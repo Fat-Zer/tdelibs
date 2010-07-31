@@ -43,38 +43,38 @@ class KPluginInfo::KPluginInfoPrivate
             delete config;
         }
 
-        QString specfile; // the filename of the file containing all the info
-        QString name;
-        QString comment;
-        QString icon;
-        QString author;
-        QString email;
-        QString pluginName; // the name attribute in the .rc file
-        QString version;
-        QString website; // URL to the website of the plugin/author
-        QString category;
-        QString license;
-        QStringList dependencies;
+        TQString specfile; // the filename of the file containing all the info
+        TQString name;
+        TQString comment;
+        TQString icon;
+        TQString author;
+        TQString email;
+        TQString pluginName; // the name attribute in the .rc file
+        TQString version;
+        TQString website; // URL to the website of the plugin/author
+        TQString category;
+        TQString license;
+        TQStringList dependencies;
 
         bool hidden;
         bool enabledbydefault;
         bool pluginenabled;
 
         KConfig * config;
-        QString configgroup;
+        TQString configgroup;
         KService::Ptr service;
-        QValueList<KService::Ptr> kcmservices;
+        TQValueList<KService::Ptr> kcmservices;
         bool kcmservicesCached;
 };
 
-KPluginInfo::KPluginInfo( const QString & filename, const char* resource )
+KPluginInfo::KPluginInfo( const TQString & filename, const char* resource )
 : d( new KPluginInfoPrivate )
 {
     KDesktopFile file( filename, true, resource );
 
     d->specfile = filename;
 
-    if( filename.endsWith( QString::fromAscii( ".desktop" ) ) )
+    if( filename.endsWith( TQString::fromAscii( ".desktop" ) ) )
     {
         file.setDesktopGroup();
         d->hidden = file.readBoolEntry( "Hidden", false );
@@ -95,7 +95,7 @@ KPluginInfo::KPluginInfo( const QString & filename, const char* resource )
         d->enabledbydefault = file.readBoolEntry(
                 "X-KDE-PluginInfo-EnabledByDefault", false );
     }
-    else if( filename.endsWith( QString::fromAscii( ".plugin" ) ) )
+    else if( filename.endsWith( TQString::fromAscii( ".plugin" ) ) )
     { // provided for noatun style .plugin files compatibility
 
         d->name = file.readName();
@@ -136,7 +136,7 @@ KPluginInfo::KPluginInfo( const KService::Ptr service )
     d->license = service->property( "X-KDE-PluginInfo-License" ).toString();
     d->dependencies =
         service->property( "X-KDE-PluginInfo-Depends" ).toStringList();
-    QVariant tmp = service->property( "X-KDE-PluginInfo-EnabledByDefault" );
+    TQVariant tmp = service->property( "X-KDE-PluginInfo-EnabledByDefault" );
     d->enabledbydefault = tmp.isValid() ? tmp.toBool() : false;
 }
 
@@ -151,9 +151,9 @@ KPluginInfo::~KPluginInfo()
     delete d;
 }
 
-QValueList<KPluginInfo*> KPluginInfo::fromServices( const KService::List & services, KConfig * config, const QString & group )
+TQValueList<KPluginInfo*> KPluginInfo::fromServices( const KService::List & services, KConfig * config, const TQString & group )
 {
-    QValueList<KPluginInfo*> infolist;
+    TQValueList<KPluginInfo*> infolist;
     KPluginInfo * info;
     for( KService::List::ConstIterator it = services.begin();
             it != services.end(); ++it )
@@ -165,10 +165,10 @@ QValueList<KPluginInfo*> KPluginInfo::fromServices( const KService::List & servi
     return infolist;
 }
 
-QValueList<KPluginInfo*> KPluginInfo::fromFiles( const QStringList & files, KConfig * config, const QString & group )
+TQValueList<KPluginInfo*> KPluginInfo::fromFiles( const TQStringList & files, KConfig * config, const TQString & group )
 {
-    QValueList<KPluginInfo*> infolist;
-    for( QStringList::ConstIterator it = files.begin(); it != files.end(); ++it )
+    TQValueList<KPluginInfo*> infolist;
+    for( TQStringList::ConstIterator it = files.begin(); it != files.end(); ++it )
     {
         KPluginInfo * info = new KPluginInfo( *it );
         info->setConfig( config, group );
@@ -177,9 +177,9 @@ QValueList<KPluginInfo*> KPluginInfo::fromFiles( const QStringList & files, KCon
     return infolist;
 }
 
-QValueList<KPluginInfo*> KPluginInfo::fromKPartsInstanceName( const QString & name, KConfig * config, const QString & group )
+TQValueList<KPluginInfo*> KPluginInfo::fromKPartsInstanceName( const TQString & name, KConfig * config, const TQString & group )
 {
-    QStringList files = KGlobal::dirs()->findAllResources( "data", name +
+    TQStringList files = KGlobal::dirs()->findAllResources( "data", name +
             "/kpartplugins/*.desktop", true, false );
     return fromFiles( files, config, group );
 }
@@ -207,62 +207,62 @@ bool KPluginInfo::isPluginEnabledByDefault() const
     return d->enabledbydefault;
 }
 
-const QString & KPluginInfo::name() const
+const TQString & KPluginInfo::name() const
 {
     return d->name;
 }
 
-const QString & KPluginInfo::comment() const
+const TQString & KPluginInfo::comment() const
 {
     return d->comment;
 }
 
-const QString & KPluginInfo::icon() const
+const TQString & KPluginInfo::icon() const
 {
     return d->icon;
 }
 
-const QString & KPluginInfo::specfile() const
+const TQString & KPluginInfo::specfile() const
 {
     return d->specfile;
 }
 
-const QString & KPluginInfo::author() const
+const TQString & KPluginInfo::author() const
 {
     return d->author;
 }
 
-const QString & KPluginInfo::email() const
+const TQString & KPluginInfo::email() const
 {
     return d->email;
 }
 
-const QString & KPluginInfo::category() const
+const TQString & KPluginInfo::category() const
 {
     return d->category;
 }
 
-const QString & KPluginInfo::pluginName() const
+const TQString & KPluginInfo::pluginName() const
 {
     return d->pluginName;
 }
 
-const QString & KPluginInfo::version() const
+const TQString & KPluginInfo::version() const
 {
     return d->version;
 }
 
-const QString & KPluginInfo::website() const
+const TQString & KPluginInfo::website() const
 {
     return d->website;
 }
 
-const QString & KPluginInfo::license() const
+const TQString & KPluginInfo::license() const
 {
     return d->license;
 }
 
-const QStringList & KPluginInfo::dependencies() const
+const TQStringList & KPluginInfo::dependencies() const
 {
     return d->dependencies;
 }
@@ -272,7 +272,7 @@ KService::Ptr KPluginInfo::service() const
     return d->service;
 }
 
-const QValueList<KService::Ptr> & KPluginInfo::kcmServices() const
+const TQValueList<KService::Ptr> & KPluginInfo::kcmServices() const
 {
     if ( !d->kcmservicesCached )
     {
@@ -287,7 +287,7 @@ const QValueList<KService::Ptr> & KPluginInfo::kcmServices() const
     return d->kcmservices;
 }
 
-void KPluginInfo::setConfig( KConfig * config, const QString & group )
+void KPluginInfo::setConfig( KConfig * config, const TQString & group )
 {
     d->config = config;
     d->configgroup = group;
@@ -298,20 +298,20 @@ KConfig * KPluginInfo::config() const
     return d->config;
 }
 
-const QString & KPluginInfo::configgroup() const
+const TQString & KPluginInfo::configgroup() const
 {
     return d->configgroup;
 }
 
-QVariant KPluginInfo::property( const QString & key ) const
+TQVariant KPluginInfo::property( const TQString & key ) const
 {
     if( d->service )
         return d->service->property( key );
     else
-        return QVariant();
+        return TQVariant();
 }
 
-QVariant KPluginInfo::operator[]( const QString & key ) const
+TQVariant KPluginInfo::operator[]( const TQString & key ) const
 {
     return property( key );
 }

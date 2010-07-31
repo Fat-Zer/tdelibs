@@ -36,7 +36,7 @@
 #undef Unsorted
 #endif
 
-QDir::SortSpec KFileView::defaultSortSpec = static_cast<QDir::SortSpec>(QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
+TQDir::SortSpec KFileView::defaultSortSpec = static_cast<TQDir::SortSpec>(TQDir::Name | TQDir::IgnoreCase | TQDir::DirsFirst);
 
 class KFileView::KFileViewPrivate
 {
@@ -55,7 +55,7 @@ public:
         }
     }
 
-    QGuardedPtr<KActionCollection> actions;
+    TQGuardedPtr<KActionCollection> actions;
     int dropOptions;
 };
 
@@ -90,20 +90,20 @@ KFileView::~KFileView()
 void KFileView::setParentView(KFileView *parent)
 {
     if ( parent ) { // pass all signals right to our parent
-        QObject::connect(sig, SIGNAL( activatedMenu(const KFileItem *,
-                                                        const QPoint& ) ),
-                parent->sig, SIGNAL( activatedMenu(const KFileItem *,
-                                                        const QPoint& )));
-        QObject::connect(sig, SIGNAL( dirActivated(const KFileItem *)),
-                parent->sig, SIGNAL( dirActivated(const KFileItem*)));
-        QObject::connect(sig, SIGNAL( fileSelected(const KFileItem *)),
-                parent->sig, SIGNAL( fileSelected(const KFileItem*)));
-        QObject::connect(sig, SIGNAL( fileHighlighted(const KFileItem *) ),
-                            parent->sig,SIGNAL(fileHighlighted(const KFileItem*)));
-        QObject::connect(sig, SIGNAL( sortingChanged( QDir::SortSpec ) ),
-                            parent->sig, SIGNAL(sortingChanged( QDir::SortSpec)));
-        QObject::connect(sig, SIGNAL( dropped(const KFileItem *, QDropEvent*, const KURL::List&) ),
-                            parent->sig, SIGNAL(dropped(const KFileItem *, QDropEvent*, const KURL::List&)));
+        TQObject::connect(sig, TQT_SIGNAL( activatedMenu(const KFileItem *,
+                                                        const TQPoint& ) ),
+                parent->sig, TQT_SIGNAL( activatedMenu(const KFileItem *,
+                                                        const TQPoint& )));
+        TQObject::connect(sig, TQT_SIGNAL( dirActivated(const KFileItem *)),
+                parent->sig, TQT_SIGNAL( dirActivated(const KFileItem*)));
+        TQObject::connect(sig, TQT_SIGNAL( fileSelected(const KFileItem *)),
+                parent->sig, TQT_SIGNAL( fileSelected(const KFileItem*)));
+        TQObject::connect(sig, TQT_SIGNAL( fileHighlighted(const KFileItem *) ),
+                            parent->sig,TQT_SIGNAL(fileHighlighted(const KFileItem*)));
+        TQObject::connect(sig, TQT_SIGNAL( sortingChanged( TQDir::SortSpec ) ),
+                            parent->sig, TQT_SIGNAL(sortingChanged( TQDir::SortSpec)));
+        TQObject::connect(sig, TQT_SIGNAL( dropped(const KFileItem *, TQDropEvent*, const KURL::List&) ),
+                            parent->sig, TQT_SIGNAL(dropped(const KFileItem *, TQDropEvent*, const KURL::List&)));
     }
 }
 
@@ -148,7 +148,7 @@ void KFileView::insertItem( KFileItem * )
 {
 }
 
-void KFileView::setSorting(QDir::SortSpec new_sort)
+void KFileView::setSorting(TQDir::SortSpec new_sort)
 {
     m_sorting = new_sort;
 }
@@ -165,16 +165,16 @@ void KFileView::sortReversed()
 {
     int spec = sorting();
 
-    setSorting( static_cast<QDir::SortSpec>( spec ^ QDir::Reversed ) );
+    setSorting( static_cast<TQDir::SortSpec>( spec ^ TQDir::Reversed ) );
 }
 
 #if 0
 int KFileView::compareItems(const KFileItem *fi1, const KFileItem *fi2) const
 {
-    static const QString &dirup = KGlobal::staticQString("..");
+    static const TQString &dirup = KGlobal::staticQString("..");
     bool bigger = true;
     bool keepFirst = false;
-    bool dirsFirst = ((m_sorting & QDir::DirsFirst) == QDir::DirsFirst);
+    bool dirsFirst = ((m_sorting & TQDir::DirsFirst) == TQDir::DirsFirst);
 
     if (fi1 == fi2)
 	return 0;
@@ -196,21 +196,21 @@ int KFileView::compareItems(const KFileItem *fi1, const KFileItem *fi2) const
 	}
 	else {
 
-	    QDir::SortSpec sort = static_cast<QDir::SortSpec>(m_sorting & QDir::SortByMask);
+	    TQDir::SortSpec sort = static_cast<TQDir::SortSpec>(m_sorting & TQDir::SortByMask);
 
 	    //if (fi1->isDir() || fi2->isDir())
-            // sort = static_cast<QDir::SortSpec>(KFileView::defaultSortSpec & QDir::SortByMask);
+            // sort = static_cast<TQDir::SortSpec>(KFileView::defaultSortSpec & TQDir::SortByMask);
 
             switch (sort) {
-                case QDir::Name:
+                case TQDir::Name:
                 default:
 sort_by_name:
-                    if ( (m_sorting & QDir::IgnoreCase) == QDir::IgnoreCase )
+                    if ( (m_sorting & TQDir::IgnoreCase) == TQDir::IgnoreCase )
                         bigger = (fi1->name( true ) > fi2->name( true ));
                     else
                         bigger = (fi1->name() > fi2->name());
                     break;
-                case QDir::Time:
+                case TQDir::Time:
                 {
                     time_t t1 = fi1->time( KIO::UDS_MODIFICATION_TIME );
                     time_t t2 = fi2->time( KIO::UDS_MODIFICATION_TIME );
@@ -226,7 +226,7 @@ sort_by_name:
                         goto sort_by_name;
                     }
                 }
-                case QDir::Size:
+                case TQDir::Size:
                 {
                     KIO::filesize_t s1 = fi1->size();
                     KIO::filesize_t s2 = fi2->size();
@@ -242,7 +242,7 @@ sort_by_name:
                         goto sort_by_name;
                     }
                 }
-                case QDir::Unsorted:
+                case TQDir::Unsorted:
                     bigger = true;  // nothing
                     break;
 	    }
@@ -265,7 +265,7 @@ void KFileView::updateView(const KFileItem *)
 {
 }
 
-void KFileView::setCurrentItem(const QString &filename )
+void KFileView::setCurrentItem(const TQString &filename )
 {
     if (!filename.isNull()) {
         KFileItem *item;
@@ -369,27 +369,27 @@ KActionCollection * KFileView::actionCollection() const
     return d->actions;
 }
 
-void KFileView::readConfig( KConfig *, const QString&  )
+void KFileView::readConfig( KConfig *, const TQString&  )
 {
 }
 
-void KFileView::writeConfig( KConfig *, const QString& )
+void KFileView::writeConfig( KConfig *, const TQString& )
 {
 }
 
-QString KFileView::sortingKey( const QString& value, bool isDir, int sortSpec )
+TQString KFileView::sortingKey( const TQString& value, bool isDir, int sortSpec )
 {
-    bool reverse   = sortSpec & QDir::Reversed;
-    bool dirsFirst = sortSpec & QDir::DirsFirst;
+    bool reverse   = sortSpec & TQDir::Reversed;
+    bool dirsFirst = sortSpec & TQDir::DirsFirst;
     char start = (isDir && dirsFirst) ? (reverse ? '2' : '0') : '1';
-    QString result = (sortSpec & QDir::IgnoreCase) ? value.lower() : value;
+    TQString result = (sortSpec & TQDir::IgnoreCase) ? value.lower() : value;
     return result.prepend( start );
 }
 
-QString KFileView::sortingKey( KIO::filesize_t value, bool isDir, int sortSpec)
+TQString KFileView::sortingKey( KIO::filesize_t value, bool isDir, int sortSpec)
 {
-    bool reverse = sortSpec & QDir::Reversed;
-    bool dirsFirst = sortSpec & QDir::DirsFirst;
+    bool reverse = sortSpec & TQDir::Reversed;
+    bool dirsFirst = sortSpec & TQDir::DirsFirst;
     char start = (isDir && dirsFirst) ? (reverse ? '2' : '0') : '1';
     return KIO::number( value ).rightJustify( 24, '0' ).prepend( start );
 }
@@ -411,7 +411,7 @@ int KFileView::dropOptions()
 
 int KFileView::autoOpenDelay()
 {
-    return (QApplication::startDragTime() * 3) / 2;
+    return (TQApplication::startDragTime() * 3) / 2;
 }
 
 void KFileView::virtual_hook( int id, void* data)

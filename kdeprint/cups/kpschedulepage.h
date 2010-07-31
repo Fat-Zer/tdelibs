@@ -31,12 +31,12 @@ class KPSchedulePage : public KPrintDialogPage
 {
 	Q_OBJECT
 public:
-	KPSchedulePage(QWidget *parent = 0, const char *name = 0);
+	KPSchedulePage(TQWidget *parent = 0, const char *name = 0);
 	~KPSchedulePage();
 
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
-	void setOptions(const QMap<QString,QString>& opts);
-	bool isValid(QString& msg);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
+	void setOptions(const TQMap<TQString,TQString>& opts);
+	bool isValid(TQString& msg);
 
 protected slots:
 	void slotTimeChanged();

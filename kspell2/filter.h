@@ -23,7 +23,7 @@
 #ifndef KSPELL_FILTER_H
 #define KSPELL_FILTER_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kdelibs_export.h>
 
 namespace KSpell2
@@ -42,7 +42,7 @@ namespace KSpell2
         Word() : start( 0 ), end( true )
             {}
 
-        Word( const QString& w, int st, bool e = false )
+        Word( const TQString& w, int st, bool e = false )
             : word( w ), start( st ), end( e )
             {}
         Word( const Word& other )
@@ -50,7 +50,7 @@ namespace KSpell2
               end( other.end )
             {}
 
-        QString word;
+        TQString word;
         uint    start;
         bool    end;
     };
@@ -84,8 +84,8 @@ namespace KSpell2
 
         bool atEnd() const;
 
-        void setBuffer( const QString& buffer );
-        QString buffer() const;
+        void setBuffer( const TQString& buffer );
+        TQString buffer() const;
 
         void restart();
 
@@ -95,21 +95,21 @@ namespace KSpell2
 
         virtual void setCurrentPosition( int );
         virtual int currentPosition() const;
-        virtual void replace( const Word& w, const QString& newWord );
+        virtual void replace( const Word& w, const TQString& newWord );
 
         /**
          * Should return the sentence containing the current word
          */
-        virtual QString context() const;
+        virtual TQString context() const;
     protected:
         bool trySkipLinks() const;
-        bool ignore( const QString& word ) const;
-        QChar skipToLetter( uint &fromPosition ) const;
+        bool ignore( const TQString& word ) const;
+        TQChar skipToLetter( uint &fromPosition ) const;
         bool shouldBeSkipped( bool wordWasUppercase, bool wordWasRunTogether,
-                              const QString& foundWord ) const;
+                              const TQString& foundWord ) const;
 
     protected:
-        QString      m_buffer;
+        TQString      m_buffer;
         mutable uint m_currentPosition;
 
     private:

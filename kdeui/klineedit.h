@@ -30,7 +30,7 @@
 #ifndef _KLINEEDIT_H
 #define _KLINEEDIT_H
 
-#include <qlineedit.h>
+#include <tqlineedit.h>
 #include <kcompletion.h>
 
 class QPopupMenu;
@@ -39,11 +39,11 @@ class KCompletionBox;
 class KURL;
 
 /**
- * An enhanced QLineEdit widget for inputting text.
+ * An enhanced TQLineEdit widget for inputting text.
  *
  * \b Detail \n
  *
- * This widget inherits from QLineEdit and implements the following
+ * This widget inherits from TQLineEdit and implements the following
  * additional functionalities: a completion object that provides both
  * automatic and manual text completion as well as multiple match iteration
  * features, configurable key-bindings to activate these features and a
@@ -51,13 +51,13 @@ class KURL;
  * modes on the fly based on their preference.
  *
  * To support these new features KLineEdit also emits a few more
- * additional signals.  These are: completion( const QString& ),
- * textRotation( KeyBindingType ), and returnPressed( const QString& ).
+ * additional signals.  These are: completion( const TQString& ),
+ * textRotation( KeyBindingType ), and returnPressed( const TQString& ).
  * The completion signal can be connected to a slot that will assist the
  * user in filling out the remaining text.  The text rotation signal is
  * intended to be used to iterate through the list of all possible matches
  * whenever there is more than one match for the entered text.  The
- * @p returnPressed( const QString& ) signals are the same as QLineEdit's
+ * @p returnPressed( const TQString& ) signals are the same as QLineEdit's
  * except it provides the current text in the widget as its argument whenever
  * appropriate.
  *
@@ -79,10 +79,10 @@ class KURL;
  * individual key-bindings by using setKeyBinding() with the default
  * second argument.
  *
- * If @p EchoMode for this widget is set to something other than @p QLineEdit::Normal,
+ * If @p EchoMode for this widget is set to something other than @p TQLineEdit::Normal,
  * the completion mode will always be defaulted to KGlobalSettings::CompletionNone.
  * This is done purposefully to guard against protected entries such as passwords being
- * cached in KCompletion's list. Hence, if the @p EchoMode is not QLineEdit::Normal, the
+ * cached in KCompletion's list. Hence, if the @p EchoMode is not TQLineEdit::Normal, the
  * completion mode is automatically disabled.
  *
  * A read-only KLineEdit will have the same background color as a
@@ -99,7 +99,7 @@ class KURL;
  * KLineEdit *edit = new KLineEdit( this, "mywidget" );
  * KCompletion *comp = edit->completionObject();
  * // Connect to the return pressed signal - optional
- * connect(edit,SIGNAL(returnPressed(const QString&)),comp,SLOT(addItem(const QString&)));
+ * connect(edit,TQT_SIGNAL(returnPressed(const TQString&)),comp,TQT_SLOT(addItem(const TQString&)));
  * \endcode
  *
  * To use a customized completion objects or your
@@ -110,7 +110,7 @@ class KURL;
  * KURLCompletion *comp = new KURLCompletion();
  * edit->setCompletionObject( comp );
  * // Connect to the return pressed signal - optional
- * connect(edit,SIGNAL(returnPressed(const QString&)),comp,SLOT(addItem(const QString&)));
+ * connect(edit,TQT_SIGNAL(returnPressed(const TQString&)),comp,TQT_SLOT(addItem(const TQString&)));
  * \endcode
  *
  * Note if you specify your own completion object you have to either delete
@@ -142,7 +142,7 @@ class KURL;
  * @author Dawit Alemayehu <adawit@kde.org>
  */
 
-class KDEUI_EXPORT KLineEdit : public QLineEdit, public KCompletionBase
+class KDEUI_EXPORT KLineEdit : public TQLineEdit, public KCompletionBase
 {
     friend class KComboBox;
 
@@ -152,7 +152,7 @@ class KDEUI_EXPORT KLineEdit : public QLineEdit, public KCompletionBase
     Q_PROPERTY( bool trapEnterKeyEvent READ trapReturnKey WRITE setTrapReturnKey )
     Q_PROPERTY( bool enableSqueezedText READ isSqueezedTextEnabled WRITE setEnableSqueezedText )
     // @since 3.5.4
-    Q_PROPERTY( QString clickMessage READ clickMessage WRITE setClickMessage )
+    Q_PROPERTY( TQString clickMessage READ clickMessage WRITE setClickMessage )
 
 public:
 
@@ -164,7 +164,7 @@ public:
      * @param parent The parent object of this widget.
      * @param name the name of this widget
      */
-    KLineEdit( const QString &string, QWidget *parent, const char *name = 0 );
+    KLineEdit( const TQString &string, TQWidget *parent, const char *name = 0 );
 
     /**
      * Constructs a KLineEdit object with a parent and a name.
@@ -172,7 +172,7 @@ public:
      * @param parent The parent object of this widget.
      * @param name The name of this widget.
      */
-    KLineEdit ( QWidget *parent=0, const char *name=0 );
+    KLineEdit ( TQWidget *parent=0, const char *name=0 );
 
     /**
      *  Destructor.
@@ -188,11 +188,11 @@ public:
     /**
      * Puts the text cursor at the end of the string.
      *
-     * This method is deprecated.  Use QLineEdit::end()
+     * This method is deprecated.  Use TQLineEdit::end()
      * instead.
      *
      * @deprecated
-     * QLineEdit::end()
+     * TQLineEdit::end()
      */
     void cursorAtEnd() { end( false ); }
 
@@ -230,7 +230,7 @@ public:
     /**
      * Enables/Disables handling of URL drops. If enabled and the user
      * drops an URL, the decoded URL will be inserted. Otherwise the default
-     * behavior of QLineEdit is used, which inserts the encoded URL.
+     * behavior of TQLineEdit is used, which inserts the encoded URL.
      *
      * @param enable If @p true, insert decoded URLs
      */
@@ -265,7 +265,7 @@ public:
      * Re-implemented for internal reasons.  API not affected.
      *
      */
-    virtual bool eventFilter( QObject *, QEvent * );
+    virtual bool eventFilter( TQObject *, TQEvent * );
 
     /**
      * @returns the completion-box, that is used in completion mode
@@ -291,8 +291,8 @@ public:
      * Enable text squeezing whenever the supplied text is too long.
      * Only works for "read-only" mode.
      *
-     * Note that once text squeezing is enabled, QLineEdit::text()
-     * and QLineEdit::displayText() return the squeezed text. If
+     * Note that once text squeezing is enabled, TQLineEdit::text()
+     * and TQLineEdit::displayText() return the squeezed text. If
      * you want the original text, use @ref originalText.
      *
      * @see QLineEdit
@@ -311,12 +311,12 @@ public:
     /**
      * Returns the original text if text squeezing is enabled.
      * If the widget is not in "read-only" mode, this function
-     * returns the same thing as QLineEdit::text().
+     * returns the same thing as TQLineEdit::text().
      *
      * @see QLineEdit
      * @since 3.2
      */
-    QString originalText() const;
+    TQString originalText() const;
 
     /**
      * Set the completion-box to be used in completion mode
@@ -334,13 +334,13 @@ public:
      * the purpose of the line edit.
      * @since 3.5.4
     */
-    void setClickMessage( const QString &msg );
+    void setClickMessage( const TQString &msg );
 
     /**
      * @return the message set with setClickMessage
      * @since 3.5.4
     */
-    QString clickMessage() const;
+    TQString clickMessage() const;
 
 signals:
 
@@ -348,16 +348,16 @@ signals:
      * Emitted whenever the completion box is activated.
      * @since 3.1
      */
-    void completionBoxActivated (const QString &);
+    void completionBoxActivated (const TQString &);
 
     /**
      * Emitted when the user presses the return key.
      *
      *  The argument is the current text.  Note that this
      * signal is @em not emitted if the widget's @p EchoMode is set to
-     * QLineEdit::EchoMode.
+     * TQLineEdit::EchoMode.
      */
-    void returnPressed( const QString& );
+    void returnPressed( const TQString& );
 
     /**
      * Emitted when the completion key is pressed.
@@ -366,12 +366,12 @@ signals:
      * completion mode is set to @p CompletionNone or @p EchoMode is
      * @em normal.
      */
-    void completion( const QString& );
+    void completion( const TQString& );
 
     /**
      * Emitted when the shortcut for substring completion is pressed.
      */
-    void substringCompletion( const QString& );
+    void substringCompletion( const TQString& );
 
     /**
      * Emitted when the text rotation key-bindings are pressed.
@@ -405,7 +405,7 @@ signals:
      *
      * @param p the context menu about to be displayed
      */
-    void aboutToShowContextMenu( QPopupMenu * p );
+    void aboutToShowContextMenu( TQPopupMenu * p );
 
 public slots:
 
@@ -429,7 +429,7 @@ public slots:
     /**
      * See KCompletionBase::setCompletedText.
      */
-    virtual void setCompletedText( const QString& );
+    virtual void setCompletedText( const TQString& );
 
     /**
      * Sets @p items into the completion-box if completionMode() is
@@ -437,7 +437,7 @@ public slots:
      *
      * @param items list of completion matches to be shown in the completion box.
      */
-    void setCompletedItems( const QStringList& items );
+    void setCompletedItems( const TQStringList& items );
 
     /**
      * Same as the above function except it allows you to temporarily
@@ -449,10 +449,10 @@ public slots:
      * @param items list of completion matches to be shown in the completion box.
      * @param autoSuggest true if you want automatic text completion (suggestion) enabled.
      */
-    void setCompletedItems( const QStringList& items, bool autoSuggest );
+    void setCompletedItems( const TQStringList& items, bool autoSuggest );
 
     /**
-     * Reimplemented to workaround a buggy QLineEdit::clear()
+     * Reimplemented to workaround a buggy TQLineEdit::clear()
      * (changing the clipboard to the text we just had in the lineedit)
      */
     virtual void clear();
@@ -462,12 +462,12 @@ public slots:
      * This can only be used with read-only line-edits.
      * @since 3.1
      */
-    void setSqueezedText( const QString &text);
+    void setSqueezedText( const TQString &text);
 
     /**
      * Re-implemented to enable text squeezing. API is not affected.
      */
-    virtual void setText ( const QString& );
+    virtual void setText ( const TQString& );
 
 
 protected slots:
@@ -476,7 +476,7 @@ protected slots:
     * Completes the remaining text with a matching one from
     * a given list.
     */
-    virtual void makeCompletion( const QString& );
+    virtual void makeCompletion( const TQString& );
 
     /**
      * @deprecated.  Will be removed in the next major release!
@@ -493,72 +493,72 @@ protected slots:
      * Call this function to revert a text completion if the user
      * cancels the request. Mostly applies to popup completions.
      */
-    void userCancelled(const QString & cancelText);
+    void userCancelled(const TQString & cancelText);
 
 protected:
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
-    * See QLineEdit::resizeEvent().
+    * See TQLineEdit::resizeEvent().
     */
-    virtual void resizeEvent( QResizeEvent * );
+    virtual void resizeEvent( TQResizeEvent * );
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
-    * See QLineEdit::keyPressEvent().
+    * See TQLineEdit::keyPressEvent().
     */
-    virtual void keyPressEvent( QKeyEvent * );
+    virtual void keyPressEvent( TQKeyEvent * );
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
-    * See QLineEdit::mousePressEvent().
+    * See TQLineEdit::mousePressEvent().
     */
-    virtual void mousePressEvent( QMouseEvent * );
+    virtual void mousePressEvent( TQMouseEvent * );
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
-    * See QWidget::mouseDoubleClickEvent().
+    * See TQWidget::mouseDoubleClickEvent().
     */
-    virtual void mouseDoubleClickEvent( QMouseEvent * );
+    virtual void mouseDoubleClickEvent( TQMouseEvent * );
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
-    * See QLineEdit::mouseReleaseEvent().
+    * See TQLineEdit::mouseReleaseEvent().
     */
-    virtual void mouseReleaseEvent( QMouseEvent * );
+    virtual void mouseReleaseEvent( TQMouseEvent * );
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
-    * See QLineEdit::contextMenuEvent().
+    * See TQLineEdit::contextMenuEvent().
     */
-    virtual void contextMenuEvent( QContextMenuEvent * );
+    virtual void contextMenuEvent( TQContextMenuEvent * );
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
-    * See QLineEdit::createPopupMenu().
+    * See TQLineEdit::createPopupMenu().
     */
-    virtual QPopupMenu *createPopupMenu();
+    virtual TQPopupMenu *createPopupMenu();
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
-    * See QFrame::drawContents().
+    * See TQFrame::drawContents().
     */
-    virtual void drawContents( QPainter *p );
+    virtual void drawContents( TQPainter *p );
 
     /**
     * Re-implemented to handle URI drops.
     *
-    * See QLineEdit::dropEvent().
+    * See TQLineEdit::dropEvent().
     */
-    virtual void dropEvent( QDropEvent * );
+    virtual void dropEvent( TQDropEvent * );
 
     /*
     * This function simply sets the lineedit text and
@@ -568,7 +568,7 @@ protected:
     * @param text
     * @param marked
     */
-    virtual void setCompletedText( const QString& /*text*/, bool /*marked*/ );
+    virtual void setCompletedText( const TQString& /*text*/, bool /*marked*/ );
 
 
     /**
@@ -586,16 +586,16 @@ protected:
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
-    * See QLineEdit::focusInEvent().
+    * See TQLineEdit::focusInEvent().
     */
-    virtual void focusInEvent( QFocusEvent* );
+    virtual void focusInEvent( TQFocusEvent* );
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
-    * See QLineEdit::focusOutEvent().
+    * See TQLineEdit::focusOutEvent().
     */
-    virtual void focusOutEvent( QFocusEvent* );
+    virtual void focusOutEvent( TQFocusEvent* );
 
     /**
      * Whether in current state text should be auto-suggested
@@ -607,7 +607,7 @@ private slots:
     void completionMenuActivated( int id );
     void tripleClickTimeout();  // resets possibleTripleClick
     void slotRestoreSelectionColors();
-    void setTextWorkaround( const QString& text );
+    void setTextWorkaround( const TQString& text );
 
 private:
 
@@ -634,7 +634,7 @@ private:
      * Checks whether we should/should not consume a key used as
      * an accelerator.
      */
-    bool overrideAccel (const QKeyEvent* e);
+    bool overrideAccel (const TQKeyEvent* e);
 
     /**
      * Properly sets the squeezed text whenever the widget is

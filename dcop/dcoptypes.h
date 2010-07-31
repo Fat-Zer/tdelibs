@@ -34,38 +34,38 @@ inline const char* dcopTypeName( long ) { return "long int"; }
 inline const char* dcopTypeName( ulong ) { return "ulong"; }
 inline const char* dcopTypeName( double ) { return "double"; }
 inline const char* dcopTypeName( float ) { return "float"; }
-inline const char* dcopTypeName( const char* ) { return "QCString"; }
+inline const char* dcopTypeName( const char* ) { return "TQCString"; }
 
 // dcop specialities
 class DCOPRef; inline const char* dcopTypeName( const DCOPRef& ) { return "DCOPRef"; }
 
 // Qt variant types
-class QString; inline const char* dcopTypeName( const QString& ) { return "QString"; }
-class QCString; inline const char* dcopTypeName( const QCString& ) { return "QCString"; }
-class QFont; inline const char* dcopTypeName( const QFont& ) { return "QFont"; }
-class QPixmap; inline const char* dcopTypeName( const QPixmap& ) { return "QPixmap"; }
-class QBrush; inline const char* dcopTypeName( const QBrush& ) { return "QBrush"; }
-class QRect; inline const char* dcopTypeName( const QRect& ) { return "QRect"; }
-class QPoint; inline const char* dcopTypeName( const QPoint& ) { return "QPoint"; }
-class QImage; inline const char* dcopTypeName( const QImage& ) { return "QImage"; }
-class QSize; inline const char* dcopTypeName( const QSize& ) { return "QSize"; }
-class QColor; inline const char* dcopTypeName( const QColor& ) { return "QColor"; }
-class QPalette; inline const char* dcopTypeName( const QPalette& ) { return "QPalette"; }
-class QColorGroup; inline const char* dcopTypeName( const QColorGroup& ) { return "QColorGroup"; }
-class QIconSet; inline const char* dcopTypeName( const QIconSet& ) { return "QIconSet"; }
-class QDataStream; inline const char* dcopTypeName( const QDataStream& ) { return "QDataStream"; }
-class QPointArray; inline const char* dcopTypeName( const QPointArray& ) { return "QPointArray"; }
-class QRegion; inline const char* dcopTypeName( const QRegion& ) { return "QRegion"; }
-class QBitmap; inline const char* dcopTypeName( const QBitmap& ) { return "QBitmap"; }
-class QCursor; inline const char* dcopTypeName( const QCursor& ) { return "QCursor"; }
-class QStringList; inline const char* dcopTypeName( const QStringList& ) { return "QStringList"; }
-class QSizePolicy; inline const char* dcopTypeName( const QSizePolicy& ) { return "QSizePolicy"; }
-class QDate; inline const char* dcopTypeName( const QDate& ) { return "QDate"; }
-class QTime; inline const char* dcopTypeName( const QTime& ) { return "QTime"; }
-class QDateTime; inline const char* dcopTypeName( const QDateTime& ) { return "QDateTime"; }
-class QBitArray; inline const char* dcopTypeName( const QBitArray& ) { return "QBitArray"; }
-class QKeySequence; inline const char* dcopTypeName( const QKeySequence& ) { return "QKeySequence"; }
-class QVariant; inline const char* dcopTypeName( const QVariant& ) { return "QVariant"; }
+class QString; inline const char* dcopTypeName( const TQString& ) { return "TQString"; }
+class QCString; inline const char* dcopTypeName( const TQCString& ) { return "TQCString"; }
+class QFont; inline const char* dcopTypeName( const TQFont& ) { return "TQFont"; }
+class QPixmap; inline const char* dcopTypeName( const TQPixmap& ) { return "TQPixmap"; }
+class QBrush; inline const char* dcopTypeName( const TQBrush& ) { return "TQBrush"; }
+class QRect; inline const char* dcopTypeName( const TQRect& ) { return "TQRect"; }
+class QPoint; inline const char* dcopTypeName( const TQPoint& ) { return "TQPoint"; }
+class QImage; inline const char* dcopTypeName( const TQImage& ) { return "TQImage"; }
+class QSize; inline const char* dcopTypeName( const TQSize& ) { return "TQSize"; }
+class QColor; inline const char* dcopTypeName( const TQColor& ) { return "TQColor"; }
+class QPalette; inline const char* dcopTypeName( const TQPalette& ) { return "TQPalette"; }
+class QColorGroup; inline const char* dcopTypeName( const TQColorGroup& ) { return "TQColorGroup"; }
+class QIconSet; inline const char* dcopTypeName( const TQIconSet& ) { return "TQIconSet"; }
+class QDataStream; inline const char* dcopTypeName( const TQDataStream& ) { return "TQDataStream"; }
+class QPointArray; inline const char* dcopTypeName( const TQPointArray& ) { return "TQPointArray"; }
+class QRegion; inline const char* dcopTypeName( const TQRegion& ) { return "TQRegion"; }
+class QBitmap; inline const char* dcopTypeName( const TQBitmap& ) { return "TQBitmap"; }
+class QCursor; inline const char* dcopTypeName( const TQCursor& ) { return "TQCursor"; }
+class QStringList; inline const char* dcopTypeName( const TQStringList& ) { return "TQStringList"; }
+class QSizePolicy; inline const char* dcopTypeName( const TQSizePolicy& ) { return "TQSizePolicy"; }
+class QDate; inline const char* dcopTypeName( const TQDate& ) { return "TQDate"; }
+class QTime; inline const char* dcopTypeName( const TQTime& ) { return "TQTime"; }
+class QDateTime; inline const char* dcopTypeName( const TQDateTime& ) { return "TQDateTime"; }
+class QBitArray; inline const char* dcopTypeName( const TQBitArray& ) { return "TQBitArray"; }
+class QKeySequence; inline const char* dcopTypeName( const TQKeySequence& ) { return "TQKeySequence"; }
+class QVariant; inline const char* dcopTypeName( const TQVariant& ) { return "TQVariant"; }
 
 // And some KDE types
 class KURL; inline const char* dcopTypeName( const KURL& ) { return "KURL"; }

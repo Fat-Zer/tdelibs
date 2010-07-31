@@ -26,7 +26,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 using namespace KIO;
 
@@ -57,12 +57,12 @@ using namespace KIO;
 
 
 DataSlave::DataSlave() :
-	Slave(true, 0, "data", QString::null)
+	Slave(true, 0, "data", TQString::null)
 {
   //kdDebug() << this << k_funcinfo << endl;
   _suspended = false;
-  timer = new QTimer(this);
-  connect(timer, SIGNAL(timeout()), SLOT(dispatchNext()));
+  timer = new TQTimer(this);
+  connect(timer, TQT_SIGNAL(timeout()), TQT_SLOT(dispatchNext()));
 }
 
 DataSlave::~DataSlave() {
@@ -115,8 +115,8 @@ void DataSlave::dispatchNext() {
   dispatchQueue.pop_front();
 }
 
-void DataSlave::send(int cmd, const QByteArray &arr) {
-  QDataStream stream(arr, IO_ReadOnly);
+void DataSlave::send(int cmd, const TQByteArray &arr) {
+  TQDataStream stream(arr, IO_ReadOnly);
 
   KURL url;
 
@@ -137,7 +137,7 @@ void DataSlave::send(int cmd, const QByteArray &arr) {
       break;
     default:
       error(ERR_UNSUPPORTED_ACTION,
-		unsupportedActionErrorString(QString::fromLatin1("data"),cmd));
+		unsupportedActionErrorString(TQString::fromLatin1("data"),cmd));
   }/*end switch*/
 }
 
@@ -145,16 +145,16 @@ bool DataSlave::suspended() {
   return _suspended;
 }
 
-void DataSlave::setHost(const QString &/*host*/, int /*port*/,
-                     const QString &/*user*/, const QString &/*passwd*/) {
+void DataSlave::setHost(const TQString &/*host*/, int /*port*/,
+                     const TQString &/*user*/, const TQString &/*passwd*/) {
   // irrelevant -> will be ignored
 }
 
 void DataSlave::setConfig(const MetaData &/*config*/) {
   // FIXME: decide to handle this directly or not at all
 #if 0
-    QByteArray data;
-    QDataStream stream( data, IO_WriteOnly );
+    TQByteArray data;
+    TQDataStream stream( data, IO_WriteOnly );
     stream << config;
     slaveconn.send( CMD_CONFIG, data );
 #endif
@@ -202,10 +202,10 @@ void DataSlave::virtual_hook( int id, void* data ) {
   }
 }
 
-DISPATCH_IMPL1(mimeType, const QString &, s)
+DISPATCH_IMPL1(mimeType, const TQString &, s)
 DISPATCH_IMPL1(totalSize, KIO::filesize_t, size)
 DISPATCH_IMPL(sendMetaData)
-DISPATCH_IMPL1(data, const QByteArray &, ba)
+DISPATCH_IMPL1(data, const TQByteArray &, ba)
 
 #undef DISPATCH_IMPL
 #undef DISPATCH_IMPL1

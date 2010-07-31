@@ -3,7 +3,7 @@
 #ifndef KLOCALETEST_H
 #define KLOCALETEST_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class QLabel;
 
@@ -18,15 +18,15 @@ public:
   //@{
   /** Constructor  
 	*/
-  Test( QWidget *parent=0, const char *name=0 );
+  Test( TQWidget *parent=0, const char *name=0 );
   /** Destructor
 	*/
   ~Test();
 
 private:
-  QString showLocale(QString cat);
+  TQString showLocale(TQString cat);
   void createFields();
 
-  QLabel *label;
+  TQLabel *label;
 };
 #endif // TEST_H

@@ -26,9 +26,9 @@
 
 #include <sys/time.h>
 
-#include <qstring.h>
-#include <qptrlist.h>
-#include <qiodevice.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
+#include <tqiodevice.h>
 
 #include "kbufferedio.h"
 #include "ksockaddr.h"
@@ -42,7 +42,7 @@ class QSocketNotifier;
 /*
  * This is extending QIODevice's error codes
  *
- * According to qiodevice.h, the last error is IO_UnspecifiedError
+ * According to tqiodevice.h, the last error is IO_UnspecifiedError
  * These errors will never occur in functions declared in QIODevice
  * (except open, but you shouldn't call open)
  */
@@ -88,7 +88,7 @@ class KExtendedSocketPrivate;
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short an extended socket
  */
-class KDECORE_EXPORT KExtendedSocket: public KBufferedIO // public QObject, public QIODevice
+class KDECORE_EXPORT KExtendedSocket: public KBufferedIO // public TQObject, public QIODevice
 {
   Q_OBJECT
 
@@ -167,7 +167,7 @@ public:
    *
    * If this is a listening (passive) socket, the hostname and port specify
    * the address to listen on. In order to listen on every interface
-   * available on this node, set @p host to QString::null. To let the operating
+   * available on this node, set @p host to TQString::null. To let the operating
    * system select a port, set it to 0.
    *
    * @sa setAddress
@@ -175,7 +175,7 @@ public:
    * @param port	the port number
    * @param flags	flags
    */
-  KExtendedSocket(const QString& host, int port, int flags = 0);
+  KExtendedSocket(const TQString& host, int port, int flags = 0);
 
   /**
    * Creates a socket with the given hostname and service.
@@ -185,7 +185,7 @@ public:
    *
    * If this is a listening (passive) socket, the hostname and service specify
    * the address to listen on. In order to listen on every interface
-   * available on this node, set @p host to QString::null. To let the operating
+   * available on this node, set @p host to TQString::null. To let the operating
    * system select a port, set the service to "0".
    *
    * @sa setAddress
@@ -193,7 +193,7 @@ public:
    * @param service	the service
    * @param flags	flags
    */
-  KExtendedSocket(const QString& host, const QString& service, int flags = 0);
+  KExtendedSocket(const TQString& host, const TQString& service, int flags = 0);
 
   /**
    * Destroys the socket, disconnecting if still connected and
@@ -246,7 +246,7 @@ public:
    *
    * If this is a listening (passive) socket, the hostname is the host to which the socket
    * will bind in order to listen. If you want to listen in every interface, set it
-   * to "*" or QString::null.
+   * to "*" or TQString::null.
    *
    * If this is a connecting (active) socket, the hostname is the host to which we will try
    * to connect.
@@ -254,13 +254,13 @@ public:
    * @param host	the hostname
    * @return true on success, false on error
    */
-  bool setHost(const QString& host);
+  bool setHost(const TQString& host);
 
   /**
    * Returns the hostname.
-   * @return the hostname or QString::null if no host has been set
+   * @return the hostname or TQString::null if no host has been set
    */
-  QString host() const;
+  TQString host() const;
 
   /**
    * Sets the port/service.
@@ -277,13 +277,13 @@ public:
    * @param port	the port
    * @return true if successful, false on error (e.g. connection already established)
    */
-  bool setPort(const QString& port);
+  bool setPort(const TQString& port);
 
   /**
    * Returns the port/service. If it is a port, the string contains a number.
-   * @return the port or QString::null if it has not been set.
+   * @return the port or TQString::null if it has not been set.
    */
-  QString port() const;
+  TQString port() const;
 
   /**
    * Sets the address where we will connect to.
@@ -294,7 +294,7 @@ public:
    * @param port	port number
    * @return true if successful, false on error (e.g. connection already established)
    */
-  bool setAddress(const QString& host, int port);
+  bool setAddress(const TQString& host, int port);
 
   /**
    * Sets the address where we will connect to.
@@ -305,14 +305,14 @@ public:
    * @param serv	the service
    * @return true if successful, false on error (e.g. connection already established)
    */
-  bool setAddress(const QString& host, const QString& serv);
+  bool setAddress(const TQString& host, const TQString& serv);
 
   /**
    * Sets the hostname to which we will bind locally before connecting.
    * @param host	the hostname
    * @return false if this is a passiveSocket, otherwise true.
    */
-  bool setBindHost(const QString& host);
+  bool setBindHost(const TQString& host);
 
   /**
    * Unsets the bind hostname. That is, don't request a binding host.
@@ -322,9 +322,9 @@ public:
 
   /**
    * Returns the hostname to which the socket will be/is bound.
-   * @return the host or QString::null if it has not been set.
+   * @return the host or TQString::null if it has not been set.
    */
-  QString bindHost() const;
+  TQString bindHost() const;
 
   /**
    * Sets the port/service to which we will bind before connecting
@@ -338,7 +338,7 @@ public:
    * @param service	the port number or service name
    * @return true if successful, false on error (e.g. connection already established)
    */
-  bool setBindPort(const QString& service);
+  bool setBindPort(const TQString& service);
 
   /**
    * Unsets the bind port/service.
@@ -348,9 +348,9 @@ public:
 
   /**
    * Returns the service to which the socket will be/is bound.
-   * @return the host or QString::null if it has not been set.
+   * @return the host or TQString::null if it has not been set.
    */
-  QString bindPort() const;
+  TQString bindPort() const;
 
   /**
    * Sets both host and port to which we will bind the socket. Will return
@@ -359,7 +359,7 @@ public:
    * @param port	the port number
    * @return true if successful, false on error (e.g. connection already established)
    */
-  bool setBindAddress(const QString& host, int port);
+  bool setBindAddress(const TQString& host, int port);
 
   /**
    * Sets both host and service to which we will bind the socket. Will return
@@ -368,7 +368,7 @@ public:
    * @param service	the service
    * @return true if successful, false on error (e.g. connection already established)
    */
-  bool setBindAddress(const QString& host, const QString& service);
+  bool setBindAddress(const TQString& host, const TQString& service);
 
   /**
    * Unsets the bind address for the socket. That means that we won't
@@ -608,7 +608,7 @@ public:
   virtual void cancelAsyncConnect();
 
   /**
-   * Implementation of QIODevice::open() pure virtual function.
+   * Implementation of TQIODevice::open() pure virtual function.
    * This depends on the target host address already being there.
    * If this is a passiveSocket, this is identical to call listen(); else, if
    * this is not a passiveSocket and no connection attempt is in progress, this
@@ -886,8 +886,8 @@ protected slots:
 
 protected:
 
-  QSocketNotifier *readNotifier();
-  QSocketNotifier *writeNotifier();
+  TQSocketNotifier *readNotifier();
+  TQSocketNotifier *writeNotifier();
 
 private:
 
@@ -899,7 +899,7 @@ private:
    * This is actually a wrapper around getaddrinfo().
    * @internal
    */
-  static int doLookup(const QString& host, const QString& serv, addrinfo& hint,
+  static int doLookup(const TQString& host, const TQString& serv, addrinfo& hint,
 		      kde_addrinfo** result);
 
 protected:
@@ -930,7 +930,7 @@ public:
    * @param flags	the same flags as getnameinfo()
    * @returns 0 on success, nonzero otherwise.
    */
-  static int resolve(sockaddr* sock, ksocklen_t len, QString& host, QString& port, int flags = 0) KDE_DEPRECATED;
+  static int resolve(sockaddr* sock, ksocklen_t len, TQString& host, TQString& port, int flags = 0) KDE_DEPRECATED;
 
   /**
    * Performs resolution on the given socket address.
@@ -944,7 +944,7 @@ public:
    * @param flags	the same flags as getnameinfo()
    * @returns 0 on success, nonzero otherwise.
    */
-  static int resolve(::KSocketAddress* sock, QString& host, QString& port, int flags = 0) KDE_DEPRECATED;
+  static int resolve(::KSocketAddress* sock, TQString& host, TQString& port, int flags = 0) KDE_DEPRECATED;
 
   /** @deprecated
    * This function is now deprecated. Please use @ref KNetwork::KResolver::resolve.
@@ -954,7 +954,7 @@ public:
    * The error code can be transformed into string by KExtendedSocket::strError()
    * with code of IO_LookupError.
    *
-   * IMPORTANT: the result values of the QPtrList must be deleted after use. So,
+   * IMPORTANT: the result values of the TQPtrList must be deleted after use. So,
    * if you don't copy the KAddressInfo objects, the best way to assure that
    * is to call setAutoDelete(true) on the list right after this function
    * returns. If you do copy the results out, you must assure that the objects
@@ -966,7 +966,7 @@ public:
    * @param error	pointer to a variable holding the error code
    * @return a list of KAddressInfos
    */
-  static QPtrList<KAddressInfo> lookup(const QString& host, const QString& port, int flags = 0, int *error = 0) KDE_DEPRECATED;
+  static TQPtrList<KAddressInfo> lookup(const TQString& host, const TQString& port, int flags = 0, int *error = 0) KDE_DEPRECATED;
 
   /**
    * Returns the local socket address
@@ -991,7 +991,7 @@ public:
    * @param syserr	the system error, as from systemError()
    * @return the text for the given error code
    */
-  static QString strError(int code, int syserr);
+  static TQString strError(int code, int syserr);
 
   /**
    * Sets/unsets address reusing flag for this socket.

@@ -25,9 +25,9 @@
 #ifndef __kurifilter_h__
 #define __kurifilter_h__
 
-#include <qptrlist.h>
-#include <qobject.h>
-#include <qstringlist.h>
+#include <tqptrlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
 
 #include <kurl.h>
 
@@ -54,7 +54,7 @@ class KCModule;
 * \b Example
 *
 * \code
-*   QString text = "kde.org";
+*   TQString text = "kde.org";
 *   KURIFilterData d = text;
 *   bool filtered = KURIFilter::self()->filter( d );
 *   cout << "URL: " << text.latin1() << endl
@@ -117,7 +117,7 @@ public:
      *
      * @param url is the string to be filtered.
      */
-    KURIFilterData( const QString& url ) { init( url ); }
+    KURIFilterData( const TQString& url ) { init( url ); }
 
     /**
      * Copy constructor.
@@ -161,11 +161,11 @@ public:
      * This functions returns the error message set
      * by the plugin whenever the uri type is set to
      * KURIFilterData::ERROR.  Otherwise, it returns
-     * a QString::null.
+     * a TQString::null.
      *
      * @return the error message or a NULL when there is none.
      */
-    QString errorMsg() const { return m_strErrMsg; }
+    TQString errorMsg() const { return m_strErrMsg; }
 
     /**
      * Returns the URI type.
@@ -185,7 +185,7 @@ public:
      *
      * @param url the string to be filtered.
      */
-    void setData( const QString& url ) { reinit( url ); }
+    void setData( const TQString& url ) { reinit( url ); }
 
     /**
      * Same as above except the argument is a URL.
@@ -212,14 +212,14 @@ public:
      * @param abs_path  the abolute path to the local resource.
      * @return true if absolute path is successfully set. Otherwise, false.
      */
-    bool setAbsolutePath( const QString& abs_path );
+    bool setAbsolutePath( const TQString& abs_path );
 
     /**
      * Returns the absolute path if one has already been set.
-     * @return the absolute path, or QString::null
+     * @return the absolute path, or TQString::null
      * @see hasAbsolutePath()
      */
-    QString absolutePath() const;
+    TQString absolutePath() const;
 
     /**
      * Checks whether the supplied data had an absolute path.
@@ -232,9 +232,9 @@ public:
      * Returns the command line options and arguments for a
      * local resource when present.
      *
-     * @return options and arguments when present, otherwise QString::null
+     * @return options and arguments when present, otherwise TQString::null
      */
-    QString argsAndOptions() const;
+    TQString argsAndOptions() const;
 
     /**
      * Checks whether the current data is a local resource with
@@ -252,9 +252,9 @@ public:
      * is found.
      *
      * @return the name of the icon associated with the resource,
-     *         or QString::null if not found
+     *         or TQString::null if not found
      */
-    QString iconName();
+    TQString iconName();
 
     /**
      * Check whether the provided uri is executable or not.
@@ -280,7 +280,7 @@ public:
      * @return the string as typed by the user, before any URL processing is done
      * @since 3.2
      */
-    QString typedString() const;
+    TQString typedString() const;
 
     /**
      * Overloaded assigenment operator.
@@ -300,7 +300,7 @@ public:
      *
      * @return an instance of a KURIFilterData object.
      */
-    KURIFilterData& operator=( const QString& url ) { reinit( url ); return *this; }
+    KURIFilterData& operator=( const TQString& url ) { reinit( url ); return *this; }
 
 protected:
 
@@ -314,20 +314,20 @@ protected:
      * Initializes the KURIFilterData on construction.
      * @param url the URL to initialize the object with
      */
-    void init( const QString& url = QString::null );
+    void init( const TQString& url = TQString::null );
 
 private:
 
     // BC hack to avoid leaking KURIFilterDataPrivate objects.
     // setData() and operator= used to call init() without deleting `d'
     void reinit(const KURL& url);
-    void reinit(const QString& url = QString::null);
+    void reinit(const TQString& url = TQString::null);
 
     bool m_bCheckForExecutables;
     bool m_bChanged;
 
-    QString m_strErrMsg;
-    QString m_strIconName;
+    TQString m_strErrMsg;
+    TQString m_strIconName;
 
     KURL m_pURI;
     URITypes m_iType;
@@ -361,14 +361,14 @@ public:
      * @param name the name of the plugin, or 0 for no name
      * @param pri the priority of the plugin.
      */
-    KURIFilterPlugin( QObject *parent = 0, const char *name = 0, double pri = 1.0 );
+    KURIFilterPlugin( TQObject *parent = 0, const char *name = 0, double pri = 1.0 );
 
     /**
      * Returns the filter's name.
      *
      * @return A string naming the filter.
      */
-    virtual QString name() const { return m_strName; }
+    virtual TQString name() const { return m_strName; }
 
     /**
      * Returns the filter's priority.
@@ -396,14 +396,14 @@ public:
      *
      * @return A configuration module, 0 if the filter isn't configurable.
      */
-    virtual KCModule *configModule( QWidget*, const char* ) const { return 0; }
+    virtual KCModule *configModule( TQWidget*, const char* ) const { return 0; }
 
     /**
      * Returns the name of the configuration module for the filter.
      *
-     * @return the name of a configuration module or QString::null if none.
+     * @return the name of a configuration module or TQString::null if none.
      */
-    virtual QString configName() const { return name(); }
+    virtual TQString configName() const { return name(); }
 
 protected:
 
@@ -415,7 +415,7 @@ protected:
     /**
      * Sets the error message in @p data to @p errormsg.
      */
-    void setErrorMsg ( KURIFilterData& data, const QString& errmsg ) const {
+    void setErrorMsg ( KURIFilterData& data, const TQString& errmsg ) const {
         data.m_strErrMsg = errmsg;
     }
 
@@ -431,9 +431,9 @@ protected:
      * Sets the arguments and options string in @p data
      * to @p args if any were found during filterting.
      */
-    void setArguments( KURIFilterData& data, const QString& args ) const;
+    void setArguments( KURIFilterData& data, const TQString& args ) const;
 
-    QString m_strName;
+    TQString m_strName;
     double m_dblPriority;
 
 protected:
@@ -446,7 +446,7 @@ private:
 /**
  * A list of filter plugins.
  */
-class KIO_EXPORT KURIFilterPluginList : public QPtrList<KURIFilterPlugin>
+class KIO_EXPORT KURIFilterPluginList : public TQPtrList<KURIFilterPlugin>
 {
 public:
     virtual int compareItems(Item a, Item b)
@@ -500,25 +500,25 @@ private:
  * of a boolean flag:
  *
  * \code
- * QString u = KURIFilter::self()->filteredURI( "kde.org" );
+ * TQString u = KURIFilter::self()->filteredURI( "kde.org" );
  * \endcode
  *
  * You can also restrict the filter(s) to be used by supplying
  * the name of the filter(s) to use.  By defualt all available
  * filters will be used. To use specific filters, add the names
- * of the filters you want to use to a QStringList and invoke
+ * of the filters you want to use to a TQStringList and invoke
  * the appropriate filtering function. The examples below show
  * the use of specific filters. The first one uses a single
  * filter called kshorturifilter while the second example uses
  * multiple filters:
  *
  * \code
- * QString text = "kde.org";
+ * TQString text = "kde.org";
  * bool filtered = KURIFilter::self()->filterURI( text, "kshorturifilter" );
  * \endcode
  *
  * \code
- * QStringList list;
+ * TQStringList list;
  * list << "kshorturifilter" << "localdomainfilter";
  * bool filtered = KURIFilter::self()->filterURI( text, list );
  * \endcode
@@ -555,7 +555,7 @@ public:
      *
      * @return a boolean indicating whether the URI has been changed
      */
-    bool filterURI( KURIFilterData& data, const QStringList& filters = QStringList() );
+    bool filterURI( KURIFilterData& data, const TQStringList& filters = TQStringList() );
 
     /**
      * Filters the URI given by the URL.
@@ -568,7 +568,7 @@ public:
      *
      * @return a boolean indicating whether the URI has been changed
      */
-    bool filterURI( KURL &uri, const QStringList& filters = QStringList() );
+    bool filterURI( KURL &uri, const TQStringList& filters = TQStringList() );
 
     /**
      * Filters a string representing a URI.
@@ -581,7 +581,7 @@ public:
      *
      * @return a boolean indicating whether the URI has been changed
      */
-    bool filterURI( QString &uri, const QStringList& filters = QStringList() );
+    bool filterURI( TQString &uri, const TQStringList& filters = TQStringList() );
 
     /**
      * Returns the filtered URI.
@@ -594,7 +594,7 @@ public:
      *
      * @return the filtered URI or null if it cannot be filtered
      */
-    KURL filteredURI( const KURL &uri, const QStringList& filters = QStringList() );
+    KURL filteredURI( const KURL &uri, const TQStringList& filters = TQStringList() );
 
     /**
      * Return a filtered string representation of a URI.
@@ -607,7 +607,7 @@ public:
      *
      * @return the filtered URI or null if it cannot be filtered
      */
-    QString filteredURI( const QString &uri, const QStringList& filters = QStringList() );
+    TQString filteredURI( const TQString &uri, const TQStringList& filters = TQStringList() );
 
     /**
      * Return an iterator to iterate over all loaded
@@ -615,15 +615,15 @@ public:
      *
      * @return a plugin iterator.
      */
-    QPtrListIterator<KURIFilterPlugin> pluginsIterator() const;
+    TQPtrListIterator<KURIFilterPlugin> pluginsIterator() const;
 
     /**
      * Return a list of the names of all loaded plugins.
      *
-     * @return a QStringList of plugin names
+     * @return a TQStringList of plugin names
      * @since 3.1
      */
-    QStringList pluginNames() const;
+    TQStringList pluginNames() const;
 
 protected:
 

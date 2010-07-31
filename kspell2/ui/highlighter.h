@@ -23,7 +23,7 @@
 
 #include "filter.h"
 
-#include <qsyntaxhighlighter.h>
+#include <tqsyntaxhighlighter.h>
 
 class QTextEdit;
 
@@ -32,19 +32,19 @@ namespace KSpell2
     class Highlighter : public QSyntaxHighlighter
     {
     public:
-        Highlighter( QTextEdit *textEdit,
-                     const QString& configFile = QString::null,
+        Highlighter( TQTextEdit *textEdit,
+                     const TQString& configFile = TQString::null,
                      Filter *filter = Filter::defaultFilter() );
         ~Highlighter();
 
-        virtual int highlightParagraph( const QString& text,
+        virtual int highlightParagraph( const TQString& text,
                                         int endStateOfLastPara );
 
         Filter *currentFilter() const;
         void setCurrentFilter( Filter *filter );
 
-        QString currentLanguage() const;
-        void setCurrentLanguage( const QString& lang );
+        TQString currentLanguage() const;
+        void setCurrentLanguage( const TQString& lang );
 
     protected:
         virtual void setMisspelled( int start, int count );

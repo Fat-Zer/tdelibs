@@ -191,7 +191,7 @@ CSSRuleImpl *CSSParser::parseRule( DOM::CSSStyleSheetImpl *sheet, const DOM::DOM
     for ( unsigned int i = 0; i < strlen(khtml_rule); i++ )
         data[i] = khtml_rule[i];
     memcpy( data + strlen( khtml_rule ), string.unicode(), string.length()*sizeof( unsigned short) );
-    // qDebug("parse string = '%s'", QConstString( (const QChar *)data, length ).string().latin1() );
+    // qDebug("parse string = '%s'", TQConstString( (const TQChar *)data, length ).string().latin1() );
     data[length-4] = '}';
 
     runParser(length);
@@ -220,7 +220,7 @@ bool CSSParser::parseValue( DOM::CSSStyleDeclarationImpl *declaration, int _id, 
         data[i] = khtml_value[i];
     memcpy( data + strlen( khtml_value ), string.unicode(), string.length()*sizeof( unsigned short) );
     data[length-4] = '}';
-    // qDebug("parse string = '%s'", QConstString( (const QChar *)data, length ).string().latin1() );
+    // qDebug("parse string = '%s'", TQConstString( (const TQChar *)data, length ).string().latin1() );
 
     id = _id;
     important = _important;
@@ -301,7 +301,7 @@ void CSSParser::addProperty( int propId, CSSValueImpl *value, bool important )
 
 CSSStyleDeclarationImpl *CSSParser::createStyleDeclaration( CSSStyleRuleImpl *rule )
 {
-    QPtrList<CSSProperty> *propList = new QPtrList<CSSProperty>;
+    TQPtrList<CSSProperty> *propList = new TQPtrList<CSSProperty>;
     propList->setAutoDelete( true );
     for ( int i = 0; i < numParsedProperties; i++ )
         propList->append( parsedProperties[i] );
@@ -477,7 +477,7 @@ bool CSSParser::parseValue( int propId, bool important )
         } else {
             QuotesValueImpl *quotes = new QuotesValueImpl;
             bool is_valid = true;
-            QString open, close;
+            TQString open, close;
             Value *val=valueList->current();
             while (val) {
                 if (val->unit == CSSPrimitiveValue::CSS_STRING)
@@ -1338,7 +1338,7 @@ bool CSSParser::parseContent( int propId, bool important )
         } else if ( val->unit == Value::Function ) {
             // attr( X ) | counter( X [,Y] ) | counters( X, Y, [,Z] )
             ValueList *args = val->function->args;
-            QString fname = qString( val->function->name ).lower();
+            TQString fname = qString( val->function->name ).lower();
             if (!args) return false;
             if (fname == "attr(") {
                 if ( args->size() != 1)
@@ -1693,7 +1693,7 @@ bool CSSParser::parseShape( int propId, bool important )
 {
     Value *value = valueList->current();
     ValueList *args = value->function->args;
-    QString fname = qString( value->function->name ).lower();
+    TQString fname = qString( value->function->name ).lower();
     //qDebug( "parseShape: fname: %d", fname.latin1() );
     if ( fname != "rect(" || !args )
         return false;
@@ -1750,7 +1750,7 @@ bool CSSParser::parseFont( bool important )
     // optional font-style, font-variant and font-weight
     while ( value ) {
 //         kdDebug( 6080 ) << "got value " << value->id << " / " << (value->unit == CSSPrimitiveValue::CSS_STRING ||
-        //                                    value->unit == CSSPrimitiveValue::CSS_IDENT ? qString( value->string ) : QString::null )
+        //                                    value->unit == CSSPrimitiveValue::CSS_IDENT ? qString( value->string ) : TQString::null )
 //                         << endl;
         int id = value->id;
         if ( id ) {
@@ -1890,12 +1890,12 @@ CSSValueListImpl *CSSParser::parseFontFamily()
 //     kdDebug( 6080 ) << "CSSParser::parseFontFamily current=" << valueList->currentValue << endl;
     CSSValueListImpl *list = new CSSValueListImpl;
     Value *value = valueList->current();
-    QString currFace;
+    TQString currFace;
 
     while ( value ) {
 //         kdDebug( 6080 ) << "got value " << value->id << " / "
 //                         << (value->unit == CSSPrimitiveValue::CSS_STRING ||
-//                             value->unit == CSSPrimitiveValue::CSS_IDENT ? qString( value->string ) : QString::null )
+//                             value->unit == CSSPrimitiveValue::CSS_IDENT ? qString( value->string ) : TQString::null )
 //                         << endl;
         Value* nextValue = valueList->next();
         bool nextValBreaksFont = !nextValue ||
@@ -1913,7 +1913,7 @@ CSSValueListImpl *CSSParser::parseFontFamily()
             else if (nextValBreaksFont || !nextValIsFontName) {
                 if ( !currFace.isNull() ) {
                     list->append( new FontFamilyValueImpl( currFace ) );
-                    currFace = QString::null;
+                    currFace = TQString::null;
                 }
                 list->append(new CSSPrimitiveValueImpl(value->id));
             }
@@ -1923,7 +1923,7 @@ CSSValueListImpl *CSSParser::parseFontFamily()
         }
         else if (value->unit == CSSPrimitiveValue::CSS_STRING) {
             // Strings never share in a family name.
-            currFace = QString::null;
+            currFace = TQString::null;
             list->append(new FontFamilyValueImpl(qString( value->string) ) );
         }
         else if (value->unit == CSSPrimitiveValue::CSS_IDENT) {
@@ -1934,7 +1934,7 @@ CSSValueListImpl *CSSParser::parseFontFamily()
             else if (nextValBreaksFont || !nextValIsFontName) {
                 if ( !currFace.isNull() ) {
                     list->append( new FontFamilyValueImpl( currFace ) );
-                    currFace = QString::null;
+                    currFace = TQString::null;
                 }
                 list->append(new FontFamilyValueImpl( qString( value->string ) ) );
         }
@@ -1954,7 +1954,7 @@ CSSValueListImpl *CSSParser::parseFontFamily()
         value = valueList->next();
             if ( !currFace.isNull() )
                 list->append( new FontFamilyValueImpl( currFace ) );
-            currFace = QString::null;
+            currFace = TQString::null;
         }
         else if (nextValIsFontName)
             value = nextValue;
@@ -2037,7 +2037,7 @@ bool CSSParser::parseHSLParameters(Value* value, double* colorArray, bool parseA
     return true;
 }
 
-static bool parseColor(int unit, const QString &name, QRgb& rgb)
+static bool parseColor(int unit, const TQString &name, QRgb& rgb)
 {
     int len = name.length();
 
@@ -2067,7 +2067,7 @@ static bool parseColor(int unit, const QString &name, QRgb& rgb)
 
     if ( unit == CSSPrimitiveValue::CSS_IDENT ) {
         // try a little harder
-        QColor tc;
+        TQColor tc;
         tc.setNamedColor(name.lower());
         if ( tc.isValid() ) {
             rgb = tc.rgb();
@@ -2088,7 +2088,7 @@ CSSPrimitiveValueImpl *CSSParser::parseColorFromValue(Value* value)
     QRgb c = khtml::transparentColor;
     if ( !strict && value->unit == CSSPrimitiveValue::CSS_NUMBER &&
               value->fValue >= 0. && value->fValue < 1000000. ) {
-        QString str;
+        TQString str;
         str.sprintf( "%06d", (int)(value->fValue+.5) );
         if ( !::parseColor( value->unit, str, c ) )
             return 0;
@@ -2357,7 +2357,7 @@ int DOM::CSSParser::lex( void *_yylval )
     unsigned short *t = text( &length );
 
 #ifdef TOKEN_DEBUG
-    qDebug("CSSTokenizer: got token %d: '%s'", token, token == END ? "" : QString( (QChar *)t, length ).latin1() );
+    qDebug("CSSTokenizer: got token %d: '%s'", token, token == END ? "" : TQString( (TQChar *)t, length ).latin1() );
 #endif
     switch( token ) {
     case '{':
@@ -2426,8 +2426,8 @@ int DOM::CSSParser::lex( void *_yylval )
         length--;
     case FLOAT:
     case INTEGER:
-        yylval->val = QString( (QChar *)t, length ).toDouble();
-        //qDebug("value = %s, converted=%.2f", QString( (QChar *)t, length ).latin1(), yylval->val );
+        yylval->val = TQString( (TQChar *)t, length ).toDouble();
+        //qDebug("value = %s, converted=%.2f", TQString( (TQChar *)t, length ).latin1(), yylval->val );
         break;
 
     default:
@@ -2531,7 +2531,7 @@ unsigned short *DOM::CSSParser::text(int *length)
                 uc += toHex( *escape );
                 escape++;
             }
-//             qDebug(" converting escape: string='%s', value=0x%x", QString( (QChar *)e, current-e ).latin1(), uc );
+//             qDebug(" converting escape: string='%s', value=0x%x", TQString( (TQChar *)e, current-e ).latin1(), uc );
             // can't handle chars outside ucs2
             if ( uc > 0xffff )
                 uc = 0xfffd;
@@ -2560,7 +2560,7 @@ unsigned short *DOM::CSSParser::text(int *length)
             uc += toHex( *escape );
             escape++;
         }
-        //             qDebug(" converting escape: string='%s', value=0x%x", QString( (QChar *)e, current-e ).latin1(), uc );
+        //             qDebug(" converting escape: string='%s', value=0x%x", TQString( (TQChar *)e, current-e ).latin1(), uc );
         // can't handle chars outside ucs2
         if ( uc > 0xffff )
             uc = 0xfffd;
@@ -2585,7 +2585,7 @@ typedef unsigned int YY_CHAR;
         *yy_cp = 0; \
         yy_c_buf_p = yy_cp;
 #define YY_BREAK break;
-#define ECHO qDebug( "%s", QString( (QChar *)yytext, yyleng ).latin1() )
+#define ECHO qDebug( "%s", TQString( (TQChar *)yytext, yyleng ).latin1() )
 #define YY_RULE_SETUP
 #define INITIAL 0
 #define YY_STATE_EOF(state) (YY_END_OF_BUFFER + state + 1)

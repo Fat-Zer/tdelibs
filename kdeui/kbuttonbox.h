@@ -22,7 +22,7 @@
 
 #include <kdelibs_export.h>
 
-#include <qwidget.h>
+#include <tqwidget.h>
 class QPushButton;
 class KGuiItem;
 
@@ -51,7 +51,7 @@ public:
     * addButton() are laid out from top to bottom, otherwise they
     * are laid out from left to right.
     */
-  KButtonBox(QWidget *parent, Orientation _orientation = Horizontal,
+  KButtonBox(TQWidget *parent, Orientation _orientation = Horizontal,
 	     int border = 0, int _autoborder = 6);
 
   /**
@@ -65,12 +65,12 @@ public:
     * This size is
     * calculated by the width/height of all buttons plus border/autoborder.
     */
-  virtual QSize sizeHint() const;
-  virtual QSizePolicy sizePolicy() const;
-  virtual void resizeEvent(QResizeEvent *);
+  virtual TQSize sizeHint() const;
+  virtual TQSizePolicy sizePolicy() const;
+  virtual void resizeEvent(TQResizeEvent *);
 
   /**
-    * Add a new QPushButton.
+    * Add a new TQPushButton.
     *
     * @param text the text of the button to add
     * @param noexpand If @p noexpand is @p false, the width
@@ -80,10 +80,10 @@ public:
     *
     * @return A pointer to the new button.
     */
-  QPushButton *addButton(const QString& text, bool noexpand = false);
+  TQPushButton *addButton(const TQString& text, bool noexpand = false);
 
   /**
-    * Add a new QPushButton.
+    * Add a new TQPushButton.
     *
     * @param text the text of the button to add.
     * @param receiver An object to connect to.
@@ -95,10 +95,10 @@ public:
     *
     * @return A pointer to the new button.
     */
-  QPushButton *addButton(const QString& text, QObject * receiver, const char * slot, bool noexpand = false);
+  TQPushButton *addButton(const TQString& text, TQObject * receiver, const char * slot, bool noexpand = false);
 
   /**
-    * Add a new QPushButton.
+    * Add a new TQPushButton.
     *
     * @param guiitem text and icon on the button
     * @param noexpand If @p noexpand is @p false, the width
@@ -110,10 +110,10 @@ public:
     *
     * @since 3.3
     */
-  QPushButton *addButton(const KGuiItem& guiitem, bool noexpand = false);
+  TQPushButton *addButton(const KGuiItem& guiitem, bool noexpand = false);
 
   /**
-    * Add a new QPushButton.
+    * Add a new TQPushButton.
     *
     * @param guiitem text and icon on the button
     * @param receiver An object to connect to.
@@ -127,7 +127,7 @@ public:
     *
     * @since 3.3
     */
-  QPushButton *addButton(const KGuiItem& guiitem, QObject * receiver, const char * slot, bool noexpand = false);
+  TQPushButton *addButton(const KGuiItem& guiitem, TQObject * receiver, const char * slot, bool noexpand = false);
 
   /**
     * Add a stretch to the buttonbox.
@@ -157,9 +157,9 @@ protected:
     * @return the best size for a button. Checks all buttons and takes
     * the maximum width/height.
     */
-  QSize bestButtonSize() const;
+  TQSize bestButtonSize() const;
   void  placeButtons();
-  QSize buttonSizeHint(QPushButton *) const;
+  TQSize buttonSizeHint(TQPushButton *) const;
 
 protected:
   virtual void virtual_hook( int id, void* data );

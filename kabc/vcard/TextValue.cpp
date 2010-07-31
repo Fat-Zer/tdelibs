@@ -37,7 +37,7 @@ TextValue::TextValue(const TextValue & x)
 {
 }
 
-TextValue::TextValue(const QCString & s)
+TextValue::TextValue(const TQCString & s)
 	:	Value(s)
 {
 }
@@ -52,7 +52,7 @@ TextValue::operator = (TextValue & x)
 }
 
 	TextValue &
-TextValue::operator = (const QCString & s)
+TextValue::operator = (const TQCString & s)
 {
 	Value::operator = (s);
 	return *this;

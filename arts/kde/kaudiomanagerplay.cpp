@@ -23,7 +23,7 @@
 #include <soundserver.h>
 #include <string>
 
-KAudioManagerPlay::KAudioManagerPlay( KArtsServer * server, const QString & title )
+KAudioManagerPlay::KAudioManagerPlay( KArtsServer * server, const TQString & title )
 {
 	d = new PrivateData;
 	d->amanPlay = Arts::DynamicCast( server->server().createObject( "Arts::Synth_AMAN_PLAY" ) );
@@ -49,24 +49,24 @@ bool KAudioManagerPlay::isNull() const
 	return d->amanPlay.isNull();
 }
 
-void KAudioManagerPlay::setTitle( const QString & title )
+void KAudioManagerPlay::setTitle( const TQString & title )
 {
 	d->amanPlay.title( std::string( title.local8Bit() ) );
 }
 
-QString KAudioManagerPlay::title()
+TQString KAudioManagerPlay::title()
 {
-	return QString::fromLocal8Bit( d->amanPlay.title().c_str() );
+	return TQString::fromLocal8Bit( d->amanPlay.title().c_str() );
 }
 
-void KAudioManagerPlay::setAutoRestoreID( const QString & autoRestoreID )
+void KAudioManagerPlay::setAutoRestoreID( const TQString & autoRestoreID )
 {
 	d->amanPlay.autoRestoreID( std::string( autoRestoreID.local8Bit() ) );
 }
 
-QString KAudioManagerPlay::autoRestoreID()
+TQString KAudioManagerPlay::autoRestoreID()
 {
-	return QString::fromLocal8Bit( d->amanPlay.autoRestoreID().c_str() );
+	return TQString::fromLocal8Bit( d->amanPlay.autoRestoreID().c_str() );
 }
 
 void KAudioManagerPlay::start()

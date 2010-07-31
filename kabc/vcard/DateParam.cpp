@@ -37,7 +37,7 @@ DateParam::DateParam(const DateParam & x)
 {
 }
 
-DateParam::DateParam(const QCString & s)
+DateParam::DateParam(const TQCString & s)
 	:	Param(s)
 {
 }
@@ -52,7 +52,7 @@ DateParam::operator = (DateParam & x)
 }
 
 	DateParam &
-DateParam::operator = (const QCString & s)
+DateParam::operator = (const TQCString & s)
 {
 	Param::operator = (s);
 	return *this;

@@ -20,7 +20,7 @@
 #include <kapplication.h>
 #include <ktextedit.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 int main( int argc, char **argv )
 {
@@ -29,7 +29,7 @@ int main( int argc, char **argv )
     edit->setReadOnly( true );
     edit->setCheckSpellingEnabled( true );
 
-    QFile file( "ktextedittest.cpp" );
+    TQFile file( "ktextedittest.cpp" );
     if ( file.open( IO_ReadOnly ) )
     {
         edit->setText( file.readAll() );

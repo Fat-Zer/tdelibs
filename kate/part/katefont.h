@@ -22,8 +22,8 @@
 #ifndef __kate_font_h__
 #define __kate_font_h__
 
-#include <qfont.h>
-#include <qfontmetrics.h>
+#include <tqfont.h>
+#include <tqfontmetrics.h>
 
 //
 // KateFontMetrics implementation
@@ -32,12 +32,12 @@
 class KateFontMetrics : public QFontMetrics
 {
   public:
-    KateFontMetrics(const QFont& f);
+    KateFontMetrics(const TQFont& f);
     ~KateFontMetrics();
 
-    int width(QChar c);
+    int width(TQChar c);
 
-    int width(QString s) { return QFontMetrics::width(s); }
+    int width(TQString s) { return TQFontMetrics::width(s); }
 
   private:
     short *createRow (short *wa, uchar row);
@@ -56,15 +56,15 @@ class KateFontStruct
     KateFontStruct();
     ~KateFontStruct();
   
-    void setFont(const QFont & font);
+    void setFont(const TQFont & font);
       
   private:
     void updateFontData ();
 
   public:
-    inline int width (const QString& text, int col, bool bold, bool italic, int tabWidth)
+    inline int width (const TQString& text, int col, bool bold, bool italic, int tabWidth)
     {
-      if (text[col] == QChar('\t'))
+      if (text[col] == TQChar('\t'))
         return tabWidth * myFontMetrics.width(' ');
     
       return (bold) ?
@@ -76,9 +76,9 @@ class KateFontStruct
           myFontMetrics.charWidth(text, col) );
     }
     
-    inline int width (const QChar& c, bool bold, bool italic, int tabWidth)
+    inline int width (const TQChar& c, bool bold, bool italic, int tabWidth)
     {
-      if (c == QChar('\t'))
+      if (c == TQChar('\t'))
         return tabWidth * myFontMetrics.width(' ');
     
       return (bold) ?
@@ -90,7 +90,7 @@ class KateFontStruct
           myFontMetrics.width(c) );
     }
     
-    inline const QFont& font(bool bold, bool italic) const
+    inline const TQFont& font(bool bold, bool italic) const
     {
       return (bold) ?
         ( (italic) ? myFontBI : myFontBold ) :
@@ -100,7 +100,7 @@ class KateFontStruct
     inline bool fixedPitch() const { return m_fixedPitch; }
     
   public:
-    QFont myFont, myFontBold, myFontItalic, myFontBI;
+    TQFont myFont, myFontBold, myFontItalic, myFontBI;
 
     KateFontMetrics myFontMetrics, myFontMetricsBold, myFontMetricsItalic, myFontMetricsBI;
 

@@ -28,23 +28,23 @@
 #include <config.h>
 #include <sys/types.h>
 
-#include <qstring.h>
-#include <qcstring.h>
-#include <qvaluelist.h>
-#include <qptrlist.h>
-#include <qptrqueue.h>
-#include <qthread.h>
-#include <qmutex.h>
-#include <qwaitcondition.h>
-#include <qsemaphore.h>
-#include <qevent.h>
+#include <tqstring.h>
+#include <tqcstring.h>
+#include <tqvaluelist.h>
+#include <tqptrlist.h>
+#include <tqptrqueue.h>
+#include <tqthread.h>
+#include <tqmutex.h>
+#include <tqwaitcondition.h>
+#include <tqsemaphore.h>
+#include <tqevent.h>
 
 #include "kresolver.h"
 
 /* decide whether we need a mutex */
 #if !defined(HAVE_GETPROTOBYNAME_R) || !defined(HAVE_GETSERVBYNAME_R) || !defined(HAVE_GETHOSTBYNAME_R) || !defined(HAVE_GETSERVBYPORT_R)
 # define NEED_MUTEX
-extern QMutex getXXbyYYmutex;
+extern TQMutex getXXbyYYmutex;
 #endif
 
 /* some systems have the functions, but don't declare them */
@@ -90,8 +90,8 @@ namespace KNetwork
 
     struct InputData
     {
-      QString node, service;
-      QCString protocolName;
+      TQString node, service;
+      TQCString protocolName;
       int flags;
       int familyMask;
       int socktype;
@@ -115,14 +115,14 @@ namespace KNetwork
     Internal::InputData input;
 
     // mutex
-    QMutex mutex;
+    TQMutex mutex;
 
     // output data
     KResolverResults results;
 
     KResolverPrivate(KResolver* _parent,
-		     const QString& _node = QString::null, 
-		     const QString& _service = QString::null)
+		     const TQString& _node = TQString::null, 
+		     const TQString& _service = TQString::null)
       : parent(_parent), deleteWhenDone(false), waiting(false),
 	status(0), errorcode(0), syserror(0)
     {
@@ -166,7 +166,7 @@ namespace KNetwork
        * objects in wait state will be woken up and will check if they are done.
        * If they aren't, they will go back to sleeping.
        */
-      QWaitCondition notifyWaiters;
+      TQWaitCondition notifyWaiters;
 
     private:
       /*
@@ -185,22 +185,22 @@ namespace KNetwork
        * data available that has to be processed. All worker threads wait on this
        * waitcond for a limited amount of time.
        */
-      QWaitCondition feedWorkers;
+      TQWaitCondition feedWorkers;
 
       // this mutex protects the data in this object
-      QMutex mutex;
+      TQMutex mutex;
 
       // hold a list of all the current threads we have
-      QPtrList<KResolverThread> workers;
+      TQPtrList<KResolverThread> workers;
 
       // hold a list of all the new requests we have
-      QPtrList<RequestData> newRequests;
+      TQPtrList<RequestData> newRequests;
 
       // hold a list of all the requests in progress we have
-      QPtrList<RequestData> currentRequests;
+      TQPtrList<RequestData> currentRequests;
 
       // hold a list of all the workers we have
-      QPtrList<KNetwork::KResolverWorkerFactoryBase> workerFactories;
+      TQPtrList<KNetwork::KResolverWorkerFactoryBase> workerFactories;
 
       // private constructor
       KResolverManager();

@@ -27,7 +27,7 @@ SearchInterface::SearchInterface()
 	d = new PrivateSearchInterface();
 	globalSearchInterfaceNumber++;
 	mySearchInterfaceNumber=globalSearchInterfaceNumber;
-        QString name = "SearchInterface#" + QString::number(mySearchInterfaceNumber);
+        TQString name = "SearchInterface#" + TQString::number(mySearchInterfaceNumber);
 	 d->interface = new SearchDCOPInterface(this, name.latin1());
 }
 SearchInterface::~SearchInterface()
@@ -41,7 +41,7 @@ unsigned int SearchInterface::searchInterfaceNumber () const
   return mySearchInterfaceNumber;
 }
 
-void SearchInterface::setSearchInterfaceDCOPSuffix (const QCString &suffix)
+void SearchInterface::setSearchInterfaceDCOPSuffix (const TQCString &suffix)
 {
   d->interface->setObjId ("SearchInterface#"+suffix);
 }

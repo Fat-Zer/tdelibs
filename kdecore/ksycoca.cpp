@@ -22,9 +22,9 @@
 #include "ksycocatype.h"
 #include "ksycocafactory.h"
 
-#include <qdatastream.h>
-#include <qfile.h>
-#include <qbuffer.h>
+#include <tqdatastream.h>
+#include <tqfile.h>
+#include <tqbuffer.h>
 
 #include <kapplication.h>
 #include <dcopclient.h>
@@ -53,7 +53,7 @@ extern "C"
 #define MAP_FAILED ((void *) -1)
 #endif
 
-template class QPtrList<KSycocaFactory>;
+template class TQPtrList<KSycocaFactory>;
 
 // The following limitations are in place:
 // Maximum length of a single string: 8192 bytes
@@ -71,13 +71,13 @@ public:
         updateSig = 0;
         autoRebuild = true;
     }
-    QFile *database;
-    QStringList changeList;
-    QString language;
+    TQFile *database;
+    TQStringList changeList;
+    TQString language;
     bool readError;
     bool autoRebuild;
     Q_UINT32 updateSig;
-    QStringList allResourceDirs;
+    TQStringList allResourceDirs;
 };
 
 int KSycoca::version()
@@ -110,15 +110,15 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
   
    m_sycoca_mmap = 0;
    m_str = 0;
-   QString path;
-   QCString ksycoca_env = getenv("KDESYCOCA");
+   TQString path;
+   TQCString ksycoca_env = getenv("KDESYCOCA");
    if (ksycoca_env.isEmpty())
       path = KGlobal::dirs()->saveLocation("cache") + "ksycoca";
    else
-      path = QFile::decodeName(ksycoca_env);
+      path = TQFile::decodeName(ksycoca_env);
 
    kdDebug(7011) << "Trying to open ksycoca from " << path << endl;
-   QFile *database = new QFile(path);
+   TQFile *database = new TQFile(path);
    bool bOpen = database->open( IO_ReadOnly );
    if (!bOpen)
    {
@@ -127,7 +127,7 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
      {
        kdDebug(7011) << "Trying to open global ksycoca from " << path << endl;
        delete database;
-       database = new QFile(path);
+       database = new TQFile(path);
        bOpen = database->open( IO_ReadOnly );
      }
    }
@@ -146,7 +146,7 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
      {
         kdDebug(7011) << "mmap failed. (length = " << m_sycoca_size << ")" << endl;
 #endif
-        m_str = new QDataStream(database);
+        m_str = new TQDataStream(database);
 #ifdef HAVE_MMAP
      }
      else
@@ -154,11 +154,11 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
 #ifdef HAVE_MADVISE
 	(void) madvise((char*)m_sycoca_mmap, m_sycoca_size, MADV_WILLNEED);
 #endif
-        QByteArray b_array;
+        TQByteArray b_array;
         b_array.setRawData(m_sycoca_mmap, m_sycoca_size);
-        QBuffer *buffer = new QBuffer( b_array );
+        TQBuffer *buffer = new TQBuffer( b_array );
         buffer->open(IO_ReadWrite);
-        m_str = new QDataStream( buffer);
+        m_str = new TQDataStream( buffer);
      }
 #endif
      bNoDatabase = false;
@@ -176,9 +176,9 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
      {
         // We open a dummy database instead.
         //kdDebug(7011) << "No database, opening a dummy one." << endl;
-        QBuffer *buffer = new QBuffer( QByteArray() );
+        TQBuffer *buffer = new TQBuffer( TQByteArray() );
         buffer->open(IO_ReadWrite);
-        m_str = new QDataStream( buffer);
+        m_str = new TQDataStream( buffer);
         (*m_str) << (Q_INT32) KSYCOCA_VERSION;
         (*m_str) << (Q_INT32) 0;
      }
@@ -226,13 +226,13 @@ KSycoca::~KSycoca()
 
 void KSycoca::closeDatabase()
 {
-   QIODevice *device = 0;
+   TQIODevice *device = 0;
    if (m_str)
       device = m_str->device();
 #ifdef HAVE_MMAP
    if (device && m_sycoca_mmap)
    {
-      QBuffer *buf = (QBuffer *) device;
+      TQBuffer *buf = (TQBuffer *) device;
       buf->buffer().resetRawData(m_sycoca_mmap, m_sycoca_size);
       // Solaris has munmap(char*, size_t) and everything else should
       // be happy with a char* for munmap(void*, size_t)
@@ -265,7 +265,7 @@ bool KSycoca::isChanged(const char *type)
     return self()->d->changeList.contains(type);
 }
 
-void KSycoca::notifyDatabaseChanged(const QStringList &changeList)
+void KSycoca::notifyDatabaseChanged(const TQStringList &changeList)
 {
     d->changeList = changeList;
     //kdDebug(7011) << "got a notifyDatabaseChanged signal !" << endl;
@@ -279,16 +279,16 @@ void KSycoca::notifyDatabaseChanged(const QStringList &changeList)
     emit databaseChanged();
 }
 
-QDataStream * KSycoca::findEntry(int offset, KSycocaType &type)
+TQDataStream * KSycoca::findEntry(int offset, KSycocaType &type)
 {
    if ( !m_str )
       openDatabase();
-   //kdDebug(7011) << QString("KSycoca::_findEntry(offset=%1)").arg(offset,8,16) << endl;
+   //kdDebug(7011) << TQString("KSycoca::_findEntry(offset=%1)").arg(offset,8,16) << endl;
    m_str->device()->at(offset);
    Q_INT32 aType;
    (*m_str) >> aType;
    type = (KSycocaType) aType;
-   //kdDebug(7011) << QString("KSycoca::found type %1").arg(aType) << endl;
+   //kdDebug(7011) << TQString("KSycoca::found type %1").arg(aType) << endl;
    return m_str;
 }
 
@@ -315,7 +315,7 @@ bool KSycoca::checkVersion(bool abortOnError)
    return true;
 }
 
-QDataStream * KSycoca::findFactory(KSycocaFactoryId id)
+TQDataStream * KSycoca::findFactory(KSycocaFactoryId id)
 {
    // The constructor found no database, but we want one
    if (bNoDatabase)
@@ -347,7 +347,7 @@ QDataStream * KSycoca::findFactory(KSycocaFactoryId id)
    while(true)
    {
       (*m_str) >> aId;
-      //kdDebug(7011) << QString("KSycoca::findFactory : found factory %1").arg(aId) << endl;
+      //kdDebug(7011) << TQString("KSycoca::findFactory : found factory %1").arg(aId) << endl;
       if (aId == 0)
       {
          kdError(7011) << "Error, KSycocaFactory (id = " << int(id) << ") not found!" << endl;
@@ -356,7 +356,7 @@ QDataStream * KSycoca::findFactory(KSycocaFactoryId id)
       (*m_str) >> aOffset;
       if (aId == id)
       {
-         //kdDebug(7011) << QString("KSycoca::findFactory(%1) offset %2").arg((int)id).arg(aOffset) << endl;
+         //kdDebug(7011) << TQString("KSycoca::findFactory(%1) offset %2").arg((int)id).arg(aOffset) << endl;
          m_str->device()->at(aOffset);
          return m_str;
       }
@@ -364,7 +364,7 @@ QDataStream * KSycoca::findFactory(KSycocaFactoryId id)
    return 0;
 }
 
-QString KSycoca::kfsstnd_prefixes()
+TQString KSycoca::kfsstnd_prefixes()
 {
    if (bNoDatabase) return "";
    if (!checkVersion(false)) return "";
@@ -380,7 +380,7 @@ QString KSycoca::kfsstnd_prefixes()
         break; // just read 0
    }
    // We now point to the header
-   QString prefixes;
+   TQString prefixes;
    KSycocaEntry::read(*m_str, prefixes);
    (*m_str) >> m_timeStamp;
    KSycocaEntry::read(*m_str, d->language);
@@ -403,32 +403,32 @@ Q_UINT32 KSycoca::updateSignature()
    return d->updateSig;
 }
 
-QString KSycoca::language()
+TQString KSycoca::language()
 {
    if (d->language.isEmpty())
       (void) kfsstnd_prefixes();
    return d->language;
 }
 
-QStringList KSycoca::allResourceDirs()
+TQStringList KSycoca::allResourceDirs()
 {
    if (!m_timeStamp)
       (void) kfsstnd_prefixes();
    return d->allResourceDirs;
 }
 
-QString KSycoca::determineRelativePath( const QString & _fullpath, const char *_resource )
+TQString KSycoca::determineRelativePath( const TQString & _fullpath, const char *_resource )
 {
-  QString sRelativeFilePath;
-  QStringList dirs = KGlobal::dirs()->resourceDirs( _resource );
-  QStringList::ConstIterator dirsit = dirs.begin();
+  TQString sRelativeFilePath;
+  TQStringList dirs = KGlobal::dirs()->resourceDirs( _resource );
+  TQStringList::ConstIterator dirsit = dirs.begin();
   for ( ; dirsit != dirs.end() && sRelativeFilePath.isEmpty(); ++dirsit ) {
     // might need canonicalPath() ...
     if ( _fullpath.find( *dirsit ) == 0 ) // path is dirs + relativePath
       sRelativeFilePath = _fullpath.mid( (*dirsit).length() ); // skip appsdirs
   }
   if ( sRelativeFilePath.isEmpty() )
-    kdFatal(7011) << QString("Couldn't find %1 in any %2 dir !!!").arg( _fullpath ).arg( _resource) << endl;
+    kdFatal(7011) << TQString("Couldn't find %1 in any %2 dir !!!").arg( _fullpath ).arg( _resource) << endl;
   //else
     // debug code
     //kdDebug(7011) << sRelativeFilePath << endl;
@@ -467,19 +467,19 @@ bool KSycoca::readError()
    return b;
 }
 
-void KSycocaEntry::read( QDataStream &s, QString &str )
+void KSycocaEntry::read( TQDataStream &s, TQString &str )
 {
   Q_UINT32 bytes;
   s >> bytes;                          // read size of string
   if ( bytes > 8192 ) {                // null string or too big
       if (bytes != 0xffffffff)
          KSycoca::flagError();
-      str = QString::null;
+      str = TQString::null;
   } 
   else if ( bytes > 0 ) {              // not empty
       int bt = bytes/2;
       str.setLength( bt );
-      QChar* ch = (QChar *) str.unicode();
+      TQChar* ch = (TQChar *) str.unicode();
       char t[8192];
       char *b = t;
       s.readRawBytes( b, bytes );
@@ -492,7 +492,7 @@ void KSycocaEntry::read( QDataStream &s, QString &str )
   }
 }
 
-void KSycocaEntry::read( QDataStream &s, QStringList &list )
+void KSycocaEntry::read( TQDataStream &s, TQStringList &list )
 {
   list.clear();
   Q_UINT32 count;
@@ -504,7 +504,7 @@ void KSycocaEntry::read( QDataStream &s, QStringList &list )
   }
   for(Q_UINT32 i = 0; i < count; i++)
   {
-     QString str;
+     TQString str;
      read(s, str);
      list.append( str );
      if (s.atEnd())

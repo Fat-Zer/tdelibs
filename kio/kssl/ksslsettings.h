@@ -21,8 +21,8 @@
 #ifndef _KSSLSETTINGS_H
 #define _KSSLSETTINGS_H
 
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 #include <kconfig.h>
 
 class KSSLSettingsPrivate;
@@ -183,14 +183,14 @@ public:
 	 *  use in a connection.
 	 *  @return the cipher list
 	 */
-	QString getCipherList();
+	TQString getCipherList();
 
 	/**
 	 *  Get the configured path to the entropy gathering daemon or entropy
 	 *  file.
 	 *  @return the path
 	 */
-	QString& getEGDPath();
+	TQString& getEGDPath();
 
 	/**
 	 *  Load the user's settings.
@@ -213,8 +213,8 @@ private:
 	bool m_bWarnOnEnter, m_bWarnOnUnencrypted, m_bWarnOnLeave, m_bWarnOnMixed;
 	bool m_bWarnSelfSigned, m_bWarnRevoked, m_bWarnExpired;
 
-	QValueList<QString> v2ciphers, v2selectedciphers, v3ciphers, v3selectedciphers;
-	QValueList<int> v2bits, v3bits;
+	TQValueList<TQString> v2ciphers, v2selectedciphers, v3ciphers, v3selectedciphers;
+	TQValueList<int> v2bits, v3bits;
 
 	KSSLSettingsPrivate *d;
 };

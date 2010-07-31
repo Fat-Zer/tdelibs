@@ -29,8 +29,8 @@ class IppReportDlg : public KDialogBase
 {
 	Q_OBJECT
 public:
-	IppReportDlg(QWidget *parent = 0, const char *name = 0);
-	static void report(IppRequest *req, int group, const QString& caption = QString::null);
+	IppReportDlg(TQWidget *parent = 0, const char *name = 0);
+	static void report(IppRequest *req, int group, const TQString& caption = TQString::null);
 
 protected slots:
 	void slotUser1();

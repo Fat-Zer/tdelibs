@@ -24,10 +24,10 @@
 
 int main( int argc, char *argv[] )
 {
-	QColor color;
+	TQColor color;
 
 	KLocale::setMainCatalogue("kdelibs");
-	QApplication::setColorMode( QApplication::CustomColors );
+	TQApplication::setColorMode( TQApplication::CustomColors );
 	KApplication a( argc, argv, "KColorDialogTest" );
         KConfig aConfig;
         aConfig.setGroup( "KColorDialog-test" );

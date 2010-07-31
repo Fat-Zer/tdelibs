@@ -44,9 +44,9 @@ public:
     KHTMLImageFactory();
     virtual ~KHTMLImageFactory();
 
-    virtual KParts::Part *createPartObject( QWidget *parentWidget, const char *widgetName,
-                                            QObject *parent, const char *name,
-                                            const char *className, const QStringList &args );
+    virtual KParts::Part *createPartObject( TQWidget *parentWidget, const char *widgetName,
+                                            TQObject *parent, const char *name,
+                                            const char *className, const TQStringList &args );
 
     static KInstance *instance() { return s_instance; }
 
@@ -61,8 +61,8 @@ class KHTMLImage : public KParts::ReadOnlyPart, public khtml::CachedObjectClient
 {
     Q_OBJECT
 public:
-    KHTMLImage( QWidget *parentWidget, const char *widgetName,
-                QObject *parent, const char *name, KHTMLPart::GUIProfile prof );
+    KHTMLImage( TQWidget *parentWidget, const char *widgetName,
+                TQObject *parent, const char *name, KHTMLPart::GUIProfile prof );
     virtual ~KHTMLImage();
 
     virtual bool openFile() { return true; } // grmbl, should be non-pure in part.h, IMHO
@@ -77,7 +77,7 @@ public:
 
 protected:
     virtual void guiActivateEvent( KParts::GUIActivateEvent *e );
-    virtual bool eventFilter( QObject *filterTarget, QEvent *e );
+    virtual bool eventFilter( TQObject *filterTarget, TQEvent *e );
 
 private slots:
     void restoreScrollPosition();
@@ -88,9 +88,9 @@ private slots:
 private:
     void disposeImage();
 
-    QGuardedPtr<KHTMLPart> m_khtml;
+    TQGuardedPtr<KHTMLPart> m_khtml;
     KParts::BrowserExtension *m_ext;
-    QString m_mimeType;
+    TQString m_mimeType;
     khtml::CachedImage *m_image;
     int m_xOffset, m_yOffset;
 };

@@ -22,7 +22,7 @@
 #ifndef __KIPC_h_Included__
 #define __KIPC_h_Included__
 
-#include <qwindowdefs.h>
+#include <tqwindowdefs.h>
 #include "kdelibs_export.h"
 
 /**

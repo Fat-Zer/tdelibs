@@ -12,12 +12,12 @@
 #ifndef __KIconLoader_p_h_Included__
 #define __KIconLoader_p_h_Included__
 
-#include <qobject.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
 #include <kicontheme.h>
 #include <kiconloader.h>
 #include <kiconeffect.h>
-#include <qdict.h>
+#include <tqdict.h>
 
 class KIconThemeNode
 {
@@ -25,10 +25,10 @@ public:
     KIconThemeNode(KIconTheme *_theme);
     ~KIconThemeNode();
 
-    void queryIcons(QStringList *lst, int size, KIcon::Context context) const;
-    void queryIconsByContext(QStringList *lst, int size, KIcon::Context context) const;
-    KIcon findIcon(const QString& name, int size, KIcon::MatchType match) const;
-    void printTree(QString& dbgString) const;
+    void queryIcons(TQStringList *lst, int size, KIcon::Context context) const;
+    void queryIconsByContext(TQStringList *lst, int size, KIcon::Context context) const;
+    KIcon findIcon(const TQString& name, int size, KIcon::MatchType match) const;
+    void printTree(TQString& dbgString) const;
 
     KIconTheme *theme;
 };
@@ -37,19 +37,19 @@ class KIconLoaderPrivate : public QObject
 {
     Q_OBJECT
 public:
-    QStringList mThemesInTree;
+    TQStringList mThemesInTree;
     KIconGroup *mpGroups;
     KIconThemeNode *mpThemeRoot;
     KStandardDirs *mpDirs;
     KIconLoader *q;
     KIconEffect mpEffect;
-    QDict<QImage> imgDict;
-    QImage lastImage; // last loaded image without effect applied
-    QString lastImageKey; // key for icon without effect
-    QString appname;
+    TQDict<TQImage> imgDict;
+    TQImage lastImage; // last loaded image without effect applied
+    TQString lastImageKey; // key for icon without effect
+    TQString appname;
     int lastIconType; // see KIcon::type
     int lastIconThreshold; // see KIcon::threshold
-    QPtrList<KIconThemeNode> links;
+    TQPtrList<KIconThemeNode> links;
     bool extraDesktopIconsLoaded;
     bool delayedLoading;
 

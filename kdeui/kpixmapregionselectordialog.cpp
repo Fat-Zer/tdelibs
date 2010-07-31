@@ -19,16 +19,16 @@
 
 #include "kpixmapregionselectordialog.h"
 #include <kdialogbase.h>
-#include <qdialog.h>
-#include <qdesktopwidget.h>
+#include <tqdialog.h>
+#include <tqdesktopwidget.h>
 #include <klocale.h>
 #include <kdialog.h>
 
-KPixmapRegionSelectorDialog::KPixmapRegionSelectorDialog(QWidget *parent,
+KPixmapRegionSelectorDialog::KPixmapRegionSelectorDialog(TQWidget *parent,
      const char *name, bool modal ) : KDialogBase(parent, name, modal, i18n("Select Region of Image"), Help|Ok|Cancel, Ok, true )
 {
-  QVBox *vbox=new QVBox(this);
-  new QLabel(i18n("Please click and drag on the image to select the region of interest:"), vbox);
+  TQVBox *vbox=new TQVBox(this);
+  new TQLabel(i18n("Please click and drag on the image to select the region of interest:"), vbox);
   m_pixmapSelectorWidget= new KPixmapRegionSelectorWidget(vbox);
 
   vbox->setSpacing( KDialog::spacingHint() );
@@ -40,86 +40,86 @@ KPixmapRegionSelectorDialog::~KPixmapRegionSelectorDialog()
 {
 }
 
-QRect KPixmapRegionSelectorDialog::getSelectedRegion(const QPixmap &pixmap, QWidget *parent )
+TQRect KPixmapRegionSelectorDialog::getSelectedRegion(const TQPixmap &pixmap, TQWidget *parent )
 {
   KPixmapRegionSelectorDialog dialog(parent);
 
   dialog.pixmapRegionSelectorWidget()->setPixmap(pixmap);
 
-  QDesktopWidget desktopWidget;
-  QRect screen=desktopWidget.availableGeometry();
+  TQDesktopWidget desktopWidget;
+  TQRect screen=desktopWidget.availableGeometry();
   dialog.pixmapRegionSelectorWidget()->setMaximumWidgetSize(
         (int)(screen.width()*4.0/5), (int)(screen.height()*4.0/5));
 
   int result = dialog.exec();
 
-  QRect rect;
+  TQRect rect;
 
-  if ( result == QDialog::Accepted )
+  if ( result == TQDialog::Accepted )
     rect = dialog.pixmapRegionSelectorWidget()->unzoomedSelectedRegion();
 
   return rect;
 }
 
-QRect KPixmapRegionSelectorDialog::getSelectedRegion(const QPixmap &pixmap, int aspectRatioWidth, int aspectRatioHeight, QWidget *parent )
+TQRect KPixmapRegionSelectorDialog::getSelectedRegion(const TQPixmap &pixmap, int aspectRatioWidth, int aspectRatioHeight, TQWidget *parent )
 {
   KPixmapRegionSelectorDialog dialog(parent);
 
   dialog.pixmapRegionSelectorWidget()->setPixmap(pixmap);
   dialog.pixmapRegionSelectorWidget()->setSelectionAspectRatio(aspectRatioWidth,aspectRatioHeight);
 
-  QDesktopWidget desktopWidget;
-  QRect screen=desktopWidget.availableGeometry();
+  TQDesktopWidget desktopWidget;
+  TQRect screen=desktopWidget.availableGeometry();
   dialog.pixmapRegionSelectorWidget()->setMaximumWidgetSize(
         (int)(screen.width()*4.0/5), (int)(screen.height()*4.0/5));
 
   int result = dialog.exec();
 
-  QRect rect;
+  TQRect rect;
 
-  if ( result == QDialog::Accepted )
+  if ( result == TQDialog::Accepted )
     rect = dialog.pixmapRegionSelectorWidget()->unzoomedSelectedRegion();
 
   return rect;
 }
 
-QImage KPixmapRegionSelectorDialog::getSelectedImage(const QPixmap &pixmap, QWidget *parent )
+TQImage KPixmapRegionSelectorDialog::getSelectedImage(const TQPixmap &pixmap, TQWidget *parent )
 {
   KPixmapRegionSelectorDialog dialog(parent);
 
   dialog.pixmapRegionSelectorWidget()->setPixmap(pixmap);
 
-  QDesktopWidget desktopWidget;
-  QRect screen=desktopWidget.availableGeometry();
+  TQDesktopWidget desktopWidget;
+  TQRect screen=desktopWidget.availableGeometry();
   dialog.pixmapRegionSelectorWidget()->setMaximumWidgetSize(
         (int)(screen.width()*4.0/5), (int)(screen.height()*4.0/5));
   int result = dialog.exec();
 
-  QImage image;
+  TQImage image;
 
-  if ( result == QDialog::Accepted )
+  if ( result == TQDialog::Accepted )
     image = dialog.pixmapRegionSelectorWidget()->selectedImage();
 
   return image;
 }
 
-QImage KPixmapRegionSelectorDialog::getSelectedImage(const QPixmap &pixmap, int aspectRatioWidth, int aspectRatioHeight, QWidget *parent )
+TQImage KPixmapRegionSelectorDialog::getSelectedImage(const TQPixmap &pixmap, int aspectRatioWidth, int aspectRatioHeight, TQWidget *parent )
 {
   KPixmapRegionSelectorDialog dialog(parent);
 
   dialog.pixmapRegionSelectorWidget()->setPixmap(pixmap);
   dialog.pixmapRegionSelectorWidget()->setSelectionAspectRatio(aspectRatioWidth,aspectRatioHeight);
 
-  QDesktopWidget desktopWidget;
-  QRect screen=desktopWidget.availableGeometry();
+  TQDesktopWidget desktopWidget;
+  TQRect screen=desktopWidget.availableGeometry();
   dialog.pixmapRegionSelectorWidget()->setMaximumWidgetSize(
         (int)(screen.width()*4.0/5), (int)(screen.height()*4.0/5));
 
   int result = dialog.exec();
 
-  QImage image;
+  TQImage image;
 
-  if ( result == QDialog::Accepted )
+  if ( result == TQDialog::Accepted )
     image = dialog.pixmapRegionSelectorWidget()->selectedImage();
 
   return image;

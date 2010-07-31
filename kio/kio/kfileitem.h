@@ -20,10 +20,10 @@
 #ifndef __kfileitem_h__
 #define __kfileitem_h__
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <sys/stat.h>
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <kio/global.h>
 #include <kurl.h>
 #include <kacl.h>
@@ -80,7 +80,7 @@ public:
    * @param mimeType the name of the file's mimetype
    * @param mode the mode (S_IFDIR...)
    */
-  KFileItem( const KURL &url, const QString &mimeType, mode_t mode );
+  KFileItem( const KURL &url, const TQString &mimeType, mode_t mode );
 
   /**
    * Copy constructor. Note that extra-data set via setExtraData() is not
@@ -125,7 +125,7 @@ public:
    * This method is provided for some special cases like relative paths as names (KFindPart)
    * @param name the item's name
    */
-  void setName( const QString &name );
+  void setName( const TQString &name );
 
   /**
    * Returns the permissions of the file (stat.st_mode containing only permissions).
@@ -137,7 +137,7 @@ public:
    * Returns the access permissions for the file as a string.
    * @return the access persmission as string
    */
-  QString permissionsString() const;
+  TQString permissionsString() const;
 
   /**
    * Tells if the file has extended access level information ( Posix ACL )
@@ -170,13 +170,13 @@ public:
    * Returns the owner of the file.
    * @return the file's owner
    */
-  QString user() const;
+  TQString user() const;
 
   /**
    * Returns the group of the file.
    * @return the file's group
    */
-  QString group() const;
+  TQString group() const;
 
   /**
    * Returns true if this item represents a link in the UNIX sense of
@@ -222,17 +222,17 @@ public:
 
   /**
    * Returns the link destination if isLink() == true.
-   * @return the link destination. QString::null if the item is not a link
+   * @return the link destination. TQString::null if the item is not a link
    */
-  QString linkDest() const;
+  TQString linkDest() const;
 
   /**
    * Returns the local path if isLocalFile() == true or the KIO item has
    * a UDS_LOCAL_PATH atom.
-   * @return the item local path, or QString::null if not known
+   * @return the item local path, or TQString::null if not known
    * @since 3.4
    */
-  QString localPath() const;
+  TQString localPath() const;
 
   //FIXME KDE4 deprecate this in favor of size(bool &hasSize)
   /**
@@ -270,10 +270,10 @@ public:
    * Requests the modification, access or creation time as a string, depending
    * on @p which.
    * @param which UDS_MODIFICATION_TIME, UDS_ACCESS_TIME or UDS_CREATION_TIME
-   * @returns a formatted string of the requested time, QString::null if time is not known
+   * @returns a formatted string of the requested time, TQString::null if time is not known
    * @see time
    */
-  QString timeString( unsigned int which = KIO::UDS_MODIFICATION_TIME ) const;
+  TQString timeString( unsigned int which = KIO::UDS_MODIFICATION_TIME ) const;
 
   /**
    * Returns true if the file is a local file.
@@ -286,7 +286,7 @@ public:
    * It's not exactly the filename since some decoding happens ('%2F'->'/').
    * @return the text of the file item
    */
-  const QString& text() const { return m_strText; }
+  const TQString& text() const { return m_strText; }
 
   /**
    * Return the name of the file item (without a path).
@@ -295,7 +295,7 @@ public:
    * which is useful to speed up sorting by name, case insensitively.
    * @return the file's name
    */
-  const QString& name( bool lowerCase = false ) const {
+  const TQString& name( bool lowerCase = false ) const {
       if ( !lowerCase )
           return m_strName;
       else
@@ -310,7 +310,7 @@ public:
    * the mimetype first. Equivalent to determineMimeType()->name()
    * @return the mime type of the file
    */
-  QString mimetype() const;
+  TQString mimetype() const;
 
   /**
    * Returns the mimetype of the file item.
@@ -333,14 +333,14 @@ public:
    * the mime type itself if none is present.
    * @return the mime type description, or the mime type itself
    */
-  QString mimeComment();
+  TQString mimeComment();
 
   /**
    * Returns the full path name to the icon that represents
    * this mime type.
    * @return iconName the name of the file's icon
    */
-  QString iconName();
+  TQString iconName();
 
   /**
    * Returns a pixmap representing the file.
@@ -350,7 +350,7 @@ public:
    * KIcon::ActiveState or KIcon::DisabledState.
    * @return the pixmap
    */
-  QPixmap pixmap( int _size, int _state=0 ) const;
+  TQPixmap pixmap( int _size, int _state=0 ) const;
 
   /**
    * Returns the overlays (bitfield of KIcon::*Overlay flags) that are used
@@ -365,7 +365,7 @@ public:
    * e.g. when the mouse is over this item
    * @return the status bar information
    */
-  QString getStatusBarInfo();
+  TQString getStatusBarInfo();
 
   /**
    * Returns the string to be displayed in the tool tip when the mouse
@@ -375,7 +375,7 @@ public:
    * @param maxcount the maximum number of entries shown
    * @return the tool tip string
    */
-  QString getToolTipText(int maxcount = 6);
+  TQString getToolTipText(int maxcount = 6);
 
   /**
    * Returns true if files can be dropped over this item.
@@ -431,7 +431,7 @@ public:
    * separately.
    *
    * I.e. a KFileIconView that associates a KFileIconViewItem (an item suitable
-   * for use with QIconView) does
+   * for use with TQIconView) does
    *
    * \code
    * kfileItem->setExtraData( this, iconViewItem );
@@ -444,7 +444,7 @@ public:
    * \endcode
    *
    * This is usually more efficient then having every view associate data to
-   * items by using a separate QDict or QMap.
+   * items by using a separate TQDict or TQMap.
    *
    * Note: you have to remove and destroy the data you associated yourself
    * when you don't need it anymore!
@@ -500,7 +500,7 @@ public:
    * @param mimetype the new mimetype
    * @since 3.5.0
    */
-   void setMimeType( const QString& mimetype );
+   void setMimeType( const TQString& mimetype );
 
   /**
    * Returns the metainfo of this item.
@@ -570,7 +570,7 @@ protected:
   /**
    * Parses the given permission set and provides it for access()
    */
-  QString parsePermissions( mode_t perm ) const;
+  TQString parsePermissions( mode_t perm ) const;
 
 private:
   /**
@@ -585,23 +585,23 @@ private:
   /**
    * The text for this item, i.e. the file name without path,
    */
-  QString m_strName;
+  TQString m_strName;
 
   /**
    * The text for this item, i.e. the file name without path, decoded
    * ('%%' becomes '%', '%2F' becomes '/')
    */
-  QString m_strText;
+  TQString m_strText;
 
   /**
    * the user and group assigned to the file.
    */
-  mutable QString m_user, m_group;
+  mutable TQString m_user, m_group;
 
   /**
    * The filename in lower case (to speed up sorting)
    */
-  mutable QString m_strLowerCaseName;
+  mutable TQString m_strLowerCaseName;
 
   /**
    * The mimetype of the file
@@ -636,9 +636,9 @@ private:
   enum { Auto, Hidden, Shown } m_hidden:3;
 
    // For special case like link to dirs over FTP
-  QString m_guessedMimeType;
-  mutable QString m_access;
-  QMap<const void*, void*> m_extra;
+  TQString m_guessedMimeType;
+  mutable TQString m_access;
+  TQMap<const void*, void*> m_extra;
   mutable KFileMetaInfo m_metaInfo;
 
   enum { Modification = 0, Access = 1, Creation = 2, NumFlags = 3 };
@@ -650,22 +650,22 @@ protected:
 private:
   class KFileItemPrivate;
   KFileItemPrivate * d;
-  KIO_EXPORT friend QDataStream & operator<< ( QDataStream & s, const KFileItem & a );
-  KIO_EXPORT friend QDataStream & operator>> ( QDataStream & s, KFileItem & a );
+  KIO_EXPORT friend TQDataStream & operator<< ( TQDataStream & s, const KFileItem & a );
+  KIO_EXPORT friend TQDataStream & operator>> ( TQDataStream & s, KFileItem & a );
 };
 
 /**
  * List of KFileItems
  */
-typedef QPtrList<KFileItem> KFileItemList;
+typedef TQPtrList<KFileItem> KFileItemList;
 
 /**
  * Iterator for KFileItemList
  */
-typedef QPtrListIterator<KFileItem> KFileItemListIterator;
+typedef TQPtrListIterator<KFileItem> KFileItemListIterator;
 
-KIO_EXPORT QDataStream & operator<< ( QDataStream & s, const KFileItem & a );
-KIO_EXPORT QDataStream & operator>> ( QDataStream & s, KFileItem & a );
+KIO_EXPORT TQDataStream & operator<< ( TQDataStream & s, const KFileItem & a );
+KIO_EXPORT TQDataStream & operator>> ( TQDataStream & s, KFileItem & a );
 
 
 #endif

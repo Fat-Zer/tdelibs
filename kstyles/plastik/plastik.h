@@ -40,8 +40,8 @@
 #define __PLASTIK_H
 
 #include <kstyle.h>
-#include <qbitmap.h>
-#include <qintcache.h>
+#include <tqbitmap.h>
+#include <tqintcache.h>
 
 #define u_arrow -4,1, 2,1, -3,0, 1,0, -2,-1, 0,-1, -1,-2
 #define d_arrow -4,-2, 2,-2, -3,-1, 1,-1, -2,0, 0,0, -1,1
@@ -62,69 +62,69 @@ public:
     PlastikStyle();
     virtual ~PlastikStyle();
 
-    void polish(QApplication* app );
-    void polish(QWidget* widget );
-    void unPolish(QWidget* widget );
+    void polish(TQApplication* app );
+    void polish(TQWidget* widget );
+    void unPolish(TQWidget* widget );
 
     void drawKStylePrimitive(KStylePrimitive kpe,
-                             QPainter* p,
-                             const QWidget* widget,
-                             const QRect &r,
-                             const QColorGroup &cg,
+                             TQPainter* p,
+                             const TQWidget* widget,
+                             const TQRect &r,
+                             const TQColorGroup &cg,
                              SFlags flags = Style_Default,
-                             const QStyleOption& = QStyleOption::Default ) const;
+                             const TQStyleOption& = TQStyleOption::Default ) const;
 
     void drawPrimitive(PrimitiveElement pe,
-                       QPainter *p,
-                       const QRect &r,
-                       const QColorGroup &cg,
+                       TQPainter *p,
+                       const TQRect &r,
+                       const TQColorGroup &cg,
                        SFlags flags = Style_Default,
-                       const QStyleOption &opt = QStyleOption::Default ) const;
+                       const TQStyleOption &opt = TQStyleOption::Default ) const;
 
     void drawControl(ControlElement element,
-                     QPainter *p,
-                     const QWidget *widget,
-                     const QRect &r,
-                     const QColorGroup &cg,
+                     TQPainter *p,
+                     const TQWidget *widget,
+                     const TQRect &r,
+                     const TQColorGroup &cg,
                      SFlags flags = Style_Default,
-                     const QStyleOption& = QStyleOption::Default ) const;
+                     const TQStyleOption& = TQStyleOption::Default ) const;
 
-    void drawControlMask( ControlElement, QPainter *, const QWidget *, const QRect &, const QStyleOption &) const;
+    void drawControlMask( ControlElement, TQPainter *, const TQWidget *, const TQRect &, const TQStyleOption &) const;
 
     void drawComplexControl(ComplexControl control,
-                            QPainter *p,
-                            const QWidget *widget,
-                            const QRect &r,
-                            const QColorGroup &cg,
+                            TQPainter *p,
+                            const TQWidget *widget,
+                            const TQRect &r,
+                            const TQColorGroup &cg,
                             SFlags flags = Style_Default,
                             SCFlags controls = SC_All,
                             SCFlags active = SC_None,
-                            const QStyleOption& = QStyleOption::Default ) const;
+                            const TQStyleOption& = TQStyleOption::Default ) const;
 
     int pixelMetric(PixelMetric m,
-                    const QWidget *widget = 0 ) const;
+                    const TQWidget *widget = 0 ) const;
 
-    QRect subRect(SubRect r,
-                  const QWidget *widget ) const;
+    TQRect subRect(SubRect r,
+                  const TQWidget *widget ) const;
 
-    QRect querySubControlMetrics(ComplexControl control,
-                                 const QWidget *widget,
+    TQRect querySubControlMetrics(ComplexControl control,
+                                 const TQWidget *widget,
                                  SubControl subcontrol,
-                                 const QStyleOption &opt = QStyleOption::Default ) const;
+                                 const TQStyleOption &opt = TQStyleOption::Default ) const;
 
-    void drawComplexControlMask(QStyle::ComplexControl c,
-                                QPainter *p,
-                                const QWidget *w,
-                                const QRect &r,
-                                const QStyleOption &o=QStyleOption::Default) const;
+    void drawComplexControlMask(TQStyle::ComplexControl c,
+                                TQPainter *p,
+                                const TQWidget *w,
+                                const TQRect &r,
+                                const TQStyleOption &o=TQStyleOption::Default) const;
 
-    QSize sizeFromContents(QStyle::ContentsType t,
-                           const QWidget *w,
-                           const QSize &s,
-                           const QStyleOption &o) const;
+    TQSize sizeFromContents(TQStyle::ContentsType t,
+                           const TQWidget *w,
+                           const TQSize &s,
+                           const TQStyleOption &o) const;
 
-    int styleHint(StyleHint, const QWidget * = 0,
-                  const QStyleOption & = QStyleOption::Default,
+    int styleHint(StyleHint, const TQWidget * = 0,
+                  const TQStyleOption & = TQStyleOption::Default,
                   QStyleHintReturn * = 0 ) const;
 
 protected:
@@ -182,66 +182,66 @@ protected:
         Draw_AlphaBlend =    0x00020000
     };
 
-    void renderContour(QPainter *p,
-                       const QRect &r,
-                       const QColor &backgroundColor,
-                       const QColor &contourColor,
+    void renderContour(TQPainter *p,
+                       const TQRect &r,
+                       const TQColor &backgroundColor,
+                       const TQColor &contourColor,
                        const uint flags = Draw_Left|Draw_Right|Draw_Top|Draw_Bottom|
                                Round_UpperLeft|Round_UpperRight|Round_BottomLeft|Round_BottomRight) const;
 
-    void renderMask(QPainter *p,
-                    const QRect &r,
-                    const QColor &color,
+    void renderMask(TQPainter *p,
+                    const TQRect &r,
+                    const TQColor &color,
                     const uint flags = Draw_Left|Draw_Right|Draw_Top|Draw_Bottom|
                             Round_UpperLeft|Round_UpperRight|Round_BottomLeft|Round_BottomRight) const;
 
-    void renderSurface(QPainter *p,
-                        const QRect &r,
-                        const QColor &backgroundColor,
-                        const QColor &buttonColor,
-                        const QColor &highlightColor,
+    void renderSurface(TQPainter *p,
+                        const TQRect &r,
+                        const TQColor &backgroundColor,
+                        const TQColor &buttonColor,
+                        const TQColor &highlightColor,
                         int intensity = 5,
                         const uint flags = Draw_Left|Draw_Right|Draw_Top|Draw_Bottom|
                                 Round_UpperLeft|Round_UpperRight|Round_BottomLeft|Round_BottomRight|
                                 Is_Horizontal) const;
 
-    inline void renderPixel(QPainter *p,
-            const QPoint &pos,
+    inline void renderPixel(TQPainter *p,
+            const TQPoint &pos,
             const int alpha,
-            const QColor &color,
-            const QColor &background = QColor(),
+            const TQColor &color,
+            const TQColor &background = TQColor(),
             bool fullAlphaBlend = true) const;
 
-    void renderButton(QPainter *p,
-                      const QRect &r,
-                      const QColorGroup &g,
+    void renderButton(TQPainter *p,
+                      const TQRect &r,
+                      const TQColorGroup &g,
                       bool sunken = false,
                       bool mouseOver = false,
                       bool horizontal = true,
                       bool enabled = true,
                       bool khtmlMode = false) const;
 
-    void renderPanel(QPainter *p,
-                     const QRect &r,
-                     const QColorGroup &g,
+    void renderPanel(TQPainter *p,
+                     const TQRect &r,
+                     const TQColorGroup &g,
                      const bool pseudo3d = true,
                      const bool sunken = true) const;
 
-    void renderDot(QPainter *p,
-                   const QPoint &point,
-                   const QColor &baseColor,
+    void renderDot(TQPainter *p,
+                   const TQPoint &point,
+                   const TQColor &baseColor,
                    const bool thick = false,
                    const bool sunken = false) const;
 
-    void renderGradient(QPainter *p,
-                        const QRect &r,
-                        const QColor &c1,
-                        const QColor &c2,
+    void renderGradient(TQPainter *p,
+                        const TQRect &r,
+                        const TQColor &c1,
+                        const TQColor &c2,
                         bool horizontal = true) const;
 
-    void renderTab(QPainter *p,
-                   const QRect &r,
-                   const QColorGroup &g,
+    void renderTab(TQPainter *p,
+                   const TQRect &r,
+                   const TQColorGroup &g,
                    bool mouseOver = false,
                    const bool selected = false,
                    const bool bottom = false,
@@ -249,21 +249,21 @@ protected:
                    const bool triangular = false,
                    const bool cornerWidget = false) const;
 
-    virtual void renderMenuBlendPixmap( KPixmap& pix, const QColorGroup& cg, 
-                                        const QPopupMenu* popup ) const;
+    virtual void renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup& cg, 
+                                        const TQPopupMenu* popup ) const;
     
-    bool eventFilter(QObject *, QEvent *);
+    bool eventFilter(TQObject *, TQEvent *);
 
-    QWidget* hoverWidget;
+    TQWidget* hoverWidget;
 protected slots:
-    void khtmlWidgetDestroyed(QObject* w);
+    void khtmlWidgetDestroyed(TQObject* w);
 
     //Animation slots.
     void updateProgressPos();
-    void progressBarDestroyed(QObject* bar);
+    void progressBarDestroyed(TQObject* bar);
 
-    inline QColor getColor(const QColorGroup &cg, const ColorType t, const bool enabled = true)const;
-    inline QColor getColor(const QColorGroup &cg, const ColorType t, const WidgetState s)const;
+    inline TQColor getColor(const TQColorGroup &cg, const ColorType t, const bool enabled = true)const;
+    inline TQColor getColor(const TQColorGroup &cg, const ColorType t, const WidgetState s)const;
 private:
 // Disable copy constructor and = operator
     PlastikStyle( const PlastikStyle & );
@@ -283,17 +283,17 @@ private:
     bool _customOverHighlightColor;
     bool _customFocusHighlightColor;
     bool _customCheckMarkColor;
-    QColor _overHighlightColor;
-    QColor _focusHighlightColor;
-    QColor _checkMarkColor;
+    TQColor _overHighlightColor;
+    TQColor _focusHighlightColor;
+    TQColor _checkMarkColor;
 
-    QTab *hoverTab;
+    TQTab *hoverTab;
 
     // track khtml widgets.
-    QMap<const QWidget*,bool> khtmlWidgets;
+    TQMap<const TQWidget*,bool> khtmlWidgets;
 
     //Animation support.
-    QMap<QWidget*, int> progAnimWidgets;
+    TQMap<TQWidget*, int> progAnimWidgets;
 
     // pixmap cache.
     enum CacheEntryType {
@@ -310,10 +310,10 @@ private:
         QRgb c2Rgb;
         bool horizontal;
 
-        QPixmap* pixmap;
+        TQPixmap* pixmap;
 
         CacheEntry(CacheEntryType t, int w, int h, QRgb c1, QRgb c2 = 0,
-                   bool hor = false, QPixmap* p = 0 ):
+                   bool hor = false, TQPixmap* p = 0 ):
             type(t), width(w), height(h), c1Rgb(c1), c2Rgb(c2), horizontal(hor), pixmap(p)
         {}
 
@@ -324,7 +324,7 @@ private:
 
         int key()
         {
-            // create an int key from the properties which is used to refer to entries in the QIntCache.
+            // create an int key from the properties which is used to refer to entries in the TQIntCache.
             // the result may not be 100% correct as we don't have so much space in one integer -- use
             // == operator after find to make sure we got the right one. :)
             return horizontal ^ (type<<1) ^ (width<<5) ^ (height<<10) ^ (c1Rgb<<19) ^ (c2Rgb<<22);
@@ -349,14 +349,14 @@ private:
             return match;
         }
     };
-    QIntCache<CacheEntry> *pixmapCache;
+    TQIntCache<CacheEntry> *pixmapCache;
     
     // For KPE_ListViewBranch
-    mutable QBitmap *verticalLine;
-    mutable QBitmap *horizontalLine;
+    mutable TQBitmap *verticalLine;
+    mutable TQBitmap *horizontalLine;
     
     // For progress bar animation
-    QTimer *animationTimer;
+    TQTimer *animationTimer;
 };
 
 #endif // __PLASTIK_H

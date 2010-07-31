@@ -43,7 +43,7 @@ public:
      * @param dcopName name to set the DCOP name to
      * @param rootMode true if the kcmshell is embedding
      */
-    void setDCOPName(const QCString &dcopName, bool rootMode );
+    void setDCOPName(const TQCString &dcopName, bool rootMode );
 
     /**
      * Waits until the last instance of kcmshell with the same
@@ -60,7 +60,7 @@ private slots:
 
     /**
      */
-    void appExit( const QCString &appId );
+    void appExit( const TQCString &appId );
 
 private:
 
@@ -68,7 +68,7 @@ private:
      * The DCOP name which actually is registered.
      * For example "kcmshell_mouse".
      */
-    QCString m_dcopName;
+    TQCString m_dcopName;
 
 };
 
@@ -88,14 +88,14 @@ public:
 
     /**
      */
-    KCMShellMultiDialog( int dialogFace, const QString& caption,
-            QWidget *parent=0, const char *name=0, bool modal=false);
+    KCMShellMultiDialog( int dialogFace, const TQString& caption,
+            TQWidget *parent=0, const char *name=0, bool modal=false);
 
 k_dcop:
 
     /**
      */
-    virtual void activate( QCString asn_id );
+    virtual void activate( TQCString asn_id );
 
 };
 

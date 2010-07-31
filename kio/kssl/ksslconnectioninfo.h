@@ -21,7 +21,7 @@
 #ifndef _KSSLCONNECTIONINFO_H
 #define _KSSLCONNECTIONINFO_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -49,19 +49,19 @@ public:
 	 *  Get the cipher in use.
 	 *  @return the cipher in use
 	 */
-	const QString& getCipher() const;
+	const TQString& getCipher() const;
 
 	/**
 	 *  Describe the cipher in use.
 	 *  @return the cipher description (from OpenSSL)
 	 */
-	const QString& getCipherDescription() const;
+	const TQString& getCipherDescription() const;
 
 	/**
 	 *  Get the version of the cipher in use.
 	 *  @return the version of the cipher
 	 */
-	const QString& getCipherVersion() const;
+	const TQString& getCipherVersion() const;
 
 	/**
 	 *  Get the number of bits of the cipher that are actually used.
@@ -82,9 +82,9 @@ protected:
 	// These are here so KSSL can access them directly
 	// It's just as easy as making accessors - they're friends afterall!
 	int m_iCipherUsedBits, m_iCipherBits;
-	QString m_cipherName;
-	QString m_cipherDescription;
-	QString m_cipherVersion;
+	TQString m_cipherName;
+	TQString m_cipherDescription;
+	TQString m_cipherVersion;
 
 private:
 	class KSSLConnectionInfoPrivate;

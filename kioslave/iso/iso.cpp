@@ -27,7 +27,7 @@
 #include <unistd.h>
 
 #include <klargefile.h>
-#include <qfile.h>
+#include <tqfile.h>
 #include <kurl.h>
 #include <kdebug.h>
 #include <kinstance.h>
@@ -78,7 +78,7 @@ int kdemain( int argc, char **argv )
 }
 
 
-kio_isoProtocol::kio_isoProtocol( const QCString &pool, const QCString &app ) : SlaveBase( "iso", pool, app )
+kio_isoProtocol::kio_isoProtocol( const TQCString &pool, const TQCString &app ) : SlaveBase( "iso", pool, app )
 {
   kdDebug() << "kio_isoProtocol::kio_isoProtocol" << endl;
   m_isoFile = 0L;
@@ -89,7 +89,7 @@ kio_isoProtocol::~kio_isoProtocol()
     delete m_isoFile;
 }
 
-bool kio_isoProtocol::checkNewFile( QString fullPath, QString & path, int startsec )
+bool kio_isoProtocol::checkNewFile( TQString fullPath, TQString & path, int startsec )
 {
     kdDebug()   << "kio_isoProtocol::checkNewFile " << fullPath << " startsec: " <<
         startsec << endl;
@@ -100,7 +100,7 @@ bool kio_isoProtocol::checkNewFile( QString fullPath, QString & path, int starts
     {
         // Has it changed ?
         struct stat statbuf;
-        if ( ::stat( QFile::encodeName( m_isoFile->fileName() ), &statbuf ) == 0 )
+        if ( ::stat( TQFile::encodeName( m_isoFile->fileName() ), &statbuf ) == 0 )
         {
             if ( m_mtime == statbuf.st_mtime )
             {
@@ -122,8 +122,8 @@ bool kio_isoProtocol::checkNewFile( QString fullPath, QString & path, int starts
 
     // Find where the iso file is in the full path
     int pos = 0;
-    QString isoFile;
-    path = QString::null;
+    TQString isoFile;
+    path = TQString::null;
 
     int len = fullPath.length();
     if ( len != 0 && fullPath[ len - 1 ] != '/' )
@@ -132,11 +132,11 @@ bool kio_isoProtocol::checkNewFile( QString fullPath, QString & path, int starts
     kdDebug()   << "the full path is " << fullPath << endl;
     while ( (pos=fullPath.find( '/', pos+1 )) != -1 )
     {
-        QString tryPath = fullPath.left( pos );
+        TQString tryPath = fullPath.left( pos );
         kdDebug()   << fullPath << "  trying " << tryPath << endl;
 
         KDE_struct_stat statbuf;
-        if ( KDE_lstat( QFile::encodeName(tryPath), &statbuf ) == 0 && !S_ISDIR(statbuf.st_mode) )
+        if ( KDE_lstat( TQFile::encodeName(tryPath), &statbuf ) == 0 && !S_ISDIR(statbuf.st_mode) )
         {
             isoFile = tryPath;
             m_mtime = statbuf.st_mtime;
@@ -150,7 +150,7 @@ bool kio_isoProtocol::checkNewFile( QString fullPath, QString & path, int starts
                     path.truncate( len - 1 );
             }
             else
-                path = QString::fromLatin1("/");
+                path = TQString::fromLatin1("/");
             kdDebug()   << "Found. isoFile=" << isoFile << " path=" << path << endl;
             break;
         }
@@ -234,10 +234,10 @@ void kio_isoProtocol::listDir( const KURL & url )
 {
     kdDebug() << "kio_isoProtocol::listDir " << url.url() << endl;
 
-    QString path;
+    TQString path;
     if ( !checkNewFile( url.path(), path, url.hasRef() ? url.htmlRef().toInt() : -1 ) )
     {
-        QCString _path( QFile::encodeName(url.path()));
+        TQCString _path( TQFile::encodeName(url.path()));
         kdDebug()  << "Checking (stat) on " << _path << endl;
         struct stat buff;
         if ( ::stat( _path.data(), &buff ) == -1 || !S_ISDIR( buff.st_mode ) ) {
@@ -259,10 +259,10 @@ void kio_isoProtocol::listDir( const KURL & url )
 
     if ( path.isEmpty() )
     {
-        KURL redir( QString::fromLatin1( "iso:/") );
+        KURL redir( TQString::fromLatin1( "iso:/") );
         kdDebug() << "url.path()==" << url.path() << endl;
         if (url.hasRef()) redir.setRef(url.htmlRef());
-        redir.setPath( url.path() + QString::fromLatin1("/") );
+        redir.setPath( url.path() + TQString::fromLatin1("/") );
         kdDebug() << "kio_isoProtocol::listDir: redirection " << redir.url() << endl;
         redirection( redir );
         finished();
@@ -274,7 +274,7 @@ void kio_isoProtocol::listDir( const KURL & url )
     const KArchiveDirectory* dir;
     if (!path.isEmpty() && path != "/")
     {
-        kdDebug()   << QString("Looking for entry %1").arg(path) << endl;
+        kdDebug()   << TQString("Looking for entry %1").arg(path) << endl;
         const KArchiveEntry* e = root->entry( path );
         if ( !e )
         {
@@ -291,11 +291,11 @@ void kio_isoProtocol::listDir( const KURL & url )
         dir = root;
     }
 
-    QStringList l = dir->entries();
+    TQStringList l = dir->entries();
     totalSize( l.count() );
 
     UDSEntry entry;
-    QStringList::Iterator it = l.begin();
+    TQStringList::Iterator it = l.begin();
     for( ; it != l.end(); ++it )
     {
         kdDebug()   << (*it) << endl;
@@ -315,7 +315,7 @@ void kio_isoProtocol::listDir( const KURL & url )
 
 void kio_isoProtocol::stat( const KURL & url )
 {
-    QString path;
+    TQString path;
     UDSEntry entry;
 
     kdDebug() << "kio_isoProtocol::stat " << url.url() << endl;
@@ -323,7 +323,7 @@ void kio_isoProtocol::stat( const KURL & url )
     {
         // We may be looking at a real directory - this happens
         // when pressing up after being in the root of an archive
-        QCString _path( QFile::encodeName(url.path()));
+        TQCString _path( TQFile::encodeName(url.path()));
         kdDebug()  << "kio_isoProtocol::stat (stat) on " << _path << endl;
         struct stat buff;
         if ( ::stat( _path.data(), &buff ) == -1 || !S_ISDIR( buff.st_mode ) ) {
@@ -356,7 +356,7 @@ void kio_isoProtocol::stat( const KURL & url )
     const KArchiveEntry* isoEntry;
     if ( path.isEmpty() )
     {
-        path = QString::fromLatin1( "/" );
+        path = TQString::fromLatin1( "/" );
         isoEntry = root;
     } else {
         isoEntry = root->entry( path );
@@ -371,11 +371,11 @@ void kio_isoProtocol::stat( const KURL & url )
     finished();
 }
 
-void kio_isoProtocol::getFile( const KIsoFile *isoFileEntry, const QString &path )
+void kio_isoProtocol::getFile( const KIsoFile *isoFileEntry, const TQString &path )
 {
     unsigned long long size, pos = 0;
     bool mime=false,zlib=false;
-    QByteArray fileData, pointer_block, inbuf, outbuf;
+    TQByteArray fileData, pointer_block, inbuf, outbuf;
     char *pptr = 0;
     compressed_file_header *hdr;
     int block_shift;
@@ -489,7 +489,7 @@ void kio_isoProtocol::get( const KURL & url )
 {
     kdDebug()  << "kio_isoProtocol::get" << url.url() << endl;
 
-    QString path;
+    TQString path;
     if ( !checkNewFile( url.path(), path, url.hasRef() ? url.htmlRef().toInt() : -1 ) )
     {
         error( KIO::ERR_DOES_NOT_EXIST, url.path() );

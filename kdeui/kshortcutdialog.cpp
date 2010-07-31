@@ -19,7 +19,7 @@
 
 #include "kshortcutdialog.h"
 
-#include <qvariant.h>
+#include <tqvariant.h>
 
 #ifdef Q_WS_X11
 	#define XK_XKB_KEYS
@@ -44,13 +44,13 @@
 #include <kshortcutdialog_simple.h>
 #include <kshortcutdialog_advanced.h>
 
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qframe.h>
-#include <qlayout.h>
-#include <qradiobutton.h>
-#include <qtimer.h>
-#include <qvbox.h>
+#include <tqbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqframe.h>
+#include <tqlayout.h>
+#include <tqradiobutton.h>
+#include <tqtimer.h>
+#include <tqvbox.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -64,12 +64,12 @@
 
 bool KShortcutDialog::s_showMore = false;
 
-KShortcutDialog::KShortcutDialog( const KShortcut& shortcut, bool bQtShortcut, QWidget* parent, const char* name )
+KShortcutDialog::KShortcutDialog( const KShortcut& shortcut, bool bQtShortcut, TQWidget* parent, const char* name )
 : KDialogBase( parent, name, true, i18n("Configure Shortcut"),
                KDialogBase::Details|KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Cancel, true )
 {
         setButtonText(Details, i18n("Advanced"));
-        m_stack = new QVBox(this);
+        m_stack = new TQVBox(this);
         m_stack->setMinimumWidth(360);
         m_stack->setSpacing(0);
         m_stack->setMargin(0);
@@ -92,21 +92,21 @@ KShortcutDialog::KShortcutDialog( const KShortcut& shortcut, bool bQtShortcut, Q
 	m_simple->m_btnClearShortcut->setPixmap( SmallIcon( "locationbar_erase" ) );
 	m_adv->m_btnClearPrimary->setPixmap( SmallIcon( "locationbar_erase" ) );
 	m_adv->m_btnClearAlternate->setPixmap( SmallIcon( "locationbar_erase" ) );
-	connect(m_simple->m_btnClearShortcut, SIGNAL(clicked()),
-	        this, SLOT(slotClearShortcut()));
-	connect(m_adv->m_btnClearPrimary, SIGNAL(clicked()),
-	        this, SLOT(slotClearPrimary()));
-	connect(m_adv->m_btnClearAlternate, SIGNAL(clicked()),
-	        this, SLOT(slotClearAlternate()));
+	connect(m_simple->m_btnClearShortcut, TQT_SIGNAL(clicked()),
+	        this, TQT_SLOT(slotClearShortcut()));
+	connect(m_adv->m_btnClearPrimary, TQT_SIGNAL(clicked()),
+	        this, TQT_SLOT(slotClearPrimary()));
+	connect(m_adv->m_btnClearAlternate, TQT_SIGNAL(clicked()),
+	        this, TQT_SLOT(slotClearAlternate()));
 
-	connect(m_adv->m_txtPrimary, SIGNAL(clicked()),
-		m_adv->m_btnPrimary, SLOT(animateClick()));
-	connect(m_adv->m_txtAlternate, SIGNAL(clicked()),
-		m_adv->m_btnAlternate, SLOT(animateClick()));
-	connect(m_adv->m_btnPrimary, SIGNAL(clicked()),
-		this, SLOT(slotSelectPrimary()));
-	connect(m_adv->m_btnAlternate, SIGNAL(clicked()),
-		this, SLOT(slotSelectAlternate()));
+	connect(m_adv->m_txtPrimary, TQT_SIGNAL(clicked()),
+		m_adv->m_btnPrimary, TQT_SLOT(animateClick()));
+	connect(m_adv->m_txtAlternate, TQT_SIGNAL(clicked()),
+		m_adv->m_btnAlternate, TQT_SLOT(animateClick()));
+	connect(m_adv->m_btnPrimary, TQT_SIGNAL(clicked()),
+		this, TQT_SLOT(slotSelectPrimary()));
+	connect(m_adv->m_btnAlternate, TQT_SIGNAL(clicked()),
+		this, TQT_SLOT(slotSelectAlternate()));
 
 	KGuiItem ok = KStdGuiItem::ok();
 	ok.setText( i18n( "OK" ) );
@@ -141,7 +141,7 @@ void KShortcutDialog::setShortcut( const KShortcut & shortcut )
 
 void KShortcutDialog::updateShortcutDisplay()
 {
-	QString s[2] = { m_shortcut.seq(0).toString(), m_shortcut.seq(1).toString() };
+	TQString s[2] = { m_shortcut.seq(0).toString(), m_shortcut.seq(1).toString() };
 
 	if( m_bRecording ) {
 		m_ptxtCurrent->setDefault( true );
@@ -150,7 +150,7 @@ void KShortcutDialog::updateShortcutDisplay()
 		// Display modifiers for the first key in the KKeySequence
 		if( m_iKey == 0 ) {
 			if( m_mod ) {
-				QString keyModStr;
+				TQString keyModStr;
 				if( m_mod & KKey::WIN )   keyModStr += KKey::modFlagLabel(KKey::WIN) + "+";
 				if( m_mod & KKey::ALT )   keyModStr += KKey::modFlagLabel(KKey::ALT) + "+";
 				if( m_mod & KKey::CTRL )  keyModStr += KKey::modFlagLabel(KKey::CTRL) + "+";
@@ -169,8 +169,8 @@ void KShortcutDialog::updateShortcutDisplay()
 		this->setFocus();
 	}
 	
-	s[0].replace('&', QString::fromLatin1("&&"));
-	s[1].replace('&', QString::fromLatin1("&&"));
+	s[0].replace('&', TQString::fromLatin1("&&"));
+	s[1].replace('&', TQString::fromLatin1("&&"));
 
 	m_simple->m_txtShortcut->setText( s[0] );
 	m_adv->m_txtPrimary->setText( s[0] );
@@ -391,12 +391,12 @@ void KShortcutDialog::x11KeyReleaseEvent( XEvent* pEvent )
 	}
 }
 #elif defined(Q_WS_WIN)
-void KShortcutDialog::keyPressEvent( QKeyEvent * e )
+void KShortcutDialog::keyPressEvent( TQKeyEvent * e )
 {
 	kdDebug() << e->text() << " " << (int)e->text()[0].latin1()<<  " " << (int)e->ascii() << endl;
 	//if key is a letter, it must be stored as lowercase
-	int keyQt = QChar( e->key() & 0xff ).isLetter() ? 
-		(QChar( e->key() & 0xff ).lower().latin1() | (e->key() & 0xffff00) )
+	int keyQt = TQChar( e->key() & 0xff ).isLetter() ? 
+		(TQChar( e->key() & 0xff ).lower().latin1() | (e->key() & 0xffff00) )
 		: e->key();
 	int modQt = KKeyServer::qtButtonStateToMod( e->state() );
 	KKeyNative keyNative( KKey(keyQt, modQt) );
@@ -445,7 +445,7 @@ void KShortcutDialog::keyPressEvent( QKeyEvent * e )
 				updateShortcutDisplay();
 
 				if( !m_adv->m_btnMultiKey->isChecked() )
-					QTimer::singleShot(500, this, SLOT(accept()));
+					TQTimer::singleShot(500, this, TQT_SLOT(accept()));
 			}
 			return;
 	}
@@ -457,11 +457,11 @@ void KShortcutDialog::keyPressEvent( QKeyEvent * e )
 	}
 }
 
-bool KShortcutDialog::event ( QEvent * e )
+bool KShortcutDialog::event ( TQEvent * e )
 {
-	if (e->type()==QEvent::KeyRelease) {
-		int modQt = KKeyServer::qtButtonStateToMod( static_cast<QKeyEvent*>(e)->state() );
-		KKeyNative keyNative( KKey(static_cast<QKeyEvent*>(e)->key(), modQt) );
+	if (e->type()==TQEvent::KeyRelease) {
+		int modQt = KKeyServer::qtButtonStateToMod( static_cast<TQKeyEvent*>(e)->state() );
+		KKeyNative keyNative( KKey(static_cast<TQKeyEvent*>(e)->key(), modQt) );
 		uint keySym = keyNative.sym();
 
 		bool change = true;
@@ -523,7 +523,7 @@ void KShortcutDialog::keyPressed( KKey key )
 	updateShortcutDisplay();
 
 	if( !m_adv->m_btnMultiKey->isChecked() )
-		QTimer::singleShot(500, this, SLOT(accept()));
+		TQTimer::singleShot(500, this, TQT_SLOT(accept()));
 }
 
 #include "kshortcutdialog.moc"

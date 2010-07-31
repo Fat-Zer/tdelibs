@@ -16,10 +16,10 @@
     Boston, MA 02110-1301, USA.
  */
 
-#include <qlabel.h>
-#include <qregexp.h>
-#include <qstyle.h>
-#include <qpopupmenu.h>
+#include <tqlabel.h>
+#include <tqregexp.h>
+#include <tqstyle.h>
+#include <tqpopupmenu.h>
 #include <kgenericfactory.h>
 #include <klocale.h>
 #include <kaction.h>
@@ -33,7 +33,7 @@
 K_EXPORT_COMPONENT_FACTORY( ktexteditor_isearch, KGenericFactory<ISearchPlugin>( "ktexteditor_isearch" ) )
 
 ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
-	: QObject ( view ), KXMLGUIClient (view)
+	: TQObject ( view ), KXMLGUIClient (view)
 	, m_view( 0L )
 	, m_doc( 0L )
 	, m_searchIF( 0L )
@@ -66,14 +66,14 @@ ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 
 	m_searchForwardAction = new KAction(
 		i18n("Search Incrementally"), CTRL+ALT+Key_F,
-		this, SLOT(slotSearchForwardAction()),
+		this, TQT_SLOT(slotSearchForwardAction()),
 		actionCollection(), "edit_isearch" );
 	m_searchBackwardAction = new KAction(
 		i18n("Search Incrementally Backwards"), CTRL+ALT+SHIFT+Key_F,
-		this, SLOT(slotSearchBackwardAction()),
+		this, TQT_SLOT(slotSearchBackwardAction()),
 		actionCollection(), "edit_isearch_reverse" );
 
-	m_label = new QLabel( i18n("I-Search:"), 0L, "kde toolbar widget" );
+	m_label = new TQLabel( i18n("I-Search:"), 0L, "kde toolbar widget" );
 	KWidgetAction* labelAction = new KWidgetAction(
 		m_label,
 		i18n("I-Search:"), 0, 0, 0,
@@ -84,12 +84,12 @@ ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 	m_combo->setDuplicatesEnabled( false );
 	m_combo->setMaximumWidth( 300 );
 	m_combo->lineEdit()->installEventFilter( this );
-	connect( m_combo, SIGNAL(textChanged(const QString&)),
-	         this, SLOT(slotTextChanged(const QString&)) );
-	connect( m_combo, SIGNAL(returnPressed(const QString&)),
-	         this, SLOT(slotReturnPressed(const QString&)) );
-	connect( m_combo, SIGNAL(aboutToShowContextMenu(QPopupMenu*)),
-		 this, SLOT(slotAddContextMenuItems(QPopupMenu*)) );
+	connect( m_combo, TQT_SIGNAL(textChanged(const TQString&)),
+	         this, TQT_SLOT(slotTextChanged(const TQString&)) );
+	connect( m_combo, TQT_SIGNAL(returnPressed(const TQString&)),
+	         this, TQT_SLOT(slotReturnPressed(const TQString&)) );
+	connect( m_combo, TQT_SIGNAL(aboutToShowContextMenu(TQPopupMenu*)),
+		 this, TQT_SLOT(slotAddContextMenuItems(TQPopupMenu*)) );
 	m_comboAction = new KWidgetAction(
 		m_combo,
 		i18n("Search"), 0, 0, 0,
@@ -106,8 +106,8 @@ ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 		i18n("Case Sensitive"), KShortcut(),
 		actionCollection(), "isearch_case_sensitive" );
 	action->setShortcutConfigurable( false );
-	connect( action, SIGNAL(toggled(bool)),
-	         this, SLOT(setCaseSensitive(bool)) );
+	connect( action, TQT_SIGNAL(toggled(bool)),
+	         this, TQT_SLOT(setCaseSensitive(bool)) );
 	action->setChecked( m_caseSensitive );
 	optionMenu->insert( action );
 
@@ -115,8 +115,8 @@ ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 		i18n("From Beginning"), KShortcut(),
 		actionCollection(), "isearch_from_beginning" );
 	action->setShortcutConfigurable( false );
-	connect( action, SIGNAL(toggled(bool)),
-	         this, SLOT(setFromBeginning(bool)) );
+	connect( action, TQT_SIGNAL(toggled(bool)),
+	         this, TQT_SLOT(setFromBeginning(bool)) );
 	action->setChecked( m_fromBeginning );
 	optionMenu->insert( action );
 
@@ -124,8 +124,8 @@ ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 		i18n("Regular Expression"), KShortcut(),
 		actionCollection(), "isearch_reg_exp" );
 	action->setShortcutConfigurable( false );
-	connect( action, SIGNAL(toggled(bool)),
-	         this, SLOT(setRegExp(bool)) );
+	connect( action, TQT_SIGNAL(toggled(bool)),
+	         this, TQT_SLOT(setRegExp(bool)) );
 	action->setChecked( m_regExp );
 	optionMenu->insert( action );
 
@@ -134,8 +134,8 @@ ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 // 	action = new KToggleAction(
 // 		i18n("Auto-Wrap Search"), KShortcut(),
 // 		actionCollection(), "isearch_auto_wrap" );
-// 	connect( action, SIGNAL(toggled(bool)),
-// 	         this, SLOT(setAutoWrap(bool)) );
+// 	connect( action, TQT_SIGNAL(toggled(bool)),
+// 	         this, TQT_SLOT(setAutoWrap(bool)) );
 // 	action->setChecked( m_autoWrap );
 // 	optionMenu->insert( action );
 
@@ -202,31 +202,31 @@ void ISearchPluginView::setAutoWrap( bool autoWrap )
 	m_autoWrap = autoWrap;
 }
 
-bool ISearchPluginView::eventFilter( QObject* o, QEvent* e )
+bool ISearchPluginView::eventFilter( TQObject* o, TQEvent* e )
 {
 	if( o != m_combo->lineEdit() )
 		return false;
 
-	if( e->type() == QEvent::FocusIn ) {
-		QFocusEvent* focusEvent = (QFocusEvent*)e;
-		if( focusEvent->reason() == QFocusEvent::ActiveWindow ||
-		    focusEvent->reason() == QFocusEvent::Popup )
+	if( e->type() == TQEvent::FocusIn ) {
+		TQFocusEvent* focusEvent = (TQFocusEvent*)e;
+		if( focusEvent->reason() == TQFocusEvent::ActiveWindow ||
+		    focusEvent->reason() == TQFocusEvent::Popup )
 			return false;
 		startSearch();
 	}
 
-	if( e->type() == QEvent::FocusOut ) {
-		QFocusEvent* focusEvent = (QFocusEvent*)e;
-		if( focusEvent->reason() == QFocusEvent::ActiveWindow ||
-		    focusEvent->reason() == QFocusEvent::Popup )
+	if( e->type() == TQEvent::FocusOut ) {
+		TQFocusEvent* focusEvent = (TQFocusEvent*)e;
+		if( focusEvent->reason() == TQFocusEvent::ActiveWindow ||
+		    focusEvent->reason() == TQFocusEvent::Popup )
 			return false;
 		endSearch();
 	}
 
-	if( e->type() == QEvent::KeyPress ) {
-		QKeyEvent *keyEvent = (QKeyEvent*)e;
+	if( e->type() == TQEvent::KeyPress ) {
+		TQKeyEvent *keyEvent = (TQKeyEvent*)e;
 		if( keyEvent->key() == Qt::Key_Escape )
-			quitToView( QString::null );
+			quitToView( TQString::null );
 	}
 
 	return false;
@@ -237,7 +237,7 @@ void ISearchPluginView::updateLabelText(
 	bool failing /* = false */, bool reverse /* = false */,
 	bool wrapped /* = false */, bool overwrapped /* = false */ )
 {
-	QString text;
+	TQString text;
 	// Reverse binary:
 	// 0000
 	if( !failing && !reverse && !wrapped && !overwrapped ) {
@@ -309,7 +309,7 @@ void ISearchPluginView::slotSearchAction( bool reverse )
 
 void ISearchPluginView::nextMatch( bool reverse )
 {
-	QString text = m_combo->currentText();
+	TQString text = m_combo->currentText();
 	if( text.isEmpty() )
 		return;
 	if( state != MatchSearch ) {
@@ -355,7 +355,7 @@ void ISearchPluginView::startSearch()
 
 	m_combo->blockSignals( true );
 
-	QString text = m_selectIF->selection();
+	TQString text = m_selectIF->selection();
 	if( text.isEmpty() )
 		text = m_lastString;
 	m_combo->setCurrentText( text );
@@ -378,7 +378,7 @@ void ISearchPluginView::endSearch()
 	}
 }
 
-void ISearchPluginView::quitToView( const QString &text )
+void ISearchPluginView::quitToView( const TQString &text )
 {
 	if( !text.isNull() && !text.isEmpty() ) {
 		m_combo->addToHistory( text );
@@ -390,7 +390,7 @@ void ISearchPluginView::quitToView( const QString &text )
 	}
 }
 
-void ISearchPluginView::slotTextChanged( const QString& text )
+void ISearchPluginView::slotTextChanged( const TQString& text )
 {
 	state = TextSearch;
 
@@ -400,29 +400,29 @@ void ISearchPluginView::slotTextChanged( const QString& text )
 	iSearch( m_searchLine, m_searchCol, text, m_searchBackward, m_autoWrap );
 }
 
-void ISearchPluginView::slotReturnPressed( const QString& text )
+void ISearchPluginView::slotReturnPressed( const TQString& text )
 {
 	quitToView( text );
 }
 
-void ISearchPluginView::slotAddContextMenuItems( QPopupMenu *menu )
+void ISearchPluginView::slotAddContextMenuItems( TQPopupMenu *menu )
 {
 	if( menu ) {
 		menu->insertSeparator();
 		menu->insertItem( i18n("Case Sensitive"), this,
-				  SLOT(setCaseSensitive(bool)));
+				  TQT_SLOT(setCaseSensitive(bool)));
 		menu->insertItem( i18n("From Beginning"), this,
-				  SLOT(setFromBeginning(bool)));
+				  TQT_SLOT(setFromBeginning(bool)));
 		menu->insertItem( i18n("Regular Expression"), this,
-				  SLOT(setRegExp(bool)));
+				  TQT_SLOT(setRegExp(bool)));
 		//menu->insertItem( i18n("Auto-Wrap Search"), this,
-		//		  SLOT(setAutoWrap(bool)));
+		//		  TQT_SLOT(setAutoWrap(bool)));
 	}
 }
 
 bool ISearchPluginView::iSearch(
 	uint startLine, uint startCol,
-	const QString& text, bool reverse,
+	const TQString& text, bool reverse,
 	bool autoWrap )
 {
 	if( !m_view ) return false;
@@ -441,7 +441,7 @@ bool ISearchPluginView::iSearch(
 	} else {
 		found = m_searchIF->searchText( startLine,
 			           startCol,
-			           QRegExp( text ),
+			           TQRegExp( text ),
 			           &m_foundLine,
 			           &m_foundCol,
 			           &m_matchLen,
@@ -465,7 +465,7 @@ bool ISearchPluginView::iSearch(
 	return found;
 }
 
-ISearchPlugin::ISearchPlugin( QObject *parent, const char* name, const QStringList& )
+ISearchPlugin::ISearchPlugin( TQObject *parent, const char* name, const TQStringList& )
 	: KTextEditor::Plugin ( (KTextEditor::Document*) parent, name )
 {
 }

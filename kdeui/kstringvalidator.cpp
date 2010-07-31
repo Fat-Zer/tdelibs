@@ -26,7 +26,7 @@
 // KStringListValidator
 //
 
-QValidator::State KStringListValidator::validate( QString & input, int& ) const {
+TQValidator::State KStringListValidator::validate( TQString & input, int& ) const {
   if ( input.isEmpty() ) return Intermediate;
 
   if ( isRejecting() ) // anything not in mStringList is acceptable:
@@ -38,7 +38,7 @@ QValidator::State KStringListValidator::validate( QString & input, int& ) const 
     if ( mStringList.find( input ) != mStringList.end() )
       return Acceptable;
     else
-      for ( QStringList::ConstIterator it = mStringList.begin() ;
+      for ( TQStringList::ConstIterator it = mStringList.begin() ;
 	    it != mStringList.end() ; ++it )
 	if ( (*it).startsWith( input ) || input.startsWith( *it ) )
 	  return Intermediate;
@@ -46,7 +46,7 @@ QValidator::State KStringListValidator::validate( QString & input, int& ) const 
   return Invalid;
 }
 
-void KStringListValidator::fixup( QString & /* input */ ) const {
+void KStringListValidator::fixup( TQString & /* input */ ) const {
   if ( !isFixupEnabled() ) return;
   // warn (but only once!) about non-implemented fixup():
   static bool warn = true;
@@ -63,17 +63,17 @@ void KStringListValidator::fixup( QString & /* input */ ) const {
 
 #define ALLOWED_CHARS "!#-'*+.0-9^-~+-"
 
-QValidator::State KMimeTypeValidator::validate( QString & input, int& ) const
+TQValidator::State KMimeTypeValidator::validate( TQString & input, int& ) const
 {
   if ( input.isEmpty() )
     return Intermediate;
 
-  QRegExp acceptable( "[" ALLOWED_CHARS "]+/[" ALLOWED_CHARS "]+",
+  TQRegExp acceptable( "[" ALLOWED_CHARS "]+/[" ALLOWED_CHARS "]+",
 		      false /*case-insens.*/);
   if ( acceptable.exactMatch( input ) )
     return Acceptable;
 
-  QRegExp intermediate( "[" ALLOWED_CHARS "]*/?[" ALLOWED_CHARS "]*",
+  TQRegExp intermediate( "[" ALLOWED_CHARS "]*/?[" ALLOWED_CHARS "]*",
 			false /*case-insensitive*/);
   if ( intermediate.exactMatch( input ) )
     return Intermediate;
@@ -81,10 +81,10 @@ QValidator::State KMimeTypeValidator::validate( QString & input, int& ) const
   return Invalid;
 }
 
-void KMimeTypeValidator::fixup( QString & input ) const
+void KMimeTypeValidator::fixup( TQString & input ) const
 {
-  QRegExp invalidChars("[^/" ALLOWED_CHARS "]+");
-  input.replace( invalidChars, QString::null);
+  TQRegExp invalidChars("[^/" ALLOWED_CHARS "]+");
+  input.replace( invalidChars, TQString::null);
 }
 
 #include "kstringvalidator.moc"

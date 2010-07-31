@@ -33,9 +33,9 @@
 
 namespace KJS {
 
-static QString cssPropertyName( const Identifier &p, bool& hadPixelPrefix )
+static TQString cssPropertyName( const Identifier &p, bool& hadPixelPrefix )
 {
-    QString prop = p.qstring();
+    TQString prop = p.qstring();
     int i = prop.length();
     while ( --i ) {
         char c = prop[i].latin1();
@@ -98,7 +98,7 @@ DOMCSSStyleDeclaration::~DOMCSSStyleDeclaration()
 bool DOMCSSStyleDeclaration::hasProperty(ExecState *exec, const Identifier &p) const
 {
   bool hadPixelPrefix;
-  QString cssprop = cssPropertyName(p, hadPixelPrefix);
+  TQString cssprop = cssPropertyName(p, hadPixelPrefix);
   if (DOM::getPropertyID(cssprop.latin1(), cssprop.length()))
       return true;
 
@@ -138,7 +138,7 @@ Value DOMCSSStyleDeclaration::tryGet(ExecState *exec, const Identifier &property
   // positioned element. if it is not a positioned element, return 0
   // from MSIE documentation ### IMPLEMENT THAT (Dirk)
   bool asNumber;
-  QString p = cssPropertyName(propertyName, asNumber);
+  TQString p = cssPropertyName(propertyName, asNumber);
 
 #ifdef KJS_VERBOSE
   kdDebug(6070) << "DOMCSSStyleDeclaration: converting to css property name: " << p << ( asNumber ? "px" : "" ) << endl;
@@ -172,8 +172,8 @@ void DOMCSSStyleDeclaration::tryPut(ExecState *exec, const Identifier &propertyN
   }
   else {
     bool pxSuffix;
-    QString prop = cssPropertyName(propertyName, pxSuffix);
-    QString propvalue = value.toString(exec).qstring();
+    TQString prop = cssPropertyName(propertyName, pxSuffix);
+    TQString propvalue = value.toString(exec).qstring();
 
     if (pxSuffix)
       propvalue += "px";
@@ -360,7 +360,7 @@ Value DOMStyleSheetList::tryGet(ExecState *exec, const Identifier &p) const
   DOM::NameNodeListImpl namedList( m_doc.documentElement().handle(), p.string() );
   int len = namedList.length();
   if ( len ) {
-    QValueList<DOM::Node> styleSheets;
+    TQValueList<DOM::Node> styleSheets;
     for ( int i = 0 ; i < len ; ++i ) {
       DOM::HTMLStyleElement elem = DOM::Node(namedList.item(i));
       if (!elem.isNull())

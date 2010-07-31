@@ -26,10 +26,10 @@
 #include "kmpropbackend.h"
 #include "kmpropdriver.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <klocale.h>
 
-KMLpdUiManager::KMLpdUiManager(QObject *parent, const char *name)
+KMLpdUiManager::KMLpdUiManager(TQObject *parent, const char *name)
 : KMUiManager(parent,name)
 {
 }
@@ -48,9 +48,9 @@ void KMLpdUiManager::setupWizard(KMWizard *wizard)
 	backend->addBackend(KMWizard::File,i18n("File printer (print to file)"),true);
 
 	KMManager	*mgr = KMFactory::self()->manager();
-	if (QFile::exists(mgr->driverDirectory()+"/smbprint")) backend->enableBackend(KMWizard::SMB,true);
-	if (QFile::exists(mgr->driverDirectory()+"/directprint")) backend->enableBackend(KMWizard::TCP,true);
-	if (QFile::exists(mgr->driverDirectory()+"/ncpprint")) backend->enableBackend(KMWizard::Custom+1,true);
+	if (TQFile::exists(mgr->driverDirectory()+"/smbprint")) backend->enableBackend(KMWizard::SMB,true);
+	if (TQFile::exists(mgr->driverDirectory()+"/directprint")) backend->enableBackend(KMWizard::TCP,true);
+	if (TQFile::exists(mgr->driverDirectory()+"/ncpprint")) backend->enableBackend(KMWizard::Custom+1,true);
 }
 
 void KMLpdUiManager::setupPropertyPages(KMPropertyPage *p)

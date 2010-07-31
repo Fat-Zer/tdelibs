@@ -21,9 +21,9 @@
 #ifndef __kbookmarkimporter_ns_h
 #define __kbookmarkimporter_ns_h
 
-#include <qdom.h>
-#include <qcstring.h>
-#include <qstringlist.h>
+#include <tqdom.h>
+#include <tqcstring.h>
+#include <tqstringlist.h>
 #include <ksimpleconfig.h>
 #include <kdemacros.h>
 
@@ -38,7 +38,7 @@ class KIO_EXPORT_DEPRECATED KNSBookmarkImporter : public QObject
 {
     Q_OBJECT
 public:
-    KNSBookmarkImporter( const QString & fileName ) : m_fileName(fileName) {}
+    KNSBookmarkImporter( const TQString & fileName ) : m_fileName(fileName) {}
     ~KNSBookmarkImporter() {}
 
     // for compat reasons only
@@ -46,17 +46,17 @@ public:
     // go for it. Set utf8 to true for Mozilla, false for Netscape.
     void parseNSBookmarks( bool utf8 );
 
-    static QString netscapeBookmarksFile( bool forSaving=false );
-    static QString mozillaBookmarksFile( bool forSaving=false );
+    static TQString netscapeBookmarksFile( bool forSaving=false );
+    static TQString mozillaBookmarksFile( bool forSaving=false );
 
 signals:
-    void newBookmark( const QString & text, const QCString & url, const QString & additionalInfo );
-    void newFolder( const QString & text, bool open, const QString & additionalInfo );
+    void newBookmark( const TQString & text, const TQCString & url, const TQString & additionalInfo );
+    void newFolder( const TQString & text, bool open, const TQString & additionalInfo );
     void newSeparator();
     void endFolder();
 
 protected:
-    QString m_fileName;
+    TQString m_fileName;
 };
 
 /**
@@ -70,7 +70,7 @@ public:
     KNSBookmarkImporterImpl() : m_utf8(false) { }
     void setUtf8(bool utf8) { m_utf8 = utf8; }
     virtual void parse();
-    virtual QString findDefaultLocation(bool forSaving = false) const;
+    virtual TQString findDefaultLocation(bool forSaving = false) const;
 private:
     bool m_utf8;
     class KNSBookmarkImporterImplPrivate *d;
@@ -97,7 +97,7 @@ private:
 class KIO_EXPORT_DEPRECATED KNSBookmarkExporter
 {
 public:
-    KNSBookmarkExporter(KBookmarkManager* mgr, const QString & fileName)
+    KNSBookmarkExporter(KBookmarkManager* mgr, const TQString & fileName)
       : m_fileName(fileName), m_pManager(mgr) { }
     ~KNSBookmarkExporter() {}
 
@@ -105,8 +105,8 @@ public:
     void write( bool utf8 );
 
 protected:
-    void writeFolder(QTextStream &stream, KBookmarkGroup parent);
-    QString m_fileName;
+    void writeFolder(TQTextStream &stream, KBookmarkGroup parent);
+    TQString m_fileName;
     KBookmarkManager* m_pManager;
 };
 
@@ -116,14 +116,14 @@ protected:
 class KIO_EXPORT KNSBookmarkExporterImpl : public KBookmarkExporterBase
 {
 public:
-    KNSBookmarkExporterImpl(KBookmarkManager* mgr, const QString & fileName)
+    KNSBookmarkExporterImpl(KBookmarkManager* mgr, const TQString & fileName)
       : KBookmarkExporterBase(mgr, fileName) 
     { ; }
     virtual ~KNSBookmarkExporterImpl() {}
     virtual void write(KBookmarkGroup);
     void setUtf8(bool);
 protected:
-    QString folderAsString(KBookmarkGroup) const;
+    TQString folderAsString(KBookmarkGroup) const;
 private:
     bool m_utf8;
     class KNSBookmarkExporterImplPrivate *d;

@@ -31,8 +31,8 @@ class VCardParser
     VCardParser();
     ~VCardParser();
 
-    static VCard::List parseVCards( const QString& text );
-    static QString createVCards( const VCard::List& list );
+    static VCard::List parseVCards( const TQString& text );
+    static TQString createVCards( const VCard::List& list );
 
   private:
     class VCardParserPrivate;

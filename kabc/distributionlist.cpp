@@ -18,9 +18,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qapplication.h>
-#include <qpair.h>
-#include <qvaluelist.h>
+#include <tqapplication.h>
+#include <tqpair.h>
+#include <tqvaluelist.h>
 
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
@@ -31,7 +31,7 @@
 using namespace KABC;
 
 DistributionList::DistributionList( DistributionListManager *manager,
-                                    const QString &name ) :
+                                    const TQString &name ) :
   mManager( manager ), mName( name )
 {
   mManager->insert( this );
@@ -42,21 +42,21 @@ DistributionList::~DistributionList()
   mManager->remove( this );
 }
 
-void DistributionList::setName( const QString &name )
+void DistributionList::setName( const TQString &name )
 {
   mName = name;
 }
 
-QString DistributionList::name() const
+TQString DistributionList::name() const
 {
   return mName;
 }
 
-void DistributionList::insertEntry( const Addressee &a, const QString &email )
+void DistributionList::insertEntry( const Addressee &a, const TQString &email )
 {
   Entry e( a, email );
 
-  QValueList<Entry>::Iterator it;
+  TQValueList<Entry>::Iterator it;
   for( it = mEntries.begin(); it != mEntries.end(); ++it ) {
     if ( (*it).addressee.uid() == a.uid() ) {
       /**
@@ -74,9 +74,9 @@ void DistributionList::insertEntry( const Addressee &a, const QString &email )
   mEntries.append( e );
 }
 
-void DistributionList::removeEntry( const Addressee &a, const QString &email )
+void DistributionList::removeEntry( const Addressee &a, const TQString &email )
 {
-  QValueList<Entry>::Iterator it;
+  TQValueList<Entry>::Iterator it;
   for( it = mEntries.begin(); it != mEntries.end(); ++it ) {
     if ( (*it).addressee.uid() == a.uid() && (*it).email == email ) {
       mEntries.remove( it );
@@ -85,14 +85,14 @@ void DistributionList::removeEntry( const Addressee &a, const QString &email )
   }
 }
 
-QStringList DistributionList::emails() const
+TQStringList DistributionList::emails() const
 {
-  QStringList emails;
+  TQStringList emails;
 
   Entry::List::ConstIterator it;
   for( it = mEntries.begin(); it != mEntries.end(); ++it ) {
     Addressee a = (*it).addressee;
-    QString email = (*it).email.isEmpty() ? a.fullEmail() :
+    TQString email = (*it).email.isEmpty() ? a.fullEmail() :
                                             a.fullEmail( (*it).email );
 
     if ( !email.isEmpty() ) {
@@ -108,13 +108,13 @@ DistributionList::Entry::List DistributionList::entries() const
   return mEntries;
 }
 
-typedef QValueList< QPair<QString, QString> > MissingEntryList;
+typedef TQValueList< QPair<TQString, TQString> > MissingEntryList;
 
 class DistributionListManager::DistributionListManagerPrivate
 {
   public:
     AddressBook *mAddressBook;
-    QMap< QString, MissingEntryList > mMissingEntries;
+    TQMap< TQString, MissingEntryList > mMissingEntries;
 };
 
 DistributionListManager::DistributionListManager( AddressBook *ab )
@@ -132,7 +132,7 @@ DistributionListManager::~DistributionListManager()
   d = 0;
 }
 
-DistributionList *DistributionListManager::list( const QString &name )
+DistributionList *DistributionListManager::list( const TQString &name )
 {
   DistributionList *list;
   for( list = mLists.first(); list; list = mLists.next() ) {
@@ -171,9 +171,9 @@ void DistributionListManager::remove( DistributionList *l )
   }
 }
 
-QStringList DistributionListManager::listNames()
+TQStringList DistributionListManager::listNames()
 {
-  QStringList names;
+  TQStringList names;
 
   DistributionList *list;
   for( list = mLists.first(); list; list = mLists.next() ) {
@@ -187,27 +187,27 @@ bool DistributionListManager::load()
 {
   KSimpleConfig cfg( locateLocal( "data", "kabc/distlists" ) );
 
-  QMap<QString,QString> entryMap = cfg.entryMap( "DistributionLists" );
+  TQMap<TQString,TQString> entryMap = cfg.entryMap( "DistributionLists" );
   cfg.setGroup( "DistributionLists" );
 
   // clear old lists
   mLists.clear();
   d->mMissingEntries.clear();
 
-  QMap<QString,QString>::ConstIterator it;
+  TQMap<TQString,TQString>::ConstIterator it;
   for( it = entryMap.constBegin(); it != entryMap.constEnd(); ++it ) {
-    QString name = it.key();
-    QStringList value = cfg.readListEntry( name );
+    TQString name = it.key();
+    TQStringList value = cfg.readListEntry( name );
 
     kdDebug(5700) << "DLM::load(): " << name << ": " << value.join(",") << endl;
 
     DistributionList *list = new DistributionList( this, name );
 
     MissingEntryList missingEntries;
-    QStringList::ConstIterator entryIt = value.constBegin();
+    TQStringList::ConstIterator entryIt = value.constBegin();
     while( entryIt != value.constEnd() ) {
-      QString id = *entryIt++;
-      QString email = *entryIt;
+      TQString id = *entryIt++;
+      TQString email = *entryIt;
 
       kdDebug(5700) << "----- Entry " << id << endl; 
       
@@ -242,7 +242,7 @@ bool DistributionListManager::save()
   for( list = mLists.first(); list; list = mLists.next() ) {
     kdDebug(5700) << "  Saving '" << list->name() << "'" << endl;
 
-    QStringList value;
+    TQStringList value;
     const DistributionList::Entry::List entries = list->entries();
     DistributionList::Entry::List::ConstIterator it;
     for( it = entries.begin(); it != entries.end(); ++it ) {
@@ -270,12 +270,12 @@ bool DistributionListManager::save()
 DistributionListWatcher* DistributionListWatcher::mSelf = 0;
 
 DistributionListWatcher::DistributionListWatcher()
- : QObject( qApp, "DistributionListWatcher" )
+ : TQObject( qApp, "DistributionListWatcher" )
 {
   mDirWatch = new KDirWatch;
   mDirWatch->addFile( locateLocal( "data", "kabc/distlists" ) );
   
-  connect( mDirWatch, SIGNAL( dirty( const QString& ) ), SIGNAL( changed() ) );
+  connect( mDirWatch, TQT_SIGNAL( dirty( const TQString& ) ), TQT_SIGNAL( changed() ) );
   mDirWatch->startScan();
 }
 
@@ -287,7 +287,7 @@ DistributionListWatcher::~DistributionListWatcher()
 
 DistributionListWatcher *DistributionListWatcher::self()
 {
-  kdWarning( !qApp ) << "No QApplication object available, you'll get a memleak!" << endl;
+  kdWarning( !qApp ) << "No TQApplication object available, you'll get a memleak!" << endl;
 
   if ( !mSelf )
     mSelf = new DistributionListWatcher();

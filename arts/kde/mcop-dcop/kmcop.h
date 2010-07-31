@@ -20,13 +20,13 @@
 #ifndef KMCOP_H
 #define KMCOP_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <dcopobject.h>
 
 class KMCOPPrivate;
 
-class KMCOP : public QObject,
+class KMCOP : public TQObject,
 			  public DCOPObject
 {
 Q_OBJECT
@@ -41,7 +41,7 @@ k_dcop:
 	void addInterfacesHackHackHack();
 
 private:
-	QCString correctType(const QCString &str);
+	TQCString correctType(const TQCString &str);
     KMCOPPrivate *d;
 };
 

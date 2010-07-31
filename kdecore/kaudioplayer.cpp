@@ -25,13 +25,13 @@
 
 class KAudioPlayerPrivate {
 public:
-	QString filename;
+	TQString filename;
 
-	KAudioPlayerPrivate(const QString &filename) : filename(filename) { }
+	KAudioPlayerPrivate(const TQString &filename) : filename(filename) { }
 };
 
-KAudioPlayer::KAudioPlayer( const QString& filename,
-			QObject* parent, const char* name ) : QObject(parent,name)
+KAudioPlayer::KAudioPlayer( const TQString& filename,
+			TQObject* parent, const char* name ) : TQObject(parent,name)
 {
 	d = new KAudioPlayerPrivate(filename);
 }
@@ -41,7 +41,7 @@ KAudioPlayer::~KAudioPlayer()
 	delete d;
 }
 
-void KAudioPlayer::play(const QString &filename)
+void KAudioPlayer::play(const TQString &filename)
 {
 	KAudioPlayer ap(filename);
 	ap.play();

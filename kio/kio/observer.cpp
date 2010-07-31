@@ -43,7 +43,7 @@
 
 using namespace KIO;
 
-template class QIntDict<KIO::Job>;
+template class TQIntDict<KIO::Job>;
 
 Observer * Observer::s_pObserver = 0L;
 
@@ -60,9 +60,9 @@ Observer::Observer() : DCOPObject("KIO::Observer")
     if ( !kapp->dcopClient()->isApplicationRegistered( "kio_uiserver" ) )
     {
         kdDebug(KDEBUG_OBSERVER) << "Starting kio_uiserver" << endl;
-        QString error;
+        TQString error;
         int ret = KApplication::startServiceByDesktopPath( "kio_uiserver.desktop",
-                                                             QStringList(), &error );
+                                                             TQStringList(), &error );
         if ( ret > 0 )
         {
             kdError() << "Couldn't start kio_uiserver from kio_uiserver.desktop: " << error << endl;
@@ -162,7 +162,7 @@ void Observer::slotPercent( KIO::Job* job, unsigned long percent )
   m_uiserver->percent( job->progressId(), percent );
 }
 
-void Observer::slotInfoMessage( KIO::Job* job, const QString & msg )
+void Observer::slotInfoMessage( KIO::Job* job, const TQString & msg )
 {
   m_uiserver->infoMessage( job->progressId(), msg );
 }
@@ -208,18 +208,18 @@ void Observer::stating( KIO::Job* job, const KURL& url )
   m_uiserver->stating( job->progressId(), url );
 }
 
-void Observer::mounting( KIO::Job* job, const QString & dev, const QString & point )
+void Observer::mounting( KIO::Job* job, const TQString & dev, const TQString & point )
 {
   m_uiserver->mounting( job->progressId(), dev, point );
 }
 
-void Observer::unmounting( KIO::Job* job, const QString & point )
+void Observer::unmounting( KIO::Job* job, const TQString & point )
 {
   m_uiserver->unmounting( job->progressId(), point );
 }
 
-bool Observer::openPassDlg( const QString& prompt, QString& user,
-			    QString& pass, bool readOnly )
+bool Observer::openPassDlg( const TQString& prompt, TQString& user,
+			    TQString& pass, bool readOnly )
 {
    AuthInfo info;
    info.prompt = prompt;
@@ -243,7 +243,7 @@ bool Observer::openPassDlg( KIO::AuthInfo& info )
                                                           &info.keepPassword, info.prompt,
                                                           info.readOnly, info.caption,
                                                           info.comment, info.commentLabel );
-    if ( result == QDialog::Accepted )
+    if ( result == TQDialog::Accepted )
     {
         info.setModified( true );
         return true;
@@ -251,16 +251,16 @@ bool Observer::openPassDlg( KIO::AuthInfo& info )
     return false;
 }
 
-int Observer::messageBox( int progressId, int type, const QString &text,
-                          const QString &caption, const QString &buttonYes,
-                          const QString &buttonNo )
+int Observer::messageBox( int progressId, int type, const TQString &text,
+                          const TQString &caption, const TQString &buttonYes,
+                          const TQString &buttonNo )
 {
-    return messageBox( progressId, type, text, caption, buttonYes, buttonNo, QString::null );
+    return messageBox( progressId, type, text, caption, buttonYes, buttonNo, TQString::null );
 }
 
-int Observer::messageBox( int progressId, int type, const QString &text,
-                          const QString &caption, const QString &buttonYes,
-                          const QString &buttonNo, const QString &dontAskAgainName )
+int Observer::messageBox( int progressId, int type, const TQString &text,
+                          const TQString &caption, const TQString &buttonYes,
+                          const TQString &buttonNo, const TQString &dontAskAgainName )
 {
     kdDebug() << "Observer::messageBox " << type << " " << text << " - " << caption << endl;
     int result = -1;
@@ -291,7 +291,7 @@ int Observer::messageBox( int progressId, int type, const QString &text,
             break;
         case KIO::SlaveBase::SSLMessageBox:
         {
-            QCString observerAppId = caption.utf8(); // hack, see slaveinterface.cpp
+            TQCString observerAppId = caption.utf8(); // hack, see slaveinterface.cpp
             // Contact the object "KIO::Observer" in the application <appId>
             // Yes, this could be the same application we are, but not necessarily.
             Observer_stub observer( observerAppId, "KIO::Observer" );
@@ -301,12 +301,12 @@ int Observer::messageBox( int progressId, int type, const QString &text,
             KSSLCertificate *x = KSSLCertificate::fromString(meta["ssl_peer_certificate"].local8Bit());
             if (x) {
                // Set the chain back onto the certificate
-               QStringList cl =
-                      QStringList::split(QString("\n"), meta["ssl_peer_chain"]);
-               QPtrList<KSSLCertificate> ncl;
+               TQStringList cl =
+                      TQStringList::split(TQString("\n"), meta["ssl_peer_chain"]);
+               TQPtrList<KSSLCertificate> ncl;
 
                ncl.setAutoDelete(true);
-               for (QStringList::Iterator it = cl.begin(); it != cl.end(); ++it) {
+               for (TQStringList::Iterator it = cl.begin(); it != cl.end(); ++it) {
                   KSSLCertificate *y = KSSLCertificate::fromString((*it).local8Bit());
                   if (y) ncl.append(y);
                }
@@ -344,20 +344,20 @@ int Observer::messageBox( int progressId, int type, const QString &text,
     delete config;
     return result;
 #if 0
-    QByteArray data, replyData;
-    QCString replyType;
-    QDataStream arg( data, IO_WriteOnly );
+    TQByteArray data, replyData;
+    TQCString replyType;
+    TQDataStream arg( data, IO_WriteOnly );
     arg << progressId;
     arg << type;
     arg << text;
     arg << caption;
     arg << buttonYes;
     arg << buttonNo;
-    if ( kapp->dcopClient()->call( "kio_uiserver", "UIServer", "messageBox(int,int,QString,QString,QString,QString)", data, replyType, replyData, true )
+    if ( kapp->dcopClient()->call( "kio_uiserver", "UIServer", "messageBox(int,int,TQString,TQString,TQString,TQString)", data, replyType, replyData, true )
         && replyType == "int" )
     {
         int result;
-        QDataStream _reply_stream( replyData, IO_ReadOnly );
+        TQDataStream _reply_stream( replyData, IO_ReadOnly );
         _reply_stream >> result;
         kdDebug(KDEBUG_OBSERVER) << "Observer::messageBox got result " << result << endl;
         return result;
@@ -368,9 +368,9 @@ int Observer::messageBox( int progressId, int type, const QString &text,
 }
 
 RenameDlg_Result Observer::open_RenameDlg( KIO::Job* job,
-                                           const QString & caption,
-                                           const QString& src, const QString & dest,
-                                           RenameDlg_Mode mode, QString& newDest,
+                                           const TQString & caption,
+                                           const TQString& src, const TQString & dest,
+                                           RenameDlg_Mode mode, TQString& newDest,
                                            KIO::filesize_t sizeSrc,
                                            KIO::filesize_t sizeDest,
                                            time_t ctimeSrc,
@@ -398,7 +398,7 @@ RenameDlg_Result Observer::open_RenameDlg( KIO::Job* job,
 
 SkipDlg_Result Observer::open_SkipDlg( KIO::Job* job,
                                        bool _multi,
-                                       const QString& _error_text )
+                                       const TQString& _error_text )
 {
   kdDebug(KDEBUG_OBSERVER) << "Observer::open_SkipDlg job=" << job << " progressId=" << job->progressId() << endl;
   // Hide existing dialog box if any

@@ -23,7 +23,7 @@
 
 #include "rendering/render_table.h"
 
-#include <qvaluevector.h>
+#include <tqvaluevector.h>
 
 #define DEBUG_CARETMODE 0
 
@@ -112,13 +112,13 @@ class LinearDocument;
  * @since 3.3
  * @internal
  */
-template<class T> class MassDeleter : public QValueVector<T *> {
+template<class T> class MassDeleter : public TQValueVector<T *> {
 public:
   MassDeleter(size_t reserved = 1) { this->reserve(reserved); }
   ~MassDeleter()
   {
-    typename QValueVector<T *>::Iterator nd = this->end();
-    for (typename QValueVector<T *>::Iterator it = this->begin(); it != nd; ++it)
+    typename TQValueVector<T *>::Iterator nd = this->end();
+    for (typename TQValueVector<T *>::Iterator it = this->begin(); it != nd; ++it)
       delete *it;
   }
 };
@@ -218,7 +218,7 @@ public:
   long maxOffset() const { return _box && !isLineBreak() ? _box->maxOffset() : 0; }
 
 #if DEBUG_CARETMODE > 0
-  void dump(QTextStream &ts, const QString &ind) const;
+  void dump(TQTextStream &ts, const TQString &ind) const;
 #endif
 
   friend class CaretBoxLine;
@@ -398,12 +398,12 @@ public:
   	RenderBox *cb, bool outside, bool outsideEnd, CaretBoxIterator &iter) /*KDE_NO_EXPORT*/;
 
 #if DEBUG_CARETMODE > 0
-  void dump(QTextStream &ts, const QString &ind) const;
-  QString information() const
+  void dump(TQTextStream &ts, const TQString &ind) const;
+  TQString information() const
   {
-    QString result;
-    QTextStream ts(&result, IO_WriteOnly);
-    dump(ts, QString::null);
+    TQString result;
+    TQTextStream ts(&result, IO_WriteOnly);
+    dump(ts, TQString::null);
     return result;
   }
 #endif
@@ -464,7 +464,7 @@ protected:
    * @param left true to add left edge, false to add right edge
    * @param rtl true if direction is rtl
    */
-  void addCreatedInlineBoxEdge(InlineBox *box, const QFontMetrics &fm,
+  void addCreatedInlineBoxEdge(InlineBox *box, const TQFontMetrics &fm,
   	bool left, bool rtl) /*KDE_NO_EXPORT*/;
   /** creates and adds the edge of an inline flow box
    * @param flowBox inline flow box
@@ -472,13 +472,13 @@ protected:
    * @param left true to add left edge, false to add right edge
    * @param rtl true if direction is rtl
    */
-  void addCreatedFlowBoxEdge(InlineFlowBox *flowBox, const QFontMetrics &fm,
+  void addCreatedFlowBoxEdge(InlineFlowBox *flowBox, const TQFontMetrics &fm,
   	bool left, bool rtl) /*KDE_NO_EXPORT*/;
   /** creates and adds the inside of an inline flow box
    * @param flowBox inline flow box
    * @param fm font metrics of inline flow box
    */
-  void addCreatedFlowBoxInside(InlineFlowBox *flowBox, const QFontMetrics &fm) /*KDE_NO_EXPORT*/;
+  void addCreatedFlowBoxInside(InlineFlowBox *flowBox, const TQFontMetrics &fm) /*KDE_NO_EXPORT*/;
 
   friend class CaretBoxIterator;
 };
@@ -1037,7 +1037,7 @@ public:
   /** returns the current character as a unicode symbol, substituting
    * a blank for a non-text node.
    */
-  QChar operator *() const { return QChar(_char >= 0 ? _char : ' '); }
+  TQChar operator *() const { return TQChar(_char >= 0 ? _char : ' '); }
 
   /** returns true when the end of the document has been reached.
    */

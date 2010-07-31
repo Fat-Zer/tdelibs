@@ -19,7 +19,7 @@
 #ifndef __kservices_p_h__
 #define __kservices_p_h__
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <kprogress.h>
 
@@ -27,14 +27,14 @@ class KServiceProgressDialog : public KProgressDialog
 {
    Q_OBJECT
 public:
-   KServiceProgressDialog(QWidget *parent, const char *name, 
-                          const QString &caption, const QString &text);
+   KServiceProgressDialog(TQWidget *parent, const char *name, 
+                          const TQString &caption, const TQString &text);
 public slots:   
    void slotProgress();
    void slotFinished();
 
 private:
-   QTimer m_timer;
+   TQTimer m_timer;
    int m_timeStep;
 };
 

@@ -48,13 +48,13 @@ public:
 private:
     void createLayout();
 
-    QWidget* makeBoolWidget(const KFileMetaInfoItem& item, QWidget* parent);
-    QWidget* makeIntWidget(const KFileMetaInfoItem& item, QWidget* parent,
-                                                    QString& valClass);
-    QWidget* makeStringWidget(const KFileMetaInfoItem& item, QWidget* parent,
-                                                       QString& valClass);
-    QWidget* makeDateTimeWidget(const KFileMetaInfoItem& item, QWidget* parent,
-                                                     QString& valClass);
+    TQWidget* makeBoolWidget(const KFileMetaInfoItem& item, TQWidget* parent);
+    TQWidget* makeIntWidget(const KFileMetaInfoItem& item, TQWidget* parent,
+                                                    TQString& valClass);
+    TQWidget* makeStringWidget(const KFileMetaInfoItem& item, TQWidget* parent,
+                                                       TQString& valClass);
+    TQWidget* makeDateTimeWidget(const KFileMetaInfoItem& item, TQWidget* parent,
+                                                     TQString& valClass);
 
 private slots:
     // Code disabled until the "Add" button is implemented

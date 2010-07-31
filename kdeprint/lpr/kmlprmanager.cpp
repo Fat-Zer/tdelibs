@@ -28,8 +28,8 @@
 #include "driver.h"
 #include "editentrydialog.h"
 
-#include <qfileinfo.h>
-#include <qptrlist.h>
+#include <tqfileinfo.h>
+#include <tqptrlist.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
@@ -42,7 +42,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-KMLprManager::KMLprManager(QObject *parent, const char *name, const QStringList & /*args*/)
+KMLprManager::KMLprManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMManager(parent,name)
 {
 	m_handlers.setAutoDelete(true);
@@ -78,7 +78,7 @@ void KMLprManager::listPrinters()
 		// cleanup previous entries
 		m_entries.clear();
 		// notify handlers
-		QPtrListIterator<LprHandler>	hit(m_handlerlist);
+		TQPtrListIterator<LprHandler>	hit(m_handlerlist);
 		for (; hit.current(); ++hit)
 			hit.current()->reset();
 
@@ -91,7 +91,7 @@ void KMLprManager::listPrinters()
 			reader.setPrintcapFile(&f);
 			while ((entry = reader.nextEntry()) != NULL)
 			{
-				QPtrListIterator<LprHandler>	it(m_handlerlist);
+				TQPtrListIterator<LprHandler>	it(m_handlerlist);
 				for (; it.current(); ++it)
 					if (it.current()->validate(entry))
 					{
@@ -110,7 +110,7 @@ void KMLprManager::listPrinters()
 	}
 	else
 	{
-		QPtrListIterator<KMPrinter>	it(m_printers);
+		TQPtrListIterator<KMPrinter>	it(m_printers);
 		for (; it.current(); ++it)
 			if (!it.current()->isSpecial())
 			{
@@ -138,9 +138,9 @@ void KMLprManager::initHandlers()
 
 	// now load external handlers
 	QStringList	l = KGlobal::dirs()->findAllResources("data", "kdeprint/lpr/*.la");
-	for (QStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
+	for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 	{
-		KLibrary	*library = KLibLoader::self()->library(QFile::encodeName(*it));
+		KLibrary	*library = KLibLoader::self()->library(TQFile::encodeName(*it));
 		if (library)
 		{
 			kdDebug() << "loading external handler from " << *it << endl;
@@ -228,10 +228,10 @@ DrMain* KMLprManager::loadPrinterDriver(KMPrinter *prt, bool config)
 	return NULL;
 }
 
-DrMain* KMLprManager::loadFileDriver(const QString& filename)
+DrMain* KMLprManager::loadFileDriver(const TQString& filename)
 {
 	int	p = filename.find('/');
-	QString	handler_str = (p != -1 ? filename.left(p) : QString::fromLatin1("default"));
+	QString	handler_str = (p != -1 ? filename.left(p) : TQString::fromLatin1("default"));
 	LprHandler	*handler = m_handlers.find(handler_str);
 	if (handler)
 	{
@@ -293,7 +293,7 @@ bool KMLprManager::savePrintcapFile()
 	if (f.open(IO_WriteOnly))
 	{
 		QTextStream	t(&f);
-		QDictIterator<PrintcapEntry>	it(m_entries);
+		TQDictIterator<PrintcapEntry>	it(m_entries);
 		for (; it.current(); ++it)
 		{
 			it.current()->writeEntry(t);
@@ -361,7 +361,7 @@ bool KMLprManager::createPrinter(KMPrinter *prt)
 	entry->addField("mx", Field::Integer, "0");
 	entry->addField("sd", Field::String, sd);
 	if (!prt->option("kde-aliases").isEmpty())
-		entry->aliases += QStringList::split("|", prt->option("kde-aliases"), false);
+		entry->aliases += TQStringList::split("|", prt->option("kde-aliases"), false);
 
 	// insert the new entry and save printcap file
 	m_entries.insert(prt->printerName(), entry);
@@ -405,7 +405,7 @@ bool KMLprManager::removePrinter(KMPrinter *prt)
 			{
 				// printcap file saved, entry can be deleted now
 				delete entry;
-				status =  (::system(QFile::encodeName("rm -rf " + KProcess::quote(sd))) == 0);
+				status =  (::system(TQFile::encodeName("rm -rf " + KProcess::quote(sd))) == 0);
 				if (!status)
 					setErrorMsg(i18n("Unable to remove spool directory %1. "
 					                 "Check that you have write permissions "
@@ -420,14 +420,14 @@ bool KMLprManager::removePrinter(KMPrinter *prt)
 	return false;
 }
 
-QString KMLprManager::driverDbCreationProgram()
+TQString KMLprManager::driverDbCreationProgram()
 {
-	return QString::fromLatin1("make_driver_db_lpr");
+	return TQString::fromLatin1("make_driver_db_lpr");
 }
 
-QString KMLprManager::driverDirectory()
+TQString KMLprManager::driverDirectory()
 {
-	QPtrListIterator<LprHandler>	it(m_handlerlist);
+	TQPtrListIterator<LprHandler>	it(m_handlerlist);
 	QString	dbDirs;
 	for (; it.current(); ++it)
 	{
@@ -440,7 +440,7 @@ QString KMLprManager::driverDirectory()
 	return dbDirs;
 }
 
-QString KMLprManager::printOptions(KPrinter *prt)
+TQString KMLprManager::printOptions(KPrinter *prt)
 {
 	KMPrinter	*mprt = findPrinter(prt->printerName());
 	QString	opts;
@@ -450,12 +450,12 @@ QString KMLprManager::printOptions(KPrinter *prt)
 		if (handler)
 			return handler->printOptions(prt);
 	}
-	return QString::null;
+	return TQString::null;
 }
 
 void KMLprManager::createPluginActions(KActionCollection *coll)
 {
-	KAction	*act = new KAction(i18n("&Edit printcap Entry..."), "kdeprint_report", 0, this, SLOT(slotEditPrintcap()), coll, "plugin_editprintcap");
+	KAction	*act = new KAction(i18n("&Edit printcap Entry..."), "kdeprint_report", 0, this, TQT_SLOT(slotEditPrintcap()), coll, "plugin_editprintcap");
 	act->setGroup("plugin");
 }
 
@@ -473,7 +473,7 @@ void KMLprManager::slotEditPrintcap()
 	    i18n("Editing a printcap entry manually should only be "
 		 "done by confirmed system administrator. This may "
 		 "prevent your printer from working. Do you want to "
-		 "continue?"), QString::null, KStdGuiItem::cont(),
+		 "continue?"), TQString::null, KStdGuiItem::cont(),
 	    "editPrintcap") == KMessageBox::Cancel)
 		return;
 
@@ -484,7 +484,7 @@ void KMLprManager::slotEditPrintcap()
 	}
 }
 
-QString KMLprManager::stateInformation()
+TQString KMLprManager::stateInformation()
 {
 	return i18n("Spooler type: %1").arg(LprSettings::self()->mode() == LprSettings::LPR ? "LPR (BSD compatible)" : "LPRng");
 }

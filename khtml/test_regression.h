@@ -25,7 +25,7 @@
 
 #include <khtml_part.h>
 #include <kurl.h>
-#include <qobject.h>
+#include <tqobject.h>
 #include <kjs/ustring.h>
 #include <kjs/object.h>
 #include <kjs/interpreter.h>
@@ -47,7 +47,7 @@ public:
     bool m_completed;
     KHTMLPart *m_part;
     int m_timer_waits;
-    QTimer *m_timeout_timer;
+    TQTimer *m_timeout_timer;
 public slots:
     void partCompleted();
     void timeout();
@@ -127,41 +127,41 @@ class RegressionTest : public QObject
   Q_OBJECT
 public:
 
-    RegressionTest(KHTMLPart *part, const QString &baseDir, const QString &outputDir,
+    RegressionTest(KHTMLPart *part, const TQString &baseDir, const TQString &outputDir,
 		   bool _genOutput, bool runJS, bool runHTML);
     ~RegressionTest();
 
     enum OutputType { DOMTree, RenderTree };
-    QString getPartOutput( OutputType type );
-    void getPartDOMOutput( QTextStream &outputStream, KHTMLPart* part, uint indent );
-    void dumpRenderTree( QTextStream &outputStream, KHTMLPart* part );
-    void testStaticFile(const QString& filename);
-    void testJSFile(const QString& filename);
+    TQString getPartOutput( OutputType type );
+    void getPartDOMOutput( TQTextStream &outputStream, KHTMLPart* part, uint indent );
+    void dumpRenderTree( TQTextStream &outputStream, KHTMLPart* part );
+    void testStaticFile(const TQString& filename);
+    void testJSFile(const TQString& filename);
     enum CheckResult { Failure = 0, Success = 1, Ignored = 2 };
-    CheckResult checkOutput(const QString& againstFilename);
-    CheckResult checkPaintdump( const QString& againstFilename);
+    CheckResult checkOutput(const TQString& againstFilename);
+    CheckResult checkPaintdump( const TQString& againstFilename);
     enum FailureType { NoFailure = 0, AllFailure = 1, RenderFailure = 2, DomFailure = 4, PaintFailure = 8, JSFailure = 16};
-    bool runTests(QString relPath = QString::null, bool mustExist = false, int known_failure = NoFailure);
-    bool reportResult( bool passed, const QString & description = QString::null );
-    bool reportResult(CheckResult result, const QString & description = QString::null );
-    void createMissingDirs(const QString &path);
+    bool runTests(TQString relPath = TQString::null, bool mustExist = false, int known_failure = NoFailure);
+    bool reportResult( bool passed, const TQString & description = TQString::null );
+    bool reportResult(CheckResult result, const TQString & description = TQString::null );
+    void createMissingDirs(const TQString &path);
 
-    QImage renderToImage();
-    bool imageEqual( const QImage &lhs, const QImage &rhs );
-    void createLink( const QString& test, int failures );
-    void doJavascriptReport( const QString &test );
-    void doFailureReport( const QString& test, int failures );
+    TQImage renderToImage();
+    bool imageEqual( const TQImage &lhs, const TQImage &rhs );
+    void createLink( const TQString& test, int failures );
+    void doJavascriptReport( const TQString &test );
+    void doFailureReport( const TQString& test, int failures );
 
     KHTMLPart *m_part;
-    QString m_baseDir;
-    QString m_outputDir;
+    TQString m_baseDir;
+    TQString m_outputDir;
     bool m_genOutput;
-    QString m_currentBase;
+    TQString m_currentBase;
 
-    QString m_currentOutput;
-    QString m_currentCategory;
-    QString m_currentTest;
-    QPixmap* m_paintBuffer;
+    TQString m_currentOutput;
+    TQString m_currentCategory;
+    TQString m_currentTest;
+    TQPixmap* m_paintBuffer;
 
     bool m_getOutput;
     bool m_runJS;
@@ -178,12 +178,12 @@ public:
     static RegressionTest *curr;
 
 private:
-    void printDescription(const QString& description);
+    void printDescription(const TQString& description);
 
-    static bool svnIgnored( const QString &filename );
+    static bool svnIgnored( const TQString &filename );
 
 private:
-    void evalJS( KJS::ScriptInterpreter &interp, const QString &filename, bool report ); // used by testJS
+    void evalJS( KJS::ScriptInterpreter &interp, const TQString &filename, bool report ); // used by testJS
 
 private slots:
     void slotOpenURL(const KURL &url, const KParts::URLArgs &args);

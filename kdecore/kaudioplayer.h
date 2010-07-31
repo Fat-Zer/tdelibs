@@ -23,7 +23,7 @@
 #ifndef __KAUDIOPLAYER_H__
 #define __KAUDIOPLAYER_H__
 
-#include <qobject.h>
+#include <tqobject.h>
 #include "kdelibs_export.h"
 
 class KAudioPlayerPrivate;
@@ -48,23 +48,23 @@ class KAudioPlayerPrivate;
  *
  * \code
  *   KAudioPlayer player("/var/share/foo.wav");
- *   connect(&button, SIGNAL(clicked()), &player, SLOT(play()));
+ *   connect(&button, TQT_SIGNAL(clicked()), &player, TQT_SLOT(play()));
  * \endcode
  *
  */
 //REVISED: hausmann
-class KDECORE_EXPORT KAudioPlayer : public QObject {
+class KDECORE_EXPORT KAudioPlayer : public TQObject {
 Q_OBJECT
 public:
 	/**
 	 * Constructor.
 	 *
 	 * @param filename Absolute path to the filename of the sound file to play
-	 * @param parent A parent QObject for this KAudioPlayer
+	 * @param parent A parent TQObject for this KAudioPlayer
 	 * @param name An internal name for this KAudioPlayer
 	 */
-	KAudioPlayer( const QString& filename,
-			QObject* parent = 0, const char* name = 0 );
+	KAudioPlayer( const TQString& filename,
+			TQObject* parent = 0, const char* name = 0 );
 
 	/**
 	 * Destructor.
@@ -77,7 +77,7 @@ public:
 	 * @param filename Absolute path to the filename of the sound file to play.
 	 *                if not absolute, goes off KDEDIR/share/sounds/ (preferred)
 	 */
-	static void play(const QString &filename);
+	static void play(const TQString &filename);
 
 public slots:
 	/**

@@ -23,13 +23,13 @@
 #ifndef _DOM_DOMStringImpl_h_
 #define _DOM_DOMStringImpl_h_
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include "dom/dom_misc.h"
 #include "misc/khtmllayout.h"
 #include "misc/shared.h"
 
-#define QT_ALLOC_QCHAR_VEC( N ) (QChar*) new char[ sizeof(QChar)*( N ) ]
+#define QT_ALLOC_QCHAR_VEC( N ) (TQChar*) new char[ sizeof(TQChar)*( N ) ]
 #define QT_DELETE_QCHAR_VEC( P ) delete[] ((char*)( P ))
 
 namespace DOM {
@@ -42,11 +42,11 @@ private:
 protected:
     DOMStringImpl() { s = 0, l = 0; }
 public:
-    DOMStringImpl(const QChar *str, unsigned int len) {
+    DOMStringImpl(const TQChar *str, unsigned int len) {
 	bool havestr = str && len;
 	s = QT_ALLOC_QCHAR_VEC( havestr ? len : 1 );
 	if(str && len) {
-	    memcpy( s, str, len * sizeof(QChar) );
+	    memcpy( s, str, len * sizeof(TQChar) );
 	    l = len;
 	} else {
 	    // crash protection
@@ -56,7 +56,7 @@ public:
     }
 
     explicit DOMStringImpl(const char *str);
-    explicit DOMStringImpl(const QChar &ch) {
+    explicit DOMStringImpl(const TQChar &ch) {
 	s = QT_ALLOC_QCHAR_VEC( 1 );
 	s[0] = ch;
 	l = 1;
@@ -78,7 +78,7 @@ public:
     DOMStringImpl *substring(unsigned int pos, unsigned int len);
     DOMStringImpl *collapseWhiteSpace(bool preserveLF, bool preserveWS);
 
-    const QChar &operator [] (int pos) { return s[pos]; }
+    const TQChar &operator [] (int pos) { return s[pos]; }
     bool containsOnlyWhitespace() const;
 
     // ignores trailing garbage, unlike QString
@@ -92,12 +92,12 @@ public:
     DOMStringImpl *capitalize(bool noFirstCap=false) const;
     DOMStringImpl *escapeHTML();
 
-    QChar *unicode() const { return s; }
+    TQChar *unicode() const { return s; }
     uint length() const { return l; }
-    QString string() const;
+    TQString string() const;
 
     unsigned int l;
-    QChar *s;
+    TQChar *s;
 };
 
 }

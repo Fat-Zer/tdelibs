@@ -19,8 +19,8 @@
 #ifndef __ktexteditor_configinterfaceextension_h__
 #define __ktexteditor_configinterfaceextension_h__
 
-#include <qwidget.h>
-#include <qpixmap.h>
+#include <tqwidget.h>
+#include <tqpixmap.h>
 #include <kicontheme.h>
 
 namespace KTextEditor
@@ -31,7 +31,7 @@ class KTEXTEDITOR_EXPORT ConfigPage : public QWidget
   Q_OBJECT
 
   public:
-    ConfigPage ( QWidget *parent=0, const char *name=0 );
+    ConfigPage ( TQWidget *parent=0, const char *name=0 );
     virtual ~ConfigPage ();
 
   //
@@ -75,7 +75,7 @@ class KTEXTEDITOR_EXPORT ConfigInterfaceExtension
     unsigned int configInterfaceExtensionNumber () const;
     
   protected:  
-    void setConfigInterfaceExtensionDCOPSuffix (const QCString &suffix); 
+    void setConfigInterfaceExtensionDCOPSuffix (const TQCString &suffix); 
 
   //
   // slots !!!
@@ -91,11 +91,11 @@ class KTEXTEDITOR_EXPORT ConfigInterfaceExtension
       config pages from 0 to configPages()-1 are available
       if configPages() > 0
     */ 
-    virtual ConfigPage *configPage (uint number = 0, QWidget *parent = 0, const char *name=0 ) = 0;
+    virtual ConfigPage *configPage (uint number = 0, TQWidget *parent = 0, const char *name=0 ) = 0;
   
-    virtual QString configPageName (uint number = 0) const = 0;
-    virtual QString configPageFullName (uint number = 0) const = 0;
-    virtual QPixmap configPagePixmap (uint number = 0, int size = KIcon::SizeSmall) const = 0;
+    virtual TQString configPageName (uint number = 0) const = 0;
+    virtual TQString configPageFullName (uint number = 0) const = 0;
+    virtual TQPixmap configPagePixmap (uint number = 0, int size = KIcon::SizeSmall) const = 0;
     
     
   private:

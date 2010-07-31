@@ -20,7 +20,7 @@
 *                                                                            *
 *  KProgressBox -- progress indicator widget for KDE                         *
 *  Original QRangeControl-based version written by Martynas Kunigelis        *
-*  Current QProgressBar based version by Aaron Seigo                         *
+*  Current TQProgressBar based version by Aaron Seigo                         *
 *  Textbox extension by Timothy Pearson                                      * 
 *                                                                            *
 *****************************************************************************/
@@ -28,7 +28,7 @@
 #ifndef _KProgressBox_H
 #define _KProgressBox_H "$Id: KProgressBox.h 589356 2006-09-28 00:58:09Z tpearson $"
 
-#include <qprogressbar.h>
+#include <tqprogressbar.h>
 #include <kdialogbase.h>
 #include <kprogress.h>
 #include <ktextedit.h>
@@ -65,9 +65,9 @@ class KDEUI_EXPORT KProgressBoxDialog : public KDialogBase
          * @param text Text to display in the dialog
          * @param modal Set to true to make the dialog modal
          */
-        KProgressBoxDialog(QWidget* parent = 0, const char* name = 0,
-                        const QString& caption = QString::null,
-                        const QString& text = QString::null,
+        KProgressBoxDialog(TQWidget* parent = 0, const char* name = 0,
+                        const TQString& caption = TQString::null,
+                        const TQString& text = TQString::null,
                         bool modal = false);
 
         /**
@@ -108,19 +108,19 @@ class KDEUI_EXPORT KProgressBoxDialog : public KDialogBase
          *
          * @param text the text to display
          */
-        void    setLabel(const QString & text);
+        void    setLabel(const TQString & text);
 
         /**
          * Returns the current dialog text
          * @deprecated
          */
         // ### Remove this KDE 4.0
-        QString labelText() KDE_DEPRECATED;
+        TQString labelText() KDE_DEPRECATED;
 
         /**
          * Returns the current dialog text
          */
-        QString labelText() const;
+        TQString labelText() const;
 
         /**
          * Sets whether or not the user can cancel the process.
@@ -225,19 +225,19 @@ class KDEUI_EXPORT KProgressBoxDialog : public KDialogBase
         /**
          * Sets the text to appear on the cancel button.
          */
-        void setButtonText(const QString&);
+        void setButtonText(const TQString&);
 
         /**
          * Returns the text on the cancel button
          * @deprecated
          */
         // ### Remove this KDE 4.0
-        QString buttonText() KDE_DEPRECATED;
+        TQString buttonText() KDE_DEPRECATED;
 
         /**
          * Returns the text on the cancel button
          */
-        QString buttonText() const;
+        TQString buttonText() const;
 
         /**
          * Set the minimum number of milliseconds to wait before
@@ -275,11 +275,11 @@ class KDEUI_EXPORT KProgressBoxDialog : public KDialogBase
         bool       mAllowCancel;
         bool       mAllowTextEdit;
         bool       mShown;
-        QString    mCancelText;
-        QLabel*    mLabel;
+        TQString    mCancelText;
+        TQLabel*    mLabel;
         KProgress* mProgressBar;
         KTextEdit* mTextBox;
-        QTimer*    mShowTimer;
+        TQTimer*    mShowTimer;
         int        mMinDuration;
     protected:
 	virtual void virtual_hook( int id, void* data );

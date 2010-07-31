@@ -11,13 +11,13 @@ class TestModule : public KDEDModule
    Q_OBJECT
    K_DCOP
 public:
-   TestModule(const QCString &obj);
+   TestModule(const TQCString &obj);
 
    void idle();
 
 k_dcop:
-   QString world();
-   void registerMe(const QCString &app);
+   TQString world();
+   void registerMe(const TQCString &app);
 };
 
 #endif

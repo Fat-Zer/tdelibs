@@ -19,11 +19,11 @@ class QPoint;
 class QRect;
 struct KPixmapIOPrivate;
 /**
- * @short Fast QImage to/from QPixmap conversion.
+ * @short Fast TQImage to/from TQPixmap conversion.
  * @author Geert Jansen <jansen@kde.org>
  * @version $Id$
  *
- * KPixmapIO implements a fast path for QPixmap to/from QImage conversions.
+ * KPixmapIO implements a fast path for TQPixmap to/from TQImage conversions.
  * It uses the MIT-SHM shared memory extension for this. If this extension is
  * not available, it will fall back to standard Qt methods.
  *
@@ -95,14 +95,14 @@ public:
      * @param image The image to convert.
      * @return The pixmap containing the image.
      */
-    QPixmap convertToPixmap(const QImage &image);
+    TQPixmap convertToPixmap(const TQImage &image);
 
     /**
      * Convert a pixmap to an image.
      * @param pixmap The pixmap to convert.
      * @return The image.
      */
-    QImage convertToImage(const QPixmap &pixmap);
+    TQImage convertToImage(const TQPixmap &pixmap);
 
     /**
      * Bitblt an image onto a pixmap.
@@ -111,13 +111,13 @@ public:
      * @param dy Destination y offset.
      * @param src The image to load.
      */
-    void putImage(QPixmap *dst, int dx, int dy, const QImage *src);
+    void putImage(TQPixmap *dst, int dx, int dy, const TQImage *src);
 
     /**
      * This function is identical to the one above. It only differs in the
      * arguments it accepts.
      */
-    void putImage(QPixmap *dst, const QPoint &offset, const QImage *src);
+    void putImage(TQPixmap *dst, const TQPoint &offset, const TQImage *src);
 
     /**
      * Transfer (a part of) a pixmap to an image.
@@ -128,13 +128,13 @@ public:
      * @param sh Source height.
      * @return The image.
      */
-    QImage getImage(const QPixmap *src, int sx, int sy, int sw, int sh);
+    TQImage getImage(const TQPixmap *src, int sx, int sy, int sw, int sh);
 
     /**
      * This function is identical to the one above. It only differs in the
      * arguments it accepts.
      */
-    QImage getImage(const QPixmap *src, const QRect &rect);
+    TQImage getImage(const TQPixmap *src, const TQRect &rect);
 
     /**
      * Shared memory allocation policies.
@@ -176,8 +176,8 @@ private:
     void destroyXImage();
     bool createShmSegment(int size);
     void destroyShmSegment();
-    void convertToXImage(const QImage &);
-    QImage convertFromXImage();
+    void convertToXImage(const TQImage &);
+    TQImage convertFromXImage();
 private:
     KPixmapIOPrivate* d;
 };

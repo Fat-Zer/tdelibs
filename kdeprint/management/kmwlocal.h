@@ -22,7 +22,7 @@
 
 #include "kmwizardpage.h"
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 class QLineEdit;
 class KListView;
@@ -32,19 +32,19 @@ class KMWLocal : public KMWizardPage
 {
 	Q_OBJECT
 public:
-	KMWLocal(QWidget *parent = 0, const char *name = 0);
+	KMWLocal(TQWidget *parent = 0, const char *name = 0);
 
-	bool isValid(QString&);
+	bool isValid(TQString&);
 	void updatePrinter(KMPrinter*);
 	void initPrinter(KMPrinter*);
 
 protected slots:
-	void slotPortSelected(QListViewItem*);
-	void slotTextChanged( const QString& );
+	void slotPortSelected(TQListViewItem*);
+	void slotTextChanged( const TQString& );
 
 protected:
 	void initialize();
-	QListViewItem* lookForItem( const QString& );
+	TQListViewItem* lookForItem( const TQString& );
 
 protected:
 	KListView	*m_ports;

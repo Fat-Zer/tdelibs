@@ -30,7 +30,7 @@
 #include "rendering/render_block.h"
 #include "xml/dom_docimpl.h"
 
-#include <qvaluevector.h>
+#include <tqvaluevector.h>
 
 using namespace khtml;
 
@@ -260,7 +260,7 @@ void RenderInline::paint(PaintInfo& i, int _tx, int _ty)
  * @param pnt point to append
  * @return \c true if \c pnt has actually been appended
  */
-inline static bool appendIfNew(QValueVector<QPoint> &pointArray, const QPoint &pnt)
+inline static bool appendIfNew(TQValueVector<TQPoint> &pointArray, const TQPoint &pnt)
 {
 //   if (!pointArray.isEmpty()) kdDebug(6040) << "appifnew: " << pointArray.back() << " == " << pnt << ": " << (pointArray.back() == pnt) << endl;
 //   else kdDebug(6040) << "appifnew: " << pnt << " (unconditional)" << endl;
@@ -297,13 +297,13 @@ inline static bool appendIfNew(QValueVector<QPoint> &pointArray, const QPoint &p
  * If no spike is found, the point-array is left unchanged.
  * @return \c true if an actual reduction was done
  */
-inline static bool reduceSpike(QValueVector<QPoint> &pointArray)
+inline static bool reduceSpike(TQValueVector<TQPoint> &pointArray)
 {
     if (pointArray.size() < 3) return false;
-    QValueVector<QPoint>::Iterator it = pointArray.end();
-    QPoint p0 = *--it;
-    QPoint p1 = *--it;
-    QPoint p2 = *--it;
+    TQValueVector<TQPoint>::Iterator it = pointArray.end();
+    TQPoint p0 = *--it;
+    TQPoint p1 = *--it;
+    TQPoint p2 = *--it;
 
     bool elide = false;
 
@@ -363,13 +363,13 @@ inline static bool reduceSpike(QValueVector<QPoint> &pointArray)
  * left unchanged.
  * @return \c true if a segment separator was actually reduced.
  */
-inline static bool reduceSegmentSeparator(QValueVector<QPoint> &pointArray)
+inline static bool reduceSegmentSeparator(TQValueVector<TQPoint> &pointArray)
 {
     if (pointArray.size() < 3) return false;
-    QValueVector<QPoint>::Iterator it = pointArray.end();
-    QPoint p0 = *--it;
-    QPoint p1 = *--it;
-    QPoint p2 = *--it;
+    TQValueVector<TQPoint>::Iterator it = pointArray.end();
+    TQPoint p0 = *--it;
+    TQPoint p1 = *--it;
+    TQPoint p2 = *--it;
 //     kdDebug(6040) << "checking p2: " << p2 << " p1: " << p1 << " p0: " << p0 << endl;
 
     if (p0.x() == p1.x() && p1.x() == p2.x()
@@ -391,7 +391,7 @@ inline static bool reduceSegmentSeparator(QValueVector<QPoint> &pointArray)
  * Appends the given point to the point-array, doing necessary reductions to
  * produce a path without spikes and segment separators.
  */
-static void appendPoint(QValueVector<QPoint> &pointArray, QPoint &pnt)
+static void appendPoint(TQValueVector<TQPoint> &pointArray, TQPoint &pnt)
 {
   if (!appendIfNew(pointArray, pnt)) return;
 //   kdDebug(6040) << "appendPoint: appended " << pnt << endl;
@@ -411,7 +411,7 @@ static void appendPoint(QValueVector<QPoint> &pointArray, QPoint &pnt)
  *	the lowest for !\c bottom.
  */
 static void collectHorizontalBoxCoordinates(InlineBox *box,
-                                            QValueVector<QPoint> &pointArray,
+                                            TQValueVector<TQPoint> &pointArray,
                                             bool bottom, int offset, int limit = -500000)
 {
 //   kdDebug(6000) << "collectHorizontalBoxCoordinates: " << endl;
@@ -420,11 +420,11 @@ static void collectHorizontalBoxCoordinates(InlineBox *box,
     if (limit != -500000 && (bottom ? y < limit : y > limit))
         y = limit;
     int x = box->xPos() + bottom*box->width() + offset;
-    QPoint newPnt(x, y);
+    TQPoint newPnt(x, y);
     // Add intersection point if point-array not empty.
     if (!pointArray.isEmpty()) {
-        QPoint lastPnt = pointArray.back();
-        QPoint insPnt(newPnt.x(), lastPnt.y());
+        TQPoint lastPnt = pointArray.back();
+        TQPoint insPnt(newPnt.x(), lastPnt.y());
         if (offset && ((bottom && lastPnt.y() > y) || (!bottom && lastPnt.y() < y))) {
             insPnt.rx() = lastPnt.x();
             insPnt.ry() = y;
@@ -453,8 +453,8 @@ static void collectHorizontalBoxCoordinates(InlineBox *box,
 
         // Add intersection point if flow box contained any children
         if (flowBox->firstChild()) {
-            QPoint lastPnt = pointArray.back();
-            QPoint insPnt(lastPnt.x(), newPnt.y());
+            TQPoint lastPnt = pointArray.back();
+            TQPoint insPnt(lastPnt.x(), newPnt.y());
 //             kdDebug(6040) << "right: " << lastPnt << " == " << insPnt << ": " << (insPnt == lastPnt) << endl;
             appendPoint(pointArray, insPnt);
         }
@@ -491,7 +491,7 @@ inline static bool lineBoxesDisjoint(InlineRunBox *line, int offset, bool toBegi
  * @param lastline if not 0, returns the pointer to the last line box traversed
  */
 static void collectVerticalBoxCoordinates(InlineRunBox *line,
-                                          QValueVector<QPoint> &pointArray,
+                                          TQValueVector<TQPoint> &pointArray,
                                           bool left, int offset, InlineRunBox **lastline = 0)
 {
     InlineRunBox *last = 0;
@@ -504,15 +504,15 @@ static void collectVerticalBoxCoordinates(InlineRunBox *line,
 
         if (root != line && !isLast)
             while (root->parent()) root = root->parent();
-        QPoint newPnt(curr->xPos() + !left*curr->width() + offset,
+        TQPoint newPnt(curr->xPos() + !left*curr->width() + offset,
                       (left ? root->topOverflow() : root->bottomOverflow()) + offset);
         if (!pointArray.isEmpty()) {
-            QPoint lastPnt = pointArray.back();
+            TQPoint lastPnt = pointArray.back();
             if (newPnt.x()>lastPnt.x() && !left)
                 pointArray.back().setY( kMin(lastPnt.y(), root->topOverflow()-offset) );
             else if (newPnt.x()<lastPnt.x() && left)
                 pointArray.back().setY( kMax(lastPnt.y(), root->bottomOverflow()+offset) );
-            QPoint insPnt(newPnt.x(), pointArray.back().y());
+            TQPoint insPnt(newPnt.x(), pointArray.back().y());
 //         kdDebug(6040) << "left: " << lastPnt << " == " << insPnt << ": " << (insPnt == lastPnt) << endl;
             appendPoint(pointArray, insPnt);
         }
@@ -532,23 +532,23 @@ static void collectVerticalBoxCoordinates(InlineRunBox *line,
  * @param pointArray point-array
  * @return actual begin of point array
  */
-static QPoint *linkEndToBegin(QValueVector<QPoint> &pointArray)
+static TQPoint *linkEndToBegin(TQValueVector<TQPoint> &pointArray)
 {
     uint index = 0;
     assert(pointArray.size() >= 3);
 
     // if first and last points match, ignore the last one.
-    bool linkup = false; QPoint linkupPnt;
+    bool linkup = false; TQPoint linkupPnt;
     if (pointArray.front() == pointArray.back()) {
         linkupPnt = pointArray.back();
         pointArray.pop_back();
         linkup = true;
     }
 
-    const QPoint *it = pointArray.begin() + index;
-    QPoint pfirst = *it;
-    QPoint pnext = *++it;
-    QPoint plast = pointArray.back();
+    const TQPoint *it = pointArray.begin() + index;
+    TQPoint pfirst = *it;
+    TQPoint pnext = *++it;
+    TQPoint plast = pointArray.back();
 //     kdDebug(6040) << "linkcheck plast: " << plast << " pfirst: " << pfirst << " pnext: " << pnext << endl;
 
     if (plast.x() == pfirst.x() && pfirst.x() == pnext.x()
@@ -562,7 +562,7 @@ static QPoint *linkEndToBegin(QValueVector<QPoint> &pointArray)
     return pointArray.begin() + index;
 }
 
-void RenderInline::paintOutlines(QPainter *p, int _tx, int _ty)
+void RenderInline::paintOutlines(TQPainter *p, int _tx, int _ty)
 {
     if (style()->outlineWidth() == 0 || style()->outlineStyle() <= BHIDDEN)
         return;
@@ -571,7 +571,7 @@ void RenderInline::paintOutlines(QPainter *p, int _tx, int _ty)
     // We may have to draw more than one outline path as they may be
     // disjoint.
     for (InlineRunBox *curr = firstLineBox(); curr; curr = curr->nextLineBox()) {
-        QValueVector<QPoint> path;
+        TQValueVector<TQPoint> path;
 
         // collect topmost outline
         collectHorizontalBoxCoordinates(curr, path, false, offset);
@@ -584,7 +584,7 @@ void RenderInline::paintOutlines(QPainter *p, int _tx, int _ty)
 
         if (path.size() < 3) continue;
 
-        const QPoint *begin = linkEndToBegin(path);
+        const TQPoint *begin = linkEndToBegin(path);
 
         // paint the outline
         paintOutlinePath(p, _tx, _ty, begin, path.end(), BSLeft, -1, BSTop);
@@ -623,7 +623,7 @@ inline BSOrientation bsOrientation(RenderObject::BorderSide bs)
  * The relative direction specifies whether the old border side meets with the
  * straight given by the coordinates from below (negative), or above (positive).
  */
-inline RenderObject::BorderSide newBorderSide(RenderObject::BorderSide oldBS, int direction, const QPoint &last, const QPoint &cur)
+inline RenderObject::BorderSide newBorderSide(RenderObject::BorderSide oldBS, int direction, const TQPoint &last, const TQPoint &cur)
 {
     bool below = direction < 0;
     if (last.x() == cur.x()) {	// new segment is vertical
@@ -654,15 +654,15 @@ inline RenderObject::BorderSide newBorderSide(RenderObject::BorderSide oldBS, in
  * @param curBS border side of this segment
  * @param nextBS border side of next segment
  */
-static void paintOutlineSegment(RenderObject *o, QPainter *p, int tx, int ty,
-                                const QPoint &p1, const QPoint &p2,
+static void paintOutlineSegment(RenderObject *o, TQPainter *p, int tx, int ty,
+                                const TQPoint &p1, const TQPoint &p2,
                                 RenderObject::BorderSide prevBS,
                                 RenderObject::BorderSide curBS,
                                 RenderObject::BorderSide nextBS)
 {
     int ow = o->style()->outlineWidth();
     EBorderStyle os = o->style()->outlineStyle();
-    QColor oc = o->style()->outlineColor();
+    TQColor oc = o->style()->outlineColor();
 
     int x1 = tx + p1.x();
     int y1 = ty + p1.y();
@@ -683,7 +683,7 @@ static void paintOutlineSegment(RenderObject *o, QPainter *p, int tx, int ty,
     switch (curBS) {
     case RenderObject::BSLeft:
     case RenderObject::BSRight:
-/*        p->setPen(QColor("#ffe4dd"));
+/*        p->setPen(TQColor("#ffe4dd"));
         p->drawLine(
                       x1 - (curBS == RenderObject::BSLeft ? ow : 0),
                       y1 - (prevBS == RenderObject::BSTop ? ow : 0),
@@ -720,13 +720,13 @@ static void paintOutlineSegment(RenderObject *o, QPainter *p, int tx, int ty,
     }
 }
 
-void RenderInline::paintOutlinePath(QPainter *p, int tx, int ty, const QPoint *begin, const QPoint *end, BorderSide bs, int direction, BorderSide endingBS)
+void RenderInline::paintOutlinePath(TQPainter *p, int tx, int ty, const TQPoint *begin, const TQPoint *end, BorderSide bs, int direction, BorderSide endingBS)
 {
     int ow = style()->outlineWidth();
     if (ow == 0 || m_isContinuation) // Continuations get painted by the original inline.
         return;
 
-    QPoint last = *begin;
+    TQPoint last = *begin;
     BorderSide lastBS = bs;
     Q_ASSERT(begin != end);
     ++begin;
@@ -736,12 +736,12 @@ void RenderInline::paintOutlinePath(QPainter *p, int tx, int ty, const QPoint *b
     bs = newBorderSide(bs, direction, last, *begin);
 //     kdDebug(6040) << "newBorderSide: " << lastBS << " " << direction << "d " << last << " - " << *begin << " => " << bs << endl;
 
-    for (const QPoint *it = begin; it != end; ++it) {
-        QPoint cur = *it;
+    for (const TQPoint *it = begin; it != end; ++it) {
+        TQPoint cur = *it;
 //         kdDebug(6040) << "cur: " << cur << endl;
         BorderSide nextBS;
         if (it + 1 != end) {
-            QPoint diff = cur - last;
+            TQPoint diff = cur - last;
             direction = diff.x() + diff.y();
             nextBS = newBorderSide(bs, direction, cur, *(it + 1));
 //             kdDebug(6040) << "newBorderSide*: " << bs << " " << direction << "d " << cur << " - " << *(it + 1) << " => " << nextBS << endl;
@@ -886,7 +886,7 @@ void RenderInline::caretPos(int offset, int flags, int &_x, int &_y, int &width,
 			&& element()->parent()->renderer()
 			? element()->parent()->renderer()->style()
 			: style();
-        const QFontMetrics &fm = s->fontMetrics();
+        const TQFontMetrics &fm = s->fontMetrics();
         _y = line->yPos() + line->baseline() - fm.ascent();
         height = fm.height();
 
@@ -897,7 +897,7 @@ void RenderInline::caretPos(int offset, int flags, int &_x, int &_y, int &width,
 	}
 
     } else {
-        const QFontMetrics &fm = style()->fontMetrics();
+        const TQFontMetrics &fm = style()->fontMetrics();
         _y = line->yPos() + line->baseline() - fm.ascent();
         height = fm.height();
     }

@@ -15,12 +15,12 @@ EditDCOPInterface::~EditDCOPInterface()
 
 }
 
-QString EditDCOPInterface::text ()
+TQString EditDCOPInterface::text ()
 {
 	return m_parent->text();
 }
 
-QString EditDCOPInterface::textLine ( uint line )
+TQString EditDCOPInterface::textLine ( uint line )
 {
 	return m_parent->textLine(line);
 }
@@ -35,12 +35,12 @@ int EditDCOPInterface::length ()
 	return m_parent->length();
 }
 
-void EditDCOPInterface::setText ( const QString &text )
+void EditDCOPInterface::setText ( const TQString &text )
 {
 	m_parent->setText(text);
 }
 
-bool EditDCOPInterface::insertText ( uint line, uint col, const QString &text )
+bool EditDCOPInterface::insertText ( uint line, uint col, const TQString &text )
 {
 	return m_parent->insertText( line, col, text);
 }
@@ -50,7 +50,7 @@ bool EditDCOPInterface::removeText ( uint startLine, uint startCol, uint endLine
 	return m_parent->removeText( startLine, startCol, endLine, endCol);
 }
 
-bool EditDCOPInterface::insertLine ( uint line, const QString &text )
+bool EditDCOPInterface::insertLine ( uint line, const TQString &text )
 {
 	return m_parent->insertLine( line, text);
 }

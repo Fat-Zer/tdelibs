@@ -28,8 +28,8 @@
 #include <kconfig.h>
 #include <kdebug.h>
 
-#include <qmap.h>
-#include <qstringlist.h>
+#include <tqmap.h>
+#include <tqstringlist.h>
 
 namespace KSpell2
 {
@@ -40,14 +40,14 @@ public:
     KSharedConfig::Ptr config;
     bool     modified;
 
-    QString defaultLanguage;
-    QString defaultClient;
+    TQString defaultLanguage;
+    TQString defaultClient;
 
     bool checkUppercase;
     bool skipRunTogether;
     bool backgroundCheckerEnabled;
 
-    QMap<QString, bool> ignore;
+    TQMap<TQString, bool> ignore;
 };
 
 Settings::Settings( Broker *broker, KSharedConfig *config )
@@ -72,9 +72,9 @@ KSharedConfig *Settings::sharedConfig() const
     return d->config;
 }
 
-void Settings::setDefaultLanguage( const QString& lang )
+void Settings::setDefaultLanguage( const TQString& lang )
 {
-    QStringList cs = d->broker->languages();
+    TQStringList cs = d->broker->languages();
     if ( cs.find( lang ) != cs.end() &&
          d->defaultLanguage != lang ) {
         d->defaultLanguage = lang;
@@ -84,12 +84,12 @@ void Settings::setDefaultLanguage( const QString& lang )
     }
 }
 
-QString Settings::defaultLanguage() const
+TQString Settings::defaultLanguage() const
 {
     return d->defaultLanguage;
 }
 
-void Settings::setDefaultClient( const QString& client )
+void Settings::setDefaultClient( const TQString& client )
 {
     //Different from setDefaultLanguage because
     //the number of clients can't be even close
@@ -101,7 +101,7 @@ void Settings::setDefaultClient( const QString& client )
     }
 }
 
-QString Settings::defaultClient() const
+TQString Settings::defaultClient() const
 {
     return d->defaultClient;
 }
@@ -145,27 +145,27 @@ bool Settings::backgroundCheckerEnabled() const
     return d->backgroundCheckerEnabled;
 }
 
-void Settings::setCurrentIgnoreList( const QStringList& ignores )
+void Settings::setCurrentIgnoreList( const TQStringList& ignores )
 {
     setQuietIgnoreList( ignores );
     d->modified = true;
 }
 
-void Settings::setQuietIgnoreList( const QStringList& ignores )
+void Settings::setQuietIgnoreList( const TQStringList& ignores )
 {
-    d->ignore = QMap<QString, bool>();//clear out
-    for ( QStringList::const_iterator itr = ignores.begin();
+    d->ignore = TQMap<TQString, bool>();//clear out
+    for ( TQStringList::const_iterator itr = ignores.begin();
           itr != ignores.end(); ++itr ) {
         d->ignore.insert( *itr, true );
     }
 }
 
-QStringList Settings::currentIgnoreList() const
+TQStringList Settings::currentIgnoreList() const
 {
     return d->ignore.keys();
 }
 
-void Settings::addWordToIgnore( const QString& word )
+void Settings::addWordToIgnore( const TQString& word )
 {
     if ( !d->ignore.contains( word ) ) {
         d->modified = true;
@@ -173,7 +173,7 @@ void Settings::addWordToIgnore( const QString& word )
     }
 }
 
-bool Settings::ignore( const QString& word )
+bool Settings::ignore( const TQString& word )
 {
     return d->ignore.contains( word );
 }
@@ -181,8 +181,8 @@ bool Settings::ignore( const QString& word )
 void Settings::readIgnoreList()
 {
     KConfigGroup conf( d->config, "Spelling" );
-    QString ignoreEntry = QString( "ignore_%1" ).arg( d->defaultLanguage );
-    QStringList ignores = conf.readListEntry( ignoreEntry );
+    TQString ignoreEntry = TQString( "ignore_%1" ).arg( d->defaultLanguage );
+    TQStringList ignores = conf.readListEntry( ignoreEntry );
     setQuietIgnoreList( ignores );
 }
 
@@ -195,7 +195,7 @@ void Settings::save()
         conf.writeEntry( "checkUppercase", d->checkUppercase );
         conf.writeEntry( "skipRunTogether", d->skipRunTogether );
         conf.writeEntry( "backgroundCheckerEnabled", d->backgroundCheckerEnabled );
-        conf.writeEntry( QString( "ignore_%1" ).arg( d->defaultLanguage ),
+        conf.writeEntry( TQString( "ignore_%1" ).arg( d->defaultLanguage ),
                          d->ignore.keys() );
         conf.sync();
     }
@@ -205,7 +205,7 @@ void Settings::loadConfig()
 {
     KConfigGroup conf( d->config, "Spelling" );
     d->defaultClient = conf.readEntry( "defaultClient",
-                                        QString::null );
+                                        TQString::null );
     d->defaultLanguage = conf.readEntry(
         "defaultLanguage", KGlobal::locale()->language() );
 

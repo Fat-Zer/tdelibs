@@ -20,15 +20,15 @@
 #include "gschecker.h"
 #include "kpipeprocess.h"
 
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
-GsChecker::GsChecker(QObject *parent, const char *name)
-: QObject(parent,name)
+GsChecker::GsChecker(TQObject *parent, const char *name)
+: TQObject(parent,name)
 {
 }
 
-bool GsChecker::checkGsDriver(const QString& name)
+bool GsChecker::checkGsDriver(const TQString& name)
 {
 	if (m_driverlist.count() == 0)
 		loadDriverList();
@@ -53,9 +53,9 @@ void GsChecker::loadDriverList()
 				else
 					buffer.append(line).append(" ");
 			}
-			else if (line.startsWith(QString::fromLatin1("Available devices:")))
+			else if (line.startsWith(TQString::fromLatin1("Available devices:")))
 				ok = true;
 		}
-		m_driverlist = QStringList::split(' ',buffer,false);
+		m_driverlist = TQStringList::split(' ',buffer,false);
 	}
 }

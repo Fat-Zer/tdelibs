@@ -19,10 +19,10 @@
 #include "kfilespeedbar.h"
 #include "config-kfile.h"
 
-#include <qdir.h>
-#include <qfile.h>
-#include <qtextcodec.h>
-#include <qtextstream.h>
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqtextcodec.h>
+#include <tqtextstream.h>
 
 #include <kconfig.h>
 #include <kglobal.h>
@@ -32,7 +32,7 @@
 #include <kstandarddirs.h>
 #include <kurl.h>
 
-KFileSpeedBar::KFileSpeedBar( QWidget *parent, const char *name )
+KFileSpeedBar::KFileSpeedBar( TQWidget *parent, const char *name )
     : KURLBar( true, parent, name )
 {
     KConfig *config = KGlobal::config();
@@ -49,14 +49,14 @@ KFileSpeedBar::KFileSpeedBar( QWidget *parent, const char *name )
         insertItem( u, i18n("Desktop"), false );
 
 //TODO: win32
-        if ((KGlobalSettings::documentPath() != (QDir::homeDirPath()+"/")) &&
-            QDir(KGlobalSettings::documentPath()).exists())
+        if ((KGlobalSettings::documentPath() != (TQDir::homeDirPath()+"/")) &&
+            TQDir(KGlobalSettings::documentPath()).exists())
         {
             u.setPath( KGlobalSettings::documentPath() );
             insertItem( u, i18n("Documents"), false, "folder_txt" );
         }
 
-        u.setPath( QDir::homeDirPath() );
+        u.setPath( TQDir::homeDirPath() );
         insertItem( u, i18n("Home Folder"), false,
                                "folder_home" );
 
@@ -65,33 +65,33 @@ KFileSpeedBar::KFileSpeedBar( QWidget *parent, const char *name )
             insertItem( u, i18n("Storage Media"), false,
                                    KProtocolInfo::icon( "media" ) );
 
-        if (  QFile::exists(  QDir::homeDirPath()+"/.config/user-dirs.dirs" ) )
+        if (  TQFile::exists(  TQDir::homeDirPath()+"/.config/user-dirs.dirs" ) )
         {
-			QString download, music, pictures, videos, templates, publicShares;
+			TQString download, music, pictures, videos, templates, publicShares;
 
-            QFile f(  QDir::homeDirPath()+"/.config/user-dirs.dirs" );
+            TQFile f(  TQDir::homeDirPath()+"/.config/user-dirs.dirs" );
 			if (!f.open(IO_ReadOnly))
 				return;
 
-			QTextStream s( &f );
-			s.setCodec( QTextCodec::codecForLocale() );
+			TQTextStream s( &f );
+			s.setCodec( TQTextCodec::codecForLocale() );
 
 			// read the xdg user dirs
-			QString line = s.readLine();
+			TQString line = s.readLine();
 			while (!line.isNull())
 			{
 				if (line.startsWith("XDG_DOWNLOAD_DIR="))
-					download = line.remove("XDG_DOWNLOAD_DIR=").remove("\"").replace("$HOME", QDir::homeDirPath());
+					download = line.remove("XDG_DOWNLOAD_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
 				else if (line.startsWith("XDG_MUSIC_DIR="))
-					music = line.remove("XDG_MUSIC_DIR=").remove("\"").replace("$HOME", QDir::homeDirPath());
+					music = line.remove("XDG_MUSIC_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
 				else if (line.startsWith("XDG_PICTURES_DIR="))
-					pictures = line.remove("XDG_PICTURES_DIR=").remove("\"").replace("$HOME", QDir::homeDirPath());
+					pictures = line.remove("XDG_PICTURES_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
 				else if (line.startsWith("XDG_VIDEOS_DIR="))
-					videos = line.remove("XDG_VIDEOS_DIR=").remove("\"").replace("$HOME", QDir::homeDirPath());
+					videos = line.remove("XDG_VIDEOS_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
 				else if (line.startsWith("XDG_TEMPLATES_DIR="))
-					templates = line.remove("XDG_TEMPLATES_DIR=").remove("\"").replace("$HOME", QDir::homeDirPath());
+					templates = line.remove("XDG_TEMPLATES_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
 				else if (line.startsWith("XDG_PUBLICSHARES_DIR="))
-					publicShares = line.remove("XDG_PUBLICSHARES_DIR=").remove("\"").replace("$HOME", QDir::homeDirPath());
+					publicShares = line.remove("XDG_PUBLICSHARES_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
 
 				line = s.readLine();
 			}
@@ -133,9 +133,9 @@ void KFileSpeedBar::save( KConfig *config )
     writeConfig( config, "KFileDialog Speedbar" );
 }
 
-QSize KFileSpeedBar::sizeHint() const
+TQSize KFileSpeedBar::sizeHint() const
 {
-    QSize sizeHint = KURLBar::sizeHint();
+    TQSize sizeHint = KURLBar::sizeHint();
     int ems = fontMetrics().width("mmmmmmmmmmmm");
     if (sizeHint.width() < ems)
     {

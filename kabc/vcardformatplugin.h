@@ -40,12 +40,12 @@ class KABC_EXPORT VCardFormatPlugin : public FormatPlugin
     VCardFormatPlugin();
     virtual ~VCardFormatPlugin();
 
-    bool load( Addressee &, QFile *file );
-    bool loadAll( AddressBook *, Resource *, QFile *file );
-    void save( const Addressee &, QFile *file );
-    void saveAll( AddressBook *, Resource *, QFile *file );
+    bool load( Addressee &, TQFile *file );
+    bool loadAll( AddressBook *, Resource *, TQFile *file );
+    void save( const Addressee &, TQFile *file );
+    void saveAll( AddressBook *, Resource *, TQFile *file );
 
-    bool checkFormat( QFile *file ) const;
+    bool checkFormat( TQFile *file ) const;
 
   private:
     struct VCardFormatPrivate;

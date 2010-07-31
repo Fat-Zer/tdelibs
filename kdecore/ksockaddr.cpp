@@ -34,8 +34,8 @@
 #include <sys/un.h>
 #include <unistd.h>
 
-#include <qglobal.h>
-#include <qfile.h>
+#include <tqglobal.h>
+#include <tqfile.h>
 
 #include "kdebug.h"
 #include "klocale.h"
@@ -107,7 +107,7 @@ KSocketAddress::~KSocketAddress()
     free(data);
 }
 
-QString KSocketAddress::pretty() const
+TQString KSocketAddress::pretty() const
 {
   return i18n("<unknown socket>");
 }
@@ -193,14 +193,14 @@ bool KSocketAddress::isCoreEqual(const KSocketAddress& other) const
   return false;
 }
 
-QString KSocketAddress::nodeName() const
+TQString KSocketAddress::nodeName() const
 {
-  return QString::null;
+  return TQString::null;
 }
 
-QString KSocketAddress::serviceName() const
+TQString KSocketAddress::serviceName() const
 {
-  return QString::null;
+  return TQString::null;
 }
 
 int KSocketAddress::ianaFamily(int af)
@@ -303,7 +303,7 @@ KInetSocketAddress::KInetSocketAddress(const in6_addr& addr, unsigned short port
   setAddress(addr, port);
 }
 
-KInetSocketAddress::KInetSocketAddress(const QString& addr, unsigned short port, int family) :
+KInetSocketAddress::KInetSocketAddress(const TQString& addr, unsigned short port, int family) :
   d(new KInetSocketAddressPrivate)
 {
   setAddress(addr, port, family);
@@ -377,7 +377,7 @@ bool KInetSocketAddress::setAddress(const in6_addr& addr, unsigned short port)
   return setHost(addr) && setPort(port);
 }
 
-bool KInetSocketAddress::setAddress(const QString& addr, unsigned short port, int family)
+bool KInetSocketAddress::setAddress(const TQString& addr, unsigned short port, int family)
 {
   return setHost(addr, family) && setPort(port);
 }
@@ -402,7 +402,7 @@ bool KInetSocketAddress::setHost(const in6_addr& addr)
 #endif
 }
 
-bool KInetSocketAddress::setHost(const QString& addr, int family)
+bool KInetSocketAddress::setHost(const TQString& addr, int family)
 {
   // if family == -1, we'll try to guess the host name
   if ((family != -1) && (family != AF_INET)
@@ -411,7 +411,7 @@ bool KInetSocketAddress::setHost(const QString& addr, int family)
 #endif
       )
     {
-      kdWarning() << "KInetSocketAddress::setHost(QString, int) called with unknown family address\n";
+      kdWarning() << "KInetSocketAddress::setHost(TQString, int) called with unknown family address\n";
       return false;
     }
 
@@ -556,7 +556,7 @@ in6_addr KInetSocketAddress::hostV6() const
 }
 #endif
 
-QString KInetSocketAddress::pretty() const
+TQString KInetSocketAddress::pretty() const
 {
   if (d->sockfamily != AF_INET
 #ifdef AF_INET6
@@ -571,7 +571,7 @@ QString KInetSocketAddress::pretty() const
   return i18n("1: hostname, 2: port number", "%1 port %2").arg(nodeName()).arg(serviceName());
 }
 
-QString KInetSocketAddress::nodeName() const
+TQString KInetSocketAddress::nodeName() const
 {
   char buf[INET6_ADDRSTRLEN];	// INET6_ADDRSTRLEN > INET_ADDRSTRLEN
 
@@ -587,12 +587,12 @@ QString KInetSocketAddress::nodeName() const
       return i18n("<empty>");
     }
 
-  return QString::fromLatin1(buf); // FIXME! What's the encoding?
+  return TQString::fromLatin1(buf); // FIXME! What's the encoding?
 }
 
-QString KInetSocketAddress::serviceName() const
+TQString KInetSocketAddress::serviceName() const
 {
-  return QString::number(port());
+  return TQString::number(port());
 }
 
 unsigned short KInetSocketAddress::port() const
@@ -713,11 +713,11 @@ void KInetSocketAddress::fromV6()
 #endif
 }
 
-QString KInetSocketAddress::addrToString(int family, const void* addr)
+TQString KInetSocketAddress::addrToString(int family, const void* addr)
 {
   char buf[INET6_ADDRSTRLEN+1];
 
-  return QString::fromLatin1(inet_ntop(family, addr, buf, INET6_ADDRSTRLEN));
+  return TQString::fromLatin1(inet_ntop(family, addr, buf, INET6_ADDRSTRLEN));
 }
 
 bool KInetSocketAddress::stringToAddr(int family, const char *text, void *dest)
@@ -749,7 +749,7 @@ KUnixSocketAddress::KUnixSocketAddress(const sockaddr_un* _sun, ksocklen_t size)
   setAddress(_sun, size);
 }
 
-KUnixSocketAddress::KUnixSocketAddress(QCString pathname) :
+KUnixSocketAddress::KUnixSocketAddress(TQCString pathname) :
   d(new KUnixSocketAddressPrivate)
 {
   setAddress(pathname);
@@ -799,7 +799,7 @@ bool KUnixSocketAddress::setAddress(const sockaddr_un* _sun, ksocklen_t _size)
   return 1;
 }
 
-bool KUnixSocketAddress::setAddress(QCString path)
+bool KUnixSocketAddress::setAddress(TQCString path)
 {
   // the +1 is necessary for the ending zero
   ksocklen_t newsize = offsetof(sockaddr_un, sun_path) + path.length() + 1;
@@ -835,7 +835,7 @@ bool KUnixSocketAddress::setAddress(QCString path)
   return 1;
 }
 
-QCString KUnixSocketAddress::pathname() const
+TQCString KUnixSocketAddress::pathname() const
 {
   if (d->m_sun != NULL)
     {
@@ -843,20 +843,20 @@ QCString KUnixSocketAddress::pathname() const
 	return d->m_sun->sun_path;
       return "";
     }
-  return QCString(0);
+  return TQCString(0);
 }
 
-QString KUnixSocketAddress::pretty() const
+TQString KUnixSocketAddress::pretty() const
 {
-  QCString pname = pathname();
+  TQCString pname = pathname();
   if (pname.isEmpty())
     return i18n("<empty UNIX socket>");
-  return QFile::decodeName(pathname());
+  return TQFile::decodeName(pathname());
 }
 
-QString KUnixSocketAddress::serviceName() const
+TQString KUnixSocketAddress::serviceName() const
 {
-  return QString::fromUtf8(pathname());
+  return TQString::fromUtf8(pathname());
 }
 
 const sockaddr_un* KUnixSocketAddress::address() const

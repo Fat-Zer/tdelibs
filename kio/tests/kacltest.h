@@ -20,7 +20,7 @@
 #ifndef KACLTEST_H
 #define KACLTEST_H
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <kacl.h>
 
 class KACLTest

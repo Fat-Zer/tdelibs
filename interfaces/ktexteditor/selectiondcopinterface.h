@@ -3,8 +3,8 @@
 
 #include <dcopobject.h>
 #include <dcopref.h>
-#include <qstringlist.h>
-#include <qcstring.h>
+#include <tqstringlist.h>
+#include <tqcstring.h>
 
 namespace KTextEditor
 {
@@ -49,9 +49,9 @@ namespace KTextEditor
      bool hasSelection ();
 
     /**
-    *  @return a QString for the selected text
+    *  @return a TQString for the selected text
     */
-     QString selection ();
+     TQString selection ();
 
     /**
     *  removes the selected Text

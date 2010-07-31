@@ -21,12 +21,12 @@
 #include "kxmlguifactory.h"
 #include "kxmlguibuilder.h"
 
-#include <qdir.h>
-#include <qfile.h>
-#include <qdom.h>
-#include <qtextstream.h>
-#include <qregexp.h>
-#include <qguardedptr.h>
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqdom.h>
+#include <tqtextstream.h>
+#include <tqregexp.h>
+#include <tqguardedptr.h>
 
 #include <kinstance.h>
 #include <kstandarddirs.h>
@@ -52,16 +52,16 @@ public:
 
   KInstance *m_instance;
 
-  QDomDocument m_doc;
+  TQDomDocument m_doc;
   KActionCollection *m_actionCollection;
-  QDomDocument m_buildDocument;
-  QGuardedPtr<KXMLGUIFactory> m_factory;
+  TQDomDocument m_buildDocument;
+  TQGuardedPtr<KXMLGUIFactory> m_factory;
   KXMLGUIClient *m_parent;
-  //QPtrList<KXMLGUIClient> m_supers;
-  QPtrList<KXMLGUIClient> m_children;
+  //TQPtrList<KXMLGUIClient> m_supers;
+  TQPtrList<KXMLGUIClient> m_children;
   KXMLGUIBuilder *m_builder;
-  QString m_xmlFile;
-  QString m_localXMLFile;
+  TQString m_xmlFile;
+  TQString m_localXMLFile;
 };
 
 KXMLGUIClient::KXMLGUIClient()
@@ -80,7 +80,7 @@ KXMLGUIClient::~KXMLGUIClient()
   if ( d->m_parent )
     d->m_parent->removeChildClient( this );
 
-  QPtrListIterator<KXMLGUIClient> it( d->m_children );
+  TQPtrListIterator<KXMLGUIClient> it( d->m_children );
   for ( ; it.current(); ++it ) {
       assert( it.current()->d->m_parent == this );
       it.current()->d->m_parent = 0;
@@ -94,7 +94,7 @@ KAction *KXMLGUIClient::action( const char *name ) const
 {
   KAction* act = actionCollection()->action( name );
   if ( !act ) {
-    QPtrListIterator<KXMLGUIClient> childIt( d->m_children );
+    TQPtrListIterator<KXMLGUIClient> childIt( d->m_children );
     for (; childIt.current(); ++childIt ) {
       act = childIt.current()->actionCollection()->action( name );
       if ( act )
@@ -114,9 +114,9 @@ KActionCollection *KXMLGUIClient::actionCollection() const
   return d->m_actionCollection;
 }
 
-KAction *KXMLGUIClient::action( const QDomElement &element ) const
+KAction *KXMLGUIClient::action( const TQDomElement &element ) const
 {
-  static const QString &attrName = KGlobal::staticQString( "name" );
+  static const TQString &attrName = KGlobal::staticQString( "name" );
   return actionCollection()->action( element.attribute( attrName ).latin1() );
 }
 
@@ -125,31 +125,31 @@ KInstance *KXMLGUIClient::instance() const
   return d->m_instance;
 }
 
-QDomDocument KXMLGUIClient::domDocument() const
+TQDomDocument KXMLGUIClient::domDocument() const
 {
   return d->m_doc;
 }
 
-QString KXMLGUIClient::xmlFile() const
+TQString KXMLGUIClient::xmlFile() const
 {
   return d->m_xmlFile;
 }
 
-QString KXMLGUIClient::localXMLFile() const
+TQString KXMLGUIClient::localXMLFile() const
 {
   if ( !d->m_localXMLFile.isEmpty() )
     return d->m_localXMLFile;
 
-  if ( !QDir::isRelativePath(d->m_xmlFile) )
-      return QString::null; // can't save anything here
+  if ( !TQDir::isRelativePath(d->m_xmlFile) )
+      return TQString::null; // can't save anything here
 
-  return locateLocal( "data", QString::fromLatin1( instance()->instanceName() + '/' ) + d->m_xmlFile );
+  return locateLocal( "data", TQString::fromLatin1( instance()->instanceName() + '/' ) + d->m_xmlFile );
 }
 
 
 void KXMLGUIClient::reloadXML()
 {
-    QString file( xmlFile() );
+    TQString file( xmlFile() );
     if ( !file.isEmpty() )
         setXMLFile( file );
 }
@@ -162,7 +162,7 @@ void KXMLGUIClient::setInstance( KInstance *instance )
     d->m_builder->setBuilderClient( this );
 }
 
-void KXMLGUIClient::setXMLFile( const QString& _file, bool merge, bool setXMLDoc )
+void KXMLGUIClient::setXMLFile( const TQString& _file, bool merge, bool setXMLDoc )
 {
   // store our xml file name
   if ( !_file.isNull() ) {
@@ -173,14 +173,14 @@ void KXMLGUIClient::setXMLFile( const QString& _file, bool merge, bool setXMLDoc
   if ( !setXMLDoc )
     return;
 
-  QString file = _file;
-  if ( QDir::isRelativePath(file) )
+  TQString file = _file;
+  if ( TQDir::isRelativePath(file) )
   {
-    QString doc;
+    TQString doc;
 
-    QString filter = QString::fromLatin1( instance()->instanceName() + '/' ) + _file;
+    TQString filter = TQString::fromLatin1( instance()->instanceName() + '/' ) + _file;
 
-    QStringList allFiles = instance()->dirs()->findAllResources( "data", filter ) + instance()->dirs()->findAllResources( "data", _file );
+    TQStringList allFiles = instance()->dirs()->findAllResources( "data", filter ) + instance()->dirs()->findAllResources( "data", _file );
 
     file = findMostRecentXMLFile( allFiles, doc );
 
@@ -195,7 +195,7 @@ void KXMLGUIClient::setXMLFile( const QString& _file, bool merge, bool setXMLDoc
       if ( !_file.isEmpty() )
           kdWarning() << "KXMLGUIClient::setXMLFile: cannot find .rc file " << _file << endl;
 
-      setXML( QString::null, true );
+      setXML( TQString::null, true );
       return;
     }
     else if ( !doc.isEmpty() )
@@ -205,29 +205,29 @@ void KXMLGUIClient::setXMLFile( const QString& _file, bool merge, bool setXMLDoc
     }
   }
 
-  QString xml = KXMLGUIFactory::readConfigFile( file );
+  TQString xml = KXMLGUIFactory::readConfigFile( file );
   setXML( xml, merge );
 }
 
-void KXMLGUIClient::setLocalXMLFile( const QString &file )
+void KXMLGUIClient::setLocalXMLFile( const TQString &file )
 {
     d->m_localXMLFile = file;
 }
 
-void KXMLGUIClient::setXML( const QString &document, bool merge )
+void KXMLGUIClient::setXML( const TQString &document, bool merge )
 {
-  QDomDocument doc;
+  TQDomDocument doc;
   doc.setContent( document );
   setDOMDocument( doc, merge );
 }
 
-void KXMLGUIClient::setDOMDocument( const QDomDocument &document, bool merge )
+void KXMLGUIClient::setDOMDocument( const TQDomDocument &document, bool merge )
 {
   if ( merge )
   {
-    QDomElement base = d->m_doc.documentElement();
+    TQDomElement base = d->m_doc.documentElement();
 
-    QDomElement e = document.documentElement();
+    TQDomElement e = document.documentElement();
 
     // merge our original (global) xml with our new one
     mergeXML(base, e, actionCollection());
@@ -245,22 +245,22 @@ void KXMLGUIClient::setDOMDocument( const QDomDocument &document, bool merge )
     d->m_doc = document;
   }
 
-  setXMLGUIBuildDocument( QDomDocument() );
+  setXMLGUIBuildDocument( TQDomDocument() );
 }
 
-bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KActionCollection *actionCollection )
+bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, KActionCollection *actionCollection )
 {
-  static const QString &tagAction = KGlobal::staticQString( "Action" );
-  static const QString &tagMerge = KGlobal::staticQString( "Merge" );
-  static const QString &tagSeparator = KGlobal::staticQString( "Separator" );
-  static const QString &attrName = KGlobal::staticQString( "name" );
-  static const QString &attrAppend = KGlobal::staticQString( "append" );
-  static const QString &attrWeakSeparator = KGlobal::staticQString( "weakSeparator" );
-  static const QString &tagMergeLocal = KGlobal::staticQString( "MergeLocal" );
-  static const QString &tagText = KGlobal::staticQString( "text" );
-  static const QString &attrAlreadyVisited = KGlobal::staticQString( "alreadyVisited" );
-  static const QString &attrNoMerge = KGlobal::staticQString( "noMerge" );
-  static const QString &attrOne = KGlobal::staticQString( "1" );
+  static const TQString &tagAction = KGlobal::staticQString( "Action" );
+  static const TQString &tagMerge = KGlobal::staticQString( "Merge" );
+  static const TQString &tagSeparator = KGlobal::staticQString( "Separator" );
+  static const TQString &attrName = KGlobal::staticQString( "name" );
+  static const TQString &attrAppend = KGlobal::staticQString( "append" );
+  static const TQString &attrWeakSeparator = KGlobal::staticQString( "weakSeparator" );
+  static const TQString &tagMergeLocal = KGlobal::staticQString( "MergeLocal" );
+  static const TQString &tagText = KGlobal::staticQString( "text" );
+  static const TQString &attrAlreadyVisited = KGlobal::staticQString( "alreadyVisited" );
+  static const TQString &attrNoMerge = KGlobal::staticQString( "noMerge" );
+  static const TQString &attrOne = KGlobal::staticQString( "1" );
 
   // there is a possibility that we don't want to merge in the
   // additive.. rather, we might want to *replace* the base with the
@@ -273,13 +273,13 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
     return true;
   }
 
-  QString tag;
+  TQString tag;
 
   // iterate over all elements in the container (of the global DOM tree)
-  QDomNode n = base.firstChild();
+  TQDomNode n = base.firstChild();
   while ( !n.isNull() )
   {
-    QDomElement e = n.toElement();
+    TQDomElement e = n.toElement();
     n = n.nextSibling(); // Advance now so that we can safely delete e
     if (e.isNull())
        continue;
@@ -290,7 +290,7 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
     // not implemented, then we remove the element
     if ( tag == tagAction )
     {
-      QCString name =  e.attribute( attrName ).utf8(); // WABA
+      TQCString name =  e.attribute( attrName ).utf8(); // WABA
       if ( !actionCollection->action( name ) ||
            (kapp && !kapp->authorizeKAction(name)))
       {
@@ -309,7 +309,7 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
       // okay, hack time. if the last item was a weak separator OR
       // this is the first item in a container, then we nuke the
       // current one
-      QDomElement prev = e.previousSibling().toElement();
+      TQDomElement prev = e.previousSibling().toElement();
       if ( prev.isNull() ||
 	 ( prev.tagName() == tagSeparator && !prev.attribute( attrWeakSeparator ).isNull() ) ||
 	 ( prev.tagName() == tagText ) )
@@ -325,10 +325,10 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
     // elements we delete this element
     else if ( tag == tagMergeLocal )
     {
-      QDomNode it = additive.firstChild();
+      TQDomNode it = additive.firstChild();
       while ( !it.isNull() )
       {
-        QDomElement newChild = it.toElement();
+        TQDomElement newChild = it.toElement();
         it = it.nextSibling();
         if (newChild.isNull() )
           continue;
@@ -339,8 +339,8 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
         if ( newChild.attribute( attrAlreadyVisited ) == attrOne )
           continue;
 
-        QString itAppend( newChild.attribute( attrAppend ) );
-        QString elemName( e.attribute( attrName ) );
+        TQString itAppend( newChild.attribute( attrAppend ) );
+        TQString elemName( e.attribute( attrName ) );
 
         if ( ( itAppend.isNull() && elemName.isEmpty() ) ||
              ( itAppend == elemName ) )
@@ -348,7 +348,7 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
           // first, see if this new element matches a standard one in
           // the global file.  if it does, then we skip it as it will
           // be merged in, later
-          QDomElement matchingElement = findMatchingElement( newChild, base );
+          TQDomElement matchingElement = findMatchingElement( newChild, base );
           if ( matchingElement.isNull() || newChild.tagName() == tagSeparator )
             base.insertBefore( newChild, e );
         }
@@ -368,7 +368,7 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
       if ( tag == tagText )
         continue;
 
-      QDomElement matchingElement = findMatchingElement( e, additive );
+      TQDomElement matchingElement = findMatchingElement( e, additive );
 
       if ( !matchingElement.isNull() )
       {
@@ -381,12 +381,12 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
         }
 
         // Merge attributes
-        const QDomNamedNodeMap attribs = matchingElement.attributes();
+        const TQDomNamedNodeMap attribs = matchingElement.attributes();
         const uint attribcount = attribs.count();
 
         for(uint i = 0; i < attribcount; ++i)
         {
-          const QDomNode node = attribs.item(i);
+          const TQDomNode node = attribs.item(i);
           e.setAttribute(node.nodeName(), node.nodeValue());
         }
 
@@ -399,7 +399,7 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
         // this container. However we have to call mergeXML recursively
         // and make it check if there are actions implemented for this
         // container. *If* none, then we can remove this container now
-        if ( mergeXML( e, QDomElement(), actionCollection ) )
+        if ( mergeXML( e, TQDomElement(), actionCollection ) )
           base.removeChild( e );
         continue;
       }
@@ -411,12 +411,12 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
   n = additive.firstChild();
   while ( !n.isNull() )
   {
-    QDomElement e = n.toElement();
+    TQDomElement e = n.toElement();
     n = n.nextSibling(); // Advance now so that we can safely delete e
     if (e.isNull())
        continue;
 
-    QDomElement matchingElement = findMatchingElement( e, base );
+    TQDomElement matchingElement = findMatchingElement( e, base );
 
     if ( matchingElement.isNull() )
     {
@@ -426,7 +426,7 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
 
   // do one quick check to make sure that the last element was not
   // a weak separator
-  QDomElement last = base.lastChild().toElement();
+  TQDomElement last = base.lastChild().toElement();
   if ( (last.tagName() == tagSeparator) && (!last.attribute( attrWeakSeparator ).isNull()) )
   {
     base.removeChild( last );
@@ -440,7 +440,7 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
   n = base.firstChild();
   while ( !n.isNull() )
   {
-    QDomElement e = n.toElement();
+    TQDomElement e = n.toElement();
     n = n.nextSibling(); // Advance now so that we can safely delete e
     if (e.isNull())
        continue;
@@ -463,7 +463,7 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
       // if we have a separator which has *not* the weak attribute
       // set, then it must be owned by the "local" tree in which case
       // we must not get deleted either
-      QString weakAttr = e.attribute( attrWeakSeparator );
+      TQString weakAttr = e.attribute( attrWeakSeparator );
       if ( weakAttr.isEmpty() || weakAttr.toInt() != 1 )
       {
         deleteMe = false;
@@ -499,16 +499,16 @@ bool KXMLGUIClient::mergeXML( QDomElement &base, const QDomElement &additive, KA
   return deleteMe;
 }
 
-QDomElement KXMLGUIClient::findMatchingElement( const QDomElement &base, const QDomElement &additive )
+TQDomElement KXMLGUIClient::findMatchingElement( const TQDomElement &base, const TQDomElement &additive )
 {
-  static const QString &tagAction = KGlobal::staticQString( "Action" );
-  static const QString &tagMergeLocal = KGlobal::staticQString( "MergeLocal" );
-  static const QString &attrName = KGlobal::staticQString( "name" );
+  static const TQString &tagAction = KGlobal::staticQString( "Action" );
+  static const TQString &tagMergeLocal = KGlobal::staticQString( "MergeLocal" );
+  static const TQString &attrName = KGlobal::staticQString( "name" );
 
-  QDomNode n = additive.firstChild();
+  TQDomNode n = additive.firstChild();
   while ( !n.isNull() )
   {
-    QDomElement e = n.toElement();
+    TQDomElement e = n.toElement();
     n = n.nextSibling(); // Advance now so that we can safely delete e
     if (e.isNull())
        continue;
@@ -528,21 +528,21 @@ QDomElement KXMLGUIClient::findMatchingElement( const QDomElement &base, const Q
   }
 
   // nope, return a (now) null element
-  return QDomElement();
+  return TQDomElement();
 }
 
 void KXMLGUIClient::conserveMemory()
 {
-  d->m_doc = QDomDocument();
-  d->m_buildDocument = QDomDocument();
+  d->m_doc = TQDomDocument();
+  d->m_buildDocument = TQDomDocument();
 }
 
-void KXMLGUIClient::setXMLGUIBuildDocument( const QDomDocument &doc )
+void KXMLGUIClient::setXMLGUIBuildDocument( const TQDomDocument &doc )
 {
   d->m_buildDocument = doc;
 }
 
-QDomDocument KXMLGUIClient::xmlguiBuildDocument() const
+TQDomDocument KXMLGUIClient::xmlguiBuildDocument() const
 {
   return d->m_buildDocument;
 }
@@ -585,7 +585,7 @@ void KXMLGUIClient::removeChildClient( KXMLGUIClient *child )
   return true;
 }*/
 
-const QPtrList<KXMLGUIClient> *KXMLGUIClient::childClients()
+const TQPtrList<KXMLGUIClient> *KXMLGUIClient::childClients()
 {
   return &d->m_children;
 }
@@ -602,7 +602,7 @@ KXMLGUIBuilder *KXMLGUIClient::clientBuilder() const
   return d->m_builder;
 }
 
-void KXMLGUIClient::plugActionList( const QString &name, const QPtrList<KAction> &actionList )
+void KXMLGUIClient::plugActionList( const TQString &name, const TQPtrList<KAction> &actionList )
 {
   if ( !d->m_factory )
     return;
@@ -610,7 +610,7 @@ void KXMLGUIClient::plugActionList( const QString &name, const QPtrList<KAction>
   d->m_factory->plugActionList( this, name, actionList );
 }
 
-void KXMLGUIClient::unplugActionList( const QString &name )
+void KXMLGUIClient::unplugActionList( const TQString &name )
 {
   if ( !d->m_factory )
     return;
@@ -618,31 +618,31 @@ void KXMLGUIClient::unplugActionList( const QString &name )
   d->m_factory->unplugActionList( this, name );
 }
 
-QString KXMLGUIClient::findMostRecentXMLFile( const QStringList &files, QString &doc )
+TQString KXMLGUIClient::findMostRecentXMLFile( const TQStringList &files, TQString &doc )
 {
 
-  QValueList<DocStruct> allDocuments;
+  TQValueList<DocStruct> allDocuments;
 
-  QStringList::ConstIterator it = files.begin();
-  QStringList::ConstIterator end = files.end();
+  TQStringList::ConstIterator it = files.begin();
+  TQStringList::ConstIterator end = files.end();
   for (; it != end; ++it )
   {
     //kdDebug() << "KXMLGUIClient::findMostRecentXMLFile " << *it << endl;
-    QString data = KXMLGUIFactory::readConfigFile( *it );
+    TQString data = KXMLGUIFactory::readConfigFile( *it );
     DocStruct d;
     d.file = *it;
     d.data = data;
     allDocuments.append( d );
   }
 
-  QValueList<DocStruct>::Iterator best = allDocuments.end();
+  TQValueList<DocStruct>::Iterator best = allDocuments.end();
   uint bestVersion = 0;
 
-  QValueList<DocStruct>::Iterator docIt = allDocuments.begin();
-  QValueList<DocStruct>::Iterator docEnd = allDocuments.end();
+  TQValueList<DocStruct>::Iterator docIt = allDocuments.begin();
+  TQValueList<DocStruct>::Iterator docEnd = allDocuments.end();
   for (; docIt != docEnd; ++docIt )
   {
-    QString versionStr = findVersionNumber( (*docIt).data );
+    TQString versionStr = findVersionNumber( (*docIt).data );
     if ( versionStr.isEmpty() )
       continue;
 
@@ -664,10 +664,10 @@ QString KXMLGUIClient::findMostRecentXMLFile( const QStringList &files, QString 
   {
     if ( best != allDocuments.begin() )
     {
-      QValueList<DocStruct>::Iterator local = allDocuments.begin();
+      TQValueList<DocStruct>::Iterator local = allDocuments.begin();
 
       // load the local document and extract the action properties
-      QDomDocument document;
+      TQDomDocument document;
       document.setContent( (*local).data );
 
       ActionPropertiesMap properties = extractActionProperties( document );
@@ -688,19 +688,19 @@ QString KXMLGUIClient::findMostRecentXMLFile( const QStringList &files, QString 
           best = local;
 
           // write out the new version of the local document
-          QFile f( (*local).file );
+          TQFile f( (*local).file );
           if ( f.open( IO_WriteOnly ) )
           {
-            QCString utf8data = (*local).data.utf8();
+            TQCString utf8data = (*local).data.utf8();
             f.writeBlock( utf8data.data(), utf8data.length() );
             f.close();
           }
       }
       else
       {
-        QString f = (*local).file;
-        QString backup = f + QString::fromLatin1( ".backup" );
-        QDir dir;
+        TQString f = (*local).file;
+        TQString backup = f + TQString::fromLatin1( ".backup" );
+        TQDir dir;
         dir.rename( f, backup );
       }
     }
@@ -714,12 +714,12 @@ QString KXMLGUIClient::findMostRecentXMLFile( const QStringList &files, QString 
     return (*allDocuments.begin()).file;
   }
 
-  return QString::null;
+  return TQString::null;
 }
 
 
 
-QString KXMLGUIClient::findVersionNumber( const QString &xml )
+TQString KXMLGUIClient::findVersionNumber( const TQString &xml )
 {
   enum { ST_START, ST_AFTER_OPEN, ST_AFTER_GUI,
                ST_EXPECT_VERSION, ST_VERSION_NUM} state = ST_START;
@@ -736,7 +736,7 @@ QString KXMLGUIClient::findVersionNumber( const QString &xml )
         //Jump to gui..
         int guipos = xml.find("gui", pos, false /*case-insensitive*/);
         if (guipos == -1)
-          return QString::null; //Reject
+          return TQString::null; //Reject
 
         pos = guipos + 2; //Position at i, so we're moved ahead to the next character by the ++;
         state = ST_AFTER_GUI;
@@ -749,7 +749,7 @@ QString KXMLGUIClient::findVersionNumber( const QString &xml )
       {
         int verpos =  xml.find("version=\"", pos, false /*case-insensitive*/);
         if (verpos == -1)
-          return QString::null; //Reject
+          return TQString::null; //Reject
 
         pos = verpos +  8; //v = 0, e = +1, r = +2, s = +3 , i = +4, o = +5, n = +6, = = +7, " = + 8
         state = ST_VERSION_NUM;
@@ -772,7 +772,7 @@ QString KXMLGUIClient::findVersionNumber( const QString &xml )
 
         if (endpos != pos && endpos < xml.length() )
         {
-          QString matchCandidate = xml.mid(pos, endpos - pos); //Don't include " ".
+          TQString matchCandidate = xml.mid(pos, endpos - pos); //Don't include " ".
           return matchCandidate;
         }
 
@@ -782,22 +782,22 @@ QString KXMLGUIClient::findVersionNumber( const QString &xml )
     } //switch
   } //for
 
-  return QString::null;
+  return TQString::null;
 }
 
-KXMLGUIClient::ActionPropertiesMap KXMLGUIClient::extractActionProperties( const QDomDocument &doc )
+KXMLGUIClient::ActionPropertiesMap KXMLGUIClient::extractActionProperties( const TQDomDocument &doc )
 {
   ActionPropertiesMap properties;
 
-  QDomElement actionPropElement = doc.documentElement().namedItem( "ActionProperties" ).toElement();
+  TQDomElement actionPropElement = doc.documentElement().namedItem( "ActionProperties" ).toElement();
 
   if ( actionPropElement.isNull() )
     return properties;
 
-  QDomNode n = actionPropElement.firstChild();
+  TQDomNode n = actionPropElement.firstChild();
   while(!n.isNull())
   {
-    QDomElement e = n.toElement();
+    TQDomElement e = n.toElement();
     n = n.nextSibling(); // Advance now so that we can safely delete e
     if ( e.isNull() )
       continue;
@@ -805,26 +805,26 @@ KXMLGUIClient::ActionPropertiesMap KXMLGUIClient::extractActionProperties( const
     if ( e.tagName().lower() != "action" )
       continue;
 
-    QString actionName = e.attribute( "name" );
+    TQString actionName = e.attribute( "name" );
 
     if ( actionName.isEmpty() )
       continue;
 
-    QMap<QString, QMap<QString, QString> >::Iterator propIt = properties.find( actionName );
+    TQMap<TQString, TQMap<TQString, TQString> >::Iterator propIt = properties.find( actionName );
     if ( propIt == properties.end() )
-      propIt = properties.insert( actionName, QMap<QString, QString>() );
+      propIt = properties.insert( actionName, TQMap<TQString, TQString>() );
 
-    const QDomNamedNodeMap attributes = e.attributes();
+    const TQDomNamedNodeMap attributes = e.attributes();
     const uint attributeslength = attributes.length();
 
     for ( uint i = 0; i < attributeslength; ++i )
     {
-      const QDomAttr attr = attributes.item( i ).toAttr();
+      const TQDomAttr attr = attributes.item( i ).toAttr();
 
       if ( attr.isNull() )
         continue;
 
-      const QString name = attr.name();
+      const TQString name = attr.name();
 
       if ( name == "name" || name.isEmpty() )
         continue;
@@ -837,9 +837,9 @@ KXMLGUIClient::ActionPropertiesMap KXMLGUIClient::extractActionProperties( const
   return properties;
 }
 
-void KXMLGUIClient::storeActionProperties( QDomDocument &doc, const ActionPropertiesMap &properties )
+void KXMLGUIClient::storeActionProperties( TQDomDocument &doc, const ActionPropertiesMap &properties )
 {
-  QDomElement actionPropElement = doc.documentElement().namedItem( "ActionProperties" ).toElement();
+  TQDomElement actionPropElement = doc.documentElement().namedItem( "ActionProperties" ).toElement();
 
   if ( actionPropElement.isNull() )
   {
@@ -854,20 +854,20 @@ void KXMLGUIClient::storeActionProperties( QDomDocument &doc, const ActionProper
   ActionPropertiesMap::ConstIterator end = properties.end();
   for (; it != end; ++it )
   {
-    QDomElement action = doc.createElement( "Action" );
+    TQDomElement action = doc.createElement( "Action" );
     action.setAttribute( "name", it.key() );
     actionPropElement.appendChild( action );
 
-    QMap<QString, QString> attributes = (*it);
-    QMap<QString, QString>::ConstIterator attrIt = attributes.begin();
-    QMap<QString, QString>::ConstIterator attrEnd = attributes.end();
+    TQMap<TQString, TQString> attributes = (*it);
+    TQMap<TQString, TQString>::ConstIterator attrIt = attributes.begin();
+    TQMap<TQString, TQString>::ConstIterator attrEnd = attributes.end();
     for (; attrIt != attrEnd; ++attrIt )
       action.setAttribute( attrIt.key(), attrIt.data() );
   }
 }
 
-void KXMLGUIClient::addStateActionEnabled(const QString& state,
-                                          const QString& action)
+void KXMLGUIClient::addStateActionEnabled(const TQString& state,
+                                          const TQString& action)
 {
   StateChange stateChange = getActionsToChangeForState(state);
 
@@ -878,8 +878,8 @@ void KXMLGUIClient::addStateActionEnabled(const QString& state,
 }
 
 
-void KXMLGUIClient::addStateActionDisabled(const QString& state,
-                                           const QString& action)
+void KXMLGUIClient::addStateActionDisabled(const TQString& state,
+                                           const TQString& action)
 {
   StateChange stateChange = getActionsToChangeForState(state);
 
@@ -890,13 +890,13 @@ void KXMLGUIClient::addStateActionDisabled(const QString& state,
 }
 
 
-KXMLGUIClient::StateChange KXMLGUIClient::getActionsToChangeForState(const QString& state)
+KXMLGUIClient::StateChange KXMLGUIClient::getActionsToChangeForState(const TQString& state)
 {
   return m_actionsStateMap[state];
 }
 
 
-void KXMLGUIClient::stateChanged(const QString &newstate, KXMLGUIClient::ReverseStateChange reverse)
+void KXMLGUIClient::stateChanged(const TQString &newstate, KXMLGUIClient::ReverseStateChange reverse)
 {
   StateChange stateChange = getActionsToChangeForState(newstate);
 
@@ -905,7 +905,7 @@ void KXMLGUIClient::stateChanged(const QString &newstate, KXMLGUIClient::Reverse
 
   // Enable actions which need to be enabled...
   //
-  for ( QStringList::Iterator it = stateChange.actionsToEnable.begin();
+  for ( TQStringList::Iterator it = stateChange.actionsToEnable.begin();
         it != stateChange.actionsToEnable.end(); ++it ) {
 
     KAction *action = actionCollection()->action((*it).latin1());
@@ -914,7 +914,7 @@ void KXMLGUIClient::stateChanged(const QString &newstate, KXMLGUIClient::Reverse
 
   // and disable actions which need to be disabled...
   //
-  for ( QStringList::Iterator it = stateChange.actionsToDisable.begin();
+  for ( TQStringList::Iterator it = stateChange.actionsToDisable.begin();
         it != stateChange.actionsToDisable.end(); ++it ) {
 
     KAction *action = actionCollection()->action((*it).latin1());
@@ -923,10 +923,10 @@ void KXMLGUIClient::stateChanged(const QString &newstate, KXMLGUIClient::Reverse
 
 }
 
-void KXMLGUIClient::beginXMLPlug( QWidget *w )
+void KXMLGUIClient::beginXMLPlug( TQWidget *w )
 {
   actionCollection()->beginXMLPlug( w );
-  QPtrListIterator<KXMLGUIClient> childIt( d->m_children );
+  TQPtrListIterator<KXMLGUIClient> childIt( d->m_children );
   for (; childIt.current(); ++childIt )
     childIt.current()->actionCollection()->beginXMLPlug( w );
 }
@@ -934,15 +934,15 @@ void KXMLGUIClient::beginXMLPlug( QWidget *w )
 void KXMLGUIClient::endXMLPlug()
 {
   actionCollection()->endXMLPlug();
-  QPtrListIterator<KXMLGUIClient> childIt( d->m_children );
+  TQPtrListIterator<KXMLGUIClient> childIt( d->m_children );
   for (; childIt.current(); ++childIt )
     childIt.current()->actionCollection()->endXMLPlug();
 }
 
-void KXMLGUIClient::prepareXMLUnplug( QWidget * )
+void KXMLGUIClient::prepareXMLUnplug( TQWidget * )
 {
   actionCollection()->prepareXMLUnplug();
-  QPtrListIterator<KXMLGUIClient> childIt( d->m_children );
+  TQPtrListIterator<KXMLGUIClient> childIt( d->m_children );
   for (; childIt.current(); ++childIt )
     childIt.current()->actionCollection()->prepareXMLUnplug();
 }

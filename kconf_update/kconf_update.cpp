@@ -25,8 +25,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
 #include <kconfig.h>
 #include <ksimpleconfig.h>
@@ -51,57 +51,57 @@ class KonfUpdate
 public:
    KonfUpdate();
    ~KonfUpdate();
-   QStringList findUpdateFiles(bool dirtyOnly);
+   TQStringList findUpdateFiles(bool dirtyOnly);
 
-   QTextStream &log();
+   TQTextStream &log();
 
-   bool checkFile(const QString &filename);
-   void checkGotFile(const QString &_file, const QString &id);
+   bool checkFile(const TQString &filename);
+   void checkGotFile(const TQString &_file, const TQString &id);
 
-   bool updateFile(const QString &filename);
+   bool updateFile(const TQString &filename);
 
-   void gotId(const QString &_id);
-   void gotFile(const QString &_file);
-   void gotGroup(const QString &_group);
-   void gotRemoveGroup(const QString &_group);
-   void gotKey(const QString &_key);
-   void gotRemoveKey(const QString &_key);
+   void gotId(const TQString &_id);
+   void gotFile(const TQString &_file);
+   void gotGroup(const TQString &_group);
+   void gotRemoveGroup(const TQString &_group);
+   void gotKey(const TQString &_key);
+   void gotRemoveKey(const TQString &_key);
    void gotAllKeys();
    void gotAllGroups();
-   void gotOptions(const QString &_options);
-   void gotScript(const QString &_script);
-   void gotScriptArguments(const QString &_arguments);
+   void gotOptions(const TQString &_options);
+   void gotScript(const TQString &_script);
+   void gotScriptArguments(const TQString &_arguments);
    void resetOptions();
 
-   void copyGroup(KConfigBase *cfg1, const QString &grp1, 
-                  KConfigBase *cfg2, const QString &grp2);
+   void copyGroup(KConfigBase *cfg1, const TQString &grp1, 
+                  KConfigBase *cfg2, const TQString &grp2);
 
 protected:
    KConfig *config;
-   QString currentFilename;
+   TQString currentFilename;
    bool skip;
    bool debug;
-   QString id;
+   TQString id;
 
-   QString oldFile;
-   QString newFile;
-   QString newFileName;
+   TQString oldFile;
+   TQString newFile;
+   TQString newFileName;
    KConfig *oldConfig1; // Config to read keys from.
    KConfig *oldConfig2; // Config to delete keys from.
    KConfig *newConfig;
 
-   QString oldGroup;
-   QString newGroup;
-   QString oldKey;
-   QString newKey;
+   TQString oldGroup;
+   TQString newGroup;
+   TQString oldKey;
+   TQString newKey;
 
    bool m_bCopy;
    bool m_bOverwrite;
    bool m_bUseConfigInfo;
-   QString m_arguments;
-   QTextStream *m_textStream;
-   QFile *m_file;
-   QString m_line;
+   TQString m_arguments;
+   TQTextStream *m_textStream;
+   TQFile *m_file;
+   TQString m_line;
    int m_lineCount;
 };
 
@@ -115,7 +115,7 @@ KonfUpdate::KonfUpdate()
 
    config = new KConfig("kconf_updaterc");
 
-   QStringList updateFiles;
+   TQStringList updateFiles;
    KCmdLineArgs *args=KCmdLineArgs::parsedArgs();
    
    debug = args->isSet("debug");
@@ -124,11 +124,11 @@ KonfUpdate::KonfUpdate()
    if (args->isSet("check"))
    {
       m_bUseConfigInfo = true;
-      QString file = locate("data", "kconf_update/"+QFile::decodeName(args->getOption("check")));
+      TQString file = locate("data", "kconf_update/"+TQFile::decodeName(args->getOption("check")));
       if (file.isEmpty())
       {
          qWarning("File '%s' not found.", args->getOption("check").data());
-         log() << "File '" << QFile::decodeName(args->getOption("check")) << "' passed on command line not found" << endl;
+         log() << "File '" << TQFile::decodeName(args->getOption("check")) << "' passed on command line not found" << endl;
          return;
       }
       updateFiles.append(file);
@@ -151,25 +151,25 @@ KonfUpdate::KonfUpdate()
       updateAll = true;
    }
 
-   for(QStringList::ConstIterator it = updateFiles.begin();
+   for(TQStringList::ConstIterator it = updateFiles.begin();
        it != updateFiles.end();
        ++it)
    {
-      QString file = *it;
+      TQString file = *it;
       updateFile(file);
    }
 
-   config->setGroup(QString::null);
+   config->setGroup(TQString::null);
    if (updateAll && !config->readBoolEntry("updateInfoAdded", false))
    {
        config->writeEntry("updateInfoAdded", true);
        updateFiles = findUpdateFiles(false);
 
-       for(QStringList::ConstIterator it = updateFiles.begin();
+       for(TQStringList::ConstIterator it = updateFiles.begin();
            it != updateFiles.end();
            ++it)
        {
-           QString file = *it;
+           TQString file = *it;
            checkFile(file);
        }
        updateFiles.clear();
@@ -183,40 +183,40 @@ KonfUpdate::~KonfUpdate()
    delete m_textStream;
 }
 
-QTextStream &
+TQTextStream &
 KonfUpdate::log()
 {
    if (!m_textStream)
    {
-      QString file = locateLocal("data", "kconf_update/log/update.log");
-      m_file = new QFile(file);
+      TQString file = locateLocal("data", "kconf_update/log/update.log");
+      m_file = new TQFile(file);
       if (m_file->open(IO_WriteOnly | IO_Append))
       {
-        m_textStream = new QTextStream(m_file);
+        m_textStream = new TQTextStream(m_file);
       }
       else
       {
         // Error
-        m_textStream = new QTextStream(stderr, IO_WriteOnly);
+        m_textStream = new TQTextStream(stderr, IO_WriteOnly);
       }
    }
    
-   (*m_textStream) << QDateTime::currentDateTime().toString( Qt::ISODate ) << " ";
+   (*m_textStream) << TQDateTime::currentDateTime().toString( Qt::ISODate ) << " ";
    
    return *m_textStream;
 }
 
-QStringList KonfUpdate::findUpdateFiles(bool dirtyOnly)
+TQStringList KonfUpdate::findUpdateFiles(bool dirtyOnly)
 {
-   QStringList result;
-   QStringList list = KGlobal::dirs()->findAllResources("data", "kconf_update/*.upd", false, true);
-   for(QStringList::ConstIterator it = list.begin();
+   TQStringList result;
+   TQStringList list = KGlobal::dirs()->findAllResources("data", "kconf_update/*.upd", false, true);
+   for(TQStringList::ConstIterator it = list.begin();
        it != list.end();
        ++it)
    {
-      QString file = *it;
+      TQString file = *it;
       struct stat buff;
-      if (stat( QFile::encodeName(file), &buff) == 0)
+      if (stat( TQFile::encodeName(file), &buff) == 0)
       {
          int i = file.findRev('/');
          if (i != -1) 
@@ -234,25 +234,25 @@ QStringList KonfUpdate::findUpdateFiles(bool dirtyOnly)
    return result;
 }
 
-bool KonfUpdate::checkFile(const QString &filename)
+bool KonfUpdate::checkFile(const TQString &filename)
 {
    currentFilename = filename;
    int i = currentFilename.findRev('/');
    if (i != -1) 
       currentFilename = currentFilename.mid(i+1);
    skip = true;
-   QFile file(filename);
+   TQFile file(filename);
    if (!file.open(IO_ReadOnly))
       return false;
 
-   QTextStream ts(&file);
-   ts.setEncoding(QTextStream::Latin1);
+   TQTextStream ts(&file);
+   ts.setEncoding(TQTextStream::Latin1);
    int lineCount = 0;
    resetOptions();
-   QString id;
+   TQString id;
    while(!ts.atEnd())
    {
-      QString line = ts.readLine().stripWhiteSpace();
+      TQString line = ts.readLine().stripWhiteSpace();
       lineCount++;
       if (line.isEmpty() || (line[0] == '#'))
          continue;
@@ -265,9 +265,9 @@ bool KonfUpdate::checkFile(const QString &filename)
    return true;
 }
 
-void KonfUpdate::checkGotFile(const QString &_file, const QString &id)
+void KonfUpdate::checkGotFile(const TQString &_file, const TQString &id)
 {
-   QString file;
+   TQString file;
    int i = _file.find(',');
    if (i == -1)
    {
@@ -282,7 +282,7 @@ void KonfUpdate::checkGotFile(const QString &_file, const QString &id)
 
    KSimpleConfig cfg(file);
    cfg.setGroup("$Version");
-   QStringList ids = cfg.readListEntry("update_info");
+   TQStringList ids = cfg.readListEntry("update_info");
    if (ids.contains(id))
        return;
    ids.append(id);
@@ -308,21 +308,21 @@ void KonfUpdate::checkGotFile(const QString &_file, const QString &id)
  * Sequence:
  * (Id,(File(Group,Keys)*)*)*
  **/
-bool KonfUpdate::updateFile(const QString &filename)
+bool KonfUpdate::updateFile(const TQString &filename)
 {
    currentFilename = filename;
    int i = currentFilename.findRev('/');
    if (i != -1) 
        currentFilename = currentFilename.mid(i+1);
    skip = true;
-   QFile file(filename);
+   TQFile file(filename);
    if (!file.open(IO_ReadOnly))
       return false;
 
    log() << "Checking update-file '" << filename << "' for new updates" << endl; 
 
-   QTextStream ts(&file);
-   ts.setEncoding(QTextStream::Latin1);
+   TQTextStream ts(&file);
+   ts.setEncoding(TQTextStream::Latin1);
    m_lineCount = 0;
    resetOptions();
    while(!ts.atEnd())
@@ -379,10 +379,10 @@ bool KonfUpdate::updateFile(const QString &filename)
       }
    }
    // Flush.
-   gotId(QString::null);
+   gotId(TQString::null);
   
    struct stat buff;
-   stat( QFile::encodeName(filename), &buff);
+   stat( TQFile::encodeName(filename), &buff);
    config->setGroup(currentFilename);
    config->writeEntry("ctime", buff.st_ctime);
    config->writeEntry("mtime", buff.st_mtime);
@@ -392,12 +392,12 @@ bool KonfUpdate::updateFile(const QString &filename)
 
 
 
-void KonfUpdate::gotId(const QString &_id)
+void KonfUpdate::gotId(const TQString &_id)
 {
    if (!id.isEmpty() && !skip)
    {
        config->setGroup(currentFilename);
-       QStringList ids = config->readListEntry("done");
+       TQStringList ids = config->readListEntry("done");
        if (!ids.contains(id))
        {
           ids.append(id);
@@ -407,10 +407,10 @@ void KonfUpdate::gotId(const QString &_id)
    }
 
    // Flush pending changes
-   gotFile(QString::null);
+   gotFile(TQString::null);
 
    config->setGroup(currentFilename);
-   QStringList ids = config->readListEntry("done");
+   TQStringList ids = config->readListEntry("done");
    if (!_id.isEmpty())
    {
        if (ids.contains(_id))
@@ -431,10 +431,10 @@ void KonfUpdate::gotId(const QString &_id)
    }
 }
 
-void KonfUpdate::gotFile(const QString &_file)
+void KonfUpdate::gotFile(const TQString &_file)
 {
    // Reset group
-   gotGroup(QString::null);
+   gotGroup(TQString::null);
  
    if (!oldFile.isEmpty())
    {
@@ -443,8 +443,8 @@ void KonfUpdate::gotFile(const QString &_file)
       oldConfig1 = 0;
 
       oldConfig2->setGroup("$Version");
-      QStringList ids = oldConfig2->readListEntry("update_info");
-      QString cfg_id = currentFilename + ":" + id;
+      TQStringList ids = oldConfig2->readListEntry("update_info");
+      TQString cfg_id = currentFilename + ":" + id;
       if (!ids.contains(cfg_id) && !skip)
       {
          ids.append(cfg_id);
@@ -454,25 +454,25 @@ void KonfUpdate::gotFile(const QString &_file)
       delete oldConfig2;
       oldConfig2 = 0;
       
-      QString file = locateLocal("config", oldFile);
+      TQString file = locateLocal("config", oldFile);
       struct stat s_buf;
-      if (stat(QFile::encodeName(file), &s_buf) == 0)
+      if (stat(TQFile::encodeName(file), &s_buf) == 0)
       {
          if (s_buf.st_size == 0)
          {
             // Delete empty file.
-            unlink(QFile::encodeName(file));
+            unlink(TQFile::encodeName(file));
          }   
       }
 
-      oldFile = QString::null;
+      oldFile = TQString::null;
    }
    if (!newFile.isEmpty())
    {
       // Close new file.
       newConfig->setGroup("$Version");
-      QStringList ids = newConfig->readListEntry("update_info");
-      QString cfg_id = currentFilename + ":" + id;
+      TQStringList ids = newConfig->readListEntry("update_info");
+      TQString cfg_id = currentFilename + ":" + id;
       if (!ids.contains(cfg_id) && !skip)
       {
          ids.append(cfg_id);
@@ -482,7 +482,7 @@ void KonfUpdate::gotFile(const QString &_file)
       delete newConfig;
       newConfig = 0;
 
-      newFile = QString::null;
+      newFile = TQString::null;
    }
    newConfig = 0; 
 
@@ -496,19 +496,19 @@ void KonfUpdate::gotFile(const QString &_file)
       oldFile = _file.left(i).stripWhiteSpace();
       newFile = _file.mid(i+1).stripWhiteSpace();
       if (oldFile == newFile)
-         newFile = QString::null;
+         newFile = TQString::null;
    }
    
    if (!oldFile.isEmpty())
    {
       oldConfig2 = new KConfig(oldFile, false, false);
-      QString cfg_id = currentFilename + ":" + id;
+      TQString cfg_id = currentFilename + ":" + id;
       oldConfig2->setGroup("$Version");
-      QStringList ids = oldConfig2->readListEntry("update_info");
+      TQStringList ids = oldConfig2->readListEntry("update_info");
       if (ids.contains(cfg_id))
       {
          skip = true;
-         newFile = QString::null;
+         newFile = TQString::null;
          log() << currentFilename << ": Skipping update '" << id << "'" << endl;
       }
 
@@ -532,14 +532,14 @@ void KonfUpdate::gotFile(const QString &_file)
    }
    else
    {
-      newFile = QString::null;
+      newFile = TQString::null;
    }
    newFileName = newFile;
    if (newFileName.isEmpty())
       newFileName = oldFile;
 }
 
-void KonfUpdate::gotGroup(const QString &_group)
+void KonfUpdate::gotGroup(const TQString &_group)
 {
    int i = _group.find(',');
    if (i == -1)
@@ -554,7 +554,7 @@ void KonfUpdate::gotGroup(const QString &_group)
    }
 }
 
-void KonfUpdate::gotRemoveGroup(const QString &_group)
+void KonfUpdate::gotRemoveGroup(const TQString &_group)
 {
    oldGroup = _group.stripWhiteSpace();
 
@@ -572,7 +572,7 @@ void KonfUpdate::gotRemoveGroup(const QString &_group)
 }
 
 
-void KonfUpdate::gotKey(const QString &_key)
+void KonfUpdate::gotKey(const TQString &_key)
 {
    int i = _key.find(',');
    if (i == -1)
@@ -599,7 +599,7 @@ void KonfUpdate::gotKey(const QString &_key)
    oldConfig1->setGroup(oldGroup);
    if (!oldConfig1->hasKey(oldKey))
       return;
-   QString value = oldConfig1->readEntry(oldKey);
+   TQString value = oldConfig1->readEntry(oldKey);
    newConfig->setGroup(newGroup);
    if (!m_bOverwrite && newConfig->hasKey(newKey))
    {
@@ -625,7 +625,7 @@ void KonfUpdate::gotKey(const QString &_key)
    }
 }
 
-void KonfUpdate::gotRemoveKey(const QString &_key)
+void KonfUpdate::gotRemoveKey(const TQString &_key)
 {
    oldKey = _key.stripWhiteSpace();
 
@@ -662,8 +662,8 @@ void KonfUpdate::gotAllKeys()
       return;
    }
 
-   QMap<QString, QString> list = oldConfig1->entryMap(oldGroup);
-   for(QMap<QString, QString>::Iterator it = list.begin();
+   TQMap<TQString, TQString> list = oldConfig1->entryMap(oldGroup);
+   for(TQMap<TQString, TQString>::Iterator it = list.begin();
        it != list.end(); ++it)
    {
       gotKey(it.key());
@@ -678,8 +678,8 @@ void KonfUpdate::gotAllGroups()
       return;
    }
 
-   QStringList allGroups = oldConfig1->groupList();
-   for(QStringList::ConstIterator it = allGroups.begin();
+   TQStringList allGroups = oldConfig1->groupList();
+   for(TQStringList::ConstIterator it = allGroups.begin();
        it != allGroups.end(); ++it)
    {
      oldGroup = *it;
@@ -688,10 +688,10 @@ void KonfUpdate::gotAllGroups()
    }
 }
 
-void KonfUpdate::gotOptions(const QString &_options)
+void KonfUpdate::gotOptions(const TQString &_options)
 {
-   QStringList options = QStringList::split(',', _options);
-   for(QStringList::ConstIterator it = options.begin();
+   TQStringList options = TQStringList::split(',', _options);
+   for(TQStringList::ConstIterator it = options.begin();
        it != options.end();
        ++it)
    {
@@ -703,27 +703,27 @@ void KonfUpdate::gotOptions(const QString &_options)
    }
 }
 
-void KonfUpdate::copyGroup(KConfigBase *cfg1, const QString &grp1, 
-                           KConfigBase *cfg2, const QString &grp2)
+void KonfUpdate::copyGroup(KConfigBase *cfg1, const TQString &grp1, 
+                           KConfigBase *cfg2, const TQString &grp2)
 {
    cfg1->setGroup(grp1);
    cfg2->setGroup(grp2);
-   QMap<QString, QString> list = cfg1->entryMap(grp1);
-   for(QMap<QString, QString>::Iterator it = list.begin();
+   TQMap<TQString, TQString> list = cfg1->entryMap(grp1);
+   for(TQMap<TQString, TQString>::Iterator it = list.begin();
        it != list.end(); ++it)
    {
       cfg2->writeEntry(it.key(), cfg1->readEntry(it.key()));
    }
 }
 
-void KonfUpdate::gotScriptArguments(const QString &_arguments)
+void KonfUpdate::gotScriptArguments(const TQString &_arguments)
 {
    m_arguments = _arguments;
 }
 
-void KonfUpdate::gotScript(const QString &_script)
+void KonfUpdate::gotScript(const TQString &_script)
 {
-   QString script, interpreter;
+   TQString script, interpreter;
    int i = _script.find(',');
    if (i == -1)
    {
@@ -745,7 +745,7 @@ void KonfUpdate::gotScript(const QString &_script)
 
 
 
-   QString path = locate("data","kconf_update/"+script);
+   TQString path = locate("data","kconf_update/"+script);
    if (path.isEmpty())
    {
       if (interpreter.isEmpty())
@@ -764,7 +764,7 @@ void KonfUpdate::gotScript(const QString &_script)
    else
       log() << currentFilename << ": Running script '" << script << "'" << endl;
 
-   QString cmd;
+   TQString cmd;
    if (interpreter.isEmpty())
       cmd = path;
    else
@@ -796,8 +796,8 @@ void KonfUpdate::gotScript(const QString &_script)
        if (oldGroup.isEmpty())
        {
            // Write all entries to tmpFile;
-           QStringList grpList = oldConfig1->groupList();
-           for(QStringList::ConstIterator it = grpList.begin();
+           TQStringList grpList = oldConfig1->groupList();
+           for(TQStringList::ConstIterator it = grpList.begin();
                it != grpList.end();
                ++it)
            {
@@ -806,27 +806,27 @@ void KonfUpdate::gotScript(const QString &_script)
        }
        else 
        {
-           copyGroup(oldConfig1, oldGroup, &cfg, QString::null);
+           copyGroup(oldConfig1, oldGroup, &cfg, TQString::null);
        }
        cfg.sync();
-       result = system(QFile::encodeName(QString("%1 < %2 > %3 2> %4").arg(cmd, tmp1.name(), tmp2.name(), tmp3.name())));
+       result = system(TQFile::encodeName(TQString("%1 < %2 > %3 2> %4").arg(cmd, tmp1.name(), tmp2.name(), tmp3.name())));
    }
    else
    {
        // No config file
-       result = system(QFile::encodeName(QString("%1 2> %2").arg(cmd, tmp3.name())));
+       result = system(TQFile::encodeName(TQString("%1 2> %2").arg(cmd, tmp3.name())));
    }
 
    // Copy script stderr to log file
    {
-     QFile output(tmp3.name());
+     TQFile output(tmp3.name());
      if (output.open(IO_ReadOnly))
      { 
-       QTextStream ts( &output );
-       ts.setEncoding(QTextStream::UnicodeUTF8);
+       TQTextStream ts( &output );
+       ts.setEncoding(TQTextStream::UnicodeUTF8);
        while(!ts.atEnd())
        {
-         QString line = ts.readLine();
+         TQString line = ts.readLine();
          log() << "[Script] " << line << endl;
        }
      }
@@ -849,15 +849,15 @@ void KonfUpdate::gotScript(const QString &_script)
 
    // Deleting old entries
    {
-     QString group = oldGroup;
-     QFile output(tmp2.name());
+     TQString group = oldGroup;
+     TQFile output(tmp2.name());
      if (output.open(IO_ReadOnly))
      { 
-       QTextStream ts( &output );
-       ts.setEncoding(QTextStream::UnicodeUTF8);
+       TQTextStream ts( &output );
+       ts.setEncoding(TQTextStream::UnicodeUTF8);
        while(!ts.atEnd())
        {
-         QString line = ts.readLine();
+         TQString line = ts.readLine();
          if (line.startsWith("["))
          {
             int j = line.find(']')+1;
@@ -866,7 +866,7 @@ void KonfUpdate::gotScript(const QString &_script)
          }
          else if (line.startsWith("# DELETE "))
          {  
-            QString key = line.mid(9);
+            TQString key = line.mid(9);
             if (key[0] == '[')
             {
                int j = key.find(']')+1;
@@ -885,7 +885,7 @@ void KonfUpdate::gotScript(const QString &_script)
          }
          else if (line.startsWith("# DELETEGROUP"))
          {
-            QString key = line.mid(13).stripWhiteSpace();
+            TQString key = line.mid(13).stripWhiteSpace();
             if (key[0] == '[')
             {
                int j = key.find(']')+1;
@@ -906,13 +906,13 @@ void KonfUpdate::gotScript(const QString &_script)
    m_bCopy = true;
    {
      KConfig *saveOldConfig1 = oldConfig1;
-     QString saveOldGroup = oldGroup;
-     QString saveNewGroup = newGroup;
+     TQString saveOldGroup = oldGroup;
+     TQString saveNewGroup = newGroup;
      oldConfig1 = new KConfig(tmp2.name(), true, false);
 
      // For all groups...
-     QStringList grpList = oldConfig1->groupList();
-     for(QStringList::ConstIterator it = grpList.begin();
+     TQStringList grpList = oldConfig1->groupList();
+     for(TQStringList::ConstIterator it = grpList.begin();
          it != grpList.end();
          ++it)
      {
@@ -934,7 +934,7 @@ void KonfUpdate::resetOptions()
 {
    m_bCopy = false;
    m_bOverwrite = false;
-   m_arguments = QString::null;
+   m_arguments = TQString::null;
 }
 
 

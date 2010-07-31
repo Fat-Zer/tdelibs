@@ -59,38 +59,38 @@ KGuiItem KStdGuiItem::guiItem ( StdItem ui_enum )
   };
 }
 
-QString KStdGuiItem::stdItem( StdItem ui_enum )
+TQString KStdGuiItem::stdItem( StdItem ui_enum )
 {
   switch (ui_enum ) {
-  case Ok       : return QString::fromLatin1("ok");
-  case Cancel   : return QString::fromLatin1("cancel");
-  case Yes      : return QString::fromLatin1("yes");
-  case No       : return QString::fromLatin1("no");
-  case Discard  : return QString::fromLatin1("discard");
-  case Save     : return QString::fromLatin1("save");
-  case DontSave : return QString::fromLatin1("dontSave");
-  case SaveAs   : return QString::fromLatin1("saveAs");
-  case Apply    : return QString::fromLatin1("apply");
-  case Help     : return QString::fromLatin1("help");
-  case Close    : return QString::fromLatin1("close");
-  case Defaults : return QString::fromLatin1("defaults");
-  case Back     : return QString::fromLatin1("back");
-  case Forward  : return QString::fromLatin1("forward");
-  case Print    : return QString::fromLatin1("print");
-  case Continue : return QString::fromLatin1("continue");
-  case Open     : return QString::fromLatin1("open");
-  case Quit     : return QString::fromLatin1("quit");
-  case AdminMode: return QString::fromLatin1("adminMode");
-  case Delete   : return QString::fromLatin1("delete");
-  case Insert   : return QString::fromLatin1("insert");
-  case Find     : return QString::fromLatin1("find");
-  case Stop     : return QString::fromLatin1("stop");
-  case Add      : return QString::fromLatin1("add");
-  case Remove   : return QString::fromLatin1("remove");
-  case Test     : return QString::fromLatin1("test");
-  case Properties : return QString::fromLatin1("properties");
-  case Overwrite : return QString::fromLatin1("overwrite");
-  default       : return QString::null;
+  case Ok       : return TQString::fromLatin1("ok");
+  case Cancel   : return TQString::fromLatin1("cancel");
+  case Yes      : return TQString::fromLatin1("yes");
+  case No       : return TQString::fromLatin1("no");
+  case Discard  : return TQString::fromLatin1("discard");
+  case Save     : return TQString::fromLatin1("save");
+  case DontSave : return TQString::fromLatin1("dontSave");
+  case SaveAs   : return TQString::fromLatin1("saveAs");
+  case Apply    : return TQString::fromLatin1("apply");
+  case Help     : return TQString::fromLatin1("help");
+  case Close    : return TQString::fromLatin1("close");
+  case Defaults : return TQString::fromLatin1("defaults");
+  case Back     : return TQString::fromLatin1("back");
+  case Forward  : return TQString::fromLatin1("forward");
+  case Print    : return TQString::fromLatin1("print");
+  case Continue : return TQString::fromLatin1("continue");
+  case Open     : return TQString::fromLatin1("open");
+  case Quit     : return TQString::fromLatin1("quit");
+  case AdminMode: return TQString::fromLatin1("adminMode");
+  case Delete   : return TQString::fromLatin1("delete");
+  case Insert   : return TQString::fromLatin1("insert");
+  case Find     : return TQString::fromLatin1("find");
+  case Stop     : return TQString::fromLatin1("stop");
+  case Add      : return TQString::fromLatin1("add");
+  case Remove   : return TQString::fromLatin1("remove");
+  case Test     : return TQString::fromLatin1("test");
+  case Properties : return TQString::fromLatin1("properties");
+  case Overwrite : return TQString::fromLatin1("overwrite");
+  default       : return TQString::null;
   };
 }
 
@@ -183,7 +183,7 @@ KGuiItem KStdGuiItem::defaults()
 
 KGuiItem KStdGuiItem::back( BidiMode useBidi )
 {
-  QString icon = ( useBidi == UseRTL && QApplication::reverseLayout() )
+  TQString icon = ( useBidi == UseRTL && TQApplication::reverseLayout() )
                  ? "forward" : "back";
   return KGuiItem( i18n( "go back", "&Back" ), icon,
                    i18n( "Go back one step" ) );
@@ -191,7 +191,7 @@ KGuiItem KStdGuiItem::back( BidiMode useBidi )
 
 KGuiItem KStdGuiItem::forward( BidiMode useBidi )
 {
-  QString icon = ( useBidi == UseRTL && QApplication::reverseLayout() )
+  TQString icon = ( useBidi == UseRTL && TQApplication::reverseLayout() )
                  ? "back" : "forward";
   return KGuiItem( i18n( "go forward", "&Forward" ), icon,
                    i18n( "Go forward one step" ) );
@@ -211,7 +211,7 @@ KGuiItem KStdGuiItem::print()
 
 KGuiItem KStdGuiItem::cont()
 {
-  return KGuiItem( i18n( "C&ontinue" ), QString::null,
+  return KGuiItem( i18n( "C&ontinue" ), TQString::null,
                    i18n( "Continue operation" ) );
 }
 

@@ -68,7 +68,7 @@ public:
 
 	bool lastInitTLS;
 	KSSLCertificate::KSSLValidation m_cert_vfy_res;
-	QString proxyPeer;
+	TQString proxyPeer;
 
 #ifdef KSSL_HAVE_SSL
 	SSL *m_ssl;
@@ -146,7 +146,7 @@ bool KSSL::TLSInit() {
 	}
 
 	// set cipher list
-	QString clist = m_cfg->getCipherList();
+	TQString clist = m_cfg->getCipherList();
 	//kdDebug(7029) << "Cipher list: " << clist << endl;
 	if (!clist.isEmpty())
 		d->kossl->SSL_CTX_set_cipher_list(d->m_ctx, const_cast<char *>(clist.ascii()));
@@ -194,7 +194,7 @@ else if (m_cfg->sslv3()) kdDebug(7029) << "SSL3 method" << endl;
 	}
 
 	// set cipher list
-	QString clist = m_cfg->getCipherList();
+	TQString clist = m_cfg->getCipherList();
 	kdDebug(7029) << "Cipher list: " << clist << endl;
 	if (!clist.isEmpty())
 		d->kossl->SSL_CTX_set_cipher_list(d->m_ctx, const_cast<char *>(clist.ascii()));
@@ -624,13 +624,13 @@ KSSLConnectionInfo& KSSL::connectionInfo() {
 }
 
 
-// KDE 4: Make it const QString &
-void KSSL::setPeerHost(QString realHost) {
+// KDE 4: Make it const TQString &
+void KSSL::setPeerHost(TQString realHost) {
 	d->proxyPeer = realHost;
 }
 
 // deprecated
-void KSSL::setProxyUse(bool, QString, int, QString) {
+void KSSL::setProxyUse(bool, TQString, int, TQString) {
 }
 
 

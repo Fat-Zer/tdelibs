@@ -20,11 +20,11 @@
 #ifndef __parse_tree_h__
 #define __parse_tree_h__
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qvaluelist.h>
-#include <qmap.h>
-#include <qshared.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqvaluelist.h>
+#include <tqmap.h>
+#include <tqshared.h>
 
 #include <kservice.h>
 #include <kuserprofile.h>
@@ -95,25 +95,25 @@ public:
   ParseContext( const ParseContext* _ctx ) : service( _ctx->service ), maxima( _ctx->maxima ),
     offers( _ctx->offers ) {}
   ParseContext( const KService::Ptr & _service, const KServiceTypeProfile::OfferList& _offers,
-		QMap<QString,PreferencesMaxima>& _m )
+		TQMap<TQString,PreferencesMaxima>& _m )
     : service( _service ), maxima( _m ), offers( _offers ) {}
 
-  bool initMaxima( const QString& _prop);
+  bool initMaxima( const TQString& _prop);
 
   enum Type { T_STRING = 1, T_DOUBLE = 2, T_NUM = 3, T_BOOL = 4,
 	      T_STR_SEQ = 5, T_SEQ = 6 };
 
-  QString str;
+  TQString str;
   int i;
   double f;
   bool b;
-  QValueList<QVariant> seq;
-  QStringList strSeq;
+  TQValueList<TQVariant> seq;
+  TQStringList strSeq;
   Type type;
 
   KService::Ptr service;
 
-  QMap<QString,PreferencesMaxima>& maxima;
+  TQMap<TQString,PreferencesMaxima>& maxima;
   const KServiceTypeProfile::OfferList& offers;
 };
 
@@ -131,8 +131,8 @@ protected:
   virtual ~ParseTreeBase() { };
 };
 
-KIO_EXPORT ParseTreeBase::Ptr parseConstraints( const QString& _constr );
-KIO_EXPORT ParseTreeBase::Ptr parsePreferences( const QString& _prefs );
+KIO_EXPORT ParseTreeBase::Ptr parseConstraints( const TQString& _constr );
+KIO_EXPORT ParseTreeBase::Ptr parsePreferences( const TQString& _prefs );
 
 /**
  * @internal
@@ -265,7 +265,7 @@ public:
   bool eval( ParseContext *_context ) const;
 
 protected:
-  QString m_id;
+  TQString m_id;
 };
 
 /**
@@ -279,7 +279,7 @@ public:
   bool eval( ParseContext *_context ) const;
 
 protected:
-  QString m_str;
+  TQString m_str;
 };
 
 /**
@@ -293,7 +293,7 @@ public:
   bool eval( ParseContext *_context ) const { _context->type = ParseContext::T_STRING; _context->str = m_str; return true; }
 
 protected:
-  QString m_str;
+  TQString m_str;
 };
 
 /**
@@ -349,7 +349,7 @@ public:
   bool eval( ParseContext *_context ) const;
 
 protected:
-  QString m_strId;
+  TQString m_strId;
 };
 
 /**
@@ -363,7 +363,7 @@ public:
   bool eval( ParseContext *_context ) const;
 
 protected:
-  QString m_strId;
+  TQString m_strId;
 };
 
 }

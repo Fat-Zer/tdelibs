@@ -19,8 +19,8 @@
 #define __KDUALCOLORBTN_H
 
 class QBitmap;
-#include <qbrush.h>
-#include <qwidget.h>
+#include <tqbrush.h>
+#include <tqwidget.h>
 
 #include <kdelibs_export.h>
 
@@ -49,9 +49,9 @@ class KDEUI_EXPORT KDualColorButton : public QWidget
 {
     Q_OBJECT
     Q_ENUMS( DualColor )
-    Q_PROPERTY( QColor foreground READ foreground WRITE setForeground )
-    Q_PROPERTY( QColor background READ background WRITE setBackground )
-    Q_PROPERTY( QColor currentColor READ currentColor WRITE setCurrentColor STORED false DESIGNABLE false )
+    Q_PROPERTY( TQColor foreground READ foreground WRITE setForeground )
+    Q_PROPERTY( TQColor background READ background WRITE setBackground )
+    Q_PROPERTY( TQColor currentColor READ currentColor WRITE setCurrentColor STORED false DESIGNABLE false )
     Q_PROPERTY( DualColor current READ current WRITE setCurrent )
 
 public:
@@ -64,24 +64,24 @@ public:
      * As of KDE 3.5.1, sets the dialog parent to the same as "parent" if that
      * argument is non-null and the dialogParent argument is null.
      */
-    KDualColorButton(QWidget *parent=0, const char *name=0, QWidget* dialogParent=0);
+    KDualColorButton(TQWidget *parent=0, const char *name=0, TQWidget* dialogParent=0);
 
     /**
      * Constructs a new KDualColorButton with the supplied foreground and
      * background colors.
      */
-    KDualColorButton(const QColor &fgColor, const QColor &bgColor,
-                     QWidget *parent=0, const char *name=0, QWidget* dialogParent=0);
+    KDualColorButton(const TQColor &fgColor, const TQColor &bgColor,
+                     TQWidget *parent=0, const char *name=0, TQWidget* dialogParent=0);
 
     ~KDualColorButton();
     /**
      * Returns the current foreground color.
      */
-    QColor foreground() const;
+    TQColor foreground() const;
     /**
      * Returns the current background color.
      */
-    QColor background() const;
+    TQColor background() const;
     /**
      * Returns the current color item selected by the user.
      */
@@ -89,21 +89,21 @@ public:
     /**
      * Returns the color of the selected item.
      */
-    QColor currentColor() const;
+    TQColor currentColor() const;
     /**
      * Returns the minimum size needed to display the widget and all its
      * controls.
      */
-    virtual QSize sizeHint() const;
+    virtual TQSize sizeHint() const;
 public slots:
     /**
      * Sets the foreground color.
      */
-    void setForeground(const QColor &c);
+    void setForeground(const TQColor &c);
     /**
      * Sets the background color.
      */
-    void setBackground(const QColor &c);
+    void setBackground(const TQColor &c);
     /**
      * Sets the current selected color item.
      */
@@ -111,16 +111,16 @@ public slots:
     /**
      * Sets the color of the selected item.
      */
-    void setCurrentColor(const QColor &c);
+    void setCurrentColor(const TQColor &c);
 signals:
     /**
      * Emitted when the foreground color is changed.
      */
-    void fgChanged(const QColor &c);
+    void fgChanged(const TQColor &c);
     /**
      * Emitted when the background color is changed.
      */
-    void bgChanged(const QColor &c);
+    void bgChanged(const TQColor &c);
     /**
      * Emitted when the user changes the current color selection.
      */
@@ -133,19 +133,19 @@ protected:
      * be at the top right, the reset control will always be at the bottom
      * left, and you must leave at least a 14x14 space in those corners.
      */
-    virtual void metrics(QRect &fgRect, QRect &bgRect);
-    virtual void paintEvent(QPaintEvent *ev);
-    virtual void mousePressEvent(QMouseEvent *ev);
-    virtual void mouseMoveEvent(QMouseEvent *ev);
-    virtual void mouseReleaseEvent(QMouseEvent *ev);
+    virtual void metrics(TQRect &fgRect, TQRect &bgRect);
+    virtual void paintEvent(TQPaintEvent *ev);
+    virtual void mousePressEvent(TQMouseEvent *ev);
+    virtual void mouseMoveEvent(TQMouseEvent *ev);
+    virtual void mouseReleaseEvent(TQMouseEvent *ev);
     // Dnd
-    virtual void dragEnterEvent(QDragEnterEvent *ev);
-    virtual void dropEvent(QDropEvent *ev);
+    virtual void dragEnterEvent(TQDragEnterEvent *ev);
+    virtual void dropEvent(TQDropEvent *ev);
 private:
-    QBitmap *arrowBitmap;
-    QPixmap *resetPixmap;
-    QBrush fg, bg;
-    QPoint mPos;
+    TQBitmap *arrowBitmap;
+    TQPixmap *resetPixmap;
+    TQBrush fg, bg;
+    TQPoint mPos;
     bool dragFlag, miniCtlFlag;
     DualColor curColor, tmpColor;
 

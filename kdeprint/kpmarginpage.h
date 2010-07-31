@@ -29,14 +29,14 @@ class KPrinter;
 class KPMarginPage : public KPrintDialogPage
 {
 public:
-	KPMarginPage(KPrinter *prt, DrMain *driver, QWidget *parent = 0, const char *name = 0);
+	KPMarginPage(KPrinter *prt, DrMain *driver, TQWidget *parent = 0, const char *name = 0);
 	~KPMarginPage();
 
-	void setOptions(const QMap<QString,QString>& opts);
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
+	void setOptions(const TQMap<TQString,TQString>& opts);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
 
 protected:
-	void initPageSize(const QString&, bool);
+	void initPageSize(const TQString&, bool);
 
 private:
 	MarginWidget	*m_margin;

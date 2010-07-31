@@ -38,12 +38,12 @@ SMTP::SMTP(char *serverhost, unsigned short int port, int timeout)
 
     kdDebug() << "SMTP object created" << endl;
 
-    connect(&connectTimer, SIGNAL(timeout()), this, SLOT(connectTimerTick()));
-    connect(&timeOutTimer, SIGNAL(timeout()), this, SLOT(connectTimedOut()));
-    connect(&interactTimer, SIGNAL(timeout()), this, SLOT(interactTimedOut()));
+    connect(&connectTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(connectTimerTick()));
+    connect(&timeOutTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(connectTimedOut()));
+    connect(&interactTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(interactTimedOut()));
 
     // some sendmail will give 'duplicate helo' error, quick fix for now
-    connect(this, SIGNAL(messageSent()), SLOT(closeConnection()));
+    connect(this, TQT_SIGNAL(messageSent()), TQT_SLOT(closeConnection()));
 }
 
 SMTP::~SMTP()
@@ -56,7 +56,7 @@ SMTP::~SMTP()
     timeOutTimer.stop();
 }
 
-void SMTP::setServerHost(const QString& serverhost)
+void SMTP::setServerHost(const TQString& serverhost)
 {
     serverHost = serverhost;
 }
@@ -71,7 +71,7 @@ void SMTP::setTimeOut(int timeout)
     timeOut = timeout;
 }
 
-void SMTP::setSenderAddress(const QString& sender)
+void SMTP::setSenderAddress(const TQString& sender)
 {
     senderAddress = sender;
     int index = senderAddress.find('<');
@@ -95,22 +95,22 @@ void SMTP::setSenderAddress(const QString& sender)
 
 }
 
-void SMTP::setRecipientAddress(const QString& recipient)
+void SMTP::setRecipientAddress(const TQString& recipient)
 {
     recipientAddress = recipient;
 }
 
-void SMTP::setMessageSubject(const QString& subject)
+void SMTP::setMessageSubject(const TQString& subject)
 {
     messageSubject = subject;
 }
 
-void SMTP::setMessageBody(const QString& message)
+void SMTP::setMessageBody(const TQString& message)
 {
     messageBody = message;
 }
 
-void SMTP::setMessageHeader(const QString &header)
+void SMTP::setMessageHeader(const TQString &header)
 {
     messageHeader = header;
 }
@@ -134,7 +134,7 @@ void SMTP::sendMessage(void)
         kdDebug() << "state was == FINISHED\n" << endl;
         finished = false;
         state = IN;
-        writeString = QString::fromLatin1("helo %1\r\n").arg(domainName);
+        writeString = TQString::fromLatin1("helo %1\r\n").arg(domainName);
         write(sock->socket(), writeString.ascii(), writeString.length());
     }
     if(connected){
@@ -173,8 +173,8 @@ void SMTP::connectTimerTick(void)
     state = INIT;
     serverState = NONE;
 
-    connect(sock, SIGNAL(readEvent(KSocket *)), this, SLOT(socketRead(KSocket *)));
-    connect(sock, SIGNAL(closeEvent(KSocket *)), this, SLOT(socketClose(KSocket *)));
+    connect(sock, TQT_SIGNAL(readEvent(KSocket *)), this, TQT_SLOT(socketRead(KSocket *)));
+    connect(sock, TQT_SIGNAL(closeEvent(KSocket *)), this, TQT_SLOT(socketClose(KSocket *)));
     //    sock->enableRead(true);
     timeOutTimer.stop();
     kdDebug() << "connected" << endl;
@@ -231,8 +231,8 @@ void SMTP::socketRead(KSocket *socket)
 void SMTP::socketClose(KSocket *socket)
 {
     timeOutTimer.stop();
-    disconnect(sock, SIGNAL(readEvent(KSocket *)), this, SLOT(socketRead(KSocket *)));
-    disconnect(sock, SIGNAL(closeEvent(KSocket *)), this, SLOT(socketClose(KSocket *)));
+    disconnect(sock, TQT_SIGNAL(readEvent(KSocket *)), this, TQT_SLOT(socketRead(KSocket *)));
+    disconnect(sock, TQT_SIGNAL(closeEvent(KSocket *)), this, TQT_SLOT(socketClose(KSocket *)));
     socket->enableRead(false);
     kdDebug() << "connection terminated" << endl;
     connected = false;
@@ -244,10 +244,10 @@ void SMTP::socketClose(KSocket *socket)
     emit connectionClosed();
 }
 
-void SMTP::processLine(QString *line)
+void SMTP::processLine(TQString *line)
 {
     int i, stat;
-    QString tmpstr;
+    TQString tmpstr;
 
     i = line->find(' ');
     tmpstr = line->left(i);
@@ -262,7 +262,7 @@ void SMTP::processLine(QString *line)
     switch(stat){
     case GREET:     //220
         state = IN;
-        writeString = QString::fromLatin1("helo %1\r\n").arg(domainName);
+        writeString = TQString::fromLatin1("helo %1\r\n").arg(domainName);
         kdDebug() << "out: " << writeString << endl;
 	write(sock->socket(), writeString.ascii(), writeString.length());
         break;
@@ -273,19 +273,19 @@ void SMTP::processLine(QString *line)
         switch(state){
         case IN:
             state = READY;
-            writeString = QString::fromLatin1("mail from: %1\r\n").arg(senderAddress);
+            writeString = TQString::fromLatin1("mail from: %1\r\n").arg(senderAddress);
             kdDebug() << "out: " << writeString << endl;
             write(sock->socket(), writeString.ascii(), writeString.length());
             break;
         case READY:
             state = SENTFROM;
-            writeString = QString::fromLatin1("rcpt to: %1\r\n").arg(recipientAddress);
+            writeString = TQString::fromLatin1("rcpt to: %1\r\n").arg(recipientAddress);
              kdDebug() << "out: " << writeString << endl;
             write(sock->socket(), writeString.ascii(), writeString.length());
             break;
         case SENTFROM:
             state = SENTTO;
-            writeString = QString::fromLatin1("data\r\n");
+            writeString = TQString::fromLatin1("data\r\n");
              kdDebug() << "out: " << writeString << endl;
             write(sock->socket(), writeString.ascii(), writeString.length());
             break;
@@ -305,11 +305,11 @@ void SMTP::processLine(QString *line)
         break;
     case READYDATA: //354
         state = DATA;
-        writeString = QString::fromLatin1("Subject: %1\r\n").arg(messageSubject);
+        writeString = TQString::fromLatin1("Subject: %1\r\n").arg(messageSubject);
         writeString += messageHeader;
         writeString += "\r\n";
         writeString += messageBody;
-        writeString += QString::fromLatin1(".\r\n");
+        writeString += TQString::fromLatin1(".\r\n");
         kdDebug() << "out: " << writeString;
         write(sock->socket(), writeString.ascii(), writeString.length());
         break;

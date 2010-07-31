@@ -21,18 +21,18 @@
 #include "kmprinter.h"
 #include "kmwizard.h"
 
-#include <qdir.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qheader.h>
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqheader.h>
 #include <klistview.h>
 #include <klocale.h>
 #include <kiconloader.h>
 
-static QListViewItem* findChild(QListViewItem *c, const QString& txt)
+static TQListViewItem* findChild(TQListViewItem *c, const TQString& txt)
 {
 	QListViewItem	*item(c);
 	while (item)
@@ -43,7 +43,7 @@ static QListViewItem* findChild(QListViewItem *c, const QString& txt)
 
 //*****************************************************************************************************
 
-KMWRlpr::KMWRlpr(QWidget *parent, const char *name)
+KMWRlpr::KMWRlpr(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_ID = KMWizard::Custom+1;
@@ -51,22 +51,22 @@ KMWRlpr::KMWRlpr(QWidget *parent, const char *name)
 	m_nextpage = KMWizard::Name;
 
 	m_view = new KListView(this);
-	m_view->setFrameStyle(QFrame::WinPanel|QFrame::Sunken);
+	m_view->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	m_view->setLineWidth(1);
-	m_view->addColumn(QString::fromLatin1(""));
+	m_view->addColumn(TQString::fromLatin1(""));
 	m_view->header()->hide();
 	m_view->setRootIsDecorated(true);
 	m_view->setSorting(0);
-	m_host = new QLineEdit(this);
-	m_queue = new QLineEdit(this);
-	QLabel	*m_hostlabel = new QLabel(i18n("Host:"), this);
-	QLabel	*m_queuelabel = new QLabel(i18n("Queue:"), this);
+	m_host = new TQLineEdit(this);
+	m_queue = new TQLineEdit(this);
+	QLabel	*m_hostlabel = new TQLabel(i18n("Host:"), this);
+	QLabel	*m_queuelabel = new TQLabel(i18n("Queue:"), this);
 	m_hostlabel->setBuddy(m_host);
 	m_queuelabel->setBuddy(m_queue);
-	connect(m_view,SIGNAL(selectionChanged(QListViewItem*)),SLOT(slotPrinterSelected(QListViewItem*)));
+	connect(m_view,TQT_SIGNAL(selectionChanged(TQListViewItem*)),TQT_SLOT(slotPrinterSelected(TQListViewItem*)));
 
-	QHBoxLayout	*lay0 = new QHBoxLayout(this, 0, 10);
-	QVBoxLayout	*lay1 = new QVBoxLayout(0, 0, 5);
+	QHBoxLayout	*lay0 = new TQHBoxLayout(this, 0, 10);
+	QVBoxLayout	*lay1 = new TQVBoxLayout(0, 0, 5);
 	lay0->addWidget(m_view,1);
 	lay0->addLayout(lay1,1);
 	lay1->addWidget(m_hostlabel);
@@ -79,7 +79,7 @@ KMWRlpr::KMWRlpr(QWidget *parent, const char *name)
 	initialize();
 }
 
-bool KMWRlpr::isValid(QString& msg)
+bool KMWRlpr::isValid(TQString& msg)
 {
 	if (m_host->text().isEmpty())
 		msg = i18n("Empty host name.");
@@ -109,7 +109,7 @@ void KMWRlpr::initPrinter(KMPrinter *p)
 
 void KMWRlpr::updatePrinter(KMPrinter *p)
 {
-	QString	uri = QString::fromLatin1("lpd://%1/%2").arg(m_host->text()).arg(m_queue->text());
+	QString	uri = TQString::fromLatin1("lpd://%1/%2").arg(m_host->text()).arg(m_queue->text());
 	p->setDevice(uri);
 	p->setOption("host",m_host->text());
 	p->setOption("queue",m_queue->text());
@@ -128,7 +128,7 @@ void KMWRlpr::updatePrinter(KMPrinter *p)
 void KMWRlpr::initialize()
 {
 	m_view->clear();
-	QFile	f(QDir::homeDirPath()+"/.rlprrc");
+	QFile	f(TQDir::homeDirPath()+"/.rlprrc");
 	if (!f.exists()) f.setName("/etc/rlprrc");
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
@@ -143,12 +143,12 @@ void KMWRlpr::initialize()
 			if ((p=line.find(':')) != -1)
 			{
 				host = line.left(p).stripWhiteSpace();
-				QListViewItem	*hitem = new QListViewItem(m_view,host);
+				QListViewItem	*hitem = new TQListViewItem(m_view,host);
 				hitem->setPixmap(0,SmallIcon("kdeprint_computer"));
-				QStringList	prs = QStringList::split(' ',line.right(line.length()-p-1),false);
-				for (QStringList::ConstIterator it=prs.begin(); it!=prs.end(); ++it)
+				QStringList	prs = TQStringList::split(' ',line.right(line.length()-p-1),false);
+				for (TQStringList::ConstIterator it=prs.begin(); it!=prs.end(); ++it)
 				{
-					QListViewItem	*pitem = new QListViewItem(hitem,*it);
+					QListViewItem	*pitem = new TQListViewItem(hitem,*it);
 					pitem->setPixmap(0,SmallIcon("kdeprint_printer"));
 				}
 			}
@@ -166,7 +166,7 @@ void KMWRlpr::initialize()
 		while (hitem) if (hitem->text(0) == "localhost") break; else hitem = hitem->nextSibling();
 		while (!t.eof())
 		{
-			buffer = QString::null;
+			buffer = TQString::null;
 			while (!t.eof())
 			{
 				line = t.readLine().stripWhiteSpace();
@@ -186,20 +186,20 @@ void KMWRlpr::initialize()
 				QString	name = buffer.left(p);
 				if (!hitem)
 				{
-					hitem = new QListViewItem(m_view,"localhost");
+					hitem = new TQListViewItem(m_view,"localhost");
 					hitem->setPixmap(0,SmallIcon("kdeprint_computer"));
 				}
-				QListViewItem	*pitem = new QListViewItem(hitem,name);
+				QListViewItem	*pitem = new TQListViewItem(hitem,name);
 				pitem->setPixmap(0,SmallIcon("kdeprint_printer"));
 			}
 		}
 	}
 
 	if (m_view->childCount() == 0)
-		new QListViewItem(m_view,i18n("No Predefined Printers"));
+		new TQListViewItem(m_view,i18n("No Predefined Printers"));
 }
 
-void KMWRlpr::slotPrinterSelected(QListViewItem *item)
+void KMWRlpr::slotPrinterSelected(TQListViewItem *item)
 {
 	if (item && item->depth() == 1)
 	{

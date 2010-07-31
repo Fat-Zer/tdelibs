@@ -45,17 +45,17 @@
 
 #include <assert.h>
 
-#include <qcursor.h>
-#include <qclipboard.h>
-#include <qobjectlist.h>
-#include <qpopupmenu.h>
-#include <qmenubar.h>
+#include <tqcursor.h>
+#include <tqclipboard.h>
+#include <tqobjectlist.h>
+#include <tqpopupmenu.h>
+#include <tqmenubar.h>
 
 #include <kmenubar.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kdeversion.h>
-#include <qtabwidget.h>
+#include <tqtabwidget.h>
 #include <klocale.h>
 
 #include <kiconloader.h>
@@ -63,11 +63,11 @@
 #include "mainwindow.moc"
 
 
-#include <qtoolbutton.h>
-#include <qlayout.h>
-#include <qstring.h>
-#include <qmap.h>
-#include <qvaluelist.h>
+#include <tqtoolbutton.h>
+#include <tqlayout.h>
+#include <tqstring.h>
+#include <tqmap.h>
+#include <tqvaluelist.h>
 
 #include "mainwindow.h"
 #include "dockcontainer.h"
@@ -97,9 +97,9 @@ namespace KMDI
 {
 
 //============ constructor ============//
-MainWindow::MainWindow(QWidget* parentWidget, const char* name)
+MainWindow::MainWindow(TQWidget* parentWidget, const char* name)
  : KParts::DockMainWindow( parentWidget, name)
- , m_toolViews (new QMap<QWidget*,KMDI::ToolViewAccessor*>)
+ , m_toolViews (new TQMap<TQWidget*,KMDI::ToolViewAccessor*>)
  , d(new KMDIPrivate::MainWindowPrivate())
 {
   // setup main dock stuff
@@ -125,7 +125,7 @@ MainWindow::~MainWindow()
 void MainWindow::setupMainDock ()
 {
   // cover KMdi's childarea by a dockwidget
-  KDockWidget *dw = createDockWidget( "mdiAreaCover", QPixmap(), 0L, "mdi_area_cover");
+  KDockWidget *dw = createDockWidget( "mdiAreaCover", TQPixmap(), 0L, "mdi_area_cover");
   dw->setDockWindowTransient(this,true);
   dw->setEnableDocking(KDockWidget::DockNone);
   dw->setDockSite(KDockWidget::DockCorner);
@@ -139,7 +139,7 @@ void MainWindow::setupMainDock ()
   setMainDockWidget(dw);
 
   // connect signals to collapse sidebars
-  connect(m_tabWidget,SIGNAL(focusInEvent()),this,SIGNAL(collapseOverlapContainers()));
+  connect(m_tabWidget,TQT_SIGNAL(focusInEvent()),this,TQT_SIGNAL(collapseOverlapContainers()));
 }
 
 void MainWindow::setupToolViews ()
@@ -156,10 +156,10 @@ void MainWindow::setupToolViews ()
     w=static_cast<KDockWidget*>(mainDock->parentDockTabGroup()->parent());
   }
 
-  QPtrList<KDockWidget> leftReparentWidgets;
-  QPtrList<KDockWidget> rightReparentWidgets;
-  QPtrList<KDockWidget> bottomReparentWidgets;
-  QPtrList<KDockWidget> topReparentWidgets;
+  TQPtrList<KDockWidget> leftReparentWidgets;
+  TQPtrList<KDockWidget> rightReparentWidgets;
+  TQPtrList<KDockWidget> bottomReparentWidgets;
+  TQPtrList<KDockWidget> topReparentWidgets;
 
   if (mainDock->parentDockTabGroup()) {
     mainDock=static_cast<KDockWidget*>(mainDock->parentDockTabGroup()->parent());
@@ -180,40 +180,40 @@ void MainWindow::setupToolViews ()
   m_leftContainer->manualDock(mainDock, KDockWidget::DockLeft,20);
   tmpDC->init();
 
-  connect (this,SIGNAL(toggleLeft()),tmpDC,SLOT(toggle()));
-  connect(this,SIGNAL(collapseOverlapContainers()),tmpDC,SLOT(collapseOverlapped()));
-  connect(tmpDC,SIGNAL(activated(DockContainer*)),this,SLOT(setActiveToolDock(DockContainer*)));
-  connect(tmpDC,SIGNAL(deactivated(DockContainer*)),this,SLOT(removeFromActiveDockList(DockContainer*)));
+  connect (this,TQT_SIGNAL(toggleLeft()),tmpDC,TQT_SLOT(toggle()));
+  connect(this,TQT_SIGNAL(collapseOverlapContainers()),tmpDC,TQT_SLOT(collapseOverlapped()));
+  connect(tmpDC,TQT_SIGNAL(activated(DockContainer*)),this,TQT_SLOT(setActiveToolDock(DockContainer*)));
+  connect(tmpDC,TQT_SIGNAL(deactivated(DockContainer*)),this,TQT_SLOT(removeFromActiveDockList(DockContainer*)));
 
   m_rightContainer->setWidget(tmpDC=new DockContainer(m_rightContainer, this, KDockWidget::DockRight, d->m_styleIDEAlMode));
   m_rightContainer->setEnableDocking(KDockWidget::DockRight);
   m_rightContainer->manualDock(mainDock, KDockWidget::DockRight,80);
   tmpDC->init();
 
-  connect (this,SIGNAL(toggleRight()),tmpDC,SLOT(toggle()));
-  connect(this,SIGNAL(collapseOverlapContainers()),tmpDC,SLOT(collapseOverlapped()));
-  connect(tmpDC,SIGNAL(activated(DockContainer*)),this,SLOT(setActiveToolDock(DockContainer*)));
-  connect(tmpDC,SIGNAL(deactivated(DockContainer*)),this,SLOT(removeFromActiveDockList(DockContainer*)));
+  connect (this,TQT_SIGNAL(toggleRight()),tmpDC,TQT_SLOT(toggle()));
+  connect(this,TQT_SIGNAL(collapseOverlapContainers()),tmpDC,TQT_SLOT(collapseOverlapped()));
+  connect(tmpDC,TQT_SIGNAL(activated(DockContainer*)),this,TQT_SLOT(setActiveToolDock(DockContainer*)));
+  connect(tmpDC,TQT_SIGNAL(deactivated(DockContainer*)),this,TQT_SLOT(removeFromActiveDockList(DockContainer*)));
 
   m_topContainer->setWidget(tmpDC=new DockContainer(m_topContainer, this, KDockWidget::DockTop, d->m_styleIDEAlMode));
   m_topContainer->setEnableDocking(KDockWidget::DockTop);
   m_topContainer->manualDock(mainDock, KDockWidget::DockTop,20);
   tmpDC->init();
 
-  connect (this,SIGNAL(toggleTop()),tmpDC,SLOT(toggle()));
-  connect(this,SIGNAL(collapseOverlapContainers()),tmpDC,SLOT(collapseOverlapped()));
-  connect(tmpDC,SIGNAL(activated(DockContainer*)),this,SLOT(setActiveToolDock(DockContainer*)));
-  connect(tmpDC,SIGNAL(deactivated(DockContainer*)),this,SLOT(removeFromActiveDockList(DockContainer*)));
+  connect (this,TQT_SIGNAL(toggleTop()),tmpDC,TQT_SLOT(toggle()));
+  connect(this,TQT_SIGNAL(collapseOverlapContainers()),tmpDC,TQT_SLOT(collapseOverlapped()));
+  connect(tmpDC,TQT_SIGNAL(activated(DockContainer*)),this,TQT_SLOT(setActiveToolDock(DockContainer*)));
+  connect(tmpDC,TQT_SIGNAL(deactivated(DockContainer*)),this,TQT_SLOT(removeFromActiveDockList(DockContainer*)));
 
   m_bottomContainer->setWidget(tmpDC=new DockContainer(m_bottomContainer, this, KDockWidget::DockBottom, d->m_styleIDEAlMode));
   m_bottomContainer->setEnableDocking(KDockWidget::DockBottom);
   m_bottomContainer->manualDock(mainDock, KDockWidget::DockBottom,80);
   tmpDC->init();
 
-  connect (this,SIGNAL(toggleBottom()),tmpDC,SLOT(toggle()));
-  connect(this,SIGNAL(collapseOverlapContainers()),tmpDC,SLOT(collapseOverlapped()));
-  connect(tmpDC,SIGNAL(activated(DockContainer*)),this,SLOT(setActiveToolDock(DockContainer*)));
-  connect(tmpDC,SIGNAL(deactivated(DockContainer*)),this,SLOT(removeFromActiveDockList(DockContainer*)));
+  connect (this,TQT_SIGNAL(toggleBottom()),tmpDC,TQT_SLOT(toggle()));
+  connect(this,TQT_SIGNAL(collapseOverlapContainers()),tmpDC,TQT_SLOT(collapseOverlapped()));
+  connect(tmpDC,TQT_SIGNAL(activated(DockContainer*)),this,TQT_SLOT(setActiveToolDock(DockContainer*)));
+  connect(tmpDC,TQT_SIGNAL(deactivated(DockContainer*)),this,TQT_SLOT(removeFromActiveDockList(DockContainer*)));
 
   m_leftContainer->setDockSite( KDockWidget::DockCenter );
   m_rightContainer->setDockSite( KDockWidget::DockCenter );
@@ -240,10 +240,10 @@ void MainWindow::setupGUIClient ()
 {
   m_guiClient = new KMDIPrivate::GUIClient (this);
 
-  connect(m_guiClient,SIGNAL(toggleTop()),this,SIGNAL(toggleTop()));
-  connect(m_guiClient,SIGNAL(toggleLeft()),this,SIGNAL(toggleLeft()));
-  connect(m_guiClient,SIGNAL(toggleRight()),this,SIGNAL(toggleRight()));
-  connect(m_guiClient,SIGNAL(toggleBottom()),this,SIGNAL(toggleBottom()));
+  connect(m_guiClient,TQT_SIGNAL(toggleTop()),this,TQT_SIGNAL(toggleTop()));
+  connect(m_guiClient,TQT_SIGNAL(toggleLeft()),this,TQT_SIGNAL(toggleLeft()));
+  connect(m_guiClient,TQT_SIGNAL(toggleRight()),this,TQT_SIGNAL(toggleRight()));
+  connect(m_guiClient,TQT_SIGNAL(toggleBottom()),this,TQT_SIGNAL(toggleBottom()));
 }
 
 TabWidget *MainWindow::tabWidget ()
@@ -256,9 +256,9 @@ ToolViewAccessor *MainWindow::createToolWindow()
   return new KMDI::ToolViewAccessor(this);
 }
 
-KMDI::ToolViewAccessor *MainWindow::addToolWindow( QWidget* pWnd, KDockWidget::DockPosition pos, QWidget* pTargetWnd, int percent, const QString& tabToolTip, const QString& tabCaption)
+KMDI::ToolViewAccessor *MainWindow::addToolWindow( TQWidget* pWnd, KDockWidget::DockPosition pos, TQWidget* pTargetWnd, int percent, const TQString& tabToolTip, const TQString& tabCaption)
 {
-  QWidget *tvta=pWnd;
+  TQWidget *tvta=pWnd;
   KDockWidget* pDW = dockManager->getDockWidgetFromName(pWnd->name());
   if (pDW) {
     // probably readDockConfig already created the widgetContainer, use that
@@ -273,7 +273,7 @@ KMDI::ToolViewAccessor *MainWindow::addToolWindow( QWidget* pWnd, KDockWidget::D
     pWnd=pDW;
   }
 
-  QRect r=pWnd->geometry();
+  TQRect r=pWnd->geometry();
 
   KMDI::ToolViewAccessor *mtva=new KMDI::ToolViewAccessor(this,pWnd,tabToolTip,(tabCaption==0)?pWnd->caption():tabCaption);
   m_toolViews->insert(tvta,mtva);
@@ -282,7 +282,7 @@ KMDI::ToolViewAccessor *MainWindow::addToolWindow( QWidget* pWnd, KDockWidget::D
     mtva->d->widgetContainer->setEnableDocking(KDockWidget::DockNone);
     mtva->d->widgetContainer->reparent(this, Qt::WType_TopLevel | Qt::WType_Dialog, r.topLeft(), isVisible());
   } else {   // add (and dock) the toolview as DockWidget view
-    //const QPixmap& wndIcon = pWnd->icon() ? *(pWnd->icon()) : QPixmap();
+    //const TQPixmap& wndIcon = pWnd->icon() ? *(pWnd->icon()) : TQPixmap();
 
     //KDockWidget *pCover=mtva->d->widgetContainer;
 
@@ -297,7 +297,7 @@ void MainWindow::deleteToolWindow( KMDI::ToolViewAccessor *accessor)
   delete accessor;
 }
 
-void MainWindow::deleteToolWindow( QWidget* pWnd)
+void MainWindow::deleteToolWindow( TQWidget* pWnd)
 {
   if (!pWnd)
     return;
@@ -325,7 +325,7 @@ void MainWindow::setToolViewStyle(int flag)
 
   d->m_toolviewStyle = flag;
   bool toolviewExists = false;
-  QMap<QWidget*,KMDI::ToolViewAccessor*>::Iterator it;
+  TQMap<TQWidget*,KMDI::ToolViewAccessor*>::Iterator it;
   for (it = m_toolViews->begin(); it != m_toolViews->end(); ++it) {
     KDockWidget *dockWidget = dynamic_cast<KDockWidget*>(it.data()->wrapperWidget());
     if (dockWidget) {
@@ -362,7 +362,7 @@ void MainWindow::setToolViewStyle(int flag)
   }
 }
 
-void MainWindow::dockToolViewsIntoContainers(QPtrList<KDockWidget>& widgetsToReparent,KDockWidget *container) {
+void MainWindow::dockToolViewsIntoContainers(TQPtrList<KDockWidget>& widgetsToReparent,KDockWidget *container) {
   for ( KDockWidget *dw = widgetsToReparent.first(); dw;
       dw=widgetsToReparent.next()){
     dw->manualDock(container,KDockWidget::DockCenter,20);
@@ -370,7 +370,7 @@ void MainWindow::dockToolViewsIntoContainers(QPtrList<KDockWidget>& widgetsToRep
   }
 }
 
-void MainWindow::findToolViewsDockedToMain(QPtrList<KDockWidget>* list,KDockWidget::DockPosition dprtmw) {
+void MainWindow::findToolViewsDockedToMain(TQPtrList<KDockWidget>* list,KDockWidget::DockPosition dprtmw) {
   KDockWidget *mainDock=getMainDockWidget();
   if (mainDock->parentDockTabGroup()) {
     mainDock=dynamic_cast<KDockWidget*>(mainDock->parentDockTabGroup()->parent());

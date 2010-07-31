@@ -21,8 +21,8 @@
 #ifndef __KPREVIEWWIDGETBASE_H__
 #define __KPREVIEWWIDGETBASE_H__
 
-#include <qptrdict.h>
-#include <qwidget.h>
+#include <tqptrdict.h>
+#include <tqwidget.h>
 
 #include <kdelibs_export.h>
 
@@ -54,7 +54,7 @@ public:
      * @param parent The KFileDialog this preview widget is going to be used in
      * @param name The internal name of this object
      */
-    KPreviewWidgetBase(QWidget *parent, const char *name=0);
+    KPreviewWidgetBase(TQWidget *parent, const char *name=0);
     ~KPreviewWidgetBase();
 
 public slots:
@@ -73,10 +73,10 @@ public slots:
      */
     virtual void clearPreview() = 0;
 
-    QStringList supportedMimeTypes() const;
+    TQStringList supportedMimeTypes() const;
 
 protected:
-    void setSupportedMimeTypes( const QStringList& mimeTypes );
+    void setSupportedMimeTypes( const TQStringList& mimeTypes );
 
 protected:
     virtual void virtual_hook( int, void* ) {};
@@ -86,7 +86,7 @@ private:
     KPreviewWidgetBasePrivate * d() const {
         return s_private->find( const_cast<KPreviewWidgetBase*>( this ) );
     }
-    static QPtrDict<KPreviewWidgetBasePrivate> * s_private;
+    static TQPtrDict<KPreviewWidgetBasePrivate> * s_private;
 };
 
 #endif

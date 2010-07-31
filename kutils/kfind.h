@@ -22,7 +22,7 @@
 #define KFIND_H
 
 #include <kdialogbase.h>
-#include <qrect.h>
+#include <tqrect.h>
 
 /**
  * @ingroup main
@@ -50,11 +50,11 @@
  *
  *  // Connect highlight signal to code which handles highlighting
  *  // of found text.
- *  connect( m_find, SIGNAL( highlight( const QString &, int, int ) ),
- *          this, SLOT( slotHighlight( const QString &, int, int ) ) );
+ *  connect( m_find, TQT_SIGNAL( highlight( const TQString &, int, int ) ),
+ *          this, TQT_SLOT( slotHighlight( const TQString &, int, int ) ) );
  *  // Connect findNext signal - called when pressing the button in the dialog
- *  connect( m_find, SIGNAL( findNext() ),
- *          this, SLOT( slotFindNext() ) );
+ *  connect( m_find, TQT_SIGNAL( findNext() ),
+ *          this, TQT_SLOT( slotFindNext() ) );
  * \endcode
  *
  * If you are using a non-modal find dialog (the recommended new way
@@ -114,7 +114,7 @@ public:
      * @param options Options for the find dialog. @see KFindDialog.
      * @param parent The parent widget.
      */
-    KFind(const QString &pattern, long options, QWidget *parent);
+    KFind(const TQString &pattern, long options, TQWidget *parent);
 
     /**
      * This is the recommended constructor if you also use KFindDialog (non-modal).
@@ -126,7 +126,7 @@ public:
      * @param parent The parent widget.
      * @param findDialog A pointer to the KFindDialog object.
      */
-    KFind(const QString &pattern, long options, QWidget *parent, QWidget* findDialog);
+    KFind(const TQString &pattern, long options, TQWidget *parent, TQWidget* findDialog);
 
     /**
      * Destructor.
@@ -158,7 +158,7 @@ public:
      * means "process all the data", i.e. either 0 or data.length()-1 depending
      * on FindBackwards.
      */
-    void setData( const QString& data, int startPos = -1 );
+    void setData( const TQString& data, int startPos = -1 );
 
     /**
      * Call this when needData returns @c true, before calling find(). The use of
@@ -173,7 +173,7 @@ public:
      *
      * @since 3.3
      */
-    void setData( int id, const QString& data, int startPos = -1 );
+    void setData( int id, const TQString& data, int startPos = -1 );
 
     /**
      * Walk the text fragment (e.g. text-processor line, kspread cell) looking for matches.
@@ -205,13 +205,13 @@ public:
     /**
      * @return the pattern we're currently looking for
      */
-    QString pattern() const { return m_pattern; }
+    TQString pattern() const { return m_pattern; }
 
     /**
      * Change the pattern we're looking for
      * @param pattern The new pattern.
      */
-    void setPattern( const QString& pattern );
+    void setPattern( const TQString& pattern );
 
     /**
      * Return the number of matches found (i.e. the number of times
@@ -240,7 +240,7 @@ public:
      * @param index The starting index where the candidate match was found
      * @param matchedlength The length of the candidate match
      */
-    virtual bool validateMatch( const QString & text, int index, int matchedlength ) {
+    virtual bool validateMatch( const TQString & text, int index, int matchedlength ) {
         Q_UNUSED(text); Q_UNUSED(index); Q_UNUSED(matchedlength); return true; }
 
     /**
@@ -274,7 +274,7 @@ public:
      * @param matchedlength The length of the string that was matched
      * @return The index at which a match was found, or -1 if no match was found.
      */
-    static int find( const QString &text, const QString &pattern, int index, long options, int *matchedlength );
+    static int find( const TQString &text, const TQString &pattern, int index, long options, int *matchedlength );
 
     /**
      * Search the given regular expression, and returns whether a match was found. If one is,
@@ -289,7 +289,7 @@ public:
      * @param matchedlength The length of the string that was matched
      * @return The index at which a match was found, or -1 if no match was found.
      */
-    static int find( const QString &text, const QRegExp &pattern, int index, long options, int *matchedlength );
+    static int find( const TQString &text, const TQRegExp &pattern, int index, long options, int *matchedlength );
 
     /**
      * Displays the final dialog saying "no match was found", if that was the case.
@@ -344,7 +344,7 @@ signals:
      * @param matchedLength The length of the matched text.
      * @see setData()
      */
-    void highlight(const QString &text, int matchingIndex, int matchedLength);
+    void highlight(const TQString &text, int matchingIndex, int matchedLength);
 
     /**
      * Connect to this signal to implement highlighting of found text during the find
@@ -388,8 +388,8 @@ signals:
 
 protected:
 
-    QWidget* parentWidget() const { return (QWidget *)parent(); }
-    QWidget* dialogsParent() const;
+    TQWidget* parentWidget() const { return (TQWidget *)parent(); }
+    TQWidget* dialogsParent() const;
 
 protected slots:
 
@@ -397,22 +397,22 @@ protected slots:
     void slotDialogClosed();
 
 private:
-    void init( const QString& pattern );
+    void init( const TQString& pattern );
     void startNewIncrementalSearch();
 
-    static bool isInWord( QChar ch );
-    static bool isWholeWords( const QString &text, int starts, int matchedLength );
+    static bool isInWord( TQChar ch );
+    static bool isWholeWords( const TQString &text, int starts, int matchedLength );
 
     friend class KReplace;
 
 
-    QString m_pattern;
-    QRegExp *m_regExp;
+    TQString m_pattern;
+    TQRegExp *m_regExp;
     KDialogBase* m_dialog;
     long m_options;
     unsigned m_matches;
 
-    QString m_text; // the text set by setData
+    TQString m_text; // the text set by setData
     int m_index;
     int m_matchedLength;
     bool m_dialogClosed;

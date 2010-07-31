@@ -20,10 +20,10 @@
 #ifndef KMDRIVERDB_H
 #define KMDRIVERDB_H
 
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qdict.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqdict.h>
+#include <tqstring.h>
 
 #include "kmdbentry.h"
 
@@ -35,31 +35,31 @@ class KMDriverDB : public QObject
 public:
 	static KMDriverDB* self();
 
-	KMDriverDB(QObject *parent = 0, const char *name = 0);
+	KMDriverDB(TQObject *parent = 0, const char *name = 0);
 	~KMDriverDB();
 
-	void init(QWidget *parent = 0);
-	KMDBEntryList* findEntry(const QString& manu, const QString& model);
-	KMDBEntryList* findPnpEntry(const QString& manu, const QString& model);
-	QDict<KMDBEntryList>* findModels(const QString& manu);
-	const QDict< QDict<KMDBEntryList> >& manufacturers() const	{ return m_entries; }
+	void init(TQWidget *parent = 0);
+	KMDBEntryList* findEntry(const TQString& manu, const TQString& model);
+	KMDBEntryList* findPnpEntry(const TQString& manu, const TQString& model);
+	TQDict<KMDBEntryList>* findModels(const TQString& manu);
+	const TQDict< TQDict<KMDBEntryList> >& manufacturers() const	{ return m_entries; }
 
 protected:
 	void loadDbFile();
 	void insertEntry(KMDBEntry *entry);
-	QString dbFile();
+	TQString dbFile();
 
 protected slots:
 	void slotDbCreated();
 
 signals:
 	void dbLoaded(bool reloaded);
-	void error(const QString&);
+	void error(const TQString&);
 
 private:
 	KMDBCreator			*m_creator;
-	QDict< QDict<KMDBEntryList> >	m_entries;
-	QDict< QDict<KMDBEntryList> >	m_pnpentries;
+	TQDict< TQDict<KMDBEntryList> >	m_entries;
+	TQDict< TQDict<KMDBEntryList> >	m_pnpentries;
 
 	static KMDriverDB	*m_self;
 };

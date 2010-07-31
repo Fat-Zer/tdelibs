@@ -24,17 +24,17 @@
 
 
 #include "rgb.h"
-#include <qimage.h>
+#include <tqimage.h>
 #include <kdebug.h>
 
 
 ///////////////////////////////////////////////////////////////////////////////
 
 
-KDE_EXPORT void kimgio_rgb_read(QImageIO *io)
+KDE_EXPORT void kimgio_rgb_read(TQImageIO *io)
 {
 	SGIImage sgi(io);
-	QImage img;
+	TQImage img;
 
 	if (!sgi.readImage(img)) {
 		io->setImage(0);
@@ -47,10 +47,10 @@ KDE_EXPORT void kimgio_rgb_read(QImageIO *io)
 }
 
 
-KDE_EXPORT void kimgio_rgb_write(QImageIO *io)
+KDE_EXPORT void kimgio_rgb_write(TQImageIO *io)
 {
 	SGIImage sgi(io);
-	QImage img = io->image();
+	TQImage img = io->image();
 
 	if (!sgi.writeImage(img))
 		io->setStatus(-1);
@@ -62,7 +62,7 @@ KDE_EXPORT void kimgio_rgb_write(QImageIO *io)
 ///////////////////////////////////////////////////////////////////////////////
 
 
-SGIImage::SGIImage(QImageIO *io) :
+SGIImage::SGIImage(TQImageIO *io) :
 	m_io(io),
 	m_starttab(0),
 	m_lengthtab(0)
@@ -118,11 +118,11 @@ bool SGIImage::getRow(uchar *dest)
 }
 
 
-bool SGIImage::readData(QImage& img)
+bool SGIImage::readData(TQImage& img)
 {
 	QRgb *c;
 	Q_UINT32 *start = m_starttab;
-	QByteArray lguard(m_xsize);
+	TQByteArray lguard(m_xsize);
 	uchar *line = (uchar *)lguard.data();
 	unsigned x, y;
 
@@ -181,7 +181,7 @@ bool SGIImage::readData(QImage& img)
 }
 
 
-bool SGIImage::readImage(QImage& img)
+bool SGIImage::readImage(TQImage& img)
 {
 	Q_INT8 u8;
 	Q_INT16 u16;
@@ -291,16 +291,16 @@ bool SGIImage::readImage(QImage& img)
 
 
 // TODO remove; for debugging purposes only
-void RLEData::print(QString desc) const
+void RLEData::print(TQString desc) const
 {
-	QString s = desc + ": ";
+	TQString s = desc + ": ";
 	for (uint i = 0; i < size(); i++)
-		s += QString::number(at(i)) + ",";
+		s += TQString::number(at(i)) + ",";
 	kdDebug() << "--- " << s << endl;
 }
 
 
-void RLEData::write(QDataStream& s)
+void RLEData::write(TQDataStream& s)
 {
 	for (unsigned i = 0; i < size(); i++)
 		s << at(i);
@@ -328,13 +328,13 @@ uint RLEMap::insert(const uchar *d, uint l)
 		return it.data();
 
 	m_offset += l;
-	return QMap<RLEData, uint>::insert(data, m_counter++).data();
+	return TQMap<RLEData, uint>::insert(data, m_counter++).data();
 }
 
 
-QPtrVector<RLEData> RLEMap::vector()
+TQPtrVector<RLEData> RLEMap::vector()
 {
-	QPtrVector<RLEData> v(size());
+	TQPtrVector<RLEData> v(size());
 	for (Iterator it = begin(); it != end(); ++it)
 		v.insert(it.data(), &it.key());
 
@@ -387,11 +387,11 @@ uint SGIImage::compact(uchar *d, uchar *s)
 }
 
 
-bool SGIImage::scanData(const QImage& img)
+bool SGIImage::scanData(const TQImage& img)
 {
 	Q_UINT32 *start = m_starttab;
-	QCString lineguard(m_xsize * 2);
-	QCString bufguard(m_xsize);
+	TQCString lineguard(m_xsize * 2);
+	TQCString bufguard(m_xsize);
 	uchar *line = (uchar *)lineguard.data();
 	uchar *buf = (uchar *)bufguard.data();
 	QRgb *c;
@@ -451,7 +451,7 @@ void SGIImage::writeHeader()
 	m_stream << Q_UINT32(0);
 
 	uint i;
-	QString desc = m_io->description();
+	TQString desc = m_io->description();
 	kdDebug(399) << "Description: " << desc << endl;
 	desc.truncate(79);
 
@@ -488,7 +488,7 @@ void SGIImage::writeRle()
 }
 
 
-void SGIImage::writeVerbatim(const QImage& img)
+void SGIImage::writeVerbatim(const TQImage& img)
 {
 	m_rle = 0;
 	kdDebug(399) << "writing verbatim data" << endl;
@@ -531,7 +531,7 @@ void SGIImage::writeVerbatim(const QImage& img)
 }
 
 
-bool SGIImage::writeImage(QImage& img)
+bool SGIImage::writeImage(TQImage& img)
 {
 	kdDebug(399) << "writing '" << m_io->fileName() << '\'' << endl;
 

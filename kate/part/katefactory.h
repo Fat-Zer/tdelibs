@@ -73,15 +73,15 @@ class KateFactory
      * reimplemented create object method
      * @param parentWidget parent widget
      * @param widgetName widget name
-     * @param parent QObject parent
+     * @param parent TQObject parent
      * @param name object name
      * @param classname class parent
      * @param args additional arguments
      * @return constructed part object
      */
-    KParts::Part *createPartObject ( QWidget *parentWidget, const char *widgetName,
-                                     QObject *parent, const char *name, const char *classname,
-                                     const QStringList &args );
+    KParts::Part *createPartObject ( TQWidget *parentWidget, const char *widgetName,
+                                     TQObject *parent, const char *name, const char *classname,
+                                     const TQStringList &args );
 
     /**
      * public accessor to the instance
@@ -132,19 +132,19 @@ class KateFactory
      * return a list of all registered docs
      * @return all known documents
      */
-    inline QPtrList<KateDocument> *documents () { return &m_documents; };
+    inline TQPtrList<KateDocument> *documents () { return &m_documents; };
 
     /**
      * return a list of all registered views
      * @return all known views
      */
-    inline QPtrList<KateView> *views () { return &m_views; };
+    inline TQPtrList<KateView> *views () { return &m_views; };
 
     /**
      * return a list of all registered renderers
      * @return all known renderers
      */
-    inline QPtrList<KateRenderer> *renderers () { return &m_renderers; };
+    inline TQPtrList<KateRenderer> *renderers () { return &m_renderers; };
 
     /**
      * on start detected plugins
@@ -210,7 +210,7 @@ class KateFactory
      * looks up a script given by name. If there are more than
      * one matching, the first found will be taken
      */
-    KateIndentScript indentScript (const QString &scriptname);
+    KateIndentScript indentScript (const TQString &scriptname);
 
   private:
     /**
@@ -231,17 +231,17 @@ class KateFactory
     /**
      * registered docs
      */
-    QPtrList<KateDocument> m_documents;
+    TQPtrList<KateDocument> m_documents;
 
     /**
      * registered views
      */
-    QPtrList<KateView> m_views;
+    TQPtrList<KateView> m_views;
 
     /**
      * registered renderers
      */
-    QPtrList<KateRenderer> m_renderers;
+    TQPtrList<KateRenderer> m_renderers;
 
     /**
      * global dirwatch object
@@ -286,7 +286,7 @@ class KateFactory
     /**
      * internal commands
      */
-    QValueList<Kate::Command *> m_cmds;
+    TQValueList<Kate::Command *> m_cmds;
 
     /**
      * js interpreter
@@ -303,7 +303,7 @@ class KateFactory
     /**
      * manager for js based indenters
      */
-    QPtrList<KateIndentScriptManagerAbstract> m_indentScriptManagers;
+    TQPtrList<KateIndentScriptManagerAbstract> m_indentScriptManagers;
 
 };
 

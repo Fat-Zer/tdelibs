@@ -46,7 +46,7 @@ class KTEXTEDITOR_EXPORT SelectionInterfaceExt
     unsigned int selectionInterfaceExtNumber () const;
     
   protected:  
-    void setSelectionInterfaceExtDCOPSuffix (const QCString &suffix);  
+    void setSelectionInterfaceExtDCOPSuffix (const TQCString &suffix);  
     
   public:
     /** The selection start line number */

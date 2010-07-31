@@ -1,5 +1,5 @@
 /**
-* QImageIO Routines to read/write TIFF images.
+* TQImageIO Routines to read/write TIFF images.
 * Sirtaj Singh Kang, Oct 1998.
 *
 * This library is distributed under the conditions of the GNU LGPL.
@@ -13,8 +13,8 @@
 class QImageIO;
 
 extern "C" {
-void kimgio_tiff_read( QImageIO *io );
-void kimgio_tiff_write( QImageIO *io );
+void kimgio_tiff_read( TQImageIO *io );
+void kimgio_tiff_write( TQImageIO *io );
 }
 
 #endif

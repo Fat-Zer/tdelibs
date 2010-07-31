@@ -19,10 +19,10 @@
 
 // TODO: more error report and control
 
-#include <qstring.h>
+#include <tqstring.h>
 #include "kqiodevicegzip_p.h"
 
-KQIODeviceGZip::KQIODeviceGZip(const QString& filename)
+KQIODeviceGZip::KQIODeviceGZip(const TQString& filename)
 {
     m_gzfile=0;
     m_ungetchar=-1;
@@ -46,11 +46,11 @@ bool KQIODeviceGZip::open(int mode)
 
     if (IO_ReadOnly==mode)
     {
-        m_gzfile=gzopen(QFile::encodeName(m_filename),"rb");
+        m_gzfile=gzopen(TQFile::encodeName(m_filename),"rb");
     }
     else if (IO_WriteOnly==mode)
     {
-        m_gzfile=gzopen(QFile::encodeName(m_filename),"wb9"); // Always set best compression
+        m_gzfile=gzopen(TQFile::encodeName(m_filename),"wb9"); // Always set best compression
     }
     else
     {
@@ -78,19 +78,19 @@ void KQIODeviceGZip::flush(void)
     }
 }
 
-QIODevice::Offset KQIODeviceGZip::size(void) const
+TQIODevice::Offset KQIODeviceGZip::size(void) const
 {
     return 0; // You cannot determine size!
 }
 
-QIODevice::Offset  KQIODeviceGZip::at() const
+TQIODevice::Offset  KQIODeviceGZip::at() const
 {
     if (!m_gzfile)
         return 0;
     return gztell(m_gzfile);
 }
 
-bool KQIODeviceGZip::at(QIODevice::Offset pos)
+bool KQIODeviceGZip::at(TQIODevice::Offset pos)
 {
     if (!m_gzfile)
         return false;

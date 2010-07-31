@@ -19,13 +19,13 @@
 */
 #include "config.h"
 
-#include <qdragobject.h>
-#include <qtimer.h>
-#include <qheader.h>
-#include <qcursor.h>
-#include <qtooltip.h>
-#include <qstyle.h>
-#include <qpainter.h>
+#include <tqdragobject.h>
+#include <tqtimer.h>
+#include <tqheader.h>
+#include <tqcursor.h>
+#include <tqtooltip.h>
+#include <tqstyle.h>
+#include <tqpainter.h>
 
 #include <kglobalsettings.h>
 #include <kconfig.h>
@@ -40,26 +40,26 @@
 class KListView::Tooltip : public QToolTip
 {
 public:
-  Tooltip (KListView* parent, QToolTipGroup* group = 0L);
+  Tooltip (KListView* parent, TQToolTipGroup* group = 0L);
   virtual ~Tooltip () {}
 
 protected:
   /**
-   * Reimplemented from QToolTip for internal reasons.
+   * Reimplemented from TQToolTip for internal reasons.
    */
-  virtual void maybeTip (const QPoint&);
+  virtual void maybeTip (const TQPoint&);
 
 private:
   KListView* mParent;
 };
 
-KListView::Tooltip::Tooltip (KListView* parent, QToolTipGroup* group)
-  : QToolTip (parent, group),
+KListView::Tooltip::Tooltip (KListView* parent, TQToolTipGroup* group)
+  : TQToolTip (parent, group),
         mParent (parent)
 {
 }
 
-void KListView::Tooltip::maybeTip (const QPoint&)
+void KListView::Tooltip::maybeTip (const TQPoint&)
 {
   // FIXME
 }
@@ -104,7 +104,7 @@ public:
       shadeSortColumn(KGlobalSettings::shadeSortColumn())
   {
       renameable.append(0);
-      connect(editor, SIGNAL(done(QListViewItem*,int)), listview, SLOT(doneEditing(QListViewItem*,int)));
+      connect(editor, TQT_SIGNAL(done(TQListViewItem*,int)), listview, TQT_SLOT(doneEditing(TQListViewItem*,int)));
   }
 
   ~KListViewPrivate ()
@@ -112,20 +112,20 @@ public:
     delete editor;
   }
 
-  QListViewItem* pCurrentItem;
+  TQListViewItem* pCurrentItem;
 
-  QTimer autoSelect;
+  TQTimer autoSelect;
   int autoSelectDelay;
 
-  QTimer dragExpand;
-  QListViewItem* dragOverItem;
-  QPoint dragOverPoint;
+  TQTimer dragExpand;
+  TQListViewItem* dragOverItem;
+  TQPoint dragOverPoint;
 
-  QPoint startDragPos;
+  TQPoint startDragPos;
   int dragDelay;
 
   KListViewLineEdit *editor;
-  QValueList<int> renameable;
+  TQValueList<int> renameable;
 
   bool cursorInExecuteArea:1;
   bool bUseSingle:1;
@@ -157,19 +157,19 @@ public:
   int contextMenuKey;
   bool showContextMenusOnPress;
 
-  QRect mOldDropVisualizer;
+  TQRect mOldDropVisualizer;
   int mDropVisualizerWidth;
-  QRect mOldDropHighlighter;
-  QListViewItem *afterItemDrop;
-  QListViewItem *parentItemDrop;
+  TQRect mOldDropHighlighter;
+  TQListViewItem *afterItemDrop;
+  TQListViewItem *parentItemDrop;
 
-  QListViewItem *paintAbove;
-  QListViewItem *paintCurrent;
-  QListViewItem *paintBelow;
+  TQListViewItem *paintAbove;
+  TQListViewItem *paintCurrent;
+  TQListViewItem *paintBelow;
   bool painting:1;
   bool shadeSortColumn:1;
 
-  QColor alternateBackground;
+  TQColor alternateBackground;
 };
 
 
@@ -178,33 +178,33 @@ KListViewLineEdit::KListViewLineEdit(KListView *parent)
 {
         setFrame( false );
         hide();
-        connect( parent, SIGNAL( selectionChanged() ), SLOT( slotSelectionChanged() ));
-        connect( parent, SIGNAL( itemRemoved( QListViewItem * ) ),
-                         SLOT( slotItemRemoved( QListViewItem * ) ));
+        connect( parent, TQT_SIGNAL( selectionChanged() ), TQT_SLOT( slotSelectionChanged() ));
+        connect( parent, TQT_SIGNAL( itemRemoved( TQListViewItem * ) ),
+                         TQT_SLOT( slotItemRemoved( TQListViewItem * ) ));
 }
 
 KListViewLineEdit::~KListViewLineEdit()
 {
 }
 
-QListViewItem *KListViewLineEdit::currentItem() const
+TQListViewItem *KListViewLineEdit::currentItem() const
 {
 	return item;
 }
 
-void KListViewLineEdit::load(QListViewItem *i, int c)
+void KListViewLineEdit::load(TQListViewItem *i, int c)
 {
         item=i;
         col=c;
 
-        QRect rect(p->itemRect(i));
+        TQRect rect(p->itemRect(i));
         setText(item->text(c));
         home( true );
 
         int fieldX = rect.x() - 1;
         int fieldW = p->columnWidth(col) + 2;
 
-        QHeader* const pHeader = p->header();
+        TQHeader* const pHeader = p->header();
 
         const int pos = pHeader->mapToIndex(col);
         for ( int index = 0; index < pos; ++index )
@@ -232,7 +232,7 @@ void KListViewLineEdit::load(QListViewItem *i, int c)
  *	tabOrderedRename functionality.
  */
 
-static int nextCol (KListView *pl, QListViewItem *pi, int start, int dir)
+static int nextCol (KListView *pl, TQListViewItem *pi, int start, int dir)
 {
 	if (pi)
 	{
@@ -245,11 +245,11 @@ static int nextCol (KListView *pl, QListViewItem *pi, int start, int dir)
 	return -1;
 }
 
-static QListViewItem *prevItem (QListViewItem *pi)
+static TQListViewItem *prevItem (TQListViewItem *pi)
 {
-	QListViewItem *pa = pi->itemAbove();
+	TQListViewItem *pa = pi->itemAbove();
 
-	/*	Does what the QListViewItem::previousSibling()
+	/*	Does what the TQListViewItem::previousSibling()
 	 *	of my dreams would do.
 	 */
 	if (pa && pa->parent() == pi->parent())
@@ -258,30 +258,30 @@ static QListViewItem *prevItem (QListViewItem *pi)
 	return 0;
 }
 
-static QListViewItem *lastQChild (QListViewItem *pi)
+static TQListViewItem *lastQChild (TQListViewItem *pi)
 {
 	if (pi)
 	{
-		/*	Since there's no QListViewItem::lastChild().
+		/*	Since there's no TQListViewItem::lastChild().
 		 *	This finds the last sibling for the given
 		 *	item.
 		 */
-		for (QListViewItem *pt = pi->nextSibling(); pt; pt = pt->nextSibling())
+		for (TQListViewItem *pt = pi->nextSibling(); pt; pt = pt->nextSibling())
 			pi = pt;
 	}
 
 	return pi;
 }
 
-void KListViewLineEdit::selectNextCell (QListViewItem *pitem, int column, bool forward)
+void KListViewLineEdit::selectNextCell (TQListViewItem *pitem, int column, bool forward)
 {
 	const int ncols = p->columns();
 	const int dir = forward ? +1 : -1;
 	const int restart = forward ? 0 : (ncols - 1);
-	QListViewItem *top = (pitem && pitem->parent())
+	TQListViewItem *top = (pitem && pitem->parent())
 		? pitem->parent()->firstChild()
 		: p->firstChild();
-	QListViewItem *pi = pitem;
+	TQListViewItem *pi = pitem;
 
 	terminate();		//	Save current changes
 
@@ -321,11 +321,11 @@ void KListViewLineEdit::selectNextCell (QListViewItem *pitem, int column, bool f
 #undef KeyPress
 #endif
 
-bool KListViewLineEdit::event (QEvent *pe)
+bool KListViewLineEdit::event (TQEvent *pe)
 {
-	if (pe->type() == QEvent::KeyPress)
+	if (pe->type() == TQEvent::KeyPress)
 	{
-		QKeyEvent *k = (QKeyEvent *) pe;
+		TQKeyEvent *k = (TQKeyEvent *) pe;
 
 	    if ((k->key() == Qt::Key_Backtab || k->key() == Qt::Key_Tab) &&
 			p->tabOrderedRenaming() && p->itemsRenameable() &&
@@ -340,7 +340,7 @@ bool KListViewLineEdit::event (QEvent *pe)
 	return KLineEdit::event(pe);
 }
 
-void KListViewLineEdit::keyPressEvent(QKeyEvent *e)
+void KListViewLineEdit::keyPressEvent(TQKeyEvent *e)
 {
 	if(e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter )
 		terminate(true);
@@ -368,7 +368,7 @@ void KListViewLineEdit::terminate(bool commit)
         if (commit)
             item->setText(col, text());
         int c=col;
-        QListViewItem *i=item;
+        TQListViewItem *i=item;
         col=0;
         item=0;
         p->setFocus();// will call focusOutEvent, that's why we set item=0 before
@@ -378,22 +378,22 @@ void KListViewLineEdit::terminate(bool commit)
     }
 }
 
-void KListViewLineEdit::focusOutEvent(QFocusEvent *ev)
+void KListViewLineEdit::focusOutEvent(TQFocusEvent *ev)
 {
-    QFocusEvent * focusEv = static_cast<QFocusEvent*>(ev);
+    TQFocusEvent * focusEv = static_cast<TQFocusEvent*>(ev);
     // Don't let a RMB close the editor
-    if (focusEv->reason() != QFocusEvent::Popup && focusEv->reason() != QFocusEvent::ActiveWindow)
+    if (focusEv->reason() != TQFocusEvent::Popup && focusEv->reason() != TQFocusEvent::ActiveWindow)
         terminate(true);
     else
         KLineEdit::focusOutEvent(ev);
 }
 
-void KListViewLineEdit::paintEvent( QPaintEvent *e )
+void KListViewLineEdit::paintEvent( TQPaintEvent *e )
 {
     KLineEdit::paintEvent( e );
 
     if ( !frame() ) {
-        QPainter p( this );
+        TQPainter p( this );
         p.setClipRegion( e->region() );
         p.drawRect( rect() );
     }
@@ -411,7 +411,7 @@ void KListViewLineEdit::slotSelectionChanged()
 
 // if the current item was removed -> terminate.  Can't call terminate(false)
 // due to same reason as slotSelectionChanged().
-void KListViewLineEdit::slotItemRemoved(QListViewItem *i)
+void KListViewLineEdit::slotItemRemoved(TQListViewItem *i)
 {
     if (currentItem() != i)
         return;
@@ -422,48 +422,48 @@ void KListViewLineEdit::slotItemRemoved(QListViewItem *i)
 }
 
 
-KListView::KListView( QWidget *parent, const char *name )
-  : QListView( parent, name ),
+KListView::KListView( TQWidget *parent, const char *name )
+  : TQListView( parent, name ),
         d (new KListViewPrivate (this))
 {
   setDragAutoScroll(true);
 
-  connect( this, SIGNAL( onViewport() ),
-                   this, SLOT( slotOnViewport() ) );
-  connect( this, SIGNAL( onItem( QListViewItem * ) ),
-                   this, SLOT( slotOnItem( QListViewItem * ) ) );
+  connect( this, TQT_SIGNAL( onViewport() ),
+                   this, TQT_SLOT( slotOnViewport() ) );
+  connect( this, TQT_SIGNAL( onItem( TQListViewItem * ) ),
+                   this, TQT_SLOT( slotOnItem( TQListViewItem * ) ) );
 
-  connect (this, SIGNAL(contentsMoving(int,int)),
-                   this, SLOT(cleanDropVisualizer()));
-  connect (this, SIGNAL(contentsMoving(int,int)),
-                   this, SLOT(cleanItemHighlighter()));
+  connect (this, TQT_SIGNAL(contentsMoving(int,int)),
+                   this, TQT_SLOT(cleanDropVisualizer()));
+  connect (this, TQT_SIGNAL(contentsMoving(int,int)),
+                   this, TQT_SLOT(cleanItemHighlighter()));
 
   slotSettingsChanged(KApplication::SETTINGS_MOUSE);
   if (kapp)
   {
-    connect( kapp, SIGNAL( settingsChanged(int) ), SLOT( slotSettingsChanged(int) ) );
+    connect( kapp, TQT_SIGNAL( settingsChanged(int) ), TQT_SLOT( slotSettingsChanged(int) ) );
     kapp->addKipcEventMask( KIPC::SettingsChanged );
   }
 
-  connect(&d->autoSelect, SIGNAL( timeout() ),
-                  this, SLOT( slotAutoSelect() ) );
-  connect(&d->dragExpand, SIGNAL( timeout() ),
-                  this, SLOT( slotDragExpand() ) );
+  connect(&d->autoSelect, TQT_SIGNAL( timeout() ),
+                  this, TQT_SLOT( slotAutoSelect() ) );
+  connect(&d->dragExpand, TQT_SIGNAL( timeout() ),
+                  this, TQT_SLOT( slotDragExpand() ) );
 
   // context menu handling
   if (d->showContextMenusOnPress)
         {
-          connect (this, SIGNAL (rightButtonPressed (QListViewItem*, const QPoint&, int)),
-                           this, SLOT (emitContextMenu (QListViewItem*, const QPoint&, int)));
+          connect (this, TQT_SIGNAL (rightButtonPressed (TQListViewItem*, const TQPoint&, int)),
+                           this, TQT_SLOT (emitContextMenu (TQListViewItem*, const TQPoint&, int)));
         }
   else
         {
-          connect (this, SIGNAL (rightButtonClicked (QListViewItem*, const QPoint&, int)),
-                           this, SLOT (emitContextMenu (QListViewItem*, const QPoint&, int)));
+          connect (this, TQT_SIGNAL (rightButtonClicked (TQListViewItem*, const TQPoint&, int)),
+                           this, TQT_SLOT (emitContextMenu (TQListViewItem*, const TQPoint&, int)));
         }
 
-  connect (this, SIGNAL (menuShortCutPressed (KListView*, QListViewItem*)),
-                   this, SLOT (emitContextMenu (KListView*, QListViewItem*)));
+  connect (this, TQT_SIGNAL (menuShortCutPressed (KListView*, TQListViewItem*)),
+                   this, TQT_SLOT (emitContextMenu (KListView*, TQListViewItem*)));
   d->alternateBackground = KGlobalSettings::alternateBackgroundColor();
 }
 
@@ -472,9 +472,9 @@ KListView::~KListView()
   delete d;
 }
 
-bool KListView::isExecuteArea( const QPoint& point )
+bool KListView::isExecuteArea( const TQPoint& point )
 {
-  QListViewItem* item = itemAt( point );
+  TQListViewItem* item = itemAt( point );
   if ( item ) {
     return isExecuteArea( point.x(), item );
   }
@@ -487,7 +487,7 @@ bool KListView::isExecuteArea( int x )
   return isExecuteArea( x, 0 );
 }
 
-bool KListView::isExecuteArea( int x, QListViewItem* item )
+bool KListView::isExecuteArea( int x, TQListViewItem* item )
 {
   if( allColumnsShowFocus() )
     return true;
@@ -497,7 +497,7 @@ bool KListView::isExecuteArea( int x, QListViewItem* item )
 
     int width = columnWidth( 0 );
 
-    QHeader* const thisHeader = header();
+    TQHeader* const thisHeader = header();
     const int pos = thisHeader->mapToIndex( 0 );
 
     for ( int index = 0; index < pos; ++index )
@@ -521,9 +521,9 @@ bool KListView::isExecuteArea( int x, QListViewItem* item )
   }
 }
 
-void KListView::slotOnItem( QListViewItem *item )
+void KListView::slotOnItem( TQListViewItem *item )
 {
-  QPoint vp = viewport()->mapFromGlobal( QCursor::pos() );
+  TQPoint vp = viewport()->mapFromGlobal( TQCursor::pos() );
   if ( item && isExecuteArea( vp.x() ) && (d->autoSelectDelay > -1) && d->bUseSingle ) {
     d->autoSelect.start( d->autoSelectDelay, true );
     d->pCurrentItem = item;
@@ -547,12 +547,12 @@ void KListView::slotSettingsChanged(int category)
     d->dragDelay =  KGlobalSettings::dndEventDelay();
     d->bUseSingle = KGlobalSettings::singleClick();
 
-    disconnect(this, SIGNAL (mouseButtonClicked (int, QListViewItem*, const QPoint &, int)),
-               this, SLOT (slotMouseButtonClicked (int, QListViewItem*, const QPoint &, int)));
+    disconnect(this, TQT_SIGNAL (mouseButtonClicked (int, TQListViewItem*, const TQPoint &, int)),
+               this, TQT_SLOT (slotMouseButtonClicked (int, TQListViewItem*, const TQPoint &, int)));
 
     if( d->bUseSingle )
-      connect (this, SIGNAL (mouseButtonClicked (int, QListViewItem*, const QPoint &, int)),
-               this, SLOT (slotMouseButtonClicked( int, QListViewItem*, const QPoint &, int)));
+      connect (this, TQT_SIGNAL (mouseButtonClicked (int, TQListViewItem*, const TQPoint &, int)),
+               this, TQT_SLOT (slotMouseButtonClicked( int, TQListViewItem*, const TQPoint &, int)));
 
     d->bChangeCursorOverItem = KGlobalSettings::changeCursorOverIcon();
     if ( !d->disableAutoSelection )
@@ -569,17 +569,17 @@ void KListView::slotSettingsChanged(int category)
 
     if (d->showContextMenusOnPress)
     {
-      disconnect (0L, 0L, this, SLOT (emitContextMenu (QListViewItem*, const QPoint&, int)));
+      disconnect (0L, 0L, this, TQT_SLOT (emitContextMenu (TQListViewItem*, const TQPoint&, int)));
 
-      connect(this, SIGNAL (rightButtonPressed (QListViewItem*, const QPoint&, int)),
-              this, SLOT (emitContextMenu (QListViewItem*, const QPoint&, int)));
+      connect(this, TQT_SIGNAL (rightButtonPressed (TQListViewItem*, const TQPoint&, int)),
+              this, TQT_SLOT (emitContextMenu (TQListViewItem*, const TQPoint&, int)));
     }
     else
     {
-      disconnect (0L, 0L, this, SLOT (emitContextMenu (QListViewItem*, const QPoint&, int)));
+      disconnect (0L, 0L, this, TQT_SLOT (emitContextMenu (TQListViewItem*, const TQPoint&, int)));
 
-      connect(this, SIGNAL (rightButtonClicked (QListViewItem*, const QPoint&, int)),
-              this, SLOT (emitContextMenu (QListViewItem*, const QPoint&, int)));
+      connect(this, TQT_SIGNAL (rightButtonClicked (TQListViewItem*, const TQPoint&, int)),
+              this, TQT_SLOT (emitContextMenu (TQListViewItem*, const TQPoint&, int)));
     }
     break;
 
@@ -606,7 +606,7 @@ void KListView::slotAutoSelect()
 
   ButtonState keybstate = KApplication::keyboardMouseState();
 
-  QListViewItem* previousItem = currentItem();
+  TQListViewItem* previousItem = currentItem();
   setCurrentItem( d->pCurrentItem );
 
   if( d->pCurrentItem ) {
@@ -624,7 +624,7 @@ void KListView::slotAutoSelect()
       viewport()->setUpdatesEnabled( false );
 
       bool down = previousItem->itemPos() < d->pCurrentItem->itemPos();
-      QListViewItemIterator lit( down ? previousItem : d->pCurrentItem );
+      TQListViewItemIterator lit( down ? previousItem : d->pCurrentItem );
       for ( ; lit.current(); ++lit ) {
                 if ( down && lit.current() == d->pCurrentItem ) {
                   d->pCurrentItem->setSelected( select );
@@ -643,7 +643,7 @@ void KListView::slotAutoSelect()
 
       emit selectionChanged();
 
-      if( selectionMode() == QListView::Single )
+      if( selectionMode() == TQListView::Single )
                 emit selectionChanged( d->pCurrentItem );
     }
     else if( (keybstate & KApplication::ControlModifier) )
@@ -677,7 +677,7 @@ void KListView::slotHeaderChanged()
   }
 }
 
-void KListView::emitExecute( QListViewItem *item, const QPoint &pos, int c )
+void KListView::emitExecute( TQListViewItem *item, const TQPoint &pos, int c )
 {
     if( isExecuteArea( viewport()->mapFromGlobal(pos) ) ) {
 	d->validDrag=false;
@@ -705,14 +705,14 @@ void KListView::emitExecute( QListViewItem *item, const QPoint &pos, int c )
     }
 }
 
-void KListView::focusInEvent( QFocusEvent *fe )
+void KListView::focusInEvent( TQFocusEvent *fe )
 {
  //   kdDebug()<<"KListView::focusInEvent()"<<endl;
-  QListView::focusInEvent( fe );
+  TQListView::focusInEvent( fe );
   if ((d->selectedBySimpleMove)
       && (d->selectionMode == FileManager)
-      && (fe->reason()!=QFocusEvent::Popup)
-      && (fe->reason()!=QFocusEvent::ActiveWindow)
+      && (fe->reason()!=TQFocusEvent::Popup)
+      && (fe->reason()!=TQFocusEvent::ActiveWindow)
       && (currentItem()))
   {
       currentItem()->setSelected(true);
@@ -721,7 +721,7 @@ void KListView::focusInEvent( QFocusEvent *fe )
   };
 }
 
-void KListView::focusOutEvent( QFocusEvent *fe )
+void KListView::focusOutEvent( TQFocusEvent *fe )
 {
   cleanDropVisualizer();
   cleanItemHighlighter();
@@ -730,8 +730,8 @@ void KListView::focusOutEvent( QFocusEvent *fe )
 
   if ((d->selectedBySimpleMove)
       && (d->selectionMode == FileManager)
-      && (fe->reason()!=QFocusEvent::Popup)
-      && (fe->reason()!=QFocusEvent::ActiveWindow)
+      && (fe->reason()!=TQFocusEvent::Popup)
+      && (fe->reason()!=TQFocusEvent::ActiveWindow)
       && (currentItem())
       && (!d->editor->isVisible()))
   {
@@ -740,25 +740,25 @@ void KListView::focusOutEvent( QFocusEvent *fe )
       emit selectionChanged();
   };
 
-  QListView::focusOutEvent( fe );
+  TQListView::focusOutEvent( fe );
 }
 
-void KListView::leaveEvent( QEvent *e )
+void KListView::leaveEvent( TQEvent *e )
 {
   d->autoSelect.stop();
 
-  QListView::leaveEvent( e );
+  TQListView::leaveEvent( e );
 }
 
-bool KListView::event( QEvent *e )
+bool KListView::event( TQEvent *e )
 {
-  if (e->type() == QEvent::ApplicationPaletteChange)
+  if (e->type() == TQEvent::ApplicationPaletteChange)
     d->alternateBackground=KGlobalSettings::alternateBackgroundColor();
 
-  return QListView::event(e);
+  return TQListView::event(e);
 }
 
-void KListView::contentsMousePressEvent( QMouseEvent *e )
+void KListView::contentsMousePressEvent( TQMouseEvent *e )
 {
   if( (selectionModeExt() == Extended) && (e->state() & ShiftButton) && !(e->state() & ControlButton) )
   {
@@ -781,8 +781,8 @@ void KListView::contentsMousePressEvent( QMouseEvent *e )
      }
   }
 
-  QPoint p( contentsToViewport( e->pos() ) );
-  QListViewItem *at = itemAt (p);
+  TQPoint p( contentsToViewport( e->pos() ) );
+  TQListViewItem *at = itemAt (p);
 
   // true if the root decoration of the item "at" was clicked (i.e. the +/- sign)
   bool rootDecoClicked = at
@@ -802,16 +802,16 @@ void KListView::contentsMousePressEvent( QMouseEvent *e )
     }
   }
 
-  QListView::contentsMousePressEvent( e );
+  TQListView::contentsMousePressEvent( e );
 }
 
-void KListView::contentsMouseMoveEvent( QMouseEvent *e )
+void KListView::contentsMouseMoveEvent( TQMouseEvent *e )
 {
   if (!dragEnabled() || d->startDragPos.isNull() || !d->validDrag)
-      QListView::contentsMouseMoveEvent (e);
+      TQListView::contentsMouseMoveEvent (e);
 
-  QPoint vp = contentsToViewport(e->pos());
-  QListViewItem *item = itemAt( vp );
+  TQPoint vp = contentsToViewport(e->pos());
+  TQListViewItem *item = itemAt( vp );
 
   //do we process cursor changes at all?
   if ( item && d->bChangeCursorOverItem && d->bUseSingle )
@@ -830,30 +830,30 @@ void KListView::contentsMouseMoveEvent( QMouseEvent *e )
     }
 
   bool dragOn = dragEnabled();
-  QPoint newPos = e->pos();
+  TQPoint newPos = e->pos();
   if (dragOn && d->validDrag &&
       (newPos.x() > d->startDragPos.x()+d->dragDelay ||
        newPos.x() < d->startDragPos.x()-d->dragDelay ||
        newPos.y() > d->startDragPos.y()+d->dragDelay ||
        newPos.y() < d->startDragPos.y()-d->dragDelay))
-    //(d->startDragPos - e->pos()).manhattanLength() > QApplication::startDragDistance())
+    //(d->startDragPos - e->pos()).manhattanLength() > TQApplication::startDragDistance())
     {
-      QListView::contentsMouseReleaseEvent( 0 );
+      TQListView::contentsMouseReleaseEvent( 0 );
       startDrag();
-      d->startDragPos = QPoint();
+      d->startDragPos = TQPoint();
       d->validDrag = false;
     }
 }
 
-void KListView::contentsMouseReleaseEvent( QMouseEvent *e )
+void KListView::contentsMouseReleaseEvent( TQMouseEvent *e )
 {
   if (e->button() == LeftButton)
   {
     // If the row was already selected, maybe we want to start an in-place editing
     if ( d->pressedOnSelected && itemsRenameable() )
     {
-      QPoint p( contentsToViewport( e->pos() ) );
-      QListViewItem *at = itemAt (p);
+      TQPoint p( contentsToViewport( e->pos() ) );
+      TQListViewItem *at = itemAt (p);
       if ( at )
       {
         // true if the root decoration of the item "at" was clicked (i.e. the +/- sign)
@@ -873,22 +873,22 @@ void KListView::contentsMouseReleaseEvent( QMouseEvent *e )
 
     d->pressedOnSelected = false;
     d->validDrag = false;
-    d->startDragPos = QPoint();
+    d->startDragPos = TQPoint();
   }
-  QListView::contentsMouseReleaseEvent( e );
+  TQListView::contentsMouseReleaseEvent( e );
 }
 
-void KListView::contentsMouseDoubleClickEvent ( QMouseEvent *e )
+void KListView::contentsMouseDoubleClickEvent ( TQMouseEvent *e )
 {
   // We don't want to call the parent method because it does setOpen,
   // whereas we don't do it in single click mode... (David)
-  //QListView::contentsMouseDoubleClickEvent( e );
+  //TQListView::contentsMouseDoubleClickEvent( e );
   if ( !e || e->button() != LeftButton )
     return;
 
-  QPoint vp = contentsToViewport(e->pos());
-  QListViewItem *item = itemAt( vp );
-  emit QListView::doubleClicked( item ); // we do it now
+  TQPoint vp = contentsToViewport(e->pos());
+  TQListViewItem *item = itemAt( vp );
+  emit TQListView::doubleClicked( item ); // we do it now
 
   int col = item ? header()->mapToLogical( header()->cellAt( vp.x() ) ) : -1;
 
@@ -900,13 +900,13 @@ void KListView::contentsMouseDoubleClickEvent ( QMouseEvent *e )
   }
 }
 
-void KListView::slotMouseButtonClicked( int btn, QListViewItem *item, const QPoint &pos, int c )
+void KListView::slotMouseButtonClicked( int btn, TQListViewItem *item, const TQPoint &pos, int c )
 {
   if( (btn == LeftButton) && item )
     emitExecute(item, pos, c);
 }
 
-void KListView::contentsDropEvent(QDropEvent* e)
+void KListView::contentsDropEvent(TQDropEvent* e)
 {
   cleanDropVisualizer();
   cleanItemHighlighter();
@@ -915,8 +915,8 @@ void KListView::contentsDropEvent(QDropEvent* e)
   if (acceptDrag (e))
   {
     e->acceptAction();
-    QListViewItem *afterme;
-    QListViewItem *parent;
+    TQListViewItem *afterme;
+    TQListViewItem *parent;
 
     findDrop(e->pos(), parent, afterme);
 
@@ -932,12 +932,12 @@ void KListView::contentsDropEvent(QDropEvent* e)
   }
 }
 
-void KListView::movableDropEvent (QListViewItem* parent, QListViewItem* afterme)
+void KListView::movableDropEvent (TQListViewItem* parent, TQListViewItem* afterme)
 {
-  QPtrList<QListViewItem> items, afterFirsts, afterNows;
-  QListViewItem *current=currentItem();
+  TQPtrList<TQListViewItem> items, afterFirsts, afterNows;
+  TQListViewItem *current=currentItem();
   bool hasMoved=false;
-  for (QListViewItem *i = firstChild(), *iNext=0; i; i = iNext)
+  for (TQListViewItem *i = firstChild(), *iNext=0; i; i = iNext)
   {
     iNext=i->itemBelow();
     if (!i->isSelected())
@@ -950,7 +950,7 @@ void KListView::movableDropEvent (QListViewItem* parent, QListViewItem* afterme)
 
     i->setSelected(false);
 
-    QListViewItem *afterFirst = i->itemAbove();
+    TQListViewItem *afterFirst = i->itemAbove();
 
         if (!hasMoved)
         {
@@ -971,7 +971,7 @@ void KListView::movableDropEvent (QListViewItem* parent, QListViewItem* afterme)
     afterme = i;
   }
   clearSelection();
-  for (QListViewItem *i=items.first(); i; i=items.next() )
+  for (TQListViewItem *i=items.first(); i; i=items.next() )
     i->setSelected(true);
   if (current)
     setCurrentItem(current);
@@ -982,7 +982,7 @@ void KListView::movableDropEvent (QListViewItem* parent, QListViewItem* afterme)
     emit moved();
 }
 
-void KListView::contentsDragMoveEvent(QDragMoveEvent *event)
+void KListView::contentsDragMoveEvent(TQDragMoveEvent *event)
 {
   if (acceptDrag(event))
   {
@@ -990,8 +990,8 @@ void KListView::contentsDragMoveEvent(QDragMoveEvent *event)
     //Clean up the view
 
     findDrop(event->pos(), d->parentItemDrop, d->afterItemDrop);
-    QPoint vp = contentsToViewport( event->pos() );
-    QListViewItem *item = isExecuteArea( vp ) ? itemAt( vp ) : 0L;
+    TQPoint vp = contentsToViewport( event->pos() );
+    TQListViewItem *item = isExecuteArea( vp ) ? itemAt( vp ) : 0L;
 
     if ( item != d->dragOverItem )
     {
@@ -999,11 +999,11 @@ void KListView::contentsDragMoveEvent(QDragMoveEvent *event)
       d->dragOverItem = item;
       d->dragOverPoint = vp;
       if ( d->dragOverItem && d->dragOverItem->isExpandable() && !d->dragOverItem->isOpen() )
-        d->dragExpand.start( QApplication::startDragTime(), true );
+        d->dragExpand.start( TQApplication::startDragTime(), true );
     }
     if (dropVisualizer())
     {
-      QRect tmpRect = drawDropVisualizer(0, d->parentItemDrop, d->afterItemDrop);
+      TQRect tmpRect = drawDropVisualizer(0, d->parentItemDrop, d->afterItemDrop);
       if (tmpRect != d->mOldDropVisualizer)
       {
         cleanDropVisualizer();
@@ -1013,7 +1013,7 @@ void KListView::contentsDragMoveEvent(QDragMoveEvent *event)
     }
     if (dropHighlighter())
     {
-      QRect tmpRect = drawItemHighlighter(0, itemAt( vp ));
+      TQRect tmpRect = drawItemHighlighter(0, itemAt( vp ));
       if (tmpRect != d->mOldDropHighlighter)
       {
         cleanItemHighlighter();
@@ -1032,7 +1032,7 @@ void KListView::slotDragExpand()
     d->dragOverItem->setOpen( true );
 }
 
-void KListView::contentsDragLeaveEvent (QDragLeaveEvent*)
+void KListView::contentsDragLeaveEvent (TQDragLeaveEvent*)
 {
   d->dragExpand.stop();
   cleanDropVisualizer();
@@ -1043,8 +1043,8 @@ void KListView::cleanDropVisualizer()
 {
   if (d->mOldDropVisualizer.isValid())
   {
-    QRect rect=d->mOldDropVisualizer;
-    d->mOldDropVisualizer = QRect();
+    TQRect rect=d->mOldDropVisualizer;
+    d->mOldDropVisualizer = TQRect();
     viewport()->repaint(rect, true);
   }
 }
@@ -1054,14 +1054,14 @@ int KListView::depthToPixels( int depth )
     return treeStepSize() * ( depth + (rootIsDecorated() ? 1 : 0) ) + itemMargin();
 }
 
-void KListView::findDrop(const QPoint &pos, QListViewItem *&parent, QListViewItem *&after)
+void KListView::findDrop(const TQPoint &pos, TQListViewItem *&parent, TQListViewItem *&after)
 {
-	QPoint p (contentsToViewport(pos));
+	TQPoint p (contentsToViewport(pos));
 
 	// Get the position to put it in
-	QListViewItem *atpos = itemAt(p);
+	TQListViewItem *atpos = itemAt(p);
 
-	QListViewItem *above;
+	TQListViewItem *above;
 	if (!atpos) // put it at the end
 		above = lastItem();
 	else
@@ -1100,8 +1100,8 @@ void KListView::findDrop(const QPoint &pos, QListViewItem *&parent, QListViewIte
 
       // Ok, there's one more level of complexity. We may want to become a new
       // sibling, but of an upper-level group, rather than the "above" item
-      QListViewItem * betterAbove = above->parent();
-      QListViewItem * last = above;
+      TQListViewItem * betterAbove = above->parent();
+      TQListViewItem * last = above;
       while ( betterAbove )
       {
           // We are allowed to become a sibling of "betterAbove" only if we are
@@ -1123,9 +1123,9 @@ void KListView::findDrop(const QPoint &pos, QListViewItem *&parent, QListViewIte
   parent = after ? after->parent() : 0L ;
 }
 
-QListViewItem* KListView::lastChild () const
+TQListViewItem* KListView::lastChild () const
 {
-  QListViewItem* lastchild = firstChild();
+  TQListViewItem* lastchild = firstChild();
 
   if (lastchild)
         for (; lastchild->nextSibling(); lastchild = lastchild->nextSibling());
@@ -1133,11 +1133,11 @@ QListViewItem* KListView::lastChild () const
   return lastchild;
 }
 
-QListViewItem *KListView::lastItem() const
+TQListViewItem *KListView::lastItem() const
 {
-  QListViewItem* last = lastChild();
+  TQListViewItem* last = lastChild();
 
-  for (QListViewItemIterator it (last); it.current(); ++it)
+  for (TQListViewItemIterator it (last); it.current(); ++it)
     last = it.current();
 
   return last;
@@ -1150,7 +1150,7 @@ KLineEdit *KListView::renameLineEdit() const
 
 void KListView::startDrag()
 {
-  QDragObject *drag = dragObject();
+  TQDragObject *drag = dragObject();
 
   if (!drag)
         return;
@@ -1159,13 +1159,13 @@ void KListView::startDrag()
     emit moved();
 }
 
-QDragObject *KListView::dragObject()
+TQDragObject *KListView::dragObject()
 {
   if (!currentItem())
         return 0;
 
 
-  return new QStoredDrag("application/x-qlistviewitem", viewport());
+  return new TQStoredDrag("application/x-qlistviewitem", viewport());
 }
 
 void KListView::setItemsMovable(bool b)
@@ -1219,14 +1219,14 @@ void KListView::setDropVisualizer(bool b)
   d->dropVisualizer=b;
 }
 
-QPtrList<QListViewItem> KListView::selectedItems() const
+TQPtrList<TQListViewItem> KListView::selectedItems() const
 {
   return selectedItems(true);
 }
 
-QPtrList<QListViewItem> KListView::selectedItems(bool includeHiddenItems) const
+TQPtrList<TQListViewItem> KListView::selectedItems(bool includeHiddenItems) const
 {
-  QPtrList<QListViewItem> list;
+  TQPtrList<TQListViewItem> list;
 
   // Using selectionMode() instead of selectionModeExt() since for the cases that
   // we're interested in selectionMode() should work for either variety of the
@@ -1242,13 +1242,13 @@ QPtrList<QListViewItem> KListView::selectedItems(bool includeHiddenItems) const
       break;
   default:
   {
-      int flags = QListViewItemIterator::Selected;
+      int flags = TQListViewItemIterator::Selected;
       if (!includeHiddenItems)
       {
-        flags |= QListViewItemIterator::Visible;
+        flags |= TQListViewItemIterator::Visible;
       }
 
-      QListViewItemIterator it(const_cast<KListView *>(this), flags);
+      TQListViewItemIterator it(const_cast<KListView *>(this), flags);
 
       for(; it.current(); ++it)
           list.append(it.current());
@@ -1261,10 +1261,10 @@ QPtrList<QListViewItem> KListView::selectedItems(bool includeHiddenItems) const
 }
 
 
-void KListView::moveItem(QListViewItem *item, QListViewItem *parent, QListViewItem *after)
+void KListView::moveItem(TQListViewItem *item, TQListViewItem *parent, TQListViewItem *after)
 {
   // sanity check - don't move a item into its own child structure
-  QListViewItem *i = parent;
+  TQListViewItem *i = parent;
   while(i)
     {
       if(i == item)
@@ -1278,7 +1278,7 @@ void KListView::moveItem(QListViewItem *item, QListViewItem *parent, QListViewIt
       return;
   }
 
-  // Basically reimplementing the QListViewItem(QListViewItem*, QListViewItem*) constructor
+  // Basically reimplementing the TQListViewItem(TQListViewItem*, TQListViewItem*) constructor
   // in here, without ever deleting the item.
   if (item->parent())
         item->parent()->takeItem(item);
@@ -1291,7 +1291,7 @@ void KListView::moveItem(QListViewItem *item, QListViewItem *parent, QListViewIt
         insertItem(item);
 }
 
-void KListView::contentsDragEnterEvent(QDragEnterEvent *event)
+void KListView::contentsDragEnterEvent(TQDragEnterEvent *event)
 {
   if (acceptDrag (event))
     event->accept();
@@ -1302,19 +1302,19 @@ void KListView::setDropVisualizerWidth (int w)
   d->mDropVisualizerWidth = w > 0 ? w : 1;
 }
 
-QRect KListView::drawDropVisualizer(QPainter *p, QListViewItem *parent,
-                                    QListViewItem *after)
+TQRect KListView::drawDropVisualizer(TQPainter *p, TQListViewItem *parent,
+                                    TQListViewItem *after)
 {
-    QRect insertmarker;
+    TQRect insertmarker;
 
     if (!after && !parent)
-        insertmarker = QRect (0, 0, viewport()->width(), d->mDropVisualizerWidth/2);
+        insertmarker = TQRect (0, 0, viewport()->width(), d->mDropVisualizerWidth/2);
     else
     {
         int level = 0;
         if (after)
         {
-            QListViewItem* it = 0L;
+            TQListViewItem* it = 0L;
             if (after->isOpen())
             {
                 // Look for the last child (recursively)
@@ -1349,17 +1349,17 @@ QRect KListView::drawDropVisualizer(QPainter *p, QListViewItem *parent,
     return insertmarker;
 }
 
-QRect KListView::drawItemHighlighter(QPainter *painter, QListViewItem *item)
+TQRect KListView::drawItemHighlighter(TQPainter *painter, TQListViewItem *item)
 {
-  QRect r;
+  TQRect r;
 
   if (item)
   {
     r = itemRect(item);
     r.setLeft(r.left()+(item->depth()+(rootIsDecorated() ? 1 : 0))*treeStepSize());
     if (painter)
-      style().drawPrimitive(QStyle::PE_FocusRect, painter, r, colorGroup(),
-                            QStyle::Style_FocusAtBorder, colorGroup().highlight());
+      style().drawPrimitive(TQStyle::PE_FocusRect, painter, r, colorGroup(),
+                            TQStyle::Style_FocusAtBorder, colorGroup().highlight());
   }
 
   return r;
@@ -1369,13 +1369,13 @@ void KListView::cleanItemHighlighter ()
 {
   if (d->mOldDropHighlighter.isValid())
   {
-    QRect rect=d->mOldDropHighlighter;
-    d->mOldDropHighlighter = QRect();
+    TQRect rect=d->mOldDropHighlighter;
+    d->mOldDropHighlighter = TQRect();
     viewport()->repaint(rect, true);
   }
 }
 
-void KListView::rename(QListViewItem *item, int c)
+void KListView::rename(TQListViewItem *item, int c)
 {
   if (d->renameable.contains(c))
   {
@@ -1398,13 +1398,13 @@ void KListView::setRenameable (int col, bool renameable)
     d->renameable+=col;
 }
 
-void KListView::doneEditing(QListViewItem *item, int row)
+void KListView::doneEditing(TQListViewItem *item, int row)
 {
   emit itemRenamed(item, item->text(row), row);
   emit itemRenamed(item);
 }
 
-bool KListView::acceptDrag(QDropEvent* e) const
+bool KListView::acceptDrag(TQDropEvent* e) const
 {
   return acceptDrops() && itemsMovable() && (e->source()==viewport());
 }
@@ -1440,12 +1440,12 @@ bool KListView::dropHighlighter() const
         return d->dropHighlighter;
 }
 
-bool KListView::showTooltip(QListViewItem *item, const QPoint &, int column) const
+bool KListView::showTooltip(TQListViewItem *item, const TQPoint &, int column) const
 {
         return ((column==tooltipColumn()) && !tooltip(item, column).isEmpty());
 }
 
-QString KListView::tooltip(QListViewItem *item, int column) const
+TQString KListView::tooltip(TQListViewItem *item, int column) const
 {
         return item->text(column);
 }
@@ -1460,7 +1460,7 @@ bool KListView::tabOrderedRenaming() const
 	return d->tabRename;
 }
 
-void KListView::keyPressEvent (QKeyEvent* e)
+void KListView::keyPressEvent (TQKeyEvent* e)
 {
   //don't we need a contextMenuModifier too ? (aleXXX)
   if (e->key() == d->contextMenuKey)
@@ -1470,7 +1470,7 @@ void KListView::keyPressEvent (QKeyEvent* e)
         }
 
   if (d->selectionMode != FileManager)
-        QListView::keyPressEvent (e);
+        TQListView::keyPressEvent (e);
   else
         fileManagerKeyPressEvent (e);
 }
@@ -1497,7 +1497,7 @@ bool KListView::automaticSelection() const
    return d->selectedBySimpleMove;
 }
 
-void KListView::fileManagerKeyPressEvent (QKeyEvent* e)
+void KListView::fileManagerKeyPressEvent (TQKeyEvent* e)
 {
    //don't care whether it's on the keypad or not
     int e_state=(e->state() & ~Keypad);
@@ -1516,19 +1516,19 @@ void KListView::fileManagerKeyPressEvent (QKeyEvent* e)
     //d->wasShiftEvent = (e_state == ShiftButton);
 
 
-    QListViewItem* item = currentItem();
+    TQListViewItem* item = currentItem();
     if (!item) return;
 
-    QListViewItem* repaintItem1 = item;
-    QListViewItem* repaintItem2 = 0L;
-    QListViewItem* visItem = 0L;
+    TQListViewItem* repaintItem1 = item;
+    TQListViewItem* repaintItem2 = 0L;
+    TQListViewItem* visItem = 0L;
 
-    QListViewItem* nextItem = 0L;
+    TQListViewItem* nextItem = 0L;
     int items = 0;
 
     bool shiftOrCtrl((e_state==ControlButton) || (e_state==ShiftButton));
     int selectedItems(0);
-    for (QListViewItem *tmpItem=firstChild(); tmpItem; tmpItem=tmpItem->nextSibling())
+    for (TQListViewItem *tmpItem=firstChild(); tmpItem; tmpItem=tmpItem->nextSibling())
        if (tmpItem->isSelected()) selectedItems++;
 
     if (((!selectedItems) || ((selectedItems==1) && (d->selectedUsingMouse)))
@@ -1788,9 +1788,9 @@ void KListView::fileManagerKeyPressEvent (QKeyEvent* e)
        if (realKey && selectCurrentItem)
           item->setSelected(false);
        //this is mainly for the "goto filename beginning with pressed char" feature (aleXXX)
-       QListView::SelectionMode oldSelectionMode = selectionMode();
-       setSelectionMode (QListView::Multi);
-       QListView::keyPressEvent (e);
+       TQListView::SelectionMode oldSelectionMode = selectionMode();
+       setSelectionMode (TQListView::Multi);
+       TQListView::keyPressEvent (e);
        setSelectionMode (oldSelectionMode);
        if (realKey && selectCurrentItem)
        {
@@ -1806,7 +1806,7 @@ void KListView::fileManagerKeyPressEvent (QKeyEvent* e)
     if (visItem)
        ensureItemVisible(visItem);
 
-    QRect ir;
+    TQRect ir;
     if (repaintItem1)
        ir = ir.unite( itemRect(repaintItem1) );
     if (repaintItem2)
@@ -1837,11 +1837,11 @@ void KListView::setSelectionModeExt (SelectionModeExt mode)
     case Multi:
     case Extended:
     case NoSelection:
-        setSelectionMode (static_cast<QListView::SelectionMode>(static_cast<int>(mode)));
+        setSelectionMode (static_cast<TQListView::SelectionMode>(static_cast<int>(mode)));
         break;
 
     case FileManager:
-        setSelectionMode (QListView::Extended);
+        setSelectionMode (TQListView::Extended);
         break;
 
     default:
@@ -1855,7 +1855,7 @@ KListView::SelectionModeExt KListView::selectionModeExt () const
   return d->selectionMode;
 }
 
-int KListView::itemIndex( const QListViewItem *item ) const
+int KListView::itemIndex( const TQListViewItem *item ) const
 {
     if ( !item )
         return -1;
@@ -1863,7 +1863,7 @@ int KListView::itemIndex( const QListViewItem *item ) const
     if ( item == firstChild() )
         return 0;
     else {
-        QListViewItemIterator it(firstChild());
+        TQListViewItemIterator it(firstChild());
         uint j = 0;
         for (; it.current() && it.current() != item; ++it, ++j );
 
@@ -1874,13 +1874,13 @@ int KListView::itemIndex( const QListViewItem *item ) const
     }
 }
 
-QListViewItem* KListView::itemAtIndex(int index)
+TQListViewItem* KListView::itemAtIndex(int index)
 {
    if (index<0)
       return 0;
 
    int j(0);
-   for (QListViewItemIterator it=firstChild(); it.current(); ++it)
+   for (TQListViewItemIterator it=firstChild(); it.current(); ++it)
    {
       if (j==index)
          return it.current();
@@ -1890,9 +1890,9 @@ QListViewItem* KListView::itemAtIndex(int index)
 }
 
 
-void KListView::emitContextMenu (KListView*, QListViewItem* i)
+void KListView::emitContextMenu (KListView*, TQListViewItem* i)
 {
-  QPoint p;
+  TQPoint p;
 
   if (i)
         p = viewport()->mapToGlobal(itemRect(i).center());
@@ -1902,14 +1902,14 @@ void KListView::emitContextMenu (KListView*, QListViewItem* i)
   emit contextMenu (this, i, p);
 }
 
-void KListView::emitContextMenu (QListViewItem* i, const QPoint& p, int)
+void KListView::emitContextMenu (TQListViewItem* i, const TQPoint& p, int)
 {
   emit contextMenu (this, i, p);
 }
 
 void KListView::setAcceptDrops (bool val)
 {
-  QListView::setAcceptDrops (val);
+  TQListView::setAcceptDrops (val);
   viewport()->setAcceptDrops (val);
 }
 
@@ -1919,29 +1919,29 @@ int KListView::dropVisualizerWidth () const
 }
 
 
-void KListView::viewportPaintEvent(QPaintEvent *e)
+void KListView::viewportPaintEvent(TQPaintEvent *e)
 {
   d->paintAbove = 0;
   d->paintCurrent = 0;
   d->paintBelow = 0;
   d->painting = true;
 
-  QListView::viewportPaintEvent(e);
+  TQListView::viewportPaintEvent(e);
 
   if (d->mOldDropVisualizer.isValid() && e->rect().intersects(d->mOldDropVisualizer))
     {
-      QPainter painter(viewport());
+      TQPainter painter(viewport());
 
       // This is where we actually draw the drop-visualizer
       painter.fillRect(d->mOldDropVisualizer, Dense4Pattern);
     }
   if (d->mOldDropHighlighter.isValid() && e->rect().intersects(d->mOldDropHighlighter))
     {
-      QPainter painter(viewport());
+      TQPainter painter(viewport());
 
       // This is where we actually draw the drop-highlighter
-      style().drawPrimitive(QStyle::PE_FocusRect, &painter, d->mOldDropHighlighter, colorGroup(),
-                            QStyle::Style_FocusAtBorder);
+      style().drawPrimitive(TQStyle::PE_FocusRect, &painter, d->mOldDropHighlighter, colorGroup(),
+                            TQStyle::Style_FocusAtBorder);
     }
   d->painting = false;
 }
@@ -1962,9 +1962,9 @@ bool KListView::fullWidth() const
   return d->fullWidth;
 }
 
-int KListView::addColumn(const QString& label, int width)
+int KListView::addColumn(const TQString& label, int width)
 {
-  int result = QListView::addColumn(label, width);
+  int result = TQListView::addColumn(label, width);
   if (d->fullWidth) {
     header()->setStretchEnabled(false, columns()-2);
     header()->setStretchEnabled(true, columns()-1);
@@ -1972,9 +1972,9 @@ int KListView::addColumn(const QString& label, int width)
   return result;
 }
 
-int KListView::addColumn(const QIconSet& iconset, const QString& label, int width)
+int KListView::addColumn(const TQIconSet& iconset, const TQString& label, int width)
 {
-  int result = QListView::addColumn(iconset, label, width);
+  int result = TQListView::addColumn(iconset, label, width);
   if (d->fullWidth) {
     header()->setStretchEnabled(false, columns()-2);
     header()->setStretchEnabled(true, columns()-1);
@@ -1984,21 +1984,21 @@ int KListView::addColumn(const QIconSet& iconset, const QString& label, int widt
 
 void KListView::removeColumn(int index)
 {
-  QListView::removeColumn(index);
+  TQListView::removeColumn(index);
   if (d->fullWidth && index == columns()) header()->setStretchEnabled(true, columns()-1);
 }
 
-void KListView::viewportResizeEvent(QResizeEvent* e)
+void KListView::viewportResizeEvent(TQResizeEvent* e)
 {
-  QListView::viewportResizeEvent(e);
+  TQListView::viewportResizeEvent(e);
 }
 
-const QColor &KListView::alternateBackground() const
+const TQColor &KListView::alternateBackground() const
 {
   return d->alternateBackground;
 }
 
-void KListView::setAlternateBackground(const QColor &c)
+void KListView::setAlternateBackground(const TQColor &c)
 {
   d->alternateBackground = c;
   repaint();
@@ -2015,17 +2015,17 @@ bool KListView::shadeSortColumn() const
   return d->shadeSortColumn;
 }
 
-void KListView::saveLayout(KConfig *config, const QString &group) const
+void KListView::saveLayout(KConfig *config, const TQString &group) const
 {
   KConfigGroupSaver saver(config, group);
-  QStringList widths, order;
+  TQStringList widths, order;
 
   const int colCount = columns();
-  QHeader* const thisHeader = header();
+  TQHeader* const thisHeader = header();
   for (int i = 0; i < colCount; ++i)
   {
-    widths << QString::number(columnWidth(i));
-    order << QString::number(thisHeader->mapToIndex(i));
+    widths << TQString::number(columnWidth(i));
+    order << TQString::number(thisHeader->mapToIndex(i));
   }
   config->writeEntry("ColumnWidths", widths);
   config->writeEntry("ColumnOrder", order);
@@ -2033,14 +2033,14 @@ void KListView::saveLayout(KConfig *config, const QString &group) const
   config->writeEntry("SortAscending", d->sortAscending);
 }
 
-void KListView::restoreLayout(KConfig *config, const QString &group)
+void KListView::restoreLayout(KConfig *config, const TQString &group)
 {
   KConfigGroupSaver saver(config, group);
-  QStringList cols = config->readListEntry("ColumnWidths");
+  TQStringList cols = config->readListEntry("ColumnWidths");
   int i = 0;
   { // scope the iterators
-    QStringList::ConstIterator it = cols.constBegin();
-    const QStringList::ConstIterator itEnd = cols.constEnd();
+    TQStringList::ConstIterator it = cols.constBegin();
+    const TQStringList::ConstIterator itEnd = cols.constEnd();
     for (; it != itEnd; ++it)
       setColumnWidth(i++, (*it).toInt());
   }
@@ -2052,8 +2052,8 @@ void KListView::restoreLayout(KConfig *config, const QString &group)
   const int colCount = columns();
   for (i = 0; i < colCount; ++i)   // final index positions from lowest to highest
   {
-    QStringList::ConstIterator it = cols.constBegin();
-    const QStringList::ConstIterator itEnd = cols.constEnd();
+    TQStringList::ConstIterator it = cols.constBegin();
+    const TQStringList::ConstIterator itEnd = cols.constEnd();
 
     int section = 0;
     for (; (it != itEnd) && ((*it).toInt() != i); ++it, ++section) ;
@@ -2070,15 +2070,15 @@ void KListView::restoreLayout(KConfig *config, const QString &group)
 
 void KListView::setSorting(int column, bool ascending)
 {
-  QListViewItem *selected = 0;
+  TQListViewItem *selected = 0;
 
-  if (selectionMode() == QListView::Single) {
+  if (selectionMode() == TQListView::Single) {
     selected = selectedItem();
     if (selected && !selected->isVisible())
       selected = 0;
   }
-  else if (selectionMode() != QListView::NoSelection) {
-    QListViewItem *item = firstChild();
+  else if (selectionMode() != TQListView::NoSelection) {
+    TQListViewItem *item = firstChild();
     while (item && !selected) {
       if (item->isSelected() && item->isVisible())
 	selected = item;
@@ -2088,12 +2088,12 @@ void KListView::setSorting(int column, bool ascending)
 
   d->sortColumn = column;
   d->sortAscending = ascending;
-  QListView::setSorting(column, ascending);
+  TQListView::setSorting(column, ascending);
 
   if (selected)
     ensureItemVisible(selected);
 
-  QListViewItem* item = firstChild();
+  TQListViewItem* item = firstChild();
   while ( item ) {
     KListViewItem *kItem = dynamic_cast<KListViewItem*>(item);
     if (kItem) kItem->m_known = false;
@@ -2111,12 +2111,12 @@ bool KListView::ascendingSort(void) const
   return d->sortAscending;
 }
 
-void KListView::takeItem(QListViewItem *item)
+void KListView::takeItem(TQListViewItem *item)
 {
   if(item && item == d->editor->currentItem())
     d->editor->terminate();
 
-  QListView::takeItem(item);
+  TQListView::takeItem(item);
 }
 
 void KListView::disableAutoSelection()
@@ -2138,63 +2138,63 @@ void KListView::resetAutoSelection()
   d->autoSelectDelay = KGlobalSettings::autoSelectDelay();
 }
 
-void KListView::doubleClicked( QListViewItem *item, const QPoint &pos, int c )
+void KListView::doubleClicked( TQListViewItem *item, const TQPoint &pos, int c )
 {
-  emit QListView::doubleClicked( item, pos, c );
+  emit TQListView::doubleClicked( item, pos, c );
 }
 
-KListViewItem::KListViewItem(QListView *parent)
-  : QListViewItem(parent)
-{
-  init();
-}
-
-KListViewItem::KListViewItem(QListViewItem *parent)
-  : QListViewItem(parent)
+KListViewItem::KListViewItem(TQListView *parent)
+  : TQListViewItem(parent)
 {
   init();
 }
 
-KListViewItem::KListViewItem(QListView *parent, QListViewItem *after)
-  : QListViewItem(parent, after)
+KListViewItem::KListViewItem(TQListViewItem *parent)
+  : TQListViewItem(parent)
 {
   init();
 }
 
-KListViewItem::KListViewItem(QListViewItem *parent, QListViewItem *after)
-  : QListViewItem(parent, after)
+KListViewItem::KListViewItem(TQListView *parent, TQListViewItem *after)
+  : TQListViewItem(parent, after)
 {
   init();
 }
 
-KListViewItem::KListViewItem(QListView *parent,
-    QString label1, QString label2, QString label3, QString label4,
-    QString label5, QString label6, QString label7, QString label8)
-  : QListViewItem(parent, label1, label2, label3, label4, label5, label6, label7, label8)
+KListViewItem::KListViewItem(TQListViewItem *parent, TQListViewItem *after)
+  : TQListViewItem(parent, after)
 {
   init();
 }
 
-KListViewItem::KListViewItem(QListViewItem *parent,
-    QString label1, QString label2, QString label3, QString label4,
-    QString label5, QString label6, QString label7, QString label8)
-  : QListViewItem(parent, label1, label2, label3, label4, label5, label6, label7, label8)
+KListViewItem::KListViewItem(TQListView *parent,
+    TQString label1, TQString label2, TQString label3, TQString label4,
+    TQString label5, TQString label6, TQString label7, TQString label8)
+  : TQListViewItem(parent, label1, label2, label3, label4, label5, label6, label7, label8)
 {
   init();
 }
 
-KListViewItem::KListViewItem(QListView *parent, QListViewItem *after,
-    QString label1, QString label2, QString label3, QString label4,
-    QString label5, QString label6, QString label7, QString label8)
-  : QListViewItem(parent, after, label1, label2, label3, label4, label5, label6, label7, label8)
+KListViewItem::KListViewItem(TQListViewItem *parent,
+    TQString label1, TQString label2, TQString label3, TQString label4,
+    TQString label5, TQString label6, TQString label7, TQString label8)
+  : TQListViewItem(parent, label1, label2, label3, label4, label5, label6, label7, label8)
 {
   init();
 }
 
-KListViewItem::KListViewItem(QListViewItem *parent, QListViewItem *after,
-    QString label1, QString label2, QString label3, QString label4,
-    QString label5, QString label6, QString label7, QString label8)
-  : QListViewItem(parent, after, label1, label2, label3, label4, label5, label6, label7, label8)
+KListViewItem::KListViewItem(TQListView *parent, TQListViewItem *after,
+    TQString label1, TQString label2, TQString label3, TQString label4,
+    TQString label5, TQString label6, TQString label7, TQString label8)
+  : TQListViewItem(parent, after, label1, label2, label3, label4, label5, label6, label7, label8)
+{
+  init();
+}
+
+KListViewItem::KListViewItem(TQListViewItem *parent, TQListViewItem *after,
+    TQString label1, TQString label2, TQString label3, TQString label4,
+    TQString label5, TQString label6, TQString label7, TQString label8)
+  : TQListViewItem(parent, after, label1, label2, label3, label4, label5, label6, label7, label8)
 {
   init();
 }
@@ -2213,31 +2213,31 @@ void KListViewItem::init()
   emit lv->itemAdded(this);
 }
 
-void KListViewItem::insertItem(QListViewItem *item)
+void KListViewItem::insertItem(TQListViewItem *item)
 {
-  QListViewItem::insertItem(item);
+  TQListViewItem::insertItem(item);
   if(listView())
     emit static_cast<KListView *>(listView())->itemAdded(item);
 }
 
-void KListViewItem::takeItem(QListViewItem *item)
+void KListViewItem::takeItem(TQListViewItem *item)
 {
-  QListViewItem::takeItem(item);
+  TQListViewItem::takeItem(item);
   if(listView())
     emit static_cast<KListView *>(listView())->itemRemoved(item);
 }
 
-const QColor &KListViewItem::backgroundColor()
+const TQColor &KListViewItem::backgroundColor()
 {
   if (isAlternate())
     return static_cast< KListView* >(listView())->alternateBackground();
   return listView()->viewport()->colorGroup().base();
 }
 
-QColor KListViewItem::backgroundColor(int column)
+TQColor KListViewItem::backgroundColor(int column)
 {
   KListView* view = static_cast< KListView* >(listView());
-  QColor color = isAlternate() ?
+  TQColor color = isAlternate() ?
                  view->alternateBackground() :
                  view->viewport()->colorGroup().base();
 
@@ -2245,7 +2245,7 @@ QColor KListViewItem::backgroundColor(int column)
   if ( (view->columns() > 1) && view->shadeSortColumn() && (column == view->columnSorted()) )
   {
     if ( color == Qt::black )
-      color = QColor(55, 55, 55);  // dark gray
+      color = TQColor(55, 55, 55);  // dark gray
     else
     {
       int h,s,v;
@@ -2335,25 +2335,25 @@ bool KListViewItem::isAlternate()
   return false;
 }
 
-void KListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
+void KListViewItem::paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int alignment)
 {
-  QColorGroup _cg = cg;
-  QListView* lv = listView();
-  const QPixmap *pm = lv->viewport()->backgroundPixmap();
+  TQColorGroup _cg = cg;
+  TQListView* lv = listView();
+  const TQPixmap *pm = lv->viewport()->backgroundPixmap();
 
   if (pm && !pm->isNull())
   {
-    _cg.setBrush(QColorGroup::Base, QBrush(backgroundColor(column), *pm));
-    QPoint o = p->brushOrigin();
+    _cg.setBrush(TQColorGroup::Base, TQBrush(backgroundColor(column), *pm));
+    TQPoint o = p->brushOrigin();
     p->setBrushOrigin( o.x()-lv->contentsX(), o.y()-lv->contentsY() );
   }
   else
   {
     _cg.setColor((lv->viewport()->backgroundMode() == Qt::FixedColor) ?
-                 QColorGroup::Background : QColorGroup::Base,
+                 TQColorGroup::Background : TQColorGroup::Base,
                  backgroundColor(column));
   }
-  QListViewItem::paintCell(p, _cg, column, width, alignment);
+  TQListViewItem::paintCell(p, _cg, column, width, alignment);
 }
 
 void KListView::virtual_hook( int, void* )

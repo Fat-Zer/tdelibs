@@ -19,20 +19,20 @@
 *                                                                            *
 *  KProgress -- progress indicator widget for KDE                            *
 *  Original QRangeControl-based version written by Martynas Kunigelis        *
-*  Current QProgressBar based version by Aaron Seigo                         *
+*  Current TQProgressBar based version by Aaron Seigo                         *
 *                                                                            *
 *****************************************************************************/
 
 #ifndef _KPROGRESS_H
 #define _KPROGRESS_H "$Id$"
 
-#include <qprogressbar.h>
+#include <tqprogressbar.h>
 #include <kdialogbase.h>
 
 /**
  * @short A progress indicator widget.
  *
- * KProgress is derived from QProgressBar, so
+ * KProgress is derived from TQProgressBar, so
  * you can use all the methods from that class. The only real difference
  * is that a signal is emitted on changes to the value and you do not need
  * to subclass KProgress just to change the format of the indicator text.
@@ -51,7 +51,7 @@ public:
   /**
    * Construct a progress bar.
    */
-  KProgress(QWidget *parent=0, const char *name=0, WFlags f = 0);
+  KProgress(TQWidget *parent=0, const char *name=0, WFlags f = 0);
 
   /**
    * Construct a progress bar with a total number of steps.
@@ -59,7 +59,7 @@ public:
    * bar represents. For example, if the operation is to examine 50 files, this value would be 50. Before examining
    * the first file, call setProgress(0); call setProgress(50) after examining the last file.
    */
-  KProgress(int totalSteps, QWidget *parent=0, const char *name=0, WFlags f = 0);
+  KProgress(int totalSteps, TQWidget *parent=0, const char *name=0, WFlags f = 0);
 
   /**
    * Destruct the progress bar.
@@ -92,7 +92,7 @@ public:
    * Retrieve the current format for printing status text.
    * @see setFormat()
    */
-  QString format() const;
+  TQString format() const;
 
   /**
    * @deprecated but kept for source compatibility with KDE2's KProgress.
@@ -121,7 +121,7 @@ public slots:
    * @param format "%p" is replaced by percentage done, "%v" is replaced by actual
    * value, "%m" is replaced by the maximum value.
    */
-  void setFormat(const QString & format);
+  void setFormat(const TQString & format);
 
   /**
     * Set the current total number of steps in the action that the progress bar
@@ -156,10 +156,10 @@ signals:
   void percentageChanged(int);
 
 protected:
-  virtual bool setIndicator(QString & indicator, int progress, int totalSteps);
+  virtual bool setIndicator(TQString & indicator, int progress, int totalSteps);
 
 private:
-  QString   mFormat;
+  TQString   mFormat;
 
 protected:
   virtual void virtual_hook( int id, void* data );
@@ -198,9 +198,9 @@ class KDEUI_EXPORT KProgressDialog : public KDialogBase
          * @param text Text to display in the dialog
          * @param modal Set to true to make the dialog modal
          */
-        KProgressDialog(QWidget* parent = 0, const char* name = 0,
-                        const QString& caption = QString::null,
-                        const QString& text = QString::null,
+        KProgressDialog(TQWidget* parent = 0, const char* name = 0,
+                        const TQString& caption = TQString::null,
+                        const TQString& text = TQString::null,
                         bool modal = false);
 
         /**
@@ -227,19 +227,19 @@ class KDEUI_EXPORT KProgressDialog : public KDialogBase
          *
          * @param text the text to display
          */
-        void    setLabel(const QString & text);
+        void    setLabel(const TQString & text);
 
         /**
          * Returns the current dialog text
          * @deprecated
          */
         // ### Remove this KDE 4.0
-        QString labelText() KDE_DEPRECATED;
+        TQString labelText() KDE_DEPRECATED;
 
         /**
          * Returns the current dialog text
          */
-        QString labelText() const;
+        TQString labelText() const;
 
         /**
          * Sets whether or not the user can cancel the process.
@@ -337,19 +337,19 @@ class KDEUI_EXPORT KProgressDialog : public KDialogBase
         /**
          * Sets the text to appear on the cancel button.
          */
-        void setButtonText(const QString&);
+        void setButtonText(const TQString&);
 
         /**
          * Returns the text on the cancel button
          * @deprecated
          */
         // ### Remove this KDE 4.0
-        QString buttonText() KDE_DEPRECATED;
+        TQString buttonText() KDE_DEPRECATED;
 
         /**
          * Returns the text on the cancel button
          */
-        QString buttonText() const;
+        TQString buttonText() const;
 
         /**
          * Set the minimum number of milliseconds to wait before
@@ -386,10 +386,10 @@ class KDEUI_EXPORT KProgressDialog : public KDialogBase
         bool       mCancelled;
         bool       mAllowCancel;
         bool       mShown;
-        QString    mCancelText;
-        QLabel*    mLabel;
+        TQString    mCancelText;
+        TQLabel*    mLabel;
         KProgress* mProgressBar;
-        QTimer*    mShowTimer;
+        TQTimer*    mShowTimer;
         int        mMinDuration;
     protected:
 	virtual void virtual_hook( int id, void* data );

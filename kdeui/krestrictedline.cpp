@@ -21,13 +21,13 @@
  *
  */
 
-#include <qkeycode.h>
+#include <tqkeycode.h>
 
 #include "krestrictedline.h"
 
-KRestrictedLine::KRestrictedLine( QWidget *parent,
+KRestrictedLine::KRestrictedLine( TQWidget *parent,
 				  const char *name,
-				  const QString& valid )
+				  const TQString& valid )
   : KLineEdit( parent, name )
 {
     qsValidChars = valid;
@@ -39,13 +39,13 @@ KRestrictedLine::~KRestrictedLine()
 }
 
 
-void KRestrictedLine::keyPressEvent( QKeyEvent *e )
+void KRestrictedLine::keyPressEvent( TQKeyEvent *e )
 {
-  // let QLineEdit process "special" keys and return/enter
+  // let TQLineEdit process "special" keys and return/enter
   // so that we still can use the default key binding
   if (e->key() == Key_Enter || e->key() == Key_Return || e->key() == Key_Delete || e->ascii() < 32)
     {
-      QLineEdit::keyPressEvent(e);
+      TQLineEdit::keyPressEvent(e);
       return;
     }
 
@@ -58,19 +58,19 @@ void KRestrictedLine::keyPressEvent( QKeyEvent *e )
       return;
     }
   else
-	// valid char: let QLineEdit process this key as usual
-	QLineEdit::keyPressEvent(e);
+	// valid char: let TQLineEdit process this key as usual
+	TQLineEdit::keyPressEvent(e);
 
   return;
 }
 
 
-void KRestrictedLine::setValidChars( const QString& valid)
+void KRestrictedLine::setValidChars( const TQString& valid)
 {
   qsValidChars = valid;
 }
 
-QString KRestrictedLine::validChars() const
+TQString KRestrictedLine::validChars() const
 {
   return qsValidChars;
 }

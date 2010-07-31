@@ -1,4 +1,4 @@
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include "kdatewidget.h"
 #include "kdebug.h"
@@ -14,15 +14,15 @@ public:
   KTimeWidget * timeWidget;
 };
 
-KDateTimeWidget::KDateTimeWidget(QWidget * parent, const char * name)
-  : QWidget(parent, name)
+KDateTimeWidget::KDateTimeWidget(TQWidget * parent, const char * name)
+  : TQWidget(parent, name)
 {
   init();
 }
 
-KDateTimeWidget::KDateTimeWidget(const QDateTime & datetime,
-			     QWidget * parent, const char * name)
-  : QWidget(parent, name)
+KDateTimeWidget::KDateTimeWidget(const TQDateTime & datetime,
+			     TQWidget * parent, const char * name)
+  : TQWidget(parent, name)
 {
   init();
 
@@ -38,32 +38,32 @@ void KDateTimeWidget::init()
 {
   d = new KDateTimeWidgetPrivate;
 
-  QHBoxLayout *layout = new QHBoxLayout(this, 0, KDialog::spacingHint());
+  TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
   layout->setAutoAdd(true);
 
   d->dateWidget = new KDateWidget(this);
   d->timeWidget = new KTimeWidget(this);
 
-  connect(d->dateWidget, SIGNAL(changed(QDate)),
-          SLOT(slotValueChanged()));
-  connect(d->timeWidget, SIGNAL(valueChanged(const QTime &)),
-          SLOT(slotValueChanged()));
+  connect(d->dateWidget, TQT_SIGNAL(changed(TQDate)),
+          TQT_SLOT(slotValueChanged()));
+  connect(d->timeWidget, TQT_SIGNAL(valueChanged(const TQTime &)),
+          TQT_SLOT(slotValueChanged()));
 }
 
-void KDateTimeWidget::setDateTime(const QDateTime & datetime)
+void KDateTimeWidget::setDateTime(const TQDateTime & datetime)
 {
   d->dateWidget->setDate(datetime.date());
   d->timeWidget->setTime(datetime.time());
 }
 
-QDateTime KDateTimeWidget::dateTime() const
+TQDateTime KDateTimeWidget::dateTime() const
 {
-  return QDateTime(d->dateWidget->date(), d->timeWidget->time());
+  return TQDateTime(d->dateWidget->date(), d->timeWidget->time());
 }
 
 void KDateTimeWidget::slotValueChanged()
 {
-  QDateTime datetime(d->dateWidget->date(),
+  TQDateTime datetime(d->dateWidget->date(),
                      d->timeWidget->time());
 
   kdDebug() << "slotValueChanged(): " << datetime << "\n";

@@ -20,7 +20,7 @@
 #ifndef _KRFCDATE_H_
 #define _KRFCDATE_H_
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <time.h>
 #include "kdelibs_export.h"
 
@@ -44,7 +44,7 @@ public:
     * @param date the date to parse
     * @return the date, or 0 if not possible
     */
-   static time_t parseDate(const QString &date);
+   static time_t parseDate(const TQString &date);
 
    /**
     * This function tries to parse a string containing a date/time in 
@@ -61,7 +61,7 @@ public:
     * @param date the date to parse
     * @return the date, or 0 if not possible
     */
-   static time_t parseDateISO8601(const QString &date);
+   static time_t parseDateISO8601(const TQString &date);
 
   /**
    * Returns the local timezone offset to UTC in minutes
@@ -79,7 +79,7 @@ public:
    * @return the string representation of the date
    */
 
-   static QCString rfc2822DateString(time_t utcTime, int utcOffset);
+   static TQCString rfc2822DateString(time_t utcTime, int utcOffset);
 
 
   /**
@@ -93,7 +93,7 @@ public:
    * @return the string representation of the date
    */
 
-   static QCString rfc2822DateString(time_t utcTime);
+   static TQCString rfc2822DateString(time_t utcTime);
 
 };
 

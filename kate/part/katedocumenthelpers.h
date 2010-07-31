@@ -25,8 +25,8 @@
 
 #include <kparts/browserextension.h>
 
-#include <qstringlist.h>
-#include <qguardedptr.h>
+#include <tqstringlist.h>
+#include <tqguardedptr.h>
 
 class KateDocument;
 

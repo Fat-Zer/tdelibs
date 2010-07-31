@@ -1,5 +1,5 @@
-#include <qimage.h>
-#include <qstring.h>
+#include <tqimage.h>
+#include <tqstring.h>
 
 #include <kimageeffect.h>
 
@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 	int width = atoi(argv[1]);
 	int height = atoi(argv[2]);
 
-	QImage *img = 0;
+	TQImage *img = 0;
 
 	KSVGIconEngine *svgEngine = new KSVGIconEngine();
 
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 */
 	}
 	else
-		img = new QImage();
+		img = new TQImage();
 
 	delete svgEngine;
 

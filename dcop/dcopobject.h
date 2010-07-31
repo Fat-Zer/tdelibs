@@ -23,22 +23,22 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _DCOPOBJECT_H
 #define _DCOPOBJECT_H
 
-#include <qobject.h>
-#include <qmap.h>
-#include <qstring.h>
-#include <qptrlist.h>
-#include <qvaluelist.h>
+#include <tqobject.h>
+#include <tqmap.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
+#include <tqvaluelist.h>
 #include <kdatastream.h> // needed for proper bool marshalling
 #include "kdelibs_export.h"
 
 class DCOPClient;
-typedef QValueList<QCString> QCStringList;
+typedef TQValueList<TQCString> QCStringList;
 
 // Makros for DCOP interfaces
 
 #define K_DCOP \
 public:        \
-  virtual bool process(const QCString &fun, const QByteArray &data, QCString& replyType, QByteArray &replyData); \
+  virtual bool process(const TQCString &fun, const TQByteArray &data, TQCString& replyType, TQByteArray &replyData); \
   QCStringList functions(); \
   QCStringList interfaces(); \
 private:
@@ -74,15 +74,15 @@ public:
   DCOPObject();
   /**
    * Creates a DCOPObject and calculates the object id
-   * using QObject::name().
+   * using TQObject::name().
    * @param obj the object to extract the name from
    */
-  DCOPObject(QObject *obj);
+  DCOPObject(TQObject *obj);
   /**
    * Creates a DCOPObject with object Id @p objId.
    * @param objId the object id of the DCOP object
    */
-  DCOPObject(const QCString &objId);
+  DCOPObject(const TQCString &objId);
   /**
    * Destroys the DCOPObject and removes it from the map
    * of known objects.
@@ -93,7 +93,7 @@ public:
    * Returns the object id of the DCOPObject.
    * @return the object's id
    */
-  QCString objId() const;
+  TQCString objId() const;
 
   /**
    * Renames a dcop object, if no other with the same name exists
@@ -101,7 +101,7 @@ public:
    * 
    * @param objId the new object id
    **/
-  bool setObjId(const QCString &objId);
+  bool setObjId(const TQCString &objId);
 
   /**
    * Dispatches a message.
@@ -120,7 +120,7 @@ public:
    *
    * @param fun is the normalized function signature.
    *            Such a signature usually looks like
-   *            foobar(QString,int). The return type,
+   *            foobar(TQString,int). The return type,
    *            qualifiers like "const" etc. are not part of
    *            the signature.
    * @param data the received data
@@ -134,8 +134,8 @@ public:
    * @see functions()
    * @see DCOPClient::process()
    */
-  virtual bool process(const QCString &fun, const QByteArray &data,
-		       QCString& replyType, QByteArray &replyData);
+  virtual bool process(const TQCString &fun, const TQByteArray &data,
+		       TQCString& replyType, TQByteArray &replyData);
 
 
   /**
@@ -147,7 +147,7 @@ public:
    *
    * @param fun is the normalized function signature.
    *            Such a signature usually looks like
-   *            foobar(QString,int). The return type,
+   *            foobar(TQString,int). The return type,
    *            qualifiers like "const" etc. are not part of
    *            the signature.
    * @param data the received data
@@ -160,8 +160,8 @@ public:
    * @see functions(),
    * @see DCOPClient::process()
    */
-  virtual bool processDynamic(const QCString &fun, const QByteArray &data,
-			      QCString& replyType, QByteArray &replyData);
+  virtual bool processDynamic(const TQCString &fun, const TQByteArray &data,
+			      TQCString& replyType, TQByteArray &replyData);
 
    /**
    * This function is of interest when you used an IDL compiler
@@ -226,7 +226,7 @@ public:
    * @param signal the signal to emit
    * @param data the data to send
    */
-  void emitDCOPSignal( const QCString &signal, const QByteArray &data);
+  void emitDCOPSignal( const TQCString &signal, const TQByteArray &data);
 
   /**
    * Connects to a DCOP signal.
@@ -247,9 +247,9 @@ public:
    * @li @p Volatile is true and @p sender  does not exist.
    * @li @p signal and @p slot do not have matching arguments.
    */
-  bool connectDCOPSignal( const QCString &sender, const QCString &senderObj,
-                          const QCString &signal,
-                          const QCString &slot,
+  bool connectDCOPSignal( const TQCString &sender, const TQCString &senderObj,
+                          const TQCString &signal,
+                          const TQCString &slot,
                           bool Volatile);
 
   /**
@@ -269,9 +269,9 @@ public:
    *
    * @return false if no connection(s) where removed.
    */
-  bool disconnectDCOPSignal( const QCString &sender, const QCString &senderObj,
-                             const QCString &signal,
-                             const QCString &slot);
+  bool disconnectDCOPSignal( const TQCString &sender, const TQCString &senderObj,
+                             const TQCString &signal,
+                             const TQCString &slot);
 
   /**
    * Returns the DCOPClient responsible for making the call. 
@@ -296,7 +296,7 @@ public:
    *
    * DCOPObjectProxy
    */
-  static bool hasObject(const QCString &objId);
+  static bool hasObject(const TQCString &objId);
 
   /**
    * Try to find a dcop object with the given id.
@@ -304,7 +304,7 @@ public:
    * @param objId the object id to search
    * @return the  DCOPObject for the id @p objId.
    */
-  static DCOPObject *find(const QCString &objId);
+  static DCOPObject *find(const TQCString &objId);
 
 
   /**
@@ -316,21 +316,21 @@ public:
    * @return a list of DCOPObjects beginning with the string
    * contained in @p partialId.
    */
-  static QPtrList<DCOPObject> match(const QCString &partialId);
+  static TQPtrList<DCOPObject> match(const TQCString &partialId);
 
   /**
-   * Creates an object id for the QObject @p obj. This is done
-   * using the QObject::name() function.
+   * Creates an object id for the TQObject @p obj. This is done
+   * using the TQObject::name() function.
    * @param obj the object whose name will be used
    * @return the created object id
    */
-  static QCString objectName( QObject* obj );
+  static TQCString objectName( TQObject* obj );
 
 private:
   /**
    * The object id of this DCOPObject.
    */
-  QCString ident;
+  TQCString ident;
 
 protected:
   virtual void virtual_hook( int id, void* data );
@@ -382,7 +382,7 @@ public:
 	 * @param obj the id of the object
      * @param fun is the normalized function signature.
      *            Such a signature usually looks like
-     *            foobar(QString,int). The return type,
+     *            foobar(TQString,int). The return type,
      *            qualifiers like "const" etc. are not part of
      *            the signature.
      * @param data the received data
@@ -391,14 +391,14 @@ public:
      * @return true if successful, false otherwise. The default implementation
      *         returns always false.
      */
-    virtual bool process( const QCString& obj, const QCString& fun,
-			  const QByteArray& data,
-			  QCString& replyType, QByteArray &replyData );
+    virtual bool process( const TQCString& obj, const TQCString& fun,
+			  const TQByteArray& data,
+			  TQCString& replyType, TQByteArray &replyData );
 private:
     void* unused;
     void* unused_too;
     friend class DCOPClient;
-    static QPtrList<DCOPObjectProxy>* proxies;
+    static TQPtrList<DCOPObjectProxy>* proxies;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:

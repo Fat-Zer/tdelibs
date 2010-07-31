@@ -25,9 +25,9 @@
 class KMWIpp : public KMWInfoBase
 {
 public:
-	KMWIpp(QWidget *parent = 0, const char *name = 0);
+	KMWIpp(TQWidget *parent = 0, const char *name = 0);
 
-	bool isValid(QString&);
+	bool isValid(TQString&);
 	void updatePrinter(KMPrinter*);
 };
 

@@ -20,8 +20,8 @@
 #ifndef __KATE_SYNTAXDOCUMENT_H__
 #define __KATE_SYNTAXDOCUMENT_H__
 
-#include <qdom.h>
-#include <qstringlist.h>
+#include <tqdom.h>
+#include <tqstringlist.h>
 
 /**
  * Information about each syntax hl Mode
@@ -29,23 +29,23 @@
 class KateSyntaxModeListItem
 {
   public:
-    QString name;
-    QString nameTranslated;
-    QString section;
-    QString mimetype;
-    QString extension;
-    QString identifier;
-    QString version;
-    QString priority;
-    QString author;
-    QString license;
+    TQString name;
+    TQString nameTranslated;
+    TQString section;
+    TQString mimetype;
+    TQString extension;
+    TQString identifier;
+    TQString version;
+    TQString priority;
+    TQString author;
+    TQString license;
     bool hidden;
 };
 
 /**
  * List of the KateSyntaxModeListItems holding all the syntax mode list items
  */
-typedef QValueList<KateSyntaxModeListItem*> KateSyntaxModeList;
+typedef TQValueList<KateSyntaxModeListItem*> KateSyntaxModeList;
 
 /**
  * Class holding the data around the current QDomElement
@@ -53,9 +53,9 @@ typedef QValueList<KateSyntaxModeListItem*> KateSyntaxModeList;
 class KateSyntaxContextData
 {
   public:
-    QDomElement parent;
-    QDomElement currentGroup;
-    QDomElement item;
+    TQDomElement parent;
+    TQDomElement currentGroup;
+    TQDomElement item;
 };
 
 /**
@@ -82,7 +82,7 @@ class KateSyntaxDocument : public QDomDocument
      * @param identifier file name and path of the new xml needed
      * @return success
      */
-    bool setIdentifier(const QString& identifier);
+    bool setIdentifier(const TQString& identifier);
 
     /**
      * Get the mode list
@@ -107,8 +107,8 @@ class KateSyntaxDocument : public QDomDocument
     /**
      * This function is used to fetch the atributes of the tags.
      */
-    QString groupItemData(const KateSyntaxContextData* data,const QString& name);
-    QString groupData(const KateSyntaxContextData* data,const QString& name);
+    TQString groupItemData(const KateSyntaxContextData* data,const TQString& name);
+    TQString groupData(const KateSyntaxContextData* data,const TQString& name);
 
     void freeGroupInfo(KateSyntaxContextData* data);
     KateSyntaxContextData* getSubItems(KateSyntaxContextData* data);
@@ -117,18 +117,18 @@ class KateSyntaxDocument : public QDomDocument
      * Get the KateSyntaxContextData of the DomElement Config inside mainGroupName
      * It just fills KateSyntaxContextData::item
      */
-    KateSyntaxContextData* getConfig(const QString& mainGroupName, const QString &config);
+    KateSyntaxContextData* getConfig(const TQString& mainGroupName, const TQString &config);
 
     /**
-     * Get the KateSyntaxContextData of the QDomElement Config inside mainGroupName
-     * KateSyntaxContextData::parent will contain the QDomElement found
+     * Get the KateSyntaxContextData of the TQDomElement Config inside mainGroupName
+     * KateSyntaxContextData::parent will contain the TQDomElement found
      */
-    KateSyntaxContextData* getGroupInfo(const QString& mainGroupName, const QString &group);
+    KateSyntaxContextData* getGroupInfo(const TQString& mainGroupName, const TQString &group);
 
     /**
      * Returns a list with all the keywords inside the list type
      */
-    QStringList& finddata(const QString& mainGroup,const QString& type,bool clearList=true);
+    TQStringList& finddata(const TQString& mainGroup,const TQString& type,bool clearList=true);
 
   private:
     /**
@@ -141,7 +141,7 @@ class KateSyntaxDocument : public QDomDocument
      * Used by getConfig and getGroupInfo to traverse the xml nodes and
      * evenually return the found element
      */
-    bool getElement (QDomElement &element, const QString &mainGroupName, const QString &config);
+    bool getElement (TQDomElement &element, const TQString &mainGroupName, const TQString &config);
 
     /**
      * List of mode items
@@ -151,12 +151,12 @@ class KateSyntaxDocument : public QDomDocument
     /**
      * current parsed filename
      */
-    QString currentFile;
+    TQString currentFile;
 
     /**
      * last found data out of the xml
      */
-    QStringList m_data;
+    TQStringList m_data;
 };
 
 #endif

@@ -46,7 +46,7 @@ public:
 }
 
 KArtsFloatWatch::KArtsFloatWatch(Arts::Object object, const char *stream,
-	QObject *parent, const char *name) : QObject(parent, name)
+	TQObject *parent, const char *name) : TQObject(parent, name)
 {
 	d = new KArtsFloatWatchPrivate();
 	d->proxy = KFloatWatchProxy::_from_base(new KFloatWatchProxy_impl(this));

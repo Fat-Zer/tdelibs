@@ -25,12 +25,12 @@
 #endif
 
 #include "config.h"
-#include <qevent.h>
-#include <qobjectlist.h>
-#include <qaccel.h>
-#include <qpainter.h>
-#include <qstyle.h>
-#include <qtimer.h>
+#include <tqevent.h>
+#include <tqobjectlist.h>
+#include <tqaccel.h>
+#include <tqpainter.h>
+#include <tqstyle.h>
+#include <tqtimer.h>
 
 #include <kconfig.h>
 #include <kglobalsettings.h>
@@ -92,8 +92,8 @@ public:
 #ifdef Q_WS_X11
     KSelectionWatcher* selection;
 #endif
-    QTimer selection_timer;
-    QSize min_size;
+    TQTimer selection_timer;
+    TQSize min_size;
     static Atom makeSelectionAtom();
 };
 
@@ -126,22 +126,22 @@ Atom KMenuBar::KMenuBarPrivate::makeSelectionAtom()
 #endif
 }
 
-KMenuBar::KMenuBar(QWidget *parent, const char *name)
-  : QMenuBar(parent, name)
+KMenuBar::KMenuBar(TQWidget *parent, const char *name)
+  : TQMenuBar(parent, name)
 {
 #ifdef Q_WS_X11
     QXEmbed::initialize();
 #endif
     d = new KMenuBarPrivate;
-    connect( &d->selection_timer, SIGNAL( timeout()),
-        this, SLOT( selectionTimeout()));
+    connect( &d->selection_timer, TQT_SIGNAL( timeout()),
+        this, TQT_SLOT( selectionTimeout()));
 
-    connect( qApp->desktop(), SIGNAL( resized( int )), SLOT( updateFallbackSize()));
+    connect( qApp->desktop(), TQT_SIGNAL( resized( int )), TQT_SLOT( updateFallbackSize()));
 
     if ( kapp )
         // toolbarAppearanceChanged(int) is sent when changing macstyle
-        connect( kapp, SIGNAL(toolbarAppearanceChanged(int)),
-            this, SLOT(slotReadConfig()));
+        connect( kapp, TQT_SIGNAL(toolbarAppearanceChanged(int)),
+            this, TQT_SLOT(slotReadConfig()));
 
     slotReadConfig();
 }
@@ -175,27 +175,27 @@ void KMenuBar::setTopLevelMenuInternal(bool top_level)
 #ifdef Q_WS_X11
       d->selection = new KSelectionWatcher( KMenuBarPrivate::makeSelectionAtom(),
           DefaultScreen( qt_xdisplay()));
-      connect( d->selection, SIGNAL( newOwner( Window )),
-          this, SLOT( updateFallbackSize()));
-      connect( d->selection, SIGNAL( lostOwner()),
-          this, SLOT( updateFallbackSize()));
+      connect( d->selection, TQT_SIGNAL( newOwner( Window )),
+          this, TQT_SLOT( updateFallbackSize()));
+      connect( d->selection, TQT_SIGNAL( lostOwner()),
+          this, TQT_SLOT( updateFallbackSize()));
 #endif
       d->frameStyle = frameStyle();
       d->lineWidth = lineWidth();
       d->margin = margin();
       d->fallback_mode = false;
       bool wasShown = !isHidden();
-      reparent( parentWidget(), WType_TopLevel | WStyle_Tool | WStyle_Customize | WStyle_NoBorder, QPoint(0,0), false );
+      reparent( parentWidget(), WType_TopLevel | WStyle_Tool | WStyle_Customize | WStyle_NoBorder, TQPoint(0,0), false );
 #ifdef Q_WS_X11
       KWin::setType( winId(), NET::TopMenu );
       if( parentWidget())
           XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->topLevelWidget()->winId());
 #endif
-      QMenuBar::setFrameStyle( NoFrame );
-      QMenuBar::setLineWidth( 0 );
-      QMenuBar::setMargin( 0 );
+      TQMenuBar::setFrameStyle( NoFrame );
+      TQMenuBar::setLineWidth( 0 );
+      TQMenuBar::setMargin( 0 );
       updateFallbackSize();
-      d->min_size = QSize( 0, 0 );
+      d->min_size = TQSize( 0, 0 );
       if( parentWidget() && !parentWidget()->isTopLevel())
           setShown( parentWidget()->isVisible());
       else if ( wasShown )
@@ -214,7 +214,7 @@ void KMenuBar::setTopLevelMenuInternal(bool top_level)
       setMaximumSize( QWIDGETSIZE_MAX, QWIDGETSIZE_MAX );
       updateMenuBarSize();
       if ( parentWidget() )
-          reparent( parentWidget(), QPoint(0,0), !isHidden());
+          reparent( parentWidget(), TQPoint(0,0), !isHidden());
   }
 }
 
@@ -226,7 +226,7 @@ bool KMenuBar::isTopLevelMenu() const
 // KDE4 remove
 void KMenuBar::show()
 {
-    QMenuBar::show();
+    TQMenuBar::show();
 }
 
 void KMenuBar::slotReadConfig()
@@ -236,24 +236,24 @@ void KMenuBar::slotReadConfig()
   setTopLevelMenuInternal( config->readBoolEntry( "macStyle", false ) );
 }
 
-bool KMenuBar::eventFilter(QObject *obj, QEvent *ev)
+bool KMenuBar::eventFilter(TQObject *obj, TQEvent *ev)
 {
     if ( d->topLevel )
     {
 	if ( parentWidget() && obj == parentWidget()->topLevelWidget()  )
         {
-	    if( ev->type() == QEvent::Resize )
-		return false; // ignore resizing of parent, QMenuBar would try to adjust size
-	    if ( ev->type() == QEvent::Accel || ev->type() == QEvent::AccelAvailable )
+	    if( ev->type() == TQEvent::Resize )
+		return false; // ignore resizing of parent, TQMenuBar would try to adjust size
+	    if ( ev->type() == TQEvent::Accel || ev->type() == TQEvent::AccelAvailable )
             {
-		if ( QApplication::sendEvent( topLevelWidget(), ev ) )
+		if ( TQApplication::sendEvent( topLevelWidget(), ev ) )
 		    return true;
 	    }
-            if(ev->type() == QEvent::ShowFullScreen )
+            if(ev->type() == TQEvent::ShowFullScreen )
                 // will update the state properly
                 setTopLevelMenuInternal( d->topLevel );
         }
-        if( parentWidget() && obj == parentWidget() && ev->type() == QEvent::Reparent )
+        if( parentWidget() && obj == parentWidget() && ev->type() == TQEvent::Reparent )
             {
 #ifdef Q_WS_X11
             XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->topLevelWidget()->winId());
@@ -264,7 +264,7 @@ bool KMenuBar::eventFilter(QObject *obj, QEvent *ev)
             }
         if( parentWidget() && !parentWidget()->isTopLevel() && obj == parentWidget())
         { // if the parent is not toplevel, KMenuBar needs to match its visibility status
-            if( ev->type() == QEvent::Show )
+            if( ev->type() == TQEvent::Show )
                 {
 #ifdef Q_WS_X11
                 XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->topLevelWidget()->winId());
@@ -273,7 +273,7 @@ bool KMenuBar::eventFilter(QObject *obj, QEvent *ev)
 #endif
                 show();
                 }
-            if( ev->type() == QEvent::Hide )
+            if( ev->type() == TQEvent::Hide )
                 hide();
 	}
     }
@@ -281,18 +281,18 @@ bool KMenuBar::eventFilter(QObject *obj, QEvent *ev)
     {
         if( parentWidget() && obj == parentWidget()->topLevelWidget())
         {
-            if( ev->type() == QEvent::WindowStateChange
+            if( ev->type() == TQEvent::WindowStateChange
                 && !parentWidget()->topLevelWidget()->isFullScreen() )
                 setTopLevelMenuInternal( d->wasTopLevel );
         }
     }
-    return QMenuBar::eventFilter( obj, ev );
+    return TQMenuBar::eventFilter( obj, ev );
 }
 
 // KDE4 remove
-void KMenuBar::showEvent( QShowEvent *e )
+void KMenuBar::showEvent( TQShowEvent *e )
 {
-    QMenuBar::showEvent(e);
+    TQMenuBar::showEvent(e);
 }
 
 void KMenuBar::updateFallbackSize()
@@ -327,8 +327,8 @@ void KMenuBar::selectionTimeout()
         d->fallback_mode = true; // KMenuBar is handling its position itself
         KConfigGroup xineramaConfig(KGlobal::config(),"Xinerama");
         int screen = xineramaConfig.readNumEntry("MenubarScreen",
-            QApplication::desktop()->screenNumber(QPoint(0,0)) );
-        QRect area;
+            TQApplication::desktop()->screenNumber(TQPoint(0,0)) );
+        TQRect area;
         if (kapp->desktop()->numScreens() < 2)
             area = kapp->desktop()->geometry();
         else
@@ -347,19 +347,19 @@ void KMenuBar::selectionTimeout()
 
 int KMenuBar::block_resize = 0;
 
-void KMenuBar::resizeEvent( QResizeEvent *e )
+void KMenuBar::resizeEvent( TQResizeEvent *e )
 {
     if( e->spontaneous() && d->topLevel && !d->fallback_mode )
         {
         ++block_resize; // do not respond with configure request to ConfigureNotify event
-        QMenuBar::resizeEvent(e); // to avoid possible infinite loop
+        TQMenuBar::resizeEvent(e); // to avoid possible infinite loop
         --block_resize;
         }
     else
-        QMenuBar::resizeEvent(e);
+        TQMenuBar::resizeEvent(e);
 }
 
-void KMenuBar::setGeometry( const QRect& r )
+void KMenuBar::setGeometry( const TQRect& r )
 {
     setGeometry( r.x(), r.y(), r.width(), r.height() );
 }
@@ -372,8 +372,8 @@ void KMenuBar::setGeometry( int x, int y, int w, int h )
 	return;
     }
     checkSize( w, h );
-    if( geometry() != QRect( x, y, w, h ))
-        QMenuBar::setGeometry( x, y, w, h );
+    if( geometry() != TQRect( x, y, w, h ))
+        TQMenuBar::setGeometry( x, y, w, h );
 }
 
 void KMenuBar::resize( int w, int h )
@@ -381,8 +381,8 @@ void KMenuBar::resize( int w, int h )
     if( block_resize > 0 )
 	return;
     checkSize( w, h );
-    if( size() != QSize( w, h ))
-        QMenuBar::resize( w, h );
+    if( size() != TQSize( w, h ))
+        TQMenuBar::resize( w, h );
 //    kdDebug() << "RS:" << w << ":" << h << ":" << width() << ":" << height() << ":" << minimumWidth() << ":" << minimumHeight() << endl;
 }
 
@@ -390,7 +390,7 @@ void KMenuBar::checkSize( int& w, int& h )
 {
     if( !d->topLevel || d->fallback_mode )
 	return;
-    QSize s = sizeHint();
+    TQSize s = sizeHint();
     w = s.width();
     h = s.height();
     // This is not done as setMinimumSize(), because that would set the minimum
@@ -401,16 +401,16 @@ void KMenuBar::checkSize( int& w, int& h )
 }
 
 // QMenuBar's sizeHint() gives wrong size (insufficient width), which causes wrapping in the kicker applet
-QSize KMenuBar::sizeHint() const
+TQSize KMenuBar::sizeHint() const
 {
     if( !d->topLevel || block_resize > 0 )
-        return QMenuBar::sizeHint();
-    // Since QMenuBar::sizeHint() may indirectly call resize(),
+        return TQMenuBar::sizeHint();
+    // Since TQMenuBar::sizeHint() may indirectly call resize(),
     // avoid infinite recursion.
     ++block_resize;
     // find the minimum useful height, and enlarge the width until the menu fits in that height (one row)
     int h = heightForWidth( 1000000 );
-    int w = QMenuBar::sizeHint().width();
+    int w = TQMenuBar::sizeHint().width();
     // optimization - don't call heightForWidth() too many times
     while( heightForWidth( w + 12 ) > h )
         w += 12;
@@ -419,7 +419,7 @@ QSize KMenuBar::sizeHint() const
     while( heightForWidth( w ) > h )
         ++w;
     --block_resize;
-    return QSize( w, h );
+    return TQSize( w, h );
 }
 
 #ifdef Q_WS_X11
@@ -428,16 +428,16 @@ bool KMenuBar::x11Event( XEvent* ev )
     if( ev->type == ClientMessage && ev->xclient.message_type == msg_type_atom
         && ev->xclient.window == winId())
     {
-        // QMenuBar is trying really hard to keep the size it deems right.
+        // TQMenuBar is trying really hard to keep the size it deems right.
         // Forcing minimum size and blocking resizing to match parent size
         // in checkResizingToParent() seem to be the only way to make
         // KMenuBar keep the size it wants
-	d->min_size = QSize( ev->xclient.data.l[ 1 ], ev->xclient.data.l[ 2 ] );
+	d->min_size = TQSize( ev->xclient.data.l[ 1 ], ev->xclient.data.l[ 2 ] );
 //        kdDebug() << "MINSIZE:" << d->min_size << endl;
         updateMenuBarSize();
 	return true;
     }
-    return QMenuBar::x11Event( ev );
+    return TQMenuBar::x11Event( ev );
 }
 #endif
 
@@ -452,7 +452,7 @@ void KMenuBar::setFrameStyle( int style )
     if( d->topLevel )
 	d->frameStyle = style;
     else
-	QMenuBar::setFrameStyle( style );
+	TQMenuBar::setFrameStyle( style );
 }
 
 void KMenuBar::setLineWidth( int width )
@@ -460,7 +460,7 @@ void KMenuBar::setLineWidth( int width )
     if( d->topLevel )
 	d->lineWidth = width;
     else
-	QMenuBar::setLineWidth( width );
+	TQMenuBar::setLineWidth( width );
 }
 
 void KMenuBar::setMargin( int margin )
@@ -468,18 +468,18 @@ void KMenuBar::setMargin( int margin )
     if( d->topLevel )
 	d->margin = margin;
     else
-	QMenuBar::setMargin( margin );
+	TQMenuBar::setMargin( margin );
 }
 
-void KMenuBar::closeEvent( QCloseEvent* e )
+void KMenuBar::closeEvent( TQCloseEvent* e )
 {
     if( d->topLevel )
         e->ignore(); // mainly for the fallback mode 
     else
-        QMenuBar::closeEvent( e );
+        TQMenuBar::closeEvent( e );
 }
 
-void KMenuBar::drawContents( QPainter* p )
+void KMenuBar::drawContents( TQPainter* p )
 {
     // Closes the BR77113
     // We need to overload this method to paint only the menu items
@@ -494,7 +494,7 @@ void KMenuBar::drawContents( QPainter* p )
 
     if( !d->topLevel )
     {
-        QMenuBar::drawContents(p);
+        TQMenuBar::drawContents(p);
     }
     else
     {
@@ -509,16 +509,16 @@ void KMenuBar::drawContents( QPainter* p )
 	p->eraseRect( rect() );
 	erase();
         
-        QColorGroup g = colorGroup();
+        TQColorGroup g = colorGroup();
         bool e;
 
         for ( int i=0; i<(int)count(); i++ )
         {
-            QMenuItem *mi = findItem( idAt( i ) );
+            TQMenuItem *mi = findItem( idAt( i ) );
 
             if ( !mi->text().isNull() || mi->pixmap() )
             {
-                QRect r = itemRect(i);
+                TQRect r = itemRect(i);
                 if(r.isEmpty() || !mi->isVisible())
                     continue;
 
@@ -535,17 +535,17 @@ void KMenuBar::drawContents( QPainter* p )
 
                 if( item_active )
                 {
-                    QStyle::SFlags flags = QStyle::Style_Default;
+                    TQStyle::SFlags flags = TQStyle::Style_Default;
                     if (isEnabled() && e)
-                        flags |= QStyle::Style_Enabled;
+                        flags |= TQStyle::Style_Enabled;
                     if ( item_active )
-                        flags |= QStyle::Style_Active;
+                        flags |= TQStyle::Style_Active;
                     if ( item_active && actItemDown )
-                        flags |= QStyle::Style_Down;
-                    flags |= QStyle::Style_HasFocus;
+                        flags |= TQStyle::Style_Down;
+                    flags |= TQStyle::Style_HasFocus;
 
-                    style().drawControl(QStyle::CE_MenuBarItem, p, this,
-                                        r, g, flags, QStyleOption(mi));
+                    style().drawControl(TQStyle::CE_MenuBarItem, p, this,
+                                        r, g, flags, TQStyleOption(mi));
                 }
                 else
                 {

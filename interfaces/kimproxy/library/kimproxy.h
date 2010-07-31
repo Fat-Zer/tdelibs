@@ -24,10 +24,10 @@
 #ifndef KIMPROXY_H
 #define KIMPROXY_H
 
-#include <qdict.h>
-#include <qmap.h>
-#include <qptrdict.h>
-#include <qstringlist.h>
+#include <tqdict.h>
+#include <tqmap.h>
+#include <tqptrdict.h>
+#include <tqstringlist.h>
 
 
 #define IM_SERVICE_TYPE "DCOP/InstantMessenger"
@@ -43,10 +43,10 @@ class KURL;
 class ContactPresenceListCurrent;
 
 /** FIXME: remove for KDE4, binary compability again. */
-typedef QMap<QCString, int> AppPresence; 		// appId->presence; contains all applications' ideas of a user's presence
-typedef QDict<AppPresence> PresenceMap;			// uid->AppPresence; contains a AppPresences for all users
+typedef TQMap<TQCString, int> AppPresence; 		// appId->presence; contains all applications' ideas of a user's presence
+typedef TQDict<AppPresence> PresenceMap;			// uid->AppPresence; contains a AppPresences for all users
 /** FIXME: remove presenceMap and call this presenceMap in KDE4.  This hack is for binary compatibility */
-typedef QMap<QString, ContactPresenceListCurrent> PresenceStringMap;
+typedef TQMap<TQString, ContactPresenceListCurrent> PresenceStringMap;
 
 /**
  * @brief Provides access to instant messenger programs which implement KDE's
@@ -81,11 +81,11 @@ typedef QMap<QString, ContactPresenceListCurrent> PresenceStringMap;
  * // check if there are suitable applications reachable
  * if (!proxy->initialize()) return;
  *
- * QString message = "Hi!\nHow are you on this wonderful day?";
+ * TQString message = "Hi!\nHow are you on this wonderful day?";
  *
  * // iterate over the list of reachable contacts
- * QStringList reachableContacts = proxy->reachableContacts();
- * for (QStringList::const_iterator it = reachableContacts.begin();
+ * TQStringList reachableContacts = proxy->reachableContacts();
+ * for (TQStringList::const_iterator it = reachableContacts.begin();
  *      it != reachableContacts.end(); ++it)
  * {
        proxy->messageContact(*it, message);
@@ -104,7 +104,7 @@ typedef QMap<QString, ContactPresenceListCurrent> PresenceStringMap;
  * @since 3.3
  * @author Will Stephenson <lists@stevello.free-online.co.uk>
  */
-class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
+class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 {
 	Q_OBJECT
 	struct Private;
@@ -163,7 +163,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see isPresent()
 		 * @see KABC::Addressee::uid()
 		 */
-		QStringList allContacts();
+		TQStringList allContacts();
 
 		/**
 		 * @brief Obtain a list of IM-contacts that are currently reachable
@@ -179,7 +179,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see messageContact()
 		 * @see KABC::Addressee::uid()
 		 */
-		QStringList reachableContacts();
+		TQStringList reachableContacts();
 
 		/**
 		 * @brief Obtain a list of IM-contacts that are currently online
@@ -199,7 +199,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see chatWithContact()
 		 * @see KABC::Addressee::uid()
 		 */
-		QStringList onlineContacts();
+		TQStringList onlineContacts();
 
 		/**
 		 * @brief Obtain a list of IM-contacts who may receive file transfers
@@ -221,7 +221,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see canReceiveFiles()
 		 * @see KABC::Addressee::uid()
 		 */
-		QStringList fileTransferContacts();
+		TQStringList fileTransferContacts();
 
 		/**
 		 * @brief Confirm if a given contact is known to the proxy
@@ -241,7 +241,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see presenceNumeric()
 		 * @see KABC::Addressee::uid()
 		 */
-		bool isPresent( const QString& uid );
+		bool isPresent( const TQString& uid );
 
 		/**
 		 * @brief Obtain the proxy's idea of the contact's display name
@@ -255,7 +255,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * Useful if KABC lookups may be too slow.
 		 *
 		 * @param uid the KABC UID you are interested in
-		 * @return the corresponding display name or QString:null if the
+		 * @return the corresponding display name or TQString:null if the
 		 *         UID is unknown
 		 *
 		 * @see isPresent()
@@ -263,7 +263,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see presenceNumeric()
 		 * @see KABC::Addressee::uid()
 		 */
-		QString displayName( const QString& uid );
+		TQString displayName( const TQString& uid );
 
 		/**
 		 * @brief Obtain the IM presence as a number for the specified contact
@@ -304,7 +304,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see KIMIface::presenceStatus()
 		 * @see KABC::Addressee::uid()
 		 */
-		int presenceNumeric( const QString& uid );
+		int presenceNumeric( const TQString& uid );
 
 		/**
 		 * @brief Obtain the IM presence as a i18ned string for the specified
@@ -333,14 +333,14 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 *
 		 * @param uid the KABC UID you want the presence for
 		 * @return the i18ned string describing the contact's presence or
-		 *         QString::null if the UID is unknown
+		 *         TQString::null if the UID is unknown
 		 *
 		 * @see isPresent()
 		 * @see presenceNumeric()
 		 * @see presenceIcon()
 		 * @see KABC::Addressee::uid()
 		 */
-		QString presenceString( const QString& uid );
+		TQString presenceString( const TQString& uid );
 
 		/**
 		 * @brief Obtain the icon representing the IM presence for the
@@ -362,14 +362,14 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 *
 		 * @param uid the KABC UID you want the presence icon for
 		 * @return a pixmap representing the contact's presence or a null
-		 *         pixmap if the contact is unknown. See QPixmap::isNull()
+		 *         pixmap if the contact is unknown. See TQPixmap::isNull()
 		 *
 		 * @see isPresent()
 		 * @see presenceString()
 		 * @see presenceNumeric()
 		 * @see KABC::Addressee::uid()
 		 */
-		QPixmap presenceIcon( const QString& uid );
+		TQPixmap presenceIcon( const TQString& uid );
 
 		/**
 		 * @brief Indicate if a given contact can receive files
@@ -386,7 +386,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see fileTransferContacts()
 		 * @see KABC::Addressee::uid()
 		 */
-		bool canReceiveFiles( const QString & uid );
+		bool canReceiveFiles( const TQString & uid );
 
 		/**
 		 * @brief Indicate if a given contact will be able to respond
@@ -411,7 +411,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see isPresent()
 		 * @see KABC::Addressee::uid()
 		 */
-		bool canRespond( const QString & uid );
+		bool canRespond( const TQString & uid );
 
 		/**
 		 * @brief Obtain the KABC UID corresponding to the given IM address
@@ -420,7 +420,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 *        e.g. UIN for ICQ, screenname for AIM, nick for IRC
 		 * @param protocol the IM protocol/service to check.
 		 *        See KIMIface::protocols()
-		 * @return the KABC UID for the given contact or @c QString::null if
+		 * @return the KABC UID for the given contact or @c TQString::null if
 		 *         not found or either input stream was empty or the protocol
 		 *         is not supported
 		 *
@@ -429,14 +429,14 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see isPresent()
 		 * @see KABC::Addressee::uid()
 		 */
-		QString locate( const QString & contactId, const QString & protocol );
+		TQString locate( const TQString & contactId, const TQString & protocol );
 
 		/**
 		 * @brief Obtain the given contact's current context (home, work, or
 		 *        any)
 		 *
 		 * Not all IM services/protocols support the concept of contexts. If the
-		 * given UID maps to such a service, @c QString::null will be returned
+		 * given UID maps to such a service, @c TQString::null will be returned
 		 *
 		 * If the given KABC UID is known to more than one IM-application
 		 * the result of the application which has the best presence for the
@@ -445,13 +445,13 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * value returned by the application providing ICQ is taken.
 		 *
 		 * @param uid the KABC UID you want the context for
-		 * @return a string describing the context, or @c QString::null if not
+		 * @return a string describing the context, or @c TQString::null if not
 		 *         supported or if the contact is unknown
 		 *
 		 * @see isPresent()
 		 * @see KABC::Addressee::uid()
 		 */
-		QString context( const QString & uid );
+		TQString context( const TQString & uid );
 
 		/**
 		 * @brief Start a chat session with the specified contact
@@ -464,7 +464,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see reachableContacts()
 		 * @see KABC::Addressee::uid()
 		 */
-		void chatWithContact( const QString& uid );
+		void chatWithContact( const TQString& uid );
 
 		/**
 		 * @brief Send a single message to the specified contact
@@ -481,7 +481,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see reachableContacts()
 		 * @see KABC::Addressee::uid()
 		 */
-		void messageContact( const QString& uid, const QString& message );
+		void messageContact( const TQString& uid, const TQString& message );
 
 		/**
 		 * @brief Send a file to the contact
@@ -500,8 +500,8 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see fileTransferContacts()
 		 * @see KABC::Addressee::uid()
 		 */
-		void sendFile(const QString &uid, const KURL &sourceURL,
-			 const QString &altFileName = QString::null, uint fileSize = 0);
+		void sendFile(const TQString &uid, const KURL &sourceURL,
+			 const TQString &altFileName = TQString::null, uint fileSize = 0);
 
 		/**
 		 * @brief Add a new contact given its protocol specific identifier
@@ -516,7 +516,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see locate()
 		 * @see KIMIface::protocols()
 		 */
-		bool addContact( const QString &contactId, const QString &protocol );
+		bool addContact( const TQString &contactId, const TQString &protocol );
 
 		/**
 		 * @brief Checks if there are any compatible instant messaging
@@ -542,7 +542,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		/**
 		 * Just exists to let the IDL compiler make the DCOP signal for this
 		 */
-		void contactPresenceChanged( QString uid, QCString appId, int presence );
+		void contactPresenceChanged( TQString uid, TQCString appId, int presence );
 
 	public slots:
 		/**
@@ -557,7 +557,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 *
 		 * @see DCOPClient::applicationRegistered()
 		 */
-		void registeredToDCOP( const QCString& appId );
+		void registeredToDCOP( const TQCString& appId );
 
 		/**
 		 * @brief Updates the proxy's data after an application unregistered
@@ -576,7 +576,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 *
 		 * @see DCOPClient::applicationRemoved()
 		 */
-		void unregisteredFromDCOP( const QCString& appId );
+		void unregisteredFromDCOP( const TQCString& appId );
 	signals:
 		/**
 		 * @brief Indicates that the specified IM-contact's presence changed
@@ -588,7 +588,7 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		 * @see presenceIcon()
 		 * @see KABC::Addressee::uid()
 		 */
-		void sigContactPresenceChanged( const QString &uid );
+		void sigContactPresenceChanged( const TQString &uid );
 
 		/**
 		 * @brief Indicates that presence information obtained earlier on might
@@ -602,44 +602,44 @@ class KIMPROXY_EXPORT KIMProxy : public QObject, virtual public KIMProxyIface
 		/**
 		 * Bootstrap our presence data for a newly registered app
 		 */
-		void pollApp( const QCString & appId );
+		void pollApp( const TQCString & appId );
 		/**
 		 * Bootstrap our presence data by polling all known apps
 		 */
-		void pollAll( const QString &uid );
+		void pollAll( const TQString &uid );
 
 		/**
 		 * Update our records with the given data
 		 */
-		bool updatePresence( const QString &uid, const QCString &appId, int presence );
+		bool updatePresence( const TQString &uid, const TQCString &appId, int presence );
 
 		/**
 		 * Get the name of the user's IM application of choice
 		 */
-		QString preferredApp();
+		TQString preferredApp();
 
 		/**
 		 * Get the app stub best able to reach this uid
 		 */
-		KIMIface_stub * stubForUid( const QString &uid );
+		KIMIface_stub * stubForUid( const TQString &uid );
 
 		/**
 		 * Get the app stub for this protocol.
 		 * Take the preferred app first, then any other.
 		 */
-		KIMIface_stub * stubForProtocol( const QString &protocol );
+		KIMIface_stub * stubForProtocol( const TQString &protocol );
 
 	private:
 		// client stubs used to get presence
 		// appId (from DCOP) -> KIMIface_stub
-		QDict<KIMIface_stub> m_im_client_stubs;
+		TQDict<KIMIface_stub> m_im_client_stubs;
 		// map containing numeric presence and the originating application ID for each KABC uid we know of
 		// KABC Uid -> (appId, numeric presence )(AppPresence)
 		PresenceMap m_presence_map;
 		// cache of the client strings in use by each application
 		// dictionary of KIMIface_stub -> map of numeric presence -> string presence
 		// FIXME: remove for KDE4 - UNUSED but maintained for binary compatibility in KDE 3.4
-		QPtrDict<int> m_client_presence_strings;
+		TQPtrDict<int> m_client_presence_strings;
 		Private * d;
 		bool m_apps_available;
 		bool m_initialized;

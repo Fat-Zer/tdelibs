@@ -24,7 +24,7 @@
 #ifndef  TEXTPARAM_H
 #define  TEXTPARAM_H
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <VCardParam.h>
 

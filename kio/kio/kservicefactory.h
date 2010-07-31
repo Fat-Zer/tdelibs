@@ -20,7 +20,7 @@
 #ifndef __kservicefactory_h__
 #define __kservicefactory_h__
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include "kservice.h"
 #include "ksycocafactory.h"
@@ -48,28 +48,28 @@ public:
   /**
    * Construct a KService from a config file.
    */
-  virtual KSycocaEntry *createEntry(const QString &, const char *) 
+  virtual KSycocaEntry *createEntry(const TQString &, const char *) 
     { assert(0); return 0; }
 
   /**
    * Find a service (by name, e.g. "Terminal")
    */
-  KService * findServiceByName( const QString &_name );
+  KService * findServiceByName( const TQString &_name );
 
   /**
    * Find a service (by desktop file name, e.g. "konsole")
    */
-  KService * findServiceByDesktopName( const QString &_name );
+  KService * findServiceByDesktopName( const TQString &_name );
 
   /**
    * Find a service ( by desktop path, e.g. "System/konsole.desktop")
    */
-  KService * findServiceByDesktopPath( const QString &_name );
+  KService * findServiceByDesktopPath( const TQString &_name );
 
   /**
    * Find a service ( by menu id, e.g. "kde-konsole.desktop")
    */
-  KService * findServiceByMenuId( const QString &_menuId );
+  KService * findServiceByMenuId( const TQString &_menuId );
 
   /**
    * @return the services supporting the given service type

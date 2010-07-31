@@ -14,13 +14,13 @@
 
 #include "kdockwidgettest.h"
 
-#include <qpushbutton.h>
+#include <tqpushbutton.h>
 #include <kapplication.h>
 #include <kiconloader.h>
 #include <kstatusbar.h>
 #include <kmenubar.h>
 #include <ktoolbar.h>
-#include <qvbox.h>
+#include <tqvbox.h>
 
 static const char*folder[]={
 "16 16 9 1",
@@ -54,7 +54,7 @@ static const char*folder[]={
 DockApplication::DockApplication( const char* name )
 : KDockMainWindow( 0L, name )
 {
-  QPixmap p(folder);
+  TQPixmap p(folder);
 
   initMenuBar();
   initToolBars();
@@ -64,7 +64,7 @@ DockApplication::DockApplication( const char* name )
   dock = createDockWidget( "Green Widget", p );
   dock->setCaption("Green");
   dock->setGeometry(50, 50, 100, 100);
-  l = new QWidget(dock);
+  l = new TQWidget(dock);
   l->setBackgroundColor(green);
   l->setMinimumSize(100,100);
   dock->setWidget(l);
@@ -75,7 +75,7 @@ DockApplication::DockApplication( const char* name )
   setView( dock1 );
   setMainDockWidget( dock1 );
 
-  mainW = new QWidget( dock1, "createdOnBlueDock" );
+  mainW = new TQWidget( dock1, "createdOnBlueDock" );
   mainW->setBackgroundColor(blue);
   mainW->setMinimumSize(300,150);
   dock1->setWidget( mainW );
@@ -88,7 +88,7 @@ DockApplication::DockApplication( const char* name )
   /* test set new header widget...*/
 //  dock2->setHeader( new KDockWidgetHeader(dock2) );
 
-  QWidget* l2 = new QWidget(dock2);
+  TQWidget* l2 = new TQWidget(dock2);
   l2->setBackgroundColor(yellow);
   dock2->setWidget( l2 );
   /*****************************************************/
@@ -117,29 +117,29 @@ DockApplication::DockApplication( const char* name )
 
 
 
-  QPushButton* b1 = new QPushButton(mainW);
+  TQPushButton* b1 = new TQPushButton(mainW);
   b1->setGeometry(10, 10, 250, 25);
   b1->setText("write dock config");
-  connect(b1, SIGNAL(clicked()), SLOT(wConfig()));
+  connect(b1, TQT_SIGNAL(clicked()), TQT_SLOT(wConfig()));
 
-  QPushButton* b2 = new QPushButton(mainW);
+  TQPushButton* b2 = new TQPushButton(mainW);
   b2->setGeometry(10, 35, 250, 25);
   b2->setText("read dock config");
-  connect(b2, SIGNAL(clicked()), SLOT(rConfig()));
+  connect(b2, TQT_SIGNAL(clicked()), TQT_SLOT(rConfig()));
 
-  m_bname = new QPushButton(mainW);
+  m_bname = new TQPushButton(mainW);
   m_bname->setGeometry(10, 60, 250, 25);
   m_bname->setEnabled( false );
 
-  QPushButton *b3 = new QPushButton(mainW);
+  TQPushButton *b3 = new TQPushButton(mainW);
   b3->setGeometry(10,95,250,25);
   b3->setText("change the icon of the green widget");
-  connect(b3,SIGNAL(clicked()), SLOT(gSetPix1()));
+  connect(b3,TQT_SIGNAL(clicked()), TQT_SLOT(gSetPix1()));
 
-  QPushButton *b4 = new QPushButton(mainW);
+  TQPushButton *b4 = new TQPushButton(mainW);
   b4->setGeometry(10,130,250,25);
   b4->setText("remove icon ");
-  connect(b4,SIGNAL(clicked()), SLOT(gSetPix2()));
+  connect(b4,TQT_SIGNAL(clicked()), TQT_SLOT(gSetPix2()));
 
   setGeometry(200, 100, 500, 300);
 
@@ -167,14 +167,14 @@ void DockApplication::wConfig()
 
 void DockApplication::initMenuBar()
 {
-  QPixmap p(folder);
-  QPopupMenu *file_menu = new QPopupMenu();
+  TQPixmap p(folder);
+  TQPopupMenu *file_menu = new TQPopupMenu();
 
-  file_menu->insertItem(p, "Change Green Widget Caption", this, SLOT(cap()) );
+  file_menu->insertItem(p, "Change Green Widget Caption", this, TQT_SLOT(cap()) );
   file_menu->insertSeparator();
-  file_menu->insertItem(p, "Set Green Widget as MainDockWidget", this, SLOT(greenMain()) );
-  file_menu->insertItem(p, "Set Blue Widget as MainDockWidget", this, SLOT(blueMain()) );
-  file_menu->insertItem(p, "Set NULL as MainDockWidget", this, SLOT(nullMain()) );
+  file_menu->insertItem(p, "Set Green Widget as MainDockWidget", this, TQT_SLOT(greenMain()) );
+  file_menu->insertItem(p, "Set Blue Widget as MainDockWidget", this, TQT_SLOT(blueMain()) );
+  file_menu->insertItem(p, "Set NULL as MainDockWidget", this, TQT_SLOT(nullMain()) );
 
   KMenuBar* menu_bar = menuBar();
   menu_bar->insertItem( "&Test", file_menu );
@@ -183,7 +183,7 @@ void DockApplication::initMenuBar()
 
 void DockApplication::initToolBars()
 {
-  QPixmap p(folder);
+  TQPixmap p(folder);
   KToolBar* tool_bar_0 = toolBar(0);
   tool_bar_0->setFullSize(false);
   tool_bar_0->insertButton( p, 1 );
@@ -226,7 +226,7 @@ void DockApplication::nullMain()
 void DockApplication::updateButton()
 {
   if ( getMainDockWidget() )
-    m_bname->setText(QString("MainDockWidget is %1").arg(getMainDockWidget()->name()));
+    m_bname->setText(TQString("MainDockWidget is %1").arg(getMainDockWidget()->name()));
   else
     m_bname->setText("MainDockWidget is NULL");
 }

@@ -111,9 +111,9 @@ class KateDocCursor : public KateTextCursor
     // KTextEditor::Cursor interface
     void position(uint *line, uint *col) const;
     bool setPosition(uint line, uint col);
-    bool insertText(const QString& text);
+    bool insertText(const TQString& text);
     bool removeText(uint numberOfCharacters);
-    QChar currentChar() const;
+    TQChar currentChar() const;
 
     uchar currentAttrib() const;
 

@@ -485,7 +485,7 @@ void DOMNode::putValueProperty(ExecState *exec, int token, const Value& value, i
           if (rend->style()->hidesOverflow())
             rend->layer()->scrollToXOffset(value.toInt32(exec));
           else if (rend->isRoot()) {
-            QScrollView* sview = node.ownerDocument().view();
+            TQScrollView* sview = node.ownerDocument().view();
             if (sview)
               sview->setContentsPos(value.toInt32(exec), sview->contentsY());
           }
@@ -496,7 +496,7 @@ void DOMNode::putValueProperty(ExecState *exec, int token, const Value& value, i
           if (rend->style()->hidesOverflow())
             rend->layer()->scrollToYOffset(value.toInt32(exec));
           else if (rend->isRoot()) {
-            QScrollView* sview = node.ownerDocument().view();
+            TQScrollView* sview = node.ownerDocument().view();
             if (sview)
               sview->setContentsPos(sview->contentsX(), value.toInt32(exec));
           }
@@ -1091,7 +1091,7 @@ Value DOMDocumentProtoFunc::tryCall(ExecState *exec, Object &thisObj, const List
     KHTMLPart *khtmlpart = ::qt_cast<KHTMLPart *>(active->part());
     if (khtmlpart) {
       // Security: only allow documents to be loaded from the same host
-      QString dstUrl = khtmlpart->htmlDocument().completeURL(s).string();
+      TQString dstUrl = khtmlpart->htmlDocument().completeURL(s).string();
       KParts::ReadOnlyPart *part = static_cast<KJS::ScriptInterpreter*>(exec->interpreter())->part();
       if (part->url().host() == KURL(dstUrl).host()) {
 	kdDebug(6070) << "JavaScript: access granted for document.load() of " << dstUrl << endl;
@@ -1702,7 +1702,7 @@ const ClassInfo KJS::DOMNamedNodesCollection::info = { "DOMNamedNodesCollection"
 // Such a collection is usually very short-lived, it only exists
 // for constructs like document.forms.<name>[1],
 // so it shouldn't be a problem that it's storing all the nodes (with the same name). (David)
-DOMNamedNodesCollection::DOMNamedNodesCollection(ExecState *exec, const QValueList<DOM::Node>& nodes )
+DOMNamedNodesCollection::DOMNamedNodesCollection(ExecState *exec, const TQValueList<DOM::Node>& nodes )
   : DOMObject(exec->interpreter()->builtinObjectPrototype()),
   m_nodes(nodes)
 {

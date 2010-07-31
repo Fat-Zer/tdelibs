@@ -16,15 +16,15 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qstring.h>
-#include <qdict.h>
+#include <tqstring.h>
+#include <tqdict.h>
 
 class A { int foo; };
 class B { int bar; };
 class C : public A, public B { int foobar; };
 
-QDict<A> dictA;
-QDict<B> dictB;
+TQDict<A> dictA;
+TQDict<B> dictB;
 
 int main(int , char *[])
 {

@@ -21,7 +21,7 @@
 #ifndef _KSSLX509V3_H
 #define _KSSLX509V3_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 

@@ -21,7 +21,7 @@
 #define	CUPSDDIALOG_H
 
 #include <kdialogbase.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 class CupsdPage;
 struct CupsdConf;
@@ -30,13 +30,13 @@ class CupsdDialog : public KDialogBase
 {
 	Q_OBJECT
 public:
-	CupsdDialog(QWidget *parent = 0, const char *name = 0);
+	CupsdDialog(TQWidget *parent = 0, const char *name = 0);
 	~CupsdDialog();
 
-	bool setConfigFile(const QString& filename);
+	bool setConfigFile(const TQString& filename);
 
-	static bool configure(const QString& filename = QString::null, QWidget *parent = 0, QString *errormsg = 0);
-	static bool restartServer(QString& msg);
+	static bool configure(const TQString& filename = TQString::null, TQWidget *parent = 0, TQString *errormsg = 0);
+	static bool restartServer(TQString& msg);
 	static int serverPid();
 	static int serverOwner();
 
@@ -50,7 +50,7 @@ protected:
 	void restartServer();
 
 private:
-	QPtrList<CupsdPage>	pagelist_;
+	TQPtrList<CupsdPage>	pagelist_;
 	CupsdConf		*conf_;
 	QString			filename_;
 };

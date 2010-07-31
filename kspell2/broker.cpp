@@ -34,8 +34,8 @@
 
 #include <kdebug.h>
 
-#include <qptrdict.h>
-#include <qmap.h>
+#include <tqptrdict.h>
+#include <tqmap.h>
 
 #define DEFAULT_CONFIG_FILE   "kspellrc"
 
@@ -49,12 +49,12 @@ public:
     Settings *settings;
 
     // <language, Clients with that language >
-    QMap<QString, QPtrList<Client> > languageClients;
-    QStringList clients;
+    TQMap<TQString, TQPtrList<Client> > languageClients;
+    TQStringList clients;
     DefaultDictionary *defaultDictionary;
 };
 
-QPtrDict<Broker> *Broker::s_brokers = 0;
+TQPtrDict<Broker> *Broker::s_brokers = 0;
 
 Broker *Broker::openBroker( KSharedConfig *config )
 {
@@ -80,7 +80,7 @@ Broker::Broker( KSharedConfig *config )
     Q_UNUSED( preventDeletion );
 
     if ( !s_brokers )
-        s_brokers = new QPtrDict<Broker>;
+        s_brokers = new TQPtrDict<Broker>;
     s_brokers->insert( config, this );
 
     d = new Private;
@@ -111,10 +111,10 @@ DefaultDictionary* Broker::defaultDictionary() const
     return d->defaultDictionary;
 }
 
-Dictionary* Broker::dictionary( const QString& language, const QString& clientName ) const
+Dictionary* Broker::dictionary( const TQString& language, const TQString& clientName ) const
 {
-    QString pclient = clientName;
-    QString plang   = language;
+    TQString pclient = clientName;
+    TQString plang   = language;
     bool ddefault = false;
 
     if ( plang.isEmpty() ) {
@@ -125,14 +125,14 @@ Dictionary* Broker::dictionary( const QString& language, const QString& clientNa
         ddefault = true;
     }
 
-    QPtrList<Client> lClients = d->languageClients[ plang ];
+    TQPtrList<Client> lClients = d->languageClients[ plang ];
 
     if ( lClients.isEmpty() ) {
         kdError()<<"No language dictionaries for the language : "<< plang <<endl;
         return 0;
     }
 
-    QPtrListIterator<Client> itr( lClients );
+    TQPtrListIterator<Client> itr( lClients );
     while ( itr.current() ) {
         if ( !pclient.isEmpty() ) {
             if ( pclient == itr.current()->name() ) {
@@ -156,12 +156,12 @@ Dictionary* Broker::dictionary( const QString& language, const QString& clientNa
     return 0;
 }
 
-QStringList Broker::clients() const
+TQStringList Broker::clients() const
 {
     return d->clients;
 }
 
-QStringList Broker::languages() const
+TQStringList Broker::languages() const
 {
     return d->languageClients.keys();
 }
@@ -182,23 +182,23 @@ void Broker::loadPlugins()
     }
 }
 
-void Broker::loadPlugin( const QString& pluginId )
+void Broker::loadPlugin( const TQString& pluginId )
 {
     int error = 0;
 
     kdDebug()<<"Loading plugin " << pluginId << endl;
 
     Client *client = KParts::ComponentFactory::createInstanceFromQuery<Client>(
-        QString::fromLatin1( "KSpell/Client" ),
-        QString::fromLatin1( "[X-KDE-PluginInfo-Name]=='%1'" ).arg( pluginId ),
-        this, 0, QStringList(), &error );
+        TQString::fromLatin1( "KSpell/Client" ),
+        TQString::fromLatin1( "[X-KDE-PluginInfo-Name]=='%1'" ).arg( pluginId ),
+        this, 0, TQStringList(), &error );
 
     if ( client )
     {
-        QStringList languages = client->languages();
+        TQStringList languages = client->languages();
         d->clients.append( client->name() );
 
-        for ( QStringList::Iterator itr = languages.begin();
+        for ( TQStringList::Iterator itr = languages.begin();
               itr != languages.end(); ++itr ) {
             if ( !d->languageClients[ *itr ].isEmpty() &&
                  client->reliability() < d->languageClients[ *itr ].first()->reliability() )

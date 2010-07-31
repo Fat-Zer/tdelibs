@@ -3,13 +3,13 @@
 public:
 URIValue();
 URIValue(const URIValue&);
-URIValue(const QCString&);
+URIValue(const TQCString&);
 URIValue & operator = (URIValue&);
-URIValue & operator = (const QCString&);
+URIValue & operator = (const TQCString&);
 bool operator ==(URIValue&);
 bool operator !=(URIValue& x) {return !(*this==x);}
-bool operator ==(const QCString& s) {URIValue a(s);return(*this==a);} 
-bool operator != (const QCString& s) {return !(*this == s);}
+bool operator ==(const TQCString& s) {URIValue a(s);return(*this==a);} 
+bool operator != (const TQCString& s) {return !(*this == s);}
 
 virtual ~URIValue();
 void parse() {if(!parsed_) _parse();parsed_=true;assembled_=false;}

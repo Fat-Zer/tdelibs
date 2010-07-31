@@ -21,7 +21,7 @@
 #define KPRINTPROCESS_H
 
 #include <kprocess.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 class KPrintProcess : public KShellProcess
 {
@@ -31,23 +31,23 @@ public:
 	~KPrintProcess();
 
 	bool print();
-	QString errorMessage() const;
+	TQString errorMessage() const;
 
-	void setOutput( const QString& output );
-	const QString& output() const;
-	void setTempOutput( const QString& output );
-	const QString& tempOutput() const;
-	void setTempFiles( const QStringList& files );
-	const QStringList& tempFiles() const;
-	void setCommand( const QString& cmd );
-	const QString& command() const;
+	void setOutput( const TQString& output );
+	const TQString& output() const;
+	void setTempOutput( const TQString& output );
+	const TQString& tempOutput() const;
+	void setTempFiles( const TQStringList& files );
+	const TQStringList& tempFiles() const;
+	void setCommand( const TQString& cmd );
+	const TQString& command() const;
 
 	enum State { None = 0, Printing, Finishing };
 	int state() const;
 
 signals:
 	void printTerminated( KPrintProcess* );
-	void printError( KPrintProcess*, const QString& );
+	void printError( KPrintProcess*, const TQString& );
 
 protected slots:
 	void slotReceivedStderr(KProcess*, char*, int);
@@ -55,33 +55,33 @@ protected slots:
 
 private:
 	QString	m_buffer;
-	QStringList m_tempfiles;
-	QString m_output, m_tempoutput, m_command;
+	TQStringList m_tempfiles;
+	TQString m_output, m_tempoutput, m_command;
 	int m_state;
 };
 
-inline const QString& KPrintProcess::output() const
+inline const TQString& KPrintProcess::output() const
 { return m_output; }
 
-inline const QString& KPrintProcess::tempOutput() const
+inline const TQString& KPrintProcess::tempOutput() const
 { return m_tempoutput; }
 
-inline const QStringList& KPrintProcess::tempFiles() const
+inline const TQStringList& KPrintProcess::tempFiles() const
 { return m_tempfiles; }
 
-inline const QString& KPrintProcess::command() const
+inline const TQString& KPrintProcess::command() const
 { return m_command; }
 
-inline void KPrintProcess::setOutput( const QString& s )
+inline void KPrintProcess::setOutput( const TQString& s )
 { m_output = s; }
 
-inline void KPrintProcess::setTempOutput( const QString& s )
+inline void KPrintProcess::setTempOutput( const TQString& s )
 { m_tempoutput = s; }
 
-inline void KPrintProcess::setTempFiles( const QStringList& l )
+inline void KPrintProcess::setTempFiles( const TQStringList& l )
 { m_tempfiles = l; }
 
-inline void KPrintProcess::setCommand( const QString& c )
+inline void KPrintProcess::setCommand( const TQString& c )
 { m_command = c; }
 
 inline int KPrintProcess::state() const

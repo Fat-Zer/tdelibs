@@ -10,8 +10,8 @@
 
 #include "helpwindow.h"
 #include <kapplication.h>
-#include <qwindowsstyle.h>
-#include <qstylesheet.h>
+#include <tqwindowsstyle.h>
+#include <tqstylesheet.h>
 #include <stdlib.h>
 
 
@@ -19,23 +19,23 @@ int main( int argc, char ** argv )
 {
     KApplication a(argc, argv, "helpviewer");
 
-    QString home;
+    TQString home;
     if (argc > 1)
         home = argv[1];
     else
-        home = QString(getenv("QTDIR")) + "/doc/html/index.html";
+        home = TQString(getenv("QTDIR")) + "/doc/html/index.html";
 
     
     HelpWindow *help = new HelpWindow(home, ".", 0, "help viewer");
 
-    if ( QApplication::desktop()->width() > 400
-	 && QApplication::desktop()->height() > 500 )
+    if ( TQApplication::desktop()->width() > 400
+	 && TQApplication::desktop()->height() > 500 )
 	help->show();
     else
 	help->showMaximized();
 
-    QObject::connect( &a, SIGNAL(lastWindowClosed()),
-                      &a, SLOT(quit()) );
+    TQObject::connect( &a, TQT_SIGNAL(lastWindowClosed()),
+                      &a, TQT_SLOT(quit()) );
 
     return a.exec();
 }

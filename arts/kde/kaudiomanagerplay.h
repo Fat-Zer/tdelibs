@@ -21,7 +21,7 @@
 #define KAUDIOMANAGERPLAY_H
 
 #include <artsflow.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <kdelibs_export.h>
 
 class KArtsServer;
@@ -38,7 +38,7 @@ class QString;
 class KDE_ARTS_EXPORT KAudioManagerPlay
 {
 	public:
-		KAudioManagerPlay( KArtsServer * server, const QString & title = QString::null );
+		KAudioManagerPlay( KArtsServer * server, const TQString & title = TQString::null );
 		~KAudioManagerPlay();
 
 		/**
@@ -57,15 +57,15 @@ class KDE_ARTS_EXPORT KAudioManagerPlay
 		/**
 		 * Set the name of the output in the AudioManager
 		 */
-		void setTitle( const QString & title );
+		void setTitle( const TQString & title );
 
 		/**
 		 * returns the name of the output as it appears in the AudioManager
 		 */
-		QString title();
+		TQString title();
 
-		void setAutoRestoreID( const QString & autoRestoreID );
-		QString autoRestoreID();
+		void setAutoRestoreID( const TQString & autoRestoreID );
+		TQString autoRestoreID();
 
 		void start();
 		void stop();

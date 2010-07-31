@@ -20,9 +20,9 @@
 
 #include <sys/stat.h>
 
-#include <qobject.h>
-#include <qstring.h>
-#include <qdict.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqdict.h>
 
 #include <kservice.h>
 #include <ksycoca.h>
@@ -47,14 +47,14 @@ public:
     */
    bool recreate();
 
-   static bool checkTimestamps( Q_UINT32 timestamp, const QStringList &dirs );
+   static bool checkTimestamps( Q_UINT32 timestamp, const TQStringList &dirs );
 
-   static QStringList existingResourceDirs();
+   static TQStringList existingResourceDirs();
    
-   void setTrackId(const QString &id) { m_trackId = id; }
+   void setTrackId(const TQString &id) { m_trackId = id; }
 
 protected slots:
-   void slotCreateEntry(const QString &file, KService **entry);
+   void slotCreateEntry(const TQString &file, KService **entry);
        
 protected:
 
@@ -67,12 +67,12 @@ protected:
     * Add single entry to the sycoca database.
     * Either from a previous database or regenerated from file.
     */
-   KSycocaEntry *createEntry(const QString &file, bool addToFactory);
+   KSycocaEntry *createEntry(const TQString &file, bool addToFactory);
 
    /**
     * Convert a VFolderMenu::SubMenu to KServiceGroups.
     */
-   void createMenu(QString caption, QString name, VFolderMenu::SubMenu *menu);
+   void createMenu(TQString caption, TQString name, VFolderMenu::SubMenu *menu);
 
    /**
     * Build the whole system cache, from .desktop files
@@ -89,7 +89,7 @@ protected:
     */
    void clear();
    
-   static bool checkDirTimestamps( const QString& dir, const QDateTime& stamp, bool top );
+   static bool checkDirTimestamps( const TQString& dir, const TQDateTime& stamp, bool top );
    
    /**
     * @internal
@@ -97,8 +97,8 @@ protected:
     */
    virtual bool isBuilding() { return true; }
 
-   QStringList m_allResourceDirs;
-   QString m_trackId;
+   TQStringList m_allResourceDirs;
+   TQString m_trackId;
 };
 
 #endif

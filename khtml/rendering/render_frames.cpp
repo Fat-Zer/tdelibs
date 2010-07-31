@@ -43,9 +43,9 @@
 #include <kmimetype.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <qtimer.h>
-#include <qpainter.h>
-#include <qcursor.h>
+#include <tqtimer.h>
+#include <tqpainter.h>
+#include <tqcursor.h>
 
 #include <assert.h>
 
@@ -509,7 +509,7 @@ bool RenderFrameSet::userResize( MouseEventImpl *evt )
   if(!m_resizing && evt->id() == EventImpl::MOUSEDOWN_EVENT)
   {
       setResizing(true);
-      KApplication::setOverrideCursor(QCursor(m_cursor));
+      KApplication::setOverrideCursor(TQCursor(m_cursor));
       m_vSplitPos = _x;
       m_hSplitPos = _y;
       m_oldpos = -1;
@@ -547,11 +547,11 @@ bool RenderFrameSet::userResize( MouseEventImpl *evt )
 
   KHTMLView *view = canvas()->view();
   if ((m_resizing || evt->id() == EventImpl::MOUSEUP_EVENT) && view) {
-      QPainter paint( view );
+      TQPainter paint( view );
       paint.setPen( Qt::gray );
       paint.setBrush( Qt::gray );
       paint.setRasterOp( Qt::XorROP );
-      QRect r(xPos(), yPos(), width(), height());
+      TQRect r(xPos(), yPos(), width(), height());
       const int rBord = 3;
       int sw = element()->border();
       int p = m_resizing ? (m_vSplit > -1 ? _x : _y) : -1;
@@ -601,7 +601,7 @@ bool RenderFrameSet::canResize( int _x, int _y )
 }
 
 #ifdef ENABLE_DUMP
-void RenderFrameSet::dump(QTextStream &stream, const QString &ind) const
+void RenderFrameSet::dump(TQTextStream &stream, const TQString &ind) const
 {
     RenderBox::dump(stream,ind);
     stream << " totalrows=" << element()->totalRows();
@@ -627,16 +627,16 @@ RenderPart::RenderPart(DOM::HTMLElementImpl* node)
     setInline(false);
 }
 
-void RenderPart::setWidget( QWidget *widget )
+void RenderPart::setWidget( TQWidget *widget )
 {
 #ifdef DEBUG_LAYOUT
     kdDebug(6031) << "RenderPart::setWidget()" << endl;
 #endif
 
     setQWidget( widget );
-    widget->setFocusPolicy(QWidget::WheelFocus);
+    widget->setFocusPolicy(TQWidget::WheelFocus);
     if(widget->inherits("KHTMLView"))
-        connect( widget, SIGNAL( cleared() ), this, SLOT( slotViewCleared() ) );
+        connect( widget, TQT_SIGNAL( cleared() ), this, TQT_SLOT( slotViewCleared() ) );
 
     setNeedsLayoutAndMinMaxRecalc();
 
@@ -645,7 +645,7 @@ void RenderPart::setWidget( QWidget *widget )
     slotViewCleared();
 }
 
-bool RenderPart::partLoadingErrorNotify(khtml::ChildFrame *, const KURL& , const QString& )
+bool RenderPart::partLoadingErrorNotify(khtml::ChildFrame *, const KURL& , const TQString& )
 {
     return false;
 }
@@ -674,13 +674,13 @@ RenderFrame::RenderFrame( DOM::HTMLFrameElementImpl *frame )
 
 void RenderFrame::slotViewCleared()
 {
-    if(m_widget->inherits("QScrollView")) {
+    if(m_widget->inherits("TQScrollView")) {
 #ifdef DEBUG_LAYOUT
         kdDebug(6031) << "frame is a scrollview!" << endl;
 #endif
-        QScrollView *view = static_cast<QScrollView *>(m_widget);
+        TQScrollView *view = static_cast<TQScrollView *>(m_widget);
         if(!element()->frameBorder || !((static_cast<HTMLFrameSetElementImpl *>(element()->parentNode()))->frameBorder()))
-            view->setFrameStyle(QFrame::NoFrame);
+            view->setFrameStyle(TQFrame::NoFrame);
 	    view->setVScrollBarMode(element()->scrolling );
 	    view->setHScrollBarMode(element()->scrolling );
         if(view->inherits("KHTMLView")) {
@@ -705,7 +705,7 @@ RenderPartObject::RenderPartObject( DOM::HTMLElementImpl* element )
 
 void RenderPartObject::updateWidget()
 {
-  QString url;
+  TQString url;
   KHTMLPart *part = m_view->part();
 
   setNeedsLayoutAndMinMaxRecalc();
@@ -715,11 +715,11 @@ void RenderPartObject::updateWidget()
       HTMLIFrameElementImpl *o = static_cast<HTMLIFrameElementImpl *>(element());
       url = o->url.string();
       if (!o->getDocument()->isURLAllowed(url)) return;
-      part->requestFrame( this, url, o->name.string(), QStringList(), true );
+      part->requestFrame( this, url, o->name.string(), TQStringList(), true );
   // ### this should be constant true - move iframe to somewhere else
   } else {
 
-      QStringList params;
+      TQStringList params;
       HTMLObjectBaseElementImpl * objbase = static_cast<HTMLObjectBaseElementImpl *>(element());
       url = objbase->url;
 
@@ -727,17 +727,17 @@ void RenderPartObject::updateWidget()
           if ( child->id() == ID_PARAM ) {
               HTMLParamElementImpl *p = static_cast<HTMLParamElementImpl *>( child );
 
-              QString aStr = p->name();
-              aStr += QString::fromLatin1("=\"");
+              TQString aStr = p->name();
+              aStr += TQString::fromLatin1("=\"");
               aStr += p->value();
-              aStr += QString::fromLatin1("\"");
-              QString name_lower = p->name().lower();
-              if (name_lower == QString::fromLatin1("type") && objbase->id() != ID_APPLET) {
+              aStr += TQString::fromLatin1("\"");
+              TQString name_lower = p->name().lower();
+              if (name_lower == TQString::fromLatin1("type") && objbase->id() != ID_APPLET) {
                   objbase->setServiceType(p->value());
               } else if (url.isEmpty() &&
-                         (name_lower == QString::fromLatin1("src") ||
-                          name_lower == QString::fromLatin1("movie") ||
-                          name_lower == QString::fromLatin1("code"))) {
+                         (name_lower == TQString::fromLatin1("src") ||
+                          name_lower == TQString::fromLatin1("movie") ||
+                          name_lower == TQString::fromLatin1("code"))) {
                   url = p->value();
               }
               params.append(aStr);
@@ -754,12 +754,12 @@ void RenderPartObject::updateWidget()
               }
           }
       }
-      params.append( QString::fromLatin1("__KHTML__PLUGINEMBED=\"YES\"") );
-      params.append( QString::fromLatin1("__KHTML__PLUGINBASEURL=\"%1\"").arg(element()->getDocument()->baseURL().url()));
+      params.append( TQString::fromLatin1("__KHTML__PLUGINEMBED=\"YES\"") );
+      params.append( TQString::fromLatin1("__KHTML__PLUGINBASEURL=\"%1\"").arg(element()->getDocument()->baseURL().url()));
 
       HTMLEmbedElementImpl *embed = 0;
-      QString classId;
-      QString serviceType = objbase->serviceType;
+      TQString classId;
+      TQString serviceType = objbase->serviceType;
       if ( element()->id() == ID_EMBED ) {
 
           embed = static_cast<HTMLEmbedElementImpl *>( objbase );
@@ -775,18 +775,18 @@ void RenderPartObject::updateWidget()
               }
           classId = objbase->classId;
 
-          params.append( QString::fromLatin1("__KHTML__CLASSID=\"%1\"").arg( classId ) );
-          params.append( QString::fromLatin1("__KHTML__CODEBASE=\"%1\"").arg( objbase->getAttribute(ATTR_CODEBASE).string() ) );
+          params.append( TQString::fromLatin1("__KHTML__CLASSID=\"%1\"").arg( classId ) );
+          params.append( TQString::fromLatin1("__KHTML__CODEBASE=\"%1\"").arg( objbase->getAttribute(ATTR_CODEBASE).string() ) );
           if (!objbase->getAttribute(ATTR_WIDTH).isEmpty())
-              params.append( QString::fromLatin1("WIDTH=\"%1\"").arg( objbase->getAttribute(ATTR_WIDTH).string() ) );
+              params.append( TQString::fromLatin1("WIDTH=\"%1\"").arg( objbase->getAttribute(ATTR_WIDTH).string() ) );
           else if (embed && !embed->getAttribute(ATTR_WIDTH).isEmpty()) {
-              params.append( QString::fromLatin1("WIDTH=\"%1\"").arg( embed->getAttribute(ATTR_WIDTH).string() ) );
+              params.append( TQString::fromLatin1("WIDTH=\"%1\"").arg( embed->getAttribute(ATTR_WIDTH).string() ) );
               objbase->setAttribute(ATTR_WIDTH, embed->getAttribute(ATTR_WIDTH));
           }
           if (!objbase->getAttribute(ATTR_HEIGHT).isEmpty())
-              params.append( QString::fromLatin1("HEIGHT=\"%1\"").arg( objbase->getAttribute(ATTR_HEIGHT).string() ) );
+              params.append( TQString::fromLatin1("HEIGHT=\"%1\"").arg( objbase->getAttribute(ATTR_HEIGHT).string() ) );
           else if (embed && !embed->getAttribute(ATTR_HEIGHT).isEmpty()) {
-              params.append( QString::fromLatin1("HEIGHT=\"%1\"").arg( embed->getAttribute(ATTR_HEIGHT).string() ) );
+              params.append( TQString::fromLatin1("HEIGHT=\"%1\"").arg( embed->getAttribute(ATTR_HEIGHT).string() ) );
               objbase->setAttribute(ATTR_HEIGHT, embed->getAttribute(ATTR_HEIGHT));
           }
 
@@ -808,7 +808,7 @@ void RenderPartObject::updateWidget()
               serviceType = "application/x-activex-handler";
 #endif
 
-              if(classId.find(QString::fromLatin1("D27CDB6E-AE6D-11cf-96B8-444553540000")) >= 0) {
+              if(classId.find(TQString::fromLatin1("D27CDB6E-AE6D-11cf-96B8-444553540000")) >= 0) {
                   // It is ActiveX, but the nsplugin system handling
                   // should also work, that's why we don't override the
                   // serviceType with application/x-activex-handler
@@ -817,17 +817,17 @@ void RenderPartObject::updateWidget()
                   // with nspluginviewer (Niko)
                   serviceType = "application/x-shockwave-flash";
               }
-              else if(classId.find(QString::fromLatin1("CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA")) >= 0)
+              else if(classId.find(TQString::fromLatin1("CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA")) >= 0)
                   serviceType = "audio/x-pn-realaudio-plugin";
-              else if(classId.find(QString::fromLatin1("8AD9C840-044E-11D1-B3E9-00805F499D93")) >= 0 ||
-                      objbase->classId.find(QString::fromLatin1("CAFEEFAC-0014-0000-0000-ABCDEFFEDCBA")) >= 0)
+              else if(classId.find(TQString::fromLatin1("8AD9C840-044E-11D1-B3E9-00805F499D93")) >= 0 ||
+                      objbase->classId.find(TQString::fromLatin1("CAFEEFAC-0014-0000-0000-ABCDEFFEDCBA")) >= 0)
                   serviceType = "application/x-java-applet";
               // http://www.apple.com/quicktime/tools_tips/tutorials/activex.html
-              else if(classId.find(QString::fromLatin1("02BF25D5-8C17-4B23-BC80-D3488ABDDC6B")) >= 0)
+              else if(classId.find(TQString::fromLatin1("02BF25D5-8C17-4B23-BC80-D3488ABDDC6B")) >= 0)
                   serviceType = "video/quicktime";
               // http://msdn.microsoft.com/library/en-us/dnwmt/html/adding_windows_media_to_web_pages__etse.asp?frame=true
-              else if(objbase->classId.find(QString::fromLatin1("6BF52A52-394A-11d3-B153-00C04F79FAA6")) >= 0 ||
-                      classId.find(QString::fromLatin1("22D6f312-B0F6-11D0-94AB-0080C74C7E95")) >= 0)
+              else if(objbase->classId.find(TQString::fromLatin1("6BF52A52-394A-11d3-B153-00C04F79FAA6")) >= 0 ||
+                      classId.find(TQString::fromLatin1("22D6f312-B0F6-11D0-94AB-0080C74C7E95")) >= 0)
                   serviceType = "video/x-msvideo";
 
               else
@@ -855,7 +855,7 @@ void RenderPartObject::close()
 }
 
 
-bool RenderPartObject::partLoadingErrorNotify( khtml::ChildFrame *childFrame, const KURL& url, const QString& serviceType )
+bool RenderPartObject::partLoadingErrorNotify( khtml::ChildFrame *childFrame, const KURL& url, const TQString& serviceType )
 {
     KHTMLPart *part = static_cast<KHTMLView *>(m_view)->part();
     kdDebug(6031) << "RenderPartObject::partLoadingErrorNotify serviceType=" << serviceType << endl;
@@ -888,7 +888,7 @@ bool RenderPartObject::partLoadingErrorNotify( khtml::ChildFrame *childFrame, co
     }
     // Dissociate ourselves from the current event loop (to prevent crashes
     // due to the message box staying up)
-    QTimer::singleShot( 0, this, SLOT( slotPartLoadingErrorNotify() ) );
+    TQTimer::singleShot( 0, this, TQT_SLOT( slotPartLoadingErrorNotify() ) );
 #if 0
     Tokenizer *tokenizer = static_cast<DOM::DocumentImpl *>(part->document().handle())->tokenizer();
     if (tokenizer) tokenizer->setOnHold( true );
@@ -902,7 +902,7 @@ void RenderPartObject::slotPartLoadingErrorNotify()
 {
     // First we need to find out the servicetype - again - this code is too duplicated !
     HTMLEmbedElementImpl *embed = 0;
-    QString serviceType;
+    TQString serviceType;
     if( element()->id()==ID_OBJECT ) {
 
         // check for embed child object
@@ -929,7 +929,7 @@ void RenderPartObject::slotPartLoadingErrorNotify()
     KParts::BrowserExtension *ext = part->browserExtension();
     if( embed && !embed->pluginPage.isEmpty() && ext ) {
         // Prepare the mimetype to show in the question (comment if available, name as fallback)
-        QString mimeName = serviceType;
+        TQString mimeName = serviceType;
         KMimeType::Ptr mime = KMimeType::mimeType(serviceType);
         if ( mime->name() != KMimeType::defaultMimeType() )
             mimeName = mime->comment();
@@ -952,10 +952,10 @@ void RenderPartObject::slotPartLoadingErrorNotify()
             if(!pluginAvailable) {
                 // Prepare the URL to show in the question (host only if http, to make it short)
                 KURL pluginPageURL( embed->pluginPage );
-                QString shortURL = pluginPageURL.protocol() == "http" ? pluginPageURL.host() : pluginPageURL.prettyURL();
+                TQString shortURL = pluginPageURL.protocol() == "http" ? pluginPageURL.host() : pluginPageURL.prettyURL();
                 int res = KMessageBox::questionYesNo( m_view,
                                                       i18n("No plugin found for '%1'.\nDo you want to download one from %2?").arg(mimeName).arg(shortURL),
-                                                      i18n("Missing Plugin"), i18n("Download"), i18n("Do Not Download"), QString("plugin-")+serviceType);
+                                                      i18n("Missing Plugin"), i18n("Download"), i18n("Do Not Download"), TQString("plugin-")+serviceType);
                 if ( res == KMessageBox::Yes )
                 {
                     // Display vendor download page
@@ -989,19 +989,19 @@ void RenderPartObject::layout( )
 
 void RenderPartObject::slotViewCleared()
 {
-  if(m_widget->inherits("QScrollView") ) {
+  if(m_widget->inherits("TQScrollView") ) {
 #ifdef DEBUG_LAYOUT
       kdDebug(6031) << "iframe is a scrollview!" << endl;
 #endif
-      QScrollView *view = static_cast<QScrollView *>(m_widget);
-      int frameStyle = QFrame::NoFrame;
-      QScrollView::ScrollBarMode scroll = QScrollView::Auto;
+      TQScrollView *view = static_cast<TQScrollView *>(m_widget);
+      int frameStyle = TQFrame::NoFrame;
+      TQScrollView::ScrollBarMode scroll = TQScrollView::Auto;
       int marginw = -1;
       int marginh = -1;
       if ( element()->id() == ID_IFRAME) {
 	  HTMLIFrameElementImpl *frame = static_cast<HTMLIFrameElementImpl *>(element());
 	  if(frame->frameBorder)
-	      frameStyle = QFrame::Box;
+	      frameStyle = TQFrame::Box;
 	  scroll = frame->scrolling;
 	  marginw = frame->marginWidth;
 	  marginh = frame->marginHeight;

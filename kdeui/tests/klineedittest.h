@@ -1,8 +1,8 @@
 #ifndef _KLINEEDITTEST_H
 #define _KLINEEDITTEST_H
 
-#include <qwidget.h>
-#include <qguardedptr.h>
+#include <tqwidget.h>
+#include <tqguardedptr.h>
 
 class QString;
 class QPushButton;
@@ -14,7 +14,7 @@ class KLineEditTest : public QWidget
     Q_OBJECT
 
 public:
-   KLineEditTest( QWidget *parent=0, const char *name=0 );
+   KLineEditTest( TQWidget *parent=0, const char *name=0 );
    ~KLineEditTest();
    KLineEdit* lineEdit() const { return m_lineedit; }
 
@@ -27,15 +27,15 @@ private slots:
    void slotEnable( bool );
    void slotReadOnly( bool );   
    void slotReturnPressed();
-   void resultOutput( const QString& );   
-   void slotReturnPressed( const QString& );
+   void resultOutput( const TQString& );   
+   void slotReturnPressed( const TQString& );
    
 protected:
-   QGuardedPtr<KLineEdit> m_lineedit;
-   QPushButton* m_btnExit;
-   QPushButton* m_btnReadOnly;
-   QPushButton* m_btnEnable;
-   QPushButton* m_btnHide;
+   TQGuardedPtr<KLineEdit> m_lineedit;
+   TQPushButton* m_btnExit;
+   TQPushButton* m_btnReadOnly;
+   TQPushButton* m_btnEnable;
+   TQPushButton* m_btnHide;
 };
 
 #endif

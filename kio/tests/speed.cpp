@@ -22,20 +22,20 @@
 #include "speed.h"
 #include <kio/job.h>
 #include <kcmdlineargs.h>
-#include <qdir.h>
+#include <tqdir.h>
 #include <kio/global.h>
 
 using namespace KIO;
 
 SpeedTest::SpeedTest( const KURL & url )
-    : QObject(0, "speed")
+    : TQObject(0, "speed")
 {
     Job *job = listRecursive( url );
-    //Job *job = del( KURL("file:" + QDir::currentDirPath()) ); DANGEROUS !
-    connect(job, SIGNAL( result( KIO::Job*)),
-	    SLOT( finished( KIO::Job* ) ));
-    /*connect(job, SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList&)),
-	    SLOT( entries( KIO::Job*, const KIO::UDSEntryList&)));
+    //Job *job = del( KURL("file:" + TQDir::currentDirPath()) ); DANGEROUS !
+    connect(job, TQT_SIGNAL( result( KIO::Job*)),
+	    TQT_SLOT( finished( KIO::Job* ) ));
+    /*connect(job, TQT_SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList&)),
+	    TQT_SLOT( entries( KIO::Job*, const KIO::UDSEntryList&)));
     */
 }
 
@@ -77,11 +77,11 @@ int main(int argc, char **argv) {
     if ( args->count() == 1 )
       url = args->url(0);
     else
-      url = "file:" + QDir::currentDirPath();
+      url = "file:" + TQDir::currentDirPath();
 
     kdDebug() << url.url() << " is probably " << (KIO::probably_slow_mounted(url.path()) ? "slow" : "normal") << " mounted\n";
     kdDebug() << url.url() << " is " << (KIO::manually_mounted(url.path()) ? "manually" : "system") << " mounted\n";
-    QString mp = KIO::findDeviceMountPoint(url.path());
+    TQString mp = KIO::findDeviceMountPoint(url.path());
     if (mp.isEmpty()) {
         kdDebug() << "no mount point for device " << url.url() << " found\n";
     } else
@@ -103,7 +103,7 @@ int main(int argc, char **argv) {
     // SpeedTest test( url );
     // app.exec();
 
-    url.setPath(QDir::homeDirPath());
+    url.setPath(TQDir::homeDirPath());
 
     mp = KIO::findPathMountPoint(url.path());
     if (mp.isEmpty()) {
@@ -124,7 +124,7 @@ int main(int argc, char **argv) {
     if ( args->count() == 1 )
       url = args->url(0);
     else
-      url = "file:" + QDir::currentDirPath();
+      url = "file:" + TQDir::currentDirPath();
 
     mp = KIO::findPathMountPoint(url.path());
     if (mp.isEmpty()) {

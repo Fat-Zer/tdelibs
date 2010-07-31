@@ -1,7 +1,7 @@
 #ifndef __blah__h__
 #define __blah__h__
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class MyObject: public QObject
 {

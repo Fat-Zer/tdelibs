@@ -26,11 +26,11 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <ktextedit.h>
-#include <qsimplerichtext.h>
-#include <qpainter.h>
-#include <qpaintdevicemetrics.h>
+#include <tqsimplerichtext.h>
+#include <tqpainter.h>
+#include <tqpaintdevicemetrics.h>
 
-IppReportDlg::IppReportDlg(QWidget *parent, const char *name)
+IppReportDlg::IppReportDlg(TQWidget *parent, const char *name)
 : KDialogBase(parent, name, true, i18n("IPP Report"), Close|User1, Close, false, KGuiItem(i18n("&Print"), "fileprint"))
 {
 	m_edit = new KTextEdit(this);
@@ -60,7 +60,7 @@ void IppReportDlg::slotUser1()
 		while (1)
 		{
 			rich.draw(&painter, margin, margin, r, colorGroup());
-			QString	s = caption() + ": " + QString::number(page);
+			QString	s = caption() + ": " + TQString::number(page);
 			QRect	br = painter.fontMetrics().boundingRect(s);
 			painter.drawText(r.right()-br.width()-5, r.top()-br.height()-4, br.width()+5, br.height()+4, Qt::AlignRight|Qt::AlignTop, s);
 			r.moveBy(0, r.height()-10);
@@ -76,7 +76,7 @@ void IppReportDlg::slotUser1()
 	}
 }
 
-void IppReportDlg::report(IppRequest *req, int group, const QString& caption)
+void IppReportDlg::report(IppRequest *req, int group, const TQString& caption)
 {
 	QString	str_report;
 	QTextStream	t(&str_report, IO_WriteOnly);

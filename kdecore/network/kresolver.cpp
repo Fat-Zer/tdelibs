@@ -37,16 +37,16 @@
 #include <unistd.h>
 
 // Qt includes
-#include <qapplication.h>
-#include <qstring.h>
-#include <qcstring.h>
-#include <qstrlist.h>
-#include <qstringlist.h>
-#include <qshared.h>
-#include <qdatetime.h>
-#include <qtimer.h>
-#include <qmutex.h>
-#include <qguardedptr.h>
+#include <tqapplication.h>
+#include <tqstring.h>
+#include <tqcstring.h>
+#include <tqstrlist.h>
+#include <tqstringlist.h>
+#include <tqshared.h>
+#include <tqdatetime.h>
+#include <tqtimer.h>
+#include <tqmutex.h>
+#include <tqguardedptr.h>
 
 // IDN
 #ifdef HAVE_IDNA_H
@@ -63,7 +63,7 @@
 
 #ifdef NEED_MUTEX
 #warning "mutex"
-QMutex getXXbyYYmutex;
+TQMutex getXXbyYYmutex;
 #endif
 
 using namespace KNetwork;
@@ -78,8 +78,8 @@ public:
   KSocketAddress addr;
   int socktype;
   int protocol;
-  QString canonName;
-  QCString encodedName;
+  TQString canonName;
+  TQCString encodedName;
 
   inline KResolverEntryPrivate() :
     socktype(0), protocol(0)
@@ -94,7 +94,7 @@ KResolverEntry::KResolverEntry() :
 
 // constructor with stuff
 KResolverEntry::KResolverEntry(const KSocketAddress& addr, int socktype, int protocol,
-			       const QString& canonName, const QCString& encodedName) :
+			       const TQString& canonName, const TQCString& encodedName) :
   d(new KResolverEntryPrivate)
 {
   d->addr = addr;
@@ -106,8 +106,8 @@ KResolverEntry::KResolverEntry(const KSocketAddress& addr, int socktype, int pro
 
 // constructor with even more stuff
 KResolverEntry::KResolverEntry(const struct sockaddr* sa, Q_UINT16 salen, int socktype,
-			       int protocol, const QString& canonName,
-			       const QCString& encodedName) :
+			       int protocol, const TQString& canonName,
+			       const TQCString& encodedName) :
   d(new KResolverEntryPrivate)
 {
   d->addr = KSocketAddress(sa, salen);
@@ -153,15 +153,15 @@ int KResolverEntry::family() const
 }
 
 // returns the canonical name
-QString KResolverEntry::canonicalName() const
+TQString KResolverEntry::canonicalName() const
 {
-  return d ? d->canonName : QString::null;
+  return d ? d->canonName : TQString::null;
 }
 
 // returns the encoded name
-QCString KResolverEntry::encodedName() const
+TQCString KResolverEntry::encodedName() const
 {
-  return d ? d->encodedName : QCString();
+  return d ? d->encodedName : TQCString();
 }
 
 // returns the socket type
@@ -196,7 +196,7 @@ KResolverEntry& KResolverEntry::operator= (const KResolverEntry& that)
 class KNetwork::KResolverResultsPrivate
 {
 public:
-  QString node, service;
+  TQString node, service;
   int errorcode, syserror;
 
   KResolverResultsPrivate() :
@@ -212,7 +212,7 @@ KResolverResults::KResolverResults()
 
 // copy constructor
 KResolverResults::KResolverResults(const KResolverResults& other)
-  : QValueList<KResolverEntry>(other), d(new KResolverResultsPrivate)
+  : TQValueList<KResolverEntry>(other), d(new KResolverResultsPrivate)
 {
   *d = *other.d;
 }
@@ -233,8 +233,8 @@ KResolverResults::operator= (const KResolverResults& other)
   // copy over the other data
   *d = *other.d;
 
-  // now let QValueList do the rest of the work
-  QValueList<KResolverEntry>::operator =(other);
+  // now let TQValueList do the rest of the work
+  TQValueList<KResolverEntry>::operator =(other);
 
   return *this;
 }
@@ -259,20 +259,20 @@ void KResolverResults::setError(int errorcode, int systemerror)
 }
 
 // gets the hostname
-QString KResolverResults::nodeName() const
+TQString KResolverResults::nodeName() const
 {
   return d->node;
 }
 
 // gets the service name
-QString KResolverResults::serviceName() const
+TQString KResolverResults::serviceName() const
 {
   return d->service;
 }
 
 // sets the address
-void KResolverResults::setAddress(const QString& node,
-				  const QString& service)
+void KResolverResults::setAddress(const TQString& node,
+				  const TQString& service)
 {
   d->node = node;
   d->service = service;
@@ -285,19 +285,19 @@ void KResolverResults::virtual_hook( int, void* )
 ///////////////////////
 // class KResolver
 
-QStringList *KResolver::idnDomains = 0;
+TQStringList *KResolver::idnDomains = 0;
 
 
 // default constructor
-KResolver::KResolver(QObject *parent, const char *name)
-  : QObject(parent, name), d(new KResolverPrivate(this))
+KResolver::KResolver(TQObject *parent, const char *name)
+  : TQObject(parent, name), d(new KResolverPrivate(this))
 {
 }
 
 // constructor with host and service
-KResolver::KResolver(const QString& nodename, const QString& servicename,
-		   QObject *parent, const char *name)
-  : QObject(parent, name), d(new KResolverPrivate(this, nodename, servicename))
+KResolver::KResolver(const TQString& nodename, const TQString& servicename,
+		   TQObject *parent, const char *name)
+  : TQObject(parent, name), d(new KResolverPrivate(this, nodename, servicename))
 {
 }
 
@@ -333,19 +333,19 @@ bool KResolver::isRunning() const
 }
 
 // get the hostname
-QString KResolver::nodeName() const
+TQString KResolver::nodeName() const
 {
   return d->input.node;
 }
 
 // get the service
-QString KResolver::serviceName() const
+TQString KResolver::serviceName() const
 {
   return d->input.service;
 }
 
 // sets the hostname
-void KResolver::setNodeName(const QString& nodename)
+void KResolver::setNodeName(const TQString& nodename)
 {
   // don't touch those values if we're working!
   if (!isRunning())
@@ -357,7 +357,7 @@ void KResolver::setNodeName(const QString& nodename)
 }
 
 // sets the service
-void KResolver::setServiceName(const QString& service)
+void KResolver::setServiceName(const TQString& service)
 {
   // don't change if running
   if (!isRunning())
@@ -369,7 +369,7 @@ void KResolver::setServiceName(const QString& service)
 }
 
 // sets the address
-void KResolver::setAddress(const QString& nodename, const QString& service)
+void KResolver::setAddress(const TQString& nodename, const TQString& service)
 {
   setNodeName(nodename);
   setServiceName(service);
@@ -462,7 +462,7 @@ bool KResolver::wait(int msec)
       return true;
     }
 
-  QMutexLocker locker(&d->mutex);
+  TQMutexLocker locker(&d->mutex);
 
   if (!isRunning())
     {
@@ -476,7 +476,7 @@ bool KResolver::wait(int msec)
     }
   else
     {
-      QTime t;
+      TQTime t;
       t.start();
 
       while (!msec || t.elapsed() < msec)
@@ -525,7 +525,7 @@ KResolver::results() const
   return r;
 }
 
-bool KResolver::event(QEvent* e)
+bool KResolver::event(TQEvent* e)
 {
   if (static_cast<int>(e->type()) == KResolverManager::ResolutionCompleted)
     {
@@ -541,7 +541,7 @@ void KResolver::emitFinished()
   if (isRunning())
     d->status = KResolver::Success;
 
-  QGuardedPtr<QObject> p = this; // guard against deletion
+  TQGuardedPtr<TQObject> p = this; // guard against deletion
 
   emit finished(d->results);
 
@@ -549,7 +549,7 @@ void KResolver::emitFinished()
     deleteLater();		// in QObject
 }
 
-QString KResolver::errorString(int errorcode, int syserror)
+TQString KResolver::errorString(int errorcode, int syserror)
 {
   // no i18n now...
   static const char * const messages[] =
@@ -574,17 +574,17 @@ QString KResolver::errorString(int errorcode, int syserror)
     return i18n("request was canceled");
 
   if (errorcode > 0 || errorcode < SystemError)
-    return QString::null;
+    return TQString::null;
 
-  QString msg = i18n(messages[-errorcode]);
+  TQString msg = i18n(messages[-errorcode]);
   if (errorcode == SystemError)
-    msg.arg(QString::fromLocal8Bit(strerror(syserror)));
+    msg.arg(TQString::fromLocal8Bit(strerror(syserror)));
 
   return msg;
 }
 
 KResolverResults
-KResolver::resolve(const QString& host, const QString& service, int flags,
+KResolver::resolve(const TQString& host, const TQString& service, int flags,
 		  int families)
 {
   KResolver qres(host, service, qApp, "synchronous KResolver");
@@ -595,23 +595,23 @@ KResolver::resolve(const QString& host, const QString& service, int flags,
   return qres.results();
 }
 
-bool KResolver::resolveAsync(QObject* userObj, const char *userSlot,
-			     const QString& host, const QString& service,
+bool KResolver::resolveAsync(TQObject* userObj, const char *userSlot,
+			     const TQString& host, const TQString& service,
 			     int flags, int families)
 {
   KResolver* qres = new KResolver(host, service, qApp, "asynchronous KResolver");
-  QObject::connect(qres, SIGNAL(finished(KResolverResults)), userObj, userSlot);
+  TQObject::connect(qres, TQT_SIGNAL(finished(KResolverResults)), userObj, userSlot);
   qres->setFlags(flags);
   qres->setFamily(families);
   qres->d->deleteWhenDone = true; // this is the only difference from the example code
   return qres->start();
 }
 
-QStrList KResolver::protocolName(int protonum)
+TQStrList KResolver::protocolName(int protonum)
 {
   struct protoent *pe = 0L;
 #ifndef HAVE_GETPROTOBYNAME_R
-  QMutexLocker locker(&getXXbyYYmutex);
+  TQMutexLocker locker(&getXXbyYYmutex);
 
   pe = getprotobynumber(protonum);
 
@@ -639,7 +639,7 @@ QStrList KResolver::protocolName(int protonum)
 #endif
 
   // Do common processing
-  QStrList lst(true);	// use deep copies
+  TQStrList lst(true);	// use deep copies
   if (pe != NULL)
     {
       lst.append(pe->p_name);
@@ -654,11 +654,11 @@ QStrList KResolver::protocolName(int protonum)
   return lst;
 }
 
-QStrList KResolver::protocolName(const char *protoname)
+TQStrList KResolver::protocolName(const char *protoname)
 {
   struct protoent *pe = 0L;
 #ifndef HAVE_GETPROTOBYNAME_R
-  QMutexLocker locker(&getXXbyYYmutex);
+  TQMutexLocker locker(&getXXbyYYmutex);
 
   pe = getprotobyname(protoname);
 
@@ -686,7 +686,7 @@ QStrList KResolver::protocolName(const char *protoname)
 #endif
 
   // Do common processing
-  QStrList lst(true);	// use deep copies
+  TQStrList lst(true);	// use deep copies
   if (pe != NULL)
     {
       lst.append(pe->p_name);
@@ -705,7 +705,7 @@ int KResolver::protocolNumber(const char *protoname)
 {
   struct protoent *pe = 0L;
 #ifndef HAVE_GETPROTOBYNAME_R
-  QMutexLocker locker(&getXXbyYYmutex);
+  TQMutexLocker locker(&getXXbyYYmutex);
 
   pe = getprotobyname(protoname);
 
@@ -748,7 +748,7 @@ int KResolver::servicePort(const char *servname, const char *protoname)
 {
   struct servent *se = 0L;
 #ifndef HAVE_GETSERVBYNAME_R
-  QMutexLocker locker(&getXXbyYYmutex);
+  TQMutexLocker locker(&getXXbyYYmutex);
 
   se = getservbyname(servname, protoname);
 
@@ -787,11 +787,11 @@ int KResolver::servicePort(const char *servname, const char *protoname)
   return servport;
 }
 
-QStrList KResolver::serviceName(const char* servname, const char *protoname)
+TQStrList KResolver::serviceName(const char* servname, const char *protoname)
 {
   struct servent *se = 0L;
 #ifndef HAVE_GETSERVBYNAME_R
-  QMutexLocker locker(&getXXbyYYmutex);
+  TQMutexLocker locker(&getXXbyYYmutex);
 
   se = getservbyname(servname, protoname);
 
@@ -819,7 +819,7 @@ QStrList KResolver::serviceName(const char* servname, const char *protoname)
 #endif
 
   // Do common processing
-  QStrList lst(true);	// use deep copies
+  TQStrList lst(true);	// use deep copies
   if (se != NULL)
     {
       lst.append(se->s_name);
@@ -834,11 +834,11 @@ QStrList KResolver::serviceName(const char* servname, const char *protoname)
   return lst;
 }
 
-QStrList KResolver::serviceName(int port, const char *protoname)
+TQStrList KResolver::serviceName(int port, const char *protoname)
 {
   struct servent *se = 0L;
 #ifndef HAVE_GETSERVBYPORT_R
-  QMutexLocker locker(&getXXbyYYmutex);
+  TQMutexLocker locker(&getXXbyYYmutex);
 
   se = getservbyport(port, protoname);
 
@@ -866,7 +866,7 @@ QStrList KResolver::serviceName(int port, const char *protoname)
 #endif
 
   // Do common processing
-  QStrList lst(true);	// use deep copies
+  TQStrList lst(true);	// use deep copies
   if (se != NULL)
     {
       lst.append(se->s_name);
@@ -881,9 +881,9 @@ QStrList KResolver::serviceName(int port, const char *protoname)
   return lst;
 }
 
-QString KResolver::localHostName()
+TQString KResolver::localHostName()
 {
-  QCString name;
+  TQCString name;
   int len;
 
 #ifdef MAXHOSTNAMELEN
@@ -910,12 +910,12 @@ QString KResolver::localHostName()
       else
 	{
 	  // Oops! Unknown error!
-	  name = QCString();
+	  name = TQCString();
 	}
     }
 
   if (name.isEmpty())
-    return QString::fromLatin1("localhost");
+    return TQString::fromLatin1("localhost");
 
   if (name.find('.') == -1)
     {
@@ -924,7 +924,7 @@ QString KResolver::localHostName()
       KResolverResults results = resolve(name, "0", CanonName);
       if (results.isEmpty())
 	// cannot find a valid hostname!
-	return QString::fromLatin1("localhost");
+	return TQString::fromLatin1("localhost");
       else
 	return results.first().canonicalName();
     }
@@ -934,31 +934,31 @@ QString KResolver::localHostName()
 
 
 // forward declaration
-static QStringList splitLabels(const QString& unicodeDomain);
-static QCString ToASCII(const QString& label);
-static QString ToUnicode(const QString& label);
+static TQStringList splitLabels(const TQString& unicodeDomain);
+static TQCString ToASCII(const TQString& label);
+static TQString ToUnicode(const TQString& label);
 
-static QStringList *KResolver_initIdnDomains()
+static TQStringList *KResolver_initIdnDomains()
 {
   const char *kde_use_idn = getenv("KDE_USE_IDN");
   if (!kde_use_idn)
      kde_use_idn = "ac:at:br:cat:ch:cl:cn:de:dk:fi:gr:hu:info:io:is:jp:kr:li:lt:museum:org:no:se:sh:th:tm:tw:vn";
-  return new QStringList(QStringList::split(':', QString::fromLatin1(kde_use_idn).lower()));
+  return new TQStringList(TQStringList::split(':', TQString::fromLatin1(kde_use_idn).lower()));
 }
 
 // implement the ToAscii function, as described by IDN documents
-QCString KResolver::domainToAscii(const QString& unicodeDomain)
+TQCString KResolver::domainToAscii(const TQString& unicodeDomain)
 {
   if (!idnDomains)
     idnDomains = KResolver_initIdnDomains();
 
-  QCString retval;
+  TQCString retval;
   // RFC 3490, section 4 describes the operation:
   // 1) this is a query, so don't allow unassigned
 
   // 2) split the domain into individual labels, without
   // separators.
-  QStringList input = splitLabels(unicodeDomain);
+  TQStringList input = splitLabels(unicodeDomain);
 
   // Do we allow IDN names for this TLD?
   if (input.count() && !idnDomains->contains(input[input.count()-1].lower()))
@@ -968,13 +968,13 @@ QCString KResolver::domainToAscii(const QString& unicodeDomain)
   // we don't enforce
 
   // 4) for each label, apply ToASCII
-  QStringList::Iterator it = input.begin();
-  const QStringList::Iterator end = input.end();
+  TQStringList::Iterator it = input.begin();
+  const TQStringList::Iterator end = input.end();
   for ( ; it != end; ++it)
     {
-      QCString cs = ToASCII(*it);
+      TQCString cs = ToASCII(*it);
       if (cs.isNull())
-	return QCString();	// error!
+	return TQCString();	// error!
 
       // no, all is Ok.
       if (!retval.isEmpty())
@@ -985,20 +985,20 @@ QCString KResolver::domainToAscii(const QString& unicodeDomain)
   return retval;
 }
 
-QString KResolver::domainToUnicode(const QCString& asciiDomain)
+TQString KResolver::domainToUnicode(const TQCString& asciiDomain)
 {
-  return domainToUnicode(QString::fromLatin1(asciiDomain));
+  return domainToUnicode(TQString::fromLatin1(asciiDomain));
 }
 
 // implement the ToUnicode function, as described by IDN documents
-QString KResolver::domainToUnicode(const QString& asciiDomain)
+TQString KResolver::domainToUnicode(const TQString& asciiDomain)
 {
   if (asciiDomain.isEmpty())
     return asciiDomain;
   if (!idnDomains)
     idnDomains = KResolver_initIdnDomains();
 
-  QString retval;
+  TQString retval;
 
   // draft-idn-idna-14.txt, section 4 describes the operation:
   // 1) this is a query, so don't allow unassigned
@@ -1006,7 +1006,7 @@ QString KResolver::domainToUnicode(const QString& asciiDomain)
 
   // 2) split the domain into individual labels, without
   // separators.
-  QStringList input = splitLabels(asciiDomain);
+  TQStringList input = splitLabels(asciiDomain);
 
   // Do we allow IDN names for this TLD?
   if (input.count() && !idnDomains->contains(input[input.count()-1].lower()))
@@ -1016,11 +1016,11 @@ QString KResolver::domainToUnicode(const QString& asciiDomain)
   // we don't enforce
 
   // 4) for each label, apply ToUnicode
-  QStringList::Iterator it;
-  const QStringList::Iterator end = input.end();
+  TQStringList::Iterator it;
+  const TQStringList::Iterator end = input.end();
   for (it = input.begin(); it != end; ++it)
     {
-      QString label = ToUnicode(*it).lower();
+      TQString label = ToUnicode(*it).lower();
 
       // ToUnicode can't fail
       if (!retval.isEmpty())
@@ -1031,7 +1031,7 @@ QString KResolver::domainToUnicode(const QString& asciiDomain)
   return retval;
 }
 
-QString KResolver::normalizeDomain(const QString& domain)
+TQString KResolver::normalizeDomain(const TQString& domain)
 {
   return domainToUnicode(domainToAscii(domain));
 }
@@ -1048,7 +1048,7 @@ void KResolver::virtual_hook( int, void* )
 //  RFC 3492 - Punycode: A Bootstring encoding of Unicode
 //          for Internationalized Domain Names in Applications (IDNA)
 
-static QStringList splitLabels(const QString& unicodeDomain)
+static TQStringList splitLabels(const TQString& unicodeDomain)
 {
   // From RFC 3490 section 3.1:
   // "Whenever dots are used as label separators, the following characters
@@ -1057,7 +1057,7 @@ static QStringList splitLabels(const QString& unicodeDomain)
   // stop)."
   static const unsigned int separators[] = { 0x002E, 0x3002, 0xFF0E, 0xFF61 };
 
-  QStringList lst;
+  TQStringList lst;
   int start = 0;
   uint i;
   for (i = 0; i < unicodeDomain.length(); i++)
@@ -1081,7 +1081,7 @@ static QStringList splitLabels(const QString& unicodeDomain)
   return lst;
 }
 
-static QCString ToASCII(const QString& label)
+static TQCString ToASCII(const TQString& label)
 {
 #ifdef HAVE_IDNA_H
   // We have idna.h, so we can use the idna_to_ascii
@@ -1092,9 +1092,9 @@ static QCString ToASCII(const QString& label)
 
   if (label.length() == 0)
     // this is allowed
-    return QCString("");	// empty, not null
+    return TQCString("");	// empty, not null
 
-  QCString retval;
+  TQCString retval;
   char buf[65];
 
   Q_UINT32* ucs4 = new Q_UINT32[label.length() + 1];
@@ -1115,7 +1115,7 @@ static QCString ToASCII(const QString& label)
 #endif
 }
 
-static QString ToUnicode(const QString& label)
+static TQString ToUnicode(const TQString& label)
 {
 #ifdef HAVE_IDNA_H
   // We have idna.h, so we can use the idna_to_unicode
@@ -1147,7 +1147,7 @@ static QString ToUnicode(const QString& label)
     }
 
   // now set the answer
-  QString result;
+  TQString result;
   result.setLength(outlen);
   for (uint i = 0; i < outlen; i++)
     result[i] = (unsigned int)ucs4_output[i];

@@ -43,7 +43,7 @@ public:
     /**
      * Constructs a KURLRequesterDlg.
      *
-     * @param url    The url of the directory to start in. Use QString::null
+     * @param url    The url of the directory to start in. Use TQString::null
      *               to start in the current working directory, or the last
      *               directory where a file has been selected.
      * @param parent The parent object of this widget.
@@ -51,13 +51,13 @@ public:
      * @param modal  Specifies whether the dialog should be opened as modal
      *               or not.
      */
-    KURLRequesterDlg( const QString& url, QWidget *parent,
+    KURLRequesterDlg( const TQString& url, TQWidget *parent,
                       const char *name, bool modal = true );
 
     /**
      * Constructs a KURLRequesterDlg.
      *
-     * @param url    The url of the directory to start in. Use QString::null
+     * @param url    The url of the directory to start in. Use TQString::null
      *               to start in the current working directory, or the last
      *               directory where a file has been selected.
      * @param text   Text of the label
@@ -66,8 +66,8 @@ public:
      * @param modal  Specifies whether the dialog should be opened as modal
      *                  or not.
      */
-    KURLRequesterDlg( const QString& url, const QString& text,
-                      QWidget *parent, const char *name, bool modal=true );
+    KURLRequesterDlg( const TQString& url, const TQString& text,
+                      TQWidget *parent, const char *name, bool modal=true );
     /**
      * Destructs the dialog.
      */
@@ -85,8 +85,8 @@ public:
      * @param parent The widget the dialog will be centered on initially.
      * @param caption The caption to use for the dialog.
      */
-    static KURL getURL(const QString& url = QString::null,
-            QWidget *parent= 0, const QString& caption = QString::null);
+    static KURL getURL(const TQString& url = TQString::null,
+            TQWidget *parent= 0, const TQString& caption = TQString::null);
 
     /**
      * Returns a pointer to the file dialog used by the KURLRequester.
@@ -99,9 +99,9 @@ public:
 
 private slots:
     void slotClear();
-    void slotTextChanged(const QString &);
+    void slotTextChanged(const TQString &);
 private:
-    void initDialog(const QString &text, const QString &url);
+    void initDialog(const TQString &text, const TQString &url);
     KURLRequester *urlRequester_;
 
     class KURLRequesterDlgPrivate;

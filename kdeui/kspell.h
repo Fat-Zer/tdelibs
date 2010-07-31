@@ -21,9 +21,9 @@
 
 #include "ksconfig.h"
 
-#include <qobject.h>
-#include <qstringlist.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
+#include <tqstring.h>
 #include <kdelibs_export.h>
 
 class QTextCodec;
@@ -96,8 +96,8 @@ public:
    * @param progressbar Indicates if progress bar should be shown.
    * @param modal       Indicates modal or non-modal dialog.
    */
-  KSpell(QWidget *parent, const QString &caption,
-	 QObject *receiver, const char *slot, KSpellConfig *kcs=0,
+  KSpell(TQWidget *parent, const TQString &caption,
+	 TQObject *receiver, const char *slot, KSpellConfig *kcs=0,
 	 bool progressbar = true, bool modal = false);
 
   /**
@@ -118,8 +118,8 @@ public:
    * @param modal       Indicates modal or non-modal dialog.
    * @param type        Type of the document to check
    */
-  KSpell(QWidget *parent, const QString &caption,
-	 QObject *receiver, const char *slot, KSpellConfig *kcs,
+  KSpell(TQWidget *parent, const TQString &caption,
+	 TQObject *receiver, const char *slot, KSpellConfig *kcs,
 	 bool progressbar, bool modal, SpellerType type);
 
   /**
@@ -157,7 +157,7 @@ public:
    *  in @p _buffer check() reached before stopping.
    */
 
-  virtual bool check (const QString &_buffer, bool usedialog = true);
+  virtual bool check (const TQString &_buffer, bool usedialog = true);
 
   /**
    * Returns the position (when using check())  or word
@@ -177,7 +177,7 @@ public:
    *  to check() would result in the mark-up tags being
    *  spell checked.
    */
-  virtual bool checkList (QStringList *_wordlist, bool usedialog = true);
+  virtual bool checkList (TQStringList *_wordlist, bool usedialog = true);
 
   /**
    * Spellchecks a single word.
@@ -201,8 +201,8 @@ public:
    *  complete.  You can look at suggestions() to see what the
    *  suggested replacements were.
    */
-  virtual bool checkWord (const QString &_buffer, bool usedialog = false);
-  bool checkWord( const QString & buffer, bool _usedialog, bool suggest );
+  virtual bool checkWord (const TQString &_buffer, bool usedialog = false);
+  bool checkWord( const TQString & buffer, bool _usedialog, bool suggest );
 
   /**
    * Hides the dialog box.
@@ -219,7 +219,7 @@ public:
    *  use this to get the list of
    *  suggestions (if any were available).
    */
-  QStringList suggestions () const { return sugg; }
+  TQStringList suggestions () const { return sugg; }
 
   /**
    * Gets the result code of the dialog box.
@@ -264,7 +264,7 @@ public:
    *
    * You might want the full buffer in its partially-checked state.
    */
-  QString intermediateBuffer () const {return newbuffer;}
+  TQString intermediateBuffer () const {return newbuffer;}
 
   /**
    * Tells ISpell/ASpell to ignore this word for the life of this KSpell instance.
@@ -272,7 +272,7 @@ public:
    *  @return false if @p word is not a word or there was an error
    *  communicating with ISpell/ASpell.
    */
-  virtual bool ignore (const QString & word);
+  virtual bool ignore (const TQString & word);
 
   /**
    * Adds a word to the user's personal dictionary.
@@ -280,7 +280,7 @@ public:
    * @return false if @p word
    *  is not a word or there was an error communicating with ISpell/ASpell.
    */
-  virtual bool addPersonal (const QString & word);
+  virtual bool addPersonal (const TQString & word);
 
   /**
    * @return the KSpellConfig object being used by this KSpell instance.
@@ -310,7 +310,7 @@ public:
    * Your application's GUI will still be updated, however.
    *
    */
-  static int modalCheck( QString& text ) KDE_DEPRECATED;
+  static int modalCheck( TQString& text ) KDE_DEPRECATED;
 
   /**
    * Performs a synchronous spellcheck.
@@ -320,7 +320,7 @@ public:
    *
    * This overloaded method uses the spell-check configuration passed as parameter.
    */
-  static int modalCheck( QString& text, KSpellConfig * kcs );
+  static int modalCheck( TQString& text, KSpellConfig * kcs );
 
   /**
    * Call setIgnoreUpperWords(true) to tell the spell-checker to ignore
@@ -346,7 +346,7 @@ signals:
    *   (The first position is zero.)
    *  If it is emitted by checkList(), @p pos is the index to
    *  the misspelled
-   *   word in the QStringList passed to checkList().
+   *   word in the TQStringList passed to checkList().
    *  Note, that @p originalword can be only a word part, if it's
    *  word with hyphens.
    *
@@ -354,7 +354,7 @@ signals:
    *   calling program's GUI may be updated. (e.g. the misspelled word may
    *   be highlighted).
    */
-  void misspelling (const QString & originalword, const QStringList & suggestions,
+  void misspelling (const TQString & originalword, const TQStringList & suggestions,
 		    unsigned int pos);
 
   /**
@@ -372,7 +372,7 @@ signals:
    *
    * @see check()
    */
-  void corrected (const QString & originalword, const QString & newword, unsigned int pos);
+  void corrected (const TQString & originalword, const TQString & newword, unsigned int pos);
 
   /**
    * Emitted when the user pressed "Ignore All" in the dialog.
@@ -380,14 +380,14 @@ signals:
    * user dictionary.
    *
    */
-  void ignoreall (const QString & originalword);
+  void ignoreall (const TQString & originalword);
 
   /**
    * Emitted when the user pressed "Ignore" in the dialog.
    * Don't know if this could be useful.
    *
    */
-  void ignoreword (const QString & originalword);
+  void ignoreword (const TQString & originalword);
 
   /**
    * Emitted when the user pressed "Add" in the dialog.
@@ -395,12 +395,12 @@ signals:
    * independent of the ISpell personal dictionary.
    *
    */
-  void addword (const QString & originalword);
+  void addword (const TQString & originalword);
 
   /**
    * Emitted when the user pressed "ReplaceAll" in the dialog.
    */
-  void replaceall( const QString & origword ,  const QString &replacement );
+  void replaceall( const TQString & origword ,  const TQString &replacement );
 
   /**
    * Emitted after KSpell has verified that ISpell/ASpell is running
@@ -422,7 +422,7 @@ signals:
    *  on the contents of buffer for the life of the slot which was signaled
    *  by done().
    */
-  void done (const QString &buffer);
+  void done (const TQString &buffer);
 
   /**
    * Emitted when checkList() is done.
@@ -475,12 +475,12 @@ private slots:
   /**
    * Used for modalCheck().
    */
-  void slotModalDone( const QString & );
+  void slotModalDone( const TQString & );
 
   /**
    * Used for modalCheck().
    */
-  void slotSpellCheckerCorrected( const QString & oldText, const QString & newText, unsigned int );
+  void slotSpellCheckerCorrected( const TQString & oldText, const TQString & newText, unsigned int );
 
   /**
    * Used for modalCheck().
@@ -493,15 +493,15 @@ signals:
 protected:
 
   KProcIO *proc;
-  QWidget *parent;
+  TQWidget *parent;
   KSpellConfig *ksconfig;
   KSpellDlg *ksdlg;
-  QStringList *wordlist;
-  QStringList::Iterator wlIt;
-  QStringList ignorelist;
-  QStringList replacelist;
-  QStringList sugg;
-  QTextCodec* codec;
+  TQStringList *wordlist;
+  TQStringList::Iterator wlIt;
+  TQStringList ignorelist;
+  TQStringList replacelist;
+  TQStringList sugg;
+  TQTextCodec* codec;
 
   spellStatus m_status;
 
@@ -514,14 +514,14 @@ protected:
   bool dialogsetup;
   bool autoDelete;
 
-  QString caption;
-  QString orig;
-  QString origbuffer;
-  QString newbuffer;
-  QString cwword;
-  QString dlgorigword;
-  QString dlgreplacement;
-  QString dialog3slot;
+  TQString caption;
+  TQString orig;
+  TQString origbuffer;
+  TQString newbuffer;
+  TQString cwword;
+  TQString dlgorigword;
+  TQString dlgreplacement;
+  TQString dialog3slot;
 
   int dlgresult;
   int trystart;
@@ -539,25 +539,25 @@ protected:
    * Used for modalCheck.
    */
   bool modaldlg;
-  static QString modaltext;
+  static TQString modaltext;
   static int modalreturn;
-  static QWidget* modalWidgetHack;
+  static TQWidget* modalWidgetHack;
 
-  int parseOneResponse (const QString &_buffer, QString &word, QStringList &sugg);
-  QString funnyWord (const QString & word);
-  void dialog (const QString & word, QStringList & sugg, const char* _slot);
-  QString replacement () const
+  int parseOneResponse (const TQString &_buffer, TQString &word, TQStringList &sugg);
+  TQString funnyWord (const TQString & word);
+  void dialog (const TQString & word, TQStringList & sugg, const char* _slot);
+  TQString replacement () const
     { return dlgreplacement; }
 
   void setUpDialog ( bool reallyusedialogbox = true);
 
   void emitProgress ();
-  bool cleanFputs (const QString & s, bool appendCR=true);
-  bool cleanFputsWord (const QString & s, bool appendCR=true);
+  bool cleanFputs (const TQString & s, bool appendCR=true);
+  bool cleanFputsWord (const TQString & s, bool appendCR=true);
   void startIspell();
   bool writePersonalDictionary();
-  void initialize( QWidget *_parent, const QString &_caption,
-                   QObject *obj, const char *slot, KSpellConfig *_ksc,
+  void initialize( TQWidget *_parent, const TQString &_caption,
+                   TQObject *obj, const char *slot, KSpellConfig *_ksc,
                    bool _progressbar, bool _modal, SpellerType type );
 
 private:

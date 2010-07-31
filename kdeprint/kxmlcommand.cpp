@@ -23,12 +23,12 @@
 #include "kdeprintcheck.h"
 #include "driverview.h"
 
-#include <qfile.h>
-#include <qregexp.h>
-#include <qdir.h>
-#include <qinputdialog.h>
-#include <qmap.h>
-#include <qvaluelist.h>
+#include <tqfile.h>
+#include <tqregexp.h>
+#include <tqdir.h>
+#include <tqinputdialog.h>
+#include <tqmap.h>
+#include <tqvaluelist.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <ksimpleconfig.h>
@@ -38,7 +38,7 @@
 #include <klibloader.h>
 #include <kmessagebox.h>
 
-static void setOptionText(DrBase *opt, const QString& s)
+static void setOptionText(DrBase *opt, const TQString& s)
 {
 	if (s.isEmpty())
 		opt->set("text", opt->name());
@@ -61,11 +61,11 @@ public:
 	QStringList	m_inputMime;
 	QStringList	m_requirements;
 	bool	m_loaded[2];	// 0 -> Desktop, 1 -> XML
-	QString m_comment;
+	TQString m_comment;
 };
 
-KXmlCommand::KXmlCommand(const QString& xmlId)
-: QObject(KXmlCommandManager::self(), "XmlCommand")
+KXmlCommand::KXmlCommand(const TQString& xmlId)
+: TQObject(KXmlCommandManager::self(), "XmlCommand")
 {
 	init();
 	d->m_name = xmlId;
@@ -87,19 +87,19 @@ void KXmlCommand::init()
 	d->m_loaded[0] = d->m_loaded[1] = false;
 }
 
-QString KXmlCommand::name() const
+TQString KXmlCommand::name() const
 { return d->m_name; }
 
-void KXmlCommand::setName(const QString& s)
+void KXmlCommand::setName(const TQString& s)
 { d->m_name = s; }
 
-QString KXmlCommand::command()
+TQString KXmlCommand::command()
 {
 	check(true);
 	return d->m_command;
 }
 
-void KXmlCommand::setCommand(const QString& s)
+void KXmlCommand::setCommand(const TQString& s)
 {
 	d->m_command = s;
 }
@@ -125,74 +125,74 @@ void KXmlCommand::setDriver(DrMain *driver)
 	d->m_driver = driver;
 }
 
-QString KXmlCommand::io(bool io_input, bool io_pipe)
+TQString KXmlCommand::io(bool io_input, bool io_pipe)
 {
 	check(true);
 	return d->m_io[(io_input?0:1)].m_format[(io_pipe?1:0)];
 }
 
-void KXmlCommand::setIo(const QString& s, bool io_input, bool io_pipe)
+void KXmlCommand::setIo(const TQString& s, bool io_input, bool io_pipe)
 {
 	d->m_io[(io_input?0:1)].m_format[(io_pipe?1:0)] = s;
 }
 
-QString KXmlCommand::description()
+TQString KXmlCommand::description()
 {
 	check();
 	return d->m_description;
 }
 
-void KXmlCommand::setDescription(const QString& s)
+void KXmlCommand::setDescription(const TQString& s)
 {
 	d->m_description = s;
 }
 
-QString KXmlCommand::mimeType()
+TQString KXmlCommand::mimeType()
 {
 	check();
 	return d->m_outputMime;
 }
 
-void KXmlCommand::setMimeType(const QString& s)
+void KXmlCommand::setMimeType(const TQString& s)
 {
 	d->m_outputMime = s;
 }
 
-bool KXmlCommand::acceptMimeType(const QString& s)
+bool KXmlCommand::acceptMimeType(const TQString& s)
 {
 	check();
 	return (d->m_inputMime.find(s) != d->m_inputMime.end());
 }
 
-QStringList KXmlCommand::inputMimeTypes()
+TQStringList KXmlCommand::inputMimeTypes()
 {
 	check();
 	return d->m_inputMime;
 }
 
-void KXmlCommand::setInputMimeTypes(const QStringList& l)
+void KXmlCommand::setInputMimeTypes(const TQStringList& l)
 {
 	d->m_inputMime = l;
 }
 
-QStringList KXmlCommand::requirements()
+TQStringList KXmlCommand::requirements()
 {
 	check();
 	return d->m_requirements;
 }
 
-void KXmlCommand::setRequirements(const QStringList& l)
+void KXmlCommand::setRequirements(const TQStringList& l)
 {
 	d->m_requirements = l;
 }
 
-QString KXmlCommand::comment()
+TQString KXmlCommand::comment()
 {
 	check();
 	return d->m_comment;
 }
 
-void KXmlCommand::setComment( const QString& s )
+void KXmlCommand::setComment( const TQString& s )
 {
 	d->m_comment = s;
 }
@@ -272,7 +272,7 @@ void KXmlCommand::loadXml()
 	}
 }
 
-void KXmlCommand::parseIO(const QDomElement& e, int n)
+void KXmlCommand::parseIO(const TQDomElement& e, int n)
 {
 	QDomElement	elem = e.firstChild().toElement();
 	while (!elem.isNull())
@@ -286,7 +286,7 @@ void KXmlCommand::parseIO(const QDomElement& e, int n)
 	}
 }
 
-DrGroup* KXmlCommand::parseGroup(const QDomElement& e, DrGroup *grp)
+DrGroup* KXmlCommand::parseGroup(const TQDomElement& e, DrGroup *grp)
 {
 	if (!grp)
 		grp = new DrGroup;
@@ -314,7 +314,7 @@ DrGroup* KXmlCommand::parseGroup(const QDomElement& e, DrGroup *grp)
 	return grp;
 }
 
-DrBase* KXmlCommand::parseArgument(const QDomElement& e)
+DrBase* KXmlCommand::parseArgument(const TQDomElement& e)
 {
 	DrBase	*opt(0);
 	QString	type = e.attribute("type");
@@ -363,26 +363,26 @@ DrBase* KXmlCommand::parseArgument(const QDomElement& e)
 	return opt;
 }
 
-QString KXmlCommand::buildCommand(const QMap<QString,QString>& opts, bool pipein, bool pipeout)
+TQString KXmlCommand::buildCommand(const TQMap<TQString,TQString>& opts, bool pipein, bool pipeout)
 {
 	check(true);
 
 	QString		str, cmd = d->m_command;
-	QString re( "%value" ), quotedRe( "'%value'" );
+	TQString re( "%value" ), quotedRe( "'%value'" );
 
 	if (d->m_driver)
 	{
-		QMap<QString,QString>	fopts;
+		TQMap<TQString,TQString>	fopts;
 
 		d->m_driver->setOptions(opts);
 		d->m_driver->getOptions(fopts, false);
-		for (QMap<QString,QString>::ConstIterator it=fopts.begin(); it!=fopts.end(); ++it)
+		for (TQMap<TQString,TQString>::ConstIterator it=fopts.begin(); it!=fopts.end(); ++it)
 		{
 			DrBase	*dopt = d->m_driver->findOption(it.key());
 			if (dopt)
 			{
 				QString	format = dopt->get("format");
-				QString value = dopt->valueText();
+				TQString value = dopt->valueText();
 				if ( format.find( quotedRe ) != -1 )
 				{
 					if ( ( value.right( 1 ) == "'" && value.left( 1 ) == "'" )  ||
@@ -407,7 +407,7 @@ QString KXmlCommand::buildCommand(const QMap<QString,QString>& opts, bool pipein
 	return cmd;
 }
 
-void KXmlCommand::setOptions(const QMap<QString,QString>& opts)
+void KXmlCommand::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	if (opts.count() == 0)
 		return;
@@ -416,7 +416,7 @@ void KXmlCommand::setOptions(const QMap<QString,QString>& opts)
 		d->m_driver->setOptions(opts);
 }
 
-void KXmlCommand::getOptions(QMap<QString,QString>& opts, bool incldef)
+void KXmlCommand::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	// force loading the driver
 	if (driver())
@@ -460,7 +460,7 @@ void KXmlCommand::saveXml()
 	f.close();
 }
 
-QDomElement KXmlCommand::createIO(QDomDocument& doc, int n, const QString& tag)
+TQDomElement KXmlCommand::createIO(TQDomDocument& doc, int n, const TQString& tag)
 {
 	QDomElement	elem = doc.createElement(tag);
 	if (d->m_command.find("%"+tag) != -1)
@@ -477,24 +477,24 @@ QDomElement KXmlCommand::createIO(QDomDocument& doc, int n, const QString& tag)
 	return elem;
 }
 
-QDomElement KXmlCommand::createGroup(QDomDocument& doc, DrGroup *group)
+TQDomElement KXmlCommand::createGroup(TQDomDocument& doc, DrGroup *group)
 {
 	QDomElement	elem = doc.createElement("filtergroup");
 	elem.setAttribute("name", group->name());
 	elem.setAttribute("description", group->get("text"));
 
-	QPtrListIterator<DrGroup>	git(group->groups());
+	TQPtrListIterator<DrGroup>	git(group->groups());
 	for (; git.current(); ++git)
 		elem.appendChild(createGroup(doc, git.current()));
 
-	QPtrListIterator<DrBase>	oit(group->options());
+	TQPtrListIterator<DrBase>	oit(group->options());
 	for (; oit.current(); ++oit)
 		elem.appendChild(createElement(doc, oit.current()));
 
 	return elem;
 }
 
-QDomElement KXmlCommand::createElement(QDomDocument& doc, DrBase *opt)
+TQDomElement KXmlCommand::createElement(TQDomDocument& doc, DrBase *opt)
 {
 	QDomElement	elem = doc.createElement("filterarg");
 	QString	elemName = opt->name();
@@ -521,7 +521,7 @@ QDomElement KXmlCommand::createElement(QDomDocument& doc, DrBase *opt)
 		case DrBase::List:
 			elem.setAttribute("type", (opt->type() == DrBase::List ? "list" : "bool"));
 			{
-				QPtrListIterator<DrBase>	it(*(static_cast<DrListOption*>(opt)->choices()));
+				TQPtrListIterator<DrBase>	it(*(static_cast<DrListOption*>(opt)->choices()));
 				for (; it.current(); ++it)
 				{
 					QDomElement	chElem = doc.createElement("value");
@@ -544,8 +544,8 @@ class KXmlCommandManager::KXmlCommandManagerPrivate
 {
 public:
 	QStringList	m_cmdlist;
-	QMap<QString, QValueList<KXmlCommand*> >	m_mimemap;
-	QMap<QString, KXmlCommand*>	m_cmdmap;
+	TQMap<TQString, TQValueList<KXmlCommand*> >	m_mimemap;
+	TQMap<TQString, KXmlCommand*>	m_cmdmap;
 };
 
 KXmlCommandManager* KXmlCommandManager::m_self = 0;
@@ -561,7 +561,7 @@ KXmlCommandManager* KXmlCommandManager::self()
 }
 
 KXmlCommandManager::KXmlCommandManager()
-: QObject(KMFactory::self(), "XmlCommandManager")
+: TQObject(KMFactory::self(), "XmlCommandManager")
 {
 	d = new KXmlCommandManagerPrivate;
 }
@@ -572,7 +572,7 @@ KXmlCommandManager::~KXmlCommandManager()
 	delete d;
 }
 
-KXmlCommand* KXmlCommandManager::loadCommand(const QString& xmlId, bool check)
+KXmlCommand* KXmlCommandManager::loadCommand(const TQString& xmlId, bool check)
 {
 	if (check)
 	{
@@ -593,7 +593,7 @@ void KXmlCommandManager::saveCommand(KXmlCommand *xmlCmd)
 
 void KXmlCommandManager::cleanUp()
 {
-	for (QMap<QString, KXmlCommand*>::ConstIterator it=d->m_cmdmap.begin(); it!=d->m_cmdmap.end(); ++it)
+	for (TQMap<TQString, KXmlCommand*>::ConstIterator it=d->m_cmdmap.begin(); it!=d->m_cmdmap.end(); ++it)
 		delete (*it);
 	d->m_cmdmap.clear();
 	d->m_mimemap.clear();
@@ -605,13 +605,13 @@ void KXmlCommandManager::preload()
 	if (d->m_cmdmap.count() == 0)
 	{
 		commandList();
-		for (QStringList::Iterator it=d->m_cmdlist.begin(); it!=d->m_cmdlist.end(); ++it)
+		for (TQStringList::Iterator it=d->m_cmdlist.begin(); it!=d->m_cmdlist.end(); ++it)
 		{
 			KXmlCommand	*xmlCmd = loadCommand(*it);
 			if (!xmlCmd) continue; // Error!
 
 			QStringList	inputMime = xmlCmd->inputMimeTypes();
-			for (QStringList::ConstIterator mime=inputMime.begin(); mime!=inputMime.end(); ++mime)
+			for (TQStringList::ConstIterator mime=inputMime.begin(); mime!=inputMime.end(); ++mime)
 			{
 				d->m_mimemap[*mime].append(xmlCmd);
 				d->m_cmdmap[*it] = xmlCmd;
@@ -620,16 +620,16 @@ void KXmlCommandManager::preload()
 	}
 }
 
-QStringList KXmlCommandManager::commandList()
+TQStringList KXmlCommandManager::commandList()
 {
 	if (d->m_cmdlist.isEmpty())
 	{
 		QStringList	dirs = KGlobal::dirs()->findDirs("data", "kdeprint/filters/");
 
-		for (QStringList::ConstIterator it=dirs.begin(); it!=dirs.end(); ++it)
+		for (TQStringList::ConstIterator it=dirs.begin(); it!=dirs.end(); ++it)
 		{
-			QStringList	list = QDir(*it).entryList("*.desktop", QDir::Files, QDir::Unsorted);
-			for (QStringList::ConstIterator it2=list.begin(); it2!=list.end(); ++it2)
+			QStringList	list = TQDir(*it).entryList("*.desktop", TQDir::Files, TQDir::Unsorted);
+			for (TQStringList::ConstIterator it2=list.begin(); it2!=list.end(); ++it2)
 			{
 				QString	cmdName = (*it2).left((*it2).length()-8);
 				if (d->m_cmdlist.find(cmdName) == d->m_cmdlist.end())
@@ -643,43 +643,43 @@ QStringList KXmlCommandManager::commandList()
 	return d->m_cmdlist;
 }
 
-QStringList KXmlCommandManager::commandListWithDescription()
+TQStringList KXmlCommandManager::commandListWithDescription()
 {
 	preload();
 	QStringList	l;
-	for (QMap<QString,KXmlCommand*>::ConstIterator it=d->m_cmdmap.begin(); it!=d->m_cmdmap.end(); ++it)
+	for (TQMap<TQString,KXmlCommand*>::ConstIterator it=d->m_cmdmap.begin(); it!=d->m_cmdmap.end(); ++it)
 		l << (*it)->name() << (*it)->description();
 
 	return l;
 }
 
-QString KXmlCommandManager::selectCommand(QWidget *parent)
+TQString KXmlCommandManager::selectCommand(TQWidget *parent)
 {
 	KLibrary *lib = KLibLoader::self()->library( "libkdeprint_management_module" );
 	if ( !lib )
 	{
 		KMessageBox::error( parent, i18n( "Unable to load KDE print management library: %1" ).arg( KLibLoader::self()->lastErrorMessage() ) );
-		return QString::null;
+		return TQString::null;
 	}
 	else
 	{
-		QString ( *func )( QWidget* ) = ( QString( * )( QWidget* ) )lib->symbol( "select_command" );
+		TQString ( *func )( TQWidget* ) = ( TQString( * )( TQWidget* ) )lib->symbol( "select_command" );
 		if ( !func )
 		{
 			KMessageBox::error( parent, i18n( "Unable to find wizard object in management library." ) );
-			return QString::null;
+			return TQString::null;
 		}
 		else
 			return func( parent );
 	}
 }
 
-KXmlCommand* KXmlCommandManager::command(const QString& xmlId) const
+KXmlCommand* KXmlCommandManager::command(const TQString& xmlId) const
 {
 	return (d->m_cmdmap.contains(xmlId) ? d->m_cmdmap[xmlId] : 0);
 }
 
-int KXmlCommandManager::insertCommand(QStringList& list, const QString& filtername, bool defaultToStart)
+int KXmlCommandManager::insertCommand(TQStringList& list, const TQString& filtername, bool defaultToStart)
 {
 	preload();
 
@@ -688,7 +688,7 @@ int KXmlCommandManager::insertCommand(QStringList& list, const QString& filterna
 	if (f1 && f1->inputMimeTypes().count() > 0)
 	{
 		QString	mimetype = f1->inputMimeTypes()[0];
-		for (QStringList::Iterator it=list.begin(); it!=list.end(); ++it, pos++)
+		for (TQStringList::Iterator it=list.begin(); it!=list.end(); ++it, pos++)
 		{
 			f2 = command(*it);
 			if (!f2)
@@ -721,7 +721,7 @@ int KXmlCommandManager::insertCommand(QStringList& list, const QString& filterna
 	return pos;
 }
 
-QStringList KXmlCommandManager::autoConvert(const QString& mimesrc, const QString& mimedest)
+TQStringList KXmlCommandManager::autoConvert(const TQString& mimesrc, const TQString& mimedest)
 {
 	QStringList	chain;
 	uint		score(0);
@@ -730,8 +730,8 @@ QStringList KXmlCommandManager::autoConvert(const QString& mimesrc, const QStrin
 
 	if (d->m_mimemap.contains(mimesrc))
 	{
-		const QValueList<KXmlCommand*>	l = d->m_mimemap[mimesrc];
-		for (QValueList<KXmlCommand*>::ConstIterator it=l.begin(); it!=l.end(); ++it)
+		const TQValueList<KXmlCommand*>	l = d->m_mimemap[mimesrc];
+		for (TQValueList<KXmlCommand*>::ConstIterator it=l.begin(); it!=l.end(); ++it)
 		{
 			// check filter availability
 			if (!KdeprintChecker::check((*it)->requirements()))
@@ -740,7 +740,7 @@ QStringList KXmlCommandManager::autoConvert(const QString& mimesrc, const QStrin
 			// direct filter: shortest path => return immediately
 			if ((*it)->mimeType() == mimedest)
 			{
-				chain = QStringList((*it)->name());
+				chain = TQStringList((*it)->name());
 				break;
 			}
 			// non direct filter: find the shortest way between
@@ -769,7 +769,7 @@ QStringList KXmlCommandManager::autoConvert(const QString& mimesrc, const QStrin
 	return chain;
 }
 
-bool KXmlCommandManager::checkCommand(const QString& xmlId, int inputCheck, int outputCheck, QString *msg)
+bool KXmlCommandManager::checkCommand(const TQString& xmlId, int inputCheck, int outputCheck, TQString *msg)
 {
 	KXmlCommand	*xmlCmd = command(xmlId);
 	QString	errmsg;
@@ -812,7 +812,7 @@ bool KXmlCommandManager::checkCommand(const QString& xmlId, int inputCheck, int 
 	return status;
 }
 
-bool KXmlCommandManager::configure(KXmlCommand *xmlCmd, QWidget *parent)
+bool KXmlCommandManager::configure(KXmlCommand *xmlCmd, TQWidget *parent)
 {
 	if (xmlCmd->driver())
 	{

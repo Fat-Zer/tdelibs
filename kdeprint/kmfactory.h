@@ -21,12 +21,12 @@
 #ifndef KMFACTORY_H
 #define KMFACTORY_H
 
-#include <qstring.h>
-#include <qvaluelist.h>
-#include <qstringlist.h>
-#include <qptrlist.h>
-#include <qobject.h>
-#include <qpair.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
+#include <tqstringlist.h>
+#include <tqptrlist.h>
+#include <tqobject.h>
+#include <tqpair.h>
 #include <dcopobject.h>
 
 #include <sys/types.h>
@@ -42,7 +42,7 @@ class KLibFactory;
 class KConfig;
 class KPReloadObject;
 
-class KDEPRINT_EXPORT KMFactory : public QObject, public DCOPObject
+class KDEPRINT_EXPORT KMFactory : public TQObject, public DCOPObject
 {
 	Q_OBJECT
 	K_DCOP
@@ -72,13 +72,13 @@ public:
 	KMSpecialManager* specialManager();
 	KXmlCommandManager* commandManager();
 	KPrinterImpl* printerImplementation();
-	KConfig* printConfig(const QString& group = QString::null);
-	QString printSystem();
-	QValueList<PluginInfo> pluginList();
-	PluginInfo pluginInfo(const QString& name);
+	KConfig* printConfig(const TQString& group = TQString::null);
+	TQString printSystem();
+	TQValueList<PluginInfo> pluginList();
+	PluginInfo pluginInfo(const TQString& name);
 	void saveConfig();
 
-	void reload(const QString& syst, bool saveSyst = true);
+	void reload(const TQString& syst, bool saveSyst = true);
 	void registerObject(KPReloadObject*, bool = false);
 	void unregisterObject(KPReloadObject*);
 
@@ -92,8 +92,8 @@ public:
 	};
 	Settings* settings() const	{ return m_settings; }
 
-	QPair<QString,QString> requestPassword( int& seqNbr, const QString& user, const QString& host = "localhost", int port = 0 );
-	void initPassword( const QString& user, const QString& password, const QString& host = "localhsot", int port = 0 );
+	QPair<TQString,TQString> requestPassword( int& seqNbr, const TQString& user, const TQString& host = "localhost", int port = 0 );
+	void initPassword( const TQString& user, const TQString& password, const TQString& host = "localhsot", int port = 0 );
 
 k_dcop:
 	ASYNC slot_pluginChanged(pid_t);
@@ -108,9 +108,9 @@ private:
 	void createJobManager();
 	void createUiManager();
 	void createPrinterImpl();
-	void loadFactory(const QString& syst = QString::null);
+	void loadFactory(const TQString& syst = TQString::null);
 	void unload();
-	QString autoDetect();
+	TQString autoDetect();
 
 private:
 	static KMFactory	*m_self;
@@ -123,7 +123,7 @@ private:
 
 	KConfig			*m_printconfig;
 	Settings		*m_settings;
-	QPtrList<KPReloadObject> m_objects;
+	TQPtrList<KPReloadObject> m_objects;
 };
 
 #endif

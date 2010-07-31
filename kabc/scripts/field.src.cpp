@@ -31,9 +31,9 @@ class Field::FieldImpl
 {
   public:
     FieldImpl( int fieldId, int category = 0,
-               const QString &label = QString::null,
-               const QString &key = QString::null,
-               const QString &app = QString::null )
+               const TQString &label = TQString::null,
+               const TQString &key = TQString::null,
+               const TQString &app = TQString::null )
       : mFieldId( fieldId ), mCategory( category ), mLabel( label ),
         mKey( key ), mApp( app ) {}
 
@@ -46,17 +46,17 @@ class Field::FieldImpl
     int fieldId() { return mFieldId; }
     int category() { return mCategory; }
 
-    QString label() { return mLabel; }
-    QString key() { return mKey; }
-    QString app() { return mApp; }
+    TQString label() { return mLabel; }
+    TQString key() { return mKey; }
+    TQString app() { return mApp; }
 
   private:
     int mFieldId;
     int mCategory;
 
-    QString mLabel;
-    QString mKey;
-    QString mApp;
+    TQString mLabel;
+    TQString mKey;
+    TQString mApp;
 };
 
 
@@ -75,7 +75,7 @@ Field::~Field()
   delete mImpl;
 }
 
-QString Field::label()
+TQString Field::label()
 {
   switch ( mImpl->fieldId() ) {
     --CASELABEL--
@@ -91,7 +91,7 @@ int Field::category()
   return mImpl->category();
 }
 
-QString Field::categoryLabel( int category )
+TQString Field::categoryLabel( int category )
 {
   switch ( category ) {
     case All:
@@ -113,7 +113,7 @@ QString Field::categoryLabel( int category )
   }
 }
 
-QString Field::value( const KABC::Addressee &a )
+TQString Field::value( const KABC::Addressee &a )
 {
   switch ( mImpl->fieldId() ) {
     --CASEVALUE--
@@ -123,7 +123,7 @@ QString Field::value( const KABC::Addressee &a )
       if ( a.birthday().isValid() )
         return a.birthday().date().toString( Qt::ISODate );
       else
-        return QString::null;
+        return TQString::null;
     case FieldImpl::Url:
       return a.url().prettyURL();
     case FieldImpl::HomePhone:
@@ -146,7 +146,7 @@ QString Field::value( const KABC::Addressee &a )
             return (*it).number();
       }
 
-      return QString::null;
+      return TQString::null;
     }
     case FieldImpl::BusinessPhone:
     {
@@ -168,7 +168,7 @@ QString Field::value( const KABC::Addressee &a )
             return (*it).number();
       }
 
-      return QString::null;
+      return TQString::null;
     }
     case FieldImpl::MobilePhone:
       return a.phoneNumber( PhoneNumber::Cell ).number();
@@ -213,11 +213,11 @@ QString Field::value( const KABC::Addressee &a )
     case FieldImpl::CustomField:
       return a.custom( mImpl->app(), mImpl->key() );
     default:
-      return QString::null;
+      return TQString::null;
   }
 }
 
-bool Field::setValue( KABC::Addressee &a, const QString &value )
+bool Field::setValue( KABC::Addressee &a, const TQString &value )
 {
   switch ( mImpl->fieldId() ) {
     --CASESETVALUE--
@@ -362,7 +362,7 @@ bool Field::setValue( KABC::Addressee &a, const QString &value )
         return true;
       }
     case FieldImpl::Birthday:
-      a.setBirthday( QDate::fromString( value, Qt::ISODate ) );
+      a.setBirthday( TQDate::fromString( value, Qt::ISODate ) );
       return true;
     case FieldImpl::CustomField:
       a.insertCustom( mImpl->app(), mImpl->key(), value );
@@ -372,18 +372,18 @@ bool Field::setValue( KABC::Addressee &a, const QString &value )
   }
 }
 
-QString Field::sortKey( const KABC::Addressee &a )
+TQString Field::sortKey( const KABC::Addressee &a )
 {
   switch ( mImpl->fieldId() ) {
     --CASEVALUE--
     case FieldImpl::Birthday:
       if ( a.birthday().isValid() ) {
-        QDate date = a.birthday().date();
-        QString key;
+        TQDate date = a.birthday().date();
+        TQString key;
         key.sprintf( "%02d-%02d", date.month(), date.day() );
         return key;
       } else
-        return QString( "00-00" );
+        return TQString( "00-00" );
     default:
       return value( a ).lower();
   }
@@ -443,7 +443,7 @@ void Field::deleteFields()
   mCustomFields.clear();
 }
 
-void Field::saveFields( const QString &identifier,
+void Field::saveFields( const TQString &identifier,
                         const Field::List &fields )
 {
   KConfig *cfg = KGlobal::config();
@@ -452,29 +452,29 @@ void Field::saveFields( const QString &identifier,
   saveFields( cfg, identifier, fields );
 }
 
-void Field::saveFields( KConfig *cfg, const QString &identifier,
+void Field::saveFields( KConfig *cfg, const TQString &identifier,
                         const Field::List &fields )
 {
-  QValueList<int> fieldIds;
+  TQValueList<int> fieldIds;
 
   int custom = 0;
   Field::List::ConstIterator it;
   for( it = fields.begin(); it != fields.end(); ++it ) {
     fieldIds.append( (*it)->mImpl->fieldId() );
     if( (*it)->isCustom() ) {
-      QStringList customEntry;
+      TQStringList customEntry;
       customEntry << (*it)->mImpl->label();
       customEntry << (*it)->mImpl->key();
       customEntry << (*it)->mImpl->app();
       cfg->writeEntry( "KABC_CustomEntry_" + identifier + "_" +
-                       QString::number( custom++ ), customEntry );
+                       TQString::number( custom++ ), customEntry );
     }
   }
 
   cfg->writeEntry( identifier, fieldIds );
 }
 
-Field::List Field::restoreFields( const QString &identifier )
+Field::List Field::restoreFields( const TQString &identifier )
 {
   KConfig *cfg = KGlobal::config();
   KConfigGroupSaver( cfg, "KABCFields" );
@@ -482,20 +482,20 @@ Field::List Field::restoreFields( const QString &identifier )
   return restoreFields( cfg, identifier );
 }
 
-Field::List Field::restoreFields( KConfig *cfg, const QString &identifier )
+Field::List Field::restoreFields( KConfig *cfg, const TQString &identifier )
 {
-  const QValueList<int> fieldIds = cfg->readIntListEntry( identifier );
+  const TQValueList<int> fieldIds = cfg->readIntListEntry( identifier );
 
   Field::List fields;
 
   int custom = 0;
-  QValueList<int>::ConstIterator it;
+  TQValueList<int>::ConstIterator it;
   for( it = fieldIds.begin(); it != fieldIds.end(); ++it ) {
     FieldImpl *f = 0;
     if ( (*it) == FieldImpl::CustomField ) {
-      QStringList customEntry = cfg->readListEntry( "KABC_CustomEntry_" +
+      TQStringList customEntry = cfg->readListEntry( "KABC_CustomEntry_" +
                                                  identifier + "_" +
-                                                 QString::number( custom++ ) );
+                                                 TQString::number( custom++ ) );
       f = new FieldImpl( *it, CustomCategory, customEntry[ 0 ],
                          customEntry[ 1 ], customEntry[ 2 ] );
     } else {
@@ -518,8 +518,8 @@ bool Field::equals( Field *field )
   return mImpl->key() == field->mImpl->key();
 }
 
-Field *Field::createCustomField( const QString &label, int category,
-                                 const QString &key, const QString &app )
+Field *Field::createCustomField( const TQString &label, int category,
+                                 const TQString &key, const TQString &app )
 {
   Field *field = new Field( new FieldImpl( FieldImpl::CustomField,
                                            category | CustomCategory,

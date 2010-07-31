@@ -22,8 +22,8 @@
 
 #include "kprintdialogpage.h"
 
-#include <qdict.h>
-#include <qstringlist.h>
+#include <tqdict.h>
+#include <tqstringlist.h>
 
 class KListView;
 class KXmlCommand;
@@ -35,12 +35,12 @@ class KPFilterPage : public KPrintDialogPage
 {
 	Q_OBJECT
 public:
-	KPFilterPage(QWidget *parent = 0, const char *name = 0);
+	KPFilterPage(TQWidget *parent = 0, const char *name = 0);
 	~KPFilterPage();
 
-	void setOptions(const QMap<QString,QString>& opts);
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
-	bool isValid(QString& msg);
+	void setOptions(const TQMap<TQString,TQString>& opts);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
+	bool isValid(TQString& msg);
 
 protected slots:
 	void slotAddClicked();
@@ -48,18 +48,18 @@ protected slots:
 	void slotUpClicked();
 	void slotDownClicked();
 	void slotConfigureClicked();
-	void slotItemSelected(QListViewItem*);
+	void slotItemSelected(TQListViewItem*);
 
 protected:
 	KXmlCommand* currentFilter();
 	void checkFilterChain();
 	void updateInfo();
-	QStringList activeList();
+	TQStringList activeList();
     void updateButton();
 private:
 	KListView		*m_view;
 	QStringList		m_filters;	// <idname,description> pairs
-	QDict<KXmlCommand>	m_activefilters;
+	TQDict<KXmlCommand>	m_activefilters;
 	QToolButton		*m_add, *m_remove, *m_up, *m_down, *m_configure;
 	bool			m_valid;
 	QTextBrowser		*m_info;

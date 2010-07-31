@@ -28,8 +28,8 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
-#include <qintdict.h>
-#include <qmap.h>
+#include <tqintdict.h>
+#include <tqmap.h>
 
 #include <ktempfile.h>
 #include <kdebug.h>
@@ -53,8 +53,8 @@ class KVMAllocatorPrivate
 public:
    KTempFile *tempfile;
    off_t max_length;
-   QMap<off_t, KVMAllocator::Block> used_blocks;
-   QMap<off_t, KVMAllocator::Block> free_blocks;
+   TQMap<off_t, KVMAllocator::Block> used_blocks;
+   TQMap<off_t, KVMAllocator::Block> free_blocks;
 };
 
 /**
@@ -85,11 +85,11 @@ KVMAllocator::allocate(size_t _size)
 {
    if (!d->tempfile)
    {
-      d->tempfile = new KTempFile(QString::null, "vmdata");
+      d->tempfile = new KTempFile(TQString::null, "vmdata");
       d->tempfile->unlink();
    }
    // Search in free list
-   QMap<off_t,KVMAllocator::Block>::iterator it;
+   TQMap<off_t,KVMAllocator::Block>::iterator it;
    it = d->free_blocks.begin();
    while (it != d->free_blocks.end())
    {
@@ -137,7 +137,7 @@ KVMAllocator::free(Block *block_p)
       kdDebug(180)<<"VM free: Block "<<(long)block.start<<" is still mmapped!"<<endl;
       return;
    }
-   QMap<off_t,KVMAllocator::Block>::iterator it;
+   TQMap<off_t,KVMAllocator::Block>::iterator it;
    it = d->used_blocks.find(block.start);
    if (it == d->used_blocks.end())
    {
@@ -146,7 +146,7 @@ KVMAllocator::free(Block *block_p)
    }
    d->used_blocks.remove(it);
    it = d->free_blocks.replace(block.start, block);
-   QMap<off_t,KVMAllocator::Block>::iterator before = it;
+   TQMap<off_t,KVMAllocator::Block>::iterator before = it;
    --before;
    if (before != d->free_blocks.end())
    {
@@ -163,7 +163,7 @@ KVMAllocator::free(Block *block_p)
       }
    }
    
-   QMap<off_t,KVMAllocator::Block>::iterator after = it;
+   TQMap<off_t,KVMAllocator::Block>::iterator after = it;
    ++after;
    if (after != d->free_blocks.end())
    {

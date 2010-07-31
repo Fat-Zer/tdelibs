@@ -21,7 +21,7 @@
 #ifndef DNSSDREMOTESERVICE_H
 #define DNSSDREMOTESERVICE_H
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <dnssd/servicebase.h>
 
 class QDataStream;
@@ -39,7 +39,7 @@ service is resolved are name, type.and domain.
 @short class representing service announced on remote machine.
 @author Jakub Stachowski
  */
-class KDNSSD_EXPORT RemoteService : public QObject, public ServiceBase
+class KDNSSD_EXPORT RemoteService : public TQObject, public ServiceBase
 {
 	Q_OBJECT
 public:
@@ -50,12 +50,12 @@ public:
 	@param label Data returned by PTR query - it is decoded into name, type and 
 	domain
 	 */
-	RemoteService(const QString& label);
+	RemoteService(const TQString& label);
 	
 	/**
 	Creates unresolved remote service with given name, type and domain.
 	 */
-	RemoteService(const QString& name,const QString& type,const QString& domain);
+	RemoteService(const TQString& name,const TQString& type,const TQString& domain);
 	
 	/**
 	Creates resolved remote service from invitation URL constructed by PublicService::toInvitation.
@@ -94,15 +94,15 @@ signals:
 
 protected:
 	virtual void virtual_hook(int id, void *data);
-	virtual void customEvent(QCustomEvent* event);
+	virtual void customEvent(TQCustomEvent* event);
 private:
 	void resolveError();
 	void resolved(const char *host, unsigned short port, unsigned short txtlen,
 		const char* txtRecord);
 	RemoteServicePrivate *d;
 
-	friend KDNSSD_EXPORT QDataStream & operator<< (QDataStream & s, const RemoteService & a);
-	friend KDNSSD_EXPORT QDataStream & operator>> (QDataStream & s, RemoteService & a);
+	friend KDNSSD_EXPORT TQDataStream & operator<< (TQDataStream & s, const RemoteService & a);
+	friend KDNSSD_EXPORT TQDataStream & operator>> (TQDataStream & s, RemoteService & a);
 
 };
 

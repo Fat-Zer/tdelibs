@@ -50,8 +50,8 @@
 
 #include <klocale.h>
 #include <dcopclient.h>
-#include <qcstring.h>
-#include <qdatastream.h>
+#include <tqcstring.h>
+#include <tqdatastream.h>
 
 #include <kapplication.h>
 
@@ -72,9 +72,9 @@ public:
   KSSL *kssl;
   bool usingTLS;
   KSSLCertificateCache *cc;
-  QString host;
-  QString realHost;
-  QString ip;
+  TQString host;
+  TQString realHost;
+  TQString ip;
   DCOPClient *dcc;
   KSSLPKCS12 *pkcs;
 
@@ -92,9 +92,9 @@ public:
 
 
 TCPSlaveBase::TCPSlaveBase(unsigned short int defaultPort,
-                           const QCString &protocol,
-                           const QCString &poolSocket,
-                           const QCString &appSocket)
+                           const TQCString &protocol,
+                           const TQCString &poolSocket,
+                           const TQCString &appSocket)
              :SlaveBase (protocol, poolSocket, appSocket),
               m_iSock(-1),
               m_iDefaultPort(defaultPort),
@@ -108,9 +108,9 @@ TCPSlaveBase::TCPSlaveBase(unsigned short int defaultPort,
 }
 
 TCPSlaveBase::TCPSlaveBase(unsigned short int defaultPort,
-                           const QCString &protocol,
-                           const QCString &poolSocket,
-                           const QCString &appSocket,
+                           const TQCString &protocol,
+                           const TQCString &poolSocket,
+                           const TQCString &appSocket,
                            bool useSSL)
              :SlaveBase (protocol, poolSocket, appSocket),
               m_iSock(-1),
@@ -299,7 +299,7 @@ unsigned short int TCPSlaveBase::port(unsigned short int _p)
 // a port, and if so use it, otherwise we check to see if there
 // is a port specified in /etc/services, and if so use that
 // otherwise as a last resort use the supplied default port.
-bool TCPSlaveBase::connectToHost( const QString &host,
+bool TCPSlaveBase::connectToHost( const TQString &host,
                                   unsigned int _port,
                                   bool sendError )
 {
@@ -323,7 +323,7 @@ bool TCPSlaveBase::connectToHost( const QString &host,
                                         "observe your data in transit."),
                                    WarningContinueCancel,
                                    i18n("Security Information"),
-                                   i18n("C&ontinue Loading"), QString::null,
+                                   i18n("C&ontinue Loading"), TQString::null,
                                    "WarnOnLeaveSSLMode" );
 
            // Move this setting into KSSL instead
@@ -533,7 +533,7 @@ bool TCPSlaveBase::canUseTLS()
 
 void TCPSlaveBase::certificatePrompt()
 {
-QString certname;   // the cert to use this session
+TQString certname;   // the cert to use this session
 bool send = false, prompt = false, save = false, forcePrompt = false;
 KSSLCertificateHome::KSSLAuthAction aa;
 
@@ -559,7 +559,7 @@ KSSLCertificateHome::KSSLAuthAction aa;
          break;
         case KSSLCertificateHome::AuthDont:
           send = false; prompt = false;
-          certname = QString::null;
+          certname = TQString::null;
          break;
         case KSSLCertificateHome::AuthPrompt:
           send = false; prompt = true;
@@ -569,7 +569,7 @@ KSSLCertificateHome::KSSLAuthAction aa;
         }
   }
 
-  QString ourHost;
+  TQString ourHost;
   if (!d->realHost.isEmpty()) {
      ourHost = d->realHost;
   } else {
@@ -577,7 +577,7 @@ KSSLCertificateHome::KSSLAuthAction aa;
   }
 
   // Look for a certificate on a per-host basis as an override
-  QString tmpcn = KSSLCertificateHome::getDefaultCertificateName(ourHost, &aa);
+  TQString tmpcn = KSSLCertificateHome::getDefaultCertificateName(ourHost, &aa);
   if (aa != KSSLCertificateHome::AuthNone) {   // we must override
     switch (aa) {
         case KSSLCertificateHome::AuthSend:
@@ -588,7 +588,7 @@ KSSLCertificateHome::KSSLAuthAction aa;
         case KSSLCertificateHome::AuthDont:
           send = false;
           prompt = false;
-          certname = QString::null;
+          certname = TQString::null;
          break;
         case KSSLCertificateHome::AuthPrompt:
           send = false;
@@ -614,9 +614,9 @@ KSSLCertificateHome::KSSLAuthAction aa;
 
   // Ok, we're supposed to prompt the user....
   if (prompt || forcePrompt) {
-    QStringList certs = KSSLCertificateHome::getCertificateList();
+    TQStringList certs = KSSLCertificateHome::getCertificateList();
 
-    for (QStringList::Iterator it = certs.begin(); it != certs.end(); ++it) {
+    for (TQStringList::Iterator it = certs.begin(); it != certs.end(); ++it) {
       KSSLPKCS12 *pkcs = KSSLCertificateHome::getCertificateByName(*it);
       if (pkcs && (!pkcs->getCertificate() ||
           !pkcs->getCertificate()->x509V3Extensions().certTypeSSLClient())) {
@@ -632,22 +632,22 @@ KSSLCertificateHome::KSSLAuthAction aa;
         d->dcc->attach();
         if (!d->dcc->isApplicationRegistered("kio_uiserver")) {
            KApplication::startServiceByDesktopPath("kio_uiserver.desktop",
-                                                   QStringList() );
+                                                   TQStringList() );
         }
     }
 
-     QByteArray data, retval;
-     QCString rettype;
-     QDataStream arg(data, IO_WriteOnly);
+     TQByteArray data, retval;
+     TQCString rettype;
+     TQDataStream arg(data, IO_WriteOnly);
      arg << ourHost;
      arg << certs;
      arg << metaData("window-id").toInt();
      bool rc = d->dcc->call("kio_uiserver", "UIServer",
-                               "showSSLCertDialog(QString, QStringList,int)",
+                               "showSSLCertDialog(TQString, TQStringList,int)",
                                data, rettype, retval);
 
      if (rc && rettype == "KSSLCertDlgRet") {
-        QDataStream retStream(retval, IO_ReadOnly);
+        TQDataStream retStream(retval, IO_ReadOnly);
         KSSLCertDlgRet drc;
         retStream >> drc;
         if (drc.ok) {
@@ -687,7 +687,7 @@ KSSLCertificateHome::KSSLAuthAction aa;
         else
            showprompt = true;
         if (showprompt) {
-           if (!openPassDlg(ai, first ? QString::null : 
+           if (!openPassDlg(ai, first ? TQString::null : 
                    i18n("Unable to open the certificate. Try a new password?")))
               break;
         }
@@ -741,13 +741,13 @@ int TCPSlaveBase::verifyCertificate()
     bool _IPmatchesCN = false;
     int result;
     bool doAddHost = false;
-    QString ourHost;
+    TQString ourHost;
 
     if (!d->realHost.isEmpty())
         ourHost = d->realHost;
     else ourHost = d->host;
 
-    QString theurl = QString(m_sServiceName)+"://"+ourHost+":"+QString::number(m_iPort);
+    TQString theurl = TQString(m_sServiceName)+"://"+ourHost+":"+TQString::number(m_iPort);
 
    if (!hasMetaData("ssl_militant") || metaData("ssl_militant") == "FALSE")
      d->militantSSL = false;
@@ -765,7 +765,7 @@ int TCPSlaveBase::verifyCertificate()
 #ifndef Q_WS_WIN //temporary
       KNetwork::KResolverResults res = KNetwork::KResolver::resolve(d->kssl->peerInfo().peerHost(), "80", KNetwork::KResolver::CanonName);
       if (!res.isEmpty()) {
-         QString old = d->kssl->peerInfo().peerHost();
+         TQString old = d->kssl->peerInfo().peerHost();
          d->kssl->peerInfo().setPeerHost(res[0].canonicalName());
          _IPmatchesCN = d->kssl->peerInfo().certMatchesAddress();
          if (!_IPmatchesCN) {
@@ -795,26 +795,26 @@ int TCPSlaveBase::verifyCertificate()
     setMetaData("ssl_cipher_version",
                                 d->kssl->connectionInfo().getCipherVersion());
     setMetaData("ssl_cipher_used_bits",
-              QString::number(d->kssl->connectionInfo().getCipherUsedBits()));
+              TQString::number(d->kssl->connectionInfo().getCipherUsedBits()));
     setMetaData("ssl_cipher_bits",
-                  QString::number(d->kssl->connectionInfo().getCipherBits()));
+                  TQString::number(d->kssl->connectionInfo().getCipherBits()));
     setMetaData("ssl_peer_ip", d->ip);
     if (!d->realHost.isEmpty()) {
        setMetaData("ssl_proxied", "true");
     }
     
-    QString errorStr;
+    TQString errorStr;
     for(KSSLCertificate::KSSLValidationList::ConstIterator it = ksvl.begin();
         it != ksvl.end(); ++it)
     {
-       errorStr += QString::number(*it)+":";
+       errorStr += TQString::number(*it)+":";
     }
     setMetaData("ssl_cert_errors", errorStr);
     setMetaData("ssl_peer_certificate", pc.toString());
 
     if (pc.chain().isValid() && pc.chain().depth() > 1) {
-       QString theChain;
-       QPtrList<KSSLCertificate> chain = pc.chain().getChain();
+       TQString theChain;
+       TQPtrList<KSSLCertificate> chain = pc.chain().getChain();
        chain.setAutoDelete(true);
        for (KSSLCertificate *c = chain.first(); c; c = chain.next()) {
           theChain += c->toString();
@@ -823,7 +823,7 @@ int TCPSlaveBase::verifyCertificate()
        setMetaData("ssl_peer_chain", theChain);
     } else setMetaData("ssl_peer_chain", "");
 
-   setMetaData("ssl_cert_state", QString::number(ksv));
+   setMetaData("ssl_cert_state", TQString::number(ksv));
 
    if (ksv == KSSLCertificate::Ok) {
       rc = 1;
@@ -872,7 +872,7 @@ int TCPSlaveBase::verifyCertificate()
            {
              do {
                 if (ksv == KSSLCertificate::InvalidHost) {
-                        QString msg = i18n("The IP address of the host %1 "
+                        TQString msg = i18n("The IP address of the host %1 "
                                            "does not match the one the "
                                            "certificate was issued to.");
                    result = messageBox( WarningYesNoCancel,
@@ -881,7 +881,7 @@ int TCPSlaveBase::verifyCertificate()
                               i18n("&Details"),
                               i18n("Co&ntinue") );
                 } else {
-                   QString msg = i18n("The server certificate failed the "
+                   TQString msg = i18n("The server certificate failed the "
                                       "authenticity test (%1).");
                    result = messageBox( WarningYesNoCancel,
                               msg.arg(ourHost),
@@ -896,17 +896,17 @@ int TCPSlaveBase::verifyCertificate()
                       d->dcc->attach();
                       if (!d->dcc->isApplicationRegistered("kio_uiserver")) {
                          KApplication::startServiceByDesktopPath("kio_uiserver.desktop",
-                         QStringList() );
+                         TQStringList() );
                       }
 
                    }
-                   QByteArray data, ignore;
-                   QCString ignoretype;
-                   QDataStream arg(data, IO_WriteOnly);
+                   TQByteArray data, ignore;
+                   TQCString ignoretype;
+                   TQDataStream arg(data, IO_WriteOnly);
                    arg << theurl << mOutgoingMetaData;
                    arg << metaData("window-id").toInt();
                         d->dcc->call("kio_uiserver", "UIServer",
-                                "showSSLInfoDialog(QString,KIO::MetaData,int)",
+                                "showSSLInfoDialog(TQString,KIO::MetaData,int)",
                                 data, ignoretype, ignore);
                 }
              } while (result == KMessageBox::Yes);
@@ -1011,7 +1011,7 @@ int TCPSlaveBase::verifyCertificate()
           setMetaData("ssl_action", "reject");
         } else {
           do {
-             QString msg = i18n("The server certificate failed the "
+             TQString msg = i18n("The server certificate failed the "
                                 "authenticity test (%1).");
              result = messageBox(WarningYesNoCancel,
                                  msg.arg(ourHost),
@@ -1024,16 +1024,16 @@ int TCPSlaveBase::verifyCertificate()
                       d->dcc->attach();
                       if (!d->dcc->isApplicationRegistered("kio_uiserver")) {
                          KApplication::startServiceByDesktopPath("kio_uiserver.desktop",
-                         QStringList() );
+                         TQStringList() );
                       }
                    }
-                   QByteArray data, ignore;
-                   QCString ignoretype;
-                   QDataStream arg(data, IO_WriteOnly);
+                   TQByteArray data, ignore;
+                   TQCString ignoretype;
+                   TQDataStream arg(data, IO_WriteOnly);
                    arg << theurl << mOutgoingMetaData;
                    arg << metaData("window-id").toInt();
                         d->dcc->call("kio_uiserver", "UIServer",
-                                "showSSLInfoDialog(QString,KIO::MetaData,int)",
+                                "showSSLInfoDialog(TQString,KIO::MetaData,int)",
                                 data, ignoretype, ignore);
                 }
           } while (result == KMessageBox::Yes);
@@ -1108,16 +1108,16 @@ int TCPSlaveBase::verifyCertificate()
              d->dcc->attach();
              if (!d->dcc->isApplicationRegistered("kio_uiserver")) {
                 KApplication::startServiceByDesktopPath("kio_uiserver.desktop",
-                QStringList() );
+                TQStringList() );
              }
           }
-          QByteArray data, ignore;
-          QCString ignoretype;
-          QDataStream arg(data, IO_WriteOnly);
+          TQByteArray data, ignore;
+          TQCString ignoretype;
+          TQDataStream arg(data, IO_WriteOnly);
           arg << theurl << mOutgoingMetaData;
           arg << metaData("window-id").toInt();
           d->dcc->call("kio_uiserver", "UIServer",
-                       "showSSLInfoDialog(QString,KIO::MetaData,int)",
+                       "showSSLInfoDialog(TQString,KIO::MetaData,int)",
                        data, ignoretype, ignore);
       }
       } while (result != KMessageBox::No);
@@ -1274,7 +1274,7 @@ void TCPSlaveBase::setEnableSSLTunnel( bool enable )
     d->useSSLTunneling = enable;
 }
 
-void TCPSlaveBase::setRealHost( const QString& realHost )
+void TCPSlaveBase::setRealHost( const TQString& realHost )
 {
     d->realHost = realHost;
 }
@@ -1282,7 +1282,7 @@ void TCPSlaveBase::setRealHost( const QString& realHost )
 bool TCPSlaveBase::doSSLHandShake( bool sendError )
 {
     kdDebug(7029) << "TCPSlaveBase::doSSLHandShake: " << endl;
-    QString msgHost = d->host;
+    TQString msgHost = d->host;
 
     d->kssl->reInitialize();
 

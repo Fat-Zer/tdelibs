@@ -22,12 +22,12 @@
 #include "kmprinter.h"
 #include "kprinter.h"
 
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qbuttongroup.h>
-#include <qlayout.h>
-#include <qradiobutton.h>
-#include <qwhatsthis.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqbuttongroup.h>
+#include <tqlayout.h>
+#include <tqradiobutton.h>
+#include <tqwhatsthis.h>
 
 #include <kcursor.h>
 #include <kdebug.h>
@@ -49,10 +49,10 @@
 #define NUP_2_ID	1
 #define NUP_4_ID	2
 
-static void initCombo(QComboBox *cb, DrListOption *opt)
+static void initCombo(TQComboBox *cb, DrListOption *opt)
 {
 	cb->clear();
-	QPtrListIterator<DrBase>	it(*(opt->choices()));
+	TQPtrListIterator<DrBase>	it(*(opt->choices()));
 	for (;it.current();++it)
 	{
 		cb->insertItem(it.current()->get("text"));
@@ -61,7 +61,7 @@ static void initCombo(QComboBox *cb, DrListOption *opt)
 	}
 }
 
-static void setComboItem(QComboBox *cb, const QString& txt)
+static void setComboItem(TQComboBox *cb, const TQString& txt)
 {
 	for (int i=0;i<cb->count();i++)
 		if (cb->text(i) == txt)
@@ -71,7 +71,7 @@ static void setComboItem(QComboBox *cb, const QString& txt)
 		}
 }
 
-static int findOption(const char *strs[], int n, const QString& txt)
+static int findOption(const char *strs[], int n, const TQString& txt)
 {
 	for (int i=0;i<n;i+=2)
 		if (txt == strs[i]) return (i/2);
@@ -116,11 +116,11 @@ static const char*	default_type[] = {
 
 //***************************************************************************************************
 
-KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, QWidget *parent, const char *name)
+KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const char *name)
 : KPrintDialogPage(pr,dr,parent,name)
 {
 	//WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThisPrintPropertiesGeneralPage = i18n( " <qt> "
+	TQString whatsThisPrintPropertiesGeneralPage = i18n( " <qt> "
 			" <p><b>\"General\"</b> </p> "
 			" <p>This dialog page contains <em>general</em> print job settings."
 			" General settings are applicable to most printers, most jobs "
@@ -128,7 +128,7 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, QWidget *parent, const c
                         " <p>To get more specific help, enable the \"WhatsThis\" cursor and click on any of the "
                         " text labels or GUI elements of this dialog. "
 			" </qt>" );
-	QString whatsThisGeneralPageSizeLabel = i18n( " <qt> "
+	TQString whatsThisGeneralPageSizeLabel = i18n( " <qt> "
 			" <p><b>Page size:</b> Select paper size to be printed on from "
 			" the drop-down menu. </p>"
 			" <p>The exact list of choices depends on the printer driver (\"PPD\") you have installed.</p> "
@@ -141,7 +141,7 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, QWidget *parent, const c
 			" </pre>"
 			" </p> "
 			" </qt>" );
-	QString whatsThisGeneralPaperTypeLabel = i18n( " <qt> "
+	TQString whatsThisGeneralPaperTypeLabel = i18n( " <qt> "
 			" <p><b>Paper type:</b> Select paper type to be printed on from "
 			" the drop-down menu. </p>"
 			" <p>The exact list of choices depends on the printer driver (\"PPD\") you have installed. </p>"
@@ -154,7 +154,7 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, QWidget *parent, const c
 			" </pre>"
 			" </p> "
 			" </qt>" );
-	QString whatsThisGeneralPaperSourceLabel = i18n( " <qt> "
+	TQString whatsThisGeneralPaperSourceLabel = i18n( " <qt> "
 			" <p><b>Paper source:</b> Select paper source tray for the paper"
                         " to be printed on from the drop-down menu. "
 			" <p>The exact list of choices depends on the printer driver (\"PPD\") you have installed. </p>"
@@ -167,7 +167,7 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, QWidget *parent, const c
 			" </pre>"
 			" </p> "
 			" </qt>" );
-	QString whatsThisGeneralOrientationLabel = i18n( " <qt> "
+	TQString whatsThisGeneralOrientationLabel = i18n( " <qt> "
 			" <p><b>Image Orientation:</b> Orientation of the printed "
                         " page image on your paper is controlled by the radio buttons. By default, "
                         " the orientation is <em>Portrait</em> "
@@ -188,7 +188,7 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, QWidget *parent, const c
 			" </pre>"
 			" </p> "
 			" </qt>" );
-	QString whatsThisGeneralDuplexLabel = i18n( " <qt> "
+	TQString whatsThisGeneralDuplexLabel = i18n( " <qt> "
 			" <p><b>Duplex Printing:</b> These controls may be grayed out if your printer "
                         " does not support <em>duplex printing</em> (i.e. printing on both sides of the sheet). "
                         " These controls are active if your printer supports duplex printing. "
@@ -214,7 +214,7 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, QWidget *parent, const c
 			" </pre>"
 			" </p> "
 			" </qt>" );
-	QString whatsThisGeneralBannersLabel = i18n( " <qt> "
+	TQString whatsThisGeneralBannersLabel = i18n( " <qt> "
 			" <p><b>Banner Page(s):</b> Select banner(s) to print one or two special sheets "
                         " of paper just before or after your main job. </p>"
 			" <p>Banners may contain some pieces of job information, such as user name, time of printing, job"
@@ -236,7 +236,7 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, QWidget *parent, const c
 			" </pre>"
 			" </p> "
 			" </qt>" );
-	QString whatsThisGeneralPagesPerSheetLabel = i18n( " <qt> "
+	TQString whatsThisGeneralPagesPerSheetLabel = i18n( " <qt> "
 			" <p><b>Pages per Sheet:</b> "
                         " You can choose to print more than one page onto each sheet of paper. "
                         " This is sometimes useful to save paper. </p>"
@@ -260,75 +260,75 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, QWidget *parent, const c
 	setTitle(i18n("General"));
 
 	// widget creation
-	QLabel	*m_pagesizelabel = new QLabel(i18n("Page s&ize:"), this);
+	QLabel	*m_pagesizelabel = new TQLabel(i18n("Page s&ize:"), this);
 	m_pagesizelabel->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
-          QWhatsThis::add(m_pagesizelabel, whatsThisGeneralPageSizeLabel);
+          TQWhatsThis::add(m_pagesizelabel, whatsThisGeneralPageSizeLabel);
 
-	QLabel	*m_papertypelabel = new QLabel(i18n("Paper t&ype:"), this);
+	QLabel	*m_papertypelabel = new TQLabel(i18n("Paper t&ype:"), this);
 	m_papertypelabel->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
-          QWhatsThis::add(m_papertypelabel, whatsThisGeneralPaperTypeLabel);
+          TQWhatsThis::add(m_papertypelabel, whatsThisGeneralPaperTypeLabel);
 
-	QLabel	*m_inputslotlabel = new QLabel(i18n("Paper so&urce:"), this);
+	QLabel	*m_inputslotlabel = new TQLabel(i18n("Paper so&urce:"), this);
 	m_inputslotlabel->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
-          QWhatsThis::add(m_inputslotlabel, whatsThisGeneralPaperSourceLabel);
+          TQWhatsThis::add(m_inputslotlabel, whatsThisGeneralPaperSourceLabel);
 
-	m_pagesize = new QComboBox(this);
-          QWhatsThis::add(m_pagesize, whatsThisGeneralPageSizeLabel);
+	m_pagesize = new TQComboBox(this);
+          TQWhatsThis::add(m_pagesize, whatsThisGeneralPageSizeLabel);
 
-	m_papertype = new QComboBox(this);
-          QWhatsThis::add(m_papertype, whatsThisGeneralPaperTypeLabel);
+	m_papertype = new TQComboBox(this);
+          TQWhatsThis::add(m_papertype, whatsThisGeneralPaperTypeLabel);
 
-	m_inputslot = new QComboBox(this);
-          QWhatsThis::add(m_inputslot, whatsThisGeneralPaperSourceLabel);
+	m_inputslot = new TQComboBox(this);
+          TQWhatsThis::add(m_inputslot, whatsThisGeneralPaperSourceLabel);
 
 	m_pagesizelabel->setBuddy(m_pagesize);
 	m_papertypelabel->setBuddy(m_papertype);
 	m_inputslotlabel->setBuddy(m_inputslot);
 
-	m_orientbox = new QButtonGroup(0, Qt::Vertical, i18n("Orientation"), this);
-          QWhatsThis::add(m_orientbox, whatsThisGeneralOrientationLabel);
+	m_orientbox = new TQButtonGroup(0, Qt::Vertical, i18n("Orientation"), this);
+          TQWhatsThis::add(m_orientbox, whatsThisGeneralOrientationLabel);
 
-	m_duplexbox = new QButtonGroup(0, Qt::Vertical, i18n("Duplex Printing"), this);
-          QWhatsThis::add(m_duplexbox, whatsThisGeneralDuplexLabel);
+	m_duplexbox = new TQButtonGroup(0, Qt::Vertical, i18n("Duplex Printing"), this);
+          TQWhatsThis::add(m_duplexbox, whatsThisGeneralDuplexLabel);
 
-	m_nupbox = new QButtonGroup(0, Qt::Vertical, i18n("Pages per Sheet"), this);
-          QWhatsThis::add(m_nupbox, whatsThisGeneralPagesPerSheetLabel);
+	m_nupbox = new TQButtonGroup(0, Qt::Vertical, i18n("Pages per Sheet"), this);
+          TQWhatsThis::add(m_nupbox, whatsThisGeneralPagesPerSheetLabel);
 
-	m_bannerbox = new QGroupBox(0, Qt::Vertical, i18n("Banners"), this);
-          QWhatsThis::add(m_bannerbox, whatsThisGeneralBannersLabel);
+	m_bannerbox = new TQGroupBox(0, Qt::Vertical, i18n("Banners"), this);
+          TQWhatsThis::add(m_bannerbox, whatsThisGeneralBannersLabel);
 
-	QRadioButton	*m_portrait = new QRadioButton(i18n("&Portrait"), m_orientbox);
-	QRadioButton	*m_landscape = new QRadioButton(i18n("&Landscape"), m_orientbox);
-	QRadioButton	*m_revland = new QRadioButton(i18n("&Reverse landscape"), m_orientbox);
-	QRadioButton	*m_revport = new QRadioButton(i18n("R&everse portrait"), m_orientbox);
+	QRadioButton	*m_portrait = new TQRadioButton(i18n("&Portrait"), m_orientbox);
+	QRadioButton	*m_landscape = new TQRadioButton(i18n("&Landscape"), m_orientbox);
+	QRadioButton	*m_revland = new TQRadioButton(i18n("&Reverse landscape"), m_orientbox);
+	QRadioButton	*m_revport = new TQRadioButton(i18n("R&everse portrait"), m_orientbox);
 
 	m_portrait->setChecked(true);
-	m_orientpix = new QLabel(m_orientbox);
+	m_orientpix = new TQLabel(m_orientbox);
 	m_orientpix->setAlignment(Qt::AlignCenter);
-	QRadioButton	*m_dupnone = new QRadioButton(i18n("duplex orientation", "&None"), m_duplexbox);
-	QRadioButton	*m_duplong = new QRadioButton(i18n("duplex orientation", "Lon&g side"), m_duplexbox);
-	QRadioButton	*m_dupshort = new QRadioButton(i18n("duplex orientation", "S&hort side"), m_duplexbox);
+	QRadioButton	*m_dupnone = new TQRadioButton(i18n("duplex orientation", "&None"), m_duplexbox);
+	QRadioButton	*m_duplong = new TQRadioButton(i18n("duplex orientation", "Lon&g side"), m_duplexbox);
+	QRadioButton	*m_dupshort = new TQRadioButton(i18n("duplex orientation", "S&hort side"), m_duplexbox);
 	m_dupnone->setChecked(true);
-	m_duplexpix = new QLabel(m_duplexbox);
+	m_duplexpix = new TQLabel(m_duplexbox);
 	m_duplexpix->setAlignment(Qt::AlignCenter);
-	QRadioButton	*m_nup1 = new QRadioButton("&1", m_nupbox);
-	QRadioButton	*m_nup2 = new QRadioButton("&2", m_nupbox);
-	QRadioButton	*m_nup4 = new QRadioButton("&4", m_nupbox);
+	QRadioButton	*m_nup1 = new TQRadioButton("&1", m_nupbox);
+	QRadioButton	*m_nup2 = new TQRadioButton("&2", m_nupbox);
+	QRadioButton	*m_nup4 = new TQRadioButton("&4", m_nupbox);
 	m_nup1->setChecked(true);
-	m_nuppix = new QLabel(m_nupbox);
+	m_nuppix = new TQLabel(m_nupbox);
 	m_nuppix->setAlignment(Qt::AlignCenter);
-	m_startbanner = new QComboBox(m_bannerbox);
-	m_endbanner = new QComboBox(m_bannerbox);
-	QLabel	*m_startbannerlabel = new QLabel(i18n("S&tart:"), m_bannerbox);
-	QLabel	*m_endbannerlabel = new QLabel(i18n("En&d:"), m_bannerbox);
+	m_startbanner = new TQComboBox(m_bannerbox);
+	m_endbanner = new TQComboBox(m_bannerbox);
+	QLabel	*m_startbannerlabel = new TQLabel(i18n("S&tart:"), m_bannerbox);
+	QLabel	*m_endbannerlabel = new TQLabel(i18n("En&d:"), m_bannerbox);
 	m_startbannerlabel->setBuddy(m_startbanner);
 	m_endbannerlabel->setBuddy(m_endbanner);
 
 	// layout creation
-	QVBoxLayout	*lay0 = new QVBoxLayout(this, 0, KDialog::spacingHint());
-          QWhatsThis::add(this, whatsThisPrintPropertiesGeneralPage);
-	QGridLayout	*lay1 = new QGridLayout(0, 3, 2, 0, KDialog::spacingHint());
-	QGridLayout	*lay2 = new QGridLayout(0, 2, 2, 0, KDialog::spacingHint());
+	QVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+          TQWhatsThis::add(this, whatsThisPrintPropertiesGeneralPage);
+	QGridLayout	*lay1 = new TQGridLayout(0, 3, 2, 0, KDialog::spacingHint());
+	QGridLayout	*lay2 = new TQGridLayout(0, 2, 2, 0, KDialog::spacingHint());
 	lay0->addStretch(1);
 	lay0->addLayout(lay1);
 	lay0->addStretch(1);
@@ -346,27 +346,27 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, QWidget *parent, const c
 	lay2->addWidget(m_nupbox, 1, 1);
 	lay2->setColStretch(0, 1);
 	lay2->setColStretch(1, 1);
-	QGridLayout	*lay3 = new QGridLayout(m_orientbox->layout(), 4, 2,
+	QGridLayout	*lay3 = new TQGridLayout(m_orientbox->layout(), 4, 2,
 		KDialog::spacingHint());
 	lay3->addWidget(m_portrait, 0, 0);
 	lay3->addWidget(m_landscape, 1, 0);
 	lay3->addWidget(m_revland, 2, 0);
 	lay3->addWidget(m_revport, 3, 0);
 	lay3->addMultiCellWidget(m_orientpix, 0, 3, 1, 1);
-	QGridLayout	*lay4 = new QGridLayout(m_duplexbox->layout(), 3, 2,
+	QGridLayout	*lay4 = new TQGridLayout(m_duplexbox->layout(), 3, 2,
 		KDialog::spacingHint());
 	lay4->addWidget(m_dupnone, 0, 0);
 	lay4->addWidget(m_duplong, 1, 0);
 	lay4->addWidget(m_dupshort, 2, 0);
 	lay4->addMultiCellWidget(m_duplexpix, 0, 2, 1, 1);
 	lay4->setRowStretch( 0, 1 );
-	QGridLayout	*lay5 = new QGridLayout(m_nupbox->layout(), 3, 2,
+	QGridLayout	*lay5 = new TQGridLayout(m_nupbox->layout(), 3, 2,
 		KDialog::spacingHint());
 	lay5->addWidget(m_nup1, 0, 0);
 	lay5->addWidget(m_nup2, 1, 0);
 	lay5->addWidget(m_nup4, 2, 0);
 	lay5->addMultiCellWidget(m_nuppix, 0, 2, 1, 1);
-	QGridLayout	*lay6 = new QGridLayout(m_bannerbox->layout(), 2, 2,
+	QGridLayout	*lay6 = new TQGridLayout(m_bannerbox->layout(), 2, 2,
 		KDialog::spacingHint());
 	lay6->addWidget(m_startbannerlabel, 0, 0);
 	lay6->addWidget(m_endbannerlabel, 1, 0);
@@ -375,9 +375,9 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, QWidget *parent, const c
 	lay6->setColStretch(1, 1);
 
 	// connections (+ misc)
-	connect(m_orientbox,SIGNAL(clicked(int)),SLOT(slotOrientationChanged(int)));
-	connect(m_nupbox,SIGNAL(clicked(int)),SLOT(slotNupChanged(int)));
-	connect(m_duplexbox,SIGNAL(clicked(int)),SLOT(slotDuplexChanged(int)));
+	connect(m_orientbox,TQT_SIGNAL(clicked(int)),TQT_SLOT(slotOrientationChanged(int)));
+	connect(m_nupbox,TQT_SIGNAL(clicked(int)),TQT_SLOT(slotNupChanged(int)));
+	connect(m_duplexbox,TQT_SIGNAL(clicked(int)),TQT_SLOT(slotDuplexChanged(int)));
 
 	// init
 	initialize();
@@ -408,7 +408,7 @@ void KPGeneralPage::initialize()
 			if ( opt->choices()->count() == 2 )
 			{
 				// probably a On/Off option instead of the standard PS one
-				QButton *btn = m_duplexbox->find( DUPLEX_SHORT_ID );
+				TQButton *btn = m_duplexbox->find( DUPLEX_SHORT_ID );
 				m_duplexbox->remove( btn );
 				btn->hide();
 				//delete btn;
@@ -455,15 +455,15 @@ void KPGeneralPage::initialize()
 	}
 
 	// Banners
-	QStringList	values = QStringList::split(',',printer()->option("kde-banners-supported"),false);
+	QStringList	values = TQStringList::split(',',printer()->option("kde-banners-supported"),false);
 	if (values.count() > 0)
 	{
-		for (QStringList::ConstIterator it = values.begin(); it != values.end(); ++it)
+		for (TQStringList::ConstIterator it = values.begin(); it != values.end(); ++it)
 		{
 			m_startbanner->insertItem(*it);
 			m_endbanner->insertItem(*it);
 		}
-		values = QStringList::split(',',printer()->option("kde-banners"),false);
+		values = TQStringList::split(',',printer()->option("kde-banners"),false);
 		while (values.count() < 2) values.append("none");
 		setComboItem(m_startbanner, values[0]);
 		setComboItem(m_endbanner, values[1]);
@@ -475,15 +475,15 @@ void KPGeneralPage::initialize()
 	slotNupChanged(NUP_1_ID);
 }
 
-void KPGeneralPage::setOptions(const QMap<QString,QString>& opts)
+void KPGeneralPage::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	QString	value;
 
 	if (driver())
 	{
 		value = opts["media"];
-		QStringList	l = QStringList::split(',',value,false);
-		for(QStringList::ConstIterator it = l.begin(); it != l.end(); ++it)
+		QStringList	l = TQStringList::split(',',value,false);
+		for(TQStringList::ConstIterator it = l.begin(); it != l.end(); ++it)
 		{
 			value = *it;
 			DrBase	*ch;
@@ -546,8 +546,8 @@ void KPGeneralPage::setOptions(const QMap<QString,QString>& opts)
 		if (!value.isEmpty())
 		{
 			int	index(-1);
-			QStringList	l = QStringList::split(',',value,false);
-			for(QStringList::ConstIterator it = l.begin(); it != l.end(); ++it)
+			QStringList	l = TQStringList::split(',',value,false);
+			for(TQStringList::ConstIterator it = l.begin(); it != l.end(); ++it)
 			{
 				value = *it;
 
@@ -575,7 +575,7 @@ void KPGeneralPage::setOptions(const QMap<QString,QString>& opts)
 	value = opts["job-sheets"];
 	if (!value.isEmpty())
 	{
-		QStringList	l = QStringList::split(',',value,false);
+		QStringList	l = TQStringList::split(',',value,false);
 		if (l.count() > 0) setComboItem(m_startbanner,l[0]);
 		if (l.count() > 1) setComboItem(m_endbanner,l[1]);
 	}
@@ -612,7 +612,7 @@ void KPGeneralPage::setOptions(const QMap<QString,QString>& opts)
 		m_pagesize->setDisabled( opts[ "kde-pagesize-fixed" ] == "1" );
 }
 
-void KPGeneralPage::getOptions(QMap<QString,QString>& opts, bool incldef)
+void KPGeneralPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	QString	value;
 
@@ -649,7 +649,7 @@ void KPGeneralPage::getOptions(QMap<QString,QString>& opts, bool incldef)
 	}
 	else
 	{
-		value = QString("%1,%2,%3").arg(default_size[m_pagesize->currentItem()*2]).arg(default_type[m_papertype->currentItem()*2]).arg(default_source[m_inputslot->currentItem()*2]);
+		value = TQString("%1,%2,%3").arg(default_size[m_pagesize->currentItem()*2]).arg(default_type[m_papertype->currentItem()*2]).arg(default_source[m_inputslot->currentItem()*2]);
 		opts["media"] = value;
 
 		if (m_duplexbox->isEnabled())
@@ -664,7 +664,7 @@ void KPGeneralPage::getOptions(QMap<QString,QString>& opts, bool incldef)
 		}
 	}
 
-	value = QString::number(m_orientbox->id(m_orientbox->selected())+3);
+	value = TQString::number(m_orientbox->id(m_orientbox->selected())+3);
 	if (value != "3" || incldef) opts["orientation-requested"] = value;
 
 	if (m_nupbox->isEnabled())
@@ -680,11 +680,11 @@ void KPGeneralPage::getOptions(QMap<QString,QString>& opts, bool incldef)
 
 	if (m_bannerbox->isEnabled())
 	{
-		QStringList	l = QStringList::split(',',printer()->option("kde-banners"),false);
+		QStringList	l = TQStringList::split(',',printer()->option("kde-banners"),false);
 		if (incldef || (l.count() == 2 && (l[0] != m_startbanner->currentText() || l[1] != m_endbanner->currentText()))
 		    || (l.count() == 0 && (m_startbanner->currentText() != "none" || m_endbanner->currentText() != "none")))
 		{
-			value = QString("%1,%2").arg(m_startbanner->currentText()).arg(m_endbanner->currentText());
+			value = TQString("%1,%2").arg(m_startbanner->currentText()).arg(m_endbanner->currentText());
 			opts["job-sheets"] = value;
 		}
 	}

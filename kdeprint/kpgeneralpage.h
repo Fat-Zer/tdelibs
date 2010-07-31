@@ -32,11 +32,11 @@ class KDEPRINT_EXPORT KPGeneralPage : public KPrintDialogPage
 {
 	Q_OBJECT
 public:
-	KPGeneralPage(KMPrinter *pr, DrMain *dr, QWidget *parent = 0, const char *name = 0);
+	KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent = 0, const char *name = 0);
 	~KPGeneralPage();
 
-	void setOptions(const QMap<QString,QString>& opts);
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
+	void setOptions(const TQMap<TQString,TQString>& opts);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
 
 protected:
 	void initialize();

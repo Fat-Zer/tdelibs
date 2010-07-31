@@ -3,8 +3,8 @@
 
 #include <dcopobject.h>
 #include <dcopref.h>
-#include <qstringlist.h>
-#include <qcstring.h>
+#include <tqstringlist.h>
+#include <tqcstring.h>
 //#include "editdcopinterface.moc"
 namespace KTextEditor
 {
@@ -36,12 +36,12 @@ namespace KTextEditor
     /**
     * @return the complete document as a single QString
     */
-    virtual QString text ();
+    virtual TQString text ();
 
     /**
     * @return All the text from the requested line.
     */
-    virtual QString textLine ( uint line );
+    virtual TQString textLine ( uint line );
 
     /**
     * @return The current number of lines in the document
@@ -57,13 +57,13 @@ namespace KTextEditor
     * Set the given text into the view.
     * Warning: This will overwrite any data currently held in this view.
     */
-    virtual void setText (const QString &text );
+    virtual void setText (const TQString &text );
 
     /**
     *  Inserts text at line "line", column "col"
     *  returns true if success
     */
-    virtual bool insertText ( uint line, uint col, const QString &text );
+    virtual bool insertText ( uint line, uint col, const TQString &text );
 
     /**
     *  remove text at line "line", column "col"
@@ -74,7 +74,7 @@ namespace KTextEditor
     /**
     * Insert line(s) at the given line number.
     */
-    virtual bool insertLine ( uint line, const QString &text );
+    virtual bool insertLine ( uint line, const TQString &text );
 
     /**
     * Insert line(s) at the given line number.

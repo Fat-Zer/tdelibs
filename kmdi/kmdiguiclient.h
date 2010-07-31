@@ -19,8 +19,8 @@
 #ifndef KMDIGUICLIENT_H
 #define KMDIGUICLIENT_H
 
-#include <qobject.h>
-#include <qguardedptr.h>
+#include <tqobject.h>
+#include <tqguardedptr.h>
 #include <kxmlguiclient.h>
 #include <kaction.h>
 #include "kmdidefines.h"
@@ -38,7 +38,7 @@ namespace KMDIPrivate
  * A class derived from KXMLGUIClient that handles the various
  * KMDI modes
  */
-class KMDI_EXPORT KMDIGUIClient : public QObject,
+class KMDI_EXPORT KMDIGUIClient : public TQObject,
 			public KXMLGUIClient
 {
 	Q_OBJECT
@@ -77,7 +77,7 @@ private slots:
 	 * One of our tool view toggle actions has been deleted. Redo the
 	 * tool views menu
 	 */
-	void actionDeleted( QObject* );
+	void actionDeleted( TQObject* );
 
 	/**
 	 * Updates the action that lets the user change the MDI mode to the
@@ -103,9 +103,9 @@ private:
 	KMDIGUIClientPrivate *d;
 	KMdi::MdiMode m_mdiMode;
 
-	QGuardedPtr<KMdiMainFrm> m_mdiMainFrm;
-	QPtrList<KAction> m_toolViewActions;
-	QPtrList<KAction> m_documentViewActions;
+	TQGuardedPtr<KMdiMainFrm> m_mdiMainFrm;
+	TQPtrList<KAction> m_toolViewActions;
+	TQPtrList<KAction> m_documentViewActions;
 
 	KActionMenu *m_docMenu;
 	KActionMenu *m_toolMenu;
@@ -123,8 +123,8 @@ class KMDI_EXPORT ToggleToolViewAction: public KToggleAction
 	Q_OBJECT
 public:
 
-	ToggleToolViewAction( const QString& text, const KShortcut& cut = KShortcut(), KDockWidget *dw = 0, KMdiMainFrm *mdiMainFrm = 0,
-	                      QObject* parent = 0, const char* name = 0 );
+	ToggleToolViewAction( const TQString& text, const KShortcut& cut = KShortcut(), KDockWidget *dw = 0, KMdiMainFrm *mdiMainFrm = 0,
+	                      TQObject* parent = 0, const char* name = 0 );
 
 	virtual ~ToggleToolViewAction();
 

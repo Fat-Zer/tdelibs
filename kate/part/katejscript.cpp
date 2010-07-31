@@ -43,11 +43,11 @@
 #include <kjs/interpreter.h>
 #include <kjs/lookup.h>
 
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qpopupmenu.h>
-#include <qregexp.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqpopupmenu.h>
+#include <tqregexp.h>
+#include <tqtextstream.h>
 
 
 namespace KJS {
@@ -58,7 +58,7 @@ namespace KJS {
 // Copyright (C) 2001-2003 David Faure (faure@kde.org)
 // Copyright (C) 2003 Apple Computer, Inc.
 
-UString::UString(const QString &d)
+UString::UString(const TQString &d)
 {
   unsigned int len = d.length();
   UChar *dat = new UChar[len];
@@ -66,14 +66,14 @@ UString::UString(const QString &d)
   rep = UString::Rep::create(dat, len);
 }
 
-QString UString::qstring() const
+TQString UString::qstring() const
 {
-  return QString((QChar*) data(), size());
+  return TQString((TQChar*) data(), size());
 }
 
-QConstString UString::qconststring() const
+TQConstString UString::qconststring() const
 {
-  return QConstString((QChar*) data(), size());
+  return TQConstString((TQChar*) data(), size());
 }
 
 //BEGIN global methods
@@ -267,7 +267,7 @@ KJS::ObjectImp *KateJScript::wrapView (KJS::ExecState *exec, KateView *view)
   return new KateJSView(exec, view);
 }
 
-bool KateJScript::execute (KateView *view, const QString &script, QString &errorMsg)
+bool KateJScript::execute (KateView *view, const TQString &script, TQString &errorMsg)
 {
   // no view, no fun
   if (!view)
@@ -653,13 +653,13 @@ void KateJScriptManager::collectScripts (bool force)
   }
 
   // Let's get a list of all the .js files
-  QStringList list = KGlobal::dirs()->findAllResources("data","katepart/scripts/*.js",false,true);
+  TQStringList list = KGlobal::dirs()->findAllResources("data","katepart/scripts/*.js",false,true);
 
   // Let's iterate through the list and build the Mode List
-  for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
+  for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
   {
     // Each file has a group called:
-    QString Group="Cache "+ *it;
+    TQString Group="Cache "+ *it;
 
     // Let's go to this group
     config.setGroup(Group);
@@ -667,7 +667,7 @@ void KateJScriptManager::collectScripts (bool force)
     // stat the file
     struct stat sbuf;
     memset (&sbuf, 0, sizeof(sbuf));
-    stat(QFile::encodeName(*it), &sbuf);
+    stat(TQFile::encodeName(*it), &sbuf);
 
     // If the group exist and we're not forced to read the .js file, let's build myModeList for katepartjscriptrc
     if (!force && config.hasGroup(Group) && (sbuf.st_mtime == config.readNumEntry("lastModified")))
@@ -677,11 +677,11 @@ void KateJScriptManager::collectScripts (bool force)
     {
       kdDebug (13050) << "add script: " << *it << endl;
 
-      QString desktopFile =  (*it).left((*it).length()-2).append ("desktop");
+      TQString desktopFile =  (*it).left((*it).length()-2).append ("desktop");
 
       kdDebug (13050) << "add script (desktop file): " << desktopFile << endl;
 
-      QFileInfo dfi (desktopFile);
+      TQFileInfo dfi (desktopFile);
 
       if (dfi.exists())
       {
@@ -689,10 +689,10 @@ void KateJScriptManager::collectScripts (bool force)
         df.setDesktopGroup ();
 
         // get cmdname, fallback to baseName, if it is empty, therefor not use the kconfig fallback
-        QString cmdname = df.readEntry ("X-Kate-Command");
+        TQString cmdname = df.readEntry ("X-Kate-Command");
         if (cmdname.isEmpty())
         {
-          QFileInfo fi (*it);
+          TQFileInfo fi (*it);
           cmdname = fi.baseName();
         }
 
@@ -711,7 +711,7 @@ void KateJScriptManager::collectScripts (bool force)
       {
         kdDebug (13050) << "add script: fallback, no desktop file around!" << endl;
 
-        QFileInfo fi (*it);
+        TQFileInfo fi (*it);
 
         if (m_scripts[fi.baseName()])
           continue;
@@ -731,7 +731,7 @@ void KateJScriptManager::collectScripts (bool force)
   config.sync();
 }
 
-bool KateJScriptManager::exec( Kate::View *view, const QString &_cmd, QString &errorMsg )
+bool KateJScriptManager::exec( Kate::View *view, const TQString &_cmd, TQString &errorMsg )
 {
   // cast it hardcore, we know that it is really a kateview :)
   KateView *v = (KateView*) view;
@@ -743,8 +743,8 @@ bool KateJScriptManager::exec( Kate::View *view, const QString &_cmd, QString &e
   }
 
    //create a list of args
-  QStringList args( QStringList::split( QRegExp("\\s+"), _cmd ) );
-  QString cmd ( args.first() );
+  TQStringList args( TQStringList::split( TQRegExp("\\s+"), _cmd ) );
+  TQString cmd ( args.first() );
   args.remove( args.first() );
 
   kdDebug(13050) << "try to exec: " << cmd << endl;
@@ -755,7 +755,7 @@ bool KateJScriptManager::exec( Kate::View *view, const QString &_cmd, QString &e
     return false;
   }
 
-  QFile file (m_scripts[cmd]->filename);
+  TQFile file (m_scripts[cmd]->filename);
 
   if ( !file.open( IO_ReadOnly ) )
     {
@@ -763,17 +763,17 @@ bool KateJScriptManager::exec( Kate::View *view, const QString &_cmd, QString &e
     return false;
   }
 
-  QTextStream stream( &file );
-  stream.setEncoding (QTextStream::UnicodeUTF8);
+  TQTextStream stream( &file );
+  stream.setEncoding (TQTextStream::UnicodeUTF8);
 
-  QString source = stream.read ();
+  TQString source = stream.read ();
 
   file.close();
 
   return KateFactory::self()->jscript()->execute(v, source, errorMsg);
 }
 
-bool KateJScriptManager::help( Kate::View *, const QString &cmd, QString &msg )
+bool KateJScriptManager::help( Kate::View *, const TQString &cmd, TQString &msg )
 {
   if (!m_scripts[cmd] || !m_scripts[cmd]->desktopFileExists)
     return false;
@@ -789,11 +789,11 @@ bool KateJScriptManager::help( Kate::View *, const QString &cmd, QString &msg )
   return true;
 }
 
-QStringList KateJScriptManager::cmds()
+TQStringList KateJScriptManager::cmds()
 {
-   QStringList l;
+   TQStringList l;
 
-   QDictIterator<KateJScriptManager::Script> it( m_scripts );
+   TQDictIterator<KateJScriptManager::Script> it( m_scripts );
    for( ; it.current(); ++it )
      l << it.current()->name;
 
@@ -844,9 +844,9 @@ KJS::Value KJS::KateJSIndenterProtoFunc::call(KJS::ExecState *exec, KJS::Object 
 //END
 
 //BEGIN KateIndentJScriptImpl
-KateIndentJScriptImpl::KateIndentJScriptImpl(const QString& internalName,
-        const QString  &filePath, const QString &niceName,
-        const QString &copyright, double version):
+KateIndentJScriptImpl::KateIndentJScriptImpl(const TQString& internalName,
+        const TQString  &filePath, const TQString &niceName,
+        const TQString &copyright, double version):
           KateIndentScriptImplAbstract(internalName,filePath,niceName,copyright,version),m_interpreter(0),m_indenter(0)
 {
 }
@@ -876,7 +876,7 @@ void KateIndentJScriptImpl::deleteInterpreter()
     m_interpreter=0;
 }
 
-bool KateIndentJScriptImpl::setupInterpreter(QString &errorMsg)
+bool KateIndentJScriptImpl::setupInterpreter(TQString &errorMsg)
 {
   if (!m_interpreter)
   {
@@ -890,7 +890,7 @@ bool KateIndentJScriptImpl::setupInterpreter(QString &errorMsg)
     m_interpreter->globalObject().put(m_interpreter->globalExec(),"debug", KJS::Object(new 
               KateJSGlobalFunctions(KateJSGlobalFunctions::Debug,1)));
     m_interpreter->globalObject().put(m_interpreter->globalExec(),"indenter",*m_indenter,KJS::DontDelete | KJS::ReadOnly);
-    QFile file (filePath());
+    TQFile file (filePath());
 
     if ( !file.open( IO_ReadOnly ) )
       {
@@ -899,10 +899,10 @@ bool KateIndentJScriptImpl::setupInterpreter(QString &errorMsg)
       return false;
     }
 
-    QTextStream stream( &file );
-    stream.setEncoding (QTextStream::UnicodeUTF8);
+    TQTextStream stream( &file );
+    stream.setEncoding (TQTextStream::UnicodeUTF8);
 
-    QString source = stream.read ();
+    TQString source = stream.read ();
 
     file.close();
 
@@ -935,7 +935,7 @@ bool KateIndentJScriptImpl::setupInterpreter(QString &errorMsg)
 }
 
 
-inline static bool KateIndentJScriptCall(Kate::View *view, QString &errorMsg, KateJSDocument *docWrapper, KateJSView *viewWrapper,
+inline static bool KateIndentJScriptCall(Kate::View *view, TQString &errorMsg, KateJSDocument *docWrapper, KateJSView *viewWrapper,
         KJS::Interpreter *interpreter, KJS::Object lookupobj,const KJS::Identifier& func,KJS::List params)
 {
  // no view, no fun
@@ -972,24 +972,24 @@ inline static bool KateIndentJScriptCall(Kate::View *view, QString &errorMsg, Ka
   return true;
 }
 
-bool KateIndentJScriptImpl::processChar(Kate::View *view, QChar c, QString &errorMsg )
+bool KateIndentJScriptImpl::processChar(Kate::View *view, TQChar c, TQString &errorMsg )
 {
 
   kdDebug(13050)<<"KateIndentJScriptImpl::processChar"<<endl;
   if (!setupInterpreter(errorMsg)) return false;
   KJS::List params;
-  params.append(KJS::String(QString(c)));
+  params.append(KJS::String(TQString(c)));
   return KateIndentJScriptCall(view,errorMsg,m_docWrapper,m_viewWrapper,m_interpreter,*m_indenter,KJS::Identifier("onchar"),params);
 }
 
-bool KateIndentJScriptImpl::processLine(Kate::View *view, const KateDocCursor &line, QString &errorMsg )
+bool KateIndentJScriptImpl::processLine(Kate::View *view, const KateDocCursor &line, TQString &errorMsg )
 {
   kdDebug(13050)<<"KateIndentJScriptImpl::processLine"<<endl;
   if (!setupInterpreter(errorMsg)) return false;
   return KateIndentJScriptCall(view,errorMsg,m_docWrapper,m_viewWrapper,m_interpreter,*m_indenter,KJS::Identifier("online"),KJS::List());
 }
 
-bool KateIndentJScriptImpl::processNewline( class Kate::View *view, const KateDocCursor &begin, bool needcontinue, QString &errorMsg )
+bool KateIndentJScriptImpl::processNewline( class Kate::View *view, const KateDocCursor &begin, bool needcontinue, TQString &errorMsg )
 {
   kdDebug(13050)<<"KateIndentJScriptImpl::processNewline"<<endl;
   if (!setupInterpreter(errorMsg)) return false;
@@ -1028,13 +1028,13 @@ void KateIndentJScriptManager::collectScripts (bool force)
 #endif
 
   // Let's get a list of all the .js files
-  QStringList list = KGlobal::dirs()->findAllResources("data","katepart/scripts/indent/*.js",false,true);
+  TQStringList list = KGlobal::dirs()->findAllResources("data","katepart/scripts/indent/*.js",false,true);
 
   // Let's iterate through the list and build the Mode List
-  for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
+  for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
   {
     // Each file has a group ed:
-    QString Group="Cache "+ *it;
+    TQString Group="Cache "+ *it;
 
     // Let's go to this group
     config.setGroup(Group);
@@ -1042,20 +1042,20 @@ void KateIndentJScriptManager::collectScripts (bool force)
     // stat the file
     struct stat sbuf;
     memset (&sbuf, 0, sizeof(sbuf));
-    stat(QFile::encodeName(*it), &sbuf);
+    stat(TQFile::encodeName(*it), &sbuf);
 
     // If the group exist and we're not forced to read the .js file, let's build myModeList for katepartjscriptrc
     bool readnew=false;
     if (!force && config.hasGroup(Group) && (sbuf.st_mtime == config.readNumEntry("lastModified")))
     {
         config.setGroup(Group);
-        QString filePath=*it;
-        QString internalName=config.readEntry("internlName","KATE-ERROR");
+        TQString filePath=*it;
+        TQString internalName=config.readEntry("internlName","KATE-ERROR");
         if (internalName=="KATE-ERROR") readnew=true;
         else
         {
-          QString niceName=config.readEntry("niceName",internalName);
-          QString copyright=config.readEntry("copyright",i18n("(Unknown)"));
+          TQString niceName=config.readEntry("niceName",internalName);
+          TQString copyright=config.readEntry("copyright",i18n("(Unknown)"));
           double  version=config.readDoubleNumEntry("version",0.0);
           KateIndentJScriptImpl *s=new KateIndentJScriptImpl(
             internalName,filePath,niceName,copyright,version);
@@ -1065,15 +1065,15 @@ void KateIndentJScriptManager::collectScripts (bool force)
     else readnew=true;
     if (readnew)
     {
-        QFileInfo fi (*it);
+        TQFileInfo fi (*it);
 
         if (m_scripts[fi.baseName()])
           continue;
 
-        QString internalName=fi.baseName();
-        QString filePath=*it;
-        QString niceName=internalName;
-        QString copyright=i18n("(Unknown)");
+        TQString internalName=fi.baseName();
+        TQString filePath=*it;
+        TQString niceName=internalName;
+        TQString copyright=i18n("(Unknown)");
         double   version=0.0;
         parseScriptHeader(filePath,&niceName,&copyright,&version);
         /*save the information for retrieval*/
@@ -1093,22 +1093,22 @@ void KateIndentJScriptManager::collectScripts (bool force)
   config.sync();
 }
 
-KateIndentScript KateIndentJScriptManager::script(const QString &scriptname) {
+KateIndentScript KateIndentJScriptManager::script(const TQString &scriptname) {
   KateIndentJScriptImpl *s=m_scripts[scriptname];
   kdDebug(13050)<<scriptname<<"=="<<s<<endl;
   return KateIndentScript(s);
 }
 
-void KateIndentJScriptManager::parseScriptHeader(const QString &filePath,
-        QString *niceName,QString *copyright,double *version)
+void KateIndentJScriptManager::parseScriptHeader(const TQString &filePath,
+        TQString *niceName,TQString *copyright,double *version)
 {
-  QFile f(QFile::encodeName(filePath));
+  TQFile f(TQFile::encodeName(filePath));
   if (!f.open(IO_ReadOnly) ) {
     kdDebug(13050)<<"Header could not be parsed, because file could not be opened"<<endl;
     return;
   }
-  QTextStream st(&f);
-  st.setEncoding (QTextStream::UnicodeUTF8);
+  TQTextStream st(&f);
+  st.setEncoding (TQTextStream::UnicodeUTF8);
   if (!st.readLine().upper().startsWith("/**KATE")) {
     kdDebug(13050)<<"No header found"<<endl;
     f.close();
@@ -1117,12 +1117,12 @@ void KateIndentJScriptManager::parseScriptHeader(const QString &filePath,
   // here the real parsing begins
   kdDebug(13050)<<"Parsing indent script header"<<endl;
   enum {NOTHING=0,COPYRIGHT=1} currentState=NOTHING;
-  QString line;
-  QString tmpblockdata="";
-  QRegExp endExpr("[\\s\\t]*\\*\\*\\/[\\s\\t]*$");
-  QRegExp keyValue("[\\s\\t]*\\*\\s*(.+):(.*)$");
-  QRegExp blockContent("[\\s\\t]*\\*(.*)$");
-  while ((line=st.readLine())!=QString::null) {
+  TQString line;
+  TQString tmpblockdata="";
+  TQRegExp endExpr("[\\s\\t]*\\*\\*\\/[\\s\\t]*$");
+  TQRegExp keyValue("[\\s\\t]*\\*\\s*(.+):(.*)$");
+  TQRegExp blockContent("[\\s\\t]*\\*(.*)$");
+  while ((line=st.readLine())!=TQString::null) {
     if (endExpr.exactMatch(line)) {
       kdDebug(13050)<<"end of config block"<<endl;
       if (currentState==NOTHING) break;
@@ -1135,11 +1135,11 @@ void KateIndentJScriptManager::parseScriptHeader(const QString &filePath,
     if (currentState==NOTHING)
     {
       if (keyValue.exactMatch(line)) {
-        QStringList sl=keyValue.capturedTexts();
+        TQStringList sl=keyValue.capturedTexts();
         kdDebug(13050)<<"key:"<<sl[1]<<endl<<"value:"<<sl[2]<<endl;
         kdDebug(13050)<<"key-length:"<<sl[1].length()<<endl<<"value-length:"<<sl[2].length()<<endl;
-        QString key=sl[1];
-        QString value=sl[2];
+        TQString key=sl[1];
+        TQString value=sl[2];
         if (key=="NAME") (*niceName)=value.stripWhiteSpace();
         else if (key=="VERSION") (*version)=value.stripWhiteSpace().toDouble(0);
         else if (key=="COPYRIGHT")
@@ -1152,7 +1152,7 @@ void KateIndentJScriptManager::parseScriptHeader(const QString &filePath,
     } else {
       if (blockContent.exactMatch(line))
       {
-        QString  bl=blockContent.capturedTexts()[1];
+        TQString  bl=blockContent.capturedTexts()[1];
         //kdDebug(13050)<<"block content line:"<<bl<<endl<<bl.length()<<" "<<bl.isEmpty()<<endl;
         if (bl.isEmpty())
         {

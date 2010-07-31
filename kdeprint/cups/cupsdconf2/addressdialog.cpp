@@ -19,27 +19,27 @@
 
 #include "addressdialog.h"
 
-#include <qcombobox.h>
-#include <qlineedit.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqcombobox.h>
+#include <tqlineedit.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 
 #include <klocale.h>
 
-AddressDialog::AddressDialog(QWidget *parent, const char *name)
+AddressDialog::AddressDialog(TQWidget *parent, const char *name)
 	: KDialogBase(Swallow, i18n("ACL Address"), Ok|Cancel, Ok, parent, name, true, true)
 {
-	QWidget *w = new QWidget(this);
-	type_ = new QComboBox(w);
-	address_ = new QLineEdit(w);
+	TQWidget *w = new TQWidget(this);
+	type_ = new TQComboBox(w);
+	address_ = new TQLineEdit(w);
 
 	type_->insertItem(i18n("Allow"));
 	type_->insertItem(i18n("Deny"));
 
-	QLabel	*l1 = new QLabel(i18n("Type:"), w);
-	QLabel	*l2 = new QLabel(i18n("Address:"), w);
+	QLabel	*l1 = new TQLabel(i18n("Type:"), w);
+	QLabel	*l2 = new TQLabel(i18n("Address:"), w);
 
-	QGridLayout	*m1 = new QGridLayout(w, 2, 2, 0, 5);
+	QGridLayout	*m1 = new TQGridLayout(w, 2, 2, 0, 5);
 	m1->setColStretch(1, 1);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);
 	m1->addWidget(l2, 1, 0, Qt::AlignRight);
@@ -50,9 +50,9 @@ AddressDialog::AddressDialog(QWidget *parent, const char *name)
 	resize(300, 100);
 }
 
-QString AddressDialog::addressString()
+TQString AddressDialog::addressString()
 {
-	QString s;
+	TQString s;
 	if (type_->currentItem() == 0)
 		s.append("Allow ");
 	else
@@ -64,16 +64,16 @@ QString AddressDialog::addressString()
 	return s;
 }
 
-QString AddressDialog::newAddress(QWidget *parent)
+TQString AddressDialog::newAddress(TQWidget *parent)
 {
 	AddressDialog	dlg(parent);
 	if (dlg.exec())
 		return dlg.addressString();
 	else
-		return QString::null;
+		return TQString::null;
 }
 
-QString AddressDialog::editAddress(const QString& addr, QWidget *parent)
+TQString AddressDialog::editAddress(const TQString& addr, TQWidget *parent)
 {
 	AddressDialog	dlg(parent);
 	int p = addr.find(' ');
@@ -85,5 +85,5 @@ QString AddressDialog::editAddress(const QString& addr, QWidget *parent)
 	if (dlg.exec())
 		return dlg.addressString();
 	else
-		return QString::null;
+		return TQString::null;
 }

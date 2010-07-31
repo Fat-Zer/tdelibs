@@ -51,34 +51,34 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     /**
      * Retrieves the specificed ICC profile filename from the configuration database
      */
-    QString getIccFileName(QString profileName, QString screenName, QString kde_confdir);
+    TQString getIccFileName(TQString profileName, TQString screenName, TQString kde_confdir);
 
     /**
      * Applies the specificed ICC profile filename to the specified RandR output
      * If RandR is not available, the specified file is applied to the current display
      */
-    QString applyIccFile(QString screenName, QString fileName);
+    TQString applyIccFile(TQString screenName, TQString fileName);
 
     /**
      * Applies all saved ICC profile settings to all RandR outputs
      * If RandR is not available, the settings are applied to the current display
      */
-    QString applyIccConfiguration(QString profileName, QString kde_confdir);
+    TQString applyIccConfiguration(TQString profileName, TQString kde_confdir);
 
     /**
      * Applies saved system wide settings to the current display
      */
-    QString applySystemWideIccConfiguration(QString kde_confdir);
+    TQString applySystemWideIccConfiguration(TQString kde_confdir);
 
     /**
      * Resets the current display
      */
-    QString clearIccConfiguration(void);
+    TQString clearIccConfiguration(void);
 
     /**
      * Retrieves current profile name
      */
-    QString getCurrentProfile(void);
+    TQString getCurrentProfile(void);
 
     /**
      * Reads current screen information.

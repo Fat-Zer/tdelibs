@@ -168,7 +168,7 @@ long HTMLAnchorElement::tabIndex() const
 void HTMLAnchorElement::setTabIndex( long _tabIndex )
 {
     if(impl) {
-	DOMString value(QString::number(_tabIndex));
+	DOMString value(TQString::number(_tabIndex));
         ((ElementImpl *)impl)->setAttribute(ATTR_TABINDEX,value);
     }
 }

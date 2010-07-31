@@ -41,7 +41,7 @@ class KTEXTEDITOR_EXPORT PrintInterface
     unsigned int printInterfaceNumber () const;
     
   protected:  
-    void setPrintInterfaceDCOPSuffix (const QCString &suffix);  
+    void setPrintInterfaceDCOPSuffix (const TQCString &suffix);  
     
   //
   // slots !!!

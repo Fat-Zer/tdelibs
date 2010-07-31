@@ -18,10 +18,10 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qregexp.h>
-#include <qstring.h>
-#include <qiconset.h>
-#include <qpixmap.h>
+#include <tqregexp.h>
+#include <tqstring.h>
+#include <tqiconset.h>
+#include <tqpixmap.h>
 
 #include <assert.h>
 #include <kiconloader.h>
@@ -57,12 +57,12 @@ public:
         return *this;
     }
 
-    QString m_text;
-    QString m_toolTip;
-    QString m_whatsThis;
-    QString m_statusText;
-    QString m_iconName;
-    QIconSet m_iconSet;
+    TQString m_text;
+    TQString m_toolTip;
+    TQString m_whatsThis;
+    TQString m_statusText;
+    TQString m_iconName;
+    TQIconSet m_iconSet;
     bool m_hasIcon : 1;
     bool m_enabled : 1;
 };
@@ -72,8 +72,8 @@ KGuiItem::KGuiItem() {
     d = new KGuiItemPrivate;
 }
 
-KGuiItem::KGuiItem( const QString &text,    const QString &iconName,
-                    const QString &toolTip, const QString &whatsThis )
+KGuiItem::KGuiItem( const TQString &text,    const TQString &iconName,
+                    const TQString &toolTip, const TQString &whatsThis )
 {
     d = new KGuiItemPrivate;
     d->m_text = text;
@@ -82,8 +82,8 @@ KGuiItem::KGuiItem( const QString &text,    const QString &iconName,
     setIconName( iconName );
 }
 
-KGuiItem::KGuiItem( const QString &text,    const QIconSet &iconSet,
-                    const QString &toolTip, const QString &whatsThis )
+KGuiItem::KGuiItem( const TQString &text,    const TQIconSet &iconSet,
+                    const TQString &toolTip, const TQString &whatsThis )
 {
     d = new KGuiItemPrivate;
     d->m_text = text;
@@ -116,13 +116,13 @@ KGuiItem::~KGuiItem()
     delete d;
 }
 
-QString KGuiItem::text() const
+TQString KGuiItem::text() const
 {
     return d->m_text;
 }
 
 
-QString KGuiItem::plainText() const
+TQString KGuiItem::plainText() const
 {
     const int len = d->m_text.length();
 
@@ -130,12 +130,12 @@ QString KGuiItem::plainText() const
         return d->m_text;
 
     //Can assume len >= 1 from now on.
-    QString stripped;
+    TQString stripped;
 
     int resultLength = 0;
     stripped.setLength(len);
 
-    const QChar* data    = d->m_text.unicode();
+    const TQChar* data    = d->m_text.unicode();
     for ( int pos = 0; pos < len; ++pos )
     {
         if ( data[ pos ] != '&' )
@@ -149,7 +149,7 @@ QString KGuiItem::plainText() const
     return stripped;
 }
 
-QIconSet KGuiItem::iconSet( KIcon::Group group, int size, KInstance* instance ) const
+TQIconSet KGuiItem::iconSet( KIcon::Group group, int size, KInstance* instance ) const
 {
     if( d->m_hasIcon )
     {
@@ -164,20 +164,20 @@ QIconSet KGuiItem::iconSet( KIcon::Group group, int size, KInstance* instance ) 
         }
     }
     else
-        return QIconSet();
+        return TQIconSet();
 }
 
-QString KGuiItem::iconName() const
+TQString KGuiItem::iconName() const
 {
     return d->m_iconName;
 }
 
-QString KGuiItem::toolTip() const
+TQString KGuiItem::toolTip() const
 {
     return d->m_toolTip;
 }
 
-QString KGuiItem::whatsThis() const
+TQString KGuiItem::whatsThis() const
 {
     return d->m_whatsThis;
 }
@@ -192,30 +192,30 @@ bool KGuiItem::hasIcon() const
     return d->m_hasIcon;
 }
 
-void KGuiItem::setText( const QString &text ) {
+void KGuiItem::setText( const TQString &text ) {
     d->m_text=text;
 }
 
-void KGuiItem::setIconSet( const QIconSet &iconset )
+void KGuiItem::setIconSet( const TQIconSet &iconset )
 {
     d->m_iconSet = iconset;
-    d->m_iconName = QString::null;
+    d->m_iconName = TQString::null;
     d->m_hasIcon = !iconset.isNull();
 }
 
-void KGuiItem::setIconName( const QString &iconName )
+void KGuiItem::setIconName( const TQString &iconName )
 {
     d->m_iconName = iconName;
-    d->m_iconSet = QIconSet();
+    d->m_iconSet = TQIconSet();
     d->m_hasIcon = !iconName.isEmpty();
 }
 
-void KGuiItem::setToolTip( const QString &toolTip )
+void KGuiItem::setToolTip( const TQString &toolTip )
 {
     d->m_toolTip = toolTip;
 }
 
-void KGuiItem::setWhatsThis( const QString &whatsThis )
+void KGuiItem::setWhatsThis( const TQString &whatsThis )
 {
     d->m_whatsThis = whatsThis;
 }

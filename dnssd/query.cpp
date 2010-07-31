@@ -22,9 +22,9 @@
 #include "responder.h"
 #include "remoteservice.h"
 #include "sdevent.h"
-#include <qdatetime.h>
-#include <qapplication.h>
-#include <qtimer.h>
+#include <tqdatetime.h>
+#include <tqapplication.h>
+#include <tqtimer.h>
 
 #ifdef HAVE_DNSSD
 #include <avahi-client/client.h>
@@ -59,22 +59,22 @@ enum BrowserType { Types, Services };
 class QueryPrivate
 {
 public:
-	QueryPrivate(const QString& type, const QString& domain) : m_finished(false), m_browser(0),
+	QueryPrivate(const TQString& type, const TQString& domain) : m_finished(false), m_browser(0),
 	m_running(false), m_domain(domain), m_type(type) {}
 
 	bool m_finished;
 	BrowserType m_browserType;
 	void* m_browser;
 	bool m_running;
-	QString m_domain;
-	QTimer timeout;
-	QString m_type;
+	TQString m_domain;
+	TQTimer timeout;
+	TQString m_type;
 };
 
-Query::Query(const QString& type, const QString& domain)
+Query::Query(const TQString& type, const TQString& domain)
 {
 	d = new QueryPrivate(type,domain);
-	connect(&d->timeout,SIGNAL(timeout()),this,SLOT(timeout()));
+	connect(&d->timeout,TQT_SIGNAL(timeout()),this,TQT_SLOT(timeout()));
 }
 
 
@@ -101,7 +101,7 @@ bool Query::isFinished() const
 	return d->m_finished;
 }
 
-const QString& Query::domain() const
+const TQString& Query::domain() const
 {
 	return d->m_domain;
 }
@@ -142,9 +142,9 @@ void Query::virtual_hook(int, void*)
 {
 }
 
-void Query::customEvent(QCustomEvent* event)
+void Query::customEvent(TQCustomEvent* event)
 {
-	if (event->type()==QEvent::User+SD_ADDREMOVE) {
+	if (event->type()==TQEvent::User+SD_ADDREMOVE) {
 		d->timeout.start(TIMEOUT_LAN,true);
 		d->m_finished=false;
 		AddRemoveEvent *aev = static_cast<AddRemoveEvent*>(event);
@@ -171,11 +171,11 @@ void services_callback (AvahiServiceBrowser*, AvahiIfIndex, AvahiProtocol, Avahi
     const char* serviceName, const char* regtype, const char* replyDomain, void* context)
 #endif
 {
-	QObject *obj = reinterpret_cast<QObject*>(context);
+	TQObject *obj = reinterpret_cast<TQObject*>(context);
 	AddRemoveEvent* arev = new AddRemoveEvent((event==AVAHI_BROWSER_NEW) ? AddRemoveEvent::Add :
-			AddRemoveEvent::Remove, QString::fromUtf8(serviceName), regtype,
+			AddRemoveEvent::Remove, TQString::fromUtf8(serviceName), regtype,
 			DNSToDomain(replyDomain));
-		QApplication::postEvent(obj, arev);
+		TQApplication::postEvent(obj, arev);
 }
 
 #ifdef AVAHI_API_0_6
@@ -186,11 +186,11 @@ void types_callback(AvahiServiceTypeBrowser*, AvahiIfIndex, AvahiProtocol, Avahi
     const char* replyDomain, void* context)
 #endif
 {
-	QObject *obj = reinterpret_cast<QObject*>(context);
+	TQObject *obj = reinterpret_cast<TQObject*>(context);
 	AddRemoveEvent* arev = new AddRemoveEvent((event==AVAHI_BROWSER_NEW) ? AddRemoveEvent::Add :
-			AddRemoveEvent::Remove, QString::null, regtype,
+			AddRemoveEvent::Remove, TQString::null, regtype,
 			DNSToDomain(replyDomain));
-		QApplication::postEvent(obj, arev);
+		TQApplication::postEvent(obj, arev);
 }
 #endif
 

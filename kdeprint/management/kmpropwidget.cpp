@@ -26,15 +26,15 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 
-KMPropWidget::KMPropWidget(QWidget *parent, const char *name)
-: QWidget(parent,name)
+KMPropWidget::KMPropWidget(TQWidget *parent, const char *name)
+: TQWidget(parent,name)
 {
 	m_pixmap = "folder";
 	m_title = m_header = "Title";
 	m_printer = 0;
 	m_canchange = ((KMFactory::self()->manager()->printerOperationMask() & KMManager::PrinterCreation) && KMFactory::self()->manager()->hasManagement());
 
-	connect(this,SIGNAL(enable(bool)),this,SIGNAL(enableChange(bool)));
+	connect(this,TQT_SIGNAL(enable(bool)),this,TQT_SIGNAL(enableChange(bool)));
 }
 
 KMPropWidget::~KMPropWidget()
@@ -48,7 +48,7 @@ void KMPropWidget::slotChange()
 	if (value == -1)
 	{
 		KMessageBox::error(this, i18n("<qt>Unable to change printer properties. Error received from manager:<p>%1</p></qt>").arg(KMManager::self()->errorMsg()));
-		KMManager::self()->setErrorMsg(QString::null);
+		KMManager::self()->setErrorMsg(TQString::null);
 	}
 	KMTimer::self()->release((value == 1));
 }

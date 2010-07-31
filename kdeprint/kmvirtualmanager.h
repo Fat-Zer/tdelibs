@@ -20,9 +20,9 @@
 #ifndef KMVIRTUALMANAGER_H
 #define KMVIRTUALMANAGER_H
 
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qdatetime.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqdatetime.h>
 
 #include <kdelibs_export.h>
 
@@ -32,7 +32,7 @@ class KMPrinter;
 class KMManager;
 class QWidget;
 
-class KDEPRINT_EXPORT KMVirtualManager : public QObject, public KPReloadObject
+class KDEPRINT_EXPORT KMVirtualManager : public TQObject, public KPReloadObject
 {
 public:
 	KMVirtualManager(KMManager *parent = 0, const char *name = 0);
@@ -40,24 +40,24 @@ public:
 
         void refresh();
 	void reset();
-	void virtualList(QPtrList<KMPrinter>& list, const QString& prname);
+	void virtualList(TQPtrList<KMPrinter>& list, const TQString& prname);
 	void triggerSave();
 
-	KMPrinter* findPrinter(const QString& name);
-	KMPrinter* findInstance(KMPrinter *p, const QString& name);
+	KMPrinter* findPrinter(const TQString& name);
+	KMPrinter* findInstance(KMPrinter *p, const TQString& name);
 	void setDefault(KMPrinter *p, bool save = true);
-	QString defaultPrinterName();
-	bool isDefault(KMPrinter *p, const QString& name);
+	TQString defaultPrinterName();
+	bool isDefault(KMPrinter *p, const TQString& name);
 	bool testInstance(KMPrinter *p);
 
-	void create(KMPrinter *p, const QString& name);
-	void remove(KMPrinter *p, const QString& name);
-	void copy(KMPrinter *p, const QString& src, const QString& name);
-	void setAsDefault(KMPrinter *p, const QString& name, QWidget *parent = NULL);
+	void create(KMPrinter *p, const TQString& name);
+	void remove(KMPrinter *p, const TQString& name);
+	void copy(KMPrinter *p, const TQString& src, const TQString& name);
+	void setAsDefault(KMPrinter *p, const TQString& name, TQWidget *parent = NULL);
 
 protected:
-	void loadFile(const QString& filename);
-	void saveFile(const QString& filename);
+	void loadFile(const TQString& filename);
+	void saveFile(const TQString& filename);
 	void addPrinter(KMPrinter *p);
 	void checkPrinter(KMPrinter*);
 	void reload();
@@ -66,10 +66,10 @@ protected:
 private:
 	KMManager		*m_manager;
 	QDateTime		m_checktime;
-        QString                 m_defaultprinter;
+        TQString                 m_defaultprinter;
 };
 
 inline void KMVirtualManager::reset()
-{ m_checktime = QDateTime(); }
+{ m_checktime = TQDateTime(); }
 
 #endif

@@ -20,8 +20,8 @@
 #ifndef __KFILEMETAINFOWIDGET_H__
 #define __KFILEMETAINFOWIDGET_H__
 
-#include <qwidget.h>
-#include <qvariant.h>
+#include <tqwidget.h>
+#include <tqvariant.h>
 #include <kfilemetainfo.h>
 
 /*!
@@ -38,11 +38,11 @@ public:
       Reserve = 0xff
     };
   
-    KFileMetaInfoWidget(KFileMetaInfoItem item, QValidator* val = 0,
-                        QWidget* parent = 0, const char* name = 0);
+    KFileMetaInfoWidget(KFileMetaInfoItem item, TQValidator* val = 0,
+                        TQWidget* parent = 0, const char* name = 0);
 
-    KFileMetaInfoWidget(KFileMetaInfoItem item, Mode mode, QValidator* val = 0,
-                        QWidget* parent = 0, const char* name = 0);
+    KFileMetaInfoWidget(KFileMetaInfoItem item, Mode mode, TQValidator* val = 0,
+                        TQWidget* parent = 0, const char* name = 0);
 
     virtual ~KFileMetaInfoWidget();
 
@@ -51,44 +51,44 @@ public:
         return m_item.isEditable() && m_item.setValue(m_value);
     }
 
-    void setValue(const QVariant& value)  { m_value = value;    }
-    QVariant value()const                      { return m_value;     }
-    QValidator* validator() const              { return m_validator; }
+    void setValue(const TQVariant& value)  { m_value = value;    }
+    TQVariant value()const                      { return m_value;     }
+    TQValidator* validator() const              { return m_validator; }
     KFileMetaInfoItem item()const              { return m_item;      }
 
 signals:
-    void valueChanged(const QVariant& value);
+    void valueChanged(const TQVariant& value);
 
 protected:
-    void reparentValidator(QWidget *widget, QValidator *validator);
-    virtual QWidget* makeWidget();
+    void reparentValidator(TQWidget *widget, TQValidator *validator);
+    virtual TQWidget* makeWidget();
 
-    QWidget* makeBoolWidget();
-    QWidget* makeIntWidget();
-    QWidget* makeDoubleWidget();
-    QWidget* makeStringWidget();
-    QWidget* makeDateWidget();
-    QWidget* makeTimeWidget();
-    QWidget* makeDateTimeWidget();
+    TQWidget* makeBoolWidget();
+    TQWidget* makeIntWidget();
+    TQWidget* makeDoubleWidget();
+    TQWidget* makeStringWidget();
+    TQWidget* makeDateWidget();
+    TQWidget* makeTimeWidget();
+    TQWidget* makeDateTimeWidget();
 
 private slots:
     void slotChanged(bool value);
     void slotChanged(int value);
     void slotChanged(double value);
-    void slotComboChanged(const QString &value);
-    void slotLineEditChanged(const QString& value);
+    void slotComboChanged(const TQString &value);
+    void slotLineEditChanged(const TQString& value);
     void slotMultiLineEditChanged();
-    void slotDateChanged(const QDate& value);
-    void slotTimeChanged(const QTime& value);
-    void slotDateTimeChanged(const QDateTime& value);
+    void slotDateChanged(const TQDate& value);
+    void slotTimeChanged(const TQTime& value);
+    void slotDateTimeChanged(const TQDateTime& value);
 
 private:
     void init(KFileMetaInfoItem item, Mode mode);
 
-    QVariant          m_value;  // the value will be saved here until apply() is called
+    TQVariant          m_value;  // the value will be saved here until apply() is called
     KFileMetaInfoItem m_item;
-    QWidget*          m_widget;
-    QValidator*       m_validator;
+    TQWidget*          m_widget;
+    TQValidator*       m_validator;
     bool              m_dirty : 1;
 };
 

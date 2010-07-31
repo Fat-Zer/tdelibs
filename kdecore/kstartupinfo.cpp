@@ -30,17 +30,17 @@ DEALINGS IN THE SOFTWARE.
 #warning Extra KStartupInfo debug messages enabled.
 #endif
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include "config.h"
 #ifdef Q_WS_X11
 //#ifdef Q_WS_X11 // FIXME(E): Re-implement in a less X11 specific way
-#include <qglobal.h>
+#include <tqglobal.h>
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
-// need to resolve INT32(qglobal.h)<>INT32(Xlibint.h) conflict
+// need to resolve INT32(tqglobal.h)<>INT32(Xlibint.h) conflict
 #ifndef QT_CLEAN_NAMESPACE
 #define QT_CLEAN_NAMESPACE
 #endif
@@ -50,7 +50,7 @@ DEALINGS IN THE SOFTWARE.
 #include <unistd.h>
 #include <sys/time.h>
 #include <stdlib.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 #ifdef Q_WS_X11
 #include <netwm.h>
 #endif
@@ -71,12 +71,12 @@ static const char* const NET_STARTUP_ENV = "DESKTOP_STARTUP_ID";
 
 static bool auto_app_started_sending = true;
 
-static long get_num( const QString& item_P );
-static unsigned long get_unum( const QString& item_P );
-static QString get_str( const QString& item_P );
-static QCString get_cstr( const QString& item_P );
-static QStringList get_fields( const QString& txt_P );
-static QString escape_str( const QString& str_P );
+static long get_num( const TQString& item_P );
+static unsigned long get_unum( const TQString& item_P );
+static TQString get_str( const TQString& item_P );
+static TQCString get_cstr( const TQString& item_P );
+static TQStringList get_fields( const TQString& txt_P );
+static TQString escape_str( const TQString& str_P );
 
 static Atom utf8_string_atom = None;
 
@@ -85,7 +85,7 @@ class KStartupInfo::Data
     {
     public:
         Data() : KStartupInfoData(), age(0) {} // just because it's in a QMap
-        Data( const QString& txt_P )
+        Data( const TQString& txt_P )
             : KStartupInfoData( txt_P ), age( 0 ) {}
         unsigned int age;
     };
@@ -93,16 +93,16 @@ class KStartupInfo::Data
 struct KStartupInfoPrivate
     {
     public:
-        QMap< KStartupInfoId, KStartupInfo::Data > startups;
+        TQMap< KStartupInfoId, KStartupInfo::Data > startups;
 	// contains silenced ASN's only if !AnnounceSilencedChanges
-        QMap< KStartupInfoId, KStartupInfo::Data > silent_startups;
+        TQMap< KStartupInfoId, KStartupInfo::Data > silent_startups;
         // contains ASN's that had change: but no new: yet
-        QMap< KStartupInfoId, KStartupInfo::Data > uninited_startups;
+        TQMap< KStartupInfoId, KStartupInfo::Data > uninited_startups;
 #ifdef Q_WS_X11
         KWinModule* wm_module;
         KXMessages msgs;
 #endif
-	QTimer* cleanup;
+	TQTimer* cleanup;
 	int flags;
 	KStartupInfoPrivate( int flags_P )
     	    :
@@ -112,15 +112,15 @@ struct KStartupInfoPrivate
 	      flags( flags_P ) {}
     };
 
-KStartupInfo::KStartupInfo( int flags_P, QObject* parent_P, const char* name_P )
-    : QObject( parent_P, name_P ),
+KStartupInfo::KStartupInfo( int flags_P, TQObject* parent_P, const char* name_P )
+    : TQObject( parent_P, name_P ),
         timeout( 60 ), d( NULL )
     {
     init( flags_P );
     }
 
-KStartupInfo::KStartupInfo( bool clean_on_cantdetect_P, QObject* parent_P, const char* name_P )
-    : QObject( parent_P, name_P ),
+KStartupInfo::KStartupInfo( bool clean_on_cantdetect_P, TQObject* parent_P, const char* name_P )
+    : TQObject( parent_P, name_P ),
         timeout( 60 ), d( NULL )
     {
     init( clean_on_cantdetect_P ? CleanOnCantDetect : 0 );
@@ -139,15 +139,15 @@ void KStartupInfo::init( int flags_P )
     if( !( d->flags & DisableKWinModule ))
         {
         d->wm_module = new KWinModule( this );
-        connect( d->wm_module, SIGNAL( windowAdded( WId )), SLOT( slot_window_added( WId )));
-        connect( d->wm_module, SIGNAL( systemTrayWindowAdded( WId )), SLOT( slot_window_added( WId )));
+        connect( d->wm_module, TQT_SIGNAL( windowAdded( WId )), TQT_SLOT( slot_window_added( WId )));
+        connect( d->wm_module, TQT_SIGNAL( systemTrayWindowAdded( WId )), TQT_SLOT( slot_window_added( WId )));
         }
     else
         d->wm_module = NULL;
-    connect( &d->msgs, SIGNAL( gotMessage( const QString& )), SLOT( got_message( const QString& )));
+    connect( &d->msgs, TQT_SIGNAL( gotMessage( const TQString& )), TQT_SLOT( got_message( const TQString& )));
 #endif
-    d->cleanup = new QTimer( this, "cleanup" );
-    connect( d->cleanup, SIGNAL( timeout()), SLOT( startups_cleanup()));
+    d->cleanup = new TQTimer( this, "cleanup" );
+    connect( d->cleanup, TQT_SIGNAL( timeout()), TQT_SLOT( startups_cleanup()));
     }
 
 KStartupInfo::~KStartupInfo()
@@ -155,11 +155,11 @@ KStartupInfo::~KStartupInfo()
     delete d;
     }
 
-void KStartupInfo::got_message( const QString& msg_P )
+void KStartupInfo::got_message( const TQString& msg_P )
     {
 // TODO do something with SCREEN= ?
     kdDebug( 172 ) << "got:" << msg_P << endl;
-    QString msg = msg_P.stripWhiteSpace();
+    TQString msg = msg_P.stripWhiteSpace();
     if( msg.startsWith( "new:" )) // must match length below
         got_startup_info( msg.mid( 4 ), false );
     else if( msg.startsWith( "change:" )) // must match length below
@@ -181,7 +181,7 @@ class DelayedWindowEvent
     {
     public:
 	DelayedWindowEvent( WId w_P )
-	    : QCustomEvent( QEvent::User + 15 ), w( w_P ) {}
+	    : TQCustomEvent( TQEvent::User + 15 ), w( w_P ) {}
 	Window w;
     };
 }
@@ -191,12 +191,12 @@ void KStartupInfo::slot_window_added( WId w_P )
     kapp->postEvent( this, new DelayedWindowEvent( w_P ));
     }
 
-void KStartupInfo::customEvent( QCustomEvent* e_P )
+void KStartupInfo::customEvent( TQCustomEvent* e_P )
     {
-    if( e_P->type() == QEvent::User + 15 )
+    if( e_P->type() == TQEvent::User + 15 )
 	window_added( static_cast< DelayedWindowEvent* >( e_P )->w );
     else
-	QObject::customEvent( e_P );
+	TQObject::customEvent( e_P );
     }
 
 void KStartupInfo::window_added( WId w_P )
@@ -218,7 +218,7 @@ void KStartupInfo::window_added( WId w_P )
         }
     }
 
-void KStartupInfo::got_startup_info( const QString& msg_P, bool update_P )
+void KStartupInfo::got_startup_info( const TQString& msg_P, bool update_P )
     {
     KStartupInfoId id( msg_P );
     if( id.none())
@@ -298,7 +298,7 @@ void KStartupInfo::new_startup_info_internal( const KStartupInfoId& id_P,
     d->cleanup->start( 1000 ); // 1 sec
     }
 
-void KStartupInfo::got_remove_startup_info( const QString& msg_P )
+void KStartupInfo::got_remove_startup_info( const TQString& msg_P )
     {
     KStartupInfoId id( msg_P );
     KStartupInfoData data( msg_P );
@@ -340,7 +340,7 @@ void KStartupInfo::remove_startup_pids( const KStartupInfoData& data_P )
     { // first find the matching info
     if( d == NULL )
         return;
-    for( QMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
+    for( TQMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
          it != d->startups.end();
          ++it )
         {
@@ -368,7 +368,7 @@ void KStartupInfo::remove_startup_pids( const KStartupInfoId& id_P,
         data = &d->uninited_startups[ id_P ];
     else
 	return;
-    for( QValueList< pid_t >::ConstIterator it2 = data_P.pids().begin();
+    for( TQValueList< pid_t >::ConstIterator it2 = data_P.pids().begin();
          it2 != data_P.pids().end();
          ++it2 )
 	data->remove_pid( *it2 ); // remove all pids from the info
@@ -381,7 +381,7 @@ bool KStartupInfo::sendStartup( const KStartupInfoId& id_P, const KStartupInfoDa
     if( id_P.none())
         return false;
     KXMessages msgs;
-    QString msg = QString::fromLatin1( "new: %1 %2" )
+    TQString msg = TQString::fromLatin1( "new: %1 %2" )
         .arg( id_P.to_text()).arg( data_P.to_text());
     msg = check_required_startup_fields( msg, data_P, qt_xscreen());
     kdDebug( 172 ) << "sending " << msg << endl;
@@ -394,7 +394,7 @@ bool KStartupInfo::sendStartupX( Display* disp_P, const KStartupInfoId& id_P,
     {
     if( id_P.none())
         return false;
-    QString msg = QString::fromLatin1( "new: %1 %2" )
+    TQString msg = TQString::fromLatin1( "new: %1 %2" )
         .arg( id_P.to_text()).arg( data_P.to_text());
     msg = check_required_startup_fields( msg, data_P, DefaultScreen( disp_P ));
 #ifdef KSTARTUPINFO_ALL_DEBUG
@@ -403,20 +403,20 @@ bool KStartupInfo::sendStartupX( Display* disp_P, const KStartupInfoId& id_P,
     return KXMessages::broadcastMessageX( disp_P, NET_STARTUP_MSG, msg, -1, false );
     }
 
-QString KStartupInfo::check_required_startup_fields( const QString& msg, const KStartupInfoData& data_P,
+TQString KStartupInfo::check_required_startup_fields( const TQString& msg, const KStartupInfoData& data_P,
     int screen )
     {
-    QString ret = msg;
+    TQString ret = msg;
     if( data_P.name().isEmpty())
         {
 //        kdWarning( 172 ) << "NAME not specified in initial startup message" << endl;
-        QString name = data_P.bin();
+        TQString name = data_P.bin();
         if( name.isEmpty())
             name = "UNKNOWN";
-        ret += QString( " NAME=\"%1\"" ).arg( escape_str( name ));
+        ret += TQString( " NAME=\"%1\"" ).arg( escape_str( name ));
         }
     if( data_P.screen() == -1 ) // add automatically if needed
-        ret += QString( " SCREEN=%1" ).arg( screen );
+        ret += TQString( " SCREEN=%1" ).arg( screen );
     return ret;
     }
 
@@ -425,7 +425,7 @@ bool KStartupInfo::sendChange( const KStartupInfoId& id_P, const KStartupInfoDat
     if( id_P.none())
         return false;
     KXMessages msgs;
-    QString msg = QString::fromLatin1( "change: %1 %2" )
+    TQString msg = TQString::fromLatin1( "change: %1 %2" )
         .arg( id_P.to_text()).arg( data_P.to_text());
     kdDebug( 172 ) << "sending " << msg << endl;
     msgs.broadcastMessage( NET_STARTUP_MSG, msg, -1, false );
@@ -437,7 +437,7 @@ bool KStartupInfo::sendChangeX( Display* disp_P, const KStartupInfoId& id_P,
     {
     if( id_P.none())
         return false;
-    QString msg = QString::fromLatin1( "change: %1 %2" )
+    TQString msg = TQString::fromLatin1( "change: %1 %2" )
         .arg( id_P.to_text()).arg( data_P.to_text());
 #ifdef KSTARTUPINFO_ALL_DEBUG
     kdDebug( 172 ) << "sending " << msg << endl;
@@ -450,7 +450,7 @@ bool KStartupInfo::sendFinish( const KStartupInfoId& id_P )
     if( id_P.none())
         return false;
     KXMessages msgs;
-    QString msg = QString::fromLatin1( "remove: %1" ).arg( id_P.to_text());
+    TQString msg = TQString::fromLatin1( "remove: %1" ).arg( id_P.to_text());
     kdDebug( 172 ) << "sending " << msg << endl;
     msgs.broadcastMessage( NET_STARTUP_MSG, msg, -1, false );
     return true;
@@ -460,7 +460,7 @@ bool KStartupInfo::sendFinishX( Display* disp_P, const KStartupInfoId& id_P )
     {
     if( id_P.none())
         return false;
-    QString msg = QString::fromLatin1( "remove: %1" ).arg( id_P.to_text());
+    TQString msg = TQString::fromLatin1( "remove: %1" ).arg( id_P.to_text());
 #ifdef KSTARTUPINFO_ALL_DEBUG
     kdDebug( 172 ) << "sending " << msg << endl;
 #endif
@@ -472,7 +472,7 @@ bool KStartupInfo::sendFinish( const KStartupInfoId& id_P, const KStartupInfoDat
 //    if( id_P.none()) // id may be none, the pids and hostname matter then
 //        return false;
     KXMessages msgs;
-    QString msg = QString::fromLatin1( "remove: %1 %2" )
+    TQString msg = TQString::fromLatin1( "remove: %1 %2" )
         .arg( id_P.to_text()).arg( data_P.to_text());
     kdDebug( 172 ) << "sending " << msg << endl;
     msgs.broadcastMessage( NET_STARTUP_MSG, msg, -1, false );
@@ -484,7 +484,7 @@ bool KStartupInfo::sendFinishX( Display* disp_P, const KStartupInfoId& id_P,
     {
 //    if( id_P.none()) // id may be none, the pids and hostname matter then
 //        return false;
-    QString msg = QString::fromLatin1( "remove: %1 %2" )
+    TQString msg = TQString::fromLatin1( "remove: %1 %2" )
         .arg( id_P.to_text()).arg( data_P.to_text());
 #ifdef KSTARTUPINFO_ALL_DEBUG
     kdDebug( 172 ) << "sending " << msg << endl;
@@ -500,7 +500,7 @@ void KStartupInfo::appStarted()
         appStarted( KStartupInfo::currentStartupIdEnv().id());
     }
 
-void KStartupInfo::appStarted( const QCString& startup_id )
+void KStartupInfo::appStarted( const TQCString& startup_id )
     {
     KStartupInfoId id;
     id.initId( startup_id );
@@ -543,7 +543,7 @@ void KStartupInfo::handleAutoAppStartedSending()
         appStarted();
     }
 
-void KStartupInfo::setNewStartupId( QWidget* window, const QCString& startup_id )
+void KStartupInfo::setNewStartupId( TQWidget* window, const TQCString& startup_id )
     {
     bool activate = true;
     kapp->setStartupId( startup_id );
@@ -607,7 +607,7 @@ KStartupInfo::startup_t KStartupInfo::check_startup_internal( WId w_P, KStartupI
     //           - Yes - test for pid match
     //           - No - test for WM_CLASS match
     kdDebug( 172 ) << "check_startup" << endl;
-    QCString id = windowStartupId( w_P );
+    TQCString id = windowStartupId( w_P );
     if( !id.isNull())
         {
         if( id.isEmpty() || id == "0" ) // means ignore this window
@@ -623,7 +623,7 @@ KStartupInfo::startup_t KStartupInfo::check_startup_internal( WId w_P, KStartupI
     pid_t pid = info.pid();
     if( pid > 0 )
         {
-        QCString hostname = get_window_hostname( w_P );
+        TQCString hostname = get_window_hostname( w_P );
         if( !hostname.isEmpty()
             && find_pid( pid, hostname, id_O, data_O ))
             return Match;
@@ -632,8 +632,8 @@ KStartupInfo::startup_t KStartupInfo::check_startup_internal( WId w_P, KStartupI
     XClassHint hint;
     if( XGetClassHint( qt_xdisplay(), w_P, &hint ) != 0 )
         { // We managed to read the class hint
-        QCString res_name = hint.res_name;
-        QCString res_class = hint.res_class;
+        TQCString res_name = hint.res_name;
+        TQCString res_class = hint.res_class;
         XFree( hint.res_name );
         XFree( hint.res_class );
         if( find_wclass( res_name, res_class, id_O, data_O ))
@@ -661,7 +661,7 @@ KStartupInfo::startup_t KStartupInfo::check_startup_internal( WId w_P, KStartupI
     return CantDetect;
     }
 
-bool KStartupInfo::find_id( const QCString& id_P, KStartupInfoId* id_O,
+bool KStartupInfo::find_id( const TQCString& id_P, KStartupInfoId* id_O,
     KStartupInfoData* data_O )
     {
     if( d == NULL )
@@ -681,13 +681,13 @@ bool KStartupInfo::find_id( const QCString& id_P, KStartupInfoId* id_O,
     return false;
     }
 
-bool KStartupInfo::find_pid( pid_t pid_P, const QCString& hostname_P,
+bool KStartupInfo::find_pid( pid_t pid_P, const TQCString& hostname_P,
     KStartupInfoId* id_O, KStartupInfoData* data_O )
     {
     if( d == NULL )
         return false;
     kdDebug( 172 ) << "find_pid:" << pid_P << endl;
-    for( QMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
+    for( TQMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
          it != d->startups.end();
          ++it )
         {
@@ -706,7 +706,7 @@ bool KStartupInfo::find_pid( pid_t pid_P, const QCString& hostname_P,
     return false;
     }
 
-bool KStartupInfo::find_wclass( QCString res_name, QCString res_class,
+bool KStartupInfo::find_wclass( TQCString res_name, TQCString res_class,
     KStartupInfoId* id_O, KStartupInfoData* data_O )
     {
     if( d == NULL )
@@ -714,11 +714,11 @@ bool KStartupInfo::find_wclass( QCString res_name, QCString res_class,
     res_name = res_name.lower();
     res_class = res_class.lower();
     kdDebug( 172 ) << "find_wclass:" << res_name << ":" << res_class << endl;
-    for( QMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
+    for( TQMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
          it != d->startups.end();
          ++it )
         {
-        const QCString wmclass = ( *it ).findWMClass();
+        const TQCString wmclass = ( *it ).findWMClass();
         if( wmclass.lower() == res_name || wmclass.lower() == res_class )
             { // Found it !
             if( id_O != NULL )
@@ -737,9 +737,9 @@ bool KStartupInfo::find_wclass( QCString res_name, QCString res_class,
 #ifdef Q_WS_X11
 static Atom net_startup_atom = None;
 
-static QCString read_startup_id_property( WId w_P )
+static TQCString read_startup_id_property( WId w_P )
     {
-    QCString ret;
+    TQCString ret;
     unsigned char *name_ret;
     Atom type_ret;
     int format_ret;
@@ -758,14 +758,14 @@ static QCString read_startup_id_property( WId w_P )
 
 #endif
 
-QCString KStartupInfo::windowStartupId( WId w_P )
+TQCString KStartupInfo::windowStartupId( WId w_P )
     {
 #ifdef Q_WS_X11
     if( net_startup_atom == None )
         net_startup_atom = XInternAtom( qt_xdisplay(), NET_STARTUP_WINDOW, False );
     if( utf8_string_atom == None )
         utf8_string_atom = XInternAtom( qt_xdisplay(), "UTF8_STRING", False );
-    QCString ret = read_startup_id_property( w_P );
+    TQCString ret = read_startup_id_property( w_P );
     if( ret.isEmpty())
         { // retry with window group leader, as the spec says
         XWMHints* hints = XGetWMHints( qt_xdisplay(), w_P );
@@ -776,11 +776,11 @@ QCString KStartupInfo::windowStartupId( WId w_P )
         }
     return ret;
 #else
-    return QCString();
+    return TQCString();
 #endif
     }
 
-void KStartupInfo::setWindowStartupId( WId w_P, const QCString& id_P )
+void KStartupInfo::setWindowStartupId( WId w_P, const TQCString& id_P )
     {
 #ifdef Q_WS_X11
     if( id_P.isNull())
@@ -794,7 +794,7 @@ void KStartupInfo::setWindowStartupId( WId w_P, const QCString& id_P )
 #endif
     }
 
-QCString KStartupInfo::get_window_hostname( WId w_P )
+TQCString KStartupInfo::get_window_hostname( WId w_P )
     {
 #ifdef Q_WS_X11
     XTextProperty tp;
@@ -805,7 +805,7 @@ QCString KStartupInfo::get_window_hostname( WId w_P )
         {
         if( cnt == 1 )
             {
-            QCString hostname = hh[ 0 ];
+            TQCString hostname = hh[ 0 ];
             XFreeStringList( hh );
             return hostname;
             }
@@ -813,14 +813,14 @@ QCString KStartupInfo::get_window_hostname( WId w_P )
         }
 #endif
     // no hostname
-    return QCString();
+    return TQCString();
     }
 
 void KStartupInfo::setTimeout( unsigned int secs_P )
     {
     timeout = secs_P;
  // schedule removing entries that are older than the new timeout
-    QTimer::singleShot( 0, this, SLOT( startups_cleanup_no_age()));
+    TQTimer::singleShot( 0, this, TQT_SLOT( startups_cleanup_no_age()));
     }
 
 void KStartupInfo::startups_cleanup_no_age()
@@ -845,7 +845,7 @@ void KStartupInfo::startups_cleanup_internal( bool age_P )
     {
     if( d == NULL )
         return;
-    for( QMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
+    for( TQMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
          it != d->startups.end();
          )
         {
@@ -864,7 +864,7 @@ void KStartupInfo::startups_cleanup_internal( bool age_P )
         else
             ++it;
         }
-    for( QMap< KStartupInfoId, Data >::Iterator it = d->silent_startups.begin();
+    for( TQMap< KStartupInfoId, Data >::Iterator it = d->silent_startups.begin();
          it != d->silent_startups.end();
          )
         {
@@ -883,7 +883,7 @@ void KStartupInfo::startups_cleanup_internal( bool age_P )
         else
             ++it;
         }
-    for( QMap< KStartupInfoId, Data >::Iterator it = d->uninited_startups.begin();
+    for( TQMap< KStartupInfoId, Data >::Iterator it = d->uninited_startups.begin();
          it != d->uninited_startups.end();
          )
         {
@@ -908,7 +908,7 @@ void KStartupInfo::clean_all_noncompliant()
     {
     if( d == NULL )
         return;
-    for( QMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
+    for( TQMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
          it != d->startups.end();
          )
         {
@@ -924,7 +924,7 @@ void KStartupInfo::clean_all_noncompliant()
         }
     }
 
-QCString KStartupInfo::createNewStartupId()
+TQCString KStartupInfo::createNewStartupId()
     {
     // Assign a unique id, use hostname+time+pid, that should be 200% unique.
     // Also append the user timestamp (for focus stealing prevention).
@@ -939,7 +939,7 @@ QCString KStartupInfo::createNewStartupId()
 #else
     unsigned long qt_x_user_time = 0;
 #endif
-    QCString id = QString( "%1;%2;%3;%4_TIME%5" ).arg( hostname ).arg( tm.tv_sec )
+    TQCString id = TQString( "%1;%2;%3;%4_TIME%5" ).arg( hostname ).arg( tm.tv_sec )
         .arg( tm.tv_usec ).arg( getpid()).arg( qt_x_user_time ).utf8();
     kdDebug( 172 ) << "creating: " << id << ":" << qAppName() << endl;
     return id;
@@ -949,26 +949,26 @@ QCString KStartupInfo::createNewStartupId()
 struct KStartupInfoIdPrivate
     {
     KStartupInfoIdPrivate() : id( "" ) {}
-    QCString id; // id
+    TQCString id; // id
     };
 
-const QCString& KStartupInfoId::id() const
+const TQCString& KStartupInfoId::id() const
     {
     return d->id;
     }
 
 
-QString KStartupInfoId::to_text() const
+TQString KStartupInfoId::to_text() const
     {
-    return QString::fromLatin1( " ID=\"%1\" " ).arg( escape_str( id()));
+    return TQString::fromLatin1( " ID=\"%1\" " ).arg( escape_str( id()));
     }
 
-KStartupInfoId::KStartupInfoId( const QString& txt_P )
+KStartupInfoId::KStartupInfoId( const TQString& txt_P )
     {
     d = new KStartupInfoIdPrivate;
-    QStringList items = get_fields( txt_P );
-    const QString id_str = QString::fromLatin1( "ID=" );
-    for( QStringList::Iterator it = items.begin();
+    TQStringList items = get_fields( txt_P );
+    const TQString id_str = TQString::fromLatin1( "ID=" );
+    for( TQStringList::Iterator it = items.begin();
          it != items.end();
          ++it )
         {
@@ -977,7 +977,7 @@ KStartupInfoId::KStartupInfoId( const QString& txt_P )
         }
     }
 
-void KStartupInfoId::initId( const QCString& id_P )
+void KStartupInfoId::initId( const TQCString& id_P )
     {
     if( !id_P.isEmpty())
         {
@@ -1110,14 +1110,14 @@ struct KStartupInfoDataPrivate
     {
     KStartupInfoDataPrivate() : desktop( 0 ), wmclass( "" ), hostname( "" ),
 	silent( KStartupInfoData::Unknown ), timestamp( -1U ), screen( -1 ), xinerama( -1 ), launched_by( 0 ) {}
-    QString bin;
-    QString name;
-    QString description;
-    QString icon;
+    TQString bin;
+    TQString name;
+    TQString description;
+    TQString icon;
     int desktop;
-    QValueList< pid_t > pids;
-    QCString wmclass;
-    QCString hostname;
+    TQValueList< pid_t > pids;
+    TQCString wmclass;
+    TQCString hostname;
     KStartupInfoData::TriState silent;
     unsigned long timestamp;
     int screen;
@@ -1125,59 +1125,59 @@ struct KStartupInfoDataPrivate
     WId launched_by;
     };
 
-QString KStartupInfoData::to_text() const
+TQString KStartupInfoData::to_text() const
     {
-    QString ret = "";
+    TQString ret = "";
     if( !d->bin.isEmpty())
-        ret += QString::fromLatin1( " BIN=\"%1\"" ).arg( escape_str( d->bin ));
+        ret += TQString::fromLatin1( " BIN=\"%1\"" ).arg( escape_str( d->bin ));
     if( !d->name.isEmpty())
-        ret += QString::fromLatin1( " NAME=\"%1\"" ).arg( escape_str( d->name ));
+        ret += TQString::fromLatin1( " NAME=\"%1\"" ).arg( escape_str( d->name ));
     if( !d->description.isEmpty())
-        ret += QString::fromLatin1( " DESCRIPTION=\"%1\"" ).arg( escape_str( d->description ));
+        ret += TQString::fromLatin1( " DESCRIPTION=\"%1\"" ).arg( escape_str( d->description ));
     if( !d->icon.isEmpty())
-        ret += QString::fromLatin1( " ICON=%1" ).arg( d->icon );
+        ret += TQString::fromLatin1( " ICON=%1" ).arg( d->icon );
     if( d->desktop != 0 )
-        ret += QString::fromLatin1( " DESKTOP=%1" )
+        ret += TQString::fromLatin1( " DESKTOP=%1" )
             .arg( d->desktop == NET::OnAllDesktops ? NET::OnAllDesktops : d->desktop - 1 ); // spec counts from 0
     if( !d->wmclass.isEmpty())
-        ret += QString::fromLatin1( " WMCLASS=\"%1\"" ).arg( d->wmclass );
+        ret += TQString::fromLatin1( " WMCLASS=\"%1\"" ).arg( d->wmclass );
     if( !d->hostname.isEmpty())
-        ret += QString::fromLatin1( " HOSTNAME=%1" ).arg( d->hostname );
-    for( QValueList< pid_t >::ConstIterator it = d->pids.begin();
+        ret += TQString::fromLatin1( " HOSTNAME=%1" ).arg( d->hostname );
+    for( TQValueList< pid_t >::ConstIterator it = d->pids.begin();
          it != d->pids.end();
          ++it )
-        ret += QString::fromLatin1( " PID=%1" ).arg( *it );
+        ret += TQString::fromLatin1( " PID=%1" ).arg( *it );
     if( d->silent != Unknown )
-	ret += QString::fromLatin1( " SILENT=%1" ).arg( d->silent == Yes ? 1 : 0 );
+	ret += TQString::fromLatin1( " SILENT=%1" ).arg( d->silent == Yes ? 1 : 0 );
     if( d->timestamp != -1U )
-        ret += QString::fromLatin1( " TIMESTAMP=%1" ).arg( d->timestamp );
+        ret += TQString::fromLatin1( " TIMESTAMP=%1" ).arg( d->timestamp );
     if( d->screen != -1 )
-        ret += QString::fromLatin1( " SCREEN=%1" ).arg( d->screen );
+        ret += TQString::fromLatin1( " SCREEN=%1" ).arg( d->screen );
     if( d->xinerama != -1 )
-        ret += QString::fromLatin1( " XINERAMA=%1" ).arg( d->xinerama );
+        ret += TQString::fromLatin1( " XINERAMA=%1" ).arg( d->xinerama );
     if( d->launched_by != 0 )
-        ret += QString::fromLatin1( " LAUNCHED_BY=%1" ).arg( d->launched_by );
+        ret += TQString::fromLatin1( " LAUNCHED_BY=%1" ).arg( d->launched_by );
     return ret;
     }
 
-KStartupInfoData::KStartupInfoData( const QString& txt_P )
+KStartupInfoData::KStartupInfoData( const TQString& txt_P )
     {
     d = new KStartupInfoDataPrivate;
-    QStringList items = get_fields( txt_P );
-    const QString bin_str = QString::fromLatin1( "BIN=" );
-    const QString name_str = QString::fromLatin1( "NAME=" );
-    const QString description_str = QString::fromLatin1( "DESCRIPTION=" );
-    const QString icon_str = QString::fromLatin1( "ICON=" );
-    const QString desktop_str = QString::fromLatin1( "DESKTOP=" );
-    const QString wmclass_str = QString::fromLatin1( "WMCLASS=" );
-    const QString hostname_str = QString::fromLatin1( "HOSTNAME=" ); // SELI nonstd
-    const QString pid_str = QString::fromLatin1( "PID=" );  // SELI nonstd
-    const QString silent_str = QString::fromLatin1( "SILENT=" );
-    const QString timestamp_str = QString::fromLatin1( "TIMESTAMP=" );
-    const QString screen_str = QString::fromLatin1( "SCREEN=" );
-    const QString xinerama_str = QString::fromLatin1( "XINERAMA=" );
-    const QString launched_by_str = QString::fromLatin1( "LAUNCHED_BY=" );
-    for( QStringList::Iterator it = items.begin();
+    TQStringList items = get_fields( txt_P );
+    const TQString bin_str = TQString::fromLatin1( "BIN=" );
+    const TQString name_str = TQString::fromLatin1( "NAME=" );
+    const TQString description_str = TQString::fromLatin1( "DESCRIPTION=" );
+    const TQString icon_str = TQString::fromLatin1( "ICON=" );
+    const TQString desktop_str = TQString::fromLatin1( "DESKTOP=" );
+    const TQString wmclass_str = TQString::fromLatin1( "WMCLASS=" );
+    const TQString hostname_str = TQString::fromLatin1( "HOSTNAME=" ); // SELI nonstd
+    const TQString pid_str = TQString::fromLatin1( "PID=" );  // SELI nonstd
+    const TQString silent_str = TQString::fromLatin1( "SILENT=" );
+    const TQString timestamp_str = TQString::fromLatin1( "TIMESTAMP=" );
+    const TQString screen_str = TQString::fromLatin1( "SCREEN=" );
+    const TQString xinerama_str = TQString::fromLatin1( "XINERAMA=" );
+    const TQString launched_by_str = TQString::fromLatin1( "LAUNCHED_BY=" );
+    for( TQStringList::Iterator it = items.begin();
          it != items.end();
          ++it )
         {
@@ -1244,7 +1244,7 @@ void KStartupInfoData::update( const KStartupInfoData& data_P )
         d->wmclass = data_P.d->wmclass;
     if( !data_P.d->hostname.isEmpty())
         d->hostname = data_P.d->hostname;
-    for( QValueList< pid_t >::ConstIterator it = data_P.d->pids.begin();
+    for( TQValueList< pid_t >::ConstIterator it = data_P.d->pids.begin();
          it != data_P.d->pids.end();
          ++it )
         addPid( *it );
@@ -1270,63 +1270,63 @@ KStartupInfoData::~KStartupInfoData()
     delete d;
 }
 
-void KStartupInfoData::setBin( const QString& bin_P )
+void KStartupInfoData::setBin( const TQString& bin_P )
     {
     d->bin = bin_P;
     }
 
-const QString& KStartupInfoData::bin() const
+const TQString& KStartupInfoData::bin() const
     {
     return d->bin;
     }
 
-void KStartupInfoData::setName( const QString& name_P )
+void KStartupInfoData::setName( const TQString& name_P )
     {
     d->name = name_P;
     }
 
-const QString& KStartupInfoData::name() const
+const TQString& KStartupInfoData::name() const
     {
     return d->name;
     }
 
-const QString& KStartupInfoData::findName() const
+const TQString& KStartupInfoData::findName() const
     {
     if( !name().isEmpty())
         return name();
     return bin();
     }
 
-void KStartupInfoData::setDescription( const QString& desc_P )
+void KStartupInfoData::setDescription( const TQString& desc_P )
     {
     d->description = desc_P;
     }
 
-const QString& KStartupInfoData::description() const
+const TQString& KStartupInfoData::description() const
     {
     return d->description;
     }
 
-const QString& KStartupInfoData::findDescription() const
+const TQString& KStartupInfoData::findDescription() const
     {
     if( !description().isEmpty())
         return description();
     return name();
     }
 
-void KStartupInfoData::setIcon( const QString& icon_P )
+void KStartupInfoData::setIcon( const TQString& icon_P )
     {
     d->icon = icon_P;
     }
 
-const QString& KStartupInfoData::findIcon() const
+const TQString& KStartupInfoData::findIcon() const
     {
     if( !icon().isEmpty())
         return icon();
     return bin();
     }
 
-const QString& KStartupInfoData::icon() const
+const TQString& KStartupInfoData::icon() const
     {
     return d->icon;
     }
@@ -1341,24 +1341,24 @@ int KStartupInfoData::desktop() const
     return d->desktop;
     }
 
-void KStartupInfoData::setWMClass( const QCString& wmclass_P )
+void KStartupInfoData::setWMClass( const TQCString& wmclass_P )
     {
     d->wmclass = wmclass_P;
     }
 
-const QCString KStartupInfoData::findWMClass() const
+const TQCString KStartupInfoData::findWMClass() const
     {
     if( !WMClass().isEmpty() && WMClass() != "0" )
         return WMClass();
     return bin().utf8();
     }
 
-const QCString& KStartupInfoData::WMClass() const
+const TQCString& KStartupInfoData::WMClass() const
     {
     return d->wmclass;
     }
 
-void KStartupInfoData::setHostname( const QCString& hostname_P )
+void KStartupInfoData::setHostname( const TQCString& hostname_P )
     {
     if( !hostname_P.isNull())
         d->hostname = hostname_P;
@@ -1372,7 +1372,7 @@ void KStartupInfoData::setHostname( const QCString& hostname_P )
         }
     }
 
-const QCString& KStartupInfoData::hostname() const
+const TQCString& KStartupInfoData::hostname() const
     {
     return d->hostname;
     }
@@ -1388,7 +1388,7 @@ void KStartupInfoData::remove_pid( pid_t pid_P )
     d->pids.remove( pid_P );
     }
 
-const QValueList< pid_t >& KStartupInfoData::pids() const
+const TQValueList< pid_t >& KStartupInfoData::pids() const
     {
     return d->pids;
     }
@@ -1449,45 +1449,45 @@ WId KStartupInfoData::launchedBy() const
     }
 
 static
-long get_num( const QString& item_P )
+long get_num( const TQString& item_P )
     {
     unsigned int pos = item_P.find( '=' );
     return item_P.mid( pos + 1 ).toLong();
     }
 
 static
-unsigned long get_unum( const QString& item_P )
+unsigned long get_unum( const TQString& item_P )
     {
     unsigned int pos = item_P.find( '=' );
     return item_P.mid( pos + 1 ).toULong();
     }
 
 static
-QString get_str( const QString& item_P )
+TQString get_str( const TQString& item_P )
     {
     unsigned int pos = item_P.find( '=' );
     if( item_P.length() > pos + 2 && item_P[ pos + 1 ] == '\"' )
         {
         int pos2 = item_P.left( pos + 2 ).find( '\"' );
         if( pos2 < 0 )
-            return QString::null;                      // 01234
+            return TQString::null;                      // 01234
         return item_P.mid( pos + 2, pos2 - 2 - pos );  // A="C"
         }
     return item_P.mid( pos + 1 );
     }
 
 static
-QCString get_cstr( const QString& item_P )
+TQCString get_cstr( const TQString& item_P )
     {
     return get_str( item_P ).utf8();
     }
 
 static
-QStringList get_fields( const QString& txt_P )
+TQStringList get_fields( const TQString& txt_P )
     {
-    QString txt = txt_P.simplifyWhiteSpace();
-    QStringList ret;
-    QString item = "";
+    TQString txt = txt_P.simplifyWhiteSpace();
+    TQStringList ret;
+    TQString item = "";
     bool in = false;
     bool escape = false;
     for( unsigned int pos = 0;
@@ -1515,9 +1515,9 @@ QStringList get_fields( const QString& txt_P )
     return ret;
     }
 
-static QString escape_str( const QString& str_P )
+static TQString escape_str( const TQString& str_P )
     {
-    QString ret = "";
+    TQString ret = "";
     for( unsigned int pos = 0;
 	 pos < str_P.length();
 	 ++pos )

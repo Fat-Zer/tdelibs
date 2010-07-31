@@ -20,22 +20,22 @@
 #ifndef LPQHELPER_H
 #define LPQHELPER_H
 
-#include <qobject.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
 
 class KMJob;
 
 class LpqHelper : public QObject
 {
 public:
-	LpqHelper(QObject *parent = 0, const char *name = 0);
+	LpqHelper(TQObject *parent = 0, const char *name = 0);
 	~LpqHelper();
 
-	void listJobs(QPtrList<KMJob>& jobs, const QString& prname, int limit = 0);
+	void listJobs(TQPtrList<KMJob>& jobs, const TQString& prname, int limit = 0);
 
 protected:
-	KMJob* parseLineLpr(const QString&);
-	KMJob* parseLineLPRng(const QString&);
+	KMJob* parseLineLpr(const TQString&);
+	KMJob* parseLineLPRng(const TQString&);
 
 private:
 	QString		m_exepath;

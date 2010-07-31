@@ -32,7 +32,7 @@ int main( int argc, char** argv )
   }
   KInstance blah("kmimemagictest");
 
-  QString file = QString::fromLocal8Bit( argv[1] );
+  TQString file = TQString::fromLocal8Bit( argv[1] );
 
   KMimeMagicResult * result = KMimeMagic::self()->findFileType( file );
 

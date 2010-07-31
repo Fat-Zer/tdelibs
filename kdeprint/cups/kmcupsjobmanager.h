@@ -22,7 +22,7 @@
 
 #include "kmjobmanager.h"
 #include "ipprequest.h"
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 class KMPrinter;
 
@@ -31,22 +31,22 @@ class KMCupsJobManager : public KMJobManager
 	Q_OBJECT
 
 public:
-	KMCupsJobManager(QObject *parent, const char *name, const QStringList &/*args*/);
+	KMCupsJobManager(TQObject *parent, const char *name, const TQStringList &/*args*/);
 	virtual ~KMCupsJobManager();
 
 	int actions();
-	QValueList<KAction*> createPluginActions(KActionCollection*);
-	void validatePluginActions(KActionCollection*, const QPtrList<KMJob>&);
-	bool doPluginAction(int, const QPtrList<KMJob>&);
+	TQValueList<KAction*> createPluginActions(KActionCollection*);
+	void validatePluginActions(KActionCollection*, const TQPtrList<KMJob>&);
+	bool doPluginAction(int, const TQPtrList<KMJob>&);
 
 protected:
 	bool jobIppReport(KMJob*);
-	bool changePriority(const QPtrList<KMJob>&, bool);
+	bool changePriority(const TQPtrList<KMJob>&, bool);
 	bool editJobAttributes(KMJob*);
 
 protected:
-	bool listJobs(const QString&, JobType, int = 0);
-	bool sendCommandSystemJob(const QPtrList<KMJob>& jobs, int action, const QString& arg = QString::null);
+	bool listJobs(const TQString&, JobType, int = 0);
+	bool sendCommandSystemJob(const TQPtrList<KMJob>& jobs, int action, const TQString& arg = TQString::null);
 	void parseListAnswer(IppRequest& req, KMPrinter *pr);
 };
 

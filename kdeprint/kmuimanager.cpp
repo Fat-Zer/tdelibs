@@ -39,8 +39,8 @@
 #include <klocale.h>
 #include <kdebug.h>
 
-KMUiManager::KMUiManager(QObject *parent, const char *name)
-: QObject(parent,name)
+KMUiManager::KMUiManager(TQObject *parent, const char *name)
+: TQObject(parent,name)
 {
 	m_printdialogflags = KMUiManager::PrintDialogAll;
 	m_printdialogpages.setAutoDelete(false);
@@ -190,11 +190,11 @@ int KMUiManager::pluginPageCap()
 	return 0;
 }
 
-void KMUiManager::setupPrintDialogPages(QPtrList<KPrintDialogPage>*)
+void KMUiManager::setupPrintDialogPages(TQPtrList<KPrintDialogPage>*)
 {
 }
 
-void KMUiManager::setupJobViewer(QListView*)
+void KMUiManager::setupJobViewer(TQListView*)
 {
 }
 

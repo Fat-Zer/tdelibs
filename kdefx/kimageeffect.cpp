@@ -34,7 +34,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <math.h>
 #include <assert.h>
 
-#include <qimage.h>
+#include <tqimage.h>
 #include <stdlib.h>
 #include <iostream>
 
@@ -121,13 +121,13 @@ struct short_packet
 //
 //======================================================================
 
-QImage KImageEffect::gradient(const QSize &size, const QColor &ca,
-	const QColor &cb, GradientType eff, int ncols)
+TQImage KImageEffect::gradient(const TQSize &size, const TQColor &ca,
+	const TQColor &cb, GradientType eff, int ncols)
 {
     int rDiff, gDiff, bDiff;
     int rca, gca, bca, rcb, gcb, bcb;
 
-    QImage image(size, 32);
+    TQImage image(size, 32);
 
     if (size.width() == 0 || size.height() == 0) {
 #ifndef NDEBUG
@@ -357,10 +357,10 @@ QImage KImageEffect::gradient(const QSize &size, const QColor &ca,
     }
 
     // dither if necessary
-    if (ncols && (QPixmap::defaultDepth() < 15 )) {
+    if (ncols && (TQPixmap::defaultDepth() < 15 )) {
 	if ( ncols < 2 || ncols > 256 )
 	    ncols = 3;
-	QColor *dPal = new QColor[ncols];
+	TQColor *dPal = new QColor[ncols];
 	for (int i=0; i<ncols; i++) {
 	    dPal[i].setRgb ( rca + rDiff * i / ( ncols - 1 ),
 			     gca + gDiff * i / ( ncols - 1 ),
@@ -385,8 +385,8 @@ QImage KImageEffect::gradient(const QSize &size, const QColor &ca,
 //   the balanced code would suffer with no other gain than a mere
 //   source code and byte code size economy.
 
-QImage KImageEffect::unbalancedGradient(const QSize &size, const QColor &ca,
-	const QColor &cb, GradientType eff, int xfactor, int yfactor,
+TQImage KImageEffect::unbalancedGradient(const TQSize &size, const TQColor &ca,
+	const TQColor &cb, GradientType eff, int xfactor, int yfactor,
 	int ncols)
 {
     int dir; // general parameter used for direction switches
@@ -415,7 +415,7 @@ QImage KImageEffect::unbalancedGradient(const QSize &size, const QColor &ca,
     int rDiff, gDiff, bDiff;
     int rca, gca, bca, rcb, gcb, bcb;
 
-    QImage image(size, 32);
+    TQImage image(size, 32);
 
     if (size.width() == 0 || size.height() == 0) {
 #ifndef NDEBUG
@@ -432,7 +432,7 @@ QImage KImageEffect::unbalancedGradient(const QSize &size, const QColor &ca,
     bDiff = (bcb = cb.blue())  - (bca = ca.blue());
 
     if( eff == VerticalGradient || eff == HorizontalGradient){
-        QColor cRow;
+        TQColor cRow;
 
         uint *p;
         uint rgbRow;
@@ -596,10 +596,10 @@ QImage KImageEffect::unbalancedGradient(const QSize &size, const QColor &ca,
           }
       }
 
-      if (ncols && (QPixmap::defaultDepth() < 15 )) {
+      if (ncols && (TQPixmap::defaultDepth() < 15 )) {
           if ( ncols < 2 || ncols > 256 )
               ncols = 3;
-          QColor *dPal = new QColor[ncols];
+          TQColor *dPal = new QColor[ncols];
           for (int i=0; i<ncols; i++) {
               dPal[i].setRgb ( rca + rDiff * i / ( ncols - 1 ),
                                gca + gDiff * i / ( ncols - 1 ),
@@ -651,7 +651,7 @@ struct KIE8Pack
  * less expensive than doing a float operation on the 3 color components of
  * each pixel. (mosfet)
  */
-QImage& KImageEffect::intensity(QImage &image, float percent)
+TQImage& KImageEffect::intensity(TQImage &image, float percent)
 {
     if (image.width() == 0 || image.height() == 0) {
 #ifndef NDEBUG
@@ -843,7 +843,7 @@ QImage& KImageEffect::intensity(QImage &image, float percent)
     return image;
 }
 
-QImage& KImageEffect::channelIntensity(QImage &image, float percent,
+TQImage& KImageEffect::channelIntensity(TQImage &image, float percent,
                                        RGBComponent channel)
 {
     if (image.width() == 0 || image.height() == 0) {
@@ -934,7 +934,7 @@ QImage& KImageEffect::channelIntensity(QImage &image, float percent,
 
 // Modulate an image with an RBG channel of another image
 //
-QImage& KImageEffect::modulate(QImage &image, QImage &modImage, bool reverse,
+TQImage& KImageEffect::modulate(TQImage &image, TQImage &modImage, bool reverse,
 	ModulationType type, int factor, RGBComponent channel)
 {
     if (image.width() == 0 || image.height() == 0 ||
@@ -946,7 +946,7 @@ QImage& KImageEffect::modulate(QImage &image, QImage &modImage, bool reverse,
     }
 
     int r, g, b, h, s, v, a;
-    QColor clr;
+    TQColor clr;
     int mod=0;
     unsigned int x1, x2, y1, y2;
     register int x, y;
@@ -1064,7 +1064,7 @@ QImage& KImageEffect::modulate(QImage &image, QImage &modImage, bool reverse,
 
 
 // Nice and fast direct pixel manipulation
-QImage& KImageEffect::blend(const QColor& clr, QImage& dst, float opacity)
+TQImage& KImageEffect::blend(const TQColor& clr, TQImage& dst, float opacity)
 {
     if (dst.width() <= 0 || dst.height() <= 0)
         return dst;
@@ -1305,7 +1305,7 @@ QImage& KImageEffect::blend(const QColor& clr, QImage& dst, float opacity)
 }
 
 // Nice and fast direct pixel manipulation
-QImage& KImageEffect::blend(QImage& src, QImage& dst, float opacity)
+TQImage& KImageEffect::blend(TQImage& src, TQImage& dst, float opacity)
 {
     if (src.width() <= 0 || src.height() <= 0)
         return dst;
@@ -1534,8 +1534,8 @@ QImage& KImageEffect::blend(QImage& src, QImage& dst, float opacity)
 }
 
 
-QImage& KImageEffect::blend(QImage &image, float initial_intensity,
-                            const QColor &bgnd, GradientType eff,
+TQImage& KImageEffect::blend(TQImage &image, float initial_intensity,
+                            const TQColor &bgnd, GradientType eff,
                             bool anti_dir)
 {
     if (image.width() == 0 || image.height() == 0 || image.depth()!=32 ) {
@@ -1742,17 +1742,17 @@ QImage& KImageEffect::blend(QImage &image, float initial_intensity,
 
 // Not very efficient as we create a third big image...
 //
-QImage& KImageEffect::blend(QImage &image1, QImage &image2,
+TQImage& KImageEffect::blend(TQImage &image1, TQImage &image2,
 			    GradientType gt, int xf, int yf)
 {
   if (image1.width() == 0 || image1.height() == 0 ||
       image2.width() == 0 || image2.height() == 0)
     return image1;
 
-  QImage image3;
+  TQImage image3;
 
   image3 = KImageEffect::unbalancedGradient(image1.size(),
-				    QColor(0,0,0), QColor(255,255,255),
+				    TQColor(0,0,0), TQColor(255,255,255),
 				    gt, xf, yf, 0);
 
   return blend(image1,image2,image3, Red); // Channel to use is arbitrary
@@ -1760,8 +1760,8 @@ QImage& KImageEffect::blend(QImage &image1, QImage &image2,
 
 // Blend image2 into image1, using an RBG channel of blendImage
 //
-QImage& KImageEffect::blend(QImage &image1, QImage &image2,
-			    QImage &blendImage, RGBComponent channel)
+TQImage& KImageEffect::blend(TQImage &image1, TQImage &image2,
+			    TQImage &blendImage, RGBComponent channel)
 {
     if (image1.width() == 0 || image1.height() == 0 ||
         image2.width() == 0 || image2.height() == 0 ||
@@ -1863,7 +1863,7 @@ unsigned int KImageEffect::uHash(unsigned int c)
 
 // -----------------------------------------------------------------------------
 
-QImage& KImageEffect::hash(QImage &image, Lighting lite, unsigned int spacing)
+TQImage& KImageEffect::hash(TQImage &image, Lighting lite, unsigned int spacing)
 {
     if (image.width() == 0 || image.height() == 0) {
 #ifndef NDEBUG
@@ -1944,8 +1944,8 @@ QImage& KImageEffect::hash(QImage &image, Lighting lite, unsigned int spacing)
 //
 //======================================================================
 
-QImage& KImageEffect::flatten(QImage &img, const QColor &ca,
-                            const QColor &cb, int ncols)
+TQImage& KImageEffect::flatten(TQImage &img, const TQColor &ca,
+                            const TQColor &cb, int ncols)
 {
     if (img.width() == 0 || img.height() == 0)
       return img;
@@ -2020,13 +2020,13 @@ QImage& KImageEffect::flatten(QImage &img, const QColor &ca,
     if (ncols == 1) ncols++;
     if (ncols > 256) ncols = 256;
 
-    QColor *pal = new QColor[ncols];
+    TQColor *pal = new QColor[ncols];
     sr = ((float) r2 - r1) / (ncols - 1);
     sg = ((float) g2 - g1) / (ncols - 1);
     sb = ((float) b2 - b1) / (ncols - 1);
 
     for (int i=0; i<ncols; i++)
-	pal[i] = QColor(r1 + int(sr*i), g1 + int(sg*i), b1 + int(sb*i));
+	pal[i] = TQColor(r1 + int(sr*i), g1 + int(sg*i), b1 + int(sb*i));
 
     dither(img, pal, ncols);
 
@@ -2041,7 +2041,7 @@ QImage& KImageEffect::flatten(QImage &img, const QColor &ca,
 //
 //======================================================================
 
-QImage& KImageEffect::fade(QImage &img, float val, const QColor &color)
+TQImage& KImageEffect::fade(TQImage &img, float val, const TQColor &color)
 {
     if (img.width() == 0 || img.height() == 0)
       return img;
@@ -2123,7 +2123,7 @@ QImage& KImageEffect::fade(QImage &img, float val, const QColor &color)
 //
 // It does produce lower quality grayscale ;-) Use fast == true for the fast
 // algorithm, false for the higher quality one (mosfet).
-QImage& KImageEffect::toGray(QImage &img, bool fast)
+TQImage& KImageEffect::toGray(TQImage &img, bool fast)
 {
     if (img.width() == 0 || img.height() == 0)
       return img;
@@ -2173,7 +2173,7 @@ QImage& KImageEffect::toGray(QImage &img, bool fast)
 }
 
 // CT 29Jan2000 - desaturation algorithms
-QImage& KImageEffect::desaturate(QImage &img, float desat)
+TQImage& KImageEffect::desaturate(TQImage &img, float desat)
 {
     if (img.width() == 0 || img.height() == 0)
       return img;
@@ -2185,7 +2185,7 @@ QImage& KImageEffect::desaturate(QImage &img, float desat)
     unsigned int *data = img.depth() > 8 ? (unsigned int *)img.bits() :
         (unsigned int *)img.colorTable();
     int h, s, v, i;
-    QColor clr; // keep constructor out of loop (mosfet)
+    TQColor clr; // keep constructor out of loop (mosfet)
     for(i=0; i < pixels; ++i){
         clr.setRgb(data[i]);
 	clr.hsv(&h, &s, &v);
@@ -2196,7 +2196,7 @@ QImage& KImageEffect::desaturate(QImage &img, float desat)
 }
 
 // Contrast stuff (mosfet)
-QImage& KImageEffect::contrast(QImage &img, int c)
+TQImage& KImageEffect::contrast(TQImage &img, int c)
 {
     if (img.width() == 0 || img.height() == 0)
       return img;
@@ -2258,13 +2258,13 @@ QImage& KImageEffect::contrast(QImage &img, int c)
 // Floyd-Steinberg dithering
 // Ref: Bitmapped Graphics Programming in C++
 //      Marv Luse, Addison-Wesley Publishing, 1993.
-QImage& KImageEffect::dither(QImage &img, const QColor *palette, int size)
+TQImage& KImageEffect::dither(TQImage &img, const TQColor *palette, int size)
 {
     if (img.width() == 0 || img.height() == 0 ||
         palette == 0 || img.depth() <= 8)
       return img;
 
-    QImage dImage( img.width(), img.height(), 8, size );
+    TQImage dImage( img.width(), img.height(), 8, size );
     int i;
 
     dImage.setNumColors( size );
@@ -2345,7 +2345,7 @@ QImage& KImageEffect::dither(QImage &img, const QColor *palette, int size)
     return img;
 }
 
-int KImageEffect::nearestColor( int r, int g, int b, const QColor *palette, int size )
+int KImageEffect::nearestColor( int r, int g, int b, const TQColor *palette, int size )
 {
     if (palette == 0)
       return 0;
@@ -2376,9 +2376,9 @@ int KImageEffect::nearestColor( int r, int g, int b, const QColor *palette, int 
 }
 
 bool KImageEffect::blend(
-    const QImage & upper,
-    const QImage & lower,
-    QImage & output
+    const TQImage & upper,
+    const TQImage & lower,
+    TQImage & output
 )
 {
   if (
@@ -2435,10 +2435,10 @@ bool KImageEffect::blend(
 #if 0
 // Not yet...
 bool KImageEffect::blend(
-    const QImage & upper,
-    const QImage & lower,
-    QImage & output,
-    const QRect & destRect
+    const TQImage & upper,
+    const TQImage & lower,
+    TQImage & output,
+    const TQRect & destRect
 )
 {
   output = lower.copy();
@@ -2449,9 +2449,9 @@ bool KImageEffect::blend(
 
 bool KImageEffect::blend(
     int &x, int &y,
-    const QImage & upper,
-    const QImage & lower,
-    QImage & output
+    const TQImage & upper,
+    const TQImage & lower,
+    TQImage & output
 )
 {
   int cx=0, cy=0, cw=upper.width(), ch=upper.height();
@@ -2513,8 +2513,8 @@ bool KImageEffect::blend(
 
 bool KImageEffect::blendOnLower(
     int x, int y,
-    const QImage & upper,
-    const QImage & lower
+    const TQImage & upper,
+    const TQImage & lower
 )
 {
   int cx=0, cy=0, cw=upper.width(), ch=upper.height();
@@ -2581,11 +2581,11 @@ bool KImageEffect::blendOnLower(
   return true;
 }
 
-void KImageEffect::blendOnLower(const QImage &upper, const QPoint &upperOffset,
-                                QImage &lower, const QRect &lowerRect)
+void KImageEffect::blendOnLower(const TQImage &upper, const TQPoint &upperOffset,
+                                TQImage &lower, const TQRect &lowerRect)
 {
     // clip rect
-    QRect lr =  lowerRect & lower.rect();
+    TQRect lr =  lowerRect & lower.rect();
     lr.setWidth( QMIN(lr.width(), upper.width()-upperOffset.x()) );
     lr.setHeight( QMIN(lr.height(), upper.height()-upperOffset.y()) );
     if ( !lr.isValid() ) return;
@@ -2603,11 +2603,11 @@ void KImageEffect::blendOnLower(const QImage &upper, const QPoint &upperOffset,
     }
 }
 
-void KImageEffect::blendOnLower(const QImage &upper, const QPoint &upperOffset,
-                          QImage &lower, const QRect &lowerRect, float opacity)
+void KImageEffect::blendOnLower(const TQImage &upper, const TQPoint &upperOffset,
+                          TQImage &lower, const TQRect &lowerRect, float opacity)
 {
     // clip rect
-    QRect lr =  lowerRect & lower.rect();
+    TQRect lr =  lowerRect & lower.rect();
     lr.setWidth( QMIN(lr.width(), upper.width()-upperOffset.x()) );
     lr.setHeight( QMIN(lr.height(), upper.height()-upperOffset.y()) );
     if ( !lr.isValid() ) return;
@@ -2625,14 +2625,14 @@ void KImageEffect::blendOnLower(const QImage &upper, const QPoint &upperOffset,
     }
 }
 
-QRect KImageEffect::computeDestinationRect(const QSize &lowerSize,
-                                       Disposition disposition, QImage &upper)
+TQRect KImageEffect::computeDestinationRect(const TQSize &lowerSize,
+                                       Disposition disposition, TQImage &upper)
 {
     int w = lowerSize.width();
     int h = lowerSize.height();
     int ww = upper.width();
     int wh = upper.height();
-    QRect d;
+    TQRect d;
 
     switch (disposition) {
     case NoImage:
@@ -2690,19 +2690,19 @@ QRect KImageEffect::computeDestinationRect(const QSize &lowerSize,
     return d;
 }
 
-void KImageEffect::blendOnLower(QImage &upper, QImage &lower,
+void KImageEffect::blendOnLower(TQImage &upper, TQImage &lower,
                                 Disposition disposition, float opacity)
 {
-    QRect r = computeDestinationRect(lower.size(), disposition, upper);
+    TQRect r = computeDestinationRect(lower.size(), disposition, upper);
     for (int y = r.top(); y<r.bottom(); y += upper.height())
         for (int x = r.left(); x<r.right(); x += upper.width())
-            blendOnLower(upper, QPoint(-QMIN(x, 0), -QMIN(y, 0)),
-                   lower, QRect(x, y, upper.width(), upper.height()), opacity);
+            blendOnLower(upper, TQPoint(-QMIN(x, 0), -QMIN(y, 0)),
+                   lower, TQRect(x, y, upper.width(), upper.height()), opacity);
 }
 
 
 // For selected icons
-QImage& KImageEffect::selectedImage( QImage &img, const QColor &col )
+TQImage& KImageEffect::selectedImage( TQImage &img, const TQColor &col )
 {
     return blend( col, img, 0.5);
 }
@@ -2744,14 +2744,14 @@ dealings in ImageMagick without prior written authorization from the
 ImageMagick Studio.
 */
 
-QImage KImageEffect::sample(QImage &src, int w, int h)
+TQImage KImageEffect::sample(TQImage &src, int w, int h)
 {
     if(w == src.width() && h == src.height())
         return(src);
 
     int depth = src.depth();
-    QImage dest(w, h, depth, depth <= 8 ? src.numColors() : 0,
-    depth == 1 ? QImage::LittleEndian : QImage::IgnoreEndian);
+    TQImage dest(w, h, depth, depth <= 8 ? src.numColors() : 0,
+    depth == 1 ? TQImage::LittleEndian : TQImage::IgnoreEndian);
     int *x_offset = (int *)malloc(w*sizeof(int));
     int *y_offset = (int *)malloc(h*sizeof(int));
     if(!x_offset || !y_offset){
@@ -2778,7 +2778,7 @@ QImage KImageEffect::sample(QImage &src, int w, int h)
         }
     }
     else if(depth == 1) {
-        int r = src.bitOrder() == QImage::LittleEndian;
+        int r = src.bitOrder() == TQImage::LittleEndian;
         memcpy(dest.colorTable(), src.colorTable(), src.numColors()*sizeof(QRgb));
         for(int y=0; y < h; ++y){
             unsigned char *destData = dest.scanLine(y);
@@ -2807,7 +2807,7 @@ QImage KImageEffect::sample(QImage &src, int w, int h)
     return(dest);
 }
 
-void KImageEffect::threshold(QImage &img, unsigned int threshold)
+void KImageEffect::threshold(TQImage &img, unsigned int threshold)
 {
     int i, count;
     unsigned int *data;
@@ -2903,7 +2903,7 @@ void KImageEffect::hull(const int x_offset, const int y_offset,
     }
 }
 
-QImage KImageEffect::despeckle(QImage &src)
+TQImage KImageEffect::despeckle(TQImage &src)
 {
     int i, j, x, y;
     unsigned int *blue_channel, *red_channel, *green_channel, *buffer,
@@ -2914,7 +2914,7 @@ QImage KImageEffect::despeckle(QImage &src)
     Y[4]= {1, 0, 1, 1};
 
     unsigned int *destData;
-    QImage dest(src.width(), src.height(), 32);
+    TQImage dest(src.width(), src.height(), 32);
 
     packets = (src.width()+2)*(src.height()+2);
     red_channel = (unsigned int *)calloc(packets, sizeof(unsigned int));
@@ -3109,10 +3109,10 @@ unsigned int KImageEffect::generateNoise(unsigned int pixel,
     return((unsigned int) (value+0.5));
 }
 
-QImage KImageEffect::addNoise(QImage &src, NoiseType noise_type)
+TQImage KImageEffect::addNoise(TQImage &src, NoiseType noise_type)
 {
     int x, y;
-    QImage dest(src.width(), src.height(), 32);
+    TQImage dest(src.width(), src.height(), 32);
     unsigned int *destData;
 
     if(src.depth() > 8){ // DirectClass source image
@@ -3148,7 +3148,7 @@ QImage KImageEffect::addNoise(QImage &src, NoiseType noise_type)
     return(dest);
 }
 
-unsigned int KImageEffect::interpolateColor(QImage *image, double x_offset,
+unsigned int KImageEffect::interpolateColor(TQImage *image, double x_offset,
                                             double y_offset,
                                             unsigned int background)
 {
@@ -3239,7 +3239,7 @@ unsigned int KImageEffect::interpolateColor(QImage *image, double x_offset,
                  (unsigned char)(beta*(alpha*qAlpha(p)+x_offset*qAlpha(q))+y_offset*(alpha*qAlpha(r)+x_offset*qAlpha(s)))));
 }
 
-QImage KImageEffect::implode(QImage &src, double factor,
+TQImage KImageEffect::implode(TQImage &src, double factor,
                              unsigned int background)
 {
     double amount, distance, radius;
@@ -3248,7 +3248,7 @@ QImage KImageEffect::implode(QImage &src, double factor,
     unsigned int *destData;
     int x, y;
 
-    QImage dest(src.width(), src.height(), 32);
+    TQImage dest(src.width(), src.height(), 32);
 
     // compute scaling factor
     x_scale = 1.0;
@@ -3320,9 +3320,9 @@ QImage KImageEffect::implode(QImage &src, double factor,
     return(dest);
 }
 
-QImage KImageEffect::rotate(QImage &img, RotateDirection r)
+TQImage KImageEffect::rotate(TQImage &img, RotateDirection r)
 {
-    QImage dest;
+    TQImage dest;
     int x, y;
     if(img.depth() > 8){
         unsigned int *srcData, *destData;
@@ -3418,7 +3418,7 @@ QImage KImageEffect::rotate(QImage &img, RotateDirection r)
     return(dest);
 }
 
-void KImageEffect::solarize(QImage &img, double factor)
+void KImageEffect::solarize(TQImage &img, double factor)
 {
     int i, count;
     int threshold;
@@ -3441,13 +3441,13 @@ void KImageEffect::solarize(QImage &img, double factor)
     }
 }
 
-QImage KImageEffect::spread(QImage &src, unsigned int amount)
+TQImage KImageEffect::spread(TQImage &src, unsigned int amount)
 {
     int quantum, x, y;
     int x_distance, y_distance;
     if(src.width() < 3 || src.height() < 3)
         return(src);
-    QImage dest(src);
+    TQImage dest(src);
     dest.detach();
     quantum=(amount+1) >> 1;
     if(src.depth() > 8){ // DirectClass source image
@@ -3492,14 +3492,14 @@ QImage KImageEffect::spread(QImage &src, unsigned int amount)
     return(dest);
 }
 
-QImage KImageEffect::swirl(QImage &src, double degrees,
+TQImage KImageEffect::swirl(TQImage &src, double degrees,
                            unsigned int background)
 {
     double cosine, distance, factor, radius, sine, x_center, x_distance,
         x_scale, y_center, y_distance, y_scale;
     int x, y;
     unsigned int *q;
-    QImage dest(src.width(), src.height(), 32);
+    TQImage dest(src.width(), src.height(), 32);
 
     // compute scaling factor
     x_center = src.width()/2.0;
@@ -3570,14 +3570,14 @@ QImage KImageEffect::swirl(QImage &src, double degrees,
     return(dest);
 }
 
-QImage KImageEffect::wave(QImage &src, double amplitude, double wavelength,
+TQImage KImageEffect::wave(TQImage &src, double amplitude, double wavelength,
                           unsigned int background)
 {
     double *sine_map;
     int x, y;
     unsigned int *q;
 
-    QImage dest(src.width(), src.height() + (int)(2*fabs(amplitude)), 32);
+    TQImage dest(src.width(), src.height() + (int)(2*fabs(amplitude)), 32);
     // allocate sine map
     sine_map = (double *)malloc(dest.width()*sizeof(double));
     if(!sine_map)
@@ -3603,13 +3603,13 @@ QImage KImageEffect::wave(QImage &src, double amplitude, double wavelength,
 
 // New algorithms based on ImageMagick 5.5.6 (05/26/03)
 
-QImage KImageEffect::oilPaint(QImage &src, int /*radius*/)
+TQImage KImageEffect::oilPaint(TQImage &src, int /*radius*/)
 {
     /* binary compat method - remove me when possible! */
     return(oilPaintConvolve(src, 0));
 }
 
-QImage KImageEffect::oilPaintConvolve(QImage &src, double radius)
+TQImage KImageEffect::oilPaintConvolve(TQImage &src, double radius)
 {
     unsigned long count /*,*histogram*/;
     unsigned long histogram[256];
@@ -3621,7 +3621,7 @@ QImage KImageEffect::oilPaintConvolve(QImage &src, double radius)
 
     if(src.depth() < 32)
         src.convertDepth(32);
-    QImage dest(src);
+    TQImage dest(src);
     dest.detach();
 
     width = getOptimalKernelWidth(radius, 0.5);
@@ -3674,15 +3674,15 @@ QImage KImageEffect::oilPaintConvolve(QImage &src, double radius)
     return(dest);
 }
 
-QImage KImageEffect::charcoal(QImage &src, double /*factor*/)
+TQImage KImageEffect::charcoal(TQImage &src, double /*factor*/)
 {
     /* binary compat method - remove me when possible! */
     return(charcoal(src, 0, 1));
 }
 
-QImage KImageEffect::charcoal(QImage &src, double radius, double sigma)
+TQImage KImageEffect::charcoal(TQImage &src, double radius, double sigma)
 {
-    QImage img(edge(src, radius));
+    TQImage img(edge(src, radius));
     img = blur(img, radius, sigma);
     normalize(img);
     img.invertPixels(false);
@@ -3690,7 +3690,7 @@ QImage KImageEffect::charcoal(QImage &src, double radius, double sigma)
     return(img);
 }
 
-void KImageEffect::normalize(QImage &image)
+void KImageEffect::normalize(TQImage &image)
 {
     struct double_packet high, low, intensity, *histogram;
     struct short_packet *normalize_map;
@@ -3900,7 +3900,7 @@ void KImageEffect::normalize(QImage &image)
     liberateMemory(&normalize_map);
 }
 
-void KImageEffect::equalize(QImage &image)
+void KImageEffect::equalize(TQImage &image)
 {
     struct double_packet high, low, intensity, *map, *histogram;
     struct short_packet *equalize_map;
@@ -4000,12 +4000,12 @@ void KImageEffect::equalize(QImage &image)
 
 }
 
-QImage KImageEffect::edge(QImage &image, double radius)
+TQImage KImageEffect::edge(TQImage &image, double radius)
 {
     double *kernel;
     int width;
     register long i;
-    QImage dest;
+    TQImage dest;
 
     if(radius == 50.0){
         /* For binary compatability! Remove me when possible! This used to
@@ -4032,18 +4032,18 @@ QImage KImageEffect::edge(QImage &image, double radius)
     return(dest);
 }
 
-QImage KImageEffect::emboss(QImage &src)
+TQImage KImageEffect::emboss(TQImage &src)
 {
     /* binary compat method - remove me when possible! */
     return(emboss(src, 0, 1));
 }
 
-QImage KImageEffect::emboss(QImage &image, double radius, double sigma)
+TQImage KImageEffect::emboss(TQImage &image, double radius, double sigma)
 {
     double alpha, *kernel;
     int j, width;
     register long i, u, v;
-    QImage dest;
+    TQImage dest;
 
     if(sigma == 0.0){
         qWarning("KImageEffect::emboss(): Zero sigma is not permitted!");
@@ -4251,16 +4251,16 @@ int KImageEffect::getBlurKernel(int width, double sigma, double **kernel)
     return(width);
 }
 
-QImage KImageEffect::blur(QImage &src, double /*factor*/)
+TQImage KImageEffect::blur(TQImage &src, double /*factor*/)
 {
     /* binary compat method - remove me when possible! */
     return(blur(src, 0, 1));
 }
 
-QImage KImageEffect::blur(QImage &src, double radius, double sigma)
+TQImage KImageEffect::blur(TQImage &src, double radius, double sigma)
 {
     double *kernel;
-    QImage dest;
+    TQImage dest;
     int width;
     int x, y;
     unsigned int *scanline, *temp;
@@ -4329,7 +4329,7 @@ QImage KImageEffect::blur(QImage &src, double radius, double sigma)
     return(dest);
 }
 
-bool KImageEffect::convolveImage(QImage *image, QImage *dest,
+bool KImageEffect::convolveImage(TQImage *image, TQImage *dest,
                                  const unsigned int order,
                                  const double *kernel)
 {
@@ -4427,18 +4427,18 @@ int KImageEffect::getOptimalKernelWidth(double radius, double sigma)
     return((int)width-2);
 }
 
-QImage KImageEffect::sharpen(QImage &src, double /*factor*/)
+TQImage KImageEffect::sharpen(TQImage &src, double /*factor*/)
 {
     /* binary compat method - remove me when possible! */
     return(sharpen(src, 0, 1));
 }
 
-QImage KImageEffect::sharpen(QImage &image, double radius, double sigma)
+TQImage KImageEffect::sharpen(TQImage &image, double radius, double sigma)
 {
     double alpha, normalize, *kernel;
     int width;
     register long i, u, v;
-    QImage dest;
+    TQImage dest;
 
     if(sigma == 0.0){
         qWarning("KImageEffect::sharpen(): Zero sigma is not permitted!");
@@ -4473,7 +4473,7 @@ QImage KImageEffect::sharpen(QImage &image, double radius, double sigma)
 
 // End of new algorithms
 
-QImage KImageEffect::shade(QImage &src, bool color_shading, double azimuth,
+TQImage KImageEffect::shade(TQImage &src, bool color_shading, double azimuth,
              double elevation)
 {
     struct PointInfo{
@@ -4487,7 +4487,7 @@ QImage KImageEffect::shade(QImage &src, bool color_shading, double azimuth,
 
     unsigned int *q;
 
-    QImage dest(src.width(), src.height(), 32);
+    TQImage dest(src.width(), src.height(), 32);
 
     azimuth = DegreesToRadians(azimuth);
     elevation = DegreesToRadians(elevation);
@@ -4611,13 +4611,13 @@ QImage KImageEffect::shade(QImage &src, bool color_shading, double azimuth,
 // taking a grayscale threshold (ie: 128) and incrementing RGB color
 // channels above it and decrementing those below it, but this gives much
 // better results. (mosfet 12/28/01)
-void KImageEffect::contrastHSV(QImage &img, bool sharpen)
+void KImageEffect::contrastHSV(TQImage &img, bool sharpen)
 {
     int i, sign;
     unsigned int *data;
     int count;
     double brightness, scale, theta;
-    QColor c;
+    TQColor c;
     int h, s, v;
 
     sign = sharpen ? 1 : -1;
@@ -4848,12 +4848,12 @@ static void bumpmap_row( uint           *src,
  * @return The destination image (dst) containing the result.
  * @author Zack Rusin <zack@kde.org>
  */
-QImage KImageEffect::bumpmap(QImage &img, QImage &map, double azimuth, double elevation,
+TQImage KImageEffect::bumpmap(TQImage &img, TQImage &map, double azimuth, double elevation,
                              int depth, int xofs, int yofs, int waterlevel,
                              int ambient, bool compensate, bool invert,
                              BumpmapType type, bool tiled)
 {
-    QImage dst;
+    TQImage dst;
 
     if ( img.depth() != 32 || img.depth() != 32 ) {
         qWarning( "Bump-mapping effect works only with 32 bit images");

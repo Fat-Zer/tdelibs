@@ -18,20 +18,20 @@
 */
 #include <kapplication.h>
 #include "kbuttonbox.h"
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qdialog.h>
-#include <qpushbutton.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqdialog.h>
+#include <tqpushbutton.h>
 
 int main(int argc, char **argv) {
   KApplication a(argc, argv, "dummy");
 
   // example 1
   {
-    QDialog *w = new QDialog(0, "A common dialog", true);
+    TQDialog *w = new TQDialog(0, "A common dialog", true);
     w->setCaption("Example 1");
-    QVBoxLayout *tl = new QVBoxLayout(w, 5);
-    QLabel *l = new QLabel("A very common dialog\n\n"\
+    TQVBoxLayout *tl = new TQVBoxLayout(w, 5);
+    TQLabel *l = new TQLabel("A very common dialog\n\n"\
 			   "OK and Cancel are left aligned, Help\n"\
 			   "is right aligned. Try resizing\n"\
 			   "the window!\n"
@@ -41,12 +41,12 @@ int main(int argc, char **argv) {
     l->setMinimumSize(l->sizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
-    QPushButton *b = bbox->addButton("OK");
+    TQPushButton *b = bbox->addButton("OK");
     b->setDefault(true);
-    w->connect(b, SIGNAL(clicked()),
-	       w, SLOT(accept()));
-    w->connect(bbox->addButton("Cancel"), SIGNAL(clicked()),
-	       w, SLOT(accept()));
+    w->connect(b, TQT_SIGNAL(clicked()),
+	       w, TQT_SLOT(accept()));
+    w->connect(bbox->addButton("Cancel"), TQT_SIGNAL(clicked()),
+	       w, TQT_SLOT(accept()));
     
     bbox->addStretch(1);
     bbox->addButton("Help");
@@ -59,10 +59,10 @@ int main(int argc, char **argv) {
 
   // example 2
   {    
-    QDialog *w = new QDialog(0, "Right aligned buttons", true);
+    TQDialog *w = new TQDialog(0, "Right aligned buttons", true);
     w->setCaption("Example 2");
-    QVBoxLayout *tl = new QVBoxLayout(w, 5);
-    QLabel *l = new QLabel("Another common dialog\n\n"\
+    TQVBoxLayout *tl = new TQVBoxLayout(w, 5);
+    TQLabel *l = new TQLabel("Another common dialog\n\n"\
 			   "OK and Cancel are right aligned\n"\
 			   "Try resizing the window!", w);
     l->setAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
@@ -70,12 +70,12 @@ int main(int argc, char **argv) {
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     bbox->addStretch(1);
-    QPushButton *b = bbox->addButton("OK");
+    TQPushButton *b = bbox->addButton("OK");
     b->setDefault(true);
-    w->connect(b, SIGNAL(clicked()),
-	       w, SLOT(accept()));
-    w->connect(bbox->addButton("Cancel"), SIGNAL(clicked()),
-	       w, SLOT(accept()));
+    w->connect(b, TQT_SIGNAL(clicked()),
+	       w, TQT_SLOT(accept()));
+    w->connect(bbox->addButton("Cancel"), TQT_SIGNAL(clicked()),
+	       w, TQT_SLOT(accept()));
     bbox->layout();
     tl->addWidget(bbox,0);
     tl->activate();  
@@ -85,10 +85,10 @@ int main(int argc, char **argv) {
 
   // example 3
   {    
-    QDialog *w = new QDialog(0, "Middle aligned buttons", true);
+    TQDialog *w = new TQDialog(0, "Middle aligned buttons", true);
     w->setCaption("Example 3");
-    QVBoxLayout *tl = new QVBoxLayout(w, 5);
-    QLabel *l = new QLabel("Another common dialog\n\n"\
+    TQVBoxLayout *tl = new TQVBoxLayout(w, 5);
+    TQLabel *l = new TQLabel("Another common dialog\n\n"\
 			   "OK and Cancel are middle aligned\n"\
 			   "Try resizing the window!", w);
     l->setAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
@@ -96,12 +96,12 @@ int main(int argc, char **argv) {
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     bbox->addStretch(1);
-    QPushButton *b = bbox->addButton("OK");
+    TQPushButton *b = bbox->addButton("OK");
     b->setDefault(true);
-    w->connect(b, SIGNAL(clicked()),
-	       w, SLOT(accept()));
-    w->connect(bbox->addButton("Cancel"), SIGNAL(clicked()),
-	       w, SLOT(accept()));
+    w->connect(b, TQT_SIGNAL(clicked()),
+	       w, TQT_SLOT(accept()));
+    w->connect(bbox->addButton("Cancel"), TQT_SIGNAL(clicked()),
+	       w, TQT_SLOT(accept()));
     bbox->addStretch(1);
     bbox->layout();
     tl->addWidget(bbox,0);
@@ -112,10 +112,10 @@ int main(int argc, char **argv) {
 
   // example 4
   {    
-    QDialog *w = new QDialog(0, "Bad example", true);
+    TQDialog *w = new TQDialog(0, "Bad example", true);
     w->setCaption("Example 4");
-    QVBoxLayout *tl = new QVBoxLayout(w, 5);
-    QLabel *l = new QLabel("A very bad example\n\n"\
+    TQVBoxLayout *tl = new TQVBoxLayout(w, 5);
+    TQLabel *l = new TQLabel("A very bad example\n\n"\
 			   "Sometimes it's a bad idea to take\n"
 			   "the maximum width for all buttons\n"
 			   "since it will look ugly -- "
@@ -125,12 +125,12 @@ int main(int argc, char **argv) {
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     bbox->addStretch(1);
-    QPushButton *b = bbox->addButton("OK");
+    TQPushButton *b = bbox->addButton("OK");
     b->setDefault(true);
-    w->connect(b, SIGNAL(clicked()),
-	       w, SLOT(accept()));
-    w->connect(bbox->addButton("Cancel"), SIGNAL(clicked()),
-	       w, SLOT(accept()));
+    w->connect(b, TQT_SIGNAL(clicked()),
+	       w, TQT_SLOT(accept()));
+    w->connect(bbox->addButton("Cancel"), TQT_SIGNAL(clicked()),
+	       w, TQT_SLOT(accept()));
 
     bbox->addButton("Push me and I give you a banana");
     bbox->addStretch(1);
@@ -143,10 +143,10 @@ int main(int argc, char **argv) {
 
   // example 5
   {    
-    QDialog *w = new QDialog(0, "Bad example", true);
+    TQDialog *w = new TQDialog(0, "Bad example", true);
     w->setCaption("Example 5");
-    QVBoxLayout *tl = new QVBoxLayout(w, 5);
-    QLabel *l = new QLabel("A better solution for the bad example\n\n"\
+    TQVBoxLayout *tl = new TQVBoxLayout(w, 5);
+    TQLabel *l = new TQLabel("A better solution for the bad example\n\n"\
 			   "Use \"addButton(\"Push me and I give"
 			   "you a banana\", true);\" to\n"
 			   "prevent this strange effect as seen\n"
@@ -157,12 +157,12 @@ int main(int argc, char **argv) {
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     bbox->addStretch(1);
-    QPushButton *b = bbox->addButton("OK");
+    TQPushButton *b = bbox->addButton("OK");
     b->setDefault(true);
-    w->connect(b, SIGNAL(clicked()),
-	       w, SLOT(accept()));
-    w->connect(bbox->addButton("Cancel"), SIGNAL(clicked()),
-	       w, SLOT(accept()));
+    w->connect(b, TQT_SIGNAL(clicked()),
+	       w, TQT_SLOT(accept()));
+    w->connect(bbox->addButton("Cancel"), TQT_SIGNAL(clicked()),
+	       w, TQT_SLOT(accept()));
 
     bbox->addButton("Push me and I give you a banana", true);
     bbox->addStretch(1);
@@ -175,10 +175,10 @@ int main(int argc, char **argv) {
 
   // example 6
   {    
-    QDialog *w = new QDialog(0, "Vertical", true);
+    TQDialog *w = new TQDialog(0, "Vertical", true);
     w->setCaption("Example 6 (last)");
-    QHBoxLayout *tl = new QHBoxLayout(w, 5);
-    QLabel *l = new QLabel("Did I mention that it's possible\n"
+    TQHBoxLayout *tl = new TQHBoxLayout(w, 5);
+    TQLabel *l = new TQLabel("Did I mention that it's possible\n"
 			   "to make vertically aligned buttons\n"
 			   "too?"
 			   ,w);
@@ -186,12 +186,12 @@ int main(int argc, char **argv) {
     l->setMinimumSize(l->sizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w, KButtonBox::Vertical);
-    QPushButton *b = bbox->addButton("OK");
+    TQPushButton *b = bbox->addButton("OK");
     b->setDefault(true);
-    w->connect(b, SIGNAL(clicked()),
-	       w, SLOT(accept()));
-    w->connect(bbox->addButton("Cancel"), SIGNAL(clicked()),
-	       w, SLOT(accept()));
+    w->connect(b, TQT_SIGNAL(clicked()),
+	       w, TQT_SLOT(accept()));
+    w->connect(bbox->addButton("Cancel"), TQT_SIGNAL(clicked()),
+	       w, TQT_SLOT(accept()));
 
     bbox->addStretch(1);
     bbox->layout();

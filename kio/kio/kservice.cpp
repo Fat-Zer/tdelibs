@@ -31,10 +31,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include <qstring.h>
-#include <qfile.h>
-#include <qdir.h>
-#include <qtl.h>
+#include <tqstring.h>
+#include <tqfile.h>
+#include <tqdir.h>
+#include <tqtl.h>
 
 #include <ksimpleconfig.h>
 #include <kapplication.h>
@@ -56,12 +56,12 @@
 class KService::KServicePrivate
 {
 public:
-  QStringList categories;
-  QString menuId;
+  TQStringList categories;
+  TQString menuId;
 };
 
-KService::KService( const QString & _name, const QString &_exec, const QString &_icon)
- : KSycocaEntry( QString::null)
+KService::KService( const TQString & _name, const TQString &_exec, const TQString &_icon)
+ : KSycocaEntry( TQString::null)
 {
   d = new KServicePrivate;
   m_bValid = true;
@@ -76,7 +76,7 @@ KService::KService( const QString & _name, const QString &_exec, const QString &
 }
 
 
-KService::KService( const QString & _fullpath )
+KService::KService( const TQString & _fullpath )
  : KSycocaEntry( _fullpath)
 {
   KDesktopFile config( _fullpath );
@@ -96,12 +96,12 @@ KService::init( KDesktopFile *config )
   d = new KServicePrivate;
   m_bValid = true;
 
-  bool absPath = !QDir::isRelativePath(entryPath());
+  bool absPath = !TQDir::isRelativePath(entryPath());
   bool kde4application = config->fileName().startsWith("/usr/share/applications/kde4/");
 
   config->setDesktopGroup();
 
-  QMap<QString, QString> entryMap = config->entryMap(config->group());
+  TQMap<TQString, TQString> entryMap = config->entryMap(config->group());
 
   entryMap.remove("Encoding"); // reserved as part of Desktop Entry Standard
   entryMap.remove("Version");  // reserved as part of Desktop Entry Standard
@@ -162,7 +162,7 @@ KService::init( KDesktopFile *config )
       return;
   }
 
-  QString resource = config->resource();
+  TQString resource = config->resource();
 
   if ( (m_strType == "Application") &&
        (!resource.isEmpty()) &&
@@ -188,7 +188,7 @@ KService::init( KDesktopFile *config )
     return;
   }
 
-  QString name = entryPath();
+  TQString name = entryPath();
   int pos = name.findRev('/');
   if (pos != -1)
      name = name.mid(pos+1);
@@ -204,7 +204,7 @@ KService::init( KDesktopFile *config )
     if (space==-1)
       m_strExec = KStandardDirs::findExe(m_strExec);
     else {
-      const QString command = m_strExec.left(space);
+      const TQString command = m_strExec.left(space);
       m_strExec.replace(command,KStandardDirs::findExe(command));
     }
   }
@@ -213,9 +213,9 @@ KService::init( KDesktopFile *config )
 
   m_strIcon = config->readEntry( "Icon", "unknown" );
   if (kde4application) {
-    if (QFile::exists("/usr/share/icons/oxygen/22x22/apps/" + m_strIcon + ".png")) {
+    if (TQFile::exists("/usr/share/icons/oxygen/22x22/apps/" + m_strIcon + ".png")) {
       m_strIcon = "/usr/share/icons/oxygen/22x22/apps/" + m_strIcon + ".png";
-    } else if (QFile::exists("/usr/share/icons/hicolor/22x22/apps/" + m_strIcon + ".png")) {
+    } else if (TQFile::exists("/usr/share/icons/hicolor/22x22/apps/" + m_strIcon + ".png")) {
       m_strIcon = "/usr/share/icons/hicolor/22x22/apps/" + m_strIcon + ".png";
     }
   }
@@ -233,7 +233,7 @@ KService::init( KDesktopFile *config )
     m_strGenName += " [KDE4]";
   }
   entryMap.remove("GenericName");
-  QString untranslatedGenericName = config->readEntryUntranslated( "GenericName" );
+  TQString untranslatedGenericName = config->readEntryUntranslated( "GenericName" );
   if (!untranslatedGenericName.isEmpty())
     entryMap.insert("UntranslatedGenericName", untranslatedGenericName);
 
@@ -257,7 +257,7 @@ KService::init( KDesktopFile *config )
     // Applications implement the service type "Application" ;-)
     m_lstServiceTypes += "Application";
 
-  QString dcopServiceType = config->readEntry("X-DCOP-ServiceType").lower();
+  TQString dcopServiceType = config->readEntry("X-DCOP-ServiceType").lower();
   entryMap.remove("X-DCOP-ServiceType");
   if (dcopServiceType == "unique")
      m_DCOPServiceType = DCOP_Unique;
@@ -279,21 +279,21 @@ KService::init( KDesktopFile *config )
   entryMap.remove("InitialPreference");
 
   // Store all additional entries in the property map.
-  // A QMap<QString,QString> would be easier for this but we can't
+  // A TQMap<TQString,TQString> would be easier for this but we can't
   // brake BC, so we have to store it in m_mapProps.
 //  qWarning("Path = %s", entryPath().latin1());
-  QMap<QString,QString>::ConstIterator it = entryMap.begin();
+  TQMap<TQString,TQString>::ConstIterator it = entryMap.begin();
   for( ; it != entryMap.end();++it)
   {
      //qDebug("   Key = %s Data = %s", it.key().latin1(), it.data().latin1());
-      QString key = it.key();
+      TQString key = it.key();
       if (kde4application && key=="OnlyShowIn" && it.data()=="KDE;")
          key = "NotShowIn";
-      m_mapProps.insert( key, QVariant( it.data()));
+      m_mapProps.insert( key, TQVariant( it.data()));
   }
 }
 
-KService::KService( QDataStream& _str, int offset ) : KSycocaEntry( _str, offset )
+KService::KService( TQDataStream& _str, int offset ) : KSycocaEntry( _str, offset )
 {
   d = new KServicePrivate;
   load( _str );
@@ -305,12 +305,12 @@ KService::~KService()
   delete d;
 }
 
-QPixmap KService::pixmap( KIcon::Group _group, int _force_size, int _state, QString * _path ) const
+TQPixmap KService::pixmap( KIcon::Group _group, int _force_size, int _state, TQString * _path ) const
 {
   KIconLoader *iconLoader=KGlobal::iconLoader();
   if (!iconLoader->extraDesktopThemesAdded())
   {
-      QPixmap pixmap=iconLoader->loadIcon( m_strIcon, _group, _force_size, _state, _path, true );
+      TQPixmap pixmap=iconLoader->loadIcon( m_strIcon, _group, _force_size, _state, _path, true );
       if (!pixmap.isNull() ) return pixmap;
 
       iconLoader->addExtraDesktopThemes();
@@ -319,14 +319,14 @@ QPixmap KService::pixmap( KIcon::Group _group, int _force_size, int _state, QStr
   return iconLoader->loadIcon( m_strIcon, _group, _force_size, _state, _path );
 }
 
-void KService::load( QDataStream& s )
+void KService::load( TQDataStream& s )
 {
   // dummies are here because of fields that were removed, to keep bin compat.
   // Feel free to re-use, but fields for Applications only (not generic services)
   // should rather be added to application.desktop
   Q_INT8 def, term, dummy1, dummy2;
   Q_INT8 dst, initpref;
-  QString dummyStr1, dummyStr2;
+  TQString dummyStr1, dummyStr2;
   int dummyI1, dummyI2;
   Q_UINT32 dummyUI32;
 
@@ -352,14 +352,14 @@ void KService::load( QDataStream& s )
   m_bValid = true;
 }
 
-void KService::save( QDataStream& s )
+void KService::save( TQDataStream& s )
 {
   KSycocaEntry::save( s );
   Q_INT8 def = m_bAllowAsDefault, initpref = m_initialPreference;
   Q_INT8 term = m_bTerminal;
   Q_INT8 dst = (Q_INT8) m_DCOPServiceType;
   Q_INT8 dummy1 = 0, dummy2 = 0; // see ::load
-  QString dummyStr1, dummyStr2;
+  TQString dummyStr1, dummyStr2;
   int dummyI1 = 0, dummyI2 = 0;
   Q_UINT32 dummyUI32 = 0;
 
@@ -378,7 +378,7 @@ void KService::save( QDataStream& s )
     << d->categories << d->menuId;
 }
 
-bool KService::hasServiceType( const QString& _servicetype ) const
+bool KService::hasServiceType( const TQString& _servicetype ) const
 {
   if (!m_bValid) return false; // safety test
 
@@ -391,7 +391,7 @@ bool KService::hasServiceType( const QString& _servicetype ) const
   bool isNumber;
   // For each service type we are associated with, if it doesn't
   // match then we try its parent service types.
-  QStringList::ConstIterator it = m_lstServiceTypes.begin();
+  TQStringList::ConstIterator it = m_lstServiceTypes.begin();
   for( ; it != m_lstServiceTypes.end(); ++it )
   {
       (*it).toInt(&isNumber);
@@ -411,14 +411,14 @@ bool KService::hasServiceType( const QString& _servicetype ) const
   return false;
 }
 
-int KService::initialPreferenceForMimeType( const QString& mimeType ) const
+int KService::initialPreferenceForMimeType( const TQString& mimeType ) const
 {
   if (!m_bValid) return 0; // safety test
 
   bool isNumber;
 
   // For each service type we are associated with
-  QStringList::ConstIterator it = m_lstServiceTypes.begin();
+  TQStringList::ConstIterator it = m_lstServiceTypes.begin();
   for( ; it != m_lstServiceTypes.end(); ++it )
   {
       (*it).toInt(&isNumber);
@@ -474,19 +474,19 @@ int KService::initialPreferenceForMimeType( const QString& mimeType ) const
 class KServiceReadProperty : public KConfigBase
 {
 public:
-   KServiceReadProperty(const QString &_key, const QCString &_value)
+   KServiceReadProperty(const TQString &_key, const TQCString &_value)
 	: key(_key), value(_value) { }
 
-   bool internalHasGroup(const QCString &) const { /*qDebug("hasGroup(const QCString &)");*/ return false; }
+   bool internalHasGroup(const TQCString &) const { /*qDebug("hasGroup(const TQCString &)");*/ return false; }
 
-   QStringList groupList() const { return QStringList(); }
+   TQStringList groupList() const { return TQStringList(); }
 
-   QMap<QString,QString> entryMap(const QString &group) const
-      { Q_UNUSED(group); return QMap<QString,QString>(); }
+   TQMap<TQString,TQString> entryMap(const TQString &group) const
+      { Q_UNUSED(group); return TQMap<TQString,TQString>(); }
 
    void reparseConfiguration() { }
 
-   KEntryMap internalEntryMap( const QString &pGroup) const 
+   KEntryMap internalEntryMap( const TQString &pGroup) const 
    { Q_UNUSED(pGroup); return KEntryMap(); }
 
    KEntryMap internalEntryMap() const { return KEntryMap(); }
@@ -497,37 +497,37 @@ public:
    KEntry lookupData(const KEntryKey &_key) const
    { Q_UNUSED(_key); KEntry entry; entry.mValue = value; return entry; }
 protected:
-   QString key;
-   QCString value;
+   TQString key;
+   TQCString value;
 };
 
-QVariant KService::property( const QString& _name) const
+TQVariant KService::property( const TQString& _name) const
 {
-   return property( _name, QVariant::Invalid);
+   return property( _name, TQVariant::Invalid);
 }
 
-// Return a string QVariant if string isn't null, and invalid variant otherwise
+// Return a string TQVariant if string isn't null, and invalid variant otherwise
 // (the variant must be invalid if the field isn't in the .desktop file)
 // This allows trader queries like "exist Library" to work.
-static QVariant makeStringVariant( const QString& string )
+static TQVariant makeStringVariant( const TQString& string )
 {
     // Using isEmpty here would be wrong.
     // Empty is "specified but empty", null is "not specified" (in the .desktop file)
-    return string.isNull() ? QVariant() : QVariant( string );
+    return string.isNull() ? TQVariant() : TQVariant( string );
 }
 
-QVariant KService::property( const QString& _name, QVariant::Type t ) const
+TQVariant KService::property( const TQString& _name, TQVariant::Type t ) const
 {
   if ( _name == "Type" )
-    return QVariant( m_strType ); // can't be null
+    return TQVariant( m_strType ); // can't be null
   else if ( _name == "Name" )
-    return QVariant( m_strName ); // can't be null
+    return TQVariant( m_strName ); // can't be null
   else if ( _name == "Exec" )
     return makeStringVariant( m_strExec );
   else if ( _name == "Icon" )
     return makeStringVariant( m_strIcon );
   else if ( _name == "Terminal" )
-    return QVariant( static_cast<int>(m_bTerminal) );
+    return TQVariant( static_cast<int>(m_bTerminal) );
   else if ( _name == "TerminalOptions" )
     return makeStringVariant( m_strTerminalOptions );
   else if ( _name == "Path" )
@@ -537,53 +537,53 @@ QVariant KService::property( const QString& _name, QVariant::Type t ) const
   else if ( _name == "GenericName" )
     return makeStringVariant( m_strGenName );
   else if ( _name == "ServiceTypes" )
-    return QVariant( m_lstServiceTypes );
+    return TQVariant( m_lstServiceTypes );
   else if ( _name == "AllowAsDefault" )
-    return QVariant( static_cast<int>(m_bAllowAsDefault) );
+    return TQVariant( static_cast<int>(m_bAllowAsDefault) );
   else if ( _name == "InitialPreference" )
-    return QVariant( m_initialPreference );
+    return TQVariant( m_initialPreference );
   else if ( _name == "Library" )
     return makeStringVariant( m_strLibrary );
   else if ( _name == "DesktopEntryPath" ) // can't be null
-    return QVariant( entryPath() );
+    return TQVariant( entryPath() );
   else if ( _name == "DesktopEntryName")
-    return QVariant( m_strDesktopEntryName ); // can't be null
+    return TQVariant( m_strDesktopEntryName ); // can't be null
   else if ( _name == "Categories")
-    return QVariant( d->categories );
+    return TQVariant( d->categories );
   else if ( _name == "Keywords")
-    return QVariant( m_lstKeywords );
+    return TQVariant( m_lstKeywords );
 
-  // Ok we need to convert the property from a QString to its real type.
+  // Ok we need to convert the property from a TQString to its real type.
   // Maybe the caller helped us.
-  if (t == QVariant::Invalid)
+  if (t == TQVariant::Invalid)
   {
     // No luck, let's ask KServiceTypeFactory what the type of this property
     // is supposed to be.
     t = KServiceTypeFactory::self()->findPropertyTypeByName(_name);
-    if (t == QVariant::Invalid)
+    if (t == TQVariant::Invalid)
     {
       kdDebug(7012) << "Request for unknown property '" << _name << "'\n";
-      return QVariant(); // Unknown property: Invalid variant.
+      return TQVariant(); // Unknown property: Invalid variant.
     }
   }
 
-  // Then we use a homebuild class based on KConfigBase to convert the QString.
+  // Then we use a homebuild class based on KConfigBase to convert the TQString.
   // For some often used property types we do the conversion ourselves.
-  QMap<QString,QVariant>::ConstIterator it = m_mapProps.find( _name );
+  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( _name );
   if ( (it == m_mapProps.end()) || (!it.data().isValid()))
   {
      //kdDebug(7012) << "Property not found " << _name << endl;
-     return QVariant(); // No property set.
+     return TQVariant(); // No property set.
   }
 
   switch(t)
   {
-    case QVariant::String:
+    case TQVariant::String:
         return it.data();
-    case QVariant::Bool:
-    case QVariant::Int:
+    case TQVariant::Bool:
+    case TQVariant::Int:
         {
-           QString aValue = it.data().toString();
+           TQString aValue = it.data().toString();
            int val = 0;
            if (aValue == "true" || aValue == "on" || aValue == "yes")
               val = 1;
@@ -594,11 +594,11 @@ QVariant KService::property( const QString& _name, QVariant::Type t ) const
               if( !bOK )
                  val = 0;
            }
-           if (t == QVariant::Bool)
+           if (t == TQVariant::Bool)
            {
-               return QVariant((bool)val, 1);
+               return TQVariant((bool)val, 1);
            }
-           return QVariant(val);
+           return TQVariant(val);
         }
     default:
         // All others
@@ -607,11 +607,11 @@ QVariant KService::property( const QString& _name, QVariant::Type t ) const
   }
 }
 
-QStringList KService::propertyNames() const
+TQStringList KService::propertyNames() const
 {
-  QStringList res;
+  TQStringList res;
 
-  QMap<QString,QVariant>::ConstIterator it = m_mapProps.begin();
+  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.begin();
   for( ; it != m_mapProps.end(); ++it )
     res.append( it.key() );
 
@@ -641,19 +641,19 @@ KService::List KService::allServices()
   return KServiceFactory::self()->allServices();
 }
 
-KService::Ptr KService::serviceByName( const QString& _name )
+KService::Ptr KService::serviceByName( const TQString& _name )
 {
   KService * s = KServiceFactory::self()->findServiceByName( _name );
   return KService::Ptr( s );
 }
 
-KService::Ptr KService::serviceByDesktopPath( const QString& _name )
+KService::Ptr KService::serviceByDesktopPath( const TQString& _name )
 {
   KService * s = KServiceFactory::self()->findServiceByDesktopPath( _name );
   return KService::Ptr( s );
 }
 
-KService::Ptr KService::serviceByDesktopName( const QString& _name )
+KService::Ptr KService::serviceByDesktopName( const TQString& _name )
 {
   KService * s = KServiceFactory::self()->findServiceByDesktopName( _name.lower() );
   if (!s && !_name.startsWith("kde-"))
@@ -661,13 +661,13 @@ KService::Ptr KService::serviceByDesktopName( const QString& _name )
   return KService::Ptr( s );
 }
 
-KService::Ptr KService::serviceByMenuId( const QString& _name )
+KService::Ptr KService::serviceByMenuId( const TQString& _name )
 {
   KService * s = KServiceFactory::self()->findServiceByMenuId( _name );
   return KService::Ptr( s );
 }
 
-KService::Ptr KService::serviceByStorageId( const QString& _storageId )
+KService::Ptr KService::serviceByStorageId( const TQString& _storageId )
 {
   KService::Ptr service = KService::serviceByMenuId( _storageId );
   if (service)
@@ -677,10 +677,10 @@ KService::Ptr KService::serviceByStorageId( const QString& _storageId )
   if (service)
      return service;
 
-  if (!QDir::isRelativePath(_storageId) && QFile::exists(_storageId))
+  if (!TQDir::isRelativePath(_storageId) && TQFile::exists(_storageId))
      return new KService(_storageId);
 
-  QString tmp = _storageId;
+  TQString tmp = _storageId;
   tmp = tmp.mid(tmp.findRev('/')+1); // Strip dir
 
   if (tmp.endsWith(".desktop"))
@@ -700,15 +700,15 @@ KService::List KService::allInitServices()
 }
 
 bool KService::substituteUid() const {
-  QVariant v = property("X-KDE-SubstituteUID", QVariant::Bool);
+  TQVariant v = property("X-KDE-SubstituteUID", TQVariant::Bool);
   return v.isValid() && v.toBool();
 }
 
-QString KService::username() const {
+TQString KService::username() const {
   // See also KDesktopFile::tryExec()
-  QString user;
-  QVariant v = property("X-KDE-Username", QVariant::String);
-  user = v.isValid() ? v.toString() : QString::null;
+  TQString user;
+  TQVariant v = property("X-KDE-Username", TQVariant::String);
+  user = v.isValid() ? v.toString() : TQString::null;
   if (user.isEmpty())
      user = ::getenv("ADMIN_ACCOUNT");
   if (user.isEmpty())
@@ -717,10 +717,10 @@ QString KService::username() const {
 }
 
 bool KService::noDisplay() const {
-  QMap<QString,QVariant>::ConstIterator it = m_mapProps.find( "NoDisplay" );
+  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( "NoDisplay" );
   if ( (it != m_mapProps.end()) && (it.data().isValid()))
   {
-     QString aValue = it.data().toString().lower();
+     TQString aValue = it.data().toString().lower();
      if (aValue == "true" || aValue == "on" || aValue == "yes")
         return true;
   }
@@ -728,8 +728,8 @@ bool KService::noDisplay() const {
   it = m_mapProps.find( "OnlyShowIn" );
   if ( (it != m_mapProps.end()) && (it.data().isValid()))
   {
-     QString aValue = it.data().toString();
-     QStringList aList = QStringList::split(';', aValue);
+     TQString aValue = it.data().toString();
+     TQStringList aList = TQStringList::split(';', aValue);
      if (!aList.contains("KDE"))
         return true;
   }
@@ -737,8 +737,8 @@ bool KService::noDisplay() const {
   it = m_mapProps.find( "NotShowIn" );
   if ( (it != m_mapProps.end()) && (it.data().isValid()))
   {
-     QString aValue = it.data().toString();
-     QStringList aList = QStringList::split(';', aValue);
+     TQString aValue = it.data().toString();
+     TQStringList aList = TQStringList::split(';', aValue);
      if (aList.contains("KDE"))
         return true;
   }
@@ -749,16 +749,16 @@ bool KService::noDisplay() const {
   return false;
 }
 
-QString KService::untranslatedGenericName() const {
-  QVariant v = property("UntranslatedGenericName", QVariant::String);
-  return v.isValid() ? v.toString() : QString::null;
+TQString KService::untranslatedGenericName() const {
+  TQVariant v = property("UntranslatedGenericName", TQVariant::String);
+  return v.isValid() ? v.toString() : TQString::null;
 }
 
-QString KService::parentApp() const {
-  QMap<QString,QVariant>::ConstIterator it = m_mapProps.find( "X-KDE-ParentApp" );
+TQString KService::parentApp() const {
+  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( "X-KDE-ParentApp" );
   if ( (it == m_mapProps.end()) || (!it.data().isValid()))
   {
-     return QString::null;
+     return TQString::null;
   }
 
   return it.data().toString();
@@ -773,51 +773,51 @@ bool KService::allowMultipleFiles() const {
     return false;
 }
 
-QStringList KService::categories() const
+TQStringList KService::categories() const
 {
   return d->categories;
 }
 
-QString KService::menuId() const
+TQString KService::menuId() const
 {
   return d->menuId;
 }
 
-void KService::setMenuId(const QString &menuId)
+void KService::setMenuId(const TQString &menuId)
 {
   d->menuId = menuId;
 }
 
-QString KService::storageId() const
+TQString KService::storageId() const
 {
   if (!d->menuId.isEmpty())
      return d->menuId;
   return entryPath();
 }
 
-QString KService::locateLocal()
+TQString KService::locateLocal()
 {
   if (d->menuId.isEmpty() || desktopEntryPath().startsWith(".hidden") ||
-      (QDir::isRelativePath(desktopEntryPath()) && d->categories.isEmpty()))
+      (TQDir::isRelativePath(desktopEntryPath()) && d->categories.isEmpty()))
      return KDesktopFile::locateLocal(desktopEntryPath());
 
   return ::locateLocal("xdgdata-apps", d->menuId);
 }
 
-QString KService::newServicePath(bool showInMenu, const QString &suggestedName,
-                                QString *menuId, const QStringList *reservedMenuIds)
+TQString KService::newServicePath(bool showInMenu, const TQString &suggestedName,
+                                TQString *menuId, const TQStringList *reservedMenuIds)
 {
-   QString base = suggestedName;
+   TQString base = suggestedName;
    if (!showInMenu)
      base.prepend("kde-");
 
-   QString result;
+   TQString result;
    for(int i = 1; true; i++)
    {
       if (i == 1)
          result = base + ".desktop";
       else
-         result = base + QString("-%1.desktop").arg(i);
+         result = base + TQString("-%1.desktop").arg(i);
 
       if (reservedMenuIds && reservedMenuIds->contains(result))
          continue;
@@ -834,7 +834,7 @@ QString KService::newServicePath(bool showInMenu, const QString &suggestedName,
       }
       else
       {
-         QString file = result.mid(4); // Strip "kde-"
+         TQString file = result.mid(4); // Strip "kde-"
          if (!locate("apps", ".hidden/"+file).isEmpty())
             continue;
       }
@@ -850,7 +850,7 @@ QString KService::newServicePath(bool showInMenu, const QString &suggestedName,
    }
    else
    {
-       QString file = result.mid(4); // Strip "kde-"
+       TQString file = result.mid(4); // Strip "kde-"
        return ::locateLocal("apps", ".hidden/"+file);
    }
 }
@@ -860,17 +860,17 @@ void KService::virtual_hook( int id, void* data )
 { KSycocaEntry::virtual_hook( id, data ); }
 
 
-void KService::rebuildKSycoca(QWidget *parent)
+void KService::rebuildKSycoca(TQWidget *parent)
 {
   KServiceProgressDialog dlg(parent, "ksycoca_progress",
                       i18n("Updating System Configuration"),
                       i18n("Updating system configuration."));
 
-  QByteArray data;
+  TQByteArray data;
   DCOPClient *client = kapp->dcopClient();
 
   int result = client->callAsync("kded", "kbuildsycoca", "recreate()",
-               data, &dlg, SLOT(slotFinished()));
+               data, &dlg, TQT_SLOT(slotFinished()));
 
   if (result)
   {
@@ -878,11 +878,11 @@ void KService::rebuildKSycoca(QWidget *parent)
   }
 }
 
-KServiceProgressDialog::KServiceProgressDialog(QWidget *parent, const char *name,
-                          const QString &caption, const QString &text)
+KServiceProgressDialog::KServiceProgressDialog(TQWidget *parent, const char *name,
+                          const TQString &caption, const TQString &text)
  : KProgressDialog(parent, name, caption, text, true)
 {
-  connect(&m_timer, SIGNAL(timeout()), this, SLOT(slotProgress()));
+  connect(&m_timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotProgress()));
   progressBar()->setTotalSteps(20);
   m_timeStep = 700;
   m_timer.start(m_timeStep);
@@ -911,7 +911,7 @@ KServiceProgressDialog::slotFinished()
 {
   progressBar()->setProgress(20);
   m_timer.stop();
-  QTimer::singleShot(1000, this, SLOT(close()));
+  TQTimer::singleShot(1000, this, TQT_SLOT(close()));
 }
 
 #include "kservice_p.moc"

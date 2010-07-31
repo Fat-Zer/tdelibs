@@ -10,7 +10,7 @@ class DummyMeta : public KFilePlugin
     Q_OBJECT
     
 public:
-    DummyMeta( QObject *parent, const char *name, const QStringList &args );
+    DummyMeta( TQObject *parent, const char *name, const TQStringList &args );
     ~DummyMeta() {}
 
     virtual bool readInfo( KFileMetaInfo::Internal& info );

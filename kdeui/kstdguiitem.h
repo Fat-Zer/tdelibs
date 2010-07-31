@@ -22,8 +22,8 @@
 // Needed for the template below
 #include <kguiitem.h>
 
-#include <qstring.h>
-#include <qpair.h>
+#include <tqstring.h>
+#include <tqpair.h>
 
 /**
  * @short Provides a set of standardized KGuiItems.
@@ -59,7 +59,7 @@ public:
 	Overwrite     ///< @since 3.5
     };
     static KGuiItem guiItem ( StdItem ui_enum );
-    static QString  stdItem ( StdItem ui_enum );
+    static TQString  stdItem ( StdItem ui_enum );
     static KGuiItem ok();
     static KGuiItem cancel();
     static KGuiItem yes();

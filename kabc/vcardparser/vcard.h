@@ -22,17 +22,17 @@
 #define VCARDPARSER_VCARD_H
 
 #include "vcardline.h"
-#include <qmap.h>
-#include <qstringlist.h>
-#include <qvaluelist.h>
+#include <tqmap.h>
+#include <tqstringlist.h>
+#include <tqvaluelist.h>
 
 namespace KABC {
 
 class VCard
 {
   public:
-    typedef QValueList<VCard> List;
-    typedef QMap< QString, VCardLine::List > LineMap;
+    typedef TQValueList<VCard> List;
+    typedef TQMap< TQString, VCardLine::List > LineMap;
 
     enum Version { v2_1, v3_0 };
 
@@ -52,7 +52,7 @@ class VCard
      * Returns a list of all identifiers that exists in the
      * vCard.
      */
-    QStringList identifiers() const;
+    TQStringList identifiers() const;
 
     /**
      * Adds a VCardLine to the VCard
@@ -62,12 +62,12 @@ class VCard
     /**
      * Returns all lines of the vcard with a special identifier.
      */
-    VCardLine::List lines( const QString& identifier ) const;
+    VCardLine::List lines( const TQString& identifier ) const;
 
     /**
      * Returns only the first line of the vcard with a special identifier.
      */
-    VCardLine line( const QString& identifier ) const;
+    VCardLine line( const TQString& identifier ) const;
 
     /**
      * Set the version of the vCard.

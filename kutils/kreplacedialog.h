@@ -79,14 +79,14 @@ public:
      * @param parent The parent object of this widget
      * @param name The name of this widget
      * @param options A bitfield of the Options to be enabled.
-     * @param findStrings A QStringList to insert in the combo box of text to find
-     * @param replaceStrings A QStringList to insert in the combo box of text to
+     * @param findStrings A TQStringList to insert in the combo box of text to find
+     * @param replaceStrings A TQStringList to insert in the combo box of text to
      *        replace with
      * @param hasSelection Whether a selection exists
      */
-    KReplaceDialog( QWidget *parent = 0, const char *name = 0, long options = 0,
-		    const QStringList &findStrings = QStringList(),
-		    const QStringList &replaceStrings = QStringList(),
+    KReplaceDialog( TQWidget *parent = 0, const char *name = 0, long options = 0,
+		    const TQStringList &findStrings = TQStringList(),
+		    const TQStringList &replaceStrings = TQStringList(),
 		    bool hasSelection = true );
 
     /**
@@ -102,7 +102,7 @@ public:
      * @param history The replacement history.
      * @see replacementHistory
      */
-    void setReplacementHistory( const QStringList &history );
+    void setReplacementHistory( const TQStringList &history );
 
     /**
      * Returns the list of history items.
@@ -110,7 +110,7 @@ public:
      * @return The replacement history.
      * @see setReplacementHistory
      */
-    QStringList replacementHistory() const;
+    TQStringList replacementHistory() const;
 
     /**
      * Set the options which are enabled.
@@ -133,21 +133,21 @@ public:
      * Returns the replacement string.
      * @return The replacement string.
      */
-    QString replacement() const;
+    TQString replacement() const;
 
     /**
      * Returns an empty widget which the user may fill with additional UI
      * elements as required. The widget occupies the width of the dialog,
      * and is positioned immediately the regular expression support widgets
      * for the replacement string.
-     * @return An extensible QWidget.
+     * @return An extensible TQWidget.
      */
-    QWidget *replaceExtension();
+    TQWidget *replaceExtension();
 
 protected slots:
 
     void slotOk();
-    virtual void showEvent ( QShowEvent * );
+    virtual void showEvent ( TQShowEvent * );
 
 private:
 

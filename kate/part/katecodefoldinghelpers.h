@@ -20,11 +20,11 @@
 #define _KATE_CODEFOLDING_HELPERS_
 
 //BEGIN INCLUDES + FORWARDS
-#include <qptrlist.h>
-#include <qvaluelist.h>
-#include <qobject.h>
-#include <qintdict.h>
-#include <qmemarray.h>
+#include <tqptrlist.h>
+#include <tqvaluelist.h>
+#include <tqobject.h>
+#include <tqintdict.h>
+#include <tqmemarray.h>
 
 class KateCodeFoldingTree;
 class KateTextCursor;
@@ -110,7 +110,7 @@ class KateCodeFoldingNode
     bool deleteOpening;
     bool deleteEnding;
 
-    QMemArray<KateCodeFoldingNode*> m_children;
+    TQMemArray<KateCodeFoldingNode*> m_children;
 };
 
 class KateCodeFoldingTree : public QObject
@@ -148,12 +148,12 @@ class KateCodeFoldingTree : public QObject
 
     KateBuffer *m_buffer;
 
-    QIntDict<unsigned int> lineMapping;
-    QIntDict<bool>         dontIgnoreUnchangedLines;
+    TQIntDict<unsigned int> lineMapping;
+    TQIntDict<bool>         dontIgnoreUnchangedLines;
 
-    QPtrList<KateCodeFoldingNode> markedForDeleting;
-    QPtrList<KateCodeFoldingNode> nodesForLine;
-    QValueList<KateHiddenLineBlock>   hiddenLines;
+    TQPtrList<KateCodeFoldingNode> markedForDeleting;
+    TQPtrList<KateCodeFoldingNode> nodesForLine;
+    TQValueList<KateHiddenLineBlock>   hiddenLines;
 
     unsigned int hiddenLinesCountCache;
     bool         something_changed;
@@ -165,9 +165,9 @@ class KateCodeFoldingTree : public QObject
 
     bool correctEndings (signed char data, KateCodeFoldingNode *node, unsigned int line, unsigned int endCol, int insertPos);
 
-    void dumpNode    (KateCodeFoldingNode *node, const QString &prefix);
-    void addOpening  (KateCodeFoldingNode *node, signed char nType,QMemArray<uint>* list, unsigned int line,unsigned int charPos);
-    void addOpening_further_iterations (KateCodeFoldingNode *node,signed char nType, QMemArray<uint>*
+    void dumpNode    (KateCodeFoldingNode *node, const TQString &prefix);
+    void addOpening  (KateCodeFoldingNode *node, signed char nType,TQMemArray<uint>* list, unsigned int line,unsigned int charPos);
+    void addOpening_further_iterations (KateCodeFoldingNode *node,signed char nType, TQMemArray<uint>*
                                         list,unsigned int line,int current,unsigned int startLine,unsigned int charPos);
 
     void incrementBy1 (KateCodeFoldingNode *node, KateCodeFoldingNode *after);
@@ -201,7 +201,7 @@ class KateCodeFoldingTree : public QObject
     void moveSubNodesUp (KateCodeFoldingNode *node);
 
   public slots:
-    void updateLine (unsigned int line,QMemArray<uint>* regionChanges, bool *updated, bool changed,bool colschanged);
+    void updateLine (unsigned int line,TQMemArray<uint>* regionChanges, bool *updated, bool changed,bool colschanged);
     void toggleRegionVisibility (unsigned int);
     void collapseToplevelNodes ();
     void expandToplevelNodes (int numLines);

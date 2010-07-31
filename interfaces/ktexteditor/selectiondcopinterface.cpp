@@ -40,9 +40,9 @@ SelectionDCOPInterface::~SelectionDCOPInterface()
 	}
 
     /**
-    *  @return a QString for the selected text
+    *  @return a TQString for the selected text
     */
-     QString SelectionDCOPInterface::selection ()
+     TQString SelectionDCOPInterface::selection ()
      {
 	return m_parent->selection();
      }

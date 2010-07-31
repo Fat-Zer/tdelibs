@@ -25,7 +25,7 @@
 
 
 #ifndef QT_H
-#include <qcommonstyle.h>
+#include <tqcommonstyle.h>
 #endif // QT_H
 
 #include "kstyle.h"
@@ -40,49 +40,49 @@
 class Q_EXPORT_STYLE_LIGHT_V3 LightStyleV3 : public KStyle
 {
     Q_OBJECT
-    QStyle *basestyle;
+    TQStyle *basestyle;
 
 public:
     LightStyleV3();
     virtual ~LightStyleV3();
 
-    void polishPopupMenu( QPopupMenu * );
+    void polishPopupMenu( TQPopupMenu * );
 
-    void drawPrimitive(PrimitiveElement, QPainter *, const QRect &, const QColorGroup &,
+    void drawPrimitive(PrimitiveElement, TQPainter *, const TQRect &, const TQColorGroup &,
 		       SFlags = Style_Default,
-		       const QStyleOption & = QStyleOption::Default ) const;
+		       const TQStyleOption & = TQStyleOption::Default ) const;
 
-    void drawControl(ControlElement, QPainter *, const QWidget *, const QRect &,
-		     const QColorGroup &, SFlags = Style_Default,
-		     const QStyleOption & = QStyleOption::Default ) const;
-    void drawControlMask(ControlElement, QPainter *, const QWidget *, const QRect &,
-			 const QStyleOption & = QStyleOption::Default) const;
+    void drawControl(ControlElement, TQPainter *, const TQWidget *, const TQRect &,
+		     const TQColorGroup &, SFlags = Style_Default,
+		     const TQStyleOption & = TQStyleOption::Default ) const;
+    void drawControlMask(ControlElement, TQPainter *, const TQWidget *, const TQRect &,
+			 const TQStyleOption & = TQStyleOption::Default) const;
 
-    QRect subRect(SubRect, const QWidget *) const;
+    TQRect subRect(SubRect, const TQWidget *) const;
 
-    void drawComplexControl(ComplexControl, QPainter *, const QWidget *, const QRect &,
-			    const QColorGroup &, SFlags = Style_Default,
+    void drawComplexControl(ComplexControl, TQPainter *, const TQWidget *, const TQRect &,
+			    const TQColorGroup &, SFlags = Style_Default,
 			    SCFlags = SC_All, SCFlags = SC_None,
-			    const QStyleOption & = QStyleOption::Default ) const;
+			    const TQStyleOption & = TQStyleOption::Default ) const;
 
-    QRect querySubControlMetrics(ComplexControl, const QWidget *, SubControl,
-				 const QStyleOption & = QStyleOption::Default ) const;
+    TQRect querySubControlMetrics(ComplexControl, const TQWidget *, SubControl,
+				 const TQStyleOption & = TQStyleOption::Default ) const;
 
-    SubControl querySubControl(ComplexControl, const QWidget *, const QPoint &,
-			       const QStyleOption &data = QStyleOption::Default ) const;
+    SubControl querySubControl(ComplexControl, const TQWidget *, const TQPoint &,
+			       const TQStyleOption &data = TQStyleOption::Default ) const;
 
-    int pixelMetric(PixelMetric, const QWidget * = 0 ) const;
+    int pixelMetric(PixelMetric, const TQWidget * = 0 ) const;
 
-    QSize sizeFromContents(ContentsType, const QWidget *, const QSize &,
-			   const QStyleOption & = QStyleOption::Default ) const;
+    TQSize sizeFromContents(ContentsType, const TQWidget *, const TQSize &,
+			   const TQStyleOption & = TQStyleOption::Default ) const;
 
-    int styleHint(StyleHint, const QWidget * = 0,
-		  const QStyleOption & = QStyleOption::Default,
+    int styleHint(StyleHint, const TQWidget * = 0,
+		  const TQStyleOption & = TQStyleOption::Default,
 		  QStyleHintReturn * = 0 ) const;
 
-    QPixmap stylePixmap( StylePixmap stylepixmap,
-			 const QWidget* widget = 0,
-			 const QStyleOption& = QStyleOption::Default ) const;
+    TQPixmap stylePixmap( StylePixmap stylepixmap,
+			 const TQWidget* widget = 0,
+			 const TQStyleOption& = TQStyleOption::Default ) const;
 };
 
 

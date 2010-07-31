@@ -22,12 +22,12 @@
 #ifndef _KTIMEOUT_H_
 #define _KTIMEOUT_H_
 
-#include <qintdict.h>
-#include <qobject.h>
-#include <qtimer.h>
+#include <tqintdict.h>
+#include <tqobject.h>
+#include <tqtimer.h>
 
 // @internal
-class KTimeout : public QObject {
+class KTimeout : public TQObject {
 	Q_OBJECT
 	public:
 		KTimeout(int size = 29);
@@ -46,7 +46,7 @@ class KTimeout : public QObject {
 		void timeout();
 
 	private:
-		QIntDict<QTimer> _timers;
+		TQIntDict<TQTimer> _timers;
 };
 
 #endif

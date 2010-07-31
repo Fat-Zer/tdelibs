@@ -21,13 +21,13 @@
 #include "kmpropwidget.h"
 
 #include <kpushbutton.h>
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kseparator.h>
 #include <kguiitem.h>
 
-KMPropContainer::KMPropContainer(QWidget *parent, const char *name)
-: QWidget(parent,name)
+KMPropContainer::KMPropContainer(TQWidget *parent, const char *name)
+: TQWidget(parent,name)
 {
 	KSeparator* sep = new KSeparator( KSeparator::HLine, this);
 	sep->setFixedHeight(5);
@@ -35,8 +35,8 @@ KMPropContainer::KMPropContainer(QWidget *parent, const char *name)
 	m_button = new KPushButton(KGuiItem(i18n("Change..."), "edit"), this);
 	m_widget = 0;
 
-	QVBoxLayout	*main_ = new QVBoxLayout(this, 0, 10);
-	QHBoxLayout	*btn_ = new QHBoxLayout(0, 0, 0);
+	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
+	QHBoxLayout	*btn_ = new TQHBoxLayout(0, 0, 0);
 	main_->addWidget(sep,0);
 	main_->addLayout(btn_,0);
 	btn_->addStretch(1);
@@ -52,11 +52,11 @@ void KMPropContainer::setWidget(KMPropWidget *w)
 	if (!m_widget)
 	{
 		m_widget = w;
-		m_widget->reparent(this,QPoint(0,0));
-		connect(m_button,SIGNAL(clicked()),m_widget,SLOT(slotChange()));
-		connect(m_widget,SIGNAL(enable(bool)),SIGNAL(enable(bool)));
-		connect(m_widget,SIGNAL(enableChange(bool)),SLOT(slotEnableChange(bool)));
-		QVBoxLayout	*lay = dynamic_cast<QVBoxLayout*>(layout());
+		m_widget->reparent(this,TQPoint(0,0));
+		connect(m_button,TQT_SIGNAL(clicked()),m_widget,TQT_SLOT(slotChange()));
+		connect(m_widget,TQT_SIGNAL(enable(bool)),TQT_SIGNAL(enable(bool)));
+		connect(m_widget,TQT_SIGNAL(enableChange(bool)),TQT_SLOT(slotEnableChange(bool)));
+		QVBoxLayout	*lay = dynamic_cast<TQVBoxLayout*>(layout());
 		if (lay)
 		{
 			lay->insertWidget(0,m_widget,1);

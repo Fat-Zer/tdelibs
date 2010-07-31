@@ -20,8 +20,8 @@
 #ifndef KABC_ADDRESSEEHELPER_H
 #define KABC_ADDRESSEEHELPER_H
 
-#include <qobject.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
 
 #include <dcopobject.h>
 
@@ -33,16 +33,16 @@
 
 namespace KABC {
 
-class KABC_EXPORT AddresseeHelper : public QObject, public DCOPObject
+class KABC_EXPORT AddresseeHelper : public TQObject, public DCOPObject
 {
   K_DCOP
         
   public:
     static AddresseeHelper *self();
 
-    bool containsTitle( const QString& title ) const;
-    bool containsPrefix( const QString& prefix ) const;
-    bool containsSuffix( const QString& suffix ) const;
+    bool containsTitle( const TQString& title ) const;
+    bool containsPrefix( const TQString& prefix ) const;
+    bool containsSuffix( const TQString& suffix ) const;
     bool tradeAsFamilyName() const;
 
   k_dcop:
@@ -51,11 +51,11 @@ class KABC_EXPORT AddresseeHelper : public QObject, public DCOPObject
   private:
     AddresseeHelper();
 
-    static void addToSet( const QStringList& list,
-                          std::set<QString>& container );
-    std::set<QString> mTitles;
-    std::set<QString> mPrefixes;
-    std::set<QString> mSuffixes;
+    static void addToSet( const TQStringList& list,
+                          std::set<TQString>& container );
+    std::set<TQString> mTitles;
+    std::set<TQString> mPrefixes;
+    std::set<TQString> mSuffixes;
     bool mTradeAsFamilyName;
 
     static AddresseeHelper *s_self;

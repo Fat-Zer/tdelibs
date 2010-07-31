@@ -21,18 +21,18 @@
 #include "kmprinter.h"
 #include "kmwizard.h"
 
-#include <qtextview.h>
-#include <qlayout.h>
+#include <tqtextview.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
-KMPropMembers::KMPropMembers(QWidget *parent, const char *name)
+KMPropMembers::KMPropMembers(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)
 {
-	m_members = new QTextView(this);
+	m_members = new TQTextView(this);
 	m_members->setPaper(colorGroup().background());
-	m_members->setFrameStyle(QFrame::NoFrame);
+	m_members->setFrameStyle(TQFrame::NoFrame);
 
-	QVBoxLayout	*main_ = new QVBoxLayout(this, 10, 0);
+	QVBoxLayout	*main_ = new TQVBoxLayout(this, 10, 0);
 	main_->addWidget(m_members);
 
 	m_pixmap = "kdeprint_printer_class";
@@ -50,7 +50,7 @@ void KMPropMembers::setPrinter(KMPrinter *p)
 	{
 		QStringList	l = p->members();
 		QString		txt("<ul>");
-		for (QStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
+		for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 			txt.append("<li>" + (*it) + "</li>");
 		txt.append("</ul>");
 		m_members->setText(txt);

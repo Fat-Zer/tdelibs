@@ -1,6 +1,6 @@
 #include "kpixmapregionselectordialog.h"
-#include <qpixmap.h>
-#include <qimage.h>
+#include <tqpixmap.h>
+#include <tqimage.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <iostream>
@@ -24,8 +24,8 @@ int main(int argc, char**argv)
     return 1;
   }
 
-  QImage image=
-     KPixmapRegionSelectorDialog::getSelectedImage(QPixmap(args->arg(0)),100,100);
+  TQImage image=
+     KPixmapRegionSelectorDialog::getSelectedImage(TQPixmap(args->arg(0)),100,100);
 
   image.save("output.png", "PNG");
 

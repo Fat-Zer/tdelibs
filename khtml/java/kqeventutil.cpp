@@ -19,180 +19,180 @@
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  */
-#include <qevent.h>
+#include <tqevent.h>
 #include "kqeventutil.h"
 
-QString KQEventUtil::getQtEventName( QEvent* e )
+TQString KQEventUtil::getQtEventName( TQEvent* e )
 {
-    QString s;
+    TQString s;
 
     switch( e->type() )
     {
-        case QEvent::None:
+        case TQEvent::None:
             s = "None";
             break;
-        case QEvent::Timer:
+        case TQEvent::Timer:
             s = "Timer";
             break;
-        case QEvent::MouseButtonPress:
+        case TQEvent::MouseButtonPress:
             s = "MouseButtonPress";
             break;
-        case QEvent::MouseButtonRelease:
+        case TQEvent::MouseButtonRelease:
             s = "MouseButtonRelease";
             break;
-        case QEvent::MouseButtonDblClick:
+        case TQEvent::MouseButtonDblClick:
             s = "MouseButtonClick";
             break;
-        case QEvent::MouseMove:
+        case TQEvent::MouseMove:
             s = "MouseMove";
             break;
-        case QEvent::KeyPress:
+        case TQEvent::KeyPress:
             s = "KeyPress";
             break;
-        case QEvent::KeyRelease:
+        case TQEvent::KeyRelease:
             s = "KeyRelease";
             break;
-        case QEvent::FocusIn:
+        case TQEvent::FocusIn:
             s = "FocusIn";
             break;
-        case QEvent::FocusOut:
+        case TQEvent::FocusOut:
             s = "FocusOut";
             break;
-        case QEvent::Enter:
+        case TQEvent::Enter:
             s = "Enter";
             break;
-        case QEvent::Leave:
+        case TQEvent::Leave:
             s = "Leave";
             break;
-        case QEvent::Paint:
+        case TQEvent::Paint:
             s = "Paint";
             break;
-        case QEvent::Move:
+        case TQEvent::Move:
             s = "Move";
             break;
-        case QEvent::Resize:
+        case TQEvent::Resize:
             s = "Resize";
             break;
-        case QEvent::Create:
+        case TQEvent::Create:
             s = "Create";
             break;
-        case QEvent::Destroy:
+        case TQEvent::Destroy:
             s = "Destroy";
             break;
-        case QEvent::Show:
+        case TQEvent::Show:
             s = "Show";
             break;
-        case QEvent::Hide:
+        case TQEvent::Hide:
             s = "Hide";
             break;
-        case QEvent::Close:
+        case TQEvent::Close:
             s = "Close";
             break;
-        case QEvent::Quit:
+        case TQEvent::Quit:
             s = "Quit";
             break;
-        case QEvent::Reparent:
+        case TQEvent::Reparent:
             s = "Reparent";
             break;
-        case QEvent::ShowMinimized:
+        case TQEvent::ShowMinimized:
             s = "ShowMinimized";
             break;
-        case QEvent::ShowNormal:
+        case TQEvent::ShowNormal:
             s = "ShowNormal";
             break;
-        case QEvent::WindowActivate:
+        case TQEvent::WindowActivate:
             s = "WindowActivate";
             break;
-        case QEvent::WindowDeactivate:
+        case TQEvent::WindowDeactivate:
             s = "WindowDeactivate";
             break;
-        case QEvent::ShowToParent:
+        case TQEvent::ShowToParent:
             s = "ShowToParent";
             break;
-        case QEvent::HideToParent:
+        case TQEvent::HideToParent:
             s = "HideToParent";
             break;
-        case QEvent::ShowMaximized:
+        case TQEvent::ShowMaximized:
             s = "ShowMaximized";
             break;
-        case QEvent::Accel:
+        case TQEvent::Accel:
             s = "Accel";
             break;
-        case QEvent::Wheel:
+        case TQEvent::Wheel:
             s = "Wheel";
             break;
-        case QEvent::AccelAvailable:
+        case TQEvent::AccelAvailable:
             s = "AccelAvailable";
             break;
-        case QEvent::CaptionChange:
+        case TQEvent::CaptionChange:
             s = "CaptionChange";
             break;
-        case QEvent::IconChange:
+        case TQEvent::IconChange:
             s = "IconChange";
             break;
-        case QEvent::ParentFontChange:
+        case TQEvent::ParentFontChange:
             s = "ParentFontChange";
             break;
-        case QEvent::ApplicationFontChange:
+        case TQEvent::ApplicationFontChange:
             s = "ApplicationFontChange";
             break;
-        case QEvent::ParentPaletteChange:
+        case TQEvent::ParentPaletteChange:
             s = "ParentPaletteChange";
             break;
-        case QEvent::ApplicationPaletteChange:
+        case TQEvent::ApplicationPaletteChange:
             s = "ApplicationPaletteChange";
             break;
-        case QEvent::Clipboard:
+        case TQEvent::Clipboard:
             s = "Clipboard";
             break;
-        case QEvent::Speech:
+        case TQEvent::Speech:
             s = "Speech";
             break;
-        case QEvent::SockAct:
+        case TQEvent::SockAct:
             s = "SockAct";
             break;
-        case QEvent::AccelOverride:
+        case TQEvent::AccelOverride:
             s = "AccelOverride";
             break;
-        case QEvent::DragEnter:
+        case TQEvent::DragEnter:
             s = "DragEnter";
             break;
-        case QEvent::DragMove:
+        case TQEvent::DragMove:
             s = "DragMove";
             break;
-        case QEvent::DragLeave:
+        case TQEvent::DragLeave:
             s = "DragLeave";
             break;
-        case QEvent::Drop:
+        case TQEvent::Drop:
             s = "Drop";
             break;
-        case QEvent::DragResponse:
+        case TQEvent::DragResponse:
             s = "DragResponse";
             break;
-        case QEvent::ChildInserted:
+        case TQEvent::ChildInserted:
             s = "ChildInserted";
             break;
-        case QEvent::ChildRemoved:
+        case TQEvent::ChildRemoved:
             s = "ChildRemoved";
             break;
-        case QEvent::LayoutHint:
+        case TQEvent::LayoutHint:
             s = "LayoutHint";
             break;
-        case QEvent::ShowWindowRequest:
+        case TQEvent::ShowWindowRequest:
             s = "ShowWindowRequest";
             break;
-        case QEvent::ActivateControl:
+        case TQEvent::ActivateControl:
             s = "ActivateControl";
             break;
-        case QEvent::DeactivateControl:
+        case TQEvent::DeactivateControl:
             s = "DeactivateControl";
             break;
-        case QEvent::User:
+        case TQEvent::User:
             s = "User Event";
             break;
 
         default:
-            s = "Undefined Event, value = " + QString::number( e->type() );
+            s = "Undefined Event, value = " + TQString::number( e->type() );
             break;
     }
 

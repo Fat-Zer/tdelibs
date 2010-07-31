@@ -18,10 +18,10 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qspinbox.h>
-#include <qvbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqspinbox.h>
+#include <tqvbox.h>
 
 #include <klineedit.h>
 #include <klocale.h>
@@ -31,43 +31,43 @@
 
 using namespace KABC;
 
-ResourceSqlConfig::ResourceSqlConfig( QWidget* parent,  const char* name )
+ResourceSqlConfig::ResourceSqlConfig( TQWidget* parent,  const char* name )
     : ResourceConfigWidget( parent, name )
 {
   resize( 290, 170 ); 
 
-  QGridLayout *mainLayout = new QGridLayout( this, 4, 2 );
+  TQGridLayout *mainLayout = new TQGridLayout( this, 4, 2 );
 
-  QLabel *label = new QLabel( i18n( "Username:" ), this );
+  TQLabel *label = new TQLabel( i18n( "Username:" ), this );
   mUser = new KLineEdit( this );
 
   mainLayout->addWidget( label, 0, 0 );
   mainLayout->addWidget( mUser, 0, 1 );
 
-  label = new QLabel( i18n( "Password:" ), this );
+  label = new TQLabel( i18n( "Password:" ), this );
   mPassword = new KLineEdit( this );
   mPassword->setEchoMode( KLineEdit::Password );
 
   mainLayout->addWidget( label, 1, 0 );
   mainLayout->addWidget( mPassword, 1, 1 );
 
-  label = new QLabel( i18n( "Host:" ), this );
+  label = new TQLabel( i18n( "Host:" ), this );
   mHost = new KLineEdit( this );
 
   mainLayout->addWidget( label, 2, 0 );
   mainLayout->addWidget( mHost, 2, 1 );
 
-  label = new QLabel( i18n( "Port:" ), this );
-  QVBox *box = new QVBox(this);
-  mPort = new QSpinBox(0, 65535, 1, box );
-  mPort->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred));
+  label = new TQLabel( i18n( "Port:" ), this );
+  TQVBox *box = new TQVBox(this);
+  mPort = new TQSpinBox(0, 65535, 1, box );
+  mPort->setSizePolicy(TQSizePolicy(TQSizePolicy::Maximum, TQSizePolicy::Preferred));
   mPort->setValue(389);
-  new QWidget(box, "dummy");
+  new TQWidget(box, "dummy");
 
   mainLayout->addWidget( label, 3, 0 );
   mainLayout->addWidget( box, 3, 1 );
 
-  label = new QLabel( i18n( "Database:" ), this );
+  label = new TQLabel( i18n( "Database:" ), this );
   mDbName = new KLineEdit( this );
 
   mainLayout->addWidget( label, 4, 0 );

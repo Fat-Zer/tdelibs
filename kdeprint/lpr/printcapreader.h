@@ -20,8 +20,8 @@
 #ifndef PRINTCAPREADER_H
 #define PRINTCAPREADER_H
 
-#include <qstring.h>
-#include <qtextstream.h>
+#include <tqstring.h>
+#include <tqtextstream.h>
 
 class QFile;
 class PrintcapEntry;
@@ -29,15 +29,15 @@ class PrintcapEntry;
 class PrintcapReader
 {
 public:
-    void setPrintcapFile(QFile*);
+    void setPrintcapFile(TQFile*);
     PrintcapEntry* nextEntry();
 
 private:
-    QString m_buffer;
-    QTextStream m_stream;
+    TQString m_buffer;
+    TQTextStream m_stream;
     
-    bool nextLine(QString&);
-    void unputLine(const QString&);
+    bool nextLine(TQString&);
+    void unputLine(const TQString&);
 };
 
 #endif

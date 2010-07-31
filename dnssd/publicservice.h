@@ -21,7 +21,7 @@
 #ifndef DNSSDPUBLICSERVICE_H
 #define DNSSDPUBLICSERVICE_H
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <dnssd/servicebase.h>
 #ifdef HAVE_DNSSD
 #include <avahi-client/client.h>
@@ -49,7 +49,7 @@ Asynchronous publishing is better for responsiveness. Example:
  
 \code
 DNSSD::PublicService *service = new DNSSD::PublicService("My files","_http._tcp",80);
-connect(service,SIGNAL(published(bool)),this,SLOT(wasPublished(bool)));
+connect(service,TQT_SIGNAL(published(bool)),this,TQT_SLOT(wasPublished(bool)));
 service->publishAsync();
 \endcode
  
@@ -58,20 +58,20 @@ service->publishAsync();
 @author Jakub Stachowski
  */
 
-class KDNSSD_EXPORT PublicService : public QObject, public ServiceBase
+class KDNSSD_EXPORT PublicService : public TQObject, public ServiceBase
 {
 	Q_OBJECT
 public:
 	/**
-	@param name Service name. If set to QString::null, computer name will be used and will be
+	@param name Service name. If set to TQString::null, computer name will be used and will be
 	available via serviceName() after successful registration
 	@param type Service type. Has to be in form _sometype._udp or _sometype._tcp
 	@param port Port number. Set to 0 to "reserve" service name. 
-	@param domain Domain name. If left as QString:null, user configuration will be used. "local."
+	@param domain Domain name. If left as TQString:null, user configuration will be used. "local."
 		means local LAN
 	 */
-	PublicService(const QString& name=QString::null,const QString& type=QString::null,
-		      unsigned int port=0,const QString& domain=QString::null);
+	PublicService(const TQString& name=TQString::null,const TQString& type=TQString::null,
+		      unsigned int port=0,const TQString& domain=TQString::null);
 
 	~PublicService();
 	
@@ -102,18 +102,18 @@ public:
 	/**
 	Sets new text properties. If services is already published, it will be re-announced with new data.
 	*/
-	void setTextData(const QMap<QString,QString>& textData);
+	void setTextData(const TQMap<TQString,TQString>& textData);
 	
 	/**
 	Sets name of the service.  If service is currently published, it will be re-announced with new data.
 	 */
-	void setServiceName(const QString& serviceName);
+	void setServiceName(const TQString& serviceName);
 	
 	/**
 	Sets type of service. It has to in form of _type._udp or _type._tcp.  If service is 
 	currently published, it will be re-announced with new data.
 	 */
-	void setType(const QString& type);
+	void setType(const TQString& type);
 
 	/** 
 	Sets port. If service is currently published, it will be re-announced with new data.
@@ -124,7 +124,7 @@ public:
 	Sets domain where service is published. "local." means local LAN. If service is currently 
 	published, it will be re-announced with new data.
 	 */
-	void setDomain(const QString& domain);
+	void setDomain(const TQString& domain);
 	
 	/**
 	Translates service into URL that can be sent to another user. 
@@ -132,7 +132,7 @@ public:
 	default route) will be used.
 	@since 3.5
 	 */
-	const KURL toInvitation(const QString& host=QString::null);
+	const KURL toInvitation(const TQString& host=TQString::null);
 
 signals:
 	/**
@@ -148,7 +148,7 @@ private slots:
 	void clientState(AvahiClientState);
 
 protected:
-	virtual void customEvent(QCustomEvent* event);
+	virtual void customEvent(TQCustomEvent* event);
 	virtual void virtual_hook(int, void*);
 };
 

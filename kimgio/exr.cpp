@@ -39,13 +39,13 @@
 #include <kgenericfactory.h>
 #include <kdebug.h>
 
-#include <qimage.h>
-#include <qcstring.h>
-#include <qfile.h>
-#include <qdatetime.h>
-#include <qdict.h>
-#include <qvalidator.h>
-#include <qcolor.h>
+#include <tqimage.h>
+#include <tqcstring.h>
+#include <tqfile.h>
+#include <tqdatetime.h>
+#include <tqdict.h>
+#include <tqvalidator.h>
+#include <tqcolor.h>
 
 #include "exr.h"
 
@@ -116,14 +116,14 @@ QRgb RgbaToQrgba(struct Rgba imagePixel)
 				  char (Imath::clamp ( a * 84.66f, 0.f, 255.f ) ) );
 }
 
-KDE_EXPORT void kimgio_exr_read( QImageIO *io )
+KDE_EXPORT void kimgio_exr_read( TQImageIO *io )
 {
     try
     {
 		int width, height;
 
-		// This won't work if io is not QFile !
-		RgbaInputFile file (QFile::encodeName(io->fileName()));
+		// This won't work if io is not TQFile !
+		RgbaInputFile file (TQFile::encodeName(io->fileName()));
 		Imath::Box2i dw = file.dataWindow();
 
         width  = dw.max.x - dw.min.x + 1;
@@ -135,7 +135,7 @@ KDE_EXPORT void kimgio_exr_read( QImageIO *io )
         file.setFrameBuffer (&pixels[0][0] - dw.min.x - dw.min.y * width, 1, width);
         file.readPixels (dw.min.y, dw.max.y);
 
-		QImage image(width, height, 32, 0, QImage::BigEndian);
+		TQImage image(width, height, 32, 0, TQImage::BigEndian);
 		if( image.isNull())
 			return;
 
@@ -158,7 +158,7 @@ KDE_EXPORT void kimgio_exr_read( QImageIO *io )
 }
 
 
-KDE_EXPORT void kimgio_exr_write(QImageIO *)
+KDE_EXPORT void kimgio_exr_write(TQImageIO *)
 {
 	// TODO: stub
 }

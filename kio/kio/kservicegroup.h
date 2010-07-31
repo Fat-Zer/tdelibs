@@ -19,11 +19,11 @@
 #ifndef __kservicegroup_h__
 #define __kservicegroup_h__
 
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qshared.h>
-#include <qdatastream.h>
-#include <qvariant.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqshared.h>
+#include <tqdatastream.h>
+#include <tqvariant.h>
 
 #include <kdesktopfile.h>
 
@@ -72,27 +72,27 @@ class KIO_EXPORT KServiceGroup : public KSycocaEntry
 public:
   typedef KSharedPtr<KServiceGroup> Ptr;
   typedef KSharedPtr<KSycocaEntry> SPtr;
-  typedef QValueList<SPtr> List;
+  typedef TQValueList<SPtr> List;
 public:
   /**
    * Construct a dummy servicegroup indexed with @p name.
    * @param name the name of the service group
    * @since 3.1
    */
-  KServiceGroup( const QString & name );
+  KServiceGroup( const TQString & name );
 
   /**
    * Construct a service and take all informations from a config file
    * @param _fullpath full path to the config file
    * @param _relpath relative path to the config file
    */
-  KServiceGroup( const QString & _fullpath, const QString & _relpath );
+  KServiceGroup( const TQString & _fullpath, const TQString & _relpath );
 
   /**
    * @internal construct a service from a stream.
    * The stream must already be positionned at the correct offset
    */
-  KServiceGroup( QDataStream& _str, int offset, bool deep );
+  KServiceGroup( TQDataStream& _str, int offset, bool deep );
 
   virtual ~KServiceGroup();
 
@@ -106,33 +106,33 @@ public:
    * Name used for indexing.
    * @return the service group's name
    */
-  virtual QString name() const { return entryPath(); }
+  virtual TQString name() const { return entryPath(); }
 
   /**
    * Returns the relative path of the service group.
    * @return the service group's relative path
    */
-  virtual QString relPath() const { return entryPath(); }
+  virtual TQString relPath() const { return entryPath(); }
 
   /**
    * Returns the caption of this group.
    * @return the caption of this group
    */
-  QString caption() const { return m_strCaption; }
+  TQString caption() const { return m_strCaption; }
 
   /**
    * Returns the name of the icon associated with the group.
    * @return the name of the icon associated with the group,
-   *         or QString::null if not set
+   *         or TQString::null if not set
    */
-  QString icon() const { return m_strIcon; }
+  TQString icon() const { return m_strIcon; }
 
   /**
    * Returns the comment about this service group.
    * @return the descriptive comment for the group, if there is one,
-   *         or QString::null if not set
+   *         or TQString::null if not set
    */
-  QString comment() const { return m_strComment; }
+  TQString comment() const { return m_strComment; }
 
   /**
    * Returns the total number of displayable services in this group and
@@ -192,30 +192,30 @@ public:
    * "Arcade Game" since it's redundant in this particular context.
    * @since 3.2
    */
-  QStringList suppressGenericNames() const;
+  TQStringList suppressGenericNames() const;
 
   /**
    * @internal
    * Sets information related to the layout of services in this group.
    */
-  void setLayoutInfo(const QStringList &layout);
+  void setLayoutInfo(const TQStringList &layout);
 
   /**
    * @internal
    * Returns information related to the layout of services in this group.
    */
-  QStringList layoutInfo() const;
+  TQStringList layoutInfo() const;
 
   /**
    * @internal
    * Load the service from a stream.
    */
-  virtual void load( QDataStream& );
+  virtual void load( TQDataStream& );
   /**
    * @internal
    * Save the service to a stream.
    */
-  virtual void save( QDataStream& );
+  virtual void save( TQDataStream& );
 
   /**
    * List of all Services and ServiceGroups within this
@@ -248,21 +248,21 @@ public:
    * in the .directory file.
    * @return the base group name, or null if no base group
    */
-  QString baseGroupName() const { return m_strBaseGroupName; }
+  TQString baseGroupName() const { return m_strBaseGroupName; }
 
   /**
    * Returns a path to the .directory file describing this service group.
    * The path is either absolute or relative to the "apps" resource.
    * @since 3.2
    */
-  QString directoryEntryPath() const;
+  TQString directoryEntryPath() const;
 
   /**
    * Returns the group for the given baseGroupName.
    * Can return 0L if the directory (or the .directory file) was deleted.
    * @return the base group with the given name, or 0 if not available.
    */
-  static Ptr baseGroup( const QString &baseGroupName );
+  static Ptr baseGroup( const TQString &baseGroupName );
 
   /**
    * Returns the root service group.
@@ -275,7 +275,7 @@ public:
    * @param relPath the path of the service group
    * @return the group with the given relative path name.
    */
-  static Ptr group(const QString &relPath);
+  static Ptr group(const TQString &relPath);
 
   /**
    * Returns the group of services that have X-KDE-ParentApp equal
@@ -284,13 +284,13 @@ public:
    * @return the services group
    * @since 3.1
    */
-  static Ptr childGroup(const QString &parent);
+  static Ptr childGroup(const TQString &parent);
 
   /**
    * This function parse attributes into menu
    * @since 3.5
    */
-    void parseAttribute( const QString &item ,  bool &showEmptyMenu, bool &showInline, bool &showInlineHeader, bool & showInlineAlias ,int &inlineValue );
+    void parseAttribute( const TQString &item ,  bool &showEmptyMenu, bool &showInline, bool &showInlineHeader, bool & showInlineAlias ,int &inlineValue );
 
 protected:
   /**
@@ -299,13 +299,13 @@ protected:
    */
   void addEntry( KSycocaEntry *entry);
 
-  QString m_strCaption;
-  QString m_strIcon;
-  QString m_strComment;
+  TQString m_strCaption;
+  TQString m_strIcon;
+  TQString m_strComment;
 
   List m_serviceList;
   bool m_bDeep;
-  QString m_strBaseGroupName;
+  TQString m_strBaseGroupName;
   int m_childCount;
 protected:
   virtual void virtual_hook( int id, void* data );
@@ -330,11 +330,11 @@ public:
   bool isValid() const { return true; }
 
   // Dummy
-  virtual QString name() const { return "separator"; }
+  virtual TQString name() const { return "separator"; }
   // Dummy
-  virtual void load( QDataStream& ) { };
+  virtual void load( TQDataStream& ) { };
   // Dummy
-  virtual void save( QDataStream& ) { };
+  virtual void save( TQDataStream& ) { };
 };
 
 #endif

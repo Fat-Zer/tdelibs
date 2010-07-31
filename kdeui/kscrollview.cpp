@@ -18,9 +18,9 @@
 
 #include "config.h"
 
-#include <qtimer.h>
-#include <qevent.h>
-#include <qapplication.h>
+#include <tqtimer.h>
+#include <tqevent.h>
+#include <tqapplication.h>
 
 #include "kscrollview.h"
 #include <kdebug.h>
@@ -29,7 +29,7 @@
 
 struct KScrollView::KScrollViewPrivate {
     KScrollViewPrivate() : dx(0), dy(0), ddx(0), ddy(0), rdx(0), rdy(0), scrolling(false) {}
-    QTimer timer;
+    TQTimer timer;
     int dx;
     int dy;
     // Step size * 16 and residual to avoid huge difference between 1px/step and 2px/step
@@ -40,11 +40,11 @@ struct KScrollView::KScrollViewPrivate {
     bool scrolling;
 };
 
-KScrollView::KScrollView( QWidget *parent, const char *name, Qt::WFlags f )
-    : QScrollView( parent, name, f )
+KScrollView::KScrollView( TQWidget *parent, const char *name, Qt::WFlags f )
+    : TQScrollView( parent, name, f )
 {
     d = new KScrollViewPrivate;
-    connect(&d->timer, SIGNAL(timeout()), this, SLOT(scrollTick()));
+    connect(&d->timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(scrollTick()));
 }
 
 KScrollView::~KScrollView()
@@ -56,7 +56,7 @@ void KScrollView::scrollBy(int dx, int dy)
 {
     KConfigGroup cfg( KGlobal::config(), "KDE" );
     if( !cfg.readBoolEntry( "SmoothScrolling", true )) {
-        QScrollView::scrollBy( dx, dy );
+        TQScrollView::scrollBy( dx, dy );
         return;
     }
     // scrolling destination
@@ -106,7 +106,7 @@ void KScrollView::setContentsPos(int x, int y)
     int dy = y - contentsY();
 
     // to large to smooth out
-//     if (dx > 1000 || dy > 1000) return QScrollView::setContentsPos(x,y);
+//     if (dx > 1000 || dy > 1000) return TQScrollView::setContentsPos(x,y);
 
     // scrolling speed
     int ddx = 0;
@@ -155,8 +155,8 @@ void KScrollView::scrollTick() {
     d->dx -= ddx;
     d->dy -= ddy;
 
-//    QScrollView::setContentsPos( contentsX() + ddx, contentsY() + ddy);
-    QScrollView::scrollBy(ddx, ddy);
+//    TQScrollView::setContentsPos( contentsX() + ddx, contentsY() + ddy);
+    TQScrollView::scrollBy(ddx, ddy);
 }
 
 void KScrollView::startScrolling()
@@ -172,12 +172,12 @@ void KScrollView::stopScrolling()
     d->scrolling = false;
 }
 
-// Overloaded from QScrollView and QScrollBar
-void KScrollView::wheelEvent( QWheelEvent *e )
+// Overloaded from TQScrollView and QScrollBar
+void KScrollView::wheelEvent( TQWheelEvent *e )
 {
     int pageStep = verticalScrollBar()->pageStep();
     int lineStep = verticalScrollBar()->lineStep();
-    int step = QMIN( QApplication::wheelScrollLines()*lineStep, pageStep );
+    int step = QMIN( TQApplication::wheelScrollLines()*lineStep, pageStep );
     if ( ( e->state() & ControlButton ) || ( e->state() & ShiftButton ) )
         step = pageStep;
 

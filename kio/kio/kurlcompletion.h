@@ -25,8 +25,8 @@
 
 #include <kcompletion.h>
 #include <kio/jobclasses.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 class KURL;
 class KURLCompletionPrivate;
@@ -74,25 +74,25 @@ public:
 	 * The completion is done asyncronously if KIO is used.
 	 *
 	 * Returns the first match for user, environment, and local dir completion
-	 * and QString::null for asynchronous completion (KIO or threaded).
+	 * and TQString::null for asynchronous completion (KIO or threaded).
 	 *
 	 * @param text the text to complete
-	 * @return the first match, or QString::null if not found
+	 * @return the first match, or TQString::null if not found
 	 */
-	virtual QString makeCompletion(const QString &text); // KDE4: remove return value, it's often null due to threading
+	virtual TQString makeCompletion(const TQString &text); // KDE4: remove return value, it's often null due to threading
 
 	/**
 	 * Sets the current directory (used as base for completion).
 	 * Default = $HOME.
 	 * @param dir the current directory, either as a path or URL
 	 */
-	virtual void setDir(const QString &dir);
+	virtual void setDir(const TQString &dir);
 
 	/**
 	 * Returns the current directory, as it was given in setDir
 	 * @return the current directory (path or URL)
 	 */
-	virtual QString dir() const;
+	virtual TQString dir() const;
 
 	/**
 	 * Check whether asynchronous completion is in progress.
@@ -157,23 +157,23 @@ public:
 	 * @return the path or URL resulting from this operation. If you
          * want to convert it to a KURL, use KURL::fromPathOrURL.
 	 */
-	QString replacedPath( const QString& text );
+	TQString replacedPath( const TQString& text );
 
 	/**
 	 * @internal I'll let ossi add a real one to KShell :)
 	 * @since 3.2
 	*/
-	static QString replacedPath( const QString& text,
+	static TQString replacedPath( const TQString& text,
                                      bool replaceHome, bool replaceEnv = true );
 
 	class MyURL;
 protected:
 	// Called by KCompletion, adds '/' to directories
-	void postProcessMatch( QString *match ) const;
-	void postProcessMatches( QStringList *matches ) const;
+	void postProcessMatch( TQString *match ) const;
+	void postProcessMatches( TQStringList *matches ) const;
 	void postProcessMatches( KCompletionMatches* matches ) const;
 
-	virtual void customEvent( QCustomEvent *e );
+	virtual void customEvent( TQCustomEvent *e );
 
 protected slots:
 	void slotEntries( KIO::Job *, const KIO::UDSEntryList& );
@@ -183,48 +183,48 @@ private:
 
 	bool isAutoCompletion();
 
-	bool userCompletion(const MyURL &url, QString *match);
-	bool envCompletion(const MyURL &url, QString *match);
-	bool exeCompletion(const MyURL &url, QString *match);
-	bool fileCompletion(const MyURL &url, QString *match);
-	bool urlCompletion(const MyURL &url, QString *match);
+	bool userCompletion(const MyURL &url, TQString *match);
+	bool envCompletion(const MyURL &url, TQString *match);
+	bool exeCompletion(const MyURL &url, TQString *match);
+	bool fileCompletion(const MyURL &url, TQString *match);
+	bool urlCompletion(const MyURL &url, TQString *match);
 
 	// List a directory using readdir()
-	void listDir( const QString& dir,
-	              QStringList *matches,
-	              const QString& filter,
+	void listDir( const TQString& dir,
+	              TQStringList *matches,
+	              const TQString& filter,
 	              bool only_exe,
 	              bool no_hidden );
 
 	// List the next dir in m_dirs
-	QString listDirectories(const QStringList &,
-	                        const QString &,
+	TQString listDirectories(const TQStringList &,
+	                        const TQString &,
 	                        bool only_exe = false,
 	                        bool only_dir = false,
 	                        bool no_hidden = false,
 	                        bool stat_files = true);
 
-	void listURLs( const QValueList<KURL *> &urls,
-	               const QString &filter = QString::null,
+	void listURLs( const TQValueList<KURL *> &urls,
+	               const TQString &filter = TQString::null,
 	               bool only_exe = false,
 	               bool no_hidden = false );
 
-	void addMatches( const QStringList & );
-	QString finished();
+	void addMatches( const TQStringList & );
+	TQString finished();
 
 	void init();
 
 	void setListedURL(int compl_type /* enum ComplType */,
-	                  const QString& dir = QString::null,
-	                  const QString& filter = QString::null,
+	                  const TQString& dir = TQString::null,
+	                  const TQString& filter = TQString::null,
 	                  bool no_hidden = false );
 
 	bool isListedURL( int compl_type /* enum ComplType */,
-	                  const QString& dir = QString::null,
-	                  const QString& filter = QString::null,
+	                  const TQString& dir = TQString::null,
+	                  const TQString& filter = TQString::null,
 	                  bool no_hidden = false );
 
-	void adjustMatch( QString& match ) const;
+	void adjustMatch( TQString& match ) const;
 
 protected:
 	virtual void virtual_hook( int id, void* data );

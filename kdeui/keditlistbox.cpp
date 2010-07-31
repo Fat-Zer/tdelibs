@@ -18,13 +18,13 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qstringlist.h>
-#include <qpushbutton.h>
-#include <qlayout.h>
-#include <qgroupbox.h>
-#include <qlistbox.h>
-#include <qwhatsthis.h>
-#include <qlabel.h>
+#include <tqstringlist.h>
+#include <tqpushbutton.h>
+#include <tqlayout.h>
+#include <tqgroupbox.h>
+#include <tqlistbox.h>
+#include <tqwhatsthis.h>
+#include <tqlabel.h>
 
 #include <kcombobox.h>
 #include <kdebug.h>
@@ -45,24 +45,24 @@ public:
     uint buttons;
 };
 
-KEditListBox::KEditListBox(QWidget *parent, const char *name,
+KEditListBox::KEditListBox(TQWidget *parent, const char *name,
 			   bool checkAtEntering, int buttons )
-    :QGroupBox(parent, name ), d(new KEditListBoxPrivate)
+    :TQGroupBox(parent, name ), d(new KEditListBoxPrivate)
 {
     init( checkAtEntering, buttons );
 }
 
-KEditListBox::KEditListBox(const QString& title, QWidget *parent,
+KEditListBox::KEditListBox(const TQString& title, TQWidget *parent,
 			   const char *name, bool checkAtEntering, int buttons)
-    :QGroupBox(title, parent, name ), d(new KEditListBoxPrivate)
+    :TQGroupBox(title, parent, name ), d(new KEditListBoxPrivate)
 {
     init( checkAtEntering, buttons );
 }
 
-KEditListBox::KEditListBox(const QString& title, const CustomEditor& custom,
-                           QWidget *parent, const char *name,
+KEditListBox::KEditListBox(const TQString& title, const CustomEditor& custom,
+                           TQWidget *parent, const char *name,
                            bool checkAtEntering, int buttons)
-    :QGroupBox(title, parent, name ), d(new KEditListBoxPrivate)
+    :TQGroupBox(title, parent, name ), d(new KEditListBoxPrivate)
 {
     m_lineEdit = custom.lineEdit();
     init( checkAtEntering, buttons, custom.representationWidget() );
@@ -74,15 +74,15 @@ KEditListBox::~KEditListBox()
 }
 
 void KEditListBox::init( bool checkAtEntering, int buttons,
-                         QWidget *representationWidget )
+                         TQWidget *representationWidget )
 {
     d->m_checkAtEntering = checkAtEntering;
 
     servNewButton = servRemoveButton = servUpButton = servDownButton = 0L;
-    setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,
-                              QSizePolicy::MinimumExpanding));
+    setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding,
+                              TQSizePolicy::MinimumExpanding));
 
-    QGridLayout * grid = new QGridLayout(this, 7, 2,
+    TQGridLayout * grid = new TQGridLayout(this, 7, 2,
                                          KDialog::marginHint(),
                                          KDialog::spacingHint());
     grid->addRowSpacing(0, fontMetrics().lineSpacing());
@@ -91,13 +91,13 @@ void KEditListBox::init( bool checkAtEntering, int buttons,
     grid->setMargin(15);
 
     if ( representationWidget )
-        representationWidget->reparent( this, QPoint(0,0) );
+        representationWidget->reparent( this, TQPoint(0,0) );
     else
         m_lineEdit=new KLineEdit(this);
 
-    m_listBox = new QListBox(this);
+    m_listBox = new TQListBox(this);
 
-    QWidget *editingWidget = representationWidget ?
+    TQWidget *editingWidget = representationWidget ?
                              representationWidget : m_lineEdit;
     grid->addMultiCellWidget(editingWidget,1,1,0,1);
     grid->addMultiCellWidget(m_listBox, 2, 6, 0, 0);
@@ -105,10 +105,10 @@ void KEditListBox::init( bool checkAtEntering, int buttons,
     d->buttons = 0;
     setButtons( buttons );
 
-    connect(m_lineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(typedSomething(const QString&)));
+    connect(m_lineEdit,TQT_SIGNAL(textChanged(const TQString&)),this,TQT_SLOT(typedSomething(const TQString&)));
     m_lineEdit->setTrapReturnKey(true);
-    connect(m_lineEdit,SIGNAL(returnPressed()),this,SLOT(addItem()));
-    connect(m_listBox, SIGNAL(highlighted(int)), SLOT(enableMoveButtons(int)));
+    connect(m_lineEdit,TQT_SIGNAL(returnPressed()),this,TQT_SLOT(addItem()));
+    connect(m_listBox, TQT_SIGNAL(highlighted(int)), TQT_SLOT(enableMoveButtons(int)));
 
     // maybe supplied lineedit has some text already
     typedSomething( m_lineEdit->text() );
@@ -119,12 +119,12 @@ void KEditListBox::setButtons( uint buttons )
     if ( d->buttons == buttons )
         return;
 
-    QGridLayout* grid = static_cast<QGridLayout *>( layout() );
+    TQGridLayout* grid = static_cast<TQGridLayout *>( layout() );
     if ( ( buttons & Add ) && !servNewButton ) {
-        servNewButton = new QPushButton(i18n("&Add"), this);
+        servNewButton = new TQPushButton(i18n("&Add"), this);
         servNewButton->setEnabled(false);
         servNewButton->show();
-        connect(servNewButton, SIGNAL(clicked()), SLOT(addItem()));
+        connect(servNewButton, TQT_SIGNAL(clicked()), TQT_SLOT(addItem()));
 
         grid->addWidget(servNewButton, 2, 1);
     } else if ( ( buttons & Add ) == 0 && servNewButton ) {
@@ -133,10 +133,10 @@ void KEditListBox::setButtons( uint buttons )
     }
 
     if ( ( buttons & Remove ) && !servRemoveButton ) {
-        servRemoveButton = new QPushButton(i18n("&Remove"), this);
+        servRemoveButton = new TQPushButton(i18n("&Remove"), this);
         servRemoveButton->setEnabled(false);
         servRemoveButton->show();
-        connect(servRemoveButton, SIGNAL(clicked()), SLOT(removeItem()));
+        connect(servRemoveButton, TQT_SIGNAL(clicked()), TQT_SLOT(removeItem()));
 
         grid->addWidget(servRemoveButton, 3, 1);
     } else if ( ( buttons & Remove ) == 0 && servRemoveButton ) {
@@ -145,15 +145,15 @@ void KEditListBox::setButtons( uint buttons )
     }
 
     if ( ( buttons & UpDown ) && !servUpButton ) {
-        servUpButton = new QPushButton(i18n("Move &Up"), this);
+        servUpButton = new TQPushButton(i18n("Move &Up"), this);
         servUpButton->setEnabled(false);
         servUpButton->show();
-        connect(servUpButton, SIGNAL(clicked()), SLOT(moveItemUp()));
+        connect(servUpButton, TQT_SIGNAL(clicked()), TQT_SLOT(moveItemUp()));
 
-        servDownButton = new QPushButton(i18n("Move &Down"), this);
+        servDownButton = new TQPushButton(i18n("Move &Down"), this);
         servDownButton->setEnabled(false);
         servDownButton->show();
-        connect(servDownButton, SIGNAL(clicked()), SLOT(moveItemDown()));
+        connect(servDownButton, TQT_SIGNAL(clicked()), TQT_SLOT(moveItemDown()));
 
         grid->addWidget(servUpButton, 4, 1);
         grid->addWidget(servDownButton, 5, 1);
@@ -165,7 +165,7 @@ void KEditListBox::setButtons( uint buttons )
     d->buttons = buttons;
 }
 
-void KEditListBox::typedSomething(const QString& text)
+void KEditListBox::typedSomething(const TQString& text)
 {
     if(currentItem() >= 0) {
         if(currentText() != m_lineEdit->text())
@@ -216,7 +216,7 @@ void KEditListBox::moveItemUp()
         return;
     }
 
-    QListBoxItem *selItem = m_listBox->item(selIndex);
+    TQListBoxItem *selItem = m_listBox->item(selIndex);
     m_listBox->takeItem(selItem);
     m_listBox->insertItem(selItem, selIndex-1);
     m_listBox->setCurrentItem(selIndex - 1);
@@ -239,7 +239,7 @@ void KEditListBox::moveItemDown()
         return;
     }
 
-    QListBoxItem *selItem = m_listBox->item(selIndex);
+    TQListBoxItem *selItem = m_listBox->item(selIndex);
     m_listBox->takeItem(selItem);
     m_listBox->insertItem(selItem, selIndex+1);
     m_listBox->setCurrentItem(selIndex + 1);
@@ -255,7 +255,7 @@ void KEditListBox::addItem()
     if ( !servNewButton || !servNewButton->isEnabled() )
         return;
 
-    const QString& currentTextLE=m_lineEdit->text();
+    const TQString& currentTextLE=m_lineEdit->text();
     bool alreadyInList(false);
     //if we didn't check for dupes at the inserting we have to do it now
     if (!d->m_checkAtEntering)
@@ -304,7 +304,7 @@ void KEditListBox::removeItem()
 
     if ( selected >= 0 )
     {
-	QString removedText = m_listBox->currentText();
+	TQString removedText = m_listBox->currentText();
 
         m_listBox->removeItem( selected );
         if ( count() > 0 )
@@ -361,17 +361,17 @@ void KEditListBox::clear()
     emit changed();
 }
 
-void KEditListBox::insertStringList(const QStringList& list, int index)
+void KEditListBox::insertStringList(const TQStringList& list, int index)
 {
     m_listBox->insertStringList(list,index);
 }
 
-void KEditListBox::insertStrList(const QStrList* list, int index)
+void KEditListBox::insertStrList(const TQStrList* list, int index)
 {
     m_listBox->insertStrList(list,index);
 }
 
-void KEditListBox::insertStrList(const QStrList& list, int index)
+void KEditListBox::insertStrList(const TQStrList& list, int index)
 {
     m_listBox->insertStrList(list,index);
 }
@@ -381,16 +381,16 @@ void KEditListBox::insertStrList(const char ** list, int numStrings, int index)
     m_listBox->insertStrList(list,numStrings,index);
 }
 
-QStringList KEditListBox::items() const
+TQStringList KEditListBox::items() const
 {
-    QStringList list;
-    for (QListBoxItem const * i = m_listBox->firstItem(); i != 0; i = i->next() )
+    TQStringList list;
+    for (TQListBoxItem const * i = m_listBox->firstItem(); i != 0; i = i->next() )
 	list.append( i->text());
 
     return list;
 }
 
-void KEditListBox::setItems(const QStringList& items)
+void KEditListBox::setItems(const TQStringList& items)
 {
   m_listBox->clear();
   m_listBox->insertStringList(items, 0);

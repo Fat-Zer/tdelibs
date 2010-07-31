@@ -26,8 +26,8 @@
 #ifndef __KDISKFREESP_H__
 #define __KDISKFREESP_H__
 
-#include <qobject.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -40,7 +40,7 @@ class KProcess;
 class KIO_EXPORT KDiskFreeSp : public QObject
 {  Q_OBJECT
 public:
-   KDiskFreeSp( QObject *parent=0, const char *name=0 );
+   KDiskFreeSp( TQObject *parent=0, const char *name=0 );
    /**
     * Destructor - this object autodeletes itself when it's done
     */
@@ -51,7 +51,7 @@ public:
     * if this mount point is found, with the info requested.
     * done is emitted in any case.
     */
-   int readDF( const QString & mountPoint );
+   int readDF( const TQString & mountPoint );
 
    /**
     * Call this to fire a search on the disk usage information
@@ -60,15 +60,15 @@ public:
     * if this mount point is found, with the info requested.
     * done is emitted in any case.
     */
-   static KDiskFreeSp * findUsageInfo( const QString & path );
+   static KDiskFreeSp * findUsageInfo( const TQString & path );
 
 signals:
-   void foundMountPoint( const QString & mountPoint, unsigned long kBSize, unsigned long kBUsed, unsigned long kBAvail );
+   void foundMountPoint( const TQString & mountPoint, unsigned long kBSize, unsigned long kBUsed, unsigned long kBAvail );
 
    // This one is a hack around a weird (compiler?) bug. In the former signal,
    // the slot in KPropsDlg would get 0L, 0L as the last two parameters.
    // When using const ulong& instead, all is ok.
-   void foundMountPoint( const unsigned long&, const unsigned long&, const unsigned long&, const QString& );
+   void foundMountPoint( const unsigned long&, const unsigned long&, const unsigned long&, const TQString& );
    void done();
 
 private slots:
@@ -77,8 +77,8 @@ private slots:
 
 private:
   KProcess         *dfProc;
-  QCString          dfStringErrOut;
-  QString           m_mountPoint;
+  TQCString          dfStringErrOut;
+  TQString           m_mountPoint;
   bool              readingDFStdErrOut;
   class KDiskFreeSpPrivate;
   KDiskFreeSpPrivate * d;

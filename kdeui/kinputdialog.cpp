@@ -17,10 +17,10 @@
   Boston, MA 02110-1301, USA.
 */
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qvalidator.h>
-#include <qwhatsthis.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqvalidator.h>
+#include <tqwhatsthis.h>
 
 #include <klineedit.h>
 #include <knuminput.h>
@@ -35,7 +35,7 @@ class KInputDialogPrivate
   public:
     KInputDialogPrivate();
 
-    QLabel *m_label;
+    TQLabel *m_label;
     KLineEdit *m_lineEdit;
     KIntSpinBox *m_intSpinBox;
     KDoubleSpinBox *m_doubleSpinBox;
@@ -50,17 +50,17 @@ KInputDialogPrivate::KInputDialogPrivate()
 {
 }
 
-KInputDialog::KInputDialog( const QString &caption, const QString &label,
-    const QString &value, QWidget *parent, const char *name,
-    QValidator *validator, const QString &mask )
+KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
+    const TQString &value, TQWidget *parent, const char *name,
+    TQValidator *validator, const TQString &mask )
     : KDialogBase( parent, name, true, caption, Ok|Cancel|User1, Ok, true,
     KStdGuiItem::clear() ),
     d( new KInputDialogPrivate() )
 {
-  QFrame *frame = makeMainWidget();
-  QVBoxLayout *layout = new QVBoxLayout( frame, 0, spacingHint() );
+  TQFrame *frame = makeMainWidget();
+  TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
-  d->m_label = new QLabel( label, frame );
+  d->m_label = new TQLabel( label, frame );
   layout->addWidget( d->m_label );
 
   d->m_lineEdit = new KLineEdit( value, frame );
@@ -77,24 +77,24 @@ KInputDialog::KInputDialog( const QString &caption, const QString &label,
   if ( !mask.isEmpty() )
     d->m_lineEdit->setInputMask( mask );
 
-  connect( d->m_lineEdit, SIGNAL( textChanged( const QString & ) ),
-      SLOT( slotEditTextChanged( const QString & ) ) );
-  connect( this, SIGNAL( user1Clicked() ), d->m_lineEdit, SLOT( clear() ) );
+  connect( d->m_lineEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+      TQT_SLOT( slotEditTextChanged( const TQString & ) ) );
+  connect( this, TQT_SIGNAL( user1Clicked() ), d->m_lineEdit, TQT_SLOT( clear() ) );
 
   slotEditTextChanged( value );
   setMinimumWidth( 350 );
 }
 
-KInputDialog::KInputDialog( const QString &caption, const QString &label,
-    const QString &value, QWidget *parent, const char *name )
+KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
+    const TQString &value, TQWidget *parent, const char *name )
     : KDialogBase( parent, name, true, caption, Ok|Cancel|User1, Ok, false,
     KStdGuiItem::clear() ),
     d( new KInputDialogPrivate() )
 {
-  QFrame *frame = makeMainWidget();
-  QVBoxLayout *layout = new QVBoxLayout( frame, 0, spacingHint() );
+  TQFrame *frame = makeMainWidget();
+  TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
-  d->m_label = new QLabel( label, frame );
+  d->m_label = new TQLabel( label, frame );
   layout->addWidget( d->m_label );
 
   d->m_textEdit = new KTextEdit( frame );
@@ -105,21 +105,21 @@ KInputDialog::KInputDialog( const QString &caption, const QString &label,
   d->m_textEdit->setFocus();
   d->m_label->setBuddy( d->m_textEdit );
 
-  connect( this, SIGNAL( user1Clicked() ), d->m_textEdit, SLOT( clear() ) );
+  connect( this, TQT_SIGNAL( user1Clicked() ), d->m_textEdit, TQT_SLOT( clear() ) );
 
   setMinimumWidth( 400 );
 }
 
-KInputDialog::KInputDialog( const QString &caption, const QString &label,
+KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
     int value, int minValue, int maxValue, int step, int base,
-    QWidget *parent, const char *name )
+    TQWidget *parent, const char *name )
     : KDialogBase( parent, name, true, caption, Ok|Cancel, Ok, true ),
     d( new KInputDialogPrivate() )
 {
-  QFrame *frame = makeMainWidget();
-  QVBoxLayout *layout = new QVBoxLayout( frame, 0, spacingHint() );
+  TQFrame *frame = makeMainWidget();
+  TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
-  d->m_label = new QLabel( label, frame );
+  d->m_label = new TQLabel( label, frame );
   layout->addWidget( d->m_label );
 
   d->m_intSpinBox = new KIntSpinBox( minValue, maxValue, step, value,
@@ -132,16 +132,16 @@ KInputDialog::KInputDialog( const QString &caption, const QString &label,
   setMinimumWidth( 300 );
 }
 
-KInputDialog::KInputDialog( const QString &caption, const QString &label,
+KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
     double value, double minValue, double maxValue, double step, int decimals,
-    QWidget *parent, const char *name )
+    TQWidget *parent, const char *name )
     : KDialogBase( parent, name, true, caption, Ok|Cancel, Ok, true ),
     d( new KInputDialogPrivate() )
 {
-  QFrame *frame = makeMainWidget();
-  QVBoxLayout *layout = new QVBoxLayout( frame, 0, spacingHint() );
+  TQFrame *frame = makeMainWidget();
+  TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
-  d->m_label = new QLabel( label, frame );
+  d->m_label = new TQLabel( label, frame );
   layout->addWidget( d->m_label );
 
   d->m_doubleSpinBox = new KDoubleSpinBox( minValue, maxValue, step, value,
@@ -154,8 +154,8 @@ KInputDialog::KInputDialog( const QString &caption, const QString &label,
   setMinimumWidth( 300 );
 }
 
-KInputDialog::KInputDialog( const QString &caption, const QString &label,
-    const QStringList &list, int current, bool editable, QWidget *parent,
+KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
+    const TQStringList &list, int current, bool editable, TQWidget *parent,
     const char *name )
     : KDialogBase( parent, name, true, caption, Ok|Cancel|User1, Ok, true,
     KStdGuiItem::clear() ),
@@ -163,10 +163,10 @@ KInputDialog::KInputDialog( const QString &caption, const QString &label,
 {
   showButton( User1, editable );
 
-  QFrame *frame = makeMainWidget();
-  QVBoxLayout *layout = new QVBoxLayout( frame, 0, spacingHint() );
+  TQFrame *frame = makeMainWidget();
+  TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
-  d->m_label = new QLabel( label, frame );
+  d->m_label = new TQLabel( label, frame );
   layout->addWidget( d->m_label );
 
   if ( editable )
@@ -176,10 +176,10 @@ KInputDialog::KInputDialog( const QString &caption, const QString &label,
     d->m_comboBox->setCurrentItem( current );
     layout->addWidget( d->m_comboBox );
 
-    connect( d->m_comboBox, SIGNAL( textChanged( const QString & ) ),
-      SLOT( slotUpdateButtons( const QString & ) ) );
-    connect( this, SIGNAL( user1Clicked() ),
-      d->m_comboBox, SLOT( clearEdit() ) );
+    connect( d->m_comboBox, TQT_SIGNAL( textChanged( const TQString & ) ),
+      TQT_SLOT( slotUpdateButtons( const TQString & ) ) );
+    connect( this, TQT_SIGNAL( user1Clicked() ),
+      d->m_comboBox, TQT_SLOT( clearEdit() ) );
     slotUpdateButtons( d->m_comboBox->currentText() );
     d->m_comboBox->setFocus();
   } else {
@@ -188,10 +188,10 @@ KInputDialog::KInputDialog( const QString &caption, const QString &label,
     d->m_listBox->setSelected( current, true );
     d->m_listBox->ensureCurrentVisible();
     layout->addWidget( d->m_listBox, 10 );
-    connect( d->m_listBox, SIGNAL( doubleClicked( QListBoxItem * ) ),
-      SLOT( slotOk() ) );
-    connect( d->m_listBox, SIGNAL( returnPressed( QListBoxItem * ) ),
-      SLOT( slotOk() ) );
+    connect( d->m_listBox, TQT_SIGNAL( doubleClicked( TQListBoxItem * ) ),
+      TQT_SLOT( slotOk() ) );
+    connect( d->m_listBox, TQT_SIGNAL( returnPressed( TQListBoxItem * ) ),
+      TQT_SLOT( slotOk() ) );
 
     d->m_listBox->setFocus();
   }
@@ -201,29 +201,29 @@ KInputDialog::KInputDialog( const QString &caption, const QString &label,
   setMinimumWidth( 320 );
 }
 
-KInputDialog::KInputDialog( const QString &caption, const QString &label,
-    const QStringList &list, const QStringList &select, bool multiple,
-    QWidget *parent, const char *name )
+KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
+    const TQStringList &list, const TQStringList &select, bool multiple,
+    TQWidget *parent, const char *name )
     : KDialogBase( parent, name, true, caption, Ok|Cancel, Ok, true ),
     d( new KInputDialogPrivate() )
 {
-  QFrame *frame = makeMainWidget();
-  QVBoxLayout *layout = new QVBoxLayout( frame, 0, spacingHint() );
+  TQFrame *frame = makeMainWidget();
+  TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
-  d->m_label = new QLabel( label, frame );
+  d->m_label = new TQLabel( label, frame );
   layout->addWidget( d->m_label );
 
   d->m_listBox = new KListBox( frame );
   d->m_listBox->insertStringList( list );
   layout->addWidget( d->m_listBox );
 
-  QListBoxItem *item;
+  TQListBoxItem *item;
 
   if ( multiple )
   {
-    d->m_listBox->setSelectionMode( QListBox::Extended );
+    d->m_listBox->setSelectionMode( TQListBox::Extended );
 
-    for ( QStringList::ConstIterator it=select.begin(); it!=select.end(); ++it )
+    for ( TQStringList::ConstIterator it=select.begin(); it!=select.end(); ++it )
     {
       item = d->m_listBox->findItem( *it, CaseSensitive|ExactMatch );
       if ( item )
@@ -232,12 +232,12 @@ KInputDialog::KInputDialog( const QString &caption, const QString &label,
   }
   else
   {
-    connect( d->m_listBox, SIGNAL( doubleClicked( QListBoxItem * ) ),
-      SLOT( slotOk() ) );
-    connect( d->m_listBox, SIGNAL( returnPressed( QListBoxItem * ) ),
-      SLOT( slotOk() ) );
+    connect( d->m_listBox, TQT_SIGNAL( doubleClicked( TQListBoxItem * ) ),
+      TQT_SLOT( slotOk() ) );
+    connect( d->m_listBox, TQT_SIGNAL( returnPressed( TQListBoxItem * ) ),
+      TQT_SLOT( slotOk() ) );
 
-    QString text = select.first();
+    TQString text = select.first();
     item = d->m_listBox->findItem( text, CaseSensitive|ExactMatch );
     if ( item )
       d->m_listBox->setSelected( item, true );
@@ -256,30 +256,30 @@ KInputDialog::~KInputDialog()
   delete d;
 }
 
-QString KInputDialog::getText( const QString &caption, const QString &label,
-    const QString &value, bool *ok, QWidget *parent, const char *name,
-    QValidator *validator, const QString &mask )
+TQString KInputDialog::getText( const TQString &caption, const TQString &label,
+    const TQString &value, bool *ok, TQWidget *parent, const char *name,
+    TQValidator *validator, const TQString &mask )
 {
   return text( caption, label, value, ok, parent, name, validator, mask,
-               QString::null );
+               TQString::null );
 }
 
-QString KInputDialog::text( const QString &caption,
-    const QString &label, const QString &value, bool *ok, QWidget *parent,
-    const char *name, QValidator *validator, const QString &mask,
-    const QString &whatsThis )
+TQString KInputDialog::text( const TQString &caption,
+    const TQString &label, const TQString &value, bool *ok, TQWidget *parent,
+    const char *name, TQValidator *validator, const TQString &mask,
+    const TQString &whatsThis )
 {
   KInputDialog dlg( caption, label, value, parent, name, validator, mask );
 
   if( !whatsThis.isEmpty() )
-    QWhatsThis::add( dlg.lineEdit(), whatsThis );
+    TQWhatsThis::add( dlg.lineEdit(), whatsThis );
 
   bool _ok = ( dlg.exec() == Accepted );
 
   if ( ok )
     *ok = _ok;
 
-  QString result;
+  TQString result;
   if ( _ok )
     result = dlg.lineEdit()->text();
 
@@ -290,9 +290,9 @@ QString KInputDialog::text( const QString &caption,
   return result;
 }
 
-QString KInputDialog::getMultiLineText( const QString &caption,
-    const QString &label, const QString &value, bool *ok,
-    QWidget *parent, const char *name )
+TQString KInputDialog::getMultiLineText( const TQString &caption,
+    const TQString &label, const TQString &value, bool *ok,
+    TQWidget *parent, const char *name )
 {
   KInputDialog dlg( caption, label, value, parent, name );
 
@@ -301,16 +301,16 @@ QString KInputDialog::getMultiLineText( const QString &caption,
   if ( ok )
     *ok = _ok;
 
-  QString result;
+  TQString result;
   if ( _ok )
     result = dlg.textEdit()->text();
 
   return result;
 }
 
-int KInputDialog::getInteger( const QString &caption, const QString &label,
+int KInputDialog::getInteger( const TQString &caption, const TQString &label,
     int value, int minValue, int maxValue, int step, int base, bool *ok,
-    QWidget *parent, const char *name )
+    TQWidget *parent, const char *name )
 {
   KInputDialog dlg( caption, label, value, minValue,
     maxValue, step, base, parent, name );
@@ -327,17 +327,17 @@ int KInputDialog::getInteger( const QString &caption, const QString &label,
   return result;
 }
 
-int KInputDialog::getInteger( const QString &caption, const QString &label,
+int KInputDialog::getInteger( const TQString &caption, const TQString &label,
     int value, int minValue, int maxValue, int step, bool *ok,
-    QWidget *parent, const char *name )
+    TQWidget *parent, const char *name )
 {
   return getInteger( caption, label, value, minValue, maxValue, step,
     10, ok, parent, name );
 }
 
-double KInputDialog::getDouble( const QString &caption, const QString &label,
+double KInputDialog::getDouble( const TQString &caption, const TQString &label,
     double value, double minValue, double maxValue, double step, int decimals,
-    bool *ok, QWidget *parent, const char *name )
+    bool *ok, TQWidget *parent, const char *name )
 {
   KInputDialog dlg( caption, label, value, minValue,
     maxValue, step, decimals, parent, name );
@@ -354,30 +354,30 @@ double KInputDialog::getDouble( const QString &caption, const QString &label,
   return result;
 }
 
-double KInputDialog::getDouble( const QString &caption, const QString &label,
+double KInputDialog::getDouble( const TQString &caption, const TQString &label,
     double value, double minValue, double maxValue, int decimals,
-    bool *ok, QWidget *parent, const char *name )
+    bool *ok, TQWidget *parent, const char *name )
 {
   return getDouble( caption, label, value, minValue, maxValue, 0.1, decimals,
     ok, parent, name );
 }
 
-QString KInputDialog::getItem( const QString &caption, const QString &label,
-    const QStringList &list, int current, bool editable, bool *ok,
-    QWidget *parent, const char *name )
+TQString KInputDialog::getItem( const TQString &caption, const TQString &label,
+    const TQStringList &list, int current, bool editable, bool *ok,
+    TQWidget *parent, const char *name )
 {
   KInputDialog dlg( caption, label, list, current,
     editable, parent, name );
   if ( !editable)
   {
-      connect( dlg.listBox(),  SIGNAL(doubleClicked ( QListBoxItem *)), &dlg, SLOT( slotOk()));
+      connect( dlg.listBox(),  TQT_SIGNAL(doubleClicked ( TQListBoxItem *)), &dlg, TQT_SLOT( slotOk()));
   }
   bool _ok = ( dlg.exec() == Accepted );
 
   if ( ok )
     *ok = _ok;
 
-  QString result;
+  TQString result;
   if ( _ok )
     if ( editable )
       result = dlg.comboBox()->currentText();
@@ -387,9 +387,9 @@ QString KInputDialog::getItem( const QString &caption, const QString &label,
   return result;
 }
 
-QStringList KInputDialog::getItemList( const QString &caption,
-    const QString &label, const QStringList &list, const QStringList &select,
-    bool multiple, bool *ok, QWidget *parent, const char *name )
+TQStringList KInputDialog::getItemList( const TQString &caption,
+    const TQString &label, const TQStringList &list, const TQStringList &select,
+    bool multiple, bool *ok, TQWidget *parent, const char *name )
 {
   KInputDialog dlg( caption, label, list, select,
     multiple, parent, name );
@@ -399,10 +399,10 @@ QStringList KInputDialog::getItemList( const QString &caption,
   if ( ok )
     *ok = _ok;
 
-  QStringList result;
+  TQStringList result;
   if ( _ok )
   {
-    for (const QListBoxItem* i = dlg.listBox()->firstItem(); i != 0; i = i->next() )
+    for (const TQListBoxItem* i = dlg.listBox()->firstItem(); i != 0; i = i->next() )
       if ( i->isSelected() )
         result.append( i->text() );
   }
@@ -410,14 +410,14 @@ QStringList KInputDialog::getItemList( const QString &caption,
   return result;
 }
 
-void KInputDialog::slotEditTextChanged( const QString &text )
+void KInputDialog::slotEditTextChanged( const TQString &text )
 {
   bool on;
   if ( lineEdit()->validator() ) {
-    QString str = lineEdit()->text();
+    TQString str = lineEdit()->text();
     int index = lineEdit()->cursorPosition();
     on = ( lineEdit()->validator()->validate( str, index )
-      == QValidator::Acceptable );
+      == TQValidator::Acceptable );
   } else {
     on = !text.stripWhiteSpace().isEmpty();
   }
@@ -426,7 +426,7 @@ void KInputDialog::slotEditTextChanged( const QString &text )
   enableButton( User1, !text.isEmpty() );
 }
 
-void KInputDialog::slotUpdateButtons( const QString &text )
+void KInputDialog::slotUpdateButtons( const TQString &text )
 {
   enableButton( Ok, !text.isEmpty() );
   enableButton( User1, !text.isEmpty() );

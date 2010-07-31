@@ -20,10 +20,10 @@
 */
 #include <iostream>
 
-#include <qlayout.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqlabel.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -43,25 +43,25 @@ GhnsWidget::GhnsWidget()
 {
   mWallpapers = new KNewStuffGeneric( "kdesktop/wallpaper", this );
 
-  QBoxLayout *topLayout = new QVBoxLayout( this );
+  TQBoxLayout *topLayout = new TQVBoxLayout( this );
   topLayout->setMargin( KDialog::marginHint() );
   topLayout->setSpacing( KDialog::spacingHint() );
 
-  topLayout->addWidget( new QLabel( i18n("Get hot new stuff:"), this ) );
+  topLayout->addWidget( new TQLabel( i18n("Get hot new stuff:"), this ) );
 
-  QPushButton *button = new QPushButton( "Wallpapers", this );
+  TQPushButton *button = new TQPushButton( "Wallpapers", this );
   topLayout->addWidget( button );
-  connect( button, SIGNAL( clicked() ), SLOT( downloadWallpapers() ) );
+  connect( button, TQT_SIGNAL( clicked() ), TQT_SLOT( downloadWallpapers() ) );
 
   topLayout->addSpacing( 5 );
 
-  QBoxLayout *buttonLayout = new QHBoxLayout( topLayout );
+  TQBoxLayout *buttonLayout = new TQHBoxLayout( topLayout );
 
   buttonLayout->addStretch();
 
-  QPushButton *closeButton = new QPushButton( "Close", this );
+  TQPushButton *closeButton = new TQPushButton( "Close", this );
   buttonLayout->addWidget( closeButton );
-  connect( closeButton, SIGNAL( clicked() ), kapp, SLOT( quit() ) );
+  connect( closeButton, TQT_SIGNAL( clicked() ), kapp, TQT_SLOT( quit() ) );
 }
 
 GhnsWidget::~GhnsWidget()

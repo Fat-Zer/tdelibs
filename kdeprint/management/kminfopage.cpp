@@ -20,44 +20,44 @@
 #include "kminfopage.h"
 #include "kmprinter.h"
 
-#include <qpixmap.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqpixmap.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kseparator.h>
 
-KMInfoPage::KMInfoPage(QWidget *parent, const char *name)
-: QWidget(parent,name)
+KMInfoPage::KMInfoPage(TQWidget *parent, const char *name)
+: TQWidget(parent,name)
 {
-	m_title = new QLabel(this);
-	m_titlepixmap = new QLabel(this);
+	m_title = new TQLabel(this);
+	m_titlepixmap = new TQLabel(this);
 	m_titlepixmap->setAlignment(Qt::AlignCenter);
         KSeparator* sep = new KSeparator( KSeparator::HLine, this);
-	m_type = new QLabel(this);
-	m_description = new QLabel(this);
-	m_state = new QLabel(this);
-	m_location = new QLabel(this);
-	m_model = new QLabel(this);
-	m_uri = new QLabel(this);
-	m_device = new QLabel(this);
-	QLabel	*m_loclabel = new QLabel(i18n("Physical Location", "Location:"), this);
+	m_type = new TQLabel(this);
+	m_description = new TQLabel(this);
+	m_state = new TQLabel(this);
+	m_location = new TQLabel(this);
+	m_model = new TQLabel(this);
+	m_uri = new TQLabel(this);
+	m_device = new TQLabel(this);
+	QLabel	*m_loclabel = new TQLabel(i18n("Physical Location", "Location:"), this);
 	m_loclabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
-	QLabel	*m_desclabel = new QLabel(i18n("Description:"), this);
+	QLabel	*m_desclabel = new TQLabel(i18n("Description:"), this);
 	m_desclabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
-	QLabel	*m_typelabel = new QLabel(i18n("Type:"), this);
+	QLabel	*m_typelabel = new TQLabel(i18n("Type:"), this);
 	m_typelabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
-	QLabel	*m_statelabel = new QLabel(i18n("Status", "State:"), this);
+	QLabel	*m_statelabel = new TQLabel(i18n("Status", "State:"), this);
 	m_statelabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
-	QLabel	*m_urilabel = new QLabel(i18n("URI:"), this);
+	QLabel	*m_urilabel = new TQLabel(i18n("URI:"), this);
 	m_urilabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
-	m_devlabel = new QLabel(i18n("Device:"), this);
+	m_devlabel = new TQLabel(i18n("Device:"), this);
 	m_devlabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
-	QLabel	*m_modellabel = new QLabel(i18n("Model:"), this);
+	QLabel	*m_modellabel = new TQLabel(i18n("Model:"), this);
 	m_modellabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
 
-	QGridLayout	*lay0 = new QGridLayout(this, 11, 2, 0, 5);
-	QHBoxLayout	*lay1 = new QHBoxLayout(0, 0, 10);
+	QGridLayout	*lay0 = new TQGridLayout(this, 11, 2, 0, 5);
+	QHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 10);
 	lay0->addRowSpacing(7,20);
 	lay0->setRowStretch(7,0);
 	lay0->setRowStretch(10,1);
@@ -95,19 +95,19 @@ void KMInfoPage::setPrinter(KMPrinter *p)
 	// clear everything if p == 0
 	if (!p)
 	{
-		m_title->setText(QString::null);
-		m_titlepixmap->setPixmap(QPixmap());
-		m_type->setText(QString::null);
-		m_state->setText(QString::null);
-		m_location->setText(QString::null);
-		m_description->setText(QString::null);
-		m_uri->setText(QString::null);
-		m_device->setText(QString::null);
-		m_model->setText(QString::null);
+		m_title->setText(TQString::null);
+		m_titlepixmap->setPixmap(TQPixmap());
+		m_type->setText(TQString::null);
+		m_state->setText(TQString::null);
+		m_location->setText(TQString::null);
+		m_description->setText(TQString::null);
+		m_uri->setText(TQString::null);
+		m_device->setText(TQString::null);
+		m_model->setText(TQString::null);
 	}
 	else
 	{
-		m_title->setText(QString::fromLatin1("<b>%1</b>").arg(p->name()));
+		m_title->setText(TQString::fromLatin1("<b>%1</b>").arg(p->name()));
 		m_titlepixmap->setPixmap(SmallIcon(p->pixmap()));
 		if (p->isImplicit()) m_type->setText(i18n("Implicit class"));
 		else if (p->isClass(false))
@@ -126,7 +126,7 @@ void KMInfoPage::setPrinter(KMPrinter *p)
 		if (p->isClass(false))
 		{
 			QString	s;
-			for (QStringList::ConstIterator it=p->members().begin(); it!=p->members().end(); ++it)
+			for (TQStringList::ConstIterator it=p->members().begin(); it!=p->members().end(); ++it)
 				s.append(KURL(*it).prettyURL() + ", ");
 			s.truncate(s.length()-2);
 			m_device->setText(s);

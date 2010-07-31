@@ -31,9 +31,9 @@
 #include <signal.h>
 
 // Qt
-#include <qevent.h>
-#include <qmutex.h>
-#include <qapplication.h>
+#include <tqevent.h>
+#include <tqmutex.h>
+#include <tqapplication.h>
 
 // Us
 #include "kreverseresolver.h"
@@ -73,22 +73,22 @@ namespace
     KReverseResolver *m_parent;
 
     // output:
-    QString node;
-    QString service;
+    TQString node;
+    TQString service;
     bool success;
   };
 
   class KReverseResolverEvent: public QEvent
   {
   public:
-    static const int myType = QEvent::User + 63; // arbitrary value
-    QString node;
-    QString service;
+    static const int myType = TQEvent::User + 63; // arbitrary value
+    TQString node;
+    TQString service;
     bool success;
 
-    KReverseResolverEvent(const QString& _node, const QString& _service,
+    KReverseResolverEvent(const TQString& _node, const TQString& _service,
 			  bool _success)
-      : QEvent((Type)myType), node(_node),
+      : TQEvent((Type)myType), node(_node),
 	service(_service), success(_success)
     { }
   };
@@ -97,8 +97,8 @@ namespace
 class KNetwork::KReverseResolverPrivate
 {
 public:
-  QString node;
-  QString service;
+  TQString node;
+  TQString service;
   KSocketAddress addr;
   int flags;
 
@@ -111,8 +111,8 @@ public:
 };
 
 KReverseResolver::KReverseResolver(const KSocketAddress& addr, int flags,
-				   QObject *parent, const char* name)
-  : QObject(parent, name), d(new KReverseResolverPrivate(addr))
+				   TQObject *parent, const char* name)
+  : TQObject(parent, name), d(new KReverseResolverPrivate(addr))
 {
   d->flags = flags;
 }
@@ -138,12 +138,12 @@ bool KReverseResolver::failure() const
   return !isRunning() && !d->success;
 }
 
-QString KReverseResolver::node() const
+TQString KReverseResolver::node() const
 {
   return d->node;
 }
 
-QString KReverseResolver::service() const
+TQString KReverseResolver::service() const
 {
   return d->service;
 }
@@ -170,10 +170,10 @@ bool KReverseResolver::start()
   return true;
 }
 
-bool KReverseResolver::event(QEvent *e)
+bool KReverseResolver::event(TQEvent *e)
 {
   if (e->type() != KReverseResolverEvent::myType)
-    return QObject::event(e);	// call parent
+    return TQObject::event(e);	// call parent
 
   KReverseResolverEvent *re = static_cast<KReverseResolverEvent*>(e);
   d->node = re->node;
@@ -190,8 +190,8 @@ bool KReverseResolver::event(QEvent *e)
   return true;
 }
 
-bool KReverseResolver::resolve(const KSocketAddress& addr, QString& node,
-			       QString& serv, int flags)
+bool KReverseResolver::resolve(const KSocketAddress& addr, TQString& node,
+			       TQString& serv, int flags)
 {
   ReverseThread th(addr, flags);
   if (th.run())
@@ -204,7 +204,7 @@ bool KReverseResolver::resolve(const KSocketAddress& addr, QString& node,
 }
 
 bool KReverseResolver::resolve(const struct sockaddr* sa, Q_UINT16 salen,
-			       QString& node, QString& serv, int flags)
+			       TQString& node, TQString& serv, int flags)
 {
   return resolve(KSocketAddress(sa, salen), node, serv, flags);
 }
@@ -230,7 +230,7 @@ bool ReverseThread::run()
 
   {
 #ifdef NEED_MUTEX
-    QMutexLocker locker(&::getXXbyYYmutex);
+    TQMutexLocker locker(&::getXXbyYYmutex);
 #endif
     err = ::getnameinfo(m_addr, m_addr.length(),
 			h, sizeof(h) - 1, s, sizeof(s) - 1, niflags);
@@ -238,13 +238,13 @@ bool ReverseThread::run()
 
   if (err == 0)
     {
-      node = KResolver::domainToUnicode(QString::fromLatin1(h));
-      service = QString::fromLatin1(s);
+      node = KResolver::domainToUnicode(TQString::fromLatin1(h));
+      service = TQString::fromLatin1(s);
       success = true;
     }
   else
     {
-      node = service = QString::null;
+      node = service = TQString::null;
       success = false;
     }
 
@@ -255,7 +255,7 @@ bool ReverseThread::postprocess()
 {
   // post an event
   if (m_parent)
-    QApplication::postEvent(m_parent,
+    TQApplication::postEvent(m_parent,
 			    new KReverseResolverEvent(node, service, success));
   return true;
 }

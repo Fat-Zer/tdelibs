@@ -21,9 +21,9 @@
 #ifndef __kbookmarkimporter_kde1_h
 #define __kbookmarkimporter_kde1_h
 
-#include <qdom.h>
-#include <qcstring.h>
-#include <qstringlist.h>
+#include <tqdom.h>
+#include <tqcstring.h>
+#include <tqstringlist.h>
 #include <ksimpleconfig.h>
 
 /**
@@ -34,16 +34,16 @@
 class KIO_EXPORT KBookmarkImporter
 {
 public:
-    KBookmarkImporter( QDomDocument * doc ) : m_pDoc(doc) {}
+    KBookmarkImporter( TQDomDocument * doc ) : m_pDoc(doc) {}
 
-    void import( const QString & path );
+    void import( const TQString & path );
 
 private:
-    void scanIntern( QDomElement & parentElem, const QString & _path );
-    void parseBookmark( QDomElement & parentElem, QCString _text,
-                        KSimpleConfig& _cfg, const QString &_group );
-    QDomDocument * m_pDoc;
-    QStringList m_lstParsedDirs;
+    void scanIntern( TQDomElement & parentElem, const TQString & _path );
+    void parseBookmark( TQDomElement & parentElem, TQCString _text,
+                        KSimpleConfig& _cfg, const TQString &_group );
+    TQDomDocument * m_pDoc;
+    TQStringList m_lstParsedDirs;
 };
 
 #endif

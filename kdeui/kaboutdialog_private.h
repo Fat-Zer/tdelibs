@@ -23,7 +23,7 @@
 #ifndef _KABOUTDIALOG_PRIVATE_H_
 #define _KABOUTDIALOG_PRIVATE_H_
 
-#include <qlabel.h>
+#include <tqlabel.h>
 class QFrame;
 class QTabWidget;
 class QVBoxLayout;
@@ -46,16 +46,16 @@ class KImageTrackLabel : public QLabel
     };
 
   public:
-    KImageTrackLabel( QWidget * parent, const char * name=0, WFlags f=0 );
+    KImageTrackLabel( TQWidget * parent, const char * name=0, WFlags f=0 );
 
   signals:
-    void mouseTrack( int mode, const QMouseEvent *e );
+    void mouseTrack( int mode, const TQMouseEvent *e );
 
   protected:
-    virtual void mousePressEvent( QMouseEvent *e );
-    virtual void mouseReleaseEvent( QMouseEvent *e );
-    virtual void mouseDoubleClickEvent( QMouseEvent *e );
-    virtual void mouseMoveEvent ( QMouseEvent *e );
+    virtual void mousePressEvent( TQMouseEvent *e );
+    virtual void mouseReleaseEvent( TQMouseEvent *e );
+    virtual void mouseDoubleClickEvent( TQMouseEvent *e );
+    virtual void mouseMoveEvent ( TQMouseEvent *e );
 };
 
 class KAboutContainer;
@@ -86,55 +86,55 @@ class KAboutContainerBase : public QWidget
     };
 
   public:
-    KAboutContainerBase( int layoutType, QWidget *parent = 0, char *name = 0 );
+    KAboutContainerBase( int layoutType, TQWidget *parent = 0, char *name = 0 );
     virtual void show( void );
-    virtual QSize sizeHint( void ) const;
+    virtual TQSize sizeHint( void ) const;
 
-    void setTitle( const QString &title );
-    void setImage( const QString &fileName );
-    void setImageBackgroundColor( const QColor &color );
+    void setTitle( const TQString &title );
+    void setImage( const TQString &fileName );
+    void setImageBackgroundColor( const TQColor &color );
     void setImageFrame( bool state );
-    void setProgramLogo( const QString &fileName );
-    void setProgramLogo( const QPixmap &pixmap );
-    void setProduct( const QString &appName, const QString &version,
-		     const QString &author, const QString &year );
+    void setProgramLogo( const TQString &fileName );
+    void setProgramLogo( const TQPixmap &pixmap );
+    void setProduct( const TQString &appName, const TQString &version,
+		     const TQString &author, const TQString &year );
 
-    QFrame *addTextPage( const QString &title, const QString &text,
+    TQFrame *addTextPage( const TQString &title, const TQString &text,
 			 bool richText=false, int numLines=10 );
-    QFrame *addLicensePage( const QString &title, const QString &text,
+    TQFrame *addLicensePage( const TQString &title, const TQString &text,
 			 int numLines=10 );
-    KAboutContainer *addContainerPage( const QString &title,
+    KAboutContainer *addContainerPage( const TQString &title,
       int childAlignment = AlignCenter, int innerAlignment = AlignCenter );
-    KAboutContainer *addScrolledContainerPage( const QString &title,
+    KAboutContainer *addScrolledContainerPage( const TQString &title,
       int childAlignment = AlignCenter, int innerAlignment = AlignCenter );
 
-    QFrame *addEmptyPage( const QString &title );
+    TQFrame *addEmptyPage( const TQString &title );
 
     KAboutContainer *addContainer( int childAlignment, int innerAlignment );
 
   public slots:
-    virtual void slotMouseTrack( int mode, const QMouseEvent *e );
-    virtual void slotUrlClick( const QString &url );
-    virtual void slotMailClick( const QString &name, const QString &address );
+    virtual void slotMouseTrack( int mode, const TQMouseEvent *e );
+    virtual void slotUrlClick( const TQString &url );
+    virtual void slotMailClick( const TQString &name, const TQString &address );
 
   protected:
-    virtual void fontChange( const QFont &oldFont );
+    virtual void fontChange( const TQFont &oldFont );
 
   signals:
-    void mouseTrack( int mode, const QMouseEvent *e );
-    void urlClick( const QString &url );
-    void mailClick( const QString &name, const QString &address );
+    void mouseTrack( int mode, const TQMouseEvent *e );
+    void urlClick( const TQString &url );
+    void mailClick( const TQString &name, const TQString &address );
 
   private:
-    QVBoxLayout *mTopLayout;
+    TQVBoxLayout *mTopLayout;
     KImageTrackLabel *mImageLabel;
-    QLabel  *mTitleLabel;
-    QLabel  *mIconLabel;
-    QLabel  *mVersionLabel;
-    QLabel  *mAuthorLabel;
-    QFrame  *mImageFrame;
-    QTabWidget *mPageTab;
-    QFrame  *mPlainSpace;
+    TQLabel  *mTitleLabel;
+    TQLabel  *mIconLabel;
+    TQLabel  *mVersionLabel;
+    TQLabel  *mAuthorLabel;
+    TQFrame  *mImageFrame;
+    TQTabWidget *mPageTab;
+    TQFrame  *mPlainSpace;
 
     KAboutContainerBasePrivate* const d;
 };

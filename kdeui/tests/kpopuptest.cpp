@@ -1,30 +1,30 @@
 #include <kapplication.h>
-#include <qwidget.h>
-#include <qcursor.h>
+#include <tqwidget.h>
+#include <tqcursor.h>
 #include "kpopupmenu.h"
 
-class DemoWidget : public QWidget {
+class DemoWidget : public TQWidget {
 private:
     KPopupMenu *menu;
     
-void mousePressEvent(QMouseEvent *)
+void mousePressEvent(TQMouseEvent *)
 {
-    menu->popup(QCursor::pos());
+    menu->popup(TQCursor::pos());
 }
 
-void paintEvent(QPaintEvent *)
+void paintEvent(TQPaintEvent *)
 {
     drawText(32, 32, "Press a Mouse Button!");
 }
 
 public:
-    DemoWidget() : QWidget()
+    DemoWidget() : TQWidget()
     {
         menu = new KPopupMenu("Popup Menu:");
         menu->insertItem("Item1");
         menu->insertItem("Item2");
         menu->insertSeparator();
-        menu->insertItem("Quit", qApp, SLOT(quit()));
+        menu->insertItem("Quit", qApp, TQT_SLOT(quit()));
     }       
 };
 
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     KApplication app(argc, argv, "kpopupmenutest");
     DemoWidget w;
     app.setMainWidget(&w);
-    w.setFont(QFont("helvetica", 12, QFont::Bold), true);
+    w.setFont(TQFont("helvetica", 12, TQFont::Bold), true);
     w.show();
     return app.exec();
 }

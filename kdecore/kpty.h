@@ -23,7 +23,7 @@
 #ifndef __kpty_h__
 #define __kpty_h__
 
-#include <qglobal.h>
+#include <tqglobal.h>
 #include <kdelibs_export.h>
 
 #ifdef Q_OS_UNIX

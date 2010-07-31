@@ -21,7 +21,7 @@
 #define KMCONFIGDIALOG_H
 
 #include <kdialogbase.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 #include "kmconfigpage.h"
 
@@ -29,7 +29,7 @@ class KDEPRINT_EXPORT KMConfigDialog : public KDialogBase
 {
 	Q_OBJECT
 public:
-	KMConfigDialog(QWidget *parent = 0, const char *name = 0);
+	KMConfigDialog(TQWidget *parent = 0, const char *name = 0);
 
 	void addConfigPage(KMConfigPage*);
 
@@ -37,7 +37,7 @@ protected slots:
 	void slotOk();
 
 private:
-	QPtrList<KMConfigPage>	m_pages;
+	TQPtrList<KMConfigPage>	m_pages;
 };
 
 #endif

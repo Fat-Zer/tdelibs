@@ -41,7 +41,7 @@
 
 #include <kopenssl.h>
 #include <kdebug.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 
 
@@ -97,7 +97,7 @@ bool KSSLCertChain::isValid() {
 
 KSSLCertChain *KSSLCertChain::replicate() {
 KSSLCertChain *x = new KSSLCertChain;
-QPtrList<KSSLCertificate> ch = getChain();
+TQPtrList<KSSLCertificate> ch = getChain();
 
   x->setChain(ch);   // this will do a deep copy for us
   ch.setAutoDelete(true);
@@ -113,8 +113,8 @@ return 0;
 }
 
 
-QPtrList<KSSLCertificate> KSSLCertChain::getChain() {
-QPtrList<KSSLCertificate> cl;
+TQPtrList<KSSLCertificate> KSSLCertChain::getChain() {
+TQPtrList<KSSLCertificate> cl;
 if (!_chain) return cl;
 #ifdef KSSL_HAVE_SSL
 STACK_OF(X509) *x = (STACK_OF(X509) *)_chain;
@@ -132,7 +132,7 @@ return cl;
 }
 
 
-void KSSLCertChain::setChain(QPtrList<KSSLCertificate>& chain) {
+void KSSLCertChain::setChain(TQPtrList<KSSLCertificate>& chain) {
 #ifdef KSSL_HAVE_SSL
 if (_chain) {
     STACK_OF(X509) *x = (STACK_OF(X509) *)_chain;
@@ -187,14 +187,14 @@ _chain = NULL;
 }
 
 
-void KSSLCertChain::setChain(QStringList chain) {
+void KSSLCertChain::setChain(TQStringList chain) {
 	setCertChain(chain);
 }
 
-void KSSLCertChain::setCertChain(const QStringList& chain) {
-    QPtrList<KSSLCertificate> cl;
+void KSSLCertChain::setCertChain(const TQStringList& chain) {
+    TQPtrList<KSSLCertificate> cl;
     cl.setAutoDelete(true);
-    for (QStringList::ConstIterator s = chain.begin(); s != chain.end(); ++s) {
+    for (TQStringList::ConstIterator s = chain.begin(); s != chain.end(); ++s) {
        KSSLCertificate *c = KSSLCertificate::fromString((*s).local8Bit());
        if (c) {
           cl.append(c);

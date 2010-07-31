@@ -59,14 +59,14 @@ using namespace DOM;
 #include <kcharsets.h>
 #include <kglobal.h>
 #include <kconfig.h>
-#include <qfile.h>
-#include <qvaluelist.h>
-#include <qstring.h>
-#include <qtooltip.h>
+#include <tqfile.h>
+#include <tqvaluelist.h>
+#include <tqstring.h>
+#include <tqtooltip.h>
 #include <kdebug.h>
 #include <kurl.h>
 #include <assert.h>
-#include <qpaintdevicemetrics.h>
+#include <tqpaintdevicemetrics.h>
 #include <stdlib.h>
 
 #define HANDLE_INHERIT(prop, Prop) \
@@ -188,7 +188,7 @@ enum PseudoState { PseudoUnknown, PseudoNone, PseudoLink, PseudoVisited};
 static PseudoState pseudoState;
 
 
-CSSStyleSelector::CSSStyleSelector( DocumentImpl* doc, QString userStyleSheet, StyleSheetListImpl *styleSheets,
+CSSStyleSelector::CSSStyleSelector( DocumentImpl* doc, TQString userStyleSheet, StyleSheetListImpl *styleSheets,
                                     const KURL &url, bool _strictParsing )
 {
     KHTMLView* view = doc->view();
@@ -196,7 +196,7 @@ CSSStyleSelector::CSSStyleSelector( DocumentImpl* doc, QString userStyleSheet, S
     init(view ? view->part()->settings() : 0, doc);
 
     strictParsing = _strictParsing;
-    m_medium = view ? view->mediaType() : QString("all");
+    m_medium = view ? view->mediaType() : TQString("all");
 
     selectors = 0;
     selectorCache = 0;
@@ -220,7 +220,7 @@ CSSStyleSelector::CSSStyleSelector( DocumentImpl* doc, QString userStyleSheet, S
     authorStyle = new CSSStyleSelectorList();
 
 
-    QPtrListIterator<StyleSheetImpl> it( styleSheets->styleSheets );
+    TQPtrListIterator<StyleSheetImpl> it( styleSheets->styleSheets );
     for ( ; it.current(); ++it ) {
         if ( it.current()->isCSSStyleSheet() && !it.current()->disabled()) {
             authorStyle->append( static_cast<CSSStyleSheetImpl*>( it.current() ), m_medium );
@@ -234,8 +234,8 @@ CSSStyleSelector::CSSStyleSelector( DocumentImpl* doc, QString userStyleSheet, S
 
     KURL u = url;
 
-    u.setQuery( QString::null );
-    u.setRef( QString::null );
+    u.setQuery( TQString::null );
+    u.setRef( TQString::null );
     encodedurl.file = u.url();
     int pos = encodedurl.file.findRev('/');
     encodedurl.path = encodedurl.file;
@@ -243,7 +243,7 @@ CSSStyleSelector::CSSStyleSelector( DocumentImpl* doc, QString userStyleSheet, S
 	encodedurl.path.truncate( pos );
 	encodedurl.path += '/';
     }
-    u.setPath( QString::null );
+    u.setPath( TQString::null );
     encodedurl.host = u.url();
 
     //kdDebug() << "CSSStyleSelector::CSSStyleSelector encoded url " << encodedurl.path << endl;
@@ -298,16 +298,16 @@ void CSSStyleSelector::loadDefaultStyle(const KHTMLSettings *s, DocumentImpl *do
     if(s_defaultStyle) return;
 
     {
-	QFile f(locate( "data", "khtml/css/html4.css" ) );
+	TQFile f(locate( "data", "khtml/css/html4.css" ) );
 	f.open(IO_ReadOnly);
 
-	QCString file( f.size()+1 );
+	TQCString file( f.size()+1 );
 	int readbytes = f.readBlock( file.data(), f.size() );
 	f.close();
 	if ( readbytes >= 0 )
 	    file[readbytes] = '\0';
 
-	QString style = QString::fromLatin1( file.data() );
+	TQString style = TQString::fromLatin1( file.data() );
 	if(s)
 	    style += s->settingsToCSS();
 	DOMString str(style);
@@ -323,16 +323,16 @@ void CSSStyleSelector::loadDefaultStyle(const KHTMLSettings *s, DocumentImpl *do
 	s_defaultPrintStyle->append( s_defaultSheet, "print" );
     }
     {
-	QFile f(locate( "data", "khtml/css/quirks.css" ) );
+	TQFile f(locate( "data", "khtml/css/quirks.css" ) );
 	f.open(IO_ReadOnly);
 
-	QCString file( f.size()+1 );
+	TQCString file( f.size()+1 );
 	int readbytes = f.readBlock( file.data(), f.size() );
 	f.close();
 	if ( readbytes >= 0 )
 	    file[readbytes] = '\0';
 
-	QString style = QString::fromLatin1( file.data() );
+	TQString style = TQString::fromLatin1( file.data() );
 	DOMString str(style);
 
 	s_quirksSheet = new DOM::CSSStyleSheetImpl(doc);
@@ -371,13 +371,13 @@ void CSSStyleSelector::reparseConfiguration()
 
 #define MAXFONTSIZES 8
 
-void CSSStyleSelector::computeFontSizes(QPaintDeviceMetrics* paintDeviceMetrics,  int zoomFactor)
+void CSSStyleSelector::computeFontSizes(TQPaintDeviceMetrics* paintDeviceMetrics,  int zoomFactor)
 {
     computeFontSizesFor(paintDeviceMetrics, zoomFactor, m_fontSizes, false);
     computeFontSizesFor(paintDeviceMetrics, zoomFactor, m_fixedFontSizes, true);
 }
 
-void CSSStyleSelector::computeFontSizesFor(QPaintDeviceMetrics* paintDeviceMetrics, int zoomFactor, QValueVector<int>& fontSizes, bool isFixed)
+void CSSStyleSelector::computeFontSizesFor(TQPaintDeviceMetrics* paintDeviceMetrics, int zoomFactor, TQValueVector<int>& fontSizes, bool isFixed)
 {
 #ifdef APPLE_CHANGES
     // We don't want to scale the settings by the dpi.
@@ -743,8 +743,8 @@ unsigned int CSSStyleSelector::addInlineDeclarations(DOM::ElementImpl* e,
     if (!decl && !addDecls)
         return numProps;
 
-    QPtrList<CSSProperty>* values = decl ? decl->values() : 0;
-    QPtrList<CSSProperty>* addValues = addDecls ? addDecls->values() : 0;
+    TQPtrList<CSSProperty>* values = decl ? decl->values() : 0;
+    TQPtrList<CSSProperty>* addValues = addDecls ? addDecls->values() : 0;
     if (!values && !addValues)
         return numProps;
 
@@ -805,7 +805,7 @@ unsigned int CSSStyleSelector::addInlineDeclarations(DOM::ElementImpl* e,
 }
 
 // modified version of the one in kurl.cpp
-static void cleanpath(QString &path)
+static void cleanpath(TQString &path)
 {
     int pos;
     while ( (pos = path.find( "/../" )) != -1 ) {
@@ -851,8 +851,8 @@ static PseudoState checkPseudoState( const CSSStyleSelector::Encodedurl& encoded
     if( attr.isNull() ) {
         return PseudoNone;
     }
-    QConstString cu(attr.unicode(), attr.length());
-    QString u = cu.string();
+    TQConstString cu(attr.unicode(), attr.length());
+    TQString u = cu.string();
     if ( !u.contains("://") ) {
         if ( u[0] == '/' )
             u = encodedurl.host + u;
@@ -870,7 +870,7 @@ static PseudoState checkPseudoState( const CSSStyleSelector::Encodedurl& encoded
 }
 
 // a helper function for parsing nth-arguments
-static bool matchNth(int count, const QString& nth)
+static bool matchNth(int count, const TQString& nth)
 {
     if (nth.isEmpty()) return false;
     int a = 0;
@@ -1145,11 +1145,11 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
             // else the value is longer and can be a list
             if ( sel->match == CSSSelector::Class && !e->hasClassList() ) return false;
 
-            QChar* sel_uc = sel->value.unicode();
-            QChar* val_uc = value->unicode();
+            TQChar* sel_uc = sel->value.unicode();
+            TQChar* val_uc = value->unicode();
 
-            QConstString sel_str(sel_uc, sel_len);
-            QConstString val_str(val_uc, val_len);
+            TQConstString sel_str(sel_uc, sel_len);
+            TQConstString val_str(val_uc, val_len);
 
             int pos = 0;
             for ( ;; ) {
@@ -1167,31 +1167,31 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
         case CSSSelector::Contain:
         {
             //kdDebug( 6080 ) << "checking for contains match" << endl;
-            QConstString val_str(value->unicode(), value->length());
-            QConstString sel_str(sel->value.unicode(), sel->value.length());
+            TQConstString val_str(value->unicode(), value->length());
+            TQConstString sel_str(sel->value.unicode(), sel->value.length());
             return val_str.string().contains(sel_str.string(), caseSensitive);
         }
         case CSSSelector::Begin:
         {
             //kdDebug( 6080 ) << "checking for beginswith match" << endl;
-            QConstString val_str(value->unicode(), value->length());
-            QConstString sel_str(sel->value.unicode(), sel->value.length());
+            TQConstString val_str(value->unicode(), value->length());
+            TQConstString sel_str(sel->value.unicode(), sel->value.length());
             return val_str.string().startsWith(sel_str.string(), caseSensitive);
         }
         case CSSSelector::End:
         {
             //kdDebug( 6080 ) << "checking for endswith match" << endl;
-            QConstString val_str(value->unicode(), value->length());
-            QConstString sel_str(sel->value.unicode(), sel->value.length());
+            TQConstString val_str(value->unicode(), value->length());
+            TQConstString sel_str(sel->value.unicode(), sel->value.length());
             return val_str.string().endsWith(sel_str.string(), caseSensitive);
         }
         case CSSSelector::Hyphen:
         {
             //kdDebug( 6080 ) << "checking for hyphen match" << endl;
-            QConstString val_str(value->unicode(), value->length());
-            QConstString sel_str(sel->value.unicode(), sel->value.length());
-            const QString& str = val_str.string();
-            const QString& selStr = sel_str.string();
+            TQConstString val_str(value->unicode(), value->length());
+            TQConstString sel_str(sel->value.unicode(), sel->value.length());
+            const TQString& str = val_str.string();
+            const TQString& selStr = sel_str.string();
             if(str.length() < selStr.length()) return false;
             // Check if str begins with selStr:
             if(str.find(selStr, 0, caseSensitive) != 0) return false;
@@ -1486,8 +1486,8 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
             }
             if (value.isEmpty()) return false;
 
-            QString langAttr = value.string();
-            QString langSel = sel->string_arg.string();
+            TQString langAttr = value.string();
+            TQString langSel = sel->string_arg.string();
 
             if(langAttr.length() < langSel.length()) return false;
 
@@ -1536,7 +1536,7 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
                 HTMLElementImpl *elem;
                 elem = static_cast<HTMLElementImpl*>(e);
                 DOMString s = elem->innerText();
-                QString selStr = sel->string_arg.string();
+                TQString selStr = sel->string_arg.string();
 //                kdDebug(6080) << ":contains(\"" << selStr << "\")" << " on \"" << s << "\"" << endl;
                 return s.string().contains(selStr);
             }
@@ -1642,7 +1642,7 @@ void CSSStyleSelector::buildLists()
     clearLists();
     // collect all selectors and Properties in lists. Then transfer them to the array for faster lookup.
 
-    QPtrList<CSSSelector> selectorList;
+    TQPtrList<CSSSelector> selectorList;
     CSSOrderedPropertyList propertyList;
 
     if(m_medium == "print" && defaultPrintStyle)
@@ -1733,7 +1733,7 @@ CSSOrderedRule::~CSSOrderedRule()
 // -----------------------------------------------------------------
 
 CSSStyleSelectorList::CSSStyleSelectorList()
-    : QPtrList<CSSOrderedRule>()
+    : TQPtrList<CSSOrderedRule>()
 {
     setAutoDelete(true);
 }
@@ -1759,11 +1759,11 @@ void CSSStyleSelectorList::append( CSSStyleSheetImpl *sheet,
         if(item->isStyleRule())
         {
             CSSStyleRuleImpl *r = static_cast<CSSStyleRuleImpl *>(item);
-            QPtrList<CSSSelector> *s = r->selector();
+            TQPtrList<CSSSelector> *s = r->selector();
             for(int j = 0; j < (int)s->count(); j++)
             {
                 CSSOrderedRule *rule = new CSSOrderedRule(r, s->at(j), count());
-		QPtrList<CSSOrderedRule>::append(rule);
+		TQPtrList<CSSOrderedRule>::append(rule);
                 //kdDebug( 6080 ) << "appending StyleRule!" << endl;
             }
         }
@@ -1805,12 +1805,12 @@ void CSSStyleSelectorList::append( CSSStyleSheetImpl *sheet,
                         CSSStyleRuleImpl *styleRule =
                                 static_cast<CSSStyleRuleImpl *>( childItem );
 
-                        QPtrList<CSSSelector> *s = styleRule->selector();
+                        TQPtrList<CSSSelector> *s = styleRule->selector();
                         for( int j = 0; j < ( int ) s->count(); j++ )
                         {
                             CSSOrderedRule *orderedRule = new CSSOrderedRule(
                                             styleRule, s->at( j ), count() );
-                	    QPtrList<CSSOrderedRule>::append( orderedRule );
+                	    TQPtrList<CSSOrderedRule>::append( orderedRule );
                         }
                     }
                     else
@@ -1831,7 +1831,7 @@ void CSSStyleSelectorList::append( CSSStyleSheetImpl *sheet,
 }
 
 
-void CSSStyleSelectorList::collect( QPtrList<CSSSelector> *selectorList, CSSOrderedPropertyList *propList,
+void CSSStyleSelectorList::collect( TQPtrList<CSSSelector> *selectorList, CSSOrderedPropertyList *propList,
 				    Source regular, Source important )
 {
     CSSOrderedRule *r = first();
@@ -1855,7 +1855,7 @@ void CSSStyleSelectorList::collect( QPtrList<CSSSelector> *selectorList, CSSOrde
 
 // -------------------------------------------------------------------------
 
-int CSSOrderedPropertyList::compareItems(QPtrCollection::Item i1, QPtrCollection::Item i2)
+int CSSOrderedPropertyList::compareItems(TQPtrCollection::Item i1, TQPtrCollection::Item i2)
 {
     int diff =  static_cast<CSSOrderedProperty *>(i1)->priority
         - static_cast<CSSOrderedProperty *>(i2)->priority;
@@ -1866,7 +1866,7 @@ int CSSOrderedPropertyList::compareItems(QPtrCollection::Item i1, QPtrCollection
 void CSSOrderedPropertyList::append(DOM::CSSStyleDeclarationImpl *decl, uint selector, uint specificity,
 				    Source regular, Source important )
 {
-    QPtrList<CSSProperty> *values = decl->values();
+    TQPtrList<CSSProperty> *values = decl->values();
     if(!values) return;
     int len = values->count();
     for(int i = 0; i < len; i++)
@@ -1898,7 +1898,7 @@ void CSSOrderedPropertyList::append(DOM::CSSStyleDeclarationImpl *decl, uint sel
             break;
         }
 
-	QPtrList<CSSOrderedProperty>::append(new CSSOrderedProperty(prop, selector,
+	TQPtrList<CSSOrderedProperty>::append(new CSSOrderedProperty(prop, selector,
 								 first, source, specificity,
 								 count() ));
     }
@@ -1907,7 +1907,7 @@ void CSSOrderedPropertyList::append(DOM::CSSStyleDeclarationImpl *decl, uint sel
 // -------------------------------------------------------------------------------------
 // this is mostly boring stuff on how to apply a certain rule to the renderstyle...
 
-static Length convertToLength( CSSPrimitiveValueImpl *primitiveValue, RenderStyle *style, QPaintDeviceMetrics *paintDeviceMetrics, bool *ok = 0 )
+static Length convertToLength( CSSPrimitiveValueImpl *primitiveValue, RenderStyle *style, TQPaintDeviceMetrics *paintDeviceMetrics, bool *ok = 0 )
 {
     Length l;
     if ( !primitiveValue ) {
@@ -1966,8 +1966,8 @@ struct uiColors {
     int css_value;
     const char * configGroup;
     const char * configEntry;
-QPalette::ColorGroup group;
-QColorGroup::ColorRole role;
+TQPalette::ColorGroup group;
+TQColorGroup::ColorRole role;
 };
 
 const char * const wmgroup = "WM";
@@ -1978,66 +1978,66 @@ const char * const generalgroup = "General";
 */
 static const uiColors uimap[] = {
 	// Active window border.
-    { CSS_VAL_ACTIVEBORDER, wmgroup, "background", QPalette::Active, QColorGroup::Light },
+    { CSS_VAL_ACTIVEBORDER, wmgroup, "background", TQPalette::Active, TQColorGroup::Light },
 	// Active window caption.
-    { CSS_VAL_ACTIVECAPTION, wmgroup, "background", QPalette::Active, QColorGroup::Text },
+    { CSS_VAL_ACTIVECAPTION, wmgroup, "background", TQPalette::Active, TQColorGroup::Text },
         // Text in caption, size box, and scrollbar arrow box.
-    { CSS_VAL_CAPTIONTEXT, wmgroup, "activeForeground", QPalette::Active, QColorGroup::Text },
+    { CSS_VAL_CAPTIONTEXT, wmgroup, "activeForeground", TQPalette::Active, TQColorGroup::Text },
 	// Face color for three-dimensional display elements.
-    { CSS_VAL_BUTTONFACE, wmgroup, 0, QPalette::Inactive, QColorGroup::Button },
+    { CSS_VAL_BUTTONFACE, wmgroup, 0, TQPalette::Inactive, TQColorGroup::Button },
 	// Dark shadow for three-dimensional display elements (for edges facing away from the light source).
-    { CSS_VAL_BUTTONHIGHLIGHT, wmgroup, 0, QPalette::Inactive, QColorGroup::Light },
+    { CSS_VAL_BUTTONHIGHLIGHT, wmgroup, 0, TQPalette::Inactive, TQColorGroup::Light },
 	// Shadow color for three-dimensional display elements.
-    { CSS_VAL_BUTTONSHADOW, wmgroup, 0, QPalette::Inactive, QColorGroup::Shadow },
+    { CSS_VAL_BUTTONSHADOW, wmgroup, 0, TQPalette::Inactive, TQColorGroup::Shadow },
 	// Text on push buttons.
-    { CSS_VAL_BUTTONTEXT, wmgroup, "buttonForeground", QPalette::Inactive, QColorGroup::ButtonText },
+    { CSS_VAL_BUTTONTEXT, wmgroup, "buttonForeground", TQPalette::Inactive, TQColorGroup::ButtonText },
 	// Dark shadow for three-dimensional display elements.
-    { CSS_VAL_THREEDDARKSHADOW, wmgroup, 0, QPalette::Inactive, QColorGroup::Dark },
+    { CSS_VAL_THREEDDARKSHADOW, wmgroup, 0, TQPalette::Inactive, TQColorGroup::Dark },
 	// Face color for three-dimensional display elements.
-    { CSS_VAL_THREEDFACE, wmgroup, 0, QPalette::Inactive, QColorGroup::Button },
+    { CSS_VAL_THREEDFACE, wmgroup, 0, TQPalette::Inactive, TQColorGroup::Button },
 	// Highlight color for three-dimensional display elements.
-    { CSS_VAL_THREEDHIGHLIGHT, wmgroup, 0, QPalette::Inactive, QColorGroup::Light },
+    { CSS_VAL_THREEDHIGHLIGHT, wmgroup, 0, TQPalette::Inactive, TQColorGroup::Light },
 	// Light color for three-dimensional display elements (for edges facing the light source).
-    { CSS_VAL_THREEDLIGHTSHADOW, wmgroup, 0, QPalette::Inactive, QColorGroup::Midlight },
+    { CSS_VAL_THREEDLIGHTSHADOW, wmgroup, 0, TQPalette::Inactive, TQColorGroup::Midlight },
 	// Dark shadow for three-dimensional display elements.
-    { CSS_VAL_THREEDSHADOW, wmgroup, 0, QPalette::Inactive, QColorGroup::Shadow },
+    { CSS_VAL_THREEDSHADOW, wmgroup, 0, TQPalette::Inactive, TQColorGroup::Shadow },
 
     // Inactive window border.
-    { CSS_VAL_INACTIVEBORDER, wmgroup, "background", QPalette::Disabled, QColorGroup::Background },
+    { CSS_VAL_INACTIVEBORDER, wmgroup, "background", TQPalette::Disabled, TQColorGroup::Background },
     // Inactive window caption.
-    { CSS_VAL_INACTIVECAPTION, wmgroup, "inactiveBackground", QPalette::Disabled, QColorGroup::Background },
+    { CSS_VAL_INACTIVECAPTION, wmgroup, "inactiveBackground", TQPalette::Disabled, TQColorGroup::Background },
     // Color of text in an inactive caption.
-    { CSS_VAL_INACTIVECAPTIONTEXT, wmgroup, "inactiveForeground", QPalette::Disabled, QColorGroup::Text },
-    { CSS_VAL_GRAYTEXT, wmgroup, 0, QPalette::Disabled, QColorGroup::Text },
+    { CSS_VAL_INACTIVECAPTIONTEXT, wmgroup, "inactiveForeground", TQPalette::Disabled, TQColorGroup::Text },
+    { CSS_VAL_GRAYTEXT, wmgroup, 0, TQPalette::Disabled, TQColorGroup::Text },
 
 	// Menu background
-    { CSS_VAL_MENU, generalgroup, "background", QPalette::Inactive, QColorGroup::Background },
+    { CSS_VAL_MENU, generalgroup, "background", TQPalette::Inactive, TQColorGroup::Background },
 	// Text in menus
-    { CSS_VAL_MENUTEXT, generalgroup, "foreground", QPalette::Inactive, QColorGroup::Background },
+    { CSS_VAL_MENUTEXT, generalgroup, "foreground", TQPalette::Inactive, TQColorGroup::Background },
 
         // Text of item(s) selected in a control.
-    { CSS_VAL_HIGHLIGHT, generalgroup, "selectBackground", QPalette::Inactive, QColorGroup::Background },
+    { CSS_VAL_HIGHLIGHT, generalgroup, "selectBackground", TQPalette::Inactive, TQColorGroup::Background },
 
     // Text of item(s) selected in a control.
-    { CSS_VAL_HIGHLIGHTTEXT, generalgroup, "selectForeground", QPalette::Inactive, QColorGroup::Background },
+    { CSS_VAL_HIGHLIGHTTEXT, generalgroup, "selectForeground", TQPalette::Inactive, TQColorGroup::Background },
 
 	// Background color of multiple document interface.
-    { CSS_VAL_APPWORKSPACE, generalgroup, "background", QPalette::Inactive, QColorGroup::Text },
+    { CSS_VAL_APPWORKSPACE, generalgroup, "background", TQPalette::Inactive, TQColorGroup::Text },
 
 	// Scroll bar gray area.
-    { CSS_VAL_SCROLLBAR, generalgroup, "background", QPalette::Inactive, QColorGroup::Background },
+    { CSS_VAL_SCROLLBAR, generalgroup, "background", TQPalette::Inactive, TQColorGroup::Background },
 
 	// Window background.
-    { CSS_VAL_WINDOW, generalgroup, "windowBackground", QPalette::Inactive, QColorGroup::Background },
+    { CSS_VAL_WINDOW, generalgroup, "windowBackground", TQPalette::Inactive, TQColorGroup::Background },
 	// Window frame.
-    { CSS_VAL_WINDOWFRAME, generalgroup, "windowBackground", QPalette::Inactive, QColorGroup::Background },
+    { CSS_VAL_WINDOWFRAME, generalgroup, "windowBackground", TQPalette::Inactive, TQColorGroup::Background },
         // WindowText
-    { CSS_VAL_WINDOWTEXT, generalgroup, "windowForeground", QPalette::Inactive, QColorGroup::Text },
-    { CSS_VAL_TEXT, generalgroup, 0, QPalette::Inactive, QColorGroup::Text },
-    { 0, 0, 0, QPalette::NColorGroups, QColorGroup::NColorRoles }
+    { CSS_VAL_WINDOWTEXT, generalgroup, "windowForeground", TQPalette::Inactive, TQColorGroup::Text },
+    { CSS_VAL_TEXT, generalgroup, 0, TQPalette::Inactive, TQColorGroup::Text },
+    { 0, 0, 0, TQPalette::NColorGroups, TQColorGroup::NColorRoles }
 };
 
-static QColor colorForCSSValue( int css_value )
+static TQColor colorForCSSValue( int css_value )
 {
     // try the regular ones first
     const colorMap *col = cmap;
@@ -2052,21 +2052,21 @@ static QColor colorForCSSValue( int css_value )
 #ifndef APPLE_CHANGES
     if ( !uicol->css_value ) {
 	if ( css_value == CSS_VAL_INFOBACKGROUND )
-	    return QToolTip::palette().inactive().background();
+	    return TQToolTip::palette().inactive().background();
 	else if ( css_value == CSS_VAL_INFOTEXT )
-	    return QToolTip::palette().inactive().foreground();
+	    return TQToolTip::palette().inactive().foreground();
 	else if ( css_value == CSS_VAL_BACKGROUND ) {
 	    KConfig bckgrConfig("kdesktoprc", true, false); // No multi-screen support
 	    bckgrConfig.setGroup("Desktop0");
 	    // Desktop background.
 	    return bckgrConfig.readColorEntry("Color1", &qApp->palette().disabled().background());
 	}
-	return QColor();
+	return TQColor();
     }
 #endif
 
-    const QPalette &pal = qApp->palette();
-    QColor c = pal.color( uicol->group, uicol->role );
+    const TQPalette &pal = qApp->palette();
+    TQColor c = pal.color( uicol->group, uicol->role );
 #ifndef APPLE_CHANGES
     if ( uicol->configEntry ) {
 	KConfig *globalConfig = KGlobal::config();
@@ -2078,7 +2078,7 @@ static QColor colorForCSSValue( int css_value )
     return c;
 }
 
-static inline int nextFontSize(const QValueVector<int>& a, int v, bool smaller)
+static inline int nextFontSize(const TQValueVector<int>& a, int v, bool smaller)
 {
     // return the nearest bigger/smaller value in scale a, when v is in range.
     // otherwise increase/decrease value using a 1.2 fixed ratio
@@ -2334,7 +2334,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
         if (isInherit)
             fontDef.weight = parentStyle->htmlFont().fontDef.weight;
         else if (isInitial)
-            fontDef.weight = QFont::Normal;
+            fontDef.weight = TQFont::Normal;
         else {
 	    if(!primitiveValue) return;
 	    if(primitiveValue->getIdent())
@@ -2348,7 +2348,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
 		case CSS_VAL_700:
 		case CSS_VAL_800:
 		case CSS_VAL_900:
-		    fontDef.weight = QFont::Bold;
+		    fontDef.weight = TQFont::Bold;
 		    break;
 		case CSS_VAL_NORMAL:
 		case CSS_VAL_LIGHTER:
@@ -2357,7 +2357,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
 		case CSS_VAL_300:
 		case CSS_VAL_400:
 		case CSS_VAL_500:
-		    fontDef.weight = QFont::Normal;
+		    fontDef.weight = TQFont::Normal;
 		    break;
 		default:
 		    return;
@@ -2718,7 +2718,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
     case CSS_PROP_SCROLLBAR_TRACK_COLOR:
     case CSS_PROP_SCROLLBAR_ARROW_COLOR:
     {
-        QColor col;
+        TQColor col;
         if (isInherit) {
             HANDLE_INHERIT_COND(CSS_PROP_BACKGROUND_COLOR, backgroundColor, BackgroundColor)
             HANDLE_INHERIT_COND(CSS_PROP_BORDER_TOP_COLOR, borderTopColor, BorderTopColor)
@@ -2747,7 +2747,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
                         && id != CSS_PROP_BORDER_RIGHT_COLOR
       			&& id != CSS_PROP_BORDER_BOTTOM_COLOR
       			&& id != CSS_PROP_BORDER_LEFT_COLOR )
-		    col = QColor();
+		    col = TQColor();
 		else
 		    col = colorForCSSValue( ident );
 	    } else if ( primitiveValue->primitiveType() == CSSPrimitiveValue::CSS_RGBCOLOR ) {
@@ -2778,36 +2778,36 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
             style->setOutlineColor(col); break;
 #ifndef APPLE_CHANGES
         case CSS_PROP_SCROLLBAR_FACE_COLOR:
-            style->setPaletteColor(QPalette::Active, QColorGroup::Button, col);
-            style->setPaletteColor(QPalette::Inactive, QColorGroup::Button, col);
+            style->setPaletteColor(TQPalette::Active, TQColorGroup::Button, col);
+            style->setPaletteColor(TQPalette::Inactive, TQColorGroup::Button, col);
             break;
         case CSS_PROP_SCROLLBAR_SHADOW_COLOR:
-            style->setPaletteColor(QPalette::Active, QColorGroup::Shadow, col);
-            style->setPaletteColor(QPalette::Inactive, QColorGroup::Shadow, col);
+            style->setPaletteColor(TQPalette::Active, TQColorGroup::Shadow, col);
+            style->setPaletteColor(TQPalette::Inactive, TQColorGroup::Shadow, col);
             break;
         case CSS_PROP_SCROLLBAR_HIGHLIGHT_COLOR:
-            style->setPaletteColor(QPalette::Active, QColorGroup::Light, col);
-            style->setPaletteColor(QPalette::Inactive, QColorGroup::Light, col);
+            style->setPaletteColor(TQPalette::Active, TQColorGroup::Light, col);
+            style->setPaletteColor(TQPalette::Inactive, TQColorGroup::Light, col);
             break;
         case CSS_PROP_SCROLLBAR_3DLIGHT_COLOR:
             break;
         case CSS_PROP_SCROLLBAR_DARKSHADOW_COLOR:
-            style->setPaletteColor(QPalette::Active, QColorGroup::Dark, col);
-            style->setPaletteColor(QPalette::Inactive, QColorGroup::Dark, col);
+            style->setPaletteColor(TQPalette::Active, TQColorGroup::Dark, col);
+            style->setPaletteColor(TQPalette::Inactive, TQColorGroup::Dark, col);
             break;
         case CSS_PROP_SCROLLBAR_TRACK_COLOR:
-            style->setPaletteColor(QPalette::Active, QColorGroup::Mid, col);
-            style->setPaletteColor(QPalette::Inactive, QColorGroup::Mid, col);
-            style->setPaletteColor(QPalette::Active, QColorGroup::Background, col);
-            style->setPaletteColor(QPalette::Inactive, QColorGroup::Background, col);
+            style->setPaletteColor(TQPalette::Active, TQColorGroup::Mid, col);
+            style->setPaletteColor(TQPalette::Inactive, TQColorGroup::Mid, col);
+            style->setPaletteColor(TQPalette::Active, TQColorGroup::Background, col);
+            style->setPaletteColor(TQPalette::Inactive, TQColorGroup::Background, col);
             // fall through
         case CSS_PROP_SCROLLBAR_BASE_COLOR:
-            style->setPaletteColor(QPalette::Active, QColorGroup::Base, col);
-            style->setPaletteColor(QPalette::Inactive, QColorGroup::Base, col);
+            style->setPaletteColor(TQPalette::Active, TQColorGroup::Base, col);
+            style->setPaletteColor(TQPalette::Inactive, TQColorGroup::Base, col);
             break;
         case CSS_PROP_SCROLLBAR_ARROW_COLOR:
-            style->setPaletteColor(QPalette::Active, QColorGroup::ButtonText, col);
-            style->setPaletteColor(QPalette::Inactive, QColorGroup::ButtonText, col);
+            style->setPaletteColor(TQPalette::Active, TQColorGroup::ButtonText, col);
+            style->setPaletteColor(TQPalette::Inactive, TQColorGroup::ButtonText, col);
             break;
 #endif
         default:
@@ -3176,10 +3176,10 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
 	    // keywords are being used.  Pick the correct default
 	    // based off the font family.
 #ifdef APPLE_CHANGES
-	    const QValueVector<int>& fontSizes = (fontDef.genericFamily == FontDef::eMonospace) ?
+	    const TQValueVector<int>& fontSizes = (fontDef.genericFamily == FontDef::eMonospace) ?
 					 m_fixedFontSizes : m_fontSizes;
 #else
-	    const QValueVector<int>& fontSizes = m_fontSizes;
+	    const TQValueVector<int>& fontSizes = m_fontSizes;
 #endif
             switch(primitiveValue->getIdent())
             {
@@ -3464,7 +3464,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
 #ifdef APPLE_CHANGES
             fontDef.family = initialDef.firstFamily();
 #else
-            fontDef.family = QString::null;
+            fontDef.family = TQString::null;
 #endif
             if (style->setFontDef(fontDef))
                 fontDirty = true;
@@ -3478,7 +3478,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
             CSSValueImpl *item = list->item(i);
             if(!item->isPrimitiveValue()) continue;
             CSSPrimitiveValueImpl *val = static_cast<CSSPrimitiveValueImpl *>(item);
-	    QString face;
+	    TQString face;
             if( val->primitiveType() == CSSPrimitiveValue::CSS_STRING )
 		face = static_cast<FontFamilyValueImpl *>(val)->fontName();
 	    else if ( val->primitiveType() == CSSPrimitiveValue::CSS_IDENT ) {
@@ -3614,10 +3614,10 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
                 style->setBorderRightColor(parentStyle->borderRightColor());
             }
             else if (isInitial) {
-                style->setBorderTopColor(QColor()); // Reset to invalid color so currentColor is used instead.
-                style->setBorderBottomColor(QColor());
-                style->setBorderLeftColor(QColor());
-                style->setBorderRightColor(QColor());
+                style->setBorderTopColor(TQColor()); // Reset to invalid color so currentColor is used instead.
+                style->setBorderBottomColor(TQColor());
+                style->setBorderLeftColor(TQColor());
+                style->setBorderRightColor(TQColor());
             }
         }
         if (id == CSS_PROP_BORDER || id == CSS_PROP_BORDER_STYLE)
@@ -3801,7 +3801,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
             int x = item->x->computeLength(style, paintDeviceMetrics);
             int y = item->y->computeLength(style, paintDeviceMetrics);
             int blur = item->blur ? item->blur->computeLength(style, paintDeviceMetrics) : 0;
-            QColor col = khtml::transparentColor;
+            TQColor col = khtml::transparentColor;
             if (item->color) {
                 int ident = item->color->getIdent();
                 if (ident)

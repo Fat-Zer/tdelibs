@@ -21,10 +21,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qstring.h>
-#include <qtoolbutton.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqstring.h>
+#include <tqtoolbutton.h>
 
 #include <kaccel.h>
 #include <kfiledialog.h>
@@ -39,16 +39,16 @@
 #include "kurlrequesterdlg.h"
 
 
-KURLRequesterDlg::KURLRequesterDlg( const QString& urlName, QWidget *parent,
+KURLRequesterDlg::KURLRequesterDlg( const TQString& urlName, TQWidget *parent,
         const char *name, bool modal )
-    :   KDialogBase( Plain, QString::null, Ok|Cancel|User1, Ok, parent, name,
+    :   KDialogBase( Plain, TQString::null, Ok|Cancel|User1, Ok, parent, name,
                 modal, true, KStdGuiItem::clear() )
 {
   initDialog(i18n( "Location:" ), urlName);
 }
 
-KURLRequesterDlg::KURLRequesterDlg( const QString& urlName, const QString& _text, QWidget *parent, const char *name, bool modal )
-    :   KDialogBase( Plain, QString::null, Ok|Cancel|User1, Ok, parent, name,
+KURLRequesterDlg::KURLRequesterDlg( const TQString& urlName, const TQString& _text, TQWidget *parent, const char *name, bool modal )
+    :   KDialogBase( Plain, TQString::null, Ok|Cancel|User1, Ok, parent, name,
                 modal, true, KStdGuiItem::clear() )
 {
   initDialog(_text, urlName);
@@ -58,20 +58,20 @@ KURLRequesterDlg::~KURLRequesterDlg()
 {
 }
 
-void KURLRequesterDlg::initDialog(const QString &text,const QString &urlName)
+void KURLRequesterDlg::initDialog(const TQString &text,const TQString &urlName)
 {
-   QVBoxLayout * topLayout = new QVBoxLayout( plainPage(), 0,
+   TQVBoxLayout * topLayout = new TQVBoxLayout( plainPage(), 0,
             spacingHint() );
 
-    QLabel * label = new QLabel( text , plainPage() );
+    TQLabel * label = new TQLabel( text , plainPage() );
     topLayout->addWidget( label );
 
     urlRequester_ = new KURLRequester( urlName, plainPage(), "urlRequester" );
     urlRequester_->setMinimumWidth( urlRequester_->sizeHint().width() * 3 );
     topLayout->addWidget( urlRequester_ );
     urlRequester_->setFocus();
-    connect( urlRequester_->lineEdit(), SIGNAL(textChanged(const QString&)),
-             SLOT(slotTextChanged(const QString&)) );
+    connect( urlRequester_->lineEdit(), TQT_SIGNAL(textChanged(const TQString&)),
+             TQT_SLOT(slotTextChanged(const TQString&)) );
     bool state = !urlName.isEmpty();
     enableButtonOK( state );
     enableButton( KDialogBase::User1, state );
@@ -80,10 +80,10 @@ void KURLRequesterDlg::initDialog(const QString &text,const QString &urlName)
             KFile::ExistingOnly );
 	urlRequester_->setMode( mode );
     */
-    connect( this, SIGNAL( user1Clicked() ), SLOT( slotClear() ) );
+    connect( this, TQT_SIGNAL( user1Clicked() ), TQT_SLOT( slotClear() ) );
 }
 
-void KURLRequesterDlg::slotTextChanged(const QString & text)
+void KURLRequesterDlg::slotTextChanged(const TQString & text)
 {
     bool state = !text.stripWhiteSpace().isEmpty();
     enableButtonOK( state );
@@ -97,15 +97,15 @@ void KURLRequesterDlg::slotClear()
 
 KURL KURLRequesterDlg::selectedURL() const
 {
-    if ( result() == QDialog::Accepted )
+    if ( result() == TQDialog::Accepted )
         return KURL::fromPathOrURL( urlRequester_->url() );
     else
         return KURL();
 }
 
 
-KURL KURLRequesterDlg::getURL(const QString& dir, QWidget *parent,
-        const QString& caption)
+KURL KURLRequesterDlg::getURL(const TQString& dir, TQWidget *parent,
+        const TQString& caption)
 {
     KURLRequesterDlg dlg(dir, parent, "filedialog", true);
 

@@ -21,10 +21,10 @@
 #ifndef KPRINTERIMPL_H
 #define KPRINTERIMPL_H
 
-#include <qobject.h>
-#include <qstringlist.h>
-#include <qmap.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
+#include <tqmap.h>
+#include <tqptrlist.h>
 
 #include <kdelibs_export.h>
 
@@ -35,36 +35,36 @@ class KDEPRINT_EXPORT KPrinterImpl : public QObject
 {
 	Q_OBJECT
 public:
-	KPrinterImpl(QObject *parent = 0, const char *name = 0);
+	KPrinterImpl(TQObject *parent = 0, const char *name = 0);
 	virtual ~KPrinterImpl();
 
-	virtual bool setupCommand(QString& cmd, KPrinter*);
+	virtual bool setupCommand(TQString& cmd, KPrinter*);
 	virtual void preparePrinting(KPrinter*);
-	virtual void broadcastOption(const QString& key, const QString& value);
+	virtual void broadcastOption(const TQString& key, const TQString& value);
 
-	bool printFiles(KPrinter*, const QStringList&, bool removeflag = false);
+	bool printFiles(KPrinter*, const TQStringList&, bool removeflag = false);
 	// result:
 	//	-1	->	error
 	//	0	->	nothing happened
 	//	1	->	files filterd
-	int filterFiles(KPrinter*, QStringList&, bool removeflag = false);
-	int autoConvertFiles(KPrinter*, QStringList&, bool removeflag = false);
-	void saveOptions(const QMap<QString,QString>& opts);
-	const QMap<QString,QString>& loadOptions() const 	{ return m_options; }
-	QString tempFile();
-	QString quote(const QString&);
-	void statusMessage(const QString&, KPrinter* = 0);
+	int filterFiles(KPrinter*, TQStringList&, bool removeflag = false);
+	int autoConvertFiles(KPrinter*, TQStringList&, bool removeflag = false);
+	void saveOptions(const TQMap<TQString,TQString>& opts);
+	const TQMap<TQString,TQString>& loadOptions() const 	{ return m_options; }
+	TQString tempFile();
+	TQString quote(const TQString&);
+	void statusMessage(const TQString&, KPrinter* = 0);
 
 protected:
-	bool startPrinting(const QString& cmd, KPrinter *printer, const QStringList& files, bool removeflag = false);
-	int dcopPrint(const QString& cmd, const QStringList& files, bool removeflag = false);
-	bool setupSpecialCommand(QString&, KPrinter*, const QStringList&);
-	int doFilterFiles(KPrinter* pr, QStringList& files, const QStringList& flist, const QMap<QString,QString>& opts, bool removeflag = false);
+	bool startPrinting(const TQString& cmd, KPrinter *printer, const TQStringList& files, bool removeflag = false);
+	int dcopPrint(const TQString& cmd, const TQStringList& files, bool removeflag = false);
+	bool setupSpecialCommand(TQString&, KPrinter*, const TQStringList&);
+	int doFilterFiles(KPrinter* pr, TQStringList& files, const TQStringList& flist, const TQMap<TQString,TQString>& opts, bool removeflag = false);
 	void loadAppOptions();
 	void saveAppOptions();
 
 protected:
-	QMap<QString,QString>	m_options;	// use to save current options
+	TQMap<TQString,TQString>	m_options;	// use to save current options
 };
 
 #endif

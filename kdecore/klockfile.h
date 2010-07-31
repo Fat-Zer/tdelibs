@@ -20,8 +20,8 @@
 #ifndef _KLOCKFILE_H_
 #define _KLOCKFILE_H_
 
-#include <qstring.h>
-#include <qdatetime.h>
+#include <tqstring.h>
+#include <tqdatetime.h>
 
 #include <ksharedptr.h>
 /**
@@ -35,7 +35,7 @@ class KDECORE_EXPORT KLockFile : public KShared
 public:
    typedef KSharedPtr<KLockFile> Ptr;
 
-   KLockFile(const QString &file);
+   KLockFile(const TQString &file);
 
    /**
     * Destroys the object, releasing the lock if held
@@ -113,7 +113,7 @@ public:
     * the lock after the lock functon has returned with LockStale.
     * @returns false if the pid and hostname could not be determined
     */
-   bool getLockInfo(int &pid, QString &hostname, QString &appname);
+   bool getLockInfo(int &pid, TQString &hostname, TQString &appname);
 
 private:
    class KLockFilePrivate;

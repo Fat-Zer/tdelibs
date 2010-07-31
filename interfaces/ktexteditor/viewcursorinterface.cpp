@@ -45,7 +45,7 @@ ViewCursorInterface::ViewCursorInterface()
   myViewCursorInterfaceNumber = globalViewCursorInterfaceNumber++;
 
   d = new PrivateViewCursorInterface();
-  QString name = "ViewCursorInterface#" + QString::number(myViewCursorInterfaceNumber);
+  TQString name = "ViewCursorInterface#" + TQString::number(myViewCursorInterfaceNumber);
   d->interface = new ViewCursorDCOPInterface(this, name.latin1());
 }
 
@@ -60,7 +60,7 @@ unsigned int ViewCursorInterface::viewCursorInterfaceNumber () const
   return myViewCursorInterfaceNumber;
 }
 
-void ViewCursorInterface::setViewCursorInterfaceDCOPSuffix (const QCString &suffix)
+void ViewCursorInterface::setViewCursorInterfaceDCOPSuffix (const TQCString &suffix)
 {
   d->interface->setObjId ("ViewCursorInterface#"+suffix);
 }

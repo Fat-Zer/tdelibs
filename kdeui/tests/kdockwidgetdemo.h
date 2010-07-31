@@ -3,18 +3,18 @@
 
 #include <kdockwidget.h>
 
-#include <qdialog.h>
-#include <qlistview.h>
-#include <qstring.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qtimer.h>
-#include <qscrollview.h>
-#include <qfiledialog.h>
-#include <qwidgetstack.h>
-#include <qvbox.h>
-#include <qurl.h>
-#include <qpixmap.h>
+#include <tqdialog.h>
+#include <tqlistview.h>
+#include <tqstring.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqtimer.h>
+#include <tqscrollview.h>
+#include <tqfiledialog.h>
+#include <tqwidgetstack.h>
+#include <tqvbox.h>
+#include <tqurl.h>
+#include <tqpixmap.h>
 
 class QMultiLineEdit;
 class QTextView;
@@ -32,26 +32,26 @@ class SFileDialog : public QDialog
 {Q_OBJECT
 
 public:
-	SFileDialog( QString initially = QString::null,
-                                  const QStringList& filter = "All Files ( * )", const char* name = 0 );
+	SFileDialog( TQString initially = TQString::null,
+                                  const TQStringList& filter = "All Files ( * )", const char* name = 0 );
 	~SFileDialog();
 
-  static QString getOpenFileName( QString initially = QString::null,
-                                  const QStringList& filter = "All Files ( * )",
-                                  const QString caption = QString::null, const char* name = 0 );
+  static TQString getOpenFileName( TQString initially = TQString::null,
+                                  const TQStringList& filter = "All Files ( * )",
+                                  const TQString caption = TQString::null, const char* name = 0 );
 
-  static QStringList getOpenFileNames( QString initially = QString::null,
-                                  const QStringList& filter = "All Files ( * )",
-                                  const QString caption = QString::null, const char* name = 0 );
+  static TQStringList getOpenFileNames( TQString initially = TQString::null,
+                                  const TQStringList& filter = "All Files ( * )",
+                                  const TQString caption = TQString::null, const char* name = 0 );
 
 
 protected:
-  void showEvent( QShowEvent *e );
+  void showEvent( TQShowEvent *e );
 
 protected slots:
   void dockChange();
   void setDockDefaultPos( KDockWidget* );
-  void changeDir( const QString& );
+  void changeDir( const TQString& );
 
 private:
   DirectoryView* dirView;
@@ -63,25 +63,25 @@ private:
   KDockWidget* d_preview;
   KDockWidget* d_fd;
 
-  QToolButton *b_tree;
-  QToolButton *b_preview;
+  TQToolButton *b_tree;
+  TQToolButton *b_preview;
 };
 /******************************************************************************************************/
 class Directory : public QListViewItem
 {
 public:
-    Directory( QListView * parent, const QString& filename );
-    Directory( Directory * parent, const QString& filename );
+    Directory( TQListView * parent, const TQString& filename );
+    Directory( Directory * parent, const TQString& filename );
 
-    QString text( int column ) const;
+    TQString text( int column ) const;
 
-    QString fullName();
+    TQString fullName();
 
     void setOpen( bool );
     void setup();
 
 private:
-    QFile f;
+    TQFile f;
     Directory * p;
     bool readable;
 };
@@ -89,61 +89,61 @@ private:
 class DirectoryView : public QListView
 {Q_OBJECT
 public:
-  DirectoryView( QWidget *parent = 0, const char *name = 0 );
-  virtual void setOpen ( QListViewItem *, bool );
+  DirectoryView( TQWidget *parent = 0, const char *name = 0 );
+  virtual void setOpen ( TQListViewItem *, bool );
 
-  QString selectedDir();
+  TQString selectedDir();
 
 public slots:
-  void setDir( const QString & );
+  void setDir( const TQString & );
 
 signals:
-  void folderSelected( const QString & );
+  void folderSelected( const TQString & );
 
 protected slots:
-  void slotFolderSelected( QListViewItem * );
+  void slotFolderSelected( TQListViewItem * );
 
 private:
-  QString fullPath(QListViewItem* item);
+  TQString fullPath(TQListViewItem* item);
 };
 /******************************************************************************************************/
 class PixmapView : public QScrollView
 {Q_OBJECT
 public:
-  PixmapView( QWidget *parent );
-  void setPixmap( const QPixmap &pix );
-  void drawContents( QPainter *p, int, int, int, int );
+  PixmapView( TQWidget *parent );
+  void setPixmap( const TQPixmap &pix );
+  void drawContents( TQPainter *p, int, int, int, int );
 
 private:
-  QPixmap pixmap;
+  TQPixmap pixmap;
 };
 
 class Preview : public QWidgetStack
 {Q_OBJECT
 public:
-  Preview( QWidget *parent );
+  Preview( TQWidget *parent );
 
 public slots:
-  void showPreview( const QString& );
+  void showPreview( const TQString& );
 
 private:
-  QMultiLineEdit *normalText;
-  QTextView *html;
+  TQMultiLineEdit *normalText;
+  TQTextView *html;
   PixmapView *pixmap;
 };
 
 class CustomFileDialog : public QFileDialog
 {Q_OBJECT
 public:
-  CustomFileDialog( QWidget* parent );
+  CustomFileDialog( TQWidget* parent );
   ~CustomFileDialog();
 
-  void addToolButton( QButton * b, bool separator = false ){ QFileDialog::addToolButton(b,separator); }
-  void setBookmark( QStringList& );
-  QStringList getBookmark(){ return bookmarkList; }
+  void addToolButton( TQButton * b, bool separator = false ){ TQFileDialog::addToolButton(b,separator); }
+  void setBookmark( TQStringList& );
+  TQStringList getBookmark(){ return bookmarkList; }
 
 public slots:
-  void setDir2( const QString & );
+  void setDir2( const TQString & );
 
 signals:
   void signalDone( int );
@@ -154,8 +154,8 @@ protected slots:
   virtual void done( int );
 
 private:
-  QPopupMenu *bookmarkMenu;
-  QStringList bookmarkList;
+  TQPopupMenu *bookmarkMenu;
+  TQStringList bookmarkList;
   int addId, clearId;
 };
 

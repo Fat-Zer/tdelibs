@@ -13,14 +13,14 @@ class Part1 : public KParts::ReadOnlyPart
 {
   Q_OBJECT
 public:
-  Part1( QObject *parent, QWidget * parentWidget );
+  Part1( TQObject *parent, TQWidget * parentWidget );
   virtual ~Part1();
 
 protected:
   virtual bool openFile();
 
 protected:
-  QMultiLineEdit * m_edit;
+  TQMultiLineEdit * m_edit;
   KInstance *m_instance;
 };
 
@@ -28,7 +28,7 @@ class Part2 : public KParts::Part
 {
   Q_OBJECT
 public:
-  Part2( QObject *parent, QWidget * parentWidget );
+  Part2( TQObject *parent, TQWidget * parentWidget );
   virtual ~Part2();
 
 protected:

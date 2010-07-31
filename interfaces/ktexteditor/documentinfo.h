@@ -39,14 +39,14 @@ class KTEXTEDITOR_EXPORT DocumentInfoInterface
     DocumentInfoInterface();
     virtual ~DocumentInfoInterface();
 
-    virtual QString mimeType()=0;
+    virtual TQString mimeType()=0;
     virtual long  fileSize()=0;
-    virtual QString niceFileSize()=0;
+    virtual TQString niceFileSize()=0;
 
     unsigned int documentInfoInterfaceNumber () const;
     
   protected:  
-    void setDocumentInfoInterfaceDCOPSuffix (const QCString &suffix);  
+    void setDocumentInfoInterfaceDCOPSuffix (const TQCString &suffix);  
 
   private:
     class PrivateDocumentInfoInterface *d;

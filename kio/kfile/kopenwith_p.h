@@ -41,20 +41,20 @@ class KAppTreeListItem : public QListViewItem
 {
     bool parsed;
     bool directory;
-    QString path;
-    QString exec;
+    TQString path;
+    TQString exec;
 
 protected:
-	int compare(QListViewItem *i, int col, bool ascending ) const;
-    QString key(int column, bool ascending) const;
+	int compare(TQListViewItem *i, int col, bool ascending ) const;
+    TQString key(int column, bool ascending) const;
 
-    void init(const QPixmap& pixmap, bool parse, bool dir, const QString &_path, const QString &exec);
+    void init(const TQPixmap& pixmap, bool parse, bool dir, const TQString &_path, const TQString &exec);
 
 public:
-    KAppTreeListItem( KListView* parent, const QString & name, const QPixmap& pixmap,
-                      bool parse, bool dir, const QString &p, const QString &c );
-    KAppTreeListItem( QListViewItem* parent, const QString & name, const QPixmap& pixmap,
-                      bool parse, bool dir, const QString &p, const QString &c );
+    KAppTreeListItem( KListView* parent, const TQString & name, const TQPixmap& pixmap,
+                      bool parse, bool dir, const TQString &p, const TQString &c );
+    KAppTreeListItem( TQListViewItem* parent, const TQString & name, const TQPixmap& pixmap,
+                      bool parse, bool dir, const TQString &p, const TQString &c );
     bool isDirectory();
 
 protected:
@@ -73,27 +73,27 @@ class KApplicationTree : public KListView
 {
     Q_OBJECT
 public:
-    KApplicationTree( QWidget *parent );
+    KApplicationTree( TQWidget *parent );
 
     /**
      * Add a group of .desktop/.kdelnk entries
      */
-    void addDesktopGroup( const QString &relPath, KAppTreeListItem *item = 0 );
+    void addDesktopGroup( const TQString &relPath, KAppTreeListItem *item = 0 );
 
     bool isDirSel();
 
 protected:
-    void resizeEvent( QResizeEvent *_ev );
+    void resizeEvent( TQResizeEvent *_ev );
     KAppTreeListItem* currentitem;
 	void cleanupTree();
 
 public slots:
-    void slotItemHighlighted(QListViewItem* i);
-    void slotSelectionChanged(QListViewItem* i);
+    void slotItemHighlighted(TQListViewItem* i);
+    void slotSelectionChanged(TQListViewItem* i);
 
 signals:
-    void selected( const QString& _name, const QString& _exec );
-    void highlighted( const QString& _name, const  QString& _exec );
+    void selected( const TQString& _name, const TQString& _exec );
+    void highlighted( const TQString& _name, const  TQString& _exec );
 };
 
 /* ------------------------------------------------------------------------- */

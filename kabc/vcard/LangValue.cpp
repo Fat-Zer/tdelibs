@@ -39,7 +39,7 @@ LangValue::LangValue(const LangValue & x)
 {
 }
 
-LangValue::LangValue(const QCString & s)
+LangValue::LangValue(const TQCString & s)
 	:	Value(s)
 {
 }
@@ -54,7 +54,7 @@ LangValue::operator = (LangValue & x)
 }
 
 	LangValue &
-LangValue::operator = (const QCString & s)
+LangValue::operator = (const TQCString & s)
 {
 	Value::operator = (s);
 	return *this;
@@ -74,7 +74,7 @@ LangValue::~LangValue()
 	void
 LangValue::_parse()
 {
-	QStrList l;
+	TQStrList l;
 	RTokenise(strRep_, "-", l);
 	
 	if (l.count() == 0) return;
@@ -91,10 +91,10 @@ LangValue::_assemble()
 {
 	strRep_ = primary_;
 	
-	QStrListIterator it(subtags_);
+	TQStrListIterator it(subtags_);
 	
 	for (; it.current(); ++it)
-		strRep_ += QCString('-') + it.current();
+		strRep_ += TQCString('-') + it.current();
 }
 
 	QCString
@@ -112,14 +112,14 @@ LangValue::subtags()
 }
 	
 	void
-LangValue::setPrimary(const QCString & s)
+LangValue::setPrimary(const TQCString & s)
 {
 	parse();
 	primary_ = s;
 }
 
 	void
-LangValue::setSubTags(const QStrList & l)
+LangValue::setSubTags(const TQStrList & l)
 {
 	parse();
 	subtags_ = l;

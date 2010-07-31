@@ -37,10 +37,10 @@
 #include <kwallet.h>
 #endif
 
-#include <qguardedptr.h>
-#include <qmap.h>
-#include <qtimer.h>
-#include <qvaluelist.h>
+#include <tqguardedptr.h>
+#include <tqmap.h>
+#include <tqtimer.h>
+#include <tqvaluelist.h>
 
 #include "html/html_formimpl.h"
 #include "khtml_run.h"
@@ -78,7 +78,7 @@ namespace khtml
   public:
       enum Type { Frame, IFrame, Object };
 
-      ChildFrame() : QObject (0L, "khtml_child_frame") {
+      ChildFrame() : TQObject (0L, "khtml_child_frame") {
           m_jscript = 0L;
           m_kjs_lib = 0;
           m_bCompleted = false; m_bPreloaded = false; m_type = Frame; m_bNotify = false;
@@ -92,33 +92,33 @@ namespace khtml
               m_kjs_lib->unload();
       }
 
-    QGuardedPtr<khtml::RenderPart> m_frame;
-    QGuardedPtr<KParts::ReadOnlyPart> m_part;
-    QGuardedPtr<KParts::BrowserExtension> m_extension;
-    QGuardedPtr<KParts::LiveConnectExtension> m_liveconnect;
-    QString m_serviceName;
-    QString m_serviceType;
+    TQGuardedPtr<khtml::RenderPart> m_frame;
+    TQGuardedPtr<KParts::ReadOnlyPart> m_part;
+    TQGuardedPtr<KParts::BrowserExtension> m_extension;
+    TQGuardedPtr<KParts::LiveConnectExtension> m_liveconnect;
+    TQString m_serviceName;
+    TQString m_serviceType;
     KJSProxy *m_jscript;
     KLibrary *m_kjs_lib;
     bool m_bCompleted;
-    QString m_name;
+    TQString m_name;
     KParts::URLArgs m_args;
-    QGuardedPtr<KHTMLRun> m_run;
+    TQGuardedPtr<KHTMLRun> m_run;
     bool m_bPreloaded;
     KURL m_workingURL;
     Type m_type;
-    QStringList m_params;
+    TQStringList m_params;
     bool m_bNotify;
     bool m_bPendingRedirection;
   protected slots:
-    void liveConnectEvent(const unsigned long, const QString&, const KParts::LiveConnectExtension::ArgList&);
+    void liveConnectEvent(const unsigned long, const TQString&, const KParts::LiveConnectExtension::ArgList&);
   };
 
 }
 
-struct KHTMLFrameList : public QValueList<khtml::ChildFrame*>
+struct KHTMLFrameList : public TQValueList<khtml::ChildFrame*>
 {
-    Iterator find( const QString &name ) KDE_NO_EXPORT;
+    Iterator find( const TQString &name ) KDE_NO_EXPORT;
 };
 
 typedef KHTMLFrameList::ConstIterator ConstFrameIt;
@@ -131,7 +131,7 @@ class KHTMLWalletQueue : public QObject
 {
   Q_OBJECT
   public:
-    KHTMLWalletQueue(QObject *parent) : QObject(parent) {
+    KHTMLWalletQueue(TQObject *parent) : TQObject(parent) {
 #ifndef KHTML_NO_WALLET
       wallet = 0L;
 #endif // KHTML_NO_WALLET
@@ -146,10 +146,10 @@ class KHTMLWalletQueue : public QObject
 #ifndef KHTML_NO_WALLET
     KWallet::Wallet *wallet;
 #endif // KHTML_NO_WALLET
-    typedef QPair<DOM::HTMLFormElementImpl*, QGuardedPtr<DOM::DocumentImpl> > Caller;
-    typedef QValueList<Caller> CallerList;
+    typedef QPair<DOM::HTMLFormElementImpl*, TQGuardedPtr<DOM::DocumentImpl> > Caller;
+    typedef TQValueList<Caller> CallerList;
     CallerList callers;
-    QValueList<QPair<QString, QMap<QString, QString> > > savers;
+    TQValueList<QPair<TQString, TQMap<TQString, TQString> > > savers;
 
   signals:
     void walletOpened(KWallet::Wallet*);
@@ -172,7 +172,7 @@ class KHTMLWalletQueue : public QObject
           }
         }
         wallet->setFolder(KWallet::Wallet::FormDataFolder());
-        for (QValueList<QPair<QString, QMap<QString, QString> > >::Iterator i = savers.begin(); i != savers.end(); ++i) {
+        for (TQValueList<QPair<TQString, TQMap<TQString, TQString> > >::Iterator i = savers.begin(); i != savers.end(); ++i) {
           wallet->writeMap((*i).first, (*i).second);
         }
       }
@@ -188,7 +188,7 @@ class KHTMLPartPrivate
   KHTMLPartPrivate(const KHTMLPartPrivate & other);
   KHTMLPartPrivate& operator=(const KHTMLPartPrivate&);
 public:
-  KHTMLPartPrivate(QObject* parent)
+  KHTMLPartPrivate(TQObject* parent)
   {
     m_doc = 0L;
     m_decoder = 0L;
@@ -303,11 +303,11 @@ public:
 #endif
   }
 
-  QGuardedPtr<khtml::ChildFrame> m_frame;
+  TQGuardedPtr<khtml::ChildFrame> m_frame;
   KHTMLFrameList m_frames;
   KHTMLFrameList m_objects;
 
-  QGuardedPtr<KHTMLView> m_view;
+  TQGuardedPtr<KHTMLView> m_view;
   KHTMLPartBrowserExtension *m_extension;
   KParts::StatusBarExtension *m_statusBarExtension;
   KHTMLPartBrowserHostExtension *m_hostExtension;
@@ -316,14 +316,14 @@ public:
   KURLLabel* m_statusBarUALabel;
   KURLLabel* m_statusBarJSErrorLabel;
   KURLLabel* m_statusBarPopupLabel;
-  QValueList<QGuardedPtr<KHTMLPart> > m_suppressedPopupOriginParts;
+  TQValueList<TQGuardedPtr<KHTMLPart> > m_suppressedPopupOriginParts;
   int m_openableSuppressedPopups;
   DOM::DocumentImpl *m_doc;
   khtml::Decoder *m_decoder;
-  QString m_encoding;
-  QString m_sheetUsed;
+  TQString m_encoding;
+  TQString m_sheetUsed;
   long m_cacheId;
-  QString scheduledScript;
+  TQString scheduledScript;
   DOM::Node scheduledScriptNode;
 
   KWallet::Wallet* m_wallet;
@@ -358,16 +358,16 @@ public:
 
   KIO::TransferJob * m_job;
 
-  QString m_statusBarText[3];
+  TQString m_statusBarText[3];
   unsigned long m_jobspeed;
-  QString m_lastModified;
-  QString m_httpHeaders;
-  QString m_pageServices;
+  TQString m_lastModified;
+  TQString m_httpHeaders;
+  TQString m_pageServices;
 
   // QStrings for SSL metadata
   // Note: When adding new variables don't forget to update ::saveState()/::restoreState()!
   bool m_ssl_in_use;
-  QString m_ssl_peer_certificate,
+  TQString m_ssl_peer_certificate,
           m_ssl_peer_chain,
           m_ssl_peer_ip,
           m_ssl_cipher,
@@ -388,10 +388,10 @@ public:
   KURL m_workingURL;
 
   KIO::CacheControl m_cachePolicy;
-  QTimer m_redirectionTimer;
-  QTime m_parsetime;
+  TQTimer m_redirectionTimer;
+  TQTime m_parsetime;
   int m_delayRedirect;
-  QString m_redirectURL;
+  TQString m_redirectURL;
 
   KAction *m_paViewDocument;
   KAction *m_paViewFrame;
@@ -420,24 +420,24 @@ public:
 
   KParts::PartManager *m_manager;
 
-  QString m_popupMenuXML;
+  TQString m_popupMenuXML;
   KHTMLPart::GUIProfile m_guiProfile;
 
   int m_zoomFactor;
 
-  QString m_strSelectedURL;
-  QString m_strSelectedURLTarget;
-  QString m_referrer;
-  QString m_pageReferrer;
+  TQString m_strSelectedURL;
+  TQString m_strSelectedURLTarget;
+  TQString m_referrer;
+  TQString m_pageReferrer;
 
   struct SubmitForm
   {
     const char *submitAction;
-    QString submitUrl;
-    QByteArray submitFormData;
-    QString target;
-    QString submitContentType;
-    QString submitBoundary;
+    TQString submitUrl;
+    TQByteArray submitFormData;
+    TQString target;
+    TQString submitContentType;
+    TQString submitBoundary;
   };
 
   SubmitForm *m_submitForm;
@@ -460,8 +460,8 @@ public:
   long m_endOffset;
   DOM::Node m_initialNode;	// (Node, Offset) pair on which the
   long m_initialOffset;		// selection has been initiated
-  QString m_overURL;
-  QString m_overURLTarget;
+  TQString m_overURL;
+  TQString m_overURLTarget;
 
   bool m_startBeforeEnd;
   bool m_extendAtEnd;		// true if selection is to be extended at its end
@@ -475,25 +475,25 @@ public:
 
   int m_focusNodeNumber;
 
-  QPoint m_dragStartPos;
+  TQPoint m_dragStartPos;
 #ifdef KHTML_NO_SELECTION
-  QPoint m_dragLastPos;
+  TQPoint m_dragLastPos;
 #endif
 
   bool m_designMode;
   bool m_caretMode;
 
-  QCursor m_linkCursor;
-  QTimer m_scrollTimer;
+  TQCursor m_linkCursor;
+  TQTimer m_scrollTimer;
 
   unsigned long m_loadedObjects;
   unsigned long m_totalObjectCount;
   unsigned int m_jobPercent;
 
   KHTMLPart::FormNotification m_formNotification;
-  QTimer m_progressUpdateTimer;
+  TQTimer m_progressUpdateTimer;
 
-  QStringList m_pluginPageQuestionAsked;
+  TQStringList m_pluginPageQuestionAsked;
 
   /////////// 'Find' feature
   struct StringPortion
@@ -514,7 +514,7 @@ public:
       int index;
       DOM::NodeImpl *node;
   };
-  QValueList<StringPortion> m_stringPortions;
+  TQValueList<StringPortion> m_stringPortions;
 
   KFind *m_find;
   KFindDialog *m_findDialog;
@@ -522,8 +522,8 @@ public:
   struct findState
   {
     findState() : options( 0 ), last_dir( -1 ) {}
-    QStringList history;
-    QString text;
+    TQStringList history;
+    TQString text;
     int options;
     int last_dir; // -1=unknown,0=forward,1=backward
   };
@@ -541,9 +541,9 @@ public:
   int m_findPosStart; // pos in start node
   /////////
 
-  //QGuardedPtr<KParts::Part> m_activeFrame;
+  //TQGuardedPtr<KParts::Part> m_activeFrame;
   KParts::Part * m_activeFrame;
-  QGuardedPtr<KHTMLPart> m_opener;
+  TQGuardedPtr<KHTMLPart> m_opener;
   bool m_openedByJS;
   bool m_newJSInterpreterExists; // set to 1 by setOpenedByJS, for window.open
 

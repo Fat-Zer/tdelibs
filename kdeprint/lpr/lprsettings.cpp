@@ -22,16 +22,16 @@
 #include "kmfactory.h"
 
 #include <kconfig.h>
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
 #define LPDCONF "/etc/lpd.conf"
 #define PRINTCAP "/etc/printcap"
 
 LprSettings* LprSettings::m_self = 0;
 
-LprSettings::LprSettings(QObject *parent, const char *name)
-: QObject(parent, name), KPReloadObject(true)
+LprSettings::LprSettings(TQObject *parent, const char *name)
+: TQObject(parent, name), KPReloadObject(true)
 {
 	init();
 }
@@ -63,21 +63,21 @@ void LprSettings::init()
 	else
 	{
 		// try to guess
-		if (QFile::exists(LPDCONF))
+		if (TQFile::exists(LPDCONF))
 			m_mode = LPRng;
 		else
 			m_mode = LPR;
 	}
 
 	// Printcap file
-	m_printcapfile = QString::null;
+	m_printcapfile = TQString::null;
 	m_local = true;
 
 	// Spool directory
 	m_spooldir = "/var/spool/lpd";
 }
 
-QString LprSettings::printcapFile()
+TQString LprSettings::printcapFile()
 {
 	if (m_printcapfile.isEmpty())
 	{
@@ -86,7 +86,7 @@ QString LprSettings::printcapFile()
 		if (m_mode == LPRng)
 		{
 			// look into /etc/lpd/conf file
-			QFile cf(LPDCONF);
+			TQFile cf(LPDCONF);
 			if (cf.open(IO_ReadOnly))
 			{
 				QTextStream	t(&cf);
@@ -112,12 +112,12 @@ QString LprSettings::printcapFile()
 	return m_printcapfile;
 }
 
-QString LprSettings::defaultRemoteHost()
+TQString LprSettings::defaultRemoteHost()
 {
 	if (m_defaultremotehost.isEmpty())
 	{
 		m_defaultremotehost = "localhost";
-		QFile cf(LPDCONF);
+		TQFile cf(LPDCONF);
 		if (cf.open(IO_ReadOnly))
 		{
 			QTextStream	t(&cf);

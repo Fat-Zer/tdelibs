@@ -30,34 +30,34 @@
 using namespace KNetwork;
 #endif
 
-QCString KIDNA::toAsciiCString(const QString &idna)
+TQCString KIDNA::toAsciiCString(const TQString &idna)
 {
 #ifndef Q_WS_WIN //TODO kresolver not ported
 	return KResolver::domainToAscii(idna);
 #else
-	return QCString();
+	return TQCString();
 #endif
 }
 
-QString KIDNA::toAscii(const QString &idna)
+TQString KIDNA::toAscii(const TQString &idna)
 {
   if (idna.length() && (idna[0] == "."))
   {
-     QString host = QString::fromLatin1(toAsciiCString(idna.mid(1)));
+     TQString host = TQString::fromLatin1(toAsciiCString(idna.mid(1)));
      if (host.isEmpty())
-        return QString::null; // Error
+        return TQString::null; // Error
      return idna[0] + host;
   }
-  return QString::fromLatin1(toAsciiCString(idna));
+  return TQString::fromLatin1(toAsciiCString(idna));
 }
 
-QString KIDNA::toUnicode(const QString &idna)
+TQString KIDNA::toUnicode(const TQString &idna)
 {
 #ifndef Q_WS_WIN //TODO kresolver not ported
   if (idna.length() && (idna[0] == "."))
      return idna[0] + KResolver::domainToUnicode(idna.mid(1));
   return KResolver::domainToUnicode(idna);
 #else
-	return QString::null;
+	return TQString::null;
 #endif
 }

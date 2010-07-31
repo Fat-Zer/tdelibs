@@ -23,10 +23,10 @@
 #ifndef _KTOOLBARBUTTON_H
 #define _KTOOLBARBUTTON_H
 
-#include <qpixmap.h>
-#include <qtoolbutton.h>
-#include <qintdict.h>
-#include <qstring.h>
+#include <tqpixmap.h>
+#include <tqtoolbutton.h>
+#include <tqintdict.h>
+#include <tqstring.h>
 #include <kglobal.h>
 
 class KToolBar;
@@ -58,8 +58,8 @@ public:
    * @param txt    This button's text (in a tooltip or otherwise)
    * @param _instance the instance to use for this button
    */
-  KToolBarButton(const QString& icon, int id, QWidget *parent,
-                 const char *name=0L, const QString &txt=QString::null,
+  KToolBarButton(const TQString& icon, int id, TQWidget *parent,
+                 const char *name=0L, const TQString &txt=TQString::null,
                  KInstance *_instance = KGlobal::instance());
 
   /**
@@ -73,8 +73,8 @@ public:
    * @param name   This button's internal name
    * @param txt    This button's text (in a tooltip or otherwise)
    */
-  KToolBarButton(const QPixmap& pixmap, int id, QWidget *parent,
-                 const char *name=0L, const QString &txt=QString::null);
+  KToolBarButton(const TQPixmap& pixmap, int id, TQWidget *parent,
+                 const char *name=0L, const TQString &txt=TQString::null);
 
   /**
    * Construct a separator button
@@ -82,7 +82,7 @@ public:
    * @param parent This button's parent
    * @param name   This button's internal name
    */
-  KToolBarButton(QWidget *parent=0L, const char *name=0L);
+  KToolBarButton(TQWidget *parent=0L, const char *name=0L);
 
   /**
    * Standard destructor
@@ -99,8 +99,8 @@ public:
    *
    * @param pixmap The active pixmap
    */
-  // this one is from QButton, so #ifdef-ing it out doesn't break BC
-  virtual void setPixmap(const QPixmap &pixmap) KDE_DEPRECATED;
+  // this one is from TQButton, so #ifdef-ing it out doesn't break BC
+  virtual void setPixmap(const TQPixmap &pixmap) KDE_DEPRECATED;
 
   /**
    * @deprecated
@@ -109,7 +109,7 @@ public:
    *
    * @param pixmap The pixmap to use as the default (normal) one
    */
-  void setDefaultPixmap(const QPixmap& pixmap) KDE_DEPRECATED;
+  void setDefaultPixmap(const TQPixmap& pixmap) KDE_DEPRECATED;
 
   /**
    * @deprecated
@@ -118,7 +118,7 @@ public:
    *
    * @param pixmap The pixmap to use when disabled
    */
-  void setDisabledPixmap(const QPixmap& pixmap) KDE_DEPRECATED;
+  void setDisabledPixmap(const TQPixmap& pixmap) KDE_DEPRECATED;
 #endif
 
   /**
@@ -127,7 +127,7 @@ public:
    *
    * @param text The button (or tooltip) text
    */
-  virtual void setText(const QString &text);
+  virtual void setText(const TQString &text);
 
   /**
    * Set the icon for this button. The icon will be loaded internally
@@ -135,19 +135,19 @@ public:
    *
    * @param icon The name of the icon
    */
-  virtual void setIcon(const QString &icon);
+  virtual void setIcon(const TQString &icon);
 
   /// @since 3.1
-  virtual void setIcon( const QPixmap &pixmap )
-  { QToolButton::setIcon( pixmap ); }
+  virtual void setIcon( const TQPixmap &pixmap )
+  { TQToolButton::setIcon( pixmap ); }
 
   /**
-   * Set the pixmaps for this toolbar button from a QIconSet.
+   * Set the pixmaps for this toolbar button from a TQIconSet.
    * If you call this you don't need to call any of the other methods
    * that set icons or pixmaps.
    * @param iconset  The iconset to use
    */
-  virtual void setIconSet( const QIconSet &iconset );
+  virtual void setIconSet( const TQIconSet &iconset );
 
 #ifndef KDE_NO_COMPAT
   /**
@@ -161,7 +161,7 @@ public:
    * @param generate If true, then the other icons are automagically
    *                 generated from this one
    */
-  KDE_DEPRECATED void setIcon(const QString &icon, bool generate ) { Q_UNUSED(generate); setIcon( icon ); }
+  KDE_DEPRECATED void setIcon(const TQString &icon, bool generate ) { Q_UNUSED(generate); setIcon( icon ); }
 
   /**
    * @deprecated
@@ -170,7 +170,7 @@ public:
    *
    * @param icon The icon to use as the default (normal) one
    */
-  void setDefaultIcon(const QString& icon) KDE_DEPRECATED;
+  void setDefaultIcon(const TQString& icon) KDE_DEPRECATED;
 
   /**
    * @deprecated
@@ -179,7 +179,7 @@ public:
    *
    * @param icon The icon to use when disabled
    */
-  void setDisabledIcon(const QString& icon) KDE_DEPRECATED;
+  void setDisabledIcon(const TQString& icon) KDE_DEPRECATED;
 #endif
 
   /**
@@ -206,7 +206,7 @@ public:
   /**
    * Return a pointer to this button's popup menu (if it exists)
    */
-  QPopupMenu *popup();
+  TQPopupMenu *popup();
 
   /**
    * Returns the button's id.
@@ -222,7 +222,7 @@ public:
    * @param p The new popup menu
    * @param unused Has no effect - ignore it.
    */
-  void setPopup (QPopupMenu *p, bool unused = false);
+  void setPopup (TQPopupMenu *p, bool unused = false);
 
   /**
    * Gives this button a delayed popup menu.
@@ -234,7 +234,7 @@ public:
    * @param p the new popup menu
    * @param unused Has no effect - ignore it.
    */
-  void setDelayedPopup(QPopupMenu *p, bool unused = false);
+  void setDelayedPopup(TQPopupMenu *p, bool unused = false);
 
   /**
    * Turn this button into a radio button
@@ -277,23 +277,23 @@ public slots:
    * orientation changing, etc.
    */
    void modeChange();
-   virtual void setTextLabel(const QString&, bool tipToo);
+   virtual void setTextLabel(const TQString&, bool tipToo);
 
 protected:
-  bool event(QEvent *e);
-  void paletteChange(const QPalette &);
-  void leaveEvent(QEvent *e);
-  void enterEvent(QEvent *e);
-  void drawButton(QPainter *p);
-  bool eventFilter (QObject *o, QEvent *e);
+  bool event(TQEvent *e);
+  void paletteChange(const TQPalette &);
+  void leaveEvent(TQEvent *e);
+  void enterEvent(TQEvent *e);
+  void drawButton(TQPainter *p);
+  bool eventFilter (TQObject *o, TQEvent *e);
   /// @since 3.4
-  void mousePressEvent( QMouseEvent * );
+  void mousePressEvent( TQMouseEvent * );
   /// @since 3.4
-  void mouseReleaseEvent( QMouseEvent * );
+  void mouseReleaseEvent( TQMouseEvent * );
   void showMenu();
-  QSize sizeHint() const;
-  QSize minimumSizeHint() const;
-  QSize minimumSize() const;
+  TQSize sizeHint() const;
+  TQSize minimumSizeHint() const;
+  TQSize minimumSize() const;
 
   /// @since 3.1
   bool isRaised() const;
@@ -320,7 +320,7 @@ private:
 * @internal
 * @version $Id$
 */
-class KDEUI_EXPORT KToolBarButtonList : public QIntDict<KToolBarButton>
+class KDEUI_EXPORT KToolBarButtonList : public TQIntDict<KToolBarButton>
 {
 public:
    KToolBarButtonList();

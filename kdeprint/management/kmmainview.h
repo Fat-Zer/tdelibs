@@ -24,7 +24,7 @@
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kdeprint/kpreloadobject.h>
 #include <kmainwindow.h>
 
@@ -50,11 +50,11 @@ class QMenuBar;
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT KMMainView : public QWidget, public KPReloadObject
+class KDEPRINT_EXPORT KMMainView : public TQWidget, public KPReloadObject
 {
 	Q_OBJECT
 public:
-	KMMainView(QWidget *parent = 0, const char *name = 0, KActionCollection *coll = 0);
+	KMMainView(TQWidget *parent = 0, const char *name = 0, KActionCollection *coll = 0);
 	~KMMainView();
 
 	void setOrientation(int);
@@ -87,8 +87,8 @@ public slots:
 	void slotHelp();
 
 protected slots:
-	void slotPrinterSelected(const QString&);
-	void slotRightButtonClicked(const QString&, const QPoint&);
+	void slotPrinterSelected(const TQString&);
+	void slotRightButtonClicked(const TQString&, const TQPoint&);
 	void slotToggleToolBar(bool);
 	void slotToggleMenuBar(bool);
 	void slotChangeView(int);
@@ -98,7 +98,7 @@ protected slots:
 
 protected:
 	void initActions();
-	void showErrorMsg(const QString& msg, bool usemgr = true);
+	void showErrorMsg(const TQString& msg, bool usemgr = true);
 	void restoreSettings();
 	void saveSettings();
 	void loadParameters();
@@ -107,9 +107,9 @@ protected:
 	//void aboutToReload();
 	void loadPluginActions();
 	void removePluginActions();
-	void createMessageWindow( const QString&, int delay = 500 );
+	void createMessageWindow( const TQString&, int delay = 500 );
 	void destroyMessageWindow();
-	void reset( const QString& msg = QString::null, bool useDelay = true, bool holdTimer = true );
+	void reset( const TQString& msg = TQString::null, bool useDelay = true, bool holdTimer = true );
 
 private:
 	KMPrinterView	*m_printerview;
@@ -128,6 +128,6 @@ private:
 	KToolBar *m_menubar;
 };
 
-KDEPRINT_EXPORT int kdeprint_management_add_printer_wizard( QWidget* parent );
+KDEPRINT_EXPORT int kdeprint_management_add_printer_wizard( TQWidget* parent );
 
 #endif

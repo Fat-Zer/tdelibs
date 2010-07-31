@@ -30,7 +30,7 @@ int main( int argc, char** argv )
 {
     KApplication app(argc, argv, "Filter");
 
-    QString buffer = QString( "This is     a sample buffer.      Please test me." );
+    TQString buffer = TQString( "This is     a sample buffer.      Please test me." );
 
     Filter filter;
     filter.setBuffer( buffer );

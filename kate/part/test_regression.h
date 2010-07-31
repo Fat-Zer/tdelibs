@@ -27,8 +27,8 @@
 #include <katejscript.h>
 #include <kateview.h>
 #include <kurl.h>
-#include <qobject.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
 #include <kjs/ustring.h>
 #include <kjs/object.h>
 #include <kjs/interpreter.h>
@@ -128,13 +128,13 @@ class OutputObject : public KJS::ObjectImp
     virtual KJS::UString className() const;
 
     void setChangedFlag(bool *flag) { changed = flag; }
-    void setOutputString(QString *s) { outstr = s; }
+    void setOutputString(TQString *s) { outstr = s; }
 
   private:
     KateDocument *doc;
     KateView *view;
     bool *changed;
-    QString *outstr;
+    TQString *outstr;
 
     friend class OutputFunction;
 };
@@ -166,40 +166,40 @@ class RegressionTest : public QObject
 public:
 
     RegressionTest(KateDocument *part, KConfig *baseConfig,
-                   const QString &baseDir, const QString &outputDir,
+                   const TQString &baseDir, const TQString &outputDir,
                    bool _genOutput);
     ~RegressionTest();
 
     enum OutputType { ResultDocument };
-    void testStaticFile(const QString& filename, const QStringList &commands);
+    void testStaticFile(const TQString& filename, const TQStringList &commands);
     enum CheckResult { Failure = 0, Success = 1, Ignored = 2 };
-    CheckResult checkOutput(const QString& againstFilename);
+    CheckResult checkOutput(const TQString& againstFilename);
     enum FailureType { NoFailure = 0, AllFailure = 1, ResultFailure = 4, NewFailure = 65536 };
-    bool runTests(QString relPath = QString::null, bool mustExist = false, int known_failure = NoFailure);
-    bool reportResult( bool passed, const QString & description = QString::null, bool *newfailure = 0 );
-    bool reportResult(CheckResult result, const QString & description = QString::null, bool *newfailure = 0 );
+    bool runTests(TQString relPath = TQString::null, bool mustExist = false, int known_failure = NoFailure);
+    bool reportResult( bool passed, const TQString & description = TQString::null, bool *newfailure = 0 );
+    bool reportResult(CheckResult result, const TQString & description = TQString::null, bool *newfailure = 0 );
     void rereadConfig();
-    static void createMissingDirs(const QString &path);
+    static void createMissingDirs(const TQString &path);
 
-    void setFailureSnapshotConfig(KConfig *cfg, const QString &snapshotname);
-    void setFailureSnapshotSaver(KConfig *cfg, const QString &snapshotname);
+    void setFailureSnapshotConfig(KConfig *cfg, const TQString &snapshotname);
+    void setFailureSnapshotSaver(KConfig *cfg, const TQString &snapshotname);
 
-    void createLink( const QString& test, int failures );
-    void doFailureReport( const QString& test, int failures );
+    void createLink( const TQString& test, int failures );
+    void doFailureReport( const TQString& test, int failures );
 
     KateDocument *m_part;
     KateView *m_view;
     KConfig *m_baseConfig;
-    QString m_baseDir;
-    QString m_outputDir;
+    TQString m_baseDir;
+    TQString m_outputDir;
     bool m_genOutput;
-    QString m_currentBase;
+    TQString m_currentBase;
     KConfig *m_failureComp;
     KConfig *m_failureSave;
 
-    QString m_currentOutput;
-    QString m_currentCategory;
-    QString m_currentTest;
+    TQString m_currentOutput;
+    TQString m_currentCategory;
+    TQString m_currentTest;
 
     bool m_keepOutput;
     bool m_getOutput;
@@ -215,14 +215,14 @@ public:
     bool ignore_errors;
     int m_known_failures;
     bool m_outputCustomised;
-    QString m_outputString;
+    TQString m_outputString;
 
     static RegressionTest *curr;
 
 private:
-    void printDescription(const QString& description);
+    void printDescription(const TQString& description);
 
-    static bool svnIgnored( const QString &filename );
+    static bool svnIgnored( const TQString &filename );
 
 private:
     /**
@@ -231,14 +231,14 @@ private:
      * return true nonetheless.
      * @return true if script was valid, false otherwise
      */
-    bool evalJS( KJS::Interpreter &interp, const QString &filename, bool ignore = false);
+    bool evalJS( KJS::Interpreter &interp, const TQString &filename, bool ignore = false);
     /**
      * concatenate contents of all list files down to but not including the
      * tests directory.
      * @param relPath relative path against tests-directory
      * @param filename file name of the list files
      */
-    QStringList concatListFiles(const QString &relPath, const QString &filename);
+    TQStringList concatListFiles(const TQString &relPath, const TQString &filename);
 
 private slots:
     void slotOpenURL(const KURL &url, const KParts::URLArgs &args);

@@ -37,7 +37,7 @@ public:
     /**
      * Create a dialog for editing a custom menu
      */
-    KCustomMenuEditor(QWidget *parent);
+    KCustomMenuEditor(TQWidget *parent);
     ~KCustomMenuEditor();
     /**
      * load the custom menu

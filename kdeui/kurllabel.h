@@ -21,7 +21,7 @@
 #ifndef KURLLABEL_H
 #define KURLLABEL_H
 
-#include <qlabel.h>
+#include <tqlabel.h>
 
 #include <kdelibs_export.h>
 
@@ -30,9 +30,9 @@ class QCursor;
 class QPixmap;
 
 /**
- * @short A drop-in replacement for QLabel that displays hyperlinks.
+ * @short A drop-in replacement for TQLabel that displays hyperlinks.
  *
- * KURLLabel is a drop-in replacement for QLabel that handles text
+ * KURLLabel is a drop-in replacement for TQLabel that handles text
  * in a fashion similar to how an HTML widget handles hyperlinks.  The
  * text can be underlined (or not) and set to different colors.  It
  * can also "glow" (cycle colors) when the mouse passes over it.
@@ -51,8 +51,8 @@ class QPixmap;
  * KURLLabel *address = new KURLLabel(this);
  * address->setText("My homepage");
  * address->setURL("http://www.home.com/~me");
- * connect(address, SIGNAL(leftClickedURL(const QString&)),
- *                  SLOT(processMyURL(const QString&)));
+ * connect(address, TQT_SIGNAL(leftClickedURL(const TQString&)),
+ *                  TQT_SLOT(processMyURL(const TQString&)));
  * \endcode
  *
  * In this example, the text "My homepage" would be displayed
@@ -71,9 +71,9 @@ class QPixmap;
 class KDEUI_EXPORT KURLLabel : public QLabel
 {
   Q_OBJECT
-  Q_PROPERTY (QString url READ url WRITE setURL)
-  Q_PROPERTY (QString tipText READ tipText WRITE setTipText )
-  Q_PROPERTY (QPixmap altPixmap READ altPixmap WRITE setAltPixmap)
+  Q_PROPERTY (TQString url READ url WRITE setURL)
+  Q_PROPERTY (TQString tipText READ tipText WRITE setTipText )
+  Q_PROPERTY (TQPixmap altPixmap READ altPixmap WRITE setAltPixmap)
   Q_PROPERTY (bool glowEnabled READ isGlowEnabled WRITE setGlow )
   Q_PROPERTY (bool floatEnabled READ isFloatEnabled WRITE setFloat )
   Q_PROPERTY (bool useTips READ useTips WRITE setUseTips )
@@ -83,25 +83,25 @@ public:
   /**
    * Default constructor.
    *
-   * Use setURL() and setText() or QListView::setPixmap()
+   * Use setURL() and setText() or TQListView::setPixmap()
    * to set the resp. properties.
    */
-  KURLLabel (QWidget* parent = 0L, const char* name = 0L);
+  KURLLabel (TQWidget* parent = 0L, const char* name = 0L);
 
   /**
    * Convenience constructor.
    *
    * @param url is the URL emitted when the label is clicked.
-   * @param text is the displayed string. If it's equal to QString::null
+   * @param text is the displayed string. If it's equal to TQString::null
    * the @p url will be used instead.
    * @param parent Passed to lower level constructor
    * @param name Passed to lower level constructor
    *
-   * @p parent and @p name are passed to QLabel, which in turn passes
+   * @p parent and @p name are passed to TQLabel, which in turn passes
    * them further down
    */
-  KURLLabel (const QString& url, const QString& text = QString::null,
-              QWidget* parent = 0L, const char* name = 0L);
+  KURLLabel (const TQString& url, const TQString& text = TQString::null,
+              TQWidget* parent = 0L, const char* name = 0L);
 
   /**
    * Destructs the label.
@@ -111,12 +111,12 @@ public:
   /**
    * Returns the URL.
    */
-  const QString& url () const;
+  const TQString& url () const;
 
   /**
    * Returns the current tooltip text.
    */
-  const QString& tipText () const;
+  const TQString& tipText () const;
 
   /**
    * @return true if a tooltip will be displayed.
@@ -151,7 +151,7 @@ public:
   /**
    * @return the alternate pixmap (may be 0L if none was set).
    */
-  const QPixmap* altPixmap () const;
+  const TQPixmap* altPixmap () const;
 
   /**
    * Reimplemented for internal reasons, the API is not affected.
@@ -166,7 +166,7 @@ public:
   /**
    * Reimplemented for internal reasons, the API is not affected.
    */
-  virtual void setSizePolicy ( QSizePolicy );
+  virtual void setSizePolicy ( TQSizePolicy );
 
 public slots:
   /**
@@ -182,12 +182,12 @@ public slots:
    *
    * @see url
    */
-  void setURL (const QString& url);
+  void setURL (const TQString& url);
 
   /**
    * Overridden for internal reasons; the API remains unaffected.
    */
-  virtual void setFont (const QFont&);
+  virtual void setFont (const TQFont&);
 
   /**
    * Turns on or off the tool tip feature.
@@ -205,7 +205,7 @@ public slots:
    *
    * @see setUseTips()
    */
-  void setTipText (const QString& tip);
+  void setTipText (const TQString& tip);
 
   /**
    * Sets the highlight color.
@@ -213,14 +213,14 @@ public slots:
    * This is the default foreground
    * color (non-selected).  By default, it is @p blue.
    */
-  void setHighlightedColor(const QColor& highcolor);
+  void setHighlightedColor(const TQColor& highcolor);
 
   /**
    * This is an overloaded version for convenience.
    *
    * @see setHighlightedColor()
    */
-  void setHighlightedColor(const QString& highcolor);
+  void setHighlightedColor(const TQString& highcolor);
 
   /**
    * Sets the selected color.
@@ -229,19 +229,19 @@ public slots:
    * to when either a mouse passes over it and "glow" mode is on or
    * when it is selected (clicked).  By default, it is @p red.
    */
-  void setSelectedColor(const QColor& selcolor);
+  void setSelectedColor(const TQColor& selcolor);
 
   /**
    * This is an overloaded version for convenience.
    *
    * @see setSelectedColor()
    */
-  void setSelectedColor(const QString& selcolor);
+  void setSelectedColor(const TQString& selcolor);
 
   /**
    * Overridden for internal reasons; the API remains unaffected.
    */
-  virtual void setCursor ( const QCursor& cursor );
+  virtual void setCursor ( const TQCursor& cursor );
 
   /**
    * Overridden for internal reasons; the API remains unaffected.
@@ -258,7 +258,7 @@ public slots:
    * @param on whether a custom cursor should be displayed.
    * @param cursor is the custom cursor. @p 0L indicates the default "hand cursor".
    */
-  void setUseCursor (bool on, QCursor* cursor = 0L);
+  void setUseCursor (bool on, TQCursor* cursor = 0L);
 
   /**
    * Turns on or off the "glow" feature.
@@ -291,7 +291,7 @@ public slots:
    *
    * @see altPixmap()
    */
-  void setAltPixmap (const QPixmap& altPix);
+  void setAltPixmap (const TQPixmap& altPix);
 
 signals:
 
@@ -300,7 +300,7 @@ signals:
    *
    * @param url The URL for this label.
    */
-  void enteredURL (const QString& url);
+  void enteredURL (const TQString& url);
 
   /**
    * Emitted when the mouse has passed over the label.
@@ -312,7 +312,7 @@ signals:
    *
    * @param url The URL for this label.
    */
-  void leftURL (const QString& url);
+  void leftURL (const TQString& url);
 
   /**
    * Emitted when the mouse is no longer over the label.
@@ -324,7 +324,7 @@ signals:
    *
    * @param url The URL for this label.
    */
-  void leftClickedURL(const QString& url);
+  void leftClickedURL(const TQString& url);
 
   /**
    * Emitted when the user clicked the left mouse button on this label.
@@ -336,7 +336,7 @@ signals:
    *
    * @param url The URL for this label.
    */
-  void rightClickedURL(const QString& url);
+  void rightClickedURL(const TQString& url);
 
   /**
    * Emitted when the user clicked the right mouse button on this label.
@@ -348,7 +348,7 @@ signals:
    *
    * @param url The URL for this label.
    */
-  void middleClickedURL(const QString& url);
+  void middleClickedURL(const TQString& url);
 
   /**
    * Emitted when the user clicked the left mouse button on this label.
@@ -360,27 +360,27 @@ protected:
   /**
    * Overridden for internal reasons; the API remains unaffected.
    */
-  virtual void mouseReleaseEvent ( QMouseEvent * e );
+  virtual void mouseReleaseEvent ( TQMouseEvent * e );
 
   /**
    * Overridden for internal reasons; the API remains unaffected.
    */
-  virtual void enterEvent (QEvent*);
+  virtual void enterEvent (TQEvent*);
 
   /**
    * Overridden for internal reasons; the API remains unaffected.
    */
-  virtual void leaveEvent (QEvent*);
+  virtual void leaveEvent (TQEvent*);
 
   /**
    * Catch parent palette changes
    */
-  virtual bool event (QEvent *e);
+  virtual bool event (TQEvent *e);
 
   /**
    * 
    */
-  QRect activeRect() const;
+  TQRect activeRect() const;
 
 
 private slots:
@@ -395,7 +395,7 @@ private:
    * @internal
    * A private helper function to set the link-color to @p col.
    */
-  void setLinkColor (const QColor& col);
+  void setLinkColor (const TQColor& col);
 
 protected:
   virtual void virtual_hook( int id, void* data );

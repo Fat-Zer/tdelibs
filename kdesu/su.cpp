@@ -29,9 +29,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <qglobal.h>
-#include <qcstring.h>
-#include <qfile.h>
+#include <tqglobal.h>
+#include <tqcstring.h>
+#include <tqfile.h>
 
 #include <kconfig.h>
 #include <kdebug.h>
@@ -50,7 +50,7 @@
 #define __PATH_SUDO "false"
 #endif
 
-SuProcess::SuProcess(const QCString &user, const QCString &command)
+SuProcess::SuProcess(const TQCString &user, const TQCString &command)
 {
     m_User = user;
     m_Command = command;
@@ -112,14 +112,14 @@ int SuProcess::exec(const char *password, int check)
     if (superUserCommand == "su") {
         args += "-c";
     }
-    args += QCString(__KDE_BINDIR) + "/kdesu_stub";
+    args += TQCString(__KDE_BINDIR) + "/kdesu_stub";
 #ifndef Q_OS_DARWIN
     args += "-";
 #endif
 
-    ///    QCString command = __PATH_SU;
+    ///    TQCString command = __PATH_SU;
     ///    if (::access(__PATH_SU, X_OK) != 0)
-    QCString command;
+    TQCString command;
     if (superUserCommand == "sudo") {
         command = __PATH_SUDO;
     } else {
@@ -128,8 +128,8 @@ int SuProcess::exec(const char *password, int check)
  
     if (::access(command, X_OK) != 0)
     {
-      ///        command = QFile::encodeName(KGlobal::dirs()->findExe("su"));
-        command = QFile::encodeName( KGlobal::dirs()->findExe(superUserCommand.ascii()) );
+      ///        command = TQFile::encodeName(KGlobal::dirs()->findExe("su"));
+        command = TQFile::encodeName( KGlobal::dirs()->findExe(superUserCommand.ascii()) );
         if (command.isEmpty())
             return check ? SuNotFound : -1;
     }
@@ -231,7 +231,7 @@ int SuProcess::ConverseSU(const char *password)
     unsigned i, j;
     // kdDebug(900) << k_lineinfo << "ConverseSU starting." << endl;
 
-    QCString line;
+    TQCString line;
     while (true)
     {
         line = readLine();
@@ -257,7 +257,7 @@ int SuProcess::ConverseSU(const char *password)
                     // couldn't have been a password prompt (the definition
                     // of prompt being that  there's a line of output followed 
                     // by a colon, and then the process waits).
-                    QCString more = readLine();
+                    TQCString more = readLine();
                     if (more.isEmpty())
                         break;
     
@@ -302,7 +302,7 @@ int SuProcess::ConverseSU(const char *password)
             //////////////////////////////////////////////////////////////////////////
             case CheckStar:
             {
-                QCString s = line.stripWhiteSpace();
+                TQCString s = line.stripWhiteSpace();
                 if (s.isEmpty()) 
                 {
                     state=HandleStub;

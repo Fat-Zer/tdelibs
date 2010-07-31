@@ -1,19 +1,19 @@
 #ifndef __KCOLORTEST_H
 #define __KCOLORTEST_H
 
-#include <qwidget.h>
-#include <qimage.h>
+#include <tqwidget.h>
+#include <tqimage.h>
 #include <kpixmap.h>
 
 class KColorWidget : public QWidget
 {
 public:
-    KColorWidget(QWidget *parent=0, const char *name=0);
+    KColorWidget(TQWidget *parent=0, const char *name=0);
     void doIntensityLoop();
 protected:
-    void paintEvent(QPaintEvent *ev);
+    void paintEvent(TQPaintEvent *ev);
 private:
-    QImage image, original;
+    TQImage image, original;
     KPixmap pixmap;
 
 };

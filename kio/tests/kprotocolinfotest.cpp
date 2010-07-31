@@ -47,11 +47,11 @@ int main(int argc, char **argv) {
     assert( KProtocolInfo::showFilePreview( "audiocd" ) == false );
     assert( KGlobalSettings::showFilePreview( "audiocd:/" ) == false );
 
-    QString proxy;
-    QString protocol = KProtocolManager::slaveProtocol( "http://bugs.kde.org", proxy );
+    TQString proxy;
+    TQString protocol = KProtocolManager::slaveProtocol( "http://bugs.kde.org", proxy );
     assert( protocol == "http" );
 
-    QStringList capabilities = KProtocolInfo::capabilities( "imap" );
+    TQStringList capabilities = KProtocolInfo::capabilities( "imap" );
     kdDebug() << "kio_imap capabilities: " << capabilities << endl;
     //assert(capabilities.contains("ACL"));
 

@@ -18,7 +18,7 @@
 #ifndef _KSOCKS_H_
 #define _KSOCKS_H_
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <sys/types.h>
 #include <sys/time.h>
 #include <kstaticdeleter.h>
@@ -195,8 +195,8 @@ private:
 
    static KSocks *_me;
    static bool _disabled;
-   QStringList _libNames;
-   QStringList _libPaths;
+   TQStringList _libNames;
+   TQStringList _libPaths;
    bool _useSocks, _hasSocks;
    KLibrary* _socksLib;
 

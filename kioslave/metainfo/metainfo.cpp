@@ -56,7 +56,7 @@ int kdemain(int argc, char **argv)
     return 0;
 }
 
-MetaInfoProtocol::MetaInfoProtocol(const QCString &pool, const QCString &app)
+MetaInfoProtocol::MetaInfoProtocol(const TQCString &pool, const TQCString &app)
     : SlaveBase("metainfo", pool, app)
 {
 }
@@ -67,11 +67,11 @@ MetaInfoProtocol::~MetaInfoProtocol()
 
 void MetaInfoProtocol::get(const KURL &url)
 {
-    QString mimeType = metaData("mimeType");
+    TQString mimeType = metaData("mimeType");
     KFileMetaInfo info(url.path(), mimeType);
     
-    QByteArray arr;
-    QDataStream stream(arr, IO_WriteOnly);
+    TQByteArray arr;
+    TQDataStream stream(arr, IO_WriteOnly);
 
     stream << info;
 
@@ -81,12 +81,12 @@ void MetaInfoProtocol::get(const KURL &url)
 
 void MetaInfoProtocol::put(const KURL& url, int, bool, bool) 
 {
-    QString mimeType = metaData("mimeType");
+    TQString mimeType = metaData("mimeType");
     KFileMetaInfo info;
     
-    QByteArray arr;
+    TQByteArray arr;
     readData(arr);
-    QDataStream stream(arr, IO_ReadOnly);
+    TQDataStream stream(arr, IO_ReadOnly);
     
     stream >> info;
 

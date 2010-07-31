@@ -23,8 +23,8 @@
 #define KSTYLE_DIRS_H
 
 
-#include <qsettings.h>
-#include <qstringlist.h>
+#include <tqsettings.h>
+#include <tqstringlist.h>
 #include <kstandarddirs.h>
 
 /**
@@ -34,7 +34,7 @@
 * @version $Id$
 *
 * This class provides a this wrapper for styles around KStandardDirs,
-* permitting integration with QSettings and easy loading of pixmaps
+* permitting integration with TQSettings and easy loading of pixmaps
 *
 * It add share/apps/kstyle/themes as "themerc",
 *    share/apps/kstyle/pixmaps "themepixmap"
@@ -59,13 +59,13 @@ public:
     Adds all of KDE directories of type type to the seach path of q.
 
     For example, when one does the following:
-    QSettings settings;
+    TQSettings settings;
     KStyleDirs dirs;
     dirs.addToSearch("config",settings);
 
     The one can do settings.readEntry("kstyle/KDE/WidgetStyle") to access a settings in kstylerc.
     */
-    void addToSearch( const char* type, QSettings& q) const; //Better name?
+    void addToSearch( const char* type, TQSettings& q) const; //Better name?
 
 protected:
     static KStyleDirs* instance;

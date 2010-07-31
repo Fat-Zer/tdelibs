@@ -37,19 +37,19 @@
 #include "treecombobox.h"
 #include "messagewindow.h"
 
-#include <qgroupbox.h>
-#include <qcheckbox.h>
+#include <tqgroupbox.h>
+#include <tqcheckbox.h>
 #include <kpushbutton.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qtabwidget.h>
-#include <qvbox.h>
-#include <qlayout.h>
-#include <qregexp.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqtabwidget.h>
+#include <tqvbox.h>
+#include <tqlayout.h>
+#include <tqregexp.h>
 #include <kmessagebox.h>
-#include <qdir.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <tqdir.h>
+#include <tqtooltip.h>
+#include <tqwhatsthis.h>
 
 #include <klocale.h>
 #include <kiconloader.h>
@@ -83,33 +83,33 @@ public:
 	QCheckBox	*m_persistent;
 	bool	m_reduced;
 
-	QPtrList<KPrintDialogPage>	m_pages;
+	TQPtrList<KPrintDialogPage>	m_pages;
 	KPrinter		*m_printer;
 	bool b_optionsEnabled;
 	bool b_propertiesEnabled;
 	bool b_systemEnabled;
 };
 
-KPrintDialog::KPrintDialog(QWidget *parent, const char *name)
+KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 : KDialog(parent,name,true)
 {
 	//WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThisLocationLabel = i18n(  " <qt><b>Printer Location:</b> The <em>Location</em> may describe where the"
+	TQString whatsThisLocationLabel = i18n(  " <qt><b>Printer Location:</b> The <em>Location</em> may describe where the"
 						" selected printer is located. The Location description is created"
 						" by the administrator of the print system (or may be"
 						" left empty)."
 						" </qt>" );
-	QString whatsThisPrinterType = i18n(    " <qt><b>Printer Type:</b>  The <em>Type</em> indicates your printer type."
+	TQString whatsThisPrinterType = i18n(    " <qt><b>Printer Type:</b>  The <em>Type</em> indicates your printer type."
 						" </qt>" );
-	QString whatsThisPrinterState = i18n(   " <qt><b>Printer State:</b>  The <em>State</em> indicates the state of the"
+	TQString whatsThisPrinterState = i18n(   " <qt><b>Printer State:</b>  The <em>State</em> indicates the state of the"
 						" print queue on the print server (which could be your localhost). The"
 						" state may be 'Idle', 'Processing', 'Stopped', 'Paused' or similar."
 						" </qt>" );
-	QString whatsThisPrinterComment = i18n( " <qt><b>Printer Comment:</b>  The <em>Comment</em> may describe the selected"
+	TQString whatsThisPrinterComment = i18n( " <qt><b>Printer Comment:</b>  The <em>Comment</em> may describe the selected"
 						" printer. This comment is created by the administrator"
 						" of the print system (or may be left empty)."
 						" </qt>" );
-	QString whatsThisPrinterSelect = i18n(  " <qt><b>Printer Selection Menu:</b> "
+	TQString whatsThisPrinterSelect = i18n(  " <qt><b>Printer Selection Menu:</b> "
 						" <p>Use this combo box to select the printer to which you want to print."
 						" Initially (if you run KDEPrint for the first time), you may only find the "
 						"  <em>KDE special printers</em> (which save"
@@ -134,11 +134,11 @@ KPrintDialog::KPrintDialog(QWidget *parent, const char *name)
 						" can be made through a selection in the drop-down menu at bottom of this dialog when "
 						" fully expanded). </p> "
 						" </qt>" );
-	QString whatsThisPrintJobProperties = i18n( " <qt><b>Print Job Properties:</b> "
+	TQString whatsThisPrintJobProperties = i18n( " <qt><b>Print Job Properties:</b> "
 						" <p>This button opens a dialog where you can make decisions"
 						" regarding all supported print job options."
 						" </qt>" );
-	QString whatsThisPrinterFilter = i18n(  " <qt><b>Selective View on List of Printers:</b>"
+	TQString whatsThisPrinterFilter = i18n(  " <qt><b>Selective View on List of Printers:</b>"
 						" <p> This button reduces the list of visible printers"
 						" to a shorter, more convenient, pre-defined list.</p>"
 						" <p>This is particularly useful in enterprise environments"
@@ -151,7 +151,7 @@ KPrintDialog::KPrintDialog(QWidget *parent, const char *name)
 						" <em>'selective view list'</em> will make all printers dissappear from the "
 						" view. (To re-enable all printers, just click this button again.) </p> "
 						" </qt>" );
-	QString whatsThisAddPrinterWizard = i18n( "<qt><b>KDE Add Printer Wizard</b>"
+	TQString whatsThisAddPrinterWizard = i18n( "<qt><b>KDE Add Printer Wizard</b>"
 						" <p>This button starts the <em>KDE Add Printer Wizard</em>.</p>"
 						" <p>Use the Wizard (with <em>\"CUPS\"</em> or <em>\"RLPR\"</em>) to add locally"
 						" defined printers to your system. </p>"
@@ -160,14 +160,14 @@ KPrintDialog::KPrintDialog(QWidget *parent, const char *name)
 						" <em>\"Generic LPD</em>\", <em>\"LPRng\"</em>, or <em>\"Print Through "
 						" an External Program</em>\".) </p> " 
 						" </qt>" );
-	QString whatsThisExternalPrintCommand = i18n( " <qt><b>External Print Command</b>"
+	TQString whatsThisExternalPrintCommand = i18n( " <qt><b>External Print Command</b>"
 						" <p>Here you can enter any command that would also print for you in "
 						" a <em>konsole</em> window. </p>"
 						" <b>Example:</b> <pre>a2ps -P &lt;printername&gt; --medium=A3</pre>."
 						" </qt>" );
-	QString whatsThisOptions = i18n( " <qt><b>Additional Print Job Options</b>"
+	TQString whatsThisOptions = i18n( " <qt><b>Additional Print Job Options</b>"
 						" <p>This button shows or hides additional printing options.</qt>" );
-	QString whatsThisSystemOptions = i18n(  " <qt><b>System Options:</b> "
+	TQString whatsThisSystemOptions = i18n(  " <qt><b>System Options:</b> "
 						" <p>This button starts a new dialog where you can adjust various"
   						" settings of your printing system. Amongst them:"
 						" <ul><li> Should KDE"
@@ -179,21 +179,21 @@ KPrintDialog::KPrintDialog(QWidget *parent, const char *name)
 						" </ul> and many more.... "
 					        " </qt>" );
 
-	QString whatsThisHelpButton = i18n(     " <qt><b>Help:</b> This button takes you to the complete <em>KDEPrint"
+	TQString whatsThisHelpButton = i18n(     " <qt><b>Help:</b> This button takes you to the complete <em>KDEPrint"
 						" Manual</em>."
 					        " </qt>" );
 
-	QString whatsThisCancelButton = i18n(   " <qt><b>Cancel:</b> This button cancels your print job and quits the"
+	TQString whatsThisCancelButton = i18n(   " <qt><b>Cancel:</b> This button cancels your print job and quits the"
 						" kprinter dialog."
 					        " </qt>" );
 
-	QString whatsThisPrintButton = i18n(    " <qt><b>Print:</b> This button sends the job to the printing process."
+	TQString whatsThisPrintButton = i18n(    " <qt><b>Print:</b> This button sends the job to the printing process."
 						" If you are sending non-PostScript files, you may be"
 						" asked if you want KDE to convert the files into PostScript,"
 						" or if you want your print subsystem (like CUPS) to do this."
 					        " </qt>" );
 
-	QString whatsThisKeepDialogOpenCheckbox = i18n( " <qt><b>Keep Printing Dialog Open</b>"
+	TQString whatsThisKeepDialogOpenCheckbox = i18n( " <qt><b>Keep Printing Dialog Open</b>"
 						"<p>If you enable this checkbox, the printing dialog"
 						" stays open after you hit the <em>Print</em> button.</p>"
 						" <p> This is"
@@ -203,7 +203,7 @@ KPrintDialog::KPrintDialog(QWidget *parent, const char *name)
 						" the other) to have it finished more quickly.</p>"
 					        " </qt>" );
 
-	QString whatsThisOutputFileLabel = i18n(" <qt><b>Output File Name and Path:</b> The \"Output file:\" shows "
+	TQString whatsThisOutputFileLabel = i18n(" <qt><b>Output File Name and Path:</b> The \"Output file:\" shows "
 						" you where your file will be"
 						" saved if you decide to \"Print to File\" your job, using one of the"
 						" KDE <em>Special Printers</em> named \"Print to File (PostScript)\""
@@ -211,18 +211,18 @@ KPrintDialog::KPrintDialog(QWidget *parent, const char *name)
 						" your need by using the button and/or editing the line on the right."
 					        " </qt>" );
 
-	QString whatsThisOutputFileLineedit = i18n(" <qt><b>Output File Name and Path:</b> Edit this line to create a "
+	TQString whatsThisOutputFileLineedit = i18n(" <qt><b>Output File Name and Path:</b> Edit this line to create a "
 						" path and filename that suits your needs." 
 						" (Button and Lineedit field are only available if you \"Print to File\")"
 					        " </qt>" );
 
-	QString whatsThisOutputFileButton = i18n(" <qt><b>Browse Directories button:<b> This button calls "
+	TQString whatsThisOutputFileButton = i18n(" <qt><b>Browse Directories button:<b> This button calls "
 						" the \"File Open / Browsed Directories\" dialog to let you"
 						" choose a directory and file name where your \"Print-to-File\""
 						" job should be saved."
 					        " </qt>" );
 
-	QString whatsThisAddFileButton = i18n(  " <qt><b>Add File to Job</b>"
+	TQString whatsThisAddFileButton = i18n(  " <qt><b>Add File to Job</b>"
 						" <p>This button calls the \"File Open / Browse Directories\" dialog to allow you"
 						" to select a file for printing. Note, that "
 						" <ul><li>you can select ASCII or International Text, PDF,"
@@ -234,7 +234,7 @@ KPrintDialog::KPrintDialog(QWidget *parent, const char *name)
 						" </ul>"
 					        " </qt>" );
 
-	QString whatsThisPreviewCheckBox = i18n(" <qt><b>Print Preview</b>"
+	TQString whatsThisPreviewCheckBox = i18n(" <qt><b>Print Preview</b>"
 						" Enable this checkbox if you want to see a preview of"
 						" your printout. A preview lets you check if, for instance,"
  						" your intended \"poster\" or \"pamphlet\" layout"
@@ -247,7 +247,7 @@ KPrintDialog::KPrintDialog(QWidget *parent, const char *name)
                                                 " Firefox or OpenOffice), print preview is not available here. "
 					        " </qt>" );
 
-	QString whatsThisSetDefaultPrinter = i18n(" <qt><b>Set as Default Printer</b>"
+	TQString whatsThisSetDefaultPrinter = i18n(" <qt><b>Set as Default Printer</b>"
 						" This button sets the current printer as the user's"
 						" default. "
 						" <p><b>Note:</b> (Button is only visible if the checkbox for "
@@ -262,98 +262,98 @@ KPrintDialog::KPrintDialog(QWidget *parent, const char *name)
 	setCaption(i18n("Print"));
 
 	// widget creation
-	QGroupBox	*m_pbox = new QGroupBox(0,Qt::Vertical,i18n("Printer"), this);
-	d->m_type = new QLabel(m_pbox);
-	QWhatsThis::add(d->m_type, whatsThisPrinterType);
-	d->m_state = new QLabel(m_pbox);
-	QWhatsThis::add(d->m_state, whatsThisPrinterState);
-	d->m_comment = new QLabel(m_pbox);
-	QWhatsThis::add(d->m_comment, whatsThisPrinterComment);
-	d->m_location = new QLabel(m_pbox);
-	QWhatsThis::add(d->m_location, whatsThisLocationLabel);
+	QGroupBox	*m_pbox = new TQGroupBox(0,Qt::Vertical,i18n("Printer"), this);
+	d->m_type = new TQLabel(m_pbox);
+	TQWhatsThis::add(d->m_type, whatsThisPrinterType);
+	d->m_state = new TQLabel(m_pbox);
+	TQWhatsThis::add(d->m_state, whatsThisPrinterState);
+	d->m_comment = new TQLabel(m_pbox);
+	TQWhatsThis::add(d->m_comment, whatsThisPrinterComment);
+	d->m_location = new TQLabel(m_pbox);
+	TQWhatsThis::add(d->m_location, whatsThisLocationLabel);
 
 	d->m_printers = new TreeComboBox(m_pbox);
-	QWhatsThis::add(d->m_printers, whatsThisPrinterSelect);
+	TQWhatsThis::add(d->m_printers, whatsThisPrinterSelect);
 	d->m_printers->setMinimumHeight(25);
-	QLabel	*m_printerlabel = new QLabel(i18n("&Name:"), m_pbox);
-	QWhatsThis::add(m_printerlabel, whatsThisPrinterSelect);
-	QLabel	*m_statelabel = new QLabel(i18n("Status", "State:"), m_pbox);
-	QWhatsThis::add(m_statelabel, whatsThisPrinterState);
-	QLabel	*m_typelabel = new QLabel(i18n("Type:"), m_pbox);
-	QWhatsThis::add(m_typelabel, whatsThisPrinterType);
-	QLabel	*m_locationlabel = new QLabel(i18n("Location:"), m_pbox);
-	QWhatsThis::add(m_locationlabel, whatsThisLocationLabel);
-	QLabel	*m_commentlabel = new QLabel(i18n("Comment:"), m_pbox);
-	QWhatsThis::add(m_commentlabel, whatsThisPrinterComment);
+	QLabel	*m_printerlabel = new TQLabel(i18n("&Name:"), m_pbox);
+	TQWhatsThis::add(m_printerlabel, whatsThisPrinterSelect);
+	QLabel	*m_statelabel = new TQLabel(i18n("Status", "State:"), m_pbox);
+	TQWhatsThis::add(m_statelabel, whatsThisPrinterState);
+	QLabel	*m_typelabel = new TQLabel(i18n("Type:"), m_pbox);
+	TQWhatsThis::add(m_typelabel, whatsThisPrinterType);
+	QLabel	*m_locationlabel = new TQLabel(i18n("Location:"), m_pbox);
+	TQWhatsThis::add(m_locationlabel, whatsThisLocationLabel);
+	QLabel	*m_commentlabel = new TQLabel(i18n("Comment:"), m_pbox);
+	TQWhatsThis::add(m_commentlabel, whatsThisPrinterComment);
 	m_printerlabel->setBuddy(d->m_printers);
 	d->m_properties = new KPushButton(KGuiItem(i18n("P&roperties"), "edit"), m_pbox);
-	QWhatsThis::add( d->m_properties, whatsThisPrintJobProperties);
+	TQWhatsThis::add( d->m_properties, whatsThisPrintJobProperties);
 	d->m_options = new KPushButton(KGuiItem(i18n("System Op&tions"), "kdeprint_configmgr"), this);
-	QWhatsThis::add(d->m_options,whatsThisSystemOptions);
+	TQWhatsThis::add(d->m_options,whatsThisSystemOptions);
 	d->m_default = new KPushButton(KGuiItem(i18n("Set as &Default"), "kdeprint_defaultsoft"), m_pbox);
-	QWhatsThis::add(d->m_default,whatsThisSetDefaultPrinter);
-	d->m_filter = new QPushButton(m_pbox);
+	TQWhatsThis::add(d->m_default,whatsThisSetDefaultPrinter);
+	d->m_filter = new TQPushButton(m_pbox);
 	d->m_filter->setPixmap(SmallIcon("filter"));
-	d->m_filter->setMinimumSize(QSize(d->m_printers->minimumHeight(),d->m_printers->minimumHeight()));
+	d->m_filter->setMinimumSize(TQSize(d->m_printers->minimumHeight(),d->m_printers->minimumHeight()));
 	d->m_filter->setToggleButton(true);
 	d->m_filter->setOn(KMManager::self()->isFilterEnabled());
-	QToolTip::add(d->m_filter, i18n("Toggle selective view on printer list"));
-	QWhatsThis::add(d->m_filter, whatsThisPrinterFilter);
-	d->m_wizard = new QPushButton(m_pbox);
+	TQToolTip::add(d->m_filter, i18n("Toggle selective view on printer list"));
+	TQWhatsThis::add(d->m_filter, whatsThisPrinterFilter);
+	d->m_wizard = new TQPushButton(m_pbox);
 	d->m_wizard->setPixmap(SmallIcon("wizard"));
-	d->m_wizard->setMinimumSize(QSize(d->m_printers->minimumHeight(),d->m_printers->minimumHeight()));
-	QToolTip::add(d->m_wizard, i18n("Add printer..."));
-	QWhatsThis::add(d->m_wizard, whatsThisAddPrinterWizard);
+	d->m_wizard->setMinimumSize(TQSize(d->m_printers->minimumHeight(),d->m_printers->minimumHeight()));
+	TQToolTip::add(d->m_wizard, i18n("Add printer..."));
+	TQWhatsThis::add(d->m_wizard, whatsThisAddPrinterWizard);
 	d->m_ok = new KPushButton(KGuiItem(i18n("&Print"), "fileprint"), this);
-        QWhatsThis::add( d->m_ok, whatsThisPrintButton);
+        TQWhatsThis::add( d->m_ok, whatsThisPrintButton);
 	d->m_ok->setDefault(true);
 	d->m_ok->setEnabled( false );
 	QPushButton	*m_cancel = new KPushButton(KStdGuiItem::cancel(), this);
-        QWhatsThis::add(m_cancel, whatsThisCancelButton);
-	d->m_preview = new QCheckBox(i18n("Previe&w"), m_pbox);
-	QWhatsThis::add(d->m_preview, whatsThisPreviewCheckBox);
-	d->m_filelabel = new QLabel(i18n("O&utput file:"), m_pbox);
-	QWhatsThis::add(d->m_filelabel,whatsThisOutputFileLabel);
-	d->m_file = new KURLRequester(QDir::homeDirPath()+"/print.ps", m_pbox);
-	QWhatsThis::add(d->m_file,whatsThisOutputFileLineedit);
+        TQWhatsThis::add(m_cancel, whatsThisCancelButton);
+	d->m_preview = new TQCheckBox(i18n("Previe&w"), m_pbox);
+	TQWhatsThis::add(d->m_preview, whatsThisPreviewCheckBox);
+	d->m_filelabel = new TQLabel(i18n("O&utput file:"), m_pbox);
+	TQWhatsThis::add(d->m_filelabel,whatsThisOutputFileLabel);
+	d->m_file = new KURLRequester(TQDir::homeDirPath()+"/print.ps", m_pbox);
+	TQWhatsThis::add(d->m_file,whatsThisOutputFileLineedit);
 	d->m_file->setEnabled(false);
 	d->m_filelabel->setBuddy(d->m_file);
-	d->m_cmdlabel = new QLabel(i18n("Print co&mmand:"), m_pbox);
-        QWhatsThis::add( d->m_cmdlabel, whatsThisExternalPrintCommand);
+	d->m_cmdlabel = new TQLabel(i18n("Print co&mmand:"), m_pbox);
+        TQWhatsThis::add( d->m_cmdlabel, whatsThisExternalPrintCommand);
 
-	d->m_cmd = new QLineEdit(m_pbox);
-        QWhatsThis::add( d->m_cmd, whatsThisExternalPrintCommand);
+	d->m_cmd = new TQLineEdit(m_pbox);
+        TQWhatsThis::add( d->m_cmd, whatsThisExternalPrintCommand);
 	d->m_cmdlabel->setBuddy(d->m_cmd);
-	d->m_dummy = new QVBox(this);
+	d->m_dummy = new TQVBox(this);
 	d->m_plugin = new PluginComboBox(this);
 	d->m_extbtn = new KPushButton(this);
-	QToolTip::add(d->m_extbtn, i18n("Show/hide advanced options"));
-	QWhatsThis::add(d->m_extbtn, whatsThisOptions);
-	d->m_persistent = new QCheckBox(i18n("&Keep this dialog open after printing"), this);
-        QWhatsThis::add( d->m_persistent, whatsThisKeepDialogOpenCheckbox);
+	TQToolTip::add(d->m_extbtn, i18n("Show/hide advanced options"));
+	TQWhatsThis::add(d->m_extbtn, whatsThisOptions);
+	d->m_persistent = new TQCheckBox(i18n("&Keep this dialog open after printing"), this);
+        TQWhatsThis::add( d->m_persistent, whatsThisKeepDialogOpenCheckbox);
 	QPushButton	*m_help = new KPushButton(KStdGuiItem::help(), this);
-        QWhatsThis::add( m_help, whatsThisHelpButton);
+        TQWhatsThis::add( m_help, whatsThisHelpButton);
 
-	QWidget::setTabOrder( d->m_printers, d->m_filter );
-	QWidget::setTabOrder( d->m_filter, d->m_wizard );
-	QWidget::setTabOrder( d->m_wizard, d->m_properties );
-	QWidget::setTabOrder( d->m_properties, d->m_preview );
-	QWidget::setTabOrder( d->m_preview, d->m_file );
-	QWidget::setTabOrder( d->m_file, d->m_cmd );
-	QWidget::setTabOrder( d->m_plugin, d->m_persistent );
-	QWidget::setTabOrder( d->m_persistent, d->m_extbtn );
-	QWidget::setTabOrder( d->m_extbtn, d->m_options );
-	QWidget::setTabOrder( d->m_options, m_help );
-	QWidget::setTabOrder( m_help, d->m_ok );
-	QWidget::setTabOrder( d->m_ok, m_cancel );
+	TQWidget::setTabOrder( d->m_printers, d->m_filter );
+	TQWidget::setTabOrder( d->m_filter, d->m_wizard );
+	TQWidget::setTabOrder( d->m_wizard, d->m_properties );
+	TQWidget::setTabOrder( d->m_properties, d->m_preview );
+	TQWidget::setTabOrder( d->m_preview, d->m_file );
+	TQWidget::setTabOrder( d->m_file, d->m_cmd );
+	TQWidget::setTabOrder( d->m_plugin, d->m_persistent );
+	TQWidget::setTabOrder( d->m_persistent, d->m_extbtn );
+	TQWidget::setTabOrder( d->m_extbtn, d->m_options );
+	TQWidget::setTabOrder( d->m_options, m_help );
+	TQWidget::setTabOrder( m_help, d->m_ok );
+	TQWidget::setTabOrder( d->m_ok, m_cancel );
 
 	// layout creation
-	QVBoxLayout	*l1 = new QVBoxLayout(this, 10, 10);
+	QVBoxLayout	*l1 = new TQVBoxLayout(this, 10, 10);
 	l1->addWidget(m_pbox,0);
 	l1->addWidget(d->m_dummy,1);
 	l1->addWidget(d->m_plugin,0);
 	l1->addWidget(d->m_persistent);
-	QHBoxLayout	*l2 = new QHBoxLayout(0, 0, 10);
+	QHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 10);
 	l1->addLayout(l2);
 	l2->addWidget(d->m_extbtn,0);
 	l2->addWidget(d->m_options,0);
@@ -361,17 +361,17 @@ KPrintDialog::KPrintDialog(QWidget *parent, const char *name)
 	l2->addStretch(1);
 	l2->addWidget(d->m_ok,0);
 	l2->addWidget(m_cancel,0);
-	QGridLayout	*l3 = new QGridLayout(m_pbox->layout(),3,3,7);
+	QGridLayout	*l3 = new TQGridLayout(m_pbox->layout(),3,3,7);
 	l3->setColStretch(1,1);
 	l3->setRowStretch(0,1);
-	QGridLayout	*l4 = new QGridLayout(0, 5, 2, 0, 5);
+	QGridLayout	*l4 = new TQGridLayout(0, 5, 2, 0, 5);
 	l3->addMultiCellLayout(l4,0,0,0,1);
 	l4->addWidget(m_printerlabel,0,0);
 	l4->addWidget(m_statelabel,1,0);
 	l4->addWidget(m_typelabel,2,0);
 	l4->addWidget(m_locationlabel,3,0);
 	l4->addWidget(m_commentlabel,4,0);
-	QHBoxLayout	*ll4 = new QHBoxLayout(0, 0, 3);
+	QHBoxLayout	*ll4 = new TQHBoxLayout(0, 0, 3);
 	l4->addLayout(ll4,0,1);
 	ll4->addWidget(d->m_printers,1);
 	ll4->addWidget(d->m_filter,0);
@@ -382,7 +382,7 @@ KPrintDialog::KPrintDialog(QWidget *parent, const char *name)
 	l4->addWidget(d->m_location,3,1);
 	l4->addWidget(d->m_comment,4,1);
 	l4->setColStretch(1,1);
-	QVBoxLayout	*l5 = new QVBoxLayout(0, 0, 10);
+	QVBoxLayout	*l5 = new TQVBoxLayout(0, 0, 10);
 	l3->addLayout(l5,0,2);
 	l5->addWidget(d->m_properties,0);
 	l5->addWidget(d->m_default,0);
@@ -396,19 +396,19 @@ KPrintDialog::KPrintDialog(QWidget *parent, const char *name)
 	l3->addMultiCellWidget(d->m_cmd,2,2,1,2);
 
 	// connections
-	connect(d->m_ok,SIGNAL(clicked()),SLOT(accept()));
-	connect(m_cancel,SIGNAL(clicked()),SLOT(reject()));
-	connect(d->m_properties,SIGNAL(clicked()),SLOT(slotProperties()));
-	connect(d->m_default,SIGNAL(clicked()),SLOT(slotSetDefault()));
-	connect(d->m_printers,SIGNAL(activated(int)),SLOT(slotPrinterSelected(int)));
-	connect(d->m_options,SIGNAL(clicked()),SLOT(slotOptions()));
-	connect(d->m_wizard,SIGNAL(clicked()),SLOT(slotWizard()));
-	connect(d->m_extbtn, SIGNAL(clicked()), SLOT(slotExtensionClicked()));
-	connect(d->m_filter, SIGNAL(toggled(bool)), SLOT(slotToggleFilter(bool)));
-	connect(m_help, SIGNAL(clicked()), SLOT(slotHelp()));
-	connect(d->m_file, SIGNAL(urlSelected(const QString&)), SLOT(slotOutputFileSelected(const QString&)));
-	connect( d->m_file, SIGNAL( openFileDialog( KURLRequester* ) ), SLOT( slotOpenFileDialog() ) );
-	connect( KMFactory::self()->manager(), SIGNAL( updatePossible( bool ) ), SLOT( slotUpdatePossible( bool ) ) );
+	connect(d->m_ok,TQT_SIGNAL(clicked()),TQT_SLOT(accept()));
+	connect(m_cancel,TQT_SIGNAL(clicked()),TQT_SLOT(reject()));
+	connect(d->m_properties,TQT_SIGNAL(clicked()),TQT_SLOT(slotProperties()));
+	connect(d->m_default,TQT_SIGNAL(clicked()),TQT_SLOT(slotSetDefault()));
+	connect(d->m_printers,TQT_SIGNAL(activated(int)),TQT_SLOT(slotPrinterSelected(int)));
+	connect(d->m_options,TQT_SIGNAL(clicked()),TQT_SLOT(slotOptions()));
+	connect(d->m_wizard,TQT_SIGNAL(clicked()),TQT_SLOT(slotWizard()));
+	connect(d->m_extbtn, TQT_SIGNAL(clicked()), TQT_SLOT(slotExtensionClicked()));
+	connect(d->m_filter, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotToggleFilter(bool)));
+	connect(m_help, TQT_SIGNAL(clicked()), TQT_SLOT(slotHelp()));
+	connect(d->m_file, TQT_SIGNAL(urlSelected(const TQString&)), TQT_SLOT(slotOutputFileSelected(const TQString&)));
+	connect( d->m_file, TQT_SIGNAL( openFileDialog( KURLRequester* ) ), TQT_SLOT( slotOpenFileDialog() ) );
+	connect( KMFactory::self()->manager(), TQT_SIGNAL( updatePossible( bool ) ), TQT_SLOT( slotUpdatePossible( bool ) ) );
 
 	d->b_optionsEnabled = kapp->authorize("print/options") && kapp->authorize("print/selection");
 	d->b_propertiesEnabled = kapp->authorize("print/properties") && kapp->authorize("print/selection");
@@ -473,28 +473,28 @@ void KPrintDialog::setFlags(int f)
 	d->m_wizard->setEnabled((mgr->hasManagement() && (mgr->printerOperationMask() & KMManager::PrinterCreation)));
 }
 
-void KPrintDialog::setDialogPages(QPtrList<KPrintDialogPage> *pages)
+void KPrintDialog::setDialogPages(TQPtrList<KPrintDialogPage> *pages)
 {
 	if (!pages) return;
 	if (pages->count() + d->m_pages.count() == 1)
 	{
 		// only one page, reparent the page to d->m_dummy and remove any
-		// QTabWidget child if any.
+		// TQTabWidget child if any.
 		if (pages->count() > 0)
 			d->m_pages.append(pages->take(0));
-		d->m_pages.first()->reparent(d->m_dummy, QPoint(0,0));
+		d->m_pages.first()->reparent(d->m_dummy, TQPoint(0,0));
 		d->m_pages.first()->show();
-		delete d->m_dummy->child("TabWidget", "QTabWidget");
+		delete d->m_dummy->child("TabWidget", "TQTabWidget");
 	}
 	else
 	{
 		// more than one page.
-		QTabWidget	*tabs = static_cast<QTabWidget*>(d->m_dummy->child("TabWidget", "QTabWidget"));
+		QTabWidget	*tabs = static_cast<TQTabWidget*>(d->m_dummy->child("TabWidget", "TQTabWidget"));
 		if (!tabs)
 		{
-			// QTabWidget doesn't exist. Create it and reparent all
+			// TQTabWidget doesn't exist. Create it and reparent all
 			// already existing pages.
-			tabs = new QTabWidget(d->m_dummy, "TabWidget");
+			tabs = new TQTabWidget(d->m_dummy, "TabWidget");
 			tabs->setMargin(10);
 			for (d->m_pages.first(); d->m_pages.current(); d->m_pages.next())
 			{
@@ -512,7 +512,7 @@ void KPrintDialog::setDialogPages(QPtrList<KPrintDialogPage> *pages)
 	d->m_extbtn->setEnabled(d->m_pages.count() > 0);
 }
 
-KPrintDialog* KPrintDialog::printerDialog(KPrinter *printer, QWidget *parent, const QString& caption, bool forceExpand)
+KPrintDialog* KPrintDialog::printerDialog(KPrinter *printer, TQWidget *parent, const TQString& caption, bool forceExpand)
 {
 	if (printer)
 	{
@@ -543,7 +543,7 @@ void KPrintDialog::initialize(KPrinter *printer)
 	d->m_printer = printer;
 
 	// first retrieve printer list and update combo box (get default or last used printer also)
-	QPtrList<KMPrinter>	*plist = KMFactory::self()->manager()->printerList();
+	TQPtrList<KMPrinter>	*plist = KMFactory::self()->manager()->printerList();
 	if (!KMManager::self()->errorMsg().isEmpty())
 	{
 		KMessageBox::error(parentWidget(),
@@ -556,7 +556,7 @@ void KPrintDialog::initialize(KPrinter *printer)
 	{
 		QString	oldP = d->m_printers->currentText();
 		d->m_printers->clear();
-		QPtrListIterator<KMPrinter>	it(*plist);
+		TQPtrListIterator<KMPrinter>	it(*plist);
 		int 	defsoft(-1), defhard(-1), defsearch(-1);
 		bool	sep(false);
 		for (;it.current();++it)
@@ -568,7 +568,7 @@ void KPrintDialog::initialize(KPrinter *printer)
 			if (!sep && it.current()->isSpecial())
 			{
 				sep = true;
-				d->m_printers->insertItem(QPixmap(), QString::fromLatin1("--------"));
+				d->m_printers->insertItem(TQPixmap(), TQString::fromLatin1("--------"));
 			}
 			d->m_printers->insertItem(SmallIcon(it.current()->pixmap(),0,(it.current()->isValid() ? (int)KIcon::DefaultState : (int)KIcon::LockOverlay)),it.current()->name(),false/*sep*/);
 			if (it.current()->isSoftDefault())
@@ -599,7 +599,7 @@ void KPrintDialog::initialize(KPrinter *printer)
 		d->m_preview->setChecked(true);
 	d->m_preview->setEnabled(!d->m_printer->previewOnly());
 	d->m_cmd->setText(d->m_printer->option("kde-printcommand"));
-	QPtrListIterator<KPrintDialogPage>	it(d->m_pages);
+	TQPtrListIterator<KPrintDialogPage>	it(d->m_pages);
 	for (;it.current();++it)
 		it.current()->setOptions(d->m_printer->options());
 }
@@ -607,10 +607,10 @@ void KPrintDialog::initialize(KPrinter *printer)
 void KPrintDialog::slotPrinterSelected(int index)
 {
 	bool 	ok(false);
-	d->m_location->setText(QString::null);
-	d->m_state->setText(QString::null);
-	d->m_comment->setText(QString::null);
-	d->m_type->setText(QString::null);
+	d->m_location->setText(TQString::null);
+	d->m_state->setText(TQString::null);
+	d->m_comment->setText(TQString::null);
+	d->m_type->setText(TQString::null);
 	if (index >= 0 && index < d->m_printers->count())
 	{
 		KMManager	*mgr = KMFactory::self()->manager();
@@ -654,12 +654,12 @@ void KPrintDialog::done(int result)
 {
 	if (result == Accepted && d->m_printer)
 	{
-		QMap<QString,QString>	opts;
+		TQMap<TQString,TQString>	opts;
 		KMPrinter		*prt(0);
 
 		// get options from global pages
 		QString	msg;
-		QPtrListIterator<KPrintDialogPage>	it(d->m_pages);
+		TQPtrListIterator<KPrintDialogPage>	it(d->m_pages);
 		for (;it.current();++it)
 			if (it.current()->isEnabled())
 			{
@@ -692,8 +692,8 @@ void KPrintDialog::done(int result)
 		opts["kde-special-command"] = prt->option("kde-special-command");
 
 		// merge options with KMPrinter object options
-		QMap<QString,QString>	popts = (prt->isEdited() ? prt->editedOptions() : prt->defaultOptions());
-		for (QMap<QString,QString>::ConstIterator it=popts.begin(); it!=popts.end(); ++it)
+		TQMap<TQString,TQString>	popts = (prt->isEdited() ? prt->editedOptions() : prt->defaultOptions());
+		for (TQMap<TQString,TQString>::ConstIterator it=popts.begin(); it!=popts.end(); ++it)
 			opts[it.key()] = it.data();
 
 		// update KPrinter object
@@ -730,7 +730,7 @@ bool KPrintDialog::checkOutputFile()
 			{
 				//value = (KMessageBox::warningYesNo(this,i18n("File \"%1\" already exists. Overwrite?").arg(f.absFilePath())) == KMessageBox::Yes);
 				time_t mtimeDest = f.lastModified().toTime_t();
-				KIO::RenameDlg dlg( this, i18n( "Print" ), QString::null, d->m_file->url(),
+				KIO::RenameDlg dlg( this, i18n( "Print" ), TQString::null, d->m_file->url(),
 						KIO::M_OVERWRITE, ( time_t ) -1, f.size(), ( time_t ) -1, f.created().toTime_t() , mtimeDest+1, mtimeDest, true );
 				int result = dlg.exec();
 				switch ( result )
@@ -755,7 +755,7 @@ bool KPrintDialog::checkOutputFile()
 		}
 		else
 		{
-			QFileInfo d( f.dirPath( true ) );
+			TQFileInfo d( f.dirPath( true ) );
 			if ( !d.exists() )
 				KMessageBox::error( this, i18n( "The output directory does not exist." ) );
 			else if ( !d.isWritable() )
@@ -794,12 +794,12 @@ void KPrintDialog::enableSpecial(bool on)
 			d->m_pages.current()->setEnabled(!on);
 }
 
-void KPrintDialog::setOutputFileExtension(const QString& ext)
+void KPrintDialog::setOutputFileExtension(const TQString& ext)
 {
 	if (!ext.isEmpty())
 	{
 		KURL url( d->m_file->url() );
-		QString f( url.fileName() );
+		TQString f( url.fileName() );
 		int p = f.findRev( '.' );
 		// change "file.ext"; don't change "file", "file." or ".file" but do change ".file.ext"
 		if ( p > 0 && p != int (f.length () - 1) )
@@ -822,7 +822,7 @@ void KPrintDialog::slotWizard()
 void KPrintDialog::reload()
 {
 	// remove printer dependent pages (usually from plugin)
-	QTabWidget	*tabs = static_cast<QTabWidget*>(d->m_dummy->child("TabWidget", "QTabWidget"));
+	QTabWidget	*tabs = static_cast<TQTabWidget*>(d->m_dummy->child("TabWidget", "TQTabWidget"));
 	for (uint i=0; i<d->m_pages.count(); i++)
 		if (d->m_pages.at(i)->onlyRealPrinters())
 		{
@@ -832,7 +832,7 @@ void KPrintDialog::reload()
 			delete page;
 		}
 	// reload printer dependent pages from plugin
-	QPtrList<KPrintDialogPage>	pages;
+	TQPtrList<KPrintDialogPage>	pages;
 	pages.setAutoDelete(false);
 	KMFactory::self()->uiManager()->setupPrintDialogPages(&pages);
 	// add those pages to the dialog
@@ -841,7 +841,7 @@ void KPrintDialog::reload()
 		d->m_dummy->show();
 	// other initializations
 	setFlags(KMFactory::self()->uiManager()->dialogFlags());
-	connect( KMFactory::self()->manager(), SIGNAL( updatePossible( bool ) ), SLOT( slotUpdatePossible( bool ) ) );
+	connect( KMFactory::self()->manager(), TQT_SIGNAL( updatePossible( bool ) ), TQT_SLOT( slotUpdatePossible( bool ) ) );
 	init();
 }
 
@@ -914,10 +914,10 @@ void KPrintDialog::slotToggleFilter(bool on)
 
 void KPrintDialog::slotHelp()
 {
-	kapp->invokeHelp(QString::null, "kdeprint");
+	kapp->invokeHelp(TQString::null, "kdeprint");
 }
 
-void KPrintDialog::slotOutputFileSelected(const QString& txt)
+void KPrintDialog::slotOutputFileSelected(const TQString& txt)
 {
 	d->m_file->setURL( txt );
 }
@@ -951,7 +951,7 @@ void KPrintDialog::enableDialogPage( int index, bool flag )
 
 	if ( d->m_pages.count() > 1 )
 	{
-		QTabWidget	*tabs = static_cast<QTabWidget*>(d->m_dummy->child("TabWidget", "QTabWidget"));
+		QTabWidget	*tabs = static_cast<TQTabWidget*>(d->m_dummy->child("TabWidget", "TQTabWidget"));
 		tabs->setTabEnabled( d->m_pages.at( index ), flag );
 	}
 	else
@@ -974,7 +974,7 @@ void KPrintDialog::slotOpenFileDialog()
 
 		if (!mimetype.isEmpty())
 		{
-			QStringList filter;
+			TQStringList filter;
 			filter << mimetype;
 			filter << "all/allfiles";
 			dialog->setMimeFilter (filter, mimetype);

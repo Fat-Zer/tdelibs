@@ -23,8 +23,8 @@
 #ifndef _CSS_cssstyleselector_h_
 #define _CSS_cssstyleselector_h_
 
-#include <qptrlist.h>
-#include <qvaluevector.h>
+#include <tqptrlist.h>
+#include <tqvaluevector.h>
 
 #include "rendering/render_style.h"
 #include "dom/dom_string.h"
@@ -114,7 +114,7 @@ namespace khtml
 	 * Also takes into account special cases for HTML documents,
 	 * including the defaultStyle (which is html only)
 	 */
-	CSSStyleSelector( DOM::DocumentImpl* doc, QString userStyleSheet, DOM::StyleSheetListImpl *styleSheets, const KURL &url,
+	CSSStyleSelector( DOM::DocumentImpl* doc, TQString userStyleSheet, DOM::StyleSheetListImpl *styleSheets, const KURL &url,
                           bool _strictParsing );
 	/**
 	 * same as above but for a single stylesheet.
@@ -131,18 +131,18 @@ namespace khtml
 
 	RenderStyle *styleForElement(DOM::ElementImpl *e);
 
-        QValueVector<int> fontSizes() const { return m_fontSizes; }
-	QValueVector<int> fixedFontSizes() const { return m_fixedFontSizes; }
+        TQValueVector<int> fontSizes() const { return m_fontSizes; }
+	TQValueVector<int> fixedFontSizes() const { return m_fixedFontSizes; }
 
 	bool strictParsing;
 	struct Encodedurl {
-	    QString host; //also contains protocol
-	    QString path;
-	    QString file;
+	    TQString host; //also contains protocol
+	    TQString path;
+	    TQString file;
 	} encodedurl;
 
-        void computeFontSizes(QPaintDeviceMetrics* paintDeviceMetrics, int zoomFactor);
-	void computeFontSizesFor(QPaintDeviceMetrics* paintDeviceMetrics, int zoomFactor, QValueVector<int>& fontSizes, bool isFixed);
+        void computeFontSizes(TQPaintDeviceMetrics* paintDeviceMetrics, int zoomFactor);
+	void computeFontSizesFor(TQPaintDeviceMetrics* paintDeviceMetrics, int zoomFactor, TQValueVector<int>& fontSizes, bool isFixed);
 
 	static void precomputeAttributeDependencies(DOM::DocumentImpl* doc, DOM::CSSSelector* sel);
     protected:
@@ -232,8 +232,8 @@ public:
 	SelectorCache *selectorCache;
 	unsigned int properties_size;
 	CSSOrderedProperty **properties;
-	QMemArray<CSSOrderedProperty> inlineProps;
-        QString m_medium;
+	TQMemArray<CSSOrderedProperty> inlineProps;
+        TQString m_medium;
 	CSSOrderedProperty **propsToApply;
 	CSSOrderedProperty **pseudoProps;
 	unsigned int propsToApplySize;
@@ -249,9 +249,9 @@ public:
 	KHTMLView *view;
 	KHTMLPart *part;
 	const KHTMLSettings *settings;
-	QPaintDeviceMetrics *paintDeviceMetrics;
-        QValueVector<int>     m_fontSizes;
-	QValueVector<int>     m_fixedFontSizes;
+	TQPaintDeviceMetrics *paintDeviceMetrics;
+        TQValueVector<int>     m_fontSizes;
+	TQValueVector<int>     m_fixedFontSizes;
 
 	bool fontDirty;
 
@@ -297,10 +297,10 @@ public:
      * This is the list we will collect all properties we need to apply in.
      * It will get sorted once before applying.
      */
-    class CSSOrderedPropertyList : public QPtrList<CSSOrderedProperty>
+    class CSSOrderedPropertyList : public TQPtrList<CSSOrderedProperty>
     {
     public:
-	virtual int compareItems(QPtrCollection::Item i1, QPtrCollection::Item i2);
+	virtual int compareItems(TQPtrCollection::Item i1, TQPtrCollection::Item i2);
 	void append(DOM::CSSStyleDeclarationImpl *decl, uint selector, uint specificity,
 		    Source regular, Source important );
     };
@@ -316,7 +316,7 @@ public:
 	int index;
     };
 
-    class CSSStyleSelectorList : public QPtrList<CSSOrderedRule>
+    class CSSStyleSelectorList : public TQPtrList<CSSOrderedRule>
     {
     public:
 	CSSStyleSelectorList();
@@ -325,7 +325,7 @@ public:
 	void append( DOM::CSSStyleSheetImpl *sheet,
 		     const DOM::DOMString &medium = "screen" );
 
-	void collect( QPtrList<DOM::CSSSelector> *selectorList, CSSOrderedPropertyList *propList,
+	void collect( TQPtrList<DOM::CSSSelector> *selectorList, CSSOrderedPropertyList *propList,
 		      Source regular, Source important );
     };
 

@@ -1,14 +1,14 @@
 #include <kapplication.h>
 #include <kdialogbase.h>
 
-#include <qstring.h>
-#include <qtextview.h>
+#include <tqstring.h>
+#include <tqtextview.h>
 
 int main(int argc, char** argv)
 {
   KApplication app(argc, argv, "DialogBaseTest");
   // -----
-  QString text= // the explanation shown by the example dialog
+  TQString text= // the explanation shown by the example dialog
     "<center><h1>DialogBase Example</h1></center><hr><br>"
     "This example shows the usage of the <i>DialogBase</i>  class. "
     "<i>DialogBase</i> is the KDE user interface class used to create "
@@ -34,7 +34,7 @@ int main(int argc, char** argv)
     "not have to take care about launching the help viewer, just set the "
     "help file and topic and of course copy it to your documentation "
     "directory during the program installation.";
-  /* Create the dialog object. DialogBase is derived from QDialog, but
+  /* Create the dialog object. DialogBase is derived from TQDialog, but
      you do not need to derive it to create a nice-looking dialog. Mostly,
      you already have a widget class representing the core of your dialog,
      and you only need to add a frame around it and the default buttons.
@@ -47,7 +47,7 @@ int main(int argc, char** argv)
      "will of course only pop up if you correctly installed kdebase. */
   // I disabled it, as khcclient did not run for me.
   // dialog.setHelp("kdehelp/intro.html", "", "");
-  /* This QTextView is intended to be the main widget of our dialog. The
+  /* This TQTextView is intended to be the main widget of our dialog. The
      main widget is placed inside the dialogs frame, with the buttons below
      it. You do not have to take care about the size handling, but it is a
      good idea to set the main wigdets minimum size, since the sizes Qt and
@@ -55,7 +55,7 @@ int main(int argc, char** argv)
 
      It is important that your main widget is created with the dialog object
      as its parent! */
-  QTextView view(text, QString::null, &dialog);
+  TQTextView view(text, TQString::null, &dialog);
   //view.setMinimumSize(400, view.heightForWidth(400)+20);
   view.setMinimumSize( 250, 300 );
   dialog.setMainWidget(&view);
@@ -65,7 +65,7 @@ int main(int argc, char** argv)
      help chapter may cause a need for adjustment since it modifies the height
      of the upper frame. */
   dialog.resize(dialog.minimumSize());
-  /* The dialog object is used just as any other QDialog: */
+  /* The dialog object is used just as any other TQDialog: */
   if(dialog.exec())
     {
       qDebug("Accepted.");

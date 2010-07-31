@@ -29,18 +29,18 @@
 #include <kstdaccel.h>
 #include <kdebug.h>
 
-#include <qdir.h>
-#include <qfileinfo.h>
+#include <tqdir.h>
+#include <tqfileinfo.h>
 
 
-ScriptLoader::ScriptLoader(KMainWindow *parent) : QObject (parent)
+ScriptLoader::ScriptLoader(KMainWindow *parent) : TQObject (parent)
 {
 	m_parent = parent;
 	m_scripts.clear();
   	m_theAction = new KSelectAction ( i18n("KDE Scripts"),
 		0,
 		this,
-		SLOT(runAction()),
+		TQT_SLOT(runAction()),
 		m_parent->actionCollection(),
 		"scripts");
 }
@@ -54,15 +54,15 @@ ScriptLoader::~ScriptLoader()
 KSelectAction * ScriptLoader::getScripts()
 {
 	// Get the available scripts for this application.
-	QStringList pluginList = "";
+	TQStringList pluginList = "";
 	// Find plugins
-	QString searchPath = kapp->name();
+	TQString searchPath = kapp->name();
 	searchPath += "/scripts/";
-	QDir d(locate( "data", searchPath));
+	TQDir d(locate( "data", searchPath));
 	kdDebug() << "loading plugin from " << locate( "data", searchPath) << endl;
 	const QFileInfoList *fileList = d.entryInfoList("*.desktop");
 	QFileInfoListIterator it ( *fileList );
-	QFileInfo *fi;
+	TQFileInfo *fi;
 	// Find all available script desktop files
 	while( (fi=it.current()))
 	{
@@ -92,7 +92,7 @@ KSelectAction * ScriptLoader::getScripts()
 
 void ScriptLoader::runAction()
 {
-	QString scriptName = m_theAction->currentText();
+	TQString scriptName = m_theAction->currentText();
 
 }
 

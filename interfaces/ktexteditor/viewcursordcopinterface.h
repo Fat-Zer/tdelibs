@@ -3,8 +3,8 @@
 
 #include <dcopobject.h>
 #include <dcopref.h>
-#include <qstringlist.h>
-#include <qcstring.h>
+#include <tqstringlist.h>
+#include <tqcstring.h>
 //#include "editdcopinterface.moc"
 namespace KTextEditor
 {
@@ -38,7 +38,7 @@ namespace KTextEditor
 		/**
 		* Get the current cursor coordinates in pixels.
 		*/
-		class QPoint cursorCoordinates ();
+		class TQPoint cursorCoordinates ();
 
 		/**
 		* Get the cursor position

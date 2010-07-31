@@ -24,19 +24,19 @@
 
 #include <kdebug.h>
 
-#include <qfont.h>
+#include <tqfont.h>
 
 KateArbitraryHighlightRange::KateArbitraryHighlightRange(KateSuperCursor* start,
-KateSuperCursor* end, QObject* parent, const char* name)   :
+KateSuperCursor* end, TQObject* parent, const char* name)   :
 KateSuperRange(start, end, parent, name) {
 }
 
-KateArbitraryHighlightRange::KateArbitraryHighlightRange(KateDocument* doc, const KateRange& range, QObject* parent, const char* name)
+KateArbitraryHighlightRange::KateArbitraryHighlightRange(KateDocument* doc, const KateRange& range, TQObject* parent, const char* name)
   : KateSuperRange(doc, range, parent, name)
 {
 }
 
-KateArbitraryHighlightRange::KateArbitraryHighlightRange(KateDocument* doc, const KateTextCursor& start, const KateTextCursor& end, QObject* parent, const char* name)
+KateArbitraryHighlightRange::KateArbitraryHighlightRange(KateDocument* doc, const KateTextCursor& start, const KateTextCursor& end, TQObject* parent, const char* name)
   : KateSuperRange(doc, start, end, parent, name)
 {
 }
@@ -46,11 +46,11 @@ KateArbitraryHighlightRange::~KateArbitraryHighlightRange()
 }
 
 KateArbitraryHighlight::KateArbitraryHighlight(KateDocument* parent, const char* name)
-  : QObject(parent, name)
+  : TQObject(parent, name)
 {
 }
 
-KateAttribute KateArbitraryHighlightRange::merge(QPtrList<KateSuperRange> ranges)
+KateAttribute KateArbitraryHighlightRange::merge(TQPtrList<KateSuperRange> ranges)
 {
   ranges.sort();
 
@@ -73,27 +73,27 @@ KateAttribute KateArbitraryHighlightRange::merge(QPtrList<KateSuperRange> ranges
 void KateArbitraryHighlight::addHighlightToDocument(KateSuperRangeList* list)
 {
   m_docHLs.append(list);
-  connect(list, SIGNAL(rangeEliminated(KateSuperRange*)), SLOT(slotRangeEliminated(KateSuperRange*)));
-  connect(list, SIGNAL(destroyed(QObject*)),SLOT(slotRangeListDeleted(QObject*)));
+  connect(list, TQT_SIGNAL(rangeEliminated(KateSuperRange*)), TQT_SLOT(slotRangeEliminated(KateSuperRange*)));
+  connect(list, TQT_SIGNAL(destroyed(TQObject*)),TQT_SLOT(slotRangeListDeleted(TQObject*)));
 }
 
 void KateArbitraryHighlight::addHighlightToView(KateSuperRangeList* list, KateView* view)
 {
   if (!m_viewHLs[view])
-    m_viewHLs.insert(view, new QPtrList<KateSuperRangeList>());
+    m_viewHLs.insert(view, new TQPtrList<KateSuperRangeList>());
 
   m_viewHLs[view]->append(list);
 
-  connect(list, SIGNAL(rangeEliminated(KateSuperRange*)), SLOT(slotTagRange(KateSuperRange*)));
-  connect(list, SIGNAL(tagRange(KateSuperRange*)), SLOT(slotTagRange(KateSuperRange*)));
-  connect(list, SIGNAL(destroyed(QObject*)),SLOT(slotRangeListDeleted(QObject*)));
+  connect(list, TQT_SIGNAL(rangeEliminated(KateSuperRange*)), TQT_SLOT(slotTagRange(KateSuperRange*)));
+  connect(list, TQT_SIGNAL(tagRange(KateSuperRange*)), TQT_SLOT(slotTagRange(KateSuperRange*)));
+  connect(list, TQT_SIGNAL(destroyed(TQObject*)),TQT_SLOT(slotRangeListDeleted(TQObject*)));
 }
 
-void KateArbitraryHighlight::slotRangeListDeleted(QObject* obj) {
+void KateArbitraryHighlight::slotRangeListDeleted(TQObject* obj) {
    int id=m_docHLs.findRef(static_cast<KateSuperRangeList*>(obj));
    if (id>=0) m_docHLs.take(id);
    
-   for (QMap<KateView*, QPtrList<KateSuperRangeList>* >::Iterator it = m_viewHLs.begin(); it != m_viewHLs.end(); ++it)
+   for (TQMap<KateView*, TQPtrList<KateSuperRangeList>* >::Iterator it = m_viewHLs.begin(); it != m_viewHLs.end(); ++it)
     for (KateSuperRangeList* l = (*it)->first(); l; l = (*it)->next())
       if (l==obj) {
         l->take();
@@ -123,14 +123,14 @@ KateSuperRangeList& KateArbitraryHighlight::rangesIncluding(uint line, KateView*
   //--- END Temporary optimisation ---
 
   if (view) {
-    QPtrList<KateSuperRangeList>* list = m_viewHLs[view];
+    TQPtrList<KateSuperRangeList>* list = m_viewHLs[view];
     if (list)
       for (KateSuperRangeList* l = list->first(); l; l = list->next())
         if (l->count())
           s_return.appendList(l->rangesIncluding(line));
 
   } else {
-    for (QMap<KateView*, QPtrList<KateSuperRangeList>* >::Iterator it = m_viewHLs.begin(); it != m_viewHLs.end(); ++it)
+    for (TQMap<KateView*, TQPtrList<KateSuperRangeList>* >::Iterator it = m_viewHLs.begin(); it != m_viewHLs.end(); ++it)
       for (KateSuperRangeList* l = (*it)->first(); l; l = (*it)->next())
         if (l->count())
           s_return.appendList(l->rangesIncluding(line));
@@ -150,7 +150,7 @@ void KateArbitraryHighlight::slotTagRange(KateSuperRange* range)
 
 KateView* KateArbitraryHighlight::viewForRange(KateSuperRange* range)
 {
-  for (QMap<KateView*, QPtrList<KateSuperRangeList>* >::Iterator it = m_viewHLs.begin(); it != m_viewHLs.end(); ++it)
+  for (TQMap<KateView*, TQPtrList<KateSuperRangeList>* >::Iterator it = m_viewHLs.begin(); it != m_viewHLs.end(); ++it)
     for (KateSuperRangeList* l = (*it)->first(); l; l = (*it)->next())
       if (l->contains(range))
         return it.key();

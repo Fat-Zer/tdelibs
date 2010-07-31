@@ -28,8 +28,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <qfileinfo.h>
-#include <qdir.h>
+#include <tqfileinfo.h>
+#include <tqdir.h>
 
 #include "kglobal.h"
 #include "kstandarddirs.h"
@@ -37,14 +37,14 @@
 
 #include "ksimpleconfig.h"
 
-KSimpleConfig::KSimpleConfig(const QString &fileName, bool bReadOnly)
-  : KConfig(QString::fromLatin1(""), bReadOnly, false)
+KSimpleConfig::KSimpleConfig(const TQString &fileName, bool bReadOnly)
+  : KConfig(TQString::fromLatin1(""), bReadOnly, false)
 {
   // the difference between KConfig and KSimpleConfig is just that
   // for KSimpleConfig an absolute filename is guaranteed
-  if (!fileName.isNull() && QDir::isRelativePath(fileName)) {
+  if (!fileName.isNull() && TQDir::isRelativePath(fileName)) {
      backEnd->changeFileName( KGlobal::dirs()->
-	saveLocation("config", QString::null, !bReadOnly)+fileName, "config", false);
+	saveLocation("config", TQString::null, !bReadOnly)+fileName, "config", false);
   } else {
      backEnd->changeFileName(fileName, "config", false);
   }

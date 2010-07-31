@@ -30,7 +30,7 @@
 #include "misc/loader_client.h"
 #include "misc/shared.h"
 
-#include <qintdict.h>
+#include <tqintdict.h>
 
 namespace khtml {
     class RenderStyle;
@@ -51,7 +51,7 @@ class CSSStyleDeclarationImpl : public StyleBaseImpl
 {
 public:
     CSSStyleDeclarationImpl(CSSRuleImpl *parentRule);
-    CSSStyleDeclarationImpl(CSSRuleImpl *parentRule, QPtrList<CSSProperty> *lstValues);
+    CSSStyleDeclarationImpl(CSSRuleImpl *parentRule, TQPtrList<CSSProperty> *lstValues);
     virtual ~CSSStyleDeclarationImpl();
 
     CSSStyleDeclarationImpl& operator=( const CSSStyleDeclarationImpl&);
@@ -79,7 +79,7 @@ public:
     virtual DOMString getPropertyValue( int propertyID ) const;
     virtual bool getPropertyPriority( int propertyID ) const;
 
-    QPtrList<CSSProperty> *values() const { return m_lstValues; }
+    TQPtrList<CSSProperty> *values() const { return m_lstValues; }
     void setNode(NodeImpl *_node) { m_node = _node; }
 
     void setChanged();
@@ -90,7 +90,7 @@ protected:
     DOMString getShortHandValue( const int* properties, int number ) const;
     DOMString get4Values( const int* properties ) const;
 
-    QPtrList<CSSProperty> *m_lstValues;
+    TQPtrList<CSSProperty> *m_lstValues;
     NodeImpl *m_node;
 
 private:
@@ -146,7 +146,7 @@ public:
     virtual DOM::DOMString cssText() const;
 
 protected:
-    QPtrList<CSSValueImpl> m_values;
+    TQPtrList<CSSValueImpl> m_values;
 };
 
 
@@ -182,9 +182,9 @@ public:
      * this is screen/printer dependent, so we probably need a config option for this,
      * and some tool to calibrate.
      */
-    int computeLength( khtml::RenderStyle *style, QPaintDeviceMetrics *devMetrics );
+    int computeLength( khtml::RenderStyle *style, TQPaintDeviceMetrics *devMetrics );
 
-    double computeLengthFloat( khtml::RenderStyle *style, QPaintDeviceMetrics *devMetrics );
+    double computeLengthFloat( khtml::RenderStyle *style, TQPaintDeviceMetrics *devMetrics );
 
     // use with care!!!
     void setPrimitiveType(unsigned short type) { m_type = type; }
@@ -323,11 +323,11 @@ protected:
 class FontFamilyValueImpl : public CSSPrimitiveValueImpl
 {
 public:
-    FontFamilyValueImpl( const QString &string);
-    const QString &fontName() const { return parsedFontName; }
+    FontFamilyValueImpl( const TQString &string);
+    const TQString &fontName() const { return parsedFontName; }
     int genericFamilyType() const { return _genericFamilyType; }
 protected:
-    QString parsedFontName;
+    TQString parsedFontName;
 private:
     int _genericFamilyType;
 };
@@ -362,12 +362,12 @@ public:
     virtual unsigned short cssValueType() const { return CSSValue::CSS_CUSTOM; }
     virtual DOM::DOMString cssText() const;
 
-    void addLevel(const QString& open, const QString& close);
-    QString openQuote(int level) const;
-    QString closeQuote(int level) const;
+    void addLevel(const TQString& open, const TQString& close);
+    TQString openQuote(int level) const;
+    TQString closeQuote(int level) const;
 
     unsigned int levels;
-    QStringList data;
+    TQStringList data;
 };
 
 // Used for text-shadow and box-shadow

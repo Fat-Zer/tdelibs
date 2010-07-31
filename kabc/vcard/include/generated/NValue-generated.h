@@ -3,13 +3,13 @@
 public:
 NValue();
 NValue(const NValue&);
-NValue(const QCString&);
+NValue(const TQCString&);
 NValue & operator = (NValue&);
-NValue & operator = (const QCString&);
+NValue & operator = (const TQCString&);
 bool operator ==(NValue&);
 bool operator !=(NValue& x) {return !(*this==x);}
-bool operator ==(const QCString& s) {NValue a(s);return(*this==a);} 
-bool operator != (const QCString& s) {return !(*this == s);}
+bool operator ==(const TQCString& s) {NValue a(s);return(*this==a);} 
+bool operator != (const TQCString& s) {return !(*this == s);}
 
 virtual ~NValue();
 void parse() {if(!parsed_) _parse();parsed_=true;assembled_=false;}

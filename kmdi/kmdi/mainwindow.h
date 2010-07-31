@@ -46,10 +46,10 @@
 #include <kmenubar.h>
 #include <kpopupmenu.h>
 
-#include <qptrlist.h>
-#include <qrect.h>
-#include <qapplication.h>
-#include <qguardedptr.h>
+#include <tqptrlist.h>
+#include <tqrect.h>
+#include <tqapplication.h>
+#include <tqguardedptr.h>
 
 #include <kmdi/global.h>
 
@@ -79,7 +79,7 @@ class KMDI_EXPORT MainWindow : public KParts::DockMainWindow
     /**
      * Constructor.
      */
-    MainWindow ( QWidget* parentWidget, const char* name = "");
+    MainWindow ( TQWidget* parentWidget, const char* name = "");
 
     /**
      * Destructor.
@@ -113,7 +113,7 @@ class KMDI_EXPORT MainWindow : public KParts::DockMainWindow
      * @param tabCaption
      * @return created toolview
      */
-    KMDI::ToolViewAccessor *addToolWindow( QWidget* pWnd, KDockWidget::DockPosition pos = KDockWidget::DockNone, QWidget* pTargetWnd = 0L, int percent = 50, const QString& tabToolTip = 0, const QString& tabCaption = 0);
+    KMDI::ToolViewAccessor *addToolWindow( TQWidget* pWnd, KDockWidget::DockPosition pos = KDockWidget::DockNone, TQWidget* pTargetWnd = 0L, int percent = 50, const TQString& tabToolTip = 0, const TQString& tabCaption = 0);
 
     /**
      * delete the toolview belonging to the given accessor
@@ -125,7 +125,7 @@ class KMDI_EXPORT MainWindow : public KParts::DockMainWindow
      * delete the toolview belonging to the given pWnd
      * @param pWnd toolview to be deleted
      */
-    void deleteToolWindow( QWidget* pWnd);
+    void deleteToolWindow( TQWidget* pWnd);
 
     /**
      * Sets the appearance of the toolview tabs.
@@ -141,8 +141,8 @@ class KMDI_EXPORT MainWindow : public KParts::DockMainWindow
     void collapseOverlapContainers();
 
   protected:
-    void findToolViewsDockedToMain(QPtrList<KDockWidget>* list,KDockWidget::DockPosition dprtmw);
-    void dockToolViewsIntoContainers(QPtrList<KDockWidget>& widgetsToReparent,KDockWidget *container);
+    void findToolViewsDockedToMain(TQPtrList<KDockWidget>* list,KDockWidget::DockPosition dprtmw);
+    void dockToolViewsIntoContainers(TQPtrList<KDockWidget>& widgetsToReparent,KDockWidget *container);
 
   private:
     /**
@@ -176,7 +176,7 @@ class KMDI_EXPORT MainWindow : public KParts::DockMainWindow
 
   protected:
     KMDIPrivate::GUIClient *m_guiClient;
-    QMap <QWidget*, KMDI::ToolViewAccessor*> *m_toolViews;
+    TQMap <TQWidget*, KMDI::ToolViewAccessor*> *m_toolViews;
 
     KDockWidget *m_leftContainer;
     KDockWidget *m_rightContainer;

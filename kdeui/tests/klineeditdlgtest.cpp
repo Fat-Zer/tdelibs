@@ -1,8 +1,8 @@
 #include <kapplication.h>
 #include <klineeditdlg.h>
 
-#include <qstring.h>
-#include <qtextview.h>
+#include <tqstring.h>
+#include <tqtextview.h>
 
 int main(int argc, char** argv)
 {

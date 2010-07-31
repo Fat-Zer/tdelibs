@@ -24,31 +24,31 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include <qapplication.h>
+#include <tqapplication.h>
 
 #include "errorhandler.h"
 
 using namespace KABC;
 
-void ConsoleErrorHandler::error( const QString &msg )
+void ConsoleErrorHandler::error( const TQString &msg )
 {
   // no debug area is ok here
   kdError() << msg << endl;
 }
 
 
-void GUIErrorHandler::error( const QString &msg )
+void GUIErrorHandler::error( const TQString &msg )
 {
   KMessageBox::error( 0, msg, i18n( "Error in libkabc" ) );
 }
 
 
-GuiErrorHandler::GuiErrorHandler( QWidget *parent )
+GuiErrorHandler::GuiErrorHandler( TQWidget *parent )
   : mParent( parent )
 {
 }
 
-void GuiErrorHandler::error( const QString &msg )
+void GuiErrorHandler::error( const TQString &msg )
 {
   if (qApp)
     KMessageBox::error( mParent, msg );

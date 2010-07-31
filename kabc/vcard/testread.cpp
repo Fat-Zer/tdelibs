@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
 #include <VCard.h>
 
@@ -16,16 +16,16 @@ int main(int argc, char * argv[])
 		exit(1);
 	}
 	
-	QFile f(argv[1]);
+	TQFile f(argv[1]);
 	
-	QCString str;
+	TQCString str;
 	
 	if (!f.open(IO_ReadOnly)) {
 		cerr << "Couldn't open file \"" << argv[1] << endl;
 		exit(1);
 	}
 	
-	QTextStream t(&f);
+	TQTextStream t(&f);
 	
 	while (!t.eof())
 		str += t.readLine().utf8() + '\n';
@@ -52,7 +52,7 @@ int main(int argc, char * argv[])
 		if (v.has(EntityEmail)) {
 			cerr << "Email parameter found" << endl;
 			
-			QCString s = v.contentLine(EntityEmail)->value()->asString();
+			TQCString s = v.contentLine(EntityEmail)->value()->asString();
 			
 			cerr << "Email value == " << s << endl;
 		}

@@ -19,9 +19,9 @@
 
 #include "ktextedit.h"
 
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qpopupmenu.h>
+#include <tqapplication.h>
+#include <tqclipboard.h>
+#include <tqpopupmenu.h>
 
 #include <ksyntaxhighlighter.h>
 #include <kspell.h>
@@ -51,16 +51,16 @@ public:
     KSpell *spell;
 };
 
-KTextEdit::KTextEdit( const QString& text, const QString& context,
-                      QWidget *parent, const char *name )
-    : QTextEdit ( text, context, parent, name )
+KTextEdit::KTextEdit( const TQString& text, const TQString& context,
+                      TQWidget *parent, const char *name )
+    : TQTextEdit ( text, context, parent, name )
 {
     d = new KTextEditPrivate();
     KCursor::setAutoHideCursor( this, true, false );
 }
 
-KTextEdit::KTextEdit( QWidget *parent, const char *name )
-    : QTextEdit ( parent, name )
+KTextEdit::KTextEdit( TQWidget *parent, const char *name )
+    : TQTextEdit ( parent, name )
 {
     d = new KTextEditPrivate();
     KCursor::setAutoHideCursor( this, true, false );
@@ -71,7 +71,7 @@ KTextEdit::~KTextEdit()
     delete d;
 }
 
-void KTextEdit::keyPressEvent( QKeyEvent *e )
+void KTextEdit::keyPressEvent( TQKeyEvent *e )
 {
     KKey key( e );
 
@@ -172,7 +172,7 @@ void KTextEdit::keyPressEvent( QKeyEvent *e )
     }
     else if ( KStdAccel::pasteSelection().contains( key ) )
     {
-        QString text = QApplication::clipboard()->text( QClipboard::Selection);
+        TQString text = TQApplication::clipboard()->text( QClipboard::Selection);
         if ( !text.isEmpty() )
             insert( text );
         e->accept();
@@ -188,7 +188,7 @@ void KTextEdit::keyPressEvent( QKeyEvent *e )
         return;
     }
     
-    QTextEdit::keyPressEvent( e );
+    TQTextEdit::keyPressEvent( e );
 }
 
 void KTextEdit::deleteWordBack()
@@ -210,11 +210,11 @@ void KTextEdit::slotAllowTab()
 setTabChangesFocus(!tabChangesFocus());
 }
 
-QPopupMenu *KTextEdit::createPopupMenu( const QPoint &pos )
+TQPopupMenu *KTextEdit::createPopupMenu( const TQPoint &pos )
 {
     enum { IdUndo, IdRedo, IdSep1, IdCut, IdCopy, IdPaste, IdClear, IdSep2, IdSelectAll };
 
-    QPopupMenu *menu = QTextEdit::createPopupMenu( pos );
+    TQPopupMenu *menu = TQTextEdit::createPopupMenu( pos );
 
     if ( isReadOnly() )
       menu->changeItem( menu->idAt(0), SmallIconSet("editcopy"), menu->text( menu->idAt(0) ) );
@@ -229,38 +229,38 @@ QPopupMenu *KTextEdit::createPopupMenu( const QPoint &pos )
 
         menu->insertSeparator();
         id = menu->insertItem( SmallIconSet( "spellcheck" ), i18n( "Check Spelling..." ),
-                                   this, SLOT( checkSpelling() ) );
+                                   this, TQT_SLOT( checkSpelling() ) );
 
         if( text().isEmpty() )
             menu->setItemEnabled( id, false );
 
         id = menu->insertItem( i18n( "Auto Spell Check" ),
-                               this, SLOT( toggleAutoSpellCheck() ) );
+                               this, TQT_SLOT( toggleAutoSpellCheck() ) );
         menu->setItemChecked(id, d->checkSpellingEnabled);
 	menu->insertSeparator();
-	id=menu->insertItem(i18n("Allow Tabulations"),this,SLOT(slotAllowTab()));
+	id=menu->insertItem(i18n("Allow Tabulations"),this,TQT_SLOT(slotAllowTab()));
 	menu->setItemChecked(id, !tabChangesFocus());
     }
 
     return menu;
 }
 
-QPopupMenu *KTextEdit::createPopupMenu()
+TQPopupMenu *KTextEdit::createPopupMenu()
 {
-    return QTextEdit::createPopupMenu();
+    return TQTextEdit::createPopupMenu();
 }
 
-void KTextEdit::contentsWheelEvent( QWheelEvent *e )
+void KTextEdit::contentsWheelEvent( TQWheelEvent *e )
 {
     if ( KGlobalSettings::wheelMouseZooms() )
-        QTextEdit::contentsWheelEvent( e );
+        TQTextEdit::contentsWheelEvent( e );
     else // thanks, we don't want to zoom, so skip QTextEdit's impl.
-        QScrollView::contentsWheelEvent( e );
+        TQScrollView::contentsWheelEvent( e );
 }
 
-void KTextEdit::setPalette( const QPalette& palette )
+void KTextEdit::setPalette( const TQPalette& palette )
 {
-    QTextEdit::setPalette( palette );
+    TQTextEdit::setPalette( palette );
     // unsetPalette() is not virtual and calls setPalette() as well
     // so we can use ownPalette() to find out about unsetting
     d->customPalette = ownPalette();
@@ -293,12 +293,12 @@ void KTextEdit::setCheckSpellingEnabled( bool check )
     }
 }
 
-void KTextEdit::focusInEvent( QFocusEvent *e )
+void KTextEdit::focusInEvent( TQFocusEvent *e )
 {
     if ( d->checkSpellingEnabled && !isReadOnly() && !d->highlighter )
         d->highlighter = new KDictSpellingHighlighter( this );
 
-    QTextEdit::focusInEvent( e );
+    TQTextEdit::focusInEvent( e );
 }
 
 bool KTextEdit::checkSpellingEnabled() const
@@ -320,10 +320,10 @@ void KTextEdit::setReadOnly(bool readOnly)
 	d->highlighter = 0;
 	    
         bool custom = ownPalette();
-        QPalette p = palette();
-        QColor color = p.color(QPalette::Disabled, QColorGroup::Background);
-        p.setColor(QColorGroup::Base, color);
-        p.setColor(QColorGroup::Background, color);
+        TQPalette p = palette();
+        TQColor color = p.color(TQPalette::Disabled, TQColorGroup::Background);
+        p.setColor(TQColorGroup::Base, color);
+        p.setColor(TQColorGroup::Background, color);
         setPalette(p);
         d->customPalette = custom;
     }
@@ -331,17 +331,17 @@ void KTextEdit::setReadOnly(bool readOnly)
     {
         if ( d->customPalette )
         {
-            QPalette p = palette();
-            QColor color = p.color(QPalette::Normal, QColorGroup::Base);
-            p.setColor(QColorGroup::Base, color);
-            p.setColor(QColorGroup::Background, color);
+            TQPalette p = palette();
+            TQColor color = p.color(TQPalette::Normal, TQColorGroup::Base);
+            p.setColor(TQColorGroup::Base, color);
+            p.setColor(TQColorGroup::Background, color);
             setPalette( p );
         }
         else
             unsetPalette();
     }
 
-    QTextEdit::setReadOnly (readOnly);
+    TQTextEdit::setReadOnly (readOnly);
 }
 
 void KTextEdit::virtual_hook( int, void* )
@@ -351,24 +351,24 @@ void KTextEdit::checkSpelling()
 {
     delete d->spell;
     d->spell = new KSpell( this, i18n( "Spell Checking" ),
-                          this, SLOT( slotSpellCheckReady( KSpell *) ), 0, true, true);
+                          this, TQT_SLOT( slotSpellCheckReady( KSpell *) ), 0, true, true);
 
-    connect( d->spell, SIGNAL( death() ),
-             this, SLOT( spellCheckerFinished() ) );
+    connect( d->spell, TQT_SIGNAL( death() ),
+             this, TQT_SLOT( spellCheckerFinished() ) );
 
-    connect( d->spell, SIGNAL( misspelling( const QString &, const QStringList &, unsigned int ) ),
-             this, SLOT( spellCheckerMisspelling( const QString &, const QStringList &, unsigned int ) ) );
+    connect( d->spell, TQT_SIGNAL( misspelling( const TQString &, const TQStringList &, unsigned int ) ),
+             this, TQT_SLOT( spellCheckerMisspelling( const TQString &, const TQStringList &, unsigned int ) ) );
 
-    connect( d->spell, SIGNAL( corrected( const QString &, const QString &, unsigned int ) ),
-             this, SLOT( spellCheckerCorrected( const QString &, const QString &, unsigned int ) ) );
+    connect( d->spell, TQT_SIGNAL( corrected( const TQString &, const TQString &, unsigned int ) ),
+             this, TQT_SLOT( spellCheckerCorrected( const TQString &, const TQString &, unsigned int ) ) );
 }
 
-void KTextEdit::spellCheckerMisspelling( const QString &text, const QStringList &, unsigned int pos )
+void KTextEdit::spellCheckerMisspelling( const TQString &text, const TQStringList &, unsigned int pos )
 {
     highLightWord( text.length(), pos );
 }
 
-void KTextEdit::spellCheckerCorrected( const QString &oldWord, const QString &newWord, unsigned int pos )
+void KTextEdit::spellCheckerCorrected( const TQString &oldWord, const TQString &newWord, unsigned int pos )
 {
     unsigned int l = 0;
     unsigned int cnt = 0;
@@ -398,10 +398,10 @@ void KTextEdit::spellCheckerFinished()
 void KTextEdit::slotSpellCheckReady( KSpell *s )
 {
     s->check( text() );
-    connect( s, SIGNAL( done( const QString & ) ), this, SLOT( slotSpellCheckDone( const QString & ) ) );
+    connect( s, TQT_SIGNAL( done( const TQString & ) ), this, TQT_SLOT( slotSpellCheckDone( const TQString & ) ) );
 }
 
-void KTextEdit::slotSpellCheckDone( const QString &s )
+void KTextEdit::slotSpellCheckDone( const TQString &s )
 {
     if ( s != text() )
         setText( s );

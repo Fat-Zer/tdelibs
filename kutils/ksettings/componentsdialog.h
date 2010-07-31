@@ -47,7 +47,7 @@ class KUTILS_EXPORT ComponentsDialog : public KDialogBase
           @param parent parent widget
           @param name   name
         */
-        ComponentsDialog( QWidget * parent = 0, const char * name = 0 );
+        ComponentsDialog( TQWidget * parent = 0, const char * name = 0 );
         ~ComponentsDialog();
 
         /**
@@ -57,11 +57,11 @@ class KUTILS_EXPORT ComponentsDialog : public KDialogBase
         /**
           Set list of plugins the dialog offers for selection. (Overwrites a previous list)
         */
-        void setPluginInfos( const QMap<QString, KPluginInfo*> & plugininfos );
+        void setPluginInfos( const TQMap<TQString, KPluginInfo*> & plugininfos );
         /**
           Set list of plugins the dialog offers for selection. (Overwrites a previous list)
         */
-        void setPluginInfos( const QValueList<KPluginInfo *> &plugins );
+        void setPluginInfos( const TQValueList<KPluginInfo *> &plugins );
 
         /**
          * reimplemented
@@ -73,7 +73,7 @@ class KUTILS_EXPORT ComponentsDialog : public KDialogBase
         void slotApply();
 
     private slots:
-        void executed( QListViewItem * );
+        void executed( TQListViewItem * );
 
     private:
         void savePluginInfos();

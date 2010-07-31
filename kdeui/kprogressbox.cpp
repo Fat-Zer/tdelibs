@@ -23,15 +23,15 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qstring.h>
-#include <qregexp.h>
-#include <qstyle.h>
-#include <qtimer.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqstring.h>
+#include <tqregexp.h>
+#include <tqstyle.h>
+#include <tqtimer.h>
 
 #include "kprogress.h"
 #include "ktextedit.h"
@@ -53,8 +53,8 @@ struct KProgressBoxDialog::KProgressBoxDialogPrivate
 /*
  * KProgressBoxDialog implementation
  */
-KProgressBoxDialog::KProgressBoxDialog(QWidget* parent, const char* name,
-                                 const QString& caption, const QString& text,
+KProgressBoxDialog::KProgressBoxDialog(TQWidget* parent, const char* name,
+                                 const TQString& caption, const TQString& text,
                                  bool modal)
     : KDialogBase(KDialogBase::Plain, caption, KDialogBase::Cancel,
                   KDialogBase::Cancel, parent, name, modal),
@@ -70,15 +70,15 @@ KProgressBoxDialog::KProgressBoxDialog(QWidget* parent, const char* name,
 #ifdef Q_WS_X11
     KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
 #endif
-    mShowTimer = new QTimer(this);
+    mShowTimer = new TQTimer(this);
     
     showButton(KDialogBase::Close, false);
     mCancelText = actionButton(KDialogBase::Cancel)->text();
 
-    QFrame* mainWidget = plainPage();
-    QVBoxLayout* layout = new QVBoxLayout(mainWidget, 10);
+    TQFrame* mainWidget = plainPage();
+    TQVBoxLayout* layout = new TQVBoxLayout(mainWidget, 10);
 
-    mLabel = new QLabel(text, mainWidget);
+    mLabel = new TQLabel(text, mainWidget);
     layout->addWidget(mLabel);
 
     mProgressBar = new KProgress(mainWidget);
@@ -86,9 +86,9 @@ KProgressBoxDialog::KProgressBoxDialog(QWidget* parent, const char* name,
     mTextBox = new KTextEdit(mainWidget);
     layout->addWidget(mTextBox);
 
-    connect(mProgressBar, SIGNAL(percentageChanged(int)),
-            this, SLOT(slotAutoActions(int)));
-    connect(mShowTimer, SIGNAL(timeout()), this, SLOT(slotAutoShow()));
+    connect(mProgressBar, TQT_SIGNAL(percentageChanged(int)),
+            this, TQT_SLOT(slotAutoActions(int)));
+    connect(mShowTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotAutoShow()));
     mShowTimer->start(mMinDuration, true);
 }
 
@@ -196,18 +196,18 @@ const KTextEdit* KProgressBoxDialog::textEdit() const
     return mTextBox;
 }
 
-void KProgressBoxDialog::setLabel(const QString& text)
+void KProgressBoxDialog::setLabel(const TQString& text)
 {
     mLabel->setText(text);
 }
 
 // ### KDE 4 remove
-QString KProgressBoxDialog::labelText()
+TQString KProgressBoxDialog::labelText()
 {
     return mLabel->text();
 }
 
-QString KProgressBoxDialog::labelText() const
+TQString KProgressBoxDialog::labelText() const
 {
     return mLabel->text();
 }
@@ -249,19 +249,19 @@ void KProgressBoxDialog::setAutoReset(bool autoReset)
     mAutoReset = autoReset;
 }
 
-void KProgressBoxDialog::setButtonText(const QString& text)
+void KProgressBoxDialog::setButtonText(const TQString& text)
 {
     mCancelText = text;
     setButtonCancel(text);
 }
 
 // ### KDE 4 remove
-QString KProgressBoxDialog::buttonText()
+TQString KProgressBoxDialog::buttonText()
 {
     return mCancelText;
 }
 
-QString KProgressBoxDialog::buttonText() const
+TQString KProgressBoxDialog::buttonText() const
 {
     return mCancelText;
 }

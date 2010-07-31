@@ -176,7 +176,7 @@ void HTMLElementImpl::parseAttribute(AttributeImpl *attr)
     case ATTR_CLASS:
         if (attr->val()) {
           DOMString v = attr->value();
-          const QChar* s = v.unicode();
+          const TQChar* s = v.unicode();
           int l = v.length();
           while( l && !s->isSpace() )
             l--,s++;
@@ -305,7 +305,7 @@ void HTMLElementImpl::addCSSLength(int id, const DOMString &value, bool numOnly,
     if ( value.implementation() ) {
         // match \s*[+-]?\d*(\.\d*)?[%\*]?
         unsigned i = 0, j = 0;
-        QChar* s = value.implementation()->s;
+        TQChar* s = value.implementation()->s;
         unsigned l = value.implementation()->l;
 
         while (i < l && s[i].isSpace())
@@ -318,7 +318,7 @@ void HTMLElementImpl::addCSSLength(int id, const DOMString &value, bool numOnly,
         // no digits!
         if (j == 0) return;
 
-        int v = kClamp( QConstString(s, i).string().toInt(), -8192, 8191 ) ;
+        int v = kClamp( TQConstString(s, i).string().toInt(), -8192, 8191 ) ;
         const char* suffix = "px";
         if (!numOnly || multiLength) {
             // look if we find a % or *
@@ -336,7 +336,7 @@ void HTMLElementImpl::addCSSLength(int id, const DOMString &value, bool numOnly,
         }
 	if (numOnly) suffix = "";
 
-        QString ns = QString::number(v) + suffix;
+        TQString ns = TQString::number(v) + suffix;
         m_styleDecls->setLengthProperty( id, DOMString( ns ), false, true, multiLength );
         setChanged();
         return;
@@ -346,13 +346,13 @@ void HTMLElementImpl::addCSSLength(int id, const DOMString &value, bool numOnly,
     setChanged();
 }
 
-static inline bool isHexDigit( const QChar &c ) {
+static inline bool isHexDigit( const TQChar &c ) {
     return ( c >= '0' && c <= '9' ) ||
 	   ( c >= 'a' && c <= 'f' ) ||
 	   ( c >= 'A' && c <= 'F' );
 }
 
-static inline int toHex( const QChar &c ) {
+static inline int toHex( const TQChar &c ) {
     return ( (c >= '0' && c <= '9')
 	     ? (c.unicode() - '0')
 	     : ( ( c >= 'a' && c <= 'f' )
@@ -376,7 +376,7 @@ void HTMLElementImpl::addHTMLColor( int id, const DOMString &c )
     if ( m_styleDecls->setProperty(id, c, false, true) )
 	return;
 
-    QString color = c.string();
+    TQString color = c.string();
     // not something that fits the specs.
 
     // we're emulating IEs color parser here. It maps transparent to black, otherwise it tries to build a rgb value
@@ -454,17 +454,17 @@ void HTMLElementImpl::removeCSSProperty(int id)
 
 DOMString HTMLElementImpl::innerHTML() const
 {
-    QString result; //Use QString to accumulate since DOMString is poor for appends
+    TQString result; //Use TQString to accumulate since DOMString is poor for appends
     for (NodeImpl *child = firstChild(); child != NULL; child = child->nextSibling()) {
         DOMString kid = child->toString();
-        result += QConstString(kid.unicode(), kid.length()).string();
+        result += TQConstString(kid.unicode(), kid.length()).string();
     }
     return result;
 }
 
 DOMString HTMLElementImpl::innerText() const
 {
-    QString text = "";
+    TQString text = "";
     if(!firstChild())
         return text;
 
@@ -486,7 +486,7 @@ DOMString HTMLElementImpl::innerText() const
         }
         if(n->isTextNode() ) {
             DOMStringImpl* data = static_cast<const TextImpl *>(n)->string();
-            text += QConstString(data->s, data->l).string();
+            text += TQConstString(data->s, data->l).string();
         }
     }
  end:

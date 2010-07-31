@@ -20,16 +20,16 @@
 #include "cupsdserverpage.h"
 #include "cupsdconf.h"
 
-#include <qlineedit.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqlineedit.h>
+#include <tqlabel.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <klocale.h>
 
-int findComboItem(QComboBox *cb, const QString& str)
+int findComboItem(TQComboBox *cb, const TQString& str)
 {
 	for (int i=0; i<cb->count(); i++)
 		if (cb->text(i) == str)
@@ -37,22 +37,22 @@ int findComboItem(QComboBox *cb, const QString& str)
 	return (-1);
 }
 
-CupsdServerPage::CupsdServerPage(QWidget *parent, const char *name)
+CupsdServerPage::CupsdServerPage(TQWidget *parent, const char *name)
 	: CupsdPage(parent, name)
 {
 	setPageLabel(i18n("Server"));
 	setHeader(i18n("Server Settings"));
 	setPixmap("gear");
 
-	servername_ = new QLineEdit(this);
-	serveradmin_ = new QLineEdit(this);
-	otherclassname_ = new QLineEdit(this);
-	language_ = new QLineEdit(this);
-	printcap_ = new QLineEdit(this);
-	classification_ = new QComboBox(this);
-	charset_ = new QComboBox(this);
-	printcapformat_ = new QComboBox(this);
-	classoverride_ = new QCheckBox(i18n("Allow overrides"), this);
+	servername_ = new TQLineEdit(this);
+	serveradmin_ = new TQLineEdit(this);
+	otherclassname_ = new TQLineEdit(this);
+	language_ = new TQLineEdit(this);
+	printcap_ = new TQLineEdit(this);
+	classification_ = new TQComboBox(this);
+	charset_ = new TQComboBox(this);
+	printcapformat_ = new TQComboBox(this);
+	classoverride_ = new TQCheckBox(i18n("Allow overrides"), this);
 
 	classification_->insertItem(i18n("None"));
 	classification_->insertItem(i18n("Classified"));
@@ -80,21 +80,21 @@ CupsdServerPage::CupsdServerPage(QWidget *parent, const char *name)
 	printcapformat_->insertItem("BSD");
 	printcapformat_->insertItem("SOLARIS");
 
-	QLabel *l1 = new QLabel(i18n("Server name:"), this);
-	QLabel *l2 = new QLabel(i18n("Server administrator:"), this);
-	QLabel *l3 = new QLabel(i18n("Classification:"), this);
-	QLabel *l4 = new QLabel(i18n("Default character set:"), this);
-	QLabel *l5 = new QLabel(i18n("Default language:"), this);
-	QLabel *l6 = new QLabel(i18n("Printcap file:"), this);
-	QLabel *l7 = new QLabel(i18n("Printcap format:"), this);
+	TQLabel *l1 = new TQLabel(i18n("Server name:"), this);
+	TQLabel *l2 = new TQLabel(i18n("Server administrator:"), this);
+	TQLabel *l3 = new TQLabel(i18n("Classification:"), this);
+	TQLabel *l4 = new TQLabel(i18n("Default character set:"), this);
+	TQLabel *l5 = new TQLabel(i18n("Default language:"), this);
+	TQLabel *l6 = new TQLabel(i18n("Printcap file:"), this);
+	TQLabel *l7 = new TQLabel(i18n("Printcap format:"), this);
 
-	connect(classification_, SIGNAL(activated(int)), SLOT(classChanged(int)));
+	connect(classification_, TQT_SIGNAL(activated(int)), TQT_SLOT(classChanged(int)));
 	classification_->setCurrentItem(0);
 	charset_->setCurrentItem(0);
 	printcapformat_->setCurrentItem(0);
 	classChanged(0);
 
-	QGridLayout	*m1 = new QGridLayout(this, 9, 2, 10, 7);
+	QGridLayout	*m1 = new TQGridLayout(this, 9, 2, 10, 7);
 	m1->setRowStretch(8, 1);
 	m1->setColStretch(1, 1);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);
@@ -110,19 +110,19 @@ CupsdServerPage::CupsdServerPage(QWidget *parent, const char *name)
 	m1->addWidget(language_, 5, 1);
 	m1->addWidget(printcap_, 6, 1);
 	m1->addWidget(printcapformat_, 7, 1);
-	QHBoxLayout	*m2 = new QHBoxLayout(0, 0, 5);
+	QHBoxLayout	*m2 = new TQHBoxLayout(0, 0, 5);
 	m1->addLayout(m2, 2, 1);
 	m2->addWidget(classification_);
 	m2->addWidget(otherclassname_);
-	QWidget	*w = new QWidget(this);
+	QWidget	*w = new TQWidget(this);
 	w->setFixedWidth(20);
-	QHBoxLayout	*m3 = new QHBoxLayout(0, 0, 0);
+	QHBoxLayout	*m3 = new TQHBoxLayout(0, 0, 0);
 	m1->addLayout(m3, 3, 1);
 	m3->addWidget(w);
 	m3->addWidget(classoverride_);
 }
 
-bool CupsdServerPage::loadConfig(CupsdConf *conf, QString&)
+bool CupsdServerPage::loadConfig(CupsdConf *conf, TQString&)
 {
 	conf_ = conf;
 	servername_->setText(conf_->servername_);
@@ -143,7 +143,7 @@ bool CupsdServerPage::loadConfig(CupsdConf *conf, QString&)
 	return true;
 }
 
-bool CupsdServerPage::saveConfig(CupsdConf *conf, QString&)
+bool CupsdServerPage::saveConfig(CupsdConf *conf, TQString&)
 {
 	conf->servername_ = servername_->text();
 	conf->serveradmin_ = serveradmin_->text();
@@ -162,14 +162,14 @@ bool CupsdServerPage::saveConfig(CupsdConf *conf, QString&)
 
 void CupsdServerPage::setInfos(CupsdConf *conf)
 {
-	QWhatsThis::add(servername_, conf->comments_.toolTip("servername"));
-	QWhatsThis::add(serveradmin_, conf->comments_.toolTip("serveradmin"));
-	QWhatsThis::add(classification_, conf->comments_.toolTip("classification"));
-	QWhatsThis::add(classoverride_, conf->comments_.toolTip("classifyoverride"));
-	QWhatsThis::add(charset_, conf->comments_.toolTip("defaultcharset"));
-	QWhatsThis::add(language_, conf->comments_.toolTip("defaultlanguage"));
-	QWhatsThis::add(printcap_, conf->comments_.toolTip("printcap"));
-	QWhatsThis::add(printcapformat_, conf->comments_.toolTip("printcapformat"));
+	TQWhatsThis::add(servername_, conf->comments_.toolTip("servername"));
+	TQWhatsThis::add(serveradmin_, conf->comments_.toolTip("serveradmin"));
+	TQWhatsThis::add(classification_, conf->comments_.toolTip("classification"));
+	TQWhatsThis::add(classoverride_, conf->comments_.toolTip("classifyoverride"));
+	TQWhatsThis::add(charset_, conf->comments_.toolTip("defaultcharset"));
+	TQWhatsThis::add(language_, conf->comments_.toolTip("defaultlanguage"));
+	TQWhatsThis::add(printcap_, conf->comments_.toolTip("printcap"));
+	TQWhatsThis::add(printcapformat_, conf->comments_.toolTip("printcapformat"));
 }
 
 void CupsdServerPage::classChanged(int index)

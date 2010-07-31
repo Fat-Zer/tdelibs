@@ -13,10 +13,10 @@
 #include <stdint.h>
 #endif
 #include <ktempfile.h>
-#include <qcolor.h>
-#include <qcstring.h>
-#include <qfile.h>
-#include <qimage.h>
+#include <tqcolor.h>
+#include <tqcstring.h>
+#include <tqfile.h>
+#include <tqimage.h>
 
 // dirty, but avoids a warning because jasper.h includes jas_config.h.
 #undef PACKAGE
@@ -39,27 +39,27 @@ typedef struct {
 
 
 jas_image_t*
-read_image( const QImageIO* io )
+read_image( const TQImageIO* io )
 {
     jas_stream_t* in = 0;
-    // for QIODevice's other than QFile, a temp. file is used.
+    // for QIODevice's other than TQFile, a temp. file is used.
     KTempFile* tempf = 0;
 
-    QFile* qf = 0;
-    if( ( qf = dynamic_cast<QFile*>( io->ioDevice() ) ) ) {
-        // great, it's a QFile. Let's just take the filename.
-        in = jas_stream_fopen( QFile::encodeName( qf->name() ), "rb" );
+    TQFile* qf = 0;
+    if( ( qf = dynamic_cast<TQFile*>( io->ioDevice() ) ) ) {
+        // great, it's a TQFile. Let's just take the filename.
+        in = jas_stream_fopen( TQFile::encodeName( qf->name() ), "rb" );
     } else {
-        // not a QFile. Copy the whole data to a temp. file.
+        // not a TQFile. Copy the whole data to a temp. file.
         tempf = new KTempFile();
         if( tempf->status() != 0 ) {
             delete tempf;
             return 0;
         } // if
         tempf->setAutoDelete( true );
-        QFile* out = tempf->file();
+        TQFile* out = tempf->file();
         // 4096 (=4k) is a common page size.
-        QByteArray b( 4096 );
+        TQByteArray b( 4096 );
         Q_LONG size;
         // 0 or -1 is EOF / error
         while( ( size = io->ioDevice()->readBlock( b.data(), 4096 ) ) > 0 ) {
@@ -69,7 +69,7 @@ read_image( const QImageIO* io )
         // flush everything out to disk
         out->flush();
 
-        in = jas_stream_fopen( QFile::encodeName( tempf->name() ), "rb" );
+        in = jas_stream_fopen( TQFile::encodeName( tempf->name() ), "rb" );
     } // else
     if( !in ) {
         delete tempf;
@@ -98,7 +98,7 @@ convert_colorspace( gs_t& gs )
 } // convert_colorspace
 
 static bool
-render_view( gs_t& gs, QImage& qti )
+render_view( gs_t& gs, TQImage& qti )
 {
     if((gs.cmptlut[0] = jas_image_getcmptbytype(gs.altimage,
                                                 JAS_IMAGE_CT_COLOR(JAS_CLRSPC_CHANIND_RGB_R))) < 0 ||
@@ -147,7 +147,7 @@ render_view( gs_t& gs, QImage& qti )
 
 
 KDE_EXPORT void
-kimgio_jp2_read( QImageIO* io )
+kimgio_jp2_read( TQImageIO* io )
 {
 	if( jas_init() ) return;
 
@@ -156,7 +156,7 @@ kimgio_jp2_read( QImageIO* io )
 
 	if( !convert_colorspace( gs ) ) return;
 
-	QImage image;
+	TQImage image;
 	render_view( gs, image );
 
 	if( gs.image ) jas_image_destroy( gs.image );
@@ -168,7 +168,7 @@ kimgio_jp2_read( QImageIO* io )
 
 
 static jas_image_t*
-create_image( const QImage& qi )
+create_image( const TQImage& qi )
 {
     // prepare the component parameters
     jas_image_cmptparm_t* cmptparms = new jas_image_cmptparm_t[ 3 ];
@@ -198,7 +198,7 @@ create_image( const QImage& qi )
 
 
 static bool
-write_components( jas_image_t* ji, const QImage& qi )
+write_components( jas_image_t* ji, const TQImage& qi )
 {
     const unsigned height = qi.height();
     const unsigned width = qi.width();
@@ -231,7 +231,7 @@ write_components( jas_image_t* ji, const QImage& qi )
 } // write_components
 
 KDE_EXPORT void
-kimgio_jp2_write( QImageIO* io )
+kimgio_jp2_write( TQImageIO* io )
 {
 	if( jas_init() ) return;
 
@@ -239,9 +239,9 @@ kimgio_jp2_write( QImageIO* io )
 	// temporary file otherwise.
 	jas_stream_t* stream = 0;
 
-	QFile* qf = 0;
+	TQFile* qf = 0;
 	KTempFile* ktempf = 0;
-	if( ( qf = dynamic_cast<QFile*>( io->ioDevice() ) ) ) {
+	if( ( qf = dynamic_cast<TQFile*>( io->ioDevice() ) ) ) {
 		// jas_stream_fdopen works here, but not when reading...
 		stream = jas_stream_fdopen( dup( qf->handle() ), "w" );
 	} else {
@@ -272,8 +272,8 @@ kimgio_jp2_write( QImageIO* io )
 	// - rate=#B => the resulting file size is about # bytes
 	// - rate=0.0 .. 1.0 => the resulting file size is about the factor times
 	//                      the uncompressed size
-	QString rate;
-	QTextStream ts( &rate, IO_WriteOnly );
+	TQString rate;
+	TQTextStream ts( &rate, IO_WriteOnly );
 	ts << "rate="
 		<< ( (io->quality() < 0) ? DEFAULT_RATE : io->quality() / 100.0F );
 	int i = jp2_encode( ji, stream, rate.utf8().data() );
@@ -285,9 +285,9 @@ kimgio_jp2_write( QImageIO* io )
 
 	if( ktempf ) {
 		// We've written to a tempfile. Copy the data to the final destination.
-		QFile* in = ktempf->file();
+		TQFile* in = ktempf->file();
 
-		QByteArray b( 4096 );
+		TQByteArray b( 4096 );
 		Q_LONG size;
 
 		// seek to the beginning of the file.

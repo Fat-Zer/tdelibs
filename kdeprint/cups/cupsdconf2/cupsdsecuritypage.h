@@ -21,7 +21,7 @@
 #define CUPSDSECURITYPAGE_H
 
 #include "cupsdpage.h"
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 class QLineEdit;
 class EditList;
@@ -33,10 +33,10 @@ class CupsdSecurityPage : public CupsdPage
 	Q_OBJECT
 
 public:
-	CupsdSecurityPage(QWidget *parent = 0, const char *name = 0);
+	CupsdSecurityPage(TQWidget *parent = 0, const char *name = 0);
 
-	bool loadConfig(CupsdConf*, QString&);
-	bool saveConfig(CupsdConf*, QString&);
+	bool loadConfig(CupsdConf*, TQString&);
+	bool saveConfig(CupsdConf*, TQString&);
 	void setInfos(CupsdConf*);
 
 protected slots:
@@ -50,7 +50,7 @@ private:
 	QDirLineEdit	*encryptcert_, *encryptkey_;
 	EditList	*locations_;
 
-	QPtrList<CupsLocation>	locs_;
+	TQPtrList<CupsLocation>	locs_;
 };
 
 #endif

@@ -25,7 +25,7 @@
 #ifndef KSERVERSOCKET_H
 #define KSERVERSOCKET_H
 
-#include <qobject.h>
+#include <tqobject.h>
 #include "ksocketbase.h"
 
 namespace KNetwork {
@@ -48,10 +48,10 @@ class KServerSocketPrivate;
  *
  * A typical example would look like:
  * \code
- *   QString service = "http";
+ *   TQString service = "http";
  *   KServerSocket *ss = new KServerSocket(service);
- *   connect(ss, SIGNAL(readyAccept()), this, SLOT(slotReadyAccept()));
- *   connect(ss, SIGNAL(gotError(int)), this, SLOT(slotSocketError(int)));
+ *   connect(ss, TQT_SIGNAL(readyAccept()), this, TQT_SLOT(slotReadyAccept()));
+ *   connect(ss, TQT_SIGNAL(gotError(int)), this, TQT_SLOT(slotSocketError(int)));
  *   ss->listen();
  * \endcode
  * 
@@ -74,7 +74,7 @@ class KServerSocketPrivate;
  *   ss->setFamily(KResolver::InetFamily);
  *   bool found = false;
  *   for( unsigned int port = firstport; port <= lastport; ++port) {
- *     ss->setAddress( QString::number( port ) );
+ *     ss->setAddress( TQString::number( port ) );
  *     bool success = ss->listen();
  *     if( found = ( success && ss->error() == 
  *                              KSocketBase::NoError ) )
@@ -84,8 +84,8 @@ class KServerSocketPrivate;
  *   if( !found ) {
  *     // Couldn't connect to any port.
  *   } else {
- *     connect(ss, SIGNAL(readyAccept()), this, SLOT(slotReadyAccept()));
- *     connect(ss, SIGNAL(gotError(int)), this, SLOT(slotSocketError(int)));
+ *     connect(ss, TQT_SIGNAL(readyAccept()), this, TQT_SLOT(slotReadyAccept()));
+ *     connect(ss, TQT_SIGNAL(gotError(int)), this, TQT_SLOT(slotSocketError(int)));
  *     ss->listen();
  *   }
  * \endcode
@@ -104,7 +104,7 @@ class KServerSocketPrivate;
  * @see KNetwork::KStreamSocket, KNetwork::KBufferedSocket
  * @author Thiago Macieira <thiago@kde.org>
  */
-class KDECORE_EXPORT KServerSocket: public QObject, public KPassiveSocketBase
+class KDECORE_EXPORT KServerSocket: public TQObject, public KPassiveSocketBase
 {
   Q_OBJECT
 public:
@@ -115,10 +115,10 @@ public:
    * bind to all interfaces on this node and the port will be selected by the
    * operating system.
    *
-   * @param parent		the parent QObject object
+   * @param parent		the parent TQObject object
    * @param name		the name of this object
    */
-  KServerSocket(QObject* parent = 0L, const char *name = 0L);
+  KServerSocket(TQObject* parent = 0L, const char *name = 0L);
 
   /**
    * Construct this object specifying the service to listen on.
@@ -134,10 +134,10 @@ public:
    * See RFC 1700 for more information on services.
    *
    * @param service		the service name to listen on
-   * @param parent		the parent QObject object
+   * @param parent		the parent TQObject object
    * @param name		the name of this object
    */
-  KServerSocket(const QString& service, QObject* parent = 0L, const char *name = 0L);
+  KServerSocket(const TQString& service, TQObject* parent = 0L, const char *name = 0L);
 
   /**
    * Construct this object specifying the node and service names to listen on.
@@ -154,11 +154,11 @@ public:
    *
    * @param node		the node to bind to
    * @param service		the service port to listen on
-   * @param parent		the parent QObject object
+   * @param parent		the parent TQObject object
    * @param name		the name of this object
    */
-  KServerSocket(const QString& node, const QString& service,
-		QObject* parent = 0L, const char *name = 0L);
+  KServerSocket(const TQString& node, const TQString& service,
+		TQObject* parent = 0L, const char *name = 0L);
 
   /**
    * Destructor. This will close the socket, if open.
@@ -227,7 +227,7 @@ public:
    *
    * @param service		the service name to listen on
    */
-  void setAddress(const QString& service);
+  void setAddress(const TQString& service);
 
   /**
    * @overload
@@ -244,7 +244,7 @@ public:
    * @param node		the node to bind to
    * @param service		the service port to listen on
    */
-  void setAddress(const QString& node, const QString& service);
+  void setAddress(const TQString& node, const TQString& service);
 
   /**
    * Sets the timeout for accepting. When you call @ref accept,
@@ -287,7 +287,7 @@ public:
    * @param node	the nodename
    * @param service	the service
    */
-  virtual bool bind(const QString& node, const QString& service);
+  virtual bool bind(const TQString& node, const TQString& service);
 
   /**
    * Binds the socket to the given service name.
@@ -295,7 +295,7 @@ public:
    *
    * @param service	the service
    */
-  virtual bool bind(const QString& service);
+  virtual bool bind(const TQString& service);
 
   /**
    * Binds the socket to the addresses previously set with @ref setAddress.
@@ -307,7 +307,7 @@ public:
   /**
    * Connect this socket to this specific address. Reimplemented from KSocketBase.
    *
-   * Unlike @ref bind(const QString&, const QString&) above, this function
+   * Unlike @ref bind(const TQString&, const TQString&) above, this function
    * really does bind the socket. No lookup is performed. The @ref bound signal
    * will be emitted.
    */

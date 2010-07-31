@@ -99,7 +99,7 @@ public:
     virtual short lineHeight( bool firstLine ) const;
     virtual short baselinePosition( bool firstLine ) const;
 
-    virtual void setPixmap( const QPixmap &, const QRect&, CachedImage *);
+    virtual void setPixmap( const TQPixmap &, const TQRect&, CachedImage *);
 
     virtual void calcWidth();
 
@@ -116,7 +116,7 @@ public:
 protected:
     friend class RenderListItem;
 
-    QString m_item;
+    TQString m_item;
     CachedImage *m_listImage;
     short m_markerWidth;
     RenderListItem* m_listItem;

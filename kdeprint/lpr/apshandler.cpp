@@ -26,10 +26,10 @@
 #include "util.h"
 #include "kprinter.h"
 
-#include <qfile.h>
-#include <qdir.h>
-#include <qtextstream.h>
-#include <qvaluestack.h>
+#include <tqfile.h>
+#include <tqdir.h>
+#include <tqtextstream.h>
+#include <tqvaluestack.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -50,8 +50,8 @@ bool ApsHandler::validate(PrintcapEntry *entry)
 
 KMPrinter* ApsHandler::createPrinter(PrintcapEntry *entry)
 {
-	entry->comment = QString::fromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
-	entry->postcomment = QString::fromLatin1("# APS%1_END - don't delete this").arg(m_counter);
+	entry->comment = TQString::fromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
+	entry->postcomment = TQString::fromLatin1("# APS%1_END - don't delete this").arg(m_counter);
 	m_counter++;
 	return LprHandler::createPrinter(entry);
 }
@@ -62,7 +62,7 @@ bool ApsHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool shor
 	{
 		if (!shortmode)
 		{
-			QMap<QString,QString>	opts = loadResources(entry);
+			TQMap<TQString,TQString>	opts = loadResources(entry);
 			if (opts.contains("PRINTER"))
 			{
 				prt->setDescription(i18n("APS Driver (%1)").arg(opts["PRINTER"]));
@@ -71,12 +71,12 @@ bool ApsHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool shor
 		}
 		if (prt->device().isEmpty())
 		{
-			QString prot;
+			TQString prot;
 			QString	smbname(sysconfDir() + "/" + prt->printerName() + "/smbclient.conf");
 			QString	ncpname(sysconfDir() + "/" + prt->printerName() + "/netware.conf");
-			if (QFile::exists(smbname))
+			if (TQFile::exists(smbname))
 			{
-				QMap<QString,QString>	opts = loadVarFile(smbname);
+				TQMap<TQString,TQString>	opts = loadVarFile(smbname);
 				if (opts.count() == 0)
 					prt->setDevice("smb://<unknown>/<unknown>");
 				else
@@ -90,15 +90,15 @@ bool ApsHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool shor
 				}
 				prot = "smb";
 			}
-			else if (QFile::exists(ncpname))
+			else if (TQFile::exists(ncpname))
 			{
-				QMap<QString,QString>	opts = loadVarFile(ncpname);
+				TQMap<TQString,TQString>	opts = loadVarFile(ncpname);
 				if (opts.count() == 0)
 					prt->setDevice("ncp://<unknown>/<unknown>");
 				else
 				{
-					QString uri = buildSmbURI( 
-							QString::null,
+					TQString uri = buildSmbURI( 
+							TQString::null,
 							opts[ "NCP_SERVER" ],
 							opts[ "NCP_PRINTER" ],
 							opts[ "NCP_USER" ],
@@ -116,29 +116,29 @@ bool ApsHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool shor
 	return false;
 }
 
-QString ApsHandler::sysconfDir()
+TQString ApsHandler::sysconfDir()
 {
-	return QFile::encodeName("/etc/apsfilter");
+	return TQFile::encodeName("/etc/apsfilter");
 }
 
-QString ApsHandler::shareDir()
+TQString ApsHandler::shareDir()
 {
 	return driverDirectory();
 }
 
-QString ApsHandler::driverDirInternal()
+TQString ApsHandler::driverDirInternal()
 {
 	return locateDir("apsfilter/setup", "/usr/share:/usr/local/share:/opt/share");
 }
 
-QMap<QString,QString> ApsHandler::loadResources(PrintcapEntry *entry)
+TQMap<TQString,TQString> ApsHandler::loadResources(PrintcapEntry *entry)
 {
-	return loadVarFile(sysconfDir() + "/" + (entry ? entry->name : QString::null) + "/apsfilterrc");
+	return loadVarFile(sysconfDir() + "/" + (entry ? entry->name : TQString::null) + "/apsfilterrc");
 }
 
-QMap<QString,QString> ApsHandler::loadVarFile(const QString& filename)
+TQMap<TQString,TQString> ApsHandler::loadVarFile(const TQString& filename)
 {
-	QMap<QString,QString>	opts;
+	TQMap<TQString,TQString>	opts;
 	QFile	f(filename);
 	if (f.open(IO_ReadOnly))
 	{
@@ -165,7 +165,7 @@ DrMain* ApsHandler::loadDriver(KMPrinter *prt, PrintcapEntry *entry, bool config
 	DrMain	*driver = loadApsDriver(config);
 	if (driver /* && config */ )    // Load resources in all case, to get the correct page size
 	{
-		QMap<QString,QString>	opts = loadResources(entry);
+		TQMap<TQString,TQString>	opts = loadResources(entry);
 		if ( !config && opts.contains( "PAPERSIZE" ) )
 		{
 			// this is needed to keep applications informed
@@ -185,7 +185,7 @@ DrMain* ApsHandler::loadDriver(KMPrinter *prt, PrintcapEntry *entry, bool config
 	return driver;
 }
 
-DrMain* ApsHandler::loadDbDriver(const QString& s)
+DrMain* ApsHandler::loadDbDriver(const TQString& s)
 {
 	int	p = s.find('/');
 	DrMain	*driver = loadApsDriver(true);
@@ -224,8 +224,8 @@ PrintcapEntry* ApsHandler::createEntry(KMPrinter *prt)
 	if (prot == "smb" || prot == "ncp")
 	{
 		// either "smb" or "ncp"
-		QFile::remove(path + "/smbclient.conf");
-		QFile::remove(path + "/netware.conf");
+		TQFile::remove(path + "/smbclient.conf");
+		TQFile::remove(path + "/netware.conf");
 		QFile	f;
 		if (prot == "smb")
 		{
@@ -233,7 +233,7 @@ PrintcapEntry* ApsHandler::createEntry(KMPrinter *prt)
 			if (f.open(IO_WriteOnly))
 			{
 				QTextStream	t(&f);
-				QString work, server, printer, user, passwd;
+				TQString work, server, printer, user, passwd;
 				if ( splitSmbURI( prt->device(), work, server, printer, user, passwd ) )
 				{
 					if (work.isEmpty())
@@ -270,8 +270,8 @@ PrintcapEntry* ApsHandler::createEntry(KMPrinter *prt)
 			f.setName(path + "/netware.conf");
 			if (f.open(IO_WriteOnly))
 			{
-				QString work, server, printer, user, passwd;
-				QString uri = prt->device();
+				TQString work, server, printer, user, passwd;
+				TQString uri = prt->device();
 				uri.replace( 0, 3, "smb" );
 				if ( splitSmbURI( uri, work, server, printer, user, passwd ) )
 				{
@@ -297,7 +297,7 @@ PrintcapEntry* ApsHandler::createEntry(KMPrinter *prt)
 			}
 		}
 		// change file permissions
-		::chmod(QFile::encodeName(f.name()).data(), S_IRUSR|S_IWUSR);
+		::chmod(TQFile::encodeName(f.name()).data(), S_IRUSR|S_IWUSR);
 	}
 	PrintcapEntry	*entry = LprHandler::createEntry(prt);
 	if (!entry)
@@ -309,8 +309,8 @@ PrintcapEntry* ApsHandler::createEntry(KMPrinter *prt)
 	entry->addField("af", Field::String, sd + "/acct");
 	entry->addField("lf", Field::String, sd + "/log");
 	entry->addField("if", Field::String, sysconfDir() + "/basedir/bin/apsfilter");
-	entry->comment = QString::fromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
-	entry->postcomment = QString::fromLatin1("# APS%1_END").arg(m_counter);
+	entry->comment = TQString::fromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
+	entry->postcomment = TQString::fromLatin1("# APS%1_END").arg(m_counter);
 	m_counter++;
 	return entry;
 }
@@ -328,15 +328,15 @@ bool ApsHandler::savePrinterDriver(KMPrinter *prt, PrintcapEntry *entry, DrMain 
 		QTextStream	t(&f);
 		t << "# File generated by KDEPrint" << endl;
 		t << "PRINTER='" << driver->get("gsdriver") << "'" << endl;
-		QValueStack<DrGroup*>	stack;
+		TQValueStack<DrGroup*>	stack;
 		stack.push(driver);
 		while (stack.count() > 0)
 		{
 			DrGroup	*grp = stack.pop();
-			QPtrListIterator<DrGroup>	git(grp->groups());
+			TQPtrListIterator<DrGroup>	git(grp->groups());
 			for (; git.current(); ++git)
 				stack.push(git.current());
-			QPtrListIterator<DrBase>	oit(grp->options());
+			TQPtrListIterator<DrBase>	oit(grp->options());
 			QString	value;
 			for (; oit.current(); ++oit)
 			{
@@ -372,10 +372,10 @@ bool ApsHandler::savePrinterDriver(KMPrinter *prt, PrintcapEntry *entry, DrMain 
 bool ApsHandler::removePrinter(KMPrinter*, PrintcapEntry *entry)
 {
 	QString	path(sysconfDir() + "/" + entry->name);
-	QFile::remove(path + "/smbclient.conf");
-	QFile::remove(path + "/netware.conf");
-	QFile::remove(path + "/apsfilterrc");
-	if (!QDir(path).rmdir(path))
+	TQFile::remove(path + "/smbclient.conf");
+	TQFile::remove(path + "/netware.conf");
+	TQFile::remove(path + "/apsfilterrc");
+	if (!TQDir(path).rmdir(path))
 	{
 		manager()->setErrorMsg(i18n("Unable to remove directory %1.").arg(path));
 		return false;
@@ -383,11 +383,11 @@ bool ApsHandler::removePrinter(KMPrinter*, PrintcapEntry *entry)
 	return true;
 }
 
-QString ApsHandler::printOptions(KPrinter *printer)
+TQString ApsHandler::printOptions(KPrinter *printer)
 {
 	QString	optstr;
-	QMap<QString,QString>	opts = printer->options();
-	for (QMap<QString,QString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
+	TQMap<TQString,TQString>	opts = printer->options();
+	for (TQMap<TQString,TQString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
 	{
 		if (it.key().startsWith("kde-") || it.key().startsWith("_kde-") || it.key().startsWith( "app-" ))
 			continue;

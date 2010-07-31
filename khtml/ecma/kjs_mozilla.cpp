@@ -73,9 +73,9 @@ Value MozillaSidebarExtensionFunc::tryCall(ExecState *exec, Object &thisObj, con
   // addPanel()  id == 0
   KParts::BrowserExtension *ext = part->browserExtension();
   if (ext) {
-    QString url, name;
+    TQString url, name;
     if (args.size() == 1) {  // I've seen this, don't know if it's legal.
-      name = QString::null;
+      name = TQString::null;
       url = args[0].toString(exec).qstring();
     } else if (args.size() == 2 || args.size() == 3) {
       name = args[0].toString(exec).qstring();

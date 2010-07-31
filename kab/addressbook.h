@@ -28,12 +28,12 @@ class QStringList;
 class KeyNameMap; 
 
 #include <list>
-#include <qframe.h>
-#include <qdatetime.h>
-#include <qstring.h>
-#include <qsize.h>
-#include <qvariant.h>
-#include <qmap.h>
+#include <tqframe.h>
+#include <tqdatetime.h>
+#include <tqstring.h>
+#include <tqsize.h>
+#include <tqvariant.h>
+#include <tqmap.h>
 
 /**
  * The class KabKey is used to select entries out of the database file.
@@ -49,22 +49,22 @@ public:
   /**
    * Get the key as a QCString
    */
-  QCString getKey() const;
+  TQCString getKey() const;
   /**
    * Set this key
    */
-  void setKey(const QCString&);
+  void setKey(const TQCString&);
 protected:
   /**
    * The key of the in this database
    */
-  QCString key;
+  TQCString key;
 
   class KabKeyPrivate;
   KabKeyPrivate *d;
 };
 
-class CategoriesMap : public QMap<int, QString>
+class CategoriesMap : public TQMap<int, TQString>
 {
 };
 
@@ -167,7 +167,7 @@ class CategoriesMap : public QMap<int, QString>
  *  mirror map nedds to be changed. 
  *
  *  \par The view
- *  If you display an AddressBook object (that is a derived QFrame), 
+ *  If you display an AddressBook object (that is a derived TQFrame), 
  *  it may show an entry 
  *  of the database that you might select. The entry you hand over to the method
  *  ::displayEntry does not need to be contained in the currently loaded file.
@@ -275,7 +275,7 @@ public:
    *  <DT>firstname<DT><DD>The first name. </DD>
    *  <DT>middlename<DT><DD>The middle name. </DD>
    *  <DT>lastname<DT><DD>The last name. </DD>
-   *  <DT>birthday<DT><DD>The birthday (a QDate). </DD>
+   *  <DT>birthday<DT><DD>The birthday (a TQDate). </DD>
    *  <DT>comment<DT><DD>A free form comment. </DD>
    *  <DT>talk<DT><DD>The talk addresses (a string list). </DD>
    *  <DT>emails<DT><DD>The email addresses (a string list). </DD>
@@ -344,34 +344,34 @@ public:
       /** Query the literal, translated name of the field given by its
 	  key. 
 	  @return false if key is not defined */
-      static bool nameOfField(const char* key, QString& value);
+      static bool nameOfField(const char* key, TQString& value);
       /** Get a field by its field name. Field names are defined in
 	  @see Fields. Since there are different file types a field
-	  may be represented with, a QVariant is returned. */
-      ErrorCode get(const char* key, QVariant&);
+	  may be represented with, a TQVariant is returned. */
+      ErrorCode get(const char* key, TQVariant&);
       // ----- the following members represent the fields:
       /** The headline for this address. */
-      QString headline; 
+      TQString headline; 
       /** The position of the person at this address. */
-      QString position; 
+      TQString position; 
       /** The organization of the person at this address. */
-      QString org; 
+      TQString org; 
       /** The org unit of the person at this address. */
-      QString orgUnit;  
+      TQString orgUnit;  
       /** The org subunit of the person at this address. */
-      QString orgSubUnit; 
+      TQString orgSubUnit; 
       /** The description for delivering. */
-      QString deliveryLabel; 
+      TQString deliveryLabel; 
       /** Street, with house number. */
-      QString address; 
+      TQString address; 
       /** Zip or postal code. */
-      QString zip;
+      TQString zip;
       /** The town. */
-      QString town; 
+      TQString town; 
       /** The country for federal states. */
-      QString country;
+      TQString country;
       /** The state for federal states. */ 
-      QString state; 
+      TQString state; 
     protected:
       static KeyNameMap *fields;
     };
@@ -396,38 +396,38 @@ public:
     /** Query the literal, translated name of the field given by its
 	key. 
 	@return false if key is not defined */
-    static bool nameOfField(const char* key, QString& value);
+    static bool nameOfField(const char* key, TQString& value);
     /** Get a field by its field name. Field names are defined in
 	@see Fields. Since there are different file types a field
-	may be represented with, a QVariant is returned. */
-    ErrorCode get(const char* key, QVariant&);
+	may be represented with, a TQVariant is returned. */
+    ErrorCode get(const char* key, TQVariant&);
     // members:
     // this parts are assumed to be unique for every entry:
-    QString title; /**< The title of the person. */
-    QString rank; /**< The rank of the person. */
-    QString fn; /**< The formatted name of the person. */
-    QString nameprefix; /**< A possibly name prefix for that person. */
-    QString firstname; /**< The first name of the person. */
-    QString middlename; /**< The middle name of the person. */
-    QString lastname; /**< The last name of the person. */
-    QDate birthday; /**< The birthday of this person. */
-    QString comment; /**< The comment. */
-    QStringList talk;  /**< The talk addresses. */
-    QStringList emails; /**< The email addresses. */
-    QStringList keywords; /**< The user defined keywords for searching. */
+    TQString title; /**< The title of the person. */
+    TQString rank; /**< The rank of the person. */
+    TQString fn; /**< The formatted name of the person. */
+    TQString nameprefix; /**< A possibly name prefix for that person. */
+    TQString firstname; /**< The first name of the person. */
+    TQString middlename; /**< The middle name of the person. */
+    TQString lastname; /**< The last name of the person. */
+    TQDate birthday; /**< The birthday of this person. */
+    TQString comment; /**< The comment. */
+    TQStringList talk;  /**< The talk addresses. */
+    TQStringList emails; /**< The email addresses. */
+    TQStringList keywords; /**< The user defined keywords for searching. */
     /**
      * Telephon numbers and types. This list contains combinations of telephone
      * numbers and the types of the phones, in this order. See enum
      * Telephone above.
      */
-    QStringList telephone; 
-    QStringList URLs; /**< The home or related web pages of this person. */
-    QString user1; /**< The first user-declared field. */
-    QString user2; /**< The second user-declared field. */
-    QString user3; /**< The third user-declared field. */
-    QString user4; /**< The fourth user-declared field. */    
-    QStringList custom;
-    QStringList categories; /**< The categories this entry is assigned to. */
+    TQStringList telephone; 
+    TQStringList URLs; /**< The home or related web pages of this person. */
+    TQString user1; /**< The first user-declared field. */
+    TQString user2; /**< The second user-declared field. */
+    TQString user3; /**< The third user-declared field. */
+    TQString user4; /**< The fourth user-declared field. */    
+    TQStringList custom;
+    TQStringList categories; /**< The categories this entry is assigned to. */
   protected:
     static KeyNameMap *fields;
   };
@@ -435,7 +435,7 @@ public:
    * The constructor. If \e load is true, the user standard file will
    * automatically be loaded into the object.
    */
-  AddressBook(QWidget* parent=0, const char* name=0, bool load=true);
+  AddressBook(TQWidget* parent=0, const char* name=0, bool load=true);
   ~AddressBook(); /**< The destructor. */
   /**
    * Get the internal state of the object. 
@@ -448,14 +448,14 @@ public:
    * Load the file with the given path. An empty file name reloads the 
    * currently opened file.
    */
-  ErrorCode load(const QString& filename=QString::null);
+  ErrorCode load(const TQString& filename=TQString::null);
   /**
    * Save the file to the given path and file name.  An empty file name saves 
    * to the file where the database has been read from.
    * If force is true, the method will switch to r/w mode for saving and
    * back.
    */
-  ErrorCode save(const QString& filename=QString::null, bool force=false);
+  ErrorCode save(const TQString& filename=TQString::null, bool force=false);
   /**
    * Close this file. 
    * ::closeFile assures sure that the ::data object is reset no matter of the 
@@ -511,12 +511,12 @@ public:
     *    name, f. a. [with reverse==true].
     * If there is no entry with this key, the method returns ::NoSuchEntry.
     */
-  ErrorCode literalName(const KabKey& key, QString& text,
+  ErrorCode literalName(const KabKey& key, TQString& text,
 			bool reverse=false, bool initials=false);
   /**
    * This is an overloaded method that differs only in the arguments it takes.
    */
-  ErrorCode literalName(const Entry& entry, QString& text,
+  ErrorCode literalName(const Entry& entry, TQString& text,
 			bool reverse=false, bool initials=false);
   /**
    * Get the key of the item in the selector with the given index.
@@ -533,7 +533,7 @@ public:
    * call this method when receiving the signal ::changed and display the list
    * in the combo.
    */
-  ErrorCode getListOfNames(QStringList*, bool reverse=true, bool initials=true);
+  ErrorCode getListOfNames(TQStringList*, bool reverse=true, bool initials=true);
   /**
    * Hand over the configuration database. Careful!
    */
@@ -560,7 +560,7 @@ public:
    * empty, it creates the users standard data file. The method does not load
    * the new database.
    */
-  ErrorCode createNew(const QString& filename=QString::null);
+  ErrorCode createNew(const TQString& filename=TQString::null);
   /**
    * Creates the local configuration file. The filename is fixed to
    * \c kab.config, it will be created in the local kab directory
@@ -572,25 +572,25 @@ public:
   ErrorCode createConfigFile();
   ErrorCode loadConfigFile(); /**< Load the local configuration file. */
   // ErrorCode configureKab(); /**< Open the configuration dialog for the KabAPI. */
-  // QSize sizeHint();  /**< The preferred (minimal) size of the view. */ // ni
+  // TQSize sizeHint();  /**< The preferred (minimal) size of the view. */ // ni
   /**
    * This method parses a vCard and creates an Entry object from it.
    */
-  ErrorCode makeEntryFromVCard(const QString& card, Entry&);
+  ErrorCode makeEntryFromVCard(const TQString& card, Entry&);
   /**
    * This method creates a vCard string from an entry.
    */
-  ErrorCode makeVCardFromEntry(const Entry& entry, const QString& card);
+  ErrorCode makeVCardFromEntry(const Entry& entry, const TQString& card);
   /**
    * Returns the complete path to the user standard file. An empty path
    * indicates an error, but this should not happen. It is NOT ensured
    * that the file exists.
    */
-  QString getStandardFileName();
+  TQString getStandardFileName();
   /**
    * Call this to get a telephone type translated to the locale.
    */
-  static QString phoneType(AddressBook::Telephone);
+  static TQString phoneType(AddressBook::Telephone);
   /**
    * Query the entry categories defined for this address
    * book. Categories may differ between addressbooks.
@@ -604,7 +604,7 @@ public:
   /**
    * Query the real name of a category by its index.
    */
-  ErrorCode category(int index, QString&);
+  ErrorCode category(int index, TQString&);
   /**
    * Query the category section. This is the "raw" storage of the defined 
    * categories. It is always defined (or will be created if you have an old 
@@ -617,7 +617,7 @@ public:
 #ifdef KDE_NO_COMPAT
 private:
 #endif
-    QString getStandardFilename() { return getStandardFileName(); };
+    TQString getStandardFilename() { return getStandardFileName(); };
 
 protected:
   QConfigDB *config; /**< The configuration database. */
@@ -632,7 +632,7 @@ protected:
    * Returns true if both pathes point to the same file.
    *  The method resolves relative file names to find this out.
    */
-  bool isSameFile(const QString& a, const QString& b);
+  bool isSameFile(const TQString& a, const TQString& b);
   /**
    * Parse the section and copy its contents into \a entry.
    * The method expects a subsection called \e addresses that contains a
@@ -681,7 +681,7 @@ protected:
    * Set the background image. Kab will store a deep copy of the image.
    * If the image is a null image nothing will be displayed.
    */
-  // void setBackground(const QImage&);
+  // void setBackground(const TQImage&);
   /**
    * Enable or disable the background image.
    */
@@ -721,8 +721,8 @@ public slots:
   // ----------------------------------------------------------------------------
 signals:
   void changed(); /**< The entries have changed, update the selector. */
-  void setStatus(const QString&); /**< This is kab radio with the news... */
-  void newFile(const QString&); /**< Notifies changes of the file name. */
+  void setStatus(const TQString&); /**< This is kab radio with the news... */
+  void newFile(const TQString&); /**< Notifies changes of the file name. */
   // ############################################################################
 
 private: 

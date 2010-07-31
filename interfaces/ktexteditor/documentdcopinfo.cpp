@@ -15,7 +15,7 @@ DocumentInfoDCOPInterface::~DocumentInfoDCOPInterface()
 
 }
 
-QString DocumentInfoDCOPInterface::mimeType()
+TQString DocumentInfoDCOPInterface::mimeType()
 {
 	return m_parent->mimeType();
 }
@@ -23,7 +23,7 @@ long  DocumentInfoDCOPInterface::fileSize()
 {
 	return m_parent->fileSize();
 }
-QString DocumentInfoDCOPInterface::niceFileSize()
+TQString DocumentInfoDCOPInterface::niceFileSize()
 {
 	return m_parent->niceFileSize();
 }

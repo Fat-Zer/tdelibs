@@ -31,7 +31,7 @@
 #define _KABOUTDIALOG_H_
 
 #include <kdialogbase.h>
-#include <qstring.h>
+#include <tqstring.h>
 
 class QFrame;
 class QLabel;
@@ -52,33 +52,33 @@ class KDEUI_EXPORT KAboutContainer : public QFrame
   Q_OBJECT
 
   public:
-    KAboutContainer( QWidget *parent=0, const char *name=0,
+    KAboutContainer( TQWidget *parent=0, const char *name=0,
 		     int margin=0, int spacing=0,
 		     int childAlignment = AlignCenter,
 		     int innerAlignment = AlignCenter );
 
-    void addWidget( QWidget *widget );
-    void addPerson( const QString &name, const QString &email,
-		    const QString &url, const QString &task,
+    void addWidget( TQWidget *widget );
+    void addPerson( const TQString &name, const TQString &email,
+		    const TQString &url, const TQString &task,
 		    bool showHeader = false, bool showframe = false,
 		    bool showBold = false );
-    void addTitle(  const QString &title, int alignment=AlignLeft,
+    void addTitle(  const TQString &title, int alignment=AlignLeft,
 		    bool showframe = false, bool showBold = false );
-    void addImage( const QString &fileName, int alignment=AlignLeft );
+    void addImage( const TQString &fileName, int alignment=AlignLeft );
 
-    virtual QSize sizeHint( void ) const;
-    virtual QSize minimumSizeHint( void ) const;
+    virtual TQSize sizeHint( void ) const;
+    virtual TQSize minimumSizeHint( void ) const;
 
   protected:
-    virtual void childEvent( QChildEvent *e );
+    virtual void childEvent( TQChildEvent *e );
 
   signals:
-    void urlClick( const QString &url );
-    void mailClick( const QString &name, const QString &address );
+    void urlClick( const TQString &url );
+    void mailClick( const TQString &name, const TQString &address );
 
 
   private:
-    QVBoxLayout *mVbox;
+    TQVBoxLayout *mVbox;
     int mAlignment;
     KAboutContainerPrivate* const d;
 };
@@ -94,52 +94,52 @@ class KDEUI_EXPORT KAboutContributor : public QFrame
   Q_OBJECT
 
   public:
-    KAboutContributor( QWidget *parent=0, const char *name=0,
-		       const QString &username=QString::null,
-		       const QString &email=QString::null,
-		       const QString &url=QString::null,
-		       const QString &work=QString::null,
+    KAboutContributor( TQWidget *parent=0, const char *name=0,
+		       const TQString &username=TQString::null,
+		       const TQString &email=TQString::null,
+		       const TQString &url=TQString::null,
+		       const TQString &work=TQString::null,
 		       bool showHeader=false, bool showFrame=true,
 		       bool showBold=false );
 
-    void setName( const QString &text, const QString &header=QString::null,
+    void setName( const TQString &text, const TQString &header=TQString::null,
 		  bool update = true );
-    void setEmail( const QString &text, const QString &header=QString::null,
+    void setEmail( const TQString &text, const TQString &header=TQString::null,
 		   bool update = true );
-    void setURL( const QString &text, const QString &header=QString::null,
+    void setURL( const TQString &text, const TQString &header=TQString::null,
 		 bool update = true );
-    void setWork( const QString &text, const QString &header=QString::null,
+    void setWork( const TQString &text, const TQString &header=TQString::null,
 		  bool update = true );
-    QString getName( void ) const;
-    QString getEmail( void ) const;
-    QString getURL( void ) const;
-    QString getWork( void ) const;
+    TQString getName( void ) const;
+    TQString getEmail( void ) const;
+    TQString getURL( void ) const;
+    TQString getWork( void ) const;
 
-    virtual QSize sizeHint( void ) const;
+    virtual TQSize sizeHint( void ) const;
 
   protected:
-    virtual void fontChange( const QFont &oldFont );
+    virtual void fontChange( const TQFont &oldFont );
 
   protected slots:
-    void urlClickedSlot( const QString& );
-    void emailClickedSlot( const QString& emailaddress );
+    void urlClickedSlot( const TQString& );
+    void emailClickedSlot( const TQString& emailaddress );
 
   private:
     void updateLayout( void );
 
   signals:
-    void sendEmail(const QString& name, const QString& email);
-    void openURL(const QString& url);
+    void sendEmail(const TQString& name, const TQString& email);
+    void openURL(const TQString& url);
 
   private:
-    QLabel *mLabel[4];
-    QLabel *mText[4];
+    TQLabel *mLabel[4];
+    TQLabel *mText[4];
     bool mShowHeader;
     bool mShowBold;
 
     KAboutContributorPrivate* const d;
 
-	virtual void setName(const char *_name) { QFrame::setName(_name); }
+	virtual void setName(const char *_name) { TQFrame::setName(_name); }
 };
 
 /**
@@ -156,7 +156,7 @@ public:
   /**
    * The Qt constructor.
    */
-  KAboutWidget(QWidget* parent=0, const char* name=0 );
+  KAboutWidget(TQWidget* parent=0, const char* name=0 );
 
   /**
    * Adjust the minimum size (after setting the properties of the image and
@@ -167,65 +167,65 @@ public:
   /**
    * Sets the image as the application logo.
    */
-  void setLogo(const QPixmap&);
+  void setLogo(const TQPixmap&);
   /**
    * Sets the author's name and email address.
    */
-  void setAuthor(const QString& name, const QString& email,
-		 const QString& url, const QString& work);
+  void setAuthor(const TQString& name, const TQString& email,
+		 const TQString& url, const TQString& work);
   /**
    * Sets the maintainers name and email address.
    */
-  void setMaintainer(const QString& name, const QString& email,
-		     const QString& url, const QString& work);
+  void setMaintainer(const TQString& name, const TQString& email,
+		     const TQString& url, const TQString& work);
   /**
    * Shows this person as one of the major contributors.
    */
-  void addContributor(const QString& name, const QString& email,
-		      const QString& url, const QString& work);
+  void addContributor(const TQString& name, const TQString& email,
+		      const TQString& url, const TQString& work);
   /**
    * Sets the text describing the version.
    */
-  void setVersion(const QString& name);
+  void setVersion(const TQString& name);
   // -------------------------------------------------------------------------
 protected slots:
   /**
    * Catches the signals from the contributors elements.
    */
-  void sendEmailSlot(const QString& name, const QString& email);
+  void sendEmailSlot(const TQString& name, const TQString& email);
   /**
    * Catches the clicked URLs.
    */
-  void openURLSlot(const QString& url);
+  void openURLSlot(const TQString& url);
   // -------------------------------------------------------------------------
 signals:
   /**
    * An email address has been selected by the user.
    */
-  void sendEmail(const QString& name, const QString& email);
+  void sendEmail(const TQString& name, const TQString& email);
   /**
    * An URL has been clicked.
    */
-  void openURL(const QString& url);
+  void openURL(const TQString& url);
   // -------------------------------------------------------------------------
 protected:
   // events:
   /**
    * The resize event.
    */
-  void resizeEvent(QResizeEvent*);
+  void resizeEvent(TQResizeEvent*);
   /**
    * The label showing the program version.
    */
-  QLabel *version;
+  TQLabel *version;
   /**
    * The label showing the text "Other contributors:".
    */
-  QLabel *cont;
+  TQLabel *cont;
   /**
    * The frame showing the logo.
    */
-  QLabel *logo;
+  TQLabel *logo;
   /**
    * The application developer.
    */
@@ -241,7 +241,7 @@ protected:
   /**
    * A set of people who contributed to the application.
    */
-  QPtrList<KAboutContributor> contributors;
+  TQPtrList<KAboutContributor> contributors;
   // #########################################################################
   //
 private:
@@ -311,7 +311,7 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
      * addContributor(), or setVersion().
      * The dialog will be laid out automatically.
      */
-    KAboutDialog( QWidget *parent=0, const char *name=0, bool modal=true );
+    KAboutDialog( TQWidget *parent=0, const char *name=0, bool modal=true );
 
    /**
     * The extended constructor. (Constructor II).
@@ -338,12 +338,12 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
     * @param user3 User button3 text.
     *
     */
-    KAboutDialog( int dialogLayout, const QString &caption, int buttonMask,
-		  ButtonCode defaultButton, QWidget *parent=0,
+    KAboutDialog( int dialogLayout, const TQString &caption, int buttonMask,
+		  ButtonCode defaultButton, TQWidget *parent=0,
 		  const char *name=0, bool modal=false, bool separator = false,
-		  const QString &user1 = QString::null,
-		  const QString &user2 = QString::null,
-		  const QString &user3 = QString::null );
+		  const TQString &user1 = TQString::null,
+		  const TQString &user2 = TQString::null,
+		  const TQString &user3 = TQString::null );
 
   /**
    * Adjusts the dialog.
@@ -371,7 +371,7 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    *
    * @param centerParent Center the dialog with respect to this widget.
    */
-  virtual void show( QWidget *centerParent );
+  virtual void show( TQWidget *centerParent );
 
   /**
    * (Constructor II only)
@@ -379,7 +379,7 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    *
    * @param title Title string.
    */
-  void setTitle( const QString &title );
+  void setTitle( const TQString &title );
 
   /**
    * (Constructor II only)
@@ -388,7 +388,7 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    *
    * @param fileName Path to image file.
    */
-  void setImage( const QString &fileName );
+  void setImage( const TQString &fileName );
 
   /**
    * (Constructor II only)
@@ -398,18 +398,18 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    * appletproxy logo with your own pixmap.
    *
    * @param fileName Path to file containing logo data in a format that 
-   *        can be loaded by QPixmap.
+   *        can be loaded by TQPixmap.
    *
    * @since 3.3
    */
-  void setIcon( const QString &fileName ) KDE_DEPRECATED; // KDE4: remove
+  void setIcon( const TQString &fileName ) KDE_DEPRECATED; // KDE4: remove
 
   /**
-   * Overloaded version of setProgramLogo(const QPixmap& pixmap).
+   * Overloaded version of setProgramLogo(const TQPixmap& pixmap).
    *
    * @since 3.4
    */
-  void setProgramLogo( const QString &fileName );
+  void setProgramLogo( const TQString &fileName );
 
   /**
    * (Constructor II only)
@@ -422,7 +422,7 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    *
    * @since 3.4
    */
-  void setProgramLogo( const QPixmap &pixmap );
+  void setProgramLogo( const TQPixmap &pixmap );
 
   /**
    * (Constructor II only)
@@ -432,7 +432,7 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    *
    * @param color Background color.
    */
-  void setImageBackgroundColor( const QColor &color );
+  void setImageBackgroundColor( const TQColor &color );
 
   /**
    * (Constructor II only)
@@ -454,8 +454,8 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    * @param author One or more authors.
    * @param year A string telling when the application was made.
    */
-  void setProduct( const QString &appName, const QString &version,
-		   const QString &author, const QString &year );
+  void setProduct( const TQString &appName, const TQString &version,
+		   const TQString &author, const TQString &year );
 
   /**
    * (Constructor II only)
@@ -469,7 +469,7 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    *        is the minimum number of lines of text that are visible.
    * @return The frame that contains the page.
    */
-  QFrame *addTextPage( const QString &title, const QString &text,
+  TQFrame *addTextPage( const TQString &title, const TQString &text,
                        bool richText=false, int numLines=10 );
 
   /**
@@ -482,7 +482,7 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    *        is the minimum number of lines of text that are visible.
    * @return The frame that contains the page.
    */
-  QFrame *addLicensePage( const QString &title, const QString &text,
+  TQFrame *addLicensePage( const TQString &title, const TQString &text,
                           int numLines=10 );
 
   /**
@@ -497,12 +497,12 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    *        respect to each other.
    * @return The new container.
    */
-  KAboutContainer *addContainerPage( const QString &title,
+  KAboutContainer *addContainerPage( const TQString &title,
     int childAlignment = AlignCenter, int innerAlignment = AlignCenter );
 
   /**
    * (Constructor II only)
-   * Adds a container inside a QScrollView to a tab box. You can add text
+   * Adds a container inside a TQScrollView to a tab box. You can add text
    * and images to a container.
    *
    * @param title Tab name.
@@ -512,7 +512,7 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    *        respect to each other.
    * @return The new container.
    */
-  KAboutContainer *addScrolledContainerPage( const QString &title,
+  KAboutContainer *addScrolledContainerPage( const TQString &title,
     int childAlignment = AlignCenter, int innerAlignment = AlignCenter );
 
   /**
@@ -534,49 +534,49 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    * @param title Tab name
    * @return The new page.
    */
-  QFrame *addPage( const QString &title );
+  TQFrame *addPage( const TQString &title );
 
 
   /**
    * (Constructor I only)
    * Sets the image as the application logo.
    */
-  void setLogo(const QPixmap&);
+  void setLogo(const TQPixmap&);
 
   /**
    * (Constructor I only)
    * Sets the author's name and email address.
    */
-  void setAuthor(const QString& name, const QString& email,
-		 const QString& url, const QString& work);
+  void setAuthor(const TQString& name, const TQString& email,
+		 const TQString& url, const TQString& work);
 
   /**
    * (Constructor I only)
    * Sets the maintainer's name and email address.
    */
-  void setMaintainer(const QString& name, const QString& email,
-		     const QString& url, const QString& work);
+  void setMaintainer(const TQString& name, const TQString& email,
+		     const TQString& url, const TQString& work);
 
   /**
    * (Constructor I only)
    * Show this person as one of the major contributors.
    */
-  void addContributor(const QString& name, const QString& email,
-		      const QString& url, const QString& work);
+  void addContributor(const TQString& name, const TQString& email,
+		      const TQString& url, const TQString& work);
 
   /**
    * (Constructor I only)
    * Sets the text describing the version.
    */
-  void setVersion(const QString& name);
+  void setVersion(const TQString& name);
 
   /**
    * Create a modal dialog with an image in the upper area with a
    * URL link below.
    */
-  static void imageURL( QWidget *parent, const QString &caption,
-			  const QString &path, const QColor &imageColor,
-			  const QString &url );
+  static void imageURL( TQWidget *parent, const TQString &caption,
+			  const TQString &path, const TQColor &imageColor,
+			  const TQString &url );
 
 signals:
   /**
@@ -585,12 +585,12 @@ signals:
    * The application must provide the
    *  functionality.
    */
-  void sendEmail(const QString& name, const QString& email);
+  void sendEmail(const TQString& name, const TQString& email);
 
   /**
    * Open the selected URL.
    */
-  void openURL(const QString& url);
+  void openURL(const TQString& url);
   // ----------------------------------------------------------------------------
 protected:
   /**
@@ -609,19 +609,19 @@ protected slots:
   /**
    * Connected to widget->sendEmail.
    */
-  void sendEmailSlot(const QString& name, const QString& email);
+  void sendEmailSlot(const TQString& name, const TQString& email);
 
   /**
    * Open this URL.
    */
-  void openURLSlot(const QString& url);
+  void openURLSlot(const TQString& url);
 
   /**
    * (Constructor II only)
    * Tells the position of the mouse cursor when the left mouse button
    * is pressed above an image
    */
-  virtual void mouseTrackSlot( int mode, const QMouseEvent *e );
+  virtual void mouseTrackSlot( int mode, const TQMouseEvent *e );
 
   // #########################################################################
 protected:

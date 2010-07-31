@@ -15,7 +15,7 @@ class TestDPointerPrivate
     bool autoSave;
     int autoSaveInterval;
     bool confirm;
-    QString archiveFile;
+    TQString archiveFile;
     int destination;
 
     // Views
@@ -23,14 +23,14 @@ class TestDPointerPrivate
     bool selectionStartsEditor;
 
     // KOrganizer Plugins
-    QStringList selectedPlugins;
+    TQStringList selectedPlugins;
 
     // Colors
-    QColor highlightColor;
-    QColor agendaBgColor;
+    TQColor highlightColor;
+    TQColor agendaBgColor;
 
     // Fonts
-    QFont timeBarFont;
+    TQFont timeBarFont;
 
     // items
     KConfigSkeleton::ItemBool *autoSaveItem;
@@ -60,97 +60,97 @@ TestDPointer *TestDPointer::self()
 }
 
 TestDPointer::TestDPointer(  )
-  : KConfigSkeleton( QString::fromLatin1( "korganizerrc" ) )
+  : KConfigSkeleton( TQString::fromLatin1( "korganizerrc" ) )
 {
   d = new TestDPointerPrivate;
   mSelf = this;
-  setCurrentGroup( QString::fromLatin1( "General" ) );
+  setCurrentGroup( TQString::fromLatin1( "General" ) );
 
-  d->autoSaveItem = new KConfigSkeleton::ItemBool( currentGroup(), QString::fromLatin1( "Auto Save" ), d->autoSave, false );
+  d->autoSaveItem = new KConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "Auto Save" ), d->autoSave, false );
   d->autoSaveItem->setLabel( i18n("Enable automatic saving of calendar") );
   d->autoSaveItem->setWhatsThis( i18n("WhatsThis text for AutoSave option") );
-  addItem( d->autoSaveItem, QString::fromLatin1( "AutoSave" ) );
-  d->autoSaveIntervalItem = new KConfigSkeleton::ItemInt( currentGroup(), QString::fromLatin1( "Auto Save Interval" ), d->autoSaveInterval, 10 );
+  addItem( d->autoSaveItem, TQString::fromLatin1( "AutoSave" ) );
+  d->autoSaveIntervalItem = new KConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "Auto Save Interval" ), d->autoSaveInterval, 10 );
   d->autoSaveIntervalItem->setLabel( i18n("Auto Save Interval") );
-  addItem( d->autoSaveIntervalItem, QString::fromLatin1( "AutoSaveInterval" ) );
-  d->confirmItem = new KConfigSkeleton::ItemBool( currentGroup(), QString::fromLatin1( "Confirm Deletes" ), d->confirm, true );
+  addItem( d->autoSaveIntervalItem, TQString::fromLatin1( "AutoSaveInterval" ) );
+  d->confirmItem = new KConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "Confirm Deletes" ), d->confirm, true );
   d->confirmItem->setLabel( i18n("Confirm deletes") );
-  addItem( d->confirmItem, QString::fromLatin1( "Confirm" ) );
-  d->archiveFileItem = new KConfigSkeleton::ItemString( currentGroup(), QString::fromLatin1( "Archive File" ), d->archiveFile );
+  addItem( d->confirmItem, TQString::fromLatin1( "Confirm" ) );
+  d->archiveFileItem = new KConfigSkeleton::ItemString( currentGroup(), TQString::fromLatin1( "Archive File" ), d->archiveFile );
   d->archiveFileItem->setLabel( i18n("Archive File") );
-  addItem( d->archiveFileItem, QString::fromLatin1( "ArchiveFile" ) );
-  QValueList<KConfigSkeleton::ItemEnum::Choice> valuesDestination;
+  addItem( d->archiveFileItem, TQString::fromLatin1( "ArchiveFile" ) );
+  TQValueList<KConfigSkeleton::ItemEnum::Choice> valuesDestination;
   {
     KConfigSkeleton::ItemEnum::Choice choice;
-    choice.name = QString::fromLatin1( "standardDestination" );
+    choice.name = TQString::fromLatin1( "standardDestination" );
     valuesDestination.append( choice );
   }
   {
     KConfigSkeleton::ItemEnum::Choice choice;
-    choice.name = QString::fromLatin1( "askDestination" );
+    choice.name = TQString::fromLatin1( "askDestination" );
     valuesDestination.append( choice );
   }
   {
     KConfigSkeleton::ItemEnum::Choice choice;
-    choice.name = QString::fromLatin1( "argl1" );
+    choice.name = TQString::fromLatin1( "argl1" );
     choice.label = i18n("Argl1 Label");
     valuesDestination.append( choice );
   }
   {
     KConfigSkeleton::ItemEnum::Choice choice;
-    choice.name = QString::fromLatin1( "argl2" );
+    choice.name = TQString::fromLatin1( "argl2" );
     choice.whatsThis = i18n("Argl2 Whatsthis");
     valuesDestination.append( choice );
   }
   {
     KConfigSkeleton::ItemEnum::Choice choice;
-    choice.name = QString::fromLatin1( "argl3" );
+    choice.name = TQString::fromLatin1( "argl3" );
     choice.label = i18n("Argl3 Label");
     choice.whatsThis = i18n("Argl3 Whatsthis");
     valuesDestination.append( choice );
   }
-  d->destinationItem = new KConfigSkeleton::ItemEnum( currentGroup(), QString::fromLatin1( "Destination" ), d->destination, valuesDestination, EnumDestination::standardDestination );
+  d->destinationItem = new KConfigSkeleton::ItemEnum( currentGroup(), TQString::fromLatin1( "Destination" ), d->destination, valuesDestination, EnumDestination::standardDestination );
   d->destinationItem->setLabel( i18n("New Events/Todos Should") );
-  addItem( d->destinationItem, QString::fromLatin1( "Destination" ) );
+  addItem( d->destinationItem, TQString::fromLatin1( "Destination" ) );
 
-  setCurrentGroup( QString::fromLatin1( "Views" ) );
+  setCurrentGroup( TQString::fromLatin1( "Views" ) );
 
-  d->hourSizeItem = new KConfigSkeleton::ItemInt( currentGroup(), QString::fromLatin1( "Hour Size" ), d->hourSize, 10 );
+  d->hourSizeItem = new KConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "Hour Size" ), d->hourSize, 10 );
   d->hourSizeItem->setLabel( i18n("Hour Size") );
-  addItem( d->hourSizeItem, QString::fromLatin1( "HourSize" ) );
-  d->selectionStartsEditorItem = new KConfigSkeleton::ItemBool( currentGroup(), QString::fromLatin1( "SelectionStartsEditor" ), d->selectionStartsEditor, false );
+  addItem( d->hourSizeItem, TQString::fromLatin1( "HourSize" ) );
+  d->selectionStartsEditorItem = new KConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "SelectionStartsEditor" ), d->selectionStartsEditor, false );
   d->selectionStartsEditorItem->setLabel( i18n("Time range selection in agenda view starts event editor") );
-  addItem( d->selectionStartsEditorItem, QString::fromLatin1( "SelectionStartsEditor" ) );
+  addItem( d->selectionStartsEditorItem, TQString::fromLatin1( "SelectionStartsEditor" ) );
 
-  setCurrentGroup( QString::fromLatin1( "KOrganizer Plugins" ) );
+  setCurrentGroup( TQString::fromLatin1( "KOrganizer Plugins" ) );
 
-  QStringList defaultSelectedPlugins;
-  defaultSelectedPlugins.append( QString::fromUtf8( "holidays" ) );
-  defaultSelectedPlugins.append( QString::fromUtf8( "webexport" ) );
+  TQStringList defaultSelectedPlugins;
+  defaultSelectedPlugins.append( TQString::fromUtf8( "holidays" ) );
+  defaultSelectedPlugins.append( TQString::fromUtf8( "webexport" ) );
 
-  d->selectedPluginsItem = new KConfigSkeleton::ItemStringList( currentGroup(), QString::fromLatin1( "SelectedPlugins" ), d->selectedPlugins, defaultSelectedPlugins );
+  d->selectedPluginsItem = new KConfigSkeleton::ItemStringList( currentGroup(), TQString::fromLatin1( "SelectedPlugins" ), d->selectedPlugins, defaultSelectedPlugins );
   d->selectedPluginsItem->setLabel( i18n("SelectedPlugins") );
-  addItem( d->selectedPluginsItem, QString::fromLatin1( "SelectedPlugins" ) );
+  addItem( d->selectedPluginsItem, TQString::fromLatin1( "SelectedPlugins" ) );
 
-  setCurrentGroup( QString::fromLatin1( "Colors" ) );
+  setCurrentGroup( TQString::fromLatin1( "Colors" ) );
 
-  d->highlightColorItem = new KConfigSkeleton::ItemColor( currentGroup(), QString::fromLatin1( "Highlight Color" ), d->highlightColor, QColor( 100, 100, 255 ) );
+  d->highlightColorItem = new KConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "Highlight Color" ), d->highlightColor, TQColor( 100, 100, 255 ) );
   d->highlightColorItem->setLabel( i18n("Highlight color") );
-  addItem( d->highlightColorItem, QString::fromLatin1( "HighlightColor" ) );
-  d->agendaBgColorItem = new KConfigSkeleton::ItemColor( currentGroup(), QString::fromLatin1( "Agenda Background Color" ), d->agendaBgColor, QColor( 255, 255, 255 ) );
+  addItem( d->highlightColorItem, TQString::fromLatin1( "HighlightColor" ) );
+  d->agendaBgColorItem = new KConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "Agenda Background Color" ), d->agendaBgColor, TQColor( 255, 255, 255 ) );
   d->agendaBgColorItem->setLabel( i18n("Agenda view background color") );
-  addItem( d->agendaBgColorItem, QString::fromLatin1( "AgendaBgColor" ) );
+  addItem( d->agendaBgColorItem, TQString::fromLatin1( "AgendaBgColor" ) );
 
-  setCurrentGroup( QString::fromLatin1( "Fonts" ) );
+  setCurrentGroup( TQString::fromLatin1( "Fonts" ) );
 
-  d->timeBarFontItem = new KConfigSkeleton::ItemFont( currentGroup(), QString::fromLatin1( "TimeBar Font" ), d->timeBarFont );
+  d->timeBarFontItem = new KConfigSkeleton::ItemFont( currentGroup(), TQString::fromLatin1( "TimeBar Font" ), d->timeBarFont );
   d->timeBarFontItem->setLabel( i18n("Time bar") );
-  addItem( d->timeBarFontItem, QString::fromLatin1( "TimeBarFont" ) );
+  addItem( d->timeBarFontItem, TQString::fromLatin1( "TimeBarFont" ) );
 }
 
 void TestDPointer::setAutoSave( bool v )
 {
-      if (!self()->isImmutable( QString::fromLatin1( "AutoSave" ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "AutoSave" ) ))
         self()->d->autoSave = v;
 }
 
@@ -167,7 +167,7 @@ KConfigSkeleton::ItemBool *TestDPointer::autoSaveItem()
 
 void TestDPointer::setAutoSaveInterval( int v )
 {
-      if (!self()->isImmutable( QString::fromLatin1( "AutoSaveInterval" ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "AutoSaveInterval" ) ))
         self()->d->autoSaveInterval = v;
 }
 
@@ -184,7 +184,7 @@ KConfigSkeleton::ItemInt *TestDPointer::autoSaveIntervalItem()
 
 void TestDPointer::setConfirm( bool v )
 {
-      if (!self()->isImmutable( QString::fromLatin1( "Confirm" ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "Confirm" ) ))
         self()->d->confirm = v;
 }
 
@@ -199,13 +199,13 @@ KConfigSkeleton::ItemBool *TestDPointer::confirmItem()
   return d->confirmItem;
 }
 
-void TestDPointer::setArchiveFile( const QString & v )
+void TestDPointer::setArchiveFile( const TQString & v )
 {
-      if (!self()->isImmutable( QString::fromLatin1( "ArchiveFile" ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "ArchiveFile" ) ))
         self()->d->archiveFile = v;
 }
 
-QString TestDPointer::archiveFile()
+TQString TestDPointer::archiveFile()
 {
   return self()->d->archiveFile;
 }
@@ -218,7 +218,7 @@ KConfigSkeleton::ItemString *TestDPointer::archiveFileItem()
 
 void TestDPointer::setDestination( int v )
 {
-      if (!self()->isImmutable( QString::fromLatin1( "Destination" ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "Destination" ) ))
         self()->d->destination = v;
 }
 
@@ -235,7 +235,7 @@ KConfigSkeleton::ItemEnum *TestDPointer::destinationItem()
 
 void TestDPointer::setHourSize( int v )
 {
-      if (!self()->isImmutable( QString::fromLatin1( "HourSize" ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "HourSize" ) ))
         self()->d->hourSize = v;
 }
 
@@ -252,7 +252,7 @@ KConfigSkeleton::ItemInt *TestDPointer::hourSizeItem()
 
 void TestDPointer::setSelectionStartsEditor( bool v )
 {
-      if (!self()->isImmutable( QString::fromLatin1( "SelectionStartsEditor" ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "SelectionStartsEditor" ) ))
         self()->d->selectionStartsEditor = v;
 }
 
@@ -267,13 +267,13 @@ KConfigSkeleton::ItemBool *TestDPointer::selectionStartsEditorItem()
   return d->selectionStartsEditorItem;
 }
 
-void TestDPointer::setSelectedPlugins( const QStringList & v )
+void TestDPointer::setSelectedPlugins( const TQStringList & v )
 {
-      if (!self()->isImmutable( QString::fromLatin1( "SelectedPlugins" ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "SelectedPlugins" ) ))
         self()->d->selectedPlugins = v;
 }
 
-QStringList TestDPointer::selectedPlugins()
+TQStringList TestDPointer::selectedPlugins()
 {
   return self()->d->selectedPlugins;
 }
@@ -284,13 +284,13 @@ KConfigSkeleton::ItemStringList *TestDPointer::selectedPluginsItem()
   return d->selectedPluginsItem;
 }
 
-void TestDPointer::setHighlightColor( const QColor & v )
+void TestDPointer::setHighlightColor( const TQColor & v )
 {
-      if (!self()->isImmutable( QString::fromLatin1( "HighlightColor" ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "HighlightColor" ) ))
         self()->d->highlightColor = v;
 }
 
-QColor TestDPointer::highlightColor()
+TQColor TestDPointer::highlightColor()
 {
   return self()->d->highlightColor;
 }
@@ -301,13 +301,13 @@ KConfigSkeleton::ItemColor *TestDPointer::highlightColorItem()
   return d->highlightColorItem;
 }
 
-void TestDPointer::setAgendaBgColor( const QColor & v )
+void TestDPointer::setAgendaBgColor( const TQColor & v )
 {
-      if (!self()->isImmutable( QString::fromLatin1( "AgendaBgColor" ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "AgendaBgColor" ) ))
         self()->d->agendaBgColor = v;
 }
 
-QColor TestDPointer::agendaBgColor()
+TQColor TestDPointer::agendaBgColor()
 {
   return self()->d->agendaBgColor;
 }
@@ -318,13 +318,13 @@ KConfigSkeleton::ItemColor *TestDPointer::agendaBgColorItem()
   return d->agendaBgColorItem;
 }
 
-void TestDPointer::setTimeBarFont( const QFont & v )
+void TestDPointer::setTimeBarFont( const TQFont & v )
 {
-      if (!self()->isImmutable( QString::fromLatin1( "TimeBarFont" ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "TimeBarFont" ) ))
         self()->d->timeBarFont = v;
 }
 
-QFont TestDPointer::timeBarFont()
+TQFont TestDPointer::timeBarFont()
 {
   return self()->d->timeBarFont;
 }

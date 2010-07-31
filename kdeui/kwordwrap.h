@@ -19,10 +19,10 @@
 #ifndef kwordwrap_h
 #define kwordwrap_h
 
-#include <qfontmetrics.h>
-#include <qvaluelist.h>
-#include <qrect.h>
-#include <qstring.h>
+#include <tqfontmetrics.h>
+#include <tqvaluelist.h>
+#include <tqrect.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -58,7 +58,7 @@ public:
     /**
      * Main method for wrapping text.
      *
-     * @param fm Font metrics, for the chosen font. Better cache it, creating a QFontMetrics is expensive.
+     * @param fm Font metrics, for the chosen font. Better cache it, creating a TQFontMetrics is expensive.
      * @param r Constraining rectangle. Only the width and height matter. With
      *          negative height the complete text will be rendered
      * @param flags currently unused
@@ -66,7 +66,7 @@ public:
      * @param len Length of text to wrap (default is -1 for all).
      * @return a KWordWrap instance. The caller is responsible for storing and deleting the result.
      */
-    static KWordWrap* formatText( QFontMetrics &fm, const QRect & r, int flags, const QString & str, int len = -1 );
+    static KWordWrap* formatText( TQFontMetrics &fm, const TQRect & r, int flags, const TQString & str, int len = -1 );
 
     /**
      * @return the bounding rect, calculated by formatText. The width is the
@@ -74,26 +74,26 @@ public:
      *         the rectangle given to formatText. The height is the
      *         text block. X and Y are always 0.
      */
-    QRect boundingRect() const { return m_boundingRect; }
+    TQRect boundingRect() const { return m_boundingRect; }
 
     /**
      * @return the original string, with '\n' inserted where
      * the text is broken by the wordwrap algorithm.
      */
-    QString wrappedString() const; // gift for Dirk :)
+    TQString wrappedString() const; // gift for Dirk :)
 
     /**
      * @return the original string, truncated to the first line.
      * If @p dots was set, '...' is appended in case the string was truncated.
      * Bug: Note that the '...' come out of the bounding rect.
      */
-    QString truncatedString( bool dots = true ) const;
+    TQString truncatedString( bool dots = true ) const;
 
     /**
      * Draw the text that has been previously wrapped, at position x,y.
      * Flags are for alignment, e.g. Qt::AlignHCenter. Default is
      * Qt::AlignAuto.
-     * @param painter the QPainter to use.
+     * @param painter the TQPainter to use.
      * @param x the horizontal position of the text
      * @param y the vertical position of the text
      * @param flags the ORed text alignment flags from the Qt namespace,
@@ -101,7 +101,7 @@ public:
      *              does not fit (the @p painter's background must be set
      *              accordingly)
      */
-    void drawText( QPainter *painter, int x, int y, int flags = Qt::AlignAuto ) const;
+    void drawText( TQPainter *painter, int x, int y, int flags = Qt::AlignAuto ) const;
 
     /**
      * Destructor.
@@ -120,8 +120,8 @@ public:
      * @param t the text to draw
      * @since 3.2
      */
-    static void drawFadeoutText( QPainter *p, int x, int y, int maxW,
-                                 const QString &t );
+    static void drawFadeoutText( TQPainter *p, int x, int y, int maxW,
+                                 const TQString &t );
 
     /**
      * Draws the string @p t at the given coordinates, if it does not
@@ -133,15 +133,15 @@ public:
      * @param t the text to draw
      * @since 3.3
      */
-    static void drawTruncateText( QPainter *p, int x, int y, int maxW,
-                                  const QString &t );
+    static void drawTruncateText( TQPainter *p, int x, int y, int maxW,
+                                  const TQString &t );
 
 private:
-    KWordWrap( const QRect & r );
-    QValueList<int> m_breakPositions;
-    QValueList<int> m_lineWidths;
-    QRect m_boundingRect;
-    QString m_text;
+    KWordWrap( const TQRect & r );
+    TQValueList<int> m_breakPositions;
+    TQValueList<int> m_lineWidths;
+    TQRect m_boundingRect;
+    TQString m_text;
 private:
     class KWordWrapPrivate* d;
 };

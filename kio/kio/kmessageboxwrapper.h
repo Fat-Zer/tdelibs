@@ -30,9 +30,9 @@
 class KIO_EXPORT KMessageBoxWrapper : public KMessageBox
 {
 public:
-  static void error(QWidget *parent, 
-                    const QString &text, 
-                    const QString &caption = QString::null)
+  static void error(TQWidget *parent, 
+                    const TQString &text, 
+                    const TQString &caption = TQString::null)
     {
 	if (KApplication::guiEnabled()) {
      	  kapp->enableStyles();
@@ -41,9 +41,9 @@ public:
 	  kdWarning() << text << endl;
     }
 
-  static void sorry(QWidget *parent, 
-                    const QString &text,
-                    const QString &caption = QString::null)
+  static void sorry(TQWidget *parent, 
+                    const TQString &text,
+                    const TQString &caption = TQString::null)
     {
       if (KApplication::guiEnabled()) {
 	 kapp->enableStyles();

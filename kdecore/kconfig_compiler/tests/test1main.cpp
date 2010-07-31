@@ -24,6 +24,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 int main( int, char*[] )
 {
   KInstance i("test");
-  Test1 *t = new Test1( QString::null, QString::null );
+  Test1 *t = new Test1( TQString::null, TQString::null );
   delete t;
 }

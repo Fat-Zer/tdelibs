@@ -23,12 +23,12 @@
 
 #include <kurl.h>
 
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qguardedptr.h>
-#include <qdom.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqguardedptr.h>
+#include <tqdom.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -63,16 +63,16 @@ namespace KIO {
 	 * KIO::davSearch() to create a new DavJob.
 	 */
         DavJob(const KURL& url, int method,
-                    const QString& request, bool showProgressInfo);
+                    const TQString& request, bool showProgressInfo);
         /**
-	 * Returns the response as a QDomDocument.
+	 * Returns the response as a TQDomDocument.
 	 * @return the response document
 	 */
-	QDomDocument& response() { return m_response; }
+	TQDomDocument& response() { return m_response; }
 
     protected slots:
         virtual void slotFinished();
-        virtual void slotData( const QByteArray &data);
+        virtual void slotData( const TQByteArray &data);
 
     protected:
         bool m_suspended;
@@ -80,8 +80,8 @@ namespace KIO {
     private:
 	class DavJobPrivate;
 	DavJobPrivate *d;
-	QString dummy; // kept around for BC reasons
-	QDomDocument m_response;
+	TQString dummy; // kept around for BC reasons
+	TQDomDocument m_response;
    };
 
    /**
@@ -95,7 +95,7 @@ namespace KIO {
     * @param showProgressInfo true to show progress information
     * @return the new DavJob
     */
-   KIO_EXPORT DavJob* davPropFind( const KURL& url, const QDomDocument& properties, QString depth, bool showProgressInfo=true );
+   KIO_EXPORT DavJob* davPropFind( const KURL& url, const TQDomDocument& properties, TQString depth, bool showProgressInfo=true );
 
    /**
     * Creates a new DavJob that issues a PROPPATCH command. PROPPATCH sets
@@ -107,7 +107,7 @@ namespace KIO {
     * @param showProgressInfo true to show progress information
     * @return the new DavJob
     */
-   KIO_EXPORT DavJob* davPropPatch( const KURL& url, const QDomDocument& properties, bool showProgressInfo=true );
+   KIO_EXPORT DavJob* davPropPatch( const KURL& url, const TQDomDocument& properties, bool showProgressInfo=true );
 
    /**
     * Creates a new DavJob that issues a SEARCH command.
@@ -119,7 +119,7 @@ namespace KIO {
     * @param showProgressInfo true to show progress information
     * @return the new DavJob
     */
-   KIO_EXPORT DavJob* davSearch( const KURL &url, const QString& nsURI, const QString& qName, const QString& query, bool showProgressInfo=true ); 
+   KIO_EXPORT DavJob* davSearch( const KURL &url, const TQString& nsURI, const TQString& qName, const TQString& query, bool showProgressInfo=true ); 
 
 }
 

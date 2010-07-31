@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef __KMANAGERSELECTION_H
 #define __KMANAGERSELECTION_H
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <kdelibs_export.h>
 
 #ifdef Q_WS_X11 // FIXME(E)
@@ -56,7 +56,7 @@ class KDECORE_EXPORT KSelectionOwner
          * @param screen X screen, or -1 for default
          * @param parent parent object, or NULL if there is none
          */
-        KSelectionOwner( Atom selection, int screen = -1, QObject* parent = NULL );
+        KSelectionOwner( Atom selection, int screen = -1, TQObject* parent = NULL );
         /**
          * @overload
          * This constructor accepts the selection name and creates the appropriate atom
@@ -66,7 +66,7 @@ class KDECORE_EXPORT KSelectionOwner
          * @param screen X screen, or -1 for default
          * @param parent parent object, or NULL if there is none
          */
-        KSelectionOwner( const char* selection, int screen = -1, QObject* parent = NULL );
+        KSelectionOwner( const char* selection, int screen = -1, TQObject* parent = NULL );
         /**
          * Destructor. Calls release().
          */
@@ -179,7 +179,7 @@ class KDECORE_EXPORT KSelectionWatcher
          * @param screen X screen, or -1 for default
          * @param parent parent object, or NULL if there is none
          */
-        KSelectionWatcher( Atom selection, int screen = -1, QObject* parent = NULL );
+        KSelectionWatcher( Atom selection, int screen = -1, TQObject* parent = NULL );
         /**
          * @overload
          * This constructor accepts the selection name and creates the appropriate atom
@@ -189,7 +189,7 @@ class KDECORE_EXPORT KSelectionWatcher
          * @param screen X screen, or -1 for default
          * @param parent parent object, or NULL if there is none
          */
-        KSelectionWatcher( const char* selection, int screen = -1, QObject* parent = NULL );
+        KSelectionWatcher( const char* selection, int screen = -1, TQObject* parent = NULL );
 	virtual ~KSelectionWatcher();
         /**
          * Return the current owner of the manager selection, if any.

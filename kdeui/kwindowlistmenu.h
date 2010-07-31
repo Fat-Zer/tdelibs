@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __kwindowlistmenu_h__
 
 #include <kpopupmenu.h>
-#include <qmap.h>
+#include <tqmap.h>
 
 #ifdef Q_WS_X11 // not yet available for non-X11
 
@@ -38,7 +38,7 @@ class KDEUI_EXPORT KWindowListMenu : public KPopupMenu
     Q_OBJECT
 
 public:
-    KWindowListMenu( QWidget *parent = 0, const char *name = 0 );
+    KWindowListMenu( TQWidget *parent = 0, const char *name = 0 );
     virtual ~KWindowListMenu();
 
     void init();
@@ -58,7 +58,7 @@ protected slots:
 
 private:
     KWinModule*         kwin_module;
-    QMap<int,WId>       map;
+    TQMap<int,WId>       map;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:

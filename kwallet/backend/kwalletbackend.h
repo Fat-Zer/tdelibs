@@ -24,9 +24,9 @@
 
 #include <kmdcodec.h>
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qmap.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqmap.h>
 #include "kwalletentry.h"
 
 
@@ -38,66 +38,66 @@ class MD5Digest;
  */
 class KDE_EXPORT Backend {
 	public:
-		Backend(const QString& name = "kdewallet", bool isPath = false);
+		Backend(const TQString& name = "kdewallet", bool isPath = false);
 		~Backend();
 
 		// Open and unlock the wallet.
-		int open(const QByteArray& password);
+		int open(const TQByteArray& password);
 
 		// Close and lock the wallet (saving changes).
-		int close(const QByteArray& password);
+		int close(const TQByteArray& password);
 
 		// Close the wallet, losing any changes.
 		int close();
 
 		// Write the wallet to disk
-		int sync(const QByteArray& password);
+		int sync(const TQByteArray& password);
 
 		// Returns true if the current wallet is open.
 		bool isOpen() const;
 
 		// Returns the current wallet name.
-		const QString& walletName() const;
+		const TQString& walletName() const;
 
 		// The list of folders.
-		QStringList folderList() const;
+		TQStringList folderList() const;
 
 		// Force creation of a folder.
-		bool createFolder(const QString& f);
+		bool createFolder(const TQString& f);
 
 		// Change the folder.
-		void setFolder(const QString& f) { _folder = f; }
+		void setFolder(const TQString& f) { _folder = f; }
 
 		// Current folder.  If empty, it's the global folder.
-		const QString& folder() const { return _folder; }
+		const TQString& folder() const { return _folder; }
 
 		// Does it have this folder?
-		bool hasFolder(const QString& f) const { return _entries.contains(f); }
+		bool hasFolder(const TQString& f) const { return _entries.contains(f); }
 
 		// Look up an entry.  Returns null if it doesn't exist.
-		Entry *readEntry(const QString& key);
+		Entry *readEntry(const TQString& key);
 		
 		// Look up a list of entries.  Supports wildcards.
 		// You delete the list.
-		QPtrList<Entry> readEntryList(const QString& key);
+		TQPtrList<Entry> readEntryList(const TQString& key);
 
 		// Store an entry.
 		void writeEntry(Entry *e);
 
 		// Does this folder contain this entry?
-		bool hasEntry(const QString& key) const;
+		bool hasEntry(const TQString& key) const;
 
 		// Returns true if the entry was removed
-		bool removeEntry(const QString& key);
+		bool removeEntry(const TQString& key);
 
 		// Returns true if the folder was removed
-		bool removeFolder(const QString& f);
+		bool removeFolder(const TQString& f);
 
 		// The list of entries in this folder.
-		QStringList entryList() const;
+		TQStringList entryList() const;
 
 		// Rename an entry in this folder.
-		int renameEntry(const QString& oldName, const QString& newName);
+		int renameEntry(const TQString& oldName, const TQString& newName);
 
 		int ref() { return ++_ref; }
 
@@ -105,37 +105,37 @@ class KDE_EXPORT Backend {
 
 		int refCount() const { return _ref; }
 
-		static bool exists(const QString& wallet);
+		static bool exists(const TQString& wallet);
 
-		bool folderDoesNotExist(const QString& folder) const;
+		bool folderDoesNotExist(const TQString& folder) const;
 
-		bool entryDoesNotExist(const QString& folder, const QString& entry) const;
+		bool entryDoesNotExist(const TQString& folder, const TQString& entry) const;
 
-		static QString openRCToString(int rc);
+		static TQString openRCToString(int rc);
 
 	private:
 		class BackendPrivate;
 		BackendPrivate *d;
-		QString _name;
-		QString _path;
+		TQString _name;
+		TQString _path;
 		bool _open;
-		QString _folder;
+		TQString _folder;
 		int _ref;
 		// Map Folder->Entries
-		typedef QMap< QString, Entry* > EntryMap;
-		typedef QMap< QString, EntryMap > FolderMap;
+		typedef TQMap< TQString, Entry* > EntryMap;
+		typedef TQMap< TQString, EntryMap > FolderMap;
 		FolderMap _entries;
-		typedef QMap<MD5Digest, QValueList<MD5Digest> > HashMap;
+		typedef TQMap<MD5Digest, TQValueList<MD5Digest> > HashMap;
 		HashMap _hashes;
 };
 
 /**
  * @internal
  */
-class MD5Digest : public QByteArray {
+class MD5Digest : public TQByteArray {
 	public:
-		MD5Digest() : QByteArray(16) {}
-		MD5Digest(const KMD5::Digest d) : QByteArray() { duplicate(reinterpret_cast<const char *>(d), 16); }
+		MD5Digest() : TQByteArray(16) {}
+		MD5Digest(const KMD5::Digest d) : TQByteArray() { duplicate(reinterpret_cast<const char *>(d), 16); }
 		virtual ~MD5Digest() {}
 
 		int operator<(const MD5Digest& r) const {

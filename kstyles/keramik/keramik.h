@@ -32,7 +32,7 @@
 #ifndef __keramik_h__
 #define __keramik_h__
 
-#include <qframe.h>
+#include <tqframe.h>
 #include <kstyle.h>
 
 #include "pixmaploader.h"
@@ -47,85 +47,85 @@ public:
 	KeramikStyle();
 	virtual ~KeramikStyle();
 
-	void renderMenuBlendPixmap( KPixmap& pix, const QColorGroup &cg, const QPopupMenu* ) const;
-	QPixmap stylePixmap(StylePixmap stylepixmap, const QWidget* widget, const QStyleOption& opt) const;
+	void renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup &cg, const TQPopupMenu* ) const;
+	TQPixmap stylePixmap(StylePixmap stylepixmap, const TQWidget* widget, const TQStyleOption& opt) const;
 
-	void polish( QWidget* widget );
-	void unPolish( QWidget* widget );
-	void polish( QPalette& );
-	void polish( QApplication *app );
+	void polish( TQWidget* widget );
+	void unPolish( TQWidget* widget );
+	void polish( TQPalette& );
+	void polish( TQApplication *app );
 
 	void drawKStylePrimitive( KStylePrimitive kpe,
-	                          QPainter* p,
-	                          const QWidget* widget,
-	                          const QRect& r,
-	                          const QColorGroup& cg,
+	                          TQPainter* p,
+	                          const TQWidget* widget,
+	                          const TQRect& r,
+	                          const TQColorGroup& cg,
 	                          SFlags flags = Style_Default,
-	                          const QStyleOption& = QStyleOption::Default ) const;
+	                          const TQStyleOption& = TQStyleOption::Default ) const;
 
 	void drawPrimitive( PrimitiveElement pe,
-	                    QPainter* p,
-	                    const QRect& r,
-	                    const QColorGroup& cg,
+	                    TQPainter* p,
+	                    const TQRect& r,
+	                    const TQColorGroup& cg,
 	                    SFlags flags = Style_Default,
-	                    const QStyleOption& = QStyleOption::Default ) const;
+	                    const TQStyleOption& = TQStyleOption::Default ) const;
 
 	void drawControl( ControlElement element,
-	                  QPainter* p,
-	                  const QWidget* widget,
-	                  const QRect& r,
-	                  const QColorGroup& cg,
+	                  TQPainter* p,
+	                  const TQWidget* widget,
+	                  const TQRect& r,
+	                  const TQColorGroup& cg,
 	                  SFlags flags = Style_Default,
-	                  const QStyleOption& opt = QStyleOption::Default ) const;
+	                  const TQStyleOption& opt = TQStyleOption::Default ) const;
 
 	void drawControlMask( ControlElement element,
-	                      QPainter* p,
-	                      const QWidget* widget,
-	                      const QRect& r,
-	                      const QStyleOption& opt = QStyleOption::Default ) const;
+	                      TQPainter* p,
+	                      const TQWidget* widget,
+	                      const TQRect& r,
+	                      const TQStyleOption& opt = TQStyleOption::Default ) const;
 
 	void drawComplexControl( ComplexControl control,
-	                         QPainter* p,
-	                         const QWidget* widget,
-	                         const QRect& r,
-	                         const QColorGroup& cg,
+	                         TQPainter* p,
+	                         const TQWidget* widget,
+	                         const TQRect& r,
+	                         const TQColorGroup& cg,
 	                         SFlags flags = Style_Default,
 	                         SCFlags controls = SC_All,
 	                         SCFlags active = SC_None,
-	                         const QStyleOption& = QStyleOption::Default ) const;
+	                         const TQStyleOption& = TQStyleOption::Default ) const;
 
 	void drawComplexControlMask( ComplexControl control,
-	                             QPainter* p,
-	                             const QWidget* widget,
-	                             const QRect& r,
-	                             const QStyleOption& = QStyleOption::Default ) const;
+	                             TQPainter* p,
+	                             const TQWidget* widget,
+	                             const TQRect& r,
+	                             const TQStyleOption& = TQStyleOption::Default ) const;
 
-	int pixelMetric( PixelMetric m, const QWidget* widget = 0 ) const;
+	int pixelMetric( PixelMetric m, const TQWidget* widget = 0 ) const;
 
-	QSize sizeFromContents( ContentsType contents,
-	                        const QWidget* widget,
-	                        const QSize& contentSize,
-	                        const QStyleOption& opt ) const;
+	TQSize sizeFromContents( ContentsType contents,
+	                        const TQWidget* widget,
+	                        const TQSize& contentSize,
+	                        const TQStyleOption& opt ) const;
 
 	SubControl querySubControl( ComplexControl control,
-	                            const QWidget* widget,
-	                            const QPoint& point,
-						        const QStyleOption& opt = QStyleOption::Default ) const;
+	                            const TQWidget* widget,
+	                            const TQPoint& point,
+						        const TQStyleOption& opt = TQStyleOption::Default ) const;
 
-	QRect querySubControlMetrics( ComplexControl control,
-	                              const QWidget* widget,
+	TQRect querySubControlMetrics( ComplexControl control,
+	                              const TQWidget* widget,
 	                              SubControl subcontrol,
-	                              const QStyleOption& opt = QStyleOption::Default ) const;
+	                              const TQStyleOption& opt = TQStyleOption::Default ) const;
 
 private slots:
 	//Animation slots.
 	void updateProgressPos();
-	void progressBarDestroyed(QObject* bar);
+	void progressBarDestroyed(TQObject* bar);
 
 private:
 
-	bool isSizeConstrainedCombo(const QComboBox* combo) const;
-	bool isFormWidget          (const QWidget*   widget) const;
+	bool isSizeConstrainedCombo(const TQComboBox* combo) const;
+	bool isFormWidget          (const TQWidget*   widget) const;
 
 	///Configuration settings
 	bool animateProgressBar;
@@ -136,7 +136,7 @@ private:
 	mutable bool maskMode;   //Ugly round trip flag to permit masking with little code;
 	mutable bool formMode;   //Set when rendering form widgets
 
-	mutable const QWidget* toolbarBlendWidget;  //Ditto for blending with toolbars
+	mutable const TQWidget* toolbarBlendWidget;  //Ditto for blending with toolbars
 
 	enum TitleBarMode
 	{
@@ -157,9 +157,9 @@ private:
 	bool firstComboPopupRelease;
 
 	//Animation support.
-	QMap<QProgressBar*, int> progAnimWidgets;
+	TQMap<TQProgressBar*, int> progAnimWidgets;
 
-	bool eventFilter( QObject* object, QEvent* event );
+	bool eventFilter( TQObject* object, TQEvent* event );
 
 	Keramik::TilePainter::PaintMode pmode() const
 	{
@@ -186,15 +186,15 @@ private:
 		return maskMode?Keramik::TilePainter::PaintMask : Keramik::TilePainter::PaintFullBlend;
 	}
 
-	QWidget* hoverWidget;
+	TQWidget* hoverWidget;
 
 
 	bool kickerMode;
 	
 	// For progress bar animation
-	QTimer *animationTimer;
+	TQTimer *animationTimer;
 
-	QRect subRect(SubRect r, const QWidget *widget) const;
+	TQRect subRect(SubRect r, const TQWidget *widget) const;
 
 	// Disable copy constructor and = operator
 	KeramikStyle( const KeramikStyle&  );

@@ -50,14 +50,14 @@ class KReplaceNextDialog;
  *
  *  // Connect signals to code which handles highlighting
  *  // of found text, and on-the-fly replacement.
- *  connect( m_replace, SIGNAL( highlight( const QString &, int, int ) ),
- *          this, SLOT( slotHighlight( const QString &, int, int ) ) );
+ *  connect( m_replace, TQT_SIGNAL( highlight( const TQString &, int, int ) ),
+ *          this, TQT_SLOT( slotHighlight( const TQString &, int, int ) ) );
  *  // Connect findNext signal - called when pressing the button in the dialog
- *  connect( m_replace, SIGNAL( findNext() ),
- *          this, SLOT( slotReplaceNext() ) );
+ *  connect( m_replace, TQT_SIGNAL( findNext() ),
+ *          this, TQT_SLOT( slotReplaceNext() ) );
  *  // Connect replace signal - called when doing a replacement
- *  connect( m_replace, SIGNAL( replace(const QString &, int, int, int) ),
- *          this, SLOT( slotReplace(const QString &, int, int, int) ) );
+ *  connect( m_replace, TQT_SIGNAL( replace(const TQString &, int, int, int) ),
+ *          this, TQT_SLOT( slotReplace(const TQString &, int, int, int) ) );
  * \endcode
  *  Then initialize the variables determining the "current position"
  *  (to the cursor, if the option FromCursor is set,
@@ -109,7 +109,7 @@ public:
      * @param options Options for the find dialog. @see KFindDialog and KReplaceDialog.
      * @param parent The parent widget.
      */
-    KReplace(const QString &pattern, const QString &replacement, long options, QWidget *parent = 0);
+    KReplace(const TQString &pattern, const TQString &replacement, long options, TQWidget *parent = 0);
     /**
      * This is the recommended constructor if you also use KReplaceDialog (non-modal).
      * You should pass the pointer to it here, so that when a message box
@@ -121,7 +121,7 @@ public:
      * @param parent The parent widget.
      * @param replaceDialog A pointer to the KReplaceDialog object.
      */
-    KReplace(const QString &pattern, const QString &replacement, long options, QWidget *parent, QWidget* replaceDialog);
+    KReplace(const TQString &pattern, const TQString &replacement, long options, TQWidget *parent, TQWidget* replaceDialog);
 
     /**
      * Destructor.
@@ -186,7 +186,7 @@ public:
      * Not always the same as replacement.length(), when backreferences are used.
      * @return The index at which a match was found, or -1 if no match was found.
      */
-    static int replace( QString &text, const QString &pattern, const QString &replacement, int index, long options, int *replacedLength );
+    static int replace( TQString &text, const TQString &pattern, const TQString &replacement, int index, long options, int *replacedLength );
 
     /**
      * Searches the given regular expression, replaces with the given replacement string,
@@ -204,7 +204,7 @@ public:
      * Not always the same as replacement.length(), when backreferences are used.
      * @return The index at which a match was found, or -1 if no match was found.
      */
-    static int replace( QString &text, const QRegExp &pattern, const QString &replacement, int index, long options, int *replacedLength );
+    static int replace( TQString &text, const TQRegExp &pattern, const TQString &replacement, int index, long options, int *replacedLength );
 
     /**
      * Returns @c true if we should restart the search from scratch.
@@ -246,7 +246,7 @@ signals:
      * @param replacedLength Length of the replacement string
      * @param matchedLength Length of the matched string
      */
-    void replace(const QString &text, int replacementIndex, int replacedLength, int matchedLength);
+    void replace(const TQString &text, int replacementIndex, int replacedLength, int matchedLength);
 
 protected slots:
 
@@ -257,9 +257,9 @@ protected slots:
 private:
     KReplaceNextDialog* dialog();
     void doReplace();
-    static int replace( QString &text, const QString &replacement, int index, long options, int length );
+    static int replace( TQString &text, const TQString &replacement, int index, long options, int length );
 
-    QString m_replacement;
+    TQString m_replacement;
     unsigned m_replacements;
 
     // Binary compatible extensibility.

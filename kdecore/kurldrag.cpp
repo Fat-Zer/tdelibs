@@ -18,9 +18,9 @@
 */
 
 #include "kurldrag.h"
-#include <qstrlist.h>
-#include <qdragobject.h>
-#include <qfont.h>
+#include <tqstrlist.h>
+#include <tqdragobject.h>
+#include <tqfont.h>
 #include <unistd.h>
 
 #include <kdeversion.h>
@@ -34,15 +34,15 @@ public:
     bool m_exportAsText;
 };
 
-KURLDrag::KURLDrag( const KURL::List &urls, QWidget* dragSource, const char * name )
-    : QUriDrag(dragSource, name), m_metaData(), d( 0 )
+KURLDrag::KURLDrag( const KURL::List &urls, TQWidget* dragSource, const char * name )
+    : TQUriDrag(dragSource, name), m_metaData(), d( 0 )
 {
     init(urls);
 }
 
-KURLDrag::KURLDrag( const KURL::List &urls, const QMap<QString,QString>& metaData,
-                    QWidget* dragSource, const char * name )
-    : QUriDrag(dragSource, name), m_metaData(metaData), d( 0 )
+KURLDrag::KURLDrag( const KURL::List &urls, const TQMap<TQString,TQString>& metaData,
+                    TQWidget* dragSource, const char * name )
+    : TQUriDrag(dragSource, name), m_metaData(metaData), d( 0 )
 {
     init(urls);
 }
@@ -73,21 +73,21 @@ void KURLDrag::setExportAsText( bool exp )
     d->m_exportAsText = exp;
 }
 
-KURLDrag * KURLDrag::newDrag( const KURL::List &urls, QWidget* dragSource, const char * name )
+KURLDrag * KURLDrag::newDrag( const KURL::List &urls, TQWidget* dragSource, const char * name )
 {
-    return new KURLDrag( urls, QMap<QString, QString>(), dragSource, name );
+    return new KURLDrag( urls, TQMap<TQString, TQString>(), dragSource, name );
 }
 
-KURLDrag * KURLDrag::newDrag( const KURL::List &urls, const QMap<QString, QString>& metaData,
-                              QWidget* dragSource, const char * name )
+KURLDrag * KURLDrag::newDrag( const KURL::List &urls, const TQMap<TQString, TQString>& metaData,
+                              TQWidget* dragSource, const char * name )
 {
     return new KURLDrag( urls, metaData, dragSource, name );
 }
 
-bool KURLDrag::decode( const QMimeSource *e, KURL::List &uris )
+bool KURLDrag::decode( const TQMimeSource *e, KURL::List &uris )
 {
     if ( e->provides( "application/x-kde-urilist" ) ) {
-        QByteArray payload = e->encodedData( "application/x-kde-urilist" );
+        TQByteArray payload = e->encodedData( "application/x-kde-urilist" );
         if ( payload.size() ) {
             uint c=0;
             const char* d = payload.data();
@@ -97,7 +97,7 @@ bool KURLDrag::decode( const QMimeSource *e, KURL::List &uris )
                 while (c < payload.size() && d[c] && d[c]!='\r'
                         && d[c] != '\n')
                     c++;
-                QCString s(d+f,c-f+1);
+                TQCString s(d+f,c-f+1);
                 if ( s[0] != '#' ) // non-comment?
                     uris.append(stringToUrl(s));
                 // Skip junk
@@ -109,9 +109,9 @@ bool KURLDrag::decode( const QMimeSource *e, KURL::List &uris )
         }
     }
     
-    QStrList lst;
-    QUriDrag::decode( e, lst );
-    for (QStrListIterator it(lst); *it; ++it)
+    TQStrList lst;
+    TQUriDrag::decode( e, lst );
+    for (TQStrListIterator it(lst); *it; ++it)
     {
       KURL url = stringToUrl( *it );
       if ( !url.isValid() )
@@ -124,18 +124,18 @@ bool KURLDrag::decode( const QMimeSource *e, KURL::List &uris )
     return !uris.isEmpty();
 }
 
-bool KURLDrag::decode( const QMimeSource *e, KURL::List &uris, QMap<QString,QString>& metaData )
+bool KURLDrag::decode( const TQMimeSource *e, KURL::List &uris, TQMap<TQString,TQString>& metaData )
 {
     if ( decode( e, uris ) ) // first decode the URLs (see above)
     {
-        QByteArray ba = e->encodedData( "application/x-kio-metadata" );
+        TQByteArray ba = e->encodedData( "application/x-kio-metadata" );
         if ( ba.size() )
         {
-            QString s = ba.data();
-            QStringList l = QStringList::split( "$@@$", s );
-            QStringList::ConstIterator it = l.begin();
+            TQString s = ba.data();
+            TQStringList l = TQStringList::split( "$@@$", s );
+            TQStringList::ConstIterator it = l.begin();
             bool readingKey = true; // true, then false, then true, etc.
-            QString key;
+            TQString key;
             for ( ; it != l.end(); ++it ) {
                 if ( readingKey )
                     key = *it;
@@ -151,10 +151,10 @@ bool KURLDrag::decode( const QMimeSource *e, KURL::List &uris, QMap<QString,QStr
 }
 
 #ifdef Q_WS_QWS
-bool KURLDrag::decode( QStringList const &e, KURL::List &uris )
+bool KURLDrag::decode( TQStringList const &e, KURL::List &uris )
 {
-	QStringList::ConstIterator end(e.end());
-    for(QStringList::ConstIterator it=e.begin(); it!=end; ++it)
+	TQStringList::ConstIterator end(e.end());
+    for(TQStringList::ConstIterator it=e.begin(); it!=end; ++it)
     {
       KURL url = KURL( *it, 106 ); // 106 is mib enum for utf8 codec
       if ( !url.isValid() )
@@ -187,19 +187,19 @@ const char * KURLDrag::format( int i ) const
     else return 0;
 }
 
-QByteArray KURLDrag::encodedData( const char* mime ) const
+TQByteArray KURLDrag::encodedData( const char* mime ) const
 {
-    QByteArray a;
-    QCString mimetype( mime );
+    TQByteArray a;
+    TQCString mimetype( mime );
     if ( mimetype == "text/uri-list" )
-        return QUriDrag::encodedData( mime );
+        return TQUriDrag::encodedData( mime );
     else if ( mimetype == "text/plain" )
     {
-	QStringList uris;
-        for (QStrListIterator it(m_urls); *it; ++it)
+	TQStringList uris;
+        for (TQStrListIterator it(m_urls); *it; ++it)
            uris.append(stringToUrl(*it).prettyURL());
 
-        QCString s = uris.join( "\n" ).local8Bit();
+        TQCString s = uris.join( "\n" ).local8Bit();
         if( uris.count() > 1 ) // terminate last line, unless it's the only line
             s.append( "\n" );
         a.resize( s.length());
@@ -207,12 +207,12 @@ QByteArray KURLDrag::encodedData( const char* mime ) const
     }
     else if ( mimetype.lower() == "text/plain;charset=iso-8859-1")
     {
-        QStringList uris;
-        for (QStrListIterator it(m_urls); *it; ++it)
-        for (QStrListIterator it(m_urls); *it; ++it)
+        TQStringList uris;
+        for (TQStrListIterator it(m_urls); *it; ++it)
+        for (TQStrListIterator it(m_urls); *it; ++it)
            uris.append(stringToUrl(*it).url(0, 4)); // 4 is mib for latin1
 
-        QCString s = uris.join( "\n" ).latin1();
+        TQCString s = uris.join( "\n" ).latin1();
         if( uris.count() > 1 )
             s.append( "\n" );
         a.resize( s.length());
@@ -220,11 +220,11 @@ QByteArray KURLDrag::encodedData( const char* mime ) const
     }
     else if ( mimetype.lower() == "text/plain;charset=utf-8")
     {
-        QStringList uris;
-        for (QStrListIterator it(m_urls); *it; ++it)
+        TQStringList uris;
+        for (TQStrListIterator it(m_urls); *it; ++it)
            uris.append(stringToUrl(*it).prettyURL());
 
-        QCString s = uris.join( "\n" ).utf8();
+        TQCString s = uris.join( "\n" ).utf8();
         if( uris.count() > 1 )
             s.append( "\n" );
         a.resize( s.length());
@@ -234,8 +234,8 @@ QByteArray KURLDrag::encodedData( const char* mime ) const
     {
         if ( !m_metaData.isEmpty() )
         {
-            QString s;
-            QMap<QString,QString>::ConstIterator it;
+            TQString s;
+            TQMap<TQString,TQString>::ConstIterator it;
             for( it = m_metaData.begin(); it != m_metaData.end(); ++it )
             {
                 s += it.key();
@@ -250,7 +250,7 @@ QByteArray KURLDrag::encodedData( const char* mime ) const
     return a;
 }
 
-KURL KURLDrag::stringToUrl(const QCString &s)
+KURL KURLDrag::stringToUrl(const TQCString &s)
 {
     if (strncmp(s.data(), "file:", 5) == 0)
        return KURL(s, KGlobal::locale()->fileEncodingMib());
@@ -258,7 +258,7 @@ KURL KURLDrag::stringToUrl(const QCString &s)
     return KURL(s, 106); // 106 is mib enum for utf8 codec;
 }
 
-QString KURLDrag::urlToString(const KURL &url)
+TQString KURLDrag::urlToString(const KURL &url)
 {
     if (url.isLocalFile())
     {
@@ -268,14 +268,14 @@ QString KURLDrag::urlToString(const KURL &url)
         // According to the XDND spec, file:/ URLs for DND must have
         // the hostname part. But in really it just breaks many apps,
         // so it's disabled for now.
-        QString s = url.url(0, KGlobal::locale()->fileEncodingMib());
+        TQString s = url.url(0, KGlobal::locale()->fileEncodingMib());
         if( !s.startsWith( "file://" ))
         {
             char hostname[257];
             if ( gethostname( hostname, 255 ) == 0 )
             {
 	        hostname[256] = '\0';
-                return QString( "file://" ) + hostname + s.mid( 5 );
+                return TQString( "file://" ) + hostname + s.mid( 5 );
             }
         }
 #endif
@@ -289,6 +289,6 @@ QString KURLDrag::urlToString(const KURL &url)
 }
 
 // deprecated ctor
-KURLDrag::KURLDrag( const QStrList & urls, const QMap<QString,QString>& metaData,
-                    QWidget * dragSource, const char* name ) :
-QUriDrag( urls, dragSource, name ), m_urls( urls ), m_metaData( metaData ), d( 0 ) {}
+KURLDrag::KURLDrag( const TQStrList & urls, const TQMap<TQString,TQString>& metaData,
+                    TQWidget * dragSource, const char* name ) :
+TQUriDrag( urls, dragSource, name ), m_urls( urls ), m_metaData( metaData ), d( 0 ) {}

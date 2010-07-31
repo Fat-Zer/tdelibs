@@ -1,5 +1,5 @@
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kio/job.h>
 
 class KLineEdit;
@@ -15,11 +15,11 @@ public:
 private slots:
     void slotGenerate();
     void slotResult(KIO::Job *);
-    void slotPreview( const KFileItem *, const QPixmap & );
+    void slotPreview( const KFileItem *, const TQPixmap & );
     void slotFailed();
 
 private:
     KLineEdit *m_url;
-    QLabel *m_preview;
+    TQLabel *m_preview;
 };
 

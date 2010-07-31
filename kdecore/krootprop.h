@@ -21,10 +21,10 @@
 
 typedef unsigned long Atom;
 
-#include <qcolor.h>
-#include <qfont.h>
-#include <qmap.h>
-#include <qstringlist.h>
+#include <tqcolor.h>
+#include <tqfont.h>
+#include <tqmap.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -47,8 +47,8 @@ class KDECORE_EXPORT KRootProp
 {
 private:	
   Atom atom;
-  QMap<QString,QString> propDict;
-  QString property_;
+  TQMap<TQString,TQString> propDict;
+  TQString property_;
   bool dirty;
   KRootPropPrivate *d;
 
@@ -59,7 +59,7 @@ public:
    *              do nothing
    * @see setProp()
    **/
-   KRootProp( const QString& rProp = QString::null );
+   KRootProp( const TQString& rProp = TQString::null );
   /**
    * Destructs the KRootProp object.
    *
@@ -71,12 +71,12 @@ public:
    * Sets the property in which keys will be searched.
    * @param rProp the property that will be searched
    **/	
-   void setProp(const QString& rProp=QString());
+   void setProp(const TQString& rProp=TQString());
    /**
     * Returns the name of the property under which keys are searched.
     * @return the property that will be searched
     **/
-   QString prop() const;
+   TQString prop() const;
    
    /**
     * Destroys the property completely.
@@ -94,8 +94,8 @@ public:
   * @return The value for this key or the default if no value
   *	  was found.
   **/	
- QString readEntry( const QString& rKey,
-		    const QString& pDefault = QString::null ) const ;
+ TQString readEntry( const TQString& rKey,
+		    const TQString& pDefault = TQString::null ) const ;
 					
  /**
   * Reads a numerical value.
@@ -107,10 +107,10 @@ public:
   * @param nDefault A default value returned if the key was not found.
   * @return The value for this key or the default if no value was found.
   */
- int readNumEntry( const QString& rKey, int nDefault = 0 ) const;
+ int readNumEntry( const TQString& rKey, int nDefault = 0 ) const;
  
  /**
-  * Reads a QFont value.
+  * Reads a TQFont value.
   *
   * Reads the value of an entry specified by @p rKey in the current property
   * and interpret it as a font object.
@@ -119,11 +119,11 @@ public:
   * @param pDefault	A default value returned if the key was not found.
   * @return The value for this key or a default font if no value was found.
   */
- QFont readFontEntry( const QString& rKey,
-		      const QFont* pDefault = 0 ) const;
+ TQFont readFontEntry( const TQString& rKey,
+		      const TQFont* pDefault = 0 ) const;
  
  /**
-  * Reads a QColor.
+  * Reads a TQColor.
   *
   * Reads the value of an entry specified by @p rKey in the current property
   * and interprets it as a color.
@@ -133,8 +133,8 @@ public:
   * @return The value for this key or a default color if no value
   * was found.
   */					
- QColor readColorEntry( const QString& rKey,
-			const QColor* pDefault = 0 ) const;
+ TQColor readColorEntry( const TQString& rKey,
+			const TQColor* pDefault = 0 ) const;
 							
 	
  /**
@@ -149,7 +149,7 @@ public:
   *	  a null string is returned.
   *
   **/
- QString writeEntry( const QString& rKey, const QString& rValue );
+ TQString writeEntry( const TQString& rKey, const TQString& rValue );
 
  /**
   * Writes the (key/value) pair.
@@ -159,7 +159,7 @@ public:
   * @return The old value for this key. If this key did not
   * exist, a null string is returned.
   **/
- QString writeEntry( const QString& rKey, int nValue );
+ TQString writeEntry( const TQString& rKey, int nValue );
 
  /**
   * Writes the (key/value) pair.
@@ -169,7 +169,7 @@ public:
   * @return The old value for this key. If this key did not
   * exist, a null string is returned.
   **/
-  QString writeEntry( const QString& rKey, const QFont& rFont );
+  TQString writeEntry( const TQString& rKey, const TQFont& rFont );
 
   /**
    * Writes the (key/value) pair.
@@ -179,7 +179,7 @@ public:
    * @return The old value for this key. If this key did not
    *  exist, a null string is returned.
    **/
-  QString writeEntry( const QString& rKey, const QColor& rColor );
+  TQString writeEntry( const TQString& rKey, const TQColor& rColor );
 
   /**
    * Removes an entry.
@@ -187,13 +187,13 @@ public:
    * @return The old value for this key. If this key did not
    *  exist, a null string is returned.
    **/
-  QString removeEntry(const QString& rKey);
+  TQString removeEntry(const TQString& rKey);
 
   /**
    * Returns a list of all keys.
-   * @return A QStringList containing all the keys.
+   * @return A TQStringList containing all the keys.
    **/
-  QStringList listEntries() const;
+  TQStringList listEntries() const;
 
   /**
    * Flushes the entry cache.

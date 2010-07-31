@@ -18,9 +18,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qfile.h>
-#include <qregexp.h>
-#include <qtimer.h>
+#include <tqfile.h>
+#include <tqregexp.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -43,22 +43,22 @@ struct AddressBook::AddressBookData
   ErrorHandler *mErrorHandler;
   KConfig *mConfig;
   KRES::Manager<Resource> *mManager;
-  QPtrList<Resource> mPendingLoadResources;
-  QPtrList<Resource> mPendingSaveResources;
+  TQPtrList<Resource> mPendingLoadResources;
+  TQPtrList<Resource> mPendingSaveResources;
   Iterator end;
 };
 
 struct AddressBook::Iterator::IteratorData
 {
   Resource::Iterator mIt;
-  QValueList<Resource*> mResources;
+  TQValueList<Resource*> mResources;
   int mCurrRes;
 };
 
 struct AddressBook::ConstIterator::ConstIteratorData
 {
   Resource::ConstIterator mIt;
-  QValueList<Resource*> mResources;
+  TQValueList<Resource*> mResources;
   int mCurrRes;
 };
 
@@ -307,11 +307,11 @@ AddressBook::AddressBook()
   d->mErrorHandler = 0;
   d->mConfig = 0;
   d->mManager = new KRES::Manager<Resource>( "contact" );
-  d->end.d->mResources = QValueList<Resource*>();
+  d->end.d->mResources = TQValueList<Resource*>();
   d->end.d->mCurrRes = -1;
 }
 
-AddressBook::AddressBook( const QString &config )
+AddressBook::AddressBook( const TQString &config )
   : d( new AddressBookData )
 {
   d->mErrorHandler = 0;
@@ -321,7 +321,7 @@ AddressBook::AddressBook( const QString &config )
     d->mConfig = new KConfig( config );
   d->mManager = new KRES::Manager<Resource>( "contact" );
   d->mManager->readConfig( d->mConfig );
-  d->end.d->mResources = QValueList<Resource*>();
+  d->end.d->mResources = TQValueList<Resource*>();
   d->end.d->mCurrRes = -1;
 }
 
@@ -400,7 +400,7 @@ bool AddressBook::asyncSave( Ticket *ticket )
 
 AddressBook::Iterator AddressBook::begin()
 {
-  QValueList<Resource*> list;
+  TQValueList<Resource*> list;
   KRES::Manager<Resource>::ActiveIterator resIt;
   for ( resIt = d->mManager->activeBegin(); resIt != d->mManager->activeEnd(); ++resIt )
     list.append( *resIt );
@@ -427,7 +427,7 @@ AddressBook::Iterator AddressBook::begin()
 
 AddressBook::ConstIterator AddressBook::begin() const
 {
-  QValueList<Resource*> list;
+  TQValueList<Resource*> list;
   KRES::Manager<Resource>::ActiveIterator resIt;
   for ( resIt = d->mManager->activeBegin(); resIt != d->mManager->activeEnd(); ++resIt )
     list.append( *resIt );
@@ -527,7 +527,7 @@ void AddressBook::insertAddressee( const Addressee &a )
   Addressee addr( a );
   if ( !fAddr.isEmpty() ) {
     if ( fAddr != a )
-      addr.setRevision( QDateTime::currentDateTime() );
+      addr.setRevision( TQDateTime::currentDateTime() );
     else {
       if ( fAddr.resource() == 0 ) {
         fAddr.setResource( resource );
@@ -566,7 +566,7 @@ AddressBook::Iterator AddressBook::find( const Addressee &a )
   return end();
 }
 
-Addressee AddressBook::findByUid( const QString &uid )
+Addressee AddressBook::findByUid( const TQString &uid )
 {
   KRES::Manager<Resource>::ActiveIterator it;
   for ( it = d->mManager->activeBegin(); it != d->mManager->activeEnd(); ++it ) {
@@ -589,7 +589,7 @@ Addressee::List AddressBook::allAddressees()
   return list;
 }
 
-Addressee::List AddressBook::findByName( const QString &name )
+Addressee::List AddressBook::findByName( const TQString &name )
 {
   Addressee::List results;
 
@@ -600,7 +600,7 @@ Addressee::List AddressBook::findByName( const QString &name )
   return results;
 }
 
-Addressee::List AddressBook::findByEmail( const QString &email )
+Addressee::List AddressBook::findByEmail( const TQString &email )
 {
   Addressee::List results;
 
@@ -611,7 +611,7 @@ Addressee::List AddressBook::findByEmail( const QString &email )
   return results;
 }
 
-Addressee::List AddressBook::findByCategory( const QString &category )
+Addressee::List AddressBook::findByCategory( const TQString &category )
 {
   Addressee::List results;
 
@@ -634,9 +634,9 @@ void AddressBook::dump() const
   kdDebug(5700) << "AddressBook::dump() ---  end  ---" << endl;
 }
 
-QString AddressBook::identifier()
+TQString AddressBook::identifier()
 {
-  QStringList identifier;
+  TQStringList identifier;
 
 
   KRES::Manager<Resource>::ActiveIterator it;
@@ -666,15 +666,15 @@ Field::List AddressBook::fields( int category )
   return result;
 }
 
-bool AddressBook::addCustomField( const QString &label, int category,
-                                  const QString &key, const QString &app )
+bool AddressBook::addCustomField( const TQString &label, int category,
+                                  const TQString &key, const TQString &app )
 {
   if ( d->mAllFields.isEmpty() ) {
     d->mAllFields = Field::allFields();
   }
 
-  QString a = app.isNull() ? KGlobal::instance()->instanceName() : app;
-  QString k = key.isNull() ? label : key;
+  TQString a = app.isNull() ? KGlobal::instance()->instanceName() : app;
+  TQString k = key.isNull() ? label : key;
 
   Field *field = Field::createCustomField( label, category, k, a );
 
@@ -685,14 +685,14 @@ bool AddressBook::addCustomField( const QString &label, int category,
   return true;
 }
 
-QDataStream &KABC::operator<<( QDataStream &s, const AddressBook &ab )
+TQDataStream &KABC::operator<<( TQDataStream &s, const AddressBook &ab )
 {
   if (!ab.d) return s;
 
   return s;// << ab.d->mAddressees;
 }
 
-QDataStream &KABC::operator>>( QDataStream &s, AddressBook &ab )
+TQDataStream &KABC::operator>>( TQDataStream &s, AddressBook &ab )
 {
   if (!ab.d) return s;
 
@@ -711,15 +711,15 @@ bool AddressBook::addResource( Resource *resource )
   d->mManager->add( resource );
   resource->setAddressBook( this );
 
-  connect( resource, SIGNAL( loadingFinished( Resource* ) ),
-           this, SLOT( resourceLoadingFinished( Resource* ) ) );
-  connect( resource, SIGNAL( savingFinished( Resource* ) ),
-           this, SLOT( resourceSavingFinished( Resource* ) ) );
+  connect( resource, TQT_SIGNAL( loadingFinished( Resource* ) ),
+           this, TQT_SLOT( resourceLoadingFinished( Resource* ) ) );
+  connect( resource, TQT_SIGNAL( savingFinished( Resource* ) ),
+           this, TQT_SLOT( resourceSavingFinished( Resource* ) ) );
 
-  connect( resource, SIGNAL( loadingError( Resource*, const QString& ) ),
-           this, SLOT( resourceLoadingError( Resource*, const QString& ) ) );
-  connect( resource, SIGNAL( savingError( Resource*, const QString& ) ),
-           this, SLOT( resourceSavingError( Resource*, const QString& ) ) );
+  connect( resource, TQT_SIGNAL( loadingError( Resource*, const TQString& ) ),
+           this, TQT_SLOT( resourceLoadingError( Resource*, const TQString& ) ) );
+  connect( resource, TQT_SIGNAL( savingError( Resource*, const TQString& ) ),
+           this, TQT_SLOT( resourceSavingError( Resource*, const TQString& ) ) );
 
   return true;
 }
@@ -733,24 +733,24 @@ bool AddressBook::removeResource( Resource *resource )
 
   resource->setAddressBook( 0 );
 
-  disconnect( resource, SIGNAL( loadingFinished( Resource* ) ),
-              this, SLOT( resourceLoadingFinished( Resource* ) ) );
-  disconnect( resource, SIGNAL( savingFinished( Resource* ) ),
-              this, SLOT( resourceSavingFinished( Resource* ) ) );
+  disconnect( resource, TQT_SIGNAL( loadingFinished( Resource* ) ),
+              this, TQT_SLOT( resourceLoadingFinished( Resource* ) ) );
+  disconnect( resource, TQT_SIGNAL( savingFinished( Resource* ) ),
+              this, TQT_SLOT( resourceSavingFinished( Resource* ) ) );
 
-  disconnect( resource, SIGNAL( loadingError( Resource*, const QString& ) ),
-              this, SLOT( resourceLoadingError( Resource*, const QString& ) ) );
-  disconnect( resource, SIGNAL( savingError( Resource*, const QString& ) ),
-              this, SLOT( resourceLoadingError( Resource*, const QString& ) ) );
+  disconnect( resource, TQT_SIGNAL( loadingError( Resource*, const TQString& ) ),
+              this, TQT_SLOT( resourceLoadingError( Resource*, const TQString& ) ) );
+  disconnect( resource, TQT_SIGNAL( savingError( Resource*, const TQString& ) ),
+              this, TQT_SLOT( resourceLoadingError( Resource*, const TQString& ) ) );
 
   d->mManager->remove( resource );
 
   return true;
 }
 
-QPtrList<Resource> AddressBook::resources()
+TQPtrList<Resource> AddressBook::resources()
 {
-  QPtrList<Resource> list;
+  TQPtrList<Resource> list;
 
   KRES::Manager<Resource>::ActiveIterator it;
   for ( it = d->mManager->activeBegin(); it != d->mManager->activeEnd(); ++it ) {
@@ -769,7 +769,7 @@ void AddressBook::setErrorHandler( ErrorHandler *handler )
   d->mErrorHandler = handler;
 }
 
-void AddressBook::error( const QString& msg )
+void AddressBook::error( const TQString& msg )
 {
   if ( !d->mErrorHandler ) // create default error handler
     d->mErrorHandler = new ConsoleErrorHandler;
@@ -825,7 +825,7 @@ void AddressBook::resourceSavingFinished( Resource *res )
   emit savingFinished( res );
 }
 
-void AddressBook::resourceLoadingError( Resource *res, const QString &errMsg )
+void AddressBook::resourceLoadingError( Resource *res, const TQString &errMsg )
 {
   error( errMsg );
 
@@ -834,7 +834,7 @@ void AddressBook::resourceLoadingError( Resource *res, const QString &errMsg )
     emit addressBookChanged( this );
 }
 
-void AddressBook::resourceSavingError( Resource *res, const QString &errMsg )
+void AddressBook::resourceSavingError( Resource *res, const TQString &errMsg )
 {
   error( errMsg );
 

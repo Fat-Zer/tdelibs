@@ -19,7 +19,7 @@
 #ifndef __kservicegroupfactory_h__
 #define __kservicegroupfactory_h__
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include "kservicegroup.h"
 #include "ksycocafactory.h"
@@ -46,18 +46,18 @@ public:
   /**
    * Construct a KServiceGroup from a config file.
    */
-  virtual KSycocaEntry *createEntry(const QString &, const char *)
+  virtual KSycocaEntry *createEntry(const TQString &, const char *)
     { assert(0); return 0; }
 
   /**
    * Find a group ( by desktop path, e.g. "Applications/Editors")
    */
-  KServiceGroup * findGroupByDesktopPath( const QString &_name, bool deep = true );
+  KServiceGroup * findGroupByDesktopPath( const TQString &_name, bool deep = true );
 
   /**
    * Find a base group by name, e.g. "settings"
    */
-  KServiceGroup * findBaseGroup( const QString &_baseGroupName, bool deep = true );
+  KServiceGroup * findBaseGroup( const TQString &_baseGroupName, bool deep = true );
 
   /**
    * @return the unique service group factory, creating it if necessary

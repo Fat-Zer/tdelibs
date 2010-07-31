@@ -22,7 +22,7 @@
 #ifndef KABC_ADDRESSEELIST_H
 #define KABC_ADDRESSEELIST_H
 
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 #include "addressee.h"
 
@@ -87,11 +87,11 @@ class KABC_EXPORT GivenName  // fallback to family name
 typedef enum { Uid, Name, FormattedName, FamilyName, GivenName } SortingCriterion;
 
 /**
- * @short  a QValueList of Addressee, with sorting functionality
+ * @short  a TQValueList of Addressee, with sorting functionality
  *
- * This class extends the functionality of QValueList with
+ * This class extends the functionality of TQValueList with
  * sorting methods specific to the Addressee class. It can be used
- * just like any other QValueList but is no template class.
+ * just like any other TQValueList but is no template class.
  *
  * An AddresseeList does not automatically keep sorted when addressees
  * are added or removed or the sorting order is changed, as this would
@@ -99,7 +99,7 @@ typedef enum { Uid, Name, FormattedName, FamilyName, GivenName } SortingCriterio
  * such operations you have to call {@link #sort} or {@link #sortBy} to
  * create a defined order again.
  *
- * Iterator usage is inherited by QValueList and extensively documented
+ * Iterator usage is inherited by TQValueList and extensively documented
  * there. Please remember that the state of an iterator is undefined
  * after any sorting operation.
  *
@@ -109,13 +109,13 @@ typedef enum { Uid, Name, FormattedName, FamilyName, GivenName } SortingCriterio
  *
  * @author Jost Schenck jost@schenck.de
  */
-class KABC_EXPORT AddresseeList : public QValueList<Addressee>
+class KABC_EXPORT AddresseeList : public TQValueList<Addressee>
 {
   public:
     AddresseeList();
     ~AddresseeList();
     AddresseeList( const AddresseeList & );
-    AddresseeList( const QValueList<Addressee> & );
+    AddresseeList( const TQValueList<Addressee> & );
 
     /**
      * Debug output.

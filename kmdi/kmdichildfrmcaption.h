@@ -27,7 +27,7 @@
 #ifndef _KMDI_CHILD_FRM_CAPTION_H_
 #define _KMDI_CHILD_FRM_CAPTION_H_
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include "kmdidefines.h"
 
@@ -63,7 +63,7 @@ public:
 	/**
 	 * Repaint with a new caption bar title
 	 */
-	void setCaption( const QString& text );
+	void setCaption( const TQString& text );
 
 	/**
 	 * Returns the caption bar height depending on the used font
@@ -80,40 +80,40 @@ protected:
 	/**
 	 * Draws the caption bar and its title using the settings
 	 */
-	virtual void paintEvent( QPaintEvent *e );
+	virtual void paintEvent( TQPaintEvent *e );
 
 	/**
 	 * The same as KMdiChildFrmCaption::slot_moveViaSystemMenu
 	 */
-	virtual void mousePressEvent( QMouseEvent * );
+	virtual void mousePressEvent( TQMouseEvent * );
 
 	/**
 	 * Calls maximizePressed of the parent widget ( KMdiChildFrm )
 	 */
-	virtual void mouseDoubleClickEvent( QMouseEvent * );
+	virtual void mouseDoubleClickEvent( TQMouseEvent * );
 
 	/**
 	 * Restore the normal mouse cursor, set the state variable back to 'not moving'
 	 */
-	virtual void mouseReleaseEvent( QMouseEvent * );
+	virtual void mouseReleaseEvent( TQMouseEvent * );
 
 	/**
 	 * Checks if out of move range of the KMdiChildArea and calls KMdiChildFrm::move
 	 */
-	virtual void mouseMoveEvent( QMouseEvent *e );
+	virtual void mouseMoveEvent( TQMouseEvent *e );
 
 	/**
 	 * Computes a new abbreviated string from a given string depending on a given maximum width
 	 * @todo Replace with a call to a KStringHandler function instead of rolling our own
 	 */
-	QString abbreviateText( QString origStr, int maxWidth );
+	TQString abbreviateText( TQString origStr, int maxWidth );
 
 	// attributes
 public:
 	/**
 	 * the title string shown in the caption bar
 	 */
-	QString m_szCaption;
+	TQString m_szCaption;
 
 protected:  // Protected attributes
 	/**
@@ -129,7 +129,7 @@ protected:  // Protected attributes
 	/**
 	 * the position offset related to its parent widget (internally used for translating mouse move positions
 	 */
-	QPoint m_offset;
+	TQPoint m_offset;
 
 	/**
 	 * True if the child knows that it is currently being dragged.

@@ -24,15 +24,15 @@
 #include "kmmanager.h"
 
 #include <klocale.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qlabel.h>
-#include <qheader.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqlabel.h>
+#include <tqheader.h>
 #include <klistview.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
 
-KMWLocal::KMWLocal(QWidget *parent, const char *name)
+KMWLocal::KMWLocal(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_title = i18n("Local Port Selection");
@@ -42,28 +42,28 @@ KMWLocal::KMWLocal(QWidget *parent, const char *name)
 	m_block = false;
 
 	m_ports = new KListView(this);
-	m_ports->setFrameStyle(QFrame::WinPanel|QFrame::Sunken);
+	m_ports->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	m_ports->setLineWidth(1);
 	m_ports->header()->hide();
 	m_ports->addColumn("");
 	m_ports->setSorting(-1);
-	QListViewItem	*root = new QListViewItem(m_ports, i18n("Local System"));
+	QListViewItem	*root = new TQListViewItem(m_ports, i18n("Local System"));
 	root->setPixmap(0, SmallIcon("kdeprint_computer"));
 	root->setOpen(true);
-	connect(m_ports, SIGNAL(selectionChanged(QListViewItem*)), SLOT(slotPortSelected(QListViewItem*)));
-	QLabel	*l1 = new QLabel(i18n("URI:"), this);
-	m_localuri = new QLineEdit(this);
-	connect( m_localuri, SIGNAL( textChanged( const QString& ) ), SLOT( slotTextChanged( const QString& ) ) );
-	m_parents[0] = new QListViewItem(root, i18n("Parallel"));
-	m_parents[1] = new QListViewItem(root, m_parents[0], i18n("Serial"));
-	m_parents[2] = new QListViewItem(root, m_parents[1], i18n("USB"));
-	m_parents[3] = new QListViewItem(root, m_parents[2], i18n("Others"));
+	connect(m_ports, TQT_SIGNAL(selectionChanged(TQListViewItem*)), TQT_SLOT(slotPortSelected(TQListViewItem*)));
+	QLabel	*l1 = new TQLabel(i18n("URI:"), this);
+	m_localuri = new TQLineEdit(this);
+	connect( m_localuri, TQT_SIGNAL( textChanged( const TQString& ) ), TQT_SLOT( slotTextChanged( const TQString& ) ) );
+	m_parents[0] = new TQListViewItem(root, i18n("Parallel"));
+	m_parents[1] = new TQListViewItem(root, m_parents[0], i18n("Serial"));
+	m_parents[2] = new TQListViewItem(root, m_parents[1], i18n("USB"));
+	m_parents[3] = new TQListViewItem(root, m_parents[2], i18n("Others"));
 	for (int i=0;i<4;i++)
 		m_parents[i]->setPixmap(0, SmallIcon("input_devices_settings"));
-	QLabel	*l2 = new QLabel(i18n("<p>Select a valid detected port, or enter directly the corresponding URI in the bottom edit field.</p>"), this);
+	QLabel	*l2 = new TQLabel(i18n("<p>Select a valid detected port, or enter directly the corresponding URI in the bottom edit field.</p>"), this);
 
-	QVBoxLayout	*lay0 = new QVBoxLayout(this, 0, 10);
-	QHBoxLayout	*lay1 = new QHBoxLayout(0, 0, 10);
+	QVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, 10);
+	QHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 10);
 	lay0->addWidget(l2, 0);
 	lay0->addWidget(m_ports, 1);
 	lay0->addLayout(lay1, 0);
@@ -71,7 +71,7 @@ KMWLocal::KMWLocal(QWidget *parent, const char *name)
 	lay1->addWidget(m_localuri, 1);
 }
 
-bool KMWLocal::isValid(QString& msg)
+bool KMWLocal::isValid(TQString& msg)
 {
 	if (m_localuri->text().isEmpty())
 	{
@@ -89,14 +89,14 @@ bool KMWLocal::isValid(QString& msg)
 	return true;
 }
 
-void KMWLocal::slotPortSelected(QListViewItem *item)
+void KMWLocal::slotPortSelected(TQListViewItem *item)
 {
 	if ( m_block )
 		return;
 
-	QString uri;
+	TQString uri;
 	if (!item || item->depth() <= 1 || item->depth() > 3)
-		uri = QString::null;
+		uri = TQString::null;
 	else if (item->depth() == 3)
 		uri = item->parent()->text( 1 );
 	else
@@ -108,7 +108,7 @@ void KMWLocal::slotPortSelected(QListViewItem *item)
 
 void KMWLocal::updatePrinter(KMPrinter *printer)
 {
-	QListViewItem *item = m_ports->selectedItem();
+	TQListViewItem *item = m_ports->selectedItem();
 	if ( item && item->depth() == 3 )
 		printer->setOption( "kde-autodetect", item->text( 0 ) );
 	printer->setDevice(m_localuri->text());
@@ -125,11 +125,11 @@ void KMWLocal::initPrinter(KMPrinter *printer)
 	}
 }
 
-QListViewItem* KMWLocal::lookForItem( const QString& uri )
+TQListViewItem* KMWLocal::lookForItem( const TQString& uri )
 {
 	for ( int i=0; i<4; i++ )
 	{
-		QListViewItem *item = m_parents[ i ]->firstChild();
+		TQListViewItem *item = m_parents[ i ]->firstChild();
 		while ( item )
 			if ( item->text( 1 ) == uri )
 				if ( item->firstChild() )
@@ -142,12 +142,12 @@ QListViewItem* KMWLocal::lookForItem( const QString& uri )
 	return 0;
 }
 
-void KMWLocal::slotTextChanged( const QString& txt )
+void KMWLocal::slotTextChanged( const TQString& txt )
 {
 	if ( m_block )
 		return;
 
-	QListViewItem *item = lookForItem( txt );
+	TQListViewItem *item = lookForItem( txt );
 	if ( item )
 	{
 		m_block = true;
@@ -167,14 +167,14 @@ void KMWLocal::initialize()
 		return;
 	}
 	QListViewItem	*last[4] = {0, 0, 0, 0};
-	for (QStringList::Iterator it=list.begin(); it!=list.end(); ++it)
+	for (TQStringList::Iterator it=list.begin(); it!=list.end(); ++it)
 	{
-		QString cl = *it;
+		TQString cl = *it;
 		++it;
 
 		QString	uri = *it;
 		int p = uri.find( ':' );
-		QString	desc = *(++it), prot = ( p != -1 ? uri.left( p ) : QString::null );
+		QString	desc = *(++it), prot = ( p != -1 ? uri.left( p ) : TQString::null );
 		QString	printer = *(++it);
 		int	index(-1);
 		if (desc.isEmpty())
@@ -189,13 +189,13 @@ void KMWLocal::initialize()
 			index = 3;
 		else
 			continue;
-		last[index] = new QListViewItem(m_parents[index], last[index], desc, uri);
+		last[index] = new TQListViewItem(m_parents[index], last[index], desc, uri);
 		last[index]->setPixmap(0, SmallIcon("blockdevice"));
 		m_parents[index]->setOpen(true);
 		m_uris << uri;
 		if (!printer.isEmpty())
 		{
-			QListViewItem	*pItem = new QListViewItem(last[index], printer);
+			QListViewItem	*pItem = new TQListViewItem(last[index], printer);
 			last[index]->setOpen(true);
 			pItem->setPixmap(0, SmallIcon("kdeprint_printer"));
 		}

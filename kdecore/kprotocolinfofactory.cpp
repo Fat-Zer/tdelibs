@@ -45,7 +45,7 @@ KProtocolInfoFactory::createEntry(int offset)
 {
    KProtocolInfo *info = 0;
    KSycocaType type;
-   QDataStream *str = KSycoca::self()->findEntry(offset, type);
+   TQDataStream *str = KSycoca::self()->findEntry(offset, type);
    switch (type)
    {
      case KST_KProtocolInfo:
@@ -63,9 +63,9 @@ KProtocolInfoFactory::createEntry(int offset)
 }
 
 
-QStringList KProtocolInfoFactory::protocols()
+TQStringList KProtocolInfoFactory::protocols()
 {
-  QStringList res;
+  TQStringList res;
 
   KSycocaEntry::List list = allEntries();
   for( KSycocaEntry::List::Iterator it = list.begin();
@@ -82,11 +82,11 @@ QStringList KProtocolInfoFactory::protocols()
 }
 
 KProtocolInfo *
-KProtocolInfoFactory::findProtocol(const QString &protocol)
+KProtocolInfoFactory::findProtocol(const TQString &protocol)
 {
   if (!m_sycocaDict) return 0; // Error!
 
-  QMap<QString,KProtocolInfo::Ptr>::iterator it = m_cache.find(protocol);
+  TQMap<TQString,KProtocolInfo::Ptr>::iterator it = m_cache.find(protocol);
   if (it != m_cache.end())
      return (*it);
 

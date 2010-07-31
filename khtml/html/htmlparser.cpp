@@ -242,7 +242,7 @@ void KHTMLParser::parseToken(Token *t)
            current->id() != ID_SCRIPT &&
            !t->text->containsOnlyWhitespace()) haveContent = true;
 #ifdef PARSER_DEBUG
-        kdDebug(6035) << "length="<< t->text->l << " text='" << QConstString(t->text->s, t->text->l).string() << "'" << endl;
+        kdDebug(6035) << "length="<< t->text->l << " text='" << TQConstString(t->text->s, t->text->l).string() << "'" << endl;
 #endif
     }
 
@@ -346,7 +346,7 @@ bool KHTMLParser::insertNode(NodeImpl *n, bool flat)
                 n->attach();
             if (n->maintainsState()) {
                 document->registerMaintainsState(n);
-                QString state(document->nextState());
+                TQString state(document->nextState());
                 if (!state.isNull()) n->restoreState(state);
             }
             n->close();
@@ -1043,7 +1043,7 @@ NodeImpl *KHTMLParser::getElement(Token* t)
             KHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled()&&
             KHTMLFactory::defaultHTMLSettings()->isHideAdsEnabled())
         {
-            QString url = doc()->completeURL( khtml::parseURL(t->attrs->getValue(ATTR_SRC)).string() );
+            TQString url = doc()->completeURL( khtml::parseURL(t->attrs->getValue(ATTR_SRC)).string() );
             if (KHTMLFactory::defaultHTMLSettings()->isAdFiltered(url))
                 return 0;
         }
@@ -1636,7 +1636,7 @@ void KHTMLParser::popOneBlock(bool delBlock)
     if((Elem->node != current)) {
         if (current->maintainsState() && document){
             document->registerMaintainsState(current);
-            QString state(document->nextState());
+            TQString state(document->nextState());
             if (!state.isNull()) current->restoreState(state);
         }
         current->close();

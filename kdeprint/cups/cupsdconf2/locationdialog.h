@@ -32,14 +32,14 @@ class LocationDialog : public KDialogBase
 {
 	Q_OBJECT
 public:
-	LocationDialog(QWidget *parent = 0, const char *name = 0);
+	LocationDialog(TQWidget *parent = 0, const char *name = 0);
 
 	void setInfos(CupsdConf*);
 	void fillLocation(CupsLocation*);
 	void setLocation(CupsLocation*);
 
-	static bool newLocation(CupsLocation*, QWidget *parent = 0, CupsdConf *conf = 0);
-	static bool editLocation(CupsLocation*, QWidget *parent = 0, CupsdConf *conf = 0);
+	static bool newLocation(CupsLocation*, TQWidget *parent = 0, CupsdConf *conf = 0);
+	static bool editLocation(CupsLocation*, TQWidget *parent = 0, CupsdConf *conf = 0);
 
 protected slots:
 	void slotTypeChanged(int);

@@ -19,7 +19,7 @@
 #ifndef __ktexteditor_editinterface_h__
 #define __ktexteditor_editinterface_h__
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -41,7 +41,7 @@ class KTEXTEDITOR_EXPORT EditInterface
     uint editInterfaceNumber () const;
 
   protected:  
-    void setEditInterfaceDCOPSuffix (const QCString &suffix);  
+    void setEditInterfaceDCOPSuffix (const TQCString &suffix);  
     
   public:
   /**
@@ -50,17 +50,17 @@ class KTEXTEDITOR_EXPORT EditInterface
     /**
     * @return the complete document as a single QString
     */
-    virtual QString text () const = 0;
+    virtual TQString text () const = 0;
 
     /**
     * @return a QString
     */
-    virtual QString text ( uint startLine, uint startCol, uint endLine, uint endCol ) const = 0;
+    virtual TQString text ( uint startLine, uint startCol, uint endLine, uint endCol ) const = 0;
 
     /**
     * @return All the text from the requested line.
     */
-    virtual QString textLine ( uint line ) const = 0;
+    virtual TQString textLine ( uint line ) const = 0;
 
     /**
     * @return The current number of lines in the document
@@ -81,7 +81,7 @@ class KTEXTEDITOR_EXPORT EditInterface
     * Set the given text into the view.
     * Warning: This will overwrite any data currently held in this view.
     */
-    virtual bool setText ( const QString &text ) = 0;
+    virtual bool setText ( const TQString &text ) = 0;
 
     /**
     *  clears the document
@@ -94,7 +94,7 @@ class KTEXTEDITOR_EXPORT EditInterface
     *  returns true if success
     *  Use insertText(numLines(), ...) to append text at end of document
     */
-    virtual bool insertText ( uint line, uint col, const QString &text ) = 0;
+    virtual bool insertText ( uint line, uint col, const TQString &text ) = 0;
 
     /**
     *  remove text at line "line", column "col"
@@ -106,7 +106,7 @@ class KTEXTEDITOR_EXPORT EditInterface
     * Insert line(s) at the given line number. 
     * Use insertLine(numLines(), text) to append line at end of document
     */
-    virtual bool insertLine ( uint line, const QString &text ) = 0;
+    virtual bool insertLine ( uint line, const TQString &text ) = 0;
 
     /**
     * Remove line(s) at the given line number.
@@ -119,7 +119,7 @@ class KTEXTEDITOR_EXPORT EditInterface
   public:
     virtual void textChanged () = 0;
 
-    virtual void charactersInteractivelyInserted(int ,int ,const QString&)=0; //line, col, characters if you don't support this, don't create a signal, just overload it.
+    virtual void charactersInteractivelyInserted(int ,int ,const TQString&)=0; //line, col, characters if you don't support this, don't create a signal, just overload it.
 
   /**
   * only for the interface itself - REAL PRIVATE

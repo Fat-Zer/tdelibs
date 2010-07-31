@@ -55,7 +55,7 @@
 #include "css/cssstyleselector.h"
 #include "css/css_stylesheetimpl.h"
 #include <stdlib.h>
-#include <qptrstack.h>
+#include <tqptrstack.h>
 
 // Turn off inlining to avoid warning with newer gcc.
 #undef __inline
@@ -63,7 +63,7 @@
 #include "doctypes.cpp"
 #undef __inline
 
-template class QPtrStack<DOM::NodeImpl>;
+template class TQPtrStack<DOM::NodeImpl>;
 
 using namespace DOM;
 using namespace khtml;
@@ -78,13 +78,13 @@ HTMLDocumentImpl::HTMLDocumentImpl(DOMImplementationImpl *_implementation, KHTML
     m_doAutoFill = false;
 
 /* dynamic history stuff to be fixed later (pfeiffer)
-    connect( KHTMLFactory::vLinks(), SIGNAL( removed( const QString& )),
-             SLOT( slotHistoryChanged() ));
+    connect( KHTMLFactory::vLinks(), TQT_SIGNAL( removed( const TQString& )),
+             TQT_SLOT( slotHistoryChanged() ));
 */
-    connect( KHTMLFactory::vLinks(), SIGNAL( inserted( const QString& ) ),
-             SLOT( slotHistoryChanged() ));
-    connect( KHTMLFactory::vLinks(), SIGNAL( cleared()),
-             SLOT( slotHistoryChanged() ));
+    connect( KHTMLFactory::vLinks(), TQT_SIGNAL( inserted( const TQString& ) ),
+             TQT_SLOT( slotHistoryChanged() ));
+    connect( KHTMLFactory::vLinks(), TQT_SIGNAL( cleared()),
+             TQT_SLOT( slotHistoryChanged() ));
 }
 
 HTMLDocumentImpl::~HTMLDocumentImpl()
@@ -113,26 +113,26 @@ DOMString HTMLDocumentImpl::cookie() const
     if ( v && v->topLevelWidget() )
       windowId = v->topLevelWidget()->winId();
 
-    QCString replyType;
-    QByteArray params, reply;
-    QDataStream stream(params, IO_WriteOnly);
+    TQCString replyType;
+    TQByteArray params, reply;
+    TQDataStream stream(params, IO_WriteOnly);
     stream << URL().url() << windowId;
     if (!kapp->dcopClient()->call("kcookiejar", "kcookiejar",
-                                  "findDOMCookies(QString,long int)", params,
+                                  "findDOMCookies(TQString,long int)", params,
                                   replyType, reply))
     {
        kdWarning(6010) << "Can't communicate with cookiejar!" << endl;
        return DOMString();
     }
 
-    QDataStream stream2(reply, IO_ReadOnly);
-    if(replyType != "QString") {
+    TQDataStream stream2(reply, IO_ReadOnly);
+    if(replyType != "TQString") {
          kdError(6010) << "DCOP function findDOMCookies(...) returns "
-                       << replyType << ", expected QString" << endl;
+                       << replyType << ", expected TQString" << endl;
          return DOMString();
     }
 
-    QString result;
+    TQString result;
     stream2 >> result;
     return DOMString(result);
 }
@@ -145,19 +145,19 @@ void HTMLDocumentImpl::setCookie( const DOMString & value )
     if ( v && v->topLevelWidget() )
       windowId = v->topLevelWidget()->winId();
 
-    QByteArray params;
-    QDataStream stream(params, IO_WriteOnly);
-    QCString fake_header("Set-Cookie: ");
+    TQByteArray params;
+    TQDataStream stream(params, IO_WriteOnly);
+    TQCString fake_header("Set-Cookie: ");
     fake_header.append(value.string().latin1());
     fake_header.append("\n");
     stream << URL().url() << fake_header << windowId;
     if (!kapp->dcopClient()->send("kcookiejar", "kcookiejar",
-                                  "addCookies(QString,QCString,long int)", params))
+                                  "addCookies(TQString,TQCString,long int)", params))
     {
          // Maybe it wasn't running (e.g. we're opening local html files)
          KApplication::startServiceByDesktopName( "kcookiejar");
          if (!kapp->dcopClient()->send("kcookiejar", "kcookiejar",
-                                       "addCookies(QString,QCString,long int)", params))
+                                       "addCookies(TQString,TQCString,long int)", params))
              kdWarning(6010) << "Can't communicate with cookiejar!" << endl;
     }
 }
@@ -231,13 +231,13 @@ void HTMLDocumentImpl::slotHistoryChanged()
 
 HTMLMapElementImpl* HTMLDocumentImpl::getMap(const DOMString& _url)
 {
-    QString url = _url.string();
-    QString s;
+    TQString url = _url.string();
+    TQString s;
     int pos = url.find('#');
     //kdDebug(0) << "map pos of #:" << pos << endl;
-    s = QString(_url.unicode() + pos + 1, _url.length() - pos - 1);
+    s = TQString(_url.unicode() + pos + 1, _url.length() - pos - 1);
 
-    QMapConstIterator<QString,HTMLMapElementImpl*> it = mapMap.find(s);
+    TQMapConstIterator<TQString,HTMLMapElementImpl*> it = mapMap.find(s);
 
     if (it != mapMap.end())
         return *it;
@@ -288,10 +288,10 @@ const int PARSEMODE_HAVE_PUBLIC_ID	=	(1<<1);
 const int PARSEMODE_HAVE_SYSTEM_ID	=	(1<<2);
 const int PARSEMODE_HAVE_INTERNAL	=	(1<<3);
 
-static int parseDocTypePart(const QString& buffer, int index)
+static int parseDocTypePart(const TQString& buffer, int index)
 {
     while (true) {
-        QChar ch = buffer[index];
+        TQChar ch = buffer[index];
         if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r')
             ++index;
         else if (ch == '-') {
@@ -307,22 +307,22 @@ static int parseDocTypePart(const QString& buffer, int index)
     }
 }
 
-static bool containsString(const char* str, const QString& buffer, int offset)
+static bool containsString(const char* str, const TQString& buffer, int offset)
 {
-    QString startString(str);
+    TQString startString(str);
     if (offset + startString.length() > buffer.length())
         return false;
 
-    QString bufferString = buffer.mid(offset, startString.length()).lower();
-    QString lowerStart = startString.lower();
+    TQString bufferString = buffer.mid(offset, startString.length()).lower();
+    TQString lowerStart = startString.lower();
 
     return bufferString.startsWith(lowerStart);
 }
 
-static bool parseDocTypeDeclaration(const QString& buffer,
+static bool parseDocTypeDeclaration(const TQString& buffer,
                                     int* resultFlags,
-                                    QString& publicID,
-                                    QString& systemID)
+                                    TQString& publicID,
+                                    TQString& systemID)
 {
     bool haveDocType = false;
     *resultFlags = 0;
@@ -332,7 +332,7 @@ static bool parseDocTypeDeclaration(const QString& buffer,
     do {
         index = buffer.find('<', index);
         if (index == -1) break;
-        QChar nextChar = buffer[index+1];
+        TQChar nextChar = buffer[index+1];
         if (nextChar == '!') {
             if (containsString("doctype", buffer, index+2)) {
                 haveDocType = true;
@@ -364,7 +364,7 @@ static bool parseDocTypeDeclaration(const QString& buffer,
         // We've read <!DOCTYPE HTML PUBLIC (not case sensitive).
         // Now we find the beginning and end of the public identifers
         // and system identifiers (assuming they're even present).
-        QChar theChar = buffer[index];
+        TQChar theChar = buffer[index];
         if (theChar != '\"' && theChar != '\'')
             return false;
 
@@ -375,7 +375,7 @@ static bool parseDocTypeDeclaration(const QString& buffer,
         if (publicIDEnd == -1)
             return false;
         index = parseDocTypePart(buffer, publicIDEnd+1);
-        QChar next = buffer[index];
+        TQChar next = buffer[index];
         if (next == '>') {
             // Public identifier present, but no system identifier.
             // Do nothing.  Note that this is the most common
@@ -406,7 +406,7 @@ static bool parseDocTypeDeclaration(const QString& buffer,
             // Doctype has a system ID but no public ID
             *resultFlags |= PARSEMODE_HAVE_SYSTEM_ID;
             index = parseDocTypePart(buffer, index+6);
-            QChar next = buffer[index];
+            TQChar next = buffer[index];
             if (next != '\"' && next != '\'')
                 return false;
             int systemIDStart = index+1;
@@ -417,7 +417,7 @@ static bool parseDocTypeDeclaration(const QString& buffer,
             index = parseDocTypePart(buffer, systemIDEnd+1);
         }
 
-        QChar nextChar = buffer[index];
+        TQChar nextChar = buffer[index];
         if (nextChar == '[')
             *resultFlags |= PARSEMODE_HAVE_INTERNAL;
         else if (nextChar != '>')
@@ -427,7 +427,7 @@ static bool parseDocTypeDeclaration(const QString& buffer,
     return true;
 }
 
-void HTMLDocumentImpl::determineParseMode( const QString &str )
+void HTMLDocumentImpl::determineParseMode( const TQString &str )
 {
     //kdDebug() << "DocumentImpl::determineParseMode str=" << str<< endl;
     int oldPMode = pMode;
@@ -446,7 +446,7 @@ void HTMLDocumentImpl::determineParseMode( const QString &str )
     // STRICT - no quirks apply.  Web pages will obey the specifications to
     // the letter.
 
-    QString systemID, publicID;
+    TQString systemID, publicID;
     int resultFlags = 0;
     if (parseDocTypeDeclaration(str, &resultFlags, publicID, systemID)) {
         if (resultFlags & PARSEMODE_HAVE_DOCTYPE) {
@@ -469,7 +469,7 @@ void HTMLDocumentImpl::determineParseMode( const QString &str )
         else {
             // We have to check a list of public IDs to see what we
             // should do.
-            QString lowerPubID = publicID.lower();
+            TQString lowerPubID = publicID.lower();
             const char* pubIDStr = lowerPubID.latin1();
 
             // Look up the entry in our gperf-generated table.

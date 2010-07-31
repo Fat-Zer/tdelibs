@@ -19,9 +19,9 @@
 #ifndef __RANDR_H__
 #define __RANDR_H__
 
-#include <qobject.h>
-#include <qstringlist.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
+#include <tqptrlist.h>
 
 #include <kcmodule.h>
 #include <kconfig.h>
@@ -82,7 +82,7 @@ public:
 	/**
 	 * Refresh rate functions.
 	 */
-	QStringList refreshRates(int size) const;
+	TQStringList refreshRates(int size) const;
 
 	QString		refreshRateDirectDescription(int rate) const;
 	QString		refreshRateIndirectDescription(int size, int index) const;
@@ -99,8 +99,8 @@ public:
 	 * Screen size functions.
 	 */
 	int				numSizes() const;
-	const QSize&	pixelSize(int index) const;
-	const QSize&	mmSize(int index) const;
+	const TQSize&	pixelSize(int index) const;
+	const TQSize&	mmSize(int index) const;
 	int				pixelCount(int index) const;
 
 	/**
@@ -109,7 +109,7 @@ public:
 	 * @param pixelSize dimensions of the screen in pixels
 	 * @returns the index of the requested screen size
 	 */
-	int				sizeIndex(QSize pixelSize) const;
+	int				sizeIndex(TQSize pixelSize) const;
 
 	int			rotations() const;
 
@@ -154,8 +154,8 @@ private:
 
 	int			m_screen;
 
-	QValueList<QSize>	m_pixelSizes;
-	QValueList<QSize>	m_mmSizes;
+	TQValueList<TQSize>	m_pixelSizes;
+	TQValueList<TQSize>	m_mmSizes;
 	int					m_rotations;
 
 	int			m_originalRotation;
@@ -177,7 +177,7 @@ private slots:
 	void		shownDialogDestroyed();
 };
 
-typedef QPtrList<RandRScreen> ScreenList;
+typedef TQPtrList<RandRScreen> ScreenList;
 
 class RandRDisplay
 {
@@ -185,14 +185,14 @@ public:
 	RandRDisplay();
 
 	bool			isValid() const;
-	const QString&	errorCode() const;
-	const QString&	version() const;
+	const TQString&	errorCode() const;
+	const TQString&	version() const;
 
 	int		eventBase() const;
 	int		screenChangeNotifyEvent() const;
 	int		errorBase() const;
 
-	int		screenIndexOfWidget(QWidget* widget);
+	int		screenIndexOfWidget(TQWidget* widget);
 
 	int				numScreens() const;
 	RandRScreen*	screen(int index);

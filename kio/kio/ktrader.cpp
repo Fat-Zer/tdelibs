@@ -19,8 +19,8 @@
 #include "ktrader.h"
 #include "ktraderparsetree.h"
 
-#include <qtl.h>
-#include <qbuffer.h>
+#include <tqtl.h>
+#include <tqbuffer.h>
 
 #include <kuserprofile.h>
 #include <kstandarddirs.h>
@@ -103,15 +103,15 @@ KTrader::~KTrader()
 {
 }
 
-KTrader::OfferList KTrader::query( const QString& _servicetype, const QString& _constraint,
-                                   const QString& _preferences ) const
+KTrader::OfferList KTrader::query( const TQString& _servicetype, const TQString& _constraint,
+                                   const TQString& _preferences ) const
 {
-    return query( _servicetype, QString::null, _constraint, _preferences );
+    return query( _servicetype, TQString::null, _constraint, _preferences );
 }
 
-KTrader::OfferList KTrader::query( const QString& _servicetype, const QString& _genericServiceType,
-                                   const QString& _constraint,
-                                   const QString& _preferences ) const
+KTrader::OfferList KTrader::query( const TQString& _servicetype, const TQString& _genericServiceType,
+                                   const TQString& _constraint,
+                                   const TQString& _preferences ) const
 {
   // TODO: catch errors here
   ParseTreeBase::Ptr constr;
@@ -147,7 +147,7 @@ KTrader::OfferList KTrader::query( const QString& _servicetype, const QString& _
 
   if ( !!prefs )
   {
-    QValueList<KTraderSorter> sorter;
+    TQValueList<KTraderSorter> sorter;
     KServiceTypeProfile::OfferList::Iterator it = lst.begin();
     for( ; it != lst.end(); ++it )
     {
@@ -157,7 +157,7 @@ KTrader::OfferList KTrader::query( const QString& _servicetype, const QString& _
     }
     qBubbleSort( sorter );
 
-    QValueList<KTraderSorter>::Iterator it2 = sorter.begin();
+    TQValueList<KTraderSorter>::Iterator it2 = sorter.begin();
     for( ; it2 != sorter.end(); ++it2 )
       ret.prepend( (*it2).service() );
   }
@@ -169,7 +169,7 @@ KTrader::OfferList KTrader::query( const QString& _servicetype, const QString& _
   }
 
 #ifndef NDEBUG
-  QString query = _servicetype;
+  TQString query = _servicetype;
   if ( !_genericServiceType.isEmpty() ) {
       query += ", ";
       query += _genericServiceType;

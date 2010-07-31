@@ -18,8 +18,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -34,19 +34,19 @@
 
 using namespace KABC;
 
-ResourceDirConfig::ResourceDirConfig( QWidget* parent,  const char* name )
+ResourceDirConfig::ResourceDirConfig( TQWidget* parent,  const char* name )
     : KRES::ConfigWidget( parent, name )
 {
-  QGridLayout *mainLayout = new QGridLayout( this, 2, 2, 0, 
+  TQGridLayout *mainLayout = new TQGridLayout( this, 2, 2, 0, 
       KDialog::spacingHint() );
 
-  QLabel *label = new QLabel( i18n( "Format:" ), this );
+  TQLabel *label = new TQLabel( i18n( "Format:" ), this );
   mFormatBox = new KComboBox( this );
 
   mainLayout->addWidget( label, 0, 0 );
   mainLayout->addWidget( mFormatBox, 0, 1 );
 
-  label = new QLabel( i18n( "Location:" ), this );
+  label = new TQLabel( i18n( "Location:" ), this );
   mFileNameEdit = new KURLRequester( this );
   mFileNameEdit->setMode( KFile::Directory );
 
@@ -54,8 +54,8 @@ ResourceDirConfig::ResourceDirConfig( QWidget* parent,  const char* name )
   mainLayout->addWidget( mFileNameEdit, 1, 1 );
 
   FormatFactory *factory = FormatFactory::self();
-  QStringList formats = factory->formats();
-  QStringList::Iterator it;
+  TQStringList formats = factory->formats();
+  TQStringList::Iterator it;
   for ( it = formats.begin(); it != formats.end(); ++it ) {
     FormatInfo *info = factory->info( *it );
     if ( info ) {

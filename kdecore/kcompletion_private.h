@@ -21,7 +21,7 @@
 #ifndef KCOMPLETION_PRIVATE_H
 #define KCOMPLETION_PRIVATE_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <ksortablevaluelist.h>
 
 class KCompTreeNode;
@@ -53,10 +53,10 @@ private:
 typedef KCompTreeNodeList KCompTreeChildren;
 
 /**
- * A helper class for KCompletion. Implements a tree of QChar.
+ * A helper class for KCompletion. Implements a tree of TQChar.
  *
  * The tree looks like this (containing the items "kde", "kde-ui",
- * "kde-core" and "pfeiffer". Every item is delimited with QChar( 0x0 )
+ * "kde-core" and "pfeiffer". Every item is delimited with TQChar( 0x0 )
  *
  *              some_root_node
  *                  /     \
@@ -84,9 +84,9 @@ typedef KCompTreeNodeList KCompTreeChildren;
 class KDECORE_EXPORT KCompTreeNode : public QChar
 {
 public:
-    KCompTreeNode() : QChar(), myWeight(0) {}
-    KCompTreeNode( const QChar& ch, uint weight = 0 )
-        : QChar( ch ),
+    KCompTreeNode() : TQChar(), myWeight(0) {}
+    KCompTreeNode( const TQChar& ch, uint weight = 0 )
+        : TQChar( ch ),
           myWeight( weight ) {}
     ~KCompTreeNode();
 
@@ -99,13 +99,13 @@ public:
 
     // Returns a child of this node matching ch, if available.
     // Otherwise, returns 0L
-    inline KCompTreeNode * find( const QChar& ch ) const {
+    inline KCompTreeNode * find( const TQChar& ch ) const {
       KCompTreeNode * cur = myChildren.begin();
       while (cur && (*cur != ch)) cur = cur->next;
       return cur;
     }
-    KCompTreeNode *	insert( const QChar&, bool sorted );
-    void 		remove( const QString& );
+    KCompTreeNode *	insert( const TQChar&, bool sorted );
+    void 		remove( const TQString& );
 
     inline int		childrenCount() const { return myChildren.count(); }
 
@@ -129,7 +129,7 @@ public:
     }
 
     /* We want to handle a list of KCompTreeNodes on our own, to not
-       need to use QValueList<>.  And to make it even more fast we don't
+       need to use TQValueList<>.  And to make it even more fast we don't
        use an accessor, but just a public member.  */
     KCompTreeNode *next;
 private:
@@ -141,7 +141,7 @@ private:
 
 
 // some more helper stuff
-typedef KSortableValueList<QString> KCompletionMatchesList;
+typedef KSortableValueList<TQString> KCompletionMatchesList;
 
 /**
  * @internal
@@ -172,7 +172,7 @@ public:
         return sortedList != 0L;
     }
 
-    void append( int i, const QString& string ) {
+    void append( int i, const TQString& string ) {
         if ( sortedList )
             sortedList->insert( i, string );
         else
@@ -197,17 +197,17 @@ public:
         return count() == 0;
     }
 
-    QString first() const {
+    TQString first() const {
         return list().first();
     }
 
-    QString last() const {
+    TQString last() const {
         return list().last();
     }
 
-    QStringList list() const;
+    TQStringList list() const;
 
-    mutable QStringList stringList;
+    mutable TQStringList stringList;
     KCompletionMatchesList *sortedList;
     mutable bool dirty;
 };

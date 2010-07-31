@@ -19,7 +19,7 @@
 
 #include "kiconselectaction.h"
 
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <ktoolbar.h>
@@ -33,10 +33,10 @@ public:
 		m_menu = 0;
 	}
 	QStringList	m_iconlst;
-	QPopupMenu*	m_menu;
+	TQPopupMenu*	m_menu;
 };
 
-KIconSelectAction::KIconSelectAction(const QString& text, int accel, QObject* parent, const char* name)
+KIconSelectAction::KIconSelectAction(const TQString& text, int accel, TQObject* parent, const char* name)
 : KSelectAction(text, accel, parent, name)
 {
 	d = new KIconSelectActionPrivate;
@@ -66,17 +66,17 @@ void KIconSelectAction::createPopupMenu()
 	}
 }
 
-void KIconSelectAction::setItems(const QStringList& lst, const QStringList& iconlst)
+void KIconSelectAction::setItems(const TQStringList& lst, const TQStringList& iconlst)
 {
 	KSelectAction::setItems(lst);
 	d->m_iconlst = iconlst;
 	updateIcons();
 }
 
-int KIconSelectAction::plug(QWidget* widget, int index)
+int KIconSelectAction::plug(TQWidget* widget, int index)
 {
 	int	value(-1);
-	if (widget->inherits("QPopupMenu"))
+	if (widget->inherits("TQPopupMenu"))
 	{
 		createPopupMenu();
 		value = KSelectAction::plug(widget, index);
@@ -94,7 +94,7 @@ int KIconSelectAction::plug(QWidget* widget, int index)
 		bar->getButton(id)->setPopup(d->m_menu, true);
 		bar->setItemEnabled(id, isEnabled());
 		addContainer(bar, id);
-		connect(bar, SIGNAL(destroyed()), SLOT(slotDestroyed()));
+		connect(bar, TQT_SIGNAL(destroyed()), TQT_SLOT(slotDestroyed()));
 
 		value = containerCount()-1;
 	}
@@ -103,7 +103,7 @@ int KIconSelectAction::plug(QWidget* widget, int index)
 
 void KIconSelectAction::updateCurrentItem(int id)
 {
-	QWidget*	w = container(id);
+	TQWidget*	w = container(id);
 	if (w->inherits("KToolBar"))
 		static_cast<KToolBar*>(w)->getButton(itemId(id))->setIcon(d->m_iconlst[currentItem()]);
 	else

@@ -8,7 +8,7 @@
 #include <kimageio.h>
 #include <kprotocolinfo.h>
 #include <kprocess.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include "kdcopcheck.h"
 #include <dcopclient.h>
@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void debug(QString txt)
+void debug(TQString txt)
 {
  fprintf(stderr, "%s\n", txt.ascii());
 }
@@ -33,27 +33,27 @@ void debug(const char *format, const char *txt)
  fprintf(stderr, "\n");
 }
 
-TestService::TestService(const QString &exec)
+TestService::TestService(const TQString &exec)
 {
    m_exec = exec;
    proc << exec;
 
    proc.start();
 
-   connect(kapp->dcopClient(), SIGNAL( applicationRegistered(const QCString&)),
-           this, SLOT(newApp(const QCString&)));
-   connect(kapp->dcopClient(), SIGNAL( applicationRemoved(const QCString&)),
-           this, SLOT(endApp(const QCString&)));
-   connect(&proc, SIGNAL(processExited(KProcess *)),
-           this, SLOT(appExit()));
+   connect(kapp->dcopClient(), TQT_SIGNAL( applicationRegistered(const TQCString&)),
+           this, TQT_SLOT(newApp(const TQCString&)));
+   connect(kapp->dcopClient(), TQT_SIGNAL( applicationRemoved(const TQCString&)),
+           this, TQT_SLOT(endApp(const TQCString&)));
+   connect(&proc, TQT_SIGNAL(processExited(KProcess *)),
+           this, TQT_SLOT(appExit()));
 
-   QTimer::singleShot(20*1000, this, SLOT(stop()));
+   TQTimer::singleShot(20*1000, this, TQT_SLOT(stop()));
    result = KService::DCOP_None;
 }
 
-void TestService::newApp(const QCString &appId)
+void TestService::newApp(const TQCString &appId)
 {
-   QString id = appId;
+   TQString id = appId;
    if (id == m_exec)
    {
       result = KService::DCOP_Unique;
@@ -67,7 +67,7 @@ void TestService::newApp(const QCString &appId)
    qWarning("Register %s", appId.data());
 }
 
-void TestService::endApp(const QCString &appId)
+void TestService::endApp(const TQCString &appId)
 {
    qWarning("Unegister %s", appId.data());
 }
@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
             int n = test->exec();
             delete test;
 
-            QString result;
+            TQString result;
             if (n == KService::DCOP_None)
                result = "None";
             else if (n == KService::DCOP_Unique)

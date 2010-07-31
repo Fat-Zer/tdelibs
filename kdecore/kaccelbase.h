@@ -20,11 +20,11 @@
 #ifndef _KACCELBASE_H
 #define _KACCELBASE_H
 
-#include <qmap.h>
-#include <qptrvector.h>
-#include <qstring.h>
-#include <qvaluevector.h>
-#include <qvaluelist.h>
+#include <tqmap.h>
+#include <tqptrvector.h>
+#include <tqstring.h>
+#include <tqvaluevector.h>
+#include <tqvaluelist.h>
 
 #include "kaccelaction.h"
 #include "kkeyserver.h"
@@ -79,11 +79,11 @@ class QWidget;
  * a->insertItem( i18n("Scroll Up"), "Scroll Up", "Up" );
  * // Insert an action "Scroll Down" which is not associated with any key:
  * a->insertItem( i18n("Scroll Down"), "Scroll Down", 0);
- * a->connectItem( "Scroll up", myWindow, SLOT( scrollUp() ) );
+ * a->connectItem( "Scroll up", myWindow, TQT_SLOT( scrollUp() ) );
  * // a->insertStdItem( KStdAccel::Print ); //not necessary, since it
  *	// is done automatially with the
  *	// connect below!
- * a->connectItem(KStdAccel::Print, myWindow, SLOT( printDoc() ) );
+ * a->connectItem(KStdAccel::Print, myWindow, TQT_SLOT( printDoc() ) );
  *
  * a->readSettings();
  *\endcode
@@ -93,12 +93,12 @@ class QWidget;
  *
  * \code
  * int id;
- * id = popup->insertItem("&Print",this, SLOT(printDoc()));
+ * id = popup->insertItem("&Print",this, TQT_SLOT(printDoc()));
  * a->changeMenuAccel(popup, id, KStdAccel::Print );
  * \endcode
  *
  * If you want a somewhat "exotic" name for your standard print action, like
- *   id = popup->insertItem(i18n("Print &Document"),this, SLOT(printDoc()));
+ *   id = popup->insertItem(i18n("Print &Document"),this, TQT_SLOT(printDoc()));
  * it might be a good idea to insert the standard action before as
  *          a->insertStdItem( KStdAccel::Print, i18n("Print Document") )
  * as well, so that the user can easily find the corresponding function.
@@ -107,7 +107,7 @@ class QWidget;
  * in a menu could be done with
  *
  * \code
- *    id = popup->insertItem(i18n"Scroll &up",this, SLOT(scrollUp()));
+ *    id = popup->insertItem(i18n"Scroll &up",this, TQT_SLOT(scrollUp()));
  *    a->changeMenuAccel(popup, id, "Scroll Up" );
  * \endcode
  *
@@ -141,9 +141,9 @@ class KDECORE_EXPORT KAccelBase
 	bool isEnabled() const;
 
 	/** Returns a pointer to the KAccelAction named @p sAction. */
-	KAccelAction* actionPtr( const QString& sAction );
+	KAccelAction* actionPtr( const TQString& sAction );
 	/** Const version of the above. */
-	const KAccelAction* actionPtr( const QString& sAction ) const;
+	const KAccelAction* actionPtr( const TQString& sAction ) const;
 	/** Returns a pointer to the KAccelAction associated with
 	*   the key @p key. This function takes into account the
 	*   key mapping defined in the constructor.
@@ -160,11 +160,11 @@ class KDECORE_EXPORT KAccelBase
 	/** Returns the name of the configuration group these
 	*   accelerators are stored in. The default is "Shortcuts".
 	*/
-	const QString& configGroup() const { return m_sConfigGroup; }
+	const TQString& configGroup() const { return m_sConfigGroup; }
 	/** Set the group (in the configuration file) for storing
 	*   accelerators.
 	*/
-	void setConfigGroup( const QString& group );
+	void setConfigGroup( const TQString& group );
 	void setConfigGlobal( bool global );
 	/** Enables or disables the accelerator.
 	 * @param bEnabled determines whether the accelerator should be enabled or
@@ -181,21 +181,21 @@ class KDECORE_EXPORT KAccelBase
 // Procedures for manipulating Actions.
 	//void clearActions();
 
-	KAccelAction* insert( const QString& sName, const QString& sDesc );
+	KAccelAction* insert( const TQString& sName, const TQString& sDesc );
 	KAccelAction* insert(
-	                 const QString& sAction, const QString& sDesc, const QString& sHelp,
+	                 const TQString& sAction, const TQString& sDesc, const TQString& sHelp,
 	                 const KShortcut& rgCutDefaults3, const KShortcut& rgCutDefaults4,
-	                 const QObject* pObjSlot, const char* psMethodSlot,
+	                 const TQObject* pObjSlot, const char* psMethodSlot,
 			 bool bConfigurable = true, bool bEnabled = true );
-	bool remove( const QString& sAction );
-	bool setActionSlot( const QString& sAction, const QObject* pObjSlot, const char* psMethodSlot );
+	bool remove( const TQString& sAction );
+	bool setActionSlot( const TQString& sAction, const TQObject* pObjSlot, const char* psMethodSlot );
 
 	bool updateConnections();
 
-	bool setShortcut( const QString& sAction, const KShortcut& cut );
+	bool setShortcut( const TQString& sAction, const KShortcut& cut );
 
 // Modify individual Action sub-items
-	bool setActionEnabled( const QString& sAction, bool bEnable );
+	bool setActionEnabled( const TQString& sAction, bool bEnable );
 
 	/**
 	 * Read all key associations from @p config, or (if @p config
@@ -214,7 +214,7 @@ class KDECORE_EXPORT KAccelBase
 	 */
 	void writeSettings( KConfigBase* pConfig = 0 ) const;
 
-	QPopupMenu* createPopupMenu( QWidget* pParent, const KKeySequence& );
+	TQPopupMenu* createPopupMenu( TQWidget* pParent, const KKeySequence& );
 
  // Protected methods
  protected:
@@ -225,7 +225,7 @@ class KDECORE_EXPORT KAccelBase
 	/** Constructs a list of keys to be connected, sorted highest priority first.
 	 * @param rgKeys constructed list of keys
 	 */
-	void createKeyList( QValueVector<struct X>& rgKeys );
+	void createKeyList( TQValueVector<struct X>& rgKeys );
 	bool insertConnection( KAccelAction* );
 	bool removeConnection( KAccelAction* );
 
@@ -261,15 +261,15 @@ class KDECORE_EXPORT KAccelBase
 		ActionInfo( KAccelAction* _pAction, uint _iSeq, uint _iVariation )
 			{ pAction = _pAction; iSeq = _iSeq; iVariation = _iVariation; }
 	};
-	typedef QMap<KKeyServer::Key, ActionInfo> KKeyToActionMap;
+	typedef TQMap<KKeyServer::Key, ActionInfo> KKeyToActionMap;
 
 	KAccelActions m_rgActions;
 	KKeyToActionMap m_mapKeyToAction;
-	QValueList<KAccelAction*> m_rgActionsNonUnique;
+	TQValueList<KAccelAction*> m_rgActionsNonUnique;
 	bool m_bNativeKeys; // Use native key codes instead of Qt codes
 	bool m_bEnabled;
 	bool m_bConfigIsGlobal;
-	QString m_sConfigGroup;
+	TQString m_sConfigGroup;
 	bool m_bAutoUpdate;
 	KAccelAction* mtemp_pActionRemoving;
 

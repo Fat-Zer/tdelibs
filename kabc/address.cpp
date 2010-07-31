@@ -27,12 +27,12 @@
 #include <kstandarddirs.h>
 #include <kstaticdeleter.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 using namespace KABC;
 
-QMap<QString, QString> *Address::mISOMap = 0;
-static KStaticDeleter< QMap<QString, QString> > isoMapDeleter;
+TQMap<TQString, TQString> *Address::mISOMap = 0;
+static KStaticDeleter< TQMap<TQString, TQString> > isoMapDeleter;
 
 Address::Address() :
   mEmpty( true ), mType( 0 )
@@ -85,14 +85,14 @@ void Address::clear()
   *this = Address();
 }
 
-void Address::setId( const QString &id )
+void Address::setId( const TQString &id )
 {
   mEmpty = false;
 
   mId = id;
 }
 
-QString Address::id() const
+TQString Address::id() const
 {
   return mId;
 }
@@ -109,9 +109,9 @@ int Address::type() const
   return mType;
 }
 
-QString Address::typeLabel() const
+TQString Address::typeLabel() const
 {
-  QString label;
+  TQString label;
   bool first = true;
 
   const TypeList list = typeList();
@@ -128,145 +128,145 @@ QString Address::typeLabel() const
   return label;
 }
 
-void Address::setPostOfficeBox( const QString &s )
+void Address::setPostOfficeBox( const TQString &s )
 {
   mEmpty = false;
 
   mPostOfficeBox = s;
 }
 
-QString Address::postOfficeBox() const
+TQString Address::postOfficeBox() const
 {
   return mPostOfficeBox;
 }
 
-QString Address::postOfficeBoxLabel()
+TQString Address::postOfficeBoxLabel()
 {
   return i18n("Post Office Box");
 }
 
 
-void Address::setExtended( const QString &s )
+void Address::setExtended( const TQString &s )
 {
   mEmpty = false;
 
   mExtended = s;
 }
 
-QString Address::extended() const
+TQString Address::extended() const
 {
   return mExtended;
 }
 
-QString Address::extendedLabel()
+TQString Address::extendedLabel()
 {
   return i18n("Extended Address Information");
 }
 
 
-void Address::setStreet( const QString &s )
+void Address::setStreet( const TQString &s )
 {
   mEmpty = false;
 
   mStreet = s;
 }
 
-QString Address::street() const
+TQString Address::street() const
 {
   return mStreet;
 }
 
-QString Address::streetLabel()
+TQString Address::streetLabel()
 {
   return i18n("Street");
 }
 
 
-void Address::setLocality( const QString &s )
+void Address::setLocality( const TQString &s )
 {
   mEmpty = false;
 
   mLocality = s;
 }
 
-QString Address::locality() const
+TQString Address::locality() const
 {
   return mLocality;
 }
 
-QString Address::localityLabel()
+TQString Address::localityLabel()
 {
   return i18n("Locality");
 }
 
 
-void Address::setRegion( const QString &s )
+void Address::setRegion( const TQString &s )
 {
   mEmpty = false;
 
   mRegion = s;
 }
 
-QString Address::region() const
+TQString Address::region() const
 {
   return mRegion;
 }
 
-QString Address::regionLabel()
+TQString Address::regionLabel()
 {
   return i18n("Region");
 }
 
 
-void Address::setPostalCode( const QString &s )
+void Address::setPostalCode( const TQString &s )
 {
   mEmpty = false;
 
   mPostalCode = s;
 }
 
-QString Address::postalCode() const
+TQString Address::postalCode() const
 {
   return mPostalCode;
 }
 
-QString Address::postalCodeLabel()
+TQString Address::postalCodeLabel()
 {
   return i18n("Postal Code");
 }
 
 
-void Address::setCountry( const QString &s )
+void Address::setCountry( const TQString &s )
 {
   mEmpty = false;
 
   mCountry = s;
 }
 
-QString Address::country() const
+TQString Address::country() const
 {
   return mCountry;
 }
 
-QString Address::countryLabel()
+TQString Address::countryLabel()
 {
   return i18n("Country");
 }
 
 
-void Address::setLabel( const QString &s )
+void Address::setLabel( const TQString &s )
 {
   mEmpty = false;
 
   mLabel = s;
 }
 
-QString Address::label() const
+TQString Address::label() const
 {
   return mLabel;
 }
 
-QString Address::labelLabel()
+TQString Address::labelLabel()
 {
   return i18n("Delivery Label");
 }
@@ -281,7 +281,7 @@ Address::TypeList Address::typeList()
   return list;
 }
 
-QString Address::typeLabel( int type )
+TQString Address::typeLabel( int type )
 {
   if ( type & Pref )
     return i18n( "Preferred address", "Preferred" );
@@ -326,12 +326,12 @@ void Address::dump() const
 }
 
 
-QString Address::formattedAddress( const QString &realName,
-                                   const QString &orgaName ) const
+TQString Address::formattedAddress( const TQString &realName,
+                                   const TQString &orgaName ) const
 {
-  QString ciso;
-  QString addrTemplate;
-  QString ret;
+  TQString ciso;
+  TQString addrTemplate;
+  TQString ret;
 
   // FIXME: first check for iso-country-field and prefer that one
   if ( !country().isEmpty() ) {
@@ -341,7 +341,7 @@ QString Address::formattedAddress( const QString &realName,
     ciso = KGlobal::locale()->country();
   }
   KSimpleConfig entry( locate( "locale", 
-        QString( "l10n/" ) + ciso + QString( "/entry.desktop" ) ) );
+        TQString( "l10n/" ) + ciso + TQString( "/entry.desktop" ) ) );
   entry.setGroup( "KCM Locale" );
 
   // decide whether this needs special business address formatting
@@ -368,10 +368,10 @@ QString Address::formattedAddress( const QString &realName,
   // now add the country line if needed (formatting this time according to
   // the rules of our own system country )
   if ( !country().isEmpty() ) {
-    KSimpleConfig entry( locate( "locale", QString( "l10n/" )
-          + KGlobal::locale()->country() + QString( "/entry.desktop" ) ) );
+    KSimpleConfig entry( locate( "locale", TQString( "l10n/" )
+          + KGlobal::locale()->country() + TQString( "/entry.desktop" ) ) );
     entry.setGroup( "KCM Locale" );
-    QString cpos = entry.readEntry( "AddressCountryPosition" );
+    TQString cpos = entry.readEntry( "AddressCountryPosition" );
     if ( "BELOW" == cpos || cpos.isEmpty() ) {
       ret = ret + "\n\n" + country().upper();
     } else if ( "below" == cpos ) {
@@ -386,8 +386,8 @@ QString Address::formattedAddress( const QString &realName,
   return ret;
 }
 
-bool Address::parseAddressTemplateSection( const QString &tsection, 
-    QString &result, const QString &realName, const QString &orgaName ) const
+bool Address::parseAddressTemplateSection( const TQString &tsection, 
+    TQString &result, const TQString &realName, const TQString &orgaName ) const
 {
   // This method first parses and substitutes any bracketed sections and
   // after that replaces any tags with their values. If a bracketed section
@@ -409,7 +409,7 @@ bool Address::parseAddressTemplateSection( const QString &tsection,
       bpos2 = findBalancedBracket( result, bpos1 );
       if ( -1 != bpos2 ) {
         // we have balanced brackets, recursively parse:
-        QString rplstr;
+        TQString rplstr;
         bool purge = !parseAddressTemplateSection( result.mid( bpos1+1,
                                                    bpos2-bpos1-1 ), rplstr,
                                                    realName, orgaName );
@@ -435,11 +435,11 @@ bool Address::parseAddressTemplateSection( const QString &tsection,
 
   // after sorting out all purge tags, we just search'n'replace the rest,
   // keeping track of whether at least one tag evaluates to something.
-  // The following macro needs QString for R_FIELD
+  // The following macro needs TQString for R_FIELD
   // It substitutes !_P_! for empty fields so conditional tags work later
 #define REPLTAG(R_TAG,R_FIELD) \
   if ( result.find(R_TAG, false) != -1 ) { \
-    QString rpl = R_FIELD.isEmpty() ? QString("!_P_!") : R_FIELD; \
+    TQString rpl = R_FIELD.isEmpty() ? TQString("!_P_!") : R_FIELD; \
     result.replace( R_TAG, rpl ); \
     if ( !R_FIELD.isEmpty() ) { \
       ret = true; \
@@ -463,8 +463,8 @@ bool Address::parseAddressTemplateSection( const QString &tsection,
   // conditional comma 
   fpos = result.find( KABC_FMTTAG_condcomma, 0 );
   while ( -1 != fpos ) {
-    QString str1 = result.mid( fpos - 5, 5 );
-    QString str2 = result.mid( fpos + 2, 5 );
+    TQString str1 = result.mid( fpos - 5, 5 );
+    TQString str2 = result.mid( fpos + 2, 5 );
     if ( str1 != "!_P_!" && str2 != "!_P_!" ) {
       result.replace( fpos, 2, ", " );
     } else {
@@ -475,8 +475,8 @@ bool Address::parseAddressTemplateSection( const QString &tsection,
   // conditional whitespace
   fpos = result.find( KABC_FMTTAG_condwhite, 0 );
   while ( -1 != fpos ) {
-    QString str1 = result.mid( fpos - 5, 5 );
-    QString str2 = result.mid( fpos + 2, 5 );
+    TQString str1 = result.mid( fpos - 5, 5 );
+    TQString str2 = result.mid( fpos + 2, 5 );
     if ( str1 != "!_P_!" && str2 != "!_P_!" ) {
       result.replace( fpos, 2, " " );
     } else {
@@ -491,7 +491,7 @@ bool Address::parseAddressTemplateSection( const QString &tsection,
   return ret;
 }
 
-int Address::findBalancedBracket( const QString &tsection, int pos ) const
+int Address::findBalancedBracket( const TQString &tsection, int pos ) const
 {
   int balancecounter = 0;
   for( unsigned int i = pos + 1; i < tsection.length(); i++ ) {
@@ -507,28 +507,28 @@ int Address::findBalancedBracket( const QString &tsection, int pos ) const
   return -1;
 }
 
-QString Address::countryToISO( const QString &cname )
+TQString Address::countryToISO( const TQString &cname )
 {
   // we search a map file for translations from country names to
-  // iso codes, storing caching things in a QMap for faster future 
+  // iso codes, storing caching things in a TQMap for faster future 
   // access.
   if ( !mISOMap )
-    isoMapDeleter.setObject( mISOMap, new QMap<QString, QString>() );
+    isoMapDeleter.setObject( mISOMap, new TQMap<TQString, TQString>() );
 
-  QMap<QString, QString>::ConstIterator it;
+  TQMap<TQString, TQString>::ConstIterator it;
   it = mISOMap->find( cname );
   if ( it != mISOMap->end() )
     return it.data();
 
-  QString mapfile = KGlobal::dirs()->findResource( "data", 
-          QString::fromLatin1( "kabc/countrytransl.map" ) );
+  TQString mapfile = KGlobal::dirs()->findResource( "data", 
+          TQString::fromLatin1( "kabc/countrytransl.map" ) );
 
-  QFile file( mapfile );
+  TQFile file( mapfile );
   if ( file.open( IO_ReadOnly ) ) {
-    QTextStream s( &file );
-    QString strbuf = s.readLine();
+    TQTextStream s( &file );
+    TQString strbuf = s.readLine();
     while( !strbuf.isEmpty() ) {
-      QStringList countryInfo = QStringList::split( '\t', strbuf, true );
+      TQStringList countryInfo = TQStringList::split( '\t', strbuf, true );
       if ( countryInfo[ 0 ] == cname ) {
         file.close();
         mISOMap->insert( cname, countryInfo[ 1 ] );
@@ -544,20 +544,20 @@ QString Address::countryToISO( const QString &cname )
   return KGlobal::locale()->country();
 }
 
-QString Address::ISOtoCountry( const QString &ISOname )
+TQString Address::ISOtoCountry( const TQString &ISOname )
 {
   // get country name from ISO country code (e.g. "no" -> i18n("Norway"))
   if ( ISOname.simplifyWhiteSpace().isEmpty() )
-    return QString::null;
+    return TQString::null;
 
-  QString mapfile = KGlobal::dirs()->findResource( "data", 
-          QString::fromLatin1( "kabc/countrytransl.map" ) );
+  TQString mapfile = KGlobal::dirs()->findResource( "data", 
+          TQString::fromLatin1( "kabc/countrytransl.map" ) );
 
-  QFile file( mapfile );
+  TQFile file( mapfile );
   if ( file.open( IO_ReadOnly ) ) {
-    QTextStream s( &file );
-    QString searchStr = "\t" + ISOname.simplifyWhiteSpace().lower();
-    QString strbuf = s.readLine();
+    TQTextStream s( &file );
+    TQString searchStr = "\t" + ISOname.simplifyWhiteSpace().lower();
+    TQString strbuf = s.readLine();
     int pos;
     while ( !strbuf.isEmpty() ) {
       if ( (pos = strbuf.find( searchStr )) != -1 ) {
@@ -572,7 +572,7 @@ QString Address::ISOtoCountry( const QString &ISOname )
   return ISOname;
 }
 
-QDataStream &KABC::operator<<( QDataStream &s, const Address &addr )
+TQDataStream &KABC::operator<<( TQDataStream &s, const Address &addr )
 {
     return s << addr.mId << addr.mType << addr.mPostOfficeBox <<
 	    addr.mExtended << addr.mStreet << addr.mLocality <<
@@ -580,7 +580,7 @@ QDataStream &KABC::operator<<( QDataStream &s, const Address &addr )
 	    addr.mLabel;
 }
 
-QDataStream &KABC::operator>>( QDataStream &s, Address &addr )
+TQDataStream &KABC::operator>>( TQDataStream &s, Address &addr )
 {
     s >> addr.mId >> addr.mType >> addr.mPostOfficeBox >> addr.mExtended >>
 	    addr.mStreet >> addr.mLocality >> addr.mRegion >>

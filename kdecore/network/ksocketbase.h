@@ -56,8 +56,8 @@
 #ifndef KSOCKETBASE_H
 #define KSOCKETBASE_H
 
-#include <qiodevice.h>
-#include <qstring.h>
+#include <tqiodevice.h>
+#include <tqstring.h>
 
 #include "ksocketaddress.h"
 #include <kdelibs_export.h>
@@ -65,7 +65,7 @@
 /*
  * This is extending QIODevice's error codes
  *
- * According to qiodevice.h, the last error is IO_UnspecifiedError
+ * According to tqiodevice.h, the last error is IO_UnspecifiedError
  * These errors will never occur in functions declared in QIODevice
  * (except open, but you shouldn't call open)
  */
@@ -380,7 +380,7 @@ public:
   /**
    * Returns the error string corresponding to this error condition.
    */
-  inline QString errorString() const
+  inline TQString errorString() const
   { return errorString(error()); }
 
   /**
@@ -398,7 +398,7 @@ public:
    * while destroying it. You must ensure there are no further references to this
    * object when deleting it.
    */
-  QMutex* mutex() const;
+  TQMutex* mutex() const;
 
 public:
   /**
@@ -406,7 +406,7 @@ public:
    *
    * @param code		the error code
    */
-  static QString errorString(SocketError code);
+  static TQString errorString(SocketError code);
 
   /**
    * Returns true if the given error code is a fatal one, false
@@ -440,7 +440,7 @@ private:
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KActiveSocketBase: public QIODevice, virtual public KSocketBase
+class KDECORE_EXPORT KActiveSocketBase: public TQIODevice, virtual public KSocketBase
 {
 public:
   /**
@@ -501,28 +501,28 @@ public:
   virtual bool disconnect() = 0;
 
   /**
-   * This call is not supported on sockets. Reimplemented from QIODevice.
+   * This call is not supported on sockets. Reimplemented from TQIODevice.
    * This will always return 0.
    */
   virtual Offset size() const
   { return 0; }
 
   /**
-   * This call is not supported on sockets. Reimplemented from QIODevice.
+   * This call is not supported on sockets. Reimplemented from TQIODevice.
    * This will always return 0.
    */
   virtual Offset at() const
   { return 0; }
 
   /**
-   * This call is not supported on sockets. Reimplemented from QIODevice.
+   * This call is not supported on sockets. Reimplemented from TQIODevice.
    * This will always return false.
    */
   virtual bool at(Offset)
   { return false; }
 
   /**
-   * This call is not supported on sockets. Reimplemented from QIODevice.
+   * This call is not supported on sockets. Reimplemented from TQIODevice.
    * This will always return true.
    */
   virtual bool atEnd() const
@@ -550,7 +550,7 @@ public:
   /**
    * Reads data from the socket.
    *
-   * Reimplemented from QIODevice. See QIODevice::readBlock for
+   * Reimplemented from TQIODevice. See TQIODevice::readBlock for
    * more information.
    */
   virtual Q_LONG readBlock(char *data, Q_ULONG len) = 0;
@@ -598,7 +598,7 @@ public:
   /**
    * Writes the given data to the socket.
    *
-   * Reimplemented from QIODevice. See QIODevice::writeBlock for
+   * Reimplemented from TQIODevice. See TQIODevice::writeBlock for
    * more information.
    */
   virtual Q_LONG writeBlock(const char *data, Q_ULONG len) = 0;
@@ -618,18 +618,18 @@ public:
 
   /**
    * Reads one character from the socket.
-   * Reimplementation from QIODevice. See QIODevice::getch for more information.
+   * Reimplementation from TQIODevice. See TQIODevice::getch for more information.
    */
   virtual int getch();
 
   /**
    * Writes one character to the socket.
-   * Reimplementation from QIODevice. See QIODevice::putch for more information.
+   * Reimplementation from TQIODevice. See TQIODevice::putch for more information.
    */
   virtual int putch(int ch);
 
   /**
-   * This call is not supported on sockets. Reimplemented from QIODevice.
+   * This call is not supported on sockets. Reimplemented from TQIODevice.
    * This will always return -1;
    */
   virtual int ungetch(int)

@@ -19,9 +19,9 @@
 #ifndef KURLBAR_H
 #define KURLBAR_H
 
-#include <qevent.h>
-#include <qframe.h>
-#include <qtooltip.h>
+#include <tqevent.h>
+#include <tqframe.h>
+#include <tqtooltip.h>
 
 #include <kdialogbase.h>
 #include <kicontheme.h>
@@ -56,8 +56,8 @@ public:
      * @since 3.2
      */
     KURLBarItem( KURLBar *parent, const KURL& url, bool persistent,
-                 const QString& description = QString::null,
-                 const QString& icon = QString::null,
+                 const TQString& description = TQString::null,
+                 const TQString& icon = TQString::null,
                  KIcon::Group group = KIcon::Panel );
 
     /**
@@ -73,8 +73,8 @@ public:
      * dynamic item, that is not saved with KURLBar::writeConfig().
      */
     KURLBarItem( KURLBar *parent, const KURL& url,
-                 const QString& description = QString::null,
-                 const QString& icon = QString::null,
+                 const TQString& description = TQString::null,
+                 const TQString& icon = TQString::null,
                  KIcon::Group group = KIcon::Panel );
 
     /**
@@ -93,32 +93,32 @@ public:
      * of the icon groups.
      * @see icon
      */
-    void setIcon( const QString& icon, KIcon::Group group = KIcon::Panel );
+    void setIcon( const TQString& icon, KIcon::Group group = KIcon::Panel );
     /**
      * Sets the description of this item that will be shown as item-text.
      * @see description
      */
-    void setDescription( const QString& desc );
+    void setDescription( const TQString& desc );
     /**
      * Sets a tooltip to be used for this item.
      * @see toolTip
      */
-    void setToolTip( const QString& tip );
+    void setToolTip( const TQString& tip );
 
     /**
      * returns the preferred size of this item
      * @since 3.1
      */
-    QSize sizeHint() const;
+    TQSize sizeHint() const;
 
     /**
      * returns the width of this item.
      */
-    virtual int width( const QListBox * ) const;
+    virtual int width( const TQListBox * ) const;
     /**
      * returns the height of this item.
      */
-    virtual int height( const QListBox * ) const;
+    virtual int height( const TQListBox * ) const;
 
     /**
      * returns the url of this item.
@@ -129,17 +129,17 @@ public:
      * returns the description of this item.
      * @see setDescription
      */
-    const QString& description() const          { return m_description; }
+    const TQString& description() const          { return m_description; }
     /**
      * returns the icon of this item.
      * @see setIcon
      */
-    const QString& icon() const                 { return m_icon; }
+    const TQString& icon() const                 { return m_icon; }
     /**
      * returns the tooltip of this item.
      * @see setToolTip
      */
-    QString toolTip() const;
+    TQString toolTip() const;
     /**
      * returns the icon-group of this item (determines icon-effects).
      * @see setIcon
@@ -148,7 +148,7 @@ public:
     /**
      * returns the pixmap  of this item.
      */
-    virtual const QPixmap * pixmap() const      { return &m_pixmap; }
+    virtual const TQPixmap * pixmap() const      { return &m_pixmap; }
 
     /**
      * Makes this item a local or global one. This has only an effect
@@ -174,18 +174,18 @@ public:
     bool isPersistent() const;
 
 protected:
-    virtual void paint( QPainter *p );
+    virtual void paint( TQPainter *p );
 
 private:
     int iconSize() const;
-    void init( const QString& icon, KIcon::Group group,
-               const QString& description, bool persistent );
+    void init( const TQString& icon, KIcon::Group group,
+               const TQString& description, bool persistent );
 
     KURL m_url;
-    QString m_description;
-    QString m_icon;
-    QString m_toolTip;
-    QPixmap m_pixmap;
+    TQString m_description;
+    TQString m_icon;
+    TQString m_toolTip;
+    TQPixmap m_pixmap;
     KIcon::Group m_group;
     KURLBar *m_parent;
     bool m_appLocal :1;
@@ -237,7 +237,7 @@ public:
      * allow global/local item separation.
      */
     KURLBar( bool useGlobalItems,
-             QWidget *parent = 0, const char *name = 0, WFlags f = 0 );
+             TQWidget *parent = 0, const char *name = 0, WFlags f = 0 );
     /**
      * Destroys the KURLBar.
      */
@@ -254,9 +254,9 @@ public:
      * @p group the icon-group for using icon-effects
      */
     virtual KURLBarItem * insertItem( const KURL& url,
-                                      const QString& description,
+                                      const TQString& description,
                                       bool applicationLocal = true,
-                                      const QString& icon = QString::null,
+                                      const TQString& icon = TQString::null,
                                       KIcon::Group group = KIcon::Panel );
     /**
      * Inserts a new dynamic item into the KURLBar and returns the created
@@ -269,8 +269,8 @@ public:
      * @since 3.2
      */
     virtual KURLBarItem * insertDynamicItem( const KURL& url,
-                                             const QString& description,
-                                             const QString& icon = QString::null,
+                                             const TQString& description,
+                                             const TQString& icon = TQString::null,
                                              KIcon::Group group = KIcon::Panel );
     /**
      * The items can be arranged either vertically in one column or
@@ -319,25 +319,25 @@ public:
      * @returns a proper sizehint, depending on the orientation and the number
      * of items available.
      */
-    virtual QSize sizeHint() const;
+    virtual TQSize sizeHint() const;
 
     /**
      * @returns a proper minimum size (reimplemented)
      */
-    virtual QSize minimumSizeHint() const;
+    virtual TQSize minimumSizeHint() const;
 
     /**
      * Call this method to read a saved configuration from @p config,
      * inside the group @p itemGroup. All items in there will be restored.
      * The reading of every item is delegated to the readItem() method.
      */
-    virtual void readConfig(  KConfig *config, const QString& itemGroup );
+    virtual void readConfig(  KConfig *config, const TQString& itemGroup );
     /**
      * Call this method to save the current configuration into @p config,
      * inside the group @p iconGroup. The writeItem() method is used
      * to save each item.
      */
-    virtual void writeConfig( KConfig *config, const QString& itemGroup );
+    virtual void writeConfig( KConfig *config, const TQString& itemGroup );
 
     /**
      * Called from readConfig() to read the i'th from @p config.
@@ -416,9 +416,9 @@ protected:
      */
     virtual bool editItem( KURLBarItem *item );
 
-    virtual void resizeEvent( QResizeEvent * );
+    virtual void resizeEvent( TQResizeEvent * );
 
-    virtual void paletteChange( const QPalette & );
+    virtual void paletteChange( const TQPalette & );
 
     /**
      * The currently active item.
@@ -446,21 +446,21 @@ protected slots:
      * Reimplemented to show a contextmenu, allowing the user to add, edit
      * or remove items, or change the iconsize.
      */
-    virtual void slotContextMenuRequested( QListBoxItem *, const QPoint& pos );
+    virtual void slotContextMenuRequested( TQListBoxItem *, const TQPoint& pos );
     /**
      * Called when an item has been selected. Emits the activated()
      * signal.
      */
-    virtual void slotSelected( QListBoxItem * );
+    virtual void slotSelected( TQListBoxItem * );
 
     /**
      * Called when a url was dropped onto the bar to show a
      * KURLBarItemDialog.
      */
-    virtual void slotDropped( QDropEvent * );
+    virtual void slotDropped( TQDropEvent * );
 
 private slots:
-    void slotSelected( int button, QListBoxItem * );
+    void slotSelected( int button, TQListBoxItem * );
 
 private:
     KURLBarListBox *m_listBox;
@@ -498,7 +498,7 @@ public:
     /**
      * Constructs a KURLBarListBox.
      */
-    KURLBarListBox( QWidget *parent = 0, const char *name = 0 );
+    KURLBarListBox( TQWidget *parent = 0, const char *name = 0 );
     /**
      * Destroys the box.
      */
@@ -523,18 +523,18 @@ signals:
     /**
      * Emitted when a drop-event happened.
      */
-    void dropped( QDropEvent *e );
+    void dropped( TQDropEvent *e );
 
 protected:
     /**
-     * @returns a suitable QDragObject when an item is dragged.
+     * @returns a suitable TQDragObject when an item is dragged.
      */
-    virtual QDragObject * dragObject();
+    virtual TQDragObject * dragObject();
 
-    virtual void contentsDragEnterEvent( QDragEnterEvent * );
-    virtual void contentsDropEvent( QDropEvent * );
-    virtual void contextMenuEvent( QContextMenuEvent * );
-    virtual void paintEvent( QPaintEvent* );
+    virtual void contentsDragEnterEvent( TQDragEnterEvent * );
+    virtual void contentsDropEvent( TQDropEvent * );
+    virtual void contextMenuEvent( TQContextMenuEvent * );
+    virtual void paintEvent( TQPaintEvent* );
 
 private:
     Qt::Orientation m_orientation;
@@ -577,9 +577,9 @@ public:
      * See the KURLBarItem constructor for the parameter description.
      */
     static bool getInformation( bool allowGlobal, KURL& url,
-                                QString& description, QString& icon,
+                                TQString& description, TQString& icon,
                                 bool& appLocal, int iconSize,
-                                QWidget *parent = 0 );
+                                TQWidget *parent = 0 );
 
     /**
      * Constructs a KURLBarItemDialog.
@@ -599,10 +599,10 @@ public:
      * used (KMimeType::pixmapForURL()).
      */
     KURLBarItemDialog( bool allowGlobal, const KURL& url,
-                       const QString& description, QString icon,
+                       const TQString& description, TQString icon,
                        bool appLocal = true,
                        int iconSize = KIcon::SizeMedium,
-                       QWidget *parent = 0, const char *name = 0 );
+                       TQWidget *parent = 0, const char *name = 0 );
     /**
      * Destroys the dialog.
      */
@@ -616,12 +616,12 @@ public:
     /**
      * @returns the configured description
      */
-    QString description() const;
+    TQString description() const;
 
     /**
      * @returns the configured icon
      */
-    QString icon() const;
+    TQString icon() const;
 
     /**
      * @returns whether the item should be local to the application or global.
@@ -644,12 +644,12 @@ protected:
      */
     KIconButton   * m_iconButton;
     /**
-     * The QCheckBox to modify the local/global setting
+     * The TQCheckBox to modify the local/global setting
      */
-    QCheckBox     * m_appLocal;
+    TQCheckBox     * m_appLocal;
 
 public slots:
-    void urlChanged(const QString & );
+    void urlChanged(const TQString & );
 
 private:
     class KURLBarItemDialogPrivate;

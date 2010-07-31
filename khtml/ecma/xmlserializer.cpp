@@ -89,7 +89,7 @@ Value XMLSerializerProtoFunc::tryCall(ExecState *exec, Object &thisObj, const Li
 	return Undefined();
       }
 
-      QString body;
+      TQString body;
 
       try {
 	  body = node->toString().string();

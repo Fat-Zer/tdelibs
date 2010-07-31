@@ -31,8 +31,8 @@
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kiconloader.h>
-#include <qvbox.h>
-#include <qlabel.h>
+#include <tqvbox.h>
+#include <tqlabel.h>
 #include "kcmoduleinfo.h"
 
 namespace KSettings
@@ -40,13 +40,13 @@ namespace KSettings
 
 struct GroupInfo
 {
-	QString id;
-	QString name;
-	QString comment;
-	QString icon;
+	TQString id;
+	TQString name;
+	TQString comment;
+	TQString icon;
 	int weight;
-	QString parentid;
-	QWidget * page;
+	TQString parentid;
+	TQWidget * page;
 };
 
 // The TreeList can get really complicated. That's why a tree data structure
@@ -54,7 +54,7 @@ struct GroupInfo
 class PageNode
 {
 	private:
-		typedef QValueList<PageNode*> List;
+		typedef TQValueList<PageNode*> List;
 		enum Type { KCM, Group, Root };
 		union Value
 		{
@@ -185,17 +185,17 @@ class PageNode
 				( *it )->makeDirty();
 		}
 
-		QString name() const
+		TQString name() const
 		{
 			if( Root == m_type )
-				return QString::fromAscii( "root node" );
+				return TQString::fromAscii( "root node" );
 			return ( KCM == m_type ) ? m_value.kcm->moduleName()
 				: m_value.group->name;
 		}
 
-		QStringList parentNames() const
+		TQStringList parentNames() const
 		{
-			QStringList ret;
+			TQStringList ret;
 			PageNode * node = m_parent;
 			while( node && node->m_type != Root )
 			{
@@ -218,13 +218,13 @@ class PageNode
 			}
 			if( Group == m_type && 0 == m_value.group->page )
 			{
-				QPixmap icon;
+				TQPixmap icon;
 				if( ! m_value.group->icon.isNull() )
 					icon = SmallIcon( m_value.group->icon,
 							IconSize( KIcon::Small ) );
-				QVBox * page = dlg->addVBoxPage( m_value.group->name,
-						QString::null, icon );
-				QLabel * comment = new QLabel( m_value.group->comment, page );
+				TQVBox * page = dlg->addVBoxPage( m_value.group->name,
+						TQString::null, icon );
+				TQLabel * comment = new TQLabel( m_value.group->comment, page );
 				comment->setTextFormat( Qt::RichText );
 				m_value.group->page = page;
 			}
@@ -291,7 +291,7 @@ class PageNode
 			return false;
 		}
 
-		bool insert( KCModuleInfo * info, const QString & parentid )
+		bool insert( KCModuleInfo * info, const TQString & parentid )
 		{
 			if( parentid.isNull() )
 			{
@@ -349,14 +349,14 @@ class Dialog::DialogPrivate
 		bool staticlistview;
 		KCMultiDialog * dlg;
 		PageNode pagetree;
-		QWidget * parentwidget;
-		QStringList registeredComponents;
-		QValueList<KService::Ptr> services;
-		QMap<QString, KPluginInfo*> plugininfomap;
+		TQWidget * parentwidget;
+		TQStringList registeredComponents;
+		TQValueList<KService::Ptr> services;
+		TQMap<TQString, KPluginInfo*> plugininfomap;
 };
 
-Dialog::Dialog( QWidget * parent, const char * name )
-	: QObject( parent, name )
+Dialog::Dialog( TQWidget * parent, const char * name )
+	: TQObject( parent, name )
 	, d( new DialogPrivate( this ) )
 {
 	d->parentwidget = parent;
@@ -365,8 +365,8 @@ Dialog::Dialog( QWidget * parent, const char * name )
 }
 
 Dialog::Dialog( ContentInListView content,
-		QWidget * parent, const char * name )
-	: QObject( parent, name )
+		TQWidget * parent, const char * name )
+	: TQObject( parent, name )
 	, d( new DialogPrivate( this ) )
 {
 	d->parentwidget = parent;
@@ -374,9 +374,9 @@ Dialog::Dialog( ContentInListView content,
 	d->services = instanceServices();
 }
 
-Dialog::Dialog( const QStringList & components,
-		QWidget * parent, const char * name )
-	: QObject( parent, name )
+Dialog::Dialog( const TQStringList & components,
+		TQWidget * parent, const char * name )
+	: TQObject( parent, name )
 	, d( new DialogPrivate( this ) )
 {
 	d->parentwidget = parent;
@@ -384,9 +384,9 @@ Dialog::Dialog( const QStringList & components,
 	d->services = instanceServices() + parentComponentsServices( components );
 }
 
-Dialog::Dialog( const QStringList & components,
-		ContentInListView content, QWidget * parent, const char * name )
-	: QObject( parent, name )
+Dialog::Dialog( const TQStringList & components,
+		ContentInListView content, TQWidget * parent, const char * name )
+	: TQObject( parent, name )
 	, d( new DialogPrivate( this ) )
 {
 	d->parentwidget = parent;
@@ -399,9 +399,9 @@ Dialog::~Dialog()
 	delete d;
 }
 
-void Dialog::addPluginInfos( const QValueList<KPluginInfo*> & plugininfos )
+void Dialog::addPluginInfos( const TQValueList<KPluginInfo*> & plugininfos )
 {
-	for( QValueList<KPluginInfo*>::ConstIterator it = plugininfos.begin();
+	for( TQValueList<KPluginInfo*>::ConstIterator it = plugininfos.begin();
 			it != plugininfos.end(); ++it )
 	{
 		d->registeredComponents.append( ( *it )->pluginName() );
@@ -425,16 +425,16 @@ KCMultiDialog * Dialog::dialog()
 	return d->dlg;
 }
 
-QValueList<KService::Ptr> Dialog::instanceServices() const
+TQValueList<KService::Ptr> Dialog::instanceServices() const
 {
 	kdDebug( 700 ) << k_funcinfo << endl;
-	QString instanceName = KGlobal::instance()->instanceName();
+	TQString instanceName = KGlobal::instance()->instanceName();
 	d->registeredComponents.append( instanceName );
 	kdDebug( 700 ) << "calling KServiceGroup::childGroup( " << instanceName
 		<< " )" << endl;
 	KServiceGroup::Ptr service = KServiceGroup::childGroup( instanceName );
 
-	QValueList<KService::Ptr> ret;
+	TQValueList<KService::Ptr> ret;
 
 	if( service && service->isValid() )
 	{
@@ -458,11 +458,11 @@ QValueList<KService::Ptr> Dialog::instanceServices() const
 	return ret;
 }
 
-QValueList<KService::Ptr> Dialog::parentComponentsServices(
-		const QStringList & kcdparents ) const
+TQValueList<KService::Ptr> Dialog::parentComponentsServices(
+		const TQStringList & kcdparents ) const
 {
 	d->registeredComponents += kcdparents;
-	QString constraint = kcdparents.join(
+	TQString constraint = kcdparents.join(
 			"' in [X-KDE-ParentComponents]) or ('" );
 	constraint = "('" + constraint + "' in [X-KDE-ParentComponents])";
 
@@ -478,9 +478,9 @@ bool Dialog::isPluginForKCMEnabled( KCModuleInfo * moduleinfo ) const
 	kdDebug( 700 ) << "check whether the " << moduleinfo->moduleName()
 		<< " KCM should be shown" << endl;
 	// for all parent components
-	QStringList parentComponents = moduleinfo->service()->property(
+	TQStringList parentComponents = moduleinfo->service()->property(
 			"X-KDE-ParentComponents" ).toStringList();
-	for( QStringList::ConstIterator pcit = parentComponents.begin();
+	for( TQStringList::ConstIterator pcit = parentComponents.begin();
 			pcit != parentComponents.end(); ++pcit )
 	{
 		// if the parentComponent is not registered ignore it
@@ -509,15 +509,15 @@ bool Dialog::isPluginForKCMEnabled( KCModuleInfo * moduleinfo ) const
 	return enabled;
 }
 
-void Dialog::parseGroupFile( const QString & filename )
+void Dialog::parseGroupFile( const TQString & filename )
 {
 	KSimpleConfig file( filename );
-	QStringList groups = file.groupList();
-	for( QStringList::ConstIterator it = groups.begin(); it != groups.end();
+	TQStringList groups = file.groupList();
+	for( TQStringList::ConstIterator it = groups.begin(); it != groups.end();
 			++it )
 	{
 		GroupInfo group;
-		QString id = *it;
+		TQString id = *it;
 		file.setGroup( id.utf8() );
 		group.id = id;
 		group.name = file.readEntry( "Name" );
@@ -532,26 +532,26 @@ void Dialog::parseGroupFile( const QString & filename )
 void Dialog::createDialogFromServices()
 {
 	// read .setdlg files
-	QString setdlgpath = locate( "appdata",
+	TQString setdlgpath = locate( "appdata",
 			KGlobal::instance()->instanceName() + ".setdlg" );
-	QStringList setdlgaddon = KGlobal::dirs()->findAllResources( "appdata",
+	TQStringList setdlgaddon = KGlobal::dirs()->findAllResources( "appdata",
 			"ksettingsdialog/*.setdlg" );
 	if( ! setdlgpath.isNull() )
 		parseGroupFile( setdlgpath );
 	if( setdlgaddon.size() > 0 )
-		for( QStringList::ConstIterator it = setdlgaddon.begin();
+		for( TQStringList::ConstIterator it = setdlgaddon.begin();
 				it != setdlgaddon.end(); ++it )
 			parseGroupFile( *it );
 
 	// now we process the KCModule services
-	for( QValueList<KService::Ptr>::ConstIterator it = d->services.begin();
+	for( TQValueList<KService::Ptr>::ConstIterator it = d->services.begin();
 			it != d->services.end(); ++it )
 	{
 		// we create the KCModuleInfo
 		KCModuleInfo * info = new KCModuleInfo( *it );
-		QString parentid;
-		QVariant tmp = info->service()->property( "X-KDE-CfgDlgHierarchy",
-			QVariant::String );
+		TQString parentid;
+		TQVariant tmp = info->service()->property( "X-KDE-CfgDlgHierarchy",
+			TQVariant::String );
 		if( tmp.isValid() )
 			parentid = tmp.toString();
 		d->pagetree.insert( info, parentid );
@@ -588,14 +588,14 @@ void Dialog::createDialogFromServices()
 
 	if( ! d->staticlistview )
 		d->dlg->addButtonBelowList( i18n( "Select Components..." ), this,
-			SLOT( configureTree() ) );
+			TQT_SLOT( configureTree() ) );
 
-	connect( d->dlg, SIGNAL( okClicked() ), Dispatcher::self(),
-		SLOT( syncConfiguration() ) );
-	connect( d->dlg, SIGNAL( applyClicked() ), Dispatcher::self(),
-		SLOT( syncConfiguration() ) );
-	connect( d->dlg, SIGNAL( configCommitted( const QCString & ) ),
-		Dispatcher::self(), SLOT( reparseConfiguration( const QCString & ) ) );
+	connect( d->dlg, TQT_SIGNAL( okClicked() ), Dispatcher::self(),
+		TQT_SLOT( syncConfiguration() ) );
+	connect( d->dlg, TQT_SIGNAL( applyClicked() ), Dispatcher::self(),
+		TQT_SLOT( syncConfiguration() ) );
+	connect( d->dlg, TQT_SIGNAL( configCommitted( const TQCString & ) ),
+		Dispatcher::self(), TQT_SLOT( reparseConfiguration( const TQCString & ) ) );
 
 	d->pagetree.addToDialog( d->dlg );
 
@@ -609,13 +609,13 @@ void Dialog::configureTree()
 	ComponentsDialog * subdlg = new ComponentsDialog( d->dlg );
 	subdlg->setPluginInfos( d->plugininfomap );
 	subdlg->show();
-	connect( subdlg, SIGNAL( okClicked() ), this, SLOT( updateTreeList() ) );
-	connect( subdlg, SIGNAL( applyClicked() ), this, SLOT( updateTreeList() ) );
-	connect( subdlg, SIGNAL( okClicked() ), this,
-			SIGNAL( pluginSelectionChanged() ) );
-	connect( subdlg, SIGNAL( applyClicked() ), this,
-			SIGNAL( pluginSelectionChanged() ) );
-	connect( subdlg, SIGNAL( finished() ), subdlg, SLOT( delayedDestruct() ) );
+	connect( subdlg, TQT_SIGNAL( okClicked() ), this, TQT_SLOT( updateTreeList() ) );
+	connect( subdlg, TQT_SIGNAL( applyClicked() ), this, TQT_SLOT( updateTreeList() ) );
+	connect( subdlg, TQT_SIGNAL( okClicked() ), this,
+			TQT_SIGNAL( pluginSelectionChanged() ) );
+	connect( subdlg, TQT_SIGNAL( applyClicked() ), this,
+			TQT_SIGNAL( pluginSelectionChanged() ) );
+	connect( subdlg, TQT_SIGNAL( finished() ), subdlg, TQT_SLOT( delayedDestruct() ) );
 }
 
 void Dialog::updateTreeList()

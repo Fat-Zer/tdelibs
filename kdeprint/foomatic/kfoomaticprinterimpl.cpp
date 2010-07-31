@@ -23,7 +23,7 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 
-KFoomaticPrinterImpl::KFoomaticPrinterImpl(QObject *parent, const char *name, const QStringList & /*args*/)
+KFoomaticPrinterImpl::KFoomaticPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KPrinterImpl(parent,name)
 {
 }
@@ -33,18 +33,18 @@ KFoomaticPrinterImpl::~KFoomaticPrinterImpl()
 }
 
 // look for executable
-QString KFoomaticPrinterImpl::executable()
+TQString KFoomaticPrinterImpl::executable()
 {
 	QString	exe = KStandardDirs::findExe("foomatic-printjob");
 	return exe;
 }
 
-bool KFoomaticPrinterImpl::setupCommand(QString& cmd, KPrinter *printer)
+bool KFoomaticPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 {
 	QString		exe = executable();
 	if (!exe.isEmpty())
 	{
-		cmd = exe + QString::fromLatin1(" -P %1 -# %2").arg(quote(printer->printerName())).arg(printer->numCopies());
+		cmd = exe + TQString::fromLatin1(" -P %1 -# %2").arg(quote(printer->printerName())).arg(printer->numCopies());
 		return true;
 	}
 	else

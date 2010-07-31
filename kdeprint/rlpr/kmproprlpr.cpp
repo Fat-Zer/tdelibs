@@ -21,21 +21,21 @@
 #include "kmprinter.h"
 #include "kmwizard.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
-KMPropRlpr::KMPropRlpr(QWidget *parent, const char *name)
+KMPropRlpr::KMPropRlpr(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)
 {
-	m_host = new QLabel("",this);
-	m_queue = new QLabel("",this);
+	m_host = new TQLabel("",this);
+	m_queue = new TQLabel("",this);
 
-	QLabel	*l1 = new QLabel(i18n("Host:"), this);
-	QLabel	*l2 = new QLabel(i18n("Queue:"), this);
+	QLabel	*l1 = new TQLabel(i18n("Host:"), this);
+	QLabel	*l2 = new TQLabel(i18n("Queue:"), this);
 
 	// layout
-	QGridLayout	*main_ = new QGridLayout(this, 3, 2, 10, 7);
+	QGridLayout	*main_ = new TQGridLayout(this, 3, 2, 10, 7);
 	main_->setColStretch(0,0);
 	main_->setColStretch(1,1);
 	main_->setRowStretch(2,1);

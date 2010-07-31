@@ -20,12 +20,12 @@
  */
 
 // I (espen) prefer that header files are included alphabetically
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qtimer.h>
-#include <qtoolbutton.h>
-#include <qwhatsthis.h>
-#include <qwidget.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
+#include <tqtimer.h>
+#include <tqtoolbutton.h>
+#include <tqwhatsthis.h>
+#include <tqwidget.h>
 
 #include <kaboutapplication.h>
 #include <kaboutdata.h>
@@ -62,9 +62,9 @@ public:
     KSwitchLanguageDialog *mSwitchApplicationLanguage;
 };
 
-KHelpMenu::KHelpMenu( QWidget *parent, const QString &aboutAppText,
+KHelpMenu::KHelpMenu( TQWidget *parent, const TQString &aboutAppText,
 		      bool showWhatsThis )
-  : QObject(parent), mMenu(0), mAboutApp(0), mAboutKDE(0), mBugReport(0),
+  : TQObject(parent), mMenu(0), mAboutApp(0), mAboutKDE(0), mBugReport(0),
     d(new KHelpMenuPrivate)
 {
   mParent = parent;
@@ -73,9 +73,9 @@ KHelpMenu::KHelpMenu( QWidget *parent, const QString &aboutAppText,
   d->mAboutData = 0;
 }
 
-KHelpMenu::KHelpMenu( QWidget *parent, const KAboutData *aboutData,
+KHelpMenu::KHelpMenu( TQWidget *parent, const KAboutData *aboutData,
 		      bool showWhatsThis, KActionCollection *actions )
-  : QObject(parent), mMenu(0), mAboutApp(0), mAboutKDE(0), mBugReport(0),
+  : TQObject(parent), mMenu(0), mAboutApp(0), mAboutKDE(0), mBugReport(0),
     d(new KHelpMenuPrivate)
 {
   mParent = parent;
@@ -84,17 +84,17 @@ KHelpMenu::KHelpMenu( QWidget *parent, const KAboutData *aboutData,
   d->mAboutData = aboutData;
 
   if (!aboutData)
-    mAboutAppText = QString::null;
+    mAboutAppText = TQString::null;
 
   if (actions)
   {
-    KStdAction::helpContents(this, SLOT(appHelpActivated()), actions);
+    KStdAction::helpContents(this, TQT_SLOT(appHelpActivated()), actions);
     if (showWhatsThis)
-      KStdAction::whatsThis(this, SLOT(contextHelpActivated()), actions);
-    KStdAction::reportBug(this, SLOT(reportBug()), actions);
-    KStdAction::aboutApp(this, SLOT(aboutApplication()), actions);
-    KStdAction::aboutKDE(this, SLOT(aboutKDE()), actions);
-    KStdAction::switchApplicationLanguage(this, SLOT(switchApplicationLanguage()), actions);
+      KStdAction::whatsThis(this, TQT_SLOT(contextHelpActivated()), actions);
+    KStdAction::reportBug(this, TQT_SLOT(reportBug()), actions);
+    KStdAction::aboutApp(this, TQT_SLOT(aboutApplication()), actions);
+    KStdAction::aboutKDE(this, TQT_SLOT(aboutKDE()), actions);
+    KStdAction::switchApplicationLanguage(this, TQT_SLOT(switchApplicationLanguage()), actions);
   }
 }
 
@@ -118,26 +118,26 @@ KPopupMenu* KHelpMenu::menu()
     // compatible.
     //
     const KAboutData *aboutData = d->mAboutData ? d->mAboutData : KGlobal::instance()->aboutData();
-    QString appName = (aboutData)? aboutData->programName() : QString::fromLatin1(qApp->name());
+    TQString appName = (aboutData)? aboutData->programName() : TQString::fromLatin1(qApp->name());
 
     mMenu = new KPopupMenu();
-    connect( mMenu, SIGNAL(destroyed()), this, SLOT(menuDestroyed()));
+    connect( mMenu, TQT_SIGNAL(destroyed()), this, TQT_SLOT(menuDestroyed()));
 
     bool need_separator = false;
     if (kapp->authorizeKAction("help_contents"))
     {
       mMenu->insertItem( BarIcon( "contents", KIcon::SizeSmall),
                      i18n( "%1 &Handbook" ).arg( appName) ,menuHelpContents );
-      mMenu->connectItem( menuHelpContents, this, SLOT(appHelpActivated()) );
+      mMenu->connectItem( menuHelpContents, this, TQT_SLOT(appHelpActivated()) );
       mMenu->setAccel( KStdAccel::shortcut(KStdAccel::Help), menuHelpContents );
       need_separator = true;
     }
 
     if( mShowWhatsThis && kapp->authorizeKAction("help_whats_this") )
     {
-      QToolButton* wtb = QWhatsThis::whatsThisButton(0);
+      TQToolButton* wtb = TQWhatsThis::whatsThisButton(0);
       mMenu->insertItem( wtb->iconSet(),i18n( "What's &This" ), menuWhatsThis);
-      mMenu->connectItem( menuWhatsThis, this, SLOT(contextHelpActivated()) );
+      mMenu->connectItem( menuWhatsThis, this, TQT_SLOT(contextHelpActivated()) );
       delete wtb;
       mMenu->setAccel( SHIFT + Key_F1, menuWhatsThis );
       need_separator = true;
@@ -148,7 +148,7 @@ KPopupMenu* KHelpMenu::menu()
       if (need_separator)
         mMenu->insertSeparator();
       mMenu->insertItem( i18n( "&Report Bug..." ), menuReportBug );
-      mMenu->connectItem( menuReportBug, this, SLOT(reportBug()) );
+      mMenu->connectItem( menuReportBug, this, TQT_SLOT(reportBug()) );
       need_separator = true;
     }
 
@@ -157,7 +157,7 @@ KPopupMenu* KHelpMenu::menu()
       if (need_separator)
         mMenu->insertSeparator();
       mMenu->insertItem( i18n( "Switch application &language..." ), menuSwitchLanguage );
-      mMenu->connectItem( menuSwitchLanguage, this, SLOT(switchApplicationLanguage()) );
+      mMenu->connectItem( menuSwitchLanguage, this, TQT_SLOT(switchApplicationLanguage()) );
       need_separator = true;
     }
     
@@ -168,13 +168,13 @@ KPopupMenu* KHelpMenu::menu()
     {
       mMenu->insertItem( kapp->miniIcon(),
         i18n( "&About %1" ).arg(appName), menuAboutApp );
-      mMenu->connectItem( menuAboutApp, this, SLOT( aboutApplication() ) );
+      mMenu->connectItem( menuAboutApp, this, TQT_SLOT( aboutApplication() ) );
     }
     
     if (kapp->authorizeKAction("help_about_kde"))
     {
       mMenu->insertItem( SmallIcon("about_kde"), i18n( "About &Trinity" ), menuAboutKDE );
-      mMenu->connectItem( menuAboutKDE, this, SLOT( aboutKDE() ) );
+      mMenu->connectItem( menuAboutKDE, this, TQT_SLOT( aboutKDE() ) );
     }
   }
 
@@ -196,7 +196,7 @@ void KHelpMenu::aboutApplication()
     if( !mAboutApp )
     {
       mAboutApp = new KAboutApplication( d->mAboutData, mParent, "about", false );
-      connect( mAboutApp, SIGNAL(finished()), this, SLOT( dialogFinished()) );
+      connect( mAboutApp, TQT_SIGNAL(finished()), this, TQT_SLOT( dialogFinished()) );
     }
     mAboutApp->show();
   }
@@ -208,20 +208,20 @@ void KHelpMenu::aboutApplication()
   {
     if( !mAboutApp )
     {
-      mAboutApp = new KDialogBase( QString::null, // Caption is defined below
+      mAboutApp = new KDialogBase( TQString::null, // Caption is defined below
 				   KDialogBase::Yes, KDialogBase::Yes,
 				   KDialogBase::Yes, mParent, "about",
 				   false, true, KStdGuiItem::ok() );
-      connect( mAboutApp, SIGNAL(finished()), this, SLOT( dialogFinished()) );
+      connect( mAboutApp, TQT_SIGNAL(finished()), this, TQT_SLOT( dialogFinished()) );
 
-      QHBox *hbox = new QHBox( mAboutApp );
+      TQHBox *hbox = new TQHBox( mAboutApp );
       mAboutApp->setMainWidget( hbox );
       hbox->setSpacing(KDialog::spacingHint()*3);
       hbox->setMargin(KDialog::marginHint()*1);
 
-      QLabel *label1 = new QLabel(hbox);
+      TQLabel *label1 = new TQLabel(hbox);
       label1->setPixmap( kapp->icon() );
-      QLabel *label2 = new QLabel(hbox);
+      TQLabel *label2 = new TQLabel(hbox);
       label2->setText( mAboutAppText );
 
       mAboutApp->setPlainCaption( i18n("About %1").arg(kapp->caption()) );
@@ -238,7 +238,7 @@ void KHelpMenu::aboutKDE()
   if( !mAboutKDE )
   {
     mAboutKDE = new KAboutKDE( mParent, "aboutkde", false );
-    connect( mAboutKDE, SIGNAL(finished()), this, SLOT( dialogFinished()) );
+    connect( mAboutKDE, TQT_SIGNAL(finished()), this, TQT_SLOT( dialogFinished()) );
   }
   mAboutKDE->show();
 }
@@ -249,7 +249,7 @@ void KHelpMenu::reportBug()
   if( !mBugReport )
   {
     mBugReport = new KBugReport( mParent, false, d->mAboutData );
-    connect( mBugReport, SIGNAL(finished()),this,SLOT( dialogFinished()) );
+    connect( mBugReport, TQT_SIGNAL(finished()),this,TQT_SLOT( dialogFinished()) );
   }
   mBugReport->show();
 }
@@ -259,7 +259,7 @@ void KHelpMenu::switchApplicationLanguage()
   if ( !d->mSwitchApplicationLanguage )
   {
     d->mSwitchApplicationLanguage = new KSwitchLanguageDialog( mParent, "switchlanguagedialog", false );
-    connect( d->mSwitchApplicationLanguage, SIGNAL(finished()), this, SLOT( dialogFinished()) );
+    connect( d->mSwitchApplicationLanguage, TQT_SIGNAL(finished()), this, TQT_SLOT( dialogFinished()) );
   }
   d->mSwitchApplicationLanguage->show();
 }
@@ -267,7 +267,7 @@ void KHelpMenu::switchApplicationLanguage()
 
 void KHelpMenu::dialogFinished()
 {
-  QTimer::singleShot( 0, this, SLOT(timerExpired()) );
+  TQTimer::singleShot( 0, this, TQT_SLOT(timerExpired()) );
 }
 
 
@@ -303,8 +303,8 @@ void KHelpMenu::menuDestroyed()
 
 void KHelpMenu::contextHelpActivated()
 {
-  QWhatsThis::enterWhatsThisMode();
-  QWidget* w = QApplication::widgetAt( QCursor::pos(), true );
+  TQWhatsThis::enterWhatsThisMode();
+  TQWidget* w = TQApplication::widgetAt( TQCursor::pos(), true );
   while ( w && !w->isTopLevel() && !w->inherits("QXEmbed")  )
       w = w->parentWidget();
 #ifdef Q_WS_X11

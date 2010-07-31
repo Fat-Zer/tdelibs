@@ -18,8 +18,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qpainter.h>
-#include <qtimer.h>
+#include <tqpainter.h>
+#include <tqtimer.h>
 #include <kapplication.h>
 #include "kscreensaver.h"
 #ifdef Q_WS_X11
@@ -36,10 +36,10 @@ typedef WId Window;
 class KScreenSaverPrivate
 {
 public:
-    QWidget *owner;
+    TQWidget *owner;
 };
 
-KScreenSaver::KScreenSaver( WId id ) : QWidget()
+KScreenSaver::KScreenSaver( WId id ) : TQWidget()
 {
     Window root;
     int ai;
@@ -75,7 +75,7 @@ KScreenSaver::~KScreenSaver()
     delete d;
 }
 
-void KScreenSaver::embed( QWidget *w )
+void KScreenSaver::embed( TQWidget *w )
 {
     KApplication::sendPostedEvents();
 #ifdef Q_WS_X11 //FIXME
@@ -85,15 +85,15 @@ void KScreenSaver::embed( QWidget *w )
     KApplication::sendPostedEvents();
 }
 
-bool KScreenSaver::eventFilter( QObject *o, QEvent *e )
+bool KScreenSaver::eventFilter( TQObject *o, TQEvent *e )
 {
     // make sure events get to the original window owner
     if ( d->owner && o == this ) {
-	QApplication::sendEvent( d->owner, e );
+	TQApplication::sendEvent( d->owner, e );
 	return false;
     }
 
-    return QWidget::eventFilter( o, e );
+    return TQWidget::eventFilter( o, e );
 }
 
 //============================================================================
@@ -103,8 +103,8 @@ class KBlankEffectPrivate
 public:
     KBlankEffect::BlankEffect currentEffect;
     int effectProgress;
-    QTimer *timer;
-    QWidget *widget;
+    TQTimer *timer;
+    TQWidget *widget;
 };
 
 KBlankEffect::BlankEffect KBlankEffect::effects[] = {
@@ -114,13 +114,13 @@ KBlankEffect::BlankEffect KBlankEffect::effects[] = {
     &KBlankEffect::blankBlocks
 };
 
-KBlankEffect::KBlankEffect( QObject *parent ) : QObject( parent )
+KBlankEffect::KBlankEffect( TQObject *parent ) : TQObject( parent )
 {
     d = new KBlankEffectPrivate;
     d->currentEffect = &KBlankEffect::blankNormal;
     d->effectProgress = 0;
-    d->timer = new QTimer( this );
-    connect( d->timer, SIGNAL(timeout()), this, SLOT(timeout()) );
+    d->timer = new TQTimer( this );
+    connect( d->timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(timeout()) );
 }
 
 
@@ -137,7 +137,7 @@ void KBlankEffect::finished()
 }
 
 
-void KBlankEffect::blank( QWidget *w, Effect effect )
+void KBlankEffect::blank( TQWidget *w, Effect effect )
 {
     if ( !w ) {
         emit doneBlank();
@@ -160,7 +160,7 @@ void KBlankEffect::timeout()
 
 void KBlankEffect::blankNormal()
 {
-    QPainter p( d->widget );
+    TQPainter p( d->widget );
     p.fillRect( 0, 0, d->widget->width(), d->widget->height(), black );
     finished();
 }
@@ -168,7 +168,7 @@ void KBlankEffect::blankNormal()
 
 void KBlankEffect::blankSweepRight()
 {
-    QPainter p( d->widget );
+    TQPainter p( d->widget );
     p.fillRect( d->effectProgress, 0, 50, d->widget->height(), black );
     kapp->flushX();
     d->effectProgress += 50;
@@ -179,7 +179,7 @@ void KBlankEffect::blankSweepRight()
 
 void KBlankEffect::blankSweepDown()
 {
-    QPainter p( d->widget );
+    TQPainter p( d->widget );
     p.fillRect( 0, d->effectProgress, d->widget->width(), 50, black );
     kapp->flushX();
     d->effectProgress += 50;
@@ -208,7 +208,7 @@ void KBlankEffect::blankBlocks()
         }
     }
 
-    QPainter p( d->widget );
+    TQPainter p( d->widget );
 
     // erase a couple of blocks at a time, otherwise it looks too slow
     for ( int i = 0; i < 2 && d->effectProgress < bx*by; i++ ) {

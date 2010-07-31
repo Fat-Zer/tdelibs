@@ -24,8 +24,8 @@
 #include "kfileitem.h"
 #include "kdirnotify.h"
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <kurl.h>
 
@@ -63,8 +63,8 @@ class KIO_EXPORT KDirLister : public QObject
   Q_PROPERTY( bool showingDotFiles READ showingDotFiles WRITE setShowingDotFiles )
   Q_PROPERTY( bool dirOnlyMode READ dirOnlyMode WRITE setDirOnlyMode )
   Q_PROPERTY( bool autoErrorHandlingEnabled READ autoErrorHandlingEnabled )
-  Q_PROPERTY( QString nameFilter READ nameFilter WRITE setNameFilter )
-  Q_PROPERTY( QStringList mimeFilter READ mimeFilters WRITE setMimeFilter RESET clearMimeFilter )
+  Q_PROPERTY( TQString nameFilter READ nameFilter WRITE setNameFilter )
+  Q_PROPERTY( TQStringList mimeFilter READ mimeFilters WRITE setMimeFilter RESET clearMimeFilter )
 
 public:
   /**
@@ -156,7 +156,7 @@ public:
    *               top-level
    * @see autoErrorHandlingEnabled()
    */
-  void setAutoErrorHandlingEnabled( bool enable, QWidget *parent );
+  void setAutoErrorHandlingEnabled( bool enable, TQWidget *parent );
 
   /**
    * Checks whether hidden files (files beginning with a dot) will be
@@ -259,7 +259,7 @@ public:
    * @param name the item name
    * @return the pointer to the KFileItem
    */
-  virtual KFileItem *findByName( const QString& name ) const;
+  virtual KFileItem *findByName( const TQString& name ) const;
 
   /**
    * Set a name filter to only list items matching this name, e.g. "*.cpp".
@@ -268,17 +268,17 @@ public:
    * "*.cpp *.h".
    * Note: the direcory is not automatically reloaded.
    *
-   * @param filter the new filter, QString::null to disable filtering
+   * @param filter the new filter, TQString::null to disable filtering
    * @see matchesFilter
    */
-  virtual void setNameFilter( const QString &filter );
+  virtual void setNameFilter( const TQString &filter );
 
   /**
    * Returns the current name filter, as set via setNameFilter()
-   * @return the current name filter, can be QString::null if filtering
+   * @return the current name filter, can be TQString::null if filtering
    *         is turned off
    */
-  const QString& nameFilter() const;
+  const TQString& nameFilter() const;
 
   /**
    * Set mime-based filter to only list items matching the given mimetypes.
@@ -291,7 +291,7 @@ public:
    * @see clearMimeFilter
    * @see matchesMimeFilter
    */
-  virtual void setMimeFilter( const QStringList &mimeList );
+  virtual void setMimeFilter( const TQStringList &mimeList );
 
   /**
    * Filtering should be done with KFileFilter. This will be implemented in a later
@@ -308,7 +308,7 @@ public:
    * @since 3.1
    * @internal
    */
-  void setMimeExcludeFilter(const QStringList &mimeList );
+  void setMimeExcludeFilter(const TQStringList &mimeList );
 
 
   /**
@@ -322,7 +322,7 @@ public:
    * Returns the list of mime based filters, as set via setMimeFilter().
    * @return the list of mime based filters. Empty, when no mime filter is set.
    */
-  const QStringList& mimeFilters() const;
+  const TQStringList& mimeFilters() const;
 
   /**
    * Checks whether @p name matches a filter in the list of name filters.
@@ -330,7 +330,7 @@ public:
    * otherwise false.
    * @see setNameFilter
    */
-  bool matchesFilter( const QString& name ) const;
+  bool matchesFilter( const TQString& name ) const;
 
   /**
    * Checks whether @p mime matches a filter in the list of mime types
@@ -339,7 +339,7 @@ public:
    * otherwise false.
    * @see setMimeFilter.
    */
-  bool matchesMimeFilter( const QString& mime ) const;
+  bool matchesMimeFilter( const TQString& mime ) const;
 
   /**
    * Pass the main window this object is associated with
@@ -347,14 +347,14 @@ public:
    * @param window the window to associate with, 0 to disassociate
    * @since 3.1
    */
-  void setMainWindow( QWidget *window );
+  void setMainWindow( TQWidget *window );
 
   /**
    * Returns the main window associated with this object.
    * @return the associated main window, or 0 if there is none
    * @since 3.1
    */
-  QWidget *mainWindow();
+  TQWidget *mainWindow();
 
   /**
    * Used by items() and itemsForDir() to specify whether you want
@@ -507,7 +507,7 @@ signals:
    * Examples of message are "Resolving host", "Connecting to host...", etc.
    * @param msg the info message
    */
-  void infoMessage( const QString& msg );
+  void infoMessage( const TQString& msg );
 
   /**
    * Progress signal showing the overall progress of the KDirLister.
@@ -574,7 +574,7 @@ protected:
    * @param name the name to filter
    * @param filters a list of regular expressions for filtering
    */
-  virtual bool doNameFilter( const QString& name, const QPtrList<QRegExp>& filters ) const;
+  virtual bool doNameFilter( const TQString& name, const TQPtrList<TQRegExp>& filters ) const;
 
   /**
    * Called by the public matchesMimeFilter() to do the
@@ -583,12 +583,12 @@ protected:
    * @param mime the mime type to filter
    * @param filters the list of mime types to filter
    */
-  virtual bool doMimeFilter( const QString& mime, const QStringList& filters ) const;
+  virtual bool doMimeFilter( const TQString& mime, const TQStringList& filters ) const;
 
   /**
    * @internal
    */
-  bool doMimeExcludeFilter( const QString& mimeExclude, const QStringList& filters ) const;
+  bool doMimeExcludeFilter( const TQString& mimeExclude, const TQStringList& filters ) const;
 
   /**
    * Checks if an url is malformed or not and displays an error message
@@ -604,7 +604,7 @@ protected:
   virtual void virtual_hook( int id, void *data );
 
 private slots:
-  void slotInfoMessage( KIO::Job *, const QString& );
+  void slotInfoMessage( KIO::Job *, const TQString& );
   void slotPercent( KIO::Job *, unsigned long );
   void slotTotalSize( KIO::Job *, KIO::filesize_t );
   void slotProcessedSize( KIO::Job *, KIO::filesize_t );

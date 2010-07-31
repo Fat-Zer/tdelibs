@@ -20,12 +20,12 @@
 #include "klpdunixprinterimpl.h"
 #include "kprinter.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kmacroexpander.h>
 
-KLpdUnixPrinterImpl::KLpdUnixPrinterImpl(QObject *parent, const char *name, const QStringList & /*args*/)
+KLpdUnixPrinterImpl::KLpdUnixPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KPrinterImpl(parent,name)
 {
 }
@@ -34,18 +34,18 @@ KLpdUnixPrinterImpl::~KLpdUnixPrinterImpl()
 {
 }
 
-void KLpdUnixPrinterImpl::initLpPrint(QString& cmd, KPrinter *printer)
+void KLpdUnixPrinterImpl::initLpPrint(TQString& cmd, KPrinter *printer)
 {
-	cmd += QString::fromLatin1(" -d %1 -n%2").arg(quote(printer->printerName())).arg(printer->numCopies());
+	cmd += TQString::fromLatin1(" -d %1 -n%2").arg(quote(printer->printerName())).arg(printer->numCopies());
 }
 
-void KLpdUnixPrinterImpl::initLprPrint(QString& cmd, KPrinter *printer)
+void KLpdUnixPrinterImpl::initLprPrint(TQString& cmd, KPrinter *printer)
 {
-	cmd += QString::fromLatin1(" -P %1 '-#%2'").arg(quote(printer->printerName())).arg(printer->numCopies());
+	cmd += TQString::fromLatin1(" -P %1 '-#%2'").arg(quote(printer->printerName())).arg(printer->numCopies());
 }
 
 // look for executable, starting with "lpr"
-QString KLpdUnixPrinterImpl::executable()
+TQString KLpdUnixPrinterImpl::executable()
 {
 	QString	exe = KStandardDirs::findExe("lpr");
 	if (exe.isEmpty())
@@ -53,9 +53,9 @@ QString KLpdUnixPrinterImpl::executable()
 	return exe;
 }
 
-bool KLpdUnixPrinterImpl::setupCommand(QString& cmd, KPrinter *printer)
+bool KLpdUnixPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 {
-	QString exe = printer->option( "kde-printcommand" );
+	TQString exe = printer->option( "kde-printcommand" );
 	if ( exe.isEmpty() || exe == "<automatic>" )
 	{
 		exe = executable();
@@ -74,9 +74,9 @@ bool KLpdUnixPrinterImpl::setupCommand(QString& cmd, KPrinter *printer)
 	}
 	else
 	{
-		QMap<QString,QString> map;
+		TQMap<TQString,TQString> map;
 		map.insert( "printer", printer->printerName() );
-		map.insert( "copies", QString::number( printer->numCopies() ) );
+		map.insert( "copies", TQString::number( printer->numCopies() ) );
 		cmd = KMacroExpander::expandMacrosShellQuote( exe, map );
 		return true;
 	}

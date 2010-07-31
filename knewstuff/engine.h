@@ -20,9 +20,9 @@
 #ifndef KNEWSTUFF_ENGINE_H
 #define KNEWSTUFF_ENGINE_H
 
-#include <qmap.h>
-#include <qobject.h>
-#include <qstring.h>
+#include <tqmap.h>
+#include <tqobject.h>
+#include <tqstring.h>
 
 #include "entry.h"
 #include "provider.h"
@@ -60,7 +60,7 @@ class KDE_EXPORT Engine : public QObject
       @param type the Hotstuff data type such as "korganizer/calendar"
       @param parentWidget the parent window
     */
-    Engine( KNewStuff *newStuff, const QString &type, QWidget *parentWidget = 0 );
+    Engine( KNewStuff *newStuff, const TQString &type, TQWidget *parentWidget = 0 );
     /**
       Constructor.
 
@@ -69,7 +69,7 @@ class KDE_EXPORT Engine : public QObject
       @param providerList the URL of the provider list
       @param parentWidget the parent window
     */
-    Engine( KNewStuff *newStuff, const QString &type, const QString &providerList, QWidget *parentWidget = 0 );
+    Engine( KNewStuff *newStuff, const TQString &type, const TQString &providerList, TQWidget *parentWidget = 0 );
 
     /**
       Destructor.
@@ -81,14 +81,14 @@ class KDE_EXPORT Engine : public QObject
 
       @return the Hotstuff data type
     */
-    QString type() const { return mType; }
+    TQString type() const { return mType; }
 
     /**
       Returns the previously set parent widget.
 
       @return parent widget
     */
-    QWidget *parentWidget() const { return mParentWidget; }
+    TQWidget *parentWidget() const { return mParentWidget; }
 
     /**
       Initiates the download process, retrieving provider lists and invoking
@@ -103,7 +103,7 @@ class KDE_EXPORT Engine : public QObject
       @param fileName name of the payload data file
       @param previewName name of the preview image file
     */
-    void upload( const QString &fileName = QString::null, const QString &previewName = QString::null );
+    void upload( const TQString &fileName = TQString::null, const TQString &previewName = TQString::null );
 
     /**
       Downloads the specified data file.
@@ -143,7 +143,7 @@ class KDE_EXPORT Engine : public QObject
     void getMetaInformation( Provider::List *providers );
     void selectUploadProvider( Provider::List *providers );
 
-    void slotNewStuffJobData( KIO::Job *job, const QByteArray &data );
+    void slotNewStuffJobData( KIO::Job *job, const TQByteArray &data );
     void slotNewStuffJobResult( KIO::Job *job );
 
     void slotDownloadJobResult( KIO::Job *job );
@@ -156,31 +156,31 @@ class KDE_EXPORT Engine : public QObject
     bool createMetaFile( Entry * );
     
   private:
-    QWidget *mParentWidget;
+    TQWidget *mParentWidget;
 
     ProviderLoader *mProviderLoader;
 
-    QMap<KIO::Job *,QString> mNewStuffJobData;
-    QMap<KIO::Job *,Provider *> mProviderJobs;
+    TQMap<KIO::Job *,TQString> mNewStuffJobData;
+    TQMap<KIO::Job *,Provider *> mProviderJobs;
 
-    QPtrList<Entry> mNewStuffList;
+    TQPtrList<Entry> mNewStuffList;
 
     DownloadDialog *mDownloadDialog;
     UploadDialog *mUploadDialog;
     ProviderDialog *mProviderDialog;
 
-    QString mDownloadDestination;
+    TQString mDownloadDestination;
 
     Provider *mUploadProvider;
 
-    QString mUploadMetaFile;
-    QString mUploadFile;
-    QString mPreviewFile;
-    QString mProviderList;
+    TQString mUploadMetaFile;
+    TQString mUploadFile;
+    TQString mPreviewFile;
+    TQString mProviderList;
 
     Private* d;
 
-    QString mType;
+    TQString mType;
 };
 
 }

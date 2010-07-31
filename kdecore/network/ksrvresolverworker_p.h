@@ -20,11 +20,11 @@
 #ifndef KSRVRESOLVERWORKER_P_H
 #define KSRVRESOLVERWORKER_P_H
 
-#include <qobject.h>
-#include <qdns.h>
-#include <qsemaphore.h>
-#include <qvaluelist.h>
-#include <qdict.h>
+#include <tqobject.h>
+#include <tqdns.h>
+#include <tqsemaphore.h>
+#include <tqvaluelist.h>
+#include <tqdict.h>
 #include "kresolver.h"
 #include "kresolverworkerbase.h"
 
@@ -38,7 +38,7 @@ namespace KNetwork
      * @internal
      * This class implements SRV-based resolution
      */
-    class KSrvResolverWorker: public QObject,
+    class KSrvResolverWorker: public TQObject,
 			      public KNetwork::KResolverWorkerBase
     {
       Q_OBJECT
@@ -46,7 +46,7 @@ namespace KNetwork
     public:
       struct Entry
       {
-	QString name;
+	TQString name;
 	Q_UINT16 port;
 	Q_UINT16 weight;
 	KNetwork::KResolver* resolver;
@@ -56,17 +56,17 @@ namespace KNetwork
       {
 	PriorityClass() : totalWeight(0) { }
 
-	QValueList<Entry> entries;
+	TQValueList<Entry> entries;
 	Q_UINT16 totalWeight;
       };
 
     private:
-      QDns *dns;
-      QValueList<QDns::Server> rawResults;
-      QCString encodedName;
-      QSemaphore *sem;
+      TQDns *dns;
+      TQValueList<TQDns::Server> rawResults;
+      TQCString encodedName;
+      TQSemaphore *sem;
 
-      typedef QMap<Q_UINT16, PriorityClass> Results;
+      typedef TQMap<Q_UINT16, PriorityClass> Results;
       Results myResults;
 
     public:
@@ -74,7 +74,7 @@ namespace KNetwork
       virtual bool run();
       virtual bool postprocess();
 
-      virtual void customEvent(QCustomEvent*);
+      virtual void customEvent(TQCustomEvent*);
 
     public slots:
       void dnsResultsReady();

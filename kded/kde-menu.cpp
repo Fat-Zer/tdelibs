@@ -18,7 +18,7 @@
 
 #include <stdlib.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <dcopclient.h>
 #include <dcopref.h>
@@ -50,7 +50,7 @@ static bool bPrintMenuId;
 static bool bPrintMenuName;
 static bool bHighlight;
 
-static void result(const QString &txt)
+static void result(const TQString &txt)
 {
    if (utf8)
       puts( txt.utf8() );
@@ -58,13 +58,13 @@ static void result(const QString &txt)
       puts( txt.local8Bit() );
 }
 
-static void error(int exitCode, const QString &txt)
+static void error(int exitCode, const TQString &txt)
 {
    qWarning("kde-menu: %s", txt.local8Bit().data());
    exit(exitCode);
 }
 
-static void findMenuEntry(KServiceGroup::Ptr parent, const QString &name, const QString &menuId)
+static void findMenuEntry(KServiceGroup::Ptr parent, const TQString &name, const TQString &menuId)
 {
    KServiceGroup::List list = parent->entries(true, true, false);
    KServiceGroup::List::ConstIterator it = list.begin();
@@ -143,11 +143,11 @@ int main(int argc, char **argv)
 
    if (args->isSet("cache-update"))
    {
-      QStringList args;
+      TQStringList args;
       args.append("--incremental");
       args.append("--checkstamps");
-      QString command = "kbuildsycoca";
-      QCString _launcher = KApplication::launcher();
+      TQString command = "kbuildsycoca";
+      TQCString _launcher = KApplication::launcher();
       if (!DCOPRef(_launcher, _launcher).call("kdeinit_exec_wait", command, args).isValid())
       {
          qWarning("Can't talk to klauncher!");
@@ -157,7 +157,7 @@ int main(int argc, char **argv)
       }
    }
 
-   QString menuId = QFile::decodeName(args->arg(0));
+   TQString menuId = TQFile::decodeName(args->arg(0));
    KService::Ptr s = KService::serviceByMenuId(menuId);
    
    if (!s)

@@ -19,8 +19,8 @@
 #ifndef __ktexteditor_cursorinterface_h__
 #define __ktexteditor_cursorinterface_h__
 
-#include <qptrlist.h>
-#include <qstring.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -37,11 +37,11 @@ class KTEXTEDITOR_EXPORT Cursor
 
     virtual bool setPosition ( unsigned int line, unsigned int col ) = 0;
 
-    virtual bool insertText ( const QString& text ) = 0;
+    virtual bool insertText ( const TQString& text ) = 0;
 
     virtual bool removeText ( unsigned int numberOfCharacters ) = 0;
 
-    virtual QChar currentChar () const = 0;
+    virtual TQChar currentChar () const = 0;
 };
 
 /**
@@ -58,7 +58,7 @@ class KTEXTEDITOR_EXPORT CursorInterface
     unsigned int cursorInterfaceNumber () const;
     
   protected:  
-    void setCursorInterfaceDCOPSuffix (const QCString &suffix);  
+    void setCursorInterfaceDCOPSuffix (const TQCString &suffix);  
 
   public:
     /**
@@ -69,7 +69,7 @@ class KTEXTEDITOR_EXPORT CursorInterface
     /*
     * Accessor to the list of cursors.
     */
-    virtual QPtrList<Cursor> cursors () const = 0;
+    virtual TQPtrList<Cursor> cursors () const = 0;
 
     private:
       class PrivateCursorInterface *d;

@@ -3,8 +3,8 @@
 
 #include <dcopobject.h>
 #include <dcopref.h>
-#include <qstringlist.h>
-#include <qcstring.h>
+#include <tqstringlist.h>
+#include <tqcstring.h>
 
 namespace KTextEditor
 {
@@ -34,9 +34,9 @@ namespace KTextEditor
 		*/
 		virtual ~DocumentInfoDCOPInterface();
 	k_dcop:
-		QString mimeType();
+		TQString mimeType();
 		long  fileSize();
-		QString niceFileSize();
+		TQString niceFileSize();
 		uint documentInfoInterfaceNumber ();
 	private:
 		DocumentInfoInterface *m_parent;

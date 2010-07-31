@@ -39,9 +39,9 @@
 #include "sp_spell.h"
 #include "ispell_checker.h"
 
-#include <qmap.h>
-#include <qdir.h>
-#include <qfileinfo.h>
+#include <tqmap.h>
+#include <tqdir.h>
+#include <tqfileinfo.h>
 
 /***************************************************************************/
 
@@ -161,7 +161,7 @@ static const IspellMap ispell_map [] = {
 };
 
 static const size_t size_ispell_map = ( sizeof(ispell_map) / sizeof((ispell_map)[0]) );
-static QMap<QString, QString> ispell_dict_map;
+static TQMap<TQString, TQString> ispell_dict_map;
 
 
 void
@@ -169,7 +169,7 @@ ISpellChecker::try_autodetect_charset(const char * const inEncoding)
 {
 	if (inEncoding && strlen(inEncoding))
 		{
-			m_translate_in = QTextCodec::codecForName(inEncoding);
+			m_translate_in = TQTextCodec::codecForName(inEncoding);
 		}
 }
 
@@ -228,7 +228,7 @@ ISpellChecker::~ISpellChecker()
 }
 
 bool
-ISpellChecker::checkWord( const QString& utf8Word )
+ISpellChecker::checkWord( const TQString& utf8Word )
 {
 	ichar_t iWord[INPUTWORDLEN + MAXAFFIXLEN];
 	if (!m_bSuccessfulInit)
@@ -238,7 +238,7 @@ ISpellChecker::checkWord( const QString& utf8Word )
 		return false;
 
 	bool retVal = false;
-	QCString out;
+	TQCString out;
 	if (!m_translate_in)
 		return false;
 	else {
@@ -261,21 +261,21 @@ ISpellChecker::checkWord( const QString& utf8Word )
 }
 
 QStringList
-ISpellChecker::suggestWord(const QString& utf8Word)
+ISpellChecker::suggestWord(const TQString& utf8Word)
 {
 	ichar_t  iWord[INPUTWORDLEN + MAXAFFIXLEN];
 	int  c;
 
 	if (!m_bSuccessfulInit)
-		return QStringList();
+		return TQStringList();
 
 	if (utf8Word.isEmpty() || utf8Word.length() >= (INPUTWORDLEN + MAXAFFIXLEN) ||
 			utf8Word.length() == 0)
-		return QStringList();
+		return TQStringList();
 
-	QCString out;
+	TQCString out;
 	if (!m_translate_in)
-		return QStringList();
+		return TQStringList();
 	else
 		{
 			/* convert to 8bit string and null terminate */
@@ -287,17 +287,17 @@ ISpellChecker::suggestWord(const QString& utf8Word)
 	if (!strtoichar(iWord, out.data(), INPUTWORDLEN + MAXAFFIXLEN, 0))
 		makepossibilities(iWord);
 	else
-		return QStringList();
+		return TQStringList();
 
-	QStringList sugg_arr;
+	TQStringList sugg_arr;
 	for (c = 0; c < m_pcount; c++)
 	{
-		QString utf8Word;
+		TQString utf8Word;
 
 		if (!m_translate_in)
 		{
 			/* copy to 8bit string and null terminate */
-			utf8Word = QString::fromUtf8( m_possibilities[c] );
+			utf8Word = TQString::fromUtf8( m_possibilities[c] );
 		}
 		else
 		{
@@ -320,7 +320,7 @@ s_buildHashNames (std::vector<std::string> & names, const char * dict)
 	names.clear ();
 
 	while ( (tmp = ispell_dirs[i++]) ) {
-		QCString maybeFile = QCString( tmp ) + '/';
+		TQCString maybeFile = TQCString( tmp ) + '/';
 		maybeFile += dict;
 		names.push_back( maybeFile.data() );
 	}
@@ -333,10 +333,10 @@ s_allDics()
 	int i = 0;
 
 	while ( (tmp = ispell_dirs[i++]) ) {
-		QDir dir( tmp );
-		QStringList lst = dir.entryList( "*.hash" );
-		for ( QStringList::Iterator it = lst.begin(); it != lst.end(); ++it ) {
-			QFileInfo info( *it );
+		TQDir dir( tmp );
+		TQStringList lst = dir.entryList( "*.hash" );
+		for ( TQStringList::Iterator it = lst.begin(); it != lst.end(); ++it ) {
+			TQFileInfo info( *it );
 			for (size_t i = 0; i < size_ispell_map; i++)
 			{
 				const IspellMap * mapping = (const IspellMap *)(&(ispell_map[i]));
@@ -349,7 +349,7 @@ s_allDics()
 	}
 }
 
-QValueList<QString>
+TQValueList<TQString>
 ISpellChecker::allDics()
 {
 	if ( ispell_dict_map.empty() )
@@ -371,7 +371,7 @@ ISpellChecker::loadDictionary (const char * szdict)
 				return dict_names[i].c_str();
 		}
 
-	return QString::null;
+	return TQString::null;
 }
 
 /*!
@@ -383,7 +383,7 @@ ISpellChecker::loadDictionary (const char * szdict)
 bool
 ISpellChecker::loadDictionaryForLanguage ( const char * szLang )
 {
-	QString hashname;
+	TQString hashname;
 
 	const char * encoding = NULL;
 	const char * szFile = NULL;
@@ -415,7 +415,7 @@ ISpellChecker::loadDictionaryForLanguage ( const char * szLang )
 }
 
 void
-ISpellChecker::setDictionaryEncoding( const QString& hashname, const char * encoding )
+ISpellChecker::setDictionaryEncoding( const TQString& hashname, const char * encoding )
 {
 	/* Get Hash encoding from XML file. This should always work! */
 	try_autodetect_charset(encoding);
@@ -446,7 +446,7 @@ ISpellChecker::setDictionaryEncoding( const QString& hashname, const char * enco
 	prefstringchar = findfiletype("utf8", 1, deftflag < 0 ? &deftflag : static_cast<int *>(NULL));
 	if (prefstringchar >= 0)
 		{
-			m_translate_in = QTextCodec::codecForName("utf8");
+			m_translate_in = TQTextCodec::codecForName("utf8");
 		}
 
 	if (m_translate_in)
@@ -458,13 +458,13 @@ ISpellChecker::setDictionaryEncoding( const QString& hashname, const char * enco
 			/* Look for "altstringtype" names from latin1 to latin15 */
 			for(int n1 = 1; n1 <= 15; n1++)
 				{
-					QString teststring = QString("latin%1").arg(n1);
+					TQString teststring = TQString("latin%1").arg(n1);
 					prefstringchar = findfiletype(teststring.latin1(), 1,
 								      deftflag < 0 ? &deftflag : static_cast<int *>(NULL));
 					if (prefstringchar >= 0)
 						{
 							//FIXME: latin1 might be wrong
-							m_translate_in = QTextCodec::codecForName( teststring.latin1() );
+							m_translate_in = TQTextCodec::codecForName( teststring.latin1() );
 							break;
 						}
 				}
@@ -473,7 +473,7 @@ ISpellChecker::setDictionaryEncoding( const QString& hashname, const char * enco
 	/* If nothing found, use latin1 */
 	if (!m_translate_in)
 		{
-			m_translate_in = QTextCodec::codecForName("latin1");
+			m_translate_in = TQTextCodec::codecForName("latin1");
 		}
 }
 

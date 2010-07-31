@@ -53,7 +53,7 @@ namespace KParts {
          * Always pass false for @p trustedSource, except for local directory views.
          */
         BrowserRun( const KURL& url, const KParts::URLArgs& args,
-                    KParts::ReadOnlyPart *part, QWidget *window,
+                    KParts::ReadOnlyPart *part, TQWidget *window,
                     bool removeReferrer, bool trustedSource );
 
         // BIC: merge with above constructor
@@ -69,7 +69,7 @@ namespace KParts {
          * 
          */
         BrowserRun( const KURL& url, const KParts::URLArgs& args,
-                    KParts::ReadOnlyPart *part, QWidget *window,
+                    KParts::ReadOnlyPart *part, TQWidget *window,
                     bool removeReferrer, bool trustedSource, bool hideErrorDialog );
 
         virtual ~BrowserRun();
@@ -90,15 +90,15 @@ namespace KParts {
         /**
 	 * @return Suggested filename given by the server (e.g. HTTP content-disposition filename)
 	 */
-        QString suggestedFilename() const { return m_suggestedFilename; }
+        TQString suggestedFilename() const { return m_suggestedFilename; }
 
         /**
 	 * @return Suggested disposition by the server (e.g. HTTP content-disposition)
          * @since 3.5.2
 	 */
-        QString contentDisposition() const;
+        TQString contentDisposition() const;
 
-        bool serverSuggestsSave() const { return contentDisposition() == QString::fromLatin1("attachment"); }
+        bool serverSuggestsSave() const { return contentDisposition() == TQString::fromLatin1("attachment"); }
 
         enum AskSaveResult { Save, Open, Cancel };
         /**
@@ -109,7 +109,7 @@ namespace KParts {
          * @param suggestedFilename optional filename suggested by the server
          * @return Save, Open or Cancel.
          */
-        static AskSaveResult askSave( const KURL & url, KService::Ptr offer, const QString& mimeType, const QString & suggestedFilename = QString::null );
+        static AskSaveResult askSave( const KURL & url, KService::Ptr offer, const TQString& mimeType, const TQString & suggestedFilename = TQString::null );
 
         enum AskEmbedOrSaveFlags { InlineDisposition = 0, AttachmentDisposition = 1 };
         /**
@@ -121,23 +121,23 @@ namespace KParts {
          * @param flags set to AttachmentDisposition if suggested by the server
          * @return Save, Open or Cancel.
          */
-        static AskSaveResult askEmbedOrSave( const KURL & url, const QString& mimeType, const QString & suggestedFilename = QString::null, int flags = 0 );
+        static AskSaveResult askEmbedOrSave( const KURL & url, const TQString& mimeType, const TQString & suggestedFilename = TQString::null, int flags = 0 );
 
         // virtual so that KHTML can implement differently (HTML cache)
-        virtual void save( const KURL & url, const QString & suggestedFilename );
+        virtual void save( const KURL & url, const TQString & suggestedFilename );
 
         // static so that it can be called from other classes
-        static void simpleSave( const KURL & url, const QString & suggestedFilename,
-                                QWidget* window );
+        static void simpleSave( const KURL & url, const TQString & suggestedFilename,
+                                TQWidget* window );
 
         /** BIC: Combine with the above function for KDE 4.0. */
-        static void simpleSave( const KURL & url, const QString & suggestedFilename );
+        static void simpleSave( const KURL & url, const TQString & suggestedFilename );
 
-        static bool allowExecution( const QString &serviceType, const KURL &url );
+        static bool allowExecution( const TQString &serviceType, const KURL &url );
 
-        /** BIC: Obsoleted by KRun::isExecutable( const QString &serviceType ); */
-        static bool isExecutable( const QString &serviceType );
-        static bool isTextExecutable( const QString &serviceType );
+        /** BIC: Obsoleted by KRun::isExecutable( const TQString &serviceType ); */
+        static bool isExecutable( const TQString &serviceType );
+        static bool isTextExecutable( const TQString &serviceType );
 
     protected:
         /**
@@ -166,26 +166,26 @@ namespace KParts {
         /**
          * Helper for foundMimeType: call this if the mimetype couldn't be embedded
          */
-        NonEmbeddableResult handleNonEmbeddable( const QString& mimeType );
+        NonEmbeddableResult handleNonEmbeddable( const TQString& mimeType );
 
     protected slots:
         void slotBrowserScanFinished(KIO::Job *job);
-        void slotBrowserMimetype(KIO::Job *job, const QString &type);
+        void slotBrowserMimetype(KIO::Job *job, const TQString &type);
         void slotCopyToTempFileResult(KIO::Job *job);
         virtual void slotStatResult( KIO::Job *job );
 
     protected:
         KParts::URLArgs m_args;
         KParts::ReadOnlyPart *m_part; // QGuardedPtr?
-        QGuardedPtr<QWidget> m_window;
+        TQGuardedPtr<TQWidget> m_window;
         // Suggested filename given by the server (e.g. HTTP content-disposition)
         // When set, we should really be saving instead of embedding
-        QString m_suggestedFilename;
-        QString m_sMimeType;
+        TQString m_suggestedFilename;
+        TQString m_sMimeType;
         bool m_bRemoveReferrer;
         bool m_bTrustedSource;
     private:
-        void redirectToError( int error, const QString& errorText );
+        void redirectToError( int error, const TQString& errorText );
         class BrowserRunPrivate;
         BrowserRunPrivate* d;
 

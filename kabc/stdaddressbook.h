@@ -93,12 +93,12 @@ class KABC_EXPORT StdAddressBook : public AddressBook
     /**
       Returns the default file name for vcard-based addressbook
      */
-    static QString fileName();
+    static TQString fileName();
 
     /**
       Returns the default directory name for vcard-based addressbook
      */
-    static QString directoryName();
+    static TQString directoryName();
 
     /**
       Sets the automatic save property of the address book.

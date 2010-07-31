@@ -19,10 +19,10 @@
 #ifndef __kate_filetype_h__
 #define __kate_filetype_h__
 
-#include <qstringlist.h>
-#include <qptrlist.h>
-#include <qpopupmenu.h> // for QPtrList<QPopupMenu>, compile with gcc 3.4
-#include <qguardedptr.h>
+#include <tqstringlist.h>
+#include <tqptrlist.h>
+#include <tqpopupmenu.h> // for TQPtrList<TQPopupMenu>, compile with gcc 3.4
+#include <tqguardedptr.h>
 
 #include "katedialogs.h"
 
@@ -32,12 +32,12 @@ class KateFileType
 {
   public:
     int number;
-    QString name;
-    QString section;
-    QStringList wildcards;
-    QStringList mimetypes;
+    TQString name;
+    TQString section;
+    TQStringList wildcards;
+    TQStringList mimetypes;
     int priority;
-    QString varLine;
+    TQString varLine;
 };
 
 class KateFileTypeManager
@@ -51,7 +51,7 @@ class KateFileTypeManager
      */
     void update ();
 
-    void save (QPtrList<KateFileType> *v);
+    void save (TQPtrList<KateFileType> *v);
 
     /**
      * get the right fileType for the given document
@@ -67,13 +67,13 @@ class KateFileTypeManager
     /**
      * Don't modify
      */
-    QPtrList<KateFileType> *list () { return &m_types; }
+    TQPtrList<KateFileType> *list () { return &m_types; }
 
   private:
-    int wildcardsFind (const QString &fileName);
+    int wildcardsFind (const TQString &fileName);
 
   private:
-    QPtrList<KateFileType> m_types;
+    TQPtrList<KateFileType> m_types;
 };
 
 class KateFileTypeConfigTab : public KateConfigPage
@@ -81,7 +81,7 @@ class KateFileTypeConfigTab : public KateConfigPage
   Q_OBJECT
 
   public:
-    KateFileTypeConfigTab( QWidget *parent );
+    KateFileTypeConfigTab( TQWidget *parent );
 
   public slots:
     void apply();
@@ -98,17 +98,17 @@ class KateFileTypeConfigTab : public KateConfigPage
     void save ();
 
   private:
-    class QGroupBox *gbProps;
-    class QPushButton *btndel;
-    class QComboBox *typeCombo;
-    class QLineEdit *wildcards;
-    class QLineEdit *mimetypes;
+    class TQGroupBox *gbProps;
+    class TQPushButton *btndel;
+    class TQComboBox *typeCombo;
+    class TQLineEdit *wildcards;
+    class TQLineEdit *mimetypes;
     class KIntNumInput *priority;
-    class QLineEdit *name;
-    class QLineEdit *section;
-    class QLineEdit *varLine;
+    class TQLineEdit *name;
+    class TQLineEdit *section;
+    class TQLineEdit *varLine;
 
-    QPtrList<KateFileType> m_types;
+    TQPtrList<KateFileType> m_types;
     KateFileType *m_lastType;
 };
 
@@ -117,7 +117,7 @@ class KateViewFileTypeAction : public Kate::ActionMenu
   Q_OBJECT
 
   public:
-    KateViewFileTypeAction(const QString& text, QObject* parent = 0, const char* name = 0)
+    KateViewFileTypeAction(const TQString& text, TQObject* parent = 0, const char* name = 0)
        : Kate::ActionMenu(text, parent, name) { init(); };
 
     ~KateViewFileTypeAction(){;};
@@ -127,10 +127,10 @@ class KateViewFileTypeAction : public Kate::ActionMenu
   private:
     void init();
 
-    QGuardedPtr<KateDocument> m_doc;
-    QStringList subMenusName;
-    QStringList names;
-    QPtrList<QPopupMenu> subMenus;
+    TQGuardedPtr<KateDocument> m_doc;
+    TQStringList subMenusName;
+    TQStringList names;
+    TQPtrList<TQPopupMenu> subMenus;
 
   public  slots:
     void slotAboutToShow();

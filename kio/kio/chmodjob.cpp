@@ -27,8 +27,8 @@
 #include <unistd.h>
 #include <assert.h>
 
-#include <qtimer.h>
-#include <qfile.h>
+#include <tqtimer.h>
+#include <tqfile.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
@@ -48,7 +48,7 @@ ChmodJob::ChmodJob( const KFileItemList& lstItems, int permissions, int mask,
       m_newOwner( newOwner ), m_newGroup( newGroup ),
       m_recursive( recursive ), m_lstItems( lstItems )
 {
-    QTimer::singleShot( 0, this, SLOT(processList()) );
+    TQTimer::singleShot( 0, this, TQT_SLOT(processList()) );
 }
 
 void ChmodJob::processList()
@@ -63,12 +63,12 @@ void ChmodJob::processList()
             info.url = item->url();
             // This is a toplevel file, we apply changes directly (no +X emulation here)
             info.permissions = ( m_permissions & m_mask ) | ( item->permissions() & ~m_mask );
-            /*kdDebug(7007) << "\n current permissions=" << QString::number(item->permissions(),8)
-                          << "\n wanted permission=" << QString::number(m_permissions,8)
-                          << "\n with mask=" << QString::number(m_mask,8)
-                          << "\n with ~mask (mask bits we keep) =" << QString::number((uint)~m_mask,8)
-                          << "\n bits we keep =" << QString::number(item->permissions() & ~m_mask,8)
-                          << "\n new permissions = " << QString::number(info.permissions,8)
+            /*kdDebug(7007) << "\n current permissions=" << TQString::number(item->permissions(),8)
+                          << "\n wanted permission=" << TQString::number(m_permissions,8)
+                          << "\n with mask=" << TQString::number(m_mask,8)
+                          << "\n with ~mask (mask bits we keep) =" << TQString::number((uint)~m_mask,8)
+                          << "\n bits we keep =" << TQString::number(item->permissions() & ~m_mask,8)
+                          << "\n new permissions = " << TQString::number(info.permissions,8)
                           << endl;*/
             m_infos.prepend( info );
             //kdDebug(7007) << "processList : Adding info for " << info.url.prettyURL() << endl;
@@ -77,9 +77,9 @@ void ChmodJob::processList()
             {
                 //kdDebug(7007) << "ChmodJob::processList dir -> listing" << endl;
                 KIO::ListJob * listJob = KIO::listRecursive( item->url(), false /* no GUI */ );
-                connect( listJob, SIGNAL(entries( KIO::Job *,
+                connect( listJob, TQT_SIGNAL(entries( KIO::Job *,
                                                   const KIO::UDSEntryList& )),
-                         SLOT( slotEntries( KIO::Job*,
+                         TQT_SLOT( slotEntries( KIO::Job*,
                                             const KIO::UDSEntryList& )));
                 addSubjob( listJob );
                 return; // we'll come back later, when this one's finished
@@ -102,7 +102,7 @@ void ChmodJob::slotEntries( KIO::Job*, const KIO::UDSEntryList & list )
         mode_t permissions = 0;
         bool isDir = false;
         bool isLink = false;
-        QString relativePath;
+        TQString relativePath;
         for( ; it2 != (*it).end(); it2++ ) {
           switch( (*it2).m_uds ) {
             case KIO::UDS_NAME:
@@ -121,7 +121,7 @@ void ChmodJob::slotEntries( KIO::Job*, const KIO::UDSEntryList & list )
               break;
           }
         }
-        if ( !isLink && relativePath != QString::fromLatin1("..") )
+        if ( !isLink && relativePath != TQString::fromLatin1("..") )
         {
             ChmodInfo info;
             info.url = m_lstItems.first()->url(); // base directory
@@ -143,12 +143,12 @@ void ChmodJob::slotEntries( KIO::Job*, const KIO::UDSEntryList & list )
                 }
             }
             info.permissions = ( m_permissions & mask ) | ( permissions & ~mask );
-            /*kdDebug(7007) << "\n current permissions=" << QString::number(permissions,8)
-                          << "\n wanted permission=" << QString::number(m_permissions,8)
-                          << "\n with mask=" << QString::number(mask,8)
-                          << "\n with ~mask (mask bits we keep) =" << QString::number((uint)~mask,8)
-                          << "\n bits we keep =" << QString::number(permissions & ~mask,8)
-                          << "\n new permissions = " << QString::number(info.permissions,8)
+            /*kdDebug(7007) << "\n current permissions=" << TQString::number(permissions,8)
+                          << "\n wanted permission=" << TQString::number(m_permissions,8)
+                          << "\n with mask=" << TQString::number(mask,8)
+                          << "\n with ~mask (mask bits we keep) =" << TQString::number((uint)~mask,8)
+                          << "\n bits we keep =" << TQString::number(permissions & ~mask,8)
+                          << "\n new permissions = " << TQString::number(info.permissions,8)
                           << endl;*/
             // Prepend this info in our todo list.
             // This way, the toplevel dirs are done last.
@@ -167,10 +167,10 @@ void ChmodJob::chmodNextFile()
         // (permissions have to set after, in case of suid and sgid)
         if ( info.url.isLocalFile() && ( m_newOwner != -1 || m_newGroup != -1 ) )
         {
-            QString path = info.url.path();
-            if ( chown( QFile::encodeName(path), m_newOwner, m_newGroup ) != 0 )
+            TQString path = info.url.path();
+            if ( chown( TQFile::encodeName(path), m_newOwner, m_newGroup ) != 0 )
             {
-                int answer = KMessageBox::warningContinueCancel( 0, i18n( "<qt>Could not modify the ownership of file <b>%1</b>. You have insufficient access to the file to perform the change.</qt>" ).arg(path), QString::null, i18n("&Skip File") );
+                int answer = KMessageBox::warningContinueCancel( 0, i18n( "<qt>Could not modify the ownership of file <b>%1</b>. You have insufficient access to the file to perform the change.</qt>" ).arg(path), TQString::null, i18n("&Skip File") );
                 if (answer == KMessageBox::Cancel)
                 {
                     m_error = ERR_USER_CANCELED;
@@ -181,11 +181,11 @@ void ChmodJob::chmodNextFile()
         }
 
         kdDebug(7007) << "ChmodJob::chmodNextFile chmod'ing " << info.url.prettyURL()
-                      << " to " << QString::number(info.permissions,8) << endl;
+                      << " to " << TQString::number(info.permissions,8) << endl;
         KIO::SimpleJob * job = KIO::chmod( info.url, info.permissions );
         // copy the metadata for acl and default acl
-        const QString aclString = queryMetaData( "ACL_STRING" );
-        const QString defaultAclString = queryMetaData( "DEFAULT_ACL_STRING" );
+        const TQString aclString = queryMetaData( "ACL_STRING" );
+        const TQString defaultAclString = queryMetaData( "DEFAULT_ACL_STRING" );
         if ( !aclString.isEmpty() )
             job->addMetaData( "ACL_STRING", aclString );
         if ( !defaultAclString.isEmpty() )
@@ -226,15 +226,15 @@ void ChmodJob::slotResult( KIO::Job * job )
     }
 }
 
-// antlarr: KDE 4: Make owner and group be const QString &
+// antlarr: KDE 4: Make owner and group be const TQString &
 KIO_EXPORT ChmodJob *KIO::chmod( const KFileItemList& lstItems, int permissions, int mask,
-                      QString owner, QString group,
+                      TQString owner, TQString group,
                       bool recursive, bool showProgressInfo )
 {
     uid_t newOwnerID = (uid_t)-1; // chown(2) : -1 means no change
     if ( !owner.isEmpty() )
     {
-        struct passwd* pw = getpwnam(QFile::encodeName(owner));
+        struct passwd* pw = getpwnam(TQFile::encodeName(owner));
         if ( pw == 0L )
             kdError(250) << " ERROR: No user " << owner << endl;
         else
@@ -243,7 +243,7 @@ KIO_EXPORT ChmodJob *KIO::chmod( const KFileItemList& lstItems, int permissions,
     gid_t newGroupID = (gid_t)-1; // chown(2) : -1 means no change
     if ( !group.isEmpty() )
     {
-        struct group* g = getgrnam(QFile::encodeName(group));
+        struct group* g = getgrnam(TQFile::encodeName(group));
         if ( g == 0L )
             kdError(250) << " ERROR: No group " << group << endl;
         else

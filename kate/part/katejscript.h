@@ -22,7 +22,7 @@
 
 #include "../interfaces/document.h"
 #include "kateindentscriptabstracts.h"
-#include <qdict.h>
+#include <tqdict.h>
 #include <kdebug.h>
 /**
  * Some common stuff
@@ -87,7 +87,7 @@ class KateJScript
      * @param errorMsg error to return if no success
      * @return success or not?
      */
-    bool execute (KateView *view, const QString &script, QString &errorMsg);
+    bool execute (KateView *view, const TQString &script, TQString &errorMsg);
 
   protected:
     /**
@@ -124,18 +124,18 @@ class KateJScriptManager : public Kate::Command
          * get desktop filename
          * @return desktop filename
          */
-        inline QString desktopFilename () { return filename.left(filename.length()-2).append ("desktop"); }
+        inline TQString desktopFilename () { return filename.left(filename.length()-2).append ("desktop"); }
 
       public:
         /**
          * command name, as used for command line and more
          */
-        QString name;
+        TQString name;
 
         /**
          * filename of the script
          */
-        QString filename;
+        TQString filename;
 
         /**
          * has it a desktop file?
@@ -165,7 +165,7 @@ class KateJScriptManager : public Kate::Command
      * @param errorMsg error to return if no success
      * @return success
      */
-    bool exec( class Kate::View *view, const QString &cmd, QString &errorMsg );
+    bool exec( class Kate::View *view, const TQString &cmd, TQString &errorMsg );
 
     /**
      * get help for a command
@@ -174,31 +174,31 @@ class KateJScriptManager : public Kate::Command
      * @param msg help message
      * @return help available or not
      */
-    bool help( class Kate::View *view, const QString &cmd, QString &msg );
+    bool help( class Kate::View *view, const TQString &cmd, TQString &msg );
 
     /**
      * supported commands as prefixes
      * @return prefix list
      */
-    QStringList cmds();
+    TQStringList cmds();
 
   private:
     /**
      * we need to know somewhere which scripts are around
      */
-    QDict<KateJScriptManager::Script> m_scripts;
+    TQDict<KateJScriptManager::Script> m_scripts;
 };
 
 class KateIndentJScriptImpl: public KateIndentScriptImplAbstract {
   public:
-    KateIndentJScriptImpl(const QString& internalName,
-        const QString  &filePath, const QString &niceName,
-        const QString &copyright, double version);
+    KateIndentJScriptImpl(const TQString& internalName,
+        const TQString  &filePath, const TQString &niceName,
+        const TQString &copyright, double version);
     ~KateIndentJScriptImpl();
     
-    virtual bool processChar( class Kate::View *view, QChar c, QString &errorMsg );
-    virtual bool processLine( class Kate::View *view, const KateDocCursor &line, QString &errorMsg );
-    virtual bool processNewline( class Kate::View *view, const KateDocCursor &begin, bool needcontinue, QString &errorMsg );
+    virtual bool processChar( class Kate::View *view, TQChar c, TQString &errorMsg );
+    virtual bool processLine( class Kate::View *view, const KateDocCursor &line, TQString &errorMsg );
+    virtual bool processNewline( class Kate::View *view, const KateDocCursor &begin, bool needcontinue, TQString &errorMsg );
   protected:
     virtual void decRef();
   private:
@@ -206,7 +206,7 @@ class KateIndentJScriptImpl: public KateIndentScriptImplAbstract {
     KateJSDocument *m_docWrapper;
     KJS::Object *m_indenter;
     KJS::Interpreter *m_interpreter;
-    bool setupInterpreter(QString &errorMsg);
+    bool setupInterpreter(TQString &errorMsg);
     void deleteInterpreter();
 };
 
@@ -216,16 +216,16 @@ class KateIndentJScriptManager: public KateIndentScriptManagerAbstract
   public:
     KateIndentJScriptManager ();
     virtual ~KateIndentJScriptManager ();
-    virtual KateIndentScript script(const QString &scriptname);
+    virtual KateIndentScript script(const TQString &scriptname);
   private:
     /**
      * go, search our scripts
      * @param force force cache updating?
      */
     void collectScripts (bool force = false);
-    void parseScriptHeader(const QString &filePath,
-        QString *niceName,QString *copyright,double *version);
-    QDict<KateIndentJScriptImpl> m_scripts;
+    void parseScriptHeader(const TQString &filePath,
+        TQString *niceName,TQString *copyright,double *version);
+    TQDict<KateIndentJScriptImpl> m_scripts;
 };
 
 #endif

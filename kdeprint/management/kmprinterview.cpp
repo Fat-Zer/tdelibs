@@ -24,37 +24,37 @@
 #include "kmtimer.h"
 #include "kmmanager.h"
 
-#include <qlayout.h>
-#include <qpopupmenu.h>
+#include <tqlayout.h>
+#include <tqpopupmenu.h>
 #include <kaction.h>
 #include <klocale.h>
 
-KMPrinterView::KMPrinterView(QWidget *parent, const char *name)
-: QWidgetStack(parent,name), m_type(KMPrinterView::Icons)
+KMPrinterView::KMPrinterView(TQWidget *parent, const char *name)
+: TQWidgetStack(parent,name), m_type(KMPrinterView::Icons)
 {
 	m_iconview = new KMIconView(this);
 	addWidget(m_iconview,0);
 	m_listview = new KMListView(this);
 	addWidget(m_listview,1);
-	m_current = QString::null;
+	m_current = TQString::null;
 	m_listset = false;
 
-	connect(m_iconview,SIGNAL(rightButtonClicked(const QString&,const QPoint&)),SIGNAL(rightButtonClicked(const QString&,const QPoint&)));
-	connect(m_listview,SIGNAL(rightButtonClicked(const QString&,const QPoint&)),SIGNAL(rightButtonClicked(const QString&,const QPoint&)));
-	connect(m_iconview,SIGNAL(printerSelected(const QString&)),SIGNAL(printerSelected(const QString&)));
-	connect(m_listview,SIGNAL(printerSelected(const QString&)),SIGNAL(printerSelected(const QString&)));
-	connect(m_iconview,SIGNAL(printerSelected(const QString&)),SLOT(slotPrinterSelected(const QString&)));
-	connect(m_listview,SIGNAL(printerSelected(const QString&)),SLOT(slotPrinterSelected(const QString&)));
+	connect(m_iconview,TQT_SIGNAL(rightButtonClicked(const TQString&,const TQPoint&)),TQT_SIGNAL(rightButtonClicked(const TQString&,const TQPoint&)));
+	connect(m_listview,TQT_SIGNAL(rightButtonClicked(const TQString&,const TQPoint&)),TQT_SIGNAL(rightButtonClicked(const TQString&,const TQPoint&)));
+	connect(m_iconview,TQT_SIGNAL(printerSelected(const TQString&)),TQT_SIGNAL(printerSelected(const TQString&)));
+	connect(m_listview,TQT_SIGNAL(printerSelected(const TQString&)),TQT_SIGNAL(printerSelected(const TQString&)));
+	connect(m_iconview,TQT_SIGNAL(printerSelected(const TQString&)),TQT_SLOT(slotPrinterSelected(const TQString&)));
+	connect(m_listview,TQT_SIGNAL(printerSelected(const TQString&)),TQT_SLOT(slotPrinterSelected(const TQString&)));
 
 	setViewType(m_type);
-	setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding ) );
+	setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 }
 
 KMPrinterView::~KMPrinterView()
 {
 }
 
-void KMPrinterView::setPrinterList(QPtrList<KMPrinter> *list)
+void KMPrinterView::setPrinterList(TQPtrList<KMPrinter> *list)
 {
 	if (m_type != KMPrinterView::Tree || list == 0)
 		m_iconview->setPrinterList(list);
@@ -100,14 +100,14 @@ void KMPrinterView::setViewType(ViewType t)
 	}
 }
 
-void KMPrinterView::slotPrinterSelected(const QString& p)
+void KMPrinterView::slotPrinterSelected(const TQString& p)
 {
 	m_current = p;
 }
 
-QSize KMPrinterView::minimumSizeHint() const
+TQSize KMPrinterView::minimumSizeHint() const
 {
-	return QWidgetStack::minimumSizeHint();
+	return TQWidgetStack::minimumSizeHint();
 }
 
 #include "kmprinterview.moc"

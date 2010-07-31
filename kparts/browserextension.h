@@ -23,17 +23,17 @@
 
 #include <sys/types.h>
 
-#include <qpoint.h>
-#include <qptrlist.h>
-#include <qdatastream.h>
-#include <qstringlist.h>
-#include <qpair.h>
+#include <tqpoint.h>
+#include <tqptrlist.h>
+#include <tqdatastream.h>
+#include <tqstringlist.h>
+#include <tqpair.h>
 
 #include <kparts/part.h>
 #include <kparts/event.h>
 
 class KFileItem;
-typedef QPtrList<KFileItem> KFileItemList;
+typedef TQPtrList<KFileItem> KFileItemList;
 class QString;
 
 namespace KParts {
@@ -60,14 +60,14 @@ struct KPARTS_EXPORT URLArgs
   URLArgs( const URLArgs &args );
   URLArgs &operator=( const URLArgs &args);
 
-  URLArgs( bool reload, int xOffset, int yOffset, const QString &serviceType = QString::null );
+  URLArgs( bool reload, int xOffset, int yOffset, const TQString &serviceType = TQString::null );
   virtual ~URLArgs();
 
   /**
    * This buffer can be used by the part to save and restore its contents.
    * See KHTMLPart for instance.
    */
-  QStringList docState;
+  TQStringList docState;
 
   /**
    * @p reload is set when the cache shouldn't be used (forced reload).
@@ -86,21 +86,21 @@ struct KPARTS_EXPORT URLArgs
   /**
    * The servicetype (usually mimetype) to use when opening the next URL.
    */
-  QString serviceType;
+  TQString serviceType;
 
   /**
    * KHTML-specific field, contents of the HTTP POST data.
    */
-  QByteArray postData;
+  TQByteArray postData;
 
   /**
    * KHTML-specific field, header defining the type of the POST data.
    */
-  void setContentType( const QString & contentType );
+  void setContentType( const TQString & contentType );
   /**
    * KHTML-specific field, header defining the type of the POST data.
    */
-  QString contentType() const;
+  TQString contentType() const;
   /**
    * KHTML-specific field, whether to do a POST instead of a GET,
    * for the next openURL.
@@ -131,12 +131,12 @@ struct KPARTS_EXPORT URLArgs
    * Meta-data to associate with the next KIO operation
    * @see KIO::TransferJob etc.
    */
-  QMap<QString, QString> &metaData();
+  TQMap<TQString, TQString> &metaData();
 
   /**
    * The frame in which to open the URL. KHTML/Konqueror-specific.
    */
-  QString frameName;
+  TQString frameName;
 
   /**
    * If true, the part who asks for a URL to be opened can be 'trusted'
@@ -187,7 +187,7 @@ struct KPARTS_EXPORT WindowArgs
     ~WindowArgs();
     WindowArgs( const WindowArgs &args );
     WindowArgs &operator=( const WindowArgs &args );
-    WindowArgs( const QRect &_geometry, bool _fullscreen, bool _menuBarVisible,
+    WindowArgs( const TQRect &_geometry, bool _fullscreen, bool _menuBarVisible,
                 bool _toolBarsVisible, bool _statusBarVisible, bool _resizable );
     WindowArgs( int _x, int _y, int _width, int _height, bool _fullscreen,
                 bool _menuBarVisible, bool _toolBarsVisible,
@@ -228,7 +228,7 @@ public:
   KURL url() const { return m_url; }
   URLArgs args() const { return m_args; }
 
-  static bool test( const QEvent *event ) { return Event::test( event, s_strOpenURLEvent ); }
+  static bool test( const TQEvent *event ) { return Event::test( event, s_strOpenURLEvent ); }
 
 private:
   static const char *s_strOpenURLEvent;
@@ -382,7 +382,7 @@ public:
    * If you want to save additional properties, reimplement it
    * but don't forget to call the parent method (probably first).
    */
-  virtual void saveState( QDataStream &stream );
+  virtual void saveState( TQDataStream &stream );
 
   /**
    * Used by the browser to restore the view in the state
@@ -391,7 +391,7 @@ public:
    * If you saved additional properties, reimplement it
    * but don't forget to call the parent method (probably first).
    */
-  virtual void restoreState( QDataStream &stream );
+  virtual void restoreState( TQDataStream &stream );
 
   /**
    * Returns whether url drop handling is enabled.
@@ -430,12 +430,12 @@ public:
    * to query later for the text of the action, using this method.
    * @since 3.5
    */
-  QString actionText( const char * name ) const;
+  TQString actionText( const char * name ) const;
 
-  typedef QMap<QCString,QCString> ActionSlotMap;
+  typedef TQMap<TQCString,TQCString> ActionSlotMap;
   /**
    * Returns a map containing the action names as keys and corresponding
-   * SLOT()'ified method names as data entries.
+   * TQT_SLOT()'ified method names as data entries.
    *
    * This is very useful for
    * the host component, when connecting the own signals with the
@@ -455,11 +455,11 @@ public:
    * Connecting to the slot can be done like this:
    *
    * \code
-   *   connect( yourObject, SIGNAL( yourSignal() ),
+   *   connect( yourObject, TQT_SIGNAL( yourSignal() ),
    *            extension, mapIterator.data() )
    * \endcode
    *
-   * (where "mapIterator" is your QMap<QCString,QCString> iterator)
+   * (where "mapIterator" is your TQMap<TQCString,TQCString> iterator)
    */
   static ActionSlotMap actionSlotMap();
 
@@ -473,7 +473,7 @@ public:
    * Queries @p obj for a child object which inherits from this
    * BrowserExtension class. Convenience method.
    */
-  static BrowserExtension *childObject( QObject *obj );
+  static BrowserExtension *childObject( TQObject *obj );
 
   /**
    * Asks the hosting browser to perform a paste (using openURLRequestDelayed)
@@ -501,7 +501,7 @@ signals:
    * See class documentation for the list of standard actions.
    * @since 3.5
    */
-  void setActionText( const char * name, const QString& text );
+  void setActionText( const char * name, const TQString& text );
 
   /**
    * Asks the host (browser) to open @p url.
@@ -539,7 +539,7 @@ signals:
   /**
    * Updates the URL shown in the browser's location bar to @p url.
    */
-  void setLocationBarURL( const QString &url );
+  void setLocationBarURL( const TQString &url );
 
   /**
    * Sets the URL of an icon for the currently displayed page.
@@ -579,13 +579,13 @@ signals:
    */
   void speedProgress( int bytesPerSecond );
 
-  void infoMessage( const QString & );
+  void infoMessage( const TQString & );
 
   /**
    * Emit this to make the browser show a standard popup menu
    * at the point @p global for the files @p items.
    */
-  void popupMenu( const QPoint &global, const KFileItemList &items );
+  void popupMenu( const TQPoint &global, const KFileItemList &items );
 
   /**
    * Emit this to make the browser show a standard popup menu
@@ -593,9 +593,9 @@ signals:
    *
    * The GUI described by @p client is being merged with the popupmenu of the host
    */
-  void popupMenu( KXMLGUIClient *client, const QPoint &global, const KFileItemList &items );
+  void popupMenu( KXMLGUIClient *client, const TQPoint &global, const KFileItemList &items );
 
-  void popupMenu( KXMLGUIClient *client, const QPoint &global, const KFileItemList &items, const KParts::URLArgs &args, KParts::BrowserExtension::PopupFlags i );
+  void popupMenu( KXMLGUIClient *client, const TQPoint &global, const KFileItemList &items, const KParts::URLArgs &args, KParts::BrowserExtension::PopupFlags i );
 
   /**
    * Emit this to make the browser show a standard popup menu
@@ -605,8 +605,8 @@ signals:
    * about this URL as possible, like the @p mimeType and the file type
    * (@p mode: S_IFREG, S_IFDIR...)
    */
-  void popupMenu( const QPoint &global, const KURL &url,
-                  const QString &mimeType, mode_t mode = (mode_t)-1 );
+  void popupMenu( const TQPoint &global, const KURL &url,
+                  const TQString &mimeType, mode_t mode = (mode_t)-1 );
 
   /**
    * Emit this to make the browser show a standard popup menu
@@ -618,8 +618,8 @@ signals:
    * The GUI described by @p client is being merged with the popupmenu of the host
    */
   void popupMenu( KXMLGUIClient *client,
-                  const QPoint &global, const KURL &url,
-                  const QString &mimeType, mode_t mode = (mode_t)-1 );
+                  const TQPoint &global, const KURL &url,
+                  const TQString &mimeType, mode_t mode = (mode_t)-1 );
 
   /**
    * Emit this to make the browser show a standard popup menu
@@ -631,7 +631,7 @@ signals:
    * The GUI described by @p client is being merged with the popupmenu of the host
    */
   void popupMenu( KXMLGUIClient *client,
-                  const QPoint &global, const KURL &url,
+                  const TQPoint &global, const KURL &url,
                   const KParts::URLArgs &args, KParts::BrowserExtension::PopupFlags i, mode_t mode = (mode_t)-1 );
 
   /**
@@ -644,7 +644,7 @@ signals:
    * Inform the hosting application about the current selection.
    * Used when some text is selected.
    */
-  void selectionInfo( const QString &text );
+  void selectionInfo( const TQString &text );
   /**
    * Inform the hosting application about the current selection.
    * Used when a set of URLs is selected.
@@ -661,7 +661,7 @@ signals:
    * Ask the hosting application to add a new HTML (aka Mozilla/Netscape)
    * SideBar entry.
    */
-  void addWebSideBar(const KURL &url, const QString& name);
+  void addWebSideBar(const KURL &url, const TQString& name);
 
   /**
    * Ask the hosting application to move the top level widget.
@@ -698,13 +698,13 @@ private slots:
   void slotOpenURLRequest( const KURL &url, const KParts::URLArgs &args );
   void slotEmitOpenURLRequestDelayed();
   void slotEnableAction( const char *, bool );
-  void slotSetActionText( const char*, const QString& );
+  void slotSetActionText( const char*, const TQString& );
 
 private:
   KParts::ReadOnlyPart *m_part;
   URLArgs m_args;
 public:
-  typedef QMap<QCString,int> ActionNumberMap;
+  typedef TQMap<TQCString,int> ActionNumberMap;
 
 private:
   static ActionNumberMap * s_actionNumberMap;
@@ -735,21 +735,21 @@ public:
    *
    * Note that this method does not query the child objects recursively.
    */
-  virtual QStringList frameNames() const;
+  virtual TQStringList frameNames() const;
 
   /**
    * Returns a list of pointers to all hosted child objects.
    *
    * Note that this method does not query the child objects recursively.
    */
-  virtual const QPtrList<KParts::ReadOnlyPart> frames() const;
+  virtual const TQPtrList<KParts::ReadOnlyPart> frames() const;
 
   /**
    * Returns the part that contains @p frame and that may be accessed
    * by @p callingPart
    * @since 3.3
    */
-  BrowserHostExtension *findFrameParent(KParts::ReadOnlyPart *callingPart, const QString &frame);
+  BrowserHostExtension *findFrameParent(KParts::ReadOnlyPart *callingPart, const TQString &frame);
 
   /**
    * Opens the given url in a hosted child frame. The frame name is specified in the
@@ -761,7 +761,7 @@ public:
    * Queries @p obj for a child object which inherits from this
    * BrowserHostExtension class. Convenience method.
    */
-  static BrowserHostExtension *childObject( QObject *obj );
+  static BrowserHostExtension *childObject( TQObject *obj );
 
 protected:
   /** This 'enum' along with the structure below is NOT part of the public API.
@@ -774,7 +774,7 @@ protected:
   {
       BrowserHostExtension *parent;
       KParts::ReadOnlyPart *callingPart;
-      QString frame;
+      TQString frame;
   };
 
   virtual void virtual_hook( int id, void* data );
@@ -796,7 +796,7 @@ public:
   enum Type {
       TypeVoid=0, TypeBool, TypeFunction, TypeNumber, TypeObject, TypeString
   };
-  typedef QValueList<QPair<Type, QString> > ArgList;
+  typedef TQValueList<QPair<Type, TQString> > ArgList;
 
   LiveConnectExtension( KParts::ReadOnlyPart *parent, const char *name = 0L );
 
@@ -804,26 +804,26 @@ public:
   /**
    * get a field value from objid, return true on success
    */
-  virtual bool get( const unsigned long objid, const QString & field, Type & type, unsigned long & retobjid, QString & value );
+  virtual bool get( const unsigned long objid, const TQString & field, Type & type, unsigned long & retobjid, TQString & value );
   /**
    * put a field value in objid, return true on success
    */
-  virtual bool put( const unsigned long objid, const QString & field, const QString & value );
+  virtual bool put( const unsigned long objid, const TQString & field, const TQString & value );
   /**
    * calls a function of objid, return true on success
    */
-  virtual bool call( const unsigned long objid, const QString & func, const QStringList & args, Type & type, unsigned long & retobjid, QString & value );
+  virtual bool call( const unsigned long objid, const TQString & func, const TQStringList & args, Type & type, unsigned long & retobjid, TQString & value );
   /**
    * notifies the part that there is no reference anymore to objid
    */
   virtual void unregister( const unsigned long objid );
 
-  static LiveConnectExtension *childObject( QObject *obj );
+  static LiveConnectExtension *childObject( TQObject *obj );
 signals:
   /**
    * notify an event from the part of object objid
    */
-  virtual void partEvent( const unsigned long objid, const QString & event, const ArgList & args );
+  virtual void partEvent( const unsigned long objid, const TQString & event, const ArgList & args );
 };
 
 }

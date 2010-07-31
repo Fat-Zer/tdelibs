@@ -24,9 +24,9 @@
 class QWidget;
 class QPopupMenu;
 class KContextMenuManagerPrivate;
-#include <qobject.h>
-#include <qptrdict.h>
-#include <qkeysequence.h>
+#include <tqobject.h>
+#include <tqptrdict.h>
+#include <tqkeysequence.h>
 
 #include <kdelibs_export.h>
 
@@ -35,8 +35,8 @@ class KContextMenuManagerPrivate;
 @author Matthias Ettrich <ettrich@kde.org>
 
 KContextMenuManager manages configurable context popup menus.  Instead
-of reimplementing QWidget::mousePressEvent() or
- QWidget::mouseReleaseEvent() and/or QWidget::keyPressEvent(), simply
+of reimplementing TQWidget::mousePressEvent() or
+ TQWidget::mouseReleaseEvent() and/or TQWidget::keyPressEvent(), simply
 create the popup menu and insert it into the context menu manager with
 the static function insert().
 
@@ -70,7 +70,7 @@ The shortcut key to invoke the context menu is defined in the standard
 The key can be configured with the standard keys module in the KDE control center.
 
 If the popup menu is invoked with the keyboard shortcut, it's shown at
-the position of the micro focus hint of the widget ( QWidget::microFocusHint() ).
+the position of the micro focus hint of the widget ( TQWidget::microFocusHint() ).
 */
 
 class KDEUI_EXPORT KContextMenuManager : public QObject
@@ -84,7 +84,7 @@ public:
        Ownership of the popup menu is not transferred to the context
        menu manager.
     */
-    static void insert( QWidget* widget, QPopupMenu* popup );
+    static void insert( TQWidget* widget, TQPopupMenu* popup );
 
     /**
      * Use this method to get information about when a popup menu
@@ -99,12 +99,12 @@ public:
 private slots:
     void widgetDestroyed();
 private:
-    KContextMenuManager( QObject* parent = 0, const char* name  = 0);
+    KContextMenuManager( TQObject* parent = 0, const char* name  = 0);
     ~KContextMenuManager();
-    bool eventFilter( QObject *, QEvent * );
-    QPtrDict<QPopupMenu> menus;
+    bool eventFilter( TQObject *, TQEvent * );
+    TQPtrDict<TQPopupMenu> menus;
     bool showOnPress;
-    QKeySequence menuKey;
+    TQKeySequence menuKey;
     static KContextMenuManager* manager;
     friend class I_really_like_this_class; // avoid warning
 

@@ -25,7 +25,7 @@
 class KMCupsUiManager : public KMUiManager
 {
 public:
-	KMCupsUiManager(QObject *parent, const char *name, const QStringList & /*args*/);
+	KMCupsUiManager(TQObject *parent, const char *name, const TQStringList & /*args*/);
 	~KMCupsUiManager();
 
 	void setupPropertyPages(KMPropertyPage*);
@@ -33,8 +33,8 @@ public:
 	void setupPrinterPropertyDialog(KPrinterPropertyDialog*);
 	void setupConfigDialog(KMConfigDialog*);
 	int pluginPageCap();
-	void setupPrintDialogPages(QPtrList<KPrintDialogPage>*);
-	void setupJobViewer(QListView*);
+	void setupPrintDialogPages(TQPtrList<KPrintDialogPage>*);
+	void setupJobViewer(TQListView*);
 };
 
 #endif

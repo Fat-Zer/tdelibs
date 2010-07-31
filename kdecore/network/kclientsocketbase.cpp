@@ -24,9 +24,9 @@
 
 #include <config.h>
 
-#include <qsocketnotifier.h>
-#include <qtimer.h>
-#include <qmutex.h>
+#include <tqsocketnotifier.h>
+#include <tqtimer.h>
+#include <tqmutex.h>
 
 #include "ksocketaddress.h"
 #include "kresolver.h"
@@ -47,8 +47,8 @@ public:
   bool enableRead : 1, enableWrite : 1;
 };
 
-KClientSocketBase::KClientSocketBase(QObject *parent, const char *name)
-  : QObject(parent, name), d(new KClientSocketBasePrivate)
+KClientSocketBase::KClientSocketBase(TQObject *parent, const char *name)
+  : TQObject(parent, name), d(new KClientSocketBasePrivate)
 {
   d->state = Idle;
   d->enableRead = true;
@@ -74,7 +74,7 @@ void KClientSocketBase::setState(SocketState state)
 
 bool KClientSocketBase::setSocketOptions(int opts)
 {
-  QMutexLocker locker(mutex());
+  TQMutexLocker locker(mutex());
   KSocketBase::setSocketOptions(opts); // call parent
 
   // don't create the device unnecessarily
@@ -140,14 +140,14 @@ bool KClientSocketBase::lookup()
     {
       if (d->localResolver.serviceName().isNull() &&
 	  !d->localResolver.nodeName().isNull())
-	d->localResolver.setServiceName(QString::fromLatin1(""));
+	d->localResolver.setServiceName(TQString::fromLatin1(""));
 
       // don't restart the lookups if they had succeeded and
       // the input values weren't changed
-      QObject::connect(&d->peerResolver, SIGNAL(finished(KResolverResults)), 
-		       this, SLOT(lookupFinishedSlot()));
-      QObject::connect(&d->localResolver, SIGNAL(finished(KResolverResults)), 
-		       this, SLOT(lookupFinishedSlot()));
+      TQObject::connect(&d->peerResolver, TQT_SIGNAL(finished(KResolverResults)), 
+		       this, TQT_SLOT(lookupFinishedSlot()));
+      TQObject::connect(&d->localResolver, TQT_SIGNAL(finished(KResolverResults)), 
+		       this, TQT_SLOT(lookupFinishedSlot()));
 
       if (d->localResolver.status() <= 0)
 	d->localResolver.start();
@@ -164,7 +164,7 @@ bool KClientSocketBase::lookup()
 	  if (blocking())
 	    lookupFinishedSlot();
 	  else
-	    QTimer::singleShot(0, this, SLOT(lookupFinishedSlot()));
+	    TQTimer::singleShot(0, this, TQT_SLOT(lookupFinishedSlot()));
 	}
       else
 	{
@@ -387,10 +387,10 @@ bool KClientSocketBase::emitsReadyRead() const
 
 void KClientSocketBase::enableRead(bool enable)
 {
-  QMutexLocker locker(mutex());
+  TQMutexLocker locker(mutex());
 
   d->enableRead = enable;
-  QSocketNotifier *n = socketDevice()->readNotifier();
+  TQSocketNotifier *n = socketDevice()->readNotifier();
   if (n)
     n->setEnabled(enable);
 }
@@ -402,10 +402,10 @@ bool KClientSocketBase::emitsReadyWrite() const
 
 void KClientSocketBase::enableWrite(bool enable)
 {
-  QMutexLocker locker(mutex());
+  TQMutexLocker locker(mutex());
 
   d->enableWrite = enable;
-  QSocketNotifier *n = socketDevice()->writeNotifier();
+  TQSocketNotifier *n = socketDevice()->writeNotifier();
   if (n)
     n->setEnabled(enable);
 }
@@ -427,8 +427,8 @@ void KClientSocketBase::lookupFinishedSlot()
   if (d->peerResolver.isRunning() || d->localResolver.isRunning() || state() != HostLookup)
     return;
 
-  QObject::disconnect(&d->peerResolver, 0L, this, SLOT(lookupFinishedSlot()));
-  QObject::disconnect(&d->localResolver, 0L, this, SLOT(lookupFinishedSlot()));
+  TQObject::disconnect(&d->peerResolver, 0L, this, TQT_SLOT(lookupFinishedSlot()));
+  TQObject::disconnect(&d->localResolver, 0L, this, TQT_SLOT(lookupFinishedSlot()));
   if (d->peerResolver.status() < 0 || d->localResolver.status() < 0)
     {
       setState(Idle);		// backtrack
@@ -449,11 +449,11 @@ void KClientSocketBase::stateChanging(SocketState newState)
 {
   if (newState == Connected && socketDevice())
     {
-      QSocketNotifier *n = socketDevice()->readNotifier();
+      TQSocketNotifier *n = socketDevice()->readNotifier();
       if (n)
 	{
 	  n->setEnabled(d->enableRead);
-	  QObject::connect(n, SIGNAL(activated(int)), this, SLOT(slotReadActivity()));
+	  TQObject::connect(n, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotReadActivity()));
 	}
       else
 	return;
@@ -462,7 +462,7 @@ void KClientSocketBase::stateChanging(SocketState newState)
       if (n)
 	{
 	  n->setEnabled(d->enableWrite);
-	  QObject::connect(n, SIGNAL(activated(int)), this, SLOT(slotWriteActivity()));
+	  TQObject::connect(n, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotWriteActivity()));
 	}
       else
 	return;

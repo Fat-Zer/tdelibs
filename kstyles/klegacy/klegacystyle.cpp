@@ -28,83 +28,83 @@
 #include <kiconloader.h>
 
 #define INCLUDE_MENUITEM_DEF
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qbuttongroup.h>
-#include <qcanvas.h>
-#include <qcheckbox.h>
-#include <qcolor.h>
-#include <qcolordialog.h>
-#include <qcombobox.h>
-#include <qdial.h>
-#include <qdialog.h>
-#include <qdict.h>
-#include <qfile.h>
-#include <qfiledialog.h>
-#include <qfileinfo.h>
-#include <qfont.h>
-#include <qfontdialog.h>
-#include <qframe.h>
-#include <qguardedptr.h>
-#include <qgrid.h>
-#include <qgroupbox.h>
-#include <qhbox.h>
-#include <qhbuttongroup.h>
-#include <qheader.h>
-#include <qhgroupbox.h>
-#include <qiconview.h>
-#include <qimage.h>
-#include <qinputdialog.h>
-#include <qintdict.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlcdnumber.h>
-#include <qlineedit.h>
-#include <qptrlist.h>
-#include <qlistbox.h>
-#include <qlistview.h>
-#include <qmainwindow.h>
-#include <qmenubar.h>
-#include <qmenudata.h>
-#include <qmessagebox.h>
-#include <qmultilineedit.h>
-#include <qobjectlist.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qpixmapcache.h>
-#include <qpopupmenu.h>
-#include <qprintdialog.h>
-#include <qprogressbar.h>
-#include <qprogressdialog.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <qregexp.h>
-#include <qscrollbar.h>
-#include <qscrollview.h>
-#include <qsemimodal.h>
-#include <qsizegrip.h>
-#include <qslider.h>
-#include <qspinbox.h>
-#include <qsplitter.h>
-#include <qstatusbar.h>
-#include <qstring.h>
-#include <qtabbar.h>
-#include <qtabdialog.h>
+#include <tqapplication.h>
+#include <tqbitmap.h>
+#include <tqbuttongroup.h>
+#include <tqcanvas.h>
+#include <tqcheckbox.h>
+#include <tqcolor.h>
+#include <tqcolordialog.h>
+#include <tqcombobox.h>
+#include <tqdial.h>
+#include <tqdialog.h>
+#include <tqdict.h>
+#include <tqfile.h>
+#include <tqfiledialog.h>
+#include <tqfileinfo.h>
+#include <tqfont.h>
+#include <tqfontdialog.h>
+#include <tqframe.h>
+#include <tqguardedptr.h>
+#include <tqgrid.h>
+#include <tqgroupbox.h>
+#include <tqhbox.h>
+#include <tqhbuttongroup.h>
+#include <tqheader.h>
+#include <tqhgroupbox.h>
+#include <tqiconview.h>
+#include <tqimage.h>
+#include <tqinputdialog.h>
+#include <tqintdict.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlcdnumber.h>
+#include <tqlineedit.h>
+#include <tqptrlist.h>
+#include <tqlistbox.h>
+#include <tqlistview.h>
+#include <tqmainwindow.h>
+#include <tqmenubar.h>
+#include <tqmenudata.h>
+#include <tqmessagebox.h>
+#include <tqmultilineedit.h>
+#include <tqobjectlist.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqpixmapcache.h>
+#include <tqpopupmenu.h>
+#include <tqprintdialog.h>
+#include <tqprogressbar.h>
+#include <tqprogressdialog.h>
+#include <tqpushbutton.h>
+#include <tqradiobutton.h>
+#include <tqregexp.h>
+#include <tqscrollbar.h>
+#include <tqscrollview.h>
+#include <tqsemimodal.h>
+#include <tqsizegrip.h>
+#include <tqslider.h>
+#include <tqspinbox.h>
+#include <tqsplitter.h>
+#include <tqstatusbar.h>
+#include <tqstring.h>
+#include <tqtabbar.h>
+#include <tqtabdialog.h>
 #include <qtableview.h>
-#include <qtabwidget.h>
-#include <qtextbrowser.h>
-#include <qtextstream.h>
-#include <qtextview.h>
-#include <qtoolbar.h>
-#include <qtoolbutton.h>
-#include <qtooltip.h>
-#include <qvbox.h>
-#include <qvbuttongroup.h>
-#include <qvgroupbox.h>
-#include <qwidget.h>
-#include <qwidgetstack.h>
-#include <qwizard.h>
-#include <qworkspace.h>
+#include <tqtabwidget.h>
+#include <tqtextbrowser.h>
+#include <tqtextstream.h>
+#include <tqtextview.h>
+#include <tqtoolbar.h>
+#include <tqtoolbutton.h>
+#include <tqtooltip.h>
+#include <tqvbox.h>
+#include <tqvbuttongroup.h>
+#include <tqvgroupbox.h>
+#include <tqwidget.h>
+#include <tqwidgetstack.h>
+#include <tqwizard.h>
+#include <tqworkspace.h>
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -118,8 +118,8 @@ class KLegacyImageData;
 class GtkObject;
 
 // declaration of hidden functions
-typedef void (QStyle::*QDrawMenuBarItemImpl) (QPainter *, int, int, int, int,
-					      QMenuItem *, QColorGroup &, bool, bool);
+typedef void (TQStyle::*QDrawMenuBarItemImpl) (TQPainter *, int, int, int, int,
+					      TQMenuItem *, TQColorGroup &, bool, bool);
 extern QDrawMenuBarItemImpl qt_set_draw_menu_bar_impl(QDrawMenuBarItemImpl impl);
 
 // the addresses of the integers are used to place things in the
@@ -134,11 +134,11 @@ static int checkmenuitem_ptr  = 6;
 static int radiomenuitem_ptr  = 7;
 static int eventbox_ptr       = 8;
 
-// a QImage cache, since we need to resize some images to different sizes, we
+// a TQImage cache, since we need to resize some images to different sizes, we
 // will cache them, to save the overhead of loading the image from disk each
 // time it's needed
 static const int imageCacheSize = 61;
-static QDict<QImage> *imageCache = 0;
+static TQDict<TQImage> *imageCache = 0;
 
 
 class KLegacy {
@@ -205,12 +205,12 @@ class KLegacyImageData : public KLegacy {
 public:
     KLegacyImageDataKey key;
 
-    QString file;
-    QString detail;
-    QString overlayFile;
-    QString gapFile;
-    QString gapStartFile;
-    QString gapEndFile;
+    TQString file;
+    TQString detail;
+    TQString overlayFile;
+    TQString gapFile;
+    TQString gapStartFile;
+    TQString gapEndFile;
 
     KLegacyBorder border;
     KLegacyBorder overlayBorder;
@@ -233,17 +233,17 @@ public:
 class KLegacyStyleData : public KLegacy {
 public:
     // name of this style
-    QString name;
+    TQString name;
 
     // font to use
-    QFont *fn;
+    TQFont *fn;
 
     // list of image datas (which tell us how to draw things)
     QList<KLegacyImageData> imageList;
 
     // background, foreground and base colors for the 5 widget
     //states that Gtk defines
-    QColor back[5], fore[5], base[5];
+    TQColor back[5], fore[5], base[5];
 
     // reference count
     int ref;
@@ -257,7 +257,7 @@ public:
 };
 
 
-class GtkObject : public QObject {
+class GtkObject : public TQObject {
 private:
     KLegacyStyleData *d;
 
@@ -266,37 +266,37 @@ private:
 
 public:
     GtkObject(GtkObject *parent, const char *name)
-	: QObject(parent, name)
+	: TQObject(parent, name)
     { d = 0; }
 
-    GtkObject *find(QRegExp &) const;
+    GtkObject *find(TQRegExp &) const;
 
-    QColor backColor(KLegacy::State);
-    QColor baseColor(KLegacy::State);
-    QColor foreColor(KLegacy::State);
+    TQColor backColor(KLegacy::State);
+    TQColor baseColor(KLegacy::State);
+    TQColor foreColor(KLegacy::State);
 
-    QFont *font();
+    TQFont *font();
 
-    inline QString styleName()
+    inline TQString styleName()
     { return styleData()->name; }
 
     KLegacyStyleData *styleData();
     KLegacyImageData *getImageData(KLegacyImageDataKey,
-				const QString & = QString::null);
+				const TQString & = TQString::null);
 
-    QPixmap *draw(KLegacyImageDataKey, int, int, const QString & = QString::null);
-    QPixmap *draw(KLegacyImageData *, int, int);
+    TQPixmap *draw(KLegacyImageDataKey, int, int, const TQString & = TQString::null);
+    TQPixmap *draw(KLegacyImageData *, int, int);
 };
 
 
-static QPixmap *drawImage(QImage *image, int width, int height,
+static TQPixmap *drawImage(TQImage *image, int width, int height,
 			  KLegacyBorder border, bool scale)
 {
     if ((! image) || (image->isNull()) || (width < 1) || (height < 1)) {
-	return (QPixmap *) 0;
+	return (TQPixmap *) 0;
     }
 
-    QPixmap *pixmap = new QPixmap(width, height);
+    TQPixmap *pixmap = new TQPixmap(width, height);
 
     if (scale) {
 	if (width < 2) width = 2;
@@ -386,10 +386,10 @@ static QPixmap *drawImage(QImage *image, int width, int height,
 
 	// draw the image
 	bool mask = image->hasAlphaBuffer();
-	QBitmap bm(width, height);
+	TQBitmap bm(width, height);
 	bm.fill(Qt::color1);
 
-	QImage nimage[3][3];
+	TQImage nimage[3][3];
 	int xx = -1, yy = -1;
 	while (++yy < 3) {
 	    xx = -1;
@@ -407,7 +407,7 @@ static QPixmap *drawImage(QImage *image, int width, int height,
 		       0, 0, w2[xx], h2[yy], Qt::CopyROP);
 
 		if (mask) {
-                    QImage am = nimage[yy][xx].createAlphaMask();
+                    TQImage am = nimage[yy][xx].createAlphaMask();
 		    bitBlt(&bm, x2[xx], y2[yy], &am,
 			   0, 0, w2[xx], h2[yy], Qt::CopyROP);
                 }
@@ -422,10 +422,10 @@ static QPixmap *drawImage(QImage *image, int width, int height,
 		bitBlt(pixmap, x, y, image, 0, 0, -1, -1, Qt::CopyROP);
 
 	if (image->hasAlphaBuffer()) {
-	    QImage mask = image->createAlphaMask();
+	    TQImage mask = image->createAlphaMask();
 
 	    if (! mask.isNull() && mask.depth() == 1) {
-		QBitmap bm(width, height);
+		TQBitmap bm(width, height);
 		bm.fill(Qt::color1);
 		bm = mask;
 		pixmap->setMask(bm);
@@ -439,7 +439,7 @@ static QPixmap *drawImage(QImage *image, int width, int height,
 
 // Generate an object tree for all the known Gtk widgets...
 // returns a pointer to the bottom of the tree
-static GtkObject *initialize(QPtrDict<GtkObject> &dict) {
+static GtkObject *initialize(TQPtrDict<GtkObject> &dict) {
     //
     // auto generated stuff from :
     // --
@@ -670,64 +670,64 @@ static GtkObject *initialize(QPtrDict<GtkObject> &dict) {
     //    sort | uniq > meta
     //--
 
-    dict.insert(QButton::staticMetaObject(), myGtkButton);
-    dict.insert(QButtonGroup::staticMetaObject(), myGtkButtonBox);
-    dict.insert(QCanvas::staticMetaObject(), myGtkDrawingArea);
-    dict.insert(QCanvasView::staticMetaObject(), myGtkDrawingArea);
-    dict.insert(QCheckBox::staticMetaObject(), myGtkCheckButton);
+    dict.insert(TQButton::staticMetaObject(), myGtkButton);
+    dict.insert(TQButtonGroup::staticMetaObject(), myGtkButtonBox);
+    dict.insert(TQCanvas::staticMetaObject(), myGtkDrawingArea);
+    dict.insert(TQCanvasView::staticMetaObject(), myGtkDrawingArea);
+    dict.insert(TQCheckBox::staticMetaObject(), myGtkCheckButton);
     dict.insert(QColorDialog::staticMetaObject(), myGtkColorSelectionDialog);
-    dict.insert(QComboBox::staticMetaObject(), myGtkCombo);
-    dict.insert(QDial::staticMetaObject(), myGtkWidget);
-    dict.insert(QDialog::staticMetaObject(), myGtkDialog);
-    dict.insert(QFileDialog::staticMetaObject(), myGtkFileSelection);
+    dict.insert(TQComboBox::staticMetaObject(), myGtkCombo);
+    dict.insert(TQDial::staticMetaObject(), myGtkWidget);
+    dict.insert(TQDialog::staticMetaObject(), myGtkDialog);
+    dict.insert(TQFileDialog::staticMetaObject(), myGtkFileSelection);
     dict.insert(QFontDialog::staticMetaObject(), myGtkFontSelectionDialog);
-    dict.insert(QFrame::staticMetaObject(), myGtkFrame);
-    dict.insert(QGrid::staticMetaObject(), myGtkFrame);
-    dict.insert(QGroupBox::staticMetaObject(), myGtkBox);
-    dict.insert(QHBox::staticMetaObject(), myGtkHBox);
-    dict.insert(QHButtonGroup::staticMetaObject(), myGtkHButtonBox);
-    dict.insert(QHGroupBox::staticMetaObject(), myGtkHBox);
-    dict.insert(QHeader::staticMetaObject(), myGtkRuler);
-    dict.insert(QIconView::staticMetaObject(), myGtkCTree);
+    dict.insert(TQFrame::staticMetaObject(), myGtkFrame);
+    dict.insert(TQGrid::staticMetaObject(), myGtkFrame);
+    dict.insert(TQGroupBox::staticMetaObject(), myGtkBox);
+    dict.insert(TQHBox::staticMetaObject(), myGtkHBox);
+    dict.insert(TQHButtonGroup::staticMetaObject(), myGtkHButtonBox);
+    dict.insert(TQHGroupBox::staticMetaObject(), myGtkHBox);
+    dict.insert(TQHeader::staticMetaObject(), myGtkRuler);
+    dict.insert(TQIconView::staticMetaObject(), myGtkCTree);
     dict.insert(QInputDialog::staticMetaObject(), myGtkInputDialog);
-    dict.insert(QLCDNumber::staticMetaObject(), myGtkFrame);
-    dict.insert(QLabel::staticMetaObject(), myGtkLabel);
-    dict.insert(QLineEdit::staticMetaObject(), myGtkEntry);
-    dict.insert(QListBox::staticMetaObject(), myGtkCList);
-    dict.insert(QListView::staticMetaObject(), myGtkCTree);
-    dict.insert(QMainWindow::staticMetaObject(), myGtkWindow);
-    dict.insert(QMenuBar::staticMetaObject(), myGtkMenuBar);
-    dict.insert(QMessageBox::staticMetaObject(), myGtkDialog);
-    dict.insert(QMultiLineEdit::staticMetaObject(), myGtkText);
-    dict.insert(QPopupMenu::staticMetaObject(), myGtkMenu);
-    dict.insert(QPrintDialog::staticMetaObject(), myGtkDialog);
-    dict.insert(QProgressBar::staticMetaObject(), myGtkProgressBar);
-    dict.insert(QProgressDialog::staticMetaObject(), myGtkDialog);
-    dict.insert(QPushButton::staticMetaObject(), myGtkButton);
-    dict.insert(QRadioButton::staticMetaObject(), myGtkRadioButton);
-    dict.insert(QScrollBar::staticMetaObject(), myGtkScrollbar);
-    dict.insert(QScrollView::staticMetaObject(), myGtkViewport);
-    dict.insert(QSemiModal::staticMetaObject(), myGtkDialog);
-    dict.insert(QSizeGrip::staticMetaObject(), myGtkWidget);
-    dict.insert(QSlider::staticMetaObject(), myGtkScale);
-    dict.insert(QSpinBox::staticMetaObject(), myGtkSpinButton);
-    dict.insert(QSplitter::staticMetaObject(), myGtkPaned);
-    dict.insert(QStatusBar::staticMetaObject(), myGtkStatusbar);
-    dict.insert(QTabBar::staticMetaObject(), myGtkNotebook);
-    dict.insert(QTabDialog::staticMetaObject(), myGtkNotebook);
-    dict.insert(QTabWidget::staticMetaObject(), myGtkNotebook);
+    dict.insert(TQLCDNumber::staticMetaObject(), myGtkFrame);
+    dict.insert(TQLabel::staticMetaObject(), myGtkLabel);
+    dict.insert(TQLineEdit::staticMetaObject(), myGtkEntry);
+    dict.insert(TQListBox::staticMetaObject(), myGtkCList);
+    dict.insert(TQListView::staticMetaObject(), myGtkCTree);
+    dict.insert(TQMainWindow::staticMetaObject(), myGtkWindow);
+    dict.insert(TQMenuBar::staticMetaObject(), myGtkMenuBar);
+    dict.insert(TQMessageBox::staticMetaObject(), myGtkDialog);
+    dict.insert(TQMultiLineEdit::staticMetaObject(), myGtkText);
+    dict.insert(TQPopupMenu::staticMetaObject(), myGtkMenu);
+    dict.insert(TQPrintDialog::staticMetaObject(), myGtkDialog);
+    dict.insert(TQProgressBar::staticMetaObject(), myGtkProgressBar);
+    dict.insert(TQProgressDialog::staticMetaObject(), myGtkDialog);
+    dict.insert(TQPushButton::staticMetaObject(), myGtkButton);
+    dict.insert(TQRadioButton::staticMetaObject(), myGtkRadioButton);
+    dict.insert(TQScrollBar::staticMetaObject(), myGtkScrollbar);
+    dict.insert(TQScrollView::staticMetaObject(), myGtkViewport);
+    dict.insert(TQSemiModal::staticMetaObject(), myGtkDialog);
+    dict.insert(TQSizeGrip::staticMetaObject(), myGtkWidget);
+    dict.insert(TQSlider::staticMetaObject(), myGtkScale);
+    dict.insert(TQSpinBox::staticMetaObject(), myGtkSpinButton);
+    dict.insert(TQSplitter::staticMetaObject(), myGtkPaned);
+    dict.insert(TQStatusBar::staticMetaObject(), myGtkStatusbar);
+    dict.insert(TQTabBar::staticMetaObject(), myGtkNotebook);
+    dict.insert(TQTabDialog::staticMetaObject(), myGtkNotebook);
+    dict.insert(TQTabWidget::staticMetaObject(), myGtkNotebook);
     dict.insert(QTableView::staticMetaObject(), myGtkTable);
-    dict.insert(QTextBrowser::staticMetaObject(), myGtkText);
-    dict.insert(QTextView::staticMetaObject(), myGtkText);
-    dict.insert(QToolBar::staticMetaObject(), myGtkToolbar);
-    dict.insert(QToolButton::staticMetaObject(), myGtkButton);
-    dict.insert(QVBox::staticMetaObject(), myGtkVBox);
-    dict.insert(QVButtonGroup::staticMetaObject(), myGtkVButtonBox);
-    dict.insert(QVGroupBox::staticMetaObject(), myGtkVBox);
-    dict.insert(QWidget::staticMetaObject(), myGtkWidget);
-    dict.insert(QWidgetStack::staticMetaObject(), myGtkWidget);
-    dict.insert(QWizard::staticMetaObject(), myGtkWindow);
-    dict.insert(QWorkspace::staticMetaObject(), myGtkWindow);
+    dict.insert(TQTextBrowser::staticMetaObject(), myGtkText);
+    dict.insert(TQTextView::staticMetaObject(), myGtkText);
+    dict.insert(TQToolBar::staticMetaObject(), myGtkToolbar);
+    dict.insert(TQToolButton::staticMetaObject(), myGtkButton);
+    dict.insert(TQVBox::staticMetaObject(), myGtkVBox);
+    dict.insert(TQVButtonGroup::staticMetaObject(), myGtkVButtonBox);
+    dict.insert(TQVGroupBox::staticMetaObject(), myGtkVBox);
+    dict.insert(TQWidget::staticMetaObject(), myGtkWidget);
+    dict.insert(TQWidgetStack::staticMetaObject(), myGtkWidget);
+    dict.insert(TQWizard::staticMetaObject(), myGtkWindow);
+    dict.insert(TQWorkspace::staticMetaObject(), myGtkWindow);
 
     // stuff that we don't have meta data for, but want to know about
     dict.insert(&listboxitem_ptr, myGtkListItem);
@@ -744,7 +744,7 @@ static GtkObject *initialize(QPtrDict<GtkObject> &dict) {
 }
 
 
-KLegacyImageData *GtkObject::getImageData(KLegacyImageDataKey key, const QString &detail) {
+KLegacyImageData *GtkObject::getImageData(KLegacyImageDataKey key, const TQString &detail) {
     KLegacyImageData *imagedata = 0;
 
     if (styleData()) {
@@ -803,7 +803,7 @@ KLegacyStyleData *GtkObject::styleData() {
 }
 
 
-QColor GtkObject::backColor(KLegacy::State s) {
+TQColor GtkObject::backColor(KLegacy::State s) {
     if ((!  styleData()->back[s].isValid()) && parent()) {
 	return ((GtkObject *) parent())->backColor(s);
     }
@@ -815,7 +815,7 @@ QColor GtkObject::backColor(KLegacy::State s) {
 }
 
 
-QColor GtkObject::baseColor(KLegacy::State s) {
+TQColor GtkObject::baseColor(KLegacy::State s) {
     if ((! styleData()->base[s].isValid()) && parent()) {
 	return ((GtkObject *) parent())->baseColor(s);
     }
@@ -827,7 +827,7 @@ QColor GtkObject::baseColor(KLegacy::State s) {
 }
 
 
-QColor GtkObject::foreColor(KLegacy::State s) {
+TQColor GtkObject::foreColor(KLegacy::State s) {
     if ((! styleData()->fore[s].isValid()) && parent()) {
 	return ((GtkObject *) parent())->foreColor(s);
     }
@@ -839,7 +839,7 @@ QColor GtkObject::foreColor(KLegacy::State s) {
 }
 
 
-QFont *GtkObject::font() {
+TQFont *GtkObject::font() {
     if ((! styleData()->fn) && parent()) {
 	return ((GtkObject *) parent())->font();
     }
@@ -848,7 +848,7 @@ QFont *GtkObject::font() {
 }
 
 
-GtkObject *GtkObject::find(QRegExp &r) const {
+GtkObject *GtkObject::find(TQRegExp &r) const {
     // if the regular expression matches the name of this widget, return
     if (r.match(name()) != -1) {
 	return (GtkObject *) this;
@@ -857,10 +857,10 @@ GtkObject *GtkObject::find(QRegExp &r) const {
     // regex doesn't match us, and we have no children, return 0
     if (! children()) return 0;
 
-    QObject *o;
+    TQObject *o;
     GtkObject *obj, *gobj;
 
-    QObjectListIt ot(*children());
+    TQObjectListIt ot(*children());
 
     // search our children to see if any match the regex
     while ((o = ot.current()) != 0) {
@@ -890,8 +890,8 @@ GtkObject *GtkObject::find(QRegExp &r) const {
 }
 
 
-QPixmap *GtkObject::draw(KLegacyImageDataKey key, int width, int height,
-			 const QString &detail)
+TQPixmap *GtkObject::draw(KLegacyImageDataKey key, int width, int height,
+			 const TQString &detail)
 {
     KLegacyImageData *imagedata = getImageData(key, detail);
     if (! imagedata) {
@@ -902,26 +902,26 @@ QPixmap *GtkObject::draw(KLegacyImageDataKey key, int width, int height,
 }
 
 
-QPixmap *GtkObject::draw(KLegacyImageData *imagedata, int width, int height) {
-    QString pixmapKey;
-    QTextOStream(&pixmapKey) << "$KLegacy_Image_" << styleData()->name << "_" <<
+TQPixmap *GtkObject::draw(KLegacyImageData *imagedata, int width, int height) {
+    TQString pixmapKey;
+    TQTextOStream(&pixmapKey) << "$KLegacy_Image_" << styleData()->name << "_" <<
 	className() << "_" << width << "x" << height << "_" <<
 	imagedata->key.cachekey << "_" << (uint) imagedata->recolorable <<
 	(uint) imagedata->stretch << (uint) imagedata->overlayStretch;
 
-    QPixmap *pixmap = QPixmapCache::find(pixmapKey);
+    TQPixmap *pixmap = TQPixmapCache::find(pixmapKey);
     if (pixmap) {
 	return pixmap;
     }
 
-    QPixmap *main = 0, *overlay = 0;
+    TQPixmap *main = 0, *overlay = 0;
 
     if (! imagedata->file.isNull()) {
-	QImage *image = imageCache->find(imagedata->file);
+	TQImage *image = imageCache->find(imagedata->file);
 	bool found = true;
 
 	if (! image) {
-	    image = new QImage(imagedata->file);
+	    image = new TQImage(imagedata->file);
 
 	    if (! image || image->isNull()) {
 		found = false;
@@ -938,11 +938,11 @@ QPixmap *GtkObject::draw(KLegacyImageData *imagedata, int width, int height) {
     }
 
     if (! imagedata->overlayFile.isNull()) {
-	QImage *image = imageCache->find(imagedata->overlayFile);
+	TQImage *image = imageCache->find(imagedata->overlayFile);
 	bool found = true;
 
 	if (! image) {
-	    image = new QImage(imagedata->overlayFile);
+	    image = new TQImage(imagedata->overlayFile);
 
 	    if (! image || image->isNull()) {
 		found = false;
@@ -959,7 +959,7 @@ QPixmap *GtkObject::draw(KLegacyImageData *imagedata, int width, int height) {
 	}
     }
 
-    QSize sz;
+    TQSize sz;
     if (main) {
 	sz = sz.expandedTo(main->size());
     }
@@ -969,19 +969,19 @@ QPixmap *GtkObject::draw(KLegacyImageData *imagedata, int width, int height) {
     }
 
     if (sz.isEmpty()) {
-	return (QPixmap *) 0;
+	return (TQPixmap *) 0;
     }
 
-    pixmap = new QPixmap(sz);
-    pixmap->fill(QColor(192,192,176));
-    QPainter p(pixmap);
+    pixmap = new TQPixmap(sz);
+    pixmap->fill(TQColor(192,192,176));
+    TQPainter p(pixmap);
 
     if (main && (! main->isNull())) {
 	p.drawTiledPixmap(0, 0, sz.width(), sz.height(), *main);
     }
 
     if (overlay && (! overlay->isNull())) {
-	QPoint pt((sz.width() - overlay->width()) / 2,
+	TQPoint pt((sz.width() - overlay->width()) / 2,
 		  (sz.height() - overlay->height()) / 2);
 	p.drawPixmap(pt, *overlay);
     }
@@ -990,9 +990,9 @@ QPixmap *GtkObject::draw(KLegacyImageData *imagedata, int width, int height) {
 
     if (main) {
 	if (main->mask() && (! main->mask()->isNull())) {
-	    QBitmap bm(sz);
-	    QPainter m(&bm);
-	    QRect r(0, 0, width, height);
+	    TQBitmap bm(sz);
+	    TQPainter m(&bm);
+	    TQRect r(0, 0, width, height);
 
 	    m.drawTiledPixmap(r, *(main->mask()));
 	    m.end();
@@ -1001,9 +1001,9 @@ QPixmap *GtkObject::draw(KLegacyImageData *imagedata, int width, int height) {
 	}
     } else if (overlay) {
 	if (overlay->mask() && (! overlay->mask()->isNull())) {
-	    QBitmap bm(sz);
-	    QPainter m(&bm);
-	    QRect r((sz.width() - overlay->width()) / 2,
+	    TQBitmap bm(sz);
+	    TQPainter m(&bm);
+	    TQRect r((sz.width() - overlay->width()) / 2,
 		    (sz.height() - overlay->height()) / 2,
 		    sz.width(), sz.height());
 	    m.drawTiledPixmap(r, *(overlay->mask()));
@@ -1013,9 +1013,9 @@ QPixmap *GtkObject::draw(KLegacyImageData *imagedata, int width, int height) {
 	}
     }
 
-    if (! QPixmapCache::insert(pixmapKey, pixmap)) {
+    if (! TQPixmapCache::insert(pixmapKey, pixmap)) {
 	delete pixmap;
-	pixmap = (QPixmap *) 0;
+	pixmap = (TQPixmap *) 0;
     }
 
     return pixmap;
@@ -1024,21 +1024,21 @@ QPixmap *GtkObject::draw(KLegacyImageData *imagedata, int width, int height) {
 
 class KLegacyStylePrivate : public KLegacy {
 private:
-    QDict<KLegacyStyleData> styleDict;
-    QStringList pixmapPath;
-    QTextStream filestream;
+    TQDict<KLegacyStyleData> styleDict;
+    TQStringList pixmapPath;
+    TQTextStream filestream;
 
-    QFont oldfont;
-    QPalette oldpalette;
+    TQFont oldfont;
+    TQPalette oldpalette;
 
     // pointer to the widget under the pointer
-    QGuardedPtr<QWidget> lastWidget;
+    TQGuardedPtr<TQWidget> lastWidget;
 
     // current position of the mouse
-    QPoint mousePos;
+    TQPoint mousePos;
     bool hovering;
 
-    QPtrDict<GtkObject> gtkDict;
+    TQPtrDict<GtkObject> gtkDict;
     GtkObject *gtktree;
 
     friend class KLegacyStyle;
@@ -1049,7 +1049,7 @@ public:
     ~KLegacyStylePrivate();
 
     // parse the filename passed
-    bool parse(const QString &filename);
+    bool parse(const TQString &filename);
 
     bool parseClass();
     bool parseEngine(KLegacyStyleData *);
@@ -1062,10 +1062,10 @@ public:
 KLegacyStylePrivate::KLegacyStylePrivate()
     : lastWidget(0), mousePos(-1, -1), hovering(false), gtktree(0)
 {
-    QPixmapCache::setCacheLimit(8192);
+    TQPixmapCache::setCacheLimit(8192);
 
     if (! imageCache) {
-	imageCache = new QDict<QImage>(imageCacheSize);
+	imageCache = new TQDict<TQImage>(imageCacheSize);
 	CHECK_PTR(imageCache);
 
 	imageCache->setAutoDelete(true);
@@ -1082,16 +1082,16 @@ KLegacyStylePrivate::KLegacyStylePrivate()
     }
 
     // get the path to this users .gtkrc
-    QString gtkrcFilename = getenv("HOME");
+    TQString gtkrcFilename = getenv("HOME");
     gtkrcFilename += "/.gtkrc";
 
-    QFile gtkrc(gtkrcFilename);
+    TQFile gtkrc(gtkrcFilename);
 
     if (gtkrc.open(IO_ReadOnly)) {
 	filestream.setDevice(&gtkrc);
 
 	while (! filestream.atEnd()) {
-	    QString next;
+	    TQString next;
 	    filestream >> next;
 
 	    if (next.isNull()) continue;
@@ -1133,7 +1133,7 @@ KLegacyStylePrivate::~KLegacyStylePrivate() {
 bool KLegacyStylePrivate::parseClass() {
     if (filestream.atEnd()) return false;
 
-    QString classname, keyword, stylename;
+    TQString classname, keyword, stylename;
     filestream >> classname;
     filestream >> keyword;
     filestream >> stylename;
@@ -1147,7 +1147,7 @@ bool KLegacyStylePrivate::parseClass() {
     classname = classname.mid(1, classname.length() - 2);
     stylename = stylename.mid(1, stylename.length() - 2);
 
-    QRegExp r(classname);
+    TQRegExp r(classname);
     r.setWildcard(true);
     GtkObject *obj = gtktree->find(r);
 
@@ -1177,7 +1177,7 @@ bool KLegacyStylePrivate::parseImage(KLegacyStyleData *styledata) {
 	return false;
     }
 
-    QString next, equals, parameter;
+    TQString next, equals, parameter;
     filestream >> next;
 
     // skip comments
@@ -1224,7 +1224,7 @@ bool KLegacyStylePrivate::parseImage(KLegacyStyleData *styledata) {
 	    if (equals.isNull() || parameter.isNull() || equals != "=" ||
 		parameter != "{")
 		continue;
-	    QString border =filestream.readLine();
+	    TQString border =filestream.readLine();
 
 	    int lp, rp, tp, bp, l, r, t, b;
 	    lp = border.find(',');
@@ -1263,9 +1263,9 @@ bool KLegacyStylePrivate::parseImage(KLegacyStyleData *styledata) {
 
 	    parameter = parameter.mid(1, parameter.length() - 2);
 
-	    QStringList::Iterator it;
+	    TQStringList::Iterator it;
 	    for (it = pixmapPath.begin(); it != pixmapPath.end(); ++it) {
-		QFileInfo fileinfo((*it) + parameter);
+		TQFileInfo fileinfo((*it) + parameter);
 
 		if (fileinfo.exists()) {
 		    imagedata->file = fileinfo.filePath();
@@ -1333,7 +1333,7 @@ bool KLegacyStylePrivate::parseImage(KLegacyStyleData *styledata) {
 	    if (equals.isNull() || parameter.isNull() || equals != "=" ||
 		parameter != "{")
 		continue;
-	    QString border = filestream.readLine();
+	    TQString border = filestream.readLine();
 
 	    int lp, rp, tp, bp, l, r, t, b;
 	    lp = border.find(',');
@@ -1362,9 +1362,9 @@ bool KLegacyStylePrivate::parseImage(KLegacyStyleData *styledata) {
 
 	    parameter = parameter.mid(1, parameter.length() - 2);
 
-	    QStringList::Iterator it;
+	    TQStringList::Iterator it;
 	    for (it = pixmapPath.begin(); it != pixmapPath.end(); ++it) {
-		QFileInfo fileinfo((*it) + parameter);
+		TQFileInfo fileinfo((*it) + parameter);
 
 		if (fileinfo.exists()) {
 		    imagedata->overlayFile = fileinfo.filePath();
@@ -1436,7 +1436,7 @@ bool KLegacyStylePrivate::parseImage(KLegacyStyleData *styledata) {
 bool KLegacyStylePrivate::parseEngine(KLegacyStyleData *styledata) {
     if (filestream.atEnd()) return false;
 
-    QString enginename, paren;
+    TQString enginename, paren;
     filestream >> enginename;
     filestream >> paren;
 
@@ -1446,7 +1446,7 @@ bool KLegacyStylePrivate::parseEngine(KLegacyStyleData *styledata) {
 	return false;
     }
 
-    QString next;
+    TQString next;
     int paren_count = 1;
     while (paren_count) {
 	filestream >> next;
@@ -1477,7 +1477,7 @@ bool KLegacyStylePrivate::parsePixmapPath() {
 	return false;
     }
 
-    QString next;
+    TQString next;
     filestream >> next;
 
     if (next.isNull() || next[0] != '\"' || next[next.length() - 1] != '\"') {
@@ -1488,13 +1488,13 @@ bool KLegacyStylePrivate::parsePixmapPath() {
 
     int start = 0, end = next.find(":");
     while (end != -1) {
-	QString path(next.mid(start, end - start));
+	TQString path(next.mid(start, end - start));
 
 	if (path[path.length() - 1] != '/') {
 	    path += '/';
 	}
 
-	QFileInfo fileinfo(path);
+	TQFileInfo fileinfo(path);
 	if (fileinfo.exists() && fileinfo.isDir()) {
 	    pixmapPath.append(path);
 	}
@@ -1505,13 +1505,13 @@ bool KLegacyStylePrivate::parsePixmapPath() {
 
     // get the straggler
     end = next.length();
-    QString path(next.mid(start, end - start));
+    TQString path(next.mid(start, end - start));
 
     if (path[path.length() - 1] != '/') {
 	path += '/';
     }
 
-    QFileInfo fileinfo(path);
+    TQFileInfo fileinfo(path);
     if (fileinfo.exists() && fileinfo.isDir()) {
 	pixmapPath.append(path);
     }
@@ -1523,7 +1523,7 @@ bool KLegacyStylePrivate::parsePixmapPath() {
 bool KLegacyStylePrivate::parseStyle() {
     if (filestream.atEnd()) return false;
 
-    QString stylename, paren;
+    TQString stylename, paren;
     filestream >> stylename;
     filestream >> paren;
 
@@ -1534,7 +1534,7 @@ bool KLegacyStylePrivate::parseStyle() {
     stylename = stylename.mid(1, stylename.length() - 2);
 
     if (paren == "=") {
-	QString newstylename;
+	TQString newstylename;
 	filestream >> newstylename;
 
 	if (newstylename.isNull() ||
@@ -1561,7 +1561,7 @@ bool KLegacyStylePrivate::parseStyle() {
     KLegacyStyleData *styledata = new KLegacyStyleData;
     styledata->name = stylename;
 
-    QString next, parameter;
+    TQString next, parameter;
     int paren_count = 1;
     while (paren_count) {
 	filestream >> next;
@@ -1577,7 +1577,7 @@ bool KLegacyStylePrivate::parseStyle() {
 
 	    if (l < 1 || r < 1 || r < l) continue;
 
-	    QString mode = next.mid(l + 1, r - l - 1);
+	    TQString mode = next.mid(l + 1, r - l - 1);
 	    if (mode == "ACTIVE")
 		state = Active;
 	    else if (mode == "NORMAL")
@@ -1595,12 +1595,12 @@ bool KLegacyStylePrivate::parseStyle() {
 	    if (next.isNull() || parameter.isNull() || next != "=") continue;
 
 	    if (parameter[0] == '\"') { // assume color of the form "#rrggbb"
-		QString colorname = parameter.mid(1, parameter.length() - 2);
+		TQString colorname = parameter.mid(1, parameter.length() - 2);
 		if (colorname.isNull()) continue;
 
 		styledata->base[state].setNamedColor(colorname);
 	    } else if (parameter == "{") { // assume color of the form  { ri, gi, bi }
-		QString color =filestream.readLine();
+		TQString color =filestream.readLine();
 
 		int rp, gp, bp;
 		float ri, gi, bi;
@@ -1623,7 +1623,7 @@ bool KLegacyStylePrivate::parseStyle() {
 
 	    if (l < 1 || r < 1 || r < l) continue;
 
-	    QString mode = next.mid(l + 1, r - l - 1);
+	    TQString mode = next.mid(l + 1, r - l - 1);
 	    if (mode == "ACTIVE")
 		state = Active;
 	    else if (mode == "NORMAL")
@@ -1641,12 +1641,12 @@ bool KLegacyStylePrivate::parseStyle() {
 	    if (next.isNull() || parameter.isNull() || next != "=") continue;
 
 	    if (parameter[0] == '\"') { // assume color of the form "#rrggbb"
-		QString colorname = parameter.mid(1, parameter.length() - 2);
+		TQString colorname = parameter.mid(1, parameter.length() - 2);
 		if (colorname.isNull()) continue;
 
 		styledata->back[state].setNamedColor(colorname);
 	    } else if (parameter == "{") { // assume color of the form  { ri, gi, bi }
-		QString color =filestream.readLine();
+		TQString color =filestream.readLine();
 
 		int rp, gp, bp;
 		float ri, gi, bi;
@@ -1672,7 +1672,7 @@ bool KLegacyStylePrivate::parseStyle() {
 
 	    if (l < 1 || r < 1 || r < l) continue;
 
-	    QString mode = next.mid(l + 1, r - l - 1);
+	    TQString mode = next.mid(l + 1, r - l - 1);
 	    if (mode == "ACTIVE")
 		state = Active;
 	    else if (mode == "NORMAL")
@@ -1690,12 +1690,12 @@ bool KLegacyStylePrivate::parseStyle() {
 	    if (next.isNull() || parameter.isNull() || next != "=") continue;
 
 	    if (parameter[0] == '\"') { // assume color of the form "#rrggbb"
-		QString colorname = parameter.mid(1, parameter.length() - 2);
+		TQString colorname = parameter.mid(1, parameter.length() - 2);
 		if (colorname.isNull()) continue;
 
 		styledata->fore[state].setNamedColor(colorname);
 	    } else if (parameter == "{") { // assume color of the form  { ri, gi, bi }
-		QString color = filestream.readLine();
+		TQString color = filestream.readLine();
 
 		int rp, gp, bp;
 		float ri, gi, bi;
@@ -1763,110 +1763,110 @@ int KLegacyStyle::defaultFrameWidth() const {
 }
 
 
-void KLegacyStyle::polish(QApplication *app) {
+void KLegacyStyle::polish(TQApplication *app) {
     priv->oldfont = app->font();
     priv->oldpalette = app->palette();
 
-    GtkObject *gobj = priv->gtkDict.find(QMainWindow::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.find(TQMainWindow::staticMetaObject());
 
     if (gobj) {
 	if (gobj->font()) {
 	    app->setFont(*gobj->font(), true);
 	}
 
-	QPalette pal = app->palette();
-	QBrush brush;
+	TQPalette pal = app->palette();
+	TQBrush brush;
 
 	// background
-	brush = pal.brush(QPalette::Active, QColorGroup::Background);
+	brush = pal.brush(TQPalette::Active, TQColorGroup::Background);
 	brush.setColor(gobj->backColor(KLegacy::Active));
-	pal.setBrush(QPalette::Active, QColorGroup::Background, brush);
+	pal.setBrush(TQPalette::Active, TQColorGroup::Background, brush);
 
-	brush = pal.brush(QPalette::Inactive, QColorGroup::Background);
+	brush = pal.brush(TQPalette::Inactive, TQColorGroup::Background);
 	brush.setColor(gobj->backColor(KLegacy::Normal));
-	pal.setBrush(QPalette::Inactive, QColorGroup::Background, brush);
+	pal.setBrush(TQPalette::Inactive, TQColorGroup::Background, brush);
 
-	brush = pal.brush(QPalette::Disabled, QColorGroup::Background);
+	brush = pal.brush(TQPalette::Disabled, TQColorGroup::Background);
 	brush.setColor(gobj->backColor(KLegacy::Insensitive));
-	pal.setBrush(QPalette::Disabled, QColorGroup::Background, brush);
+	pal.setBrush(TQPalette::Disabled, TQColorGroup::Background, brush);
 
 	// foreground
-	brush = pal.brush(QPalette::Active, QColorGroup::Foreground);
+	brush = pal.brush(TQPalette::Active, TQColorGroup::Foreground);
 	brush.setColor(gobj->foreColor(KLegacy::Active));
-	pal.setBrush(QPalette::Active, QColorGroup::Foreground, brush);
+	pal.setBrush(TQPalette::Active, TQColorGroup::Foreground, brush);
 
-	brush = pal.brush(QPalette::Inactive, QColorGroup::Foreground);
+	brush = pal.brush(TQPalette::Inactive, TQColorGroup::Foreground);
 	brush.setColor(gobj->foreColor(KLegacy::Normal));
-	pal.setBrush(QPalette::Inactive, QColorGroup::Foreground, brush);
+	pal.setBrush(TQPalette::Inactive, TQColorGroup::Foreground, brush);
 
-	brush = pal.brush(QPalette::Disabled, QColorGroup::Foreground);
+	brush = pal.brush(TQPalette::Disabled, TQColorGroup::Foreground);
 	brush.setColor(gobj->foreColor(KLegacy::Insensitive));
-	pal.setBrush(QPalette::Disabled, QColorGroup::Foreground, brush);
+	pal.setBrush(TQPalette::Disabled, TQColorGroup::Foreground, brush);
 
 	// base
-	brush = pal.brush(QPalette::Active, QColorGroup::Base);
+	brush = pal.brush(TQPalette::Active, TQColorGroup::Base);
 	brush.setColor(gobj->baseColor(KLegacy::Normal));
-	pal.setBrush(QPalette::Active, QColorGroup::Base, brush);
+	pal.setBrush(TQPalette::Active, TQColorGroup::Base, brush);
 
-	brush = pal.brush(QPalette::Inactive, QColorGroup::Base);
+	brush = pal.brush(TQPalette::Inactive, TQColorGroup::Base);
 	brush.setColor(gobj->baseColor(KLegacy::Normal));
-	pal.setBrush(QPalette::Inactive, QColorGroup::Base, brush);
+	pal.setBrush(TQPalette::Inactive, TQColorGroup::Base, brush);
 
-	brush = pal.brush(QPalette::Disabled, QColorGroup::Base);
+	brush = pal.brush(TQPalette::Disabled, TQColorGroup::Base);
 	brush.setColor(gobj->baseColor(KLegacy::Normal));
-	pal.setBrush(QPalette::Disabled, QColorGroup::Base, brush);
+	pal.setBrush(TQPalette::Disabled, TQColorGroup::Base, brush);
 
 	// button
-	brush = pal.brush(QPalette::Active, QColorGroup::Button);
+	brush = pal.brush(TQPalette::Active, TQColorGroup::Button);
 	brush.setColor(gobj->backColor(KLegacy::Active));
-	pal.setBrush(QPalette::Active, QColorGroup::Button, brush);
+	pal.setBrush(TQPalette::Active, TQColorGroup::Button, brush);
 
-	brush = pal.brush(QPalette::Normal, QColorGroup::Button);
+	brush = pal.brush(TQPalette::Normal, TQColorGroup::Button);
 	brush.setColor(gobj->backColor(KLegacy::Normal));
-	pal.setBrush(QPalette::Normal, QColorGroup::Button, brush);
+	pal.setBrush(TQPalette::Normal, TQColorGroup::Button, brush);
 
-	brush = pal.brush(QPalette::Disabled, QColorGroup::Button);
+	brush = pal.brush(TQPalette::Disabled, TQColorGroup::Button);
 	brush.setColor(gobj->backColor(KLegacy::Insensitive));
-	pal.setBrush(QPalette::Disabled, QColorGroup::Button, brush);
+	pal.setBrush(TQPalette::Disabled, TQColorGroup::Button, brush);
 
 	// text
-	brush = pal.brush(QPalette::Active, QColorGroup::Text);
+	brush = pal.brush(TQPalette::Active, TQColorGroup::Text);
 	brush.setColor(gobj->foreColor(KLegacy::Active));
-	pal.setBrush(QPalette::Active, QColorGroup::Text, brush);
+	pal.setBrush(TQPalette::Active, TQColorGroup::Text, brush);
 
-	brush = pal.brush(QPalette::Inactive, QColorGroup::Text);
+	brush = pal.brush(TQPalette::Inactive, TQColorGroup::Text);
 	brush.setColor(gobj->foreColor(KLegacy::Normal));
-	pal.setBrush(QPalette::Inactive, QColorGroup::Text, brush);
+	pal.setBrush(TQPalette::Inactive, TQColorGroup::Text, brush);
 
-	brush = pal.brush(QPalette::Disabled, QColorGroup::Text);
+	brush = pal.brush(TQPalette::Disabled, TQColorGroup::Text);
 	brush.setColor(gobj->foreColor(KLegacy::Insensitive));
-	pal.setBrush(QPalette::Disabled, QColorGroup::Text, brush);
+	pal.setBrush(TQPalette::Disabled, TQColorGroup::Text, brush);
 
 	// highlight
-	brush = pal.brush(QPalette::Active, QColorGroup::Highlight);
+	brush = pal.brush(TQPalette::Active, TQColorGroup::Highlight);
 	brush.setColor(gobj->backColor(KLegacy::Selected));
-	pal.setBrush(QPalette::Active, QColorGroup::Highlight, brush);
+	pal.setBrush(TQPalette::Active, TQColorGroup::Highlight, brush);
 
-	brush = pal.brush(QPalette::Active, QColorGroup::Highlight);
+	brush = pal.brush(TQPalette::Active, TQColorGroup::Highlight);
 	brush.setColor(gobj->backColor(KLegacy::Selected));
-	pal.setBrush(QPalette::Active, QColorGroup::Highlight, brush);
+	pal.setBrush(TQPalette::Active, TQColorGroup::Highlight, brush);
 
-	brush = pal.brush(QPalette::Active, QColorGroup::Highlight);
+	brush = pal.brush(TQPalette::Active, TQColorGroup::Highlight);
 	brush.setColor(gobj->backColor(KLegacy::Selected));
-	pal.setBrush(QPalette::Active, QColorGroup::Highlight, brush);
+	pal.setBrush(TQPalette::Active, TQColorGroup::Highlight, brush);
 
 	// highlight text
-	brush = pal.brush(QPalette::Active, QColorGroup::HighlightedText);
+	brush = pal.brush(TQPalette::Active, TQColorGroup::HighlightedText);
 	brush.setColor(gobj->foreColor(KLegacy::Selected));
-	pal.setBrush(QPalette::Active, QColorGroup::HighlightedText, brush);
+	pal.setBrush(TQPalette::Active, TQColorGroup::HighlightedText, brush);
 
-	brush = pal.brush(QPalette::Active, QColorGroup::HighlightedText);
+	brush = pal.brush(TQPalette::Active, TQColorGroup::HighlightedText);
 	brush.setColor(gobj->foreColor(KLegacy::Active));
-	pal.setBrush(QPalette::Active, QColorGroup::HighlightedText, brush);
+	pal.setBrush(TQPalette::Active, TQColorGroup::HighlightedText, brush);
 
-	brush = pal.brush(QPalette::Active, QColorGroup::HighlightedText);
+	brush = pal.brush(TQPalette::Active, TQColorGroup::HighlightedText);
 	brush.setColor(gobj->foreColor(KLegacy::Active));
-	pal.setBrush(QPalette::Active, QColorGroup::HighlightedText, brush);
+	pal.setBrush(TQPalette::Active, TQColorGroup::HighlightedText, brush);
 
 	app->setPalette(pal, true);
     }
@@ -1877,19 +1877,19 @@ void KLegacyStyle::polish(QApplication *app) {
 }
 
 
-void KLegacyStyle::polish(QWidget *widget) {
+void KLegacyStyle::polish(TQWidget *widget) {
     if (qstrcmp(widget->name(), "qt_viewport") == 0 ||
 	widget->testWFlags(WType_Popup) ||
 	widget->inherits("KDesktop"))
 	return;
 
-    if (widget->backgroundMode() == QWidget::PaletteBackground ||
-	widget->backgroundMode() == QWidget::PaletteButton &&
+    if (widget->backgroundMode() == TQWidget::PaletteBackground ||
+	widget->backgroundMode() == TQWidget::PaletteButton &&
 	(! widget->ownPalette()))
-	widget->setBackgroundMode(QWidget::X11ParentRelative);
+	widget->setBackgroundMode(TQWidget::X11ParentRelative);
 
-    QMetaObject *metaobject = 0;
-    QString detail;
+    TQMetaObject *metaobject = 0;
+    TQString detail;
     KLegacyImageDataKey key;
     key.cachekey = 0;
 
@@ -1898,40 +1898,40 @@ void KLegacyStyle::polish(QWidget *widget) {
     bool immediateRender = false;
     bool bgPixmap = false;
 
-    if (widget->inherits("QButton")) {
-	metaobject = QButton::staticMetaObject();
+    if (widget->inherits("TQButton")) {
+	metaobject = TQButton::staticMetaObject();
 	eventFilter = true;
     }
 
-    if (widget->inherits("QComboBox")) {
-	metaobject = QComboBox::staticMetaObject();
+    if (widget->inherits("TQComboBox")) {
+	metaobject = TQComboBox::staticMetaObject();
 	eventFilter = true;
     }
 
-    if (widget->inherits("QScrollBar")) {
-	metaobject = QScrollBar::staticMetaObject();
+    if (widget->inherits("TQScrollBar")) {
+	metaobject = TQScrollBar::staticMetaObject();
 	eventFilter = true;
 	mouseTrack = true;
     }
 
-    if (widget->inherits("QMenuBar")) {
+    if (widget->inherits("TQMenuBar")) {
 	eventFilter = true;
 	immediateRender = true;
 
-	metaobject = QMenuBar::staticMetaObject();
+	metaobject = TQMenuBar::staticMetaObject();
 
 	detail = "menubar";
 	key.data.function = KLegacy::Box;
 	key.data.shadow = KLegacy::Out;
 	key.data.state = KLegacy::Normal;
 
-	((QMenuBar *) widget)->setFrameShape(QFrame::StyledPanel);
-	((QMenuBar *) widget)->setLineWidth(0);
-	widget->setBackgroundMode(QWidget::PaletteBackground);
+	((TQMenuBar *) widget)->setFrameShape(TQFrame::StyledPanel);
+	((TQMenuBar *) widget)->setLineWidth(0);
+	widget->setBackgroundMode(TQWidget::PaletteBackground);
     }
 
-    if (widget->inherits("QToolBar")) {
-	metaobject = QToolBar::staticMetaObject();
+    if (widget->inherits("TQToolBar")) {
+	metaobject = TQToolBar::staticMetaObject();
 
 	eventFilter = true;
 	immediateRender = true;
@@ -1941,11 +1941,11 @@ void KLegacyStyle::polish(QWidget *widget) {
 	key.data.shadow = KLegacy::Out;
 	key.data.state = KLegacy::Normal;
 
-	widget->setBackgroundMode(QWidget::PaletteBackground);
+	widget->setBackgroundMode(TQWidget::PaletteBackground);
     }
 
-    if (widget->inherits("QLineEdit")) {
-	metaobject = QLineEdit::staticMetaObject();
+    if (widget->inherits("TQLineEdit")) {
+	metaobject = TQLineEdit::staticMetaObject();
 
 	eventFilter = true;
 	immediateRender = true;
@@ -1955,101 +1955,101 @@ void KLegacyStyle::polish(QWidget *widget) {
 	key.data.shadow = KLegacy::NoShadow;
 	key.data.state = (widget->isEnabled()) ? KLegacy::Normal : KLegacy::Insensitive;
 
-	widget->setBackgroundMode(QWidget::PaletteBase);
+	widget->setBackgroundMode(TQWidget::PaletteBase);
     }
 
     if (widget->isTopLevel() || widget->inherits("QWorkspaceChild")) {
 	immediateRender = true;
 
 	bgPixmap = true;
-	metaobject = QMainWindow::staticMetaObject();
+	metaobject = TQMainWindow::staticMetaObject();
 	key.cachekey = 0;
 	key.data.function = KLegacy::FlatBox;
 	detail = "base";
     }
 
-    if (widget->inherits("QPopupMenu")) {
+    if (widget->inherits("TQPopupMenu")) {
 	qDebug("polishing popup '%s'", widget->className());
-	metaobject = QPopupMenu::staticMetaObject();
-	widget->setBackgroundMode(QWidget::PaletteBackground);
+	metaobject = TQPopupMenu::staticMetaObject();
+	widget->setBackgroundMode(TQWidget::PaletteBackground);
     }
 
     GtkObject *gobj = gobj = priv->gtkDict.find(((metaobject) ? metaobject :
 						 widget->metaObject()));
 
     if (gobj) {
-	if (gobj->font() && (*gobj->font() != QApplication::font()))
+	if (gobj->font() && (*gobj->font() != TQApplication::font()))
 	    widget->setFont(*gobj->font());
 
 	if (immediateRender) {
-	    QPixmap *pix = gobj->draw(key, widget->width(), widget->height(), detail);
+	    TQPixmap *pix = gobj->draw(key, widget->width(), widget->height(), detail);
 
 	    if (pix && ! pix->isNull()) {
 		if (! bgPixmap) {
-		    QPalette pal = widget->palette();
-		    QBrush brush;
+		    TQPalette pal = widget->palette();
+		    TQBrush brush;
 
 		    // base
 		    // active
-		    brush = pal.brush(QPalette::Active,
-				      QColorGroup::Base);
+		    brush = pal.brush(TQPalette::Active,
+				      TQColorGroup::Base);
 		    brush.setPixmap(*pix);
-		    pal.setBrush(QPalette::Active,
-				 QColorGroup::Base, brush);
+		    pal.setBrush(TQPalette::Active,
+				 TQColorGroup::Base, brush);
 
 		    // inactive
-		    brush = pal.brush(QPalette::Inactive,
-				      QColorGroup::Base);
+		    brush = pal.brush(TQPalette::Inactive,
+				      TQColorGroup::Base);
 		    brush.setPixmap(*pix);
-		    pal.setBrush(QPalette::Inactive,
-				 QColorGroup::Base, brush);
+		    pal.setBrush(TQPalette::Inactive,
+				 TQColorGroup::Base, brush);
 
 		    // disabled
-		    brush = pal.brush(QPalette::Disabled,
-				      QColorGroup::Base);
+		    brush = pal.brush(TQPalette::Disabled,
+				      TQColorGroup::Base);
 		    brush.setPixmap(*pix);
-		    pal.setBrush(QPalette::Disabled,
-				 QColorGroup::Base, brush);
+		    pal.setBrush(TQPalette::Disabled,
+				 TQColorGroup::Base, brush);
 
 		    // background - button
 		    // active
-		    brush = pal.brush(QPalette::Active,
-				      QColorGroup::Background);
+		    brush = pal.brush(TQPalette::Active,
+				      TQColorGroup::Background);
 		    brush.setPixmap(*pix);
-		    pal.setBrush(QPalette::Active,
-				 QColorGroup::Background, brush);
+		    pal.setBrush(TQPalette::Active,
+				 TQColorGroup::Background, brush);
 
-		    brush = pal.brush(QPalette::Active,
-				      QColorGroup::Button);
+		    brush = pal.brush(TQPalette::Active,
+				      TQColorGroup::Button);
 		    brush.setPixmap(*pix);
-		    pal.setBrush(QPalette::Active,
-				 QColorGroup::Button, brush);
+		    pal.setBrush(TQPalette::Active,
+				 TQColorGroup::Button, brush);
 
 		    // inactive
-		    brush = pal.brush(QPalette::Inactive,
-				      QColorGroup::Background);
+		    brush = pal.brush(TQPalette::Inactive,
+				      TQColorGroup::Background);
 		    brush.setPixmap(*pix);
-		    pal.setBrush(QPalette::Inactive,
-				 QColorGroup::Background, brush);
+		    pal.setBrush(TQPalette::Inactive,
+				 TQColorGroup::Background, brush);
 
-		    brush = pal.brush(QPalette::Inactive,
-				      QColorGroup::Button);
+		    brush = pal.brush(TQPalette::Inactive,
+				      TQColorGroup::Button);
 		    brush.setPixmap(*pix);
-		    pal.setBrush(QPalette::Inactive,
-				 QColorGroup::Button, brush);
+		    pal.setBrush(TQPalette::Inactive,
+				 TQColorGroup::Button, brush);
 
 		    // disabled
-		    brush = pal.brush(QPalette::Disabled,
-				      QColorGroup::Background);
+		    brush = pal.brush(TQPalette::Disabled,
+				      TQColorGroup::Background);
 		    brush.setPixmap(*pix);
-		    pal.setBrush(QPalette::Disabled,
-				 QColorGroup::Background, brush);
+		    pal.setBrush(TQPalette::Disabled,
+				 TQColorGroup::Background, brush);
 
-		    brush = pal.brush(QPalette::Disabled,
-				      QColorGroup::Button);
+		    brush = pal.brush(TQPalette::Disabled,
+				      TQColorGroup::Button);
 		    brush.setPixmap(*pix);
-		    pal.setBrush(QPalette::Disabled,
-				 QColorGroup::Button, brush);
+		    pal.setBrush(TQPalette::Disabled,
+				 TQColorGroup::Button, brush);
 
 		    widget->setPalette(pal);
 		} else
@@ -2070,7 +2070,7 @@ void KLegacyStyle::polish(QWidget *widget) {
 }
 
 
-void KLegacyStyle::polishPopupMenu(QPopupMenu *popup) {
+void KLegacyStyle::polishPopupMenu(TQPopupMenu *popup) {
     KStyle::polishPopupMenu(popup);
 
     popup->setMouseTracking(true);
@@ -2080,12 +2080,12 @@ void KLegacyStyle::polishPopupMenu(QPopupMenu *popup) {
 }
 
 
-void KLegacyStyle::unPolish(QWidget *widget) {
+void KLegacyStyle::unPolish(TQWidget *widget) {
     if (widget->inherits("KDesktop"))
 	return;
 
-    widget->setBackgroundOrigin(QWidget::WidgetOrigin);
-    widget->setBackgroundPixmap(QPixmap());
+    widget->setBackgroundOrigin(TQWidget::WidgetOrigin);
+    widget->setBackgroundPixmap(TQPixmap());
     widget->removeEventFilter(this);
     widget->unsetPalette();
     widget->setAutoMask(false);
@@ -2093,7 +2093,7 @@ void KLegacyStyle::unPolish(QWidget *widget) {
 }
 
 
-void KLegacyStyle::unPolish(QApplication *app) {
+void KLegacyStyle::unPolish(TQApplication *app) {
     app->setFont(priv->oldfont, true);
     app->setPalette(priv->oldpalette, true);
 
@@ -2103,16 +2103,16 @@ void KLegacyStyle::unPolish(QApplication *app) {
 }
 
 
-void KLegacyStyle::drawKMenuItem(QPainter *p, int x, int y, int w, int h, const QColorGroup &g,
-				 bool active, QMenuItem *mi, QBrush *)
+void KLegacyStyle::drawKMenuItem(TQPainter *p, int x, int y, int w, int h, const TQColorGroup &g,
+				 bool active, TQMenuItem *mi, TQBrush *)
 {
-    drawMenuBarItem(p, x, y, w, h, mi, (QColorGroup &) g,
+    drawMenuBarItem(p, x, y, w, h, mi, (TQColorGroup &) g,
 		    (mi) ? mi->isEnabled() : false, active);
 }
 
 
-void KLegacyStyle::drawMenuBarItem(QPainter *p, int x, int y, int w, int h, QMenuItem *mi,
-				   QColorGroup &g, bool enabled, bool active)
+void KLegacyStyle::drawMenuBarItem(TQPainter *p, int x, int y, int w, int h, TQMenuItem *mi,
+				   TQColorGroup &g, bool enabled, bool active)
 {
     if (enabled && active) {
 	GtkObject *gobj = priv->gtkDict.find(&menuitem_ptr);
@@ -2124,7 +2124,7 @@ void KLegacyStyle::drawMenuBarItem(QPainter *p, int x, int y, int w, int h, QMen
 	    key.data.state = KLegacy::Prelight;
 	    key.data.shadow = KLegacy::Out;
 
-	    QPixmap *pix = gobj->draw(key, w, h, "menuitem");
+	    TQPixmap *pix = gobj->draw(key, w, h, "menuitem");
 
 	    if (pix && ! pix->isNull())
 		p->drawPixmap(x, y, *pix);
@@ -2136,18 +2136,18 @@ void KLegacyStyle::drawMenuBarItem(QPainter *p, int x, int y, int w, int h, QMen
 }
 
 
-void KLegacyStyle::drawButton(QPainter *p, int x, int y , int w, int h,
-			      const QColorGroup &g, bool sunken, const QBrush *fill)
+void KLegacyStyle::drawButton(TQPainter *p, int x, int y , int w, int h,
+			      const TQColorGroup &g, bool sunken, const TQBrush *fill)
 {
     drawBevelButton(p, x, y, w, h, g, sunken, fill);
 }
 
 
-void KLegacyStyle::drawBevelButton(QPainter *p, int x, int y, int w, int h,
-				const QColorGroup & g, bool sunken,
-				const QBrush *fill)
+void KLegacyStyle::drawBevelButton(TQPainter *p, int x, int y, int w, int h,
+				const TQColorGroup & g, bool sunken,
+				const TQBrush *fill)
 {
-    GtkObject *gobj = priv->gtkDict.find(QButton::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.find(TQButton::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawBevelButton(p, x, y, w, h, g, sunken, fill);
@@ -2160,7 +2160,7 @@ void KLegacyStyle::drawBevelButton(QPainter *p, int x, int y, int w, int h,
     key.data.shadow = (sunken) ? KLegacy::In : KLegacy::Out;
     key.data.state = (sunken) ? KLegacy::Active : KLegacy::Normal;
 
-    QPixmap *pix = gobj->draw(key, w, h, "button");
+    TQPixmap *pix = gobj->draw(key, w, h, "button");
 
     if (pix && (! pix->isNull()))
 	p->drawPixmap(x, y, *pix);
@@ -2169,8 +2169,8 @@ void KLegacyStyle::drawBevelButton(QPainter *p, int x, int y, int w, int h,
 }
 
 
-void KLegacyStyle::drawPushButton(QPushButton *btn, QPainter *p) {
-    GtkObject *gobj = priv->gtkDict.find(QPushButton::staticMetaObject());
+void KLegacyStyle::drawPushButton(TQPushButton *btn, TQPainter *p) {
+    GtkObject *gobj = priv->gtkDict.find(TQPushButton::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawPushButton(btn, p);
@@ -2181,8 +2181,8 @@ void KLegacyStyle::drawPushButton(QPushButton *btn, QPainter *p) {
     key.cachekey = 0;
     key.data.function = KLegacy::Box;
 
-    QColorGroup g = btn->colorGroup();
-    QBrush fill = g.brush(QColorGroup::Button);
+    TQColorGroup g = btn->colorGroup();
+    TQBrush fill = g.brush(TQColorGroup::Button);
     int x1, y1, x2, y2;
     btn->rect().coords(&x1, &y1, &x2, &y2);
 
@@ -2191,7 +2191,7 @@ void KLegacyStyle::drawPushButton(QPushButton *btn, QPainter *p) {
 	key.data.state = (btn->isEnabled()) ? KLegacy::Normal : KLegacy::Insensitive;
 	key.data.shadow = KLegacy::In;
 
-	QPixmap *pix = gobj->draw(key, x2 -x1 + 1, y2 - y1 + 1, "buttondefault");
+	TQPixmap *pix = gobj->draw(key, x2 -x1 + 1, y2 - y1 + 1, "buttondefault");
 
 	if (! pix)
 	    pix = gobj->draw(key, x2 - x1 + 1, y2 - y1 + 1, "button");
@@ -2216,13 +2216,13 @@ void KLegacyStyle::drawPushButton(QPushButton *btn, QPainter *p) {
 	key.data.shadow = KLegacy::In;
     } else {
 	key.data.state = ((btn->isEnabled()) ?
-			  ((static_cast<QWidget *>( btn ) == priv->lastWidget) ? KLegacy::Prelight : KLegacy::Normal) :
+			  ((static_cast<TQWidget *>( btn ) == priv->lastWidget) ? KLegacy::Prelight : KLegacy::Normal) :
 			  KLegacy::Insensitive);
 	key.data.shadow = ((btn->isOn() || btn->isDown()) ?
 			   KLegacy::In : KLegacy::Out);
     }
 
-    QPixmap *pix = gobj->draw(key, x2 - x1 + 1, y2 - y1 + 1, "button");
+    TQPixmap *pix = gobj->draw(key, x2 - x1 + 1, y2 - y1 + 1, "button");
 
     if (pix && ! pix->isNull())
 	p->drawPixmap(x1, y1, *pix);
@@ -2233,11 +2233,11 @@ void KLegacyStyle::drawPushButton(QPushButton *btn, QPainter *p) {
 }
 
 
-void KLegacyStyle::drawIndicator(QPainter *p, int x, int y, int w, int h,
-			      const QColorGroup &g, int state,
+void KLegacyStyle::drawIndicator(TQPainter *p, int x, int y, int w, int h,
+			      const TQColorGroup &g, int state,
 			      bool down, bool enabled)
 {
-    GtkObject *gobj = priv->gtkDict.find(QCheckBox::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.find(TQCheckBox::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawIndicator(p, x, y, w, h, g, state, down, enabled);
@@ -2248,9 +2248,9 @@ void KLegacyStyle::drawIndicator(QPainter *p, int x, int y, int w, int h,
     key.cachekey = 0;
     key.data.function = KLegacy::Check;
     key.data.state = KLegacy::Normal;
-    key.data.shadow = ((state != QButton::Off) || down) ? KLegacy::In : KLegacy::Out;
+    key.data.shadow = ((state != TQButton::Off) || down) ? KLegacy::In : KLegacy::Out;
 
-    QPixmap *pix = gobj->draw(key, w, h, "checkbutton");
+    TQPixmap *pix = gobj->draw(key, w, h, "checkbutton");
 
     if (pix && (! pix->isNull()))
      	p->drawPixmap(x, y, *pix);
@@ -2259,8 +2259,8 @@ void KLegacyStyle::drawIndicator(QPainter *p, int x, int y, int w, int h,
 }
 
 
-void KLegacyStyle::drawIndicatorMask(QPainter *p, int x, int y, int w, int h, int state) {
-    GtkObject *gobj = priv->gtkDict.find(QCheckBox::staticMetaObject());
+void KLegacyStyle::drawIndicatorMask(TQPainter *p, int x, int y, int w, int h, int state) {
+    GtkObject *gobj = priv->gtkDict.find(TQCheckBox::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawIndicatorMask(p, x, y, w, h, state);
@@ -2271,9 +2271,9 @@ void KLegacyStyle::drawIndicatorMask(QPainter *p, int x, int y, int w, int h, in
     key.cachekey = 0;
     key.data.function = KLegacy::Check;
     key.data.state = KLegacy::Normal;
-    key.data.shadow = (state != QButton::Off) ? KLegacy::In : KLegacy::Out;
+    key.data.shadow = (state != TQButton::Off) ? KLegacy::In : KLegacy::Out;
 
-    QPixmap *pix = gobj->draw(key, w, h, "checkbutton");
+    TQPixmap *pix = gobj->draw(key, w, h, "checkbutton");
 
     if (pix && pix->mask() && ! pix->mask()->isNull())
 	p->drawPixmap(x, y, *(pix->mask()));
@@ -2282,8 +2282,8 @@ void KLegacyStyle::drawIndicatorMask(QPainter *p, int x, int y, int w, int h, in
 }
 
 
-QSize KLegacyStyle::indicatorSize(void) const {
-    GtkObject *gobj = priv->gtkDict.find(QCheckBox::staticMetaObject());
+TQSize KLegacyStyle::indicatorSize(void) const {
+    GtkObject *gobj = priv->gtkDict.find(TQCheckBox::staticMetaObject());
 
     if (! gobj)	return KStyle::indicatorSize();
 
@@ -2295,7 +2295,7 @@ QSize KLegacyStyle::indicatorSize(void) const {
 
     if (! id) return KStyle::indicatorSize();
 
-    QString filename;
+    TQString filename;
     if (! id->file.isNull())
 	filename = id->file;
     else if (! id->overlayFile.isNull())
@@ -2303,24 +2303,24 @@ QSize KLegacyStyle::indicatorSize(void) const {
     else
 	return KStyle::indicatorSize();
 
-    QImage *image = imageCache->find(filename);
+    TQImage *image = imageCache->find(filename);
     if (! image) {
-        image = new QImage(filename);
+        image = new TQImage(filename);
 
         if (! image) return KStyle::indicatorSize();
 
         imageCache->insert(filename, image);
     }
 
-    return QSize(image->width(), image->height());
+    return TQSize(image->width(), image->height());
 }
 
 
-void KLegacyStyle::drawExclusiveIndicator(QPainter *p, int x, int y, int w, int h,
-				      const QColorGroup &g, bool on,
+void KLegacyStyle::drawExclusiveIndicator(TQPainter *p, int x, int y, int w, int h,
+				      const TQColorGroup &g, bool on,
 				       bool down, bool enabled)
 {
-    GtkObject *gobj = priv->gtkDict.find(QRadioButton::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.find(TQRadioButton::staticMetaObject());
 
     if (! gobj) {
 	drawExclusiveIndicator(p, x, y, w, h, g, on, down, enabled);
@@ -2333,7 +2333,7 @@ void KLegacyStyle::drawExclusiveIndicator(QPainter *p, int x, int y, int w, int 
     key.data.state = KLegacy::Normal;
     key.data.shadow = (on || down) ? KLegacy::In : KLegacy::Out;
 
-    QPixmap *pix = gobj->draw(key, w, h, "radiobutton");
+    TQPixmap *pix = gobj->draw(key, w, h, "radiobutton");
 
     if (pix && (! pix->isNull()))
 	p->drawPixmap(x, y, *pix);
@@ -2342,10 +2342,10 @@ void KLegacyStyle::drawExclusiveIndicator(QPainter *p, int x, int y, int w, int 
 }
 
 
-void KLegacyStyle::drawExclusiveIndicatorMask(QPainter *p, int x, int y, int w, int h,
+void KLegacyStyle::drawExclusiveIndicatorMask(TQPainter *p, int x, int y, int w, int h,
 					   bool on)
 {
-    GtkObject *gobj = priv->gtkDict.find(QRadioButton::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.find(TQRadioButton::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawExclusiveIndicatorMask(p, x, y, w, h, on);
@@ -2358,7 +2358,7 @@ void KLegacyStyle::drawExclusiveIndicatorMask(QPainter *p, int x, int y, int w, 
     key.data.state = KLegacy::Normal;
     key.data.shadow = (on) ? KLegacy::In : KLegacy::Out;
 
-    QPixmap *pix = gobj->draw(key, w, h, "radiobutton");
+    TQPixmap *pix = gobj->draw(key, w, h, "radiobutton");
 
     if (pix && pix->mask() && ! pix->mask()->isNull())
 	p->drawPixmap(x, y, *(pix->mask()));
@@ -2367,8 +2367,8 @@ void KLegacyStyle::drawExclusiveIndicatorMask(QPainter *p, int x, int y, int w, 
 }
 
 
-QSize KLegacyStyle::exclusiveIndicatorSize(void) const {
-    GtkObject *gobj = priv->gtkDict.find(QRadioButton::staticMetaObject());
+TQSize KLegacyStyle::exclusiveIndicatorSize(void) const {
+    GtkObject *gobj = priv->gtkDict.find(TQRadioButton::staticMetaObject());
 
     if (! gobj) {
 	return KStyle::indicatorSize();
@@ -2382,7 +2382,7 @@ QSize KLegacyStyle::exclusiveIndicatorSize(void) const {
 
     if (! id) return KStyle::indicatorSize();
 
-    QString filename;
+    TQString filename;
     if (! id->file.isNull()) {
 	filename = id->file;
     } else if (! id->overlayFile.isNull()) {
@@ -2391,9 +2391,9 @@ QSize KLegacyStyle::exclusiveIndicatorSize(void) const {
 	return KStyle::indicatorSize();
     }
 
-    QImage *image = imageCache->find(filename);
+    TQImage *image = imageCache->find(filename);
     if (! image) {
-        image = new QImage(filename);
+        image = new TQImage(filename);
 
         if (! image) {
 	    return KStyle::indicatorSize();
@@ -2402,16 +2402,16 @@ QSize KLegacyStyle::exclusiveIndicatorSize(void) const {
         imageCache->insert(filename, image);
     }
 
-    return QSize(image->width(), image->height());
+    return TQSize(image->width(), image->height());
 }
 
 
-void KLegacyStyle::drawPopupMenuItem(QPainter *p, bool checkable, int maxpmw, int tab,
-				  QMenuItem *mi, const QPalette &pal, bool act,
+void KLegacyStyle::drawPopupMenuItem(TQPainter *p, bool checkable, int maxpmw, int tab,
+				  TQMenuItem *mi, const TQPalette &pal, bool act,
 				  bool enabled, int x, int y, int w, int h)
 {
-    const QColorGroup & g = pal.active();
-    QColorGroup itemg = (! enabled) ? pal.disabled() : pal.active();
+    const TQColorGroup & g = pal.active();
+    TQColorGroup itemg = (! enabled) ? pal.disabled() : pal.active();
 
     if (checkable)
 	maxpmw = QMAX(maxpmw, 15);
@@ -2436,13 +2436,13 @@ void KLegacyStyle::drawPopupMenuItem(QPainter *p, bool checkable, int maxpmw, in
 	    key.data.state = KLegacy::Prelight;
 	    key.data.shadow = KLegacy::Out;
 
-	    QPixmap *pix = gobj->draw(key, w, h, "menuitem");
+	    TQPixmap *pix = gobj->draw(key, w, h, "menuitem");
 
 	    if (pix && ! pix->isNull())
 		p->drawPixmap(x, y, *pix);
 	}
     } else
-	p->fillRect(x, y, w, h, g.brush( QColorGroup::Button ));
+	p->fillRect(x, y, w, h, g.brush( TQColorGroup::Button ));
 
     if ( !mi )
 	return;
@@ -2450,26 +2450,26 @@ void KLegacyStyle::drawPopupMenuItem(QPainter *p, bool checkable, int maxpmw, in
     if ( mi->isChecked() ) {
 	if ( mi->iconSet() ) {
 	    qDrawShadePanel( p, x+2, y+2, checkcol, h-2*2,
-			     g, true, 1, &g.brush( QColorGroup::Midlight ) );
+			     g, true, 1, &g.brush( TQColorGroup::Midlight ) );
 	}
     } else if ( !act ) {
 	p->fillRect(x+2, y+2, checkcol, h-2*2,
-		    g.brush( QColorGroup::Button ));
+		    g.brush( TQColorGroup::Button ));
     }
 
     if ( mi->iconSet() ) {		// draw iconset
-	QIconSet::Mode mode = (enabled) ? QIconSet::Normal : QIconSet::Disabled;
+	TQIconSet::Mode mode = (enabled) ? TQIconSet::Normal : TQIconSet::Disabled;
 
 	if (act && enabled)
-	    mode = QIconSet::Active;
+	    mode = TQIconSet::Active;
 
-	QPixmap pixmap = mi->iconSet()->pixmap(QIconSet::Small, mode);
+	TQPixmap pixmap = mi->iconSet()->pixmap(TQIconSet::Small, mode);
 
 	int pixw = pixmap.width();
 	int pixh = pixmap.height();
 
-	QRect cr( x + 2, y+2, checkcol, h-2*2 );
-	QRect pmr( 0, 0, pixw, pixh );
+	TQRect cr( x + 2, y+2, checkcol, h-2*2 );
+	TQRect pmr( 0, 0, pixw, pixh );
 
 	pmr.moveCenter(cr.center());
 
@@ -2486,7 +2486,7 @@ void KLegacyStyle::drawPopupMenuItem(QPainter *p, bool checkable, int maxpmw, in
 
     p->setPen( g.buttonText() );
 
-    QColor discol;
+    TQColor discol;
     if (! enabled) {
 	discol = itemg.text();
 	p->setPen( discol );
@@ -2499,7 +2499,7 @@ void KLegacyStyle::drawPopupMenuItem(QPainter *p, bool checkable, int maxpmw, in
 	p->restore();
     }
 
-    QString s = mi->text();
+    TQString s = mi->text();
     if ( !s.isNull() ) {			// draw text
 	int t = s.find( '\t' );
 	int m = 2;
@@ -2511,7 +2511,7 @@ void KLegacyStyle::drawPopupMenuItem(QPainter *p, bool checkable, int maxpmw, in
 	p->drawText(x + checkcol + 4, y + 2, w - checkcol -tab - 3, h - 4,
 		    text_flags, s, t);
     } else if (mi->pixmap()) {
-	QPixmap *pixmap = mi->pixmap();
+	TQPixmap *pixmap = mi->pixmap();
 
 	if (pixmap->depth() == 1) p->setBackgroundMode(OpaqueMode);
 	p->drawPixmap(x + checkcol + 2, y + 2, *pixmap);
@@ -2527,11 +2527,11 @@ void KLegacyStyle::drawPopupMenuItem(QPainter *p, bool checkable, int maxpmw, in
 }
 
 
-void KLegacyStyle::drawComboButton(QPainter *p, int x, int y, int w, int h,
-				const QColorGroup &g, bool sunken, bool editable,
-				bool enabled, const QBrush *b)
+void KLegacyStyle::drawComboButton(TQPainter *p, int x, int y, int w, int h,
+				const TQColorGroup &g, bool sunken, bool editable,
+				bool enabled, const TQBrush *b)
 {
-    GtkObject *gobj = priv->gtkDict.find(QComboBox::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.find(TQComboBox::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawComboButton(p, x, y, w, h, g, sunken, editable, enabled, b);
@@ -2544,10 +2544,10 @@ void KLegacyStyle::drawComboButton(QPainter *p, int x, int y, int w, int h,
     key.data.state = KLegacy::Normal;
     key.data.shadow = KLegacy::Out;
 
-    if (priv->lastWidget && priv->lastWidget->inherits("QComboBox"))
+    if (priv->lastWidget && priv->lastWidget->inherits("TQComboBox"))
 	key.data.state = KLegacy::Prelight;
 
-    QPixmap *pix = gobj->draw(key, w, h, "optionmenu");
+    TQPixmap *pix = gobj->draw(key, w, h, "optionmenu");
 
     if (pix && ! pix->isNull()) {
 	p->drawPixmap(x, y, *pix);
@@ -2556,7 +2556,7 @@ void KLegacyStyle::drawComboButton(QPainter *p, int x, int y, int w, int h,
 	return;
     }
 
-    QRect rect = comboButtonRect(x, y, w, h);
+    TQRect rect = comboButtonRect(x, y, w, h);
     int tw = w - rect.width() - rect.right() - rect.left();
     int th = rect.height();
 
@@ -2570,8 +2570,8 @@ void KLegacyStyle::drawComboButton(QPainter *p, int x, int y, int w, int h,
 }
 
 
-QRect KLegacyStyle::comboButtonRect(int x, int y, int w, int h) {
-    GtkObject *gobj = priv->gtkDict.find(QComboBox::staticMetaObject());
+TQRect KLegacyStyle::comboButtonRect(int x, int y, int w, int h) {
+    GtkObject *gobj = priv->gtkDict.find(TQComboBox::staticMetaObject());
 
     if (! gobj) {
 	return KStyle::comboButtonRect(x, y, w, h);
@@ -2586,32 +2586,32 @@ QRect KLegacyStyle::comboButtonRect(int x, int y, int w, int h) {
 	return KStyle::comboButtonRect(x, y, w, h);
     }
 
-    return QRect(x + id->border.left() + 1, y + id->border.top() + 1,
+    return TQRect(x + id->border.left() + 1, y + id->border.top() + 1,
 		 w - id->border.left() - id->border.right() - 18,
 		 h - id->border.top() - id->border.bottom() - 2);
 }
 
 
-QRect KLegacyStyle::comboButtonFocusRect(int x, int  y, int w, int h) {
+TQRect KLegacyStyle::comboButtonFocusRect(int x, int  y, int w, int h) {
     return comboButtonRect(x, y, w, h);
 }
 
 
-QStyle::ScrollControl KLegacyStyle::scrollBarPointOver(const QScrollBar *scrollbar,
-						       int sliderStart, const QPoint &p)
+TQStyle::ScrollControl KLegacyStyle::scrollBarPointOver(const TQScrollBar *scrollbar,
+						       int sliderStart, const TQPoint &p)
 {
-    return QCommonStyle::scrollBarPointOver(scrollbar, sliderStart, p);
+    return TQCommonStyle::scrollBarPointOver(scrollbar, sliderStart, p);
 }
 
 
-void KLegacyStyle::scrollBarMetrics(const QScrollBar *scrollbar, int &sliderMin,
+void KLegacyStyle::scrollBarMetrics(const TQScrollBar *scrollbar, int &sliderMin,
 				 int &sliderMax, int &sliderLength, int &buttonDim)
 {
     int maxLength;
     int b = defaultFrameWidth();
-    int length = ((scrollbar->orientation() == QScrollBar::Horizontal) ?
+    int length = ((scrollbar->orientation() == TQScrollBar::Horizontal) ?
 		  scrollbar->width() : scrollbar->height());
-    int extent = ((scrollbar->orientation() == QScrollBar::Horizontal) ?
+    int extent = ((scrollbar->orientation() == TQScrollBar::Horizontal) ?
 		  scrollbar->height() : scrollbar->width());
 
     if (length > ((extent - (b * 2) - 1) * 2) + (b * 2))
@@ -2643,12 +2643,12 @@ void KLegacyStyle::scrollBarMetrics(const QScrollBar *scrollbar, int &sliderMin,
 }
 
 
-void KLegacyStyle::drawScrollBarControls(QPainter *p, const QScrollBar *scrollbar,
+void KLegacyStyle::drawScrollBarControls(TQPainter *p, const TQScrollBar *scrollbar,
 				     int start, uint controls, uint active)
 {
     if (! scrollbar->isVisible()) return;
 
-    GtkObject *gobj = priv->gtkDict.find(QScrollBar::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.find(TQScrollBar::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawScrollBarControls(p, scrollbar, start, controls, active);
@@ -2674,7 +2674,7 @@ void KLegacyStyle::drawScrollBarControls(QPainter *p, const QScrollBar *scrollba
     scrollBarMetrics(scrollbar, sliderMin, sliderMax, sliderLen, buttonDim);
 
     // the rectangle for the slider
-    QRect slider(
+    TQRect slider(
 		 // x
 		 ((scrollbar->orientation() == Vertical) ?
 		  defaultFrameWidth() : start),
@@ -2708,21 +2708,21 @@ void KLegacyStyle::drawScrollBarControls(QPainter *p, const QScrollBar *scrollba
 	return;
     }
 
-    QPixmap *groove_pm = gobj->draw(groove_id, scrollbar->width(), scrollbar->height());
+    TQPixmap *groove_pm = gobj->draw(groove_id, scrollbar->width(), scrollbar->height());
 
     if ((! groove_pm) || (groove_pm->isNull())) {
 	groove_pm = 0;
     }
 
-    QPixmap *slider_pm = gobj->draw(slider_id, slider.width(), slider.height());
+    TQPixmap *slider_pm = gobj->draw(slider_id, slider.width(), slider.height());
 
     if ((! slider_pm) || (slider_pm->isNull())) {
 	slider_pm = 0;
     }
 
-    QPixmap buf(scrollbar->size());
+    TQPixmap buf(scrollbar->size());
     {
-	QPainter p2(&buf);
+	TQPainter p2(&buf);
 
 	if (groove_pm) {
 	    p2.drawTiledPixmap(scrollbar->rect(), *groove_pm);
@@ -2759,10 +2759,10 @@ void KLegacyStyle::drawScrollBarControls(QPainter *p, const QScrollBar *scrollba
 }
 
 
-void KLegacyStyle::drawSlider(QPainter *p, int x, int y, int w, int h, const QColorGroup &g,
+void KLegacyStyle::drawSlider(TQPainter *p, int x, int y, int w, int h, const TQColorGroup &g,
 			   Orientation orientation, bool tickAbove, bool tickBelow)
 {
-    GtkObject *gobj = priv->gtkDict.find(QSlider::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.find(TQSlider::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawSlider(p, x, y, w, h, g, orientation, tickAbove, tickBelow);
@@ -2776,7 +2776,7 @@ void KLegacyStyle::drawSlider(QPainter *p, int x, int y, int w, int h, const QCo
     key.data.state = KLegacy::Normal;
     key.data.orientation = orientation + 1;
 
-    QPixmap *pix = gobj->draw(key, w, h, "slider");
+    TQPixmap *pix = gobj->draw(key, w, h, "slider");
 
     if (pix && ! pix->isNull())
 	p->drawPixmap(x, y, *pix);
@@ -2786,10 +2786,10 @@ void KLegacyStyle::drawSlider(QPainter *p, int x, int y, int w, int h, const QCo
 
 
 
-void KLegacyStyle::drawSliderGroove(QPainter *p, int x, int y, int w, int h,
-				const QColorGroup &g, QCOORD c, Orientation o)
+void KLegacyStyle::drawSliderGroove(TQPainter *p, int x, int y, int w, int h,
+				const TQColorGroup &g, QCOORD c, Orientation o)
 {
-    GtkObject *gobj = priv->gtkDict.find(QSlider::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.find(TQSlider::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawSliderGroove(p, x, y, w, h, g, c, o);
@@ -2803,7 +2803,7 @@ void KLegacyStyle::drawSliderGroove(QPainter *p, int x, int y, int w, int h,
     key.data.state = KLegacy::Active;
     key.data.orientation = o + 1;
 
-    QPixmap *pix = gobj->draw(key, w, h, "trough");
+    TQPixmap *pix = gobj->draw(key, w, h, "trough");
 
     if (pix && ! pix->isNull())
 	p->drawPixmap(x, y, *pix);
@@ -2812,9 +2812,9 @@ void KLegacyStyle::drawSliderGroove(QPainter *p, int x, int y, int w, int h,
 }
 
 
-void KLegacyStyle::drawArrow(QPainter *p, ArrowType type, bool down,
+void KLegacyStyle::drawArrow(TQPainter *p, ArrowType type, bool down,
 			 int x, int y, int w, int h,
-			 const QColorGroup &g, bool enabled, const QBrush *b)
+			 const TQColorGroup &g, bool enabled, const TQBrush *b)
 {
     GtkObject *gobj = priv->gtkDict.find(&arrow_ptr);
 
@@ -2831,11 +2831,11 @@ void KLegacyStyle::drawArrow(QPainter *p, ArrowType type, bool down,
     key.data.arrowDirection = type + 1;
 
     if ((! down) && priv->hovering &&
-	QRect(x, y, w, h).contains(priv->mousePos)) {
+	TQRect(x, y, w, h).contains(priv->mousePos)) {
 	key.data.state = KLegacy::Prelight;
     }
 
-    QPixmap *pix = gobj->draw(key, w, h, "arrow");
+    TQPixmap *pix = gobj->draw(key, w, h, "arrow");
 
     if (pix && ! pix->isNull())
 	p->drawPixmap(x, y, *pix);
@@ -2844,9 +2844,9 @@ void KLegacyStyle::drawArrow(QPainter *p, ArrowType type, bool down,
 }
 
 
-void KLegacyStyle::drawMenuArrow(QPainter *p, ArrowType type, bool down,
+void KLegacyStyle::drawMenuArrow(TQPainter *p, ArrowType type, bool down,
 			 int x, int y, int w, int h,
-			 const QColorGroup &g, bool enabled, const QBrush *b)
+			 const TQColorGroup &g, bool enabled, const TQBrush *b)
 {
     GtkObject *gobj = priv->gtkDict.find(&menuitem_ptr);
 
@@ -2862,7 +2862,7 @@ void KLegacyStyle::drawMenuArrow(QPainter *p, ArrowType type, bool down,
     key.data.shadow = (down) ? KLegacy::In : KLegacy::NoShadow;
     key.data.arrowDirection = type + 1;
 
-    QPixmap *pix = gobj->draw(key, w, h, "arrow");
+    TQPixmap *pix = gobj->draw(key, w, h, "arrow");
 
     if (pix && ! pix->isNull())
     	p->drawPixmap(x + ((w - pix->width()) / 2),
@@ -2872,24 +2872,24 @@ void KLegacyStyle::drawMenuArrow(QPainter *p, ArrowType type, bool down,
 }
 
 
-void KLegacyStyle::drawPanel(QPainter *p, int x, int y, int w, int h,
-			  const QColorGroup &g, bool sunken, int, const QBrush *brush)
+void KLegacyStyle::drawPanel(TQPainter *p, int x, int y, int w, int h,
+			  const TQColorGroup &g, bool sunken, int, const TQBrush *brush)
 {
     KStyle::drawPanel(p, x, y, w, h, g, sunken, 1, brush);
 }
 
 
-void KLegacyStyle::drawPopupPanel(QPainter *p, int x, int y, int w, int h,
-				  const QColorGroup &g, int, const QBrush *fill)
+void KLegacyStyle::drawPopupPanel(TQPainter *p, int x, int y, int w, int h,
+				  const TQColorGroup &g, int, const TQBrush *fill)
 {
-    QBrush brush = (fill) ? *fill : g.brush(QColorGroup::Background);
+    TQBrush brush = (fill) ? *fill : g.brush(TQColorGroup::Background);
 
     p->fillRect(x, y, w, h, brush);
 }
 
 
-void KLegacyStyle::drawCheckMark(QPainter *p, int x, int y, int w, int h,
-			      const QColorGroup &g, bool activated, bool disabled)
+void KLegacyStyle::drawCheckMark(TQPainter *p, int x, int y, int w, int h,
+			      const TQColorGroup &g, bool activated, bool disabled)
 {
     GtkObject *gobj = priv->gtkDict.find(&checkmenuitem_ptr);
 
@@ -2903,7 +2903,7 @@ void KLegacyStyle::drawCheckMark(QPainter *p, int x, int y, int w, int h,
     key.data.function = KLegacy::Check;
     key.data.shadow = (disabled) ? KLegacy::Out : KLegacy::In;
 
-    QPixmap *pix = gobj->draw(key, w, h);
+    TQPixmap *pix = gobj->draw(key, w, h);
 
     if (pix && (! pix->isNull())) {
 	x += (w - pix->width()) / 2;
@@ -2915,8 +2915,8 @@ void KLegacyStyle::drawCheckMark(QPainter *p, int x, int y, int w, int h,
 }
 
 
-void KLegacyStyle::drawSplitter(QPainter *p, int x, int y, int w, int h,
-			     const QColorGroup &g, Orientation orientation)
+void KLegacyStyle::drawSplitter(TQPainter *p, int x, int y, int w, int h,
+			     const TQColorGroup &g, Orientation orientation)
 {
     if (orientation == Horizontal) {
 	int xpos = x + (w / 2);
@@ -2925,7 +2925,7 @@ void KLegacyStyle::drawSplitter(QPainter *p, int x, int y, int w, int h,
 
 	qDrawShadeLine(p, xpos, kpos + ksize - 1, xpos, h, g);
 	drawBevelButton(p, xpos - (splitterWidth() / 2) + 1, kpos, ksize, ksize,
-			g, false, &g.brush(QColorGroup::Button));
+			g, false, &g.brush(TQColorGroup::Button));
 	qDrawShadeLine(p, xpos, 0, xpos, kpos, g);
     } else {
 	int ypos = y + (h / 2);
@@ -2934,15 +2934,15 @@ void KLegacyStyle::drawSplitter(QPainter *p, int x, int y, int w, int h,
 
 	qDrawShadeLine(p, 0, ypos, kpos, ypos, g);
 	drawBevelButton(p, kpos, ypos - (splitterWidth() / 2) + 1, ksize, ksize,
-			g, false, &g.brush(QColorGroup::Button));
+			g, false, &g.brush(TQColorGroup::Button));
 	qDrawShadeLine(p, kpos + ksize - 1, ypos, w, ypos, g);
     }
 }
 
 
-void KLegacyStyle::drawTab(QPainter *p, const QTabBar *tabbar, QTab *tab, bool selected)
+void KLegacyStyle::drawTab(TQPainter *p, const TQTabBar *tabbar, TQTab *tab, bool selected)
 {
-    GtkObject *gobj = priv->gtkDict.find(QTabBar::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.find(TQTabBar::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawTab(p, tabbar, tab, selected);
@@ -2954,8 +2954,8 @@ void KLegacyStyle::drawTab(QPainter *p, const QTabBar *tabbar, QTab *tab, bool s
     key.data.function = KLegacy::Extension;
     key.data.state = (! selected) ? KLegacy::Active : KLegacy::Normal;
     key.data.shadow = KLegacy::Out;
-    key.data.gapSide = (tabbar->shape() == QTabBar::RoundedAbove ||
-			tabbar->shape() == QTabBar::TriangularAbove) ?
+    key.data.gapSide = (tabbar->shape() == TQTabBar::RoundedAbove ||
+			tabbar->shape() == TQTabBar::TriangularAbove) ?
 		       KLegacy::Bottom : KLegacy::Top;
 
     int ry = tab->r.top(), rh = tab->r.height();
@@ -2963,12 +2963,12 @@ void KLegacyStyle::drawTab(QPainter *p, const QTabBar *tabbar, QTab *tab, bool s
     if (! selected) {
 	rh -= 2;
 
-	if (tabbar->shape() == QTabBar::RoundedAbove ||
-	    tabbar->shape() == QTabBar::TriangularAbove)
+	if (tabbar->shape() == TQTabBar::RoundedAbove ||
+	    tabbar->shape() == TQTabBar::TriangularAbove)
 	    ry += 2;
     }
 
-    QPixmap *pix = gobj->draw(key, tab->r.width(), rh, "tab");
+    TQPixmap *pix = gobj->draw(key, tab->r.width(), rh, "tab");
 
 
     if (pix && ! pix->isNull())
@@ -2978,10 +2978,10 @@ void KLegacyStyle::drawTab(QPainter *p, const QTabBar *tabbar, QTab *tab, bool s
 }
 
 
-void KLegacyStyle::drawKBarHandle(QPainter *p, int x, int y, int w, int h,
-				  const QColorGroup &g, KToolBarPos type, QBrush *fill)
+void KLegacyStyle::drawKBarHandle(TQPainter *p, int x, int y, int w, int h,
+				  const TQColorGroup &g, KToolBarPos type, TQBrush *fill)
 {
-    GtkObject *gobj = priv->gtkDict.find(QToolBar::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.find(TQToolBar::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawKBarHandle(p, x, y, w, h, g, type, fill);
@@ -2996,37 +2996,37 @@ void KLegacyStyle::drawKBarHandle(QPainter *p, int x, int y, int w, int h,
     key.data.orientation = (type == Left || type == Right) ?
 			   Vertical + 1: Horizontal + 1;
 
-    QPixmap *pix = gobj->draw(key, w, h, "handle");
+    TQPixmap *pix = gobj->draw(key, w, h, "handle");
 
     if (pix && ! pix->isNull())
 	p->drawPixmap(x, y, *pix);
 }
 
 
-void KLegacyStyle::drawKickerHandle(QPainter *p, int x, int y, int w, int h,
-				    const QColorGroup &g, QBrush *fill)
+void KLegacyStyle::drawKickerHandle(TQPainter *p, int x, int y, int w, int h,
+				    const TQColorGroup &g, TQBrush *fill)
 {
     drawKBarHandle(p, x, y, w, h, g, Left, fill);
 }
 
 
-void KLegacyStyle::drawKickerAppletHandle(QPainter *p, int x, int y, int w, int h,
-					  const QColorGroup &g, QBrush *fill)
+void KLegacyStyle::drawKickerAppletHandle(TQPainter *p, int x, int y, int w, int h,
+					  const TQColorGroup &g, TQBrush *fill)
 {
     drawKBarHandle(p, x, y, w, h, g, Left, fill);
 }
 
 
-void KLegacyStyle::drawKickerTaskButton(QPainter *p, int x, int y, int w, int h,
-					const QColorGroup &g, const QString &title,
-					bool active, QPixmap *icon, QBrush *fill)
+void KLegacyStyle::drawKickerTaskButton(TQPainter *p, int x, int y, int w, int h,
+					const TQColorGroup &g, const TQString &title,
+					bool active, TQPixmap *icon, TQBrush *fill)
 {
     drawBevelButton(p, x, y, w, h, g, active, fill);
 
     const int pxWidth = 20;
     int textPos = pxWidth;
 
-    QRect br(buttonRect(x, y, w, h));
+    TQRect br(buttonRect(x, y, w, h));
 
     if (active)
         p->translate(1,1);
@@ -3038,17 +3038,17 @@ void KLegacyStyle::drawKickerTaskButton(QPainter *p, int x, int y, int w, int h,
         p->drawPixmap(br.x() + dx, dy, *icon);
     }
 
-    QString s(title);
+    TQString s(title);
 
-    static const QString &modStr = KGlobal::staticQString(
-        QString::fromUtf8("[") + i18n("modified") + QString::fromUtf8("]"));
+    static const TQString &modStr = KGlobal::staticQString(
+        TQString::fromUtf8("[") + i18n("modified") + TQString::fromUtf8("]"));
 
     int modStrPos = s.find(modStr);
 
     if (modStrPos != -1) {
         s.remove(modStrPos, modStr.length()+1);
 
-	QPixmap modPixmap = SmallIcon("modified");
+	TQPixmap modPixmap = SmallIcon("modified");
 
 	int dx = (pxWidth - modPixmap.width()) / 2;
 	int dy = (h - modPixmap.height()) / 2;
@@ -3075,14 +3075,14 @@ void KLegacyStyle::drawKickerTaskButton(QPainter *p, int x, int y, int w, int h,
 }
 
 
-bool KLegacyStyle::eventFilter(QObject *obj, QEvent *e) {
+bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
     switch (e->type()) {
-    case QEvent::Resize:
+    case TQEvent::Resize:
 	{
-	    QWidget *w = (QWidget *) obj;
+	    TQWidget *w = (TQWidget *) obj;
 
-	    if (w->inherits("QPopupMenu") && w->width() < 700) {
-		GtkObject *gobj = priv->gtkDict.find(QPopupMenu::staticMetaObject());
+	    if (w->inherits("TQPopupMenu") && w->width() < 700) {
+		GtkObject *gobj = priv->gtkDict.find(TQPopupMenu::staticMetaObject());
 
 		if (gobj) {
 		    KLegacyImageDataKey key;
@@ -3091,68 +3091,68 @@ bool KLegacyStyle::eventFilter(QObject *obj, QEvent *e) {
 		    key.data.state = KLegacy::Normal;
 		    key.data.shadow = KLegacy::Out;
 
-		    QPixmap *pix = gobj->draw(key, w->width(), w->height(), "menu");
+		    TQPixmap *pix = gobj->draw(key, w->width(), w->height(), "menu");
 
 		    if (pix && ! pix->isNull()) {
-			QPalette pal = w->palette();
+			TQPalette pal = w->palette();
 
 			// active
-			QBrush brush = pal.brush(QPalette::Active,
-						 QColorGroup::Background);
+			TQBrush brush = pal.brush(TQPalette::Active,
+						 TQColorGroup::Background);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Active,
-				     QColorGroup::Background, brush);
+			pal.setBrush(TQPalette::Active,
+				     TQColorGroup::Background, brush);
 
-			brush = pal.brush(QPalette::Active,
-					  QColorGroup::Button);
+			brush = pal.brush(TQPalette::Active,
+					  TQColorGroup::Button);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Active,
-				     QColorGroup::Button, brush);
+			pal.setBrush(TQPalette::Active,
+				     TQColorGroup::Button, brush);
 
 			// inactive
-			brush = pal.brush(QPalette::Inactive,
-					  QColorGroup::Background);
+			brush = pal.brush(TQPalette::Inactive,
+					  TQColorGroup::Background);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Inactive,
-				     QColorGroup::Background, brush);
+			pal.setBrush(TQPalette::Inactive,
+				     TQColorGroup::Background, brush);
 
-			brush = pal.brush(QPalette::Inactive,
-					  QColorGroup::Button);
+			brush = pal.brush(TQPalette::Inactive,
+					  TQColorGroup::Button);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Inactive,
-				     QColorGroup::Button, brush);
+			pal.setBrush(TQPalette::Inactive,
+				     TQColorGroup::Button, brush);
 
 			// disabled
-			brush = pal.brush(QPalette::Disabled,
-					  QColorGroup::Background);
+			brush = pal.brush(TQPalette::Disabled,
+					  TQColorGroup::Background);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Disabled,
-				     QColorGroup::Background, brush);
+			pal.setBrush(TQPalette::Disabled,
+				     TQColorGroup::Background, brush);
 
-			brush = pal.brush(QPalette::Disabled,
-					  QColorGroup::Button);
+			brush = pal.brush(TQPalette::Disabled,
+					  TQColorGroup::Button);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Disabled,
-				     QColorGroup::Button, brush);
+			pal.setBrush(TQPalette::Disabled,
+				     TQColorGroup::Button, brush);
 
 			w->setPalette(pal);
 		    }
 		}
 	    } else if (w->isTopLevel() || w->inherits("QWorkspaceChild")) {
-		GtkObject *gobj = priv->gtkDict.find(QMainWindow::staticMetaObject());
+		GtkObject *gobj = priv->gtkDict.find(TQMainWindow::staticMetaObject());
 
 		if (gobj) {
 		    KLegacyImageDataKey key;
 		    key.cachekey = 0;
 		    key.data.function = KLegacy::FlatBox;
 
-		    QPixmap *p = gobj->draw(key, w->width(), w->height(), "base");
+		    TQPixmap *p = gobj->draw(key, w->width(), w->height(), "base");
 
 		    if (p && (! p->isNull()))
 			w->setBackgroundPixmap(*p);
 		}
-	    } else if (w->inherits("QLineEdit")) {
-		GtkObject *gobj = priv->gtkDict.find(QLineEdit::staticMetaObject());
+	    } else if (w->inherits("TQLineEdit")) {
+		GtkObject *gobj = priv->gtkDict.find(TQLineEdit::staticMetaObject());
 
 		if (gobj) {
 		    KLegacyImageDataKey key;
@@ -3161,39 +3161,39 @@ bool KLegacyStyle::eventFilter(QObject *obj, QEvent *e) {
 		    key.data.shadow = KLegacy::NoShadow;
 		    key.data.state = (w->isEnabled()) ? KLegacy::Normal : KLegacy::Insensitive;
 
-		    QPixmap *pix = gobj->draw(key, w->width(), w->height(),
+		    TQPixmap *pix = gobj->draw(key, w->width(), w->height(),
 					      "entry_bg");
 
 		    if (pix && (! pix->isNull())) {
-			QPalette pal = w->palette();
+			TQPalette pal = w->palette();
 
 			// active
-			QBrush brush = pal.brush(QPalette::Active,
-						 QColorGroup::Base);
+			TQBrush brush = pal.brush(TQPalette::Active,
+						 TQColorGroup::Base);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Active,
-				     QColorGroup::Base, brush);
+			pal.setBrush(TQPalette::Active,
+				     TQColorGroup::Base, brush);
 
 			// inactive
-			brush = pal.brush(QPalette::Inactive,
-					  QColorGroup::Base);
+			brush = pal.brush(TQPalette::Inactive,
+					  TQColorGroup::Base);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Inactive,
-				     QColorGroup::Base, brush);
+			pal.setBrush(TQPalette::Inactive,
+				     TQColorGroup::Base, brush);
 
 			// disabled
-			brush = pal.brush(QPalette::Disabled,
-					  QColorGroup::Base);
+			brush = pal.brush(TQPalette::Disabled,
+					  TQColorGroup::Base);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Disabled,
-				     QColorGroup::Base, brush);
+			pal.setBrush(TQPalette::Disabled,
+				     TQColorGroup::Base, brush);
 
 			w->setPalette(pal);
 		    }
 		}
-	    } else if (w->inherits("QMenuBar") ||
-		       w->inherits("QToolBar")) {
-		GtkObject *gobj = priv->gtkDict.find(QMenuBar::staticMetaObject());
+	    } else if (w->inherits("TQMenuBar") ||
+		       w->inherits("TQToolBar")) {
+		GtkObject *gobj = priv->gtkDict.find(TQMenuBar::staticMetaObject());
 
 		if (gobj) {
 		    KLegacyImageDataKey key;
@@ -3202,49 +3202,49 @@ bool KLegacyStyle::eventFilter(QObject *obj, QEvent *e) {
 		    key.data.state = KLegacy::Normal;
 		    key.data.shadow = KLegacy::Out;
 
-		    QPixmap *pix = gobj->draw(key, w->width(), w->height(),
+		    TQPixmap *pix = gobj->draw(key, w->width(), w->height(),
 					      "menubar");
 		    if (pix && (! pix->isNull())) {
-			QPalette pal = w->palette();
+			TQPalette pal = w->palette();
 
 			// active
-			QBrush brush = pal.brush(QPalette::Active,
-						 QColorGroup::Background);
+			TQBrush brush = pal.brush(TQPalette::Active,
+						 TQColorGroup::Background);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Active,
-				     QColorGroup::Background, brush);
+			pal.setBrush(TQPalette::Active,
+				     TQColorGroup::Background, brush);
 
-			brush = pal.brush(QPalette::Active,
-					  QColorGroup::Button);
+			brush = pal.brush(TQPalette::Active,
+					  TQColorGroup::Button);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Active,
-				     QColorGroup::Button, brush);
+			pal.setBrush(TQPalette::Active,
+				     TQColorGroup::Button, brush);
 
 			// inactive
-			brush = pal.brush(QPalette::Inactive,
-					  QColorGroup::Background);
+			brush = pal.brush(TQPalette::Inactive,
+					  TQColorGroup::Background);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Inactive,
-				     QColorGroup::Background, brush);
+			pal.setBrush(TQPalette::Inactive,
+				     TQColorGroup::Background, brush);
 
-			brush = pal.brush(QPalette::Inactive,
-					  QColorGroup::Button);
+			brush = pal.brush(TQPalette::Inactive,
+					  TQColorGroup::Button);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Inactive,
-				     QColorGroup::Button, brush);
+			pal.setBrush(TQPalette::Inactive,
+				     TQColorGroup::Button, brush);
 
 			// disabled
-			brush = pal.brush(QPalette::Disabled,
-					  QColorGroup::Background);
+			brush = pal.brush(TQPalette::Disabled,
+					  TQColorGroup::Background);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Disabled,
-				     QColorGroup::Background, brush);
+			pal.setBrush(TQPalette::Disabled,
+				     TQColorGroup::Background, brush);
 
-			brush = pal.brush(QPalette::Disabled,
-					  QColorGroup::Button);
+			brush = pal.brush(TQPalette::Disabled,
+					  TQColorGroup::Button);
 			brush.setPixmap(*pix);
-			pal.setBrush(QPalette::Disabled,
-				     QColorGroup::Button, brush);
+			pal.setBrush(TQPalette::Disabled,
+				     TQColorGroup::Button, brush);
 
 			w->setPalette(pal);
 		    }
@@ -3254,67 +3254,67 @@ bool KLegacyStyle::eventFilter(QObject *obj, QEvent *e) {
 	    break;
 	}
 
-    case QEvent::Enter:
+    case TQEvent::Enter:
 	{
-	    if (obj->inherits("QPushButton") ||
-		obj->inherits("QComboBox") ||
-		obj->inherits("QSlider") ||
+	    if (obj->inherits("TQPushButton") ||
+		obj->inherits("TQComboBox") ||
+		obj->inherits("TQSlider") ||
 		obj->inherits("QScrollbar")) {
-		priv->lastWidget = (QWidget *) obj;
+		priv->lastWidget = (TQWidget *) obj;
 		priv->lastWidget->repaint(false);
-	    } else if (obj->inherits("QRadioButton")) {
-		QWidget *w = (QWidget *) obj;
+	    } else if (obj->inherits("TQRadioButton")) {
+		TQWidget *w = (TQWidget *) obj;
 
 		if (! w->isTopLevel() && w->isEnabled()) {
-		    GtkObject *gobj = priv->gtkDict.find(QRadioButton::staticMetaObject());
+		    GtkObject *gobj = priv->gtkDict.find(TQRadioButton::staticMetaObject());
 
 		    if (gobj) {
 			KLegacyImageDataKey key;
 			key.cachekey = 0;
 			key.data.function = KLegacy::FlatBox;
 
-			QPixmap *pix = gobj->draw(key, w->width(), w->height());
+			TQPixmap *pix = gobj->draw(key, w->width(), w->height());
 
 			if (pix && (! pix->isNull())) {
-			    QPalette pal = w->palette();
-			    QBrush brush = pal.brush(QPalette::Normal,
-						     QColorGroup::Background);
+			    TQPalette pal = w->palette();
+			    TQBrush brush = pal.brush(TQPalette::Normal,
+						     TQColorGroup::Background);
 
 			    brush.setPixmap(*pix);
-			    pal.setBrush(QPalette::Normal,
-					 QColorGroup::Background, brush);
+			    pal.setBrush(TQPalette::Normal,
+					 TQColorGroup::Background, brush);
 
 			    w->setPalette(pal);
-			    w->setBackgroundMode(QWidget::PaletteBackground);
-			    w->setBackgroundOrigin(QWidget::WidgetOrigin);
+			    w->setBackgroundMode(TQWidget::PaletteBackground);
+			    w->setBackgroundOrigin(TQWidget::WidgetOrigin);
 			}
 		    }
 		}
-	    } else if (obj->inherits("QCheckBox")) {
-		QWidget *w = (QWidget *) obj;
+	    } else if (obj->inherits("TQCheckBox")) {
+		TQWidget *w = (TQWidget *) obj;
 
 		if (! w->isTopLevel() && w->isEnabled()) {
-		    GtkObject *gobj = priv->gtkDict.find(QCheckBox::staticMetaObject());
+		    GtkObject *gobj = priv->gtkDict.find(TQCheckBox::staticMetaObject());
 
 		    if (gobj) {
 			KLegacyImageDataKey key;
 			key.cachekey = 0;
 			key.data.function = KLegacy::FlatBox;
 
-			QPixmap *pix = gobj->draw(key, w->width(), w->height());
+			TQPixmap *pix = gobj->draw(key, w->width(), w->height());
 
 			if (pix && (! pix->isNull())) {
-			    QPalette pal = w->palette();
-			    QBrush brush = pal.brush(QPalette::Normal,
-						     QColorGroup::Background);
+			    TQPalette pal = w->palette();
+			    TQBrush brush = pal.brush(TQPalette::Normal,
+						     TQColorGroup::Background);
 
 			    brush.setPixmap(*pix);
-			    pal.setBrush(QPalette::Normal,
-					 QColorGroup::Background, brush);
+			    pal.setBrush(TQPalette::Normal,
+					 TQColorGroup::Background, brush);
 
 			    w->setPalette(pal);
-			    w->setBackgroundMode(QWidget::PaletteBackground);
-			    w->setBackgroundOrigin(QWidget::WidgetOrigin);
+			    w->setBackgroundMode(TQWidget::PaletteBackground);
+			    w->setBackgroundOrigin(TQWidget::WidgetOrigin);
 			}
 		    }
 		}
@@ -3323,18 +3323,18 @@ bool KLegacyStyle::eventFilter(QObject *obj, QEvent *e) {
 	    break;
 	}
 
-    case QEvent::Leave:
+    case TQEvent::Leave:
 	{
 	    if (obj == priv->lastWidget) {
 		priv->lastWidget = 0;
-		((QWidget *) obj)->repaint(false);
-	    } else if (obj->inherits("QRadioButton") ||
-		       obj->inherits("QCheckBox")) {
-		QWidget *w = (QWidget *) obj;
+		((TQWidget *) obj)->repaint(false);
+	    } else if (obj->inherits("TQRadioButton") ||
+		       obj->inherits("TQCheckBox")) {
+		TQWidget *w = (TQWidget *) obj;
 
 		if (! w->isTopLevel()) {
-		    w->setBackgroundMode(QWidget::X11ParentRelative);
-		    w->setBackgroundOrigin(QWidget::WidgetOrigin);
+		    w->setBackgroundMode(TQWidget::X11ParentRelative);
+		    w->setBackgroundOrigin(TQWidget::WidgetOrigin);
 		    w->repaint(true);
 		}
 	    }
@@ -3342,14 +3342,14 @@ bool KLegacyStyle::eventFilter(QObject *obj, QEvent *e) {
 	    break;
 	}
 
-    case QEvent::MouseMove:
+    case TQEvent::MouseMove:
 	{
-	    QMouseEvent *me = (QMouseEvent *) e;
+	    TQMouseEvent *me = (TQMouseEvent *) e;
 	    priv->mousePos = me->pos();
-	    if (obj->inherits("QScrollBar") &&
+	    if (obj->inherits("TQScrollBar") &&
 		(! (me->state() & (LeftButton | MidButton | RightButton)))) {
 		priv->hovering = true;
-		((QWidget *) obj)->repaint(false);
+		((TQWidget *) obj)->repaint(false);
 		priv->hovering = false;
 	    }
 

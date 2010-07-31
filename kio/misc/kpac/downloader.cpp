@@ -21,7 +21,7 @@
 #include <cstdlib>
 #include <cstring>
 
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 
 #include <kcharsets.h>
 #include <kglobal.h>
@@ -32,21 +32,21 @@
 
 namespace KPAC
 {
-    Downloader::Downloader( QObject* parent )
-        : QObject( parent )
+    Downloader::Downloader( TQObject* parent )
+        : TQObject( parent )
     {
     }
 
     void Downloader::download( const KURL& url )
     {
         m_data.resize( 0 );
-        m_script = QString::null;
+        m_script = TQString::null;
         m_scriptURL = url;
 
         KIO::TransferJob* job = KIO::get( url, false, false );
-        connect( job, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
-                 SLOT( data( KIO::Job*, const QByteArray& ) ) );
-        connect( job, SIGNAL( result( KIO::Job* ) ), SLOT( result( KIO::Job* ) ) );
+        connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
+                 TQT_SLOT( data( KIO::Job*, const TQByteArray& ) ) );
+        connect( job, TQT_SIGNAL( result( KIO::Job* ) ), TQT_SLOT( result( KIO::Job* ) ) );
     }
 
     void Downloader::failed()
@@ -54,12 +54,12 @@ namespace KPAC
         emit result( false );
     }
 
-    void Downloader::setError( const QString& error )
+    void Downloader::setError( const TQString& error )
     {
         m_error = error;
     }
 
-    void Downloader::data( KIO::Job*, const QByteArray& data )
+    void Downloader::data( KIO::Job*, const TQByteArray& data )
     {
         unsigned offset = m_data.size();
         m_data.resize( offset + data.size() );

@@ -21,7 +21,7 @@
 
 #include "ksycocatype.h"
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <ksharedptr.h>
 class QDataStream;
 
@@ -43,24 +43,24 @@ public:
 
 public:
   typedef KSharedPtr<KSycocaEntry> Ptr;
-  typedef QValueList<Ptr> List;
+  typedef TQValueList<Ptr> List;
 public: // KDoc seems to barf on those typedefs and generates no docs after them
    /**
     * Default constructor
     */
-   KSycocaEntry(const QString &path) : mOffset(0), m_bDeleted(false), mPath(path) { }
+   KSycocaEntry(const TQString &path) : mOffset(0), m_bDeleted(false), mPath(path) { }
 
    /**
     * Safe demarshalling functions.
     */
-   static void read( QDataStream &s, QString &str );
-   static void read( QDataStream &s, QStringList &list );
+   static void read( TQDataStream &s, TQString &str );
+   static void read( TQDataStream &s, TQStringList &list );
 
    /**
     * @internal
     * Restores itself from a stream.
     */
-   KSycocaEntry( QDataStream &_str, int offset ) : 
+   KSycocaEntry( TQDataStream &_str, int offset ) : 
               mOffset( offset ), m_bDeleted(false) 
    { 
      read(_str, mPath);
@@ -69,14 +69,14 @@ public: // KDoc seems to barf on those typedefs and generates no docs after them
    /**
     * @return the name of this entry
     */
-   virtual QString name() const = 0;
+   virtual TQString name() const = 0;
 
    /**
     * @return the path of this entry 
     * The path can be absolute or relative.
     * The corresponding factory should know relative to what.
     */
-   QString entryPath() const { return mPath; }
+   TQString entryPath() const { return mPath; }
   
    /**
     * @return true if valid
@@ -99,7 +99,7 @@ public: // KDoc seems to barf on those typedefs and generates no docs after them
     * Save ourselves to the database. Don't forget to call the parent class
     * first if you override this function.
     */
-   virtual void save(QDataStream &s)
+   virtual void save(TQDataStream &s)
      {
        mOffset = s.device()->at(); // store position in member variable
        s << (Q_INT32) sycocaType() << mPath;
@@ -109,13 +109,13 @@ public: // KDoc seems to barf on those typedefs and generates no docs after them
     * @internal
     * Load ourselves from the database. Don't call the parent class!
     */
-   virtual void load(QDataStream &) = 0;
+   virtual void load(TQDataStream &) = 0;
 
 private:
    int mOffset;
 protected:
    bool m_bDeleted;
-   QString mPath;   
+   TQString mPath;   
 protected:
    virtual void virtual_hook( int id, void* data );
 };

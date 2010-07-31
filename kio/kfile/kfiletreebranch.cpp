@@ -18,7 +18,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <kfileitem.h>
 #include <kdebug.h>
@@ -34,8 +34,8 @@
 
 /* --- KFileTreeViewToplevelItem --- */
 KFileTreeBranch::KFileTreeBranch( KFileTreeView *parent, const KURL& url,
-                                  const QString& name,
-				  const QPixmap& pix, bool showHidden,
+                                  const TQString& name,
+				  const TQPixmap& pix, bool showHidden,
 				  KFileTreeViewItem *branchRoot )
 
     : KDirLister( false ),
@@ -64,37 +64,37 @@ KFileTreeBranch::KFileTreeBranch( KFileTreeView *parent, const KURL& url,
 
     setShowingDotFiles( showHidden );
 
-    connect( this, SIGNAL( refreshItems(const KFileItemList&)),
-             this, SLOT  ( slotRefreshItems( const KFileItemList& )));
+    connect( this, TQT_SIGNAL( refreshItems(const KFileItemList&)),
+             this, TQT_SLOT  ( slotRefreshItems( const KFileItemList& )));
 
-    connect( this, SIGNAL( newItems(const KFileItemList&)),
-             this, SLOT  ( addItems( const KFileItemList& )));
+    connect( this, TQT_SIGNAL( newItems(const KFileItemList&)),
+             this, TQT_SLOT  ( addItems( const KFileItemList& )));
 
-    connect( this, SIGNAL( completed(const KURL& )),
-             this,   SLOT(slCompleted(const KURL&)));
+    connect( this, TQT_SIGNAL( completed(const KURL& )),
+             this,   TQT_SLOT(slCompleted(const KURL&)));
 
-    connect( this, SIGNAL( started( const KURL& )),
-             this,   SLOT( slotListerStarted( const KURL& )));
+    connect( this, TQT_SIGNAL( started( const KURL& )),
+             this,   TQT_SLOT( slotListerStarted( const KURL& )));
 
-    connect( this, SIGNAL( deleteItem( KFileItem* )),
-             this,   SLOT( slotDeleteItem( KFileItem* )));
+    connect( this, TQT_SIGNAL( deleteItem( KFileItem* )),
+             this,   TQT_SLOT( slotDeleteItem( KFileItem* )));
 
-    connect( this, SIGNAL( canceled(const KURL&) ),
-             this,   SLOT( slotCanceled(const KURL&) ));
+    connect( this, TQT_SIGNAL( canceled(const KURL&) ),
+             this,   TQT_SLOT( slotCanceled(const KURL&) ));
 
-    connect( this, SIGNAL( clear()),
-             this, SLOT( slotDirlisterClear()));
+    connect( this, TQT_SIGNAL( clear()),
+             this, TQT_SLOT( slotDirlisterClear()));
 
-    connect( this, SIGNAL( clear(const KURL&)),
-             this, SLOT( slotDirlisterClearURL(const KURL&)));
+    connect( this, TQT_SIGNAL( clear(const KURL&)),
+             this, TQT_SLOT( slotDirlisterClearURL(const KURL&)));
 
-    connect( this, SIGNAL( redirection( const KURL& , const KURL& ) ),
-             this, SLOT( slotRedirect( const KURL&, const KURL& )));
+    connect( this, TQT_SIGNAL( redirection( const KURL& , const KURL& ) ),
+             this, TQT_SLOT( slotRedirect( const KURL&, const KURL& )));
 
     m_openChildrenURLs.append( url );
 }
 
-void KFileTreeBranch::setOpenPixmap( const QPixmap& pix )
+void KFileTreeBranch::setOpenPixmap( const TQPixmap& pix )
 {
     m_openRootIcon = pix;
 
@@ -123,7 +123,7 @@ KFileTreeViewItem *KFileTreeBranch::parentKFTVItem( KFileItem *item )
     KURL url = item->url();
     // kdDebug(250) << "Item's url is " << url.prettyURL() << endl;
     KURL dirUrl( url );
-    dirUrl.setFileName( QString::null );
+    dirUrl.setFileName( TQString::null );
     // kdDebug(250) << "Directory url is " << dirUrl.prettyURL() << endl;
 
     parent  = findTVIByURL( dirUrl );
@@ -181,7 +181,7 @@ void KFileTreeBranch::addItems( const KFileItemList& list )
             /* Cut off the file extension in case it is not a directory */
             if( !m_showExtensions && !currItem->isDir() )	/* Need to cut the extension */
             {
-                QString name = currItem->text();
+                TQString name = currItem->text();
                 int mPoint = name.findRev( '.' );
                 if( mPoint > 0 )
                     name = name.left( mPoint );
@@ -195,13 +195,13 @@ void KFileTreeBranch::addItems( const KFileItemList& list )
         if( dirOnlyMode() && !m_recurseChildren && currItem->isLocalFile( ) && currItem->isDir() )
         {
             KURL url = currItem->url();
-            QString filename = url.directory( false, true ) + url.fileName();
+            TQString filename = url.directory( false, true ) + url.fileName();
             /* do the stat trick of Carsten. The problem is, that the hardlink
              *  count only contains directory links. Thus, this method only seem
              * to work in dir-only mode */
             kdDebug(250) << "Doing stat on " << filename << endl;
             KDE_struct_stat statBuf;
-            if( KDE_stat( QFile::encodeName( filename ), &statBuf ) == 0 )
+            if( KDE_stat( TQFile::encodeName( filename ), &statBuf ) == 0 )
             {
                 int hardLinks = statBuf.st_nlink;  /* Count of dirs */
                 kdDebug(250) << "stat succeeded, hardlinks: " << hardLinks << endl;
@@ -346,7 +346,7 @@ void KFileTreeBranch::slotDirlisterClearURL( const KURL& url )
     }
 }
 
-void KFileTreeBranch::deleteChildrenOf( QListViewItem *parent )
+void KFileTreeBranch::deleteChildrenOf( TQListViewItem *parent )
 {
     // for some strange reason, slotDirlisterClearURL() sometimes calls us
     // with a 0L parent.
@@ -446,7 +446,7 @@ void KFileTreeBranch::slCompleted( const KURL& url )
             /* This is the starting point. The visible folder has finished,
                processing the children has not yet started */
             nextChild = static_cast<KFileTreeViewItem*>
-                        (static_cast<QListViewItem*>(currParent)->firstChild());
+                        (static_cast<TQListViewItem*>(currParent)->firstChild());
 
             if( ! nextChild )
             {
@@ -480,7 +480,7 @@ void KFileTreeBranch::slCompleted( const KURL& url )
                         openURL( recurseUrl, true );
                     }
                 }
-                nextChild = static_cast<KFileTreeViewItem*>(static_cast<QListViewItem*>(nextChild->nextSibling()));
+                nextChild = static_cast<KFileTreeViewItem*>(static_cast<TQListViewItem*>(nextChild->nextSibling()));
                 // kdDebug(250) << "Next child " << m_nextChild << endl;
             }
         }

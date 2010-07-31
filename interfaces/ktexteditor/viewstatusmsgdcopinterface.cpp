@@ -1,7 +1,7 @@
 #include "viewstatusmsgdcopinterface.h"
 #include "viewstatusmsginterface.h"
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <dcopclient.h>
 using namespace KTextEditor;
@@ -22,7 +22,7 @@ uint ViewStatusMsgDCOPInterface::viewStatusMsgInterfaceNumber ()
 	return m_parent->viewStatusMsgInterfaceNumber ();
 }
 
-void ViewStatusMsgDCOPInterface::viewStatusMsg (QString msg)
+void ViewStatusMsgDCOPInterface::viewStatusMsg (TQString msg)
 {
 	m_parent->viewStatusMsg(msg);
 }

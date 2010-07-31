@@ -28,12 +28,12 @@
 typedef KGenericFactory<ShellScript, KScriptClientInterface> ShellScriptFactory;
 K_EXPORT_COMPONENT_FACTORY( libshellscript, ShellScriptFactory( "ShellScript" ) )
 
-ShellScript::ShellScript(KScriptClientInterface *parent, const char *, const QStringList & ) : ScriptClientInterface(parent)
+ShellScript::ShellScript(KScriptClientInterface *parent, const char *, const TQStringList & ) : ScriptClientInterface(parent)
 {
 	m_script =  new KProcess();
-	connect ( m_script, SIGNAL(processExited(KProcess *)), SLOT(Exit(KProcess *)));
-	connect ( m_script, SIGNAL(receivedStdout(KProcess *, char *, int)), SLOT(stdOut(KProcess *, char *, int )));
-	connect ( m_script, SIGNAL(receivedStderr(KProcess *, char *, int)), SLOT(stdErr(KProcess *, char *, int )));
+	connect ( m_script, TQT_SIGNAL(processExited(KProcess *)), TQT_SLOT(Exit(KProcess *)));
+	connect ( m_script, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)), TQT_SLOT(stdOut(KProcess *, char *, int )));
+	connect ( m_script, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)), TQT_SLOT(stdErr(KProcess *, char *, int )));
 	// Connect feedback signals and slots
 	//kdDebug() << "Building new script engine" << endl;
 }
@@ -42,23 +42,23 @@ ShellScript::~ShellScript()
 {
 }
 
-QString ShellScript::script() const
+TQString ShellScript::script() const
 {
 	return m_scriptName;
 }
 
-void ShellScript::setScript( const QString &scriptFile  )
+void ShellScript::setScript( const TQString &scriptFile  )
 {
 	m_scriptName = scriptFile;
 	*m_script << "sh" << m_scriptName << kapp->dcopClient()->appId();
 }
 
-void ShellScript::setScript( const QString &, const QString & )
+void ShellScript::setScript( const TQString &, const TQString & )
 {
     // ### what is this?
 }
 
-void ShellScript::run(QObject *, const QVariant &)
+void ShellScript::run(TQObject *, const TQVariant &)
 {
 	 m_script->start(KProcess::NotifyOnExit,KProcess::All);
 }

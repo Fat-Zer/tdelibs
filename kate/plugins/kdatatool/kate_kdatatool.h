@@ -22,9 +22,9 @@
 #define _KATE_KDATATOOL_
 
 #include <ktexteditor/plugin.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <kxmlguiclient.h>
-#include <qguardedptr.h>
+#include <tqguardedptr.h>
 
 class KActionMenu;
 class KDataToolInfo;
@@ -39,17 +39,17 @@ class KDataToolPlugin : public KTextEditor::Plugin, public KTextEditor::PluginVi
 	Q_OBJECT
 
 public:
-	KDataToolPlugin( QObject *parent = 0, const char* name = 0, const QStringList &args = QStringList() );
+	KDataToolPlugin( TQObject *parent = 0, const char* name = 0, const TQStringList &args = TQStringList() );
 	virtual ~KDataToolPlugin();
 	void addView (KTextEditor::View *view);
 	void removeView (KTextEditor::View *view);
 
   private:
-	QPtrList<class KDataToolPluginView> m_views;
+	TQPtrList<class KDataToolPluginView> m_views;
 };
 
 
-class KDataToolPluginView : public QObject, public KXMLGUIClient
+class KDataToolPluginView : public TQObject, public KXMLGUIClient
 {
 	Q_OBJECT
 
@@ -61,13 +61,13 @@ private:
 	View *m_view;
 	bool m_singleWord;
 	int m_singleWord_line, m_singleWord_start, m_singleWord_end;
-	QString m_wordUnderCursor;
-	QPtrList<KAction> m_actionList;
-	QGuardedPtr<KActionMenu> m_menu;
+	TQString m_wordUnderCursor;
+	TQPtrList<KAction> m_actionList;
+	TQGuardedPtr<KActionMenu> m_menu;
 	KAction *m_notAvailable;
 protected slots:
 	void aboutToShow();
-	void slotToolActivated( const KDataToolInfo &datatoolinfo, const QString &string );
+	void slotToolActivated( const KDataToolInfo &datatoolinfo, const TQString &string );
 	void slotNotAvailable();
 };
 

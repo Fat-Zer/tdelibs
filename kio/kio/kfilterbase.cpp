@@ -33,23 +33,23 @@ KFilterBase::~KFilterBase()
         delete m_dev;
 }
 
-void KFilterBase::setDevice( QIODevice * dev, bool autodelete )
+void KFilterBase::setDevice( TQIODevice * dev, bool autodelete )
 {
     m_dev = dev;
     m_bAutoDel = autodelete;
 }
 
-KFilterBase * KFilterBase::findFilterByFileName( const QString & fileName )
+KFilterBase * KFilterBase::findFilterByFileName( const TQString & fileName )
 {
     KMimeType::Ptr mime = KMimeType::findByPath( fileName );
     kdDebug(7005) << "KFilterBase::findFilterByFileName mime=" << mime->name() << endl;
     return findFilterByMimeType(mime->name());
 }
 
-KFilterBase * KFilterBase::findFilterByMimeType( const QString & mimeType )
+KFilterBase * KFilterBase::findFilterByMimeType( const TQString & mimeType )
 {
     KTrader::OfferList offers = KTrader::self()->query( "KDECompressionFilter",
-                                                        QString("'") + mimeType + "' in ServiceTypes" );
+                                                        TQString("'") + mimeType + "' in ServiceTypes" );
     KTrader::OfferList::ConstIterator it = offers.begin();
     KTrader::OfferList::ConstIterator end = offers.end();
 

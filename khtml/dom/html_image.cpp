@@ -142,7 +142,7 @@ long HTMLAreaElement::tabIndex() const
 void HTMLAreaElement::setTabIndex( long _tabIndex )
 {
     if(impl) {
-	DOMString value(QString::number(_tabIndex));
+	DOMString value(TQString::number(_tabIndex));
         ((ElementImpl *)impl)->setAttribute(ATTR_TABINDEX,value);
     }
 }
@@ -230,7 +230,7 @@ long HTMLImageElement::border() const
 
 void HTMLImageElement::setBorder( long value )
 {
-    if (impl) static_cast<HTMLImageElementImpl*>(impl)->setAttribute(ATTR_BORDER, QString::number(value));
+    if (impl) static_cast<HTMLImageElementImpl*>(impl)->setAttribute(ATTR_BORDER, TQString::number(value));
 }
 
 DOMString HTMLImageElement::getBorder() const
@@ -253,7 +253,7 @@ long HTMLImageElement::height() const
 
 void HTMLImageElement::setHeight( long value )
 {
-    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_HEIGHT, QString::number(value));
+    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_HEIGHT, TQString::number(value));
 }
 
 long HTMLImageElement::hspace() const
@@ -265,7 +265,7 @@ long HTMLImageElement::hspace() const
 
 void HTMLImageElement::setHspace( long value )
 {
-    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_HSPACE, QString::number(value));
+    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_HSPACE, TQString::number(value));
 }
 
 bool HTMLImageElement::isMap() const
@@ -328,7 +328,7 @@ long HTMLImageElement::vspace() const
 
 void HTMLImageElement::setVspace( long value )
 {
-    if(impl) static_cast<ElementImpl*>(impl)->setAttribute(ATTR_VSPACE, QString::number(value));
+    if(impl) static_cast<ElementImpl*>(impl)->setAttribute(ATTR_VSPACE, TQString::number(value));
 }
 
 long HTMLImageElement::width() const
@@ -339,7 +339,7 @@ long HTMLImageElement::width() const
 
 void HTMLImageElement::setWidth( long value )
 {
-    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_WIDTH, QString::number(value));
+    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_WIDTH, TQString::number(value));
 }
 
 long HTMLImageElement::x() const

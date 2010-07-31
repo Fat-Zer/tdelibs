@@ -13,9 +13,9 @@
 class ScriptInfo
 {
 	public:
-		QString scriptType;
-		QString scriptFile;
-		QString scriptMethod;
+		TQString scriptType;
+		TQString scriptFile;
+		TQString scriptMethod;
 		ScriptInfo();
 		~ScriptInfo(){}
 };
@@ -25,8 +25,8 @@ ScriptInfo::ScriptInfo()
 	scriptFile = "";
 	scriptMethod = "";
 }
-KScriptManager::KScriptManager(QObject *parent, const char *name) :
-	QObject(parent,name), KScriptClientInterface()
+KScriptManager::KScriptManager(TQObject *parent, const char *name) :
+	TQObject(parent,name), KScriptClientInterface()
 {
 
 }
@@ -36,14 +36,14 @@ KScriptManager::~KScriptManager()
     m_scriptCache.setAutoDelete(true);
 
 }
-bool KScriptManager::addScript( const QString &scriptDesktopFile)
+bool KScriptManager::addScript( const TQString &scriptDesktopFile)
 {
 	//m_scriptNames.append(scriptName);
 	// lets get some information about the script we are going to run...
 	bool success = false;
-	QString tmpScriptType = "";
-	QString tmpScriptFile = "";
-	QString tmpScriptMethod = "";
+	TQString tmpScriptType = "";
+	TQString tmpScriptFile = "";
+	TQString tmpScriptMethod = "";
 	// Read the desktop file
 
 	if(KDesktopFile::isDesktopFile(scriptDesktopFile))
@@ -51,24 +51,24 @@ bool KScriptManager::addScript( const QString &scriptDesktopFile)
 		KDesktopFile desktop(scriptDesktopFile, true);
 		m_scripts.insert(desktop.readName(), new ScriptInfo());
 		m_scripts[desktop.readName()]->scriptType = desktop.readType();
-		QString localpath = QString(kapp->name()) + "/scripts/" + desktop.readEntry("X-KDE-ScriptName", "");
+		TQString localpath = TQString(kapp->name()) + "/scripts/" + desktop.readEntry("X-KDE-ScriptName", "");
 		m_scripts[desktop.readName()]->scriptFile = locate("data", localpath);
 //		m_scripts[desktop.readName()]->scriptMethod = tmpScriptMethod;
 		success = true;
 	}
 	return success;
 }
-bool KScriptManager::removeScript( const QString &scriptName )
+bool KScriptManager::removeScript( const TQString &scriptName )
 {
 	bool result = m_scriptCache.remove(scriptName);
 	result = m_scripts.remove(scriptName);
 	return result;
 }
-QStringList KScriptManager::scripts()
+TQStringList KScriptManager::scripts()
 {
-	QDictIterator<ScriptInfo> it( m_scripts );
+	TQDictIterator<ScriptInfo> it( m_scripts );
 //	return m_scriptNames;
-	QStringList scriptList;
+	TQStringList scriptList;
 	while ( it.current() )
 	{
 		scriptList.append(it.currentKey());
@@ -81,19 +81,19 @@ void KScriptManager::clear()
 	m_scriptCache.clear();
 	m_scripts.clear();
 }
-void KScriptManager::runScript( const QString &scriptName, QObject *context, const QVariant &arg)
+void KScriptManager::runScript( const TQString &scriptName, TQObject *context, const TQVariant &arg)
 {
 	ScriptInfo *newScript = m_scripts[scriptName];
 	if (newScript)
 	{
-		QString scriptType = "([X-KDE-Script-Runner] == '" + newScript->scriptType + "')";
+		TQString scriptType = "([X-KDE-Script-Runner] == '" + newScript->scriptType + "')";
 		kdDebug()<<"running script, type = '"<<scriptType<<"'"<<endl;
 		// See if the script is already cached...
 		if ( !m_scriptCache[scriptName] )
 		{
 			// via some magic we will let the old script engine go away after
 			// some minutes...
-			// currently i am thinking a QTimer that will throw a signal in 10 minutes
+			// currently i am thinking a TQTimer that will throw a signal in 10 minutes
 			// to remove m_scriptCache[m_currentScript]
                         KScriptInterface *ksif = KParts::ComponentFactory::createInstanceFromQuery<KScriptInterface>( "KScriptRunner/KScriptRunner", scriptType, this );
                         if ( ksif ) 

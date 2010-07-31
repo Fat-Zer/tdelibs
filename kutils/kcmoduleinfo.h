@@ -58,7 +58,7 @@ public:
    * @param desktopFile the desktop file representing the module, or
    * the name of the module.
    */
-  KCModuleInfo(const QString& desktopFile);
+  KCModuleInfo(const TQString& desktopFile);
 
   /**
    * Same as above but takes a KService::Ptr as argument.
@@ -110,12 +110,12 @@ public:
   /**
    * @return the filename of the .desktop file that describes the KCM
    */
-  QString fileName() const { return _fileName; }
+  TQString fileName() const { return _fileName; }
 
   /**
    * @return the keywords associated with this KCM.
    */
-  const QStringList &keywords() const { return _keywords; }
+  const TQStringList &keywords() const { return _keywords; }
 
   /**
    * Returns the module's factory name, if it's set. If not, the library
@@ -123,13 +123,13 @@ public:
    * @returns the module's factory name
    * @since 3.4
    */
-  QString factoryName() const;
+  TQString factoryName() const;
 
   /**
    * @return the module\'s (translated) name
    */
-  QString moduleName() const { return _name; }
-  // changed from name() to avoid ambiguity with QObject::name() on multiple inheritance
+  TQString moduleName() const { return _name; }
+  // changed from name() to avoid ambiguity with TQObject::name() on multiple inheritance
 
   /**
    * @return a KSharedPtr to KService created from the modules .desktop file
@@ -139,27 +139,27 @@ public:
   /**
    * @return the module's (translated) comment field
    */
-  QString comment() const { return _comment; }
+  TQString comment() const { return _comment; }
 
   /**
    * @return the module's icon name
    */
-  QString icon() const { return _icon; }
+  TQString icon() const { return _icon; }
 
   /**
    * @return the path of the module's documentation
    */
-  QString docPath() const;
+  TQString docPath() const;
 
   /**
    * @return the library name
    */
-  QString library() const { return _lib; }
+  TQString library() const { return _lib; }
 
   /**
    * @return a handle (usually the contents of the FactoryName field)
    */
-  QString handle() const;
+  TQString handle() const;
 
   /**
    * @return the weight of the module which determines the order of the pages in
@@ -193,37 +193,37 @@ protected:
    * Sets the object's keywords.
    * @param keyword the new keywords
    */
-  void setKeywords(const QStringList &keyword) { _keywords = keyword; }
+  void setKeywords(const TQStringList &keyword) { _keywords = keyword; }
 
   /**
    * Sets the object's name.
    * @param name the new name
    */
-  void setName(const QString &name) { _name = name; }
+  void setName(const TQString &name) { _name = name; }
 
   /**
    * Sets the object's name.
    * @param comment the new comment
    */
-  void setComment(const QString &comment) { _comment = comment; }
+  void setComment(const TQString &comment) { _comment = comment; }
 
   /**
    * Sets the object's icon.
    * @param icon the name of the new icon
    */
-  void setIcon(const QString &icon) { _icon = icon; }
+  void setIcon(const TQString &icon) { _icon = icon; }
 
   /**
    * Set the object's library
    * @param lib the name of the new library without any extensions or prefixs.
    */
-  void setLibrary(const QString &lib) { _lib = lib; }
+  void setLibrary(const TQString &lib) { _lib = lib; }
 
   /**
    * Sets the factory name
    * @param handle The new factory name
    */
-  void setHandle(const QString &handle) { _handle = handle; }
+  void setHandle(const TQString &handle) { _handle = handle; }
 
   /**
    * Sets the object's weight property which determines in what
@@ -259,7 +259,7 @@ protected:
    * Sets the object's documentation path
    * @param p the new documentation path
    */
-  void setDocPath(const QString &p) { _doc = p; }
+  void setDocPath(const TQString &p) { _doc = p; }
 
   /**
    * Reads the service entries specific for KCModule from the desktop file.
@@ -277,8 +277,8 @@ private:
 private:
 
   // KDE4 These needs to be moved to KCModuleInfoPrivate
-  QStringList _keywords;
-  QString     _name, _icon, _lib, _handle, _fileName, _doc, _comment;
+  TQStringList _keywords;
+  TQString     _name, _icon, _lib, _handle, _fileName, _doc, _comment;
   bool        _needsRootPrivileges : 1;
   bool        _isHiddenByDefault : 1;
   bool        _allLoaded : 1;

@@ -20,8 +20,8 @@
 #ifndef POSTERPREVIEW_H
 #define POSTERPREVIEW_H
 
-#include <qframe.h>
-#include <qvaluelist.h>
+#include <tqframe.h>
+#include <tqvaluelist.h>
 
 class KProcess;
 
@@ -29,29 +29,29 @@ class PosterPreview : public QFrame
 {
 	Q_OBJECT
 public:
-	PosterPreview( QWidget *parent = 0, const char *name = 0 );
-	PosterPreview( const QString& postersize, const QString& mediasize, QWidget *parent = 0, const char *name = 0 );
+	PosterPreview( TQWidget *parent = 0, const char *name = 0 );
+	PosterPreview( const TQString& postersize, const TQString& mediasize, TQWidget *parent = 0, const char *name = 0 );
 	~PosterPreview();
 
 public slots:
 	void setPosterSize( int );
-	void setPosterSize( const QString& );
+	void setPosterSize( const TQString& );
 	void setMediaSize( int );
-	void setMediaSize( const QString& );
+	void setMediaSize( const TQString& );
 	void setCutMargin( int );
 	void updatePoster();
-	void setSelectedPages( const QString& );
+	void setSelectedPages( const TQString& );
 
 signals:
-	void selectionChanged( const QString& );
+	void selectionChanged( const TQString& );
 
 protected:
 	void parseBuffer();
-	void drawContents( QPainter* );
+	void drawContents( TQPainter* );
 	void init();
 	void setDirty();
-	void mouseMoveEvent( QMouseEvent* );
-	void mousePressEvent( QMouseEvent* );
+	void mouseMoveEvent( TQMouseEvent* );
+	void mousePressEvent( TQMouseEvent* );
 	void emitSelectedPages();
 
 protected slots:
@@ -62,14 +62,14 @@ private:
 	int m_rows, m_cols;
 	int m_pw, m_ph; // page size
 	int m_mw, m_mh; // cur margins
-	QRect m_posterbb; // poster bounding box (without any margin)
+	TQRect m_posterbb; // poster bounding box (without any margin)
 	KProcess *m_process;
-	QString m_buffer;
-	QString m_postersize, m_mediasize;
+	TQString m_buffer;
+	TQString m_postersize, m_mediasize;
 	int m_cutmargin;
 	bool m_dirty;
-	QRect m_boundingrect;
-	QValueList<int> m_selectedpages;
+	TQRect m_boundingrect;
+	TQValueList<int> m_selectedpages;
 };
 
 #endif /* POSTERPREVIEW_H */

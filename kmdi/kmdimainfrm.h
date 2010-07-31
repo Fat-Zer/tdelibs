@@ -35,11 +35,11 @@
 #include <kmenubar.h>
 #include <kpopupmenu.h>
 
-#include <qptrlist.h>
-#include <qrect.h>
-#include <qapplication.h>
-#include <qdom.h>
-#include <qguardedptr.h>
+#include <tqptrlist.h>
+#include <tqrect.h>
+#include <tqapplication.h>
+#include <tqdom.h>
+#include <tqguardedptr.h>
 
 #include "kmditaskbar.h"
 #include "kmdichildarea.h"
@@ -72,7 +72,7 @@ class KMdiMainFrmPrivate;
 class KMDI_EXPORT KMdiViewCloseEvent : public QCustomEvent
 {
 public:
-	KMdiViewCloseEvent( KMdiChildView* pWnd ) : QCustomEvent( QEvent::User, pWnd ) {}
+	KMdiViewCloseEvent( KMdiChildView* pWnd ) : TQCustomEvent( TQEvent::User, pWnd ) {}
 };
 
 /**
@@ -123,7 +123,7 @@ public:
  * 			setMenuForSDIModeSysButtons( menuBar() );
  * 		}
  * 		...
- *		void B_MainModuleWidget::resizeEvent ( QResizeEvent *e )
+ *		void B_MainModuleWidget::resizeEvent ( TQResizeEvent *e )
  *		{
  *			KMdiMainFrm::resizeEvent( e );
  *			setSysButtonsAtMenuPosition();
@@ -230,7 +230,7 @@ public:
  *		}
  *		else
  *		{
- *			m_pMdiMainFrm->addWindow( pWnd, QPoint(20, 20), KMdi::AddWindowFlags(mdiFlags));
+ *			m_pMdiMainFrm->addWindow( pWnd, TQPoint(20, 20), KMdi::AddWindowFlags(mdiFlags));
  *			return;
  *		}
  *		m_pMdiMainFrm->addWindow( pWnd, KMdi::AddWindowFlags(mdiFlags));
@@ -248,27 +248,27 @@ protected:
 	KMdi::MdiMode m_mdiMode;
 	KMdiChildArea *m_pMdi;
 	KMdiTaskBar *m_pTaskBar;
-	QPtrList<KMdiChildView> *m_pDocumentViews;
-	QMap<QWidget*, KMdiToolViewAccessor*> *m_pToolViews;
+	TQPtrList<KMdiChildView> *m_pDocumentViews;
+	TQMap<TQWidget*, KMdiToolViewAccessor*> *m_pToolViews;
 	KMdiChildView *m_pCurrentWindow;
-	QPopupMenu *m_pWindowPopup;
-	QPopupMenu *m_pTaskBarPopup;
-	QPopupMenu *m_pWindowMenu;
-	QPopupMenu *m_pDockMenu;
-	QPopupMenu *m_pMdiModeMenu;
-	QPopupMenu *m_pPlacingMenu;
+	TQPopupMenu *m_pWindowPopup;
+	TQPopupMenu *m_pTaskBarPopup;
+	TQPopupMenu *m_pWindowMenu;
+	TQPopupMenu *m_pDockMenu;
+	TQPopupMenu *m_pMdiModeMenu;
+	TQPopupMenu *m_pPlacingMenu;
 	KMenuBar *m_pMainMenuBar;
 
-	QPixmap *m_pUndockButtonPixmap;
-	QPixmap *m_pMinButtonPixmap;
-	QPixmap *m_pRestoreButtonPixmap;
-	QPixmap *m_pCloseButtonPixmap;
+	TQPixmap *m_pUndockButtonPixmap;
+	TQPixmap *m_pMinButtonPixmap;
+	TQPixmap *m_pRestoreButtonPixmap;
+	TQPixmap *m_pCloseButtonPixmap;
 
-	QToolButton *m_pUndock;
-	QToolButton *m_pMinimize;
-	QToolButton *m_pRestore;
-	QToolButton *m_pClose;
-	QPoint m_undockPositioningOffset;
+	TQToolButton *m_pUndock;
+	TQToolButton *m_pMinimize;
+	TQToolButton *m_pRestore;
+	TQToolButton *m_pClose;
+	TQPoint m_undockPositioningOffset;
 	bool m_bMaximizedChildFrmMode;
 	int m_oldMainFrmHeight;
 	int m_oldMainFrmMinHeight;
@@ -276,10 +276,10 @@ protected:
 	static KMdi::FrameDecor m_frameDecoration;
 	bool m_bSDIApplication;
 	KDockWidget* m_pDockbaseAreaOfDocumentViews;
-	QDomDocument* m_pTempDockSession;
+	TQDomDocument* m_pTempDockSession;
 	bool m_bClearingOfWindowMenuBlocked;
 
-	QTimer* m_pDragEndTimer;
+	TQTimer* m_pDragEndTimer;
 
 	bool m_bSwitching;
 
@@ -296,7 +296,7 @@ private:
 
 	// methods
 public:
-	KMdiMainFrm( QWidget* parentWidget, const char* name = "", KMdi::MdiMode mdiMode = KMdi::ChildframeMode, WFlags flags = WType_TopLevel | WDestructiveClose );
+	KMdiMainFrm( TQWidget* parentWidget, const char* name = "", KMdi::MdiMode mdiMode = KMdi::ChildframeMode, WFlags flags = WType_TopLevel | WDestructiveClose );
 	virtual ~KMdiMainFrm();
 
 	/**
@@ -329,13 +329,13 @@ public:
 	 * Undock/Dock, Restore/Maximize/Minimize, Close and an empty sub-popup ( windowPopup() )
 	 * menu called Operations.
 	 */
-	virtual QPopupMenu * taskBarPopup( KMdiChildView *pWnd, bool bIncludeWindowPopup = false );
+	virtual TQPopupMenu * taskBarPopup( KMdiChildView *pWnd, bool bIncludeWindowPopup = false );
 
 	/**
 	 * Returns a popup menu with only a title "Window". You can fill it with own operations entries
 	 * on the MDI view. This popup menu is inserted as last menu item in taskBarPopup() .
 	 */
-	virtual QPopupMenu * windowPopup( KMdiChildView *pWnd, bool bIncludeTaskbarPopup = true );
+	virtual TQPopupMenu * windowPopup( KMdiChildView *pWnd, bool bIncludeTaskbarPopup = true );
 
 	/**
 	 * Called in the constructor (forces a resize of all MDI views)
@@ -345,7 +345,7 @@ public:
 	/**
 	 * Returns the KMdiChildView belonging to the given caption string.
 	 */
-	KMdiChildView * findWindow( const QString& caption );
+	KMdiChildView * findWindow( const TQString& caption );
 
 	enum ExistsAs {DocumentView, ToolView, AnyView};
 	/**
@@ -363,9 +363,9 @@ public:
 	 * It is necessary that the main frame has to start an MDI view close action because it must
 	 * remove the MDI view from MDI control, additionally.
 	 *
-	 * This method calls QMainWindow::event , additionally.
+	 * This method calls TQMainWindow::event , additionally.
 	 */
-	virtual bool event( QEvent* e );
+	virtual bool event( TQEvent* e );
 
 	/**
 	 * If there's a main menubar given, it will create the 4 maximize mode buttons there (undock, minimize, restore, close).
@@ -381,7 +381,7 @@ public:
 	 * Sets an offset value that is used on detachWindow() . The undocked window
 	 * is visually moved on the desktop by this offset.
 	 */
-	virtual void setUndockPositioningOffset( QPoint offset ) { m_undockPositioningOffset = offset; }
+	virtual void setUndockPositioningOffset( TQPoint offset ) { m_undockPositioningOffset = offset; }
 
 	/**
 	 * If you don't want to know about the inner structure of the KMdi system, you can use
@@ -415,28 +415,28 @@ public:
 	 * Additionally, this menu provides some placing actions for these views.
 	 * Usually, you insert this popup menu in your main menubar as "Window" menu.
 	 */
-	QPopupMenu* windowMenu() const  { return m_pWindowMenu; };
+	TQPopupMenu* windowMenu() const  { return m_pWindowMenu; };
 
 	/**
 	 * Sets a background color for the MDI view area widget.
 	 */
-	virtual void setBackgroundColor( const QColor &c ) { m_pMdi->setBackgroundColor( c ); }
+	virtual void setBackgroundColor( const TQColor &c ) { m_pMdi->setBackgroundColor( c ); }
 
 	/**
 	 * Sets a background pixmap for the MDI view area widget.
 	 */
-	virtual void setBackgroundPixmap( const QPixmap &pm ) { m_pMdi->setBackgroundPixmap( pm ); }
+	virtual void setBackgroundPixmap( const TQPixmap &pm ) { m_pMdi->setBackgroundPixmap( pm ); }
 
 	/**
 	 * Sets a size that is used as the default size for a newly to the MDI system added KMdiChildView .
 	 *  By default this size is 600x400. So all non-resized added MDI views appear in that size.
 	 */
-	void setDefaultChildFrmSize( const QSize& sz ) { m_pMdi->m_defaultChildFrmSize = sz; }
+	void setDefaultChildFrmSize( const TQSize& sz ) { m_pMdi->m_defaultChildFrmSize = sz; }
 
 	/**
 	 * Returns the default size for a newly added KMdiChildView. See setDefaultChildFrmSize() .
 	 */
-	QSize defaultChildFrmSize() { return m_pMdi->m_defaultChildFrmSize; }
+	TQSize defaultChildFrmSize() { return m_pMdi->m_defaultChildFrmSize; }
 
 	/**
 	 * Do nothing when in Toplevel mode
@@ -473,8 +473,8 @@ public:
 	 */
 	bool isFakingSDIApplication() const { return m_bSDIApplication; }
 
-	virtual bool eventFilter( QObject *obj, QEvent *e );
-	void findRootDockWidgets( QPtrList<KDockWidget>* pRootDockWidgetList, QValueList<QRect>* pPositionList );
+	virtual bool eventFilter( TQObject *obj, TQEvent *e );
+	void findRootDockWidgets( TQPtrList<KDockWidget>* pRootDockWidgetList, TQValueList<TQRect>* pPositionList );
 
 	/** We're switching something.*/
 	void setSwitching( const bool switching ) { m_bSwitching = switching; }
@@ -482,10 +482,10 @@ public:
 
 public slots:
 	/**
-	 * addWindow demands a KMdiChildView. This method wraps every QWidget in such an object and
+	 * addWindow demands a KMdiChildView. This method wraps every TQWidget in such an object and
 	 * this way you can put every widget under MDI control.
 	 */
-	KMdiChildView* createWrapper( QWidget *view, const QString& name, const QString& shortName );
+	KMdiChildView* createWrapper( TQWidget *view, const TQString& name, const TQString& shortName );
 
 	/**
 	 * Adds a KMdiChildView to the MDI system. The main frame takes control of it.
@@ -527,7 +527,7 @@ public slots:
 	 * \li whether the view should be added as tool view (stay-on-top and toplevel) or
 	 * added as document-type view.
 	 */
-	virtual void addWindow( KMdiChildView* pWnd, QPoint pos, int flags = KMdi::StandardAdd );
+	virtual void addWindow( KMdiChildView* pWnd, TQPoint pos, int flags = KMdi::StandardAdd );
 
 	/**
 	 * Adds a KMdiChildView to the MDI system. The main frame takes control of it.
@@ -540,17 +540,17 @@ public slots:
 	 * \li whether the view should be added as tool view (stay-on-top and toplevel) or
 	 * added as document-type view.
 	 */
-	virtual void addWindow( KMdiChildView* pWnd, QRect rectNormal, int flags = KMdi::StandardAdd );
+	virtual void addWindow( KMdiChildView* pWnd, TQRect rectNormal, int flags = KMdi::StandardAdd );
 
 	/**
 	 * Usually called from addWindow() when adding a tool view window. It reparents the given widget
 	 * as toplevel and stay-on-top on the application's main widget.
 	 */
-	virtual KMdiToolViewAccessor *addToolWindow( QWidget* pWnd, KDockWidget::DockPosition pos = KDockWidget::DockNone,
-	                                             QWidget* pTargetWnd = 0L, int percent = 50, const QString& tabToolTip = 0,
-	                                             const QString& tabCaption = 0 );
+	virtual KMdiToolViewAccessor *addToolWindow( TQWidget* pWnd, KDockWidget::DockPosition pos = KDockWidget::DockNone,
+	                                             TQWidget* pTargetWnd = 0L, int percent = 50, const TQString& tabToolTip = 0,
+	                                             const TQString& tabCaption = 0 );
 
-	virtual void deleteToolWindow( QWidget* pWnd );
+	virtual void deleteToolWindow( TQWidget* pWnd );
 	virtual void deleteToolWindow( KMdiToolViewAccessor *accessor );
 
 	/**
@@ -745,7 +745,7 @@ private:
 
 protected:
 
-	virtual void resizeEvent( QResizeEvent * );
+	virtual void resizeEvent( TQResizeEvent * );
 
 	/**
 	 * Creates a new MDI taskbar (showing the MDI views as taskbar entries) and shows it.
@@ -763,10 +763,10 @@ protected:
 	 */
 	void blockClearingOfWindowMenu( bool bBlocked ) { m_bClearingOfWindowMenuBlocked = bBlocked; }
 
-	void findToolViewsDockedToMain( QPtrList<KDockWidget>* list, KDockWidget::DockPosition dprtmw );
-	void dockToolViewsIntoContainers( QPtrList<KDockWidget>& widgetsToReparent, KDockWidget *container );
-	QStringList prepareIdealToTabs( KDockWidget* container );
-	void idealToolViewsToStandardTabs( QStringList widgetNames, KDockWidget::DockPosition pos, int sizee );
+	void findToolViewsDockedToMain( TQPtrList<KDockWidget>* list, KDockWidget::DockPosition dprtmw );
+	void dockToolViewsIntoContainers( TQPtrList<KDockWidget>& widgetsToReparent, KDockWidget *container );
+	TQStringList prepareIdealToTabs( KDockWidget* container );
+	void idealToolViewsToStandardTabs( TQStringList widgetNames, KDockWidget::DockPosition pos, int sizee );
 
 	/** Get tabwidget visibility */
 	KMdi::TabWidgetVisibility tabWidgetVisibility();
@@ -813,7 +813,7 @@ protected slots:  // Protected slots
 	/**
 	 * Popups the "Window" menu. See also windowPopup() .
 	 */
-	void popupWindowMenu( QPoint p );
+	void popupWindowMenu( TQPoint p );
 
 	/**
 	 * The timer for main widget moving has elapsed -> send drag end to all concerned views.
@@ -844,7 +844,7 @@ signals:
 	/**
 	 * Signals that a child view has been detached (undocked to desktop)
 	 */
-	void childViewIsDetachedNow( QWidget* );
+	void childViewIsDetachedNow( TQWidget* );
 
 	/** Signals we need to collapse the overlapped containers */
 	void collapseOverlapContainers();
@@ -862,7 +862,7 @@ public slots:
 private slots:
 	void setActiveToolDock( KMdiDockContainer* );
 	void removeFromActiveDockList( KMdiDockContainer* );
-	void slotDocCurrentChanged( QWidget* );
+	void slotDocCurrentChanged( TQWidget* );
 	void verifyToplevelHeight();
 #define protected public
 signals:

@@ -25,7 +25,7 @@
 #ifndef _KAUDIORECORDSTREAM__H
 #define _KAUDIORECORDSTREAM__H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kdelibs_export.h>
 
@@ -51,7 +51,7 @@ class KDE_ARTS_EXPORT KAudioRecordStream : public QObject
                  * @param parent You will propably want to pass the server as parent to so this stream gets deleted before the server disappears.
                  * @param name The name of the stream.
 		 */
-		KAudioRecordStream( KArtsServer * server, const QString & title, QObject * parent = 0, const char * name = 0 );
+		KAudioRecordStream( KArtsServer * server, const TQString & title, TQObject * parent = 0, const char * name = 0 );
 
 		~KAudioRecordStream();
 
@@ -137,12 +137,12 @@ class KDE_ARTS_EXPORT KAudioRecordStream : public QObject
 	signals:
 		/**
 		 * Data from the aRts server has arrived. You should copy the data
-		 * because the passed QByteArray will be deleted right after
+		 * because the passed TQByteArray will be deleted right after
 		 * returning from your slot(s).
 		 *
 		 * @param data the data from the server
 		 */
-		void data( QByteArray & data );
+		void data( TQByteArray & data );
 
 		/**
 		 * Wether this RecordStream is recording or not.

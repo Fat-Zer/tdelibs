@@ -20,9 +20,9 @@
 #ifndef __kbookmark_h
 #define __kbookmark_h
 
-#include <qstring.h>
-#include <qvaluelist.h>
-#include <qdom.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
+#include <tqdom.h>
 #include <kurl.h>
 
 class KBookmarkManager;
@@ -37,9 +37,9 @@ public:
     };
 
     KBookmark( ) {}
-    KBookmark( QDomElement elem ) : element(elem) {}
+    KBookmark( TQDomElement elem ) : element(elem) {}
 
-    static KBookmark standaloneBookmark( const QString & text, const KURL & url, const QString & icon = QString::null );
+    static KBookmark standaloneBookmark( const TQString & text, const KURL & url, const TQString & icon = TQString::null );
 
     /**
      * Whether the bookmark is a group or a normal bookmark
@@ -59,7 +59,7 @@ public:
     bool isNull() const {return element.isNull();}
 
     /**
-     * @return true if bookmark is contained by a QDomDocument,
+     * @return true if bookmark is contained by a TQDomDocument,
      * if not it is most likely that it has become separated and
      * is thus invalid and/or has been deleted from the bookmarks.
      * @since 3.2
@@ -71,12 +71,12 @@ public:
      * If bigger than 40, the text is shortened by
      * replacing middle characters with "..." (see KStringHandler::csqueeze)
      */
-    QString text() const;
+    TQString text() const;
     /**
      * Text shown for the bookmark, not truncated.
      * You should not use this - this is mainly for keditbookmarks.
      */
-    QString fullText() const;
+    TQString fullText() const;
     /**
      * URL contained by the bookmark
      */
@@ -85,7 +85,7 @@ public:
      * @return the pixmap file for this bookmark
      * (i.e. the name of the icon)
      */
-    QString icon() const;
+    TQString icon() const;
 
     /**
      * @return the group containing this bookmark
@@ -104,7 +104,7 @@ public:
      * in a given bookmark. The encoding of the address is "/4/2", for
      * instance, to design the 2nd child inside the 4th child of the root bk.
      */
-    QString address() const;
+    TQString address() const;
 
     // Hard to decide. Good design would imply that each bookmark
     // knows about its manager, so that there can be several managers.
@@ -115,7 +115,7 @@ public:
     /**
      * @internal for KEditBookmarks
      */
-    QDomElement internalElement() const { return element; }
+    TQDomElement internalElement() const { return element; }
 
     /**
      * Updates the bookmarks access metadata
@@ -129,47 +129,47 @@ public:
     /**
      * @return address of parent
      */
-    static QString parentAddress( const QString & address )
+    static TQString parentAddress( const TQString & address )
     { return address.left( address.findRev('/') ); }
 
     /**
      * @return position in parent (e.g. /4/5/2 -> 2)
      */
-    static uint positionInParent( const QString & address )
+    static uint positionInParent( const TQString & address )
     { return address.mid( address.findRev('/') + 1 ).toInt(); }
 
     /**
      * @return address of previous sibling (e.g. /4/5/2 -> /4/5/1)
-     * Returns QString::null for a first child
+     * Returns TQString::null for a first child
      */
-    static QString previousAddress( const QString & address )
+    static TQString previousAddress( const TQString & address )
     {
         uint pp = positionInParent(address);
-        return pp>0 ? parentAddress(address) + '/' + QString::number(pp-1) : QString::null;
+        return pp>0 ? parentAddress(address) + '/' + TQString::number(pp-1) : TQString::null;
     }
 
     /**
      * @return address of next sibling (e.g. /4/5/2 -> /4/5/3)
      * This doesn't check whether it actually exists
      */
-    static QString nextAddress( const QString & address )
-    { return parentAddress(address) + '/' + QString::number(positionInParent(address)+1); }
+    static TQString nextAddress( const TQString & address )
+    { return parentAddress(address) + '/' + TQString::number(positionInParent(address)+1); }
 
     /**
      * @return the common parent of both addresses which 
      * has the greatest depth
      * @since 3.5
      */
-     static QString commonParent(QString A, QString B);
+     static TQString commonParent(TQString A, TQString B);
 
     /**
      * Get the value of a specific metadata item.
      * @param key Name of the metadata item
-     * @return Value of the metadata item. QString::null is returned in case
+     * @return Value of the metadata item. TQString::null is returned in case
      * the specified key does not exist.
      * @since 3.4
      */
-    QString metaDataItem( const QString &key ) const;
+    TQString metaDataItem( const TQString &key ) const;
 
     /**
      * Change the value of a specific metadata item, or create the given item
@@ -179,18 +179,18 @@ public:
      * @param mode Whether to overwrite the item's value if it exists already or not.
      * @since 3.4
      */
-    void setMetaDataItem( const QString &key, const QString &value, MetaDataOverwriteMode mode = OverwriteMetaData );
+    void setMetaDataItem( const TQString &key, const TQString &value, MetaDataOverwriteMode mode = OverwriteMetaData );
 
 protected:
-    QDomElement element;
+    TQDomElement element;
     // Note: you can't add new member variables here.
     // The KBookmarks are created on the fly, as wrappers
     // around internal QDomElements. Any additional information
-    // has to be implemented as an attribute of the QDomElement.
+    // has to be implemented as an attribute of the TQDomElement.
 
 private:
     bool hasMetaData() const;
-    static QString left(const QString & str, uint len);
+    static TQString left(const TQString & str, uint len);
 };
 
 /**
@@ -200,7 +200,7 @@ class KIO_EXPORT KBookmarkGroup : public KBookmark
 {
 public:
     /**
-     * Create an invalid group. This is mostly for use in QValueList,
+     * Create an invalid group. This is mostly for use in TQValueList,
      * and other places where we need a null group.
      * Also used as a parent for a bookmark that doesn't have one
      * (e.g. Netscape bookmarks)
@@ -210,13 +210,13 @@ public:
     /**
      * Create a bookmark group as specified by the given element
      */
-    KBookmarkGroup( QDomElement elem );
+    KBookmarkGroup( TQDomElement elem );
 
     /**
      * Much like KBookmark::address, but caches the
      * address into m_address.
      */
-    QString groupAddress() const;
+    TQString groupAddress() const;
 
     /**
      * @return true if the bookmark folder is opened in the bookmark editor
@@ -244,7 +244,7 @@ public:
      * @param text for the folder. If empty, the user will be queried for it.
      * @param emitSignal if true emit KBookmarkNotifier signal
      */
-    KBookmarkGroup createNewFolder( KBookmarkManager* mgr, const QString & text = QString::null, bool emitSignal = true );
+    KBookmarkGroup createNewFolder( KBookmarkManager* mgr, const TQString & text = TQString::null, bool emitSignal = true );
     /**
      * Create a new bookmark separator
      * Don't forget to use KBookmarkManager::self()->emitChanged( parentBookmark );
@@ -271,7 +271,7 @@ public:
      * will be determined from the URL if not specified.
      * @param emitSignal if true emit KBookmarkNotifier signal
      */
-    KBookmark addBookmark( KBookmarkManager* mgr, const QString & text, const KURL & url, const QString & icon = QString::null, bool emitSignal = true );
+    KBookmark addBookmark( KBookmarkManager* mgr, const TQString & text, const KURL & url, const TQString & icon = TQString::null, bool emitSignal = true );
 
     /**
      * Moves @p item after @p after (which should be a child of ours).
@@ -293,23 +293,23 @@ public:
     /**
      * @internal
      */
-    QDomElement findToolbar() const;
+    TQDomElement findToolbar() const;
 
     /**
      * @return the list of urls of bookmarks at top level of the group
      * @since 3.2
      */
-    QValueList<KURL> groupUrlList() const;
+    TQValueList<KURL> groupUrlList() const;
 
 protected:
-    QDomElement nextKnownTag( QDomElement start, bool goNext ) const;
+    TQDomElement nextKnownTag( TQDomElement start, bool goNext ) const;
 
 private:
-    mutable QString m_address;
+    mutable TQString m_address;
     // Note: you can't add other member variables here, except for caching info.
     // The KBookmarks are created on the fly, as wrappers
     // around internal QDomElements. Any additional information
-    // has to be implemented as an attribute of the QDomElement.
+    // has to be implemented as an attribute of the TQDomElement.
 };
 
 /**

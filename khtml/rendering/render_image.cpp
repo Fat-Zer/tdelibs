@@ -27,8 +27,8 @@
 #include "render_image.h"
 #include "render_canvas.h"
 
-#include <qdrawutil.h>
-#include <qpainter.h>
+#include <tqdrawutil.h>
+#include <tqpainter.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -77,9 +77,9 @@ RenderImage::~RenderImage()
     if(m_oldImage) m_oldImage->deref( this );
 }
 
-QPixmap RenderImage::pixmap() const
+TQPixmap RenderImage::pixmap() const
 {
-    return m_cachedImage ? m_cachedImage->pixmap() : QPixmap();
+    return m_cachedImage ? m_cachedImage->pixmap() : TQPixmap();
 }
 
 void RenderImage::setStyle(RenderStyle* _style)
@@ -96,7 +96,7 @@ void RenderImage::setContentObject(CachedObject* co )
         updateImage( static_cast<CachedImage*>( co ) );
 }
 
-void RenderImage::setPixmap( const QPixmap &p, const QRect& r, CachedImage *o)
+void RenderImage::setPixmap( const TQPixmap &p, const TQRect& r, CachedImage *o)
 {
     if ( o == m_oldImage )
         return;
@@ -114,8 +114,8 @@ void RenderImage::setPixmap( const QPixmap &p, const QRect& r, CachedImage *o)
 
         // we have an alt and the user meant it (its not a text we invented)
         if ( element() && !alt.isEmpty() && !element()->getAttribute( ATTR_ALT ).isNull()) {
-            const QFontMetrics &fm = style()->fontMetrics();
-            QRect br = fm.boundingRect (  0, 0, 1024, 256, Qt::AlignAuto|Qt::WordBreak, alt.string() );
+            const TQFontMetrics &fm = style()->fontMetrics();
+            TQRect br = fm.boundingRect (  0, 0, 1024, 256, Qt::AlignAuto|Qt::WordBreak, alt.string() );
             if ( br.width() > iw )
                 iw = br.width();
             if ( br.height() > ih )
@@ -193,7 +193,7 @@ void RenderImage::setPixmap( const QPixmap &p, const QRect& r, CachedImage *o)
            (scaledHeight / (cHeight/5) == resizeCache.height() / (cHeight/5)))
             return;
 
-        resizeCache = QPixmap(); // for resized animations
+        resizeCache = TQPixmap(); // for resized animations
 
         if(completeRepaint)
             repaintRectangle(borderLeft()+paddingLeft(), borderTop()+paddingTop(), contentWidth(), contentHeight());
@@ -241,16 +241,16 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
 
     // paint frame around image as long as it is not completely loaded from web.
     if (bUnfinishedImageFrame && paintInfo.phase == PaintActionForeground && cWidth > 2 && cHeight > 2 && !complete()) {
-        static QPixmap *loadingIcon;
-        QColor bg = khtml::retrieveBackgroundColor(this);
-        QColor fg = khtml::hasSufficientContrast(Qt::gray, bg) ? Qt::gray :
+        static TQPixmap *loadingIcon;
+        TQColor bg = khtml::retrieveBackgroundColor(this);
+        TQColor fg = khtml::hasSufficientContrast(Qt::gray, bg) ? Qt::gray :
                     (hasSufficientContrast(Qt::white, bg) ? Qt::white : Qt::black);
-	paintInfo.p->setPen(QPen(fg, 1));
+	paintInfo.p->setPen(TQPen(fg, 1));
 	paintInfo.p->setBrush( Qt::NoBrush );
 	paintInfo.p->drawRect(_tx, _ty, m_width, m_height);
         if (!(m_width <= 5 || m_height <= 5)) {
             if (!loadingIcon) {
-                loadingIcon = new QPixmap();
+                loadingIcon = new TQPixmap();
                 loadingIcon->loadFromData(loading_icon_data, loading_icon_len);
             }
             paintInfo.p->drawPixmap(_tx + 4, _ty + 4, *loadingIcon, 0, 0, m_width - 5, m_height - 5);
@@ -268,20 +268,20 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
                 qDrawShadePanel( paintInfo.p, _tx + leftBorder + leftPad, _ty + topBorder + topPad, cWidth, cHeight,
                                  KApplication::palette().inactive(), true, 1 );
             }
-            QPixmap const* pix = i ? &i->pixmap() : 0;
+            TQPixmap const* pix = i ? &i->pixmap() : 0;
             if(berrorPic && pix && (cWidth >= pix->width()+4) && (cHeight >= pix->height()+4) )
             {
-                QRect r(pix->rect());
-                r = r.intersect(QRect(0, 0, cWidth-4, cHeight-4));
-                paintInfo.p->drawPixmap( QPoint( _tx + leftBorder + leftPad+2, _ty + topBorder + topPad+2), *pix, r );
+                TQRect r(pix->rect());
+                r = r.intersect(TQRect(0, 0, cWidth-4, cHeight-4));
+                paintInfo.p->drawPixmap( TQPoint( _tx + leftBorder + leftPad+2, _ty + topBorder + topPad+2), *pix, r );
             }
             if(!alt.isEmpty()) {
-                QString text = alt.string();
+                TQString text = alt.string();
                 paintInfo.p->setFont(style()->font());
                 paintInfo.p->setPen( style()->color() );
                 int ax = _tx + leftBorder + leftPad + 2;
                 int ay = _ty + topBorder + topPad + 2;
-                const QFontMetrics &fm = style()->fontMetrics();
+                const TQFontMetrics &fm = style()->fontMetrics();
                 if (cWidth>5 && cHeight>=fm.height())
                     paintInfo.p->drawText(ax, ay+1, cWidth - 4, cHeight - 4, Qt::WordBreak, text );
             }
@@ -290,18 +290,18 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
     else if (i && !i->isTransparent())
     {
         paintInfo.p->setPen( Qt::black ); // used for bitmaps
-        const QPixmap& pix = i->pixmap();
+        const TQPixmap& pix = i->pixmap();
         if ( (cWidth != intrinsicWidth() ||  cHeight != intrinsicHeight()) &&
              pix.width() > 0 && pix.height() > 0 && i->valid_rect().isValid())
         {
             if (resizeCache.isNull() && cWidth && cHeight && intrinsicWidth() && intrinsicHeight())
             {
-                QRect scaledrect(i->valid_rect());
+                TQRect scaledrect(i->valid_rect());
 //                 kdDebug(6040) << "time elapsed: " << dt->elapsed() << endl;
 //                  kdDebug( 6040 ) << "have to scale: " << endl;
 //                  qDebug("cw=%d ch=%d  pw=%d ph=%d  rcw=%d, rch=%d",
 //                          cWidth, cHeight, intrinsicWidth(), intrinsicHeight(), resizeCache.width(), resizeCache.height());
-                QWMatrix matrix;
+                TQWMatrix matrix;
                 matrix.scale( (float)(cWidth)/intrinsicWidth(),
                               (float)(cHeight)/intrinsicHeight() );
                 resizeCache = pix.xForm( matrix );
@@ -315,35 +315,35 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
                 // sometimes scaledrect.width/height are off by one because
                 // of rounding errors. if the i is fully loaded, we
                 // make sure that we don't do unnecessary resizes during painting
-                QSize s(scaledrect.size());
-                if(i->valid_rect().size() == QSize( intrinsicWidth(), intrinsicHeight() )) // fully loaded
-                    s = QSize(cWidth, cHeight);
+                TQSize s(scaledrect.size());
+                if(i->valid_rect().size() == TQSize( intrinsicWidth(), intrinsicHeight() )) // fully loaded
+                    s = TQSize(cWidth, cHeight);
                 if(kAbs(s.width() - cWidth) < 2) // rounding errors
                     s.setWidth(cWidth);
                 if(resizeCache.size() != s)
                     resizeCache.resize(s);
 
-                paintInfo.p->drawPixmap( QPoint( _tx + leftBorder + leftPad, _ty + topBorder + topPad),
+                paintInfo.p->drawPixmap( TQPoint( _tx + leftBorder + leftPad, _ty + topBorder + topPad),
                                resizeCache, scaledrect );
             }
             else
-                paintInfo.p->drawPixmap( QPoint( _tx + leftBorder + leftPad, _ty + topBorder + topPad), resizeCache );
+                paintInfo.p->drawPixmap( TQPoint( _tx + leftBorder + leftPad, _ty + topBorder + topPad), resizeCache );
         }
         else
         {
             // we might be just about switching images
-            QRect rect(i->valid_rect().isValid() ? i->valid_rect()
-                       : QRect(0, 0, intrinsicWidth(), intrinsicHeight()));
+            TQRect rect(i->valid_rect().isValid() ? i->valid_rect()
+                       : TQRect(0, 0, intrinsicWidth(), intrinsicHeight()));
 
-            QPoint offs( _tx + leftBorder + leftPad, _ty + topBorder + topPad);
+            TQPoint offs( _tx + leftBorder + leftPad, _ty + topBorder + topPad);
 //             qDebug("normal paint rect %d/%d/%d/%d", rect.x(), rect.y(), rect.width(), rect.height());
-//             rect = rect & QRect( 0 , y - offs.y() - 10, w, 10 + y + h  - offs.y());
+//             rect = rect & TQRect( 0 , y - offs.y() - 10, w, 10 + y + h  - offs.y());
 
 //             qDebug("normal paint rect after %d/%d/%d/%d", rect.x(), rect.y(), rect.width(), rect.height());
 //             qDebug("normal paint: offs.y(): %d, y: %d, diff: %d", offs.y(), y, y - offs.y());
 //             qDebug("");
 
-//           p->setClipRect(QRect(x,y,w,h));
+//           p->setClipRect(TQRect(x,y,w,h));
 
 
 //             p->drawPixmap( offs.x(), y, pix, rect.x(), rect.y(), rect.width(), rect.height() );
@@ -370,7 +370,7 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
 	    // don't touch it unless you know what you're doing
     	    paintInfo.p->setBrushOrigin(_tx, _ty - paintInfo.r.y());
             paintInfo.p->fillRect(_tx, _ty, width(), height(),
-		    QBrush(style()->palette().active().highlight(),
+		    TQBrush(style()->palette().active().highlight(),
 		    Qt::Dense4Pattern));
 	}
     }
@@ -406,7 +406,7 @@ void RenderImage::layout()
     }
 
     if ( m_width != oldwidth || m_height != oldheight )
-        resizeCache = QPixmap();
+        resizeCache = TQPixmap();
 
     setNeedsLayout(false);
 }

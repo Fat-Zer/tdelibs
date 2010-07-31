@@ -21,7 +21,7 @@ class Test2 : public MyPrefs
     */
     void setAutoSave( bool v )
     {
-      if (!isImmutable( QString::fromLatin1( "AutoSave" ) ))
+      if (!isImmutable( TQString::fromLatin1( "AutoSave" ) ))
         mAutoSave = v;
     }
 
@@ -46,7 +46,7 @@ class Test2 : public MyPrefs
     */
     void setAutoSaveInterval( int v )
     {
-      if (!isImmutable( QString::fromLatin1( "AutoSaveInterval" ) ))
+      if (!isImmutable( TQString::fromLatin1( "AutoSaveInterval" ) ))
         mAutoSaveInterval = v;
     }
 
@@ -71,7 +71,7 @@ class Test2 : public MyPrefs
     */
     void setConfirm( bool v )
     {
-      if (!isImmutable( QString::fromLatin1( "Confirm" ) ))
+      if (!isImmutable( TQString::fromLatin1( "Confirm" ) ))
         mConfirm = v;
     }
 
@@ -94,16 +94,16 @@ class Test2 : public MyPrefs
     /**
       Set Archive File
     */
-    void setArchiveFile( const QString & v )
+    void setArchiveFile( const TQString & v )
     {
-      if (!isImmutable( QString::fromLatin1( "ArchiveFile" ) ))
+      if (!isImmutable( TQString::fromLatin1( "ArchiveFile" ) ))
         mArchiveFile = v;
     }
 
     /**
       Get Archive File
     */
-    QString archiveFile() const
+    TQString archiveFile() const
     {
       return mArchiveFile;
     }
@@ -121,7 +121,7 @@ class Test2 : public MyPrefs
     */
     void setDestination( int v )
     {
-      if (!isImmutable( QString::fromLatin1( "Destination" ) ))
+      if (!isImmutable( TQString::fromLatin1( "Destination" ) ))
         mDestination = v;
     }
 
@@ -146,7 +146,7 @@ class Test2 : public MyPrefs
     */
     void setHourSize( int v )
     {
-      if (!isImmutable( QString::fromLatin1( "HourSize" ) ))
+      if (!isImmutable( TQString::fromLatin1( "HourSize" ) ))
         mHourSize = v;
     }
 
@@ -171,7 +171,7 @@ class Test2 : public MyPrefs
     */
     void setSelectionStartsEditor( bool v )
     {
-      if (!isImmutable( QString::fromLatin1( "SelectionStartsEditor" ) ))
+      if (!isImmutable( TQString::fromLatin1( "SelectionStartsEditor" ) ))
         mSelectionStartsEditor = v;
     }
 
@@ -194,16 +194,16 @@ class Test2 : public MyPrefs
     /**
       Set SelectedPlugins
     */
-    void setSelectedPlugins( const QStringList & v )
+    void setSelectedPlugins( const TQStringList & v )
     {
-      if (!isImmutable( QString::fromLatin1( "SelectedPlugins" ) ))
+      if (!isImmutable( TQString::fromLatin1( "SelectedPlugins" ) ))
         mSelectedPlugins = v;
     }
 
     /**
       Get SelectedPlugins
     */
-    QStringList selectedPlugins() const
+    TQStringList selectedPlugins() const
     {
       return mSelectedPlugins;
     }
@@ -219,16 +219,16 @@ class Test2 : public MyPrefs
     /**
       Set Highlight color
     */
-    void setHighlightColor( const QColor & v )
+    void setHighlightColor( const TQColor & v )
     {
-      if (!isImmutable( QString::fromLatin1( "HighlightColor" ) ))
+      if (!isImmutable( TQString::fromLatin1( "HighlightColor" ) ))
         mHighlightColor = v;
     }
 
     /**
       Get Highlight color
     */
-    QColor highlightColor() const
+    TQColor highlightColor() const
     {
       return mHighlightColor;
     }
@@ -244,16 +244,16 @@ class Test2 : public MyPrefs
     /**
       Set Agenda view background color
     */
-    void setAgendaBgColor( const QColor & v )
+    void setAgendaBgColor( const TQColor & v )
     {
-      if (!isImmutable( QString::fromLatin1( "AgendaBgColor" ) ))
+      if (!isImmutable( TQString::fromLatin1( "AgendaBgColor" ) ))
         mAgendaBgColor = v;
     }
 
     /**
       Get Agenda view background color
     */
-    QColor agendaBgColor() const
+    TQColor agendaBgColor() const
     {
       return mAgendaBgColor;
     }
@@ -269,16 +269,16 @@ class Test2 : public MyPrefs
     /**
       Set Time bar
     */
-    void setTimeBarFont( const QFont & v )
+    void setTimeBarFont( const TQFont & v )
     {
-      if (!isImmutable( QString::fromLatin1( "TimeBarFont" ) ))
+      if (!isImmutable( TQString::fromLatin1( "TimeBarFont" ) ))
         mTimeBarFont = v;
     }
 
     /**
       Get Time bar
     */
-    QFont timeBarFont() const
+    TQFont timeBarFont() const
     {
       return mTimeBarFont;
     }
@@ -298,7 +298,7 @@ class Test2 : public MyPrefs
     bool mAutoSave;
     int mAutoSaveInterval;
     bool mConfirm;
-    QString mArchiveFile;
+    TQString mArchiveFile;
     int mDestination;
 
     // Views
@@ -306,14 +306,14 @@ class Test2 : public MyPrefs
     bool mSelectionStartsEditor;
 
     // KOrganizer Plugins
-    QStringList mSelectedPlugins;
+    TQStringList mSelectedPlugins;
 
     // Colors
-    QColor mHighlightColor;
-    QColor mAgendaBgColor;
+    TQColor mHighlightColor;
+    TQColor mAgendaBgColor;
 
     // Fonts
-    QFont mTimeBarFont;
+    TQFont mTimeBarFont;
 
   private:
     ItemBool *mAutoSaveItem;

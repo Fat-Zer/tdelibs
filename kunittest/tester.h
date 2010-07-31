@@ -96,7 +96,7 @@
  * void SampleTest::allTests()
  * {
  *    CHECK( 3+3, 6 );
- *    CHECK( QString( "hello%1" ).arg( " world not" ), QString( "hello world" ) );
+ *    CHECK( TQString( "hello%1" ).arg( " world not" ), TQString( "hello world" ) );
  * }
  * @endcode
  *
@@ -119,7 +119,7 @@
  * @verbatim
 SampleTest - 1 test passed, 1 test failed
     Unexpected failure:
-        sampletest.cpp[38]: failed on "QString( "hello%1" ).arg( " world not" )"
+        sampletest.cpp[38]: failed on "TQString( "hello%1" ).arg( " world not" )"
             result = 'hello world not', expected = 'hello world'
 @endverbatim
  *
@@ -325,9 +325,9 @@ SampleTest - 1 test passed, 1 test failed
 #include <iostream>
 using namespace std;
 
-#include <qobject.h>
-#include <qstringlist.h>
-#include <qasciidict.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
+#include <tqasciidict.h>
 
 #include <kdelibs_export.h>
 
@@ -359,7 +359,7 @@ using namespace std;
  *
  * @code SKIP("Test skipped because of lack of foo support."); @endcode
  */
-#define SKIP( x ) skip( __FILE__, __LINE__, QString::fromLatin1(#x))
+#define SKIP( x ) skip( __FILE__, __LINE__, TQString::fromLatin1(#x))
 
 /*!
  * A macro testing that @p expression throws an exception that is catched
@@ -379,11 +379,11 @@ using namespace std;
     } \
     if(exceptionRaised()) \
     { \
-        success(QString(__FILE__) + "[" + QString::number(__LINE__) + "]: passed " + #expression); \
+        success(TQString(__FILE__) + "[" + TQString::number(__LINE__) + "]: passed " + #expression); \
     } \
     else \
     { \
-        failure(QString(__FILE__) + "[" + QString::number(__LINE__) + QString("]: failed to throw " \
+        failure(TQString(__FILE__) + "[" + TQString::number(__LINE__) + TQString("]: failed to throw " \
                 "an exception on: ") + #expression); \
     } \
     setExceptionRaised(false);
@@ -403,11 +403,11 @@ using namespace std;
     } \
     if(exceptionRaised()) \
     { \
-        unexpectedSuccess(QString(__FILE__) + "[" + QString::number(__LINE__) + "]: unexpectedly threw an exception and passed: " + #expression); \
+        unexpectedSuccess(TQString(__FILE__) + "[" + TQString::number(__LINE__) + "]: unexpectedly threw an exception and passed: " + #expression); \
     }\
     else \
     { \
-        expectedFailure(QString(__FILE__) + "[" + QString::number(__LINE__) + QString("]: failed to throw an exception on: ") + #expression); \
+        expectedFailure(TQString(__FILE__) + "[" + TQString::number(__LINE__) + TQString("]: failed to throw an exception on: ") + #expression); \
     } \
     setExceptionRaised(false);
 
@@ -417,8 +417,8 @@ using namespace std;
  * as being skipped.
  */
 #define SKIP_EXCEPTION(exceptionCatch, expression) \
-	skip( __FILE__, __LINE__, QString("Exception catch: ")\
-			.arg(QString(#exceptionCatch)).arg(QString(" Test expression: ")).arg(QString(#expression)))
+	skip( __FILE__, __LINE__, TQString("Exception catch: ")\
+			.arg(TQString(#exceptionCatch)).arg(TQString(" Test expression: ")).arg(TQString(#expression)))
 
 /**
  * Namespace for Unit testing classes
@@ -454,14 +454,14 @@ namespace KUnitTest
         /*! Add some debug info that can be view later. Normally you do not need to call this.
          * @param debug The debug info.
          */
-        virtual void addDebugInfo(const QString &debug)
+        virtual void addDebugInfo(const TQString &debug)
         {
             m_debug += debug;
         }
 
         /*! @returns The debug info that was added to this Tester object.
          */
-        QString debugInfo() const { return m_debug; }
+        TQString debugInfo() const { return m_debug; }
 
         /*! @returns The number of finished tests. */
         int testsFinished() const { return m_tests; }
@@ -482,34 +482,34 @@ namespace KUnitTest
         int passed() const { return m_successList.count(); }
 
         /*! @returns Details about the failed tests. */
-        QStringList errorList() const { return m_errorList; }
+        TQStringList errorList() const { return m_errorList; }
 
         /*! @returns Details about tests that failed expectedly. */
-        QStringList xfailList() const { return m_xfailList; }
+        TQStringList xfailList() const { return m_xfailList; }
 
         /*! @returns Details about tests that succeeded unexpectedly. */
-        QStringList xpassList() const { return m_xpassList; }
+        TQStringList xpassList() const { return m_xpassList; }
 
         /*! @returns Details about which tests were skipped. */
-        QStringList skipList() const { return m_skipList; }
+        TQStringList skipList() const { return m_skipList; }
 
         /*! @returns Details about the succeeded tests. */
-        QStringList successList() const { return m_successList; }
+        TQStringList successList() const { return m_successList; }
 
     private:
-        QStringList m_errorList;
-        QStringList m_xfailList;
-        QStringList m_xpassList;
-        QStringList m_skipList;
-        QStringList m_successList;
-        QString     m_debug;
+        TQStringList m_errorList;
+        TQStringList m_xfailList;
+        TQStringList m_xpassList;
+        TQStringList m_skipList;
+        TQStringList m_successList;
+        TQString     m_debug;
         int         m_tests;
     };
 
-    typedef QAsciiDict<TestResults> TestResultsListType;
+    typedef TQAsciiDict<TestResults> TestResultsListType;
 
     /*! A type that can be used to iterate through the registry. */
-    typedef QAsciiDictIterator<TestResults> TestResultsListIteratorType;
+    typedef TQAsciiDictIterator<TestResults> TestResultsListIteratorType;
 
     /*! The abstract Tester class forms the base class for all test cases. Users must
      * implement the void Tester::allTests() method. This method contains the actual test.
@@ -523,7 +523,7 @@ namespace KUnitTest
     {
     public:
         Tester(const char *name = 0L)
-        : QObject(0L, name), m_results(new TestResults()), m_exceptionState(false)
+        : TQObject(0L, name), m_results(new TestResults()), m_exceptionState(false)
         {}
 
         virtual ~Tester() { delete m_results; }
@@ -544,10 +544,10 @@ namespace KUnitTest
          * @param line The linenumber in the file @p file. Use the __LINE__ macro for this.
          * @param msg The message that identifies the skipped test.
          */
-        void skip( const char *file, int line, QString msg )
+        void skip( const char *file, int line, TQString msg )
         {
-            QString skipEntry;
-            QTextStream ts( &skipEntry, IO_WriteOnly );
+            TQString skipEntry;
+            TQTextStream ts( &skipEntry, IO_WriteOnly );
             ts << file << "["<< line <<"]: " << msg;
             skipTest( skipEntry );
         }
@@ -569,8 +569,8 @@ namespace KUnitTest
 
             if ( result != expectedResult )
             {
-                QString error;
-                QTextStream ts( &error, IO_WriteOnly );
+                TQString error;
+                TQTextStream ts( &error, IO_WriteOnly );
                 ts << file << "["<< line <<"]: failed on \"" <<  str
                    <<"\" result = '" << result << "' expected = '" << expectedResult << "'";
 
@@ -586,8 +586,8 @@ namespace KUnitTest
                 // we were expecting a failure
                 if (expectedFail)
                 {
-                    QString err;
-                    QTextStream ts( &err, IO_WriteOnly );
+                    TQString err;
+                    TQTextStream ts( &err, IO_WriteOnly );
                     ts << file << "["<< line <<"]: "
                        <<" unexpectedly passed on \""
                        <<  str <<"\"";
@@ -595,8 +595,8 @@ namespace KUnitTest
                 }
                 else
                 {
-                    QString succ;
-                    QTextStream ts( &succ, IO_WriteOnly );
+                    TQString succ;
+                    TQTextStream ts( &succ, IO_WriteOnly );
                     ts << file << "["<< line <<"]: "
                        <<" passed \""
                        <<  str <<"\"";
@@ -614,7 +614,7 @@ namespace KUnitTest
      * @param message the message describing what failed. Should be informative, 
      * such as mentioning the expression that failed and where, the file and file number.
      */
-    void success(const QString &message) { m_results->m_successList.append(message); }
+    void success(const TQString &message) { m_results->m_successList.append(message); }
 
     /*!
      * This function can be used to flag failing tests, when 
@@ -623,7 +623,7 @@ namespace KUnitTest
      * @param message the message describing what failed. Should be informative, 
      * such as mentioning the expression that failed and where, the file name and file number.
      */
-    void failure(const QString &message) { m_results->m_errorList.append(message); }
+    void failure(const TQString &message) { m_results->m_errorList.append(message); }
 
     /*!
      * This function can be used to flag expected failures, when 
@@ -632,7 +632,7 @@ namespace KUnitTest
      * @param message the message describing what failed. Should be informative, 
      * such as mentioning the expression that failed and where, the file name and file number.
      */
-    void expectedFailure(const QString &message) { m_results->m_xfailList.append(message); }
+    void expectedFailure(const TQString &message) { m_results->m_xfailList.append(message); }
 
     /*!
      * This function can be used to flag unexpected successes, when 
@@ -641,7 +641,7 @@ namespace KUnitTest
      * @param message the message describing what failed. Should be informative, 
      * such as mentioning the expression that failed and where, the file name and file number.
      */
-    void unexpectedSuccess(const QString &message) { m_results->m_xpassList.append(message); }
+    void unexpectedSuccess(const TQString &message) { m_results->m_xpassList.append(message); }
 
     /*!
      * This function can be used to flag a test as skipped, when 
@@ -650,7 +650,7 @@ namespace KUnitTest
      * @param message the message describing what failed. Should be informative, 
      * such as mentioning the expression that failed and where, the file name and file number.
      */
-    void skipTest(const QString &message) { m_results->m_skipList.append(message); }
+    void skipTest(const TQString &message) { m_results->m_skipList.append(message); }
 
     /*!
      * exceptionRaised and exceptionState are book-keeping functions for testing for
@@ -700,17 +700,17 @@ namespace KUnitTest
         void invoke();
 
     private:
-        void invokeMember(const QString &str);
+        void invokeMember(const TQString &str);
 
         TestResultsListType  m_resultsList;
         TestResults         *m_total;
     };
 }
 
-KUNITTEST_EXPORT QTextStream& operator<<( QTextStream& str, const QRect& r );
+KUNITTEST_EXPORT TQTextStream& operator<<( TQTextStream& str, const TQRect& r );
 
-KUNITTEST_EXPORT QTextStream& operator<<( QTextStream& str, const QPoint& r );
+KUNITTEST_EXPORT TQTextStream& operator<<( TQTextStream& str, const TQPoint& r );
 
-KUNITTEST_EXPORT QTextStream& operator<<( QTextStream& str, const QSize& r );
+KUNITTEST_EXPORT TQTextStream& operator<<( TQTextStream& str, const TQSize& r );
 
 #endif

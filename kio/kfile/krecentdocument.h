@@ -28,7 +28,7 @@
 #ifndef __KRECENTDOCUMENT_H
 #define __KRECENTDOCUMENT_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kurl.h>
 
 /**
@@ -57,7 +57,7 @@ public:
      * sorted by date.
      *
      */
-    static QStringList recentDocuments();
+    static TQStringList recentDocuments();
 
     /**
      * Add a new item to the Recent Document menu.
@@ -74,7 +74,7 @@ public:
      * @param url The url to add.
      * @param desktopEntryName The desktopEntryName of the service to use for opening this document.
      */
-    static void add(const KURL& url, const QString& desktopEntryName);
+    static void add(const KURL& url, const TQString& desktopEntryName);
 
     /**
      *
@@ -83,7 +83,7 @@ public:
      * @param documentStr The full path to the document or URL to add.
      * @param isURL Set to @p true if @p documentStr is an URL and not a local file path.
      */
-    static void add(const QString &documentStr, bool isURL = false);
+    static void add(const TQString &documentStr, bool isURL = false);
 
     /**
      * Clear the recent document menu of all entries.
@@ -99,7 +99,7 @@ public:
      * Returns the path to the directory where recent document .desktop files
      * are stored.
      */
-    static QString recentDocumentDirectory();
+    static TQString recentDocumentDirectory();
 };
 
 #endif

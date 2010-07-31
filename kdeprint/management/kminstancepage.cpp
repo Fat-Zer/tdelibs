@@ -26,10 +26,10 @@
 #include "kprinter.h"
 #include "kmtimer.h"
 
-#include <qlayout.h>
-#include <qregexp.h>
-#include <qwhatsthis.h>
-#include <qpushbutton.h>
+#include <tqlayout.h>
+#include <tqregexp.h>
+#include <tqwhatsthis.h>
+#include <tqpushbutton.h>
 #include <kmessagebox.h>
 #include <kinputdialog.h>
 #include <klistbox.h>
@@ -38,26 +38,26 @@
 #include <kstandarddirs.h>
 #include <kdebug.h>
 
-KMInstancePage::KMInstancePage(QWidget *parent, const char *name)
-: QWidget(parent,name)
+KMInstancePage::KMInstancePage(TQWidget *parent, const char *name)
+: TQWidget(parent,name)
 {
 	m_view = new KListBox(this);
 	m_printer = 0;
 
 	initActions();
 
-	QHBoxLayout	*main_ = new QHBoxLayout(this, 0, 0);
+	QHBoxLayout	*main_ = new TQHBoxLayout(this, 0, 0);
 	main_->addWidget(m_view);
-	QVBoxLayout	*sub_ = new QVBoxLayout(0, 0, 0);
+	QVBoxLayout	*sub_ = new TQVBoxLayout(0, 0, 0);
 	main_->addLayout(sub_);
-	for (QValueList<QButton*>::Iterator it=m_buttons.begin(); it!=m_buttons.end(); ++it)
+	for (TQValueList<TQButton*>::Iterator it=m_buttons.begin(); it!=m_buttons.end(); ++it)
 		if (*it)
 			sub_->addWidget(*it);
 		else
 			sub_->addSpacing(10);
 	sub_->addStretch(1);
 
-	QWhatsThis::add(this,
+	TQWhatsThis::add(this,
 		i18n("Define/Edit here instances for the current selected "
 		     "printer. An instance is a combination of a real "
 		     "(physical) printer and a set of predefined options. "
@@ -72,26 +72,26 @@ KMInstancePage::~KMInstancePage()
 {
 }
 
-void KMInstancePage::addButton(const QString& txt, const QString& pixmap, const char *receiver)
+void KMInstancePage::addButton(const TQString& txt, const TQString& pixmap, const char *receiver)
 {
-	QPushButton	*btn = new QPushButton(this, 0L);
+	QPushButton	*btn = new TQPushButton(this, 0L);
 	btn->setText(txt);
 	btn->setIconSet(BarIconSet(pixmap));
 	btn->setFlat(true);
-	connect(btn, SIGNAL(clicked()), receiver);
+	connect(btn, TQT_SIGNAL(clicked()), receiver);
 	m_buttons.append(btn);
 }
 
 void KMInstancePage::initActions()
 {
-	addButton(i18n("New..."), "filenew", SLOT(slotNew()));
-	addButton(i18n("Copy..."), "editcopy", SLOT(slotCopy()));
-	addButton(i18n("Remove"), "edittrash", SLOT(slotRemove()));
+	addButton(i18n("New..."), "filenew", TQT_SLOT(slotNew()));
+	addButton(i18n("Copy..."), "editcopy", TQT_SLOT(slotCopy()));
+	addButton(i18n("Remove"), "edittrash", TQT_SLOT(slotRemove()));
 	m_buttons.append(0);
-	addButton(i18n("Set as Default"), "exec", SLOT(slotDefault()));
-	addButton(i18n("Settings"), "configure", SLOT(slotSettings()));
+	addButton(i18n("Set as Default"), "exec", TQT_SLOT(slotDefault()));
+	addButton(i18n("Settings"), "configure", TQT_SLOT(slotSettings()));
 	m_buttons.append(0);
-	addButton(i18n("Test..."), "fileprint", SLOT(slotTest()));
+	addButton(i18n("Test..."), "fileprint", TQT_SLOT(slotTest()));
 }
 
 void KMInstancePage::setPrinter(KMPrinter *p)
@@ -104,18 +104,18 @@ void KMInstancePage::setPrinter(KMPrinter *p)
 	bool	ok = (p != 0);
 	if (ok)
 	{
-		QPtrList<KMPrinter>	list;
+		TQPtrList<KMPrinter>	list;
 		KMFactory::self()->virtualManager()->virtualList(list,p->name());
-		QPtrListIterator<KMPrinter>	it(list);
+		TQPtrListIterator<KMPrinter>	it(list);
 		for (;it.current();++it)
 		{
-			QStringList	pair = QStringList::split('/',it.current()->name(),false);
+			QStringList	pair = TQStringList::split('/',it.current()->name(),false);
 			m_view->insertItem(SmallIcon((it.current()->isSoftDefault() ? "exec" : "fileprint")),(pair.count() > 1 ? pair[1] : i18n("(Default)")));
 		}
 		m_view->sort();
 	}
 
-	for (QValueList<QButton*>::ConstIterator it=m_buttons.begin(); it!=m_buttons.end(); ++it)
+	for (TQValueList<TQButton*>::ConstIterator it=m_buttons.begin(); it!=m_buttons.end(); ++it)
 		if (*it)
 			(*it)->setEnabled(ok);
 
@@ -138,12 +138,12 @@ void KMInstancePage::slotNew()
 			                     i18n("(Default)"),&ok,this);
 	if (ok)
 	{
-		if (name.find(QRegExp("[/\\s]")) != -1)
+		if (name.find(TQRegExp("[/\\s]")) != -1)
 			KMessageBox::error(this, i18n("Instance name must not contain any spaces or slashes."));
 		else
 		{
 			if (name == i18n("(Default)"))
-				name = QString::null;
+				name = TQString::null;
 			KMFactory::self()->virtualManager()->create(m_printer,name);
 			setPrinter(m_printer);
 		}
@@ -158,11 +158,11 @@ void KMInstancePage::slotRemove()
 	bool	reload(false);
 
 	QString	src = m_view->currentText();
-        QString msg = (src != i18n("(Default)") ? i18n("Do you really want to remove instance %1?") : i18n("You can't remove the default instance. However all settings of %1 will be discarded. Continue?"));
-	if (!src.isEmpty() && KMessageBox::warningContinueCancel(this,msg.arg(src),QString::null,KStdGuiItem::del()) == KMessageBox::Continue)
+        TQString msg = (src != i18n("(Default)") ? i18n("Do you really want to remove instance %1?") : i18n("You can't remove the default instance. However all settings of %1 will be discarded. Continue?"));
+	if (!src.isEmpty() && KMessageBox::warningContinueCancel(this,msg.arg(src),TQString::null,KStdGuiItem::del()) == KMessageBox::Continue)
 	{
 		if (src == i18n("(Default)"))
-			src = QString::null;
+			src = TQString::null;
 		reload = KMFactory::self()->virtualManager()->isDefault(m_printer,src);
 		KMFactory::self()->virtualManager()->remove(m_printer,src);
 		setPrinter(m_printer);
@@ -183,14 +183,14 @@ void KMInstancePage::slotCopy()
 				                     i18n("(Default)"),&ok,this);
 		if (ok)
 		{
-			if (name.find(QRegExp("[/\\s]")) != -1)
+			if (name.find(TQRegExp("[/\\s]")) != -1)
 				KMessageBox::error(this, i18n("Instance name must not contain any spaces or slashes."));
 			else
 			{
 				if (src == i18n("(Default)"))
-					src = QString::null;
+					src = TQString::null;
 				if (name == i18n("(Default)"))
-					name = QString::null;
+					name = TQString::null;
 				KMFactory::self()->virtualManager()->copy(m_printer,src,name);
 				setPrinter(m_printer);
 			}
@@ -207,7 +207,7 @@ void KMInstancePage::slotSettings()
 	QString	src = m_view->currentText();
 	if (!src.isEmpty())
 	{
-		if (src == i18n("(Default)")) src = QString::null;
+		if (src == i18n("(Default)")) src = TQString::null;
 		KMPrinter	*pr = KMFactory::self()->virtualManager()->findInstance(m_printer,src);
 		if ( !pr )
 			KMessageBox::error( this, i18n( "Unable to find instance %1." ).arg( m_view->currentText() ) );
@@ -222,7 +222,7 @@ void KMInstancePage::slotSettings()
 			if (pr->isEdited())
 			{ // printer edited, need to save changes
 				pr->setDefaultOptions(pr->editedOptions());
-				pr->setEditedOptions(QMap<QString,QString>());
+				pr->setEditedOptions(TQMap<TQString,TQString>());
 				pr->setEdited(false);
 				KMFactory::self()->virtualManager()->triggerSave();
 			}
@@ -242,7 +242,7 @@ void KMInstancePage::slotDefault()
 	if (!src.isEmpty())
 	{
 		if (src == i18n("(Default)"))
-			src = QString::null;
+			src = TQString::null;
 		KMFactory::self()->virtualManager()->setAsDefault(m_printer,src);
 		setPrinter(m_printer);
 	}
@@ -258,11 +258,11 @@ void KMInstancePage::slotTest()
 	if (!src.isEmpty())
 	{
 		if (src == i18n("(Default)"))
-			src = QString::null;
+			src = TQString::null;
 		KMPrinter	*mpr = KMFactory::self()->virtualManager()->findInstance(m_printer,src);
 		if (!mpr)
 			KMessageBox::error(this,i18n("Internal error: printer not found."));
-		else if (KMessageBox::warningContinueCancel(this, i18n("You are about to print a test page on %1. Do you want to continue?").arg(mpr->printerName()), QString::null, i18n("Print Test Page"), "printTestPage") == KMessageBox::Continue)
+		else if (KMessageBox::warningContinueCancel(this, i18n("You are about to print a test page on %1. Do you want to continue?").arg(mpr->printerName()), TQString::null, i18n("Print Test Page"), "printTestPage") == KMessageBox::Continue)
 		{
 			if (!KMFactory::self()->virtualManager()->testInstance(mpr))
 				KMessageBox::error(this, i18n("Unable to send test page to %1.").arg(mpr->printerName()));

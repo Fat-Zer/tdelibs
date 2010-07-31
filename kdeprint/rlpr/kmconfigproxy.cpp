@@ -20,10 +20,10 @@
 #include "kmconfigproxy.h"
 #include "kmproxywidget.h"
 
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
-KMConfigProxy::KMConfigProxy(QWidget *parent)
+KMConfigProxy::KMConfigProxy(TQWidget *parent)
 : KMConfigPage(parent,"Proxy")
 {
 	setPageName(i18n("Proxy"));
@@ -31,7 +31,7 @@ KMConfigProxy::KMConfigProxy(QWidget *parent)
 	setPagePixmap("proxy");
 
 	m_widget = new KMProxyWidget(this);
-	QVBoxLayout	*lay0 = new QVBoxLayout(this, 5, 0);
+	QVBoxLayout	*lay0 = new TQVBoxLayout(this, 5, 0);
 	lay0->addWidget(m_widget);
 	lay0->addStretch(1);
 }

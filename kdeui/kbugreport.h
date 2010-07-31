@@ -49,7 +49,7 @@ public:
    * since KHelpMenu takes care of the menu item
    * for "Report Bug..." and of creating a KBugReport dialog.
    */
-  KBugReport( QWidget * parent = 0L, bool modal=true, const KAboutData *aboutData = 0L );
+  KBugReport( TQWidget * parent = 0L, bool modal=true, const KAboutData *aboutData = 0L );
   /**
    * Destructor
    */
@@ -69,7 +69,7 @@ protected slots:
    * The URL-Label "http://bugs.pearsoncomputing.net/" was clicked.
    * @deprecated remove in KDE4.0
    */
-  virtual void slotUrlClicked(const QString &);
+  virtual void slotUrlClicked(const TQString &);
   /**
    * OK has been clicked
    */
@@ -91,9 +91,9 @@ protected slots:
 protected:
   /**
    * A complete copy of the bug report
-   * @return QString copy of the bug report.
+   * @return TQString copy of the bug report.
    */
-  QString text() const;
+  TQString text() const;
   /**
    * Attempt to e-mail the bug report.
    * @return true on success
@@ -103,13 +103,13 @@ protected:
   KProcess * m_process;
   const KAboutData * m_aboutData;
 
-  QMultiLineEdit * m_lineedit;
-  QLineEdit * m_subject;
-  QLabel * m_from;
-  QLabel * m_version;
-  QString m_strVersion;
-  QHButtonGroup * m_bgSeverity;
-  QPushButton * m_configureEmail;
+  TQMultiLineEdit * m_lineedit;
+  TQLineEdit * m_subject;
+  TQLabel * m_from;
+  TQLabel * m_version;
+  TQString m_strVersion;
+  TQHButtonGroup * m_bgSeverity;
+  TQPushButton * m_configureEmail;
 
 protected:
   virtual void virtual_hook( int id, void* data );

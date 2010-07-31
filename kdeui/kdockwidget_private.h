@@ -24,8 +24,8 @@
 #ifndef KDOCKWIDGET_PRIVATE_H
 #define KDOCKWIDGET_PRIVATE_H
 
-#include <qwidget.h>
-#include <qpushbutton.h>
+#include <tqwidget.h>
+#include <tqpushbutton.h>
 
 #ifndef NO_KDE2
 #include <netwm_def.h>
@@ -36,7 +36,7 @@ class KDockContainer;
 
 
 /**
- * Like QSplitter but specially designed for dockwidgets stuff.
+ * Like TQSplitter but specially designed for dockwidgets stuff.
  * @internal
  *
  * @author Max Judin.
@@ -56,7 +56,7 @@ public:
    * @param orient orientation. Either @p Vertical or @p Horizontal
    * @param pos procentual position of the splitter. Must be int [0...100].
    */
-  KDockSplitter(QWidget *parent= 0, const char *name= 0, Orientation orient= Vertical, int pos= 50);
+  KDockSplitter(TQWidget *parent= 0, const char *name= 0, Orientation orient= Vertical, int pos= 50);
   virtual ~KDockSplitter(){}
 
   /**
@@ -67,7 +67,7 @@ public:
    * @param c0 the widget on top/left
    * @param c1 the widget on borrom/right
    */
-  void activate(QWidget *c0, QWidget *c1 = 0L);
+  void activate(TQWidget *c0, TQWidget *c1 = 0L);
   /**
    * Disables the splitter.
    */
@@ -115,22 +115,22 @@ public:
    * The eventfilter installed on the @p divider processes
    * all splitter resizing events.
    */
-  virtual bool eventFilter(QObject *, QEvent *);
-  virtual bool event( QEvent * );
+  virtual bool eventFilter(TQObject *, TQEvent *);
+  virtual bool event( TQEvent * );
 
   /**
    * @return the top/left child widget.
    */
-  QWidget* getFirst() const { return child0; }
+  TQWidget* getFirst() const { return child0; }
   /**
    * @return the bottom/right child widget.
    */
-  QWidget* getLast() const { return child1; }
+  TQWidget* getLast() const { return child1; }
   /**
    * If @p w is child0, return child1, otherwise child0.
    * @return the other child widget
    */
-  QWidget* getAnother( QWidget* w ) const;
+  TQWidget* getAnother( TQWidget* w ) const;
   void updateName();
 
   /**
@@ -173,7 +173,7 @@ protected:
    * @param child the overlapping child
    * @return the (new) splitter position.
    */
-  int checkValueOverlapped(int position, QWidget* child) const;
+  int checkValueOverlapped(int position, TQWidget* child) const;
 
   /**
    * The resize event resizes @p child0, @p child1 and the @p divider.
@@ -189,7 +189,7 @@ protected:
    * @param ev the resize Event. If @p ev=0L the user changed
    *        the mode (for example from overlap to nonoverlap mode).
    */
-  virtual void resizeEvent(QResizeEvent *ev);
+  virtual void resizeEvent(TQResizeEvent *ev);
 
 /*
 protected slots:
@@ -207,7 +207,7 @@ private:
    * so no need to make pointer checks.
    * child[01]->getWidget() may be KDockContainer.
    */
-  QWidget *child0, *child1;
+  TQWidget *child0, *child1;
   Orientation m_orientation;
   /**
    * If initialised is true, the divider!=0L. If false, the divider==0L!
@@ -217,7 +217,7 @@ private:
    * The splitter controller which is between child0 and child1.
    * Its size is 4 pixel.
    */
-  QFrame* divider;
+  TQFrame* divider;
   /**
    * @p xpos and @p savedXPos represent the current divider position.
    * If the orientation is Horizontal @p xpos actually is "ypos". So
@@ -249,13 +249,13 @@ class KDEUI_EXPORT KDockButton_Private : public QPushButton
 {
   Q_OBJECT
 public:
-  KDockButton_Private( QWidget *parent=0, const char *name=0 );
+  KDockButton_Private( TQWidget *parent=0, const char *name=0 );
   ~KDockButton_Private();
 
 protected:
-  virtual void drawButton( QPainter * );
-  virtual void enterEvent( QEvent * );
-  virtual void leaveEvent( QEvent * );
+  virtual void drawButton( TQPainter * );
+  virtual void enterEvent( TQEvent * );
+  virtual void leaveEvent( TQEvent * );
 
 private:
   bool moveMouse;
@@ -281,7 +281,7 @@ public slots:
   /**
    * Especially used for Tab page docking. Switching the pages requires additional setFocus() for the embedded widget.
    */
-  void slotFocusEmbeddedWidget(QWidget* w = 0L);
+  void slotFocusEmbeddedWidget(TQWidget* w = 0L);
 
 public:
  enum KDockWidgetResize
@@ -300,12 +300,12 @@ public:
   NET::WindowType windowType;
 #endif
 
-  QWidget *_parent;
+  TQWidget *_parent;
   bool transient;
 
-  QGuardedPtr<QWidget> container;
+  TQGuardedPtr<TQWidget> container;
 
-  QPoint resizePos;
+  TQPoint resizePos;
   bool resizing;
   KDockWidgetResize resizeMode;
 };
@@ -314,8 +314,8 @@ class KDockWidgetHeaderPrivate
    : public QObject
 {
 public:
-  KDockWidgetHeaderPrivate( QObject* parent )
-        : QObject( parent )
+  KDockWidgetHeaderPrivate( TQObject* parent )
+        : TQObject( parent )
   {
     forceCloseButtonHidden=false;
     toDesktopButton = 0;
@@ -327,9 +327,9 @@ public:
 
   bool showToDesktopButton;
   bool topLevel;
-  QPtrList<KDockButton_Private> btns;
+  TQPtrList<KDockButton_Private> btns;
   bool forceCloseButtonHidden;
-  QWidget *dummy;
+  TQWidget *dummy;
 };
 
 #endif

@@ -31,7 +31,7 @@
 #include "html/html_elementimpl.h"
 #include "misc/khtmllayout.h"
 
-#include <qscrollview.h>
+#include <tqscrollview.h>
 
 class KHTMLView;
 class KHTMLPart;
@@ -103,7 +103,7 @@ public:
 
     int marginWidth;
     int marginHeight;
-    QScrollView::ScrollBarMode scrolling;
+    TQScrollView::ScrollBarMode scrolling;
 
     bool frameBorder : 1;
     bool frameBorderSet : 1;

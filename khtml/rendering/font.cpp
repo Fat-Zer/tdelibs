@@ -35,9 +35,9 @@
 #include <kdebug.h>
 #include <kglobal.h>
 
-#include <qpainter.h>
-#include <qfontdatabase.h>
-#include <qpaintdevicemetrics.h>
+#include <tqpainter.h>
+#include <tqfontdatabase.h>
+#include <tqpaintdevicemetrics.h>
 
 using namespace khtml;
 
@@ -51,12 +51,12 @@ using namespace khtml;
  * @return the width in pixels. May be 0 if @p wordStart and @p wordEnd were
  *	equal.
  */
-inline int closeWordAndGetWidth(const QFontMetrics &fm, const QChar *str, int pos,
+inline int closeWordAndGetWidth(const TQFontMetrics &fm, const TQChar *str, int pos,
 	int wordStart, int wordEnd)
 {
     if (wordEnd <= wordStart) return 0;
 
-    QConstString s(str + pos + wordStart, wordEnd - wordStart);
+    TQConstString s(str + pos + wordStart, wordEnd - wordStart);
     return fm.width(s.string());
 }
 
@@ -75,41 +75,41 @@ inline int closeWordAndGetWidth(const QFontMetrics &fm, const QChar *str, int po
  *	will be set to wordEnd after function
  * @param wordEnd relative index pointing one position after the word ended
  */
-inline void closeAndDrawWord(QPainter *p, QPainter::TextDirection d,
-	int &x, int y, const short widths[], const QChar *str, int pos,
+inline void closeAndDrawWord(TQPainter *p, TQPainter::TextDirection d,
+	int &x, int y, const short widths[], const TQChar *str, int pos,
 	int &wordStart, int wordEnd)
 {
     if (wordEnd <= wordStart) return;
 
     int width = widths[wordStart];
-    if (d == QPainter::RTL)
+    if (d == TQPainter::RTL)
       x -= width;
 
-    QConstString s(str + pos + wordStart, wordEnd - wordStart);
+    TQConstString s(str + pos + wordStart, wordEnd - wordStart);
     p->drawText(x, y, s.string(), -1, d);
 
-    if (d != QPainter::RTL)
+    if (d != TQPainter::RTL)
       x += width;
 
     wordStart = wordEnd;
 }
 
-void Font::drawText( QPainter *p, int x, int y, QChar *str, int slen, int pos, int len,
-        int toAdd, QPainter::TextDirection d, int from, int to, QColor bg, int uy, int h, int deco ) const
+void Font::drawText( TQPainter *p, int x, int y, TQChar *str, int slen, int pos, int len,
+        int toAdd, TQPainter::TextDirection d, int from, int to, TQColor bg, int uy, int h, int deco ) const
 {
     if (!str) return;
-    QConstString cstr = QConstString(str, slen);
-    QString qstr = cstr.string();
+    TQConstString cstr = TQConstString(str, slen);
+    TQString qstr = cstr.string();
 
     // ### fixme for RTL
     if ( !scFont && !letterSpacing && !wordSpacing && !toAdd && from==-1 ) {
 	// simply draw it
-	// Due to some unfounded cause QPainter::drawText traverses the
+	// Due to some unfounded cause TQPainter::drawText traverses the
         // *whole* string when painting, not only the specified
         // [pos, pos + len) segment. This makes painting *extremely* slow for
         // long render texts (in the order of several megabytes).
         // Hence, only hand over the piece of text of the actual inline text box
-	QConstString cstr = QConstString(str + pos, len);
+	TQConstString cstr = TQConstString(str + pos, len);
 	p->drawText( x, y, cstr.string(), 0, len, d );
     } else {
 	if (from < 0) from = 0;
@@ -118,20 +118,20 @@ void Font::drawText( QPainter *p, int x, int y, QChar *str, int slen, int pos, i
 	int numSpaces = 0;
 	if ( toAdd ) {
 	    for( int i = 0; i < len; ++i )
-		if ( str[i+pos].category() == QChar::Separator_Space )
+		if ( str[i+pos].category() == TQChar::Separator_Space )
 		    ++numSpaces;
 	}
 
 	const int totWidth = width( str, slen, pos, len );
-	if ( d == QPainter::RTL ) {
+	if ( d == TQPainter::RTL ) {
 	    x += totWidth + toAdd;
 	}
-	QString upper = qstr;
-	QFontMetrics sc_fm = fm;
+	TQString upper = qstr;
+	TQFontMetrics sc_fm = fm;
 	if ( scFont ) {
 	    // draw in small caps
 	    upper = qstr.upper();
-	    sc_fm = QFontMetrics( *scFont );
+	    sc_fm = TQFontMetrics( *scFont );
 	}
 
 	// ### sc could be optimized by only painting uppercase letters extra,
@@ -150,11 +150,11 @@ void Font::drawText( QPainter *p, int x, int y, QChar *str, int slen, int pos, i
 	if (mode == Whole) {	// most likely variant is treated extra
 
 	    if (to < 0) to = len;
-	    const QConstString cstr(str + pos, len);
-	    const QConstString segStr(str + pos + from, to - from);
+	    const TQConstString cstr(str + pos, len);
+	    const TQConstString segStr(str + pos + from, to - from);
 	    const int preSegmentWidth = fm.width(cstr.string(), from);
 	    const int segmentWidth = fm.width(segStr.string());
-	    const int eff_x = d == QPainter::RTL ? x - preSegmentWidth - segmentWidth
+	    const int eff_x = d == TQPainter::RTL ? x - preSegmentWidth - segmentWidth
 					: x + preSegmentWidth;
 
 	    // draw whole string segment, with optional background
@@ -194,9 +194,9 @@ void Font::drawText( QPainter *p, int x, int y, QChar *str, int slen, int pos, i
 		onSegment = true;
 	    }
 
-	    const QChar ch = str[pos+i];
-	    bool lowercase = (ch.category() == QChar::Letter_Lowercase);
-	    bool is_space = (ch.category() == QChar::Separator_Space);
+	    const TQChar ch = str[pos+i];
+	    bool lowercase = (ch.category() == TQChar::Letter_Lowercase);
+	    bool is_space = (ch.category() == TQChar::Separator_Space);
 	    int chw = 0;
 	    if ( letterSpacing )
 		chw += letterSpacing;
@@ -235,10 +235,10 @@ void Font::drawText( QPainter *p, int x, int y, QChar *str, int slen, int pos, i
 	    widthList[lastWordBegin] = (short)width;
 	}
 
-        if (d == QPainter::RTL) x -= preSegmentWidth;
+        if (d == TQPainter::RTL) x -= preSegmentWidth;
 	else x += preSegmentWidth;
 
-        const int startx = d == QPainter::RTL ? x-segmentWidth : x;
+        const int startx = d == TQPainter::RTL ? x-segmentWidth : x;
 
 	// optionally draw background
 	if ( bg.isValid() )
@@ -247,9 +247,9 @@ void Font::drawText( QPainter *p, int x, int y, QChar *str, int slen, int pos, i
 	// second pass: do the actual drawing
         lastWordBegin = from;
 	for( int i = from; i < to; ++i ) {
-	    const QChar ch = str[pos+i];
-	    bool lowercase = (ch.category() == QChar::Letter_Lowercase);
-	    bool is_space = ch.category() == QChar::Separator_Space;
+	    const TQChar ch = str[pos+i];
+	    bool lowercase = (ch.category() == TQChar::Letter_Lowercase);
+	    bool is_space = ch.category() == TQChar::Separator_Space;
 	    if ( is_space ) {
 	        if (mode == WordWise) {
 		    closeAndDrawWord(p, d, x, y, widthList, str, pos, lastWordBegin, i);
@@ -258,14 +258,14 @@ void Font::drawText( QPainter *p, int x, int y, QChar *str, int slen, int pos, i
 	    }
 	    if (is_space || mode == CharacterWise) {
 	        const int chw = widthList[i];
-	        if (d == QPainter::RTL)
+	        if (d == TQPainter::RTL)
 		    x -= chw;
 
 		if ( scFont )
 		    p->setFont( lowercase ? *scFont : f );
 		p->drawText( x, y, (lowercase ? upper : qstr), pos+i, 1, d );
 
-	        if (d != QPainter::RTL)
+	        if (d != TQPainter::RTL)
 		    x += chw;
 	    }
 
@@ -285,18 +285,18 @@ void Font::drawText( QPainter *p, int x, int y, QChar *str, int slen, int pos, i
 }
 
 
-int Font::width( QChar *chs, int, int pos, int len, int start, int end, int toAdd ) const
+int Font::width( TQChar *chs, int, int pos, int len, int start, int end, int toAdd ) const
 {
-    const QConstString cstr(chs+pos, len);
+    const TQConstString cstr(chs+pos, len);
     int w = 0;
 
-    const QString qstr = cstr.string();
+    const TQString qstr = cstr.string();
     if ( scFont ) {
-	const QString upper = qstr.upper();
-	const QChar *uc = qstr.unicode();
-	const QFontMetrics sc_fm( *scFont );
+	const TQString upper = qstr.upper();
+	const TQChar *uc = qstr.unicode();
+	const TQFontMetrics sc_fm( *scFont );
 	for ( int i = 0; i < len; ++i ) {
-	    if ( (uc+i)->category() == QChar::Letter_Lowercase )
+	    if ( (uc+i)->category() == TQChar::Letter_Lowercase )
 		w += sc_fm.charWidth( upper, i );
 	    else
 		w += fm.charWidth( qstr, i );
@@ -312,7 +312,7 @@ int Font::width( QChar *chs, int, int pos, int len, int start, int end, int toAd
     if ( wordSpacing )
 	// add amount
 	for( int i = 0; i < len; ++i ) {
-	    if( chs[i+pos].category() == QChar::Separator_Space )
+	    if( chs[i+pos].category() == TQChar::Separator_Space )
 		w += wordSpacing;
 	}
 
@@ -320,12 +320,12 @@ int Font::width( QChar *chs, int, int pos, int len, int start, int end, int toAd
         // first gather count of spaces
         int numSpaces = 0;
         for( int i = start; i != end; ++i )
-            if ( chs[i].category() == QChar::Separator_Space )
+            if ( chs[i].category() == TQChar::Separator_Space )
                 ++numSpaces;
         // distribute pixels evenly among spaces, but count only those within
         // [pos, pos+len)
         for ( int i = start; numSpaces && i != pos + len; i++ )
-            if ( chs[i].category() == QChar::Separator_Space ) {
+            if ( chs[i].category() == TQChar::Separator_Space ) {
                 const int a = toAdd/numSpaces;
                 if ( i >= pos ) w += a;
                 toAdd -= a;
@@ -336,21 +336,21 @@ int Font::width( QChar *chs, int, int pos, int len, int start, int end, int toAd
     return w;
 }
 
-int Font::width( QChar *chs, int slen, int pos ) const
+int Font::width( TQChar *chs, int slen, int pos ) const
 {
     int w;
-	if ( scFont && chs[pos].category() == QChar::Letter_Lowercase ) {
-	    QString str( chs, slen );
+	if ( scFont && chs[pos].category() == TQChar::Letter_Lowercase ) {
+	    TQString str( chs, slen );
 	    str[pos] = chs[pos].upper();
-	    w = QFontMetrics( *scFont ).charWidth( str, pos );
+	    w = TQFontMetrics( *scFont ).charWidth( str, pos );
 	} else {
-	    const QConstString cstr( chs, slen );
+	    const TQConstString cstr( chs, slen );
 	    w = fm.charWidth( cstr.string(), pos );
 	}
     if ( letterSpacing )
 	w += letterSpacing;
 
-    if ( wordSpacing && (chs+pos)->category() == QChar::Separator_Space )
+    if ( wordSpacing && (chs+pos)->category() == TQChar::Separator_Space )
 		w += wordSpacing;
     return w;
 }
@@ -358,11 +358,11 @@ int Font::width( QChar *chs, int slen, int pos ) const
 /** Querying QFontDB whether something is scalable is expensive, so we cache. */
 struct Font::ScalKey 
 {
-    QString family;
+    TQString family;
     int     weight;
     int     italic;
 
-    ScalKey(const QFont& font) : 
+    ScalKey(const TQFont& font) : 
             family(font.family()), weight(font.weight()), italic(font.italic())
     {}
 
@@ -389,13 +389,13 @@ struct Font::ScalKey
     }
 };
 
-QMap<Font::ScalKey, Font::ScalInfo>*   Font::scalCache;
-QMap<Font::ScalKey, QValueList<int> >* Font::scalSizesCache;
+TQMap<Font::ScalKey, Font::ScalInfo>*   Font::scalCache;
+TQMap<Font::ScalKey, TQValueList<int> >* Font::scalSizesCache;
 
-bool Font::isFontScalable(QFontDatabase& db, const QFont& font) 
+bool Font::isFontScalable(TQFontDatabase& db, const TQFont& font) 
 {
     if (!scalCache)
-        scalCache = new QMap<ScalKey, ScalInfo>;
+        scalCache = new TQMap<ScalKey, ScalInfo>;
 
     ScalKey key(font);
 
@@ -406,7 +406,7 @@ bool Font::isFontScalable(QFontDatabase& db, const QFont& font)
         if (s == No) {
             /* Cache size info */
             if (!scalSizesCache)
-                scalSizesCache = new QMap<ScalKey, QValueList<int> >;
+                scalSizesCache = new TQMap<ScalKey, TQValueList<int> >;
             (*scalSizesCache)[key] = db.smoothSizes(font.family(), db.styleString(font));
         }
     }
@@ -415,13 +415,13 @@ bool Font::isFontScalable(QFontDatabase& db, const QFont& font)
 }
 
 
-void Font::update( QPaintDeviceMetrics* devMetrics ) const
+void Font::update( TQPaintDeviceMetrics* devMetrics ) const
 {
     f.setFamily( fontDef.family.isEmpty() ? KHTMLFactory::defaultHTMLSettings()->stdFontName() : fontDef.family );
     f.setItalic( fontDef.italic );
     f.setWeight( fontDef.weight );
 
-    QFontDatabase db;
+    TQFontDatabase db;
 
     int size = fontDef.size;
     const int lDpiY = kMax(devMetrics->logicalDpiY(), 96);
@@ -430,7 +430,7 @@ void Font::update( QPaintDeviceMetrics* devMetrics ) const
     // all other font properties should be set before this one!!!!
     if( !isFontScalable(db, f) )
     {
-        const QValueList<int>& pointSizes = (*scalSizesCache)[ScalKey(f)];
+        const TQValueList<int>& pointSizes = (*scalSizesCache)[ScalKey(f)];
         // lets see if we find a nice looking font, which is not too far away
         // from the requested one.
         // kdDebug(6080) << "khtml::setFontSize family = " << f.family() << " size requested=" << size << endl;
@@ -439,8 +439,8 @@ void Font::update( QPaintDeviceMetrics* devMetrics ) const
         float diff = 1; // ### 100% deviation
         float bestSize = 0;
 
-        QValueList<int>::ConstIterator it = pointSizes.begin();
-        const QValueList<int>::ConstIterator itEnd = pointSizes.end();
+        TQValueList<int>::ConstIterator it = pointSizes.begin();
+        const TQValueList<int>::ConstIterator itEnd = pointSizes.end();
 
         for( ; it != itEnd; ++it )
         {
@@ -459,7 +459,7 @@ void Font::update( QPaintDeviceMetrics* devMetrics ) const
     }
 
     // make sure we don't bust up X11
-    // Also, Qt does not support sizing a QFont to zero.
+    // Also, Qt does not support sizing a TQFont to zero.
     size = kMax(1, kMin(255, size));
 
 //       qDebug("setting font to %s, italic=%d, weight=%d, size=%d", fontDef.family.latin1(), fontDef.italic,
@@ -468,24 +468,24 @@ void Font::update( QPaintDeviceMetrics* devMetrics ) const
 
     f.setPixelSize( size );
 
-    fm = QFontMetrics( f );
+    fm = TQFontMetrics( f );
 
     // small caps
     delete scFont;
     scFont = 0;
 
     if ( fontDef.smallCaps ) {
-	scFont = new QFont( f );
+	scFont = new TQFont( f );
 	scFont->setPixelSize( kMax(1, f.pixelSize()*7/10) );
     }
 }
 
-void Font::drawDecoration(QPainter *pt, int _tx, int _ty, int baseline, int width, int height, int deco) const
+void Font::drawDecoration(TQPainter *pt, int _tx, int _ty, int baseline, int width, int height, int deco) const
 {
     Q_UNUSED(height);
     // thick lines on small fonts look ugly
     const int thickness = fm.height() > 20 ? fm.lineWidth() : 1;
-    const QBrush brush = pt->pen().color();
+    const TQBrush brush = pt->pen().color();
     if (deco & UNDERLINE) {
         int underlineOffset = ( fm.height() + baseline ) / 2;
         if (underlineOffset <= baseline) underlineOffset = baseline+1;

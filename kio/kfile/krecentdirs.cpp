@@ -44,7 +44,7 @@ static void recentdirs_done(KConfig *config)
    }
 }
 
-static KConfig *recentdirs_readList(QString &key, QStringList &result, bool readOnly)
+static KConfig *recentdirs_readList(TQString &key, TQStringList &result, bool readOnly)
 {
    KConfig *config;
    if ((key.length() < 2) || (key[0] != ':'))
@@ -52,13 +52,13 @@ static KConfig *recentdirs_readList(QString &key, QStringList &result, bool read
    if (key[1] == ':') 
    {
       key = key.mid(2);
-      config = new KSimpleConfig(QString::fromLatin1("krecentdirsrc"), readOnly);
+      config = new KSimpleConfig(TQString::fromLatin1("krecentdirsrc"), readOnly);
    }
    else
    {
       key = key.mid(1);
       config = KGlobal::config();
-      config->setGroup(QString::fromLatin1("Recent Dirs"));
+      config->setGroup(TQString::fromLatin1("Recent Dirs"));
    }
 
    result=config->readPathListEntry(key);
@@ -69,24 +69,24 @@ static KConfig *recentdirs_readList(QString &key, QStringList &result, bool read
    return config;
 }
 
-QStringList KRecentDirs::list(const QString &fileClass)
+TQStringList KRecentDirs::list(const TQString &fileClass)
 {
-   QString key = fileClass;
-   QStringList result;
+   TQString key = fileClass;
+   TQStringList result;
    recentdirs_done(recentdirs_readList(key, result, true));
    return result;
 }
     
-QString KRecentDirs::dir(const QString &fileClass)
+TQString KRecentDirs::dir(const TQString &fileClass)
 {
-   QStringList result = list(fileClass);
+   TQStringList result = list(fileClass);
    return result[0];
 }
 
-void KRecentDirs::add(const QString &fileClass, const QString &directory)
+void KRecentDirs::add(const TQString &fileClass, const TQString &directory)
 {
-   QString key = fileClass;
-   QStringList result;
+   TQString key = fileClass;
+   TQStringList result;
    KConfig *config = recentdirs_readList(key, result, false);
    // make sure the dir is first in history
    result.remove(directory);

@@ -19,8 +19,8 @@
 
 #include "psd.h"
 
-#include <qimage.h>
-#include <qdatastream.h>
+#include <tqimage.h>
+#include <tqdatastream.h>
 
 #include <kdebug.h>
 
@@ -52,7 +52,7 @@ namespace {	// Private.
 		ushort color_mode;
 	};
 	
-	static QDataStream & operator>> ( QDataStream & s, PSDHeader & header )
+	static TQDataStream & operator>> ( TQDataStream & s, PSDHeader & header )
 	{
 		s >> header.signature;
 		s >> header.version;
@@ -66,7 +66,7 @@ namespace {	// Private.
 		s >> header.color_mode;
 		return s;
 	}
-        static bool seekBy(QDataStream& s, unsigned int bytes)
+        static bool seekBy(TQDataStream& s, unsigned int bytes)
         {
                 char buf[4096];
                 while (bytes) {
@@ -108,7 +108,7 @@ namespace {	// Private.
 	}
 
 	// Load the PSD image.
-	static bool LoadPSD( QDataStream & s, const PSDHeader & header, QImage & img )
+	static bool LoadPSD( TQDataStream & s, const PSDHeader & header, TQImage & img )
 	{
 		// Create dst image.
 		if( !img.create( header.width, header.height, 32 )) {
@@ -238,10 +238,10 @@ namespace {	// Private.
 } // Private
 
 
-void kimgio_psd_read( QImageIO *io )
+void kimgio_psd_read( TQImageIO *io )
 {
-	QDataStream s( io->ioDevice() );
-	s.setByteOrder( QDataStream::BigEndian );
+	TQDataStream s( io->ioDevice() );
+	s.setByteOrder( TQDataStream::BigEndian );
 
 	PSDHeader header;
 	s >> header;
@@ -262,7 +262,7 @@ void kimgio_psd_read( QImageIO *io )
 		return;
 	}
 
-	QImage img;
+	TQImage img;
 	if( !LoadPSD(s, header, img) ) {
 		kdDebug(399) << "Error loading PSD file." << endl;
 		io->setImage( 0 );
@@ -275,7 +275,7 @@ void kimgio_psd_read( QImageIO *io )
 }
 
 
-void kimgio_psd_write( QImageIO * )
+void kimgio_psd_write( TQImageIO * )
 {
 	// TODO Stub!
 }

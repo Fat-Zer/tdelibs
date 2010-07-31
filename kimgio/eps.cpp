@@ -1,10 +1,10 @@
 // This library is distributed under the conditions of the GNU LGPL.
 #include <unistd.h>
 #include <stdio.h>
-#include <qimage.h>
-#include <qfile.h>
-#include <qpainter.h>
-#include <qprinter.h>
+#include <tqimage.h>
+#include <tqfile.h>
+#include <tqpainter.h>
+#include <tqprinter.h>
 #include <kapplication.h>
 #include <ktempfile.h>
 #include <kdebug.h>
@@ -15,7 +15,7 @@
 #define BBOX "%%BoundingBox:"
 #define BBOX_LEN strlen(BBOX)
 
-static bool seekToCodeStart( QIODevice * io, Q_UINT32 & ps_offset, Q_UINT32 & ps_size )
+static bool seekToCodeStart( TQIODevice * io, Q_UINT32 & ps_offset, Q_UINT32 & ps_size )
 {
     char buf[4]; // We at most need to read 4 bytes at a time
     ps_offset=0L;
@@ -95,7 +95,7 @@ static bool seekToCodeStart( QIODevice * io, Q_UINT32 & ps_offset, Q_UINT32 & ps
     return true;
 }
 
-static bool bbox ( QIODevice *io, int *x1, int *y1, int *x2, int *y2)
+static bool bbox ( TQIODevice *io, int *x1, int *y1, int *x2, int *y2)
 {
         char buf[BUFLEN+1];
 
@@ -121,19 +121,19 @@ static bool bbox ( QIODevice *io, int *x1, int *y1, int *x2, int *y2)
         return ret;
 }
 
-KDE_EXPORT void kimgio_eps_read (QImageIO *image)
+KDE_EXPORT void kimgio_eps_read (TQImageIO *image)
 {
         kdDebug(399) << "kimgio EPS: starting..." << endl;
 
         FILE * ghostfd;
         int x1, y1, x2, y2;
-        //QTime dt;
+        //TQTime dt;
         //dt.start();
 
-        QString cmdBuf;
-        QString tmp;
+        TQString cmdBuf;
+        TQString tmp;
 
-        QIODevice* io = image->ioDevice();
+        TQIODevice* io = image->ioDevice();
         Q_UINT32 ps_offset, ps_size;
 
         // find start of PostScript code
@@ -170,7 +170,7 @@ KDE_EXPORT void kimgio_eps_read (QImageIO *image)
         if (image->parameters())
         {
             // Size forced by the caller
-            QStringList params = QStringList::split(':', image->parameters());
+            TQStringList params = TQStringList::split(':', image->parameters());
             if (params.count() >= 2 && x2 != 0.0 && y2 != 0.0)
             {
                 wantedWidth = params[0].toInt();
@@ -203,7 +203,7 @@ KDE_EXPORT void kimgio_eps_read (QImageIO *image)
 
         // run ghostview
 
-        ghostfd = popen (QFile::encodeName(cmdBuf), "w");
+        ghostfd = popen (TQFile::encodeName(cmdBuf), "w");
 
         if ( ghostfd == 0 ) {
             kdError(399) << "kimgio EPS: no GhostScript?" << endl;
@@ -219,7 +219,7 @@ KDE_EXPORT void kimgio_eps_read (QImageIO *image)
         io->reset(); // Go back to start of file to give all the file to GhostScript
         if (ps_offset>0L) // We have an offset
               io->at(ps_offset);
-        QByteArray buffer ( io->readAll() );
+        TQByteArray buffer ( io->readAll() );
 
         // If we have no MS-DOS EPS file or if the size seems wrong, then choose the buffer size
         if (ps_size<=0L || ps_size>buffer.size())
@@ -231,7 +231,7 @@ KDE_EXPORT void kimgio_eps_read (QImageIO *image)
         pclose ( ghostfd );
 
         // load image
-        QImage myimage;
+        TQImage myimage;
         if( myimage.load (tmpFile.name()) ) {
                 image->setImage (myimage);
                 image->setStatus (0);
@@ -245,17 +245,17 @@ KDE_EXPORT void kimgio_eps_read (QImageIO *image)
 }
 
 // Sven Wiegand <SWiegand@tfh-berlin.de> -- eps output filter (from KSnapshot)
-KDE_EXPORT void kimgio_eps_write( QImageIO *imageio )
+KDE_EXPORT void kimgio_eps_write( TQImageIO *imageio )
 {
-  QPrinter psOut(QPrinter::PrinterResolution);
-  QPainter p;
+  TQPrinter psOut(TQPrinter::PrinterResolution);
+  TQPainter p;
 
   // making some definitions (papersize, output to file, filename):
   psOut.setCreator( "KDE " KDE_VERSION_STRING  );
   psOut.setOutputToFile( true );
 
   // Extension must be .eps so that Qt generates EPS file
-  KTempFile tmpFile(QString::null, ".eps");
+  KTempFile tmpFile(TQString::null, ".eps");
   tmpFile.setAutoDelete(true);
   if ( tmpFile.status() != 0)
      return;
@@ -267,20 +267,20 @@ KDE_EXPORT void kimgio_eps_write( QImageIO *imageio )
   // painting the pixmap to the "printer" which is a file
   p.begin( &psOut );
   // Qt uses the clip rect for the bounding box
-  p.setClipRect( 0, 0, imageio->image().width(), imageio->image().height(), QPainter::CoordPainter);
-  p.drawImage( QPoint( 0, 0 ), imageio->image() );
+  p.setClipRect( 0, 0, imageio->image().width(), imageio->image().height(), TQPainter::CoordPainter);
+  p.drawImage( TQPoint( 0, 0 ), imageio->image() );
   p.end();
 
   // Copy file to imageio struct
-  QFile inFile(tmpFile.name());
+  TQFile inFile(tmpFile.name());
   inFile.open( IO_ReadOnly );
 
-  QTextStream in( &inFile );
-  in.setEncoding( QTextStream::Latin1 );
-  QTextStream out( imageio->ioDevice() );
-  out.setEncoding( QTextStream::Latin1 );
+  TQTextStream in( &inFile );
+  in.setEncoding( TQTextStream::Latin1 );
+  TQTextStream out( imageio->ioDevice() );
+  out.setEncoding( TQTextStream::Latin1 );
 
-  QString szInLine = in.readLine();
+  TQString szInLine = in.readLine();
   out << szInLine << '\n';
 
   while( !in.atEnd() ){

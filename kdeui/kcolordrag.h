@@ -22,8 +22,8 @@
 #ifndef _KCOLORDRAG_H
 #define _KCOLORDRAG_H
 
-#include <qdragobject.h>
-#include <qcolor.h>
+#include <tqdragobject.h>
+#include <tqcolor.h>
 #include <kdelibs_export.h>
 
 class KColorDragPrivate;
@@ -33,42 +33,42 @@ class KColorDragPrivate;
  *
  * See the Qt drag'n'drop documentation.
  */
-class KDEUI_EXPORT KColorDrag : public QStoredDrag {
+class KDEUI_EXPORT KColorDrag : public TQStoredDrag {
     Q_OBJECT
 
 public:
     /**
      * Constructs a color drag with a white color.
      */
-    KColorDrag( QWidget *dragsource = 0, const char *name = 0 );
+    KColorDrag( TQWidget *dragsource = 0, const char *name = 0 );
     /**
      * Constructs a color drag with the color @p col.
      */
-    KColorDrag( const QColor &col, QWidget *dragsource = 0, const char *name = 0 );
+    KColorDrag( const TQColor &col, TQWidget *dragsource = 0, const char *name = 0 );
     virtual ~KColorDrag() {}
 
     virtual const char *format(int i) const;
-    virtual QByteArray encodedData ( const char * m ) const;
+    virtual TQByteArray encodedData ( const char * m ) const;
 
     /**
      * Sets the color of the drag to @p col.
      */
-    void setColor(const QColor &col);
+    void setColor(const TQColor &col);
     /**
      * Returns true if the MIME source @p e contains a color object.
      */
-    static bool canDecode(QMimeSource *e);
+    static bool canDecode(TQMimeSource *e);
     /**
      * Decodes the MIME source @p e and puts the resulting color into @p col.
      */
-    static bool decode(QMimeSource *e, QColor &col);
+    static bool decode(TQMimeSource *e, TQColor &col);
     /**
      * @deprecated This is equivalent with "new KColorDrag(color, dragsource)".
      */
-    static KColorDrag* makeDrag( const QColor&,QWidget *dragsource) KDE_DEPRECATED;
+    static KColorDrag* makeDrag( const TQColor&,TQWidget *dragsource) KDE_DEPRECATED;
 
 private:
-     QColor m_color; // unused
+     TQColor m_color; // unused
 protected:
      virtual void virtual_hook( int id, void* data );
 private:

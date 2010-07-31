@@ -33,14 +33,14 @@ public:
                         //we need it only to switch the dics
 };
 
-DefaultDictionary::DefaultDictionary( const QString& lang, Broker *broker )
-    : QObject( broker ), Dictionary( lang, true )
+DefaultDictionary::DefaultDictionary( const TQString& lang, Broker *broker )
+    : TQObject( broker ), Dictionary( lang, true )
 {
     d = new Private;
     d->dict = broker->dictionary();
     d->broker = broker;
-    connect( broker, SIGNAL(configurationChanged()),
-             SLOT(defaultConfigurationChanged()) );
+    connect( broker, TQT_SIGNAL(configurationChanged()),
+             TQT_SLOT(defaultConfigurationChanged()) );
 }
 
 DefaultDictionary::~DefaultDictionary()
@@ -54,7 +54,7 @@ bool DefaultDictionary::isValid() const
     return d->dict;
 }
 
-bool DefaultDictionary::check( const QString& word )
+bool DefaultDictionary::check( const TQString& word )
 {
     if ( d->dict )
         return d->dict->check( word );
@@ -62,17 +62,17 @@ bool DefaultDictionary::check( const QString& word )
         return true;
 }
 
-QStringList DefaultDictionary::suggest( const QString& word )
+TQStringList DefaultDictionary::suggest( const TQString& word )
 {
     if ( d->dict )
         return d->dict->suggest( word );
     else
-        return QStringList();
+        return TQStringList();
 
 }
 
-bool DefaultDictionary::checkAndSuggest( const QString& word,
-                                         QStringList& suggestions )
+bool DefaultDictionary::checkAndSuggest( const TQString& word,
+                                         TQStringList& suggestions )
 {
     if ( d->dict )
         return d->dict->checkAndSuggest( word, suggestions );
@@ -80,8 +80,8 @@ bool DefaultDictionary::checkAndSuggest( const QString& word,
         return true;
 }
 
-bool DefaultDictionary::storeReplacement( const QString& bad,
-                                          const QString& good )
+bool DefaultDictionary::storeReplacement( const TQString& bad,
+                                          const TQString& good )
 {
     if ( d->dict )
         return d->dict->storeReplacement( bad, good );
@@ -89,7 +89,7 @@ bool DefaultDictionary::storeReplacement( const QString& bad,
         return false;
 }
 
-bool DefaultDictionary::addToPersonal( const QString& word )
+bool DefaultDictionary::addToPersonal( const TQString& word )
 {
     if ( d->dict )
         return d->dict->addToPersonal( word );
@@ -97,7 +97,7 @@ bool DefaultDictionary::addToPersonal( const QString& word )
         return false;
 }
 
-bool DefaultDictionary::addToSession( const QString& word )
+bool DefaultDictionary::addToSession( const TQString& word )
 {
     if ( d->dict )
         return d->dict->addToSession( word );
@@ -112,7 +112,7 @@ void DefaultDictionary::defaultConfigurationChanged()
     if ( d->dict )
         m_language = d->dict->language();
     else
-        m_language = QString::null;
+        m_language = TQString::null;
 }
 
 #include "defaultdictionary.moc"

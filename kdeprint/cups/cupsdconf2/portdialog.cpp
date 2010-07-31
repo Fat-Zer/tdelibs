@@ -20,31 +20,31 @@
 #include "portdialog.h"
 #include "cupsdconf.h"
 
-#include <qlineedit.h>
-#include <qspinbox.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqlineedit.h>
+#include <tqspinbox.h>
+#include <tqcheckbox.h>
+#include <tqpushbutton.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <klocale.h>
 
-PortDialog::PortDialog(QWidget *parent, const char *name)
-	: KDialogBase(parent, name, true, QString::null, Ok|Cancel, Ok, true)
+PortDialog::PortDialog(TQWidget *parent, const char *name)
+	: KDialogBase(parent, name, true, TQString::null, Ok|Cancel, Ok, true)
 {
-	QWidget	*dummy = new QWidget(this);
+	QWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
-	address_ = new QLineEdit(dummy);
-	port_ = new QSpinBox(0, 9999, 1, dummy);
+	address_ = new TQLineEdit(dummy);
+	port_ = new TQSpinBox(0, 9999, 1, dummy);
 	port_->setValue(631);
-	usessl_ = new QCheckBox(i18n("Use SSL encryption"), dummy);
+	usessl_ = new TQCheckBox(i18n("Use SSL encryption"), dummy);
 
-	QLabel	*l1 = new QLabel(i18n("Address:"), dummy);
-	QLabel	*l2 = new QLabel(i18n("Port:"), dummy);
+	QLabel	*l1 = new TQLabel(i18n("Address:"), dummy);
+	QLabel	*l2 = new TQLabel(i18n("Port:"), dummy);
 
-	QVBoxLayout	*m1 = new QVBoxLayout(dummy, 0, 10);
-	QGridLayout	*m2 = new QGridLayout(0, 3, 2, 0, 5);
+	QVBoxLayout	*m1 = new TQVBoxLayout(dummy, 0, 10);
+	QGridLayout	*m2 = new TQGridLayout(0, 3, 2, 0, 5);
 	m1->addLayout(m2);
 	m2->addWidget(l1, 0, 0, Qt::AlignRight);
 	m2->addWidget(l2, 1, 0, Qt::AlignRight);
@@ -56,9 +56,9 @@ PortDialog::PortDialog(QWidget *parent, const char *name)
 	resize(250, 100);
 }
 
-QString PortDialog::listenString()
+TQString PortDialog::listenString()
 {
-	QString s;
+	TQString s;
 	if (usessl_->isChecked())
 		s.append("SSLListen ");
 	else
@@ -73,12 +73,12 @@ QString PortDialog::listenString()
 
 void PortDialog::setInfos(CupsdConf *conf)
 {
-	QWhatsThis::add(address_, conf->comments_.toolTip("address"));
-	QWhatsThis::add(port_, conf->comments_.toolTip("port"));
-	QWhatsThis::add(usessl_, conf->comments_.toolTip("usessl"));
+	TQWhatsThis::add(address_, conf->comments_.toolTip("address"));
+	TQWhatsThis::add(port_, conf->comments_.toolTip("port"));
+	TQWhatsThis::add(usessl_, conf->comments_.toolTip("usessl"));
 }
 
-QString PortDialog::newListen(QWidget *parent, CupsdConf *conf)
+TQString PortDialog::newListen(TQWidget *parent, CupsdConf *conf)
 {
 	PortDialog	dlg(parent);
 	dlg.setInfos(conf);
@@ -86,10 +86,10 @@ QString PortDialog::newListen(QWidget *parent, CupsdConf *conf)
 	{
 		return dlg.listenString();
 	}
-	return QString::null;
+	return TQString::null;
 }
 
-QString PortDialog::editListen(const QString& s, QWidget *parent, CupsdConf *conf)
+TQString PortDialog::editListen(const TQString& s, TQWidget *parent, CupsdConf *conf)
 {
 	PortDialog	dlg(parent);
 	dlg.setInfos(conf);
@@ -114,5 +114,5 @@ QString PortDialog::editListen(const QString& s, QWidget *parent, CupsdConf *con
 	{
 		return dlg.listenString();
 	}
-	return QString::null;
+	return TQString::null;
 }

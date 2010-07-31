@@ -1,24 +1,24 @@
 #include "kgradienttest.h"
 #include <kapplication.h>
 #include <kpixmapeffect.h>
-#include <qpainter.h>
-#include <qdatetime.h>
-#include <qstring.h>
+#include <tqpainter.h>
+#include <tqdatetime.h>
+#include <tqstring.h>
 
 int cols = 3, rows = 3; // how many
 
-void KGradientWidget::paintEvent(QPaintEvent */*ev*/)
+void KGradientWidget::paintEvent(TQPaintEvent */*ev*/)
 {
-    QTime time;
+    TQTime time;
     int it, ft;
-    QString say;
+    TQString say;
 
-    QColor ca = Qt::black, cb = Qt::blue;
+    TQColor ca = Qt::black, cb = Qt::blue;
 
     int x = 0, y = 0;
 
     pix.resize(width()/cols, height()/rows);
-    QPainter p(this);
+    TQPainter p(this);
     p.setPen(Qt::white);
 
     // draw once, so that the benchmarking be fair :-)

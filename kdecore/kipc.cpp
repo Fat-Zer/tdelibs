@@ -27,7 +27,7 @@
  */
 #include "config.h"
 
-#include <qwindowdefs.h>
+#include <tqwindowdefs.h>
 
 #if defined Q_WS_X11
 #include <X11/X.h> 

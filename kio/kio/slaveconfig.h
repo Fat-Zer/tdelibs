@@ -21,7 +21,7 @@
 #ifndef KIO_SLAVE_CONFIG_H
 #define KIO_SLAVE_CONFIG_H
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <kio/global.h>
 
 namespace KIO {
@@ -58,7 +58,7 @@ namespace KIO {
          * Changes made to the slave configuration only apply to slaves
          * used by the current process.
          */
-        void setConfigData(const QString &protocol, const QString &host, const QString &key, const QString &value );
+        void setConfigData(const TQString &protocol, const TQString &host, const TQString &key, const TQString &value );
         
         /**
          * Configure slaves of type @p protocol with @p config.
@@ -68,19 +68,19 @@ namespace KIO {
          * Changes made to the slave configuration only apply to slaves
          * used by the current process.
          */
-        void setConfigData(const QString &protocol, const QString &host, const MetaData &config );
+        void setConfigData(const TQString &protocol, const TQString &host, const MetaData &config );
                 
         /**
          * Query slave configuration for slaves of type @p protocol when
          * dealing with @p host.
          */
-        MetaData configData(const QString &protocol, const QString &host);
+        MetaData configData(const TQString &protocol, const TQString &host);
 
         /**
          * Query a specific configuration key for slaves of type @p protocol when
          * dealing with @p host.
          */
-        QString configData(const QString &protocol, const QString &host, const QString &key);
+        TQString configData(const TQString &protocol, const TQString &host, const TQString &key);
 
         /**
          * Undo any changes made by calls to setConfigData.
@@ -95,7 +95,7 @@ namespace KIO {
          * configuration changes with setConfigData based on the
          * host.
          */
-        void configNeeded(const QString &protocol, const QString &host);
+        void configNeeded(const TQString &protocol, const TQString &host);
     protected:
         SlaveConfig();
         static SlaveConfig *_self;

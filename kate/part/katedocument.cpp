@@ -70,12 +70,12 @@
 #include <kmdcodec.h>
 #include <kstandarddirs.h>
 
-#include <qtimer.h>
-#include <qfile.h>
-#include <qclipboard.h>
-#include <qtextstream.h>
-#include <qtextcodec.h>
-#include <qmap.h>
+#include <tqtimer.h>
+#include <tqfile.h>
+#include <tqclipboard.h>
+#include <tqtextstream.h>
+#include <tqtextcodec.h>
+#include <tqmap.h>
 //END  includes
 
 //BEGIN PRIVATE CLASSES
@@ -91,8 +91,8 @@ class KatePartPluginItem
 // KateDocument Constructor
 //
 KateDocument::KateDocument ( bool bSingleViewMode, bool bBrowserView,
-                             bool bReadOnly, QWidget *parentWidget,
-                             const char *widgetName, QObject *parent, const char *name)
+                             bool bReadOnly, TQWidget *parentWidget,
+                             const char *widgetName, TQObject *parent, const char *name)
 : Kate::Document(parent, name),
   m_plugins (KateFactory::self()->plugins().count()),
   m_undoDontMerge(false),
@@ -170,8 +170,8 @@ KateDocument::KateDocument ( bool bSingleViewMode, bool bBrowserView,
   m_markDescriptions.setAutoDelete( true );
   setMarksUserChangable( markType01 );
 
-  m_undoMergeTimer = new QTimer(this);
-  connect(m_undoMergeTimer, SIGNAL(timeout()), SLOT(undoCancel()));
+  m_undoMergeTimer = new TQTimer(this);
+  connect(m_undoMergeTimer, TQT_SIGNAL(timeout()), TQT_SLOT(undoCancel()));
 
   clearMarks ();
   clearUndo ();
@@ -189,24 +189,24 @@ KateDocument::KateDocument ( bool bSingleViewMode, bool bBrowserView,
   m_indenter->updateConfig ();
 
   // some nice signals from the buffer
-  connect(m_buffer, SIGNAL(tagLines(int,int)), this, SLOT(tagLines(int,int)));
-  connect(m_buffer, SIGNAL(codeFoldingUpdated()),this,SIGNAL(codeFoldingUpdated()));
+  connect(m_buffer, TQT_SIGNAL(tagLines(int,int)), this, TQT_SLOT(tagLines(int,int)));
+  connect(m_buffer, TQT_SIGNAL(codeFoldingUpdated()),this,TQT_SIGNAL(codeFoldingUpdated()));
 
   // if the user changes the highlight with the dialog, notify the doc
-  connect(KateHlManager::self(),SIGNAL(changed()),SLOT(internalHlChanged()));
+  connect(KateHlManager::self(),TQT_SIGNAL(changed()),TQT_SLOT(internalHlChanged()));
 
   // signal for the arbitrary HL
-  connect(m_arbitraryHL, SIGNAL(tagLines(KateView*, KateSuperRange*)), SLOT(tagArbitraryLines(KateView*, KateSuperRange*)));
+  connect(m_arbitraryHL, TQT_SIGNAL(tagLines(KateView*, KateSuperRange*)), TQT_SLOT(tagArbitraryLines(KateView*, KateSuperRange*)));
 
   // signals for mod on hd
-  connect( KateFactory::self()->dirWatch(), SIGNAL(dirty (const QString &)),
-           this, SLOT(slotModOnHdDirty (const QString &)) );
+  connect( KateFactory::self()->dirWatch(), TQT_SIGNAL(dirty (const TQString &)),
+           this, TQT_SLOT(slotModOnHdDirty (const TQString &)) );
 
-  connect( KateFactory::self()->dirWatch(), SIGNAL(created (const QString &)),
-           this, SLOT(slotModOnHdCreated (const QString &)) );
+  connect( KateFactory::self()->dirWatch(), TQT_SIGNAL(created (const TQString &)),
+           this, TQT_SLOT(slotModOnHdCreated (const TQString &)) );
 
-  connect( KateFactory::self()->dirWatch(), SIGNAL(deleted (const QString &)),
-           this, SLOT(slotModOnHdDeleted (const QString &)) );
+  connect( KateFactory::self()->dirWatch(), TQT_SIGNAL(deleted (const TQString &)),
+           this, TQT_SLOT(slotModOnHdDeleted (const TQString &)) );
 
   // update doc name
   setDocName ("");
@@ -220,7 +220,7 @@ KateDocument::KateDocument ( bool bSingleViewMode, bool bBrowserView,
     setWidget( view );
   }
 
-  connect(this,SIGNAL(sigQueryClose(bool *, bool*)),this,SLOT(slotQueryClose_save(bool *, bool*)));
+  connect(this,TQT_SIGNAL(sigQueryClose(bool *, bool*)),this,TQT_SLOT(slotQueryClose_save(bool *, bool*)));
 
   m_isasking = 0;
 
@@ -287,7 +287,7 @@ void KateDocument::loadPlugin (uint pluginIndex)
 {
   if (m_plugins[pluginIndex]) return;
 
-  m_plugins[pluginIndex] = KTextEditor::createPlugin (QFile::encodeName((KateFactory::self()->plugins())[pluginIndex]->library()), this);
+  m_plugins[pluginIndex] = KTextEditor::createPlugin (TQFile::encodeName((KateFactory::self()->plugins())[pluginIndex]->library()), this);
 
   enablePluginGUI (m_plugins[pluginIndex]);
 }
@@ -353,16 +353,16 @@ void KateDocument::disablePluginGUI (KTextEditor::Plugin *plugin)
 
 //BEGIN KTextEditor::Document stuff
 
-KTextEditor::View *KateDocument::createView( QWidget *parent, const char *name )
+KTextEditor::View *KateDocument::createView( TQWidget *parent, const char *name )
 {
   KateView* newView = new KateView( this, parent, name);
-  connect(newView, SIGNAL(cursorPositionChanged()), SLOT(undoCancel()));
+  connect(newView, TQT_SIGNAL(cursorPositionChanged()), TQT_SLOT(undoCancel()));
   if ( s_fileChangedDialogsActivated )
-    connect( newView, SIGNAL(gotFocus( Kate::View * )), this, SLOT(slotModifiedOnDisk()) );
+    connect( newView, TQT_SIGNAL(gotFocus( Kate::View * )), this, TQT_SLOT(slotModifiedOnDisk()) );
   return newView;
 }
 
-QPtrList<KTextEditor::View> KateDocument::views () const
+TQPtrList<KTextEditor::View> KateDocument::views () const
 {
   return m_textEditViews;
 }
@@ -382,7 +382,7 @@ uint KateDocument::configPages () const
   return 10;
 }
 
-KTextEditor::ConfigPage *KateDocument::configPage (uint number, QWidget *parent, const char * )
+KTextEditor::ConfigPage *KateDocument::configPage (uint number, TQWidget *parent, const char * )
 {
   switch( number )
   {
@@ -423,7 +423,7 @@ KTextEditor::ConfigPage *KateDocument::configPage (uint number, QWidget *parent,
   return 0;
 }
 
-QString KateDocument::configPageName (uint number) const
+TQString KateDocument::configPageName (uint number) const
 {
   switch( number )
   {
@@ -458,13 +458,13 @@ QString KateDocument::configPageName (uint number) const
       return i18n ("Plugins");
 
     default:
-      return QString ("");
+      return TQString ("");
   }
 
-  return QString ("");
+  return TQString ("");
 }
 
-QString KateDocument::configPageFullName (uint number) const
+TQString KateDocument::configPageFullName (uint number) const
 {
   switch( number )
   {
@@ -499,13 +499,13 @@ QString KateDocument::configPageFullName (uint number) const
       return i18n ("Plugin Manager");
 
     default:
-      return QString ("");
+      return TQString ("");
   }
 
-  return QString ("");
+  return TQString ("");
 }
 
-QPixmap KateDocument::configPagePixmap (uint number, int size) const
+TQPixmap KateDocument::configPagePixmap (uint number, int size) const
 {
   switch( number )
   {
@@ -549,9 +549,9 @@ QPixmap KateDocument::configPagePixmap (uint number, int size) const
 
 //BEGIN KTextEditor::EditInterface stuff
 
-QString KateDocument::text() const
+TQString KateDocument::text() const
 {
-  QString s;
+  TQString s;
 
   for (uint i = 0; i < m_buffer->count(); i++)
   {
@@ -569,27 +569,27 @@ QString KateDocument::text() const
   return s;
 }
 
-QString KateDocument::text ( uint startLine, uint startCol, uint endLine, uint endCol ) const
+TQString KateDocument::text ( uint startLine, uint startCol, uint endLine, uint endCol ) const
 {
   return text(startLine, startCol, endLine, endCol, false);
 }
 
-QString KateDocument::text ( uint startLine, uint startCol, uint endLine, uint endCol, bool blockwise) const
+TQString KateDocument::text ( uint startLine, uint startCol, uint endLine, uint endCol, bool blockwise) const
 {
   if ( blockwise && (startCol > endCol) )
-    return QString ();
+    return TQString ();
 
-  QString s;
+  TQString s;
 
   if (startLine == endLine)
   {
     if (startCol > endCol)
-      return QString ();
+      return TQString ();
 
     KateTextLine::Ptr textLine = m_buffer->plainLine(startLine);
 
     if ( !textLine )
-      return QString ();
+      return TQString ();
 
     return textLine->string(startCol, endCol-startCol);
   }
@@ -622,23 +622,23 @@ QString KateDocument::text ( uint startLine, uint startCol, uint endLine, uint e
   return s;
 }
 
-QString KateDocument::textLine( uint line ) const
+TQString KateDocument::textLine( uint line ) const
 {
   KateTextLine::Ptr l = m_buffer->plainLine(line);
 
   if (!l)
-    return QString();
+    return TQString();
 
   return l->string();
 }
 
-bool KateDocument::setText(const QString &s)
+bool KateDocument::setText(const TQString &s)
 {
   if (!isReadWrite())
     return false;
 
-  QPtrList<KTextEditor::Mark> m = marks ();
-  QValueList<KTextEditor::Mark> msave;
+  TQPtrList<KTextEditor::Mark> m = marks ();
+  TQValueList<KTextEditor::Mark> msave;
 
   for (uint i=0; i < m.count(); i++)
     msave.append (*m.at(i));
@@ -675,12 +675,12 @@ bool KateDocument::clear()
   return removeText (0,0,lastLine()+1, 0);
 }
 
-bool KateDocument::insertText( uint line, uint col, const QString &s)
+bool KateDocument::insertText( uint line, uint col, const TQString &s)
 {
   return insertText (line, col, s, false);
 }
 
-bool KateDocument::insertText( uint line, uint col, const QString &s, bool blockwise )
+bool KateDocument::insertText( uint line, uint col, const TQString &s, bool blockwise )
 {
   if (!isReadWrite())
     return false;
@@ -698,7 +698,7 @@ bool KateDocument::insertText( uint line, uint col, const QString &s, bool block
   uint insertPos = col;
   uint len = s.length();
 
-  QString buf;
+  TQString buf;
 
   bool replacetabs = ( config()->configFlags() & KateDocumentConfig::cfReplaceTabsDyn && ! m_isInUndo );
   uint tw = config()->tabWidth();
@@ -709,7 +709,7 @@ bool KateDocument::insertText( uint line, uint col, const QString &s, bool block
 
   for (uint pos = 0; pos < len; pos++)
   {
-    QChar ch = s[pos];
+    TQChar ch = s[pos];
 
     if (ch == '\n')
     {
@@ -845,7 +845,7 @@ bool KateDocument::removeText ( uint startLine, uint startCol, uint endLine, uin
   return true;
 }
 
-bool KateDocument::insertLine( uint l, const QString &str )
+bool KateDocument::insertLine( uint l, const TQString &str )
 {
   if (!isReadWrite())
     return false;
@@ -1064,16 +1064,16 @@ bool KateDocument::wrapText (uint startLine, uint endLine)
 
       kdDebug (13020) << "do wrap line: " << line << endl;
 
-      const QChar *text = l->text();
+      const TQChar *text = l->text();
       uint eolPosition = l->length()-1;
 
       // take tabs into account here, too
       uint x = 0;
-      const QString & t = l->string();
+      const TQString & t = l->string();
       uint z2 = 0;
       for ( ; z2 < l->length(); z2++)
       {
-        if (t[z2] == QChar('\t'))
+        if (t[z2] == TQChar('\t'))
           x += m_buffer->tabWidth() - (x % m_buffer->tabWidth());
         else
           x++;
@@ -1128,7 +1128,7 @@ bool KateDocument::wrapText (uint startLine, uint endLine)
       else
       {
         if (nextl && (nextl->length() > 0) && !nextl->getChar(0).isSpace() && ((l->length() < 1) || !l->getChar(l->length()-1).isSpace()))
-          editInsertText (line+1, 0, QString (" "));
+          editInsertText (line+1, 0, TQString (" "));
 
         bool newLineAdded = false;
         editWrapLine (line, z, false, &newLineAdded);
@@ -1145,7 +1145,7 @@ bool KateDocument::wrapText (uint startLine, uint endLine)
   return true;
 }
 
-void KateDocument::editAddUndo (KateUndoGroup::UndoType type, uint line, uint col, uint len, const QString &text)
+void KateDocument::editAddUndo (KateUndoGroup::UndoType type, uint line, uint col, uint len, const TQString &text)
 {
   if (editIsRunning && editWithUndo && m_editCurrentUndo) {
     m_editCurrentUndo->addItem(type, line, col, len, text);
@@ -1159,12 +1159,12 @@ void KateDocument::editAddUndo (KateUndoGroup::UndoType type, uint line, uint co
   }
 }
 
-bool KateDocument::editInsertText ( uint line, uint col, const QString &str )
+bool KateDocument::editInsertText ( uint line, uint col, const TQString &str )
 {
   if (!isReadWrite())
     return false;
 
-  QString s = str;
+  TQString s = str;
 
   KateTextLine::Ptr l = m_buffer->line(line);
 
@@ -1179,7 +1179,7 @@ bool KateDocument::editInsertText ( uint line, uint col, const QString &str )
       while ( (pos = s.find('\t')) > -1 )
       {
         l = tw - ( (col + pos)%tw );
-        s.replace( pos, 1, QString().fill( ' ', l ) );
+        s.replace( pos, 1, TQString().fill( ' ', l ) );
       }
     }
 
@@ -1192,7 +1192,7 @@ bool KateDocument::editInsertText ( uint line, uint col, const QString &str )
 
   m_buffer->changeLine(line);
 
-  for( QPtrListIterator<KateSuperCursor> it (m_superCursors); it.current(); ++it )
+  for( TQPtrListIterator<KateSuperCursor> it (m_superCursors); it.current(); ++it )
     it.current()->editTextInserted (line, col, s.length());
 
   editEnd ();
@@ -1219,7 +1219,7 @@ bool KateDocument::editRemoveText ( uint line, uint col, uint len )
 
   m_buffer->changeLine(line);
 
-  for( QPtrListIterator<KateSuperCursor> it (m_superCursors); it.current(); ++it )
+  for( TQPtrListIterator<KateSuperCursor> it (m_superCursors); it.current(); ++it )
     it.current()->editTextRemoved (line, col, len);
 
   editEnd ();
@@ -1239,7 +1239,7 @@ bool KateDocument::editMarkLineAutoWrapped ( uint line, bool autowrapped )
 
   editStart ();
 
-  editAddUndo (KateUndoGroup::editMarkLineAutoWrapped, line, autowrapped ? 1 : 0, 0, QString::null);
+  editAddUndo (KateUndoGroup::editMarkLineAutoWrapped, line, autowrapped ? 1 : 0, 0, TQString::null);
 
   l->setAutoWrapped (autowrapped);
 
@@ -1281,8 +1281,8 @@ bool KateDocument::editWrapLine ( uint line, uint col, bool newLine, bool *newLi
     m_buffer->insertLine (line+1, textLine);
     m_buffer->changeLine(line);
 
-    QPtrList<KTextEditor::Mark> list;
-    for( QIntDictIterator<KTextEditor::Mark> it( m_marks ); it.current(); ++it )
+    TQPtrList<KTextEditor::Mark> list;
+    for( TQIntDictIterator<KTextEditor::Mark> it( m_marks ); it.current(); ++it )
     {
       if( it.current()->line >= line )
       {
@@ -1291,7 +1291,7 @@ bool KateDocument::editWrapLine ( uint line, uint col, bool newLine, bool *newLi
       }
     }
 
-    for( QPtrListIterator<KTextEditor::Mark> it( list ); it.current(); ++it )
+    for( TQPtrListIterator<KTextEditor::Mark> it( list ); it.current(); ++it )
     {
       KTextEditor::Mark* mark = m_marks.take( it.current()->line );
       mark->line++;
@@ -1318,7 +1318,7 @@ bool KateDocument::editWrapLine ( uint line, uint col, bool newLine, bool *newLi
       (*newLineAdded) = false;
   }
 
-  for( QPtrListIterator<KateSuperCursor> it (m_superCursors); it.current(); ++it )
+  for( TQPtrListIterator<KateSuperCursor> it (m_superCursors); it.current(); ++it )
     it.current()->editLineWrapped (line, col, !nextLine || newLine);
 
   editEnd ();
@@ -1360,8 +1360,8 @@ bool KateDocument::editUnWrapLine ( uint line, bool removeLine, uint length )
     m_buffer->changeLine(line+1);
   }
 
-  QPtrList<KTextEditor::Mark> list;
-  for( QIntDictIterator<KTextEditor::Mark> it( m_marks ); it.current(); ++it )
+  TQPtrList<KTextEditor::Mark> list;
+  for( TQIntDictIterator<KTextEditor::Mark> it( m_marks ); it.current(); ++it )
   {
     if( it.current()->line >= line+1 )
       list.append( it.current() );
@@ -1377,7 +1377,7 @@ bool KateDocument::editUnWrapLine ( uint line, bool removeLine, uint length )
     }
   }
 
-  for( QPtrListIterator<KTextEditor::Mark> it( list ); it.current(); ++it )
+  for( TQPtrListIterator<KTextEditor::Mark> it( list ); it.current(); ++it )
   {
     KTextEditor::Mark* mark = m_marks.take( it.current()->line );
     mark->line--;
@@ -1387,7 +1387,7 @@ bool KateDocument::editUnWrapLine ( uint line, bool removeLine, uint length )
   if( !list.isEmpty() )
     emit marksChanged();
 
-  for( QPtrListIterator<KateSuperCursor> it (m_superCursors); it.current(); ++it )
+  for( TQPtrListIterator<KateSuperCursor> it (m_superCursors); it.current(); ++it )
     it.current()->editLineUnWrapped (line, col, removeLine, length);
 
   editEnd ();
@@ -1395,7 +1395,7 @@ bool KateDocument::editUnWrapLine ( uint line, bool removeLine, uint length )
   return true;
 }
 
-bool KateDocument::editInsertLine ( uint line, const QString &s )
+bool KateDocument::editInsertLine ( uint line, const TQString &s )
 {
   if (!isReadWrite())
     return false;
@@ -1416,14 +1416,14 @@ bool KateDocument::editInsertLine ( uint line, const QString &s )
 
   removeTrailingSpace( line ); // new line
 
-  QPtrList<KTextEditor::Mark> list;
-  for( QIntDictIterator<KTextEditor::Mark> it( m_marks ); it.current(); ++it )
+  TQPtrList<KTextEditor::Mark> list;
+  for( TQIntDictIterator<KTextEditor::Mark> it( m_marks ); it.current(); ++it )
   {
     if( it.current()->line >= line )
       list.append( it.current() );
   }
 
-  for( QPtrListIterator<KTextEditor::Mark> it( list ); it.current(); ++it )
+  for( TQPtrListIterator<KTextEditor::Mark> it( list ); it.current(); ++it )
   {
     KTextEditor::Mark* mark = m_marks.take( it.current()->line );
     mark->line++;
@@ -1433,7 +1433,7 @@ bool KateDocument::editInsertLine ( uint line, const QString &s )
   if( !list.isEmpty() )
     emit marksChanged();
 
-  for( QPtrListIterator<KateSuperCursor> it (m_superCursors); it.current(); ++it )
+  for( TQPtrListIterator<KateSuperCursor> it (m_superCursors); it.current(); ++it )
     it.current()->editLineInserted (line);
 
   editEnd ();
@@ -1458,9 +1458,9 @@ bool KateDocument::editRemoveLine ( uint line )
 
   m_buffer->removeLine(line);
 
-  QPtrList<KTextEditor::Mark> list;
+  TQPtrList<KTextEditor::Mark> list;
   KTextEditor::Mark* rmark = 0;
-  for( QIntDictIterator<KTextEditor::Mark> it( m_marks ); it.current(); ++it )
+  for( TQIntDictIterator<KTextEditor::Mark> it( m_marks ); it.current(); ++it )
   {
     if ( (it.current()->line > line) )
       list.append( it.current() );
@@ -1471,7 +1471,7 @@ bool KateDocument::editRemoveLine ( uint line )
   if (rmark)
     delete (m_marks.take (rmark->line));
 
-  for( QPtrListIterator<KTextEditor::Mark> it( list ); it.current(); ++it )
+  for( TQPtrListIterator<KTextEditor::Mark> it( list ); it.current(); ++it )
   {
     KTextEditor::Mark* mark = m_marks.take( it.current()->line );
     mark->line--;
@@ -1481,7 +1481,7 @@ bool KateDocument::editRemoveLine ( uint line )
   if( !list.isEmpty() )
     emit marksChanged();
 
-  for( QPtrListIterator<KateSuperCursor> it (m_superCursors); it.current(); ++it )
+  for( TQPtrListIterator<KateSuperCursor> it (m_superCursors); it.current(); ++it )
     it.current()->editLineRemoved (line);
 
   editEnd();
@@ -1642,7 +1642,7 @@ void KateDocument::clearRedo()
   emit undoChanged ();
 }
 
-QPtrList<KTextEditor::Cursor> KateDocument::cursors () const
+TQPtrList<KTextEditor::Cursor> KateDocument::cursors () const
 {
   return myCursors;
 }
@@ -1650,7 +1650,7 @@ QPtrList<KTextEditor::Cursor> KateDocument::cursors () const
 
 //BEGIN KTextEditor::SearchInterface stuff
 
-bool KateDocument::searchText (unsigned int startLine, unsigned int startCol, const QString &text, unsigned int *foundAtLine, unsigned int *foundAtCol, unsigned int *matchLen, bool casesensitive, bool backwards)
+bool KateDocument::searchText (unsigned int startLine, unsigned int startCol, const TQString &text, unsigned int *foundAtLine, unsigned int *foundAtCol, unsigned int *matchLen, bool casesensitive, bool backwards)
 {
   if (text.isEmpty())
     return false;
@@ -1732,7 +1732,7 @@ bool KateDocument::searchText (unsigned int startLine, unsigned int startCol, co
   return false;
 }
 
-bool KateDocument::searchText (unsigned int startLine, unsigned int startCol, const QRegExp &regexp, unsigned int *foundAtLine, unsigned int *foundAtCol, unsigned int *matchLen, bool backwards)
+bool KateDocument::searchText (unsigned int startLine, unsigned int startCol, const TQRegExp &regexp, unsigned int *foundAtLine, unsigned int *foundAtCol, unsigned int *matchLen, bool backwards)
 {
   kdDebug(13020)<<"KateDocument::searchText( "<<startLine<<", "<<startCol<<", "<<regexp.pattern()<<", "<<backwards<<" )"<<endl;
   if (regexp.isEmpty() || !regexp.isValid())
@@ -1862,12 +1862,12 @@ uint KateDocument::hlModeCount ()
   return KateHlManager::self()->highlights();
 }
 
-QString KateDocument::hlModeName (uint mode)
+TQString KateDocument::hlModeName (uint mode)
 {
   return KateHlManager::self()->hlName (mode);
 }
 
-QString KateDocument::hlModeSectionName (uint mode)
+TQString KateDocument::hlModeSectionName (uint mode)
 {
   return KateHlManager::self()->hlSection (mode);
 }
@@ -1930,7 +1930,7 @@ void KateDocument::readSessionConfig(KConfig *kconfig)
   KURL url (kconfig->readEntry("URL"));
 
   // get the encoding
-  QString tmpenc=kconfig->readEntry("Encoding");
+  TQString tmpenc=kconfig->readEntry("Encoding");
   if (!tmpenc.isEmpty() && (tmpenc != encoding()))
     setEncoding(tmpenc);
 
@@ -1948,7 +1948,7 @@ void KateDocument::readSessionConfig(KConfig *kconfig)
   config()->setIndentationMode( (uint)kconfig->readNumEntry("Indentation Mode", config()->indentationMode() ) );
 
   // Restore Bookmarks
-  QValueList<int> marks = kconfig->readIntListEntry("Bookmarks");
+  TQValueList<int> marks = kconfig->readIntListEntry("Bookmarks");
   for( uint i = 0; i < marks.count(); i++ )
     addMark( marks[i], KateDocument::markType01 );
 }
@@ -1969,8 +1969,8 @@ void KateDocument::writeSessionConfig(KConfig *kconfig)
   kconfig->writeEntry("Indentation Mode", config()->indentationMode() );
 
   // Save Bookmarks
-  QValueList<int> marks;
-  for( QIntDictIterator<KTextEditor::Mark> it( m_marks );
+  TQValueList<int> marks;
+  for( TQIntDictIterator<KTextEditor::Mark> it( m_marks );
        it.current() && it.current()->type & KTextEditor::MarkInterface::markType01;
        ++it )
      marks << it.current()->line;
@@ -1990,14 +1990,14 @@ void KateDocument::configDialog()
   KWin::setIcons( kd->winId(), kapp->icon(), kapp->miniIcon() );
 #endif
 
-  QPtrList<KTextEditor::ConfigPage> editorPages;
+  TQPtrList<KTextEditor::ConfigPage> editorPages;
 
   for (uint i = 0; i < KTextEditor::configInterfaceExtension (this)->configPages (); i++)
   {
-    QStringList path;
+    TQStringList path;
     path.clear();
     path << KTextEditor::configInterfaceExtension (this)->configPageName (i);
-    QVBox *page = kd->addVBoxPage(path, KTextEditor::configInterfaceExtension (this)->configPageFullName (i),
+    TQVBox *page = kd->addVBoxPage(path, KTextEditor::configInterfaceExtension (this)->configPageFullName (i),
                               KTextEditor::configInterfaceExtension (this)->configPagePixmap(i, KIcon::SizeMedium) );
 
     editorPages.append (KTextEditor::configInterfaceExtension (this)->configPage(i, page));
@@ -2122,11 +2122,11 @@ void KateDocument::removeMark( uint line, uint markType )
   repaintViews(true);
 }
 
-QPtrList<KTextEditor::Mark> KateDocument::marks()
+TQPtrList<KTextEditor::Mark> KateDocument::marks()
 {
-  QPtrList<KTextEditor::Mark> list;
+  TQPtrList<KTextEditor::Mark> list;
 
-  for( QIntDictIterator<KTextEditor::Mark> it( m_marks );
+  for( TQIntDictIterator<KTextEditor::Mark> it( m_marks );
        it.current(); ++it ) {
     list.append( it.current() );
   }
@@ -2136,7 +2136,7 @@ QPtrList<KTextEditor::Mark> KateDocument::marks()
 
 void KateDocument::clearMarks()
 {
-  for( QIntDictIterator<KTextEditor::Mark> it( m_marks );
+  for( TQIntDictIterator<KTextEditor::Mark> it( m_marks );
        it.current(); ++it ) {
     KTextEditor::Mark* mark = it.current();
     emit markChanged( *mark, MarkRemoved );
@@ -2149,36 +2149,36 @@ void KateDocument::clearMarks()
   repaintViews(true);
 }
 
-void KateDocument::setPixmap( MarkInterface::MarkTypes type, const QPixmap& pixmap )
+void KateDocument::setPixmap( MarkInterface::MarkTypes type, const TQPixmap& pixmap )
 {
-  m_markPixmaps.replace( type, new QPixmap( pixmap ) );
+  m_markPixmaps.replace( type, new TQPixmap( pixmap ) );
 }
 
-void KateDocument::setDescription( MarkInterface::MarkTypes type, const QString& description )
+void KateDocument::setDescription( MarkInterface::MarkTypes type, const TQString& description )
 {
-  m_markDescriptions.replace( type, new QString( description ) );
+  m_markDescriptions.replace( type, new TQString( description ) );
 }
 
-QPixmap *KateDocument::markPixmap( MarkInterface::MarkTypes type )
+TQPixmap *KateDocument::markPixmap( MarkInterface::MarkTypes type )
 {
   return m_markPixmaps[type];
 }
 
-QColor KateDocument::markColor( MarkInterface::MarkTypes type )
+TQColor KateDocument::markColor( MarkInterface::MarkTypes type )
 {
   uint reserved = (0x1 << KTextEditor::MarkInterface::reservedMarkersCount()) - 1;
   if ((uint)type >= (uint)markType01 && (uint)type <= reserved) {
     return KateRendererConfig::global()->lineMarkerColor(type);
   } else {
-    return QColor();
+    return TQColor();
   }
 }
 
-QString KateDocument::markDescription( MarkInterface::MarkTypes type )
+TQString KateDocument::markDescription( MarkInterface::MarkTypes type )
 {
   if( m_markDescriptions[type] )
     return *m_markDescriptions[type];
-  return QString::null;
+  return TQString::null;
 }
 
 void KateDocument::setMarksUserChangable( uint markMask )
@@ -2205,7 +2205,7 @@ bool KateDocument::print ()
 //END
 
 //BEGIN KTextEditor::DocumentInfoInterface (### unfinished)
-QString KateDocument::mimeType()
+TQString KateDocument::mimeType()
 {
   KMimeType::Ptr result = KMimeType::defaultMimeTypePtr();
 
@@ -2226,19 +2226,19 @@ long KateDocument::fileSize()
 }
 
 // TODO implement this
-QString KateDocument::niceFileSize()
+TQString KateDocument::niceFileSize()
 {
   return "UNKNOWN";
 }
 
 KMimeType::Ptr KateDocument::mimeTypeForContent()
 {
-  QByteArray buf (1024);
+  TQByteArray buf (1024);
   uint bufpos = 0;
 
   for (uint i=0; i < numLines(); i++)
   {
-    QString line = textLine( i );
+    TQString line = textLine( i );
     uint len = line.length() + 1;
 
     if (bufpos + len > 1024)
@@ -2305,13 +2305,13 @@ bool KateDocument::openURL( const KURL &url )
     m_job = KIO::get ( url, false, isProgressInfoEnabled() );
 
     // connect to slots
-    connect( m_job, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
-           SLOT( slotDataKate( KIO::Job*, const QByteArray& ) ) );
+    connect( m_job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
+           TQT_SLOT( slotDataKate( KIO::Job*, const TQByteArray& ) ) );
 
-    connect( m_job, SIGNAL( result( KIO::Job* ) ),
-           SLOT( slotFinishedKate( KIO::Job* ) ) );
+    connect( m_job, TQT_SIGNAL( result( KIO::Job* ) ),
+           TQT_SLOT( slotFinishedKate( KIO::Job* ) ) );
 
-    QWidget *w = widget ();
+    TQWidget *w = widget ();
     if (!w && !m_views.isEmpty ())
       w = m_views.first();
 
@@ -2324,7 +2324,7 @@ bool KateDocument::openURL( const KURL &url )
   }
 }
 
-void KateDocument::slotDataKate ( KIO::Job *, const QByteArray &data )
+void KateDocument::slotDataKate ( KIO::Job *, const TQByteArray &data )
 {
 //   kdDebug(13020) << "KateDocument::slotData" << endl;
 
@@ -2384,7 +2384,7 @@ bool KateDocument::openFile(KIO::Job * job)
   //
   if (job)
   {
-    QString metaDataCharset = job->queryMetaData("charset");
+    TQString metaDataCharset = job->queryMetaData("charset");
 
     // only overwrite config if nothing set
     if (!metaDataCharset.isEmpty () && (!m_config->isSetEncoding() || m_config->encoding().isEmpty()))
@@ -2394,7 +2394,7 @@ bool KateDocument::openFile(KIO::Job * job)
   //
   // service type magic to get encoding right
   //
-  QString serviceType = m_extension->urlArgs().serviceType.simplifyWhiteSpace();
+  TQString serviceType = m_extension->urlArgs().serviceType.simplifyWhiteSpace();
   int pos = serviceType.find(';');
   if (pos != -1)
     setEncoding (serviceType.mid(pos+1));
@@ -2462,7 +2462,7 @@ bool KateDocument::openFile(KIO::Job * job)
   //
   // set doc name, dummy value as arg, don't need it
   //
-  setDocName  (QString::null);
+  setDocName  (TQString::null);
 
   //
   // to houston, we are not modified
@@ -2567,7 +2567,7 @@ bool KateDocument::saveFile()
   {
     if (s_fileChangedDialogsActivated && m_modOnHd)
     {
-      QString str = reasonedMOHString() + "\n\n";
+      TQString str = reasonedMOHString() + "\n\n";
 
       if (!isModified())
       {
@@ -2650,12 +2650,12 @@ bool KateDocument::saveFile()
 
 bool KateDocument::saveAs( const KURL &u )
 {
-  QString oldDir = url().directory();
+  TQString oldDir = url().directory();
 
   if ( KParts::ReadWritePart::saveAs( u ) )
   {
     // null means base on filename
-    setDocName( QString::null );
+    setDocName( TQString::null );
 
     if ( u.directory() != oldDir )
       readDirConfig();
@@ -2675,7 +2675,7 @@ void KateDocument::readDirConfig ()
 
   if (m_url.isLocalFile() && (depth > -1))
   {
-    QString currentDir = QFileInfo (m_file).dirPath();
+    TQString currentDir = TQFileInfo (m_file).dirPath();
 
     // only search as deep as specified or not at all ;)
     while (depth > -1)
@@ -2683,14 +2683,14 @@ void KateDocument::readDirConfig ()
       kdDebug (13020) << "search for config file in path: " << currentDir << endl;
 
       // try to open config file in this dir
-      QFile f (currentDir + "/.kateconfig");
+      TQFile f (currentDir + "/.kateconfig");
 
       if (f.open (IO_ReadOnly))
       {
-        QTextStream stream (&f);
+        TQTextStream stream (&f);
 
         uint linesRead = 0;
-        QString line = stream.readLine();
+        TQString line = stream.readLine();
         while ((linesRead < 32) && !line.isNull())
         {
           readVariableLine( line );
@@ -2703,7 +2703,7 @@ void KateDocument::readDirConfig ()
         break;
       }
 
-      QString newDir = QFileInfo (currentDir).dirPath();
+      TQString newDir = TQFileInfo (currentDir).dirPath();
 
       // bail out on looping (for example reached /)
       if (currentDir == newDir)
@@ -2737,7 +2737,7 @@ void KateDocument::deactivateDirWatch ()
   if (!m_dirWatchFile.isEmpty())
     KateFactory::self()->dirWatch ()->removeFile (m_dirWatchFile);
 
-  m_dirWatchFile = QString::null;
+  m_dirWatchFile = TQString::null;
 }
 
 bool KateDocument::closeURL()
@@ -2755,7 +2755,7 @@ bool KateDocument::closeURL()
             widget(),
             reasonedMOHString() + "\n\n" + i18n("Do you really want to continue to close this file? Data loss may occur."),
             i18n("Possible Data Loss"), i18n("Close Nevertheless"),
-            QString("kate_close_modonhd_%1").arg( m_modOnHdReason ) ) == KMessageBox::Continue))
+            TQString("kate_close_modonhd_%1").arg( m_modOnHdReason ) ) == KMessageBox::Continue))
         return false;
     }
   }
@@ -2773,7 +2773,7 @@ bool KateDocument::closeURL()
   // empty url + filename
   //
   m_url = KURL ();
-  m_file = QString::null;
+  m_file = TQString::null;
 
   // we are not modified
   if (m_modOnHd)
@@ -2803,7 +2803,7 @@ bool KateDocument::closeURL()
   for (KateView * view = m_views.first(); view != 0L; view = m_views.next() )
   {
     // Explicitly call the internal version because we don't want this to look like
-    // an external request (and thus have the view not QWidget::scroll()ed.
+    // an external request (and thus have the view not TQWidget::scroll()ed.
     view->setCursorPositionInternal(0, 0, 1, false);
     view->clearSelection();
     view->updateView(true);
@@ -2813,7 +2813,7 @@ bool KateDocument::closeURL()
   emit fileNameChanged ();
 
   // update doc name
-  setDocName (QString::null);
+  setDocName (TQString::null);
 
   // success
   return true;
@@ -2951,7 +2951,7 @@ uint KateDocument::currentColumn( const KateTextCursor& cursor )
     return 0;
 }
 
-bool KateDocument::typeChars ( KateView *view, const QString &chars )
+bool KateDocument::typeChars ( KateView *view, const TQString &chars )
 {
   KateTextLine::Ptr textLine = m_buffer->plainLine(view->cursorLine ());
 
@@ -2959,22 +2959,22 @@ bool KateDocument::typeChars ( KateView *view, const QString &chars )
     return false;
 
   bool bracketInserted = false;
-  QString buf;
-  QChar c;
+  TQString buf;
+  TQChar c;
 
   for( uint z = 0; z < chars.length(); z++ )
   {
-    QChar ch = c = chars[z];
+    TQChar ch = c = chars[z];
     if (ch.isPrint() || ch == '\t')
     {
       buf.append (ch);
 
       if (!bracketInserted && (config()->configFlags() & KateDocument::cfAutoBrackets))
       {
-        QChar end_ch;
+        TQChar end_ch;
         bool complete = true;
-        QChar prevChar = textLine->getChar(view->cursorColumnReal()-1);
-        QChar nextChar = textLine->getChar(view->cursorColumnReal());
+        TQChar prevChar = textLine->getChar(view->cursorColumnReal()-1);
+        TQChar nextChar = textLine->getChar(view->cursorColumnReal());
         switch(ch) {
           case '(': end_ch = ')'; break;
           case '[': end_ch = ']'; break;
@@ -3107,7 +3107,7 @@ void KateDocument::transpose( const KateTextCursor& cursor)
     return;
 
   uint line = cursor.line();
-  QString s;
+  TQString s;
 
   //clever swap code if first character on the line swap right&left
   //otherwise left & right
@@ -3143,8 +3143,8 @@ void KateDocument::backspace( KateView *view, const KateTextCursor& c )
       // if inside empty (), {}, [], '', "" delete both
       KateTextLine::Ptr tl = m_buffer->plainLine(line);
       if(!tl) return;
-      QChar prevChar = tl->getChar(col-1);
-      QChar nextChar = tl->getChar(col);
+      TQChar prevChar = tl->getChar(col-1);
+      TQChar nextChar = tl->getChar(col);
 
       if ( (prevChar == '"' && nextChar == '"') ||
            (prevChar == '\'' && nextChar == '\'') ||
@@ -3195,7 +3195,7 @@ void KateDocument::backspace( KateView *view, const KateTextCursor& c )
       if (!textLine)
         return;
 
-      if (config()->wordWrap() && textLine->endingWith(QString::fromLatin1(" ")))
+      if (config()->wordWrap() && textLine->endingWith(TQString::fromLatin1(" ")))
       {
         // gg: in hard wordwrap mode, backspace must also eat the trailing space
         removeText (line-1, textLine->length()-1, line, 0);
@@ -3227,12 +3227,12 @@ void KateDocument::del( KateView *view, const KateTextCursor& c )
 
 void KateDocument::paste ( KateView* view )
 {
-  QString s = QApplication::clipboard()->text();
+  TQString s = TQApplication::clipboard()->text();
 
   if (s.isEmpty())
     return;
 
-  uint lines = s.contains (QChar ('\n'));
+  uint lines = s.contains (TQChar ('\n'));
 
   m_undoDontMerge = true;
 
@@ -3275,7 +3275,7 @@ void KateDocument::insertIndentChars ( KateView *view )
 {
   editStart ();
 
-  QString s;
+  TQString s;
   if (config()->configFlags() & KateDocument::cfSpaceIndent)
   {
     int width = config()->indentationWidth();
@@ -3406,7 +3406,7 @@ void KateDocument::optimizeLeadingSpace(uint line, int flags, int change)
 void KateDocument::replaceWithOptimizedSpace(uint line, uint upto_column, uint space, int flags)
 {
   uint length;
-  QString new_space;
+  TQString new_space;
 
   if (flags & KateDocument::cfSpaceIndent && ! (flags & KateDocumentConfig::cfMixedIndent) ) {
     length = space;
@@ -3416,7 +3416,7 @@ void KateDocument::replaceWithOptimizedSpace(uint line, uint upto_column, uint s
     length = space / config()->tabWidth();
     new_space.fill('\t', length);
 
-    QString extra_space;
+    TQString extra_space;
     extra_space.fill(' ', space % config()->tabWidth());
     length += space % config()->tabWidth();
     new_space += extra_space;
@@ -3444,7 +3444,7 @@ void KateDocument::replaceWithOptimizedSpace(uint line, uint upto_column, uint s
   Remove a given string at the begining
   of the current line.
 */
-bool KateDocument::removeStringFromBegining(int line, QString &str)
+bool KateDocument::removeStringFromBegining(int line, TQString &str)
 {
   KateTextLine::Ptr textline = m_buffer->plainLine(line);
 
@@ -3474,7 +3474,7 @@ bool KateDocument::removeStringFromBegining(int line, QString &str)
   Remove a given string at the end
   of the current line.
 */
-bool KateDocument::removeStringFromEnd(int line, QString &str)
+bool KateDocument::removeStringFromEnd(int line, TQString &str)
 {
   KateTextLine::Ptr textline = m_buffer->plainLine(line);
 
@@ -3511,12 +3511,12 @@ void KateDocument::addStartLineCommentToSingleLine( int line, int attrib )
 {
   if (highlight()->getCommentSingleLinePosition(attrib)==KateHighlighting::CSLPosColumn0)
   {
-    QString commentLineMark = highlight()->getCommentSingleLineStart( attrib ) + " ";
+    TQString commentLineMark = highlight()->getCommentSingleLineStart( attrib ) + " ";
     insertText (line, 0, commentLineMark);
   }
   else
   {
-    QString commentLineMark=highlight()->getCommentSingleLineStart(attrib);
+    TQString commentLineMark=highlight()->getCommentSingleLineStart(attrib);
     KateTextLine::Ptr l = m_buffer->line(line);
     int pos=l->firstChar();
     if (pos >=0)
@@ -3530,8 +3530,8 @@ void KateDocument::addStartLineCommentToSingleLine( int line, int attrib )
 */
 bool KateDocument::removeStartLineCommentFromSingleLine( int line, int attrib )
 {
-  QString shortCommentMark = highlight()->getCommentSingleLineStart( attrib );
-  QString longCommentMark = shortCommentMark + " ";
+  TQString shortCommentMark = highlight()->getCommentSingleLineStart( attrib );
+  TQString longCommentMark = shortCommentMark + " ";
 
   editStart();
 
@@ -3550,8 +3550,8 @@ bool KateDocument::removeStartLineCommentFromSingleLine( int line, int attrib )
 */
 void KateDocument::addStartStopCommentToSingleLine( int line, int attrib )
 {
-  QString startCommentMark = highlight()->getCommentStart( attrib ) + " ";
-  QString stopCommentMark = " " + highlight()->getCommentEnd( attrib );
+  TQString startCommentMark = highlight()->getCommentStart( attrib ) + " ";
+  TQString stopCommentMark = " " + highlight()->getCommentEnd( attrib );
 
   editStart();
 
@@ -3573,10 +3573,10 @@ void KateDocument::addStartStopCommentToSingleLine( int line, int attrib )
 */
 bool KateDocument::removeStartStopCommentFromSingleLine( int line, int attrib )
 {
-  QString shortStartCommentMark = highlight()->getCommentStart( attrib );
-  QString longStartCommentMark = shortStartCommentMark + " ";
-  QString shortStopCommentMark = highlight()->getCommentEnd( attrib );
-  QString longStopCommentMark = " " + shortStopCommentMark;
+  TQString shortStartCommentMark = highlight()->getCommentStart( attrib );
+  TQString longStartCommentMark = shortStartCommentMark + " ";
+  TQString shortStopCommentMark = highlight()->getCommentEnd( attrib );
+  TQString longStopCommentMark = " " + shortStopCommentMark;
 
   editStart();
 
@@ -3607,8 +3607,8 @@ bool KateDocument::removeStartStopCommentFromSingleLine( int line, int attrib )
 */
 void KateDocument::addStartStopCommentToSelection( KateView *view, int attrib )
 {
-  QString startComment = highlight()->getCommentStart( attrib );
-  QString endComment = highlight()->getCommentEnd( attrib );
+  TQString startComment = highlight()->getCommentStart( attrib );
+  TQString endComment = highlight()->getCommentEnd( attrib );
 
   int sl = view->selStartLine();
   int el = view->selEndLine();
@@ -3639,7 +3639,7 @@ void KateDocument::addStartStopCommentToSelection( KateView *view, int attrib )
 */
 void KateDocument::addStartLineCommentToSelection( KateView *view, int attrib )
 {
-  QString commentLineMark = highlight()->getCommentSingleLineStart( attrib ) + " ";
+  TQString commentLineMark = highlight()->getCommentSingleLineStart( attrib ) + " ";
 
   int sl = view->selStartLine();
   int el = view->selEndLine();
@@ -3713,8 +3713,8 @@ bool KateDocument::previousNonSpaceCharPos(int &line, int &col)
 */
 bool KateDocument::removeStartStopCommentFromSelection( KateView *view, int attrib )
 {
-  QString startComment = highlight()->getCommentStart( attrib );
-  QString endComment = highlight()->getCommentEnd( attrib );
+  TQString startComment = highlight()->getCommentStart( attrib );
+  TQString endComment = highlight()->getCommentEnd( attrib );
 
   int sl = kMax<int> (0, view->selStartLine());
   int el = kMin<int>  (view->selEndLine(), lastLine());
@@ -3757,8 +3757,8 @@ bool KateDocument::removeStartStopCommentFromSelection( KateView *view, int attr
 
 bool KateDocument::removeStartStopCommentFromRegion(const KateTextCursor &start,const KateTextCursor &end,int attrib)
 {
-  QString startComment = highlight()->getCommentStart( attrib );
-  QString endComment = highlight()->getCommentEnd( attrib );
+  TQString startComment = highlight()->getCommentStart( attrib );
+  TQString endComment = highlight()->getCommentEnd( attrib );
   int startCommentLen = startComment.length();
   int endCommentLen = endComment.length();
 
@@ -3780,8 +3780,8 @@ bool KateDocument::removeStartStopCommentFromRegion(const KateTextCursor &start,
 */
 bool KateDocument::removeStartLineCommentFromSelection( KateView *view, int attrib )
 {
-  QString shortCommentMark = highlight()->getCommentSingleLineStart( attrib );
-  QString longCommentMark = shortCommentMark + " ";
+  TQString shortCommentMark = highlight()->getCommentSingleLineStart( attrib );
+  TQString longCommentMark = shortCommentMark + " ";
 
   int sl = view->selStartLine();
   int el = view->selEndLine();
@@ -3961,8 +3961,8 @@ void KateDocument::transform( KateView *v, const KateTextCursor &c,
         start = end;
         end = t;
       }
-      QString s = text( ln, start, ln, end );
-      QString o = s;
+      TQString s = text( ln, start, ln, end );
+      TQString o = s;
 
       if ( t == Uppercase )
         s = s.upper();
@@ -4002,8 +4002,8 @@ void KateDocument::transform( KateView *v, const KateTextCursor &c,
     selectionRestored = true;
 
   } else {  // no selection
-    QString o = text( cl, cc, cl, cc + 1 );
-    QString s;
+    TQString o = text( cl, cc, cl, cc + 1 );
+    TQString s;
     int n ( cc );
     switch ( t ) {
       case Uppercase:
@@ -4078,19 +4078,19 @@ void KateDocument::joinLines( uint first, uint last )
   editEnd();
 }
 
-QString KateDocument::getWord( const KateTextCursor& cursor ) {
+TQString KateDocument::getWord( const KateTextCursor& cursor ) {
   int start, end, len;
 
   KateTextLine::Ptr textLine = m_buffer->plainLine(cursor.line());
   len = textLine->length();
   start = end = cursor.col();
   if (start > len)        // Probably because of non-wrapping cursor mode.
-    return QString("");
+    return TQString("");
 
   while (start > 0 && highlight()->isInWord(textLine->getChar(start - 1), textLine->attribute(start - 1))) start--;
   while (end < len && highlight()->isInWord(textLine->getChar(end), textLine->attribute(end))) end++;
   len = end - start;
-  return QString(&textLine->text()[start], len);
+  return TQString(&textLine->text()[start], len);
 }
 
 void KateDocument::tagLines(int start, int end)
@@ -4137,9 +4137,9 @@ void KateDocument::setConfigFlags (uint flags)
   config()->setConfigFlags(flags);
 }
 
-inline bool isStartBracket( const QChar& c ) { return c == '{' || c == '[' || c == '('; }
-inline bool isEndBracket  ( const QChar& c ) { return c == '}' || c == ']' || c == ')'; }
-inline bool isBracket     ( const QChar& c ) { return isStartBracket( c ) || isEndBracket( c ); }
+inline bool isStartBracket( const TQChar& c ) { return c == '{' || c == '[' || c == '('; }
+inline bool isEndBracket  ( const TQChar& c ) { return c == '}' || c == ']' || c == ')'; }
+inline bool isBracket     ( const TQChar& c ) { return isStartBracket( c ) || isEndBracket( c ); }
 
 /*
    Bracket matching uses the following algorithm:
@@ -4174,9 +4174,9 @@ bool KateDocument::findMatchingBracket( KateTextCursor& start, KateTextCursor& e
   if( !textLine )
     return false;
 
-  QChar right = textLine->getChar( start.col() );
-  QChar left  = textLine->getChar( start.col() - 1 );
-  QChar bracket;
+  TQChar right = textLine->getChar( start.col() );
+  TQChar left  = textLine->getChar( start.col() - 1 );
+  TQChar bracket;
 
   if ( config()->configFlags() & cfOvr ) {
     if( isBracket( right ) ) {
@@ -4198,7 +4198,7 @@ bool KateDocument::findMatchingBracket( KateTextCursor& start, KateTextCursor& e
     return false;
   }
 
-  QChar opposite;
+  TQChar opposite;
 
   switch( bracket ) {
   case '{': opposite = '}'; break;
@@ -4247,7 +4247,7 @@ bool KateDocument::findMatchingBracket( KateTextCursor& start, KateTextCursor& e
       continue;
 
     /* Check for match */
-    QChar c = textLine->getChar( end.col() );
+    TQChar c = textLine->getChar( end.col() );
     if( c == bracket ) {
       count++;
     } else if( c == opposite ) {
@@ -4266,7 +4266,7 @@ void KateDocument::guiActivateEvent( KParts::GUIActivateEvent *ev )
     emit selectionChanged();
 }
 
-void KateDocument::setDocName (QString name )
+void KateDocument::setDocName (TQString name )
 {
   if ( name == m_docName )
     return;
@@ -4300,7 +4300,7 @@ void KateDocument::setDocName (QString name )
     m_docName = i18n ("Untitled");
 
   if (m_docNameNumber > 0)
-    m_docName = QString(m_docName + " (%1)").arg(m_docNameNumber+1);
+    m_docName = TQString(m_docName + " (%1)").arg(m_docNameNumber+1);
 
   updateFileType (KateFactory::self()->fileTypeManager()->fileType (this));
   emit nameChanged ((Kate::Document *) this);
@@ -4328,7 +4328,7 @@ void KateDocument::slotModifiedOnDisk( Kate::View * /*v*/ )
       {
         m_modOnHd = false;
         KEncodingFileDialog::Result res=KEncodingFileDialog::getSaveURLAndEncoding(config()->encoding(),
-            url().url(),QString::null,widget(),i18n("Save File"));
+            url().url(),TQString::null,widget(),i18n("Save File"));
 
         kdDebug(13020)<<"got "<<res.URLs.count()<<" URLs"<<endl;
         if( ! res.URLs.isEmpty() && ! res.URLs.first().isEmpty() && checkOverwrite( res.URLs.first() ) )
@@ -4388,7 +4388,7 @@ void KateDocument::setModifiedOnDisk( int reason )
 class KateDocumentTmpMark
 {
   public:
-    QString line;
+    TQString line;
     KTextEditor::Mark mark;
 };
 
@@ -4415,9 +4415,9 @@ void KateDocument::reloadFile()
       }
     }
 
-    QValueList<KateDocumentTmpMark> tmp;
+    TQValueList<KateDocumentTmpMark> tmp;
 
-    for( QIntDictIterator<KTextEditor::Mark> it( m_marks ); it.current(); ++it )
+    for( TQIntDictIterator<KTextEditor::Mark> it( m_marks ); it.current(); ++it )
     {
       KateDocumentTmpMark m;
 
@@ -4434,7 +4434,7 @@ void KateDocument::reloadFile()
 
     m_reloading = true;
 
-    QValueList<int> lines, cols;
+    TQValueList<int> lines, cols;
     for ( uint i=0; i < m_views.count(); i++ )
     {
       lines.append( m_views.at( i )->cursorLine() );
@@ -4448,7 +4448,7 @@ void KateDocument::reloadFile()
 
     m_reloading = false;
 
-    for ( QValueList<int>::size_type z=0; z < tmp.size(); z++ )
+    for ( TQValueList<int>::size_type z=0; z < tmp.size(); z++ )
     {
       if (z < numLines())
       {
@@ -4533,12 +4533,12 @@ KateCodeFoldingTree *KateDocument::foldingTree ()
   return m_buffer->foldingTree();
 }
 
-void KateDocument::setEncoding (const QString &e)
+void KateDocument::setEncoding (const TQString &e)
 {
   if ( m_encodingSticky )
     return;
 
-  QString ce = m_config->encoding().lower();
+  TQString ce = m_config->encoding().lower();
   if ( e.lower() == ce )
     return;
 
@@ -4547,7 +4547,7 @@ void KateDocument::setEncoding (const QString &e)
     reloadFile();
 }
 
-QString KateDocument::encoding() const
+TQString KateDocument::encoding() const
 {
   return m_config->encoding();
 }
@@ -4590,10 +4590,10 @@ void KateDocument::updateConfig ()
       add interface for plugins/apps to set/get variables
       add view stuff
 */
-QRegExp KateDocument::kvLine = QRegExp("kate:(.*)");
-QRegExp KateDocument::kvLineWildcard = QRegExp("kate-wildcard\\((.*)\\):(.*)");
-QRegExp KateDocument::kvLineMime = QRegExp("kate-mimetype\\((.*)\\):(.*)");
-QRegExp KateDocument::kvVar = QRegExp("([\\w\\-]+)\\s+([^;]+)");
+TQRegExp KateDocument::kvLine = TQRegExp("kate:(.*)");
+TQRegExp KateDocument::kvLineWildcard = TQRegExp("kate-wildcard\\((.*)\\):(.*)");
+TQRegExp KateDocument::kvLineMime = TQRegExp("kate-mimetype\\((.*)\\):(.*)");
+TQRegExp KateDocument::kvVar = TQRegExp("([\\w\\-]+)\\s+([^;]+)");
 
 void KateDocument::readVariables(bool onlyViewAndRenderer)
 {
@@ -4630,7 +4630,7 @@ void KateDocument::readVariables(bool onlyViewAndRenderer)
   }
 }
 
-void KateDocument::readVariableLine( QString t, bool onlyViewAndRenderer )
+void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
 {
   // simple check first, no regex
   // no kate inside, no vars, simple...
@@ -4638,7 +4638,7 @@ void KateDocument::readVariableLine( QString t, bool onlyViewAndRenderer )
     return;
 
   // found vars, if any
-  QString s;
+  TQString s;
 
   if ( kvLine.search( t ) > -1 )
   {
@@ -4648,13 +4648,13 @@ void KateDocument::readVariableLine( QString t, bool onlyViewAndRenderer )
   }
   else if (kvLineWildcard.search( t ) > -1) // regex given
   {
-    QStringList wildcards (QStringList::split(';', kvLineWildcard.cap(1)));
-    QString nameOfFile = url().fileName();
+    TQStringList wildcards (TQStringList::split(';', kvLineWildcard.cap(1)));
+    TQString nameOfFile = url().fileName();
 
     bool found = false;
-    for (QStringList::size_type i = 0; !found && i < wildcards.size(); ++i)
+    for (TQStringList::size_type i = 0; !found && i < wildcards.size(); ++i)
     {
-      QRegExp wildcard (wildcards[i], true/*Qt::CaseSensitive*/, true/*QRegExp::Wildcard*/);
+      TQRegExp wildcard (wildcards[i], true/*Qt::CaseSensitive*/, true/*TQRegExp::Wildcard*/);
 
       found = wildcard.exactMatch (nameOfFile);
     }
@@ -4669,7 +4669,7 @@ void KateDocument::readVariableLine( QString t, bool onlyViewAndRenderer )
   }
   else if (kvLineMime.search( t ) > -1) // mime-type given
   {
-    QStringList types (QStringList::split(';', kvLineMime.cap(1)));
+    TQStringList types (TQStringList::split(';', kvLineMime.cap(1)));
 
     // no matching type found
     if (!types.contains (mimeType ()))
@@ -4684,7 +4684,7 @@ void KateDocument::readVariableLine( QString t, bool onlyViewAndRenderer )
     return;
   }
 
-  QStringList vvl; // view variable names
+  TQStringList vvl; // view variable names
   vvl << "dynamic-word-wrap" << "dynamic-word-wrap-indicators"
       << "line-numbers" << "icon-border" << "folding-markers"
       << "bookmark-sorting" << "auto-center-lines"
@@ -4696,7 +4696,7 @@ void KateDocument::readVariableLine( QString t, bool onlyViewAndRenderer )
       << "font" << "font-size" << "scheme";
   int p( 0 );
 
-  QString  var, val;
+  TQString  var, val;
   while ( (p = kvVar.search( s, p )) > -1 )
   {
     p += kvVar.matchedLength();
@@ -4771,7 +4771,7 @@ void KateDocument::readVariableLine( QString t, bool onlyViewAndRenderer )
       // STRING SETTINGS
       else if ( var == "eol" || var == "end-of-line" )
       {
-        QStringList l;
+        TQStringList l;
         l << "unix" << "dos" << "mac";
         if ( (n = l.findIndex( val.lower() )) != -1 )
           m_config->setEol( n );
@@ -4802,12 +4802,12 @@ void KateDocument::readVariableLine( QString t, bool onlyViewAndRenderer )
   }
 }
 
-void KateDocument::setViewVariable( QString var, QString val )
+void KateDocument::setViewVariable( TQString var, TQString val )
 {
   KateView *v;
   bool state;
   int n;
-  QColor c;
+  TQColor c;
   for (v = m_views.first(); v != 0L; v= m_views.next() )
   {
     if ( var == "dynamic-word-wrap" && checkBoolValue( val, &state ) )
@@ -4838,12 +4838,12 @@ void KateDocument::setViewVariable( QString var, QString val )
       v->renderer()->config()->setWordWrapMarkerColor( c );
     else if ( var == "font" || ( var == "font-size" && checkIntValue( val, &n ) ) )
     {
-      QFont _f( *v->renderer()->config()->font(  ) );
+      TQFont _f( *v->renderer()->config()->font(  ) );
 
       if ( var == "font" )
       {
         _f.setFamily( val );
-        _f.setFixedPitch( QFont( val ).fixedPitch() );
+        _f.setFixedPitch( TQFont( val ).fixedPitch() );
       }
       else
         _f.setPointSize( n );
@@ -4857,10 +4857,10 @@ void KateDocument::setViewVariable( QString var, QString val )
   }
 }
 
-bool KateDocument::checkBoolValue( QString val, bool *result )
+bool KateDocument::checkBoolValue( TQString val, bool *result )
 {
   val = val.stripWhiteSpace().lower();
-  QStringList l;
+  TQStringList l;
   l << "1" << "on" << "true";
   if ( l.contains( val ) )
   {
@@ -4877,21 +4877,21 @@ bool KateDocument::checkBoolValue( QString val, bool *result )
   return false;
 }
 
-bool KateDocument::checkIntValue( QString val, int *result )
+bool KateDocument::checkIntValue( TQString val, int *result )
 {
   bool ret( false );
   *result = val.toInt( &ret );
   return ret;
 }
 
-bool KateDocument::checkColorValue( QString val, QColor &c )
+bool KateDocument::checkColorValue( TQString val, TQColor &c )
 {
   c.setNamedColor( val );
   return c.isValid();
 }
 
 // KTextEditor::variable
-QString KateDocument::variable( const QString &name ) const
+TQString KateDocument::variable( const TQString &name ) const
 {
   if ( m_storedVariables.contains( name ) )
     return m_storedVariables[ name ];
@@ -4901,14 +4901,14 @@ QString KateDocument::variable( const QString &name ) const
 
 //END
 
-void KateDocument::slotModOnHdDirty (const QString &path)
+void KateDocument::slotModOnHdDirty (const TQString &path)
 {
   if ((path == m_dirWatchFile) && (!m_modOnHd || m_modOnHdReason != 1))
   {
     // compare md5 with the one we have (if we have one)
     if ( ! m_digest.isEmpty() )
     {
-      QCString tmp;
+      TQCString tmp;
       if ( createDigest( tmp ) && tmp == m_digest )
         return;
     }
@@ -4924,7 +4924,7 @@ void KateDocument::slotModOnHdDirty (const QString &path)
   }
 }
 
-void KateDocument::slotModOnHdCreated (const QString &path)
+void KateDocument::slotModOnHdCreated (const TQString &path)
 {
   if ((path == m_dirWatchFile) && (!m_modOnHd || m_modOnHdReason != 2))
   {
@@ -4939,7 +4939,7 @@ void KateDocument::slotModOnHdCreated (const QString &path)
   }
 }
 
-void KateDocument::slotModOnHdDeleted (const QString &path)
+void KateDocument::slotModOnHdDeleted (const TQString &path)
 {
   if ((path == m_dirWatchFile) && (!m_modOnHd || m_modOnHdReason != 3))
   {
@@ -4954,13 +4954,13 @@ void KateDocument::slotModOnHdDeleted (const QString &path)
   }
 }
 
-bool KateDocument::createDigest( QCString &result )
+bool KateDocument::createDigest( TQCString &result )
 {
   bool ret = false;
   result = "";
   if ( url().isLocalFile() )
   {
-    QFile f ( url().path() );
+    TQFile f ( url().path() );
     if ( f.open( IO_ReadOnly) )
     {
       KMD5 md5;
@@ -4973,7 +4973,7 @@ bool KateDocument::createDigest( QCString &result )
   return ret;
 }
 
-QString KateDocument::reasonedMOHString() const
+TQString KateDocument::reasonedMOHString() const
 {
   switch( m_modOnHdReason )
   {
@@ -4987,7 +4987,7 @@ QString KateDocument::reasonedMOHString() const
       return i18n("The file '%1' was deleted by another program.").arg( url().prettyURL() );
       break;
     default:
-      return QString();
+      return TQString();
   }
 }
 
@@ -5061,7 +5061,7 @@ void KateDocument::slotQueryClose_save(bool *handled, bool* abortClosing) {
       if (m_url.isEmpty())
       {
         KEncodingFileDialog::Result res=KEncodingFileDialog::getSaveURLAndEncoding(config()->encoding(),
-                QString::null,QString::null,0,i18n("Save File"));
+                TQString::null,TQString::null,0,i18n("Save File"));
 
         if( res.URLs.isEmpty() || !checkOverwrite( res.URLs.first() ) ) {
                 *abortClosing=true;
@@ -5084,7 +5084,7 @@ bool KateDocument::checkOverwrite( KURL u )
   if( !u.isLocalFile() )
     return true;
 
-  QFileInfo info( u.path() );
+  TQFileInfo info( u.path() );
   if( !info.exists() )
     return true;
 
@@ -5095,20 +5095,20 @@ bool KateDocument::checkOverwrite( KURL u )
     i18n( "&Overwrite" ) );
 }
 
-void KateDocument::setDefaultEncoding (const QString &encoding)
+void KateDocument::setDefaultEncoding (const TQString &encoding)
 {
   s_defaultEncoding = encoding;
 }
 
 //BEGIN KTextEditor::TemplateInterface
-bool KateDocument::insertTemplateTextImplementation ( uint line, uint column, const QString &templateString, const QMap<QString,QString> &initialValues, QWidget *) {
+bool KateDocument::insertTemplateTextImplementation ( uint line, uint column, const TQString &templateString, const TQMap<TQString,TQString> &initialValues, TQWidget *) {
       return (new KateTemplateHandler(this,line,column,templateString,initialValues))->initOk();
 }
 
 void KateDocument::testTemplateCode() {
   int col=activeView()->cursorColumn();
   int line=activeView()->cursorLine();
-  insertTemplateText(line,col,"for ${index} \\${NOPLACEHOLDER} ${index} ${blah} ${fullname} \\$${Placeholder} \\${${PLACEHOLDER2}}\n next line:${ANOTHERPLACEHOLDER} $${DOLLARBEFOREPLACEHOLDER} {NOTHING} {\n${cursor}\n}",QMap<QString,QString>());
+  insertTemplateText(line,col,"for ${index} \\${NOPLACEHOLDER} ${index} ${blah} ${fullname} \\$${Placeholder} \\${${PLACEHOLDER2}}\n next line:${ANOTHERPLACEHOLDER} $${DOLLARBEFOREPLACEHOLDER} {NOTHING} {\n${cursor}\n}",TQMap<TQString,TQString>());
 }
 
 bool KateDocument::invokeTabInterceptor(KKey key) {
@@ -5139,8 +5139,8 @@ bool KateDocument::removeTabInterceptor(KateKeyInterceptorFunctor *interceptor) 
  bool KateDocument::hasSelection () const
  { if (m_activeView) return m_activeView->hasSelection (); return false; }
 
- QString KateDocument::selection () const
- { if (m_activeView) return m_activeView->selection (); return QString(""); }
+ TQString KateDocument::selection () const
+ { if (m_activeView) return m_activeView->selection (); return TQString(""); }
 
  bool KateDocument::removeSelectedText ()
  { if (m_activeView) return m_activeView->removeSelectedText (); return false; }

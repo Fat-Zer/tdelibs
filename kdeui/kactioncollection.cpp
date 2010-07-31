@@ -34,9 +34,9 @@
 #include <kapplication.h>
 #include <kdebug.h>
 
-#include <qpopupmenu.h>
-#include <qptrdict.h>
-#include <qvariant.h>
+#include <tqpopupmenu.h>
+#include <tqptrdict.h>
+#include <tqvariant.h>
 
 class KActionCollection::KActionCollectionPrivate
 {
@@ -57,28 +57,28 @@ public:
   }
 
   KInstance *m_instance;
-  QString m_sXMLFile;
+  TQString m_sXMLFile;
   bool m_bAutoConnectShortcuts;
   //bool m_bOneKAccelOnly;
   //int m_iWidgetCurrent;
-  //QValueList<QWidget*> m_widgetList;
-  //QValueList<KAccel*> m_kaccelList;
-  QValueList<KActionCollection*> m_docList;
-  QWidget *m_widget;
+  //TQValueList<TQWidget*> m_widgetList;
+  //TQValueList<KAccel*> m_kaccelList;
+  TQValueList<KActionCollection*> m_docList;
+  TQWidget *m_widget;
   KAccel *m_kaccel;
   KAccel *m_builderKAccel;
 
-  QAsciiDict<KAction> m_actionDict;
-  QPtrDict< QPtrList<KAction> > m_dctHighlightContainers;
+  TQAsciiDict<KAction> m_actionDict;
+  TQPtrDict< TQPtrList<KAction> > m_dctHighlightContainers;
   bool m_highlight;
   KAction *m_currentHighlightAction;
   bool m_statusCleared;
   const KXMLGUIClient *m_parentGUIClient;
 };
 
-KActionCollection::KActionCollection( QWidget *parent, const char *name,
+KActionCollection::KActionCollection( TQWidget *parent, const char *name,
                                       KInstance *instance )
-  : QObject( parent, name )
+  : TQObject( parent, name )
 {
   kdDebug(129) << "KActionCollection::KActionCollection( " << parent << ", " << name << " ): this = " << this << endl; // ellis
   d = new KActionCollectionPrivate;
@@ -89,9 +89,9 @@ KActionCollection::KActionCollection( QWidget *parent, const char *name,
 }
 
 
-KActionCollection::KActionCollection( QWidget *watch, QObject* parent, const char *name,
+KActionCollection::KActionCollection( TQWidget *watch, TQObject* parent, const char *name,
                                       KInstance *instance )
-  : QObject( parent, name )
+  : TQObject( parent, name )
 {
   kdDebug(129) << "KActionCollection::KActionCollection( " << watch << ", " << parent << ", " << name << " ): this = " << this << endl; //ellis
   d = new KActionCollectionPrivate;
@@ -103,14 +103,14 @@ KActionCollection::KActionCollection( QWidget *watch, QObject* parent, const cha
 
 #ifndef KDE_NO_COMPAT
 // KDE 4: remove
-KActionCollection::KActionCollection( QObject *parent, const char *name,
+KActionCollection::KActionCollection( TQObject *parent, const char *name,
                                       KInstance *instance )
-  : QObject( parent, name )
+  : TQObject( parent, name )
 {
-  kdWarning(129) << "KActionCollection::KActionCollection( QObject *parent, const char *name, KInstance *instance )" << endl; //ellis
+  kdWarning(129) << "KActionCollection::KActionCollection( TQObject *parent, const char *name, KInstance *instance )" << endl; //ellis
   kdDebug(129) << kdBacktrace() << endl;
   d = new KActionCollectionPrivate;
-  QWidget* w = dynamic_cast<QWidget*>( parent );
+  TQWidget* w = dynamic_cast<TQWidget*>( parent );
   if( w )
     setWidget( w );
   //d->m_bOneKAccelOnly = (d->m_kaccelList.count() > 0);
@@ -118,7 +118,7 @@ KActionCollection::KActionCollection( QObject *parent, const char *name,
 }
 
 KActionCollection::KActionCollection( const KActionCollection &copy )
-    : QObject()
+    : TQObject()
 {
   kdWarning(129) << "KActionCollection::KActionCollection( const KActionCollection & ): function is severely deprecated." << endl;
   d = new KActionCollectionPrivate;
@@ -127,7 +127,7 @@ KActionCollection::KActionCollection( const KActionCollection &copy )
 #endif // KDE 4: remove end
 
 KActionCollection::KActionCollection( const char *name, const KXMLGUIClient *parent )
-    : QObject( 0L, name )
+    : TQObject( 0L, name )
 {
   d = new KActionCollectionPrivate;
   d->m_parentGUIClient=parent;
@@ -138,7 +138,7 @@ KActionCollection::KActionCollection( const char *name, const KXMLGUIClient *par
 KActionCollection::~KActionCollection()
 {
   kdDebug(129) << "KActionCollection::~KActionCollection(): this = " << this << endl;
-  for ( QAsciiDictIterator<KAction> it( d->m_actionDict ); it.current(); ++it ) {
+  for ( TQAsciiDictIterator<KAction> it( d->m_actionDict ); it.current(); ++it ) {
     KAction* pAction = it.current();
     if ( pAction->m_parentCollection == this )
       pAction->m_parentCollection = 0L;
@@ -149,7 +149,7 @@ KActionCollection::~KActionCollection()
   delete d; d = 0;
 }
 
-void KActionCollection::setWidget( QWidget* w )
+void KActionCollection::setWidget( TQWidget* w )
 {
   //if ( d->m_actionDict.count() > 0 ) {
   //  kdError(129) << "KActionCollection::setWidget(): must be called before any actions are added to collection!" << endl;
@@ -180,7 +180,7 @@ bool KActionCollection::addDocCollection( KActionCollection* pDoc )
 	return true;
 }
 
-void KActionCollection::beginXMLPlug( QWidget *widget )
+void KActionCollection::beginXMLPlug( TQWidget *widget )
 {
 	kdDebug(129) << "KActionCollection::beginXMLPlug( buildWidget = " << widget << " ): this = " <<  this << " d->m_builderKAccel = " << d->m_builderKAccel << endl;
 
@@ -209,7 +209,7 @@ void KActionCollection::prepareXMLUnplug()
 
 void KActionCollection::unplugShortcuts( KAccel* kaccel )
 {
-  for ( QAsciiDictIterator<KAction> it( d->m_actionDict ); it.current(); ++it ) {
+  for ( TQAsciiDictIterator<KAction> it( d->m_actionDict ); it.current(); ++it ) {
     KAction* pAction = it.current();
     pAction->removeKAccel( kaccel );
   }
@@ -218,7 +218,7 @@ void KActionCollection::unplugShortcuts( KAccel* kaccel )
     d->m_docList[i]->unplugShortcuts( kaccel );
 }
 
-/*void KActionCollection::addWidget( QWidget* w )
+/*void KActionCollection::addWidget( TQWidget* w )
 {
   if( !d->m_bOneKAccelOnly ) {
     kdDebug(129) << "KActionCollection::addWidget( " << w << " ): this = " << this << endl;
@@ -234,7 +234,7 @@ void KActionCollection::unplugShortcuts( KAccel* kaccel )
   }
 }
 
-void KActionCollection::removeWidget( QWidget* w )
+void KActionCollection::removeWidget( TQWidget* w )
 {
   if( !d->m_bOneKAccelOnly ) {
     kdDebug(129) << "KActionCollection::removeWidget( " << w << " ): this = " << this << endl;
@@ -242,7 +242,7 @@ void KActionCollection::removeWidget( QWidget* w )
       if( d->m_widgetList[i] == w ) {
         // Remove KAccel object from children.
         KAccel* pKAccel = d->m_kaccelList[i];
-        for ( QAsciiDictIterator<KAction> it( d->m_actionDict ); it.current(); ++it ) {
+        for ( TQAsciiDictIterator<KAction> it( d->m_actionDict ); it.current(); ++it ) {
           KAction* pAction = it.current();
           if ( pAction->m_parentCollection == this ) {
             pAction->removeKAccel( pKAccel );
@@ -357,7 +357,7 @@ KAction* KActionCollection::_take( KAction* action )
 
 void KActionCollection::_clear()
 {
-  QAsciiDictIterator<KAction> it( d->m_actionDict );
+  TQAsciiDictIterator<KAction> it( d->m_actionDict );
   while ( it.current() )
     _remove( it.current() );
 }
@@ -378,7 +378,7 @@ KAction* KActionCollection::action( const char* name, const char* classname ) co
     pAction = d->m_actionDict[ name ];
 
   else {
-    QAsciiDictIterator<KAction> it( d->m_actionDict );
+    TQAsciiDictIterator<KAction> it( d->m_actionDict );
     for( ; it.current(); ++it )
     {
       if ( ( !name || !strcmp( it.current()->name(), name ) ) &&
@@ -399,18 +399,18 @@ KAction* KActionCollection::action( const char* name, const char* classname ) co
 
 KAction* KActionCollection::action( int index ) const
 {
-  QAsciiDictIterator<KAction> it( d->m_actionDict );
+  TQAsciiDictIterator<KAction> it( d->m_actionDict );
   it += index;
   return it.current();
 //  return d->m_actions.at( index );
 }
 
-bool KActionCollection::readShortcutSettings( const QString& sConfigGroup, KConfigBase* pConfig )
+bool KActionCollection::readShortcutSettings( const TQString& sConfigGroup, KConfigBase* pConfig )
 {
   return KActionShortcutList(this).readSettings( sConfigGroup, pConfig );
 }
 
-bool KActionCollection::writeShortcutSettings( const QString& sConfigGroup, KConfigBase* pConfig ) const
+bool KActionCollection::writeShortcutSettings( const TQString& sConfigGroup, KConfigBase* pConfig ) const
 {
   return KActionShortcutList((KActionCollection*)this).writeSettings( sConfigGroup, pConfig );
 }
@@ -420,11 +420,11 @@ uint KActionCollection::count() const
   return d->m_actionDict.count();
 }
 
-QStringList KActionCollection::groups() const
+TQStringList KActionCollection::groups() const
 {
-  QStringList lst;
+  TQStringList lst;
 
-  QAsciiDictIterator<KAction> it( d->m_actionDict );
+  TQAsciiDictIterator<KAction> it( d->m_actionDict );
   for( ; it.current(); ++it )
     if ( !it.current()->group().isEmpty() && !lst.contains( it.current()->group() ) )
       lst.append( it.current()->group() );
@@ -432,11 +432,11 @@ QStringList KActionCollection::groups() const
   return lst;
 }
 
-KActionPtrList KActionCollection::actions( const QString& group ) const
+KActionPtrList KActionCollection::actions( const TQString& group ) const
 {
   KActionPtrList lst;
 
-  QAsciiDictIterator<KAction> it( d->m_actionDict );
+  TQAsciiDictIterator<KAction> it( d->m_actionDict );
   for( ; it.current(); ++it )
     if ( it.current()->group() == group )
       lst.append( it.current() );
@@ -450,7 +450,7 @@ KActionPtrList KActionCollection::actions() const
 {
   KActionPtrList lst;
 
-  QAsciiDictIterator<KAction> it( d->m_actionDict );
+  TQAsciiDictIterator<KAction> it( d->m_actionDict );
   for( ; it.current(); ++it )
     lst.append( it.current() );
 
@@ -470,12 +470,12 @@ KInstance *KActionCollection::instance() const
   return d->m_instance;
 }
 
-void KActionCollection::setXMLFile( const QString& sXMLFile )
+void KActionCollection::setXMLFile( const TQString& sXMLFile )
 {
   d->m_sXMLFile = sXMLFile;
 }
 
-const QString& KActionCollection::xmlFile() const
+const TQString& KActionCollection::xmlFile() const
 {
   return d->m_sXMLFile;
 }
@@ -490,32 +490,32 @@ bool KActionCollection::highlightingEnabled() const
   return d->m_highlight;
 }
 
-void KActionCollection::connectHighlight( QWidget *container, KAction *action )
+void KActionCollection::connectHighlight( TQWidget *container, KAction *action )
 {
   if ( !d->m_highlight )
     return;
 
-  QPtrList<KAction> *actionList = d->m_dctHighlightContainers[ container ];
+  TQPtrList<KAction> *actionList = d->m_dctHighlightContainers[ container ];
 
   if ( !actionList )
   {
-    actionList = new QPtrList<KAction>;
+    actionList = new TQPtrList<KAction>;
 
-    if ( ::qt_cast<QPopupMenu *>( container ) )
+    if ( ::qt_cast<TQPopupMenu *>( container ) )
     {
-      connect( container, SIGNAL( highlighted( int ) ),
-               this, SLOT( slotMenuItemHighlighted( int ) ) );
-      connect( container, SIGNAL( aboutToHide() ),
-               this, SLOT( slotMenuAboutToHide() ) );
+      connect( container, TQT_SIGNAL( highlighted( int ) ),
+               this, TQT_SLOT( slotMenuItemHighlighted( int ) ) );
+      connect( container, TQT_SIGNAL( aboutToHide() ),
+               this, TQT_SLOT( slotMenuAboutToHide() ) );
     }
     else if ( ::qt_cast<KToolBar *>( container ) )
     {
-      connect( container, SIGNAL( highlighted( int, bool ) ),
-               this, SLOT( slotToolBarButtonHighlighted( int, bool ) ) );
+      connect( container, TQT_SIGNAL( highlighted( int, bool ) ),
+               this, TQT_SLOT( slotToolBarButtonHighlighted( int, bool ) ) );
     }
 
-    connect( container, SIGNAL( destroyed() ),
-             this, SLOT( slotDestroyed() ) );
+    connect( container, TQT_SIGNAL( destroyed() ),
+             this, TQT_SLOT( slotDestroyed() ) );
 
     d->m_dctHighlightContainers.insert( container, actionList );
   }
@@ -523,12 +523,12 @@ void KActionCollection::connectHighlight( QWidget *container, KAction *action )
   actionList->append( action );
 }
 
-void KActionCollection::disconnectHighlight( QWidget *container, KAction *action )
+void KActionCollection::disconnectHighlight( TQWidget *container, KAction *action )
 {
   if ( !d->m_highlight )
     return;
 
-  QPtrList<KAction> *actionList = d->m_dctHighlightContainers[ container ];
+  TQPtrList<KAction> *actionList = d->m_dctHighlightContainers[ container ];
 
   if ( !actionList )
     return;
@@ -547,7 +547,7 @@ void KActionCollection::slotMenuItemHighlighted( int id )
   if ( d->m_currentHighlightAction )
     emit actionHighlighted( d->m_currentHighlightAction, false );
 
-  QWidget *container = static_cast<QWidget *>( const_cast<QObject *>( sender() ) );
+  TQWidget *container = static_cast<TQWidget *>( const_cast<TQObject *>( sender() ) );
 
   d->m_currentHighlightAction = findAction( container, id );
 
@@ -581,7 +581,7 @@ void KActionCollection::slotToolBarButtonHighlighted( int id, bool highlight )
   if ( !d->m_highlight )
     return;
 
-  QWidget *container = static_cast<QWidget *>( const_cast<QObject *>( sender() ) );
+  TQWidget *container = static_cast<TQWidget *>( const_cast<TQObject *>( sender() ) );
 
   KAction *action = findAction( container, id );
 
@@ -606,17 +606,17 @@ void KActionCollection::slotToolBarButtonHighlighted( int id, bool highlight )
 
 void KActionCollection::slotDestroyed()
 {
-    d->m_dctHighlightContainers.remove( reinterpret_cast<void *>( const_cast<QObject *>(sender()) ) );
+    d->m_dctHighlightContainers.remove( reinterpret_cast<void *>( const_cast<TQObject *>(sender()) ) );
 }
 
-KAction *KActionCollection::findAction( QWidget *container, int id )
+KAction *KActionCollection::findAction( TQWidget *container, int id )
 {
-  QPtrList<KAction> *actionList = d->m_dctHighlightContainers[ reinterpret_cast<void *>( container ) ];
+  TQPtrList<KAction> *actionList = d->m_dctHighlightContainers[ reinterpret_cast<void *>( container ) ];
 
   if ( !actionList )
     return 0;
 
-  QPtrListIterator<KAction> it( *actionList );
+  TQPtrListIterator<KAction> it( *actionList );
   for (; it.current(); ++it )
     if ( it.current()->isPlugged( container, id ) )
       return it.current();
@@ -636,9 +636,9 @@ KActionCollection KActionCollection::operator+(const KActionCollection &c ) cons
   kdWarning(129) << "KActionCollection::operator+(): function is severely deprecated." << endl;
   KActionCollection ret( *this );
 
-  QValueList<KAction *> actions = c.actions();
-  QValueList<KAction *>::ConstIterator it = actions.begin();
-  QValueList<KAction *>::ConstIterator end = actions.end();
+  TQValueList<KAction *> actions = c.actions();
+  TQValueList<KAction *>::ConstIterator it = actions.begin();
+  TQValueList<KAction *>::ConstIterator end = actions.end();
   for (; it != end; ++it )
     ret.insert( *it );
 
@@ -662,7 +662,7 @@ KActionCollection &KActionCollection::operator=( const KActionCollection &copy )
 KActionCollection &KActionCollection::operator+=( const KActionCollection &c )
 {
   kdWarning(129) << "KActionCollection::operator+=(): function is severely deprecated." << endl;
-  QAsciiDictIterator<KAction> it(c.d->m_actionDict);
+  TQAsciiDictIterator<KAction> it(c.d->m_actionDict);
   for ( ; it.current(); ++it )
     insert( it.current() );
 
@@ -681,11 +681,11 @@ KActionShortcutList::~KActionShortcutList()
 	{ }
 uint KActionShortcutList::count() const
 	{ return m_actions.count(); }
-QString KActionShortcutList::name( uint i ) const
+TQString KActionShortcutList::name( uint i ) const
 	{ return m_actions.action(i)->name(); }
-QString KActionShortcutList::label( uint i ) const
+TQString KActionShortcutList::label( uint i ) const
 	{ return m_actions.action(i)->text(); }
-QString KActionShortcutList::whatsThis( uint i ) const
+TQString KActionShortcutList::whatsThis( uint i ) const
 	{ return m_actions.action(i)->whatsThis(); }
 const KShortcut& KActionShortcutList::shortcut( uint i ) const
 	{ return m_actions.action(i)->shortcut(); }
@@ -697,9 +697,9 @@ bool KActionShortcutList::setShortcut( uint i, const KShortcut& cut )
 	{ return m_actions.action(i)->setShortcut( cut ); }
 const KInstance* KActionShortcutList::instance() const
 	{ return m_actions.instance(); }
-QVariant KActionShortcutList::getOther( Other, uint ) const
-	{ return QVariant(); }
-bool KActionShortcutList::setOther( Other, uint, QVariant )
+TQVariant KActionShortcutList::getOther( Other, uint ) const
+	{ return TQVariant(); }
+bool KActionShortcutList::setOther( Other, uint, TQVariant )
 	{ return false; }
 const KAction *KActionShortcutList::action( uint i) const
 	{ return m_actions.action(i); }
@@ -707,36 +707,36 @@ const KAction *KActionShortcutList::action( uint i) const
 bool KActionShortcutList::save() const
 {
 	const KXMLGUIClient* guiClient=m_actions.parentGUIClient();
-	const QString xmlFile=guiClient ? guiClient->xmlFile() : m_actions.xmlFile();
+	const TQString xmlFile=guiClient ? guiClient->xmlFile() : m_actions.xmlFile();
 	kdDebug(129) << "KActionShortcutList::save(): xmlFile = " << xmlFile << endl;
 
 	if( m_actions.xmlFile().isEmpty() )
 		return writeSettings();
 
-	QString attrShortcut  = QString::fromLatin1("shortcut");
-	QString attrAccel     = QString::fromLatin1("accel"); // Depricated attribute
+	TQString attrShortcut  = TQString::fromLatin1("shortcut");
+	TQString attrAccel     = TQString::fromLatin1("accel"); // Depricated attribute
 
 	// Read XML file
-	QString sXml( KXMLGUIFactory::readConfigFile( xmlFile, false, instance() ) );
-	QDomDocument doc;
+	TQString sXml( KXMLGUIFactory::readConfigFile( xmlFile, false, instance() ) );
+	TQDomDocument doc;
 	doc.setContent( sXml );
 
 	// Process XML data
 
         // Get hold of ActionProperties tag
-        QDomElement elem = KXMLGUIFactory::actionPropertiesElement( doc );
+        TQDomElement elem = KXMLGUIFactory::actionPropertiesElement( doc );
 
 	// now, iterate through our actions
 	uint nSize = count();
 	for( uint i = 0; i < nSize; i++ ) {
-		const QString& sName = name(i);
+		const TQString& sName = name(i);
 
 		bool bSameAsDefault = (shortcut(i) == shortcutDefault(i));
 		//kdDebug(129) << "name = " << sName << " shortcut = " << shortcut(i).toStringInternal() << " def = " << shortcutDefault(i).toStringInternal() << endl;
 
 		// now see if this element already exists
                 // and create it if necessary (unless bSameAsDefault)
-		QDomElement act_elem = KXMLGUIFactory::findActionByName( elem, sName, !bSameAsDefault );
+		TQDomElement act_elem = KXMLGUIFactory::findActionByName( elem, sName, !bSameAsDefault );
                 if ( act_elem.isNull() )
                     continue;
 
@@ -766,11 +766,11 @@ KActionPtrShortcutList::~KActionPtrShortcutList()
 	{ }
 uint KActionPtrShortcutList::count() const
 	{ return m_actions.count(); }
-QString KActionPtrShortcutList::name( uint i ) const
+TQString KActionPtrShortcutList::name( uint i ) const
 	{ return m_actions[i]->name(); }
-QString KActionPtrShortcutList::label( uint i ) const
+TQString KActionPtrShortcutList::label( uint i ) const
 	{ return m_actions[i]->text(); }
-QString KActionPtrShortcutList::whatsThis( uint i ) const
+TQString KActionPtrShortcutList::whatsThis( uint i ) const
 	{ return m_actions[i]->whatsThis(); }
 const KShortcut& KActionPtrShortcutList::shortcut( uint i ) const
 	{ return m_actions[i]->shortcut(); }
@@ -780,9 +780,9 @@ bool KActionPtrShortcutList::isConfigurable( uint i ) const
 	{ return m_actions[i]->isShortcutConfigurable(); }
 bool KActionPtrShortcutList::setShortcut( uint i, const KShortcut& cut )
 	{ return m_actions[i]->setShortcut( cut ); }
-QVariant KActionPtrShortcutList::getOther( Other, uint ) const
-	{ return QVariant(); }
-bool KActionPtrShortcutList::setOther( Other, uint, QVariant )
+TQVariant KActionPtrShortcutList::getOther( Other, uint ) const
+	{ return TQVariant(); }
+bool KActionPtrShortcutList::setOther( Other, uint, TQVariant )
 	{ return false; }
 bool KActionPtrShortcutList::save() const
 	{ return false; }

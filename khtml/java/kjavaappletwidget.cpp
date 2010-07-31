@@ -26,7 +26,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <qlabel.h>
+#include <tqlabel.h>
 
 
 // For future expansion
@@ -34,12 +34,12 @@ class KJavaAppletWidgetPrivate
 {
 friend class KJavaAppletWidget;
 private:
-    QLabel* tmplabel;
+    TQLabel* tmplabel;
 };
 
 int KJavaAppletWidget::appletCount = 0;
 
-KJavaAppletWidget::KJavaAppletWidget( QWidget* parent, const char* name )
+KJavaAppletWidget::KJavaAppletWidget( TQWidget* parent, const char* name )
    : QXEmbed ( parent, name)
 {
     setProtocol(QXEmbed::XPLAIN);
@@ -48,10 +48,10 @@ KJavaAppletWidget::KJavaAppletWidget( QWidget* parent, const char* name )
     d        = new KJavaAppletWidgetPrivate;
     m_kwm    = new KWinModule( this );
 
-    d->tmplabel = new QLabel( this );
+    d->tmplabel = new TQLabel( this );
     d->tmplabel->setText( KJavaAppletServer::getAppletLabel() );
     d->tmplabel->setAlignment( Qt::AlignCenter | Qt::WordBreak );
-    d->tmplabel->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+    d->tmplabel->setFrameStyle( TQFrame::StyledPanel | TQFrame::Sunken );
     d->tmplabel->show();
 
     m_swallowTitle.sprintf( "KJAS Applet - Ticket number %u", appletCount++ );
@@ -66,8 +66,8 @@ KJavaAppletWidget::~KJavaAppletWidget()
 
 void KJavaAppletWidget::showApplet()
 {
-    connect( m_kwm, SIGNAL( windowAdded( WId ) ),
-	         this,  SLOT( setWindow( WId ) ) );
+    connect( m_kwm, TQT_SIGNAL( windowAdded( WId ) ),
+	         this,  TQT_SLOT( setWindow( WId ) ) );
 
     m_kwm->doNotManage( m_swallowTitle );
 
@@ -89,8 +89,8 @@ void KJavaAppletWidget::setWindow( WId w )
         d->tmplabel = 0;
 
         // disconnect from KWM events
-        disconnect( m_kwm, SIGNAL( windowAdded( WId ) ),
-                    this,  SLOT( setWindow( WId ) ) );
+        disconnect( m_kwm, TQT_SIGNAL( windowAdded( WId ) ),
+                    this,  TQT_SLOT( setWindow( WId ) ) );
 
 
         embed( w );
@@ -98,16 +98,16 @@ void KJavaAppletWidget::setWindow( WId w )
     }
 }
 
-QSize KJavaAppletWidget::sizeHint() const
+TQSize KJavaAppletWidget::sizeHint() const
 {
     kdDebug(6100) << "KJavaAppletWidget::sizeHint()" << endl;
-    QSize rval = QXEmbed::sizeHint();
+    TQSize rval = QXEmbed::sizeHint();
 
     if( rval.width() == 0 || rval.height() == 0 )
     {
         if( width() != 0 && height() != 0 )
         {
-            rval = QSize( width(), height() );
+            rval = TQSize( width(), height() );
         }
     }
 
@@ -121,13 +121,13 @@ void KJavaAppletWidget::resize( int w, int h )
     if( d->tmplabel )
     {
         d->tmplabel->resize( w, h );
-        m_applet->setSize( QSize( w, h ) );
+        m_applet->setSize( TQSize( w, h ) );
     }
 
     QXEmbed::resize( w, h );
 }
 
-void KJavaAppletWidget::showEvent (QShowEvent * e) {
+void KJavaAppletWidget::showEvent (TQShowEvent * e) {
     QXEmbed::showEvent(e);
     if (!applet()->isCreated() && !applet()->appletClass().isEmpty()) {
         // delayed showApplet

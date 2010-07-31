@@ -27,23 +27,23 @@
 #include <kstandarddirs.h>
 #include <kstaticdeleter.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include "resource.h"
 #include "factory.h"
 
 using namespace KRES;
 
-QDict<Factory> *Factory::mSelves = 0;
-static KStaticDeleter< QDict<Factory> > staticDeleter;
+TQDict<Factory> *Factory::mSelves = 0;
+static KStaticDeleter< TQDict<Factory> > staticDeleter;
 
-Factory *Factory::self( const QString& resourceFamily )
+Factory *Factory::self( const TQString& resourceFamily )
 {
   kdDebug(5650) << "Factory::self()" << endl;
 
   Factory *factory = 0;
   if ( !mSelves )
-    staticDeleter.setObject( mSelves, new QDict<Factory> );
+    staticDeleter.setObject( mSelves, new TQDict<Factory> );
 
   factory = mSelves->find( resourceFamily );
 
@@ -55,14 +55,14 @@ Factory *Factory::self( const QString& resourceFamily )
   return factory;
 }
 
-Factory::Factory( const QString& resourceFamily ) :
+Factory::Factory( const TQString& resourceFamily ) :
   mResourceFamily( resourceFamily )
 {
-  KTrader::OfferList plugins = KTrader::self()->query( "KResources/Plugin", QString( "[X-KDE-ResourceFamily] == '%1'" )
+  KTrader::OfferList plugins = KTrader::self()->query( "KResources/Plugin", TQString( "[X-KDE-ResourceFamily] == '%1'" )
                                                 .arg( resourceFamily ) );
   KTrader::OfferList::ConstIterator it;
   for ( it = plugins.begin(); it != plugins.end(); ++it ) {
-    QVariant type = (*it)->property( "X-KDE-ResourceType" );
+    TQVariant type = (*it)->property( "X-KDE-ResourceType" );
     if ( !type.toString().isEmpty() )
       mTypeMap.insert( type.toString(), *it );
   }
@@ -72,12 +72,12 @@ Factory::~Factory()
 {
 }
 
-QStringList Factory::typeNames() const
+TQStringList Factory::typeNames() const
 {
   return mTypeMap.keys();
 }
 
-ConfigWidget *Factory::configWidget( const QString& type, QWidget *parent )
+ConfigWidget *Factory::configWidget( const TQString& type, TQWidget *parent )
 {
   if ( type.isEmpty() || !mTypeMap.contains( type ) )
     return 0;
@@ -107,25 +107,25 @@ ConfigWidget *Factory::configWidget( const QString& type, QWidget *parent )
   return wdg;
 }
 
-QString Factory::typeName( const QString &type ) const
+TQString Factory::typeName( const TQString &type ) const
 {
   if ( type.isEmpty() || !mTypeMap.contains( type ) )
-    return QString();
+    return TQString();
 
   KService::Ptr ptr = mTypeMap[ type ];
   return ptr->name();
 }
 
-QString Factory::typeDescription( const QString &type ) const
+TQString Factory::typeDescription( const TQString &type ) const
 {
   if ( type.isEmpty() || !mTypeMap.contains( type ) )
-    return QString();
+    return TQString();
 
   KService::Ptr ptr = mTypeMap[ type ];
   return ptr->comment();
 }
 
-Resource *Factory::resource( const QString& type, const KConfig *config )
+Resource *Factory::resource( const TQString& type, const KConfig *config )
 {
   kdDebug(5650) << "Factory::resource( " << type << ", config )" << endl;
 

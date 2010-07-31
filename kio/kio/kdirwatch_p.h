@@ -47,10 +47,10 @@ public:
     entryMode m_mode;
     bool isDir;
     // instances interested in events
-    QPtrList<Client> m_clients;
+    TQPtrList<Client> m_clients;
     // nonexistent entries of this directory
-    QPtrList<Entry> m_entries;
-    QString path;
+    TQPtrList<Entry> m_entries;
+    TQString path;
 
     int msecLeft, freq;
 
@@ -74,15 +74,15 @@ public:
 #endif
   };
 
-  typedef QMap<QString,Entry> EntryMap;
+  typedef TQMap<TQString,Entry> EntryMap;
 
   KDirWatchPrivate();
   ~KDirWatchPrivate();
 
   void resetList (KDirWatch*,bool);
   void useFreq(Entry* e, int newFreq);
-  void addEntry(KDirWatch*,const QString&, Entry*, bool);
-  void removeEntry(KDirWatch*,const QString&, Entry*);
+  void addEntry(KDirWatch*,const TQString&, Entry*, bool);
+  void removeEntry(KDirWatch*,const TQString&, Entry*);
   bool stopEntryScan(KDirWatch*, Entry*);
   bool restartEntryScan(KDirWatch*, Entry*, bool );
   void stopScan(KDirWatch*);
@@ -91,9 +91,9 @@ public:
   void removeEntries(KDirWatch*);
   void statistics();
 
-  Entry* entry(const QString&);
+  Entry* entry(const TQString&);
   int scanEntry(Entry* e);
-  void emitEvent(Entry* e, int event, const QString &fileName = QString::null);
+  void emitEvent(Entry* e, int event, const TQString &fileName = TQString::null);
 
   // Memory management - delete when last KDirWatch gets deleted
   void ref() { m_ref++; }
@@ -108,7 +108,7 @@ public slots:
   void slotRemoveDelayed();
 
 public:
-  QTimer *timer;
+  TQTimer *timer;
   EntryMap m_mapEntries;
 
   int freq;
@@ -118,13 +118,13 @@ public:
   bool useStat(Entry*);
 
   bool delayRemove;
-  QPtrList<Entry> removeList;
+  TQPtrList<Entry> removeList;
 
   bool rescan_all;
-  QTimer rescan_timer;
+  TQTimer rescan_timer;
 
 #ifdef HAVE_FAM
-  QSocketNotifier *sn;
+  TQSocketNotifier *sn;
   FAMConnection fc;
   bool use_fam;
 
@@ -133,13 +133,13 @@ public:
 #endif
 
 #if defined(HAVE_DNOTIFY) || defined(HAVE_INOTIFY)
-   QSocketNotifier *mSn;
+   TQSocketNotifier *mSn;
 #endif
 
 #ifdef HAVE_DNOTIFY
   bool supports_dnotify;
   int mPipe[2];
-  QIntDict<Entry> fd_Entry;
+  TQIntDict<Entry> fd_Entry;
 
   static void dnotify_handler(int, siginfo_t *si, void *);
   static void dnotify_sigio_handler(int, siginfo_t *si, void *);

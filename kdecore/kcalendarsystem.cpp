@@ -52,9 +52,9 @@ const KLocale * KCalendarSystem::locale() const
   return KGlobal::locale();
 }
 
-QString KCalendarSystem::dayString(const QDate & pDate, bool bShort) const
+TQString KCalendarSystem::dayString(const TQDate & pDate, bool bShort) const
 {
-  QString sResult;
+  TQString sResult;
 
   sResult.setNum(day(pDate));
   if (!bShort && sResult.length() == 1 )
@@ -63,9 +63,9 @@ QString KCalendarSystem::dayString(const QDate & pDate, bool bShort) const
   return sResult;
 }
 
-QString KCalendarSystem::monthString(const QDate & pDate, bool bShort) const
+TQString KCalendarSystem::monthString(const TQDate & pDate, bool bShort) const
 {
-  QString sResult;
+  TQString sResult;
 
   sResult.setNum(month(pDate));
   if (!bShort && sResult.length() == 1 )
@@ -74,9 +74,9 @@ QString KCalendarSystem::monthString(const QDate & pDate, bool bShort) const
   return sResult;
 }
 
-QString KCalendarSystem::yearString(const QDate & pDate, bool bShort) const
+TQString KCalendarSystem::yearString(const TQDate & pDate, bool bShort) const
 {
-  QString sResult;
+  TQString sResult;
 
   sResult.setNum(year(pDate));
   if (bShort && sResult.length() == 4 )
@@ -85,7 +85,7 @@ QString KCalendarSystem::yearString(const QDate & pDate, bool bShort) const
   return sResult;
 }
 
-static int stringToInteger(const QString & sNum, int & iLength)
+static int stringToInteger(const TQString & sNum, int & iLength)
 {
   unsigned int iPos = 0;
 
@@ -101,22 +101,22 @@ static int stringToInteger(const QString & sNum, int & iLength)
 }
 
 
-int KCalendarSystem::dayStringToInteger(const QString & sNum, int & iLength) const
+int KCalendarSystem::dayStringToInteger(const TQString & sNum, int & iLength) const
 {
   return stringToInteger(sNum, iLength);
 }
 
-int KCalendarSystem::monthStringToInteger(const QString & sNum, int & iLength) const
+int KCalendarSystem::monthStringToInteger(const TQString & sNum, int & iLength) const
 {
   return stringToInteger(sNum, iLength);
 }
 
-int KCalendarSystem::yearStringToInteger(const QString & sNum, int & iLength) const
+int KCalendarSystem::yearStringToInteger(const TQString & sNum, int & iLength) const
 {
   return stringToInteger(sNum, iLength);
 }
 
-QString KCalendarSystem::weekDayName (int weekDay, bool shortName) const
+TQString KCalendarSystem::weekDayName (int weekDay, bool shortName) const
 {
   if ( shortName )
     switch ( weekDay )
@@ -141,6 +141,6 @@ QString KCalendarSystem::weekDayName (int weekDay, bool shortName) const
       case 7:  return locale()->translate("Sunday");
       }
 
-  return QString::null;
+  return TQString::null;
 }
 

@@ -25,8 +25,8 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 
-#include <qptrdict.h>
-#include <qwindowdefs.h>
+#include <tqptrdict.h>
+#include <tqwindowdefs.h>
 
 #include "provider.h"
 #include "provider.moc"
@@ -44,13 +44,13 @@ class ProviderPrivate
   KURL mDownloadUrlDownloads;
 };
 
-static QPtrDict<ProviderPrivate> *d_ptr_prov = 0;
+static TQPtrDict<ProviderPrivate> *d_ptr_prov = 0;
 
 static ProviderPrivate *d_prov(const Provider *p)
 {
   if(!d_ptr_prov)
   {
-    d_ptr_prov = new QPtrDict<ProviderPrivate>();
+    d_ptr_prov = new TQPtrDict<ProviderPrivate>();
     d_ptr_prov->setAutoDelete(true);
   }
   ProviderPrivate *ret = d_ptr_prov->find((void*)p);
@@ -62,7 +62,7 @@ static ProviderPrivate *d_prov(const Provider *p)
   return ret;
 }
 
-KURL Provider::downloadUrlVariant( QString variant ) const
+KURL Provider::downloadUrlVariant( TQString variant ) const
 {
   if((variant == "latest") && (d_prov(this)->mDownloadUrlLatest.isValid()))
 	return d_prov(this)->mDownloadUrlLatest;
@@ -80,7 +80,7 @@ Provider::Provider() : mNoUpload( false )
 {
 }
 
-Provider::Provider( const QDomElement &e ) : mNoUpload( false )
+Provider::Provider( const TQDomElement &e ) : mNoUpload( false )
 {
   parseDomElement( e );
 }
@@ -102,12 +102,12 @@ Provider::~Provider()
 }
 
 
-void Provider::setName( const QString &name )
+void Provider::setName( const TQString &name )
 {
   mName = name;
 }
 
-QString Provider::name() const
+TQString Provider::name() const
 {
   return mName;
 }
@@ -168,7 +168,7 @@ bool Provider::noUpload() const
 }
 
 
-void Provider::parseDomElement( const QDomElement &element )
+void Provider::parseDomElement( const TQDomElement &element )
 {
   if ( element.tagName() != "provider" ) return;
 
@@ -184,21 +184,21 @@ void Provider::parseDomElement( const QDomElement &element )
   if(!iconurl.isValid()) iconurl.setPath( element.attribute("icon") );
   setIcon( iconurl );
 
-  QDomNode n;
+  TQDomNode n;
   for ( n = element.firstChild(); !n.isNull(); n = n.nextSibling() ) {
-    QDomElement p = n.toElement();
+    TQDomElement p = n.toElement();
     
     if ( p.tagName() == "noupload" ) setNoUpload( true );
     if ( p.tagName() == "title" ) setName( p.text().stripWhiteSpace() );
   }
 }
 
-QDomElement Provider::createDomElement( QDomDocument &doc, QDomElement &parent )
+TQDomElement Provider::createDomElement( TQDomDocument &doc, TQDomElement &parent )
 {
-  QDomElement entry = doc.createElement( "stuff" );
+  TQDomElement entry = doc.createElement( "stuff" );
   parent.appendChild( entry );
 
-  QDomElement n = doc.createElement( "name" );
+  TQDomElement n = doc.createElement( "name" );
   n.appendChild( doc.createTextNode( name() ) );
   entry.appendChild( n );
   
@@ -206,13 +206,13 @@ QDomElement Provider::createDomElement( QDomDocument &doc, QDomElement &parent )
 }
 
 
-ProviderLoader::ProviderLoader( QWidget *parentWidget ) :
-  QObject( parentWidget )
+ProviderLoader::ProviderLoader( TQWidget *parentWidget ) :
+  TQObject( parentWidget )
 {
   mProviders.setAutoDelete( true );
 }
 
-void ProviderLoader::load( const QString &type, const QString &providersList )
+void ProviderLoader::load( const TQString &type, const TQString &providersList )
 {
   kdDebug() << "ProviderLoader::load()" << endl;
 
@@ -222,13 +222,13 @@ void ProviderLoader::load( const QString &type, const QString &providersList )
   KConfig *cfg = KGlobal::config();
   cfg->setGroup("KNewStuff");
 
-  QString providersUrl = providersList;
+  TQString providersUrl = providersList;
   if( providersUrl.isEmpty() )
   	providersUrl = cfg->readEntry( "ProvidersUrl" );
 
   if ( providersUrl.isEmpty() ) {
     // TODO: Replace the default by the real one.
-    QString server = cfg->readEntry( "MasterServer",
+    TQString server = cfg->readEntry( "MasterServer",
                                      "http://korganizer.kde.org" );
   
     providersUrl = server + "/knewstuff/" + type + "/providers.xml";
@@ -237,49 +237,49 @@ void ProviderLoader::load( const QString &type, const QString &providersList )
   kdDebug() << "ProviderLoader::load(): providersUrl: " << providersUrl << endl;
   
   KIO::TransferJob *job = KIO::get( KURL( providersUrl ), false, false );
-  connect( job, SIGNAL( result( KIO::Job * ) ),
-           SLOT( slotJobResult( KIO::Job * ) ) );
-  connect( job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
-           SLOT( slotJobData( KIO::Job *, const QByteArray & ) ) );
+  connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
+           TQT_SLOT( slotJobResult( KIO::Job * ) ) );
+  connect( job, TQT_SIGNAL( data( KIO::Job *, const TQByteArray & ) ),
+           TQT_SLOT( slotJobData( KIO::Job *, const TQByteArray & ) ) );
 
 //  job->dumpObjectInfo();
 }
 
-void ProviderLoader::slotJobData( KIO::Job *, const QByteArray &data )
+void ProviderLoader::slotJobData( KIO::Job *, const TQByteArray &data )
 {
   kdDebug() << "ProviderLoader::slotJobData()" << endl;
 
   if ( data.size() == 0 ) return;
 
-  QCString str( data, data.size() + 1 );
+  TQCString str( data, data.size() + 1 );
 
-  mJobData.append( QString::fromUtf8( str ) );
+  mJobData.append( TQString::fromUtf8( str ) );
 }
 
 void ProviderLoader::slotJobResult( KIO::Job *job )
 {
   if ( job->error() ) {
-    job->showErrorDialog( static_cast<QWidget *>(parent()) );
+    job->showErrorDialog( static_cast<TQWidget *>(parent()) );
   }
 
   kdDebug() << "--PROVIDERS-START--" << endl << mJobData << "--PROV_END--"
             << endl;
 
-  QDomDocument doc;
+  TQDomDocument doc;
   if ( !doc.setContent( mJobData ) ) {
-    KMessageBox::error( static_cast<QWidget *>(parent()), i18n("Error parsing providers list.") );
+    KMessageBox::error( static_cast<TQWidget *>(parent()), i18n("Error parsing providers list.") );
     return;
   }
 
-  QDomElement providers = doc.documentElement();
+  TQDomElement providers = doc.documentElement();
 
   if ( providers.isNull() ) {
     kdDebug() << "No document in Providers.xml." << endl;
   }
 
-  QDomNode n;
+  TQDomNode n;
   for ( n = providers.firstChild(); !n.isNull(); n = n.nextSibling() ) {
-    QDomElement p = n.toElement();
+    TQDomElement p = n.toElement();
  
     if ( p.tagName() == "provider" ) {
       mProviders.append( new Provider( p ) );

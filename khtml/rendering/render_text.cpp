@@ -39,9 +39,9 @@
 #include "misc/loader.h"
 #include "misc/helper.h"
 
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qpainter.h>
+#include <tqbitmap.h>
+#include <tqimage.h>
+#include <tqpainter.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <assert.h>
@@ -173,7 +173,7 @@ void InlineTextBox::paint(RenderObject::PaintInfo& i, int tx, int ty)
             paintShadow(i.p, font, tx, ty, styleToUse->textShadow());
         if (!haveSelection || sPos != 0 || ePos != m_len) {
             font->drawText(i.p, m_x + tx, m_y + ty + m_baseline, renderText()->string()->s, renderText()->string()->l, m_start, endPoint,
-                           m_toAdd, m_reversed ? QPainter::RTL : QPainter::LTR);
+                           m_toAdd, m_reversed ? TQPainter::RTL : TQPainter::LTR);
         }
     }
 
@@ -206,13 +206,13 @@ inline const RenderStyle *retrieveSelectionPseudoStyle(const RenderObject *obj)
   return 0;
 }
 
-void InlineTextBox::paintSelection(const Font *f, RenderText *text, QPainter *p, RenderStyle* style, int tx, int ty, int startPos, int endPos, int deco)
+void InlineTextBox::paintSelection(const Font *f, RenderText *text, TQPainter *p, RenderStyle* style, int tx, int ty, int startPos, int endPos, int deco)
 {
     if(startPos > m_len) return;
     if(startPos < 0) startPos = 0;
 
-    QColor hc;
-    QColor hbg;
+    TQColor hc;
+    TQColor hbg;
     const RenderStyle* pseudoStyle = retrieveSelectionPseudoStyle(text);
     if (pseudoStyle) {
         // ### support outline (mandated by CSS3)
@@ -221,11 +221,11 @@ void InlineTextBox::paintSelection(const Font *f, RenderText *text, QPainter *p,
             hbg = pseudoStyle->backgroundColor();
         hc = pseudoStyle->color();
     } else {
-        const QColorGroup &grp = style->palette().active();
+        const TQColorGroup &grp = style->palette().active();
         hc = grp.highlightedText();
         hbg = grp.highlight();
 	// ### should be at most retrieved once per render text
-	QColor bg = khtml::retrieveBackgroundColor(text);
+	TQColor bg = khtml::retrieveBackgroundColor(text);
 	// It may happen that the contrast is -- well -- virtually non existent.
 	// In this case, simply swap the colors, thus in compliance with
 	// NN4 (win32 only), IE, and Mozilla.
@@ -235,7 +235,7 @@ void InlineTextBox::paintSelection(const Font *f, RenderText *text, QPainter *p,
 
     p->setPen(hc);
 
-    //kdDebug( 6040 ) << "textRun::painting(" << QConstString(text->str->s + m_start, m_len).string().left(30) << ") at(" << m_x+tx << "/" << m_y+ty << ")" << endl;
+    //kdDebug( 6040 ) << "textRun::painting(" << TQConstString(text->str->s + m_start, m_len).string().left(30) << ") at(" << m_x+tx << "/" << m_y+ty << ")" << endl;
 
     const bool needClipping = startPos != 0 || endPos != m_len;
 
@@ -249,23 +249,23 @@ void InlineTextBox::paintSelection(const Font *f, RenderText *text, QPainter *p,
             visualSelectionStart = f->width(text->str->s, text->str->l, m_start, m_len) - visualSelectionEnd;
         }
 
-        QRect selectionRect(m_x + tx + visualSelectionStart, m_y + ty, visualSelectionWidth, height());
-        QRegion r(selectionRect);
+        TQRect selectionRect(m_x + tx + visualSelectionStart, m_y + ty, visualSelectionWidth, height());
+        TQRegion r(selectionRect);
         if (p->hasClipping())
-            r &= p->clipRegion(QPainter::CoordPainter);
-        p->setClipRegion(r, QPainter::CoordPainter);
+            r &= p->clipRegion(TQPainter::CoordPainter);
+        p->setClipRegion(r, TQPainter::CoordPainter);
     }
 
     f->drawText(p, m_x + tx, m_y + ty + m_baseline, text->str->s, text->str->l,
                 m_start, m_len, m_toAdd,
-                m_reversed ? QPainter::RTL : QPainter::LTR,
+                m_reversed ? TQPainter::RTL : TQPainter::LTR,
                 needClipping ? 0 : startPos, needClipping ? m_len : endPos,
 		hbg, m_y + ty, height(), deco);
 
     if (needClipping) p->restore();
 }
 
-void InlineTextBox::paintDecoration( QPainter *pt, const Font *f, int _tx, int _ty, int deco)
+void InlineTextBox::paintDecoration( TQPainter *pt, const Font *f, int _tx, int _ty, int deco)
 {
     _tx += m_x;
     _ty += m_y;
@@ -280,7 +280,7 @@ void InlineTextBox::paintDecoration( QPainter *pt, const Font *f, int _tx, int _
 
     RenderObject *p = object();
 
-    QColor underline, overline, linethrough;
+    TQColor underline, overline, linethrough;
     p->getTextDecorationColors(deco, underline, overline, linethrough, p->style()->htmlHacks());
 
     if(deco & UNDERLINE){
@@ -299,18 +299,18 @@ void InlineTextBox::paintDecoration( QPainter *pt, const Font *f, int _tx, int _
     // support it. Lars
 }
 
-void InlineTextBox::paintShadow(QPainter *pt, const Font *f, int _tx, int _ty, const ShadowData *shadow )
+void InlineTextBox::paintShadow(TQPainter *pt, const Font *f, int _tx, int _ty, const ShadowData *shadow )
 {
     int x = m_x + _tx + shadow->x;
     int y = m_y + _ty + shadow->y;
     const RenderText* text = renderText();
 
     if (shadow->blur <= 0) {
-        QColor c = pt->pen().color();
+        TQColor c = pt->pen().color();
         pt->setPen(shadow->color);
         f->drawText(pt, x, y+m_baseline, text->str->s, text->str->l,
                     m_start, m_len, m_toAdd,
-                    m_reversed ? QPainter::RTL : QPainter::LTR);
+                    m_reversed ? TQPainter::RTL : TQPainter::LTR);
         pt->setPen(c);
 
     }
@@ -322,19 +322,19 @@ void InlineTextBox::paintShadow(QPainter *pt, const Font *f, int _tx, int _ty, c
         const int gray = qGray(color);
         const bool inverse = (gray < 100);
         const QRgb bgColor = (inverse) ? qRgb(255,255,255) : qRgb(0,0,0);
-        QPixmap pixmap(w, h);
+        TQPixmap pixmap(w, h);
         pixmap.fill(bgColor);
-        QPainter p;
+        TQPainter p;
 
         p.begin(&pixmap);
         p.setPen(shadow->color);
         p.setFont(pt->font());
         f->drawText(&p, thickness, thickness+m_baseline, text->str->s, text->str->l,
                     m_start, m_len, m_toAdd,
-                    m_reversed ? QPainter::RTL : QPainter::LTR);
+                    m_reversed ? TQPainter::RTL : TQPainter::LTR);
 
         p.end();
-        QImage img = pixmap.convertToImage().convertDepth(32);
+        TQImage img = pixmap.convertToImage().convertDepth(32);
 
         int md = thickness*thickness; // max-dist^2
 
@@ -381,7 +381,7 @@ void InlineTextBox::paintShadow(QPainter *pt, const Font *f, int _tx, int _ty, c
             }
         }
 
-        QImage res(w,h,32);
+        TQImage res(w,h,32);
         res.setAlphaBuffer(true);
         int r = qRed(color);
         int g = qGreen(color);
@@ -453,7 +453,7 @@ FindSelectionResult InlineTextBox::checkSelectionPoint(int _x, int _y, int _tx, 
     if (justified) {
 
         for( int i = 0; i < m_len; i++ )
-            if ( text->str->s[m_start+i].category() == QChar::Separator_Space )
+            if ( text->str->s[m_start+i].category() == TQChar::Separator_Space )
 	        numSpaces++;
 
     }/*end if*/
@@ -465,7 +465,7 @@ FindSelectionResult InlineTextBox::checkSelectionPoint(int _x, int _y, int _tx, 
 	delta -= m_width;
 	while(pos < m_len) {
 	    int w = f->width( text->str->s, text->str->l, m_start + pos);
-	    if (justified && text->str->s[m_start + pos].category() == QChar::Separator_Space)
+	    if (justified && text->str->s[m_start + pos].category() == TQChar::Separator_Space)
 	        w += justifyWidth(numSpaces, toAdd);
 	    int w2 = w/2;
 	    w -= w2;
@@ -477,7 +477,7 @@ FindSelectionResult InlineTextBox::checkSelectionPoint(int _x, int _y, int _tx, 
     } else {
 	while(pos < m_len) {
 	    int w = f->width( text->str->s, text->str->l, m_start + pos);
-	    if (justified && text->str->s[m_start + pos].category() == QChar::Separator_Space)
+	    if (justified && text->str->s[m_start + pos].category() == TQChar::Separator_Space)
 	        w += justifyWidth(numSpaces, toAdd);
 	    int w2 = w/2;
 	    w -= w2;
@@ -522,7 +522,7 @@ int InlineTextBox::widthFromStart(int pos) const
   const RenderText *t = renderText();
   Q_ASSERT(t->isText());
   const Font *f = t->htmlFont(m_firstLine);
-  const QFontMetrics &fm = t->fontMetrics(m_firstLine);
+  const TQFontMetrics &fm = t->fontMetrics(m_firstLine);
 
   int numSpaces = 0;
   // consider spacing for justified text
@@ -531,9 +531,9 @@ int InlineTextBox::widthFromStart(int pos) const
   if (justified && m_toAdd > 0) do {
     //kdDebug(6000) << "justify" << endl;
 
-//    QConstString cstr = QConstString(t->str->s + m_start, m_len);
+//    TQConstString cstr = TQConstString(t->str->s + m_start, m_len);
     for( int i = 0; i < m_len; i++ )
-      if ( t->str->s[m_start+i].category() == QChar::Separator_Space )
+      if ( t->str->s[m_start+i].category() == TQChar::Separator_Space )
 	numSpaces++;
     if (numSpaces == 0) break;
 
@@ -543,7 +543,7 @@ int InlineTextBox::widthFromStart(int pos) const
     int current = 0;	// current position
     while (current < pos) {
       // add spacing
-      while (current < pos && t->str->s[m_start + current].category() == QChar::Separator_Space) {
+      while (current < pos && t->str->s[m_start + current].category() == TQChar::Separator_Space) {
 	w += f->getWordSpacing();
 	w += f->getLetterSpacing();
 	w += justifyWidth(numSpaces, toAdd);
@@ -553,7 +553,7 @@ int InlineTextBox::widthFromStart(int pos) const
       if (current >= pos) break;
 
       // seek next space
-      while (current < pos && t->str->s[m_start + current].category() != QChar::Separator_Space)
+      while (current < pos && t->str->s[m_start + current].category() != TQChar::Separator_Space)
         current++;
 
       // check run without spaces
@@ -661,7 +661,7 @@ int InlineTextBoxArray::findFirstMatching(Item d) const
 	if ( (*this)[mid] == 0 )			// null item greater
 	    res = -1;
 	else
-	    res = ((QGVector*)this)->compareItems( d, (*this)[mid] );
+	    res = ((TQGVector*)this)->compareItems( d, (*this)[mid] );
 	if ( res < 0 )
 	    n2 = mid - 1;
 	else if ( res > 0 )
@@ -674,7 +674,7 @@ int InlineTextBoxArray::findFirstMatching(Item d) const
     /* if ( !found )
 	return -1; */
     // search to first one equal or bigger
-    while ( found && (mid > 0) && !((QGVector*)this)->compareItems(d, (*this)[mid-1]) )
+    while ( found && (mid > 0) && !((TQGVector*)this)->compareItems(d, (*this)[mid-1]) )
 	mid--;
     return mid;
 }
@@ -697,7 +697,7 @@ RenderText::RenderText(DOM::NodeImpl* node, DOMStringImpl *_str)
     m_hasReturn = true;
 
 #ifdef DEBUG_LAYOUT
-    QConstString cstr(str->s, str->l);
+    TQConstString cstr(str->s, str->l);
     kdDebug( 6040 ) << "RenderText ctr( "<< cstr.string().length() << " )  '" << cstr.string() << "'" << endl;
 #endif
 }
@@ -931,7 +931,7 @@ void RenderText::caretPos(int offset, int flags, int &_x, int &_y, int &width, i
   RenderText *t = s->renderText();
 //  kdDebug(6040) << "offset="<<offset << " pos="<<pos << endl;
 
-  const QFontMetrics &fm = t->metrics( s->m_firstLine );
+  const TQFontMetrics &fm = t->metrics( s->m_firstLine );
   height = fm.height(); // s->m_height;
 
   _x = s->m_x + s->widthFromStart(pos);
@@ -1150,7 +1150,7 @@ int RenderText::inlineYPos() const
     return m_lines.isEmpty() ? 0 : m_lines[0]->yPos();
 }
 
-const QFont &RenderText::font()
+const TQFont &RenderText::font()
 {
     return style()->font();
 }
@@ -1188,7 +1188,7 @@ void RenderText::setText(DOMStringImpl *text, bool force)
 
                     if (prevStr->length() == 0)
                         continue;
-                    QChar c = (*prevStr)[prevStr->length() - 1];
+                    TQChar c = (*prevStr)[prevStr->length() - 1];
                     if (!c.isSpace())
                         runOnString = true;
 
@@ -1218,7 +1218,7 @@ void RenderText::setText(DOMStringImpl *text, bool force)
 
     setNeedsLayoutAndMinMaxRecalc();
 #ifdef BIDI_DEBUG
-    QConstString cstr(str->s, str->l);
+    TQConstString cstr(str->s, str->l);
     kdDebug( 6040 ) << "RenderText::setText( " << cstr.string().length() << " ) '" << cstr.string() << "'" << endl;
 #endif
 }
@@ -1244,7 +1244,7 @@ short RenderText::lineHeight( bool firstLine ) const
 
 short RenderText::baselinePosition( bool firstLine ) const
 {
-    const QFontMetrics &fm = metrics( firstLine );
+    const TQFontMetrics &fm = metrics( firstLine );
     return fm.ascent() +
         ( lineHeight( firstLine ) - fm.height() ) / 2;
 }
@@ -1268,8 +1268,8 @@ void RenderText::position(InlineBox* box, int from, int len, bool reverse)
     reverse = reverse && !style()->visuallyOrdered();
 
 #ifdef DEBUG_LAYOUT
-    QChar *ch = str->s+from;
-    QConstString cstr(ch, len);
+    TQChar *ch = str->s+from;
+    TQConstString cstr(ch, len);
 #endif
 
     KHTMLAssert(box->isInlineTextBox());
@@ -1337,7 +1337,7 @@ void RenderText::repaint(Priority p)
 
 bool RenderText::isFixedWidthFont() const
 {
-    return QFontInfo(style()->font()).fixedPitch();
+    return TQFontInfo(style()->font()).fixedPitch();
 }
 
 short RenderText::verticalPositionHint( bool firstLine ) const
@@ -1345,7 +1345,7 @@ short RenderText::verticalPositionHint( bool firstLine ) const
     return parent()->verticalPositionHint( firstLine );
 }
 
-const QFontMetrics &RenderText::metrics(bool firstLine) const
+const TQFontMetrics &RenderText::metrics(bool firstLine) const
 {
     if( firstLine && hasFirstLine() ) {
 	RenderStyle *pseudoStyle  = style()->getPseudoStyle(RenderStyle::FIRST_LINE);
@@ -1372,7 +1372,7 @@ bool RenderText::containsOnlyWhitespace(unsigned int from, unsigned int len) con
 {
     unsigned int currPos;
     for (currPos = from;
-         currPos < from+len && (str->s[currPos] == '\n' || str->s[currPos].direction() == QChar::DirWS);
+         currPos < from+len && (str->s[currPos] == '\n' || str->s[currPos].direction() == TQChar::DirWS);
          currPos++);
     return currPos >= (from+len);
 }
@@ -1407,9 +1407,9 @@ void RenderText::trimmedMinMaxWidth(short& beginMinW, bool& beginWS,
     hasBreakableChar = m_hasBreakableChar;
     hasBreak = m_hasBreak;
 
-    if (stripFrontSpaces && (str->s[0].direction() == QChar::DirWS || (!preserveLF && str->s[0] == '\n'))) {
+    if (stripFrontSpaces && (str->s[0].direction() == TQChar::DirWS || (!preserveLF && str->s[0] == '\n'))) {
         const Font *f = htmlFont( false );
-        QChar space[1]; space[0] = ' ';
+        TQChar space[1]; space[0] = ' ';
         int spaceWidth = f->width(space, 1, 0);
         maxW -= spaceWidth;
     }
@@ -1459,12 +1459,12 @@ void RenderText::trimmedMinMaxWidth(short& beginMinW, bool& beginWS,
 
 #ifdef ENABLE_DUMP
 
-static QString quoteAndEscapeNonPrintables(const QString &s)
+static TQString quoteAndEscapeNonPrintables(const TQString &s)
 {
-    QString result;
+    TQString result;
     result += '"';
     for (uint i = 0; i != s.length(); ++i) {
-        QChar c = s.at(i);
+        TQChar c = s.at(i);
         if (c == '\\') {
             result += "\\\\";
         } else if (c == '"') {
@@ -1474,7 +1474,7 @@ static QString quoteAndEscapeNonPrintables(const QString &s)
             if (u >= 0x20 && u < 0x7F) {
                 result += c;
             } else {
-                QString hex;
+                TQString hex;
                 hex.sprintf("\\x{%X}", u);
                 result += hex;
             }
@@ -1484,13 +1484,13 @@ static QString quoteAndEscapeNonPrintables(const QString &s)
     return result;
 }
 
-static void writeTextRun(QTextStream &ts, const RenderText &o, const InlineTextBox &run)
+static void writeTextRun(TQTextStream &ts, const RenderText &o, const InlineTextBox &run)
 {
     ts << "text run at (" << run.m_x << "," << run.m_y << ") width " << run.m_width << ": "
        << quoteAndEscapeNonPrintables(o.data().string().mid(run.m_start, run.m_len));
 }
 
-void RenderText::dump(QTextStream &stream, const QString &ind) const
+void RenderText::dump(TQTextStream &stream, const TQString &ind) const
 {
     RenderObject::dump( stream, ind );
 

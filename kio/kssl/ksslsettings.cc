@@ -29,8 +29,8 @@
 #include <pwd.h>
 #include <unistd.h>
 
-#include <qfile.h>
-#include <qsortedlist.h>
+#include <tqfile.h>
+#include <tqsortedlist.h>
 
 #include "ksslsettings.h"
 #include <kglobal.h>
@@ -60,7 +60,7 @@
       public:
         CipherNode(const char *_name, int _keylen) : 
                       name(_name), keylen(_keylen) {}
-        QString name;
+        TQString name;
         int keylen;
         inline int operator==(CipherNode &x) 
                      { return ((x.keylen == keylen) && (x.name == name)); }
@@ -83,7 +83,7 @@ public:
   KOSSL *kossl;
   bool m_bUseEGD;
   bool m_bUseEFile;
-  QString m_EGDPath;
+  TQString m_EGDPath;
   bool m_bSendX509;
   bool m_bPromptX509;
 };
@@ -131,13 +131,13 @@ bool KSSLSettings::tlsv1() const {
 // FIXME: we should make a default list available if this fails
 //        since OpenSSL seems to just choose any old thing if it's given an
 //        empty list.  This behavior is not confirmed though.
-QString KSSLSettings::getCipherList() {
-	QString clist;
+TQString KSSLSettings::getCipherList() {
+	TQString clist;
 #ifdef KSSL_HAVE_SSL
-	QString tcipher;
+	TQString tcipher;
 	bool firstcipher = true;
 	SSL_METHOD *meth = 0L;
-	QPtrList<CipherNode> cipherList;
+	TQPtrList<CipherNode> cipherList;
 
 	cipherList.setAutoDelete(true);
 
@@ -296,7 +296,7 @@ void KSSLSettings::save() {
 #ifdef KSSL_HAVE_SSL
   m_cfg->setGroup("SSLv2");
   for (unsigned int i = 0; i < v2ciphers.count(); i++) {
-    QString ciphername;
+    TQString ciphername;
     ciphername.sprintf("cipher_%s", v2ciphers[i].ascii());
     if (v2selectedciphers.contains(v2ciphers[i])) {
       m_cfg->writeEntry(ciphername, true);
@@ -305,7 +305,7 @@ void KSSLSettings::save() {
  
   m_cfg->setGroup("SSLv3");
   for (unsigned int i = 0; i < v3ciphers.count(); i++) {
-    QString ciphername;
+    TQString ciphername;
     ciphername.sprintf("cipher_%s", v3ciphers[i].ascii());
     if (v3selectedciphers.contains(v3ciphers[i])) {
       m_cfg->writeEntry(ciphername, true);
@@ -316,9 +316,9 @@ void KSSLSettings::save() {
   m_cfg->sync();
  
   // insure proper permissions -- contains sensitive data
-  QString cfgName(KGlobal::dirs()->findResource("config", "cryptodefaults"));
+  TQString cfgName(KGlobal::dirs()->findResource("config", "cryptodefaults"));
   if (!cfgName.isEmpty())
-    ::chmod(QFile::encodeName(cfgName), 0600);
+    ::chmod(TQFile::encodeName(cfgName), 0600);
 #endif
 }
 
@@ -342,7 +342,7 @@ void KSSLSettings::setTLSv1(bool enabled) { m_bUseTLSv1 = enabled; }
 void KSSLSettings::setSSLv2(bool enabled) { m_bUseSSLv2 = enabled; }
 void KSSLSettings::setSSLv3(bool enabled) { m_bUseSSLv3 = enabled; }
 
-QString& KSSLSettings::getEGDPath()       { return d->m_EGDPath; }
+TQString& KSSLSettings::getEGDPath()       { return d->m_EGDPath; }
 
 #ifdef KSSL_HAVE_SSL
 #undef sk_new

@@ -49,7 +49,7 @@ public:
     virtual ~KGenericFactoryBase()
     {
         if ( s_instance )
-            KGlobal::locale()->removeCatalogue( QString::fromAscii( s_instance->instanceName() ) );
+            KGlobal::locale()->removeCatalogue( TQString::fromAscii( s_instance->instanceName() ) );
         delete s_instance;
         s_instance = 0;
         s_self = 0;
@@ -72,7 +72,7 @@ protected:
     virtual void setupTranslations( void )
     {
         if ( instance() )
-            KGlobal::locale()->insertCatalogue( QString::fromAscii( instance()->instanceName() ) );
+            KGlobal::locale()->insertCatalogue( TQString::fromAscii( instance()->instanceName() ) );
     }
 
     void initializeMessageCatalogue()
@@ -85,7 +85,7 @@ protected:
     }
 
 private:
-    QCString m_instanceName;
+    TQCString m_instanceName;
     const KAboutData *m_aboutData;
     bool m_catalogueInitialized;
 
@@ -123,21 +123,21 @@ KInstance *KGenericFactoryBase<T>::instance()
  * Note that the class specified as template argument needs to provide
  * a certain constructor:
  * <ul>
- *     <li>If the class is derived from QObject then it needs to have
+ *     <li>If the class is derived from TQObject then it needs to have
  *         a constructor like:
- *         <code>MyClass( QObject *parent, const char *name,
- *                        const QStringList &args );</code>
- *     <li>If the class is derived from QWidget then it needs to have
+ *         <code>MyClass( TQObject *parent, const char *name,
+ *                        const TQStringList &args );</code>
+ *     <li>If the class is derived from TQWidget then it needs to have
  *         a constructor like:
- *         <code>MyWidget( QWidget *parent, const char *name,
- *                         const QStringList &args);</code>
+ *         <code>MyWidget( TQWidget *parent, const char *name,
+ *                         const TQStringList &args);</code>
  *     <li>If the class is derived from KParts::Part then it needs to have
  *         a constructor like:
- *         <code>MyPart( QWidget *parentWidget, const char *widgetName,
- *                       QObject *parent, const char *name,
- *                       const QStringList &args );</code>
+ *         <code>MyPart( TQWidget *parentWidget, const char *widgetName,
+ *                       TQObject *parent, const char *name,
+ *                       const TQStringList &args );</code>
  * </ul>
- * The args QStringList passed to the constructor is the args string list
+ * The args TQStringList passed to the constructor is the args string list
  * that the caller passed to KLibFactory's create method.
  *
  * In addition upon instantiation this template provides a central
@@ -161,15 +161,15 @@ KInstance *KGenericFactoryBase<T>::instance()
  *     {
  *         Q_ OBJECT
  *     public:
- *         MyPlugin( QObject *parent, const char *name,
- *                   const QStringList &args );
+ *         MyPlugin( TQObject *parent, const char *name,
+ *                   const TQStringList &args );
  *         ...
  *     };
  *
  *     K_EXPORT_COMPONENT_FACTORY( libmyplugin, KGenericFactory&lt;MyPlugin&gt; )
  * \endcode
  */
-template <class Product, class ParentType = QObject>
+template <class Product, class ParentType = TQObject>
 class KGenericFactory : public KLibFactory, public KGenericFactoryBase<Product>
 {
 public:
@@ -186,8 +186,8 @@ public:
 
 
 protected:
-    virtual QObject *createObject( QObject *parent, const char *name,
-                                  const char *className, const QStringList &args )
+    virtual TQObject *createObject( TQObject *parent, const char *name,
+                                  const char *className, const TQStringList &args )
     {
         KGenericFactoryBase<Product>::initializeMessageCatalogue();
         return KDEPrivate::ConcreteFactory<Product, ParentType>
@@ -206,21 +206,21 @@ protected:
  * Note that each class in the specified in the typelist template argument
  * needs to provide a certain constructor:
  * <ul>
- *     <li>If the class is derived from QObject then it needs to have
+ *     <li>If the class is derived from TQObject then it needs to have
  *         a constructor like:
- *         <code>MyClass( QObject *parent, const char *name,
- *                        const QStringList &args );</code>
- *     <li>If the class is derived from QWidget then it needs to have
+ *         <code>MyClass( TQObject *parent, const char *name,
+ *                        const TQStringList &args );</code>
+ *     <li>If the class is derived from TQWidget then it needs to have
  *         a constructor like:
- *         <code>MyWidget( QWidget *parent, const char *name,
- *                         const QStringList &args);</code>
+ *         <code>MyWidget( TQWidget *parent, const char *name,
+ *                         const TQStringList &args);</code>
  *     <li>If the class is derived from KParts::Part then it needs to have
  *         a constructor like:
- *         <code>MyPart( QWidget *parentWidget, const char *widgetName,
- *                       QObject *parent, const char *name,
- *                       const QStringList &args );</code>
+ *         <code>MyPart( TQWidget *parentWidget, const char *widgetName,
+ *                       TQObject *parent, const char *name,
+ *                       const TQStringList &args );</code>
  * </ul>
- * The args QStringList passed to the constructor is the args string list
+ * The args TQStringList passed to the constructor is the args string list
  * that the caller passed to KLibFactory's create method.
  *
  * In addition upon instantiation this template provides a central
@@ -244,8 +244,8 @@ protected:
  *     {
  *         Q_ OBJECT
  *     public:
- *         MyPlugin( QObject *parent, const char *name,
- *                   const QStringList &args );
+ *         MyPlugin( TQObject *parent, const char *name,
+ *                   const TQStringList &args );
  *         ...
  *     };
  *
@@ -253,8 +253,8 @@ protected:
  *     {
  *         Q_ OBJECT
  *     public:
- *         MyDialogComponent( QWidget *parentWidget, const char *name,
- *                            const QStringList &args );
+ *         MyDialogComponent( TQWidget *parentWidget, const char *name,
+ *                            const TQStringList &args );
  *         ...
  *     };
  *
@@ -263,7 +263,7 @@ protected:
  * \endcode
  */
 template <class Product, class ProductListTail>
-class KGenericFactory< KTypeList<Product, ProductListTail>, QObject >
+class KGenericFactory< KTypeList<Product, ProductListTail>, TQObject >
     : public KLibFactory,
       public KGenericFactoryBase< KTypeList<Product, ProductListTail> >
 {
@@ -281,8 +281,8 @@ public:
 
 
 protected:
-    virtual QObject *createObject( QObject *parent, const char *name,
-                                   const char *className, const QStringList &args )
+    virtual TQObject *createObject( TQObject *parent, const char *name,
+                                   const char *className, const TQStringList &args )
     {
         this->initializeMessageCatalogue();
         return KDEPrivate::MultiFactory< KTypeList< Product, ProductListTail > >
@@ -301,21 +301,21 @@ protected:
  * Note that each class in the specified in the typelist template argument
  * needs to provide a certain constructor:
  * <ul>
- *     <li>If the class is derived from QObject then it needs to have
+ *     <li>If the class is derived from TQObject then it needs to have
  *         a constructor like:
- *         <code>MyClass( QObject *parent, const char *name,
- *                        const QStringList &args );</code>
- *     <li>If the class is derived from QWidget then it needs to have
+ *         <code>MyClass( TQObject *parent, const char *name,
+ *                        const TQStringList &args );</code>
+ *     <li>If the class is derived from TQWidget then it needs to have
  *         a constructor like:
- *         <code>MyWidget( QWidget *parent, const char *name,
- *                         const QStringList &args);</code>
+ *         <code>MyWidget( TQWidget *parent, const char *name,
+ *                         const TQStringList &args);</code>
  *     <li>If the class is derived from KParts::Part then it needs to have
  *         a constructor like:
- *         <code>MyPart( QWidget *parentWidget, const char *widgetName,
- *                       QObject *parent, const char *name,
- *                       const QStringList &args );</code>
+ *         <code>MyPart( TQWidget *parentWidget, const char *widgetName,
+ *                       TQObject *parent, const char *name,
+ *                       const TQStringList &args );</code>
  * </ul>
- * The args QStringList passed to the constructor is the args string list
+ * The args TQStringList passed to the constructor is the args string list
  * that the caller passed to KLibFactory's create method.
  *
  * In addition upon instantiation this template provides a central
@@ -339,8 +339,8 @@ protected:
  *     {
  *         Q_ OBJECT
  *     public:
- *         MyPlugin( QObject *parent, const char *name,
- *                   const QStringList &args );
+ *         MyPlugin( TQObject *parent, const char *name,
+ *                   const TQStringList &args );
  *         ...
  *     };
  *
@@ -348,8 +348,8 @@ protected:
  *     {
  *         Q_ OBJECT
  *     public:
- *         MyDialogComponent( QWidget *parentWidget, const char *name,
- *                            const QStringList &args );
+ *         MyDialogComponent( TQWidget *parentWidget, const char *name,
+ *                            const TQStringList &args );
  *         ...
  *     };
  *
@@ -377,8 +377,8 @@ public:
 
 
 protected:
-    virtual QObject *createObject( QObject *parent, const char *name,
-                                   const char *className, const QStringList &args )
+    virtual TQObject *createObject( TQObject *parent, const char *name,
+                                   const char *className, const TQStringList &args )
     {
         this->initializeMessageCatalogue();
         return KDEPrivate::MultiFactory< KTypeList< Product, ProductListTail >,

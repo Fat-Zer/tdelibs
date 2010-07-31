@@ -20,18 +20,18 @@
 #define _KCONFIG_TEST_H
 
 #include <kapplication.h>
-#include <qdialog.h>
-#include <qfile.h>
-#include <qfileinfo.h>
+#include <tqdialog.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
 #include <kdebug.h>
 #include <ksimpleconfig.h>
-#include <qtextstream.h>
+#include <tqtextstream.h>
 
 // Standard Qt widgets
 
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqpushbutton.h>
 
 #include <kconfig.h>
 
@@ -43,7 +43,7 @@ class KConfigTestView : public QDialog
 {
   Q_OBJECT
 public:
-  KConfigTestView( QWidget *parent=0, const char *name=0 );
+  KConfigTestView( TQWidget *parent=0, const char *name=0 );
   ~KConfigTestView();
 
 private slots:
@@ -53,20 +53,20 @@ private slots:
   void writeButtonClicked();
 
 private:
-  QLabel* pAppFileLabel;
-  QLineEdit* pAppFileEdit;
-  QLabel* pGroupLabel;
-  QLineEdit* pGroupEdit;
-  QLineEdit* pKeyEdit;
-  QLabel* pEqualsLabel;
-  QLineEdit* pValueEdit;
-  QPushButton* pWriteButton;
-  QLabel* pInfoLabel1, *pInfoLabel2;
-  QPushButton* pQuitButton;
+  TQLabel* pAppFileLabel;
+  TQLineEdit* pAppFileEdit;
+  TQLabel* pGroupLabel;
+  TQLineEdit* pGroupEdit;
+  TQLineEdit* pKeyEdit;
+  TQLabel* pEqualsLabel;
+  TQLineEdit* pValueEdit;
+  TQPushButton* pWriteButton;
+  TQLabel* pInfoLabel1, *pInfoLabel2;
+  TQPushButton* pQuitButton;
 
   KConfig* pConfig;
-  QFile* pFile;
-  QTextStream* pStream;
+  TQFile* pFile;
+  TQTextStream* pStream;
 };
 
 #endif

@@ -26,34 +26,34 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdio.h>
 #include <ctype.h>
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 static DCOPClient* dcop = 0;
 
 void startApp(const char *_app, int argc, const char **args)
 {
     const char *function = 0;
-    QString app = QString::fromLatin1(_app);
+    TQString app = TQString::fromLatin1(_app);
     if (app.endsWith(".desktop"))
-       function = "start_service_by_desktop_path(QString,QStringList)";
+       function = "start_service_by_desktop_path(TQString,TQStringList)";
     else
-       function = "start_service_by_desktop_name(QString,QStringList)";
-    QStringList URLs;
+       function = "start_service_by_desktop_name(TQString,TQStringList)";
+    TQStringList URLs;
     for(int i = 0; i < argc; i++)
     {
-       URLs.append(QString::fromLocal8Bit(args[i]));
+       URLs.append(TQString::fromLocal8Bit(args[i]));
     }
 
-    QByteArray data, replyData;
-    QCString replyType;
-    QDataStream arg(data, IO_WriteOnly);
+    TQByteArray data, replyData;
+    TQCString replyType;
+    TQDataStream arg(data, IO_WriteOnly);
     arg << app << URLs;
 
     if ( !dcop->call( "klauncher", "klauncher", function,  data, replyType, replyData) ) {
 	qWarning( "call failed");
         exit(1);
     } else {
-	QDataStream reply(replyData, IO_ReadOnly);
+	TQDataStream reply(replyData, IO_ReadOnly);
 
         if ( replyType != "serviceResult" )
         {
@@ -61,8 +61,8 @@ void startApp(const char *_app, int argc, const char **args)
             exit(1);
         }
         int result;
-        QCString dcopName;
-        QString error;
+        TQCString dcopName;
+        TQString error;
         reply >> result >> dcopName >> error;
         if (result != 0)
         {
@@ -89,9 +89,9 @@ int main( int argc, char** argv )
     client.attach();
     dcop = &client;
 
-    QCString app;
-    QCString objid;
-    QCString function;
+    TQCString app;
+    TQCString objid;
+    TQCString function;
     /*char **args = 0;*/
     startApp( argv[1], argc - 2, (const char**)&argv[2] );
 

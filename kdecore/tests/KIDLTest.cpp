@@ -3,17 +3,17 @@
 #include <kapplication.h>
 #include <dcopclient.h>
 
-KIDLTest::KIDLTest( const QCString& id )
+KIDLTest::KIDLTest( const TQCString& id )
     : DCOPObject( id )
 {
 }
 
-QString KIDLTest::hello( const QString& name )
+TQString KIDLTest::hello( const TQString& name )
 {
     qDebug("Du heter %s", name.latin1() );
     qDebug("Ha det %s", name.latin1() );
 	
-    return QString("Jeg heter KIDLTest");
+    return TQString("Jeg heter KIDLTest");
 }
 
 int main( int argc, char** argv )

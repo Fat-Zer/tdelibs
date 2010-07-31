@@ -26,7 +26,7 @@
 #define KHTMLVIEW_H
 
 // qt includes and classes
-#include <qscrollview.h>
+#include <tqscrollview.h>
 
 #include <kdelibs_export.h>
 
@@ -71,7 +71,7 @@ class KHTMLPart;
 class KHTMLViewPrivate;
 
 /**
- * Renders and displays HTML in a QScrollView.
+ * Renders and displays HTML in a TQScrollView.
  *
  * Suitable for use as an application's main view.
  **/
@@ -103,7 +103,7 @@ public:
     /**
      * Constructs a KHTMLView.
      */
-    KHTMLView( KHTMLPart *part, QWidget *parent, const char *name=0 );
+    KHTMLView( KHTMLPart *part, TQWidget *parent, const char *name=0 );
     virtual ~KHTMLView();
 
     /**
@@ -185,32 +185,32 @@ signals:
 protected:
     void clear();
 
-    virtual void resizeEvent ( QResizeEvent * event );
-    virtual void showEvent ( QShowEvent * );
-    virtual void hideEvent ( QHideEvent *);
+    virtual void resizeEvent ( TQResizeEvent * event );
+    virtual void showEvent ( TQShowEvent * );
+    virtual void hideEvent ( TQHideEvent *);
     virtual bool focusNextPrevChild( bool next );
-    virtual void drawContents ( QPainter * p, int clipx, int clipy, int clipw, int cliph );
-    virtual void drawContents( QPainter* );
-    virtual void viewportMousePressEvent( QMouseEvent * );
-    virtual void focusInEvent( QFocusEvent * );
-    virtual void focusOutEvent( QFocusEvent * );
-    virtual void viewportMouseDoubleClickEvent( QMouseEvent * );
-    virtual void viewportMouseMoveEvent(QMouseEvent *);
-    virtual void viewportMouseReleaseEvent(QMouseEvent *);
-    virtual void viewportResizeEvent(QResizeEvent*);
+    virtual void drawContents ( TQPainter * p, int clipx, int clipy, int clipw, int cliph );
+    virtual void drawContents( TQPainter* );
+    virtual void viewportMousePressEvent( TQMouseEvent * );
+    virtual void focusInEvent( TQFocusEvent * );
+    virtual void focusOutEvent( TQFocusEvent * );
+    virtual void viewportMouseDoubleClickEvent( TQMouseEvent * );
+    virtual void viewportMouseMoveEvent(TQMouseEvent *);
+    virtual void viewportMouseReleaseEvent(TQMouseEvent *);
+    virtual void viewportResizeEvent(TQResizeEvent*);
 #ifndef QT_NO_WHEELEVENT
-    virtual void viewportWheelEvent(QWheelEvent*);
+    virtual void viewportWheelEvent(TQWheelEvent*);
 #endif
-    virtual void dragEnterEvent( QDragEnterEvent* );
-    virtual void dropEvent( QDropEvent* );
-    virtual void closeEvent ( QCloseEvent * );
-    virtual bool eventFilter(QObject *, QEvent *);
+    virtual void dragEnterEvent( TQDragEnterEvent* );
+    virtual void dropEvent( TQDropEvent* );
+    virtual void closeEvent ( TQCloseEvent * );
+    virtual bool eventFilter(TQObject *, TQEvent *);
 
-    void keyPressEvent( QKeyEvent *_ke );
-    void keyReleaseEvent ( QKeyEvent *_ke );
-    void contentsContextMenuEvent ( QContextMenuEvent *_ce );
+    void keyPressEvent( TQKeyEvent *_ke );
+    void keyReleaseEvent ( TQKeyEvent *_ke );
+    void contentsContextMenuEvent ( TQContextMenuEvent *_ce );
     void doAutoScroll();
-    void timerEvent ( QTimerEvent * );
+    void timerEvent ( TQTimerEvent * );
 protected slots:
     void slotPaletteChanged();
     void slotScrollBarMoved();
@@ -241,21 +241,21 @@ private:
     bool dialogsAllowed();
 
     /**
-     * Paints the HTML document to a QPainter.
+     * Paints the HTML document to a TQPainter.
      * The document will be scaled to match the width of
      * rc and clipped to fit in the height.
      * yOff determines the vertical offset in the document to start with.
      * more, if nonzero will be set to true if the documents extends
      * beyond the rc or false if everything below yOff was painted.
      **/
-    void paint(QPainter *p, const QRect &rc, int yOff = 0, bool *more = 0);
+    void paint(TQPainter *p, const TQRect &rc, int yOff = 0, bool *more = 0);
 
 #if 0
     /**
-     * Paints the HTML document to a QPainter.
+     * Paints the HTML document to a TQPainter.
      * The document will be scaled to match the width.
      **/
-    void paint(QPainter *p, int width);
+    void paint(TQPainter *p, int width);
 #endif
 
     /**
@@ -268,18 +268,18 @@ private:
      * you only need to enable the media type in the view and if necessary
      * add the media type dependent changes to the renderer.
      */
-    void setMediaType( const QString &medium );
-    QString mediaType() const;
+    void setMediaType( const TQString &medium );
+    TQString mediaType() const;
 
     bool pagedMode() const;
 
-    bool scrollTo(const QRect &);
+    bool scrollTo(const TQRect &);
 
     bool focusNextPrevNode(bool next);
-    bool handleAccessKey(const QKeyEvent* ev);
-    bool focusNodeWithAccessKey(QChar c, KHTMLView* caller = NULL);
-    QMap< DOM::ElementImpl*, QChar > buildFallbackAccessKeys() const;
-    void displayAccessKeys( KHTMLView* caller, KHTMLView* origview, QValueVector< QChar >& taken, bool use_fallbacks );
+    bool handleAccessKey(const TQKeyEvent* ev);
+    bool focusNodeWithAccessKey(TQChar c, KHTMLView* caller = NULL);
+    TQMap< DOM::ElementImpl*, TQChar > buildFallbackAccessKeys() const;
+    void displayAccessKeys( KHTMLView* caller, KHTMLView* origview, TQValueVector< TQChar >& taken, bool use_fallbacks );
 
     void useSlowRepaints();
 
@@ -292,19 +292,19 @@ private:
 
     void restoreScrollBar();
 
-    QStringList formCompletionItems(const QString &name) const;
-    void clearCompletionHistory(const QString& name);
-    void addFormCompletionItem(const QString &name, const QString &value);
+    TQStringList formCompletionItems(const TQString &name) const;
+    void clearCompletionHistory(const TQString& name);
+    void addFormCompletionItem(const TQString &name, const TQString &value);
 
-    void addNonPasswordStorableSite( const QString& host );
-    bool nonPasswordStorableSite( const QString& host ) const;
+    void addNonPasswordStorableSite( const TQString& host );
+    bool nonPasswordStorableSite( const TQString& host ) const;
 
     bool dispatchMouseEvent(int eventId, DOM::NodeImpl *targetNode,
 			    DOM::NodeImpl *targetNodeNonShared, bool cancelable,
-			    int detail,QMouseEvent *_mouse, bool setUnder,
+			    int detail,TQMouseEvent *_mouse, bool setUnder,
 			    int mouseEventType);
-    bool dispatchKeyEvent( QKeyEvent *_ke );
-    bool dispatchKeyEventHelper( QKeyEvent *_ke, bool generate_keypress );
+    bool dispatchKeyEvent( TQKeyEvent *_ke );
+    bool dispatchKeyEventHelper( TQKeyEvent *_ke, bool generate_keypress );
 
     void complete( bool pendingAction );
 
@@ -460,7 +460,7 @@ private:
     /**
      * Evaluates key presses on editable nodes.
      */
-    void caretKeyPressEvent(QKeyEvent *);
+    void caretKeyPressEvent(TQKeyEvent *);
 
     // -- caret navigation member functions
 
@@ -597,7 +597,7 @@ private:
     KHTMLPart *m_part;
     KHTMLViewPrivate *d;
 
-    QString m_medium;   // media type
+    TQString m_medium;   // media type
 };
 
 #endif

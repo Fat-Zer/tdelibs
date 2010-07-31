@@ -22,7 +22,7 @@
 #include <kdebug.h>
 #include <kcmdlineargs.h>
 
-#include <qeventloop.h>
+#include <tqeventloop.h>
 
 #include <assert.h>
 #include <stdlib.h>
@@ -50,12 +50,12 @@ void TestLDAPClient::runAll()
   testIntevation();
 }
 
-bool TestLDAPClient::check(const QString& txt, QString a, QString b)
+bool TestLDAPClient::check(const TQString& txt, TQString a, TQString b)
 {
   if (a.isEmpty())
-    a = QString::null;
+    a = TQString::null;
   if (b.isEmpty())
-    b = QString::null;
+    b = TQString::null;
   if (a == b) {
     kdDebug() << txt << " : checking '" << a << "' against expected value '" << b << "'... " << "ok" << endl;
   }
@@ -82,50 +82,50 @@ void TestLDAPClient::testIntevation()
   mClient->setBase( "o=Intevation GmbH,c=de" );
 
   // Same list as in kaddressbook's ldapsearchdialog
-  QStringList attrs;
+  TQStringList attrs;
   attrs << "l" << "Company" << "co" << "department" << "description" << "mail" << "facsimileTelephoneNumber" << "cn" << "homePhone" << "mobile" << "o" << "pager" << "postalAddress" << "st" << "street" << "title" << "uid" << "telephoneNumber" << "postalCode" << "objectClass";
   // the list from ldapclient.cpp
   //attrs << "cn" << "mail" << "givenname" << "sn" << "objectClass";
   mClient->setAttrs( attrs );
 
   // Taken from LdapSearch
-  //QString mSearchText = QString::fromUtf8( "Till" );
-  //QString filter = QString( "&(|(objectclass=person)(objectclass=groupOfNames)(mail=*))(|(cn=%1*)(mail=%2*)(givenName=%3*)(sn=%4*))" )
+  //TQString mSearchText = TQString::fromUtf8( "Till" );
+  //TQString filter = TQString( "&(|(objectclass=person)(objectclass=groupOfNames)(mail=*))(|(cn=%1*)(mail=%2*)(givenName=%3*)(sn=%4*))" )
   //                 .arg( mSearchText ).arg( mSearchText ).arg( mSearchText ).arg( mSearchText );
 
   // For some reason a fromUtf8 broke the search for me (no results).
   // But this certainly looks fishy, it might break on non-utf8 systems.
-  QString filter = "&(|(objectclass=person)(objectclass=groupofnames)(mail=*))(|(cn=*Ägypten MDK*)(sn=*Ägypten MDK*))";
+  TQString filter = "&(|(objectclass=person)(objectclass=groupofnames)(mail=*))(|(cn=*Ägypten MDK*)(sn=*Ägypten MDK*))";
 
-  connect( mClient, SIGNAL( result( const KABC::LdapObject& ) ),
-           this, SLOT( slotLDAPResult( const KABC::LdapObject& ) ) );
-  connect( mClient, SIGNAL( done() ),
-           this, SLOT( slotLDAPDone() ) );
-  connect( mClient, SIGNAL( error( const QString& ) ),
-           this, SLOT( slotLDAPError( const QString& ) ) );
+  connect( mClient, TQT_SIGNAL( result( const KABC::LdapObject& ) ),
+           this, TQT_SLOT( slotLDAPResult( const KABC::LdapObject& ) ) );
+  connect( mClient, TQT_SIGNAL( done() ),
+           this, TQT_SLOT( slotLDAPDone() ) );
+  connect( mClient, TQT_SIGNAL( error( const TQString& ) ),
+           this, TQT_SLOT( slotLDAPError( const TQString& ) ) );
   mClient->startQuery( filter );
   kapp->eventLoop()->enterLoop();
   delete mClient; mClient = 0;
 }
 
 // from kaddressbook... ugly though...
-static QString asUtf8( const QByteArray &val )
+static TQString asUtf8( const TQByteArray &val )
 {
   if ( val.isEmpty() )
-    return QString::null;
+    return TQString::null;
 
   const char *data = val.data();
 
-  //QString::fromUtf8() bug workaround
+  //TQString::fromUtf8() bug workaround
   if ( data[ val.size() - 1 ] == '\0' )
-    return QString::fromUtf8( data, val.size() - 1 );
+    return TQString::fromUtf8( data, val.size() - 1 );
   else
-    return QString::fromUtf8( data, val.size() );
+    return TQString::fromUtf8( data, val.size() );
 }
 
-static QString join( const KABC::LdapAttrValue& lst, const QString& sep )
+static TQString join( const KABC::LdapAttrValue& lst, const TQString& sep )
 {
-  QString res;
+  TQString res;
   bool already = false;
   for ( KABC::LdapAttrValue::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
     if ( already )
@@ -138,15 +138,15 @@ static QString join( const KABC::LdapAttrValue& lst, const QString& sep )
 
 void TestLDAPClient::slotLDAPResult( const KABC::LdapObject& obj )
 {
-  QString cn = join( obj.attrs[ "cn" ], ", " );
+  TQString cn = join( obj.attrs[ "cn" ], ", " );
   kdDebug() << " cn:" << cn << endl;
   assert( !obj.attrs[ "mail" ].isEmpty() );
-  QString mail = join( obj.attrs[ "mail" ], ", " );
+  TQString mail = join( obj.attrs[ "mail" ], ", " );
   kdDebug() << " mail:" << mail << endl;
   assert( mail.contains( '@' ) );
 }
 
-void TestLDAPClient::slotLDAPError( const QString& err )
+void TestLDAPClient::slotLDAPError( const TQString& err )
 {
   kdDebug() << k_funcinfo << err << endl;
   ::exit( 1 );

@@ -7,24 +7,24 @@
 #ifndef __KBLEND_TEST_H
 #define __KBLEND_TEST_H
 
-#include <qwidget.h>
-#include <qimage.h>
+#include <tqwidget.h>
+#include <tqimage.h>
 #include <knuminput.h>
 
 class KDesatWidget : public QWidget
 {
 Q_OBJECT
 public:
-    KDesatWidget(QWidget *parent=0, const char *name=0);
+    KDesatWidget(TQWidget *parent=0, const char *name=0);
 
 public slots:
     void change(double);
 
 protected:
-    void paintEvent(QPaintEvent *ev);
+    void paintEvent(TQPaintEvent *ev);
 private:
     float desat_value;
-    QImage image;
+    TQImage image;
     KDoubleNumInput *slide;
 };
 

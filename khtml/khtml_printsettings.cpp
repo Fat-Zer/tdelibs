@@ -20,15 +20,15 @@
 #include "khtml_printsettings.h"
 
 #include <klocale.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
-KHTMLPrintSettings::KHTMLPrintSettings(QWidget *parent, const char *name)
+KHTMLPrintSettings::KHTMLPrintSettings(TQWidget *parent, const char *name)
 : KPrintDialogPage(parent, name)
 {
 	//WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThisPrintImages = i18n( "<qt>"
+	TQString whatsThisPrintImages = i18n( "<qt>"
 		"<p><strong>'Print images'</strong></p>"
 		"<p>"
 		"If this checkbox is enabled, images contained in the HTML page will "
@@ -40,7 +40,7 @@ KHTMLPrintSettings::KHTMLPrintSettings(QWidget *parent, const char *name)
 		"less ink or toner."
 		"</p>"
 						" </qt>" );
-	QString whatsThisPrintHeader = i18n( "<qt>"
+	TQString whatsThisPrintHeader = i18n( "<qt>"
 		"<p><strong>'Print header'</strong></p>"
 		"<p>"
 		"If this checkbox is enabled, the printout of the HTML document will "
@@ -53,7 +53,7 @@ KHTMLPrintSettings::KHTMLPrintSettings(QWidget *parent, const char *name)
 		"not contain such a header line."
 		"</p>"
 						" </qt>" );
-	QString whatsThisPrinterFriendlyMode = i18n( "<qt>"
+	TQString whatsThisPrinterFriendlyMode = i18n( "<qt>"
 		"<p><strong>'Printerfriendly mode'</strong></p>"
 		"<p>"
 		"If this checkbox is enabled, the printout of the HTML document will "
@@ -70,17 +70,17 @@ KHTMLPrintSettings::KHTMLPrintSettings(QWidget *parent, const char *name)
 						" </qt>" );
 	setTitle(i18n("HTML Settings"));
 
-	m_printfriendly = new QCheckBox(i18n("Printer friendly mode (black text, no background)"), this);
-	QWhatsThis::add(m_printfriendly, whatsThisPrinterFriendlyMode);
+	m_printfriendly = new TQCheckBox(i18n("Printer friendly mode (black text, no background)"), this);
+	TQWhatsThis::add(m_printfriendly, whatsThisPrinterFriendlyMode);
 	m_printfriendly->setChecked(true);
-	m_printimages = new QCheckBox(i18n("Print images"), this);
-	QWhatsThis::add(m_printimages, whatsThisPrintImages);
+	m_printimages = new TQCheckBox(i18n("Print images"), this);
+	TQWhatsThis::add(m_printimages, whatsThisPrintImages);
 	m_printimages->setChecked(true);
-	m_printheader = new QCheckBox(i18n("Print header"), this);
-	QWhatsThis::add(m_printheader, whatsThisPrintHeader);
+	m_printheader = new TQCheckBox(i18n("Print header"), this);
+	TQWhatsThis::add(m_printheader, whatsThisPrintHeader);
 	m_printheader->setChecked(true);
 
-	QVBoxLayout	*l0 = new QVBoxLayout(this, 0, 10);
+	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
 	l0->addWidget(m_printfriendly);
 	l0->addWidget(m_printimages);
 	l0->addWidget(m_printheader);
@@ -91,14 +91,14 @@ KHTMLPrintSettings::~KHTMLPrintSettings()
 {
 }
 
-void KHTMLPrintSettings::getOptions(QMap<QString,QString>& opts, bool /*incldef*/)
+void KHTMLPrintSettings::getOptions(TQMap<TQString,TQString>& opts, bool /*incldef*/)
 {
 	opts["app-khtml-printfriendly"] = (m_printfriendly->isChecked() ? "true" : "false");
 	opts["app-khtml-printimages"] = (m_printimages->isChecked() ? "true" : "false");
 	opts["app-khtml-printheader"] = (m_printheader->isChecked() ? "true" : "false");
 }
 
-void KHTMLPrintSettings::setOptions(const QMap<QString,QString>& opts)
+void KHTMLPrintSettings::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	m_printfriendly->setChecked(opts["app-khtml-printfriendly"] != "false");
 	m_printimages->setChecked(opts["app-khtml-printimages"] != "false");

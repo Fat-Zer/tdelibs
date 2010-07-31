@@ -22,7 +22,7 @@
 
 #include <kdelibs_export.h>
 #include <klistview.h>
-#include <qstring.h>
+#include <tqstring.h>
 
 class KTimezone;
 class KTimezones;
@@ -70,7 +70,7 @@ public:
      * @param db The timezone database to use. If 0, the system timezone
      *           database is used.
      */
-    KTimezoneWidget(QWidget *parent = 0, const char *name = 0, KTimezones *db = 0);
+    KTimezoneWidget(TQWidget *parent = 0, const char *name = 0, KTimezones *db = 0);
 
     /**
      * Destroys the timezone selection widget.
@@ -78,12 +78,12 @@ public:
     virtual ~KTimezoneWidget();
 
     /**
-     * Returns the currently selected timezones. See QListView::selectionChanged().
+     * Returns the currently selected timezones. See TQListView::selectionChanged().
      *
      * @return a list of timezone names, in the format used by the database
      *         supplied to the {@link KTimezoneWidget() } constructor.
      */
-    QStringList selection() const;
+    TQStringList selection() const;
 
     /**
      * Select/deselect the named timezone.
@@ -91,7 +91,7 @@ public:
      * @param zone The timezone name to be selected. Ignored if not recognised!
      * @param selected The new selection state.
      */
-    void setSelected(const QString &zone, bool selected);
+    void setSelected(const TQString &zone, bool selected);
 
     /**
      * Format a timezone name in a standardised manner. The returned value is
@@ -103,7 +103,7 @@ public:
      *
      * @return formatted timezone name.
      */
-    static QString displayName(const KTimezone *zone);
+    static TQString displayName(const KTimezone *zone);
 
 private:
     KTimezoneWidgetPrivate *d;

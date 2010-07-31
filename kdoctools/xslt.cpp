@@ -7,8 +7,8 @@
 #include <libxml/catalog.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <qdir.h>
-#include <qregexp.h>
+#include <tqdir.h>
+#include <tqregexp.h>
 #include <xslt.h>
 #include <kinstance.h>
 #include "kio_help.h"
@@ -16,7 +16,7 @@
 #include <assert.h>
 #include <kfilterbase.h>
 #include <kfilterdev.h>
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 #include <stdlib.h>
 #include <config.h>
 #include <stdarg.h>
@@ -25,7 +25,7 @@
 #include <gzip/kgzipfilter.h>
 #include <bzip2/kbzip2filter.h>
 #include <klibloader.h>
-#include <qvaluevector.h>
+#include <tqvaluevector.h>
 
 #if !defined( SIMPLE_XSLT )
 extern HelpProtocol *slave;
@@ -36,21 +36,21 @@ extern HelpProtocol *slave;
 
 int writeToQString(void * context, const char * buffer, int len)
 {
-    QString *t = (QString*)context;
-    *t += QString::fromUtf8(buffer, len);
+    TQString *t = (TQString*)context;
+    *t += TQString::fromUtf8(buffer, len);
     return len;
 }
 
 int closeQString(void * context) {
-    QString *t = (QString*)context;
+    TQString *t = (TQString*)context;
     *t += '\n';
     return 0;
 }
 
-QString transform( const QString &pat, const QString& tss,
-                   const QValueVector<const char *> &params )
+TQString transform( const TQString &pat, const TQString& tss,
+                   const TQValueVector<const char *> &params )
 {
-    QString parsed;
+    TQString parsed;
 
     INFO(i18n("Parsing stylesheet"));
 
@@ -76,7 +76,7 @@ QString transform( const QString &pat, const QString& tss,
         return parsed;
 
     INFO(i18n("Applying stylesheet"));
-    QValueVector<const char *> p = params;
+    TQValueVector<const char *> p = params;
     p.append( NULL );
     xmlDocPtr res = xsltApplyStylesheet(style_sheet, doc, const_cast<const char **>(&p[0]));
     xmlFreeDoc(doc);
@@ -113,9 +113,9 @@ xmlParserInputPtr meinExternalEntityLoader(const char *URL, const char *ID,
     if (!qstrcmp(ID, "-//OASIS//DTD XML DocBook V4.1.2//EN"))
 	URL = "docbook/xml-dtd-4.1.2/docbookx.dtd";
 
-    QString file;
-    if (KStandardDirs::exists( QDir::currentDirPath() + "/" + URL ) )
-        file = QDir::currentDirPath() + "/" + URL;
+    TQString file;
+    if (KStandardDirs::exists( TQDir::currentDirPath() + "/" + URL ) )
+        file = TQDir::currentDirPath() + "/" + URL;
     else
         file = locate("dtd", URL);
 
@@ -130,14 +130,14 @@ xmlParserInputPtr meinExternalEntityLoader(const char *URL, const char *ID,
 }
 */
 
-QString splitOut(const QString &parsed, int index)
+TQString splitOut(const TQString &parsed, int index)
 {
     int start_index = index + 1;
     while (parsed.at(start_index - 1) != '>') start_index++;
 
     int inside = 0;
 
-    QString filedata;
+    TQString filedata;
 
     while (true) {
         int endindex = parsed.find("</FILENAME>", index);
@@ -175,12 +175,12 @@ QString splitOut(const QString &parsed, int index)
         filedata = filedata.left(index) + filedata.mid(endindex);
     }
 
-    // filedata.replace(QRegExp(">"), "\n>");
+    // filedata.replace(TQRegExp(">"), "\n>");
     return filedata;
 }
 
-void fillInstance(KInstance &ins, const QString &srcdir) {
-    QString catalogs;
+void fillInstance(KInstance &ins, const TQString &srcdir) {
+    TQString catalogs;
 
     if ( srcdir.isEmpty() ) {
         catalogs += ins.dirs()->findResource("data", "ksgmltools2/customization/catalog");
@@ -197,9 +197,9 @@ void fillInstance(KInstance &ins, const QString &srcdir) {
 
 extern "C" void *init_kbzip2filter();
 
-static QIODevice *getBZip2device(const QString &fileName )
+static TQIODevice *getBZip2device(const TQString &fileName )
 {
-    QFile * f = new QFile( fileName );
+    TQFile * f = new TQFile( fileName );
     KLibFactory * factory = static_cast<KLibFactory*>(init_kbzip2filter());
     KFilterBase * base = static_cast<KFilterBase*>( factory->create(0, "bzip2" ) );
 
@@ -211,9 +211,9 @@ static QIODevice *getBZip2device(const QString &fileName )
     return 0;
 }
 
-bool saveToCache( const QString &contents, const QString &filename )
+bool saveToCache( const TQString &contents, const TQString &filename )
 {
-    QIODevice *fd = ::getBZip2device(filename);
+    TQIODevice *fd = ::getBZip2device(filename);
     if ( !fd )
         return false;
 
@@ -229,8 +229,8 @@ bool saveToCache( const QString &contents, const QString &filename )
     return true;
 }
 
-static bool readCache( const QString &filename,
-                       const QString &cache, QString &output)
+static bool readCache( const TQString &filename,
+                       const TQString &cache, TQString &output)
 {
     kdDebug( 7119 ) << "verifyCache " << filename << " " << cache << endl;
     if ( !compareTimeStamps( filename, cache ) )
@@ -239,14 +239,14 @@ static bool readCache( const QString &filename,
         return false;
 
     kdDebug( 7119 ) << "create filter" << endl;
-    QIODevice *fd = ::getBZip2device(cache);
+    TQIODevice *fd = ::getBZip2device(cache);
     if ( !fd )
         return false;
 
     if (!fd->open(IO_ReadOnly))
     {
        delete fd;
-       QFile::remove(cache);
+       TQFile::remove(cache);
        return false;
     }
 
@@ -254,7 +254,7 @@ static bool readCache( const QString &filename,
 
     char buffer[32000];
     int n;
-    QCString text;
+    TQCString text;
     // Also end loop in case of error, when -1 is returned
     while ( ( n = fd->readBlock(buffer, 31900) ) > 0)
     {
@@ -264,7 +264,7 @@ static bool readCache( const QString &filename,
     kdDebug( 7119 ) << "read " << text.length() << endl;
     fd->close();
 
-    output = QString::fromUtf8( text );
+    output = TQString::fromUtf8( text );
     delete fd;
 
     if (n == -1)
@@ -275,14 +275,14 @@ static bool readCache( const QString &filename,
     return true;
 }
 
-QString lookForCache( const QString &filename )
+TQString lookForCache( const TQString &filename )
 {
     kdDebug() << "lookForCache " << filename << endl;
     assert( filename.endsWith( ".docbook" ) );
     assert( filename.at( 0 ) == '/' );
 
-    QString cache = filename.left( filename.length() - 7 );
-    QString output;
+    TQString cache = filename.left( filename.length() - 7 );
+    TQString output;
     if ( readCache( filename, cache + "cache.bz2", output) )
         return output;
     if ( readCache( filename,
@@ -291,35 +291,35 @@ QString lookForCache( const QString &filename )
                                  "cache.bz2" ), output ) )
         return output;
 
-    return QString::null;
+    return TQString::null;
 }
 
-bool compareTimeStamps( const QString &older, const QString &newer )
+bool compareTimeStamps( const TQString &older, const TQString &newer )
 {
-    QFileInfo _older( older );
-    QFileInfo _newer( newer );
+    TQFileInfo _older( older );
+    TQFileInfo _newer( newer );
     assert( _older.exists() );
     if ( !_newer.exists() )
         return false;
     return ( _newer.lastModified() > _older.lastModified() );
 }
 
-QCString fromUnicode( const QString &data )
+TQCString fromUnicode( const TQString &data )
 {
-    QTextCodec *locale = QTextCodec::codecForLocale();
-    QCString result;
+    TQTextCodec *locale = TQTextCodec::codecForLocale();
+    TQCString result;
     char buffer[30000];
     uint buffer_len = 0;
     uint len = 0;
     uint offset = 0;
     const int part_len = 5000;
 
-    QString part;
+    TQString part;
 
     while ( offset < data.length() )
     {
         part = data.mid( offset, part_len );
-        QCString test = locale->fromUnicode( part );
+        TQCString test = locale->fromUnicode( part );
         if ( locale->toUnicode( test ) == part ) {
             result += test;
             offset += part_len;
@@ -328,14 +328,14 @@ QCString fromUnicode( const QString &data )
         len = part.length();
         buffer_len = 0;
         for ( uint i = 0; i < len; i++ ) {
-            QCString test = locale->fromUnicode( part.mid( i, 1 ) );
+            TQCString test = locale->fromUnicode( part.mid( i, 1 ) );
             if ( locale->toUnicode( test ) == part.mid( i, 1 ) ) {
                 if (buffer_len + test.length() + 1 > sizeof(buffer))
                    break;
                 strcpy( buffer + buffer_len, test.data() );
                 buffer_len += test.length();
             } else {
-                QString res;
+                TQString res;
                 res.sprintf( "&#%d;", part.at( i ).unicode() );
                 test = locale->fromUnicode( res );
                 if (buffer_len + test.length() + 1 > sizeof(buffer))
@@ -344,16 +344,16 @@ QCString fromUnicode( const QString &data )
                 buffer_len += test.length();
             }
         }
-        result += QCString( buffer, buffer_len + 1);
+        result += TQCString( buffer, buffer_len + 1);
         offset += part_len;
     }
     return result;
 }
 
-void replaceCharsetHeader( QString &output )
+void replaceCharsetHeader( TQString &output )
 {
-    QString name = QTextCodec::codecForLocale()->name();
-    name.replace( QString( "ISO " ), "iso-" );
-    output.replace( QString( "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">" ),
-                    QString( "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=%1\">" ).arg( name ) );
+    TQString name = TQTextCodec::codecForLocale()->name();
+    name.replace( TQString( "ISO " ), "iso-" );
+    output.replace( TQString( "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">" ),
+                    TQString( "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=%1\">" ).arg( name ) );
 }

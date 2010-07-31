@@ -20,7 +20,7 @@
 #ifndef _KACCEL_H
 #define _KACCEL_H
 
-#include <qaccel.h>
+#include <tqaccel.h>
 #include <kshortcut.h>
 #include <kstdaccel.h>
 #include "kdelibs_export.h"
@@ -42,7 +42,7 @@ class KAccelPrivate;
  * A KAccel contains a list of accelerator actions.
  *
  * For example, CTRL+Key_P could be a shortcut for printing a document. The key
- * codes are listed in qnamespace.h. "Print" could be the action name for printing.
+ * codes are listed in tqnamespace.h. "Print" could be the action name for printing.
  * The action name identifies the shortcut in configuration files and the
  * KKeyChooser GUI.
  *
@@ -74,9 +74,9 @@ class KAccelPrivate;
  * // Insert an action "Scroll Up" which is associated with the "Up" key:
  * pAccel->insert( "Scroll Up", i18n("Scroll up"),
  *                       i18n("Scroll up the current document by one line."),
- *                       Qt::Key_Up, this, SLOT(slotScrollUp()) );
+ *                       Qt::Key_Up, this, TQT_SLOT(slotScrollUp()) );
  * // Insert an standard acclerator action.
- * pAccel->insert( KStdAccel::Print, this, SLOT(slotPrint()) );
+ * pAccel->insert( KStdAccel::Print, this, TQT_SLOT(slotPrint()) );
  *
  * // Update the shortcuts by read any user-defined settings from the
  * // application's config file.
@@ -101,7 +101,7 @@ class KDECORE_EXPORT KAccel : public QAccel
 	 * @param pParent the parent and widget to watch for key strokes
 	 * @param psName the name of the QObject
 	 */
-	KAccel( QWidget* pParent, const char* psName = 0 );
+	KAccel( TQWidget* pParent, const char* psName = 0 );
 
 	/**
 	 * Creates a new KAccel that watches @p watch.
@@ -110,7 +110,7 @@ class KDECORE_EXPORT KAccel : public QAccel
 	 * @param parent the parent of the QObject
 	 * @param psName the name of the QObject
 	 */
-	KAccel( QWidget* watch, QObject* parent, const char* psName = 0 );
+	KAccel( TQWidget* watch, TQObject* parent, const char* psName = 0 );
 	virtual ~KAccel();
 
 	/**
@@ -129,7 +129,7 @@ class KDECORE_EXPORT KAccel : public QAccel
 
 	/**
 	 * Checks whether the KAccel is active.
-	 * @return true if the QAccel is enabled
+	 * @return true if the TQAccel is enabled
 	 */
 	bool isEnabled();
 
@@ -159,7 +159,7 @@ class KDECORE_EXPORT KAccel : public QAccel
 	 * insert( "Do Something", i18n("Do Something"),
 	 *   i18n("This action allows you to do something really great with this program to "
 	 *        "the currently open document."),
-	 *   ALT+Key_D, this, SLOT(slotDoSomething()) );
+	 *   ALT+Key_D, this, TQT_SLOT(slotDoSomething()) );
 	 *\endcode
 	 *
 	 * @param sAction The internal name of the action.
@@ -172,17 +172,17 @@ class KDECORE_EXPORT KAccel : public QAccel
 	 * @param bConfigurable Allow the user to change this shortcut if set to 'true'.
 	 * @param bEnabled The action will be activated by the shortcut if set to 'true'.
 	 */
-	KAccelAction* insert( const QString& sAction, const QString& sLabel, const QString& sWhatsThis,
+	KAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
 	                 const KShortcut& cutDef,
-	                 const QObject* pObjSlot, const char* psMethodSlot,
+	                 const TQObject* pObjSlot, const char* psMethodSlot,
 	                 bool bConfigurable = true, bool bEnabled = true );
 	/**
 	 * Same as first insert(), but with separate shortcuts defined for
 	 * 3- and 4- modifier defaults.
 	 */
-	KAccelAction* insert( const QString& sAction, const QString& sLabel, const QString& sWhatsThis,
+	KAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
 	                 const KShortcut& cutDef3, const KShortcut& cutDef4,
-	                 const QObject* pObjSlot, const char* psMethodSlot,
+	                 const TQObject* pObjSlot, const char* psMethodSlot,
 	                 bool bConfigurable = true, bool bEnabled = true );
 	/**
 	 * This is an overloaded function provided for convenience.
@@ -191,7 +191,7 @@ class KDECORE_EXPORT KAccel : public QAccel
 	 *
 	 * Usage:
 	 * \code
-	 * insert( i18n("Do Something"), ALT+Key_D, this, SLOT(slotDoSomething()) );
+	 * insert( i18n("Do Something"), ALT+Key_D, this, TQT_SLOT(slotDoSomething()) );
 	 * \endcode
 	 *
 	 * @param psAction The name AND label of the action.
@@ -202,7 +202,7 @@ class KDECORE_EXPORT KAccel : public QAccel
 	 * @param bEnabled The action will be activated by the shortcut if set to 'true'.
 	 */
 	KAccelAction* insert( const char* psAction, const KShortcut& cutDef,
-	                 const QObject* pObjSlot, const char* psMethodSlot,
+	                 const TQObject* pObjSlot, const char* psMethodSlot,
 	                 bool bConfigurable = true, bool bEnabled = true );
 	/**
 	 * Similar to the first insert() method, but with the action
@@ -211,7 +211,7 @@ class KDECORE_EXPORT KAccel : public QAccel
 	 * @see KStdAccel.
 	 */
 	KAccelAction* insert( KStdAccel::StdAccel id,
-	                 const QObject* pObjSlot, const char* psMethodSlot,
+	                 const TQObject* pObjSlot, const char* psMethodSlot,
 	                 bool bConfigurable = true, bool bEnabled = true );
 
         /**
@@ -220,7 +220,7 @@ class KDECORE_EXPORT KAccel : public QAccel
 	 * @param sAction the name of the action to remove
 	 * @return true if successful, false otherwise
          */
-	bool remove( const QString& sAction );
+	bool remove( const TQString& sAction );
 
 	/**
 	 * Updates the connections of the accelerations after changing them.
@@ -237,7 +237,7 @@ class KDECORE_EXPORT KAccel : public QAccel
 	 * @param sAction the name of the action
 	 * @return the action's shortcut, or a null shortcut if not found
 	 */
-	const KShortcut& shortcut( const QString& sAction ) const;
+	const KShortcut& shortcut( const TQString& sAction ) const;
 
 	/**
 	 * Set the shortcut to be associated with the action named by @p sAction.
@@ -245,7 +245,7 @@ class KDECORE_EXPORT KAccel : public QAccel
 	 * @param shortcut the shortcut to set
 	 * @return true if successful, false otherwise
 	 */
-	bool setShortcut( const QString& sAction, const KShortcut &shortcut );
+	bool setShortcut( const TQString& sAction, const KShortcut &shortcut );
 
 	/**
 	 * Set the slot to be called when the shortcut of the action named
@@ -255,28 +255,28 @@ class KDECORE_EXPORT KAccel : public QAccel
 	 * @param psMethodSlot the name of the slot
 	 * @return true if successful, false otherwise
 	 */
-	bool setSlot( const QString& sAction, const QObject* pObjSlot, const char* psMethodSlot );
+	bool setSlot( const TQString& sAction, const TQObject* pObjSlot, const char* psMethodSlot );
 	/**
 	 * Enable or disable the action named by @p sAction.
 	 * @param sAction the action to en-/disable
 	 * @param bEnabled true to enable, false to disable
 	 * @return true if successful, false otherwise
 	 */
-	bool setEnabled( const QString& sAction, bool bEnabled );
+	bool setEnabled( const TQString& sAction, bool bEnabled );
 
 	/**
 	 * Returns the configuration group of the settings.
 	 * @return the configuration group
 	 * @see KConfig
 	 */
-	const QString& configGroup() const;
+	const TQString& configGroup() const;
 
 	/**
 	 * Returns the configuration group of the settings.
 	 * @param name the new configuration group
 	 * @see KConfig
 	 */
-	void setConfigGroup( const QString &name );
+	void setConfigGroup( const TQString &name );
 
 	/**
 	 * Read all shortcuts from @p pConfig, or (if @p pConfig
@@ -317,49 +317,49 @@ class KDECORE_EXPORT KAccel : public QAccel
 	/**
 	 * @deprecated use insert
 	 */
-	bool insertItem( const QString& sLabel, const QString& sAction,
+	bool insertItem( const TQString& sLabel, const TQString& sAction,
 	                 const char* psKey,
-	                 int nIDMenu = 0, QPopupMenu* pMenu = 0, bool bConfigurable = true ) KDE_DEPRECATED;
+	                 int nIDMenu = 0, TQPopupMenu* pMenu = 0, bool bConfigurable = true ) KDE_DEPRECATED;
 	/**
 	 * @deprecated use insert
 	 */
-	bool insertItem( const QString& sLabel, const QString& sAction,
+	bool insertItem( const TQString& sLabel, const TQString& sAction,
 	                 int key,
-	                 int nIDMenu = 0, QPopupMenu* pMenu = 0, bool bConfigurable = true ) KDE_DEPRECATED;
+	                 int nIDMenu = 0, TQPopupMenu* pMenu = 0, bool bConfigurable = true ) KDE_DEPRECATED;
 	/**
 	 * @deprecated use insert
 	 */
-	bool insertStdItem( KStdAccel::StdAccel id, const QString& descr = QString::null ) KDE_DEPRECATED;
+	bool insertStdItem( KStdAccel::StdAccel id, const TQString& descr = TQString::null ) KDE_DEPRECATED;
 	/**
 	 * @deprecated use insert
 	 */
-	bool connectItem( const QString& sAction, const QObject* pObjSlot, const char* psMethodSlot, bool bActivate = true ) KDE_DEPRECATED;
+	bool connectItem( const TQString& sAction, const TQObject* pObjSlot, const char* psMethodSlot, bool bActivate = true ) KDE_DEPRECATED;
 	/**
 	 * @deprecated use insert( accel, pObjSlot, psMethodSlot );
 	 *
 	 */
-	KDE_DEPRECATED bool connectItem( KStdAccel::StdAccel accel, const QObject* pObjSlot, const char* psMethodSlot )
+	KDE_DEPRECATED bool connectItem( KStdAccel::StdAccel accel, const TQObject* pObjSlot, const char* psMethodSlot )
 		{ return insert( accel, pObjSlot, psMethodSlot ); }
 	/**
 	 * @deprecated use remove
 	 */
-	bool removeItem( const QString& sAction ) KDE_DEPRECATED;
+	bool removeItem( const TQString& sAction ) KDE_DEPRECATED;
 	/**
 	 * @deprecated
 	 */
-	bool setItemEnabled( const QString& sAction, bool bEnable ) KDE_DEPRECATED;
+	bool setItemEnabled( const TQString& sAction, bool bEnable ) KDE_DEPRECATED;
 	/**
 	 * @deprecated see KDE3PORTING.html
 	 */
-	void changeMenuAccel( QPopupMenu *menu, int id, const QString& action ) KDE_DEPRECATED;
+	void changeMenuAccel( TQPopupMenu *menu, int id, const TQString& action ) KDE_DEPRECATED;
 	/**
 	 * @deprecated see KDE3PORTING.html
 	 */
-	void changeMenuAccel( QPopupMenu *menu, int id, KStdAccel::StdAccel accel ) KDE_DEPRECATED;
+	void changeMenuAccel( TQPopupMenu *menu, int id, KStdAccel::StdAccel accel ) KDE_DEPRECATED;
 	/**
 	 * @deprecated
 	 */
-	static int stringToKey( const QString& ) KDE_DEPRECATED;
+	static int stringToKey( const TQString& ) KDE_DEPRECATED;
 
 	/**
 	 * @deprecated  Use shortcut().
@@ -368,15 +368,15 @@ class KDECORE_EXPORT KAccel : public QAccel
 	 * @p action, or zero if either the action name cannot be
 	 * found or the current key is set to no key.
 	 */
-	int currentKey( const QString& action ) const KDE_DEPRECATED;
+	int currentKey( const TQString& action ) const KDE_DEPRECATED;
 
 	/**
 	 * @deprecated  Use actions().actionPtr().
 	 *
 	 * Return the name of the accelerator item with the keycode @p key,
-	 * or QString::null if the item cannot be found.
+	 * or TQString::null if the item cannot be found.
 	 */
-	QString findKey( int key ) const KDE_DEPRECATED;
+	TQString findKey( int key ) const KDE_DEPRECATED;
 #endif // !KDE_NO_COMPAT
 
  protected:

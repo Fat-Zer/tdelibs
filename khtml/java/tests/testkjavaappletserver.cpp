@@ -1,7 +1,7 @@
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <kdebug.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 
     KApplication app;
 
-    QString path_to_kdelibs = "/build/wynnw/kde-src";
+    TQString path_to_kdelibs = "/build/wynnw/kde-src";
 
     KJavaAppletWidget *a = new KJavaAppletWidget;
 

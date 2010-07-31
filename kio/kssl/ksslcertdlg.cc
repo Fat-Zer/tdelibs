@@ -22,12 +22,12 @@
 
 #include <kssl.h>
 
-#include <qlayout.h>
-#include <qradiobutton.h>
-#include <qcheckbox.h>
-#include <qlistview.h>
-#include <qframe.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqradiobutton.h>
+#include <tqcheckbox.h>
+#include <tqlistview.h>
+#include <tqframe.h>
+#include <tqlabel.h>
 
 #include <kapplication.h>
 #include <kglobal.h>
@@ -42,43 +42,43 @@
 class KSSLCertDlg::KSSLCertDlgPrivate {
 private:
     friend class KSSLCertDlg;
-    QLabel *p_message;
-    QPushButton *p_pb_dontsend;
+    TQLabel *p_message;
+    TQPushButton *p_pb_dontsend;
     bool p_send_flag;
 };
 
-KSSLCertDlg::KSSLCertDlg(QWidget *parent, const char *name, bool modal)
+KSSLCertDlg::KSSLCertDlg(TQWidget *parent, const char *name, bool modal)
  : KDialog(parent, name, modal), d(new KSSLCertDlgPrivate) {
 
-   QBoxLayout * grid = new QVBoxLayout( this, KDialog::marginHint(),
+   TQBoxLayout * grid = new TQVBoxLayout( this, KDialog::marginHint(),
                                               KDialog::spacingHint() );
 
-   d->p_message = new QLabel(QString::null, this);
+   d->p_message = new TQLabel(TQString::null, this);
    grid->addWidget(d->p_message);
    setHost(_host);
 
-   _certs = new QListView(this);
+   _certs = new TQListView(this);
    _certs->addColumn(i18n("Certificate"));
-   _certs->setResizeMode(QListView::LastColumn);
-   QFontMetrics fm( KGlobalSettings::generalFont() );
+   _certs->setResizeMode(TQListView::LastColumn);
+   TQFontMetrics fm( KGlobalSettings::generalFont() );
    _certs->setMinimumHeight(4*fm.height());
    grid->addWidget(_certs);
 
-   _save = new QCheckBox(i18n("Save selection for this host."), this);
+   _save = new TQCheckBox(i18n("Save selection for this host."), this);
    grid->addWidget(_save);
 
    grid->addWidget(new KSeparator(KSeparator::HLine, this));
 
-   QBoxLayout * h = new QHBoxLayout( grid );
+   TQBoxLayout * h = new TQHBoxLayout( grid );
    h->insertStretch(0);
 
    _ok = new KPushButton(i18n("Send certificate"), this);
    h->addWidget(_ok);
-   connect(_ok, SIGNAL(clicked()), SLOT(slotSend()));
+   connect(_ok, TQT_SIGNAL(clicked()), TQT_SLOT(slotSend()));
 
    d->p_pb_dontsend = new KPushButton(i18n("Do not send a certificate"), this);
    h->addWidget(d->p_pb_dontsend);
-   connect(d->p_pb_dontsend, SIGNAL(clicked()), SLOT(slotDont()));
+   connect(d->p_pb_dontsend, TQT_SIGNAL(clicked()), TQT_SLOT(slotDont()));
 
 #ifndef QT_NO_WIDGET_TOPEXTRA
    setCaption(i18n("KDE SSL Certificate Dialog"));
@@ -91,11 +91,11 @@ KSSLCertDlg::~KSSLCertDlg() {
 }
 
 
-void KSSLCertDlg::setup(QStringList certs, bool saveChecked, bool sendChecked) {
+void KSSLCertDlg::setup(TQStringList certs, bool saveChecked, bool sendChecked) {
 	setupDialog(certs, saveChecked, sendChecked);
 }
 
-void KSSLCertDlg::setupDialog(const QStringList& certs, bool saveChecked, bool sendChecked) {
+void KSSLCertDlg::setupDialog(const TQStringList& certs, bool saveChecked, bool sendChecked) {
   _save->setChecked(saveChecked);
   d->p_send_flag = sendChecked;
 
@@ -104,11 +104,11 @@ void KSSLCertDlg::setupDialog(const QStringList& certs, bool saveChecked, bool s
   else
     d->p_pb_dontsend->setDefault(true); // "do not send" is the "default action".
 
-  for (QStringList::ConstIterator i = certs.begin(); i != certs.end(); ++i) {
+  for (TQStringList::ConstIterator i = certs.begin(); i != certs.end(); ++i) {
     if ((*i).isEmpty())
       continue;
 
-    new QListViewItem(_certs, *i);
+    new TQListViewItem(_certs, *i);
   }
 
   _certs->setSelected(_certs->firstChild(), true);
@@ -125,16 +125,16 @@ bool KSSLCertDlg::wantsToSend() {
 }
 
 
-QString KSSLCertDlg::getChoice() {
-   QListViewItem *selected = _certs->selectedItem();
+TQString KSSLCertDlg::getChoice() {
+   TQListViewItem *selected = _certs->selectedItem();
    if (selected && d->p_send_flag)
 	return selected->text(0);
    else
-	return QString::null;
+	return TQString::null;
 }
 
 
-void KSSLCertDlg::setHost(const QString& host) {
+void KSSLCertDlg::setHost(const TQString& host) {
    _host = host;
    d->p_message->setText(i18n("The server <b>%1</b> requests a certificate.<p>"
 			     "Select a certificate to use from the list below:")
@@ -154,13 +154,13 @@ void KSSLCertDlg::slotDont() {
 }
 
 
-QDataStream& operator<<(QDataStream& s, const KSSLCertDlgRet& r) {
+TQDataStream& operator<<(TQDataStream& s, const KSSLCertDlgRet& r) {
    s << Q_INT8(r.ok?1:0) <<  r.choice << Q_INT8(r.save?1:0) << Q_INT8(r.send?1:0);
    return s;
 }
 
 
-QDataStream& operator>>(QDataStream& s, KSSLCertDlgRet& r) {
+TQDataStream& operator>>(TQDataStream& s, KSSLCertDlgRet& r) {
 Q_INT8 tmp;
    s >> tmp; r.ok = (tmp == 1);
    s >> r.choice;

@@ -57,14 +57,14 @@ namespace KIO {
          * no .desktop).
 	 * @return the list of available meta info plugins
          */
-        static QStringList availablePlugins();
+        static TQStringList availablePlugins();
 
         /**
          * Returns a list of all supported MIME types. The list can
          * contain entries like text/ * (without the space).
 	 * @return the list of MIME types that are supported
          */
-        static QStringList supportedMimeTypes();
+        static TQStringList supportedMimeTypes();
 
     signals:
         /**
@@ -89,11 +89,11 @@ namespace KIO {
 
     private slots:
         void start();
-        void slotMetaInfo(KIO::Job *, const QByteArray &);
+        void slotMetaInfo(KIO::Job *, const TQByteArray &);
 
     private:
         void determineNextFile();
-//        void saveMetaInfo(const QByteArray info);
+//        void saveMetaInfo(const TQByteArray info);
 
     private:
         struct MetaInfoJobPrivate *d;

@@ -26,11 +26,11 @@
 #include "gschecker.h"
 #include "kpipeprocess.h"
 
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qtextstream.h>
-#include <qmap.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqtextstream.h>
+#include <tqmap.h>
+#include <tqregexp.h>
 
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -45,11 +45,11 @@
 // only there to allow testing on my system. Should be removed
 // when everything has proven to be working and stable
 QString	lpdprefix = "";
-QString ptPrinterType(KMPrinter*);
+TQString ptPrinterType(KMPrinter*);
 
 //************************************************************************************************
 
-KMLpdManager::KMLpdManager(QObject *parent, const char *name)
+KMLpdManager::KMLpdManager(TQObject *parent, const char *name)
 : KMManager(parent,name)
 {
 	m_entries.setAutoDelete(true);
@@ -63,14 +63,14 @@ KMLpdManager::~KMLpdManager()
 {
 }
 
-QString KMLpdManager::driverDbCreationProgram()
+TQString KMLpdManager::driverDbCreationProgram()
 {
-	return QString::fromLatin1("make_driver_db_lpd");
+	return TQString::fromLatin1("make_driver_db_lpd");
 }
 
-QString KMLpdManager::driverDirectory()
+TQString KMLpdManager::driverDirectory()
 {
-	return QString::fromLatin1("/usr/lib/rhs/rhs-printfilters");
+	return TQString::fromLatin1("/usr/lib/rhs/rhs-printfilters");
 }
 
 bool KMLpdManager::completePrinter(KMPrinter *printer)
@@ -91,29 +91,29 @@ bool KMLpdManager::completePrinterShort(KMPrinter *printer)
 		KURL	url;
 		if (!entry->arg("rm").isEmpty())
 		{
-			url = QString::fromLatin1("lpd://%1/%2").arg(entry->arg("rm")).arg(entry->arg("rp"));
+			url = TQString::fromLatin1("lpd://%1/%2").arg(entry->arg("rm")).arg(entry->arg("rp"));
 			printer->setDescription(i18n("Remote LPD queue %1@%2").arg(entry->arg("rp")).arg(entry->arg("rm")));
 		}
 		else if (!lp.isEmpty() && lp != "/dev/null")
-			url = QString::fromLatin1("parallel:%1").arg(lp);
-		else if (QFile::exists(entry->arg("sd")+"/.config"))
+			url = TQString::fromLatin1("parallel:%1").arg(lp);
+		else if (TQFile::exists(entry->arg("sd")+"/.config"))
 		{
-			QMap<QString,QString>	map = loadPrinttoolCfgFile(entry->arg("sd")+"/.config");
+			TQMap<TQString,TQString>	map = loadPrinttoolCfgFile(entry->arg("sd")+"/.config");
 			if (type == "SMB")
 			{
-				QStringList	l = QStringList::split('\\',map["share"],false);
+				QStringList	l = TQStringList::split('\\',map["share"],false);
 				if (map["workgroup"].isEmpty())
-					url = QString::fromLatin1("smb://%1/%2").arg(l[0]).arg(l[1]);
+					url = TQString::fromLatin1("smb://%1/%2").arg(l[0]).arg(l[1]);
 				else
-					url = QString::fromLatin1("smb://%1/%2/%3").arg(map["workgroup"]).arg(l[0]).arg(l[1]);
+					url = TQString::fromLatin1("smb://%1/%2/%3").arg(map["workgroup"]).arg(l[0]).arg(l[1]);
 				url.setUser(map["user"]);
 				url.setPass(map["password"]);
 			}
 			else if (type == "DIRECT")
-				url = QString::fromLatin1("socket://%1:%2").arg(map["printer_ip"]).arg(map["port"]);
+				url = TQString::fromLatin1("socket://%1:%2").arg(map["printer_ip"]).arg(map["port"]);
 			else if (type == "NCP")
 			{
-				url = QString::fromLatin1("ncp://%1/%2").arg(map["server"]).arg(map["queue"]);
+				url = TQString::fromLatin1("ncp://%1/%2").arg(map["server"]).arg(map["queue"]);
 				url.setUser(map["user"]);
 				url.setPass(map["password"]);
 			}
@@ -146,12 +146,12 @@ bool KMLpdManager::createPrinter(KMPrinter *printer)
 	{
 		// remote lpd queue
 		ent->m_args["rm"] = printer->device().host();
-		ent->m_args["rp"] = printer->device().path().replace("/",QString::fromLatin1(""));
+		ent->m_args["rp"] = printer->device().path().replace("/",TQString::fromLatin1(""));
 		ent->m_args["lpd_bounce"] = "true";
-		ent->m_comment = QString::fromLatin1("##PRINTTOOL3## REMOTE");
+		ent->m_comment = TQString::fromLatin1("##PRINTTOOL3## REMOTE");
 	}
 	ent->m_args["mx"] = (printer->option("mx").isEmpty() ? "#0" : printer->option("mx"));
-	ent->m_args["sh"] = QString::null;
+	ent->m_args["sh"] = TQString::null;
 	// create spool directory (if necessary) and update PrintcapEntry object
 	if (!createSpooldir(ent))
 	{
@@ -184,10 +184,10 @@ bool KMLpdManager::createPrinter(KMPrinter *printer)
 	}
 
 	// 4) change permissions of spool directory
-	QCString cmd = "chmod -R o-rwx,g+rwX ";
-	cmd += QFile::encodeName(KProcess::quote(ent->arg("sd")));
+	TQCString cmd = "chmod -R o-rwx,g+rwX ";
+	cmd += TQFile::encodeName(KProcess::quote(ent->arg("sd")));
 	cmd += "&& chown -R lp.lp ";
-	cmd += QFile::encodeName(KProcess::quote(ent->arg("sd")));
+	cmd += TQFile::encodeName(KProcess::quote(ent->arg("sd")));
 	if (system(cmd.data()) != 0)
 	{
 		setErrorMsg(i18n("Unable to set correct permissions on spool directory %1 for printer <b>%2</b>.").arg(ent->arg("sd")).arg(ent->m_name));
@@ -208,8 +208,8 @@ bool KMLpdManager::removePrinter(KMPrinter *printer)
 			m_entries.insert(ent->m_name,ent);
 			return false;
 		}
-		QCString cmd = "rm -rf ";
-		cmd += QFile::encodeName(KProcess::quote(ent->arg("sd")));
+		TQCString cmd = "rm -rf ";
+		cmd += TQFile::encodeName(KProcess::quote(ent->arg("sd")));
 		system(cmd.data());
 		delete ent;
 		return true;
@@ -259,9 +259,9 @@ bool KMLpdManager::disablePrinter(KMPrinter *printer)
 void KMLpdManager::listPrinters()
 {
 	m_entries.clear();
-	loadPrintcapFile(QString::fromLatin1("%1/etc/printcap").arg(lpdprefix));
+	loadPrintcapFile(TQString::fromLatin1("%1/etc/printcap").arg(lpdprefix));
 
-	QDictIterator<PrintcapEntry>	it(m_entries);
+	TQDictIterator<PrintcapEntry>	it(m_entries);
 	for (;it.current();++it)
 	{
 		KMPrinter	*printer = it.current()->createPrinter();
@@ -271,7 +271,7 @@ void KMLpdManager::listPrinters()
 	checkStatus();
 }
 
-QString KMLpdManager::programName(int f)
+TQString KMLpdManager::programName(int f)
 {
 	KConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("LPD");
@@ -281,7 +281,7 @@ QString KMLpdManager::programName(int f)
 		case 1: return conf->readPathEntry("LpdQueue","lpq");
 		case 2: return conf->readPathEntry("LpdRemove","lprm");
 	}
-	return QString::null;
+	return TQString::null;
 }
 
 void KMLpdManager::checkStatus()
@@ -312,7 +312,7 @@ void KMLpdManager::checkStatus()
 
 bool KMLpdManager::writePrinters()
 {
-	if (!writePrintcapFile(QString::fromLatin1("%1/etc/printcap").arg(lpdprefix)))
+	if (!writePrintcapFile(TQString::fromLatin1("%1/etc/printcap").arg(lpdprefix)))
 	{
 		setErrorMsg(i18n("Unable to write printcap file."));
 		return false;
@@ -320,7 +320,7 @@ bool KMLpdManager::writePrinters()
 	return true;
 }
 
-void KMLpdManager::loadPrintcapFile(const QString& filename)
+void KMLpdManager::loadPrintcapFile(const TQString& filename)
 {
 	QFile	f(filename);
 	if (f.exists() && f.open(IO_ReadOnly))
@@ -348,14 +348,14 @@ void KMLpdManager::loadPrintcapFile(const QString& filename)
 	}
 }
 
-bool KMLpdManager::writePrintcapFile(const QString& filename)
+bool KMLpdManager::writePrintcapFile(const TQString& filename)
 {
 	QFile	f(filename);
 	if (f.open(IO_WriteOnly))
 	{
 		QTextStream	t(&f);
 		t << "# File generated by KDE print (LPD plugin).\n#Don't edit by hand." << endl << endl;
-		QDictIterator<PrintcapEntry>	it(m_entries);
+		TQDictIterator<PrintcapEntry>	it(m_entries);
 		for (;it.current();++it)
 			it.current()->writeEntry(t);
 		return true;
@@ -363,7 +363,7 @@ bool KMLpdManager::writePrintcapFile(const QString& filename)
 	return false;
 }
 
-PrinttoolEntry* KMLpdManager::findPrinttoolEntry(const QString& name)
+PrinttoolEntry* KMLpdManager::findPrinttoolEntry(const TQString& name)
 {
 	if (m_ptentries.count() == 0)
 		loadPrinttoolDb(driverDirectory()+"/printerdb");
@@ -373,7 +373,7 @@ PrinttoolEntry* KMLpdManager::findPrinttoolEntry(const QString& name)
 	return ent;
 }
 
-void KMLpdManager::loadPrinttoolDb(const QString& filename)
+void KMLpdManager::loadPrinttoolDb(const TQString& filename)
 {
 	QFile	f(filename);
 	if (f.exists() && f.open(IO_ReadOnly))
@@ -404,7 +404,7 @@ DrMain* KMLpdManager::loadDbDriver(KMDBEntry *entry)
 	return NULL;
 }
 
-PrintcapEntry* KMLpdManager::findPrintcapEntry(const QString& name)
+PrintcapEntry* KMLpdManager::findPrintcapEntry(const TQString& name)
 {
 	PrintcapEntry	*ent = m_entries.find(name);
 	if (!ent)
@@ -420,9 +420,9 @@ DrMain* KMLpdManager::loadPrinterDriver(KMPrinter *printer, bool config)
 
 	// check for printtool driver (only for configuration)
 	QString	sd = entry->arg("sd"), dr(entry->comment(7));
-	if (QFile::exists(sd+"/postscript.cfg") && config && !dr.isEmpty())
+	if (TQFile::exists(sd+"/postscript.cfg") && config && !dr.isEmpty())
 	{
-		QMap<QString,QString>	map = loadPrinttoolCfgFile(sd+"/postscript.cfg");
+		TQMap<TQString,TQString>	map = loadPrinttoolCfgFile(sd+"/postscript.cfg");
 		PrinttoolEntry	*ptentry = findPrinttoolEntry(dr);
 		if (!ptentry)
 			return NULL;
@@ -443,7 +443,7 @@ DrMain* KMLpdManager::loadPrinterDriver(KMPrinter *printer, bool config)
 	return NULL;
 }
 
-bool KMLpdManager::checkGsDriver(const QString& gsdriver)
+bool KMLpdManager::checkGsDriver(const TQString& gsdriver)
 {
 	if (gsdriver == "ppa" || gsdriver == "POSTSCRIPT" || gsdriver == "TEXT")
 		return true;
@@ -455,10 +455,10 @@ bool KMLpdManager::checkGsDriver(const QString& gsdriver)
 	return true;
 }
 
-QMap<QString,QString> KMLpdManager::loadPrinttoolCfgFile(const QString& filename)
+TQMap<TQString,TQString> KMLpdManager::loadPrinttoolCfgFile(const TQString& filename)
 {
 	QFile	f(filename);
-	QMap<QString,QString>	map;
+	TQMap<TQString,TQString>	map;
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
 		QTextStream	t(&f);
@@ -485,11 +485,11 @@ QMap<QString,QString> KMLpdManager::loadPrinttoolCfgFile(const QString& filename
 	return map;
 }
 
-bool KMLpdManager::savePrinttoolCfgFile(const QString& templatefile, const QString& dirname, const QMap<QString,QString>& options)
+bool KMLpdManager::savePrinttoolCfgFile(const TQString& templatefile, const TQString& dirname, const TQMap<TQString,TQString>& options)
 {
 	// defines input and output file
-	QString	fname = QFileInfo(templatefile).fileName();
-	fname.replace(QRegExp("\\.in$"),QString::fromLatin1(""));
+	QString	fname = TQFileInfo(templatefile).fileName();
+	fname.replace(TQRegExp("\\.in$"),TQString::fromLatin1(""));
 	QFile	fin(templatefile);
 	QFile	fout(dirname + "/" + fname);
 	if (fin.exists() && fin.open(IO_ReadOnly) && fout.open(IO_WriteOnly))
@@ -508,7 +508,7 @@ bool KMLpdManager::savePrinttoolCfgFile(const QString& templatefile, const QStri
 			if (line.startsWith("export "))
 			{
 				tout << "export ";
-				line.replace(0,7,QString::fromLatin1(""));
+				line.replace(0,7,TQString::fromLatin1(""));
 			}
 			if ((p=line.find('=')) != -1)
 			{
@@ -533,7 +533,7 @@ bool KMLpdManager::savePrinterDriver(KMPrinter *printer, DrMain *driver)
 
 	if (driver->get("drtype") == "printtool" && !spooldir.isEmpty())
 	{
-		QMap<QString,QString>	options;
+		TQMap<TQString,TQString>	options;
 		driver->getOptions(options,true);
 		// add some standard options
 		options["DESIRED_TO"] = "ps";
@@ -543,15 +543,15 @@ bool KMLpdManager::savePrinterDriver(KMPrinter *printer, DrMain *driver)
 			return false;
 		QString	resol(options["RESOLUTION"]), color(options["COLOR"]);
 		// update entry comment to make printtool happy and save printcap file
-		ent->m_comment = QString::fromLatin1("##PRINTTOOL3## %1 %2 %3 %4 {} {%5} %6 {}").arg(options["PRINTER_TYPE"]).arg(options["GSDEVICE"]).arg((resol.isEmpty() ? QString::fromLatin1("NAxNA") : resol)).arg(options["PAPERSIZE"]).arg(driver->name()).arg((color.isEmpty() ? QString::fromLatin1("Default") : color.right(color.length()-15)));
-		ent->m_args["if"] = spooldir+QString::fromLatin1("/filter");
+		ent->m_comment = TQString::fromLatin1("##PRINTTOOL3## %1 %2 %3 %4 {} {%5} %6 {}").arg(options["PRINTER_TYPE"]).arg(options["GSDEVICE"]).arg((resol.isEmpty() ? TQString::fromLatin1("NAxNA") : resol)).arg(options["PAPERSIZE"]).arg(driver->name()).arg((color.isEmpty() ? TQString::fromLatin1("Default") : color.right(color.length()-15)));
+		ent->m_args["if"] = spooldir+TQString::fromLatin1("/filter");
 		if (!writePrinters())
 			return false;
 		// write various driver files using templates
-		QCString cmd = "cp ";
-		cmd += QFile::encodeName(KProcess::quote(driverDirectory()+"/master-filter"));
+		TQCString cmd = "cp ";
+		cmd += TQFile::encodeName(KProcess::quote(driverDirectory()+"/master-filter"));
 		cmd += " ";
-		cmd += QFile::encodeName(KProcess::quote(spooldir + "/filter"));
+		cmd += TQFile::encodeName(KProcess::quote(spooldir + "/filter"));
 		if (system(cmd.data()) == 0 &&
 		    savePrinttoolCfgFile(driverDirectory()+"/general.cfg.in",spooldir,options) &&
 		    savePrinttoolCfgFile(driverDirectory()+"/postscript.cfg.in",spooldir,options) &&
@@ -566,11 +566,11 @@ bool KMLpdManager::createPrinttoolEntry(KMPrinter *printer, PrintcapEntry *entry
 {
 	KURL	dev(printer->device());
 	QString	prot = dev.protocol(), sd(entry->arg("sd"));
-	entry->m_comment = QString::fromLatin1("##PRINTTOOL3## %1").arg(ptPrinterType(printer));
+	entry->m_comment = TQString::fromLatin1("##PRINTTOOL3## %1").arg(ptPrinterType(printer));
 	if (prot == "smb" || prot == "ncp" || prot == "socket")
 	{
-		entry->m_args["af"] = sd+QString::fromLatin1("/acct");
-		QFile	f(sd+QString::fromLatin1("/.config"));
+		entry->m_args["af"] = sd+TQString::fromLatin1("/acct");
+		QFile	f(sd+TQString::fromLatin1("/.config"));
 		if (f.open(IO_WriteOnly))
 		{
 			QTextStream	t(&f);
@@ -578,11 +578,11 @@ bool KMLpdManager::createPrinttoolEntry(KMPrinter *printer, PrintcapEntry *entry
 			{
 				t << "printer_ip=" << dev.host() << endl;
 				t << "port=" << dev.port() << endl;
-				entry->m_args["if"] = driverDirectory()+QString::fromLatin1("/directprint");
+				entry->m_args["if"] = driverDirectory()+TQString::fromLatin1("/directprint");
 			}
 			else if (prot == "smb")
 			{
-				QStringList	l = QStringList::split('/',dev.path(),false);
+				QStringList	l = TQStringList::split('/',dev.path(),false);
 				if (l.count() == 2)
 				{
 					t << "share='\\\\" << l[0] << '\\' << l[1] << '\'' << endl;
@@ -594,20 +594,20 @@ bool KMLpdManager::createPrinttoolEntry(KMPrinter *printer, PrintcapEntry *entry
 				t << "hostip=" << endl;
 				t << "user='" << dev.user() << '\'' << endl;
 				t << "password='" << dev.pass() << '\'' << endl;
-				t << "workgroup='" << (l.count() == 2 ? dev.host() : QString::fromLatin1("")) << '\'' << endl;
-				entry->m_args["if"] = driverDirectory()+QString::fromLatin1("/smbprint");
+				t << "workgroup='" << (l.count() == 2 ? dev.host() : TQString::fromLatin1("")) << '\'' << endl;
+				entry->m_args["if"] = driverDirectory()+TQString::fromLatin1("/smbprint");
 			}
 			else if (prot == "ncp")
 			{
 				t << "server=" << dev.host() << endl;
-				t << "queue=" << dev.path().replace("/",QString::fromLatin1("")) << endl;
+				t << "queue=" << dev.path().replace("/",TQString::fromLatin1("")) << endl;
 				t << "user=" << dev.user() << endl;
 				t << "password=" << dev.pass() << endl;
-				entry->m_args["if"] = driverDirectory()+QString::fromLatin1("/ncpprint");
+				entry->m_args["if"] = driverDirectory()+TQString::fromLatin1("/ncpprint");
 			}
 		}
 		else return false;
-		entry->m_args["lp"] = QString::fromLatin1("/dev/null");
+		entry->m_args["lp"] = TQString::fromLatin1("/dev/null");
 	}
 	else if (prot != "lpd")
 		entry->m_args["lp"] = dev.path();
@@ -618,14 +618,14 @@ bool KMLpdManager::createSpooldir(PrintcapEntry *entry)
 {
 	// first check if it has a "sd" defined
 	if (entry->arg("sd").isEmpty())
-		entry->m_args["sd"] = QString::fromLatin1("/var/spool/lpd/")+entry->m_name;
+		entry->m_args["sd"] = TQString::fromLatin1("/var/spool/lpd/")+entry->m_name;
 	QString	sd = entry->arg("sd");
 	if (!KStandardDirs::exists(sd))
 	{
 		if (!KStandardDirs::makeDir(sd,0750))
 			return false;
 		struct passwd	*lp_pw = getpwnam("lp");
-		if (lp_pw && chown(QFile::encodeName(sd),lp_pw->pw_uid,lp_pw->pw_gid) != 0)
+		if (lp_pw && chown(TQFile::encodeName(sd),lp_pw->pw_uid,lp_pw->pw_gid) != 0)
 			return false;
 	}
 	return true;
@@ -639,7 +639,7 @@ bool KMLpdManager::validateDbDriver(KMDBEntry *entry)
 
 //************************************************************************************************
 
-QString ptPrinterType(KMPrinter *p)
+TQString ptPrinterType(KMPrinter *p)
 {
 	QString	type, prot = p->device().protocol();
 	if (prot == "lpd") type = "REMOTE";

@@ -23,8 +23,8 @@
  */
 
 #include "kdiskfreesp.h"
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
 #include <kdebug.h>
 #include <kprocess.h>
@@ -43,15 +43,15 @@
 /***************************************************************************
   * constructor
 **/
-KDiskFreeSp::KDiskFreeSp(QObject *parent, const char *name)
-    : QObject(parent,name)
+KDiskFreeSp::KDiskFreeSp(TQObject *parent, const char *name)
+    : TQObject(parent,name)
 {
     dfProc = new KProcess(); Q_CHECK_PTR(dfProc);
     dfProc->setEnvironment("LANGUAGE", "C");
-    connect( dfProc, SIGNAL(receivedStdout(KProcess *, char *, int) ),
-             this, SLOT (receivedDFStdErrOut(KProcess *, char *, int)) );
-    connect(dfProc,SIGNAL(processExited(KProcess *) ),
-            this, SLOT(dfDone() ) );
+    connect( dfProc, TQT_SIGNAL(receivedStdout(KProcess *, char *, int) ),
+             this, TQT_SLOT (receivedDFStdErrOut(KProcess *, char *, int)) );
+    connect(dfProc,TQT_SIGNAL(processExited(KProcess *) ),
+            this, TQT_SLOT(dfDone() ) );
 
     readingDFStdErrOut=false;
 }
@@ -70,21 +70,21 @@ KDiskFreeSp::~KDiskFreeSp()
 **/
 void KDiskFreeSp::receivedDFStdErrOut(KProcess *, char *data, int len)
 {
-  QCString tmp(data,len+1);  // adds a zero-byte
+  TQCString tmp(data,len+1);  // adds a zero-byte
   dfStringErrOut.append(tmp);
 }
 
 /***************************************************************************
   * reads the df-commands results
 **/
-int KDiskFreeSp::readDF( const QString & mountPoint )
+int KDiskFreeSp::readDF( const TQString & mountPoint )
 {
   if (readingDFStdErrOut || dfProc->isRunning())
     return -1;
   m_mountPoint = mountPoint;
   dfStringErrOut=""; // yet no data received
   dfProc->clearArguments();
-  (*dfProc) << QString::fromLocal8Bit(DF_COMMAND) << QString::fromLocal8Bit(DF_ARGS);
+  (*dfProc) << TQString::fromLocal8Bit(DF_COMMAND) << TQString::fromLocal8Bit(DF_ARGS);
   if (!dfProc->start( KProcess::NotifyOnExit, KProcess::AllOutput ))
      kdError() << "could not execute ["<< DF_COMMAND << "]" << endl;
   return 1;
@@ -98,12 +98,12 @@ void KDiskFreeSp::dfDone()
 {
   readingDFStdErrOut=true;
 
-  QTextStream t (dfStringErrOut, IO_ReadOnly);
-  QString s=t.readLine();
-  if ( (s.isEmpty()) || ( s.left(10) != QString::fromLatin1("Filesystem") ) )
+  TQTextStream t (dfStringErrOut, IO_ReadOnly);
+  TQString s=t.readLine();
+  if ( (s.isEmpty()) || ( s.left(10) != TQString::fromLatin1("Filesystem") ) )
     kdError() << "Error running df command... got [" << s << "]" << endl;
   while ( !t.eof() ) {
-    QString u,v;
+    TQString u,v;
     s=t.readLine();
     s=s.simplifyWhiteSpace();
     if ( !s.isEmpty() ) {
@@ -119,7 +119,7 @@ void KDiskFreeSp::dfDone()
 
       //kdDebug(kfile_area) << "[" << s << "]" << endl;
 
-      //QString deviceName = s.left(s.find(BLANK));
+      //TQString deviceName = s.left(s.find(BLANK));
       s=s.remove(0,s.find(BLANK)+1 );
       //kdDebug(kfile_area) << "    DeviceName:    [" << deviceName << "]" << endl;
 
@@ -143,7 +143,7 @@ void KDiskFreeSp::dfDone()
 
 
       s=s.remove(0,s.find(BLANK)+1 );  // delete the capacity 94%
-      QString mountPoint = s.stripWhiteSpace();
+      TQString mountPoint = s.stripWhiteSpace();
       //kdDebug(kfile_area) << "    MountPoint:       [" << mountPoint << "]" << endl;
 
       if ( mountPoint == m_mountPoint )
@@ -160,10 +160,10 @@ void KDiskFreeSp::dfDone()
   delete this;
 }
 
-KDiskFreeSp * KDiskFreeSp::findUsageInfo( const QString & path )
+KDiskFreeSp * KDiskFreeSp::findUsageInfo( const TQString & path )
 {
     KDiskFreeSp * job = new KDiskFreeSp;
-    QString mountPoint = KIO::findPathMountPoint( path );
+    TQString mountPoint = KIO::findPathMountPoint( path );
     job->readDF( mountPoint );
     return job;
 }

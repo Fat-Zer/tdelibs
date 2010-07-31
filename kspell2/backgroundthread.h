@@ -23,8 +23,8 @@
 
 #include "broker.h"
 
-#include <qthread.h>
-#include <qmutex.h>
+#include <tqthread.h>
+#include <tqmutex.h>
 
 class QObject;
 
@@ -37,28 +37,28 @@ namespace KSpell2
     {
     public:
         BackgroundThread();
-        void setReceiver( QObject *parent );
-        QObject *receiver() const { return m_recv; }
+        void setReceiver( TQObject *parent );
+        TQObject *receiver() const { return m_recv; }
 
         void setBroker( const Broker::Ptr& broker );
         Broker *broker() const { return m_broker; }
 
-        void setText( const QString& );
-        QString text() const;
+        void setText( const TQString& );
+        TQString text() const;
 
-        void changeLanguage( const QString& );
-        QString language() const;
+        void changeLanguage( const TQString& );
+        TQString language() const;
 
         void setFilter( Filter *filter );
         Filter *filter() const { return m_filter; }
 
-        QStringList suggest( const QString& ) const;
+        TQStringList suggest( const TQString& ) const;
 
         virtual void run();
         void stop();
     private:
-        QObject    *m_recv;
-        QMutex      m_mutex;
+        TQObject    *m_recv;
+        TQMutex      m_mutex;
         Filter     *m_filter;
         Broker::Ptr m_broker;
         Dictionary *m_dict;

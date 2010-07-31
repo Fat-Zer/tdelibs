@@ -32,11 +32,11 @@ class KPTextPage : public KPrintDialogPage
 {
 	Q_OBJECT
 public:
-	KPTextPage(DrMain *driver, QWidget *parent = 0, const char *name = 0);
+	KPTextPage(DrMain *driver, TQWidget *parent = 0, const char *name = 0);
 	~KPTextPage();
 
-	void setOptions(const QMap<QString,QString>& opts);
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
+	void setOptions(const TQMap<TQString,TQString>& opts);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
 
 protected slots:
 	void slotPrettyChanged(int);

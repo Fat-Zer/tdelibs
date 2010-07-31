@@ -50,19 +50,19 @@ class KDEPRINT_EXPORT KMJobViewer : public KMainWindow, public KMPrinterPage, pu
 {
 	Q_OBJECT
 public:
-	KMJobViewer(QWidget *parent = 0, const char *name = 0);
+	KMJobViewer(TQWidget *parent = 0, const char *name = 0);
 	~KMJobViewer();
 
-	void setPrinter(const QString& prname);
+	void setPrinter(const TQString& prname);
 	void setPrinter(KMPrinter *p);
 	void refresh(bool reload = false);
-	QString printer() const;
+	TQString printer() const;
 	bool isSticky() const;
 
 signals:
 	void jobsShown(KMJobViewer*, bool hasJobs);
 	void refreshClicked();
-	void printerChanged(KMJobViewer*, const QString& prname);
+	void printerChanged(KMJobViewer*, const TQString& prname);
 	void viewerDestroyed(KMJobViewer*);
 
 public slots:
@@ -74,7 +74,7 @@ protected slots:
 	void slotResume();
 	void slotRemove();
 	void slotRestart();
-	void slotRightClicked(QListViewItem*,const QPoint&,int);
+	void slotRightClicked(TQListViewItem*,const TQPoint&,int);
 	void slotMove(int prID);
 	void slotPrinterSelected(int);
 	void slotShowCompleted(bool);
@@ -85,34 +85,34 @@ protected slots:
 	void slotUserOnly(bool);
 	void slotUserChanged();
 	void slotConfigure();
-	void slotDropped( QDropEvent*, QListViewItem* );
+	void slotDropped( TQDropEvent*, TQListViewItem* );
 
 protected:
 	void init();
 	void updateJobs();
 	void initActions();
-	JobItem* findItem(const QString& uri);
-	void jobSelection(QPtrList<KMJob>& l);
-	void send(int cmd, const QString& name, const QString& arg = QString::null);
+	JobItem* findItem(const TQString& uri);
+	void jobSelection(TQPtrList<KMJob>& l);
+	void send(int cmd, const TQString& name, const TQString& arg = TQString::null);
 	void loadPrinters();
 	void loadPluginActions();
 	void removePluginActions();
 	void reload();
 	//void aboutToReload();
-	void closeEvent(QCloseEvent*);
+	void closeEvent(TQCloseEvent*);
 	void triggerRefresh();
 	void addToManager();
 	void removeFromManager();
-	void buildPrinterMenu(QPopupMenu *menu, bool use_all = false, bool use_specials = false);
+	void buildPrinterMenu(TQPopupMenu *menu, bool use_all = false, bool use_specials = false);
 	void updateCaption();
 	void updateStatusBar();
 
 private:
 	KListView		*m_view;
-	QPtrList<KMJob>		m_jobs;
-	QPtrList<JobItem>		m_items;
+	TQPtrList<KMJob>		m_jobs;
+	TQPtrList<JobItem>		m_items;
 	QPopupMenu		*m_pop;
-	QPtrList<KMPrinter>	m_printers;
+	TQPtrList<KMPrinter>	m_printers;
 	QString	m_prname;
 	int	m_type;
 	QString	m_username;
@@ -121,7 +121,7 @@ private:
 	bool m_standalone;
 };
 
-inline QString KMJobViewer::printer() const
+inline TQString KMJobViewer::printer() const
 { return m_prname; }
 
 #endif

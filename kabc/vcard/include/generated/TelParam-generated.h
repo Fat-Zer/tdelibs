@@ -3,13 +3,13 @@
 public:
 TelParam();
 TelParam(const TelParam&);
-TelParam(const QCString&);
+TelParam(const TQCString&);
 TelParam & operator = (TelParam&);
-TelParam & operator = (const QCString&);
+TelParam & operator = (const TQCString&);
 bool operator ==(TelParam&);
 bool operator !=(TelParam& x) {return !(*this==x);}
-bool operator ==(const QCString& s) {TelParam a(s);return(*this==a);} 
-bool operator != (const QCString& s) {return !(*this == s);}
+bool operator ==(const TQCString& s) {TelParam a(s);return(*this==a);} 
+bool operator != (const TQCString& s) {return !(*this == s);}
 
 virtual ~TelParam();
 void parse() {if(!parsed_) _parse();parsed_=true;assembled_=false;}

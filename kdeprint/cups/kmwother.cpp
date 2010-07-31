@@ -23,40 +23,40 @@
 #include "kmmanager.h"
 #include "cupsinfos.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qheader.h>
-#include <qdict.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqheader.h>
+#include <tqdict.h>
 
 #include <klocale.h>
 #include <klistview.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 
-KMWOther::KMWOther(QWidget *parent, const char *name)
+KMWOther::KMWOther(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_ID = KMWizard::Custom+5;
 	m_title = i18n("URI Selection");
 	m_nextpage = KMWizard::Driver;
 
-	m_uri = new QLineEdit(this);
-	QLabel	*l1 = new QLabel(this);
+	m_uri = new TQLineEdit(this);
+	QLabel	*l1 = new TQLabel(this);
 	l1->setText(i18n("<p>Enter the URI corresponding to the printer to be installed. "
 	                 "Examples:</p><ul>"
 					 "<li>smb://[login[:passwd]@]server/printer</li>"
 					 "<li>lpd://server/queue</li>"
 					 "<li>parallel:/dev/lp0</li></ul>"));
-	QLabel	*l2 = new QLabel(i18n("URI:"), this);
+	QLabel	*l2 = new TQLabel(i18n("URI:"), this);
 	m_uriview = new KListView( this );
 	m_uriview->addColumn( "" );
 	m_uriview->header()->hide();
 	m_uriview->setSorting( -1 );
-	connect( m_uriview, SIGNAL( pressed( QListViewItem* ) ), SLOT( slotPressed( QListViewItem* ) ) );
+	connect( m_uriview, TQT_SIGNAL( pressed( TQListViewItem* ) ), TQT_SLOT( slotPressed( TQListViewItem* ) ) );
 
-	QVBoxLayout	*lay1 = new QVBoxLayout(this, 0, 15);
-	QVBoxLayout	*lay2 = new QVBoxLayout(0, 0, 5);
+	QVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 15);
+	QVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 5);
 	lay1->addWidget(l1);
 	lay1->addLayout(lay2);
 	lay1->addWidget( m_uriview );
@@ -70,29 +70,29 @@ void KMWOther::initPrinter(KMPrinter *p)
 
 	if ( m_uriview->childCount() == 0 )
 	{
-		QStringList l = KMManager::self()->detectLocalPrinters();
+		TQStringList l = KMManager::self()->detectLocalPrinters();
 		if ( l.isEmpty() || l.count() % 4 != 0 )
 			return;
 
-		QListViewItem *item = 0, *lastparent = 0, *root;
-		root = new QListViewItem( m_uriview, i18n( "CUPS Server %1:%2" ).arg( CupsInfos::self()->host() ).arg( CupsInfos::self()->port() ) );
+		TQListViewItem *item = 0, *lastparent = 0, *root;
+		root = new TQListViewItem( m_uriview, i18n( "CUPS Server %1:%2" ).arg( CupsInfos::self()->host() ).arg( CupsInfos::self()->port() ) );
 		root->setPixmap( 0, SmallIcon( "gear" ) );
 		root->setOpen( true );
-		QDict<QListViewItem> parents, last;
+		TQDict<TQListViewItem> parents, last;
 		parents.setAutoDelete( false );
 		last.setAutoDelete( false );
-		for ( QStringList::Iterator it=l.begin(); it!=l.end(); ++it )
+		for ( TQStringList::Iterator it=l.begin(); it!=l.end(); ++it )
 		{
-			QString cl = *it;
-			QString uri = *( ++it );
-			QString desc = *( ++it );
-			QString prt = *( ++it );
+			TQString cl = *it;
+			TQString uri = *( ++it );
+			TQString desc = *( ++it );
+			TQString prt = *( ++it );
 			if ( !prt.isEmpty() )
 				desc.append( " [" + prt + "]" );
-			QListViewItem *parent = parents.find( cl );
+			TQListViewItem *parent = parents.find( cl );
 			if ( !parent )
 			{
-				parent = new QListViewItem( root, lastparent, cl );
+				parent = new TQListViewItem( root, lastparent, cl );
 				parent->setOpen( true );
 				if ( cl == "network" )
 					parent->setPixmap( 0, SmallIcon( "network" ) );
@@ -105,7 +105,7 @@ void KMWOther::initPrinter(KMPrinter *p)
 				lastparent = parent;
 				parents.insert( cl, parent );
 			}
-			item = new QListViewItem( parent, last.find( cl ), desc, uri);
+			item = new TQListViewItem( parent, last.find( cl ), desc, uri);
 			last.insert( cl, item );
 		}
 	}
@@ -116,7 +116,7 @@ void KMWOther::updatePrinter(KMPrinter *p)
 	p->setDevice( m_uri->text() );
 }
 
-void KMWOther::slotPressed( QListViewItem *item )
+void KMWOther::slotPressed( TQListViewItem *item )
 {
 	if ( item && !item->text( 1 ).isEmpty() )
 		m_uri->setText( item->text( 1 ) );

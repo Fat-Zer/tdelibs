@@ -18,8 +18,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qlayout.h>
-#include <qpushbutton.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
 
 #include <kapplication.h>
 #include <kdirlister.h>
@@ -30,18 +30,18 @@
 #include <cstdlib>
 
 
-KDirListerTest::KDirListerTest( QWidget *parent, const char *name )
-  : QWidget( parent, name )
+KDirListerTest::KDirListerTest( TQWidget *parent, const char *name )
+  : TQWidget( parent, name )
 {
   lister = new KDirLister( false /* true */ );
   debug = new PrintSignals;
 
-  QVBoxLayout* layout = new QVBoxLayout( this );
+  TQVBoxLayout* layout = new TQVBoxLayout( this );
 
-  QPushButton* startH = new QPushButton( "Start listing $HOME", this );
-  QPushButton* startR= new QPushButton( "Start listing /", this );
-  QPushButton* test = new QPushButton( "Many", this );
-  QPushButton* startT = new QPushButton( "tarfile", this );
+  TQPushButton* startH = new TQPushButton( "Start listing $HOME", this );
+  TQPushButton* startR= new TQPushButton( "Start listing /", this );
+  TQPushButton* test = new TQPushButton( "Many", this );
+  TQPushButton* startT = new TQPushButton( "tarfile", this );
 
   layout->addWidget( startH );
   layout->addWidget( startR );
@@ -49,48 +49,48 @@ KDirListerTest::KDirListerTest( QWidget *parent, const char *name )
   layout->addWidget( test );
   resize( layout->sizeHint() );
 
-  connect( startR, SIGNAL( clicked() ), SLOT( startRoot() ) );
-  connect( startH, SIGNAL( clicked() ), SLOT( startHome() ) );
-  connect( startT, SIGNAL( clicked() ), SLOT( startTar() ) );
-  connect( test, SIGNAL( clicked() ), SLOT( test() ) );
+  connect( startR, TQT_SIGNAL( clicked() ), TQT_SLOT( startRoot() ) );
+  connect( startH, TQT_SIGNAL( clicked() ), TQT_SLOT( startHome() ) );
+  connect( startT, TQT_SIGNAL( clicked() ), TQT_SLOT( startTar() ) );
+  connect( test, TQT_SIGNAL( clicked() ), TQT_SLOT( test() ) );
 
-  connect( lister, SIGNAL( started( const KURL & ) ),
-           debug,  SLOT( started( const KURL & ) ) );
-  connect( lister, SIGNAL( completed() ),
-           debug,  SLOT( completed() ) );
-  connect( lister, SIGNAL( completed( const KURL & ) ),
-           debug,  SLOT( completed( const KURL & ) ) );
-  connect( lister, SIGNAL( canceled() ),
-           debug,  SLOT( canceled() ) );
-  connect( lister, SIGNAL( canceled( const KURL & ) ),
-           debug,  SLOT( canceled( const KURL & ) ) );
-  connect( lister, SIGNAL( redirection( const KURL & ) ),
-           debug,  SLOT( redirection( const KURL & ) ) );
-  connect( lister, SIGNAL( redirection( const KURL &, const KURL & ) ),
-           debug,  SLOT( redirection( const KURL &, const KURL & ) ) );
-  connect( lister, SIGNAL( clear() ),
-           debug,  SLOT( clear() ) );
-  connect( lister, SIGNAL( newItems( const KFileItemList & ) ),
-           debug,  SLOT( newItems( const KFileItemList & ) ) );
-  connect( lister, SIGNAL( itemsFilteredByMime( const KFileItemList & ) ),
-           debug,  SLOT( itemsFilteredByMime( const KFileItemList & ) ) );
-  connect( lister, SIGNAL( deleteItem( KFileItem * ) ),
-           debug,  SLOT( deleteItem( KFileItem * ) ) );
-  connect( lister, SIGNAL( refreshItems( const KFileItemList & ) ),
-           debug,  SLOT( refreshItems( const KFileItemList & ) ) );
-  connect( lister, SIGNAL( infoMessage( const QString& ) ),
-           debug,  SLOT( infoMessage( const QString& ) ) );
-  connect( lister, SIGNAL( percent( int ) ),
-           debug,  SLOT( percent( int ) ) );
-  connect( lister, SIGNAL( totalSize( KIO::filesize_t ) ),
-           debug,  SLOT( totalSize( KIO::filesize_t ) ) );
-  connect( lister, SIGNAL( processedSize( KIO::filesize_t ) ),
-           debug,  SLOT( processedSize( KIO::filesize_t ) ) );
-  connect( lister, SIGNAL( speed( int ) ),
-           debug,  SLOT( speed( int ) ) );
+  connect( lister, TQT_SIGNAL( started( const KURL & ) ),
+           debug,  TQT_SLOT( started( const KURL & ) ) );
+  connect( lister, TQT_SIGNAL( completed() ),
+           debug,  TQT_SLOT( completed() ) );
+  connect( lister, TQT_SIGNAL( completed( const KURL & ) ),
+           debug,  TQT_SLOT( completed( const KURL & ) ) );
+  connect( lister, TQT_SIGNAL( canceled() ),
+           debug,  TQT_SLOT( canceled() ) );
+  connect( lister, TQT_SIGNAL( canceled( const KURL & ) ),
+           debug,  TQT_SLOT( canceled( const KURL & ) ) );
+  connect( lister, TQT_SIGNAL( redirection( const KURL & ) ),
+           debug,  TQT_SLOT( redirection( const KURL & ) ) );
+  connect( lister, TQT_SIGNAL( redirection( const KURL &, const KURL & ) ),
+           debug,  TQT_SLOT( redirection( const KURL &, const KURL & ) ) );
+  connect( lister, TQT_SIGNAL( clear() ),
+           debug,  TQT_SLOT( clear() ) );
+  connect( lister, TQT_SIGNAL( newItems( const KFileItemList & ) ),
+           debug,  TQT_SLOT( newItems( const KFileItemList & ) ) );
+  connect( lister, TQT_SIGNAL( itemsFilteredByMime( const KFileItemList & ) ),
+           debug,  TQT_SLOT( itemsFilteredByMime( const KFileItemList & ) ) );
+  connect( lister, TQT_SIGNAL( deleteItem( KFileItem * ) ),
+           debug,  TQT_SLOT( deleteItem( KFileItem * ) ) );
+  connect( lister, TQT_SIGNAL( refreshItems( const KFileItemList & ) ),
+           debug,  TQT_SLOT( refreshItems( const KFileItemList & ) ) );
+  connect( lister, TQT_SIGNAL( infoMessage( const TQString& ) ),
+           debug,  TQT_SLOT( infoMessage( const TQString& ) ) );
+  connect( lister, TQT_SIGNAL( percent( int ) ),
+           debug,  TQT_SLOT( percent( int ) ) );
+  connect( lister, TQT_SIGNAL( totalSize( KIO::filesize_t ) ),
+           debug,  TQT_SLOT( totalSize( KIO::filesize_t ) ) );
+  connect( lister, TQT_SIGNAL( processedSize( KIO::filesize_t ) ),
+           debug,  TQT_SLOT( processedSize( KIO::filesize_t ) ) );
+  connect( lister, TQT_SIGNAL( speed( int ) ),
+           debug,  TQT_SLOT( speed( int ) ) );
 
-  connect( lister, SIGNAL( completed() ),
-           this,  SLOT( completed() ) );
+  connect( lister, TQT_SIGNAL( completed() ),
+           this,  TQT_SLOT( completed() ) );
 }
 
 KDirListerTest::~KDirListerTest()

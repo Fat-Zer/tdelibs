@@ -39,7 +39,7 @@ namespace KPAC
     {
     }
 
-    ProxyScout::ProxyScout( const QCString& name )
+    ProxyScout::ProxyScout( const TQCString& name )
         : KDEDModule( name ),
           m_instance( new KInstance( "proxyscout" ) ),
           m_downloader( 0 ),
@@ -54,7 +54,7 @@ namespace KPAC
         delete m_instance;
     }
 
-    QString ProxyScout::proxyForURL( const KURL& url )
+    TQString ProxyScout::proxyForURL( const KURL& url )
     {
         if ( m_suspendTime )
         {
@@ -70,12 +70,12 @@ namespace KPAC
         if ( m_downloader || startDownload() )
         {
             m_requestQueue.append( url );
-            return QString::null;
+            return TQString::null;
         }
         else return "DIRECT";
     }
 
-    ASYNC ProxyScout::blackListProxy( const QString& proxy )
+    ASYNC ProxyScout::blackListProxy( const TQString& proxy )
     {
         m_blackList[ proxy ] = std::time( 0 );
     }
@@ -105,8 +105,8 @@ namespace KPAC
             default:
                 return false;
         }
-        connect( m_downloader, SIGNAL( result( bool ) ),
-                 SLOT( downloadResult( bool ) ) );
+        connect( m_downloader, TQT_SIGNAL( result( bool ) ),
+                 TQT_SLOT( downloadResult( bool ) ) );
         return true;
     }
 
@@ -130,11 +130,11 @@ namespace KPAC
         for ( RequestQueue::ConstIterator it = m_requestQueue.begin();
               it != m_requestQueue.end(); ++it )
         {
-            QCString type = "QString";
-            QByteArray data;
-            QDataStream ds( data, IO_WriteOnly );
+            TQCString type = "TQString";
+            TQByteArray data;
+            TQDataStream ds( data, IO_WriteOnly );
             if ( success ) ds << handleRequest( ( *it ).url );
-            else ds << QString( "DIRECT" );
+            else ds << TQString( "DIRECT" );
             kapp->dcopClient()->endTransaction( ( *it ).transaction, type, data );
         }
         m_requestQueue.clear();
@@ -144,16 +144,16 @@ namespace KPAC
         if ( !success ) m_suspendTime = std::time( 0 );
     }
 
-    QString ProxyScout::handleRequest( const KURL& url )
+    TQString ProxyScout::handleRequest( const KURL& url )
     {
         try
         {
-            QString result = m_script->evaluate( url );
-            QStringList proxies = QStringList::split( ';', result );
-            for ( QStringList::ConstIterator it = proxies.begin();
+            TQString result = m_script->evaluate( url );
+            TQStringList proxies = TQStringList::split( ';', result );
+            for ( TQStringList::ConstIterator it = proxies.begin();
                   it != proxies.end(); ++it )
             {
-                QString proxy = ( *it ).stripWhiteSpace();
+                TQString proxy = ( *it ).stripWhiteSpace();
                 if ( proxy.left( 5 ) == "PROXY" )
                 {
                     KURL proxyURL( proxy = proxy.mid( 5 ).stripWhiteSpace() );
@@ -187,7 +187,7 @@ namespace KPAC
         return "DIRECT";
     }
 
-    extern "C" KDE_EXPORT KDEDModule* create_proxyscout( const QCString& name )
+    extern "C" KDE_EXPORT KDEDModule* create_proxyscout( const TQCString& name )
     {
         return new ProxyScout( name );
     }

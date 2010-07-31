@@ -6,7 +6,7 @@
 #include <kconfigskeleton.h>
 #include <kdebug.h>
 
-#include <qdir.h>
+#include <tqdir.h>
 class Test1 : public KConfigSkeleton
 {
   public:
@@ -16,7 +16,7 @@ class Test1 : public KConfigSkeleton
       enum type { One, Two, Three, COUNT };
     };
 
-    Test1( const QString & transport, const QString & folder );
+    Test1( const TQString & transport, const TQString & folder );
     ~Test1();
 
     /**
@@ -24,7 +24,7 @@ class Test1 : public KConfigSkeleton
     */
     void setOneOption( bool v )
     {
-      if (!isImmutable( QString::fromLatin1( "OneOption" ) ))
+      if (!isImmutable( TQString::fromLatin1( "OneOption" ) ))
         mOneOption = v;
     }
 
@@ -41,7 +41,7 @@ class Test1 : public KConfigSkeleton
     */
     void setAnotherOption( int v )
     {
-      if (!isImmutable( QString::fromLatin1( "AnotherOption" ) ))
+      if (!isImmutable( TQString::fromLatin1( "AnotherOption" ) ))
         mAnotherOption = v;
     }
 
@@ -58,7 +58,7 @@ class Test1 : public KConfigSkeleton
     */
     void setListOption( int v )
     {
-      if (!isImmutable( QString::fromLatin1( "ListOption" ) ))
+      if (!isImmutable( TQString::fromLatin1( "ListOption" ) ))
         mListOption = v;
     }
 
@@ -73,16 +73,16 @@ class Test1 : public KConfigSkeleton
     /**
       Set This is a string
     */
-    void setMyString( const QString & v )
+    void setMyString( const TQString & v )
     {
-      if (!isImmutable( QString::fromLatin1( "MyString" ) ))
+      if (!isImmutable( TQString::fromLatin1( "MyString" ) ))
         mMyString = v;
     }
 
     /**
       Get This is a string
     */
-    QString myString() const
+    TQString myString() const
     {
       return mMyString;
     }
@@ -90,16 +90,16 @@ class Test1 : public KConfigSkeleton
     /**
       Set This is a path
     */
-    void setMyPath( const QString & v )
+    void setMyPath( const TQString & v )
     {
-      if (!isImmutable( QString::fromLatin1( "MyPath" ) ))
+      if (!isImmutable( TQString::fromLatin1( "MyPath" ) ))
         mMyPath = v;
     }
 
     /**
       Get This is a path
     */
-    QString myPath() const
+    TQString myPath() const
     {
       return mMyPath;
     }
@@ -109,7 +109,7 @@ class Test1 : public KConfigSkeleton
     */
     void setAnotherOption2( int v )
     {
-      if (!isImmutable( QString::fromLatin1( "AnotherOption2" ) ))
+      if (!isImmutable( TQString::fromLatin1( "AnotherOption2" ) ))
         mAnotherOption2 = v;
     }
 
@@ -124,16 +124,16 @@ class Test1 : public KConfigSkeleton
     /**
       Set MyStringList
     */
-    void setMyStringList( const QStringList & v )
+    void setMyStringList( const TQStringList & v )
     {
-      if (!isImmutable( QString::fromLatin1( "MyStringList" ) ))
+      if (!isImmutable( TQString::fromLatin1( "MyStringList" ) ))
         mMyStringList = v;
     }
 
     /**
       Get MyStringList
     */
-    QStringList myStringList() const
+    TQStringList myStringList() const
     {
       return mMyStringList;
     }
@@ -141,16 +141,16 @@ class Test1 : public KConfigSkeleton
     /**
       Set MyStringListHidden
     */
-    void setMyStringListHidden( const QStringList & v )
+    void setMyStringListHidden( const TQStringList & v )
     {
-      if (!isImmutable( QString::fromLatin1( "MyStringListHidden" ) ))
+      if (!isImmutable( TQString::fromLatin1( "MyStringListHidden" ) ))
         mMyStringListHidden = v;
     }
 
     /**
       Get MyStringListHidden
     */
-    QStringList myStringListHidden() const
+    TQStringList myStringListHidden() const
     {
       return mMyStringListHidden;
     }
@@ -160,7 +160,7 @@ class Test1 : public KConfigSkeleton
     */
     void setMyNumber( int v )
     {
-      if (!isImmutable( QString::fromLatin1( "MyNumber" ) ))
+      if (!isImmutable( TQString::fromLatin1( "MyNumber" ) ))
         mMyNumber = v;
     }
 
@@ -173,8 +173,8 @@ class Test1 : public KConfigSkeleton
     }
 
   protected:
-    QString mParamtransport;
-    QString mParamfolder;
+    TQString mParamtransport;
+    TQString mParamfolder;
 
     // General-$(folder)
     bool mOneOption;
@@ -182,11 +182,11 @@ class Test1 : public KConfigSkeleton
     int mListOption;
 
     // MyOptions
-    QString mMyString;
-    QString mMyPath;
+    TQString mMyString;
+    TQString mMyPath;
     int mAnotherOption2;
-    QStringList mMyStringList;
-    QStringList mMyStringListHidden;
+    TQStringList mMyStringList;
+    TQStringList mMyStringListHidden;
     int mMyNumber;
 
   private:

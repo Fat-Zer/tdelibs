@@ -21,18 +21,18 @@
 #include "kmprinter.h"
 #include "kmwizard.h"
 
-#include <qtextview.h>
-#include <qlayout.h>
+#include <tqtextview.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
-KMPropUsers::KMPropUsers(QWidget *parent, const char *name)
+KMPropUsers::KMPropUsers(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)
 {
-	m_text = new QTextView(this);
+	m_text = new TQTextView(this);
 	m_text->setPaper(colorGroup().background());
-	m_text->setFrameStyle(QFrame::NoFrame);
+	m_text->setFrameStyle(TQFrame::NoFrame);
 
-	QVBoxLayout	*l0 = new QVBoxLayout(this, 10, 0);
+	QVBoxLayout	*l0 = new TQVBoxLayout(this, 10, 0);
 	l0->addWidget(m_text, 1);
 
 	m_title = i18n("Users");
@@ -53,21 +53,21 @@ void KMPropUsers::setPrinter(KMPrinter *p)
 		if (!p->option("requesting-user-name-denied").isEmpty())
 		{
 			txt = txt.arg(i18n("Denied users"));
-			users = QStringList::split(",", p->option("requesting-user-name-denied"), false);
+			users = TQStringList::split(",", p->option("requesting-user-name-denied"), false);
 			if (users.count() == 1 && users[0] == "none")
 				users.clear();
 		}
 		else if (!p->option("requesting-user-name-allowed").isEmpty())
 		{
 			txt = txt.arg(i18n("Allowed users"));
-			users = QStringList::split(",", p->option("requesting-user-name-allowed"), false);
+			users = TQStringList::split(",", p->option("requesting-user-name-allowed"), false);
 			if (users.count() == 1 && users[0] == "all")
 				users.clear();
 		}
 		if (users.count() > 0)
 		{
 			QString	s;
-			for (QStringList::ConstIterator it=users.begin(); it!=users.end(); ++it)
+			for (TQStringList::ConstIterator it=users.begin(); it!=users.end(); ++it)
 				s.append("<li>").append(*it).append("</li>");
 			txt = txt.arg(s);
 			m_text->setText(txt);

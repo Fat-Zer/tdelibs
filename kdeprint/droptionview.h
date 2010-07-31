@@ -20,9 +20,9 @@
 #ifndef DROPTIONVIEW_H
 #define DROPTIONVIEW_H
 
-#include <qwidget.h>
-#include <qgroupbox.h>
-#include <qstringlist.h>
+#include <tqwidget.h>
+#include <tqgroupbox.h>
+#include <tqstringlist.h>
 
 class QLineEdit;
 class QSlider;
@@ -39,12 +39,12 @@ class OptionBaseView : public QWidget
 {
 	Q_OBJECT
 public:
-	OptionBaseView(QWidget *parent = 0, const char *name = 0);
+	OptionBaseView(TQWidget *parent = 0, const char *name = 0);
 	virtual void setOption(DrBase*);
-	virtual void setValue(const QString&);
+	virtual void setValue(const TQString&);
 
 signals:
-	void valueChanged(const QString&);
+	void valueChanged(const TQString&);
 
 protected:
 	bool	blockSS;
@@ -54,13 +54,13 @@ class OptionNumericView : public OptionBaseView
 {
 	Q_OBJECT
 public:
-	OptionNumericView(QWidget *parent = 0, const char *name = 0);
+	OptionNumericView(TQWidget *parent = 0, const char *name = 0);
 	void setOption(DrBase *opt);
-	void setValue(const QString& val);
+	void setValue(const TQString& val);
 
 protected slots:
 	void slotSliderChanged(int);
-	void slotEditChanged(const QString&);
+	void slotEditChanged(const TQString&);
 
 private:
 	QLineEdit	*m_edit;
@@ -72,9 +72,9 @@ private:
 class OptionStringView : public OptionBaseView
 {
 public:
-	OptionStringView(QWidget *parent = 0, const char *name = 0);
+	OptionStringView(TQWidget *parent = 0, const char *name = 0);
 	void setOption(DrBase *opt);
-	void setValue(const QString& val);
+	void setValue(const TQString& val);
 
 private:
 	QLineEdit	*m_edit;
@@ -84,9 +84,9 @@ class OptionListView : public OptionBaseView
 {
 	Q_OBJECT
 public:
-	OptionListView(QWidget *parent = 0, const char *name = 0);
+	OptionListView(TQWidget *parent = 0, const char *name = 0);
 	void setOption(DrBase *opt);
-	void setValue(const QString& val);
+	void setValue(const TQString& val);
 
 protected slots:
 	void slotSelectionChanged();
@@ -100,9 +100,9 @@ class OptionBooleanView : public OptionBaseView
 {
 	Q_OBJECT
 public:
-	OptionBooleanView(QWidget *parent = 0, const char *name = 0);
+	OptionBooleanView(TQWidget *parent = 0, const char *name = 0);
 	void setOption(DrBase *opt);
-	void setValue(const QString& val);
+	void setValue(const TQString& val);
 
 protected slots:
 	void slotSelected(int);
@@ -116,15 +116,15 @@ class DrOptionView : public QGroupBox
 {
 	Q_OBJECT
 public:
-	DrOptionView(QWidget *parent = 0, const char *name = 0);
+	DrOptionView(TQWidget *parent = 0, const char *name = 0);
 	void setAllowFixed(bool on) 	{ m_allowfixed = on; }
 
 signals:
 	void changed();
 
 public slots:
-	void slotValueChanged(const QString&);
-	void slotItemSelected(QListViewItem*);
+	void slotValueChanged(const TQString&);
+	void slotItemSelected(TQListViewItem*);
 
 private:
 	QWidgetStack	*m_stack;

@@ -44,7 +44,7 @@
 #define YYDEBUG 1
 
 #include <stdlib.h>
-#include <qvariant.h>
+#include <tqvariant.h>
 #include "foomatic2loader.h"
 
 void yyerror(const char*) {}
@@ -737,7 +737,7 @@ case 5:
     break;}
 case 6:
 #line 51 "./fooparser.y"
-{ QMap<QString,QVariant>::ConstIterator it = yyvsp[0].mapBegin(); yyvsp[-2].asMap().insert(it.key(), it.data()); yyval = yyvsp[-2]; ;
+{ TQMap<TQString,TQVariant>::ConstIterator it = yyvsp[0].mapBegin(); yyvsp[-2].asMap().insert(it.key(), it.data()); yyval = yyvsp[-2]; ;
     break;}
 case 7:
 #line 54 "./fooparser.y"
@@ -753,7 +753,7 @@ case 9:
     break;}
 case 10:
 #line 61 "./fooparser.y"
-{ yyval = QVariant(); ;
+{ yyval = TQVariant(); ;
     break;}
 case 11:
 #line 62 "./fooparser.y"
@@ -773,11 +773,11 @@ case 14:
     break;}
 case 15:
 #line 66 "./fooparser.y"
-{ yyval = QVariant(); ;
+{ yyval = TQVariant(); ;
     break;}
 case 16:
 #line 67 "./fooparser.y"
-{ yyval = QVariant(); ;
+{ yyval = TQVariant(); ;
     break;}
 }
    /* the action file gets copied in in place of this dollarsign */

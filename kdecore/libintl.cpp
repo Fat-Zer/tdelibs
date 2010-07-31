@@ -51,7 +51,7 @@ Boston, MA 02110-1301, USA.  */
 #include "kde_file.h"
 #include <config.h>
 
-#include <qglobal.h>
+#include <tqglobal.h>
 
 #include <stdlib.h>
 

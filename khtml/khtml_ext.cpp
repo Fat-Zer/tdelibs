@@ -35,13 +35,13 @@
 #include "misc/loader.h"
 #include "dom/html_form.h"
 #include "dom/html_image.h"
-#include <qclipboard.h>
-#include <qfileinfo.h>
-#include <qpopupmenu.h>
-#include <qurl.h>
-#include <qmetaobject.h>
+#include <tqclipboard.h>
+#include <tqfileinfo.h>
+#include <tqpopupmenu.h>
+#include <tqurl.h>
+#include <tqmetaobject.h>
 #include <private/qucomextra_p.h>
-#include <qdragobject.h>
+#include <tqdragobject.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -93,40 +93,40 @@ int KHTMLPartBrowserExtension::yOffset()
   return m_part->view()->contentsY();
 }
 
-void KHTMLPartBrowserExtension::saveState( QDataStream &stream )
+void KHTMLPartBrowserExtension::saveState( TQDataStream &stream )
 {
   //kdDebug( 6050 ) << "saveState!" << endl;
   m_part->saveState( stream );
 }
 
-void KHTMLPartBrowserExtension::restoreState( QDataStream &stream )
+void KHTMLPartBrowserExtension::restoreState( TQDataStream &stream )
 {
   //kdDebug( 6050 ) << "restoreState!" << endl;
   m_part->restoreState( stream );
 }
 
-void KHTMLPartBrowserExtension::editableWidgetFocused( QWidget *widget )
+void KHTMLPartBrowserExtension::editableWidgetFocused( TQWidget *widget )
 {
     m_editableFormWidget = widget;
     updateEditActions();
 
     if ( !m_connectedToClipboard && m_editableFormWidget )
     {
-        connect( QApplication::clipboard(), SIGNAL( dataChanged() ),
-                 this, SLOT( updateEditActions() ) );
+        connect( TQApplication::clipboard(), TQT_SIGNAL( dataChanged() ),
+                 this, TQT_SLOT( updateEditActions() ) );
 
-        if ( m_editableFormWidget->inherits( "QLineEdit" ) || m_editableFormWidget->inherits( "QTextEdit" ) )
-            connect( m_editableFormWidget, SIGNAL( selectionChanged() ),
-                     this, SLOT( updateEditActions() ) );
+        if ( m_editableFormWidget->inherits( "TQLineEdit" ) || m_editableFormWidget->inherits( "TQTextEdit" ) )
+            connect( m_editableFormWidget, TQT_SIGNAL( selectionChanged() ),
+                     this, TQT_SLOT( updateEditActions() ) );
 
         m_connectedToClipboard = true;
     }
     editableWidgetFocused();
 }
 
-void KHTMLPartBrowserExtension::editableWidgetBlurred( QWidget * /*widget*/ )
+void KHTMLPartBrowserExtension::editableWidgetBlurred( TQWidget * /*widget*/ )
 {
-    QWidget *oldWidget = m_editableFormWidget;
+    TQWidget *oldWidget = m_editableFormWidget;
 
     m_editableFormWidget = 0;
     enableAction( "cut", false );
@@ -135,14 +135,14 @@ void KHTMLPartBrowserExtension::editableWidgetBlurred( QWidget * /*widget*/ )
 
     if ( m_connectedToClipboard )
     {
-        disconnect( QApplication::clipboard(), SIGNAL( dataChanged() ),
-                    this, SLOT( updateEditActions() ) );
+        disconnect( TQApplication::clipboard(), TQT_SIGNAL( dataChanged() ),
+                    this, TQT_SLOT( updateEditActions() ) );
 
         if ( oldWidget )
         {
-            if ( oldWidget->inherits( "QLineEdit" ) || oldWidget->inherits( "QTextEdit" ) )
-                disconnect( oldWidget, SIGNAL( selectionChanged() ),
-                            this, SLOT( updateEditActions() ) );
+            if ( oldWidget->inherits( "TQLineEdit" ) || oldWidget->inherits( "TQTextEdit" ) )
+                disconnect( oldWidget, TQT_SIGNAL( selectionChanged() ),
+                            this, TQT_SLOT( updateEditActions() ) );
         }
 
         m_connectedToClipboard = false;
@@ -154,14 +154,14 @@ void KHTMLPartBrowserExtension::setExtensionProxy( KParts::BrowserExtension *pro
 {
     if ( m_extensionProxy )
     {
-        disconnect( m_extensionProxy, SIGNAL( enableAction( const char *, bool ) ),
-                    this, SLOT( extensionProxyActionEnabled( const char *, bool ) ) );
+        disconnect( m_extensionProxy, TQT_SIGNAL( enableAction( const char *, bool ) ),
+                    this, TQT_SLOT( extensionProxyActionEnabled( const char *, bool ) ) );
         if ( m_extensionProxy->inherits( "KHTMLPartBrowserExtension" ) )
         {
-            disconnect( m_extensionProxy, SIGNAL( editableWidgetFocused() ),
-                        this, SLOT( extensionProxyEditableWidgetFocused() ) );
-            disconnect( m_extensionProxy, SIGNAL( editableWidgetBlurred() ),
-                        this, SLOT( extensionProxyEditableWidgetBlurred() ) );
+            disconnect( m_extensionProxy, TQT_SIGNAL( editableWidgetFocused() ),
+                        this, TQT_SLOT( extensionProxyEditableWidgetFocused() ) );
+            disconnect( m_extensionProxy, TQT_SIGNAL( editableWidgetBlurred() ),
+                        this, TQT_SLOT( extensionProxyEditableWidgetBlurred() ) );
         }
     }
 
@@ -169,14 +169,14 @@ void KHTMLPartBrowserExtension::setExtensionProxy( KParts::BrowserExtension *pro
 
     if ( m_extensionProxy )
     {
-        connect( m_extensionProxy, SIGNAL( enableAction( const char *, bool ) ),
-                 this, SLOT( extensionProxyActionEnabled( const char *, bool ) ) );
+        connect( m_extensionProxy, TQT_SIGNAL( enableAction( const char *, bool ) ),
+                 this, TQT_SLOT( extensionProxyActionEnabled( const char *, bool ) ) );
         if ( m_extensionProxy->inherits( "KHTMLPartBrowserExtension" ) )
         {
-            connect( m_extensionProxy, SIGNAL( editableWidgetFocused() ),
-                     this, SLOT( extensionProxyEditableWidgetFocused() ) );
-            connect( m_extensionProxy, SIGNAL( editableWidgetBlurred() ),
-                     this, SLOT( extensionProxyEditableWidgetBlurred() ) );
+            connect( m_extensionProxy, TQT_SIGNAL( editableWidgetFocused() ),
+                     this, TQT_SLOT( extensionProxyEditableWidgetFocused() ) );
+            connect( m_extensionProxy, TQT_SIGNAL( editableWidgetBlurred() ),
+                     this, TQT_SLOT( extensionProxyEditableWidgetBlurred() ) );
         }
 
         enableAction( "cut", m_extensionProxy->isActionEnabled( "cut" ) );
@@ -201,10 +201,10 @@ void KHTMLPartBrowserExtension::cut()
     if ( !m_editableFormWidget )
         return;
 
-    if ( m_editableFormWidget->inherits( "QLineEdit" ) )
-        static_cast<QLineEdit *>( &(*m_editableFormWidget) )->cut();
-    else if ( m_editableFormWidget->inherits( "QTextEdit" ) )
-        static_cast<QTextEdit *>( &(*m_editableFormWidget) )->cut();
+    if ( m_editableFormWidget->inherits( "TQLineEdit" ) )
+        static_cast<TQLineEdit *>( &(*m_editableFormWidget) )->cut();
+    else if ( m_editableFormWidget->inherits( "TQTextEdit" ) )
+        static_cast<TQTextEdit *>( &(*m_editableFormWidget) )->cut();
 }
 
 void KHTMLPartBrowserExtension::copy()
@@ -219,14 +219,14 @@ void KHTMLPartBrowserExtension::copy()
     if ( !m_editableFormWidget )
     {
         // get selected text and paste to the clipboard
-        QString text= m_part->selectedText();
-	text.replace( QChar( 0xa0 ), ' ' );
+        TQString text= m_part->selectedText();
+	text.replace( TQChar( 0xa0 ), ' ' );
 
 
-        QClipboard *cb = QApplication::clipboard();
-        disconnect( cb, SIGNAL( selectionChanged() ), m_part, SLOT( slotClearSelection() ) );
+        QClipboard *cb = TQApplication::clipboard();
+        disconnect( cb, TQT_SIGNAL( selectionChanged() ), m_part, TQT_SLOT( slotClearSelection() ) );
 #ifndef QT_NO_MIMECLIPBOARD
-	QString htmltext;
+	TQString htmltext;
 	/*
 	 * When selectionModeEnabled, that means the user has just selected
 	 * the text, not ctrl+c to copy it.  The selection clipboard
@@ -236,12 +236,12 @@ void KHTMLPartBrowserExtension::copy()
 	*/
 	//if(!cb->selectionModeEnabled())
 	    htmltext = m_part->selectedTextAsHTML();
-	QTextDrag *textdrag = new QTextDrag(text, 0L);
+	TQTextDrag *textdrag = new TQTextDrag(text, 0L);
 	KMultipleDrag *drag = new KMultipleDrag( m_editableFormWidget );
 	drag->addDragObject( textdrag );
 	if(!htmltext.isEmpty()) {
-	    htmltext.replace( QChar( 0xa0 ), ' ' );
-	    QTextDrag *htmltextdrag = new QTextDrag(htmltext, 0L);
+	    htmltext.replace( TQChar( 0xa0 ), ' ' );
+	    TQTextDrag *htmltextdrag = new TQTextDrag(htmltext, 0L);
 	    htmltextdrag->setSubtype("html");
 	    drag->addDragObject( htmltextdrag );
 	}
@@ -250,32 +250,32 @@ void KHTMLPartBrowserExtension::copy()
 	cb->setText(text);
 #endif
 
-        connect( cb, SIGNAL( selectionChanged() ), m_part, SLOT( slotClearSelection() ) );
+        connect( cb, TQT_SIGNAL( selectionChanged() ), m_part, TQT_SLOT( slotClearSelection() ) );
     }
     else
     {
-        if ( m_editableFormWidget->inherits( "QLineEdit" ) )
-            static_cast<QLineEdit *>( &(*m_editableFormWidget) )->copy();
-        else if ( m_editableFormWidget->inherits( "QTextEdit" ) )
-            static_cast<QTextEdit *>( &(*m_editableFormWidget) )->copy();
+        if ( m_editableFormWidget->inherits( "TQLineEdit" ) )
+            static_cast<TQLineEdit *>( &(*m_editableFormWidget) )->copy();
+        else if ( m_editableFormWidget->inherits( "TQTextEdit" ) )
+            static_cast<TQTextEdit *>( &(*m_editableFormWidget) )->copy();
     }
 }
 
 void KHTMLPartBrowserExtension::searchProvider()
 {
     // action name is of form "previewProvider[<searchproviderprefix>:]"
-    const QString searchProviderPrefix = QString( sender()->name() ).mid( 14 );
+    const TQString searchProviderPrefix = TQString( sender()->name() ).mid( 14 );
 
     KURIFilterData data;
-    QStringList list;
+    TQStringList list;
     data.setData( searchProviderPrefix + m_part->selectedText() );
     list << "kurisearchfilter" << "kuriikwsfilter";
 
     if( !KURIFilter::self()->filterURI(data, list) )
     {
         KDesktopFile file("searchproviders/google.desktop", true, "services");
-	QString encodedSearchTerm = m_part->selectedText();
-	QUrl::encode(encodedSearchTerm);
+	TQString encodedSearchTerm = m_part->selectedText();
+	TQUrl::encode(encodedSearchTerm);
 	data.setData(file.readEntry("Query").replace("\\{@}", encodedSearchTerm));
     }
 
@@ -304,10 +304,10 @@ void KHTMLPartBrowserExtension::paste()
     if ( !m_editableFormWidget )
         return;
 
-    if ( m_editableFormWidget->inherits( "QLineEdit" ) )
-        static_cast<QLineEdit *>( &(*m_editableFormWidget) )->paste();
-    else if ( m_editableFormWidget->inherits( "QTextEdit" ) )
-        static_cast<QTextEdit *>( &(*m_editableFormWidget) )->paste();
+    if ( m_editableFormWidget->inherits( "TQLineEdit" ) )
+        static_cast<TQLineEdit *>( &(*m_editableFormWidget) )->paste();
+    else if ( m_editableFormWidget->inherits( "TQTextEdit" ) )
+        static_cast<TQTextEdit *>( &(*m_editableFormWidget) )->paste();
 }
 
 void KHTMLPartBrowserExtension::callExtensionProxyMethod( const char *method )
@@ -335,19 +335,19 @@ void KHTMLPartBrowserExtension::updateEditActions()
 
     // ### duplicated from KonqMainWindow::slotClipboardDataChanged
 #ifndef QT_NO_MIMECLIPBOARD // Handle minimalized versions of Qt Embedded
-    QMimeSource *data = QApplication::clipboard()->data();
+    TQMimeSource *data = TQApplication::clipboard()->data();
     enableAction( "paste", data->provides( "text/plain" ) );
 #else
-    QString data=QApplication::clipboard()->text();
+    TQString data=TQApplication::clipboard()->text();
     enableAction( "paste", data.contains("://"));
 #endif
     bool hasSelection = false;
 
     if( m_editableFormWidget) {
-        if ( ::qt_cast<QLineEdit*>(m_editableFormWidget))
-            hasSelection = static_cast<QLineEdit *>( &(*m_editableFormWidget) )->hasSelectedText();
-        else if(::qt_cast<QTextEdit*>(m_editableFormWidget))
-            hasSelection = static_cast<QTextEdit *>( &(*m_editableFormWidget) )->hasSelectedText();
+        if ( ::qt_cast<TQLineEdit*>(m_editableFormWidget))
+            hasSelection = static_cast<TQLineEdit *>( &(*m_editableFormWidget) )->hasSelectedText();
+        else if(::qt_cast<TQTextEdit*>(m_editableFormWidget))
+            hasSelection = static_cast<TQTextEdit *>( &(*m_editableFormWidget) )->hasSelectedText();
     }
 
     enableAction( "copy", hasSelection );
@@ -384,10 +384,10 @@ void KHTMLPartBrowserExtension::print()
 
 void KHTMLPartBrowserExtension::disableScrolling()
 {
-  QScrollView *scrollView = m_part->view();
+  TQScrollView *scrollView = m_part->view();
   if (scrollView) {
-    scrollView->setVScrollBarMode(QScrollView::AlwaysOff);
-    scrollView->setHScrollBarMode(QScrollView::AlwaysOff);
+    scrollView->setVScrollBarMode(TQScrollView::AlwaysOff);
+    scrollView->setHScrollBarMode(TQScrollView::AlwaysOff);
   }
 }
 
@@ -397,13 +397,13 @@ public:
   KHTMLPart *m_khtml;
   KURL m_url;
   KURL m_imageURL;
-  QPixmap m_pixmap;
-  QString m_suggestedFilename;
+  TQPixmap m_pixmap;
+  TQString m_suggestedFilename;
 };
 
 
-KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const QString &doc, const KURL &url )
-  : QObject( khtml )
+KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const TQString &doc, const KURL &url )
+  : TQObject( khtml )
 {
   d = new KHTMLPopupGUIClientPrivate;
   d->m_khtml = khtml;
@@ -430,7 +430,7 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const QString &doc, 
 
   if (hasSelection)
   {
-      KAction* copyAction = KStdAction::copy( d->m_khtml->browserExtension(), SLOT( copy() ), actionCollection(), "copy" );
+      KAction* copyAction = KStdAction::copy( d->m_khtml->browserExtension(), TQT_SLOT( copy() ), actionCollection(), "copy" );
       copyAction->setText(i18n("&Copy Text"));
       copyAction->setEnabled(d->m_khtml->browserExtension()->isActionEnabled( "copy" ));
       actionCollection()->insert( khtml->actionCollection()->action( "selectAll" ) );
@@ -439,11 +439,11 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const QString &doc, 
       // Fill search provider entries
       KConfig config("kuriikwsfilterrc");
       config.setGroup("General");
-      const QString defaultEngine = config.readEntry("DefaultSearchEngine", "google");
+      const TQString defaultEngine = config.readEntry("DefaultSearchEngine", "google");
       const char keywordDelimiter = config.readNumEntry("KeywordDelimiter", ':');
 
       // search text
-      QString selectedText = khtml->selectedText();
+      TQString selectedText = khtml->selectedText();
       selectedText.replace("&", "&&");
       if ( selectedText.length()>18 ) {
         selectedText.truncate(15);
@@ -451,23 +451,23 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const QString &doc, 
       }
 
       // default search provider
-      KService::Ptr service = KService::serviceByDesktopPath(QString("searchproviders/%1.desktop").arg(defaultEngine));
+      KService::Ptr service = KService::serviceByDesktopPath(TQString("searchproviders/%1.desktop").arg(defaultEngine));
 
       // search provider icon
-      QPixmap icon;
+      TQPixmap icon;
       KURIFilterData data;
-      QStringList list;
-      data.setData( QString("some keyword") );
+      TQStringList list;
+      data.setData( TQString("some keyword") );
       list << "kurisearchfilter" << "kuriikwsfilter";
 
-      QString name;
+      TQString name;
       if ( KURIFilter::self()->filterURI(data, list) )
       {
-        QString iconPath = locate("cache", KMimeType::favIconForURL(data.uri()) + ".png");
+        TQString iconPath = locate("cache", KMimeType::favIconForURL(data.uri()) + ".png");
         if ( iconPath.isEmpty() )
           icon = SmallIcon("find");
         else
-          icon = QPixmap( iconPath );
+          icon = TQPixmap( iconPath );
         name = service->name();
       }
       else
@@ -478,37 +478,37 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const QString &doc, 
 
       // using .arg(foo, bar) instead of .arg(foo).arg(bar), as foo can contain %x
       new KAction( i18n( "Search for '%1' with %2" ).arg( selectedText, name ), icon, 0, d->m_khtml->browserExtension(),
-                     SLOT( searchProvider() ), actionCollection(), "searchProvider" );
+                     TQT_SLOT( searchProvider() ), actionCollection(), "searchProvider" );
 
       // favorite search providers
-      QStringList favoriteEngines;
+      TQStringList favoriteEngines;
       favoriteEngines << "google" << "google_groups" << "google_news" << "webster" << "dmoz" << "wikipedia";
       favoriteEngines = config.readListEntry("FavoriteSearchEngines", favoriteEngines);
 
       if ( !favoriteEngines.isEmpty()) {
         KActionMenu* providerList = new KActionMenu( i18n( "Search for '%1' with" ).arg( selectedText ), actionCollection(), "searchProviderList" );
 
-        QStringList::ConstIterator it = favoriteEngines.begin();
+        TQStringList::ConstIterator it = favoriteEngines.begin();
         for ( ; it != favoriteEngines.end(); ++it ) {
           if (*it==defaultEngine)
             continue;
-          service = KService::serviceByDesktopPath(QString("searchproviders/%1.desktop").arg(*it));
+          service = KService::serviceByDesktopPath(TQString("searchproviders/%1.desktop").arg(*it));
           if (!service)
             continue;
-          const QString searchProviderPrefix = *(service->property("Keys").toStringList().begin()) + keywordDelimiter;
+          const TQString searchProviderPrefix = *(service->property("Keys").toStringList().begin()) + keywordDelimiter;
           data.setData( searchProviderPrefix + "some keyword" );
 
           if ( KURIFilter::self()->filterURI(data, list) )
           {
-            QString iconPath = locate("cache", KMimeType::favIconForURL(data.uri()) + ".png");
+            TQString iconPath = locate("cache", KMimeType::favIconForURL(data.uri()) + ".png");
             if ( iconPath.isEmpty() )
               icon = SmallIcon("find");
             else
-              icon = QPixmap( iconPath );
+              icon = TQPixmap( iconPath );
             name = service->name();
 
             providerList->insert( new KAction( name, icon, 0, d->m_khtml->browserExtension(),
-              SLOT( searchProvider() ), actionCollection(), QString( "searchProvider" + searchProviderPrefix ).latin1() ) );
+              TQT_SLOT( searchProvider() ), actionCollection(), TQString( "searchProvider" + searchProviderPrefix ).latin1() ) );
           }
         }
       }
@@ -516,13 +516,13 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const QString &doc, 
 
       if ( selectedText.contains("://") && KURL(selectedText).isValid() )
          new KAction( i18n( "Open '%1'" ).arg( selectedText ), "window_new", 0,
-         d->m_khtml->browserExtension(), SLOT( openSelection() ), actionCollection(), "openSelection" );
+         d->m_khtml->browserExtension(), TQT_SLOT( openSelection() ), actionCollection(), "openSelection" );
   }
   else if ( url.isEmpty() && !isImage )
   {
       actionCollection()->insert( khtml->actionCollection()->action( "security" ) );
       actionCollection()->insert( khtml->actionCollection()->action( "setEncoding" ) );
-      new KAction( i18n( "Stop Animations" ), 0, this, SLOT( slotStopAnimations() ),
+      new KAction( i18n( "Stop Animations" ), 0, this, TQT_SLOT( slotStopAnimations() ),
                    actionCollection(), "stopanimations" );
   }
 
@@ -530,14 +530,14 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const QString &doc, 
   {
     if (url.protocol() == "mailto")
     {
-      new KAction( i18n( "Copy Email Address" ), 0, this, SLOT( slotCopyLinkLocation() ),
+      new KAction( i18n( "Copy Email Address" ), 0, this, TQT_SLOT( slotCopyLinkLocation() ),
                  actionCollection(), "copylinklocation" );
     }
     else
     {
-      new KAction( i18n( "&Save Link As..." ), 0, this, SLOT( slotSaveLinkAs() ),
+      new KAction( i18n( "&Save Link As..." ), 0, this, TQT_SLOT( slotSaveLinkAs() ),
                  actionCollection(), "savelinkas" );
-      new KAction( i18n( "Copy &Link Address" ), 0, this, SLOT( slotCopyLinkLocation() ),
+      new KAction( i18n( "Copy &Link Address" ), 0, this, TQT_SLOT( slotCopyLinkLocation() ),
                  actionCollection(), "copylinklocation" );
     }
   }
@@ -547,28 +547,28 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const QString &doc, 
   {
     if ( khtml->parentPart() )
     {
-      new KAction( i18n( "Open in New &Window" ), "window_new", 0, this, SLOT( slotFrameInWindow() ),
+      new KAction( i18n( "Open in New &Window" ), "window_new", 0, this, TQT_SLOT( slotFrameInWindow() ),
                                           actionCollection(), "frameinwindow" );
-      new KAction( i18n( "Open in &This Window" ), 0, this, SLOT( slotFrameInTop() ),
+      new KAction( i18n( "Open in &This Window" ), 0, this, TQT_SLOT( slotFrameInTop() ),
                                           actionCollection(), "frameintop" );
-      new KAction( i18n( "Open in &New Tab" ), "tab_new", 0, this, SLOT( slotFrameInTab() ),
+      new KAction( i18n( "Open in &New Tab" ), "tab_new", 0, this, TQT_SLOT( slotFrameInTab() ),
                                        actionCollection(), "frameintab" );
-      new KAction( i18n( "Reload Frame" ), 0, this, SLOT( slotReloadFrame() ),
+      new KAction( i18n( "Reload Frame" ), 0, this, TQT_SLOT( slotReloadFrame() ),
                                         actionCollection(), "reloadframe" );
 
       if ( KHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled() ) {
           if ( khtml->d->m_frame->m_type == khtml::ChildFrame::IFrame )
-              new KAction( i18n( "Block IFrame..." ), 0, this, SLOT( slotBlockIFrame() ), actionCollection(), "blockiframe" );
+              new KAction( i18n( "Block IFrame..." ), 0, this, TQT_SLOT( slotBlockIFrame() ), actionCollection(), "blockiframe" );
       }
 
-      new KAction( i18n( "View Frame Source" ), 0, d->m_khtml, SLOT( slotViewDocumentSource() ),
+      new KAction( i18n( "View Frame Source" ), 0, d->m_khtml, TQT_SLOT( slotViewDocumentSource() ),
                                           actionCollection(), "viewFrameSource" );
-      new KAction( i18n( "View Frame Information" ), 0, d->m_khtml, SLOT( slotViewPageInfo() ), actionCollection(), "viewFrameInfo" );
+      new KAction( i18n( "View Frame Information" ), 0, d->m_khtml, TQT_SLOT( slotViewPageInfo() ), actionCollection(), "viewFrameInfo" );
       // This one isn't in khtml_popupmenu.rc anymore, because Print isn't either,
       // and because print frame is already in the toolbar and the menu.
       // But leave this here, so that it's easy to read it.
-      new KAction( i18n( "Print Frame..." ), "frameprint", 0, d->m_khtml->browserExtension(), SLOT( print() ), actionCollection(), "printFrame" );
-      new KAction( i18n( "Save &Frame As..." ), 0, d->m_khtml, SLOT( slotSaveFrame() ), actionCollection(), "saveFrame" );
+      new KAction( i18n( "Print Frame..." ), "frameprint", 0, d->m_khtml->browserExtension(), TQT_SLOT( print() ), actionCollection(), "printFrame" );
+      new KAction( i18n( "Save &Frame As..." ), 0, d->m_khtml, TQT_SLOT( slotSaveFrame() ), actionCollection(), "saveFrame" );
 
       actionCollection()->insert( khtml->parentPart()->actionCollection()->action( "viewDocumentSource" ) );
       actionCollection()->insert( khtml->parentPart()->actionCollection()->action( "viewPageInfo" ) );
@@ -579,7 +579,7 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const QString &doc, 
   } else if (isImage || !url.isEmpty()) {
     actionCollection()->insert( khtml->actionCollection()->action( "viewDocumentSource" ) );
     actionCollection()->insert( khtml->actionCollection()->action( "viewPageInfo" ) );
-    new KAction( i18n( "Stop Animations" ), 0, this, SLOT( slotStopAnimations() ),
+    new KAction( i18n( "Stop Animations" ), 0, this, TQT_SLOT( slotStopAnimations() ),
                  actionCollection(), "stopanimations" );
   }
 
@@ -598,44 +598,44 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const QString &doc, 
     }
     else
       d->m_imageURL = KURL( static_cast<DOM::HTMLInputElement>( e ).src().string() );
-    new KAction( i18n( "Save Image As..." ), 0, this, SLOT( slotSaveImageAs() ),
+    new KAction( i18n( "Save Image As..." ), 0, this, TQT_SLOT( slotSaveImageAs() ),
                  actionCollection(), "saveimageas" );
-    new KAction( i18n( "Send Image..." ), 0, this, SLOT( slotSendImage() ),
+    new KAction( i18n( "Send Image..." ), 0, this, TQT_SLOT( slotSendImage() ),
                  actionCollection(), "sendimage" );
 
 
 #ifndef QT_NO_MIMECLIPBOARD
-    (new KAction( i18n( "Copy Image" ), 0, this, SLOT( slotCopyImage() ),
+    (new KAction( i18n( "Copy Image" ), 0, this, TQT_SLOT( slotCopyImage() ),
                  actionCollection(), "copyimage" ))->setEnabled(!d->m_pixmap.isNull());
 #endif
 
     if(d->m_pixmap.isNull()) {    //fallback to image location if still loading the image.  this will always be true if ifdef QT_NO_MIMECLIPBOARD
-      new KAction( i18n( "Copy Image Location" ), 0, this, SLOT( slotCopyImageLocation() ),
+      new KAction( i18n( "Copy Image Location" ), 0, this, TQT_SLOT( slotCopyImageLocation() ),
                    actionCollection(), "copyimagelocation" );
     }
 
-    QString name = KStringHandler::csqueeze(d->m_imageURL.fileName()+d->m_imageURL.query(), 25);
-    new KAction( i18n( "View Image (%1)" ).arg(d->m_suggestedFilename.isEmpty() ? name.replace("&", "&&") : d->m_suggestedFilename.replace("&", "&&")), 0, this, SLOT( slotViewImage() ),
+    TQString name = KStringHandler::csqueeze(d->m_imageURL.fileName()+d->m_imageURL.query(), 25);
+    new KAction( i18n( "View Image (%1)" ).arg(d->m_suggestedFilename.isEmpty() ? name.replace("&", "&&") : d->m_suggestedFilename.replace("&", "&&")), 0, this, TQT_SLOT( slotViewImage() ),
                  actionCollection(), "viewimage" );
 
     if (KHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled())
     {
-      new KAction( i18n( "Block Image..." ), 0, this, SLOT( slotBlockImage() ),
+      new KAction( i18n( "Block Image..." ), 0, this, TQT_SLOT( slotBlockImage() ),
                    actionCollection(), "blockimage" );
 
       if (!d->m_imageURL.host().isEmpty() &&
           !d->m_imageURL.protocol().isEmpty())
       {
-        new KAction( i18n( "Block Images From %1" ).arg(d->m_imageURL.host()), 0, this, SLOT( slotBlockHost() ),
+        new KAction( i18n( "Block Images From %1" ).arg(d->m_imageURL.host()), 0, this, TQT_SLOT( slotBlockHost() ),
                      actionCollection(), "blockhost" );
       }
     }
   }
 
   setXML( doc );
-  setDOMDocument( QDomDocument(), true ); // ### HACK
+  setDOMDocument( TQDomDocument(), true ); // ### HACK
 
-  QDomElement menu = domDocument().documentElement().namedItem( "Menu" ).toElement();
+  TQDomElement menu = domDocument().documentElement().namedItem( "Menu" ).toElement();
 
   if ( actionCollection()->count() > 0 )
     menu.insertBefore( domDocument().createElement( "separator" ), menu.firstChild() );
@@ -655,12 +655,12 @@ void KHTMLPopupGUIClient::slotSaveLinkAs()
 
 void KHTMLPopupGUIClient::slotSendImage()
 {
-    QStringList urls;
+    TQStringList urls;
     urls.append( d->m_imageURL.url());
-    QString subject = d->m_imageURL.url();
-    kapp->invokeMailer(QString::null, QString::null, QString::null, subject,
-                       QString::null, //body
-                       QString::null,
+    TQString subject = d->m_imageURL.url();
+    kapp->invokeMailer(TQString::null, TQString::null, TQString::null, subject,
+                       TQString::null, //body
+                       TQString::null,
                        urls); // attachments
 
 
@@ -670,12 +670,12 @@ void KHTMLPopupGUIClient::slotSaveImageAs()
 {
   KIO::MetaData metaData;
   metaData["referrer"] = d->m_khtml->referrer();
-  saveURL( d->m_khtml->widget(), i18n( "Save Image As" ), d->m_imageURL, metaData, QString::null, 0, d->m_suggestedFilename );
+  saveURL( d->m_khtml->widget(), i18n( "Save Image As" ), d->m_imageURL, metaData, TQString::null, 0, d->m_suggestedFilename );
 }
 
 void KHTMLPopupGUIClient::slotBlockHost()
 {
-    QString name=d->m_imageURL.protocol()+"://"+d->m_imageURL.host()+"/*";
+    TQString name=d->m_imageURL.protocol()+"://"+d->m_imageURL.host()+"/*";
     KHTMLFactory::defaultHTMLSettings()->addAdFilter( name );
     d->m_khtml->reparseConfiguration();
 }
@@ -684,7 +684,7 @@ void KHTMLPopupGUIClient::slotBlockImage()
 {
     bool ok = false;
 
-    QString url = KInputDialog::getText( i18n("Add URL to Filter"),
+    TQString url = KInputDialog::getText( i18n("Add URL to Filter"),
                                          i18n("Enter the URL:"),
                                          d->m_imageURL.url(),
                                          &ok);
@@ -697,7 +697,7 @@ void KHTMLPopupGUIClient::slotBlockImage()
 void KHTMLPopupGUIClient::slotBlockIFrame()
 {
     bool ok = false;
-    QString url = KInputDialog::getText( i18n( "Add URL to Filter"),
+    TQString url = KInputDialog::getText( i18n( "Add URL to Filter"),
                                                i18n("Enter the URL:"),
                                                d->m_khtml->url().url(),
                                                &ok );
@@ -710,15 +710,15 @@ void KHTMLPopupGUIClient::slotBlockIFrame()
 void KHTMLPopupGUIClient::slotCopyLinkLocation()
 {
   KURL safeURL(d->m_url);
-  safeURL.setPass(QString::null);
+  safeURL.setPass(TQString::null);
 #ifndef QT_NO_MIMECLIPBOARD
   // Set it in both the mouse selection and in the clipboard
   KURL::List lst;
   lst.append( safeURL );
-  QApplication::clipboard()->setData( new KURLDrag( lst ), QClipboard::Clipboard );
-  QApplication::clipboard()->setData( new KURLDrag( lst ), QClipboard::Selection );
+  TQApplication::clipboard()->setData( new KURLDrag( lst ), QClipboard::Clipboard );
+  TQApplication::clipboard()->setData( new KURLDrag( lst ), QClipboard::Selection );
 #else
-  QApplication::clipboard()->setText( safeURL.url() ); //FIXME(E): Handle multiple entries
+  TQApplication::clipboard()->setText( safeURL.url() ); //FIXME(E): Handle multiple entries
 #endif
 }
 
@@ -731,18 +731,18 @@ void KHTMLPopupGUIClient::slotCopyImage()
 {
 #ifndef QT_NO_MIMECLIPBOARD
   KURL safeURL(d->m_imageURL);
-  safeURL.setPass(QString::null);
+  safeURL.setPass(TQString::null);
 
   KURL::List lst;
   lst.append( safeURL );
   KMultipleDrag *drag = new KMultipleDrag(d->m_khtml->view(), "Image");
 
-  drag->addDragObject( new QImageDrag(d->m_pixmap.convertToImage()) );
+  drag->addDragObject( new TQImageDrag(d->m_pixmap.convertToImage()) );
   drag->addDragObject( new KURLDrag(lst, d->m_khtml->view(), "Image URL") );
 
   // Set it in both the mouse selection and in the clipboard
-  QApplication::clipboard()->setData( drag, QClipboard::Clipboard );
-  QApplication::clipboard()->setData( new KURLDrag(lst), QClipboard::Selection );
+  TQApplication::clipboard()->setData( drag, QClipboard::Clipboard );
+  TQApplication::clipboard()->setData( new KURLDrag(lst), QClipboard::Selection );
 #else
   kdDebug() << "slotCopyImage called when the clipboard does not support this.  This should not be possible." << endl;
 #endif
@@ -751,15 +751,15 @@ void KHTMLPopupGUIClient::slotCopyImage()
 void KHTMLPopupGUIClient::slotCopyImageLocation()
 {
   KURL safeURL(d->m_imageURL);
-  safeURL.setPass(QString::null);
+  safeURL.setPass(TQString::null);
 #ifndef QT_NO_MIMECLIPBOARD
   // Set it in both the mouse selection and in the clipboard
   KURL::List lst;
   lst.append( safeURL );
-  QApplication::clipboard()->setData( new KURLDrag( lst ), QClipboard::Clipboard );
-  QApplication::clipboard()->setData( new KURLDrag( lst ), QClipboard::Selection );
+  TQApplication::clipboard()->setData( new KURLDrag( lst ), QClipboard::Clipboard );
+  TQApplication::clipboard()->setData( new KURLDrag( lst ), QClipboard::Selection );
 #else
-  QApplication::clipboard()->setText( safeURL.url() ); //FIXME(E): Handle multiple entries
+  TQApplication::clipboard()->setText( safeURL.url() ); //FIXME(E): Handle multiple entries
 #endif
 }
 
@@ -803,13 +803,13 @@ void KHTMLPopupGUIClient::slotFrameInTab()
   emit d->m_khtml->browserExtension()->createNewWindow( d->m_khtml->url(), args );
 }
 
-void KHTMLPopupGUIClient::saveURL( QWidget *parent, const QString &caption,
+void KHTMLPopupGUIClient::saveURL( TQWidget *parent, const TQString &caption,
                                    const KURL &url,
-                                   const QMap<QString, QString> &metadata,
-                                   const QString &filter, long cacheId,
-                                   const QString & suggestedFilename )
+                                   const TQMap<TQString, TQString> &metadata,
+                                   const TQString &filter, long cacheId,
+                                   const TQString & suggestedFilename )
 {
-  QString name = QString::fromLatin1( "index.html" );
+  TQString name = TQString::fromLatin1( "index.html" );
   if ( !suggestedFilename.isEmpty() )
     name = suggestedFilename;
   else if ( !url.fileName().isEmpty() )
@@ -822,7 +822,7 @@ void KHTMLPopupGUIClient::saveURL( QWidget *parent, const QString &caption,
     destURL = KFileDialog::getSaveURL( name, filter, parent, caption );
       if( destURL.isLocalFile() )
       {
-        QFileInfo info( destURL.path() );
+        TQFileInfo info( destURL.path() );
         if( info.exists() ) {
           // TODO: use KIO::RenameDlg (shows more information)
           query = KMessageBox::warningContinueCancel( parent, i18n( "A file named \"%1\" already exists. " "Are you sure you want to overwrite it?" ).arg( info.fileName() ), i18n( "Overwrite File?" ), i18n( "Overwrite" ) );
@@ -835,7 +835,7 @@ void KHTMLPopupGUIClient::saveURL( QWidget *parent, const QString &caption,
 }
 
 void KHTMLPopupGUIClient::saveURL( const KURL &url, const KURL &destURL,
-                                   const QMap<QString, QString> &metadata,
+                                   const TQMap<TQString, TQString> &metadata,
                                    long cacheId )
 {
     if ( destURL.isValid() )
@@ -878,25 +878,25 @@ void KHTMLPopupGUIClient::saveURL( const KURL &url, const KURL &destURL,
           {
             KConfig cfg("konquerorrc", false, false);
             cfg.setGroup("HTML Settings");
-            QString downloadManger = cfg.readPathEntry("DownloadManager");
+            TQString downloadManger = cfg.readPathEntry("DownloadManager");
             if (!downloadManger.isEmpty())
             {
                 // then find the download manager location
                 kdDebug(1000) << "Using: "<<downloadManger <<" as Download Manager" <<endl;
-                QString cmd = KStandardDirs::findExe(downloadManger);
+                TQString cmd = KStandardDirs::findExe(downloadManger);
                 if (cmd.isEmpty())
                 {
-                    QString errMsg=i18n("The Download Manager (%1) could not be found in your $PATH ").arg(downloadManger);
-                    QString errMsgEx= i18n("Try to reinstall it  \n\nThe integration with Konqueror will be disabled!");
+                    TQString errMsg=i18n("The Download Manager (%1) could not be found in your $PATH ").arg(downloadManger);
+                    TQString errMsgEx= i18n("Try to reinstall it  \n\nThe integration with Konqueror will be disabled!");
                     KMessageBox::detailedSorry(0,errMsg,errMsgEx);
-                    cfg.writePathEntry("DownloadManager",QString::null);
+                    cfg.writePathEntry("DownloadManager",TQString::null);
                     cfg.sync ();
                 }
                 else
                 {
                     downloadViaKIO = false;
                     KURL cleanDest = destURL;
-                    cleanDest.setPass( QString::null ); // don't put password into commandline
+                    cleanDest.setPass( TQString::null ); // don't put password into commandline
                     cmd += " " + KProcess::quote(url.url()) + " " +
                            KProcess::quote(cleanDest.url());
                     kdDebug(1000) << "Calling command  "<<cmd<<endl;
@@ -927,12 +927,12 @@ KHTMLPartBrowserHostExtension::~KHTMLPartBrowserHostExtension()
 {
 }
 
-QStringList KHTMLPartBrowserHostExtension::frameNames() const
+TQStringList KHTMLPartBrowserHostExtension::frameNames() const
 {
   return m_part->frameNames();
 }
 
-const QPtrList<KParts::ReadOnlyPart> KHTMLPartBrowserHostExtension::frames() const
+const TQPtrList<KParts::ReadOnlyPart> KHTMLPartBrowserHostExtension::frames() const
 {
   return m_part->frames();
 }
@@ -961,13 +961,13 @@ extern const int KDE_NO_EXPORT fastZoomSizes[];
 extern const int KDE_NO_EXPORT fastZoomSizeCount;
 
 // BCI: remove in KDE 4
-KHTMLZoomFactorAction::KHTMLZoomFactorAction( KHTMLPart *part, bool direction, const QString &text, const QString &icon, const QObject *receiver, const char *slot, QObject *parent, const char *name )
+KHTMLZoomFactorAction::KHTMLZoomFactorAction( KHTMLPart *part, bool direction, const TQString &text, const TQString &icon, const TQObject *receiver, const char *slot, TQObject *parent, const char *name )
     : KAction( text, icon, 0, receiver, slot, parent, name )
 {
     init(part, direction);
 }
 
-KHTMLZoomFactorAction::KHTMLZoomFactorAction( KHTMLPart *part, bool direction, const QString &text, const QString &icon, const KShortcut &cut, const QObject *receiver, const char *slot, QObject *parent, const char *name )
+KHTMLZoomFactorAction::KHTMLZoomFactorAction( KHTMLPart *part, bool direction, const TQString &text, const TQString &icon, const KShortcut &cut, const TQObject *receiver, const char *slot, TQObject *parent, const char *name )
     : KAction( text, icon, cut, receiver, slot, parent, name )
 {
     init(part, direction);
@@ -989,14 +989,14 @@ void KHTMLZoomFactorAction::init(KHTMLPart *part, bool direction)
     for ( int i = m; i != m*(ofs+1); i += m )
     {
         int num = i * m;
-        QString numStr = QString::number( num );
+        TQString numStr = TQString::number( num );
         if ( num > 0 ) numStr.prepend( '+' );
 
         // xgettext: no-c-format
         m_popup->insertItem( i18n( "%1%" ).arg( fastZoomSizes[ofs + i] ) );
     }
 
-    connect( m_popup, SIGNAL( activated( int ) ), this, SLOT( slotActivated( int ) ) );
+    connect( m_popup, TQT_SIGNAL( activated( int ) ), this, TQT_SLOT( slotActivated( int ) ) );
 }
 
 KHTMLZoomFactorAction::~KHTMLZoomFactorAction()
@@ -1004,7 +1004,7 @@ KHTMLZoomFactorAction::~KHTMLZoomFactorAction()
     delete m_popup;
 }
 
-int KHTMLZoomFactorAction::plug( QWidget *w, int index )
+int KHTMLZoomFactorAction::plug( TQWidget *w, int index )
 {
     int containerId = KAction::plug( w, index );
     if ( containerId == -1 || !w->inherits( "KToolBar" ) )

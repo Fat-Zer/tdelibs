@@ -42,7 +42,7 @@ class KTEXTEDITOR_EXPORT DynWordWrapInterface
     unsigned int dynWordWrapInterfaceNumber () const;
     
   protected:  
-    void setDynWordWrapInterfaceDCOPSuffix (const QCString &suffix);  
+    void setDynWordWrapInterfaceDCOPSuffix (const TQCString &suffix);  
 
   //
   // slots !!!

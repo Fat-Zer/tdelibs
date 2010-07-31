@@ -7,17 +7,17 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kcharsets.h>
-#include <qtextcodec.h>
-#include <qdatastream.h>
+#include <tqtextcodec.h>
+#include <tqdatastream.h>
 #include <assert.h>
 #include <kcmdlineargs.h>
 
-static bool check(QString txt, QString a, QString b)
+static bool check(TQString txt, TQString a, TQString b)
 {
   if (a.isEmpty())
-     a = QString::null;
+     a = TQString::null;
   if (b.isEmpty())
-     b = QString::null;
+     b = TQString::null;
   if (a == b) {
     kdDebug() << txt << " : checking '" << a << "' against expected value '" << b << "'... " << "ok" << endl;
   }
@@ -64,11 +64,11 @@ void testAdjustPath()
 
     // Equivalent tests written by the KDirLister maintainer :)
 
-    KURL u3( QCString("ftp://brade@ftp.kde.org///") );
+    KURL u3( TQCString("ftp://brade@ftp.kde.org///") );
     u3.adjustPath(-1);
     check("KURL::adjustPath()", u3.url(), "ftp://brade@ftp.kde.org/");
 
-    KURL u4( QCString("ftp://brade@ftp.kde.org/kde///") );
+    KURL u4( TQCString("ftp://brade@ftp.kde.org/kde///") );
     u4.adjustPath(-1);
     check("KURL::adjustPath()", u4.url(), "ftp://brade@ftp.kde.org/kde");
 
@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
   KURL url2( baseURL, "../../////kdebase/konqueror" );
   check( "KURL::url()", url2.url(), "file:///usr/local/src/kde2/////kdebase/konqueror" );
 
-  QString u1 = "file:/home/dfaure/my#myref";
+  TQString u1 = "file:/home/dfaure/my#myref";
   url1 = u1;
   check("KURL::url()", url1.url(), "file:///home/dfaure/my#myref");
   check("KURL::hasRef()", url1.hasRef() ? "yes" : "no", "yes");
@@ -167,11 +167,11 @@ int main(int argc, char *argv[])
 
   KURL dxOffEagle( KURL("http://something/other.html"), "newpage.html?[{\"foo: bar\"}]" );
   check("isValid", dxOffEagle.isValid() ? "OK" : "KO", "OK");
-  check("url", dxOffEagle.url(), QString("http://something/newpage.html?[{\"foo:%20bar\"}]") );
+  check("url", dxOffEagle.url(), TQString("http://something/newpage.html?[{\"foo:%20bar\"}]") );
 
   KURL javascript( KURL("javascript:window.location+\"__flashplugin_unique__\"") );
   check("isValid", javascript.isValid() ? "OK" : "KO", "OK");
-  check("url", javascript.url(), QString("javascript:window.location+\"__flashplugin_unique__\"") );
+  check("url", javascript.url(), TQString("javascript:window.location+\"__flashplugin_unique__\"") );
 
 
   u1 = "file:///home/dfaure/my#myref";
@@ -192,16 +192,16 @@ int main(int argc, char *argv[])
   url1= "$HOME/.kde/share/config";
   check("KURL::isValid()", url1.isValid()?"TRUE":"FALSE", "FALSE" );
 
-  u1 = "file:/opt/kde2/qt2/doc/html/showimg-main-cpp.html#QObject::connect";
+  u1 = "file:/opt/kde2/qt2/doc/html/showimg-main-cpp.html#TQObject::connect";
   url1 = u1;
-  check("KURL::url()", url1.url(), "file:///opt/kde2/qt2/doc/html/showimg-main-cpp.html#QObject::connect");
+  check("KURL::url()", url1.url(), "file:///opt/kde2/qt2/doc/html/showimg-main-cpp.html#TQObject::connect");
   check("KURL::hasRef()", url1.hasRef() ? "yes" : "no", "yes");
   check("KURL::hasHTMLRef()", url1.hasHTMLRef() ? "yes" : "no", "yes");
-  check("KURL::htmlRef()", url1.htmlRef(), "QObject::connect");
+  check("KURL::htmlRef()", url1.htmlRef(), "TQObject::connect");
   check("KURL::hasSubURL()", url1.hasSubURL() ? "yes" : "no", "no");
   check("KURL::upURL()", url1.upURL().url(), "file:///opt/kde2/qt2/doc/html/");
 
-  url1 = KURL( QCString( "http://www.kde.org/foo.cgi?foo=bar" ) );
+  url1 = KURL( TQCString( "http://www.kde.org/foo.cgi?foo=bar" ) );
   check("query", url1.query(), "?foo=bar" );
   url1.setQuery( "toto=titi&kde=rocks" );
   check("query", url1.query(), "?toto=titi&kde=rocks" );
@@ -211,24 +211,24 @@ int main(int argc, char *argv[])
   check("setQuery(\"?\") -> query", url1.query(), "?" );
   url1.setQuery( "" );
   check("setQuery(\"\") -> query", url1.query(), "?" );
-  url1.setQuery( QString::null );
-  check("setQuery(QString::null) -> query", url1.query(), QString::null );
+  url1.setQuery( TQString::null );
+  check("setQuery(TQString::null) -> query", url1.query(), TQString::null );
 
-  u1 = "file:///opt/kde2/qt2/doc/html/showimg-main-cpp.html#QObject::connect";
+  u1 = "file:///opt/kde2/qt2/doc/html/showimg-main-cpp.html#TQObject::connect";
   url1 = u1;
-  check("KURL::url()", url1.url(), "file:///opt/kde2/qt2/doc/html/showimg-main-cpp.html#QObject::connect");
+  check("KURL::url()", url1.url(), "file:///opt/kde2/qt2/doc/html/showimg-main-cpp.html#TQObject::connect");
   check("KURL::hasRef()", url1.hasRef() ? "yes" : "no", "yes");
   check("KURL::hasHTMLRef()", url1.hasHTMLRef() ? "yes" : "no", "yes");
-  check("KURL::htmlRef()", url1.htmlRef(), "QObject::connect");
+  check("KURL::htmlRef()", url1.htmlRef(), "TQObject::connect");
   check("KURL::hasSubURL()", url1.hasSubURL() ? "yes" : "no", "no");
   check("KURL::upURL()", url1.upURL().url(), "file:///opt/kde2/qt2/doc/html/");
 
-  u1 = "file:/opt/kde2/qt2/doc/html/showimg-main-cpp.html#QObject:connect";
+  u1 = "file:/opt/kde2/qt2/doc/html/showimg-main-cpp.html#TQObject:connect";
   url1 = u1;
-  check("KURL::url()", url1.url(), "file:///opt/kde2/qt2/doc/html/showimg-main-cpp.html#QObject:connect");
+  check("KURL::url()", url1.url(), "file:///opt/kde2/qt2/doc/html/showimg-main-cpp.html#TQObject:connect");
   check("KURL::hasRef()", url1.hasRef() ? "yes" : "no", "yes");
   check("KURL::hasHTMLRef()", url1.hasHTMLRef() ? "yes" : "no", "yes");
-  check("KURL::htmlRef()", url1.htmlRef(), "QObject:connect");
+  check("KURL::htmlRef()", url1.htmlRef(), "TQObject:connect");
   check("KURL::hasSubURL()", url1.hasSubURL() ? "yes" : "no", "no");
   check("KURL::upURL()", url1.upURL().url(), "file:///opt/kde2/qt2/doc/html/");
 
@@ -329,7 +329,7 @@ int main(int argc, char *argv[])
 
   KURL udir;
   printf("\n* Empty URL\n");
-  check("KURL::url()", udir.url(), QString::null);
+  check("KURL::url()", udir.url(), TQString::null);
   check("KURL::isEmpty()", udir.isEmpty() ? "ok" : "ko", "ok");
   check("KURL::isValid()", udir.isValid() ? "ok" : "ko", "ko");
   udir = udir.upURL();
@@ -342,7 +342,7 @@ int main(int argc, char *argv[])
   check("KURL::directory(false,false)", udir.directory(false,false), "/home/dfaure/");
   check("KURL::directory(true,false)", udir.directory(true,false), "/home/dfaure");
 
-  KURL u2( QCString("/home/dfaure/") );
+  KURL u2( TQCString("/home/dfaure/") );
   printf("\n* URL is %s\n",u2.url().ascii());
   // not ignoring trailing slash
   check("KURL::directory(false,false)", u2.directory(false,false), "/home/dfaure/");
@@ -383,7 +383,7 @@ int main(int argc, char *argv[])
   u2.setFileName( "myotherfile.txt" );
   check("KURL::setFileName()", u2.url(), "file:///home/dfaure/myotherfile.txt");
   // more tricky, renaming a directory (kpropsdlg.cc, line ~ 238)
-      QString tmpurl = "file:/home/dfaure/myolddir/";
+      TQString tmpurl = "file:/home/dfaure/myolddir/";
       if ( tmpurl.at(tmpurl.length() - 1) == '/')
           // It's a directory, so strip the trailing slash first
           tmpurl.truncate( tmpurl.length() - 1);
@@ -425,15 +425,15 @@ int main(int argc, char *argv[])
   check("KURL::split()", lst.first().url(), "ftp://host/dir1/dir2/myfile.txt");
   // cdUp code
   KURL lastUrl = lst.last();
-  QString dir = lastUrl.directory( true, true );
+  TQString dir = lastUrl.directory( true, true );
   check( "KURL::directory(true,true)", dir, "/dir1/dir2");
 
   /// Comparisons
-  QString ucmp1 = "ftp://ftp.de.kde.org/dir";
-  QString ucmp2 = "ftp://ftp.de.kde.org/dir/";
+  TQString ucmp1 = "ftp://ftp.de.kde.org/dir";
+  TQString ucmp2 = "ftp://ftp.de.kde.org/dir/";
   check("urlcmp(only slash difference)", urlcmp(ucmp1,ucmp2)?"ko":"ok","ok");
   check("urlcmp(only slash difference, ignore_trailing)", urlcmp(ucmp1,ucmp2,true,false)?"ok":"ko","ok");
-  QString ucmp3 = "ftp://ftp.de.kde.org/dir/#";
+  TQString ucmp3 = "ftp://ftp.de.kde.org/dir/#";
   check("urlcmp(only hash difference)", urlcmp(ucmp2,ucmp3)?"ko":"ok","ok");
   check("urlcmp(only hash difference, ignore_ref)", urlcmp(ucmp2,ucmp3,false,true)?"ok":"ko","ok");
   check("urlcmp(slash and hash difference, ignore_trailing, ignore_ref)", urlcmp(ucmp2,ucmp3,true,true)?"ok":"ko","ok");
@@ -446,7 +446,7 @@ int main(int argc, char *argv[])
 
   KURL ftpUrl ( "ftp://ftp.de.kde.org" );
   printf("\n* URL is %s\n",ftpUrl.url().latin1());
-  check("KURL::path()", ftpUrl.path(), QString::null);
+  check("KURL::path()", ftpUrl.path(), TQString::null);
   ftpUrl = "ftp://ftp.de.kde.org/";
   check("KURL::isParentOf()", ftpUrl.isParentOf( "ftp://ftp.de.kde.org/host/subdir/") ? "yes" : "no", "yes");
   ftpUrl = "ftp://ftp/host/subdir/";
@@ -560,7 +560,7 @@ int main(int argc, char *argv[])
   check("http: Set user", waba1.url(), "http://waldo@www.website.com/directory/filename?bla#blub");
   waba1.setUser("waldo/bastian");
   check("http: Set user with slash in it", waba1.url(), "http://waldo%2Fbastian@www.website.com/directory/filename?bla#blub");
-  waba1.setRef( QString::null );
+  waba1.setRef( TQString::null );
   waba1.setPass( "pass" );
   waba1.setDirectory( "/foo" );
   waba1.setProtocol( "https" );
@@ -581,7 +581,7 @@ int main(int argc, char *argv[])
         "http://www.kde.org/cgi/test.cgi#");
   check("hasRef()", waba1.hasRef()?"true":"false","true");
   check("hasHTMLRef()", waba1.hasHTMLRef()?"true":"false","true");
-  check("encodedHtmlRef()", waba1.encodedHtmlRef(),QString::null);
+  check("encodedHtmlRef()", waba1.encodedHtmlRef(),TQString::null);
 
   // URLs who forgot to encode spaces in the query.
   waba1 = "http://www.kde.org/cgi/test.cgi?hello=My Value";
@@ -612,7 +612,7 @@ int main(int argc, char *argv[])
   waba1 = "http://a:389?b=c";
   check( "http: URL with port, query, and empty path; url", waba1.url(), "http://a:389?b=c" );
   check( "http: URL with port, query, and empty path; host", waba1.host(), "a" );
-  check( "http: URL with port, query, and empty path; port", QString::number( waba1.port() ), "389" );
+  check( "http: URL with port, query, and empty path; port", TQString::number( waba1.port() ), "389" );
   check( "http: URL with port, query, and empty path; path", waba1.path(), "" );
   check( "http: URL with port, query, and empty path; query", waba1.query(), "?b=c" );
 
@@ -635,7 +635,7 @@ int main(int argc, char *argv[])
   waba1 = "http://a:389#b=c";
   check( "http: URL with port, ref, and empty path; url", waba1.url(), "http://a:389#b=c" );
   check( "http: URL with port, ref, and empty path; host", waba1.host(), "a" );
-  check( "http: URL with port, ref, and empty path; port", QString::number( waba1.port() ), "389" );
+  check( "http: URL with port, ref, and empty path; port", TQString::number( waba1.port() ), "389" );
   check( "http: URL with port, ref, and empty path; path", waba1.path(), "" );
   check( "http: URL with port, ref, and empty path; ref", waba1.ref(), "b=c" );
   check( "http: URL with port, ref, and empty path; query", waba1.query(), "" );
@@ -644,7 +644,7 @@ int main(int argc, char *argv[])
   waba1 = "http://[::FFFF:129.144.52.38]:81/index.html";
   check("http: IPV6 host", waba1.host(),
         "::ffff:129.144.52.38");
-  check("http: IPV6 port", QString("%1").arg(waba1.port()),
+  check("http: IPV6 port", TQString("%1").arg(waba1.port()),
         "81");
 
   // IPV6
@@ -655,7 +655,7 @@ int main(int argc, char *argv[])
         "waba");
   check("http: IPV6 host", waba1.pass(),
         "pass");
-  check("http: IPV6 port", QString("%1").arg(waba1.port()),
+  check("http: IPV6 port", TQString("%1").arg(waba1.port()),
         "81");
 
   // IPV6
@@ -684,27 +684,27 @@ int main(int argc, char *argv[])
   assert( waba1.isValid() );
   check("http: IPV6 without path", waba1.url(),
         "http://[::ffff:129.144.52.38]:81?query");
-  check("http: IPV6 without path; port", QString::number( waba1.port() ), "81" );
+  check("http: IPV6 without path; port", TQString::number( waba1.port() ), "81" );
   check("http: IPV6 without path; query", waba1.query(), "?query");
   waba1 = "http://[::ffff:129.144.52.38]:81#ref";
   assert( waba1.isValid() );
   check("http: IPV6 without path", waba1.url(),
         "http://[::ffff:129.144.52.38]:81#ref");
-  check("http: IPV6 without path; port", QString::number( waba1.port() ), "81" );
+  check("http: IPV6 without path; port", TQString::number( waba1.port() ), "81" );
   check("http: IPV6 without path; ref", waba1.ref(), "ref");
 
   // Streaming operators
   KURL origURL( "http://www.website.com/directory/?#ref" );
   waba1 = "http://[::ffff:129.144.52.38]:81?query";
-  QByteArray buffer;
+  TQByteArray buffer;
   {
-      QDataStream stream( buffer, IO_WriteOnly );
+      TQDataStream stream( buffer, IO_WriteOnly );
       stream << origURL
              << KURL( "file:" ) // an invalid one
              << waba1; // the IPv6 one
   }
   {
-      QDataStream stream( buffer, IO_ReadOnly );
+      TQDataStream stream( buffer, IO_ReadOnly );
       KURL restoredURL;
       stream >> restoredURL;
       check( "Streaming valid URL", origURL.url(), restoredURL.url() );
@@ -742,7 +742,7 @@ int main(int argc, char *argv[])
   check("Broken stuff #3 directory(true, false)", waba1.directory(true, false), "");
   check("Broken stuff #3 directory(false, true)", waba1.directory(true, true), "");
   KURL broken;
-  broken.setPath( QString::null );
+  broken.setPath( TQString::null );
   check("Broken stuff #4 empty", broken.isEmpty()?"EMPTY":"NOT", "NOT");
   // It's valid: because isValid refers to parsing, not to what happens afterwards.
   check("Broken stuff #4 valid", broken.isValid()?"VALID":"MALFORMED", "VALID");
@@ -819,9 +819,9 @@ int main(int argc, char *argv[])
 #if QT_VERSION < 300
   qt_set_locale_codec( KGlobal::charsets()->codecForName( "iso-8859-1" ) );
 #else
-  QTextCodec::setCodecForLocale( KGlobal::charsets()->codecForName( "iso-8859-1" ) );
+  TQTextCodec::setCodecForLocale( KGlobal::charsets()->codecForName( "iso-8859-1" ) );
 #endif
-  QString raw = "data:text/html,%00%2540%00";
+  TQString raw = "data:text/html,%00%2540%00";
   check("data URL: encode-decode of %00", KURL(raw).url(), raw );
 
   // UTF8 tests
@@ -864,10 +864,10 @@ int main(int argc, char *argv[])
 #if QT_VERSION < 300
   qt_set_locale_codec( KGlobal::charsets()->codecForName( "koi8-r" ) );
 #else
-  QTextCodec::setCodecForLocale( KGlobal::charsets()->codecForName( "koi8-r" ) );
+  TQTextCodec::setCodecForLocale( KGlobal::charsets()->codecForName( "koi8-r" ) );
 #endif
   baseURL = "file:/home/coolo";
-  KURL russian = baseURL.directory(false, true) + QString::fromLocal8Bit( "ÆÇÎ7" );
+  KURL russian = baseURL.directory(false, true) + TQString::fromLocal8Bit( "ÆÇÎ7" );
   check( "russian", russian.url(), "file:///home/%C6%C7%CE7" );
 
   KURL tobi1("http://some.host.net/path/to/file#fragmentPrecedes?theQuery");
@@ -895,27 +895,27 @@ int main(int argc, char *argv[])
   check("queryItem (first item)", theKow.queryItem("q"), "frerich");
   check("queryItem (middle item)", theKow.queryItem("hl"), "de");
   check("queryItem (last item)", theKow.queryItem("lr"), "lang de");
-  check("queryItem (invalid item)", theKow.queryItem("InterstellarCounselor"), QString::null);
+  check("queryItem (invalid item)", theKow.queryItem("InterstellarCounselor"), TQString::null);
   check("queryItem (empty item)", theKow.queryItem("empty"), "");
   check("queryItem (item with encoded chars)", theKow.queryItem("test"), "+ :%");
   check("encodedPathAndQuery", theKow.encodedPathAndQuery(), "/search?q=frerich&hlx=xx&hl=de&empty=&lr=lang+de&test=%2B%20%3A%25");
 
-  // checks for queryItems(), which returns a QMap<QString,QString>:
+  // checks for queryItems(), which returns a TQMap<TQString,TQString>:
   KURL queryUrl( "mailto:Marc%20Mutz%20%3cmutz@kde.org%3E?"
 		 "Subject=subscribe+me&"
 		 "body=subscribe+mutz%40kde.org&"
 		 "Cc=majordomo%40lists.kde.org" );
   check("queryItems (c.s. keys)",
-	QStringList(queryUrl.queryItems().keys()).join(", "),
+	TQStringList(queryUrl.queryItems().keys()).join(", "),
 	"Cc, Subject, body" );
   check("queryItems (c.i.s. keys)",
-	QStringList(queryUrl.queryItems(KURL::CaseInsensitiveKeys).keys()).join(", "),
+	TQStringList(queryUrl.queryItems(KURL::CaseInsensitiveKeys).keys()).join(", "),
 	"body, cc, subject" );
   check("queryItems (values; c.s. keys)",
-	QStringList(queryUrl.queryItems().values()).join(", "),
+	TQStringList(queryUrl.queryItems().values()).join(", "),
 	"majordomo@lists.kde.org, subscribe me, subscribe mutz@kde.org" );
   check("queryItems (values; c.i.s. keys)",
-	QStringList(queryUrl.queryItems(KURL::CaseInsensitiveKeys).values()).join(", "),
+	TQStringList(queryUrl.queryItems(KURL::CaseInsensitiveKeys).values()).join(", "),
 	"subscribe mutz@kde.org, majordomo@lists.kde.org, subscribe me" );
 
   KURL umlaut1("http://www.clever-tanken.de/liste.asp?ort=N%FCrnberg&typ=Diesel");
@@ -940,12 +940,12 @@ int main(int argc, char *argv[])
   check("amantia.url()", amantia.url(), "http://?.foo.de"); // why not
 #endif
 
-  KURL thiago( QString::fromUtf8( "http://\303\244.de" ) ); // ä in utf8
+  KURL thiago( TQString::fromUtf8( "http://\303\244.de" ) ); // ä in utf8
   check("thiago.isValid()", thiago.isValid() ? "true" : "false", "true");
 #ifdef HAVE_IDNA_H
   check("thiago.url()", thiago.url(), "http://xn--4ca.de");   // Non-ascii is allowed in IDN domain names.
 #else
-  check("thiago.url()", thiago.url(), QString::fromUtf8( "http://\303\244.de" ) );
+  check("thiago.url()", thiago.url(), TQString::fromUtf8( "http://\303\244.de" ) );
 #endif
 
 
@@ -1003,16 +1003,16 @@ int main(int argc, char *argv[])
   check("com2.url()", com2.url(), "http://server.com/dir/blubb/blah/");
 
   KURL utf8_1("audiocd:/By%20Name/15%20Geantra%C3%AE.wav", 106);
-  check("utf8_1.fileName()", utf8_1.fileName(), QString::fromLatin1("15 Geantraî.wav"));
+  check("utf8_1.fileName()", utf8_1.fileName(), TQString::fromLatin1("15 Geantraî.wav"));
 
   KURL utf8_2("audiocd:/By%20Name/15%2fGeantra%C3%AE.wav", 106);
-  check("utf8_2.fileName()", utf8_2.fileName(), QString::fromLatin1("15/Geantraî.wav"));
+  check("utf8_2.fileName()", utf8_2.fileName(), TQString::fromLatin1("15/Geantraî.wav"));
 
   KURL url_newline_1("http://www.foo.bar/foo/bar\ngnork");
-  check("url_newline_1.url()", url_newline_1.url(), QString::fromLatin1("http://www.foo.bar/foo/bar%0Agnork"));
+  check("url_newline_1.url()", url_newline_1.url(), TQString::fromLatin1("http://www.foo.bar/foo/bar%0Agnork"));
 
   KURL url_newline_2("http://www.foo.bar/foo?bar\ngnork");
-  check("url_newline_2.url()", url_newline_2.url(), QString::fromLatin1("http://www.foo.bar/foo?bar%0Agnork"));
+  check("url_newline_2.url()", url_newline_2.url(), TQString::fromLatin1("http://www.foo.bar/foo?bar%0Agnork"));
 
   KURL local_file_1("file://localhost/my/file");
   check("local_file_1.isLocalFile()", local_file_1.isLocalFile() ? "true" : "false", "true");
@@ -1033,7 +1033,7 @@ int main(int argc, char *argv[])
   local_file_5.setPath("/foo?bar");
   check("local_file_5.url()", local_file_5.url(), "file:///foo%3Fbar");
 
-  QString basePath = "/home/bastian";
+  TQString basePath = "/home/bastian";
 
   check("relativePath(\"/home/bastian\", \"/home/bastian\")", KURL::relativePath(basePath, "/home/bastian"), "./");
   bool b;
@@ -1064,7 +1064,7 @@ int main(int argc, char *argv[])
 
   baseURL = "http://mlc:80/";
   check("isValid()?", baseURL.isValid() ? "true" : "false", "true");
-  check("port()?", QString::number(baseURL.port()), "80");
+  check("port()?", TQString::number(baseURL.port()), "80");
   check("path()?", baseURL.path(), "/");
 
   baseURL = "ptal://mlc:usb@PC_970"; // User=mlc, password=usb, host=PC_970
@@ -1085,7 +1085,7 @@ int main(int argc, char *argv[])
 
   KURL ldap = "ldap://host.com:6666/o=University%20of%20Michigan,c=US??sub?(cn=Babs%20Jensen)";
   check("host()?", ldap.host(), "host.com");
-  check("port()?", QString("%1").arg(ldap.port()), "6666");
+  check("port()?", TQString("%1").arg(ldap.port()), "6666");
   check("path()?", ldap.path(), "/o=University of Michigan,c=US");
   check("query()?", ldap.query(), "??sub?(cn=Babs%20Jensen)");
   check("url()?", ldap.url(), "ldap://host.com:6666/o=University%20of%20Michigan,c=US??sub?(cn=Babs%20Jensen)");
@@ -1101,13 +1101,13 @@ int main(int argc, char *argv[])
 
   // URI Mode tests
   url1 = "http://www.foobar.com/";
-  check("KURL(\"http://www.foobar.com/\").uriMode()", QString::number(url1.uriMode()), QString::number(KURL::URL));
+  check("KURL(\"http://www.foobar.com/\").uriMode()", TQString::number(url1.uriMode()), TQString::number(KURL::URL));
   url1 = "mailto:user@host.com";
-  check("KURL(\"mailto:user@host.com\").uriMode()", QString::number(url1.uriMode()), QString::number(KURL::Mailto));
+  check("KURL(\"mailto:user@host.com\").uriMode()", TQString::number(url1.uriMode()), TQString::number(KURL::Mailto));
   check("KURL(\"mailto:user@host.com\").url()", url1.url(), "mailto:user@host.com");
   check("KURL(\"mailto:user@host.com\").url(0, 106)", url1.url(0, 106), "mailto:user@host.com");
   url1 = "data:text/plain,foobar?gazonk=flarp";
-  check("KURL(\"data:text/plain,foobar?gazonk=flarp\").uriMode()", QString::number(url1.uriMode()), QString::number(KURL::RawURI));
+  check("KURL(\"data:text/plain,foobar?gazonk=flarp\").uriMode()", TQString::number(url1.uriMode()), TQString::number(KURL::RawURI));
   check("KURL(\"data:text/plain,foobar?gazonk=flarp\").path()", url1.path(), "text/plain,foobar?gazonk=flarp");
   url1 = "mailto:User@Host.COM?subject=Hello";
   check("KURL(\"mailto:User@Host.COM?subject=Hello\").path()", url1.path(), "User@host.com");

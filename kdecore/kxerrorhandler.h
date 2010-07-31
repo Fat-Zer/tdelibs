@@ -25,8 +25,8 @@
 #ifndef KXERRORHANDLER_H
 #define KXERRORHANDLER_H
 
-#include <qvaluelist.h>
-#include <qwindowdefs.h>
+#include <tqvaluelist.h>
+#include <tqwindowdefs.h>
 #include <kdelibs_export.h>
 #include <X11/Xlib.h>
 

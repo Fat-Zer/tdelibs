@@ -3,8 +3,8 @@
 
 #include <dcopobject.h>
 #include <dcopref.h>
-#include <qstringlist.h>
-#include <qcstring.h>
+#include <tqstringlist.h>
+#include <tqcstring.h>
 
 namespace KTextEditor
 {

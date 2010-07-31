@@ -19,12 +19,12 @@
 
 #include "kfilelist.h"
 
-#include <qtoolbutton.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qheader.h>
-#include <qwhatsthis.h>
+#include <tqtoolbutton.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqtooltip.h>
+#include <tqheader.h>
+#include <tqwhatsthis.h>
 
 #include <kio/netaccess.h>
 #include <kurldrag.h>
@@ -35,11 +35,11 @@
 #include <krun.h>
 #include <kmimetype.h>
 
-KFileList::KFileList(QWidget *parent, const char *name)
-: QWidget(parent, name)
+KFileList::KFileList(TQWidget *parent, const char *name)
+: TQWidget(parent, name)
 {
 	//WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThisAddFileButton = i18n(  " <qt> <b>Add File button</b>"
+	TQString whatsThisAddFileButton = i18n(  " <qt> <b>Add File button</b>"
 						" <p>This button calls the <em>'File Open'</em> dialog to let you"
 						" select a file for printing. Note, that "
 						" <ul><li>you can select ASCII or International Text, PDF,"
@@ -51,26 +51,26 @@ KFileList::KFileList(QWidget *parent, const char *name)
 						" </ul>"
 					        " </qt>" );
 
-	QString whatsThisRemoveFileButton = i18n(" <qt> <b>Remove File button</b>"
+	TQString whatsThisRemoveFileButton = i18n(" <qt> <b>Remove File button</b>"
                                                 " <p>This button removes the highlighted file from the"
 						" list of to-be-printed files."
 					        " </qt>" );
 
-	QString whatsThisMoveFileUpButton = i18n(" <qt> <b>Move File Up button</b>"
+	TQString whatsThisMoveFileUpButton = i18n(" <qt> <b>Move File Up button</b>"
                                                 " <p>This button moves the highlighted file up in the list"
 						" of files to be printed.</p>"
 						" <p>In effect, this changes the order"
 						" of the files' printout.</p>"
 					        " </qt>" );
 
-	QString whatsThisMoveFileDownButton = i18n(" <qt> <b>Move File Down button</b>"
+	TQString whatsThisMoveFileDownButton = i18n(" <qt> <b>Move File Down button</b>"
                                                 " <p>This button moves the highlighted file down in the list"
 						" of files to be printed.</p>"
 						" <p>In effect, this changes the order"
 						" of the files' printout.</p>"
 					        " </qt>" );
 
-	QString whatsThisOpenFileButton = i18n( " <qt> <b>File Open button</b>"
+	TQString whatsThisOpenFileButton = i18n( " <qt> <b>File Open button</b>"
                                                 " <p>This button tries to open the highlighted file, so"
 						" you can view or edit it before you send it to the printing"
 						" system.</p>"
@@ -79,7 +79,7 @@ KFileList::KFileList(QWidget *parent, const char *name)
 						" the file.</p>"
 					        " </qt>" );
 
-	QString whatsThisFileSelectionListview = i18n( " <qt> <b>File List view</b>"
+	TQString whatsThisFileSelectionListview = i18n( " <qt> <b>File List view</b>"
                                                 " <p>This list displays all the files you selected for printing."
 						" You can see the file name(s), file path(s) and the file"
 						" (MIME) type(s) as determined by KDEPrint. You may re-arrange the "
@@ -104,53 +104,53 @@ KFileList::KFileList(QWidget *parent, const char *name)
 	m_files->setAllColumnsShowFocus(true);
 	m_files->setSorting(-1);
 	m_files->setAcceptDrops(false);
-	m_files->setSelectionMode(QListView::Extended);
+	m_files->setSelectionMode(TQListView::Extended);
 	m_files->header()->setStretchEnabled(true, 2);
-	QWhatsThis::add(m_files, whatsThisFileSelectionListview);
-	connect(m_files, SIGNAL(selectionChanged()), SLOT(slotSelectionChanged()));
+	TQWhatsThis::add(m_files, whatsThisFileSelectionListview);
+	connect(m_files, TQT_SIGNAL(selectionChanged()), TQT_SLOT(slotSelectionChanged()));
 
-	m_add = new QToolButton(this);
+	m_add = new TQToolButton(this);
 	m_add->setIconSet(SmallIconSet("fileopen"));
-	connect(m_add, SIGNAL(clicked()), SLOT(slotAddFile()));
-	QToolTip::add(m_add, i18n("Add file"));
-	QWhatsThis::add(m_add, whatsThisAddFileButton);
+	connect(m_add, TQT_SIGNAL(clicked()), TQT_SLOT(slotAddFile()));
+	TQToolTip::add(m_add, i18n("Add file"));
+	TQWhatsThis::add(m_add, whatsThisAddFileButton);
 
-	m_remove = new QToolButton(this);
+	m_remove = new TQToolButton(this);
 	m_remove->setIconSet(SmallIconSet("remove"));
-	connect(m_remove, SIGNAL(clicked()), SLOT(slotRemoveFile()));
-	QToolTip::add(m_remove, i18n("Remove file"));
-	QWhatsThis::add(m_remove, whatsThisRemoveFileButton);
+	connect(m_remove, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemoveFile()));
+	TQToolTip::add(m_remove, i18n("Remove file"));
+	TQWhatsThis::add(m_remove, whatsThisRemoveFileButton);
 	m_remove->setEnabled(false);
 
-	m_open = new QToolButton(this);
+	m_open = new TQToolButton(this);
 	m_open->setIconSet(SmallIconSet("filefind"));
-	connect(m_open, SIGNAL(clicked()), SLOT(slotOpenFile()));
-	QToolTip::add(m_open, i18n("Open file"));
-	QWhatsThis::add(m_open, whatsThisOpenFileButton);
+	connect(m_open, TQT_SIGNAL(clicked()), TQT_SLOT(slotOpenFile()));
+	TQToolTip::add(m_open, i18n("Open file"));
+	TQWhatsThis::add(m_open, whatsThisOpenFileButton);
 	m_open->setEnabled(false);
 
-	m_up = new QToolButton(this);
+	m_up = new TQToolButton(this);
 	m_up->setIconSet(SmallIconSet("up"));
-	connect(m_up, SIGNAL(clicked()), SLOT(slotUp()));
-	QToolTip::add(m_up, i18n("Move up"));
-	QWhatsThis::add(m_up, whatsThisMoveFileUpButton);
+	connect(m_up, TQT_SIGNAL(clicked()), TQT_SLOT(slotUp()));
+	TQToolTip::add(m_up, i18n("Move up"));
+	TQWhatsThis::add(m_up, whatsThisMoveFileUpButton);
 	m_up->setEnabled(false);
 
-	m_down = new QToolButton(this);
+	m_down = new TQToolButton(this);
 	m_down->setIconSet(SmallIconSet("down"));
-	connect(m_down, SIGNAL(clicked()), SLOT(slotDown()));
-	QToolTip::add(m_down, i18n("Move down"));
-	QWhatsThis::add(m_down, whatsThisMoveFileDownButton);
+	connect(m_down, TQT_SIGNAL(clicked()), TQT_SLOT(slotDown()));
+	TQToolTip::add(m_down, i18n("Move down"));
+	TQWhatsThis::add(m_down, whatsThisMoveFileDownButton);
 	m_down->setEnabled(false);
 
 	setAcceptDrops(true);
 
-	QToolTip::add(m_files, i18n(
+	TQToolTip::add(m_files, i18n(
 		"Drag file(s) here or use the button to open a file dialog. "
 		"Leave empty for <b>&lt;STDIN&gt;</b>."));
 
-	QHBoxLayout	*l0 = new QHBoxLayout(this, 0, KDialog::spacingHint());
-	QVBoxLayout	*l1 = new QVBoxLayout(0, 0, 1);
+	QHBoxLayout	*l0 = new TQHBoxLayout(this, 0, KDialog::spacingHint());
+	QVBoxLayout	*l1 = new TQVBoxLayout(0, 0, 1);
 	l0->addWidget(m_files);
 	l0->addLayout(l1);
 	l1->addWidget(m_add);
@@ -166,12 +166,12 @@ KFileList::~KFileList()
 {
 }
 
-void KFileList::dragEnterEvent(QDragEnterEvent *e)
+void KFileList::dragEnterEvent(TQDragEnterEvent *e)
 {
 	e->accept(KURLDrag::canDecode(e));
 }
 
-void KFileList::dropEvent(QDropEvent *e)
+void KFileList::dropEvent(TQDropEvent *e)
 {
 	KURL::List	files;
 	if (KURLDrag::decode(e, files))
@@ -192,7 +192,7 @@ void KFileList::addFiles(const KURL::List& files)
 		for (KURL::List::ConstIterator it=files.begin(); it!=files.end(); ++it)
 		{
 			KMimeType::Ptr	mime = KMimeType::findByURL( *it, 0, true, false);
-			item = new QListViewItem(m_files, item, (*it).fileName(), mime->comment(), (*it).url());
+			item = new TQListViewItem(m_files, item, (*it).fileName(), mime->comment(), (*it).url());
 			item->setPixmap(0, mime->pixmap(*it, KIcon::Small));
 		}
 
@@ -209,21 +209,21 @@ void KFileList::addFiles(const KURL::List& files)
 	}
 }
 
-void KFileList::setFileList(const QStringList& files)
+void KFileList::setFileList(const TQStringList& files)
 {
 	m_files->clear();
-	QListViewItem *item = 0;
-	for (QStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
+	TQListViewItem *item = 0;
+	for (TQStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
 	{
 		KURL	url = KURL::fromPathOrURL( *it );
 		KMimeType::Ptr	mime = KMimeType::findByURL(url, 0, true, false);
-		item = new QListViewItem(m_files, item, url.fileName(), mime->comment(), url.url());
+		item = new TQListViewItem(m_files, item, url.fileName(), mime->comment(), url.url());
 		item->setPixmap(0, mime->pixmap(url, KIcon::Small));
 	}
 	slotSelectionChanged();
 }
 
-QStringList KFileList::fileList() const
+TQStringList KFileList::fileList() const
 {
 	QStringList	l;
 	QListViewItem	*item = m_files->firstChild();
@@ -237,14 +237,14 @@ QStringList KFileList::fileList() const
 
 void KFileList::slotAddFile()
 {
-	KURL::List fnames = KFileDialog::getOpenURLs(QString::null, QString::null, this);
+	KURL::List fnames = KFileDialog::getOpenURLs(TQString::null, TQString::null, this);
 	if (!fnames.empty())
 		addFiles(fnames);
 }
 
 void KFileList::slotRemoveFile()
 {
-	QPtrList<QListViewItem>	l;
+	TQPtrList<TQListViewItem>	l;
 	selection(l);
 	l.setAutoDelete(true);
 	m_block = true;
@@ -263,12 +263,12 @@ void KFileList::slotOpenFile()
 	}
 }
 
-QSize KFileList::sizeHint() const
+TQSize KFileList::sizeHint() const
 {
-	return QSize(100, 100);
+	return TQSize(100, 100);
 }
 
-void KFileList::selection(QPtrList<QListViewItem>& l)
+void KFileList::selection(TQPtrList<TQListViewItem>& l)
 {
 	l.setAutoDelete(false);
 	QListViewItem	*item = m_files->firstChild();
@@ -285,7 +285,7 @@ void KFileList::slotSelectionChanged()
 	if (m_block)
 		return;
 
-	QPtrList<QListViewItem>	l;
+	TQPtrList<TQListViewItem>	l;
 	selection(l);
 	m_remove->setEnabled(l.count() > 0);
 	m_open->setEnabled(l.count() == 1);
@@ -295,12 +295,12 @@ void KFileList::slotSelectionChanged()
 
 void KFileList::slotUp()
 {
-	QPtrList<QListViewItem>	l;
+	TQPtrList<TQListViewItem>	l;
 	selection(l);
 	if (l.count() == 1 && l.first()->itemAbove())
 	{
 		QListViewItem	*item(l.first()), *clone;
-		clone = new QListViewItem(m_files, item->itemAbove()->itemAbove(), item->text(0), item->text(1), item->text(2));
+		clone = new TQListViewItem(m_files, item->itemAbove()->itemAbove(), item->text(0), item->text(1), item->text(2));
 		clone->setPixmap(0, *(item->pixmap(0)));
 		delete item;
 		m_files->setCurrentItem(clone);
@@ -310,12 +310,12 @@ void KFileList::slotUp()
 
 void KFileList::slotDown()
 {
-	QPtrList<QListViewItem>	l;
+	TQPtrList<TQListViewItem>	l;
 	selection(l);
 	if (l.count() == 1 && l.first()->itemBelow())
 	{
 		QListViewItem	*item(l.first()), *clone;
-		clone = new QListViewItem(m_files, item->itemBelow(), item->text(0), item->text(1), item->text(2));
+		clone = new TQListViewItem(m_files, item->itemBelow(), item->text(0), item->text(1), item->text(2));
 		clone->setPixmap(0, *(item->pixmap(0)));
 		delete item;
 		m_files->setCurrentItem(clone);

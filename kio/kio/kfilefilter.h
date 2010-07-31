@@ -21,8 +21,8 @@
 #ifndef KFILEFILTER_H
 #define KFILEFILTER_H
 
-#include <qptrlist.h>
-#include <qstringlist.h>
+#include <tqptrlist.h>
+#include <tqstringlist.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -105,8 +105,8 @@ public:
      * @param separator the separator in the @p nameFilter
      * @since 3.1
      */
-    void setNameFilters( const QString& nameFilters, bool caseSensitive,
-                         const QChar& separator = ' ' );
+    void setNameFilters( const TQString& nameFilters, bool caseSensitive,
+                         const TQChar& separator = ' ' );
     /**
      * Sets a list of regular expressions to filter by name.
      * The file will only pass if its name matches one of the regular
@@ -114,7 +114,7 @@ public:
      * @param nameFilters a list of regular expressions, separated by
      *                    space (' ')
      */
-    virtual void setNameFilters( const QString& nameFilters );
+    virtual void setNameFilters( const TQString& nameFilters );
 
     /**
      * Sets a list of mime filters. A file can only pass if its
@@ -122,13 +122,13 @@ public:
      * @param mimeFilters the list of mime types
      * @see setMimeFilter
      */
-    virtual void setMimeFilters( const QStringList& mimeFilters );
+    virtual void setMimeFilters( const TQStringList& mimeFilters );
     /**
      * Returns the list of mime types.
      * @return the list of mime types
      * @see mimeFilter
      */
-    QStringList mimeFilters() const { return m_mimeFilters; }
+    TQStringList mimeFilters() const { return m_mimeFilters; }
 
     /**
      * Sets the mode filter. If the @p mode is 0, the filter is
@@ -154,10 +154,10 @@ public:
     virtual bool passesFilter( const KFileItem *item ) const;
 
 protected:
-    QPtrList<QRegExp>   m_nameFilters;
+    TQPtrList<TQRegExp>   m_nameFilters;
 
 private:
-    QStringList         m_mimeFilters;
+    TQStringList         m_mimeFilters;
     bool                m_filterDotFiles :1;
     bool                m_filterSpecials :1;
     mode_t              m_modeFilter;

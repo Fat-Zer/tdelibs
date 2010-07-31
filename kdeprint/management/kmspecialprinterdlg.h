@@ -33,7 +33,7 @@ class KMSpecialPrinterDlg : public KDialogBase
 {
 	Q_OBJECT
 public:
-	KMSpecialPrinterDlg(QWidget *parent = 0, const char *name = 0);
+	KMSpecialPrinterDlg(TQWidget *parent = 0, const char *name = 0);
 
 	void setPrinter(KMPrinter*);
 	KMPrinter* printer();
@@ -43,7 +43,7 @@ protected:
 
 protected slots:
 	void slotOk();
-	void slotTextChanged(const QString &);
+	void slotTextChanged(const TQString &);
 
 private:
 	QLineEdit	*m_name, *m_description, *m_location, *m_extension;

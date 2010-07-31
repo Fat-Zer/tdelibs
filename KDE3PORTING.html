@@ -68,7 +68,7 @@ The old name will still work unless KDE_NO_COMPAT is defined.
 <H3><A NAME="kdecore">Changes in kdecore</A></H3>
 
 <H4>KDesktopWidget</H4>
-KDesktopWidget is obsolete. Include &lt;qdesktopwidget.h&gt; and use QDesktopWidget
+KDesktopWidget is obsolete. Include &lt;tqdesktopwidget.h&gt; and use QDesktopWidget
 instead, everything else is source compatible.
 
 <H4>Header file names</H4>
@@ -112,13 +112,13 @@ The old name will still work unless KDE_NO_COMPAT is defined.
 KPixmapSplitter has now been moved to the new kdefx library.
 
 <H4>KStringHandler</H4>
-The <i>matchFilename( const QString& filename, const QString& pattern )</i> method has been 
-renamed to <br><i>matchFileName( const QString& filename, const QString& pattern )</i>.
+The <i>matchFilename( const TQString& filename, const TQString& pattern )</i> method has been 
+renamed to <br><i>matchFileName( const TQString& filename, const TQString& pattern )</i>.
 The old name will still work unless KDE_NO_COMPAT is defined.
 
 <H4>KStyle</H4>
-Due to the major changes in the QStyle API in Qt3, KStyle has been completely
-re-written. KStyle is now a thin wrapper around QCommonStyle with a few extra 
+Due to the major changes in the TQStyle API in Qt3, KStyle has been completely
+re-written. KStyle is now a thin wrapper around TQCommonStyle with a few extra 
 primitive elements and a simple popupMenu transparency engine. All KStyles can
 now style Qt apps like designer and assistant automatically. KStyle is no longer
 present in kdecore. It is now in a new library called kdefx to allow Qt apps to
@@ -131,20 +131,20 @@ The old name will still work unless KDE_NO_COMPAT is defined.
 
 <H4>KMD5</H4>
 HASHHEX and HASH has been removed to make this class namespace clean. 
-They have been replaced by QCString and KMD5::Digest. <br>
+They have been replaced by TQCString and KMD5::Digest. <br>
 The API has been cleaned up, it is no longer necessary to call finalize(). 
 Simply remove any calls to it. 
 
 <H4>KLocale</H4>
 <li>charset() has been removed. You might want to use encoding() instead.
-<li>setCharset(const QString &amp;) has been removed. You might want to use
+<li>setCharset(const TQString &amp;) has been removed. You might want to use
 setEncoding(int) instead.
-<li>formatMoney(const QString &amp;) has been removed.
-<li>formatNumber(const QString &amp;) has been removed.
+<li>formatMoney(const TQString &amp;) has been removed.
+<li>formatNumber(const TQString &amp;) has been removed.
 <li>languages() has been removed. Use languageList() instead.
 <li>All references to monthName(), monthNamePossessive(), and weekDayName()
 should be replaced with methods from KLocale::calendar().
-<li>Hard coded date handling or date handling with QDate should in most
+<li>Hard coded date handling or date handling with TQDate should in most
 cases be replaced by methods in KLocale::calendar().
 
 <H4>Accelerators Keys</H4>
@@ -155,12 +155,12 @@ not be available.
 	<li> KAccel::insertItem() and KAccel::connectItem().
 <pre>
 	- kaccel-&gt;insertItem( i18n("Scroll Up"), "Scroll Up", "Up" );
-	- kaccel-&gt;connectItem( "Scroll Up", this, SLOT(scrollUp()) );
-	+ kaccel-&gt;insert( "Scroll Up", i18n("Scroll Up"), QString::null,
-		Key_Up, this, SLOT(scrollUp()) );
+	- kaccel-&gt;connectItem( "Scroll Up", this, TQT_SLOT(scrollUp()) );
+	+ kaccel-&gt;insert( "Scroll Up", i18n("Scroll Up"), TQString::null,
+		Key_Up, this, TQT_SLOT(scrollUp()) );
 </pre>
 	Note that a What's This parameter is now a part of the insert function.
-	You might replace the QString::null parameter with
+	You might replace the TQString::null parameter with
 	<pre> i18n("Scroll the current document's contents up by one line.") </pre>
 	for example.</li>
 	<li> KAccel::changeMenuAccel() has been deprecated because it was
@@ -176,7 +176,7 @@ not be available.
 The preferred means of defining a shortcut, however, is to use <b>KAction</b>.
 <pre>
 	new KAction( i18n("Scroll Up"), Key_Up,
-		this, SLOT(scrollUp()), actionCollection(), "Scroll Up" );
+		this, TQT_SLOT(scrollUp()), actionCollection(), "Scroll Up" );
 </pre>
 
 <h5>KGlobalAccel</h5>
@@ -200,12 +200,12 @@ The preferred means of defining a shortcut, however, is to use <b>KAction</b>.
 	<li>The following functions have been deprecated and will need to be changed if KDE_NO_COMPAT is defined:
 		<table border=1>
 			<tr><th>Old</th><th>New</th></tr>
-			<tr><td>QString action(StdAccel id)</td><td>QString name(StdAccel id)</td></tr>
+			<tr><td>TQString action(StdAccel id)</td><td>TQString name(StdAccel id)</td></tr>
 			<tr><td>int defaultKey(StdAccel accel)</td><td>KShortcut shortcutDefault(StdAccel id)</td></tr>
-			<tr><td>QString description(StdAccel id)</td><td>QString label(StdAccel id)</td></tr>
-			<tr><td>bool isEqual(const QKeyEvent* pEvent, int keyQt)</td>
+			<tr><td>TQString description(StdAccel id)</td><td>TQString label(StdAccel id)</td></tr>
+			<tr><td>bool isEqual(const TQKeyEvent* pEvent, int keyQt)</td>
 				<td>The best method for replacing this varies.  One possibility is to use
-				<i>KKey(const QKeyEvent*) == KKey(int)</i>.  Another is to use
+				<i>KKey(const TQKeyEvent*) == KKey(int)</i>.  Another is to use
 				<i>KShortcut::contains( const KKey&/KKeySequence& )</i>.</td></tr>
 			<tr><td>int key(StdAccel)</td><td>const KShortcut& shortcut(StdAccel)</td></tr>
 		</table></li-->
@@ -261,7 +261,7 @@ This class has been removed, use Qt layouts instead.
 <H4>KCommand</H4>
 This class has been made lighter: the name isn't stored into the command anymore,
 but must be provided by the inherited class, as the result of the virtual name() function.
-This saves storing a QString into each command in memory.
+This saves storing a TQString into each command in memory.
 The former behavior is available in the class KNamedCommand, so for a quick port
 simply replace KCommand with KNamedCommand.
 
@@ -273,7 +273,7 @@ The deprecated getMainWidget() method has been removed. Use mainWidget() instead
 functionality.
 
 <H4>KDockWidget</H4>
-The WidgetList parameter has been renamed to QWidgetList. Behaviour
+The WidgetList parameter has been renamed to TQWidgetList. Behaviour
 is identical.
 
 <H4>KEdit</H4>
@@ -306,11 +306,11 @@ for more informations on this new extension.
 PixmapEffect has now been moved to the new kdefx library.
 
 <H4>KProgress</H4>
-KProgress is now based on QProgressBar.
+KProgress is now based on TQProgressBar.
 This has led to a few API changes. In particular the constructors have been
 simplified, you simply need to pass the total number of steps instead of
 min / max / initialvalue / orientation. See documentation of both KProgress
-and QProgressBar.
+and TQProgressBar.
 
 <H4>KRootPixmap</H4>
 The KRootPixmap class has been extended to make it more flexible, and the
@@ -324,7 +324,7 @@ as its use is basically limited to KThemeStyle.
 
 <H4>KAction, KToolBar, KToolBarButton and icons</H4>
 The preferred way for specifying icons is passing the icon names (and the icons will be loaded by KIconLoader),
-instead of using QIconSet or QPixmap. This results in always using the correct icon size and allows delayed
+instead of using TQIconSet or TQPixmap. This results in always using the correct icon size and allows delayed
 on-demand icon loading.
 <p>
 Method KAction::hasIconSet() has been renamed to KAction::hasIcon(), the old name will still work unless KDE_NO_COMPAT is defined.
@@ -335,13 +335,13 @@ KToolBarButton methods setPixmap(), setDefaultPixmap(), setDisabledPixmap(), set
 Use KToolBarButton::setIcon() (preferred) or KToolBarButton::setIconSet() instead.
 
 <H4>KAction and derived classes</H4>
-The protected set* methods have been renamed to update* and they now take only one argument (i.e. setText(int, const QString&)
+The protected set* methods have been renamed to update* and they now take only one argument (i.e. setText(int, const TQString&)
 is now updateText(int) ). Because the former second argument was always the value of the a corresponding data member, you
 can simply call the accessor method (i.e. in updateText() call text() to get the text).
 
 <H4>KToggleAction</H4>
 exclusiveGroup() is no more virtual. setExclusiveGroup(const
-QString&) is not a slot anymore.
+TQString&) is not a slot anymore.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
@@ -350,7 +350,7 @@ QString&) is not a slot anymore.
 <H4>KPropertiesDialog</H4>
 <ul>
   <li>The header file has been renamed from kpropsdlg.h to kpropertiesdialog.h.</li>
-  <li>KPropertiesDialog::KPropertiesDialog(const KURL&, mode_t, QWidget*,
+  <li>KPropertiesDialog::KPropertiesDialog(const KURL&, mode_t, TQWidget*,
       const char*, bool, bool ) has been removed since mode_t was no longer
       used. Simply omit the mode_t parameter.</li>
 </ul>
@@ -362,15 +362,15 @@ QString&) is not a slot anymore.
   <li>A base class KArchive has been written, to support other archive formats in the future</li>
   <li>KTarEntry is now KArchiveEntry, KTarDirectory is now KArchiveDirectory, and KTarFile is now KArchiveFile.</li>
   <li>The classes ProgressBase, StatusbarProgress and DefaultProgress have been moved to the KIO namespace.</li>
-  <li>The signal KDirLister::started(const QString &amp;url) has changed to KDirLister::started(const KURL &amp;url).<li>
-  <li>KServiceTypeProfile::preferredService( const QString &amp; serviceType, bool needApp ) has been removed, use
+  <li>The signal KDirLister::started(const TQString &amp;url) has changed to KDirLister::started(const KURL &amp;url).<li>
+  <li>KServiceTypeProfile::preferredService( const TQString &amp; serviceType, bool needApp ) has been removed, use
       KServiceTypeProfile::preferredService( ..., "Application") if needApp was true, or
-      KServiceTypeProfile::preferredService( ..., QString::null) if needApp was false.
+      KServiceTypeProfile::preferredService( ..., TQString::null) if needApp was false.
   <li>The following functions in KProtocolManager have been replaced:
       <ul>
 <li>ftpProxy(), use proxyFor("ftp") instead.
 <li>httpProxy(), use proxyFor("http") instead.
-<li>slaveProtocol(const QString&amp;), use slaveProtocol(const KURL &amp;url, QString &amp;proxy) instead.
+<li>slaveProtocol(const TQString&amp;), use slaveProtocol(const KURL &amp;url, TQString &amp;proxy) instead.
 <li>defaultReadTimeout(), use DEFAULT_READ_TIMEOUT instead. (See ioslave_defaults.h)
 <li>defaultProxyConnectTimeout(), use DEFAULT_PROXY_CONNECT_TIMEOUT instead. (See ioslave_defaults.h)
 <li>defaultResponseTimeout(), use DEFAULT_RESPONSE_TIMEOUT instead. (See ioslave_defaults.h)
@@ -378,7 +378,7 @@ QString&) is not a slot anymore.
       </ul>
   <li>The following functions in KProtocolManager have been removed:
       <ul>
-<li>setUserAgentList( const QStringList&amp; )
+<li>setUserAgentList( const TQStringList&amp; )
 <li>userAgentList();
 <li>setReadTimeout()
 <li>setConnectTimeout( int )
@@ -396,11 +396,11 @@ QString&) is not a slot anymore.
 <li>setUseReverseProxy( bool )
 <li>setProxyType( ProxyType )
 <li>setProxyAuthMode( ProxyAuthMode )
-<li>setFtpProxy( const QString&amp; )
-<li>setHttpProxy( const QString&amp; )
-<li>setProxyFor( const QString&amp;, const QString&amp; )
-<li>setNoProxyFor( const QString&amp; )
-<li>setProxyConfigScript( const QString&amp;  )
+<li>setFtpProxy( const TQString&amp; )
+<li>setHttpProxy( const TQString&amp; )
+<li>setProxyFor( const TQString&amp;, const TQString&amp; )
+<li>setNoProxyFor( const TQString&amp; )
+<li>setProxyConfigScript( const TQString&amp;  )
       </ul>
   </li>
   <li>In order to support files &gt; 4Gb, the file size / file-offset argument
@@ -428,10 +428,10 @@ The createFilterDevice method is deprecated. Use deviceForFile instead.
 
 <H4>KDirWatch</H4>
 <ul>
-  <li>The signal fileDirty( const QString&amp; ) has been removed</li>
-  <li>The signal created( const QString&amp; ) has been added</li>
-  <li>The signal deleted( const QString&amp; ) has been added</li>
-  <li>The signal dirty( const QString&amp; ) may be emitted with a file name, not only
+  <li>The signal fileDirty( const TQString&amp; ) has been removed</li>
+  <li>The signal created( const TQString&amp; ) has been added</li>
+  <li>The signal deleted( const TQString&amp; ) has been added</li>
+  <li>The signal dirty( const TQString&amp; ) may be emitted with a file name, not only
     a directory name. This depends on which backend is used but will probably always be
     the case in KDE 3.1. You should prepare to receive dirty( dirname ) or dirty( filename )
     when a file has changed.
@@ -473,18 +473,18 @@ setURLArgs does the job.
 <H4>KSpell</H4>
 The API has been cleaned up to be in line with the rest of kdelibs, in particular:
 <ul>
-<li>suggestions() now returns a QStringList instead of a pointer to a QStringList
-<li>intermediateBuffer() now returns a QString instead of a pointer to a QString
-<li>The signal <b>misspelling(QString, QStringList *, unsigned)</b> has changed to
-    misspelling(const QString &amp;, const QStringList &amp;, unsigned int)
-<li>The signal <b>corrected(QString, QString, unsigned)</b> has changed to
-    corrected(const QString &amp;, const QString &amp;, unsigned int)
-<li>The signal <b>ignoreall(QString)</b> has changed to
-    ignoreall(const QString &amp;)
-<li>The signal <b>ignoreword(QString)</b> has changed to
-    ignoreword(const QString &amp;)
-<li>The signal <b>addword(QString)</b> has changed to
-    addword(const QString &amp;)
+<li>suggestions() now returns a TQStringList instead of a pointer to a QStringList
+<li>intermediateBuffer() now returns a TQString instead of a pointer to a QString
+<li>The signal <b>misspelling(TQString, TQStringList *, unsigned)</b> has changed to
+    misspelling(const TQString &amp;, const TQStringList &amp;, unsigned int)
+<li>The signal <b>corrected(TQString, TQString, unsigned)</b> has changed to
+    corrected(const TQString &amp;, const TQString &amp;, unsigned int)
+<li>The signal <b>ignoreall(TQString)</b> has changed to
+    ignoreall(const TQString &amp;)
+<li>The signal <b>ignoreword(TQString)</b> has changed to
+    ignoreword(const TQString &amp;)
+<li>The signal <b>addword(TQString)</b> has changed to
+    addword(const TQString &amp;)
 </ul>
 
       Make sure to check if you use the above signals since your compiler
@@ -551,7 +551,7 @@ This class has been merged with KDirLister from kio.
 <tr><td>saveConfig()</td><td>writeConfig()</td></tr>
 <tr><td>setFileReader()</td><td>setDirLister()</td></tr>
 <tr><td>fileReader()</td><td>dirLister()</td></tr>
-<tr><td>activatedMenu( const KFileViewItem * )</td><td>activatedMenu( const KFileItem *, const QPoint& pos )</td></tr>
+<tr><td>activatedMenu( const KFileViewItem * )</td><td>activatedMenu( const KFileItem *, const TQPoint& pos )</td></tr>
 </table>
 
 <H4>KFileDetailView</H4>
@@ -564,25 +564,25 @@ flexibility and efficiency.
 Sorting has changed radically. Previously, KFileView had protected methods QuickSort,
 compareItems() and mergeLists() to sort directory entries for displaying in the views. Now,
 KFileView does not do any sorting anymore. Instead, the view's (i.e. KIconView, KListView)
-sorting is utilized by letting its view-items provide a QString key() method. Therefore,
+sorting is utilized by letting its view-items provide a TQString key() method. Therefore,
 KFileView offers the two methods
 <ul>
-<li>QString sortingKey( const QString&amp; value, bool isDir, int sortSpec )</li>
-<li>QString sortingKey( KIO::filesize_t value, bool isDir, int sortSpec )</li>
+<li>TQString sortingKey( const TQString&amp; value, bool isDir, int sortSpec )</li>
+<li>TQString sortingKey( KIO::filesize_t value, bool isDir, int sortSpec )</li>
 </ul>
 which the view-classes can use to generate the string for the key() method. The KFile::SortMode
-enum has been removed, as QDir::SortSpec is used entirely.
+enum has been removed, as TQDir::SortSpec is used entirely.
 
 <br><br>
 Further changes:
 <table>
 <tr><th>Old:</th><th>New:</th></tr>
-<tr><td>not existant</td><td>virtual void readConfig( KConfig *, const QString&amp; group = QString::null )</td></tr>
-<tr><td>not existant</td><td>void writeConfig( KConfig *, const QString&amp; group = QString::null)</td></tr>
-<tr><td>virtual void setCurrentItem( const QString&amp; filename, KFileViewItem * )</td><td>Replaced with the two methods below.</td></tr>
-<tr><td>&nbsp;</td><td>void setCurrentItem( const QString&amp; filename );</td></tr>
+<tr><td>not existant</td><td>virtual void readConfig( KConfig *, const TQString&amp; group = TQString::null )</td></tr>
+<tr><td>not existant</td><td>void writeConfig( KConfig *, const TQString&amp; group = TQString::null)</td></tr>
+<tr><td>virtual void setCurrentItem( const TQString&amp; filename, KFileViewItem * )</td><td>Replaced with the two methods below.</td></tr>
+<tr><td>&nbsp;</td><td>void setCurrentItem( const TQString&amp; filename );</td></tr>
 <tr><td>&nbsp;</td><td>virtual void setCurrentItem( const KFileViewItem * ) = 0;</td></tr>
-<tr><td>setOperator( QObject * )</td><td>setParentView( KFileView * )</td></tr>
+<tr><td>setOperator( TQObject * )</td><td>setParentView( KFileView * )</td></tr>
 <tr><td>virtual void insertSorted( KFileViewItem *, uint count )</td><td>virtual void insertItem( KFileItem * )</td></tr>
 <tr><td>virtual void addItemList( const KFileViewItemList &amp;list )</td><td>not virtual anymore. Sufficient to reimplement insertItem()</td></tr>
 </table>

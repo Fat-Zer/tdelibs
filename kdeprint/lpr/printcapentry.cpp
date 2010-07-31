@@ -19,7 +19,7 @@
 
 #include "printcapentry.h"
 
-QString Field::toString() const
+TQString Field::toString() const
 {
 	QString	s = name;
 	switch (type)
@@ -38,14 +38,14 @@ QString Field::toString() const
 	return s;
 }
 
-bool PrintcapEntry::writeEntry(QTextStream& t)
+bool PrintcapEntry::writeEntry(TQTextStream& t)
 {
 	t << comment << endl;
 	t << name;
 	if (aliases.count() > 0)
 		t << '|' << aliases.join("|");
 	t << ':';
-	for (QMap<QString,Field>::ConstIterator it=fields.begin(); it!=fields.end(); ++it)
+	for (TQMap<TQString,Field>::ConstIterator it=fields.begin(); it!=fields.end(); ++it)
 	{
 		t << '\\' << endl << "    :";
 		t << (*it).name;
@@ -72,7 +72,7 @@ bool PrintcapEntry::writeEntry(QTextStream& t)
 	return true;
 }
 
-void PrintcapEntry::addField(const QString& name, Field::Type type, const QString& value)
+void PrintcapEntry::addField(const TQString& name, Field::Type type, const TQString& value)
 {
 	Field	f;
 	f.name = name;

@@ -21,12 +21,12 @@
 #ifndef KWALLET_TYPES_H
 #define KWALLET_TYPES_H
 
-#include <qmap.h>
+#include <tqmap.h>
 
 class QString;
 
-inline const char* dcopTypeName(const QByteArray&) { return "QByteArray"; }
-inline const char* dcopTypeName(const QMap<QString,QString>&) { return "QMap<QString,QString>"; }
-inline const char* dcopTypeName(const QMap<QString,QByteArray>&) { return "QMap<QString,QByteArray>"; }
+inline const char* dcopTypeName(const TQByteArray&) { return "TQByteArray"; }
+inline const char* dcopTypeName(const TQMap<TQString,TQString>&) { return "TQMap<TQString,TQString>"; }
+inline const char* dcopTypeName(const TQMap<TQString,TQByteArray>&) { return "TQMap<TQString,TQByteArray>"; }
 
 #endif

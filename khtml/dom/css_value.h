@@ -29,7 +29,7 @@
 
 #include <dom/dom_string.h>
 
-#include <qcolor.h>
+#include <tqcolor.h>
 
 #include <kdemacros.h>
 
@@ -595,7 +595,7 @@ public:
     /**
      * @deprecated
      */
-    RGBColor(const QColor& c) { m_color = c.rgb(); }
+    RGBColor(const TQColor& c) { m_color = c.rgb(); }
     RGBColor(QRgb color);
 
     RGBColor(const RGBColor &other);

@@ -22,10 +22,10 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qdom.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqdom.h>
+#include <tqregexp.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -52,25 +52,25 @@ static const KCmdLineOptions options[] =
 bool globalEnums;
 bool itemAccessors;
 bool dpointer;
-QStringList allNames;
-QRegExp *validNameRegexp;
-QString This;
-QString Const;  
+TQStringList allNames;
+TQRegExp *validNameRegexp;
+TQString This;
+TQString Const;  
 
 class CfgEntry
 {
   public:
     struct Choice
     {
-      QString name;
-      QString label;
-      QString whatsThis;
+      TQString name;
+      TQString label;
+      TQString whatsThis;
     };
 
-    CfgEntry( const QString &group, const QString &type, const QString &key,
-              const QString &name, const QString &label,
-              const QString &whatsThis, const QString &code,
-              const QString &defaultValue, const QValueList<Choice> &choices,
+    CfgEntry( const TQString &group, const TQString &type, const TQString &key,
+              const TQString &name, const TQString &label,
+              const TQString &whatsThis, const TQString &code,
+              const TQString &defaultValue, const TQValueList<Choice> &choices,
               bool hidden )
       : mGroup( group ), mType( type ), mKey( key ), mName( name ),
         mLabel( label ), mWhatsThis( whatsThis ), mCode( code ),
@@ -79,53 +79,53 @@ class CfgEntry
     {
     }
 
-    void setGroup( const QString &group ) { mGroup = group; }
-    QString group() const { return mGroup; }
+    void setGroup( const TQString &group ) { mGroup = group; }
+    TQString group() const { return mGroup; }
 
-    void setType( const QString &type ) { mType = type; }
-    QString type() const { return mType; }
+    void setType( const TQString &type ) { mType = type; }
+    TQString type() const { return mType; }
 
-    void setKey( const QString &key ) { mKey = key; }
-    QString key() const { return mKey; }
+    void setKey( const TQString &key ) { mKey = key; }
+    TQString key() const { return mKey; }
 
-    void setName( const QString &name ) { mName = name; }
-    QString name() const { return mName; }
+    void setName( const TQString &name ) { mName = name; }
+    TQString name() const { return mName; }
 
-    void setLabel( const QString &label ) { mLabel = label; }
-    QString label() const { return mLabel; }
+    void setLabel( const TQString &label ) { mLabel = label; }
+    TQString label() const { return mLabel; }
 
-    void setWhatsThis( const QString &whatsThis ) { mWhatsThis = whatsThis; }
-    QString whatsThis() const { return mWhatsThis; }
+    void setWhatsThis( const TQString &whatsThis ) { mWhatsThis = whatsThis; }
+    TQString whatsThis() const { return mWhatsThis; }
 
-    void setDefaultValue( const QString &d ) { mDefaultValue = d; }
-    QString defaultValue() const { return mDefaultValue; }
+    void setDefaultValue( const TQString &d ) { mDefaultValue = d; }
+    TQString defaultValue() const { return mDefaultValue; }
 
-    void setCode( const QString &d ) { mCode = d; }
-    QString code() const { return mCode; }
+    void setCode( const TQString &d ) { mCode = d; }
+    TQString code() const { return mCode; }
 
-    void setMinValue( const QString &d ) { mMin = d; }
-    QString minValue() const { return mMin; }
+    void setMinValue( const TQString &d ) { mMin = d; }
+    TQString minValue() const { return mMin; }
 
-    void setMaxValue( const QString &d ) { mMax = d; }
-    QString maxValue() const { return mMax; }
+    void setMaxValue( const TQString &d ) { mMax = d; }
+    TQString maxValue() const { return mMax; }
 
-    void setParam( const QString &d ) { mParam = d; }
-    QString param() const { return mParam; }
+    void setParam( const TQString &d ) { mParam = d; }
+    TQString param() const { return mParam; }
 
-    void setParamName( const QString &d ) { mParamName = d; }
-    QString paramName() const { return mParamName; }
+    void setParamName( const TQString &d ) { mParamName = d; }
+    TQString paramName() const { return mParamName; }
 
-    void setParamType( const QString &d ) { mParamType = d; }
-    QString paramType() const { return mParamType; }
+    void setParamType( const TQString &d ) { mParamType = d; }
+    TQString paramType() const { return mParamType; }
 
-    void setChoices( const QValueList<Choice> &d ) { mChoices = d; }
-    QValueList<Choice> choices() const { return mChoices; }
+    void setChoices( const TQValueList<Choice> &d ) { mChoices = d; }
+    TQValueList<Choice> choices() const { return mChoices; }
 
-    void setParamValues( const QStringList &d ) { mParamValues = d; }
-    QStringList paramValues() const { return mParamValues; }
+    void setParamValues( const TQStringList &d ) { mParamValues = d; }
+    TQStringList paramValues() const { return mParamValues; }
 
-    void setParamDefaultValues( const QStringList &d ) { mParamDefaultValues = d; }
-    QString paramDefaultValue(int i) const { return mParamDefaultValues[i]; }
+    void setParamDefaultValues( const TQStringList &d ) { mParamDefaultValues = d; }
+    TQString paramDefaultValue(int i) const { return mParamDefaultValues[i]; }
 
     void setParamMax( int d ) { mParamMax = d; }
     int paramMax() const { return mParamMax; }
@@ -158,38 +158,38 @@ class CfgEntry
     }
 
   private:
-    QString mGroup;
-    QString mType;
-    QString mKey;
-    QString mName;
-    QString mLabel;
-    QString mWhatsThis;
-    QString mCode;
-    QString mDefaultValue;
-    QString mParam;
-    QString mParamName;
-    QString mParamType;
-    QValueList<Choice> mChoices;
-    QStringList mParamValues;
-    QStringList mParamDefaultValues;
+    TQString mGroup;
+    TQString mType;
+    TQString mKey;
+    TQString mName;
+    TQString mLabel;
+    TQString mWhatsThis;
+    TQString mCode;
+    TQString mDefaultValue;
+    TQString mParam;
+    TQString mParamName;
+    TQString mParamType;
+    TQValueList<Choice> mChoices;
+    TQStringList mParamValues;
+    TQStringList mParamDefaultValues;
     int mParamMax;
     bool mHidden;
-    QString mMin;
-    QString mMax;
+    TQString mMin;
+    TQString mMax;
 };
 
 class Param {
 public:
-  QString name;
-  QString type;
+  TQString name;
+  TQString type;
 };
 
 // returns the name of an member variable
 // use itemPath to know the full path
 // like using d-> in case of dpointer
-static QString varName(const QString &n)
+static TQString varName(const TQString &n)
 {
-  QString result;
+  TQString result;
   if ( !dpointer ) {
     result = "m"+n;
     result[1] = result[1].upper();
@@ -201,9 +201,9 @@ static QString varName(const QString &n)
   return result;
 }
 
-static QString varPath(const QString &n)
+static TQString varPath(const TQString &n)
 {
-  QString result;
+  TQString result;
   if ( dpointer ) {
     result = "d->"+varName(n);
   }
@@ -213,16 +213,16 @@ static QString varPath(const QString &n)
   return result;
 }
 
-static QString enumName(const QString &n)
+static TQString enumName(const TQString &n)
 {
-  QString result = "Enum"+n;
+  TQString result = "Enum"+n;
   result[4] = result[4].upper();
   return result;
 }
 
-static QString setFunction(const QString &n, const QString &className = QString::null)
+static TQString setFunction(const TQString &n, const TQString &className = TQString::null)
 {
-  QString result = "set"+n;
+  TQString result = "set"+n;
   result[3] = result[3].upper();
 
   if ( !className.isEmpty() )
@@ -231,9 +231,9 @@ static QString setFunction(const QString &n, const QString &className = QString:
 }
 
 
-static QString getFunction(const QString &n, const QString &className = QString::null)
+static TQString getFunction(const TQString &n, const TQString &className = TQString::null)
 {
-  QString result = n;
+  TQString result = n;
   result[0] = result[0].lower();
 
   if ( !className.isEmpty() )
@@ -242,15 +242,15 @@ static QString getFunction(const QString &n, const QString &className = QString:
 }
 
 
-static void addQuotes( QString &s )
+static void addQuotes( TQString &s )
 {
   if ( s.left( 1 ) != "\"" ) s.prepend( "\"" );
   if ( s.right( 1 ) != "\"" ) s.append( "\"" );
 }
 
-static QString quoteString( const QString &s )
+static TQString quoteString( const TQString &s )
 {
-  QString r = s;
+  TQString r = s;
   r.replace( "\\", "\\\\" );
   r.replace( "\"", "\\\"" );
   r.replace( "\r", "" );
@@ -258,22 +258,22 @@ static QString quoteString( const QString &s )
   return "\"" + r + "\"";
 }
 
-static QString literalString( const QString &s )
+static TQString literalString( const TQString &s )
 {
   bool isAscii = true;
   for(int i = s.length(); i--;)
      if (s[i].unicode() > 127) isAscii = false;
 
   if (isAscii)
-     return "QString::fromLatin1( " + quoteString(s) + " )";
+     return "TQString::fromLatin1( " + quoteString(s) + " )";
   else
-     return "QString::fromUtf8( " + quoteString(s) + " )";
+     return "TQString::fromUtf8( " + quoteString(s) + " )";
 }
 
-static QString dumpNode(const QDomNode &node)
+static TQString dumpNode(const TQDomNode &node)
 {
-  QString msg;
-  QTextStream s(&msg, IO_WriteOnly );
+  TQString msg;
+  TQTextStream s(&msg, IO_WriteOnly );
   node.save(s, 0);
 
   msg = msg.simplifyWhiteSpace();
@@ -282,7 +282,7 @@ static QString dumpNode(const QDomNode &node)
   return msg;
 }
 
-static QString filenameOnly(QString path)
+static TQString filenameOnly(TQString path)
 {
    int i = path.findRev('/');
    if (i >= 0)
@@ -290,10 +290,10 @@ static QString filenameOnly(QString path)
    return path;
 }
 
-static void preProcessDefault( QString &defaultValue, const QString &name,
-                               const QString &type,
-                               const QValueList<CfgEntry::Choice> &choices,
-                               QString &code )
+static void preProcessDefault( TQString &defaultValue, const TQString &name,
+                               const TQString &type,
+                               const TQValueList<CfgEntry::Choice> &choices,
+                               TQString &code )
 {
     if ( type == "String" && !defaultValue.isEmpty() ) {
       defaultValue = literalString(defaultValue);
@@ -302,33 +302,33 @@ static void preProcessDefault( QString &defaultValue, const QString &name,
       defaultValue = literalString( defaultValue );
 
     } else if ( (type == "StringList" || type == "PathList") && !defaultValue.isEmpty() ) {
-      QTextStream cpp( &code, IO_WriteOnly | IO_Append );
+      TQTextStream cpp( &code, IO_WriteOnly | IO_Append );
       if (!code.isEmpty())
          cpp << endl;
 
-      cpp << "  QStringList default" << name << ";" << endl;
-      QStringList defaults = QStringList::split( ",", defaultValue );
-      QStringList::ConstIterator it;
+      cpp << "  TQStringList default" << name << ";" << endl;
+      TQStringList defaults = TQStringList::split( ",", defaultValue );
+      TQStringList::ConstIterator it;
       for( it = defaults.begin(); it != defaults.end(); ++it ) {
-        cpp << "  default" << name << ".append( QString::fromUtf8( \"" << *it << "\" ) );"
+        cpp << "  default" << name << ".append( TQString::fromUtf8( \"" << *it << "\" ) );"
             << endl;
       }
       defaultValue = "default" + name;
 
     } else if ( type == "Color" && !defaultValue.isEmpty() ) {
-      QRegExp colorRe("\\d+,\\s*\\d+,\\s*\\d+");
+      TQRegExp colorRe("\\d+,\\s*\\d+,\\s*\\d+");
       if (colorRe.exactMatch(defaultValue))
       {
-        defaultValue = "QColor( " + defaultValue + " )";
+        defaultValue = "TQColor( " + defaultValue + " )";
       }
       else
       {
-        defaultValue = "QColor( \"" + defaultValue + "\" )";
+        defaultValue = "TQColor( \"" + defaultValue + "\" )";
       }
 
     } else if ( type == "Enum" ) {
       if ( !globalEnums ) {
-        QValueList<CfgEntry::Choice>::ConstIterator it;
+        TQValueList<CfgEntry::Choice>::ConstIterator it;
         for( it = choices.begin(); it != choices.end(); ++it ) {
           if ( (*it).name == defaultValue ) {
             defaultValue.prepend( enumName(name) + "::");
@@ -338,13 +338,13 @@ static void preProcessDefault( QString &defaultValue, const QString &name,
       }
 
     } else if ( type == "IntList" ) {
-      QTextStream cpp( &code, IO_WriteOnly | IO_Append );
+      TQTextStream cpp( &code, IO_WriteOnly | IO_Append );
       if (!code.isEmpty())
          cpp << endl;
 
-      cpp << "  QValueList<int> default" << name << ";" << endl;
-      QStringList defaults = QStringList::split( ",", defaultValue );
-      QStringList::ConstIterator it;
+      cpp << "  TQValueList<int> default" << name << ";" << endl;
+      TQStringList defaults = TQStringList::split( ",", defaultValue );
+      TQStringList::ConstIterator it;
       for( it = defaults.begin(); it != defaults.end(); ++it ) {
         cpp << "  default" << name << ".append( " << *it << " );"
             << endl;
@@ -354,31 +354,31 @@ static void preProcessDefault( QString &defaultValue, const QString &name,
 }
 
 
-CfgEntry *parseEntry( const QString &group, const QDomElement &element )
+CfgEntry *parseEntry( const TQString &group, const TQDomElement &element )
 {
   bool defaultCode = false;
-  QString type = element.attribute( "type" );
-  QString name = element.attribute( "name" );
-  QString key = element.attribute( "key" );
-  QString hidden = element.attribute( "hidden" );
-  QString label;
-  QString whatsThis;
-  QString defaultValue;
-  QString code;
-  QString param;
-  QString paramName;
-  QString paramType;
-  QValueList<CfgEntry::Choice> choices;
-  QStringList paramValues;
-  QStringList paramDefaultValues;
-  QString minValue;
-  QString maxValue;
+  TQString type = element.attribute( "type" );
+  TQString name = element.attribute( "name" );
+  TQString key = element.attribute( "key" );
+  TQString hidden = element.attribute( "hidden" );
+  TQString label;
+  TQString whatsThis;
+  TQString defaultValue;
+  TQString code;
+  TQString param;
+  TQString paramName;
+  TQString paramType;
+  TQValueList<CfgEntry::Choice> choices;
+  TQStringList paramValues;
+  TQStringList paramDefaultValues;
+  TQString minValue;
+  TQString maxValue;
   int paramMax = 0;
 
-  QDomNode n;
+  TQDomNode n;
   for ( n = element.firstChild(); !n.isNull(); n = n.nextSibling() ) {
-    QDomElement e = n.toElement();
-    QString tag = e.tagName();
+    TQDomElement e = n.toElement();
+    TQString tag = e.tagName();
     if ( tag == "label" ) label = e.text();
     else if ( tag == "whatsthis" ) whatsThis = e.text();
     else if ( tag == "min" ) minValue = e.text();
@@ -408,14 +408,14 @@ CfgEntry *parseEntry( const QString &group, const QDomElement &element )
       }
       else if (paramType == "Enum")
       {
-         QDomNode n2;
+         TQDomNode n2;
          for ( n2 = e.firstChild(); !n2.isNull(); n2 = n2.nextSibling() ) {
-           QDomElement e2 = n2.toElement();
+           TQDomElement e2 = n2.toElement();
            if (e2.tagName() == "values")
            {
-             QDomNode n3;
+             TQDomNode n3;
              for ( n3 = e2.firstChild(); !n3.isNull(); n3 = n3.nextSibling() ) {
-               QDomElement e3 = n3.toElement();
+               TQDomElement e3 = n3.toElement();
                if (e3.tagName() == "value")
                {
                   paramValues.append( e3.text() );
@@ -447,18 +447,18 @@ CfgEntry *parseEntry( const QString &group, const QDomElement &element )
       }
     }
     else if ( tag == "choices" ) {
-      QDomNode n2;
+      TQDomNode n2;
       for( n2 = e.firstChild(); !n2.isNull(); n2 = n2.nextSibling() ) {
-        QDomElement e2 = n2.toElement();
+        TQDomElement e2 = n2.toElement();
         if ( e2.tagName() == "choice" ) {
-          QDomNode n3;
+          TQDomNode n3;
           CfgEntry::Choice choice;
           choice.name = e2.attribute( "name" );
           if ( choice.name.isEmpty() ) {
             kdError() << "Tag <choice> requires attribute 'name'." << endl;
           }
           for( n3 = e2.firstChild(); !n3.isNull(); n3 = n3.nextSibling() ) {
-            QDomElement e3 = n3.toElement();
+            TQDomElement e3 = n3.toElement();
             if ( e3.tagName() == "label" ) choice.label = e3.text();
             if ( e3.tagName() == "whatsthis" ) choice.whatsThis = e3.text();
           }
@@ -480,7 +480,7 @@ CfgEntry *parseEntry( const QString &group, const QDomElement &element )
 
   if ( nameIsEmpty ) {
     name = key;
-    name.replace( " ", QString::null );
+    name.replace( " ", TQString::null );
   } else if ( name.contains( ' ' ) ) {
     kdWarning()<<"Entry '"<<name<<"' contains spaces! <name> elements can't contain speces!"<<endl;
     name.remove( ' ' );
@@ -513,20 +513,20 @@ CfgEntry *parseEntry( const QString &group, const QDomElement &element )
   {
     // Adjust name
     paramName = name;
-    name.replace("$("+param+")", QString::null);
+    name.replace("$("+param+")", TQString::null);
     // Lookup defaults for indexed entries
     for(int i = 0; i <= paramMax; i++)
     {
-      paramDefaultValues.append(QString::null);
+      paramDefaultValues.append(TQString::null);
     }
 
-    QDomNode n;
+    TQDomNode n;
     for ( n = element.firstChild(); !n.isNull(); n = n.nextSibling() ) {
-      QDomElement e = n.toElement();
-      QString tag = e.tagName();
+      TQDomElement e = n.toElement();
+      TQString tag = e.tagName();
       if ( tag == "default" )
       {
-        QString index = e.attribute("param");
+        TQString index = e.attribute("param");
         if (index.isEmpty())
            continue;
 
@@ -548,7 +548,7 @@ CfgEntry *parseEntry( const QString &group, const QDomElement &element )
           return 0;
         }
 
-        QString tmpDefaultValue = e.text();
+        TQString tmpDefaultValue = e.text();
 
         if (e.attribute( "code" ) != "true")
            preProcessDefault(tmpDefaultValue, name, type, choices, code);
@@ -605,93 +605,93 @@ CfgEntry *parseEntry( const QString &group, const QDomElement &element )
 /**
   Return parameter declaration for given type.
 */
-QString param( const QString &type )
+TQString param( const TQString &type )
 {
-    if ( type == "String" )           return "const QString &";
-    else if ( type == "StringList" )  return "const QStringList &";
-    else if ( type == "Font" )        return "const QFont &";
-    else if ( type == "Rect" )        return "const QRect &";
-    else if ( type == "Size" )        return "const QSize &";
-    else if ( type == "Color" )       return "const QColor &";
-    else if ( type == "Point" )       return "const QPoint &";
+    if ( type == "String" )           return "const TQString &";
+    else if ( type == "StringList" )  return "const TQStringList &";
+    else if ( type == "Font" )        return "const TQFont &";
+    else if ( type == "Rect" )        return "const TQRect &";
+    else if ( type == "Size" )        return "const TQSize &";
+    else if ( type == "Color" )       return "const TQColor &";
+    else if ( type == "Point" )       return "const TQPoint &";
     else if ( type == "Int" )         return "int";
     else if ( type == "UInt" )        return "uint";
     else if ( type == "Bool" )        return "bool";
     else if ( type == "Double" )      return "double";
-    else if ( type == "DateTime" )    return "const QDateTime &";
+    else if ( type == "DateTime" )    return "const TQDateTime &";
     else if ( type == "Int64" )       return "Q_INT64";
     else if ( type == "UInt64" )      return "Q_UINT64";
-    else if ( type == "IntList" )     return "const QValueList<int> &";
+    else if ( type == "IntList" )     return "const TQValueList<int> &";
     else if ( type == "Enum" )        return "int";
-    else if ( type == "Path" )        return "const QString &";
-    else if ( type == "PathList" )    return "const QStringList &";
-    else if ( type == "Password" )    return "const QString &";
+    else if ( type == "Path" )        return "const TQString &";
+    else if ( type == "PathList" )    return "const TQStringList &";
+    else if ( type == "Password" )    return "const TQString &";
     else {
         kdError() <<"kconfig_compiler does not support type \""<< type <<"\""<<endl;
-        return "QString"; //For now, but an assert would be better
+        return "TQString"; //For now, but an assert would be better
     }
 }
 
 /**
   Actual C++ storage type for given type.
 */
-QString cppType( const QString &type )
+TQString cppType( const TQString &type )
 {
-    if ( type == "String" )           return "QString";
-    else if ( type == "StringList" )  return "QStringList";
-    else if ( type == "Font" )        return "QFont";
-    else if ( type == "Rect" )        return "QRect";
-    else if ( type == "Size" )        return "QSize";
-    else if ( type == "Color" )       return "QColor";
-    else if ( type == "Point" )       return "QPoint";
+    if ( type == "String" )           return "TQString";
+    else if ( type == "StringList" )  return "TQStringList";
+    else if ( type == "Font" )        return "TQFont";
+    else if ( type == "Rect" )        return "TQRect";
+    else if ( type == "Size" )        return "TQSize";
+    else if ( type == "Color" )       return "TQColor";
+    else if ( type == "Point" )       return "TQPoint";
     else if ( type == "Int" )         return "int";
     else if ( type == "UInt" )        return "uint";
     else if ( type == "Bool" )        return "bool";
     else if ( type == "Double" )      return "double";
-    else if ( type == "DateTime" )    return "QDateTime";
+    else if ( type == "DateTime" )    return "TQDateTime";
     else if ( type == "Int64" )       return "Q_INT64";
     else if ( type == "UInt64" )      return "Q_UINT64";
-    else if ( type == "IntList" )     return "QValueList<int>";
+    else if ( type == "IntList" )     return "TQValueList<int>";
     else if ( type == "Enum" )        return "int";
-    else if ( type == "Path" )        return "QString";
-    else if ( type == "PathList" )    return "QStringList";
-    else if ( type == "Password" )    return "QString";
+    else if ( type == "Path" )        return "TQString";
+    else if ( type == "PathList" )    return "TQStringList";
+    else if ( type == "Password" )    return "TQString";
     else {
         kdError()<<"kconfig_compiler does not support type \""<< type <<"\""<<endl;
-        return "QString"; //For now, but an assert would be better
+        return "TQString"; //For now, but an assert would be better
     }
 }
 
-QString defaultValue( const QString &type )
+TQString defaultValue( const TQString &type )
 {
     if ( type == "String" )           return "\"\""; // Use empty string, not null string!
-    else if ( type == "StringList" )  return "QStringList()";
+    else if ( type == "StringList" )  return "TQStringList()";
     else if ( type == "Font" )        return "KGlobalSettings::generalFont()";
-    else if ( type == "Rect" )        return "QRect()";
-    else if ( type == "Size" )        return "QSize()";
-    else if ( type == "Color" )       return "QColor(128, 128, 128)";
-    else if ( type == "Point" )       return "QPoint()";
+    else if ( type == "Rect" )        return "TQRect()";
+    else if ( type == "Size" )        return "TQSize()";
+    else if ( type == "Color" )       return "TQColor(128, 128, 128)";
+    else if ( type == "Point" )       return "TQPoint()";
     else if ( type == "Int" )         return "0";
     else if ( type == "UInt" )        return "0";
     else if ( type == "Bool" )        return "false";
     else if ( type == "Double" )      return "0.0";
-    else if ( type == "DateTime" )    return "QDateTime()";
+    else if ( type == "DateTime" )    return "TQDateTime()";
     else if ( type == "Int64" )       return "0";
     else if ( type == "UInt64" )      return "0";
-    else if ( type == "IntList" )     return "QValueList<int>()";
+    else if ( type == "IntList" )     return "TQValueList<int>()";
     else if ( type == "Enum" )        return "0";
     else if ( type == "Path" )        return "\"\""; // Use empty string, not null string!
-    else if ( type == "PathList" )    return "QStringList()";
+    else if ( type == "PathList" )    return "TQStringList()";
     else if ( type == "Password" )    return "\"\""; // Use empty string, not null string!
     else {
         kdWarning()<<"Error, kconfig_compiler doesn't support the \""<< type <<"\" type!"<<endl;
-        return "QString"; //For now, but an assert would be better
+        return "TQString"; //For now, but an assert would be better
     }
 }
 
-QString itemType( const QString &type )
+TQString itemType( const TQString &type )
 {
-  QString t;
+  TQString t;
 
   t = type;
   t.replace( 0, 1, t.left( 1 ).upper() );
@@ -699,25 +699,25 @@ QString itemType( const QString &type )
   return t;
 }
 
-static QString itemDeclaration(const CfgEntry *e)
+static TQString itemDeclaration(const CfgEntry *e)
 {
   if (itemAccessors)
-     return QString::null;
+     return TQString::null;
 
-  QString fCap = e->name();
+  TQString fCap = e->name();
   fCap[0] = fCap[0].upper();
   return "  KConfigSkeleton::Item"+itemType( e->type() ) +
          "  *item" + fCap +
-         ( (!e->param().isEmpty())?(QString("[%1]").arg(e->paramMax()+1)) : QString::null) +
+         ( (!e->param().isEmpty())?(TQString("[%1]").arg(e->paramMax()+1)) : TQString::null) +
          ";\n";
 }
 
 // returns the name of an item variable
 // use itemPath to know the full path
 // like using d-> in case of dpointer
-static QString itemVar(const CfgEntry *e)
+static TQString itemVar(const CfgEntry *e)
 {
-  QString result;
+  TQString result;
   if (itemAccessors)
   {
     if ( !dpointer )  
@@ -739,9 +739,9 @@ static QString itemVar(const CfgEntry *e)
   return result;
 }
 
-static QString itemPath(const CfgEntry *e)
+static TQString itemPath(const CfgEntry *e)
 {
-  QString result;
+  TQString result;
   if ( dpointer ) {
     result = "d->"+itemVar(e);
   }
@@ -751,10 +751,10 @@ static QString itemPath(const CfgEntry *e)
   return result;
 }
 
-QString newItem( const QString &type, const QString &name, const QString &key,
-                 const QString &defaultValue, const QString &param = QString::null)
+TQString newItem( const TQString &type, const TQString &name, const TQString &key,
+                 const TQString &defaultValue, const TQString &param = TQString::null)
 {
-  QString t = "new KConfigSkeleton::Item" + itemType( type ) +
+  TQString t = "new KConfigSkeleton::Item" + itemType( type ) +
               "( currentGroup(), " + key + ", " + varPath( name ) + param;
   if ( type == "Enum" ) t += ", values" + name;
   if ( !defaultValue.isEmpty() ) {
@@ -767,20 +767,20 @@ QString newItem( const QString &type, const QString &name, const QString &key,
   return t;
 }
 
-QString paramString(const QString &s, const CfgEntry *e, int i)
+TQString paramString(const TQString &s, const CfgEntry *e, int i)
 {
-  QString result = s;
-  QString needle = "$("+e->param()+")";
+  TQString result = s;
+  TQString needle = "$("+e->param()+")";
   if (result.contains(needle))
   {
-    QString tmp;
+    TQString tmp;
     if (e->paramType() == "Enum")
     {
       tmp = e->paramValues()[i];
     }
     else
     {
-      tmp = QString::number(i);
+      tmp = TQString::number(i);
     }
 
     result.replace(needle, tmp);
@@ -788,32 +788,32 @@ QString paramString(const QString &s, const CfgEntry *e, int i)
   return result;
 }
 
-QString paramString(const QString &group, const QValueList<Param> &parameters)
+TQString paramString(const TQString &group, const TQValueList<Param> &parameters)
 {
-  QString paramString = group;
-  QString arguments;
+  TQString paramString = group;
+  TQString arguments;
   int i = 1;
-  for (QValueList<Param>::ConstIterator it = parameters.begin();
+  for (TQValueList<Param>::ConstIterator it = parameters.begin();
        it != parameters.end(); ++it)
   {
      if (paramString.contains("$("+(*it).name+")"))
      {
-       QString tmp;
+       TQString tmp;
        tmp.sprintf("%%%d", i++);
        paramString.replace("$("+(*it).name+")", tmp);
        arguments += ".arg( mParam"+(*it).name+" )";
      }
   }
   if (arguments.isEmpty())
-    return "QString::fromLatin1( \""+group+"\" )";
+    return "TQString::fromLatin1( \""+group+"\" )";
 
-  return "QString::fromLatin1( \""+paramString+"\" )"+arguments;
+  return "TQString::fromLatin1( \""+paramString+"\" )"+arguments;
 }
 
 /* int i is the value of the parameter */
-QString userTextsFunctions( CfgEntry *e, QString itemVarStr=QString::null, QString i=QString::null )
+TQString userTextsFunctions( CfgEntry *e, TQString itemVarStr=TQString::null, TQString i=TQString::null )
 {
-  QString txt;
+  TQString txt;
   if (itemVarStr.isNull()) itemVarStr=itemPath(e);
   if ( !e->label().isEmpty() ) {
     txt += "  " + itemVarStr + "->setLabel( i18n(";
@@ -837,12 +837,12 @@ QString userTextsFunctions( CfgEntry *e, QString itemVarStr=QString::null, QStri
 // returns the member accesor implementation
 // which should go in the h file if inline
 // or the cpp file if not inline
-QString memberAccessorBody( CfgEntry *e )
+TQString memberAccessorBody( CfgEntry *e )
 {    
-    QString result;
-    QTextStream out(&result, IO_WriteOnly);
-    QString n = e->name();
-    QString t = e->type();
+    TQString result;
+    TQTextStream out(&result, IO_WriteOnly);
+    TQString n = e->name();
+    TQString t = e->type();
 
     out << "return " << This << varPath(n);
     if (!e->param().isEmpty()) out << "[i]";
@@ -854,12 +854,12 @@ QString memberAccessorBody( CfgEntry *e )
 // returns the member mutator implementation
 // which should go in the h file if inline
 // or the cpp file if not inline
-QString memberMutatorBody( CfgEntry *e )
+TQString memberMutatorBody( CfgEntry *e )
 {
-  QString result;
-  QTextStream out(&result, IO_WriteOnly);
-  QString n = e->name();
-  QString t = e->type();
+  TQString result;
+  TQTextStream out(&result, IO_WriteOnly);
+  TQString n = e->name();
+  TQString t = e->type();
 
   if (!e->minValue().isEmpty())
   {
@@ -883,12 +883,12 @@ QString memberMutatorBody( CfgEntry *e )
     out << "}" << endl << endl;
   }
 
-  out << "if (!" << This << "isImmutable( QString::fromLatin1( \"";
+  out << "if (!" << This << "isImmutable( TQString::fromLatin1( \"";
   if (!e->param().isEmpty())
   {
     out << e->paramName().replace("$("+e->param()+")", "%1") << "\" ).arg( ";
     if ( e->paramType() == "Enum" ) {
-      out << "QString::fromLatin1( ";
+      out << "TQString::fromLatin1( ";
 
       if (globalEnums)
         out << enumName(e->param()) << "ToString[i]";
@@ -919,10 +919,10 @@ QString memberMutatorBody( CfgEntry *e )
 // returns the item accesor implementation
 // which should go in the h file if inline
 // or the cpp file if not inline
-QString itemAccessorBody( CfgEntry *e )
+TQString itemAccessorBody( CfgEntry *e )
 {    
-    QString result;
-    QTextStream out(&result, IO_WriteOnly);
+    TQString result;
+    TQTextStream out(&result, IO_WriteOnly);
 
     out << "return " << itemPath(e);
     if (!e->param().isEmpty()) out << "[i]";
@@ -932,12 +932,12 @@ QString itemAccessorBody( CfgEntry *e )
 }
 
 //indents text adding X spaces per line
-QString indent(QString text, int spaces)
+TQString indent(TQString text, int spaces)
 {    
-    QString result;
-    QTextStream out(&result, IO_WriteOnly);
-    QTextStream in(&text, IO_ReadOnly);
-    QString currLine;
+    TQString result;
+    TQTextStream out(&result, IO_WriteOnly);
+    TQTextStream in(&text, IO_ReadOnly);
+    TQString currLine;
     while ( !in.atEnd() )
     {
       currLine = in.readLine();
@@ -978,37 +978,37 @@ int main( int argc, char **argv )
     return 1;
   }
 
-  validNameRegexp = new QRegExp("[a-zA-Z_][a-zA-Z0-9_]*");
+  validNameRegexp = new TQRegExp("[a-zA-Z_][a-zA-Z0-9_]*");
 
-  QString baseDir = QFile::decodeName(args->getOption("directory"));
+  TQString baseDir = TQFile::decodeName(args->getOption("directory"));
   if (!baseDir.endsWith("/"))
     baseDir.append("/");
 
-  QString inputFilename = args->url( 0 ).path();
-  QString codegenFilename = args->url( 1 ).path();
+  TQString inputFilename = args->url( 0 ).path();
+  TQString codegenFilename = args->url( 1 ).path();
 
   if (!codegenFilename.endsWith(".kcfgc"))
   {
     kdError() << "Codegen options file must have extension .kcfgc" << endl;
     return 1;
   }
-  QString baseName = args->url( 1 ).fileName();
+  TQString baseName = args->url( 1 ).fileName();
   baseName = baseName.left(baseName.length() - 6);
 
   KSimpleConfig codegenConfig( codegenFilename, true );
 
-  QString nameSpace = codegenConfig.readEntry("NameSpace");
-  QString className = codegenConfig.readEntry("ClassName");
-  QString inherits = codegenConfig.readEntry("Inherits");
-  QString visibility = codegenConfig.readEntry("Visibility");
+  TQString nameSpace = codegenConfig.readEntry("NameSpace");
+  TQString className = codegenConfig.readEntry("ClassName");
+  TQString inherits = codegenConfig.readEntry("Inherits");
+  TQString visibility = codegenConfig.readEntry("Visibility");
   if (!visibility.isEmpty()) visibility+=" ";
   bool singleton = codegenConfig.readBoolEntry("Singleton", false);
   bool staticAccessors = singleton;
   //bool useDPointer = codegenConfig.readBoolEntry("DPointer", false);
   bool customAddons = codegenConfig.readBoolEntry("CustomAdditions");
-  QString memberVariables = codegenConfig.readEntry("MemberVariables");
-  QStringList headerIncludes = codegenConfig.readListEntry("IncludeFiles");
-  QStringList mutators = codegenConfig.readListEntry("Mutators");
+  TQString memberVariables = codegenConfig.readEntry("MemberVariables");
+  TQStringList headerIncludes = codegenConfig.readListEntry("IncludeFiles");
+  TQStringList mutators = codegenConfig.readListEntry("Mutators");
   bool allMutators = false;
   if ((mutators.count() == 1) && (mutators[0].lower() == "true"))
      allMutators = true;
@@ -1019,10 +1019,10 @@ int main( int argc, char **argv )
 
   dpointer = (memberVariables == "dpointer");
 
-  QFile input( inputFilename );
+  TQFile input( inputFilename );
 
-  QDomDocument doc;
-  QString errorMsg;
+  TQDomDocument doc;
+  TQString errorMsg;
   int errorRow;
   int errorCol;
   if ( !doc.setContent( &input, &errorMsg, &errorRow, &errorCol ) ) {
@@ -1031,38 +1031,38 @@ int main( int argc, char **argv )
     return 1;
   }
 
-  QDomElement cfgElement = doc.documentElement();
+  TQDomElement cfgElement = doc.documentElement();
 
   if ( cfgElement.isNull() ) {
     kdError() << "No document in kcfg file" << endl;
     return 1;
   }
 
-  QString cfgFileName;
+  TQString cfgFileName;
   bool cfgFileNameArg = false;
-  QValueList<Param> parameters;
-  QStringList includes;
+  TQValueList<Param> parameters;
+  TQStringList includes;
 
-  QPtrList<CfgEntry> entries;
+  TQPtrList<CfgEntry> entries;
   entries.setAutoDelete( true );
 
-  QDomNode n;
+  TQDomNode n;
   for ( n = cfgElement.firstChild(); !n.isNull(); n = n.nextSibling() ) {
-    QDomElement e = n.toElement();
+    TQDomElement e = n.toElement();
 
-    QString tag = e.tagName();
+    TQString tag = e.tagName();
 
     if ( tag == "include" ) {
-      QString includeFile = e.text();
+      TQString includeFile = e.text();
       if (!includeFile.isEmpty())
         includes.append(includeFile);
 
     } else if ( tag == "kcfgfile" ) {
       cfgFileName = e.attribute( "name" );
       cfgFileNameArg = e.attribute( "arg" ).lower() == "true";
-      QDomNode n2;
+      TQDomNode n2;
       for( n2 = e.firstChild(); !n2.isNull(); n2 = n2.nextSibling() ) {
-        QDomElement e2 = n2.toElement();
+        TQDomElement e2 = n2.toElement();
         if ( e2.tagName() == "parameter" ) {
           Param p;
           p.name = e2.attribute( "name" );
@@ -1074,14 +1074,14 @@ int main( int argc, char **argv )
       }
 
     } else if ( tag == "group" ) {
-      QString group = e.attribute( "name" );
+      TQString group = e.attribute( "name" );
       if ( group.isEmpty() ) {
         kdError() << "Group without name" << endl;
         return 1;
       }
-      QDomNode n2;
+      TQDomNode n2;
       for( n2 = e.firstChild(); !n2.isNull(); n2 = n2.nextSibling() ) {
-        QDomElement e2 = n2.toElement();
+        TQDomElement e2 = n2.toElement();
         if ( e2.tagName() != "entry" ) continue;
         CfgEntry *entry = parseEntry( group, e2 );
         if ( entry ) entries.append( entry );
@@ -1122,17 +1122,17 @@ int main( int argc, char **argv )
   }
 #endif
 
-  QString headerFileName = baseName + ".h";
-  QString implementationFileName = baseName + ".cpp";
-  QString cppPreamble; // code to be inserted at the beginnin of the cpp file, e.g. initialization of static values
+  TQString headerFileName = baseName + ".h";
+  TQString implementationFileName = baseName + ".cpp";
+  TQString cppPreamble; // code to be inserted at the beginnin of the cpp file, e.g. initialization of static values
 
-  QFile header( baseDir + headerFileName );
+  TQFile header( baseDir + headerFileName );
   if ( !header.open( IO_WriteOnly ) ) {
     kdError() << "Can't open '" << headerFileName << "' for writing." << endl;
     return 1;
   }
 
-  QTextStream h( &header );
+  TQTextStream h( &header );
 
   h << "// This file is generated by kconfig_compiler from " << args->url(0).fileName() << "." << endl;
   h << "// All changes you do to this file will be lost." << endl;
@@ -1143,7 +1143,7 @@ int main( int argc, char **argv )
     << className.upper() << "_H" << endl << endl;
 
   // Includes
-  QStringList::ConstIterator it;
+  TQStringList::ConstIterator it;
   for( it = headerIncludes.begin(); it != headerIncludes.end(); ++it ) {
     h << "#include <" << *it << ">" << endl;
   }
@@ -1177,10 +1177,10 @@ int main( int argc, char **argv )
   // enums
   CfgEntry *e;
   for( e = entries.first(); e; e = entries.next() ) {
-    QValueList<CfgEntry::Choice> choices = e->choices();
+    TQValueList<CfgEntry::Choice> choices = e->choices();
     if ( !choices.isEmpty() ) {
-      QStringList values;
-      QValueList<CfgEntry::Choice>::ConstIterator itChoice;
+      TQStringList values;
+      TQValueList<CfgEntry::Choice>::ConstIterator itChoice;
       for( itChoice = choices.begin(); itChoice != choices.end(); ++itChoice ) {
         values.append( (*itChoice).name );
       }
@@ -1194,7 +1194,7 @@ int main( int argc, char **argv )
         h << "    };" << endl;
       }
     }
-    QStringList values = e->paramValues();
+    TQStringList values = e->paramValues();
     if ( !values.isEmpty() ) {
       if ( globalEnums ) {
         h << "    enum { " << values.join( ", " ) << " };" << endl;
@@ -1221,7 +1221,7 @@ int main( int argc, char **argv )
     h << "    " << className << "(";
     if (cfgFileNameArg)
        h << " KSharedConfig::Ptr config" << (parameters.isEmpty() ? " = KGlobal::sharedConfig()" : ", ");
-    for (QValueList<Param>::ConstIterator it = parameters.begin();
+    for (TQValueList<Param>::ConstIterator it = parameters.begin();
          it != parameters.end(); ++it)
     {
        if (it != parameters.begin())
@@ -1245,8 +1245,8 @@ int main( int argc, char **argv )
     Const = " const";
 
   for( e = entries.first(); e; e = entries.next() ) {
-    QString n = e->name();
-    QString t = e->type();
+    TQString n = e->name();
+    TQString t = e->type();
 
     // Manipulator
     if (allMutators || mutators.contains(n))
@@ -1351,7 +1351,7 @@ int main( int argc, char **argv )
   }
 
   // Class Parameters
-  for (QValueList<Param>::ConstIterator it = parameters.begin();
+  for (TQValueList<Param>::ConstIterator it = parameters.begin();
        it != parameters.end(); ++it)
   {
      h << "    " << cppType((*it).type) << " mParam" << (*it).name << ";" << endl;
@@ -1359,7 +1359,7 @@ int main( int argc, char **argv )
 
   if ( memberVariables != "dpointer" )
   {
-    QString group;
+    TQString group;
     for( e = entries.first(); e; e = entries.next() ) {
       if ( e->group() != group ) {
         group = e->group();
@@ -1369,7 +1369,7 @@ int main( int argc, char **argv )
       h << "    " << cppType(e->type()) << " " << varName(e->name());
       if (!e->param().isEmpty())
       {
-        h << QString("[%1]").arg(e->paramMax()+1);
+        h << TQString("[%1]").arg(e->paramMax()+1);
       }
       h << ";" << endl;
     }
@@ -1378,7 +1378,7 @@ int main( int argc, char **argv )
     if ( itemAccessors ) {
       for( e = entries.first(); e; e = entries.next() ) {
         h << "    Item" << itemType( e->type() ) << " *" << itemVar( e );
-        if (!e->param().isEmpty() ) h << QString("[%1]").arg( e->paramMax()+1 );
+        if (!e->param().isEmpty() ) h << TQString("[%1]").arg( e->paramMax()+1 );
         h << ";" << endl;
       }
     }
@@ -1406,14 +1406,14 @@ int main( int argc, char **argv )
 
   header.close();
 
-  QFile implementation( baseDir + implementationFileName );
+  TQFile implementation( baseDir + implementationFileName );
   if ( !implementation.open( IO_WriteOnly ) ) {
     kdError() << "Can't open '" << implementationFileName << "' for writing."
               << endl;
     return 1;
   }
 
-  QTextStream cpp( &implementation );
+  TQTextStream cpp( &implementation );
 
 
   cpp << "// This file is generated by kconfig_compiler from " << args->url(0).fileName() << "." << endl;
@@ -1432,7 +1432,7 @@ int main( int argc, char **argv )
   if ( !nameSpace.isEmpty() )
     cpp << "using namespace " << nameSpace << ";" << endl << endl;
 
-  QString group;
+  TQString group;
 
   // private class implementation
   if ( dpointer )
@@ -1449,14 +1449,14 @@ int main( int argc, char **argv )
       cpp << "    " << cppType(e->type()) << " " << varName(e->name());
       if (!e->param().isEmpty())
       {
-        cpp << QString("[%1]").arg(e->paramMax()+1);
+        cpp << TQString("[%1]").arg(e->paramMax()+1);
       }
       cpp << ";" << endl;
     }
     cpp << endl << "    // items" << endl;
     for( e = entries.first(); e; e = entries.next() ) {
       cpp << "    KConfigSkeleton::Item" << itemType( e->type() ) << " *" << itemVar( e );
-      if (!e->param().isEmpty() ) cpp << QString("[%1]").arg( e->paramMax()+1 );
+      if (!e->param().isEmpty() ) cpp << TQString("[%1]").arg( e->paramMax()+1 );
         cpp << ";" << endl;
     }
 
@@ -1508,7 +1508,7 @@ int main( int argc, char **argv )
     cpp << (parameters.isEmpty() ? " " : ", ");
   }
 
-  for (QValueList<Param>::ConstIterator it = parameters.begin();
+  for (TQValueList<Param>::ConstIterator it = parameters.begin();
        it != parameters.end(); ++it)
   {
      if (it != parameters.begin())
@@ -1518,13 +1518,13 @@ int main( int argc, char **argv )
   cpp << " )" << endl;
 
   cpp << "  : " << inherits << "(";
-  if ( !cfgFileName.isEmpty() ) cpp << " QString::fromLatin1( \"" << cfgFileName << "\" ";
+  if ( !cfgFileName.isEmpty() ) cpp << " TQString::fromLatin1( \"" << cfgFileName << "\" ";
   if ( cfgFileNameArg ) cpp << " config ";
   if ( !cfgFileName.isEmpty() ) cpp << ") ";
   cpp << ")" << endl;
 
   // Store parameters
-  for (QValueList<Param>::ConstIterator it = parameters.begin();
+  for (TQValueList<Param>::ConstIterator it = parameters.begin();
        it != parameters.end(); ++it)
   {
      cpp << "  , mParam" << (*it).name << "(" << (*it).name << ")" << endl;
@@ -1539,7 +1539,7 @@ int main( int argc, char **argv )
   if ( singleton )
     cpp << "  mSelf = this;" << endl;
 
-  group = QString::null;
+  group = TQString::null;
   for( e = entries.first(); e; e = entries.next() ) {
     if ( e->group() != group ) {
       if ( !group.isEmpty() ) cpp << endl;
@@ -1547,20 +1547,20 @@ int main( int argc, char **argv )
       cpp << "  setCurrentGroup( " << paramString(group, parameters) << " );" << endl << endl;
     }
 
-    QString key = paramString(e->key(), parameters);
+    TQString key = paramString(e->key(), parameters);
     if ( !e->code().isEmpty())
     {
       cpp << e->code() << endl;
     }
     if ( e->type() == "Enum" ) {
-      cpp << "  QValueList<KConfigSkeleton::ItemEnum::Choice> values"
+      cpp << "  TQValueList<KConfigSkeleton::ItemEnum::Choice> values"
           << e->name() << ";" << endl;
-      QValueList<CfgEntry::Choice> choices = e->choices();
-      QValueList<CfgEntry::Choice>::ConstIterator it;
+      TQValueList<CfgEntry::Choice> choices = e->choices();
+      TQValueList<CfgEntry::Choice>::ConstIterator it;
       for( it = choices.begin(); it != choices.end(); ++it ) {
         cpp << "  {" << endl;
         cpp << "    KConfigSkeleton::ItemEnum::Choice choice;" << endl;
-        cpp << "    choice.name = QString::fromLatin1( \"" << (*it).name << "\" );" << endl;
+        cpp << "    choice.name = TQString::fromLatin1( \"" << (*it).name << "\" );" << endl;
         if ( setUserTexts ) {
           if ( !(*it).label.isEmpty() )
             cpp << "    choice.label = i18n(" << quoteString((*it).label) << ");" << endl;
@@ -1590,9 +1590,9 @@ int main( int argc, char **argv )
         cpp << userTextsFunctions( e );
 
       cpp << "  addItem( " << itemPath(e);
-      QString quotedName = e->name();
+      TQString quotedName = e->name();
       addQuotes( quotedName );
-      if ( quotedName != key ) cpp << ", QString::fromLatin1( \"" << e->name() << "\" )";
+      if ( quotedName != key ) cpp << ", TQString::fromLatin1( \"" << e->name() << "\" )";
       cpp << " );" << endl;
     }
     else
@@ -1600,8 +1600,8 @@ int main( int argc, char **argv )
       // Indexed
       for(int i = 0; i <= e->paramMax(); i++)
       {
-        QString defaultStr;
-        QString itemVarStr(itemPath(e)+QString("[%1]").arg(i));
+        TQString defaultStr;
+        TQString itemVarStr(itemPath(e)+TQString("[%1]").arg(i));
 
         if ( !e->paramDefaultValue(i).isEmpty() )
           defaultStr = e->paramDefaultValue(i);
@@ -1611,7 +1611,7 @@ int main( int argc, char **argv )
           defaultStr = defaultValue( e->type() );
 
         cpp << "  " << itemVarStr << " = "
-            << newItem( e->type(), e->name(), paramString(key, e, i), defaultStr, QString("[%1]").arg(i) )
+            << newItem( e->type(), e->name(), paramString(key, e, i), defaultStr, TQString("[%1]").arg(i) )
             << endl;
 
         if ( setUserTexts )
@@ -1621,7 +1621,7 @@ int main( int argc, char **argv )
         // param name. The check for isImmutable in the set* functions doesn't have the param
         // name available, just the corresponding enum value (int), so we need to store the
         // param names in a separate static list!.
-        cpp << "  addItem( " << itemVarStr << ", QString::fromLatin1( \"";
+        cpp << "  addItem( " << itemVarStr << ", TQString::fromLatin1( \"";
         if ( e->paramType()=="Enum" )
           cpp << e->paramName().replace( "$("+e->param()+")", "%1").arg(e->paramValues()[i] );
         else
@@ -1638,8 +1638,8 @@ int main( int argc, char **argv )
     // setters and getters go in Cpp if in dpointer mode
     for( e = entries.first(); e; e = entries.next() )
     {
-      QString n = e->name();
-      QString t = e->type();
+      TQString n = e->name();
+      TQString t = e->type();
   
       // Manipulator
       if (allMutators || mutators.contains(n))

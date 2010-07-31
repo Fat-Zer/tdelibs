@@ -22,7 +22,7 @@
 #ifndef __KDEDMODULE_H__
 #define __KDEDMODULE_H__
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <dcopobject.h>
 #include <ksharedptr.h>
 
@@ -40,7 +40,7 @@ class Kded;
  *
  * \code
  *   extern "C" {
- *     KDE_EXPORT KDEDModule *create_xyz(QCString *name)
+ *     KDE_EXPORT KDEDModule *create_xyz(TQCString *name)
  *     {
  *       return new XYZ(name);
  *     }
@@ -52,7 +52,7 @@ class Kded;
  * @author Waldo Bastian <bastian@kde.org>
  */
 
-class KDE_EXPORT KDEDModule : public QObject, public DCOPObject
+class KDE_EXPORT KDEDModule : public TQObject, public DCOPObject
 {
   Q_OBJECT
 // For inclusion in KDE4 (since it's BIC) long-needed fix for allowing
@@ -64,7 +64,7 @@ public:
   /**
    * Create a DCOPObject named @p name
    */
-  KDEDModule(const QCString &name);
+  KDEDModule(const TQCString &name);
   
   virtual ~KDEDModule();
   
@@ -91,24 +91,24 @@ public:
    * Any previous object inserted with the same values for @p app 
    * and @p key will be removed.
    */
-  void insert(const QCString &app, const QCString &key, KShared *obj);
+  void insert(const TQCString &app, const TQCString &key, KShared *obj);
 
   /**
    * Lookup object indexed with @p app and @p key
    */
-  KShared *find(const QCString &app, const QCString &key);
+  KShared *find(const TQCString &app, const TQCString &key);
   
   /**
    * remove object indexed with @p app and @p key.
    * The object will be deleted when it is no more referenced.
    */
-  void remove(const QCString &app, const QCString &key);
+  void remove(const TQCString &app, const TQCString &key);
 
   /**
    * remove all objects indexed with @p app. 
    * The objects will be deleted when they are no more referenced.
    */
-  void removeAll(const QCString &app);
+  void removeAll(const TQCString &app);
 
   /**
    * Returns whether a certain mainwindow has registered itself with KDED

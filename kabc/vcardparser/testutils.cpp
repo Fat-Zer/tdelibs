@@ -1,6 +1,6 @@
 #include <vcardparser.h>
 #include <kabc/addressee.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 using namespace KABC;
 
@@ -62,12 +62,12 @@ vcard3()
 
 
 QString
-vcardAsText( const QString& location )
+vcardAsText( const TQString& location )
 {
-    QString line;
-    QFile file( location );
+    TQString line;
+    TQFile file( location );
     if ( file.open( IO_ReadOnly ) ) {
-        QTextStream stream( &file );
+        TQTextStream stream( &file );
         if ( !stream.eof() ) {
             line = stream.read();
         }
@@ -91,7 +91,7 @@ vCardsAsAddresseeList()
 QString
 vCardsAsText()
 {
-    QString vcards = vcardAsText( "tests/vcard1.vcf" );
+    TQString vcards = vcardAsText( "tests/vcard1.vcf" );
     vcards += vcardAsText( "tests/vcard2.vcf" );
     vcards += vcardAsText( "tests/vcard3.vcf" );
 

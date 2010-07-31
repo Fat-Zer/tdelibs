@@ -40,14 +40,14 @@
 #include <kcharsets.h>
 #include <kpopupmenu.h>
 
-#include <qcursor.h>
-#include <qpainter.h>
-#include <qpopupmenu.h>
-#include <qstyle.h>
-#include <qtimer.h>
-#include <qwhatsthis.h>
-#include <qregexp.h>
-#include <qtextcodec.h>
+#include <tqcursor.h>
+#include <tqpainter.h>
+#include <tqpopupmenu.h>
+#include <tqstyle.h>
+#include <tqtimer.h>
+#include <tqwhatsthis.h>
+#include <tqregexp.h>
+#include <tqtextcodec.h>
 
 #include <math.h>
 
@@ -55,7 +55,7 @@
 
 //BEGIN KateScrollBar
 KateScrollBar::KateScrollBar (Orientation orientation, KateViewInternal* parent, const char* name)
-  : QScrollBar (orientation, parent->m_view, name)
+  : TQScrollBar (orientation, parent->m_view, name)
   , m_middleMouseDown (false)
   , m_view(parent->m_view)
   , m_doc(parent->m_doc)
@@ -65,67 +65,67 @@ KateScrollBar::KateScrollBar (Orientation orientation, KateViewInternal* parent,
   , m_savVisibleLines(0)
   , m_showMarks(false)
 {
-  connect(this, SIGNAL(valueChanged(int)), SLOT(sliderMaybeMoved(int)));
-  connect(m_doc, SIGNAL(marksChanged()), this, SLOT(marksChanged()));
+  connect(this, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(sliderMaybeMoved(int)));
+  connect(m_doc, TQT_SIGNAL(marksChanged()), this, TQT_SLOT(marksChanged()));
 
   m_lines.setAutoDelete(true);
 }
 
-void KateScrollBar::mousePressEvent(QMouseEvent* e)
+void KateScrollBar::mousePressEvent(TQMouseEvent* e)
 {
   if (e->button() == MidButton)
     m_middleMouseDown = true;
 
-  QScrollBar::mousePressEvent(e);
+  TQScrollBar::mousePressEvent(e);
 
   redrawMarks();
 }
 
-void KateScrollBar::mouseReleaseEvent(QMouseEvent* e)
+void KateScrollBar::mouseReleaseEvent(TQMouseEvent* e)
 {
-  QScrollBar::mouseReleaseEvent(e);
+  TQScrollBar::mouseReleaseEvent(e);
 
   m_middleMouseDown = false;
 
   redrawMarks();
 }
 
-void KateScrollBar::mouseMoveEvent(QMouseEvent* e)
+void KateScrollBar::mouseMoveEvent(TQMouseEvent* e)
 {
-  QScrollBar::mouseMoveEvent(e);
+  TQScrollBar::mouseMoveEvent(e);
 
   if (e->state() | LeftButton)
     redrawMarks();
 }
 
-void KateScrollBar::paintEvent(QPaintEvent *e)
+void KateScrollBar::paintEvent(TQPaintEvent *e)
 {
-  QScrollBar::paintEvent(e);
+  TQScrollBar::paintEvent(e);
   redrawMarks();
 }
 
-void KateScrollBar::resizeEvent(QResizeEvent *e)
+void KateScrollBar::resizeEvent(TQResizeEvent *e)
 {
-  QScrollBar::resizeEvent(e);
+  TQScrollBar::resizeEvent(e);
   recomputeMarksPositions();
 }
 
-void KateScrollBar::styleChange(QStyle &s)
+void KateScrollBar::styleChange(TQStyle &s)
 {
-  QScrollBar::styleChange(s);
+  TQScrollBar::styleChange(s);
   m_topMargin = -1;
   recomputeMarksPositions();
 }
 
 void KateScrollBar::valueChange()
 {
-  QScrollBar::valueChange();
+  TQScrollBar::valueChange();
   redrawMarks();
 }
 
 void KateScrollBar::rangeChange()
 {
-  QScrollBar::rangeChange();
+  TQScrollBar::rangeChange();
   recomputeMarksPositions();
 }
 
@@ -139,9 +139,9 @@ void KateScrollBar::redrawMarks()
   if (!m_showMarks)
     return;
 
-  QPainter painter(this);
-  QRect rect = sliderRect();
-  for (QIntDictIterator<QColor> it(m_lines); it.current(); ++it)
+  TQPainter painter(this);
+  TQRect rect = sliderRect();
+  for (TQIntDictIterator<TQColor> it(m_lines); it.current(); ++it)
   {
     if (it.currentKey() < rect.top() || it.currentKey() > rect.bottom())
     {
@@ -161,7 +161,7 @@ void KateScrollBar::recomputeMarksPositions(bool forceFullUpdate)
 
   int realHeight = frameGeometry().height() - m_topMargin - m_bottomMargin;
 
-  QPtrList<KTextEditor::Mark> marks = m_doc->marks();
+  TQPtrList<KTextEditor::Mark> marks = m_doc->marks();
   KateCodeFoldingTree *tree = m_doc->foldingTree();
 
   for (KTextEditor::Mark *mark = marks.first(); mark; mark = marks.next())
@@ -184,7 +184,7 @@ void KateScrollBar::recomputeMarksPositions(bool forceFullUpdate)
 
     double d = (double)line / (m_savVisibleLines - 1);
     m_lines.insert(m_topMargin + (int)(d * realHeight),
-                   new QColor(KateRendererConfig::global()->lineMarkerColor((KTextEditor::MarkInterface::MarkTypes)mark->type)));
+                   new TQColor(KateRendererConfig::global()->lineMarkerColor((KTextEditor::MarkInterface::MarkTypes)mark->type)));
   }
 
   if (forceFullUpdate)
@@ -197,7 +197,7 @@ void KateScrollBar::watchScrollBarSize()
 {
   int savMax = maxValue();
   setMaxValue(0);
-  QRect rect = sliderRect();
+  TQRect rect = sliderRect();
   setMaxValue(savMax);
 
   m_topMargin = rect.top();
@@ -216,22 +216,22 @@ class KateCmdLnWhatsThis : public QWhatsThis
 {
   public:
     KateCmdLnWhatsThis( KateCmdLine *parent )
-  : QWhatsThis( parent )
+  : TQWhatsThis( parent )
   , m_parent( parent ) {;}
 
-    QString text( const QPoint & )
+    TQString text( const TQPoint & )
     {
-      QString beg = "<qt background=\"white\"><div><table width=\"100%\"><tr><td bgcolor=\"brown\"><font color=\"white\"><b>Help: <big>";
-      QString mid = "</big></b></font></td></tr><tr><td>";
-      QString end = "</td></tr></table></div><qt>";
+      TQString beg = "<qt background=\"white\"><div><table width=\"100%\"><tr><td bgcolor=\"brown\"><font color=\"white\"><b>Help: <big>";
+      TQString mid = "</big></b></font></td></tr><tr><td>";
+      TQString end = "</td></tr></table></div><qt>";
 
-      QString t = m_parent->text();
-      QRegExp re( "\\s*help\\s+(.*)" );
+      TQString t = m_parent->text();
+      TQRegExp re( "\\s*help\\s+(.*)" );
       if ( re.search( t ) > -1 )
       {
-        QString s;
+        TQString s;
         // get help for command
-        QString name = re.cap( 1 );
+        TQString name = re.cap( 1 );
         if ( name == "list" )
         {
           return beg + i18n("Available Commands") + mid
@@ -277,9 +277,9 @@ class KateCmdLineFlagCompletion : public KCompletion
   public:
     KateCmdLineFlagCompletion() {;}
 
-    QString makeCompletion( const QString & string )
+    TQString makeCompletion( const TQString & string )
     {
-      return QString::null;
+      return TQString::null;
     }
 
 };
@@ -295,15 +295,15 @@ KateCmdLine::KateCmdLine (KateView *view)
   , m_command( 0L )
   , m_oldCompletionObject( 0L )
 {
-  connect (this, SIGNAL(returnPressed(const QString &)),
-           this, SLOT(slotReturnPressed(const QString &)));
+  connect (this, TQT_SIGNAL(returnPressed(const TQString &)),
+           this, TQT_SLOT(slotReturnPressed(const TQString &)));
 
   completionObject()->insertItems (KateCmd::self()->cmds());
   setAutoDeleteCompletionObject( false );
   m_help = new KateCmdLnWhatsThis( this );
 }
 
-void KateCmdLine::slotReturnPressed ( const QString& text )
+void KateCmdLine::slotReturnPressed ( const TQString& text )
 {
 
   // silently ignore leading space
@@ -311,16 +311,16 @@ void KateCmdLine::slotReturnPressed ( const QString& text )
   while( text[n].isSpace() )
     n++;
 
-  QString cmd = text.mid( n );
+  TQString cmd = text.mid( n );
 
   // Built in help: if the command starts with "help", [try to] show some help
   if ( cmd.startsWith( "help" ) )
   {
-    m_help->display( m_help->text( QPoint() ), mapToGlobal(QPoint(0,0)) );
+    m_help->display( m_help->text( TQPoint() ), mapToGlobal(TQPoint(0,0)) );
     clear();
     KateCmd::self()->appendHistory( cmd );
     m_histpos = KateCmd::self()->historyLength();
-    m_oldText = QString ();
+    m_oldText = TQString ();
     return;
   }
 
@@ -333,13 +333,13 @@ void KateCmdLine::slotReturnPressed ( const QString& text )
 
     if (p)
     {
-      QString msg;
+      TQString msg;
 
       if (p->exec (m_view, cmd, msg))
       {
         KateCmd::self()->appendHistory( cmd );
         m_histpos = KateCmd::self()->historyLength();
-        m_oldText = QString ();
+        m_oldText = TQString ();
 
         if (msg.length() > 0)
           setText (i18n ("Success: ") + msg);
@@ -375,7 +375,7 @@ void KateCmdLine::slotReturnPressed ( const QString& text )
   m_cmdend = 0;
 
   m_view->setFocus ();
-  QTimer::singleShot( 4000, this, SLOT(hideMe()) );
+  TQTimer::singleShot( 4000, this, TQT_SLOT(hideMe()) );
 }
 
 void KateCmdLine::hideMe () // unless i have focus ;)
@@ -385,7 +385,7 @@ void KateCmdLine::hideMe () // unless i have focus ;)
   }
 }
 
-void KateCmdLine::focusInEvent ( QFocusEvent *ev )
+void KateCmdLine::focusInEvent ( TQFocusEvent *ev )
 {
   if (m_msgMode)
   {
@@ -397,7 +397,7 @@ void KateCmdLine::focusInEvent ( QFocusEvent *ev )
   KLineEdit::focusInEvent (ev);
 }
 
-void KateCmdLine::keyPressEvent( QKeyEvent *ev )
+void KateCmdLine::keyPressEvent( TQKeyEvent *ev )
 {
   if (ev->key() == Key_Escape)
   {
@@ -415,7 +415,7 @@ void KateCmdLine::keyPressEvent( QKeyEvent *ev )
   // during typing, let us see if we have a valid command
   if ( ! m_cmdend || cursorpos <= m_cmdend  )
   {
-    QChar c;
+    TQChar c;
     if ( ! ev->text().isEmpty() )
       c = ev->text()[0];
 
@@ -443,7 +443,7 @@ void KateCmdLine::keyPressEvent( QKeyEvent *ev )
       if ( m_command )
       {
         //kdDebug(13025)<<"keypress in commandline: We have a command! "<<m_command<<endl;
-        QString t = text();
+        TQString t = text();
         m_cmdend = 0;
         bool b = false;
         for ( ; m_cmdend < t.length(); m_cmdend++ )
@@ -512,7 +512,7 @@ void KateCmdLine::fromHistory( bool up )
   if ( ! KateCmd::self()->historyLength() )
     return;
 
-  QString s;
+  TQString s;
 
   if ( up )
   {
@@ -539,7 +539,7 @@ void KateCmdLine::fromHistory( bool up )
   {
     // Select the argument part of the command, so that it is easy to overwrite
     setText( s );
-    static QRegExp reCmd = QRegExp(".*[\\w\\-]+(?:[^a-zA-Z0-9_-]|:\\w+)(.*)");
+    static TQRegExp reCmd = TQRegExp(".*[\\w\\-]+(?:[^a-zA-Z0-9_-]|:\\w+)(.*)");
     if ( reCmd.search( text() ) == 0 )
       setSelection( text().length() - reCmd.cap(1).length(), reCmd.cap(1).length() );
   }
@@ -684,8 +684,8 @@ static const char * const bookmark_xpm[] = {
 const int iconPaneWidth = 16;
 const int halfIPW = 8;
 
-KateIconBorder::KateIconBorder ( KateViewInternal* internalView, QWidget *parent )
-  : QWidget(parent, "", Qt::WStaticContents | Qt::WRepaintNoErase | Qt::WResizeNoErase )
+KateIconBorder::KateIconBorder ( KateViewInternal* internalView, TQWidget *parent )
+  : TQWidget(parent, "", Qt::WStaticContents | Qt::WRepaintNoErase | Qt::WResizeNoErase )
   , m_view( internalView->m_view )
   , m_doc( internalView->m_doc )
   , m_viewInternal( internalView )
@@ -697,12 +697,12 @@ KateIconBorder::KateIconBorder ( KateViewInternal* internalView, QWidget *parent
   , m_cachedLNWidth( 0 )
   , m_maxCharWidth( 0 )
 {
-  setSizePolicy( QSizePolicy(  QSizePolicy::Fixed, QSizePolicy::Minimum ) );
+  setSizePolicy( TQSizePolicy(  TQSizePolicy::Fixed, TQSizePolicy::Minimum ) );
 
   setBackgroundMode( NoBackground );
 
   m_doc->setDescription( MarkInterface::markType01, i18n("Bookmark") );
-  m_doc->setPixmap( MarkInterface::markType01, QPixmap((const char**)bookmark_xpm) );
+  m_doc->setPixmap( MarkInterface::markType01, TQPixmap((const char**)bookmark_xpm) );
 
   updateFont();
 }
@@ -716,7 +716,7 @@ void KateIconBorder::setIconBorderOn( bool enable )
 
   updateGeometry();
 
-  QTimer::singleShot( 0, this, SLOT(update()) );
+  TQTimer::singleShot( 0, this, TQT_SLOT(update()) );
 }
 
 void KateIconBorder::setLineNumbersOn( bool enable )
@@ -729,7 +729,7 @@ void KateIconBorder::setLineNumbersOn( bool enable )
 
   updateGeometry();
 
-  QTimer::singleShot( 0, this, SLOT(update()) );
+  TQTimer::singleShot( 0, this, TQT_SLOT(update()) );
 }
 
 void KateIconBorder::setDynWrapIndicators( int state )
@@ -742,7 +742,7 @@ void KateIconBorder::setDynWrapIndicators( int state )
 
   updateGeometry ();
 
-  QTimer::singleShot( 0, this, SLOT(update()) );
+  TQTimer::singleShot( 0, this, TQT_SLOT(update()) );
 }
 
 void KateIconBorder::setFoldingMarkersOn( bool enable )
@@ -754,10 +754,10 @@ void KateIconBorder::setFoldingMarkersOn( bool enable )
 
   updateGeometry();
 
-  QTimer::singleShot( 0, this, SLOT(update()) );
+  TQTimer::singleShot( 0, this, TQT_SLOT(update()) );
 }
 
-QSize KateIconBorder::sizeHint() const
+TQSize KateIconBorder::sizeHint() const
 {
   int w = 0;
 
@@ -773,19 +773,19 @@ QSize KateIconBorder::sizeHint() const
 
   w += 4;
 
-  return QSize( w, 0 );
+  return TQSize( w, 0 );
 }
 
 // This function (re)calculates the maximum width of any of the digit characters (0 -> 9)
 // for graceful handling of variable-width fonts as the linenumber font.
 void KateIconBorder::updateFont()
 {
-  const QFontMetrics *fm = m_view->renderer()->config()->fontMetrics();
+  const TQFontMetrics *fm = m_view->renderer()->config()->fontMetrics();
   m_maxCharWidth = 0;
   // Loop to determine the widest numeric character in the current font.
   // 48 is ascii '0'
   for (int i = 48; i < 58; i++) {
-    int charWidth = fm->width( QChar(i) );
+    int charWidth = fm->width( TQChar(i) );
     m_maxCharWidth = kMax(m_maxCharWidth, charWidth);
   }
 }
@@ -801,11 +801,11 @@ int KateIconBorder::lineNumberWidth() const
       int w = style().scrollBarExtent().width();
       int h = m_view->renderer()->config()->fontMetrics()->height();
 
-      QSize newSize(w, h);
+      TQSize newSize(w, h);
       if ((m_arrow.size() != newSize || m_oldBackgroundColor != m_view->renderer()->config()->iconBarColor()) && !newSize.isEmpty()) {
         m_arrow.resize(newSize);
 
-        QPainter p(&m_arrow);
+        TQPainter p(&m_arrow);
         p.fillRect( 0, 0, w, h, m_view->renderer()->config()->iconBarColor() );
 
         h = m_view->renderer()->config()->fontMetrics()->ascent();
@@ -838,15 +838,15 @@ int KateIconBorder::lineNumberWidth() const
   return width;
 }
 
-void KateIconBorder::paintEvent(QPaintEvent* e)
+void KateIconBorder::paintEvent(TQPaintEvent* e)
 {
   paintBorder(e->rect().x(), e->rect().y(), e->rect().width(), e->rect().height());
 }
 
 void KateIconBorder::paintBorder (int /*x*/, int y, int /*width*/, int height)
 {
-  static QPixmap minus_px ((const char**)minus_xpm);
-  static QPixmap plus_px ((const char**)plus_xpm);
+  static TQPixmap minus_px ((const char**)minus_xpm);
+  static TQPixmap plus_px ((const char**)plus_xpm);
 
   uint h = m_view->renderer()->config()->fontStruct()->fontHeight;
   uint startz = (y / h);
@@ -878,7 +878,7 @@ void KateIconBorder::paintBorder (int /*x*/, int y, int /*width*/, int height)
 
   int w( this->width() );                     // sane value/calc only once
 
-  QPainter p ( this );
+  TQPainter p ( this );
   p.setFont ( *m_view->renderer()->config()->font() ); // for line numbers
   // the line number color is for the line numbers, vertical separator lines
   // and for for the code folding lines.
@@ -922,7 +922,7 @@ void KateIconBorder::paintBorder (int /*x*/, int y, int /*width*/, int height)
             MarkInterface::MarkTypes markType = (MarkInterface::MarkTypes)(1<<bit);
             if( mrk & markType )
             {
-              QPixmap *px_mark (m_doc->markPixmap( markType ));
+              TQPixmap *px_mark (m_doc->markPixmap( markType ));
 
               if (px_mark)
               {
@@ -953,7 +953,7 @@ void KateIconBorder::paintBorder (int /*x*/, int y, int /*width*/, int height)
       if (realLine > -1)
         if (m_viewInternal->lineRanges[z].startCol == 0) {
           if (m_lineNumbersOn)
-            p.drawText( lnX + 1, y, lnWidth-4, h, Qt::AlignRight|Qt::AlignVCenter, QString("%1").arg( realLine + 1 ) );
+            p.drawText( lnX + 1, y, lnWidth-4, h, Qt::AlignRight|Qt::AlignVCenter, TQString("%1").arg( realLine + 1 ) );
         } else if (m_view->dynWordWrap() && m_dynWrapIndicatorsOn) {
           p.drawPixmap(lnX + lnWidth - m_arrow.width() - 4, y, m_arrow);
         }
@@ -1016,7 +1016,7 @@ void KateIconBorder::paintBorder (int /*x*/, int y, int /*width*/, int height)
   }
 }
 
-KateIconBorder::BorderArea KateIconBorder::positionToArea( const QPoint& p ) const
+KateIconBorder::BorderArea KateIconBorder::positionToArea( const TQPoint& p ) const
 {
   int x = 0;
   if( m_iconBorderOn ) {
@@ -1037,30 +1037,30 @@ KateIconBorder::BorderArea KateIconBorder::positionToArea( const QPoint& p ) con
   return None;
 }
 
-void KateIconBorder::mousePressEvent( QMouseEvent* e )
+void KateIconBorder::mousePressEvent( TQMouseEvent* e )
 {
   m_lastClickedLine = m_viewInternal->yToKateLineRange(e->y()).line;
 
   if ( positionToArea( e->pos() ) != IconBorder )
   {
-    QMouseEvent forward( QEvent::MouseButtonPress,
-      QPoint( 0, e->y() ), e->button(), e->state() );
+    TQMouseEvent forward( TQEvent::MouseButtonPress,
+      TQPoint( 0, e->y() ), e->button(), e->state() );
     m_viewInternal->mousePressEvent( &forward );
   }
   e->accept();
 }
 
-void KateIconBorder::mouseMoveEvent( QMouseEvent* e )
+void KateIconBorder::mouseMoveEvent( TQMouseEvent* e )
 {
   if ( positionToArea( e->pos() ) != IconBorder )
   {
-    QMouseEvent forward( QEvent::MouseMove,
-      QPoint( 0, e->y() ), e->button(), e->state() );
+    TQMouseEvent forward( TQEvent::MouseMove,
+      TQPoint( 0, e->y() ), e->button(), e->state() );
     m_viewInternal->mouseMoveEvent( &forward );
   }
 }
 
-void KateIconBorder::mouseReleaseEvent( QMouseEvent* e )
+void KateIconBorder::mouseReleaseEvent( TQMouseEvent* e )
 {
   uint cursorOnLine = m_viewInternal->yToKateLineRange(e->y()).line;
 
@@ -1076,12 +1076,12 @@ void KateIconBorder::mouseReleaseEvent( QMouseEvent* e )
           else
             m_doc->addMark( cursorOnLine, KateViewConfig::global()->defaultMarkType() );
           } else {
-            showMarkMenu( cursorOnLine, QCursor::pos() );
+            showMarkMenu( cursorOnLine, TQCursor::pos() );
           }
         }
         else
         if (e->button() == RightButton) {
-          showMarkMenu( cursorOnLine, QCursor::pos() );
+          showMarkMenu( cursorOnLine, TQCursor::pos() );
         }
     }
 
@@ -1094,24 +1094,24 @@ void KateIconBorder::mouseReleaseEvent( QMouseEvent* e )
     }
   }
 
-  QMouseEvent forward( QEvent::MouseButtonRelease,
-    QPoint( 0, e->y() ), e->button(), e->state() );
+  TQMouseEvent forward( TQEvent::MouseButtonRelease,
+    TQPoint( 0, e->y() ), e->button(), e->state() );
   m_viewInternal->mouseReleaseEvent( &forward );
 }
 
-void KateIconBorder::mouseDoubleClickEvent( QMouseEvent* e )
+void KateIconBorder::mouseDoubleClickEvent( TQMouseEvent* e )
 {
-  QMouseEvent forward( QEvent::MouseButtonDblClick,
-    QPoint( 0, e->y() ), e->button(), e->state() );
+  TQMouseEvent forward( TQEvent::MouseButtonDblClick,
+    TQPoint( 0, e->y() ), e->button(), e->state() );
   m_viewInternal->mouseDoubleClickEvent( &forward );
 }
 
-void KateIconBorder::showMarkMenu( uint line, const QPoint& pos )
+void KateIconBorder::showMarkMenu( uint line, const TQPoint& pos )
 {
-  QPopupMenu markMenu;
-  QPopupMenu selectDefaultMark;
+  TQPopupMenu markMenu;
+  TQPopupMenu selectDefaultMark;
 
-  typedef QValueVector<int> MarkTypeVector;
+  typedef TQValueVector<int> MarkTypeVector;
   MarkTypeVector vec( 33 );
   int i=1;
 
@@ -1167,23 +1167,23 @@ void KateIconBorder::showMarkMenu( uint line, const QPoint& pos )
 }
 //END KateIconBorder
 
-KateViewEncodingAction::KateViewEncodingAction(KateDocument *_doc, KateView *_view, const QString& text, QObject* parent, const char* name)
+KateViewEncodingAction::KateViewEncodingAction(KateDocument *_doc, KateView *_view, const TQString& text, TQObject* parent, const char* name)
        : KActionMenu (text, parent, name), doc(_doc), view (_view)
 {
-  connect(popupMenu(),SIGNAL(aboutToShow()),this,SLOT(slotAboutToShow()));
+  connect(popupMenu(),TQT_SIGNAL(aboutToShow()),this,TQT_SLOT(slotAboutToShow()));
 }
 
 void KateViewEncodingAction::slotAboutToShow()
 {
-  QStringList modes (KGlobal::charsets()->descriptiveEncodingNames());
+  TQStringList modes (KGlobal::charsets()->descriptiveEncodingNames());
 
   popupMenu()->clear ();
   for (uint z=0; z<modes.size(); ++z)
   {
-    popupMenu()->insertItem ( modes[z], this, SLOT(setMode(int)), 0,  z);
+    popupMenu()->insertItem ( modes[z], this, TQT_SLOT(setMode(int)), 0,  z);
 
     bool found = false;
-    QTextCodec *codecForEnc = KGlobal::charsets()->codecForName(KGlobal::charsets()->encodingForName(modes[z]), found);
+    TQTextCodec *codecForEnc = KGlobal::charsets()->codecForName(KGlobal::charsets()->encodingForName(modes[z]), found);
 
     if (found && codecForEnc)
     {
@@ -1195,7 +1195,7 @@ void KateViewEncodingAction::slotAboutToShow()
 
 void KateViewEncodingAction::setMode (int mode)
 {
-  QStringList modes (KGlobal::charsets()->descriptiveEncodingNames());
+  TQStringList modes (KGlobal::charsets()->descriptiveEncodingNames());
   doc->config()->setEncoding( KGlobal::charsets()->encodingForName( modes[mode] ) );
   // now we don't want the encoding changed again unless the user does so using the menu.
   doc->setEncodingSticky( true );

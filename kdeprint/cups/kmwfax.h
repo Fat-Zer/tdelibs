@@ -27,9 +27,9 @@ class KListBox;
 class KMWFax : public KMWizardPage
 {
 public:
-	KMWFax(QWidget *parent = 0, const char *name = 0);
+	KMWFax(TQWidget *parent = 0, const char *name = 0);
 
-	bool isValid(QString&);
+	bool isValid(TQString&);
 	void updatePrinter(KMPrinter*);
 
 private:

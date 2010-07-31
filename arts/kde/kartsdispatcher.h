@@ -22,7 +22,7 @@
 #ifndef KARTSDISPATCHER_H
 #define KARTSDISPATCHER_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kdelibs_export.h>
 
@@ -71,7 +71,7 @@ public:
 	 * @param parent  the parent Qt object
 	 * @param name    the Qt object name of this object
 	 */
-	KArtsDispatcher(QObject *parent = 0, const char *name = 0);
+	KArtsDispatcher(TQObject *parent = 0, const char *name = 0);
 
 	/**
 	 * Destructor

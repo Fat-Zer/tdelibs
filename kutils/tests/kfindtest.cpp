@@ -28,12 +28,12 @@
 #include <stdlib.h>
 #include <assert.h>
 
-static bool check(QString txt, QString a, QString b) // from kurltest
+static bool check(TQString txt, TQString a, TQString b) // from kurltest
 {
   if (a.isEmpty())
-     a = QString::null;
+     a = TQString::null;
   if (b.isEmpty())
-     b = QString::null;
+     b = TQString::null;
   if (a == b) {
     kdDebug() << txt << " : checking '" << a << "' against expected value '" << b << "'... " << "ok" << endl;
   }
@@ -44,7 +44,7 @@ static bool check(QString txt, QString a, QString b) // from kurltest
   return true;
 }
 
-void KFindTest::changeText(uint line, const QString &text)
+void KFindTest::changeText(uint line, const TQString &text)
 {
 	Q_ASSERT(line < m_text.count());
 	Q_ASSERT(m_find != 0);
@@ -54,15 +54,15 @@ void KFindTest::changeText(uint line, const QString &text)
 	m_find->setData(line, text);
 }
 
-void KFindTest::find(const QString &pattern, long options)
+void KFindTest::find(const TQString &pattern, long options)
 {
 	delete m_find;
 	m_find = new KFind(pattern, options, 0);
 
-	connect(m_find, SIGNAL(highlight(const QString &, int, int)),
-	                SLOT(slotHighlight(const QString &, int, int)));
-	connect(m_find, SIGNAL(highlight(int, int, int)),
-	                SLOT(slotHighlight(int, int, int)));
+	connect(m_find, TQT_SIGNAL(highlight(const TQString &, int, int)),
+	                TQT_SLOT(slotHighlight(const TQString &, int, int)));
+	connect(m_find, TQT_SIGNAL(highlight(int, int, int)),
+	                TQT_SLOT(slotHighlight(int, int, int)));
 
 	m_line = 0;
 	KFind::Result result = KFind::NoMatch;
@@ -79,7 +79,7 @@ void KFindTest::find(const QString &pattern, long options)
 	} while(result == KFind::NoMatch && m_line < m_text.count());
 }
 
-void KFindTest::findNext(const QString &pattern)
+void KFindTest::findNext(const TQString &pattern)
 {
 	Q_ASSERT(m_find != 0);
 
@@ -109,16 +109,16 @@ void KFindTest::findNext(const QString &pattern)
 	//kdDebug() << "find next completed" << m_line << endl;
 }
 
-void KFindTest::slotHighlight(const QString &text, int index, int matchedLength)
+void KFindTest::slotHighlight(const TQString &text, int index, int matchedLength)
 {
-	m_hits.append("line: \"" + text + "\", index: " + QString::number(index) +
-	              ", length: " + QString::number(matchedLength) + "\n");
+	m_hits.append("line: \"" + text + "\", index: " + TQString::number(index) +
+	              ", length: " + TQString::number(matchedLength) + "\n");
 }
 
 void KFindTest::slotHighlight(int id, int index, int matchedLength)
 {
-	m_hits.append("line: \"" + m_text[id] + "\", index: " + QString::number(index) +
-	              ", length: " + QString::number(matchedLength) + "\n");
+	m_hits.append("line: \"" + m_text[id] + "\", index: " + TQString::number(index) +
+	              ", length: " + TQString::number(matchedLength) + "\n");
 }
 
 int main(int argc, char **argv)
@@ -126,7 +126,7 @@ int main(int argc, char **argv)
 	KCmdLineArgs::init(argc, argv, "kfindtest", "KFindTest", 0, 0, false);
 	KApplication app;
 
-	QString text = "This file is part of the KDE project.\n"
+	TQString text = "This file is part of the KDE project.\n"
 	               "This library is free software; you can redistribute it and/or\n"
 	               "modify it under the terms of the GNU Library General Public\n"
 	               "License version 2, as published by the Free Software Foundation.\n"
@@ -141,12 +141,12 @@ int main(int argc, char **argv)
 	               "    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,\n"
 	               "    Boston, MA 02110-1301, USA.\n";
 
-	QString output1 = "line: \"This file is part of the KDE project.\", index: 0, length: 4\n"
+	TQString output1 = "line: \"This file is part of the KDE project.\", index: 0, length: 4\n"
 	                  "line: \"This library is free software; you can redistribute it and/or\", index: 0, length: 4\n"
 	                  "line: \"    This library is distributed in the hope that it will be useful,\", index: 4, length: 4\n"
 	                  "line: \"    along with this library; see the file COPYING.LIB.  If not, write to\", index: 15, length: 4\n";
 
-	QString output2 = "line: \"This file is part of the KDE project.\", index: 0, length: 0\n"
+	TQString output2 = "line: \"This file is part of the KDE project.\", index: 0, length: 0\n"
 	                  "line: \"This file is part of the KDE project.\", index: 2, length: 1\n"
 	                  "line: \"This file is part of the KDE project.\", index: 2, length: 2\n"
 	                  "line: \"This library is free software; you can redistribute it and/or\", index: 42, length: 3\n"
@@ -161,7 +161,7 @@ int main(int argc, char **argv)
 	                  "line: \"This library is free software; you can redistribute it and/or\", index: 16, length: 4\n"
 	                  "line: \"License version 2, as published by the Free Software Foundation.\", index: 44, length: 19\n";
 
-	QString output3 = "line: \"This file is part of the KDE project.\", index: 0, length: 0\n"
+	TQString output3 = "line: \"This file is part of the KDE project.\", index: 0, length: 0\n"
 	                  "line: \"This file is part of the KDE project.\", index: 2, length: 1\n"
 	                  "line: \"This file is part of the KDE project.\", index: 2, length: 2\n"
 	                  "line: \"This library is free software; you can redistribute it and/or\", index: 42, length: 3\n"
@@ -179,7 +179,7 @@ int main(int argc, char **argv)
 	                  "line: \"License version 2, as published by the Free Software Foundation.\", index: 39, length: 4\n"
 	                  "line: \"License version 2, as published by the Free Software Foundation.\", index: 44, length: 19\n";
 
-	KFindTest *test = new KFindTest(QStringList::split('\n', text, true));
+	KFindTest *test = new KFindTest(TQStringList::split('\n', text, true));
 
 	kdDebug() << "Plain static search..." << endl;
 

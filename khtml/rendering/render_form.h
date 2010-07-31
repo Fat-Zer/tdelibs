@@ -37,10 +37,10 @@ class QListboxItem;
 #include <ktextedit.h>
 #include <kurlrequester.h>
 #include <klineedit.h>
-#include <qcheckbox.h>
-#include <qradiobutton.h>
-#include <qpushbutton.h>
-#include <qhbox.h>
+#include <tqcheckbox.h>
+#include <tqradiobutton.h>
+#include <tqpushbutton.h>
+#include <tqhbox.h>
 #include <klistbox.h>
 #include <kcombobox.h>
 #include "dom/dom_misc.h"
@@ -97,7 +97,7 @@ protected:
     virtual bool isEditable() const { return false; }
     AlignmentFlags textAlignment() const;
 
-    QPoint m_mousePos;
+    TQPoint m_mousePos;
     int m_state;
 };
 
@@ -136,7 +136,7 @@ public:
 
     virtual bool handleEvent(const DOM::EventImpl&) { return false; }
 
-    QCheckBox *widget() const { return static_cast<QCheckBox*>(m_widget); }
+    TQCheckBox *widget() const { return static_cast<TQCheckBox*>(m_widget); }
 
 public slots:
     virtual void slotStateChanged(int state);
@@ -157,7 +157,7 @@ public:
 
     virtual bool handleEvent(const DOM::EventImpl&) { return false; }
 
-    QRadioButton *widget() const { return static_cast<QRadioButton*>(m_widget); }
+    TQRadioButton *widget() const { return static_cast<TQRadioButton*>(m_widget); }
 
 public slots:
     virtual void slotToggled(bool);
@@ -176,7 +176,7 @@ public:
     virtual void updateFromElement();
     virtual short baselinePosition( bool ) const;
 private:
-    QString rawText();
+    TQString rawText();
 };
 
 // -------------------------------------------------------------------------
@@ -240,7 +240,7 @@ public:
     void setSelectionRange(long start, long end);
 public slots:
     void slotReturnPressed();
-    void slotTextChanged(const QString &string);
+    void slotTextChanged(const TQString &string);
 protected:
     virtual void handleFocusOut();
 
@@ -256,21 +256,21 @@ class LineEditWidget : public KLineEdit
     Q_OBJECT
 public:
     LineEditWidget(DOM::HTMLInputElementImpl* input,
-                   KHTMLView* view, QWidget* parent);
+                   KHTMLView* view, TQWidget* parent);
     ~LineEditWidget();
     void highLightWord( unsigned int length, unsigned int pos );
 
 protected:
-    virtual bool event( QEvent *e );
-    virtual void mouseMoveEvent(QMouseEvent *e);
-    virtual QPopupMenu *createPopupMenu();
+    virtual bool event( TQEvent *e );
+    virtual void mouseMoveEvent(TQMouseEvent *e);
+    virtual TQPopupMenu *createPopupMenu();
 private slots:
     void extendedMenuActivated( int id);
     void slotCheckSpelling();
     void slotSpellCheckReady( KSpell *s );
-    void slotSpellCheckDone( const QString &s );
-    void spellCheckerMisspelling( const QString &text, const QStringList &, unsigned int pos);
-    void spellCheckerCorrected( const QString &, const QString &, unsigned int );
+    void slotSpellCheckDone( const TQString &s );
+    void spellCheckerMisspelling( const TQString &text, const TQStringList &, unsigned int pos);
+    void spellCheckerCorrected( const TQString &, const TQString &, unsigned int );
     void spellCheckerFinished();
 
 private:
@@ -296,7 +296,7 @@ public:
 
 protected:
     virtual void paintBoxDecorations(PaintInfo& pI, int _tx, int _ty);
-    void paintBorderMinusLegend(QPainter *p, int _tx, int _ty, int w,
+    void paintBorderMinusLegend(TQPainter *p, int _tx, int _ty, int w,
                                   int h, const RenderStyle *style, int lx, int lw);
     RenderObject* findLegend();
 };
@@ -321,8 +321,8 @@ public:
 
 public slots:
     void slotReturnPressed();
-    void slotTextChanged(const QString &string);
-    void slotUrlSelected(const QString &string);
+    void slotTextChanged(const TQString &string);
+    void slotUrlSelected(const TQString &string);
 
 protected:
     virtual void handleFocusOut();
@@ -365,11 +365,11 @@ public:
 class ComboBoxWidget : public KComboBox
 {
 public:
-    ComboBoxWidget(QWidget *parent);
+    ComboBoxWidget(TQWidget *parent);
 
 protected:
-    virtual bool event(QEvent *);
-    virtual bool eventFilter(QObject *dest, QEvent *e);
+    virtual bool event(TQEvent *);
+    virtual bool eventFilter(TQObject *dest, TQEvent *e);
 };
 
 // -------------------------------------------------------------------------
@@ -417,13 +417,13 @@ class TextAreaWidget : public KTextEdit
 {
     Q_OBJECT
 public:
-    TextAreaWidget(int wrap, QWidget* parent);
+    TextAreaWidget(int wrap, TQWidget* parent);
     virtual ~TextAreaWidget();
 
 protected:
-    virtual bool event (QEvent *e );
-    virtual QPopupMenu *createPopupMenu(const QPoint& pos);
-    virtual QPopupMenu* createPopupMenu() { return KTextEdit::createPopupMenu(); }
+    virtual bool event (TQEvent *e );
+    virtual TQPopupMenu *createPopupMenu(const TQPoint& pos);
+    virtual TQPopupMenu* createPopupMenu() { return KTextEdit::createPopupMenu(); }
 private slots:
     void slotFind();
     void slotDoFind();
@@ -431,8 +431,8 @@ private slots:
     void slotReplace();
     void slotDoReplace();
     void slotReplaceNext();
-    void slotReplaceText(const QString&, int, int, int);
-    void slotFindHighlight(const QString&, int, int);
+    void slotReplaceText(const TQString&, int, int, int);
+    void slotFindHighlight(const TQString&, int, int);
 private:
     KFindDialog *m_findDlg;
     KFind *m_find;
@@ -468,7 +468,7 @@ public:
     DOM::HTMLTextAreaElementImpl* element() const
     { return static_cast<DOM::HTMLTextAreaElementImpl*>(RenderObject::element()); }
 
-    QString text();
+    TQString text();
     void highLightWord( unsigned int length, unsigned int pos );
 
     void select();

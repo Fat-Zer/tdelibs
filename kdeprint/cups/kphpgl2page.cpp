@@ -19,18 +19,18 @@
 
 #include "kphpgl2page.h"
 
-#include <qcheckbox.h>
-#include <qgroupbox.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqgroupbox.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 #include <klocale.h>
 #include <knuminput.h>
 
-KPHpgl2Page::KPHpgl2Page(QWidget *parent, const char *name)
+KPHpgl2Page::KPHpgl2Page(TQWidget *parent, const char *name)
 : KPrintDialogPage(parent, name)
 {
 	//WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThisBlackplotHpgl2Page = i18n( " <qt> "
+	TQString whatsThisBlackplotHpgl2Page = i18n( " <qt> "
 			" <b>Print in Black Only (Blackplot)</b> "
 			" <p>The \'blackplot\' option specifies that all pens should plot in black-only:" 
 			" The default is to use the colors defined in the plot file, or the standard "
@@ -45,7 +45,7 @@ KPHpgl2Page::KPHpgl2Page(QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisFitplotHpgl2Page = i18n( " <qt> "
+	TQString whatsThisFitplotHpgl2Page = i18n( " <qt> "
 			" <b>Scale Print Image to Page Size</b> "
 			" <p>The 'fitplot' option specifies that the HP-GL image should be scaled to fill "
 			" exactly the page with the (elsewhere selected) media size. </p> "
@@ -65,7 +65,7 @@ KPHpgl2Page::KPHpgl2Page(QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisPenwidthHpgl2Page = i18n( " <qt> "
+	TQString whatsThisPenwidthHpgl2Page = i18n( " <qt> "
 			" <b>Set Pen Width for HP-GL (if not defined in file)</b>. "
 			" <p>The pen width value can be set here in case the original HP-GL file does not have it "
 			" set. The pen width specifies the value in micrometers. The default value of 1000 produces "
@@ -82,7 +82,7 @@ KPHpgl2Page::KPHpgl2Page(QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisAllOptionsHpgl2Page = i18n( " <qt> "
+	TQString whatsThisAllOptionsHpgl2Page = i18n( " <qt> "
 			" <b>HP-GL Print Options</b> "
 			" <p>All options on this page are only applicable if you use KDEPrint to send HP-GL and "
 			" HP-GL/2 files to one of your printers. </p> "
@@ -110,36 +110,36 @@ KPHpgl2Page::KPHpgl2Page(QWidget *parent, const char *name)
 
 	setTitle("HP-GL/2");
 
-	QGroupBox	*box = new QGroupBox(0, Qt::Vertical, i18n("HP-GL/2 Options"), this);
+	QGroupBox	*box = new TQGroupBox(0, Qt::Vertical, i18n("HP-GL/2 Options"), this);
 
-	m_blackplot = new QCheckBox(i18n("&Use only black pen"), box);
-	  QWhatsThis::add(m_blackplot, whatsThisBlackplotHpgl2Page);
+	m_blackplot = new TQCheckBox(i18n("&Use only black pen"), box);
+	  TQWhatsThis::add(m_blackplot, whatsThisBlackplotHpgl2Page);
 
-	m_fitplot = new QCheckBox(i18n("&Fit plot to page"), box);
-	  QWhatsThis::add(m_fitplot, whatsThisFitplotHpgl2Page);
+	m_fitplot = new TQCheckBox(i18n("&Fit plot to page"), box);
+	  TQWhatsThis::add(m_fitplot, whatsThisFitplotHpgl2Page);
 
 	m_penwidth = new KIntNumInput(1000, box);
 	m_penwidth->setLabel(i18n("&Pen width:"), Qt::AlignLeft|Qt::AlignVCenter);
 	m_penwidth->setSuffix(" [um]");
 	m_penwidth->setRange(0, 10000, 100, true);
-	  QWhatsThis::add(m_penwidth, whatsThisPenwidthHpgl2Page);
+	  TQWhatsThis::add(m_penwidth, whatsThisPenwidthHpgl2Page);
 
-	QVBoxLayout	*l0 = new QVBoxLayout(this, 0, 10);
+	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
 	l0->addWidget(box);
 	l0->addStretch(1);
 
-	QVBoxLayout	*l1 = new QVBoxLayout(box->layout(), 10);
+	QVBoxLayout	*l1 = new TQVBoxLayout(box->layout(), 10);
 	l1->addWidget(m_blackplot);
 	l1->addWidget(m_fitplot);
 	l1->addWidget(m_penwidth);
-	  QWhatsThis::add(this, whatsThisAllOptionsHpgl2Page);
+	  TQWhatsThis::add(this, whatsThisAllOptionsHpgl2Page);
 }
 
 KPHpgl2Page::~KPHpgl2Page()
 {
 }
 
-void KPHpgl2Page::setOptions(const QMap<QString,QString>& opts)
+void KPHpgl2Page::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	QString	value;
 	if (opts.contains("blackplot") && ((value=opts["blackplot"]).isEmpty() || value == "true"))
@@ -150,10 +150,10 @@ void KPHpgl2Page::setOptions(const QMap<QString,QString>& opts)
 		m_penwidth->setValue(value.toInt());
 }
 
-void KPHpgl2Page::getOptions(QMap<QString,QString>& opts, bool incldef)
+void KPHpgl2Page::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	if (incldef || m_penwidth->value() != 1000)
-		opts["penwidth"] = QString::number(m_penwidth->value());
+		opts["penwidth"] = TQString::number(m_penwidth->value());
 	if (m_blackplot->isChecked())
 		opts["blackplot"] = "true";
 	else if (incldef)

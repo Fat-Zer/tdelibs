@@ -9,7 +9,7 @@
   LGPL version 2.
  */
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <kdebug.h>
 #include <kcmdlineargs.h>
@@ -38,26 +38,26 @@ int main (int argc, char **argv)
   KDirWatch *dirwatch1 = KDirWatch::self();
   KDirWatch *dirwatch2 = new KDirWatch;
 
-  testObject.connect(dirwatch1, SIGNAL( dirty( const QString &)), SLOT( dirty( const QString &)) );
-  testObject.connect(dirwatch1, SIGNAL( created( const QString &)), SLOT( created( const QString &)) );
-  testObject.connect(dirwatch1, SIGNAL( deleted( const QString &)), SLOT( deleted( const QString &)) );
+  testObject.connect(dirwatch1, TQT_SIGNAL( dirty( const TQString &)), TQT_SLOT( dirty( const TQString &)) );
+  testObject.connect(dirwatch1, TQT_SIGNAL( created( const TQString &)), TQT_SLOT( created( const TQString &)) );
+  testObject.connect(dirwatch1, TQT_SIGNAL( deleted( const TQString &)), TQT_SLOT( deleted( const TQString &)) );
 
   if (args->count() >0) {
     for(int i = 0; i < args->count(); i++) {
       kdDebug() << "Watching: " << args->arg(i) << endl;
-      dirwatch2->addDir( QFile::decodeName( args->arg(i)));
+      dirwatch2->addDir( TQFile::decodeName( args->arg(i)));
     }
   }
 
-  QString home = QString(getenv ("HOME")) + "/";
-  QString desk = home + "Desktop/";
+  TQString home = TQString(getenv ("HOME")) + "/";
+  TQString desk = home + "Desktop/";
   kdDebug() << "Watching: " << home << endl;
   dirwatch1->addDir(home);
   kdDebug() << "Watching file: " << home << "foo " << endl;
   dirwatch1->addFile(home+"foo");
   kdDebug() << "Watching: " << desk << endl;
   dirwatch1->addDir(desk);
-  QString test = home + "test/";
+  TQString test = home + "test/";
   kdDebug() << "Watching: (but skipped) " << test << endl;
   dirwatch1->addDir(test);
 

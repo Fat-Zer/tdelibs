@@ -53,7 +53,7 @@
 #include <kglobalsettings.h>
 #include <kguiitem.h>
 #include <kpushbutton.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <assert.h>
 
 #define minButtonWidth 50
@@ -68,7 +68,7 @@ public:
   Item(KPushButton* const _button) : button(_button) {}
 };
 
-template class QPtrList<KButtonBox::Item>;
+template class TQPtrList<KButtonBox::Item>;
 
 class KButtonBoxPrivate {
 public:
@@ -76,12 +76,12 @@ public:
   unsigned short autoborder;
   unsigned short orientation;
   bool activated;
-  QPtrList<KButtonBox::Item> buttons;
+  TQPtrList<KButtonBox::Item> buttons;
 };
 
-KButtonBox::KButtonBox(QWidget *parent, Orientation _orientation,
+KButtonBox::KButtonBox(TQWidget *parent, Orientation _orientation,
 		       int border, int autoborder)
-  :  QWidget(parent), data(new KButtonBoxPrivate)
+  :  TQWidget(parent), data(new KButtonBoxPrivate)
 {
   assert(data);
 
@@ -95,7 +95,7 @@ KButtonBox::~KButtonBox() {
   delete data;
 }
 
-QPushButton *KButtonBox::addButton(const QString& text, bool noexpand) {
+TQPushButton *KButtonBox::addButton(const TQString& text, bool noexpand) {
   Item* const item = new Item(new KPushButton(text, this));
 
   item->noexpand  = noexpand;
@@ -107,7 +107,7 @@ QPushButton *KButtonBox::addButton(const QString& text, bool noexpand) {
   return item->button;
 }
 
-QPushButton *KButtonBox::addButton(const KGuiItem& guiitem, bool noexpand) {
+TQPushButton *KButtonBox::addButton(const KGuiItem& guiitem, bool noexpand) {
   Item* const item = new Item(new KPushButton(guiitem, this));
 
   item->noexpand  = noexpand;
@@ -119,34 +119,34 @@ QPushButton *KButtonBox::addButton(const KGuiItem& guiitem, bool noexpand) {
   return item->button;
 }
 
-  QPushButton *
+  TQPushButton *
 KButtonBox::addButton(
-  const QString & text,
-  QObject *       receiver,
+  const TQString & text,
+  TQObject *       receiver,
   const char *    slot,
   bool            noexpand
 )
 {
-  QPushButton * pb = addButton(text, noexpand);
+  TQPushButton * pb = addButton(text, noexpand);
 
   if ((0 != receiver) && (0 != slot))
-    QObject::connect(pb, SIGNAL(clicked()), receiver, slot);
+    TQObject::connect(pb, TQT_SIGNAL(clicked()), receiver, slot);
 
   return pb;
 }
 
-  QPushButton *
+  TQPushButton *
 KButtonBox::addButton(
   const KGuiItem& guiitem,
-  QObject *       receiver,
+  TQObject *       receiver,
   const char *    slot,
   bool            noexpand
 )
 {
-  QPushButton * pb = addButton(guiitem, noexpand);
+  TQPushButton * pb = addButton(guiitem, noexpand);
 
   if ((0 != receiver) && (0 != slot))
-    QObject::connect(pb, SIGNAL(clicked()), receiver, slot);
+    TQObject::connect(pb, TQT_SIGNAL(clicked()), receiver, slot);
 
   return pb;
 }
@@ -162,13 +162,13 @@ void KButtonBox::addStretch(int scale) {
 
 void KButtonBox::layout() {
   // resize all buttons
-  const QSize bs = bestButtonSize();
+  const TQSize bs = bestButtonSize();
 
-  QPtrListIterator<KButtonBox::Item> itr(data->buttons);
+  TQPtrListIterator<KButtonBox::Item> itr(data->buttons);
   Item* item;
 
   while ( (item = itr.current()) != 0 ) {
-    QPushButton* const b = item->button;
+    TQPushButton* const b = item->button;
     if(b) {
       if(item->noexpand)
 	b->setFixedSize(buttonSizeHint(b));
@@ -188,11 +188,11 @@ void KButtonBox::placeButtons() {
     int fs = width() - 2 * data->border;
     int stretch = 0;
     {
-      QPtrListIterator<KButtonBox::Item> itr(data->buttons);
+      TQPtrListIterator<KButtonBox::Item> itr(data->buttons);
       Item *item;
 
       while ( (item = itr.current()) != 0 ) {
-        QPushButton* const b = item->button;
+        TQPushButton* const b = item->button;
         if(b) {
           fs -= b->width();
 
@@ -210,11 +210,11 @@ void KButtonBox::placeButtons() {
     // distribute buttons
     int x_pos = data->border;
     {
-      QPtrListIterator<KButtonBox::Item> itr(data->buttons);
+      TQPtrListIterator<KButtonBox::Item> itr(data->buttons);
       Item *item;
 
       while ( (item = itr.current()) != 0 ) {
-        QPushButton* const b = item->button;
+        TQPushButton* const b = item->button;
         if(b) {
           b->move(x_pos, (height() - b->height()) / 2);
 
@@ -232,11 +232,11 @@ void KButtonBox::placeButtons() {
     int fs = height() - 2 * data->border;
     int stretch = 0;
     {
-      QPtrListIterator<KButtonBox::Item> itr(data->buttons);
+      TQPtrListIterator<KButtonBox::Item> itr(data->buttons);
       Item *item;
 
       while ( (item = itr.current()) != 0 ) {
-        QPushButton* const b = item->button;
+        TQPushButton* const b = item->button;
         if(b)
           fs -= b->height() + data->autoborder;
         else
@@ -250,11 +250,11 @@ void KButtonBox::placeButtons() {
     // distribute buttons
     int y_pos = data->border;
     {
-      QPtrListIterator<KButtonBox::Item> itr(data->buttons);
+      TQPtrListIterator<KButtonBox::Item> itr(data->buttons);
       Item *item;
 
       while ( (item = itr.current()) != 0 ) {
-        QPushButton* const b = item->button;
+        TQPushButton* const b = item->button;
         if(b) {
           b->move((width() - b->width()) / 2, y_pos);
 
@@ -269,22 +269,22 @@ void KButtonBox::placeButtons() {
   }
 }
 
-void KButtonBox::resizeEvent(QResizeEvent *) {
+void KButtonBox::resizeEvent(TQResizeEvent *) {
   placeButtons();
 }
 
-QSize KButtonBox::bestButtonSize() const {
-  QSize s(0, 0);
+TQSize KButtonBox::bestButtonSize() const {
+  TQSize s(0, 0);
 
   // calculate optimal size
-  QPtrListIterator<KButtonBox::Item> itr(data->buttons);
+  TQPtrListIterator<KButtonBox::Item> itr(data->buttons);
   Item *item;
 
   while ( (item = itr.current()) != 0 ) {
-    QPushButton* const b = item->button;
+    TQPushButton* const b = item->button;
 
     if(b && !item->noexpand) {
-      const QSize bs = buttonSizeHint(b);
+      const TQSize bs = buttonSizeHint(b);
 
       const int bsWidth = bs.width();
       const int bsHeight = bs.height();
@@ -300,24 +300,24 @@ QSize KButtonBox::bestButtonSize() const {
   return s;
 }
 
-QSize KButtonBox::sizeHint() const {
+TQSize KButtonBox::sizeHint() const {
   unsigned int dw;
 
   if(data->buttons.isEmpty())
-    return QSize(0, 0);
+    return TQSize(0, 0);
   else {
     dw = 2 * data->border;
 
-    const QSize bs = bestButtonSize();
+    const TQSize bs = bestButtonSize();
 
-    QPtrListIterator<KButtonBox::Item> itr(data->buttons);
+    TQPtrListIterator<KButtonBox::Item> itr(data->buttons);
     Item *item;
 
     while ( (item = itr.current()) != 0 ) {
-      QPushButton* const b = item->button;
+      TQPushButton* const b = item->button;
 
       if(b) {
-	QSize s;
+	TQSize s;
 	if(item->noexpand)
 	  s = buttonSizeHint(b);
 	else
@@ -336,17 +336,17 @@ QSize KButtonBox::sizeHint() const {
     }
 
     if(data->orientation == Horizontal)
-	return QSize(dw, bs.height() + 2 * data->border);
+	return TQSize(dw, bs.height() + 2 * data->border);
     else
-	return QSize(bs.width() + 2 * data->border, dw);
+	return TQSize(bs.width() + 2 * data->border, dw);
   }
 }
 
-QSizePolicy KButtonBox::sizePolicy() const
+TQSizePolicy KButtonBox::sizePolicy() const
 {
     return data->orientation == Horizontal?
-        QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed ) :
-        QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Minimum );
+        TQSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed ) :
+        TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum );
 }
 
 /*
@@ -354,9 +354,9 @@ QSizePolicy KButtonBox::sizePolicy() const
  * minButtonWidth pixels wide, return minButtonWidth pixels
  * as minimum width
  */
-QSize KButtonBox::buttonSizeHint(QPushButton *b) const {
-  QSize s = b->sizeHint();
-  const QSize ms = b->minimumSize();
+TQSize KButtonBox::buttonSizeHint(TQPushButton *b) const {
+  TQSize s = b->sizeHint();
+  const TQSize ms = b->minimumSize();
   if(s.width() < minButtonWidth)
     s.setWidth(minButtonWidth);
 

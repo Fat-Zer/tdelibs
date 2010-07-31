@@ -24,7 +24,7 @@
 
 #include <config.h>
 
-#include <qmap.h>
+#include <tqmap.h>
 
 #ifdef USE_SOLARIS
 # include <sys/filio.h>
@@ -49,8 +49,8 @@
 // Include syssocket before our local includes
 #include "syssocket.h"
 
-#include <qmutex.h>
-#include <qsocketnotifier.h>
+#include <tqmutex.h>
+#include <tqsocketnotifier.h>
 
 #include "kresolver.h"
 #include "ksocketaddress.h"
@@ -63,7 +63,7 @@ using namespace KNetwork;
 class KNetwork::KSocketDevicePrivate
 {
 public:
-  mutable QSocketNotifier *input, *output, *exception;
+  mutable TQSocketNotifier *input, *output, *exception;
   KSocketAddress local, peer;
   int af;
 
@@ -110,7 +110,7 @@ KSocketDevice::~KSocketDevice()
 bool KSocketDevice::setSocketOptions(int opts)
 {
   // must call parent
-  QMutexLocker locker(mutex());
+  TQMutexLocker locker(mutex());
   KSocketBase::setSocketOptions(opts);
 
   if (m_sockfd == -1)
@@ -606,12 +606,12 @@ KSocketAddress KSocketDevice::externalAddress() const
   return localAddress();
 }
 
-QSocketNotifier* KSocketDevice::readNotifier() const
+TQSocketNotifier* KSocketDevice::readNotifier() const
 {
   if (d->input)
     return d->input;
 
-  QMutexLocker locker(mutex());
+  TQMutexLocker locker(mutex());
   if (d->input)
     return d->input;
 
@@ -621,15 +621,15 @@ QSocketNotifier* KSocketDevice::readNotifier() const
       return 0L;
     }
 
-  return d->input = createNotifier(QSocketNotifier::Read);
+  return d->input = createNotifier(TQSocketNotifier::Read);
 }
 
-QSocketNotifier* KSocketDevice::writeNotifier() const
+TQSocketNotifier* KSocketDevice::writeNotifier() const
 {
   if (d->output)
     return d->output;
 
-  QMutexLocker locker(mutex());
+  TQMutexLocker locker(mutex());
   if (d->output)
     return d->output;
 
@@ -639,15 +639,15 @@ QSocketNotifier* KSocketDevice::writeNotifier() const
       return 0L;
     }
 
-  return d->output = createNotifier(QSocketNotifier::Write);
+  return d->output = createNotifier(TQSocketNotifier::Write);
 }
 
-QSocketNotifier* KSocketDevice::exceptionNotifier() const
+TQSocketNotifier* KSocketDevice::exceptionNotifier() const
 {
   if (d->exception)
     return d->exception;
 
-  QMutexLocker locker(mutex());
+  TQMutexLocker locker(mutex());
   if (d->exception)
     return d->exception;
 
@@ -657,7 +657,7 @@ QSocketNotifier* KSocketDevice::exceptionNotifier() const
       return 0L;
     }
 
-  return d->exception = createNotifier(QSocketNotifier::Exception);
+  return d->exception = createNotifier(TQSocketNotifier::Exception);
 }
 
 bool KSocketDevice::poll(bool *input, bool *output, bool *exception,
@@ -788,12 +788,12 @@ bool KSocketDevice::poll(int timeout, bool *timedout)
   return poll(&input, &output, &exception, timeout, timedout);
 }
 
-QSocketNotifier* KSocketDevice::createNotifier(QSocketNotifier::Type type) const
+TQSocketNotifier* KSocketDevice::createNotifier(TQSocketNotifier::Type type) const
 {
   if (m_sockfd == -1)
     return 0L;
 
-  return new QSocketNotifier(m_sockfd, type);
+  return new TQSocketNotifier(m_sockfd, type);
 }
 
 namespace
@@ -832,8 +832,8 @@ namespace
 }
 
 static KSocketDeviceFactoryBase* defaultImplFactory;
-static QMutex defaultImplFactoryMutex;
-typedef QMap<int, KSocketDeviceFactoryBase* > factoryMap;
+static TQMutex defaultImplFactoryMutex;
+typedef TQMap<int, KSocketDeviceFactoryBase* > factoryMap;
 static factoryMap factories;
  
 KSocketDevice* KSocketDevice::createDefault(KSocketBase* parent)
@@ -857,7 +857,7 @@ KSocketDevice* KSocketDevice::createDefault(KSocketBase* parent, int capabilitie
   if (device != 0L)
     return device;
 
-  QMutexLocker locker(&defaultImplFactoryMutex);
+  TQMutexLocker locker(&defaultImplFactoryMutex);
   factoryMap::ConstIterator it = factories.constBegin();
   for ( ; it != factories.constEnd(); ++it)
     if ((it.key() & capabilities) == capabilities)
@@ -870,7 +870,7 @@ KSocketDevice* KSocketDevice::createDefault(KSocketBase* parent, int capabilitie
 KSocketDeviceFactoryBase*
 KSocketDevice::setDefaultImpl(KSocketDeviceFactoryBase* factory)
 {
-  QMutexLocker locker(&defaultImplFactoryMutex);
+  TQMutexLocker locker(&defaultImplFactoryMutex);
   KSocketDeviceFactoryBase* old = defaultImplFactory;
   defaultImplFactory = factory;
   return old;
@@ -878,7 +878,7 @@ KSocketDevice::setDefaultImpl(KSocketDeviceFactoryBase* factory)
 
 void KSocketDevice::addNewImpl(KSocketDeviceFactoryBase* factory, int capabilities)
 {
-  QMutexLocker locker(&defaultImplFactoryMutex);
+  TQMutexLocker locker(&defaultImplFactoryMutex);
   if (factories.contains(capabilities))
     delete factories[capabilities];
   factories.insert(capabilities, factory);

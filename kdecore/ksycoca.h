@@ -20,8 +20,8 @@
 #define __ksycoca_h__
 
 #include <dcopobject.h>
-#include <qobject.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
 #include "ksycocatype.h"
 #include <kdelibs_export.h>
 
@@ -41,7 +41,7 @@ class KSycocaFactoryList;
  * @internal
  * Read-only SYstem COnfiguration CAche
  */
-class KDECORE_EXPORT KSycoca : public QObject, public DCOPObject
+class KDECORE_EXPORT KSycoca : public TQObject, public DCOPObject
 {
   Q_OBJECT
   K_DCOP
@@ -73,19 +73,19 @@ public:
     * @internal - called by factories in read-only mode
     * This is how factories get a stream to an entry
     */
-   QDataStream *findEntry(int offset, KSycocaType &type);
+   TQDataStream *findEntry(int offset, KSycocaType &type);
    /**
     * @internal - called by factories in read-only mode
     */
-   QDataStream *findFactory( KSycocaFactoryId id);
+   TQDataStream *findFactory( KSycocaFactoryId id);
    /**
     * @internal - returns kfsstnd stored inside database
     */
-   QString kfsstnd_prefixes();
+   TQString kfsstnd_prefixes();
    /**
     * @internal - returns language stored inside database
     */
-   QString language();
+   TQString language();
 
    /**
     * @internal - returns timestamp of database
@@ -110,7 +110,7 @@ public:
     * @internal - returns all directories with information
     * stored inside sycoca.
     */
-   QStringList allResourceDirs();
+   TQStringList allResourceDirs();
 
    /**
     * @internal - add a factory
@@ -131,7 +131,7 @@ public:
    /**
     * Determine relative path for a .desktop file from a full path and a resource name
     */
-   static QString determineRelativePath( const QString & _fullpath, const char *_resource );
+   static TQString determineRelativePath( const TQString & _fullpath, const char *_resource );
 
    /**
     * When you receive a "databaseChanged" signal, you can query here if
@@ -154,7 +154,7 @@ k_dcop:
    /**
     * internal function for receiving kded/kbuildsycoca's signal, when the sycoca file changes
     */
-   void notifyDatabaseChanged(const QStringList &);
+   void notifyDatabaseChanged(const TQStringList &);
 
 signals:
    /**
@@ -168,7 +168,7 @@ protected:
    bool openDatabase(bool openDummyIfNotFound=true);
    void closeDatabase();
    KSycocaFactoryList *m_lstFactories;
-   QDataStream *m_str;
+   TQDataStream *m_str;
    bool bNoDatabase;
    size_t m_sycoca_size;
    const char *m_sycoca_mmap;

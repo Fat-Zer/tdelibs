@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <qtextstream.h>
+#include <tqtextstream.h>
 
 #include <kapplication.h>
 #include <kemailsettings.h>
@@ -26,7 +26,7 @@ static KCmdLineOptions options[] = {
 
 void BugMailer::slotError(int errornum) {
     kdDebug() << "slotError\n";
-    QString str, lstr;
+    TQString str, lstr;
 
     switch(errornum) {
         case SMTP::CONNECTERROR:
@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
 
     KApplication a(false, false);
 
-    QCString recipient = args->getOption("recipient");
+    TQCString recipient = args->getOption("recipient");
     if (recipient.isEmpty())
         recipient = "submit@bugs.kde.org";
     else {
@@ -80,15 +80,15 @@ int main(int argc, char **argv) {
     }
     kdDebug() << "recp \"" << recipient << "\"\n";
 
-    QCString subject = args->getOption("subject");
+    TQCString subject = args->getOption("subject");
     if (subject.isEmpty())
         subject = "(no subject)";
     else {
         if (subject.at(0) == '\'')
             subject = subject.mid(1).left(subject.length() - 2);
     }
-    QTextIStream input(stdin);
-    QString text, line;
+    TQTextIStream input(stdin);
+    TQString text, line;
     while (!input.eof()) {
         line = input.readLine();
         text += line + "\r\n";
@@ -97,15 +97,15 @@ int main(int argc, char **argv) {
 
     KEMailSettings emailConfig;
     emailConfig.setProfile(emailConfig.defaultProfileName());
-    QString fromaddr = emailConfig.getSetting(KEMailSettings::EmailAddress);
+    TQString fromaddr = emailConfig.getSetting(KEMailSettings::EmailAddress);
     if (!fromaddr.isEmpty()) {
-        QString name = emailConfig.getSetting(KEMailSettings::RealName);
+        TQString name = emailConfig.getSetting(KEMailSettings::RealName);
         if (!name.isEmpty())
-            fromaddr = name + QString::fromLatin1(" <") + fromaddr + QString::fromLatin1(">");
+            fromaddr = name + TQString::fromLatin1(" <") + fromaddr + TQString::fromLatin1(">");
     } else {
         struct passwd *p;
         p = getpwuid(getuid());
-        fromaddr = QString::fromLatin1(p->pw_name);
+        fromaddr = TQString::fromLatin1(p->pw_name);
         fromaddr += "@";
         char buffer[256];
 	buffer[0] = '\0';
@@ -115,21 +115,21 @@ int main(int argc, char **argv) {
     }
     kdDebug() << "fromaddr \"" << fromaddr << "\"" << endl;
 
-    QString  server = emailConfig.getSetting(KEMailSettings::OutServer);
+    TQString  server = emailConfig.getSetting(KEMailSettings::OutServer);
     if (server.isEmpty())
-        server=QString::fromLatin1("bugs.kde.org");
+        server=TQString::fromLatin1("bugs.kde.org");
 
     SMTP *sm = new SMTP;
     BugMailer bm(sm);
 
-    QObject::connect(sm, SIGNAL(messageSent()), &bm, SLOT(slotSend()));
-    QObject::connect(sm, SIGNAL(error(int)), &bm, SLOT(slotError(int)));
+    TQObject::connect(sm, TQT_SIGNAL(messageSent()), &bm, TQT_SLOT(slotSend()));
+    TQObject::connect(sm, TQT_SIGNAL(error(int)), &bm, TQT_SLOT(slotError(int)));
     sm->setServerHost(server);
     sm->setPort(25);
     sm->setSenderAddress(fromaddr);
     sm->setRecipientAddress(recipient);
     sm->setMessageSubject(subject);
-    sm->setMessageHeader(QString::fromLatin1("From: %1\r\nTo: %2\r\n").arg(fromaddr).arg(recipient));
+    sm->setMessageHeader(TQString::fromLatin1("From: %1\r\nTo: %2\r\n").arg(fromaddr).arg(recipient));
     sm->setMessageBody(text);
     sm->sendMessage();
 

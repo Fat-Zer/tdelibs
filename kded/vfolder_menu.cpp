@@ -28,18 +28,18 @@
 #include <kservice.h>
 #include <kde_file.h>
 
-#include <qmap.h>
-#include <qfile.h>
-#include <qdir.h>
-#include <qregexp.h>
+#include <tqmap.h>
+#include <tqfile.h>
+#include <tqdir.h>
+#include <tqregexp.h>
 
 #include "vfolder_menu.h"
 
-static void foldNode(QDomElement &docElem, QDomElement &e, QMap<QString,QDomElement> &dupeList, QString s=QString::null)
+static void foldNode(TQDomElement &docElem, TQDomElement &e, TQMap<TQString,TQDomElement> &dupeList, TQString s=TQString::null)
 {
    if (s.isEmpty())
       s = e.text();
-   QMap<QString,QDomElement>::iterator it = dupeList.find(s);
+   TQMap<TQString,TQDomElement>::iterator it = dupeList.find(s);
    if (it != dupeList.end())
    {
       kdDebug(7021) << e.tagName() << " and " << s << " requires combining!" << endl;
@@ -50,46 +50,46 @@ static void foldNode(QDomElement &docElem, QDomElement &e, QMap<QString,QDomElem
    dupeList.insert(s, e);
 }
 
-static void replaceNode(QDomElement &docElem, QDomNode &n, const QStringList &list, const QString &tag)
+static void replaceNode(TQDomElement &docElem, TQDomNode &n, const TQStringList &list, const TQString &tag)
 {
-   for(QStringList::ConstIterator it = list.begin();
+   for(TQStringList::ConstIterator it = list.begin();
        it != list.end(); ++it)
    {
-      QDomElement e = docElem.ownerDocument().createElement(tag);
-      QDomText txt = docElem.ownerDocument().createTextNode(*it);
+      TQDomElement e = docElem.ownerDocument().createElement(tag);
+      TQDomText txt = docElem.ownerDocument().createTextNode(*it);
       e.appendChild(txt);
       docElem.insertAfter(e, n);
    }
 
-   QDomNode next = n.nextSibling();
+   TQDomNode next = n.nextSibling();
    docElem.removeChild(n);
    n = next;
 //   kdDebug(7021) << "Next tag = " << n.toElement().tagName() << endl;
 }
 
-void VFolderMenu::registerFile(const QString &file)
+void VFolderMenu::registerFile(const TQString &file)
 {
    int i = file.findRev('/');
    if (i < 0)
       return;
 
-   QString dir = file.left(i+1); // Include trailing '/'
+   TQString dir = file.left(i+1); // Include trailing '/'
    registerDirectory(dir);
 }
 
-void VFolderMenu::registerDirectory(const QString &directory)
+void VFolderMenu::registerDirectory(const TQString &directory)
 {
    m_allDirectories.append(directory);
 }
 
-QStringList VFolderMenu::allDirectories()
+TQStringList VFolderMenu::allDirectories()
 {
    if (m_allDirectories.isEmpty())
      return m_allDirectories;
    m_allDirectories.sort();
 
-   QStringList::Iterator it = m_allDirectories.begin();
-   QString previous = *it++;
+   TQStringList::Iterator it = m_allDirectories.begin();
+   TQString previous = *it++;
    for(;it != m_allDirectories.end();)
    {
      if ((*it).startsWith(previous))
@@ -106,27 +106,27 @@ QStringList VFolderMenu::allDirectories()
 }
 
 static void
-track(const QString &menuId, const QString &menuName, QDict<KService> *includeList, QDict<KService> *excludeList, QDict<KService> *itemList, const QString &comment)
+track(const TQString &menuId, const TQString &menuName, TQDict<KService> *includeList, TQDict<KService> *excludeList, TQDict<KService> *itemList, const TQString &comment)
 {
    if (itemList->find(menuId))
       printf("%s: %s INCL %d EXCL %d\n", menuName.latin1(), comment.latin1(), includeList->find(menuId) ? 1 : 0, excludeList->find(menuId) ? 1 : 0);
 }
 
 void
-VFolderMenu::includeItems(QDict<KService> *items1, QDict<KService> *items2)
+VFolderMenu::includeItems(TQDict<KService> *items1, TQDict<KService> *items2)
 {
-   for(QDictIterator<KService> it(*items2); it.current(); ++it)
+   for(TQDictIterator<KService> it(*items2); it.current(); ++it)
    {
        items1->replace(it.current()->menuId(), it.current());
    }
 }
 
 void
-VFolderMenu::matchItems(QDict<KService> *items1, QDict<KService> *items2)
+VFolderMenu::matchItems(TQDict<KService> *items1, TQDict<KService> *items2)
 {
-   for(QDictIterator<KService> it(*items1); it.current(); )
+   for(TQDictIterator<KService> it(*items1); it.current(); )
    {
-       QString id = it.current()->menuId();
+       TQString id = it.current()->menuId();
        ++it;
        if (!items2->find(id))
           items1->remove(id);
@@ -134,20 +134,20 @@ VFolderMenu::matchItems(QDict<KService> *items1, QDict<KService> *items2)
 }
 
 void
-VFolderMenu::excludeItems(QDict<KService> *items1, QDict<KService> *items2)
+VFolderMenu::excludeItems(TQDict<KService> *items1, TQDict<KService> *items2)
 {
-   for(QDictIterator<KService> it(*items2); it.current(); ++it)
+   for(TQDictIterator<KService> it(*items2); it.current(); ++it)
    {
        items1->remove(it.current()->menuId());
    }
 }
 
 VFolderMenu::SubMenu*
-VFolderMenu::takeSubMenu(SubMenu *parentMenu, const QString &menuName)
+VFolderMenu::takeSubMenu(SubMenu *parentMenu, const TQString &menuName)
 {
    int i = menuName.find('/');
-   QString s1 = i > 0 ? menuName.left(i) : menuName;
-   QString s2 = menuName.mid(i+1);
+   TQString s1 = i > 0 ? menuName.left(i) : menuName;
+   TQString s2 = menuName.mid(i+1);
 
    // Look up menu
    for(SubMenu *menu = parentMenu->subMenus.first(); menu; menu = parentMenu->subMenus.next())
@@ -173,8 +173,8 @@ VFolderMenu::mergeMenu(SubMenu *menu1, SubMenu *menu2, bool reversePriority)
 {
    if (m_track)
    {
-      track(m_trackId, menu1->name, &(menu1->items), &(menu1->excludeItems), &(menu2->items), QString("Before MenuMerge w. %1 (incl)").arg(menu2->name));
-      track(m_trackId, menu1->name, &(menu1->items), &(menu1->excludeItems), &(menu2->excludeItems), QString("Before MenuMerge w. %1 (excl)").arg(menu2->name));
+      track(m_trackId, menu1->name, &(menu1->items), &(menu1->excludeItems), &(menu2->items), TQString("Before MenuMerge w. %1 (incl)").arg(menu2->name));
+      track(m_trackId, menu1->name, &(menu1->items), &(menu1->excludeItems), &(menu2->excludeItems), TQString("Before MenuMerge w. %1 (excl)").arg(menu2->name));
    }
    if (reversePriority)
    {
@@ -221,20 +221,20 @@ VFolderMenu::mergeMenu(SubMenu *menu1, SubMenu *menu2, bool reversePriority)
 
    if (m_track)
    {
-      track(m_trackId, menu1->name, &(menu1->items), &(menu1->excludeItems), &(menu2->items), QString("After MenuMerge w. %1 (incl)").arg(menu2->name));
-      track(m_trackId, menu1->name, &(menu1->items), &(menu1->excludeItems), &(menu2->excludeItems), QString("After MenuMerge w. %1 (excl)").arg(menu2->name));
+      track(m_trackId, menu1->name, &(menu1->items), &(menu1->excludeItems), &(menu2->items), TQString("After MenuMerge w. %1 (incl)").arg(menu2->name));
+      track(m_trackId, menu1->name, &(menu1->items), &(menu1->excludeItems), &(menu2->excludeItems), TQString("After MenuMerge w. %1 (excl)").arg(menu2->name));
    }
 
    delete menu2;
 }
 
 void
-VFolderMenu::insertSubMenu(SubMenu *parentMenu, const QString &menuName, SubMenu *newMenu, bool reversePriority)
+VFolderMenu::insertSubMenu(SubMenu *parentMenu, const TQString &menuName, SubMenu *newMenu, bool reversePriority)
 {
    int i = menuName.find('/');
 
-   QString s1 = menuName.left(i);
-   QString s2 = menuName.mid(i+1);
+   TQString s1 = menuName.left(i);
+   TQString s2 = menuName.mid(i+1);
 
    // Look up menu
    for(SubMenu *menu = parentMenu->subMenus.first(); menu; menu = parentMenu->subMenus.next())
@@ -269,7 +269,7 @@ VFolderMenu::insertSubMenu(SubMenu *parentMenu, const QString &menuName, SubMenu
 }
 
 void
-VFolderMenu::insertService(SubMenu *parentMenu, const QString &name, KService *newService)
+VFolderMenu::insertService(SubMenu *parentMenu, const TQString &name, KService *newService)
 {
    int i = name.find('/');
 
@@ -280,8 +280,8 @@ VFolderMenu::insertService(SubMenu *parentMenu, const QString &name, KService *n
      return;
    }
 
-   QString s1 = name.left(i);
-   QString s2 = name.mid(i+1);
+   TQString s1 = name.left(i);
+   TQString s2 = name.mid(i+1);
 
    // Look up menu
    for(SubMenu *menu = parentMenu->subMenus.first(); menu; menu = parentMenu->subMenus.next())
@@ -315,7 +315,7 @@ VFolderMenu::~VFolderMenu()
    for(appsInfo *info = m_appsInfoStack.first(); \
        info; info = m_appsInfoStack.next()) \
    { \
-      for(QDictIterator<KService> it( info->applications ); \
+      for(TQDictIterator<KService> it( info->applications ); \
           it.current(); ++it ) \
       {
 #define FOR_ALL_APPLICATIONS_END } }
@@ -331,7 +331,7 @@ VFolderMenu::~VFolderMenu()
 #define FOR_CATEGORY_END } }
 
 KService *
-VFolderMenu::findApplication(const QString &relPath)
+VFolderMenu::findApplication(const TQString &relPath)
 {
    for(appsInfo *info = m_appsInfoStack.first();
        info; info = m_appsInfoStack.next())
@@ -344,7 +344,7 @@ VFolderMenu::findApplication(const QString &relPath)
 }
 
 void
-VFolderMenu::addApplication(const QString &id, KService *service)
+VFolderMenu::addApplication(const TQString &id, KService *service)
 {
    service->setMenuId(id);
    m_appsInfo->applications.replace(id, service);
@@ -353,16 +353,16 @@ VFolderMenu::addApplication(const QString &id, KService *service)
 void
 VFolderMenu::buildApplicationIndex(bool unusedOnly)
 {
-   QPtrList<appsInfo>::ConstIterator appsInfo_it =  m_appsInfoList.begin();
+   TQPtrList<appsInfo>::ConstIterator appsInfo_it =  m_appsInfoList.begin();
    for( ; appsInfo_it != m_appsInfoList.end(); ++appsInfo_it )
    {
       appsInfo *info = *appsInfo_it;
       info->dictCategories.clear();
-      for(QDictIterator<KService> it( info->applications );
+      for(TQDictIterator<KService> it( info->applications );
           it.current(); )
       {
          KService *s = it.current();
-         QDictIterator<KService> tmpIt = it;
+         TQDictIterator<KService> tmpIt = it;
          ++it;
          if (unusedOnly && m_usedAppsDict.find(s->menuId()))
          {
@@ -371,11 +371,11 @@ VFolderMenu::buildApplicationIndex(bool unusedOnly)
             continue;
          }
 
-         QStringList cats = s->categories();
-         for(QStringList::ConstIterator it2 = cats.begin();
+         TQStringList cats = s->categories();
+         for(TQStringList::ConstIterator it2 = cats.begin();
              it2 != cats.end(); ++it2)
          {
-            const QString &cat = *it2;
+            const TQString &cat = *it2;
             KService::List *list = info->dictCategories.find(cat);
             if (!list)
             {
@@ -429,17 +429,17 @@ VFolderMenu::unloadAppsInfo()
 }
 
 QString
-VFolderMenu::absoluteDir(const QString &_dir, const QString &baseDir, bool keepRelativeToCfg)
+VFolderMenu::absoluteDir(const TQString &_dir, const TQString &baseDir, bool keepRelativeToCfg)
 {
-   QString dir = _dir;
-   if (QDir::isRelativePath(dir))
+   TQString dir = _dir;
+   if (TQDir::isRelativePath(dir))
    {
       dir = baseDir + dir;
    }
    if (!dir.endsWith("/"))
       dir += '/';
 
-   if (QDir::isRelativePath(dir) && !keepRelativeToCfg)
+   if (TQDir::isRelativePath(dir) && !keepRelativeToCfg)
    {
       dir = KGlobal::dirs()->findResource("xdgconf-menu", dir);
    }
@@ -449,23 +449,23 @@ VFolderMenu::absoluteDir(const QString &_dir, const QString &baseDir, bool keepR
    return dir;
 }
 
-static void tagBaseDir(QDomDocument &doc, const QString &tag, const QString &dir)
+static void tagBaseDir(TQDomDocument &doc, const TQString &tag, const TQString &dir)
 {
-   QDomNodeList mergeFileList = doc.elementsByTagName(tag);
+   TQDomNodeList mergeFileList = doc.elementsByTagName(tag);
    for(int i = 0; i < (int)mergeFileList.count(); i++)
    {
-      QDomAttr attr = doc.createAttribute("__BaseDir");
+      TQDomAttr attr = doc.createAttribute("__BaseDir");
       attr.setValue(dir);
       mergeFileList.item(i).toElement().setAttributeNode(attr);
    }
 }
 
-static void tagBasePath(QDomDocument &doc, const QString &tag, const QString &path)
+static void tagBasePath(TQDomDocument &doc, const TQString &tag, const TQString &path)
 {
-   QDomNodeList mergeFileList = doc.elementsByTagName(tag);
+   TQDomNodeList mergeFileList = doc.elementsByTagName(tag);
    for(int i = 0; i < (int)mergeFileList.count(); i++)
    {
-      QDomAttr attr = doc.createAttribute("__BasePath");
+      TQDomAttr attr = doc.createAttribute("__BasePath");
       attr.setValue(path);
       mergeFileList.item(i).toElement().setAttributeNode(attr);
    }
@@ -474,18 +474,18 @@ static void tagBasePath(QDomDocument &doc, const QString &tag, const QString &pa
 QDomDocument
 VFolderMenu::loadDoc()
 {
-   QDomDocument doc;
+   TQDomDocument doc;
    if ( m_docInfo.path.isEmpty() )
    {
       return doc;
    }
-   QFile file( m_docInfo.path );
+   TQFile file( m_docInfo.path );
    if ( !file.open( IO_ReadOnly ) )
    {
       kdWarning(7021) << "Could not open " << m_docInfo.path << endl;
       return doc;
    }
-   QString errorMsg;
+   TQString errorMsg;
    int errorRow;
    int errorCol;
    if ( !doc.setContent( &file, &errorMsg, &errorRow, &errorCol ) ) {
@@ -507,18 +507,18 @@ VFolderMenu::loadDoc()
 
 
 void
-VFolderMenu::mergeFile(QDomElement &parent, const QDomNode &mergeHere)
+VFolderMenu::mergeFile(TQDomElement &parent, const TQDomNode &mergeHere)
 {
 kdDebug(7021) << "VFolderMenu::mergeFile: " << m_docInfo.path << endl;
-   QDomDocument doc = loadDoc();
+   TQDomDocument doc = loadDoc();
 
-   QDomElement docElem = doc.documentElement();
-   QDomNode n = docElem.firstChild();
-   QDomNode last = mergeHere;
+   TQDomElement docElem = doc.documentElement();
+   TQDomNode n = docElem.firstChild();
+   TQDomNode last = mergeHere;
    while( !n.isNull() )
    {
-      QDomElement e = n.toElement(); // try to convert the node to an element.
-      QDomNode next = n.nextSibling();
+      TQDomElement e = n.toElement(); // try to convert the node to an element.
+      TQDomNode next = n.nextSibling();
 
       if (e.isNull())
       {
@@ -538,19 +538,19 @@ kdDebug(7021) << "VFolderMenu::mergeFile: " << m_docInfo.path << endl;
 
 
 void
-VFolderMenu::mergeMenus(QDomElement &docElem, QString &name)
+VFolderMenu::mergeMenus(TQDomElement &docElem, TQString &name)
 {
-   QMap<QString,QDomElement> menuNodes;
-   QMap<QString,QDomElement> directoryNodes;
-   QMap<QString,QDomElement> appDirNodes;
-   QMap<QString,QDomElement> directoryDirNodes;
-   QMap<QString,QDomElement> legacyDirNodes;
-   QDomElement defaultLayoutNode;
-   QDomElement layoutNode;
+   TQMap<TQString,TQDomElement> menuNodes;
+   TQMap<TQString,TQDomElement> directoryNodes;
+   TQMap<TQString,TQDomElement> appDirNodes;
+   TQMap<TQString,TQDomElement> directoryDirNodes;
+   TQMap<TQString,TQDomElement> legacyDirNodes;
+   TQDomElement defaultLayoutNode;
+   TQDomElement layoutNode;
 
-   QDomNode n = docElem.firstChild();
+   TQDomNode n = docElem.firstChild();
    while( !n.isNull() ) {
-      QDomElement e = n.toElement(); // try to convert the node to an element.
+      TQDomElement e = n.toElement(); // try to convert the node to an element.
       if( e.isNull() ) {
 // kdDebug(7021) << "Empty node" << endl;
       }
@@ -587,10 +587,10 @@ VFolderMenu::mergeMenus(QDomElement &docElem, QString &name)
       }
       else if( e.tagName() == "Move") {
          // Filter out dupes
-         QString orig;
-         QDomNode n2 = e.firstChild();
+         TQString orig;
+         TQDomNode n2 = e.firstChild();
          while( !n2.isNull() ) {
-            QDomElement e2 = n2.toElement(); // try to convert the node to an element.
+            TQDomElement e2 = n2.toElement(); // try to convert the node to an element.
             if( e2.tagName() == "Old")
             {
                orig = e2.text();
@@ -601,17 +601,17 @@ VFolderMenu::mergeMenus(QDomElement &docElem, QString &name)
          foldNode(docElem, e, appDirNodes, orig);
       }
       else if( e.tagName() == "Menu") {
-         QString name;
+         TQString name;
          mergeMenus(e, name);
-         QMap<QString,QDomElement>::iterator it = menuNodes.find(name);
+         TQMap<TQString,TQDomElement>::iterator it = menuNodes.find(name);
          if (it != menuNodes.end())
          {
-           QDomElement docElem2 = *it;
-           QDomNode n2 = docElem2.firstChild();
-           QDomNode first = e.firstChild();
+           TQDomElement docElem2 = *it;
+           TQDomNode n2 = docElem2.firstChild();
+           TQDomNode first = e.firstChild();
            while( !n2.isNull() ) {
-             QDomElement e2 = n2.toElement(); // try to convert the node to an element.
-             QDomNode n3 = n2.nextSibling();
+             TQDomElement e2 = n2.toElement(); // try to convert the node to an element.
+             TQDomNode n3 = n2.nextSibling();
              e.insertBefore(n2, first);
              docElem2.removeChild(n2);
              n2 = n3;
@@ -634,23 +634,23 @@ VFolderMenu::mergeMenus(QDomElement &docElem, QString &name)
             mergeFile(docElem, n);
          popDocInfo();
 
-         QDomNode last = n;
+         TQDomNode last = n;
          n = n.nextSibling();
          docElem.removeChild(last); // Remove the MergeFile node
          continue;
       }
       else if( e.tagName() == "MergeDir") {
-         QString dir = absoluteDir(e.text(), e.attribute("__BaseDir"), true);
+         TQString dir = absoluteDir(e.text(), e.attribute("__BaseDir"), true);
 
-         QStringList dirs = KGlobal::dirs()->findDirs("xdgconf-menu", dir);
-         for(QStringList::ConstIterator it=dirs.begin();
+         TQStringList dirs = KGlobal::dirs()->findDirs("xdgconf-menu", dir);
+         for(TQStringList::ConstIterator it=dirs.begin();
              it != dirs.end(); ++it)
          {
             registerDirectory(*it);
          }
 
-         QStringList fileList;
-         if (!QDir::isRelativePath(dir))
+         TQStringList fileList;
+         if (!TQDir::isRelativePath(dir))
          {
             // Absolute
             fileList = KGlobal::dirs()->findAllResources("xdgconf-menu", dir+"*.menu", false, false);
@@ -661,7 +661,7 @@ VFolderMenu::mergeMenus(QDomElement &docElem, QString &name)
             (void) KGlobal::dirs()->findAllResources("xdgconf-menu", dir+"*.menu", false, true, fileList);
          }
 
-         for(QStringList::ConstIterator it=fileList.begin();
+         for(TQStringList::ConstIterator it=fileList.begin();
              it != fileList.end(); ++it)
          {
             pushDocInfo(*it);
@@ -669,7 +669,7 @@ VFolderMenu::mergeMenus(QDomElement &docElem, QString &name)
             popDocInfo();
          }
 
-         QDomNode last = n;
+         TQDomNode last = n;
          n = n.nextSibling();
          docElem.removeChild(last); // Remove the MergeDir node
 
@@ -693,19 +693,19 @@ VFolderMenu::mergeMenus(QDomElement &docElem, QString &name)
 }
 
 void
-VFolderMenu::pushDocInfo(const QString &fileName, const QString &baseDir)
+VFolderMenu::pushDocInfo(const TQString &fileName, const TQString &baseDir)
 {
    m_docInfoStack.push(m_docInfo);
    if (!baseDir.isEmpty())
    {
-      if (!QDir::isRelativePath(baseDir))
+      if (!TQDir::isRelativePath(baseDir))
          m_docInfo.baseDir = KGlobal::dirs()->relativeLocation("xdgconf-menu", baseDir);
       else
          m_docInfo.baseDir = baseDir;
    }
 
-   QString baseName = fileName;
-   if (!QDir::isRelativePath(baseName))
+   TQString baseName = fileName;
+   if (!TQDir::isRelativePath(baseName))
       registerFile(baseName);
    else
       baseName = m_docInfo.baseDir + baseName;
@@ -713,8 +713,8 @@ VFolderMenu::pushDocInfo(const QString &fileName, const QString &baseDir)
    m_docInfo.path = locateMenuFile(fileName);
    if (m_docInfo.path.isEmpty())
    {
-      m_docInfo.baseDir = QString::null;
-      m_docInfo.baseName = QString::null;
+      m_docInfo.baseDir = TQString::null;
+      m_docInfo.baseName = TQString::null;
       kdDebug(7021) << "Menu " << fileName << " not found." << endl;
       return;
    }
@@ -727,30 +727,30 @@ VFolderMenu::pushDocInfo(const QString &fileName, const QString &baseDir)
    }
    else
    {
-      m_docInfo.baseDir = QString::null;
+      m_docInfo.baseDir = TQString::null;
       m_docInfo.baseName = baseName.left( baseName.length() - 5 );
    }
 }
 
 void
-VFolderMenu::pushDocInfoParent(const QString &basePath, const QString &baseDir)
+VFolderMenu::pushDocInfoParent(const TQString &basePath, const TQString &baseDir)
 {
     m_docInfoStack.push(m_docInfo);
 
    m_docInfo.baseDir = baseDir;
 
-   QString fileName = basePath.mid(basePath.findRev('/')+1);
+   TQString fileName = basePath.mid(basePath.findRev('/')+1);
    m_docInfo.baseName = fileName.left( fileName.length() - 5 );
-   QString baseName = QDir::cleanDirPath(m_docInfo.baseDir + fileName);
+   TQString baseName = TQDir::cleanDirPath(m_docInfo.baseDir + fileName);
 
-   QStringList result = KGlobal::dirs()->findAllResources("xdgconf-menu", baseName);
+   TQStringList result = KGlobal::dirs()->findAllResources("xdgconf-menu", baseName);
 
    while( !result.isEmpty() && (result[0] != basePath))
       result.remove(result.begin());
 
    if (result.count() <= 1)
    {
-      m_docInfo.path = QString::null; // No parent found
+      m_docInfo.path = TQString::null; // No parent found
       return;
    }
    m_docInfo.path = result[1];
@@ -763,29 +763,29 @@ VFolderMenu::popDocInfo()
 }
 
 QString
-VFolderMenu::locateMenuFile(const QString &fileName)
+VFolderMenu::locateMenuFile(const TQString &fileName)
 {
-   if (!QDir::isRelativePath(fileName))
+   if (!TQDir::isRelativePath(fileName))
    {
       if (KStandardDirs::exists(fileName))
          return fileName;
-      return QString::null;
+      return TQString::null;
    }
 
-   QString result;
+   TQString result;
 
-   //QString xdgMenuPrefix = QString::fromLocal8Bit(getenv("XDG_MENU_PREFIX"));
+   //TQString xdgMenuPrefix = TQString::fromLocal8Bit(getenv("XDG_MENU_PREFIX"));
    // hardcode xdgMenuPrefix to "kde-" string until proper upstream fix
-   QString xdgMenuPrefix = "kde-";
+   TQString xdgMenuPrefix = "kde-";
    if (!xdgMenuPrefix.isEmpty())
    {
-      QFileInfo fileInfo(fileName);
+      TQFileInfo fileInfo(fileName);
 
-      QString fileNameOnly = fileInfo.fileName();
+      TQString fileNameOnly = fileInfo.fileName();
       if (!fileNameOnly.startsWith(xdgMenuPrefix))
          fileNameOnly = xdgMenuPrefix + fileNameOnly;
 
-      QString baseName = QDir::cleanDirPath(m_docInfo.baseDir +
+      TQString baseName = TQDir::cleanDirPath(m_docInfo.baseDir +
                                             fileInfo.dirPath() + "/" +
                                             fileNameOnly);
       result = locate("xdgconf-menu", baseName);
@@ -793,7 +793,7 @@ VFolderMenu::locateMenuFile(const QString &fileName)
 
    if (result.isEmpty())
    {
-       QString baseName = QDir::cleanDirPath(m_docInfo.baseDir + fileName);
+       TQString baseName = TQDir::cleanDirPath(m_docInfo.baseDir + fileName);
        result = locate("xdgconf-menu", baseName);
    }
 
@@ -801,21 +801,21 @@ VFolderMenu::locateMenuFile(const QString &fileName)
 }
 
 QString
-VFolderMenu::locateDirectoryFile(const QString &fileName)
+VFolderMenu::locateDirectoryFile(const TQString &fileName)
 {
    if (fileName.isEmpty())
-      return QString::null;
+      return TQString::null;
 
-   if (!QDir::isRelativePath(fileName))
+   if (!TQDir::isRelativePath(fileName))
    {
       if (KStandardDirs::exists(fileName))
          return fileName;
-      return QString::null;
+      return TQString::null;
    }
 
    // First location in the list wins
-   QString tmp;
-   for(QStringList::ConstIterator it = m_directoryDirs.begin();
+   TQString tmp;
+   for(TQStringList::ConstIterator it = m_directoryDirs.begin();
        it != m_directoryDirs.end();
        ++it)
    {
@@ -824,23 +824,23 @@ VFolderMenu::locateDirectoryFile(const QString &fileName)
          return tmp;
    }
 
-   return QString::null;
+   return TQString::null;
 }
 
 void
 VFolderMenu::initDirs()
 {
-   m_defaultDataDirs = QStringList::split(':', KGlobal::dirs()->kfsstnd_prefixes());
-   QString localDir = m_defaultDataDirs.first();
+   m_defaultDataDirs = TQStringList::split(':', KGlobal::dirs()->kfsstnd_prefixes());
+   TQString localDir = m_defaultDataDirs.first();
    m_defaultDataDirs.remove(localDir); // Remove local dir
 
-   m_defaultAppDirs = KGlobal::dirs()->findDirs("xdgdata-apps", QString::null);
-   m_defaultDirectoryDirs = KGlobal::dirs()->findDirs("xdgdata-dirs", QString::null);
+   m_defaultAppDirs = KGlobal::dirs()->findDirs("xdgdata-apps", TQString::null);
+   m_defaultDirectoryDirs = KGlobal::dirs()->findDirs("xdgdata-dirs", TQString::null);
    m_defaultLegacyDirs = KGlobal::dirs()->resourceDirs("apps");
 }
 
 void
-VFolderMenu::loadMenu(const QString &fileName)
+VFolderMenu::loadMenu(const TQString &fileName)
 {
    m_defaultMergeDirs.clear();
 
@@ -861,21 +861,21 @@ VFolderMenu::loadMenu(const QString &fileName)
       return;
    }
 
-   QDomElement e = m_doc.documentElement();
-   QString name;
+   TQDomElement e = m_doc.documentElement();
+   TQString name;
    mergeMenus(e, name);
 }
 
 void
-VFolderMenu::processCondition(QDomElement &domElem, QDict<KService> *items)
+VFolderMenu::processCondition(TQDomElement &domElem, TQDict<KService> *items)
 {
    if (domElem.tagName() == "And")
    {
-      QDomNode n = domElem.firstChild();
+      TQDomNode n = domElem.firstChild();
       // Look for the first child element
       while (!n.isNull()) // loop in case of comments
       {
-         QDomElement e = n.toElement();
+         TQDomElement e = n.toElement();
          n = n.nextSibling();
          if ( !e.isNull() ) {
              processCondition(e, items);
@@ -883,15 +883,15 @@ VFolderMenu::processCondition(QDomElement &domElem, QDict<KService> *items)
          }
       }
 
-      QDict<KService> andItems;
+      TQDict<KService> andItems;
       while( !n.isNull() ) {
-         QDomElement e = n.toElement();
+         TQDomElement e = n.toElement();
          if (e.tagName() == "Not")
          {
             // Special handling for "and not"
-            QDomNode n2 = e.firstChild();
+            TQDomNode n2 = e.firstChild();
             while( !n2.isNull() ) {
-               QDomElement e2 = n2.toElement();
+               TQDomElement e2 = n2.toElement();
                andItems.clear();
                processCondition(e2, &andItems);
                excludeItems(items, &andItems);
@@ -909,11 +909,11 @@ VFolderMenu::processCondition(QDomElement &domElem, QDict<KService> *items)
    }
    else if (domElem.tagName() == "Or")
    {
-      QDomNode n = domElem.firstChild();
+      TQDomNode n = domElem.firstChild();
       // Look for the first child element
       while (!n.isNull()) // loop in case of comments
       {
-         QDomElement e = n.toElement();
+         TQDomElement e = n.toElement();
          n = n.nextSibling();
          if ( !e.isNull() ) {
              processCondition(e, items);
@@ -921,9 +921,9 @@ VFolderMenu::processCondition(QDomElement &domElem, QDict<KService> *items)
          }
       }
 
-      QDict<KService> orItems;
+      TQDict<KService> orItems;
       while( !n.isNull() ) {
-         QDomElement e = n.toElement();
+         TQDomElement e = n.toElement();
          if ( !e.isNull() ) {
              orItems.clear();
              processCondition(e, &orItems);
@@ -941,10 +941,10 @@ VFolderMenu::processCondition(QDomElement &domElem, QDict<KService> *items)
       }
       FOR_ALL_APPLICATIONS_END
 
-      QDict<KService> notItems;
-      QDomNode n = domElem.firstChild();
+      TQDict<KService> notItems;
+      TQDomNode n = domElem.firstChild();
       while( !n.isNull() ) {
-         QDomElement e = n.toElement();
+         TQDomElement e = n.toElement();
          if ( !e.isNull() ) {
              notItems.clear();
              processCondition(e, &notItems);
@@ -973,7 +973,7 @@ VFolderMenu::processCondition(QDomElement &domElem, QDict<KService> *items)
    }
    else if (domElem.tagName() == "Filename")
    {
-      QString filename = domElem.text();
+      TQString filename = domElem.text();
 kdDebug(7021) << "Adding file " << filename << endl;
       KService *s = findApplication(filename);
       if (s)
@@ -982,29 +982,29 @@ kdDebug(7021) << "Adding file " << filename << endl;
 }
 
 void
-VFolderMenu::loadApplications(const QString &dir, const QString &prefix)
+VFolderMenu::loadApplications(const TQString &dir, const TQString &prefix)
 {
    kdDebug(7021) << "Looking up applications under " << dir << endl;
 
    // We look for a set of files.
-   DIR *dp = opendir( QFile::encodeName(dir));
+   DIR *dp = opendir( TQFile::encodeName(dir));
    if (!dp)
       return;
 
    struct dirent *ep;
    KDE_struct_stat buff;
 
-   QString _dot(".");
-   QString _dotdot("..");
+   TQString _dot(".");
+   TQString _dotdot("..");
 
    while( ( ep = readdir( dp ) ) != 0L )
    {
-      QString fn( QFile::decodeName(ep->d_name));
+      TQString fn( TQFile::decodeName(ep->d_name));
       if (fn == _dot || fn == _dotdot || fn.at(fn.length() - 1).latin1() == '~')
          continue;
 
-      QString pathfn = dir + fn;
-      if ( KDE_stat( QFile::encodeName(pathfn), &buff ) != 0 ) {
+      TQString pathfn = dir + fn;
+      if ( KDE_stat( TQFile::encodeName(pathfn), &buff ) != 0 ) {
          continue; // Couldn't stat (e.g. no read permissions)
       }
       if ( S_ISDIR( buff.st_mode )) {
@@ -1031,24 +1031,24 @@ VFolderMenu::processKDELegacyDirs()
 {
 kdDebug(7021) << "processKDELegacyDirs()" << endl;
 
-   QDict<KService> items;
-   QString prefix = "kde-";
+   TQDict<KService> items;
+   TQString prefix = "kde-";
 
-   QStringList relFiles;
-   QRegExp files("\\.(desktop|kdelnk)$");
-   QRegExp dirs("\\.directory$");
+   TQStringList relFiles;
+   TQRegExp files("\\.(desktop|kdelnk)$");
+   TQRegExp dirs("\\.directory$");
 
    (void) KGlobal::dirs()->findAllResources( "apps",
-                                             QString::null,
+                                             TQString::null,
                                              true, // Recursive!
                                              true, // uniq
                                              relFiles);
-   for(QStringList::ConstIterator it = relFiles.begin();
+   for(TQStringList::ConstIterator it = relFiles.begin();
        it != relFiles.end(); ++it)
    {
       if (!m_forcedLegacyLoad && (dirs.search(*it) != -1))
       {
-         QString name = *it;
+         TQString name = *it;
          if (!name.endsWith("/.directory"))
             continue; // Probably ".directory", skip it.
 
@@ -1063,13 +1063,13 @@ kdDebug(7021) << "processKDELegacyDirs()" << endl;
 
       if (files.search(*it) != -1)
       {
-         QString name = *it;
+         TQString name = *it;
          KService *service = 0;
          emit newService(name, &service);
 
          if (service && !m_forcedLegacyLoad)
          {
-            QString id = name;
+            TQString id = name;
             // Strip path from id
             int i = id.findRev('/');
             if (i >= 0)
@@ -1091,30 +1091,30 @@ kdDebug(7021) << "processKDELegacyDirs()" << endl;
 }
 
 void
-VFolderMenu::processLegacyDir(const QString &dir, const QString &relDir, const QString &prefix)
+VFolderMenu::processLegacyDir(const TQString &dir, const TQString &relDir, const TQString &prefix)
 {
 kdDebug(7021) << "processLegacyDir(" << dir << ", " << relDir << ", " << prefix << ")" << endl;
 
-   QDict<KService> items;
+   TQDict<KService> items;
    // We look for a set of files.
-   DIR *dp = opendir( QFile::encodeName(dir));
+   DIR *dp = opendir( TQFile::encodeName(dir));
    if (!dp)
       return;
 
    struct dirent *ep;
    KDE_struct_stat buff;
 
-   QString _dot(".");
-   QString _dotdot("..");
+   TQString _dot(".");
+   TQString _dotdot("..");
 
    while( ( ep = readdir( dp ) ) != 0L )
    {
-      QString fn( QFile::decodeName(ep->d_name));
+      TQString fn( TQFile::decodeName(ep->d_name));
       if (fn == _dot || fn == _dotdot || fn.at(fn.length() - 1).latin1() == '~')
          continue;
 
-      QString pathfn = dir + fn;
-      if ( KDE_stat( QFile::encodeName(pathfn), &buff ) != 0 ) {
+      TQString pathfn = dir + fn;
+      if ( KDE_stat( TQFile::encodeName(pathfn), &buff ) != 0 ) {
          continue; // Couldn't stat (e.g. no read permissions)
       }
       if ( S_ISDIR( buff.st_mode )) {
@@ -1140,7 +1140,7 @@ kdDebug(7021) << "processLegacyDir(" << dir << ", " << relDir << ", " << prefix 
          emit newService(pathfn, &service);
          if (service)
          {
-            QString id = prefix+fn;
+            TQString id = prefix+fn;
 
             // TODO: Add legacy category
             addApplication(id, service);
@@ -1158,23 +1158,23 @@ kdDebug(7021) << "processLegacyDir(" << dir << ", " << relDir << ", " << prefix 
 
 
 void
-VFolderMenu::processMenu(QDomElement &docElem, int pass)
+VFolderMenu::processMenu(TQDomElement &docElem, int pass)
 {
    SubMenu *parentMenu = m_currentMenu;
    unsigned int oldDirectoryDirsCount = m_directoryDirs.count();
 
-   QString name;
-   QString directoryFile;
+   TQString name;
+   TQString directoryFile;
    bool onlyUnallocated = false;
    bool isDeleted = false;
    bool kdeLegacyDirsDone = false;
-   QDomElement defaultLayoutNode;
-   QDomElement layoutNode;
+   TQDomElement defaultLayoutNode;
+   TQDomElement layoutNode;
 
-   QDomElement query;
-   QDomNode n = docElem.firstChild();
+   TQDomElement query;
+   TQDomNode n = docElem.firstChild();
    while( !n.isNull() ) {
-      QDomElement e = n.toElement(); // try to convert the node to an element.
+      TQDomElement e = n.toElement(); // try to convert the node to an element.
       if (e.tagName() == "Name")
       {
          name = e.text();
@@ -1185,7 +1185,7 @@ VFolderMenu::processMenu(QDomElement &docElem, int pass)
       }
       else if (e.tagName() == "DirectoryDir")
       {
-         QString dir = absoluteDir(e.text(), e.attribute("__BaseDir"));
+         TQString dir = absoluteDir(e.text(), e.attribute("__BaseDir"));
 
          m_directoryDirs.prepend(dir);
       }
@@ -1250,7 +1250,7 @@ VFolderMenu::processMenu(QDomElement &docElem, int pass)
       }
 
       // Override previous directoryFile iff available
-      QString tmp = locateDirectoryFile(directoryFile);
+      TQString tmp = locateDirectoryFile(directoryFile);
       if (! tmp.isEmpty())
          m_currentMenu->directoryFile = tmp;
       m_currentMenu->isDeleted = isDeleted;
@@ -1281,18 +1281,18 @@ VFolderMenu::processMenu(QDomElement &docElem, int pass)
    // Process AppDir and LegacyDir
    if (pass == 0)
    {
-      QDomElement query;
-      QDomNode n = docElem.firstChild();
+      TQDomElement query;
+      TQDomNode n = docElem.firstChild();
       while( !n.isNull() ) {
-         QDomElement e = n.toElement(); // try to convert the node to an element.
+         TQDomElement e = n.toElement(); // try to convert the node to an element.
          if (e.tagName() == "AppDir")
          {
             createAppsInfo();
-            QString dir = absoluteDir(e.text(), e.attribute("__BaseDir"));
+            TQString dir = absoluteDir(e.text(), e.attribute("__BaseDir"));
 
             registerDirectory(dir);
 
-            loadApplications(dir, QString::null);
+            loadApplications(dir, TQString::null);
          }
          else if (e.tagName() == "KDELegacyDirs")
          {
@@ -1314,9 +1314,9 @@ kdDebug(7021) << "Processing KDE Legacy dirs for <KDE>" << endl;
          else if (e.tagName() == "LegacyDir")
          {
             createAppsInfo();
-            QString dir = absoluteDir(e.text(), e.attribute("__BaseDir"));
+            TQString dir = absoluteDir(e.text(), e.attribute("__BaseDir"));
 
-            QString prefix = e.attributes().namedItem("prefix").toAttr().value();
+            TQString prefix = e.attributes().namedItem("prefix").toAttr().value();
 
             if (m_defaultLegacyDirs.contains(dir))
             {
@@ -1341,7 +1341,7 @@ kdDebug(7021) << "Processing KDE Legacy dirs for " << dir << endl;
 
                registerDirectory(dir);
 
-               processLegacyDir(dir, QString::null, prefix);
+               processLegacyDir(dir, TQString::null, prefix);
 
                m_legacyNodes.replace(dir, m_currentMenu);
                m_currentMenu = oldMenu;
@@ -1358,14 +1358,14 @@ kdDebug(7021) << "Processing KDE Legacy dirs for " << dir << endl;
       n = docElem.firstChild();
 
       while( !n.isNull() ) {
-         QDomElement e = n.toElement(); // try to convert the node to an element.
+         TQDomElement e = n.toElement(); // try to convert the node to an element.
          if (e.tagName() == "Include")
          {
-            QDict<KService> items;
+            TQDict<KService> items;
 
-            QDomNode n2 = e.firstChild();
+            TQDomNode n2 = e.firstChild();
             while( !n2.isNull() ) {
-               QDomElement e2 = n2.toElement();
+               TQDomElement e2 = n2.toElement();
                items.clear();
                processCondition(e2, &items);
                if (m_track)
@@ -1383,11 +1383,11 @@ kdDebug(7021) << "Processing KDE Legacy dirs for " << dir << endl;
 
          else if (e.tagName() == "Exclude")
          {
-            QDict<KService> items;
+            TQDict<KService> items;
 
-            QDomNode n2 = e.firstChild();
+            TQDomNode n2 = e.firstChild();
             while( !n2.isNull() ) {
-               QDomElement e2 = n2.toElement();
+               TQDomElement e2 = n2.toElement();
                items.clear();
                processCondition(e2, &items);
                if (m_track)
@@ -1406,7 +1406,7 @@ kdDebug(7021) << "Processing KDE Legacy dirs for " << dir << endl;
 
    n = docElem.firstChild();
    while( !n.isNull() ) {
-      QDomElement e = n.toElement(); // try to convert the node to an element.
+      TQDomElement e = n.toElement(); // try to convert the node to an element.
       if (e.tagName() == "Menu")
       {
          processMenu(e, pass);
@@ -1420,7 +1420,7 @@ kdDebug(7021) << "Processing KDE Legacy dirs for " << dir << endl;
          if (e.tagName() == "LegacyDir")
          {
             // Add legacy nodes to Menu structure
-            QString dir = absoluteDir(e.text(), e.attribute("__BaseDir"));
+            TQString dir = absoluteDir(e.text(), e.attribute("__BaseDir"));
             SubMenu *legacyMenu = m_legacyNodes.find(dir);
             if (legacyMenu)
             {
@@ -1431,7 +1431,7 @@ kdDebug(7021) << "Processing KDE Legacy dirs for " << dir << endl;
          else if (e.tagName() == "KDELegacyDirs")
          {
             // Add legacy nodes to Menu structure
-            QString dir = "<KDE>";
+            TQString dir = "<KDE>";
             SubMenu *legacyMenu = m_legacyNodes.find(dir);
             if (legacyMenu)
             {
@@ -1446,14 +1446,14 @@ kdDebug(7021) << "Processing KDE Legacy dirs for " << dir << endl;
    {
       n = docElem.firstChild();
       while( !n.isNull() ) {
-         QDomElement e = n.toElement(); // try to convert the node to an element.
+         TQDomElement e = n.toElement(); // try to convert the node to an element.
          if (e.tagName() == "Move")
          {
-            QString orig;
-            QString dest;
-            QDomNode n2 = e.firstChild();
+            TQString orig;
+            TQString dest;
+            TQDomNode n2 = e.firstChild();
             while( !n2.isNull() ) {
-               QDomElement e2 = n2.toElement(); // try to convert the node to an element.
+               TQDomElement e2 = n2.toElement(); // try to convert the node to an element.
                if( e2.tagName() == "Old")
                   orig = e2.text();
                if( e2.tagName() == "New")
@@ -1485,12 +1485,12 @@ kdDebug(7021) << "Processing KDE Legacy dirs for " << dir << endl;
 
 
 
-static QString parseAttribute( const QDomElement &e)
+static TQString parseAttribute( const TQDomElement &e)
 {
-    QString option;
+    TQString option;
     if ( e.hasAttribute( "show_empty" ) )
     {
-        QString str = e.attribute( "show_empty" );
+        TQString str = e.attribute( "show_empty" );
         if ( str=="true" )
             option= "ME ";
         else if ( str=="false" )
@@ -1500,7 +1500,7 @@ static QString parseAttribute( const QDomElement &e)
     }
     if ( e.hasAttribute( "inline" ) )
     {
-        QString str = e.attribute( "inline" );
+        TQString str = e.attribute( "inline" );
         if (  str=="true" )
             option+="I ";
         else if ( str=="false" )
@@ -1513,11 +1513,11 @@ static QString parseAttribute( const QDomElement &e)
         bool ok;
         int value = e.attribute( "inline_limit" ).toInt(&ok);
         if ( ok )
-            option+=QString( "IL[%1] " ).arg( value );
+            option+=TQString( "IL[%1] " ).arg( value );
     }
     if ( e.hasAttribute( "inline_header" ) )
     {
-        QString str = e.attribute( "inline_header" );
+        TQString str = e.attribute( "inline_header" );
         if ( str=="true")
             option+="IH ";
         else if ( str == "false" )
@@ -1528,7 +1528,7 @@ static QString parseAttribute( const QDomElement &e)
     }
     if ( e.hasAttribute( "inline_alias" ) && e.attribute( "inline_alias" )=="true")
     {
-        QString str = e.attribute( "inline_alias" );
+        TQString str = e.attribute( "inline_alias" );
         if ( str=="true" )
             option+="IA";
         else if ( str=="false" )
@@ -1544,19 +1544,19 @@ static QString parseAttribute( const QDomElement &e)
 
 }
 
-static QStringList parseLayoutNode(const QDomElement &docElem)
+static TQStringList parseLayoutNode(const TQDomElement &docElem)
 {
-   QStringList layout;
+   TQStringList layout;
 
-   QString optionDefaultLayout;
+   TQString optionDefaultLayout;
    if( docElem.tagName()=="DefaultLayout")
        optionDefaultLayout =  parseAttribute( docElem);
    if ( !optionDefaultLayout.isEmpty() )
        layout.append( optionDefaultLayout );
 
-   QDomNode n = docElem.firstChild();
+   TQDomNode n = docElem.firstChild();
    while( !n.isNull() ) {
-      QDomElement e = n.toElement(); // try to convert the node to an element.
+      TQDomElement e = n.toElement(); // try to convert the node to an element.
       if (e.tagName() == "Separator")
       {
          layout.append(":S");
@@ -1568,13 +1568,13 @@ static QStringList parseLayoutNode(const QDomElement &docElem)
       else if (e.tagName() == "Menuname")
       {
          layout.append("/"+e.text());
-         QString option = parseAttribute( e );
+         TQString option = parseAttribute( e );
          if( !option.isEmpty())
              layout.append( option );
       }
       else if (e.tagName() == "Merge")
       {
-         QString type = e.attributeNode("type").value();
+         TQString type = e.attributeNode("type").value();
          if (type == "files")
             layout.append(":F");
          else if (type == "menus")
@@ -1589,7 +1589,7 @@ static QStringList parseLayoutNode(const QDomElement &docElem)
 }
 
 void
-VFolderMenu::layoutMenu(VFolderMenu::SubMenu *menu, QStringList defaultLayout)
+VFolderMenu::layoutMenu(VFolderMenu::SubMenu *menu, TQStringList defaultLayout)
 {
    if (!menu->defaultLayoutNode.isNull())
    {
@@ -1614,23 +1614,23 @@ VFolderMenu::layoutMenu(VFolderMenu::SubMenu *menu, QStringList defaultLayout)
 }
 
 void
-VFolderMenu::markUsedApplications(QDict<KService> *items)
+VFolderMenu::markUsedApplications(TQDict<KService> *items)
 {
-   for(QDictIterator<KService> it(*items); it.current(); ++it)
+   for(TQDictIterator<KService> it(*items); it.current(); ++it)
    {
       m_usedAppsDict.replace(it.current()->menuId(), it.current());
    }
 }
 
 VFolderMenu::SubMenu *
-VFolderMenu::parseMenu(const QString &file, bool forceLegacyLoad)
+VFolderMenu::parseMenu(const TQString &file, bool forceLegacyLoad)
 {
    m_forcedLegacyLoad = false;
    m_legacyLoaded = false;
    m_appsInfo = 0;
 
-   QStringList dirs = KGlobal::dirs()->resourceDirs("xdgconf-menu");
-   for(QStringList::ConstIterator it=dirs.begin();
+   TQStringList dirs = KGlobal::dirs()->resourceDirs("xdgconf-menu");
+   for(TQStringList::ConstIterator it=dirs.begin();
        it != dirs.end(); ++it)
    {
       registerDirectory(*it);
@@ -1641,7 +1641,7 @@ VFolderMenu::parseMenu(const QString &file, bool forceLegacyLoad)
    delete m_rootMenu;
    m_rootMenu = m_currentMenu = 0;
 
-   QDomElement docElem = m_doc.documentElement();
+   TQDomElement docElem = m_doc.documentElement();
 
    for (int pass = 0; pass <= 2; pass++)
    {
@@ -1657,7 +1657,7 @@ VFolderMenu::parseMenu(const QString &file, bool forceLegacyLoad)
       }
       if (pass == 2)
       {
-         QStringList defaultLayout;
+         TQStringList defaultLayout;
          defaultLayout << ":M"; // Sub-Menus
          defaultLayout << ":F"; // Individual entries
          layoutMenu(m_rootMenu, defaultLayout);
@@ -1674,7 +1674,7 @@ VFolderMenu::parseMenu(const QString &file, bool forceLegacyLoad)
 }
 
 void
-VFolderMenu::setTrackId(const QString &id)
+VFolderMenu::setTrackId(const TQString &id)
 {
    m_track = !id.isEmpty();
    m_trackId = id;

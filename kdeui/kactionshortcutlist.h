@@ -16,9 +16,9 @@ class KDEUI_EXPORT KActionShortcutList : public KShortcutList
 	virtual ~KActionShortcutList();
 
 	virtual uint count() const;
-	virtual QString name( uint index ) const;
-	virtual QString label( uint index ) const;
-	virtual QString whatsThis( uint index ) const;
+	virtual TQString name( uint index ) const;
+	virtual TQString label( uint index ) const;
+	virtual TQString whatsThis( uint index ) const;
 	virtual const KShortcut& shortcut( uint index ) const;
 	virtual const KShortcut& shortcutDefault( uint index ) const;
 	virtual bool isConfigurable( uint index ) const;
@@ -26,8 +26,8 @@ class KDEUI_EXPORT KActionShortcutList : public KShortcutList
 
 	virtual const KInstance* instance() const;
 
-	virtual QVariant getOther( Other, uint index ) const;
-	virtual bool setOther( Other, uint index, QVariant );
+	virtual TQVariant getOther( Other, uint index ) const;
+	virtual bool setOther( Other, uint index, TQVariant );
 
 	virtual bool save() const;
 
@@ -54,16 +54,16 @@ class KDEUI_EXPORT KActionPtrShortcutList : public KShortcutList
 	virtual ~KActionPtrShortcutList();
 
 	virtual uint count() const;
-	virtual QString name( uint index ) const;
-	virtual QString label( uint index ) const;
-	virtual QString whatsThis( uint index ) const;
+	virtual TQString name( uint index ) const;
+	virtual TQString label( uint index ) const;
+	virtual TQString whatsThis( uint index ) const;
 	virtual const KShortcut& shortcut( uint index ) const;
 	virtual const KShortcut& shortcutDefault( uint index ) const;
 	virtual bool isConfigurable( uint index ) const;
 	virtual bool setShortcut( uint index, const KShortcut& shortcut);
 
-	virtual QVariant getOther( Other, uint index ) const;
-	virtual bool setOther( Other, uint index, QVariant );
+	virtual TQVariant getOther( Other, uint index ) const;
+	virtual bool setOther( Other, uint index, TQVariant );
 
 	virtual bool save() const;
 

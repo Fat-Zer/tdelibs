@@ -3,7 +3,7 @@
 #include <iostream>
 
 static QCString
-ps(const QString &s)
+ps(const TQString &s)
 {
   if (s.isNull())
     return "(null)";
@@ -34,7 +34,7 @@ int main()
     tx("~sulli");
 #endif
 #if 1
-    QStringList lst;
+    TQStringList lst;
     lst << "this" << "is" << "text";
     std::cout << KShell::joinArgs(lst).latin1() << std::endl;
 #endif

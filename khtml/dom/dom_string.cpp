@@ -26,13 +26,13 @@
 using namespace DOM;
 
 
-DOMString::DOMString(const QChar *str, uint len)
+DOMString::DOMString(const TQChar *str, uint len)
 {
     impl = new DOMStringImpl( str, len );
     impl->ref();
 }
 
-DOMString::DOMString(const QString &str)
+DOMString::DOMString(const TQString &str)
 {
     if (str.isNull()) {
 	impl = 0;
@@ -127,16 +127,16 @@ void DOMString::insert(DOMString str, uint pos)
 }
 
 
-const QChar &DOMString::operator [](unsigned int i) const
+const TQChar &DOMString::operator [](unsigned int i) const
 {
-    static const QChar nullChar = 0;
+    static const TQChar nullChar = 0;
 
     if(!impl || i >= impl->l ) return nullChar;
 
     return *(impl->s+i);
 }
 
-int DOMString::find(const QChar c, int start) const
+int DOMString::find(const TQChar c, int start) const
 {
     unsigned int l = start;
     if(!impl || l >= impl->l ) return -1;
@@ -186,22 +186,22 @@ bool DOMString::percentage(int &_percentage) const
 {
     if(!impl || !impl->l) return false;
 
-    if ( *(impl->s+impl->l-1) != QChar('%'))
+    if ( *(impl->s+impl->l-1) != TQChar('%'))
        return false;
 
-    _percentage = QConstString(impl->s, impl->l-1).string().toInt();
+    _percentage = TQConstString(impl->s, impl->l-1).string().toInt();
     return true;
 }
 
-QChar *DOMString::unicode() const
+TQChar *DOMString::unicode() const
 {
     if(!impl) return 0;
     return impl->unicode();
 }
 
-QString DOMString::string() const
+TQString DOMString::string() const
 {
-    if(!impl) return QString::null;
+    if(!impl) return TQString::null;
 
     return impl->string();
 }
@@ -225,8 +225,8 @@ bool DOM::strcasecmp( const DOMString &as, const DOMString &bs )
 {
     if ( as.length() != bs.length() ) return true;
 
-    const QChar *a = as.unicode();
-    const QChar *b = bs.unicode();
+    const TQChar *a = as.unicode();
+    const TQChar *b = bs.unicode();
     if ( a == b )  return false;
     if ( !( a && b ) )  return true;
     int l = as.length();
@@ -239,7 +239,7 @@ bool DOM::strcasecmp( const DOMString &as, const DOMString &bs )
 
 bool DOM::strcasecmp( const DOMString &as, const char* bs )
 {
-    const QChar *a = as.unicode();
+    const TQChar *a = as.unicode();
     int l = as.length();
     if ( !bs ) return ( l != 0 );
     while ( l-- ) {
@@ -265,18 +265,18 @@ bool DOM::operator==( const DOMString &a, const DOMString &b )
 
     if( l != b.length() ) return false;
 
-    if(!memcmp(a.unicode(), b.unicode(), l*sizeof(QChar)))
+    if(!memcmp(a.unicode(), b.unicode(), l*sizeof(TQChar)))
 	return true;
     return false;
 }
 
-bool DOM::operator==( const DOMString &a, const QString &b )
+bool DOM::operator==( const DOMString &a, const TQString &b )
 {
     unsigned int l = a.length();
 
     if( l != b.length() ) return false;
 
-    if(!memcmp(a.unicode(), b.unicode(), l*sizeof(QChar)))
+    if(!memcmp(a.unicode(), b.unicode(), l*sizeof(TQChar)))
 	return true;
     return false;
 }
@@ -288,7 +288,7 @@ bool DOM::operator==( const DOMString &a, const char *b )
 
     if ( aimpl ) {
         int alen = aimpl->l;
-        const QChar *aptr = aimpl->s;
+        const TQChar *aptr = aimpl->s;
         while ( alen-- ) {
             unsigned char c = *b++;
             if ( !c || ( *aptr++ ).unicode() != c )

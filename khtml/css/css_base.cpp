@@ -76,9 +76,9 @@ KURL StyleBaseImpl::baseURL()
 }
 
 void StyleBaseImpl::setParsedValue(int propId, const CSSValueImpl *parsedValue,
-				   bool important, bool nonCSSHint, QPtrList<CSSProperty> *propList)
+				   bool important, bool nonCSSHint, TQPtrList<CSSProperty> *propList)
 {
-    QPtrListIterator<CSSProperty> propIt(*propList);
+    TQPtrListIterator<CSSProperty> propIt(*propList);
     propIt.toLast(); // just remove the top one - not sure what should happen if we have multiple instances of the property
     while (propIt.current() &&
            ( propIt.current()->m_id != propId || propIt.current()->nonCSSHint != nonCSSHint ||
@@ -122,7 +122,7 @@ StyleListImpl::~StyleListImpl()
 
 void CSSSelector::print(void)
 {
-    kdDebug( 6080 ) << "[Selector: tag = " <<       QString::number(tag,16) << ", attr = \"" << attr << "\", match = \"" << match
+    kdDebug( 6080 ) << "[Selector: tag = " <<       TQString::number(tag,16) << ", attr = \"" << attr << "\", match = \"" << match
 		    << "\" value = \"" << value.string().latin1() << "\" relation = " << (int)relation
 		    << "]" << endl;
     if ( tagHistory )

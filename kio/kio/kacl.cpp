@@ -33,7 +33,7 @@
 #include <posixacladdons.h>
 #endif
 #endif
-#include <qintdict.h>
+#include <tqintdict.h>
 
 #include <kdebug.h>
 
@@ -41,8 +41,8 @@
 
 
 #ifdef USE_POSIX_ACL
-static void printACL( acl_t acl, const QString &comment );
-static QString aclAsString(const acl_t acl);
+static void printACL( acl_t acl, const TQString &comment );
+static TQString aclAsString(const acl_t acl);
 #endif
 
 class KACL::KACLPrivate {
@@ -60,20 +60,20 @@ public:
     // helpers
 #ifdef USE_POSIX_ACL
     bool setMaskPermissions( unsigned short v );
-    QString getUserName( uid_t uid ) const;
-    QString getGroupName( gid_t gid ) const;
-    bool setAllUsersOrGroups( const QValueList< QPair<QString, unsigned short> > &list, acl_tag_t type );
-    bool setNamedUserOrGroupPermissions( const QString& name, unsigned short permissions, acl_tag_t type );
+    TQString getUserName( uid_t uid ) const;
+    TQString getGroupName( gid_t gid ) const;
+    bool setAllUsersOrGroups( const TQValueList< QPair<TQString, unsigned short> > &list, acl_tag_t type );
+    bool setNamedUserOrGroupPermissions( const TQString& name, unsigned short permissions, acl_tag_t type );
 
     acl_t m_acl;
 #else
     int m_acl;
 #endif
-    mutable QIntDict<QString> m_usercache;
-    mutable QIntDict<QString> m_groupcache;
+    mutable TQIntDict<TQString> m_usercache;
+    mutable TQIntDict<TQString> m_groupcache;
 };
 
-KACL::KACL( const QString &aclString )
+KACL::KACL( const TQString &aclString )
     : d( new KACLPrivate )
 {
     setACL( aclString );
@@ -172,12 +172,12 @@ static void permissionsToEntry( acl_entry_t entry, unsigned short v )
     if ( v & 1 ) acl_add_perm( permset, ACL_EXECUTE );
 }
 
-static void printACL( acl_t acl, const QString &comment )
+static void printACL( acl_t acl, const TQString &comment )
 {
     kdDebug() << comment << aclAsString( acl ) << endl;
 }
 
-static int getUidForName( const QString& name )
+static int getUidForName( const TQString& name )
 {
     struct passwd *user = getpwnam( name.latin1() );
     if ( user )
@@ -186,7 +186,7 @@ static int getUidForName( const QString& name )
         return -1;
 }
 
-static int getGidForName( const QString& name )
+static int getGidForName( const TQString& name )
 {
     struct group *group = getgrnam( name.latin1() );
     if ( group )
@@ -312,7 +312,7 @@ bool KACL::setMaskPermissions( unsigned short v )
 /**************************
  * Deal with named users  *
  **************************/
-unsigned short KACL::namedUserPermissions( const QString& name, bool *exists ) const
+unsigned short KACL::namedUserPermissions( const TQString& name, bool *exists ) const
 {
 #ifdef USE_POSIX_ACL
     acl_entry_t entry;
@@ -339,7 +339,7 @@ unsigned short KACL::namedUserPermissions( const QString& name, bool *exists ) c
 }
 
 #ifdef USE_POSIX_ACL
-bool KACL::KACLPrivate::setNamedUserOrGroupPermissions( const QString& name, unsigned short permissions, acl_tag_t type )
+bool KACL::KACLPrivate::setNamedUserOrGroupPermissions( const TQString& name, unsigned short permissions, acl_tag_t type )
 {
     bool allIsWell = true;
     acl_t newACL = acl_dup( m_acl );
@@ -352,7 +352,7 @@ bool KACL::KACLPrivate::setNamedUserOrGroupPermissions( const QString& name, uns
         acl_get_tag_type( entry, &currentTag );
         if ( currentTag == type ) {
             int id = * (int*)acl_get_qualifier( entry );
-            const QString entryName = type == ACL_USER? getUserName( id ): getGroupName( id );
+            const TQString entryName = type == ACL_USER? getUserName( id ): getGroupName( id );
             if ( entryName == name ) {
               // found him, update
               permissionsToEntry( entry, permissions );
@@ -394,7 +394,7 @@ bool KACL::KACLPrivate::setNamedUserOrGroupPermissions( const QString& name, uns
 }
 #endif
 
-bool KACL::setNamedUserPermissions( const QString& name, unsigned short permissions )
+bool KACL::setNamedUserPermissions( const TQString& name, unsigned short permissions )
 {
 #ifdef USE_POSIX_ACL
     return d->setNamedUserOrGroupPermissions( name, permissions, ACL_USER );
@@ -417,7 +417,7 @@ ACLUserPermissionsList KACL::allUserPermissions() const
         acl_get_tag_type( entry, &currentTag );
         if ( currentTag ==  ACL_USER ) {
             id = *( (uid_t*) acl_get_qualifier( entry ) );
-            QString name = d->getUserName( id );
+            TQString name = d->getUserName( id );
             unsigned short permissions = entryToPermissions( entry );
             ACLUserPermissions pair = qMakePair( name, permissions );
             list.append( pair );
@@ -429,7 +429,7 @@ ACLUserPermissionsList KACL::allUserPermissions() const
 }
 
 #ifdef USE_POSIX_ACL
-bool KACL::KACLPrivate::setAllUsersOrGroups( const QValueList< QPair<QString, unsigned short> > &list, acl_tag_t type )
+bool KACL::KACLPrivate::setAllUsersOrGroups( const TQValueList< QPair<TQString, unsigned short> > &list, acl_tag_t type )
 {
     bool allIsWell = true;
     bool atLeastOneUserOrGroup = false;
@@ -456,7 +456,7 @@ bool KACL::KACLPrivate::setAllUsersOrGroups( const QValueList< QPair<QString, un
 //printACL( newACL, "After cleaning out entries: " );
 
     // now add the entries from the list
-    QValueList< QPair<QString, unsigned short> >::const_iterator it = list.constBegin();
+    TQValueList< QPair<TQString, unsigned short> >::const_iterator it = list.constBegin();
     while ( it != list.constEnd() ) {
         acl_create_entry( &newACL, &entry );
         acl_set_tag_type( entry, type );
@@ -506,7 +506,7 @@ bool KACL::setAllUserPermissions( const ACLUserPermissionsList &users )
  * Deal with named groups  *
  **************************/
 
-unsigned short KACL::namedGroupPermissions( const QString& name, bool *exists ) const
+unsigned short KACL::namedGroupPermissions( const TQString& name, bool *exists ) const
 {
     *exists = false;
 #ifdef USE_POSIX_ACL
@@ -531,7 +531,7 @@ unsigned short KACL::namedGroupPermissions( const QString& name, bool *exists ) 
     return 0;
 }
 
-bool KACL::setNamedGroupPermissions( const QString& name, unsigned short permissions )
+bool KACL::setNamedGroupPermissions( const TQString& name, unsigned short permissions )
 {
 #ifdef USE_POSIX_ACL
     return d->setNamedUserOrGroupPermissions( name, permissions, ACL_GROUP );
@@ -555,7 +555,7 @@ ACLGroupPermissionsList KACL::allGroupPermissions() const
         acl_get_tag_type( entry, &currentTag );
         if ( currentTag ==  ACL_GROUP ) {
             id = *( (gid_t*) acl_get_qualifier( entry ) );
-            QString name = d->getGroupName( id );
+            TQString name = d->getGroupName( id );
             unsigned short permissions = entryToPermissions( entry );
             ACLGroupPermissions pair = qMakePair( name, permissions );
             list.append( pair );
@@ -580,7 +580,7 @@ bool KACL::setAllGroupPermissions( const ACLGroupPermissionsList &groups )
  * from and to string     *
  **************************/
 
-bool KACL::setACL( const QString &aclStr )
+bool KACL::setACL( const TQString &aclStr )
 {
     bool ret = false;
 #ifdef USE_POSIX_ACL
@@ -603,12 +603,12 @@ bool KACL::setACL( const QString &aclStr )
     return ret;
 }
 
-QString KACL::asString() const
+TQString KACL::asString() const
 {
 #ifdef USE_POSIX_ACL
     return aclAsString( d->m_acl );
 #else
-    return QString::null;
+    return TQString::null;
 #endif
 }
 
@@ -616,45 +616,45 @@ QString KACL::asString() const
 // helpers
 
 #ifdef USE_POSIX_ACL
-QString KACL::KACLPrivate::getUserName( uid_t uid ) const
+TQString KACL::KACLPrivate::getUserName( uid_t uid ) const
 {
-    QString *temp;
+    TQString *temp;
     temp = m_usercache.find( uid );
     if ( !temp ) {
         struct passwd *user = getpwuid( uid );
         if ( user ) {
-            m_usercache.insert( uid, new QString(QString::fromLatin1(user->pw_name)) );
-            return QString::fromLatin1( user->pw_name );
+            m_usercache.insert( uid, new TQString(TQString::fromLatin1(user->pw_name)) );
+            return TQString::fromLatin1( user->pw_name );
         }
         else
-            return QString::number( uid );
+            return TQString::number( uid );
     }
     else
         return *temp;
 }
 
 
-QString KACL::KACLPrivate::getGroupName( gid_t gid ) const
+TQString KACL::KACLPrivate::getGroupName( gid_t gid ) const
 {
-    QString *temp;
+    TQString *temp;
     temp = m_groupcache.find( gid );
     if ( !temp ) {
         struct group *grp = getgrgid( gid );
         if ( grp ) {
-            m_groupcache.insert( gid, new QString(QString::fromLatin1(grp->gr_name)) );
-            return QString::fromLatin1( grp->gr_name );
+            m_groupcache.insert( gid, new TQString(TQString::fromLatin1(grp->gr_name)) );
+            return TQString::fromLatin1( grp->gr_name );
         }
         else
-            return QString::number( gid );
+            return TQString::number( gid );
     }
     else
         return *temp;
 }
 
-static QString aclAsString(const acl_t acl)
+static TQString aclAsString(const acl_t acl)
 {
     char *aclString = acl_to_text( acl, 0 );
-    QString ret = QString::fromLatin1( aclString );
+    TQString ret = TQString::fromLatin1( aclString );
     acl_free( (void*)aclString );
     return ret;
 }
@@ -665,15 +665,15 @@ static QString aclAsString(const acl_t acl)
 void KACL::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-QDataStream & operator<< ( QDataStream & s, const KACL & a )
+TQDataStream & operator<< ( TQDataStream & s, const KACL & a )
 {
     s << a.asString();
     return s;
 }
 
-QDataStream & operator>> ( QDataStream & s, KACL & a )
+TQDataStream & operator>> ( TQDataStream & s, KACL & a )
 {
-    QString str;
+    TQString str;
     s >> str;
     a.setACL( str );
     return s;

@@ -20,7 +20,7 @@
 #ifndef KABC_FORMAT_H
 #define KABC_FORMAT_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -37,11 +37,11 @@ class KABC_EXPORT_DEPRECATED Format
     /**
       Load addressbook from file.
     */
-    virtual bool load( AddressBook *, const QString &fileName ) = 0;
+    virtual bool load( AddressBook *, const TQString &fileName ) = 0;
     /**
       Save addressbook to file.
     */
-    virtual bool save( AddressBook *, const QString &fileName ) = 0;
+    virtual bool save( AddressBook *, const TQString &fileName ) = 0;
 };
 
 }

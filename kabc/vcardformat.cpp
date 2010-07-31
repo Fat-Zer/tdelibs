@@ -34,9 +34,9 @@ VCardFormat::~VCardFormat()
   delete mImpl;
 }
 
-bool VCardFormat::load( AddressBook *addressBook, const QString &fileName )
+bool VCardFormat::load( AddressBook *addressBook, const TQString &fileName )
 {
-  QFile f( fileName );
+  TQFile f( fileName );
   if ( !f.open( IO_ReadOnly ) ) return false;
   
   bool result = mImpl->loadAll( addressBook, 0, &f );
@@ -46,9 +46,9 @@ bool VCardFormat::load( AddressBook *addressBook, const QString &fileName )
   return result;
 }
 
-bool VCardFormat::save( AddressBook *addressBook, const QString &fileName )
+bool VCardFormat::save( AddressBook *addressBook, const TQString &fileName )
 {
-  QFile f( fileName );
+  TQFile f( fileName );
   if ( !f.open( IO_WriteOnly ) ) return false;
   
   mImpl->saveAll( addressBook, 0, &f );

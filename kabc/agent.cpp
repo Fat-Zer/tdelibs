@@ -29,7 +29,7 @@ Agent::Agent()
 {
 }
 
-Agent::Agent( const QString &url )
+Agent::Agent( const TQString &url )
   : mAddressee( 0 ),mUrl( url ), mIntern( false )
 {
 }
@@ -87,7 +87,7 @@ Agent &Agent::operator=(  const Agent &addr )
   return *this;
 }
 
-void Agent::setUrl( const QString &url )
+void Agent::setUrl( const TQString &url )
 {
   mUrl = url;
   mIntern = false;
@@ -104,7 +104,7 @@ bool Agent::isIntern() const
   return mIntern;
 }
 
-QString Agent::url() const
+TQString Agent::url() const
 {
   return mUrl;
 }
@@ -114,7 +114,7 @@ Addressee *Agent::addressee() const
   return mAddressee;
 }
 
-QString Agent::asString() const
+TQString Agent::asString() const
 {
   if ( mIntern )
     return "intern agent";
@@ -122,7 +122,7 @@ QString Agent::asString() const
     return mUrl;
 }
 
-QDataStream &KABC::operator<<( QDataStream &s, const Agent &agent )
+TQDataStream &KABC::operator<<( TQDataStream &s, const Agent &agent )
 {
   Q_UINT32 hasAddressee = ( agent.mAddressee != 0 );
 
@@ -133,7 +133,7 @@ QDataStream &KABC::operator<<( QDataStream &s, const Agent &agent )
   return s;
 }
 
-QDataStream &KABC::operator>>( QDataStream &s, Agent &agent )
+TQDataStream &KABC::operator>>( TQDataStream &s, Agent &agent )
 {
   Q_UINT32 hasAddressee;
 

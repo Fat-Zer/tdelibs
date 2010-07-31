@@ -22,29 +22,29 @@
 #include "driveritem.h"
 #include "driver.h"
 
-#include <qlistview.h>
-#include <qsplitter.h>
-#include <qheader.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqlistview.h>
+#include <tqsplitter.h>
+#include <tqheader.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 #include <klocale.h>
 
-DrListView::DrListView(QWidget *parent, const char *name)
+DrListView::DrListView(TQWidget *parent, const char *name)
 : KListView(parent,name)
 {
 	addColumn("");
 	header()->hide();
-	setFrameStyle(QFrame::WinPanel|QFrame::Sunken);
+	setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	setSorting(-1);
 }
 
 //****************************************************************************************************
 
-DriverView::DriverView(QWidget *parent, const char *name)
-: QWidget(parent,name)
+DriverView::DriverView(TQWidget *parent, const char *name)
+: TQWidget(parent,name)
 {
 	//WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThisPPDOptionsDriverPage = i18n( " <qt> "
+	TQString whatsThisPPDOptionsDriverPage = i18n( " <qt> "
 			" <b>List of Driver Options (from PPD)</b>. "
 			" <p>The upper pane of this dialog page contains all printjob options as laid "
 			" down in the printer's description file (PostScript Printer Description == 'PPD') </p>"
@@ -68,7 +68,7 @@ DriverView::DriverView(QWidget *parent, const char *name)
 			" in the kprinter dialog.</p> "
 			" </qt>" );
 
-	QString whatsThisOptionSettingsDriverPage = i18n( " <qt> "
+	TQString whatsThisOptionSettingsDriverPage = i18n( " <qt> "
 			" <b>List of Possible Values for given Option (from PPD)</b>. "
 			" <p>The lower pane of this dialog page contains all possible values of the printoption "
 			" highlighted above, as laid "
@@ -94,19 +94,19 @@ DriverView::DriverView(QWidget *parent, const char *name)
 
 	m_driver = 0;
 
-	QSplitter	*splitter = new QSplitter(this);
-	splitter->setOrientation(QSplitter::Vertical);
+	QSplitter	*splitter = new TQSplitter(this);
+	splitter->setOrientation(TQSplitter::Vertical);
 
-	QVBoxLayout     *vbox = new QVBoxLayout(this, 0, 10);
+	TQVBoxLayout     *vbox = new TQVBoxLayout(this, 0, 10);
 	vbox->addWidget(splitter);
 
 	m_view = new DrListView(splitter);
-	  QWhatsThis::add(m_view, whatsThisPPDOptionsDriverPage);
+	  TQWhatsThis::add(m_view, whatsThisPPDOptionsDriverPage);
 	m_optview = new DrOptionView(splitter);
-	  QWhatsThis::add(m_optview, whatsThisOptionSettingsDriverPage);
+	  TQWhatsThis::add(m_optview, whatsThisOptionSettingsDriverPage);
 
-	connect(m_view,SIGNAL(selectionChanged(QListViewItem*)),m_optview,SLOT(slotItemSelected(QListViewItem*)));
-	connect(m_optview,SIGNAL(changed()),SLOT(slotChanged()));
+	connect(m_view,TQT_SIGNAL(selectionChanged(TQListViewItem*)),m_optview,TQT_SLOT(slotItemSelected(TQListViewItem*)));
+	connect(m_optview,TQT_SIGNAL(changed()),TQT_SLOT(slotChanged()));
 }
 
 DriverView::~DriverView()
@@ -133,7 +133,7 @@ void DriverView::slotChanged()
 	}
 }
 
-void DriverView::setOptions(const QMap<QString,QString>& opts)
+void DriverView::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	if (m_driver)
 	{
@@ -144,7 +144,7 @@ void DriverView::setOptions(const QMap<QString,QString>& opts)
 	}
 }
 
-void DriverView::getOptions(QMap<QString,QString>& opts, bool incldef)
+void DriverView::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	if (m_driver)
 		m_driver->getOptions(opts,incldef);

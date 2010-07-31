@@ -20,8 +20,8 @@
 #ifndef __KSHORTCUTLIST_H
 #define __KSHORTCUTLIST_H
 
-#include <qglobal.h>	// For uint
-#include <qstring.h>
+#include <tqglobal.h>	// For uint
+#include <tqstring.h>
 #include "kdelibs_export.h"
 
 class QVariant;
@@ -65,23 +65,23 @@ class KDECORE_EXPORT KShortcutList
 	 * @param index the index of the shortcut (must be < count())
 	 * @return the name of the shortcut
 	 */
-	virtual QString name( uint index ) const = 0;
+	virtual TQString name( uint index ) const = 0;
 
 	/**
 	 * Returns the (i18n'd) label of the shortcut with the given @p index.
 	 * @param index the index of the shortcut (must be < count())
 	 * @return the label (i18n'd) of the shortcut
 	 */
-	virtual QString label( uint index ) const = 0;
+	virtual TQString label( uint index ) const = 0;
 
 	/**
 	 * Returns the (i18n'd) What's This text of the shortcut with the given @p index.
 	 * @param index the index of the shortcut (must be < count())
 	 * @return the What's This text (i18n'd) of the shortcut
 	 */
-	virtual QString whatsThis( uint index ) const = 0;
+	virtual TQString whatsThis( uint index ) const = 0;
 
-	// TODO KDE4: add virtual QString toolTip( uint index ) const = 0
+	// TODO KDE4: add virtual TQString toolTip( uint index ) const = 0
 	// Will then be used by the listview in kkeydialog
 
 	/**
@@ -127,7 +127,7 @@ class KDECORE_EXPORT KShortcutList
 	 * @param sName the name of the shortcut to search
 	 * @return the index of the shortcut, of -1 if not found
 	 */
-	virtual int index( const QString& sName ) const;
+	virtual int index( const TQString& sName ) const;
 
 	/**
 	 * Returns the index of the shortcut with he given key sequence.
@@ -145,9 +145,9 @@ class KDECORE_EXPORT KShortcutList
 	// These are here in order to handle expansion.
 	enum Other { };
 	/** \internal */
-	virtual QVariant getOther( Other, uint index ) const = 0;
+	virtual TQVariant getOther( Other, uint index ) const = 0;
 	/** \internal */
-	virtual bool setOther( Other, uint index, QVariant ) = 0;
+	virtual bool setOther( Other, uint index, TQVariant ) = 0;
 
 	/**
 	 * Save the shortcut list.
@@ -162,7 +162,7 @@ class KDECORE_EXPORT KShortcutList
 	 * @param pConfig the configuration file to load from
 	 * @return true if successful, false otherwise
 	 */
-	virtual bool readSettings( const QString& sConfigGroup = QString::null, KConfigBase* pConfig = 0 );
+	virtual bool readSettings( const TQString& sConfigGroup = TQString::null, KConfigBase* pConfig = 0 );
 
 	/**
 	 * Writes the shortcuts to the given configuration file.
@@ -173,7 +173,7 @@ class KDECORE_EXPORT KShortcutList
 	 * @param bGlobal true to write to the global configuration file
 	 * @return true if successful, false otherwise
 	 */
-	virtual bool writeSettings( const QString& sConfigGroup = QString::null, KConfigBase* pConfig = 0,
+	virtual bool writeSettings( const TQString& sConfigGroup = TQString::null, KConfigBase* pConfig = 0,
 			bool bWriteAll = false, bool bGlobal = false ) const;
 
  protected:
@@ -223,9 +223,9 @@ class KDECORE_EXPORT KAccelShortcutList : public KShortcutList
 	virtual ~KAccelShortcutList();
 
 	virtual uint count() const;
-	virtual QString name( uint index ) const;
-	virtual QString label( uint index ) const;
-	virtual QString whatsThis( uint index ) const;
+	virtual TQString name( uint index ) const;
+	virtual TQString label( uint index ) const;
+	virtual TQString whatsThis( uint index ) const;
 	virtual const KShortcut& shortcut( uint index ) const;
 	virtual const KShortcut& shortcutDefault( uint index ) const;
 	virtual bool isConfigurable( uint index ) const;
@@ -233,9 +233,9 @@ class KDECORE_EXPORT KAccelShortcutList : public KShortcutList
 	virtual bool isGlobal( uint index ) const;
 
 	/** \internal */
-	virtual QVariant getOther( Other, uint index ) const;
+	virtual TQVariant getOther( Other, uint index ) const;
 	/** \internal */
-	virtual bool setOther( Other, uint index, QVariant );
+	virtual bool setOther( Other, uint index, TQVariant );
 
 	virtual bool save() const;
 
@@ -270,18 +270,18 @@ class KDECORE_EXPORT ShortcutList : public KShortcutList
 	virtual ~ShortcutList();
 
 	virtual uint count() const;
-	virtual QString name( uint index ) const;
-	virtual QString label( uint index ) const;
-	virtual QString whatsThis( uint index ) const;
+	virtual TQString name( uint index ) const;
+	virtual TQString label( uint index ) const;
+	virtual TQString whatsThis( uint index ) const;
 	virtual const KShortcut& shortcut( uint index ) const;
 	virtual const KShortcut& shortcutDefault( uint index ) const;
 	virtual bool isConfigurable( uint index ) const;
 	virtual bool setShortcut( uint index , const KShortcut& shortcut );
 
 	/** \internal */
-	virtual QVariant getOther( Other, uint index ) const;
+	virtual TQVariant getOther( Other, uint index ) const;
 	/** \internal */
-	virtual bool setOther( Other, uint index, QVariant );
+	virtual bool setOther( Other, uint index, TQVariant );
 
 	virtual bool save() const;
 

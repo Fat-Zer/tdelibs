@@ -27,7 +27,7 @@
 using namespace KABC;
 
 LockNull::LockNull( bool allowAccess )
-  : Lock( QString::null ), mAllowAccess( allowAccess )
+  : Lock( TQString::null ), mAllowAccess( allowAccess )
 {
 }
 
@@ -54,7 +54,7 @@ bool LockNull::unlock()
   return true;
 }
 
-QString LockNull::error() const
+TQString LockNull::error() const
 {
   if ( mAllowAccess )
     return i18n("LockNull: All locks succeed but no actual locking is done.");

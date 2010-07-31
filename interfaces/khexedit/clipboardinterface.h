@@ -26,7 +26,7 @@ namespace KHE
  *
  * This interface enables the interaction with the clipboard. It relies on the
  * possibilities of signal/slot so a class B that implements this interface
- * should be derived from QObject. When connecting to a signal or a slot
+ * should be derived from TQObject. When connecting to a signal or a slot
  * the class B has to be used, not the interface.
  * <p>
  * Example:
@@ -34,8 +34,8 @@ namespace KHE
  * KHE::ClipboardInterface *Clipboard = KHE::clipboardInterface( BytesEditWidget );
  * if( Clipboard )
  * {
- *   // Yes, use BytesEditWidget, not Clipboard, because that's the QObject, indeed hacky...
- *   connect( BytesEditWidget, SIGNAL(copyAvailable(bool)), this, SLOT(offerCopy(bool)) );
+ *   // Yes, use BytesEditWidget, not Clipboard, because that's the TQObject, indeed hacky...
+ *   connect( BytesEditWidget, TQT_SIGNAL(copyAvailable(bool)), this, TQT_SLOT(offerCopy(bool)) );
  * }
  * \endcode 
  *

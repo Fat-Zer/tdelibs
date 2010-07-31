@@ -19,15 +19,15 @@
 
 #include "treecombobox.h"
 
-#include <qpainter.h>
+#include <tqpainter.h>
 
-TreeListBoxItem::TreeListBoxItem(QListBox *lb, const QPixmap& pix, const QString& txt, bool oneBlock)
-	: QListBoxPixmap(pix, txt)
+TreeListBoxItem::TreeListBoxItem(TQListBox *lb, const TQPixmap& pix, const TQString& txt, bool oneBlock)
+	: TQListBoxPixmap(pix, txt)
 {
 	if (oneBlock)
-		m_path = QStringList(txt);
+		m_path = TQStringList(txt);
 	else
-		m_path = QStringList::split('/', text(), false);
+		m_path = TQStringList::split('/', text(), false);
 	m_depth = m_path.count()-1;
 	m_child = m_next = m_parent = 0;
 
@@ -48,7 +48,7 @@ TreeListBoxItem::TreeListBoxItem(QListBox *lb, const QPixmap& pix, const QString
 		if (!parentItem)
 		{
 			// parent not found, add parent first into QListBox
-			parentItem = new TreeListBoxItem(lb, QPixmap(), parentStr);
+			parentItem = new TreeListBoxItem(lb, TQPixmap(), parentStr);
 		}
 		// search last "child" of the parent item, to put the new one
 		// at the end
@@ -75,21 +75,21 @@ TreeListBoxItem::TreeListBoxItem(QListBox *lb, const QPixmap& pix, const QString
 	}
 }
 
-int TreeListBoxItem::width(const QListBox *lb) const
+int TreeListBoxItem::width(const TQListBox *lb) const
 {
 	int	w = m_depth * stepSize() + 2;
 	if (pixmap())
 		w += (pixmap()->width() + 2);
 	if (!m_path[m_depth].isEmpty())
 		w += (lb->fontMetrics().width(m_path[m_depth]) + 2);
-	return QMAX(w, QListBoxPixmap::width(lb));
+	return QMAX(w, TQListBoxPixmap::width(lb));
 }
 
-void TreeListBoxItem::paint(QPainter *p)
+void TreeListBoxItem::paint(TQPainter *p)
 {
 	if(!static_cast<TreeListBox*>(listBox())->m_painting)
 	{
-		QListBoxPixmap::paint(p);
+		TQListBoxPixmap::paint(p);
 		return;
 	}
 
@@ -128,29 +128,29 @@ void TreeListBoxItem::paint(QPainter *p)
 
 //-----------------------------------------------------------------------------------------
 
-TreeListBox::TreeListBox(QWidget *parent, const char *name)
-	: QListBox(parent, name)
+TreeListBox::TreeListBox(TQWidget *parent, const char *name)
+	: TQListBox(parent, name)
 {
 	m_painting = false;
 }
 
-void TreeListBox::paintCell(QPainter *p, int row, int col)
+void TreeListBox::paintCell(TQPainter *p, int row, int col)
 {
 	m_painting = true;
-	QListBox::paintCell(p, row, col);
+	TQListBox::paintCell(p, row, col);
 	m_painting = false;
 }
 
 //-----------------------------------------------------------------------------------------
 
-TreeComboBox::TreeComboBox(QWidget *parent, const char *name)
-	: QComboBox(parent, name)
+TreeComboBox::TreeComboBox(TQWidget *parent, const char *name)
+	: TQComboBox(parent, name)
 {
 	m_listbox = new TreeListBox(this);
 	setListBox(m_listbox);
 }
 
-void TreeComboBox::insertItem(const QPixmap& pix, const QString& txt, bool oneBlock)
+void TreeComboBox::insertItem(const TQPixmap& pix, const TQString& txt, bool oneBlock)
 {
 	new TreeListBoxItem(m_listbox, pix, txt, oneBlock);
 }

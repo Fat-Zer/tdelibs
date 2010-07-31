@@ -21,36 +21,36 @@
 #ifndef __kebdrag_h
 #define __kebdrag_h
 
-#include <qdragobject.h>
+#include <tqdragobject.h>
 #include <kbookmark.h>
 
 // Clipboard/dnd data : URLs + XML for bookmarks
 class KIO_EXPORT KBookmarkDrag : public QUriDrag
 {
 public:
-    static KBookmarkDrag * newDrag( const QValueList<KBookmark> & bookmarks,
-                                    QWidget * dragSource = 0,
+    static KBookmarkDrag * newDrag( const TQValueList<KBookmark> & bookmarks,
+                                    TQWidget * dragSource = 0,
                                     const char * name = 0 );
     static KBookmarkDrag * newDrag( const KBookmark & bookmark,
-                                    QWidget * dragSource = 0,
+                                    TQWidget * dragSource = 0,
                                     const char * name = 0 );
 protected:
-    KBookmarkDrag( const QValueList<KBookmark> & bookmarks,
-                   const QStrList & urls,
-                   QWidget * dragSource,
+    KBookmarkDrag( const TQValueList<KBookmark> & bookmarks,
+                   const TQStrList & urls,
+                   TQWidget * dragSource,
                    const char * name );
 public:
     virtual ~KBookmarkDrag() {}
 
     virtual const char* format( int i ) const;
-    virtual QByteArray encodedData( const char* mime ) const;
+    virtual TQByteArray encodedData( const char* mime ) const;
 
-    static bool canDecode( const QMimeSource * e );
-    static QValueList<KBookmark> decode( const QMimeSource * e );
+    static bool canDecode( const TQMimeSource * e );
+    static TQValueList<KBookmark> decode( const TQMimeSource * e );
 
 protected:
-    QValueList<KBookmark> m_bookmarks;
-    QDomDocument m_doc;
+    TQValueList<KBookmark> m_bookmarks;
+    TQDomDocument m_doc;
     class KBookmarkDragPrivate;
     KBookmarkDragPrivate * d;
 };

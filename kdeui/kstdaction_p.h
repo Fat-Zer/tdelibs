@@ -124,9 +124,9 @@ inline const KStdActionInfo* infoPtr( StdAction id )
 	return 0;
 }
 
-static inline QStringList internal_stdNames()
+static inline TQStringList internal_stdNames()
 {
-    QStringList result;
+    TQStringList result;
 
     for( uint i = 0; g_rgActionInfo[i].id != ActionNone; i++ )
         if (g_rgActionInfo[i].psLabel)

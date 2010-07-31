@@ -18,7 +18,7 @@
 #ifndef KISOFILE_H
 #define KISOFILE_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <karchive.h>
 
 /**
@@ -27,16 +27,16 @@
 
 class KIsoFile : public KArchiveFile  {
 public: 
-    KIsoFile( KArchive* archive, const QString& name, int access, int date,
-                    int adate,int cdate, const QString& user, const QString& group,
-                   const QString& symlink, int pos, int size);
+    KIsoFile( KArchive* archive, const TQString& name, int access, int date,
+                    int adate,int cdate, const TQString& user, const TQString& group,
+                   const TQString& symlink, int pos, int size);
     ~KIsoFile();
     void setZF(char algo[2],char parms[2],int realsize);
     int adate() const { return m_adate; }
     int cdate() const { return m_cdate; }
     long long realsize() const { return m_realsize; }
 
-    virtual QByteArray data(long long pos, int count) const;
+    virtual TQByteArray data(long long pos, int count) const;
 private:
     /* hide this member function, it's broken by design, because the full
     data often requires too much memory */

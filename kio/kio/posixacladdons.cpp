@@ -24,13 +24,13 @@
 #include <errno.h>
 #include <sys/stat.h>
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
-class SortedEntryList : public QPtrList<acl_entry_t>
+class SortedEntryList : public TQPtrList<acl_entry_t>
 {
 protected:
-    int compareItems( QPtrCollection::Item i1,
-                      QPtrCollection::Item i2 )
+    int compareItems( TQPtrCollection::Item i1,
+                      TQPtrCollection::Item i2 )
     {
         acl_entry_t *e1 = static_cast<acl_entry_t*>( i1 );
         acl_entry_t *e2 = static_cast<acl_entry_t*>( i2 );

@@ -31,14 +31,14 @@ class KRESOURCES_EXPORT ManagerIface : virtual public DCOPObject
   K_DCOP
 
   k_dcop_signals:
-    void signalKResourceAdded( QString managerId, QString resourceId );
-    void signalKResourceModified( QString managerId, QString resourceId );
-    void signalKResourceDeleted( QString managerId, QString resourceId );
+    void signalKResourceAdded( TQString managerId, TQString resourceId );
+    void signalKResourceModified( TQString managerId, TQString resourceId );
+    void signalKResourceDeleted( TQString managerId, TQString resourceId );
 
   k_dcop:
-    virtual ASYNC dcopKResourceAdded( QString managerId, QString resourceId ) = 0;
-    virtual ASYNC dcopKResourceModified( QString managerId, QString resourceId ) = 0;
-    virtual ASYNC dcopKResourceDeleted( QString managerId, QString resourceId ) = 0;
+    virtual ASYNC dcopKResourceAdded( TQString managerId, TQString resourceId ) = 0;
+    virtual ASYNC dcopKResourceModified( TQString managerId, TQString resourceId ) = 0;
+    virtual ASYNC dcopKResourceDeleted( TQString managerId, TQString resourceId ) = 0;
 };
 
 }

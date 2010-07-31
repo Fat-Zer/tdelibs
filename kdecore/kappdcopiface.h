@@ -21,8 +21,8 @@
 #define KAPPDCOP_INTERFACE_H
 
 #include <dcopobject.h>
-#include <qstringlist.h>
-#include <qcstring.h>
+#include <tqstringlist.h>
+#include <tqcstring.h>
 #include <dcopref.h>
 #include "kdelibs_export.h"
 
@@ -56,8 +56,8 @@ k_dcop:
 	**/
 	void disableSessionManagement();
 	
-	QCString startupId();
-	QCString caption();
+	TQCString startupId();
+	TQCString caption();
 	
 	void quit();
 

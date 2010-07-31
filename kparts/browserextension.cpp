@@ -19,14 +19,14 @@
 */
 #include "browserextension.h"
 
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qtimer.h>
-#include <qobjectlist.h>
-#include <qmetaobject.h>
-#include <qregexp.h>
-#include <qstrlist.h>
-#include <qstylesheet.h>
+#include <tqapplication.h>
+#include <tqclipboard.h>
+#include <tqtimer.h>
+#include <tqobjectlist.h>
+#include <tqmetaobject.h>
+#include <tqregexp.h>
+#include <tqstrlist.h>
+#include <tqstylesheet.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -73,8 +73,8 @@ struct URLArgsPrivate
       newTab = false;
       forcesNewWindow = false;
     }
-    QString contentType; // for POST
-    QMap<QString, QString> metaData;
+    TQString contentType; // for POST
+    TQMap<TQString, TQString> metaData;
     bool doPost;
     bool redirectedRequest;
     bool lockHistory;
@@ -94,7 +94,7 @@ URLArgs::URLArgs()
 }
 
 
-URLArgs::URLArgs( bool _reload, int _xOffset, int _yOffset, const QString &_serviceType )
+URLArgs::URLArgs( bool _reload, int _xOffset, int _yOffset, const TQString &_serviceType )
 {
   reload = _reload;
   xOffset = _xOffset;
@@ -136,7 +136,7 @@ URLArgs::~URLArgs()
   d = 0;
 }
 
-void URLArgs::setContentType( const QString & contentType )
+void URLArgs::setContentType( const TQString & contentType )
 {
   if (!d)
     d = new URLArgsPrivate;
@@ -155,12 +155,12 @@ bool URLArgs::redirectedRequest () const
   return d ? d->redirectedRequest : false;
 }
 
-QString URLArgs::contentType() const
+TQString URLArgs::contentType() const
 {
-  return d ? d->contentType : QString::null;
+  return d ? d->contentType : TQString::null;
 }
 
-QMap<QString, QString> &URLArgs::metaData()
+TQMap<TQString, TQString> &URLArgs::metaData()
 {
   if (!d)
      d = new URLArgsPrivate;
@@ -276,7 +276,7 @@ WindowArgs &WindowArgs::operator=( const WindowArgs &args )
     return *this;
 }
 
-WindowArgs::WindowArgs( const QRect &_geometry, bool _fullscreen, bool _menuBarVisible,
+WindowArgs::WindowArgs( const TQRect &_geometry, bool _fullscreen, bool _menuBarVisible,
                         bool _toolBarsVisible, bool _statusBarVisible, bool _resizable )
 {
     d = 0;
@@ -340,10 +340,10 @@ public:
     KURL m_delayedURL;
     KParts::URLArgs m_delayedArgs;
   };
-  QValueList<DelayedRequest> m_requests;
+  TQValueList<DelayedRequest> m_requests;
   bool m_urlDropHandlingEnabled;
   KBitArray m_actionStatus;
-  QMap<int, QString> m_actionText;
+  TQMap<int, TQString> m_actionText;
   BrowserInterface *m_browserInterface;
 };
 
@@ -356,7 +356,7 @@ static KStaticDeleter<BrowserExtension::ActionNumberMap> actionNumberMapsd;
 
 BrowserExtension::BrowserExtension( KParts::ReadOnlyPart *parent,
                                     const char *name )
-: QObject( parent, name), m_part( parent )
+: TQObject( parent, name), m_part( parent )
 {
   //kdDebug() << "BrowserExtension::BrowserExtension() " << this << endl;
   d = new BrowserExtensionPrivate;
@@ -370,21 +370,21 @@ BrowserExtension::BrowserExtension( KParts::ReadOnlyPart *parent,
   // they're supported or not
   ActionSlotMap::ConstIterator it = s_actionSlotMap->begin();
   ActionSlotMap::ConstIterator itEnd = s_actionSlotMap->end();
-  QStrList slotNames = metaObject()->slotNames();
+  TQStrList slotNames = metaObject()->slotNames();
   for ( int i=0 ; it != itEnd ; ++it, ++i )
   {
       // Does the extension have a slot with the name of this action ?
       d->m_actionStatus.setBit( i, slotNames.contains( it.key()+"()" ) );
   }
 
-  connect( m_part, SIGNAL( completed() ),
-           this, SLOT( slotCompleted() ) );
-  connect( this, SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs & ) ),
-           this, SLOT( slotOpenURLRequest( const KURL &, const KParts::URLArgs & ) ) );
-  connect( this, SIGNAL( enableAction( const char *, bool ) ),
-           this, SLOT( slotEnableAction( const char *, bool ) ) );
-  connect( this, SIGNAL( setActionText( const char *, const QString& ) ),
-           this, SLOT( slotSetActionText( const char *, const QString& ) ) );
+  connect( m_part, TQT_SIGNAL( completed() ),
+           this, TQT_SLOT( slotCompleted() ) );
+  connect( this, TQT_SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs & ) ),
+           this, TQT_SLOT( slotOpenURLRequest( const KURL &, const KParts::URLArgs & ) ) );
+  connect( this, TQT_SIGNAL( enableAction( const char *, bool ) ),
+           this, TQT_SLOT( slotEnableAction( const char *, bool ) ) );
+  connect( this, TQT_SIGNAL( setActionText( const char *, const TQString& ) ),
+           this, TQT_SLOT( slotSetActionText( const char *, const TQString& ) ) );
 }
 
 BrowserExtension::~BrowserExtension()
@@ -413,12 +413,12 @@ int BrowserExtension::yOffset()
   return 0;
 }
 
-void BrowserExtension::saveState( QDataStream &stream )
+void BrowserExtension::saveState( TQDataStream &stream )
 {
   stream << m_part->url() << (Q_INT32)xOffset() << (Q_INT32)yOffset();
 }
 
-void BrowserExtension::restoreState( QDataStream &stream )
+void BrowserExtension::restoreState( TQDataStream &stream )
 {
   KURL u;
   Q_INT32 xOfs, yOfs;
@@ -451,13 +451,13 @@ void BrowserExtension::slotCompleted()
 
 void BrowserExtension::pasteRequest()
 {
-    QCString plain( "plain" );
-    QString url = QApplication::clipboard()->text(plain, QClipboard::Selection).stripWhiteSpace();
+    TQCString plain( "plain" );
+    TQString url = TQApplication::clipboard()->text(plain, QClipboard::Selection).stripWhiteSpace();
     // Remove linefeeds and any whitespace surrounding it.
-    url.remove(QRegExp("[\\ ]*\\n+[\\ ]*"));
+    url.remove(TQRegExp("[\\ ]*\\n+[\\ ]*"));
 
     // Check if it's a URL
-    QStringList filters = KURIFilter::self()->pluginNames();
+    TQStringList filters = KURIFilter::self()->pluginNames();
     filters.remove( "kuriikwsfilter" );
     filters.remove( "localdomainurifilter" );
     KURIFilterData filterData;
@@ -482,7 +482,7 @@ void BrowserExtension::pasteRequest()
     else if ( KURIFilter::self()->filterURI( filterData, "kuriikwsfilter" ) && url.length() < 250 )
     {
         if ( KMessageBox::questionYesNo( m_part->widget(),
-		    i18n( "<qt>Do you want to search the Internet for <b>%1</b>?" ).arg( QStyleSheet::escape(url) ),
+		    i18n( "<qt>Do you want to search the Internet for <b>%1</b>?" ).arg( TQStyleSheet::escape(url) ),
 		    i18n( "Internet Search" ), KGuiItem( i18n( "&Search" ), "find"),
 		    KStdGuiItem::cancel(), "MiddleClickSearch" ) == KMessageBox::Yes)
           slotOpenURLRequest( filterData.uri(), KParts::URLArgs() );
@@ -496,7 +496,7 @@ void BrowserExtension::slotOpenURLRequest( const KURL &url, const KParts::URLArg
     req.m_delayedURL = url;
     req.m_delayedArgs = args;
     d->m_requests.append( req );
-    QTimer::singleShot( 0, this, SLOT( slotEmitOpenURLRequestDelayed() ) );
+    TQTimer::singleShot( 0, this, TQT_SLOT( slotEmitOpenURLRequestDelayed() ) );
 }
 
 void BrowserExtension::slotEmitOpenURLRequestDelayed()
@@ -537,7 +537,7 @@ bool BrowserExtension::isActionEnabled( const char * name ) const
     return d->m_actionStatus[ actionNumber ];
 }
 
-void BrowserExtension::slotSetActionText( const char * name, const QString& text )
+void BrowserExtension::slotSetActionText( const char * name, const TQString& text )
 {
     kdDebug() << "BrowserExtension::slotSetActionText " << name << " " << text << endl;
     ActionNumberMap::ConstIterator it = s_actionNumberMap->find( name );
@@ -549,13 +549,13 @@ void BrowserExtension::slotSetActionText( const char * name, const QString& text
         kdWarning() << "BrowserExtension::slotSetActionText unknown action " << name << endl;
 }
 
-QString BrowserExtension::actionText( const char * name ) const
+TQString BrowserExtension::actionText( const char * name ) const
 {
     int actionNumber = (*s_actionNumberMap)[ name ];
-    QMap<int, QString>::ConstIterator it = d->m_actionText.find( actionNumber );
+    TQMap<int, TQString>::ConstIterator it = d->m_actionText.find( actionNumber );
     if ( it != d->m_actionText.end() )
         return *it;
-    return QString::null;
+    return TQString::null;
 }
 
 // for compatibility
@@ -576,19 +576,19 @@ void BrowserExtension::createActionSlotMap()
     assert(!s_actionSlotMap);
     s_actionSlotMap = actionSlotMapsd.setObject( s_actionSlotMap, new ActionSlotMap );
 
-    s_actionSlotMap->insert( "cut", SLOT( cut() ) );
-    s_actionSlotMap->insert( "copy", SLOT( copy() ) );
-    s_actionSlotMap->insert( "paste", SLOT( paste() ) );
-    s_actionSlotMap->insert( "rename", SLOT( rename() ) );
-    s_actionSlotMap->insert( "trash", SLOT( trash() ) );
-    s_actionSlotMap->insert( "del", SLOT( del() ) );
-    s_actionSlotMap->insert( "properties", SLOT( properties() ) );
-    s_actionSlotMap->insert( "editMimeType", SLOT( editMimeType() ) );
-    s_actionSlotMap->insert( "print", SLOT( print() ) );
+    s_actionSlotMap->insert( "cut", TQT_SLOT( cut() ) );
+    s_actionSlotMap->insert( "copy", TQT_SLOT( copy() ) );
+    s_actionSlotMap->insert( "paste", TQT_SLOT( paste() ) );
+    s_actionSlotMap->insert( "rename", TQT_SLOT( rename() ) );
+    s_actionSlotMap->insert( "trash", TQT_SLOT( trash() ) );
+    s_actionSlotMap->insert( "del", TQT_SLOT( del() ) );
+    s_actionSlotMap->insert( "properties", TQT_SLOT( properties() ) );
+    s_actionSlotMap->insert( "editMimeType", TQT_SLOT( editMimeType() ) );
+    s_actionSlotMap->insert( "print", TQT_SLOT( print() ) );
     // Tricky. Those aren't actions in fact, but simply methods that a browserextension
     // can have or not. No need to return them here.
-    //s_actionSlotMap->insert( "reparseConfiguration", SLOT( reparseConfiguration() ) );
-    //s_actionSlotMap->insert( "refreshMimeTypes", SLOT( refreshMimeTypes() ) );
+    //s_actionSlotMap->insert( "reparseConfiguration", TQT_SLOT( reparseConfiguration() ) );
+    //s_actionSlotMap->insert( "refreshMimeTypes", TQT_SLOT( refreshMimeTypes() ) );
     // nothing for setSaveViewPropertiesLocally either
 
     // Create the action-number map
@@ -603,15 +603,15 @@ void BrowserExtension::createActionSlotMap()
     }
 }
 
-BrowserExtension *BrowserExtension::childObject( QObject *obj )
+BrowserExtension *BrowserExtension::childObject( TQObject *obj )
 {
     if ( !obj || !obj->children() )
         return 0L;
 
     // we try to do it on our own, in hope that we are faster than
     // queryList, which looks kind of big :-)
-    const QObjectList *children = obj->children();
-    QObjectListIt it( *children );
+    const TQObjectList *children = obj->children();
+    TQObjectListIt it( *children );
     for (; it.current(); ++it )
         if ( it.current()->inherits( "KParts::BrowserExtension" ) )
             return static_cast<KParts::BrowserExtension *>( it.current() );
@@ -638,7 +638,7 @@ public:
 }
 
 BrowserHostExtension::BrowserHostExtension( KParts::ReadOnlyPart *parent, const char *name )
- : QObject( parent, name )
+ : TQObject( parent, name )
 {
   d = new BrowserHostExtensionPrivate;
   d->m_part = parent;
@@ -649,14 +649,14 @@ BrowserHostExtension::~BrowserHostExtension()
   delete d;
 }
 
-QStringList BrowserHostExtension::frameNames() const
+TQStringList BrowserHostExtension::frameNames() const
 {
-  return QStringList();
+  return TQStringList();
 }
 
-const QPtrList<KParts::ReadOnlyPart> BrowserHostExtension::frames() const
+const TQPtrList<KParts::ReadOnlyPart> BrowserHostExtension::frames() const
 {
-  return QPtrList<KParts::ReadOnlyPart>();
+  return TQPtrList<KParts::ReadOnlyPart>();
 }
 
 bool BrowserHostExtension::openURLInFrame( const KURL &, const KParts::URLArgs & )
@@ -664,15 +664,15 @@ bool BrowserHostExtension::openURLInFrame( const KURL &, const KParts::URLArgs &
   return false;
 }
 
-BrowserHostExtension *BrowserHostExtension::childObject( QObject *obj )
+BrowserHostExtension *BrowserHostExtension::childObject( TQObject *obj )
 {
     if ( !obj || !obj->children() )
         return 0L;
 
     // we try to do it on our own, in hope that we are faster than
     // queryList, which looks kind of big :-)
-    const QObjectList *children = obj->children();
-    QObjectListIt it( *children );
+    const TQObjectList *children = obj->children();
+    TQObjectListIt it( *children );
     for (; it.current(); ++it )
         if ( it.current()->inherits( "KParts::BrowserHostExtension" ) )
             return static_cast<KParts::BrowserHostExtension *>( it.current() );
@@ -684,7 +684,7 @@ void BrowserExtension::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 BrowserHostExtension *
-BrowserHostExtension::findFrameParent(KParts::ReadOnlyPart *callingPart, const QString &frame)
+BrowserHostExtension::findFrameParent(KParts::ReadOnlyPart *callingPart, const TQString &frame)
 {
     FindFrameParentParams param;
     param.parent = 0;
@@ -697,31 +697,31 @@ BrowserHostExtension::findFrameParent(KParts::ReadOnlyPart *callingPart, const Q
 void BrowserHostExtension::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-LiveConnectExtension::LiveConnectExtension( KParts::ReadOnlyPart *parent, const char *name ) : QObject( parent, name) {}
+LiveConnectExtension::LiveConnectExtension( KParts::ReadOnlyPart *parent, const char *name ) : TQObject( parent, name) {}
 
-bool LiveConnectExtension::get( const unsigned long, const QString &, Type &, unsigned long &, QString & ) {
+bool LiveConnectExtension::get( const unsigned long, const TQString &, Type &, unsigned long &, TQString & ) {
     return false;
 }
 
-bool LiveConnectExtension::put( const unsigned long, const QString &, const QString & ) {
+bool LiveConnectExtension::put( const unsigned long, const TQString &, const TQString & ) {
       return false;
 }
 
-bool LiveConnectExtension::call( const unsigned long, const QString &, const QStringList &, Type &, unsigned long &, QString & ) {
+bool LiveConnectExtension::call( const unsigned long, const TQString &, const TQStringList &, Type &, unsigned long &, TQString & ) {
       return false;
 }
 
 void LiveConnectExtension::unregister( const unsigned long ) {}
 
-LiveConnectExtension *LiveConnectExtension::childObject( QObject *obj )
+LiveConnectExtension *LiveConnectExtension::childObject( TQObject *obj )
 {
     if ( !obj || !obj->children() )
         return 0L;
 
     // we try to do it on our own, in hope that we are faster than
     // queryList, which looks kind of big :-)
-    const QObjectList *children = obj->children();
-    QObjectListIt it( *children );
+    const TQObjectList *children = obj->children();
+    TQObjectListIt it( *children );
     for (; it.current(); ++it )
         if ( it.current()->inherits( "KParts::LiveConnectExtension" ) )
             return static_cast<KParts::LiveConnectExtension *>( it.current() );

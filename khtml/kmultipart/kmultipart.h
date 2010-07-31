@@ -26,7 +26,7 @@
 #include <kparts/factory.h>
 #include <kparts/browserextension.h>
 #include <kaboutdata.h>
-#include <qdatetime.h>
+#include <tqdatetime.h>
 
 class KHTMLPart;
 class KInstance;
@@ -40,8 +40,8 @@ class KMultiPart : public KParts::ReadOnlyPart
 {
     Q_OBJECT
 public:
-    KMultiPart( QWidget *parentWidget, const char *widgetName,
-                QObject *parent, const char *name, const QStringList& );
+    KMultiPart( TQWidget *parentWidget, const char *widgetName,
+                TQObject *parent, const char *name, const TQStringList& );
     virtual ~KMultiPart();
 
     virtual bool openFile() { return false; }
@@ -53,17 +53,17 @@ public:
 
 protected:
     virtual void guiActivateEvent( KParts::GUIActivateEvent *e );
-    void setPart( const QString& mimeType );
+    void setPart( const TQString& mimeType );
 
     void startOfData();
-    void sendData( const QByteArray& line );
+    void sendData( const TQByteArray& line );
     void endOfData();
 
 private slots:
-    void reallySendData( const QByteArray& line );
-    //void slotPopupMenu( KXMLGUIClient *cl, const QPoint &pos, const KURL &u, const QString &mime, mode_t mode );
+    void reallySendData( const TQByteArray& line );
+    //void slotPopupMenu( KXMLGUIClient *cl, const TQPoint &pos, const KURL &u, const TQString &mime, mode_t mode );
     void slotJobFinished( KIO::Job *job );
-    void slotData( KIO::Job *, const QByteArray & );
+    void slotData( KIO::Job *, const TQByteArray & );
     //void updateWindowCaption();
 
     void slotPartCompleted();
@@ -74,14 +74,14 @@ private slots:
 
 private:
     KParts::BrowserExtension* m_extension;
-    QGuardedPtr<KParts::ReadOnlyPart> m_part;
+    TQGuardedPtr<KParts::ReadOnlyPart> m_part;
     bool m_isHTMLPart;
     bool m_partIsLoading;
     KIO::Job* m_job;
-    QCString m_boundary;
+    TQCString m_boundary;
     int m_boundaryLength;
-    QString m_mimeType; // the one handled by m_part - store the kservice instead?
-    QString m_nextMimeType; // while parsing headers
+    TQString m_mimeType; // the one handled by m_part - store the kservice instead?
+    TQString m_nextMimeType; // while parsing headers
     KTempFile* m_tempFile;
     KLineParser* m_lineParser;
     bool m_bParsingHeader;
@@ -92,8 +92,8 @@ private:
     long m_totalNumberOfFrames;
     long m_numberOfFrames;
     long m_numberOfFramesSkipped;
-    QTime m_qtime;
-    QTimer* m_timer;
+    TQTime m_qtime;
+    TQTimer* m_timer;
 };
 
 #if 0

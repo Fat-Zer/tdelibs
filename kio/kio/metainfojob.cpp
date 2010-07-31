@@ -27,7 +27,7 @@
 #include <kio/kservice.h>
 #include <kparts/componentfactory.h>
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include "metainfojob.moc"
 
@@ -63,7 +63,7 @@ MetaInfoJob::MetaInfoJob(const KFileItemList &items, bool deleteItems)
 
     // Return to event loop first, determineNextFile() might delete this;
     // (no idea what that means, it comes from previewjob)
-    QTimer::singleShot(0, this, SLOT(start()));
+    TQTimer::singleShot(0, this, TQT_SLOT(start()));
 }
 
 MetaInfoJob::~MetaInfoJob()
@@ -132,17 +132,17 @@ void MetaInfoJob::getMetaInfo()
     KIO::TransferJob* job = KIO::get(URL, false, false);
     addSubjob(job);
 
-    connect(job,  SIGNAL(data(KIO::Job *, const QByteArray &)),
-            this, SLOT(slotMetaInfo(KIO::Job *, const QByteArray &)));
+    connect(job,  TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)),
+            this, TQT_SLOT(slotMetaInfo(KIO::Job *, const TQByteArray &)));
 
     job->addMetaData("mimeType", d->currentItem->current()->mimetype());
 }
 
 
-void MetaInfoJob::slotMetaInfo(KIO::Job*, const QByteArray &data)
+void MetaInfoJob::slotMetaInfo(KIO::Job*, const TQByteArray &data)
 {
     KFileMetaInfo info;
-    QDataStream s(data, IO_ReadOnly);
+    TQDataStream s(data, IO_ReadOnly);
 
     s >> info;
 
@@ -151,18 +151,18 @@ void MetaInfoJob::slotMetaInfo(KIO::Job*, const QByteArray &data)
     d->succeeded = true;
 }
 
-QStringList MetaInfoJob::availablePlugins()
+TQStringList MetaInfoJob::availablePlugins()
 {
-    QStringList result;
+    TQStringList result;
     KTrader::OfferList plugins = KTrader::self()->query("KFilePlugin");
     for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
         result.append((*it)->desktopEntryName());
     return result;
 }
 
-QStringList MetaInfoJob::supportedMimeTypes()
+TQStringList MetaInfoJob::supportedMimeTypes()
 {
-    QStringList result;
+    TQStringList result;
     KTrader::OfferList plugins = KTrader::self()->query("KFilePlugin");
     for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
         result += (*it)->property("MimeTypes").toStringList();

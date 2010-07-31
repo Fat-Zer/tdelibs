@@ -30,13 +30,13 @@ class KMWOther : public KMWizardPage
 {
 	Q_OBJECT
 public:
-	KMWOther(QWidget *parent = 0, const char *name = 0);
+	KMWOther(TQWidget *parent = 0, const char *name = 0);
 
 	void initPrinter(KMPrinter*);
 	void updatePrinter(KMPrinter*);
 
 protected slots:
-	void slotPressed( QListViewItem* );
+	void slotPressed( TQListViewItem* );
 
 private:
 	QLineEdit	*m_uri;

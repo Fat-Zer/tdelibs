@@ -22,7 +22,7 @@
 #define __kio_chmodjob_h__
 
 #include <kurl.h>
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kio/global.h>
 #include <kio/job.h>
@@ -68,7 +68,7 @@ namespace KIO {
         int m_newGroup;
         bool m_recursive;
         KFileItemList m_lstItems;
-        QValueList<ChmodInfo> m_infos;
+        TQValueList<ChmodInfo> m_infos;
     protected:
 	virtual void virtual_hook( int id, void* data );
     private:
@@ -101,7 +101,7 @@ namespace KIO {
      * @return The job handling the operation.
      */
     KIO_EXPORT ChmodJob * chmod( const KFileItemList& lstItems, int permissions, int mask,
-                      QString newOwner, QString newGroup,
+                      TQString newOwner, TQString newGroup,
                       bool recursive, bool showProgressInfo = true );
 
 }

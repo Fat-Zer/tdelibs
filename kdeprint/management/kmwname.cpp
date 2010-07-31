@@ -21,13 +21,13 @@
 #include "kmwizard.h"
 #include "kmprinter.h"
 
-#include <qlabel.h>
-#include <qlineedit.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <qregexp.h>
+#include <tqregexp.h>
 
-KMWName::KMWName(QWidget *parent, const char *name)
+KMWName::KMWName(TQWidget *parent, const char *name)
 : KMWInfoBase(3,parent,name)
 {
 	m_ID = KMWizard::Name;
@@ -41,24 +41,24 @@ KMWName::KMWName(QWidget *parent, const char *name)
 	setLabel(2,i18n("Description:"));
 }
 
-bool KMWName::isValid(QString& msg)
+bool KMWName::isValid(TQString& msg)
 {
 	if (text(0).isEmpty())
 	{
 		msg = i18n("You must supply at least a name.");
 		return false;
 	}
-	else if (text(0).find(QRegExp("\\s")) != -1)
+	else if (text(0).find(TQRegExp("\\s")) != -1)
 	{
 		QString	conv = text(0);
-		conv.replace(QRegExp("\\s"), "");
+		conv.replace(TQRegExp("\\s"), "");
 		int result = KMessageBox::warningYesNoCancel(this,
 					i18n("It is usually not a good idea to include spaces "
 					     "in printer name: it may prevent your printer from "
 					     "working correctly. The wizard can strip all spaces "
 					     "from the string you entered, resulting in %1; "
 					     "what do you want to do?").arg(conv),
-					QString::null,
+					TQString::null,
 					i18n("Strip"), i18n("Keep"));
 		switch (result)
 		{

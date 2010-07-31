@@ -25,7 +25,7 @@ using namespace KABC;
 class VCardLine::VCardLinePrivate
 {
   public:
-    QString mGroup;
+    TQString mGroup;
 };
 
 VCardLine::VCardLine()
@@ -33,13 +33,13 @@ VCardLine::VCardLine()
 {
 }
 
-VCardLine::VCardLine( const QString &identifier )
+VCardLine::VCardLine( const TQString &identifier )
   : d( 0 )
 {
   mIdentifier = identifier;
 }
 
-VCardLine::VCardLine( const QString &identifier, const QVariant &value )
+VCardLine::VCardLine( const TQString &identifier, const TQVariant &value )
   : d( 0 )
 {
   mIdentifier = identifier;
@@ -72,27 +72,27 @@ VCardLine& VCardLine::operator=( const VCardLine& line )
   return *this;
 }
 
-void VCardLine::setIdentifier( const QString& identifier )
+void VCardLine::setIdentifier( const TQString& identifier )
 {
   mIdentifier = identifier;
 }
 
-QString VCardLine::identifier() const
+TQString VCardLine::identifier() const
 {
   return mIdentifier;
 }
 
-void VCardLine::setValue( const QVariant& value )
+void VCardLine::setValue( const TQVariant& value )
 {
   mValue = value;
 }
 
-QVariant VCardLine::value() const
+TQVariant VCardLine::value() const
 {
   return mValue;
 }
 
-void VCardLine::setGroup( const QString& group )
+void VCardLine::setGroup( const TQString& group )
 {
   if ( !d )
     d = new VCardLinePrivate();
@@ -100,12 +100,12 @@ void VCardLine::setGroup( const QString& group )
   d->mGroup = group;
 }
 
-QString VCardLine::group() const
+TQString VCardLine::group() const
 {
   if ( d )
     return d->mGroup;
   else
-    return QString();
+    return TQString();
 }
 
 bool VCardLine::hasGroup() const
@@ -116,35 +116,35 @@ bool VCardLine::hasGroup() const
     return d->mGroup.isEmpty();
 }
 
-QStringList VCardLine::parameterList() const
+TQStringList VCardLine::parameterList() const
 {
   return mParamMap.keys();
 }
 
-void VCardLine::addParameter( const QString& param, const QString& value )
+void VCardLine::addParameter( const TQString& param, const TQString& value )
 {
-  QStringList &list = mParamMap[ param ];
+  TQStringList &list = mParamMap[ param ];
   if ( list.findIndex( value ) == -1 ) // not included yet
     list.append( value );
 }
 
-QStringList VCardLine::parameters( const QString& param ) const
+TQStringList VCardLine::parameters( const TQString& param ) const
 {
   ParamMap::ConstIterator it = mParamMap.find( param );
   if ( it == mParamMap.end() )
-    return QStringList();
+    return TQStringList();
   else
     return *it;
 }
 
-QString VCardLine::parameter( const QString& param ) const
+TQString VCardLine::parameter( const TQString& param ) const
 {
   ParamMap::ConstIterator it = mParamMap.find( param );
   if ( it == mParamMap.end() )
-    return QString::null;
+    return TQString::null;
   else {
     if ( (*it).isEmpty() )
-      return QString::null;
+      return TQString::null;
     else
       return (*it).first();
   }

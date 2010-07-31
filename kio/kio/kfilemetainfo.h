@@ -24,10 +24,10 @@
    m_unit is a define in <sys/sysmacros.h> */
 #define m_unit outouftheway_m_unit
 
-#include <qdict.h>
-#include <qvariant.h>
-#include <qobject.h>
-#include <qstring.h>
+#include <tqdict.h>
+#include <tqvariant.h>
+#include <tqobject.h>
+#include <tqstring.h>
 #include <kurl.h>
 
 #undef m_unit
@@ -151,7 +151,7 @@ public:
          *
          * @return the list of keys supported for this mimetype
          **/
-        QStringList supportedKeys() const
+        TQStringList supportedKeys() const
         {
             return m_supportedKeys;
         }
@@ -162,7 +162,7 @@ public:
          *
          * @return the group name
          */
-        const QString& name() const
+        const TQString& name() const
         {
             return m_name;
         }
@@ -174,7 +174,7 @@ public:
          *
          *  @return the translated group name
          */
-        const QString& translatedName() const
+        const TQString& translatedName() const
         {
             return m_translatedName;
         }
@@ -186,7 +186,7 @@ public:
         *
         *  @return a pointer to the item info. Don't delete this object!
         */
-        const ItemInfo * itemInfo( const QString& key ) const;
+        const ItemInfo * itemInfo( const TQString& key ) const;
 
        /**
         *  Get the attributes of this group (see Attributes)
@@ -223,22 +223,22 @@ public:
         ~GroupInfo();
     private:
         /** @internal */
-        GroupInfo( const QString& name, const QString& translatedName);
+        GroupInfo( const TQString& name, const TQString& translatedName);
 
         /** @internal */
-        KFileMimeTypeInfo::ItemInfo* addItemInfo( const QString& key,
-                                                  const QString& translatedKey,
-                                                  QVariant::Type type);
+        KFileMimeTypeInfo::ItemInfo* addItemInfo( const TQString& key,
+                                                  const TQString& translatedKey,
+                                                  TQVariant::Type type);
 
         /** @internal */
-        void addVariableInfo( QVariant::Type type, uint attr );
+        void addVariableInfo( TQVariant::Type type, uint attr );
 
-        QString         m_name;
-        QString         m_translatedName;
-        QStringList     m_supportedKeys;
+        TQString         m_name;
+        TQString         m_translatedName;
+        TQStringList     m_supportedKeys;
         uint            m_attr;
         ItemInfo*       m_variableItemInfo;
-        QDict<ItemInfo> m_itemDict;
+        TQDict<ItemInfo> m_itemDict;
 
     };
 
@@ -262,7 +262,7 @@ public:
          *
          * @return the prefix
          */
-        const QString& prefix() const
+        const TQString& prefix() const
         {
             return m_prefix;
         }
@@ -273,18 +273,18 @@ public:
          *
          * @return the prefix
          */
-        const QString& suffix() const
+        const TQString& suffix() const
         {
             return m_suffix;
         }
 
         /**
-         * The items for a file are stored as a QVariant and this method
+         * The items for a file are stored as a TQVariant and this method
          * can be used to get the data type of this item.
          *
-         * @return the QVariant type
+         * @return the TQVariant type
          */
-        QVariant::Type type() const
+        TQVariant::Type type() const
         {
             return m_type;
         }
@@ -293,23 +293,23 @@ public:
          * Returns the name of the item.
          * @return the name of the item
          */
-        const QString& key() const
+        const TQString& key() const
         {
             return m_key;
         }
 
         /**
          * Returns a string for the specified @p value, if possible. If not,
-         * QString::null is returned. This can be used by programs if they want
+         * TQString::null is returned. This can be used by programs if they want
          * to display a sum or an average of some item for a list of files.
          *
          * @param value the value to convert
          * @param mangle if true, the string will already contain prefix and
          *               suffix
-         * @return the converted string, or QString::null if not possible
+         * @return the converted string, or TQString::null if not possible
          * @since 3.1
          */
-        QString string( const QVariant& value, bool mangle = true ) const;
+        TQString string( const TQVariant& value, bool mangle = true ) const;
 
         /**
          * Is this item the variable item?
@@ -328,7 +328,7 @@ public:
          * language.
          * @return the translated key
          */
-        const QString& translatedKey() const
+        const TQString& translatedKey() const
         {
             return m_translatedKey;
         }
@@ -365,22 +365,22 @@ public:
 
     private:
         /** @internal */
-        ItemInfo(const QString& key, const QString& translatedKey,
-                 QVariant::Type type)
+        ItemInfo(const TQString& key, const TQString& translatedKey,
+                 TQVariant::Type type)
             : m_key(key), m_translatedKey(translatedKey),
               m_type(type),
               m_attr(0), m_unit(NoUnit), m_hint(NoHint),
-              m_prefix(QString::null), m_suffix(QString::null)
+              m_prefix(TQString::null), m_suffix(TQString::null)
         {}
 
-        QString           m_key;
-        QString           m_translatedKey;
-        QVariant::Type    m_type;
+        TQString           m_key;
+        TQString           m_translatedKey;
+        TQVariant::Type    m_type;
         uint              m_attr;
         uint              m_unit;
         uint              m_hint;
-        QString           m_prefix;
-        QString           m_suffix;
+        TQString           m_prefix;
+        TQString           m_suffix;
     };
 
     // ### could it be made private? Would this be BC?
@@ -392,13 +392,13 @@ public:
      *
      * @param group the group of the item
      * @param key the key of the item
-     * @param parent the parent of the QObject, or 0 for a parent-less object
-     * @param name the name of the QObject, can be 0
+     * @param parent the parent of the TQObject, or 0 for a parent-less object
+     * @param name the name of the TQObject, can be 0
      * @return the validator. You are responsible for deleting it. 0 if
      *         creation failed
      */
-    QValidator * createValidator(const QString& group, const QString& key,
-                                 QObject *parent = 0, const char *name = 0) const;
+    TQValidator * createValidator(const TQString& group, const TQString& key,
+                                 TQObject *parent = 0, const char *name = 0) const;
 
     /**
      * Returns the list of all groups that the plugin for this mimetype
@@ -406,7 +406,7 @@ public:
      *
      * @return the list of groups
      */
-    QStringList supportedGroups() const;
+    TQStringList supportedGroups() const;
 
     /**
      * Same as the above function, but returns the strings to display to the
@@ -414,7 +414,7 @@ public:
      *
      * @return the list of groups
      */
-    QStringList translatedGroups() const;
+    TQStringList translatedGroups() const;
 
     /**
      * This returns the list of groups in the preferred order that's specified
@@ -422,7 +422,7 @@ public:
      *
      * @return the list of groups
      */
-    QStringList preferredGroups() const
+    TQStringList preferredGroups() const
     {
         return m_preferredGroups;
     }
@@ -432,7 +432,7 @@ public:
      *
      * @return the mimetype of this info
      */
-    QString mimeType()  const {return m_mimeType;}
+    TQString mimeType()  const {return m_mimeType;}
 
     /**
      * Get the group info for a specific group.
@@ -441,7 +441,7 @@ public:
      * @return a pointer to the info. 0 if it does not
      *         exist. Don't delete this object!
      */
-    const GroupInfo * groupInfo( const QString& group ) const;
+    const GroupInfo * groupInfo( const TQString& group ) const;
 
     // always returning stringlists which the user has to iterate and use them
     // to look up the real items sounds strange to me. I think we should add
@@ -453,37 +453,37 @@ public:
      *
      * @return the list of keys
      */
-    QStringList supportedKeys() const;
+    TQStringList supportedKeys() const;
 
     /**
      * Return a list of all supported keys in preference order
      *
      * @return the list of keys
      */
-    QStringList preferredKeys() const
+    TQStringList preferredKeys() const
     {
         return m_preferredKeys;
     }
 
     // ### shouldn't this be private? BC?
-    GroupInfo * addGroupInfo( const QString& name,
-                              const QString& translatedName);
+    GroupInfo * addGroupInfo( const TQString& name,
+                              const TQString& translatedName);
 
-    QString         m_translatedName;
-    QStringList     m_supportedKeys;
+    TQString         m_translatedName;
+    TQStringList     m_supportedKeys;
     uint            m_attr;
     //        bool            m_supportsVariableKeys : 1;
-    QDict<ItemInfo> m_itemDict;
+    TQDict<ItemInfo> m_itemDict;
 
 // ### this should be made private instead, but this would be BIC
 protected:
     /** @internal */
-    KFileMimeTypeInfo( const QString& mimeType );
+    KFileMimeTypeInfo( const TQString& mimeType );
 
-    QDict<GroupInfo> m_groups;
-    QString     m_mimeType;
-    QStringList m_preferredKeys;   // same as KFileMetaInfoProvider::preferredKeys()
-    QStringList m_preferredGroups; // same as KFileMetaInfoProvider::preferredKeys()
+    TQDict<GroupInfo> m_groups;
+    TQString     m_mimeType;
+    TQStringList m_preferredKeys;   // same as KFileMetaInfoProvider::preferredKeys()
+    TQStringList m_preferredGroups; // same as KFileMetaInfoProvider::preferredKeys()
 };
 
 
@@ -508,7 +508,7 @@ public:
      **/
     // ### hmm, then it should be private
     KFileMetaInfoItem( const KFileMimeTypeInfo::ItemInfo* mti,
-                       const QString& key, const QVariant& value);
+                       const TQString& key, const TQVariant& value);
 
     /**
      * Copy constructor
@@ -538,7 +538,7 @@ public:
      *
      * @return the key of this item
      */
-    QString key() const;
+    TQString key() const;
 
     /**
      * Returns a translation of the key for displaying to the user. If the
@@ -546,24 +546,24 @@ public:
      *
      * @return the translated key
      */
-    QString translatedKey() const;
+    TQString translatedKey() const;
 
     /**
      * Returns the value of the item.
      *
      * @return the value of the item.
      */
-    const QVariant& value() const;
+    const TQVariant& value() const;
 
     /**
      * Returns a string containing the value, if possible. If not,
-     * QString::null is returned.
+     * TQString::null is returned.
      *
      * @param mangle if true, the string will already contain prefix and
      * suffix
-     * @return the value string, or QString::null if not possible
+     * @return the value string, or TQString::null if not possible
      */
-    QString string( bool mangle = true ) const;
+    TQString string( bool mangle = true ) const;
 
     /**
      * Changes the value of the item.
@@ -571,14 +571,14 @@ public:
      * @param value the new value
      * @return true if successful, false otherwise
      */
-    bool setValue( const QVariant& value );
+    bool setValue( const TQVariant& value );
 
     /**
      * Return the type of the item.
      *
      * @return the type of the item
      */
-    QVariant::Type type() const;
+    TQVariant::Type type() const;
 
     /**
      * You can query if the application can edit the item and write it back to
@@ -617,7 +617,7 @@ public:
      *
      * @return the prefix
      */
-    QString prefix() const;
+    TQString prefix() const;
 
     /**
      * This method returns a translated suffix to be displayed after the
@@ -625,7 +625,7 @@ public:
      *
      * @return the suffix
      */
-    QString suffix() const;
+    TQString suffix() const;
 
     /**
      * Returns the hint for this item. See KFileMimeTypeInfo::Hint.
@@ -660,9 +660,9 @@ public:
      */
     bool isValid() const;
 
-    KIO_EXPORT friend QDataStream& operator >>(QDataStream& s, KFileMetaInfoItem& );
-    KIO_EXPORT friend QDataStream& operator >>(QDataStream& s, KFileMetaInfoGroup& );
-    KIO_EXPORT friend QDataStream& operator <<(QDataStream& s, const KFileMetaInfoItem& );
+    KIO_EXPORT friend TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoItem& );
+    KIO_EXPORT friend TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoGroup& );
+    KIO_EXPORT friend TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoItem& );
     friend class KFileMetaInfoGroup;
 
 protected:
@@ -685,8 +685,8 @@ class KIO_EXPORT KFileMetaInfoGroup
 {
   friend class KFilePlugin;
   friend class KFileMetaInfo;
-  KIO_EXPORT friend QDataStream& operator >>(QDataStream& s, KFileMetaInfoGroup& );
-  KIO_EXPORT friend QDataStream& operator <<(QDataStream& s, const KFileMetaInfoGroup& );
+  KIO_EXPORT friend TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoGroup& );
+  KIO_EXPORT friend TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoGroup& );
 
 public:
     class Data;
@@ -696,7 +696,7 @@ public:
      * KFileMetaInfo do it for you.
      **/
     // ### hmm, then it should be private
-    KFileMetaInfoGroup( const QString& name, const KFileMimeTypeInfo* info );
+    KFileMetaInfoGroup( const TQString& name, const KFileMimeTypeInfo* info );
 
     /**
      * Copy constructor
@@ -755,7 +755,7 @@ public:
      * Operator for convenience. It does the same as item(),
      * but you cannot specify a group to search in
      */
-    KFileMetaInfoItem operator[]( const QString& key ) const
+    KFileMetaInfoItem operator[]( const TQString& key ) const
     { return item( key ); }
 
     /**
@@ -764,7 +764,7 @@ public:
      * @param key the key of the item to search
      * @return the specified item if found, an invalid item, if not
      **/
-    KFileMetaInfoItem item( const QString& key ) const;
+    KFileMetaInfoItem item( const TQString& key ) const;
 
     /**
      * Returns the item with the given @p hint.
@@ -781,7 +781,7 @@ public:
      * @param key the key of the item to search
      * @return the value with the given key
      */
-    const QVariant value( const QString& key ) const
+    const TQVariant value( const TQString& key ) const
     {
         const KFileMetaInfoItem &i = item( key );
         return i.value();
@@ -797,7 +797,7 @@ public:
      *
      * @return the list of keys supported for this mimetype
     **/
-    QStringList supportedKeys() const;
+    TQStringList supportedKeys() const;
 
     /**
      * Returns true if this group supports adding or removing arbitrary
@@ -812,21 +812,21 @@ public:
      *
      * @return true if an item for this @p key exists.
      */
-    bool contains( const QString& key ) const;
+    bool contains( const TQString& key ) const;
 
     /**
      * Returns a list of all keys.
      *
      * @return a list of all keys in the order they were inserted.
      **/
-    QStringList keys() const;
+    TQStringList keys() const;
 
     /**
      * Returns a list of all keys in preference order.
      *
      * @return a list of all keys in preference order.
      **/
-    QStringList preferredKeys() const;
+    TQStringList preferredKeys() const;
 
    /**
     * @return the list of possible types that the value for the specified key
@@ -837,7 +837,7 @@ public:
     // ### do we really want to support that?
     // let's not waste time on thinking about it. Let's just kick it for now
     // and add it in 4.0 if needed ;)
-//    const QMemArray<QVariant::Type>& types( const QString& key ) const;
+//    const TQMemArray<TQVariant::Type>& types( const TQString& key ) const;
 
    /**
     * Add an item to the info. This is only possible if the specified @p key
@@ -847,7 +847,7 @@ public:
     * @param key the key of the item
     * @return the KFileMetaInfoItem for the given @p key
     **/
-    KFileMetaInfoItem addItem( const QString& key );
+    KFileMetaInfoItem addItem( const TQString& key );
 
     /**
      * Remove this item from the meta info of the file. You cannot query
@@ -858,21 +858,21 @@ public:
      * @param key the key of the removed item
      * @return true if successful, false otherwise
      */
-    bool removeItem(const QString& key);
+    bool removeItem(const TQString& key);
 
     /**
      * Returns a list of all removed items.
      *
      * @return a list of all removed items
      */
-    QStringList removedItems();
+    TQStringList removedItems();
 
     /**
      * The name of this group.
      *
      * @return the name of this group
      */
-    QString name() const;
+    TQString name() const;
 
     /**
      * The translated name of this group.
@@ -881,7 +881,7 @@ public:
      *
      * @since 3.2
      */
-    QString translatedName() const;
+    TQString translatedName() const;
 
     /**
      * Returns the attributes of this item.
@@ -892,7 +892,7 @@ public:
 
 protected:
       void setAdded();
-      KFileMetaInfoItem appendItem( const QString& key, const QVariant& value);
+      KFileMetaInfoItem appendItem( const TQString& key, const TQVariant& value);
 
       Data* d;
       void ref();
@@ -976,8 +976,8 @@ public:
      * @note This version will @b only work for @b local (file:/) files.
      *
      **/
-    KFileMetaInfo( const QString& path,
-                   const QString& mimeType = QString::null,
+    KFileMetaInfo( const TQString& path,
+                   const TQString& mimeType = TQString::null,
                    uint what = Fastest);
 
    /**
@@ -988,7 +988,7 @@ public:
     *
     **/
     KFileMetaInfo( const KURL& url,
-                   const QString& mimeType = QString::null,
+                   const TQString& mimeType = TQString::null,
                    uint what = Fastest);
 
     /**
@@ -1025,42 +1025,42 @@ public:
      *
      * @return the keys of the groups that the file has.
      */
-    QStringList groups() const;
+    TQStringList groups() const;
 
     /**
      * Returns a list of all supported groups.
      *
      * @return the supported keys of the groups that the file has.
      */
-    QStringList supportedGroups() const;
+    TQStringList supportedGroups() const;
 
     /**
      * Returns a list of the preferred groups.
      *
      * @return the keys of the preferred groups that the file has.
      */
-    QStringList preferredGroups() const;
+    TQStringList preferredGroups() const;
 
     /**
      * Returns a list of all preferred keys.
      *
      * @return a list of all preferred keys.
      */
-    QStringList preferredKeys() const;
+    TQStringList preferredKeys() const;
 
     /**
      * Returns a list of supported keys.
      *
      * @return a list of supported keys
      */
-    QStringList supportedKeys() const;
+    TQStringList supportedKeys() const;
 
    /**
     * Returns the list of groups that you can add or remove from the file.
     *
     * @return the groups can be added or removed
     */
-    QStringList editableGroups() const;
+    TQStringList editableGroups() const;
 
     // I'd like to keep those for lookup without group, at least the hint
     // version
@@ -1070,7 +1070,7 @@ public:
      * @param key the key of the item
      * @return the item. Invalid if there is no item with the given @p key.
      */
-    KFileMetaInfoItem item(const QString& key) const;
+    KFileMetaInfoItem item(const TQString& key) const;
     /**
      * Returns the KFileMetaInfoItem with the given @p hint.
      *
@@ -1083,12 +1083,12 @@ public:
      * Saves the item with the given @p key.
      *
      * @param key the key of the item
-     * @param preferredGroup the preferred group, or QString::null
+     * @param preferredGroup the preferred group, or TQString::null
      * @param createGroup true to create the group if necessary
      * @return the saved item
      */
-    KFileMetaInfoItem saveItem( const QString& key,
-                                const QString& preferredGroup = QString::null,
+    KFileMetaInfoItem saveItem( const TQString& key,
+                                const TQString& preferredGroup = TQString::null,
                                 bool createGroup = true );
 
     /**
@@ -1097,7 +1097,7 @@ public:
      * @param key the key of the item
      * @return the group. Invalid if there is no group with the given @p key.
      */
-    KFileMetaInfoGroup group(const QString& key) const;
+    KFileMetaInfoGroup group(const TQString& key) const;
 
     /**
      * Returns the KFileMetaInfoGroup with the given @p key.
@@ -1105,7 +1105,7 @@ public:
      * @param key the key of the item
      * @return the group. Invalid if there is no group with the given @p key.
      */
-    KFileMetaInfoGroup operator[] (const QString& key) const
+    KFileMetaInfoGroup operator[] (const TQString& key) const
     {
         return group(key);
     }
@@ -1120,7 +1120,7 @@ public:
     * @param name the name of the group to add
     * @return true if successful, false if not
     */
-    bool addGroup( const QString& name );
+    bool addGroup( const TQString& name );
 
    /**
     * Remove the specified group. This will only succeed if it is
@@ -1131,14 +1131,14 @@ public:
     * @param name the name of the group to remove
     * @return true if successful, false if not
     */
-    bool removeGroup( const QString& name );
+    bool removeGroup( const TQString& name );
 
     /**
      * Returns a list of removed groups.
      *
      * @return a list of removed groups.
      */
-    QStringList removedGroups();
+    TQStringList removedGroups();
 
    /**
     * This method writes all pending changes of the meta info back to the file.
@@ -1156,7 +1156,7 @@ public:
     *
     * @return true if successful, false if not
     */
-    bool applyChanges(const QString& path);
+    bool applyChanges(const TQString& path);
 
    /**
      * Checks whether an item with the given @p key exists.
@@ -1164,7 +1164,7 @@ public:
      * @param key the key to check
      * @return whether an item for this @p key exists.
      */
-    bool contains( const QString& key ) const;
+    bool contains( const TQString& key ) const;
 
     /**
      * Checks whether a group with the given @p key exists.
@@ -1172,7 +1172,7 @@ public:
      * @param key the key to check
      * @return whether a group with this name exists.
      */
-    bool containsGroup( const QString& key ) const;
+    bool containsGroup( const TQString& key ) const;
 
     /**
      * Returns the value with the given @p key.
@@ -1180,7 +1180,7 @@ public:
      * @param key the key to retrieve
      * @return the value. Invalid if it does not exist
      */
-    const QVariant value( const QString& key ) const
+    const TQVariant value( const TQString& key ) const
     {
         return item(key).value();
     }
@@ -1207,14 +1207,14 @@ public:
      *
      * @return the file's mime type
      */
-    QString mimeType() const;
+    TQString mimeType() const;
 
     /**
-     * Returns the path of file - or QString::null if file is non-local
+     * Returns the path of file - or TQString::null if file is non-local
      *
-     * @return the file's path - or QString::null if file is non-local
+     * @return the file's path - or TQString::null if file is non-local
      */
-    QString path() const;
+    TQString path() const;
 
     /**
      * Returns the url of file
@@ -1223,12 +1223,12 @@ public:
      */
     KURL url() const;
 
-    KIO_EXPORT friend QDataStream& operator >>(QDataStream& s, KFileMetaInfo& );
-    KIO_EXPORT friend QDataStream& operator <<(QDataStream& s, const KFileMetaInfo& );
+    KIO_EXPORT friend TQDataStream& operator >>(TQDataStream& s, KFileMetaInfo& );
+    KIO_EXPORT friend TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfo& );
     friend class KFilePlugin;
 
 protected:
-    KFileMetaInfoGroup appendGroup(const QString& name);
+    KFileMetaInfoGroup appendGroup(const TQString& name);
 
    /**
      * @return a pointer to the plugin that belogs to this object's mimetype.
@@ -1243,10 +1243,10 @@ protected:
 
 private:
     KFileMetaInfoItem findEditableItem( KFileMetaInfoGroup& group,
-                                        const QString& key );
+                                        const TQString& key );
 
     void init( const KURL& url,
-               const QString& mimeType = QString::null,
+               const TQString& mimeType = TQString::null,
                uint what = Fastest);
 };
 
@@ -1276,8 +1276,8 @@ private:
  *
  * Example:
  *  @code
- *  FooPlugin::FooPlugin(QObject *parent, const char *name,
- *                       const QStringList &args)
+ *  FooPlugin::FooPlugin(TQObject *parent, const char *name,
+ *                       const TQStringList &args)
  *      : KFilePlugin(parent, name, args)
  *  {
  *      KFileMimeTypeInfo* info = addMimeTypeInfo( "application/x-foo" );
@@ -1289,12 +1289,12 @@ private:
  *      KFileMimeTypeInfo::ItemInfo* item;
  *
  *      // our new items in the group
- *      item = addItemInfo(group, "Items", i18n("Items"), QVariant::Int);
- *      item = addItemInfo(group, "Size", i18n("Size"), QVariant::Int);
+ *      item = addItemInfo(group, "Items", i18n("Items"), TQVariant::Int);
+ *      item = addItemInfo(group, "Size", i18n("Size"), TQVariant::Int);
  *      setUnit(item, KFileMimeTypeInfo::KiloBytes);
  *
  *      // strings are possible, too:
- *      //addItemInfo(group, "Document Type", i18n("Document type"), QVariant::String);
+ *      //addItemInfo(group, "Document Type", i18n("Document type"), TQVariant::String);
  *  }
  *  @endcode
  *
@@ -1311,7 +1311,7 @@ private:
  * achieve this task. This might be the best way for binary files, since a
  * change in the file format is likely to be supported by subsequent releases
  * of that library. Alternatively, for text-based file formats, you can use
- * QTextStream to parse the file. For simple file formats, QRegExp can be of
+ * TQTextStream to parse the file. For simple file formats, TQRegExp can be of
  * great help, too.
  *
  * After you extracted the relevant information, use appendGroup() and
@@ -1343,8 +1343,8 @@ private:
  *
  * If you want to define mutable meta information items, you need to overwrite
  * the writeInfo() method. In this method, you can use third-party library
- * (appropriate mostly for binary files, see above) or QTextStream to write the
- * information back to the file. If you use QTextStream, be sure to write all
+ * (appropriate mostly for binary files, see above) or TQTextStream to write the
+ * information back to the file. If you use TQTextStream, be sure to write all
  * file contents back.
  *
  * For some items, it might be that not all possible values are allowed. You
@@ -1400,17 +1400,17 @@ public:
      * Creates a new KFilePlugin instance. You need to implement a constructor
      * with the same argument list as this is required by KGenericFactory
      *
-     * @param parent the parent of the QObject, can be @c 0
-     * @param name the name of the QObject, can be @c 0
+     * @param parent the parent of the TQObject, can be @c 0
+     * @param name the name of the TQObject, can be @c 0
      * @param args currently ignored
      *
      * @see addMimeTypeInfo()
      * @see addGroupInfo()
      * @see addItemInfo()
-     * @see QObject()
+     * @see TQObject()
      **/
-    KFilePlugin( QObject *parent, const char *name,
-                 const QStringList& args );
+    KFilePlugin( TQObject *parent, const char *name,
+                 const TQStringList& args );
 
     /**
      * Destructor
@@ -1456,13 +1456,13 @@ public:
      * @param mimeType the mime type
      * @param group the group name of the validator item
      * @param key the key name of the validator item
-     * @param parent the QObject parent, can be @c 0
-     * @param name the name of the QObject, can be @c 0
+     * @param parent the TQObject parent, can be @c 0
+     * @param name the name of the TQObject, can be @c 0
      **/
-    virtual QValidator* createValidator( const QString& mimeType,
-                                         const QString& group,
-                                         const QString& key,
-                                         QObject* parent,
+    virtual TQValidator* createValidator( const TQString& mimeType,
+                                         const TQString& group,
+                                         const TQString& key,
+                                         TQObject* parent,
                                          const char* name) const
     {
         Q_UNUSED(mimeType); Q_UNUSED(group);Q_UNUSED(key);
@@ -1479,7 +1479,7 @@ protected:
      * @param mimeType a string containing the mimetype, e.g. @c "text/html"
      * @return a KFileMimeTypeInfo object, to be used with addGroupInfo()
      **/
-    KFileMimeTypeInfo * addMimeTypeInfo( const QString& mimeType );
+    KFileMimeTypeInfo * addMimeTypeInfo( const TQString& mimeType );
     // ### do we need this, if it only calls the provider?
     // IMHO the Plugin shouldn't call its provider.
     // DF: yes we need this. A plugin can create more than one mimetypeinfo.
@@ -1504,7 +1504,7 @@ protected:
      * @see addItemInfo()
      **/
     KFileMimeTypeInfo::GroupInfo*  addGroupInfo(KFileMimeTypeInfo* info,
-                      const QString& key, const QString& translatedKey) const;
+                      const TQString& key, const TQString& translatedKey) const;
 
     /**
      * Sets attributes of the GroupInfo object returned by addGroupInfo().
@@ -1515,7 +1515,7 @@ protected:
      **/
     void setAttributes(KFileMimeTypeInfo::GroupInfo* gi, uint attr) const;
 
-    void addVariableInfo(KFileMimeTypeInfo::GroupInfo* gi, QVariant::Type type,
+    void addVariableInfo(KFileMimeTypeInfo::GroupInfo* gi, TQVariant::Type type,
                          uint attr) const;
 
     /**
@@ -1528,14 +1528,14 @@ protected:
      *        parameter
      * @param translatedKey the translated version of the key string for
      *        displaying in user interfaces. Use i18n() to translate the string
-     * @param type the type of the meta information item, e.g. QVariant::Int
-     *        or QVariant::String.
+     * @param type the type of the meta information item, e.g. TQVariant::Int
+     *        or TQVariant::String.
      * @return an ItemInfo object. Pass this object to setAttributes()
      **/
     KFileMimeTypeInfo::ItemInfo* addItemInfo(KFileMimeTypeInfo::GroupInfo* gi,
-                                             const QString& key,
-                                             const QString& translatedKey,
-                                             QVariant::Type type);
+                                             const TQString& key,
+                                             const TQString& translatedKey,
+                                             TQVariant::Type type);
 
     /**
      * Sets some attributes for a meta information item. The attributes
@@ -1579,7 +1579,7 @@ protected:
      * @param item the ItemInfo object as returned by addItemInfo()
      * @param prefix the prefix string to display
      **/
-    void setPrefix(KFileMimeTypeInfo::ItemInfo* item, const QString& prefix);
+    void setPrefix(KFileMimeTypeInfo::ItemInfo* item, const TQString& prefix);
 
     /**
      * Sets a suffix string which is displayed before the item's value. Use
@@ -1589,7 +1589,7 @@ protected:
      * @param item the ItemInfo object as returned by addItemInfo()
      * @param suffix the suffix string to display
      **/
-    void setSuffix(KFileMimeTypeInfo::ItemInfo* item, const QString& suffix);
+    void setSuffix(KFileMimeTypeInfo::ItemInfo* item, const TQString& suffix);
 
     /**
      * Call this method from within readInfo() to indicate that you wish to
@@ -1602,7 +1602,7 @@ protected:
      *        defined in your class' constructor
      * @return a KFileMetaInfoGroup object, to be used in appendItem()
      **/
-    KFileMetaInfoGroup appendGroup(KFileMetaInfo& info, const QString& key);
+    KFileMetaInfoGroup appendGroup(KFileMetaInfo& info, const TQString& key);
 
     /**
      * Call this method from within readInfo() to fill the meta information item
@@ -1612,10 +1612,10 @@ protected:
      * @param key the key string to identify the item.
      * @param value the value of the meta information item
      **/
-    void appendItem(KFileMetaInfoGroup& group, const QString& key, QVariant value);
+    void appendItem(KFileMetaInfoGroup& group, const TQString& key, TQVariant value);
 
-    QStringList m_preferredKeys;
-    QStringList m_preferredGroups;
+    TQStringList m_preferredKeys;
+    TQStringList m_preferredGroups;
 
 protected:
     /**
@@ -1657,23 +1657,23 @@ public:
      *  @return a pointer to the plugin that belongs to the specified mimetype,
      *  which means also load the plugin if it's not in memory
      */
-    KFilePlugin * plugin( const QString& mimeType ); // KDE4: merge with method below
+    KFilePlugin * plugin( const TQString& mimeType ); // KDE4: merge with method below
 
     /**
      *  @return a pointer to the plugin that belongs to the specified mimetype,
      *  for the given protocol.
      *  This loads the plugin if it's not in memory yet.
      */
-    KFilePlugin * plugin( const QString& mimeType, const QString& protocol );
+    KFilePlugin * plugin( const TQString& mimeType, const TQString& protocol );
 
-    const KFileMimeTypeInfo * mimeTypeInfo( const QString& mimeType ); // KDE4: merge with below
-    const KFileMimeTypeInfo * mimeTypeInfo( const QString& mimeType, const QString& protocol );
+    const KFileMimeTypeInfo * mimeTypeInfo( const TQString& mimeType ); // KDE4: merge with below
+    const KFileMimeTypeInfo * mimeTypeInfo( const TQString& mimeType, const TQString& protocol );
 
-    QStringList preferredKeys( const QString& mimeType ) const;
-    QStringList preferredGroups( const QString& mimeType ) const;
+    TQStringList preferredKeys( const TQString& mimeType ) const;
+    TQStringList preferredGroups( const TQString& mimeType ) const;
 
     /// @since 3.1
-    QStringList supportedMimeTypes() const;
+    TQStringList supportedMimeTypes() const;
 
 protected: // ## should be private, right?
     KFileMetaInfoProvider();
@@ -1705,34 +1705,34 @@ private:
 
     // The key is either a mimetype or a protocol. Those things don't look the same
     // so there's no need for two QDicts.
-    QDict<CachedPluginInfo> m_plugins;
+    TQDict<CachedPluginInfo> m_plugins;
 
     // This data is aggregated during the creation of a plugin,
     // before being moved to the appropriate CachedPluginInfo(s)
     // At any other time than during the loading of a plugin, this dict is EMPTY.
     // Same key as in m_plugins: mimetype or protocol
-    QDict<KFileMimeTypeInfo> m_pendingMimetypeInfos;
+    TQDict<KFileMimeTypeInfo> m_pendingMimetypeInfos;
 
 private:
     static KFileMetaInfoProvider * s_self;
 
-    KFilePlugin* loadPlugin( const QString& mimeType, const QString& protocol );
-    KFilePlugin* loadAndRegisterPlugin( const QString& mimeType, const QString& protocol );
-    KFileMimeTypeInfo * addMimeTypeInfo( const QString& mimeType );
+    KFilePlugin* loadPlugin( const TQString& mimeType, const TQString& protocol );
+    KFilePlugin* loadAndRegisterPlugin( const TQString& mimeType, const TQString& protocol );
+    KFileMimeTypeInfo * addMimeTypeInfo( const TQString& mimeType );
 
     class KFileMetaInfoProviderPrivate;
     KFileMetaInfoProviderPrivate *d;
 
 };
 
-KIO_EXPORT QDataStream& operator <<(QDataStream& s, const KFileMetaInfoItem& );
-KIO_EXPORT QDataStream& operator >>(QDataStream& s, KFileMetaInfoItem& );
+KIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoItem& );
+KIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoItem& );
 
-KIO_EXPORT QDataStream& operator <<(QDataStream& s, const KFileMetaInfoGroup& );
-KIO_EXPORT QDataStream& operator >>(QDataStream& s, KFileMetaInfoGroup& );
+KIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoGroup& );
+KIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoGroup& );
 
-KIO_EXPORT QDataStream& operator <<(QDataStream& s, const KFileMetaInfo& );
-KIO_EXPORT QDataStream& operator >>(QDataStream& s, KFileMetaInfo& );
+KIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfo& );
+KIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfo& );
 
 
 #endif // KILEMETAINFO_H

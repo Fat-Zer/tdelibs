@@ -6,8 +6,8 @@
 
 #include <tiffio.h>
 
-#include <qimage.h>
-#include <qfile.h>
+#include <tqimage.h>
+#include <tqfile.h>
 #include <kdelibs_export.h>
 
 #include <assert.h>
@@ -16,7 +16,7 @@
 
 static tsize_t tiff_read( thandle_t handle, tdata_t buf, tsize_t size )
 {
-    QIODevice *dev = reinterpret_cast<QIODevice *>( handle );
+    TQIODevice *dev = reinterpret_cast<TQIODevice *>( handle );
     return dev->readBlock( reinterpret_cast<char *>( buf ), size );
 }
 
@@ -27,7 +27,7 @@ static tsize_t tiff_write( thandle_t, tdata_t, tsize_t )
 
 static toff_t tiff_seek( thandle_t handle, toff_t off, int whence )
 {
-    QIODevice *dev = reinterpret_cast<QIODevice *>( handle );
+    TQIODevice *dev = reinterpret_cast<TQIODevice *>( handle );
 
     if ( whence == SEEK_CUR )
 	off += dev->at();
@@ -42,7 +42,7 @@ static toff_t tiff_seek( thandle_t handle, toff_t off, int whence )
 
 static toff_t tiff_size( thandle_t handle )
 {
-    QIODevice *dev = reinterpret_cast<QIODevice *>( handle );
+    TQIODevice *dev = reinterpret_cast<TQIODevice *>( handle );
     return dev->size();
 }
 
@@ -60,7 +60,7 @@ static void tiff_unmap( thandle_t, tdata_t, toff_t )
 {
 }
 
-KDE_EXPORT void kimgio_tiff_read( QImageIO *io )
+KDE_EXPORT void kimgio_tiff_read( TQImageIO *io )
 {
 	TIFF *tiff;
 	uint32 width, height;
@@ -69,7 +69,7 @@ KDE_EXPORT void kimgio_tiff_read( QImageIO *io )
 	// FIXME: use qdatastream
 
 	// open file
-	tiff = TIFFClientOpen( QFile::encodeName( io->fileName() ), "r",
+	tiff = TIFFClientOpen( TQFile::encodeName( io->fileName() ), "r",
 			       ( thandle_t )io->ioDevice(),
 			       tiff_read, tiff_write, tiff_seek, tiff_close, 
 			       tiff_size, tiff_map, tiff_unmap );
@@ -83,7 +83,7 @@ KDE_EXPORT void kimgio_tiff_read( QImageIO *io )
             || TIFFGetField( tiff, TIFFTAG_IMAGELENGTH, &height ) != 1 )
             return;
 
-	QImage image( width, height, 32 );
+	TQImage image( width, height, 32 );
 	if( image.isNull()) {
 		TIFFClose( tiff );
 		return;
@@ -143,7 +143,7 @@ KDE_EXPORT void kimgio_tiff_read( QImageIO *io )
 	io->setStatus ( 0 );
 }
 
-KDE_EXPORT void kimgio_tiff_write( QImageIO * )
+KDE_EXPORT void kimgio_tiff_write( TQImageIO * )
 {
 	// TODO: stub
 }

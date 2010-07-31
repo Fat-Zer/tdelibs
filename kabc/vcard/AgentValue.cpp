@@ -37,7 +37,7 @@ AgentValue::AgentValue(const AgentValue & x)
 {
 }
 
-AgentValue::AgentValue(const QCString & s)
+AgentValue::AgentValue(const TQCString & s)
 	:	Value(s)
 {
 }
@@ -52,7 +52,7 @@ AgentValue::operator = (AgentValue & x)
 }
 
 	AgentValue &
-AgentValue::operator = (const QCString & s)
+AgentValue::operator = (const TQCString & s)
 {
 	Value::operator = (s);
 	return *this;

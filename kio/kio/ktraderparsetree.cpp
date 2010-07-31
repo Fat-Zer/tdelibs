@@ -396,7 +396,7 @@ bool ParseTreeEXIST::eval( ParseContext *_context ) const
 {
   _context->type = ParseContext::T_BOOL;
 
-  QVariant prop = _context->service->property( m_id );
+  TQVariant prop = _context->service->property( m_id );
   _context->b = prop.isValid();
 
   return true;
@@ -433,13 +433,13 @@ bool ParseTreeIN::eval( ParseContext *_context ) const
 
   if ( (c1.type == ParseContext::T_NUM) &&
        (c2.type == ParseContext::T_SEQ) &&
-       ((*(c2.seq.begin())).type() == QVariant::Int)) {
+       ((*(c2.seq.begin())).type() == TQVariant::Int)) {
 
-      QValueList<QVariant>::ConstIterator it = c2.seq.begin();
-      QValueList<QVariant>::ConstIterator end = c2.seq.end();
+      TQValueList<TQVariant>::ConstIterator it = c2.seq.begin();
+      TQValueList<TQVariant>::ConstIterator end = c2.seq.end();
       _context->b = false;
       for (; it != end; it++)
-	  if ((*it).type() == QVariant::Int &&
+	  if ((*it).type() == TQVariant::Int &&
 	      (*it).toInt() == c1.i) {
 	      _context->b = true;
 	      break;
@@ -449,13 +449,13 @@ bool ParseTreeIN::eval( ParseContext *_context ) const
 
   if ( c1.type == ParseContext::T_DOUBLE &&
        c2.type == ParseContext::T_SEQ &&
-       (*(c2.seq.begin())).type() == QVariant::Double) {
+       (*(c2.seq.begin())).type() == TQVariant::Double) {
 
-      QValueList<QVariant>::ConstIterator it = c2.seq.begin();
-      QValueList<QVariant>::ConstIterator end = c2.seq.end();
+      TQValueList<TQVariant>::ConstIterator it = c2.seq.begin();
+      TQValueList<TQVariant>::ConstIterator end = c2.seq.end();
       _context->b = false;
       for (; it != end; it++)
-	  if ((*it).type() == QVariant::Double &&
+	  if ((*it).type() == TQVariant::Double &&
 	      (*it).toDouble() == c1.i) {
 	      _context->b = true;
 	      break;
@@ -474,46 +474,46 @@ bool ParseTreeIN::eval( ParseContext *_context ) const
 
 bool ParseTreeID::eval( ParseContext *_context ) const
 {
-  QVariant prop = _context->service->property( m_str );
+  TQVariant prop = _context->service->property( m_str );
   if ( !prop.isValid() )
     return false;
 
-  if ( prop.type() == QVariant::String )
+  if ( prop.type() == TQVariant::String )
   {
     _context->str = prop.toString();
     _context->type = ParseContext::T_STRING;
     return true;
   }
 
-  if ( prop.type() == QVariant::Int )
+  if ( prop.type() == TQVariant::Int )
   {
     _context->i = prop.toInt();
     _context->type = ParseContext::T_NUM;
     return true;
   }
 
-  if ( prop.type() == QVariant::Bool )
+  if ( prop.type() == TQVariant::Bool )
   {
     _context->b = prop.toBool();
     _context->type = ParseContext::T_BOOL;
     return true;
   }
 
-  if ( prop.type() == QVariant::Double )
+  if ( prop.type() == TQVariant::Double )
   {
     _context->f = prop.toDouble();
     _context->type = ParseContext::T_DOUBLE;
     return true;
   }
 
-  if ( prop.type() == QVariant::List )
+  if ( prop.type() == TQVariant::List )
   {
     _context->seq = prop.toList();
     _context->type = ParseContext::T_SEQ;
     return true;
   }
 
-  if ( prop.type() == QVariant::StringList )
+  if ( prop.type() == TQVariant::StringList )
   {
     _context->strSeq = prop.toStringList();
     _context->type = ParseContext::T_STR_SEQ;
@@ -528,24 +528,24 @@ bool ParseTreeMIN2::eval( ParseContext *_context ) const
 {
   _context->type = ParseContext::T_DOUBLE;
 
-  QVariant prop = _context->service->property( m_strId );
+  TQVariant prop = _context->service->property( m_strId );
   if ( !prop.isValid() )
     return false;
 
   if ( !_context->initMaxima( m_strId ) )
     return false;
 
-  QMap<QString,PreferencesMaxima>::Iterator it = _context->maxima.find( m_strId );
+  TQMap<TQString,PreferencesMaxima>::Iterator it = _context->maxima.find( m_strId );
   if ( it == _context->maxima.end() )
     return false;
 
-  if ( prop.type() == QVariant::Int && it.data().type == PreferencesMaxima::PM_INT )
+  if ( prop.type() == TQVariant::Int && it.data().type == PreferencesMaxima::PM_INT )
   {
     _context->f = (double)( prop.toInt() - it.data().iMin ) /
                   (double)(it.data().iMax - it.data().iMin ) * (-2.0) + 1.0;
     return true;
   }
-  else if ( prop.type() == QVariant::Double && it.data().type == PreferencesMaxima::PM_DOUBLE )
+  else if ( prop.type() == TQVariant::Double && it.data().type == PreferencesMaxima::PM_DOUBLE )
   {
     _context->f = ( prop.toDouble() - it.data().fMin ) / (it.data().fMax - it.data().fMin )
                   * (-2.0) + 1.0;
@@ -559,7 +559,7 @@ bool ParseTreeMAX2::eval( ParseContext *_context ) const
 {
   _context->type = ParseContext::T_DOUBLE;
 
-  QVariant prop = _context->service->property( m_strId );
+  TQVariant prop = _context->service->property( m_strId );
   if ( !prop.isValid() )
     return false;
 
@@ -568,17 +568,17 @@ bool ParseTreeMAX2::eval( ParseContext *_context ) const
     return false;
 
   // Find extrema
-  QMap<QString,PreferencesMaxima>::Iterator it = _context->maxima.find( m_strId );
+  TQMap<TQString,PreferencesMaxima>::Iterator it = _context->maxima.find( m_strId );
   if ( it == _context->maxima.end() )
     return false;
 
-  if ( prop.type() == QVariant::Int && it.data().type == PreferencesMaxima::PM_INT )
+  if ( prop.type() == TQVariant::Int && it.data().type == PreferencesMaxima::PM_INT )
   {
     _context->f = (double)( prop.toInt() - it.data().iMin ) /
                   (double)(it.data().iMax - it.data().iMin ) * 2.0 - 1.0;
     return true;
   }
-  else if ( prop.type() == QVariant::Double && it.data().type == PreferencesMaxima::PM_DOUBLE )
+  else if ( prop.type() == TQVariant::Double && it.data().type == PreferencesMaxima::PM_DOUBLE )
   {
     _context->f = ( prop.toDouble() - it.data().fMin ) /
                   (it.data().fMax - it.data().fMin ) * 2.0 - 1.0;
@@ -595,7 +595,7 @@ int matchConstraint( const ParseTreeBase *_tree, const KService::Ptr &_service,
   if ( !_tree )
     return 1;
 
-  QMap<QString,PreferencesMaxima> maxima;
+  TQMap<TQString,PreferencesMaxima> maxima;
   ParseContext c( _service, _list, maxima );
 
   // Error during evaluation ?
@@ -618,7 +618,7 @@ PreferencesReturn matchPreferences( const ParseTreeBase *_tree, const KService::
   if ( !_tree )
     return ret;
 
-  QMap<QString,PreferencesMaxima> maxima;
+  TQMap<TQString,PreferencesMaxima> maxima;
   ParseContext c( _service, _list, maxima );
 
   if ( !_tree->eval( &c ) )
@@ -639,26 +639,26 @@ PreferencesReturn matchPreferences( const ParseTreeBase *_tree, const KService::
   return ret;
 }
 
-bool ParseContext::initMaxima( const QString& _prop )
+bool ParseContext::initMaxima( const TQString& _prop )
 {
   // Is the property known ?
-  QVariant prop = service->property( _prop );
+  TQVariant prop = service->property( _prop );
   if ( !prop.isValid() )
     return false;
 
   // Numeric ?
-  if ( prop.type() != QVariant::Int && prop.type() != QVariant::Double )
+  if ( prop.type() != TQVariant::Int && prop.type() != TQVariant::Double )
     return false;
 
   // Did we cache the result ?
-  QMap<QString,PreferencesMaxima>::Iterator it = maxima.find( _prop );
+  TQMap<TQString,PreferencesMaxima>::Iterator it = maxima.find( _prop );
   if ( it != maxima.end() )
     return ( it.data().type == PreferencesMaxima::PM_DOUBLE ||
 	     it.data().type == PreferencesMaxima::PM_INT );
 
   // Double or Int ?
   PreferencesMaxima extrema;
-  if ( prop.type() == QVariant::Int )
+  if ( prop.type() == TQVariant::Int )
     extrema.type = PreferencesMaxima::PM_INVALID_INT;
   else
     extrema.type = PreferencesMaxima::PM_INVALID_DOUBLE;
@@ -667,7 +667,7 @@ bool ParseContext::initMaxima( const QString& _prop )
   KServiceTypeProfile::OfferList::ConstIterator oit = offers.begin();
   for( ; oit != offers.end(); ++oit )
   {
-    QVariant p = (*oit).service()->property( _prop );
+    TQVariant p = (*oit).service()->property( _prop );
     if ( p.isValid() )
     {
       // Determine new maximum/minimum

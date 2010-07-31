@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include "config.h"
 #ifdef Q_WS_X11 // not needed anyway :-)
@@ -27,12 +27,12 @@
 #include "klocale.h"
 #include "kcharsets.h"
 #include "kapplication.h"
-#include <qtextstream.h>
+#include <tqtextstream.h>
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
-KRootProp::KRootProp(const QString& rProp )
+KRootProp::KRootProp(const TQString& rProp )
 {
   atom = 0;
   dirty = false;
@@ -50,15 +50,15 @@ void KRootProp::sync()
   if ( !dirty )
       return;
 
-  QString propString;
+  TQString propString;
   if ( !propDict.isEmpty() )
   {
-    QMap<QString,QString>::Iterator it = propDict.begin();
-    QString keyvalue;
+    TQMap<TQString,TQString>::Iterator it = propDict.begin();
+    TQString keyvalue;
 
     while ( it != propDict.end() )
     {
-      keyvalue = QString( "%1=%2\n").arg(it.key()).arg(it.data());
+      keyvalue = TQString( "%1=%2\n").arg(it.key()).arg(it.data());
       propString += keyvalue;
       ++it;
     }
@@ -71,7 +71,7 @@ void KRootProp::sync()
   XFlush( qt_xdisplay() );
 }
 
-void KRootProp::setProp( const QString& rProp )
+void KRootProp::setProp( const TQString& rProp )
 {
   Atom type;
   int format;
@@ -91,7 +91,7 @@ void KRootProp::setProp( const QString& rProp )
 
   atom = XInternAtom( qt_xdisplay(), rProp.utf8(), False);
 
-  QString s;
+  TQString s;
   offset = 0; bytes_after = 1;
   while (bytes_after != 0)
   {
@@ -100,7 +100,7 @@ void KRootProp::setProp( const QString& rProp )
                         False, XA_STRING, &type, &format, &nitems, &bytes_after,
                         &buf) == Success && buf) 
     {
-      s += QString::fromUtf8((const char*)buf);
+      s += TQString::fromUtf8((const char*)buf);
       offset += nitems/4;
       XFree(buf);
     }
@@ -109,10 +109,10 @@ void KRootProp::setProp( const QString& rProp )
   // Parse through the property string stripping out key value pairs
   // and putting them in the dictionary
 
-  QString keypair;
+  TQString keypair;
   int i=0;
-  QString key;
-  QString value;
+  TQString key;
+  TQString value;
 
   while(s.length() >0 )
   {
@@ -142,7 +142,7 @@ void KRootProp::setProp( const QString& rProp )
 }
 
 
-QString KRootProp::prop() const
+TQString KRootProp::prop() const
 {
     return property_;
 }
@@ -157,8 +157,8 @@ void KRootProp::destroy()
     }
 }
 
-QString KRootProp::readEntry( const QString& rKey,
-			    const QString& pDefault ) const
+TQString KRootProp::readEntry( const TQString& rKey,
+			    const TQString& pDefault ) const
 {
   if( propDict.contains( rKey ) )
       return propDict[ rKey ];
@@ -166,10 +166,10 @@ QString KRootProp::readEntry( const QString& rKey,
       return pDefault;
 }
 
-int KRootProp::readNumEntry( const QString& rKey, int nDefault ) const
+int KRootProp::readNumEntry( const TQString& rKey, int nDefault ) const
 {
 
-  QString aValue = readEntry( rKey );
+  TQString aValue = readEntry( rKey );
   if( !aValue.isNull() )
   {
     bool ok;
@@ -182,16 +182,16 @@ int KRootProp::readNumEntry( const QString& rKey, int nDefault ) const
 }
 
 
-QFont KRootProp::readFontEntry( const QString& rKey,
-                                const QFont* pDefault ) const
+TQFont KRootProp::readFontEntry( const TQString& rKey,
+                                const TQFont* pDefault ) const
 {
-  QFont aRetFont;
-  QFont aDefFont;
+  TQFont aRetFont;
+  TQFont aDefFont;
 
   if (pDefault)
     aDefFont = *pDefault;
 
-  QString aValue = readEntry( rKey );
+  TQString aValue = readEntry( rKey );
   if( aValue.isNull() )
     return aDefFont; // Return default font
 
@@ -202,16 +202,16 @@ QFont KRootProp::readFontEntry( const QString& rKey,
 }
 
 
-QColor KRootProp::readColorEntry( const QString& rKey,
-								const QColor* pDefault ) const
+TQColor KRootProp::readColorEntry( const TQString& rKey,
+								const TQColor* pDefault ) const
 {
-  QColor aRetColor;
+  TQColor aRetColor;
   int nRed = 0, nGreen = 0, nBlue = 0;
 
   if( pDefault )
     aRetColor = *pDefault;
 
-  QString aValue = readEntry( rKey );
+  TQString aValue = readEntry( rKey );
   if( aValue.isNull() )
     return aRetColor;
 
@@ -243,58 +243,58 @@ QColor KRootProp::readColorEntry( const QString& rKey,
   return aRetColor;
 }
 
-QString KRootProp::writeEntry( const QString& rKey, const QString& rValue )
+TQString KRootProp::writeEntry( const TQString& rKey, const TQString& rValue )
 {
     dirty = true;
     if ( propDict.contains( rKey ) ) {
-	QString aValue = propDict[ rKey ];
+	TQString aValue = propDict[ rKey ];
 	propDict.replace( rKey, rValue );
 	return aValue;
     }
     else {
 	propDict.insert( rKey, rValue );
-	return QString::null;
+	return TQString::null;
     }
 }
 
-QString KRootProp::writeEntry( const QString& rKey, int nValue )
+TQString KRootProp::writeEntry( const TQString& rKey, int nValue )
 {
-  QString aValue;
+  TQString aValue;
 
   aValue.setNum( nValue );
 
   return writeEntry( rKey, aValue );
 }
 
-QString KRootProp::writeEntry( const QString& rKey, const QFont& rFont )
+TQString KRootProp::writeEntry( const TQString& rKey, const TQFont& rFont )
 {
   return writeEntry( rKey, rFont.toString() );
 }
 
-QString KRootProp::writeEntry( const QString& rKey, const QColor& rColor )
+TQString KRootProp::writeEntry( const TQString& rKey, const TQColor& rColor )
 {
-  QString aValue = QString( "%1,%2,%3").arg(rColor.red()).arg(rColor.green()).arg(rColor.blue() );
+  TQString aValue = TQString( "%1,%2,%3").arg(rColor.red()).arg(rColor.green()).arg(rColor.blue() );
 
   return writeEntry( rKey, aValue );
 }
 
-QString KRootProp::removeEntry(const QString& rKey)
+TQString KRootProp::removeEntry(const TQString& rKey)
 {
     if (propDict.contains(rKey)) {
 	dirty = true;
-	QString aValue = propDict[rKey];
+	TQString aValue = propDict[rKey];
 	propDict.remove(rKey);
 	return aValue;
     } else
-	return QString::null;
+	return TQString::null;
 }
 
-QStringList KRootProp::listEntries() const
+TQStringList KRootProp::listEntries() const
 {
-    QMap<QString,QString>::ConstIterator it;
-    QStringList list;
+    TQMap<TQString,TQString>::ConstIterator it;
+    TQStringList list;
 
-	QMap<QString,QString>::ConstIterator end(propDict.end());
+	TQMap<TQString,TQString>::ConstIterator end(propDict.end());
     for (it=propDict.begin(); it!=end; ++it)
 	list += it.key();
 

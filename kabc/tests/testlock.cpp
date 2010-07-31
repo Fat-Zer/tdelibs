@@ -33,12 +33,12 @@
 #include <kmessagebox.h>
 #include <kdialog.h>
 
-#include <qwidget.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qlistview.h>
-#include <qdir.h>
+#include <tqwidget.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqlistview.h>
+#include <tqdir.h>
 
 #include <iostream>
 
@@ -47,9 +47,9 @@
 
 using namespace KABC;
 
-LockWidget::LockWidget( const QString &identifier )
+LockWidget::LockWidget( const TQString &identifier )
 {
-  QVBoxLayout *topLayout = new QVBoxLayout( this );
+  TQVBoxLayout *topLayout = new TQVBoxLayout( this );
   topLayout->setMargin( KDialog::marginHint() );
   topLayout->setSpacing( KDialog::spacingHint() );
 
@@ -60,31 +60,31 @@ LockWidget::LockWidget( const QString &identifier )
 
     int pid = getpid();
 
-    QLabel *pidLabel = new QLabel( "Process ID: " + QString::number( pid ),
+    TQLabel *pidLabel = new TQLabel( "Process ID: " + TQString::number( pid ),
                                    this );
     topLayout->addWidget( pidLabel );
 
-    QHBoxLayout *identifierLayout = new QHBoxLayout( topLayout );
+    TQHBoxLayout *identifierLayout = new TQHBoxLayout( topLayout );
 
-    QLabel *resourceLabel = new QLabel( "Identifier:", this );
+    TQLabel *resourceLabel = new TQLabel( "Identifier:", this );
     identifierLayout->addWidget( resourceLabel );
 
-    QLabel *resourceIdentifier = new QLabel( identifier, this );
+    TQLabel *resourceIdentifier = new TQLabel( identifier, this );
     identifierLayout->addWidget( resourceIdentifier );
 
-    mStatus = new QLabel( "Status: Unlocked", this );
+    mStatus = new TQLabel( "Status: Unlocked", this );
     topLayout->addWidget( mStatus );
 
-    QPushButton *button = new QPushButton( "Lock", this );
+    TQPushButton *button = new TQPushButton( "Lock", this );
     topLayout->addWidget( button );
-    connect( button, SIGNAL( clicked() ), SLOT( lock() ) );
+    connect( button, TQT_SIGNAL( clicked() ), TQT_SLOT( lock() ) );
 
-    button = new QPushButton( "Unlock", this );
+    button = new TQPushButton( "Unlock", this );
     topLayout->addWidget( button );
-    connect( button, SIGNAL( clicked() ), SLOT( unlock() ) );
+    connect( button, TQT_SIGNAL( clicked() ), TQT_SLOT( unlock() ) );
   }
 
-  mLockView = new QListView( this );
+  mLockView = new TQListView( this );
   topLayout->addWidget( mLockView );
   mLockView->addColumn( "Lock File" );
   mLockView->addColumn( "PID" );
@@ -92,17 +92,17 @@ LockWidget::LockWidget( const QString &identifier )
 
   updateLockView();
 
-  QPushButton *quitButton = new QPushButton( "Quit", this );
+  TQPushButton *quitButton = new TQPushButton( "Quit", this );
   topLayout->addWidget( quitButton );
-  connect( quitButton, SIGNAL( clicked() ), SLOT( close() ) );
+  connect( quitButton, TQT_SIGNAL( clicked() ), TQT_SLOT( close() ) );
   
   KDirWatch *watch = KDirWatch::self();
-  connect( watch, SIGNAL( dirty( const QString & ) ),
-           SLOT( updateLockView() ) );
-  connect( watch, SIGNAL( created( const QString & ) ),
-           SLOT( updateLockView() ) );
-  connect( watch, SIGNAL( deleted( const QString & ) ),
-           SLOT( updateLockView() ) );
+  connect( watch, TQT_SIGNAL( dirty( const TQString & ) ),
+           TQT_SLOT( updateLockView() ) );
+  connect( watch, TQT_SIGNAL( created( const TQString & ) ),
+           TQT_SLOT( updateLockView() ) );
+  connect( watch, TQT_SIGNAL( deleted( const TQString & ) ),
+           TQT_SLOT( updateLockView() ) );
   watch->addDir( Lock::locksDir() );
   watch->startScan();
 }
@@ -116,20 +116,20 @@ void LockWidget::updateLockView()
 {
   mLockView->clear();
   
-  QDir dir( Lock::locksDir() );
+  TQDir dir( Lock::locksDir() );
   
-  QStringList files = dir.entryList( "*.lock" );
+  TQStringList files = dir.entryList( "*.lock" );
   
-  QStringList::ConstIterator it;
+  TQStringList::ConstIterator it;
   for( it = files.begin(); it != files.end(); ++it ) {
     if ( *it == "." || *it == ".." ) continue;
     
-    QString app;
+    TQString app;
     int pid;
     if ( !Lock::readLockFile( dir.filePath( *it ), pid, app ) ) {
       kdWarning() << "Unable to open lock file '" << *it << "'" << endl; 
     } else {
-      new QListViewItem( mLockView, *it, QString::number( pid ), app );
+      new TQListViewItem( mLockView, *it, TQString::number( pid ), app );
     }
   }
 }
@@ -171,7 +171,7 @@ int main(int argc,char **argv)
 
   KApplication app;
 
-  QString identifier;
+  TQString identifier;
 
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
   if ( args->count() == 1 ) {

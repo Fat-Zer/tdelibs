@@ -21,7 +21,7 @@
 
 #include <krun.h>
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class testKRun : public KRun
 {
@@ -34,7 +34,7 @@ public:
 
   virtual ~testKRun() {}
 
-  virtual void foundMimeType( const QString& _type );
+  virtual void foundMimeType( const TQString& _type );
 
 };
 
@@ -50,8 +50,8 @@ public slots:
  void slotStart();
  void slotStop();
 private:
- QPushButton * start;
- QPushButton * stop;
+ TQPushButton * start;
+ TQPushButton * stop;
 
 };
 

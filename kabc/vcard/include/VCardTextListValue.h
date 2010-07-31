@@ -24,9 +24,9 @@
 #ifndef  TEXTLISTVALUE_H
 #define  TEXTLISTVALUE_H
 
-#include <qstrlist.h>
+#include <tqstrlist.h>
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <VCardValue.h>
 
@@ -39,11 +39,11 @@ class KVCARD_EXPORT TextListValue : public Value
 #include "TextListValue-generated.h"
 	
 	unsigned int numValues();
-	QCString value(unsigned int);
+	TQCString value(unsigned int);
 	
 	private:
 		
-		QStrList valueList_;
+		TQStrList valueList_;
 };
 
 }

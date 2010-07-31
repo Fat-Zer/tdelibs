@@ -28,8 +28,8 @@
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
 #include "vcardconverter.h"
 
@@ -46,7 +46,7 @@ int main( int argc, char **argv )
 
   addressee.setNameFromString( "Mr. Tobias Koenig Jr." );
   addressee.setNickName( "tokoe" );
-  addressee.setBirthday( QDate( 1982, 7, 19 ) );
+  addressee.setBirthday( TQDate( 1982, 7, 19 ) );
   addressee.setMailer( "mutt1.2" );
   addressee.setTimeZone( KABC::TimeZone( +2 ) );
 
@@ -60,26 +60,26 @@ int main( int argc, char **argv )
   addressee.setOrganization( "KDE" );
   addressee.setNote( "nerver\ntouch a running system" );
   addressee.setProductId( "testId" );
-  addressee.setRevision( QDateTime::currentDateTime() );
+  addressee.setRevision( TQDateTime::currentDateTime() );
   addressee.setSortString( "koenig" );
   addressee.setUrl( KURL( "http://wgess16.dyndns.org") );
   addressee.setSecrecy(  KABC::Secrecy( KABC::Secrecy::Confidential ) );
 /*
-  QImage img;
+  TQImage img;
   img.load( "testimg.png", "PNG" );
   KABC::Picture photo;
   photo.setData( img );
   addressee.setPhoto( photo );
 
-  QImage img2;
+  TQImage img2;
   img2.load( "testimg.png", "PNG" );
   KABC::Picture logo;
   logo.setData( img2 );
   addressee.setLogo( logo );
 
-  QFile soundFile( "testsound.wav" );
+  TQFile soundFile( "testsound.wav" );
   soundFile.open( IO_ReadOnly );
-  QByteArray data = soundFile.readAll();
+  TQByteArray data = soundFile.readAll();
   soundFile.close();
   KABC::Sound sound;
   sound.setData( data );
@@ -96,7 +96,7 @@ int main( int argc, char **argv )
   KABC::Key key( "secret key", KABC::Key::X509 );
   addressee.insertKey( key );
 
-  QStringList categories;
+  TQStringList categories;
   categories << "Friends" << "School" << "KDE";
   addressee.setCategories( categories );
 
@@ -115,18 +115,18 @@ int main( int argc, char **argv )
   KABC::Addressee::List list;
   for ( int i = 0; i < 1000; ++i ) {
     KABC::Addressee addr = addressee;
-    addr.setUid( QString::number( i ) );
+    addr.setUid( TQString::number( i ) );
     list.append( addr );
   }
 
   KABC::VCardConverter converter;
-  QString txt = converter.createVCards( list );
+  TQString txt = converter.createVCards( list );
 
-  QFile file( "out.vcf" );
+  TQFile file( "out.vcf" );
   file.open( IO_WriteOnly );
 
-  QTextStream s( &file );
-  s.setEncoding( QTextStream::UnicodeUTF8 );
+  TQTextStream s( &file );
+  s.setEncoding( TQTextStream::UnicodeUTF8 );
   s << txt;
   file.close();
 

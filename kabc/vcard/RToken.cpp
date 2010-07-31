@@ -24,14 +24,14 @@
 
 #include <string.h>
 #include <stddef.h>
-#include <qcstring.h>
-#include <qstrlist.h>
+#include <tqcstring.h>
+#include <tqstrlist.h>
 
 namespace VCARD
 {
 
 	Q_UINT32
-RTokenise(const char * str, const char * delim, QStrList & l)
+RTokenise(const char * str, const char * delim, TQStrList & l)
 {
 	// FIXME no stderr !
 	l.clear();

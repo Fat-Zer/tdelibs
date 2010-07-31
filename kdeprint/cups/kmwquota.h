@@ -29,10 +29,10 @@ class KMWQuota : public KMWizardPage
 {
 	Q_OBJECT
 public:
-	KMWQuota(QWidget *parent = 0, const char *name = 0);
+	KMWQuota(TQWidget *parent = 0, const char *name = 0);
 	virtual ~KMWQuota();
 
-	bool isValid(QString&);
+	bool isValid(TQString&);
 	void initPrinter(KMPrinter*);
 	void updatePrinter(KMPrinter*);
 

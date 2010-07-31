@@ -18,7 +18,7 @@
 #ifndef __PTY_h_Included__
 #define __PTY_h_Included__
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <kdelibs_export.h>
 
@@ -57,12 +57,12 @@ public:
      * Get the slave name.
      * @return The slave name.
      */
-    QCString ptsname();
+    TQCString ptsname();
     
 private:
 
     int ptyfd;
-    QCString ptyname, ttyname;
+    TQCString ptyname, ttyname;
 
     class PTYPrivate;
     PTYPrivate *d;

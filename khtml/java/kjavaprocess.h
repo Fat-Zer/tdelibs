@@ -25,7 +25,7 @@
 #define KJAVAPROCESS_H
 
 #include <kprocess.h>
-#include <qcstring.h>
+#include <tqcstring.h>
 
 /**
  * @short A class for invoking a Java VM
@@ -71,7 +71,7 @@ public:
     /**
      * Used to specify the path to the Java executable to be run.
      */
-    void setJVMPath( const QString& path );
+    void setJVMPath( const TQString& path );
 
     /**
      * This will set the classpath the Java process will use.  It's used as a the
@@ -80,42 +80,42 @@ public:
      * users to simply drop the JSSE (Java Secure Sockets Extension classes into that directory
      * without having to modify the jvm configuration files.
      */
-    void setClasspath( const QString& classpath );
+    void setClasspath( const TQString& classpath );
 
     /**
-     * Set a property on the java command line as -Dname=value, or -Dname if value is QString::null.
+     * Set a property on the java command line as -Dname=value, or -Dname if value is TQString::null.
      * For example, you could call setSystemProperty( "kjas.debug", "" ) to set the kjas.debug property.
      */
-    void setSystemProperty( const QString& name, const QString& value );
+    void setSystemProperty( const TQString& name, const TQString& value );
 
     /**
      * The class to be called when startJava() is called.
      */
-    void setMainClass( const QString& clazzName );
+    void setMainClass( const TQString& clazzName );
 
     /**
      * Extra flags passed to the JVM.
      */
-    void setExtraArgs( const QString& args );
+    void setExtraArgs( const TQString& args );
 
     /**
      * Arguments passed to the main class.  They will be very last in the java
      * command line, after the main class.
      */
-    void setClassArgs( const QString& classArgs );
+    void setClassArgs( const TQString& classArgs );
 
     /**
      * Sends a command to the KJAS Applet Server by building a QByteArray
      * out of the data, and then writes it standard out.
      */
-    void send( char cmd_code, const QStringList& args );
+    void send( char cmd_code, const TQStringList& args );
 
     /**
      * Sends a command to the KJAS Applet Server by building a QByteArray
      * out of the data, and then writes it standard out.  It adds each QString
      * in the arg list, and then adds the data array.
      */
-    void send( char cmd_code, const QStringList& args, const QByteArray& data );
+    void send( char cmd_code, const TQStringList& args, const TQByteArray& data );
 
     /**
      * Writes all pending data to JVM
@@ -145,15 +145,15 @@ protected:
     virtual bool invokeJVM();
     virtual void killJVM();
 
-    QByteArray* addArgs( char cmd_code, const QStringList& args );
+    TQByteArray* addArgs( char cmd_code, const TQStringList& args );
     void        popBuffer();
-    void        sendBuffer( QByteArray* buff );
-    void        storeSize( QByteArray* buff );
+    void        sendBuffer( TQByteArray* buff );
+    void        storeSize( TQByteArray* buff );
 
     KProcess* javaProcess;
 
 signals:
-    void received( const QByteArray& );
+    void received( const TQByteArray& );
     void exited( int status );
 
 private:

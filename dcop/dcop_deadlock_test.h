@@ -29,23 +29,23 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <dcopclient.h>
 #include <dcopobject.h>
 
-#include <qobject.h>
-#include <qtimer.h>
+#include <tqobject.h>
+#include <tqtimer.h>
 
 #include <stdio.h>
 
-class MyDCOPObject : public QObject, public DCOPObject
+class MyDCOPObject : public TQObject, public DCOPObject
 {
   Q_OBJECT
 public:
-  MyDCOPObject(const QCString &name, const QCString &remoteName);
-  bool process(const QCString &fun, const QByteArray &data,
-	       QCString& replyType, QByteArray &replyData);
+  MyDCOPObject(const TQCString &name, const TQCString &remoteName);
+  bool process(const TQCString &fun, const TQByteArray &data,
+	       TQCString& replyType, TQByteArray &replyData);
 public slots:
   void slotTimeout();
 
 private:
-  QCString m_remoteName;
-  QTimer m_timer;
+  TQCString m_remoteName;
+  TQTimer m_timer;
 };
 #endif

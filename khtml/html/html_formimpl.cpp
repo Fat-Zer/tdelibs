@@ -58,12 +58,12 @@
 #endif
 #include <netaccess.h>
 #include <kfileitem.h>
-#include <qfile.h>
-#include <qdir.h>
-#include <qtextcodec.h>
+#include <tqfile.h>
+#include <tqdir.h>
+#include <tqtextcodec.h>
 
 // for keygen
-#include <qstring.h>
+#include <tqstring.h>
 #include <ksslkeygen.h>
 
 #include <assert.h>
@@ -93,10 +93,10 @@ HTMLFormElementImpl::~HTMLFormElementImpl()
     if (getDocument() && getDocument()->view() && getDocument()->view()->part()) {
         getDocument()->view()->part()->dequeueWallet(this);
     }
-    QPtrListIterator<HTMLGenericFormElementImpl> it(formElements);
+    TQPtrListIterator<HTMLGenericFormElementImpl> it(formElements);
     for (; it.current(); ++it)
         it.current()->m_form = 0;
-    QPtrListIterator<HTMLImageElementImpl> it2(imgElements);
+    TQPtrListIterator<HTMLImageElementImpl> it2(imgElements);
     for (; it2.current(); ++it2)
         it2.current()->m_form = 0;
 }
@@ -109,7 +109,7 @@ NodeImpl::Id HTMLFormElementImpl::id() const
 long HTMLFormElementImpl::length() const
 {
     int len = 0;
-    QPtrListIterator<HTMLGenericFormElementImpl> it(formElements);
+    TQPtrListIterator<HTMLGenericFormElementImpl> it(formElements);
     for (; it.current(); ++it)
 	if (it.current()->isEnumeratable())
 	    ++len;
@@ -117,19 +117,19 @@ long HTMLFormElementImpl::length() const
     return len;
 }
 
-static QCString encodeCString(const QCString& e)
+static TQCString encodeCString(const TQCString& e)
 {
     // http://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1
     // safe characters like NS handles them for compatibility
     static const char *safe = "-._*";
-    QCString encoded(( e.length()+e.contains( '\n' ) )*3
+    TQCString encoded(( e.length()+e.contains( '\n' ) )*3
                      +e.contains('\r') * 3 + 1);
     int enclen = 0;
     bool crmissing = false;
     unsigned char oldc;
     unsigned char c ='\0';
 
-    //QCString orig(e.data(), e.size());
+    //TQCString orig(e.data(), e.size());
 
     unsigned len = e.length();
     for(unsigned pos = 0; pos < len; pos++) {
@@ -184,15 +184,15 @@ static QCString encodeCString(const QCString& e)
 
 // ### This function only encodes to numeric ampersand escapes,
 // ### we could use standard ampersand values as well.
-inline static QString escapeUnencodeable(const QTextCodec* codec, const QString& s) {
-    QString enc_string;
+inline static TQString escapeUnencodeable(const TQTextCodec* codec, const TQString& s) {
+    TQString enc_string;
     const int len = s.length();
     for(int i=0; i <len; ++i) {
-        const QChar c = s[i];
+        const TQChar c = s[i];
         if (codec->canEncode(c))
             enc_string.append(c);
         else {
-            QString ampersandEscape;
+            TQString ampersandEscape;
             ampersandEscape.sprintf("&#%u;", c.unicode());
             enc_string.append(ampersandEscape);
         }
@@ -200,37 +200,37 @@ inline static QString escapeUnencodeable(const QTextCodec* codec, const QString&
     return enc_string;
 }
 
-inline static QCString fixUpfromUnicode(const QTextCodec* codec, const QString& s)
+inline static TQCString fixUpfromUnicode(const TQTextCodec* codec, const TQString& s)
 {
-    QCString str = codec->fromUnicode(escapeUnencodeable(codec,s));
+    TQCString str = codec->fromUnicode(escapeUnencodeable(codec,s));
     str.truncate(str.length());
     return str;
 }
 
-QByteArray HTMLFormElementImpl::formData(bool& ok)
+TQByteArray HTMLFormElementImpl::formData(bool& ok)
 {
 #ifdef FORMS_DEBUG
     kdDebug( 6030 ) << "form: formData()" << endl;
 #endif
 
-    QByteArray form_data(0);
-    QCString enc_string = ""; // used for non-multipart data
+    TQByteArray form_data(0);
+    TQCString enc_string = ""; // used for non-multipart data
 
     // find out the QTextcodec to use
-    const QString str = m_acceptcharset.string();
-    const QChar space(' ');
+    const TQString str = m_acceptcharset.string();
+    const TQChar space(' ');
     const unsigned int strLength = str.length();
     for(unsigned int i=0; i < strLength; ++i) if(str[i].latin1() == ',') str[i] = space;
-    const QStringList charsets = QStringList::split(' ', str);
-    QTextCodec* codec = 0;
+    const TQStringList charsets = TQStringList::split(' ', str);
+    TQTextCodec* codec = 0;
     KHTMLView *view = getDocument()->view();
     {
-        QStringList::ConstIterator it = charsets.begin();
-        const QStringList::ConstIterator itEnd = charsets.end();
+        TQStringList::ConstIterator it = charsets.begin();
+        const TQStringList::ConstIterator itEnd = charsets.end();
 
         for ( ; it != itEnd; ++it )
         {
-            QString enc = (*it);
+            TQString enc = (*it);
             if(enc.contains("UNKNOWN"))
             {
                 // use standard document encoding
@@ -243,21 +243,21 @@ QByteArray HTMLFormElementImpl::formData(bool& ok)
         }
     }
     if(!codec)
-        codec = QTextCodec::codecForLocale();
+        codec = TQTextCodec::codecForLocale();
 
     // we need to map visual hebrew to logical hebrew, as the web
     // server alsways expects responses in logical ordering
     if ( codec->mibEnum() == 11 )
-	codec = QTextCodec::codecForMib( 85 );
+	codec = TQTextCodec::codecForMib( 85 );
 
     m_encCharset = codec->name();
     const unsigned int m_encCharsetLength = m_encCharset.length();
     for(unsigned int i=0; i < m_encCharsetLength; ++i)
-        m_encCharset[i] = m_encCharset[i].latin1() == ' ' ? QChar('-') : m_encCharset[i].lower();
+        m_encCharset[i] = m_encCharset[i].latin1() == ' ' ? TQChar('-') : m_encCharset[i].lower();
 
-    QStringList fileUploads, fileNotUploads;
+    TQStringList fileUploads, fileNotUploads;
 
-    for (QPtrListIterator<HTMLGenericFormElementImpl> it(formElements); it.current(); ++it) {
+    for (TQPtrListIterator<HTMLGenericFormElementImpl> it(formElements); it.current(); ++it) {
         HTMLGenericFormElementImpl* const current = it.current();
         khtml::encodingList lst;
 
@@ -288,7 +288,7 @@ QByteArray HTMLFormElementImpl::formData(bool& ok)
                 }
                 else
                 {
-                    QCString hstr("--");
+                    TQCString hstr("--");
                     hstr += m_boundary.latin1();
                     hstr += "\r\n";
                     hstr += "Content-Disposition: form-data; name=\"";
@@ -302,10 +302,10 @@ QByteArray HTMLFormElementImpl::formData(bool& ok)
                         current->renderer())
                     {
                         KURL path;
-                        QString val = static_cast<HTMLInputElementImpl*>(current)->value().string().stripWhiteSpace();
+                        TQString val = static_cast<HTMLInputElementImpl*>(current)->value().string().stripWhiteSpace();
                         if (!val.isEmpty() &&
-                            QDir::isRelativePath(val) &&
-                            QFile::exists(KGlobalSettings::documentPath() + val)) {
+                            TQDir::isRelativePath(val) &&
+                            TQFile::exists(KGlobalSettings::documentPath() + val)) {
                             path.setPath(KGlobalSettings::documentPath() + val);
                         } else {
                             path = KURL::fromPathOrURL(val);
@@ -359,7 +359,7 @@ QByteArray HTMLFormElementImpl::formData(bool& ok)
 
         if (result == KMessageBox::Cancel) {
             ok = false;
-            return QByteArray();
+            return TQByteArray();
         }
     }
 
@@ -374,7 +374,7 @@ QByteArray HTMLFormElementImpl::formData(bool& ok)
 
         if (result == KMessageBox::Cancel) {
             ok = false;
-            return QByteArray();
+            return TQByteArray();
         }
     }
 
@@ -406,27 +406,27 @@ void HTMLFormElementImpl::setEnctype( const DOMString& type )
         m_enctype = "application/x-www-form-urlencoded";
         m_multipart = false;
     }
-    m_encCharset = QString::null;
+    m_encCharset = TQString::null;
 }
 
-static QString calculateAutoFillKey(const HTMLFormElementImpl& e)
+static TQString calculateAutoFillKey(const HTMLFormElementImpl& e)
 {
     KURL k(e.getDocument()->URL());
-    k.setRef(QString::null);
-    k.setQuery(QString::null);
+    k.setRef(TQString::null);
+    k.setQuery(TQString::null);
     // ensure that we have the user / password inside the url
     // otherwise we might have a potential security problem
     // by saving passwords under wrong lookup key.
-    const QString name = e.getAttribute(ATTR_NAME).string().stripWhiteSpace();
-    const QRegExp re("[;,!]");
-    const QStringList url = QStringList::split(re, k.url());
+    const TQString name = e.getAttribute(ATTR_NAME).string().stripWhiteSpace();
+    const TQRegExp re("[;,!]");
+    const TQStringList url = TQStringList::split(re, k.url());
     return url[0] + '#' + name;
 }
 
 void HTMLFormElementImpl::doAutoFill()
 {
 #ifndef KHTML_NO_WALLET
-    const QString key = calculateAutoFillKey(*this);
+    const TQString key = calculateAutoFillKey(*this);
 
     if (KWallet::Wallet::keyDoesNotExist(KWallet::Wallet::NetworkWallet(),
                                          KWallet::Wallet::FormDataFolder(),
@@ -442,16 +442,16 @@ void HTMLFormElementImpl::doAutoFill()
 void HTMLFormElementImpl::walletOpened(KWallet::Wallet *w) {
 #ifndef KHTML_NO_WALLET
     assert(w);
-    const QString key = calculateAutoFillKey(*this);
+    const TQString key = calculateAutoFillKey(*this);
     if (!w->hasFolder(KWallet::Wallet::FormDataFolder())) {
         return; // failed
     }
     w->setFolder(KWallet::Wallet::FormDataFolder());
-    QMap<QString, QString> map;
+    TQMap<TQString, TQString> map;
     if (w->readMap(key, map))
         return; // failed, abort
 
-    for (QPtrListIterator<HTMLGenericFormElementImpl> it(formElements); it.current(); ++it) {
+    for (TQPtrListIterator<HTMLGenericFormElementImpl> it(formElements); it.current(); ++it) {
         if (it.current()->id() == ID_INPUT) {
             HTMLInputElementImpl* const current = static_cast<HTMLInputElementImpl*>(it.current());
             if ((current->inputType() == HTMLInputElementImpl::PASSWORD ||
@@ -472,7 +472,7 @@ void HTMLFormElementImpl::submitFromKeyboard()
     // if there is none, do a submit anyway if not more
     // than one <input type=text> or <input type=password>
     unsigned int inputtext = 0;
-    for (QPtrListIterator<HTMLGenericFormElementImpl> it(formElements); it.current(); ++it) {
+    for (TQPtrListIterator<HTMLGenericFormElementImpl> it(formElements); it.current(); ++it) {
         if (it.current()->id() == ID_BUTTON) {
             HTMLButtonElementImpl* const current = static_cast<HTMLButtonElementImpl *>(it.current());
             if (current->buttonType() == HTMLButtonElementImpl::SUBMIT && !current->disabled()) {
@@ -513,7 +513,7 @@ void HTMLFormElementImpl::gatherWalletData()
     m_haveTextarea = false;
     const KURL formUrl(getDocument()->URL());
     if (view && !view->nonPasswordStorableSite(formUrl.host())) {
-        for (QPtrListIterator<HTMLGenericFormElementImpl> it(formElements); it.current(); ++it) {
+        for (TQPtrListIterator<HTMLGenericFormElementImpl> it(formElements); it.current(); ++it) {
             if (it.current()->id() == ID_INPUT)  {
                 HTMLInputElementImpl* const c = static_cast<HTMLInputElementImpl*> (it.current());
                 if ((c->inputType() == HTMLInputElementImpl::TEXT ||
@@ -570,7 +570,7 @@ void HTMLFormElementImpl::submit(  )
 
     bool ok;
     KHTMLView* const view = getDocument()->view();
-    const QByteArray form_data = formData(ok);
+    const TQByteArray form_data = formData(ok);
     const KURL formUrl(getDocument()->URL());
 
     if (ok && view) {
@@ -579,7 +579,7 @@ void HTMLFormElementImpl::submit(  )
         }
 #ifndef KHTML_NO_WALLET
         if (m_havePassword && !m_haveTextarea && KWallet::Wallet::isEnabled()) {
-            const QString key = calculateAutoFillKey(*this);
+            const TQString key = calculateAutoFillKey(*this);
             const bool doesnotexist = KWallet::Wallet::keyDoesNotExist(KWallet::Wallet::NetworkWallet(), KWallet::Wallet::FormDataFolder(), key);
             KWallet::Wallet* const w = view->part()->wallet();
             bool login_changed = false;
@@ -589,10 +589,10 @@ void HTMLFormElementImpl::submit(  )
                 // we had so far.
                 if (w->hasFolder(KWallet::Wallet::FormDataFolder())) {
                     w->setFolder(KWallet::Wallet::FormDataFolder());
-                    QMap<QString, QString> map;
+                    TQMap<TQString, TQString> map;
                     if (!w->readMap(key, map)) {
-                        QMapConstIterator<QString, QString> it = map.begin();
-                        const QMapConstIterator<QString, QString> itEnd = map.end();
+                        TQMapConstIterator<TQString, TQString> it = map.begin();
+                        const TQMapConstIterator<TQString, TQString> itEnd = map.end();
                         for ( ; it != itEnd; ++it )
                             if ( map[it.key()] != m_walletMap[it.key()] ) {
                                 login_changed = true;
@@ -613,9 +613,9 @@ void HTMLFormElementImpl::submit(  )
                                                           i18n("Store"), KGuiItem(i18n("Ne&ver for This Site")), i18n("Do Not Store"));
 
                 bool checkboxResult = false;
-                const int savePassword = KMessageBox::createKMessageBox(dialog, QMessageBox::Information,
+                const int savePassword = KMessageBox::createKMessageBox(dialog, TQMessageBox::Information,
 									i18n("Store passwords on this page?"),
-                                                                            QStringList(), QString::null, &checkboxResult, KMessageBox::Notify);
+                                                                            TQStringList(), TQString::null, &checkboxResult, KMessageBox::Notify);
 
                 if ( savePassword == KDialogBase::Yes ) {
                     // ensure that we have the user / password inside the url
@@ -668,7 +668,7 @@ void HTMLFormElementImpl::reset(  )
         return;
     }
 
-    for (QPtrListIterator<HTMLGenericFormElementImpl> it(formElements); it.current(); ++it)
+    for (TQPtrListIterator<HTMLGenericFormElementImpl> it(formElements); it.current(); ++it)
         it.current()->reset();
 
     m_inreset = false;
@@ -732,13 +732,13 @@ void HTMLFormElementImpl::insertedIntoDocument()
     HTMLElementImpl::insertedIntoDocument();
 }
 
-void HTMLFormElementImpl::removeId(const QString& id)
+void HTMLFormElementImpl::removeId(const TQString& id)
 {
     getDocument()->underDocNamedCache().remove(id, this);
     HTMLElementImpl::removeId(id);
 }
 
-void HTMLFormElementImpl::addId   (const QString& id)
+void HTMLFormElementImpl::addId   (const TQString& id)
 {
     getDocument()->underDocNamedCache().add(id, this);
     HTMLElementImpl::addId(id);
@@ -747,7 +747,7 @@ void HTMLFormElementImpl::addId   (const QString& id)
 
 void HTMLFormElementImpl::radioClicked( HTMLGenericFormElementImpl *caller )
 {
-    for (QPtrListIterator<HTMLGenericFormElementImpl> it(formElements); it.current(); ++it) {
+    for (TQPtrListIterator<HTMLGenericFormElementImpl> it(formElements); it.current(); ++it) {
         HTMLGenericFormElementImpl* const current = it.current();
         if (current->id() == ID_INPUT &&
             static_cast<HTMLInputElementImpl*>(current)->inputType() == HTMLInputElementImpl::RADIO &&
@@ -956,16 +956,16 @@ bool HTMLGenericFormElementImpl::isFocusable() const
     if (!m_render || !m_render->isWidget())
 	return false;
 
-    QWidget* widget = static_cast<RenderWidget*>(m_render)->widget();
-    return widget && widget->focusPolicy() >= QWidget::TabFocus;
+    TQWidget* widget = static_cast<RenderWidget*>(m_render)->widget();
+    return widget && widget->focusPolicy() >= TQWidget::TabFocus;
 }
 
 class FocusHandleWidget : public QWidget
 {
 public:
     void focusNextPrev(bool n) {
-        if (!focusNextPrevChild(n) && inherits("QTextEdit"))
-            QWidget::focusNextPrevChild(n);
+        if (!focusNextPrevChild(n) && inherits("TQTextEdit"))
+            TQWidget::focusNextPrevChild(n);
     }
 };
 
@@ -994,7 +994,7 @@ void HTMLGenericFormElementImpl::defaultEventHandler(EventImpl *evt)
         KHTMLView* const view = getDocument()->view();
         if (view && evt->id() == EventImpl::DOMFOCUSIN_EVENT && isEditable() && m_render && m_render->isWidget()) {
             KHTMLPartBrowserExtension *ext = static_cast<KHTMLPartBrowserExtension *>(view->part()->browserExtension());
-            QWidget* const widget = static_cast<RenderWidget*>(m_render)->widget();
+            TQWidget* const widget = static_cast<RenderWidget*>(m_render)->widget();
             if (ext)
                 ext->editableWidgetFocused(widget);
         }
@@ -1017,14 +1017,14 @@ void HTMLGenericFormElementImpl::defaultEventHandler(EventImpl *evt)
 	if (!evt->defaultHandled() && m_render && m_render->isWidget()) {
 	    // handle tabbing out, either from a single or repeated key event.
 	    if ( evt->id() == EventImpl::KEYPRESS_EVENT && evt->isKeyRelatedEvent() ) {
-	        QKeyEvent* const k = static_cast<KeyEventBaseImpl *>(evt)->qKeyEvent();
+	        TQKeyEvent* const k = static_cast<KeyEventBaseImpl *>(evt)->qKeyEvent();
 	        if ( k && (k->key() == Qt::Key_Tab || k->key() == Qt::Key_BackTab) ) {
-		    QWidget* const widget = static_cast<RenderWidget*>(m_render)->widget();
-		    QFocusEvent::setReason( k->key() == Qt::Key_Tab ? QFocusEvent::Tab : QFocusEvent::Backtab );
+		    TQWidget* const widget = static_cast<RenderWidget*>(m_render)->widget();
+		    TQFocusEvent::setReason( k->key() == Qt::Key_Tab ? TQFocusEvent::Tab : TQFocusEvent::Backtab );
 		    if (widget)
                         static_cast<FocusHandleWidget *>(widget)
 			    ->focusNextPrev(k->key() == Qt::Key_Tab);
-		    QFocusEvent::resetReason();
+		    TQFocusEvent::resetReason();
                     evt->setDefaultHandled();
 	        }
             }
@@ -1033,7 +1033,7 @@ void HTMLGenericFormElementImpl::defaultEventHandler(EventImpl *evt)
 
 	if (view && evt->id() == EventImpl::DOMFOCUSOUT_EVENT && isEditable() && m_render && m_render->isWidget()) {
 	    KHTMLPartBrowserExtension* const ext = static_cast<KHTMLPartBrowserExtension *>(view->part()->browserExtension());
-	    QWidget* const widget = static_cast<RenderWidget*>(m_render)->widget();
+	    TQWidget* const widget = static_cast<RenderWidget*>(m_render)->widget();
 	    if (ext)
 		ext->editableWidgetBlurred(widget);
 
@@ -1118,7 +1118,7 @@ void HTMLButtonElementImpl::defaultEventHandler(EventImpl *evt)
     if (m_type != BUTTON && !m_disabled) {
 	bool act = (evt->id() == EventImpl::DOMACTIVATE_EVENT);
 	if (!act && evt->id()==EventImpl::KEYUP_EVENT && evt->isKeyRelatedEvent()) {
-	    QKeyEvent* const ke = static_cast<KeyEventBaseImpl *>(evt)->qKeyEvent();
+	    TQKeyEvent* const ke = static_cast<KeyEventBaseImpl *>(evt)->qKeyEvent();
 	    if (ke && active() && (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Space))
 		act = true;
 	}
@@ -1143,17 +1143,17 @@ void HTMLButtonElementImpl::activate()
 
 void HTMLButtonElementImpl::click()
 {
-    QMouseEvent me(QEvent::MouseButtonRelease, QPoint(0,0),Qt::LeftButton, 0);
+    TQMouseEvent me(TQEvent::MouseButtonRelease, TQPoint(0,0),Qt::LeftButton, 0);
     dispatchMouseEvent(&me,EventImpl::CLICK_EVENT, 1);
 }
 
-bool HTMLButtonElementImpl::encoding(const QTextCodec* codec, khtml::encodingList& encoding, bool /*multipart*/)
+bool HTMLButtonElementImpl::encoding(const TQTextCodec* codec, khtml::encodingList& encoding, bool /*multipart*/)
 {
     if (m_type != SUBMIT || name().isEmpty() || !m_activeSubmit)
         return false;
 
     encoding += fixUpfromUnicode(codec, name().string());
-    const QString enc_str = m_currValue.isNull() ? QString("") : m_currValue;
+    const TQString enc_str = m_currValue.isNull() ? TQString("") : m_currValue;
     encoding += fixUpfromUnicode(codec, enc_str);
 
     return true;
@@ -1312,14 +1312,14 @@ DOMString HTMLInputElementImpl::type() const
     }
 }
 
-QString HTMLInputElementImpl::state( )
+TQString HTMLInputElementImpl::state( )
 {
     switch (m_type) {
     case PASSWORD:
-        return QString::fromLatin1("."); // empty string, avoid restoring
+        return TQString::fromLatin1("."); // empty string, avoid restoring
     case CHECKBOX:
     case RADIO:
-        return QString::fromLatin1(checked() ? "on" : "off");
+        return TQString::fromLatin1(checked() ? "on" : "off");
     case TEXT:
         if (autoComplete() && value() != getAttribute(ATTR_VALUE) && getDocument()->view())
             getDocument()->view()->addFormCompletionItem(name().string(), value().string());
@@ -1329,12 +1329,12 @@ QString HTMLInputElementImpl::state( )
     }
 }
 
-void HTMLInputElementImpl::restoreState(const QString &state)
+void HTMLInputElementImpl::restoreState(const TQString &state)
 {
     switch (m_type) {
     case CHECKBOX:
     case RADIO:
-        setChecked((state == QString::fromLatin1("on")));
+        setChecked((state == TQString::fromLatin1("on")));
         break;
     case FILE:
         m_value = DOMString(state.left(state.length()-1));
@@ -1359,7 +1359,7 @@ void HTMLInputElementImpl::select(  )
 
 void HTMLInputElementImpl::click()
 {
-    QMouseEvent me(QEvent::MouseButtonRelease, QPoint(0,0),Qt::LeftButton, 0);
+    TQMouseEvent me(TQEvent::MouseButtonRelease, TQPoint(0,0),Qt::LeftButton, 0);
     dispatchMouseEvent(&me,0, 1);
     dispatchMouseEvent(&me,EventImpl::CLICK_EVENT, 1);
 }
@@ -1447,9 +1447,9 @@ void HTMLInputElementImpl::attach()
         // FIXME: This needs to be dynamic, doesn't it, since someone could set this
         // after attachment?
         if ((uint) m_type <= ISINDEX && !m_value.isEmpty()) {
-            const QString value = m_value.string();
+            const TQString value = m_value.string();
             // remove newline stuff..
-            QString nvalue;
+            TQString nvalue;
             unsigned int valueLength = value.length();
             for (unsigned int i = 0; i < valueLength; ++i)
                 if (value[i] >= ' ')
@@ -1523,9 +1523,9 @@ DOMString HTMLInputElementImpl::altText() const
     return alt;
 }
 
-bool HTMLInputElementImpl::encoding(const QTextCodec* codec, khtml::encodingList& encoding, bool multipart)
+bool HTMLInputElementImpl::encoding(const TQTextCodec* codec, khtml::encodingList& encoding, bool multipart)
 {
-    const QString nme = name().string();
+    const TQString nme = name().string();
 
     // image generates its own name's
     if (nme.isEmpty() && m_type != IMAGE) return false;
@@ -1560,12 +1560,12 @@ bool HTMLInputElementImpl::encoding(const QTextCodec* codec, khtml::encodingList
             if(m_clicked)
             {
                 m_clicked = false;
-                QString astr(nme.isEmpty() ? QString::fromLatin1("x") : nme + ".x");
+                TQString astr(nme.isEmpty() ? TQString::fromLatin1("x") : nme + ".x");
 
                 encoding += fixUpfromUnicode(codec, astr);
                 astr.setNum(KMAX( clickX(), 0 ));
                 encoding += fixUpfromUnicode(codec, astr);
-                astr = nme.isEmpty() ? QString::fromLatin1("y") : nme + ".y";
+                astr = nme.isEmpty() ? TQString::fromLatin1("y") : nme + ".y";
                 encoding += fixUpfromUnicode(codec, astr);
                 astr.setNum(KMAX( clickY(), 0 ) );
                 encoding += fixUpfromUnicode(codec, astr);
@@ -1583,7 +1583,7 @@ bool HTMLInputElementImpl::encoding(const QTextCodec* codec, khtml::encodingList
 
             if (m_activeSubmit)
             {
-                QString enc_str = valueWithDefault().string();
+                TQString enc_str = valueWithDefault().string();
                 if(!enc_str.isEmpty())
                 {
                     encoding += fixUpfromUnicode(codec, enc_str);
@@ -1598,12 +1598,12 @@ bool HTMLInputElementImpl::encoding(const QTextCodec* codec, khtml::encodingList
             if(!renderer() || renderer()->style()->visibility() != khtml::VISIBLE)
                 return false;
 
-            QString local;
+            TQString local;
             KURL fileurl;
-            QString val = value().string();
+            TQString val = value().string();
             if (!val.isEmpty() &&
-                QDir::isRelativePath(val) &&
-                QFile::exists(KGlobalSettings::documentPath() + val)) {
+                TQDir::isRelativePath(val) &&
+                TQFile::exists(KGlobalSettings::documentPath() + val)) {
                 fileurl.setPath(KGlobalSettings::documentPath() + val);
             } else {
                 fileurl = KURL::fromPathOrURL(val);
@@ -1612,14 +1612,14 @@ bool HTMLInputElementImpl::encoding(const QTextCodec* codec, khtml::encodingList
             KIO::UDSEntry filestat;
 
             // can't submit file in www-url-form encoded
-            QWidget* const toplevel = static_cast<RenderSubmitButton*>(m_render)->widget()->topLevelWidget();
+            TQWidget* const toplevel = static_cast<RenderSubmitButton*>(m_render)->widget()->topLevelWidget();
             if (multipart) {
-                QCString filearray( "" );
+                TQCString filearray( "" );
                 if ( KIO::NetAccess::stat(fileurl, filestat, toplevel)) {
                     const KFileItem fileitem(filestat, fileurl, true, false);
                     if ( fileitem.isFile() &&
                          KIO::NetAccess::download(fileurl, local, toplevel) ) {
-                        QFile file(local);
+                        TQFile file(local);
                         filearray.resize(file.size()+1);
                         if ( file.open( IO_ReadOnly ) ) {
                             const int readbytes = file.readBlock( filearray.data(), file.size());
@@ -1800,7 +1800,7 @@ void HTMLInputElementImpl::defaultEventHandler(EventImpl *evt)
         if (m_type == IMAGE || m_type == SUBMIT || m_type == RESET) {
 	    bool act = (evt->id() == EventImpl::DOMACTIVATE_EVENT);
 	    if (!act && evt->id() == EventImpl::KEYUP_EVENT && evt->isKeyRelatedEvent()) {
-		QKeyEvent* const ke = static_cast<KeyEventBaseImpl *>(evt)->qKeyEvent();
+		TQKeyEvent* const ke = static_cast<KeyEventBaseImpl *>(evt)->qKeyEvent();
 		if (ke && active() && (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Space))
 		    act = true;
 	    }
@@ -1916,7 +1916,7 @@ void HTMLLabelElementImpl::defaultEventHandler(EventImpl *evt)
 	}
 	else if ( evt->isKeyRelatedEvent() && ( evt->id() == EventImpl::KEYUP_EVENT ||
 	                                        evt->id() == EventImpl::KEYPRESS_EVENT ) ) {
-	    QKeyEvent* const ke = static_cast<KeyEventBaseImpl *>(evt)->qKeyEvent();
+	    TQKeyEvent* const ke = static_cast<KeyEventBaseImpl *>(evt)->qKeyEvent();
 	    if (ke && active() && (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Space))
 		act = true;
 	}
@@ -2008,7 +2008,7 @@ long HTMLSelectElementImpl::selectedIndex() const
 {
     // return the number of the first option selected
     uint o = 0;
-    QMemArray<HTMLGenericFormElementImpl*> items = listItems();
+    TQMemArray<HTMLGenericFormElementImpl*> items = listItems();
     const unsigned int itemsSize = items.size();
     for (unsigned int i = 0; i < itemsSize; ++i) {
         if (items[i]->id() == ID_OPTION) {
@@ -2024,7 +2024,7 @@ long HTMLSelectElementImpl::selectedIndex() const
 void HTMLSelectElementImpl::setSelectedIndex( long  index )
 {
     // deselect all other options and select only the new one
-    QMemArray<HTMLGenericFormElementImpl*> items = listItems();
+    TQMemArray<HTMLGenericFormElementImpl*> items = listItems();
     int listIndex;
     const int itemsSize = int(items.size());
     for (listIndex = 0; listIndex < itemsSize; ++listIndex) {
@@ -2073,7 +2073,7 @@ void HTMLSelectElementImpl::remove( long index )
     int exceptioncode = 0;
     const int listIndex = optionToListIndex(index);
 
-    QMemArray<HTMLGenericFormElementImpl*> items = listItems();
+    TQMemArray<HTMLGenericFormElementImpl*> items = listItems();
     if(listIndex < 0 || index >= int(items.size()))
         return; // ### what should we do ? remove the last item?
 
@@ -2150,7 +2150,7 @@ DOMString HTMLInputElementImpl::valueWithDefault() const
 DOMString HTMLSelectElementImpl::value( ) const
 {
     uint i;
-    QMemArray<HTMLGenericFormElementImpl*> items = listItems();
+    TQMemArray<HTMLGenericFormElementImpl*> items = listItems();
     const uint itemsSize = items.size();
     for (i = 0; i < itemsSize; ++i) {
         if ( items[i]->id() == ID_OPTION
@@ -2164,7 +2164,7 @@ void HTMLSelectElementImpl::setValue(DOMStringImpl* value)
 {
     // find the option with value() matching the given parameter
     // and make it the current selection.
-    QMemArray<HTMLGenericFormElementImpl*> items = listItems();
+    TQMemArray<HTMLGenericFormElementImpl*> items = listItems();
     for (unsigned i = 0; i < items.size(); i++)
         if (items[i]->id() == ID_OPTION && static_cast<HTMLOptionElementImpl*>(items[i])->value() == value) {
             static_cast<HTMLOptionElementImpl*>(items[i])->setSelected(true);
@@ -2172,10 +2172,10 @@ void HTMLSelectElementImpl::setValue(DOMStringImpl* value)
         }
 }
 
-QString HTMLSelectElementImpl::state( )
+TQString HTMLSelectElementImpl::state( )
 {
-    QString state;
-    QMemArray<HTMLGenericFormElementImpl*> items = listItems();
+    TQString state;
+    TQMemArray<HTMLGenericFormElementImpl*> items = listItems();
 
     const int l = items.count();
 
@@ -2187,17 +2187,17 @@ QString HTMLSelectElementImpl::state( )
     return state;
 }
 
-void HTMLSelectElementImpl::restoreState(const QString &_state)
+void HTMLSelectElementImpl::restoreState(const TQString &_state)
 {
     recalcListItems();
 
-    QString state = _state;
+    TQString state = _state;
     if(!state.isEmpty() && !state.contains('X') && !m_multiple && m_size <= 1) {
         qWarning("should not happen in restoreState!");
         state[0] = 'X';
     }
 
-    QMemArray<HTMLGenericFormElementImpl*> items = listItems();
+    TQMemArray<HTMLGenericFormElementImpl*> items = listItems();
 
     const int l = items.count();
     for(int i = 0; i < l; ++i) {
@@ -2291,11 +2291,11 @@ void HTMLSelectElementImpl::attach()
     _style->deref();
 }
 
-bool HTMLSelectElementImpl::encoding(const QTextCodec* codec, khtml::encodingList& encoded_values, bool)
+bool HTMLSelectElementImpl::encoding(const TQTextCodec* codec, khtml::encodingList& encoded_values, bool)
 {
     bool successful = false;
-    const QCString enc_name = fixUpfromUnicode(codec, name().string());
-    QMemArray<HTMLGenericFormElementImpl*> items = listItems();
+    const TQCString enc_name = fixUpfromUnicode(codec, name().string());
+    TQMemArray<HTMLGenericFormElementImpl*> items = listItems();
 
     uint i;
     const uint itemsSize = items.size();
@@ -2329,7 +2329,7 @@ bool HTMLSelectElementImpl::encoding(const QTextCodec* codec, khtml::encodingLis
 
 int HTMLSelectElementImpl::optionToListIndex(int optionIndex) const
 {
-    QMemArray<HTMLGenericFormElementImpl*> items = listItems();
+    TQMemArray<HTMLGenericFormElementImpl*> items = listItems();
     const int itemsSize = int(items.size());
     if (optionIndex < 0 || optionIndex >= itemsSize)
         return -1;
@@ -2353,7 +2353,7 @@ int HTMLSelectElementImpl::optionToListIndex(int optionIndex) const
 
 int HTMLSelectElementImpl::listToOptionIndex(int listIndex) const
 {
-    QMemArray<HTMLGenericFormElementImpl*> items = listItems();
+    TQMemArray<HTMLGenericFormElementImpl*> items = listItems();
     if (listIndex < 0 || listIndex >= int(items.size()) ||
         items[listIndex]->id() != ID_OPTION)
         return -1;
@@ -2419,7 +2419,7 @@ void HTMLSelectElementImpl::setRecalcListItems()
 
 void HTMLSelectElementImpl::reset()
 {
-    QMemArray<HTMLGenericFormElementImpl*> items = listItems();
+    TQMemArray<HTMLGenericFormElementImpl*> items = listItems();
     uint i;
     const uint itemsSize = items.size();
     bool anySelected = false;
@@ -2450,7 +2450,7 @@ void HTMLSelectElementImpl::notifyOptionSelected(HTMLOptionElementImpl *selected
 {
     if (selected && !m_multiple) {
         // deselect all other options
-        QMemArray<HTMLGenericFormElementImpl*> items = listItems();
+        TQMemArray<HTMLGenericFormElementImpl*> items = listItems();
         uint i;
 	const uint itemsSize = items.size();
         for (i = 0; i < itemsSize; ++i) {
@@ -2469,9 +2469,9 @@ void HTMLSelectElementImpl::notifyOptionSelected(HTMLOptionElementImpl *selected
 HTMLKeygenElementImpl::HTMLKeygenElementImpl(DocumentImpl* doc, HTMLFormElementImpl* f)
     : HTMLSelectElementImpl(doc, f)
 {
-    const QStringList keys = KSSLKeyGen::supportedKeySizes();
-    QStringList::ConstIterator i = keys.begin();
-    const QStringList::ConstIterator iEnd = keys.end();
+    const TQStringList keys = KSSLKeyGen::supportedKeySizes();
+    TQStringList::ConstIterator i = keys.begin();
+    const TQStringList::ConstIterator iEnd = keys.end();
     for ( ; i != iEnd; ++i) {
         HTMLOptionElementImpl* const o = new HTMLOptionElementImpl(doc, form());
         addChild(o);
@@ -2496,10 +2496,10 @@ void HTMLKeygenElementImpl::parseAttribute(AttributeImpl* attr)
     }
 }
 
-bool HTMLKeygenElementImpl::encoding(const QTextCodec* codec, khtml::encodingList& encoded_values, bool)
+bool HTMLKeygenElementImpl::encoding(const TQTextCodec* codec, khtml::encodingList& encoded_values, bool)
 {
     bool successful = false;
-    const QCString enc_name = fixUpfromUnicode(codec, name().string());
+    const TQCString enc_name = fixUpfromUnicode(codec, name().string());
 
     encoded_values += enc_name;
 
@@ -2507,7 +2507,7 @@ bool HTMLKeygenElementImpl::encoding(const QTextCodec* codec, khtml::encodingLis
     KSSLKeyGen* const kg = new KSSLKeyGen(getDocument()->view(), "Key Generator", true);
 
     kg->setKeySize(0);
-    successful = (QDialog::Accepted == kg->exec());
+    successful = (TQDialog::Accepted == kg->exec());
 
     delete kg;
 
@@ -2559,7 +2559,7 @@ long HTMLOptionElementImpl::index() const
 {
     // Let's do this dynamically. Might be a bit slow, but we're sure
     // we won't forget to update a member variable in some cases...
-    QMemArray<HTMLGenericFormElementImpl*> items = getSelect()->listItems();
+    TQMemArray<HTMLGenericFormElementImpl*> items = getSelect()->listItems();
     const int l = items.count();
     int optionIndex = 0;
     for(int i = 0; i < l; ++i) {
@@ -2656,12 +2656,12 @@ DOMString HTMLTextAreaElementImpl::type() const
     return "textarea";
 }
 
-QString HTMLTextAreaElementImpl::state( )
+TQString HTMLTextAreaElementImpl::state( )
 {
     return value().string() + (m_unsubmittedFormChange ? 'M' : '.');
 }
 
-void HTMLTextAreaElementImpl::restoreState(const QString &state)
+void HTMLTextAreaElementImpl::restoreState(const TQString &state)
 {
     setDefaultValue(state.left(state.length()-1));
     m_unsubmittedFormChange = state.endsWith("M");
@@ -2742,7 +2742,7 @@ void HTMLTextAreaElementImpl::attach()
 }
 
 
-static QString expandLF(const QString& s)
+static TQString expandLF(const TQString& s)
 {
     // LF -> CRLF
     unsigned crs = s.contains( '\n' );
@@ -2750,12 +2750,12 @@ static QString expandLF(const QString& s)
 	return s;
     unsigned len = s.length();
 
-    QString r;
+    TQString r;
     r.reserve(len + crs + 1);
     unsigned pos2 = 0;
     for(unsigned pos = 0; pos < len; pos++)
     {
-       QChar c = s.at(pos);
+       TQChar c = s.at(pos);
        switch(c.unicode())
        {
          case '\n':
@@ -2776,7 +2776,7 @@ static QString expandLF(const QString& s)
 }
 
 
-bool HTMLTextAreaElementImpl::encoding(const QTextCodec* codec, encodingList& encoding, bool)
+bool HTMLTextAreaElementImpl::encoding(const TQTextCodec* codec, encodingList& encoding, bool)
 {
     if (name().isEmpty()) return false;
 
@@ -2814,7 +2814,7 @@ DOMString HTMLTextAreaElementImpl::value()
 void HTMLTextAreaElementImpl::setValue(DOMString _value)
 {
     // \r\n -> \n, \r -> \n
-    QString str = _value.string().replace( "\r\n", "\n" );
+    TQString str = _value.string().replace( "\r\n", "\n" );
     m_value = str.replace( '\r', '\n' );
     m_dirtyvalue = false;
     m_initialized = true;
@@ -2845,12 +2845,12 @@ DOMString HTMLTextAreaElementImpl::defaultValue()
 void HTMLTextAreaElementImpl::setDefaultValue(DOMString _defaultValue)
 {
     // there may be comments - remove all the text nodes and replace them with one
-    QPtrList<NodeImpl> toRemove;
+    TQPtrList<NodeImpl> toRemove;
     NodeImpl *n;
     for (n = firstChild(); n; n = n->nextSibling())
         if (n->isTextNode())
             toRemove.append(n);
-    QPtrListIterator<NodeImpl> it(toRemove);
+    TQPtrListIterator<NodeImpl> it(toRemove);
     int exceptioncode = 0;
     for (; it.current(); ++it) {
         removeChild(it.current(), exceptioncode);

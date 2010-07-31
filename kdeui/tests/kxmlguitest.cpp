@@ -8,8 +8,8 @@
 #include <kdebug.h>
 #include <kstdaction.h>
 #include <kstandarddirs.h>
-#include <qlineedit.h>
-#include <qdir.h>
+#include <tqlineedit.h>
+#include <tqdir.h>
 
 void Client::slotSec()
 {
@@ -22,11 +22,11 @@ int main( int argc, char **argv )
 
     // KXMLGUIClient looks in the "data" resource for the .rc files
     // Let's add $PWD (ideally $srcdir instead...) to it
-    KGlobal::dirs()->addResourceDir( "data", QDir::currentDirPath() );
+    KGlobal::dirs()->addResourceDir( "data", TQDir::currentDirPath() );
 
     KMainWindow *mainwindow = new KMainWindow;
 
-    QLineEdit* line = new QLineEdit( mainwindow );
+    TQLineEdit* line = new TQLineEdit( mainwindow );
     mainwindow->setCentralWidget( line );
 
     mainwindow->show();
@@ -37,7 +37,7 @@ int main( int argc, char **argv )
 
     Client *shell = new Client;
     shell->setInstance( new KInstance( "konqueror" ) );
-    shell->instance()->dirs()->addResourceDir( "data", QDir::currentDirPath() );
+    shell->instance()->dirs()->addResourceDir( "data", TQDir::currentDirPath() );
 
     (void)new KAction( "Split", "view_left_right", 0, 0, 0, shell->actionCollection(), "splitviewh" );
 
@@ -48,7 +48,7 @@ int main( int argc, char **argv )
     Client *part = new Client;
 
     (void)new KAction( "decfont", "viewmag-", 0, 0, 0, part->actionCollection(), "decFontSizes" );
-    (void)new KAction( "sec", "unlock", Qt::ALT + Qt::Key_1, part, SLOT( slotSec() ), part->actionCollection(), "security" );
+    (void)new KAction( "sec", "unlock", Qt::ALT + Qt::Key_1, part, TQT_SLOT( slotSec() ), part->actionCollection(), "security" );
 
     part->setXMLFile( "./kxmlguitest_part.rc" );
 

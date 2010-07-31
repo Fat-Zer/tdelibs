@@ -24,8 +24,8 @@
 
 #include <config.h>
 
-#include <qsocketnotifier.h>
-#include <qmutex.h>
+#include <tqsocketnotifier.h>
+#include <tqmutex.h>
 
 #include "ksocketaddress.h"
 #include "kresolver.h"
@@ -58,27 +58,27 @@ public:
   }
 };
 
-KServerSocket::KServerSocket(QObject* parent, const char *name)
-  : QObject(parent, name), d(new KServerSocketPrivate)
+KServerSocket::KServerSocket(TQObject* parent, const char *name)
+  : TQObject(parent, name), d(new KServerSocketPrivate)
 {
-  QObject::connect(&d->resolver, SIGNAL(finished(KResolverResults)), 
-		   this, SLOT(lookupFinishedSlot()));
+  TQObject::connect(&d->resolver, TQT_SIGNAL(finished(KResolverResults)), 
+		   this, TQT_SLOT(lookupFinishedSlot()));
 }
 
-KServerSocket::KServerSocket(const QString& service, QObject* parent, const char *name)
-  : QObject(parent, name), d(new KServerSocketPrivate)
+KServerSocket::KServerSocket(const TQString& service, TQObject* parent, const char *name)
+  : TQObject(parent, name), d(new KServerSocketPrivate)
 {
-  QObject::connect(&d->resolver, SIGNAL(finished(KResolverResults)), 
-		   this, SLOT(lookupFinishedSlot()));
+  TQObject::connect(&d->resolver, TQT_SIGNAL(finished(KResolverResults)), 
+		   this, TQT_SLOT(lookupFinishedSlot()));
   d->resolver.setServiceName(service);
 }
 
-KServerSocket::KServerSocket(const QString& node, const QString& service,
-			     QObject* parent, const char* name)
-  : QObject(parent, name), d(new KServerSocketPrivate)
+KServerSocket::KServerSocket(const TQString& node, const TQString& service,
+			     TQObject* parent, const char* name)
+  : TQObject(parent, name), d(new KServerSocketPrivate)
 {
-  QObject::connect(&d->resolver, SIGNAL(finished(KResolverResults)), 
-		   this, SLOT(lookupFinishedSlot()));
+  TQObject::connect(&d->resolver, TQT_SIGNAL(finished(KResolverResults)), 
+		   this, TQT_SLOT(lookupFinishedSlot()));
   setAddress(node, service);
 }
 
@@ -90,7 +90,7 @@ KServerSocket::~KServerSocket()
 
 bool KServerSocket::setSocketOptions(int opts)
 {
-  QMutexLocker locker(mutex());
+  TQMutexLocker locker(mutex());
   KSocketBase::setSocketOptions(opts); // call parent
   bool result = socketDevice()->setSocketOptions(opts); // and set the implementation
   copyError();
@@ -120,16 +120,16 @@ void KServerSocket::setFamily(int families)
   d->resolver.setFamily(families);
 }
 
-void KServerSocket::setAddress(const QString& service)
+void KServerSocket::setAddress(const TQString& service)
 {
-  d->resolver.setNodeName(QString::null);
+  d->resolver.setNodeName(TQString::null);
   d->resolver.setServiceName(service);
   d->resolverResults.empty();
   if (d->state <= KServerSocketPrivate::LookupDone)
     d->state = KServerSocketPrivate::None;
 }
 
-void KServerSocket::setAddress(const QString& node, const QString& service)
+void KServerSocket::setAddress(const TQString& node, const TQString& service)
 {
   d->resolver.setNodeName(node);
   d->resolver.setServiceName(service);
@@ -155,7 +155,7 @@ bool KServerSocket::lookup()
   // make sure we have at least one parameter for lookup
   if (d->resolver.serviceName().isNull() &&
       !d->resolver.nodeName().isNull())
-    d->resolver.setServiceName(QString::fromLatin1(""));
+    d->resolver.setServiceName(TQString::fromLatin1(""));
 
   // don't restart the lookups if they had succeeded and
   // the input values weren't changed
@@ -193,13 +193,13 @@ bool KServerSocket::bind(const KResolverEntry& address)
   return false;
 }
 
-bool KServerSocket::bind(const QString& node, const QString& service)
+bool KServerSocket::bind(const TQString& node, const TQString& service)
 {
   setAddress(node, service);
   return bind();
 }
 
-bool KServerSocket::bind(const QString& service)
+bool KServerSocket::bind(const TQString& service)
 {
   setAddress(service);
   return bind();
@@ -403,8 +403,8 @@ bool KServerSocket::doListen()
     }
   
   // set up ready accept signal
-  QObject::connect(socketDevice()->readNotifier(), SIGNAL(activated(int)),
-		   this, SIGNAL(readyAccept()));
+  TQObject::connect(socketDevice()->readNotifier(), TQT_SIGNAL(activated(int)),
+		   this, TQT_SIGNAL(readyAccept()));
   d->state = KServerSocketPrivate::Listening;
   return true;
 }

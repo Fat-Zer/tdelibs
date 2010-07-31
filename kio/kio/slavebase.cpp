@@ -40,7 +40,7 @@
 #include <signal.h>
 #include <time.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <dcopclient.h>
 
@@ -68,10 +68,10 @@
 
 using namespace KIO;
 
-template class QPtrList<QValueList<UDSAtom> >;
-typedef QValueList<QCString> AuthKeysList;
-typedef QMap<QString,QCString> AuthKeysMap;
-#define KIO_DATA QByteArray data; QDataStream stream( data, IO_WriteOnly ); stream
+template class TQPtrList<TQValueList<UDSAtom> >;
+typedef TQValueList<TQCString> AuthKeysList;
+typedef TQMap<TQString,TQCString> AuthKeysMap;
+#define KIO_DATA TQByteArray data; TQDataStream stream( data, IO_WriteOnly ); stream
 #define KIO_FILESIZE_T(x) (unsigned long)(x & 0xffffffff) << (unsigned long)(x >> 32)
 
 namespace KIO {
@@ -82,17 +82,17 @@ public:
    SlaveBaseConfig(SlaveBase *_slave)
 	: slave(_slave) { }
 
-   bool internalHasGroup(const QCString &) const { qWarning("hasGroup(const QCString &)");
+   bool internalHasGroup(const TQCString &) const { qWarning("hasGroup(const TQCString &)");
 return false; }
 
-   QStringList groupList() const { return QStringList(); }
+   TQStringList groupList() const { return TQStringList(); }
 
-   QMap<QString,QString> entryMap(const QString &group) const
-      { Q_UNUSED(group); return QMap<QString,QString>(); }
+   TQMap<TQString,TQString> entryMap(const TQString &group) const
+      { Q_UNUSED(group); return TQMap<TQString,TQString>(); }
 
    void reparseConfiguration() { }
 
-   KEntryMap internalEntryMap( const QString &pGroup) const { Q_UNUSED(pGroup); return KEntryMap(); }
+   KEntryMap internalEntryMap( const TQString &pGroup) const { Q_UNUSED(pGroup); return KEntryMap(); }
 
    KEntryMap internalEntryMap() const { return KEntryMap(); }
 
@@ -102,7 +102,7 @@ return false; }
    KEntry lookupData(const KEntryKey &_key) const
    {
      KEntry entry;
-     QString value = slave->metaData(_key.c_key);
+     TQString value = slave->metaData(_key.c_key);
      if (!value.isNull())
         entry.mValue = value.utf8();
      return entry;
@@ -114,7 +114,7 @@ protected:
 
 class SlaveBasePrivate {
 public:
-    QString slaveid;
+    TQString slaveid;
     bool resume:1;
     bool needSendCanResume:1;
     bool onHold:1;
@@ -129,7 +129,7 @@ public:
     DCOPClient *dcopClient;
     KRemoteEncoding *remotefile;
     time_t timeout;
-    QByteArray timeoutData;
+    TQByteArray timeoutData;
 };
 
 }
@@ -159,12 +159,12 @@ static void genericsig_handler(int sigNumber)
 
 //////////////
 
-SlaveBase::SlaveBase( const QCString &protocol,
-                      const QCString &pool_socket,
-                      const QCString &app_socket )
+SlaveBase::SlaveBase( const TQCString &protocol,
+                      const TQCString &pool_socket,
+                      const TQCString &app_socket )
     : mProtocol(protocol), m_pConnection(0),
-      mPoolSocket( QFile::decodeName(pool_socket)),
-      mAppSocket( QFile::decodeName(app_socket))
+      mPoolSocket( TQFile::decodeName(pool_socket)),
+      mAppSocket( TQFile::decodeName(app_socket))
 {
     s_protocol = protocol.data();
 #ifdef Q_OS_UNIX
@@ -218,7 +218,7 @@ SlaveBase::SlaveBase( const QCString &protocol,
     d = new SlaveBasePrivate;
     // by kahl for netmgr (need a way to identify slaves)
     d->slaveid = protocol;
-    d->slaveid += QString::number(getpid());
+    d->slaveid += TQString::number(getpid());
     d->resume = false;
     d->needSendCanResume = false;
     d->config = new SlaveBaseConfig(this);
@@ -264,9 +264,9 @@ void SlaveBase::dispatchLoop()
     {
        if (d->timeout && (d->timeout < time(0)))
        {
-          QByteArray data = d->timeoutData;
+          TQByteArray data = d->timeoutData;
           d->timeout = 0;
-          d->timeoutData = QByteArray();
+          d->timeoutData = TQByteArray();
           special(data);
        }
        FD_ZERO(&rfds);
@@ -295,7 +295,7 @@ void SlaveBase::dispatchLoop()
        if ((retval>0) && FD_ISSET(appconn->fd_from(), &rfds))
        { // dispatch application messages
           int cmd;
-          QByteArray data;
+          TQByteArray data;
           if ( appconn->read(&cmd, data) != -1 )
           {
              dispatch(cmd, data);
@@ -337,10 +337,10 @@ void SlaveBase::dispatchLoop()
 #endif
 }
 
-void SlaveBase::connectSlave(const QString& path)
+void SlaveBase::connectSlave(const TQString& path)
 {
 #ifdef Q_OS_UNIX //TODO: KSocket not yet available on WIN32
-    appconn->init(new KSocket(QFile::encodeName(path)));
+    appconn->init(new KSocket(TQFile::encodeName(path)));
     if (!appconn->inited())
     {
         kdDebug(7019) << "SlaveBase: failed to connect to " << path << endl;
@@ -356,21 +356,21 @@ void SlaveBase::disconnectSlave()
     appconn->close();
 }
 
-void SlaveBase::setMetaData(const QString &key, const QString &value)
+void SlaveBase::setMetaData(const TQString &key, const TQString &value)
 {
    mOutgoingMetaData.replace(key, value);
 }
 
-QString SlaveBase::metaData(const QString &key) const
+TQString SlaveBase::metaData(const TQString &key) const
 {
    if (mIncomingMetaData.contains(key))
       return mIncomingMetaData[key];
    if (d->configData.contains(key))
       return d->configData[key];
-   return QString::null;
+   return TQString::null;
 }
 
-bool SlaveBase::hasMetaData(const QString &key) const
+bool SlaveBase::hasMetaData(const TQString &key) const
 {
    if (mIncomingMetaData.contains(key))
       return true;
@@ -380,10 +380,10 @@ bool SlaveBase::hasMetaData(const QString &key) const
 }
 
 // ### remove the next two methods for KDE4 (they miss the const)
-QString SlaveBase::metaData(const QString &key) {
+TQString SlaveBase::metaData(const TQString &key) {
    return const_cast<const SlaveBase*>(this)->metaData( key );
 }
-bool SlaveBase::hasMetaData(const QString &key) {
+bool SlaveBase::hasMetaData(const TQString &key) {
    return const_cast<const SlaveBase*>(this)->hasMetaData( key );
 }
 
@@ -410,7 +410,7 @@ KRemoteEncoding *SlaveBase::remoteEncoding()
    return d->remotefile = new KRemoteEncoding(metaData("Charset").latin1());
 }
 
-void SlaveBase::data( const QByteArray &data )
+void SlaveBase::data( const TQByteArray &data )
 {
    if (!mOutgoingMetaData.isEmpty())
       sendMetaData();
@@ -430,7 +430,7 @@ void SlaveBase::dataReq( )
    m_pConnection->send( MSG_DATA_REQ );
 }
 
-void SlaveBase::error( int _errid, const QString &_text )
+void SlaveBase::error( int _errid, const TQString &_text )
 {
     mIncomingMetaData.clear(); // Clear meta data
     mOutgoingMetaData.clear();
@@ -468,7 +468,7 @@ void SlaveBase::needSubURLData()
     m_pConnection->send( MSG_NEED_SUBURL_DATA );
 }
 
-void SlaveBase::slaveStatus( const QString &host, bool connected )
+void SlaveBase::slaveStatus( const TQString &host, bool connected )
 {
     pid_t pid = getpid();
     Q_INT8 b = connected ? 1 : 0;
@@ -572,7 +572,7 @@ static bool isSubCommand(int cmd)
             (cmd == CMD_MULTI_GET));
 }
 
-void SlaveBase::mimeType( const QString &_type)
+void SlaveBase::mimeType( const TQString &_type)
 {
   // kdDebug(7019) << "(" << getpid() << ") SlaveBase::mimeType '" << _type << "'" << endl;
   int cmd;
@@ -615,19 +615,19 @@ void SlaveBase::exit()
     ::exit(255);
 }
 
-void SlaveBase::warning( const QString &_msg)
+void SlaveBase::warning( const TQString &_msg)
 {
     KIO_DATA << _msg;
     m_pConnection->send( INF_WARNING, data );
 }
 
-void SlaveBase::infoMessage( const QString &_msg)
+void SlaveBase::infoMessage( const TQString &_msg)
 {
     KIO_DATA << _msg;
     m_pConnection->send( INF_INFOMESSAGE, data );
 }
 
-bool SlaveBase::requestNetwork(const QString& host)
+bool SlaveBase::requestNetwork(const TQString& host)
 {
     KIO_DATA << host << d->slaveid;
     m_pConnection->send( MSG_NET_REQUEST, data );
@@ -635,14 +635,14 @@ bool SlaveBase::requestNetwork(const QString& host)
     if ( waitForAnswer( INF_NETWORK_STATUS, 0, data ) != -1 )
     {
         bool status;
-        QDataStream stream( data, IO_ReadOnly );
+        TQDataStream stream( data, IO_ReadOnly );
         stream >> status;
         return status;
     } else
         return false;
 }
 
-void SlaveBase::dropNetwork(const QString& host)
+void SlaveBase::dropNetwork(const TQString& host)
 {
     KIO_DATA << host << d->slaveid;
     m_pConnection->send( MSG_NET_DROP, data );
@@ -711,15 +711,15 @@ void SlaveBase::listEntries( const UDSEntryList& list )
     d->sentListEntries+=(uint)list.count();
 }
 
-void SlaveBase::sendAuthenticationKey( const QCString& key,
-                                       const QCString& group,
+void SlaveBase::sendAuthenticationKey( const TQCString& key,
+                                       const TQCString& group,
                                        bool keepPass )
 {
     KIO_DATA << key << group << keepPass;
     m_pConnection->send( MSG_AUTH_KEY, data );
 }
 
-void SlaveBase::delCachedAuthentication( const QString& key )
+void SlaveBase::delCachedAuthentication( const TQString& key )
 {
     KIO_DATA << key.utf8() ;
     m_pConnection->send( MSG_DEL_AUTH_KEY, data );
@@ -762,7 +762,7 @@ void SlaveBase::sigpipe_handler (int)
     // Don't add anything else here, especially no debug output
 }
 
-void SlaveBase::setHost(QString const &, int, QString const &, QString const &)
+void SlaveBase::setHost(TQString const &, int, TQString const &, TQString const &)
 {
 }
 
@@ -774,7 +774,7 @@ void SlaveBase::stat(KURL const &)
 { error(  ERR_UNSUPPORTED_ACTION, unsupportedActionErrorString(mProtocol, CMD_STAT)); }
 void SlaveBase::put(KURL const &, int, bool, bool)
 { error(  ERR_UNSUPPORTED_ACTION, unsupportedActionErrorString(mProtocol, CMD_PUT)); }
-void SlaveBase::special(const QByteArray &)
+void SlaveBase::special(const TQByteArray &)
 { error(  ERR_UNSUPPORTED_ACTION, unsupportedActionErrorString(mProtocol, CMD_SPECIAL)); }
 void SlaveBase::listDir(KURL const &)
 { error(  ERR_UNSUPPORTED_ACTION, unsupportedActionErrorString(mProtocol, CMD_LISTDIR)); }
@@ -784,7 +784,7 @@ void SlaveBase::mimetype(KURL const &url)
 { get(url); }
 void SlaveBase::rename(KURL const &, KURL const &, bool)
 { error(  ERR_UNSUPPORTED_ACTION, unsupportedActionErrorString(mProtocol, CMD_RENAME)); }
-void SlaveBase::symlink(QString const &, KURL const &, bool)
+void SlaveBase::symlink(TQString const &, KURL const &, bool)
 { error(  ERR_UNSUPPORTED_ACTION, unsupportedActionErrorString(mProtocol, CMD_SYMLINK)); }
 void SlaveBase::copy(KURL const &, KURL const &, int, bool)
 { error(  ERR_UNSUPPORTED_ACTION, unsupportedActionErrorString(mProtocol, CMD_COPY)); }
@@ -796,12 +796,12 @@ void SlaveBase::chmod(KURL const &, int)
 { error(  ERR_UNSUPPORTED_ACTION, unsupportedActionErrorString(mProtocol, CMD_CHMOD)); }
 void SlaveBase::setSubURL(KURL const &)
 { error(  ERR_UNSUPPORTED_ACTION, unsupportedActionErrorString(mProtocol, CMD_SUBURL)); }
-void SlaveBase::multiGet(const QByteArray &)
+void SlaveBase::multiGet(const TQByteArray &)
 { error(  ERR_UNSUPPORTED_ACTION, unsupportedActionErrorString(mProtocol, CMD_MULTI_GET)); }
 
 
 void SlaveBase::slave_status()
-{ slaveStatus( QString::null, false ); }
+{ slaveStatus( TQString::null, false ); }
 
 void SlaveBase::reparseConfiguration()
 {
@@ -812,7 +812,7 @@ bool SlaveBase::dispatch()
     assert( m_pConnection );
 
     int cmd;
-    QByteArray data;
+    TQByteArray data;
     if ( m_pConnection->read( &cmd, data ) == -1 )
     {
         kdDebug(7019) << "SlaveBase::dispatch() has read error." << endl;
@@ -825,14 +825,14 @@ bool SlaveBase::dispatch()
 
 bool SlaveBase::openPassDlg( AuthInfo& info )
 {
-    return openPassDlg(info, QString::null);
+    return openPassDlg(info, TQString::null);
 }
 
-bool SlaveBase::openPassDlg( AuthInfo& info, const QString &errorMsg )
+bool SlaveBase::openPassDlg( AuthInfo& info, const TQString &errorMsg )
 {
-    QCString replyType;
-    QByteArray params;
-    QByteArray reply;
+    TQCString replyType;
+    TQByteArray params;
+    TQByteArray reply;
     AuthInfo authResult;
     long windowId = metaData("window-id").toLong();
     long progressId = metaData("progress-id").toLong();
@@ -846,14 +846,14 @@ bool SlaveBase::openPassDlg( AuthInfo& info, const QString &errorMsg )
     if (progressId)
       uiserver.setJobVisible( progressId, false );
 
-    QDataStream stream(params, IO_WriteOnly);
+    TQDataStream stream(params, IO_WriteOnly);
 
     if (metaData("no-auth-prompt").lower() == "true")
-       stream << info << QString("<NoAuthPrompt>") << windowId << s_seqNr << userTimestamp;
+       stream << info << TQString("<NoAuthPrompt>") << windowId << s_seqNr << userTimestamp;
     else
        stream << info << errorMsg << windowId << s_seqNr << userTimestamp;
 
-    bool callOK = d->dcopClient->call( "kded", "kpasswdserver", "queryAuthInfo(KIO::AuthInfo, QString, long int, long int, unsigned long int)",
+    bool callOK = d->dcopClient->call( "kded", "kpasswdserver", "queryAuthInfo(KIO::AuthInfo, TQString, long int, long int, unsigned long int)",
                                         params, replyType, reply );
 
     if (progressId)
@@ -867,7 +867,7 @@ bool SlaveBase::openPassDlg( AuthInfo& info, const QString &errorMsg )
 
     if ( replyType == "KIO::AuthInfo" )
     {
-       QDataStream stream2( reply, IO_ReadOnly );
+       TQDataStream stream2( reply, IO_ReadOnly );
        stream2 >> authResult >> s_seqNr;
     }
     else
@@ -888,21 +888,21 @@ bool SlaveBase::openPassDlg( AuthInfo& info, const QString &errorMsg )
     return true;
 }
 
-int SlaveBase::messageBox( MessageBoxType type, const QString &text, const QString &caption,
-                           const QString &buttonYes, const QString &buttonNo )
+int SlaveBase::messageBox( MessageBoxType type, const TQString &text, const TQString &caption,
+                           const TQString &buttonYes, const TQString &buttonNo )
 {
-    return messageBox( text, type, caption, buttonYes, buttonNo, QString::null );
+    return messageBox( text, type, caption, buttonYes, buttonNo, TQString::null );
 }
 
-int SlaveBase::messageBox( const QString &text, MessageBoxType type, const QString &caption,
-                           const QString &buttonYes, const QString &buttonNo, const QString &dontAskAgainName )
+int SlaveBase::messageBox( const TQString &text, MessageBoxType type, const TQString &caption,
+                           const TQString &buttonYes, const TQString &buttonNo, const TQString &dontAskAgainName )
 {
     kdDebug(7019) << "messageBox " << type << " " << text << " - " << caption << buttonYes << buttonNo << endl;
     KIO_DATA << (Q_INT32)type << text << caption << buttonYes << buttonNo << dontAskAgainName;
     m_pConnection->send( INF_MESSAGEBOX, data );
     if ( waitForAnswer( CMD_MESSAGEBOXANSWER, 0, data ) != -1 )
     {
-        QDataStream stream( data, IO_ReadOnly );
+        TQDataStream stream( data, IO_ReadOnly );
         int answer;
         stream >> answer;
         kdDebug(7019) << "got messagebox answer" << answer << endl;
@@ -933,7 +933,7 @@ bool SlaveBase::canResume( KIO::filesize_t offset )
 
 
 
-int SlaveBase::waitForAnswer( int expected1, int expected2, QByteArray & data, int *pCmd )
+int SlaveBase::waitForAnswer( int expected1, int expected2, TQByteArray & data, int *pCmd )
 {
     int cmd, result;
     for (;;)
@@ -961,14 +961,14 @@ int SlaveBase::waitForAnswer( int expected1, int expected2, QByteArray & data, i
 }
 
 
-int SlaveBase::readData( QByteArray &buffer)
+int SlaveBase::readData( TQByteArray &buffer)
 {
    int result = waitForAnswer( MSG_DATA, 0, buffer );
    //kdDebug(7019) << "readData: length = " << result << " " << endl;
    return result;
 }
 
-void SlaveBase::setTimeoutSpecialCommand(int timeout, const QByteArray &data)
+void SlaveBase::setTimeoutSpecialCommand(int timeout, const TQByteArray &data)
 {
    if (timeout > 0)
       d->timeout = time(0)+(time_t)timeout;
@@ -980,9 +980,9 @@ void SlaveBase::setTimeoutSpecialCommand(int timeout, const QByteArray &data)
    d->timeoutData = data;
 }
 
-void SlaveBase::dispatch( int command, const QByteArray &data )
+void SlaveBase::dispatch( int command, const TQByteArray &data )
 {
-    QDataStream stream( data, IO_ReadOnly );
+    TQDataStream stream( data, IO_ReadOnly );
 
     KURL url;
     int i;
@@ -991,8 +991,8 @@ void SlaveBase::dispatch( int command, const QByteArray &data )
     case CMD_HOST: {
         // Reset s_seqNr, see kpasswdserver/DESIGN
         s_seqNr = 0;
-        QString passwd;
-        QString host, user;
+        TQString passwd;
+        TQString host, user;
         stream >> host >> i >> user >> passwd;
         setHost( host, i, user, passwd );
     }
@@ -1009,8 +1009,8 @@ void SlaveBase::dispatch( int command, const QByteArray &data )
     case CMD_SLAVE_CONNECT:
     {
         d->onHold = false;
-        QString app_socket;
-        QDataStream stream( data, IO_ReadOnly);
+        TQString app_socket;
+        TQDataStream stream( data, IO_ReadOnly);
         stream >> app_socket;
         appconn->send( MSG_SLAVE_ACK );
         disconnectSlave();
@@ -1020,7 +1020,7 @@ void SlaveBase::dispatch( int command, const QByteArray &data )
     case CMD_SLAVE_HOLD:
     {
         KURL url;
-        QDataStream stream( data, IO_ReadOnly);
+        TQDataStream stream( data, IO_ReadOnly);
         stream >> url;
         d->onHoldUrl = url;
         d->onHold = true;
@@ -1087,7 +1087,7 @@ void SlaveBase::dispatch( int command, const QByteArray &data )
     case CMD_SYMLINK:
     {
         Q_INT8 iOverwrite;
-        QString target;
+        TQString target;
         stream >> target >> url >> iOverwrite;
         bool overwrite = (iOverwrite != 0);
         symlink( target, url, overwrite );
@@ -1135,20 +1135,20 @@ void SlaveBase::dispatch( int command, const QByteArray &data )
     }
 }
 
-QString SlaveBase::createAuthCacheKey( const KURL& url )
+TQString SlaveBase::createAuthCacheKey( const KURL& url )
 {
     if( !url.isValid() )
-        return QString::null;
+        return TQString::null;
 
     // Generate the basic key sequence.
-    QString key = url.protocol();
+    TQString key = url.protocol();
     key += '-';
     key += url.host();
     int port = url.port();
     if( port )
     {
       key += ':';
-      key += QString::number(port);
+      key += TQString::number(port);
     }
 
     return key;
@@ -1178,9 +1178,9 @@ bool SlaveBase::pingCacheDaemon() const
 
 bool SlaveBase::checkCachedAuthentication( AuthInfo& info )
 {
-    QCString replyType;
-    QByteArray params;
-    QByteArray reply;
+    TQCString replyType;
+    TQByteArray params;
+    TQByteArray reply;
     AuthInfo authResult;
     long windowId = metaData("window-id").toLong();
     unsigned long userTimestamp = metaData("user-timestamp").toULong();
@@ -1189,7 +1189,7 @@ bool SlaveBase::checkCachedAuthentication( AuthInfo& info )
 
     (void) dcopClient(); // Make sure to have a dcop client.
 
-    QDataStream stream(params, IO_WriteOnly);
+    TQDataStream stream(params, IO_WriteOnly);
     stream << info << windowId << userTimestamp;
 
     if ( !d->dcopClient->call( "kded", "kpasswdserver", "checkAuthInfo(KIO::AuthInfo, long int, unsigned long int)",
@@ -1201,7 +1201,7 @@ bool SlaveBase::checkCachedAuthentication( AuthInfo& info )
 
     if ( replyType == "KIO::AuthInfo" )
     {
-       QDataStream stream2( reply, IO_ReadOnly );
+       TQDataStream stream2( reply, IO_ReadOnly );
        stream2 >> authResult;
     }
     else
@@ -1221,12 +1221,12 @@ bool SlaveBase::checkCachedAuthentication( AuthInfo& info )
 
 bool SlaveBase::cacheAuthentication( const AuthInfo& info )
 {
-    QByteArray params;
+    TQByteArray params;
     long windowId = metaData("window-id").toLong();
 
     (void) dcopClient(); // Make sure to have a dcop client.
 
-    QDataStream stream(params, IO_WriteOnly);
+    TQDataStream stream(params, IO_WriteOnly);
     stream << info << windowId;
 
     d->dcopClient->send( "kded", "kpasswdserver", "addAuthInfo(KIO::AuthInfo, long int)", params );
@@ -1237,7 +1237,7 @@ bool SlaveBase::cacheAuthentication( const AuthInfo& info )
 int SlaveBase::connectTimeout()
 {
     bool ok;
-    QString tmp = metaData("ConnectTimeout");
+    TQString tmp = metaData("ConnectTimeout");
     int result = tmp.toInt(&ok);
     if (ok)
        return result;
@@ -1247,7 +1247,7 @@ int SlaveBase::connectTimeout()
 int SlaveBase::proxyConnectTimeout()
 {
     bool ok;
-    QString tmp = metaData("ProxyConnectTimeout");
+    TQString tmp = metaData("ProxyConnectTimeout");
     int result = tmp.toInt(&ok);
     if (ok)
        return result;
@@ -1258,7 +1258,7 @@ int SlaveBase::proxyConnectTimeout()
 int SlaveBase::responseTimeout()
 {
     bool ok;
-    QString tmp = metaData("ResponseTimeout");
+    TQString tmp = metaData("ResponseTimeout");
     int result = tmp.toInt(&ok);
     if (ok)
        return result;
@@ -1269,7 +1269,7 @@ int SlaveBase::responseTimeout()
 int SlaveBase::readTimeout()
 {
     bool ok;
-    QString tmp = metaData("ReadTimeout");
+    TQString tmp = metaData("ReadTimeout");
     int result = tmp.toInt(&ok);
     if (ok)
        return result;

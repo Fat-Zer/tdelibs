@@ -21,24 +21,24 @@
 #include "kmprinter.h"
 #include "kmwizard.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
-KMPropDriver::KMPropDriver(QWidget *parent, const char *name)
+KMPropDriver::KMPropDriver(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)
 {
-	m_manufacturer = new QLabel("",this);
-	m_model = new QLabel("",this);
-	m_driverinfo = new QLabel("",this);
+	m_manufacturer = new TQLabel("",this);
+	m_model = new TQLabel("",this);
+	m_driverinfo = new TQLabel("",this);
 	m_driverinfo->setTextFormat(Qt::RichText);
 
-	QLabel	*l1 = new QLabel(i18n("Manufacturer:"), this);
-	QLabel	*l2 = new QLabel(i18n("Printer model:"), this);
-	QLabel	*l3 = new QLabel(i18n("Driver info:"), this);
+	QLabel	*l1 = new TQLabel(i18n("Manufacturer:"), this);
+	QLabel	*l2 = new TQLabel(i18n("Printer model:"), this);
+	QLabel	*l3 = new TQLabel(i18n("Driver info:"), this);
 
 	// layout
-	QGridLayout	*main_ = new QGridLayout(this, 4, 2, 10, 7);
+	QGridLayout	*main_ = new TQGridLayout(this, 4, 2, 10, 7);
 	main_->setColStretch(0,0);
 	main_->setColStretch(1,1);
 	main_->setRowStretch(3,1);

@@ -1,5 +1,5 @@
-#include <qtextstream.h>
-#include <qtimer.h>
+#include <tqtextstream.h>
+#include <tqtimer.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -12,7 +12,7 @@
 
 #include "kwallettest.h"
 
-static QTextStream _out( stdout, IO_WriteOnly );
+static TQTextStream _out( stdout, IO_WriteOnly );
 
 void openWallet()
 {
@@ -22,7 +22,7 @@ void openWallet()
 	KWallet::Wallet *wallet = KWallet::Wallet::openWallet( KWallet::Wallet::NetworkWallet(), 0, KWallet::Wallet::Asynchronous );
 
 	WalletReceiver r;
-	r.connect( wallet, SIGNAL( walletOpened(bool) ), SLOT( walletOpened(bool) ) );
+	r.connect( wallet, TQT_SIGNAL( walletOpened(bool) ), TQT_SLOT( walletOpened(bool) ) );
 
 	_out << "About to ask for wallet sync" << endl;
 
@@ -31,7 +31,7 @@ void openWallet()
 	_out << "Got sync wallet: " << (wallet != 0) << endl;
 	_out << "About to start 30 second event loop" << endl;
 
-	QTimer::singleShot( 30000, qApp, SLOT( quit() ) );
+	TQTimer::singleShot( 30000, qApp, TQT_SLOT( quit() ) );
 	int ret = qApp->exec();
 
 
@@ -40,16 +40,16 @@ void openWallet()
 	else
 		_out << "Success!" << endl;
 
-	QMap<QString,QString> p;
+	TQMap<TQString,TQString> p;
 	ret = wallet->readPasswordList("*", p);
 	_out << "readPasswordList returned: " << ret << endl;
 	_out << "readPasswordList returned " << p.keys().count() << " entries" << endl;
-	QMap<QString, QMap<QString, QString> > q;
+	TQMap<TQString, TQMap<TQString, TQString> > q;
 	ret = wallet->readMapList("*", q);
 	_out << "readMapList returned: " << ret << endl;
 	_out << "readMapList returned " << q.keys().count() << " entries" << endl;
 
-	QMap<QString, QByteArray> s;
+	TQMap<TQString, TQByteArray> s;
 	ret = wallet->readEntryList("*", s);
 	_out << "readEntryList returned: " << ret << endl;
 	_out << "readEntryList returned " << s.keys().count() << " entries" << endl;

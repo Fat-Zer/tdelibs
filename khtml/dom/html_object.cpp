@@ -140,7 +140,7 @@ long HTMLAppletElement::getHspace() const
 
 void HTMLAppletElement::setHspace( long value )
 {
-    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_HSPACE, QString::number(value));
+    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_HSPACE, TQString::number(value));
 }
 
 DOMString HTMLAppletElement::name() const
@@ -184,7 +184,7 @@ long HTMLAppletElement::getVspace() const
 
 void HTMLAppletElement::setVspace( long value )
 {
-    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_VSPACE, QString::number(value));
+    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_VSPACE, TQString::number(value));
 }
 
 
@@ -359,7 +359,7 @@ long HTMLObjectElement::getHspace() const
 
 void HTMLObjectElement::setHspace( long value )
 {
-    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_HSPACE, QString::number(value));
+    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_HSPACE, TQString::number(value));
 }
 
 DOMString HTMLObjectElement::name() const
@@ -393,7 +393,7 @@ long HTMLObjectElement::tabIndex() const
 void HTMLObjectElement::setTabIndex( long _tabIndex )
 {
     if(impl) {
-	DOMString value(QString::number(_tabIndex));
+	DOMString value(TQString::number(_tabIndex));
         ((ElementImpl *)impl)->setAttribute(ATTR_TABINDEX,value);
     }
 }
@@ -439,7 +439,7 @@ long HTMLObjectElement::getVspace() const
 
 void HTMLObjectElement::setVspace( long value )
 {
-    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_VSPACE, QString::number(value));
+    if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_VSPACE, TQString::number(value));
 }
 
 DOMString HTMLObjectElement::width() const

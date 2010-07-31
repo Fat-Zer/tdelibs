@@ -20,7 +20,7 @@
 #ifndef KMCUPSCONFIGWIDGET_H
 #define KMCUPSCONFIGWIDGET_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class QLineEdit;
 class QCheckBox;
@@ -29,7 +29,7 @@ class KConfig;
 class KMCupsConfigWidget : public QWidget
 {
 public:
-	KMCupsConfigWidget(QWidget *parent = 0, const char *name = 0);
+	KMCupsConfigWidget(TQWidget *parent = 0, const char *name = 0);
 
 	void load();
 	void save(bool sync = true);

@@ -21,9 +21,9 @@
   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <qcstring.h>
-#include <qstrlist.h>
-#include <qregexp.h>
+#include <tqcstring.h>
+#include <tqstrlist.h>
+#include <tqregexp.h>
 
 #include <kdebug.h>
 
@@ -85,7 +85,7 @@ ContentLine::ContentLine(const ContentLine & x)
 {
 }
 
-ContentLine::ContentLine(const QCString & s)
+ContentLine::ContentLine(const TQCString & s)
 	:	Entity(s),
 		value_(0),
 		paramType_( ParamUnknown ),
@@ -107,7 +107,7 @@ ContentLine::operator = (ContentLine & x)
 }
 
 	ContentLine &
-ContentLine::operator = (const QCString & s)
+ContentLine::operator = (const TQCString & s)
 {
 	Entity::operator = (s);
 	delete value_;
@@ -120,7 +120,7 @@ ContentLine::operator == (ContentLine & x)
 {
 	x.parse();
 	
-	QPtrListIterator<Param> it(x.paramList());
+	TQPtrListIterator<Param> it(x.paramList());
 	
 	if (!paramList_.find(it.current()))
 		return false;
@@ -140,7 +140,7 @@ ContentLine::_parse()
 	vDebug("parse");
 	
 	// Unqote newlines
-	strRep_ = strRep_.replace( QRegExp( "\\\\n" ), "\n" );
+	strRep_ = strRep_.replace( TQRegExp( "\\\\n" ), "\n" );
 	
 	int split = strRep_.find(':');
 	
@@ -149,8 +149,8 @@ ContentLine::_parse()
 		return;
 	}
 	
-	QCString firstPart(strRep_.left(split));
-	QCString valuePart(strRep_.mid(split + 1));
+	TQCString firstPart(strRep_.left(split));
+	TQCString valuePart(strRep_.mid(split + 1));
 	
 	split = firstPart.find('.');
 	
@@ -165,7 +165,7 @@ ContentLine::_parse()
 	
 	// Now we have the group, the name and param list together and the value.
 	
-	QStrList l;
+	TQStrList l;
 	
 	RTokenise(firstPart, ";", l);
 	
@@ -187,11 +187,11 @@ ContentLine::_parse()
 	
 	// For each parameter, create a new parameter of the correct type.
 
-	QStrListIterator it(l);
+	TQStrListIterator it(l);
 	
 	for (; it.current(); ++it, i++) {
 
-		QCString str = *it;
+		TQCString str = *it;
 
 		split = str.find("=");
 		if (split < 0 ) {
@@ -199,13 +199,13 @@ ContentLine::_parse()
 			continue;
 		}
 		
-		QCString paraName = str.left(split);
-		QCString paraValue = str.mid(split + 1);
+		TQCString paraName = str.left(split);
+		TQCString paraValue = str.mid(split + 1);
 		
-		QStrList paraValues;
+		TQStrList paraValues;
 		RTokenise(paraValue, ",", paraValues);
 		
-		QStrListIterator it2( paraValues );
+		TQStrListIterator it2( paraValues );
 		
 		for(; it2.current(); ++it2) {		
 		
@@ -254,7 +254,7 @@ ContentLine::_assemble()
 	vDebug("Assemble (argl) - my name is \"" + name_ + "\"");
 	strRep_.truncate(0);
 
-	QCString line;
+	TQCString line;
 	
 	if (!group_.isEmpty())
 		line += group_ + '.';
@@ -275,7 +275,7 @@ ContentLine::_assemble()
         }
 
 	// Quote newlines
-	line = line.replace( QRegExp( "\n" ), "\\n" );
+	line = line.replace( TQRegExp( "\n" ), "\\n" );
 		
 	// Fold lines longer than 72 chars
 	const int maxLen = 72;

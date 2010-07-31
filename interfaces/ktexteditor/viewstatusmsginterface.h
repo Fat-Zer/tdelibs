@@ -41,13 +41,13 @@ class KTEXTEDITOR_EXPORT ViewStatusMsgInterface
     unsigned int viewStatusMsgInterfaceNumber () const;
     
   protected:  
-    void setViewStatusMsgInterfaceDCOPSuffix (const QCString &suffix); 
+    void setViewStatusMsgInterfaceDCOPSuffix (const TQCString &suffix); 
 
   //
   // signals !!!
   //  
   public:
-    virtual void viewStatusMsg (const class QString &msg) = 0;
+    virtual void viewStatusMsg (const class TQString &msg) = 0;
     
 
   private:

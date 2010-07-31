@@ -8,7 +8,7 @@
  * 
  */
 
-// You can use QImageIO::setParameters() to request a specific
+// You can use TQImageIO::setParameters() to request a specific
 // Icon out of an .ico file:
 //
 // Options consist of a name=value pair and are separated by a semicolon.
@@ -39,8 +39,8 @@ class QImageIO;
 
 extern "C"
 {
-    void kimgio_ico_read(QImageIO *);
-//    void kimgio_ico_write(QImageIO *);
+    void kimgio_ico_read(TQImageIO *);
+//    void kimgio_ico_write(TQImageIO *);
 }
 
 #endif

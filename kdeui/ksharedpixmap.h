@@ -18,9 +18,9 @@
 
 #ifdef Q_WS_X11
 
-#include <qstring.h>
-#include <qpixmap.h>
-#include <qwidget.h>
+#include <tqstring.h>
+#include <tqpixmap.h>
+#include <tqwidget.h>
 
 class KSharedPixmapPrivate;
 
@@ -41,7 +41,7 @@ class KSharedPixmapPrivate;
  * An example: copy from a shared pixmap:
  * \code
  *   KSharedPixmap *pm = new KSharedPixmap;
- *   connect(pm, SIGNAL(done(bool)), SLOT(slotDone(bool)));
+ *   connect(pm, TQT_SIGNAL(done(bool)), TQT_SLOT(slotDone(bool)));
  *   pm->loadFromShared("My Pixmap");
  * \endcode
  *
@@ -50,7 +50,7 @@ class KSharedPixmapPrivate;
  *
  */
 class KDEUI_EXPORT KSharedPixmap: 
-    public QWidget,
+    public TQWidget,
     public KPixmap
 {
     Q_OBJECT
@@ -80,7 +80,7 @@ public:
      * @return True if the shared pixmap exists and loading has started
      * successfully, false otherwise.
      */
-    bool loadFromShared(const QString & name, const QRect & rect=QRect());
+    bool loadFromShared(const TQString & name, const TQRect & rect=TQRect());
 
     /**
      * Check whether a shared pixmap is available.
@@ -88,7 +88,7 @@ public:
      * @param name The shared pixmap name.
      * @return True if the shared pixmap is available, false otherwise.
      */
-    bool isAvailable(const QString & name) const;
+    bool isAvailable(const TQString & name) const;
 
 signals:
     /** 
@@ -102,7 +102,7 @@ protected:
     bool x11Event(XEvent *);
     
 private:
-    bool copy(const QString & id, const QRect & rect);
+    bool copy(const TQString & id, const TQRect & rect);
     void init();
 
     KSharedPixmapPrivate *d;

@@ -22,8 +22,8 @@
 #ifndef _KWALLETENTRY_H
 #define _KWALLETENTRY_H
 
-#include <qstring.h>
-#include <qdatastream.h>
+#include <tqstring.h>
+#include <tqdatastream.h>
 
 #include "kwallet.h"
 
@@ -36,14 +36,14 @@ class KDE_EXPORT Entry {
 		Entry();
 		~Entry();
 		
-		const QString& key() const;
-		const QByteArray& value() const;
-		QString password() const;
-		const QByteArray& map() const { return value(); }
+		const TQString& key() const;
+		const TQByteArray& value() const;
+		TQString password() const;
+		const TQByteArray& map() const { return value(); }
 
-		void setValue(const QByteArray& val);
-		void setValue(const QString& val);
-		void setKey(const QString& key);
+		void setValue(const TQByteArray& val);
+		void setValue(const TQString& val);
+		void setKey(const TQString& key);
 
 		Wallet::EntryType type() const;
 		void setType(Wallet::EntryType type);
@@ -51,8 +51,8 @@ class KDE_EXPORT Entry {
 		void copy(const Entry* x);
 
 	private:
-		QString _key;
-		QByteArray _value;
+		TQString _key;
+		TQByteArray _value;
 		Wallet::EntryType _type;
 };
 

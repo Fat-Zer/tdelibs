@@ -20,9 +20,9 @@
 #ifndef KXMLCOMMANDDLG_H
 #define KXMLCOMMANDDLG_H
 
-#include <qwidget.h>
-#include <qmap.h>
-#include <qstringlist.h>
+#include <tqwidget.h>
+#include <tqmap.h>
+#include <tqstringlist.h>
 #include <kdialogbase.h>
 
 class KListView;
@@ -44,21 +44,21 @@ class KXmlCommandAdvancedDlg : public QWidget
 {
 	Q_OBJECT
 public:
-	KXmlCommandAdvancedDlg(QWidget *parent = 0, const char *name = 0);
+	KXmlCommandAdvancedDlg(TQWidget *parent = 0, const char *name = 0);
 	~KXmlCommandAdvancedDlg();
 
 	void setCommand(KXmlCommand*);
-	static bool editCommand(KXmlCommand *xmlcmd, QWidget *parent = 0);
+	static bool editCommand(KXmlCommand *xmlcmd, TQWidget *parent = 0);
 
 protected:
-	void parseGroupItem(DrGroup*, QListViewItem*);
+	void parseGroupItem(DrGroup*, TQListViewItem*);
 	void parseXmlCommand(KXmlCommand*);
-	void viewItem(QListViewItem*);
-	void removeItem(QListViewItem*);
-	void recreateGroup(QListViewItem*, DrGroup*);
+	void viewItem(TQListViewItem*);
+	void removeItem(TQListViewItem*);
+	void recreateGroup(TQListViewItem*, DrGroup*);
 
 protected slots:
-	void slotSelectionChanged(QListViewItem*);
+	void slotSelectionChanged(TQListViewItem*);
 	void slotTypeChanged(int);
 	void slotAddValue();
 	void slotRemoveValue();
@@ -68,9 +68,9 @@ protected slots:
 	void slotRemoveItem();
 	void slotMoveUp();
 	void slotMoveDown();
-	void slotCommandChanged(const QString&);
-	void slotValueSelected(QListViewItem*);
-	void slotOptionRenamed(QListViewItem*, int);
+	void slotCommandChanged(const TQString&);
+	void slotValueSelected(TQListViewItem*);
+	void slotOptionRenamed(TQListViewItem*, int);
 	void slotChanged();
 
 private:
@@ -84,21 +84,21 @@ private:
 	QToolButton	*m_apply, *m_addgrp, *m_addopt, *m_delopt, *m_up, *m_down;
 	QLineEdit	*m_inputfile, *m_inputpipe, *m_outputfile, *m_outputpipe;
 	QToolButton	*m_addval, *m_delval;
-	QTextEdit *m_comment;
-	QCheckBox *m_persistent;
+	TQTextEdit *m_comment;
+	TQCheckBox *m_persistent;
 
 	KXmlCommand	*m_xmlcmd;
-	QMap<QString, DrBase*>	m_opts;
+	TQMap<TQString, DrBase*>	m_opts;
 };
 
 class KXmlCommandDlg : public KDialogBase
 {
 	Q_OBJECT
 public:
-	KXmlCommandDlg(QWidget *parent = 0, const char *name = 0);
+	KXmlCommandDlg(TQWidget *parent = 0, const char *name = 0);
 
 	void setCommand(KXmlCommand*);
-	static bool editCommand(KXmlCommand*, QWidget *parent = 0);
+	static bool editCommand(KXmlCommand*, TQWidget *parent = 0);
 
 protected slots:
 	void slotAddMime();
@@ -106,9 +106,9 @@ protected slots:
 	void slotEditCommand();
 	void slotAddReq();
 	void slotRemoveReq();
-	void slotReqSelected(QListViewItem*);
-	void slotAvailableSelected(QListBoxItem*);
-	void slotSelectedSelected(QListBoxItem*);
+	void slotReqSelected(TQListViewItem*);
+	void slotAvailableSelected(TQListBoxItem*);
+	void slotSelectedSelected(TQListBoxItem*);
 	void slotOk();
 
 private:

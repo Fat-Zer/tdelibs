@@ -20,8 +20,8 @@
 #include "kdirsize.h"
 #include <kdebug.h>
 #include <kglobal.h>
-#include <qapplication.h>
-#include <qtimer.h>
+#include <tqapplication.h>
+#include <tqtimer.h>
 #include <config-kfile.h>
 
 using namespace KIO;
@@ -35,7 +35,7 @@ KDirSize::KDirSize( const KURL & directory )
 KDirSize::KDirSize( const KFileItemList & lstItems )
     : KIO::Job(false /*No GUI*/), m_bAsync(true), m_totalSize(0L), m_totalFiles(0L), m_totalSubdirs(0L), m_lstItems(lstItems)
 {
-    QTimer::singleShot( 0, this, SLOT(processList()) );
+    TQTimer::singleShot( 0, this, TQT_SLOT(processList()) );
 }
 
 void KDirSize::processList()
@@ -70,17 +70,17 @@ void KDirSize::processList()
 void KDirSize::startNextJob( const KURL & url )
 {
     KIO::ListJob * listJob = KIO::listRecursive( url, false /* no GUI */ );
-    connect( listJob, SIGNAL(entries( KIO::Job *,
+    connect( listJob, TQT_SIGNAL(entries( KIO::Job *,
                                       const KIO::UDSEntryList& )),
-             SLOT( slotEntries( KIO::Job*,
+             TQT_SLOT( slotEntries( KIO::Job*,
                                 const KIO::UDSEntryList& )));
     addSubjob( listJob );
 }
 
 void KDirSize::slotEntries( KIO::Job*, const KIO::UDSEntryList & list )
 {
-    static const QString& dot = KGlobal::staticQString( "." );
-    static const QString& dotdot = KGlobal::staticQString( ".." );
+    static const TQString& dot = KGlobal::staticQString( "." );
+    static const TQString& dotdot = KGlobal::staticQString( ".." );
     KIO::UDSEntryListConstIterator it = list.begin();
     KIO::UDSEntryListConstIterator end = list.end();
     for (; it != end; ++it) {
@@ -88,7 +88,7 @@ void KDirSize::slotEntries( KIO::Job*, const KIO::UDSEntryList & list )
         KIO::filesize_t size = 0;
         bool isLink = false;
         bool isDir = false;
-        QString name;
+        TQString name;
         for( ; it2 != (*it).end(); it2++ ) {
           switch( (*it2).m_uds ) {
             case KIO::UDS_NAME:

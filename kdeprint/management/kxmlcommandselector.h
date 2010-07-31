@@ -20,8 +20,8 @@
 #ifndef KXMLCOMMANDSELECTOR_H
 #define KXMLCOMMANDSELECTOR_H
 
-#include <qwidget.h>
-#include <qstringlist.h>
+#include <tqwidget.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -36,10 +36,10 @@ class KDEPRINT_EXPORT KXmlCommandSelector : public QWidget
 {
 	Q_OBJECT
 public:
-	KXmlCommandSelector(bool canBeNull = true, QWidget *parent = 0, const char *name = 0, KDialogBase *dlg = 0);
+	KXmlCommandSelector(bool canBeNull = true, TQWidget *parent = 0, const char *name = 0, KDialogBase *dlg = 0);
 
-	void setCommand(const QString&);
-	QString command() const;
+	void setCommand(const TQString&);
+	TQString command() const;
 
 protected:
 	void loadCommands();
@@ -61,8 +61,8 @@ private:
 	QCheckBox	*m_usefilter;
 	QStringList	m_cmdlist;
 	QLabel		*m_shortinfo;
-	QPushButton *m_helpbtn;
-	QString m_help;
+	TQPushButton *m_helpbtn;
+	TQString m_help;
 };
 
 #endif

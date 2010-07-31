@@ -391,7 +391,7 @@ void ProcessingInstructionImpl::checkStyleSheet()
         // ### make sure this gets called when adding from javascript
         XMLAttributeReader attrReader(DOMString(m_data).string());
         bool attrsOk;
-        QXmlAttributes attrs = attrReader.readAttrs(attrsOk);
+        TQXmlAttributes attrs = attrReader.readAttrs(attrsOk);
         if (!attrsOk)
             return;
         if (attrs.value("type") != "text/css" && !attrs.value("type").isEmpty())
@@ -414,7 +414,7 @@ void ProcessingInstructionImpl::checkStyleSheet()
                 // ### some validation on the URL?
                 // ### FIXME charset
                 if (m_cachedSheet) m_cachedSheet->deref(this);
-                m_cachedSheet = getDocument()->docLoader()->requestStyleSheet(getDocument()->completeURL(href.string()), QString::null);
+                m_cachedSheet = getDocument()->docLoader()->requestStyleSheet(getDocument()->completeURL(href.string()), TQString::null);
                 if (m_cachedSheet) {
                     getDocument()->addPendingSheet(); //before ref, because during the ref it might load!
                     m_cachedSheet->ref( this );
@@ -466,7 +466,7 @@ DOMString ProcessingInstructionImpl::toString() const
 
 // -------------------------------------------------------------------------
 
-XMLAttributeReader::XMLAttributeReader(const QString& _attrString)
+XMLAttributeReader::XMLAttributeReader(const TQString& _attrString)
 {
     m_attrString = _attrString;
 }
@@ -475,19 +475,19 @@ XMLAttributeReader::~XMLAttributeReader()
 {
 }
 
-QXmlAttributes XMLAttributeReader::readAttrs(bool &ok)
+TQXmlAttributes XMLAttributeReader::readAttrs(bool &ok)
 {
     // parse xml file
-    QXmlInputSource source;
+    TQXmlInputSource source;
     source.setData("<?xml version=\"1.0\"?><attrs "+m_attrString+" />");
-    QXmlSimpleReader reader;
+    TQXmlSimpleReader reader;
     reader.setContentHandler( this );
     ok = reader.parse( source );
     return attrs;
 }
 
-bool XMLAttributeReader::startElement(const QString& /*namespaceURI*/, const QString& localName,
-                                      const QString& /*qName*/, const QXmlAttributes& atts)
+bool XMLAttributeReader::startElement(const TQString& /*namespaceURI*/, const TQString& localName,
+                                      const TQString& /*qName*/, const TQXmlAttributes& atts)
 {
     if (localName == "attrs") {
         attrs = atts;

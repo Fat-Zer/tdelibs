@@ -18,16 +18,16 @@
 #define SECURITY_H
 
 //qt includes
-#include <qmap.h>
-#include <qobject.h>
+#include <tqmap.h>
+#include <tqobject.h>
 
 class KProcIO;
 class KProcess;
 
 struct KeyStruct {
-   QString id;
-   QString name;
-   QString mail;
+   TQString id;
+   TQString name;
+   TQString mail;
    bool trusted;
    bool secret;
 };
@@ -59,7 +59,7 @@ public:
    *               the file is should contain a "signature" and a "md5sum" file, otherwise verification will fail.
    *               The method is asynchronous and the result is signalled with @ref validityResult.
    */
-  void checkValidity(const QString &fileName);
+  void checkValidity(const TQString &fileName);
 
   /** Creates a signature and an md5sum file for the fileName and packs
    * everything into a gzipped tarball.
@@ -67,7 +67,7 @@ public:
    *
    * The method is asynchronous and the result is signalled with @ref fileSigned.
    */
-  void signFile(const QString &fileName);
+  void signFile(const TQString &fileName);
   /** Get the key used for signing. This method is valid only if:
   *  - the checkValidity was called
   *  - the result of the validity check does not have the UNKNOWN bit set
@@ -115,9 +115,9 @@ private:
    int m_runMode;
    bool m_gpgRunning; /// true if gpg is currently running
    bool m_keysRead; /// true if all the keys were read
-   QMap<QString, KeyStruct> m_keys; /// holds information about the available key
-   QString m_fileName; /// the file to sign/verify
-   QString m_secretKey; /// the key used for signing
+   TQMap<TQString, KeyStruct> m_keys; /// holds information about the available key
+   TQString m_fileName; /// the file to sign/verify
+   TQString m_secretKey; /// the key used for signing
 
 private slots:
    void slotProcessExited(KProcess *process);

@@ -9,10 +9,10 @@
  * licensing terms.
  */
 
-#include <qwidget.h>
-#include <qtimer.h>
-#include <qrect.h>
-#include <qimage.h>
+#include <tqwidget.h>
+#include <tqtimer.h>
+#include <tqrect.h>
+#include <tqimage.h>
 
 #include <kapplication.h>
 #include <kimageeffect.h>
@@ -28,7 +28,7 @@
 #include <krootpixmap.h>
 
 
-static QString wallpaperForDesktop(int desktop)
+static TQString wallpaperForDesktop(int desktop)
 {
     return DCOPRef("kdesktop", "KBackgroundIface").call("currentWallpaper", desktop);
 }
@@ -36,21 +36,21 @@ static QString wallpaperForDesktop(int desktop)
 class KRootPixmapData
 {
 public:
-    QWidget *toplevel;
+    TQWidget *toplevel;
 #ifdef Q_WS_X11
     KWinModule *kwin;
 #endif
 };
 
 
-KRootPixmap::KRootPixmap( QWidget *widget, const char *name )
-    : QObject(widget, name ? name : "KRootPixmap" ), m_Desk(0), m_pWidget(widget)
+KRootPixmap::KRootPixmap( TQWidget *widget, const char *name )
+    : TQObject(widget, name ? name : "KRootPixmap" ), m_Desk(0), m_pWidget(widget)
 {
     init();
 }
 
-KRootPixmap::KRootPixmap( QWidget *widget, QObject *parent, const char *name )
-    : QObject( parent, name ? name : "KRootPixmap" ), m_Desk(0), m_pWidget(widget)
+KRootPixmap::KRootPixmap( TQWidget *widget, TQObject *parent, const char *name )
+    : TQObject( parent, name ? name : "KRootPixmap" ), m_Desk(0), m_pWidget(widget)
 {
     init();
 }
@@ -60,19 +60,19 @@ void KRootPixmap::init()
     d = new KRootPixmapData;
     m_Fade = 0;
     m_pPixmap = new KSharedPixmap; //ordinary KPixmap on win32
-    m_pTimer = new QTimer( this );
+    m_pTimer = new TQTimer( this );
     m_bInit = false;
     m_bActive = false;
     m_bCustomPaint = false;
 
-    connect(kapp, SIGNAL(backgroundChanged(int)), SLOT(slotBackgroundChanged(int)));
-    connect(m_pTimer, SIGNAL(timeout()), SLOT(repaint()));
+    connect(kapp, TQT_SIGNAL(backgroundChanged(int)), TQT_SLOT(slotBackgroundChanged(int)));
+    connect(m_pTimer, TQT_SIGNAL(timeout()), TQT_SLOT(repaint()));
 #ifdef Q_WS_X11
-    connect(m_pPixmap, SIGNAL(done(bool)), SLOT(slotDone(bool)));
+    connect(m_pPixmap, TQT_SIGNAL(done(bool)), TQT_SLOT(slotDone(bool)));
 
     d->kwin = new KWinModule( this );
-    connect(d->kwin, SIGNAL(windowChanged(WId, unsigned int)), SLOT(desktopChanged(WId, unsigned int)));
-    connect(d->kwin, SIGNAL(currentDesktopChanged(int)), SLOT(desktopChanged(int)));
+    connect(d->kwin, TQT_SIGNAL(windowChanged(WId, unsigned int)), TQT_SLOT(desktopChanged(WId, unsigned int)));
+    connect(d->kwin, TQT_SIGNAL(currentDesktopChanged(int)), TQT_SLOT(desktopChanged(int)));
 #endif
 
     d->toplevel = m_pWidget->topLevelWidget();
@@ -95,7 +95,7 @@ int KRootPixmap::currentDesktop() const
     return rinfo.currentDesktop();
 #else
     //OK?
-    return QApplication::desktop()->screenNumber(m_pWidget);
+    return TQApplication::desktop()->screenNumber(m_pWidget);
 #endif
 }
 
@@ -124,7 +124,7 @@ void KRootPixmap::stop()
 }
 
 
-void KRootPixmap::setFadeEffect(double fade, const QColor &color)
+void KRootPixmap::setFadeEffect(double fade, const TQColor &color)
 {
     if (fade < 0)
 	m_Fade = 0;
@@ -138,10 +138,10 @@ void KRootPixmap::setFadeEffect(double fade, const QColor &color)
 }
 
 
-bool KRootPixmap::eventFilter(QObject *, QEvent *event)
+bool KRootPixmap::eventFilter(TQObject *, TQEvent *event)
 {
     // Initialise after the first show or paint event on the managed widget.
-    if (!m_bInit && ((event->type() == QEvent::Show) || (event->type() == QEvent::Paint)))
+    if (!m_bInit && ((event->type() == TQEvent::Show) || (event->type() == TQEvent::Paint)))
     {
 	m_bInit = true;
 	m_Desk = currentDesktop();
@@ -152,16 +152,16 @@ bool KRootPixmap::eventFilter(QObject *, QEvent *event)
 
     switch (event->type())
     {
-    case QEvent::Resize:
-    case QEvent::Move:
+    case TQEvent::Resize:
+    case TQEvent::Move:
 	m_pTimer->start(100, true);
 	break;
 
-    case QEvent::Paint:
+    case TQEvent::Paint:
 	m_pTimer->start(0, true);
 	break;
 
-    case QEvent::Reparent:
+    case TQEvent::Reparent:
         d->toplevel->removeEventFilter(this);
         d->toplevel = m_pWidget->topLevelWidget();
         d->toplevel->installEventFilter(this);
@@ -207,9 +207,9 @@ void KRootPixmap::repaint()
 
 void KRootPixmap::repaint(bool force)
 {
-    QPoint p1 = m_pWidget->mapToGlobal(m_pWidget->rect().topLeft());
-    QPoint p2 = m_pWidget->mapToGlobal(m_pWidget->rect().bottomRight());
-    if (!force && (m_Rect == QRect(p1, p2)))
+    TQPoint p1 = m_pWidget->mapToGlobal(m_pWidget->rect().topLeft());
+    TQPoint p2 = m_pWidget->mapToGlobal(m_pWidget->rect().bottomRight());
+    if (!force && (m_Rect == TQRect(p1, p2)))
 	return;
 
     // Due to northwest bit gravity, we don't need to do anything if the
@@ -220,11 +220,11 @@ void KRootPixmap::repaint(bool force)
 	(m_pWidget->height() < m_Rect.height())
        )
     {
-        m_Rect = QRect(p1, p2);
+        m_Rect = TQRect(p1, p2);
  	updateBackground( m_pPixmap );
 	return;
     }
-    m_Rect = QRect(p1, p2);
+    m_Rect = TQRect(p1, p2);
 #ifdef Q_WS_X11
     m_Desk = KWin::windowInfo(m_pWidget->topLevelWidget()->winId()).desktop();
     if (m_Desk == NET::OnAllDesktops)
@@ -253,12 +253,12 @@ bool KRootPixmap::isAvailable() const
 #endif
 }
 
-QString KRootPixmap::pixmapName(int desk) {
-    QString pattern = QString("DESKTOP%1");
+TQString KRootPixmap::pixmapName(int desk) {
+    TQString pattern = TQString("DESKTOP%1");
 #ifdef Q_WS_X11
     int screen_number = DefaultScreen(qt_xdisplay());
     if (screen_number) {
-        pattern = QString("SCREEN%1-DESKTOP").arg(screen_number) + "%1";
+        pattern = TQString("SCREEN%1-DESKTOP").arg(screen_number) + "%1";
     }
 #endif
     return pattern.arg( desk );
@@ -272,11 +272,11 @@ void KRootPixmap::enableExports()
     DCOPClient *client = kapp->dcopClient();
     if (!client->isAttached())
 	client->attach();
-    QByteArray data;
-    QDataStream args( data, IO_WriteOnly );
+    TQByteArray data;
+    TQDataStream args( data, IO_WriteOnly );
     args << 1;
 
-    QCString appname( "kdesktop" );
+    TQCString appname( "kdesktop" );
     int screen_number = DefaultScreen(qt_xdisplay());
     if ( screen_number )
         appname.sprintf("kdesktop-screen-%d", screen_number );
@@ -302,12 +302,12 @@ void KRootPixmap::slotDone(bool success)
 
 void KRootPixmap::updateBackground( KSharedPixmap *spm )
 {
-    QPixmap pm = *spm;
+    TQPixmap pm = *spm;
 
     if (m_Fade > 1e-6)
     {
 	KPixmapIO io;
-	QImage img = io.convertToImage(pm);
+	TQImage img = io.convertToImage(pm);
 	img = KImageEffect::fade(img, m_Fade, m_FadeColor);
 	pm = io.convertToPixmap(img);
     }

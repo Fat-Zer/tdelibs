@@ -29,7 +29,7 @@ namespace KIO {
 
   enum SkipDlg_Result { S_SKIP = 1, S_AUTO_SKIP = 2, S_CANCEL = 0 };
 
-  KIO_EXPORT SkipDlg_Result open_SkipDlg( bool _multi, const QString& _error_text = QString::null );
+  KIO_EXPORT SkipDlg_Result open_SkipDlg( bool _multi, const TQString& _error_text = TQString::null );
 
 /**
  * @internal
@@ -38,13 +38,13 @@ class KIO_EXPORT SkipDlg : public KDialog
 {
   Q_OBJECT
 public:
-  SkipDlg( QWidget *parent, bool _multi, const QString& _error_text, bool _modal = false );
+  SkipDlg( TQWidget *parent, bool _multi, const TQString& _error_text, bool _modal = false );
   ~SkipDlg();
 
 protected:
-  QPushButton *b0;
-  QPushButton *b1;
-  QPushButton *b2;
+  TQPushButton *b0;
+  TQPushButton *b1;
+  TQPushButton *b2;
 
   bool modal;
 

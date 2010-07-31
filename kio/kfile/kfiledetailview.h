@@ -37,8 +37,8 @@ class QKeyEvent;
 class KIO_EXPORT KFileListViewItem : public KListViewItem
 {
 public:
-    KFileListViewItem( QListView *parent, const QString &text,
-		       const QPixmap &icon, KFileItem *fi )
+    KFileListViewItem( TQListView *parent, const TQString &text,
+		       const TQPixmap &icon, KFileItem *fi )
 	: KListViewItem( parent, text ), inf( fi ) {
         setPixmap( 0, icon );
         setText( 0, text );
@@ -47,14 +47,14 @@ public:
     /**
      * @since 3.1
      */
-    KFileListViewItem( QListView *parent, KFileItem *fi )
+    KFileListViewItem( TQListView *parent, KFileItem *fi )
         : KListViewItem( parent ), inf( fi ) {
         init();
     }
 
-    KFileListViewItem( QListView *parent, const QString &text,
-		       const QPixmap &icon, KFileItem *fi,
-		       QListViewItem *after)
+    KFileListViewItem( TQListView *parent, const TQString &text,
+		       const TQPixmap &icon, KFileItem *fi,
+		       TQListViewItem *after)
 	: KListViewItem( parent, after ), inf( fi ) {
         setPixmap( 0, icon );
         setText( 0, text );
@@ -70,17 +70,17 @@ public:
 	return inf;
     }
 
-    virtual QString key( int /*column*/, bool /*ascending*/ ) const {
+    virtual TQString key( int /*column*/, bool /*ascending*/ ) const {
         return m_key;
     }
 
-    void setKey( const QString& key ) { m_key = key; }
+    void setKey( const TQString& key ) { m_key = key; }
 
-    QRect rect() const
+    TQRect rect() const
     {
-        QRect r = listView()->itemRect(this);
-        return QRect( listView()->viewportToContents( r.topLeft() ),
-                      QSize( r.width(), r.height() ) );
+        TQRect r = listView()->itemRect(this);
+        return TQRect( listView()->viewportToContents( r.topLeft() ),
+                      TQSize( r.width(), r.height() ) );
     }
 
     /**
@@ -90,7 +90,7 @@ public:
 
 private:
     KFileItem *inf;
-    QString m_key;
+    TQString m_key;
 
 private:
     class KFileListViewItemPrivate;
@@ -111,10 +111,10 @@ class KIO_EXPORT KFileDetailView : public KListView, public KFileView
     Q_OBJECT
 
 public:
-    KFileDetailView(QWidget *parent, const char *name);
+    KFileDetailView(TQWidget *parent, const char *name);
     virtual ~KFileDetailView();
 
-    virtual QWidget *widget() { return this; }
+    virtual TQWidget *widget() { return this; }
     virtual void clearView();
     virtual void setAutoUpdate( bool ) {} // ### unused. remove in KDE4
 
@@ -140,17 +140,17 @@ public:
     virtual void insertItem( KFileItem *i );
 
     // implemented to get noticed about sorting changes (for sortingIndicator)
-    virtual void setSorting( QDir::SortSpec );
+    virtual void setSorting( TQDir::SortSpec );
 
     void ensureItemVisible( const KFileItem * );
 
     // for KMimeTypeResolver
     void mimeTypeDeterminationFinished();
     void determineIcon( KFileListViewItem *item );
-    QScrollView *scrollWidget() const { return (QScrollView*) this; }
+    TQScrollView *scrollWidget() const { return (TQScrollView*) this; }
 
-    virtual void readConfig( KConfig *, const QString& group = QString::null );
-    virtual void writeConfig( KConfig *, const QString& group = QString::null);
+    virtual void readConfig( KConfig *, const TQString& group = TQString::null );
+    virtual void writeConfig( KConfig *, const TQString& group = TQString::null);
 
 signals:
     /**
@@ -159,25 +159,25 @@ signals:
      * user dropped on empty space.
      * @since 3.2
      */
-    void dropped(QDropEvent *event, KFileItem *fileItem);
+    void dropped(TQDropEvent *event, KFileItem *fileItem);
     /**
      * The user dropped the URLs @p urls.
      * @p url points to the item dropped on or can be empty if the
      * user dropped on empty space.
      * @since 3.2
      */
-    void dropped(QDropEvent *event, const KURL::List &urls, const KURL &url);
+    void dropped(TQDropEvent *event, const KURL::List &urls, const KURL &url);
 
 protected:
-    virtual void keyPressEvent( QKeyEvent * );
+    virtual void keyPressEvent( TQKeyEvent * );
 
     // DND support
-    virtual QDragObject *dragObject();
-    virtual void contentsDragEnterEvent( QDragEnterEvent *e );
-    virtual void contentsDragMoveEvent( QDragMoveEvent *e );
-    virtual void contentsDragLeaveEvent( QDragLeaveEvent *e );
-    virtual void contentsDropEvent( QDropEvent *ev );
-    virtual bool acceptDrag(QDropEvent* e ) const;
+    virtual TQDragObject *dragObject();
+    virtual void contentsDragEnterEvent( TQDragEnterEvent *e );
+    virtual void contentsDragMoveEvent( TQDragMoveEvent *e );
+    virtual void contentsDragLeaveEvent( TQDragLeaveEvent *e );
+    virtual void contentsDropEvent( TQDropEvent *ev );
+    virtual bool acceptDrag(TQDropEvent* e ) const;
 
     int m_sortingCol;
 
@@ -186,16 +186,16 @@ protected slots:
 
 private slots:
     void slotSortingChanged( int );
-    void selected( QListViewItem *item );
-    void slotActivate( QListViewItem *item );
-    void highlighted( QListViewItem *item );
-    void slotActivateMenu ( QListViewItem *item, const QPoint& pos );
+    void selected( TQListViewItem *item );
+    void slotActivate( TQListViewItem *item );
+    void highlighted( TQListViewItem *item );
+    void slotActivateMenu ( TQListViewItem *item, const TQPoint& pos );
     void slotAutoOpen();
 
 private:
-    virtual void insertItem(QListViewItem *i) { KListView::insertItem(i); }
+    virtual void insertItem(TQListViewItem *i) { KListView::insertItem(i); }
     virtual void setSorting(int i, bool b) { KListView::setSorting(i, b); }
-    virtual void setSelected(QListViewItem *i, bool b) { KListView::setSelected(i, b); }
+    virtual void setSelected(TQListViewItem *i, bool b) { KListView::setSelected(i, b); }
 
     inline KFileListViewItem * viewItem( const KFileItem *item ) const {
         if ( item )

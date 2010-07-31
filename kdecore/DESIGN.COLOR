@@ -22,12 +22,12 @@ should be taken never to mix foreground colors from one group with
 background colors from another group: they do not necasserily have any
 contrast at all which can lead to a completely unreadable UI.
 
-Color schemes are supported by Qt (see QColorGroup) and can be
+Color schemes are supported by Qt (see TQColorGroup) and can be
 configured on a KDE wide basis from the Control Panel. The settings
 are stored in the global KDE configuration file under the "General"
 setting. The KApplication class takes care that the configured
 settings are passed on to Qt. Application developers can just use the
-values provided by QColorGroup.
+values provided by TQColorGroup.
 
 There are three major color categories:
 
@@ -36,13 +36,13 @@ General
 The colors in this group are used when no particular other group is
 relevant.
 
-QColorGroup...: ColorRole::Background, background()
+TQColorGroup...: ColorRole::Background, background()
 KDE config key: background
 Control Center: i18n("Window Background")
 Description...: General background color
 Example use...: Background of dialogs
 
-QColorGroup...: ColorRole::Foreground, foreground()
+TQColorGroup...: ColorRole::Foreground, foreground()
 KDE config key: foreground
 Control Center: i18n("Window Text")
 Description...: General foreground color
@@ -53,25 +53,25 @@ Text Areas
 The colors in this group are used where the user can type text. it is
 also used for lists from which the user can choose.
 
-QColorGroup...: ColorRole::Base, base()
+TQColorGroup...: ColorRole::Base, base()
 KDE config key: windowBackground
 Control Center: i18n("Standard background")
 Description...: Background color for text areas.
 Example use...: Background in a word-processor.
 
-QColorGroup...: ColorRole::Text, text()
+TQColorGroup...: ColorRole::Text, text()
 KDE config key: windowForeground
 Control Center: i18n("Standard text")
 Description...: Text color for text areas.
 Example use...: Text in a word-processor.
 
-QColorGroup...: ColorRole::Highlight, highlight()
+TQColorGroup...: ColorRole::Highlight, highlight()
 KDE config key: selectBackground
 Control Center: i18n("Select background")
 Description...: Background color for selected text.
 Example use...: In a selection list.
 
-QColorGroup...: ColorRole::HighlightedText, highlightedText()
+TQColorGroup...: ColorRole::HighlightedText, highlightedText()
 KDE config key: selectForeground
 Control Center: i18n("Select text")
 Description...: Text color for selected text.
@@ -88,13 +88,13 @@ The colors used in this category are used for buttons in the broad
 sense, including e.g.scrollbars, menubars and
 popup-menus.
 
-QColorGroup...: ColorRole::Button, button()
+TQColorGroup...: ColorRole::Button, button()
 KDE config key: buttonBackground
 Control Center: i18n("Button background")
 Description...: Background color for buttons.
 Example use...: Background color of the OK button in a messagebox.
 
-QColorGroup...: ColorRole::ButtonText, buttonText()
+TQColorGroup...: ColorRole::ButtonText, buttonText()
 KDE config key: buttonForeground
 Control Center: i18n("Button text")
 Description...: Color for text on buttons.
@@ -104,22 +104,22 @@ Example use...: Color of the OK text on a button in a messagebox.
 In addition to the above colors a number of derived colors are
 defined.They are all darker of lighter version of "Background".
 
-QColorGroup...: ColorRole::Shadow, shadow()
+TQColorGroup...: ColorRole::Shadow, shadow()
 Description...: Used for shadow effects.(Very dark)
 
-QColorGroup...: ColorRold::BrightText, brightText()
+TQColorGroup...: ColorRold::BrightText, brightText()
 Description...: Used for text on pushed pushbuttons
 
-QColorGroup...: ColorRole::Light, light()
+TQColorGroup...: ColorRole::Light, light()
 Description...: Lighter than "Button"
 
-QColorGroup...: ColorRole::Midlight, midlight()
+TQColorGroup...: ColorRole::Midlight, midlight()
 Description...: Between "Button" and "Light"
 
-QColorGroup...: ColorRole::Dark, dark()
+TQColorGroup...: ColorRole::Dark, dark()
 Description...: Darker than "Button"
 
-QColorGroup...: ColorRole::Mid, mid()
+TQColorGroup...: ColorRole::Mid, mid()
 Description...: Between "Button" and "Dark"
 
 Well Behaved Aplications

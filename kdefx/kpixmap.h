@@ -24,7 +24,7 @@
 #ifndef __KPIXMAP_H__
 #define __KPIXMAP_H__
 
-#include <qpixmap.h>
+#include <tqpixmap.h>
 
 #include <kdelibs_export.h>
 
@@ -79,7 +79,7 @@ public:
 	/**
 	 * Constructs a null pixmap.
 	 */
-         KPixmap() : QPixmap() {};
+         KPixmap() : TQPixmap() {};
 
 	/**
 	 * Destructs the pixmap.
@@ -88,9 +88,9 @@ public:
 	~KPixmap();
 
 	/**
-	 * Copies the QPixmap @p pix.
+	 * Copies the TQPixmap @p pix.
          */
-	KPixmap(const QPixmap& pix);
+	KPixmap(const TQPixmap& pix);
 
 	/**
 	 * Converts an image and sets this pixmap.
@@ -148,7 +148,7 @@ public:
 	 * @param conversion_flags bitmask, described above
 	 * @return @p true if successful.
 	 **/
-	bool convertFromImage( const QImage &img, int conversion_flags );
+	bool convertFromImage( const TQImage &img, int conversion_flags );
 
 	/**
 	 * This is an overloaded member function, provided for
@@ -158,7 +158,7 @@ public:
 	 * @param mode a ColorMode to apply
 	 * @return @p true if successful.
 	 **/
-	bool convertFromImage( const QImage &img, ColorMode mode = WebColor );
+	bool convertFromImage( const TQImage &img, ColorMode mode = WebColor );
 
 	/**
 	 * Loads a pixmap from the file @p fileName.
@@ -168,7 +168,7 @@ public:
 	 * specified (default), the loader reads a few bytes from the
 	 * header to guess the file format.
 	 *
-	 * The QImageIO documentation lists the supported image
+	 * The TQImageIO documentation lists the supported image
 	 * formats and explains how to add extra formats.
 	 *
 	 * @param fileName the name of the file to load the image from
@@ -178,7 +178,7 @@ public:
 	 * @return @p true if successful, or false if the pixmap
 	 *         could not be loaded.
 	 **/
-	bool load( const QString& fileName, const char *format,
+	bool load( const TQString& fileName, const char *format,
 		int conversion_flags );
 
 	/**
@@ -191,7 +191,7 @@ public:
 	 * @return @p true if successful, or false if the pixmap
 	 *         could not be loaded.
 	 **/
-	bool load( const QString& fileName,
+	bool load( const TQString& fileName,
 		const char *format = 0,
 		ColorMode mode = WebColor );
 
@@ -204,7 +204,7 @@ public:
 	 * transparent background.
 	 * @param image the image to test
 	 **/
-	bool checkColorTable(const QImage &image);
+	bool checkColorTable(const TQImage &image);
 
 private:
     KPixmapPrivate *d;

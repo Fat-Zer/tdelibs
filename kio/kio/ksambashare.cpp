@@ -16,9 +16,9 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qdict.h>
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqdict.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
 #include <kdirwatch.h>
 #include <kstaticdeleter.h>
@@ -36,8 +36,8 @@ public:
   bool findSmbConf();
   bool load();
   
-  QDict<bool> sharedPaths;
-  QString smbConf;
+  TQDict<bool> sharedPaths;
+  TQString smbConf;
 };
 
 KSambaSharePrivate::KSambaSharePrivate() 
@@ -62,28 +62,28 @@ bool KSambaSharePrivate::load() {
  * @return wether a smb.conf was found.
  **/
 bool KSambaSharePrivate::findSmbConf() {
-  KSimpleConfig config(QString::fromLatin1(FILESHARECONF),true);
+  KSimpleConfig config(TQString::fromLatin1(FILESHARECONF),true);
   smbConf = config.readEntry("SMBCONF");
 
-  if ( QFile::exists(smbConf) )
+  if ( TQFile::exists(smbConf) )
     return true;
 
-  if ( QFile::exists("/etc/samba/smb.conf") )
+  if ( TQFile::exists("/etc/samba/smb.conf") )
     smbConf = "/etc/samba/smb.conf";
   else
-  if ( QFile::exists("/etc/smb.conf") )
+  if ( TQFile::exists("/etc/smb.conf") )
     smbConf = "/etc/smb.conf";
   else
-  if ( QFile::exists("/usr/local/samba/lib/smb.conf") )
+  if ( TQFile::exists("/usr/local/samba/lib/smb.conf") )
     smbConf = "/usr/local/samba/lib/smb.conf";
   else
-  if ( QFile::exists("/usr/samba/lib/smb.conf") )
+  if ( TQFile::exists("/usr/samba/lib/smb.conf") )
     smbConf = "/usr/samba/lib/smb.conf";
   else
-  if ( QFile::exists("/usr/lib/smb.conf") )
+  if ( TQFile::exists("/usr/lib/smb.conf") )
     smbConf = "/usr/lib/smb.conf";
   else
-  if ( QFile::exists("/usr/local/lib/smb.conf") )
+  if ( TQFile::exists("/usr/local/lib/smb.conf") )
     smbConf = "/usr/local/lib/smb.conf";
   else {
     kdDebug(7000) << "KSambaShare: Could not found smb.conf!" << endl;
@@ -99,7 +99,7 @@ bool KSambaSharePrivate::findSmbConf() {
  * and fills the sharedPaths dict with the values
  */
 bool KSambaSharePrivate::readSmbConf() {
-  QFile f(smbConf);
+  TQFile f(smbConf);
 
   kdDebug(7000) << "KSambaShare::readSmbConf " << smbConf << endl;
   
@@ -110,14 +110,14 @@ bool KSambaSharePrivate::readSmbConf() {
   
   sharedPaths.clear();
 
-  QTextStream s(&f);
+  TQTextStream s(&f);
 
   bool continuedLine = false; // is true if the line before ended with a backslash
-  QString completeLine;
+  TQString completeLine;
 
   while (!s.eof())
   {
-    QString currentLine = s.readLine().stripWhiteSpace();
+    TQString currentLine = s.readLine().stripWhiteSpace();
 
     if (continuedLine) {
       completeLine += currentLine;
@@ -148,8 +148,8 @@ bool KSambaSharePrivate::readSmbConf() {
 
     if (i>-1)
     {
-      QString name = completeLine.left(i).stripWhiteSpace().lower();
-      QString value = completeLine.mid(i+1).stripWhiteSpace();
+      TQString name = completeLine.left(i).stripWhiteSpace().lower();
+      TQString value = completeLine.mid(i+1).stripWhiteSpace();
 
       if (name == KGlobal::staticQString("path")) {
         // Handle quotation marks
@@ -178,44 +178,44 @@ bool KSambaSharePrivate::readSmbConf() {
 
 KSambaShare::KSambaShare() {
   d = new KSambaSharePrivate();
-  if (QFile::exists(d->smbConf)) {
+  if (TQFile::exists(d->smbConf)) {
     KDirWatch::self()->addFile(d->smbConf);
     KDirWatch::self()->addFile(FILESHARECONF);
-    connect(KDirWatch::self(), SIGNAL(dirty (const QString&)),this,
-   	        SLOT(slotFileChange(const QString&)));
+    connect(KDirWatch::self(), TQT_SIGNAL(dirty (const TQString&)),this,
+   	        TQT_SLOT(slotFileChange(const TQString&)));
   } 
 }
 
 KSambaShare::~KSambaShare() {
-  if (QFile::exists(d->smbConf)) {
+  if (TQFile::exists(d->smbConf)) {
         KDirWatch::self()->removeFile(d->smbConf);
         KDirWatch::self()->removeFile(FILESHARECONF);
   }
   delete d;
 }
 
-QString KSambaShare::smbConfPath() const {
+TQString KSambaShare::smbConfPath() const {
   return d->smbConf;
 }
 
-bool KSambaShare::isDirectoryShared( const QString & path ) const {
-  QString fixedPath = path;
+bool KSambaShare::isDirectoryShared( const TQString & path ) const {
+  TQString fixedPath = path;
   if ( path[path.length()-1] != '/' )
        fixedPath += '/';
   
   return d->sharedPaths.find(fixedPath) != 0;
 }
 
-QStringList KSambaShare::sharedDirectories() const {
-  QStringList result;
-  QDictIterator<bool> it(d->sharedPaths);
+TQStringList KSambaShare::sharedDirectories() const {
+  TQStringList result;
+  TQDictIterator<bool> it(d->sharedPaths);
   for( ; it.current(); ++it )
       result << it.currentKey();
       
   return result;       
 }
 
-void KSambaShare::slotFileChange( const QString & path ) {
+void KSambaShare::slotFileChange( const TQString & path ) {
   if (path == d->smbConf)
      d->readSmbConf();
   else

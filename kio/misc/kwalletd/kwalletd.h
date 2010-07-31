@@ -23,10 +23,10 @@
 #define _KWALLETD_H_
 
 #include <kded/kdedmodule.h>
-#include <qintdict.h>
-#include <qstring.h>
-#include <qwidget.h>
-#include <qguardedptr.h>
+#include <tqintdict.h>
+#include <tqstring.h>
+#include <tqwidget.h>
+#include <tqguardedptr.h>
 #include "kwalletbackend.h"
 
 #include <time.h>
@@ -42,7 +42,7 @@ class KWalletD : public KDEDModule {
 	Q_OBJECT
 	K_DCOP
 	public:
-		KWalletD(const QCString &name);
+		KWalletD(const TQCString &name);
 		virtual ~KWalletD();
 
 	k_dcop:
@@ -50,145 +50,145 @@ class KWalletD : public KDEDModule {
 		virtual bool isEnabled() const;
 
 		// Open and unlock the wallet
-		virtual int open(const QString& wallet, uint wId);
+		virtual int open(const TQString& wallet, uint wId);
 
 		// Open and unlock the wallet with this path
-		virtual int openPath(const QString& path, uint wId);
+		virtual int openPath(const TQString& path, uint wId);
 
 		// Asynchronous open - must give the object to return the handle
 		// to.
-		virtual void openAsynchronous(const QString& wallet, const QCString& returnObject, uint wId);
+		virtual void openAsynchronous(const TQString& wallet, const TQCString& returnObject, uint wId);
 
 		// Close and lock the wallet
 		// If force = true, will close it for all users.  Behave.  This
 		// can break applications, and is generally intended for use by
 		// the wallet manager app only.
-		virtual int close(const QString& wallet, bool force);
+		virtual int close(const TQString& wallet, bool force);
 		virtual int close(int handle, bool force);
 
 		// Save to disk but leave open
 		virtual ASYNC sync(int handle);
 
 		// Physically deletes the wallet from disk.
-		virtual int deleteWallet(const QString& wallet);
+		virtual int deleteWallet(const TQString& wallet);
 
 		// Returns true if the wallet is open
-		virtual bool isOpen(const QString& wallet) const;
+		virtual bool isOpen(const TQString& wallet) const;
 		virtual bool isOpen(int handle);
 
 		// List the users of this wallet
-		virtual QStringList users(const QString& wallet) const;
+		virtual TQStringList users(const TQString& wallet) const;
 
 		// Change the password of this wallet
-		virtual void changePassword(const QString& wallet, uint wId);
+		virtual void changePassword(const TQString& wallet, uint wId);
 
 		// A list of all wallets
-		virtual QStringList wallets() const;
+		virtual TQStringList wallets() const;
 
 		// A list of all folders in this wallet
-		virtual QStringList folderList(int handle);
+		virtual TQStringList folderList(int handle);
 
 		// Does this wallet have this folder?
-		virtual bool hasFolder(int handle, const QString& folder);
+		virtual bool hasFolder(int handle, const TQString& folder);
 
 		// Create this folder
-		virtual bool createFolder(int handle, const QString& folder);
+		virtual bool createFolder(int handle, const TQString& folder);
 
 		// Remove this folder
-		virtual bool removeFolder(int handle, const QString& folder);
+		virtual bool removeFolder(int handle, const TQString& folder);
 
 		// List of entries in this folder
-		virtual QStringList entryList(int handle, const QString& folder);
+		virtual TQStringList entryList(int handle, const TQString& folder);
 
 		// Read an entry.  If the entry does not exist, it just
 		// returns an empty result.  It is your responsibility to check
 		// hasEntry() first.
-		virtual QByteArray readEntry(int handle, const QString& folder, const QString& key);
-		virtual QByteArray readMap(int handle, const QString& folder, const QString& key);
-		virtual QString readPassword(int handle, const QString& folder, const QString& key);
-		virtual QMap<QString, QByteArray> readEntryList(int handle, const QString& folder, const QString& key);
-		virtual QMap<QString, QByteArray> readMapList(int handle, const QString& folder, const QString& key);
-		virtual QMap<QString, QString> readPasswordList(int handle, const QString& folder, const QString& key);
+		virtual TQByteArray readEntry(int handle, const TQString& folder, const TQString& key);
+		virtual TQByteArray readMap(int handle, const TQString& folder, const TQString& key);
+		virtual TQString readPassword(int handle, const TQString& folder, const TQString& key);
+		virtual TQMap<TQString, TQByteArray> readEntryList(int handle, const TQString& folder, const TQString& key);
+		virtual TQMap<TQString, TQByteArray> readMapList(int handle, const TQString& folder, const TQString& key);
+		virtual TQMap<TQString, TQString> readPasswordList(int handle, const TQString& folder, const TQString& key);
 
 		// Rename an entry.  rc=0 on success.
-		virtual int renameEntry(int handle, const QString& folder, const QString& oldName, const QString& newName);
+		virtual int renameEntry(int handle, const TQString& folder, const TQString& oldName, const TQString& newName);
 
 		// Write an entry.  rc=0 on success.
-		virtual int writeEntry(int handle, const QString& folder, const QString& key, const QByteArray& value, int entryType);
-		virtual int writeEntry(int handle, const QString& folder, const QString& key, const QByteArray& value);
-		virtual int writeMap(int handle, const QString& folder, const QString& key, const QByteArray& value);
-		virtual int writePassword(int handle, const QString& folder, const QString& key, const QString& value);
+		virtual int writeEntry(int handle, const TQString& folder, const TQString& key, const TQByteArray& value, int entryType);
+		virtual int writeEntry(int handle, const TQString& folder, const TQString& key, const TQByteArray& value);
+		virtual int writeMap(int handle, const TQString& folder, const TQString& key, const TQByteArray& value);
+		virtual int writePassword(int handle, const TQString& folder, const TQString& key, const TQString& value);
 
 		// Does the entry exist?
-		virtual bool hasEntry(int handle, const QString& folder, const QString& key);
+		virtual bool hasEntry(int handle, const TQString& folder, const TQString& key);
 
 		// What type is the entry?
-		virtual int entryType(int handle, const QString& folder, const QString& key);
+		virtual int entryType(int handle, const TQString& folder, const TQString& key);
 
 		// Remove an entry.  rc=0 on success.
-		virtual int removeEntry(int handle, const QString& folder, const QString& key);
+		virtual int removeEntry(int handle, const TQString& folder, const TQString& key);
 
 		// Disconnect an app from a wallet
-		virtual bool disconnectApplication(const QString& wallet, const QCString& application);
+		virtual bool disconnectApplication(const TQString& wallet, const TQCString& application);
 
 		virtual void reconfigure();
 
 		// Determine
-		virtual bool folderDoesNotExist(const QString& wallet, const QString& folder);
-		virtual bool keyDoesNotExist(const QString& wallet, const QString& folder, const QString& key);
+		virtual bool folderDoesNotExist(const TQString& wallet, const TQString& folder);
+		virtual bool keyDoesNotExist(const TQString& wallet, const TQString& folder, const TQString& key);
 
 		virtual void closeAllWallets();
 
-		virtual QString networkWallet();
+		virtual TQString networkWallet();
 
-		virtual QString localWallet();
+		virtual TQString localWallet();
 
 	private slots:
-		void slotAppUnregistered(const QCString& app);
+		void slotAppUnregistered(const TQCString& app);
 		void emitWalletListDirty();
 		void timedOut(int);
 		void notifyFailures();
 		void processTransactions();
 
 	private:
-		int internalOpen(const QCString& appid, const QString& wallet, bool isPath = false, WId w = 0, bool modal = false);
-		bool isAuthorizedApp(const QCString& appid, const QString& wallet, WId w);
+		int internalOpen(const TQCString& appid, const TQString& wallet, bool isPath = false, WId w = 0, bool modal = false);
+		bool isAuthorizedApp(const TQCString& appid, const TQString& wallet, WId w);
 		// This also validates the handle.  May return NULL.
-		KWallet::Backend* getWallet(const QCString& appid, int handle);
+		KWallet::Backend* getWallet(const TQCString& appid, int handle);
 		// Generate a new unique handle.
 		int generateHandle();
-		// Invalidate a handle (remove it from the QMap)
+		// Invalidate a handle (remove it from the TQMap)
 		void invalidateHandle(int handle);
 		// Emit signals about closing wallets
-		void doCloseSignals(int,const QString&);
-		void emitFolderUpdated(const QString&, const QString&);
+		void doCloseSignals(int,const TQString&);
+		void emitFolderUpdated(const TQString&, const TQString&);
 		// Internal - close this wallet.
 		int closeWallet(KWallet::Backend *w, int handle, bool force);
 		// Implicitly allow access for this application
-		bool implicitAllow(const QString& wallet, const QCString& app);
-		bool implicitDeny(const QString& wallet, const QCString& app);
-		QCString friendlyDCOPPeerName();
+		bool implicitAllow(const TQString& wallet, const TQCString& app);
+		bool implicitDeny(const TQString& wallet, const TQCString& app);
+		TQCString friendlyDCOPPeerName();
 
-		void doTransactionChangePassword(const QCString& appid, const QString& wallet, uint wId);
-		int doTransactionOpen(const QCString& appid, const QString& wallet, uint wId, bool modal);
+		void doTransactionChangePassword(const TQCString& appid, const TQString& wallet, uint wId);
+		int doTransactionOpen(const TQCString& appid, const TQString& wallet, uint wId, bool modal);
 
-		void setupDialog( QWidget* dialog, WId wId, const QCString& appid, bool modal );
+		void setupDialog( TQWidget* dialog, WId wId, const TQCString& appid, bool modal );
 		void checkActiveDialog();
 
-		QIntDict<KWallet::Backend> _wallets;
-		QMap<QCString,QValueList<int> > _handles;
-		QMap<QString,QCString> _passwords;
+		TQIntDict<KWallet::Backend> _wallets;
+		TQMap<TQCString,TQValueList<int> > _handles;
+		TQMap<TQString,TQCString> _passwords;
 		KDirWatch *_dw;
 		int _failed;
 
 		bool _leaveOpen, _closeIdle, _launchManager, _enabled;
 	       	bool _openPrompt, _firstUse, _showingFailureNotify;
 		int _idleTime;
-		QMap<QString,QStringList> _implicitAllowMap, _implicitDenyMap;
+		TQMap<TQString,TQStringList> _implicitAllowMap, _implicitDenyMap;
 		KTimeout *_timeouts;
 
-		QPtrList<KWalletTransaction> _transactions;
-		QGuardedPtr< QWidget > activeDialog;
+		TQPtrList<KWalletTransaction> _transactions;
+		TQGuardedPtr< TQWidget > activeDialog;
 };
 
 

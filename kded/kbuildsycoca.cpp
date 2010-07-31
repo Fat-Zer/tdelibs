@@ -17,8 +17,8 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#include <qdir.h>
-#include <qeventloop.h>
+#include <tqdir.h>
+#include <tqeventloop.h>
 #include <config.h>
 
 #include "kbuildsycoca.h"
@@ -35,9 +35,9 @@
 #include <kctimefactory.h>
 #include <kdatastream.h>
 
-#include <qdatastream.h>
-#include <qfile.h>
-#include <qtimer.h>
+#include <tqdatastream.h>
+#include <tqfile.h>
+#include <tqtimer.h>
 
 #include <assert.h>
 #include <kapplication.h>
@@ -54,7 +54,7 @@
 
 #ifdef KBUILDSYCOCA_GUI // KBUILDSYCOCA_GUI is used on win32 to build 
                         // GUI version of kbuildsycoca, so-called "kbuildsycocaw".
-# include <qlabel.h>
+# include <tqlabel.h>
 # include <kmessagebox.h>
   bool silent;
   bool showprogress;
@@ -65,8 +65,8 @@
 #include <time.h>
 #include <memory> // auto_ptr
 
-typedef QDict<KSycocaEntry> KBSEntryDict;
-typedef QValueList<KSycocaEntry::List> KSycocaEntryListList;
+typedef TQDict<KSycocaEntry> KBSEntryDict;
+typedef TQValueList<KSycocaEntry::List> KSycocaEntryListList;
 
 static Q_UINT32 newTimestamp = 0;
 
@@ -74,13 +74,13 @@ static KBuildServiceFactory *g_bsf = 0;
 static KBuildServiceGroupFactory *g_bsgf = 0;
 static KSycocaFactory *g_factory = 0;
 static KCTimeInfo *g_ctimeInfo = 0;
-static QDict<Q_UINT32> *g_ctimeDict = 0;
+static TQDict<Q_UINT32> *g_ctimeDict = 0;
 static const char *g_resource = 0;
 static KBSEntryDict *g_entryDict = 0;
 static KBSEntryDict *g_serviceGroupEntryDict = 0;
 static KSycocaEntryListList *g_allEntries = 0;
-static QStringList *g_changeList = 0;
-static QStringList *g_allResourceDirs = 0;
+static TQStringList *g_changeList = 0;
+static TQStringList *g_allResourceDirs = 0;
 static bool g_changed = false;
 static KSycocaEntry::List g_tempStorage;
 static VFolderMenu *g_vfolder = 0;
@@ -98,9 +98,9 @@ void crashHandler(int)
       unlink(cSycocaPath);
 }
 
-static QString sycocaPath()
+static TQString sycocaPath()
 {
-  QString path;
+  TQString path;
 
   if (bGlobalDatabase)
   {
@@ -108,23 +108,23 @@ static QString sycocaPath()
   }
   else
   {
-     QCString ksycoca_env = getenv("KDESYCOCA");
+     TQCString ksycoca_env = getenv("KDESYCOCA");
      if (ksycoca_env.isEmpty())
         path = KGlobal::dirs()->saveLocation("cache")+"ksycoca";
      else
-        path = QFile::decodeName(ksycoca_env);
+        path = TQFile::decodeName(ksycoca_env);
   }
 
   return path;
 }
 
-static QString oldSycocaPath()
+static TQString oldSycocaPath()
 {
-  QCString ksycoca_env = getenv("KDESYCOCA");
+  TQCString ksycoca_env = getenv("KDESYCOCA");
   if (ksycoca_env.isEmpty())
      return KGlobal::dirs()->saveLocation("tmp")+"ksycoca";
 
-  return QString::null;
+  return TQString::null;
 }
 
 KBuildSycoca::KBuildSycoca()
@@ -139,18 +139,18 @@ KBuildSycoca::~KBuildSycoca()
 
 void KBuildSycoca::processGnomeVfs()
 {
-   QString file = locate("app-reg", "gnome-vfs.applications");
+   TQString file = locate("app-reg", "gnome-vfs.applications");
    if (file.isEmpty())
    {
 //      kdDebug(7021) << "gnome-vfs.applications not found." << endl;
       return;
    }
 
-   QString app;
+   TQString app;
 
    char line[1024*64];
 
-   FILE *f = fopen(QFile::encodeName(file), "r");
+   FILE *f = fopen(TQFile::encodeName(file), "r");
    while (!feof(f))
    {
       if (!fgets(line, sizeof(line)-1, f))
@@ -160,22 +160,22 @@ void KBuildSycoca::processGnomeVfs()
 
       if (line[0] != '\t')
       {
-          app = QString::fromLatin1(line);
+          app = TQString::fromLatin1(line);
           app.truncate(app.length()-1);
       }
       else if (strncmp(line+1, "mime_types=", 11) == 0)
       {
-          QString mimetypes = QString::fromLatin1(line+12);
+          TQString mimetypes = TQString::fromLatin1(line+12);
           mimetypes.truncate(mimetypes.length()-1);
-          mimetypes.replace(QRegExp("\\*"), "all");
+          mimetypes.replace(TQRegExp("\\*"), "all");
           KService *s = g_bsf->findServiceByName(app);
           if (!s)
              continue;
 
-          QStringList &serviceTypes = s->accessServiceTypes();
+          TQStringList &serviceTypes = s->accessServiceTypes();
           if (serviceTypes.count() <= 1)
           {
-             serviceTypes += QStringList::split(',', mimetypes);
+             serviceTypes += TQStringList::split(',', mimetypes);
 //             kdDebug(7021) << "Adding gnome mimetypes for '" << app << "'.\n";
 //             kdDebug(7021) << "ServiceTypes=" << s->serviceTypes().join(":") << endl;
           }
@@ -184,7 +184,7 @@ void KBuildSycoca::processGnomeVfs()
    fclose( f );
 }
 
-KSycocaEntry *KBuildSycoca::createEntry(const QString &file, bool addToFactory)
+KSycocaEntry *KBuildSycoca::createEntry(const TQString &file, bool addToFactory)
 {
    Q_UINT32 timeStamp = g_ctimeInfo->ctime(file);
    if (!timeStamp)
@@ -246,7 +246,7 @@ KSycocaEntry *KBuildSycoca::createEntry(const QString &file, bool addToFactory)
    return 0;
 }
 
-void KBuildSycoca::slotCreateEntry(const QString &file, KService **service)
+void KBuildSycoca::slotCreateEntry(const TQString &file, KService **service)
 {
    KSycocaEntry *entry = createEntry(file, false);
    *service = dynamic_cast<KService *>(entry);
@@ -255,7 +255,7 @@ void KBuildSycoca::slotCreateEntry(const QString &file, KService **service)
 // returns false if the database is up to date
 bool KBuildSycoca::build()
 {
-  typedef QPtrList<KBSEntryDict> KBSEntryDictList;
+  typedef TQPtrList<KBSEntryDict> KBSEntryDictList;
   KBSEntryDictList *entryDictList = 0;
   KBSEntryDict *serviceEntryDict = 0;
 
@@ -285,7 +285,7 @@ bool KBuildSycoca::build()
      entryDictList->append(entryDict);
   }
 
-  QStringList allResources;
+  TQStringList allResources;
   // For each factory
   for (KSycocaFactory *factory = m_lstFactories->first();
        factory;
@@ -308,17 +308,17 @@ bool KBuildSycoca::build()
   g_ctimeInfo = new KCTimeInfo(); // This is a build factory too, don't delete!!
   bool uptodate = true;
   // For all resources
-  for( QStringList::ConstIterator it1 = allResources.begin();
+  for( TQStringList::ConstIterator it1 = allResources.begin();
        it1 != allResources.end();
        ++it1 )
   {
      g_changed = false;
      g_resource = (*it1).ascii();
 
-     QStringList relFiles;
+     TQStringList relFiles;
 
      (void) KGlobal::dirs()->findAllResources( g_resource,
-                                               QString::null,
+                                               TQString::null,
                                                true, // Recursive!
                                                true, // uniq
                                                relFiles);
@@ -344,7 +344,7 @@ bool KBuildSycoca::build()
            if (res.resource != (*it1)) continue;
 
            // For each file in the resource
-           for( QStringList::ConstIterator it3 = relFiles.begin();
+           for( TQStringList::ConstIterator it3 = relFiles.begin();
                 it3 != relFiles.end();
                 ++it3 )
            {
@@ -376,22 +376,22 @@ bool KBuildSycoca::build()
      if (!m_trackId.isEmpty())
         g_vfolder->setTrackId(m_trackId);
 
-     connect(g_vfolder, SIGNAL(newService(const QString &, KService **)),
-             this, SLOT(slotCreateEntry(const QString &, KService **)));
+     connect(g_vfolder, TQT_SIGNAL(newService(const TQString &, KService **)),
+             this, TQT_SLOT(slotCreateEntry(const TQString &, KService **)));
              
      VFolderMenu::SubMenu *kdeMenu = g_vfolder->parseMenu("applications.menu", true);
 
      KServiceGroup *entry = g_bsgf->addNew("/", kdeMenu->directoryFile, 0, false);
      entry->setLayoutInfo(kdeMenu->layoutList);
-     createMenu(QString::null, QString::null, kdeMenu);
+     createMenu(TQString::null, TQString::null, kdeMenu);
 
      KServiceGroup::Ptr g(entry);
 
      (void) existingResourceDirs();
      *g_allResourceDirs += g_vfolder->allDirectories();
 
-     disconnect(g_vfolder, SIGNAL(newService(const QString &, KService **)),
-             this, SLOT(slotCreateEntry(const QString &, KService **)));
+     disconnect(g_vfolder, TQT_SIGNAL(newService(const TQString &, KService **)),
+             this, TQT_SLOT(slotCreateEntry(const TQString &, KService **)));
 
      if (g_changed || !g_allEntries)
      {
@@ -405,13 +405,13 @@ bool KBuildSycoca::build()
   return result;
 }
 
-void KBuildSycoca::createMenu(QString caption, QString name, VFolderMenu::SubMenu *menu)
+void KBuildSycoca::createMenu(TQString caption, TQString name, VFolderMenu::SubMenu *menu)
 {
   for(VFolderMenu::SubMenu *subMenu = menu->subMenus.first(); subMenu; subMenu = menu->subMenus.next())
   {
-     QString subName = name+subMenu->name+"/";
+     TQString subName = name+subMenu->name+"/";
 
-     QString directoryFile = subMenu->directoryFile;
+     TQString directoryFile = subMenu->directoryFile;
      if (directoryFile.isEmpty())
         directoryFile = subName+".directory";
      Q_UINT32 timeStamp = g_ctimeInfo->ctime(directoryFile);
@@ -444,7 +444,7 @@ void KBuildSycoca::createMenu(QString caption, QString name, VFolderMenu::SubMen
      caption += "/";
   if (name.isEmpty())
      name += "/";
-  for(QDictIterator<KService> it(menu->items); it.current(); ++it)
+  for(TQDictIterator<KService> it(menu->items); it.current(); ++it)
   {
      if (bMenuTest)
      {
@@ -461,7 +461,7 @@ void KBuildSycoca::createMenu(QString caption, QString name, VFolderMenu::SubMen
 
 bool KBuildSycoca::recreate()
 {
-  QString path(sycocaPath());
+  TQString path(sycocaPath());
 #ifdef Q_WS_WIN
   printf("kbuildsycoca: path='%s'\n", (const char*)path);
 #endif
@@ -469,9 +469,9 @@ bool KBuildSycoca::recreate()
   // KSaveFile first writes to a temp file.
   // Upon close() it moves the stuff to the right place.
   std::auto_ptr<KSaveFile> database( new KSaveFile(path) );
-  if (database->status() == EACCES && QFile::exists(path))
+  if (database->status() == EACCES && TQFile::exists(path))
   {
-    QFile::remove( path );
+    TQFile::remove( path );
     database.reset( new KSaveFile(path) ); // try again
   }
   if (database->status() != 0)
@@ -526,10 +526,10 @@ bool KBuildSycoca::recreate()
   if (!bGlobalDatabase)
   {
     // update the timestamp file
-    QString stamppath = path + "stamp";
-    QFile ksycocastamp(stamppath);
+    TQString stamppath = path + "stamp";
+    TQFile ksycocastamp(stamppath);
     ksycocastamp.open( IO_WriteOnly );
-    QDataStream str( &ksycocastamp );
+    TQDataStream str( &ksycocastamp );
     str << newTimestamp;
     str << existingResourceDirs();
     if (g_vfolder)
@@ -602,19 +602,19 @@ void KBuildSycoca::save()
    m_str->device()->at(endOfData);
 }
 
-bool KBuildSycoca::checkDirTimestamps( const QString& dirname, const QDateTime& stamp, bool top )
+bool KBuildSycoca::checkDirTimestamps( const TQString& dirname, const TQDateTime& stamp, bool top )
 {
    if( top )
    {
-      QFileInfo inf( dirname );
+      TQFileInfo inf( dirname );
       if( inf.lastModified() > stamp )
          {
          kdDebug( 7021 ) << "timestamp changed:" << dirname << endl;
          return false;
          }
    }
-   QDir dir( dirname );
-   const QFileInfoList *list = dir.entryInfoList( QDir::DefaultFilter, QDir::Unsorted );
+   TQDir dir( dirname );
+   const QFileInfoList *list = dir.entryInfoList( TQDir::DefaultFilter, TQDir::Unsorted );
    if (!list)
       return true;
 
@@ -622,7 +622,7 @@ bool KBuildSycoca::checkDirTimestamps( const QString& dirname, const QDateTime& 
         it.current() != NULL;
         ++it )
    {
-      QFileInfo* fi = it.current();
+      TQFileInfo* fi = it.current();
       if( fi->fileName() == "." || fi->fileName() == ".." )
          continue;
       if( fi->lastModified() > stamp )
@@ -640,12 +640,12 @@ bool KBuildSycoca::checkDirTimestamps( const QString& dirname, const QDateTime& 
 // and also their directories
 // if all of them all older than the timestamp in file ksycocastamp, this
 // means that there's no need to rebuild ksycoca
-bool KBuildSycoca::checkTimestamps( Q_UINT32 timestamp, const QStringList &dirs )
+bool KBuildSycoca::checkTimestamps( Q_UINT32 timestamp, const TQStringList &dirs )
 {
    kdDebug( 7021 ) << "checking file timestamps" << endl;
-   QDateTime stamp;
+   TQDateTime stamp;
    stamp.setTime_t( timestamp );
-   for( QStringList::ConstIterator it = dirs.begin();
+   for( TQStringList::ConstIterator it = dirs.begin();
         it != dirs.end();
         ++it )
    {
@@ -656,15 +656,15 @@ bool KBuildSycoca::checkTimestamps( Q_UINT32 timestamp, const QStringList &dirs 
    return true;
 }
 
-QStringList KBuildSycoca::existingResourceDirs()
+TQStringList KBuildSycoca::existingResourceDirs()
 {
-   static QStringList* dirs = NULL;
+   static TQStringList* dirs = NULL;
    if( dirs != NULL )
        return *dirs;
    dirs = new QStringList;
    g_allResourceDirs = new QStringList;
    // these are all resources cached by ksycoca
-   QStringList resources;
+   TQStringList resources;
    resources += KBuildServiceTypeFactory::resourceTypes();
    resources += KBuildServiceGroupFactory::resourceTypes();
    resources += KBuildServiceFactory::resourceTypes();
@@ -672,17 +672,17 @@ QStringList KBuildSycoca::existingResourceDirs()
    resources += KBuildProtocolInfoFactory::resourceTypes();
    while( !resources.empty())
    {
-      QString res = resources.front();
+      TQString res = resources.front();
       *dirs += KGlobal::dirs()->resourceDirs( res.latin1());
       resources.remove( res ); // remove this 'res' and all its duplicates
    }
 
    *g_allResourceDirs = *dirs;
 
-   for( QStringList::Iterator it = dirs->begin();
+   for( TQStringList::Iterator it = dirs->begin();
         it != dirs->end(); )
    {
-      QFileInfo inf( *it );
+      TQFileInfo inf( *it );
       if( !inf.exists() || !inf.isReadable() )
          it = dirs->remove( it );
       else
@@ -747,8 +747,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 #ifdef KBUILDSYCOCA_GUI
    silent = args->isSet("silent");
    showprogress = args->isSet("showprogress");
-   QLabel progress( QString("<p><br><nobr>    %1    </nobr><br>").arg( i18n("Reloading KDE configuration, please wait...") ), 0, "", Qt::WType_Dialog | Qt::WStyle_DialogBorder  | Qt::WStyle_Customize| Qt::WStyle_Title );
-   QString capt = i18n("KDE Configuration Manager");
+   TQLabel progress( TQString("<p><br><nobr>    %1    </nobr><br>").arg( i18n("Reloading KDE configuration, please wait...") ), 0, "", Qt::WType_Dialog | Qt::WStyle_DialogBorder  | Qt::WStyle_Customize| Qt::WStyle_Title );
+   TQString capt = i18n("KDE Configuration Manager");
    if (!silent) {
      if (KMessageBox::No == KMessageBox::questionYesNo(0, i18n("Do you want to reload KDE configuration?"), capt, i18n("Reload"), i18n("Do Not Reload")))
        return 0;
@@ -761,7 +761,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 
    KCrash::setCrashHandler(KCrash::defaultCrashHandler);
    KCrash::setEmergencySaveFunction(crashHandler);
-   KCrash::setApplicationName(QString(appName));
+   KCrash::setApplicationName(TQString(appName));
 
    // this program is in kdelibs so it uses kdelibs as catalog
    KLocale::setMainCatalogue("kdelibs");
@@ -774,7 +774,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 
    while(true)
    {
-     QCString registeredName = dcopClient->registerAs(appName, false);
+     TQCString registeredName = dcopClient->registerAs(appName, false);
      if (registeredName.isEmpty())
      {
        fprintf(stderr, "Warning: %s is unable to register with DCOP.\n", appName);
@@ -790,8 +790,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
      while (dcopClient->isApplicationRegistered(appName))
      {
        WaitForSignal *obj = new WaitForSignal;
-       obj->connect(dcopClient, SIGNAL(applicationRemoved(const QCString &)),
-               SLOT(deleteLater()));
+       obj->connect(dcopClient, TQT_SIGNAL(applicationRemoved(const TQCString &)),
+               TQT_SLOT(deleteLater()));
        kapp->eventLoop()->enterLoop();
      }
      dcopClient->setNotifications( false );
@@ -804,8 +804,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    if (incremental || !checkfiles)
    {
      KSycoca::self()->disableAutoRebuild(); // Prevent deadlock
-     QString current_language = KGlobal::locale()->language();
-     QString ksycoca_language = KSycoca::self()->language();
+     TQString current_language = KGlobal::locale()->language();
+     TQString ksycoca_language = KSycoca::self()->language();
      Q_UINT32 current_update_sig = KGlobal::dirs()->calcResourceHash("services", "update_ksycoca", true);
      Q_UINT32 ksycoca_update_sig = KSycoca::self()->updateSignature();
 
@@ -823,16 +823,16 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 
    bool checkstamps = incremental && args->isSet("checkstamps") && checkfiles;
    Q_UINT32 filestamp = 0;
-   QStringList oldresourcedirs;
+   TQStringList oldresourcedirs;
    if( checkstamps && incremental )
    {
-       QString path = sycocaPath()+"stamp";
-       QCString qPath = QFile::encodeName(path);
+       TQString path = sycocaPath()+"stamp";
+       TQCString qPath = TQFile::encodeName(path);
        cSycocaPath = qPath.data(); // Delete timestamps on crash
-       QFile ksycocastamp(path);
+       TQFile ksycocastamp(path);
        if( ksycocastamp.open( IO_ReadOnly ))
        {
-           QDataStream str( &ksycocastamp );
+           TQDataStream str( &ksycocastamp );
            if (!str.atEnd())
                str >> filestamp;
            if (!str.atEnd())
@@ -847,7 +847,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
            }
            if (!str.atEnd())
            {
-               QStringList extraResourceDirs;
+               TQStringList extraResourceDirs;
                str >> extraResourceDirs;
                oldresourcedirs += extraResourceDirs;
            }
@@ -863,7 +863,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 
    if( checkfiles && ( !checkstamps || !KBuildSycoca::checkTimestamps( filestamp, oldresourcedirs )))
    {
-      QCString qSycocaPath = QFile::encodeName(sycocaPath());
+      TQCString qSycocaPath = TQFile::encodeName(sycocaPath());
       cSycocaPath = qSycocaPath.data();
 
       g_allEntries = 0;
@@ -874,7 +874,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
          KSycoca *oldSycoca = KSycoca::self();
          KSycocaFactoryList *factories = new KSycocaFactoryList;
          g_allEntries = new KSycocaEntryListList;
-         g_ctimeDict = new QDict<Q_UINT32>(523);
+         g_ctimeDict = new TQDict<Q_UINT32>(523);
 
          // Must be in same order as in KBuildSycoca::recreate()!
          factories->append( new KServiceTypeFactory );
@@ -901,7 +901,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 
       KBuildSycoca *sycoca= new KBuildSycoca; // Build data base
       if (args->isSet("track"))
-         sycoca->setTrackId(QString::fromLocal8Bit(args->getOption("track")));
+         sycoca->setTrackId(TQString::fromLocal8Bit(args->getOption("track")));
       if (!sycoca->recreate()) {
 #ifdef KBUILDSYCOCA_GUI
         if (!silent || showprogress)
@@ -914,26 +914,26 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
       {
         // These directories may have been created with 0700 permission
         // better delete them if they are empty
-        QString applnkDir = KGlobal::dirs()->saveLocation("apps", QString::null, false);
-        ::rmdir(QFile::encodeName(applnkDir));
-        QString servicetypesDir = KGlobal::dirs()->saveLocation("servicetypes", QString::null, false);
-        ::rmdir(QFile::encodeName(servicetypesDir));
+        TQString applnkDir = KGlobal::dirs()->saveLocation("apps", TQString::null, false);
+        ::rmdir(TQFile::encodeName(applnkDir));
+        TQString servicetypesDir = KGlobal::dirs()->saveLocation("servicetypes", TQString::null, false);
+        ::rmdir(TQFile::encodeName(servicetypesDir));
       }
    }
 
    if (!bGlobalDatabase)
    {
      // Recreate compatibility symlink
-     QString oldPath = oldSycocaPath();
+     TQString oldPath = oldSycocaPath();
      if (!oldPath.isEmpty())
      {
        KTempFile tmp;
        if (tmp.status() == 0)
        {
-         QString tmpFile = tmp.name();
+         TQString tmpFile = tmp.name();
          tmp.unlink();
-         symlink(QFile::encodeName(sycocaPath()), QFile::encodeName(tmpFile));
-         rename(QFile::encodeName(tmpFile), QFile::encodeName(oldPath));
+         symlink(TQFile::encodeName(sycocaPath()), TQFile::encodeName(tmpFile));
+         rename(TQFile::encodeName(tmpFile), TQFile::encodeName(oldPath));
        }
      }
    }
@@ -941,10 +941,10 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    if (args->isSet("signal"))
    {
      // Notify ALL applications that have a ksycoca object, using a broadcast
-     QByteArray data;
-     QDataStream stream(data, IO_WriteOnly);
+     TQByteArray data;
+     TQDataStream stream(data, IO_WriteOnly);
      stream << *g_changeList;
-     dcopClient->send( "*", "ksycoca", "notifyDatabaseChanged(QStringList)", data );
+     dcopClient->send( "*", "ksycoca", "notifyDatabaseChanged(TQStringList)", data );
    }
 
 #ifdef KBUILDSYCOCA_GUI

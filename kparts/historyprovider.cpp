@@ -17,14 +17,14 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qdict.h>
+#include <tqdict.h>
 
 #include <kapplication.h>
 
 #include "historyprovider.h"
 
 using namespace KParts;
-template class QDict<void>;
+template class TQDict<void>;
 
 HistoryProvider * HistoryProvider::s_self = 0L;
 
@@ -34,7 +34,7 @@ public:
     HistoryProviderPrivate()
 	: dict( 1009 ) {}
 
-    QDict<void> dict;
+    TQDict<void> dict;
 };
 
 HistoryProvider * HistoryProvider::self()
@@ -44,8 +44,8 @@ HistoryProvider * HistoryProvider::self()
     return s_self;
 }
 
-HistoryProvider::HistoryProvider( QObject *parent, const char *name )
-    : QObject( parent, name )
+HistoryProvider::HistoryProvider( TQObject *parent, const char *name )
+    : TQObject( parent, name )
 {
     if ( !s_self )
 	s_self = this;
@@ -61,19 +61,19 @@ HistoryProvider::~HistoryProvider()
 	s_self = 0;
 }
 
-bool HistoryProvider::contains( const QString& item ) const
+bool HistoryProvider::contains( const TQString& item ) const
 {
     return (bool) d->dict.find( item );
 }
 
-void HistoryProvider::insert( const QString& item )
+void HistoryProvider::insert( const TQString& item )
 {
     // no need to allocate memory, we only want to have fast lookup, no mapping
     d->dict.replace( item, (void*) 1 );
     emit inserted( item );
 }
 
-void HistoryProvider::remove( const QString& item )
+void HistoryProvider::remove( const TQString& item )
 {
     (void) d->dict.remove( item );
 }

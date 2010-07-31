@@ -21,7 +21,7 @@
   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include <VCardDefines.h>
 #include <VCardVCardEntity.h>
@@ -38,7 +38,7 @@ VCardEntity::VCardEntity(const VCardEntity & x)
 {
 }
 
-VCardEntity::VCardEntity(const QCString & s)
+VCardEntity::VCardEntity(const TQCString & s)
 	:	Entity(s)
 {
 }
@@ -53,7 +53,7 @@ VCardEntity::operator = (VCardEntity & x)
 }
 
 	VCardEntity &
-VCardEntity::operator = (const QCString & s)
+VCardEntity::operator = (const TQCString & s)
 {
 	Entity::operator = (s);
 	return *this;
@@ -74,15 +74,15 @@ VCardEntity::~VCardEntity()
 VCardEntity::_parse()
 {
 	vDebug("parse");
-	QCString s(strRep_);
+	TQCString s(strRep_);
 	
-	int i = s.find(QRegExp("BEGIN:VCARD", false));
+	int i = s.find(TQRegExp("BEGIN:VCARD", false));
 	
 	while (i != -1) {
 		
-		i = s.find(QRegExp("BEGIN:VCARD", false), 11);
+		i = s.find(TQRegExp("BEGIN:VCARD", false), 11);
 		
-		QCString cardStr(s.left(i));
+		TQCString cardStr(s.left(i));
 		
 		VCard * v = new VCard(cardStr);
 		

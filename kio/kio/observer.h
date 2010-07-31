@@ -19,9 +19,9 @@
 #ifndef __kio_observer_h__
 #define __kio_observer_h__
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <dcopobject.h>
-#include <qintdict.h>
+#include <tqintdict.h>
 
 #include <kio/global.h>
 #include <kio/authinfo.h>
@@ -52,7 +52,7 @@ namespace KIO {
  * @short Observer for KIO::Job progress information
  * @author David Faure <faure@kde.org>
  */
-class KIO_EXPORT Observer : public QObject, public DCOPObject {
+class KIO_EXPORT Observer : public TQObject, public DCOPObject {
 
   K_DCOP
   Q_OBJECT
@@ -87,7 +87,7 @@ public:
   /**
    * @deprecated use KIO::AutoInfo
    */
-  bool openPassDlg( const QString& prompt, QString& user, QString& pass,
+  bool openPassDlg( const TQString& prompt, TQString& user, TQString& pass,
                     bool readOnly );
 
   /**
@@ -108,8 +108,8 @@ public:
    * @param buttonYes the text of the "Yes" button
    * @param buttonNo the text of the "No button
    */
-  static int messageBox( int progressId, int type, const QString &text, const QString &caption,
-                         const QString &buttonYes, const QString &buttonNo );
+  static int messageBox( int progressId, int type, const TQString &text, const TQString &caption,
+                         const TQString &buttonYes, const TQString &buttonNo );
 
   /**
    * Popup a message box. See KIO::SlaveBase.
@@ -125,18 +125,18 @@ public:
    *        The string is used to lookup and store the setting in kioslaverc.
    * @since 3.3
    */
-  static int messageBox( int progressId, int type, const QString &text, const QString &caption,
-                         const QString &buttonYes, const QString &buttonNo, const QString &dontAskAgainName );
+  static int messageBox( int progressId, int type, const TQString &text, const TQString &caption,
+                         const TQString &buttonYes, const TQString &buttonNo, const TQString &dontAskAgainName );
 
   /**
    * @internal
    * See renamedlg.h
    */
   KIO::RenameDlg_Result open_RenameDlg( KIO::Job * job,
-                                        const QString & caption,
-                                        const QString& src, const QString & dest,
+                                        const TQString & caption,
+                                        const TQString& src, const TQString & dest,
                                         KIO::RenameDlg_Mode mode,
-                                        QString& newDest,
+                                        TQString& newDest,
                                         KIO::filesize_t sizeSrc = (KIO::filesize_t) -1,
                                         KIO::filesize_t sizeDest = (KIO::filesize_t) -1,
                                         time_t ctimeSrc = (time_t) -1,
@@ -151,7 +151,7 @@ public:
    */
   KIO::SkipDlg_Result open_SkipDlg( KIO::Job * job,
                                     bool multi,
-                                    const QString & error_text );
+                                    const TQString & error_text );
 
 k_dcop:
   /**
@@ -174,7 +174,7 @@ protected:
 
   UIServer_stub * m_uiserver;
 
-  QIntDict< KIO::Job > m_dctJobs;
+  TQIntDict< KIO::Job > m_dctJobs;
 
 public slots:
 
@@ -188,7 +188,7 @@ public slots:
 
   void slotSpeed( KIO::Job*, unsigned long speed );
   void slotPercent( KIO::Job*, unsigned long percent );
-  void slotInfoMessage( KIO::Job*, const QString & msg );
+  void slotInfoMessage( KIO::Job*, const TQString & msg );
 
   void slotCopying( KIO::Job*, const KURL& from, const KURL& to );
   void slotMoving( KIO::Job*, const KURL& from, const KURL& to );
@@ -201,8 +201,8 @@ public slots:
 
 public:
   void stating( KIO::Job*, const KURL& url );
-  void mounting( KIO::Job*, const QString & dev, const QString & point );
-  void unmounting( KIO::Job*, const QString & point );
+  void mounting( KIO::Job*, const TQString & dev, const TQString & point );
+  void unmounting( KIO::Job*, const TQString & point );
 protected:
   virtual void virtual_hook( int id, void* data );
 private:

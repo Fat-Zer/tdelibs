@@ -25,8 +25,8 @@
 #ifndef KSOCKETADDRESS_H
 #define KSOCKETADDRESS_H
 
-#include <qstring.h>
-#include <qcstring.h>
+#include <tqstring.h>
+#include <tqcstring.h>
 
 #include <kdelibs_export.h>
 
@@ -87,7 +87,7 @@ public:
    *
    * @param addr		the address
    */
-  inline KIpAddress(const QString& addr)
+  inline KIpAddress(const TQString& addr)
   { setAddress(addr); }
 
   /**
@@ -189,7 +189,7 @@ public:
    * @return true if the address was successfully parsed; otherwise returns
    * false and leaves the object unchanged.
    */
-  bool setAddress(const QString& address);
+  bool setAddress(const TQString& address);
 
   /**
    * Sets the address to the given string representation.
@@ -212,7 +212,7 @@ public:
   /**
    * Returns the address as a string.
    */
-  QString toString() const;
+  TQString toString() const;
 
   /**
    * Returns a pointer to binary raw data representing the address.
@@ -564,23 +564,23 @@ public:
    * Returns the node name of this socket.
    *
    * In the case of Internet sockets, this is string representation of the IP address.
-   * The default implementation returns QString::null.
+   * The default implementation returns TQString::null.
    *
-   * @return the node name, can be QString::null
+   * @return the node name, can be TQString::null
    * @bug use KResolver to resolve unknown families
    */
-  virtual QString nodeName() const;
+  virtual TQString nodeName() const;
 
   /**
    * Returns the service name for this socket.
    *
    * In the case of Internet sockets, this is the port number.
-   * The default implementation returns QString::null.
+   * The default implementation returns TQString::null.
    *
-   * @return the service name, can be QString::null
+   * @return the service name, can be TQString::null
    * @bug use KResolver to resolve unknown families
    */
-  virtual QString serviceName() const;
+  virtual TQString serviceName() const;
 
   /**
    * Returns this socket address as a string suitable for
@@ -588,7 +588,7 @@ public:
    *
    * @bug use KResolver to resolve unknown families
    */
-  virtual QString toString() const;
+  virtual TQString toString() const;
 
   /**
    * Returns an object reference that can be used to manipulate this socket
@@ -867,7 +867,7 @@ public:
   /**
    * Constructs an object from the given pathname.
    */
-  KUnixSocketAddress(const QString& pathname);
+  KUnixSocketAddress(const TQString& pathname);
 
   /**
    * Destructor.
@@ -890,16 +890,16 @@ public:
 
   /**
    * Returns the pathname associated with this object. Will return
-   * QString::null if this object is empty.
+   * TQString::null if this object is empty.
    */
-  QString pathname() const;
+  TQString pathname() const;
 
   /**
    * Sets the pathname for the object.
    *
    * @return a reference to itself
    */
-  KUnixSocketAddress& setPathname(const QString& path);
+  KUnixSocketAddress& setPathname(const TQString& path);
 
 protected:
   /// @internal

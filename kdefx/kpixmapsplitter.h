@@ -20,10 +20,10 @@
 #ifndef KPIXMAPSPLITTER_H
 #define KPIXMAPSPLITTER_H
 
-#include <qpixmap.h>
-#include <qrect.h>
-#include <qsize.h>
-#include <qstring.h>
+#include <tqpixmap.h>
+#include <tqrect.h>
+#include <tqsize.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -39,13 +39,13 @@ class KPixmapSplitterPrivate;
  * \code
  * KPixmapSplitter splitter;
  * splitter.setPixmap( somePixmap );
- * splitter.setItemSize( QSize( 20, 10 ));
+ * splitter.setItemSize( TQSize( 20, 10 ));
  *
- * QPixmap item( 20, 10 );
+ * TQPixmap item( 20, 10 );
  * item.fill( Qt::white );
- * QRect rect = splitter.coordinates( 4 );
+ * TQRect rect = splitter.coordinates( 4 );
  * if ( !rect.isEmpty() )
- *     bitBlt( &item, QPoint(0,0), &somePixmap, rect, CopyROP );
+ *     bitBlt( &item, TQPoint(0,0), &somePixmap, rect, CopyROP );
  * \endcode
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
@@ -62,25 +62,25 @@ public:
     /**
      * Sets the pixmap to be split.
      */
-    void setPixmap( const QPixmap& pixmap );
+    void setPixmap( const TQPixmap& pixmap );
 
     /**
      * @returns the pixmap that has been set via setPixmap().
      */
-    const QPixmap& pixmap() const { return m_pixmap; }
+    const TQPixmap& pixmap() const { return m_pixmap; }
 
     /**
      * Sets the size of the items you want to get out of the given pixmap.
-     * The QRect of #coordinates(int) will have the width and height of exactly
+     * The TQRect of #coordinates(int) will have the width and height of exactly
      * this @p size.
      */
-    void setItemSize( const QSize& size );
+    void setItemSize( const TQSize& size );
 
     /**
      * @returns the set size of the items (coordinates) you want to get
      * out of the given pixmap.
      */
-    QSize itemSize() const { return m_itemSize; }
+    TQSize itemSize() const { return m_itemSize; }
 
     /**
      * If there is space between rows in the given pixmap, you have to specify
@@ -98,17 +98,17 @@ public:
      * @returns the coordinates of the item at position pos in the given
      * pixmap.
      */
-    QRect coordinates( int pos );
+    TQRect coordinates( int pos );
 
     /**
      * Overloaded for convenience. Returns the item at the position of the
      * given character (when using a latin1 font-pixmap)
      */
-    QRect coordinates( const QChar& ch );
+    TQRect coordinates( const TQChar& ch );
 
 private:
-    QPixmap m_pixmap;
-    QSize m_itemSize;
+    TQPixmap m_pixmap;
+    TQSize m_itemSize;
 
     int m_vSpacing;
     int m_hSpacing;

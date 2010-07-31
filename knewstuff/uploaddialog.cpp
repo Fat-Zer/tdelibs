@@ -18,12 +18,12 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qspinbox.h>
-#include <qstring.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqspinbox.h>
+#include <tqstring.h>
 #include <ktextedit.h>
 
 #include <klistview.h>
@@ -43,65 +43,65 @@
 
 using namespace KNS;
 
-UploadDialog::UploadDialog( Engine *engine, QWidget *parent ) :
+UploadDialog::UploadDialog( Engine *engine, TQWidget *parent ) :
   KDialogBase( Plain, i18n("Share Hot New Stuff"), Ok | Cancel, Cancel,
                parent, 0, false, true ),
   mEngine( engine )
 {
   mEntryList.setAutoDelete( true );
 
-  QFrame *topPage = plainPage();
+  TQFrame *topPage = plainPage();
 
-  QGridLayout *topLayout = new QGridLayout( topPage );
+  TQGridLayout *topLayout = new TQGridLayout( topPage );
   topLayout->setSpacing( spacingHint() );
 
-  QLabel *nameLabel = new QLabel( i18n("Name:"), topPage );
+  TQLabel *nameLabel = new TQLabel( i18n("Name:"), topPage );
   topLayout->addWidget( nameLabel, 0, 0 );  
-  mNameEdit = new QLineEdit( topPage );
+  mNameEdit = new TQLineEdit( topPage );
   topLayout->addWidget( mNameEdit, 0, 1 );
 
-  QLabel *authorLabel = new QLabel( i18n("Author:"), topPage );
+  TQLabel *authorLabel = new TQLabel( i18n("Author:"), topPage );
   topLayout->addWidget( authorLabel, 1, 0 );
-  mAuthorEdit = new QLineEdit( topPage );
+  mAuthorEdit = new TQLineEdit( topPage );
   topLayout->addWidget( mAuthorEdit, 1, 1 );
 
-  QLabel *emailLabel = new QLabel( i18n("Email:"), topPage );
+  TQLabel *emailLabel = new TQLabel( i18n("Email:"), topPage );
   topLayout->addWidget( emailLabel, 2, 0 );
-  mEmailEdit = new QLineEdit( topPage );
+  mEmailEdit = new TQLineEdit( topPage );
   topLayout->addWidget( mEmailEdit, 2, 1 );
 
-  QLabel *versionLabel = new QLabel( i18n("Version:"), topPage );
+  TQLabel *versionLabel = new TQLabel( i18n("Version:"), topPage );
   topLayout->addWidget( versionLabel, 3, 0 );  
-  mVersionEdit = new QLineEdit( topPage );
+  mVersionEdit = new TQLineEdit( topPage );
   topLayout->addWidget( mVersionEdit, 3, 1 );
 
-  QLabel *releaseLabel = new QLabel( i18n("Release:"), topPage );
+  TQLabel *releaseLabel = new TQLabel( i18n("Release:"), topPage );
   topLayout->addWidget( releaseLabel, 4, 0 );  
-  mReleaseSpin = new QSpinBox( topPage );
+  mReleaseSpin = new TQSpinBox( topPage );
   mReleaseSpin->setMinValue( 1 );
   topLayout->addWidget( mReleaseSpin, 4, 1 );
 
-  QLabel *licenceLabel = new QLabel( i18n("License:"), topPage );
+  TQLabel *licenceLabel = new TQLabel( i18n("License:"), topPage );
   topLayout->addWidget( licenceLabel, 5, 0 );
-  mLicenceCombo = new QComboBox( topPage );
+  mLicenceCombo = new TQComboBox( topPage );
   mLicenceCombo->setEditable( true );
   mLicenceCombo->insertItem( i18n("GPL") );
   mLicenceCombo->insertItem( i18n("LGPL") );
   mLicenceCombo->insertItem( i18n("BSD") );
   topLayout->addWidget( mLicenceCombo, 5, 1 );
 
-  QLabel *languageLabel = new QLabel( i18n("Language:"), topPage );
+  TQLabel *languageLabel = new TQLabel( i18n("Language:"), topPage );
   topLayout->addWidget( languageLabel, 6, 0 );
-  mLanguageCombo = new QComboBox( topPage );
+  mLanguageCombo = new TQComboBox( topPage );
   topLayout->addWidget( mLanguageCombo, 6, 1 );
   mLanguageCombo->insertStringList( KGlobal::locale()->languageList() );
 
-  QLabel *previewLabel = new QLabel( i18n("Preview URL:"), topPage );
+  TQLabel *previewLabel = new TQLabel( i18n("Preview URL:"), topPage );
   topLayout->addWidget( previewLabel, 7, 0 );
   mPreviewUrl = new KURLRequester( topPage );
   topLayout->addWidget( mPreviewUrl, 7, 1 );
 
-  QLabel *summaryLabel = new QLabel( i18n("Summary:"), topPage );
+  TQLabel *summaryLabel = new TQLabel( i18n("Summary:"), topPage );
   topLayout->addMultiCellWidget( summaryLabel, 8, 8, 0, 1 );
   mSummaryEdit = new KTextEdit( topPage );
   topLayout->addMultiCellWidget( mSummaryEdit, 9, 9, 0, 1 );
@@ -137,7 +137,7 @@ void UploadDialog::slotOk()
 
   if ( mPayloadUrl.isValid() ) {
     KConfig *conf = kapp->config();
-    conf->setGroup( QString("KNewStuffUpload:%1").arg(mPayloadUrl.fileName()) );
+    conf->setGroup( TQString("KNewStuffUpload:%1").arg(mPayloadUrl.fileName()) );
     conf->writeEntry("name", mNameEdit->text());
     conf->writeEntry("author", mAuthorEdit->text());
     conf->writeEntry("email", mEmailEdit->text());
@@ -155,26 +155,26 @@ void UploadDialog::slotOk()
   accept();
 }
 
-void UploadDialog::setPreviewFile( const QString &previewFile )
+void UploadDialog::setPreviewFile( const TQString &previewFile )
 {
   mPreviewUrl->setURL( previewFile );
 }
 
-void UploadDialog::setPayloadFile( const QString &payloadFile )
+void UploadDialog::setPayloadFile( const TQString &payloadFile )
 {
   mPayloadUrl = payloadFile;
 
   KConfig *conf = kapp->config();
-  conf->setGroup( QString("KNewStuffUpload:%1").arg(mPayloadUrl.fileName()) );
-  QString name = conf->readEntry("name");
-  QString author = conf->readEntry("author");
-  QString email = conf->readEntry("email");
-  QString version = conf->readEntry("version");
-  QString release = conf->readEntry("release");
-  QString preview = conf->readEntry("preview");
-  QString summary = conf->readEntry("summary");
-  QString lang = conf->readEntry("language");
-  QString licence = conf->readEntry("licence");
+  conf->setGroup( TQString("KNewStuffUpload:%1").arg(mPayloadUrl.fileName()) );
+  TQString name = conf->readEntry("name");
+  TQString author = conf->readEntry("author");
+  TQString email = conf->readEntry("email");
+  TQString version = conf->readEntry("version");
+  TQString release = conf->readEntry("release");
+  TQString preview = conf->readEntry("preview");
+  TQString summary = conf->readEntry("summary");
+  TQString lang = conf->readEntry("language");
+  TQString licence = conf->readEntry("licence");
 
   mNameEdit->clear();
   mAuthorEdit->clear();
@@ -188,7 +188,7 @@ void UploadDialog::setPayloadFile( const QString &payloadFile )
 
   if(!name.isNull())
   {
-    int prefill = KMessageBox::questionYesNo(this, i18n("Old upload information found, fill out fields?"),QString::null,i18n("Fill Out"),i18n("Do Not Fill Out"));
+    int prefill = KMessageBox::questionYesNo(this, i18n("Old upload information found, fill out fields?"),TQString::null,i18n("Fill Out"),i18n("Do Not Fill Out"));
     if(prefill == KMessageBox::Yes)
     {
       mNameEdit->setText(name);

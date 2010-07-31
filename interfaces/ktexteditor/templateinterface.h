@@ -19,9 +19,9 @@
 #ifndef __ktexteditor_templateinterface_h__
 #define __ktexteditor_templateinterface_h__
 
-#include <qstring.h>
-#include <qmap.h>
-#include <qwidget.h>
+#include <tqstring.h>
+#include <tqmap.h>
+#include <tqwidget.h>
 
 #include <kdelibs_export.h>
 
@@ -52,12 +52,12 @@ class KTEXTEDITOR_EXPORT TemplateInterface //should be named AbstractTemplateInt
      * @return true if all macros was sucessfully expanded
      * @see insertTemplateText for a list of supported macros
      */
-    static bool expandMacros( QMap<QString, QString> &initialValues, QWidget *parentWindow );
+    static bool expandMacros( TQMap<TQString, TQString> &initialValues, TQWidget *parentWindow );
 
     uint templateInterfaceNumber () const;
 
   protected:
-    void setTemplateInterfaceDCOPSuffix (const QCString &suffix);
+    void setTemplateInterfaceDCOPSuffix (const TQCString &suffix);
 
   public:
 
@@ -103,7 +103,7 @@ class KTEXTEDITOR_EXPORT TemplateInterface //should be named AbstractTemplateInt
      * If the editor supports some kind of smart indentation, the inserted code
      * should be layouted by the indenter.
      */
-    bool insertTemplateText ( uint line, uint column, const QString &templateString, const QMap<QString,QString> &initialValues, QWidget *parentWindow=0);
+    bool insertTemplateText ( uint line, uint column, const TQString &templateString, const TQMap<TQString,TQString> &initialValues, TQWidget *parentWindow=0);
 
 protected:
     /**
@@ -113,7 +113,7 @@ protected:
      * insertTemplateText above.
      * @return true if any text was inserted.
      */
-    virtual bool insertTemplateTextImplementation ( uint line, uint column, const QString &templateString, const QMap<QString,QString> &initialValues, QWidget *parentWindow=0 )=0;
+    virtual bool insertTemplateTextImplementation ( uint line, uint column, const TQString &templateString, const TQMap<TQString,TQString> &initialValues, TQWidget *parentWindow=0 )=0;
 
   /**
   * only for the interface itself - REAL PRIVATE

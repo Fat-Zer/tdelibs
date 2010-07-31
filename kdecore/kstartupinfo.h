@@ -26,13 +26,13 @@ DEALINGS IN THE SOFTWARE.
 #define __KSTARTUPINFO_H
 
 #include <sys/types.h>
-#include <qobject.h>
+#include <tqobject.h>
 
 #ifdef Q_WS_X11 // FIXME(E): Redo in a less X11-specific way
 
-#include <qcstring.h>
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqcstring.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 #include "kdelibs_export.h"
 
 class KStartupInfoId;
@@ -89,7 +89,7 @@ class KDECORE_EXPORT KStartupInfo
          * with id startup_id should end.
          * @since 3.2
          */ 
-        static void appStarted( const QCString& startup_id );
+        static void appStarted( const TQCString& startup_id );
         
         /**
          * Use this function if the application got a request with startup
@@ -100,7 +100,7 @@ class KDECORE_EXPORT KStartupInfo
          * needed only when a window is reused.
          * @since 3.2
          */
-        static void setNewStartupId( QWidget* window, const QCString& startup_id );
+        static void setNewStartupId( TQWidget* window, const TQCString& startup_id );
 
         /**
          * If your application shows temporarily some window during its startup,
@@ -118,7 +118,7 @@ class KDECORE_EXPORT KStartupInfo
          * user timestamp.
          * @since 3.3
          */
-        static QCString createNewStartupId();
+        static TQCString createNewStartupId();
 	/**
 	 *
 	 */
@@ -142,23 +142,23 @@ class KDECORE_EXPORT KStartupInfo
 	 *     With this flag, the change is normally announced with gotStartupChange().
 	 *
 	 * @param flags OR-ed combination of flags
-	 * @param parent the parent of this QObject (can be 0 for no parent)
-	 * @param name the name of the QObject (can be 0 for no name)
+	 * @param parent the parent of this TQObject (can be 0 for no parent)
+	 * @param name the name of the TQObject (can be 0 for no name)
 	 *
 	 */
-	KStartupInfo( int flags, QObject* parent = NULL, const char* name = NULL );
+	KStartupInfo( int flags, TQObject* parent = NULL, const char* name = NULL );
 	/**
 	 * Creates an instance that will receive the startup notifications.
 	 *
 	 * @param clean_on_cantdetect if true, and a new unknown window appears,
 	 *  removes all notification for applications that are not compliant
 	 *  with the app startup protocol
-	 * @param parent the parent of this QObject (can be 0 for no parent)
-	 * @param name the name of the QObject (can be 0 for no name)
+	 * @param parent the parent of this TQObject (can be 0 for no parent)
+	 * @param name the name of the TQObject (can be 0 for no name)
 	 *
 	 * @obsolete
 	 */
-        KStartupInfo( bool clean_on_cantdetect, QObject* parent = 0, const char* name = 0 );
+        KStartupInfo( bool clean_on_cantdetect, TQObject* parent = 0, const char* name = 0 );
         virtual ~KStartupInfo();
 	/**
 	 * Sends given notification data about started application
@@ -300,13 +300,13 @@ class KDECORE_EXPORT KStartupInfo
 	 * @param window the id of the window
 	 * @param id the startup notification id
 	 */
-        static void setWindowStartupId( WId window, const QCString& id );
+        static void setWindowStartupId( WId window, const TQCString& id );
 	/**
 	 * Returns startup notification identification of the given window.
 	 * @param w the id of the window
 	 * @return the startup notification id. Can be null if not found.
 	 */
-        static QCString windowStartupId( WId w );
+        static TQCString windowStartupId( WId w );
         /**
          * @internal
          */
@@ -340,34 +340,34 @@ class KDECORE_EXPORT KStartupInfo
 	/**
 	 * 
 	 */ 
-	virtual void customEvent( QCustomEvent* e_P );
+	virtual void customEvent( TQCustomEvent* e_P );
     private slots:
         void startups_cleanup();
         void startups_cleanup_no_age();
-        void got_message( const QString& msg );
+        void got_message( const TQString& msg );
         void window_added( WId w );
 	void slot_window_added( WId w );
     private:
         void init( int flags );
         friend class KStartupInfoPrivate;
-        void got_startup_info( const QString& msg_P, bool update_only_P );
-        void got_remove_startup_info( const QString& msg_P );
+        void got_startup_info( const TQString& msg_P, bool update_only_P );
+        void got_remove_startup_info( const TQString& msg_P );
         void new_startup_info_internal( const KStartupInfoId& id_P,
             Data& data_P, bool update_only_P );
         void remove_startup_info_internal( const KStartupInfoId& id_P );
         void remove_startup_pids( const KStartupInfoId& id, const KStartupInfoData& data );
         void remove_startup_pids( const KStartupInfoData& data );
         startup_t check_startup_internal( WId w, KStartupInfoId* id, KStartupInfoData* data );
-        bool find_id( const QCString& id_P, KStartupInfoId* id_O,
+        bool find_id( const TQCString& id_P, KStartupInfoId* id_O,
             KStartupInfoData* data_O );
-        bool find_pid( pid_t pid_P, const QCString& hostname, KStartupInfoId* id_O,
+        bool find_pid( pid_t pid_P, const TQCString& hostname, KStartupInfoId* id_O,
             KStartupInfoData* data_O );
-        bool find_wclass( QCString res_name_P, QCString res_class_P,
+        bool find_wclass( TQCString res_name_P, TQCString res_class_P,
             KStartupInfoId* id_O, KStartupInfoData* data_O );
-        static QCString get_window_hostname( WId w_P );
+        static TQCString get_window_hostname( WId w_P );
         void startups_cleanup_internal( bool age_P );
         void clean_all_noncompliant();
-        static QString check_required_startup_fields( const QString& msg,
+        static TQString check_required_startup_fields( const TQString& msg,
             const KStartupInfoData& data, int screen );
         bool clean_on_cantdetect_; // KDE4 remove unused
         unsigned int timeout;
@@ -412,12 +412,12 @@ class KDECORE_EXPORT KStartupInfoId
 	 * @param id the new identification, "0" for no notification or "" to read
 	 *           the environment variable
 	 */
-        void initId( const QCString& id = "" );
+        void initId( const TQCString& id = "" );
 	/**
 	 * Returns the notification identifier as string.
 	 * @return the identification string for the notification
 	 */
-        const QCString& id() const;
+        const TQCString& id() const;
         /**
          * Return the user timestamp for the startup notification, or 0 if no timestamp
          * is set.
@@ -441,8 +441,8 @@ class KDECORE_EXPORT KStartupInfoId
         KStartupInfoId& operator=( const KStartupInfoId& data );
         bool operator<( const KStartupInfoId& id ) const;
     private:
-        KStartupInfoId( const QString& txt );
-        QString to_text() const;
+        KStartupInfoId( const TQString& txt );
+        TQString to_text() const;
         friend class KStartupInfo;
         KStartupInfoIdPrivate* d;
     };
@@ -467,66 +467,66 @@ class KDECORE_EXPORT KStartupInfoData
 	 * Sets the binary name of the application ( e.g. 'kcontrol' ).
 	 * @param bin the new binary name of the application
 	 */
-        void setBin( const QString& bin );
+        void setBin( const TQString& bin );
 	/**
 	 * Returns the binary name of the starting application
 	 * @return the new binary name of the application
 	 */
-        const QString& bin() const;
+        const TQString& bin() const;
 	/**
 	 * Sets the name for the notification (e.g. 'Control Center')
 	 */
-        void setName( const QString& name );
+        void setName( const TQString& name );
 	/**
 	 * Returns the name of the startup notification. If it's not available,
          * it tries to use other information (binary name).
 	 * @return the name of the startup notification
 	 */
-        const QString& findName() const;
+        const TQString& findName() const;
 	/**
 	 * Returns the name of the startup notification, or empty if not available.
 	 * @return the name of the startup notification, or an empty string
 	 *         if not set.
 	 */
-        const QString& name() const;
+        const TQString& name() const;
 	/**
 	 * Sets the description for the notification (e.g. 'Launching Control Center').
          * I.e. name() describes what is being started, while description() is
          * the actual action performed by the starting.
          * @since 3.2
 	 */
-        void setDescription( const QString& descr );
+        void setDescription( const TQString& descr );
 	/**
 	 * Returns the description of the startup notification. If it's not available,
          * it returns name().
 	 * @return the description of the startup notification
          * @since 3.2
 	 */
-        const QString& findDescription() const;
+        const TQString& findDescription() const;
 	/**
 	 * Returns the name of the startup notification, or empty if not available.
 	 * @return the name of the startup notificaiton, or an empty string
 	 *         if not set.
          * @since 3.2
 	 */
-        const QString& description() const;
+        const TQString& description() const;
 	/**
 	 * Sets the icon for the startup notification ( e.g. 'kcontrol' )
 	 * @param icon the name of the icon
 	 */
-        void setIcon( const QString& icon );
+        void setIcon( const TQString& icon );
 	/**
 	 * Returns the icon of the startup notification, and if it's not available,
 	 * tries to get it from the binary name.
 	 * @return the name of the startup notification's icon, or the name of
 	 *         the binary if not set
 	 */
-        const QString& findIcon() const;
+        const TQString& findIcon() const;
 	/**
 	 * Returns the icon of the startup notification, or empty if not available.
 	 * @return the name of the icon, or an empty string if not set.
 	 */
-        const QString& icon() const;
+        const TQString& icon() const;
 	/**
 	 * Sets the desktop for the startup notification ( i.e. the desktop on which
 	 * the starting application should appear ).
@@ -544,20 +544,20 @@ class KDECORE_EXPORT KStartupInfoData
 	 * detected correctly.
 	 * @param wmclass the WM_CLASS value for the startup notification
 	 */
-        void setWMClass( const QCString& wmclass );
+        void setWMClass( const TQCString& wmclass );
 	/**
 	 * Returns the WM_CLASS value for the startup notification, or binary name if not
 	 * available.
 	 * @return the WM_CLASS value for the startup notification, or the binary name
 	 *         if not set
 	 */
-        const QCString findWMClass() const;
+        const TQCString findWMClass() const;
 	/**
 	 * Returns the WM_CLASS value for the startup notification, or empty if not available.
 	 * @return the WM_CLASS value for the startup notification, or empty
 	 *         if not set
 	 */
-        const QCString& WMClass() const;
+        const TQCString& WMClass() const;
 	/**
 	 * Adds a PID to the list of processes that belong to the startup notification. It
 	 * may be used to increase the chance that the windows created by the starting
@@ -570,7 +570,7 @@ class KDECORE_EXPORT KStartupInfoData
 	 * Returns all PIDs for the startup notification.
 	 * @return the list of all PIDs
 	 */
-        const QValueList< pid_t >& pids() const;
+        const TQValueList< pid_t >& pids() const;
 	/**
 	 * Checks whether the given @p pid is in the list of PIDs for starup
 	 * notification.
@@ -582,12 +582,12 @@ class KDECORE_EXPORT KStartupInfoData
 	 * it if PIDs are set.
 	 * @param hostname the application's hostname. If it's a null string, the current hostname is used
 	 */
-        void setHostname( const QCString& hostname = QCString());
+        void setHostname( const TQCString& hostname = TQCString());
 	/**
 	 * Returns the hostname for the startup notification.
 	 * @return the hostname
 	 */
-        const QCString& hostname() const;
+        const TQCString& hostname() const;
 	
 	/**
 	 *
@@ -679,8 +679,8 @@ class KDECORE_EXPORT KStartupInfoData
         ~KStartupInfoData();
         KStartupInfoData& operator=( const KStartupInfoData& data );
     private:
-        KStartupInfoData( const QString& txt );
-        QString to_text() const;
+        KStartupInfoData( const TQString& txt );
+        TQString to_text() const;
         void remove_pid( pid_t pid );
         friend class KStartupInfo;
         friend class KStartupInfo::Data;

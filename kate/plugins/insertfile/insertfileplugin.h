@@ -26,7 +26,7 @@
 #include <ktexteditor/view.h>
 
 #include <kxmlguiclient.h>
-#include <qobject.h>
+#include <tqobject.h>
 #include <jobclasses.h>
 #include <kurl.h>
 
@@ -35,9 +35,9 @@ class InsertFilePlugin : public KTextEditor::Plugin, public KTextEditor::PluginV
   Q_OBJECT
 
   public:
-    InsertFilePlugin( QObject *parent = 0, 
+    InsertFilePlugin( TQObject *parent = 0, 
                             const char* name = 0, 
-                            const QStringList &args = QStringList() );
+                            const TQStringList &args = TQStringList() );
     virtual ~InsertFilePlugin();       
     
     void addView (KTextEditor::View *view);
@@ -45,10 +45,10 @@ class InsertFilePlugin : public KTextEditor::Plugin, public KTextEditor::PluginV
     
     
   private:
-    QPtrList<class InsertFilePluginView> m_views;
+    TQPtrList<class InsertFilePluginView> m_views;
 };
 
-class InsertFilePluginView : public QObject, public KXMLGUIClient
+class InsertFilePluginView : public TQObject, public KXMLGUIClient
 {
   Q_OBJECT
   public:
@@ -63,7 +63,7 @@ class InsertFilePluginView : public QObject, public KXMLGUIClient
   private:
     void insertFile();
     KURL _file;
-    QString _tmpfile;
+    TQString _tmpfile;
     KIO::FileCopyJob *_job;
 };
 

@@ -21,7 +21,7 @@
 #ifndef KPAC_PROXYSCOUT_H
 #define KPAC_PROXYSCOUT_H
 
-#include <qmap.h>
+#include <tqmap.h>
 
 #include <kdedmodule.h>
 #include <kurl.h>
@@ -41,12 +41,12 @@ namespace KPAC
         Q_OBJECT
         K_DCOP
     public:
-        ProxyScout( const QCString& );
+        ProxyScout( const TQCString& );
         virtual ~ProxyScout();
 
     k_dcop:
-        QString proxyForURL( const KURL& url );
-        ASYNC blackListProxy( const QString& proxy );
+        TQString proxyForURL( const KURL& url );
+        ASYNC blackListProxy( const TQString& proxy );
         ASYNC reset();
 
     private slots:
@@ -54,7 +54,7 @@ namespace KPAC
 
     private:
         bool startDownload();
-        QString handleRequest( const KURL& url );
+        TQString handleRequest( const KURL& url );
 
         KInstance* m_instance;
         Downloader* m_downloader;
@@ -68,10 +68,10 @@ namespace KPAC
             DCOPClientTransaction* transaction;
             KURL url;
         };
-        typedef QValueList< QueuedRequest > RequestQueue;
+        typedef TQValueList< QueuedRequest > RequestQueue;
         RequestQueue m_requestQueue;
 
-        typedef QMap< QString, time_t > BlackList;
+        typedef TQMap< TQString, time_t > BlackList;
         BlackList m_blackList;
         time_t m_suspendTime;
     };

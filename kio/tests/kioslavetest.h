@@ -12,12 +12,12 @@
 #ifndef _KIOSLAVETEST_H
 #define _KIOSLAVETEST_H
 
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qradiobutton.h>
-#include <qpushbutton.h>
-#include <qbuttongroup.h>
-#include <qwidget.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqradiobutton.h>
+#include <tqpushbutton.h>
+#include <tqbuttongroup.h>
+#include <tqwidget.h>
 
 #include <kmainwindow.h>
 
@@ -30,7 +30,7 @@ class KioslaveTest : public KMainWindow {
   Q_OBJECT
 
 public:
-  KioslaveTest( QString src, QString dest, uint op, uint pr );
+  KioslaveTest( TQString src, TQString dest, uint op, uint pr );
   ~KioslaveTest() {}
 
   enum Operations { List, ListRecursive, Stat, Get, Put, Copy, Move, Delete, Shred, Mkdir, Mimetype };
@@ -39,43 +39,43 @@ public:
 
 protected:
 
-  void closeEvent( QCloseEvent * );
+  void closeEvent( TQCloseEvent * );
 
   void printUDSEntry( const KIO::UDSEntry & entry );
 
   // info stuff
-  QLabel *lb_from;
-  QLineEdit *le_source;
+  TQLabel *lb_from;
+  TQLineEdit *le_source;
 
-  QLabel *lb_to;
-  QLineEdit *le_dest;
+  TQLabel *lb_to;
+  TQLineEdit *le_dest;
 
   // operation stuff
-  QButtonGroup *opButtons;
+  TQButtonGroup *opButtons;
 
-  QRadioButton *rbList;
-  QRadioButton *rbListRecursive;
-  QRadioButton *rbStat;
-  QRadioButton *rbGet;
-  QRadioButton *rbPut;
-  QRadioButton *rbCopy;
-  QRadioButton *rbMove;
-  QRadioButton *rbDelete;
-  QRadioButton *rbShred;
-  QRadioButton *rbMkdir;
-  QRadioButton *rbMimetype;
+  TQRadioButton *rbList;
+  TQRadioButton *rbListRecursive;
+  TQRadioButton *rbStat;
+  TQRadioButton *rbGet;
+  TQRadioButton *rbPut;
+  TQRadioButton *rbCopy;
+  TQRadioButton *rbMove;
+  TQRadioButton *rbDelete;
+  TQRadioButton *rbShred;
+  TQRadioButton *rbMkdir;
+  TQRadioButton *rbMimetype;
 
   // progress stuff
-  QButtonGroup *progressButtons;
+  TQButtonGroup *progressButtons;
 
-  QRadioButton *rbProgressNone;
-  QRadioButton *rbProgressDefault;
-  QRadioButton *rbProgressStatus;
+  TQRadioButton *rbProgressNone;
+  TQRadioButton *rbProgressDefault;
+  TQRadioButton *rbProgressStatus;
 
-  QPushButton *pbStart;
-  QPushButton *pbStop;
+  TQPushButton *pbStart;
+  TQPushButton *pbStop;
 
-  QPushButton *close;
+  TQPushButton *close;
 
 protected slots:
   void changeOperation( int id );
@@ -86,8 +86,8 @@ protected slots:
 
   void slotResult( KIO::Job * );
   void slotEntries( KIO::Job *, const KIO::UDSEntryList& );
-  void slotData( KIO::Job *, const QByteArray &data );
-  void slotDataReq( KIO::Job *, QByteArray &data );
+  void slotData( KIO::Job *, const TQByteArray &data );
+  void slotDataReq( KIO::Job *, TQByteArray &data );
 
   void slotQuit();
   void slotSlaveConnected();
@@ -95,7 +95,7 @@ protected slots:
 
 private:
   KIO::Job *job;
-  QWidget *main_widget;
+  TQWidget *main_widget;
 
   KIO::StatusbarProgress *statusProgress;
 

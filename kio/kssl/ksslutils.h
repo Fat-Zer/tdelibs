@@ -48,17 +48,17 @@ class QDateTime;
  *  @return the date formatted in a QString
  *  @see ASN1_UTCTIME_QDateTime
  */
-KDE_EXPORT QString ASN1_UTCTIME_QString(ASN1_UTCTIME *tm);
+KDE_EXPORT TQString ASN1_UTCTIME_QString(ASN1_UTCTIME *tm);
 
 /**
- *  Convert an ASN1 UTCTIME value to a QDateTime.  Uses KLocale settings.
+ *  Convert an ASN1 UTCTIME value to a TQDateTime.  Uses KLocale settings.
  *
  *  @param tm the OpenSSL ASN1_UTCTIME pointer
  *  @param isGmt set to 1 if the date is set to GMT
  *
  *  @return the date formatted in a QDateTime
  */
-KDE_EXPORT QDateTime ASN1_UTCTIME_QDateTime(ASN1_UTCTIME *tm, int *isGmt);
+KDE_EXPORT TQDateTime ASN1_UTCTIME_QDateTime(ASN1_UTCTIME *tm, int *isGmt);
 
 
 /**
@@ -68,7 +68,7 @@ KDE_EXPORT QDateTime ASN1_UTCTIME_QDateTime(ASN1_UTCTIME *tm, int *isGmt);
  *
  *  @return the number formatted in a QString
  */
-KDE_EXPORT QString ASN1_INTEGER_QString(ASN1_INTEGER *aint);
+KDE_EXPORT TQString ASN1_INTEGER_QString(ASN1_INTEGER *aint);
 #endif
 
 

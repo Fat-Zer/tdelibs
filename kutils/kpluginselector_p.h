@@ -20,7 +20,7 @@
 #ifndef KPLUGINSELECTOR_P_H
 #define KPLUGINSELECTOR_P_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kdelibs_export.h>
 
@@ -55,13 +55,13 @@ class KPluginSelectionWidget : public QWidget
          * @param category     The unstranslated category key name.
          * @param config       Set the KConfigGroup object that holds the
          *                     state of the plugins being enabled or not.
-         * @param name         The name of the widget (passed to QWidget)
+         * @param name         The name of the widget (passed to TQWidget)
          *
          * @internal
          */
-        KPluginSelectionWidget( const QValueList<KPluginInfo*> & plugininfos,
-                KPluginSelector * kps, QWidget * parent, const QString & catname,
-                const QString & category, KConfigGroup * config = 0,
+        KPluginSelectionWidget( const TQValueList<KPluginInfo*> & plugininfos,
+                KPluginSelector * kps, TQWidget * parent, const TQString & catname,
+                const TQString & category, KConfigGroup * config = 0,
                 const char * name = 0 );
 
         virtual ~KPluginSelectionWidget();
@@ -72,7 +72,7 @@ class KPluginSelectionWidget : public QWidget
          *
          * @internal
          */
-        QString catName() const;
+        TQString catName() const;
 
         /**
          * Tell the KPluginInfo objects to load their state (enabled/disabled).
@@ -88,7 +88,7 @@ class KPluginSelectionWidget : public QWidget
         /**
          * @return whether the plugin is enabled in the ListView or not.
          */
-        bool pluginChecked( const QString & pluginName ) const;
+        bool pluginChecked( const TQString & pluginName ) const;
 
     signals:
         /**
@@ -103,7 +103,7 @@ class KPluginSelectionWidget : public QWidget
          * argument is the name of the parent component that needs to reload
          * its config
          */
-        void configCommitted( const QCString & instanceName );
+        void configCommitted( const TQCString & instanceName );
 
     protected:
         /**
@@ -114,16 +114,16 @@ class KPluginSelectionWidget : public QWidget
          *
          * @return Whether the plugin is loaded.
          */
-        virtual bool pluginIsLoaded( const QString & pluginName ) const;
+        virtual bool pluginIsLoaded( const TQString & pluginName ) const;
 
     private slots:
         /**
-         * Called when a QCheckListItem is checked or unchecked. It calls
+         * Called when a TQCheckListItem is checked or unchecked. It calls
          * checkDependencies on the Plugin and then updateConfigPage.
          *
          * @internal
          */
-        void executed( QListViewItem * );
+        void executed( TQListViewItem * );
 
         /**
          * Called whenever the visible config page should change (plugin
@@ -158,7 +158,7 @@ class KPluginSelectionWidget : public QWidget
          * KPluginSelectionWidget is shown and sets the currentplugininfo
          * accordingly.
          */
-        void tabWidgetChanged( QWidget * );
+        void tabWidgetChanged( TQWidget * );
 
     private:
         /**
@@ -168,7 +168,7 @@ class KPluginSelectionWidget : public QWidget
          *
          * @internal
          */
-        QWidget * insertKCM( QWidget * parent, const KCModuleInfo & );
+        TQWidget * insertKCM( TQWidget * parent, const KCModuleInfo & );
 
         /**
          * Embed the KCMs for the plugin into the widgetstack
@@ -177,7 +177,7 @@ class KPluginSelectionWidget : public QWidget
          */
         void embeddPluginKCMs( KPluginInfo *, bool );
 
-        void init( const QValueList<KPluginInfo*> & plugininfos, const QString & );
+        void init( const TQValueList<KPluginInfo*> & plugininfos, const TQString & );
         void checkDependencies( const KPluginInfo * );
 
         struct KPluginSelectionWidgetPrivate;

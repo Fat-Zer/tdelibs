@@ -19,17 +19,17 @@
 
 #include "config.h"
 
-#include <qwindowdefs.h>
+#include <tqwindowdefs.h>
 #ifdef Q_WS_WIN
 
 #include "kglobalaccel_win.h"
 #include "kglobalaccel.h"
 #include "kkeyserver_x11.h"
 
-#include <qpopupmenu.h>
-#include <qregexp.h>
-#include <qwidget.h>
-#include <qmetaobject.h>
+#include <tqpopupmenu.h>
+#include <tqregexp.h>
+#include <tqwidget.h>
+#include <tqmetaobject.h>
 #include <private/qucomextra_p.h>
 #include <kapplication.h>
 #include <kdebug.h>
@@ -37,7 +37,7 @@
 
 //----------------------------------------------------
 
-static QValueList< KGlobalAccelPrivate* >* all_accels = 0;
+static TQValueList< KGlobalAccelPrivate* >* all_accels = 0;
 
 KGlobalAccelPrivate::KGlobalAccelPrivate()
 : KAccelBase( KAccelBase::NATIVE_KEYS )
@@ -45,7 +45,7 @@ KGlobalAccelPrivate::KGlobalAccelPrivate()
 , m_blockingDisabled( false )
 {
         if( all_accels == NULL )
-            all_accels = new QValueList< KGlobalAccelPrivate* >;
+            all_accels = new TQValueList< KGlobalAccelPrivate* >;
         all_accels->append( this );
 	m_sConfigGroup = "Global Shortcuts";
 //	kapp->installX11EventFilter( this );
@@ -74,7 +74,7 @@ void KGlobalAccelPrivate::blockShortcuts( bool block )
 {
         if( all_accels == NULL )
             return;
-        for( QValueList< KGlobalAccelPrivate* >::ConstIterator it = all_accels->begin();
+        for( TQValueList< KGlobalAccelPrivate* >::ConstIterator it = all_accels->begin();
              it != all_accels->end();
              ++it ) {
             if( (*it)->m_blockingDisabled )
@@ -128,7 +128,7 @@ bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAcce
 	    keyCodeX = 111;
 	}
 
-	kdDebug(125) << QString( "grabKey( key: '%1', bGrab: %2 ): keyCodeX: %3 keyModX: %4\n" )
+	kdDebug(125) << TQString( "grabKey( key: '%1', bGrab: %2 ): keyCodeX: %3 keyModX: %4\n" )
 		.arg( key.key().toStringInternal() ).arg( bGrab )
 		.arg( keyCodeX, 0, 16 ).arg( keyModX, 0, 16 );
 	if( !keyCodeX )
@@ -140,13 +140,13 @@ bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAcce
 	//  the irrelevant bits are always ignored and we can just make one XGrabKey
 	//  call per accelerator? -- ellis
 #ifndef NDEBUG
-	QString sDebug = QString("\tcode: 0x%1 state: 0x%2 | ").arg(keyCodeX,0,16).arg(keyModX,0,16);
+	TQString sDebug = TQString("\tcode: 0x%1 state: 0x%2 | ").arg(keyCodeX,0,16).arg(keyModX,0,16);
 #endif
 	uint keyModMaskX = ~g_keyModMaskXOnOrOff;
 	for( uint irrelevantBitsMask = 0; irrelevantBitsMask <= 0xff; irrelevantBitsMask++ ) {
 		if( (irrelevantBitsMask & keyModMaskX) == 0 ) {
 #ifndef NDEBUG
-			sDebug += QString("0x%3, ").arg(irrelevantBitsMask, 0, 16);
+			sDebug += TQString("0x%3, ").arg(irrelevantBitsMask, 0, 16);
 #endif
 			if( bGrab )
 				XGrabKey( qt_xdisplay(), keyCodeX, keyModX | irrelevantBitsMask,
@@ -202,7 +202,7 @@ bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAcce
 		if( x11KeyPress( pEvent ) )
 			return true;
 	 default:
-		return QWidget::x11Event( pEvent );
+		return TQWidget::x11Event( pEvent );
 	}
 }
 
@@ -221,7 +221,7 @@ void KGlobalAccelPrivate::x11MappingNotify()
 bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 {
 	// do not change this line unless you really really know what you are doing (Matthias)
-	if ( !QWidget::keyboardGrabber() && !QApplication::activePopupWidget() ) {
+	if ( !TQWidget::keyboardGrabber() && !TQApplication::activePopupWidget() ) {
 		XUngrabKeyboard( qt_xdisplay(), pEvent->xkey.time );
                 XFlush( qt_xdisplay()); // avoid X(?) bug
         }
@@ -261,7 +261,7 @@ bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 	KKey key = keyNative;
 
 	kdDebug(125) << "x11KeyPress: seek " << key.toStringInternal()
-		<< QString( " keyCodeX: %1 state: %2 keyModX: %3" )
+		<< TQString( " keyCodeX: %1 state: %2 keyModX: %3" )
 			.arg( codemod.code, 0, 16 ).arg( pEvent->xkey.state, 0, 16 ).arg( codemod.mod, 0, 16 ) << endl;
 
 	// Search for which accelerator activated this event:
@@ -269,8 +269,8 @@ bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 #ifndef NDEBUG
 		for( CodeModMap::ConstIterator it = m_rgCodeModToAction.begin(); it != m_rgCodeModToAction.end(); ++it ) {
 			KAccelAction* pAction = *it;
-			kdDebug(125) << "\tcode: " << QString::number(it.key().code, 16) << " mod: " << QString::number(it.key().mod, 16)
-				<< (pAction ? QString(" name: \"%1\" shortcut: %2").arg(pAction->name()).arg(pAction->shortcut().toStringInternal()) : QString::null)
+			kdDebug(125) << "\tcode: " << TQString::number(it.key().code, 16) << " mod: " << TQString::number(it.key().mod, 16)
+				<< (pAction ? TQString(" name: \"%1\" shortcut: %2").arg(pAction->name()).arg(pAction->shortcut().toStringInternal()) : TQString::null)
 				<< endl;
 		}
 #endif
@@ -282,10 +282,10 @@ bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
                 static bool recursion_block = false;
                 if( !recursion_block ) {
                         recursion_block = true;
-		        QPopupMenu* pMenu = createPopupMenu( 0, KKeySequence(key) );
-		        connect( pMenu, SIGNAL(activated(int)), this, SLOT(slotActivated(int)) );
-		        pMenu->exec( QPoint( 0, 0 ) );
-		        disconnect( pMenu, SIGNAL(activated(int)), this, SLOT(slotActivated(int)));
+		        TQPopupMenu* pMenu = createPopupMenu( 0, KKeySequence(key) );
+		        connect( pMenu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotActivated(int)) );
+		        pMenu->exec( TQPoint( 0, 0 ) );
+		        disconnect( pMenu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotActivated(int)));
 		        delete pMenu;
                         recursion_block = false;
                 }
@@ -301,9 +301,9 @@ void KGlobalAccelPrivate::activate( KAccelAction* pAction, const KKeySequence& s
 {
 	kdDebug(125) << "KGlobalAccelPrivate::activate( \"" << pAction->name() << "\" ) " << endl;
 
-	QRegExp rexPassIndex( "([ ]*int[ ]*)" );
-	QRegExp rexPassInfo( " QString" );
-	QRegExp rexIndex( " ([0-9]+)$" );
+	TQRegExp rexPassIndex( "([ ]*int[ ]*)" );
+	TQRegExp rexPassInfo( " TQString" );
+	TQRegExp rexIndex( " ([0-9]+)$" );
 
 	// If the slot to be called accepts an integer index
 	//  and an index is present at the end of the action's name,
@@ -315,7 +315,7 @@ void KGlobalAccelPrivate::activate( KAccelAction* pAction, const KKeySequence& s
                 if( slot_id >= 0 ) {
                     QUObject o[2];
                     static_QUType_int.set(o+1,n);
-                    const_cast< QObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, o );
+                    const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, o );
                 }
 	} else if( rexPassInfo.search( pAction->methodSlotPtr() ) ) {
                 int slot_id = pAction->objSlotPtr()->metaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
@@ -324,12 +324,12 @@ void KGlobalAccelPrivate::activate( KAccelAction* pAction, const KKeySequence& s
                     static_QUType_QString.set(o+1,pAction->name());
                     static_QUType_QString.set(o+2,pAction->label());
                     static_QUType_ptr.set(o+3,&seq);
-                    const_cast< QObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, o );
+                    const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, o );
                 }
 	} else {
                 int slot_id = pAction->objSlotPtr()->metaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
                 if( slot_id >= 0 )
-                    const_cast< QObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, 0 );
+                    const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, 0 );
 	}
 }
 

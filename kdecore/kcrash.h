@@ -22,7 +22,7 @@
 #ifndef __KCRASH_H
 #define __KCRASH_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include "kdelibs_export.h"
 
 /**
@@ -97,16 +97,16 @@ class KDECORE_EXPORT KCrash
    * Dr. Konqi, our nice crash display application.
    * @param path the application path.
    */
-  static void setApplicationPath (QString path) { appPath = qstrdup(path.local8Bit().data()); }
-  /* KDE 4: Make it const QString & */
+  static void setApplicationPath (TQString path) { appPath = qstrdup(path.local8Bit().data()); }
+  /* KDE 4: Make it const TQString & */
 
   /**
    * Sets the application name @p name which should be passed to
    * Dr. Konqi, our nice crash display application.
    * @param name the name of the application, as shown in Dr. Konqi
    */
-  static void setApplicationName (QString name) { appName = qstrdup(name.local8Bit().data()); }
-  /* KDE 4: Make it const QString & */
+  static void setApplicationName (TQString name) { appName = qstrdup(name.local8Bit().data()); }
+  /* KDE 4: Make it const TQString & */
 
  protected:
   /**

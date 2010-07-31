@@ -21,10 +21,10 @@
 
 */
 
-#include <qcursor.h>
-#include <qhbox.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
+#include <tqcursor.h>
+#include <tqhbox.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -55,7 +55,7 @@ class KCMultiDialog::KCMultiDialogPrivate
 };
 
  
-KCMultiDialog::KCMultiDialog(QWidget *parent, const char *name, bool modal)
+KCMultiDialog::KCMultiDialog(TQWidget *parent, const char *name, bool modal)
     : KDialogBase(IconList, i18n("Configure"), Help | Default |Cancel | Apply |
             Ok | User1 | User2, Ok, parent, name, modal, true,
             KStdGuiItem::reset(), KStdGuiItem::adminMode())
@@ -64,7 +64,7 @@ KCMultiDialog::KCMultiDialog(QWidget *parent, const char *name, bool modal)
     init();
 }
 
-KCMultiDialog::KCMultiDialog( int dialogFace, const QString & caption, QWidget * parent, const char * name, bool modal )
+KCMultiDialog::KCMultiDialog( int dialogFace, const TQString & caption, TQWidget * parent, const char * name, bool modal )
     : KDialogBase( dialogFace, caption, Help | Default | Cancel | Apply | Ok |
             User1 | User2, Ok, parent, name, modal, true,
             KStdGuiItem::reset(), KStdGuiItem::adminMode())
@@ -74,8 +74,8 @@ KCMultiDialog::KCMultiDialog( int dialogFace, const QString & caption, QWidget *
 }
 
 KCMultiDialog::KCMultiDialog( int dialogFace, const KGuiItem &user2,
-        const KGuiItem &user3, int buttonMask, const QString &caption,
-        QWidget *parent, const char *name, bool modal )
+        const KGuiItem &user3, int buttonMask, const TQString &caption,
+        TQWidget *parent, const char *name, bool modal )
     : KDialogBase( dialogFace, caption, buttonMask | Help | Default | Cancel |
             Apply | Ok | User1, Ok, parent, name, modal, true,
             KStdGuiItem::reset(), user2, user3 )
@@ -89,12 +89,12 @@ KCMultiDialog::KCMultiDialog( int dialogFace, const KGuiItem &user2,
 
 inline void KCMultiDialog::init()
 {
-    connect( this, SIGNAL( finished()), SLOT( dialogClosed()));
+    connect( this, TQT_SIGNAL( finished()), TQT_SLOT( dialogClosed()));
     showButton( User1, false );
     showButton( User2, false );
     enableButton(Apply, false);
-    connect(this, SIGNAL(aboutToShowPage(QWidget *)), this, SLOT(slotAboutToShow(QWidget *)));
-    setInitialSize(QSize(640,480));
+    connect(this, TQT_SIGNAL(aboutToShowPage(TQWidget *)), this, TQT_SLOT(slotAboutToShow(TQWidget *)));
+    setInitialSize(TQSize(640,480));
     moduleParentComponents.setAutoDelete( true );
 
 }
@@ -113,7 +113,7 @@ void KCMultiDialog::slotDefault()
 
     ModuleList::Iterator end = m_modules.end();
     for( ModuleList::Iterator it = m_modules.begin(); it != end; ++it )
-        if( pageIndex( ( QWidget * )( *it ).kcm->parent() ) == curPageIndex )
+        if( pageIndex( ( TQWidget * )( *it ).kcm->parent() ) == curPageIndex )
         {
           ( *it ).kcm->defaults();
           clientChanged( true );
@@ -127,7 +127,7 @@ void KCMultiDialog::slotUser1()
 
     ModuleList::Iterator end = m_modules.end();
     for( ModuleList::Iterator it = m_modules.begin(); it != end; ++it )
-        if( pageIndex( ( QWidget * )( *it ).kcm->parent() ) == curPageIndex )
+        if( pageIndex( ( TQWidget * )( *it ).kcm->parent() ) == curPageIndex )
         {
             ( *it ).kcm->load();
             clientChanged( false );
@@ -137,7 +137,7 @@ void KCMultiDialog::slotUser1()
 
 void KCMultiDialog::apply()
 {
-    QStringList updatedModules;
+    TQStringList updatedModules;
     ModuleList::Iterator end = m_modules.end();
     for( ModuleList::Iterator it = m_modules.begin(); it != end; ++it )
     {
@@ -145,14 +145,14 @@ void KCMultiDialog::apply()
         if( m->changed() )
         {
             m->save();
-            QStringList * names = moduleParentComponents[ m ];
+            TQStringList * names = moduleParentComponents[ m ];
             kdDebug(710) << k_funcinfo << *names << " saved and added to the list" << endl;
-            for( QStringList::ConstIterator it = names->begin(); it != names->end(); ++it )
+            for( TQStringList::ConstIterator it = names->begin(); it != names->end(); ++it )
                 if( updatedModules.find( *it ) == updatedModules.end() )
                     updatedModules.append( *it );
         }
     }
-    for( QStringList::const_iterator it = updatedModules.begin(); it != updatedModules.end(); ++it )
+    for( TQStringList::const_iterator it = updatedModules.begin(); it != updatedModules.end(); ++it )
     {
         kdDebug(710) << k_funcinfo << *it << " " << ( *it ).latin1() << endl;
         emit configCommitted( ( *it ).latin1() );
@@ -162,7 +162,7 @@ void KCMultiDialog::apply()
 
 void KCMultiDialog::slotApply()
 {
-    QPushButton *button = actionButton(Apply);
+    TQPushButton *button = actionButton(Apply);
     if (button)
         button->setFocus();
     emit applyClicked();
@@ -172,7 +172,7 @@ void KCMultiDialog::slotApply()
 
 void KCMultiDialog::slotOk()
 {
-    QPushButton *button = actionButton(Ok);
+    TQPushButton *button = actionButton(Ok);
     if (button)
         button->setFocus();
     emit okClicked();
@@ -182,12 +182,12 @@ void KCMultiDialog::slotOk()
 
 void KCMultiDialog::slotHelp()
 {
-    QString docPath;
+    TQString docPath;
 
     int curPageIndex = activePageIndex();
     ModuleList::Iterator end = m_modules.end();
     for( ModuleList::Iterator it = m_modules.begin(); it != end; ++it )
-        if( pageIndex( ( QWidget * )( *it ).kcm->parent() ) == curPageIndex )
+        if( pageIndex( ( TQWidget * )( *it ).kcm->parent() ) == curPageIndex )
         {
             docPath = ( *it ).kcm->moduleInfo().docPath();
             break;
@@ -219,20 +219,20 @@ void KCMultiDialog::clientChanged(bool state)
     enableButton( Apply, false );
 }
 
-void KCMultiDialog::addModule(const QString& path, bool withfallback)
+void KCMultiDialog::addModule(const TQString& path, bool withfallback)
 {
-    QString complete = path;
+    TQString complete = path;
 
     if( !path.endsWith( ".desktop" ))
         complete += ".desktop";
 
     KService::Ptr service = KService::serviceByStorageId( complete );
 
-    addModule( KCModuleInfo( service ), QStringList(), withfallback);
+    addModule( KCModuleInfo( service ), TQStringList(), withfallback);
 }
 
 void KCMultiDialog::addModule(const KCModuleInfo& moduleinfo,
-        QStringList parentmodulenames, bool withfallback)
+        TQStringList parentmodulenames, bool withfallback)
 {
     kdDebug(710) << "KCMultiDialog::addModule " 
         << moduleinfo.moduleName() << endl;
@@ -246,7 +246,7 @@ void KCMultiDialog::addModule(const KCModuleInfo& moduleinfo,
     if( !KCModuleLoader::testModule( moduleinfo ))
             return;
 
-    QFrame* page = 0;
+    TQFrame* page = 0;
     if (!moduleinfo.service()->noDisplay())
         switch( dialogface )
         {
@@ -263,7 +263,7 @@ void KCMultiDialog::addModule(const KCModuleInfo& moduleinfo,
                 break;
             case Plain:
                 page = plainPage();
-                ( new QHBoxLayout( page ) )->setAutoAdd( true );
+                ( new TQHBoxLayout( page ) )->setAutoAdd( true );
                 break;
             default:
                 kdError( 710 ) << "unsupported dialog face for KCMultiDialog"
@@ -284,7 +284,7 @@ void KCMultiDialog::addModule(const KCModuleInfo& moduleinfo,
         kdDebug( 710 ) << "Use KCModule from the list of orphans for " <<
             moduleinfo.moduleName() << ": " << module << endl;
 
-        module->reparent( page, 0, QPoint( 0, 0 ), true );
+        module->reparent( page, 0, TQPoint( 0, 0 ), true );
 
         if( module->changed() )
             clientChanged( true );
@@ -295,12 +295,12 @@ void KCMultiDialog::addModule(const KCModuleInfo& moduleinfo,
     else
     {
         module = new KCModuleProxy( moduleinfo, withfallback, page );
-        QStringList parentComponents = moduleinfo.service()->property(
+        TQStringList parentComponents = moduleinfo.service()->property(
                 "X-KDE-ParentComponents" ).toStringList();
         moduleParentComponents.insert( module,
-                new QStringList( parentComponents ) );
+                new TQStringList( parentComponents ) );
 
-        connect(module, SIGNAL(changed(bool)), this, SLOT(clientChanged(bool)));
+        connect(module, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(clientChanged(bool)));
 
         if( m_modules.count() == 0 )
             aboutToShowPage( page );
@@ -328,12 +328,12 @@ void KCMultiDialog::removeAllModules()
     {
         kdDebug( 710 ) << "remove 2" << endl;
         KCModuleProxy * kcm = ( *it ).kcm;
-        QObject * page = kcm->parent();
+        TQObject * page = kcm->parent();
         kcm->hide();
         if( page )
         {
             // I hate this
-            kcm->reparent( 0, QPoint( 0, 0 ), false );
+            kcm->reparent( 0, TQPoint( 0, 0 ), false );
             delete page;
         }
         m_orphanModules[ ( *it ).service ] = kcm;
@@ -350,11 +350,11 @@ void KCMultiDialog::show()
     KDialogBase::show();
 }
 
-void KCMultiDialog::slotAboutToShow(QWidget *page)
+void KCMultiDialog::slotAboutToShow(TQWidget *page)
 {
     kdDebug(710) << k_funcinfo << endl;
 
-    QObject * obj = page->child( 0, "KCModuleProxy" );
+    TQObject * obj = page->child( 0, "KCModuleProxy" );
     if( ! obj )
         return;
 
@@ -369,15 +369,15 @@ void KCMultiDialog::slotAboutToShow(QWidget *page)
     enableButton( KDialogBase::Default,
             d->currentModule->buttons() & KCModule::Default );
 
-    disconnect( this, SIGNAL(user2Clicked()), 0, 0 );
+    disconnect( this, TQT_SIGNAL(user2Clicked()), 0, 0 );
 
     if (d->currentModule->moduleInfo().needsRootPrivileges())
     {
         if ( !d->currentModule->rootMode() )
             { /* Enable the Admin Mode button */
             enableButton( User2, true );
-            connect( this, SIGNAL(user2Clicked()), d->currentModule, SLOT( runAsRoot() ));
-            connect( this, SIGNAL(user2Clicked()), SLOT( disableRModeButton() ));
+            connect( this, TQT_SIGNAL(user2Clicked()), d->currentModule, TQT_SLOT( runAsRoot() ));
+            connect( this, TQT_SIGNAL(user2Clicked()), TQT_SLOT( disableRModeButton() ));
         }
         else
             enableButton( User2, false);
@@ -392,7 +392,7 @@ void KCMultiDialog::rootExit()
 void KCMultiDialog::disableRModeButton()
 {
     enableButton( User2, false );
-    connect ( d->currentModule, SIGNAL( childClosed() ), SLOT( rootExit() ));
+    connect ( d->currentModule, TQT_SIGNAL( childClosed() ), TQT_SLOT( rootExit() ));
 }
 
 void KCMultiDialog::dialogClosed()

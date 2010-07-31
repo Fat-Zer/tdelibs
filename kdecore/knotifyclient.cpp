@@ -20,8 +20,8 @@
 
 #include "knotifyclient.h"
 
-#include <qdatastream.h>
-#include <qptrstack.h>
+#include <tqdatastream.h>
+#include <tqptrstack.h>
 
 #include <kapplication.h>
 #include <kstandarddirs.h>
@@ -33,7 +33,7 @@
 
 static const char daemonName[] = "knotify";
 
-static bool canAvoidStartupEvent( const QString& event, const QString& appname, int present )
+static bool canAvoidStartupEvent( const TQString& event, const TQString& appname, int present )
 {
     static bool checkAvoid = true;
     if( !checkAvoid )
@@ -62,9 +62,9 @@ static bool canAvoidStartupEvent( const QString& event, const QString& appname, 
     return true;
 }
 
-static int sendNotifyEvent(const QString &message, const QString &text,
-                            int present, int level, const QString &sound,
-                            const QString &file, int winId )
+static int sendNotifyEvent(const TQString &message, const TQString &text,
+                            int present, int level, const TQString &sound,
+                            const TQString &file, int winId )
 {
   if (!kapp) return 0;
 
@@ -76,7 +76,7 @@ static int sendNotifyEvent(const QString &message, const QString &text,
       return 0;
   }
 
-  QString appname = KNotifyClient::instance()->instanceName();
+  TQString appname = KNotifyClient::instance()->instanceName();
 
   if( canAvoidStartupEvent( message, appname, present ))
       return -1; // done "successfully" - there will be no event presentation
@@ -84,19 +84,19 @@ static int sendNotifyEvent(const QString &message, const QString &text,
   int uniqueId = kMax( 1, kapp->random() ); // must not be 0 -- means failure!
 
   // knotify daemon needs toplevel window
-  QWidget* widget = QWidget::find( (WId)winId );
+  TQWidget* widget = TQWidget::find( (WId)winId );
   if( widget )
     winId = (int)widget->topLevelWidget()->winId();
 
-  QByteArray data;
-  QDataStream ds(data, IO_WriteOnly);
+  TQByteArray data;
+  TQDataStream ds(data, IO_WriteOnly);
   ds << message << appname << text << sound << file << present << level
      << winId << uniqueId;
 
   if ( !KNotifyClient::startDaemon() )
       return 0;
 
-  if ( client->send(daemonName, "Notify", "notify(QString,QString,QString,QString,QString,int,int,int,int)", data) )
+  if ( client->send(daemonName, "Notify", "notify(TQString,TQString,TQString,TQString,TQString,int,int,int,int)", data) )
   {
       return uniqueId;
   }
@@ -104,63 +104,63 @@ static int sendNotifyEvent(const QString &message, const QString &text,
   return 0;
 }
 
-int KNotifyClient::event( StandardEvent type, const QString& text )
+int KNotifyClient::event( StandardEvent type, const TQString& text )
 {
     return event( 0, type, text );
 }
 
-int KNotifyClient::event(const QString &message, const QString &text)
+int KNotifyClient::event(const TQString &message, const TQString &text)
 {
     return event(0, message, text);
 }
 
-int KNotifyClient::userEvent(const QString &text, int present, int level,
-                              const QString &sound, const QString &file)
+int KNotifyClient::userEvent(const TQString &text, int present, int level,
+                              const TQString &sound, const TQString &file)
 {
     return userEvent( 0, text, present, level, sound, file );
 }
 
 
-int KNotifyClient::event( int winId, StandardEvent type, const QString& text )
+int KNotifyClient::event( int winId, StandardEvent type, const TQString& text )
 {
-    QString message;
+    TQString message;
     switch ( type ) {
     case cannotOpenFile:
-	message = QString::fromLatin1("cannotopenfile");
+	message = TQString::fromLatin1("cannotopenfile");
 	break;
     case warning:
-	message = QString::fromLatin1("warning");
+	message = TQString::fromLatin1("warning");
 	break;
     case fatalError:
-	message = QString::fromLatin1("fatalerror");
+	message = TQString::fromLatin1("fatalerror");
 	break;
     case catastrophe:
-	message = QString::fromLatin1("catastrophe");
+	message = TQString::fromLatin1("catastrophe");
 	break;
     case notification: // fall through
     default:
-	message = QString::fromLatin1("notification");
+	message = TQString::fromLatin1("notification");
 	break;
     }
 
     return sendNotifyEvent( message, text, Default, Default,
-			    QString::null, QString::null, winId );
+			    TQString::null, TQString::null, winId );
 }
 
-int KNotifyClient::event(int winId, const QString &message,
-                          const QString &text)
+int KNotifyClient::event(int winId, const TQString &message,
+                          const TQString &text)
 {
-  return sendNotifyEvent(message, text, Default, Default, QString::null, QString::null, winId);
+  return sendNotifyEvent(message, text, Default, Default, TQString::null, TQString::null, winId);
 }
 
-int KNotifyClient::userEvent(int winId, const QString &text, int present,
+int KNotifyClient::userEvent(int winId, const TQString &text, int present,
                               int level,
-                              const QString &sound, const QString &file)
+                              const TQString &sound, const TQString &file)
 {
-  return sendNotifyEvent(QString::null, text, present, level, sound, file, winId);
+  return sendNotifyEvent(TQString::null, text, present, level, sound, file, winId);
 }
 
-int KNotifyClient::getPresentation(const QString &eventname)
+int KNotifyClient::getPresentation(const TQString &eventname)
 {
 	int present;
 	if (eventname.isEmpty()) return Default;
@@ -173,9 +173,9 @@ int KNotifyClient::getPresentation(const QString &eventname)
 	return present;
 }
 
-QString KNotifyClient::getFile(const QString &eventname, int present)
+TQString KNotifyClient::getFile(const TQString &eventname, int present)
 {
-	if (eventname.isEmpty()) return QString::null;
+	if (eventname.isEmpty()) return TQString::null;
 
 	KConfig eventsfile( KNotifyClient::instance()->instanceName()+".eventsrc", true, false);
 	eventsfile.setGroup(eventname);
@@ -188,10 +188,10 @@ QString KNotifyClient::getFile(const QString &eventname, int present)
 		return eventsfile.readPathEntry("logfile");
 	}
 
-	return QString::null;
+	return TQString::null;
 }
 
-int KNotifyClient::getDefaultPresentation(const QString &eventname)
+int KNotifyClient::getDefaultPresentation(const TQString &eventname)
 {
 	int present;
 	if (eventname.isEmpty()) return Default;
@@ -204,9 +204,9 @@ int KNotifyClient::getDefaultPresentation(const QString &eventname)
 	return present;
 }
 
-QString KNotifyClient::getDefaultFile(const QString &eventname, int present)
+TQString KNotifyClient::getDefaultFile(const TQString &eventname, int present)
 {
-	if (eventname.isEmpty()) return QString::null;
+	if (eventname.isEmpty()) return TQString::null;
 
 	KConfig eventsfile( KNotifyClient::instance()->instanceName()+"/eventsrc", true, false, "data");
 	eventsfile.setGroup(eventname);
@@ -219,7 +219,7 @@ QString KNotifyClient::getDefaultFile(const QString &eventname, int present)
 		return eventsfile.readPathEntry("default_logfile");
 	}
 
-	return QString::null;
+	return TQString::null;
 }
 
 bool KNotifyClient::startDaemon()
@@ -236,10 +236,10 @@ bool KNotifyClient::startDaemon()
 }
 
 
-void KNotifyClient::beep(const QString& reason)
+void KNotifyClient::beep(const TQString& reason)
 {
   if ( !kapp || KNotifyClient::Instance::currentInstance()->useSystemBell() ) {
-    QApplication::beep();
+    TQApplication::beep();
     return;
   }
 
@@ -249,14 +249,14 @@ void KNotifyClient::beep(const QString& reason)
     client->attach();
     if (!client->isAttached() || !client->isApplicationRegistered(daemonName))
     {
-      QApplication::beep();
+      TQApplication::beep();
       return;
     }
   }
   // The kaccess daemon handles visual and other audible beeps
   if ( client->isApplicationRegistered( "kaccess" ) )
   {
-      QApplication::beep();
+      TQApplication::beep();
       return;
   }
 
@@ -300,7 +300,7 @@ public:
 	}
 
 private:
-	QPtrStack<Instance> m_instances;
+	TQPtrStack<Instance> m_instances;
 	Instance *m_defaultInstance;
 };
 

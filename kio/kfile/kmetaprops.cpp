@@ -28,40 +28,40 @@
 #include <klocale.h>
 #include <kprotocolinfo.h>
 
-#include <qvalidator.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qfileinfo.h>
-#include <qdatetime.h>
-#include <qstylesheet.h>
-#include <qvgroupbox.h>
+#include <tqvalidator.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqfileinfo.h>
+#include <tqdatetime.h>
+#include <tqstylesheet.h>
+#include <tqvgroupbox.h>
 
 #undef Bool
 
 class MetaPropsScrollView : public QScrollView
 {
 public:
-    MetaPropsScrollView(QWidget* parent = 0, const char* name = 0)
-        : QScrollView(parent, name)
+    MetaPropsScrollView(TQWidget* parent = 0, const char* name = 0)
+        : TQScrollView(parent, name)
     {
-      setFrameStyle(QFrame::NoFrame);
-      m_frame = new QFrame(viewport(), "MetaPropsScrollView::m_frame");
-      m_frame->setFrameStyle(QFrame::NoFrame);
+      setFrameStyle(TQFrame::NoFrame);
+      m_frame = new TQFrame(viewport(), "MetaPropsScrollView::m_frame");
+      m_frame->setFrameStyle(TQFrame::NoFrame);
       addChild(m_frame, 0, 0);
     };
 
-    QFrame* frame() {return m_frame;};
+    TQFrame* frame() {return m_frame;};
 
 protected:
-    virtual void viewportResizeEvent(QResizeEvent* ev)
+    virtual void viewportResizeEvent(TQResizeEvent* ev)
     {
-      QScrollView::viewportResizeEvent(ev);
+      TQScrollView::viewportResizeEvent(ev);
       m_frame->resize( kMax(m_frame->sizeHint().width(), ev->size().width()),
                        kMax(m_frame->sizeHint().height(), ev->size().height()));
     };
 
 private:
-      QFrame* m_frame;
+      TQFrame* m_frame;
 };
 
 class KFileMetaPropsPlugin::KFileMetaPropsPluginPrivate
@@ -70,11 +70,11 @@ public:
     KFileMetaPropsPluginPrivate()  {}
     ~KFileMetaPropsPluginPrivate() {}
 
-    QFrame*                       m_frame;
-    QGridLayout*                  m_framelayout;
+    TQFrame*                       m_frame;
+    TQGridLayout*                  m_framelayout;
     KFileMetaInfo                 m_info;
-//    QPushButton*                m_add;
-    QPtrList<KFileMetaInfoWidget> m_editWidgets;
+//    TQPushButton*                m_add;
+    TQPtrList<KFileMetaInfoWidget> m_editWidgets;
 };
 
 KFileMetaPropsPlugin::KFileMetaPropsPlugin(KPropertiesDialog* props)
@@ -107,7 +107,7 @@ KFileMetaPropsPlugin::KFileMetaPropsPlugin(KPropertiesDialog* props)
 
 void KFileMetaPropsPlugin::createLayout()
 {
-    QFileInfo file_info(properties->item()->url().path());
+    TQFileInfo file_info(properties->item()->url().path());
 
     kdDebug(250) << "KFileMetaPropsPlugin::createLayout" << endl;
 
@@ -117,7 +117,7 @@ void KFileMetaPropsPlugin::createLayout()
 
     // now get a list of groups
     KFileMetaInfoProvider* prov = KFileMetaInfoProvider::self();
-    QStringList groupList = d->m_info.preferredGroups();
+    TQStringList groupList = d->m_info.preferredGroups();
 
     const KFileMimeTypeInfo* mtinfo = prov->mimeTypeInfo(d->m_info.mimeType());
     if (!mtinfo) 
@@ -127,9 +127,9 @@ void KFileMetaPropsPlugin::createLayout()
     }
 
     // let the dialog create the page frame
-    QFrame* topframe = properties->addPage(i18n("&Meta Info"));
-    topframe->setFrameStyle(QFrame::NoFrame);
-    QVBoxLayout* tmp = new QVBoxLayout(topframe);
+    TQFrame* topframe = properties->addPage(i18n("&Meta Info"));
+    topframe->setFrameStyle(TQFrame::NoFrame);
+    TQVBoxLayout* tmp = new TQVBoxLayout(topframe);
 
     // create a scroll view in the page
     MetaPropsScrollView* view = new MetaPropsScrollView(topframe);
@@ -138,28 +138,28 @@ void KFileMetaPropsPlugin::createLayout()
 
     d->m_frame = view->frame();
 
-    QVBoxLayout *toplayout = new QVBoxLayout(d->m_frame);
+    TQVBoxLayout *toplayout = new TQVBoxLayout(d->m_frame);
     toplayout->setSpacing(KDialog::spacingHint());
 
-    for (QStringList::Iterator git=groupList.begin(); 
+    for (TQStringList::Iterator git=groupList.begin(); 
             git!=groupList.end(); ++git)
     {
         kdDebug(7033) << *git << endl;
 
-        QStringList itemList = d->m_info.group(*git).preferredKeys();
+        TQStringList itemList = d->m_info.group(*git).preferredKeys();
         if (itemList.isEmpty())
             continue;
 
-        QGroupBox *groupBox = new QGroupBox(2, Qt::Horizontal, 
-            QStyleSheet::escape(mtinfo->groupInfo(*git)->translatedName()), 
+        TQGroupBox *groupBox = new TQGroupBox(2, Qt::Horizontal, 
+            TQStyleSheet::escape(mtinfo->groupInfo(*git)->translatedName()), 
             d->m_frame);
 
         toplayout->addWidget(groupBox);
 
-        QValueList<KFileMetaInfoItem> readItems;
-        QValueList<KFileMetaInfoItem> editItems;
+        TQValueList<KFileMetaInfoItem> readItems;
+        TQValueList<KFileMetaInfoItem> editItems;
 
-        for (QStringList::Iterator iit = itemList.begin(); 
+        for (TQStringList::Iterator iit = itemList.begin(); 
                 iit!=itemList.end(); ++iit)
         {
             KFileMetaInfoItem item = d->m_info[*git][*iit];
@@ -175,23 +175,23 @@ void KFileMetaPropsPlugin::createLayout()
 
         KFileMetaInfoWidget* w = 0L;
         // then first add the editable items to the layout
-        for (QValueList<KFileMetaInfoItem>::Iterator iit= editItems.begin(); 
+        for (TQValueList<KFileMetaInfoItem>::Iterator iit= editItems.begin(); 
                 iit!=editItems.end(); ++iit)
         {
-            QLabel* l = new QLabel((*iit).translatedKey() + ":", groupBox);
+            TQLabel* l = new TQLabel((*iit).translatedKey() + ":", groupBox);
             l->setAlignment( AlignAuto | AlignTop | ExpandTabs );
-            QValidator* val = mtinfo->createValidator(*git, (*iit).key());
+            TQValidator* val = mtinfo->createValidator(*git, (*iit).key());
             if (!val) kdDebug(7033) << "didn't get a validator for " << *git << "/" << (*iit).key() << endl;
             w = new KFileMetaInfoWidget(*iit, val, groupBox);
             d->m_editWidgets.append( w );
-            connect(w, SIGNAL(valueChanged(const QVariant&)), this, SIGNAL(changed()));
+            connect(w, TQT_SIGNAL(valueChanged(const TQVariant&)), this, TQT_SIGNAL(changed()));
         }
 
         // and then the read only items
-        for (QValueList<KFileMetaInfoItem>::Iterator iit= readItems.begin(); 
+        for (TQValueList<KFileMetaInfoItem>::Iterator iit= readItems.begin(); 
                 iit!=readItems.end(); ++iit)
         {
-            QLabel* l = new QLabel((*iit).translatedKey() + ":", groupBox);
+            TQLabel* l = new TQLabel((*iit).translatedKey() + ":", groupBox);
             l->setAlignment( AlignAuto | AlignTop | ExpandTabs );
             (new KFileMetaInfoWidget(*iit, KFileMetaInfoWidget::ReadOnly, 0L, groupBox));
         }
@@ -200,10 +200,10 @@ void KFileMetaPropsPlugin::createLayout()
     toplayout->addStretch(1);
 
     // the add key (disabled until fully implemented)
-/*    d->m_add = new QPushButton(i18n("&Add"), topframe);
-    d->m_add->setSizePolicy(QSizePolicy(QSizePolicy::Fixed,
-                                        QSizePolicy::Fixed));
-    connect(d->m_add, SIGNAL(clicked()), this, SLOT(slotAdd()));
+/*    d->m_add = new TQPushButton(i18n("&Add"), topframe);
+    d->m_add->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed,
+                                        TQSizePolicy::Fixed));
+    connect(d->m_add, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotAdd()));
     tmp->addWidget(d->m_add);
 
     // if nothing can be added, deactivate it
@@ -212,9 +212,9 @@ void KFileMetaPropsPlugin::createLayout()
         // if supportedKeys() does contain anything not in preferredKeys,
         // we have something addable
 
-        QStringList sk = d->m_info.supportedKeys();
+        TQStringList sk = d->m_info.supportedKeys();
         d->m_add->setEnabled(false);
-        for (QStringList::Iterator it = sk.begin(); it!=sk.end(); ++it)
+        for (TQStringList::Iterator it = sk.begin(); it!=sk.end(); ++it)
         {
                 if ( l.find(*it)==l.end() )
                 {
@@ -259,7 +259,7 @@ void KFileMetaPropsPlugin::applyChanges()
   kdDebug(250) << "applying changes" << endl;
   // insert the fields that changed into the info object
 
-  QPtrListIterator<KFileMetaInfoWidget> it( d->m_editWidgets );
+  TQPtrListIterator<KFileMetaInfoWidget> it( d->m_editWidgets );
   KFileMetaInfoWidget* w;
   for (; (w = it.current()); ++it) w->apply();
   d->m_info.applyChanges(properties->kurl().path());

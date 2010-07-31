@@ -20,11 +20,11 @@ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
-#include <qdom.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqdom.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <string.h>
 #include <stdlib.h>
@@ -52,11 +52,11 @@ static int const primes[] =
 struct Function
 {
     Function(){}
-    Function( const QString& t, const QString& n, const QString&fn, bool h ) 
+    Function( const TQString& t, const TQString& n, const TQString&fn, bool h ) 
 	: type( t ), name( n ), fullName( fn ), hidden( h ) {}
-    QString type;
-    QString name;
-    QString fullName;
+    TQString type;
+    TQString name;
+    TQString fullName;
     bool hidden;
 };
 
@@ -64,13 +64,13 @@ struct Function
 /*
  * Writes the skeleton
  */
-void generateSkel( const QString& idl, const QString& filename, QDomElement de )
+void generateSkel( const TQString& idl, const TQString& filename, TQDomElement de )
 {
-    QFile skel( filename );
+    TQFile skel( filename );
     if ( !skel.open( IO_WriteOnly ) )
 	qFatal("Could not write to %s", filename.local8Bit().data() );
 
-    QTextStream str( &skel );
+    TQTextStream str( &skel );
 
     str << "/****************************************************************************" << endl;
     str << "**" << endl;
@@ -81,7 +81,7 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
     str << "*****************************************************************************/" << endl;
     str << endl;
 
-    QDomElement e = de.firstChild().toElement();
+    TQDomElement e = de.firstChild().toElement();
     if ( e.tagName() == "SOURCE" ) {
 	str << "#include \"" << e.firstChild().toText().data() << "\"" << endl << endl;
     }
@@ -89,35 +89,35 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
     for( ; !e.isNull(); e = e.nextSibling().toElement() ) {
 	if ( e.tagName() != "CLASS" )
 	    continue;
-	QDomElement n = e.firstChild().toElement();
+	TQDomElement n = e.firstChild().toElement();
 	Q_ASSERT( n.tagName() == "NAME" );
-	QString className = n.firstChild().toText().data();
+	TQString className = n.firstChild().toText().data();
 	// find dcop parent ( rightmost super class )
-	QString DCOPParent;
-	QDomElement s = n.nextSibling().toElement();
+	TQString DCOPParent;
+	TQDomElement s = n.nextSibling().toElement();
 	for( ; !s.isNull(); s = s.nextSibling().toElement() ) {
 	    if ( s.tagName() == "SUPER" )
 		DCOPParent = s.firstChild().toText().data();
 	}
     
 	// get function table
-	QValueList<Function> functions;
+	TQValueList<Function> functions;
 	s = n.nextSibling().toElement();
 	for( ; !s.isNull(); s = s.nextSibling().toElement() ) {
 	    if ( s.tagName() != "FUNC" )
 		continue;
-	    QDomElement r = s.firstChild().toElement();
+	    TQDomElement r = s.firstChild().toElement();
 	    Q_ASSERT( r.tagName() == "TYPE" );
-	    QString funcType = r.firstChild().toText().data();
+	    TQString funcType = r.firstChild().toText().data();
 	    r = r.nextSibling().toElement();
 	    Q_ASSERT ( r.tagName() == "NAME" );
-	    QString funcName = r.firstChild().toText().data();
-	    QStringList argtypes;
-	    QStringList argnames;
+	    TQString funcName = r.firstChild().toText().data();
+	    TQStringList argtypes;
+	    TQStringList argnames;
 	    r = r.nextSibling().toElement();
 	    for( ; !r.isNull(); r = r.nextSibling().toElement() ) {
 		Q_ASSERT( r.tagName() == "ARG" );
-		QDomElement a = r.firstChild().toElement();
+		TQDomElement a = r.firstChild().toElement();
 		Q_ASSERT( a.tagName() == "TYPE" );
 		argtypes.append( a.firstChild().toText().data() );
 		a = a.nextSibling().toElement();
@@ -125,14 +125,14 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
 		    Q_ASSERT( a.tagName() == "NAME" );
 		    argnames.append( a.firstChild().toText().data() );
 		} else {
-		    argnames.append( QString::null );
+		    argnames.append( TQString::null );
 		}
 	    }
 	    funcName += '(';
-	    QString fullFuncName = funcName;
+	    TQString fullFuncName = funcName;
 	    bool first = true;
-	    QStringList::Iterator ittype = argtypes.begin();
-	    QStringList::Iterator itname = argnames.begin();
+	    TQStringList::Iterator ittype = argtypes.begin();
+	    TQStringList::Iterator itname = argnames.begin();
 	    while ( ittype != argtypes.end() && itname != argnames.end() ) {
 		if ( !first ) {
 		    funcName += ',';
@@ -168,13 +168,13 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
 
 	bool useHashing = functions.count() > 7;
 	if ( useHashing ) {
-	    str << "#include <qasciidict.h>" << endl;
+	    str << "#include <tqasciidict.h>" << endl;
 	}
 
-	QString classNameFull = className; // class name with possible namespaces prepended
+	TQString classNameFull = className; // class name with possible namespaces prepended
 					   // namespaces will be removed from className now
 	int namespace_count = 0;
-	QString namespace_tmp = className;
+	TQString namespace_tmp = className;
 	str << endl;
 	for(;;) {
 	    int pos = namespace_tmp.find( "::" );
@@ -193,7 +193,7 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
 	    str << "static const int " << className << "_fhash = " << fhash << ";" << endl;
 	}
 	str << "static const char* const " << className << "_ftable[" << functions.count() + 1 << "][3] = {" << endl;
-	for( QValueList<Function>::Iterator it = functions.begin(); it != functions.end(); ++it ){
+	for( TQValueList<Function>::Iterator it = functions.begin(); it != functions.end(); ++it ){
 	    str << "    { \"" << (*it).type << "\", \"" << (*it).name << "\", \"" << (*it).fullName << "\" }," << endl;
 	}
 	str << "    { 0, 0, 0 }" << endl;
@@ -201,7 +201,7 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
 
 	if (functions.count() > 0) {
 	    str << "static const int " << className << "_ftable_hiddens[" << functions.count() << "] = {" << endl;
-	    for( QValueList<Function>::Iterator it = functions.begin(); it != functions.end(); ++it ){
+	    for( TQValueList<Function>::Iterator it = functions.begin(); it != functions.end(); ++it ){
 		str << "    " << !!(*it).hidden << "," << endl;
 	    }
 	    str << "};" << endl;
@@ -212,13 +212,13 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
     
 	// Write dispatcher
 	str << "bool " << className;
-	str << "::process(const QCString &fun, const QByteArray &data, QCString& replyType, QByteArray &replyData)" << endl;
+	str << "::process(const TQCString &fun, const TQByteArray &data, TQCString& replyType, TQByteArray &replyData)" << endl;
 	str << "{" << endl;
 	if ( useHashing ) {
-	    str << "    static QAsciiDict<int>* fdict = 0;" << endl;
+	    str << "    static TQAsciiDict<int>* fdict = 0;" << endl;
     
 	    str << "    if ( !fdict ) {" << endl;
-	    str << "\tfdict = new QAsciiDict<int>( " << className << "_fhash, true, false );" << endl;
+	    str << "\tfdict = new TQAsciiDict<int>( " << className << "_fhash, true, false );" << endl;
 	    str << "\tfor ( int i = 0; " << className << "_ftable[i][1]; i++ )" << endl;
 	    str << "\t    fdict->insert( " << className << "_ftable[i][1],  new int( i ) );" << endl;
 	    str << "    }" << endl;
@@ -232,28 +232,28 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
 	for( ; !s.isNull(); s = s.nextSibling().toElement() ) {
 	    if ( s.tagName() != "FUNC" )
 		continue;
-	    QDomElement r = s.firstChild().toElement();
+	    TQDomElement r = s.firstChild().toElement();
 	    Q_ASSERT( r.tagName() == "TYPE" );
-	    QString funcType = r.firstChild().toText().data();
+	    TQString funcType = r.firstChild().toText().data();
 	    if ( funcType == "ASYNC" )
 		funcType = "void";
 	    r = r.nextSibling().toElement();
 	    Q_ASSERT ( r.tagName() == "NAME" );
-	    QString funcName = r.firstChild().toText().data();
-	    QStringList args;
-	    QStringList argtypes;
+	    TQString funcName = r.firstChild().toText().data();
+	    TQStringList args;
+	    TQStringList argtypes;
 	    r = r.nextSibling().toElement();
 	    for( ; !r.isNull(); r = r.nextSibling().toElement() ) {
 		Q_ASSERT( r.tagName() == "ARG" );
-		QDomElement a = r.firstChild().toElement();
+		TQDomElement a = r.firstChild().toElement();
 		Q_ASSERT( a.tagName() == "TYPE" );
 		argtypes.append( a.firstChild().toText().data() );
-		args.append( QString("arg" ) + QString::number( args.count() ) );
+		args.append( TQString("arg" ) + TQString::number( args.count() ) );
 	    }
-	    QString plainFuncName = funcName;
+	    TQString plainFuncName = funcName;
 	    funcName += '(';
 	    bool first = true;
-	    for( QStringList::Iterator argtypes_count = argtypes.begin(); argtypes_count != argtypes.end(); ++argtypes_count ){
+	    for( TQStringList::Iterator argtypes_count = argtypes.begin(); argtypes_count != argtypes.end(); ++argtypes_count ){
 		if ( !first )
 		    funcName += ',';
 		first = false;
@@ -271,8 +271,8 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
 		firstFunc = false;
 	    }
 	    if ( !args.isEmpty() ) {
-		QStringList::Iterator ittypes = argtypes.begin();
-		QStringList::Iterator args_count;
+		TQStringList::Iterator ittypes = argtypes.begin();
+		TQStringList::Iterator args_count;
 		for( args_count = args.begin(); args_count != args.end(); ++args_count ){
 		    str << '\t'<< *ittypes << " " << *args_count << ";" <<  endl;
 		    ++ittypes;
@@ -293,7 +293,7 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
 	    }
 
 	    first = true;
-	    for ( QStringList::Iterator args_count = args.begin(); args_count != args.end(); ++args_count ){
+	    for ( TQStringList::Iterator args_count = args.begin(); args_count != args.end(); ++args_count ){
 		if ( !first )
 		    str << ", ";
 		first = false;
@@ -372,16 +372,16 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
 	for(s = e.firstChild().toElement(); !s.isNull(); s = s.nextSibling().toElement() ) {
 	    if (s.tagName() != "SIGNAL")
 		continue;
-	    QDomElement r = s.firstChild().toElement();
-	    QString result = writeType( str, r );
+	    TQDomElement r = s.firstChild().toElement();
+	    TQString result = writeType( str, r );
 
 	    r = r.nextSibling().toElement();
 	    Q_ASSERT ( r.tagName() == "NAME" );
-	    QString funcName = r.firstChild().toText().data();
+	    TQString funcName = r.firstChild().toText().data();
 	    str << className << "::" << funcName << "(";
 
-	    QStringList args;
-	    QStringList argtypes;
+	    TQStringList args;
+	    TQStringList argtypes;
 	    bool first = true;
 	    r = r.nextSibling().toElement();
 	    for( ; !r.isNull(); r = r.nextSibling().toElement() ) {
@@ -391,10 +391,10 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
 		    str << " ";
 		first = false;
 		Q_ASSERT( r.tagName() == "ARG" );
-		QDomElement a = r.firstChild().toElement();
-		QString type = writeType( str, a );
+		TQDomElement a = r.firstChild().toElement();
+		TQString type = writeType( str, a );
 		argtypes.append( type );
-		args.append( QString("arg" ) + QString::number( args.count() ) ) ;
+		args.append( TQString("arg" ) + TQString::number( args.count() ) ) ;
 		str << args.last();
 	    }
 	    if ( !first )
@@ -409,7 +409,7 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
 
 	    funcName += "(";
 	    first = true;
-	    for( QStringList::Iterator it = argtypes.begin(); it != argtypes.end(); ++it ){
+	    for( TQStringList::Iterator it = argtypes.begin(); it != argtypes.end(); ++it ){
 		if ( !first )
 		    funcName += ",";
 		first = false;
@@ -420,10 +420,10 @@ void generateSkel( const QString& idl, const QString& filename, QDomElement de )
 	    if ( result != "void" )
 	       qFatal("Error in DCOP signal %s::%s: DCOP signals can not return values.", className.latin1(), funcName.latin1());
 	
-	    str << "    QByteArray data;" << endl;
+	    str << "    TQByteArray data;" << endl;
 	    if ( !args.isEmpty() ) {
-		str << "    QDataStream arg( data, IO_WriteOnly );" << endl;
-		for( QStringList::Iterator args_count = args.begin(); args_count != args.end(); ++args_count ){
+		str << "    TQDataStream arg( data, IO_WriteOnly );" << endl;
+		for( TQStringList::Iterator args_count = args.begin(); args_count != args.end(); ++args_count ){
 		    str << "    arg << " << *args_count << ";" << endl;
 		}
 	    }

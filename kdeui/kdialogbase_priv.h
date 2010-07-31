@@ -33,7 +33,7 @@ class KDEUI_EXPORT KDialogBaseButton : public KPushButton
   Q_OBJECT
 
   public:
-    KDialogBaseButton( const KGuiItem &text, int key, QWidget *parent=0,
+    KDialogBaseButton( const KGuiItem &text, int key, TQWidget *parent=0,
                        const char *name=0 );
     inline int id();
 
@@ -50,11 +50,11 @@ class KDEUI_EXPORT KDialogBaseTile : public QObject
   Q_OBJECT
 
   public:
-    KDialogBaseTile( QObject *parent=0, const char *name=0 );
+    KDialogBaseTile( TQObject *parent=0, const char *name=0 );
     ~KDialogBaseTile();
 
-    void set( const QPixmap *pix );
-    const QPixmap *get() const;
+    void set( const TQPixmap *pix );
+    const TQPixmap *get() const;
   
   public slots:
     void cleanup();
@@ -63,7 +63,7 @@ class KDEUI_EXPORT KDialogBaseTile : public QObject
     void pixmapChanged();
 
   private:
-    QPixmap *mPixmap;
+    TQPixmap *mPixmap;
     class KDialogBaseTilePrivate;
     KDialogBaseTilePrivate *d;
 };

@@ -88,8 +88,8 @@ Value DOMParserProtoFunc::tryCall(ExecState *exec, Object &thisObj, const List &
 				return Undefined();
       }
 
-      QString str = args[0].toString(exec).qstring();
-      QString contentType = args[1].toString(exec).qstring().stripWhiteSpace();
+      TQString str = args[0].toString(exec).qstring();
+      TQString contentType = args[1].toString(exec).qstring().stripWhiteSpace();
 
       if (contentType == "text/xml" || contentType == "application/xml" || contentType == "application/xhtml+xml") {
         DocumentImpl *docImpl = parser->doc->implementation()->createDocument();

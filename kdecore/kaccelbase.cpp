@@ -22,9 +22,9 @@
 
 #include "kaccelbase.h"
 
-#include <qkeycode.h>
-#include <qlabel.h>
-#include <qpopupmenu.h>
+#include <tqkeycode.h>
+#include <tqlabel.h>
+#include <tqpopupmenu.h>
 
 #include <kconfig.h>
 #include "kckey.h"
@@ -69,10 +69,10 @@ bool KAccelBase::isEnabled() const { return m_bEnabled; }
 // to disable key grabbing even if enabled
 bool KAccelBase::isEnabledInternal() const { return isEnabled(); }
 
-KAccelAction* KAccelBase::actionPtr( const QString& sAction )
+KAccelAction* KAccelBase::actionPtr( const TQString& sAction )
 	{ return m_rgActions.actionPtr( sAction ); }
 
-const KAccelAction* KAccelBase::actionPtr( const QString& sAction ) const
+const KAccelAction* KAccelBase::actionPtr( const TQString& sAction ) const
 	{ return m_rgActions.actionPtr( sAction ); }
 
 KAccelAction* KAccelBase::actionPtr( const KKeyServer::Key& key )
@@ -90,13 +90,13 @@ KAccelAction* KAccelBase::actionPtr( const KKey& key )
 	return actionPtr( k2 );
 }
 
-void KAccelBase::setConfigGroup( const QString& sConfigGroup )
+void KAccelBase::setConfigGroup( const TQString& sConfigGroup )
 	{ m_sConfigGroup = sConfigGroup; }
 
 void KAccelBase::setConfigGlobal( bool global )
 	{ m_bConfigIsGlobal = global; }
 
-bool KAccelBase::setActionEnabled( const QString& sAction, bool bEnable )
+bool KAccelBase::setActionEnabled( const TQString& sAction, bool bEnable )
 {
 	KAccelAction* pAction = actionPtr( sAction );
 	if( pAction ) {
@@ -126,9 +126,9 @@ bool KAccelBase::setAutoUpdate( bool bAuto )
 	return b;
 }
 
-KAccelAction* KAccelBase::insert( const QString& sAction, const QString& sDesc, const QString& sHelp,
+KAccelAction* KAccelBase::insert( const TQString& sAction, const TQString& sDesc, const TQString& sHelp,
 			const KShortcut& rgCutDefaults3, const KShortcut& rgCutDefaults4,
-			const QObject* pObjSlot, const char* psMethodSlot,
+			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled )
 {
 	//kdDebug(125) << "KAccelBase::insert() begin" << endl;
@@ -145,10 +145,10 @@ KAccelAction* KAccelBase::insert( const QString& sAction, const QString& sDesc, 
 	return pAction;
 }
 
-KAccelAction* KAccelBase::insert( const QString& sName, const QString& sDesc )
+KAccelAction* KAccelBase::insert( const TQString& sName, const TQString& sDesc )
 	{ return m_rgActions.insert( sName, sDesc ); }
 
-bool KAccelBase::remove( const QString& sAction )
+bool KAccelBase::remove( const TQString& sAction )
 {
 	return m_rgActions.remove( sAction );
 }
@@ -158,7 +158,7 @@ void KAccelBase::slotRemoveAction( KAccelAction* pAction )
 	removeConnection( pAction );
 }
 
-bool KAccelBase::setActionSlot( const QString& sAction, const QObject* pObjSlot, const char* psMethodSlot )
+bool KAccelBase::setActionSlot( const TQString& sAction, const TQObject* pObjSlot, const char* psMethodSlot )
 {
 	kdDebug(125) << "KAccelBase::setActionSlot( " << sAction << ", " << pObjSlot << ", " << psMethodSlot << " )\n";
 	KAccelAction* pAction = m_rgActions.actionPtr( sAction );
@@ -318,7 +318,7 @@ bool KAccelBase::updateConnections()
 	kdDebug(125) << "KAccelBase::updateConnections()  this = " << this << endl;
 	// Retrieve the list of keys to be connected, sorted by priority.
 	//  (key, variation, seq)
-	QValueVector<X> rgKeys;
+	TQValueVector<X> rgKeys;
 	createKeyList( rgKeys );
 	m_rgActionsNonUnique.clear();
 
@@ -410,7 +410,7 @@ bool KAccelBase::updateConnections()
 #ifndef NDEBUG
 	for( KKeyToActionMap::iterator it = m_mapKeyToAction.begin(); it != m_mapKeyToAction.end(); ++it ) {
 		kdDebug(125) << "Key: " << it.key().key().toStringInternal() << " => '"
-			<< (((*it).pAction) ? (*it).pAction->name() : QString::null) << "'" << endl;
+			<< (((*it).pAction) ? (*it).pAction->name() : TQString::null) << "'" << endl;
 	}
 #endif
 #endif //Q_WS_X11
@@ -419,7 +419,7 @@ bool KAccelBase::updateConnections()
 
 #ifdef Q_WS_X11
 // Construct a list of keys to be connected, sorted highest priority first.
-void KAccelBase::createKeyList( QValueVector<struct X>& rgKeys )
+void KAccelBase::createKeyList( TQValueVector<struct X>& rgKeys )
 {
 	//kdDebug(125) << "KAccelBase::createKeyList()" << endl;
 	if( !isEnabledInternal())
@@ -548,7 +548,7 @@ bool KAccelBase::removeConnection( KAccelAction* pAction )
 	return true;
 }
 
-bool KAccelBase::setShortcut( const QString& sAction, const KShortcut& cut )
+bool KAccelBase::setShortcut( const TQString& sAction, const KShortcut& cut )
 {
 	KAccelAction* pAction = actionPtr( sAction );
 	if( pAction ) {
@@ -576,7 +576,7 @@ void KAccelBase::writeSettings( KConfigBase* pConfig ) const
 	m_rgActions.writeActions( m_sConfigGroup, pConfig, m_bConfigIsGlobal, m_bConfigIsGlobal );
 }
 
-QPopupMenu* KAccelBase::createPopupMenu( QWidget* pParent, const KKeySequence& seq )
+TQPopupMenu* KAccelBase::createPopupMenu( TQWidget* pParent, const KKeySequence& seq )
 {
 	KShortcutMenu* pMenu = new KShortcutMenu( pParent, &actions(), seq );
 
@@ -604,8 +604,8 @@ QPopupMenu* KAccelBase::createPopupMenu( QWidget* pParent, const KKeySequence& s
 
 				pMenu->insertAction( i, seqAction );
 
-				//kdDebug(125) << "sLabel = " << sLabel << ", seq = " << (QString)seqMenu.qt() << ", i = " << i << endl;
-				//kdDebug(125) << "pMenu->accel(" << i << ") = " << (QString)pMenu->accel(i) << endl;
+				//kdDebug(125) << "sLabel = " << sLabel << ", seq = " << (TQString)seqMenu.qt() << ", i = " << i << endl;
+				//kdDebug(125) << "pMenu->accel(" << i << ") = " << (TQString)pMenu->accel(i) << endl;
 				bActionInserted = true;
 				break;
 			}

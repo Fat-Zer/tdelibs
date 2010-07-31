@@ -20,10 +20,10 @@ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
-#include <qdom.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qstring.h>
+#include <tqdom.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqstring.h>
 
 #include <string.h>
 #include <stdlib.h>
@@ -53,7 +53,7 @@ int main( int argc, char** argv )
     bool generate_skel    = true;
     bool generate_stub    = true;
 
-    QString suffix = "cpp";
+    TQString suffix = "cpp";
 
     while (argc > 2) {
 
@@ -91,18 +91,18 @@ int main( int argc, char** argv )
 	}
     }
 
-    QFile in( QFile::decodeName(argv[argpos]) );
+    TQFile in( TQFile::decodeName(argv[argpos]) );
     if ( !in.open( IO_ReadOnly ) )
 	qFatal("Could not read %s", argv[argpos] );
 
-    QDomDocument doc;
+    TQDomDocument doc;
     doc.setContent( &in );
 
-    QDomElement de = doc.documentElement();
+    TQDomElement de = doc.documentElement();
     Q_ASSERT( de.tagName() == "DCOP-IDL" );
 
-    QString base( argv[argpos] );
-    QString idl = base;
+    TQString base( argv[argpos] );
+    TQString idl = base;
 
     int pos = base.findRev( '.' );
     if ( pos != -1 )
@@ -116,7 +116,7 @@ int main( int argc, char** argv )
 	generateSkel( idl, base + "_skel." + suffix, de );
 
     if ( generate_stub ) {
-	QString header = base;
+	TQString header = base;
 	generateStub( idl, header + "_stub.h", de );
 	pos = header.findRev('/');
 	if ( pos != -1 )

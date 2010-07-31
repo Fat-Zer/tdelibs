@@ -21,8 +21,8 @@
 #ifndef KABC_VCARDFORMATIMPL_H
 #define KABC_VCARDFORMATIMPL_H
 
-#include <qstring.h>
-#include <qfile.h>
+#include <tqstring.h>
+#include <tqfile.h>
 
 #include "address.h"
 #include "addressee.h"
@@ -43,26 +43,26 @@ class AddressBook;
 class KABC_EXPORT_DEPRECATED VCardFormatImpl
 {
   public:
-    bool load( Addressee &, QFile *file );
-    bool loadAll( AddressBook *, Resource *, QFile *file );
-    void save( const Addressee &, QFile *file );
-    void saveAll( AddressBook *, Resource *, QFile *file );
+    bool load( Addressee &, TQFile *file );
+    bool loadAll( AddressBook *, Resource *, TQFile *file );
+    void save( const Addressee &, TQFile *file );
+    void saveAll( AddressBook *, Resource *, TQFile *file );
 
-    bool readFromString( const QString &vcard, Addressee &addr );
-    bool writeToString( const Addressee &addressee, QString &vcard );
+    bool readFromString( const TQString &vcard, Addressee &addr );
+    bool writeToString( const Addressee &addressee, TQString &vcard );
 
   protected:
     bool loadAddressee( Addressee &, VCARD::VCard & );
     void saveAddressee( const Addressee &, VCARD::VCard *, bool intern );
 
-    void addTextValue (VCARD::VCard *, VCARD::EntityType, const QString & );
-    QString readTextValue( VCARD::ContentLine * );
+    void addTextValue (VCARD::VCard *, VCARD::EntityType, const TQString & );
+    TQString readTextValue( VCARD::ContentLine * );
 
-    void addDateValue( VCARD::VCard *, VCARD::EntityType, const QDate & );
-    QDate readDateValue( VCARD::ContentLine * );
+    void addDateValue( VCARD::VCard *, VCARD::EntityType, const TQDate & );
+    TQDate readDateValue( VCARD::ContentLine * );
 
-    void addDateTimeValue( VCARD::VCard *, VCARD::EntityType, const QDateTime & );
-    QDateTime readDateTimeValue( VCARD::ContentLine * );
+    void addDateTimeValue( VCARD::VCard *, VCARD::EntityType, const TQDateTime & );
+    TQDateTime readDateTimeValue( VCARD::ContentLine * );
 
     void addAddressValue( VCARD::VCard *, const Address & );
     Address readAddressValue( VCARD::ContentLine * );
@@ -75,7 +75,7 @@ class KABC_EXPORT_DEPRECATED VCardFormatImpl
     void addNValue( VCARD::VCard *, const Addressee & );
     void readNValue( VCARD::ContentLine *, Addressee & );
 
-    void addCustomValue( VCARD::VCard *, const QString & );
+    void addCustomValue( VCARD::VCard *, const TQString & );
 
     void addAddressParam( VCARD::ContentLine *, int );
     int readAddressParam( VCARD::ContentLine * );

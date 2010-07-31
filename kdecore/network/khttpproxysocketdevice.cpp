@@ -27,8 +27,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-#include <qsocketnotifier.h>
-#include <qcstring.h>
+#include <tqsocketnotifier.h>
+#include <tqcstring.h>
 
 #include "kresolver.h"
 #include "ksocketaddress.h"
@@ -43,8 +43,8 @@ class KNetwork::KHttpProxySocketDevicePrivate
 {
 public:
   KResolverEntry proxy;
-  QCString request;
-  QCString reply;
+  TQCString request;
+  TQCString reply;
   KSocketAddress peer;
 
   KHttpProxySocketDevicePrivate()
@@ -89,7 +89,7 @@ void KHttpProxySocketDevice::setProxyServer(const KResolverEntry& proxy)
 
 void KHttpProxySocketDevice::close()
 {
-  d->reply = d->request = QCString();
+  d->reply = d->request = TQCString();
   d->peer = KSocketAddress();
   KSocketDevice::close();
 }
@@ -128,7 +128,7 @@ bool KHttpProxySocketDevice::connect(const KResolverEntry& address)
   return parseServerReply();
 }
 
-bool KHttpProxySocketDevice::connect(const QString& node, const QString& service)
+bool KHttpProxySocketDevice::connect(const TQString& node, const TQString& service)
 {
   // same safety checks as above
   if (m_sockfd == -1 && (d->proxy.family() == AF_UNSPEC ||
@@ -153,11 +153,11 @@ bool KHttpProxySocketDevice::connect(const QString& node, const QString& service
       setState(0);		// unset open flag
 
       // prepare the request
-      QString request = QString::fromLatin1("CONNECT %1:%2 HTTP/1.1\r\n"
+      TQString request = TQString::fromLatin1("CONNECT %1:%2 HTTP/1.1\r\n"
 					    "Cache-Control: no-cache\r\n"
 					    "Host: \r\n"
 					    "\r\n");
-      QString node2 = node;
+      TQString node2 = node;
       if (node.contains(':'))
 	node2 = '[' + node + ']';
 
@@ -216,11 +216,11 @@ bool KHttpProxySocketDevice::parseServerReply()
       else if (avail < 0)
 	return false;		// error!
 
-      QByteArray buf(avail);
+      TQByteArray buf(avail);
       if (peekBlock(buf.data(), avail) < 0)
 	return false;		// error!
 
-      QCString fullHeaders = d->reply + buf.data();
+      TQCString fullHeaders = d->reply + buf.data();
       // search for the end of the headers
       index = fullHeaders.find("\r\n\r\n");
       if (index == -1)

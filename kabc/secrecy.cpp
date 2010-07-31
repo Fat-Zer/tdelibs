@@ -64,7 +64,7 @@ Secrecy::TypeList Secrecy::typeList()
   return list;
 }
 
-QString Secrecy::typeLabel( int type )
+TQString Secrecy::typeLabel( int type )
 {
   switch ( type ) {
     case Public:
@@ -82,17 +82,17 @@ QString Secrecy::typeLabel( int type )
   }
 }
 
-QString Secrecy::asString() const
+TQString Secrecy::asString() const
 {
   return typeLabel( mType );
 }
 
-QDataStream &KABC::operator<<( QDataStream &s, const Secrecy &secrecy )
+TQDataStream &KABC::operator<<( TQDataStream &s, const Secrecy &secrecy )
 {
     return s << secrecy.mType;
 }
 
-QDataStream &KABC::operator>>( QDataStream &s, Secrecy &secrecy )
+TQDataStream &KABC::operator>>( TQDataStream &s, Secrecy &secrecy )
 {
     s >> secrecy.mType;
 

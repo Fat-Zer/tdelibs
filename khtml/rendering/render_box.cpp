@@ -28,7 +28,7 @@
 //#define CLIP_DEBUG
 
 
-#include <qpainter.h>
+#include <tqpainter.h>
 
 #include "misc/loader.h"
 #include "rendering/render_replaced.h"
@@ -330,7 +330,7 @@ void RenderBox::paintRootBoxDecorations(PaintInfo& paintInfo, int _tx, int _ty)
 {
     //kdDebug( 6040 ) << renderName() << "::paintRootBoxDecorations()" << _tx << "/" << _ty << endl;
     const BackgroundLayer* bgLayer = style()->backgroundLayers();
-    QColor bgColor = style()->backgroundColor();
+    TQColor bgColor = style()->backgroundColor();
     if (document()->isHTMLDocument() && !style()->hasBackground()) {
         // Locate the <body> element using the DOM.  This is easier than trying
         // to crawl around a render tree with potential :before/:after content and
@@ -346,7 +346,7 @@ void RenderBox::paintRootBoxDecorations(PaintInfo& paintInfo, int _tx, int _ty)
     }
 
     if( !bgColor.isValid() && canvas()->view())
-        bgColor = canvas()->view()->palette().active().color(QColorGroup::Base);
+        bgColor = canvas()->view()->palette().active().color(TQColorGroup::Base);
 
     int w = width();
     int h = height();
@@ -408,14 +408,14 @@ void RenderBox::paintBoxDecorations(PaintInfo& paintInfo, int _tx, int _ty)
     }
 }
 
-void RenderBox::paintBackgrounds(QPainter *p, const QColor& c, const BackgroundLayer* bgLayer, int clipy, int cliph, int _tx, int _ty, int w, int height)
+void RenderBox::paintBackgrounds(TQPainter *p, const TQColor& c, const BackgroundLayer* bgLayer, int clipy, int cliph, int _tx, int _ty, int w, int height)
  {
     if (!bgLayer) return;
     paintBackgrounds(p, c, bgLayer->next(), clipy, cliph, _tx, _ty, w, height);
     paintBackground(p, c, bgLayer, clipy, cliph, _tx, _ty, w, height);
 }
 
-void RenderBox::paintBackground(QPainter *p, const QColor& c, const BackgroundLayer* bgLayer, int clipy, int cliph, int _tx, int _ty, int w, int height)
+void RenderBox::paintBackground(TQPainter *p, const TQColor& c, const BackgroundLayer* bgLayer, int clipy, int cliph, int _tx, int _ty, int w, int height)
 {
     paintBackgroundExtended(p, c, bgLayer, clipy, cliph, _tx, _ty, w, height,
                             borderLeft(), borderRight(), paddingLeft(), paddingRight());
@@ -467,7 +467,7 @@ static void calculateBackgroundSize(const BackgroundLayer* bgLayer, int& scaledW
     }
 }
 
-void RenderBox::paintBackgroundExtended(QPainter *p, const QColor &c, const BackgroundLayer* bgLayer, int clipy, int cliph,
+void RenderBox::paintBackgroundExtended(TQPainter *p, const TQColor &c, const BackgroundLayer* bgLayer, int clipy, int cliph,
                                         int _tx, int _ty, int w, int h,
                                         int bleft, int bright, int pleft, int pright)
 {
@@ -482,12 +482,12 @@ void RenderBox::paintBackgroundExtended(QPainter *p, const QColor &c, const Back
         int width = w - bleft - bright - (includePadding ? pleft + pright : 0);
         int height = h - borderTop() - borderBottom() - (includePadding ? paddingTop() + paddingBottom() : 0);
         p->save();
-        p->setClipRect(QRect(x, y, width, height), QPainter::CoordPainter);
+        p->setClipRect(TQRect(x, y, width, height), TQPainter::CoordPainter);
     }
 
     CachedImage* bg = bgLayer->backgroundImage();
     bool shouldPaintBackgroundImage = bg && bg->pixmap_size() == bg->valid_rect().size() && !bg->isTransparent() && !bg->isErrorImage();
-    QColor bgColor = c;
+    TQColor bgColor = c;
 
     // Paint the color first underneath all images.
     if (!bgLayer->next() && bgColor.isValid() && qAlpha(bgColor.rgb()) > 0)
@@ -583,7 +583,7 @@ void RenderBox::paintBackgroundExtended(QPainter *p, const QColor &c, const Back
         else
         {
             //fixed
-            QRect vr = viewRect();
+            TQRect vr = viewRect();
             int pw = vr.width();
             int ph = vr.height();
             scaledImageWidth = pw;
@@ -613,9 +613,9 @@ void RenderBox::paintBackgroundExtended(QPainter *p, const QColor &c, const Back
                     sy = scaledImageHeight - yPosition % scaledImageHeight;
             }
 
-            QRect fix(cx, cy, cw, ch);
-            QRect ele(_tx, _ty, w, h);
-            QRect b = fix.intersect(ele);
+            TQRect fix(cx, cy, cw, ch);
+            TQRect ele(_tx, _ty, w, h);
+            TQRect b = fix.intersect(ele);
 
             //kdDebug() <<" ele is " << ele << " b is " << b << " fix is " << fix << endl;
             sx+=b.x()-cx;
@@ -642,14 +642,14 @@ void RenderBox::paintBackgroundExtended(QPainter *p, const QColor &c, const Back
 
 }
 
-void RenderBox::outlineBox(QPainter *p, int _tx, int _ty, const char *color)
+void RenderBox::outlineBox(TQPainter *p, int _tx, int _ty, const char *color)
 {
-    p->setPen(QPen(QColor(color), 1, Qt::DotLine));
+    p->setPen(TQPen(TQColor(color), 1, Qt::DotLine));
     p->setBrush( Qt::NoBrush );
     p->drawRect(_tx, _ty, m_width, m_height);
 }
 
-QRect RenderBox::getOverflowClipRect(int tx, int ty)
+TQRect RenderBox::getOverflowClipRect(int tx, int ty)
 {
     // XXX When overflow-clip (CSS3) is implemented, we'll obtain the property
     // here.
@@ -665,10 +665,10 @@ QRect RenderBox::getOverflowClipRect(int tx, int ty)
         cliph -= m_layer->horizontalScrollbarHeight();
     }
 
-    return QRect(clipx,clipy,clipw,cliph);
+    return TQRect(clipx,clipy,clipw,cliph);
 }
 
-QRect RenderBox::getClipRect(int tx, int ty)
+TQRect RenderBox::getClipRect(int tx, int ty)
 {
     int bl=borderLeft(),bt=borderTop(),bb=borderBottom(),br=borderRight();
     // ### what about paddings?
@@ -711,7 +711,7 @@ QRect RenderBox::getClipRect(int tx, int ty)
 
     //kdDebug( 6040 ) << "setting clip("<<clipx<<","<<clipy<<","<<clipw<<","<<cliph<<")"<<endl;
 
-    return QRect(clipx,clipy,clipw,cliph);
+    return TQRect(clipx,clipy,clipw,cliph);
 }
 
 void RenderBox::close()
@@ -2260,7 +2260,7 @@ void RenderBox::caretPos(int /*offset*/, int flags, int &_x, int &_y, int &width
 			? element()->parent()->renderer()->style()
 			: cb->style();
 
-        const QFontMetrics &fm = s->fontMetrics();
+        const TQFontMetrics &fm = s->fontMetrics();
         height = fm.height();
 
 	bool rtl = s->direction() == RTL;
@@ -2284,7 +2284,7 @@ void RenderBox::caretPos(int /*offset*/, int flags, int &_x, int &_y, int &width
 
     // Place caret inside the element
     } else {
-        const QFontMetrics &fm = style()->fontMetrics();
+        const TQFontMetrics &fm = style()->fontMetrics();
         height = fm.height();
 
         RenderStyle *s = style();

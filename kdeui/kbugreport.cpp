@@ -17,14 +17,14 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qhbuttongroup.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qmultilineedit.h>
-#include <qradiobutton.h>
-#include <qwhatsthis.h>
-#include <qregexp.h>
+#include <tqhbuttongroup.h>
+#include <tqpushbutton.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqmultilineedit.h>
+#include <tqradiobutton.h>
+#include <tqwhatsthis.h>
+#include <tqregexp.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -51,21 +51,21 @@
 #include <kcombobox.h>
 #include <config.h>
 #include <ktempfile.h>
-#include <qtextstream.h>
-#include <qfile.h>
+#include <tqtextstream.h>
+#include <tqfile.h>
 
 class KBugReportPrivate {
 public:
     KComboBox *appcombo;
-    QString lastError;
-    QString kde_version;
-    QString appname;
-    QString os;
-    QPushButton *submitBugButton;
+    TQString lastError;
+    TQString kde_version;
+    TQString appname;
+    TQString os;
+    TQPushButton *submitBugButton;
     KURL url;
 };
 
-KBugReport::KBugReport( QWidget * parentw, bool modal, const KAboutData *aboutData )
+KBugReport::KBugReport( TQWidget * parentw, bool modal, const KAboutData *aboutData )
   : KDialogBase( Plain,
                  i18n("Submit Bug Report"),
                  Ok | Cancel,
@@ -85,21 +85,21 @@ KBugReport::KBugReport( QWidget * parentw, bool modal, const KAboutData *aboutDa
     : ( KGlobal::_activeInstance ? KGlobal::_activeInstance->aboutData()
                                  : KGlobal::instance()->aboutData() );
   m_process = 0;
-  QWidget * parent = plainPage();
+  TQWidget * parent = plainPage();
   d->submitBugButton = 0;
 
-  //if ( m_aboutData->bugAddress() == QString::fromLatin1("submit@bugs.pearsoncomputing.net") )
+  //if ( m_aboutData->bugAddress() == TQString::fromLatin1("submit@bugs.pearsoncomputing.net") )
   //{
   //  // This is a core KDE application -> redirect to the web form
     // Always redirect to the Web form for Trinity
-    d->submitBugButton = new QPushButton( parent );
+    d->submitBugButton = new TQPushButton( parent );
     setButtonCancel( KStdGuiItem::close() );
   //}
 
-  QLabel * tmpLabel;
-  QVBoxLayout * lay = new QVBoxLayout( parent, 0, spacingHint() );
+  TQLabel * tmpLabel;
+  TQVBoxLayout * lay = new TQVBoxLayout( parent, 0, spacingHint() );
 
-  QGridLayout *glay = new QGridLayout( lay, 4, 3 );
+  TQGridLayout *glay = new TQGridLayout( lay, 4, 3 );
   glay->setColStretch( 1, 10 );
   glay->setColStretch( 2, 10 );
 
@@ -108,30 +108,30 @@ KBugReport::KBugReport( QWidget * parentw, bool modal, const KAboutData *aboutDa
   if ( !d->submitBugButton )
   {
     // From
-    QString qwtstr = i18n( "Your email address. If incorrect, use the Configure Email button to change it" );
-    tmpLabel = new QLabel( i18n("From:"), parent );
+    TQString qwtstr = i18n( "Your email address. If incorrect, use the Configure Email button to change it" );
+    tmpLabel = new TQLabel( i18n("From:"), parent );
     glay->addWidget( tmpLabel, row,0 );
-    QWhatsThis::add( tmpLabel, qwtstr );
-    m_from = new QLabel( parent );
+    TQWhatsThis::add( tmpLabel, qwtstr );
+    m_from = new TQLabel( parent );
     glay->addWidget( m_from, row, 1 );
-    QWhatsThis::add( m_from, qwtstr );
+    TQWhatsThis::add( m_from, qwtstr );
 
 
     // Configure email button
-    m_configureEmail = new QPushButton( i18n("Configure Email..."),
+    m_configureEmail = new TQPushButton( i18n("Configure Email..."),
                                         parent );
-    connect( m_configureEmail, SIGNAL( clicked() ), this,
-             SLOT( slotConfigureEmail() ) );
+    connect( m_configureEmail, TQT_SIGNAL( clicked() ), this,
+             TQT_SLOT( slotConfigureEmail() ) );
     glay->addMultiCellWidget( m_configureEmail, 0, 2, 2, 2, AlignTop|AlignRight );
 
     // To
     qwtstr = i18n( "The email address this bug report is sent to." );
-    tmpLabel = new QLabel( i18n("To:"), parent );
+    tmpLabel = new TQLabel( i18n("To:"), parent );
     glay->addWidget( tmpLabel, ++row,0 );
-    QWhatsThis::add( tmpLabel, qwtstr );
-    tmpLabel = new QLabel( m_aboutData->bugAddress(), parent );
+    TQWhatsThis::add( tmpLabel, qwtstr );
+    tmpLabel = new TQLabel( m_aboutData->bugAddress(), parent );
     glay->addWidget( tmpLabel, row, 1 );
-    QWhatsThis::add( tmpLabel, qwtstr );
+    TQWhatsThis::add( tmpLabel, qwtstr );
 
     setButtonOK( KGuiItem( i18n("&Send"), "mail_send", i18n( "Send bug report." ),
                     i18n( "Send this bug report to %1." ).arg( m_aboutData->bugAddress() ) ) );
@@ -145,15 +145,15 @@ KBugReport::KBugReport( QWidget * parentw, bool modal, const KAboutData *aboutDa
   }
 
   // Program name
-  QString qwtstr = i18n( "The application for which you wish to submit a bug report - if incorrect, please use the Report Bug menu item of the correct application" );
-  tmpLabel = new QLabel( i18n("Application: "), parent );
+  TQString qwtstr = i18n( "The application for which you wish to submit a bug report - if incorrect, please use the Report Bug menu item of the correct application" );
+  tmpLabel = new TQLabel( i18n("Application: "), parent );
   glay->addWidget( tmpLabel, ++row, 0 );
-  QWhatsThis::add( tmpLabel, qwtstr );
+  TQWhatsThis::add( tmpLabel, qwtstr );
   d->appcombo = new KComboBox( false, parent, "app");
-  QWhatsThis::add( d->appcombo, qwtstr );
+  TQWhatsThis::add( d->appcombo, qwtstr );
   d->appcombo->insertStrList((const char**)packages);
-  connect(d->appcombo, SIGNAL(activated(int)), SLOT(appChanged(int)));
-  d->appname = QString::fromLatin1( m_aboutData
+  connect(d->appcombo, TQT_SIGNAL(activated(int)), TQT_SLOT(appChanged(int)));
+  d->appname = TQString::fromLatin1( m_aboutData
                                     ? m_aboutData->productName()
                                     : qApp->name() );
   glay->addWidget( d->appcombo, row, 1 );
@@ -168,81 +168,81 @@ KBugReport::KBugReport( QWidget * parentw, bool modal, const KAboutData *aboutDa
   }
   d->appcombo->setCurrentItem(index);
 
-  QWhatsThis::add( tmpLabel, qwtstr );
+  TQWhatsThis::add( tmpLabel, qwtstr );
 
   // Version
   qwtstr = i18n( "The version of this application - please make sure that no newer version is available before sending a bug report" );
-  tmpLabel = new QLabel( i18n("Version:"), parent );
+  tmpLabel = new TQLabel( i18n("Version:"), parent );
   glay->addWidget( tmpLabel, ++row, 0 );
-  QWhatsThis::add( tmpLabel, qwtstr );
+  TQWhatsThis::add( tmpLabel, qwtstr );
   if (m_aboutData)
       m_strVersion = m_aboutData->version();
   else
       m_strVersion = i18n("no version set (programmer error!)");
-  d->kde_version = QString::fromLatin1( KDE_VERSION_STRING );
-  d->kde_version += ", " + QString::fromLatin1( KDE_DISTRIBUTION_TEXT );
+  d->kde_version = TQString::fromLatin1( KDE_VERSION_STRING );
+  d->kde_version += ", " + TQString::fromLatin1( KDE_DISTRIBUTION_TEXT );
   if ( !d->submitBugButton )
       m_strVersion += " " + d->kde_version;
-  m_version = new QLabel( m_strVersion, parent );
+  m_version = new TQLabel( m_strVersion, parent );
   //glay->addWidget( m_version, row, 1 );
   glay->addMultiCellWidget( m_version, row, row, 1, 2 );
-  QWhatsThis::add( m_version, qwtstr );
+  TQWhatsThis::add( m_version, qwtstr );
 
-  tmpLabel = new QLabel(i18n("OS:"), parent);
+  tmpLabel = new TQLabel(i18n("OS:"), parent);
   glay->addWidget( tmpLabel, ++row, 0 );
 
   struct utsname unameBuf;
   uname( &unameBuf );
-  d->os = QString::fromLatin1( unameBuf.sysname ) +
-          " (" + QString::fromLatin1( unameBuf.machine ) + ") "
-          "release " + QString::fromLatin1( unameBuf.release );
+  d->os = TQString::fromLatin1( unameBuf.sysname ) +
+          " (" + TQString::fromLatin1( unameBuf.machine ) + ") "
+          "release " + TQString::fromLatin1( unameBuf.release );
 
-  tmpLabel = new QLabel(d->os, parent);
+  tmpLabel = new TQLabel(d->os, parent);
   glay->addMultiCellWidget( tmpLabel, row, row, 1, 2 );
 
-  tmpLabel = new QLabel(i18n("Compiler:"), parent);
+  tmpLabel = new TQLabel(i18n("Compiler:"), parent);
   glay->addWidget( tmpLabel, ++row, 0 );
-  tmpLabel = new QLabel(QString::fromLatin1(KDE_COMPILER_VERSION), parent);
+  tmpLabel = new TQLabel(TQString::fromLatin1(KDE_COMPILER_VERSION), parent);
   glay->addMultiCellWidget( tmpLabel, row, row, 1, 2 );
 
   if ( !d->submitBugButton )
   {
     // Severity
-    m_bgSeverity = new QHButtonGroup( i18n("Se&verity"), parent );
+    m_bgSeverity = new TQHButtonGroup( i18n("Se&verity"), parent );
     static const char * const sevNames[5] = { "critical", "grave", "normal", "wishlist", "i18n" };
-    const QString sevTexts[5] = { i18n("Critical"), i18n("Grave"), i18n("normal severity","Normal"), i18n("Wishlist"), i18n("Translation") };
+    const TQString sevTexts[5] = { i18n("Critical"), i18n("Grave"), i18n("normal severity","Normal"), i18n("Wishlist"), i18n("Translation") };
 
     for (int i = 0 ; i < 5 ; i++ )
     {
       // Store the severity string as the name
-      QRadioButton *rb = new QRadioButton( sevTexts[i], m_bgSeverity, sevNames[i] );
+      TQRadioButton *rb = new TQRadioButton( sevTexts[i], m_bgSeverity, sevNames[i] );
       if (i==2) rb->setChecked(true); // default : "normal"
     }
 
     lay->addWidget( m_bgSeverity );
 
     // Subject
-    QHBoxLayout * hlay = new QHBoxLayout( lay );
-    tmpLabel = new QLabel( i18n("S&ubject: "), parent );
+    TQHBoxLayout * hlay = new TQHBoxLayout( lay );
+    tmpLabel = new TQLabel( i18n("S&ubject: "), parent );
     hlay->addWidget( tmpLabel );
     m_subject = new KLineEdit( parent );
     m_subject->setFocus();
     tmpLabel->setBuddy(m_subject);
     hlay->addWidget( m_subject );
 
-    QString text = i18n("Enter the text (in English if possible) that you wish to submit for the "
+    TQString text = i18n("Enter the text (in English if possible) that you wish to submit for the "
                         "bug report.\n"
                         "If you press \"Send\", a mail message will be sent to the maintainer of "
                         "this program.\n");
-    QLabel * label = new QLabel( parent, "label" );
+    TQLabel * label = new TQLabel( parent, "label" );
 
     label->setText( text );
     lay->addWidget( label );
 
     // The multiline-edit
-    m_lineedit = new QMultiLineEdit( parent, "QMultiLineEdit" );
+    m_lineedit = new TQMultiLineEdit( parent, "TQMultiLineEdit" );
     m_lineedit->setMinimumHeight( 180 ); // make it big
-    m_lineedit->setWordWrap(QMultiLineEdit::WidgetWidth);
+    m_lineedit->setWordWrap(TQMultiLineEdit::WidgetWidth);
     lay->addWidget( m_lineedit, 10 /*stretch*/ );
 
     slotSetFrom();
@@ -250,21 +250,21 @@ KBugReport::KBugReport( QWidget * parentw, bool modal, const KAboutData *aboutDa
     // Point to the web form
 
     lay->addSpacing(10);
-    QString text = i18n("To submit a bug report, click on the button below.\n"
+    TQString text = i18n("To submit a bug report, click on the button below.\n"
                         "This will open a web browser window on http://bugs.pearsoncomputing.net where you will find a form to fill in.\n"
                         "The information displayed above will be transferred to that server.");
-    QLabel * label = new QLabel( text, parent, "label");
+    TQLabel * label = new TQLabel( text, parent, "label");
     lay->addWidget( label );
     lay->addSpacing(10);
 
     updateURL();
     d->submitBugButton->setText( i18n("&Launch Bug Report Wizard") );
-    d->submitBugButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    d->submitBugButton->setSizePolicy(TQSizePolicy::Fixed,TQSizePolicy::Fixed);
     lay->addWidget( d->submitBugButton );
     lay->addSpacing(10);
 
-    connect( d->submitBugButton, SIGNAL(clicked()),
-             this, SLOT(slotOk()));
+    connect( d->submitBugButton, TQT_SIGNAL(clicked()),
+             this, TQT_SLOT(slotOk()));
   }
 }
 
@@ -288,7 +288,7 @@ void KBugReport::updateURL()
 
 void KBugReport::appChanged(int i)
 {
-    QString appName = d->appcombo->text(i);
+    TQString appName = d->appcombo->text(i);
     int index = appName.find( '/' );
     if ( index > 0 )
         appName = appName.left( index );
@@ -311,8 +311,8 @@ void KBugReport::slotConfigureEmail()
 {
   if (m_process) return;
   m_process = new KProcess;
-  *m_process << QString::fromLatin1("kcmshell") << QString::fromLatin1("kcm_useraccount");
-  connect(m_process, SIGNAL(processExited(KProcess *)), SLOT(slotSetFrom()));
+  *m_process << TQString::fromLatin1("kcmshell") << TQString::fromLatin1("kcm_useraccount");
+  connect(m_process, TQT_SIGNAL(processExited(KProcess *)), TQT_SLOT(slotSetFrom()));
   if (!m_process->start())
   {
     kdDebug() << "Couldn't start kcmshell.." << endl;
@@ -330,29 +330,29 @@ void KBugReport::slotSetFrom()
   m_configureEmail->setEnabled(true);
 
   // ### KDE4: why oh why is KEmailSettings in kio?
-  KConfig emailConf( QString::fromLatin1("emaildefaults") );
+  KConfig emailConf( TQString::fromLatin1("emaildefaults") );
 
   // find out the default profile
-  emailConf.setGroup( QString::fromLatin1("Defaults") );
-  QString profile = QString::fromLatin1("PROFILE_");
-  profile += emailConf.readEntry( QString::fromLatin1("Profile"),
-                                  QString::fromLatin1("Default") );
+  emailConf.setGroup( TQString::fromLatin1("Defaults") );
+  TQString profile = TQString::fromLatin1("PROFILE_");
+  profile += emailConf.readEntry( TQString::fromLatin1("Profile"),
+                                  TQString::fromLatin1("Default") );
 
   emailConf.setGroup( profile );
-  QString fromaddr = emailConf.readEntry( QString::fromLatin1("EmailAddress") );
+  TQString fromaddr = emailConf.readEntry( TQString::fromLatin1("EmailAddress") );
   if (fromaddr.isEmpty()) {
      struct passwd *p;
      p = getpwuid(getuid());
-     fromaddr = QString::fromLatin1(p->pw_name);
+     fromaddr = TQString::fromLatin1(p->pw_name);
   } else {
-     QString name = emailConf.readEntry( QString::fromLatin1("FullName"));
+     TQString name = emailConf.readEntry( TQString::fromLatin1("FullName"));
      if (!name.isEmpty())
-        fromaddr = name + QString::fromLatin1(" <") + fromaddr + QString::fromLatin1(">");
+        fromaddr = name + TQString::fromLatin1(" <") + fromaddr + TQString::fromLatin1(">");
   }
   m_from->setText( fromaddr );
 }
 
-void KBugReport::slotUrlClicked(const QString &urlText)
+void KBugReport::slotUrlClicked(const TQString &urlText)
 {
   if ( kapp )
     kapp->invokeBrowser( urlText );
@@ -375,7 +375,7 @@ void KBugReport::slotOk( void )
     if( m_lineedit->text().isEmpty() ||
         m_subject->text().isEmpty() )
     {
-        QString msg = i18n("You must specify both a subject and a description "
+        TQString msg = i18n("You must specify both a subject and a description "
                            "before the report can be sent.");
         KMessageBox::error(this,msg);
         return;
@@ -391,7 +391,7 @@ void KBugReport::slotOk( void )
                 "<li>cause serious data loss</li>"
                 "<li>introduce a security hole on the system where the affected package is installed</li></ul>\n"
                 "<p>Does the bug you are reporting cause any of the above damage? "
-                "If it does not, please select a lower severity. Thank you!</p>" ),QString::null,KStdGuiItem::cont(),KStdGuiItem::cancel() ) == KMessageBox::No )
+                "If it does not, please select a lower severity. Thank you!</p>" ),TQString::null,KStdGuiItem::cont(),KStdGuiItem::cancel() ) == KMessageBox::No )
                 return;
             break;
         case 1: // grave
@@ -402,13 +402,13 @@ void KBugReport::slotOk( void )
                 "<li>cause data loss</li>"
                 "<li>introduce a security hole allowing access to the accounts of users who use the affected package</li></ul>\n"
                 "<p>Does the bug you are reporting cause any of the above damage? "
-                "If it does not, please select a lower severity. Thank you!</p>" ),QString::null,KStdGuiItem::cont(),KStdGuiItem::cancel() ) == KMessageBox::No )
+                "If it does not, please select a lower severity. Thank you!</p>" ),TQString::null,KStdGuiItem::cont(),KStdGuiItem::cancel() ) == KMessageBox::No )
                 return;
             break;
     }
     if( !sendBugReport() )
     {
-        QString msg = i18n("Unable to send the bug report.\n"
+        TQString msg = i18n("Unable to send the bug report.\n"
                            "Please submit a bug report manually...\n"
                            "See http://bugs.pearsoncomputing.net/ for instructions.");
         KMessageBox::error(this, msg + "\n\n" + d->lastError);
@@ -434,61 +434,61 @@ void KBugReport::slotCancel()
 }
 
 
-QString KBugReport::text() const
+TQString KBugReport::text() const
 {
     kdDebug() << m_bgSeverity->selected()->name() << endl;
     // Prepend the pseudo-headers to the contents of the mail
-  QString severity = QString::fromLatin1(m_bgSeverity->selected()->name());
-  QString appname = d->appcombo->currentText();
-  QString os = QString::fromLatin1("OS: %1 (%2)\n").
+  TQString severity = TQString::fromLatin1(m_bgSeverity->selected()->name());
+  TQString appname = d->appcombo->currentText();
+  TQString os = TQString::fromLatin1("OS: %1 (%2)\n").
                arg(KDE_COMPILING_OS).
                arg(KDE_DISTRIBUTION_TEXT);
-  QString bodyText;
+  TQString bodyText;
   for(int i = 0; i < m_lineedit->numLines(); i++)
   {
-     QString line = m_lineedit->textLine(i);
+     TQString line = m_lineedit->textLine(i);
      if (!line.endsWith("\n"))
         line += '\n';
      bodyText += line;
   }
 
-  if (severity == QString::fromLatin1("i18n") && KGlobal::locale()->language() != KLocale::defaultLanguage()) {
+  if (severity == TQString::fromLatin1("i18n") && KGlobal::locale()->language() != KLocale::defaultLanguage()) {
       // Case 1 : i18n bug
-      QString package = QString::fromLatin1("i18n_%1").arg(KGlobal::locale()->language());
-      package = package.replace(QString::fromLatin1("_"), QString::fromLatin1("-"));
-      return QString::fromLatin1("Package: %1").arg(package) +
-          QString::fromLatin1("\n"
+      TQString package = TQString::fromLatin1("i18n_%1").arg(KGlobal::locale()->language());
+      package = package.replace(TQString::fromLatin1("_"), TQString::fromLatin1("-"));
+      return TQString::fromLatin1("Package: %1").arg(package) +
+          TQString::fromLatin1("\n"
                               "Application: %1\n"
                               // not really i18n's version, so better here IMHO
                               "Version: %2\n").arg(appname).arg(m_strVersion)+
-          os+QString::fromLatin1("\n")+bodyText;
+          os+TQString::fromLatin1("\n")+bodyText;
   } else {
-      appname = appname.replace(QString::fromLatin1("_"), QString::fromLatin1("-"));
+      appname = appname.replace(TQString::fromLatin1("_"), TQString::fromLatin1("-"));
       // Case 2 : normal bug
-      return QString::fromLatin1("Package: %1\n"
+      return TQString::fromLatin1("Package: %1\n"
                                  "Version: %2\n"
                                  "Severity: %3\n")
           .arg(appname).arg(m_strVersion).arg(severity)+
-          QString::fromLatin1("Compiler: %1\n").arg(KDE_COMPILER_VERSION)+
-          os+QString::fromLatin1("\n")+bodyText;
+          TQString::fromLatin1("Compiler: %1\n").arg(KDE_COMPILER_VERSION)+
+          os+TQString::fromLatin1("\n")+bodyText;
   }
 }
 
 bool KBugReport::sendBugReport()
 {
-  QString recipient ( m_aboutData ?
+  TQString recipient ( m_aboutData ?
     m_aboutData->bugAddress() :
-    QString::fromLatin1("submit@bugs.pearsoncomputing.net") );
+    TQString::fromLatin1("submit@bugs.pearsoncomputing.net") );
 
-  QString command;
+  TQString command;
   command = locate("exe", "ksendbugmail");
   if (command.isEmpty())
-      command = KStandardDirs::findExe( QString::fromLatin1("ksendbugmail") );
+      command = KStandardDirs::findExe( TQString::fromLatin1("ksendbugmail") );
 
   KTempFile outputfile;
   outputfile.close();
 
-  QString subject = m_subject->text();
+  TQString subject = m_subject->text();
   command += " --subject ";
   command += KProcess::quote(subject);
   command += " --recipient ";
@@ -499,14 +499,14 @@ bool KBugReport::sendBugReport()
   fflush(stdin);
   fflush(stderr);
 
-  FILE * fd = popen(QFile::encodeName(command), "w");
+  FILE * fd = popen(TQFile::encodeName(command), "w");
   if (!fd)
   {
     kdError() << "Unable to open a pipe to " << command << endl;
     return false;
   }
 
-  QString btext = text();
+  TQString btext = text();
   fwrite(btext.ascii(),btext.length(),1,fd);
   fflush(fd);
 
@@ -514,16 +514,16 @@ bool KBugReport::sendBugReport()
   kdDebug() << "exit status1 " << error << " " << (WIFEXITED(error)) << " " <<  WEXITSTATUS(error) << endl;
 
   if ((WIFEXITED(error)) && WEXITSTATUS(error) == 1) {
-      QFile of(outputfile.name());
+      TQFile of(outputfile.name());
       if (of.open(IO_ReadOnly )) {
-          QTextStream is(&of);
-          is.setEncoding(QTextStream::UnicodeUTF8);
-          QString line;
+          TQTextStream is(&of);
+          is.setEncoding(TQTextStream::UnicodeUTF8);
+          TQString line;
           while (!is.eof())
               line = is.readLine();
           d->lastError = line;
       } else {
-          d->lastError = QString::null;
+          d->lastError = TQString::null;
       }
       outputfile.unlink();
       return false;

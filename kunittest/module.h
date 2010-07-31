@@ -31,7 +31,7 @@
 #ifndef KUNITTEST_MODULE_H
 #define KUNITTEST_MODULE_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <klibloader.h>
 #include <kunittest/runner.h>
@@ -48,8 +48,8 @@ namespace KUnitTest
     * @code KUNITTEST_MODULE(kunittest_samplemodule,"TestSuite") @endcode
     */
     #define KUNITTEST_MODULE(library,suite)                                                 \
-    static const QString s_kunittest_suite  = QString::fromLatin1(suite);                   \
-    class library##Module : public QObject                                                  \
+    static const TQString s_kunittest_suite  = TQString::fromLatin1(suite);                   \
+    class library##Module : public TQObject                                                  \
     {                                                                                       \
     public:                                                                                 \
         library##Module()                                                                   \
@@ -72,7 +72,7 @@ namespace KUnitTest
     class module##Factory : public KLibFactory                                              \
     {                                                                                       \
     public:                                                                                 \
-        QObject *createObject (QObject *, const char *, const char *, const QStringList &)  \
+        TQObject *createObject (TQObject *, const char *, const char *, const TQStringList &)  \
         {                                                                                   \
             return new library##Module();                                                   \
         };                                                                                  \
@@ -93,7 +93,7 @@ namespace KUnitTest
         tester##ModuleAutoregister()                                                            \
         {                                                                                       \
             KUnitTest::Tester *test = new tester();                                             \
-            QString name = s_kunittest_suite + QString::fromLatin1("::") + QString::fromLocal8Bit(#tester); \
+            TQString name = s_kunittest_suite + TQString::fromLatin1("::") + TQString::fromLocal8Bit(#tester); \
             test->setName(name.local8Bit());                                                    \
             kunittest_registerModuleTester(name.local8Bit(), test );                            \
         }                                                                                       \
@@ -110,7 +110,7 @@ namespace KUnitTest
     public:                                                                                   \
         tester##ModuleAutoregister()                                                          \
         {                                                                                     \
-            QString fullName = s_kunittest_suite + QString("::") + QString::fromLocal8Bit(name); \
+            TQString fullName = s_kunittest_suite + TQString("::") + TQString::fromLocal8Bit(name); \
             KUnitTest::Tester *test = new tester(fullName.local8Bit());                       \
             kunittest_registerModuleTester(fullName.local8Bit(), test);                       \
         }                                                                                     \

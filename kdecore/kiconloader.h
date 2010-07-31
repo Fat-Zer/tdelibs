@@ -12,16 +12,16 @@
 #ifndef __KIconLoader_h_Included__
 #define __KIconLoader_h_Included__
 
-#include <qstring.h>
-#include <qpixmap.h>
-#include <qiconset.h>
+#include <tqstring.h>
+#include <tqpixmap.h>
+#include <tqiconset.h>
 
 // Grmbl, X headers.....
 #ifdef Status
 #define KIconLoaderXStatus Status
 #undef Status
 #endif
-#include <qmovie.h>
+#include <tqmovie.h>
 #ifdef KIconLoaderXStatus
 #define Status int
 #undef KIconLoaderXStatus
@@ -92,7 +92,7 @@ public:
      * @see KGlobal::iconLoader()
      * @see KInstance::iconLoader()
      */
-    KIconLoader(const QString& appname=QString::null, KStandardDirs *dirs = 0);
+    KIconLoader(const TQString& appname=TQString::null, KStandardDirs *dirs = 0);
 
     /**
      * Cleanup
@@ -103,7 +103,7 @@ public:
      * Adds @p appname to the list of application specific directories.
      * @param appname The application name.
      */
-    void addAppDir(const QString& appname);
+    void addAppDir(const TQString& appname);
 
     /**
      * Loads an icon. It will try very hard to find an icon which is
@@ -123,11 +123,11 @@ public:
      * @param path_store If not null, the path of the icon is stored here.
      * @param canReturnNull Can return a null pixmap? If false, the
      * "unknown" pixmap is returned when no appropriate icon has been found.
-     * @return the QPixmap. Can be null when not found, depending on
+     * @return the TQPixmap. Can be null when not found, depending on
      *         @p canReturnNull.
      */
-    QPixmap loadIcon(const QString& name, KIcon::Group group, int size=0,
-		     int state=KIcon::DefaultState, QString *path_store=0L,
+    TQPixmap loadIcon(const TQString& name, KIcon::Group group, int size=0,
+		     int state=KIcon::DefaultState, TQString *path_store=0L,
 		     bool canReturnNull=false) const;
 
     /**
@@ -148,10 +148,10 @@ public:
      *          @p canReturnNull.
      * @since 3.5
      */
-    QIconSet loadIconSet(const QString& name, KIcon::Group group, int size,
+    TQIconSet loadIconSet(const TQString& name, KIcon::Group group, int size,
                          bool canReturnNull, bool immediateExistenceCheck);
 
-    // KDE4 merge as (const QString&,KIcon::Group,int=0,bool=false,bool=true);
+    // KDE4 merge as (const TQString&,KIcon::Group,int=0,bool=false,bool=true);
     /**
      * Creates an icon set, that will do on-demand loading of the icon.
      * Loading itself is done by calling loadIcon .
@@ -168,10 +168,10 @@ public:
      *          @p canReturnNull.
      * @since 3.1
      */
-    QIconSet loadIconSet(const QString& name, KIcon::Group group, int size,
+    TQIconSet loadIconSet(const TQString& name, KIcon::Group group, int size,
                          bool canReturnNull);
 
-    // KDE4 merge as (const QString&,KIcon::Group,int=0,bool=false,bool=true);
+    // KDE4 merge as (const TQString&,KIcon::Group,int=0,bool=false,bool=true);
     /**
      * Creates an icon set, that will do on-demand loading of the icon.
      * Loading itself is done by calling loadIcon .
@@ -183,7 +183,7 @@ public:
      *             See KIcon::StdSizes.
      * @return the icon set. Can be null when not found
      */
-    QIconSet loadIconSet(const QString& name, KIcon::Group group, int size=0);
+    TQIconSet loadIconSet(const TQString& name, KIcon::Group group, int size=0);
 
     /**
      * Returns the path of an icon.
@@ -199,7 +199,7 @@ public:
      * @return the path of an icon, can be null or the "unknown" icon when
      *         not found, depending on @p canReturnNull.
      */
-    QString iconPath(const QString& name, int group_or_size,
+    TQString iconPath(const TQString& name, int group_or_size,
 		     bool canReturnNull=false) const;
 
     /**
@@ -208,9 +208,9 @@ public:
      * @param group The icon group. See loadIcon().
      * @param size Override the default size for @p group.
      *             See KIcon::StdSizes.
-     * @return A QMovie object. Can be null if not found.
+     * @return A TQMovie object. Can be null if not found.
      */
-    QMovie loadMovie(const QString& name, KIcon::Group group, int size=0) const;
+    TQMovie loadMovie(const TQString& name, KIcon::Group group, int size=0) const;
 
     /**
      * Returns the path to an animated icon.
@@ -221,19 +221,19 @@ public:
      * @return the full path to the movie, ready to be passed to QMovie's constructor.
      * Empty string if not found.
      */
-    QString moviePath(const QString& name, KIcon::Group group, int size=0) const;
+    TQString moviePath(const TQString& name, KIcon::Group group, int size=0) const;
 
     /**
      * Loads an animated icon as a series of still frames. If you want to load
-     * a .mng animation as QMovie instead, please use loadMovie() instead.
+     * a .mng animation as TQMovie instead, please use loadMovie() instead.
      * @param name The name of the icon.
      * @param group The icon group. See loadIcon().
      * @param size Override the default size for @p group.
      *             See KIcon::StdSizes.
-     * @return A QStringList containing the absolute path of all the frames
+     * @return A TQStringList containing the absolute path of all the frames
      * making up the animation.
      */
-    QStringList loadAnimated(const QString& name, KIcon::Group group, int size=0) const;
+    TQStringList loadAnimated(const TQString& name, KIcon::Group group, int size=0) const;
 
     /**
      * Queries all available icons for a specific group, having a specific
@@ -245,7 +245,7 @@ public:
      * @param context The icon context.
      * @return a list of all icons
      */
-    QStringList queryIcons(int group_or_size, KIcon::Context context=KIcon::Any) const;
+    TQStringList queryIcons(int group_or_size, KIcon::Context context=KIcon::Any) const;
 
     /**
      * Queries all available icons for a specific context.
@@ -255,10 +255,10 @@ public:
      * negative numbers are negated sizes. See KIcon::Group and
      * KIcon::StdSizes
      * @param context The icon context.
-     * @return A QStringList containing the icon names
+     * @return A TQStringList containing the icon names
      * available for that context
      */
-    QStringList queryIconsByContext(int group_or_size,
+    TQStringList queryIconsByContext(int group_or_size,
 				    KIcon::Context context=KIcon::Any) const;
 
     /**
@@ -270,10 +270,10 @@ public:
      * Returns a list of all icons (*.png or *.xpm extension) in the
      * given directory.
      * @param iconsDir the directory to search in
-     * @return A QStringList containing the icon paths
+     * @return A TQStringList containing the icon paths
      * @since 3.1
      */
-    QStringList queryIconsByDir( const QString& iconsDir ) const;
+    TQStringList queryIconsByDir( const TQString& iconsDir ) const;
 
     /**
      * Returns the current size of the group.
@@ -301,14 +301,14 @@ public:
      * @param _dirs the new standard directories. If 0, the directories
      *              from KGlobal will be taken.
      */
-    void reconfigure( const QString& _appname, KStandardDirs *_dirs );
+    void reconfigure( const TQString& _appname, KStandardDirs *_dirs );
 
     /**
      * Returns the unknown icon. An icon that is used when no other icon
      * can be found.
      * @return the unknown pixmap
      */
-    static QPixmap unknown();
+    static TQPixmap unknown();
 
     /**
      * Checks whether the user wants to blend the icons with the background
@@ -334,7 +334,7 @@ public:
     bool extraDesktopThemesAdded() const;
 
     /**
-     * Enables on-demand icon loading for QIconSets using QIconFactory.
+     * Enables on-demand icon loading for QIconSets using TQIconFactory.
      * Icons loaded via loadIconSet() will be loaded as soon as they
      * need to be displayed, not earlier.
      *
@@ -355,7 +355,7 @@ public:
     void enableDelayedIconSetLoading( bool enable );
 
     /**
-     * Checks whether delayed loading for QIconSet is enabled.
+     * Checks whether delayed loading for TQIconSet is enabled.
      * @return whether icons for QIconSets will be loaded on demand.
      * @see enableDelayedIconSetLoading()
      * @see QIconFactory
@@ -368,40 +368,40 @@ public:
     /**
      * @internal
      */
-    void init( const QString& _appname, KStandardDirs *_dirs );
+    void init( const TQString& _appname, KStandardDirs *_dirs );
 
     /**
      * @internal
      * tries to find an icon with the name. It tries some extension and
      * match strategies
      */
-    KIcon findMatchingIcon(const QString& name, int size) const;
+    KIcon findMatchingIcon(const TQString& name, int size) const;
 
     /**
      * @internal
      * Loads and caches an overlay.
      */
-     QImage *loadOverlay(const QString& name, int size) const;
+     TQImage *loadOverlay(const TQString& name, int size) const;
 
     /**
      * @internal
      * Adds themes installed in the application's directory.
      **/
-    void addAppThemes(const QString& appname);
+    void addAppThemes(const TQString& appname);
 
     /**
      * Adds all themes that are part of this node and the themes
      * below (the fallbacks of the theme) in the tree.
      * @internal
      */
-    void addBaseThemes(KIconThemeNode *node, const QString &appname);
+    void addBaseThemes(KIconThemeNode *node, const TQString &appname);
 
     /**
      * @internal
      * return the path for the unknown icon in that size
      * @since 3.1
      */
-    QString unknownIconPath( int size ) const;
+    TQString unknownIconPath( int size ) const;
 
     /**
      * Checks if name ends in one of the supported icon formats (i.e. .png)
@@ -418,7 +418,7 @@ public:
      * TODO: KDE 4 make public & static
      * @since 3.1
      */
-    QString removeIconExtension(const QString &name) const;
+    TQString removeIconExtension(const TQString &name) const;
 
     /**
      * Same as removeIconExtension except it prints a debug message
@@ -429,12 +429,12 @@ public:
      *
      * TODO: KDE 4 make static
      */
-    QString removeIconExtensionInternal(const QString &name) const;
+    TQString removeIconExtensionInternal(const TQString &name) const;
 
     /**
      * Loads all the different sizes for an iconset.
      */
-    QIconSet loadIconSetNonDelayed( const QString& name, KIcon::Group group,
+    TQIconSet loadIconSetNonDelayed( const TQString& name, KIcon::Group group,
                                     int size, bool canReturnNull );
 
     // @internal the data object
@@ -445,7 +445,7 @@ public:
  * \relates KIconLoader
  * Load a desktop icon.
  */
-KDECORE_EXPORT QPixmap DesktopIcon(const QString& name, int size=0,
+KDECORE_EXPORT TQPixmap DesktopIcon(const TQString& name, int size=0,
 		    int state=KIcon::DefaultState,
 		    KInstance *instance=KGlobal::instance());
 
@@ -453,40 +453,40 @@ KDECORE_EXPORT QPixmap DesktopIcon(const QString& name, int size=0,
  * \relates KIconLoader
  * Load a desktop icon.
  */
-KDECORE_EXPORT QPixmap DesktopIcon(const QString& name, KInstance *instance);
+KDECORE_EXPORT TQPixmap DesktopIcon(const TQString& name, KInstance *instance);
 
 /**
  * \relates KIconLoader
  * Load a desktop icon, and apply the necessary effects to get an IconSet.
  */
-KDECORE_EXPORT QIconSet DesktopIconSet(const QString& name, int size=0,
+KDECORE_EXPORT TQIconSet DesktopIconSet(const TQString& name, int size=0,
 		    KInstance *instance=KGlobal::instance());
 
 /**
  * \relates KIconLoader
  * Load a toolbar icon.
  */
-KDECORE_EXPORT QPixmap BarIcon(const QString& name, int size=0, int state=KIcon::DefaultState,
+KDECORE_EXPORT TQPixmap BarIcon(const TQString& name, int size=0, int state=KIcon::DefaultState,
 	KInstance *instance=KGlobal::instance());
 
 /**
  * \relates KIconLoader
  * Load a toolbar icon.
  */
-KDECORE_EXPORT QPixmap BarIcon(const QString& name, KInstance *instance);
+KDECORE_EXPORT TQPixmap BarIcon(const TQString& name, KInstance *instance);
 
 /**
  * \relates KIconLoader
  * Load a toolbar icon, and apply the necessary effects to get an IconSet.
  */
-KDECORE_EXPORT QIconSet BarIconSet(const QString& name, int size=0,
+KDECORE_EXPORT TQIconSet BarIconSet(const TQString& name, int size=0,
 		    KInstance *instance=KGlobal::instance());
 
 /**
  * \relates KIconLoader
  * Load a small icon.
  */
-KDECORE_EXPORT QPixmap SmallIcon(const QString& name, int size=0,
+KDECORE_EXPORT TQPixmap SmallIcon(const TQString& name, int size=0,
 		  int state=KIcon::DefaultState,
 		  KInstance *instance=KGlobal::instance());
 
@@ -494,20 +494,20 @@ KDECORE_EXPORT QPixmap SmallIcon(const QString& name, int size=0,
  * \relates KIconLoader
  * Load a small icon.
  */
-KDECORE_EXPORT QPixmap SmallIcon(const QString& name, KInstance *instance);
+KDECORE_EXPORT TQPixmap SmallIcon(const TQString& name, KInstance *instance);
 
 /**
  * \relates KIconLoader
  * Load a small icon, and apply the necessary effects to get an IconSet.
  */
-KDECORE_EXPORT QIconSet SmallIconSet(const QString& name, int size=0,
+KDECORE_EXPORT TQIconSet SmallIconSet(const TQString& name, int size=0,
 		    KInstance *instance=KGlobal::instance());
 
 /**
  * \relates KIconLoader
  * Load a main toolbar icon.
  */
-KDECORE_EXPORT QPixmap MainBarIcon(const QString& name, int size=0,
+KDECORE_EXPORT TQPixmap MainBarIcon(const TQString& name, int size=0,
 		    int state=KIcon::DefaultState,
 		    KInstance *instance=KGlobal::instance());
 
@@ -515,33 +515,33 @@ KDECORE_EXPORT QPixmap MainBarIcon(const QString& name, int size=0,
  * \relates KIconLoader
  * Load a main toolbar icon.
  */
-KDECORE_EXPORT QPixmap MainBarIcon(const QString& name, KInstance *instance);
+KDECORE_EXPORT TQPixmap MainBarIcon(const TQString& name, KInstance *instance);
 
 /**
  * \relates KIconLoader
  * Load a main toolbar icon, and apply the effects to get an IconSet.
  */
-KDECORE_EXPORT QIconSet MainBarIconSet(const QString& name, int size=0,
+KDECORE_EXPORT TQIconSet MainBarIconSet(const TQString& name, int size=0,
 		    KInstance *instance=KGlobal::instance());
 
 /**
  * \relates KIconLoader
  * Load a user icon. User icons are searched in $appdir/pics.
  */
-KDECORE_EXPORT QPixmap UserIcon(const QString& name, int state=KIcon::DefaultState,
+KDECORE_EXPORT TQPixmap UserIcon(const TQString& name, int state=KIcon::DefaultState,
 	KInstance *instance=KGlobal::instance());
 
 /**
  * \relates KIconLoader
  * Load a user icon. User icons are searched in $appdir/pics.
  */
-KDECORE_EXPORT QPixmap UserIcon(const QString& name, KInstance *instance);
+KDECORE_EXPORT TQPixmap UserIcon(const TQString& name, KInstance *instance);
 
 /**
  * \relates KIconLoader
  * Load a user icon, and apply the effects to get an IconSet.
  */
-KDECORE_EXPORT QIconSet UserIconSet(const QString& name,
+KDECORE_EXPORT TQIconSet UserIconSet(const TQString& name,
 	KInstance *instance=KGlobal::instance());
 
 /**

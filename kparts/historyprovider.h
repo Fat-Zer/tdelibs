@@ -20,8 +20,8 @@
 #ifndef KHISTORYPROVIDER_H
 #define KHISTORYPROVIDER_H
 
-#include <qdict.h>
-#include <qobject.h>
+#include <tqdict.h>
+#include <tqobject.h>
 
 #include <kdelibs_export.h>
 
@@ -48,7 +48,7 @@ public:
     /**
      * Creates a KHistoryProvider with an optional parent and name
      */
-    HistoryProvider( QObject *parent = 0L, const char *name = 0 );
+    HistoryProvider( TQObject *parent = 0L, const char *name = 0 );
 
     /**
      * Destroys the provider.
@@ -58,17 +58,17 @@ public:
     /**
      * @returns true if @p item is present in the history.
      */
-    virtual bool contains( const QString& item ) const;
+    virtual bool contains( const TQString& item ) const;
 
     /**
      * Inserts @p item into the history.
      */
-    virtual void insert( const QString& item );
+    virtual void insert( const TQString& item );
 
     /**
      * Removes @p item from the history.
      */
-    virtual void remove( const QString& item );
+    virtual void remove( const TQString& item );
 
     /**
      * Clears the history. The cleared() signal is emitted after clearing.
@@ -87,12 +87,12 @@ signals:
      * history has changed. Put those items that were added or removed from the
      * history into @p items.
      */
-    void updated( const QStringList& items );
+    void updated( const TQStringList& items );
 
     /**
      * Emitted after the item has been inserted
      */
-    void inserted( const QString& item );
+    void inserted( const TQString& item );
 
 private:
     static HistoryProvider *s_self;

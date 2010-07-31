@@ -1,5 +1,5 @@
 #include "kdatewidget.h"
-#include <qlineedit.h>
+#include <tqlineedit.h>
 #include <kapplication.h>
 #include <klocale.h>
 

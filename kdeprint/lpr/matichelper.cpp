@@ -21,7 +21,7 @@
 #include "printcapentry.h"
 #include "driver.h"
 
-QString maticFile(PrintcapEntry *entry)
+TQString maticFile(PrintcapEntry *entry)
 {
 	QString	s(entry->field("af"));
 	if (s.isEmpty())

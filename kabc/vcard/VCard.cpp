@@ -21,8 +21,8 @@
   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <qcstring.h>
-#include <qstrlist.h>
+#include <tqcstring.h>
+#include <tqstrlist.h>
 
 #include <VCardEntity.h>
 #include <VCardVCard.h>
@@ -46,7 +46,7 @@ VCard::VCard(const VCard & x)
 {
 }
 
-VCard::VCard(const QCString & s)
+VCard::VCard(const TQCString & s)
 	:	Entity(s)
 {
 }
@@ -64,7 +64,7 @@ VCard::operator = (VCard & x)
 }
 
 	VCard &
-VCard::operator = (const QCString & s)
+VCard::operator = (const TQCString & s)
 {
 	Entity::operator = (s);
 	return *this;
@@ -85,7 +85,7 @@ VCard::~VCard()
 VCard::_parse()
 {
 	vDebug("parse() called");
-	QStrList l;
+	TQStrList l;
 
 	RTokenise(strRep_, "\r\n", l);
 
@@ -95,16 +95,16 @@ VCard::_parse()
 	}
 
 	// Get the first line
-	QCString beginLine = QCString(l.at(0)).stripWhiteSpace();
+	TQCString beginLine = TQCString(l.at(0)).stripWhiteSpace();
 
 	vDebug("Begin line == \"" + beginLine + "\"");
 
 	// Remove extra blank lines
-	while (QCString(l.last()).isEmpty())
+	while (TQCString(l.last()).isEmpty())
 		l.remove(l.last());
 
 	// Now we know this is the last line
-	QCString endLine = l.last();
+	TQCString endLine = l.last();
 
 	// Trash the first and last lines as we have seen them.
 	l.remove(0u);
@@ -120,8 +120,8 @@ VCard::_parse()
 		return;
 	}
 
-	QCString firstPart(beginLine.left(split));
-	QCString valuePart(beginLine.mid(split + 1));
+	TQCString firstPart(beginLine.left(split));
+	TQCString valuePart(beginLine.mid(split + 1));
 
 	split = firstPart.find('.');
 
@@ -147,11 +147,11 @@ VCard::_parse()
 
 	// Handle folded lines.
 
-	QStrList refolded;
+	TQStrList refolded;
 
-	QStrListIterator it(l);
+	TQStrListIterator it(l);
 
-	QCString cur;
+	TQCString cur;
 
 	for (; it.current(); ++it) {
 
@@ -173,11 +173,11 @@ VCard::_parse()
 		refolded.append(cur);
 	}
 
-	QStrListIterator it2(refolded);
+	TQStrListIterator it2(refolded);
 
 	for (; it2.current(); ++it2) {
 
-		vDebug("New contentline using \"" + QCString(it2.current()) + "\"");
+		vDebug("New contentline using \"" + TQCString(it2.current()) + "\"");
 		ContentLine * cl = new ContentLine(it2.current());
 
 		cl->parse();
@@ -217,7 +217,7 @@ VCard::_assemble()
 	strRep_ = "BEGIN:VCARD\r\n";
 	strRep_ += "VERSION:3.0\r\n";
 
-	QPtrListIterator<ContentLine> it(contentLineList_);
+	TQPtrListIterator<ContentLine> it(contentLineList_);
 
 	for (; it.current(); ++it)
 		strRep_ += it.current()->asString() + "\r\n";
@@ -233,7 +233,7 @@ VCard::has(EntityType t)
 }
 
 	bool
-VCard::has(const QCString & s)
+VCard::has(const TQCString & s)
 {
 	parse();
 	return contentLine(s) == 0 ? false : true;
@@ -248,7 +248,7 @@ VCard::add(const ContentLine & cl)
 }
 
 	void
-VCard::add(const QCString & s)
+VCard::add(const TQCString & s)
 {
 	parse();
 	ContentLine * c = new ContentLine(s);
@@ -259,7 +259,7 @@ VCard::add(const QCString & s)
 VCard::contentLine(EntityType t)
 {
 	parse();
-	QPtrListIterator<ContentLine> it(contentLineList_);
+	TQPtrListIterator<ContentLine> it(contentLineList_);
 
 	for (; it.current(); ++it)
 		if (it.current()->entityType() == t)
@@ -269,10 +269,10 @@ VCard::contentLine(EntityType t)
 }
 
 	ContentLine *
-VCard::contentLine(const QCString & s)
+VCard::contentLine(const TQCString & s)
 {
 	parse();
-	QPtrListIterator<ContentLine> it(contentLineList_);
+	TQPtrListIterator<ContentLine> it(contentLineList_);
 
 	for (; it.current(); ++it)
 		if (it.current()->entityType() == EntityNameToEntityType(s))

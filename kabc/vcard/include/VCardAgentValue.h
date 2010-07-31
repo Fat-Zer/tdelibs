@@ -24,7 +24,7 @@
 #ifndef  AGENTVALUE_H
 #define  AGENTVALUE_H
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <VCardValue.h>
 

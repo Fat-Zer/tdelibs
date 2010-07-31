@@ -1,33 +1,33 @@
 #include "kblendtest.h"
 #include <kapplication.h>
 #include <kimageeffect.h>
-#include <qpainter.h>
-#include <qdatetime.h>
-#include <qstring.h>
+#include <tqpainter.h>
+#include <tqdatetime.h>
+#include <tqstring.h>
 
 int cols = 3, rows = 3; // how many
 
-KBlendWidget::KBlendWidget(QWidget *parent, const char *name)
-  :QWidget(parent, name)
+KBlendWidget::KBlendWidget(TQWidget *parent, const char *name)
+  :TQWidget(parent, name)
 {
 
     bgnd = qRgb(255, 255, 255);
 
-    image = QImage("testimage.png");
+    image = TQImage("testimage.png");
 
     resize(image.width()*2+60, image.height()*3+80);
     setBackgroundColor(bgnd);
 }
 
-void KBlendWidget::paintEvent(QPaintEvent */*ev*/)
+void KBlendWidget::paintEvent(TQPaintEvent */*ev*/)
 {
-    QTime time;
+    TQTime time;
     int it, ft;
-    QString say;
+    TQString say;
 
-    image = QImage("testimage.png");
+    image = TQImage("testimage.png");
 
-    QPainter p(this);
+    TQPainter p(this);
     p.setPen(Qt::black);
 
     // you see here use of anti_dir param (blend from down to up, here)
@@ -39,7 +39,7 @@ void KBlendWidget::paintEvent(QPaintEvent */*ev*/)
     p.drawImage(20, 20, image);
     p.drawText(5 , 15, say);
 
-    image = QImage("testimage.png");
+    image = TQImage("testimage.png");
 
     // here a negative initial intensity is used (1/2 of image is unaffected)
     it = time.elapsed();
@@ -49,7 +49,7 @@ void KBlendWidget::paintEvent(QPaintEvent */*ev*/)
     p.drawImage(40+image.width(), 20, image);
     p.drawText(15+image.width() , 15, say);
 
-    image = QImage("testimage.png");
+    image = TQImage("testimage.png");
 
     it = time.elapsed();
     KImageEffect::blend(image, 0., bgnd, KImageEffect::DiagonalGradient,true);
@@ -58,7 +58,7 @@ void KBlendWidget::paintEvent(QPaintEvent */*ev*/)
     p.drawImage(20, 40+image.height(), image);
     p.drawText(5 , 35+image.height(), say);
 
-    image = QImage("testimage.png");
+    image = TQImage("testimage.png");
 
     it = time.elapsed();
     KImageEffect::blend(image, 0.1, bgnd, KImageEffect::CrossDiagonalGradient);
@@ -67,7 +67,7 @@ void KBlendWidget::paintEvent(QPaintEvent */*ev*/)
     p.drawImage(40+image.width(), 40+image.height(), image);
     p.drawText(25+image.width() , 35 + image.height(), say);
 
-    image = QImage("testimage.png");
+    image = TQImage("testimage.png");
 
     it = time.elapsed();
     KImageEffect::blend(image, -0.6, bgnd, KImageEffect::RectangleGradient);
@@ -76,7 +76,7 @@ void KBlendWidget::paintEvent(QPaintEvent */*ev*/)
     p.drawImage(20, 60+2*image.height(), image);
     p.drawText(5 , 55+2*image.height(), say);
 
-    image = QImage("testimage.png");
+    image = TQImage("testimage.png");
 
     it = time.elapsed();
     KImageEffect::blend(image, 0.2, bgnd, KImageEffect::EllipticGradient);

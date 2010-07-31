@@ -43,7 +43,7 @@
 #include <sys/socket.h>
 #include <errno.h>
 
-#include <qwindowdefs.h>
+#include <tqwindowdefs.h>
 #include <kglobal.h>
 #include <kinstance.h>
 #include <kaboutdata.h>
@@ -349,9 +349,9 @@ static char *getDisplay()
    char *colon;
    char *i;
 /*
- don't test for a value from qglobal.h but instead distinguish
+ don't test for a value from tqglobal.h but instead distinguish
  Qt/X11 from Qt/Embedded by the fact that Qt/E apps have -DQWS
- on the commandline (which in qglobal.h however triggers Q_WS_QWS,
+ on the commandline (which in tqglobal.h however triggers Q_WS_QWS,
  but we don't want to include that here) (Simon)
 #ifdef Q_WS_X11
  */

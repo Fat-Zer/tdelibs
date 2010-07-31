@@ -72,7 +72,7 @@ void HTMLBodyElementImpl::parseAttribute(AttributeImpl *attr)
 
     case ATTR_BACKGROUND:
     {
-        QString url = khtml::parseURL( attr->value() ).string();
+        TQString url = khtml::parseURL( attr->value() ).string();
         if (!url.isEmpty()) {
             url = getDocument()->completeURL( url );
             addCSSProperty(CSS_PROP_BACKGROUND_IMAGE, "url('"+url+"')" );
@@ -124,7 +124,7 @@ void HTMLBodyElementImpl::parseAttribute(AttributeImpl *attr)
             m_styleSheet = new CSSStyleSheetImpl(this,DOMString(),true);
             m_styleSheet->ref();
         }
-        QString aStr;
+        TQString aStr;
 	if ( attr->id() == ATTR_LINK )
 	    aStr = "a:link";
 	else if ( attr->id() == ATTR_VLINK )
@@ -187,13 +187,13 @@ void HTMLBodyElementImpl::insertedIntoDocument()
 
     KHTMLView* w = getDocument()->view();
     if(w && w->marginWidth() != -1) {
-        QString s;
+        TQString s;
         s.sprintf( "%d", w->marginWidth() );
         addCSSLength(CSS_PROP_MARGIN_LEFT, s);
         addCSSLength(CSS_PROP_MARGIN_RIGHT, s);
     }
     if(w && w->marginHeight() != -1) {
-        QString s;
+        TQString s;
         s.sprintf( "%d", w->marginHeight() );
         addCSSLength(CSS_PROP_MARGIN_TOP, s);
         addCSSLength(CSS_PROP_MARGIN_BOTTOM, s);
@@ -244,7 +244,7 @@ HTMLFrameElementImpl::HTMLFrameElementImpl(DocumentImpl *doc)
     frameBorderSet = false;
     marginWidth = -1;
     marginHeight = -1;
-    scrolling = QScrollView::Auto;
+    scrolling = TQScrollView::Auto;
     noresize = false;
     url = "about:blank";
 }
@@ -286,11 +286,11 @@ void HTMLFrameElementImpl::parseAttribute(AttributeImpl *attr)
         break;
     case ATTR_SCROLLING:
         if( strcasecmp( attr->value(), "auto" ) == 0 )
-            scrolling = QScrollView::Auto;
+            scrolling = TQScrollView::Auto;
         else if( strcasecmp( attr->value(), "yes" ) == 0 )
-            scrolling = QScrollView::AlwaysOn;
+            scrolling = TQScrollView::AlwaysOn;
         else if( strcasecmp( attr->value(), "no" ) == 0 )
-            scrolling = QScrollView::AlwaysOff;
+            scrolling = TQScrollView::AlwaysOff;
         // when attached, has no effect
         break;
     case ATTR_ONLOAD:

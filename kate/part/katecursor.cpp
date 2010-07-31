@@ -136,7 +136,7 @@ bool KateDocCursor::moveBackward(uint nbChar)
   }
 }
 
-bool KateDocCursor::insertText(const QString& s)
+bool KateDocCursor::insertText(const TQString& s)
 {
   return m_doc->insertText(line(), col(), s);
 }
@@ -152,7 +152,7 @@ bool KateDocCursor::removeText(uint nbChar)
          (uint)endCursor.line(), (uint)endCursor.col());
 }
 
-QChar KateDocCursor::currentChar() const
+TQChar KateDocCursor::currentChar() const
 {
   return m_doc->plainKateTextLine(line())->getChar(col());
 }

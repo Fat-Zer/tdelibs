@@ -3,8 +3,8 @@
 
 #include <dcopobject.h>
 #include <dcopref.h>
-#include <qstringlist.h>
-#include <qcstring.h>
+#include <tqstringlist.h>
+#include <tqcstring.h>
 
 namespace KTextEditor
 {
@@ -33,17 +33,17 @@ namespace KTextEditor
 		**/
 		virtual ~SearchDCOPInterface();
 	k_dcop:
-		bool findFirstString(QString text, bool caseSensitive);
-		bool findNextString(QString text, bool caseSensitive);
-		bool findPreviousString( QString text, bool caseSensitive);
-		bool findLastString(QString text, bool caseSensitive);
-		bool findStringAt( uint  row, uint  col, QString text, bool caseSensitive);
+		bool findFirstString(TQString text, bool caseSensitive);
+		bool findNextString(TQString text, bool caseSensitive);
+		bool findPreviousString( TQString text, bool caseSensitive);
+		bool findLastString(TQString text, bool caseSensitive);
+		bool findStringAt( uint  row, uint  col, TQString text, bool caseSensitive);
 
-		bool findFirstRegExp( QString regexp);
-		bool findNextRegExp( QString regexp);
-		bool findPreviousRegExp( QString regexp);
-		bool findLastRegExp( QString regexp);
-		bool findRegExpAt( uint  row, uint  col, QString regexp);
+		bool findFirstRegExp( TQString regexp);
+		bool findNextRegExp( TQString regexp);
+		bool findPreviousRegExp( TQString regexp);
+		bool findLastRegExp( TQString regexp);
+		bool findRegExpAt( uint  row, uint  col, TQString regexp);
 
 		uint currentMatchLine();
 		uint currentMatchCol();

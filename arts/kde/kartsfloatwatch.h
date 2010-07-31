@@ -21,7 +21,7 @@
     */
 
 #include "common.h"
-#include <qobject.h>
+#include <tqobject.h>
 
 class KArtsFloatWatchPrivate;
 namespace Arts { class KFloatWatchProxy_impl; }
@@ -44,10 +44,10 @@ namespace Arts { class KFloatWatchProxy_impl; }
  * \code
  *   StereoVolumeControl stereoVolumeControl = ...;
  *   KArtsFloatWatch *w = new KArtsFloatWatch(stereoVolumeControl, "scaleFactor_changed", this);
- *   connect(w, SIGNAL(valueChanged(float)), this, SLOT(setValue(float)));
+ *   connect(w, TQT_SIGNAL(valueChanged(float)), this, TQT_SLOT(setValue(float)));
  * \endcode
  */
-class KArtsFloatWatch : public QObject {
+class KArtsFloatWatch : public TQObject {
 	Q_OBJECT
 private:
 	KArtsFloatWatchPrivate *d;
@@ -67,7 +67,7 @@ public:
 	 * @param parent  the parent Qt object
 	 * @param name    the Qt object name of this object
 	 */
-	KArtsFloatWatch(Arts::Object object, const char *stream, QObject *parent = 0, const char *name = 0);
+	KArtsFloatWatch(Arts::Object object, const char *stream, TQObject *parent = 0, const char *name = 0);
 
 	/**
 	 * Destructor

@@ -19,8 +19,8 @@
 */
 #ifndef KDATEPICKER_H
 #define KDATEPICKER_H
-#include <qdatetime.h>
-#include <qframe.h>
+#include <tqdatetime.h>
+#include <tqframe.h>
 #include <kdelibs_export.h>
 
 class QLineEdit;
@@ -51,7 +51,7 @@ class KDateTable;
 class KDEUI_EXPORT KDatePicker: public QFrame
 {
   Q_OBJECT
-  Q_PROPERTY( QDate date READ date WRITE setDate)
+  Q_PROPERTY( TQDate date READ date WRITE setDate)
   Q_PROPERTY( bool closeButton READ hasCloseButton WRITE setCloseButton )
   Q_PROPERTY( int fontSize READ fontSize WRITE setFontSize )
 
@@ -59,16 +59,16 @@ public:
   /** The usual constructor.  The given date will be displayed
    * initially.
    **/
-  KDatePicker(QWidget *parent=0,
-	      QDate=QDate::currentDate(),
+  KDatePicker(TQWidget *parent=0,
+	      QDate=TQDate::currentDate(),
 	      const char *name=0);
 
   /** The usual constructor.  The given date will be displayed
    * initially.
    * @since 3.1
    **/
-  KDatePicker(QWidget *parent,
-	      QDate,
+  KDatePicker(TQWidget *parent,
+	      TQDate,
 	      const char *name,
 	      WFlags f); // ### KDE 4.0: Merge
 
@@ -77,7 +77,7 @@ public:
    * current date.
    * @since 3.1
    */
-  KDatePicker( QWidget *parent, const char *name );
+  KDatePicker( TQWidget *parent, const char *name );
 
   /**
    * The destructor.
@@ -90,7 +90,7 @@ public:
    *  size hint, try adding 28 to each of the reported numbers of
    *  pixels.
    **/
-  QSize sizeHint() const;
+  TQSize sizeHint() const;
 
   /**
    * Sets the date.
@@ -98,18 +98,18 @@ public:
    *  @returns @p false and does not change anything
    *      if the date given is invalid.
    **/
-  bool setDate(const QDate&);
+  bool setDate(const TQDate&);
 
   /**
    * Returns the selected date.
    * @deprecated
    **/
-  const QDate& getDate() const KDE_DEPRECATED;
+  const TQDate& getDate() const KDE_DEPRECATED;
 
   /**
    * @returns the selected date.
    */
-  const QDate &date() const;
+  const TQDate &date() const;
 
   /**
    * Enables or disables the widget.
@@ -152,34 +152,34 @@ public:
   bool hasCloseButton() const;
 
 protected:
-  /// to catch move keyEvents when QLineEdit has keyFocus
-  virtual bool eventFilter(QObject *o, QEvent *e );
+  /// to catch move keyEvents when TQLineEdit has keyFocus
+  virtual bool eventFilter(TQObject *o, TQEvent *e );
   /// the resize event
-  virtual void resizeEvent(QResizeEvent*);
+  virtual void resizeEvent(TQResizeEvent*);
   /// the year forward button
-  QToolButton *yearForward;
+  TQToolButton *yearForward;
   /// the year backward button
-  QToolButton *yearBackward;
+  TQToolButton *yearBackward;
   /// the month forward button
-  QToolButton *monthForward;
+  TQToolButton *monthForward;
   /// the month backward button
-  QToolButton *monthBackward;
+  TQToolButton *monthBackward;
   /// the button for selecting the month directly
-  QToolButton *selectMonth;
+  TQToolButton *selectMonth;
   /// the button for selecting the year directly
-  QToolButton *selectYear;
+  TQToolButton *selectYear;
   /// the line edit to enter the date directly
-  QLineEdit *line;
+  TQLineEdit *line;
   /// the validator for the line edit:
   KDateValidator *val;
   /// the date table
   KDateTable *table;
   /// the size calculated during resize events
-    //  QSize sizehint;
+    //  TQSize sizehint;
   /// the widest month string in pixels:
-  QSize maxMonthRect;
+  TQSize maxMonthRect;
 protected slots:
-  void dateChangedSlot(QDate);
+  void dateChangedSlot(TQDate);
   void tableClickedSlot();
   void monthForwardClicked();
   void monthBackwardClicked();
@@ -212,7 +212,7 @@ protected slots:
   void weekSelected(int);
 
 signals:
-  // ### KDE 4.0 Make all QDate parameters const references
+  // ### KDE 4.0 Make all TQDate parameters const references
 
   /** This signal is emitted each time the selected date is changed.
    *  Usually, this does not mean that the date has been entered,
@@ -220,19 +220,19 @@ signals:
    *  selected.
    *  @see dateSelected
    */
-  void dateChanged(QDate);
+  void dateChanged(TQDate);
   /** This signal is emitted each time a day has been selected by
    *  clicking on the table (hitting a day in the current month). It
    *  has the same meaning as dateSelected() in older versions of
    *  KDatePicker.
    */
-  void dateSelected(QDate);
+  void dateSelected(TQDate);
   /** This signal is emitted when enter is pressed and a VALID date
    *  has been entered before into the line edit. Connect to both
    *  dateEntered() and dateSelected() to receive all events where the
    *  user really enters a date.
    */
-  void dateEntered(QDate);
+  void dateEntered(TQDate);
   /** This signal is emitted when the day has been selected by
    *  clicking on it in the table.
    */
@@ -248,8 +248,8 @@ private:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  void init( const QDate &dt );
-  void fillWeeksCombo(const QDate &date);
+  void init( const TQDate &dt );
+  void fillWeeksCombo(const TQDate &date);
   class KDatePickerPrivate;
   KDatePickerPrivate *d;
 };

@@ -26,15 +26,15 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-#include <qmap.h>
-#include <qguardedptr.h>
-#include <qstringlist.h>
-#include <qregexp.h>
+#include <tqmap.h>
+#include <tqguardedptr.h>
+#include <tqstringlist.h>
+#include <tqregexp.h>
 
 // This file was using 6002, but kdebug.areas didn't know about that number
 #define DEBUGAREA 6100
 
-typedef QMap< int, QGuardedPtr<KJavaApplet> > AppletMap;
+typedef TQMap< int, TQGuardedPtr<KJavaApplet> > AppletMap;
 
 // For future expansion
 class KJavaAppletContextPrivate
@@ -50,11 +50,11 @@ int KJavaAppletContext::contextCount = 0;
 /*  Class Implementation
  */
 KJavaAppletContext::KJavaAppletContext()
-    : QObject()
+    : TQObject()
 {
     d = new KJavaAppletContextPrivate;
     server = KJavaAppletServer::allocateJavaServer();
-    connect(server->javaProcess(), SIGNAL(exited(int)), this, SLOT(javaProcessExited(int)));
+    connect(server->javaProcess(), TQT_SIGNAL(exited(int)), this, TQT_SLOT(javaProcessExited(int)));
 
     id = contextCount;
     server->createContext( id, this );
@@ -128,37 +128,37 @@ void KJavaAppletContext::stop( KJavaApplet* applet )
     server->stopApplet( id, applet->appletId() );
 }
 
-void KJavaAppletContext::processCmd( QString cmd, QStringList args )
+void KJavaAppletContext::processCmd( TQString cmd, TQStringList args )
 {
     received( cmd, args );
 }
 
-void KJavaAppletContext::received( const QString& cmd, const QStringList& arg )
+void KJavaAppletContext::received( const TQString& cmd, const TQStringList& arg )
 {
     kdDebug(6100) << "KJavaAppletContext::received, cmd = >>" << cmd << "<<" << endl;
     kdDebug(6100) << "arg count = " << arg.count() << endl;
 
-    if ( cmd == QString::fromLatin1("showstatus")
+    if ( cmd == TQString::fromLatin1("showstatus")
 	 && !arg.empty() )
     {
-        QString tmp = arg.first();
-        tmp.replace(QRegExp("[\n\r]"), "");
+        TQString tmp = arg.first();
+        tmp.replace(TQRegExp("[\n\r]"), "");
         kdDebug(6100) << "status message = " << tmp << endl;
         emit showStatus( tmp );
     }
-    else if ( cmd == QString::fromLatin1( "showurlinframe" )
+    else if ( cmd == TQString::fromLatin1( "showurlinframe" )
               && arg.count() > 1 )
     {
         kdDebug(6100) << "url = " << arg[0] << ", frame = " << arg[1] << endl;
         emit showDocument( arg[0], arg[1] );
     }
-    else if ( cmd == QString::fromLatin1( "showdocument" )
+    else if ( cmd == TQString::fromLatin1( "showdocument" )
               && !arg.empty() )
     {
         kdDebug(6100) << "url = " << arg.first() << endl;
         emit showDocument( arg.first(), "_top" );
     }
-    else if ( cmd == QString::fromLatin1( "resizeapplet" )
+    else if ( cmd == TQString::fromLatin1( "resizeapplet" )
               && arg.count() > 2 )
     {
         //arg[1] should be appletID
@@ -180,10 +180,10 @@ void KJavaAppletContext::received( const QString& cmd, const QStringList& arg )
                 tmp->resizeAppletWidget( width, height );
         }
     }
-    else if (cmd.startsWith(QString::fromLatin1("audioclip_"))) {
+    else if (cmd.startsWith(TQString::fromLatin1("audioclip_"))) {
         kdDebug(DEBUGAREA) << "process Audio command (not yet implemented): " << cmd  << " " << arg[0] << endl;
     }
-    else if ( cmd == QString::fromLatin1( "JS_Event" )
+    else if ( cmd == TQString::fromLatin1( "JS_Event" )
               && arg.count() > 2 )
     {
         bool ok;
@@ -191,14 +191,14 @@ void KJavaAppletContext::received( const QString& cmd, const QStringList& arg )
         KJavaApplet * applet;
         if (ok && (applet = d->applets[appletID]))
         {
-            QStringList js_args(arg);
+            TQStringList js_args(arg);
             js_args.pop_front();
             applet->jsData(js_args);
         }
         else
             kdError(DEBUGAREA) << "parse JS event " << arg[0] << " " << arg[1] << endl;
     }
-    else if ( cmd == QString::fromLatin1( "AppletStateNotification" ) )
+    else if ( cmd == TQString::fromLatin1( "AppletStateNotification" ) )
     {
         bool ok;
         const int appletID = arg.first().toInt(&ok);
@@ -222,15 +222,15 @@ void KJavaAppletContext::received( const QString& cmd, const QStringList& arg )
         } else
             kdError(DEBUGAREA) << "AppletStateNotification: Applet ID is not numerical" << endl;
     }
-    else if ( cmd == QString::fromLatin1( "AppletFailed" ) ) {
+    else if ( cmd == TQString::fromLatin1( "AppletFailed" ) ) {
         bool ok;
         const int appletID = arg.first().toInt(&ok);
         if (ok)
         {
             KJavaApplet* const applet = d->applets[appletID];
             /*
-            QString errorDetail(arg[1]);
-            errorDetail.replace(QRegExp(":\\s*"), ":\n");
+            TQString errorDetail(arg[1]);
+            errorDetail.replace(TQRegExp(":\\s*"), ":\n");
             KMessageBox::detailedError(0L, i18n("Java error while loading applet."), errorDetail);
             */
             if (applet)
@@ -251,23 +251,23 @@ void KJavaAppletContext::javaProcessExited(int) {
         }
 }
 
-bool KJavaAppletContext::getMember(QStringList & args, QStringList & ret_args) {
-    args.push_front( QString::number(id) );
+bool KJavaAppletContext::getMember(TQStringList & args, TQStringList & ret_args) {
+    args.push_front( TQString::number(id) );
     return server->getMember( args, ret_args );
 }
 
-bool KJavaAppletContext::putMember( QStringList & args ) {
-    args.push_front( QString::number(id) );
+bool KJavaAppletContext::putMember( TQStringList & args ) {
+    args.push_front( TQString::number(id) );
     return server->putMember( args );
 }
 
-bool KJavaAppletContext::callMember(QStringList & args, QStringList &ret_args) {
-    args.push_front( QString::number(id) );
+bool KJavaAppletContext::callMember(TQStringList & args, TQStringList &ret_args) {
+    args.push_front( TQString::number(id) );
     return server->callMember( args, ret_args );
 }
 
-void KJavaAppletContext::derefObject( QStringList & args ) {
-    args.push_front( QString::number(id) );
+void KJavaAppletContext::derefObject( TQStringList & args ) {
+    args.push_front( TQString::number(id) );
     server->derefObject( args );
 }
 

@@ -28,13 +28,13 @@
 #include "kfilebookmarkhandler.h"
 
 KFileBookmarkHandler::KFileBookmarkHandler( KFileDialog *dialog )
-    : QObject( dialog, "KFileBookmarkHandler" ),
+    : TQObject( dialog, "KFileBookmarkHandler" ),
       KBookmarkOwner(),
       m_dialog( dialog )
 {
     m_menu = new KPopupMenu( dialog, "bookmark menu" );
 
-    QString file = locate( "data", "kfile/bookmarks.xml" );
+    TQString file = locate( "data", "kfile/bookmarks.xml" );
     if ( file.isEmpty() )
         file = locateLocal( "data", "kfile/bookmarks.xml" );
 
@@ -42,7 +42,7 @@ KFileBookmarkHandler::KFileBookmarkHandler( KFileDialog *dialog )
 
     // import old bookmarks
     if ( !KStandardDirs::exists( file ) ) {
-        QString oldFile = locate( "data", "kfile/bookmarks.html" );
+        TQString oldFile = locate( "data", "kfile/bookmarks.html" );
         if ( !oldFile.isEmpty() )
             importOldBookmarks( oldFile, manager );
     }
@@ -59,12 +59,12 @@ KFileBookmarkHandler::~KFileBookmarkHandler()
     delete m_bookmarkMenu;
 }
 
-QString KFileBookmarkHandler::currentURL() const
+TQString KFileBookmarkHandler::currentURL() const
 {
     return m_dialog->baseURL().url();
 }
 
-void KFileBookmarkHandler::importOldBookmarks( const QString& path,
+void KFileBookmarkHandler::importOldBookmarks( const TQString& path,
                                                KBookmarkManager *manager )
 {
     KBookmarkDomBuilder *builder = new KBookmarkDomBuilder( manager->root(), manager );

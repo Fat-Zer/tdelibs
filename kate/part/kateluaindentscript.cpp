@@ -27,8 +27,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include <qfile.h>
-#include <qfileinfo.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
 #include <kstandarddirs.h>
 
 #include <kconfig.h>
@@ -156,7 +156,7 @@ static int katelua_document_insertText(lua_State *L) {
       lua_pushstring(L,i18n("document.removeText:Three parameters needed (line,col,text) (number,number,string)").utf8().data());
       lua_error(L);
   }
-  lua_pushboolean(L,katelua_doc->insertText((uint)lua_tonumber(L,1),(uint)lua_tonumber(L,2),QString::fromUtf8(lua_tostring(L,3))));
+  lua_pushboolean(L,katelua_doc->insertText((uint)lua_tonumber(L,1),(uint)lua_tonumber(L,2),TQString::fromUtf8(lua_tostring(L,3))));
   return 1;
 }
 
@@ -212,9 +212,9 @@ static void  kateregistertable(lua_State* m_interpreter,const KATELUA_FUNCTIONS 
 
 
 //BEGIN KateLUAIndentScriptImpl
-KateLUAIndentScriptImpl::KateLUAIndentScriptImpl(const QString& internalName,
-        const QString  &filePath, const QString &niceName,
-        const QString &copyright, double version):
+KateLUAIndentScriptImpl::KateLUAIndentScriptImpl(const TQString& internalName,
+        const TQString  &filePath, const TQString &niceName,
+        const TQString &copyright, double version):
           KateIndentScriptImplAbstract(internalName,filePath,niceName,copyright,version),m_interpreter(0)/*,m_indenter(0)*/
 {
 }
@@ -243,7 +243,7 @@ void KateLUAIndentScriptImpl::deleteInterpreter()
   }
 }
 
-bool KateLUAIndentScriptImpl::setupInterpreter(QString &errorMsg)
+bool KateLUAIndentScriptImpl::setupInterpreter(TQString &errorMsg)
 {
   if (m_interpreter) return true;
   m_interpreter=lua_open();
@@ -283,7 +283,7 @@ bool KateLUAIndentScriptImpl::setupInterpreter(QString &errorMsg)
   /*open script*/
   lua_pushstring(m_interpreter,"dofile");
   lua_gettable(m_interpreter,LUA_GLOBALSINDEX);
-  QCString fn=QFile::encodeName(filePath());
+  TQCString fn=TQFile::encodeName(filePath());
   lua_pushstring(m_interpreter,fn.data());
   int execresult=lua_pcall(m_interpreter,1,1,0);
   if (execresult==0) {
@@ -299,7 +299,7 @@ bool KateLUAIndentScriptImpl::setupInterpreter(QString &errorMsg)
 }
 
 
-bool KateLUAIndentScriptImpl::processChar(Kate::View *view, QChar c, QString &errorMsg )
+bool KateLUAIndentScriptImpl::processChar(Kate::View *view, TQChar c, TQString &errorMsg )
 {
   if (!setupInterpreter(errorMsg)) return false;
   katelua_doc=((KateView*)view)->doc();
@@ -310,7 +310,7 @@ bool KateLUAIndentScriptImpl::processChar(Kate::View *view, QChar c, QString &er
   bool result=true;
   if (!lua_isnil(m_interpreter,lua_gettop(m_interpreter)))
   {
-    lua_pushstring(m_interpreter,QString(c).utf8().data());
+    lua_pushstring(m_interpreter,TQString(c).utf8().data());
     if (lua_pcall(m_interpreter,1,0,0)!=0)
     {
       errorMsg=i18n("Lua indenting script had errors: %1").arg(lua_tostring(m_interpreter,lua_gettop(m_interpreter)));
@@ -322,13 +322,13 @@ bool KateLUAIndentScriptImpl::processChar(Kate::View *view, QChar c, QString &er
   return result;
 }
 
-bool KateLUAIndentScriptImpl::processLine(Kate::View *view, const KateDocCursor &line, QString &errorMsg )
+bool KateLUAIndentScriptImpl::processLine(Kate::View *view, const KateDocCursor &line, TQString &errorMsg )
 {
   if (!setupInterpreter(errorMsg)) return false;
   return true;
 }
 
-bool KateLUAIndentScriptImpl::processNewline( class Kate::View *view, const KateDocCursor &begin, bool needcontinue, QString &errorMsg )
+bool KateLUAIndentScriptImpl::processNewline( class Kate::View *view, const KateDocCursor &begin, bool needcontinue, TQString &errorMsg )
 {
   if (!setupInterpreter(errorMsg)) return false;
   katelua_doc=((KateView*)view)->doc();
@@ -383,13 +383,13 @@ void KateLUAIndentScriptManager::collectScripts (bool force)
 #endif
 
   // Let's get a list of all the .js files
-  QStringList list = KGlobal::dirs()->findAllResources("data","katepart/scripts/indent/*.lua",false,true);
+  TQStringList list = KGlobal::dirs()->findAllResources("data","katepart/scripts/indent/*.lua",false,true);
 
   // Let's iterate through the list and build the Mode List
-  for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
+  for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
   {
     // Each file has a group ed:
-    QString Group="Cache "+ *it;
+    TQString Group="Cache "+ *it;
 
     // Let's go to this group
     config.setGroup(Group);
@@ -397,20 +397,20 @@ void KateLUAIndentScriptManager::collectScripts (bool force)
     // stat the file
     struct stat sbuf;
     memset (&sbuf, 0, sizeof(sbuf));
-    stat(QFile::encodeName(*it), &sbuf);
+    stat(TQFile::encodeName(*it), &sbuf);
     kdDebug()<<"Lua script file:"<<(*it)<<endl;
     // If the group exist and we're not forced to read the .js file, let's build myModeList for katepartjscriptrc
     bool readnew=false;
     if (!force && config.hasGroup(Group) && (sbuf.st_mtime == config.readNumEntry("lastModified")))
     {
         config.setGroup(Group);
-        QString filePath=*it;
-        QString internalName=config.readEntry("internlName","KATE-ERROR");
+        TQString filePath=*it;
+        TQString internalName=config.readEntry("internlName","KATE-ERROR");
         if (internalName=="KATE-ERROR") readnew=true;
         else
         {
-          QString niceName=config.readEntry("niceName",internalName);
-          QString copyright=config.readEntry("copyright",i18n("(Unknown)"));
+          TQString niceName=config.readEntry("niceName",internalName);
+          TQString copyright=config.readEntry("copyright",i18n("(Unknown)"));
           double  version=config.readDoubleNumEntry("version",0.0);
           KateLUAIndentScriptImpl *s=new KateLUAIndentScriptImpl(
             internalName,filePath,niceName,copyright,version);
@@ -420,15 +420,15 @@ void KateLUAIndentScriptManager::collectScripts (bool force)
     else readnew=true;
     if (readnew)
     {
-        QFileInfo fi (*it);
+        TQFileInfo fi (*it);
 
         if (m_scripts[fi.baseName()])
           continue;
 
-        QString internalName=fi.baseName();
-        QString filePath=*it;
-        QString niceName=internalName;
-        QString copyright=i18n("(Unknown)");
+        TQString internalName=fi.baseName();
+        TQString filePath=*it;
+        TQString niceName=internalName;
+        TQString copyright=i18n("(Unknown)");
         double   version=0.0;
         parseScriptHeader(filePath,&niceName,&copyright,&version);
         /*save the information for retrieval*/
@@ -448,23 +448,23 @@ void KateLUAIndentScriptManager::collectScripts (bool force)
   config.sync();
 }
 
-KateIndentScript KateLUAIndentScriptManager::script(const QString &scriptname) {
+KateIndentScript KateLUAIndentScriptManager::script(const TQString &scriptname) {
   KateLUAIndentScriptImpl *s=m_scripts[scriptname];
   kdDebug(13050)<<scriptname<<"=="<<s<<endl;
   return KateIndentScript(s);
 }
 
-void KateLUAIndentScriptManager::parseScriptHeader(const QString &filePath,
-        QString *niceName,QString *copyright,double *version)
+void KateLUAIndentScriptManager::parseScriptHeader(const TQString &filePath,
+        TQString *niceName,TQString *copyright,double *version)
 {
 #if 0
-  QFile f(QFile::encodeName(filePath));
+  TQFile f(TQFile::encodeName(filePath));
   if (!f.open(IO_ReadOnly) ) {
     kdDebug(13050)<<"Header could not be parsed, because file could not be opened"<<endl;
     return;
   }
-  QTextStream st(&f);
-  st.setEncoding (QTextStream::UnicodeUTF8);
+  TQTextStream st(&f);
+  st.setEncoding (TQTextStream::UnicodeUTF8);
   if (!st.readLine().upper().startsWith("/**KATE")) {
     kdDebug(13050)<<"No header found"<<endl;
     f.close();
@@ -473,12 +473,12 @@ void KateLUAIndentScriptManager::parseScriptHeader(const QString &filePath,
   // here the real parsing begins
   kdDebug(13050)<<"Parsing indent script header"<<endl;
   enum {NOTHING=0,COPYRIGHT=1} currentState=NOTHING;
-  QString line;
-  QString tmpblockdata="";
-  QRegExp endExpr("[\\s\\t]*\\*\\*\\/[\\s\\t]*$");
-  QRegExp keyValue("[\\s\\t]*\\*\\s*(.+):(.*)$");
-  QRegExp blockContent("[\\s\\t]*\\*(.*)$");
-  while ((line=st.readLine())!=QString::null) {
+  TQString line;
+  TQString tmpblockdata="";
+  TQRegExp endExpr("[\\s\\t]*\\*\\*\\/[\\s\\t]*$");
+  TQRegExp keyValue("[\\s\\t]*\\*\\s*(.+):(.*)$");
+  TQRegExp blockContent("[\\s\\t]*\\*(.*)$");
+  while ((line=st.readLine())!=TQString::null) {
     if (endExpr.exactMatch(line)) {
       kdDebug(13050)<<"end of config block"<<endl;
       if (currentState==NOTHING) break;
@@ -491,11 +491,11 @@ void KateLUAIndentScriptManager::parseScriptHeader(const QString &filePath,
     if (currentState==NOTHING)
     {
       if (keyValue.exactMatch(line)) {
-        QStringList sl=keyValue.capturedTexts();
+        TQStringList sl=keyValue.capturedTexts();
         kdDebug(13050)<<"key:"<<sl[1]<<endl<<"value:"<<sl[2]<<endl;
         kdDebug(13050)<<"key-length:"<<sl[1].length()<<endl<<"value-length:"<<sl[2].length()<<endl;
-        QString key=sl[1];
-        QString value=sl[2];
+        TQString key=sl[1];
+        TQString value=sl[2];
         if (key=="NAME") (*niceName)=value.stripWhiteSpace();
         else if (key=="VERSION") (*version)=value.stripWhiteSpace().toDouble(0);
         else if (key=="COPYRIGHT")
@@ -508,7 +508,7 @@ void KateLUAIndentScriptManager::parseScriptHeader(const QString &filePath,
     } else {
       if (blockContent.exactMatch(line))
       {
-        QString  bl=blockContent.capturedTexts()[1];
+        TQString  bl=blockContent.capturedTexts()[1];
         //kdDebug(13050)<<"block content line:"<<bl<<endl<<bl.length()<<" "<<bl.isEmpty()<<endl;
         if (bl.isEmpty())
         {

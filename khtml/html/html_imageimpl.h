@@ -28,7 +28,7 @@
 #include "misc/loader_client.h"
 #include "rendering/render_object.h"
 
-#include <qregion.h>
+#include <tqregion.h>
 
 namespace DOM {
 
@@ -50,8 +50,8 @@ public:
     virtual void attach();
     virtual void removedFromDocument();
     virtual void insertedIntoDocument();
-    virtual void addId(const QString& id);
-    virtual void removeId(const QString& id);
+    virtual void addId(const TQString& id);
+    virtual void removeId(const TQString& id);
 
 
     long width() const;
@@ -62,11 +62,11 @@ public:
      *  This has to convert the pixmap into an image first.
      *  This will return undefined results if complete() is not true.
      */
-    QImage currentImage() const;
+    TQImage currentImage() const;
     /** Return the pixmap for this element.
      *  This will return undefined results if complete() is not true.
      */
-    QPixmap currentPixmap() const;
+    TQPixmap currentPixmap() const;
 
     DOMString altText() const;
 
@@ -107,13 +107,13 @@ public:
     bool mapMouseEvent(int x_, int y_, int width_, int height_,
                        khtml::RenderObject::NodeInfo& info);
 
-    virtual QRect getRect() const;
+    virtual TQRect getRect() const;
 
-    QRegion cachedRegion() const { return region; }
+    TQRegion cachedRegion() const { return region; }
 
 protected:
-    QRegion getRegion(int width_, int height) const;
-    QRegion region;
+    TQRegion getRegion(int width_, int height) const;
+    TQRegion region;
     khtml::Length* m_coords;
     int m_coordsLen;
     int lastw, lasth;
@@ -141,7 +141,7 @@ public:
                        khtml::RenderObject::NodeInfo& info);
 private:
 
-    QString name;
+    TQString name;
 };
 
 

@@ -20,21 +20,21 @@ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
-#include <qdom.h>
-#include <qstring.h>
+#include <tqdom.h>
+#include <tqstring.h>
 
 /**
  * Writes the skeleton
  */
-void generateSkel( const QString& idl, const QString& filename, QDomElement de );
+void generateSkel( const TQString& idl, const TQString& filename, TQDomElement de );
 
 /**
  * Writes the stubs header
  */
-void generateStub( const QString& idl, const QString& filename, QDomElement de);
+void generateStub( const TQString& idl, const TQString& filename, TQDomElement de);
 
 /**
  * Writes the stub implementation
  */
-void generateStubImpl( const QString& idl, const QString& header, const QString& headerBase, const QString& filename, QDomElement de);
+void generateStubImpl( const TQString& idl, const TQString& header, const TQString& headerBase, const TQString& filename, TQDomElement de);
 

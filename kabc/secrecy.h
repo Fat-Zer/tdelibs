@@ -21,7 +21,7 @@
 #ifndef KABC_SECRECY_H
 #define KABC_SECRECY_H
 
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 #include <kdelibs_export.h>
 
@@ -29,11 +29,11 @@ namespace KABC {
 
 class KABC_EXPORT Secrecy
 {
-    friend KABC_EXPORT QDataStream &operator<<( QDataStream &, const Secrecy & );
-    friend KABC_EXPORT QDataStream &operator>>( QDataStream &, Secrecy & );
+    friend KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const Secrecy & );
+    friend KABC_EXPORT TQDataStream &operator>>( TQDataStream &, Secrecy & );
 
 public:
-  typedef QValueList<int> TypeList;  
+  typedef TQValueList<int> TypeList;  
 
   /**
    * Secrecy types
@@ -82,19 +82,19 @@ public:
   /**
    * Returns a translated label for a given secrecy type.
    */
-  static QString typeLabel( int type );
+  static TQString typeLabel( int type );
 
   /**
    * For debug.
    */
-  QString asString() const;
+  TQString asString() const;
 
 private:
   int mType;
 };
 
-KABC_EXPORT QDataStream& operator<<( QDataStream &s, const Secrecy &secrecy );
-KABC_EXPORT QDataStream& operator>>( QDataStream &s, Secrecy &secrecy );
+KABC_EXPORT TQDataStream& operator<<( TQDataStream &s, const Secrecy &secrecy );
+KABC_EXPORT TQDataStream& operator>>( TQDataStream &s, Secrecy &secrecy );
 
 }
 #endif

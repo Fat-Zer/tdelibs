@@ -37,8 +37,8 @@
 #include <kinstance.h>
 #include <kstaticdeleter.h>
 
-#include <qpopupmenu.h>
-#include <qtextcodec.h>
+#include <tqpopupmenu.h>
+#include <tqtextcodec.h>
 
 #include <kdebug.h>
 
@@ -180,9 +180,9 @@ void KateDocumentConfig::readConfig (KConfig *config)
 
   setSearchDirConfigDepth (config->readNumEntry("Search Dir Config Depth", 3));
 
-  setBackupPrefix (config->readEntry("Backup Prefix", QString ("")));
+  setBackupPrefix (config->readEntry("Backup Prefix", TQString ("")));
 
-  setBackupSuffix (config->readEntry("Backup Suffix", QString ("~")));
+  setBackupSuffix (config->readEntry("Backup Suffix", TQString ("~")));
 
   // plugins
   for (uint i=0; i<KateFactory::self()->plugins().count(); i++)
@@ -409,7 +409,7 @@ void KateDocumentConfig::setConfigFlags (uint fullFlags)
   configEnd ();
 }
 
-const QString &KateDocumentConfig::encoding () const
+const TQString &KateDocumentConfig::encoding () const
 {
   if (m_encodingSet || isGlobal())
     return m_encoding;
@@ -417,12 +417,12 @@ const QString &KateDocumentConfig::encoding () const
   return s_global->encoding();
 }
 
-QTextCodec *KateDocumentConfig::codec ()
+TQTextCodec *KateDocumentConfig::codec ()
 {
   if (m_encodingSet || isGlobal())
   {
     if (m_encoding.isEmpty() && isGlobal())
-      return KGlobal::charsets()->codecForName (QString::fromLatin1(KGlobal::locale()->encoding()));
+      return KGlobal::charsets()->codecForName (TQString::fromLatin1(KGlobal::locale()->encoding()));
     else if (m_encoding.isEmpty())
       return s_global->codec ();
     else
@@ -432,14 +432,14 @@ QTextCodec *KateDocumentConfig::codec ()
   return s_global->codec ();
 }
 
-void KateDocumentConfig::setEncoding (const QString &encoding)
+void KateDocumentConfig::setEncoding (const TQString &encoding)
 {
-  QString enc = encoding;
+  TQString enc = encoding;
 
   if (!enc.isEmpty())
   {
     bool found = false;
-    QTextCodec *codec = KGlobal::charsets()->codecForName (encoding, found);
+    TQTextCodec *codec = KGlobal::charsets()->codecForName (encoding, found);
 
     if (!found || !codec)
       return;
@@ -471,16 +471,16 @@ int KateDocumentConfig::eol () const
   return s_global->eol();
 }
 
-QString KateDocumentConfig::eolString ()
+TQString KateDocumentConfig::eolString ()
 {
   if (eol() == KateDocumentConfig::eolUnix)
-    return QString ("\n");
+    return TQString ("\n");
   else if (eol() == KateDocumentConfig::eolDos)
-    return QString ("\r\n");
+    return TQString ("\r\n");
   else if (eol() == KateDocumentConfig::eolMac)
-    return QString ("\r");
+    return TQString ("\r");
 
-  return QString ("\n");
+  return TQString ("\n");
 }
 
 void KateDocumentConfig::setEol (int mode)
@@ -529,7 +529,7 @@ void KateDocumentConfig::setBackupFlags (uint flags)
   configEnd ();
 }
 
-const QString &KateDocumentConfig::backupPrefix () const
+const TQString &KateDocumentConfig::backupPrefix () const
 {
   if (m_backupPrefixSet || isGlobal())
     return m_backupPrefix;
@@ -537,7 +537,7 @@ const QString &KateDocumentConfig::backupPrefix () const
   return s_global->backupPrefix();
 }
 
-const QString &KateDocumentConfig::backupSuffix () const
+const TQString &KateDocumentConfig::backupSuffix () const
 {
   if (m_backupSuffixSet || isGlobal())
     return m_backupSuffix;
@@ -545,7 +545,7 @@ const QString &KateDocumentConfig::backupSuffix () const
   return s_global->backupSuffix();
 }
 
-void KateDocumentConfig::setBackupPrefix (const QString &prefix)
+void KateDocumentConfig::setBackupPrefix (const TQString &prefix)
 {
   configStart ();
 
@@ -555,7 +555,7 @@ void KateDocumentConfig::setBackupPrefix (const QString &prefix)
   configEnd ();
 }
 
-void KateDocumentConfig::setBackupSuffix (const QString &suffix)
+void KateDocumentConfig::setBackupSuffix (const TQString &suffix)
 {
   configStart ();
 
@@ -1127,14 +1127,14 @@ void KateRendererConfig::setSchemaInternal( int schema )
 
   KConfig *config (KateFactory::self()->schemaManager()->schema(schema));
 
-  QColor tmp0 (KGlobalSettings::baseColor());
-  QColor tmp1 (KGlobalSettings::highlightColor());
-  QColor tmp2 (KGlobalSettings::alternateBackgroundColor());
-  QColor tmp3 ( "#FFFF99" );
-  QColor tmp4 (tmp2.dark());
-  QColor tmp5 ( KGlobalSettings::textColor() );
-  QColor tmp6 ( "#EAE9E8" );
-  QColor tmp7 ( "#000000" );
+  TQColor tmp0 (KGlobalSettings::baseColor());
+  TQColor tmp1 (KGlobalSettings::highlightColor());
+  TQColor tmp2 (KGlobalSettings::alternateBackgroundColor());
+  TQColor tmp3 ( "#FFFF99" );
+  TQColor tmp4 (tmp2.dark());
+  TQColor tmp5 ( KGlobalSettings::textColor() );
+  TQColor tmp6 ( "#EAE9E8" );
+  TQColor tmp7 ( "#000000" );
 
   m_backgroundColor = config->readColorEntry("Color Background", &tmp0);
   m_backgroundColorSet = true;
@@ -1154,7 +1154,7 @@ void KateRendererConfig::setSchemaInternal( int schema )
   m_lineNumberColorSet = true;
 
     // same std colors like in KateDocument::markColor
-  QColor mark[7];
+  TQColor mark[7];
   mark[0] = Qt::blue;
   mark[1] = Qt::red;
   mark[2] = Qt::yellow;
@@ -1164,13 +1164,13 @@ void KateRendererConfig::setSchemaInternal( int schema )
   mark[6] = Qt::red;
 
   for (int i = 1; i <= KTextEditor::MarkInterface::reservedMarkersCount(); i++) {
-    QColor col = config->readColorEntry(QString("Color MarkType%1").arg(i), &mark[i - 1]);
+    TQColor col = config->readColorEntry(TQString("Color MarkType%1").arg(i), &mark[i - 1]);
     int index = i-1;
     m_lineMarkerColorSet[index] = true;
     m_lineMarkerColor[index] = col;
   }
 
-  QFont f (KGlobalSettings::fixedFont());
+  TQFont f (KGlobalSettings::fixedFont());
 
   if (!m_fontSet)
   {
@@ -1189,7 +1189,7 @@ KateFontStruct *KateRendererConfig::fontStruct ()
   return s_global->fontStruct ();
 }
 
-QFont *KateRendererConfig::font()
+TQFont *KateRendererConfig::font()
 {
   return &(fontStruct ()->myFont);
 }
@@ -1199,7 +1199,7 @@ KateFontMetrics *KateRendererConfig::fontMetrics()
   return &(fontStruct ()->myFontMetrics);
 }
 
-void KateRendererConfig::setFont(const QFont &font)
+void KateRendererConfig::setFont(const TQFont &font)
 {
   configStart ();
 
@@ -1232,7 +1232,7 @@ void KateRendererConfig::setWordWrapMarker (bool on)
   configEnd ();
 }
 
-const QColor& KateRendererConfig::backgroundColor() const
+const TQColor& KateRendererConfig::backgroundColor() const
 {
   if (m_backgroundColorSet || isGlobal())
     return m_backgroundColor;
@@ -1240,7 +1240,7 @@ const QColor& KateRendererConfig::backgroundColor() const
   return s_global->backgroundColor();
 }
 
-void KateRendererConfig::setBackgroundColor (const QColor &col)
+void KateRendererConfig::setBackgroundColor (const TQColor &col)
 {
   configStart ();
 
@@ -1250,7 +1250,7 @@ void KateRendererConfig::setBackgroundColor (const QColor &col)
   configEnd ();
 }
 
-const QColor& KateRendererConfig::selectionColor() const
+const TQColor& KateRendererConfig::selectionColor() const
 {
   if (m_selectionColorSet || isGlobal())
     return m_selectionColor;
@@ -1258,7 +1258,7 @@ const QColor& KateRendererConfig::selectionColor() const
   return s_global->selectionColor();
 }
 
-void KateRendererConfig::setSelectionColor (const QColor &col)
+void KateRendererConfig::setSelectionColor (const TQColor &col)
 {
   configStart ();
 
@@ -1268,7 +1268,7 @@ void KateRendererConfig::setSelectionColor (const QColor &col)
   configEnd ();
 }
 
-const QColor& KateRendererConfig::highlightedLineColor() const
+const TQColor& KateRendererConfig::highlightedLineColor() const
 {
   if (m_highlightedLineColorSet || isGlobal())
     return m_highlightedLineColor;
@@ -1276,7 +1276,7 @@ const QColor& KateRendererConfig::highlightedLineColor() const
   return s_global->highlightedLineColor();
 }
 
-void KateRendererConfig::setHighlightedLineColor (const QColor &col)
+void KateRendererConfig::setHighlightedLineColor (const TQColor &col)
 {
   configStart ();
 
@@ -1286,7 +1286,7 @@ void KateRendererConfig::setHighlightedLineColor (const QColor &col)
   configEnd ();
 }
 
-const QColor& KateRendererConfig::lineMarkerColor(KTextEditor::MarkInterface::MarkTypes type) const
+const TQColor& KateRendererConfig::lineMarkerColor(KTextEditor::MarkInterface::MarkTypes type) const
 {
   int index = 0;
   if (type > 0) { while((type >> index++) ^ 1) {} }
@@ -1294,7 +1294,7 @@ const QColor& KateRendererConfig::lineMarkerColor(KTextEditor::MarkInterface::Ma
 
   if ( index < 0 || index >= KTextEditor::MarkInterface::reservedMarkersCount() )
   {
-    static QColor dummy;
+    static TQColor dummy;
     return dummy;
   }
 
@@ -1304,7 +1304,7 @@ const QColor& KateRendererConfig::lineMarkerColor(KTextEditor::MarkInterface::Ma
   return s_global->lineMarkerColor( type );
 }
 
-void KateRendererConfig::setLineMarkerColor (const QColor &col, KTextEditor::MarkInterface::MarkTypes type)
+void KateRendererConfig::setLineMarkerColor (const TQColor &col, KTextEditor::MarkInterface::MarkTypes type)
 {
   int index = static_cast<int>( log(static_cast<double>(type)) / log(2.0) );
   Q_ASSERT( index >= 0 && index < KTextEditor::MarkInterface::reservedMarkersCount() );
@@ -1316,7 +1316,7 @@ void KateRendererConfig::setLineMarkerColor (const QColor &col, KTextEditor::Mar
   configEnd ();
 }
 
-const QColor& KateRendererConfig::highlightedBracketColor() const
+const TQColor& KateRendererConfig::highlightedBracketColor() const
 {
   if (m_highlightedBracketColorSet || isGlobal())
     return m_highlightedBracketColor;
@@ -1324,7 +1324,7 @@ const QColor& KateRendererConfig::highlightedBracketColor() const
   return s_global->highlightedBracketColor();
 }
 
-void KateRendererConfig::setHighlightedBracketColor (const QColor &col)
+void KateRendererConfig::setHighlightedBracketColor (const TQColor &col)
 {
   configStart ();
 
@@ -1334,7 +1334,7 @@ void KateRendererConfig::setHighlightedBracketColor (const QColor &col)
   configEnd ();
 }
 
-const QColor& KateRendererConfig::wordWrapMarkerColor() const
+const TQColor& KateRendererConfig::wordWrapMarkerColor() const
 {
   if (m_wordWrapMarkerColorSet || isGlobal())
     return m_wordWrapMarkerColor;
@@ -1342,7 +1342,7 @@ const QColor& KateRendererConfig::wordWrapMarkerColor() const
   return s_global->wordWrapMarkerColor();
 }
 
-void KateRendererConfig::setWordWrapMarkerColor (const QColor &col)
+void KateRendererConfig::setWordWrapMarkerColor (const TQColor &col)
 {
   configStart ();
 
@@ -1352,7 +1352,7 @@ void KateRendererConfig::setWordWrapMarkerColor (const QColor &col)
   configEnd ();
 }
 
-const QColor& KateRendererConfig::tabMarkerColor() const
+const TQColor& KateRendererConfig::tabMarkerColor() const
 {
   if (m_tabMarkerColorSet || isGlobal())
     return m_tabMarkerColor;
@@ -1360,7 +1360,7 @@ const QColor& KateRendererConfig::tabMarkerColor() const
   return s_global->tabMarkerColor();
 }
 
-void KateRendererConfig::setTabMarkerColor (const QColor &col)
+void KateRendererConfig::setTabMarkerColor (const TQColor &col)
 {
   configStart ();
 
@@ -1370,7 +1370,7 @@ void KateRendererConfig::setTabMarkerColor (const QColor &col)
   configEnd ();
 }
 
-const QColor& KateRendererConfig::iconBarColor() const
+const TQColor& KateRendererConfig::iconBarColor() const
 {
   if (m_iconBarColorSet || isGlobal())
     return m_iconBarColor;
@@ -1378,7 +1378,7 @@ const QColor& KateRendererConfig::iconBarColor() const
   return s_global->iconBarColor();
 }
 
-void KateRendererConfig::setIconBarColor (const QColor &col)
+void KateRendererConfig::setIconBarColor (const TQColor &col)
 {
   configStart ();
 
@@ -1388,7 +1388,7 @@ void KateRendererConfig::setIconBarColor (const QColor &col)
   configEnd ();
 }
 
-const QColor& KateRendererConfig::lineNumberColor() const
+const TQColor& KateRendererConfig::lineNumberColor() const
 {
   if (m_lineNumberColorSet || isGlobal())
     return m_lineNumberColor;
@@ -1396,7 +1396,7 @@ const QColor& KateRendererConfig::lineNumberColor() const
   return s_global->lineNumberColor();
 }
 
-void KateRendererConfig::setLineNumberColor (const QColor &col)
+void KateRendererConfig::setLineNumberColor (const TQColor &col)
 {
   configStart ();
 

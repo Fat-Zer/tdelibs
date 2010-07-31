@@ -31,8 +31,8 @@
 
 #include <iostream>
 
-#include <qfile.h>
-#include <qtimer.h>
+#include <tqfile.h>
+#include <tqtimer.h>
 
 #include <kurl.h>
 #include <kdebug.h>
@@ -71,7 +71,7 @@ bool KAudioConverter::setup(int samplingRate)
 	return true;
 }
 
-void KAudioConverter::slotMimeType(const QString &mimeType)
+void KAudioConverter::slotMimeType(const TQString &mimeType)
 {
 	m_mimeType = mimeType;
 	kapp->exit_loop();
@@ -88,7 +88,7 @@ void KAudioConverter::requestPlayObject(const KURL &url)
 		Arts::KIOInputStream_impl *inputStreamImpl = new Arts::KIOInputStream_impl();
 		inputStream = Arts::KIOInputStream::_from_base(inputStreamImpl);
 
-		QObject::connect(inputStreamImpl, SIGNAL(mimeTypeFound(const QString &)), SLOT(slotMimeType(const QString &)));
+		TQObject::connect(inputStreamImpl, TQT_SIGNAL(mimeTypeFound(const TQString &)), TQT_SLOT(slotMimeType(const TQString &)));
 
 		inputStream.openURL(url.url().latin1());
 		inputStream.streamStart();
@@ -134,7 +134,7 @@ void KAudioConverter::requestPlayObject(const KURL &url)
 	{
 		Arts::PlayObject result = Arts::SubClass(objectType);
 
-		if(result.loadMedia(string(QFile::encodeName(url.path()))))
+		if(result.loadMedia(string(TQFile::encodeName(url.path()))))
 		{
 			result._node()->start();
 			m_incoming = new KPlayObject(result, false);
@@ -161,9 +161,9 @@ void KAudioConverter::start()
 	Arts::connect(m_incoming->object(), "left", m_request, "left");
 	Arts::connect(m_incoming->object(), "right", m_request, "right");
 
-	QObject::connect(requestImpl, SIGNAL(newBlockSize(long)), SIGNAL(newBlockSize(long)));
-	QObject::connect(requestImpl, SIGNAL(newBlockPointer(long)), SIGNAL(newBlockPointer(long)));
-	QObject::connect(requestImpl, SIGNAL(newData()), SIGNAL(newData()));
+	TQObject::connect(requestImpl, TQT_SIGNAL(newBlockSize(long)), TQT_SIGNAL(newBlockSize(long)));
+	TQObject::connect(requestImpl, TQT_SIGNAL(newBlockPointer(long)), TQT_SIGNAL(newBlockPointer(long)));
+	TQObject::connect(requestImpl, TQT_SIGNAL(newData()), TQT_SIGNAL(newData()));
 
 	// Special mpeglib case
 	// TODO: needed at all??
@@ -174,7 +174,7 @@ void KAudioConverter::start()
 	
 	m_request.start();
 		
-	// TODO: Maybe do this async, using QTimer::singleShot
+	// TODO: Maybe do this async, using TQTimer::singleShot
 	// But jowenn i think jowenn is right -> this would
 	// lead to problems in slotNewData() when accessing the data
 	// (could already be overwritten...)

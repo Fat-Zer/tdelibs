@@ -65,7 +65,7 @@ public:
    *        will be imported into the config object.  If false, only
    *        the filename specified will be dealt with.
    */
-  KConfigBackEnd(KConfigBase *_config, const QString &_fileName,
+  KConfigBackEnd(KConfigBase *_config, const TQString &_fileName,
 		 const char * _resType, bool _useKDEGlobals);
 
   /**
@@ -102,7 +102,7 @@ public:
    * @param _useKDEGlobals specifies whether or not to also parse the
    *        global KDE configuration files.
    */
-  void changeFileName(const QString &_fileName, const char * _resType,
+  void changeFileName(const TQString &_fileName, const char * _resType,
 		      bool _useKDEGlobals);
 
   /**
@@ -117,7 +117,7 @@ public:
    * Returns the filename as passed to the constructor.
    * @return the filename as passed to the constructor.
    */
-  QString fileName() const { return mfileName; }
+  TQString fileName() const { return mfileName; }
 
   /**
    * Returns the resource type as passed to the constructor.
@@ -130,7 +130,7 @@ public:
    * @param _localeString the identifier of the language
    * @see KLocale
    */
-  void setLocaleString(const QCString &_localeString) { localeString = _localeString; }
+  void setLocaleString(const TQCString &_localeString) { localeString = _localeString; }
 
   /**
    * Set the file mode for newly created files.
@@ -159,18 +159,18 @@ private:
   /**
    * @deprecated Use fileName() instead
    */
-  KDE_DEPRECATED QString filename() const { return mfileName; }
+  KDE_DEPRECATED TQString filename() const { return mfileName; }
 
 protected:
   KConfigBase *pConfig;
 
-  QString mfileName;
-  QCString resType;
+  TQString mfileName;
+  TQCString resType;
   bool useKDEGlobals : 1;
   bool bFileImmutable : 1;
-  QCString localeString;
-  QString mLocalFileName;
-  QString mGlobalFileName;
+  TQCString localeString;
+  TQString mLocalFileName;
+  TQString mGlobalFileName;
   KConfigBase::ConfigState mConfigState;
   int mFileMode;
 
@@ -207,7 +207,7 @@ public:
    *        will be imported into the config object.  If false, only
    *        the filename specified will be dealt with.
    */
-  KConfigINIBackEnd(KConfigBase *_config, const QString &_fileName,
+  KConfigINIBackEnd(KConfigBase *_config, const TQString &_fileName,
 		    const char * _resType, bool _useKDEGlobals = true)
     : KConfigBackEnd(_config, _fileName, _resType, _useKDEGlobals) {}
 
@@ -248,13 +248,13 @@ protected:
    * @param bDefault Specifies whether entries should be marked as
    *        being default values.
    */
-  void parseSingleConfigFile(QFile& rFile, KEntryMap *pWriteBackMap = 0L,
+  void parseSingleConfigFile(TQFile& rFile, KEntryMap *pWriteBackMap = 0L,
 			     bool bGlobal = false, bool bDefault = false);
 
   // Kubuntu patch, 2006-08-03
   // looks up a key in with KLocale
   // see https://launchpad.net/distros/ubuntu/+spec/langpacks-desktopfiles-kde
-  void translateKey(KLocale& locale, QCString currentGroup, QCString key);
+  void translateKey(KLocale& locale, TQCString currentGroup, TQCString key);
 
   /**
    * Writes configuration file back.
@@ -270,7 +270,7 @@ protected:
    * @return Whether some entries are left to be written to other
    *         files.
    */
-  bool writeConfigFile(QString filename, bool bGlobal = false, bool bMerge = true);
+  bool writeConfigFile(TQString filename, bool bGlobal = false, bool bMerge = true);
 
   /** Get the entry map.
    *
@@ -284,7 +284,7 @@ protected:
    * @return Whether there will be some entries left for writing to other
    * files.
    */
-  bool getEntryMap(KEntryMap &map, bool bGlobal, QFile *mergeFile);
+  bool getEntryMap(KEntryMap &map, bool bGlobal, TQFile *mergeFile);
 
   /** Write the entries in @e aTempMap to the file stream.*/
   void writeEntries(FILE *pStream, const KEntryMap &aTempMap);

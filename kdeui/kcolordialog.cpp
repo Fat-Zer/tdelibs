@@ -31,19 +31,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qdrawutil.h>
-#include <qevent.h>
-#include <qfile.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qvalidator.h>
-#include <qpainter.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
-#include <qtimer.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqdrawutil.h>
+#include <tqevent.h>
+#include <tqfile.h>
+#include <tqimage.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqvalidator.h>
+#include <tqpainter.h>
+#include <tqpushbutton.h>
+#include <tqspinbox.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -96,8 +96,8 @@ const int customColorIndex = 1;
 class KColorSpinBox : public QSpinBox
 {
 public:
-  KColorSpinBox(int minValue, int maxValue, int step, QWidget* parent)
-   : QSpinBox(minValue, maxValue, step, parent, "kcolorspinbox")
+  KColorSpinBox(int minValue, int maxValue, int step, TQWidget* parent)
+   : TQSpinBox(minValue, maxValue, step, parent, "kcolorspinbox")
   { }
 
   // Override Qt's braindead auto-selection.
@@ -114,23 +114,23 @@ public:
 #define STANDARD_PAL_SIZE 17
 
 KColor::KColor()
-: QColor()
+: TQColor()
 {
   r = 0; g = 0; b = 0; h = 0; s = 0; v = 0;
 }
 
 KColor::KColor( const KColor &col)
-: QColor( col )
+: TQColor( col )
 {
   h = col.h; s = col.s; v = col.v;
   r = col.r; g = col.g; b = col.b;
 }
 
-KColor::KColor( const QColor &col)
-: QColor( col )
+KColor::KColor( const TQColor &col)
+: TQColor( col )
 {
-  QColor::getRgb(&r, &g, &b);
-  QColor::getHsv(&h, &s, &v);
+  TQColor::getRgb(&r, &g, &b);
+  TQColor::getHsv(&h, &s, &v);
 }
 
 bool KColor::operator==(const KColor& col) const
@@ -141,7 +141,7 @@ bool KColor::operator==(const KColor& col) const
 
 KColor& KColor::operator=(const KColor& col)
 {
-  *(QColor *)this = col;
+  *(TQColor *)this = col;
   h = col.h; s = col.s; v = col.v;
   r = col.r; g = col.g; b = col.b;
   return *this;
@@ -151,16 +151,16 @@ void
 KColor::setHsv(int _h, int _s, int _v)
 {
   h = _h; s = _s; v = _v;
-  QColor::setHsv(h, s, v);
-  QColor::rgb(&r, &g, &b);
+  TQColor::setHsv(h, s, v);
+  TQColor::rgb(&r, &g, &b);
 }
 
 void
 KColor::setRgb(int _r, int _g, int _b)
 {
   r = _r; g = _g; b = _b;
-  QColor::setRgb(r, g, b);
-  QColor::hsv(&h, &s, &v);
+  TQColor::setRgb(r, g, b);
+  TQColor::hsv(&h, &s, &v);
 }
 
 void
@@ -176,15 +176,15 @@ KColor::hsv(int *_h, int *_s, int *_v) const
 }
 
 
-static QColor *standardPalette = 0;
-static KStaticDeleter<QColor> spd;
+static TQColor *standardPalette = 0;
+static KStaticDeleter<TQColor> spd;
 
 static void createStandardPalette()
 {
     if ( standardPalette )
 	return;
 
-    spd.setObject(standardPalette, new QColor [STANDARD_PAL_SIZE], true/*array*/);
+    spd.setObject(standardPalette, new TQColor [STANDARD_PAL_SIZE], true/*array*/);
 
     int i = 0;
 
@@ -208,7 +208,7 @@ static void createStandardPalette()
 }
 
 
-KHSSelector::KHSSelector( QWidget *parent, const char *name )
+KHSSelector::KHSSelector( TQWidget *parent, const char *name )
 	: KXYSelector( parent, name )
 {
 	setRange( 0, 0, 359, 255 );
@@ -219,21 +219,21 @@ void KHSSelector::updateContents()
 	drawPalette(&pixmap);
 }
 
-void KHSSelector::resizeEvent( QResizeEvent * )
+void KHSSelector::resizeEvent( TQResizeEvent * )
 {
 	updateContents();
 }
 
-void KHSSelector::drawContents( QPainter *painter )
+void KHSSelector::drawContents( TQPainter *painter )
 {
 	painter->drawPixmap( contentsRect().x(), contentsRect().y(), pixmap );
 }
 
-void KHSSelector::drawPalette( QPixmap *pixmap )
+void KHSSelector::drawPalette( TQPixmap *pixmap )
 {
 	int xSize = contentsRect().width(), ySize = contentsRect().height();
-	QImage image( xSize, ySize, 32 );
-	QColor col;
+	TQImage image( xSize, ySize, 32 );
+	TQColor col;
 	int h, s;
 	uint *p;
 
@@ -248,7 +248,7 @@ void KHSSelector::drawPalette( QPixmap *pixmap )
 		}
 	}
 
-	if ( QColor::numBitPlanes() <= 8 )
+	if ( TQColor::numBitPlanes() <= 8 )
 	{
 		createStandardPalette();
 		KImageEffect::dither( image, standardPalette, STANDARD_PAL_SIZE );
@@ -259,19 +259,19 @@ void KHSSelector::drawPalette( QPixmap *pixmap )
 
 //-----------------------------------------------------------------------------
 
-KValueSelector::KValueSelector( QWidget *parent, const char *name )
+KValueSelector::KValueSelector( TQWidget *parent, const char *name )
 	: KSelector( KSelector::Vertical, parent, name ), _hue(0), _sat(0)
 {
 	setRange( 0, 255 );
-	pixmap.setOptimization( QPixmap::BestOptim );
+	pixmap.setOptimization( TQPixmap::BestOptim );
 }
 
-KValueSelector::KValueSelector(Orientation o, QWidget *parent, const char *name
+KValueSelector::KValueSelector(Orientation o, TQWidget *parent, const char *name
  )
 	: KSelector( o, parent, name), _hue(0), _sat(0)
 {
 	setRange( 0, 255 );
-	pixmap.setOptimization( QPixmap::BestOptim );
+	pixmap.setOptimization( TQPixmap::BestOptim );
 }
 
 void KValueSelector::updateContents()
@@ -279,21 +279,21 @@ void KValueSelector::updateContents()
 	drawPalette(&pixmap);
 }
 
-void KValueSelector::resizeEvent( QResizeEvent * )
+void KValueSelector::resizeEvent( TQResizeEvent * )
 {
 	updateContents();
 }
 
-void KValueSelector::drawContents( QPainter *painter )
+void KValueSelector::drawContents( TQPainter *painter )
 {
 	painter->drawPixmap( contentsRect().x(), contentsRect().y(), pixmap );
 }
 
-void KValueSelector::drawPalette( QPixmap *pixmap )
+void KValueSelector::drawPalette( TQPixmap *pixmap )
 {
 	int xSize = contentsRect().width(), ySize = contentsRect().height();
-	QImage image( xSize, ySize, 32 );
-	QColor col;
+	TQImage image( xSize, ySize, 32 );
+	TQColor col;
 	uint *p;
 	QRgb rgb;
 
@@ -324,7 +324,7 @@ void KValueSelector::drawPalette( QPixmap *pixmap )
 		}
 	}
 
-	if ( QColor::numBitPlanes() <= 8 )
+	if ( TQColor::numBitPlanes() <= 8 )
 	{
 		createStandardPalette();
 		KImageEffect::dither( image, standardPalette, STANDARD_PAL_SIZE );
@@ -334,16 +334,16 @@ void KValueSelector::drawPalette( QPixmap *pixmap )
 
 //-----------------------------------------------------------------------------
 
-KColorCells::KColorCells( QWidget *parent, int rows, int cols )
-	: QGridView( parent )
+KColorCells::KColorCells( TQWidget *parent, int rows, int cols )
+	: TQGridView( parent )
 {
 	shade = true;
 	setNumRows( rows );
 	setNumCols( cols );
-	colors = new QColor [ rows * cols ];
+	colors = new TQColor [ rows * cols ];
 
 	for ( int i = 0; i < rows * cols; i++ )
-		colors[i] = QColor();
+		colors[i] = TQColor();
 
 	selected = 0;
         inMouse = false;
@@ -362,15 +362,15 @@ KColorCells::~KColorCells()
 	delete [] colors;
 }
 
-void KColorCells::setColor( int colNum, const QColor &col )
+void KColorCells::setColor( int colNum, const TQColor &col )
 {
 	colors[colNum] = col;
 	updateCell( colNum/numCols(), colNum%numCols() );
 }
 
-void KColorCells::paintCell( QPainter *painter, int row, int col )
+void KColorCells::paintCell( TQPainter *painter, int row, int col )
 {
-	QBrush brush;
+	TQBrush brush;
         int w = 1;
 
 	if (shade)
@@ -379,7 +379,7 @@ void KColorCells::paintCell( QPainter *painter, int row, int col )
 		    cellHeight()-2, colorGroup(), true, 1, &brush );
 		w = 2;
         }
-        QColor color = colors[ row * numCols() + col ];
+        TQColor color = colors[ row * numCols() + col ];
         if (!color.isValid())
 	{
 		if (!shade) return;
@@ -387,26 +387,26 @@ void KColorCells::paintCell( QPainter *painter, int row, int col )
 	}
 
 	painter->setPen( color );
-	painter->setBrush( QBrush( color ) );
+	painter->setBrush( TQBrush( color ) );
 	painter->drawRect( w, w, cellWidth()-w*2, cellHeight()-w*2 );
 
 	if ( row * numCols() + col == selected )
 		painter->drawWinFocusRect( w, w, cellWidth()-w*2, cellHeight()-w*2 );
 }
 
-void KColorCells::resizeEvent( QResizeEvent * )
+void KColorCells::resizeEvent( TQResizeEvent * )
 {
 	setCellWidth( width() / numCols() );
 	setCellHeight( height() / numRows() );
 }
 
-void KColorCells::mousePressEvent( QMouseEvent *e )
+void KColorCells::mousePressEvent( TQMouseEvent *e )
 {
     inMouse = true;
     mPos = e->pos();
 }
 
-int KColorCells::posToCell(const QPoint &pos, bool ignoreBorders)
+int KColorCells::posToCell(const TQPoint &pos, bool ignoreBorders)
 {
    int row = pos.y() / cellHeight();
    int col = pos.x() / cellWidth();
@@ -424,7 +424,7 @@ int KColorCells::posToCell(const QPoint &pos, bool ignoreBorders)
    return cell;
 }
 
-void KColorCells::mouseMoveEvent( QMouseEvent *e )
+void KColorCells::mouseMoveEvent( TQMouseEvent *e )
 {
     if( !(e->state() & LeftButton)) return;
 
@@ -443,21 +443,21 @@ void KColorCells::mouseMoveEvent( QMouseEvent *e )
     }
 }
 
-void KColorCells::dragEnterEvent( QDragEnterEvent *event)
+void KColorCells::dragEnterEvent( TQDragEnterEvent *event)
 {
      event->accept( acceptDrags && KColorDrag::canDecode( event));
 }
 
-void KColorCells::dropEvent( QDropEvent *event)
+void KColorCells::dropEvent( TQDropEvent *event)
 {
-     QColor c;
+     TQColor c;
      if( KColorDrag::decode( event, c)) {
           int cell = posToCell(event->pos(), true);
 	  setColor(cell,c);
      }
 }
 
-void KColorCells::mouseReleaseEvent( QMouseEvent *e )
+void KColorCells::mouseReleaseEvent( TQMouseEvent *e )
 {
 	int cell = posToCell(mPos);
         int currentCell = posToCell(e->pos());
@@ -480,7 +480,7 @@ void KColorCells::mouseReleaseEvent( QMouseEvent *e )
 	    emit colorSelected( cell );
 }
 
-void KColorCells::mouseDoubleClickEvent( QMouseEvent * /*e*/ )
+void KColorCells::mouseDoubleClickEvent( TQMouseEvent * /*e*/ )
 {
   int cell = posToCell(mPos);
 
@@ -491,9 +491,9 @@ void KColorCells::mouseDoubleClickEvent( QMouseEvent * /*e*/ )
 
 //-----------------------------------------------------------------------------
 
-KColorPatch::KColorPatch( QWidget *parent ) : QFrame( parent )
+KColorPatch::KColorPatch( TQWidget *parent ) : TQFrame( parent )
 {
-	setFrameStyle( QFrame::Panel | QFrame::Sunken );
+	setFrameStyle( TQFrame::Panel | TQFrame::Sunken );
 	colContext = 0;
 	setAcceptDrops( true);
 }
@@ -501,33 +501,33 @@ KColorPatch::KColorPatch( QWidget *parent ) : QFrame( parent )
 KColorPatch::~KColorPatch()
 {
   if ( colContext )
-    QColor::destroyAllocContext( colContext );
+    TQColor::destroyAllocContext( colContext );
 }
 
-void KColorPatch::setColor( const QColor &col )
+void KColorPatch::setColor( const TQColor &col )
 {
 	if ( colContext )
-		QColor::destroyAllocContext( colContext );
-	colContext = QColor::enterAllocContext();
+		TQColor::destroyAllocContext( colContext );
+	colContext = TQColor::enterAllocContext();
 	color.setRgb( col.rgb() );
 	color.alloc();
-	QColor::leaveAllocContext();
+	TQColor::leaveAllocContext();
 
-	QPainter painter;
+	TQPainter painter;
 
 	painter.begin( this );
 	drawContents( &painter );
 	painter.end();
 }
 
-void KColorPatch::drawContents( QPainter *painter )
+void KColorPatch::drawContents( TQPainter *painter )
 {
 	painter->setPen( color );
-	painter->setBrush( QBrush( color ) );
+	painter->setBrush( TQBrush( color ) );
 	painter->drawRect( contentsRect() );
 }
 
-void KColorPatch::mouseMoveEvent( QMouseEvent *e )
+void KColorPatch::mouseMoveEvent( TQMouseEvent *e )
 {
         // Drag color object
         if( !(e->state() & LeftButton)) return;
@@ -535,14 +535,14 @@ void KColorPatch::mouseMoveEvent( QMouseEvent *e )
 	d->dragCopy();
 }
 
-void KColorPatch::dragEnterEvent( QDragEnterEvent *event)
+void KColorPatch::dragEnterEvent( TQDragEnterEvent *event)
 {
      event->accept( KColorDrag::canDecode( event));
 }
 
-void KColorPatch::dropEvent( QDropEvent *event)
+void KColorPatch::dropEvent( TQDropEvent *event)
 {
-     QColor c;
+     TQColor c;
      if( KColorDrag::decode( event, c)) {
 	  setColor( c);
 	  emit colorChanged( c);
@@ -552,18 +552,18 @@ void KColorPatch::dropEvent( QDropEvent *event)
 class KPaletteTable::KPaletteTablePrivate
 {
 public:
-    QMap<QString,QColor> m_namedColorMap;
+    TQMap<TQString,TQColor> m_namedColorMap;
 };
 
-KPaletteTable::KPaletteTable( QWidget *parent, int minWidth, int cols)
-    : QWidget( parent ), cells(0), mPalette(0), mMinWidth(minWidth), mCols(cols)
+KPaletteTable::KPaletteTable( TQWidget *parent, int minWidth, int cols)
+    : TQWidget( parent ), cells(0), mPalette(0), mMinWidth(minWidth), mCols(cols)
 {
   d = new KPaletteTablePrivate;
   
   i18n_namedColors  = i18n("Named Colors");
 
-  QStringList diskPaletteList = KPalette::getPaletteList();
-  QStringList paletteList;
+  TQStringList diskPaletteList = KPalette::getPaletteList();
+  TQStringList paletteList;
 
   // We must replace the untranslated file names by translate names (of course only for KDE's standard palettes)
   for ( int i = 0; colorPaletteName[i].m_fileName; ++i )
@@ -574,19 +574,19 @@ KPaletteTable::KPaletteTable( QWidget *parent, int minWidth, int cols)
   paletteList += diskPaletteList;
   paletteList.append( i18n_namedColors );
 
-  QVBoxLayout *layout = new QVBoxLayout( this );
+  TQVBoxLayout *layout = new TQVBoxLayout( this );
 
-  combo = new QComboBox( false, this );
+  combo = new TQComboBox( false, this );
   combo->insertStringList( paletteList );
   layout->addWidget(combo);
 
-  sv = new QScrollView( this );
-  QSize cellSize = QSize( mMinWidth, 120);
-  sv->setHScrollBarMode( QScrollView::AlwaysOff);
-  sv->setVScrollBarMode( QScrollView::AlwaysOn);
-  QSize minSize = QSize(sv->verticalScrollBar()->width(), 0);
-  minSize += QSize(sv->frameWidth(), 0);
-  minSize += QSize(cellSize);
+  sv = new TQScrollView( this );
+  TQSize cellSize = TQSize( mMinWidth, 120);
+  sv->setHScrollBarMode( TQScrollView::AlwaysOff);
+  sv->setVScrollBarMode( TQScrollView::AlwaysOn);
+  TQSize minSize = TQSize(sv->verticalScrollBar()->width(), 0);
+  minSize += TQSize(sv->frameWidth(), 0);
+  minSize += TQSize(cellSize);
   sv->setFixedSize(minSize);
   layout->addWidget(sv);
 
@@ -594,12 +594,12 @@ KPaletteTable::KPaletteTable( QWidget *parent, int minWidth, int cols)
   mNamedColorList->setFixedSize(minSize);
   mNamedColorList->hide();
   layout->addWidget(mNamedColorList);
-  connect( mNamedColorList, SIGNAL(highlighted( const QString & )),
-	   this, SLOT( slotColorTextSelected( const QString & )) );
+  connect( mNamedColorList, TQT_SIGNAL(highlighted( const TQString & )),
+	   this, TQT_SLOT( slotColorTextSelected( const TQString & )) );
 
   setFixedSize( sizeHint());
-  connect( combo, SIGNAL(activated(const QString &)),
-	this, SLOT(slotSetPalette( const QString &)));
+  connect( combo, TQT_SIGNAL(activated(const TQString &)),
+	this, TQT_SLOT(slotSetPalette( const TQString &)));
 }
 
 KPaletteTable::~KPaletteTable()
@@ -654,14 +654,14 @@ KPaletteTable::readNamedColor( void )
   const char * const *path = namedColorFilePath();
   for( int i=0; path[i]; ++i )
   {
-    QFile paletteFile( path[i] );
+    TQFile paletteFile( path[i] );
     if( !paletteFile.open( IO_ReadOnly ) )
     {
       continue;
     }
 
-    QString line;
-    QStringList list;
+    TQString line;
+    TQStringList list;
     while( paletteFile.readLine( line, 100 ) != -1 )
     {
       int red, green, blue;
@@ -673,17 +673,17 @@ KPaletteTable::readNamedColor( void )
 	// Remove duplicates. Every name with a space and every name
 	// that start with "gray".
 	//
-	QString name = line.mid(pos).stripWhiteSpace();
+	TQString name = line.mid(pos).stripWhiteSpace();
 	if( name.isNull() || name.find(' ') != -1 ||
 	    name.find( "gray" ) != -1 ||  name.find( "grey" ) != -1 )
 	{
 	  continue;
 	}
 
-        const QColor color ( red, green, blue );
+        const TQColor color ( red, green, blue );
         if ( color.isValid() )
         {
-            const QString colorName( i18n("color", name.latin1() ) );
+            const TQString colorName( i18n("color", name.latin1() ) );
             list.append( colorName );
             d->m_namedColorMap[ colorName ] = color;
         }
@@ -704,7 +704,7 @@ KPaletteTable::readNamedColor( void )
     // preventing the real dialog to become visible until the
     // error dialog box is removed (== bad UI).
     //
-    QTimer::singleShot( 10, this, SLOT(slotShowNamedColorReadError()) );
+    TQTimer::singleShot( 10, this, TQT_SLOT(slotShowNamedColorReadError()) );
   }
 }
 
@@ -714,7 +714,7 @@ KPaletteTable::slotShowNamedColorReadError( void )
 {
   if( mNamedColorList->count() == 0 )
   {
-    QString msg = i18n(""
+    TQString msg = i18n(""
       "Unable to read X11 RGB color strings. The following "
       "file location(s) were examined:\n");
 
@@ -740,7 +740,7 @@ KPaletteTable::slotShowNamedColorReadError( void )
 // new color setting. It is only used by the combobox widget.
 //
 void
-KPaletteTable::slotSetPalette( const QString &_paletteName )
+KPaletteTable::slotSetPalette( const TQString &_paletteName )
 {
   setPalette( _paletteName );
   if( mNamedColorList->isVisible() )
@@ -757,9 +757,9 @@ KPaletteTable::slotSetPalette( const QString &_paletteName )
 
 
 void
-KPaletteTable::setPalette( const QString &_paletteName )
+KPaletteTable::setPalette( const TQString &_paletteName )
 {
-  QString paletteName( _paletteName);
+  TQString paletteName( _paletteName);
   if (paletteName.isEmpty())
      paletteName = i18n_recentColors;
 
@@ -825,16 +825,16 @@ KPaletteTable::setPalette( const QString &_paletteName )
       cells = new KColorCells( sv->viewport(), rows, mCols);
       cells->setShading(false);
       cells->setAcceptDrags(false);
-      QSize cellSize = QSize( mMinWidth, mMinWidth * rows / mCols);
+      TQSize cellSize = TQSize( mMinWidth, mMinWidth * rows / mCols);
       cells->setFixedSize( cellSize );
       for( int i = 0; i < mPalette->nrColors(); i++)
       {
         cells->setColor( i, mPalette->color(i) );
       }
-      connect( cells, SIGNAL( colorSelected( int ) ),
-	       SLOT( slotColorCellSelected( int ) ) );
-      connect( cells, SIGNAL( colorDoubleClicked( int ) ),
-	       SLOT( slotColorCellDoubleClicked( int ) ) );
+      connect( cells, TQT_SIGNAL( colorSelected( int ) ),
+	       TQT_SLOT( slotColorCellSelected( int ) ) );
+      connect( cells, TQT_SIGNAL( colorDoubleClicked( int ) ),
+	       TQT_SLOT( slotColorCellDoubleClicked( int ) ) );
       sv->addChild( cells );
       cells->show();
       sv->updateScrollBars();
@@ -862,14 +862,14 @@ KPaletteTable::slotColorCellDoubleClicked( int col )
 
 
 void
-KPaletteTable::slotColorTextSelected( const QString &colorText )
+KPaletteTable::slotColorTextSelected( const TQString &colorText )
 {
   emit colorSelected( d->m_namedColorMap[ colorText ], colorText );
 }
 
 
 void
-KPaletteTable::addToCustomColors( const QColor &color)
+KPaletteTable::addToCustomColors( const TQColor &color)
 {
   setPalette(i18n( "palette name", colorPaletteName[ customColorIndex ].m_displayName ));
   mPalette->addColor( color );
@@ -880,7 +880,7 @@ KPaletteTable::addToCustomColors( const QColor &color)
 }
 
 void
-KPaletteTable::addToRecentColors( const QColor &color)
+KPaletteTable::addToRecentColors( const TQColor &color)
 {
   //
   // 2000-02-12 Espen Sand.
@@ -907,13 +907,13 @@ KPaletteTable::addToRecentColors( const QColor &color)
 class KColorDialog::KColorDialogPrivate {
 public:
     KPaletteTable *table;
-    QString originalPalette;
+    TQString originalPalette;
     bool bRecursion;
     bool bEditRgb;
     bool bEditHsv;
     bool bEditHtml;
     bool bColorPicking;
-    QLabel *colorName;
+    TQLabel *colorName;
     KLineEdit *htmlName;
     KColorSpinBox *hedit;
     KColorSpinBox *sedit;
@@ -925,9 +925,9 @@ public:
     KHSSelector *hsSelector;
     KPalette *palette;
     KValueSelector *valuePal;
-    QVBoxLayout* l_right;
-    QGridLayout* tl_layout;
-    QCheckBox *cbDefaultColor;
+    TQVBoxLayout* l_right;
+    TQGridLayout* tl_layout;
+    TQCheckBox *cbDefaultColor;
     KColor defaultColor;
     KColor selColor;
 #ifdef Q_WS_X11
@@ -936,7 +936,7 @@ public:
 };
 
 
-KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
+KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   :KDialogBase( parent, name, modal, i18n("Select Color"),
 		modal ? Ok|Cancel : Close,
 		Ok, true )
@@ -948,18 +948,18 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
   d->oldfilter = 0;
 #endif
   d->cbDefaultColor = 0L;
-  connect( this, SIGNAL(okClicked(void)),this,SLOT(slotWriteSettings(void)));
-  connect( this, SIGNAL(closeClicked(void)),this,SLOT(slotWriteSettings(void)));
+  connect( this, TQT_SIGNAL(okClicked(void)),this,TQT_SLOT(slotWriteSettings(void)));
+  connect( this, TQT_SIGNAL(closeClicked(void)),this,TQT_SLOT(slotWriteSettings(void)));
 
-  QLabel *label;
+  TQLabel *label;
 
   //
   // Create the top level page and its layout
   //
-  QWidget *page = new QWidget( this );
+  TQWidget *page = new TQWidget( this );
   setMainWidget( page );
 
-  QGridLayout *tl_layout = new QGridLayout( page, 3, 3, 0, spacingHint() );
+  TQGridLayout *tl_layout = new TQGridLayout( page, 3, 3, 0, spacingHint() );
   d->tl_layout = tl_layout;
   tl_layout->addColSpacing( 1, spacingHint() * 2 );
 
@@ -967,20 +967,20 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
   // the more complicated part: the left side
   // add a V-box
   //
-  QVBoxLayout *l_left = new QVBoxLayout();
+  TQVBoxLayout *l_left = new TQVBoxLayout();
   tl_layout->addLayout(l_left, 0, 0);
 
   //
   // add a H-Box for the XY-Selector and a grid for the
   // entry fields
   //
-  QHBoxLayout *l_ltop = new QHBoxLayout();
+  TQHBoxLayout *l_ltop = new TQHBoxLayout();
   l_left->addLayout(l_ltop);
 
   // a little space between
   l_left->addSpacing(10);
 
-  QGridLayout *l_lbot = new QGridLayout(3, 6);
+  TQGridLayout *l_lbot = new TQGridLayout(3, 6);
   l_left->addLayout(l_lbot);
 
   //
@@ -989,75 +989,75 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
   d->hsSelector = new KHSSelector( page );
   d->hsSelector->setMinimumSize(140, 70);
   l_ltop->addWidget(d->hsSelector, 8);
-  connect( d->hsSelector, SIGNAL( valueChanged( int, int ) ),
-	   SLOT( slotHSChanged( int, int ) ) );
+  connect( d->hsSelector, TQT_SIGNAL( valueChanged( int, int ) ),
+	   TQT_SLOT( slotHSChanged( int, int ) ) );
 
   d->valuePal = new KValueSelector( page );
   d->valuePal->setMinimumSize(26, 70);
   l_ltop->addWidget(d->valuePal, 1);
-  connect( d->valuePal, SIGNAL( valueChanged( int ) ),
-	   SLOT( slotVChanged( int ) ) );
+  connect( d->valuePal, TQT_SIGNAL( valueChanged( int ) ),
+	   TQT_SLOT( slotVChanged( int ) ) );
 
 
   //
   // add the HSV fields
   //
-  label = new QLabel( i18n("H:"), page );
+  label = new TQLabel( i18n("H:"), page );
   label->setAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 0, 2);
   d->hedit = new KColorSpinBox( 0, 359, 1, page );
-  d->hedit->setValidator( new QIntValidator( d->hedit ) );
+  d->hedit->setValidator( new TQIntValidator( d->hedit ) );
   l_lbot->addWidget(d->hedit, 0, 3);
-  connect( d->hedit, SIGNAL( valueChanged(int) ),
-  	SLOT( slotHSVChanged() ) );
+  connect( d->hedit, TQT_SIGNAL( valueChanged(int) ),
+  	TQT_SLOT( slotHSVChanged() ) );
 
-  label = new QLabel( i18n("S:"), page );
+  label = new TQLabel( i18n("S:"), page );
   label->setAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 1, 2);
   d->sedit = new KColorSpinBox( 0, 255, 1, page );
-  d->sedit->setValidator( new QIntValidator( d->sedit ) );
+  d->sedit->setValidator( new TQIntValidator( d->sedit ) );
   l_lbot->addWidget(d->sedit, 1, 3);
-  connect( d->sedit, SIGNAL( valueChanged(int) ),
-  	SLOT( slotHSVChanged() ) );
+  connect( d->sedit, TQT_SIGNAL( valueChanged(int) ),
+  	TQT_SLOT( slotHSVChanged() ) );
 
-  label = new QLabel( i18n("V:"), page );
+  label = new TQLabel( i18n("V:"), page );
   label->setAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 2, 2);
   d->vedit = new KColorSpinBox( 0, 255, 1, page );
-  d->vedit->setValidator( new QIntValidator( d->vedit ) );
+  d->vedit->setValidator( new TQIntValidator( d->vedit ) );
   l_lbot->addWidget(d->vedit, 2, 3);
-  connect( d->vedit, SIGNAL( valueChanged(int) ),
-  	SLOT( slotHSVChanged() ) );
+  connect( d->vedit, TQT_SIGNAL( valueChanged(int) ),
+  	TQT_SLOT( slotHSVChanged() ) );
 
   //
   // add the RGB fields
   //
-  label = new QLabel( i18n("R:"), page );
+  label = new TQLabel( i18n("R:"), page );
   label->setAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 0, 4);
   d->redit = new KColorSpinBox( 0, 255, 1, page );
-  d->redit->setValidator( new QIntValidator( d->redit ) );
+  d->redit->setValidator( new TQIntValidator( d->redit ) );
   l_lbot->addWidget(d->redit, 0, 5);
-  connect( d->redit, SIGNAL( valueChanged(int) ),
-  	SLOT( slotRGBChanged() ) );
+  connect( d->redit, TQT_SIGNAL( valueChanged(int) ),
+  	TQT_SLOT( slotRGBChanged() ) );
 
-  label = new QLabel( i18n("G:"), page );
+  label = new TQLabel( i18n("G:"), page );
   label->setAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget( label, 1, 4);
   d->gedit = new KColorSpinBox( 0, 255,1, page );
-  d->gedit->setValidator( new QIntValidator( d->gedit ) );
+  d->gedit->setValidator( new TQIntValidator( d->gedit ) );
   l_lbot->addWidget(d->gedit, 1, 5);
-  connect( d->gedit, SIGNAL( valueChanged(int) ),
-  	SLOT( slotRGBChanged() ) );
+  connect( d->gedit, TQT_SIGNAL( valueChanged(int) ),
+  	TQT_SLOT( slotRGBChanged() ) );
 
-  label = new QLabel( i18n("B:"), page );
+  label = new TQLabel( i18n("B:"), page );
   label->setAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 2, 4);
   d->bedit = new KColorSpinBox( 0, 255, 1, page );
-  d->bedit->setValidator( new QIntValidator( d->bedit ) );
+  d->bedit->setValidator( new TQIntValidator( d->bedit ) );
   l_lbot->addWidget(d->bedit, 2, 5);
-  connect( d->bedit, SIGNAL( valueChanged(int) ),
-  	SLOT( slotRGBChanged() ) );
+  connect( d->bedit, TQT_SIGNAL( valueChanged(int) ),
+  	TQT_SLOT( slotRGBChanged() ) );
 
   //
   // the entry fields should be wide enough to hold 8888888
@@ -1083,13 +1083,13 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
   d->table = new KPaletteTable( page );
   d->l_right->addWidget(d->table, 10);
 
-  connect( d->table, SIGNAL( colorSelected( const QColor &, const QString & ) ),
-	   SLOT( slotColorSelected( const QColor &, const QString & ) ) );
+  connect( d->table, TQT_SIGNAL( colorSelected( const TQColor &, const TQString & ) ),
+	   TQT_SLOT( slotColorSelected( const TQColor &, const TQString & ) ) );
 
   connect(
     d->table,
-    SIGNAL( colorDoubleClicked( const QColor &, const QString & ) ),
-    SLOT( slotColorDoubleClicked( const QColor &, const QString & ) )
+    TQT_SIGNAL( colorDoubleClicked( const TQColor &, const TQString & ) ),
+    TQT_SLOT( slotColorDoubleClicked( const TQColor &, const TQString & ) )
   );
   // Store the default value for saving time.
   d->originalPalette = d->table->palette();
@@ -1099,23 +1099,23 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
   //
   d->l_right->addSpacing(10);
 
-  QHBoxLayout *l_hbox = new QHBoxLayout( d->l_right );
+  TQHBoxLayout *l_hbox = new TQHBoxLayout( d->l_right );
 
   //
   // The add to custom colors button
   //
-  QPushButton *button = new QPushButton( page );
+  TQPushButton *button = new TQPushButton( page );
   button->setText(i18n("&Add to Custom Colors"));
   l_hbox->addWidget(button, 0, AlignLeft);
-  connect( button, SIGNAL( clicked()), SLOT( slotAddToCustomColors()));
+  connect( button, TQT_SIGNAL( clicked()), TQT_SLOT( slotAddToCustomColors()));
 
   //
   // The color picker button
   //
-  button = new QPushButton( page );
+  button = new TQPushButton( page );
   button->setPixmap( BarIcon("colorpicker"));
   l_hbox->addWidget(button, 0, AlignHCenter );
-  connect( button, SIGNAL( clicked()), SLOT( slotColorPicker()));
+  connect( button, TQT_SIGNAL( clicked()), TQT_SLOT( slotColorPicker()));
 
   //
   // a little space between
@@ -1125,36 +1125,36 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
   //
   // and now the entry fields and the patch (=colored box)
   //
-  QGridLayout *l_grid = new QGridLayout( d->l_right, 2, 3);
+  TQGridLayout *l_grid = new TQGridLayout( d->l_right, 2, 3);
 
   l_grid->setColStretch(2, 1);
 
-  label = new QLabel( page );
+  label = new TQLabel( page );
   label->setText(i18n("Name:"));
   l_grid->addWidget(label, 0, 1, AlignLeft);
 
-  d->colorName = new QLabel( page );
+  d->colorName = new TQLabel( page );
   l_grid->addWidget(d->colorName, 0, 2, AlignLeft);
 
-  label = new QLabel( page );
+  label = new TQLabel( page );
   label->setText(i18n("HTML:"));
   l_grid->addWidget(label, 1, 1, AlignLeft);
 
   d->htmlName = new KLineEdit( page );
-  d->htmlName->setMaxLength( 13 ); // Qt's QColor allows 12 hexa-digits
+  d->htmlName->setMaxLength( 13 ); // Qt's TQColor allows 12 hexa-digits
   d->htmlName->setText("#FFFFFF"); // But HTML uses only 6, so do not worry about the size
-  w = d->htmlName->fontMetrics().width(QString::fromLatin1("#DDDDDDD"));
+  w = d->htmlName->fontMetrics().width(TQString::fromLatin1("#DDDDDDD"));
   d->htmlName->setFixedWidth(w);
   l_grid->addWidget(d->htmlName, 1, 2, AlignLeft);
 
-  connect( d->htmlName, SIGNAL( textChanged(const QString &) ),
-      SLOT( slotHtmlChanged() ) );
+  connect( d->htmlName, TQT_SIGNAL( textChanged(const TQString &) ),
+      TQT_SLOT( slotHtmlChanged() ) );
 
   d->patch = new KColorPatch( page );
   d->patch->setFixedSize(48, 48);
   l_grid->addMultiCellWidget(d->patch, 0, 1, 0, 0, AlignHCenter | AlignVCenter);
-  connect( d->patch, SIGNAL( colorChanged( const QColor&)),
-	   SLOT( setColor( const QColor&)));
+  connect( d->patch, TQT_SIGNAL( colorChanged( const TQColor&)),
+	   TQT_SLOT( setColor( const TQColor&)));
 
   tl_layout->activate();
   page->setMinimumSize( page->sizeHint() );
@@ -1185,16 +1185,16 @@ KColorDialog::~KColorDialog()
 }
 
 bool
-KColorDialog::eventFilter( QObject *obj, QEvent *ev )
+KColorDialog::eventFilter( TQObject *obj, TQEvent *ev )
 {
     if ((obj == d->htmlName) || (obj == d->hsSelector))
     switch(ev->type())
     {
-      case QEvent::DragEnter:
-      case QEvent::DragMove:
-      case QEvent::DragLeave:
-      case QEvent::Drop:
-      case QEvent::DragResponse:
+      case TQEvent::DragEnter:
+      case TQEvent::DragMove:
+      case TQEvent::DragLeave:
+      case TQEvent::Drop:
+      case TQEvent::DragResponse:
             qApp->sendEvent(d->patch, ev);
             return true;
       default:
@@ -1204,7 +1204,7 @@ KColorDialog::eventFilter( QObject *obj, QEvent *ev )
 }
 
 void
-KColorDialog::setDefaultColor( const QColor& col )
+KColorDialog::setDefaultColor( const TQColor& col )
 {
     if ( !d->cbDefaultColor )
     {
@@ -1216,7 +1216,7 @@ KColorDialog::setDefaultColor( const QColor& col )
         //
         // and the "default color" checkbox, under all items on the right side
         //
-        d->cbDefaultColor = new QCheckBox( i18n( "Default color" ), mainWidget() );
+        d->cbDefaultColor = new TQCheckBox( i18n( "Default color" ), mainWidget() );
         d->cbDefaultColor->setChecked(true);
 
         d->l_right->addWidget( d->cbDefaultColor );
@@ -1226,7 +1226,7 @@ KColorDialog::setDefaultColor( const QColor& col )
         mainWidget()->setMinimumSize( mainWidget()->sizeHint() );
         disableResize();
 
-        connect( d->cbDefaultColor, SIGNAL( clicked() ), SLOT( slotDefaultColorClicked() ) );
+        connect( d->cbDefaultColor, TQT_SIGNAL( clicked() ), TQT_SLOT( slotDefaultColorClicked() ) );
     }
 
     d->defaultColor = col;
@@ -1234,7 +1234,7 @@ KColorDialog::setDefaultColor( const QColor& col )
     slotDefaultColorClicked();
 }
 
-QColor KColorDialog::defaultColor() const
+TQColor KColorDialog::defaultColor() const
 {
     return d->defaultColor;
 }
@@ -1247,7 +1247,7 @@ void KColorDialog::slotDefaultColorClicked()
         showColor( d->selColor, i18n( "-default-" ) );
     } else
     {
-        showColor( d->selColor, QString::null );
+        showColor( d->selColor, TQString::null );
     }
 }
 
@@ -1256,7 +1256,7 @@ KColorDialog::readSettings()
 {
   KConfigGroup group( KGlobal::config(), "Colors" );
 
-  QString palette = group.readEntry("CurrentPalette");
+  TQString palette = group.readEntry("CurrentPalette");
   d->table->setPalette(palette);
 }
 
@@ -1265,7 +1265,7 @@ KColorDialog::slotWriteSettings()
 {
   KConfigGroup group( KGlobal::config(), "Colors" );
 
-  QString palette = d->table->palette();
+  TQString palette = d->table->palette();
   if (!group.hasDefault("CurrentPalette") &&
       (d->table->palette() == d->originalPalette))
   {
@@ -1281,13 +1281,13 @@ QColor
 KColorDialog::color() const
 {
   if ( d->cbDefaultColor && d->cbDefaultColor->isChecked() )
-     return QColor();
+     return TQColor();
   if ( d->selColor.isValid() )
     d->table->addToRecentColors( d->selColor );
   return d->selColor;
 }
 
-void KColorDialog::setColor( const QColor &col )
+void KColorDialog::setColor( const TQColor &col )
 {
   _setColor( col );
 }
@@ -1295,7 +1295,7 @@ void KColorDialog::setColor( const QColor &col )
 //
 // static function to display dialog and return color
 //
-int KColorDialog::getColor( QColor &theColor, QWidget *parent )
+int KColorDialog::getColor( TQColor &theColor, TQWidget *parent )
 {
   KColorDialog dlg( parent, "Color Selector", true );
   if ( theColor.isValid() )
@@ -1313,7 +1313,7 @@ int KColorDialog::getColor( QColor &theColor, QWidget *parent )
 //
 // static function to display dialog and return color
 //
-int KColorDialog::getColor( QColor &theColor, const QColor& defaultCol, QWidget *parent )
+int KColorDialog::getColor( TQColor &theColor, const TQColor& defaultCol, TQWidget *parent )
 {
   KColorDialog dlg( parent, "Color Selector", true );
   dlg.setDefaultColor( defaultCol );
@@ -1348,7 +1348,7 @@ void KColorDialog::slotHtmlChanged( void )
 {
   if (d->bRecursion || d->htmlName->text().isEmpty()) return;
 
-  QString strColor( d->htmlName->text() );
+  TQString strColor( d->htmlName->text() );
 
   // Assume that a user does not want to type the # all the time
   if ( strColor[0] != '#' )
@@ -1360,7 +1360,7 @@ void KColorDialog::slotHtmlChanged( void )
     d->htmlName->blockSignals(signalsblocked);
   }
 
-  const QColor color( strColor );
+  const TQColor color( strColor );
 
   if ( color.isValid() )
   {
@@ -1409,7 +1409,7 @@ void KColorDialog::slotVChanged( int v )
   _setColor( col );
 }
 
-void KColorDialog::slotColorSelected( const QColor &color )
+void KColorDialog::slotColorSelected( const TQColor &color )
 {
   _setColor( color );
 }
@@ -1419,22 +1419,22 @@ void KColorDialog::slotAddToCustomColors( )
   d->table->addToCustomColors( d->selColor );
 }
 
-void KColorDialog::slotColorSelected( const QColor &color, const QString &name )
+void KColorDialog::slotColorSelected( const TQColor &color, const TQString &name )
 {
   _setColor( color, name);
 }
 
 void KColorDialog::slotColorDoubleClicked
 (
-  const QColor  & color,
-  const QString & name
+  const TQColor  & color,
+  const TQString & name
 )
 {
   _setColor(color, name);
   accept();
 }
 
-void KColorDialog::_setColor(const KColor &color, const QString &name)
+void KColorDialog::_setColor(const KColor &color, const TQString &name)
 {
   if (color.isValid())
   {
@@ -1455,7 +1455,7 @@ void KColorDialog::_setColor(const KColor &color, const QString &name)
 }
 
 // show but don't set into selColor, nor emit colorSelected
-void KColorDialog::showColor( const KColor &color, const QString &name )
+void KColorDialog::showColor( const KColor &color, const TQString &name )
 {
   d->bRecursion = true;
 
@@ -1484,16 +1484,16 @@ void KColorDialog::showColor( const KColor &color, const QString &name )
 }
 
 
-static QWidget *kde_color_dlg_widget = 0;
+static TQWidget *kde_color_dlg_widget = 0;
 
 #ifdef Q_WS_X11
 static int kde_color_dlg_handler(XEvent *event)
 {
     if (event->type == ButtonRelease)
     {
-        QMouseEvent e( QEvent::MouseButtonRelease, QPoint(),
-                       QPoint(event->xmotion.x_root, event->xmotion.y_root) , 0, 0 );
-        QApplication::sendEvent( kde_color_dlg_widget, &e );
+        TQMouseEvent e( TQEvent::MouseButtonRelease, TQPoint(),
+                       TQPoint(event->xmotion.x_root, event->xmotion.y_root) , 0, 0 );
+        TQApplication::sendEvent( kde_color_dlg_widget, &e );
         return true;
     }
     return false;
@@ -1512,7 +1512,7 @@ KColorDialog::slotColorPicker()
 }
 
 void
-KColorDialog::mouseReleaseEvent( QMouseEvent *e )
+KColorDialog::mouseReleaseEvent( TQMouseEvent *e )
 {
   if (d->bColorPicking)
   {
@@ -1530,16 +1530,16 @@ KColorDialog::mouseReleaseEvent( QMouseEvent *e )
 }
 
 QColor
-KColorDialog::grabColor(const QPoint &p)
+KColorDialog::grabColor(const TQPoint &p)
 {
-    QWidget *desktop = QApplication::desktop();
-    QPixmap pm = QPixmap::grabWindow( desktop->winId(), p.x(), p.y(), 1, 1);
-    QImage i = pm.convertToImage();
+    TQWidget *desktop = TQApplication::desktop();
+    TQPixmap pm = TQPixmap::grabWindow( desktop->winId(), p.x(), p.y(), 1, 1);
+    TQImage i = pm.convertToImage();
     return i.pixel(0,0);
 }
 
 void
-KColorDialog::keyPressEvent( QKeyEvent *e )
+KColorDialog::keyPressEvent( TQKeyEvent *e )
 {
   if (d->bColorPicking)
   {
@@ -1575,7 +1575,7 @@ void KColorDialog::setHtmlEdit( const KColor &col )
   if (d->bEditHtml) return;
   int r, g, b;
   col.rgb( &r, &g, &b );
-  QString num;
+  TQString num;
 
   num.sprintf("#%02X%02X%02X", r,g,b);
   d->htmlName->setText( num );

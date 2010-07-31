@@ -26,21 +26,21 @@
 #include "driver.h"
 
 #include <kmessagebox.h>
-#include <qtabwidget.h>
+#include <tqtabwidget.h>
 #include <klocale.h>
 #include <kpushbutton.h>
 #include <kguiitem.h>
 
-KPrinterPropertyDialog::KPrinterPropertyDialog(KMPrinter *p, QWidget *parent, const char *name)
-: KDialogBase(parent, name, true, QString::null, KDialogBase::Ok|KDialogBase::Cancel|KDialogBase::User1, KDialogBase::Ok, false, KStdGuiItem::save()),
+KPrinterPropertyDialog::KPrinterPropertyDialog(KMPrinter *p, TQWidget *parent, const char *name)
+: KDialogBase(parent, name, true, TQString::null, KDialogBase::Ok|KDialogBase::Cancel|KDialogBase::User1, KDialogBase::Ok, false, KStdGuiItem::save()),
   m_printer(p), m_driver(0), m_current(0)
 {
 	m_pages.setAutoDelete(false);
 
 	// set a margin
-	m_tw = new QTabWidget(this);
+	m_tw = new TQTabWidget(this);
 	m_tw->setMargin(10);
-	connect(m_tw,SIGNAL(currentChanged(QWidget*)),SLOT(slotCurrentChanged(QWidget*)));
+	connect(m_tw,TQT_SIGNAL(currentChanged(TQWidget*)),TQT_SLOT(slotCurrentChanged(TQWidget*)));
 	setMainWidget(m_tw);
 
 	if (m_printer)
@@ -52,7 +52,7 @@ KPrinterPropertyDialog::~KPrinterPropertyDialog()
 	delete m_driver;
 }
 
-void KPrinterPropertyDialog::slotCurrentChanged(QWidget *w)
+void KPrinterPropertyDialog::slotCurrentChanged(TQWidget *w)
 {
 	if (m_current) m_current->getOptions(m_options,true);
 	m_current = (KPrintDialogPage*)w;
@@ -69,7 +69,7 @@ bool KPrinterPropertyDialog::synchronize()
 {
 	if (m_current) m_current->getOptions(m_options,true);
 	QString	msg;
-	QPtrListIterator<KPrintDialogPage>	it(m_pages);
+	TQPtrListIterator<KPrintDialogPage>	it(m_pages);
 	for (;it.current();++it)
 	{
 		it.current()->setOptions(m_options);
@@ -82,25 +82,25 @@ bool KPrinterPropertyDialog::synchronize()
 	return true;
 }
 
-void KPrinterPropertyDialog::setOptions(const QMap<QString,QString>& opts)
+void KPrinterPropertyDialog::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	// merge the 2 options sets
-	for (QMap<QString,QString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
+	for (TQMap<TQString,TQString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
 		m_options[it.key()] = it.data();
 	// update all existing pages
-	QPtrListIterator<KPrintDialogPage>	it(m_pages);
+	TQPtrListIterator<KPrintDialogPage>	it(m_pages);
 	for (; it.current(); ++it)
 		it.current()->setOptions(m_options);
 }
 
-void KPrinterPropertyDialog::getOptions(QMap<QString,QString>& opts, bool incldef)
+void KPrinterPropertyDialog::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	collectOptions(opts, incldef);
 }
 
-void KPrinterPropertyDialog::collectOptions(QMap<QString,QString>& opts, bool incldef)
+void KPrinterPropertyDialog::collectOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
-	QPtrListIterator<KPrintDialogPage>	it(m_pages);
+	TQPtrListIterator<KPrintDialogPage>	it(m_pages);
 	for (;it.current();++it)
 		it.current()->getOptions(opts,incldef);
 }
@@ -116,10 +116,10 @@ void KPrinterPropertyDialog::slotUser1()
 {
 	if (m_printer && synchronize())
 	{
-		QMap<QString,QString>	opts;
+		TQMap<TQString,TQString>	opts;
 		collectOptions(opts, false);
 		m_printer->setDefaultOptions(opts);
-		m_printer->setEditedOptions(QMap<QString,QString>());
+		m_printer->setEditedOptions(TQMap<TQString,TQString>());
 		m_printer->setEdited(false);
 		KMFactory::self()->virtualManager()->triggerSave();
 	}
@@ -130,7 +130,7 @@ void KPrinterPropertyDialog::enableSaveButton(bool state)
 	showButton(KDialogBase::User1, state);
 }
 
-void KPrinterPropertyDialog::setupPrinter(KMPrinter *pr, QWidget *parent)
+void KPrinterPropertyDialog::setupPrinter(KMPrinter *pr, TQWidget *parent)
 {
 	KPrinterPropertyDialog	dlg(pr,parent,"PropertyDialog");
 	KMFactory::self()->uiManager()->setupPropertyDialog(&dlg);
@@ -138,7 +138,7 @@ void KPrinterPropertyDialog::setupPrinter(KMPrinter *pr, QWidget *parent)
 		KMessageBox::information(parent,i18n("No configurable options for that printer."),i18n("Printer Configuration"));
 	else if (dlg.exec())
 	{
-		QMap<QString,QString>	opts;
+		TQMap<TQString,TQString>	opts;
 		dlg.collectOptions(opts, false);
 		pr->setEditedOptions(opts);
 		pr->setEdited(true);

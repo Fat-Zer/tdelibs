@@ -33,12 +33,12 @@
 #include "kmdichildview.h"
 #include "kmdidefines.h"
 
-#include <qtooltip.h>
-#include <qlabel.h>
-#include <qwidget.h>
-#include <qstyle.h>
+#include <tqtooltip.h>
+#include <tqlabel.h>
+#include <tqwidget.h>
+#include <tqstyle.h>
 
-#include <qnamespace.h>
+#include <tqnamespace.h>
 
 /*
    @quickhelp: KMdiTaskBar
@@ -56,12 +56,12 @@
 //
 //####################################################################
 KMdiTaskBarButton::KMdiTaskBarButton( KMdiTaskBar *pTaskBar, KMdiChildView *win_ptr )
-		: QPushButton( pTaskBar ),
+		: TQPushButton( pTaskBar ),
 		m_actualText( "" )
 {
 	setToggleButton( true );
 	m_pWindow = win_ptr;
-	QToolTip::add
+	TQToolTip::add
 		( this, win_ptr->caption() );
 	setFocusPolicy( NoFocus );
 }
@@ -69,14 +69,14 @@ KMdiTaskBarButton::KMdiTaskBarButton( KMdiTaskBar *pTaskBar, KMdiChildView *win_
 KMdiTaskBarButton::~KMdiTaskBarButton()
 {}
 
-void KMdiTaskBarButton::mousePressEvent( QMouseEvent* e )
+void KMdiTaskBarButton::mousePressEvent( TQMouseEvent* e )
 {
 	switch ( e->button() )
 	{
-	case QMouseEvent::LeftButton:
+	case TQMouseEvent::LeftButton:
 		emit leftMouseButtonClicked( m_pWindow );
 		break;
-	case QMouseEvent::RightButton:
+	case TQMouseEvent::RightButton:
 		emit rightMouseButtonClicked( m_pWindow );
 		break;
 	default:
@@ -86,27 +86,27 @@ void KMdiTaskBarButton::mousePressEvent( QMouseEvent* e )
 }
 
 /** slot version of setText */
-void KMdiTaskBarButton::setNewText( const QString& s )
+void KMdiTaskBarButton::setNewText( const TQString& s )
 {
 	setText( s );
 	emit buttonTextChanged( 0 );
 }
 
-void KMdiTaskBarButton::setText( const QString& s )
+void KMdiTaskBarButton::setText( const TQString& s )
 {
 	m_actualText = s;
-	QButton::setText( s );
+	TQButton::setText( s );
 }
 
-void KMdiTaskBarButton::fitText( const QString& origStr, int newWidth )
+void KMdiTaskBarButton::fitText( const TQString& origStr, int newWidth )
 {
-	QButton::setText( m_actualText );
+	TQButton::setText( m_actualText );
 
 	int actualWidth = sizeHint().width();
 	int realLetterCount = origStr.length();
 	int newLetterCount = ( newWidth * realLetterCount ) / actualWidth;
 	int w = newWidth + 1;
-	QString s = origStr;
+	TQString s = origStr;
 	while ( ( w > newWidth ) && ( newLetterCount >= 1 ) )
 	{
 		if ( newLetterCount < realLetterCount )
@@ -121,15 +121,15 @@ void KMdiTaskBarButton::fitText( const QString& origStr, int newWidth )
 					s = origStr.left( 1 );
 			}
 		}
-		QFontMetrics fm = fontMetrics();
+		TQFontMetrics fm = fontMetrics();
 		w = fm.width( s );
 		newLetterCount--;
 	}
 
-	QButton::setText( s );
+	TQButton::setText( s );
 }
 
-QString KMdiTaskBarButton::actualText() const
+TQString KMdiTaskBarButton::actualText() const
 {
 	return m_actualText;
 }
@@ -140,7 +140,7 @@ QString KMdiTaskBarButton::actualText() const
 //
 //####################################################################
 
-KMdiTaskBar::KMdiTaskBar( KMdiMainFrm *parent, QMainWindow::ToolBarDock dock )
+KMdiTaskBar::KMdiTaskBar( KMdiMainFrm *parent, TQMainWindow::ToolBarDock dock )
 		: KToolBar( parent, "KMdiTaskBar",  /*honor_style*/ false,  /*readConfig*/ true )
 		, m_pCurrentFocusedWindow( 0 )
 		, m_pStretchSpace( 0 )
@@ -148,9 +148,9 @@ KMdiTaskBar::KMdiTaskBar( KMdiMainFrm *parent, QMainWindow::ToolBarDock dock )
 		, m_bSwitchedOn( false )
 {
 	m_pFrm = parent;
-	m_pButtonList = new QPtrList<KMdiTaskBarButton>;
+	m_pButtonList = new TQPtrList<KMdiTaskBarButton>;
 	m_pButtonList->setAutoDelete( true );
-	//QT30   setFontPropagation(QWidget::SameFont);
+	//QT30   setFontPropagation(TQWidget::SameFont);
 	setMinimumWidth( 1 );
 	setFocusPolicy( NoFocus );
 	parent->moveToolBar( this, dock ); //XXX obsolete!
@@ -171,18 +171,18 @@ KMdiTaskBarButton * KMdiTaskBar::addWinButton( KMdiChildView *win_ptr )
 	}
 
 	KMdiTaskBarButton *b = new KMdiTaskBarButton( this, win_ptr );
-	QObject::connect( b, SIGNAL( clicked() ), win_ptr, SLOT( setFocus() ) );
-	QObject::connect( b, SIGNAL( clicked( KMdiChildView* ) ), this, SLOT( setActiveButton( KMdiChildView* ) ) );
-	QObject::connect( b, SIGNAL( leftMouseButtonClicked( KMdiChildView* ) ), m_pFrm, SLOT( activateView( KMdiChildView* ) ) );
-	QObject::connect( b, SIGNAL( rightMouseButtonClicked( KMdiChildView* ) ), m_pFrm, SLOT( taskbarButtonRightClicked( KMdiChildView* ) ) );
-	QObject::connect( b, SIGNAL( buttonTextChanged( int ) ), this, SLOT( layoutTaskBar( int ) ) );
+	TQObject::connect( b, TQT_SIGNAL( clicked() ), win_ptr, TQT_SLOT( setFocus() ) );
+	TQObject::connect( b, TQT_SIGNAL( clicked( KMdiChildView* ) ), this, TQT_SLOT( setActiveButton( KMdiChildView* ) ) );
+	TQObject::connect( b, TQT_SIGNAL( leftMouseButtonClicked( KMdiChildView* ) ), m_pFrm, TQT_SLOT( activateView( KMdiChildView* ) ) );
+	TQObject::connect( b, TQT_SIGNAL( rightMouseButtonClicked( KMdiChildView* ) ), m_pFrm, TQT_SLOT( taskbarButtonRightClicked( KMdiChildView* ) ) );
+	TQObject::connect( b, TQT_SIGNAL( buttonTextChanged( int ) ), this, TQT_SLOT( layoutTaskBar( int ) ) );
 	m_pButtonList->append( b );
 	b->setToggleButton( true );
 	b->setText( win_ptr->tabCaption() );
 
 	layoutTaskBar();
 
-	m_pStretchSpace = new QLabel( this, "empty" );
+	m_pStretchSpace = new TQLabel( this, "empty" );
 	m_pStretchSpace->setText( "" );
 	setStretchableWidget( m_pStretchSpace );
 	m_pStretchSpace->show();
@@ -325,9 +325,9 @@ void KMdiTaskBar::layoutTaskBar( int taskBarWidth )
 	int allButtonsWidthHint = 0;
 	for ( b = m_pButtonList->first();b;b = m_pButtonList->next() )
 	{
-		QFontMetrics fm = b->fontMetrics();
-		QString s = b->actualText();
-		QSize sz = fm.size( ShowPrefix, s );
+		TQFontMetrics fm = b->fontMetrics();
+		TQString s = b->actualText();
+		TQSize sz = fm.size( ShowPrefix, s );
 		int w = sz.width() + 6;
 		int h = sz.height() + sz.height() / 8 + 10;
 		w += h;
@@ -337,8 +337,8 @@ void KMdiTaskBar::layoutTaskBar( int taskBarWidth )
 	// if there's enough space, use actual width
 	int buttonCount = m_pButtonList->count();
 	int tbHandlePixel;
-	tbHandlePixel = style().pixelMetric( QStyle::PM_DockWindowHandleExtent, this );
-	int buttonAreaWidth = taskBarWidth - tbHandlePixel - style().pixelMetric( QStyle::PM_DefaultFrameWidth, this ) - 5;
+	tbHandlePixel = style().pixelMetric( TQStyle::PM_DockWindowHandleExtent, this );
+	int buttonAreaWidth = taskBarWidth - tbHandlePixel - style().pixelMetric( TQStyle::PM_DefaultFrameWidth, this ) - 5;
 	if ( ( ( allButtonsWidthHint ) <= buttonAreaWidth ) || ( width() < parentWidget() ->width() ) )
 	{
 		for ( b = m_pButtonList->first();b;b = m_pButtonList->next() )
@@ -375,7 +375,7 @@ void KMdiTaskBar::layoutTaskBar( int taskBarWidth )
 	m_layoutIsPending = false;
 }
 
-void KMdiTaskBar::resizeEvent( QResizeEvent* rse )
+void KMdiTaskBar::resizeEvent( TQResizeEvent* rse )
 {
 	if ( !m_layoutIsPending )
 	{

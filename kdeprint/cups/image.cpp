@@ -17,7 +17,7 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#include <qimage.h>
+#include <tqimage.h>
 #include <math.h>
 
 void
@@ -245,7 +245,7 @@ bright(float mat[3][3],
 
 //----------------------------------------------------------------------------------------------------
 
-QImage convertImage(const QImage& image, int hue, int saturation, int brightness, int gamma)
+TQImage convertImage(const TQImage& image, int hue, int saturation, int brightness, int gamma)
 {
 	float	mat[3][3] = {{1.0,0.0,0.0},{0.0,1.0,0.0},{0.0,0.0,1.0}};
 	int	lut[3][3][256];

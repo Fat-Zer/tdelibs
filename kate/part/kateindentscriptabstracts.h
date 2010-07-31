@@ -19,7 +19,7 @@
 #ifndef _KATEINDENTSCRIPTABSTRACTS_H_
 #define _KATEINDENTSCRIPTABSTRACTS_H_
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kdebug.h>
 
 namespace Kate {
@@ -32,25 +32,25 @@ class KateDocCursor;
 class KateIndentScriptImplAbstract {
   public:
     friend class KateIndentScript;
-    KateIndentScriptImplAbstract(const QString& internalName,
-        const QString  &filePath, const QString &niceName,
-        const QString &copyright, double version);
+    KateIndentScriptImplAbstract(const TQString& internalName,
+        const TQString  &filePath, const TQString &niceName,
+        const TQString &copyright, double version);
     virtual ~KateIndentScriptImplAbstract();
     
-    virtual bool processChar( class Kate::View *view, QChar c, QString &errorMsg )=0;
-    virtual bool processLine( class Kate::View *view, const KateDocCursor &line, QString &errorMsg )=0;
-    virtual bool processNewline( class Kate::View *view, const KateDocCursor &begin, bool needcontinue, QString &errorMsg )=0;
+    virtual bool processChar( class Kate::View *view, TQChar c, TQString &errorMsg )=0;
+    virtual bool processLine( class Kate::View *view, const KateDocCursor &line, TQString &errorMsg )=0;
+    virtual bool processNewline( class Kate::View *view, const KateDocCursor &begin, bool needcontinue, TQString &errorMsg )=0;
   protected:
     virtual void decRef();
     long refCount() {return m_refcount;}
-    QString filePath() const {return m_filePath;}
+    TQString filePath() const {return m_filePath;}
   private:
     void incRef();
     long m_refcount;
-    QString m_internalName;
-    QString m_filePath;
-    QString m_niceName;
-    QString m_copyright;
+    TQString m_internalName;
+    TQString m_filePath;
+    TQString m_niceName;
+    TQString m_copyright;
     double m_version;
 };
 
@@ -69,15 +69,15 @@ class KateIndentScript {
       return *this;
     }
     /*operator KateIndentJScript*() const { return m_scr; }*/
-    bool processChar( class Kate::View *view, QChar c, QString &errorMsg ) {
+    bool processChar( class Kate::View *view, TQChar c, TQString &errorMsg ) {
       kdDebug(13050)<<"KateIndentScript::processChar: m_scr:"<<m_scr<<endl;
       if (m_scr) return m_scr->processChar(view,c,errorMsg); else return true;
     }
-    bool processLine( class Kate::View *view, const KateDocCursor& line, QString &errorMsg ) {
+    bool processLine( class Kate::View *view, const KateDocCursor& line, TQString &errorMsg ) {
       kdDebug(13050)<<"KateIndentScript::processLine: m_scr:"<<m_scr<<endl;
       if (m_scr) return m_scr->processLine(view,line,errorMsg); else return true;
     }
-    bool processNewline( class Kate::View *view, const KateDocCursor& begin, bool needcontinue, QString &errorMsg ) {
+    bool processNewline( class Kate::View *view, const KateDocCursor& begin, bool needcontinue, TQString &errorMsg ) {
       kdDebug(13050)<<"KateIndentScript::processNewLine: m_scr:"<<m_scr<<endl;
       if (m_scr) return m_scr->processNewline(view,begin,needcontinue,errorMsg); else return true;
     }
@@ -93,7 +93,7 @@ class KateIndentScriptManagerAbstract
   public:
     KateIndentScriptManagerAbstract () {};
     virtual ~KateIndentScriptManagerAbstract () {};
-    virtual KateIndentScript script(const QString &scriptname)=0;
+    virtual KateIndentScript script(const TQString &scriptname)=0;
 };
 
 #endif

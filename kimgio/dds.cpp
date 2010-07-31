@@ -21,8 +21,8 @@
 
 #include "dds.h"
 
-#include <qimage.h>
-#include <qdatastream.h>
+#include <tqimage.h>
+#include <tqdatastream.h>
 
 #include <kglobal.h>
 #include <kdebug.h>
@@ -143,7 +143,7 @@ namespace {	// Private.
 		uint amask;
 	};
 
-	static QDataStream & operator>> ( QDataStream & s, DDSPixelFormat & pf )
+	static TQDataStream & operator>> ( TQDataStream & s, DDSPixelFormat & pf )
 	{
 		s >> pf.size;
 		s >> pf.flags;
@@ -163,7 +163,7 @@ namespace {	// Private.
 		uint caps4;
 	};
 
-	static QDataStream & operator>> ( QDataStream & s, DDSCaps & caps )
+	static TQDataStream & operator>> ( TQDataStream & s, DDSCaps & caps )
 	{
 		s >> caps.caps1;
 		s >> caps.caps2;
@@ -186,7 +186,7 @@ namespace {	// Private.
 		uint notused;
 	};
 
-	static QDataStream & operator>> ( QDataStream & s, DDSHeader & header )
+	static TQDataStream & operator>> ( TQDataStream & s, DDSHeader & header )
 	{
 		s >> header.size;
 		s >> header.flags;
@@ -288,7 +288,7 @@ namespace {	// Private.
 	}
 
 
-	static bool LoadA8R8G8B8( QDataStream & s, const DDSHeader & header, QImage & img  )
+	static bool LoadA8R8G8B8( TQDataStream & s, const DDSHeader & header, TQImage & img  )
 	{
 		const uint w = header.width;
 		const uint h = header.height;
@@ -305,7 +305,7 @@ namespace {	// Private.
 		return true;
 	}
 
-	static bool LoadR8G8B8( QDataStream & s, const DDSHeader & header, QImage & img )
+	static bool LoadR8G8B8( TQDataStream & s, const DDSHeader & header, TQImage & img )
 	{
 		const uint w = header.width;
 		const uint h = header.height;
@@ -322,7 +322,7 @@ namespace {	// Private.
 		return true;
 	}
 
-	static bool LoadA1R5G5B5( QDataStream & s, const DDSHeader & header, QImage & img )
+	static bool LoadA1R5G5B5( TQDataStream & s, const DDSHeader & header, TQImage & img )
 	{
 		const uint w = header.width;
 		const uint h = header.height;
@@ -343,7 +343,7 @@ namespace {	// Private.
 		return true;
 	}
 
-	static bool LoadA4R4G4B4( QDataStream & s, const DDSHeader & header, QImage & img )
+	static bool LoadA4R4G4B4( TQDataStream & s, const DDSHeader & header, TQImage & img )
 	{
 		const uint w = header.width;
 		const uint h = header.height;
@@ -364,7 +364,7 @@ namespace {	// Private.
 		return true;
 	}
 
-	static bool LoadR5G6B5( QDataStream & s, const DDSHeader & header, QImage & img )
+	static bool LoadR5G6B5( TQDataStream & s, const DDSHeader & header, TQImage & img )
 	{
 		const uint w = header.width;
 		const uint h = header.height;
@@ -384,7 +384,7 @@ namespace {	// Private.
 		return true;
 	}
 
-	static QDataStream & operator>> ( QDataStream & s, Color565 & c )
+	static TQDataStream & operator>> ( TQDataStream & s, Color565 & c )
 	{
 		return s >> c.u;
 	}
@@ -437,7 +437,7 @@ namespace {	// Private.
 	};
 
 
-	static QDataStream & operator>> ( QDataStream & s, BlockDXT & c )
+	static TQDataStream & operator>> ( TQDataStream & s, BlockDXT & c )
 	{
 		return s >> c.col0 >> c.col1 >> c.row[0] >> c.row[1] >> c.row[2] >> c.row[3];
 	}
@@ -446,7 +446,7 @@ namespace {	// Private.
 		ushort row[4];
 	};
 
-	static QDataStream & operator>> ( QDataStream & s, BlockDXTAlphaExplicit & c )
+	static TQDataStream & operator>> ( TQDataStream & s, BlockDXTAlphaExplicit & c )
 	{
 		return s >> c.row[0] >> c.row[1] >> c.row[2] >> c.row[3];
 	}
@@ -512,13 +512,13 @@ namespace {	// Private.
 		}
 	};
 
-	static QDataStream & operator>> ( QDataStream & s, BlockDXTAlphaLinear & c )
+	static TQDataStream & operator>> ( TQDataStream & s, BlockDXTAlphaLinear & c )
 	{
 		s >> c.alpha0 >> c.alpha1;
 		return s >> c.bits[0] >> c.bits[1] >> c.bits[2] >> c.bits[3] >> c.bits[4] >> c.bits[5];
 	}
 
-	static bool LoadDXT1( QDataStream & s, const DDSHeader & header, QImage & img )
+	static bool LoadDXT1( TQDataStream & s, const DDSHeader & header, TQImage & img )
 	{
 		const uint w = header.width;
 		const uint h = header.height;
@@ -557,7 +557,7 @@ namespace {	// Private.
 		return true;
 	}
 
-	static bool LoadDXT3( QDataStream & s, const DDSHeader & header, QImage & img )
+	static bool LoadDXT3( TQDataStream & s, const DDSHeader & header, TQImage & img )
 	{
 		const uint w = header.width;
 		const uint h = header.height;
@@ -602,14 +602,14 @@ namespace {	// Private.
 		return true;
 	}
 
-	static bool LoadDXT2( QDataStream & s, const DDSHeader & header, QImage & img )
+	static bool LoadDXT2( TQDataStream & s, const DDSHeader & header, TQImage & img )
 	{
 		if( !LoadDXT3(s, header, img) ) return false;
 		//UndoPremultiplyAlpha(img);
 		return true;
 	}
 
-	static bool LoadDXT5( QDataStream & s, const DDSHeader & header, QImage & img )
+	static bool LoadDXT5( TQDataStream & s, const DDSHeader & header, TQImage & img )
 	{
 		const uint w = header.width;
 		const uint h = header.height;
@@ -657,14 +657,14 @@ namespace {	// Private.
 
 		return true;
 	}
-	static bool LoadDXT4( QDataStream & s, const DDSHeader & header, QImage & img )
+	static bool LoadDXT4( TQDataStream & s, const DDSHeader & header, TQImage & img )
 	{
 		if( !LoadDXT5(s, header, img) ) return false;
 		//UndoPremultiplyAlpha(img);
 		return true;
 	}
 
-	static bool LoadRXGB( QDataStream & s, const DDSHeader & header, QImage & img )
+	static bool LoadRXGB( TQDataStream & s, const DDSHeader & header, TQImage & img )
 	{
 		const uint w = header.width;
 		const uint h = header.height;
@@ -713,7 +713,7 @@ namespace {	// Private.
 		return true;
 	}
 
-	static bool LoadATI2( QDataStream & s, const DDSHeader & header, QImage & img )
+	static bool LoadATI2( TQDataStream & s, const DDSHeader & header, TQImage & img )
 	{
 		const uint w = header.width;
 		const uint h = header.height;
@@ -769,7 +769,7 @@ namespace {	// Private.
 
 
 
-	typedef bool (* TextureLoader)( QDataStream & s, const DDSHeader & header, QImage & img );
+	typedef bool (* TextureLoader)( TQDataStream & s, const DDSHeader & header, TQImage & img );
 
 	// Get an appropiate texture loader for the given type.
 	static TextureLoader GetTextureLoader( DDSType type ) {
@@ -805,7 +805,7 @@ namespace {	// Private.
 
 
 	// Load a 2d texture.
-	static bool LoadTexture( QDataStream & s, const DDSHeader & header, QImage & img )
+	static bool LoadTexture( TQDataStream & s, const DDSHeader & header, TQImage & img )
 	{
 		// Create dst image.
 		if( !img.create( header.width, header.height, 32 )) {
@@ -875,7 +875,7 @@ namespace {	// Private.
 	};
 
 	// Load unwrapped cube map.
-	static bool LoadCubeMap( QDataStream & s, const DDSHeader & header, QImage & img )
+	static bool LoadCubeMap( TQDataStream & s, const DDSHeader & header, TQImage & img )
 	{
 		// Create dst image.
 #if CUBE_LAYOUT == HORIZONTAL
@@ -905,7 +905,7 @@ namespace {	// Private.
 		img.fill( 0 );
 
 		// Create face image.
-		QImage face;
+		TQImage face;
 		if( !face.create( header.width, header.height, 32 )) {
 			return false;
 		}
@@ -953,10 +953,10 @@ namespace {	// Private.
 }
 
 
-KDE_EXPORT void kimgio_dds_read( QImageIO *io )
+KDE_EXPORT void kimgio_dds_read( TQImageIO *io )
 {
-	QDataStream s( io->ioDevice() );
-	s.setByteOrder( QDataStream::LittleEndian );
+	TQDataStream s( io->ioDevice() );
+	s.setByteOrder( TQDataStream::LittleEndian );
 
 	// Validate header.
 	uint fourcc;
@@ -989,7 +989,7 @@ KDE_EXPORT void kimgio_dds_read( QImageIO *io )
 	}
 
 
-	QImage img;
+	TQImage img;
 	bool result;
 
 	if( IsCubeMap( header ) ) {
@@ -1011,7 +1011,7 @@ KDE_EXPORT void kimgio_dds_read( QImageIO *io )
 }
 
 
-KDE_EXPORT void kimgio_dds_write( QImageIO * )
+KDE_EXPORT void kimgio_dds_write( TQImageIO * )
 {
 	// TODO Stub!
 }

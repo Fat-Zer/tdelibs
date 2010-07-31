@@ -21,10 +21,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qbuffer.h>
-#include <qvariant.h>
-#include <qcolor.h>
-#include <qimage.h>
+#include <tqbuffer.h>
+#include <tqvariant.h>
+#include <tqcolor.h>
+#include <tqimage.h>
 #include "../kdatastream.h"
 #include "../dcopclient.h"
 #include "../dcopref.h"
@@ -40,7 +40,7 @@ static bool bLaunchApp = 0;
 
 bool findObject( const char* app, const char* obj, const char* func, QCStringList args )
 {
-    QString f = func; // Qt is better with unicode strings, so use one.
+    TQString f = func; // Qt is better with unicode strings, so use one.
     int left = f.find( '(' );
     int right = f.find( ')' );
 
@@ -57,26 +57,26 @@ bool findObject( const char* app, const char* obj, const char* func, QCStringLis
     // of dcop, so it should be OK.
     //
     //
-    QStringList intTypes;
+    TQStringList intTypes;
     intTypes << "int" << "unsigned" << "long" << "bool" ;
 
-    QStringList types;
+    TQStringList types;
     if ( left >0 && left + 1 < right - 1) {
-	types = QStringList::split( ',', f.mid( left + 1, right - left - 1) );
-	for ( QStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
-	    QString lt = (*it).simplifyWhiteSpace();
+	types = TQStringList::split( ',', f.mid( left + 1, right - left - 1) );
+	for ( TQStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
+	    TQString lt = (*it).simplifyWhiteSpace();
 
 	    int s = lt.find(' ');
 
 	    // If there are spaces in the name, there may be two
 	    // reasons: the parameter name is still there, ie.
-	    // "QString URL" or it's a complicated int type, ie.
+	    // "TQString URL" or it's a complicated int type, ie.
 	    // "unsigned long long int bool".
 	    //
 	    //
 	    if ( s > 0 )
 	    {
-		QStringList partl = QStringList::split(' ' , lt);
+		TQStringList partl = TQStringList::split(' ' , lt);
 
 		// The zero'th part is -- at the very least -- a
 		// type part. Any trailing parts *might* be extra
@@ -107,10 +107,10 @@ bool findObject( const char* app, const char* obj, const char* func, QCStringLis
 
 	    (*it) = lt;
 	}
-	QString fc = f.left( left );
+	TQString fc = f.left( left );
 	fc += '(';
 	bool first = true;
-	for ( QStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
+	for ( TQStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
 	    if ( !first )
 		fc +=",";
 	    first = false;
@@ -125,11 +125,11 @@ bool findObject( const char* app, const char* obj, const char* func, QCStringLis
 	exit(1);
     }
 
-    QByteArray data;
-    QDataStream arg(data, IO_WriteOnly);
+    TQByteArray data;
+    TQDataStream arg(data, IO_WriteOnly);
 
     uint i = 0;
-    for ( QStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
+    for ( TQStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
         marshall(arg, args, i, *it);
     }
     if ( (uint) i != args.count() ) {
@@ -137,8 +137,8 @@ bool findObject( const char* app, const char* obj, const char* func, QCStringLis
 	exit(1);
     }
 
-    QCString foundApp;
-    QCString foundObj;
+    TQCString foundApp;
+    TQCString foundObj;
     if ( dcop->findObject( app, obj, f.latin1(),  data, foundApp, foundObj) )
     {
        if (bAppIdOnly)
@@ -150,7 +150,7 @@ bool findObject( const char* app, const char* obj, const char* func, QCStringLis
     return false;
 }
 
-bool launchApp(QString app)
+bool launchApp(TQString app)
 {
     int l = app.length();
     if (l && (app[l-1] == '*'))
@@ -160,18 +160,18 @@ bool launchApp(QString app)
     if (!l) return false;
     app.truncate(l);
 
-    QStringList URLs;
-    QByteArray data, replyData;
-    QCString replyType;
-    QDataStream arg(data, IO_WriteOnly);
+    TQStringList URLs;
+    TQByteArray data, replyData;
+    TQCString replyType;
+    TQDataStream arg(data, IO_WriteOnly);
     arg << app << URLs;
 
-    if ( !dcop->call( "klauncher", "klauncher", "start_service_by_desktop_name(QString,QStringList)",
+    if ( !dcop->call( "klauncher", "klauncher", "start_service_by_desktop_name(TQString,TQStringList)",
                       data, replyType, replyData) ) {
 	qWarning( "call to klauncher failed.");
         return false;
     }
-    QDataStream reply(replyData, IO_ReadOnly);
+    TQDataStream reply(replyData, IO_ReadOnly);
 
     if ( replyType != "serviceResult" )
     {
@@ -179,8 +179,8 @@ bool launchApp(QString app)
         return false;
     }
     int result;
-    QCString dcopName;
-    QString error;
+    TQCString dcopName;
+    TQString error;
     reply >> result >> dcopName >> error;
     if (result != 0)
     {
@@ -226,9 +226,9 @@ int main( int argc, char** argv )
     client.attach();
     dcop = &client;
 
-    QCString app;
-    QCString objid;
-    QCString function;
+    TQCString app;
+    TQCString objid;
+    TQCString function;
     char **args = 0;
     if ((argc > argi) && (strncmp(argv[argi], "DCOPRef(", 8)) == 0)
     {

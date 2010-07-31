@@ -22,12 +22,12 @@
 
 
 
-#include <qfile.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qpixmap.h>
-#include <qtextstream.h>
-#include <qurl.h>
+#include <tqfile.h>
+#include <tqimage.h>
+#include <tqlabel.h>
+#include <tqpixmap.h>
+#include <tqtextstream.h>
+#include <tqurl.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -43,18 +43,18 @@ using namespace KABC;
 
 class LdapClient::LdapClientPrivate{
 public:
-  QString bindDN;
-  QString pwdBindDN;
+  TQString bindDN;
+  TQString pwdBindDN;
   LDIF ldif;
 };
 
-QString LdapObject::toString() const
+TQString LdapObject::toString() const
 {
-  QString result = QString::fromLatin1( "\ndn: %1\n" ).arg( dn );
+  TQString result = TQString::fromLatin1( "\ndn: %1\n" ).arg( dn );
   for ( LdapAttrMap::ConstIterator it = attrs.begin(); it != attrs.end(); ++it ) {
-    QString attr = it.key();
+    TQString attr = it.key();
     for ( LdapAttrValue::ConstIterator it2 = (*it).begin(); it2 != (*it).end(); ++it2 ) {
-      result += QString::fromUtf8( LDIF::assembleLine( attr, *it2, 76 ) ) + "\n";
+      result += TQString::fromUtf8( LDIF::assembleLine( attr, *it2, 76 ) ) + "\n";
     }
   }
 
@@ -63,7 +63,7 @@ QString LdapObject::toString() const
 
 void LdapObject::clear()
 {
-  dn = QString::null;
+  dn = TQString::null;
   attrs.clear();
 }
 
@@ -76,8 +76,8 @@ void LdapObject::assign( const LdapObject& that )
   }
 }
 
-LdapClient::LdapClient( QObject* parent, const char* name )
-  : QObject( parent, name ), mJob( 0 ), mActive( false )
+LdapClient::LdapClient( TQObject* parent, const char* name )
+  : TQObject( parent, name ), mJob( 0 ), mActive( false )
 {
   d = new LdapClientPrivate;
 }
@@ -88,37 +88,37 @@ LdapClient::~LdapClient()
   delete d; d = 0;
 }
 
-void LdapClient::setHost( const QString& host )
+void LdapClient::setHost( const TQString& host )
 {
   mHost = host;
 }
 
-void LdapClient::setPort( const QString& port )
+void LdapClient::setPort( const TQString& port )
 {
   mPort = port;
 }
 
-void LdapClient::setBase( const QString& base )
+void LdapClient::setBase( const TQString& base )
 {
   mBase = base;
 }
 
-void LdapClient::setBindDN( const QString& bindDN )
+void LdapClient::setBindDN( const TQString& bindDN )
 {
   d->bindDN = bindDN;
 }
 
-void LdapClient::setPwdBindDN( const QString& pwdBindDN )
+void LdapClient::setPwdBindDN( const TQString& pwdBindDN )
 {
   d->pwdBindDN = pwdBindDN;
 }
 
-void LdapClient::setAttrs( const QStringList& attrs )
+void LdapClient::setAttrs( const TQStringList& attrs )
 {
   mAttrs = attrs;
 }
 
-void LdapClient::startQuery( const QString& filter )
+void LdapClient::startQuery( const TQString& filter )
 {
   cancelQuery();
   LDAPUrl url;
@@ -138,12 +138,12 @@ void LdapClient::startQuery( const QString& filter )
   startParseLDIF();
   mActive = true;
   mJob = KIO::get( url, false, false );
-  connect( mJob, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
-           this, SLOT( slotData( KIO::Job*, const QByteArray& ) ) );
-  connect( mJob, SIGNAL( infoMessage( KIO::Job*, const QString& ) ),
-           this, SLOT( slotInfoMessage( KIO::Job*, const QString& ) ) );
-  connect( mJob, SIGNAL( result( KIO::Job* ) ),
-           this, SLOT( slotDone() ) );
+  connect( mJob, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
+           this, TQT_SLOT( slotData( KIO::Job*, const TQByteArray& ) ) );
+  connect( mJob, TQT_SIGNAL( infoMessage( KIO::Job*, const TQString& ) ),
+           this, TQT_SLOT( slotInfoMessage( KIO::Job*, const TQString& ) ) );
+  connect( mJob, TQT_SIGNAL( result( KIO::Job* ) ),
+           this, TQT_SLOT( slotDone() ) );
 }
 
 void LdapClient::cancelQuery()
@@ -156,16 +156,16 @@ void LdapClient::cancelQuery()
   mActive = false;
 }
 
-void LdapClient::slotData( KIO::Job*, const QByteArray& data )
+void LdapClient::slotData( KIO::Job*, const TQByteArray& data )
 {
 #ifndef NDEBUG // don't create the QString
-//  QString str( data );
+//  TQString str( data );
 //  kdDebug(5700) << "LdapClient: Got \"" << str << "\"\n";
 #endif
   parseLDIF( data );
 }
 
-void LdapClient::slotInfoMessage( KIO::Job*, const QString & )
+void LdapClient::slotInfoMessage( KIO::Job*, const TQString & )
 {
   //qDebug("Job said \"%s\"", info.latin1());
 }
@@ -175,13 +175,13 @@ void LdapClient::slotDone()
   endParseLDIF();
   mActive = false;
 #if 0
-  for ( QValueList<LdapObject>::Iterator it = mObjects.begin(); it != mObjects.end(); ++it ) {
+  for ( TQValueList<LdapObject>::Iterator it = mObjects.begin(); it != mObjects.end(); ++it ) {
     qDebug( (*it).toString().latin1() );
   }
 #endif
   int err = mJob->error();
   if ( err && err != KIO::ERR_USER_CANCELED ) {
-    emit error( KIO::buildErrorString( err, QString("%1:%2").arg( mHost ).arg( mPort ) ) );
+    emit error( KIO::buildErrorString( err, TQString("%1:%2").arg( mHost ).arg( mPort ) ) );
   }
   emit done();
 }
@@ -199,7 +199,7 @@ void LdapClient::endParseLDIF()
 {
 }
 
-void LdapClient::parseLDIF( const QByteArray& data )
+void LdapClient::parseLDIF( const TQByteArray& data )
 {
   if ( data.size() ) {
     d->ldif.setLDIF( data );
@@ -208,15 +208,15 @@ void LdapClient::parseLDIF( const QByteArray& data )
   }
 
   LDIF::ParseVal ret;
-  QString name;
+  TQString name;
   do {
     ret = d->ldif.nextItem();
     switch ( ret ) {
       case LDIF::Item:
       {
         name = d->ldif.attr();
-        // Must make a copy! QByteArray is explicitely shared
-        QByteArray value = d->ldif.val().copy();
+        // Must make a copy! TQByteArray is explicitely shared
+        TQByteArray value = d->ldif.val().copy();
         mCurrentObject.attrs[ name ].append( value );
         break;
       }
@@ -232,12 +232,12 @@ void LdapClient::parseLDIF( const QByteArray& data )
   } while ( ret != LDIF::MoreData );
 }
 
-QString LdapClient::bindDN() const
+TQString LdapClient::bindDN() const
 {
   return d->bindDN;
 }
 
-QString LdapClient::pwdBindDN() const
+TQString LdapClient::pwdBindDN() const
 {
   return d->pwdBindDN;
 }
@@ -261,45 +261,45 @@ LdapSearch::LdapSearch()
     for ( int j = 0; j < numHosts; j++ ) {
       LdapClient* ldapClient = new LdapClient( this );
 
-      QString host =  config.readEntry( QString( "SelectedHost%1" ).arg( j ), "" ).stripWhiteSpace();
+      TQString host =  config.readEntry( TQString( "SelectedHost%1" ).arg( j ), "" ).stripWhiteSpace();
       if ( !host.isEmpty() )
         ldapClient->setHost( host );
 
-      QString port = QString::number( config.readUnsignedNumEntry( QString( "SelectedPort%1" ).arg( j ) ) );
+      TQString port = TQString::number( config.readUnsignedNumEntry( TQString( "SelectedPort%1" ).arg( j ) ) );
       if ( !port.isEmpty() )
         ldapClient->setPort( port );
 
-      QString base = config.readEntry( QString( "SelectedBase%1" ).arg( j ), "" ).stripWhiteSpace();
+      TQString base = config.readEntry( TQString( "SelectedBase%1" ).arg( j ), "" ).stripWhiteSpace();
       if ( !base.isEmpty() )
         ldapClient->setBase( base );
 
-      QString bindDN = config.readEntry( QString( "SelectedBind%1" ).arg( j ) ).stripWhiteSpace();
+      TQString bindDN = config.readEntry( TQString( "SelectedBind%1" ).arg( j ) ).stripWhiteSpace();
       if ( !bindDN.isEmpty() )
         ldapClient->setBindDN( bindDN );
 
-      QString pwdBindDN = config.readEntry( QString( "SelectedPwdBind%1" ).arg( j ) );
+      TQString pwdBindDN = config.readEntry( TQString( "SelectedPwdBind%1" ).arg( j ) );
       if ( !pwdBindDN.isEmpty() )
         ldapClient->setPwdBindDN( pwdBindDN );
 
-      QStringList attrs;
+      TQStringList attrs;
       attrs << "cn" << "mail" << "givenname" << "sn";
       ldapClient->setAttrs( attrs );
 
-      connect( ldapClient, SIGNAL( result( const KABC::LdapObject& ) ),
-               this, SLOT( slotLDAPResult( const KABC::LdapObject& ) ) );
-      connect( ldapClient, SIGNAL( done() ),
-               this, SLOT( slotLDAPDone() ) );
-      connect( ldapClient, SIGNAL( error( const QString& ) ),
-               this, SLOT( slotLDAPError( const QString& ) ) );
+      connect( ldapClient, TQT_SIGNAL( result( const KABC::LdapObject& ) ),
+               this, TQT_SLOT( slotLDAPResult( const KABC::LdapObject& ) ) );
+      connect( ldapClient, TQT_SIGNAL( done() ),
+               this, TQT_SLOT( slotLDAPDone() ) );
+      connect( ldapClient, TQT_SIGNAL( error( const TQString& ) ),
+               this, TQT_SLOT( slotLDAPError( const TQString& ) ) );
 
       mClients.append( ldapClient );
     }
   }
 
-  connect( &mDataTimer, SIGNAL( timeout() ), SLOT( slotDataTimer() ) );
+  connect( &mDataTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( slotDataTimer() ) );
 }
 
-void LdapSearch::startSearch( const QString& txt )
+void LdapSearch::startSearch( const TQString& txt )
 {
   if ( mNoLDAPLookup )
     return;
@@ -318,10 +318,10 @@ void LdapSearch::startSearch( const QString& txt )
   } else
     mSearchText = txt;
 
-  QString filter = QString( "|(cn=%1*)(mail=%2*)(givenName=%3*)(sn=%4*)" )
+  TQString filter = TQString( "|(cn=%1*)(mail=%2*)(givenName=%3*)(sn=%4*)" )
       .arg( mSearchText ).arg( mSearchText ).arg( mSearchText ).arg( mSearchText );
 
-  QValueList< LdapClient* >::Iterator it;
+  TQValueList< LdapClient* >::Iterator it;
   for ( it = mClients.begin(); it != mClients.end(); ++it ) {
     (*it)->startQuery( filter );
     ++mActiveClients;
@@ -330,7 +330,7 @@ void LdapSearch::startSearch( const QString& txt )
 
 void LdapSearch::cancelSearch()
 {
-  QValueList< LdapClient* >::Iterator it;
+  TQValueList< LdapClient* >::Iterator it;
   for ( it = mClients.begin(); it != mClients.end(); ++it )
     (*it)->cancelQuery();
 
@@ -345,7 +345,7 @@ void LdapSearch::slotLDAPResult( const KABC::LdapObject& obj )
     mDataTimer.start( 500, true );
 }
 
-void LdapSearch::slotLDAPError( const QString& )
+void LdapSearch::slotLDAPError( const TQString& )
 {
   slotLDAPDone();
 }
@@ -360,7 +360,7 @@ void LdapSearch::slotLDAPDone()
 
 void LdapSearch::slotDataTimer()
 {
-  QStringList lst;
+  TQStringList lst;
   LdapResultList reslist;
   makeSearchData( lst, reslist );
   if ( !lst.isEmpty() )
@@ -377,17 +377,17 @@ void LdapSearch::finish()
   emit searchDone();
 }
 
-void LdapSearch::makeSearchData( QStringList& ret, LdapResultList& resList )
+void LdapSearch::makeSearchData( TQStringList& ret, LdapResultList& resList )
 {
-  QString search_text_upper = mSearchText.upper();
+  TQString search_text_upper = mSearchText.upper();
 
-  QValueList< KABC::LdapObject >::ConstIterator it1;
+  TQValueList< KABC::LdapObject >::ConstIterator it1;
   for ( it1 = mResults.begin(); it1 != mResults.end(); ++it1 ) {
-    QString name, mail, givenname, sn;
+    TQString name, mail, givenname, sn;
 
     LdapAttrMap::ConstIterator it2;
     for ( it2 = (*it1).attrs.begin(); it2 != (*it1).attrs.end(); ++it2 ) {
-      QString tmp = QString::fromUtf8( (*it2).first(), (*it2).first().size() );
+      TQString tmp = TQString::fromUtf8( (*it2).first(), (*it2).first().size() );
       if ( it2.key() == "cn" )
         name = tmp; // TODO loop?
       else if( it2.key() == "mail" )
@@ -404,7 +404,7 @@ void LdapSearch::makeSearchData( QStringList& ret, LdapResultList& resList )
       ret.append( mail );
     else {
       kdDebug(5700) << "<" << name << "><" << mail << ">" << endl;
-      ret.append( QString( "%1 <%2>" ).arg( name ).arg( mail ) );
+      ret.append( TQString( "%1 <%2>" ).arg( name ).arg( mail ) );
     }
 
     LdapResult sr;

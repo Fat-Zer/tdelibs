@@ -24,7 +24,7 @@
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 
-#include <qstring.h>
+#include <tqstring.h>
 
 class PrintcapEntry;
 class KMPrinter;
@@ -42,30 +42,30 @@ class KPrinter;
 class LprHandler
 {
 public:
-	LprHandler(const QString& name, KMManager *mgr = 0);
+	LprHandler(const TQString& name, KMManager *mgr = 0);
 	virtual ~LprHandler();
 
 	virtual bool validate(PrintcapEntry*);
 	virtual KMPrinter* createPrinter(PrintcapEntry*);
 	virtual bool completePrinter(KMPrinter*, PrintcapEntry*, bool shortmode = true);
 	virtual DrMain* loadDriver(KMPrinter*, PrintcapEntry*, bool = false);
-	virtual DrMain* loadDbDriver(const QString&);
+	virtual DrMain* loadDbDriver(const TQString&);
 	virtual bool savePrinterDriver(KMPrinter*, PrintcapEntry*, DrMain*, bool* = 0);
 	virtual PrintcapEntry* createEntry(KMPrinter*);
 	virtual bool removePrinter(KMPrinter*, PrintcapEntry*);
-	virtual QString printOptions(KPrinter*);
+	virtual TQString printOptions(KPrinter*);
 	virtual void reset();
 
-	QString name() const;
+	TQString name() const;
 	KMManager* manager() const;
-	QString driverDirectory();
+	TQString driverDirectory();
 
 protected:
-	DrMain* loadToolDriver(const QString&);
-	QString locateDir(const QString& dirname, const QString& paths);
-	QString cachedDriverDir() const;
-	void setCachedDriverDir(const QString&);
-	virtual QString driverDirInternal();
+	DrMain* loadToolDriver(const TQString&);
+	TQString locateDir(const TQString& dirname, const TQString& paths);
+	TQString cachedDriverDir() const;
+	void setCachedDriverDir(const TQString&);
+	virtual TQString driverDirInternal();
 
 protected:
 	QString	m_name;
@@ -73,16 +73,16 @@ protected:
 	QString	m_cacheddriverdir;
 };
 
-inline QString LprHandler::name() const
+inline TQString LprHandler::name() const
 { return m_name; }
 
 inline KMManager* LprHandler::manager() const
 { return m_manager; }
 
-inline QString LprHandler::cachedDriverDir() const
+inline TQString LprHandler::cachedDriverDir() const
 { return m_cacheddriverdir; }
 
-inline void LprHandler::setCachedDriverDir(const QString& s)
+inline void LprHandler::setCachedDriverDir(const TQString& s)
 { m_cacheddriverdir = s; }
 
 #endif

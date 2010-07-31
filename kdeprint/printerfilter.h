@@ -20,16 +20,16 @@
 #ifndef PRINTERFILTER_H
 #define PRINTERFILTER_H
 
-#include <qobject.h>
-#include <qregexp.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqregexp.h>
+#include <tqstringlist.h>
 
 class KMPrinter;
 
 class PrinterFilter : QObject
 {
 public:
-	PrinterFilter(QObject *parent = 0, const char *name = 0);
+	PrinterFilter(TQObject *parent = 0, const char *name = 0);
 	~PrinterFilter();
 
 	bool filter(KMPrinter*);

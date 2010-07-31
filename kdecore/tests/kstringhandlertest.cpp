@@ -3,7 +3,7 @@
 using std::cout;
 using std::endl;
 
-bool check(const QString &txt, const QString &a, const QString &b)
+bool check(const TQString &txt, const TQString &a, const TQString &b)
 {
     if ( a != b ) {
         cout << "ERROR: Tested " << txt.latin1() << ", expected" << endl;
@@ -17,7 +17,7 @@ bool check(const QString &txt, const QString &a, const QString &b)
 
 int main(int argc, char *argv[]) 
 {
-  QString test = "The quick brown fox jumped over the lazy bridge. ";
+  TQString test = "The quick brown fox jumped over the lazy bridge. ";
 
   check("word(test, 3)", 
 	KStringHandler::word(test, 2), 
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
   check("reverse(test)", 
 	KStringHandler::reverse(test),
        " bridge. lazy the over jumped fox brown quick The"); 
-  QString result;
+  TQString result;
   result = KStringHandler::ljust(test, 70);
   if (result.length() != 70)
   {

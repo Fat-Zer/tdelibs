@@ -21,19 +21,19 @@
 #define UTIL_H
 
 #include "kprinter.h"
-#include <qstring.h>
+#include <tqstring.h>
 #include <kurl.h>
 #include <klocale.h>
 
-KURL smbToUrl(const QString& work, const QString& server, const QString& printer);
-void urlToSmb(const KURL& url, QString& work, QString& server, QString& printer);
+KURL smbToUrl(const TQString& work, const TQString& server, const TQString& printer);
+void urlToSmb(const KURL& url, TQString& work, TQString& server, TQString& printer);
 // those 2 are only workarounds when the login/password may contain
 // strange characters ('@', '/'). In this case, those chars are not encoded
 // as other SMB tools (smbspool) doesn't seem to support encoding. This
 // utilities allow to continue working KURL class (and encoding) within
 // KDEPrint, but without encoding outside KDEPrint (shoudl fix bug #38733)
-KDEPRINT_EXPORT QString buildSmbURI( const QString& work, const QString& server, const QString& printer, const QString& user, const QString& passwd );
-KDEPRINT_EXPORT bool splitSmbURI( const QString& uri, QString& work, QString& server, QString& printer, QString& user, QString& passwd );
+KDEPRINT_EXPORT TQString buildSmbURI( const TQString& work, const TQString& server, const TQString& printer, const TQString& user, const TQString& passwd );
+KDEPRINT_EXPORT bool splitSmbURI( const TQString& uri, TQString& work, TQString& server, TQString& printer, TQString& user, TQString& passwd );
 
 static const struct pagesizestruct
 {

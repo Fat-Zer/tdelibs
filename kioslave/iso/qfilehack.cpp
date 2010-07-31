@@ -20,7 +20,7 @@
 QFileHack::QFileHack(){
 }
 
-QFileHack::QFileHack( const QString & name ) : QFile(name) {
+QFileHack::QFileHack( const TQString & name ) : TQFile(name) {
 }
 
 QFileHack::~QFileHack(){
@@ -32,7 +32,7 @@ bool QFileHack::open ( int m ) {
 #ifdef __linux__
     m |= IO_Async; //On linux, set O_NONBLOCK, opens CD-ROMs faster
 #endif
-    ret=QFile::open(m);
+    ret=TQFile::open(m);
     if (ret && isSequentialAccess() ) {
         setType(IO_Direct);
     }

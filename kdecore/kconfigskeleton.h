@@ -23,16 +23,16 @@
 #ifndef _KCONFIGSKELETON_H
 #define _KCONFIGSKELETON_H
 
-#include <qcolor.h>
-#include <qdatetime.h>
-#include <qfont.h>
-#include <qpoint.h>
-#include <qptrlist.h>
-#include <qdict.h>
-#include <qrect.h>
-#include <qsize.h>
-#include <qstringlist.h>
-#include <qvariant.h>
+#include <tqcolor.h>
+#include <tqdatetime.h>
+#include <tqfont.h>
+#include <tqpoint.h>
+#include <tqptrlist.h>
+#include <tqdict.h>
+#include <tqrect.h>
+#include <tqsize.h>
+#include <tqstringlist.h>
+#include <tqvariant.h>
 #include <kconfig.h>
 #include <kglobalsettings.h>
 
@@ -50,9 +50,9 @@
   class KDECORE_EXPORT KConfigSkeletonItem
   {
   public:
-    typedef QValueList < KConfigSkeletonItem * >List;
-    typedef QDict < KConfigSkeletonItem > Dict;
-    typedef QDictIterator < KConfigSkeletonItem > DictIterator;
+    typedef TQValueList < KConfigSkeletonItem * >List;
+    typedef TQDict < KConfigSkeletonItem > Dict;
+    typedef TQDictIterator < KConfigSkeletonItem > DictIterator;
 
     /**
      * Constructor.
@@ -60,7 +60,7 @@
      * @param group Config file group.
      * @param key Config file key.
      */
-    KConfigSkeletonItem(const QString & group, const QString & key)
+    KConfigSkeletonItem(const TQString & group, const TQString & key)
       :mGroup(group),mKey(key), mIsImmutable(true)
     {
     }
@@ -75,7 +75,7 @@
     /**
      * Set config file group.
      */
-    void setGroup( const QString &group )
+    void setGroup( const TQString &group )
     {
       mGroup = group;
     }
@@ -83,7 +83,7 @@
     /**
      * Return config file group.
      */
-    QString group() const
+    TQString group() const
     {
       return mGroup;
     }
@@ -91,7 +91,7 @@
     /**
      * Set config file key.
      */
-    void setKey( const QString &key )
+    void setKey( const TQString &key )
     {
       mKey = key;
     }
@@ -99,7 +99,7 @@
     /**
      * Return config file key.
      */
-    QString key() const
+    TQString key() const
     {
       return mKey;
     }
@@ -107,7 +107,7 @@
     /**
      * Set internal name of entry.
      */
-    void setName(const QString &name)
+    void setName(const TQString &name)
     {
       mName = name;
     }
@@ -115,7 +115,7 @@
     /**
      * Return internal name of entry.
      */
-    QString name() const
+    TQString name() const
     {
       return mName;
     }
@@ -123,7 +123,7 @@
     /**
       Set label providing a translated one-line description of the item.
     */
-    void setLabel( const QString &l )
+    void setLabel( const TQString &l )
     {
       mLabel = l;
     }
@@ -131,7 +131,7 @@
     /**
       Return label of item. See setLabel().
     */
-    QString label() const
+    TQString label() const
     {
       return mLabel;
     }
@@ -139,7 +139,7 @@
     /**
       Set WhatsThis description og item.
     */
-    void setWhatsThis( const QString &w )
+    void setWhatsThis( const TQString &w )
     {
       mWhatsThis = w;
     }
@@ -147,7 +147,7 @@
     /**
       Return WhatsThis description of item. See setWhatsThis().
     */
-    QString whatsThis() const
+    TQString whatsThis() const
     {
       return mWhatsThis;
     }
@@ -173,22 +173,22 @@
     /**
      * Set item to @p p
      */
-    virtual void setProperty(const QVariant &p) = 0;
+    virtual void setProperty(const TQVariant &p) = 0;
     
     /**
      * Return item as property
      */
-    virtual QVariant property() const = 0;
+    virtual TQVariant property() const = 0;
 
     /**
      * Return minimum value of item or invalid if not specified
      */
-    virtual QVariant minValue() const { return QVariant(); }
+    virtual TQVariant minValue() const { return TQVariant(); }
 
     /**
      * Return maximum value of item or invalid if not specified
      */
-    virtual QVariant maxValue() const { return QVariant(); }
+    virtual TQVariant maxValue() const { return TQVariant(); }
 
     /**
       Sets the current value to the default value.
@@ -216,22 +216,22 @@
      */
     void readImmutability(KConfig *config);
 
-    QString mGroup;
-    QString mKey;
-    QString mName;
+    TQString mGroup;
+    TQString mKey;
+    TQString mName;
 
   private:
     bool mIsImmutable;
 
-    QString mLabel;
-    QString mWhatsThis;
+    TQString mLabel;
+    TQString mWhatsThis;
   };
 
 
 template < typename T > class KConfigSkeletonGenericItem:public KConfigSkeletonItem
   {
   public:
-    KConfigSkeletonGenericItem(const QString & group, const QString & key, T & reference,
+    KConfigSkeletonGenericItem(const TQString & group, const TQString & key, T & reference,
                 T defaultValue)
       : KConfigSkeletonItem(group, key), mReference(reference),
         mDefault(defaultValue), mLoadedValue(defaultValue)
@@ -330,15 +330,15 @@ template < typename T > class KConfigSkeletonGenericItem:public KConfigSkeletonI
    *     {
    *       setCurrentGroup("MyGroup");
    *       addItemBool("MySetting1",mMyBool,false);
-   *       addItemColor("MySetting2",mMyColor,QColor(1,2,3));
+   *       addItemColor("MySetting2",mMyColor,TQColor(1,2,3));
    * 
    *       setCurrentGroup("MyOtherGroup");
-   *       addItemFont("MySetting3",mMyFont,QFont("helvetica",12));
+   *       addItemFont("MySetting3",mMyFont,TQFont("helvetica",12));
    *     }
    * 
    *     bool mMyBool;
-   *     QColor mMyColor;
-   *     QFont mMyFont;
+   *     TQColor mMyColor;
+   *     TQFont mMyFont;
    * }
    * \endcode
    * 
@@ -369,20 +369,20 @@ public:
   /**
    * Class for handling a string preferences item.
    */
-  class KDECORE_EXPORT ItemString:public KConfigSkeletonGenericItem < QString >
+  class KDECORE_EXPORT ItemString:public KConfigSkeletonGenericItem < TQString >
   {
   public:
     enum Type { Normal, Password, Path };
 
-    ItemString(const QString & group, const QString & key,
-               QString & reference,
-               const QString & defaultValue = QString::fromLatin1(""), // NOT QString::null !!
+    ItemString(const TQString & group, const TQString & key,
+               TQString & reference,
+               const TQString & defaultValue = TQString::fromLatin1(""), // NOT TQString::null !!
                Type type = Normal);
 
     void writeConfig(KConfig * config);
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
 
   private:
     Type mType;
@@ -394,9 +394,9 @@ public:
   class KDECORE_EXPORT ItemPassword:public ItemString
   {
   public:
-    ItemPassword(const QString & group, const QString & key,
-               QString & reference,
-               const QString & defaultValue = QString::fromLatin1("")); // NOT QString::null !!
+    ItemPassword(const TQString & group, const TQString & key,
+               TQString & reference,
+               const TQString & defaultValue = TQString::fromLatin1("")); // NOT TQString::null !!
   };
 
   /**
@@ -405,24 +405,24 @@ public:
   class KDECORE_EXPORT ItemPath:public ItemString
   {
   public:
-    ItemPath(const QString & group, const QString & key,
-             QString & reference,
-             const QString & defaultValue = QString::null);
+    ItemPath(const TQString & group, const TQString & key,
+             TQString & reference,
+             const TQString & defaultValue = TQString::null);
   };
 
 
   /**
-   * Class for handling a QVariant preferences item.
+   * Class for handling a TQVariant preferences item.
    */
-  class KDECORE_EXPORT ItemProperty:public KConfigSkeletonGenericItem < QVariant >
+  class KDECORE_EXPORT ItemProperty:public KConfigSkeletonGenericItem < TQVariant >
   {
   public:
-    ItemProperty(const QString & group, const QString & key,
-                 QVariant & reference, QVariant defaultValue = 0);
+    ItemProperty(const TQString & group, const TQString & key,
+                 TQVariant & reference, TQVariant defaultValue = 0);
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
   };
 
 
@@ -432,12 +432,12 @@ public:
   class KDECORE_EXPORT ItemBool:public KConfigSkeletonGenericItem < bool >
   {
   public:
-    ItemBool(const QString & group, const QString & key, bool & reference,
+    ItemBool(const TQString & group, const TQString & key, bool & reference,
              bool defaultValue = true);
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
   };
 
 
@@ -447,14 +447,14 @@ public:
   class KDECORE_EXPORT ItemInt:public KConfigSkeletonGenericItem < int >
   {
   public:
-    ItemInt(const QString & group, const QString & key, int &reference,
+    ItemInt(const TQString & group, const TQString & key, int &reference,
             int defaultValue = 0);
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
-    QVariant minValue() const;
-    QVariant maxValue() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
+    TQVariant minValue() const;
+    TQVariant maxValue() const;
 
     void setMinValue(int);
     void setMaxValue(int);
@@ -472,15 +472,15 @@ public:
   class KDECORE_EXPORT ItemInt64:public KConfigSkeletonGenericItem < Q_INT64 >
   {
   public:
-    ItemInt64(const QString & group, const QString & key, Q_INT64 &reference,
+    ItemInt64(const TQString & group, const TQString & key, Q_INT64 &reference,
             Q_INT64 defaultValue = 0);
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
 
-    QVariant minValue() const;
-    QVariant maxValue() const;
+    TQVariant minValue() const;
+    TQVariant maxValue() const;
 
     void setMinValue(Q_INT64);
     void setMaxValue(Q_INT64);
@@ -500,21 +500,21 @@ public:
   public:
     struct Choice
     {
-      QString name;
-      QString label;
-      QString whatsThis;
+      TQString name;
+      TQString label;
+      TQString whatsThis;
     };
 
-    ItemEnum(const QString & group, const QString & key, int &reference,
-             const QValueList<Choice> &choices, int defaultValue = 0);
+    ItemEnum(const TQString & group, const TQString & key, int &reference,
+             const TQValueList<Choice> &choices, int defaultValue = 0);
 
-    QValueList<Choice> choices() const;
+    TQValueList<Choice> choices() const;
 
     void readConfig(KConfig * config);
     void writeConfig(KConfig * config);
 
   private:
-      QValueList<Choice> mChoices;
+      TQValueList<Choice> mChoices;
   };
 
 
@@ -524,14 +524,14 @@ public:
   class KDECORE_EXPORT ItemUInt:public KConfigSkeletonGenericItem < unsigned int >
   {
   public:
-    ItemUInt(const QString & group, const QString & key,
+    ItemUInt(const TQString & group, const TQString & key,
              unsigned int &reference, unsigned int defaultValue = 0);
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
-    QVariant minValue() const;
-    QVariant maxValue() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
+    TQVariant minValue() const;
+    TQVariant maxValue() const;
 
     void setMinValue(unsigned int);
     void setMaxValue(unsigned int);
@@ -550,14 +550,14 @@ public:
   class KDECORE_EXPORT ItemLong:public KConfigSkeletonGenericItem < long >
   {
   public:
-    ItemLong(const QString & group, const QString & key, long &reference,
+    ItemLong(const TQString & group, const TQString & key, long &reference,
              long defaultValue = 0);
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
-    QVariant minValue() const;
-    QVariant maxValue() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
+    TQVariant minValue() const;
+    TQVariant maxValue() const;
 
     void setMinValue(long);
     void setMaxValue(long);
@@ -576,14 +576,14 @@ public:
   class KDECORE_EXPORT ItemULong:public KConfigSkeletonGenericItem < unsigned long >
   {
   public:
-    ItemULong(const QString & group, const QString & key,
+    ItemULong(const TQString & group, const TQString & key,
               unsigned long &reference, unsigned long defaultValue = 0);
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
-    QVariant minValue() const;
-    QVariant maxValue() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
+    TQVariant minValue() const;
+    TQVariant maxValue() const;
 
     void setMinValue(unsigned long);
     void setMaxValue(unsigned long);
@@ -601,15 +601,15 @@ public:
   class KDECORE_EXPORT ItemUInt64:public KConfigSkeletonGenericItem < Q_UINT64 >
   {
   public:
-    ItemUInt64(const QString & group, const QString & key, Q_UINT64 &reference,
+    ItemUInt64(const TQString & group, const TQString & key, Q_UINT64 &reference,
             Q_UINT64 defaultValue = 0);
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
 
-    QVariant minValue() const;
-    QVariant maxValue() const;
+    TQVariant minValue() const;
+    TQVariant maxValue() const;
 
     void setMinValue(Q_UINT64);
     void setMaxValue(Q_UINT64);
@@ -627,14 +627,14 @@ public:
   class KDECORE_EXPORT ItemDouble:public KConfigSkeletonGenericItem < double >
   {
   public:
-    ItemDouble(const QString & group, const QString & key,
+    ItemDouble(const TQString & group, const TQString & key,
                double &reference, double defaultValue = 0);
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
-    QVariant minValue() const;
-    QVariant maxValue() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
+    TQVariant minValue() const;
+    TQVariant maxValue() const;
 
     void setMinValue(double);
     void setMaxValue(double);
@@ -650,108 +650,108 @@ public:
   /**
    * Class for handling a color preferences item.
    */
-  class KDECORE_EXPORT ItemColor:public KConfigSkeletonGenericItem < QColor >
+  class KDECORE_EXPORT ItemColor:public KConfigSkeletonGenericItem < TQColor >
   {
   public:
-    ItemColor(const QString & group, const QString & key,
-              QColor & reference,
-              const QColor & defaultValue = QColor(128, 128, 128));
+    ItemColor(const TQString & group, const TQString & key,
+              TQColor & reference,
+              const TQColor & defaultValue = TQColor(128, 128, 128));
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
   };
 
 
   /**
    * Class for handling a font preferences item.
    */
-  class KDECORE_EXPORT ItemFont:public KConfigSkeletonGenericItem < QFont >
+  class KDECORE_EXPORT ItemFont:public KConfigSkeletonGenericItem < TQFont >
   {
   public:
-    ItemFont(const QString & group, const QString & key, QFont & reference,
-             const QFont & defaultValue = KGlobalSettings::generalFont());
+    ItemFont(const TQString & group, const TQString & key, TQFont & reference,
+             const TQFont & defaultValue = KGlobalSettings::generalFont());
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
   };
 
 
   /**
-   * Class for handling a QRect preferences item.
+   * Class for handling a TQRect preferences item.
    */
-  class KDECORE_EXPORT ItemRect:public KConfigSkeletonGenericItem < QRect >
+  class KDECORE_EXPORT ItemRect:public KConfigSkeletonGenericItem < TQRect >
   {
   public:
-    ItemRect(const QString & group, const QString & key, QRect & reference,
-             const QRect & defaultValue = QRect());
+    ItemRect(const TQString & group, const TQString & key, TQRect & reference,
+             const TQRect & defaultValue = TQRect());
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
   };
 
 
   /**
-   * Class for handling a QPoint preferences item.
+   * Class for handling a TQPoint preferences item.
    */
-  class KDECORE_EXPORT ItemPoint:public KConfigSkeletonGenericItem < QPoint >
+  class KDECORE_EXPORT ItemPoint:public KConfigSkeletonGenericItem < TQPoint >
   {
   public:
-    ItemPoint(const QString & group, const QString & key, QPoint & reference,
-              const QPoint & defaultValue = QPoint());
+    ItemPoint(const TQString & group, const TQString & key, TQPoint & reference,
+              const TQPoint & defaultValue = TQPoint());
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
   };
 
 
   /**
-   * Class for handling a QSize preferences item.
+   * Class for handling a TQSize preferences item.
    */
-  class KDECORE_EXPORT ItemSize:public KConfigSkeletonGenericItem < QSize >
+  class KDECORE_EXPORT ItemSize:public KConfigSkeletonGenericItem < TQSize >
   {
   public:
-    ItemSize(const QString & group, const QString & key, QSize & reference,
-             const QSize & defaultValue = QSize());
+    ItemSize(const TQString & group, const TQString & key, TQSize & reference,
+             const TQSize & defaultValue = TQSize());
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
   };
 
 
   /**
-   * Class for handling a QDateTime preferences item.
+   * Class for handling a TQDateTime preferences item.
    */
-  class KDECORE_EXPORT ItemDateTime:public KConfigSkeletonGenericItem < QDateTime >
+  class KDECORE_EXPORT ItemDateTime:public KConfigSkeletonGenericItem < TQDateTime >
   {
   public:
-    ItemDateTime(const QString & group, const QString & key,
-                 QDateTime & reference,
-                 const QDateTime & defaultValue = QDateTime());
+    ItemDateTime(const TQString & group, const TQString & key,
+                 TQDateTime & reference,
+                 const TQDateTime & defaultValue = TQDateTime());
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
   };
 
 
   /**
    * Class for handling a string list preferences item.
    */
-  class KDECORE_EXPORT ItemStringList:public KConfigSkeletonGenericItem < QStringList >
+  class KDECORE_EXPORT ItemStringList:public KConfigSkeletonGenericItem < TQStringList >
   {
   public:
-    ItemStringList(const QString & group, const QString & key,
-                   QStringList & reference,
-                   const QStringList & defaultValue = QStringList());
+    ItemStringList(const TQString & group, const TQString & key,
+                   TQStringList & reference,
+                   const TQStringList & defaultValue = TQStringList());
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
   };
 
 
@@ -761,9 +761,9 @@ public:
   class KDECORE_EXPORT ItemPathList:public ItemStringList
   {
   public:
-    ItemPathList(const QString & group, const QString & key,
-                   QStringList & reference,
-                   const QStringList & defaultValue = QStringList());
+    ItemPathList(const TQString & group, const TQString & key,
+                   TQStringList & reference,
+                   const TQStringList & defaultValue = TQStringList());
 
     void readConfig(KConfig * config);
     void writeConfig(KConfig * config);
@@ -773,16 +773,16 @@ public:
   /**
    * Class for handling an integer list preferences item.
    */
-  class KDECORE_EXPORT ItemIntList:public KConfigSkeletonGenericItem < QValueList < int > >
+  class KDECORE_EXPORT ItemIntList:public KConfigSkeletonGenericItem < TQValueList < int > >
   {
   public:
-    ItemIntList(const QString & group, const QString & key,
-                QValueList < int >&reference,
-                const QValueList < int >&defaultValue = QValueList < int >());
+    ItemIntList(const TQString & group, const TQString & key,
+                TQValueList < int >&reference,
+                const TQValueList < int >&defaultValue = TQValueList < int >());
 
     void readConfig(KConfig * config);
-    void setProperty(const QVariant & p);
-    QVariant property() const;
+    void setProperty(const TQVariant & p);
+    TQVariant property() const;
   };
 
 
@@ -793,7 +793,7 @@ public:
    * @param configname name of config file. If no name is given, the default
    * config file as returned by kapp()->config() is used.
    */
-  KConfigSkeleton(const QString & configname = QString::null);
+  KConfigSkeleton(const TQString & configname = TQString::null);
 
   /**
    * Constructor.
@@ -829,12 +829,12 @@ public:
    * until setCurrentGroup() is called with a new argument. Call this before
    * you add any items. The default value is "No Group".
    */
-  void setCurrentGroup(const QString & group);
+  void setCurrentGroup(const TQString & group);
 
   /**
    * Returns the current group used for addItem() calls. 
    */
-  QString currentGroup() // ### KDE 4.0: make const
+  TQString currentGroup() // ### KDE 4.0: make const
   {
     return mCurrentGroup;
   }
@@ -845,10 +845,10 @@ public:
    * Note that all names must be unique but that multiple entries can have
    * the same key if they reside in different groups. 
    */
-  void addItem(KConfigSkeletonItem *, const QString & name = QString::null );
+  void addItem(KConfigSkeletonItem *, const TQString & name = TQString::null );
 
   /**
-   * Register an item of type QString.
+   * Register an item of type TQString.
    * 
    * @param name Name used to indentify this setting. Names must be unique.
    * @param reference Pointer to the variable, which is set by readConfig()
@@ -858,12 +858,12 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemString *addItemString(const QString & name, QString & reference,
-                            const QString & defaultValue = QString::fromLatin1(""), // NOT QString::null !!
-                            const QString & key = QString::null);
+  ItemString *addItemString(const TQString & name, TQString & reference,
+                            const TQString & defaultValue = TQString::fromLatin1(""), // NOT TQString::null !!
+                            const TQString & key = TQString::null);
 
   /**
-   * Register a password item of type QString. The string value is written 
+   * Register a password item of type TQString. The string value is written 
    * encrypted to the config file. Note that the current encryption scheme 
    * is very weak.
    * 
@@ -875,12 +875,12 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemPassword *addItemPassword(const QString & name, QString & reference,
-                              const QString & defaultValue = QString::fromLatin1(""),
-                              const QString & key = QString::null);
+  ItemPassword *addItemPassword(const TQString & name, TQString & reference,
+                              const TQString & defaultValue = TQString::fromLatin1(""),
+                              const TQString & key = TQString::null);
 
   /**
-   * Register a path item of type QString. The string value is interpreted
+   * Register a path item of type TQString. The string value is interpreted
    * as a path. This means, dollar expension is activated for this value, so
    * that e.g. $HOME gets expanded. 
    * 
@@ -892,13 +892,13 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemPath *addItemPath(const QString & name, QString & reference,
-                          const QString & defaultValue = QString::fromLatin1(""),
-                          const QString & key = QString::null);
+  ItemPath *addItemPath(const TQString & name, TQString & reference,
+                          const TQString & defaultValue = TQString::fromLatin1(""),
+                          const TQString & key = TQString::null);
 
   /**
-   * Register a property item of type QVariant. Note that only the following
-   * QVariant types are allowed: String, StringList, Font, Point, Rect, Size,
+   * Register a property item of type TQVariant. Note that only the following
+   * TQVariant types are allowed: String, StringList, Font, Point, Rect, Size,
    * Color, Int, UInt, Bool, Double, DateTime and Date.
    * 
    * @param name Name used to indentify this setting. Names must be unique.
@@ -909,9 +909,9 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemProperty *addItemProperty(const QString & name, QVariant & reference,
-                                const QVariant & defaultValue = QVariant(),
-                                const QString & key = QString::null);
+  ItemProperty *addItemProperty(const TQString & name, TQVariant & reference,
+                                const TQVariant & defaultValue = TQVariant(),
+                                const TQString & key = TQString::null);
   /**
    * Register an item of type bool.
    * 
@@ -923,9 +923,9 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemBool *addItemBool(const QString & name, bool & reference,
+  ItemBool *addItemBool(const TQString & name, bool & reference,
                         bool defaultValue = false,
-                        const QString & key = QString::null);
+                        const TQString & key = TQString::null);
 
   /**
    * Register an item of type int.
@@ -938,8 +938,8 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemInt *addItemInt(const QString & name, int &reference, int defaultValue = 0,
-                      const QString & key = QString::null);
+  ItemInt *addItemInt(const TQString & name, int &reference, int defaultValue = 0,
+                      const TQString & key = TQString::null);
 
   /**
    * Register an item of type unsigned int.
@@ -952,9 +952,9 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemUInt *addItemUInt(const QString & name, unsigned int &reference,
+  ItemUInt *addItemUInt(const TQString & name, unsigned int &reference,
                         unsigned int defaultValue = 0,
-                        const QString & key = QString::null);
+                        const TQString & key = TQString::null);
 
   /**
    * Register an item of type long.
@@ -967,9 +967,9 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemLong *addItemLong(const QString & name, long &reference,
+  ItemLong *addItemLong(const TQString & name, long &reference,
                         long defaultValue = 0,
-                        const QString & key = QString::null);
+                        const TQString & key = TQString::null);
 
   /**
    * Register an item of type unsigned long.
@@ -982,9 +982,9 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemULong *addItemULong(const QString & name, unsigned long &reference,
+  ItemULong *addItemULong(const TQString & name, unsigned long &reference,
                           unsigned long defaultValue = 0,
-                          const QString & key = QString::null);
+                          const TQString & key = TQString::null);
 
   /**
    * Register an item of type Q_INT64.
@@ -997,9 +997,9 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemInt64 *addItemInt64(const QString & name, Q_INT64 &reference,
+  ItemInt64 *addItemInt64(const TQString & name, Q_INT64 &reference,
                           Q_INT64 defaultValue = 0,
-                          const QString & key = QString::null);
+                          const TQString & key = TQString::null);
 
   /**
    * Register an item of type Q_UINT64
@@ -1012,9 +1012,9 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemUInt64 *addItemUInt64(const QString & name, Q_UINT64 &reference,
+  ItemUInt64 *addItemUInt64(const TQString & name, Q_UINT64 &reference,
                             Q_UINT64 defaultValue = 0,
-                            const QString & key = QString::null);
+                            const TQString & key = TQString::null);
 
   /**
    * Register an item of type double.
@@ -1027,12 +1027,12 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemDouble *addItemDouble(const QString & name, double &reference,
+  ItemDouble *addItemDouble(const TQString & name, double &reference,
                             double defaultValue = 0.0,
-                            const QString & key = QString::null);
+                            const TQString & key = TQString::null);
 
   /**
-   * Register an item of type QColor.
+   * Register an item of type TQColor.
    * 
    * @param name Name used to indentify this setting. Names must be unique.
    * @param reference Pointer to the variable, which is set by readConfig()
@@ -1042,12 +1042,12 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemColor *addItemColor(const QString & name, QColor & reference,
-                          const QColor & defaultValue = QColor(128, 128, 128),
-                          const QString & key = QString::null);
+  ItemColor *addItemColor(const TQString & name, TQColor & reference,
+                          const TQColor & defaultValue = TQColor(128, 128, 128),
+                          const TQString & key = TQString::null);
 
   /**
-   * Register an item of type QFont.
+   * Register an item of type TQFont.
    * 
    * @param name Name used to indentify this setting. Names must be unique.
    * @param reference Pointer to the variable, which is set by readConfig()
@@ -1057,13 +1057,13 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemFont *addItemFont(const QString & name, QFont & reference,
-                        const QFont & defaultValue =
+  ItemFont *addItemFont(const TQString & name, TQFont & reference,
+                        const TQFont & defaultValue =
                         KGlobalSettings::generalFont(),
-                        const QString & key = QString::null);
+                        const TQString & key = TQString::null);
 
   /**
-   * Register an item of type QRect.
+   * Register an item of type TQRect.
    * 
    * @param name Name used to indentify this setting. Names must be unique.
    * @param reference Pointer to the variable, which is set by readConfig()
@@ -1073,12 +1073,12 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemRect *addItemRect(const QString & name, QRect & reference,
-                        const QRect & defaultValue = QRect(),
-                        const QString & key = QString::null);
+  ItemRect *addItemRect(const TQString & name, TQRect & reference,
+                        const TQRect & defaultValue = TQRect(),
+                        const TQString & key = TQString::null);
 
   /**
-   * Register an item of type QPoint.
+   * Register an item of type TQPoint.
    * 
    * @param name Name used to indentify this setting. Names must be unique.
    * @param reference Pointer to the variable, which is set by readConfig()
@@ -1088,12 +1088,12 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemPoint *addItemPoint(const QString & name, QPoint & reference,
-                          const QPoint & defaultValue = QPoint(),
-                          const QString & key = QString::null);
+  ItemPoint *addItemPoint(const TQString & name, TQPoint & reference,
+                          const TQPoint & defaultValue = TQPoint(),
+                          const TQString & key = TQString::null);
 
   /**
-   * Register an item of type QSize.
+   * Register an item of type TQSize.
    * 
    * @param name Name used to indentify this setting. Names must be unique.
    * @param reference Pointer to the variable, which is set by readConfig()
@@ -1103,12 +1103,12 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemSize *addItemSize(const QString & name, QSize & reference,
-                        const QSize & defaultValue = QSize(),
-                        const QString & key = QString::null);
+  ItemSize *addItemSize(const TQString & name, TQSize & reference,
+                        const TQSize & defaultValue = TQSize(),
+                        const TQString & key = TQString::null);
 
   /**
-   * Register an item of type QDateTime.
+   * Register an item of type TQDateTime.
    * 
    * @param name Name used to indentify this setting. Names must be unique.
    * @param reference Pointer to the variable, which is set by readConfig()
@@ -1118,12 +1118,12 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemDateTime *addItemDateTime(const QString & name, QDateTime & reference,
-                                const QDateTime & defaultValue = QDateTime(),
-                                const QString & key = QString::null);
+  ItemDateTime *addItemDateTime(const TQString & name, TQDateTime & reference,
+                                const TQDateTime & defaultValue = TQDateTime(),
+                                const TQString & key = TQString::null);
 
   /**
-   * Register an item of type QStringList.
+   * Register an item of type TQStringList.
    * 
    * @param name Name used to indentify this setting. Names must be unique.
    * @param reference Pointer to the variable, which is set by readConfig()
@@ -1133,12 +1133,12 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemStringList *addItemStringList(const QString & name, QStringList & reference,
-                                    const QStringList & defaultValue = QStringList(),
-                                    const QString & key = QString::null);
+  ItemStringList *addItemStringList(const TQString & name, TQStringList & reference,
+                                    const TQStringList & defaultValue = TQStringList(),
+                                    const TQString & key = TQString::null);
 
   /**
-   * Register an item of type QValueList<int>.
+   * Register an item of type TQValueList<int>.
    * 
    * @param name Name used to indentify this setting. Names must be unique.
    * @param reference Pointer to the variable, which is set by readConfig()
@@ -1148,10 +1148,10 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemIntList *addItemIntList(const QString & name, QValueList < int >&reference,
-                              const QValueList < int >&defaultValue =
-                              QValueList < int >(),
-                              const QString & key = QString::null);
+  ItemIntList *addItemIntList(const TQString & name, TQValueList < int >&reference,
+                              const TQValueList < int >&defaultValue =
+                              TQValueList < int >(),
+                              const TQString & key = TQString::null);
 
   /**
    * Return the @ref KConfig object used for reading and writing the settings.
@@ -1169,12 +1169,12 @@ public:
   /**
    * Return whether a certain item is immutable
    */
-  bool isImmutable(const QString & name);
+  bool isImmutable(const TQString & name);
 
   /**
    * Lookup item by name
    */
-  KConfigSkeletonItem * findItem(const QString & name);
+  KConfigSkeletonItem * findItem(const TQString & name);
 
   /**
    * Indicate whether this object should reflect the actual
@@ -1213,7 +1213,7 @@ protected:
   }
 
 private:
-  QString mCurrentGroup;
+  TQString mCurrentGroup;
 
   KSharedConfig::Ptr mConfig; // pointer to KConfig object
 

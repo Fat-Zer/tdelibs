@@ -20,7 +20,7 @@
   DEALINGS IN THE SOFTWARE.
 */
 
-#include <qstyleplugin.h>
+#include <tqstyleplugin.h>
 #include "lightstyle-v2.h"
 #include "lightstyle-v3.h"
 
@@ -29,24 +29,24 @@ class LightStylePlugin : public QStylePlugin
 public:
     LightStylePlugin();
 
-    QStringList keys() const;
-    QStyle *create(const QString &);
+    TQStringList keys() const;
+    TQStyle *create(const TQString &);
 };
 
 LightStylePlugin::LightStylePlugin()
-    : QStylePlugin()
+    : TQStylePlugin()
 {
 }
 
-QStringList LightStylePlugin::keys() const
+TQStringList LightStylePlugin::keys() const
 {
-    QStringList list;
+    TQStringList list;
     list << "Light, 2nd revision";
     list << "Light, 3rd revision";
     return list;
 }
 
-QStyle *LightStylePlugin::create(const QString &s)
+TQStyle *LightStylePlugin::create(const TQString &s)
 {
     if (s.lower() == "light, 2nd revision")
 	return new LightStyleV2;

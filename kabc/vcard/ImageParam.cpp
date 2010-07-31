@@ -37,7 +37,7 @@ ImageParam::ImageParam(const ImageParam & x)
 {
 }
 
-ImageParam::ImageParam(const QCString & s)
+ImageParam::ImageParam(const TQCString & s)
 	:	Param(s)
 {
 }
@@ -52,7 +52,7 @@ ImageParam::operator = (ImageParam & x)
 }
 
 	ImageParam &
-ImageParam::operator = (const QCString & s)
+ImageParam::operator = (const TQCString & s)
 {
 	Param::operator = (s);
 	return *this;

@@ -23,10 +23,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _DCOPCLIENT_H
 #define _DCOPCLIENT_H
 
-#include <qobject.h>
-#include <qcstring.h>
-#include <qvaluelist.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqcstring.h>
+#include <tqvaluelist.h>
+#include <tqstring.h>
 #include <kdatastream.h> // needed for proper bool marshalling
 #include <kdelibs_export.h>
 
@@ -34,7 +34,7 @@ class DCOPObjectProxy;
 class DCOPClientPrivate;
 class DCOPClientTransaction;
 
-typedef QValueList<QCString> QCStringList;
+typedef TQValueList<TQCString> QCStringList;
 
 /**
  * Inter-process communication and remote procedure calls
@@ -51,15 +51,15 @@ typedef QValueList<QCString> QCStringList;
  * and registerAs() for
  * more information.
  *
- * Data to be sent should be serialized into a QDataStream which was
- * initialized with the QByteArray that you actually intend to send
+ * Data to be sent should be serialized into a TQDataStream which was
+ * initialized with the TQByteArray that you actually intend to send
  * the data in.  An example of how you might do this:
  *
  * \code
- *   QByteArray data;
- *   QDataStream arg(data, IO_WriteOnly);
- *   arg << QString("This is text I am serializing");
- *   client->send("someApp", "someObject", "someFunction(QString)", data);
+ *   TQByteArray data;
+ *   TQDataStream arg(data, IO_WriteOnly);
+ *   arg << TQString("This is text I am serializing");
+ *   client->send("someApp", "someObject", "someFunction(TQString)", data);
  * \endcode
  *
  * @see KApplication::dcopClient()
@@ -86,7 +86,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * find the server anyway.
    * @param addr the new address of the server
    */
-  static void setServerAddress(const QCString &addr);
+  static void setServerAddress(const TQCString &addr);
 
   /**
    * Attaches to the DCOP server.
@@ -96,9 +96,9 @@ class DCOP_EXPORT DCOPClient : public QObject
    *
    * Naturally, only attached application can use DCOP services.
    *
-   * If a QApplication object exists then client registers itself as
-   * QApplication::name() + "-" + \<pid\>.
-   * If no QApplication object exists the client registers itself as
+   * If a TQApplication object exists then client registers itself as
+   * TQApplication::name() + "-" + \<pid\>.
+   * If no TQApplication object exists the client registers itself as
    * "anonymous".
    *
    * If you want to register differently, you should use registerAs()
@@ -191,7 +191,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * @return The actual @p appId used for the registration or a null string
    * if the registration wasn't successful.
    */
-  QCString registerAs( const QCString &appId, bool addPID = true );
+  TQCString registerAs( const TQCString &appId, bool addPID = true );
 
   /**
    * Returns whether or not the client is registered at the server.
@@ -202,9 +202,9 @@ class DCOP_EXPORT DCOPClient : public QObject
   /**
    * Returns the current app id or a null string if the application
    * hasn't yet been registered.
-   * @return the application id, or QString::null if not registered
+   * @return the application id, or TQString::null if not registered
    */
-  QCString appId() const;
+  TQCString appId() const;
 
   /**
    * Returns the socket fd that is used for communication with the server.
@@ -251,12 +251,12 @@ class DCOP_EXPORT DCOPClient : public QObject
    *
    * @return Whether or not the server was able to accept the send.
    */
-  bool send(const QCString &remApp, const QCString &remObj,
-	    const QCString &remFun, const QByteArray &data);
+  bool send(const TQCString &remApp, const TQCString &remObj,
+	    const TQCString &remFun, const TQByteArray &data);
 
   /**
    * This function acts exactly the same as the above, but the data
-   * parameter can be specified as a QString for convenience.
+   * parameter can be specified as a TQString for convenience.
    *
    * @param remApp The remote application id.
    * @param remObj The name of the remote object.
@@ -265,14 +265,14 @@ class DCOP_EXPORT DCOPClient : public QObject
    *
    * @return Whether or not the server was able to accept the send.
    */
-  bool send(const QCString &remApp, const QCString &remObj,
-	    const QCString &remFun, const QString &data);
+  bool send(const TQCString &remApp, const TQCString &remObj,
+	    const TQCString &remFun, const TQString &data);
 
   /**
    * Performs a synchronous send and receive.
    *
    *  The parameters are the same as for send, with the exception of
-   *  another QByteArray being provided for results to be
+   *  another TQByteArray being provided for results to be
    *  (optionally) returned in.
    *
    * A call blocks the application until the process receives the
@@ -297,17 +297,17 @@ class DCOP_EXPORT DCOPClient : public QObject
    *
    * @see send()
    */
-  bool call(const QCString &remApp, const QCString &remObj,
-	    const QCString &remFun, const QByteArray &data,
-	    QCString& replyType, QByteArray &replyData,
+  bool call(const TQCString &remApp, const TQCString &remObj,
+	    const TQCString &remFun, const TQByteArray &data,
+	    TQCString& replyType, TQByteArray &replyData,
 	    bool useEventLoop/*=false*/, int timeout/*=-1*/);
   /**
    * @deprecated
    */
   // KDE4 merge with above
-  bool call(const QCString &remApp, const QCString &remObj,
-	    const QCString &remFun, const QByteArray &data,
-	    QCString& replyType, QByteArray &replyData,
+  bool call(const TQCString &remApp, const TQCString &remObj,
+	    const TQCString &remFun, const TQByteArray &data,
+	    TQCString& replyType, TQByteArray &replyData,
 	    bool useEventLoop=false);
 
   /**
@@ -319,8 +319,8 @@ class DCOP_EXPORT DCOPClient : public QObject
    * slot that is called when an answer is received.
    *
    * The slot should have the following signature:
-   * callBackSlot(int callId, const QCString& replyType,
-   *              const QByteArray &replyData);
+   * callBackSlot(int callId, const TQCString& replyType,
+   *              const TQByteArray &replyData);
    *
    *
    * @param remApp the remote application's id
@@ -338,9 +338,9 @@ class DCOP_EXPORT DCOPClient : public QObject
    *
    * @since 3.2
    */
-  int callAsync(const QCString &remApp, const QCString &remObj,
-                const QCString &remFun, const QByteArray &data,
-                QObject *callBackObj, const char *callBackSlot);
+  int callAsync(const TQCString &remApp, const TQCString &remObj,
+                const TQCString &remFun, const TQByteArray &data,
+                TQObject *callBackObj, const char *callBackSlot);
 
   /**
    * Searches for an object which matches a criteria.
@@ -378,18 +378,18 @@ class DCOP_EXPORT DCOPClient : public QObject
    *
    * @see send()
    */
-  bool findObject(const QCString &remApp, const QCString &remObj,
-	    const QCString &remFun, const QByteArray &data,
-	    QCString &foundApp, QCString &foundObj,
+  bool findObject(const TQCString &remApp, const TQCString &remObj,
+	    const TQCString &remFun, const TQByteArray &data,
+	    TQCString &foundApp, TQCString &foundObj,
 	    bool useEventLoop/*=false*/, int timeout/*=-1*/);
 
   /**
    * @deprecated
    */
   // KDE4 merge with above
-  bool findObject(const QCString &remApp, const QCString &remObj,
-	    const QCString &remFun, const QByteArray &data,
-	    QCString &foundApp, QCString &foundObj,
+  bool findObject(const TQCString &remApp, const TQCString &remObj,
+	    const TQCString &remFun, const TQByteArray &data,
+	    TQCString &foundApp, TQCString &foundObj,
 	    bool useEventLoop=false);
 
 
@@ -397,11 +397,11 @@ class DCOP_EXPORT DCOPClient : public QObject
    * Emits @p signal as DCOP signal from object @p object with @p data as
    * arguments.
    */
-  void emitDCOPSignal( const QCString &object, const QCString &signal,
-                       const QByteArray &data);
+  void emitDCOPSignal( const TQCString &object, const TQCString &signal,
+                       const TQByteArray &data);
 
   /* For backwards compatibility */
-  void emitDCOPSignal( const QCString &signal, const QByteArray &data);
+  void emitDCOPSignal( const TQCString &signal, const TQByteArray &data);
 
   /**
    * Connects to a DCOP signal.
@@ -423,17 +423,17 @@ class DCOP_EXPORT DCOPClient : public QObject
    * @li @p Volatile is true and @p sender  does not exist.
    * @li @p signal and @p slot do not have matching arguments.
    */
-  bool connectDCOPSignal( const QCString &sender, const QCString &senderObj,
-                          const QCString &signal,
-                          const QCString &receiverObj, const QCString &slot,
+  bool connectDCOPSignal( const TQCString &sender, const TQCString &senderObj,
+                          const TQCString &signal,
+                          const TQCString &receiverObj, const TQCString &slot,
                           bool Volatile);
 
   /**
    * @deprecated
    * For backwards compatibility
    */
-  bool connectDCOPSignal( const QCString &sender, const QCString &signal,
-                          const QCString &receiverObj, const QCString &slot,
+  bool connectDCOPSignal( const TQCString &sender, const TQCString &signal,
+                          const TQCString &receiverObj, const TQCString &slot,
                           bool Volatile) KDE_DEPRECATED;
 
   /**
@@ -453,16 +453,16 @@ class DCOP_EXPORT DCOPClient : public QObject
    * If empty all slots will be disconnected.
    * @return false if no connection(s) where removed.
    */
-  bool disconnectDCOPSignal( const QCString &sender, const QCString &senderObj,
-                          const QCString &signal,
-                          const QCString &receiverObj, const QCString &slot);
+  bool disconnectDCOPSignal( const TQCString &sender, const TQCString &senderObj,
+                          const TQCString &signal,
+                          const TQCString &receiverObj, const TQCString &slot);
 
   /**
    * @deprecated
    * For backwards compatibility
    */
-  bool disconnectDCOPSignal( const QCString &sender, const QCString &signal,
-                          const QCString &receiverObj, const QCString &slot) KDE_DEPRECATED;
+  bool disconnectDCOPSignal( const TQCString &sender, const TQCString &signal,
+                          const TQCString &receiverObj, const TQCString &slot) KDE_DEPRECATED;
 
   /**
    * Reimplement this function to handle app-wide function calls unassociated w/an object.
@@ -479,8 +479,8 @@ class DCOP_EXPORT DCOPClient : public QObject
    * @return true if successful, false otherwise
    * @see setDefaultObject()
    */
-  virtual bool process(const QCString &fun, const QByteArray &data,
-		       QCString& replyType, QByteArray &replyData);
+  virtual bool process(const TQCString &fun, const TQByteArray &data,
+		       TQCString& replyType, TQByteArray &replyData);
 
   /**
    * Delays the reply of the current function call
@@ -500,7 +500,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * @param replyData write the reply data in this array
    * @see beginTransaction()
    */
-  void endTransaction( DCOPClientTransaction *t, QCString& replyType, QByteArray &replyData);
+  void endTransaction( DCOPClientTransaction *t, TQCString& replyType, TQByteArray &replyData);
 
   /**
    * Test whether the current function call is delayed.
@@ -518,7 +518,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * @param remApp the id of the remote application
    * @return true if the remote application is registered, otherwise @p false.
    */
-  bool isApplicationRegistered( const QCString& remApp);
+  bool isApplicationRegistered( const TQCString& remApp);
 
   /**
    * Retrieves the list of all currently registered applications
@@ -534,7 +534,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    *           and false if an error occurred
    * @return the list of object ids
    */
-  QCStringList remoteObjects( const QCString& remApp, bool *ok = 0 );
+  QCStringList remoteObjects( const TQCString& remApp, bool *ok = 0 );
 
   /**
    * Retrieves the list of interfaces of the remote object @p remObj
@@ -545,7 +545,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    *           and false if an error occurred
    * @return the list of interfaces
   */
-  QCStringList remoteInterfaces( const QCString& remApp, const QCString& remObj , bool *ok = 0 );
+  QCStringList remoteInterfaces( const TQCString& remApp, const TQCString& remObj , bool *ok = 0 );
 
   /**
    * Retrieves the list of functions of the remote object @p remObj
@@ -556,7 +556,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    *           and false if an error occurred
    * @return the list of function ids
   */
-  QCStringList remoteFunctions( const QCString& remApp, const QCString& remObj , bool *ok = 0 );
+  QCStringList remoteFunctions( const TQCString& remApp, const TQCString& remObj , bool *ok = 0 );
 
   /**
    * @internal
@@ -572,9 +572,9 @@ class DCOP_EXPORT DCOPClient : public QObject
    * @param replyData write the reply data in this array
    * @return true if successful, false otherwise
    */
-  bool receive(const QCString &app, const QCString &obj,
-	       const QCString &fun, const QByteArray& data,
-	       QCString& replyType, QByteArray &replyData);
+  bool receive(const TQCString &app, const TQCString &obj,
+	       const TQCString &fun, const TQByteArray& data,
+	       TQCString& replyType, TQByteArray &replyData);
 
   /**
    * @internal
@@ -589,9 +589,9 @@ class DCOP_EXPORT DCOPClient : public QObject
    * @param replyType write the reply type in this string
    * @param replyData write the reply data in this array
    */
-  bool find(const QCString &app, const QCString &obj,
-	    const QCString &fun, const QByteArray& data,
-	    QCString& replyType, QByteArray &replyData);
+  bool find(const TQCString &app, const TQCString &obj,
+	    const TQCString &fun, const TQByteArray& data,
+	    TQCString& replyType, TQByteArray &replyData);
 
   /**
    * Normalizes the function signature @p fun.
@@ -601,7 +601,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    *
    * Example for a normalized signature:
    * \code
-   *   "someFunction(QString,int)"
+   *   "someFunction(TQString,int)"
    * \endcode
    *
    * When using send() or call(), normalization is done
@@ -610,7 +610,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * @param fun the function signature to normalize
    * @return the normalized function
    */
-  static QCString normalizeFunctionSignature( const QCString& fun );
+  static TQCString normalizeFunctionSignature( const TQCString& fun );
 
 
   /**
@@ -618,7 +618,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * @return the application id of the last application that send a message
    *         to this client
    */
-  QCString senderId() const;
+  TQCString senderId() const;
 
 
    /**
@@ -628,7 +628,7 @@ class DCOP_EXPORT DCOPClient : public QObject
     * will be send further to @p objId.
     * @param objId the id of the new default object
     */
-  void setDefaultObject( const QCString& objId );
+  void setDefaultObject( const TQCString& objId );
 
     /**
      * Returns the current default object or an empty string if no object is
@@ -638,7 +638,7 @@ class DCOP_EXPORT DCOPClient : public QObject
      * been processed by the DCOPClient itself.
     * @return the id of the new default object
      */
-  QCString defaultObject() const;
+  TQCString defaultObject() const;
 
   /**
    * Enables / disables the applicationRegistered() /
@@ -693,7 +693,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * to check whether a given client (by name) is running in the same
    * process or in another one.
    */
-  static DCOPClient* findLocalClient( const QCString &_appId );
+  static DCOPClient* findLocalClient( const TQCString &_appId );
 
   /**
     * @internal Do not use.
@@ -718,19 +718,19 @@ class DCOP_EXPORT DCOPClient : public QObject
     * @return Filename that contains information how to contact the
     * DCOPserver.
     */
-  static QCString dcopServerFile(const QCString &hostname=0);
+  static TQCString dcopServerFile(const TQCString &hostname=0);
 
   /**
    * @deprecated
    * For backwards compatibility with KDE 2.x
    * // KDE4 remove
    */
-  static QCString dcopServerFileOld(const QCString &hostname=0) KDE_DEPRECATED;
+  static TQCString dcopServerFileOld(const TQCString &hostname=0) KDE_DEPRECATED;
 
   /**
    * Return the path of iceauth or an empty string if not found.
    */
-  static QCString iceauthPath();
+  static TQCString iceauthPath();
 
 signals:
   /**
@@ -741,7 +741,7 @@ signals:
    * that you want to get these events.
    * @param appId the id of the new application
    */
-  void applicationRegistered( const QCString& appId );
+  void applicationRegistered( const TQCString& appId );
   /**
    * Indicates that the formerly registered application @p appId has
    * been removed.
@@ -750,7 +750,7 @@ signals:
    * DCOP server that you want to get these events.
    * @param appId the id of the removed application
    */
-  void applicationRemoved( const QCString& appId );
+  void applicationRemoved( const TQCString& appId );
 
   /**
    * Indicates that the process of establishing DCOP communications failed
@@ -760,7 +760,7 @@ signals:
    * aid.
    * @param msg the message tha contains further information
    */
-  void attachFailed(const QString &msg);
+  void attachFailed(const TQString &msg);
 
   /**
    * Indicates that user input shall be blocked or released,
@@ -790,7 +790,7 @@ signals:
    * @see callAsync()
    * @since 3.2
    */
-  void callBack(int, const QCString&, const QByteArray &);
+  void callBack(int, const TQCString&, const TQByteArray &);
 
 public slots:
   /**
@@ -816,18 +816,18 @@ public:
 
 private:
 
-  bool isLocalTransactionFinished(Q_INT32 id, QCString &replyType, QByteArray &replyData);
+  bool isLocalTransactionFinished(Q_INT32 id, TQCString &replyType, TQByteArray &replyData);
 
   bool attachInternal( bool registerAsAnonymous = true );
 
-  bool callInternal(const QCString &remApp, const QCString &remObj,
-	    const QCString &remFun, const QByteArray &data,
-	    QCString& replyType, QByteArray &replyData,
+  bool callInternal(const TQCString &remApp, const TQCString &remObj,
+	    const TQCString &remFun, const TQByteArray &data,
+	    TQCString& replyType, TQByteArray &replyData,
 	    bool useEventLoop, int timeout, int minor_opcode);
 
 
-  bool callInternal(const QCString &remApp, const QCString &remObjId,
-            const QCString &remFun, const QByteArray &data,
+  bool callInternal(const TQCString &remApp, const TQCString &remObjId,
+            const TQCString &remFun, const TQByteArray &data,
             ReplyStruct *replyStruct,
             bool useEventLoop, int timeout, int minor_opcode);
 

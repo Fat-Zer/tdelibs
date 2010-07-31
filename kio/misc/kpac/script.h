@@ -21,7 +21,7 @@
 #ifndef KPAC_SCRIPT_H
 #define KPAC_SCRIPT_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kjs/interpreter.h>
 
@@ -35,16 +35,16 @@ namespace KPAC
         class Error
         {
         public:
-            Error( const QString& message )
+            Error( const TQString& message )
                 : m_message( message ) {}
-            const QString& message() const { return m_message; }
+            const TQString& message() const { return m_message; }
 
         private:
-            QString m_message;
+            TQString m_message;
         };
 
-        Script( const QString& code );
-        QString evaluate( const KURL& );
+        Script( const TQString& code );
+        TQString evaluate( const KURL& );
 
     private:
         KJS::Interpreter m_interpreter;

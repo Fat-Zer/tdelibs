@@ -23,7 +23,7 @@
 #define KSPELL_HSPELLCLIENT_H
 
 #include "client.h"
-#include <qobject.h>
+#include <tqobject.h>
 
 /* libhspell is a C library and it does not have #ifdef __cplusplus */
 extern "C" {
@@ -39,18 +39,18 @@ class HSpellClient : public KSpell2::Client
 {
     Q_OBJECT
 public:
-    HSpellClient( QObject *parent, const char *name, const QStringList & /* args */  );
+    HSpellClient( TQObject *parent, const char *name, const TQStringList & /* args */  );
     ~HSpellClient();
 
     virtual int reliability() const {
         return 20;
     }
 
-    virtual Dictionary* dictionary( const QString& language );
+    virtual Dictionary* dictionary( const TQString& language );
 
-    virtual QStringList languages() const;
+    virtual TQStringList languages() const;
 
-    virtual QString name() const {
+    virtual TQString name() const {
         return "HSpell";
     }
 private:

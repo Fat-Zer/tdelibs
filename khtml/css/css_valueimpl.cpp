@@ -41,9 +41,9 @@
 #include "rendering/render_style.h"
 
 #include <kdebug.h>
-#include <qregexp.h>
-#include <qpaintdevice.h>
-#include <qpaintdevicemetrics.h>
+#include <tqregexp.h>
+#include <tqpaintdevice.h>
+#include <tqpaintdevicemetrics.h>
 
 // Hack for debugging purposes
 extern DOM::DOMString getPropertyName(unsigned short id);
@@ -56,7 +56,7 @@ using namespace DOM;
 static DOMString quoteStringIfNeeded(const DOMString &string)
 {
     // FIXME: Also need to transform control characters into \ sequences.
-    QString s = string.string();
+    TQString s = string.string();
     s.replace('\\', "\\\\");
     s.replace('\'', "\\'");
     return '\'' + s + '\'';
@@ -70,7 +70,7 @@ CSSStyleDeclarationImpl::CSSStyleDeclarationImpl(CSSRuleImpl *parent)
     m_node = 0;
 }
 
-CSSStyleDeclarationImpl::CSSStyleDeclarationImpl(CSSRuleImpl *parent, QPtrList<CSSProperty> *lstValues)
+CSSStyleDeclarationImpl::CSSStyleDeclarationImpl(CSSRuleImpl *parent, TQPtrList<CSSProperty> *lstValues)
     : StyleBaseImpl(parent)
 {
     m_lstValues = lstValues;
@@ -83,10 +83,10 @@ CSSStyleDeclarationImpl&  CSSStyleDeclarationImpl::operator= (const CSSStyleDecl
     delete m_lstValues;
     m_lstValues = 0;
     if (o.m_lstValues) {
-        m_lstValues = new QPtrList<CSSProperty>;
+        m_lstValues = new TQPtrList<CSSProperty>;
         m_lstValues->setAutoDelete( true );
 
-        QPtrListIterator<CSSProperty> lstValuesIt(*o.m_lstValues);
+        TQPtrListIterator<CSSProperty> lstValuesIt(*o.m_lstValues);
         for (lstValuesIt.toFirst(); lstValuesIt.current(); ++lstValuesIt)
             m_lstValues->append(new CSSProperty(*lstValuesIt.current()));
     }
@@ -233,7 +233,7 @@ DOMString CSSStyleDeclarationImpl::getShortHandValue( const int* properties, int
 {
     if(!m_lstValues) return 0;
 
-    QPtrListIterator<CSSProperty> lstValuesIt(*m_lstValues);
+    TQPtrListIterator<CSSProperty> lstValuesIt(*m_lstValues);
     CSSProperty *current;
     for ( lstValuesIt.toLast(); (current = lstValuesIt.current()); --lstValuesIt )
         if (current->m_id == propertyID && !current->nonCSSHint)
@@ -246,7 +246,7 @@ DOMString CSSStyleDeclarationImpl::removeProperty( int propertyID, bool NonCSSHi
     if(!m_lstValues) return DOMString();
     DOMString value;
 
-    QPtrListIterator<CSSProperty> lstValuesIt(*m_lstValues);
+    TQPtrListIterator<CSSProperty> lstValuesIt(*m_lstValues);
      CSSProperty *current;
      for ( lstValuesIt.toLast(); (current = lstValuesIt.current()); --lstValuesIt )  {
          if (current->m_id == propertyID && NonCSSHint == current->nonCSSHint) {
@@ -289,7 +289,7 @@ void CSSStyleDeclarationImpl::removeCSSHints()
 bool CSSStyleDeclarationImpl::getPropertyPriority( int propertyID ) const
 {
     if ( m_lstValues) {
-	QPtrListIterator<CSSProperty> lstValuesIt(*m_lstValues);
+	TQPtrListIterator<CSSProperty> lstValuesIt(*m_lstValues);
 	CSSProperty *current;
 	for ( lstValuesIt.toFirst(); (current = lstValuesIt.current()); ++lstValuesIt ) {
 	    if( propertyID == current->m_id )
@@ -302,7 +302,7 @@ bool CSSStyleDeclarationImpl::getPropertyPriority( int propertyID ) const
 bool CSSStyleDeclarationImpl::setProperty(int id, const DOMString &value, bool important, bool nonCSSHint)
 {
     if(!m_lstValues) {
-	m_lstValues = new QPtrList<CSSProperty>;
+	m_lstValues = new TQPtrList<CSSProperty>;
 	m_lstValues->setAutoDelete(true);
     }
 
@@ -319,7 +319,7 @@ bool CSSStyleDeclarationImpl::setProperty(int id, const DOMString &value, bool i
 void CSSStyleDeclarationImpl::setProperty(int id, int value, bool important, bool nonCSSHint)
 {
     if(!m_lstValues) {
-	m_lstValues = new QPtrList<CSSProperty>;
+	m_lstValues = new TQPtrList<CSSProperty>;
 	m_lstValues->setAutoDelete(true);
     }
     removeProperty(id, nonCSSHint );
@@ -342,7 +342,7 @@ void CSSStyleDeclarationImpl::setLengthProperty(int id, const DOM::DOMString &va
 void CSSStyleDeclarationImpl::setProperty ( const DOMString &propertyString)
 {
     if(!m_lstValues) {
-	m_lstValues = new QPtrList<CSSProperty>;
+	m_lstValues = new TQPtrList<CSSProperty>;
 	m_lstValues->setAutoDelete( true );
     }
 
@@ -374,7 +374,7 @@ DOM::DOMString CSSStyleDeclarationImpl::cssText() const
     DOMString result;
 
     if ( m_lstValues) {
-	QPtrListIterator<CSSProperty> lstValuesIt(*m_lstValues);
+	TQPtrListIterator<CSSProperty> lstValuesIt(*m_lstValues);
 	CSSProperty *current;
 	for ( lstValuesIt.toFirst(); (current = lstValuesIt.current()); ++lstValuesIt ) {
 	    result += current->cssText();
@@ -389,7 +389,7 @@ void CSSStyleDeclarationImpl::setCssText(DOM::DOMString text)
     if (m_lstValues) {
 	m_lstValues->clear();
     } else {
-	m_lstValues = new QPtrList<CSSProperty>;
+	m_lstValues = new TQPtrList<CSSProperty>;
 	m_lstValues->setAutoDelete( true );
     }
 
@@ -454,7 +454,7 @@ DOM::DOMString CSSValueListImpl::cssText() const
 {
     DOMString result = "";
 
-    for (QPtrListIterator<CSSValueImpl> iterator(m_values); iterator.current(); ++iterator) {
+    for (TQPtrListIterator<CSSValueImpl> iterator(m_values); iterator.current(); ++iterator) {
 	result += iterator.current()->cssText();
     }
 
@@ -549,7 +549,7 @@ void CSSPrimitiveValueImpl::cleanup()
     m_type = 0;
 }
 
-int CSSPrimitiveValueImpl::computeLength( khtml::RenderStyle *style, QPaintDeviceMetrics *devMetrics )
+int CSSPrimitiveValueImpl::computeLength( khtml::RenderStyle *style, TQPaintDeviceMetrics *devMetrics )
 {
     double result = computeLengthFloat( style, devMetrics );
     // This conversion is imprecise, often resulting in values of, e.g., 44.99998.  We
@@ -558,7 +558,7 @@ int CSSPrimitiveValueImpl::computeLength( khtml::RenderStyle *style, QPaintDevic
     return intResult;
 }
 
-double CSSPrimitiveValueImpl::computeLengthFloat( khtml::RenderStyle *style, QPaintDeviceMetrics *devMetrics )
+double CSSPrimitiveValueImpl::computeLengthFloat( khtml::RenderStyle *style, TQPaintDeviceMetrics *devMetrics )
 {
     unsigned short type = primitiveType();
 
@@ -576,11 +576,11 @@ double CSSPrimitiveValueImpl::computeLengthFloat( khtml::RenderStyle *style, QPa
         break;
     case CSSPrimitiveValue::CSS_EXS:
 	{
-        QFontMetrics fm = style->fontMetrics();
+        TQFontMetrics fm = style->fontMetrics();
 #ifdef APPLE_CHANGES
         factor = fm.xHeight();
 #else
-        QRect b = fm.boundingRect('x');
+        TQRect b = fm.boundingRect('x');
         factor = b.height();
 #endif
         break;
@@ -671,55 +671,55 @@ DOM::DOMString CSSPrimitiveValueImpl::cssText() const
 	    // ###
 	    break;
 	case CSSPrimitiveValue::CSS_NUMBER:
-	    text = DOMString(QString::number( (int)m_value.num ));
+	    text = DOMString(TQString::number( (int)m_value.num ));
 	    break;
 	case CSSPrimitiveValue::CSS_PERCENTAGE:
-	    text = DOMString(QString::number( m_value.num ) + "%");
+	    text = DOMString(TQString::number( m_value.num ) + "%");
 	    break;
 	case CSSPrimitiveValue::CSS_EMS:
-	    text = DOMString(QString::number( m_value.num ) + "em");
+	    text = DOMString(TQString::number( m_value.num ) + "em");
 	    break;
 	case CSSPrimitiveValue::CSS_EXS:
-	    text = DOMString(QString::number( m_value.num ) + "ex");
+	    text = DOMString(TQString::number( m_value.num ) + "ex");
 	    break;
 	case CSSPrimitiveValue::CSS_PX:
-	    text = DOMString(QString::number( m_value.num ) + "px");
+	    text = DOMString(TQString::number( m_value.num ) + "px");
 	    break;
 	case CSSPrimitiveValue::CSS_CM:
-	    text = DOMString(QString::number( m_value.num ) + "cm");
+	    text = DOMString(TQString::number( m_value.num ) + "cm");
 	    break;
 	case CSSPrimitiveValue::CSS_MM:
-	    text = DOMString(QString::number( m_value.num ) + "mm");
+	    text = DOMString(TQString::number( m_value.num ) + "mm");
 	    break;
 	case CSSPrimitiveValue::CSS_IN:
-	    text = DOMString(QString::number( m_value.num ) + "in");
+	    text = DOMString(TQString::number( m_value.num ) + "in");
 	    break;
 	case CSSPrimitiveValue::CSS_PT:
-	    text = DOMString(QString::number( m_value.num ) + "pt");
+	    text = DOMString(TQString::number( m_value.num ) + "pt");
 	    break;
 	case CSSPrimitiveValue::CSS_PC:
-	    text = DOMString(QString::number( m_value.num ) + "pc");
+	    text = DOMString(TQString::number( m_value.num ) + "pc");
 	    break;
 	case CSSPrimitiveValue::CSS_DEG:
-	    text = DOMString(QString::number( m_value.num ) + "deg");
+	    text = DOMString(TQString::number( m_value.num ) + "deg");
 	    break;
 	case CSSPrimitiveValue::CSS_RAD:
-	    text = DOMString(QString::number( m_value.num ) + "rad");
+	    text = DOMString(TQString::number( m_value.num ) + "rad");
 	    break;
 	case CSSPrimitiveValue::CSS_GRAD:
-	    text = DOMString(QString::number( m_value.num ) + "grad");
+	    text = DOMString(TQString::number( m_value.num ) + "grad");
 	    break;
 	case CSSPrimitiveValue::CSS_MS:
-	    text = DOMString(QString::number( m_value.num ) + "ms");
+	    text = DOMString(TQString::number( m_value.num ) + "ms");
 	    break;
 	case CSSPrimitiveValue::CSS_S:
-	    text = DOMString(QString::number( m_value.num ) + "s");
+	    text = DOMString(TQString::number( m_value.num ) + "s");
 	    break;
 	case CSSPrimitiveValue::CSS_HZ:
-	    text = DOMString(QString::number( m_value.num ) + "hz");
+	    text = DOMString(TQString::number( m_value.num ) + "hz");
 	    break;
 	case CSSPrimitiveValue::CSS_KHZ:
-	    text = DOMString(QString::number( m_value.num ) + "khz");
+	    text = DOMString(TQString::number( m_value.num ) + "khz");
 	    break;
 	case CSSPrimitiveValue::CSS_DIMENSION:
 	    // ###
@@ -759,12 +759,12 @@ DOM::DOMString CSSPrimitiveValueImpl::cssText() const
 		if (m_value.rgbcolor == khtml::transparentColor)
 		    text = "transparent";
 		else
-		    text = "rgba(" + QString::number(qRed  (m_value.rgbcolor)) + "," 
-				   + QString::number(qBlue (m_value.rgbcolor)) + "," 
-				   + QString::number(qGreen(m_value.rgbcolor)) + "," 
-				   + QString::number(qAlpha(m_value.rgbcolor)/255.0) + ")";
+		    text = "rgba(" + TQString::number(qRed  (m_value.rgbcolor)) + "," 
+				   + TQString::number(qBlue (m_value.rgbcolor)) + "," 
+				   + TQString::number(qGreen(m_value.rgbcolor)) + "," 
+				   + TQString::number(qAlpha(m_value.rgbcolor)/255.0) + ")";
 	    } else {
-		text = QColor(m_value.rgbcolor).name();
+		text = TQColor(m_value.rgbcolor).name();
 	    }
 	    break;
         case CSSPrimitiveValue::CSS_PAIR:
@@ -876,20 +876,20 @@ CSSImageValueImpl::~CSSImageValueImpl()
 
 // ------------------------------------------------------------------------
 
-FontFamilyValueImpl::FontFamilyValueImpl( const QString &string)
+FontFamilyValueImpl::FontFamilyValueImpl( const TQString &string)
 : CSSPrimitiveValueImpl( DOMString(string), CSSPrimitiveValue::CSS_STRING)
 {
-    static const QRegExp parenReg(" \\(.*\\)$");
-    static const QRegExp braceReg(" \\[.*\\]$");
+    static const TQRegExp parenReg(" \\(.*\\)$");
+    static const TQRegExp braceReg(" \\[.*\\]$");
 
     parsedFontName = string;
     // a language tag is often added in braces at the end. Remove it.
-    parsedFontName.replace(parenReg, QString::null);
+    parsedFontName.replace(parenReg, TQString::null);
     // remove [Xft] qualifiers
-    parsedFontName.replace(braceReg, QString::null);
+    parsedFontName.replace(braceReg, TQString::null);
 
 #ifndef APPLE_CHANGES
-    const QString &available = KHTMLSettings::availableFamilies();
+    const TQString &available = KHTMLSettings::availableFamilies();
 
     parsedFontName = parsedFontName.lower();
     // kdDebug(0) << "searching for face '" << parsedFontName << "'" << endl;
@@ -913,7 +913,7 @@ FontFamilyValueImpl::FontFamilyValueImpl( const QString &string)
        parsedFontName = available.mid( pos, p - pos);
        // kdDebug(0) << "going for '" << parsedFontName << "'" << endl;
     } else
-        parsedFontName = QString::null;
+        parsedFontName = TQString::null;
 
 #endif // !APPLE_CHANGES
 }
@@ -987,14 +987,14 @@ DOMString QuotesValueImpl::cssText() const
     return "\"" + data.join("\" \"") + "\"";
 }
 
-void QuotesValueImpl::addLevel(const QString& open, const QString& close)
+void QuotesValueImpl::addLevel(const TQString& open, const TQString& close)
 {
     data.append(open);
     data.append(close);
     levels++;
 }
 
-QString QuotesValueImpl::openQuote(int level) const
+TQString QuotesValueImpl::openQuote(int level) const
 {
     if (levels == 0) return "";
     level--; // increments are calculated before openQuote is called
@@ -1005,7 +1005,7 @@ QString QuotesValueImpl::openQuote(int level) const
     return data[level*2];
 }
 
-QString QuotesValueImpl::closeQuote(int level) const
+TQString QuotesValueImpl::closeQuote(int level) const
 {
     if (levels == 0) return "";
 //     kdDebug( 6080 ) << "Close quote level:" << level << endl;
@@ -1060,7 +1060,7 @@ DOMString ShadowValueImpl::cssText() const
 DOMString CounterActImpl::cssText() const
 {
     DOMString text(m_counter);
-    text += DOMString(QString::number(m_value));
+    text += DOMString(TQString::number(m_value));
 
     return text;
 }

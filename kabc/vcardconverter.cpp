@@ -43,7 +43,7 @@ VCardConverter::~VCardConverter()
   d = 0;
 }
 
-QString VCardConverter::createVCard( const Addressee &addr, Version version )
+TQString VCardConverter::createVCard( const Addressee &addr, Version version )
 {
   Addressee::List list;
   list.append( addr );
@@ -51,21 +51,21 @@ QString VCardConverter::createVCard( const Addressee &addr, Version version )
   return createVCards( list, version );
 }
 
-QString VCardConverter::createVCards( Addressee::List list, Version version )
+TQString VCardConverter::createVCards( Addressee::List list, Version version )
 {
   VCardTool tool;
 
   return tool.createVCards( list, ( version == v3_0 ? VCard::v3_0 : VCard::v2_1 ) );
 }
 
-Addressee VCardConverter::parseVCard( const QString& vcard )
+Addressee VCardConverter::parseVCard( const TQString& vcard )
 {
   Addressee::List list = parseVCards( vcard );
 
   return list[ 0 ];
 }
 
-Addressee::List VCardConverter::parseVCards( const QString& vcard )
+Addressee::List VCardConverter::parseVCards( const TQString& vcard )
 {
   VCardTool tool;
 
@@ -74,7 +74,7 @@ Addressee::List VCardConverter::parseVCards( const QString& vcard )
 
 // ---------------------------- deprecated stuff ---------------------------- //
 
-bool VCardConverter::vCardToAddressee( const QString &str, Addressee &addr, Version version )
+bool VCardConverter::vCardToAddressee( const TQString &str, Addressee &addr, Version version )
 {
   if ( version == v2_1 ) {
     addr = d->vcard21parser.readFromString( str );
@@ -87,7 +87,7 @@ bool VCardConverter::vCardToAddressee( const QString &str, Addressee &addr, Vers
   return false;
 }
 
-bool VCardConverter::addresseeToVCard( const Addressee &addr, QString &str, Version version )
+bool VCardConverter::addresseeToVCard( const Addressee &addr, TQString &str, Version version )
 {
   if ( version == v2_1 )
     return false;
@@ -101,29 +101,29 @@ bool VCardConverter::addresseeToVCard( const Addressee &addr, QString &str, Vers
 
 /* Helper functions */
 
-QString KABC::dateToVCardString( const QDateTime &dateTime )
+TQString KABC::dateToVCardString( const TQDateTime &dateTime )
 {
   return dateTime.toString("yyyyMMddThhmmssZ");
 }
 
-QString KABC::dateToVCardString( const QDate &date )
+TQString KABC::dateToVCardString( const TQDate &date )
 {
   return date.toString("yyyyMMdd");
 }
 
-QDateTime KABC::VCardStringToDate( const QString &dateString )
+TQDateTime KABC::VCardStringToDate( const TQString &dateString )
 {
-  QDate date;
-  QTime time;
-  QString d( dateString );
+  TQDate date;
+  TQTime time;
+  TQString d( dateString );
 
   d = d.remove('-').remove(':');
 
   if (d.length()>=8)
-    date = QDate( d.mid(0,4).toUInt(), d.mid(4,2).toUInt(), d.mid(6,2).toUInt() );
+    date = TQDate( d.mid(0,4).toUInt(), d.mid(4,2).toUInt(), d.mid(6,2).toUInt() );
   if (d.length()>9 && d[8].upper()=='T')
-    time = QTime( d.mid(9,2).toUInt(), d.mid(11,2).toUInt(), d.mid(13,2).toUInt() );
+    time = TQTime( d.mid(9,2).toUInt(), d.mid(11,2).toUInt(), d.mid(13,2).toUInt() );
 
-  return QDateTime( date, time );
+  return TQDateTime( date, time );
 }
 

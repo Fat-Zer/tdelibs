@@ -19,20 +19,20 @@
 
 #include "sidepixmap.h"
 
-#include <qpainter.h>
+#include <tqpainter.h>
 #include <kstandarddirs.h>
 
-SidePixmap::SidePixmap(QWidget *parent, const char *name)
-: QFrame(parent, name)
+SidePixmap::SidePixmap(TQWidget *parent, const char *name)
+: TQFrame(parent, name)
 {
 	setLineWidth(1);
-	setFrameStyle(QFrame::WinPanel|QFrame::Sunken);
+	setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 
 	m_side.load(locate("data", "kdeprint/side.png"));
 	m_tileup.load(locate("data", "kdeprint/tileup.png"));
 	m_tiledown.load(locate("data", "kdeprint/tiledown.png"));
 
-	setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum));
+	setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Minimum));
 }
 
 bool SidePixmap::isValid()
@@ -42,12 +42,12 @@ bool SidePixmap::isValid()
 			&& (m_side.width() == m_tiledown.width()));
 }
 
-QSize SidePixmap::sizeHint() const
+TQSize SidePixmap::sizeHint() const
 {
-	return (QSize(m_side.width()+lineWidth(), 300+lineWidth()));
+	return (TQSize(m_side.width()+lineWidth(), 300+lineWidth()));
 }
 
-void SidePixmap::drawContents(QPainter *p)
+void SidePixmap::drawContents(TQPainter *p)
 {
 	QRect	r = contentsRect();
 	if (r.height() <= m_side.height())

@@ -26,10 +26,10 @@
 #ifndef render_object_h
 #define render_object_h
 
-#include <qcolor.h>
-#include <qrect.h>
+#include <tqcolor.h>
+#include <tqrect.h>
 #include <assert.h>
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -169,9 +169,9 @@ public:
     }
 
     // ### rename to overflowClipRect and clipRect
-    virtual QRect getOverflowClipRect(int /*tx*/, int /*ty*/)
-	{ return QRect(0,0,0,0); }
-    virtual QRect getClipRect(int /*tx*/, int /*ty*/) { return QRect(0,0,0,0); }
+    virtual TQRect getOverflowClipRect(int /*tx*/, int /*ty*/)
+	{ return TQRect(0,0,0,0); }
+    virtual TQRect getClipRect(int /*tx*/, int /*ty*/) { return TQRect(0,0,0,0); }
     bool hasClip() const { return isPositioned() &&  style()->hasClip(); }
     bool hasOverflowClip() const { return m_hasOverflowClip; }
 
@@ -192,17 +192,17 @@ public:
     RenderObject *objectAbove() const;
 
     // Returns if an object has counter-increment or counter-reset
-    bool hasCounter(const QString& counter) const;
+    bool hasCounter(const TQString& counter) const;
     // Calculates the value of the counter
-    CounterNode* getCounter(const QString& counter, bool view = false, bool counters = false);
+    CounterNode* getCounter(const TQString& counter, bool view = false, bool counters = false);
     // Detaches all counterNodes
     void detachCounters();
 
 
 protected:
     // Helper functions for counter-cache
-    void insertCounter(const QString& counter, CounterNode* value);
-    CounterNode* lookupCounter(const QString& counter) const;
+    void insertCounter(const TQString& counter, CounterNode* value);
+    CounterNode* lookupCounter(const TQString& counter) const;
 
 public:
     //////////////////////////////////////////
@@ -226,9 +226,9 @@ public:
 public:
     virtual const char *renderName() const { return "RenderObject"; }
 #ifdef ENABLE_DUMP
-    QString information() const;
+    TQString information() const;
     virtual void printTree(int indent=0) const;
-    virtual void dump(QTextStream &stream, const QString &ind = QString::null) const;
+    virtual void dump(TQTextStream &stream, const TQString &ind = TQString::null) const;
 #endif
 
     static RenderObject *createObject(DOM::NodeImpl* node, RenderStyle* style);
@@ -372,22 +372,22 @@ public:
      * (tx|ty) is the calculated position of the parent
      */
     struct PaintInfo {
-       PaintInfo(QPainter* _p, const QRect& _r, PaintAction _phase)
+       PaintInfo(TQPainter* _p, const TQRect& _r, PaintAction _phase)
            : p(_p), r(_r), phase(_phase), outlineObjects(0) {}
        ~PaintInfo() { delete outlineObjects; }
-       QPainter* p;
-       QRect     r;
+       TQPainter* p;
+       TQRect     r;
        PaintAction phase;
-       QValueList<RenderFlow *>* outlineObjects; // used to list which outlines should be painted by a block with inline children
+       TQValueList<RenderFlow *>* outlineObjects; // used to list which outlines should be painted by a block with inline children
     };
     virtual void paint( PaintInfo& i, int tx, int ty);
 
-    void paintBorder(QPainter *p, int _tx, int _ty, int w, int h, const RenderStyle* style, bool begin=true, bool end=true);
-    void paintOutline(QPainter *p, int _tx, int _ty, int w, int h, const RenderStyle* style);
+    void paintBorder(TQPainter *p, int _tx, int _ty, int w, int h, const RenderStyle* style, bool begin=true, bool end=true);
+    void paintOutline(TQPainter *p, int _tx, int _ty, int w, int h, const RenderStyle* style);
 
     virtual void paintBoxDecorations(PaintInfo&, int /*_tx*/, int /*_ty*/) {}
 
-    virtual void paintBackgroundExtended(QPainter* /*p*/, const QColor& /*c*/, const BackgroundLayer */*bgLayer*/,
+    virtual void paintBackgroundExtended(TQPainter* /*p*/, const TQColor& /*c*/, const BackgroundLayer */*bgLayer*/,
                                          int /*clipy*/, int /*cliph*/, int /*_tx*/, int /*_ty*/,
                                          int /*w*/, int /*height*/, int /*bleft*/, int /*bright*/, int /*pleft*/, int /*pright*/  ) {}
 
@@ -667,18 +667,18 @@ public:
 	return s;
     }
 
-    void getTextDecorationColors(int decorations, QColor& underline, QColor& overline,
-                                 QColor& linethrough, bool quirksMode=false);
+    void getTextDecorationColors(int decorations, TQColor& underline, TQColor& overline,
+                                 TQColor& linethrough, bool quirksMode=false);
 
     enum BorderSide {
         BSTop, BSBottom, BSLeft, BSRight
     };
-    void drawBorder(QPainter *p, int x1, int y1, int x2, int y2, BorderSide s,
-                    QColor c, const QColor& textcolor, EBorderStyle style,
+    void drawBorder(TQPainter *p, int x1, int y1, int x2, int y2, BorderSide s,
+                    TQColor c, const TQColor& textcolor, EBorderStyle style,
                     int adjbw1, int adjbw2, bool invalidisInvert = false);
 
     // Used by collapsed border tables.
-    virtual void collectBorders(QValueList<CollapsedBorderValue>& borderStyles);
+    virtual void collectBorders(TQValueList<CollapsedBorderValue>& borderStyles);
 
     // force a complete repaint
     virtual void repaint(Priority p = NormalPriority) { if(m_parent) m_parent->repaint(p); }
@@ -758,11 +758,11 @@ public:
     void setDoNotDelete(bool b) { m_doNotDelete = b; }
     bool doNotDelete() const { return m_doNotDelete; }
 
-    const QFont &font(bool firstLine) const {
+    const TQFont &font(bool firstLine) const {
 	return style( firstLine )->font();
     }
 
-    const QFontMetrics &fontMetrics(bool firstLine) const {
+    const TQFontMetrics &fontMetrics(bool firstLine) const {
 	return style( firstLine )->fontMetrics();
     }
 
@@ -780,14 +780,14 @@ public:
      */
     virtual long maxOffset() const { return 0; }
 
-    virtual void setPixmap(const QPixmap &, const QRect&, CachedImage *);
+    virtual void setPixmap(const TQPixmap &, const TQRect&, CachedImage *);
 
-    QRegion visibleFlowRegion(int x, int y) const;
+    TQRegion visibleFlowRegion(int x, int y) const;
 
 protected:
     virtual void selectionStartEnd(int& spos, int& epos);
 
-    virtual QRect viewRect() const;
+    virtual TQRect viewRect() const;
     void remove();
     void invalidateVerticalPositions();
     bool attemptDirectLayerTranslation();

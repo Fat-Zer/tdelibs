@@ -25,8 +25,8 @@
 
 #include <kopenssl.h>
 
-#include <qstring.h>
-#include <qfile.h>
+#include <tqstring.h>
+#include <tqfile.h>
 #include <ksslall.h>
 #include <kdebug.h>
 #include <ktempfile.h>
@@ -72,12 +72,12 @@ KSSLPKCS12::~KSSLPKCS12() {
 }
 
 
-KSSLPKCS12* KSSLPKCS12::fromString(QString base64, QString password) {
+KSSLPKCS12* KSSLPKCS12::fromString(TQString base64, TQString password) {
 #ifdef KSSL_HAVE_SSL
 KTempFile ktf;
 
     if (base64.isEmpty()) return NULL;
-    QByteArray qba, qbb = QCString(base64.latin1()).copy();
+    TQByteArray qba, qbb = TQCString(base64.latin1()).copy();
     KCodecs::base64Decode(qbb, qba);
     ktf.file()->writeBlock(qba);
     ktf.close();
@@ -90,9 +90,9 @@ return NULL;
 
 
 
-KSSLPKCS12* KSSLPKCS12::loadCertFile(QString filename, QString password) {
+KSSLPKCS12* KSSLPKCS12::loadCertFile(TQString filename, TQString password) {
 #ifdef KSSL_HAVE_SSL
-QFile qf(filename);
+TQFile qf(filename);
 PKCS12 *newpkcs = NULL;
 
   if (!qf.open(IO_ReadOnly))
@@ -130,7 +130,7 @@ void KSSLPKCS12::setCert(PKCS12 *c) {
 }
 
 
-bool KSSLPKCS12::changePassword(QString pold, QString pnew) {
+bool KSSLPKCS12::changePassword(TQString pold, TQString pnew) {
 #ifdef KSSL_HAVE_SSL
    // OpenSSL makes me cast away the const here.  argh
    return (0 == kossl->PKCS12_newpass(_pkcs, 
@@ -141,7 +141,7 @@ return false;
 }
 
 
-bool KSSLPKCS12::parse(QString pass) {
+bool KSSLPKCS12::parse(TQString pass) {
 #ifdef KSSL_HAVE_SSL
 X509 *x = NULL;
 
@@ -193,8 +193,8 @@ KSSLCertificate *KSSLPKCS12::getCertificate() {
 }
 
 
-QString KSSLPKCS12::toString() {
-QString base64;
+TQString KSSLPKCS12::toString() {
+TQString base64;
 #ifdef KSSL_HAVE_SSL
 unsigned char *p;
 int len;
@@ -204,7 +204,7 @@ int len;
        char *buf = new char[len];
        p = (unsigned char *)buf;
        kossl->i2d_PKCS12(_pkcs, &p);
-       QByteArray qba;
+       TQByteArray qba;
        qba.setRawData(buf, len);
        base64 = KCodecs::base64Encode(qba);
        qba.resetRawData(buf, len);
@@ -216,9 +216,9 @@ return base64;
 
 
 
-bool KSSLPKCS12::toFile(QString filename) {
+bool KSSLPKCS12::toFile(TQString filename) {
 #ifdef KSSL_HAVE_SSL
-QFile out(filename);
+TQFile out(filename);
 
    if (!out.open(IO_WriteOnly)) return false;
 
@@ -278,7 +278,7 @@ return (validate(p) == KSSLCertificate::Ok);
 }
 
 
-QString KSSLPKCS12::name() {
+TQString KSSLPKCS12::name() {
    return _cert->getSubject();
 }
 

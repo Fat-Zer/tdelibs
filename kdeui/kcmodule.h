@@ -23,7 +23,7 @@
 #ifndef KCMODULE_H
 #define KCMODULE_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kdelibs_export.h>
 
@@ -54,7 +54,7 @@ class KInstance;
  * \code
  * #include <kgenericfactory.h>
  *
- * typedef KGenericFactory<YourKCModule, QWidget> YourKCModuleFactory;
+ * typedef KGenericFactory<YourKCModule, TQWidget> YourKCModuleFactory;
  * K_EXPORT_COMPONENT_FACTORY( yourLibName, YourKCModuleFactory("name_of_the_po_file") );
  * \endcode
  *
@@ -86,12 +86,12 @@ public:
 
   /*
    * Base class for all KControlModules.
-   * Make sure you have a QStringList argument in your
+   * Make sure you have a TQStringList argument in your
    * implementation.
    */
-  KCModule(QWidget *parent=0, const char *name=0, const QStringList &args=QStringList() );
+  KCModule(TQWidget *parent=0, const char *name=0, const TQStringList &args=TQStringList() );
 
-  KCModule(KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() );
+  KCModule(KInstance *instance, TQWidget *parent=0, const TQStringList &args=TQStringList() );
 
   /*
    * Destroys the module.
@@ -175,7 +175,7 @@ public:
    *
    * @note make sure the quick help text gets translated (use i18n()).
    */
-  virtual QString quickHelp() const;
+  virtual TQString quickHelp() const;
 
   /**
    * This is generally only called for the KBugReport.
@@ -214,7 +214,7 @@ public:
    *
    * @see KCModule::setRootOnlyMsg
    */
-  QString rootOnlyMsg() const;
+  TQString rootOnlyMsg() const;
 
   /**
    * Tell if KControl should show a RootOnly message when run as
@@ -234,7 +234,7 @@ public:
    * @return a list of @ref KConfigDialogManager's in use, if any.
    * @since 3.4
    */
-  const QPtrList<KConfigDialogManager>& configs() const;
+  const TQPtrList<KConfigDialogManager>& configs() const;
 
 protected:
   /**
@@ -247,14 +247,14 @@ protected:
    * @param config the KConfigSkeleton to use
    * @param widget the widget to watch
    */
-  KConfigDialogManager* addConfig( KConfigSkeleton *config, QWidget* widget );
+  KConfigDialogManager* addConfig( KConfigSkeleton *config, TQWidget* widget );
 
   /**
    * Sets the quick help.
    *
    * @since 3.3
    */
-  void setQuickHelp( const QString& help );
+  void setQuickHelp( const TQString& help );
 
 signals:
 
@@ -317,7 +317,7 @@ protected:
    *
    * @see KCModule::rootOnlyMsg
    */
-  void setRootOnlyMsg(const QString& msg);
+  void setRootOnlyMsg(const TQString& msg);
 
   /**
    * Change whether or not the RootOnly message should be shown.

@@ -21,9 +21,9 @@
 #ifndef KBOOKMARKBAR_H
 #define KBOOKMARKBAR_H
 
-#include <qobject.h>
-#include <qguardedptr.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqguardedptr.h>
+#include <tqptrlist.h>
 #include <kbookmark.h>
 #include <kaction.h>
 
@@ -59,7 +59,7 @@ public:
     KBookmarkBar( KBookmarkManager* manager,
                   KBookmarkOwner *owner, KToolBar *toolBar,
                   KActionCollection *,
-                  QObject *parent = 0L, const char *name = 0L);
+                  TQObject *parent = 0L, const char *name = 0L);
 
     virtual ~KBookmarkBar();
 
@@ -76,22 +76,22 @@ public:
     /**
      * @since 3.2
      */
-    QString parentAddress();
+    TQString parentAddress();
 
 signals:
     /**
      * @since 3.2
      */
-    void aboutToShowContextMenu( const KBookmark &, QPopupMenu * );
+    void aboutToShowContextMenu( const KBookmark &, TQPopupMenu * );
     /**
      * @since 3.4
      */
-    void openBookmark( const QString& url, Qt::ButtonState state );
+    void openBookmark( const TQString& url, Qt::ButtonState state );
 
 public slots:
     void clear();
 
-    void slotBookmarksChanged( const QString & );
+    void slotBookmarksChanged( const TQString & );
     void slotBookmarkSelected();
 
     /**
@@ -112,16 +112,16 @@ public slots:
 
 protected:
     void fillBookmarkBar( KBookmarkGroup & parent );
-    virtual bool eventFilter( QObject *o, QEvent *e );
+    virtual bool eventFilter( TQObject *o, TQEvent *e );
 
 private:
     KBookmarkGroup getToolbar();
 
     KBookmarkOwner *m_pOwner;
-    QGuardedPtr<KToolBar> m_toolBar;
+    TQGuardedPtr<KToolBar> m_toolBar;
     KActionCollection *m_actionCollection;
     KBookmarkManager *m_pManager;
-    QPtrList<KBookmarkMenu> m_lstSubMenus;
+    TQPtrList<KBookmarkMenu> m_lstSubMenus;
 
 private:
     class KBookmarkBarPrivate* dptr() const;

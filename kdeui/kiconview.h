@@ -18,25 +18,25 @@
 #ifndef KICONVIEW_H
 #define KICONVIEW_H
 
-#include <qcursor.h>
-#include <qiconview.h>
+#include <tqcursor.h>
+#include <tqiconview.h>
 
 #include <kdelibs_export.h>
 
 /**
- * @short A variant of QIconView that honors KDE's system-wide settings.
+ * @short A variant of TQIconView that honors KDE's system-wide settings.
  *
- * This Widget extends the functionality of QIconView to honor the system
+ * This Widget extends the functionality of TQIconView to honor the system
  * wide settings for Single Click/Double Click mode, Auto Selection and
  * Change Cursor over Link.
  *
  * There is a new signal executed(). It gets connected to either
- * QIconView::clicked() or QIconView::doubleClicked() depending on the KDE
+ * TQIconView::clicked() or TQIconView::doubleClicked() depending on the KDE
  * wide Single Click/Double Click settings. It is strongly recommended that
  * you use this signal instead of the above mentioned. This way you don´t
  * need to care about the current settings.
  * If you want to get informed when the user selects something connect to the
- * QIconView::selectionChanged() signal.
+ * TQIconView::selectionChanged() signal.
  *
  **/
 class KDEUI_EXPORT KIconView : public QIconView
@@ -47,7 +47,7 @@ class KDEUI_EXPORT KIconView : public QIconView
   Q_PROPERTY( Mode mode READ mode WRITE setMode )
 
 public:
-  KIconView( QWidget *parent = 0, const char *name = 0, WFlags f = 0 );
+  KIconView( TQWidget *parent = 0, const char *name = 0, WFlags f = 0 );
 
   ~KIconView();
 
@@ -66,7 +66,7 @@ public:
    * @li In Execute mode, the signal executed()
    * will be emitted when the user clicks/double-clicks an item.
    * @li Select mode is
-   * the normal QIconView mode.
+   * the normal TQIconView mode.
    *
    * Default is Execute.
    */
@@ -80,7 +80,7 @@ public:
   /**
    * Reimplemented for internal purposes
    */
-  virtual void setFont( const QFont & );
+  virtual void setFont( const TQFont & );
 
    /**
     * Set the maximum number of lines that will be used to display icon text.
@@ -100,7 +100,7 @@ public:
   /**
    * Reimplemented for held() signal behavior internal purposes
    */
-  virtual void takeItem( QIconViewItem * item );
+  virtual void takeItem( TQIconViewItem * item );
 
 signals:
 
@@ -110,10 +110,10 @@ signals:
    * setting the user clicked or double clicked on that item.
    * @param item is the pointer to the executed iconview item.
    *
-   * Note that you may not delete any QIconViewItem objects in slots
+   * Note that you may not delete any TQIconViewItem objects in slots
    * connected to this signal.
    */
-  void executed( QIconViewItem *item );
+  void executed( TQIconViewItem *item );
 
   /**
    * This signal is emitted whenever the user executes an iconview item.
@@ -122,20 +122,20 @@ signals:
    * @param item is the pointer to the executed iconview item.
    * @param pos is the position where the user has clicked
    *
-   * Note that you may not delete any QIconViewItem objects in slots
+   * Note that you may not delete any TQIconViewItem objects in slots
    * connected to this signal.
    */
-  void executed( QIconViewItem *item, const QPoint &pos );
+  void executed( TQIconViewItem *item, const TQPoint &pos );
 
   /**
    * This signal is emitted whenever the user hold something on an iconview
    * during a drag'n'drop.
    * @param item is the pointer to the iconview item the hold event occur.
    *
-   * Note that you may not delete any QIconViewItem objects in slots
+   * Note that you may not delete any TQIconViewItem objects in slots
    * connected to this signal.
    */
-  void held( QIconViewItem *item );
+  void held( TQIconViewItem *item );
 
   /**
    * This signal gets emitted whenever the user double clicks into the
@@ -143,17 +143,17 @@ signals:
    * @param item is the pointer to the clicked iconview item.
    * @param pos is the position where the user has clicked, and
    *
-   * Note that you may not delete any QIconViewItem objects in slots
+   * Note that you may not delete any TQIconViewItem objects in slots
    * connected to this signal.
    *
    * This signal is more or less here for the sake of completeness.
    * You should normally not need to use this. In most cases it's better
    * to use executed() instead.
    */
-  void doubleClicked( QIconViewItem *item, const QPoint &pos );
+  void doubleClicked( TQIconViewItem *item, const TQPoint &pos );
 
 protected slots:
-  void slotOnItem( QIconViewItem *item );
+  void slotOnItem( TQIconViewItem *item );
   void slotOnViewport();
   void slotSettingsChanged(int);
 
@@ -163,48 +163,48 @@ protected slots:
   void slotAutoSelect();
 
 protected:
-  void emitExecute( QIconViewItem *item, const QPoint &pos );
-  void updateDragHoldItem( QDropEvent *e );
+  void emitExecute( TQIconViewItem *item, const TQPoint &pos );
+  void updateDragHoldItem( TQDropEvent *e );
 
-  virtual void focusOutEvent( QFocusEvent *fe );
-  virtual void leaveEvent( QEvent *e );
-  virtual void contentsMousePressEvent( QMouseEvent *e );
-  virtual void contentsMouseDoubleClickEvent ( QMouseEvent * e );
-  virtual void contentsMouseReleaseEvent( QMouseEvent *e );
-  virtual void contentsDragEnterEvent( QDragEnterEvent *e );
-  virtual void contentsDragLeaveEvent( QDragLeaveEvent *e );
-  virtual void contentsDragMoveEvent( QDragMoveEvent *e );
-  virtual void contentsDropEvent( QDropEvent* e );
-  virtual void wheelEvent( QWheelEvent *e );
+  virtual void focusOutEvent( TQFocusEvent *fe );
+  virtual void leaveEvent( TQEvent *e );
+  virtual void contentsMousePressEvent( TQMouseEvent *e );
+  virtual void contentsMouseDoubleClickEvent ( TQMouseEvent * e );
+  virtual void contentsMouseReleaseEvent( TQMouseEvent *e );
+  virtual void contentsDragEnterEvent( TQDragEnterEvent *e );
+  virtual void contentsDragLeaveEvent( TQDragLeaveEvent *e );
+  virtual void contentsDragMoveEvent( TQDragMoveEvent *e );
+  virtual void contentsDropEvent( TQDropEvent* e );
+  virtual void wheelEvent( TQWheelEvent *e );
 
   /**
    * This method allows to handle correctly cases where a subclass
    * needs the held() signal to not be triggered without calling
    * a KIconView::contentsDrag*Event() method (which have side effects
-   * because they forward to QIconView).
+   * because they forward to TQIconView).
    */
   void cancelPendingHeldSignal();
   
 private slots:
-  void slotMouseButtonClicked( int btn, QIconViewItem *item, const QPoint &pos );
+  void slotMouseButtonClicked( int btn, TQIconViewItem *item, const TQPoint &pos );
   void slotDragHoldTimeout();
 
 private:
   /**
    * @internal. For use by KIconViewItem.
    */
-  QFontMetrics *itemFontMetrics() const;
+  TQFontMetrics *itemFontMetrics() const;
   /**
    * @internal. For use by KIconViewItem.
    */
-  QPixmap selectedIconPixmap( QPixmap *pix, const QColor &col ) const;
+  TQPixmap selectedIconPixmap( TQPixmap *pix, const TQColor &col ) const;
 
   bool m_bUseSingle;
   bool m_bChangeCursorOverItem;
 
-  QIconViewItem* m_pCurrentItem;
+  TQIconViewItem* m_pCurrentItem;
 
-  QTimer* m_pAutoSelect;
+  TQTimer* m_pAutoSelect;
   int m_autoSelectDelay;
 
 protected:
@@ -216,10 +216,10 @@ private:
 
 class KWordWrap;
 /**
- * @short A variant of QIconViewItem that wraps words better.
+ * @short A variant of TQIconViewItem that wraps words better.
  *
  * KIconViewItem exists to improve the word-wrap functionality of QIconViewItem
- * Use KIconViewItem instead of QIconViewItem for any iconview item you might have :)
+ * Use KIconViewItem instead of TQIconViewItem for any iconview item you might have :)
  *
  * @author David Faure <david@mandrakesoft.com>
  */
@@ -227,22 +227,22 @@ class KDEUI_EXPORT KIconViewItem : public QIconViewItem
 {
 public:
     // Need to redefine all the constructors - I want Java !
-    KIconViewItem( QIconView *parent )
-        : QIconViewItem( parent ) { init(); } // We need to call it because the parent ctor won't call our reimplementation :(((
-    KIconViewItem( QIconView *parent, QIconViewItem *after )
-        : QIconViewItem( parent, after ) { init(); }
-    KIconViewItem( QIconView *parent, const QString &text )
-        : QIconViewItem( parent, text ) { init(); }
-    KIconViewItem( QIconView *parent, QIconViewItem *after, const QString &text )
-        : QIconViewItem( parent, after, text ) { init(); }
-    KIconViewItem( QIconView *parent, const QString &text, const QPixmap &icon )
-        : QIconViewItem( parent, text, icon ) { init(); }
-    KIconViewItem( QIconView *parent, QIconViewItem *after, const QString &text, const QPixmap &icon )
-        : QIconViewItem( parent, after, text, icon ) { init(); }
-    KIconViewItem( QIconView *parent, const QString &text, const QPicture &picture )
-        : QIconViewItem( parent, text, picture ) { init(); }
-    KIconViewItem( QIconView *parent, QIconViewItem *after, const QString &text, const QPicture &picture )
-        : QIconViewItem( parent, after, text, picture ) { init(); }
+    KIconViewItem( TQIconView *parent )
+        : TQIconViewItem( parent ) { init(); } // We need to call it because the parent ctor won't call our reimplementation :(((
+    KIconViewItem( TQIconView *parent, TQIconViewItem *after )
+        : TQIconViewItem( parent, after ) { init(); }
+    KIconViewItem( TQIconView *parent, const TQString &text )
+        : TQIconViewItem( parent, text ) { init(); }
+    KIconViewItem( TQIconView *parent, TQIconViewItem *after, const TQString &text )
+        : TQIconViewItem( parent, after, text ) { init(); }
+    KIconViewItem( TQIconView *parent, const TQString &text, const TQPixmap &icon )
+        : TQIconViewItem( parent, text, icon ) { init(); }
+    KIconViewItem( TQIconView *parent, TQIconViewItem *after, const TQString &text, const TQPixmap &icon )
+        : TQIconViewItem( parent, after, text, icon ) { init(); }
+    KIconViewItem( TQIconView *parent, const TQString &text, const TQPicture &picture )
+        : TQIconViewItem( parent, text, picture ) { init(); }
+    KIconViewItem( TQIconView *parent, TQIconViewItem *after, const TQString &text, const TQPicture &picture )
+        : TQIconViewItem( parent, after, text, picture ) { init(); }
     virtual ~KIconViewItem();
 
    /**
@@ -256,21 +256,21 @@ public:
     *
     * @param size The size to use
     */
-    void setPixmapSize( const QSize& size );
+    void setPixmapSize( const TQSize& size );
 
    /**
-    * @return The size set by setPixmapSize() or QSize( 0, 0 )
+    * @return The size set by setPixmapSize() or TQSize( 0, 0 )
     * @since 3.3
     */
-    QSize pixmapSize() const;
+    TQSize pixmapSize() const;
 
 protected:
     void init();
-    virtual void calcRect( const QString& text_ = QString::null );
-    virtual void paintItem( QPainter *p, const QColorGroup &c );
+    virtual void calcRect( const TQString& text_ = TQString::null );
+    virtual void paintItem( TQPainter *p, const TQColorGroup &c );
     KWordWrap *wordWrap();
-    void paintPixmap( QPainter *p, const QColorGroup &c );
-    void paintText( QPainter *p, const QColorGroup &c );
+    void paintPixmap( TQPainter *p, const TQColorGroup &c );
+    void paintText( TQPainter *p, const TQColorGroup &c );
 
 private:
     KWordWrap* m_wordWrap;

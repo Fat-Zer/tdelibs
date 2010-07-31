@@ -34,16 +34,16 @@ LDIF::~LDIF()
 {
 }
 
-QCString LDIF::assembleLine( const QString &fieldname, const QByteArray &value,
+TQCString LDIF::assembleLine( const TQString &fieldname, const TQByteArray &value,
   uint linelen, bool url )
 {
   bool safe = false;
   bool isDn;
-  QCString result;
+  TQCString result;
   uint i;
 
   if ( url ) {
-    result = fieldname.utf8() + ":< " + QCString( value.data(), value.size()+1 );
+    result = fieldname.utf8() + ":< " + TQCString( value.data(), value.size()+1 );
   } else {
     isDn = fieldname.lower() == "dn";
     //SAFE-INIT-CHAR
@@ -66,7 +66,7 @@ QCString LDIF::assembleLine( const QString &fieldname, const QByteArray &value,
     if ( value.size() == 0 ) safe = true;
 
     if( safe ) {
-      result = fieldname.utf8() + ": " + QCString( value.data(), value.size()+1 );
+      result = fieldname.utf8() + ": " + TQCString( value.data(), value.size()+1 );
     } else {
       result = fieldname.utf8() + ":: " + KCodecs::base64Encode( value, false );
     }
@@ -82,11 +82,11 @@ QCString LDIF::assembleLine( const QString &fieldname, const QByteArray &value,
   return result;
 }
 
-QCString LDIF::assembleLine( const QString &fieldname, const QCString &value,
+TQCString LDIF::assembleLine( const TQString &fieldname, const TQCString &value,
   uint linelen, bool url )
 {
-  QCString ret;
-  QByteArray tmp;
+  TQCString ret;
+  TQByteArray tmp;
   uint valuelen = value.length();
   const char *data = value.data();
 
@@ -97,26 +97,26 @@ QCString LDIF::assembleLine( const QString &fieldname, const QCString &value,
 
 }
 
-QCString LDIF::assembleLine( const QString &fieldname, const QString &value,
+TQCString LDIF::assembleLine( const TQString &fieldname, const TQString &value,
   uint linelen, bool url )
 {
   return assembleLine( fieldname, value.utf8(), linelen, url );
 }
 
-bool LDIF::splitLine( const QCString &line, QString &fieldname, QByteArray &value )
+bool LDIF::splitLine( const TQCString &line, TQString &fieldname, TQByteArray &value )
 {
   int position;
-  QByteArray tmp;
+  TQByteArray tmp;
   int linelen;
   const char *data;
 
-//  kdDebug(5700) << "splitLine line: " << QString::fromUtf8(line) << endl;
+//  kdDebug(5700) << "splitLine line: " << TQString::fromUtf8(line) << endl;
 
   position = line.find( ":" );
   if ( position == -1 ) {
     // strange: we did not find a fieldname
     fieldname = "";
-    QCString str;
+    TQCString str;
     str = line.stripWhiteSpace();
     linelen = str.length();
     data = str.data();
@@ -131,7 +131,7 @@ bool LDIF::splitLine( const QCString &line, QString &fieldname, QByteArray &valu
 
   if ( linelen > ( position + 1 ) && line[ position + 1 ] == ':' ) {
     // String is BASE64 encoded -> decode it now.
-    fieldname = QString::fromUtf8(
+    fieldname = TQString::fromUtf8(
       line.left( position ).stripWhiteSpace() );
     if ( linelen <= ( position + 3 ) ) {
       value.resize( 0 );
@@ -146,7 +146,7 @@ bool LDIF::splitLine( const QCString &line, QString &fieldname, QByteArray &valu
 
   if ( linelen > ( position + 1 ) && line[ position + 1 ] == '<' ) {
     // String is an URL.
-    fieldname = QString::fromUtf8(
+    fieldname = TQString::fromUtf8(
       line.left( position ).stripWhiteSpace() );
     if ( linelen <= ( position + 3 ) ) {
       value.resize( 0 );
@@ -159,7 +159,7 @@ bool LDIF::splitLine( const QCString &line, QString &fieldname, QByteArray &valu
     return true;
   }
 
-  fieldname = QString::fromUtf8(line.left( position ).stripWhiteSpace());
+  fieldname = TQString::fromUtf8(line.left( position ).stripWhiteSpace());
   if ( linelen <= ( position + 2 ) ) {
     value.resize( 0 );
     return false;
@@ -171,16 +171,16 @@ bool LDIF::splitLine( const QCString &line, QString &fieldname, QByteArray &valu
   return false;
 }
 
-bool LDIF::splitControl( const QCString &line, QString &oid, bool &critical, 
-  QByteArray &value )
+bool LDIF::splitControl( const TQCString &line, TQString &oid, bool &critical, 
+  TQByteArray &value )
 {
-  QString tmp;
+  TQString tmp;
   critical = false;
   bool url = splitLine( line, tmp, value );
   
-  kdDebug(5700) << "splitControl: value: " << QString::fromUtf8(value, value.size()) << endl;
+  kdDebug(5700) << "splitControl: value: " << TQString::fromUtf8(value, value.size()) << endl;
   if ( tmp.isEmpty() ) {
-    tmp = QString::fromUtf8( value, value.size() );
+    tmp = TQString::fromUtf8( value, value.size() );
     value.resize( 0 );
   }
   if ( tmp.right( 4 ) == "true" ) {
@@ -204,22 +204,22 @@ LDIF::ParseVal LDIF::processLine()
 
   mUrl = splitLine( line, mAttr, mVal );
 
-  QString attrLower = mAttr.lower();
+  TQString attrLower = mAttr.lower();
 
   switch ( mEntryType ) {
     case Entry_None:
       if ( attrLower == "version" ) {
         if ( !mDn.isEmpty() ) retval = Err;
       } else if ( attrLower == "dn" ) {
-        kdDebug(5700) << "ldapentry dn: " << QString::fromUtf8( mVal, mVal.size() ) << endl;
-        mDn = QString::fromUtf8( mVal, mVal.size() );
+        kdDebug(5700) << "ldapentry dn: " << TQString::fromUtf8( mVal, mVal.size() ) << endl;
+        mDn = TQString::fromUtf8( mVal, mVal.size() );
         mModType = Mod_None;
         retval = NewEntry;
       } else if ( attrLower == "changetype" ) {
         if ( mDn.isEmpty() )
           retval = Err;
         else {
-          QString tmpval = QString::fromUtf8( mVal, mVal.size() );
+          TQString tmpval = TQString::fromUtf8( mVal, mVal.size() );
           kdDebug(5700) << "changetype: " << tmpval << endl;
           if ( tmpval == "add" ) mEntryType = Entry_Add;
           else if ( tmpval == "delete" ) mEntryType = Entry_Del;
@@ -233,7 +233,7 @@ LDIF::ParseVal LDIF::processLine()
           else retval = Err;
         }
       } else if ( attrLower == "control" ) {
-        mUrl = splitControl( QCString( mVal, mVal.size() + 1 ), mOid, mCritical, mVal );
+        mUrl = splitControl( TQCString( mVal, mVal.size() + 1 ), mOid, mCritical, mVal );
         retval = Control;
       } else if ( !mAttr.isEmpty() && mVal.size() > 0 ) {
         mEntryType = Entry_Add;
@@ -261,12 +261,12 @@ LDIF::ParseVal LDIF::processLine()
           mModType = Mod_Add;
         } else if ( attrLower == "replace" ) {
           mModType = Mod_Replace;
-          mAttr = QString::fromUtf8( mVal, mVal.size() );
+          mAttr = TQString::fromUtf8( mVal, mVal.size() );
           mVal.resize( 0 );
           retval = Item;
         } else if ( attrLower == "delete" ) {
           mModType = Mod_Del;
-          mAttr = QString::fromUtf8( mVal, mVal.size() );
+          mAttr = TQString::fromUtf8( mVal, mVal.size() );
           mVal.resize( 0 );
           retval = Item;
         } else {
@@ -274,7 +274,7 @@ LDIF::ParseVal LDIF::processLine()
         }
       } else {
         if ( mAttr.isEmpty() ) {
-          if ( QString::fromUtf8( mVal, mVal.size() ) == "-" ) {
+          if ( TQString::fromUtf8( mVal, mVal.size() ) == "-" ) {
             mModType = Mod_None;
           } else if ( mVal.size() == 0 ) {
             retval = EndEntry;
@@ -288,9 +288,9 @@ LDIF::ParseVal LDIF::processLine()
       if ( mAttr.isEmpty() && mVal.size() == 0 )
         retval = EndEntry;
       else if ( attrLower == "newrdn" )
-        mNewRdn = QString::fromUtf8( mVal, mVal.size() );
+        mNewRdn = TQString::fromUtf8( mVal, mVal.size() );
       else if ( attrLower == "newsuperior" )
-        mNewSuperior = QString::fromUtf8( mVal, mVal.size() );
+        mNewSuperior = TQString::fromUtf8( mVal, mVal.size() );
       else if ( attrLower == "deleteoldrdn" ) {
         if ( mVal.size() > 0 && mVal[0] == '0' )
           mDelOldRdn = false;
@@ -343,7 +343,7 @@ LDIF::ParseVal LDIF::nextItem()
 
 void LDIF::endLDIF()
 {
-  QByteArray tmp( 3 );
+  TQByteArray tmp( 3 );
   tmp[ 0 ] = '\n';
   tmp[ 1 ] = '\n';
   tmp[ 2 ] = '\n';

@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qdir.h>
+#include <tqdir.h>
 
 #include <kglobal.h>
 #include <kiconloader.h>
@@ -45,30 +45,30 @@ testFrame::testFrame():KMainWindow(0,"Test FileTreeView"),
 
    /* Connect to see the status bar */
    KStatusBar* sta = statusBar();
-   connect( treeView, SIGNAL( onItem( const QString& )),
-	    sta, SLOT( message( const QString& )));
+   connect( treeView, TQT_SIGNAL( onItem( const TQString& )),
+	    sta, TQT_SLOT( message( const TQString& )));
 
-   connect( treeView, SIGNAL( dropped( QWidget*, QDropEvent*, KURL::List& )),
-	    this, SLOT( urlsDropped( QWidget*, QDropEvent*, KURL::List& )));
+   connect( treeView, TQT_SIGNAL( dropped( TQWidget*, TQDropEvent*, KURL::List& )),
+	    this, TQT_SLOT( urlsDropped( TQWidget*, TQDropEvent*, KURL::List& )));
 
-   connect( treeView, SIGNAL( dropped( KURL::List&, KURL& )), this,
-	    SLOT( copyURLs( KURL::List&, KURL& )));
+   connect( treeView, TQT_SIGNAL( dropped( KURL::List&, KURL& )), this,
+	    TQT_SLOT( copyURLs( KURL::List&, KURL& )));
 
    treeView->addColumn( "File" );
    treeView->addColumn( "ChildCount" );
    setCentralWidget( treeView );
    resize( 600, 400 );
 
-   showPath( KURL::fromPathOrURL( QDir::homeDirPath() ));
+   showPath( KURL::fromPathOrURL( TQDir::homeDirPath() ));
 }
 
 void testFrame::showPath( const KURL &url )
 {
-   QString fname = "TestBranch"; // url.fileName ();
+   TQString fname = "TestBranch"; // url.fileName ();
    /* try a user icon */
    KIconLoader *loader = KGlobal::iconLoader();
-   QPixmap pix = loader->loadIcon( "contents2", KIcon::Small );
-   QPixmap pixOpen = loader->loadIcon( "contents", KIcon::Small );
+   TQPixmap pix = loader->loadIcon( "contents2", KIcon::Small );
+   TQPixmap pixOpen = loader->loadIcon( "contents", KIcon::Small );
 
    KFileTreeBranch *nb = treeView->addBranch( url, fname, pix );
 
@@ -77,10 +77,10 @@ void testFrame::showPath( const KURL &url )
       if( dirOnlyMode ) treeView->setDirOnlyMode( nb, true );
       nb->setOpenPixmap( pixOpen );
 
-      connect( nb, SIGNAL(populateFinished(KFileTreeViewItem*)),
-	       this, SLOT(slotPopulateFinished(KFileTreeViewItem*)));
-      connect( nb, SIGNAL( directoryChildCount( KFileTreeViewItem *, int )),
-	       this, SLOT( slotSetChildCount( KFileTreeViewItem*, int )));
+      connect( nb, TQT_SIGNAL(populateFinished(KFileTreeViewItem*)),
+	       this, TQT_SLOT(slotPopulateFinished(KFileTreeViewItem*)));
+      connect( nb, TQT_SIGNAL( directoryChildCount( KFileTreeViewItem *, int )),
+	       this, TQT_SLOT( slotSetChildCount( KFileTreeViewItem*, int )));
       // nb->setChildRecurse(false );
 
       nb->setOpen(true);
@@ -89,7 +89,7 @@ void testFrame::showPath( const KURL &url )
 
 }
 
-void testFrame::urlsDropped( QWidget* , QDropEvent* , KURL::List& list )
+void testFrame::urlsDropped( TQWidget* , TQDropEvent* , KURL::List& list )
 {
    KURL::List::ConstIterator it = list.begin();
    for ( ; it != list.end(); ++it ) {
@@ -117,7 +117,7 @@ void testFrame::slotPopulateFinished(KFileTreeViewItem *item )
 
       kdDebug() << "setting column 2 of treeview with count " << cc << endl;
 
-      item->setText( 1, QString::number( cc ));
+      item->setText( 1, TQString::number( cc ));
 #endif
    }
    else
@@ -129,16 +129,16 @@ void testFrame::slotPopulateFinished(KFileTreeViewItem *item )
 void testFrame::slotSetChildCount( KFileTreeViewItem *item, int c )
 {
    if( item )
-      item->setText(1, QString::number( c ));
+      item->setText(1, TQString::number( c ));
 }
 
 int main(int argc, char **argv)
 {
     KApplication a(argc, argv, "kfiletreeviewtest");
-    QString name1;
-    QStringList names;
+    TQString name1;
+    TQStringList names;
 
-    QString argv1;
+    TQString argv1;
     testFrame *tf;
 
     tf =  new testFrame();
@@ -148,7 +148,7 @@ int main(int argc, char **argv)
     {
        for( int i = 1; i < argc; i++ )
        {
-	  argv1 = QString::fromLatin1(argv[i]);
+	  argv1 = TQString::fromLatin1(argv[i]);
 	  kdDebug() << "Opening " << argv1 << endl;
 	  if( argv1 == "-d" )
 	     tf->setDirOnly();

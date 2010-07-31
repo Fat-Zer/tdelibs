@@ -52,17 +52,17 @@ class KatePrintTextSettings : public KPrintDialogPage
 {
   Q_OBJECT
   public:
-    KatePrintTextSettings( KPrinter *printer, QWidget *parent=0, const char *name=0 );
+    KatePrintTextSettings( KPrinter *printer, TQWidget *parent=0, const char *name=0 );
     ~KatePrintTextSettings(){};
 
-    void getOptions(QMap<QString,QString>& opts, bool incldef = false);
-    void setOptions(const QMap<QString,QString>& opts);
+    void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
+    void setOptions(const TQMap<TQString,TQString>& opts);
     
     /* call if view has a selection, enables the seelction checkbox according to the arg */
     void enableSelection( bool );
   
   private:
-    QCheckBox *cbSelection, *cbLineNumbers, *cbGuide;
+    TQCheckBox *cbSelection, *cbLineNumbers, *cbGuide;
 };
 //END Text Settings
 
@@ -79,26 +79,26 @@ class KatePrintHeaderFooter : public KPrintDialogPage
 {
   Q_OBJECT
   public:
-    KatePrintHeaderFooter( KPrinter *printer, QWidget *parent=0, const char *name=0 );
+    KatePrintHeaderFooter( KPrinter *printer, TQWidget *parent=0, const char *name=0 );
     ~KatePrintHeaderFooter(){};
 
-    void getOptions(QMap<QString,QString>& opts, bool incldef = false);
-    void setOptions(const QMap<QString,QString>& opts);
+    void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
+    void setOptions(const TQMap<TQString,TQString>& opts);
 
   public slots:  
     void setHFFont();
         
   private:
-    QCheckBox *cbEnableHeader, *cbEnableFooter;
-    QLabel *lFontPreview;
-    QString strFont;
-    QGroupBox *gbHeader, *gbFooter;
-    QLineEdit *leHeaderLeft, *leHeaderCenter, *leHeaderRight;
+    TQCheckBox *cbEnableHeader, *cbEnableFooter;
+    TQLabel *lFontPreview;
+    TQString strFont;
+    TQGroupBox *gbHeader, *gbFooter;
+    TQLineEdit *leHeaderLeft, *leHeaderCenter, *leHeaderRight;
     KColorButton *kcbtnHeaderFg, *kcbtnHeaderBg;
-    QCheckBox *cbHeaderEnableBgColor;
-    QLineEdit *leFooterLeft, *leFooterCenter, *leFooterRight;
+    TQCheckBox *cbHeaderEnableBgColor;
+    TQLineEdit *leFooterLeft, *leFooterCenter, *leFooterRight;
     KColorButton *kcbtnFooterFg, *kcbtnFooterBg;
-    QCheckBox *cbFooterEnableBgColor;    
+    TQCheckBox *cbFooterEnableBgColor;    
 };
 
 //END Header/Footer
@@ -117,17 +117,17 @@ class KatePrintLayout : public KPrintDialogPage
 {
   Q_OBJECT
   public:
-    KatePrintLayout( KPrinter *printer, QWidget *parent=0, const char *name=0 );
+    KatePrintLayout( KPrinter *printer, TQWidget *parent=0, const char *name=0 );
     ~KatePrintLayout(){};
 
-    void getOptions(QMap<QString,QString>& opts, bool incldef = false);
-    void setOptions(const QMap<QString,QString>& opts);
+    void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
+    void setOptions(const TQMap<TQString,TQString>& opts);
   
   private:
-    QComboBox *cmbSchema;
-    QCheckBox *cbEnableBox, *cbDrawBackground;
-    QGroupBox *gbBoxProps;
-    QSpinBox *sbBoxWidth, *sbBoxMargin;
+    TQComboBox *cmbSchema;
+    TQCheckBox *cbEnableBox, *cbDrawBackground;
+    TQGroupBox *gbBoxProps;
+    TQSpinBox *sbBoxWidth, *sbBoxMargin;
     KColorButton* kcbtnBoxColor;
 };
 //END Layout

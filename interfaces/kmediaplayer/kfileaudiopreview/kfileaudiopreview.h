@@ -19,7 +19,7 @@
 #ifndef KFILEAUDIOPREVIEW_H
 #define KFILEAUDIOPREVIEW_H
 
-#include <qdict.h>
+#include <tqdict.h>
 
 #include <kurl.h>
 #include <kpreviewwidgetbase.h>
@@ -39,7 +39,7 @@ class KFileAudioPreview : public KPreviewWidgetBase
     Q_OBJECT
 
 public:
-    KFileAudioPreview(QWidget *parent = 0, const char *name = 0 );
+    KFileAudioPreview(TQWidget *parent = 0, const char *name = 0 );
     ~KFileAudioPreview();
 
 public slots:
@@ -50,9 +50,9 @@ private slots:
     void toggleAuto(bool);
 
 private:
-    QDict<void> m_supportedFormats;
+    TQDict<void> m_supportedFormats;
     KURL m_currentURL;
-    QCheckBox *m_autoPlay;
+    TQCheckBox *m_autoPlay;
 
 protected:
     virtual void virtual_hook( int id, void* data );

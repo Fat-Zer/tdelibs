@@ -19,37 +19,37 @@
 
 #include "cupsdcomment.h"
 
-#include <qfile.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqregexp.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 
-QString Comment::comment()
+TQString Comment::comment()
 {
-        QString str = comment_;
-        str.replace(QRegExp("<[^>]*>"), "");
+        TQString str = comment_;
+        str.replace(TQRegExp("<[^>]*>"), "");
         str += ("#\n" + example_);
         return str;
 }
 
-QString Comment::toolTip()
+TQString Comment::toolTip()
 {
-        QString str = comment_;
-        str.replace(QRegExp("^#[\\s]*"), "").replace(QRegExp("\n#[\\s]*"), "\n");
+        TQString str = comment_;
+        str.replace(TQRegExp("^#[\\s]*"), "").replace(TQRegExp("\n#[\\s]*"), "\n");
         return i18n("Do not translate the keyword between brackets (e.g. ServerName, ServerAdmin, etc.)", str.utf8());
 }
 
-QString Comment::key()
+TQString Comment::key()
 {
 	return key_;
 }
 
-bool Comment::load(QFile *f)
+bool Comment::load(TQFile *f)
 {
         comment_ = "";
         example_ = "";
 	key_ = "";
-        QString line, *current = &comment_;
+        TQString line, *current = &comment_;
         while (!f->atEnd())
         {
                 f->readLine(line, 1024);
@@ -83,12 +83,12 @@ bool Comment::load(QFile *f)
 
 //------------------------------------------------------------------------------------------------------------
 
-QString CupsdComment::operator[] (const QString& key)
+TQString CupsdComment::operator[] (const TQString& key)
 {
         return comment(key);
 }
 
-QString CupsdComment::comment(const QString& key)
+TQString CupsdComment::comment(const TQString& key)
 {
         if (comments_.count() != 0 || loadComments())
 	{
@@ -96,10 +96,10 @@ QString CupsdComment::comment(const QString& key)
 		if (comm)
 			return comm->comment();
 	}
-        return QString::null;
+        return TQString::null;
 }
 
-QString CupsdComment::toolTip(const QString& key)
+TQString CupsdComment::toolTip(const TQString& key)
 {
         if (comments_.count() != 0 || loadComments())
 	{
@@ -107,7 +107,7 @@ QString CupsdComment::toolTip(const QString& key)
 		if (comm)
 			return comm->toolTip();
 	}
-        return QString::null;
+        return TQString::null;
 }
 
 bool CupsdComment::loadComments()

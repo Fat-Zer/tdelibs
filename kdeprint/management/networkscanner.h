@@ -20,9 +20,9 @@
 #ifndef NETWORKSCANNER_H
 #define NETWORKSCANNER_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kdialogbase.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 
 class KDEPRINT_EXPORT NetworkScanner : public QWidget
@@ -30,25 +30,25 @@ class KDEPRINT_EXPORT NetworkScanner : public QWidget
 	Q_OBJECT
 
 public:
-	NetworkScanner( int port = 9100, QWidget *parent = 0, const char *name = 0 );
+	NetworkScanner( int port = 9100, TQWidget *parent = 0, const char *name = 0 );
 	~NetworkScanner();
 
 	struct SocketInfo
 	{
-		QString IP;
-		QString Name;
+		TQString IP;
+		TQString Name;
 		int Port;
 	};
 
-	const QPtrList<NetworkScanner::SocketInfo>* printerList();
+	const TQPtrList<NetworkScanner::SocketInfo>* printerList();
 
 	int timeout() const;
 	void setTimeout( int to );
-	QString subnet() const;
-	void setSubnet( const QString& );
+	TQString subnet() const;
+	void setSubnet( const TQString& );
 	int port() const;
 	void setPort( int );
-	bool checkPrinter( const QString&, int );
+	bool checkPrinter( const TQString&, int );
 
 signals:
 	void scanStarted();

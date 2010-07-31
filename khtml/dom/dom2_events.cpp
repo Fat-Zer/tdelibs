@@ -542,9 +542,9 @@ void TextEvent::initTextEvent(const DOMString &typeArg,
 
     if (impl->isTextInputEvent()) {
         //Initialize based on the outputStringArg or virtKeyValArg.
-        QString text = outputStringArg.string();
+        TQString text = outputStringArg.string();
         if (outputStringArg.length() == 0 && virtKeyValArg) {
-            text += QChar((unsigned short)virtKeyValArg);
+            text += TQChar((unsigned short)virtKeyValArg);
         }
 
         TextEventImpl* tImpl = static_cast<TextEventImpl*>(impl);
@@ -575,7 +575,7 @@ DOMString TextEvent::outputString() const
         return static_cast<TextEventImpl*>(ke)->data();
     else {
         if (ke->keyVal())
-            return QString(QChar((ushort)ke->keyVal()));
+            return TQString(TQChar((ushort)ke->keyVal()));
         else
             return DOMString();
     }

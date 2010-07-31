@@ -18,9 +18,9 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <qpair.h>
-#include <qstring.h>
-#include <qptrlist.h>
+#include <tqpair.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
 
 #include <kdebug.h>
 #include <kstaticdeleter.h>
@@ -54,15 +54,15 @@
 
 #ifdef KSSL_HAVE_SSL
 
-typedef QPair<QString,QString> KSSLCSession;
-typedef QPtrList<KSSLCSession> KSSLCSessions;
+typedef QPair<TQString,TQString> KSSLCSession;
+typedef TQPtrList<KSSLCSession> KSSLCSessions;
 
 static KSSLCSessions *sessions = 0L;
 static KStaticDeleter<KSSLCSessions> med;
 
 
-static QString URLtoKey(const KURL &kurl) {
-    return kurl.host() + ":" + kurl.protocol() + ":" + QString::number(kurl.port());
+static TQString URLtoKey(const KURL &kurl) {
+    return kurl.host() + ":" + kurl.protocol() + ":" + TQString::number(kurl.port());
 }
 
 
@@ -74,10 +74,10 @@ static void setup() {
 
 #endif
 
-QString KSSLCSessionCache::getSessionForURL(const KURL &kurl) {
+TQString KSSLCSessionCache::getSessionForURL(const KURL &kurl) {
 #ifdef KSSL_HAVE_SSL
-    if (!sessions) return QString::null;
-    QString key = URLtoKey(kurl);
+    if (!sessions) return TQString::null;
+    TQString key = URLtoKey(kurl);
 
     for(KSSLCSession *it = sessions->first(); it; it=sessions->next()) {
 	if (it->first == key) {
@@ -91,18 +91,18 @@ QString KSSLCSessionCache::getSessionForURL(const KURL &kurl) {
 #if 0 
     kdDebug(7029) <<"Negative caching " <<key <<endl;
     if (sessions->count() >= MAX_ENTRIES) sessions->removeLast();
-    sessions->prepend(new KSSLCSession(key, QString::null));
+    sessions->prepend(new KSSLCSession(key, TQString::null));
 #endif
 
 #endif
-    return QString::null;
+    return TQString::null;
 }
 
 
-void KSSLCSessionCache::putSessionForURL(const KURL &kurl, const QString &session) {
+void KSSLCSessionCache::putSessionForURL(const KURL &kurl, const TQString &session) {
 #ifdef KSSL_HAVE_SSL
     if (!sessions) setup();
-    QString key = URLtoKey(kurl);
+    TQString key = URLtoKey(kurl);
     KSSLCSession *it;
 
     for(it = sessions->first(); it && it->first != key; it=sessions->next());

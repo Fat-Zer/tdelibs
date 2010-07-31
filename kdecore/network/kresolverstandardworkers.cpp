@@ -38,10 +38,10 @@
 #include <net/if.h>
 #endif
 
-#include <qthread.h>
-#include <qmutex.h>
-#include <qstrlist.h>
-#include <qfile.h>
+#include <tqthread.h>
+#include <tqmutex.h>
+#include <tqstrlist.h>
+#include <tqfile.h>
 
 #include "kdebug.h"
 #include "kglobal.h"
@@ -76,8 +76,8 @@ static bool hasIPv6()
 }
 
 // blacklist management
-static QMutex blacklistMutex;	// KDE4: change to a QReadWriteLock
-QStringList KBlacklistWorker::blacklist;
+static TQMutex blacklistMutex;	// KDE4: change to a QReadWriteLock
+TQStringList KBlacklistWorker::blacklist;
 
 void KBlacklistWorker::init()
 {
@@ -98,21 +98,21 @@ void KBlacklistWorker::init()
 
 void KBlacklistWorker::loadBlacklist()
 {
-  QMutexLocker locker(&blacklistMutex);
-  QStringList filelist = KGlobal::dirs()->findAllResources("config", "ipv6blacklist");
+  TQMutexLocker locker(&blacklistMutex);
+  TQStringList filelist = KGlobal::dirs()->findAllResources("config", "ipv6blacklist");
 
-  QStringList::ConstIterator it = filelist.constBegin(),
+  TQStringList::ConstIterator it = filelist.constBegin(),
     end = filelist.constEnd();
   for ( ; it != end; ++it)
     {
       // for each file, each line is a domainname to be blacklisted
-      QFile f(*it);
+      TQFile f(*it);
       if (!f.open(IO_ReadOnly))
 	continue;
 
-      QTextStream stream(&f);
-      stream.setEncoding(QTextStream::Latin1);
-      for (QString line = stream.readLine(); !line.isNull(); 
+      TQTextStream stream(&f);
+      stream.setEncoding(TQTextStream::Latin1);
+      for (TQString line = stream.readLine(); !line.isNull(); 
 	   line = stream.readLine())
 	{
 	  if (line.isEmpty())
@@ -131,7 +131,7 @@ void KBlacklistWorker::loadBlacklist()
 
 // checks the blacklist to see if the domain is listed
 // it matches the domain ending part
-bool KBlacklistWorker::isBlacklisted(const QString& host)
+bool KBlacklistWorker::isBlacklisted(const TQString& host)
 {
   KBlacklistWorker::init();
 
@@ -140,12 +140,12 @@ bool KBlacklistWorker::isBlacklisted(const QString& host)
     return false;
 
   // KDE4: QLatin1String
-  QString ascii = QString::fromLatin1(KResolver::domainToAscii(host));
+  TQString ascii = TQString::fromLatin1(KResolver::domainToAscii(host));
 
-  QMutexLocker locker(&blacklistMutex);
+  TQMutexLocker locker(&blacklistMutex);
 
   // now find out if this hostname is present
-  QStringList::ConstIterator it = blacklist.constBegin(),
+  TQStringList::ConstIterator it = blacklist.constBegin(),
     end = blacklist.constEnd();
   for ( ; it != end; ++it)
     if (ascii.endsWith(*it))
@@ -207,7 +207,7 @@ namespace
   class GetHostByNameThread: public KResolverWorkerBase
   {
   public:
-    QCString m_hostname;	// might be different!
+    TQCString m_hostname;	// might be different!
     Q_UINT16 m_port;
     int m_scopeid;
     int m_af;
@@ -251,7 +251,7 @@ namespace
 
 	// check blacklist
 	if (m_af != AF_INET && 
-	    KBlacklistWorker::isBlacklisted(QString::fromLatin1(m_hostname)))
+	    KBlacklistWorker::isBlacklisted(TQString::fromLatin1(m_hostname)))
 	  break;
 
 # ifdef USE_GETHOSTBYNAME2_R
@@ -358,7 +358,7 @@ namespace
     if (socktype == 0)
       socktype = SOCK_STREAM;	// default
 
-    QString canon = KResolver::domainToUnicode(QString::fromLatin1(he->h_name));
+    TQString canon = KResolver::domainToUnicode(TQString::fromLatin1(he->h_name));
     KInetSocketAddress sa;
     sa.setPort(m_port);
     if (he->h_addrtype != AF_INET)
@@ -378,8 +378,8 @@ namespace
   class GetAddrInfoThread: public KResolverWorkerBase
   {
   public:
-    QCString m_node;
-    QCString m_serv;
+    TQCString m_node;
+    TQCString m_serv;
     int m_af;
     int m_flags;
     KResolverResults& results;
@@ -404,7 +404,7 @@ namespace
   {
     // check blacklist
     if ((m_af != AF_INET && m_af != AF_UNSPEC) && 
-	KBlacklistWorker::isBlacklisted(QString::fromLatin1(m_node)))
+	KBlacklistWorker::isBlacklisted(TQString::fromLatin1(m_node)))
       {
 	results.setError(KResolver::NoName);
 	finished();
@@ -510,7 +510,7 @@ namespace
 	  }
 
 	// if we are here, lookup succeeded
-	QString canon;
+	TQString canon;
 	const char *previous_canon = 0L;
 
 	for (addrinfo* p = result; p; p = p->ai_next)
@@ -521,7 +521,7 @@ namespace
 		(p->ai_canonname != previous_canon && 
 		 strcmp(p->ai_canonname, previous_canon) != 0))
 	      {
-		canon = KResolver::domainToUnicode(QString::fromAscii(p->ai_canonname));
+		canon = KResolver::domainToUnicode(TQString::fromAscii(p->ai_canonname));
 		previous_canon = p->ai_canonname;
 	      }
 
@@ -546,12 +546,12 @@ bool KStandardWorker::sanityCheck()
 
   if (!nodeName().isEmpty())
     {
-      QString node = nodeName();
+      TQString node = nodeName();
       if (node.find('%') != -1)
 	node.truncate(node.find('%'));
 
-      if (node.isEmpty() || node == QString::fromLatin1("*") ||
-	  node == QString::fromLatin1("localhost"))
+      if (node.isEmpty() || node == TQString::fromLatin1("*") ||
+	  node == TQString::fromLatin1("localhost"))
 	m_encodedName.truncate(0);
       else
 	{
@@ -588,7 +588,7 @@ bool KStandardWorker::resolveScopeId()
   if (pos == -1)
     return true;
 
-  QString scopename = nodeName().mid(pos + 1);
+  TQString scopename = nodeName().mid(pos + 1);
 
   bool ok;
   scopeid = scopename.toInt(&ok);
@@ -616,12 +616,12 @@ bool KStandardWorker::resolveService()
       // service name does not contain a port number
       // must be a name
 
-      if (serviceName().isEmpty() || serviceName().compare(QString::fromLatin1("*")) == 0)
+      if (serviceName().isEmpty() || serviceName().compare(TQString::fromLatin1("*")) == 0)
 	port = 0;
       else
 	{
 	  // it's a name. We need the protocol name in order to lookup.
-	  QCString protoname = protocolName();
+	  TQCString protoname = protocolName();
 
 	  if (protoname.isEmpty() && protocol())
 	    {
@@ -670,7 +670,7 @@ KResolver::ErrorCodes KStandardWorker::addUnix()
   if (protocol() || protocolName())
     return KResolver::BadFlags;	// cannot have Unix sockets with protocols
 
-  QString pathname = serviceName();
+  TQString pathname = serviceName();
   if (pathname.isEmpty())
     return KResolver::NoName;;	// no path?
 
@@ -712,7 +712,7 @@ bool KStandardWorker::resolveNumerically()
   // now try to resolve the hostname numerically
   KInetSocketAddress sa;
   setError(KResolver::NoError);
-  sa.setHost(KIpAddress(QString::fromLatin1(m_encodedName)));
+  sa.setHost(KIpAddress(TQString::fromLatin1(m_encodedName)));
   
   // if it failed, the length was reset to 0
   bool ok = sa.length() != 0;

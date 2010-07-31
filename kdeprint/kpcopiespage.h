@@ -35,11 +35,11 @@ class KDEPRINT_EXPORT KPCopiesPage : public KPrintDialogPage, public KPReloadObj
 {
 	Q_OBJECT
 public:
-	KPCopiesPage(KPrinter *prt = 0, QWidget *parent = 0, const char *name = 0);
+	KPCopiesPage(KPrinter *prt = 0, TQWidget *parent = 0, const char *name = 0);
 	~KPCopiesPage();
 
-	void setOptions(const QMap<QString,QString>& opts);
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
+	void setOptions(const TQMap<TQString,TQString>& opts);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
 	void initialize(bool usePlugin = true);
 
 protected slots:

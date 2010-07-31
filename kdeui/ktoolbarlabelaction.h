@@ -28,7 +28,7 @@ class QLabel;
  * KToolBarLabelAction is a convenience class for displaying a label in a
  * toolbar.
  *
- * It provides easy access to the label's #setBuddy(QWidget*) and #buddy()
+ * It provides easy access to the label's #setBuddy(TQWidget*) and #buddy()
  * methods and can be used as follows:
  *
  * \code
@@ -36,10 +36,10 @@ class QLabel;
  * KHistoryCombo* findCombo = new KHistoryCombo(true, this);
  * KWidgetAction* action
  *   = new KWidgetAction(findCombo, i18n("F&ind Combo"), Qt::Key_F6, this,
- *                       SLOT(slotFocus()), actionCollection(), "find_combo");
+ *                       TQT_SLOT(slotFocus()), actionCollection(), "find_combo");
  *
  * new KToolBarLabelAction(findCombo, i18n("F&ind "), 0, this,
- *                         SLOT(slotFocus()), actionCollection(),
+ *                         TQT_SLOT(slotFocus()), actionCollection(),
  *             "find_label");
  *
  * \endcode
@@ -55,13 +55,13 @@ public:
    * @param text The label's and the action's text.
    * @param cut The action's shortcut.
    * @param receiver The SLOT's parent.
-   * @param slot The SLOT to invoke to execute this action.
+   * @param slot The TQT_SLOT to invoke to execute this action.
    * @param parent This action's parent.
    * @param name An internal name for this action.
    */
-  KToolBarLabelAction(const QString &text,
+  KToolBarLabelAction(const TQString &text,
 		      const KShortcut &cut,
-		      const QObject *receiver, const char *slot,
+		      const TQObject *receiver, const char *slot,
 		      KActionCollection *parent, const char *name);
   /**
    * Constructs a toolbar label setting a buddy for the label.
@@ -71,19 +71,19 @@ public:
    * @param text The label's and the action's text.
    * @param cut The action's shortcut.
    * @param receiver The SLOT's parent.
-   * @param slot The SLOT to invoke to execute this action.
+   * @param slot The TQT_SLOT to invoke to execute this action.
    * @param parent This action's parent.
    * @param name An internal name for this action.
    */
-  KToolBarLabelAction(QWidget* buddy, const QString &text,
+  KToolBarLabelAction(TQWidget* buddy, const TQString &text,
 		      const KShortcut &cut,
-		      const QObject *receiver, const char *slot,
+		      const TQObject *receiver, const char *slot,
 		      KActionCollection *parent, const char *name);
   /**
    * Constructs a toolbar label for a label.
    *
    * You can use this constructor if you want to display a class which is
-   * derived from QLabel in the toolbar. Note that ownership of the label is
+   * derived from TQLabel in the toolbar. Note that ownership of the label is
    * transferred to the action and the label is deleted when the action is
    * deleted. So you shouldn't hold any pointers to the label.
    *
@@ -94,35 +94,35 @@ public:
    * @param label the label which is displayed in the toolbar.
    * @param cut The action's shortcut.
    * @param receiver The SLOT's parent.
-   * @param slot The SLOT to invoke to execute this action.
+   * @param slot The TQT_SLOT to invoke to execute this action.
    * @param parent This action's parent.
    * @param name An internal name for this action.
    */
-  KToolBarLabelAction(QLabel* label, const KShortcut &cut, 
-		      const QObject *receiver, const char *slot,
+  KToolBarLabelAction(TQLabel* label, const KShortcut &cut, 
+		      const TQObject *receiver, const char *slot,
 		      KActionCollection* parent, const char *name);
 
   virtual ~KToolBarLabelAction();
   /**
    * Reimplemented to update both the action's text and the label's text.
    */
-  virtual void setText(const QString& text);
+  virtual void setText(const TQString& text);
   /**
    * Sets the label's buddy to buddy.
    *
    * See QLabel#setBuddy() for details.
    */
-  virtual void setBuddy(QWidget* buddy);
+  virtual void setBuddy(TQWidget* buddy);
   /**
    * Returns the label's buddy or 0 if no buddy is currently set.
    *
    * See QLabel#buddy() and QLabel#setBuddy() for more information.
    */
-  QWidget* buddy() const;
+  TQWidget* buddy() const;
   /**
    * Returns the label which is used internally.
    */
-  QLabel* label() const;
+  TQLabel* label() const;
 
 protected:
   virtual void virtual_hook(int id, void* data);

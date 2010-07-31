@@ -34,10 +34,10 @@
 
 #include "ispell.h"
 
-#include <qstringlist.h>
-#include <qvaluelist.h>
-#include <qtextcodec.h>
-#include <qstring.h>
+#include <tqstringlist.h>
+#include <tqvaluelist.h>
+#include <tqtextcodec.h>
+#include <tqstring.h>
 
 
 class ISpellChecker
@@ -46,18 +46,18 @@ public:
 	ISpellChecker();
 	~ISpellChecker();
 
-	bool checkWord(const QString& word);
-	QStringList suggestWord(const QString& word);
+	bool checkWord(const TQString& word);
+	TQStringList suggestWord(const TQString& word);
 
 	bool requestDictionary (const char * szLang);
-	static QValueList<QString> allDics();
+	static TQValueList<TQString> allDics();
 private:
 	ISpellChecker(const ISpellChecker&);	// no impl
 	void operator=(const ISpellChecker&);	// no impl
 
-	QString loadDictionary (const char * szLang );
+	TQString loadDictionary (const char * szLang );
 	bool   loadDictionaryForLanguage ( const char * szLang );
-	void   setDictionaryEncoding ( const QString& hashname, const char * enc );
+	void   setDictionaryEncoding ( const TQString& hashname, const char * enc );
 
 	//
 	// The member functions after this point were formerly global functions
@@ -267,7 +267,7 @@ private:
 	int	m_Trynum;		/* Size of "Try" array */
 	ichar_t	m_Try[SET_SIZE + MAXSTRINGCHARS];
 
-	QTextCodec   *m_translate_in; /* Selected translation from/to Unicode */
+	TQTextCodec   *m_translate_in; /* Selected translation from/to Unicode */
 };
 
 #endif /* ISPELL_CHECKER_H */

@@ -21,7 +21,7 @@
 #ifndef _KSSLSESSION_H
 #define _KSSLSESSION_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -50,14 +50,14 @@ public:
 	/**
 	 *  Convert to a base64 encoded string (so it can be copied safely)
 	 */
-	QString toString() const;
+	TQString toString() const;
 
 	/**
 	 *  Create as session ID object from a base64 encoded string.
 	 *  @param s the session id in base64 encoded ASN.1 format
 	 *  @return a KSSLSession object, or 0L on error
 	 */
-	static KSSLSession* fromString(const QString& s);
+	static KSSLSession* fromString(const TQString& s);
 
 protected:
 	KSSLSession();

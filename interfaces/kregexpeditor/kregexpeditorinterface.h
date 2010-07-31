@@ -1,7 +1,7 @@
 #ifndef __kregexpeditorinterface_h__
 #define __kregexpeditorinterface_h__
 
-#include <qstring.h>
+#include <tqstring.h>
 
 /**
  *  A graphical editor for regular expressions.
@@ -22,7 +22,7 @@
  * regular expression dialog:
  *
  * \code
- * QDialog *editorDialog = KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor" );
+ * TQDialog *editorDialog = KParts::ComponentFactory::createInstanceFromQuery<TQDialog>( "KRegExpEditor/KRegExpEditor" );
  * if ( editorDialog ) {
  *   // kdeutils was installed, so the dialog was found fetch the editor interface
  *   KRegExpEditorInterface *editor = static_cast<KRegExpEditorInterface *>( editorDialog->qt_cast( "KRegExpEditorInterface" ) );
@@ -41,16 +41,16 @@
  *
  * Note: signals and slots must be connected to the editorDialog object, not to the editor object:
  * \code
- * connect( editorDialog, SIGNAL( canUndo( bool ) ), undoBut, SLOT( setEnabled( bool ) ) );
+ * connect( editorDialog, TQT_SIGNAL( canUndo( bool ) ), undoBut, TQT_SLOT( setEnabled( bool ) ) );
  * \endcode
  *
  * If you want to create an instance of the editor widget, i.e. not the
  * dialog, then you must do it in the following way:
  *
  * \code
- * QWidget *editorWidget =
- * KParts::ComponentFactory::createInstanceFromQuery<QWidget>( 
- *     "KRegExpEditor/KRegExpEditor", QString::null, parent );
+ * TQWidget *editorWidget =
+ * KParts::ComponentFactory::createInstanceFromQuery<TQWidget>( 
+ *     "KRegExpEditor/KRegExpEditor", TQString::null, parent );
  * if ( editorWidget ) {
  *   // kdeutils was installed, so the widget was found fetch the editor interface
  *   KRegExpEditorInterface *editor = static_cast<KRegExpEditorInterface *>( editorWidget->qt_cast( "KRegExpEditorInterface" ) );
@@ -75,7 +75,7 @@ public:
    * returns the regular expression of the editor in Qt3 QRegExp
    * syntax. Note, there is also a 'regexp' Qt property available.
    */
-  virtual QString regExp() const = 0;
+  virtual TQString regExp() const = 0;
 
 protected:
 // These are signals: in classes that actually implement the interface.
@@ -103,9 +103,9 @@ public:
 
  /**
   * Set the regular expression for the editor. The syntax must be Qt3
-  * QRegExp syntax.
+  * TQRegExp syntax.
   */
-  virtual void setRegExp( const QString &regexp ) = 0;
+  virtual void setRegExp( const TQString &regexp ) = 0;
   virtual void redo() = 0;
   virtual void undo() = 0;
 
@@ -116,7 +116,7 @@ public:
    * this method will be used to give the widget a text to show matches of
    * the regular expression on.
    */
-  virtual void setMatchText( const QString& ) = 0;
+  virtual void setMatchText( const TQString& ) = 0;
   
   /**
    * This method allows for future changes that will not break binary
@@ -130,7 +130,7 @@ public:
    *   
    * Conclusion: You should not use this method in this version of KDE!
    */
-  virtual void doSomething( QString method, void* arguments ) = 0;
+  virtual void doSomething( TQString method, void* arguments ) = 0;
 };
 
 #endif

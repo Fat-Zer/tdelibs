@@ -19,11 +19,11 @@
 
 #include "escpwidget.h"
 
-#include <qpushbutton.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qaccel.h>
+#include <tqpushbutton.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqcheckbox.h>
+#include <tqaccel.h>
 #include <kdemacros.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -37,12 +37,12 @@
 class EscpFactory : public KLibFactory
 {
 public:
-	EscpFactory(QObject *parent = 0, const char *name = 0) : KLibFactory(parent, name) {}
+	EscpFactory(TQObject *parent = 0, const char *name = 0) : KLibFactory(parent, name) {}
 protected:
-	QObject* createObject(QObject *parent = 0, const char *name = 0, const char * className = "QObject", const QStringList& args = QStringList())
+	TQObject* createObject(TQObject *parent = 0, const char *name = 0, const char * className = "TQObject", const TQStringList& args = TQStringList())
 	{
                Q_UNUSED(className);
-		KDialogBase	*dlg = new KDialogBase(static_cast<QWidget*>(parent), name, true, i18n("EPSON InkJet Printer Utilities"), KDialogBase::Close);
+		KDialogBase	*dlg = new KDialogBase(static_cast<TQWidget*>(parent), name, true, i18n("EPSON InkJet Printer Utilities"), KDialogBase::Close);
 		EscpWidget	*w = new EscpWidget(dlg);
 		if (args.count() > 0)
 			w->setDevice(args[0]);
@@ -62,49 +62,49 @@ extern "C"
 	}
 }
 
-EscpWidget::EscpWidget(QWidget *parent, const char *name)
-: QWidget(parent, name)
+EscpWidget::EscpWidget(TQWidget *parent, const char *name)
+: TQWidget(parent, name)
 {
 	m_hasoutput = false;
 
-	connect(&m_proc, SIGNAL(processExited(KProcess*)), SLOT(slotProcessExited(KProcess*)));
-	connect(&m_proc, SIGNAL(receivedStdout(KProcess*,char*,int)), SLOT(slotReceivedStdout(KProcess*,char*,int)));
-	connect(&m_proc, SIGNAL(receivedStderr(KProcess*,char*,int)), SLOT(slotReceivedStderr(KProcess*,char*,int)));
+	connect(&m_proc, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(slotProcessExited(KProcess*)));
+	connect(&m_proc, TQT_SIGNAL(receivedStdout(KProcess*,char*,int)), TQT_SLOT(slotReceivedStdout(KProcess*,char*,int)));
+	connect(&m_proc, TQT_SIGNAL(receivedStderr(KProcess*,char*,int)), TQT_SLOT(slotReceivedStderr(KProcess*,char*,int)));
 
-	QPushButton	*cleanbtn = new QPushButton(this, "-c");
+	QPushButton	*cleanbtn = new TQPushButton(this, "-c");
 	cleanbtn->setPixmap(DesktopIcon("exec"));
-	QPushButton	*nozzlebtn = new QPushButton(this, "-n");
+	QPushButton	*nozzlebtn = new TQPushButton(this, "-n");
 	nozzlebtn->setPixmap(DesktopIcon("exec"));
-	QPushButton	*alignbtn = new QPushButton(this, "-a");
+	QPushButton	*alignbtn = new TQPushButton(this, "-a");
 	alignbtn->setPixmap(DesktopIcon("exec"));
-	QPushButton	*inkbtn = new QPushButton(this, "-i");
+	QPushButton	*inkbtn = new TQPushButton(this, "-i");
 	inkbtn->setPixmap(DesktopIcon("kdeprint_inklevel"));
-	QPushButton	*identbtn = new QPushButton(this, "-d");
+	QPushButton	*identbtn = new TQPushButton(this, "-d");
 	identbtn->setPixmap(DesktopIcon("exec"));
 
 	QFont	f(font());
 	f.setBold(true);
-	m_printer = new QLabel(this);
+	m_printer = new TQLabel(this);
 	m_printer->setFont(f);
-	m_device = new QLabel(this);
+	m_device = new TQLabel(this);
 	m_device->setFont(f);
-	m_useraw = new QCheckBox(i18n("&Use direct connection (might need root permissions)"), this);
+	m_useraw = new TQCheckBox(i18n("&Use direct connection (might need root permissions)"), this);
 
-	connect(cleanbtn, SIGNAL(clicked()), SLOT(slotButtonClicked()));
-	connect(nozzlebtn, SIGNAL(clicked()), SLOT(slotButtonClicked()));
-	connect(alignbtn, SIGNAL(clicked()), SLOT(slotButtonClicked()));
-	connect(inkbtn, SIGNAL(clicked()), SLOT(slotButtonClicked()));
-	connect(identbtn, SIGNAL(clicked()), SLOT(slotButtonClicked()));
+	connect(cleanbtn, TQT_SIGNAL(clicked()), TQT_SLOT(slotButtonClicked()));
+	connect(nozzlebtn, TQT_SIGNAL(clicked()), TQT_SLOT(slotButtonClicked()));
+	connect(alignbtn, TQT_SIGNAL(clicked()), TQT_SLOT(slotButtonClicked()));
+	connect(inkbtn, TQT_SIGNAL(clicked()), TQT_SLOT(slotButtonClicked()));
+	connect(identbtn, TQT_SIGNAL(clicked()), TQT_SLOT(slotButtonClicked()));
 
-	QLabel	*printerlab = new QLabel(i18n("Printer:"), this);
+	QLabel	*printerlab = new TQLabel(i18n("Printer:"), this);
 	printerlab->setAlignment(AlignRight|AlignVCenter);
-	QLabel	*devicelab = new QLabel(i18n("Device:"), this);
+	QLabel	*devicelab = new TQLabel(i18n("Device:"), this);
 	devicelab->setAlignment(AlignRight|AlignVCenter);
-	QLabel	*cleanlab = new QLabel(i18n("Clea&n print head"), this);
-	QLabel	*nozzlelab = new QLabel(i18n("&Print a nozzle test pattern"), this);
-	QLabel	*alignlab = new QLabel(i18n("&Align print head"), this);
-	QLabel	*inklab = new QLabel(i18n("&Ink level"), this);
-	QLabel	*identlab = new QLabel(i18n("P&rinter identification"), this);
+	QLabel	*cleanlab = new TQLabel(i18n("Clea&n print head"), this);
+	QLabel	*nozzlelab = new TQLabel(i18n("&Print a nozzle test pattern"), this);
+	QLabel	*alignlab = new TQLabel(i18n("&Align print head"), this);
+	QLabel	*inklab = new TQLabel(i18n("&Ink level"), this);
+	QLabel	*identlab = new TQLabel(i18n("P&rinter identification"), this);
 
 	cleanlab->setAlignment(AlignLeft|AlignVCenter|ShowPrefix);
 	nozzlelab->setAlignment(AlignLeft|AlignVCenter|ShowPrefix);
@@ -112,17 +112,17 @@ EscpWidget::EscpWidget(QWidget *parent, const char *name)
 	inklab->setAlignment(AlignLeft|AlignVCenter|ShowPrefix);
 	identlab->setAlignment(AlignLeft|AlignVCenter|ShowPrefix);
 
-	cleanbtn->setAccel(QAccel::shortcutKey(cleanlab->text()));
-	nozzlebtn->setAccel(QAccel::shortcutKey(nozzlelab->text()));
-	alignbtn->setAccel(QAccel::shortcutKey(alignlab->text()));
-	inkbtn->setAccel(QAccel::shortcutKey(inklab->text()));
-	identbtn->setAccel(QAccel::shortcutKey(identlab->text()));
+	cleanbtn->setAccel(TQAccel::shortcutKey(cleanlab->text()));
+	nozzlebtn->setAccel(TQAccel::shortcutKey(nozzlelab->text()));
+	alignbtn->setAccel(TQAccel::shortcutKey(alignlab->text()));
+	inkbtn->setAccel(TQAccel::shortcutKey(inklab->text()));
+	identbtn->setAccel(TQAccel::shortcutKey(identlab->text()));
 
 	KSeparator	*sep = new KSeparator(this);
 	sep->setFixedHeight(10);
 
-	QGridLayout	*l0 = new QGridLayout(this, 8, 2, 10, 10);
-	QGridLayout	*l1 = new QGridLayout(0, 2, 2, 0, 5);
+	QGridLayout	*l0 = new TQGridLayout(this, 8, 2, 10, 10);
+	QGridLayout	*l1 = new TQGridLayout(0, 2, 2, 0, 5);
 	l0->addMultiCellLayout(l1, 0, 0, 0, 1);
 	l1->addWidget(printerlab, 0, 0);
 	l1->addWidget(devicelab, 1, 0);
@@ -144,7 +144,7 @@ EscpWidget::EscpWidget(QWidget *parent, const char *name)
 	l0->setColStretch(1, 1);
 }
 
-void EscpWidget::startCommand(const QString& arg)
+void EscpWidget::startCommand(const TQString& arg)
 {
 	bool	useUSB(false);
 
@@ -192,9 +192,9 @@ void EscpWidget::startCommand(const QString& arg)
 		m_proc << "-u";
 
 	m_proc << arg << "-q";
-	m_errorbuffer = m_outbuffer = QString::null;
+	m_errorbuffer = m_outbuffer = TQString::null;
 	m_hasoutput = ( arg == "-i" || arg == "-d" );
-	for ( QValueList<QCString>::ConstIterator it=m_proc.args().begin(); it!=m_proc.args().end(); ++it )
+	for ( TQValueList<TQCString>::ConstIterator it=m_proc.args().begin(); it!=m_proc.args().end(); ++it )
 		kdDebug() << "ARG: " << *it << endl;
 	if (m_proc.start(KProcess::NotifyOnExit, KProcess::AllOutput))
 		setEnabled(false);
@@ -231,13 +231,13 @@ void EscpWidget::slotProcessExited(KProcess*)
 
 void EscpWidget::slotReceivedStdout(KProcess*, char *buf, int len)
 {
-	QString	bufstr = QCString(buf, len);
+	QString	bufstr = TQCString(buf, len);
 	m_outbuffer.append(bufstr);
 }
 
 void EscpWidget::slotReceivedStderr(KProcess*, char *buf, int len)
 {
-	QString	bufstr = QCString(buf, len);
+	QString	bufstr = TQCString(buf, len);
 	m_errorbuffer.append(bufstr);
 }
 
@@ -247,12 +247,12 @@ void EscpWidget::slotButtonClicked()
 	startCommand(arg);
 }
 
-void EscpWidget::setPrinterName(const QString& p)
+void EscpWidget::setPrinterName(const TQString& p)
 {
 	m_printer->setText(p);
 }
 
-void EscpWidget::setDevice(const QString& dev)
+void EscpWidget::setDevice(const TQString& dev)
 {
 	m_deviceURL = dev;
 	m_device->setText(dev);

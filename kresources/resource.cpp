@@ -33,19 +33,19 @@ class Resource::ResourcePrivate
 {
   public:
 #ifdef QT_THREAD_SUPPORT
-    QMutex mMutex;
+    TQMutex mMutex;
 #endif
     int mOpenCount;
-    QString mType;
-    QString mIdentifier;
+    TQString mType;
+    TQString mIdentifier;
     bool mReadOnly;
-    QString mName;
+    TQString mName;
     bool mActive;
     bool mIsOpen;
 };
 
 Resource::Resource( const KConfig* config )
-  : QObject( 0, "" ), d( new ResourcePrivate )
+  : TQObject( 0, "" ), d( new ResourcePrivate )
 {
   d->mOpenCount = 0;
   d->mIsOpen = false;
@@ -86,7 +86,7 @@ bool Resource::open()
 {
   d->mIsOpen = true;
 #ifdef QT_THREAD_SUPPORT
-  QMutexLocker guard( &(d->mMutex) );
+  TQMutexLocker guard( &(d->mMutex) );
 #endif
   if ( !d->mOpenCount ) {
     kdDebug(5650) << "Opening resource " << resourceName() << endl;
@@ -99,7 +99,7 @@ bool Resource::open()
 void Resource::close()
 {
 #ifdef QT_THREAD_SUPPORT
-  QMutexLocker guard( &(d->mMutex) );
+  TQMutexLocker guard( &(d->mMutex) );
 #endif
   if ( !d->mOpenCount ) {
     kdDebug(5650) << "ERROR: Resource " << resourceName() << " closed more times than previously opened" << endl;
@@ -120,22 +120,22 @@ bool Resource::isOpen() const
   return d->mIsOpen;
 }
 
-void Resource::setIdentifier( const QString& identifier )
+void Resource::setIdentifier( const TQString& identifier )
 {
   d->mIdentifier = identifier;
 }
 
-QString Resource::identifier() const
+TQString Resource::identifier() const
 {
   return d->mIdentifier;
 }
 
-void Resource::setType( const QString& type )
+void Resource::setType( const TQString& type )
 {
   d->mType = type;
 }
 
-QString Resource::type() const
+TQString Resource::type() const
 {
   return d->mType;
 }
@@ -150,12 +150,12 @@ bool Resource::readOnly() const
   return d->mReadOnly;
 }
 
-void Resource::setResourceName( const QString &name )
+void Resource::setResourceName( const TQString &name )
 {
   d->mName = name;
 }
 
-QString Resource::resourceName() const
+TQString Resource::resourceName() const
 {
   return d->mName;
 }

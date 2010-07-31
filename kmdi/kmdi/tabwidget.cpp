@@ -43,7 +43,7 @@
 #include <kpopupmenu.h>
 #include <kdebug.h>
 
-#include <qobjectlist.h>
+#include <tqobjectlist.h>
 
 #include "tabwidget.h"
 #include "tabwidget.moc"
@@ -59,7 +59,7 @@ namespace KMDIPrivate
 namespace KMDI
 {
 
-TabWidget::TabWidget(QWidget* parent, const char* name)
+TabWidget::TabWidget(TQWidget* parent, const char* name)
  : KTabWidget(parent,name)
  , m_visibility (KMDI::ShowWhenMoreThanOneTab)
  , d (new KMDIPrivate::TabWidgetPrivate())
@@ -70,7 +70,7 @@ TabWidget::TabWidget(QWidget* parent, const char* name)
 
   setHoverCloseButton(true);
 
-  connect(this, SIGNAL(closeRequest(QWidget*)), this, SLOT(closeTab(QWidget*)));
+  connect(this, TQT_SIGNAL(closeRequest(TQWidget*)), this, TQT_SLOT(closeTab(TQWidget*)));
 }
 
 TabWidget::~TabWidget()
@@ -79,50 +79,50 @@ TabWidget::~TabWidget()
   d = 0;
 }
 
-bool TabWidget::eventFilter(QObject *obj, QEvent *e )
+bool TabWidget::eventFilter(TQObject *obj, TQEvent *e )
 {
-  if(e->type() == QEvent::FocusIn)
+  if(e->type() == TQEvent::FocusIn)
   {
     emit focusInEvent ();
   }
-  else if (e->type() == QEvent::ChildRemoved)
+  else if (e->type() == TQEvent::ChildRemoved)
   {
     // if we lost a child we uninstall ourself as event filter for the lost
     // child and its children
-    QObject* pLostChild = ((QChildEvent*)e)->child();
+    TQObject* pLostChild = ((TQChildEvent*)e)->child();
     if ((pLostChild != 0L) && (pLostChild->isWidgetType())) {
-       QObjectList *list = pLostChild->queryList( "QWidget" );
+       TQObjectList *list = pLostChild->queryList( "TQWidget" );
        list->insert(0, pLostChild);        // add the lost child to the list too, just to save code
-       QObjectListIt it( *list );          // iterate over all lost child widgets
-       QObject * o;
+       TQObjectListIt it( *list );          // iterate over all lost child widgets
+       TQObject * o;
        while ( (o=it.current()) != 0 ) { // for each found object...
-          QWidget* widg = (QWidget*)o;
+          TQWidget* widg = (TQWidget*)o;
           ++it;
           widg->removeEventFilter(this);
        }
        delete list;                        // delete the list, not the objects
     }
   }
-  else if (e->type() == QEvent::ChildInserted)
+  else if (e->type() == TQEvent::ChildInserted)
   {
     // if we got a new child and we are attached to the MDI system we
     // install ourself as event filter for the new child and its children
     // (as we did when we were added to the MDI system).
-    QObject* pNewChild = ((QChildEvent*)e)->child();
+    TQObject* pNewChild = ((TQChildEvent*)e)->child();
     if ((pNewChild != 0L) && (pNewChild->isWidgetType()))
     {
-       QWidget* pNewWidget = (QWidget*)pNewChild;
+       TQWidget* pNewWidget = (TQWidget*)pNewChild;
        if (pNewWidget->testWFlags(Qt::WType_Dialog | Qt::WShowModal))
            return false;
-       QObjectList *list = pNewWidget->queryList( "QWidget" );
+       TQObjectList *list = pNewWidget->queryList( "TQWidget" );
        list->insert(0, pNewChild);         // add the new child to the list too, just to save code
-       QObjectListIt it( *list );          // iterate over all new child widgets
-       QObject * o;
+       TQObjectListIt it( *list );          // iterate over all new child widgets
+       TQObject * o;
        while ( (o=it.current()) != 0 ) { // for each found object...
-          QWidget* widg = (QWidget*)o;
+          TQWidget* widg = (TQWidget*)o;
           ++it;
           widg->installEventFilter(this);
-          connect(widg, SIGNAL(destroyed()), this, SLOT(childDestroyed()));
+          connect(widg, TQT_SIGNAL(destroyed()), this, TQT_SLOT(childDestroyed()));
        }
        delete list;                        // delete the list, not the objects
     }
@@ -135,15 +135,15 @@ void TabWidget::childDestroyed()
 {
   // if we lost a child we uninstall ourself as event filter for the lost
   // child and its children
-  const QObject* pLostChild = QObject::sender();
+  const TQObject* pLostChild = TQObject::sender();
   if ((pLostChild != 0L) && (pLostChild->isWidgetType()))
   {
-     QObjectList *list = ((QObject*)(pLostChild))->queryList("QWidget");
+     TQObjectList *list = ((TQObject*)(pLostChild))->queryList("TQWidget");
      list->insert(0, pLostChild);        // add the lost child to the list too, just to save code
-     QObjectListIt it( *list );          // iterate over all lost child widgets
-     QObject * obj;
+     TQObjectListIt it( *list );          // iterate over all lost child widgets
+     TQObject * obj;
      while ( (obj=it.current()) != 0 ) { // for each found object...
-       QWidget* widg = (QWidget*)obj;
+       TQWidget* widg = (TQWidget*)obj;
        ++it;
        widg->removeEventFilter(this);
      }
@@ -151,33 +151,33 @@ void TabWidget::childDestroyed()
   }
 }
 
-void TabWidget::closeTab(QWidget* w)
+void TabWidget::closeTab(TQWidget* w)
 {
   w->close();
 }
 
-void TabWidget::addTab ( QWidget * child, const QString & label )
+void TabWidget::addTab ( TQWidget * child, const TQString & label )
 {
   KTabWidget::addTab(child,label);
   showPage(child);
   maybeShow();
 }
 
-void TabWidget::addTab ( QWidget * child, const QIconSet & iconset, const QString & label )
+void TabWidget::addTab ( TQWidget * child, const TQIconSet & iconset, const TQString & label )
 {
   KTabWidget::addTab(child,iconset,label);
   showPage(child);
   maybeShow();
 }
 
-void TabWidget::addTab ( QWidget * child, QTab * tab )
+void TabWidget::addTab ( TQWidget * child, TQTab * tab )
 {
   KTabWidget::addTab(child,tab);
   showPage(child);
   maybeShow();
 }
 
-void TabWidget::insertTab ( QWidget * child, const QString & label, int index)
+void TabWidget::insertTab ( TQWidget * child, const TQString & label, int index)
 {
   KTabWidget::insertTab(child,label,index);
   showPage(child);
@@ -185,7 +185,7 @@ void TabWidget::insertTab ( QWidget * child, const QString & label, int index)
   tabBar()->repaint();
 }
 
-void TabWidget::insertTab ( QWidget * child, const QIconSet & iconset, const QString & label, int index )
+void TabWidget::insertTab ( TQWidget * child, const TQIconSet & iconset, const TQString & label, int index )
 {
   KTabWidget::insertTab(child,iconset,label,index);
   showPage(child);
@@ -193,7 +193,7 @@ void TabWidget::insertTab ( QWidget * child, const QIconSet & iconset, const QSt
   tabBar()->repaint();
 }
 
-void TabWidget::insertTab ( QWidget * child, QTab * tab, int index)
+void TabWidget::insertTab ( TQWidget * child, TQTab * tab, int index)
 {
   KTabWidget::insertTab(child,tab,index);
   showPage(child);
@@ -201,18 +201,18 @@ void TabWidget::insertTab ( QWidget * child, QTab * tab, int index)
   tabBar()->repaint();
 }
 
-void TabWidget::removePage ( QWidget * w )
+void TabWidget::removePage ( TQWidget * w )
 {
   KTabWidget::removePage(w);
   maybeShow();
 }
 
-void TabWidget::updateIconInView( QWidget *w, QPixmap icon )
+void TabWidget::updateIconInView( TQWidget *w, TQPixmap icon )
 {
   changeTab(w,icon,tabLabel(w));
 }
 
-void TabWidget::updateCaptionInView( QWidget *w, const QString &caption )
+void TabWidget::updateCaptionInView( TQWidget *w, const TQString &caption )
 {
   changeTab(w, caption);
 }

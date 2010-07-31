@@ -3,13 +3,13 @@
 public:
 GeoValue();
 GeoValue(const GeoValue&);
-GeoValue(const QCString&);
+GeoValue(const TQCString&);
 GeoValue & operator = (GeoValue&);
-GeoValue & operator = (const QCString&);
+GeoValue & operator = (const TQCString&);
 bool operator ==(GeoValue&);
 bool operator !=(GeoValue& x) {return !(*this==x);}
-bool operator ==(const QCString& s) {GeoValue a(s);return(*this==a);} 
-bool operator != (const QCString& s) {return !(*this == s);}
+bool operator ==(const TQCString& s) {GeoValue a(s);return(*this==a);} 
+bool operator != (const TQCString& s) {return !(*this == s);}
 
 virtual ~GeoValue();
 void parse() {if(!parsed_) _parse();parsed_=true;assembled_=false;}

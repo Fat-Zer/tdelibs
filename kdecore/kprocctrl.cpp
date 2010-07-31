@@ -31,7 +31,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <qsocketnotifier.h>
+#include <tqsocketnotifier.h>
 
 KProcessController *KProcessController::theKProcessController;
 int KProcessController::refCount;
@@ -69,10 +69,10 @@ KProcessController::KProcessController()
   fcntl( fd[0], F_SETFD, FD_CLOEXEC );
   fcntl( fd[1], F_SETFD, FD_CLOEXEC );
 
-  notifier = new QSocketNotifier( fd[0], QSocketNotifier::Read );
+  notifier = new TQSocketNotifier( fd[0], TQSocketNotifier::Read );
   notifier->setEnabled( true );
-  QObject::connect( notifier, SIGNAL(activated(int)),
-                    SLOT(slotDoHousekeeping()));
+  TQObject::connect( notifier, TQT_SIGNAL(activated(int)),
+                    TQT_SLOT(slotDoHousekeeping()));
 }
 
 KProcessController::~KProcessController()
@@ -192,8 +192,8 @@ void KProcessController::slotDoHousekeeping()
 
   int status;
  again:
-  QValueListIterator<KProcess*> it( kProcessList.begin() );
-  QValueListIterator<KProcess*> eit( kProcessList.end() );
+  TQValueListIterator<KProcess*> it( kProcessList.begin() );
+  TQValueListIterator<KProcess*> eit( kProcessList.end() );
   while( it != eit )
   {
     KProcess *prc = *it;
@@ -207,8 +207,8 @@ void KProcessController::slotDoHousekeeping()
     }
     ++it;
   }
-  QValueListIterator<int> uit( unixProcessList.begin() );
-  QValueListIterator<int> ueit( unixProcessList.end() );
+  TQValueListIterator<int> uit( unixProcessList.begin() );
+  TQValueListIterator<int> ueit( unixProcessList.end() );
   while( uit != ueit )
   {
     if( waitpid( *uit, 0, WNOHANG ) > 0 )

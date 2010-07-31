@@ -20,7 +20,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include <ksharedptr.h>
 #include <kdebug.h>
@@ -39,23 +39,23 @@ using namespace KABC;
 static bool matchBinaryPattern( int value, int pattern );
 
 template <class L>
-static bool listEquals( const QValueList<L>&, const QValueList<L>& );
-static bool emailsEquals( const QStringList&, const QStringList& );
+static bool listEquals( const TQValueList<L>&, const TQValueList<L>& );
+static bool emailsEquals( const TQStringList&, const TQStringList& );
 
 KABC::SortMode *Addressee::mSortMode = 0;
 
 struct Addressee::AddresseeData : public KShared
 {
-  QString uid;
-  QString uri;
+  TQString uid;
+  TQString uri;
   --VARIABLES--
 
   PhoneNumber::List phoneNumbers;
   Address::List addresses;
   Key::List keys;
-  QStringList emails;
-  QStringList categories;
-  QStringList custom;
+  TQStringList emails;
+  TQStringList categories;
+  TQStringList custom;
 
   Resource *resource;
 
@@ -163,7 +163,7 @@ bool Addressee::isEmpty() const
   return mData->empty;
 }
 
-void Addressee::setUid( const QString &id )
+void Addressee::setUid( const TQString &id )
 {
   if ( id == mData->uid ) return;
   detach();
@@ -171,17 +171,17 @@ void Addressee::setUid( const QString &id )
   mData->uid = id;
 }
 
-QString Addressee::uid() const
+TQString Addressee::uid() const
 {
   return mData->uid;
 }
 
-QString Addressee::uidLabel()
+TQString Addressee::uidLabel()
 {
   return i18n("Unique Identifier");
 }
 
-void Addressee::setUri( const QString &id )
+void Addressee::setUri( const TQString &id )
 {
   if ( id == mData->uri ) return;
   detach();
@@ -189,21 +189,21 @@ void Addressee::setUri( const QString &id )
   mData->uri = id;
 }
 
-QString Addressee::uri() const
+TQString Addressee::uri() const
 {
   return mData->uri;
 }
 
-QString Addressee::uriLabel()
+TQString Addressee::uriLabel()
 {
   return i18n("Unique Resource Identifier");
 }
 
 --DEFINITIONS--
 
-void Addressee::setNameFromString( const QString &s )
+void Addressee::setNameFromString( const TQString &s )
 {
-  QString str = s;
+  TQString str = s;
   //remove enclosing quotes from string
   if ( str.length() > 1  && s[ 0 ] == '"' && s[ s.length() - 1 ] == '"' )
     str = s.mid( 1, s.length() - 2 );
@@ -212,26 +212,26 @@ void Addressee::setNameFromString( const QString &s )
   setName( str );
 
   // clear all name parts
-  setPrefix( QString::null );
-  setGivenName( QString::null );
-  setAdditionalName( QString::null );
-  setFamilyName( QString::null );
-  setSuffix( QString::null );
+  setPrefix( TQString::null );
+  setGivenName( TQString::null );
+  setAdditionalName( TQString::null );
+  setFamilyName( TQString::null );
+  setSuffix( TQString::null );
 
   if ( str.isEmpty() )
     return;
 
-  QString spaceStr = " ";
-  QString emptyStr = "";
+  TQString spaceStr = " ";
+  TQString emptyStr = "";
   AddresseeHelper *helper = AddresseeHelper::self();
 
   int i = str.find( ',' );
   if( i < 0 ) {
-    QStringList parts = QStringList::split( spaceStr, str );
+    TQStringList parts = TQStringList::split( spaceStr, str );
     int leftOffset = 0;
     int rightOffset = parts.count() - 1;
 
-    QString suffix;
+    TQString suffix;
     while ( rightOffset >= 0 ) {
       if ( helper->containsSuffix( parts[ rightOffset ] ) ) {
         suffix.prepend(parts[ rightOffset ] + (suffix.isEmpty() ? emptyStr : spaceStr));
@@ -244,7 +244,7 @@ void Addressee::setNameFromString( const QString &s )
     if ( rightOffset < 0 )
       return;
 
-    QStringList inclusionList;
+    TQStringList inclusionList;
     for ( int n = 1; (rightOffset - n >= 0) && (n < 4); ++n ) {
       if ( helper->containsPrefix( parts[ rightOffset - n ].lower() ) ) {
         inclusionList.prepend( parts[ rightOffset - n ] );
@@ -262,7 +262,7 @@ void Addressee::setNameFromString( const QString &s )
         setGivenName( parts[ rightOffset ] );
     }
 
-    QString prefix;
+    TQString prefix;
     while ( leftOffset < rightOffset ) {
       if ( helper->containsTitle( parts[ leftOffset ] ) ) {
         prefix.append( ( prefix.isEmpty() ? emptyStr : spaceStr) + parts[ leftOffset ] );
@@ -277,23 +277,23 @@ void Addressee::setNameFromString( const QString &s )
       leftOffset++;
     }
 
-    QString additionalName;
+    TQString additionalName;
     while ( leftOffset < rightOffset ) {
       additionalName.append( ( additionalName.isEmpty() ? emptyStr : spaceStr) + parts[ leftOffset ] );
       leftOffset++;
     }
     setAdditionalName( additionalName );
   } else {
-    QString part1 = str.left( i );
-    QString part2 = str.mid( i + 1 );
+    TQString part1 = str.left( i );
+    TQString part2 = str.mid( i + 1 );
 
-    QStringList parts = QStringList::split( spaceStr, part1 );
+    TQStringList parts = TQStringList::split( spaceStr, part1 );
     int leftOffset = 0;
     int rightOffset = parts.count() - 1;
 
     if ( parts.count() > 0 ) {
 
-      QString suffix;
+      TQString suffix;
       while ( rightOffset >= 0 ) {
         if ( helper->containsSuffix( parts[ rightOffset ] ) ) {
           suffix.prepend(parts[ rightOffset ] + (suffix.isEmpty() ? emptyStr : spaceStr));
@@ -309,7 +309,7 @@ void Addressee::setNameFromString( const QString &s )
       } else
         setFamilyName( parts[ rightOffset ] );
 
-      QString prefix;
+      TQString prefix;
       while ( leftOffset < rightOffset ) {
         if ( helper->containsTitle( parts[ leftOffset ] ) ) {
           prefix.append( ( prefix.isEmpty() ? emptyStr : spaceStr) + parts[ leftOffset ] );
@@ -323,14 +323,14 @@ void Addressee::setNameFromString( const QString &s )
       setSuffix( "" );
     }
 
-    parts = QStringList::split( spaceStr, part2 );
+    parts = TQStringList::split( spaceStr, part2 );
 
     leftOffset = 0;
     rightOffset = parts.count();
 
     if ( parts.count() > 0 ) {
 
-      QString prefix;
+      TQString prefix;
       while ( leftOffset < rightOffset ) {
         if ( helper->containsTitle( parts[ leftOffset ] ) ) {
           prefix.append( ( prefix.isEmpty() ? emptyStr : spaceStr) + parts[ leftOffset ] );
@@ -345,7 +345,7 @@ void Addressee::setNameFromString( const QString &s )
         leftOffset++;
       }
 
-      QString additionalName;
+      TQString additionalName;
       while ( leftOffset < rightOffset ) {
         additionalName.append( ( additionalName.isEmpty() ? emptyStr : spaceStr) + parts[ leftOffset ] );
         leftOffset++;
@@ -358,9 +358,9 @@ void Addressee::setNameFromString( const QString &s )
   }
 }
 
-QString Addressee::realName() const
+TQString Addressee::realName() const
 {
-  QString n( formattedName() );
+  TQString n( formattedName() );
   if ( !n.isEmpty() )
 	return n;
 
@@ -375,31 +375,31 @@ QString Addressee::realName() const
   return organization();
 }
 
-QString Addressee::assembledName() const
+TQString Addressee::assembledName() const
 {
-  QString name = prefix() + " " + givenName() + " " + additionalName() + " " +
+  TQString name = prefix() + " " + givenName() + " " + additionalName() + " " +
               familyName() + " " + suffix();
 
   return name.simplifyWhiteSpace();
 }
 
-QString Addressee::fullEmail( const QString &email ) const
+TQString Addressee::fullEmail( const TQString &email ) const
 {
-  QString e;
+  TQString e;
   if ( email.isNull() ) {
     e = preferredEmail();
   } else {
     e = email;
   }
-  if ( e.isEmpty() ) return QString::null;
+  if ( e.isEmpty() ) return TQString::null;
 
-  QString text;
+  TQString text;
   if ( realName().isEmpty() )
     text = e;
   else {
-    QRegExp needQuotes( "[^ 0-9A-Za-z\\x0080-\\xFFFF]" );
+    TQRegExp needQuotes( "[^ 0-9A-Za-z\\x0080-\\xFFFF]" );
     if ( realName().find( needQuotes ) != -1 ) {
-      QString name = realName();
+      TQString name = realName();
       name.replace( "\"", "\\\"" );
       text = "\"" + name + "\" <" + e + ">";
     } else
@@ -409,7 +409,7 @@ QString Addressee::fullEmail( const QString &email ) const
   return text;
 }
 
-void Addressee::insertEmail( const QString &email, bool preferred )
+void Addressee::insertEmail( const TQString &email, bool preferred )
 {
   if ( email.simplifyWhiteSpace().isEmpty() )
     return;
@@ -417,7 +417,7 @@ void Addressee::insertEmail( const QString &email, bool preferred )
   detach();
   mData->empty = false;
 
-  QStringList::Iterator it = mData->emails.find( email );
+  TQStringList::Iterator it = mData->emails.find( email );
 
   if ( it != mData->emails.end() ) {
     if ( !preferred || it == mData->emails.begin() ) return;
@@ -432,27 +432,27 @@ void Addressee::insertEmail( const QString &email, bool preferred )
   }
 }
 
-void Addressee::removeEmail( const QString &email )
+void Addressee::removeEmail( const TQString &email )
 {
   detach();
 
-  QStringList::Iterator it = mData->emails.find( email );
+  TQStringList::Iterator it = mData->emails.find( email );
   if ( it == mData->emails.end() ) return;
 
   mData->emails.remove( it );
 }
 
-QString Addressee::preferredEmail() const
+TQString Addressee::preferredEmail() const
 {
-  if ( mData->emails.count() == 0 ) return QString::null;
+  if ( mData->emails.count() == 0 ) return TQString::null;
   else return mData->emails.first();
 }
 
-QStringList Addressee::emails() const
+TQStringList Addressee::emails() const
 {
   return mData->emails;
 }
-void Addressee::setEmails( const QStringList& emails ) {
+void Addressee::setEmails( const TQStringList& emails ) {
   detach();
 
   mData->emails = emails;
@@ -520,7 +520,7 @@ PhoneNumber::List Addressee::phoneNumbers( int type ) const
   return list;
 }
 
-PhoneNumber Addressee::findPhoneNumber( const QString &id ) const
+PhoneNumber Addressee::findPhoneNumber( const TQString &id ) const
 {
   PhoneNumber::List::ConstIterator it;
   for( it = mData->phoneNumbers.constBegin(); it != mData->phoneNumbers.constEnd(); ++it ) {
@@ -559,7 +559,7 @@ void Addressee::removeKey( const Key &key )
   }
 }
 
-Key Addressee::key( int type, QString customTypeString ) const
+Key Addressee::key( int type, TQString customTypeString ) const
 {
   Key::List::ConstIterator it;
   for( it = mData->keys.constBegin(); it != mData->keys.constEnd(); ++it ) {
@@ -576,7 +576,7 @@ Key Addressee::key( int type, QString customTypeString ) const
       }
     }
   }
-  return Key( QString(), type );
+  return Key( TQString(), type );
 }
 
 void Addressee::setKeys( const Key::List& list )
@@ -590,7 +590,7 @@ Key::List Addressee::keys() const
   return mData->keys;
 }
 
-Key::List Addressee::keys( int type, QString customTypeString ) const
+Key::List Addressee::keys( int type, TQString customTypeString ) const
 {
   Key::List list;
 
@@ -612,7 +612,7 @@ Key::List Addressee::keys( int type, QString customTypeString ) const
   return list;
 }
 
-Key Addressee::findKey( const QString &id ) const
+Key Addressee::findKey( const TQString &id ) const
 {
   Key::List::ConstIterator it;
   for( it = mData->keys.constBegin(); it != mData->keys.constEnd(); ++it ) {
@@ -623,7 +623,7 @@ Key Addressee::findKey( const QString &id ) const
   return Key();
 }
 
-QString Addressee::asString() const
+TQString Addressee::asString() const
 {
   return "Smith, agent Smith...";
 }
@@ -637,8 +637,8 @@ void Addressee::dump() const
   --DEBUG--
 
   kdDebug(5700) << "  Emails {" << endl;
-  const QStringList e = emails();
-  QStringList::ConstIterator it;
+  const TQStringList e = emails();
+  TQStringList::ConstIterator it;
   for( it = e.begin(); it != e.end(); ++it ) {
     kdDebug(5700) << "    " << (*it) << endl;
   }
@@ -739,7 +739,7 @@ Address::List Addressee::addresses( int type ) const
   return list;
 }
 
-Address Addressee::findAddress( const QString &id ) const
+Address Addressee::findAddress( const TQString &id ) const
 {
   Address::List::ConstIterator it;
   for( it = mData->addresses.constBegin(); it != mData->addresses.constEnd(); ++it ) {
@@ -750,7 +750,7 @@ Address Addressee::findAddress( const QString &id ) const
   return Address();
 }
 
-void Addressee::insertCategory( const QString &c )
+void Addressee::insertCategory( const TQString &c )
 {
   detach();
   mData->empty = false;
@@ -760,22 +760,22 @@ void Addressee::insertCategory( const QString &c )
   mData->categories.append( c );
 }
 
-void Addressee::removeCategory( const QString &c )
+void Addressee::removeCategory( const TQString &c )
 {
   detach();
 
-  QStringList::Iterator it = mData->categories.find( c );
+  TQStringList::Iterator it = mData->categories.find( c );
   if ( it == mData->categories.end() ) return;
 
   mData->categories.remove( it );
 }
 
-bool Addressee::hasCategory( const QString &c ) const
+bool Addressee::hasCategory( const TQString &c ) const
 {
   return ( mData->categories.findIndex( c ) != -1 );
 }
 
-void Addressee::setCategories( const QStringList &c )
+void Addressee::setCategories( const TQStringList &c )
 {
   detach();
   mData->empty = false;
@@ -783,22 +783,22 @@ void Addressee::setCategories( const QStringList &c )
   mData->categories = c;
 }
 
-QStringList Addressee::categories() const
+TQStringList Addressee::categories() const
 {
   return mData->categories;
 }
 
-void Addressee::insertCustom( const QString &app, const QString &name,
-                              const QString &value )
+void Addressee::insertCustom( const TQString &app, const TQString &name,
+                              const TQString &value )
 {
   if ( value.isEmpty() || name.isEmpty() || app.isEmpty() ) return;
 
   detach();
   mData->empty = false;
 
-  QString qualifiedName = app + "-" + name + ":";
+  TQString qualifiedName = app + "-" + name + ":";
 
-  QStringList::Iterator it;
+  TQStringList::Iterator it;
   for( it = mData->custom.begin(); it != mData->custom.end(); ++it ) {
     if ( (*it).startsWith( qualifiedName ) ) {
       (*it) = qualifiedName + value;
@@ -809,13 +809,13 @@ void Addressee::insertCustom( const QString &app, const QString &name,
   mData->custom.append( qualifiedName + value );
 }
 
-void Addressee::removeCustom( const QString &app, const QString &name)
+void Addressee::removeCustom( const TQString &app, const TQString &name)
 {
   detach();
 
-  QString qualifiedName = app + "-" + name + ":";
+  TQString qualifiedName = app + "-" + name + ":";
 
-  QStringList::Iterator it;
+  TQStringList::Iterator it;
   for( it = mData->custom.begin(); it != mData->custom.end(); ++it ) {
     if ( (*it).startsWith( qualifiedName ) ) {
       mData->custom.remove( it );
@@ -824,12 +824,12 @@ void Addressee::removeCustom( const QString &app, const QString &name)
   }
 }
 
-QString Addressee::custom( const QString &app, const QString &name ) const
+TQString Addressee::custom( const TQString &app, const TQString &name ) const
 {
-  QString qualifiedName = app + "-" + name + ":";
-  QString value;
+  TQString qualifiedName = app + "-" + name + ":";
+  TQString value;
 
-  QStringList::ConstIterator it;
+  TQStringList::ConstIterator it;
   for( it = mData->custom.constBegin(); it != mData->custom.constEnd(); ++it ) {
     if ( (*it).startsWith( qualifiedName ) ) {
       value = (*it).mid( (*it).find( ":" ) + 1 );
@@ -840,7 +840,7 @@ QString Addressee::custom( const QString &app, const QString &name ) const
   return value;
 }
 
-void Addressee::setCustoms( const QStringList &l )
+void Addressee::setCustoms( const TQStringList &l )
 {
   detach();
   mData->empty = false;
@@ -848,13 +848,13 @@ void Addressee::setCustoms( const QStringList &l )
   mData->custom = l;
 }
 
-QStringList Addressee::customs() const
+TQStringList Addressee::customs() const
 {
   return mData->custom;
 }
 
-void Addressee::parseEmailAddress( const QString &rawEmail, QString &fullName,
-                                   QString &email)
+void Addressee::parseEmailAddress( const TQString &rawEmail, TQString &fullName,
+                                   TQString &email)
 {
   // This is a simplified version of KPIM::splitAddress().
 
@@ -864,11 +864,11 @@ void Addressee::parseEmailAddress( const QString &rawEmail, QString &fullName,
     return; // KPIM::AddressEmpty;
 
   // The code works on 8-bit strings, so convert the input to UTF-8.
-  QCString address = rawEmail.utf8();
+  TQCString address = rawEmail.utf8();
 
-  QCString displayName;
-  QCString addrSpec;
-  QCString comment;
+  TQCString displayName;
+  TQCString addrSpec;
+  TQCString comment;
 
   // The following is a primitive parser for a mailbox-list (cf. RFC 2822).
   // The purpose is to extract a displayable string from the mailboxes.
@@ -980,8 +980,8 @@ ABORT_PARSING:
   comment = comment.stripWhiteSpace();
   addrSpec = addrSpec.stripWhiteSpace();
 
-  fullName = QString::fromUtf8( displayName );
-  email = QString::fromUtf8( addrSpec );
+  fullName = TQString::fromUtf8( displayName );
+  email = TQString::fromUtf8( addrSpec );
 
   // check for errors
   if ( inQuotedString )
@@ -999,7 +999,7 @@ ABORT_PARSING:
       //displayName.truncate( 0 );
       // Address of the form "foo@bar" or "foo@bar (Name)".
       email = fullName;
-      fullName = QString::fromUtf8( comment );
+      fullName = TQString::fromUtf8( comment );
     }
   }
 
@@ -1045,7 +1045,7 @@ bool Addressee::operator< ( const Addressee &addr )
     return mSortMode->lesser( *this, addr );
 }
 
-QDataStream &KABC::operator<<( QDataStream &s, const Addressee &a )
+TQDataStream &KABC::operator<<( TQDataStream &s, const Addressee &a )
 {
   if (!a.mData) return s;
 
@@ -1061,7 +1061,7 @@ QDataStream &KABC::operator<<( QDataStream &s, const Addressee &a )
   return s;
 }
 
-QDataStream &KABC::operator>>( QDataStream &s, Addressee &a )
+TQDataStream &KABC::operator>>( TQDataStream &s, Addressee &a )
 {
   if (!a.mData)
     return s;
@@ -1098,7 +1098,7 @@ bool matchBinaryPattern( int value, int pattern )
 }
 
 template <class L>
-bool listEquals( const QValueList<L> &list, const QValueList<L> &pattern )
+bool listEquals( const TQValueList<L> &list, const TQValueList<L> &pattern )
 {
   if ( list.count() != pattern.count() )
     return false;
@@ -1110,7 +1110,7 @@ bool listEquals( const QValueList<L> &list, const QValueList<L> &pattern )
   return true;
 }
 
-bool emailsEquals( const QStringList &list, const QStringList &pattern )
+bool emailsEquals( const TQStringList &list, const TQStringList &pattern )
 {
   if ( list.count() != pattern.count() )
     return false;
@@ -1118,7 +1118,7 @@ bool emailsEquals( const QStringList &list, const QStringList &pattern )
   if ( list.first() != pattern.first() )
     return false;
 
-  QStringList::ConstIterator it;
+  TQStringList::ConstIterator it;
   for ( it = list.begin(); it != list.end(); ++it )
     if ( pattern.find( *it ) == pattern.end() )
       return false;

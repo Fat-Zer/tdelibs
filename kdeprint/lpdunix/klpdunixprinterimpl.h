@@ -27,15 +27,15 @@ class KProcess;
 class KLpdUnixPrinterImpl : public KPrinterImpl
 {
 public:
-	KLpdUnixPrinterImpl(QObject *parent, const char *name, const QStringList & /*args*/);
+	KLpdUnixPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/);
 	~KLpdUnixPrinterImpl();
 
-	bool setupCommand(QString&, KPrinter*);
+	bool setupCommand(TQString&, KPrinter*);
 
 protected:
-	void initLpPrint(QString&, KPrinter*);
-	void initLprPrint(QString&, KPrinter*);
-	QString executable();
+	void initLpPrint(TQString&, KPrinter*);
+	void initLprPrint(TQString&, KPrinter*);
+	TQString executable();
 };
 
 #endif

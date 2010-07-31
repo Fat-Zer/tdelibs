@@ -3,9 +3,9 @@
 #include "parts.h"
 #include "notepad.h"
 
-#include <qsplitter.h>
-#include <qcheckbox.h>
-#include <qdir.h>
+#include <tqsplitter.h>
+#include <tqcheckbox.h>
+#include <tqdir.h>
 
 #include <kiconloader.h>
 #include <kstandarddirs.h>
@@ -21,30 +21,30 @@ Shell::Shell()
   // We can do this "switch active part" because we have a splitter with
   // two items in it.
   // I wonder what kdevelop uses/will use to embed kedit, BTW.
-  m_splitter = new QSplitter( this );
+  m_splitter = new TQSplitter( this );
 
   m_part1 = new Part1(this, m_splitter);
   m_part2 = new Part2(this, m_splitter);
 
-  QPopupMenu * pFile = new QPopupMenu( this );
+  TQPopupMenu * pFile = new TQPopupMenu( this );
   menuBar()->insertItem( "File", pFile );
-  QObject * coll = this;
-  KAction * paLocal = new KAction( "&View local file", 0, this, SLOT( slotFileOpen() ), coll, "open_local_file" );
+  TQObject * coll = this;
+  KAction * paLocal = new KAction( "&View local file", 0, this, TQT_SLOT( slotFileOpen() ), coll, "open_local_file" );
   // No XML : we need to plug our actions ourselves
   paLocal->plug( pFile );
 
-  KAction * paRemote = new KAction( "&View remote file", 0, this, SLOT( slotFileOpenRemote() ), coll, "open_remote_file" );
+  KAction * paRemote = new KAction( "&View remote file", 0, this, TQT_SLOT( slotFileOpenRemote() ), coll, "open_remote_file" );
   paRemote->plug( pFile );
 
-  m_paEditFile = new KAction( "&Edit file", 0, this, SLOT( slotFileEdit() ), coll, "edit_file" );
+  m_paEditFile = new KAction( "&Edit file", 0, this, TQT_SLOT( slotFileEdit() ), coll, "edit_file" );
   m_paEditFile->plug( pFile );
 
-  m_paCloseEditor = new KAction( "&Close file editor", 0, this, SLOT( slotFileCloseEditor() ), coll, "close_editor" );
+  m_paCloseEditor = new KAction( "&Close file editor", 0, this, TQT_SLOT( slotFileCloseEditor() ), coll, "close_editor" );
   m_paCloseEditor->setEnabled(false);
   m_paCloseEditor->plug( pFile );
 
-  KAction * paQuit = new KAction( "&Quit", 0, this, SLOT( close() ), coll, "shell_quit" );
-  paQuit->setIconSet(QIconSet(BarIcon("exit")));
+  KAction * paQuit = new KAction( "&Quit", 0, this, TQT_SLOT( close() ), coll, "shell_quit" );
+  paQuit->setIconSet(TQIconSet(BarIcon("exit")));
   paQuit->plug( pFile );
 
   setCentralWidget( m_splitter );
@@ -102,7 +102,7 @@ void Shell::slotFileEdit()
   if ( !m_editorpart )
     embedEditor();
   // TODO use KFileDialog to allow testing remote files
-  if ( ! m_editorpart->openURL( QDir::current().absPath()+"/kpartstest_shell.rc" ) )
+  if ( ! m_editorpart->openURL( TQDir::current().absPath()+"/kpartstest_shell.rc" ) )
     KMessageBox::error(this,"Couldn't open file !");
 }
 

@@ -22,7 +22,7 @@
 #ifndef _KTOOLBARRADIOGROUP_H
 #define _KTOOLBARRADIOGROUP_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kdelibs_export.h>
 

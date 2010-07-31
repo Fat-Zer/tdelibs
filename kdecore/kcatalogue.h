@@ -20,7 +20,7 @@
 #ifndef KCATALOGUE_H
 #define KCATALOGUE_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include "kdelibs_export.h"
 
 struct kde_loaded_l10nfile;
@@ -43,7 +43,7 @@ public:
    * @param name The name of the catalog
    * @param language The language of this catalog
    */
-  explicit KCatalogue(const QString & name = QString::null, const QString & language = QString::null);
+  explicit KCatalogue(const TQString & name = TQString::null, const TQString & language = TQString::null);
 
   /**
    * Copy constructor.
@@ -65,14 +65,14 @@ public:
    *
    * @return The name of the catalog
    */
-  QString name() const;
+  TQString name() const;
 
   /**
    * Returns the language of the catalog.
    *
    * @return The language of the catalog
    */
-  QString language() const;
+  TQString language() const;
   
   /**
    * Returns the plural type for the catalog. This type is based on the language of the catalog
@@ -109,13 +109,13 @@ private:
    * @param fileName The new file name
    */
 
-  void setFileName( const QString & fileName );
+  void setFileName( const TQString & fileName );
   /**
    * @internal Retrieves the current file name.
    *
    * @return The current file name, if any.
    */
-  QString fileName() const;
+  TQString fileName() const;
 
   /**
    * @internal Unloads the current file.

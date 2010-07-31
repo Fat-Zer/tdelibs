@@ -47,9 +47,9 @@ KBuildServiceFactory::KBuildServiceFactory( KSycocaFactory *serviceTypeFactory,
 
 // return all service types for this factory
 // i.e. first arguments to m_resourceList->add() above
-QStringList KBuildServiceFactory::resourceTypes()
+TQStringList KBuildServiceFactory::resourceTypes()
 {
-    return QStringList() << "apps" << "services";
+    return TQStringList() << "apps" << "services";
 }
 
 KBuildServiceFactory::~KBuildServiceFactory()
@@ -57,16 +57,16 @@ KBuildServiceFactory::~KBuildServiceFactory()
    delete m_resourceList;
 }
 
-KService * KBuildServiceFactory::findServiceByName(const QString &_name)
+KService * KBuildServiceFactory::findServiceByName(const TQString &_name)
 {
    return m_serviceDict[_name];
 }
 
 
 KSycocaEntry *
-KBuildServiceFactory::createEntry( const QString& file, const char *resource )
+KBuildServiceFactory::createEntry( const TQString& file, const char *resource )
 {
-  QString name = file;
+  TQString name = file;
   int pos = name.findRev('/');
   if (pos != -1)
   {
@@ -97,7 +97,7 @@ KBuildServiceFactory::createEntry( const QString& file, const char *resource )
 
 
 void
-KBuildServiceFactory::saveHeader(QDataStream &str)
+KBuildServiceFactory::saveHeader(TQDataStream &str)
 {
    KSycocaFactory::saveHeader(str);
 
@@ -109,7 +109,7 @@ KBuildServiceFactory::saveHeader(QDataStream &str)
 }
 
 void
-KBuildServiceFactory::save(QDataStream &str)
+KBuildServiceFactory::save(TQDataStream &str)
 {
    KSycocaFactory::save(str);
 
@@ -136,19 +136,19 @@ KBuildServiceFactory::save(QDataStream &str)
 }
 
 void
-KBuildServiceFactory::saveOfferList(QDataStream &str)
+KBuildServiceFactory::saveOfferList(TQDataStream &str)
 {
    m_offerListOffset = str.device()->at();
 
    bool isNumber;
-   for(QDictIterator<KSycocaEntry::Ptr> itserv ( *m_entryDict );
+   for(TQDictIterator<KSycocaEntry::Ptr> itserv ( *m_entryDict );
        itserv.current();
        ++itserv)
    {
       KService *service = (KService *) ((KSycocaEntry *)(*itserv.current()));
-      QStringList serviceTypeList = service->serviceTypes();
+      TQStringList serviceTypeList = service->serviceTypes();
       KServiceType::List serviceTypes;
-      QStringList::ConstIterator it = serviceTypeList.begin();
+      TQStringList::ConstIterator it = serviceTypeList.begin();
       for( ; it != serviceTypeList.end(); ++it )
       {
          (*it).toInt(&isNumber);
@@ -178,7 +178,7 @@ KBuildServiceFactory::saveOfferList(QDataStream &str)
    }
 
    // For each entry in servicetypeFactory
-   for(QDictIterator<KSycocaEntry::Ptr> it ( *(m_serviceTypeFactory->entryDict()) );
+   for(TQDictIterator<KSycocaEntry::Ptr> it ( *(m_serviceTypeFactory->entryDict()) );
        it.current();
        ++it)
    {
@@ -199,13 +199,13 @@ KBuildServiceFactory::saveOfferList(QDataStream &str)
 }
 
 void
-KBuildServiceFactory::saveInitList(QDataStream &str)
+KBuildServiceFactory::saveInitList(TQDataStream &str)
 {
    m_initListOffset = str.device()->at();
 
    KService::List initList;
 
-   for(QDictIterator<KSycocaEntry::Ptr> itserv ( *m_entryDict );
+   for(TQDictIterator<KSycocaEntry::Ptr> itserv ( *m_entryDict );
        itserv.current();
        ++itserv)
    {
@@ -237,18 +237,18 @@ KBuildServiceFactory::addEntry(KSycocaEntry *newEntry, const char *resource)
 
    if (!service->isDeleted())
    {
-      QString parent = service->parentApp();
+      TQString parent = service->parentApp();
       if (!parent.isEmpty())
          m_serviceGroupFactory->addNewChild(parent, resource, service);
    }
 
-   QString name = service->desktopEntryName();
+   TQString name = service->desktopEntryName();
    m_nameDict->add( name, newEntry );
    m_serviceDict.replace(name, service);
 
-   QString relName = service->desktopEntryPath();
+   TQString relName = service->desktopEntryPath();
    m_relNameDict->add( relName, newEntry );
-   QString menuId = service->menuId();
+   TQString menuId = service->menuId();
    if (!menuId.isEmpty())
       m_menuIdDict->add( menuId, newEntry );
 }

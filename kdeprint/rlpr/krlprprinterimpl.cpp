@@ -23,12 +23,12 @@
 #include "kmmanager.h"
 #include "kmprinter.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <klocale.h>
 
-KRlprPrinterImpl::KRlprPrinterImpl(QObject *parent, const char *name, const QStringList & /*args*/)
+KRlprPrinterImpl::KRlprPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KPrinterImpl(parent,name)
 {
 }
@@ -37,7 +37,7 @@ KRlprPrinterImpl::~KRlprPrinterImpl()
 {
 }
 
-bool KRlprPrinterImpl::setupCommand(QString& cmd, KPrinter *printer)
+bool KRlprPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 {
 	// retrieve the KMPrinter object, to get host and queue name
 	KMPrinter	*rpr = KMFactory::self()->manager()->findPrinter(printer->printerName());
@@ -54,12 +54,12 @@ bool KRlprPrinterImpl::setupCommand(QString& cmd, KPrinter *printer)
 			return false;
 		}
 
-		cmd = QString::fromLatin1("%1 -H %2 -P %3 -\\#%4").arg(exestr).arg(quote(host)).arg(quote(queue)).arg(printer->numCopies());
+		cmd = TQString::fromLatin1("%1 -H %2 -P %3 -\\#%4").arg(exestr).arg(quote(host)).arg(quote(queue)).arg(printer->numCopies());
 
 		// proxy settings
 		KConfig	*conf = KMFactory::self()->printConfig();
 		conf->setGroup("RLPR");
-		QString	host = conf->readEntry("ProxyHost",QString::null), port = conf->readEntry("ProxyPort",QString::null);
+		QString	host = conf->readEntry("ProxyHost",TQString::null), port = conf->readEntry("ProxyPort",TQString::null);
 		if (!host.isEmpty())
 		{
 			cmd.append(" -X ").append(quote(host));

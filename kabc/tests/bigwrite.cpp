@@ -25,9 +25,9 @@ int main(int argc,char **argv)
   
   for( int i = 0; i < 5000; ++i ) {
     Addressee a;
-    a.setGivenName( "number" + QString::number( i ) );
+    a.setGivenName( "number" + TQString::number( i ) );
     a.setFamilyName( "Name" );
-    a.insertEmail( QString::number( i ) + "@domain" );
+    a.insertEmail( TQString::number( i ) + "@domain" );
     
     ab.insertAddressee( a );
   }

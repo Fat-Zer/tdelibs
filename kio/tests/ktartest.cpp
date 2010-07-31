@@ -19,14 +19,14 @@
 #include "ktar.h"
 #include <stdio.h>
 #include <kinstance.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <assert.h>
 
-void recursive_print( const KTarDirectory * dir, const QString & path )
+void recursive_print( const KTarDirectory * dir, const TQString & path )
 {
-  QStringList l = dir->entries();
-  QStringList::Iterator it = l.begin();
+  TQStringList l = dir->entries();
+  TQStringList::Iterator it = l.begin();
   for( ; it != l.end(); ++it )
   {
     const KTarEntry* entry = dir->entry( (*it) );
@@ -51,7 +51,7 @@ int main( int argc, char** argv )
     return 1;
   }
   KInstance instance("ktartest");
-  QString command = argv[1];
+  TQString command = argv[1];
   if ( command == "list" )
   {
     KTarGz tar( argv[2] );
@@ -120,9 +120,9 @@ int main( int argc, char** argv )
     Q_ASSERT( e && e->isFile() );
     const KTarFile* f = (KTarFile*)e;
 
-    QByteArray arr( f->data() );
+    TQByteArray arr( f->data() );
     printf("SIZE=%i\n",arr.size() );
-    QString str( arr );
+    TQString str( arr );
     printf("DATA=%s\n", str.latin1());
 
     tar.close();
@@ -143,7 +143,7 @@ int main( int argc, char** argv )
     // implementation fares
     for (int i = 98; i < 514 ; i++ )
     {
-      QString str, num;
+      TQString str, num;
       str.fill( 'a', i-10 );
       num.setNum( i );
       num = num.rightJustify( 10, '0' );
@@ -165,9 +165,9 @@ int main( int argc, char** argv )
     const KTarEntry* entry = dir->entry( "my/dir/test3" );
     if ( entry && entry->isFile() )
     {
-        QIODevice *dev = static_cast<const KTarFile *>(entry)->device();
-        QByteArray contents = dev->readAll();
-        printf("contents='%s'\n", QCString(contents, contents.size()+1 ).data());
+        TQIODevice *dev = static_cast<const KTarFile *>(entry)->device();
+        TQByteArray contents = dev->readAll();
+        printf("contents='%s'\n", TQCString(contents, contents.size()+1 ).data());
     } else
         printf("entry=%p - not found if 0, otherwise not a file\n", (void*)entry);
     return 0;

@@ -24,11 +24,11 @@
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qptrlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqptrlist.h>
 #include <kurl.h>
-#include <qmap.h>
+#include <tqmap.h>
 #include <kdeprint/kmobject.h>
 
 class KMDBEntry;
@@ -88,38 +88,38 @@ public:
 
 
 	// inline access functions
-	const QString& name() const		{ return m_name; }
-	void setName(const QString& s)		{ m_name = s; if (m_printername.isEmpty()) m_printername = s; }
-	const QString& printerName() const	{ return m_printername; }
-	void setPrinterName(const QString& s)	{ m_printername = s; if (m_name.isEmpty()) m_name = s; }
-	const QString& instanceName() const	{ return m_instancename; }
-	void setInstanceName(const QString& s)	{ m_instancename = s; }
+	const TQString& name() const		{ return m_name; }
+	void setName(const TQString& s)		{ m_name = s; if (m_printername.isEmpty()) m_printername = s; }
+	const TQString& printerName() const	{ return m_printername; }
+	void setPrinterName(const TQString& s)	{ m_printername = s; if (m_name.isEmpty()) m_name = s; }
+	const TQString& instanceName() const	{ return m_instancename; }
+	void setInstanceName(const TQString& s)	{ m_instancename = s; }
 	int type() const 			{ return m_type; }
 	void setType(int t) 			{ m_type = t; }
 	void addType(int t) 			{ m_type |= t; }
 	PrinterState state(bool complete = false) const 		{ return PrinterState(m_state & (complete ? ~0x0 : StateMask)); }
-	QString stateString() const;
+	TQString stateString() const;
 	void setState(PrinterState s) 		{ m_state = PrinterState((m_state & ~StateMask) | s); }
 	bool acceptJobs() const			{ return !(m_state & Rejecting); }
 	void setAcceptJobs(bool on)		{ m_state = PrinterState((m_state & StateMask) | (on ? 0 : Rejecting)); }
-	const QString& device() const 		{ return m_device; }
-	QString deviceProtocol() const;
-	void setDevice(const QString& d) 		{ m_device = d; }
-	const QStringList& members() const	{ return m_members; }
-	void setMembers(const QStringList& l)	{ m_members = l; }
-	void addMember(const QString& s)	{ m_members.append(s); }
-	const QString& description() const 	{ return m_description; }
-	void setDescription(const QString& s) 	{ m_description = s; }
-	const QString& location() const 	{ return m_location; }
-	void setLocation(const QString& s) 	{ m_location = s; }
+	const TQString& device() const 		{ return m_device; }
+	TQString deviceProtocol() const;
+	void setDevice(const TQString& d) 		{ m_device = d; }
+	const TQStringList& members() const	{ return m_members; }
+	void setMembers(const TQStringList& l)	{ m_members = l; }
+	void addMember(const TQString& s)	{ m_members.append(s); }
+	const TQString& description() const 	{ return m_description; }
+	void setDescription(const TQString& s) 	{ m_description = s; }
+	const TQString& location() const 	{ return m_location; }
+	void setLocation(const TQString& s) 	{ m_location = s; }
 	const KURL& uri() const 		{ return m_uri; }
 	void setUri(const KURL& u) 		{ m_uri = u; }
-	const QString& manufacturer() const	{ return m_manufacturer; }
-	void setManufacturer(const QString&s )	{ m_manufacturer = s; }
-	const QString& model() const		{ return m_model; }
-	void setModel(const QString& s)		{ m_model = s; }
-	const QString& driverInfo() const	{ return m_driverinfo; }
-	void setDriverInfo(const QString& s)	{ m_driverinfo = s; }
+	const TQString& manufacturer() const	{ return m_manufacturer; }
+	void setManufacturer(const TQString&s )	{ m_manufacturer = s; }
+	const TQString& model() const		{ return m_model; }
+	void setModel(const TQString& s)		{ m_model = s; }
+	const TQString& driverInfo() const	{ return m_driverinfo; }
+	void setDriverInfo(const TQString& s)	{ m_driverinfo = s; }
 	int printerCap() const              { return m_printercap; }
 	void setPrinterCap( int c )         { m_printercap = c; }
 	void addPrinterCap( int c )         { m_printercap |= c; }
@@ -137,8 +137,8 @@ public:
 	// misc
 	KMDBEntry* dbEntry() const	{ return m_dbentry; }
 	void setDbEntry(KMDBEntry *e)	{ m_dbentry = e; }
-	QString pixmap();
-	void setPixmap(const QString& s)	{ m_pixmap = s; }
+	TQString pixmap();
+	void setPixmap(const TQString& s)	{ m_pixmap = s; }
 	bool isHardDefault() const	{ return m_harddefault; }
 	void setHardDefault(bool on)	{ m_harddefault = on; }
 	bool isSoftDefault() const	{ return m_softdefault; }
@@ -146,29 +146,29 @@ public:
 	bool ownSoftDefault() const	{ return m_ownsoftdefault; }
 	void setOwnSoftDefault(bool on)	{ m_ownsoftdefault = on; }
 	static int compare(KMPrinter *p1, KMPrinter *p2);
-	const QString& option(const QString& key) const 		{ return m_options[key]; }
-	bool hasOption(const QString& key) const 			{ return m_options.contains(key); }
-	void setOption(const QString& key, const QString& value)	{ if (!key.isEmpty()) m_options[key] = value; }
-	void removeOption(const QString& key) 				{ m_options.remove(key); }
-	QMap<QString,QString> options() const 				{ return m_options; }
-	void setOptions(const QMap<QString,QString>& opts)		{ m_options = opts; }
+	const TQString& option(const TQString& key) const 		{ return m_options[key]; }
+	bool hasOption(const TQString& key) const 			{ return m_options.contains(key); }
+	void setOption(const TQString& key, const TQString& value)	{ if (!key.isEmpty()) m_options[key] = value; }
+	void removeOption(const TQString& key) 				{ m_options.remove(key); }
+	TQMap<TQString,TQString> options() const 				{ return m_options; }
+	void setOptions(const TQMap<TQString,TQString>& opts)		{ m_options = opts; }
 	DrMain* driver() const 						{ return m_driver; }
 	void setDriver(DrMain*);
 	DrMain* takeDriver();
 
 	// configure an existing KPrinter object
-	bool autoConfigure(KPrinter *prt, QWidget *parent = 0);
+	bool autoConfigure(KPrinter *prt, TQWidget *parent = 0);
 
 	// default options
-	const QString& defaultOption(const QString& key) const 		{ return m_defaultoptions[key]; }
-	void setDefaultOption(const QString& key, const QString& value)	{ if (!key.isEmpty()) m_defaultoptions[key] = value; }
-	QMap<QString,QString> defaultOptions() const 			{ return m_defaultoptions; }
-	void setDefaultOptions(const QMap<QString,QString>& opts)	{ m_defaultoptions = opts; }
+	const TQString& defaultOption(const TQString& key) const 		{ return m_defaultoptions[key]; }
+	void setDefaultOption(const TQString& key, const TQString& value)	{ if (!key.isEmpty()) m_defaultoptions[key] = value; }
+	TQMap<TQString,TQString> defaultOptions() const 			{ return m_defaultoptions; }
+	void setDefaultOptions(const TQMap<TQString,TQString>& opts)	{ m_defaultoptions = opts; }
 	// edited options
-	const QString& editedOption(const QString& key) const 		{ return m_editedoptions[key]; }
-	void setEditedOption(const QString& key, const QString& value)	{ if (!key.isEmpty()) m_editedoptions[key] = value; }
-	QMap<QString,QString> editedOptions() const 			{ return m_editedoptions; }
-	void setEditedOptions(const QMap<QString,QString>& opts)	{ m_editedoptions = opts; }
+	const TQString& editedOption(const TQString& key) const 		{ return m_editedoptions[key]; }
+	void setEditedOption(const TQString& key, const TQString& value)	{ if (!key.isEmpty()) m_editedoptions[key] = value; }
+	TQMap<TQString,TQString> editedOptions() const 			{ return m_editedoptions; }
+	void setEditedOptions(const TQMap<TQString,TQString>& opts)	{ m_editedoptions = opts; }
 	// edited flag
 	bool isEdited() const 	{ return m_isedited; }
 	void setEdited(bool on)	{ m_isedited = on; }
@@ -210,26 +210,26 @@ protected:
         bool            m_ownsoftdefault;
 
 	// other options (for any use)
-	QMap<QString,QString>	m_options;
+	TQMap<TQString,TQString>	m_options;
 
 	// options used for instances, and print library. These options are not
 	// overwritten when copying from another KMPrinter object. This allows to
 	// to keep the user settings through an application session. The difference
 	// between "default" and "edited" can be used for option saving (only save
 	// the options corresponding to current edited printer).
-	QMap<QString,QString>	m_defaultoptions;
-	QMap<QString,QString>	m_editedoptions;
+	TQMap<TQString,TQString>	m_defaultoptions;
+	TQMap<TQString,TQString>	m_editedoptions;
 	bool			m_isedited;
 
 	// printer capabilities (based on CUPS model)
 	int m_printercap;
 };
 
-class KMPrinterList : public QPtrList<KMPrinter>
+class KMPrinterList : public TQPtrList<KMPrinter>
 {
 public:
-	KMPrinterList() : QPtrList<KMPrinter>() {}
-	virtual int compareItems(QPtrCollection::Item i1, QPtrCollection::Item i2)
+	KMPrinterList() : TQPtrList<KMPrinter>() {}
+	virtual int compareItems(TQPtrCollection::Item i1, TQPtrCollection::Item i2)
 	{ return KMPrinter::compare((KMPrinter*)i1, (KMPrinter*)i2); }
 };
 

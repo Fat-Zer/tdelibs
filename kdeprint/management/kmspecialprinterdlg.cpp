@@ -26,36 +26,36 @@
 #include "kxmlcommand.h"
 #include "driver.h"
 
-#include <qpushbutton.h>
-#include <qlineedit.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qgroupbox.h>
+#include <tqpushbutton.h>
+#include <tqlineedit.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
+#include <tqgroupbox.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kicondialog.h>
 #include <kfiledialog.h>
 #include <kseparator.h>
 
-KMSpecialPrinterDlg::KMSpecialPrinterDlg(QWidget *parent, const char *name)
-: KDialogBase(parent, name, true, QString::null, Ok|Cancel, Ok)
+KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
+: KDialogBase(parent, name, true, TQString::null, Ok|Cancel, Ok)
 {
 	setCaption(i18n("Add Special Printer"));
 
-	QWidget	*dummy = new QWidget(this);
+	QWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
 
 	// widget creation
-	m_name = new QLineEdit(dummy);
-	connect(m_name, SIGNAL(textChanged ( const QString & )),this,SLOT(slotTextChanged(const QString & )));
-	m_description = new QLineEdit(dummy);
-	m_location = new QLineEdit(dummy);
-	QLabel	*m_namelabel = new QLabel(i18n("&Name:"), dummy);
-	QLabel	*m_desclabel = new QLabel(i18n("&Description:"), dummy);
-	QLabel	*m_loclabel = new QLabel(i18n("&Location:"), dummy);
+	m_name = new TQLineEdit(dummy);
+	connect(m_name, TQT_SIGNAL(textChanged ( const TQString & )),this,TQT_SLOT(slotTextChanged(const TQString & )));
+	m_description = new TQLineEdit(dummy);
+	m_location = new TQLineEdit(dummy);
+	QLabel	*m_namelabel = new TQLabel(i18n("&Name:"), dummy);
+	QLabel	*m_desclabel = new TQLabel(i18n("&Description:"), dummy);
+	QLabel	*m_loclabel = new TQLabel(i18n("&Location:"), dummy);
 	m_namelabel->setBuddy(m_name);
 	m_desclabel->setBuddy(m_description);
 	m_loclabel->setBuddy(m_location);
@@ -63,16 +63,16 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(QWidget *parent, const char *name)
 	KSeparator* sep = new KSeparator( KSeparator::HLine, dummy);
 
 	sep->setFixedHeight(10);
-	QGroupBox	*m_gb = new QGroupBox(1, Qt::Horizontal, i18n("Command &Settings"), dummy);
+	QGroupBox	*m_gb = new TQGroupBox(1, Qt::Horizontal, i18n("Command &Settings"), dummy);
 	m_command = new KXmlCommandSelector(true, m_gb, "CommandSelector", this);
 
-	QGroupBox *m_outfile_gb = new QGroupBox( 0, Qt::Horizontal, i18n( "Outp&ut File" ), dummy );
+	TQGroupBox *m_outfile_gb = new TQGroupBox( 0, Qt::Horizontal, i18n( "Outp&ut File" ), dummy );
 
-	m_usefile = new QCheckBox( i18n("&Enable output file"), m_outfile_gb);
+	m_usefile = new TQCheckBox( i18n("&Enable output file"), m_outfile_gb);
 
-	m_mimetype = new QComboBox(m_outfile_gb);
+	m_mimetype = new TQComboBox(m_outfile_gb);
 	KMimeType::List	list = KMimeType::allMimeTypes();
-	for (QValueList<KMimeType::Ptr>::ConstIterator it=list.begin(); it!=list.end(); ++it)
+	for (TQValueList<KMimeType::Ptr>::ConstIterator it=list.begin(); it!=list.end(); ++it)
 	{
 		QString	mimetype = (*it)->name();
 		m_mimelist << mimetype;
@@ -80,31 +80,31 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(QWidget *parent, const char *name)
 	m_mimelist.sort();
 	m_mimetype->insertStringList(m_mimelist);
 
-	QLabel	*m_mimetypelabel = new QLabel(i18n("&Format:"), m_outfile_gb);
+	QLabel	*m_mimetypelabel = new TQLabel(i18n("&Format:"), m_outfile_gb);
 	m_mimetypelabel->setBuddy (m_mimetype);
 
-	m_extension = new QLineEdit(m_outfile_gb);
+	m_extension = new TQLineEdit(m_outfile_gb);
 
-	QLabel	*m_extensionlabel = new QLabel(i18n("Filename e&xtension:"), m_outfile_gb);
+	QLabel	*m_extensionlabel = new TQLabel(i18n("Filename e&xtension:"), m_outfile_gb);
 	m_extensionlabel->setBuddy(m_extension);
 
 	m_icon = new KIconButton(dummy);
 	m_icon->setIcon("fileprint");
-	m_icon->setFixedSize(QSize(48,48));
+	m_icon->setFixedSize(TQSize(48,48));
 
-	connect( m_usefile, SIGNAL( toggled( bool ) ), m_mimetype, SLOT( setEnabled( bool ) ) );
-	connect( m_usefile, SIGNAL( toggled( bool ) ), m_extension, SLOT( setEnabled( bool ) ) );
-	connect( m_usefile, SIGNAL( toggled( bool ) ), m_mimetypelabel, SLOT( setEnabled( bool ) ) );
-	connect( m_usefile, SIGNAL( toggled( bool ) ), m_extensionlabel, SLOT( setEnabled( bool ) ) );
+	connect( m_usefile, TQT_SIGNAL( toggled( bool ) ), m_mimetype, TQT_SLOT( setEnabled( bool ) ) );
+	connect( m_usefile, TQT_SIGNAL( toggled( bool ) ), m_extension, TQT_SLOT( setEnabled( bool ) ) );
+	connect( m_usefile, TQT_SIGNAL( toggled( bool ) ), m_mimetypelabel, TQT_SLOT( setEnabled( bool ) ) );
+	connect( m_usefile, TQT_SIGNAL( toggled( bool ) ), m_extensionlabel, TQT_SLOT( setEnabled( bool ) ) );
 	m_mimetypelabel->setEnabled( false );
 	m_mimetype->setEnabled( false );
 	m_extensionlabel->setEnabled( false );
 	m_extension->setEnabled( false );
 
-	QWhatsThis::add(m_usefile,
+	TQWhatsThis::add(m_usefile,
 		i18n("<p>The command will use an output file. If checked, make sure the "
 		     "command contains an output tag.</p>"));
-	QWhatsThis::add(m_command,
+	TQWhatsThis::add(m_command,
 		i18n("<p>The command to execute when printing on this special printer. Either enter "
 			 "the command to execute directly, or associate/create a command object with/for "
 			 "this special printer. The command object is the preferred method as it provides "
@@ -115,16 +115,16 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(QWidget *parent, const char *name)
 			 "<li><b>%out</b>: the output file (required if using an output file).</li>"
 			 "<li><b>%psl</b>: the paper size in lower case.</li>"
 			 "<li><b>%psu</b>: the paper size with the first letter in upper case.</li></ul>"));
-	QString mimetypeWhatsThis = i18n("<p>The default mimetype for the output file (e.g. application/postscript).</p>");
-	QWhatsThis::add(m_mimetypelabel, mimetypeWhatsThis);
-	QWhatsThis::add(m_mimetype, mimetypeWhatsThis);
-	QString extensionWhatsThis = i18n("<p>The default extension for the output file (e.g. ps, pdf, ps.gz).</p>");
-	QWhatsThis::add(m_extensionlabel, extensionWhatsThis);
-	QWhatsThis::add(m_extension, extensionWhatsThis);
+	TQString mimetypeWhatsThis = i18n("<p>The default mimetype for the output file (e.g. application/postscript).</p>");
+	TQWhatsThis::add(m_mimetypelabel, mimetypeWhatsThis);
+	TQWhatsThis::add(m_mimetype, mimetypeWhatsThis);
+	TQString extensionWhatsThis = i18n("<p>The default extension for the output file (e.g. ps, pdf, ps.gz).</p>");
+	TQWhatsThis::add(m_extensionlabel, extensionWhatsThis);
+	TQWhatsThis::add(m_extension, extensionWhatsThis);
 
 	// layout creation
-	QVBoxLayout	*l0 = new QVBoxLayout(dummy, 0, 10);
-	QGridLayout	*l1 = new QGridLayout(0, 3, 3, 0, 5);
+	QVBoxLayout	*l0 = new TQVBoxLayout(dummy, 0, 10);
+	QGridLayout	*l1 = new TQGridLayout(0, 3, 3, 0, 5);
 	l0->addLayout(l1);
 	l1->setColStretch(2,1);
 	l1->addColSpacing(0,60);
@@ -138,7 +138,7 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(QWidget *parent, const char *name)
 	l0->addWidget(sep);
 	l0->addWidget(m_gb);
 	l0->addWidget(m_outfile_gb);
-	QGridLayout	*l6 = new QGridLayout(m_outfile_gb->layout(), 3, 2, 10);
+	QGridLayout	*l6 = new TQGridLayout(m_outfile_gb->layout(), 3, 2, 10);
 	l6->addMultiCellWidget( m_usefile, 0, 0, 0, 1 );
 	l6->addWidget(m_mimetypelabel, 1, 0);
 	l6->addWidget(m_mimetype, 1, 1);
@@ -151,7 +151,7 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(QWidget *parent, const char *name)
 	resize(400,100);
 }
 
-void KMSpecialPrinterDlg::slotTextChanged(const QString & )
+void KMSpecialPrinterDlg::slotTextChanged(const TQString & )
 {
 	enableButton(Ok, !m_name->text().isEmpty());
 }

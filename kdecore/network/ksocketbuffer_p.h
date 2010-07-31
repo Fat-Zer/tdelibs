@@ -25,9 +25,9 @@
 #ifndef KSOCKETBUFFER_P_H
 #define KSOCKETBUFFER_P_H
 
-#include <qmutex.h>
-#include <qcstring.h>
-#include <qvaluelist.h>
+#include <tqmutex.h>
+#include <tqcstring.h>
+#include <tqvaluelist.h>
 #include "kiobuffer.h"
 
 namespace KNetwork {
@@ -78,7 +78,7 @@ public:
   /**
    * Reads a line from the buffer and discard it from the buffer.
    */
-  virtual QCString readLine();
+  virtual TQCString readLine();
 
   /**
    * Returns the number of bytes in the buffer. Note that this is not
@@ -151,9 +151,9 @@ public:
   virtual Q_LONG receiveFrom(KActiveSocketBase* device, Q_LONG len = -1);
 
 protected:
-  mutable QMutex m_mutex;
-  QValueList<QByteArray> m_list;
-  QIODevice::Offset m_offset;	///< offset of the start of data in the first element
+  mutable TQMutex m_mutex;
+  TQValueList<TQByteArray> m_list;
+  TQIODevice::Offset m_offset;	///< offset of the start of data in the first element
 
   Q_LONG m_size;		///< the maximum length of the buffer
   mutable Q_LONG m_length;

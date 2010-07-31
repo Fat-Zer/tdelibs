@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include <kapplication.h>
-#include <qstring.h>
+#include <tqstring.h>
 
 #include "kwalletbackend.h"
 
@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
    KWallet::Backend be("ktestwallet");
    printf("KWalletBackend constructed\n");
 
-   QByteArray apass, bpass, cpass;
+   TQByteArray apass, bpass, cpass;
 
    apass.duplicate("apassword", 9);
    bpass.duplicate("bpassword", 9);

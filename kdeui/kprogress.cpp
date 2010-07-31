@@ -22,15 +22,15 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qstring.h>
-#include <qregexp.h>
-#include <qstyle.h>
-#include <qtimer.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqstring.h>
+#include <tqregexp.h>
+#include <tqstyle.h>
+#include <tqtimer.h>
 
 #include "kprogress.h"
 
@@ -38,15 +38,15 @@
 #include <klocale.h>
 #include <kwin.h>
 
-KProgress::KProgress(QWidget *parent, const char *name, WFlags f)
-  : QProgressBar(parent, name, f),
+KProgress::KProgress(TQWidget *parent, const char *name, WFlags f)
+  : TQProgressBar(parent, name, f),
     mFormat("%p%")
 {
     setProgress(0);
 }
 
-KProgress::KProgress(int totalSteps, QWidget *parent, const char *name, WFlags f)
-  : QProgressBar(totalSteps, parent, name, f),
+KProgress::KProgress(int totalSteps, TQWidget *parent, const char *name, WFlags f)
+  : TQProgressBar(totalSteps, parent, name, f),
     mFormat("%p%")
 {
     setProgress(0);
@@ -63,7 +63,7 @@ void KProgress::advance(int offset)
 
 void KProgress::setTotalSteps(int totalSteps)
 {
-    QProgressBar::setTotalSteps(totalSteps);
+    TQProgressBar::setTotalSteps(totalSteps);
 
     if (totalSteps)
     {
@@ -73,7 +73,7 @@ void KProgress::setTotalSteps(int totalSteps)
 
 void KProgress::setProgress(int progress)
 {
-    QProgressBar::setProgress(progress);
+    TQProgressBar::setProgress(progress);
 
     if (totalSteps())
     {
@@ -109,14 +109,14 @@ bool KProgress::textEnabled() const
     return percentageVisible();
 }
 
-void KProgress::setFormat(const QString & format)
+void KProgress::setFormat(const TQString & format)
 {
     mFormat = format;
     if (mFormat != "%p%")
         setCenterIndicator(true);
 }
 
-QString KProgress::format() const
+TQString KProgress::format() const
 {
     return mFormat;
 }
@@ -127,23 +127,23 @@ int KProgress::value() const
     return progress();
 }
 
-bool KProgress::setIndicator(QString &indicator, int progress, int totalSteps)
+bool KProgress::setIndicator(TQString &indicator, int progress, int totalSteps)
 {
     if (!totalSteps)
         return false;
-    QString newString(mFormat);
-    newString.replace(QString::fromLatin1("%v"),
-                      QString::number(progress));
-    newString.replace(QString::fromLatin1("%m"),
-                      QString::number(totalSteps));
+    TQString newString(mFormat);
+    newString.replace(TQString::fromLatin1("%v"),
+                      TQString::number(progress));
+    newString.replace(TQString::fromLatin1("%m"),
+                      TQString::number(totalSteps));
 
     if (totalSteps > INT_MAX / 1000) {
         progress /= 1000;
         totalSteps /= 1000;
     }
 
-    newString.replace(QString::fromLatin1("%p"),
-                      QString::number((progress * 100) / totalSteps)); 
+    newString.replace(TQString::fromLatin1("%p"),
+                      TQString::number((progress * 100) / totalSteps)); 
 
     if (newString != indicator)
     {
@@ -166,8 +166,8 @@ struct KProgressDialog::KProgressDialogPrivate
 /*
  * KProgressDialog implementation
  */
-KProgressDialog::KProgressDialog(QWidget* parent, const char* name,
-                                 const QString& caption, const QString& text,
+KProgressDialog::KProgressDialog(TQWidget* parent, const char* name,
+                                 const TQString& caption, const TQString& text,
                                  bool modal)
     : KDialogBase(KDialogBase::Plain, caption, KDialogBase::Cancel,
                   KDialogBase::Cancel, parent, name, modal),
@@ -182,23 +182,23 @@ KProgressDialog::KProgressDialog(QWidget* parent, const char* name,
 #ifdef Q_WS_X11
     KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
 #endif
-    mShowTimer = new QTimer(this);
+    mShowTimer = new TQTimer(this);
     
     showButton(KDialogBase::Close, false);
     mCancelText = actionButton(KDialogBase::Cancel)->text();
 
-    QFrame* mainWidget = plainPage();
-    QVBoxLayout* layout = new QVBoxLayout(mainWidget, 10);
+    TQFrame* mainWidget = plainPage();
+    TQVBoxLayout* layout = new TQVBoxLayout(mainWidget, 10);
 
-    mLabel = new QLabel(text, mainWidget);
+    mLabel = new TQLabel(text, mainWidget);
     layout->addWidget(mLabel);
 
     mProgressBar = new KProgress(mainWidget);
     layout->addWidget(mProgressBar);
 
-    connect(mProgressBar, SIGNAL(percentageChanged(int)),
-            this, SLOT(slotAutoActions(int)));
-    connect(mShowTimer, SIGNAL(timeout()), this, SLOT(slotAutoShow()));
+    connect(mProgressBar, TQT_SIGNAL(percentageChanged(int)),
+            this, TQT_SLOT(slotAutoActions(int)));
+    connect(mShowTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotAutoShow()));
     mShowTimer->start(mMinDuration, true);
 }
 
@@ -290,18 +290,18 @@ const KProgress* KProgressDialog::progressBar() const
     return mProgressBar;
 }
 
-void KProgressDialog::setLabel(const QString& text)
+void KProgressDialog::setLabel(const TQString& text)
 {
     mLabel->setText(text);
 }
 
 // ### KDE 4 remove
-QString KProgressDialog::labelText()
+TQString KProgressDialog::labelText()
 {
     return mLabel->text();
 }
 
-QString KProgressDialog::labelText() const
+TQString KProgressDialog::labelText() const
 {
     return mLabel->text();
 }
@@ -343,19 +343,19 @@ void KProgressDialog::setAutoReset(bool autoReset)
     mAutoReset = autoReset;
 }
 
-void KProgressDialog::setButtonText(const QString& text)
+void KProgressDialog::setButtonText(const TQString& text)
 {
     mCancelText = text;
     setButtonCancel(text);
 }
 
 // ### KDE 4 remove
-QString KProgressDialog::buttonText()
+TQString KProgressDialog::buttonText()
 {
     return mCancelText;
 }
 
-QString KProgressDialog::buttonText() const
+TQString KProgressDialog::buttonText() const
 {
     return mCancelText;
 }

@@ -41,14 +41,14 @@ class KTEXTEDITOR_EXPORT EncodingInterface
     unsigned int encodingInterfaceNumber () const;
     
   protected:  
-    void setEncodingInterfaceDCOPSuffix (const QCString &suffix);  
+    void setEncodingInterfaceDCOPSuffix (const TQCString &suffix);  
 
   //
   // slots !!!
   //  
   public:
-    virtual void setEncoding (const class QString &e) = 0;
-    virtual class QString encoding() const = 0;
+    virtual void setEncoding (const class TQString &e) = 0;
+    virtual class TQString encoding() const = 0;
 
   private:
     class PrivateEncodingInterface *d;

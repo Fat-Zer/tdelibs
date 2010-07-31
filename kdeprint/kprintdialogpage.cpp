@@ -20,13 +20,13 @@
 
 #include "kprintdialogpage.h"
 
-KPrintDialogPage::KPrintDialogPage(QWidget *parent, const char *name)
-: QWidget(parent,name), m_printer(0), m_driver(0), m_ID(0), m_onlyreal(false)
+KPrintDialogPage::KPrintDialogPage(TQWidget *parent, const char *name)
+: TQWidget(parent,name), m_printer(0), m_driver(0), m_ID(0), m_onlyreal(false)
 {
 }
 
-KPrintDialogPage::KPrintDialogPage(KMPrinter *pr, DrMain *dr, QWidget *parent, const char *name)
-: QWidget(parent,name), m_printer(pr), m_driver(dr), m_ID(0), m_onlyreal(false)
+KPrintDialogPage::KPrintDialogPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const char *name)
+: TQWidget(parent,name), m_printer(pr), m_driver(dr), m_ID(0), m_onlyreal(false)
 {
 }
 
@@ -34,15 +34,15 @@ KPrintDialogPage::~KPrintDialogPage()
 {
 }
 
-void KPrintDialogPage::setOptions(const QMap<QString,QString>&)
+void KPrintDialogPage::setOptions(const TQMap<TQString,TQString>&)
 {
 }
 
-void KPrintDialogPage::getOptions(QMap<QString,QString>&, bool)
+void KPrintDialogPage::getOptions(TQMap<TQString,TQString>&, bool)
 {
 }
 
-bool KPrintDialogPage::isValid(QString&)
+bool KPrintDialogPage::isValid(TQString&)
 {
 	return true;
 }

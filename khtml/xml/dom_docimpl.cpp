@@ -43,8 +43,8 @@
 #include "ecma/kjs_proxy.h"
 #include "ecma/kjs_binding.h"
 
-#include <qptrstack.h>
-#include <qpaintdevicemetrics.h>
+#include <tqptrstack.h>
+#include <tqpaintdevicemetrics.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kstaticdeleter.h>
@@ -101,7 +101,7 @@ DOMImplementationImpl::~DOMImplementationImpl()
 bool DOMImplementationImpl::hasFeature ( const DOMString &feature, const DOMString &version )
 {
     // ### update when we (fully) support the relevant features
-    QString lower = feature.string().lower();
+    TQString lower = feature.string().lower();
     if ((lower == "html" || lower == "xml") &&
         (version.isEmpty() || version == "1.0" || version == "2.0" || version == "null"))
         return true;
@@ -228,7 +228,7 @@ ElementMappingCache::ElementMappingCache():m_dict(257)
     m_dict.setAutoDelete(true);
 }
 
-void ElementMappingCache::add(const QString& id, ElementImpl* nd)
+void ElementMappingCache::add(const TQString& id, ElementImpl* nd)
 {
     if (id.isEmpty()) return;
 
@@ -247,7 +247,7 @@ void ElementMappingCache::add(const QString& id, ElementImpl* nd)
     }
 }
 
-void ElementMappingCache::set(const QString& id, ElementImpl* nd)
+void ElementMappingCache::set(const TQString& id, ElementImpl* nd)
 {
     if (id.isEmpty()) return;
 
@@ -255,7 +255,7 @@ void ElementMappingCache::set(const QString& id, ElementImpl* nd)
     info->nd = nd;
 }
 
-void ElementMappingCache::remove(const QString& id, ElementImpl* nd)
+void ElementMappingCache::remove(const TQString& id, ElementImpl* nd)
 {
     if (id.isEmpty()) return;
 
@@ -273,20 +273,20 @@ void ElementMappingCache::remove(const QString& id, ElementImpl* nd)
     }
 }
 
-bool ElementMappingCache::contains(const QString& id)
+bool ElementMappingCache::contains(const TQString& id)
 {
     if (id.isEmpty()) return false;
     return m_dict.find(id);
 }
 
-ElementMappingCache::ItemInfo* ElementMappingCache::get(const QString& id)
+ElementMappingCache::ItemInfo* ElementMappingCache::get(const TQString& id)
 {
     if (id.isEmpty()) return 0;
     return m_dict.find(id);
 }
 
-static KStaticDeleter< QPtrList<DocumentImpl> > s_changedDocumentsDeleter;
-QPtrList<DocumentImpl> * DocumentImpl::changedDocuments;
+static KStaticDeleter< TQPtrList<DocumentImpl> > s_changedDocumentsDeleter;
+TQPtrList<DocumentImpl> * DocumentImpl::changedDocuments;
 
 // KHTMLView might be 0
 DocumentImpl::DocumentImpl(DOMImplementationImpl *_implementation, KHTMLView *v)
@@ -335,7 +335,7 @@ DocumentImpl::DocumentImpl(DOMImplementationImpl *_implementation, KHTMLView *v)
     m_attrMap = new IdNameMapping(ATTR_LAST_ATTR+1);
     m_elementMap = new IdNameMapping(ID_LAST_TAG+1);
     m_namespaceMap = new IdNameMapping(1);
-    QString xhtml(XHTML_NAMESPACE);
+    TQString xhtml(XHTML_NAMESPACE);
     m_namespaceMap->names.insert(emptyNamespace, new DOMStringImpl(""));
     m_namespaceMap->names.insert(xhtmlNamespace, new DOMStringImpl(xhtml.unicode(), xhtml.length()));
     m_namespaceMap->names[emptyNamespace]->ref();
@@ -423,7 +423,7 @@ DocumentImpl::~DocumentImpl()
     //you may also have to fix removedLastRef() above - M.O.
     assert( !m_render );
 
-    QIntDictIterator<NodeListImpl::Cache> it(m_nodeListCache);
+    TQIntDictIterator<NodeListImpl::Cache> it(m_nodeListCache);
     for (; it.current(); ++it)
         it.current()->deref();
 
@@ -674,7 +674,7 @@ AttrImpl *DocumentImpl::createAttributeNS( const DOMString &_namespaceURI,
 
 ElementImpl *DocumentImpl::getElementById( const DOMString &elementId ) const
 {
-    QString stringKey = elementId.string();
+    TQString stringKey = elementId.string();
 
     ElementMappingCache::ItemInfo* info = m_getElementByIdCache.get(stringKey);
 
@@ -686,7 +686,7 @@ ElementImpl *DocumentImpl::getElementById( const DOMString &elementId ) const
         return info->nd;
 
     //Now we actually have to walk.
-    QPtrStack<NodeImpl> nodeStack;
+    TQPtrStack<NodeImpl> nodeStack;
     NodeImpl *current = _first;
 
     while(1)
@@ -734,7 +734,7 @@ void DocumentImpl::setTitle(const DOMString& _title)
 
     m_title = _title;
 
-    QString titleStr = m_title.string();
+    TQString titleStr = m_title.string();
     for (unsigned int i = 0; i < titleStr.length(); ++i)
         if (titleStr[i] < ' ')
             titleStr[i] = ' ';
@@ -744,8 +744,8 @@ void DocumentImpl::setTitle(const DOMString& _title)
 	if (titleStr.isNull() || titleStr.isEmpty()) {
 	    // empty title... set window caption as the URL
 	    KURL url = m_url;
-	    url.setRef(QString::null);
-	    url.setQuery(QString::null);
+	    url.setRef(TQString::null);
+	    url.setQuery(TQString::null);
 	    titleStr = url.prettyURL();
 	}
 
@@ -1037,9 +1037,9 @@ ElementImpl *DocumentImpl::createHTMLElement( const DOMString &name )
     return n;
 }
 
-QString DocumentImpl::nextState()
+TQString DocumentImpl::nextState()
 {
-   QString state;
+   TQString state;
    if (!m_state.isEmpty())
    {
       state = m_state.first();
@@ -1048,10 +1048,10 @@ QString DocumentImpl::nextState()
    return state;
 }
 
-QStringList DocumentImpl::docState()
+TQStringList DocumentImpl::docState()
 {
-    QStringList s;
-    for (QPtrListIterator<NodeImpl> it(m_maintainsState); it.current(); ++it)
+    TQStringList s;
+    for (TQPtrListIterator<NodeImpl> it(m_maintainsState); it.current(); ++it)
         s.append(it.current()->state());
 
     return s;
@@ -1059,7 +1059,7 @@ QStringList DocumentImpl::docState()
 
 bool DocumentImpl::unsubmittedFormChanges()
 {
-    for (QPtrListIterator<NodeImpl> it(m_maintainsState); it.current(); ++it)
+    for (TQPtrListIterator<NodeImpl> it(m_maintainsState); it.current(); ++it)
         if (it.current()->state().right(1)=="M")
             return true;
 
@@ -1097,7 +1097,7 @@ TreeWalkerImpl *DocumentImpl::createTreeWalker(NodeImpl *root, unsigned long wha
 void DocumentImpl::setDocumentChanged(bool b)
 {
     if (!changedDocuments)
-        changedDocuments = s_changedDocumentsDeleter.setObject( changedDocuments, new QPtrList<DocumentImpl>() );
+        changedDocuments = s_changedDocumentsDeleter.setObject( changedDocuments, new TQPtrList<DocumentImpl>() );
 
     if (b && !m_docChanged)
         changedDocuments->append(this);
@@ -1109,7 +1109,7 @@ void DocumentImpl::setDocumentChanged(bool b)
 void DocumentImpl::recalcStyle( StyleChange change )
 {
 //     qDebug("recalcStyle(%p)", this);
-//     QTime qt;
+//     TQTime qt;
 //     qt.start();
     if (m_inStyleRecalc)
         return; // Guard against re-entrancy. -dwh
@@ -1127,13 +1127,13 @@ void DocumentImpl::recalcStyle( StyleChange change )
         // ### make the font stuff _really_ work!!!!
 
 	khtml::FontDef fontDef;
-	QFont f = KGlobalSettings::generalFont();
+	TQFont f = KGlobalSettings::generalFont();
 	fontDef.family = f.family();
 	fontDef.italic = f.italic();
 	fontDef.weight = f.weight();
         if (m_view) {
             const KHTMLSettings *settings = m_view->part()->settings();
-	    QString stdfont = settings->stdFontName();
+	    TQString stdfont = settings->stdFontName();
 	    if ( !stdfont.isEmpty() )
 		fontDef.family = stdfont;
 
@@ -1179,7 +1179,7 @@ void DocumentImpl::updateRendering()
 {
     if (!hasChangedChild()) return;
 
-//     QTime time;
+//     TQTime time;
 //     time.start();
 //     kdDebug() << "UPDATERENDERING: "<<endl;
 
@@ -1298,12 +1298,12 @@ khtml::Tokenizer *DocumentImpl::createTokenizer()
     return new khtml::XMLTokenizer(docPtr(),m_view);
 }
 
-void DocumentImpl::setPaintDevice( QPaintDevice *dev )
+void DocumentImpl::setPaintDevice( TQPaintDevice *dev )
 {
     if (m_paintDevice != dev) {
         m_paintDevice = dev;
         delete m_paintDeviceMetrics;
-        m_paintDeviceMetrics = new QPaintDeviceMetrics( dev );
+        m_paintDeviceMetrics = new TQPaintDeviceMetrics( dev );
     }
 }
 
@@ -1334,7 +1334,7 @@ void DocumentImpl::open( bool clearEventListeners )
 
     m_tokenizer = createTokenizer();
     m_decoderMibEnum = 0;
-    connect(m_tokenizer,SIGNAL(finishedParsing()),this,SIGNAL(finishedParsing()));
+    connect(m_tokenizer,TQT_SIGNAL(finishedParsing()),this,TQT_SIGNAL(finishedParsing()));
     m_tokenizer->begin();
 }
 
@@ -1380,14 +1380,14 @@ void DocumentImpl::write( const DOMString &text )
     write(text.string());
 }
 
-void DocumentImpl::write( const QString &text )
+void DocumentImpl::write( const TQString &text )
 {
     if (!m_tokenizer) {
         open();
         if (m_view)
             m_view->part()->resetFromScript();
         m_tokenizer->setAutoClose();
-        write(QString::fromLatin1("<html>"));
+        write(TQString::fromLatin1("<html>"));
     }
     m_tokenizer->write(text, false);
 }
@@ -1404,7 +1404,7 @@ void DocumentImpl::finishParsing (  )
         m_tokenizer->finish();
 }
 
-void DocumentImpl::setUserStyleSheet( const QString& sheet )
+void DocumentImpl::setUserStyleSheet( const TQString& sheet )
 {
     if ( m_usersheet != sheet ) {
         m_usersheet = sheet;
@@ -1421,7 +1421,7 @@ CSSStyleSheetImpl* DocumentImpl::elementSheet()
     return m_elemSheet;
 }
 
-void DocumentImpl::determineParseMode( const QString &/*str*/ )
+void DocumentImpl::determineParseMode( const TQString &/*str*/ )
 {
     // For XML documents, use strict parse mode
     pMode = Strict;
@@ -1622,7 +1622,7 @@ NodeImpl *DocumentImpl::previousFocusNode(NodeImpl *fromNode)
     }
 }
 
-ElementImpl* DocumentImpl::findAccessKeyElement(QChar c)
+ElementImpl* DocumentImpl::findAccessKeyElement(TQChar c)
 {
     c = c.upper();
     for( NodeImpl* n = this;
@@ -1667,10 +1667,10 @@ void DocumentImpl::processHttpEquiv(const DOMString &equiv, const DOMString &con
     if(strcasecmp(equiv, "refresh") == 0 && v && v->part()->metaRefreshEnabled())
     {
         // get delay and url
-        QString str = content.string().stripWhiteSpace();
-        int pos = str.find(QRegExp("[;,]"));
+        TQString str = content.string().stripWhiteSpace();
+        int pos = str.find(TQRegExp("[;,]"));
         if ( pos == -1 )
-            pos = str.find(QRegExp("[ \t]"));
+            pos = str.find(TQRegExp("[ \t]"));
 
         bool ok = false;
 	int delay = kMax( 0, content.implementation()->toInt(&ok) );
@@ -1692,7 +1692,7 @@ void DocumentImpl::processHttpEquiv(const DOMString &equiv, const DOMString &con
                   (str[str.length()-1] == ';' || str[str.length()-1] == ','))
                 str.setLength(str.length()-1);
             str = parseURL( DOMString(str) ).string();
-            QString newURL = getDocument()->completeURL( str );
+            TQString newURL = getDocument()->completeURL( str );
             if ( ok )
                 v->part()->scheduleRedirection(delay, getDocument()->completeURL( str ),  delay < 2 || newURL == URL().url());
         }
@@ -1700,7 +1700,7 @@ void DocumentImpl::processHttpEquiv(const DOMString &equiv, const DOMString &con
     else if(strcasecmp(equiv, "expires") == 0)
     {
         bool relative = false;
-        QString str = content.string().stripWhiteSpace();
+        TQString str = content.string().stripWhiteSpace();
         time_t expire_date = KRFCDate::parseDate(str);
         if (!expire_date)
         {
@@ -1714,7 +1714,7 @@ void DocumentImpl::processHttpEquiv(const DOMString &equiv, const DOMString &con
     }
     else if(v && (strcasecmp(equiv, "pragma") == 0 || strcasecmp(equiv, "cache-control") == 0))
     {
-        QString str = content.string().lower().stripWhiteSpace();
+        TQString str = content.string().lower().stripWhiteSpace();
         KURL url = v->part()->url();
         if ((str == "no-cache") && url.protocol().startsWith("http"))
         {
@@ -1853,7 +1853,7 @@ NodeImpl::Id DocumentImpl::getId( NodeImpl::IdType _type, DOMStringImpl* _nsURI,
     if (_name->l == 0) return 0;
 
     NodeImpl::Id id, nsid = 0;
-    QConstString n(_name->s, _name->l);
+    TQConstString n(_name->s, _name->l);
     bool cs = true; // case sensitive
     if (_type != NodeImpl::NamespaceId) {
         if (_nsURI)
@@ -1878,7 +1878,7 @@ NodeImpl::Id DocumentImpl::getId( NodeImpl::IdType _type, DOMStringImpl* _nsURI,
 
     // Look in the names array for the name
     // compatibility mode has to lookup upper case
-    QString name = cs ? n.string() : n.string().upper();
+    TQString name = cs ? n.string() : n.string().upper();
 
     if (!_nsURI) {
         id = (NodeImpl::Id)(long) map->ids.find( name );
@@ -1889,8 +1889,8 @@ NodeImpl::Id DocumentImpl::getId( NodeImpl::IdType _type, DOMStringImpl* _nsURI,
         id = (NodeImpl::Id)(long) map->ids.find( name );
         if (!readonly && id && _prefix && _prefix->l) {
             // we were called in registration mode... check if the alias exists
-            QConstString px( _prefix->s, _prefix->l );
-            QString qn("aliases: " + (cs ? px.string() : px.string().upper()) + ":" + name);
+            TQConstString px( _prefix->s, _prefix->l );
+            TQString qn("aliases: " + (cs ? px.string() : px.string().upper()) + ":" + name);
             if (!map->ids.find( qn )) {
                 map->ids.insert( qn, (void*)id );
             }
@@ -2065,9 +2065,9 @@ void DocumentImpl::recalcStyleSelector()
 
     assert(m_pendingStylesheets==0);
 
-    QPtrList<StyleSheetImpl> oldStyleSheets = m_styleSheets->styleSheets;
+    TQPtrList<StyleSheetImpl> oldStyleSheets = m_styleSheets->styleSheets;
     m_styleSheets->styleSheets.clear();
-    QString sheetUsed = view() ? view()->part()->d->m_sheetUsed.replace("&&", "&") : QString();
+    TQString sheetUsed = view() ? view()->part()->d->m_sheetUsed.replace("&&", "&") : TQString();
     bool autoselect = sheetUsed.isEmpty();
     if (autoselect && !m_preferredStylesheetSet.isEmpty())
         sheetUsed = m_preferredStylesheetSet.string();
@@ -2109,7 +2109,7 @@ void DocumentImpl::recalcStyleSelector()
 
             }
             else if (n->isHTMLElement() && ( n->id() == ID_LINK || n->id() == ID_STYLE) ) {
-                QString title;
+                TQString title;
                 if ( n->id() == ID_LINK ) {
                     HTMLLinkElementImpl* l = static_cast<HTMLLinkElementImpl*>(n);
                     if (l->isCSSStyleSheet()) {
@@ -2177,17 +2177,17 @@ void DocumentImpl::recalcStyleSelector()
         // the alternative sheet we used doesn't exist anymore
         // so try from scratch again
         if (view())
-            view()->part()->d->m_sheetUsed = QString::null;
+            view()->part()->d->m_sheetUsed = TQString::null;
         if (!m_preferredStylesheetSet.isEmpty() && !(sheetUsed == m_preferredStylesheetSet))
             sheetUsed = m_preferredStylesheetSet.string();
         else
-            sheetUsed = QString::null;
+            sheetUsed = TQString::null;
         autoselect = true;
     }
 
     // Include programmatically added style sheets
     if (m_addedStyleSheets) {
-        QPtrListIterator<StyleSheetImpl> it = m_addedStyleSheets->styleSheets;
+        TQPtrListIterator<StyleSheetImpl> it = m_addedStyleSheets->styleSheets;
         for (; *it; ++it) {
             if ((*it)->isCSSStyleSheet() && !(*it)->disabled())
                 m_styleSheets->add(*it);
@@ -2195,7 +2195,7 @@ void DocumentImpl::recalcStyleSelector()
     }
 
     // De-reference all the stylesheets in the old list
-    QPtrListIterator<StyleSheetImpl> it(oldStyleSheets);
+    TQPtrListIterator<StyleSheetImpl> it(oldStyleSheets);
     for (; it.current(); ++it)
 	it.current()->deref();
 
@@ -2206,7 +2206,7 @@ void DocumentImpl::rebuildStyleSelector()
 {
     // Create a new style selector
     delete m_styleSelector;
-    QString usersheet = m_usersheet;
+    TQString usersheet = m_usersheet;
     if ( m_view && m_view->mediaType() == "print" )
 	usersheet += m_printSheet;
     m_styleSelector = new CSSStyleSelector( this, usersheet, m_styleSheets, m_url,
@@ -2329,17 +2329,17 @@ void DocumentImpl::detachNodeIterator(NodeIteratorImpl *ni)
 
 void DocumentImpl::notifyBeforeNodeRemoval(NodeImpl *n)
 {
-    QPtrListIterator<NodeIteratorImpl> it(m_nodeIterators);
+    TQPtrListIterator<NodeIteratorImpl> it(m_nodeIterators);
     for (; it.current(); ++it)
         it.current()->notifyBeforeNodeRemoval(n);
 }
 
-bool DocumentImpl::isURLAllowed(const QString& url) const
+bool DocumentImpl::isURLAllowed(const TQString& url) const
 {
     KHTMLPart *thisPart = part();
 
     KURL newURL(completeURL(url));
-    newURL.setRef(QString::null);
+    newURL.setRef(TQString::null);
 
     if (KHTMLFactory::defaultHTMLSettings()->isAdFiltered( newURL.url() ))
         return false;
@@ -2357,7 +2357,7 @@ bool DocumentImpl::isURLAllowed(const QString& url) const
     bool foundSelfReference = false;
     for (KHTMLPart *part = thisPart; part; part = part->parentPart()) {
         KURL partURL = part->url();
-        partURL.setRef(QString::null);
+        partURL.setRef(TQString::null);
         if (partURL == newURL) {
             if (foundSelfReference)
                 return false;
@@ -2436,7 +2436,7 @@ void DocumentImpl::load(const DOMString &uri)
     // of the data retrieved from the server based on the character set, as happens with
     // HTML files. Need to look into a way of using the decoder in CachedCSSStyleSheet.
     m_docLoading = true;
-    m_loadingXMLDoc = m_docLoader->requestStyleSheet(uri.string(),QString(),"text/xml");
+    m_loadingXMLDoc = m_docLoader->requestStyleSheet(uri.string(),TQString(),"text/xml");
 
     if (!m_loadingXMLDoc) {
 	m_docLoading = false;
@@ -2478,7 +2478,7 @@ void DocumentImpl::setStyleSheet(const DOM::DOMString &url, const DOM::DOMString
     m_loadingXMLDoc = 0;
 }
 
-void DocumentImpl::error(int err, const QString &text)
+void DocumentImpl::error(int err, const TQString &text)
 {
     m_docLoading = false;
     if (m_inSyncLoad) {
@@ -2509,10 +2509,10 @@ void DocumentImpl::defaultEventHandler(EventImpl *evt)
     if (!m_windowEventListeners.listeners || evt->propagationStopped())
         return;
 
-    QValueList<RegisteredEventListener>::iterator it;
+    TQValueList<RegisteredEventListener>::iterator it;
 
     //Grab a copy in case of clear
-    QValueList<RegisteredEventListener> listeners = *m_windowEventListeners.listeners;
+    TQValueList<RegisteredEventListener> listeners = *m_windowEventListeners.listeners;
     Event ev(evt);
     for (it = listeners.begin(); it != listeners.end(); ++it) {
         //Check to make sure it didn't get removed. KDE4: use Java-style iterators
@@ -2554,7 +2554,7 @@ bool DocumentImpl::hasWindowEventListener(int id)
     return m_windowEventListeners.hasEventListener(id);
 }
 
-EventListener *DocumentImpl::createHTMLEventListener(const QString& code, const QString& name, NodeImpl* node)
+EventListener *DocumentImpl::createHTMLEventListener(const TQString& code, const TQString& name, NodeImpl* node)
 {
     return part() ? part()->createHTMLEventListener(code, name, node) : 0;
 }
@@ -2595,7 +2595,7 @@ void DocumentImpl::dispatchImageLoadEventsNow()
 
     m_imageLoadEventDispatchingList = m_imageLoadEventDispatchSoonList;
     m_imageLoadEventDispatchSoonList.clear();
-    for (QPtrListIterator<HTMLImageElementImpl> it(m_imageLoadEventDispatchingList); it.current(); ) {
+    for (TQPtrListIterator<HTMLImageElementImpl> it(m_imageLoadEventDispatchingList); it.current(); ) {
         HTMLImageElementImpl* image = it.current();
         // Must advance iterator *before* dispatching call.
         // Otherwise, it might be advanced automatically if dispatching the call had a side effect
@@ -2607,12 +2607,12 @@ void DocumentImpl::dispatchImageLoadEventsNow()
     m_imageLoadEventDispatchingList.clear();
 }
 
-void DocumentImpl::timerEvent(QTimerEvent *)
+void DocumentImpl::timerEvent(TQTimerEvent *)
 {
     dispatchImageLoadEventsNow();
 }
 
-void DocumentImpl::setDecoderCodec(const QTextCodec *codec)
+void DocumentImpl::setDecoderCodec(const TQTextCodec *codec)
 {
     m_decoderMibEnum = codec->mibEnum();
 }

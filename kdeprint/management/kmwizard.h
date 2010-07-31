@@ -20,9 +20,9 @@
 #ifndef KMWIZARD_H
 #define KMWIZARD_H
 
-#include <qdialog.h>
-#include <qintdict.h>
-#include <qvaluestack.h>
+#include <tqdialog.h>
+#include <tqintdict.h>
+#include <tqvaluestack.h>
 
 #include <kdelibs_export.h>
 
@@ -60,7 +60,7 @@ public:
 		Custom  = 100
 	};
 
-	KMWizard(QWidget *parent = 0, const char *name = 0);
+	KMWizard(TQWidget *parent = 0, const char *name = 0);
 	~KMWizard();
 
 	void configure(int start, int end, bool inclusive = true);
@@ -81,8 +81,8 @@ protected slots:
 	void slotHelp();
 
 private:
-	QIntDict<KMWizardPage>	m_pagepool;
-	QValueStack<int>	m_pagestack;
+	TQIntDict<KMWizardPage>	m_pagepool;
+	TQValueStack<int>	m_pagestack;
 
 	QWidgetStack		*m_stack;
 	QLabel			*m_title;

@@ -19,10 +19,10 @@
 #ifndef KCHARSETS_H
 #define KCHARSETS_H
 
-#include <qstring.h>
-#include <qfont.h>
-#include <qstringlist.h>
-#include <qptrlist.h>
+#include <tqstring.h>
+#include <tqfont.h>
+#include <tqstringlist.h>
+#include <tqptrlist.h>
 #include "kdelibs_export.h"
 
 class KGlobal;
@@ -60,45 +60,45 @@ public:
     /**
      * Provided for compatibility.
      * @param name the name of the codec
-     * @return the QTextCodec. If the desired codec could not be found,
+     * @return the TQTextCodec. If the desired codec could not be found,
      *         it returns a default (Latin-1) codec
      */
-    QTextCodec *codecForName(const QString &name) const;
+    TQTextCodec *codecForName(const TQString &name) const;
 
     /**
-     * Tries to find a QTextCodec to convert the given encoding from and to
+     * Tries to find a TQTextCodec to convert the given encoding from and to
      * Unicode. If no codec could be found the latin1 codec will be returned an
      * @p ok will be set to false.
-     * @return the QTextCodec. If the desired codec could not be found,
+     * @return the TQTextCodec. If the desired codec could not be found,
      *         it returns a default (Latin-1) codec
      */
-    QTextCodec *codecForName(const QString &n, bool &ok) const;
+    TQTextCodec *codecForName(const TQString &n, bool &ok) const;
 
     /**
      * Converts an entity to a character. The string must contain only the
      * entity without the trailing ';'.
      * @param str the entity
-     * @return QChar::null if the entity could not be decoded.
+     * @return TQChar::null if the entity could not be decoded.
      */
-    static QChar fromEntity(const QString &str);
+    static TQChar fromEntity(const TQString &str);
     /**
      * Overloaded member function. Tries to find an entity in the
-     * QString str.
+     * TQString str.
      * @param str the string containing entified
      * @param len is a return value, that gives the length of the decoded
      * entity.
-     * @return a decoded entity if one could be found, QChar::null
+     * @return a decoded entity if one could be found, TQChar::null
      * otherwise
      */
-    static QChar fromEntity(const QString &str, int &len);
+    static TQChar fromEntity(const TQString &str, int &len);
 
     /**
-     * Converts a QChar to an entity. The returned string does already
+     * Converts a TQChar to an entity. The returned string does already
      * contain the leading '&' and the trailing ';'.
      * @param ch the char to convert
      * @return the entity
      */
-    static QString toEntity(const QChar &ch);
+    static TQString toEntity(const TQChar &ch);
 
     /**
      * Scans the given string for entities (like &amp;amp;) and resolves them
@@ -107,33 +107,33 @@ public:
      * @return the clean string
      * @since 3.1
      */
-    static QString resolveEntities( const QString &text );
+    static TQString resolveEntities( const TQString &text );
 
     /**
      * Lists all available encodings as names.
      * @return the list of all encodings
      */
-    QStringList availableEncodingNames();
+    TQStringList availableEncodingNames();
 
     /**
      * Lists the available encoding names together with a more descriptive language.
      * @return the list of descriptive encoding names
      */
-    QStringList descriptiveEncodingNames();
+    TQStringList descriptiveEncodingNames();
 
     /**
      * Returns the language the encoding is used for.
      * @param encoding the encoding for the language
      * @return the language of the encoding
      */
-    QString languageForEncoding( const QString &encoding );
+    TQString languageForEncoding( const TQString &encoding );
 
     /**
      * Returns the encoding for a string obtained with descriptiveEncodingNames().
      * @param descriptiveName the descriptive name for the encoding
      * @return the name of the encoding
      */
-    QString encodingForName( const QString &descriptiveName );
+    TQString encodingForName( const TQString &descriptiveName );
 
 private:
     KCharsetsPrivate *d;

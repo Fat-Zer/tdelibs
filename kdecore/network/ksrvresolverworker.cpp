@@ -25,8 +25,8 @@
 #include <sys/socket.h>
 #include <stdlib.h>
 
-#include <qapplication.h>
-#include <qevent.h>
+#include <tqapplication.h>
+#include <tqevent.h>
 
 using namespace KNetwork;
 using namespace KNetwork::Internal;
@@ -35,7 +35,7 @@ namespace
 {
   struct KSrvStartEvent: public QCustomEvent
   {
-    inline KSrvStartEvent() : QCustomEvent(QEvent::User) { }
+    inline KSrvStartEvent() : TQCustomEvent(TQEvent::User) { }
   };
 }
 
@@ -50,12 +50,12 @@ bool KSrvResolverWorker::preprocess()
   if ((flags() & (KResolver::NoSrv | KResolver::UseSrv)) != KResolver::UseSrv)
     return false;
 
-  QString node = nodeName();
+  TQString node = nodeName();
   if (node.find('%') != -1)
     node.truncate(node.find('%'));
 
-  if (node.isEmpty() || node == QString::fromLatin1("*") ||
-      node == QString::fromLatin1("localhost"))
+  if (node.isEmpty() || node == TQString::fromLatin1("*") ||
+      node == TQString::fromLatin1("localhost"))
     return false;		// empty == localhost
 
   encodedName = KResolver::domainToAscii(node);
@@ -73,13 +73,13 @@ bool KSrvResolverWorker::preprocess()
     return false;		// it is numeric
 
   // check the protocol for something we know
-  QCString protoname;
+  TQCString protoname;
   int sockettype = socketType();
   if (!protocolName().isEmpty())
     protoname = protocolName();
   else if (protocol() != 0)
     {
-      QStrList names = KResolver::protocolName(protocol());
+      TQStrList names = KResolver::protocolName(protocol());
       names.setAutoDelete(true);
       if (names.isEmpty())
 	return false;
@@ -106,11 +106,11 @@ bool KSrvResolverWorker::preprocess()
 
 bool KSrvResolverWorker::run()
 {
-  sem = new QSemaphore(1);
+  sem = new TQSemaphore(1);
   // zero out
   sem->tryAccess(sem->available());
 
-  QApplication::postEvent(this, new KSrvStartEvent);
+  TQApplication::postEvent(this, new KSrvStartEvent);
 
   // block
   (*sem)++;
@@ -146,10 +146,10 @@ bool KSrvResolverWorker::run()
   else
     {
       // now process the results
-      QValueList<QDns::Server>::ConstIterator it = rawResults.begin();
+      TQValueList<TQDns::Server>::ConstIterator it = rawResults.begin();
       while (it != rawResults.end())
 	{
-	  const QDns::Server& srv = *it;
+	  const TQDns::Server& srv = *it;
 	  PriorityClass& r = myResults[srv.priority];
 	  r.totalWeight += srv.weight;
 
@@ -170,15 +170,15 @@ bool KSrvResolverWorker::run()
 	  // sort the priority
 	  sortPriorityClass(*mapit);
 
-	  QValueList<Entry>& entries = (*mapit).entries;
+	  TQValueList<Entry>& entries = (*mapit).entries;
 
 	  // start the resolvers
-	  for (QValueList<Entry>::Iterator it = entries.begin();
+	  for (TQValueList<Entry>::Iterator it = entries.begin();
 	       it != entries.end(); ++it)
 	    {
 	      Entry &e = *it;
 
-	      KResolver* r = new KResolver(e.name, QString::number(e.port));
+	      KResolver* r = new KResolver(e.name, TQString::number(e.port));
 	      r->setFlags(flags() | KResolver::NoSrv);
 	      r->setFamily(familyMask());
 	      r->setSocketType(socketType());
@@ -203,7 +203,7 @@ bool KSrvResolverWorker::postprocess()
   for (mapit = myResults.begin(), mapend = myResults.end();
        mapit != mapend; ++mapit)
     {
-      QValueList<Entry>::Iterator it = (*mapit).entries.begin(),
+      TQValueList<Entry>::Iterator it = (*mapit).entries.begin(),
 	end = (*mapit).entries.end();
       for ( ; it != end; ++it)
 	{
@@ -223,10 +223,10 @@ bool KSrvResolverWorker::postprocess()
   return true;
 }
 
-void KSrvResolverWorker::customEvent(QCustomEvent*)
+void KSrvResolverWorker::customEvent(TQCustomEvent*)
 {
-  dns = new QDns(QString::fromLatin1(encodedName), QDns::Srv);
-  QObject::connect(dns, SIGNAL(resultsReady()), this, SLOT(dnsResultsReady()));
+  dns = new TQDns(TQString::fromLatin1(encodedName), TQDns::Srv);
+  TQObject::connect(dns, TQT_SIGNAL(resultsReady()), this, TQT_SLOT(dnsResultsReady()));
 }
 
 void KSrvResolverWorker::dnsResultsReady()

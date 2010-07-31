@@ -26,12 +26,12 @@
 #include <kstandarddirs.h>
 
 
-KAboutKDE::KAboutKDE( QWidget *parent, const char *name, bool modal )
-  :KAboutDialog( KAboutDialog::AbtKDEStandard, QString::fromLatin1("KDE"),
+KAboutKDE::KAboutKDE( TQWidget *parent, const char *name, bool modal )
+  :KAboutDialog( KAboutDialog::AbtKDEStandard, TQString::fromLatin1("KDE"),
 		 KDialogBase::Help|KDialogBase::Close, KDialogBase::Close,
 		 parent, name, modal )
 {
-  const QString text1 = i18n(""
+  const TQString text1 = i18n(""
     "The <b>Trinity Desktop Environment</b> is a fork of the "
     "K Desktop Environment version 3.5, which was originally written by the KDE Team, "
     "a world-wide network of software engineers committed to <a "
@@ -42,7 +42,7 @@ KAboutKDE::KAboutKDE( QWidget *parent, const char *name, bool modal )
     "about Trinity, and <A HREF=\"http://www.kde.org/\">http://www.kde.org</A> "
     "for more information on the KDE project. ");
 
-  const QString text2 = i18n(""
+  const TQString text2 = i18n(""
     "Software can always be improved, and the Trinity Team is ready to "
     "do so. However, you - the user - must tell us when "
     "something does not work as expected or could be done better.<br><br>"
@@ -53,7 +53,7 @@ KAboutKDE::KAboutKDE( QWidget *parent, const char *name, bool modal )
     "the bug tracking system to register your wish. Make sure you use the "
     "severity called \"Wishlist\"." );
 
-  const QString text3 = i18n(""
+  const TQString text3 = i18n(""
     "You do not have to be a software developer to be a member of the "
     "Trinity team. You can join the national teams that translate "
     "program interfaces. You can provide graphics, themes, sounds, and "
@@ -66,7 +66,7 @@ KAboutKDE::KAboutKDE( QWidget *parent, const char *name, bool modal )
     "If you need more information or documentation, then a visit to "
     "<A HREF=\"http://trinity.pearsoncomputing.net/docs/\">http://trinity.pearsoncomputing.net/docs/</A> "
     "will provide you with what you need.");
-  const QString text4 = i18n(""
+  const TQString text4 = i18n(""
     "Trinity is available free of charge, but making it is not free.<br><br>"
     "<br><br>"
     "The Trinity team does need financial support. Most of the money is used to "
@@ -75,13 +75,13 @@ KAboutKDE::KAboutKDE( QWidget *parent, const char *name, bool modal )
     "donation, using one of the ways described at "
     "<a href=\"http://trinity.pearsoncomputing.net/support/\">http://trinity.pearsoncomputing.net/support/</a>."
     "<br><br>Thank you very much in advance for your support!");
-  setHelp( QString::fromLatin1("khelpcenter/main.html"), QString::null );
+  setHelp( TQString::fromLatin1("khelpcenter/main.html"), TQString::null );
   setTitle(i18n("Trinity Desktop Environment. Release %1").
-	   arg(QString::fromLatin1(KDE_VERSION_STRING)) );
+	   arg(TQString::fromLatin1(KDE_VERSION_STRING)) );
   addTextPage( i18n("About Trinity","&About"), text1, true );
   addTextPage( i18n("&Report Bugs or Wishes"), text2, true );
   addTextPage( i18n("&Join the Trinity Team"), text3, true );
   addTextPage( i18n("&Support Trinity"), text4, true );
-  setImage( locate( "data", QString::fromLatin1("kdeui/pics/aboutkde.png")) );
+  setImage( locate( "data", TQString::fromLatin1("kdeui/pics/aboutkde.png")) );
   setImageBackgroundColor( white );
 }

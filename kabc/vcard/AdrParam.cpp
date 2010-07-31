@@ -38,7 +38,7 @@ AdrParam::AdrParam(const AdrParam & x)
 {
 }
 
-AdrParam::AdrParam(const QCString & s)
+AdrParam::AdrParam(const TQCString & s)
 	:	Param(s)
 {
 }
@@ -56,7 +56,7 @@ AdrParam::operator = (AdrParam & x)
 }
 
 	AdrParam &
-AdrParam::operator = (const QCString & s)
+AdrParam::operator = (const TQCString & s)
 {
 	Param::operator = (s);
 	
@@ -77,7 +77,7 @@ AdrParam::operator == (AdrParam & x)
 	if (x.adrTypeList().count() != adrTypeList_.count())
 		return false;
 	
-	QStrListIterator it(x.adrTypeList_);
+	TQStrListIterator it(x.adrTypeList_);
 	
 	for (; it.current(); ++it)
 		if (!adrTypeList_.find(it.current()))
@@ -114,7 +114,7 @@ AdrParam::_assemble()
 		return;
 	}
 	
-	QStrListIterator it(adrTypeList_);
+	TQStrListIterator it(adrTypeList_);
 	
 	for (; it.current(); ++it) {
 		

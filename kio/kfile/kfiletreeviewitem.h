@@ -20,7 +20,7 @@
 #ifndef kfile_tree_view_item_h
 #define kfile_tree_view_item_h
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <klistview.h>
 
 #include <kfileitem.h>
@@ -57,7 +57,7 @@ public:
    /**
     * @return the path of the item.
     */
-   QString path() const;
+   TQString path() const;
 
    /**
     * @return the items KURL
@@ -94,12 +94,12 @@ private:
 /**
  * List of KFileTreeViewItems
  */
-typedef QPtrList<KFileTreeViewItem> KFileTreeViewItemList;
+typedef TQPtrList<KFileTreeViewItem> KFileTreeViewItemList;
 
 /**
  * Iterator for KFileTreeViewItemList
  */
-typedef QPtrListIterator<KFileTreeViewItem> KFileTreeViewItemListIterator;
+typedef TQPtrListIterator<KFileTreeViewItem> KFileTreeViewItemListIterator;
 
 
 #endif

@@ -32,13 +32,13 @@ class KJavaAppletPrivate
 {
 public:
    bool    reallyExists;
-   QString className;
-   QString appName;
-   QString baseURL;
-   QString codeBase;
-   QString archives;
-   QSize   size;
-   QString windowName;
+   TQString className;
+   TQString appName;
+   TQString baseURL;
+   TQString codeBase;
+   TQString archives;
+   TQSize   size;
+   TQString windowName;
    KJavaApplet::AppletState state;
    bool    failed;
 
@@ -81,67 +81,67 @@ void KJavaApplet::setAppletContext( KJavaAppletContext* _context )
     context->registerApplet( this );
 }
 
-void KJavaApplet::setAppletClass( const QString& _className )
+void KJavaApplet::setAppletClass( const TQString& _className )
 {
     d->className = _className;
 }
 
-QString& KJavaApplet::appletClass()
+TQString& KJavaApplet::appletClass()
 {
     return d->className;
 }
 
-QString& KJavaApplet::parameter( const QString& name )
+TQString& KJavaApplet::parameter( const TQString& name )
 {
     return params[ name ];
 }
 
-void KJavaApplet::setParameter( const QString& name, const QString& value )
+void KJavaApplet::setParameter( const TQString& name, const TQString& value )
 {
     params.insert( name, value );
 }
 
-QMap<QString,QString>& KJavaApplet::getParams()
+TQMap<TQString,TQString>& KJavaApplet::getParams()
 {
     return params;
 }
 
-void KJavaApplet::setBaseURL( const QString& baseURL )
+void KJavaApplet::setBaseURL( const TQString& baseURL )
 {
     d->baseURL = baseURL;
 }
 
-QString& KJavaApplet::baseURL()
+TQString& KJavaApplet::baseURL()
 {
     return d->baseURL;
 }
 
-void KJavaApplet::setCodeBase( const QString& codeBase )
+void KJavaApplet::setCodeBase( const TQString& codeBase )
 {
     d->codeBase = codeBase;
 }
 
-QString& KJavaApplet::codeBase()
+TQString& KJavaApplet::codeBase()
 {
     return d->codeBase;
 }
 
-void KJavaApplet::setSize( QSize size )
+void KJavaApplet::setSize( TQSize size )
 {
     d->size = size;
 }
 
-QSize KJavaApplet::size()
+TQSize KJavaApplet::size()
 {
     return d->size;
 }
 
-void KJavaApplet::setArchives( const QString& _archives )
+void KJavaApplet::setArchives( const TQString& _archives )
 {
     d->archives = _archives;
 }
 
-QString& KJavaApplet::archives()
+TQString& KJavaApplet::archives()
 {
     return d->archives;
 }
@@ -150,30 +150,30 @@ void KJavaApplet::resizeAppletWidget( int width, int height )
 {
     kdDebug(6100) << "KJavaApplet, id = " << id << ", ::resizeAppletWidget to " << width << ", " << height << endl;
 
-    QStringList sl;
-    sl.push_back( QString::number( 0 ) ); // applet itself has id 0
-    sl.push_back( QString( "eval" ) );    // evaluate next script
-    sl.push_back( QString::number( KParts::LiveConnectExtension::TypeString ) );
-    sl.push_back( QString( "this.setAttribute('WIDTH',%1);this.setAttribute('HEIGHT',%2)" ).arg( width ).arg( height ) );
+    TQStringList sl;
+    sl.push_back( TQString::number( 0 ) ); // applet itself has id 0
+    sl.push_back( TQString( "eval" ) );    // evaluate next script
+    sl.push_back( TQString::number( KParts::LiveConnectExtension::TypeString ) );
+    sl.push_back( TQString( "this.setAttribute('WIDTH',%1);this.setAttribute('HEIGHT',%2)" ).arg( width ).arg( height ) );
     jsData( sl );
 }
 
-void KJavaApplet::setAppletName( const QString& name )
+void KJavaApplet::setAppletName( const TQString& name )
 {
     d->appName = name;
 }
 
-void KJavaApplet::setWindowName( const QString& title )
+void KJavaApplet::setWindowName( const TQString& title )
 {
     d->windowName = title;
 }
 
-QString& KJavaApplet::getWindowName()
+TQString& KJavaApplet::getWindowName()
 {
     return d->windowName;
 }
 
-QString& KJavaApplet::appletName()
+TQString& KJavaApplet::appletName()
 {
     return d->appName;
 }
@@ -259,8 +259,8 @@ void KJavaApplet::stateChange( const int newStateInt ) {
     } 
 }
 
-void KJavaApplet::showStatus(const QString &msg) {
-    QStringList args;
+void KJavaApplet::showStatus(const TQString &msg) {
+    TQStringList args;
     args << msg;
     context->processCmd("showstatus", args); 
 }

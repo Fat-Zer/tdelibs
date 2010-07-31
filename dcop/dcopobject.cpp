@@ -25,12 +25,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <dcopobject.h>
 #include <dcopclient.h>
 
-QMap<QCString, DCOPObject *> *kde_dcopObjMap = 0;
+TQMap<TQCString, DCOPObject *> *kde_dcopObjMap = 0;
 
-static inline QMap<QCString, DCOPObject *> *objMap()
+static inline TQMap<TQCString, DCOPObject *> *objMap()
 {
   if (!kde_dcopObjMap)
-    kde_dcopObjMap = new QMap<QCString, DCOPObject *>;
+    kde_dcopObjMap = new TQMap<TQCString, DCOPObject *>;
   return kde_dcopObjMap;
 }
 
@@ -51,10 +51,10 @@ DCOPObject::DCOPObject()
     objMap()->insert(ident, this );
 }
 
-DCOPObject::DCOPObject(QObject *obj)
+DCOPObject::DCOPObject(TQObject *obj)
 {
     d = new DCOPObjectPrivate;
-    QObject *currentObj = obj;
+    TQObject *currentObj = obj;
     while (currentObj != 0L) {
         ident.prepend( currentObj->name() );
         ident.prepend("/");
@@ -66,7 +66,7 @@ DCOPObject::DCOPObject(QObject *obj)
     objMap()->insert(ident, this);
 }
 
-DCOPObject::DCOPObject(const QCString &_objId)
+DCOPObject::DCOPObject(const TQCString &_objId)
   : ident(_objId)
 {
     d = new DCOPObjectPrivate;
@@ -95,7 +95,7 @@ void DCOPObject::setCallingDcopClient(DCOPClient *client)
     d->m_dcopClient = client;
 }
 
-bool DCOPObject::setObjId(const QCString &objId)
+bool DCOPObject::setObjId(const TQCString &objId)
 {
   if (objMap()->find(objId)!=objMap()->end()) return false;
 
@@ -109,12 +109,12 @@ bool DCOPObject::setObjId(const QCString &objId)
     return true;
 }
 
-QCString DCOPObject::objId() const
+TQCString DCOPObject::objId() const
 {
   return ident;
 }
 
-bool DCOPObject::hasObject(const QCString &_objId)
+bool DCOPObject::hasObject(const TQCString &_objId)
 {
   if (objMap()->contains(_objId))
     return true;
@@ -122,9 +122,9 @@ bool DCOPObject::hasObject(const QCString &_objId)
     return false;
 }
 
-DCOPObject *DCOPObject::find(const QCString &_objId)
+DCOPObject *DCOPObject::find(const TQCString &_objId)
 {
-  QMap<QCString, DCOPObject *>::ConstIterator it;
+  TQMap<TQCString, DCOPObject *>::ConstIterator it;
   it = objMap()->find(_objId);
   if (it != objMap()->end())
     return *it;
@@ -132,10 +132,10 @@ DCOPObject *DCOPObject::find(const QCString &_objId)
     return 0L;
 }
 
-QPtrList<DCOPObject> DCOPObject::match(const QCString &partialId)
+TQPtrList<DCOPObject> DCOPObject::match(const TQCString &partialId)
 {
-    QPtrList<DCOPObject> mlist;
-    QMap<QCString, DCOPObject *>::ConstIterator it(objMap()->begin());
+    TQPtrList<DCOPObject> mlist;
+    TQMap<TQCString, DCOPObject *>::ConstIterator it(objMap()->begin());
     for (; it != objMap()->end(); ++it)
 	if (it.key().left(partialId.length()) == partialId) // found it?
 	    mlist.append(it.data());
@@ -143,14 +143,14 @@ QPtrList<DCOPObject> DCOPObject::match(const QCString &partialId)
 }
 
 
-QCString DCOPObject::objectName( QObject* obj )
+TQCString DCOPObject::objectName( TQObject* obj )
 {
     if ( obj == 0 )
-	return QCString();
+	return TQCString();
 
-    QCString identity;
+    TQCString identity;
 
-    QObject *currentObj = obj;
+    TQObject *currentObj = obj;
     while (currentObj != 0 )
     {
 	identity.prepend( currentObj->name() );
@@ -163,24 +163,24 @@ QCString DCOPObject::objectName( QObject* obj )
     return identity;
 }
 
-bool DCOPObject::process(const QCString &fun, const QByteArray &data,
-			 QCString& replyType, QByteArray &replyData)
+bool DCOPObject::process(const TQCString &fun, const TQByteArray &data,
+			 TQCString& replyType, TQByteArray &replyData)
 {
     if ( fun == "interfaces()" ) {
 	replyType = "QCStringList";
-	QDataStream reply( replyData, IO_WriteOnly );
+	TQDataStream reply( replyData, IO_WriteOnly );
 	reply << interfaces();
 	return true;
     } else  if ( fun == "functions()" ) {
 	replyType = "QCStringList";
-	QDataStream reply( replyData, IO_WriteOnly );
+	TQDataStream reply( replyData, IO_WriteOnly );
 	reply << functions();
 	return true;
     }
     return processDynamic( fun, data, replyType, replyData );
 }
 
-bool DCOPObject::processDynamic( const QCString&, const QByteArray&, QCString&, QByteArray& )
+bool DCOPObject::processDynamic( const TQCString&, const TQByteArray&, TQCString&, TQByteArray& )
 {
     return false;
 }
@@ -210,16 +210,16 @@ QCStringList DCOPObject::functions()
     return result;
 }
 
-void DCOPObject::emitDCOPSignal( const QCString &signal, const QByteArray &data)
+void DCOPObject::emitDCOPSignal( const TQCString &signal, const TQByteArray &data)
 {
     DCOPClient *client = DCOPClient::mainClient();
     if ( client )
         client->emitDCOPSignal( objId(), signal, data );
 }
 
-bool DCOPObject::connectDCOPSignal( const QCString &sender, const QCString &senderObj,
-                                    const QCString &signal,
-                                    const QCString &slot,
+bool DCOPObject::connectDCOPSignal( const TQCString &sender, const TQCString &senderObj,
+                                    const TQCString &signal,
+                                    const TQCString &slot,
                                     bool Volatile)
 {
     DCOPClient *client = DCOPClient::mainClient();
@@ -231,9 +231,9 @@ bool DCOPObject::connectDCOPSignal( const QCString &sender, const QCString &send
     return client->connectDCOPSignal( sender, senderObj, signal, objId(), slot, Volatile );
 }
 
-bool DCOPObject::disconnectDCOPSignal( const QCString &sender, const QCString &senderObj,
-                                       const QCString &signal,
-                                       const QCString &slot)
+bool DCOPObject::disconnectDCOPSignal( const TQCString &sender, const TQCString &senderObj,
+                                       const TQCString &signal,
+                                       const TQCString &slot)
 {
     DCOPClient *client = DCOPClient::mainClient();
 
@@ -245,19 +245,19 @@ bool DCOPObject::disconnectDCOPSignal( const QCString &sender, const QCString &s
 }
 
 
-QPtrList<DCOPObjectProxy>* DCOPObjectProxy::proxies = 0;
+TQPtrList<DCOPObjectProxy>* DCOPObjectProxy::proxies = 0;
 
 DCOPObjectProxy::DCOPObjectProxy()
 {
     if ( !proxies )
-	proxies = new QPtrList<DCOPObjectProxy>;
+	proxies = new TQPtrList<DCOPObjectProxy>;
     proxies->append( this );
 }
 
 DCOPObjectProxy::DCOPObjectProxy( DCOPClient*)
 {
     if ( !proxies )
-	proxies = new QPtrList<DCOPObjectProxy>;
+	proxies = new TQPtrList<DCOPObjectProxy>;
     proxies->append( this );
 }
 
@@ -267,11 +267,11 @@ DCOPObjectProxy:: ~DCOPObjectProxy()
 	proxies->removeRef( this );
 }
 
-bool DCOPObjectProxy::process( const QCString& /*obj*/,
-			       const QCString& /*fun*/,
-			       const QByteArray& /*data*/,
-			       QCString& /*replyType*/,
-			       QByteArray &/*replyData*/ )
+bool DCOPObjectProxy::process( const TQCString& /*obj*/,
+			       const TQCString& /*fun*/,
+			       const TQByteArray& /*data*/,
+			       TQCString& /*replyType*/,
+			       TQByteArray &/*replyData*/ )
 {
     return false;
 }

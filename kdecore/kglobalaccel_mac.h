@@ -1,7 +1,7 @@
 #ifndef _KGLOBALACCEL_MAC_H
 #define _KGLOBALACCEL_MAC_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include "kshortcut.h"
 #include "kaccelbase.h"

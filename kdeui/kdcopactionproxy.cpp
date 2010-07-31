@@ -39,7 +39,7 @@ public:
 
   KActionCollection *m_actionCollection;
   DCOPObject *m_parent;
-  QCString m_prefix;
+  TQCString m_prefix;
   int m_pos;
 };
 
@@ -67,10 +67,10 @@ KDCOPActionProxy::~KDCOPActionProxy()
   delete d;
 }
 
-QValueList<KAction *>KDCOPActionProxy::actions() const
+TQValueList<KAction *>KDCOPActionProxy::actions() const
 {
   if ( !d->m_actionCollection )
-    return QValueList<KAction *>();
+    return TQValueList<KAction *>();
 
   return d->m_actionCollection->actions();
 }
@@ -83,30 +83,30 @@ KAction *KDCOPActionProxy::action( const char *name ) const
   return d->m_actionCollection->action( name );
 }
 
-QCString KDCOPActionProxy::actionObjectId( const QCString &name ) const
+TQCString KDCOPActionProxy::actionObjectId( const TQCString &name ) const
 {
   return d->m_prefix + name;
 }
 
-QMap<QCString,DCOPRef> KDCOPActionProxy::actionMap( const QCString &appId ) const
+TQMap<TQCString,DCOPRef> KDCOPActionProxy::actionMap( const TQCString &appId ) const
 {
-  QMap<QCString,DCOPRef> res;
+  TQMap<TQCString,DCOPRef> res;
 
-  QCString id = appId;
+  TQCString id = appId;
   if ( id.isEmpty() )
     id = kapp->dcopClient()->appId();
 
-  QValueList<KAction *> lst = actions();
-  QValueList<KAction *>::ConstIterator it = lst.begin();
-  QValueList<KAction *>::ConstIterator end = lst.end();
+  TQValueList<KAction *> lst = actions();
+  TQValueList<KAction *>::ConstIterator it = lst.begin();
+  TQValueList<KAction *>::ConstIterator end = lst.end();
   for (; it != end; ++it )
     res.insert( (*it)->name(), DCOPRef( id, actionObjectId( (*it)->name() ) ) );
 
   return res;
 }
 
-bool KDCOPActionProxy::process( const QCString &obj, const QCString &fun, const QByteArray &data,
-                                QCString &replyType, QByteArray &replyData )
+bool KDCOPActionProxy::process( const TQCString &obj, const TQCString &fun, const TQByteArray &data,
+                                TQCString &replyType, TQByteArray &replyData )
 {
   if ( obj.left( d->m_pos ) != d->m_prefix )
     return false;
@@ -118,8 +118,8 @@ bool KDCOPActionProxy::process( const QCString &obj, const QCString &fun, const 
   return processAction( obj, fun, data, replyType, replyData, act );
 }
 
-bool KDCOPActionProxy::processAction( const QCString &, const QCString &fun, const QByteArray &data,
-                                      QCString &replyType, QByteArray &replyData, KAction *action )
+bool KDCOPActionProxy::processAction( const TQCString &, const TQCString &fun, const TQByteArray &data,
+                                      TQCString &replyType, TQByteArray &replyData, KAction *action )
 {
   if ( fun == "activate()" )
   {
@@ -131,14 +131,14 @@ bool KDCOPActionProxy::processAction( const QCString &, const QCString &fun, con
   if ( fun == "isPlugged()" )
   {
     replyType = "bool";
-    QDataStream reply( replyData, IO_WriteOnly );
+    TQDataStream reply( replyData, IO_WriteOnly );
     reply << (Q_INT8)action->isPlugged();
     return true;
   }
 
   if ( fun == "functions()" )
   {
-    QValueList<QCString> res;
+    TQValueList<TQCString> res;
     res << "QCStringList functions()";
     res << "void activate()";
     res << "bool isPlugged()";
@@ -146,7 +146,7 @@ bool KDCOPActionProxy::processAction( const QCString &, const QCString &fun, con
     res += KDCOPPropertyProxy::functions( action );
 
     replyType = "QCStringList";
-    QDataStream reply( replyData, IO_WriteOnly );
+    TQDataStream reply( replyData, IO_WriteOnly );
     reply << res;
     return true;
   }

@@ -23,8 +23,8 @@
 //#include <reference.h>
 #include <dynamicrequest.h>
 
-#include <qmap.h>
-#include <qdatastream.h>
+#include <tqmap.h>
+#include <tqdatastream.h>
 
 using namespace std;
 
@@ -34,10 +34,10 @@ using namespace std;
 class MCOPDCOPObjectPrivate
 {
 public:
-	QMap<QCString, MCOPEntryInfo *> dynamicFunctions;
+	TQMap<TQCString, MCOPEntryInfo *> dynamicFunctions;
 };
 
-MCOPDCOPObject::MCOPDCOPObject(QCString name) : DCOPObject(name)
+MCOPDCOPObject::MCOPDCOPObject(TQCString name) : DCOPObject(name)
 {
     d = new MCOPDCOPObjectPrivate();
 }
@@ -51,14 +51,14 @@ QCStringList MCOPDCOPObject::functionsDynamic()
 {
 	QCStringList returnList;
 	
-	QMap<QCString, MCOPEntryInfo *>::iterator it;
+	TQMap<TQCString, MCOPEntryInfo *>::iterator it;
 	for(it = d->dynamicFunctions.begin(); it != d->dynamicFunctions.end(); ++it)
 		returnList.append(it.key());
 	
 	return returnList;
 }
 
-Arts::Buffer *MCOPDCOPObject::callFunction(MCOPEntryInfo *entry, QCString ifaceName, const QByteArray &data)
+Arts::Buffer *MCOPDCOPObject::callFunction(MCOPEntryInfo *entry, TQCString ifaceName, const TQByteArray &data)
 {
 	Arts::Object workingObject = Arts::SubClass(string(ifaceName));
 	Arts::DynamicRequest request(workingObject);
@@ -71,11 +71,11 @@ Arts::Buffer *MCOPDCOPObject::callFunction(MCOPEntryInfo *entry, QCString ifaceN
 		QCStringList::iterator it;
 		for(it = list.begin(); it != list.end(); ++it)
 		{
-			QCString param = *it;
+			TQCString param = *it;
 
 			kdDebug() << "PARAM: " << param << endl;
 			
-			QDataStream argStream(data, IO_ReadOnly);
+			TQDataStream argStream(data, IO_ReadOnly);
 
 			if(param == "long")
 				request.param(MCOPDCOPTools::getLong(argStream));
@@ -94,16 +94,16 @@ Arts::Buffer *MCOPDCOPObject::callFunction(MCOPEntryInfo *entry, QCString ifaceN
 	return newBuffer;
 }
 
-bool MCOPDCOPObject::processDynamic(const QCString &fun, const QByteArray &data, QCString &replyType, QByteArray &replyData)
+bool MCOPDCOPObject::processDynamic(const TQCString &fun, const TQByteArray &data, TQCString &replyType, TQByteArray &replyData)
 {
-	QMap<QCString, MCOPEntryInfo *>::iterator it;
+	TQMap<TQCString, MCOPEntryInfo *>::iterator it;
 	for(it = d->dynamicFunctions.begin(); it != d->dynamicFunctions.end(); ++it)
 	{
 		MCOPEntryInfo *entry = it.data();
 
 		if((entry->functionName() + entry->signature()) == fun)
 		{
-			QCString type = entry->functionType();
+			TQCString type = entry->functionType();
 
 			if(type == "void")
 			{
@@ -116,9 +116,9 @@ bool MCOPDCOPObject::processDynamic(const QCString &fun, const QByteArray &data,
 			}
 			else if(type == "string")
 			{
-				replyType = "QCString";
+				replyType = "TQCString";
 				
-				QDataStream reply(replyData, IO_WriteOnly);
+				TQDataStream reply(replyData, IO_WriteOnly);
 				reply << "fooo!";
 			}
 			else if(type == "long")
@@ -135,7 +135,7 @@ bool MCOPDCOPObject::processDynamic(const QCString &fun, const QByteArray &data,
 					delete result;
 				}
 				
-				QDataStream reply(replyData, IO_WriteOnly);
+				TQDataStream reply(replyData, IO_WriteOnly);
 				reply << returnCode;
 			}
 			
@@ -146,7 +146,7 @@ bool MCOPDCOPObject::processDynamic(const QCString &fun, const QByteArray &data,
 	return false;
 }
 
-void MCOPDCOPObject::addDynamicFunction(QCString value, MCOPEntryInfo *entry)
+void MCOPDCOPObject::addDynamicFunction(TQCString value, MCOPEntryInfo *entry)
 {
 	d->dynamicFunctions.insert(value, entry);
 }

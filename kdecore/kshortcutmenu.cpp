@@ -17,9 +17,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qkeysequence.h>
-#include <qlabel.h>
-#include <qpopupmenu.h>
+#include <tqkeysequence.h>
+#include <tqlabel.h>
+#include <tqpopupmenu.h>
 
 #include "kaccelaction.h"
 #include <kdebug.h>
@@ -27,19 +27,19 @@
 #include "kshortcutmenu.h"
 //#include <kkeynative.h>
 
-KShortcutMenu::KShortcutMenu( QWidget* pParent, KAccelActions* pActions, KKeySequence seq )
-:	QPopupMenu( pParent ),
+KShortcutMenu::KShortcutMenu( TQWidget* pParent, KAccelActions* pActions, KKeySequence seq )
+:	TQPopupMenu( pParent ),
 	m_pActions( pActions ),
 	m_seq( seq )
 {
 	kdDebug() << seq.toStringInternal() << endl;
 	
-	QFont fontTitle = KGlobalSettings::menuFont();
+	TQFont fontTitle = KGlobalSettings::menuFont();
 	fontTitle.setBold( true );
 	
-	pTitle = new QLabel( "", (QWidget*)0 );
+	pTitle = new TQLabel( "", (TQWidget*)0 );
 	pTitle->setFont( fontTitle );
-	pTitle->setFrameShape( QFrame::Panel );	
+	pTitle->setFrameShape( TQFrame::Panel );	
 	
 	insertItem( pTitle );
 }
@@ -67,9 +67,9 @@ void KShortcutMenu::updateShortcuts()
 			KAccelAction* pAction = m_pActions->actionPtr( iAction );
 			if( pAction ) {
 				KKeySequence seq = m_seqs[iItem];
-				QString sSeq = seq.key(m_seq.count()).toString();
+				TQString sSeq = seq.key(m_seq.count()).toString();
 				for( uint iKey = m_seq.count() + 1; iKey < seq.count(); iKey++ )
-					sSeq += QString(",") + seq.key(iKey).toString();
+					sSeq += TQString(",") + seq.key(iKey).toString();
 
 				kdDebug(125) << "seq = " << seq.toStringInternal() << " sSeq = " << sSeq << endl;
 				changeItem( iAction, pAction->label() + "\t" + sSeq );
@@ -78,7 +78,7 @@ void KShortcutMenu::updateShortcuts()
 	}
 }
 
-void KShortcutMenu::keyPressEvent( QKeyEvent* pEvent )
+void KShortcutMenu::keyPressEvent( TQKeyEvent* pEvent )
 {
 	kdDebug() << "keypress; " << pEvent->key() << endl;
 	KKey key( pEvent );
@@ -106,7 +106,7 @@ void KShortcutMenu::keyPressEvent( QKeyEvent* pEvent )
 			// And permit Enter, Return to select the item.
 			if( pEvent->key() == Qt::Key_Up    || pEvent->key() == Qt::Key_Down ||
 			    pEvent->key() == Qt::Key_Enter || pEvent->key() == Qt::Key_Return )
-				QPopupMenu::keyPressEvent( pEvent );
+				TQPopupMenu::keyPressEvent( pEvent );
 			else
 				close();
 		}

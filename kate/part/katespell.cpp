@@ -34,7 +34,7 @@
 #include <kmessagebox.h>
 
 KateSpell::KateSpell( KateView* view )
-  : QObject( view )
+  : TQObject( view )
   , m_view (view)
   , m_kspell (0)
 {
@@ -53,11 +53,11 @@ KateSpell::~KateSpell()
 
 void KateSpell::createActions( KActionCollection* ac )
 {
-   KStdAction::spelling( this, SLOT(spellcheck()), ac );
-   KAction *a = new KAction( i18n("Spelling (from cursor)..."), "spellcheck", 0, this, SLOT(spellcheckFromCursor()), ac, "tools_spelling_from_cursor" );
+   KStdAction::spelling( this, TQT_SLOT(spellcheck()), ac );
+   KAction *a = new KAction( i18n("Spelling (from cursor)..."), "spellcheck", 0, this, TQT_SLOT(spellcheckFromCursor()), ac, "tools_spelling_from_cursor" );
    a->setWhatsThis(i18n("Check the document's spelling from the cursor and forward"));
 
-   m_spellcheckSelection = new KAction( i18n("Spellcheck Selection..."), "spellcheck", 0, this, SLOT(spellcheckSelection()), ac, "tools_spelling_selection" );
+   m_spellcheckSelection = new KAction( i18n("Spellcheck Selection..."), "spellcheck", 0, this, TQT_SLOT(spellcheckSelection()), ac, "tools_spelling_selection" );
    m_spellcheckSelection->setWhatsThis(i18n("Check spelling of the selected text"));
 }
 
@@ -98,7 +98,7 @@ void KateSpell::spellcheck( const KateTextCursor &from, const KateTextCursor &to
   m_spellPosCursor = from;
   m_spellLastPos = 0;
 
-  QString mt = m_view->doc()->mimeType()/*->name()*/;
+  TQString mt = m_view->doc()->mimeType()/*->name()*/;
 
   KSpell::SpellerType type = KSpell::Text;
   if ( mt == "text/x-tex" || mt == "text/x-latex" )
@@ -107,7 +107,7 @@ void KateSpell::spellcheck( const KateTextCursor &from, const KateTextCursor &to
     type = KSpell::HTML;
 
   KSpellConfig *ksc = new KSpellConfig;
-  QStringList ksEncodings;
+  TQStringList ksEncodings;
   ksEncodings << "US-ASCII" << "ISO 8859-1" << "ISO 8859-2" << "ISO 8859-3"
       << "ISO 8859-4" << "ISO 8859-5" << "ISO 8859-7" << "ISO 8859-8"
       << "ISO 8859-9" << "ISO 8859-13" << "ISO 8859-15" << "UTF-8"
@@ -123,17 +123,17 @@ void KateSpell::spellcheck( const KateTextCursor &from, const KateTextCursor &to
     kdDebug(13020)<<"KateSpell::spellCheck(): using encoding: "<<enc<<" and KSpell::Type "<<type<<" (for '"<<mt<<"')"<<endl;
 
   m_kspell = new KSpell( m_view, i18n("Spellcheck"),
-                         this, SLOT(ready(KSpell *)), ksc, true, true, type );
+                         this, TQT_SLOT(ready(KSpell *)), ksc, true, true, type );
 
-  connect( m_kspell, SIGNAL(death()),
-           this, SLOT(spellCleanDone()) );
+  connect( m_kspell, TQT_SIGNAL(death()),
+           this, TQT_SLOT(spellCleanDone()) );
 
-  connect( m_kspell, SIGNAL(misspelling(const QString&, const QStringList&, unsigned int)),
-           this, SLOT(misspelling(const QString&, const QStringList&, unsigned int)) );
-  connect( m_kspell, SIGNAL(corrected(const QString&, const QString&, unsigned int)),
-           this, SLOT(corrected(const QString&, const QString&, unsigned int)) );
-  connect( m_kspell, SIGNAL(done(const QString&)),
-           this, SLOT(spellResult(const QString&)) );
+  connect( m_kspell, TQT_SIGNAL(misspelling(const TQString&, const TQStringList&, unsigned int)),
+           this, TQT_SLOT(misspelling(const TQString&, const TQStringList&, unsigned int)) );
+  connect( m_kspell, TQT_SIGNAL(corrected(const TQString&, const TQString&, unsigned int)),
+           this, TQT_SLOT(corrected(const TQString&, const TQString&, unsigned int)) );
+  connect( m_kspell, TQT_SIGNAL(done(const TQString&)),
+           this, TQT_SLOT(spellResult(const TQString&)) );
 }
 
 void KateSpell::ready(KSpell *)
@@ -170,7 +170,7 @@ void KateSpell::locatePosition( uint pos, uint& line, uint& col )
   col = m_spellPosCursor.col();
 }
 
-void KateSpell::misspelling( const QString& origword, const QStringList&, unsigned int pos )
+void KateSpell::misspelling( const TQString& origword, const TQStringList&, unsigned int pos )
 {
   uint line, col;
 
@@ -180,7 +180,7 @@ void KateSpell::misspelling( const QString& origword, const QStringList&, unsign
   m_view->setSelection( line, col, line, col + origword.length() );
 }
 
-void KateSpell::corrected( const QString& originalword, const QString& newword, unsigned int pos )
+void KateSpell::corrected( const TQString& originalword, const TQString& newword, unsigned int pos )
 {
   uint line, col;
 
@@ -190,7 +190,7 @@ void KateSpell::corrected( const QString& originalword, const QString& newword, 
   m_view->doc()->insertText( line, col, newword );
 }
 
-void KateSpell::spellResult( const QString& )
+void KateSpell::spellResult( const TQString& )
 {
   m_view->clearSelection();
   m_kspell->cleanUp();

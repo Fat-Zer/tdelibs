@@ -18,9 +18,9 @@
 #ifndef KPROCIO_H_
 #define KPROCIO_H_
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kprocess.h>
-#include <qstrlist.h>
+#include <tqstrlist.h>
 #include "kdelibs_export.h"
 
 class KProcIOPrivate;
@@ -55,7 +55,7 @@ public:
   /**
    * Constructor
    */
-  KProcIO ( QTextCodec *codec = 0 );
+  KProcIO ( TQTextCodec *codec = 0 );
 
   /**
    * Destructor
@@ -93,7 +93,7 @@ public:
    * @param appendnewline if true, a newline '\\n' is appended.
    * @return true if successful, false otherwise
    **/
-  bool writeStdin(const QString &line, bool appendnewline=true);
+  bool writeStdin(const TQString &line, bool appendnewline=true);
 
   /**
    * Writes text to stdin of the process.
@@ -101,14 +101,14 @@ public:
    * @param appendnewline if true, a newline '\\n' is appended.
    * @return true if successful, false otherwise
    **/
-  bool writeStdin(const QCString &line, bool appendnewline);
+  bool writeStdin(const TQCString &line, bool appendnewline);
 
   /**
    * Writes data to stdin of the process.
    * @param data Data to write.
    * @return true if successful, false otherwise
    **/
-  bool writeStdin(const QByteArray &data);
+  bool writeStdin(const TQByteArray &data);
 
   //I like fputs better -- it's the same as writeStdin
   //inline
@@ -120,7 +120,7 @@ public:
    * @return true if successful, false otherwise
    * @deprecated
    **/
-  KDE_DEPRECATED bool fputs (const QString &line, bool AppendNewLine=true)
+  KDE_DEPRECATED bool fputs (const TQString &line, bool AppendNewLine=true)
     { return writeStdin(line, AppendNewLine); }
 
   /**
@@ -149,7 +149,7 @@ public:
    * false if the line contains a '\\n' and false otherwise.
    * @return the number of characters read, or -1 if no data is available.
    **/
-  int readln (QString &line, bool autoAck=true, bool *partial=0);
+  int readln (TQString &line, bool autoAck=true, bool *partial=0);
 
   /**
    * This function calls readln().
@@ -159,7 +159,7 @@ public:
    * @deprecated use readln. Note that it has an inverted autoAck default,
    *  though.
    **/
-  KDE_DEPRECATED int fgets (QString &line, bool autoAck=false)
+  KDE_DEPRECATED int fgets (TQString &line, bool autoAck=false)
     { return readln (line, autoAck); }
 
   /**
@@ -195,9 +195,9 @@ signals:
   void readReady(KProcIO *pio);
 
 protected:
-  QPtrList<QByteArray> outbuffer;
-  QCString recvbuffer;
-  QTextCodec *codec;
+  TQPtrList<TQByteArray> outbuffer;
+  TQCString recvbuffer;
+  TQTextCodec *codec;
   int rbi;
   bool needreadsignal, readsignalon, writeready;
 

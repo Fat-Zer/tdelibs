@@ -53,14 +53,14 @@ namespace KIO {
 
         virtual ~DataSlave();
 
-        virtual void setHost(const QString &host, int port,
-			const QString &user, const QString &passwd);
+        virtual void setHost(const TQString &host, int port,
+			const TQString &user, const TQString &passwd);
 	virtual void setConfig(const MetaData &config);
 
         virtual void suspend();
         virtual void resume();
         virtual bool suspended();
-        virtual void send(int cmd, const QByteArray &data = QByteArray());
+        virtual void send(int cmd, const TQByteArray &data = TQByteArray());
 
 	virtual void hold(const KURL &url);
 
@@ -89,20 +89,20 @@ namespace KIO {
 	 */
 	struct QueueStruct {
 	  QueueType type;
-	  QString s;
+	  TQString s;
 	  KIO::filesize_t size;
-	  QByteArray ba;
+	  TQByteArray ba;
 
 	  QueueStruct() {}
 	  QueueStruct(QueueType type) : type(type) {}
 	};
-        typedef QValueList<QueueStruct> DispatchQueue;
+        typedef TQValueList<QueueStruct> DispatchQueue;
 	DispatchQueue dispatchQueue;
 
-	DISPATCH_DECL1(mimeType, const QString &, s)
+	DISPATCH_DECL1(mimeType, const TQString &, s)
 	DISPATCH_DECL1(totalSize, KIO::filesize_t, size)
 	DISPATCH_DECL(sendMetaData)
-	DISPATCH_DECL1(data, const QByteArray &, ba)
+	DISPATCH_DECL1(data, const TQByteArray &, ba)
 	DISPATCH_DECL(finished)
 
     protected slots:
@@ -115,7 +115,7 @@ namespace KIO {
     private:
 	MetaData meta_data;
 	bool _suspended;
-	QTimer *timer;
+	TQTimer *timer;
     };
 
 }

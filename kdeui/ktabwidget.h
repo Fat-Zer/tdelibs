@@ -21,8 +21,8 @@
 #ifndef KTABWIDGET_H
 #define KTABWIDGET_H
 
-#include <qtabwidget.h>
-#include <qstringlist.h>
+#include <tqtabwidget.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -43,7 +43,7 @@ class KDEUI_EXPORT KTabWidget : public QTabWidget
     Q_PROPERTY( bool automaticResizeTabs READ automaticResizeTabs WRITE setAutomaticResizeTabs )
 
 public:
-    KTabWidget( QWidget *parent = 0, const char *name = 0, WFlags f = 0 );
+    KTabWidget( TQWidget *parent = 0, const char *name = 0, WFlags f = 0 );
     /**
      * Destructor.
      */
@@ -51,11 +51,11 @@ public:
     /*!
       Set the tab of the given widget to \a color.
     */
-    void setTabColor( QWidget *, const QColor& color );
+    void setTabColor( TQWidget *, const TQColor& color );
     /*!
       Returns the tab color for the given widget.
     */
-    QColor tabColor( QWidget * ) const;
+    TQColor tabColor( TQWidget * ) const;
 
     /*!
       Returns true if tab ordering with the middle mouse button
@@ -105,42 +105,42 @@ public:
     /*!
       Reimplemented for internal reasons.
      */
-    virtual void insertTab( QWidget *, const QString &, int index = -1 );
+    virtual void insertTab( TQWidget *, const TQString &, int index = -1 );
 
     /*!
       Reimplemented for internal reasons.
      */
-    virtual void insertTab( QWidget *child, const QIconSet& iconset,
-                            const QString &label, int index = -1 );
+    virtual void insertTab( TQWidget *child, const TQIconSet& iconset,
+                            const TQString &label, int index = -1 );
     /*!
       Reimplemented for internal reasons.
     */
-    virtual void insertTab( QWidget *, QTab *, int index = -1 );
+    virtual void insertTab( TQWidget *, TQTab *, int index = -1 );
 
     /*!
       Reimplemented for internal reasons.
     */
-    void changeTab( QWidget *, const QString & );
+    void changeTab( TQWidget *, const TQString & );
 
     /*!
       Reimplemented for internal reasons.
     */
-    void changeTab( QWidget *child, const QIconSet& iconset, const QString &label );
+    void changeTab( TQWidget *child, const TQIconSet& iconset, const TQString &label );
 
     /*!
       Reimplemented for internal reasons.
     */
-    QString label( int ) const;
+    TQString label( int ) const;
 
     /*!
       Reimplemented for internal reasons.
     */
-    QString tabLabel( QWidget * ) const;
+    TQString tabLabel( TQWidget * ) const;
 
     /*!
       Reimplemented for internal reasons.
     */
-    void setTabLabel( QWidget *, const QString & );
+    void setTabLabel( TQWidget *, const TQString & );
 
 public slots:
     /*!
@@ -153,13 +153,13 @@ public slots:
       Removes the widget, reimplemented for
       internal reasons (keeping labels in sync).
     */
-    virtual void removePage ( QWidget * w );
+    virtual void removePage ( TQWidget * w );
 
     /*!
       If \a enable is true, tab reordering with middle button will be enabled.
 
       Note that once enabled you shouldn't rely on previously queried
-      currentPageIndex() or indexOf( QWidget * ) values anymore.
+      currentPageIndex() or indexOf( TQWidget * ) values anymore.
 
       You can connect to signal movedTab(int, int) which will notify
       you from which index to which index a tab has been moved.
@@ -168,7 +168,7 @@ public slots:
 
     /*!
       If \a enable is true, a close button will be shown on mouse hover
-      over tab icons which will emit signal closeRequest( QWidget * )
+      over tab icons which will emit signal closeRequest( TQWidget * )
       when pressed.
     */
     void setHoverCloseButton( bool enable );
@@ -189,7 +189,7 @@ public slots:
     /*!
       If \a enable is true, tabs will be resized to the width of the tab bar.
 
-      Does not work reliable with "QTabWidget* foo=new KTabWidget()" and if
+      Does not work reliable with "TQTabWidget* foo=new KTabWidget()" and if
       you change tabs via the tabbar or by accessing tabs directly.
       @since 3.4
     */
@@ -199,34 +199,34 @@ signals:
     /*!
       Connect to this and set accept to true if you can and want to decode the event.
     */
-    void testCanDecode(const QDragMoveEvent *e, bool &accept /* result */);
+    void testCanDecode(const TQDragMoveEvent *e, bool &accept /* result */);
 
     /*!
       Received an event in the empty space beside tabbar. Usually creates a new tab.
       This signal is only possible after testCanDecode and positive accept result.
     */
-    void receivedDropEvent( QDropEvent * );
+    void receivedDropEvent( TQDropEvent * );
 
     /*!
       Received an drop event on given widget's tab.
       This signal is only possible after testCanDecode and positive accept result.
     */
-    void receivedDropEvent( QWidget *, QDropEvent * );
+    void receivedDropEvent( TQWidget *, TQDropEvent * );
 
     /*!
       Request to start a drag operation on the given tab.
     */
-    void initiateDrag( QWidget * );
+    void initiateDrag( TQWidget * );
 
     /*!
       The right mouse button was pressed over empty space besides tabbar.
     */
-    void contextMenu( const QPoint & );
+    void contextMenu( const TQPoint & );
 
     /*!
       The right mouse button was pressed over a widget.
     */
-    void contextMenu( QWidget *, const QPoint & );
+    void contextMenu( TQWidget *, const TQPoint & );
 
     /*!
       A tab was moved from first to second index. This signal is only
@@ -243,7 +243,7 @@ signals:
     /*!
       A double left mouse button click was performed over the widget.
     */
-    void mouseDoubleClick( QWidget * );
+    void mouseDoubleClick( TQWidget * );
 
     /*!
       A middle mouse button click was performed over empty space besides tabbar.
@@ -253,29 +253,29 @@ signals:
     /*!
       A middle mouse button click was performed over the widget.
     */
-    void mouseMiddleClick( QWidget * );
+    void mouseMiddleClick( TQWidget * );
 
     /*!
       The close button of a widget's tab was clicked. This signal is
       only possible after you have called setHoverCloseButton( true ).
     */
-    void closeRequest( QWidget * );
+    void closeRequest( TQWidget * );
 
 protected:
-    virtual void mouseDoubleClickEvent( QMouseEvent *e );
-    virtual void mousePressEvent( QMouseEvent * );
-    virtual void dragMoveEvent( QDragMoveEvent * );
-    virtual void dropEvent( QDropEvent * );
+    virtual void mouseDoubleClickEvent( TQMouseEvent *e );
+    virtual void mousePressEvent( TQMouseEvent * );
+    virtual void dragMoveEvent( TQDragMoveEvent * );
+    virtual void dropEvent( TQDropEvent * );
     unsigned int tabBarWidthForMaxChars( uint maxLength );
 #ifndef QT_NO_WHEELEVENT
-    virtual void wheelEvent( QWheelEvent *e );
+    virtual void wheelEvent( TQWheelEvent *e );
 #endif
-    virtual void resizeEvent( QResizeEvent * );
+    virtual void resizeEvent( TQResizeEvent * );
 
 protected slots:
-    virtual void receivedDropEvent( int, QDropEvent * );
+    virtual void receivedDropEvent( int, TQDropEvent * );
     virtual void initiateDrag( int );
-    virtual void contextMenu( int, const QPoint & );
+    virtual void contextMenu( int, const TQPoint & );
     virtual void mouseDoubleClick( int );
     virtual void mouseMiddleClick( int );
     virtual void closeRequest( int );
@@ -284,7 +284,7 @@ protected slots:
 #endif
 
 private:
-    bool isEmptyTabbarSpace( const QPoint & )  const;
+    bool isEmptyTabbarSpace( const TQPoint & )  const;
     void resizeTabs( int changedTabIndex = -1 );
     void updateTab( int index );
 

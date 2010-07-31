@@ -53,10 +53,10 @@ class Button : public KPushButton
          * @param parent the parent widget
          * @param name the name to be used for this widget
          */
-        Button(const QString& what,
-               const QString& providerList,
-               const QString& resourceType,
-               QWidget* parent, const char* name);
+        Button(const TQString& what,
+               const TQString& providerList,
+               const TQString& resourceType,
+               TQWidget* parent, const char* name);
 
         /**
          * Constructor used when the details of the KHotNewStuff
@@ -65,24 +65,24 @@ class Button : public KPushButton
          * @param parent the parent widget
          * @param name the name to be used for this widget
          */
-        Button(QWidget* parent, const char* name);
+        Button(TQWidget* parent, const char* name);
 
         /**
          * set the URL to the list of providers for this button to use
          */
-        void setProviderList(const QString& providerList);
+        void setProviderList(const TQString& providerList);
 
         /**
          * the Hotstuff data type for this downlaod such as
          * "korganizer/calendar"
          */
-        void setResourceType(const QString& resourceType);
+        void setResourceType(const TQString& resourceType);
 
         /**
          * set the text that should appear on the button. will be prefaced
          * with i18n("Download New")
          */
-        void setButtonText(const QString& what);
+        void setButtonText(const TQString& what);
 
     signals:
         /**
@@ -105,8 +105,8 @@ class Button : public KPushButton
         class ButtonPrivate;
         ButtonPrivate* d;
 
-        QString m_providerList;
-        QString m_type;
+        TQString m_providerList;
+        TQString m_type;
         DownloadDialog* m_downloadDialog;
 };
 

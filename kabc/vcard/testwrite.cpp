@@ -33,7 +33,7 @@ int main(int argc,char **argv)
   cl2.setParamList( p );
   v.add(cl2);
 
-  QCString str = v.asString();
+  TQCString str = v.asString();
 
   kdDebug() << "--- VCard begin ---" << endl
             << str

@@ -18,8 +18,8 @@
 */
 
 #include "kfileshare.h"
-#include <qdir.h>
-#include <qfile.h>
+#include <tqdir.h>
+#include <tqfile.h>
 #include <kprocess.h>
 #include <kprocio.h>
 #include <klocale.h>
@@ -35,14 +35,14 @@
 #include <kuser.h>
 
 KFileShare::Authorization KFileShare::s_authorization = NotInitialized;
-QStringList* KFileShare::s_shareList = 0L;
-static KStaticDeleter<QStringList> sdShareList;
+TQStringList* KFileShare::s_shareList = 0L;
+static KStaticDeleter<TQStringList> sdShareList;
 
 KFileShare::ShareMode KFileShare::s_shareMode;
 bool KFileShare::s_sambaEnabled;
 bool KFileShare::s_nfsEnabled;
 bool KFileShare::s_restricted;
-QString KFileShare::s_fileShareGroup;
+TQString KFileShare::s_fileShareGroup;
 bool KFileShare::s_sharingEnabled;
 
 
@@ -51,12 +51,12 @@ bool KFileShare::s_sharingEnabled;
 KFileSharePrivate::KFileSharePrivate()
 {
   KDirWatch::self()->addFile(FILESHARECONF);
-  connect(KDirWatch::self(), SIGNAL(dirty (const QString&)),this,
-          SLOT(slotFileChange(const QString &)));
-  connect(KDirWatch::self(), SIGNAL(created(const QString&)),this,
-          SLOT(slotFileChange(const QString &)));
-  connect(KDirWatch::self(), SIGNAL(deleted(const QString&)),this,
-          SLOT(slotFileChange(const QString &)));
+  connect(KDirWatch::self(), TQT_SIGNAL(dirty (const TQString&)),this,
+          TQT_SLOT(slotFileChange(const TQString &)));
+  connect(KDirWatch::self(), TQT_SIGNAL(created(const TQString&)),this,
+          TQT_SLOT(slotFileChange(const TQString &)));
+  connect(KDirWatch::self(), TQT_SIGNAL(deleted(const TQString&)),this,
+          TQT_SLOT(slotFileChange(const TQString &)));
 }
 
 KFileSharePrivate::~KFileSharePrivate()
@@ -75,7 +75,7 @@ KFileSharePrivate* KFileSharePrivate::self()
    return _self;
 }
 
-void KFileSharePrivate::slotFileChange(const QString &file)
+void KFileSharePrivate::slotFileChange(const TQString &file)
 {
   if(file==FILESHARECONF) {
      KFileShare::readConfig();
@@ -87,7 +87,7 @@ void KFileShare::readConfig() // static
 {    
     // Create KFileSharePrivate instance
     KFileSharePrivate::self();
-    KSimpleConfig config(QString::fromLatin1(FILESHARECONF),true);
+    KSimpleConfig config(TQString::fromLatin1(FILESHARECONF),true);
     
     s_sharingEnabled = config.readEntry("FILESHARING", "yes") == "yes";
     s_restricted = config.readEntry("RESTRICT", "yes") == "yes";
@@ -139,7 +139,7 @@ bool KFileShare::isRestricted() {
   return s_restricted;
 }
     
-QString KFileShare::fileShareGroup() {
+TQString KFileShare::fileShareGroup() {
   if ( s_authorization == NotInitialized )
       readConfig();
   
@@ -166,12 +166,12 @@ void KFileShare::readShareList()
 {
     KFileSharePrivate::self();
     if ( !s_shareList )
-        sdShareList.setObject( s_shareList, new QStringList );
+        sdShareList.setObject( s_shareList, new TQStringList );
     else
         s_shareList->clear();
 
     // /usr/sbin on Mandrake, $PATH allows flexibility for other distributions
-    QString exe = findExe( "filesharelist" );
+    TQString exe = findExe( "filesharelist" );
     if (exe.isEmpty()) {
         s_authorization = ErrorNotFound;
         return;
@@ -185,7 +185,7 @@ void KFileShare::readShareList()
     }
 
     // Reading code shamelessly stolen from khostname.cpp ;)
-    QString line;
+    TQString line;
     int length;
     do {
         length = proc.readln(line, true);
@@ -200,12 +200,12 @@ void KFileShare::readShareList()
 }
 
 
-bool KFileShare::isDirectoryShared( const QString& _path )
+bool KFileShare::isDirectoryShared( const TQString& _path )
 {
     if ( ! s_shareList )
         readShareList();
 
-    QString path( _path );
+    TQString path( _path );
     if ( path[path.length()-1] != '/' )
         path += '/';
     return s_shareList && s_shareList->contains( path );
@@ -219,24 +219,24 @@ KFileShare::Authorization KFileShare::authorization()
     return s_authorization;
 }
 
-QString KFileShare::findExe( const char* exeName )
+TQString KFileShare::findExe( const char* exeName )
 {
    // /usr/sbin on Mandrake, $PATH allows flexibility for other distributions
-   QString path = QString::fromLocal8Bit(getenv("PATH")) + QString::fromLatin1(":/usr/sbin");
-   QString exe = KStandardDirs::findExe( exeName, path );
+   TQString path = TQString::fromLocal8Bit(getenv("PATH")) + TQString::fromLatin1(":/usr/sbin");
+   TQString exe = KStandardDirs::findExe( exeName, path );
    if (exe.isEmpty())
        kdError() << exeName << " not found in " << path << endl;
    return exe;
 }
 
-bool KFileShare::setShared( const QString& path, bool shared )
+bool KFileShare::setShared( const TQString& path, bool shared )
 {
     if (! KFileShare::sharingEnabled() ||
           KFileShare::shareMode() == Advanced)
        return false;
 
     kdDebug(7000) << "KFileShare::setShared " << path << "," << shared << endl;
-    QString exe = KFileShare::findExe( "fileshareset" );
+    TQString exe = KFileShare::findExe( "fileshareset" );
     if (exe.isEmpty())
         return false;
         

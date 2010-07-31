@@ -24,14 +24,14 @@
 #include "kmmanager.h"
 #include "cupsinfos.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <cups/cups.h>
 #include <stdlib.h>
 #include <kprocess.h>
 
-static void mapToCupsOptions(const QMap<QString,QString>& opts, QString& cmd);
+static void mapToCupsOptions(const TQMap<TQString,TQString>& opts, TQString& cmd);
 
-QSize rangeToSize(const QString& s)
+TQSize rangeToSize(const TQString& s)
 {
 	QString	range = s;
 	int	p(-1);
@@ -49,11 +49,11 @@ QSize rangeToSize(const QString& s)
 	else
 		from = to = 0;
 
-	return QSize(from,to);
+	return TQSize(from,to);
 }
 //******************************************************************************************************
 
-KCupsPrinterImpl::KCupsPrinterImpl(QObject *parent, const char *name, const QStringList & /*args*/)
+KCupsPrinterImpl::KCupsPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KPrinterImpl(parent,name)
 {
 }
@@ -62,13 +62,13 @@ KCupsPrinterImpl::~KCupsPrinterImpl()
 {
 }
 
-bool KCupsPrinterImpl::setupCommand(QString& cmd, KPrinter *printer)
+bool KCupsPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 {
 	// check printer object
 	if (!printer) return false;
 
-	QString	hoststr = QString::fromLatin1("%1:%2").arg(CupsInfos::self()->host()).arg(CupsInfos::self()->port());
-	cmd = QString::fromLatin1("cupsdoprint -P %1 -J %3 -H %2").arg(quote(printer->printerName())).arg(quote(hoststr)).arg(quote(printer->docName()));
+	QString	hoststr = TQString::fromLatin1("%1:%2").arg(CupsInfos::self()->host()).arg(CupsInfos::self()->port());
+	cmd = TQString::fromLatin1("cupsdoprint -P %1 -J %3 -H %2").arg(quote(printer->printerName())).arg(quote(hoststr)).arg(quote(printer->docName()));
 	if (!CupsInfos::self()->login().isEmpty())
 	{
 		QString	userstr(CupsInfos::self()->login());
@@ -107,12 +107,12 @@ void KCupsPrinterImpl::preparePrinting(KPrinter *printer)
 	}
 	else
 	{ // No translation needed (but range => (from,to))
-		QString range = printer->option("kde-range");
+		TQString range = printer->option("kde-range");
 		if (!range.isEmpty())
 		{
 			QSize	s = rangeToSize(range);
-			printer->setOption("kde-from",QString::number(s.width()));
-			printer->setOption("kde-to",QString::number(s.height()));
+			printer->setOption("kde-from",TQString::number(s.width()));
+			printer->setOption("kde-to",TQString::number(s.height()));
 		}
 	}
 
@@ -120,14 +120,14 @@ void KCupsPrinterImpl::preparePrinting(KPrinter *printer)
 	KPrinterImpl::preparePrinting(printer);
 }
 
-void KCupsPrinterImpl::broadcastOption(const QString& key, const QString& value)
+void KCupsPrinterImpl::broadcastOption(const TQString& key, const TQString& value)
 {
 	KPrinterImpl::broadcastOption(key,value);
 	if (key == "kde-orientation")
 		KPrinterImpl::broadcastOption("orientation-requested",(value == "Landscape" ? "4" : "3"));
 	else if (key == "kde-pagesize")
 	{
-		QString	pagename = QString::fromLatin1(pageSizeToPageName((KPrinter::PageSize)value.toInt()));
+		QString	pagename = TQString::fromLatin1(pageSizeToPageName((KPrinter::PageSize)value.toInt()));
 		KPrinterImpl::broadcastOption("PageSize",pagename);
 		// simple hack for classes
 		KPrinterImpl::broadcastOption("media",pagename);
@@ -136,15 +136,15 @@ void KCupsPrinterImpl::broadcastOption(const QString& key, const QString& value)
 
 //******************************************************************************************************
 
-static void mapToCupsOptions(const QMap<QString,QString>& opts, QString& cmd)
+static void mapToCupsOptions(const TQMap<TQString,TQString>& opts, TQString& cmd)
 {
 	QString	optstr;
-	for (QMap<QString,QString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
+	for (TQMap<TQString,TQString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
 	{
 		// only encode those options that doesn't start with "kde-" or "app-".
 		if (!it.key().startsWith("kde-") && !it.key().startsWith("app-") && !it.key().startsWith("_kde"))
 		{
-			QString key = it.key();
+			TQString key = it.key();
 			if (key.startsWith("KDEPrint-"))
 				/* Those are keys added by the "Additional Tags" page. *
 				 * Strip the prefix to build valid a CUPS option.      */

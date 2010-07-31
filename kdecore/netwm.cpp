@@ -25,7 +25,7 @@
 
 //#define NETWMDEBUG
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #ifdef Q_WS_X11 //FIXME
 
 #include "netwm.h"
@@ -2798,8 +2798,8 @@ NET::Orientation NETRootInfo::desktopLayoutOrientation() const {
 }
 
 
-QSize NETRootInfo::desktopLayoutColumnsRows() const {
-    return QSize( p->desktop_layout_columns, p->desktop_layout_rows );
+TQSize NETRootInfo::desktopLayoutColumnsRows() const {
+    return TQSize( p->desktop_layout_columns, p->desktop_layout_rows );
 }
 
 

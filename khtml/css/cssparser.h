@@ -22,9 +22,9 @@
 #ifndef _CSS_cssparser_h_
 #define _CSS_cssparser_h_
 
-#include <qstring.h>
-#include <qcolor.h>
-#include <qvaluevector.h>
+#include <tqstring.h>
+#include <tqcolor.h>
+#include <tqvaluevector.h>
 #include <dom/dom_string.h>
 
 namespace DOM {
@@ -72,11 +72,11 @@ namespace DOM {
 	int unit;
     };
 
-    static inline QString qString( const ParseString &ps ) {
-	return QString( (QChar *)ps.string, ps.length );
+    static inline TQString qString( const ParseString &ps ) {
+	return TQString( (TQChar *)ps.string, ps.length );
     }
     static inline DOMString domString( const ParseString &ps ) {
-	return DOMString( (QChar *)ps.string, ps.length );
+	return DOMString( (TQChar *)ps.string, ps.length );
     }
 
     class ValueList {
@@ -88,7 +88,7 @@ namespace DOM {
         Value* current() { return m_current < m_values.size() ? &m_values[m_current] : 0; }
         Value* next() { ++m_current; return current(); }
     private:
-        QValueVector<Value> m_values;
+        TQValueVector<Value> m_values;
 	unsigned int m_current;
     };
 
@@ -148,7 +148,7 @@ namespace DOM {
         CSSPrimitiveValueImpl *parseColorFromValue(Value* val);
         CSSValueImpl* parseCounterContent(ValueList *args, bool counters);
 
-        static bool parseColor(const QString &name, QRgb& rgb);
+        static bool parseColor(const TQString &name, QRgb& rgb);
 
         // CSS3 Parsing Routines (for properties specific to CSS3)
         bool parseShadow(int propId, bool important);

@@ -46,7 +46,7 @@
 
 #include <kdebug.h>
 #include <kglobal.h>
-#include <qpainter.h>
+#include <tqpainter.h>
 #include "khtmlview.h"
 #include <khtml_part.h>
 
@@ -528,7 +528,7 @@ bool RenderObject::hasStaticY() const
     return (style()->top().isVariable() && style()->bottom().isVariable());
 }
 
-void RenderObject::setPixmap(const QPixmap&, const QRect& /*r*/, CachedImage* image)
+void RenderObject::setPixmap(const TQPixmap&, const TQRect& /*r*/, CachedImage* image)
 {
     //repaint bg when it finished loading
     if(image && parent() && style() && style()->backgroundLayers()->containsImage(image)) {
@@ -688,7 +688,7 @@ static int brightness(int red, int green, int blue)
           (luminosity * LUMINOSITY_FACTOR)) / 100;
 }
 
-static void calc3DColor(QColor &color, bool darken)
+static void calc3DColor(TQColor &color, bool darken)
 {
   int rb = color.red();
   int gb = color.green();
@@ -731,8 +731,8 @@ static void calc3DColor(QColor &color, bool darken)
   }
 }
 
-void RenderObject::drawBorder(QPainter *p, int x1, int y1, int x2, int y2,
-                              BorderSide s, QColor c, const QColor& textcolor, EBorderStyle style,
+void RenderObject::drawBorder(TQPainter *p, int x1, int y1, int x2, int y2,
+                              BorderSide s, TQColor c, const TQColor& textcolor, EBorderStyle style,
                               int adjbw1, int adjbw2, bool invalidisInvert)
 {
     int width = (s==BSTop||s==BSBottom?y2-y1:x2-x1);
@@ -768,7 +768,7 @@ void RenderObject::drawBorder(QPainter *p, int x1, int y1, int x2, int y2,
     case DOTTED:
         if ( width == 1 ) {
             // workaround Qt brokenness
-            p->setPen(QPen(c, width, Qt::SolidLine));
+            p->setPen(TQPen(c, width, Qt::SolidLine));
             switch(s) {
             case BSBottom:
             case BSTop:
@@ -783,11 +783,11 @@ void RenderObject::drawBorder(QPainter *p, int x1, int y1, int x2, int y2,
             break;
         }
 
-        p->setPen(QPen(c, width, Qt::DotLine));
+        p->setPen(TQPen(c, width, Qt::DotLine));
         /* nobreak; */
     case DASHED:
         if(style == DASHED)
-            p->setPen(QPen(c, width == 1 ? 0 : width, width == 1 ? Qt::DotLine : Qt::DashLine));
+            p->setPen(TQPen(c, width == 1 ? 0 : width, width == 1 ? Qt::DotLine : Qt::DashLine));
 
         if (width > 0)
             switch(s) {
@@ -924,7 +924,7 @@ void RenderObject::drawBorder(QPainter *p, int x1, int y1, int x2, int y2,
             p->drawRect(x1,y1,x2-x1,y2-y1);
             return;
         }
-        QPointArray quad(4);
+        TQPointArray quad(4);
         switch(s) {
         case BSTop:
             quad.setPoints(4,
@@ -963,12 +963,12 @@ void RenderObject::drawBorder(QPainter *p, int x1, int y1, int x2, int y2,
         p->setRasterOp(Qt::CopyROP);
 }
 
-void RenderObject::paintBorder(QPainter *p, int _tx, int _ty, int w, int h, const RenderStyle* style, bool begin, bool end)
+void RenderObject::paintBorder(TQPainter *p, int _tx, int _ty, int w, int h, const RenderStyle* style, bool begin, bool end)
 {
-    const QColor& tc = style->borderTopColor();
-    const QColor& bc = style->borderBottomColor();
-    const QColor& lc = style->borderLeftColor();
-    const QColor& rc = style->borderRightColor();
+    const TQColor& tc = style->borderTopColor();
+    const TQColor& bc = style->borderBottomColor();
+    const TQColor& lc = style->borderLeftColor();
+    const TQColor& rc = style->borderRightColor();
 
     bool tt = style->borderTopIsTransparent();
     bool bt = style->borderBottomIsTransparent();
@@ -1052,12 +1052,12 @@ void RenderObject::paintBorder(QPainter *p, int _tx, int _ty, int w, int h, cons
     }
 }
 
-void RenderObject::paintOutline(QPainter *p, int _tx, int _ty, int w, int h, const RenderStyle* style)
+void RenderObject::paintOutline(TQPainter *p, int _tx, int _ty, int w, int h, const RenderStyle* style)
 {
     int ow = style->outlineWidth();
     if(!ow) return;
 
-    const QColor& oc = style->outlineColor();
+    const TQColor& oc = style->outlineColor();
     EBorderStyle os = style->outlineStyle();
     int offset = style->outlineOffset();
 
@@ -1077,19 +1077,19 @@ void RenderObject::paintOutline(QPainter *p, int _tx, int _ty, int w, int h, con
     h += 2*offset;
 
     drawBorder(p, _tx-ow, _ty-ow, _tx, _ty+h+ow, BSLeft,
-               QColor(oc), style->color(),
+               TQColor(oc), style->color(),
                os, ow, ow, true);
 
     drawBorder(p, _tx-ow, _ty-ow, _tx+w+ow, _ty, BSTop,
-               QColor(oc), style->color(),
+               TQColor(oc), style->color(),
                os, ow, ow, true);
 
     drawBorder(p, _tx+w, _ty-ow, _tx+w+ow, _ty+h+ow, BSRight,
-               QColor(oc), style->color(),
+               TQColor(oc), style->color(),
                os, ow, ow, true);
 
     drawBorder(p, _tx-ow, _ty+h, _tx+w+ow, _ty+h+ow, BSBottom,
-               QColor(oc), style->color(),
+               TQColor(oc), style->color(),
                os, ow, ow, true);
 
 }
@@ -1105,14 +1105,14 @@ void RenderObject::repaintRectangle(int x, int y, int w, int h, Priority p, bool
 
 #ifdef ENABLE_DUMP
 
-QString RenderObject::information() const
+TQString RenderObject::information() const
 {
-    QString str;
+    TQString str;
     int x; int y;
     absolutePosition(x,y);
     x += inlineXPos();
     y += inlineYPos();
-    QTextStream ts( &str, IO_WriteOnly );
+    TQTextStream ts( &str, IO_WriteOnly );
     ts << renderName()
         << "(" << (style() ? style()->refCount() : 0) << ")"
        << ": " << (void*)this << "  ";
@@ -1139,7 +1139,7 @@ QString RenderObject::information() const
 
     } else if (isPseudoAnonymous() && style() && style()->styleType() != RenderStyle::NOPSEUDO) {
         ts << " <" <<  getTagName(node()->id());
-        QString pseudo;
+        TQString pseudo;
         switch (style()->styleType()) {
           case RenderStyle::FIRST_LETTER:
             pseudo = ":first-letter"; break;
@@ -1159,27 +1159,27 @@ QString RenderObject::information() const
        << " mB: " << marginBottom() << " qB: " << isBottomMarginQuirk()
        << "}"
         << (isTableCell() ?
-            ( QString::fromLatin1(" [r=") +
-              QString::number( static_cast<const RenderTableCell *>(this)->row() ) +
-              QString::fromLatin1(" c=") +
-              QString::number( static_cast<const RenderTableCell *>(this)->col() ) +
-              QString::fromLatin1(" rs=") +
-              QString::number( static_cast<const RenderTableCell *>(this)->rowSpan() ) +
-              QString::fromLatin1(" cs=") +
-              QString::number( static_cast<const RenderTableCell *>(this)->colSpan() ) +
-              QString::fromLatin1("]") ) : QString::null );
+            ( TQString::fromLatin1(" [r=") +
+              TQString::number( static_cast<const RenderTableCell *>(this)->row() ) +
+              TQString::fromLatin1(" c=") +
+              TQString::number( static_cast<const RenderTableCell *>(this)->col() ) +
+              TQString::fromLatin1(" rs=") +
+              TQString::number( static_cast<const RenderTableCell *>(this)->rowSpan() ) +
+              TQString::fromLatin1(" cs=") +
+              TQString::number( static_cast<const RenderTableCell *>(this)->colSpan() ) +
+              TQString::fromLatin1("]") ) : TQString::null );
     if ( layer() )
         ts << " layer=" << layer();
     if ( continuation() )
         ts << " continuation=" << continuation();
     if (isText())
-        ts << " \"" << QConstString(static_cast<const RenderText *>(this)->text(), kMin(static_cast<const RenderText *>(this)->length(), 10u)).string() << "\"";
+        ts << " \"" << TQConstString(static_cast<const RenderText *>(this)->text(), kMin(static_cast<const RenderText *>(this)->length(), 10u)).string() << "\"";
     return str;
 }
 
 void RenderObject::printTree(int indent) const
 {
-    QString ind;
+    TQString ind;
     ind.fill(' ', indent);
 
     kdDebug() << ind << information() << endl;
@@ -1192,17 +1192,17 @@ void RenderObject::printTree(int indent) const
     }
 }
 
-static QTextStream &operator<<(QTextStream &ts, const QRect &r)
+static TQTextStream &operator<<(TQTextStream &ts, const TQRect &r)
 {
     return ts << "at (" << r.x() << "," << r.y() << ") size " << r.width() << "x" << r.height();
 }
 
 //A bit like getTagName, but handles XML, too.
-static QString lookupTagName(NodeImpl* node) {
+static TQString lookupTagName(NodeImpl* node) {
     return node->getDocument()->getName(NodeImpl::ElementId, node->id()).string();
 }
 
-void RenderObject::dump(QTextStream &ts, const QString &ind) const
+void RenderObject::dump(TQTextStream &ts, const TQString &ind) const
 {
     if ( !layer() )
         ts << endl;
@@ -1214,13 +1214,13 @@ void RenderObject::dump(QTextStream &ts, const QString &ind) const
     }
 
     if (element()) {
-        QString tagName(lookupTagName(element()));
+        TQString tagName(lookupTagName(element()));
         if (!tagName.isEmpty()) {
             ts << " {" << tagName << "}";
         }
     } else if (isPseudoAnonymous() && style() && style()->styleType() != RenderStyle::NOPSEUDO) {
-        QString pseudo;
-        QString tagName(lookupTagName(node()));
+        TQString pseudo;
+        TQString tagName(lookupTagName(node()));
         switch (style()->styleType()) {
           case RenderStyle::FIRST_LETTER:
             pseudo = ":first-letter"; break;
@@ -1234,7 +1234,7 @@ void RenderObject::dump(QTextStream &ts, const QString &ind) const
         ts << " {" << tagName << pseudo << "}";
     }
 
-    QRect r(xPos(), yPos(), width(), height());
+    TQRect r(xPos(), yPos(), width(), height());
     ts << " " << r;
 
     if ( parent() )
@@ -1481,7 +1481,7 @@ void RenderObject::updateBackgroundImages(RenderStyle* oldStyle)
     }
 }
 
-QRect RenderObject::viewRect() const
+TQRect RenderObject::viewRect() const
 {
     return containingBlock()->viewRect();
 }
@@ -1705,7 +1705,7 @@ FindSelectionResult RenderObject::checkSelectionPoint( int _x, int _y, int _tx, 
         if (child->isText() && !static_cast<RenderText *>(child)->inlineTextBoxCount())
             continue;
 
-//        kdDebug(6040) << "iterating " << (child ? child->renderName() : "") << "@" << child << (child->isText() ? " contains: \"" + QConstString(static_cast<RenderText *>(child)->text(), kMin(static_cast<RenderText *>(child)->length(), 10u)).string() + "\"" : QString::null) << endl;
+//        kdDebug(6040) << "iterating " << (child ? child->renderName() : "") << "@" << child << (child->isText() ? " contains: \"" + TQConstString(static_cast<RenderText *>(child)->text(), kMin(static_cast<RenderText *>(child)->length(), 10u)).string() + "\"" : TQString::null) << endl;
 //        kdDebug(6040) << "---------- checkSelectionPoint recursive -----------" << endl;
         khtml::FindSelectionResult pos = child->checkSelectionPoint(_x, _y, _tx+xPos(), _ty+yPos(), nod, off, state);
 //        kdDebug(6040) << "-------- end checkSelectionPoint recursive ---------" << endl;
@@ -1773,7 +1773,7 @@ bool RenderObject::nodeAtPoint(NodeInfo& info, int _x, int _y, int _tx, int _ty,
     if ( !inOverflowRect ) {
         int ol = overflowLeft();
         int ot = overflowTop();
-        QRect overflowRect( tx+ol, ty+ot, overflowWidth()-ol, overflowHeight()-ot );
+        TQRect overflowRect( tx+ol, ty+ot, overflowWidth()-ol, overflowHeight()-ot );
         inOverflowRect = overflowRect.contains( _x, _y );
     }
 
@@ -1851,7 +1851,7 @@ short RenderObject::getVerticalPosition( bool firstLine, RenderObject* ref ) con
             else if ( va == LENGTH )
                 return vpos - style()->verticalAlignLength().width( lineHeight( firstLine ) );
 
-            const QFont &f = ref->font( firstLine );
+            const TQFont &f = ref->font( firstLine );
             int fontsize = f.pixelSize();
 
             if ( va == SUB )
@@ -1859,12 +1859,12 @@ short RenderObject::getVerticalPosition( bool firstLine, RenderObject* ref ) con
             else if ( va == SUPER )
                 vpos -= fontsize/3 + 1;
             else if ( va == TEXT_TOP ) {
-                vpos += baselinePosition( firstLine ) - (QFontMetrics(f).ascent() + QFontMetrics(f).leading()/2);
+                vpos += baselinePosition( firstLine ) - (TQFontMetrics(f).ascent() + TQFontMetrics(f).leading()/2);
             } else if ( va == MIDDLE ) {
-                QRect b = QFontMetrics(f).boundingRect('x');
+                TQRect b = TQFontMetrics(f).boundingRect('x');
                 vpos += -b.height()/2 - lineHeight( firstLine )/2 + baselinePosition( firstLine );
             } else if ( va == TEXT_BOTTOM ) {
-                vpos += QFontMetrics(f).descent() + QFontMetrics(f).leading()/2;
+                vpos += TQFontMetrics(f).descent() + TQFontMetrics(f).leading()/2;
                 if ( !isReplaced() )
                     vpos -= fontMetrics(firstLine).descent();
             } else if ( va == BASELINE_MIDDLE )
@@ -1914,7 +1914,7 @@ short RenderObject::baselinePosition( bool firstLine ) const
     if (isReplaced() && (!isInlineBlockOrInlineTable() || !needsLayout()))
         return height()+marginTop()+marginBottom();
 
-    const QFontMetrics &fm = fontMetrics( firstLine );
+    const TQFontMetrics &fm = fontMetrics( firstLine );
     return fm.ascent() + ( lineHeight( firstLine) - fm.height() ) / 2;
 }
 
@@ -1985,8 +1985,8 @@ InlineBox* RenderObject::createInlineBox(bool /*makePlaceHolderBox*/, bool /*isR
     return 0;
 }
 
-void RenderObject::getTextDecorationColors(int decorations, QColor& underline, QColor& overline,
-                                           QColor& linethrough, bool quirksMode)
+void RenderObject::getTextDecorationColors(int decorations, TQColor& underline, TQColor& overline,
+                                           TQColor& linethrough, bool quirksMode)
 {
     RenderObject* curr = this;
     do {
@@ -2031,7 +2031,7 @@ int RenderObject::maximalOutlineSize(PaintAction p) const
     return static_cast<RenderCanvas*>(document()->renderer())->maximalOutlineSize();
 }
 
-void RenderObject::collectBorders(QValueList<CollapsedBorderValue>& borderStyles)
+void RenderObject::collectBorders(TQValueList<CollapsedBorderValue>& borderStyles)
 {
     for (RenderObject* curr = firstChild(); curr; curr = curr->nextSibling())
         curr->collectBorders(borderStyles);
@@ -2052,7 +2052,7 @@ bool RenderObject::usesLineWidth() const
     return (flowAroundFloats() && (style()->width().isVariable() || isHR() || (style()->htmlHacks() && !isTable())));
 }
 
-bool RenderObject::hasCounter(const QString& counter) const
+bool RenderObject::hasCounter(const TQString& counter) const
 {
     if (style() && (!isText() || isCounter())) {
         if (lookupCounter(counter)) return true;
@@ -2078,7 +2078,7 @@ bool RenderObject::hasCounter(const QString& counter) const
     return false;
 }
 
-CounterNode* RenderObject::getCounter(const QString& counter, bool view, bool counters)
+CounterNode* RenderObject::getCounter(const TQString& counter, bool view, bool counters)
 {
 //     kdDebug( 6040 ) << renderName() << " getCounter(" << counter << ")" << endl;
 
@@ -2214,9 +2214,9 @@ CounterNode* RenderObject::getCounter(const QString& counter, bool view, bool co
     return i;
 }
 
-CounterNode* RenderObject::lookupCounter(const QString& counter) const
+CounterNode* RenderObject::lookupCounter(const TQString& counter) const
 {
-    QDict<khtml::CounterNode>* counters = document()->counters(this);
+    TQDict<khtml::CounterNode>* counters = document()->counters(this);
     if (counters)
         return counters->find(counter);
     else
@@ -2225,10 +2225,10 @@ CounterNode* RenderObject::lookupCounter(const QString& counter) const
 
 void RenderObject::detachCounters()
 {
-    QDict<khtml::CounterNode>* counters = document()->counters(this);
+    TQDict<khtml::CounterNode>* counters = document()->counters(this);
     if (!counters) return;
 
-    QDictIterator<khtml::CounterNode> i(*counters);
+    TQDictIterator<khtml::CounterNode> i(*counters);
 
     while (i.current()) {
         (*i)->remove();
@@ -2238,12 +2238,12 @@ void RenderObject::detachCounters()
     document()->removeCounters(this);
 }
 
-void RenderObject::insertCounter(const QString& counter, CounterNode* val)
+void RenderObject::insertCounter(const TQString& counter, CounterNode* val)
 {
-    QDict<khtml::CounterNode>* counters = document()->counters(this);
+    TQDict<khtml::CounterNode>* counters = document()->counters(this);
 
     if (!counters) {
-        counters = new QDict<khtml::CounterNode>(11);
+        counters = new TQDict<khtml::CounterNode>(11);
         document()->setCounters(this, counters);
     }
 
@@ -2253,22 +2253,22 @@ void RenderObject::insertCounter(const QString& counter, CounterNode* val)
 void RenderObject::updateWidgetMasks() {
     for (RenderObject* curr = firstChild(); curr; curr = curr->nextSibling()) {
         if ( curr->isWidget() && static_cast<RenderWidget*>(curr)->needsMask() ) {
-            QWidget* w = static_cast<RenderWidget*>(curr)->widget();
+            TQWidget* w = static_cast<RenderWidget*>(curr)->widget();
             if (!w)
                 return;
             RenderLayer* l = curr->enclosingStackingContext();
-            QRegion r = l ? l->getMask() : QRegion();
+            TQRegion r = l ? l->getMask() : TQRegion();
             int x,y;
             if (!r.isNull() && curr->absolutePosition(x,y)) {
                 int pbx = curr->borderLeft()+curr->paddingLeft();
                 int pby = curr->borderTop()+curr->paddingTop();
                 x+= pbx;
                 y+= pby;
-                r = r.intersect(QRect(x,y,
+                r = r.intersect(TQRect(x,y,
                                   curr->width()-pbx-curr->borderRight()-curr->paddingRight(),
                                   curr->height()-pby-curr->borderBottom()-curr->paddingBottom()));
 #ifdef MASK_DEBUG
-                QMemArray<QRect> ar = r.rects();
+                TQMemArray<TQRect> ar = r.rects();
                 kdDebug(6040) << "|| Setting widget mask for " << curr->information() << endl;
                 for (int i = 0; i < ar.size() ; ++i) {
                     kdDebug(6040) << "		" <<  ar[i] << endl;
@@ -2286,16 +2286,16 @@ void RenderObject::updateWidgetMasks() {
     }
 }
 
-QRegion RenderObject::visibleFlowRegion(int x, int y) const
+TQRegion RenderObject::visibleFlowRegion(int x, int y) const
 {
-    QRegion r;
+    TQRegion r;
     for (RenderObject* ro=firstChild();ro;ro=ro->nextSibling()) {
         if( !ro->layer() && !ro->isInlineFlow() && ro->style()->visibility() == VISIBLE) {
             const RenderStyle *s = ro->style();
             if (ro->isRelPositioned())
                 static_cast<const RenderBox*>(ro)->relativePositionOffset(x,y);
             if ( s->backgroundImage() || s->backgroundColor().isValid() || s->hasBorder() )
-                r += QRect(x + ro->effectiveXPos(),y + ro->effectiveYPos(), ro->effectiveWidth(), ro->effectiveHeight());
+                r += TQRect(x + ro->effectiveXPos(),y + ro->effectiveYPos(), ro->effectiveWidth(), ro->effectiveHeight());
             else
                 r += ro->visibleFlowRegion(x+ro->xPos(), y+ro->yPos());
         }

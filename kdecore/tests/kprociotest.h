@@ -12,7 +12,7 @@
 #define __DUMMY_H__
 
 #include <stdio.h>
-#include <qobject.h>
+#include <tqobject.h>
 #include "kprocio.h"
 
 class Dummy : public QObject
@@ -27,7 +27,7 @@ class Dummy : public QObject
  
    void gotOutput(KProcIO*proc)
    {
-    QString line;
+    TQString line;
     while(true) {
        int result = proc->readln(line);
        if (result == -1) return;

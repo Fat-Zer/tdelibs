@@ -20,26 +20,26 @@
 #ifndef _KMDI_DOCK_CONTAINER_
 #define _KMDI_DOCK_CONTAINER_
 
-#include <qwidget.h>
-#include <qstringlist.h>
+#include <tqwidget.h>
+#include <tqstringlist.h>
 #include <kdockwidget.h>
-#include <qmap.h>
-#include <qdom.h>
+#include <tqmap.h>
+#include <tqdom.h>
 
 # include <kdockwidget_p.h>
 
-#include <qpushbutton.h>
+#include <tqpushbutton.h>
 
 class QWidgetStack;
 class KMultiTabBar;
 class KDockButton_Private;
 
-class KMDI_EXPORT KMdiDockContainer: public QWidget, public KDockContainer
+class KMDI_EXPORT KMdiDockContainer: public TQWidget, public KDockContainer
 {
 	Q_OBJECT
 
 public:
-	KMdiDockContainer( QWidget *parent, QWidget *win, int position, int flags );
+	KMdiDockContainer( TQWidget *parent, TQWidget *win, int position, int flags );
 	virtual ~KMdiDockContainer();
 
 	/** Get the KDockWidget that is our parent */
@@ -49,7 +49,7 @@ public:
 	 * Add a widget to this container
 	 * \param w the KDockWidget we are adding
 	 */
-	virtual void insertWidget ( KDockWidget *w, QPixmap, const QString &, int & );
+	virtual void insertWidget ( KDockWidget *w, TQPixmap, const TQString &, int & );
 
 	/**
 	 * Show a widget.
@@ -64,12 +64,12 @@ public:
 	 * Set the tooltip for the widget.
 	 * Currently, this method does nothing
 	 */
-	virtual void setToolTip ( KDockWidget *, QString & );
+	virtual void setToolTip ( KDockWidget *, TQString & );
 
 	/**
 	 * Set the pixmap for the widget.
 	 */
-	virtual void setPixmap( KDockWidget* widget, const QPixmap& pixmap );
+	virtual void setPixmap( KDockWidget* widget, const TQPixmap& pixmap );
 
 	/**
 	 * Undock the widget from the container.
@@ -94,7 +94,7 @@ public:
 	 * dockwidget's name will be the group the configuration is saved in
 	 * \param group_or_prefix the prefix to append to the parent dockwidget's name
 	 */
-	virtual void save( KConfig *, const QString& group_or_prefix );
+	virtual void save( KConfig *, const TQString& group_or_prefix );
 
 	/**
 	 * Load the config using a KConfig object
@@ -103,17 +103,17 @@ public:
 	 * dockwidget's name will be the group the configuration is loaded from
 	 * \param group_or_prefix the prefix to append to the parent dockwidget's name
 	 */
-	virtual void load( KConfig *, const QString& group_or_prefix );
+	virtual void load( KConfig *, const TQString& group_or_prefix );
 
 	/**
 	 * Save the config to a QDomElement
 	 */
-	virtual void save( QDomElement& );
+	virtual void save( TQDomElement& );
 
 	/**
 	 * Load the config from a QDomElement
 	 */
-	virtual void load( QDomElement& );
+	virtual void load( TQDomElement& );
 
 	/**
 	 * Set the style for the tabbar
@@ -121,7 +121,7 @@ public:
 	void setStyle( int );
 
 protected:
-	bool eventFilter( QObject*, QEvent* );
+	bool eventFilter( TQObject*, TQEvent* );
 
 public slots:
 	void init();
@@ -134,28 +134,28 @@ protected slots:
 	void delayedRaise();
 	void changeOverlapMode();
 private:
-	QWidget *m_mainWin;
-	QWidgetStack *m_ws;
+	TQWidget *m_mainWin;
+	TQWidgetStack *m_ws;
 	KMultiTabBar *m_tb;
 	int mTabCnt;
 	int oldtab;
 	int m_previousTab;
 	int m_position;
 	int m_separatorPos;
-	QMap<KDockWidget*, int> m_map;
-	QMap<int, KDockWidget*> m_revMap;
-	QMap<KDockWidget*, KDockButton_Private*> m_overlapButtons;
-	QStringList itemNames;
-	QMap<QString, QString> tabCaptions;
-	QMap<QString, QString> tabTooltips;
+	TQMap<KDockWidget*, int> m_map;
+	TQMap<int, KDockWidget*> m_revMap;
+	TQMap<KDockWidget*, KDockButton_Private*> m_overlapButtons;
+	TQStringList itemNames;
+	TQMap<TQString, TQString> tabCaptions;
+	TQMap<TQString, TQString> tabTooltips;
 	int m_inserted;
 	int m_delayedRaise;
 	bool m_horizontal;
 	bool m_block;
 	bool m_tabSwitching;
-	QObject *m_dragPanel;
+	TQObject *m_dragPanel;
 	KDockManager *m_dockManager;
-	QMouseEvent *m_startEvent;
+	TQMouseEvent *m_startEvent;
 	enum MovingState {NotMoving = 0, WaitingForMoveStart, Moving} m_movingState;
 signals:
 	void activated( KMdiDockContainer* );

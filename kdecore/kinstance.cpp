@@ -30,17 +30,17 @@
 #include "kglobal.h"
 #include "kmimesourcefactory.h"
 
-#include <qfont.h>
+#include <tqfont.h>
 
 #include "config.h"
 #ifndef NDEBUG
   #include <assert.h>
-  #include <qptrdict.h>
-  static QPtrList<KInstance> *allInstances = 0;
-  static QPtrDict<QCString> *allOldInstances = 0;
-  #define DEBUG_ADD do { if (!allInstances) { allInstances = new QPtrList<KInstance>(); allOldInstances = new QPtrDict<QCString>(); } allInstances->append(this); allOldInstances->insert( this, new QCString( _name)); } while (false);
+  #include <tqptrdict.h>
+  static TQPtrList<KInstance> *allInstances = 0;
+  static TQPtrDict<TQCString> *allOldInstances = 0;
+  #define DEBUG_ADD do { if (!allInstances) { allInstances = new TQPtrList<KInstance>(); allOldInstances = new TQPtrDict<TQCString>(); } allInstances->append(this); allOldInstances->insert( this, new TQCString( _name)); } while (false);
   #define DEBUG_REMOVE do { allInstances->removeRef(this); } while (false);
-  #define DEBUG_CHECK_ALIVE do { if (!allInstances->contains((KInstance*)this)) { QCString *old = allOldInstances->find((KInstance*)this); qWarning("ACCESSING DELETED KINSTANCE! (%s)", old ? old->data() : "<unknown>"); assert(false); } } while (false);
+  #define DEBUG_CHECK_ALIVE do { if (!allInstances->contains((KInstance*)this)) { TQCString *old = allOldInstances->find((KInstance*)this); qWarning("ACCESSING DELETED KINSTANCE! (%s)", old ? old->data() : "<unknown>"); assert(false); } } while (false);
 #else
   #define DEBUG_ADD
   #define DEBUG_REMOVE
@@ -61,12 +61,12 @@ public:
     }
 
     KMimeSourceFactory* mimeSourceFactory;
-    QString configName;
+    TQString configName;
     bool ownAboutdata;
     KSharedConfig::Ptr sharedConfig;
 };
 
-KInstance::KInstance( const QCString& name)
+KInstance::KInstance( const TQCString& name)
   : _dirs (0L),
     _config (0L),
     _iconLoader (0L),
@@ -184,10 +184,10 @@ KConfig	*KInstance::config() const
 
             // Check whether custom config files are allowed.
             d->sharedConfig->setGroup( "KDE Action Restrictions" );
-            QString kioskException = d->sharedConfig->readEntry("kiosk_exception");
+            TQString kioskException = d->sharedConfig->readEntry("kiosk_exception");
             if (d->sharedConfig->readBoolEntry( "custom_config", true))
             {
-               d->sharedConfig->setGroup(QString::null);
+               d->sharedConfig->setGroup(TQString::null);
             }
             else
             {
@@ -201,11 +201,11 @@ KConfig	*KInstance::config() const
 	    if ( !_name.isEmpty() )
 	        d->sharedConfig = KSharedConfig::openConfig( _name + "rc");
 	    else
-	        d->sharedConfig = KSharedConfig::openConfig( QString::null );
+	        d->sharedConfig = KSharedConfig::openConfig( TQString::null );
 	}
 	
 	// Check if we are excempt from kiosk restrictions
-	if (kde_kiosk_admin && !kde_kiosk_exception && !QCString(getenv("KDE_KIOSK_NO_RESTRICTIONS")).isEmpty())
+	if (kde_kiosk_admin && !kde_kiosk_exception && !TQCString(getenv("KDE_KIOSK_NO_RESTRICTIONS")).isEmpty())
 	{
             kde_kiosk_exception = true;
             d->sharedConfig = 0;
@@ -230,7 +230,7 @@ KSharedConfig *KInstance::sharedConfig() const
     return d->sharedConfig;
 }
 
-void KInstance::setConfigName(const QString &configName)
+void KInstance::setConfigName(const TQString &configName)
 {
     DEBUG_CHECK_ALIVE
     d->configName = configName;
@@ -260,7 +260,7 @@ const KAboutData * KInstance::aboutData() const
     return _aboutData;
 }
 
-QCString KInstance::instanceName() const
+TQCString KInstance::instanceName() const
 {
     DEBUG_CHECK_ALIVE
     return _name;

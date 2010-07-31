@@ -28,19 +28,19 @@
 #include "kfiledetailview.h"
 #include "config-kfile.h"
 
-#include <qevent.h>
+#include <tqevent.h>
 
-#include <qdir.h>
+#include <tqdir.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
-KCombiView::KCombiView( QWidget *parent, const char *name)
-  : QSplitter( parent, name),
+KCombiView::KCombiView( TQWidget *parent, const char *name)
+  : TQSplitter( parent, name),
     KFileView(),
     right(0),
     m_lastViewForNextItem(0),
@@ -51,13 +51,13 @@ KCombiView::KCombiView( QWidget *parent, const char *name)
     left->viewport()->setAcceptDrops(false);
     left->setGridX( 160 );
     left->KFileView::setViewMode( Directories );
-    left->setArrangement( QIconView::LeftToRight );
+    left->setArrangement( TQIconView::LeftToRight );
     left->setParentView( this );
     left->setAcceptDrops(false);
     left->installEventFilter( this );
     
-    connect( sig, SIGNAL( sortingChanged( QDir::SortSpec ) ),
-             SLOT( slotSortingChanged( QDir::SortSpec ) ));
+    connect( sig, TQT_SIGNAL( sortingChanged( TQDir::SortSpec ) ),
+             TQT_SLOT( slotSortingChanged( TQDir::SortSpec ) ));
 }
 
 KCombiView::~KCombiView()
@@ -72,10 +72,10 @@ void KCombiView::setRight(KFileView *view)
     right->KFileView::setViewMode( Files );
     setViewName( right->viewName() );
 
-    QValueList<int> lst;
+    TQValueList<int> lst;
     lst << left->gridX() + 2 * left->spacing();
     setSizes( lst );
-    setResizeMode( left, QSplitter::KeepSize );
+    setResizeMode( left, TQSplitter::KeepSize );
 
     right->setParentView( this );
     right->widget()->setAcceptDrops(acceptDrops());
@@ -98,7 +98,7 @@ void KCombiView::insertItem( KFileItem *item )
     }
 }
 
-void KCombiView::setSorting( QDir::SortSpec sort )
+void KCombiView::setSorting( TQDir::SortSpec sort )
 {
     if ( !right )
         kdFatal() << "You need to call setRight( someview ) before!" << endl;
@@ -293,26 +293,26 @@ KFileItem * KCombiView::prevItem( const KFileItem *fileItem ) const
     return item;
 }
 
-void KCombiView::slotSortingChanged( QDir::SortSpec sorting )
+void KCombiView::slotSortingChanged( TQDir::SortSpec sorting )
 {
     KFileView::setSorting( sorting );
 }
 
 KFileView *KCombiView::focusView( KFileView *preferred ) const
 {
-    QWidget *w = focusWidget();
+    TQWidget *w = focusWidget();
     KFileView *other = (right == preferred) ? left : right;
     return (preferred && w == preferred->widget()) ? preferred : other;
 }
 
-void KCombiView::readConfig( KConfig *config, const QString& group )
+void KCombiView::readConfig( KConfig *config, const TQString& group )
 {
     left->readConfig( config, group );
     if ( right )
         right->readConfig( config, group );
 }
 
-void KCombiView::writeConfig( KConfig *config, const QString& group )
+void KCombiView::writeConfig( KConfig *config, const TQString& group )
 {
     left->writeConfig( config, group );
     if ( right )
@@ -329,7 +329,7 @@ void KCombiView::setAcceptDrops(bool b)
     left->setAcceptDrops(b);
     if (right)
        right->widget()->setAcceptDrops(b);
-    QSplitter::setAcceptDrops(b);
+    TQSplitter::setAcceptDrops(b);
 }
 
 void KCombiView::setDropOptions_impl(int options)
@@ -351,12 +351,12 @@ void KCombiView::virtual_hook( int id, void* data )
     }
 }
 
-bool KCombiView::eventFilter( QObject *o, QEvent *e )
+bool KCombiView::eventFilter( TQObject *o, TQEvent *e )
 {
     int type = e->type();
     
     // only the focused view may have a selection
-    if ( type == QEvent::FocusIn )
+    if ( type == TQEvent::FocusIn )
     {
         if ( o == left )
             right->clearSelection();
@@ -364,7 +364,7 @@ bool KCombiView::eventFilter( QObject *o, QEvent *e )
             left->clearSelection();
     }
     
-    return QSplitter::eventFilter( o, e );
+    return TQSplitter::eventFilter( o, e );
 }
 
 #include "kcombiview.moc"

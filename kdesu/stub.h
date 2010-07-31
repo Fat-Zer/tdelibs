@@ -13,15 +13,15 @@
 #ifndef __Stub_h_Included__
 #define __Stub_h_Included__
 
-#include <qcstring.h>
-#include <qvaluelist.h>
+#include <tqcstring.h>
+#include <tqvaluelist.h>
 
 #include "process.h"
 #include "kcookie.h"
 
 #include <kdelibs_export.h>
 
-typedef QValueList<QCString> QCStringList;
+typedef TQValueList<TQCString> QCStringList;
 
 /**
  * Chat with kdesu_stub.
@@ -38,18 +38,18 @@ public:
     /**
      * Specify dcop transport
      */
-    void setDcopTransport(const QCString &dcopTransport) 
+    void setDcopTransport(const TQCString &dcopTransport) 
        { m_pCookie->setDcopTransport(dcopTransport); }
 
     /**
      * Set the command.
      */
-    void setCommand(const QCString &command) { m_Command = command; }
+    void setCommand(const TQCString &command) { m_Command = command; }
 
     /**
      * Set the target user.
      */
-    void setUser(const QCString &user) { m_User = user; }
+    void setUser(const TQCString &user) { m_User = user; }
 
     /**
      * Set to "X only mode": Sycoca is not built and kdeinit is not launched.
@@ -91,43 +91,43 @@ protected:
      * @obsolete
      */
     // KDE4 remove
-    void notifyTaskbar(const QString &suffix);
+    void notifyTaskbar(const TQString &suffix);
 
     /** 
      * This virtual function can be overloaded when special behavior is
      * desired. By default, it returns the value returned by KCookie.
      */
-    virtual QCString display() { return m_pCookie->display(); }
+    virtual TQCString display() { return m_pCookie->display(); }
 #ifdef Q_WS_X11
     /**
      * See display.
      */
-    virtual QCString displayAuth() { return m_pCookie->displayAuth(); }
+    virtual TQCString displayAuth() { return m_pCookie->displayAuth(); }
 #endif
     /**
      * See display.
      */
-    virtual QCString dcopServer() { return m_pCookie->dcopServer(); }
+    virtual TQCString dcopServer() { return m_pCookie->dcopServer(); }
     /**
      * See display.
      */
-    virtual QCString dcopAuth() { return m_pCookie->dcopAuth(); }
+    virtual TQCString dcopAuth() { return m_pCookie->dcopAuth(); }
     /**
      * See display.
      */
-    virtual QCString iceAuth() { return m_pCookie->iceAuth(); }
+    virtual TQCString iceAuth() { return m_pCookie->iceAuth(); }
 
     bool m_bXOnly;
     bool m_bDCOPForwarding;
     int m_Priority;
     int  m_Scheduler;
-    QCString m_dcopTransport;
-    QCString m_Command;
-    QCString m_User;
+    TQCString m_dcopTransport;
+    TQCString m_Command;
+    TQCString m_User;
     KCookie *m_pCookie;
     
 private:
-    QCString commaSeparatedList(QCStringList);
+    TQCString commaSeparatedList(QCStringList);
 
 protected:
     virtual void virtual_hook( int id, void* data );

@@ -16,17 +16,17 @@
    Boston, MA 02110-1301, USA.
 */
 #include "kdrawutil.h"
-#include <qdrawutil.h>
+#include <tqdrawutil.h>
 
-KDEFX_EXPORT void kDrawNextButton(QPainter *p, int x, int y, int w, int h,
-                     const QColorGroup &g, bool sunken,
-                     const QBrush *fill)
+KDEFX_EXPORT void kDrawNextButton(TQPainter *p, int x, int y, int w, int h,
+                     const TQColorGroup &g, bool sunken,
+                     const TQBrush *fill)
 {
-    QPen oldPen = p->pen();
+    TQPen oldPen = p->pen();
     int x2 = x+w-1;
     int y2 = y+h-1;
     p->fillRect(x+1, y+1, w-2, h-2,
-                fill ? *fill : g.brush(QColorGroup::Button));
+                fill ? *fill : g.brush(TQColorGroup::Button));
     p->setPen(sunken ? Qt::black : g.light());
     p->drawLine(x, y, x2-1, y);
     p->drawLine(x, y, x, y2-1);
@@ -40,16 +40,16 @@ KDEFX_EXPORT void kDrawNextButton(QPainter *p, int x, int y, int w, int h,
 }
 
 
-KDEFX_EXPORT void kDrawNextButton(QPainter *p, const QRect &r, const QColorGroup &g,
-                     bool sunken, const QBrush *fill)
+KDEFX_EXPORT void kDrawNextButton(TQPainter *p, const TQRect &r, const TQColorGroup &g,
+                     bool sunken, const TQBrush *fill)
 {
     kDrawNextButton(p, r.x(), r.y(), r.width(), r.height(), g, sunken, fill);
 }
 
-KDEFX_EXPORT void kDrawBeButton(QPainter *p, int x, int y, int w, int h,
-                   const QColorGroup &g, bool sunken, const QBrush *fill)
+KDEFX_EXPORT void kDrawBeButton(TQPainter *p, int x, int y, int w, int h,
+                   const TQColorGroup &g, bool sunken, const TQBrush *fill)
 {
-    QPen oldPen = p->pen();
+    TQPen oldPen = p->pen();
     int x2 = x+w-1;
     int y2 = y+h-1;
     p->setPen(g.dark());
@@ -90,20 +90,20 @@ KDEFX_EXPORT void kDrawBeButton(QPainter *p, int x, int y, int w, int h,
     p->setPen(oldPen);
 }
 
-KDEFX_EXPORT void kDrawBeButton(QPainter *p, QRect &r, const QColorGroup &g, bool sunken,
-                   const QBrush *fill)
+KDEFX_EXPORT void kDrawBeButton(TQPainter *p, TQRect &r, const TQColorGroup &g, bool sunken,
+                   const TQBrush *fill)
 {
     kDrawBeButton(p, r.x(), r.y(), r.width(), r.height(), g, sunken, fill);
 }
 
-KDEFX_EXPORT void kDrawRoundButton(QPainter *p, const QRect &r, const QColorGroup &g,
+KDEFX_EXPORT void kDrawRoundButton(TQPainter *p, const TQRect &r, const TQColorGroup &g,
                       bool sunken)
 {
     int x, y, x2, y2;
     r.coords(&x, &y, &x2, &y2);
     if(r.width() > 16 && r.height() > 16){
-        QPen oldPen = p->pen();
-        QPointArray hPntArray, lPntArray;
+        TQPen oldPen = p->pen();
+        TQPointArray hPntArray, lPntArray;
         hPntArray.putPoints(0, 12, x+4,y+1, x+5,y+1, // top left
                             x+3,y+2, x+2,y+3, x+1,y+4, x+1,y+5,
                             x+1,y2-5, x+1,y2-4, x+2,y2-3, // half corners
@@ -136,16 +136,16 @@ KDEFX_EXPORT void kDrawRoundButton(QPainter *p, const QRect &r, const QColorGrou
         qDrawWinPanel(p, x, y, r.width(), r.height(), g, sunken);
 }
 
-KDEFX_EXPORT void kDrawRoundButton(QPainter *p, int x, int y, int w, int h,
-                      const QColorGroup &g, bool sunken)
+KDEFX_EXPORT void kDrawRoundButton(TQPainter *p, int x, int y, int w, int h,
+                      const TQColorGroup &g, bool sunken)
 {
-    QRect r(x, y, w, h);
+    TQRect r(x, y, w, h);
     kDrawRoundButton(p, r, g, sunken);
 }
 
 #define QCOORDARRLEN(x) sizeof(x)/(sizeof(QCOORD)*2)
 
-KDEFX_EXPORT void kDrawRoundMask(QPainter *p, int x, int y, int w, int h, bool clear)
+KDEFX_EXPORT void kDrawRoundMask(TQPainter *p, int x, int y, int w, int h, bool clear)
 {
     // round edge fills
     static const QCOORD btm_left_fill[]={ 0,0,1,0,2,0,3,0,4,0,0,1,1,1,2,1,3,1,4,1,
@@ -161,14 +161,14 @@ KDEFX_EXPORT void kDrawRoundMask(QPainter *p, int x, int y, int w, int h, bool c
     3,1,3,2,3,3,3,4,3,0,4,1,4,2,4,3,4,4,4 };
 
     if(clear)
-        p->fillRect(x, y, w, h, QBrush(Qt::color0, Qt::SolidPattern));
+        p->fillRect(x, y, w, h, TQBrush(Qt::color0, Qt::SolidPattern));
     
-    QBrush fillBrush(Qt::color1, Qt::SolidPattern);
+    TQBrush fillBrush(Qt::color1, Qt::SolidPattern);
     p->setPen(Qt::color1);
     if(w > 16 && h > 16){
         int x2 = x+w-1;
         int y2 = y+h-1;
-        QPointArray a(QCOORDARRLEN(top_left_fill), top_left_fill);
+        TQPointArray a(QCOORDARRLEN(top_left_fill), top_left_fill);
         a.translate(1, 1);
         p->drawPoints(a);
         a.setPoints(QCOORDARRLEN(btm_left_fill), btm_left_fill);
@@ -194,35 +194,35 @@ KDEFX_EXPORT void kDrawRoundMask(QPainter *p, int x, int y, int w, int h, bool c
         p->fillRect(x, y, w, h, fillBrush);
 }
 
-KDEFX_EXPORT void kRoundMaskRegion(QRegion &r, int x, int y, int w, int h)
+KDEFX_EXPORT void kRoundMaskRegion(TQRegion &r, int x, int y, int w, int h)
 {
-    // using a bunch of QRect lines seems much more efficient than bitmaps or
+    // using a bunch of TQRect lines seems much more efficient than bitmaps or
     // point arrays, even tho it uses more statements
-    r += QRect(x+6, y+0, w-12, h);
-    r += QRect(x+5, y+1, 1, h-2); // left
-    r += QRect(x+4, y+1, 1, h-2);
-    r += QRect(x+3, y+2, 1, h-4);
-    r += QRect(x+2, y+3, 1, h-6);
-    r += QRect(x+1, y+4, 1, h-8);
-    r += QRect(x, y+6, 1, h-12);
+    r += TQRect(x+6, y+0, w-12, h);
+    r += TQRect(x+5, y+1, 1, h-2); // left
+    r += TQRect(x+4, y+1, 1, h-2);
+    r += TQRect(x+3, y+2, 1, h-4);
+    r += TQRect(x+2, y+3, 1, h-6);
+    r += TQRect(x+1, y+4, 1, h-8);
+    r += TQRect(x, y+6, 1, h-12);
     int x2 = x+w-1;
-    r += QRect(x2-5, y+1, 1, h-2); // right
-    r += QRect(x2-4, y+1, 1, h-2);
-    r += QRect(x2-3, y+2, 1, h-4);
-    r += QRect(x2-2, y+3, 1, h-6);
-    r += QRect(x2-1, y+4, 1, h-8);
-    r += QRect(x2, y+6, 1, h-12);
+    r += TQRect(x2-5, y+1, 1, h-2); // right
+    r += TQRect(x2-4, y+1, 1, h-2);
+    r += TQRect(x2-3, y+2, 1, h-4);
+    r += TQRect(x2-2, y+3, 1, h-6);
+    r += TQRect(x2-1, y+4, 1, h-8);
+    r += TQRect(x2, y+6, 1, h-12);
 }
 
-KDEFX_EXPORT void kColorBitmaps(QPainter *p, const QColorGroup &g, int x, int y,
-                   QBitmap *lightColor, QBitmap *midColor,
-                   QBitmap *midlightColor, QBitmap *darkColor,
-                   QBitmap *blackColor, QBitmap *whiteColor)
+KDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int y,
+                   TQBitmap *lightColor, TQBitmap *midColor,
+                   TQBitmap *midlightColor, TQBitmap *darkColor,
+                   TQBitmap *blackColor, TQBitmap *whiteColor)
 {
-    QBitmap *bitmaps[]={lightColor, midColor, midlightColor, darkColor,
+    TQBitmap *bitmaps[]={lightColor, midColor, midlightColor, darkColor,
         blackColor, whiteColor};
 
-    QColor colors[]={g.light(), g.mid(), g.midlight(), g.dark(),
+    TQColor colors[]={g.light(), g.mid(), g.midlight(), g.dark(),
         Qt::black, Qt::white};
 
     int i;
@@ -236,7 +236,7 @@ KDEFX_EXPORT void kColorBitmaps(QPainter *p, const QColorGroup &g, int x, int y,
     }
 }
 
-KDEFX_EXPORT void kColorBitmaps(QPainter *p, const QColorGroup &g, int x, int y, int w,
+KDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int y, int w,
                    int h, bool isXBitmaps, const uchar *lightColor,
                    const uchar *midColor, const uchar *midlightColor,
                    const uchar *darkColor, const uchar *blackColor,
@@ -245,14 +245,14 @@ KDEFX_EXPORT void kColorBitmaps(QPainter *p, const QColorGroup &g, int x, int y,
     const uchar *data[]={lightColor, midColor, midlightColor, darkColor,
         blackColor, whiteColor};
 
-    QColor colors[]={g.light(), g.mid(), g.midlight(), g.dark(),
+    TQColor colors[]={g.light(), g.mid(), g.midlight(), g.dark(),
         Qt::black, Qt::white};
 
     int i;
-    QBitmap b;
+    TQBitmap b;
     for(i=0; i < 6; ++i){
         if(data[i]){
-            b = QBitmap(w, h, data[i], isXBitmaps);
+            b = TQBitmap(w, h, data[i], isXBitmaps);
             b.setMask(b);
             p->setPen(colors[i]);
             p->drawPixmap(x, y, b);

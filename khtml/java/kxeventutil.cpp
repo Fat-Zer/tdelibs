@@ -23,14 +23,14 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include "kxeventutil.h"
 
-QString KXEventUtil::getXAnyEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXAnyEventInfo(XEvent *xevent) {
     XAnyEvent *e = &xevent->xany;
-    QString winname("window");
+    TQString winname("window");
     switch (e->type) {
         case  GraphicsExpose:
         case  NoExpose:
@@ -49,7 +49,7 @@ QString KXEventUtil::getXAnyEventInfo(XEvent *xevent) {
         default:
             break;
     } 
-    QString s("serial=%1 send_event=%2 display=0x%3 %4=%5");
+    TQString s("serial=%1 send_event=%2 display=0x%3 %4=%5");
     return 
      s.arg(e->serial)
      .arg(e->send_event)
@@ -57,10 +57,10 @@ QString KXEventUtil::getXAnyEventInfo(XEvent *xevent) {
      .arg(winname)
      .arg(e->window);
 }
-QString KXEventUtil::getXButtonEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXButtonEventInfo(XEvent *xevent) {
     XButtonEvent *e = &xevent->xbutton; 
-    QString s("root=%1 subwindow=%2 time=%3 x=%4 y=%5 x_root=%6 y_root=%7 state=%8 button=%9");
-    QString t(" same_screen=%1");
+    TQString s("root=%1 subwindow=%2 time=%3 x=%4 y=%5 x_root=%6 y_root=%7 state=%8 button=%9");
+    TQString t(" same_screen=%1");
     return 
      s.arg(e->root)
      .arg(e->subwindow)
@@ -74,10 +74,10 @@ QString KXEventUtil::getXButtonEventInfo(XEvent *xevent) {
      +t.arg(e->same_screen);
 }
 
-QString KXEventUtil::getXKeyEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXKeyEventInfo(XEvent *xevent) {
     XKeyEvent *e = &xevent->xkey; 
-    QString s("root=%1 subwindow=%2 time=%3 x=%4 y=%5 x_root=%6 y_root=%7 state=%8 keycode=%9");
-    QString t(" same_screen=%1");
+    TQString s("root=%1 subwindow=%2 time=%3 x=%4 y=%5 x_root=%6 y_root=%7 state=%8 keycode=%9");
+    TQString t(" same_screen=%1");
     return 
      s.arg(e->root)
      .arg(e->subwindow)
@@ -91,10 +91,10 @@ QString KXEventUtil::getXKeyEventInfo(XEvent *xevent) {
      +t.arg(e->same_screen);
 }
 
-QString KXEventUtil::getXMotionEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXMotionEventInfo(XEvent *xevent) {
     XMotionEvent *e = &xevent->xmotion; 
-    QString s("root=%1 subwindow=%2 time=%3 x=%4 y=%5 x_root=%6 y_root=%7 state=%8 is_hint=%9");
-    QString t(" same_screen=%1");
+    TQString s("root=%1 subwindow=%2 time=%3 x=%4 y=%5 x_root=%6 y_root=%7 state=%8 is_hint=%9");
+    TQString t(" same_screen=%1");
     return 
      s.arg(e->root)
      .arg(e->subwindow)
@@ -107,9 +107,9 @@ QString KXEventUtil::getXMotionEventInfo(XEvent *xevent) {
      .arg(e->is_hint)
      +t.arg(e->same_screen);
 }
-QString KXEventUtil::getXCrossingEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXCrossingEventInfo(XEvent *xevent) {
     XCrossingEvent *e = &xevent->xcrossing;
-    QString ms, ds;
+    TQString ms, ds;
     switch (e->mode) {
         case NotifyNormal: ms = "NotifyNormal"; break;
         case NotifyGrab: ms = "NotifyGrab"; break;
@@ -125,8 +125,8 @@ QString KXEventUtil::getXCrossingEventInfo(XEvent *xevent) {
         default: ds="?";
     }
           
-    QString s("root=%1 subwindow=%2 time=%3 x=%4 y=%5 x_root=%6 y_root=%7 mode=%8=%9 ");
-    QString t("detail=%1=%2 same_screen=%3 focus=%4 state=%5");
+    TQString s("root=%1 subwindow=%2 time=%3 x=%4 y=%5 x_root=%6 y_root=%7 mode=%8=%9 ");
+    TQString t("detail=%1=%2 same_screen=%3 focus=%4 state=%5");
     return 
      s.arg(e->root)
      .arg(e->subwindow)
@@ -142,16 +142,16 @@ QString KXEventUtil::getXCrossingEventInfo(XEvent *xevent) {
      .arg(e->focus)
      .arg(e->state);
 }
-QString KXEventUtil::getXFocusChangeEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXFocusChangeEventInfo(XEvent *xevent) {
     XFocusChangeEvent *e = &xevent->xfocus; 
-    QString s("mode=%1 detail=%2");
+    TQString s("mode=%1 detail=%2");
     return 
      s.arg(e->mode)
      .arg(e->detail);
 }
-QString KXEventUtil::getXExposeEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXExposeEventInfo(XEvent *xevent) {
     XExposeEvent *e = &xevent->xexpose; 
-    QString s("x=%1 y=%2 width=%3 height=%4 count=%5");
+    TQString s("x=%1 y=%2 width=%3 height=%4 count=%5");
     return
      s.arg(e->x)
      .arg(e->y)
@@ -162,9 +162,9 @@ QString KXEventUtil::getXExposeEventInfo(XEvent *xevent) {
 
 
 
-QString KXEventUtil::getXGraphicsExposeEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXGraphicsExposeEventInfo(XEvent *xevent) {
     XGraphicsExposeEvent *e = &xevent->xgraphicsexpose; 
-    QString s("x=%1 y=%2 width=%3 height=%4 count=%5 major_code=%6 minor_code=%7");
+    TQString s("x=%1 y=%2 width=%3 height=%4 count=%5 major_code=%6 minor_code=%7");
     return 
      s.arg(e->x)
      .arg(e->y)
@@ -174,18 +174,18 @@ QString KXEventUtil::getXGraphicsExposeEventInfo(XEvent *xevent) {
      .arg(e->major_code)
      .arg(e->minor_code);
 }
-QString KXEventUtil::getXNoExposeEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXNoExposeEventInfo(XEvent *xevent) {
     XNoExposeEvent *e = &xevent->xnoexpose; 
-    QString s("major_code=%1 minor_code=%2");
+    TQString s("major_code=%1 minor_code=%2");
     return 
      s.arg(e->major_code)
      .arg(e->minor_code);
 }
 
 
-QString KXEventUtil::getXCreateWindowEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXCreateWindowEventInfo(XEvent *xevent) {
     XCreateWindowEvent *e = &xevent->xcreatewindow; 
-    QString s("window=%1 x=%2 y=%3 width=%4 height=%5 border_width=%6 override_redirect=%7");
+    TQString s("window=%1 x=%2 y=%3 width=%4 height=%5 border_width=%6 override_redirect=%7");
     return 
      s.arg(e->window)
      .arg(e->x)
@@ -196,47 +196,47 @@ QString KXEventUtil::getXCreateWindowEventInfo(XEvent *xevent) {
      .arg(e->override_redirect);
 }
 
-QString KXEventUtil::getXDestroyWindowEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXDestroyWindowEventInfo(XEvent *xevent) {
     XDestroyWindowEvent *e = &xevent->xdestroywindow; 
-    QString s("window=%1");
+    TQString s("window=%1");
     return 
      s.arg(e->window);
 }
-QString KXEventUtil::getXMapEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXMapEventInfo(XEvent *xevent) {
     XMapEvent *e = &xevent->xmap; 
-    QString s("window=%1 override_redirect=%2");
+    TQString s("window=%1 override_redirect=%2");
     return 
      s.arg(e->window)
      .arg(e->override_redirect);
 }
-QString KXEventUtil::getXMappingEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXMappingEventInfo(XEvent *xevent) {
     XMappingEvent *e = &xevent->xmapping; 
-    QString s("request=%1 first_keycode=%2 count=%3");
+    TQString s("request=%1 first_keycode=%2 count=%3");
     return 
      s.arg(e->request)
      .arg(e->first_keycode)
      .arg(e->count);
 }
-QString KXEventUtil::getXReparentEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXReparentEventInfo(XEvent *xevent) {
     XReparentEvent *e = &xevent->xreparent; 
-    QString s("window=%1 parent=%2 x=%3 y=%4");
+    TQString s("window=%1 parent=%2 x=%3 y=%4");
     return 
      s.arg(e->window)
      .arg(e->parent)
      .arg(e->x)
      .arg(e->y);
 }
-QString KXEventUtil::getXUnmapEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXUnmapEventInfo(XEvent *xevent) {
     XUnmapEvent *e = &xevent->xunmap; 
-    QString s("window=%1 from_configure=%2");
+    TQString s("window=%1 from_configure=%2");
     return 
      s.arg(e->window)
      .arg(e->from_configure);
 }
 
-QString KXEventUtil::getXConfigureEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXConfigureEventInfo(XEvent *xevent) {
     XConfigureEvent *e = &xevent->xconfigure;
-    QString s("window=%1 x=%2 y=%2 width=%3 height=%4 border_width=%5 above=%6 override_redirect=%7");
+    TQString s("window=%1 x=%2 y=%2 width=%3 height=%4 border_width=%5 above=%6 override_redirect=%7");
     return 
         s.arg(e->window)
         .arg(e->x).arg(e->y)
@@ -246,10 +246,10 @@ QString KXEventUtil::getXConfigureEventInfo(XEvent *xevent) {
         .arg(e->override_redirect);
 }
 
-QString KXEventUtil::getXConfigureRequestEventInfo(XEvent *xevent) {
+TQString KXEventUtil::getXConfigureRequestEventInfo(XEvent *xevent) {
     XConfigureRequestEvent *e = &xevent->xconfigurerequest;
     unsigned vm = e->value_mask;
-    QStringList vml;
+    TQStringList vml;
     if (vm & CWX)           vml.append("CWX");
     if (vm & CWY)           vml.append("CWY");
     if (vm & CWWidth)       vml.append("CWWidth");
@@ -257,8 +257,8 @@ QString KXEventUtil::getXConfigureRequestEventInfo(XEvent *xevent) {
     if (vm & CWBorderWidth) vml.append("CWBorderWidth");
     if (vm & CWSibling)     vml.append("CWSibling");
     if (vm & CWStackMode)   vml.append("CWStackMode");
-    QString vms = vml.join("|");
-    QString s("window=%1 x=%2 y=%2 width=%3 height=%4 border_width=%5 above=%6 detail=%7 value_mask=0x%8=%9");
+    TQString vms = vml.join("|");
+    TQString s("window=%1 x=%2 y=%2 width=%3 height=%4 border_width=%5 above=%6 detail=%7 value_mask=0x%8=%9");
     return 
         s.arg(e->window)
         .arg(e->x).arg(e->y)
@@ -269,11 +269,11 @@ QString KXEventUtil::getXConfigureRequestEventInfo(XEvent *xevent) {
         .arg(e->value_mask, 0, 16)
         .arg(vms);
 }
-QString KXEventUtil::getX11EventInfo( XEvent* e )
+TQString KXEventUtil::getX11EventInfo( XEvent* e )
 {
-    QString anyInfo = getXAnyEventInfo(e);
-    QString info = "";
-    QString s;
+    TQString anyInfo = getXAnyEventInfo(e);
+    TQString info = "";
+    TQString s;
     switch( e->type )
     {
         case KeyPress:

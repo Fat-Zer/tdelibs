@@ -28,7 +28,7 @@
 #define   __net_wm_h
 
 #include "kdelibs_export.h"
-#include <qwidget.h>
+#include <tqwidget.h>
 #ifdef Q_WS_X11
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -381,7 +381,7 @@ public:
        Returns the desktop layout number of columns and rows. Note that
        either may be 0 (see _NET_DESKTOP_LAYOUT).
     **/
-    QSize desktopLayoutColumnsRows() const;
+    TQSize desktopLayoutColumnsRows() const;
 
     /**
        Returns the desktop layout starting corner.

@@ -51,12 +51,12 @@ public:
 	/** This constructor is what to use when no GUI is required, as in the
 	 * case of a KMediaPlayer/Engine.
 	 */
-	Player(QObject *parent, const char *name);
+	Player(TQObject *parent, const char *name);
 
 	/** This constructor is what to use when a GUI is required, as in the
 	 * case of a KMediaPlayer/Player.
 	 */
-	Player(QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name);
+	Player(TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name);
 
 	virtual ~Player(void);
 

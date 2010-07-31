@@ -22,10 +22,10 @@
 #ifndef __kguiitem_h__
 #define __kguiitem_h__
 
-#include <qstring.h>
-#include <qiconset.h>
-#include <qpixmap.h>
-#include <qvaluelist.h>
+#include <tqstring.h>
+#include <tqiconset.h>
+#include <tqpixmap.h>
+#include <tqvaluelist.h>
 #include <kicontheme.h>
 #include <kglobal.h>
 
@@ -44,32 +44,32 @@ public:
     // subtle bugs otherwise - the icon name, tooltip and whatsthis text
     // get changed behind your back if you do 'setButtonFoo( "Bar" );'
     // It gives the wrong impression that you just change the text.
-    KGuiItem( const QString &text, 
-              const QString &iconName  = QString::null,
-              const QString &toolTip   = QString::null, 
-              const QString &whatsThis = QString::null );
+    KGuiItem( const TQString &text, 
+              const TQString &iconName  = TQString::null,
+              const TQString &toolTip   = TQString::null, 
+              const TQString &whatsThis = TQString::null );
 
-    KGuiItem( const QString &text, const QIconSet &iconSet, 
-              const QString &toolTip   = QString::null, 
-              const QString &whatsThis = QString::null );
+    KGuiItem( const TQString &text, const TQIconSet &iconSet, 
+              const TQString &toolTip   = TQString::null, 
+              const TQString &whatsThis = TQString::null );
 
     KGuiItem( const KGuiItem &rhs );
     KGuiItem &operator=( const KGuiItem &rhs );
 
     ~KGuiItem();
 
-    QString text() const;
-    QString plainText() const;
+    TQString text() const;
+    TQString plainText() const;
 #ifndef KDE_NO_COMPAT
-    QIconSet iconSet( KIcon::Group, int size = 0, KInstance* instance = KGlobal::instance()) const;
-    QIconSet iconSet() const { return iconSet( KIcon::Small ); }
+    TQIconSet iconSet( KIcon::Group, int size = 0, KInstance* instance = KGlobal::instance()) const;
+    TQIconSet iconSet() const { return iconSet( KIcon::Small ); }
 #else
-    QIconSet iconSet( KIcon::Group=KIcon::Small, int size = 0, KInstance* instance = KGlobal::instance()) const;
+    TQIconSet iconSet( KIcon::Group=KIcon::Small, int size = 0, KInstance* instance = KGlobal::instance()) const;
 #endif
 
-    QString iconName() const;
-    QString toolTip() const;
-    QString whatsThis() const;
+    TQString iconName() const;
+    TQString toolTip() const;
+    TQString whatsThis() const;
     bool isEnabled() const;
     /**
      * returns whether an icon is defined, doesn't tell if it really exists
@@ -79,11 +79,11 @@ public:
     bool hasIconSet() const { return hasIcon(); }
 #endif
 
-    void setText( const QString &text );
-    void setIconSet( const QIconSet &iconset );
-    void setIconName( const QString &iconName );
-    void setToolTip( const QString &tooltip );
-    void setWhatsThis( const QString &whatsThis );
+    void setText( const TQString &text );
+    void setIconSet( const TQIconSet &iconset );
+    void setIconName( const TQString &iconName );
+    void setToolTip( const TQString &tooltip );
+    void setWhatsThis( const TQString &whatsThis );
     void setEnabled( bool enable );
 
 private:

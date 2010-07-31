@@ -20,12 +20,12 @@
 #ifndef _VFOLDER_MENU_H_
 #define _VFOLDER_MENU_H_
 
-#include <qobject.h>
-#include <qdom.h>
-#include <qstringlist.h>
-#include <qptrdict.h>
-#include <qptrlist.h>
-#include <qvaluestack.h>
+#include <tqobject.h>
+#include <tqdom.h>
+#include <tqstringlist.h>
+#include <tqptrdict.h>
+#include <tqptrlist.h>
+#include <tqvaluestack.h>
 
 #include <kservice.h>
 
@@ -40,15 +40,15 @@ public:
      ~SubMenu() { subMenus.setAutoDelete(true); }
   
   public:
-     QString name;
-     QString directoryFile;
-     QPtrList<SubMenu> subMenus;
-     QDict<KService> items;
-     QDict<KService> excludeItems; // Needed when merging due to Move.
-     QDomElement defaultLayoutNode;
-     QDomElement layoutNode;
+     TQString name;
+     TQString directoryFile;
+     TQPtrList<SubMenu> subMenus;
+     TQDict<KService> items;
+     TQDict<KService> excludeItems; // Needed when merging due to Move.
+     TQDomElement defaultLayoutNode;
+     TQDomElement layoutNode;
      bool isDeleted;
-     QStringList layoutList;
+     TQStringList layoutList;
      appsInfo *apps_info;
   };
 
@@ -64,7 +64,7 @@ public:
    * @param forceLegacyLoad flag indicating whether the KDE "applnk"
    * directory should be processed at least once.
    */
-  SubMenu *parseMenu(const QString &file, bool forceLegacyLoad=false);
+  SubMenu *parseMenu(const TQString &file, bool forceLegacyLoad=false);
   
   /**
    * Returns a list of all directories involved in the last call to 
@@ -73,16 +73,16 @@ public:
    * A change in any of these directories or in any of their child-
    * directories can result in changes to the menu.
    */
-  QStringList allDirectories();
+  TQStringList allDirectories();
 
   /**
    * Debug function to enable tracking of what happens with a specific
    * menu item id
    */
-  void setTrackId(const QString &id);
+  void setTrackId(const TQString &id);
 
 signals:
-  void newService(const QString &path, KService **entry);
+  void newService(const TQString &path, KService **entry);
 
 public:
   struct MenuItem 
@@ -96,28 +96,28 @@ public:
   };
 
 public:  
-  QStringList m_allDirectories; // A list of all the directories that we touch
+  TQStringList m_allDirectories; // A list of all the directories that we touch
 
-  QStringList m_defaultDataDirs;
-  QStringList m_defaultAppDirs;
-  QStringList m_defaultDirectoryDirs;
-  QStringList m_defaultMergeDirs;
-  QStringList m_defaultLegacyDirs;
+  TQStringList m_defaultDataDirs;
+  TQStringList m_defaultAppDirs;
+  TQStringList m_defaultDirectoryDirs;
+  TQStringList m_defaultMergeDirs;
+  TQStringList m_defaultLegacyDirs;
 
-  QStringList m_directoryDirs; // Current set of applicable <DirectoryDir> dirs
-  QDict<SubMenu> m_legacyNodes; // Dictionary that stores Menu nodes 
+  TQStringList m_directoryDirs; // Current set of applicable <DirectoryDir> dirs
+  TQDict<SubMenu> m_legacyNodes; // Dictionary that stores Menu nodes 
                                 // associated with legacy tree.
 
   class docInfo {
   public:
-     QString baseDir; // Relative base dir of current menu file
-     QString baseName; // Filename of current menu file without ".menu"
-     QString path; // Full path of current menu file including ".menu"
+     TQString baseDir; // Relative base dir of current menu file
+     TQString baseName; // Filename of current menu file without ".menu"
+     TQString path; // Full path of current menu file including ".menu"
   };
   
 
   docInfo m_docInfo; // docInfo for current doc
-  QValueStack<VFolderMenu::docInfo> m_docInfoStack;
+  TQValueStack<VFolderMenu::docInfo> m_docInfoStack;
 
   class appsInfo {
   public:
@@ -126,39 +126,39 @@ public:
         dictCategories.setAutoDelete(true);
      }
 
-     QDict<KService::List> dictCategories; // category -> apps
-     QDict<KService> applications; // rel path -> service
-     QPtrDict<QString> appRelPaths; // service -> rel path
+     TQDict<KService::List> dictCategories; // category -> apps
+     TQDict<KService> applications; // rel path -> service
+     TQPtrDict<TQString> appRelPaths; // service -> rel path
   };
   
   appsInfo *m_appsInfo; // appsInfo for current menu
-  QPtrList<appsInfo> m_appsInfoStack; // All applicable appsInfo for current menu
-  QPtrList<appsInfo> m_appsInfoList; // List of all appsInfo objects.
-  QDict<KService> m_usedAppsDict; // all applications that have been allocated
+  TQPtrList<appsInfo> m_appsInfoStack; // All applicable appsInfo for current menu
+  TQPtrList<appsInfo> m_appsInfoList; // List of all appsInfo objects.
+  TQDict<KService> m_usedAppsDict; // all applications that have been allocated
   
-  QDomDocument m_doc;
+  TQDomDocument m_doc;
   SubMenu *m_rootMenu;
   SubMenu *m_currentMenu;
   bool m_forcedLegacyLoad;
   bool m_legacyLoaded;
   bool m_track;
-  QString m_trackId;
+  TQString m_trackId;
 
 private:
   /**
    * Lookup application by relative path
    */
-  KService *findApplication(const QString &relPath);
+  KService *findApplication(const TQString &relPath);
 
   /**
    * Lookup applications by category
    */
-  QPtrList<KService::List> findCategory(const QString &category);
+  TQPtrList<KService::List> findCategory(const TQString &category);
   
   /**
    * Add new application
    */
-  void addApplication(const QString &id, KService *service);
+  void addApplication(const TQString &id, KService *service);
   
   /**
    * Build application indices
@@ -180,25 +180,25 @@ private:
    */
   void unloadAppsInfo();
 
-  QDomDocument loadDoc();
-  void mergeMenus(QDomElement &docElem, QString &name);
-  void mergeFile(QDomElement &docElem, const QDomNode &mergeHere);
-  void loadMenu(const QString &filename);
+  TQDomDocument loadDoc();
+  void mergeMenus(TQDomElement &docElem, TQString &name);
+  void mergeFile(TQDomElement &docElem, const TQDomNode &mergeHere);
+  void loadMenu(const TQString &filename);
 
   /**
    * Merge the items2 set into the items1 set
    */
-  void includeItems(QDict<KService> *items1, QDict<KService> *items2);
+  void includeItems(TQDict<KService> *items1, TQDict<KService> *items2);
 
   /**
    * Remove all items from the items1 set that aren't also in the items2 set
    */
-  void matchItems(QDict<KService> *items1, QDict<KService> *items2);
+  void matchItems(TQDict<KService> *items1, TQDict<KService> *items2);
 
   /**
    * Remove all items in the items2 set from the items1 set
    */
-  void excludeItems(QDict<KService> *items1, QDict<KService> *items2);
+  void excludeItems(TQDict<KService> *items1, TQDict<KService> *items2);
 
   /**
    * Search the parentMenu tree for the menu menuName and takes it
@@ -207,7 +207,7 @@ private:
    * This function returns a pointer to the menu if it was found 
    * or 0 if it was not found.
    */
-  SubMenu* takeSubMenu(SubMenu *parentMenu, const QString &menuName);
+  SubMenu* takeSubMenu(SubMenu *parentMenu, const TQString &menuName);
 
   /**
    * Insert the menu newMenu with name menuName into the parentMenu.
@@ -218,7 +218,7 @@ private:
    * If reversePriority is true, the existing menu has priority over newMenu
    * during merging.
    */
-  void insertSubMenu(VFolderMenu::SubMenu *parentMenu, const QString &menuName, VFolderMenu::SubMenu *newMenu, bool reversePriority=false);
+  void insertSubMenu(VFolderMenu::SubMenu *parentMenu, const TQString &menuName, VFolderMenu::SubMenu *newMenu, bool reversePriority=false);
 
   /**
    * Merge menu2 and it's submenus into menu1 and it's submenus
@@ -231,41 +231,41 @@ private:
    * Inserts service into the menu using name relative to parentMenu
    * Any missing sub-menus are created.
    */
-  void insertService(SubMenu *parentMenu, const QString &name, KService *newService);
+  void insertService(SubMenu *parentMenu, const TQString &name, KService *newService);
 
   /**
    * Register the directory that @p file is in.
    * @see allDirectories()
    */
-  void registerFile(const QString &file);
+  void registerFile(const TQString &file);
 
   /**
    * Fill m_usedAppsDict with all applications from @p items
    */
-  void markUsedApplications(QDict<KService> *items);
+  void markUsedApplications(TQDict<KService> *items);
 
   /**
    * Register @p directory
    * @see allDirectories()
    */
-  void registerDirectory(const QString &directory);
+  void registerDirectory(const TQString &directory);
 
   void processKDELegacyDirs();
-  void processLegacyDir(const QString &dir, const QString &relDir, const QString &prefix);
-  void processMenu(QDomElement &docElem, int pass);
-  void layoutMenu(VFolderMenu::SubMenu *menu, QStringList defaultLayout);
-  void processCondition(QDomElement &docElem, QDict<KService> *items);
+  void processLegacyDir(const TQString &dir, const TQString &relDir, const TQString &prefix);
+  void processMenu(TQDomElement &docElem, int pass);
+  void layoutMenu(VFolderMenu::SubMenu *menu, TQStringList defaultLayout);
+  void processCondition(TQDomElement &docElem, TQDict<KService> *items);
 
   void initDirs();
   
-  void pushDocInfo(const QString &fileName, const QString &baseDir = QString::null);
-  void pushDocInfoParent(const QString &basePath, const QString &baseDir);
+  void pushDocInfo(const TQString &fileName, const TQString &baseDir = TQString::null);
+  void pushDocInfoParent(const TQString &basePath, const TQString &baseDir);
   void popDocInfo();
   
-  QString absoluteDir(const QString &_dir, const QString &baseDir, bool keepRelativeToCfg=false);
-  QString locateMenuFile(const QString &fileName); 
-  QString locateDirectoryFile(const QString &fileName);
-  void loadApplications(const QString&, const QString&);
+  TQString absoluteDir(const TQString &_dir, const TQString &baseDir, bool keepRelativeToCfg=false);
+  TQString locateMenuFile(const TQString &fileName); 
+  TQString locateDirectoryFile(const TQString &fileName);
+  void loadApplications(const TQString&, const TQString&);
 };
 
 #endif

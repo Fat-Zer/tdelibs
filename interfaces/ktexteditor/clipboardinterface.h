@@ -40,7 +40,7 @@ class KTEXTEDITOR_EXPORT ClipboardInterface
     unsigned int clipboardInterfaceNumber () const;
     
   protected:  
-    void setClipboardInterfaceDCOPSuffix (const QCString &suffix); 
+    void setClipboardInterfaceDCOPSuffix (const TQCString &suffix); 
         
   /**
   * slots !!!

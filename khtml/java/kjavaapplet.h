@@ -26,9 +26,9 @@
 
 #include <kurl.h>
 
-#include <qobject.h>
-#include <qstringlist.h>
-#include <qmap.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
+#include <tqmap.h>
 
 /**
  * @short A Java applet
@@ -74,90 +74,90 @@ public:
     /**
      * Specify the name of the class file to run. For example 'Lake.class'.
      */
-    void setAppletClass( const QString& clazzName );
+    void setAppletClass( const TQString& clazzName );
 
     /**
      * Get the name of the Class file the applet should run
      */
-    QString& appletClass();
+    TQString& appletClass();
 
     /**
      * Set the URL of the document embedding the applet.
      */
-    void setBaseURL( const QString& base );
+    void setBaseURL( const TQString& base );
 
     /**
      * get the Base URL of the document embedding the applet
      */
-    QString& baseURL();
+    TQString& baseURL();
 
     /**
      * Set the codebase of the applet classes.
      */
-    void setCodeBase( const QString& codeBase );
+    void setCodeBase( const TQString& codeBase );
 
     /**
      * Get the codebase of the applet classes
      */
-    QString& codeBase();
+    TQString& codeBase();
 
     /**
      * Set the list of archives at the Applet's codebase to search in for
      * class files and other resources
      */
-    void setArchives( const QString& _archives );
+    void setArchives( const TQString& _archives );
 
     /**
      * Get the list of Archives that should be searched for class files
      * and other resources
      */
-    QString& archives();
+    TQString& archives();
 
     /**
      * Set the name the applet should be called in its context
      */
-    void setAppletName( const QString& name );
+    void setAppletName( const TQString& name );
 
     /**
      * Get the name the applet should be called in its context
      */
-    QString& appletName();
+    TQString& appletName();
 
     /**
      * Set the size of the applet
      */
-    void setSize( QSize size );
+    void setSize( TQSize size );
 
     /**
      * Get the size of the applet
      */
-    QSize size();
+    TQSize size();
 
     /**
      * Specify a parameter to be passed to the applet.
      */
-    void setParameter( const QString& name, const QString& value );
+    void setParameter( const TQString& name, const TQString& value );
 
     /**
      * Look up the parameter value for the given Parameter.  Returns
-     * QString::null if the name has not been set.
+     * TQString::null if the name has not been set.
      */
-    QString& parameter( const QString& name );
+    TQString& parameter( const TQString& name );
 
     /**
      * Get a reference to the Paramaters and their values
      */
-    QMap<QString,QString>& getParams();
+    TQMap<TQString,TQString>& getParams();
 
     /**
      * Set the window title for swallowing
      */
-    void setWindowName( const QString& title );
+    void setWindowName( const TQString& title );
 
     /**
      * Get the window title this applet should use
      */
-    QString& getWindowName();
+    TQString& getWindowName();
 
     /**
      * Interface for applets to resize themselves
@@ -206,20 +206,20 @@ public:
     /**
      * Get/Set the user name
      */
-    void setUser(const QString & _user) { username = _user; }
-    const QString & user () const { return username; }
+    void setUser(const TQString & _user) { username = _user; }
+    const TQString & user () const { return username; }
 
     /**
      * Get/Set the user password
      */
-    void setPassword(const QString & _password) { userpassword = _password; }
-    const QString & password () const { return userpassword; }
+    void setPassword(const TQString & _password) { userpassword = _password; }
+    const TQString & password () const { return userpassword; }
 
     /**
      * Get/Set the auth name
      */
-    void setAuthName(const QString & _auth) { authname = _auth; }
-    const QString & authName () const { return authname; }
+    void setAuthName(const TQString & _auth) { authname = _auth; }
+    const TQString & authName () const { return authname; }
 
     /**
     * called from the protocol engine
@@ -234,18 +234,18 @@ public:
     /**
      * JavaScript coming from Java
      **/
-    void jsData (const QStringList & args) { emit jsEvent (args); }
+    void jsData (const TQStringList & args) { emit jsEvent (args); }
 signals:
-    void jsEvent (const QStringList & args);
+    void jsEvent (const TQStringList & args);
 private:
-    void showStatus( const QString &msg);
+    void showStatus( const TQString &msg);
     KJavaAppletPrivate*    d;
-    QMap<QString, QString> params;
+    TQMap<TQString, TQString> params;
     KJavaAppletContext*    context;
     int                    id;
-    QString                username;
-    QString                userpassword;
-    QString                authname;
+    TQString                username;
+    TQString                userpassword;
+    TQString                authname;
 };
 
 #endif // KJAVAAPPLET_H

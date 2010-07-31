@@ -11,7 +11,7 @@
 #ifndef HELLO_H
 #define HELLO_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kmdichildview.h>
 
 class QWidget;
@@ -22,16 +22,16 @@ class Hello : public KMdiChildView
 {
     Q_OBJECT
 public:
-    Hello( const char *title, const char *text, QWidget* parentWidget = 0 );
+    Hello( const char *title, const char *text, TQWidget* parentWidget = 0 );
 signals:
     void clicked();
 protected:
-    void mouseReleaseEvent( QMouseEvent * );
-    void paintEvent( QPaintEvent * );
+    void mouseReleaseEvent( TQMouseEvent * );
+    void paintEvent( TQPaintEvent * );
 private slots:
     void animate();
 private:
-    QString t;
+    TQString t;
     int     b;
 };
 

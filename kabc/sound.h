@@ -21,8 +21,8 @@
 #ifndef KABC_SOUND_H
 #define KABC_SOUND_H
 
-#include <qcstring.h>
-#include <qstring.h>
+#include <tqcstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -39,7 +39,7 @@ namespace KABC {
  *      tmp.close();
  *      KAudioPlayer::play( tmp.name() );
  *    } else if(!sound.url().isEmpty()) {
- *      QString tmpFile;
+ *      TQString tmpFile;
  *      if(!KIO::NetAccess::download(KURL(themeURL.url()), tmpFile, NULL))
  *      {
  *        KMessageBox::error(0L,
@@ -58,8 +58,8 @@ namespace KABC {
  */
 class KABC_EXPORT Sound
 {
-  friend KABC_EXPORT QDataStream &operator<<( QDataStream &, const Sound & );
-  friend KABC_EXPORT QDataStream &operator>>( QDataStream &, Sound & );
+  friend KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const Sound & );
+  friend KABC_EXPORT TQDataStream &operator>>( TQDataStream &, Sound & );
 
 public:
 
@@ -73,14 +73,14 @@ public:
    *
    * @param url  A URL that describes the position of the sound file.
    */
-  Sound( const QString &url );
+  Sound( const TQString &url );
 
   /**
    * Consturctor.
    *
    * @param data  The raw data of the sound.
    */
-  Sound( const QByteArray &data );
+  Sound( const TQByteArray &data );
 
   /**
    * Destructor.
@@ -98,7 +98,7 @@ public:
    *
    * @param url  The location URL of the sound file.
    */
-  void setUrl( const QString &url );
+  void setUrl( const TQString &url );
 
   /**
    * Test if this sound file has been set.
@@ -113,7 +113,7 @@ public:
    *
    * @param data  The raw data of the sound.
    */
-  void setData( const QByteArray &data );
+  void setData( const TQByteArray &data );
 
   /**
    * Returns whether the sound is described by a URL (extern) or
@@ -127,27 +127,27 @@ public:
   /**
    * Returns the location URL of this sound.
    */
-  QString url() const;
+  TQString url() const;
 
   /**
    * Returns the raw data of this sound.
    */
-  QByteArray data() const;
+  TQByteArray data() const;
 
   /**
    * Returns string representation of the sound.
    */
-  QString asString() const;
+  TQString asString() const;
 
 private:
-  QString mUrl;
-  QByteArray mData;
+  TQString mUrl;
+  TQByteArray mData;
 
   int mIntern;
 };
 
-KABC_EXPORT QDataStream &operator<<( QDataStream &, const Sound & );
-KABC_EXPORT QDataStream &operator>>( QDataStream &, Sound & );
+KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const Sound & );
+KABC_EXPORT TQDataStream &operator>>( TQDataStream &, Sound & );
 
 }
 #endif

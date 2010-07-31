@@ -29,16 +29,16 @@
 #include <kglobal.h>
 #include <kdebug.h>
 
-#include <qstring.h>
-//#include <qptrqueue.h>
-//#include <qcstring.h> //QByteArray
+#include <tqstring.h>
+//#include <tqptrqueue.h>
+//#include <tqcstring.h> //QByteArray
 
 #include <string.h> // for strncpy
 
 //#include <assert.h>
 
-KAudioPlayStreamPrivate::KAudioPlayStreamPrivate( KArtsServer* server, const QString title, QObject* p, const char* n )
- : QObject( p,n )
+KAudioPlayStreamPrivate::KAudioPlayStreamPrivate( KArtsServer* server, const TQString title, TQObject* p, const char* n )
+ : TQObject( p,n )
  , _server( server )
  , _play( new KAudioManagerPlay( _server, title ) )
  , _effectrack( Arts::StereoEffectStack::null() )
@@ -82,8 +82,8 @@ void KAudioPlayStreamPrivate::initaRts() {
 	if ( _effects ) _effectrack.start();
 }
 
-KAudioPlayStream::KAudioPlayStream( KArtsServer* server, const QString title, QObject* p, const char* n )
- : QObject( p,n )
+KAudioPlayStream::KAudioPlayStream( KArtsServer* server, const TQString title, TQObject* p, const char* n )
+ : TQObject( p,n )
  , d( new KAudioPlayStreamPrivate( server, title, this ) )
 {
 	kdDebug( 400 ) << k_funcinfo << endl;
@@ -147,7 +147,7 @@ void KAudioPlayStream::stop()
 	}
 }
 
-void KAudioPlayStream::write( QByteArray& )
+void KAudioPlayStream::write( TQByteArray& )
 {
 }
 
@@ -156,7 +156,7 @@ void KAudioPlayStream::fillData( Arts::DataPacket<Arts::mcopbyte> *packet )
 	//kdDebug( 400 ) << k_funcinfo << "packet->size=" << packet->size << endl;
 	if ( d->_polling )
 	{
-		QByteArray bytearray( packet->size );
+		TQByteArray bytearray( packet->size );
 		bytearray.setRawData( ( char* )packet->contents, packet->size );
 		bytearray.fill( 0 );
 		emit requestData( bytearray );

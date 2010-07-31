@@ -1,15 +1,15 @@
 #ifndef __kdatastream__h
 #define __kdatastream__h
 
-#include <qdatastream.h>
+#include <tqdatastream.h>
 
-inline QDataStream & operator << (QDataStream & str, bool b)
+inline TQDataStream & operator << (TQDataStream & str, bool b)
 {
   str << Q_INT8(b);
   return str;
 }
 
-inline QDataStream & operator >> (QDataStream & str, bool & b)
+inline TQDataStream & operator >> (TQDataStream & str, bool & b)
 {
   Q_INT8 l;
   str >> l;
@@ -18,7 +18,7 @@ inline QDataStream & operator >> (QDataStream & str, bool & b)
 }
 
 #if QT_VERSION < 0x030200 && !defined(Q_WS_WIN) && !defined(Q_WS_MAC)
-inline QDataStream & operator << (QDataStream & str, long long int ll)
+inline TQDataStream & operator << (TQDataStream & str, long long int ll)
 {
   Q_UINT32 l1,l2;
   l1 = ll & 0xffffffffLL;
@@ -27,7 +27,7 @@ inline QDataStream & operator << (QDataStream & str, long long int ll)
   return str;
 }
 
-inline QDataStream & operator >> (QDataStream & str, long long int&ll)
+inline TQDataStream & operator >> (TQDataStream & str, long long int&ll)
 {
   Q_UINT32 l1,l2;
   str >> l1 >> l2;
@@ -35,7 +35,7 @@ inline QDataStream & operator >> (QDataStream & str, long long int&ll)
   return str;
 }
 
-inline QDataStream & operator << (QDataStream & str, unsigned long long int ll)
+inline TQDataStream & operator << (TQDataStream & str, unsigned long long int ll)
 {
   Q_UINT32 l1,l2;
   l1 = ll & 0xffffffffLL;
@@ -44,7 +44,7 @@ inline QDataStream & operator << (QDataStream & str, unsigned long long int ll)
   return str;
 }
 
-inline QDataStream & operator >> (QDataStream & str, unsigned long long int &ll)
+inline TQDataStream & operator >> (TQDataStream & str, unsigned long long int &ll)
 {
   Q_UINT32 l1,l2;
   str >> l1 >> l2;

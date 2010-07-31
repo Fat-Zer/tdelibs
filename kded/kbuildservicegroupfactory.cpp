@@ -37,9 +37,9 @@ KBuildServiceGroupFactory::KBuildServiceGroupFactory() :
 
 // return all service types for this factory
 // i.e. first arguments to m_resourceList->add() above
-QStringList KBuildServiceGroupFactory::resourceTypes()
+TQStringList KBuildServiceGroupFactory::resourceTypes()
 {
-    return QStringList(); // << "apps";
+    return TQStringList(); // << "apps";
 }
 
 KBuildServiceGroupFactory::~KBuildServiceGroupFactory()
@@ -48,7 +48,7 @@ KBuildServiceGroupFactory::~KBuildServiceGroupFactory()
 }
 
 KServiceGroup *
-KBuildServiceGroupFactory::createEntry( const QString&, const char * )
+KBuildServiceGroupFactory::createEntry( const TQString&, const char * )
 {
   // Unused
   kdWarning("!!!! KBuildServiceGroupFactory::createEntry called!");
@@ -56,7 +56,7 @@ KBuildServiceGroupFactory::createEntry( const QString&, const char * )
 }
 
 
-void KBuildServiceGroupFactory::addNewEntryTo( const QString &menuName, KService *newEntry)
+void KBuildServiceGroupFactory::addNewEntryTo( const TQString &menuName, KService *newEntry)
 {
   KServiceGroup *entry = 0;
   KSycocaEntry::Ptr *ptr = m_entryDict->find(menuName);
@@ -72,7 +72,7 @@ void KBuildServiceGroupFactory::addNewEntryTo( const QString &menuName, KService
 }
 
 KServiceGroup *
-KBuildServiceGroupFactory::addNew( const QString &menuName, const QString& file, KServiceGroup *entry, bool isDeleted)
+KBuildServiceGroupFactory::addNew( const TQString &menuName, const TQString& file, KServiceGroup *entry, bool isDeleted)
 {
   KSycocaEntry::Ptr *ptr = m_entryDict->find(menuName);
   if (ptr)
@@ -93,7 +93,7 @@ KBuildServiceGroupFactory::addNew( const QString &menuName, const QString& file,
   {
      // Make sure parent dir exists.
      KServiceGroup *parentEntry = 0;
-     QString parent = menuName.left(menuName.length()-1);
+     TQString parent = menuName.left(menuName.length()-1);
      int i = parent.findRev('/');
      if (i > 0) {
         parent = parent.left(i+1);
@@ -118,9 +118,9 @@ KBuildServiceGroupFactory::addNew( const QString &menuName, const QString& file,
 }
 
 KServiceGroup *
-KBuildServiceGroupFactory::addNewChild( const QString &parent, const char *resource, KSycocaEntry *newEntry)
+KBuildServiceGroupFactory::addNewChild( const TQString &parent, const char *resource, KSycocaEntry *newEntry)
 {
-  QString name = "#parent#"+parent;
+  TQString name = "#parent#"+parent;
 
   KServiceGroup *entry = 0;
   KSycocaEntry::Ptr *ptr = m_entryDict->find(name);
@@ -153,7 +153,7 @@ KBuildServiceGroupFactory::addEntry( KSycocaEntry *newEntry, const char *resourc
 }
 
 void
-KBuildServiceGroupFactory::saveHeader(QDataStream &str)
+KBuildServiceGroupFactory::saveHeader(TQDataStream &str)
 {
    KSycocaFactory::saveHeader(str);
 
@@ -161,7 +161,7 @@ KBuildServiceGroupFactory::saveHeader(QDataStream &str)
 }
 
 void
-KBuildServiceGroupFactory::save(QDataStream &str)
+KBuildServiceGroupFactory::save(TQDataStream &str)
 {
    KSycocaFactory::save(str);
 

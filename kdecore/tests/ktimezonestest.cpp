@@ -17,13 +17,13 @@ int main(int argc, char *argv[])
 
      // Find the current offset of the UTC timezone.
      timezone = timezones.zone("UTC");
-     printf( "UTC timezone offset should be 0: %d\n", timezone->offset(QDateTime::currentDateTime()) );
+     printf( "UTC timezone offset should be 0: %d\n", timezone->offset(TQDateTime::currentDateTime()) );
 
      // Find some offsets for Europe/London.
      char *london = "Europe/London";
      timezone = timezones.zone(london);
-     QDateTime winter(QDateTime::fromString("2005-01-01T00:00:00", Qt::ISODate));
-     QDateTime summer(QDateTime::fromString("2005-06-01T00:00:00", Qt::ISODate));
+     TQDateTime winter(TQDateTime::fromString("2005-01-01T00:00:00", Qt::ISODate));
+     TQDateTime summer(TQDateTime::fromString("2005-06-01T00:00:00", Qt::ISODate));
      printf( "%s winter timezone offset should be 0: %d\n", london, timezone->offset(winter) );
      printf( "%s summer timezone offset should be 3600: %d\n", london, timezone->offset(summer) );
 
@@ -33,14 +33,14 @@ int main(int argc, char *argv[])
      char *bstAfterPdt = "2005-05-01T00:00:00";
      char *gmtBeforePst = "2005-10-30T01:00:00";
      char *gmtAfterPst = "2005-12-01T00:00:00";
-     QString result;
-     result = timezone->convert(losAngeles, QDateTime::fromString(bstBeforePdt, Qt::ISODate)).toString(Qt::ISODate);
+     TQString result;
+     result = timezone->convert(losAngeles, TQDateTime::fromString(bstBeforePdt, Qt::ISODate)).toString(Qt::ISODate);
      printf( "BST before PDT, %s should be 2005-03-27T15:00:00: %s\n", bstBeforePdt, result.latin1() );
-     result = timezone->convert(losAngeles, QDateTime::fromString(bstAfterPdt, Qt::ISODate)).toString(Qt::ISODate);
+     result = timezone->convert(losAngeles, TQDateTime::fromString(bstAfterPdt, Qt::ISODate)).toString(Qt::ISODate);
      printf( "BST and PDT,    %s should be 2005-04-30T16:00:00: %s\n", bstAfterPdt, result.latin1() );
-     result = timezone->convert(losAngeles, QDateTime::fromString(gmtBeforePst, Qt::ISODate)).toString(Qt::ISODate);
+     result = timezone->convert(losAngeles, TQDateTime::fromString(gmtBeforePst, Qt::ISODate)).toString(Qt::ISODate);
      printf( "GMT before PST, %s should be 2005-10-29T17:00:00: %s\n", gmtBeforePst, result.latin1() );
-     result = timezone->convert(losAngeles, QDateTime::fromString(gmtAfterPst, Qt::ISODate)).toString(Qt::ISODate);
+     result = timezone->convert(losAngeles, TQDateTime::fromString(gmtAfterPst, Qt::ISODate)).toString(Qt::ISODate);
      printf( "GMT and PST,    %s should be 2005-11-30T16:00:00: %s\n", gmtAfterPst, result.latin1() );
      printf( "Latitude 89 should be valid: %svalid\n", KTimezone::isValidLatitude(89.0) ? "" : "in");
      printf( "Latitude 91 should be invalid: %svalid\n", KTimezone::isValidLatitude(91.0) ? "" : "in");

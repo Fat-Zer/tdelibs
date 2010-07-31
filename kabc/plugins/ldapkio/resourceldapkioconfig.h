@@ -21,10 +21,10 @@
 #ifndef RESOURCELDAPCONFIG_H
 #define RESOURCELDAPCONFIG_H
 
-#include <qmap.h>
-#include <qradiobutton.h>
-#include <qcombobox.h>
-#include <qdict.h>
+#include <tqmap.h>
+#include <tqradiobutton.h>
+#include <tqcombobox.h>
+#include <tqdict.h>
 
 #include <kdialogbase.h>
 #include <kresources/configwidget.h>
@@ -47,7 +47,7 @@ class KABC_EXPORT ResourceLDAPKIOConfig : public KRES::ConfigWidget
   Q_OBJECT
 
   public:
-    ResourceLDAPKIOConfig( QWidget* parent = 0, const char* name = 0 );
+    ResourceLDAPKIOConfig( TQWidget* parent = 0, const char* name = 0 );
 
   public slots:
     void loadSettings( KRES::Resource* );
@@ -57,13 +57,13 @@ class KABC_EXPORT ResourceLDAPKIOConfig : public KRES::ConfigWidget
     void editAttributes();
     void editCache();
   private:
-    QPushButton *mEditButton, *mCacheButton;
+    TQPushButton *mEditButton, *mCacheButton;
     LdapConfigWidget *cfg;
-    QCheckBox *mSubTree;
-    QMap<QString, QString> mAttributes;
+    TQCheckBox *mSubTree;
+    TQMap<TQString, TQString> mAttributes;
     int mRDNPrefix, mCachePolicy;
     bool mAutoCache;
-    QString mCacheDst;
+    TQString mCacheDst;
 };
 
 class AttributesDialog : public KDialogBase
@@ -71,11 +71,11 @@ class AttributesDialog : public KDialogBase
   Q_OBJECT
 
   public:
-    AttributesDialog( const QMap<QString, QString> &attributes, int rdnprefix,
-                      QWidget *parent, const char *name = 0 );
+    AttributesDialog( const TQMap<TQString, TQString> &attributes, int rdnprefix,
+                      TQWidget *parent, const char *name = 0 );
     ~AttributesDialog();
 
-    QMap<QString, QString> attributes() const;
+    TQMap<TQString, TQString> attributes() const;
     int rdnprefix() const;
 
   private slots:
@@ -85,10 +85,10 @@ class AttributesDialog : public KDialogBase
     enum { UserMap, KolabMap, NetscapeMap, EvolutionMap, OutlookMap };
 
     KComboBox *mMapCombo, *mRDNCombo;
-    QValueList< QMap<QString, QString> > mMapList;
-    QMap<QString, QString> mDefaultMap;
-    QDict<KLineEdit> mLineEditDict;
-    QDict<QString> mNameDict;
+    TQValueList< TQMap<TQString, TQString> > mMapList;
+    TQMap<TQString, TQString> mDefaultMap;
+    TQDict<KLineEdit> mLineEditDict;
+    TQDict<TQString> mNameDict;
 };
 
 class OfflineDialog : public KDialogBase
@@ -97,7 +97,7 @@ class OfflineDialog : public KDialogBase
 
   public:
     OfflineDialog( bool autoCache, int cachePolicy, const KURL &src, 
-      const QString &dst, QWidget *parent, const char *name = 0 );
+      const TQString &dst, TQWidget *parent, const char *name = 0 );
     ~OfflineDialog();
 
     int cachePolicy() const;
@@ -108,9 +108,9 @@ class OfflineDialog : public KDialogBase
 
   private:
     KURL mSrc;
-    QString mDst;
-    QButtonGroup *mCacheGroup;
-    QCheckBox *mAutoCache;
+    TQString mDst;
+    TQButtonGroup *mCacheGroup;
+    TQCheckBox *mAutoCache;
 };
 
 }

@@ -24,7 +24,7 @@
 #ifndef  IMAGEVALUE_H
 #define  IMAGEVALUE_H
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <VCardValue.h>
 

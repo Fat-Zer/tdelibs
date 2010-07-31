@@ -26,8 +26,8 @@
 
 #include <assert.h>
 
-#include <qcstring.h>
-#include <qstring.h>
+#include <tqcstring.h>
+#include <tqstring.h>
 
 #include "kresolver.h"
 #include "kresolver_p.h"
@@ -45,18 +45,18 @@ KResolverWorkerBase::~KResolverWorkerBase()
 {
 }
 
-QString KResolverWorkerBase::nodeName() const
+TQString KResolverWorkerBase::nodeName() const
 {
   if (input)
     return input->node;
-  return QString::null;
+  return TQString::null;
 }
 
-QString KResolverWorkerBase::serviceName() const
+TQString KResolverWorkerBase::serviceName() const
 {
   if (input)
     return input->service;
-  return QString::null;
+  return TQString::null;
 }
 
 int KResolverWorkerBase::flags() const
@@ -87,9 +87,9 @@ int KResolverWorkerBase::protocol() const
   return 0;
 }
 
-QCString KResolverWorkerBase::protocolName() const
+TQCString KResolverWorkerBase::protocolName() const
 {
-  QCString res;
+  TQCString res;
   if (input)
     res = input->protocolName;
   return res;

@@ -47,7 +47,7 @@ EncodingInterface::EncodingInterface()
   myEncodingInterfaceNumber = globalEncodingInterfaceNumber++;
 
   d = new PrivateEncodingInterface();
-  ::QString name = "EncodingInterface#" + ::QString::number(myEncodingInterfaceNumber);
+  ::TQString name = "EncodingInterface#" + ::TQString::number(myEncodingInterfaceNumber);
   d->interface = new EncodingDCOPInterface(this, name.latin1());
 }
 
@@ -62,7 +62,7 @@ unsigned int EncodingInterface::encodingInterfaceNumber () const
   return myEncodingInterfaceNumber;
 }
 
-void EncodingInterface::setEncodingInterfaceDCOPSuffix (const QCString &suffix)
+void EncodingInterface::setEncodingInterfaceDCOPSuffix (const TQCString &suffix)
 {
   d->interface->setObjId ("EncodingInterface#"+suffix);
 }

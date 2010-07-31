@@ -50,10 +50,10 @@ class KDEUI_EXPORT KAboutKDE : public KAboutDialog
      * @param name Internal name of the widget. This name in not used in the
      *        caption.
      * @param modal If false, this widget will be modeless and must be
-     *        made visible using QWidget::show(). Otherwise it will be
-     *        modal and must be made visible using QWidget::exec()
+     *        made visible using TQWidget::show(). Otherwise it will be
+     *        modal and must be made visible using TQWidget::exec()
      */
-    KAboutKDE( QWidget *parent=0, const char *name=0, bool modal=true );
+    KAboutKDE( TQWidget *parent=0, const char *name=0, bool modal=true );
 };
 
 

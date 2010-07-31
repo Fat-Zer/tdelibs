@@ -1,11 +1,11 @@
 #include <kapplication.h>
-#include <qwidget.h>
+#include <tqwidget.h>
 #include "kprogress.h"
 
 
-class MyWidget : public QWidget {
+class MyWidget : public TQWidget {
 public:
-	MyWidget() : QWidget()
+	MyWidget() : TQWidget()
 	{
 		setFixedSize(440, 80);
 		Progress = new KProgress(this);
@@ -17,10 +17,10 @@ public:
 private:
 	KProgress *Progress;
 	
-	void timerEvent(QTimerEvent *);
+	void timerEvent(TQTimerEvent *);
 };
 
-void MyWidget::timerEvent(QTimerEvent *)
+void MyWidget::timerEvent(TQTimerEvent *)
 {
   static enum { fwd, back } direction = fwd;
   //static KProgress::BarStyle style = KProgress::Solid;

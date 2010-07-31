@@ -37,7 +37,7 @@
 #include <kiconloader.h>
 #include <kconfig.h>
 
-#include <qapplication.h>
+#include <tqapplication.h>
 
 class KSystemTrayPrivate
 {
@@ -56,8 +56,8 @@ public:
     bool on_all_desktops; // valid only when the parent widget was hidden
 };
 
-KSystemTray::KSystemTray( QWidget* parent, const char* name )
-    : QLabel( parent, name, WType_TopLevel )
+KSystemTray::KSystemTray( TQWidget* parent, const char* name )
+    : TQLabel( parent, name, WType_TopLevel )
 {
 #ifdef Q_WS_X11
     QXEmbed::initialize();
@@ -75,12 +75,12 @@ KSystemTray::KSystemTray( QWidget* parent, const char* name )
     menu = new KPopupMenu( this );
     menu->insertTitle( kapp->miniIcon(), kapp->caption() );
     move( -1000, -1000 );
-    KStdAction::quit(this, SLOT(maybeQuit()), d->actionCollection);
+    KStdAction::quit(this, TQT_SLOT(maybeQuit()), d->actionCollection);
 
     if (parentWidget())
     {
         new KAction(i18n("Minimize"), KShortcut(),
-                    this, SLOT( minimizeRestoreAction() ),
+                    this, TQT_SLOT( minimizeRestoreAction() ),
                     d->actionCollection, "minimizeRestore");
 #ifdef Q_WS_X11
 	KWin::WindowInfo info = KWin::windowInfo( parentWidget()->winId());
@@ -106,7 +106,7 @@ KSystemTray::~KSystemTray()
 }
 
 
-void KSystemTray::showEvent( QShowEvent * )
+void KSystemTray::showEvent( TQShowEvent * )
 {
     if ( !hasQuit ) {
 	menu->insertSeparator();
@@ -129,9 +129,9 @@ void KSystemTray::showEvent( QShowEvent * )
 }
 
 // KDE4 remove
-void KSystemTray::enterEvent( QEvent* e )
+void KSystemTray::enterEvent( TQEvent* e )
 {
-    QLabel::enterEvent( e );
+    TQLabel::enterEvent( e );
 }
 
 KPopupMenu* KSystemTray::contextMenu() const
@@ -140,7 +140,7 @@ KPopupMenu* KSystemTray::contextMenu() const
 }
 
 
-void KSystemTray::mousePressEvent( QMouseEvent *e )
+void KSystemTray::mousePressEvent( TQMouseEvent *e )
 {
     if ( !rect().contains( e->pos() ) )
 	return;
@@ -168,7 +168,7 @@ void KSystemTray::mousePressEvent( QMouseEvent *e )
     }
 }
 
-void KSystemTray::mouseReleaseEvent( QMouseEvent * )
+void KSystemTray::mouseReleaseEvent( TQMouseEvent * )
 {
 }
 
@@ -190,12 +190,12 @@ void KSystemTray::minimizeRestoreAction()
 
 void KSystemTray::maybeQuit()
 {
-    QString query = i18n("<qt>Are you sure you want to quit <b>%1</b>?</qt>")
+    TQString query = i18n("<qt>Are you sure you want to quit <b>%1</b>?</qt>")
                         .arg(kapp->caption());
     if (KMessageBox::warningContinueCancel(this, query,
                                      i18n("Confirm Quit From System Tray"),
                                      KStdGuiItem::quit(),
-                                     QString("systemtrayquit%1")
+                                     TQString("systemtrayquit%1")
                                             .arg(kapp->caption())) !=
         KMessageBox::Continue)
     {
@@ -237,7 +237,7 @@ void KSystemTray::setInactive()
 // (just like taskbar); otherwise hide it
 void KSystemTray::activateOrHide()
 {
-    QWidget *pw = parentWidget();
+    TQWidget *pw = parentWidget();
 
     if ( !pw )
 	return;
@@ -255,7 +255,7 @@ void KSystemTray::activateOrHide()
     else
     {
         KWinModule module;
-        for( QValueList< WId >::ConstIterator it = module.stackingOrder().fromLast();
+        for( TQValueList< WId >::ConstIterator it = module.stackingOrder().fromLast();
              it != module.stackingOrder().end() && (*it) != pw->winId();
              --it )
         {
@@ -283,7 +283,7 @@ void KSystemTray::activateOrHide()
 
 void KSystemTray::minimizeRestore( bool restore )
 {
-    QWidget* pw = parentWidget();
+    TQWidget* pw = parentWidget();
     if( !pw )
 	return;
 #ifdef Q_WS_X11
@@ -310,7 +310,7 @@ KActionCollection* KSystemTray::actionCollection()
     return d->actionCollection;
 }
 
-QPixmap KSystemTray::loadIcon( const QString &icon, KInstance *instance )
+TQPixmap KSystemTray::loadIcon( const TQString &icon, KInstance *instance )
 {
     KConfig *appCfg = kapp->config();
     KConfigGroupSaver configSaver(appCfg, "System Tray");
@@ -318,22 +318,22 @@ QPixmap KSystemTray::loadIcon( const QString &icon, KInstance *instance )
     return instance->iconLoader()->loadIcon( icon, KIcon::Panel, iconWidth );
 }
 
-QPixmap KSystemTray::loadSizedIcon( const QString &icon, int iconWidth, KInstance *instance )
+TQPixmap KSystemTray::loadSizedIcon( const TQString &icon, int iconWidth, KInstance *instance )
 {
     return instance->iconLoader()->loadIcon( icon, KIcon::Panel, iconWidth );
 }
 
-void KSystemTray::setPixmap( const QPixmap& p )
+void KSystemTray::setPixmap( const TQPixmap& p )
 {
-    QLabel::setPixmap( p );
+    TQLabel::setPixmap( p );
 #ifdef Q_WS_X11
-    KWin::setIcons( winId(), p, QPixmap());
+    KWin::setIcons( winId(), p, TQPixmap());
 #endif
 }
 
-void KSystemTray::setCaption( const QString& s )
+void KSystemTray::setCaption( const TQString& s )
 {
-    QLabel::setCaption( s );
+    TQLabel::setCaption( s );
 }
 
 void KSystemTray::virtual_hook( int, void* )

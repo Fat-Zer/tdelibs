@@ -16,11 +16,11 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qtimer.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qdatetime.h>
-#include <qcheckbox.h>
+#include <tqtimer.h>
+#include <tqlayout.h>
+#include <tqtooltip.h>
+#include <tqdatetime.h>
+#include <tqcheckbox.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -52,9 +52,9 @@ public:
   KPushButton *cancelClose;
   KPushButton *openFile;
   KPushButton *openLocation;
-  QCheckBox   *keepOpen;
+  TQCheckBox   *keepOpen;
   KURL        location;
-  QTime       startTime;
+  TQTime       startTime;
 };
 
 DefaultProgress::DefaultProgress( bool showNow )
@@ -69,7 +69,7 @@ DefaultProgress::DefaultProgress( bool showNow )
   }
 }
 
-DefaultProgress::DefaultProgress( QWidget* parent, const char* /*name*/ )
+DefaultProgress::DefaultProgress( TQWidget* parent, const char* /*name*/ )
   : ProgressBase( parent ),
   m_iTotalSize(0), m_iTotalFiles(0), m_iTotalDirs(0),
   m_iProcessedSize(0), m_iProcessedDirs(0), m_iProcessedFiles(0)
@@ -93,22 +93,22 @@ void DefaultProgress::init()
           KGlobal::iconLoader()->loadIcon( "filesave", KIcon::NoGroup, 16 ) );
 #endif
 
-  QVBoxLayout *topLayout = new QVBoxLayout( this, KDialog::marginHint(),
+  TQVBoxLayout *topLayout = new TQVBoxLayout( this, KDialog::marginHint(),
                                             KDialog::spacingHint() );
   topLayout->addStrut( 360 );   // makes dlg at least that wide
 
-  QGridLayout *grid = new QGridLayout( 2, 3 );
+  TQGridLayout *grid = new TQGridLayout( 2, 3 );
   topLayout->addLayout(grid);
   grid->addColSpacing(1, KDialog::spacingHint());
   // filenames or action name
-  grid->addWidget(new QLabel(i18n("Source:"), this), 0, 0);
+  grid->addWidget(new TQLabel(i18n("Source:"), this), 0, 0);
 
   sourceEdit = new KLineEdit(this);
   sourceEdit->setReadOnly(true);
   sourceEdit->setEnableSqueezedText(true);
   grid->addWidget(sourceEdit, 0, 2);
 
-  destInvite = new QLabel(i18n("Destination:"), this);
+  destInvite = new TQLabel(i18n("Destination:"), this);
   grid->addWidget(destInvite, 1, 0);
 
   destEdit = new KLineEdit(this);
@@ -120,55 +120,55 @@ void DefaultProgress::init()
   topLayout->addWidget( m_pProgressBar );
 
   // processed info
-  QHBoxLayout *hBox = new QHBoxLayout();
+  TQHBoxLayout *hBox = new TQHBoxLayout();
   topLayout->addLayout(hBox);
 
-  sizeLabel = new QLabel(this);
+  sizeLabel = new TQLabel(this);
   hBox->addWidget(sizeLabel);
 
-  resumeLabel = new QLabel(this);
+  resumeLabel = new TQLabel(this);
   hBox->addWidget(resumeLabel);
 
-  progressLabel = new QLabel( this );
-/*  progressLabel->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
-                                             QSizePolicy::Preferred ) );*/
-  progressLabel->setAlignment( QLabel::AlignRight );
+  progressLabel = new TQLabel( this );
+/*  progressLabel->setSizePolicy( TQSizePolicy( TQSizePolicy::MinimumExpanding,
+                                             TQSizePolicy::Preferred ) );*/
+  progressLabel->setAlignment( TQLabel::AlignRight );
   hBox->addWidget( progressLabel );
 
-  hBox = new QHBoxLayout();
+  hBox = new TQHBoxLayout();
   topLayout->addLayout(hBox);
 
-  speedLabel = new QLabel(this);
+  speedLabel = new TQLabel(this);
   hBox->addWidget(speedLabel, 1);
 
-  QFrame *line = new QFrame( this );
-  line->setFrameShape( QFrame::HLine );
-  line->setFrameShadow( QFrame::Sunken );
+  TQFrame *line = new TQFrame( this );
+  line->setFrameShape( TQFrame::HLine );
+  line->setFrameShadow( TQFrame::Sunken );
   topLayout->addWidget( line );
 
-  d->keepOpen = new QCheckBox( i18n("&Keep this window open after transfer is complete"), this);
-  connect( d->keepOpen, SIGNAL( toggled(bool) ), SLOT( slotKeepOpenToggled(bool) ) );
+  d->keepOpen = new TQCheckBox( i18n("&Keep this window open after transfer is complete"), this);
+  connect( d->keepOpen, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( slotKeepOpenToggled(bool) ) );
   topLayout->addWidget(d->keepOpen);
   d->keepOpen->hide();
 
-  hBox = new QHBoxLayout();
+  hBox = new TQHBoxLayout();
   topLayout->addLayout(hBox);
 
   d->openFile = new KPushButton( i18n("Open &File"), this );
-  connect( d->openFile, SIGNAL( clicked() ), SLOT( slotOpenFile() ) );
+  connect( d->openFile, TQT_SIGNAL( clicked() ), TQT_SLOT( slotOpenFile() ) );
   hBox->addWidget( d->openFile );
   d->openFile->setEnabled(false);
   d->openFile->hide();
 
   d->openLocation = new KPushButton( i18n("Open &Destination"), this );
-  connect( d->openLocation, SIGNAL( clicked() ), SLOT( slotOpenLocation() ) );
+  connect( d->openLocation, TQT_SIGNAL( clicked() ), TQT_SLOT( slotOpenLocation() ) );
   hBox->addWidget( d->openLocation );
   d->openLocation->hide();
 
   hBox->addStretch(1);
 
   d->cancelClose = new KPushButton( KStdGuiItem::cancel(), this );
-  connect( d->cancelClose, SIGNAL( clicked() ), SLOT( slotStop() ) );
+  connect( d->cancelClose, TQT_SIGNAL( clicked() ), TQT_SLOT( slotStop() ) );
   hBox->addWidget( d->cancelClose );
 
   resize( sizeHint() );
@@ -219,7 +219,7 @@ void DefaultProgress::showTotals()
   // of CopyJob takes a long time (e.g. over networks).
   if ( m_iProcessedFiles == 0 && m_iProcessedDirs == 0 )
   {
-    QString tmps;
+    TQString tmps;
     if ( m_iTotalDirs > 1 )
       // that we have a singular to translate looks weired but is only logical
       // xgettext: no-c-format
@@ -231,12 +231,12 @@ void DefaultProgress::showTotals()
 }
 
 //static
-QString DefaultProgress::makePercentString( unsigned long percent,
+TQString DefaultProgress::makePercentString( unsigned long percent,
                                             KIO::filesize_t totalSize,
                                             unsigned long totalFiles )
 {
   if ( totalSize )
-      return i18n( "%1 % of %2 " ).arg( QString::number(percent) , KIO::convertSize( totalSize ) );
+      return i18n( "%1 % of %2 " ).arg( TQString::number(percent) , KIO::convertSize( totalSize ) );
   else if ( totalFiles )
       return i18n( "%1 % of 1 file", "%1 % of %n files", totalFiles ).arg( percent );
   else
@@ -245,7 +245,7 @@ QString DefaultProgress::makePercentString( unsigned long percent,
 
 void DefaultProgress::slotPercent( KIO::Job*, unsigned long percent )
 {
-  QString caption = makePercentString( percent, m_iTotalSize, m_iTotalFiles );
+  TQString caption = makePercentString( percent, m_iTotalSize, m_iTotalFiles );
   m_pProgressBar->setValue( percent );
   switch(mode) {
   case Copy:
@@ -270,7 +270,7 @@ void DefaultProgress::slotPercent( KIO::Job*, unsigned long percent )
 }
 
 
-void DefaultProgress::slotInfoMessage( KIO::Job*, const QString & msg )
+void DefaultProgress::slotInfoMessage( KIO::Job*, const TQString & msg )
 {
   speedLabel->setText( msg );
   speedLabel->setAlignment( speedLabel->alignment() & ~Qt::WordBreak );
@@ -282,7 +282,7 @@ void DefaultProgress::slotProcessedSize( KIO::Job*, KIO::filesize_t bytes ) {
     return;
   m_iProcessedSize = bytes;
 
-  QString tmp = i18n( "%1 of %2 complete")
+  TQString tmp = i18n( "%1 of %2 complete")
                 .arg( KIO::convertSize(bytes) )
                 .arg( KIO::convertSize(m_iTotalSize));
   sizeLabel->setText( tmp );
@@ -295,7 +295,7 @@ void DefaultProgress::slotProcessedDirs( KIO::Job*, unsigned long dirs )
     return;
   m_iProcessedDirs = dirs;
 
-  QString tmps;
+  TQString tmps;
   tmps = i18n("%1 / %n folder", "%1 / %n folders", m_iTotalDirs).arg( m_iProcessedDirs );
   tmps += "   ";
   tmps += i18n("%1 / %n file", "%1 / %n files", m_iTotalFiles).arg( m_iProcessedFiles );
@@ -309,7 +309,7 @@ void DefaultProgress::slotProcessedFiles( KIO::Job*, unsigned long files )
     return;
   m_iProcessedFiles = files;
 
-  QString tmps;
+  TQString tmps;
   if ( m_iTotalDirs > 1 ) {
     tmps = i18n("%1 / %n folder", "%1 / %n folders", m_iTotalDirs).arg( m_iProcessedDirs );
     tmps += "   ";
@@ -398,14 +398,14 @@ void DefaultProgress::slotStating( KIO::Job*, const KURL& url )
   setDestVisible( false );
 }
 
-void DefaultProgress::slotMounting( KIO::Job*, const QString & dev, const QString & point )
+void DefaultProgress::slotMounting( KIO::Job*, const TQString & dev, const TQString & point )
 {
   setCaption(i18n("Mounting %1").arg(dev));
   sourceEdit->setText(point);
   setDestVisible( false );
 }
 
-void DefaultProgress::slotUnmounting( KIO::Job*, const QString & point )
+void DefaultProgress::slotUnmounting( KIO::Job*, const TQString & point )
 {
   setCaption(i18n("Unmounting"));
   sourceEdit->setText(point);
@@ -424,7 +424,7 @@ void DefaultProgress::slotCanResume( KIO::Job*, KIO::filesize_t resume )
 void DefaultProgress::setDestVisible( bool visible )
 {
   // We can't hide the destInvite/destEdit labels,
-  // because it screws up the QGridLayout.
+  // because it screws up the TQGridLayout.
   if (visible)
   {
       destInvite->show();
@@ -436,8 +436,8 @@ void DefaultProgress::setDestVisible( bool visible )
   {
       destInvite->hide();
       destEdit->hide();
-    destInvite->setText( QString::null );
-    destEdit->setText( QString::null );
+    destInvite->setText( TQString::null );
+    destEdit->setText( TQString::null );
   }
 }
 
@@ -469,9 +469,9 @@ void DefaultProgress::slotKeepOpenToggled(bool keepopen)
 void DefaultProgress::checkDestination(const KURL& dest) {
   bool ok = true;
   if ( dest.isLocalFile() ) {
-      QString path = dest.path( -1 );
-      QStringList tmpDirs = KGlobal::dirs()->resourceDirs( "tmp" );
-      for ( QStringList::Iterator it = tmpDirs.begin() ; ok && it != tmpDirs.end() ; ++it )
+      TQString path = dest.path( -1 );
+      TQStringList tmpDirs = KGlobal::dirs()->resourceDirs( "tmp" );
+      for ( TQStringList::Iterator it = tmpDirs.begin() ; ok && it != tmpDirs.end() ; ++it )
           if ( path.contains( *it ) )
               ok = false; // it's in the tmp resource
   }

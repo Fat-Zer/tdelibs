@@ -20,7 +20,7 @@
 #ifndef KURLREQUESTER_H
 #define KURLREQUESTER_H
 
-#include <qhbox.h>
+#include <tqhbox.h>
 
 #include <keditlistbox.h>
 #include <kfile.h>
@@ -56,22 +56,22 @@ class QTimer;
 class KIO_EXPORT KURLRequester : public QHBox
 {
     Q_OBJECT
-    Q_PROPERTY( QString url READ url WRITE setURL )
+    Q_PROPERTY( TQString url READ url WRITE setURL )
     Q_PROPERTY( bool showLocalProtocol READ showLocalProtocol WRITE setShowLocalProtocol )
-    Q_PROPERTY( QString filter READ filter WRITE setFilter )
+    Q_PROPERTY( TQString filter READ filter WRITE setFilter )
     Q_PROPERTY( uint mode READ mode WRITE setMode )
 
 public:
     /**
      * Constructs a KURLRequester widget.
      */
-    KURLRequester( QWidget *parent=0, const char *name=0 );
+    KURLRequester( TQWidget *parent=0, const char *name=0 );
 
     /**
      * Constructs a KURLRequester widget with the initial URL @p url.
      * // TODO KDE4: Use KURL instead
      */
-    KURLRequester( const QString& url, QWidget *parent=0, const char *name=0 );
+    KURLRequester( const TQString& url, TQWidget *parent=0, const char *name=0 );
 
     /**
      * Special constructor, which creates a KURLRequester widget with a custom
@@ -79,7 +79,7 @@ public:
      * (or inherited thereof). Note: for geometry management reasons, the
      * edit-widget is reparented to have the KURLRequester as parent.
      */
-    KURLRequester( QWidget *editWidget, QWidget *parent, const char *name=0 );
+    KURLRequester( TQWidget *editWidget, TQWidget *parent, const char *name=0 );
     /**
      * Destructs the KURLRequester.
      */
@@ -91,7 +91,7 @@ public:
      * for local files.
      * // TODO KDE4: Use KURL so that the result is properly defined
      */
-    QString url() const;
+    TQString url() const;
 
     /**
      * Enables/disables showing file:/ in the lineedit, when a local file has
@@ -121,14 +121,14 @@ public:
      * Sets the filter for the file dialog.
      * @see KFileDialog::setFilter()
      */
-    void setFilter( const QString& filter );
+    void setFilter( const TQString& filter );
 
     /**
     * Returns the current filter for the file dialog.
     * @see KFileDialog::filter()
     * @since 3.3
     */
-    QString filter() const;
+    TQString filter() const;
 
     /**
      * @returns whether local files will be prefixed with file:/ in the
@@ -194,7 +194,7 @@ public slots:
      * @since 3.1
      * // TODO KDE4: Use KURL instead
      */
-    void setURL( const QString& url );
+    void setURL( const TQString& url );
 
     /**
      * Sets the url in the lineedit to @p url.
@@ -207,7 +207,7 @@ public slots:
      * Sets the caption of the file dialog.
      * @since 3.1
      */
-    virtual void setCaption( const QString& caption );
+    virtual void setCaption( const TQString& caption );
 
     /**
      * Clears the lineedit/combobox.
@@ -221,7 +221,7 @@ signals:
      * The parameter contains the contents of the lineedit.
      * @since 3.1
      */
-    void textChanged( const QString& );
+    void textChanged( const TQString& );
 
     /**
      * Emitted when return or enter was pressed in the lineedit.
@@ -232,7 +232,7 @@ signals:
      * Emitted when return or enter was pressed in the lineedit.
      * The parameter contains the contents of the lineedit.
      */
-    void returnPressed( const QString& );
+    void returnPressed( const TQString& );
 
     /**
      * Emitted before the filedialog is going to open. Connect
@@ -252,7 +252,7 @@ signals:
      * The parameter contains the contents of the lineedit.
      * // TODO KDE4: Use KURL instead
      */
-    void urlSelected( const QString& );
+    void urlSelected( const TQString& );
 
 protected:
     void		init();
@@ -278,7 +278,7 @@ private slots:
 
 protected:
     virtual void virtual_hook( int id, void* data );
-    bool eventFilter( QObject *obj, QEvent *ev );
+    bool eventFilter( TQObject *obj, TQEvent *ev );
 private:
     class KURLRequesterPrivate;
     KURLRequesterPrivate *d;
@@ -294,7 +294,7 @@ public:
     /**
      * Constructs a KURLRequester widget with a combobox.
      */
-    KURLComboRequester( QWidget *parent=0, const char *name=0 );
+    KURLComboRequester( TQWidget *parent=0, const char *name=0 );
 };
 
 

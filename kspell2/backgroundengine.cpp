@@ -26,12 +26,12 @@
 
 #include <kdebug.h>
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 using namespace KSpell2;
 
-BackgroundEngine::BackgroundEngine( QObject *parent )
-    : QObject( parent )
+BackgroundEngine::BackgroundEngine( TQObject *parent )
+    : TQObject( parent )
 {
     m_filter = Filter::defaultFilter();
     m_dict = 0;
@@ -50,17 +50,17 @@ void BackgroundEngine::setBroker( const Broker::Ptr& broker )
     m_filter->setSettings( m_broker->settings() );
 }
 
-void BackgroundEngine::setText( const QString& text )
+void BackgroundEngine::setText( const TQString& text )
 {
     m_filter->setBuffer( text );
 }
 
-QString BackgroundEngine::text() const
+TQString BackgroundEngine::text() const
 {
     return m_filter->buffer();
 }
 
-void BackgroundEngine::changeLanguage( const QString& lang )
+void BackgroundEngine::changeLanguage( const TQString& lang )
 {
     delete m_dict;
     if ( lang.isEmpty() ) {
@@ -70,7 +70,7 @@ void BackgroundEngine::changeLanguage( const QString& lang )
     }
 }
 
-QString BackgroundEngine::language() const
+TQString BackgroundEngine::language() const
 {
     if ( m_dict )
         return m_dict->language();
@@ -80,14 +80,14 @@ QString BackgroundEngine::language() const
 
 void BackgroundEngine::setFilter( Filter *filter )
 {
-    QString oldText = m_filter->buffer();
+    TQString oldText = m_filter->buffer();
     m_filter = filter;
     m_filter->setBuffer( oldText );
 }
 
 void BackgroundEngine::start()
 {
-    QTimer::singleShot( 0, this, SLOT(checkNext()) );
+    TQTimer::singleShot( 0, this, TQT_SLOT(checkNext()) );
 }
 
 void BackgroundEngine::stop()
@@ -96,7 +96,7 @@ void BackgroundEngine::stop()
 
 void BackgroundEngine::continueChecking()
 {
-    QTimer::singleShot( 0, this, SLOT(checkNext()) );
+    TQTimer::singleShot( 0, this, TQT_SLOT(checkNext()) );
 }
 
 void BackgroundEngine::checkNext()
@@ -117,19 +117,19 @@ void BackgroundEngine::checkNext()
         continueChecking();
 }
 
-bool BackgroundEngine::checkWord( const QString& word )
+bool BackgroundEngine::checkWord( const TQString& word )
 {
     Dictionary *dict = ( m_dict ) ? m_dict : static_cast<Dictionary*>( m_defaultDict );
     return dict->check( word );
 }
 
-bool BackgroundEngine::addWord( const QString& word )
+bool BackgroundEngine::addWord( const TQString& word )
 {
     Dictionary *dict = ( m_dict ) ? m_dict : static_cast<Dictionary*>( m_defaultDict );
     return dict->addToPersonal( word );
 }
 
-QStringList BackgroundEngine::suggest( const QString& word )
+TQStringList BackgroundEngine::suggest( const TQString& word )
 {
     Dictionary *dict = ( m_dict ) ? m_dict : static_cast<Dictionary*>( m_defaultDict );
     return dict->suggest( word );

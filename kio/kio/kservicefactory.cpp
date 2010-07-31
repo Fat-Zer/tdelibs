@@ -22,7 +22,7 @@
 #include "ksycocadict.h"
 #include "kservice.h"
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -87,7 +87,7 @@ KServiceFactory * KServiceFactory::self()
     return _self;
 }
 
-KService * KServiceFactory::findServiceByName(const QString &_name)
+KService * KServiceFactory::findServiceByName(const TQString &_name)
 {
    if (!m_sycocaDict) return 0; // Error!
 
@@ -110,7 +110,7 @@ KService * KServiceFactory::findServiceByName(const QString &_name)
    return newService;
 }
 
-KService * KServiceFactory::findServiceByDesktopName(const QString &_name)
+KService * KServiceFactory::findServiceByDesktopName(const TQString &_name)
 {
    if (!m_nameDict) return 0; // Error!
 
@@ -133,7 +133,7 @@ KService * KServiceFactory::findServiceByDesktopName(const QString &_name)
    return newService;
 }
 
-KService * KServiceFactory::findServiceByDesktopPath(const QString &_name)
+KService * KServiceFactory::findServiceByDesktopPath(const TQString &_name)
 {
    if (!m_relNameDict) return 0; // Error!
 
@@ -156,7 +156,7 @@ KService * KServiceFactory::findServiceByDesktopPath(const QString &_name)
    return newService;
 }
 
-KService * KServiceFactory::findServiceByMenuId(const QString &_menuId)
+KService * KServiceFactory::findServiceByMenuId(const TQString &_menuId)
 {
    if (!m_menuIdDict) return 0; // Error!
 
@@ -183,7 +183,7 @@ KService* KServiceFactory::createEntry(int offset)
 {
    KService * newEntry = 0L;
    KSycocaType type;
-   QDataStream *str = KSycoca::self()->findEntry(offset, type);
+   TQDataStream *str = KSycoca::self()->findEntry(offset, type);
    switch(type)
    {
      case KST_KService:
@@ -191,7 +191,7 @@ KService* KServiceFactory::createEntry(int offset)
         break;
 
      default:
-        kdError(7011) << QString("KServiceFactory: unexpected object entry in KSycoca database (type = %1)").arg((int)type) << endl;
+        kdError(7011) << TQString("KServiceFactory: unexpected object entry in KSycoca database (type = %1)").arg((int)type) << endl;
         return 0;
    }
    if (!newEntry->isValid())
@@ -251,7 +251,7 @@ KService::List KServiceFactory::offers( int serviceTypeOffset )
 {
    KService::List list;
 
-   QDataStream *str = m_str;
+   TQDataStream *str = m_str;
    // Jump to the offer list
    str->device()->at( m_offerListOffset );
 

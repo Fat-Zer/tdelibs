@@ -22,8 +22,8 @@
 #ifndef KSPELL_SETTINGS_H
 #define KSPELL_SETTINGS_H
 
-#include <qstringlist.h>
-#include <qstring.h>
+#include <tqstringlist.h>
+#include <tqstring.h>
 #include <kdelibs_export.h>
 
 class KSharedConfig;
@@ -37,11 +37,11 @@ namespace KSpell2
     public:
         ~Settings();
 
-        void setDefaultLanguage( const QString& lang );
-        QString defaultLanguage() const;
+        void setDefaultLanguage( const TQString& lang );
+        TQString defaultLanguage() const;
 
-        void setDefaultClient( const QString& client );
-        QString defaultClient() const;
+        void setDefaultClient( const TQString& client );
+        TQString defaultClient() const;
 
         void setCheckUppercase( bool );
         bool checkUppercase() const;
@@ -52,10 +52,10 @@ namespace KSpell2
         void setBackgroundCheckerEnabled( bool );
         bool backgroundCheckerEnabled() const;
 
-        void setCurrentIgnoreList( const QStringList& ignores );
-        void addWordToIgnore( const QString& word );
-        QStringList currentIgnoreList() const;
-        bool ignore( const QString& word );
+        void setCurrentIgnoreList( const TQStringList& ignores );
+        void addWordToIgnore( const TQString& word );
+        TQStringList currentIgnoreList() const;
+        bool ignore( const TQString& word );
 
         void save();
 
@@ -64,7 +64,7 @@ namespace KSpell2
     private:
         void loadConfig();
         void readIgnoreList();
-        void setQuietIgnoreList( const QStringList& ignores );
+        void setQuietIgnoreList( const TQStringList& ignores );
 
     private:
         friend class Broker;

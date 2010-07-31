@@ -21,10 +21,10 @@
 
 #include <ktexteditor/markinterface.h>
 
-#include <qbitarray.h>
-#include <qcolor.h>
-#include <qobject.h>
-#include <qvaluevector.h>
+#include <tqbitarray.h>
+#include <tqcolor.h>
+#include <tqobject.h>
+#include <tqvaluevector.h>
 
 class KateView;
 class KateDocument;
@@ -186,10 +186,10 @@ class KateDocumentConfig : public KateConfig
     void setConfigFlags (KateDocumentConfig::ConfigFlags flag, bool enable);
     void setConfigFlags (uint fullFlags);
 
-    const QString &encoding () const;
-    QTextCodec *codec ();
+    const TQString &encoding () const;
+    TQTextCodec *codec ();
 
-    void setEncoding (const QString &encoding);
+    void setEncoding (const TQString &encoding);
 
     bool isSetEncoding () const;
 
@@ -201,7 +201,7 @@ class KateDocumentConfig : public KateConfig
     };
 
     int eol () const;
-    QString eolString ();
+    TQString eolString ();
 
     void setEol (int mode);
 
@@ -217,11 +217,11 @@ class KateDocumentConfig : public KateConfig
     uint backupFlags () const;
     void setBackupFlags (uint flags);
 
-    const QString &backupPrefix () const;
-    void setBackupPrefix (const QString &prefix);
+    const TQString &backupPrefix () const;
+    void setBackupPrefix (const TQString &prefix);
 
-    const QString &backupSuffix () const;
-    void setBackupSuffix (const QString &suffix);
+    const TQString &backupSuffix () const;
+    void setBackupSuffix (const TQString &suffix);
 
     bool plugin (uint index) const;
     void setPlugin (uint index, bool load);
@@ -244,14 +244,14 @@ class KateDocumentConfig : public KateConfig
     uint m_undoSteps;
     bool m_pageUpDownMovesCursor;
     uint m_configFlags;
-    QString m_encoding;
+    TQString m_encoding;
     int m_eol;
     bool m_allowEolDetection;
     uint m_backupFlags;
     int m_searchDirConfigDepth;
-    QString m_backupPrefix;
-    QString m_backupSuffix;
-    QBitArray m_plugins;
+    TQString m_backupPrefix;
+    TQString m_backupSuffix;
+    TQBitArray m_plugins;
 
     bool m_tabWidthSet : 1;
     bool m_indentationWidthSet : 1;
@@ -268,7 +268,7 @@ class KateDocumentConfig : public KateConfig
     bool m_searchDirConfigDepthSet : 1;
     bool m_backupPrefixSet : 1;
     bool m_backupSuffixSet : 1;
-    QBitArray m_pluginsSet;
+    TQBitArray m_pluginsSet;
 
   private:
     static KateDocumentConfig *s_global;
@@ -453,42 +453,42 @@ class KateRendererConfig : public KateConfig
     void reloadSchema();
 
     KateFontStruct *fontStruct ();
-    QFont *font();
+    TQFont *font();
     KateFontMetrics *fontMetrics();
 
-    void setFont(const QFont &font);
+    void setFont(const TQFont &font);
 
     bool wordWrapMarker () const;
     void setWordWrapMarker (bool on);
 
-    const QColor& backgroundColor() const;
-    void setBackgroundColor (const QColor &col);
+    const TQColor& backgroundColor() const;
+    void setBackgroundColor (const TQColor &col);
 
-    const QColor& selectionColor() const;
-    void setSelectionColor (const QColor &col);
+    const TQColor& selectionColor() const;
+    void setSelectionColor (const TQColor &col);
 
-    const QColor& highlightedLineColor() const;
-    void setHighlightedLineColor (const QColor &col);
+    const TQColor& highlightedLineColor() const;
+    void setHighlightedLineColor (const TQColor &col);
 
-    const QColor& lineMarkerColor(KTextEditor::MarkInterface::MarkTypes type = KTextEditor::MarkInterface::markType01) const; // markType01 == Bookmark
-    void setLineMarkerColor (const QColor &col, KTextEditor::MarkInterface::MarkTypes type = KTextEditor::MarkInterface::markType01);
+    const TQColor& lineMarkerColor(KTextEditor::MarkInterface::MarkTypes type = KTextEditor::MarkInterface::markType01) const; // markType01 == Bookmark
+    void setLineMarkerColor (const TQColor &col, KTextEditor::MarkInterface::MarkTypes type = KTextEditor::MarkInterface::markType01);
 
-    const QColor& highlightedBracketColor() const;
-    void setHighlightedBracketColor (const QColor &col);
+    const TQColor& highlightedBracketColor() const;
+    void setHighlightedBracketColor (const TQColor &col);
 
-    const QColor& wordWrapMarkerColor() const;
-    void setWordWrapMarkerColor (const QColor &col);
+    const TQColor& wordWrapMarkerColor() const;
+    void setWordWrapMarkerColor (const TQColor &col);
 
-    const QColor& tabMarkerColor() const;
-    void setTabMarkerColor (const QColor &col);
+    const TQColor& tabMarkerColor() const;
+    void setTabMarkerColor (const TQColor &col);
 
-    const QColor& iconBarColor() const;
-    void setIconBarColor (const QColor &col);
+    const TQColor& iconBarColor() const;
+    void setIconBarColor (const TQColor &col);
 
     // the line number color is used for the line numbers on the left bar and
     // for vertical separator lines and for code folding lines.
-    const QColor& lineNumberColor() const;
-    void setLineNumberColor (const QColor &col);
+    const TQColor& lineNumberColor() const;
+    void setLineNumberColor (const TQColor &col);
 
     bool showIndentationLines () const;
     void setShowIndentationLines (bool on);
@@ -503,15 +503,15 @@ class KateRendererConfig : public KateConfig
     KateFontStruct *m_font;
     bool m_wordWrapMarker;
     bool m_showIndentationLines;    
-    QColor m_backgroundColor;
-    QColor m_selectionColor;
-    QColor m_highlightedLineColor;
-    QColor m_highlightedBracketColor;
-    QColor m_wordWrapMarkerColor;
-    QColor m_tabMarkerColor;
-    QColor m_iconBarColor;
-    QColor m_lineNumberColor;
-    QValueVector<QColor> m_lineMarkerColor;
+    TQColor m_backgroundColor;
+    TQColor m_selectionColor;
+    TQColor m_highlightedLineColor;
+    TQColor m_highlightedBracketColor;
+    TQColor m_wordWrapMarkerColor;
+    TQColor m_tabMarkerColor;
+    TQColor m_iconBarColor;
+    TQColor m_lineNumberColor;
+    TQValueVector<TQColor> m_lineMarkerColor;
 
     bool m_schemaSet : 1;
     bool m_fontSet : 1;
@@ -525,7 +525,7 @@ class KateRendererConfig : public KateConfig
     bool m_tabMarkerColorSet : 1;
     bool m_iconBarColorSet : 1;
     bool m_lineNumberColorSet : 1;
-    QBitArray m_lineMarkerColorSet;
+    TQBitArray m_lineMarkerColorSet;
 
   private:
     static KateRendererConfig *s_global;

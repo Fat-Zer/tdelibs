@@ -24,9 +24,9 @@
 #include <kglobal.h>
 
 
-KStatusBarLabel::KStatusBarLabel( const QString& text, int _id,
+KStatusBarLabel::KStatusBarLabel( const TQString& text, int _id,
                                  KStatusBar *parent, const char *name) :
-  QLabel( parent, name)
+  TQLabel( parent, name)
 {
   id = _id;
 
@@ -34,39 +34,39 @@ KStatusBarLabel::KStatusBarLabel( const QString& text, int _id,
 
   // umm... Mosfet? Can you help here?
 
-  // Warning: QStatusBar draws shaded rectangle around every item - which
+  // Warning: TQStatusBar draws shaded rectangle around every item - which
   // IMHO is stupid.
   // So NoFrame|Plain is the best you get. the problem is that only in case of
-  // StyledPanel|Something you get QFrame to call QStyle::drawPanel().
+  // StyledPanel|Something you get TQFrame to call TQStyle::drawPanel().
 
   setLineWidth  (0);
-  setFrameStyle (QFrame::NoFrame);
+  setFrameStyle (TQFrame::NoFrame);
 
   setAlignment( AlignHCenter | AlignVCenter | SingleLine );
 
-  connect (this, SIGNAL(itemPressed(int)), parent, SIGNAL(pressed(int)));
-  connect (this, SIGNAL(itemReleased(int)), parent, SIGNAL(released(int)));
+  connect (this, TQT_SIGNAL(itemPressed(int)), parent, TQT_SIGNAL(pressed(int)));
+  connect (this, TQT_SIGNAL(itemReleased(int)), parent, TQT_SIGNAL(released(int)));
 }
 
-void KStatusBarLabel::mousePressEvent (QMouseEvent *)
+void KStatusBarLabel::mousePressEvent (TQMouseEvent *)
 {
   emit itemPressed (id);
 }
 
-void KStatusBarLabel::mouseReleaseEvent (QMouseEvent *)
+void KStatusBarLabel::mouseReleaseEvent (TQMouseEvent *)
 {
   emit itemReleased (id);
 }
 
-KStatusBar::KStatusBar( QWidget *parent, const char *name )
-  : QStatusBar( parent, name )
+KStatusBar::KStatusBar( TQWidget *parent, const char *name )
+  : TQStatusBar( parent, name )
 {
   // make the size grip stuff configurable
   // ...but off by default (sven)
   KConfig *config = KGlobal::config();
-  QString group(config->group());
-  config->setGroup(QString::fromLatin1("StatusBar style"));
-  bool grip_enabled = config->readBoolEntry(QString::fromLatin1("SizeGripEnabled"), false);
+  TQString group(config->group());
+  config->setGroup(TQString::fromLatin1("StatusBar style"));
+  bool grip_enabled = config->readBoolEntry(TQString::fromLatin1("SizeGripEnabled"), false);
   setSizeGripEnabled(grip_enabled);
   config->setGroup(group);
 }
@@ -75,7 +75,7 @@ KStatusBar::~KStatusBar ()
 {
 }
 
-void KStatusBar::insertItem( const QString& text, int id, int stretch, bool permanent)
+void KStatusBar::insertItem( const TQString& text, int id, int stretch, bool permanent)
 {
   if (items[id])
     kdDebug() << "KStatusBar::insertItem: item id " << id << " already exists." << endl;
@@ -109,7 +109,7 @@ bool KStatusBar::hasItem( int id ) const
     return false;
 }
 
-void KStatusBar::changeItem( const QString& text, int id )
+void KStatusBar::changeItem( const TQString& text, int id )
 {
   KStatusBarLabel *l = items[id];
   if (l)

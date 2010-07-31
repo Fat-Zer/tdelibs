@@ -20,7 +20,7 @@
 #ifndef __ktexteditor_editinterfaceext_h__
 #define __ktexteditor_editinterfaceext_h__
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 

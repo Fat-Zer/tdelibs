@@ -22,9 +22,9 @@
 #define _INCLUDE_KSSLCCACHE_H
 
 class KSSLCertificate;
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qdatetime.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqdatetime.h>
 
 #include <kdelibs_export.h>
 
@@ -55,35 +55,35 @@ enum KSSLCertificatePolicy { Unknown, Reject, Accept, Prompt, Ambiguous };
   //            the exact FQDN of the site presenting it)
   //           If you're just doing an OpenSSL connection, I believe it
   //           tests this for you, but don't take my word for it.
-  KSSLCertificatePolicy getPolicyByCN(QString& cn);
+  KSSLCertificatePolicy getPolicyByCN(TQString& cn);
 
   KSSLCertificatePolicy getPolicyByCertificate(KSSLCertificate& cert);
 
-  bool seenCN(QString& cn);
+  bool seenCN(TQString& cn);
   bool seenCertificate(KSSLCertificate& cert);
 
-  bool removeByCN(QString& cn);
+  bool removeByCN(TQString& cn);
   bool removeByCertificate(KSSLCertificate& cert);
 
   bool isPermanent(KSSLCertificate& cert);
 
-  bool modifyByCN(QString& cn,
+  bool modifyByCN(TQString& cn,
                   KSSLCertificateCache::KSSLCertificatePolicy policy,
                   bool permanent,
-                  QDateTime& expires);
+                  TQDateTime& expires);
 
   bool modifyByCertificate(KSSLCertificate& cert,
                            KSSLCertificateCache::KSSLCertificatePolicy policy,
                            bool permanent,
-                           QDateTime& expires);
+                           TQDateTime& expires);
 
-  QStringList getHostList(KSSLCertificate& cert);
-  bool addHost(KSSLCertificate& cert, QString& host);
-  bool removeHost(KSSLCertificate& cert, QString& host);
+  TQStringList getHostList(KSSLCertificate& cert);
+  bool addHost(KSSLCertificate& cert, TQString& host);
+  bool removeHost(KSSLCertificate& cert, TQString& host);
 
   // SMIME
-  QStringList getKDEKeyByEmail(const QString &email);
-  KSSLCertificate *getCertByMD5Digest(const QString &key);
+  TQStringList getKDEKeyByEmail(const TQString &email);
+  KSSLCertificate *getCertByMD5Digest(const TQString &key);
 
   void reload();
 
@@ -101,7 +101,7 @@ private:
 };
 
 
-KIO_EXPORT QDataStream& operator<<(QDataStream& s, const KSSLCertificateCache::KSSLCertificatePolicy& p);
-KIO_EXPORT QDataStream& operator>>(QDataStream& s, KSSLCertificateCache::KSSLCertificatePolicy& p);
+KIO_EXPORT TQDataStream& operator<<(TQDataStream& s, const KSSLCertificateCache::KSSLCertificatePolicy& p);
+KIO_EXPORT TQDataStream& operator>>(TQDataStream& s, KSSLCertificateCache::KSSLCertificatePolicy& p);
 
 #endif

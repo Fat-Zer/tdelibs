@@ -19,12 +19,12 @@
 
 #include "kmultipart.h"
 
-#include <qvbox.h>
+#include <tqvbox.h>
 #include <kinstance.h>
 #include <kmimetype.h>
 #include <klocale.h>
 #include <kio/job.h>
-#include <qfile.h>
+#include <tqfile.h>
 #include <ktempfile.h>
 #include <kmessagebox.h>
 #include <kparts/componentfactory.h>
@@ -32,7 +32,7 @@
 #include <khtml_part.h>
 #include <unistd.h>
 #include <kxmlguifactory.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 
 typedef KParts::GenericFactory<KMultiPart> KMultiPartFactory; // factory for the part
 K_EXPORT_COMPONENT_FACTORY( libkmultipart /*library name*/, KMultiPartFactory )
@@ -51,7 +51,7 @@ public:
         Q_ASSERT( !m_lineComplete );
         if ( storeNewline || c != '\n' ) {
             int sz = m_currentLine.size();
-            m_currentLine.resize( sz+1, QGArray::SpeedOptim );
+            m_currentLine.resize( sz+1, TQGArray::SpeedOptim );
             m_currentLine[sz] = c;
         }
         if ( c == '\n' )
@@ -60,7 +60,7 @@ public:
     bool isLineComplete() const {
         return m_lineComplete;
     }
-    QByteArray currentLine() const {
+    TQByteArray currentLine() const {
         return m_currentLine;
     }
     void clearLine() {
@@ -68,11 +68,11 @@ public:
         reset();
     }
     void reset() {
-        m_currentLine.resize( 0, QGArray::SpeedOptim );
+        m_currentLine.resize( 0, TQGArray::SpeedOptim );
         m_lineComplete = false;
     }
 private:
-    QByteArray m_currentLine;
+    TQByteArray m_currentLine;
     bool m_lineComplete; // true when ending with '\n'
 };
 
@@ -93,15 +93,15 @@ Data for the second and last object.
 */
 
 
-KMultiPart::KMultiPart( QWidget *parentWidget, const char *widgetName,
-                        QObject *parent, const char *name, const QStringList& )
+KMultiPart::KMultiPart( TQWidget *parentWidget, const char *widgetName,
+                        TQObject *parent, const char *name, const TQStringList& )
     : KParts::ReadOnlyPart( parent, name )
 {
     m_filter = 0L;
 
     setInstance( KMultiPartFactory::instance() );
 
-    QVBox *box = new QVBox( parentWidget, widgetName );
+    TQVBox *box = new TQVBox( parentWidget, widgetName );
     setWidget( box );
 
     m_extension = new KParts::BrowserExtension( this );
@@ -114,8 +114,8 @@ KMultiPart::KMultiPart( QWidget *parentWidget, const char *widgetName,
     m_lineParser = new KLineParser;
     m_tempFile = 0L;
 
-    m_timer = new QTimer( this );
-    connect( m_timer, SIGNAL( timeout() ), this, SLOT( slotProgressInfo() ) );
+    m_timer = new TQTimer( this );
+    connect( m_timer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( slotProgressInfo() ) );
 }
 
 KMultiPart::~KMultiPart()
@@ -167,10 +167,10 @@ bool KMultiPart::openURL( const KURL &url )
 
     emit started( 0 /*m_job*/ ); // don't pass the job, it would interfer with our own infoMessage
 
-    connect( m_job, SIGNAL( result( KIO::Job * ) ),
-             this, SLOT( slotJobFinished( KIO::Job * ) ) );
-    connect( m_job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
-             this, SLOT( slotData( KIO::Job *, const QByteArray & ) ) );
+    connect( m_job, TQT_SIGNAL( result( KIO::Job * ) ),
+             this, TQT_SLOT( slotJobFinished( KIO::Job * ) ) );
+    connect( m_job, TQT_SIGNAL( data( KIO::Job *, const TQByteArray & ) ),
+             this, TQT_SLOT( slotData( KIO::Job *, const TQByteArray & ) ) );
 
     m_numberOfFrames = 0;
     m_numberOfFramesSkipped = 0;
@@ -184,17 +184,17 @@ bool KMultiPart::openURL( const KURL &url )
 // Yes, libkdenetwork's has such a parser already (MultiPart),
 // but it works on the complete string, expecting the whole data to be available....
 // The version here is asynchronous.
-void KMultiPart::slotData( KIO::Job *job, const QByteArray &data )
+void KMultiPart::slotData( KIO::Job *job, const TQByteArray &data )
 {
     if (m_boundary.isNull())
     {
-       QString tmp = job->queryMetaData("media-boundary");
+       TQString tmp = job->queryMetaData("media-boundary");
        kdDebug() << "Got Boundary from kio-http '" << tmp << "'" << endl;
        if ( !tmp.isEmpty() ) {
            if (tmp.startsWith("--"))
                m_boundary = tmp.latin1();
            else
-               m_boundary = QCString("--")+tmp.latin1();
+               m_boundary = TQCString("--")+tmp.latin1();
            m_boundaryLength = m_boundary.length();
        }
     }
@@ -205,11 +205,11 @@ void KMultiPart::slotData( KIO::Job *job, const QByteArray &data )
         m_lineParser->addChar( data[i], !m_bParsingHeader );
         if ( m_lineParser->isLineComplete() )
         {
-            QByteArray lineData = m_lineParser->currentLine();
+            TQByteArray lineData = m_lineParser->currentLine();
 #ifdef DEBUG_PARSING
             kdDebug() << "lineData.size()=" << lineData.size() << endl;
 #endif
-            QCString line( lineData.data(), lineData.size()+1 ); // deep copy
+            TQCString line( lineData.data(), lineData.size()+1 ); // deep copy
             // 0-terminate the data, but only for the line-based tests below
             // We want to keep the raw data in case it ends up in sendData()
             int sz = line.size();
@@ -234,7 +234,7 @@ void KMultiPart::slotData( KIO::Job *job, const QByteArray &data )
                 }
                 else if ( !qstrnicmp( line.data(), "Content-Encoding:", 17 ) )
                 {
-                    QString encoding = QString::fromLatin1(line.data()+17).stripWhiteSpace().lower();
+                    TQString encoding = TQString::fromLatin1(line.data()+17).stripWhiteSpace().lower();
                     if (encoding == "gzip" || encoding == "x-gzip") {
                         m_gzip = true;
                     } else {
@@ -245,7 +245,7 @@ void KMultiPart::slotData( KIO::Job *job, const QByteArray &data )
                 else if ( !qstrnicmp( line.data(), "Content-Type:", 13 ) )
                 {
                     Q_ASSERT( m_nextMimeType.isNull() );
-                    m_nextMimeType = QString::fromLatin1( line.data() + 14 ).stripWhiteSpace();
+                    m_nextMimeType = TQString::fromLatin1( line.data() + 14 ).stripWhiteSpace();
                     int semicolon = m_nextMimeType.find( ';' );
                     if ( semicolon != -1 )
                         m_nextMimeType = m_nextMimeType.left( semicolon );
@@ -305,7 +305,7 @@ void KMultiPart::slotData( KIO::Job *job, const QByteArray &data )
     }
 }
 
-void KMultiPart::setPart( const QString& mimeType )
+void KMultiPart::setPart( const TQString& mimeType )
 {
     KXMLGUIFactory *guiFactory = factory();
     if ( guiFactory ) // seems to be 0 when restoring from SM
@@ -314,7 +314,7 @@ void KMultiPart::setPart( const QString& mimeType )
     delete m_part;
     // Try to find an appropriate viewer component
     m_part = KParts::ComponentFactory::createPartInstanceFromQuery<KParts::ReadOnlyPart>
-             ( m_mimeType, QString::null, widget(), 0L, this, 0L );
+             ( m_mimeType, TQString::null, widget(), 0L, this, 0L );
     if ( !m_part ) {
         // TODO launch external app
         KMessageBox::error( widget(), i18n("No handler found for %1!").arg(m_mimeType) );
@@ -324,8 +324,8 @@ void KMultiPart::setPart( const QString& mimeType )
     insertChildClient( m_part );
     m_part->widget()->show();
 
-    connect( m_part, SIGNAL( completed() ),
-             this, SLOT( slotPartCompleted() ) );
+    connect( m_part, TQT_SIGNAL( completed() ),
+             this, TQT_SLOT( slotPartCompleted() ) );
 
     m_isHTMLPart = ( mimeType == "text/html" );
     KParts::BrowserExtension* childExtension = KParts::BrowserExtension::childObject( m_part );
@@ -336,62 +336,62 @@ void KMultiPart::setPart( const QString& mimeType )
         // Forward signals from the part's browser extension
         // this is very related (but not exactly like) KHTMLPart::processObjectRequest
 
-        connect( childExtension, SIGNAL( openURLNotify() ),
-                 m_extension, SIGNAL( openURLNotify() ) );
+        connect( childExtension, TQT_SIGNAL( openURLNotify() ),
+                 m_extension, TQT_SIGNAL( openURLNotify() ) );
 
-        connect( childExtension, SIGNAL( openURLRequestDelayed( const KURL &, const KParts::URLArgs & ) ),
-                 m_extension, SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs & ) ) );
+        connect( childExtension, TQT_SIGNAL( openURLRequestDelayed( const KURL &, const KParts::URLArgs & ) ),
+                 m_extension, TQT_SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs & ) ) );
 
-        connect( childExtension, SIGNAL( createNewWindow( const KURL &, const KParts::URLArgs & ) ),
-                 m_extension, SIGNAL( createNewWindow( const KURL &, const KParts::URLArgs & ) ) );
-        connect( childExtension, SIGNAL( createNewWindow( const KURL &, const KParts::URLArgs &, const KParts::WindowArgs &, KParts::ReadOnlyPart *& ) ),
-                 m_extension, SIGNAL( createNewWindow( const KURL &, const KParts::URLArgs & , const KParts::WindowArgs &, KParts::ReadOnlyPart *&) ) );
+        connect( childExtension, TQT_SIGNAL( createNewWindow( const KURL &, const KParts::URLArgs & ) ),
+                 m_extension, TQT_SIGNAL( createNewWindow( const KURL &, const KParts::URLArgs & ) ) );
+        connect( childExtension, TQT_SIGNAL( createNewWindow( const KURL &, const KParts::URLArgs &, const KParts::WindowArgs &, KParts::ReadOnlyPart *& ) ),
+                 m_extension, TQT_SIGNAL( createNewWindow( const KURL &, const KParts::URLArgs & , const KParts::WindowArgs &, KParts::ReadOnlyPart *&) ) );
 
         // Keep in sync with khtml_part.cpp
-        connect( childExtension, SIGNAL( popupMenu( const QPoint &, const KFileItemList & ) ),
-                 m_extension, SIGNAL( popupMenu( const QPoint &, const KFileItemList & ) ) );
-        connect( childExtension, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KFileItemList & ) ),
-                 m_extension, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KFileItemList & ) ) );
-        connect( childExtension, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KFileItemList &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags ) ),
-                 m_extension, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KFileItemList &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags ) ) );
-        connect( childExtension, SIGNAL( popupMenu( const QPoint &, const KURL &, const QString &, mode_t ) ),
-                 m_extension, SIGNAL( popupMenu( const QPoint &, const KURL &, const QString &, mode_t ) ) );
-        connect( childExtension, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KURL &, const QString &, mode_t ) ),
-                 m_extension, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KURL &, const QString &, mode_t ) ) );
-        connect( childExtension, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KURL &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags, mode_t ) ),
-                 m_extension, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KURL &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags, mode_t ) ) );
+        connect( childExtension, TQT_SIGNAL( popupMenu( const TQPoint &, const KFileItemList & ) ),
+                 m_extension, TQT_SIGNAL( popupMenu( const TQPoint &, const KFileItemList & ) ) );
+        connect( childExtension, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KFileItemList & ) ),
+                 m_extension, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KFileItemList & ) ) );
+        connect( childExtension, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KFileItemList &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags ) ),
+                 m_extension, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KFileItemList &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags ) ) );
+        connect( childExtension, TQT_SIGNAL( popupMenu( const TQPoint &, const KURL &, const TQString &, mode_t ) ),
+                 m_extension, TQT_SIGNAL( popupMenu( const TQPoint &, const KURL &, const TQString &, mode_t ) ) );
+        connect( childExtension, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KURL &, const TQString &, mode_t ) ),
+                 m_extension, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KURL &, const TQString &, mode_t ) ) );
+        connect( childExtension, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KURL &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags, mode_t ) ),
+                 m_extension, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KURL &, const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags, mode_t ) ) );
 
 
         if ( m_isHTMLPart )
-            connect( childExtension, SIGNAL( infoMessage( const QString & ) ),
-                     m_extension, SIGNAL( infoMessage( const QString & ) ) );
+            connect( childExtension, TQT_SIGNAL( infoMessage( const TQString & ) ),
+                     m_extension, TQT_SIGNAL( infoMessage( const TQString & ) ) );
         // For non-HTML we prefer to show our infoMessage ourselves.
 
         childExtension->setBrowserInterface( m_extension->browserInterface() );
 
-        connect( childExtension, SIGNAL( enableAction( const char *, bool ) ),
-                 m_extension, SIGNAL( enableAction( const char *, bool ) ) );
-        connect( childExtension, SIGNAL( setLocationBarURL( const QString& ) ),
-                 m_extension, SIGNAL( setLocationBarURL( const QString& ) ) );
-        connect( childExtension, SIGNAL( setIconURL( const KURL& ) ),
-                 m_extension, SIGNAL( setIconURL( const KURL& ) ) );
-        connect( childExtension, SIGNAL( loadingProgress( int ) ),
-                 m_extension, SIGNAL( loadingProgress( int ) ) );
+        connect( childExtension, TQT_SIGNAL( enableAction( const char *, bool ) ),
+                 m_extension, TQT_SIGNAL( enableAction( const char *, bool ) ) );
+        connect( childExtension, TQT_SIGNAL( setLocationBarURL( const TQString& ) ),
+                 m_extension, TQT_SIGNAL( setLocationBarURL( const TQString& ) ) );
+        connect( childExtension, TQT_SIGNAL( setIconURL( const KURL& ) ),
+                 m_extension, TQT_SIGNAL( setIconURL( const KURL& ) ) );
+        connect( childExtension, TQT_SIGNAL( loadingProgress( int ) ),
+                 m_extension, TQT_SIGNAL( loadingProgress( int ) ) );
         if ( m_isHTMLPart ) // for non-HTML we have our own
-            connect( childExtension, SIGNAL( speedProgress( int ) ),
-                     m_extension, SIGNAL( speedProgress( int ) ) );
-        connect( childExtension, SIGNAL( selectionInfo( const KFileItemList& ) ),
-                 m_extension, SIGNAL( selectionInfo( const KFileItemList& ) ) );
-        connect( childExtension, SIGNAL( selectionInfo( const QString& ) ),
-                 m_extension, SIGNAL( selectionInfo( const QString& ) ) );
-        connect( childExtension, SIGNAL( selectionInfo( const KURL::List& ) ),
-                 m_extension, SIGNAL( selectionInfo( const KURL::List& ) ) );
-        connect( childExtension, SIGNAL( mouseOverInfo( const KFileItem* ) ),
-                 m_extension, SIGNAL( mouseOverInfo( const KFileItem* ) ) );
-        connect( childExtension, SIGNAL( moveTopLevelWidget( int, int ) ),
-                 m_extension, SIGNAL( moveTopLevelWidget( int, int ) ) );
-        connect( childExtension, SIGNAL( resizeTopLevelWidget( int, int ) ),
-                 m_extension, SIGNAL( resizeTopLevelWidget( int, int ) ) );
+            connect( childExtension, TQT_SIGNAL( speedProgress( int ) ),
+                     m_extension, TQT_SIGNAL( speedProgress( int ) ) );
+        connect( childExtension, TQT_SIGNAL( selectionInfo( const KFileItemList& ) ),
+                 m_extension, TQT_SIGNAL( selectionInfo( const KFileItemList& ) ) );
+        connect( childExtension, TQT_SIGNAL( selectionInfo( const TQString& ) ),
+                 m_extension, TQT_SIGNAL( selectionInfo( const TQString& ) ) );
+        connect( childExtension, TQT_SIGNAL( selectionInfo( const KURL::List& ) ),
+                 m_extension, TQT_SIGNAL( selectionInfo( const KURL::List& ) ) );
+        connect( childExtension, TQT_SIGNAL( mouseOverInfo( const KFileItem* ) ),
+                 m_extension, TQT_SIGNAL( mouseOverInfo( const KFileItem* ) ) );
+        connect( childExtension, TQT_SIGNAL( moveTopLevelWidget( int, int ) ),
+                 m_extension, TQT_SIGNAL( moveTopLevelWidget( int, int ) ) );
+        connect( childExtension, TQT_SIGNAL( resizeTopLevelWidget( int, int ) ),
+                 m_extension, TQT_SIGNAL( resizeTopLevelWidget( int, int ) ) );
     }
 
     m_partIsLoading = false;
@@ -414,7 +414,7 @@ void KMultiPart::startOfData()
     if ( m_gzip )
     {
         m_filter = new HTTPFilterGZip;
-        connect( m_filter, SIGNAL( output( const QByteArray& ) ), this, SLOT( reallySendData( const QByteArray& ) ) );
+        connect( m_filter, TQT_SIGNAL( output( const TQByteArray& ) ), this, TQT_SLOT( reallySendData( const TQByteArray& ) ) );
     }
 
     if ( m_mimeType != m_nextMimeType )
@@ -429,7 +429,7 @@ void KMultiPart::startOfData()
     if ( childExtension )
         childExtension->setURLArgs( m_extension->urlArgs() );
 
-    m_nextMimeType = QString::null;
+    m_nextMimeType = TQString::null;
     if ( m_tempFile ) {
         m_tempFile->setAutoDelete( true );
         delete m_tempFile;
@@ -442,12 +442,12 @@ void KMultiPart::startOfData()
     }
     else
     {
-        // ###### TODO use a QByteArray and a data: URL instead
+        // ###### TODO use a TQByteArray and a data: URL instead
         m_tempFile = new KTempFile;
     }
 }
 
-void KMultiPart::sendData( const QByteArray& line )
+void KMultiPart::sendData( const TQByteArray& line )
 {
     if ( m_filter )
     {
@@ -459,7 +459,7 @@ void KMultiPart::sendData( const QByteArray& line )
     }
 }
 
-void KMultiPart::reallySendData( const QByteArray& line )
+void KMultiPart::reallySendData( const TQByteArray& line )
 {
     if ( m_isHTMLPart )
     {
@@ -511,7 +511,7 @@ void KMultiPart::slotPartCompleted()
         // Delete temp file used by the part
         Q_ASSERT( m_part->url().isLocalFile() );
 	kdDebug() << "slotPartCompleted deleting " << m_part->url().path() << endl;
-        (void) unlink( QFile::encodeName( m_part->url().path() ) );
+        (void) unlink( TQFile::encodeName( m_part->url().path() ) );
         m_partIsLoading = false;
         ++m_numberOfFrames;
         // Do not emit completed from here.
@@ -551,7 +551,7 @@ void KMultiPart::slotJobFinished( KIO::Job *job )
 
         emit completed();
 
-        //QTimer::singleShot( 0, this, SLOT( updateWindowCaption() ) );
+        //TQTimer::singleShot( 0, this, TQT_SLOT( updateWindowCaption() ) );
     }
     m_job = 0L;
 }
@@ -563,7 +563,7 @@ void KMultiPart::slotProgressInfo()
     if ( m_totalNumberOfFrames == m_numberOfFrames + m_numberOfFramesSkipped )
         return; // No change, don't overwrite statusbar messages if any
     //kdDebug() << m_numberOfFrames << " in " << time << " milliseconds" << endl;
-    QString str( "%1 frames per second, %2 frames skipped per second" );
+    TQString str( "%1 frames per second, %2 frames skipped per second" );
     str = str.arg( 1000.0 * (double)m_numberOfFrames / (double)time );
     str = str.arg( 1000.0 * (double)m_numberOfFramesSkipped / (double)time );
     m_totalNumberOfFrames = m_numberOfFrames + m_numberOfFramesSkipped;

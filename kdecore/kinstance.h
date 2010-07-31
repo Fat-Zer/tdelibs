@@ -28,7 +28,7 @@ class KInstancePrivate;
 class KMimeSourceFactory;
 class KSharedConfig;
 
-#include <qstring.h>
+#include <tqstring.h>
 #include "kdelibs_export.h"
 
 
@@ -49,7 +49,7 @@ class KDECORE_EXPORT KInstance
      *  Constructor.
      *  @param instanceName the name of the instance
      */
-    KInstance( const QCString& instanceName) ;
+    KInstance( const TQCString& instanceName) ;
 
     /**
      *  Constructor.
@@ -118,7 +118,7 @@ class KDECORE_EXPORT KInstance
      * @return the instance name, can be null if the KInstance has been 
      *         created with a null name
      */
-    QCString          instanceName() const;
+    TQCString          instanceName() const;
 
     /**
      * Returns the KMimeSourceFactory of the instance.
@@ -138,7 +138,7 @@ protected:
      * @param name the name of the default config file
      * @since 3.1
      */
-    void setConfigName(const QString &name);
+    void setConfigName(const TQString &name);
 
 private:
     mutable KStandardDirs       *_dirs;
@@ -146,7 +146,7 @@ private:
     mutable KConfig             *_config;
     mutable KIconLoader         *_iconLoader;
 
-    QCString                     _name;
+    TQCString                     _name;
     const KAboutData            *_aboutData;
 
 protected:

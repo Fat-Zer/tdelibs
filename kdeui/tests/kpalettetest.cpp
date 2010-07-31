@@ -1,21 +1,21 @@
 
 #include <kapplication.h>
-#include <qwidget.h>
-#include <qtimer.h>
+#include <tqwidget.h>
+#include <tqtimer.h>
 #include <stdlib.h>
 #include "kpalette.h"
 #include "kledtest.h"
 #include <stdio.h>
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 
 int main( int argc, char **argv )
 {
     KApplication a( argc, argv, "KPalettetest" );
 
-    QStringList palettes = KPalette::getPaletteList();
-    for(QStringList::ConstIterator it = palettes.begin(); 
+    TQStringList palettes = KPalette::getPaletteList();
+    for(TQStringList::ConstIterator it = palettes.begin(); 
 	it != palettes.end(); it++) 
     {
        printf("Palette = %s\n", (*it).ascii());

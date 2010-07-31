@@ -20,10 +20,10 @@
 #ifndef KPLUGININFO_H
 #define KPLUGININFO_H
 
-#include <qstring.h>
-#include <qmap.h>
-#include <qstringlist.h>
-#include <qvaluelist.h>
+#include <tqstring.h>
+#include <tqmap.h>
+#include <tqstringlist.h>
+#include <tqvaluelist.h>
 #include <kservice.h>
 
 class KConfigGroup;
@@ -42,7 +42,7 @@ class KConfigGroup;
 class KUTILS_EXPORT KPluginInfo
 {
     public:
-        typedef QValueList<KPluginInfo*> List;
+        typedef TQValueList<KPluginInfo*> List;
 
         /**
          * Read plugin info from @p filename.
@@ -77,7 +77,7 @@ class KUTILS_EXPORT KPluginInfo
          * (e.g. "service", "apps"... KStandardDirs). Otherwise,
          * resource isn't used.
          */
-        KPluginInfo( const QString & filename, const char* resource = 0 );
+        KPluginInfo( const TQString & filename, const char* resource = 0 );
 
         /**
          * Read plugin info from a KService object.
@@ -120,7 +120,7 @@ class KUTILS_EXPORT KPluginInfo
          * KService objects. If you get a trader offer of the plugins you want
          * to use you can just pass them to this function.
          */
-        static KPluginInfo::List fromServices( const KService::List & services, KConfig * config = 0, const QString & group = QString::null );
+        static KPluginInfo::List fromServices( const KService::List & services, KConfig * config = 0, const TQString & group = TQString::null );
 
         /**
          * @return A list of KPluginInfo objects constructed from a list of
@@ -128,14 +128,14 @@ class KUTILS_EXPORT KPluginInfo
          * KStandardDirs::findAllResources() you pass the list of files to this
          * function.
          */
-        static KPluginInfo::List fromFiles( const QStringList & files, KConfig * config = 0, const QString & group = QString::null );
+        static KPluginInfo::List fromFiles( const TQStringList & files, KConfig * config = 0, const TQString & group = TQString::null );
 
         /**
          * @return A list of KPluginInfo objects for the KParts plugins of an
          * instance. You only need the name of the instance not a pointer to the
          * KInstance object.
          */
-        static KPluginInfo::List fromKPartsInstanceName( const QString &, KConfig * config = 0, const QString & group = QString::null );
+        static KPluginInfo::List fromKPartsInstanceName( const TQString &, KConfig * config = 0, const TQString & group = TQString::null );
 
         /**
          * @return Whether the plugin should be hidden.
@@ -176,7 +176,7 @@ class KUTILS_EXPORT KPluginInfo
          *
          * @see operator[]
          */
-        QVariant property( const QString & key ) const;
+        TQVariant property( const TQString & key ) const;
 
         /**
          * This is the same as property(). It is provided for convenience.
@@ -185,70 +185,70 @@ class KUTILS_EXPORT KPluginInfo
          *
          * @see property()
          */
-        QVariant operator[]( const QString & key ) const;
+        TQVariant operator[]( const TQString & key ) const;
 
         /**
          * @return The user visible name of the plugin.
          */
-        const QString & name() const;
+        const TQString & name() const;
 
         /**
          * @return A comment describing the plugin.
          */
-        const QString & comment() const;
+        const TQString & comment() const;
 
         /**
          * @return The iconname for this plugin
          */
-        const QString & icon() const;
+        const TQString & icon() const;
 
         /**
          * @return The file containing the information about the plugin.
          */
-        const QString & specfile() const;
+        const TQString & specfile() const;
 
         /**
          * @return The author of this plugin.
          */
-        const QString & author() const;
+        const TQString & author() const;
 
         /**
          * @return The email address of the author.
          */
-        const QString & email() const;
+        const TQString & email() const;
 
         /**
          * @return The category of this plugin (e.g. playlist/skin).
          */
-        const QString & category() const;
+        const TQString & category() const;
 
         /**
          * @return The internal name of the plugin (for KParts Plugins this is
          * the same name as set in the .rc file).
          */
-        const QString & pluginName() const;
+        const TQString & pluginName() const;
 
         /**
          * @return The version of the plugin.
          */
-        const QString & version() const;
+        const TQString & version() const;
 
         /**
          * @return The website of the plugin/author.
          */
-        const QString & website() const;
+        const TQString & website() const;
 
 
         /**
          * @return The license of this plugin.
          */
-        const QString & license() const;
+        const TQString & license() const;
 
         /**
          * @return A list of plugins required for this plugin to be enabled. Use
          *         the pluginName in this list.
          */
-        const QStringList & dependencies() const;
+        const TQStringList & dependencies() const;
 
         /**
          * @return The KService object for this plugin. You might need it if you
@@ -265,14 +265,14 @@ class KUTILS_EXPORT KPluginInfo
          * @return A list of Service pointers if the plugin installs one or more
          *         KCModule
          */
-        const QValueList<KService::Ptr> & kcmServices() const;
+        const TQValueList<KService::Ptr> & kcmServices() const;
 
         /**
          * Set the KConfigGroup to use for load()ing and save()ing the
          * configuration. This will be overridden by the KConfigGroup passed to
          * save() or load() (if one is passed).
          */
-        void setConfig( KConfig * config, const QString & group );
+        void setConfig( KConfig * config, const TQString & group );
 
         /**
          * @return If the KPluginInfo object has a KConfig object set return
@@ -284,7 +284,7 @@ class KUTILS_EXPORT KPluginInfo
          * @return The groupname used in the KConfig object for load()ing and
          * save()ing whether the plugin is enabled.
          */
-        const QString & configgroup() const;
+        const TQString & configgroup() const;
 
         /**
          * Save state of the plugin - enabled or not. This function is provided

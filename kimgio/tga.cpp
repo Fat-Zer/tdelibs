@@ -22,8 +22,8 @@
 
 #include <assert.h>
 
-#include <qimage.h>
-#include <qdatastream.h>
+#include <tqimage.h>
+#include <tqdatastream.h>
 
 #include <kdebug.h>
 
@@ -74,7 +74,7 @@ namespace {	// Private.
 		enum { SIZE = 18 }; // const static int SIZE = 18;
 	};
 
-	static QDataStream & operator>> ( QDataStream & s, TgaHeader & head )
+	static TQDataStream & operator>> ( TQDataStream & s, TgaHeader & head )
 	{
 		s >> head.id_length;
 		s >> head.colormap_type;
@@ -169,7 +169,7 @@ namespace {	// Private.
 		}
 	};
 
-	static bool LoadTGA( QDataStream & s, const TgaHeader & tga, QImage &img )
+	static bool LoadTGA( TQDataStream & s, const TgaHeader & tga, TQImage &img )
 	{
 		// Create image.
 		if( !img.create( tga.width, tga.height, 32 )) {
@@ -313,12 +313,12 @@ namespace {	// Private.
 } // namespace
 
 
-KDE_EXPORT void kimgio_tga_read( QImageIO *io )
+KDE_EXPORT void kimgio_tga_read( TQImageIO *io )
 {
 	//kdDebug(399) << "Loading TGA file!" << endl;
 	
-	QDataStream s( io->ioDevice() );
-	s.setByteOrder( QDataStream::LittleEndian );
+	TQDataStream s( io->ioDevice() );
+	s.setByteOrder( TQDataStream::LittleEndian );
 
 
 	// Read image header.
@@ -343,7 +343,7 @@ KDE_EXPORT void kimgio_tga_read( QImageIO *io )
 	}
 				
 
-	QImage img;
+	TQImage img;
 	bool result = LoadTGA(s, tga, img);
 		
 	if( result == false ) {
@@ -359,12 +359,12 @@ KDE_EXPORT void kimgio_tga_read( QImageIO *io )
 }
 
 
-KDE_EXPORT void kimgio_tga_write( QImageIO *io )
+KDE_EXPORT void kimgio_tga_write( TQImageIO *io )
 {
-    QDataStream s( io->ioDevice() );
-    s.setByteOrder( QDataStream::LittleEndian );
+    TQDataStream s( io->ioDevice() );
+    s.setByteOrder( TQDataStream::LittleEndian );
 
-    const QImage img = io->image();
+    const TQImage img = io->image();
     const bool hasAlpha = img.hasAlphaBuffer();
     for( int i = 0; i < 12; i++ )
         s << targaMagic[i];

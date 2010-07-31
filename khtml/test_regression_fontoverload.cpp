@@ -24,11 +24,11 @@
 #define QT_NO_XRANDR 1
 #define QT_NO_XFTFREETYPE 1
 #include <private/qfontengine_p.h>
-#include <qfontdatabase.h>
-#include <qfont.h>
-#include <qpainter.h>
+#include <tqfontdatabase.h>
+#include <tqfont.h>
+#include <tqpainter.h>
 #include "khtml_settings.h"
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <assert.h>
 
 class QFakeFontEngine : public QFontEngineXLFD
@@ -47,7 +47,7 @@ public:
             return QFontEngineXLFD::leading();
     }
 
-    void draw( QPainter *p, int x, int y, const QTextEngine *engine, const QScriptItem *si, int textFlags )
+    void draw( TQPainter *p, int x, int y, const QTextEngine *engine, const QScriptItem *si, int textFlags )
     {
         //Sometimes X misrounds stuff for larger ahem, so we have to do it ourselves.
         if (!ahem || (si->analysis.bidiLevel & 1) ) //We're fine if not ahem or bidi.
@@ -81,7 +81,7 @@ public:
                                          const advance_t *advances, const qoffset_t *offsets, int numGlyphs );
     glyph_metrics_t boundingBox( glyph_t glyph );
 
-    QFontEngine::Error stringToCMap( const QChar *, int len, glyph_t *glyphs, advance_t *advances, int *nglyphs, bool ) const;
+    QFontEngine::Error stringToCMap( const TQChar *, int len, glyph_t *glyphs, advance_t *advances, int *nglyphs, bool ) const;
 
     int ascent() const;
     int descent() const;
@@ -91,21 +91,21 @@ public:
     int minRightBearing() const { return 0; }
     int cmap() const;
 #endif
-    bool canRender( const QChar *string,  int len );
+    bool canRender( const TQChar *string,  int len );
 };
 
 QFakeFontEngine::QFakeFontEngine( XFontStruct *fs, const char *name, int size )
     : QFontEngineXLFD( fs,  name,  0)
 {
     pixS = size;
-    ahem = QString::fromLatin1(name).contains("ahem");
+    ahem = TQString::fromLatin1(name).contains("ahem");
 }
 
 QFakeFontEngine::~QFakeFontEngine()
 {
 }
 #if 0
-QFontEngine::Error QFakeFontEngine::stringToCMap( const QChar *str, int len, glyph_t *glyphs, advance_t *advances, int *nglyphs, bool mirrored) const
+QFontEngine::Error QFakeFontEngine::stringToCMap( const TQChar *str, int len, glyph_t *glyphs, advance_t *advances, int *nglyphs, bool mirrored) const
 {
     QFontEngine::Error ret = QFontEngineXLFD::stringToCMap( str, len, glyphs, advances, nglyphs, mirrored );
 
@@ -167,12 +167,12 @@ int QFakeFontEngine::cmap() const
 }
 
 #endif
-bool QFakeFontEngine::canRender( const QChar *, int )
+bool QFakeFontEngine::canRender( const TQChar *, int )
 {
     return true;
 }
 
-static QString courier_pickxlfd( int pixelsize, bool italic, bool bold )
+static TQString courier_pickxlfd( int pixelsize, bool italic, bool bold )
 {
     if ( pixelsize >= 24 )
         pixelsize = 24;
@@ -183,15 +183,15 @@ static QString courier_pickxlfd( int pixelsize, bool italic, bool bold )
     else
         pixelsize = 10;
 
-    return QString( "-adobe-courier-%1-%2-normal--%3-*-75-75-m-*-iso10646-1" ).arg( bold ? "bold" : "medium" ).arg( italic ? "o" : "r" ).arg( pixelsize );
+    return TQString( "-adobe-courier-%1-%2-normal--%3-*-75-75-m-*-iso10646-1" ).arg( bold ? "bold" : "medium" ).arg( italic ? "o" : "r" ).arg( pixelsize );
 }
 
-static QString ahem_pickxlfd( int pixelsize )
+static TQString ahem_pickxlfd( int pixelsize )
 {
-    return QString( "-misc-ahem-medium-r-normal--%1-*-100-100-c-*-iso10646-1" ).arg( pixelsize );
+    return TQString( "-misc-ahem-medium-r-normal--%1-*-100-100-c-*-iso10646-1" ).arg( pixelsize );
 }
 
-static QString helv_pickxlfd( int pixelsize, bool italic, bool bold )
+static TQString helv_pickxlfd( int pixelsize, bool italic, bool bold )
 {
     if ( pixelsize >= 24 )
         pixelsize = 24;
@@ -202,16 +202,16 @@ static QString helv_pickxlfd( int pixelsize, bool italic, bool bold )
     else
         pixelsize = 10;
 
-    return QString( "-adobe-helvetica-%1-%2-normal--%3-*-75-75-p-*-iso10646-1" ).arg( bold ? "bold" : "medium" ).arg( italic ? "o" : "r" ).arg( pixelsize );
+    return TQString( "-adobe-helvetica-%1-%2-normal--%3-*-75-75-p-*-iso10646-1" ).arg( bold ? "bold" : "medium" ).arg( italic ? "o" : "r" ).arg( pixelsize );
 
 }
 
 KDE_EXPORT QFontEngine *
-QFontDatabase::findFont( QFont::Script script, const QFontPrivate *fp,
+TQFontDatabase::findFont( TQFont::Script script, const QFontPrivate *fp,
 			 const QFontDef &request, int )
 {
-    QString xlfd;
-    QString family = request.family.lower();
+    TQString xlfd;
+    TQString family = request.family.lower();
     if ( family == "adobe courier" || family == "courier" || family == "fixed" ) {
         xlfd = courier_pickxlfd( request.pixelSize, request.italic, request.weight > 50 );
     }
@@ -225,7 +225,7 @@ QFontDatabase::findFont( QFont::Script script, const QFontPrivate *fp,
     QFontEngine *fe = 0;
 
     XFontStruct *xfs;
-    xfs = XLoadQueryFont(QPaintDevice::x11AppDisplay(), xlfd.latin1() );
+    xfs = XLoadQueryFont(TQPaintDevice::x11AppDisplay(), xlfd.latin1() );
     if (!xfs) // as long as you don't do screenshots, it's maybe fine
 	qFatal("we need some fonts. So make sure you have %s installed.", xlfd.latin1());
 
@@ -233,7 +233,7 @@ QFontDatabase::findFont( QFont::Script script, const QFontPrivate *fp,
     if ( !XGetFontProperty( xfs, XA_FONT, &value ) )
         return 0;
 
-    char *n = XGetAtomName( QPaintDevice::x11AppDisplay(), value );
+    char *n = XGetAtomName( TQPaintDevice::x11AppDisplay(), value );
     xlfd = n;
     if ( n )
         XFree( n );
@@ -253,19 +253,19 @@ QFontDatabase::findFont( QFont::Script script, const QFontPrivate *fp,
     return fe;
 }
 
-KDE_EXPORT bool QFontDatabase::isBitmapScalable( const QString &,
-				      const QString &) const
+KDE_EXPORT bool TQFontDatabase::isBitmapScalable( const TQString &,
+				      const TQString &) const
 {
     return true;
 }
 
-KDE_EXPORT bool  QFontDatabase::isSmoothlyScalable( const QString &,
-                                         const QString &) const
+KDE_EXPORT bool  TQFontDatabase::isSmoothlyScalable( const TQString &,
+                                         const TQString &) const
 {
     return true;
 }
 
-const QString &KHTMLSettings::availableFamilies()
+const TQString &KHTMLSettings::availableFamilies()
 {
     if ( !avFamilies ) {
         avFamilies = new QString;
@@ -280,42 +280,42 @@ bool KHTMLSettings::unfinishedImageFrame() const
   return false;
 }
 
-KDE_EXPORT int QPaintDevice::x11AppDpiY( int )
+KDE_EXPORT int TQPaintDevice::x11AppDpiY( int )
 {
     return 100;
 }
 
-KDE_EXPORT int QPaintDevice::x11AppDpiX( int )
+KDE_EXPORT int TQPaintDevice::x11AppDpiX( int )
 {
     return 100;
 }
 
-KDE_EXPORT void QFont::insertSubstitution(const QString &,
-                               const QString &)
+KDE_EXPORT void TQFont::insertSubstitution(const TQString &,
+                               const TQString &)
 {
 }
 
-KDE_EXPORT void QFont::insertSubstitutions(const QString &,
-                                const QStringList &)
+KDE_EXPORT void TQFont::insertSubstitutions(const TQString &,
+                                const TQStringList &)
 {
 }
 
 #include <kprotocolinfo.h>
-bool KProtocolInfo::isKnownProtocol( const QString& _protocol )
+bool KProtocolInfo::isKnownProtocol( const TQString& _protocol )
 {
     return ( _protocol == "file" );
 }
 
 #include <kprotocolinfofactory.h>
 
-QString KProtocolInfo::exec( const QString& _protocol )
+TQString KProtocolInfo::exec( const TQString& _protocol )
 {
     if ( _protocol != "file" )
-        return QString::null;
+        return TQString::null;
 
     KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
     if ( !prot )
-        return QString::null;
+        return TQString::null;
 
     return prot->m_exec;
 }
@@ -336,32 +336,32 @@ void DCOPClient::processSocketData( int )
 {
 }
 
-#include <qapplication.h>
-#include <qpalette.h>
+#include <tqapplication.h>
+#include <tqpalette.h>
 
-KDE_EXPORT void QApplication::setPalette( const QPalette &, bool ,
+KDE_EXPORT void TQApplication::setPalette( const TQPalette &, bool ,
                                const char*  )
 {
     static bool done = false;
     if (done) return;
-    QString xlfd = ahem_pickxlfd(40);
+    TQString xlfd = ahem_pickxlfd(40);
     XFontStruct *xfs;
-    xfs = XLoadQueryFont(QPaintDevice::x11AppDisplay(), xlfd.latin1() );
+    xfs = XLoadQueryFont(TQPaintDevice::x11AppDisplay(), xlfd.latin1() );
     if (!xfs) // as long as you don't do screenshots, it's maybe fine
 	qFatal("We will need some fonts. So make sure you have %s installed.", xlfd.latin1());
-    XFreeFont(QPaintDevice::x11AppDisplay(), xfs);
+    XFreeFont(TQPaintDevice::x11AppDisplay(), xfs);
     done = true;
 }
 
 #include <kapplication.h>
-void KApplication::dcopFailure( const QString & )
+void KApplication::dcopFailure( const TQString & )
 {
     qDebug( "KApplication::dcopFailure" );
 }
 
 #include <kparts/historyprovider.h>
 
-bool KParts::HistoryProvider::contains( const QString& t ) const
+bool KParts::HistoryProvider::contains( const TQString& t ) const
 {
     return ( t == "http://www.kde.org/" || t == "http://www.google.com/");
 }
@@ -380,5 +380,5 @@ bool KSSLSettings::warnOnLeave() const       { return false; }
 
 #include <kparts/plugin.h>
 
-KParts::Plugin* KParts::Plugin::loadPlugin( QObject * parent, const char* libname ) { return 0; }
+KParts::Plugin* KParts::Plugin::loadPlugin( TQObject * parent, const char* libname ) { return 0; }
 

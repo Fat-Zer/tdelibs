@@ -19,10 +19,10 @@
 
 #include "classpreviews.h"
 
-KDialogPreview::KDialogPreview(QWidget * parent , const char * /* name , bool, WFlagsf */)
+KDialogPreview::KDialogPreview(TQWidget * parent , const char * /* name , bool, WFlagsf */)
 {
    if (parent)
-      reparent(parent, QPoint(0,0), true);
+      reparent(parent, TQPoint(0,0), true);
    else
       qDebug("Error while reparenting!");
 }

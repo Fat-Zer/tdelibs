@@ -19,10 +19,10 @@
 
 #include "ksettings/componentsdialog.h"
 #include <klocale.h>
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <klistview.h>
-#include <qlabel.h>
-#include <qheader.h>
+#include <tqlabel.h>
+#include <tqheader.h>
 #include <kplugininfo.h>
 #include <kiconloader.h>
 #include <kdebug.h>
@@ -36,34 +36,34 @@ class ComponentsDialog::ComponentsDialogPrivate
 {
     public:
         KListView * listview;
-        QFrame * infowidget;
-        QLabel * iconwidget;
-        QLabel * commentwidget;
-        QLabel * descriptionwidget;
-        QMap<QCheckListItem*, KPluginInfo*> plugininfomap;
-        QValueList<KPluginInfo*> plugininfolist;
+        TQFrame * infowidget;
+        TQLabel * iconwidget;
+        TQLabel * commentwidget;
+        TQLabel * descriptionwidget;
+        TQMap<TQCheckListItem*, KPluginInfo*> plugininfomap;
+        TQValueList<KPluginInfo*> plugininfolist;
 };
 
-ComponentsDialog::ComponentsDialog( QWidget * parent, const char * name )
+ComponentsDialog::ComponentsDialog( TQWidget * parent, const char * name )
     : KDialogBase( parent, name, false, i18n( "Select Components" ) )
 , d( new ComponentsDialogPrivate )
 {
-    QWidget * page = new QWidget( this );
+    TQWidget * page = new TQWidget( this );
     setMainWidget( page );
-    ( new QHBoxLayout( page, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
+    ( new TQHBoxLayout( page, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
     d->listview = new KListView( page );
     d->listview->setMinimumSize( 200, 200 );
-    d->infowidget = new QFrame( page );
+    d->infowidget = new TQFrame( page );
     d->infowidget->setMinimumSize( 200, 200 );
-    ( new QVBoxLayout( d->infowidget, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
-    d->iconwidget = new QLabel( d->infowidget );
+    ( new TQVBoxLayout( d->infowidget, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
+    d->iconwidget = new TQLabel( d->infowidget );
     ( void )new KSeparator( d->infowidget );
-    d->commentwidget = new QLabel( d->infowidget );
+    d->commentwidget = new TQLabel( d->infowidget );
     d->commentwidget->setAlignment( Qt::WordBreak );
-    d->descriptionwidget = new QLabel( d->infowidget );
+    d->descriptionwidget = new TQLabel( d->infowidget );
     d->descriptionwidget->setAlignment( Qt::WordBreak );
 
-    d->listview->addColumn( QString::null );
+    d->listview->addColumn( TQString::null );
     d->listview->header()->hide();
     d->listview->setRootIsDecorated( true );
     d->listview->setSorting( -1 );
@@ -71,14 +71,14 @@ ComponentsDialog::ComponentsDialog( QWidget * parent, const char * name )
     d->listview->setSelectionModeExt( KListView::Single );
     d->listview->setAllColumnsShowFocus( true );
 
-    connect( d->listview, SIGNAL( pressed( QListViewItem * ) ), this,
-            SLOT( executed( QListViewItem * ) ) );
-    connect( d->listview, SIGNAL( spacePressed( QListViewItem * ) ), this,
-            SLOT( executed( QListViewItem * ) ) );
-    connect( d->listview, SIGNAL( returnPressed( QListViewItem * ) ), this,
-            SLOT( executed( QListViewItem * ) ) );
-    connect( d->listview, SIGNAL( selectionChanged( QListViewItem * ) ), this,
-            SLOT( executed( QListViewItem * ) ) );
+    connect( d->listview, TQT_SIGNAL( pressed( TQListViewItem * ) ), this,
+            TQT_SLOT( executed( TQListViewItem * ) ) );
+    connect( d->listview, TQT_SIGNAL( spacePressed( TQListViewItem * ) ), this,
+            TQT_SLOT( executed( TQListViewItem * ) ) );
+    connect( d->listview, TQT_SIGNAL( returnPressed( TQListViewItem * ) ), this,
+            TQT_SLOT( executed( TQListViewItem * ) ) );
+    connect( d->listview, TQT_SIGNAL( selectionChanged( TQListViewItem * ) ), this,
+            TQT_SLOT( executed( TQListViewItem * ) ) );
 }
 
 ComponentsDialog::~ComponentsDialog()
@@ -90,17 +90,17 @@ void ComponentsDialog::addPluginInfo( KPluginInfo * info )
     d->plugininfolist.append( info );
 }
 
-void ComponentsDialog::setPluginInfos( const QMap<QString, KPluginInfo*> &
+void ComponentsDialog::setPluginInfos( const TQMap<TQString, KPluginInfo*> &
         plugininfos )
 {
-    for( QMap<QString, KPluginInfo*>::ConstIterator it = plugininfos.begin();
+    for( TQMap<TQString, KPluginInfo*>::ConstIterator it = plugininfos.begin();
             it != plugininfos.end(); ++it )
     {
         d->plugininfolist.append( it.data() );
     }
 }
 
-void ComponentsDialog::setPluginInfos( const QValueList<KPluginInfo *> &plugins )
+void ComponentsDialog::setPluginInfos( const TQValueList<KPluginInfo *> &plugins )
 {
     d->plugininfolist = plugins;
 }
@@ -112,12 +112,12 @@ void ComponentsDialog::show()
     d->plugininfomap.clear();
 
     // construct the treelist
-    for( QValueList<KPluginInfo*>::ConstIterator it = d->plugininfolist.begin();
+    for( TQValueList<KPluginInfo*>::ConstIterator it = d->plugininfolist.begin();
             it != d->plugininfolist.end(); ++it )
     {
         ( *it )->load();
-        QCheckListItem * item = new QCheckListItem( d->listview, ( *it )->name(),
-                QCheckListItem::CheckBox );
+        TQCheckListItem * item = new TQCheckListItem( d->listview, ( *it )->name(),
+                TQCheckListItem::CheckBox );
         if( ! ( *it )->icon().isEmpty() )
             item->setPixmap( 0, SmallIcon( ( *it )->icon(), IconSize( KIcon::Small ) ) );
         item->setOn( ( *it )->isPluginEnabled() );
@@ -126,7 +126,7 @@ void ComponentsDialog::show()
     KDialogBase::show();
 }
 
-void ComponentsDialog::executed( QListViewItem * item )
+void ComponentsDialog::executed( TQListViewItem * item )
 {
     kdDebug( 704 ) << k_funcinfo << endl;
     if( item == 0 )
@@ -134,11 +134,11 @@ void ComponentsDialog::executed( QListViewItem * item )
     if( item->rtti() != 1 ) // check for QCheckListItem
         return;
 
-    QCheckListItem * citem = static_cast<QCheckListItem *>( item );
+    TQCheckListItem * citem = static_cast<TQCheckListItem *>( item );
     bool checked = citem->isOn();
 
     kdDebug( 704 ) << "it's a " << ( checked ? "checked" : "unchecked" )
-        << " QCheckListItem" << endl;
+        << " TQCheckListItem" << endl;
 
     KPluginInfo * info = d->plugininfomap[ citem ];
     info->setPluginEnabled( checked );
@@ -151,7 +151,7 @@ void ComponentsDialog::executed( QListViewItem * item )
 
 void ComponentsDialog::savePluginInfos()
 {
-    for( QValueList<KPluginInfo*>::ConstIterator it = d->plugininfolist.begin();
+    for( TQValueList<KPluginInfo*>::ConstIterator it = d->plugininfolist.begin();
             it != d->plugininfolist.end(); ++it )
     {
         if( ( *it )->config() )

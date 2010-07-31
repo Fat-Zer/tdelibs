@@ -32,11 +32,11 @@
 
 
 KToolBarRadioGroup::KToolBarRadioGroup (KToolBar *_parent, const char *_name)
-: QObject(_parent, _name)
+: TQObject(_parent, _name)
 {
   buttons = new KToolBarButtonList();
   tb = _parent;
-  connect (tb, SIGNAL(toggled(int)), this, SLOT(slotToggled(int)));
+  connect (tb, TQT_SIGNAL(toggled(int)), this, TQT_SLOT(slotToggled(int)));
 }
 
 KToolBarRadioGroup::~KToolBarRadioGroup()
@@ -63,7 +63,7 @@ void KToolBarRadioGroup::slotToggled(int id)
 {
   if (buttons->find(id) && buttons->find(id)->isOn())
   {
-    QIntDictIterator<KToolBarButton> it(*buttons);
+    TQIntDictIterator<KToolBarButton> it(*buttons);
     while (it.current())
     {
       if (it.currentKey() != id)

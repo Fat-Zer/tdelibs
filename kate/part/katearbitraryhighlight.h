@@ -22,9 +22,9 @@
 #include "kateattribute.h"
 #include "katesupercursor.h"
 
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qmap.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqmap.h>
 
 class KateDocument;
 class KateView;
@@ -34,15 +34,15 @@ class KateArbitraryHighlightRange : public KateSuperRange, public KateAttribute
   Q_OBJECT
 
 public:
-  KateArbitraryHighlightRange(KateSuperCursor* start, KateSuperCursor* end, QObject* parent = 0L, const char* name = 0L);
-  KateArbitraryHighlightRange(KateDocument* doc, const KateRange& range, QObject* parent = 0L, const char* name = 0L);
-  KateArbitraryHighlightRange(KateDocument* doc, const KateTextCursor& start, const KateTextCursor& end, QObject* parent = 0L, const char* name = 0L);
+  KateArbitraryHighlightRange(KateSuperCursor* start, KateSuperCursor* end, TQObject* parent = 0L, const char* name = 0L);
+  KateArbitraryHighlightRange(KateDocument* doc, const KateRange& range, TQObject* parent = 0L, const char* name = 0L);
+  KateArbitraryHighlightRange(KateDocument* doc, const KateTextCursor& start, const KateTextCursor& end, TQObject* parent = 0L, const char* name = 0L);
 
 	virtual ~KateArbitraryHighlightRange();
 
   virtual void changed() { slotTagRange(); };
 
-  static KateAttribute merge(QPtrList<KateSuperRange> ranges);
+  static KateAttribute merge(TQPtrList<KateSuperRange> ranges);
 };
 
 /**
@@ -74,12 +74,12 @@ signals:
 
 private slots:
   void slotTagRange(KateSuperRange* range);
-  void slotRangeListDeleted(QObject* obj);
+  void slotRangeListDeleted(TQObject* obj);
 private:
   KateView* viewForRange(KateSuperRange* range);
 
-  QMap<KateView*, QPtrList<KateSuperRangeList>* > m_viewHLs;
-  QPtrList<KateSuperRangeList> m_docHLs;
+  TQMap<KateView*, TQPtrList<KateSuperRangeList>* > m_viewHLs;
+  TQPtrList<KateSuperRangeList> m_docHLs;
 };
 
 #endif

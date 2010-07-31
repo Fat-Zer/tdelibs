@@ -27,8 +27,8 @@
 #ifndef RENDER_TABLE_H
 #define RENDER_TABLE_H
 
-#include <qcolor.h>
-#include <qptrvector.h>
+#include <tqcolor.h>
+#include <tqptrvector.h>
 
 #include "rendering/render_box.h"
 #include "rendering/render_block.h"
@@ -78,7 +78,7 @@ public:
     int paddingTop() const { return collapseBorders() ? 0 : RenderBlock::paddingTop(); }
     int paddingBottom() const { return collapseBorders() ? 0 : RenderBlock::paddingBottom(); }
 
-    const QColor &bgColor() const { return style()->backgroundColor(); }
+    const TQColor &bgColor() const { return style()->backgroundColor(); }
 
     uint cellPadding() const { return padding; }
     void setCellPadding( uint p ) { padding = p; }
@@ -103,7 +103,7 @@ public:
 						     SelPointState & );
 
 #ifdef ENABLE_DUMP
-    virtual void dump(QTextStream &stream, const QString &ind) const;
+    virtual void dump(TQTextStream &stream, const TQString &ind) const;
 #endif
     struct ColumnStruct {
 	enum {
@@ -117,8 +117,8 @@ public:
 	ushort width; // the calculated position of the column
     };
 
-    QMemArray<int> columnPos;
-    QMemArray<ColumnStruct> columns;
+    TQMemArray<int> columnPos;
+    TQMemArray<ColumnStruct> columns;
 
     void splitColumn( int pos, int firstSpan );
     void appendColumn( int span );
@@ -217,7 +217,7 @@ public:
 						     SelPointState & );
 
 #ifdef ENABLE_DUMP
-    virtual void dump(QTextStream &stream, const QString &ind) const;
+    virtual void dump(TQTextStream &stream, const TQString &ind) const;
 #endif
 
     void addCell( RenderTableCell *cell, RenderTableRow *row );
@@ -228,7 +228,7 @@ public:
 
     RenderTable *table() const { return static_cast<RenderTable *>(parent()); }
 
-    typedef QMemArray<RenderTableCell *> Row;
+    typedef TQMemArray<RenderTableCell *> Row;
     struct RowStruct {
         Row *row;
         RenderTableRow* rowRenderer;
@@ -273,8 +273,8 @@ public:
 
     // this gets a cell grid data structure. changing the number of
     // columns is done by the table
-    QMemArray<RowStruct> grid;
-    QMemArray<int> rowPos;
+    TQMemArray<RowStruct> grid;
+    TQMemArray<int> rowPos;
 
     signed short cRow;
     ushort cCol;
@@ -375,7 +375,7 @@ public:
     CollapsedBorderValue collapsedRightBorder() const;
     CollapsedBorderValue collapsedTopBorder() const;
     CollapsedBorderValue collapsedBottomBorder() const;
-    virtual void collectBorders(QValueList<CollapsedBorderValue>& borderStyles);
+    virtual void collectBorders(TQValueList<CollapsedBorderValue>& borderStyles);
 
     virtual void updateFromElement();
 
@@ -388,7 +388,7 @@ public:
 
     virtual void paint( PaintInfo& i, int tx, int ty);
 
-    void paintCollapsedBorder(QPainter* p, int x, int y, int w, int h);
+    void paintCollapsedBorder(TQPainter* p, int x, int y, int w, int h);
     void paintBackgroundsBehindCell(PaintInfo& i, int _tx, int _ty, RenderObject* backgroundObject);
 
     virtual void close();
@@ -407,7 +407,7 @@ public:
     RenderTableSection *section() const { return static_cast<RenderTableSection *>(parent()->parent()); }
 
 #ifdef ENABLE_DUMP
-    virtual void dump(QTextStream &stream, const QString &ind) const;
+    virtual void dump(TQTextStream &stream, const TQString &ind) const;
 #endif
 
     bool widthChanged() {
@@ -461,7 +461,7 @@ public:
     virtual void updateFromElement();
 
 #ifdef ENABLE_DUMP
-    virtual void dump(QTextStream &stream, const QString& ind) const;
+    virtual void dump(TQTextStream &stream, const TQString& ind) const;
 #endif
 
     int span() const { return m_span; }

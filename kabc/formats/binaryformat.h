@@ -36,33 +36,33 @@ public:
   /**
    * Load single addressee from file.
    */
-  bool load( Addressee &, QFile *file );
+  bool load( Addressee &, TQFile *file );
 
   /**
    * Load whole addressee from file.
    */
-  bool loadAll( AddressBook *, Resource *, QFile *file );
+  bool loadAll( AddressBook *, Resource *, TQFile *file );
 
   /**
    * Save single addressee to file.
    */
-  void save( const Addressee &, QFile *file );
+  void save( const Addressee &, TQFile *file );
 
   /**
    * Save all addressees to file.
    */
-  void saveAll( AddressBook *, Resource *, QFile *file );
+  void saveAll( AddressBook *, Resource *, TQFile *file );
 
   /**
    * Check for valid format of a file.
    */
-  bool checkFormat( QFile *file ) const;
+  bool checkFormat( TQFile *file ) const;
 
 private:
-  void loadAddressee( Addressee &, QDataStream & );
-  void saveAddressee( const Addressee &, QDataStream & );
-  bool checkHeader( QDataStream & ) const;
-  void writeHeader( QDataStream & );
+  void loadAddressee( Addressee &, TQDataStream & );
+  void saveAddressee( const Addressee &, TQDataStream & );
+  bool checkHeader( TQDataStream & ) const;
+  void writeHeader( TQDataStream & );
 };
 
 }

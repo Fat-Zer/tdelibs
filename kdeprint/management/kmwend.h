@@ -27,7 +27,7 @@ class QTextView;
 class KMWEnd : public KMWizardPage
 {
 public:
-	KMWEnd(QWidget *parent = 0, const char *name = 0);
+	KMWEnd(TQWidget *parent = 0, const char *name = 0);
 
 	void initPrinter(KMPrinter*);
 

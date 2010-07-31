@@ -1167,7 +1167,7 @@ Value KJS::HTMLElement::tryGet(ExecState *exec, const Identifier &propertyName) 
     case ID_OBJECT:
     case ID_EMBED: {
       KParts::LiveConnectExtension *lc = getLiveConnectExtension(element);
-      QString rvalue;
+      TQString rvalue;
       KParts::LiveConnectExtension::Type rtype;
       unsigned long robjid;
       if (lc && lc->get(0, propertyName.qstring(), rtype, robjid, rvalue))
@@ -1586,13 +1586,13 @@ Value KJS::HTMLElement::getValueProperty(ExecState *exec, int token) const
       if (url.port()==0)
         return String(url.host());
       else
-        return String(url.host() + ":" + QString::number(url.port()));
+        return String(url.host() + ":" + TQString::number(url.port()));
     }
     case AnchorPathName:        return String(KURL(anchor.href().string()).path());
-    case AnchorPort:            return String(QString::number(KURL(anchor.href().string()).port()));
+    case AnchorPort:            return String(TQString::number(KURL(anchor.href().string()).port()));
     case AnchorProtocol:        return String(KURL(anchor.href().string()).protocol()+":");
     case AnchorSearch:          { KURL u(anchor.href().string());
-                                  QString q = u.query();
+                                  TQString q = u.query();
                                   if (q.length() == 1)
                                     return String();
                                   return String(q); }
@@ -1713,7 +1713,7 @@ Value KJS::HTMLElement::getValueProperty(ExecState *exec, int token) const
       if ( !href.isNull() ) {
         url = doc.completeURL( href ).string();
         if ( href.isEmpty() )
-          url.setFileName( QString::null ); // href="" clears the filename (in IE)
+          url.setFileName( TQString::null ); // href="" clears the filename (in IE)
       }
       switch(token) {
       case AreaHref:
@@ -1724,12 +1724,12 @@ Value KJS::HTMLElement::getValueProperty(ExecState *exec, int token) const
         if (url.port()==0)
           return String(url.host());
         else
-          return String(url.host() + ":" + QString::number(url.port()));
+          return String(url.host() + ":" + TQString::number(url.port()));
       }
       case AreaPathName:        {
         return String(url.path());
       }
-      case AreaPort:            return String(QString::number(url.port()));
+      case AreaPort:            return String(TQString::number(url.port()));
       case AreaProtocol:        return String(url.isEmpty() ? "" : url.protocol()+":");
       case AreaSearch:          return String(url.query());
       }
@@ -2002,13 +2002,13 @@ UString KJS::HTMLElement::toString(ExecState *exec) const
     return UString(static_cast<const DOM::HTMLAnchorElement&>(node).href());
   else if (node.elementId() == ID_APPLET) {
     KParts::LiveConnectExtension *lc = getLiveConnectExtension(node);
-    QStringList qargs;
-    QString retvalue;
+    TQStringList qargs;
+    TQString retvalue;
     KParts::LiveConnectExtension::Type rettype;
     unsigned long retobjid;
     if (lc && lc->call(0, "hashCode", qargs, rettype, retobjid, retvalue)) {
-      QString str("[object APPLET ref=");
-      return UString(str + retvalue + QString("]"));
+      TQString str("[object APPLET ref=");
+      return UString(str + retvalue + TQString("]"));
     }
   } else if (node.elementId() == ID_IMG) {
     DOM::HTMLImageElement image(node);
@@ -2134,12 +2134,12 @@ Value KJS::HTMLElementFunction::tryCall(ExecState *exec, Object &thisObj, const 
           block = true;
 
          // if this is a form without a target, or a special target, don't block
-          QString trg = form.target().lower().string();
+          TQString trg = form.target().lower().string();
           if( trg.isEmpty() || trg == "_top" || trg == "_self" ||
               trg == "_parent")
             block = false;
 
-          QString caption;
+          TQString caption;
 
           // if there is a frame with the target name, don't block
           if ( view && view->part() )  {
@@ -2831,7 +2831,7 @@ void KJS::HTMLElement::putValueProperty(ExecState *exec, int token, const Value&
       case AnchorHref:            { anchor.setHref(str); return; }
       case AnchorHrefLang:        { anchor.setHreflang(str); return; }
       case AnchorSearch:          { KURL href(anchor.href().string());
-                                    QString q = str.isEmpty() ? QString() : str.string();
+                                    TQString q = str.isEmpty() ? TQString() : str.string();
                                     href.setQuery(q);
                                     anchor.setHref(href.url()); return; }
       case AnchorName:            { anchor.setName(str); return; }
@@ -3607,7 +3607,7 @@ Value KJS::HTMLCollection::getNamedItems(ExecState *exec, const Identifier &prop
 
   DOM::DOMString pstr = propertyName.string();
 
-  QValueList<DOM::NodeImpl*> matches = collection.handle()->namedItems(pstr);
+  TQValueList<DOM::NodeImpl*> matches = collection.handle()->namedItems(pstr);
 
   if (!matches.isEmpty()) {
     if (matches.size() == 1) {
@@ -3619,8 +3619,8 @@ Value KJS::HTMLCollection::getNamedItems(ExecState *exec, const Identifier &prop
     }
     else  {
       // multiple items, return a collection
-      QValueList<DOM::Node> nodes;
-      for (QValueList<DOM::NodeImpl*>::const_iterator i =  matches.begin();
+      TQValueList<DOM::Node> nodes;
+      for (TQValueList<DOM::NodeImpl*>::const_iterator i =  matches.begin();
                                                       i != matches.end(); ++i)
            nodes.append(DOM::Node(*i));
 #ifdef KJS_VERBOSE
@@ -3824,7 +3824,7 @@ Value KJS::HTMLSelectCollectionProtoFunc::tryCall(ExecState *exec, Object &thisO
     } else {
       //Find what to prepend before..
       DOM::HTMLSelectElementImpl* impl = static_cast<HTMLSelectElementImpl*>(element.handle());
-      QMemArray<HTMLGenericFormElementImpl*> items = impl->listItems();
+      TQMemArray<HTMLGenericFormElementImpl*> items = impl->listItems();
       int dummy;
       impl->insertBefore(option.handle(), items.at(pos), dummy);
     }

@@ -11,7 +11,7 @@
 #include <libxslt/xsltInternals.h>
 #include <libxslt/transform.h>
 #include <libxslt/xsltutils.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <kstandarddirs.h>
 #include <kinstance.h>
 #include <kdebug.h>

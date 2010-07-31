@@ -44,7 +44,7 @@ public:
   static bool supports( KFileItemList _items );
 
 private slots:
-  void aboutToShowPage( QWidget* );
+  void aboutToShowPage( TQWidget* );
 
 private:
   KFileMetaPreview* preview;

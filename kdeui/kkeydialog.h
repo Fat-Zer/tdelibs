@@ -21,7 +21,7 @@
 #ifndef __KKEYDIALOG_H__
 #define __KKEYDIALOG_H__
 
-#include <qdict.h>
+#include <tqdict.h>
 #include <kdialogbase.h>
 #include <klistview.h>
 
@@ -69,7 +69,7 @@ class KDEUI_EXPORT KKeyChooser : public QWidget
 	 * @param bAllowLetterShortcuts Set to false if unmodified alphanumeric
 	 *  keys ('A', '1', etc.) are not permissible shortcuts.
 	 **/
-	KKeyChooser( QWidget* parent, ActionType type = Application, bool bAllowLetterShortcuts = true );
+	KKeyChooser( TQWidget* parent, ActionType type = Application, bool bAllowLetterShortcuts = true );
 	/**
 	 * \overload
 	 * @param parent parent widget
@@ -77,11 +77,11 @@ class KDEUI_EXPORT KKeyChooser : public QWidget
 	 * @param bAllowLetterShortcuts Set to false if unmodified alphanumeric
      *  keys ('A', '1', etc.) are not permissible shortcuts.
      */
-	KKeyChooser( KActionCollection* coll, QWidget* parent, bool bAllowLetterShortcuts = true );
+	KKeyChooser( KActionCollection* coll, TQWidget* parent, bool bAllowLetterShortcuts = true );
 
-    KKeyChooser( KAccel* actions, QWidget* parent, bool bAllowLetterShortcuts = true );
-	KKeyChooser( KGlobalAccel* actions, QWidget* parent );
-	KKeyChooser( KShortcutList*, QWidget* parent, ActionType type = Application, bool bAllowLetterShortcuts = true );
+    KKeyChooser( KAccel* actions, TQWidget* parent, bool bAllowLetterShortcuts = true );
+	KKeyChooser( KGlobalAccel* actions, TQWidget* parent );
+	KKeyChooser( KShortcutList*, TQWidget* parent, ActionType type = Application, bool bAllowLetterShortcuts = true );
 
 	virtual ~KKeyChooser();
 
@@ -96,9 +96,9 @@ class KDEUI_EXPORT KKeyChooser : public QWidget
 	 * @param title subtree title of this collection of shortcut.
 	 * @since 3.1
 	 */
-    bool insert( KActionCollection *, const QString &title);
+    bool insert( KActionCollection *, const TQString &title);
 
-	void syncToConfig( const QString& sConfigGroup, KConfigBase* pConfig, bool bClearUnset );
+	void syncToConfig( const TQString& sConfigGroup, KConfigBase* pConfig, bool bClearUnset );
 
 	/**
 	 * This function writes any shortcut changes back to the original
@@ -127,7 +127,7 @@ class KDEUI_EXPORT KKeyChooser : public QWidget
          *
          * @since 3.2
          */
-        static bool checkGlobalShortcutsConflict( const KShortcut& cut, bool warnUser, QWidget* parent );
+        static bool checkGlobalShortcutsConflict( const KShortcut& cut, bool warnUser, TQWidget* parent );
 
         /**
          * Checks whether the given shortcut conflicts with standard keyboard shortcuts.
@@ -142,7 +142,7 @@ class KDEUI_EXPORT KKeyChooser : public QWidget
          *
          * @since 3.2
          */
-        static bool checkStandardShortcutsConflict( const KShortcut& cut, bool warnUser, QWidget* parent );
+        static bool checkStandardShortcutsConflict( const KShortcut& cut, bool warnUser, TQWidget* parent );
 
  signals:
 	/**
@@ -172,25 +172,25 @@ class KDEUI_EXPORT KKeyChooser : public QWidget
 	bool insert( KGlobalAccel* );
 	bool insert( KShortcutList* );
 	/// @since 3.1
-	void buildListView( uint iList, const QString &title = QString::null );
+	void buildListView( uint iList, const TQString &title = TQString::null );
 
 	void readGlobalKeys();
 
 	void updateButtons();
-	void fontChange( const QFont& _font );
+	void fontChange( const TQFont& _font );
 	void setShortcut( const KShortcut& cut );
 	bool isKeyPresent( const KShortcut& cut, bool warnuser = true );
-        bool isKeyPresentLocally( const KShortcut& cut, KKeyChooserItem* ignoreItem, const QString& warnText );
-	void _warning( const KKeySequence& seq, QString sAction, QString sTitle );
+        bool isKeyPresentLocally( const KShortcut& cut, KKeyChooserItem* ignoreItem, const TQString& warnText );
+	void _warning( const KKeySequence& seq, TQString sAction, TQString sTitle );
 
  protected slots:
 	void slotNoKey();
 	void slotDefaultKey();
 	void slotCustomKey();
-	void slotListItemSelected( QListViewItem *item );
+	void slotListItemSelected( TQListViewItem *item );
 	void capturedShortcut( const KShortcut& cut );
         void slotSettingsChanged( int );
-        void slotListItemDoubleClicked ( QListViewItem * ipoQListViewItem, const QPoint & ipoQPoint, int c );
+        void slotListItemDoubleClicked ( TQListViewItem * ipoQListViewItem, const TQPoint & ipoQPoint, int c );
 
  protected:
 	ActionType m_type;
@@ -200,24 +200,24 @@ class KDEUI_EXPORT KKeyChooser : public QWidget
 	//  otherwise aDefaultKeycode.
 	bool m_bPreferFourModifierKeys;
 
-	QRadioButton* m_prbNone;
-	QRadioButton* m_prbDef;
-	QRadioButton* m_prbCustom;
+	TQRadioButton* m_prbNone;
+	TQRadioButton* m_prbDef;
+	TQRadioButton* m_prbCustom;
 
  private:
         bool isKeyPresentLocally( const KShortcut& cut, KKeyChooserItem* ignoreItem, bool bWarnUser );
-        static bool promptForReassign( const KKeySequence& cut, const QString& sAction, ActionType action, QWidget* parent );
+        static bool promptForReassign( const KKeySequence& cut, const TQString& sAction, ActionType action, TQWidget* parent );
         // Remove the key sequences contained in cut from the standard shortcut @p name
         // which currently has @p origCut as shortcut.
-        static void removeStandardShortcut( const QString& name, KKeyChooser* chooser, const KShortcut &origCut, const KShortcut &cut );
+        static void removeStandardShortcut( const TQString& name, KKeyChooser* chooser, const KShortcut &origCut, const KShortcut &cut );
         // Remove the key sequences contained in cut from the global shortcut @p name
         // which currently has @p origCut as shortcut.
-        static void removeGlobalShortcut( const QString& name, KKeyChooser* chooser, const KShortcut &origCut, const KShortcut &cut );
-        static void readGlobalKeys( QMap< QString, KShortcut >& map );
-        static bool checkGlobalShortcutsConflict( const KShortcut& cut, bool bWarnUser, QWidget* parent,
-            const QMap< QString, KShortcut >& map, const QString& ignoreAction );
+        static void removeGlobalShortcut( const TQString& name, KKeyChooser* chooser, const KShortcut &origCut, const KShortcut &cut );
+        static void readGlobalKeys( TQMap< TQString, KShortcut >& map );
+        static bool checkGlobalShortcutsConflict( const KShortcut& cut, bool bWarnUser, TQWidget* parent,
+            const TQMap< TQString, KShortcut >& map, const TQString& ignoreAction );
         // Remove the key sequences contained in cut from this item
-        bool removeShortcut( const QString& name, const KShortcut &cut );
+        bool removeShortcut( const TQString& name, const KShortcut &cut );
 
 private slots:
         void captureCurrentItem();
@@ -227,14 +227,14 @@ private slots:
 	/**
 	 * @obsolete
 	 */
-	KKeyChooser( KAccel* actions, QWidget* parent,
+	KKeyChooser( KAccel* actions, TQWidget* parent,
 			bool bCheckAgainstStdKeys,
 			bool bAllowLetterShortcuts,
 			bool bAllowWinKey = false );
 	/**
 	 * @obsolete
 	 */
-	KKeyChooser( KGlobalAccel* actions, QWidget* parent,
+	KKeyChooser( KGlobalAccel* actions, TQWidget* parent,
 			bool bCheckAgainstStdKeys,
 			bool bAllowLetterShortcuts,
 			bool bAllowWinKey = false );
@@ -281,7 +281,7 @@ public:
 	 * Set @p bAllowLetterShortcuts to false if unmodified alphanumeric
 	 * keys ('A', '1', etc.) are not permissible shortcuts.
 	 */
-	KKeyDialog( bool bAllowLetterShortcuts = true, QWidget* parent = 0, const char* name = 0 );
+	KKeyDialog( bool bAllowLetterShortcuts = true, TQWidget* parent = 0, const char* name = 0 );
 
 	/**
 	 * Destructor. Deletes all resources used by a KKeyDialog object.
@@ -310,7 +310,7 @@ public:
          * @return true :)
 	 * @since 3.1
 	 */
-        bool insert(KActionCollection *, const QString &title);
+        bool insert(KActionCollection *, const TQString &title);
 
 	/**
 	 * Run the dialog and call commitChanges() if @p bSaveSettings
@@ -332,20 +332,20 @@ public:
 	 * the *uirc file which they were intially read from.
 	 * @return Accept if the dialog was closed with OK, Reject otherwise.
 	 */
-	static int configure( KActionCollection* coll, QWidget* parent = 0, bool bSaveSettings = true );
+	static int configure( KActionCollection* coll, TQWidget* parent = 0, bool bSaveSettings = true );
 
 	/**
 	 * This is an overloaded member function, provided for convenience.
 	 * It behaves essentially like the above function, except that settings
 	 * are saved to a *.rc file using KConfig.
 	 */
-	static int configure( KAccel* keys, QWidget* parent = 0, bool bSaveSettings = true );
+	static int configure( KAccel* keys, TQWidget* parent = 0, bool bSaveSettings = true );
 
 	/**
 	 * This is an overloaded member function, provided for convenience.
 	 * It behaves essentially like the above function.
 	 */
-	static int configure( KGlobalAccel* keys, QWidget* parent = 0, bool bSaveSettings = true );
+	static int configure( KGlobalAccel* keys, TQWidget* parent = 0, bool bSaveSettings = true );
 
 
 	/**
@@ -359,42 +359,42 @@ public:
 	 * @param bSaveSettings if true, the settings will also be saved back to
 	 * the *uirc file which they were intially read from.
 	 */
-	static int configure( KActionCollection* coll, bool bAllowLetterShortcuts, QWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
+	static int configure( KActionCollection* coll, bool bAllowLetterShortcuts, TQWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
 
 	/**
 	 * This is an overloaded member function, provided for convenience.
 	 * It behaves essentially like the above function.
 	 **/
-	static int configure( KAccel* keys, bool bAllowLetterShortcuts, QWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
+	static int configure( KAccel* keys, bool bAllowLetterShortcuts, TQWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
 
 	/**
 	 * This is an overloaded member function, provided for convenience.
 	 * It behaves essentially like the above function.
 	 **/
-	static int configure( KGlobalAccel* keys, bool bAllowLetterShortcuts, QWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
+	static int configure( KGlobalAccel* keys, bool bAllowLetterShortcuts, TQWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
 
 	/**
 	 * @deprecated Obsolete.
 	 * Please use KKeyDialog::configure instead
 	 */
-	static KDE_DEPRECATED int configureKeys( KAccel* keys, bool save_settings = true, QWidget* parent = 0 )
+	static KDE_DEPRECATED int configureKeys( KAccel* keys, bool save_settings = true, TQWidget* parent = 0 )
 		{ return configure( keys, parent, save_settings ); }
 	/**
 	 * @deprecated Obsolete.
 	 * Please use KKeyDialog::configure instead
 	 */
-	static KDE_DEPRECATED int configureKeys( KGlobalAccel* keys, bool save_settings = true, QWidget* parent = 0 )
+	static KDE_DEPRECATED int configureKeys( KGlobalAccel* keys, bool save_settings = true, TQWidget* parent = 0 )
 		{ return configure( keys, parent, save_settings ); }
 	/**
 	 * @deprecated Obsolete.
 	 * Please use KKeyDialog::configure instead
 	 */
-	static KDE_DEPRECATED int configureKeys( KActionCollection* coll, const QString& /*xmlfile*/,
-		bool save_settings = true, QWidget* parent = 0 )
+	static KDE_DEPRECATED int configureKeys( KActionCollection* coll, const TQString& /*xmlfile*/,
+		bool save_settings = true, TQWidget* parent = 0 )
 		{ return configure( coll, parent, save_settings ); }
 
 private:
-	KKeyDialog( KKeyChooser::ActionType, bool bAllowLetterShortcuts = true, QWidget* parent = 0, const char* name = 0 );
+	KKeyDialog( KKeyChooser::ActionType, bool bAllowLetterShortcuts = true, TQWidget* parent = 0, const char* name = 0 );
 
  protected:
 	virtual void virtual_hook( int id, void* data );

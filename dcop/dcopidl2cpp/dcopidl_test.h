@@ -8,27 +8,27 @@
 // stub:
 //    - includes to super relationship, a bit much to test, needs multiple files?
 
-class KDEUI_EXPORT DefaultTest : public QObject, virtual public DCOPObject
+class KDEUI_EXPORT DefaultTest : public TQObject, virtual public DCOPObject
 {
    Q_OBJECT
    K_DCOP
 public:
    DefaultTest();
-   void nonDcopFunction( QString filename, QString url, QString text, QString address, QString icon );
+   void nonDcopFunction( TQString filename, TQString url, TQString text, TQString address, TQString icon );
 k_dcop:
    void noArgsTest();
-   void argsTest( QString filename, QString url );
-   void unNamedArgsTest( QString, QString );
+   void argsTest( TQString filename, TQString url );
+   void unNamedArgsTest( TQString, TQString );
 
-   void constTest( QString, QString ) const;
-   QStringList writeTypeTest( const QString &, QPtrList<int> );
+   void constTest( TQString, TQString ) const;
+   TQStringList writeTypeTest( const TQString &, TQPtrList<int> );
 
-   void voidReturnType( QString filename, QString url, QString text, QString address, QString icon );
-   QString nonVoidReturnType( QString filename, QString text, QString address );
-   int intReturnType( QString filename, QString text, QString address );
-   bool boolReturnType( QString filename, QString text, QString address );
+   void voidReturnType( TQString filename, TQString url, TQString text, TQString address, TQString icon );
+   TQString nonVoidReturnType( TQString filename, TQString text, TQString address );
+   int intReturnType( TQString filename, TQString text, TQString address );
+   bool boolReturnType( TQString filename, TQString text, TQString address );
 
-   ASYNC asyncTest( QString filename, QString text, QString address );
+   ASYNC asyncTest( TQString filename, TQString text, TQString address );
 };
 
 namespace TestNamespace {
@@ -38,7 +38,7 @@ namespace TestNamespace {
    public:
       NamespaceTest();
    k_dcop:
-      void function1( QString filename, QString url, QString text, QString address, QString icon );
+      void function1( TQString filename, TQString url, TQString text, TQString address, TQString icon );
    };
 }
 
@@ -48,7 +48,7 @@ class NoSuper
 public:
    NoSuper();
 k_dcop:
-   void function1( QString filename, QString url, QString text, QString address, QString icon );
+   void function1( TQString filename, TQString url, TQString text, TQString address, TQString icon );
 };
 
 class NonDCOPObject : public MyDCOPObjectBase
@@ -57,7 +57,7 @@ class NonDCOPObject : public MyDCOPObjectBase
 public:
    NonDCOPObject();
 k_dcop:
-   void function1( QString filename, QString url, QString text, QString address, QString icon );
+   void function1( TQString filename, TQString url, TQString text, TQString address, TQString icon );
 };
 
 class NoFunctions : public DCOPObject
@@ -65,45 +65,45 @@ class NoFunctions : public DCOPObject
    K_DCOP
 public:
    NonDCOPObject();
-   void nonDcopFunction( QString filename, QString url, QString text, QString address, QString icon );
+   void nonDcopFunction( TQString filename, TQString url, TQString text, TQString address, TQString icon );
 };
 
-class NonHashingTest : public QObject, virtual public DCOPObject
+class NonHashingTest : public TQObject, virtual public DCOPObject
 {
    Q_OBJECT
    K_DCOP
 public:
    NonHashingTest();
 k_dcop:
-   void function1( QString );
+   void function1( TQString );
 };
 
-class HashingTest : public QObject, virtual public DCOPObject
+class HashingTest : public TQObject, virtual public DCOPObject
 {
    Q_OBJECT
    K_DCOP
 public:
    HashingTest();
 k_dcop:
-   void function1( QString );
-   void function2( QString, QString );
-   void function3( QString, QString, QString );
-   void function4( QString, QString, QString, QString );
-   void function5( QString, QString, QString, QString, QString );
-   void function6( QString, QString, QString, QString, QString, QString );
-   void function7( QString, QString, QString, QString, QString, QString, QString );
-   void function8( QString, QString, QString, QString, QString, QString, QString, QString );
+   void function1( TQString );
+   void function2( TQString, TQString );
+   void function3( TQString, TQString, TQString );
+   void function4( TQString, TQString, TQString, TQString );
+   void function5( TQString, TQString, TQString, TQString, TQString );
+   void function6( TQString, TQString, TQString, TQString, TQString, TQString );
+   void function7( TQString, TQString, TQString, TQString, TQString, TQString, TQString );
+   void function8( TQString, TQString, TQString, TQString, TQString, TQString, TQString, TQString );
 };
 
 class SignalTest : virtual public DCOPObject
 {
    K_DCOP
 public:
-   SignalTest(QCString objId = "KBookmarkNotifier") : DCOPObject(objId) {}
+   SignalTest(TQCString objId = "KBookmarkNotifier") : DCOPObject(objId) {}
 k_dcop_signals:
-   void signal1( QString filename, QString url, QString text, QString address, QString icon );
-   void signal2( QString filename, QString text, QString address );
-   void signal3( QString filename, QString url );
+   void signal1( TQString filename, TQString url, TQString text, TQString address, TQString icon );
+   void signal2( TQString filename, TQString text, TQString address );
+   void signal3( TQString filename, TQString url );
 };
 
 #endif // end

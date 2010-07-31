@@ -24,13 +24,13 @@
 #include <kparts/mainwindow.h>
 #include <kparts/partmanager.h>
 
-#include <qapplication.h>
-#include <qfile.h>
-#include <qpoint.h>
-#include <qpointarray.h>
-#include <qpainter.h>
-#include <qtextstream.h>
-#include <qfileinfo.h>
+#include <tqapplication.h>
+#include <tqfile.h>
+#include <tqpoint.h>
+#include <tqpointarray.h>
+#include <tqpainter.h>
+#include <tqtextstream.h>
+#include <tqfileinfo.h>
 
 #include <kinstance.h>
 #include <klocale.h>
@@ -46,7 +46,7 @@
 #include <assert.h>
 #include <kdebug.h>
 
-template class QPtrList<KXMLGUIClient>;
+template class TQPtrList<KXMLGUIClient>;
 
 using namespace KParts;
 
@@ -92,12 +92,12 @@ PartBase::~PartBase()
   delete d;
 }
 
-void PartBase::setPartObject( QObject *obj )
+void PartBase::setPartObject( TQObject *obj )
 {
   m_obj = obj;
 }
 
-QObject *PartBase::partObject() const
+TQObject *PartBase::partObject() const
 {
   return m_obj;
 }
@@ -114,12 +114,12 @@ void PartBase::setInstance( KInstance *inst, bool bLoadPlugins )
   // install 'instancename'data resource type
   KGlobal::dirs()->addResourceType( inst->instanceName() + "data",
                                     KStandardDirs::kde_default( "data" )
-                                    + QString::fromLatin1( inst->instanceName() ) + '/' );
+                                    + TQString::fromLatin1( inst->instanceName() ) + '/' );
   if ( bLoadPlugins )
     loadPlugins( m_obj, this, instance() );
 }
 
-void PartBase::loadPlugins( QObject *parent, KXMLGUIClient *parentGUIClient, KInstance *instance )
+void PartBase::loadPlugins( TQObject *parent, KXMLGUIClient *parentGUIClient, KInstance *instance )
 {
   if( d->m_pluginLoadingMode != DoNotLoadPlugins )
     Plugin::loadPlugins( parent, parentGUIClient, instance, d->m_pluginLoadingMode == LoadPlugins );
@@ -130,8 +130,8 @@ void PartBase::setPluginLoadingMode( PluginLoadingMode loadingMode )
     d->m_pluginLoadingMode = loadingMode;
 }
 
-Part::Part( QObject *parent, const char* name )
- : QObject( parent, name )
+Part::Part( TQObject *parent, const char* name )
+ : TQObject( parent, name )
 {
   d = new PartPrivate;
   m_widget = 0L;
@@ -146,8 +146,8 @@ Part::~Part()
   if ( m_widget )
   {
     // We need to disconnect first, to avoid calling it !
-    disconnect( m_widget, SIGNAL( destroyed() ),
-                this, SLOT( slotWidgetDestroyed() ) );
+    disconnect( m_widget, TQT_SIGNAL( destroyed() ),
+                this, TQT_SLOT( slotWidgetDestroyed() ) );
   }
 
   if ( m_manager )
@@ -156,19 +156,19 @@ Part::~Part()
   if ( m_widget )
   {
     kdDebug(1000) << "deleting widget " << m_widget << " " << m_widget->name() << endl;
-    delete (QWidget*) m_widget;
+    delete (TQWidget*) m_widget;
   }
 
   delete d;
 }
 
-void Part::embed( QWidget * parentWidget )
+void Part::embed( TQWidget * parentWidget )
 {
   if ( widget() )
-    widget()->reparent( parentWidget, 0, QPoint( 0, 0 ), true );
+    widget()->reparent( parentWidget, 0, TQPoint( 0, 0 ), true );
 }
 
-QWidget *Part::widget()
+TQWidget *Part::widget()
 {
   return m_widget;
 }
@@ -183,20 +183,20 @@ PartManager *Part::manager() const
   return m_manager;
 }
 
-Part *Part::hitTest( QWidget *widget, const QPoint & )
+Part *Part::hitTest( TQWidget *widget, const TQPoint & )
 {
-  if ( (QWidget *)m_widget != widget )
+  if ( (TQWidget *)m_widget != widget )
     return 0L;
 
   return this;
 }
 
-void Part::setWidget( QWidget *widget )
+void Part::setWidget( TQWidget *widget )
 {
   assert ( !m_widget ); // otherwise we get two connects
   m_widget = widget;
-  connect( m_widget, SIGNAL( destroyed() ),
-           this, SLOT( slotWidgetDestroyed() ) );
+  connect( m_widget, TQT_SIGNAL( destroyed() ),
+           this, TQT_SLOT( slotWidgetDestroyed() ) );
 
   // Tell the actionCollection() which widget its
   //  action shortcuts should be connected to.
@@ -218,7 +218,7 @@ bool Part::isSelectable() const
   return d->m_bSelectable;
 }
 
-void Part::customEvent( QCustomEvent *event )
+void Part::customEvent( TQCustomEvent *event )
 {
   if ( PartActivateEvent::test( event ) )
   {
@@ -238,7 +238,7 @@ void Part::customEvent( QCustomEvent *event )
     return;
   }
 
-  QObject::customEvent( event );
+  TQObject::customEvent( event );
 }
 
 void Part::partActivateEvent( PartActivateEvent * )
@@ -253,7 +253,7 @@ void Part::guiActivateEvent( GUIActivateEvent * )
 {
 }
 
-QWidget *Part::hostContainer( const QString &containerName )
+TQWidget *Part::hostContainer( const TQString &containerName )
 {
   if ( !factory() )
     return 0L;
@@ -292,7 +292,7 @@ public:
   KIO::FileCopyJob * m_job;
   KIO::FileCopyJob * m_uploadJob;
   KURL m_originalURL; // for saveAs
-  QString m_originalFilePath; // for saveAs
+  TQString m_originalFilePath; // for saveAs
   bool m_showProgressInfo : 1;
   bool m_saveOk : 1;
   bool m_waitForSave : 1;
@@ -301,7 +301,7 @@ public:
 
 }
 
-ReadOnlyPart::ReadOnlyPart( QObject *parent, const char *name )
+ReadOnlyPart::ReadOnlyPart( TQObject *parent, const char *name )
  : Part( parent, name ), m_bTemp( false )
 {
   d = new ReadOnlyPartPrivate;
@@ -353,13 +353,13 @@ bool ReadOnlyPart::openURL( const KURL &url )
   {
     m_bTemp = true;
     // Use same extension as remote file. This is important for mimetype-determination (e.g. koffice)
-    QString fileName = url.fileName();
-    QFileInfo fileInfo(fileName);
-    QString ext = fileInfo.extension();
-    QString extension;
+    TQString fileName = url.fileName();
+    TQFileInfo fileInfo(fileName);
+    TQString ext = fileInfo.extension();
+    TQString extension;
     if ( !ext.isEmpty() && url.query().isNull() ) // not if the URL has a query, e.g. cgi.pl?something
         extension = "."+ext; // keep the '.'
-    KTempFile tempFile( QString::null, extension );
+    KTempFile tempFile( TQString::null, extension );
     m_file = tempFile.name();
 
     KURL destURL;
@@ -367,7 +367,7 @@ bool ReadOnlyPart::openURL( const KURL &url )
     d->m_job = KIO::file_copy( m_url, destURL, 0600, true, false, d->m_showProgressInfo );
     d->m_job->setWindow( widget() ? widget()->topLevelWidget() : 0 );
     emit started( d->m_job );
-    connect( d->m_job, SIGNAL( result( KIO::Job * ) ), this, SLOT( slotJobFinished ( KIO::Job * ) ) );
+    connect( d->m_job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotJobFinished ( KIO::Job * ) ) );
     return true;
   }
 }
@@ -388,7 +388,7 @@ bool ReadOnlyPart::closeURL()
 
   if ( m_bTemp )
   {
-    unlink( QFile::encodeName(m_file) );
+    unlink( TQFile::encodeName(m_file) );
     m_bTemp = false;
   }
   // It always succeeds for a read-only part,
@@ -424,7 +424,7 @@ void ReadOnlyPart::guiActivateEvent( GUIActivateEvent * event )
   }
 }
 
-bool ReadOnlyPart::openStream( const QString& mimeType, const KURL& url )
+bool ReadOnlyPart::openStream( const TQString& mimeType, const KURL& url )
 {
     if ( !closeURL() )
         return false;
@@ -432,7 +432,7 @@ bool ReadOnlyPart::openStream( const QString& mimeType, const KURL& url )
     return doOpenStream( mimeType );
 }
 
-bool ReadOnlyPart::writeStream( const QByteArray& data )
+bool ReadOnlyPart::writeStream( const TQByteArray& data )
 {
     return doWriteStream( data );
 }
@@ -444,7 +444,7 @@ bool ReadOnlyPart::closeStream()
 
 //////////////////////////////////////////////////
 
-ReadWritePart::ReadWritePart( QObject *parent, const char *name )
+ReadWritePart::ReadWritePart( TQObject *parent, const char *name )
  : ReadOnlyPart( parent, name ), m_bModified( false ), m_bClosing( false )
 {
   m_bReadWrite = true;
@@ -485,7 +485,7 @@ bool ReadWritePart::queryClose()
   if ( !isReadWrite() || !isModified() )
     return true;
 
-  QString docName = url().fileName();
+  TQString docName = url().fileName();
   if (docName.isEmpty()) docName = i18n( "Untitled" );
 
   int res = KMessageBox::warningYesNoCancel( widget(),
@@ -547,7 +547,7 @@ bool ReadWritePart::save()
   if( saveFile() )
     return saveToURL();
   else
-    emit canceled(QString::null);
+    emit canceled(TQString::null);
   return false;
 }
 
@@ -572,7 +572,7 @@ bool ReadWritePart::saveAs( const KURL & kurl )
     m_file = d->m_originalFilePath;
     d->m_duringSaveAs = false;
     d->m_originalURL = KURL();
-    d->m_originalFilePath = QString::null;
+    d->m_originalFilePath = TQString::null;
   }
 
   return result;
@@ -586,7 +586,7 @@ void ReadWritePart::prepareSaving()
   {
     if ( m_bTemp ) // get rid of a possible temp file first
     {              // (happens if previous url was remote)
-      unlink( QFile::encodeName(m_file) );
+      unlink( TQFile::encodeName(m_file) );
       m_bTemp = false;
     }
     m_file = m_url.path();
@@ -615,31 +615,31 @@ bool ReadWritePart::saveToURL()
     d->m_saveOk = true;
     d->m_duringSaveAs = false;
     d->m_originalURL = KURL();
-    d->m_originalFilePath = QString::null;
+    d->m_originalFilePath = TQString::null;
     return true; // Nothing to do
   }
   else
   {
     if (d->m_uploadJob)
     {
-       unlink(QFile::encodeName(d->m_uploadJob->srcURL().path()));
+       unlink(TQFile::encodeName(d->m_uploadJob->srcURL().path()));
        d->m_uploadJob->kill();
        d->m_uploadJob = 0;
     }
     KTempFile tempFile;
-    QString uploadFile = tempFile.name();
+    TQString uploadFile = tempFile.name();
     KURL uploadUrl;
     uploadUrl.setPath( uploadFile );
     tempFile.unlink();
     // Create hardlink
-    if (::link(QFile::encodeName(m_file), QFile::encodeName(uploadFile)) != 0)
+    if (::link(TQFile::encodeName(m_file), TQFile::encodeName(uploadFile)) != 0)
     {
        // Uh oh, some error happened.
        return false;
     }
     d->m_uploadJob = KIO::file_move( uploadUrl, m_url, -1, true /*overwrite*/ );
     d->m_uploadJob->setWindow( widget() ? widget()->topLevelWidget() : 0 );
-    connect( d->m_uploadJob, SIGNAL( result( KIO::Job * ) ), this, SLOT( slotUploadFinished (KIO::Job *) ) );
+    connect( d->m_uploadJob, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotUploadFinished (KIO::Job *) ) );
     return true;
   }
 }
@@ -648,8 +648,8 @@ void ReadWritePart::slotUploadFinished( KIO::Job * )
 {
   if (d->m_uploadJob->error())
   {
-    unlink(QFile::encodeName(d->m_uploadJob->srcURL().path()));
-    QString error = d->m_uploadJob->errorString();
+    unlink(TQFile::encodeName(d->m_uploadJob->srcURL().path()));
+    TQString error = d->m_uploadJob->errorString();
     d->m_uploadJob = 0;
     if (d->m_duringSaveAs) {
       m_url = d->m_originalURL;
@@ -671,7 +671,7 @@ void ReadWritePart::slotUploadFinished( KIO::Job * )
   }
   d->m_duringSaveAs = false;
   d->m_originalURL = KURL();
-  d->m_originalFilePath = QString::null;
+  d->m_originalFilePath = TQString::null;
   if (d->m_waitForSave)
   {
      qApp->exit_loop();
@@ -679,8 +679,8 @@ void ReadWritePart::slotUploadFinished( KIO::Job * )
 }
 
 // Trolls: Nothing to see here, please step away.
-void qt_enter_modal( QWidget *widget );
-void qt_leave_modal( QWidget *widget );
+void qt_enter_modal( TQWidget *widget );
+void qt_leave_modal( TQWidget *widget );
 
 bool ReadWritePart::waitSaveComplete()
 {
@@ -689,8 +689,8 @@ bool ReadWritePart::waitSaveComplete()
 
   d->m_waitForSave = true;
 
-  QWidget dummy(0,0,WType_Dialog | WShowModal);
-  dummy.setFocusPolicy( QWidget::NoFocus );
+  TQWidget dummy(0,0,WType_Dialog | WShowModal);
+  dummy.setFocusPolicy( TQWidget::NoFocus );
   qt_enter_modal(&dummy);
   qApp->enter_loop();
   qt_leave_modal(&dummy);

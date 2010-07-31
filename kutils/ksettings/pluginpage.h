@@ -38,10 +38,10 @@ namespace KSettings
  * PluginPage and add the appropriate plugin infos to the KPluginSelector.
  * This is done using the pluginSelector() method:
  * \code
- * typedef KGenericFactory<MyAppPluginConfig, QWidget> MyAppPluginConfigFactory;
+ * typedef KGenericFactory<MyAppPluginConfig, TQWidget> MyAppPluginConfigFactory;
  * K_EXPORT_COMPONENT_FACTORY( kcm_myapppluginconfig, MyAppPluginConfigFactory( "kcm_myapppluginconfig" ) );
  *
- * MyAppPluginConfig( QWidget * parent, const char *, const QStringList & args )
+ * MyAppPluginConfig( TQWidget * parent, const char *, const TQStringList & args )
  *     : PluginPage( MyAppPluginConfigFactory::instance(), parent, args )
  * {
  *     pluginSelector()->addPlugins( KGlobal::instance()->instanceName(), i18n( "General Plugins" ), "General" );
@@ -78,13 +78,13 @@ class KUTILS_EXPORT PluginPage : public KCModule
          * Standart KCModule constructor. Automatically creates the the
          * KPluginSelector widget.
          */
-        PluginPage( QWidget * parent = 0, const char * name = 0, const QStringList & args = QStringList() );
+        PluginPage( TQWidget * parent = 0, const char * name = 0, const TQStringList & args = TQStringList() );
 
         /**
          * Standart KCModule constructor. Automatically creates the the
          * KPluginSelector widget.
          */
-        PluginPage( KInstance * instance, QWidget * parent = 0, const QStringList & args = QStringList() );
+        PluginPage( KInstance * instance, TQWidget * parent = 0, const TQStringList & args = TQStringList() );
 
         ~PluginPage();
 

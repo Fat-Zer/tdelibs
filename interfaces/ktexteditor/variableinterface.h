@@ -50,7 +50,7 @@ class KTEXTEDITOR_EXPORT VariableInterface
     * @return the value of the variable @p name, or an empty string if the
     * variable is not set or has no value.
     */
-    virtual QString variable( const QString &name ) const = 0;
+    virtual TQString variable( const TQString &name ) const = 0;
 
     //
     // signals!!
@@ -59,7 +59,7 @@ class KTEXTEDITOR_EXPORT VariableInterface
     /**
     * Signal: emitted when a variable is set
     */
-    virtual void variableChanged( const QString &variable, const QString &value ) = 0;
+    virtual void variableChanged( const TQString &variable, const TQString &value ) = 0;
 
   private:
     static unsigned int globalVariableInterfaceNumber;

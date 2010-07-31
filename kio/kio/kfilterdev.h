@@ -18,8 +18,8 @@
 #ifndef __kfilterdev_h
 #define __kfilterdev_h
 
-#include <qiodevice.h>
-#include <qstring.h>
+#include <tqiodevice.h>
+#include <tqstring.h>
 #include <kdelibs_export.h>
 
 class QFile;
@@ -66,7 +66,7 @@ public:
      * set the name of the original file, to be used in the gzip header.
      * @param fileName the name of the original file
      */
-    void setOrigFileName( const QCString & fileName );
+    void setOrigFileName( const TQCString & fileName );
 
     /**
      * Call this let this device skip the gzip headers when reading/writing.
@@ -77,13 +77,13 @@ public:
     void setSkipHeaders();
 
     // Not implemented
-    virtual QIODevice::Offset size() const;
+    virtual TQIODevice::Offset size() const;
 
-    virtual QIODevice::Offset at() const;
+    virtual TQIODevice::Offset at() const;
     /**
      * That one can be quite slow, when going back. Use with care.
      */
-    virtual bool at( QIODevice::Offset );
+    virtual bool at( TQIODevice::Offset );
 
     virtual bool atEnd() const;
 
@@ -100,12 +100,12 @@ private:
 #endif
     /**
      * Call this to create the appropriate filter device for @p base
-     * working on @p file . The returned QIODevice has to be deleted
+     * working on @p file . The returned TQIODevice has to be deleted
      * after using.
      * @deprecated. Use deviceForFile instead.
      * To be removed in KDE 3.0
      */
-    static QIODevice* createFilterDevice(KFilterBase* base, QFile* file) KDE_DEPRECATED;
+    static TQIODevice* createFilterDevice(KFilterBase* base, TQFile* file) KDE_DEPRECATED;
 public:
 
     /**
@@ -118,27 +118,27 @@ public:
      * to force the corresponding decompression filter, if available.
      *
      * Warning: application/x-bzip2 may not be available.
-     * In that case a QFile opened on the compressed data will be returned !
+     * In that case a TQFile opened on the compressed data will be returned !
      * Use KFilterBase::findFilterByMimeType and code similar to what
      * deviceForFile is doing, to better control what's happening.
      *
-     * The returned QIODevice has to be deleted after using.
+     * The returned TQIODevice has to be deleted after using.
      *
      * @param fileName the name of the file to filter
-     * @param mimetype the mime type of the file to filter, or QString::null if unknown
+     * @param mimetype the mime type of the file to filter, or TQString::null if unknown
      * @param forceFilter if true, the function will either find a compression filter, or return 0.
-     *                    If false, it will always return a QIODevice. If no
-     *                    filter is available it will return a simple QFile.
+     *                    If false, it will always return a TQIODevice. If no
+     *                    filter is available it will return a simple TQFile.
      *                    This can be useful if the file is usable without a filter.
-     * @return if a filter has been found, the QIODevice for the filter. If the
+     * @return if a filter has been found, the TQIODevice for the filter. If the
      *         filter does not exist, the return value depends on @p forceFilter.
-     *         The returned QIODevice has to be deleted after using.
+     *         The returned TQIODevice has to be deleted after using.
      */
-    static QIODevice * deviceForFile( const QString & fileName, const QString & mimetype = QString::null,
+    static TQIODevice * deviceForFile( const TQString & fileName, const TQString & mimetype = TQString::null,
                                       bool forceFilter = false );
 
     /**
-     * Creates an i/o device that is able to read from the QIODevice @p inDevice,
+     * Creates an i/o device that is able to read from the TQIODevice @p inDevice,
      * whether the data is compressed or not. Available compression filters
      * (gzip/bzip2 etc.) will automatically be used.
      *
@@ -149,17 +149,17 @@ public:
      * Warning: application/x-bzip2 may not be available.
      * In that case 0 will be returned !
      *
-     * The returned QIODevice has to be deleted after using.
+     * The returned TQIODevice has to be deleted after using.
      * @param inDevice input device, becomes owned by this device! Automatically deleted!
      * @param mimetype the mime type for the filter
-     * @return a QIODevice that filters the original stream. Must be deleted after
+     * @return a TQIODevice that filters the original stream. Must be deleted after
      *         using
      */
-    static QIODevice * device( QIODevice* inDevice, const QString & mimetype);
+    static TQIODevice * device( TQIODevice* inDevice, const TQString & mimetype);
     // BIC: merge with device() method below, using default value for autoDeleteInDevice
 
     /**
-     * Creates an i/o device that is able to read from the QIODevice @p inDevice,
+     * Creates an i/o device that is able to read from the TQIODevice @p inDevice,
      * whether the data is compressed or not. Available compression filters
      * (gzip/bzip2 etc.) will automatically be used.
      *
@@ -170,15 +170,15 @@ public:
      * Warning: application/x-bzip2 may not be available.
      * In that case 0 will be returned !
      *
-     * The returned QIODevice has to be deleted after using.
+     * The returned TQIODevice has to be deleted after using.
      * @param inDevice input device. Won't be deleted if @p autoDeleteInDevice = false
      * @param mimetype the mime type for the filter
      * @param autoDeleteInDevice if true, @p inDevice will be deleted automatically
-     * @return a QIODevice that filters the original stream. Must be deleted after
+     * @return a TQIODevice that filters the original stream. Must be deleted after
      *         using
      * @since 3.1
      */
-    static QIODevice * device( QIODevice* inDevice, const QString & mimetype, bool autoDeleteInDevice );
+    static TQIODevice * device( TQIODevice* inDevice, const TQString & mimetype, bool autoDeleteInDevice );
 
 private:
     KFilterBase *filter;

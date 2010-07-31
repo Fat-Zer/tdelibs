@@ -22,8 +22,8 @@
 #ifndef KIOINPUTSTREAM_IMPL
 #define KIOINPUTSTREAM_IMPL
 
-#include <qobject.h>
-#include <qcstring.h>
+#include <tqobject.h>
+#include <tqcstring.h>
 #include <kio/jobclasses.h>
 #include <kurl.h>
 #include "artskde.h"
@@ -31,7 +31,7 @@
 
 namespace Arts {
 
-class KIOInputStream_impl : public QObject, virtual public KIOInputStream_skel, 
+class KIOInputStream_impl : public TQObject, virtual public KIOInputStream_skel, 
 					    virtual public InputStream_skel,
 					    virtual public StdSynthModule
 {
@@ -59,18 +59,18 @@ public:
 	long packetSize() { return m_packetSize; }
 
 signals:
-	void mimeTypeFound(const QString & mimetype);
+	void mimeTypeFound(const TQString & mimetype);
 	
 private slots:
-	void slotData(KIO::Job *, const QByteArray &);
+	void slotData(KIO::Job *, const TQByteArray &);
 	void slotResult(KIO::Job *);
-	void slotScanMimeType(KIO::Job *, const QString &mimetype);
+	void slotScanMimeType(KIO::Job *, const TQString &mimetype);
 	void slotTotalSize(KIO::Job *, KIO::filesize_t size);
 
 private:
 	KURL m_url;
 	KIO::TransferJob *m_job;
-	QByteArray m_data;
+	TQByteArray m_data;
 	bool m_finished;
 	bool m_firstBuffer;
 	bool m_streamStarted;

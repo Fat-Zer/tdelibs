@@ -25,13 +25,13 @@
 class KLpdPrinterImpl : public KPrinterImpl
 {
 public:
-	KLpdPrinterImpl(QObject *parent = 0, const char *name = 0);
+	KLpdPrinterImpl(TQObject *parent = 0, const char *name = 0);
 	~KLpdPrinterImpl();
 
-	bool setupCommand(QString&, KPrinter*);
+	bool setupCommand(TQString&, KPrinter*);
 
 protected:
-	QString executable();
+	TQString executable();
 };
 
 #endif

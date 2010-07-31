@@ -40,9 +40,9 @@
 #include <kmimetype.h>
 #include <klocale.h>
 
-#include <qintdict.h>
-#include <qmap.h>
-#include <qdatetime.h>
+#include <tqintdict.h>
+#include <tqmap.h>
+#include <tqdatetime.h>
 
 namespace KTextEditor { class Plugin; }
 
@@ -91,7 +91,7 @@ class KateDocument : public Kate::Document,
 
   public:
     KateDocument (bool bSingleViewMode=false, bool bBrowserView=false, bool bReadOnly=false,
-        QWidget *parentWidget = 0, const char *widgetName = 0, QObject * = 0, const char * = 0);
+        TQWidget *parentWidget = 0, const char *widgetName = 0, TQObject * = 0, const char * = 0);
     ~KateDocument ();
 
     bool closeURL();
@@ -115,7 +115,7 @@ class KateDocument : public Kate::Document,
     void disablePluginGUI (KTextEditor::Plugin *plugin);
 
   private:
-     QMemArray<KTextEditor::Plugin *> m_plugins;
+     TQMemArray<KTextEditor::Plugin *> m_plugins;
 
   public:
     bool readOnly () const { return m_bReadOnly; }
@@ -134,14 +134,14 @@ class KateDocument : public Kate::Document,
   // KTextEditor::Document stuff
   //
   public:
-    KTextEditor::View *createView( QWidget *parent, const char *name );
-    QPtrList<KTextEditor::View> views () const;
+    KTextEditor::View *createView( TQWidget *parent, const char *name );
+    TQPtrList<KTextEditor::View> views () const;
 
     inline KateView *activeView () const { return m_activeView; }
 
   private:
-    QPtrList<KateView> m_views;
-    QPtrList<KTextEditor::View> m_textEditViews;
+    TQPtrList<KateView> m_views;
+    TQPtrList<KTextEditor::View> m_textEditViews;
     KateView *m_activeView;
 
     /**
@@ -160,32 +160,32 @@ class KateDocument : public Kate::Document,
   //
   public slots:
     uint configPages () const;
-    KTextEditor::ConfigPage *configPage (uint number = 0, QWidget *parent = 0, const char *name=0 );
-    QString configPageName (uint number = 0) const;
-    QString configPageFullName (uint number = 0) const;
-    QPixmap configPagePixmap (uint number = 0, int size = KIcon::SizeSmall) const;
+    KTextEditor::ConfigPage *configPage (uint number = 0, TQWidget *parent = 0, const char *name=0 );
+    TQString configPageName (uint number = 0) const;
+    TQString configPageFullName (uint number = 0) const;
+    TQPixmap configPagePixmap (uint number = 0, int size = KIcon::SizeSmall) const;
 
   //
   // KTextEditor::EditInterface stuff
   //
   public slots:
-    QString text() const;
+    TQString text() const;
 
-    QString text ( uint startLine, uint startCol, uint endLine, uint endCol ) const;
-    QString text ( uint startLine, uint startCol, uint endLine, uint endCol, bool blockwise ) const;
+    TQString text ( uint startLine, uint startCol, uint endLine, uint endCol ) const;
+    TQString text ( uint startLine, uint startCol, uint endLine, uint endCol, bool blockwise ) const;
 
-    QString textLine ( uint line ) const;
+    TQString textLine ( uint line ) const;
 
-    bool setText(const QString &);
+    bool setText(const TQString &);
     bool clear ();
 
-    bool insertText ( uint line, uint col, const QString &s );
-    bool insertText ( uint line, uint col, const QString &s, bool blockwise );
+    bool insertText ( uint line, uint col, const TQString &s );
+    bool insertText ( uint line, uint col, const TQString &s, bool blockwise );
 
     bool removeText ( uint startLine, uint startCol, uint endLine, uint endCol );
     bool removeText ( uint startLine, uint startCol, uint endLine, uint endCol, bool blockwise );
 
-    bool insertLine ( uint line, const QString &s );
+    bool insertLine ( uint line, const TQString &s );
     bool removeLine ( uint line );
 
     uint numLines() const;
@@ -195,8 +195,8 @@ class KateDocument : public Kate::Document,
 
   signals:
     void textChanged ();
-    void charactersInteractivelyInserted(int ,int ,const QString&);
-    void charactersSemiInteractivelyInserted(int ,int ,const QString&);
+    void charactersInteractivelyInserted(int ,int ,const TQString&);
+    void charactersSemiInteractivelyInserted(int ,int ,const TQString&);
     void backspacePressed();
 
   public:
@@ -228,7 +228,7 @@ class KateDocument : public Kate::Document,
      * @param s string to be inserted
      * @return true on success
      */
-    bool editInsertText ( uint line, uint col, const QString &s );
+    bool editInsertText ( uint line, uint col, const TQString &s );
     /**
      * Remove a string in the given line/column
      * @param line line number
@@ -275,7 +275,7 @@ class KateDocument : public Kate::Document,
      * @param s string to insert
      * @return true on success
      */
-    bool editInsertLine ( uint line, const QString &s );
+    bool editInsertLine ( uint line, const TQString &s );
     /**
      * Remove a line
      * @param line line number
@@ -333,7 +333,7 @@ class KateDocument : public Kate::Document,
     void undoCancel();
 
   private:
-    void editAddUndo (KateUndoGroup::UndoType type, uint line, uint col, uint len, const QString &text);
+    void editAddUndo (KateUndoGroup::UndoType type, uint line, uint col, uint len, const TQString &text);
 
     uint editSessionNumber;
     bool editIsRunning;
@@ -360,16 +360,16 @@ class KateDocument : public Kate::Document,
     friend class KateTemplateHandler;
 
   private:
-    QPtrList<KateSuperCursor> m_superCursors;
+    TQPtrList<KateSuperCursor> m_superCursors;
 
     //
     // some internals for undo/redo
     //
-    QPtrList<KateUndoGroup> undoItems;
-    QPtrList<KateUndoGroup> redoItems;
+    TQPtrList<KateUndoGroup> undoItems;
+    TQPtrList<KateUndoGroup> redoItems;
     bool m_undoDontMerge; //create a setter later on and remove the friend declaration
     bool m_undoIgnoreCancel;
-    QTimer* m_undoMergeTimer;
+    TQTimer* m_undoMergeTimer;
     // these two variables are for resetting the document to
     // non-modified if all changes have been undone...
     KateUndoGroup* lastUndoGroupWhenSaved;
@@ -389,20 +389,20 @@ class KateDocument : public Kate::Document,
   //
   public slots:
     KTextEditor::Cursor *createCursor ();
-    QPtrList<KTextEditor::Cursor> cursors () const;
+    TQPtrList<KTextEditor::Cursor> cursors () const;
 
   private:
-    QPtrList<KTextEditor::Cursor> myCursors;
+    TQPtrList<KTextEditor::Cursor> myCursors;
 
   //
   // KTextEditor::SearchInterface stuff
   //
   public slots:
     bool searchText (unsigned int startLine, unsigned int startCol,
-        const QString &text, unsigned int *foundAtLine, unsigned int *foundAtCol,
+        const TQString &text, unsigned int *foundAtLine, unsigned int *foundAtCol,
         unsigned int *matchLen, bool casesensitive = true, bool backwards = false);
     bool searchText (unsigned int startLine, unsigned int startCol,
-        const QRegExp &regexp, unsigned int *foundAtLine, unsigned int *foundAtCol,
+        const TQRegExp &regexp, unsigned int *foundAtLine, unsigned int *foundAtCol,
         unsigned int *matchLen, bool backwards = false);
 
   //
@@ -412,8 +412,8 @@ class KateDocument : public Kate::Document,
     uint hlMode ();
     bool setHlMode (uint mode);
     uint hlModeCount ();
-    QString hlModeName (uint mode);
-    QString hlModeSectionName (uint mode);
+    TQString hlModeName (uint mode);
+    TQString hlModeSectionName (uint mode);
 
   public:
     void bufferHlChanged ();
@@ -457,14 +457,14 @@ class KateDocument : public Kate::Document,
     void addMark( uint line, uint markType );
     void removeMark( uint line, uint markType );
 
-    QPtrList<KTextEditor::Mark> marks();
+    TQPtrList<KTextEditor::Mark> marks();
     void clearMarks();
 
-    void setPixmap( MarkInterface::MarkTypes, const QPixmap& );
-    void setDescription( MarkInterface::MarkTypes, const QString& );
-    QString markDescription( MarkInterface::MarkTypes );
-    QPixmap *markPixmap( MarkInterface::MarkTypes );
-    QColor markColor( MarkInterface::MarkTypes );
+    void setPixmap( MarkInterface::MarkTypes, const TQPixmap& );
+    void setDescription( MarkInterface::MarkTypes, const TQString& );
+    TQString markDescription( MarkInterface::MarkTypes );
+    TQPixmap *markPixmap( MarkInterface::MarkTypes );
+    TQColor markColor( MarkInterface::MarkTypes );
 
     void setMarksUserChangable( uint markMask );
     uint editableMarks();
@@ -474,9 +474,9 @@ class KateDocument : public Kate::Document,
     void markChanged( KTextEditor::Mark, KTextEditor::MarkInterfaceExtension::MarkChangeAction );
 
   private:
-    QIntDict<KTextEditor::Mark> m_marks;
-    QIntDict<QPixmap>           m_markPixmaps;
-    QIntDict<QString>           m_markDescriptions;
+    TQIntDict<KTextEditor::Mark> m_marks;
+    TQIntDict<TQPixmap>           m_markPixmaps;
+    TQIntDict<TQString>           m_markDescriptions;
     uint                        m_editableMarks;
 
   //
@@ -499,7 +499,7 @@ class KateDocument : public Kate::Document,
      *
      * @since Kate 2.3
      */
-    QString mimeType();
+    TQString mimeType();
 
     /**
      * @return the calculated size in bytes that the document would have when saved to
@@ -517,7 +517,7 @@ class KateDocument : public Kate::Document,
      * @since Kate 2.3
      * @todo implement this (it returns "UNKNOWN")
      */
-    QString niceFileSize();
+    TQString niceFileSize();
 
     /**
      * @return a pointer to the KMimeType for this document, found by analyzing the
@@ -533,13 +533,13 @@ class KateDocument : public Kate::Document,
   // KTextEditor::VariableInterface
   //
   public:
-    QString variable( const QString &name ) const;
+    TQString variable( const TQString &name ) const;
 
   signals:
-    void variableChanged( const QString &, const QString & );
+    void variableChanged( const TQString &, const TQString & );
 
   private:
-    QMap<QString, QString> m_storedVariables;
+    TQMap<TQString, TQString> m_storedVariables;
 
   //
   // KParts::ReadWrite stuff
@@ -565,7 +565,7 @@ class KateDocument : public Kate::Document,
     void setModified( bool m );
 
   private slots:
-    void slotDataKate ( KIO::Job* kio_job, const QByteArray &data );
+    void slotDataKate ( KIO::Job* kio_job, const TQByteArray &data );
     void slotFinishedKate ( KIO::Job * job );
 
   private:
@@ -574,30 +574,30 @@ class KateDocument : public Kate::Document,
     void activateDirWatch ();
     void deactivateDirWatch ();
 
-    QString m_dirWatchFile;
+    TQString m_dirWatchFile;
 
   //
   // Kate::Document stuff, this is all deprecated!!!!!!!!!!
   //
   public:
-    Kate::ConfigPage *colorConfigPage (QWidget *) { return 0; }
-    Kate::ConfigPage *fontConfigPage (QWidget *) { return 0; }
-    Kate::ConfigPage *indentConfigPage (QWidget *) { return 0; }
-    Kate::ConfigPage *selectConfigPage (QWidget *) { return 0; }
-    Kate::ConfigPage *editConfigPage (QWidget *) { return 0; }
-    Kate::ConfigPage *keysConfigPage (QWidget *) { return 0; }
-    Kate::ConfigPage *hlConfigPage (QWidget *) { return 0; }
-    Kate::ConfigPage *viewDefaultsConfigPage (QWidget *) { return 0; }
-    Kate::ConfigPage *saveConfigPage( QWidget * ) { return 0; }
+    Kate::ConfigPage *colorConfigPage (TQWidget *) { return 0; }
+    Kate::ConfigPage *fontConfigPage (TQWidget *) { return 0; }
+    Kate::ConfigPage *indentConfigPage (TQWidget *) { return 0; }
+    Kate::ConfigPage *selectConfigPage (TQWidget *) { return 0; }
+    Kate::ConfigPage *editConfigPage (TQWidget *) { return 0; }
+    Kate::ConfigPage *keysConfigPage (TQWidget *) { return 0; }
+    Kate::ConfigPage *hlConfigPage (TQWidget *) { return 0; }
+    Kate::ConfigPage *viewDefaultsConfigPage (TQWidget *) { return 0; }
+    Kate::ConfigPage *saveConfigPage( TQWidget * ) { return 0; }
 
-    Kate::ActionMenu *hlActionMenu (const QString& /* text */, QObject* /* parent */ = 0, const char* /* name */ = 0) { return 0; }
-    Kate::ActionMenu *exportActionMenu (const QString& /* text */, QObject* /* parent */ = 0, const char* /* name */ = 0) { return 0; }
+    Kate::ActionMenu *hlActionMenu (const TQString& /* text */, TQObject* /* parent */ = 0, const char* /* name */ = 0) { return 0; }
+    Kate::ActionMenu *exportActionMenu (const TQString& /* text */, TQObject* /* parent */ = 0, const char* /* name */ = 0) { return 0; }
 
   public:
     /**
      * Type chars in a view
      */
-    bool typeChars ( KateView *type, const QString &chars );
+    bool typeChars ( KateView *type, const TQString &chars );
 
     /**
      * gets the last line number (numLines() -1)
@@ -620,7 +620,7 @@ class KateDocument : public Kate::Document,
 
   //export feature, obsolute
   public slots:
-     void exportAs(const QString&) { };
+     void exportAs(const TQString&) { };
 
   signals:
     void modifiedChanged ();
@@ -673,8 +673,8 @@ class KateDocument : public Kate::Document,
     void optimizeLeadingSpace( uint line, int flags, int change );
     void replaceWithOptimizedSpace( uint line, uint upto_column, uint space, int flags );
 
-    bool removeStringFromBegining(int line, QString &str);
-    bool removeStringFromEnd(int line, QString &str);
+    bool removeStringFromBegining(int line, TQString &str);
+    bool removeStringFromEnd(int line, TQString &str);
 
     /**
       Find the position (line and col) of the next char
@@ -743,7 +743,7 @@ class KateDocument : public Kate::Document,
     bool removeStartLineCommentFromSelection( KateView *view, int attrib=0 );
 
   public:
-    QString getWord( const KateTextCursor& cursor );
+    TQString getWord( const KateTextCursor& cursor );
 
   public:
     void tagAll();
@@ -756,9 +756,9 @@ class KateDocument : public Kate::Document,
 
   public:
 
-    QString docName () {return m_docName;};
+    TQString docName () {return m_docName;};
 
-    void setDocName (QString docName);
+    void setDocName (TQString docName);
 
     void lineInfo (KateLineInfo *info, unsigned int line);
 
@@ -796,8 +796,8 @@ class KateDocument : public Kate::Document,
                     // -1: ignore once, 0: false, 1: true
 
   public slots:
-    void setEncoding (const QString &e);
-    QString encoding() const;
+    void setEncoding (const TQString &e);
+    TQString encoding() const;
 
   public slots:
     void setWordWrap (bool on);
@@ -861,9 +861,9 @@ class KateDocument : public Kate::Document,
     void textRemoved();
 
   private slots:
-    void slotModOnHdDirty (const QString &path);
-    void slotModOnHdCreated (const QString &path);
-    void slotModOnHdDeleted (const QString &path);
+    void slotModOnHdDirty (const TQString &path);
+    void slotModOnHdCreated (const TQString &path);
+    void slotModOnHdDeleted (const TQString &path);
 
   private:
     /**
@@ -875,14 +875,14 @@ class KateDocument : public Kate::Document,
      *
      * @since 3.3
      */
-    bool createDigest ( QCString &result );
+    bool createDigest ( TQCString &result );
 
     /**
      * create a string for the modonhd warnings, giving the reason.
      *
      * @since 3.3
      */
-    QString reasonedMOHString() const;
+    TQString reasonedMOHString() const;
 
     /**
      * Removes all trailing whitespace form @p line, if
@@ -914,9 +914,9 @@ class KateDocument : public Kate::Document,
 
     bool m_modOnHd;
     unsigned char m_modOnHdReason;
-    QCString m_digest; // MD5 digest, updated on load/save
+    TQCString m_digest; // MD5 digest, updated on load/save
 
-    QString m_docName;
+    TQString m_docName;
     int m_docNameNumber;
 
     // file type !!!
@@ -938,7 +938,7 @@ class KateDocument : public Kate::Document,
 
     static bool checkOverwrite( KURL u );
 
-    static void setDefaultEncoding (const QString &encoding);
+    static void setDefaultEncoding (const TQString &encoding);
 
     void setEncodingSticky( bool e ) { m_encodingSticky = e; }
 
@@ -973,36 +973,36 @@ class KateDocument : public Kate::Document,
       Reads and applies the variables in a single line
       TODO registered variables gets saved in a [map]
     */
-    void readVariableLine( QString t, bool onlyViewAndRenderer = false );
+    void readVariableLine( TQString t, bool onlyViewAndRenderer = false );
     /**
       Sets a view variable in all the views.
     */
-    void setViewVariable( QString var, QString val );
+    void setViewVariable( TQString var, TQString val );
     /**
       @return weather a string value could be converted
       to a bool value as supported.
       The value is put in *result.
     */
-    static bool checkBoolValue( QString value, bool *result );
+    static bool checkBoolValue( TQString value, bool *result );
     /**
       @return weather a string value could be converted
       to a integer value.
       The value is put in *result.
     */
-    static bool checkIntValue( QString value, int *result );
+    static bool checkIntValue( TQString value, int *result );
     /**
-      Feeds value into @p col using QColor::setNamedColor() and returns
+      Feeds value into @p col using TQColor::setNamedColor() and returns
       wheather the color is valid
     */
-    static bool checkColorValue( QString value, QColor &col );
+    static bool checkColorValue( TQString value, TQColor &col );
 
     /**
      * helper regex to capture the document variables
      */
-    static QRegExp kvLine;
-    static QRegExp kvLineWildcard;
-    static QRegExp kvLineMime;
-    static QRegExp kvVar;
+    static TQRegExp kvLine;
+    static TQRegExp kvLineWildcard;
+    static TQRegExp kvLineMime;
+    static TQRegExp kvVar;
 
     KIO::TransferJob *m_job;
     KTempFile *m_tempFile;
@@ -1014,7 +1014,7 @@ class KateDocument : public Kate::Document,
       bool invokeTabInterceptor(KKey);
 
   protected:
-      virtual bool insertTemplateTextImplementation ( uint line, uint column, const QString &templateString, const QMap<QString,QString> &initialValues, QWidget *parentWindow=0 );
+      virtual bool insertTemplateTextImplementation ( uint line, uint column, const TQString &templateString, const TQMap<TQString,TQString> &initialValues, TQWidget *parentWindow=0 );
       KateKeyInterceptorFunctor *m_tabInterceptor;
 
   protected slots:
@@ -1030,7 +1030,7 @@ class KateDocument : public Kate::Document,
     bool setSelection ( uint startLine, uint startCol, uint endLine, uint endCol );
     bool clearSelection ();
     bool hasSelection () const;
-    QString selection () const;
+    TQString selection () const;
     bool removeSelectedText ();
     bool selectAll();
 

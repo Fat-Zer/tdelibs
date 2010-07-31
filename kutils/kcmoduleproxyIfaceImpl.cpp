@@ -16,8 +16,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <qcstring.h>
-#include <qdatastream.h>
+#include <tqcstring.h>
+#include <tqdatastream.h>
 
 #include <dcopclient.h>
 
@@ -28,17 +28,17 @@
 #include "kcmoduleproxyIfaceImpl.h"
 
 
-#include <qmessagebox.h>
+#include <tqmessagebox.h>
 
-KCModuleProxyIfaceImpl::KCModuleProxyIfaceImpl( const QCString& name, 
+KCModuleProxyIfaceImpl::KCModuleProxyIfaceImpl( const TQCString& name, 
 		KCModuleProxy* const client )
-	: DCOPObject( name ), QObject( 0, name ),
+	: DCOPObject( name ), TQObject( 0, name ),
 		p( const_cast<KCModuleProxy *>( client ))
 { 
-	connect( p, SIGNAL( changed(bool)), 
-			SLOT( changedRelay(bool)));
-	connect( p, SIGNAL( quickHelpChanged()), 
-			SLOT( quickHelpRelay()));
+	connect( p, TQT_SIGNAL( changed(bool)), 
+			TQT_SLOT( changedRelay(bool)));
+	connect( p, TQT_SIGNAL( quickHelpChanged()), 
+			TQT_SLOT( quickHelpRelay()));
 }
 
 void KCModuleProxyIfaceImpl::save()
@@ -59,12 +59,12 @@ void KCModuleProxyIfaceImpl::defaults()
 	p->defaults();
 }
 
-QString KCModuleProxyIfaceImpl::applicationName()
+TQString KCModuleProxyIfaceImpl::applicationName()
 {
 	return kapp->caption();
 }
 
-QString KCModuleProxyIfaceImpl::quickHelp()
+TQString KCModuleProxyIfaceImpl::quickHelp()
 {
 	return p->quickHelp();
 }
@@ -76,15 +76,15 @@ bool KCModuleProxyIfaceImpl::changed()
 
 void KCModuleProxyIfaceImpl::changedRelay( bool c )
 {
-	QByteArray data;
-	QDataStream stream(data, IO_WriteOnly);
+	TQByteArray data;
+	TQDataStream stream(data, IO_WriteOnly);
 	stream << c;
 	emitDCOPSignal( "changed(bool)", data );
 }
 
 void KCModuleProxyIfaceImpl::quickHelpRelay()
 {
-	QByteArray data;
+	TQByteArray data;
 	emitDCOPSignal( "quickHelpChanged()", data );
 }
 
@@ -95,8 +95,8 @@ void KCModuleProxyIfaceImpl::quickHelpRelay()
 
 /***************************************************************/
 KCModuleProxyRootCommunicatorImpl::KCModuleProxyRootCommunicatorImpl
-		( const QCString& name, KCModuleProxy* const client )
-	: DCOPObject( name ), QObject( 0, name ), 
+		( const TQCString& name, KCModuleProxy* const client )
+	: DCOPObject( name ), TQObject( 0, name ), 
 		p( const_cast<KCModuleProxy *>( client ))
 { 
 	/*

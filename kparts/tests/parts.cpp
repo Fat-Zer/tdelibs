@@ -3,13 +3,13 @@
 
 #include "parts.h"
 
-#include <qcheckbox.h>
-#include <qfile.h>
-#include <qdir.h>
-#include <qtextstream.h>
-#include <qmultilineedit.h>
-#include <qlineedit.h>
-#include <qvbox.h>
+#include <tqcheckbox.h>
+#include <tqfile.h>
+#include <tqdir.h>
+#include <tqtextstream.h>
+#include <tqmultilineedit.h>
+#include <tqlineedit.h>
+#include <tqvbox.h>
 
 #include <kiconloader.h>
 #include <kapplication.h>
@@ -18,12 +18,12 @@
 #include <kaction.h>
 #include <klocale.h>
 
-Part1::Part1( QObject *parent, QWidget * parentWidget )
+Part1::Part1( TQObject *parent, TQWidget * parentWidget )
  : KParts::ReadOnlyPart( parent, "Part1" )
 {
   m_instance = new KInstance( "kpartstestpart" );
   setInstance( m_instance );
-  m_edit = new QMultiLineEdit( parentWidget );
+  m_edit = new TQMultiLineEdit( parentWidget );
   setWidget( m_edit );
   setXMLFile( "kpartstest_part1.rc" );
 
@@ -37,12 +37,12 @@ Part1::~Part1()
 
 bool Part1::openFile()
 {
-  kdDebug() << "Part1: opening " << QFile::encodeName(m_file) << endl;
+  kdDebug() << "Part1: opening " << TQFile::encodeName(m_file) << endl;
   // Hehe this is from a tutorial I did some time ago :)
-  QFile f(m_file);
-  QString s;
+  TQFile f(m_file);
+  TQString s;
   if ( f.open(IO_ReadOnly) ) {
-    QTextStream t( &f );
+    TQTextStream t( &f );
     while ( !t.eof() ) {
       s += t.readLine() + "\n";
     }
@@ -56,22 +56,22 @@ bool Part1::openFile()
   return true;
 }
 
-Part2::Part2( QObject *parent, QWidget * parentWidget )
+Part2::Part2( TQObject *parent, TQWidget * parentWidget )
  : KParts::Part( parent, "Part2" )
 {
   m_instance = new KInstance( "part2" );
   setInstance( m_instance );
-  QWidget * w = new QWidget( parentWidget, "Part2Widget" );
+  TQWidget * w = new TQWidget( parentWidget, "Part2Widget" );
   setWidget( w );
 
-  QCheckBox * cb = new QCheckBox( "something", w );
+  TQCheckBox * cb = new TQCheckBox( "something", w );
 
-  QLineEdit * l = new QLineEdit( "something", widget() );
+  TQLineEdit * l = new TQLineEdit( "something", widget() );
   l->move(0,50);
   // Since the main widget is a dummy one, we HAVE to set
   // strong focus for it, otherwise we get the
   // the famous activating-file-menu-switches-part bug.
-  w->setFocusPolicy( QWidget::ClickFocus );
+  w->setFocusPolicy( TQWidget::ClickFocus );
 
   // setXMLFile( ... ); // no actions currently
 }

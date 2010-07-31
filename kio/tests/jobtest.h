@@ -20,8 +20,8 @@
 #ifndef JOBTEST_H
 #define JOBTEST_H
 
-#include <qstring.h>
-#include <qobject.h>
+#include <tqstring.h>
+#include <tqobject.h>
 #include <kio/job.h>
 
 class JobTest : public QObject
@@ -56,24 +56,24 @@ public:
 private slots:
     void slotEntries( KIO::Job*, const KIO::UDSEntryList& lst );
     void slotGetResult( KIO::Job* );
-    void slotMimetype(KIO::Job*,const QString&);
+    void slotMimetype(KIO::Job*,const TQString&);
 
 private:
-    QString homeTmpDir() const;
-    QString otherTmpDir() const;
-    QString realSystemPath() const;
+    TQString homeTmpDir() const;
+    TQString otherTmpDir() const;
+    TQString realSystemPath() const;
     KURL systemTmpDir() const;
     enum { AlreadyExists = 1 };
-    void copyLocalFile( const QString& src, const QString& dest );
-    void copyLocalDirectory( const QString& src, const QString& dest, int flags = 0 );
-    void moveLocalFile( const QString& src, const QString& dest );
-    void moveLocalDirectory( const QString& src, const QString& dest );
+    void copyLocalFile( const TQString& src, const TQString& dest );
+    void copyLocalDirectory( const TQString& src, const TQString& dest, int flags = 0 );
+    void moveLocalFile( const TQString& src, const TQString& dest );
+    void moveLocalDirectory( const TQString& src, const TQString& dest );
     void copyFileToSystem( bool resolve_local_urls );
 
     int m_result;
-    QByteArray m_data;
-    QStringList m_names;
-    QString m_mimetype;
+    TQByteArray m_data;
+    TQStringList m_names;
+    TQString m_mimetype;
 };
 
 #endif

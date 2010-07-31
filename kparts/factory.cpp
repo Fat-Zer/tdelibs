@@ -21,7 +21,7 @@
 #include "factory.h"
 #include "part.h"
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <klocale.h>
 #include <kglobal.h>
@@ -30,7 +30,7 @@
 
 using namespace KParts;
 
-Factory::Factory( QObject *parent, const char *name )
+Factory::Factory( TQObject *parent, const char *name )
 : KLibFactory( parent, name )
 {
 }
@@ -39,7 +39,7 @@ Factory::~Factory()
 {
 }
 
-Part *Factory::createPart( QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name, const char *classname, const QStringList &args )
+Part *Factory::createPart( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *classname, const TQStringList &args )
 {
     Part* part = createPartObject( parentWidget, widgetName, parent, name, classname, args );
     if ( part )
@@ -55,7 +55,7 @@ const KInstance *Factory::partInstance()
     return params.instance;
 }
 
-const KInstance *Factory::partInstanceFromLibrary( const QCString &libraryName )
+const KInstance *Factory::partInstanceFromLibrary( const TQCString &libraryName )
 {
     KLibrary *library = KLibLoader::self()->library( libraryName );
     if ( !library )
@@ -69,14 +69,14 @@ const KInstance *Factory::partInstanceFromLibrary( const QCString &libraryName )
     return pfactory->partInstance();
 }
 
-Part *Factory::createPartObject( QWidget *, const char *, QObject *, const char *, const char *, const QStringList & )
+Part *Factory::createPartObject( TQWidget *, const char *, TQObject *, const char *, const char *, const TQStringList & )
 {
     return 0;
 }
 
-QObject *Factory::createObject( QObject *parent, const char *name, const char *classname, const QStringList &args )
+TQObject *Factory::createObject( TQObject *parent, const char *name, const char *classname, const TQStringList &args )
 {
   assert( !parent || parent->isWidgetType() );
-  return createPart( static_cast<QWidget *>( parent ), name, parent, name, classname, args );
+  return createPart( static_cast<TQWidget *>( parent ), name, parent, name, classname, args );
 }
 #include "factory.moc"

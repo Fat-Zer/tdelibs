@@ -24,14 +24,14 @@
 #ifndef KTOOLBAR_H
 #define KTOOLBAR_H
 
-#include <qtoolbar.h>
-#include <qmainwindow.h>
-#include <qcombobox.h>
-#include <qmap.h>
-#include <qptrlist.h>
-#include <qguardedptr.h>
-#include <qframe.h>
-#include <qiconset.h>
+#include <tqtoolbar.h>
+#include <tqmainwindow.h>
+#include <tqcombobox.h>
+#include <tqmap.h>
+#include <tqptrlist.h>
+#include <tqguardedptr.h>
+#include <tqframe.h>
+#include <tqiconset.h>
 
 #include <kglobal.h>
 
@@ -59,17 +59,17 @@ class KDEUI_EXPORT KToolBarSeparator : public QFrame
 {
     Q_OBJECT
 public:
-    KToolBarSeparator( Orientation, bool l, QToolBar *parent, const char* name=0 );
+    KToolBarSeparator( Orientation, bool l, TQToolBar *parent, const char* name=0 );
 
-    QSize sizeHint() const;
+    TQSize sizeHint() const;
     Orientation orientation() const { return orient; }
-    QSizePolicy sizePolicy() const;
+    TQSizePolicy sizePolicy() const;
     bool showLine() const { return line; }
 public slots:
    void setOrientation( Orientation );
 protected:
-    void styleChange( QStyle& );
-    void drawContents( QPainter* );
+    void styleChange( TQStyle& );
+    void drawContents( TQPainter* );
 private:
     Orientation orient;
     bool line;
@@ -108,7 +108,7 @@ class KDEUI_EXPORT KToolBar : public QToolBar
     Q_PROPERTY( BarPosition barPos READ barPos WRITE setBarPos )
     Q_PROPERTY( bool fullSize READ fullSize WRITE setFullSize )
     Q_PROPERTY( int iconSize READ iconSize WRITE setIconSize )
-    Q_PROPERTY( QString text READ text WRITE setText )
+    Q_PROPERTY( TQString text READ text WRITE setText )
 
 public:
     enum IconText{IconOnly = 0, IconTextRight, TextOnly, IconTextBottom};
@@ -125,7 +125,7 @@ public:
   /**
    * Normal constructor.
    * This constructor is used by the XML-GUI. If you use it, you need
-   * to call QMainWindow::addToolBar to specify the position of the toolbar.
+   * to call TQMainWindow::addToolBar to specify the position of the toolbar.
    * So it's simpler to use the other constructor.
    *
    * The toolbar will read in various global config settings for
@@ -139,7 +139,7 @@ public:
    * @param honorStyle  If true, then global settings for IconSize and IconText will be honored
    * @param readConfig  whether to apply the configuration (global and application-specific)
    */
-    KToolBar( QWidget *parent, const char *name = 0, bool honorStyle = false, bool readConfig = true );
+    KToolBar( TQWidget *parent, const char *name = 0, bool honorStyle = false, bool readConfig = true );
 
   /**
    * Constructor for non-XML-GUI applications.
@@ -150,13 +150,13 @@ public:
    * true.  All other toolbars will be IconOnly and use Medium icons.
    *
    * @param parentWindow The window that should be the parent of this toolbar
-   * @param dock        The position of the toolbar. Usually QMainWindow::Top.
+   * @param dock        The position of the toolbar. Usually TQMainWindow::Top.
    * @param newLine     If true, start a new line in the dock for this toolbar.
    * @param name        The standard internal name
    * @param honorStyle  If true, then global settings for IconSize and IconText will be honored
    * @param readConfig  whether to apply the configuration (global and application-specific)
    */
-    KToolBar( QMainWindow *parentWindow, QMainWindow::ToolBarDock dock /*= QMainWindow::Top*/, bool newLine = false,
+    KToolBar( TQMainWindow *parentWindow, TQMainWindow::ToolBarDock dock /*= TQMainWindow::Top*/, bool newLine = false,
               const char *name = 0, bool honorStyle = false, bool readConfig = true );
 
   /**
@@ -174,7 +174,7 @@ public:
    * @param honorStyle  If true, then global settings for IconSize and IconText will be honored
    * @param readConfig  whether to apply the configuration (global and application-specific)
    */
-    KToolBar( QMainWindow *parentWindow, QWidget *dock, bool newLine = false,
+    KToolBar( TQMainWindow *parentWindow, TQWidget *dock, bool newLine = false,
               const char *name = 0, bool honorStyle = false, bool readConfig = true );
 
   /**
@@ -203,8 +203,8 @@ public:
    *
    * @return The item index.
    */
-    int insertButton(const QString& icon, int id, bool enabled = true,
-		     const QString& text = QString::null, int index=-1,
+    int insertButton(const TQString& icon, int id, bool enabled = true,
+		     const TQString& text = TQString::null, int index=-1,
 		     KInstance *_instance = KGlobal::instance());
 
    /**
@@ -225,9 +225,9 @@ public:
    *
    * @return The item index.
    */
-    int insertButton(const QString& icon, int id, const char *signal,
-		     const QObject *receiver, const char *slot,
-		     bool enabled = true, const QString& text = QString::null,
+    int insertButton(const TQString& icon, int id, const char *signal,
+		     const TQObject *receiver, const char *slot,
+		     bool enabled = true, const TQString& text = TQString::null,
 		     int index=-1, KInstance *_instance = KGlobal::instance() );
 
   /**
@@ -254,8 +254,8 @@ public:
    *
    * @return The item index.
    */
-    int insertButton(const QPixmap& pixmap, int id, bool enabled = true,
-		     const QString& text = QString::null, int index=-1 );
+    int insertButton(const TQPixmap& pixmap, int id, bool enabled = true,
+		     const TQString& text = TQString::null, int index=-1 );
 
   /**
    * This is the same as above, but with specified signals and
@@ -274,9 +274,9 @@ public:
    *
    * @return The item index.
    */
-    int insertButton(const QPixmap& pixmap, int id, const char *signal,
-		     const QObject *receiver, const char *slot,
-		     bool enabled = true, const QString& text = QString::null,
+    int insertButton(const TQPixmap& pixmap, int id, const char *signal,
+		     const TQObject *receiver, const char *slot,
+		     bool enabled = true, const TQString& text = TQString::null,
 		     int index=-1 );
 
   /**
@@ -288,11 +288,11 @@ public:
    * KButton::clicked() or KButton::doubleClicked() are @p not
    * emmited by
    * this button (see setDelayedPopup() for that).
-   * You can add custom popups which inherit QPopupMenu to get popups
+   * You can add custom popups which inherit TQPopupMenu to get popups
    * with tables, drawings etc. Just don't fiddle with events there.
    */
-    int insertButton(const QString& icon, int id, QPopupMenu *popup,
-		     bool enabled, const QString&_text, int index=-1);
+    int insertButton(const TQString& icon, int id, TQPopupMenu *popup,
+		     bool enabled, const TQString&_text, int index=-1);
 
   /**
    * Inserts a button with popupmenu.
@@ -303,11 +303,11 @@ public:
    * KButton::clicked() or KButton::doubleClicked() are @p not
    * emmited by
    * this button (see setDelayedPopup() for that).
-   * You can add custom popups which inherit QPopupMenu to get popups
+   * You can add custom popups which inherit TQPopupMenu to get popups
    * with tables, drawings etc. Just don't fiddle with events there.
    */
-    int insertButton(const QPixmap& pixmap, int id, QPopupMenu *popup,
-		     bool enabled, const QString&_text, int index=-1);
+    int insertButton(const TQPixmap& pixmap, int id, TQPopupMenu *popup,
+		     bool enabled, const TQString&_text, int index=-1);
 
   /**
    * Inserts a KLineEdit. You have to specify signals and slots to
@@ -321,11 +321,11 @@ public:
    * @see KLineEdit
    * @return Item index.
    */
-    int insertLined (const QString& text, int id,
+    int insertLined (const TQString& text, int id,
 		     const char *signal,
-		     const QObject *receiver, const char *slot,
+		     const TQObject *receiver, const char *slot,
 		     bool enabled = true,
-		     const QString& toolTipText = QString::null,
+		     const TQString& toolTipText = TQString::null,
 		     int size = 70, int index =-1);
 
   /**
@@ -342,12 +342,12 @@ public:
    * @see KComboBox
    * @return Item index.
    */
-    int insertCombo (const QStringList &list, int id, bool writable,
-		     const char *signal, const QObject *receiver,
+    int insertCombo (const TQStringList &list, int id, bool writable,
+		     const char *signal, const TQObject *receiver,
 		     const char *slot, bool enabled=true,
-		     const QString& tooltiptext=QString::null,
+		     const TQString& tooltiptext=TQString::null,
 		     int size=70, int index=-1,
-		     QComboBox::Policy policy = QComboBox::AtBottom);
+		     TQComboBox::Policy policy = TQComboBox::AtBottom);
 
   /**
    * Insert a KComboBox with text.
@@ -358,12 +358,12 @@ public:
    * @see KComboBox
    * @return Item index.
    */
-    int insertCombo (const QString& text, int id, bool writable,
-		     const char *signal, QObject *receiver,
+    int insertCombo (const TQString& text, int id, bool writable,
+		     const char *signal, TQObject *receiver,
 		     const char *slot, bool enabled=true,
-		     const QString& tooltiptext=QString::null,
+		     const TQString& tooltiptext=TQString::null,
 		     int size=70, int index=-1,
-		     QComboBox::Policy policy = QComboBox::AtBottom);
+		     TQComboBox::Policy policy = TQComboBox::AtBottom);
 
     /**
      * Inserts a separator into the toolbar with the given @p id.
@@ -381,13 +381,13 @@ public:
    * Inserts a user-defined widget.  The widget @p must have this
    * toolbar as its parent.
    *
-   * Widget must have a QWidget for base class.  Widget can be
+   * Widget must have a TQWidget for base class.  Widget can be
    * autosized to full width. If you forget about it, you can get a
    * pointer to this widget with getWidget().
    * @see setItemAutoSized()
    * @return Item index.
    */
-    int insertWidget(int id, int width, QWidget *_widget, int index=-1);
+    int insertWidget(int id, int width, TQWidget *_widget, int index=-1);
 
   /**
    * Inserts an animated widget.  A KAnimWidget will be created
@@ -405,8 +405,8 @@ public:
    *
    * @return The item index
    */
-    int insertAnimatedWidget(int id, QObject *receiver, const char *slot,
-			     const QString& icons, int index = -1);
+    int insertAnimatedWidget(int id, TQObject *receiver, const char *slot,
+			     const TQString& icons, int index = -1);
 
     /**
    * This will return a pointer to the animated widget with the
@@ -425,7 +425,7 @@ public:
    * know the @p id of particular item. Nothing happens if you forget @p id.
    */
     void addConnection (int id, const char *signal,
-                        const QObject *receiver, const char *slot);
+                        const TQObject *receiver, const char *slot);
   /**
    * Enables/disables item.
    */
@@ -436,21 +436,21 @@ public:
    *
    * Can be used while button is visible.
    */
-    void setButtonIcon( int id, const QString& _icon );
+    void setButtonIcon( int id, const TQString& _icon );
 
   /**
    * Sets button pixmap.
    *
    * Can be used while button is visible.
    */
-    void setButtonPixmap( int id, const QPixmap& _pixmap );
+    void setButtonPixmap( int id, const TQPixmap& _pixmap );
 
   /**
-   * Sets a button icon from a QIconSet.
+   * Sets a button icon from a TQIconSet.
    *
    * Can be used while button is visible.
    */
-    void setButtonIconSet( int id, const QIconSet& iconset );
+    void setButtonIconSet( int id, const TQIconSet& iconset );
 
   /**
    * Sets a delayed popup for a button.
@@ -464,8 +464,8 @@ public:
    * You will insert a normal button with connection (or use signals from
    * toolbar):
    * \code
-   * bar->insertButton(icon, id, SIGNAL(clicked ()), this,
-   *                   SLOT (slotClick()), true, "click or wait for popup");
+   * bar->insertButton(icon, id, TQT_SIGNAL(clicked ()), this,
+   *                   TQT_SLOT (slotClick()), true, "click or wait for popup");
    * \endcode
    * And then add a delayed popup:
    * \code
@@ -474,11 +474,11 @@ public:
    *
    * Don't add delayed popups to buttons which have normal popups.
    *
-   * You may add popups which are derived from QPopupMenu. You may
+   * You may add popups which are derived from TQPopupMenu. You may
    * add popups that are already in the menu bar or are submenus of
    * other popups.
    */
-    void setDelayedPopup (int id , QPopupMenu *_popup, bool toggle = false);
+    void setDelayedPopup (int id , TQPopupMenu *_popup, bool toggle = false);
 
   /**
    * Turns a button into an autorepeat button.
@@ -490,7 +490,7 @@ public:
    * When the user presses this button, you will receive the signal clicked(),
    * and if the button is still pressed after some time,
    * you will receive more clicked() signals separated by regular
-   * intervals.  Since this uses QButton::setAutoRepeat() ,
+   * intervals.  Since this uses TQButton::setAutoRepeat() ,
    * I can't quantify 'some'.
    */
     void setAutoRepeat (int id, bool flag=true);
@@ -535,23 +535,23 @@ public:
    *
    * Cursor is set at end of text.
    */
-    void setLinedText (int id, const QString& text);
+    void setLinedText (int id, const TQString& text);
 
   /**
    * Returns the line editor text.
    * @return the line editor text.
    */
-    QString getLinedText (int id) const;
+    TQString getLinedText (int id) const;
 
   /**
    * Inserts @p text in combobox @p id at position @p index.
    */
-    void insertComboItem (int id, const QString& text, int index);
+    void insertComboItem (int id, const TQString& text, int index);
 
     /**
    * Inserts @p list in combobox @p id at position @p index.
    */
-    void insertComboList (int id, const QStringList &list, int index);
+    void insertComboList (int id, const TQStringList &list, int index);
 
   /**
    * Removes item @p index from combobox @p id.
@@ -568,7 +568,7 @@ public:
    *
    * @p index = -1 refers current item (one displayed in the button).
    */
-    void changeComboItem  (int id, const QString& text, int index=-1);
+    void changeComboItem  (int id, const TQString& text, int index=-1);
 
   /**
    * Clears the combobox @p id.
@@ -584,7 +584,7 @@ public:
    * @p index = -1 refers to current item.
    */
 
-    QString getComboItem (int id, int index=-1) const;
+    TQString getComboItem (int id, int index=-1) const;
 
     /**
    * Returns a pointer to the combobox with @p id.
@@ -609,7 +609,7 @@ public:
    * \endcode
    * That way you can get access to other public methods
    * that KLineEdit provides. KLineEdit is the same thing
-   * as QLineEdit plus completion signals.
+   * as TQLineEdit plus completion signals.
    */
     KLineEdit * getLined (int id);
 
@@ -642,11 +642,11 @@ public:
    * Wrong ids are not tested.
    * You can do with this whatever you want,
    * except change its height (hardcoded). If you change its width
-   * you will probably have to call QToolBar::updateRects(true)
+   * you will probably have to call TQToolBar::updateRects(true)
    * @see QWidget
    * @see updateRects()
    */
-    QWidget *getWidget (int id); // ### KDE4: make this const!
+    TQWidget *getWidget (int id); // ### KDE4: make this const!
 
     /**
    * Set item autosized.
@@ -790,7 +790,7 @@ public:
    * Titles are however not (yet)
    * visible. You can't change toolbar's title while it's floating.
    */
-    void setTitle (const QString& _title);
+    void setTitle (const TQString& _title);
 
   /**
    * Use setMovingEnabled(bool) instead.
@@ -903,15 +903,15 @@ public:
   /**
    * Save the toolbar settings to group @p configGroup in @p config.
    */
-    void saveSettings(KConfig *config, const QString &configGroup);
+    void saveSettings(KConfig *config, const TQString &configGroup);
 
   /**
    * Read the toolbar settings from group @p configGroup in @p config
    * and apply them. Even default settings are re-applied if @p force is set.
    */
-    void applySettings(KConfig *config, const QString &configGroup,bool force);
+    void applySettings(KConfig *config, const TQString &configGroup,bool force);
     // KDE4 merge with force=false
-    void applySettings(KConfig *config, const QString &configGroup);
+    void applySettings(KConfig *config, const TQString &configGroup);
 
   /*
    * Tell the toolbar what XML-GUI resource file it should use to save
@@ -924,7 +924,7 @@ public:
    * @param xml     The DOM document for the XML-GUI building
    * @internal
    */
-  //  void setXML(const QString& xmlfile, const QDomDocument& xml);
+  //  void setXML(const TQString& xmlfile, const TQDomDocument& xml);
 
     void setXMLGUIClient( KXMLGUIClient *client );
 
@@ -932,20 +932,20 @@ public:
    * Assign a (translated) text to this toolbar. This is used
    * for the tooltip on the handle, and when listing the toolbars.
    */
-    void setText( const QString & txt );
+    void setText( const TQString & txt );
 
   /**
    * Returns the toolbar's text.
    * @return the toolbar's text.
    */
-    QString text() const;
+    TQString text() const;
 
-    void setStretchableWidget( QWidget *w );
-    QSizePolicy sizePolicy() const;
+    void setStretchableWidget( TQWidget *w );
+    TQSizePolicy sizePolicy() const;
     bool highlight() const;
-    QSize sizeHint() const;
-    QSize minimumSizeHint() const;
-    QSize minimumSize() const;
+    TQSize sizeHint() const;
+    TQSize minimumSizeHint() const;
+    TQSize minimumSize() const;
 
     void hide();
     void show();
@@ -955,11 +955,11 @@ public:
     /**
      * Load state from an XML element, called by KXMLGUIBuilder
      */
-    void loadState( const QDomElement &e );
+    void loadState( const TQDomElement &e );
     /*
      * Save state into an XML element, called by KXMLGUIBuilder
      */
-    void saveState( QDomElement &e );
+    void saveState( TQDomElement &e );
 
     /**
      * @internal
@@ -979,7 +979,7 @@ signals:
      * recive two clicked() , pressed() and released() signals.
      * There is no way to avoid it - at least no easy way.
      * If you need to resolve this all you can do is set up timers
-     * which wait for QApplication::doubleClickInterval() to expire.
+     * which wait for TQApplication::doubleClickInterval() to expire.
      * If in that time you don't get this signal, you may belive that
      * button was only clicked and not double-clicked.
      * And please note that butons with popup menus do not emit this signal,
@@ -1079,17 +1079,17 @@ public:
     static IconText iconTextSetting();
 
 public slots:
-    virtual void setIconText( const QString &txt )
-    { QToolBar::setIconText( txt ); }
+    virtual void setIconText( const TQString &txt )
+    { TQToolBar::setIconText( txt ); }
 
 protected:
-    void mousePressEvent( QMouseEvent * );
-    void childEvent( QChildEvent *e );
-    void showEvent( QShowEvent *e );
-    void resizeEvent( QResizeEvent *e );
-    bool event( QEvent *e );
-    void applyAppearanceSettings(KConfig *config, const QString &_configGroup, bool forceGlobal = false);
-    QString settingsGroup() const;
+    void mousePressEvent( TQMouseEvent * );
+    void childEvent( TQChildEvent *e );
+    void showEvent( TQShowEvent *e );
+    void resizeEvent( TQResizeEvent *e );
+    bool event( TQEvent *e );
+    void applyAppearanceSettings(KConfig *config, const TQString &_configGroup, bool forceGlobal = false);
+    TQString settingsGroup() const;
 
 private slots:
     void rebuildLayout();
@@ -1097,7 +1097,7 @@ private slots:
     void slotAppearanceChanged();
     void slotIconChanged(int);
     void slotRepaint();
-    void toolBarPosChanged( QToolBar *tb );
+    void toolBarPosChanged( TQToolBar *tb );
     void slotContextAboutToShow();
     void slotContextAboutToHide();
     void widgetDestroyed();
@@ -1105,20 +1105,20 @@ private slots:
 private:
     void init( bool readConfig = true, bool honorStyle = false );
     void doConnections( KToolBarButton *button );
-    void insertWidgetInternal( QWidget *w, int &index, int id );
-    void removeWidgetInternal( QWidget *w );
-    void getAttributes( QString &position, QString &icontext, int &index );
+    void insertWidgetInternal( TQWidget *w, int &index, int id );
+    void removeWidgetInternal( TQWidget *w );
+    void getAttributes( TQString &position, TQString &icontext, int &index );
     int dockWindowIndex();
     KPopupMenu *contextMenu();
     void doModeChange();
 
-    QMap<QWidget*, int > widget2id;
-    typedef QMap<int, QWidget* > Id2WidgetMap;
+    TQMap<TQWidget*, int > widget2id;
+    typedef TQMap<int, TQWidget* > Id2WidgetMap;
     Id2WidgetMap id2widget;
     KPopupMenu *context;
-    QPtrList<QWidget> widgets;
-    QTimer *layoutTimer;
-    QGuardedPtr<QWidget> stretchableWidget, rightAligned;
+    TQPtrList<TQWidget> widgets;
+    TQTimer *layoutTimer;
+    TQGuardedPtr<TQWidget> stretchableWidget, rightAligned;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:

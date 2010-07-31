@@ -33,16 +33,16 @@ class KMWIppPrinter : public KMWizardPage
 {
 	Q_OBJECT
 public:
-	KMWIppPrinter(QWidget *parent = 0, const char *name = 0);
+	KMWIppPrinter(TQWidget *parent = 0, const char *name = 0);
 	~KMWIppPrinter();
 
-	bool isValid(QString&);
+	bool isValid(TQString&);
 	void updatePrinter(KMPrinter*);
 
 protected slots:
 	void slotScanStarted();
 	void slotScanFinished();
-	void slotPrinterSelected(QListViewItem*);
+	void slotPrinterSelected(TQListViewItem*);
 	void slotIppReport();
 
 private:

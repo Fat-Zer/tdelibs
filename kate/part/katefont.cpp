@@ -23,13 +23,13 @@
 
 #include <kglobalsettings.h>
 
-#include <qfontinfo.h>
+#include <tqfontinfo.h>
 
 //
 // KateFontMetrics implementation
 //
 
-KateFontMetrics::KateFontMetrics(const QFont& f) : QFontMetrics(f)
+KateFontMetrics::KateFontMetrics(const TQFont& f) : TQFontMetrics(f)
 {
   for (int i=0; i<256; i++) warray[i]=0;
 }
@@ -49,7 +49,7 @@ short * KateFontMetrics::createRow (short *wa, uchar row)
   return wa;
 }
 
-int KateFontMetrics::width(QChar c)
+int KateFontMetrics::width(TQChar c)
 {
   uchar cell=c.cell();
   uchar row=c.row();
@@ -58,7 +58,7 @@ int KateFontMetrics::width(QChar c)
   if (!wa)
     wa = createRow (wa, row);
 
-  if (wa[cell]<0) wa[cell]=(short) QFontMetrics::width(c);
+  if (wa[cell]<0) wa[cell]=(short) TQFontMetrics::width(c);
 
   return (int)wa[cell];
 }
@@ -93,12 +93,12 @@ void KateFontStruct::updateFontData ()
   fontHeight = maxAscent + maxDescent + 1;
   fontAscent = maxAscent;
   
-  m_fixedPitch = QFontInfo( myFont ).fixedPitch();
+  m_fixedPitch = TQFontInfo( myFont ).fixedPitch();
 }
 
-void KateFontStruct::setFont (const QFont & font)
+void KateFontStruct::setFont (const TQFont & font)
 {
-  QFontMetrics testFM (font);
+  TQFontMetrics testFM (font);
 
   // no valid font tried
   if ((testFM.ascent() + testFM.descent() + 1) < 1)
@@ -106,13 +106,13 @@ void KateFontStruct::setFont (const QFont & font)
 
   myFont = font;
 
-  myFontBold = QFont (font);
+  myFontBold = TQFont (font);
   myFontBold.setBold (true);
 
-  myFontItalic = QFont (font);
+  myFontItalic = TQFont (font);
   myFontItalic.setItalic (true);
 
-  myFontBI = QFont (font);
+  myFontBI = TQFont (font);
   myFontBI.setBold (true);
   myFontBI.setItalic (true);
 

@@ -1,5 +1,5 @@
 #include "notepad.h" // this plugin applies to a notepad part
-#include <qmultilineedit.h>
+#include <tqmultilineedit.h>
 #include "plugin_spellcheck.h"
 #include <kaction.h>
 #include <kgenericfactory.h>
@@ -7,11 +7,11 @@
 #include <klocale.h>
 #include <kdebug.h>
 
-PluginSpellCheck::PluginSpellCheck( QObject* parent, const char* name, 
-                                    const QStringList& )
+PluginSpellCheck::PluginSpellCheck( TQObject* parent, const char* name, 
+                                    const TQStringList& )
     : Plugin( parent, name )
 {
-    (void) new KAction( "&Select current line (plugin)", 0, this, SLOT(slotSpellCheck()),
+    (void) new KAction( "&Select current line (plugin)", 0, this, TQT_SLOT(slotSpellCheck()),
                         actionCollection(), "spellcheck" );
 }
 
@@ -28,7 +28,7 @@ void PluginSpellCheck::slotSpellCheck()
     else
     {
          NotepadPart * part = (NotepadPart *) parent();
-         QMultiLineEdit * widget = (QMultiLineEdit *) part->widget();
+         TQMultiLineEdit * widget = (TQMultiLineEdit *) part->widget();
          widget->selectAll(); //selects current line !
     }
 }

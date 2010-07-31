@@ -29,10 +29,10 @@
 #include <kmessagebox.h>
 #include <kconfig.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 KateSyntaxDocument::KateSyntaxDocument(bool force)
-  : QDomDocument()
+  : TQDomDocument()
 {
   // Let's build the Mode List (katesyntaxhighlightingrc)
   setupModeList(force);
@@ -48,20 +48,20 @@ KateSyntaxDocument::~KateSyntaxDocument()
     the new one and assign some other things.
     identifier = File name and path of the new xml needed
 */
-bool KateSyntaxDocument::setIdentifier(const QString& identifier)
+bool KateSyntaxDocument::setIdentifier(const TQString& identifier)
 {
   // if the current file is the same as the new one don't do anything.
   if(currentFile != identifier)
   {
     // let's open the new file
-    QFile f( identifier );
+    TQFile f( identifier );
 
     if ( f.open(IO_ReadOnly) )
     {
       // Let's parse the contets of the xml file
       /* The result of this function should be check for robustness,
          a false returned means a parse error */
-      QString errorMsg;
+      TQString errorMsg;
       int line, col;
       bool success=setContent(&f,&errorMsg,&line,&col);
 
@@ -100,7 +100,7 @@ bool KateSyntaxDocument::nextGroup( KateSyntaxContextData* data)
   if (data->currentGroup.isNull())
   {
     // Skip over non-elements. So far non-elements are just comments
-    QDomNode node = data->parent.firstChild();
+    TQDomNode node = data->parent.firstChild();
     while (node.isComment())
       node = node.nextSibling();
 
@@ -109,7 +109,7 @@ bool KateSyntaxDocument::nextGroup( KateSyntaxContextData* data)
   else
   {
     // common case, iterate over siblings, skipping comments as we go
-    QDomNode node = data->currentGroup.nextSibling();
+    TQDomNode node = data->currentGroup.nextSibling();
     while (node.isComment())
       node = node.nextSibling();
 
@@ -129,7 +129,7 @@ bool KateSyntaxDocument::nextItem( KateSyntaxContextData* data)
 
   if (data->item.isNull())
   {
-    QDomNode node = data->currentGroup.firstChild();
+    TQDomNode node = data->currentGroup.firstChild();
     while (node.isComment())
       node = node.nextSibling();
 
@@ -137,7 +137,7 @@ bool KateSyntaxDocument::nextItem( KateSyntaxContextData* data)
   }
   else
   {
-    QDomNode node = data->item.nextSibling();
+    TQDomNode node = data->item.nextSibling();
     while (node.isComment())
       node = node.nextSibling();
 
@@ -150,9 +150,9 @@ bool KateSyntaxDocument::nextItem( KateSyntaxContextData* data)
 /**
  * This function is used to fetch the atributes of the tags of the item in a KateSyntaxContextData.
  */
-QString KateSyntaxDocument::groupItemData( const KateSyntaxContextData* data, const QString& name){
+TQString KateSyntaxDocument::groupItemData( const KateSyntaxContextData* data, const TQString& name){
   if(!data)
-    return QString::null;
+    return TQString::null;
 
   // If there's no name just return the tag name of data->item
   if ( (!data->item.isNull()) && (name.isEmpty()))
@@ -166,14 +166,14 @@ QString KateSyntaxDocument::groupItemData( const KateSyntaxContextData* data, co
     return data->item.attribute(name);
   }
 
-  return QString::null;
+  return TQString::null;
 
 }
 
-QString KateSyntaxDocument::groupData( const KateSyntaxContextData* data,const QString& name)
+TQString KateSyntaxDocument::groupData( const KateSyntaxContextData* data,const TQString& name)
 {
   if(!data)
-    return QString::null;
+    return TQString::null;
 
   if (!data->currentGroup.isNull())
   {
@@ -181,7 +181,7 @@ QString KateSyntaxDocument::groupData( const KateSyntaxContextData* data,const Q
   }
   else
   {
-    return QString::null;
+    return TQString::null;
   }
 }
 
@@ -204,25 +204,25 @@ KateSyntaxContextData* KateSyntaxDocument::getSubItems(KateSyntaxContextData* da
   return retval;
 }
 
-bool KateSyntaxDocument::getElement (QDomElement &element, const QString &mainGroupName, const QString &config)
+bool KateSyntaxDocument::getElement (TQDomElement &element, const TQString &mainGroupName, const TQString &config)
 {
   kdDebug(13010) << "Looking for \"" << mainGroupName << "\" -> \"" << config << "\"." << endl;
 
-  QDomNodeList nodes = documentElement().childNodes();
+  TQDomNodeList nodes = documentElement().childNodes();
 
   // Loop over all these child nodes looking for mainGroupName
   for (unsigned int i=0; i<nodes.count(); i++)
   {
-    QDomElement elem = nodes.item(i).toElement();
+    TQDomElement elem = nodes.item(i).toElement();
     if (elem.tagName() == mainGroupName)
     {
       // Found mainGroupName ...
-      QDomNodeList subNodes = elem.childNodes();
+      TQDomNodeList subNodes = elem.childNodes();
 
       // ... so now loop looking for config
       for (unsigned int j=0; j<subNodes.count(); j++)
       {
-        QDomElement subElem = subNodes.item(j).toElement();
+        TQDomElement subElem = subNodes.item(j).toElement();
         if (subElem.tagName() == config)
         {
           // Found it!
@@ -241,12 +241,12 @@ bool KateSyntaxDocument::getElement (QDomElement &element, const QString &mainGr
 }
 
 /**
- * Get the KateSyntaxContextData of the QDomElement Config inside mainGroupName
- * KateSyntaxContextData::item will contain the QDomElement found
+ * Get the KateSyntaxContextData of the TQDomElement Config inside mainGroupName
+ * KateSyntaxContextData::item will contain the TQDomElement found
  */
-KateSyntaxContextData* KateSyntaxDocument::getConfig(const QString& mainGroupName, const QString &config)
+KateSyntaxContextData* KateSyntaxDocument::getConfig(const TQString& mainGroupName, const TQString &config)
 {
-  QDomElement element;
+  TQDomElement element;
   if (getElement(element, mainGroupName, config))
   {
     KateSyntaxContextData *data = new KateSyntaxContextData;
@@ -257,12 +257,12 @@ KateSyntaxContextData* KateSyntaxDocument::getConfig(const QString& mainGroupNam
 }
 
 /**
- * Get the KateSyntaxContextData of the QDomElement Config inside mainGroupName
- * KateSyntaxContextData::parent will contain the QDomElement found
+ * Get the KateSyntaxContextData of the TQDomElement Config inside mainGroupName
+ * KateSyntaxContextData::parent will contain the TQDomElement found
  */
-KateSyntaxContextData* KateSyntaxDocument::getGroupInfo(const QString& mainGroupName, const QString &group)
+KateSyntaxContextData* KateSyntaxDocument::getGroupInfo(const TQString& mainGroupName, const TQString &group)
 {
-  QDomElement element;
+  TQDomElement element;
   if (getElement(element, mainGroupName, group+"s"))
   {
     KateSyntaxContextData *data = new KateSyntaxContextData;
@@ -275,30 +275,30 @@ KateSyntaxContextData* KateSyntaxDocument::getGroupInfo(const QString& mainGroup
 /**
  * Returns a list with all the keywords inside the list type
  */
-QStringList& KateSyntaxDocument::finddata(const QString& mainGroup, const QString& type, bool clearList)
+TQStringList& KateSyntaxDocument::finddata(const TQString& mainGroup, const TQString& type, bool clearList)
 {
   kdDebug(13010)<<"Create a list of keywords \""<<type<<"\" from \""<<mainGroup<<"\"."<<endl;
   if (clearList)
     m_data.clear();
 
-  for(QDomNode node = documentElement().firstChild(); !node.isNull(); node = node.nextSibling())
+  for(TQDomNode node = documentElement().firstChild(); !node.isNull(); node = node.nextSibling())
   {
-    QDomElement elem = node.toElement();
+    TQDomElement elem = node.toElement();
     if (elem.tagName() == mainGroup)
     {
       kdDebug(13010)<<"\""<<mainGroup<<"\" found."<<endl;
-      QDomNodeList nodelist1 = elem.elementsByTagName("list");
+      TQDomNodeList nodelist1 = elem.elementsByTagName("list");
 
       for (uint l=0; l<nodelist1.count(); l++)
       {
         if (nodelist1.item(l).toElement().attribute("name") == type)
         {
           kdDebug(13010)<<"List with attribute name=\""<<type<<"\" found."<<endl;
-          QDomNodeList childlist = nodelist1.item(l).toElement().childNodes();
+          TQDomNodeList childlist = nodelist1.item(l).toElement().childNodes();
 
           for (uint i=0; i<childlist.count(); i++)
           {
-            QString element = childlist.item(i).toElement().text().stripWhiteSpace();
+            TQString element = childlist.item(i).toElement().text().stripWhiteSpace();
             if (element.isEmpty())
               continue;
 #ifndef NDEBUG
@@ -346,13 +346,13 @@ void KateSyntaxDocument::setupModeList (bool force)
   }
 
   // Let's get a list of all the xml files for hl
-  QStringList list = KGlobal::dirs()->findAllResources("data","katepart/syntax/*.xml",false,true);
+  TQStringList list = KGlobal::dirs()->findAllResources("data","katepart/syntax/*.xml",false,true);
 
   // Let's iterate through the list and build the Mode List
-  for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
+  for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
   {
     // Each file has a group called:
-    QString Group="Cache "+ *it;
+    TQString Group="Cache "+ *it;
 
     // Let's go to this group
     config.setGroup(Group);
@@ -360,7 +360,7 @@ void KateSyntaxDocument::setupModeList (bool force)
     // stat the file
     struct stat sbuf;
     memset (&sbuf, 0, sizeof(sbuf));
-    stat(QFile::encodeName(*it), &sbuf);
+    stat(TQFile::encodeName(*it), &sbuf);
 
     // If the group exist and we're not forced to read the xml file, let's build myModeList for katesyntax..rc
     if (!force && config.hasGroup(Group) && (sbuf.st_mtime == config.readNumEntry("lastModified")))
@@ -387,13 +387,13 @@ void KateSyntaxDocument::setupModeList (bool force)
       kdDebug (13010) << "UPDATE hl cache for: " << *it << endl;
 
       // We're forced to read the xml files or the mode doesn't exist in the katesyntax...rc
-      QFile f(*it);
+      TQFile f(*it);
 
       if (f.open(IO_ReadOnly))
       {
         // Ok we opened the file, let's read the contents and close the file
         /* the return of setContent should be checked because a false return shows a parsing error */
-        QString errMsg;
+        TQString errMsg;
         int line, col;
 
         bool success = setContent(&f,&errMsg,&line,&col);
@@ -402,7 +402,7 @@ void KateSyntaxDocument::setupModeList (bool force)
 
         if (success)
         {
-          QDomElement root = documentElement();
+          TQDomElement root = documentElement();
 
           if (!root.isNull())
           {
@@ -421,7 +421,7 @@ void KateSyntaxDocument::setupModeList (bool force)
               mli->author    = root.attribute("author");
               mli->license   = root.attribute("license");
 
-              QString hidden = root.attribute("hidden");
+              TQString hidden = root.attribute("hidden");
               mli->hidden    = (hidden == "true" || hidden == "TRUE");
 
               mli->identifier = *it;
@@ -458,7 +458,7 @@ void KateSyntaxDocument::setupModeList (bool force)
           emli->mimetype="invalid_file/invalid_file";
           emli->extension="invalid_file.invalid_file";
           emli->version="1.";
-          emli->name=QString ("Error: %1").arg(*it); // internal
+          emli->name=TQString ("Error: %1").arg(*it); // internal
           emli->nameTranslated=i18n("Error: %1").arg(*it); // translated
           emli->identifier=(*it);
 

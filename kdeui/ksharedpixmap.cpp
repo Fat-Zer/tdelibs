@@ -13,12 +13,12 @@
  */
 #include "config.h"
 
-#include <qrect.h>
-#include <qsize.h>
-#include <qstring.h>
-#include <qpixmap.h>
-#include <qwindowdefs.h>
-#include <qwidget.h>
+#include <tqrect.h>
+#include <tqsize.h>
+#include <tqstring.h>
+#include <tqpixmap.h>
+#include <tqwindowdefs.h>
+#include <tqwidget.h>
 
 #ifdef Q_WS_X11
 
@@ -58,11 +58,11 @@ public:
   Atom pixmap;
   Atom target;
   Atom selection;
-  QRect rect;
+  TQRect rect;
 };
 
 KSharedPixmap::KSharedPixmap()
-    : QWidget(0L, "shpixmap comm window")
+    : TQWidget(0L, "shpixmap comm window")
 {
     d = new KSharedPixmapPrivate;
     init();
@@ -78,16 +78,16 @@ KSharedPixmap::~KSharedPixmap()
 void KSharedPixmap::init()
 {
     d->pixmap = XInternAtom(qt_xdisplay(), "PIXMAP", false);
-    QCString atom;
+    TQCString atom;
     atom.sprintf("target prop for window %lx", static_cast<unsigned long int>(winId()));
     d->target = XInternAtom(qt_xdisplay(), atom.data(), false);
     d->selection = None;
 }
 
 
-bool KSharedPixmap::isAvailable(const QString & name) const
+bool KSharedPixmap::isAvailable(const TQString & name) const
 {
-    QString str = QString("KDESHPIXMAP:%1").arg(name);
+    TQString str = TQString("KDESHPIXMAP:%1").arg(name);
     Atom sel = XInternAtom(qt_xdisplay(), str.latin1(), true);
     if (sel == None)
 	return false;
@@ -95,16 +95,16 @@ bool KSharedPixmap::isAvailable(const QString & name) const
 }
 
 
-bool KSharedPixmap::loadFromShared(const QString & name, const QRect & rect)
+bool KSharedPixmap::loadFromShared(const TQString & name, const TQRect & rect)
 {
     d->rect = rect;
     if (d->selection != None)
 	// already active
 	return false;
 
-    QPixmap::resize(0, 0); // invalidate
+    TQPixmap::resize(0, 0); // invalidate
 
-    QString str = QString("KDESHPIXMAP:%1").arg(name);
+    TQString str = TQString("KDESHPIXMAP:%1").arg(name);
     d->selection = XInternAtom(qt_xdisplay(), str.latin1(), true);
     if (d->selection == None)
 	return false;
@@ -167,7 +167,7 @@ bool KSharedPixmap::x11Event(XEvent *event)
 
     if (d->rect.isEmpty())
     {
-	QPixmap::resize(width, height);
+	TQPixmap::resize(width, height);
 	XCopyArea(qt_xdisplay(), pixmap, ((KPixmap*)this)->handle(), qt_xget_temp_gc(qt_xscreen(), false),
 		0, 0, width, height, 0, 0);
 
@@ -182,11 +182,11 @@ bool KSharedPixmap::x11Event(XEvent *event)
     // background tile for the rectangle "rect".
 
     //Check for origin off screen
-    QPoint origin(0, 0);
+    TQPoint origin(0, 0);
     if(  d->rect.topLeft().x() < 0 ||  d->rect.topLeft().y() < 0 ) {
         //Save the offset and relocate the rect corners
-        QPoint tl = d->rect.topLeft();
-        QPoint br = d->rect.bottomRight();
+        TQPoint tl = d->rect.topLeft();
+        TQPoint br = d->rect.bottomRight();
         if( tl.x() < 0 ) {
             origin.setX( abs( tl.x() ) );
             tl.setX( 0 );
@@ -195,7 +195,7 @@ bool KSharedPixmap::x11Event(XEvent *event)
             origin.setY( abs( tl.y() ) );
             tl.setY( 0 );
         }
-        QRect adjustedRect( tl, br );
+        TQRect adjustedRect( tl, br );
         d->rect = adjustedRect;
     }
 
@@ -204,7 +204,7 @@ bool KSharedPixmap::x11Event(XEvent *event)
     unsigned xa = d->rect.x() % width, ya = d->rect.y() % height;
     unsigned t1w = QMIN(width-xa,tw), t1h = QMIN(height-ya,th);
 
-    QPixmap::resize( tw+origin.x(), th+origin.y() );
+    TQPixmap::resize( tw+origin.x(), th+origin.y() );
 
     XCopyArea(qt_xdisplay(), pixmap, ((KPixmap*)this)->handle(), qt_xget_temp_gc(qt_xscreen(), false),
             xa, ya, t1w+origin.x(), t1h+origin.y(), origin.x(), origin.y() );

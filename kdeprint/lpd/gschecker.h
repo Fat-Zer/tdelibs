@@ -20,15 +20,15 @@
 #ifndef GSCHECKER_H
 #define GSCHECKER_H
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qobject.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqobject.h>
 
 class GsChecker : public QObject
 {
 public:
-	GsChecker(QObject *parent = 0, const char *name = 0);
-	bool checkGsDriver(const QString& name);
+	GsChecker(TQObject *parent = 0, const char *name = 0);
+	bool checkGsDriver(const TQString& name);
 
 protected:
 	void loadDriverList();

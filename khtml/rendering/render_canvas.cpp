@@ -166,7 +166,7 @@ void RenderCanvas::layout()
     }
 
 #ifdef SPEED_DEBUG
-    QTime qt;
+    TQTime qt;
     qt.start();
 #endif
 
@@ -212,7 +212,7 @@ void RenderCanvas::updateDocumentSize()
 
         bool vss = m_view->verticalScrollBar()->isShown();
         bool hss = m_view->horizontalScrollBar()->isShown();
-        QSize s = m_view->viewportSize(m_cachedDocWidth, m_cachedDocHeight);
+        TQSize s = m_view->viewportSize(m_cachedDocWidth, m_cachedDocHeight);
 
         // if we are about to show a scrollbar, and the document is sized to the viewport w or h,
         // then reserve the scrollbar space so that it doesn't trigger the _other_ scrollbar
@@ -329,7 +329,7 @@ void RenderCanvas::paintBoxDecorations(PaintInfo& paintInfo, int /*_tx*/, int /*
     if ((firstChild() && firstChild()->style()->visibility() == VISIBLE) || !view())
         return;
 
-    paintInfo.p->fillRect(paintInfo.r, view()->palette().active().color(QColorGroup::Base));
+    paintInfo.p->fillRect(paintInfo.r, view()->palette().active().color(TQColorGroup::Base));
 }
 
 void RenderCanvas::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)
@@ -345,8 +345,8 @@ void RenderCanvas::repaintRectangle(int x, int y, int w, int h, Priority p, bool
         y += m_view->contentsY();
     }
 
-    QRect vr = viewRect();
-    QRect ur(x, y, w, h);
+    TQRect vr = viewRect();
+    TQRect ur(x, y, w, h);
 
     if (m_view && ur.intersects(vr)) {
 
@@ -370,7 +370,7 @@ void RenderCanvas::deferredRepaint( RenderObject* o )
 void RenderCanvas::scheduleDeferredRepaints()
 {
     if (!needsFullRepaint()) {
-        QValueList<RenderObject*>::const_iterator it;
+        TQValueList<RenderObject*>::const_iterator it;
         for ( it = m_dirtyChildren.begin(); it != m_dirtyChildren.end(); ++it )
             (*it)->repaint();
     }
@@ -401,10 +401,10 @@ void RenderCanvas::repaint(Priority p)
     }
 }
 
-static QRect enclosingPositionedRect (RenderObject *n)
+static TQRect enclosingPositionedRect (RenderObject *n)
 {
     RenderObject *enclosingParent =  n->containingBlock();
-    QRect rect(0,0,0,0);
+    TQRect rect(0,0,0,0);
     if (enclosingParent) {
         int ox, oy;
         enclosingParent->absolutePosition(ox, oy);
@@ -421,13 +421,13 @@ static QRect enclosingPositionedRect (RenderObject *n)
     return rect;
 }
 
-QRect RenderCanvas::selectionRect() const
+TQRect RenderCanvas::selectionRect() const
 {
     RenderObject *r = m_selectionStart;
     if (!r)
-        return QRect();
+        return TQRect();
 
-    QRect selectionRect = enclosingPositionedRect(r);
+    TQRect selectionRect = enclosingPositionedRect(r);
 
     while (r && r != m_selectionEnd)
     {
@@ -475,8 +475,8 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
     int oldStartPos = m_selectionStartPos;
     RenderObject *oldEnd = m_selectionEnd;
     int oldEndPos = m_selectionEndPos;
-    QPtrList<RenderObject> oldSelectedInside;
-    QPtrList<RenderObject> newSelectedInside;
+    TQPtrList<RenderObject> oldSelectedInside;
+    TQPtrList<RenderObject> newSelectedInside;
     RenderObject *os = oldStart;
 
     while (os && os != oldEnd)
@@ -565,7 +565,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
     newSelectedInside.removeRef(s);
     newSelectedInside.removeRef(e);
 
-    QRect updateRect;
+    TQRect updateRect;
 
     // Don't use repaint() because it will cause all rects to
     // be united (see khtmlview::scheduleRepaint()).  Instead
@@ -578,7 +578,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
     // If so we have to draw them.
     // Could be faster by building list of non-intersecting rectangles rather
     // than unioning rectangles.
-    QPtrListIterator<RenderObject> oldIterator(oldSelectedInside);
+    TQPtrListIterator<RenderObject> oldIterator(oldSelectedInside);
     bool firstRect = true;
     for (; oldIterator.current(); ++oldIterator){
         if (!newSelectedInside.containsRef(oldIterator.current())){
@@ -598,7 +598,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
     // If so we have to draw them.
     // Could be faster by building list of non-intersecting rectangles rather
     // than unioning rectangles.
-    QPtrListIterator<RenderObject> newIterator(newSelectedInside);
+    TQPtrListIterator<RenderObject> newIterator(newSelectedInside);
     firstRect = true;
     for (; newIterator.current(); ++newIterator){
         if (!oldSelectedInside.containsRef(newIterator.current())){
@@ -690,24 +690,24 @@ void RenderCanvas::selectionStartEnd(int& spos, int& epos)
     epos = m_selectionEndPos;
 }
 
-QRect RenderCanvas::viewRect() const
+TQRect RenderCanvas::viewRect() const
 {
     if (m_pagedMode)
         if (m_pageTop == m_pageBottom) {
-            kdDebug(6040) << "viewRect: " << QRect(0, m_pageTop, m_width, m_height) << endl;
-            return QRect(0, m_pageTop, m_width, m_height);
+            kdDebug(6040) << "viewRect: " << TQRect(0, m_pageTop, m_width, m_height) << endl;
+            return TQRect(0, m_pageTop, m_width, m_height);
         }
         else {
-            kdDebug(6040) << "viewRect: " << QRect(0, m_pageTop, m_width, m_pageBottom - m_pageTop) << endl;
-            return QRect(0, m_pageTop, m_width, m_pageBottom - m_pageTop);
+            kdDebug(6040) << "viewRect: " << TQRect(0, m_pageTop, m_width, m_pageBottom - m_pageTop) << endl;
+            return TQRect(0, m_pageTop, m_width, m_pageBottom - m_pageTop);
         }
     else if (m_view)
-        return QRect(m_view->contentsX(),
+        return TQRect(m_view->contentsX(),
             m_view->contentsY(),
             m_view->visibleWidth(),
             m_view->visibleHeight());
     else
-        return QRect(0,0,m_rootWidth,m_rootHeight);
+        return TQRect(0,0,m_rootWidth,m_rootHeight);
 }
 
 int RenderCanvas::docHeight() const

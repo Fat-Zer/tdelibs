@@ -3,10 +3,10 @@
 #include <kapplication.h>
 #include <kiconloader.h>
 
-#include <qwidget.h>
-#include <qstring.h>
+#include <tqwidget.h>
+#include <tqstring.h>
 
-DockTest::DockTest( QWidget* parent )
+DockTest::DockTest( TQWidget* parent )
   : KDockArea( parent )
 {
   m_blueDock = createDockWidget( "Blue Widget", SmallIcon("mail") );
@@ -17,7 +17,7 @@ DockTest::DockTest( QWidget* parent )
   m_blueDock->setHeader( header );
   m_blueDock->setCaption( "Blue" );
   m_blueDock->setGeometry( 50, 50, 100, 100 );
-  QWidget *l = new QWidget( m_blueDock );
+  TQWidget *l = new TQWidget( m_blueDock );
   l->setBackgroundColor( Qt::blue );
   l->setMinimumSize( 100,100 );
   m_blueDock->setWidget( l );
@@ -31,7 +31,7 @@ DockTest::DockTest( QWidget* parent )
   m_redDock->setHeader( header );
   m_redDock->setCaption( "Red" );
   m_redDock->setGeometry( 50, 50, 100, 100 );
-  l = new QWidget( m_redDock );
+  l = new TQWidget( m_redDock );
   l->setBackgroundColor( Qt::red );
   l->setMinimumSize( 100,100 );
   m_redDock->setWidget( l );
@@ -44,7 +44,7 @@ DockTest::DockTest( QWidget* parent )
  // m_yellowDock->setHeader( header );
   m_yellowDock->setCaption( "Yellow" );
   m_yellowDock->setGeometry( 50, 50, 100, 100 );
-  l = new QWidget( m_yellowDock );
+  l = new TQWidget( m_yellowDock );
   l->setBackgroundColor( Qt::yellow );
   l->setMinimumSize( 100,100 );
   m_yellowDock->setWidget( l );

@@ -21,7 +21,7 @@
 #define KMLPDMANAGER_H
 
 #include "kmmanager.h"
-#include <qdict.h>
+#include <tqdict.h>
 
 class PrintcapEntry;
 class PrinttoolEntry;
@@ -30,7 +30,7 @@ class GsChecker;
 class KMLpdManager : public KMManager
 {
 public:
-	KMLpdManager(QObject *parent = 0, const char *name = 0);
+	KMLpdManager(TQObject *parent = 0, const char *name = 0);
 	~KMLpdManager();
 
 	bool completePrinterShort(KMPrinter*);
@@ -41,8 +41,8 @@ public:
 	bool disablePrinter(KMPrinter*);
 
 	// Driver DB functions
-	QString driverDbCreationProgram();
-	QString driverDirectory();
+	TQString driverDbCreationProgram();
+	TQString driverDirectory();
 
 	// Driver loading functions
 	DrMain* loadDbDriver(KMDBEntry*);
@@ -53,23 +53,23 @@ public:
 protected:
 	void listPrinters();
 	bool writePrinters();
-	void loadPrintcapFile(const QString& filename);
-	bool writePrintcapFile(const QString& filename);
-	void loadPrinttoolDb(const QString& filename);
-	QMap<QString,QString> loadPrinttoolCfgFile(const QString& filename);
-	bool savePrinttoolCfgFile(const QString& templatefile, const QString& dirname, const QMap<QString,QString>& options);
-	bool checkGsDriver(const QString& gsdriver);
+	void loadPrintcapFile(const TQString& filename);
+	bool writePrintcapFile(const TQString& filename);
+	void loadPrinttoolDb(const TQString& filename);
+	TQMap<TQString,TQString> loadPrinttoolCfgFile(const TQString& filename);
+	bool savePrinttoolCfgFile(const TQString& templatefile, const TQString& dirname, const TQMap<TQString,TQString>& options);
+	bool checkGsDriver(const TQString& gsdriver);
 	bool createSpooldir(PrintcapEntry*);
 	bool createPrinttoolEntry(KMPrinter*, PrintcapEntry*);
-	PrintcapEntry* findPrintcapEntry(const QString& name);
-	PrinttoolEntry* findPrinttoolEntry(const QString& name);
-	QString programName(int);
+	PrintcapEntry* findPrintcapEntry(const TQString& name);
+	PrinttoolEntry* findPrinttoolEntry(const TQString& name);
+	TQString programName(int);
 	void checkStatus();
 	bool enablePrinter(KMPrinter*, bool);
 
 private:
-	QDict<PrintcapEntry>	m_entries;
-	QDict<PrinttoolEntry>	m_ptentries;
+	TQDict<PrintcapEntry>	m_entries;
+	TQDict<PrinttoolEntry>	m_ptentries;
 	GsChecker		*m_gschecker;
 };
 

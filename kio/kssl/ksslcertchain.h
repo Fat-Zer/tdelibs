@@ -21,8 +21,8 @@
 #ifndef _KSSLCERTCHAIN_H
 #define _KSSLCERTCHAIN_H
 
-#include <qglobal.h>
-#include <qptrlist.h>
+#include <tqglobal.h>
+#include <tqptrlist.h>
 #include <kdemacros.h>
 
 class QString;
@@ -86,7 +86,7 @@ public:
 	 *  @param chain the certificate chain
 	 *  @see KSSLCertificate
 	 */
-	void setChain(QPtrList<KSSLCertificate>& chain);
+	void setChain(TQPtrList<KSSLCertificate>& chain);
 
 	/**
 	 *  Set the certificate chain as a list of base64 encoded X.509
@@ -95,7 +95,7 @@ public:
 	 *  @param chain the certificate chain
 	 *  @deprecated
 	 */
-	void setChain(QStringList chain) KDE_DEPRECATED;
+	void setChain(TQStringList chain) KDE_DEPRECATED;
 
 	/**
 	 *  Set the certificate chain as a list of base64 encoded X.509
@@ -103,7 +103,7 @@ public:
 	 *
 	 *  @param chain the certificate chain
 	 */
-	void setCertChain(const QStringList& chain);
+	void setCertChain(const TQStringList& chain);
 
 	/**
 	 *  Obtain a copy of the certificate chain.
@@ -111,7 +111,7 @@ public:
 	 *  @return a deep copy of the certificate chain.
 	 *  @see KSSLCertificate
 	 */
-	QPtrList<KSSLCertificate> getChain();
+	TQPtrList<KSSLCertificate> getChain();
 
 	/**
 	 *  Determine the number of entries (depth) of the chain.

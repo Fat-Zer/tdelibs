@@ -58,15 +58,15 @@
 #include "html/html_blockimpl.h"
 #include "xml/dom_restyler.h"
 
-#include <qscrollbar.h>
-#include <qptrvector.h>
-#include <qstyle.h>
+#include <tqscrollbar.h>
+#include <tqptrvector.h>
+#include <tqstyle.h>
 
 using namespace DOM;
 using namespace khtml;
 
 #ifdef APPLE_CHANGES
-QScrollBar* RenderLayer::gScrollBar = 0;
+TQScrollBar* RenderLayer::gScrollBar = 0;
 #endif
 
 #ifndef NDEBUG
@@ -161,10 +161,10 @@ void RenderLayer::updateLayerPosition()
     setPos(x,y);
 }
 
-QRegion RenderLayer::paintedRegion(RenderLayer* rootLayer)
+TQRegion RenderLayer::paintedRegion(RenderLayer* rootLayer)
 {
     updateZOrderLists();
-    QRegion r;
+    TQRegion r;
     if (m_negZOrderList) {
         uint count = m_negZOrderList->count();
         for (uint i = 0; i < count; i++) {
@@ -176,7 +176,7 @@ QRegion RenderLayer::paintedRegion(RenderLayer* rootLayer)
     if (s->visibility() == VISIBLE) {
         int x = 0; int y = 0;
         convertToLayerCoords(rootLayer,x,y);
-        QRect cr(x,y,width(),height());
+        TQRect cr(x,y,width(),height());
         if ( s->backgroundImage() || s->backgroundColor().isValid() || s->hasBorder() ||
              renderer()->scrollsOverflow() || renderer()->isReplaced() ) {
             r += cr;
@@ -201,7 +201,7 @@ void RenderLayer::repaint( Priority p, bool markForRepaint )
         return;
     for (RenderLayer* child = firstChild(); child; child = child->nextSibling())
         child->repaint( p, markForRepaint );
-    QRect layerBounds, damageRect, fgrect;
+    TQRect layerBounds, damageRect, fgrect;
     calculateRects(renderer()->canvas()->layer(), renderer()->viewRect(), layerBounds, damageRect, fgrect);
     m_visibleRect = damageRect.intersect( layerBounds );
     if (m_visibleRect.isValid())
@@ -226,7 +226,7 @@ void RenderLayer::updateLayerPositions(RenderLayer* rootLayer, bool doFullRepain
         int x = 0;
         int y = 0;
         convertToLayerCoords(rootLayer, x, y);
-        QRect layerBounds = QRect(x,y,width(),height());
+        TQRect layerBounds = TQRect(x,y,width(),height());
         positionScrollbars(layerBounds);
     }
 
@@ -236,9 +236,9 @@ void RenderLayer::updateLayerPositions(RenderLayer* rootLayer, bool doFullRepain
         m_object->repaintAfterLayoutIfNeeded(m_repaintRect, m_fullRepaintRect);
 #else
     if (checkForRepaint && m_markedForRepaint) {
-        QRect layerBounds, damageRect, fgrect;
+        TQRect layerBounds, damageRect, fgrect;
         calculateRects(rootLayer, renderer()->viewRect(), layerBounds, damageRect, fgrect);
-        QRect vr = damageRect.intersect( layerBounds );
+        TQRect vr = damageRect.intersect( layerBounds );
         if (vr != m_visibleRect && vr.isValid()) {
             renderer()->canvas()->repaintViewRectangle( vr.x(), vr.y(), vr.width(), vr.height() );
             m_visibleRect = vr;
@@ -262,8 +262,8 @@ void RenderLayer::updateWidgetMasks(RenderLayer* rootLayer)
         uint count = m_posZOrderList ? m_posZOrderList->count() : 0;
         bool needUpdate = (count || !m_region.isNull());
         if (count) {
-            QScrollView* sv = m_object->document()->view();
-            m_region = QRect(0,0,sv->contentsWidth(),sv->contentsHeight());
+            TQScrollView* sv = m_object->document()->view();
+            m_region = TQRect(0,0,sv->contentsWidth(),sv->contentsHeight());
 
             for (uint i = 0; i < count; i++) {
                 RenderLayer* child = m_posZOrderList->at(i);
@@ -272,7 +272,7 @@ void RenderLayer::updateWidgetMasks(RenderLayer* rootLayer)
                 m_region -= child->paintedRegion(rootLayer);
             }
         } else {
-            m_region = QRegion();
+            m_region = TQRegion();
         }
         if (needUpdate)
             renderer()->updateWidgetMasks();
@@ -606,17 +606,17 @@ void RenderLayer::updateScrollPositionFromScrollbars()
 void
 RenderLayer::showScrollbar(Qt::Orientation o, bool show)
 {
-    QScrollBar *sb = (o == Qt::Horizontal) ? m_hBar : m_vBar;
+    TQScrollBar *sb = (o == Qt::Horizontal) ? m_hBar : m_vBar;
 
     if (show && !sb) {
-        QScrollView* scrollView = m_object->document()->view();
-        sb = new QScrollBar(o, scrollView, "__khtml");
+        TQScrollView* scrollView = m_object->document()->view();
+        sb = new TQScrollBar(o, scrollView, "__khtml");
         scrollView->addChild(sb, 0, -50000);
-	sb->setBackgroundMode(QWidget::NoBackground);
+	sb->setBackgroundMode(TQWidget::NoBackground);
         sb->show();
         if (!m_scrollMediator)
             m_scrollMediator = new RenderScrollMediator(this);
-        m_scrollMediator->connect(sb, SIGNAL(valueChanged(int)), SLOT(slotValueChanged()));
+        m_scrollMediator->connect(sb, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotValueChanged()));
     }
     else if (!show && sb) {
         delete sb;
@@ -637,7 +637,7 @@ int RenderLayer::verticalScrollbarWidth()
 #ifdef APPLE_CHANGES
     return m_vBar->width();
 #else
-    return m_vBar->style().pixelMetric(QStyle::PM_ScrollBarExtent);
+    return m_vBar->style().pixelMetric(TQStyle::PM_ScrollBarExtent);
 #endif
 
 }
@@ -650,12 +650,12 @@ int RenderLayer::horizontalScrollbarHeight()
 #ifdef APPLE_CHANGES
     return m_hBar->height();
 #else
-    return m_hBar->style().pixelMetric(QStyle::PM_ScrollBarExtent);
+    return m_hBar->style().pixelMetric(TQStyle::PM_ScrollBarExtent);
 #endif
 
 }
 
-void RenderLayer::positionScrollbars(const QRect& absBounds)
+void RenderLayer::positionScrollbars(const TQRect& absBounds)
 {
 #ifdef APPLE_CHANGES
     if (m_vBar) {
@@ -683,24 +683,24 @@ void RenderLayer::positionScrollbars(const QRect& absBounds)
     if (w <= 0 || h <= 0 || (!m_vBar && !m_hBar))
 	return;
 
-    QScrollView* scrollView = m_object->document()->view();
+    TQScrollView* scrollView = m_object->document()->view();
 
     tx += bl;
     ty += bt;
 
-    QScrollBar *b = m_hBar;
+    TQScrollBar *b = m_hBar;
     if (!m_hBar)
 	b = m_vBar;
-    int sw = b->style().pixelMetric(QStyle::PM_ScrollBarExtent);
+    int sw = b->style().pixelMetric(TQStyle::PM_ScrollBarExtent);
 
     if (m_vBar) {
-	QRect vBarRect = QRect(tx + w - sw + 1, ty, sw, h - (m_hBar ? sw : 0) + 1);
+	TQRect vBarRect = TQRect(tx + w - sw + 1, ty, sw, h - (m_hBar ? sw : 0) + 1);
         m_vBar->resize(vBarRect.width(), vBarRect.height());
         scrollView->addChild(m_vBar, vBarRect.x(), vBarRect.y());
     }
 
     if (m_hBar) {
-	QRect hBarRect = QRect(tx, ty + h - sw + 1, w - (m_vBar ? sw : 0) + 1, sw);
+	TQRect hBarRect = TQRect(tx, ty + h - sw + 1, w - (m_vBar ? sw : 0) + 1, sw);
         m_hBar->resize(hBarRect.width(), hBarRect.height());
         scrollView->addChild(m_hBar, hBarRect.x(), hBarRect.y());
     }
@@ -801,7 +801,7 @@ void RenderLayer::paintScrollbars(RenderObject::PaintInfo& pI)
     if (!m_object->element())
        return;
 
-    QScrollView* scrollView = m_object->document()->view();
+    TQScrollView* scrollView = m_object->document()->view();
     if (m_hBar) {
 	int x = m_hBar->x();
 	int y = m_hBar->y();
@@ -817,12 +817,12 @@ void RenderLayer::paintScrollbars(RenderObject::PaintInfo& pI)
 #endif
 }
 
-void RenderLayer::paint(QPainter *p, const QRect& damageRect, bool selectionOnly)
+void RenderLayer::paint(TQPainter *p, const TQRect& damageRect, bool selectionOnly)
 {
     paintLayer(this, p, damageRect, selectionOnly);
 }
 
-static void setClip(QPainter* p, const QRect& paintDirtyRect, const QRect& clipRect)
+static void setClip(TQPainter* p, const TQRect& paintDirtyRect, const TQRect& clipRect)
 {
     if (paintDirtyRect == clipRect)
         return;
@@ -832,9 +832,9 @@ static void setClip(QPainter* p, const QRect& paintDirtyRect, const QRect& clipR
     p->addClip(clipRect);
 #else
 
-    QRect clippedRect = p->xForm(clipRect);
-    QRegion creg(clippedRect);
-    QRegion old = p->clipRegion();
+    TQRect clippedRect = p->xForm(clipRect);
+    TQRegion creg(clippedRect);
+    TQRegion old = p->clipRegion();
     if (!old.isNull())
         creg = old.intersect(creg);
     p->setClipRegion(creg);
@@ -842,18 +842,18 @@ static void setClip(QPainter* p, const QRect& paintDirtyRect, const QRect& clipR
 
 }
 
-static void restoreClip(QPainter* p, const QRect& paintDirtyRect, const QRect& clipRect)
+static void restoreClip(TQPainter* p, const TQRect& paintDirtyRect, const TQRect& clipRect)
 {
     if (paintDirtyRect == clipRect)
         return;
     p->restore();
 }
 
-void RenderLayer::paintLayer(RenderLayer* rootLayer, QPainter *p,
-                        const QRect& paintDirtyRect, bool selectionOnly)
+void RenderLayer::paintLayer(RenderLayer* rootLayer, TQPainter *p,
+                        const TQRect& paintDirtyRect, bool selectionOnly)
 {
     // Calculate the clip rects we should use.
-    QRect layerBounds, damageRect, clipRectToApply;
+    TQRect layerBounds, damageRect, clipRectToApply;
     calculateRects(rootLayer, paintDirtyRect, layerBounds, damageRect, clipRectToApply);
     int x = layerBounds.x();
     int y = layerBounds.y();
@@ -939,7 +939,7 @@ void RenderLayer::paintLayer(RenderLayer* rootLayer, QPainter *p,
 
     // Paint any child layers that have overflow.
     if (m_overflowList)
-        for (QValueList<RenderLayer*>::iterator it = m_overflowList->begin(); it != m_overflowList->end(); ++it)
+        for (TQValueList<RenderLayer*>::iterator it = m_overflowList->begin(); it != m_overflowList->end(); ++it)
             (*it)->paintLayer(rootLayer, p, paintDirtyRect, selectionOnly);
 
     // Now walk the sorted list of children with positive z-indices.
@@ -956,7 +956,7 @@ void RenderLayer::paintLayer(RenderLayer* rootLayer, QPainter *p,
         int ax=0;
         int ay=0;
         renderer()->absolutePosition( ax, ay );
-        p->setPen(QPen(QColor("yellow"), 1, Qt::DotLine));
+        p->setPen(TQPen(TQColor("yellow"), 1, Qt::DotLine));
         p->setBrush( Qt::NoBrush );
         p->drawRect(ax, ay, width(), height());
     }
@@ -987,7 +987,7 @@ bool RenderLayer::nodeAtPoint(RenderObject::NodeInfo& info, int x, int y)
         sty += static_cast<RenderCanvas*>(renderer())->view()->contentsY();
     }
 
-    QRect damageRect(stx,sty, width(), height());
+    TQRect damageRect(stx,sty, width(), height());
     RenderLayer* insideLayer = nodeAtPointForLayer(this, info, x, y, damageRect);
 
     // Now determine if the result is inside an anchor.
@@ -1007,10 +1007,10 @@ bool RenderLayer::nodeAtPoint(RenderObject::NodeInfo& info, int x, int y)
 }
 
 RenderLayer* RenderLayer::nodeAtPointForLayer(RenderLayer* rootLayer, RenderObject::NodeInfo& info,
-                                 int xMousePos, int yMousePos, const QRect& hitTestRect)
+                                 int xMousePos, int yMousePos, const TQRect& hitTestRect)
 {
     // Calculate the clip rects we should use.
-    QRect layerBounds, bgRect, fgRect;
+    TQRect layerBounds, bgRect, fgRect;
     calculateRects(rootLayer, hitTestRect, layerBounds, bgRect, fgRect);
 
     // Ensure our lists are up-to-date.
@@ -1035,7 +1035,7 @@ RenderLayer* RenderLayer::nodeAtPointForLayer(RenderLayer* rootLayer, RenderObje
 
     // Now check our overflow objects.
     if (m_overflowList) {
-        QValueList<RenderLayer*>::iterator it = m_overflowList->end();
+        TQValueList<RenderLayer*>::iterator it = m_overflowList->end();
         for (--it; it != m_overflowList->end(); --it) {
             insideLayer = (*it)->nodeAtPointForLayer(rootLayer, info,  xMousePos, yMousePos, hitTestRect);
             if (insideLayer)
@@ -1076,8 +1076,8 @@ RenderLayer* RenderLayer::nodeAtPointForLayer(RenderLayer* rootLayer, RenderObje
     return 0;
 }
 
-void RenderLayer::calculateClipRects(const RenderLayer* rootLayer, QRect& overflowClipRect,
-                                     QRect& posClipRect, QRect& fixedClipRect)
+void RenderLayer::calculateClipRects(const RenderLayer* rootLayer, TQRect& overflowClipRect,
+                                     TQRect& posClipRect, TQRect& fixedClipRect)
 {
     if (parent())
         parent()->calculateClipRects(rootLayer, overflowClipRect, posClipRect, fixedClipRect);
@@ -1107,13 +1107,13 @@ void RenderLayer::calculateClipRects(const RenderLayer* rootLayer, QRect& overfl
         convertToLayerCoords(rootLayer, x, y);
 
         if (m_object->hasOverflowClip()) {
-            QRect newOverflowClip = m_object->getOverflowClipRect(x,y);
+            TQRect newOverflowClip = m_object->getOverflowClipRect(x,y);
             overflowClipRect  = newOverflowClip.intersect(overflowClipRect);
             if (m_object->isPositioned() || m_object->isRelPositioned())
                 posClipRect = newOverflowClip.intersect(posClipRect);
         }
         if (m_object->hasClip()) {
-            QRect newPosClip = m_object->getClipRect(x,y);
+            TQRect newPosClip = m_object->getClipRect(x,y);
             posClipRect = posClipRect.intersect(newPosClip);
             overflowClipRect = overflowClipRect.intersect(newPosClip);
             fixedClipRect = fixedClipRect.intersect(newPosClip);
@@ -1121,19 +1121,19 @@ void RenderLayer::calculateClipRects(const RenderLayer* rootLayer, QRect& overfl
     }
 }
 
-void RenderLayer::calculateRects(const RenderLayer* rootLayer, const QRect& paintDirtyRect, QRect& layerBounds,
-                                 QRect& backgroundRect, QRect& foregroundRect)
+void RenderLayer::calculateRects(const RenderLayer* rootLayer, const TQRect& paintDirtyRect, TQRect& layerBounds,
+                                 TQRect& backgroundRect, TQRect& foregroundRect)
 {
-    QRect overflowClipRect = paintDirtyRect;
-    QRect posClipRect = paintDirtyRect;
-    QRect fixedClipRect = paintDirtyRect;
+    TQRect overflowClipRect = paintDirtyRect;
+    TQRect posClipRect = paintDirtyRect;
+    TQRect fixedClipRect = paintDirtyRect;
     if (parent())
         parent()->calculateClipRects(rootLayer, overflowClipRect, posClipRect, fixedClipRect);
 
     int x = 0;
     int y = 0;
     convertToLayerCoords(rootLayer, x, y);
-    layerBounds = QRect(x,y,width(),height());
+    layerBounds = TQRect(x,y,width(),height());
 
     backgroundRect = m_object->style()->position() == FIXED ? fixedClipRect :
         (m_object->isPositioned() ? posClipRect : overflowClipRect);
@@ -1147,7 +1147,7 @@ void RenderLayer::calculateRects(const RenderLayer* rootLayer, const QRect& pain
 
         if (m_object->hasClip()) {
             // Clip applies to *us* as well, so go ahead and update the damageRect.
-            QRect newPosClip = m_object->getClipRect(x,y);
+            TQRect newPosClip = m_object->getClipRect(x,y);
             backgroundRect = backgroundRect.intersect(newPosClip);
             foregroundRect = foregroundRect.intersect(newPosClip);
         }
@@ -1158,7 +1158,7 @@ void RenderLayer::calculateRects(const RenderLayer* rootLayer, const QRect& pain
     }
 }
 
-bool RenderLayer::intersectsDamageRect(const QRect& layerBounds, const QRect& damageRect) const
+bool RenderLayer::intersectsDamageRect(const TQRect& layerBounds, const TQRect& damageRect) const
 {
     return (renderer()->isCanvas() || renderer()->isRoot() || renderer()->isBody() ||
             (renderer()->hasOverhangingFloats() && !renderer()->hasOverflowClip()) ||
@@ -1166,7 +1166,7 @@ bool RenderLayer::intersectsDamageRect(const QRect& layerBounds, const QRect& da
             layerBounds.intersects(damageRect));
 }
 
-bool RenderLayer::containsPoint(int x, int y, const QRect& damageRect) const
+bool RenderLayer::containsPoint(int x, int y, const TQRect& damageRect) const
 {
     return (renderer()->isCanvas() || renderer()->isRoot() || renderer()->isBody() ||
             renderer()->hasOverhangingFloats() ||
@@ -1249,8 +1249,8 @@ void RenderLayer::updateHoverActiveState(RenderObject::NodeInfo& info)
 // Sort the buffer from lowest z-index to highest.  The common scenario will have
 // most z-indices equal, so we optimize for that case (i.e., the list will be mostly
 // sorted already).
-static void sortByZOrder(QPtrVector<RenderLayer>* buffer,
-                         QPtrVector<RenderLayer>* mergeBuffer,
+static void sortByZOrder(TQPtrVector<RenderLayer>* buffer,
+                         TQPtrVector<RenderLayer>* mergeBuffer,
                          uint start, uint end)
 {
     if (start >= end)
@@ -1344,11 +1344,11 @@ void RenderLayer::updateZOrderLists()
 
     // Sort the two lists.
     if (m_posZOrderList) {
-        QPtrVector<RenderLayer> mergeBuffer;
+        TQPtrVector<RenderLayer> mergeBuffer;
         sortByZOrder(m_posZOrderList, &mergeBuffer, 0, m_posZOrderList->count());
     }
     if (m_negZOrderList) {
-        QPtrVector<RenderLayer> mergeBuffer;
+        TQPtrVector<RenderLayer> mergeBuffer;
         sortByZOrder(m_negZOrderList, &mergeBuffer, 0, m_negZOrderList->count());
     }
 
@@ -1363,7 +1363,7 @@ void RenderLayer::updateOverflowList()
     for (RenderLayer* child = firstChild(); child; child = child->nextSibling()) {
         if (child->isOverflowOnly()) {
             if (!m_overflowList)
-                m_overflowList = new QValueList<RenderLayer*>;
+                m_overflowList = new TQValueList<RenderLayer*>;
             m_overflowList->append(child);
         }
     }
@@ -1371,7 +1371,7 @@ void RenderLayer::updateOverflowList()
     m_overflowListDirty = false;
 }
 
-void RenderLayer::collectLayers(QPtrVector<RenderLayer>*& posBuffer, QPtrVector<RenderLayer>*& negBuffer)
+void RenderLayer::collectLayers(TQPtrVector<RenderLayer>*& posBuffer, TQPtrVector<RenderLayer>*& negBuffer)
 {
     // FIXME: A child render object or layer could override visibility.  Don't remove this
     // optimization though until RenderObject's nodeAtPoint is patched to understand what to do
@@ -1383,11 +1383,11 @@ void RenderLayer::collectLayers(QPtrVector<RenderLayer>*& posBuffer, QPtrVector<
     if (!isOverflowOnly()) {
 
         // Determine which buffer the child should be in.
-        QPtrVector<RenderLayer>*& buffer = (zIndex() >= 0) ? posBuffer : negBuffer;
+        TQPtrVector<RenderLayer>*& buffer = (zIndex() >= 0) ? posBuffer : negBuffer;
 
         // Create the buffer if it doesn't exist yet.
         if (!buffer)
-            buffer = new QPtrVector<RenderLayer>();
+            buffer = new TQPtrVector<RenderLayer>();
 
         // Resize by a power of 2 when our buffer fills up.
         if (buffer->count() == buffer->size())
@@ -1407,13 +1407,13 @@ void RenderLayer::collectLayers(QPtrVector<RenderLayer>*& posBuffer, QPtrVector<
 
 #ifdef ENABLE_DUMP
 #ifndef KDE_USE_FINAL
-static QTextStream &operator<<(QTextStream &ts, const QRect &r)
+static TQTextStream &operator<<(TQTextStream &ts, const TQRect &r)
 {
     return ts << "at (" << r.x() << "," << r.y() << ") size " << r.width() << "x" << r.height();
 }
 #endif
 
-static void write(QTextStream &ts, RenderObject& o, const QString& indent )
+static void write(TQTextStream &ts, RenderObject& o, const TQString& indent )
 {
     o.dump(ts, indent);
 
@@ -1423,9 +1423,9 @@ static void write(QTextStream &ts, RenderObject& o, const QString& indent )
     }
 }
 
-static void write(QTextStream &ts, const RenderLayer &l,
-                  const QRect& layerBounds, const QRect& backgroundClipRect, const QRect& clipRect,
-                  int layerType = 0, const QString& indent = QString::null)
+static void write(TQTextStream &ts, const RenderLayer &l,
+                  const TQRect& layerBounds, const TQRect& backgroundClipRect, const TQRect& clipRect,
+                  int layerType = 0, const TQString& indent = TQString::null)
 
 {
     ts << indent << "layer";
@@ -1452,11 +1452,11 @@ static void write(QTextStream &ts, const RenderLayer &l,
     ts << "\n";
 }
 
-static void writeLayers(QTextStream &ts, const RenderLayer* rootLayer, RenderLayer* l,
-                        const QRect& paintDirtyRect, const QString& indent)
+static void writeLayers(TQTextStream &ts, const RenderLayer* rootLayer, RenderLayer* l,
+                        const TQRect& paintDirtyRect, const TQString& indent)
 {
     // Calculate the clip rects we should use.
-    QRect layerBounds, damageRect, clipRectToApply;
+    TQRect layerBounds, damageRect, clipRectToApply;
     l->calculateRects(rootLayer, paintDirtyRect, layerBounds, damageRect, clipRectToApply);
 
     // Ensure our lists are up-to-date.
@@ -1464,8 +1464,8 @@ static void writeLayers(QTextStream &ts, const RenderLayer* rootLayer, RenderLay
     l->updateOverflowList();
 
     bool shouldPaint = l->intersectsDamageRect(layerBounds, damageRect);
-    QPtrVector<RenderLayer>* negList = l->negZOrderList();
-    QValueList<RenderLayer*>* ovfList = l->overflowList();
+    TQPtrVector<RenderLayer>* negList = l->negZOrderList();
+    TQValueList<RenderLayer*>* ovfList = l->overflowList();
     if (shouldPaint && negList && negList->count() > 0)
         write(ts, *l, layerBounds, damageRect, clipRectToApply, -1, indent);
 
@@ -1478,11 +1478,11 @@ static void writeLayers(QTextStream &ts, const RenderLayer* rootLayer, RenderLay
         write(ts, *l, layerBounds, damageRect, clipRectToApply, negList && negList->count() > 0, indent);
 
     if (ovfList) {
-        for (QValueList<RenderLayer*>::iterator it = ovfList->begin(); it != ovfList->end(); ++it)
+        for (TQValueList<RenderLayer*>::iterator it = ovfList->begin(); it != ovfList->end(); ++it)
             writeLayers(ts, rootLayer, *it, paintDirtyRect, indent);
     }
 
-    QPtrVector<RenderLayer>* posList = l->posZOrderList();
+    TQPtrVector<RenderLayer>* posList = l->posZOrderList();
     if (posList) {
         for (unsigned i = 0; i != posList->count(); ++i)
             writeLayers(ts, rootLayer, posList->at(i), paintDirtyRect, indent);
@@ -1490,11 +1490,11 @@ static void writeLayers(QTextStream &ts, const RenderLayer* rootLayer, RenderLay
 }
 
 
-void RenderLayer::dump(QTextStream &ts, const QString &ind)
+void RenderLayer::dump(TQTextStream &ts, const TQString &ind)
 {
     assert( renderer()->isCanvas() );
 
-    writeLayers(ts, this, this, QRect(xPos(), yPos(), width(), height()), ind);
+    writeLayers(ts, this, this, TQRect(xPos(), yPos(), width(), height()), ind);
 }
 
 
@@ -1757,7 +1757,7 @@ void Marquee::updateMarqueeStyle()
     }
 }
 
-void Marquee::timerEvent(QTimerEvent* /*evt*/)
+void Marquee::timerEvent(TQTimerEvent* /*evt*/)
 {
     if (m_layer->renderer()->needsLayout())
         return;

@@ -21,13 +21,13 @@
 
 #include <klistbox.h>
 #include <kpushbutton.h>
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kguiitem.h>
 
-EditList::EditList(QWidget *parent, const char *name)
-	: QWidget(parent, name)
+EditList::EditList(TQWidget *parent, const char *name)
+	: TQWidget(parent, name)
 {
 	list_ = new KListBox(this);
 	addbtn_ = new KPushButton(KGuiItem(i18n("Add..."), "filenew"), this);
@@ -35,7 +35,7 @@ EditList::EditList(QWidget *parent, const char *name)
 	delbtn_ = new KPushButton(KGuiItem(i18n("Delete"), "editdelete"), this);
 	defbtn_ = new KPushButton(KGuiItem(i18n("Default List"), "history"), this);
 
-	QGridLayout *m1 = new QGridLayout(this, 4, 2, 0, 0);
+	TQGridLayout *m1 = new TQGridLayout(this, 4, 2, 0, 0);
 	m1->setColStretch(0, 1);
 	m1->addMultiCellWidget(list_, 0, 3, 0, 1);
 	m1->addWidget(addbtn_, 0, 1);
@@ -43,11 +43,11 @@ EditList::EditList(QWidget *parent, const char *name)
 	m1->addWidget(delbtn_, 2, 1);
 	m1->addWidget(defbtn_, 3, 1);
 
-	connect(addbtn_, SIGNAL(clicked()), SIGNAL(add()));
-	connect(editbtn_, SIGNAL(clicked()), SLOT(slotEdit()));
-	connect(delbtn_, SIGNAL(clicked()), SLOT(slotDelete()));
-	connect(defbtn_, SIGNAL(clicked()), SIGNAL(defaultList()));
-	connect(list_, SIGNAL(highlighted(int)), SLOT(slotSelected(int)));
+	connect(addbtn_, TQT_SIGNAL(clicked()), TQT_SIGNAL(add()));
+	connect(editbtn_, TQT_SIGNAL(clicked()), TQT_SLOT(slotEdit()));
+	connect(delbtn_, TQT_SIGNAL(clicked()), TQT_SLOT(slotDelete()));
+	connect(defbtn_, TQT_SIGNAL(clicked()), TQT_SIGNAL(defaultList()));
+	connect(list_, TQT_SIGNAL(highlighted(int)), TQT_SLOT(slotSelected(int)));
 	slotSelected(-1);
 }
 
@@ -72,12 +72,12 @@ void EditList::slotSelected(int index)
 	delbtn_->setEnabled(index >= 0);
 }
 
-QString EditList::text(int index)
+TQString EditList::text(int index)
 {
 	return list_->text(index);
 }
 
-void EditList::setText(int index, const QString& s)
+void EditList::setText(int index, const TQString& s)
 {
 	if (list_->text(index) != s)
 	{
@@ -95,27 +95,27 @@ void EditList::clear()
 	slotSelected(-1);
 }
 
-void EditList::insertItem(const QString& s)
+void EditList::insertItem(const TQString& s)
 {
 	if (!list_->findItem(s, Qt::ExactMatch))
 		list_->insertItem(s);
 }
 
-void EditList::insertItem(const QPixmap& icon, const QString& s)
+void EditList::insertItem(const TQPixmap& icon, const TQString& s)
 {
 	if (!list_->findItem(s, Qt::ExactMatch))
 		list_->insertItem(icon, s);
 }
 
-void EditList::insertItems(const QStringList& l)
+void EditList::insertItems(const TQStringList& l)
 {
-	for (QStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
+	for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 		insertItem(*it);
 }
 
-QStringList EditList::items()
+TQStringList EditList::items()
 {
-	QStringList l;
+	TQStringList l;
 	for (uint i=0; i<list_->count(); i++)
 		l << list_->text(i);
 	return l;

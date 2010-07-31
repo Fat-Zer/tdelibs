@@ -9,9 +9,9 @@
 #ifndef FORM1_H
 #define FORM1_H
 
-#include <qstringlist.h>
-#include <qvariant.h>
-#include <qwidget.h>
+#include <tqstringlist.h>
+#include <tqvariant.h>
+#include <tqwidget.h>
 class QVBoxLayout;
 class QHBoxLayout;
 class QGridLayout;
@@ -30,17 +30,17 @@ class Form1 : public QWidget
     Q_OBJECT
 
 public:
-    Form1( QWidget* parent = 0, const char* name = 0 );
+    Form1( TQWidget* parent = 0, const char* name = 0 );
     ~Form1();
 
-    QGroupBox* GroupBox1;
-    QLabel* TextLabel1;
+    TQGroupBox* GroupBox1;
+    TQLabel* TextLabel1;
     KLineEdit* LineEdit1;
-    QPushButton* PushButton1;
-    QPushButton* PushButton1_4;
-    QListBox* ListBox1;
-    QPushButton* PushButton1_3;
-    QPushButton* PushButton1_2;
+    TQPushButton* PushButton1;
+    TQPushButton* PushButton1_4;
+    TQListBox* ListBox1;
+    TQPushButton* PushButton1_3;
+    TQPushButton* PushButton1_2;
 
     KLineEdit* edit;
     KHistoryCombo *combo;
@@ -49,19 +49,19 @@ protected slots:
     void slotList();
     void slotAdd();
     void slotRemove();
-    void slotHighlighted( const QString& );
+    void slotHighlighted( const TQString& );
 
 protected:
-    QStringList defaultItems() const;
+    TQStringList defaultItems() const;
 
-    QVBoxLayout* Form1Layout;
-    QVBoxLayout* GroupBox1Layout;
-    QVBoxLayout* Layout9;
-    QHBoxLayout* Layout1;
-    QHBoxLayout* Layout2;
-    QHBoxLayout* Layout3;
-    QHBoxLayout* Layout8;
-    QVBoxLayout* Layout7;
+    TQVBoxLayout* Form1Layout;
+    TQVBoxLayout* GroupBox1Layout;
+    TQVBoxLayout* Layout9;
+    TQHBoxLayout* Layout1;
+    TQHBoxLayout* Layout2;
+    TQHBoxLayout* Layout3;
+    TQHBoxLayout* Layout8;
+    TQVBoxLayout* Layout7;
 };
 
 #endif // FORM1_H

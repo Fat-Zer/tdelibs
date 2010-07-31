@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <qfileinfo.h>
+#include <tqfileinfo.h>
 
 #include <kapplication.h>
 #include "kconfigbackend.h"
@@ -39,9 +39,9 @@
 #include "kglobal.h"
 #include "kstandarddirs.h"
 #include "kstaticdeleter.h"
-#include <qtimer.h>
+#include <tqtimer.h>
 
-KConfig::KConfig( const QString& fileName,
+KConfig::KConfig( const TQString& fileName,
                  bool bReadOnly, bool bUseKderc, const char *resType )
   : KConfigBase(), bGroupImmutable(false), bFileImmutable(false),
     bForceGlobal(false)
@@ -104,9 +104,9 @@ void KConfig::rollback(bool bDeep)
     (*aIt).bDirty = false;
 }
 
-QStringList KConfig::groupList() const
+TQStringList KConfig::groupList() const
 {
-  QStringList retList;
+  TQStringList retList;
 
   KEntryMapConstIterator aIt = aEntryMap.begin();
   KEntryMapConstIterator aEnd = aEntryMap.end();
@@ -114,7 +114,7 @@ QStringList KConfig::groupList() const
   {
     while(aIt.key().mKey.isEmpty())
     {
-      QCString group = aIt.key().mGroup;
+      TQCString group = aIt.key().mGroup;
       ++aIt;
       while (true)
       {
@@ -127,7 +127,7 @@ QStringList KConfig::groupList() const
          if (!aIt.key().bDefault && !(*aIt).bDeleted)
          {
             if (group != "$Version") // Special case!
-               retList.append(QString::fromUtf8(group));
+               retList.append(TQString::fromUtf8(group));
             break; // Group is non-empty, added, next group
          }
          ++aIt;
@@ -138,11 +138,11 @@ QStringList KConfig::groupList() const
   return retList;
 }
 
-QMap<QString, QString> KConfig::entryMap(const QString &pGroup) const
+TQMap<TQString, TQString> KConfig::entryMap(const TQString &pGroup) const
 {
-  QCString pGroup_utf = pGroup.utf8();
+  TQCString pGroup_utf = pGroup.utf8();
   KEntryKey groupKey( pGroup_utf, 0 );
-  QMap<QString, QString> tmpMap;
+  TQMap<TQString, TQString> tmpMap;
 
   KEntryMapConstIterator aIt = aEntryMap.find(groupKey);
   if (aIt == aEntryMap.end())
@@ -152,7 +152,7 @@ QMap<QString, QString> KConfig::entryMap(const QString &pGroup) const
   {
     // Leave the default values out && leave deleted entries out
     if (!aIt.key().bDefault && !(*aIt).bDeleted)
-      tmpMap.insert(QString::fromUtf8(aIt.key().mKey), QString::fromUtf8((*aIt).mValue.data(), (*aIt).mValue.length()));
+      tmpMap.insert(TQString::fromUtf8(aIt.key().mKey), TQString::fromUtf8((*aIt).mValue.data(), (*aIt).mValue.length()));
   }
 
   return tmpMap;
@@ -175,9 +175,9 @@ void KConfig::reparseConfiguration()
   bFileImmutable = bReadOnly;
 }
 
-KEntryMap KConfig::internalEntryMap(const QString &pGroup) const
+KEntryMap KConfig::internalEntryMap(const TQString &pGroup) const
 {
-  QCString pGroup_utf = pGroup.utf8();
+  TQCString pGroup_utf = pGroup.utf8();
   KEntry aEntry;
   KEntryMapConstIterator aIt;
   KEntryKey aKey(pGroup_utf, 0);
@@ -251,7 +251,7 @@ KEntry KConfig::lookupData(const KEntryKey &_key) const
   }
 }
 
-bool KConfig::internalHasGroup(const QCString &group) const
+bool KConfig::internalHasGroup(const TQCString &group) const
 {
   KEntryKey groupKey( group, 0);
 
@@ -284,15 +284,15 @@ KLockFile::Ptr KConfig::lockFile(bool bGlobal)
   return aBackEnd->lockFile(bGlobal);
 }
 
-void KConfig::checkUpdate(const QString &id, const QString &updateFile)
+void KConfig::checkUpdate(const TQString &id, const TQString &updateFile)
 {
-  QString oldGroup = group();
+  TQString oldGroup = group();
   setGroup("$Version");
-  QString cfg_id = updateFile+":"+id;
-  QStringList ids = readListEntry("update_info");
+  TQString cfg_id = updateFile+":"+id;
+  TQStringList ids = readListEntry("update_info");
   if (!ids.contains(cfg_id))
   {
-     QStringList args;
+     TQStringList args;
      args << "--check" << updateFile;
      KApplication::kdeinitExecWait("kconf_update", args);
      reparseConfiguration();
@@ -300,22 +300,22 @@ void KConfig::checkUpdate(const QString &id, const QString &updateFile)
   setGroup(oldGroup);
 }
 
-KConfig* KConfig::copyTo(const QString &file, KConfig *config) const
+KConfig* KConfig::copyTo(const TQString &file, KConfig *config) const
 {
   if (!config)
-     config = new KConfig(QString::null, false, false);
+     config = new KConfig(TQString::null, false, false);
   config->backEnd->changeFileName(file, "config", false);
   config->setReadOnly(false);
   config->bFileImmutable = false;
   config->backEnd->mConfigState = ReadWrite;
 
-  QStringList groups = groupList();
-  for(QStringList::ConstIterator it = groups.begin();
+  TQStringList groups = groupList();
+  for(TQStringList::ConstIterator it = groups.begin();
       it != groups.end(); ++it)
   {
-     QMap<QString, QString> map = entryMap(*it);
+     TQMap<TQString, TQString> map = entryMap(*it);
      config->setGroup(*it);
-     for (QMap<QString,QString>::Iterator it2  = map.begin();
+     for (TQMap<TQString,TQString>::Iterator it2  = map.begin();
           it2 != map.end(); ++it2)
      {
         config->writeEntry(it2.key(), it2.data());
@@ -328,14 +328,14 @@ KConfig* KConfig::copyTo(const QString &file, KConfig *config) const
 void KConfig::virtual_hook( int id, void* data )
 { KConfigBase::virtual_hook( id, data ); }
 
-static KStaticDeleter< QValueList<KSharedConfig*> > sd;
-QValueList<KSharedConfig*> *KSharedConfig::s_list = 0;
+static KStaticDeleter< TQValueList<KSharedConfig*> > sd;
+TQValueList<KSharedConfig*> *KSharedConfig::s_list = 0;
 
-KSharedConfig::Ptr KSharedConfig::openConfig(const QString& fileName, bool readOnly, bool useKDEGlobals )
+KSharedConfig::Ptr KSharedConfig::openConfig(const TQString& fileName, bool readOnly, bool useKDEGlobals )
 {
   if (s_list)
   {
-     for(QValueList<KSharedConfig*>::ConstIterator it = s_list->begin();
+     for(TQValueList<KSharedConfig*>::ConstIterator it = s_list->begin();
          it != s_list->end(); ++it)
      {
         if ((*it)->backEnd->fileName() == fileName &&
@@ -347,12 +347,12 @@ KSharedConfig::Ptr KSharedConfig::openConfig(const QString& fileName, bool readO
   return new KSharedConfig(fileName, readOnly, useKDEGlobals);
 }
 
-KSharedConfig::KSharedConfig( const QString& fileName, bool readonly, bool usekdeglobals)
+KSharedConfig::KSharedConfig( const TQString& fileName, bool readonly, bool usekdeglobals)
  : KConfig(fileName, readonly, usekdeglobals)
 {
   if (!s_list)
   {
-    sd.setObject(s_list, new QValueList<KSharedConfig*>);
+    sd.setObject(s_list, new TQValueList<KSharedConfig*>);
   }
 
   s_list->append(this);

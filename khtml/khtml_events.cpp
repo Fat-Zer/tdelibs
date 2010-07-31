@@ -27,7 +27,7 @@ class khtml::MouseEvent::MouseEventPrivate
 {
 };
 
-khtml::MouseEvent::MouseEvent( const char *name, QMouseEvent *qmouseEvent, int x, int y,
+khtml::MouseEvent::MouseEvent( const char *name, TQMouseEvent *qmouseEvent, int x, int y,
                                const DOM::DOMString &url, const DOM::DOMString& target,
 	                const DOM::Node &innerNode )
 : KParts::Event( name ), m_qmouseEvent( qmouseEvent ), m_x( x ), m_y( y ),
@@ -78,7 +78,7 @@ public:
   }
 };
 
-khtml::DrawContentsEvent::DrawContentsEvent( QPainter *painter, int clipx, int clipy, int clipw, int cliph )
+khtml::DrawContentsEvent::DrawContentsEvent( TQPainter *painter, int clipx, int clipy, int clipw, int cliph )
   : KParts::Event( s_strDrawContentsEvent ), m_painter( painter ), m_clipx( clipx ), m_clipy( clipy ),
     m_clipw( clipw ), m_cliph( cliph )
 {

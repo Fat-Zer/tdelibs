@@ -44,9 +44,9 @@
 #include <sys/select.h>                // Needed on some systems.
 #endif
 
-#include <qglobal.h>
-#include <qcstring.h>
-#include <qfile.h>
+#include <tqglobal.h>
+#include <tqcstring.h>
+#include <tqfile.h>
 
 #include <kconfig.h>
 #include <kdebug.h>
@@ -76,7 +76,7 @@ bool PtyProcess::checkPid(pid_t pid)
 {
 	KConfig* config = KGlobal::config();
 	config->setGroup("super-user-command");
-	QString superUserCommand = config->readEntry("super-user-command", DEFAULT_SUPER_USER_COMMAND);
+	TQString superUserCommand = config->readEntry("super-user-command", DEFAULT_SUPER_USER_COMMAND);
 	//sudo does not accept signals from user so we except it
 	if (superUserCommand == "sudo") {
 		return true;
@@ -172,10 +172,10 @@ const QCStringList& PtyProcess::environment() const
  * one time.
  */
 
-QCString PtyProcess::readLine(bool block)
+TQCString PtyProcess::readLine(bool block)
 {
     int pos;
-    QCString ret;
+    TQCString ret;
 
     if (!m_Inbuf.isEmpty()) 
     {
@@ -244,9 +244,9 @@ QCString PtyProcess::readLine(bool block)
     return ret;
 }
 
-QCString PtyProcess::readAll(bool block)
+TQCString PtyProcess::readAll(bool block)
 {
-    QCString ret;
+    TQCString ret;
 
     if (!m_Inbuf.isEmpty()) 
     {
@@ -299,7 +299,7 @@ QCString PtyProcess::readAll(bool block)
 }
 
 
-void PtyProcess::writeLine(const QCString &line, bool addnl)
+void PtyProcess::writeLine(const TQCString &line, bool addnl)
 {
     if (!line.isEmpty())
         write(m_Fd, line, line.length());
@@ -308,9 +308,9 @@ void PtyProcess::writeLine(const QCString &line, bool addnl)
 }
 
 
-void PtyProcess::unreadLine(const QCString &line, bool addnl)
+void PtyProcess::unreadLine(const TQCString &line, bool addnl)
 {
-    QCString tmp = line;
+    TQCString tmp = line;
     if (addnl)
         tmp += '\n';
     if (!tmp.isEmpty())
@@ -321,7 +321,7 @@ void PtyProcess::unreadLine(const QCString &line, bool addnl)
  * Fork and execute the command. This returns in the parent.
  */
 
-int PtyProcess::exec(const QCString &command, const QCStringList &args)
+int PtyProcess::exec(const TQCString &command, const QCStringList &args)
 {
     kdDebug(900) << k_lineinfo << "Running `" << command << "'\n";
 
@@ -370,18 +370,18 @@ int PtyProcess::exec(const QCString &command, const QCStringList &args)
 
     // From now on, terminal output goes through the tty.
 
-    QCString path;
+    TQCString path;
     if (command.contains('/'))
         path = command;
     else 
     {
-        QString file = KStandardDirs::findExe(command);
+        TQString file = KStandardDirs::findExe(command);
         if (file.isEmpty()) 
         {
             kdError(900) << k_lineinfo << command << " not found\n"; 
             _exit(1);
         } 
-        path = QFile::encodeName(file);
+        path = TQFile::encodeName(file);
     }
 
     const char **argp = (const char **)malloc((args.count()+2)*sizeof(char *));
@@ -506,7 +506,7 @@ int PtyProcess::waitForChild()
 
         if (ret) 
         {
-            QCString output = readAll(false);
+            TQCString output = readAll(false);
             bool lineStart = true;
             while (!output.isNull()) 
             {

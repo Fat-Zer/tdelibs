@@ -131,13 +131,13 @@ Discussion\
 If you want to talk about this code feel free to mail us.";
 
 BackgroundTest::BackgroundTest()
-    : QObject( 0 )
+    : TQObject( 0 )
 {
     m_checker = new BackgroundChecker( Broker::openBroker(), this );
-    connect( m_checker, SIGNAL(done()),
-             SLOT(slotDone()) );
-    connect( m_checker, SIGNAL(misspelling(const QString&, int)),
-             SLOT(slotMisspelling(const QString&, int)) );
+    connect( m_checker, TQT_SIGNAL(done()),
+             TQT_SLOT(slotDone()) );
+    connect( m_checker, TQT_SIGNAL(misspelling(const TQString&, int)),
+             TQT_SLOT(slotMisspelling(const TQString&, int)) );
     m_len = strlen( text );
     m_checker->checkText( text );
     m_timer.start();
@@ -147,10 +147,10 @@ void BackgroundTest::slotDone()
 {
     kdDebug()<<"Text of length "<<m_len<<" checked in "
              << m_timer.elapsed() << " msec."<<endl;
-    QApplication::exit();
+    TQApplication::exit();
 }
 
-void BackgroundTest::slotMisspelling( const QString& word, int start )
+void BackgroundTest::slotMisspelling( const TQString& word, int start )
 {
     kdDebug()<<"Misspelling \""<< word << "\" at " << start << endl;
     m_checker->continueChecking();

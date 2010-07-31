@@ -25,7 +25,7 @@
 #include <kdecore/kdelibs_export.h>
 
 #ifdef  __cplusplus
-#include <qstring.h>
+#include <tqstring.h>
 
 extern "C" {
 #endif
@@ -59,13 +59,13 @@ KDEWIN32_EXPORT void win32_slashify(char *path, int maxlen);
  @param item is an item inside subKey or "" if default folder's value should be returned
  @param ok if not null, will be set to true on success and false on failure
 */
-KDEWIN32_EXPORT QString getWin32RegistryValue(HKEY key, const QString& subKey, 
-	const QString& item, bool *ok = 0);
+KDEWIN32_EXPORT TQString getWin32RegistryValue(HKEY key, const TQString& subKey, 
+	const TQString& item, bool *ok = 0);
 
 /**
  \return a value from MS Windows native registry for shell folder \a folder.
 */
-inline QString getWin32ShellFoldersPath(const QString& folder) {
+inline TQString getWin32ShellFoldersPath(const TQString& folder) {
 	return getWin32RegistryValue(HKEY_CURRENT_USER, 
 			"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", folder);
 }
@@ -76,7 +76,7 @@ inline QString getWin32ShellFoldersPath(const QString& folder) {
  Used by KPropertiesDialog, if possible.
 */
 KDEWIN32_EXPORT
-bool showWin32FilePropertyDialog(const QString& fileName);
+bool showWin32FilePropertyDialog(const TQString& fileName);
 
 /**
  \return two-letter locale name (like "en" or "pl") taken from MS Windows native registry.
@@ -84,12 +84,12 @@ bool showWin32FilePropertyDialog(const QString& fileName);
  Used e.g. by kbuildsycoca application.
 */
 KDEWIN32_EXPORT
-QCString getWin32LocaleName();
+TQCString getWin32LocaleName();
 
 /*! Temporary solutiuon
- \return a KFileDialog-compatible filter string converted to QFileDialog compatible one. 
+ \return a KFileDialog-compatible filter string converted to TQFileDialog compatible one. 
  This is temporary solution for kdelibs/win32... */
-KDEWIN32_EXPORT QString convertKFileDialogFilterToQFileDialogFilter(const QString& filter);
+KDEWIN32_EXPORT TQString convertKFileDialogFilterToQFileDialogFilter(const TQString& filter);
 
 #endif //__cplusplus
 

@@ -27,9 +27,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <qstring.h>
-#include <qfile.h>
-#include <qobject.h>
+#include <tqstring.h>
+#include <tqfile.h>
+#include <tqobject.h>
 
 #include <kio/global.h>
 
@@ -42,7 +42,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @author Andreas F. Pour <bugs@mieterra.com>
  * @author David Faure <faure@kde.org> (integration into KDE and progress signal)
  */
-class KIO_EXPORT_DEPRECATED KShred : public QObject { // KDE4: remove
+class KIO_EXPORT_DEPRECATED KShred : public TQObject { // KDE4: remove
 
   Q_OBJECT
 
@@ -52,7 +52,7 @@ class KIO_EXPORT_DEPRECATED KShred : public QObject { // KDE4: remove
 	 * Initialize the class using the name of the file to 'shred'.
 	 * @param fileName fully qualified name of the file to shred.
 	 */
-        KShred(QString fileName);
+        KShred(TQString fileName);
 
 	/*
 	 * Destructor for the class.
@@ -105,7 +105,7 @@ class KIO_EXPORT_DEPRECATED KShred : public QObject { // KDE4: remove
          * No need to create an instance of the class.
 	 * @param fileName fully qualified name of the file to shred.
          */
-        static bool shred(QString fileName);
+        static bool shred(TQString fileName);
 
     signals:
         /**
@@ -118,7 +118,7 @@ class KIO_EXPORT_DEPRECATED KShred : public QObject { // KDE4: remove
          * Shows a message in the progress dialog
 	 * @param message the message to display
          */
-        void infoMessage(const QString & message);
+        void infoMessage(const TQString & message);
 
     private:
 	/**
@@ -134,7 +134,7 @@ class KIO_EXPORT_DEPRECATED KShred : public QObject { // KDE4: remove
 	/**
 	 * @internal structure for the file information
 	 */
-        QFile *file;
+        TQFile *file;
 
 	/**
 	 * @internal for the size of the file

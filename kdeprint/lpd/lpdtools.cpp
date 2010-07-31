@@ -21,7 +21,7 @@
 #include "driver.h"
 #include "kmprinter.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <klocale.h>
 
 static const char *pt_pagesize[] = {
@@ -53,7 +53,7 @@ void setupBooleanOption(DrBooleanOption *opt)
 	}
 }
 
-QString nextWord(const QString& s, int& pos)
+TQString nextWord(const TQString& s, int& pos)
 {
 	int	p1(pos), p2(0);
 	while (s[p1].isSpace() && p1 < (int)s.length()) p1++;
@@ -73,9 +73,9 @@ QString nextWord(const QString& s, int& pos)
 
 //************************************************************************************************
 
-bool PrintcapEntry::readLine(const QString& line)
+bool PrintcapEntry::readLine(const TQString& line)
 {
-	QStringList	l = QStringList::split(':',line,false);
+	QStringList	l = TQStringList::split(':',line,false);
 	if (l.count() > 0)
 	{
 		m_name = l[0];
@@ -97,12 +97,12 @@ bool PrintcapEntry::readLine(const QString& line)
 	return false;
 }
 
-void PrintcapEntry::writeEntry(QTextStream& t)
+void PrintcapEntry::writeEntry(TQTextStream& t)
 {
 	if (m_comment.isEmpty()) t << "# Entry for printer " << m_name << endl;
 	else t << m_comment << endl;
 	t << m_name << ":";
-	for (QMap<QString,QString>::ConstIterator it=m_args.begin(); it!=m_args.end(); ++it)
+	for (TQMap<TQString,TQString>::ConstIterator it=m_args.begin(); it!=m_args.end(); ++it)
 	{
 		t << "\\\n\t:" << it.key();
 		if (!it.data().isEmpty())
@@ -112,7 +112,7 @@ void PrintcapEntry::writeEntry(QTextStream& t)
 	t << endl << endl;
 }
 
-QString PrintcapEntry::comment(int index)
+TQString PrintcapEntry::comment(int index)
 {
 	QString	w;
 	if (m_comment.startsWith("##PRINTTOOL3##"))
@@ -129,7 +129,7 @@ KMPrinter* PrintcapEntry::createPrinter()
 	KMPrinter	*printer = new KMPrinter();
 	printer->setName(m_name);
 	printer->setPrinterName(m_name);
-	printer->setInstanceName(QString::null);
+	printer->setInstanceName(TQString::null);
 	printer->setState(KMPrinter::Idle);
 	printer->setType(KMPrinter::Printer);
 	return printer;
@@ -137,7 +137,7 @@ KMPrinter* PrintcapEntry::createPrinter()
 
 //************************************************************************************************
 
-QStringList splitPrinttoolLine(const QString& line)
+TQStringList splitPrinttoolLine(const TQString& line)
 {
 	QStringList	l;
 	int 		p = line.find(':');
@@ -164,7 +164,7 @@ QStringList splitPrinttoolLine(const QString& line)
 	return l;
 }
 
-bool PrinttoolEntry::readEntry(QTextStream& t)
+bool PrinttoolEntry::readEntry(TQTextStream& t)
 {
 	QString	line;
 	QStringList	args;
@@ -253,15 +253,15 @@ DrMain* PrinttoolEntry::createDriver()
 			lopt->setName("RESOLUTION");
 			lopt->set("text",i18n("Resolution"));
 			gr->addOption(lopt);
-			QPtrListIterator<Resolution>	it(m_resolutions);
+			TQPtrListIterator<Resolution>	it(m_resolutions);
 			for (int i=0;it.current();++it,i++)
 			{
 				ch = new DrBase;
-				ch->setName(QString::fromLatin1("%1x%2").arg(it.current()->xdpi).arg(it.current()->ydpi));
+				ch->setName(TQString::fromLatin1("%1x%2").arg(it.current()->xdpi).arg(it.current()->ydpi));
 				if (it.current()->comment.isEmpty())
-					ch->set("text",QString::fromLatin1("%1x%2 DPI").arg(it.current()->xdpi).arg(it.current()->ydpi));
+					ch->set("text",TQString::fromLatin1("%1x%2 DPI").arg(it.current()->xdpi).arg(it.current()->ydpi));
 				else
-					ch->set("text",QString::fromLatin1("%2x%3 DPI (%1)").arg(it.current()->comment).arg(it.current()->xdpi).arg(it.current()->ydpi));
+					ch->set("text",TQString::fromLatin1("%2x%3 DPI (%1)").arg(it.current()->comment).arg(it.current()->xdpi).arg(it.current()->ydpi));
 				lopt->addChoice(ch);
 			}
 			QString	defval = lopt->choices()->first()->name();
@@ -276,18 +276,18 @@ DrMain* PrinttoolEntry::createDriver()
 			lopt->setName("COLOR");
 			lopt->set("text",i18n("Color depth"));
 			gr->addOption(lopt);
-			QPtrListIterator<BitsPerPixel>	it(m_depths);
+			TQPtrListIterator<BitsPerPixel>	it(m_depths);
 			for (int i=0;it.current();++it,i++)
 			{
 				ch = new DrBase;
 				if (m_gsdriver != "uniprint")
-					ch->setName(QString::fromLatin1("-dBitsPerPixel=%1").arg(it.current()->bpp));
+					ch->setName(TQString::fromLatin1("-dBitsPerPixel=%1").arg(it.current()->bpp));
 				else
 					ch->setName(it.current()->bpp);
 				if (it.current()->comment.isEmpty())
 					ch->set("text",it.current()->bpp);
 				else
-					ch->set("text",QString::fromLatin1("%1 - %2").arg(it.current()->bpp).arg(it.current()->comment));
+					ch->set("text",TQString::fromLatin1("%1 - %2").arg(it.current()->bpp).arg(it.current()->comment));
 				lopt->addChoice(ch);
 			}
 			QString	defval = lopt->choices()->first()->name();
@@ -333,7 +333,7 @@ DrMain* PrinttoolEntry::createDriver()
 	while (pt_nup[i] != -1)
 	{
 		ch = new DrBase();
-		ch->setName(QString::number(pt_nup[i++]));
+		ch->setName(TQString::number(pt_nup[i++]));
 		ch->set("text",ch->name());
 		lopt->addChoice(ch);
 	}
@@ -392,7 +392,7 @@ DrMain* PrinttoolEntry::createDriver()
 
 //************************************************************************************************
 
-QString getPrintcapLine(QTextStream& t, QString *lastcomment)
+TQString getPrintcapLine(TQTextStream& t, TQString *lastcomment)
 {
 	QString	line, buffer, comm;
 	while (!t.eof())

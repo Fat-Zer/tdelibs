@@ -20,13 +20,13 @@
 #ifndef _KJANUS_WIDGET_H_
 #define _KJANUS_WIDGET_H_
 
-#include <qptrlist.h>
-#include <qpixmap.h>
-#include <qsplitter.h>
+#include <tqptrlist.h>
+#include <tqpixmap.h>
+#include <tqsplitter.h>
 
 #include <klistbox.h>
-#include <qstringlist.h>
-#include <qmap.h>
+#include <tqstringlist.h>
+#include <tqmap.h>
 
 class KListView;
 
@@ -50,7 +50,7 @@ class KGuiItem;
  * This class provides KJanusWidget::TreeList, KJanusWidget::IconList,
  * KJanusWidget::Tabbed, KJanusWidget::Plain and KJanusWidget::Swallow layouts.
  *
- * For all modes it is important that you specify the QWidget::minimumSize()
+ * For all modes it is important that you specify the TQWidget::minimumSize()
  * on the page, plain widget or the swallowed widget. If you use a QLayout
  * on the page, plain widget or the swallowed widget this will be taken care
  * of automatically. The size is used when the KJanusWidget determines its
@@ -59,7 +59,7 @@ class KGuiItem;
  *
  * Pages that have been added in TreeList, IconList or Tabbed mode can be
  * removed by simply deleting the page. However, it would be preferable to use
- * the QObject::deleteLater() function on the page as the main event loop
+ * the TQObject::deleteLater() function on the page as the main event loop
  * may have optimized UI update events of the page by scheduling them for later.
  *
  * @author Espen Sand (espen@kde.org)
@@ -72,7 +72,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
     class IconListBox : public KListBox
     {
       public:
-        IconListBox( QWidget *parent=0, const char *name=0, WFlags f=0 );
+        IconListBox( TQWidget *parent=0, const char *name=0, WFlags f=0 );
 	void updateMinimumHeight();
 	void updateWidth();
 	void invalidateHeight();
@@ -103,7 +103,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
        */
       Tabbed,
       /**
-       * The Plain face provides an empty widget (QFrame) where you can place your
+       * The Plain face provides an empty widget (TQFrame) where you can place your
        * widgets. The KJanusWidget makes no assumptions regarding the contents so
        * you are free to add whatever you want.
        */
@@ -136,7 +136,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * @param face The kind of dialog, Use TreeList, Tabbed, Plain or
      * Swallow.
      */
-    KJanusWidget( QWidget *parent=0, const char *name=0, int face=Plain );
+    KJanusWidget( TQWidget *parent=0, const char *name=0, int face=Plain );
 
     /**
      * Destructor.
@@ -179,7 +179,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      *
      * @return The minimum size.
      */
-    virtual QSize minimumSizeHint() const;
+    virtual TQSize minimumSizeHint() const;
 
     /**
      * Returns the recommended size for the widget in order to be displayed
@@ -187,14 +187,14 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      *
      * @return The recommended size.
      */
-    virtual QSize sizeHint() const;
+    virtual TQSize sizeHint() const;
 
     /**
      * Returns the empty widget that is available in Plain mode.
      *
      * @return The widget or 0 if the face in not Plain.
      */
-    virtual QFrame *plainPage();
+    virtual TQFrame *plainPage();
 
     /**
      * Add a new page when the class is used in TreeList, IconList or Tabbed
@@ -215,8 +215,8 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * @return The empty page or 0 if the face is not TreeList, IconList or
      *         Tabbed.
      */
-    virtual QFrame *addPage(const QString &item,const QString &header=QString::null,
-		    const QPixmap &pixmap=QPixmap() );
+    virtual TQFrame *addPage(const TQString &item,const TQString &header=TQString::null,
+		    const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * This is like addPage just above, with the difference that the first
@@ -232,14 +232,14 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
 	 * Deleting the returned frame will cause the listitem or tab to be
 	 * removed (you can re-add a page with the same name later.
      **/
-     virtual QFrame *addPage(const QStringList &items, const QString &header=QString::null,
-		    const QPixmap &pixmap=QPixmap() );
+     virtual TQFrame *addPage(const TQStringList &items, const TQString &header=TQString::null,
+		    const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * Add a new page when the class is used in TreeList, IconList or Tabbed
      * mode. The returned widget is empty and you must add your widgets
      * as children to this widget. The returned widget is a QVBox
-     * so it contains a QVBoxLayout layout that lines up the child widgets
+     * so it contains a TQVBoxLayout layout that lines up the child widgets
      * are vertically.
      *
 	 * Deleting the returned frame will cause the listitem or tab to be
@@ -254,9 +254,9 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      *
      * @return The empty page or 0 if the face is not TreeList, IconList or
      *         Tabbed.  */
-    virtual QVBox *addVBoxPage( const QString &item,
-			const QString &header=QString::null,
-			const QPixmap &pixmap=QPixmap() );
+    virtual TQVBox *addVBoxPage( const TQString &item,
+			const TQString &header=TQString::null,
+			const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * This is like addVBoxPage just above, with the difference that the first
@@ -270,15 +270,15 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * Deleting the returned frame will cause the listitem or tab to be
      * removed (you can re-add a page with the same name later.
      **/
-    virtual QVBox *addVBoxPage( const QStringList &items,
-			const QString &header=QString::null,
-			const QPixmap &pixmap=QPixmap() );
+    virtual TQVBox *addVBoxPage( const TQStringList &items,
+			const TQString &header=TQString::null,
+			const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * Add a new page when the class is used in TreeList, IconList or Tabbed
      * mode. The returned widget is empty and you must add your widgets
      * as children to this widget. The returned widget is a QHBox
-     * so it contains a QHBoxLayout layout that lines up the child widgets
+     * so it contains a TQHBoxLayout layout that lines up the child widgets
      * are horizontally.
      *
      * Deleting the returned frame will cause the listitem or tab to be
@@ -294,9 +294,9 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * @return The empty page or 0 if the face is not TreeList, IconList or
      *         Tabbed.
      */
-    virtual QHBox *addHBoxPage( const QString &itemName,
-			const QString &header=QString::null,
-			const QPixmap &pixmap=QPixmap() );
+    virtual TQHBox *addHBoxPage( const TQString &itemName,
+			const TQString &header=TQString::null,
+			const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * This is like addHBoxPage just above, with the difference that the first
@@ -310,23 +310,23 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * Deleting the returned frame will cause the listitem or tab to be
      * removed (you can re-add a page with the same name later.
      **/
-    virtual QHBox *addHBoxPage( const QStringList &items,
-			const QString &header=QString::null,
-			const QPixmap &pixmap=QPixmap() );
+    virtual TQHBox *addHBoxPage( const TQStringList &items,
+			const TQString &header=TQString::null,
+			const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * Add a new page when the class is used in either TreeList or Tabbed
      * mode. The returned widget is empty and you must add your widgets
      * as children to this widget. The returned widget is a QGrid
-     * so it contains a QGridLayout layout that places up the child widgets
+     * so it contains a TQGridLayout layout that places up the child widgets
      * in a grid.
      *
      * Deleting the returned frame will cause the listitem or tab to be
      * removed (you can re-add a page with the same name later.
      *
-     * @param n Specifies the number of columns if 'dir' is QGrid::Horizontal
-     *          or the number of rows if 'dir' is QGrid::Vertical.
-     * @param dir Can be QGrid::Horizontal or QGrid::Vertical.
+     * @param n Specifies the number of columns if 'dir' is TQGrid::Horizontal
+     *          or the number of rows if 'dir' is TQGrid::Vertical.
+     * @param dir Can be TQGrid::Horizontal or TQGrid::Vertical.
      * @param itemName String used in the list or Tab item.
      * @param header A longer string used in TreeList and IconList mode to
      *        describe the contents of a page. If empty, the item string
@@ -337,10 +337,10 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * @return The empty page or 0 if the face is not TreeList, IconList or
      *         Tabbed.
      */
-    virtual QGrid *addGridPage( int n, Orientation dir,
-			const QString &itemName,
-			const QString &header=QString::null,
-			const QPixmap &pixmap=QPixmap() );
+    virtual TQGrid *addGridPage( int n, Orientation dir,
+			const TQString &itemName,
+			const TQString &header=TQString::null,
+			const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * This is like addGridPage just above, with the difference that the first
@@ -354,10 +354,10 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * Deleting the returned frame will cause the listitem or tab to be
      * removed (you can re-add a page with the same name later.
      **/
-    virtual QGrid *addGridPage( int n, Orientation dir,
-			const QStringList &items,
-			const QString &header=QString::null,
-			const QPixmap &pixmap=QPixmap() );
+    virtual TQGrid *addGridPage( int n, Orientation dir,
+			const TQStringList &items,
+			const TQString &header=TQString::null,
+			const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * @short Removes a page created with addPage, addVBoxPage,
@@ -368,7 +368,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * @param page The widget returned by addPage , addVBoxPage ,
      * addHBoxPage or addGridPage .
      */
-    void removePage( QWidget *page );
+    void removePage( TQWidget *page );
 
 
     /**
@@ -387,7 +387,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * @return The index or -1 if the face is not Tabbed, TreeList or
      *         IconList
      */
-    virtual int pageIndex( QWidget *widget ) const;
+    virtual int pageIndex( TQWidget *widget ) const;
 
     /**
      * Defines the widget to be swallowed.
@@ -398,7 +398,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * @param widget The widget to be swallowed. If 0, then an empty rectangle
      * is displayed.
      */
-    virtual bool setSwallowedWidget( QWidget *widget );
+    virtual bool setSwallowedWidget( TQWidget *widget );
 
     /**
      * This function has only effect in TreeList mode.
@@ -430,7 +430,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * This function has only effect in TreeList mode.
      *
      * This tells the widgets whether the root should be decorated.
-     * For details see QListView::setRootIsDecorated
+     * For details see TQListView::setRootIsDecorated
      *
      * @param state Root will be decorated if true.
      **/
@@ -459,7 +459,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      *                KJanusWidget, too. To be on the save side just don't keep
      *                the pointer to this widget.
      */
-    /*virtual*/ void addWidgetBelowList( QWidget * widget ); // ### KDE4
+    /*virtual*/ void addWidgetBelowList( TQWidget * widget ); // ### KDE4
 
     /**
      * Add a button at the bottom of the TreeList/IconList.
@@ -471,7 +471,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      *
      * @since 3.2
      */
-    /*virtual*/ void addButtonBelowList( const QString & text, QObject * recv,
+    /*virtual*/ void addButtonBelowList( const TQString & text, TQObject * recv,
                     const char * slot ); //### KDE4
 
     /**
@@ -485,7 +485,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      *
      * @since 3.2
      */
-    /*virtual*/ void addButtonBelowList( const KGuiItem & guiitem, QObject *
+    /*virtual*/ void addButtonBelowList( const KGuiItem & guiitem, TQObject *
                     recv, const char * slot ); //### KDE4
 
     /**
@@ -507,14 +507,14 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * @param path The path for which this icon should be shown.
      * @param pixmap The icon used.
      **/
-    virtual void setFolderIcon(const QStringList &path, const QPixmap &pixmap);
+    virtual void setFolderIcon(const TQStringList &path, const TQPixmap &pixmap);
     /**
      * Returns the title string associated with a page index in TreeList or IconList mode.
      * @param index The index of the page or null if there is no such page.
      * @see pageIndex()
      * @since 3.2
      */
-    /*virtual*/ QString pageTitle(int index) const;
+    /*virtual*/ TQString pageTitle(int index) const;
     /**
      * Returns the page widget associated with a page index or null if there is
      * no such page.
@@ -522,7 +522,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * @see pageIndex()
      * @since 3.2
      */
-    /*virtual*/ QWidget *pageWidget(int index) const;
+    /*virtual*/ TQWidget *pageWidget(int index) const;
 
   signals:
     /**
@@ -530,7 +530,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * @param page the new page. 
      * @since 3.4
      */
-    void aboutToShowPage(QWidget *page);
+    void aboutToShowPage(TQWidget *page);
 
   public slots:
     /**
@@ -543,7 +543,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * Reimplemented to handle the splitter width when the the face
      * is TreeList
      */
-    virtual void showEvent( QShowEvent * );
+    virtual void showEvent( TQShowEvent * );
 
     /**
      * This function is used internally when in IconList mode. If you
@@ -553,46 +553,46 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * @param o Object that has received an event.
      * @param e The event.
      */
-    virtual bool eventFilter( QObject *o, QEvent *e );
+    virtual bool eventFilter( TQObject *o, TQEvent *e );
 
   private slots:
     bool slotShowPage();
     void slotFontChanged();
-    void slotItemClicked(QListViewItem *it);
-    void pageGone(QObject *obj); // signal from the added page's "destroyed" signal
-    void slotReopen(QListViewItem *item);
+    void slotItemClicked(TQListViewItem *it);
+    void pageGone(TQObject *obj); // signal from the added page's "destroyed" signal
+    void slotReopen(TQListViewItem *item);
 
   protected:
-    bool showPage( QWidget *w );
-    void addPageWidget( QFrame *page, const QStringList &items,
-			const QString &header, const QPixmap &pixmap );
-    void InsertTreeListItem(const QStringList &items, const QPixmap &pixmap, QFrame *page);
-    QWidget *FindParent();
+    bool showPage( TQWidget *w );
+    void addPageWidget( TQFrame *page, const TQStringList &items,
+			const TQString &header, const TQPixmap &pixmap );
+    void InsertTreeListItem(const TQStringList &items, const TQPixmap &pixmap, TQFrame *page);
+    TQWidget *FindParent();
 
   private:
     bool mValid;
 
     // Obsolete members. Remove in KDE 4.
-    QPtrList<QWidget> *mPageList;
-    QStringList *mTitleList;
+    TQPtrList<TQWidget> *mPageList;
+    TQStringList *mTitleList;
 
     int          mFace;
     KListView    *mTreeList;
     IconListBox  *mIconList;
-    QWidgetStack *mPageStack;
-    QLabel       *mTitleLabel;
-    QTabWidget   *mTabControl;
-    QFrame       *mPlainPage;
-    QWidget      *mSwallowPage;
-    QWidget      *mActivePageWidget;
+    TQWidgetStack *mPageStack;
+    TQLabel       *mTitleLabel;
+    TQTabWidget   *mTabControl;
+    TQFrame       *mPlainPage;
+    TQWidget      *mSwallowPage;
+    TQWidget      *mActivePageWidget;
     KSeparator   *mTitleSep;
-    QSplitter::ResizeMode mTreeListResizeMode;
+    TQSplitter::ResizeMode mTreeListResizeMode;
     bool         mShowIconsInTreeList;
-    QMap<QListViewItem *, QWidget *> mTreeListToPageStack;
-    QMap<QListBoxItem *, QWidget *> mIconListToPageStack;
-    QMap<QString, QPixmap> mFolderIconMap;
-    QMap<QString, QStringList> mChildrenNames;
-    QMap<QString, QWidget *> mChildPages;
+    TQMap<TQListViewItem *, TQWidget *> mTreeListToPageStack;
+    TQMap<TQListBoxItem *, TQWidget *> mIconListToPageStack;
+    TQMap<TQString, TQPixmap> mFolderIconMap;
+    TQMap<TQString, TQStringList> mChildrenNames;
+    TQMap<TQString, TQWidget *> mChildPages;
 
   public:
     class IconListItem;

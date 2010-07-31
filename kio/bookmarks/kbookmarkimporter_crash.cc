@@ -26,10 +26,10 @@
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
-#include <qfile.h>
-#include <qdir.h>
-#include <qstring.h>
-#include <qtextcodec.h>
+#include <tqfile.h>
+#include <tqdir.h>
+#include <tqstring.h>
+#include <tqtextcodec.h>
 #include <dcopclient.h>
 
 #include <sys/types.h>
@@ -37,27 +37,27 @@
 #include <dirent.h>
 #include <sys/stat.h>
 
-typedef QMap<QString, QString> ViewMap;
+typedef TQMap<TQString, TQString> ViewMap;
 
 // KDE 4.0: remove this BC keeping stub
-void KCrashBookmarkImporter::parseCrashLog( QString /*filename*/, bool /*del*/ ) 
+void KCrashBookmarkImporter::parseCrashLog( TQString /*filename*/, bool /*del*/ ) 
 {
     ;
 }
 
-ViewMap KCrashBookmarkImporterImpl::parseCrashLog_noemit( const QString & filename, bool del ) 
+ViewMap KCrashBookmarkImporterImpl::parseCrashLog_noemit( const TQString & filename, bool del ) 
 {
     static const int g_lineLimit = 16*1024;
 
-    QFile f( filename );
+    TQFile f( filename );
     ViewMap views;
 
     if ( !f.open( IO_ReadOnly ) )
         return views;
 
-    QCString s( g_lineLimit );
+    TQCString s( g_lineLimit );
 
-    QTextCodec * codec = QTextCodec::codecForName( "UTF-8" );
+    TQTextCodec * codec = TQTextCodec::codecForName( "UTF-8" );
     Q_ASSERT( codec );
     if ( !codec ) 
         return views;
@@ -69,8 +69,8 @@ ViewMap KCrashBookmarkImporterImpl::parseCrashLog_noemit( const QString & filena
             kdWarning() << "Crash bookmarks contain a line longer than " << g_lineLimit << ". Skipping." << endl;
             continue;
         }
-        QString t = codec->toUnicode( s.stripWhiteSpace() );
-        QRegExp rx( "(.*)\\((.*)\\):(.*)$" );
+        TQString t = codec->toUnicode( s.stripWhiteSpace() );
+        TQRegExp rx( "(.*)\\((.*)\\):(.*)$" );
         rx.setMinimal( true );
         if ( !rx.exactMatch( t ) ) 
             continue;
@@ -88,28 +88,28 @@ ViewMap KCrashBookmarkImporterImpl::parseCrashLog_noemit( const QString & filena
     return views;
 }
 
-QStringList KCrashBookmarkImporter::getCrashLogs() 
+TQStringList KCrashBookmarkImporter::getCrashLogs() 
 {
     return KCrashBookmarkImporterImpl::getCrashLogs();
 }
 
-QStringList KCrashBookmarkImporterImpl::getCrashLogs() 
+TQStringList KCrashBookmarkImporterImpl::getCrashLogs() 
 {
-    QMap<QString, bool> activeLogs;
+    TQMap<TQString, bool> activeLogs;
 
     DCOPClient* dcop = kapp->dcopClient();
 
     QCStringList apps = dcop->registeredApplications();
     for ( QCStringList::Iterator it = apps.begin(); it != apps.end(); ++it ) 
     {
-        QCString &clientId = *it;
+        TQCString &clientId = *it;
 
         if ( qstrncmp(clientId, "konqueror", 9) != 0 ) 
             continue;
 
-        QByteArray data, replyData;
-        QCString replyType;
-        QDataStream arg( data, IO_WriteOnly );
+        TQByteArray data, replyData;
+        TQCString replyType;
+        TQDataStream arg( data, IO_WriteOnly );
 
         if ( !dcop->call( clientId.data(), "KonquerorIface", 
                           "crashLogFile()", data, replyType, replyData) ) 
@@ -118,25 +118,25 @@ QStringList KCrashBookmarkImporterImpl::getCrashLogs()
             continue;
         }
 
-        if ( replyType != "QString" ) 
+        if ( replyType != "TQString" ) 
             continue;
 
-        QDataStream reply( replyData, IO_ReadOnly );
-        QString ret;
+        TQDataStream reply( replyData, IO_ReadOnly );
+        TQString ret;
         reply >> ret;
         activeLogs[ret] = true;
     }
 
-    QDir d( KCrashBookmarkImporterImpl().findDefaultLocation() );
-    d.setSorting( QDir::Time );
-    d.setFilter( QDir::Files );
+    TQDir d( KCrashBookmarkImporterImpl().findDefaultLocation() );
+    d.setSorting( TQDir::Time );
+    d.setFilter( TQDir::Files );
     d.setNameFilter( "konqueror-crash-*.log" );
 
     const QFileInfoList *list = d.entryInfoList();
     QFileInfoListIterator it( *list );
 
-    QFileInfo *fi;
-    QStringList crashFiles;
+    TQFileInfo *fi;
+    TQStringList crashFiles;
 
     int count = 0;
     for ( ; (( fi = it.current() ) != 0) && (count < 20); ++it, ++count ) 
@@ -148,7 +148,7 @@ QStringList KCrashBookmarkImporterImpl::getCrashLogs()
     // Delete remaining ones
     for ( ; ( fi = it.current() ) != 0; ++it ) 
     {
-        QFile::remove( fi->absFilePath() );
+        TQFile::remove( fi->absFilePath() );
     }
 
     return crashFiles;
@@ -156,20 +156,20 @@ QStringList KCrashBookmarkImporterImpl::getCrashLogs()
 
 void KCrashBookmarkImporterImpl::parse() 
 {
-    QDict<bool> signatureMap;
-    QStringList crashFiles = KCrashBookmarkImporterImpl::getCrashLogs();
+    TQDict<bool> signatureMap;
+    TQStringList crashFiles = KCrashBookmarkImporterImpl::getCrashLogs();
     int count = 1;
-    for ( QStringList::Iterator it = crashFiles.begin(); it != crashFiles.end(); ++it ) 
+    for ( TQStringList::Iterator it = crashFiles.begin(); it != crashFiles.end(); ++it ) 
     {
         ViewMap views;
         views = parseCrashLog_noemit( *it, m_shouldDelete );
-        QString signature;
+        TQString signature;
         for ( ViewMap::Iterator vit = views.begin(); vit != views.end(); ++vit ) 
             signature += "|"+vit.data();
         if (signatureMap[signature])
         {
             // Duplicate... throw away and skip
-            QFile::remove(*it);
+            TQFile::remove(*it);
             continue;
         }
             
@@ -177,15 +177,15 @@ void KCrashBookmarkImporterImpl::parse()
 
         int outerFolder = ( crashFiles.count() > 1 ) && (views.count() > 0);
         if ( outerFolder )
-            emit newFolder( QString("Konqueror Window %1").arg(count++), false, "" );
+            emit newFolder( TQString("Konqueror Window %1").arg(count++), false, "" );
         for ( ViewMap::Iterator vit = views.begin(); vit != views.end(); ++vit ) 
-            emit newBookmark( vit.data(), vit.data().latin1(), QString("") );
+            emit newBookmark( vit.data(), vit.data().latin1(), TQString("") );
         if ( outerFolder )
             emit endFolder();
     }
 }
 
-QString KCrashBookmarkImporter::crashBookmarksDir() 
+TQString KCrashBookmarkImporter::crashBookmarksDir() 
 {
     static KCrashBookmarkImporterImpl *p = 0;
     if (!p)
@@ -207,7 +207,7 @@ void KCrashBookmarkImporter::parseCrashBookmarks( bool del )
     importer.parse();
 }
 
-QString KCrashBookmarkImporterImpl::findDefaultLocation( bool ) const 
+TQString KCrashBookmarkImporterImpl::findDefaultLocation( bool ) const 
 {
     return locateLocal( "tmp", "" );
 }

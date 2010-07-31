@@ -36,7 +36,7 @@
 #include <kdebug.h>
 #include <kurl.h>
 
-KMCupsJobManager::KMCupsJobManager(QObject *parent, const char *name, const QStringList & /*args*/)
+KMCupsJobManager::KMCupsJobManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMJobManager(parent,name)
 {
 }
@@ -50,13 +50,13 @@ int KMCupsJobManager::actions()
 	return KMJob::All;
 }
 
-bool KMCupsJobManager::sendCommandSystemJob(const QPtrList<KMJob>& jobs, int action, const QString& argstr)
+bool KMCupsJobManager::sendCommandSystemJob(const TQPtrList<KMJob>& jobs, int action, const TQString& argstr)
 {
 	IppRequest	req;
 	QString		uri;
 	bool		value(true);
 
-	QPtrListIterator<KMJob>	it(jobs);
+	TQPtrListIterator<KMJob>	it(jobs);
 	for (;it.current() && value;++it)
 	{
 		// hypothesis: job operation are always done on local jobs. The only operation
@@ -93,7 +93,7 @@ bool KMCupsJobManager::sendCommandSystemJob(const QPtrList<KMJob>& jobs, int act
 				if (argstr.isEmpty()) return false;
 				req.setOperation(CUPS_MOVE_JOB);
 				uri =
-				    QString::fromLatin1("ipp://%1/printers/%2").arg(CupsInfos::self()->hostaddr(),
+				    TQString::fromLatin1("ipp://%1/printers/%2").arg(CupsInfos::self()->hostaddr(),
 					    argstr);
 				req.addURI(IPP_TAG_OPERATION, "job-printer-uri", uri);
 				break;
@@ -108,7 +108,7 @@ bool KMCupsJobManager::sendCommandSystemJob(const QPtrList<KMJob>& jobs, int act
 	return value;
 }
 
-bool KMCupsJobManager::listJobs(const QString& prname, KMJobManager::JobType type, int limit)
+bool KMCupsJobManager::listJobs(const TQString& prname, KMJobManager::JobType type, int limit)
 {
 	IppRequest	req;
 	QStringList	keys;
@@ -144,13 +144,13 @@ bool KMCupsJobManager::listJobs(const QString& prname, KMJobManager::JobType typ
 		*/
 	}
 	else
-		req.addURI(IPP_TAG_OPERATION, "printer-uri", QString("ipp://%1/%2/%3").arg(infos->hostaddr(),
+		req.addURI(IPP_TAG_OPERATION, "printer-uri", TQString("ipp://%1/%2/%3").arg(infos->hostaddr(),
                             (mp&&mp->isClass())?"classes":"printers", prname));
 
 	// other attributes
 	req.addKeyword(IPP_TAG_OPERATION, "requested-attributes", keys);
 	if (type == KMJobManager::CompletedJobs)
-		req.addKeyword(IPP_TAG_OPERATION,"which-jobs",QString::fromLatin1("completed"));
+		req.addKeyword(IPP_TAG_OPERATION,"which-jobs",TQString::fromLatin1("completed"));
 	if (limit > 0)
 		req.addInteger(IPP_TAG_OPERATION,"limit",limit);
 
@@ -172,8 +172,8 @@ void KMCupsJobManager::parseListAnswer(IppRequest& req, KMPrinter *pr)
 	{
 		QString	name(attr->name);
 		if (name == "job-id") job->setId(attr->values[0].integer);
-		else if (name == "job-uri") job->setUri(QString::fromLocal8Bit(attr->values[0].string.text));
-		else if (name == "job-name") job->setName(QString::fromLocal8Bit(attr->values[0].string.text));
+		else if (name == "job-uri") job->setUri(TQString::fromLocal8Bit(attr->values[0].string.text));
+		else if (name == "job-name") job->setName(TQString::fromLocal8Bit(attr->values[0].string.text));
 		else if (name == "job-state")
 		{
 			switch (attr->values[0].integer)
@@ -205,7 +205,7 @@ void KMCupsJobManager::parseListAnswer(IppRequest& req, KMPrinter *pr)
 			}
 		}
 		else if (name == "job-k-octets") job->setSize(attr->values[0].integer);
-		else if (name == "job-originating-user-name") job->setOwner(QString::fromLocal8Bit(attr->values[0].string.text));
+		else if (name == "job-originating-user-name") job->setOwner(TQString::fromLocal8Bit(attr->values[0].string.text));
 		else if (name == "job-k-octets-completed") job->setProcessedSize(attr->values[0].integer);
 		else if (name == "job-media-sheets") job->setPages(attr->values[0].integer);
 		else if (name == "job-media-sheets-completed") job->setProcessedPages(attr->values[0].integer);
@@ -218,12 +218,12 @@ void KMCupsJobManager::parseListAnswer(IppRequest& req, KMPrinter *pr)
 		}
 		else if (name == "job-priority")
 		{
-			job->setAttribute(0, QString::fromLatin1("%1").arg(attr->values[0].integer, 3));
+			job->setAttribute(0, TQString::fromLatin1("%1").arg(attr->values[0].integer, 3));
 		}
 		else if (name == "job-billing")
 		{
 			job->setAttributeCount(2);
-			job->setAttribute(1, QString::fromLocal8Bit(attr->values[0].string.text));
+			job->setAttribute(1, TQString::fromLocal8Bit(attr->values[0].string.text));
 		}
 
 		if (name.isEmpty() || attr == req.last())
@@ -240,7 +240,7 @@ void KMCupsJobManager::parseListAnswer(IppRequest& req, KMPrinter *pr)
 	delete job;
 }
 
-bool KMCupsJobManager::doPluginAction(int ID, const QPtrList<KMJob>& jobs)
+bool KMCupsJobManager::doPluginAction(int ID, const TQPtrList<KMJob>& jobs)
 {
 	switch (ID)
 	{
@@ -280,9 +280,9 @@ bool KMCupsJobManager::jobIppReport(KMJob *j)
 	return result;
 }
 
-QValueList<KAction*> KMCupsJobManager::createPluginActions(KActionCollection *coll)
+TQValueList<KAction*> KMCupsJobManager::createPluginActions(KActionCollection *coll)
 {
-	QValueList<KAction*>	list;
+	TQValueList<KAction*>	list;
 	KAction	*act(0);
 
 	list <<  (act = new PluginAction(0, i18n("&Job IPP Report"), "kdeprint_report", 0, coll, "plugin_ipp"));
@@ -297,9 +297,9 @@ QValueList<KAction*> KMCupsJobManager::createPluginActions(KActionCollection *co
 	return list;
 }
 
-void KMCupsJobManager::validatePluginActions(KActionCollection *coll, const QPtrList<KMJob>& joblist)
+void KMCupsJobManager::validatePluginActions(KActionCollection *coll, const TQPtrList<KMJob>& joblist)
 {
-	QPtrListIterator<KMJob>	it(joblist);
+	TQPtrListIterator<KMJob>	it(joblist);
 	bool	flag(true);
 	for (; it.current(); ++it)
 	{
@@ -319,9 +319,9 @@ void KMCupsJobManager::validatePluginActions(KActionCollection *coll, const QPtr
 		a->setEnabled( flag && ( joblist.count() == 1 ) );
 }
 
-bool KMCupsJobManager::changePriority(const QPtrList<KMJob>& jobs, bool up)
+bool KMCupsJobManager::changePriority(const TQPtrList<KMJob>& jobs, bool up)
 {
-	QPtrListIterator<KMJob>	it(jobs);
+	TQPtrListIterator<KMJob>	it(jobs);
 	bool	result(true);
 	for (; it.current() && result; ++it)
 	{
@@ -349,11 +349,11 @@ bool KMCupsJobManager::changePriority(const QPtrList<KMJob>& jobs, bool up)
 	return result;
 }
 
-static QString processRange(const QString& range)
+static TQString processRange(const TQString& range)
 {
-	QStringList	l = QStringList::split(',', range, false);
+	QStringList	l = TQStringList::split(',', range, false);
 	QString	s;
-	for (QStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
+	for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 	{
 		s.append(*it);
 		if ((*it).find('-') == -1)
@@ -385,7 +385,7 @@ bool KMCupsJobManager::editJobAttributes(KMJob *j)
 		return false;
 	}
 
-	QMap<QString,QString>	opts = req.toMap(IPP_TAG_JOB);
+	TQMap<TQString,TQString>	opts = req.toMap(IPP_TAG_JOB);
 	// translate the "Copies" option to non-CUPS syntax
 	if (opts.contains("copies"))
 		opts["kde-copies"] = opts["copies"];

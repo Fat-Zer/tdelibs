@@ -19,11 +19,11 @@
 
 #include <config.h>
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtimer.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -41,12 +41,12 @@
 class KSpellConfigPrivate
 {
 public:
-    QStringList replacelist;
+    TQStringList replacelist;
 };
 
 
 KSpellConfig::KSpellConfig (const KSpellConfig &_ksc)
-  : QWidget(0, 0), nodialog(true)
+  : TQWidget(0, 0), nodialog(true)
   , kc(0)
   , cb1(0)
   , cb2(0)
@@ -68,9 +68,9 @@ KSpellConfig::KSpellConfig (const KSpellConfig &_ksc)
 }
 
 
-KSpellConfig::KSpellConfig( QWidget *parent, const char *name,
+KSpellConfig::KSpellConfig( TQWidget *parent, const char *name,
 			    KSpellConfig *_ksc, bool addHelpButton )
-  : QWidget (parent, name), nodialog(false)
+  : TQWidget (parent, name), nodialog(false)
   , kc(0)
   , cb1(0)
   , cb2(0)
@@ -98,27 +98,27 @@ KSpellConfig::KSpellConfig( QWidget *parent, const char *name,
     setClient( _ksc->client() );
   }
 
-  QGridLayout *glay = new QGridLayout( this, 6, 3, 0, KDialog::spacingHint() );
-  cb1 = new QCheckBox( i18n("Create &root/affix combinations"
+  TQGridLayout *glay = new TQGridLayout( this, 6, 3, 0, KDialog::spacingHint() );
+  cb1 = new TQCheckBox( i18n("Create &root/affix combinations"
                             " not in dictionary"), this, "NoRootAffix" );
-  connect( cb1, SIGNAL(toggled(bool)), SLOT(sNoAff(bool)) );
+  connect( cb1, TQT_SIGNAL(toggled(bool)), TQT_SLOT(sNoAff(bool)) );
   glay->addMultiCellWidget( cb1, 0, 0, 0, 2 );
 
-  cb2 = new QCheckBox( i18n("Consider run-together &words"
+  cb2 = new TQCheckBox( i18n("Consider run-together &words"
 			    " as spelling errors"), this, "RunTogether" );
-  connect( cb2, SIGNAL(toggled(bool)), SLOT(sRunTogether(bool)) );
+  connect( cb2, TQT_SIGNAL(toggled(bool)), TQT_SLOT(sRunTogether(bool)) );
   glay->addMultiCellWidget( cb2, 1, 1, 0, 2 );
 
-  dictcombo = new QComboBox( this, "DictFromList" );
-  dictcombo->setInsertionPolicy( QComboBox::NoInsertion );
-  connect( dictcombo, SIGNAL (activated(int)),
-	   this, SLOT (sSetDictionary(int)) );
+  dictcombo = new TQComboBox( this, "DictFromList" );
+  dictcombo->setInsertionPolicy( TQComboBox::NoInsertion );
+  connect( dictcombo, TQT_SIGNAL (activated(int)),
+	   this, TQT_SLOT (sSetDictionary(int)) );
   glay->addMultiCellWidget( dictcombo, 2, 2, 1, 2 );
 
-  dictlist = new QLabel( dictcombo, i18n("&Dictionary:"), this );
+  dictlist = new TQLabel( dictcombo, i18n("&Dictionary:"), this );
   glay->addWidget( dictlist, 2 ,0 );
 
-  encodingcombo = new QComboBox( this, "Encoding" );
+  encodingcombo = new TQComboBox( this, "Encoding" );
   encodingcombo->insertItem( "US-ASCII" );
   encodingcombo->insertItem( "ISO 8859-1" );
   encodingcombo->insertItem( "ISO 8859-2" );
@@ -136,30 +136,30 @@ KSpellConfig::KSpellConfig( QWidget *parent, const char *name,
   encodingcombo->insertItem( "CP1251" );
   encodingcombo->insertItem( "CP1255" );
 
-  connect( encodingcombo, SIGNAL(activated(int)), this,
-	   SLOT(sChangeEncoding(int)) );
+  connect( encodingcombo, TQT_SIGNAL(activated(int)), this,
+	   TQT_SLOT(sChangeEncoding(int)) );
   glay->addMultiCellWidget( encodingcombo, 3, 3, 1, 2 );
 
-  QLabel *tmpQLabel = new QLabel( encodingcombo, i18n("&Encoding:"), this);
+  TQLabel *tmpQLabel = new TQLabel( encodingcombo, i18n("&Encoding:"), this);
   glay->addWidget( tmpQLabel, 3, 0 );
 
 
-  clientcombo = new QComboBox( this, "Client" );
+  clientcombo = new TQComboBox( this, "Client" );
   clientcombo->insertItem( i18n("International Ispell") );
   clientcombo->insertItem( i18n("Aspell") );
   clientcombo->insertItem( i18n("Hspell") );
   clientcombo->insertItem( i18n("Zemberek") );
-  connect( clientcombo, SIGNAL (activated(int)), this,
-	   SLOT (sChangeClient(int)) );
+  connect( clientcombo, TQT_SIGNAL (activated(int)), this,
+	   TQT_SLOT (sChangeClient(int)) );
   glay->addMultiCellWidget( clientcombo, 4, 4, 1, 2 );
 
-  tmpQLabel = new QLabel( clientcombo, i18n("&Client:"), this );
+  tmpQLabel = new TQLabel( clientcombo, i18n("&Client:"), this );
   glay->addWidget( tmpQLabel, 4, 0 );
 
   if( addHelpButton )
   {
-    QPushButton *pushButton = new KPushButton( KStdGuiItem::help(), this );
-    connect( pushButton, SIGNAL(clicked()), this, SLOT(sHelp()) );
+    TQPushButton *pushButton = new KPushButton( KStdGuiItem::help(), this );
+    connect( pushButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(sHelp()) );
     glay->addWidget(pushButton, 5, 2);
   }
 
@@ -246,16 +246,16 @@ KSpellConfig::sChangeClient( int i )
   emit configChanged();
 }
 
-// KDE 4: Make it const QString & fname (only fname)
+// KDE 4: Make it const TQString & fname (only fname)
 bool
-KSpellConfig::interpret( QString &fname, QString &lname,
-                         QString &hname )
+KSpellConfig::interpret( TQString &fname, TQString &lname,
+                         TQString &hname )
 
 {
 
   kdDebug(750) << "KSpellConfig::interpret [" << fname << "]" << endl;
 
-  QString dname( fname );
+  TQString dname( fname );
 
   if( dname.endsWith( "+" ) )
     dname.remove( dname.length()-1, 1 );
@@ -264,7 +264,7 @@ KSpellConfig::interpret( QString &fname, QString &lname,
       dname.endsWith("xlg"))
      dname.remove(dname.length()-3,3);
 
-  QString extension;
+  TQString extension;
 
   int i = dname.find('-');
   if ( i != -1 )
@@ -282,7 +282,7 @@ KSpellConfig::interpret( QString &fname, QString &lname,
   else if ( (dname.length() == 5) && (dname[2] == '_') ) {
     lname = dname.left(2);
     hname = KGlobal::locale()->twoAlphaToLanguageName(lname);
-    QString country = KGlobal::locale()->twoAlphaToCountryName( dname.right(2) );
+    TQString country = KGlobal::locale()->twoAlphaToCountryName( dname.right(2) );
     if ( extension.isEmpty() )
       extension = country;
     else
@@ -363,8 +363,8 @@ KSpellConfig::interpret( QString &fname, QString &lname,
   }
 
   //We have explicitly chosen English as the default here.
-  if ( ( KGlobal::locale()->language() == QString::fromLatin1("C") &&
-         lname==QString::fromLatin1("en") ) ||
+  if ( ( KGlobal::locale()->language() == TQString::fromLatin1("C") &&
+         lname==TQString::fromLatin1("en") ) ||
        KGlobal::locale()->language() == lname )
     return true;
 
@@ -440,7 +440,7 @@ void KSpellConfig::getAvailDictsIspell () {
   dictcombo->insertItem( i18n("ISpell Default") );
 
   // dictionary path
-  QFileInfo dir ("/usr/lib" KDELIBSUFF "/ispell");
+  TQFileInfo dir ("/usr/lib" KDELIBSUFF "/ispell");
   if (!dir.exists() || !dir.isDir())
     dir.setFile ("/usr/local/lib" KDELIBSUFF "/ispell");
   if (!dir.exists() || !dir.isDir())
@@ -459,19 +459,19 @@ void KSpellConfig::getAvailDictsIspell () {
   kdDebug(750) << "KSpellConfig::getAvailDictsIspell "
 	       << dir.filePath() << " " << dir.dirPath() << endl;
 
-  const QDir thedir (dir.filePath(),"*.hash");
-  const QStringList entryList = thedir.entryList();
+  const TQDir thedir (dir.filePath(),"*.hash");
+  const TQStringList entryList = thedir.entryList();
 
   kdDebug(750) << "KSpellConfig" << thedir.path() << "\n" << endl;
   kdDebug(750) << "entryList().count()="
 	       << entryList.count() << endl;
 
-  QStringList::const_iterator entryListItr = entryList.constBegin();
-  const QStringList::const_iterator entryListEnd = entryList.constEnd();
+  TQStringList::const_iterator entryListItr = entryList.constBegin();
+  const TQStringList::const_iterator entryListEnd = entryList.constEnd();
 
   for ( ; entryListItr != entryListEnd; ++entryListItr)
   {
-    QString fname, lname, hname;
+    TQString fname, lname, hname;
     fname = *entryListItr;
 
     // remove .hash
@@ -509,7 +509,7 @@ void KSpellConfig::getAvailDictsAspell () {
 
   // Aspell now have /usr/lib/aspell as
   // ASPELL_DATADIR default.
-  QFileInfo dir ( ASPELL_DATADIR );
+  TQFileInfo dir ( ASPELL_DATADIR );
   if (!dir.exists() || !dir.isDir())
     dir.setFile ("/usr/lib" KDELIBSUFF "/aspell-0.60");
   if (!dir.exists() || !dir.isDir())
@@ -525,19 +525,19 @@ void KSpellConfig::getAvailDictsAspell () {
   kdDebug(750) << "KSpellConfig::getAvailDictsAspell "
 	       << dir.filePath() << " " << dir.dirPath() << endl;
 
-  const QDir thedir (dir.filePath(),"*");
-  const QStringList entryList = thedir.entryList();
+  const TQDir thedir (dir.filePath(),"*");
+  const TQStringList entryList = thedir.entryList();
 
   kdDebug(750) << "KSpellConfig" << thedir.path() << "\n" << endl;
   kdDebug(750) << "entryList().count()="
 	       << entryList.count() << endl;
 
-  QStringList::const_iterator entryListItr = entryList.constBegin();
-  const QStringList::const_iterator entryListEnd = entryList.constEnd();
+  TQStringList::const_iterator entryListItr = entryList.constBegin();
+  const TQStringList::const_iterator entryListEnd = entryList.constEnd();
 
   for ( ; entryListItr != entryListEnd; ++entryListItr)
   {
-    QString fname, lname, hname;
+    TQString fname, lname, hname;
     fname = *entryListItr;
 
     // consider only simple dicts without '-' in the name
@@ -584,7 +584,7 @@ void KSpellConfig::getAvailDictsAspell () {
 }
 
 void
-KSpellConfig::fillDicts( QComboBox* box, QStringList* dictionaries )
+KSpellConfig::fillDicts( TQComboBox* box, TQStringList* dictionaries )
 {
   langfnames.clear();
   if ( box ) {
@@ -594,7 +594,7 @@ KSpellConfig::fillDicts( QComboBox* box, QStringList* dictionaries )
       box->insertItem( i18n("ISpell Default") );
 
       // dictionary path
-      QFileInfo dir ("/usr/lib/ispell");
+      TQFileInfo dir ("/usr/lib/ispell");
       if (!dir.exists() || !dir.isDir())
         dir.setFile ("/usr/local/lib/ispell");
       if (!dir.exists() || !dir.isDir())
@@ -613,19 +613,19 @@ KSpellConfig::fillDicts( QComboBox* box, QStringList* dictionaries )
       kdDebug(750) << "KSpellConfig::getAvailDictsIspell "
                    << dir.filePath() << " " << dir.dirPath() << endl;
 
-      const QDir thedir (dir.filePath(),"*.hash");
-      const QStringList entryList = thedir.entryList();
+      const TQDir thedir (dir.filePath(),"*.hash");
+      const TQStringList entryList = thedir.entryList();
 
       kdDebug(750) << "KSpellConfig" << thedir.path() << "\n" << endl;
       kdDebug(750) << "entryList().count()="
                    << entryList.count() << endl;
 
-      QStringList::const_iterator entryListItr = entryList.constBegin();
-      const QStringList::const_iterator entryListEnd = entryList.constEnd();
+      TQStringList::const_iterator entryListItr = entryList.constBegin();
+      const TQStringList::const_iterator entryListEnd = entryList.constEnd();
 
       for ( ; entryListItr != entryListEnd; ++entryListItr)
       {
-        QString fname, lname, hname;
+        TQString fname, lname, hname;
         fname = *entryListItr;
 
         // remove .hash
@@ -669,7 +669,7 @@ KSpellConfig::fillDicts( QComboBox* box, QStringList* dictionaries )
 
       // dictionary path
       // FIXME: use "aspell dump config" to find out the dict-dir
-      QFileInfo dir ("/usr/lib" KDELIBSUFF "/aspell");
+      TQFileInfo dir ("/usr/lib" KDELIBSUFF "/aspell");
       if (!dir.exists() || !dir.isDir())
         dir.setFile ("/usr/lib" KDELIBSUFF "/aspell-0.60");
       if (!dir.exists() || !dir.isDir())
@@ -685,19 +685,19 @@ KSpellConfig::fillDicts( QComboBox* box, QStringList* dictionaries )
       kdDebug(750) << "KSpellConfig::getAvailDictsAspell "
                    << dir.filePath() << " " << dir.dirPath() << endl;
 
-      const QDir thedir (dir.filePath(),"*");
-      const QStringList entryList = thedir.entryList();
+      const TQDir thedir (dir.filePath(),"*");
+      const TQStringList entryList = thedir.entryList();
 
       kdDebug(750) << "KSpellConfig" << thedir.path() << "\n" << endl;
       kdDebug(750) << "entryList().count()="
                    << entryList.count() << endl;
 
-      QStringList::const_iterator entryListItr = entryList.constBegin();
-      const QStringList::const_iterator entryListEnd = entryList.constEnd();
+      TQStringList::const_iterator entryListItr = entryList.constBegin();
+      const TQStringList::const_iterator entryListEnd = entryList.constEnd();
 
       for ( ; entryListItr != entryListEnd; ++entryListItr)
       {
-        QString fname, lname, hname;
+        TQString fname, lname, hname;
         fname = *entryListItr;
 
         // consider only simple dicts without '-' in the name
@@ -783,7 +783,7 @@ KSpellConfig::setRunTogether(bool b)
 }
 
 void
-KSpellConfig::setDictionary (const QString s)
+KSpellConfig::setDictionary (const TQString s)
 {
   qsdict=s; //.copy();
 
@@ -855,13 +855,13 @@ KSpellConfig::runTogether() const
 }
 
 const
-QString KSpellConfig::dictionary () const
+TQString KSpellConfig::dictionary () const
 {
   return qsdict;
 }
 
 /*
-const QString KSpellConfig::personalDict () const
+const TQString KSpellConfig::personalDict () const
 {
   return qspdict;
 }
@@ -893,7 +893,7 @@ KSpellConfig::sBrowseDict()
 {
   return;
 
-  QString qs( KFileDialog::getOpenFileName ("/usr/local/lib","*.hash") );
+  TQString qs( KFileDialog::getOpenFileName ("/usr/local/lib","*.hash") );
   if ( !qs.isNull() )
     kle1->setText (qs);
 
@@ -904,7 +904,7 @@ KSpellConfig::sBrowseDict()
 void KSpellConfig::sBrowsePDict()
 {
   //how do I find home directory path??
-  QString qs( KFileDialog::getOpenFileName ("",".ispell_*") );
+  TQString qs( KFileDialog::getOpenFileName ("",".ispell_*") );
   if ( !qs.isNull() )
       kle2->setText (qs);
 
@@ -917,7 +917,7 @@ KSpellConfig::sSetDictionary (int i)
 {
   setDictionary (langfnames[i]);
   setDictFromList (true);
-  QTimer::singleShot( 0, this, SIGNAL( configChanged() ) );
+  TQTimer::singleShot( 0, this, TQT_SIGNAL( configChanged() ) );
 }
 
 void
@@ -996,9 +996,9 @@ KSpellConfig::operator= (const KSpellConfig &ksc)
   fillInDialog();
 }
 
-// KDE 4: Make it const QStringList &
+// KDE 4: Make it const TQStringList &
 void
-KSpellConfig::setIgnoreList (QStringList _ignorelist)
+KSpellConfig::setIgnoreList (TQStringList _ignorelist)
 {
   ignorelist=_ignorelist;
 }
@@ -1009,9 +1009,9 @@ KSpellConfig::ignoreList () const
   return ignorelist;
 }
 
-// KDE 4: Make it const QStringList &
+// KDE 4: Make it const TQStringList &
 void
-KSpellConfig::setReplaceAllList (QStringList _replacelist)
+KSpellConfig::setReplaceAllList (TQStringList _replacelist)
 {
   d->replacelist=_replacelist;
 }

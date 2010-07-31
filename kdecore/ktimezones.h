@@ -21,10 +21,10 @@
 #define _KTIMEZONES_H
 
 #include "kdelibs_export.h"
-#include <qdatetime.h>
-#include <qnamespace.h>
-#include <qmap.h>
-#include <qstring.h>
+#include <tqdatetime.h>
+#include <tqnamespace.h>
+#include <tqmap.h>
+#include <tqstring.h>
 #include <ksharedptr.h>
 
 class KTimezoneDetails;
@@ -52,24 +52,24 @@ class KDECORE_EXPORT KTimezoneSource :
     public KShared
 {
 public:
-    KTimezoneSource(const QString &db);
+    KTimezoneSource(const TQString &db);
     virtual ~KTimezoneSource();
 
     /**
      * Location of system timezone information.
      * @return value which can be combined with zone name to retrieve timezone info.
      */
-    virtual QString db();
+    virtual TQString db();
 
     /**
      * Extract timezone detail information. The default implementation consists
      * of a parser for zoneinfo files in tzfile(5).
      * @return true if the parse encountered no errors.
      */
-    virtual bool parse(const QString &zone, KTimezoneDetails &dataReceiver) const;
+    virtual bool parse(const TQString &zone, KTimezoneDetails &dataReceiver) const;
 
 private:
-    QString m_db;
+    TQString m_db;
 };
 
 /**
@@ -114,9 +114,9 @@ public:
      * @param comment description of the timezone, if any.
      */
     KTimezone(
-        KSharedPtr<KTimezoneSource> db, const QString &name,
-        const QString &countryCode = QString(), float latitude = UNKNOWN, float longitude = UNKNOWN,
-        const QString &comment = QString());
+        KSharedPtr<KTimezoneSource> db, const TQString &name,
+        const TQString &countryCode = TQString(), float latitude = UNKNOWN, float longitude = UNKNOWN,
+        const TQString &comment = TQString());
     ~KTimezone();
 
     /**
@@ -124,14 +124,14 @@ public:
      *
      * @return name in system-dependent format.
      */
-    QString name() const;
+    TQString name() const;
 
     /**
      * Returns the two-letter country code of the timezone.
      *
      * @return ISO 3166 2-character country code, empty if unknown.
      */
-    QString countryCode() const;
+    TQString countryCode() const;
 
     /**
      * Returns the latitude of the timezone.
@@ -164,7 +164,7 @@ public:
      *
      * @return offset in seconds.
      */
-    int offset(const QDateTime &dateTime) const;
+    int offset(const TQDateTime &dateTime) const;
 
     /**
      * Convert a date/time (which is interpreted as being localtime in this
@@ -172,14 +172,14 @@ public:
      *
      * @return converted date/time.
      */
-    QDateTime convert(const KTimezone *newZone, const QDateTime &dateTime) const;
+    TQDateTime convert(const KTimezone *newZone, const TQDateTime &dateTime) const;
 
     /**
      * Returns any comment for the timezone.
      *
      * @return comment, may be empty.
      */
-    QString comment() const;
+    TQString comment() const;
 
     /**
      * Extract timezone detail information.
@@ -192,11 +192,11 @@ private:
     KTimezone& operator=(const KTimezone&);
 
     KSharedPtr<KTimezoneSource> m_db;
-    QString m_name;
-    QString m_countryCode;
+    TQString m_name;
+    TQString m_countryCode;
     float m_latitude;
     float m_longitude;
-    QString m_comment;
+    TQString m_comment;
     KTimezonePrivate *d;
 };
 
@@ -265,7 +265,7 @@ public:
      * is NOT a simple incrementing integer, rather it matches the sequence
      * of abbrIndex values from {@link gotLocalTime() }.
      */
-    virtual void gotAbbreviation(int index, const QString &abbr);
+    virtual void gotAbbreviation(int index, const TQString &abbr);
 
     /**
      * Called when a leap second adjustment is seen.
@@ -321,9 +321,9 @@ public:
      * @param name Name of timezone. Empty is equivalent to UTC.
      * @return named timezone, NULL on error.
      */
-    const KTimezone *zone(const QString &name);
+    const KTimezone *zone(const TQString &name);
 
-    typedef QMap<QString, KTimezone *> ZoneMap;
+    typedef TQMap<TQString, KTimezone *> ZoneMap;
 
     /**
      * Return timezone database.
@@ -340,9 +340,9 @@ private:
     KTimezones(const KTimezones&);
     KTimezones& operator=(const KTimezones&);
 
-    float convertCoordinate(const QString &coordinate);
+    float convertCoordinate(const TQString &coordinate);
 
-    QString m_zoneinfoDir;
+    TQString m_zoneinfoDir;
     ZoneMap *m_zones;
     KTimezone *m_UTC;
     KTimezonesPrivate *d;

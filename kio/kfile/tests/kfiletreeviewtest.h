@@ -31,7 +31,7 @@ public slots:
    void slotPopulateFinished(KFileTreeViewItem *);
    void slotSetChildCount( KFileTreeViewItem *item, int c );
 
-   void urlsDropped( QWidget*, QDropEvent*, KURL::List& );
+   void urlsDropped( TQWidget*, TQDropEvent*, KURL::List& );
    void copyURLs( KURL::List& list, KURL& to ); 
 private:
    KFileTreeView *treeView;

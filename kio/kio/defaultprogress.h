@@ -18,7 +18,7 @@
 #ifndef __defaultprogress_h__
 #define __defaultprogress_h__
 
-#include <qlabel.h>
+#include <tqlabel.h>
 
 #include <kio/global.h>
 
@@ -51,13 +51,13 @@ public:
    * @param name the name of the dialog, can be 0
    * @since 3.1
    */
-  DefaultProgress( QWidget* parent, const char* name = 0 );
+  DefaultProgress( TQWidget* parent, const char* name = 0 );
   ~DefaultProgress();
 
   bool keepOpen() const;
 
   /// Shared with uiserver.cpp
-  static QString makePercentString( unsigned long percent,
+  static TQString makePercentString( unsigned long percent,
                                     KIO::filesize_t totalSize,
                                     unsigned long totalFiles );
 
@@ -77,7 +77,7 @@ public slots:
    * @param job the KIO::Job
    * @param msg the message to set
    */
-  virtual void slotInfoMessage( KIO::Job *job, const QString & msg );
+  virtual void slotInfoMessage( KIO::Job *job, const TQString & msg );
 
   virtual void slotCopying( KIO::Job* job, const KURL& src, const KURL& dest );
   virtual void slotMoving( KIO::Job* job, const KURL& src, const KURL& dest );
@@ -103,13 +103,13 @@ public slots:
    * @param dev the device to mount
    * @param point the mount point
    */
-  virtual void slotMounting( KIO::Job* job, const QString & dev, const QString & point );
+  virtual void slotMounting( KIO::Job* job, const TQString & dev, const TQString & point );
   /**
    * Called when the job is unmounting.
    * @param job the KIO::Job
    * @param point the mount point
    */
-  virtual void slotUnmounting( KIO::Job* job, const QString & point );
+  virtual void slotUnmounting( KIO::Job* job, const TQString & point );
   virtual void slotCanResume( KIO::Job* job, KIO::filesize_t from);
 
   /**
@@ -128,11 +128,11 @@ protected:
 
   KLineEdit* sourceEdit;
   KLineEdit* destEdit;
-  QLabel* progressLabel;
-  QLabel* destInvite;
-  QLabel* speedLabel;
-  QLabel* sizeLabel;
-  QLabel* resumeLabel;
+  TQLabel* progressLabel;
+  TQLabel* destInvite;
+  TQLabel* speedLabel;
+  TQLabel* sizeLabel;
+  TQLabel* resumeLabel;
 
   KProgress* m_pProgressBar;
 

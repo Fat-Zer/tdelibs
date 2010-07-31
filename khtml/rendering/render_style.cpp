@@ -89,7 +89,7 @@ bool StyleBoxData::operator==(const StyleBoxData& o) const
 
 StyleVisualData::StyleVisualData()
      : textDecoration(RenderStyle::initialTextDecoration()),
-      palette( QApplication::palette() )
+      palette( TQApplication::palette() )
 {
 }
 
@@ -879,7 +879,7 @@ void RenderStyle::cleanup()
     _default = 0;
 }
 
-void RenderStyle::setPaletteColor(QPalette::ColorGroup g, QColorGroup::ColorRole r, const QColor& c)
+void RenderStyle::setPaletteColor(TQPalette::ColorGroup g, TQColorGroup::ColorRole r, const TQColor& c)
 {
     visual.access()->palette.setColor(g,r,c);
 }
@@ -912,7 +912,7 @@ void RenderStyle::setQuotes(DOM::QuotesValueImpl* q)
     if (t) t->deref();
 }
 
-QString RenderStyle::openQuote(int level) const
+TQString RenderStyle::openQuote(int level) const
 {
     if (inherited->quotes)
         return inherited->quotes->openQuote(level);
@@ -920,7 +920,7 @@ QString RenderStyle::openQuote(int level) const
         return "\""; // 0 is default quotes
 }
 
-QString RenderStyle::closeQuote(int level) const
+TQString RenderStyle::closeQuote(int level) const
 {
     if (inherited->quotes)
         return inherited->quotes->closeQuote(level);
@@ -1213,14 +1213,14 @@ void RenderStyle::setCounterIncrement(CSSValueListImpl *l)
 
 #ifdef ENABLE_DUMP
 
-static QString describeFont( const QFont &f)
+static TQString describeFont( const TQFont &f)
 {
-    QString res = "'" + f.family() + "' ";
+    TQString res = "'" + f.family() + "' ";
 
     if ( f.pointSize() > 0)
-        res += QString::number( f.pointSize() ) + "pt";
+        res += TQString::number( f.pointSize() ) + "pt";
     else
-        res += QString::number( f.pixelSize() ) + "px";
+        res += TQString::number( f.pixelSize() ) + "px";
 
     if ( f.bold() )
         res += " bold";
@@ -1235,9 +1235,9 @@ static QString describeFont( const QFont &f)
     return res;
 }
 
-QString RenderStyle::createDiff( const RenderStyle &parent ) const
+TQString RenderStyle::createDiff( const RenderStyle &parent ) const
 {
-    QString res;
+    TQString res;
       if ( color().isValid() && parent.color() != color() )
         res += " [color=" + color().name() + "]";
     if ( backgroundColor().isValid() && parent.backgroundColor() != backgroundColor() )

@@ -20,19 +20,19 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qfile.h>
-#include <qdir.h>
-#include <qdialog.h>
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qtoolbutton.h>
-#include <qcheckbox.h>
-#include <qtooltip.h>
-#include <qstyle.h>
-#include <qwhatsthis.h>
+#include <tqfile.h>
+#include <tqdir.h>
+#include <tqdialog.h>
+#include <tqimage.h>
+#include <tqpixmap.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqtoolbutton.h>
+#include <tqcheckbox.h>
+#include <tqtooltip.h>
+#include <tqstyle.h>
+#include <tqwhatsthis.h>
 
 #include <kapplication.h>
 #include <kbuttonbox.h>
@@ -64,14 +64,14 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#define SORT_SPEC (QDir::DirsFirst | QDir::Name | QDir::IgnoreCase)
+#define SORT_SPEC (TQDir::DirsFirst | TQDir::Name | TQDir::IgnoreCase)
 
 
 // ----------------------------------------------------------------------
 
-KAppTreeListItem::KAppTreeListItem( KListView* parent, const QString & name,
-                                    const QPixmap& pixmap, bool parse, bool dir, const QString &p, const QString &c )
-    : QListViewItem( parent, name )
+KAppTreeListItem::KAppTreeListItem( KListView* parent, const TQString & name,
+                                    const TQPixmap& pixmap, bool parse, bool dir, const TQString &p, const TQString &c )
+    : TQListViewItem( parent, name )
 {
     init(pixmap, parse, dir, p, c);
 }
@@ -79,9 +79,9 @@ KAppTreeListItem::KAppTreeListItem( KListView* parent, const QString & name,
 
 // ----------------------------------------------------------------------
 
-KAppTreeListItem::KAppTreeListItem( QListViewItem* parent, const QString & name,
-                                    const QPixmap& pixmap, bool parse, bool dir, const QString &p, const QString &c )
-    : QListViewItem( parent, name )
+KAppTreeListItem::KAppTreeListItem( TQListViewItem* parent, const TQString & name,
+                                    const TQPixmap& pixmap, bool parse, bool dir, const TQString &p, const TQString &c )
+    : TQListViewItem( parent, name )
 {
     init(pixmap, parse, dir, p, c);
 }
@@ -89,7 +89,7 @@ KAppTreeListItem::KAppTreeListItem( QListViewItem* parent, const QString & name,
 
 // ----------------------------------------------------------------------
 
-void KAppTreeListItem::init(const QPixmap& pixmap, bool parse, bool dir, const QString &_path, const QString &_exec)
+void KAppTreeListItem::init(const TQPixmap& pixmap, bool parse, bool dir, const TQString &_path, const TQString &_exec)
 {
     setPixmap(0, pixmap);
     parsed = parse;
@@ -100,7 +100,7 @@ void KAppTreeListItem::init(const QPixmap& pixmap, bool parse, bool dir, const Q
 
 
 /* Ensures that directories sort before non-directories */
-int KAppTreeListItem::compare(QListViewItem *i, int col, bool ascending) const
+int KAppTreeListItem::compare(TQListViewItem *i, int col, bool ascending) const
 {
 	KAppTreeListItem *other = dynamic_cast<KAppTreeListItem *>(i);
 
@@ -112,12 +112,12 @@ int KAppTreeListItem::compare(QListViewItem *i, int col, bool ascending) const
 		return 1;
 
 	else // both directories or both not
-		return QListViewItem::compare(i, col, ascending);
+		return TQListViewItem::compare(i, col, ascending);
 }
 
 // ----------------------------------------------------------------------
 // Ensure that case is ignored
-QString KAppTreeListItem::key(int column, bool /*ascending*/) const
+TQString KAppTreeListItem::key(int column, bool /*ascending*/) const
 {
         return text(column).upper();
 }
@@ -134,7 +134,7 @@ void KAppTreeListItem::setOpen( bool o )
         ((KApplicationTree *) parent())->addDesktopGroup( path, this );
         parsed = true;
     }
-    QListViewItem::setOpen( o );
+    TQListViewItem::setOpen( o );
 }
 
 bool KAppTreeListItem::isDirectory()
@@ -144,19 +144,19 @@ bool KAppTreeListItem::isDirectory()
 
 // ----------------------------------------------------------------------
 
-KApplicationTree::KApplicationTree( QWidget *parent )
+KApplicationTree::KApplicationTree( TQWidget *parent )
     : KListView( parent ), currentitem(0)
 {
     addColumn( i18n("Known Applications") );
     setRootIsDecorated( true );
 
-    addDesktopGroup( QString::null );
+    addDesktopGroup( TQString::null );
     cleanupTree();
 
-    connect( this, SIGNAL( currentChanged(QListViewItem*) ),
-            SLOT( slotItemHighlighted(QListViewItem*) ) );
-    connect( this, SIGNAL( selectionChanged(QListViewItem*) ),
-            SLOT( slotSelectionChanged(QListViewItem*) ) );
+    connect( this, TQT_SIGNAL( currentChanged(TQListViewItem*) ),
+            TQT_SLOT( slotItemHighlighted(TQListViewItem*) ) );
+    connect( this, TQT_SIGNAL( selectionChanged(TQListViewItem*) ),
+            TQT_SLOT( slotSelectionChanged(TQListViewItem*) ) );
 }
 
 // ----------------------------------------------------------------------
@@ -169,20 +169,20 @@ bool KApplicationTree::isDirSel()
 
 // ----------------------------------------------------------------------
 
-static QPixmap appIcon(const QString &iconName)
+static TQPixmap appIcon(const TQString &iconName)
 {
-    QPixmap normal = KGlobal::iconLoader()->loadIcon(iconName, KIcon::Small, 0, KIcon::DefaultState, 0L, true);
+    TQPixmap normal = KGlobal::iconLoader()->loadIcon(iconName, KIcon::Small, 0, KIcon::DefaultState, 0L, true);
     // make sure they are not larger than 20x20
     if (normal.width() > 20 || normal.height() > 20)
     {
-       QImage tmp = normal.convertToImage();
+       TQImage tmp = normal.convertToImage();
        tmp = tmp.smoothScale(20, 20);
        normal.convertFromImage(tmp);
     }
     return normal;
 }
 
-void KApplicationTree::addDesktopGroup( const QString &relPath, KAppTreeListItem *item)
+void KApplicationTree::addDesktopGroup( const TQString &relPath, KAppTreeListItem *item)
 {
    KServiceGroup::Ptr root = KServiceGroup::group(relPath);
    if (!root || !root->isValid()) return;
@@ -193,10 +193,10 @@ void KApplicationTree::addDesktopGroup( const QString &relPath, KAppTreeListItem
    for( KServiceGroup::List::ConstIterator it = list.begin();
        it != list.end(); it++)
    {
-      QString icon;
-      QString text;
-      QString relPath;
-      QString exec;
+      TQString icon;
+      TQString text;
+      TQString relPath;
+      TQString exec;
       bool isDir = false;
       KSycocaEntry *p = (*it);
       if (p->isType(KST_KService))
@@ -228,7 +228,7 @@ void KApplicationTree::addDesktopGroup( const QString &relPath, KAppTreeListItem
          continue;
       }
 
-      QPixmap pixmap = appIcon( icon );
+      TQPixmap pixmap = appIcon( icon );
 
       if (item)
          newItem = new KAppTreeListItem( item, text, pixmap, false, isDir,
@@ -244,7 +244,7 @@ void KApplicationTree::addDesktopGroup( const QString &relPath, KAppTreeListItem
 
 // ----------------------------------------------------------------------
 
-void KApplicationTree::slotItemHighlighted(QListViewItem* i)
+void KApplicationTree::slotItemHighlighted(TQListViewItem* i)
 {
     // i may be 0 (see documentation)
     if(!i)
@@ -261,7 +261,7 @@ void KApplicationTree::slotItemHighlighted(QListViewItem* i)
 
 // ----------------------------------------------------------------------
 
-void KApplicationTree::slotSelectionChanged(QListViewItem* i)
+void KApplicationTree::slotSelectionChanged(TQListViewItem* i)
 {
     // i may be 0 (see documentation)
     if(!i)
@@ -277,22 +277,22 @@ void KApplicationTree::slotSelectionChanged(QListViewItem* i)
 
 // ----------------------------------------------------------------------
 
-void KApplicationTree::resizeEvent( QResizeEvent * e)
+void KApplicationTree::resizeEvent( TQResizeEvent * e)
 {
-    setColumnWidth(0, width()-QApplication::style().pixelMetric(QStyle::PM_ScrollBarExtent)
-                         -2*QApplication::style().pixelMetric(QStyle::PM_DefaultFrameWidth));
+    setColumnWidth(0, width()-TQApplication::style().pixelMetric(TQStyle::PM_ScrollBarExtent)
+                         -2*TQApplication::style().pixelMetric(TQStyle::PM_DefaultFrameWidth));
     KListView::resizeEvent(e);
 }
 
 // Prune empty directories from the tree
 void KApplicationTree::cleanupTree()
 {
-	QListViewItem *item=firstChild();
+	TQListViewItem *item=firstChild();
 	while(item!=0)
 	{
 		if(item->isExpandable())
 		{
-			QListViewItem *temp=item->itemBelow();
+			TQListViewItem *temp=item->itemBelow();
 			if(item->text(0)!=i18n("Applications"))
 				item->setOpen(false);
 			item=temp;
@@ -311,16 +311,16 @@ class KOpenWithDlgPrivate
 {
 public:
     KOpenWithDlgPrivate() : saveNewApps(false) { };
-    QPushButton* ok;
+    TQPushButton* ok;
     bool saveNewApps;
     KService::Ptr curService;
 };
 
-KOpenWithDlg::KOpenWithDlg( const KURL::List& _urls, QWidget* parent )
-             :QDialog( parent, "openwith", true )
+KOpenWithDlg::KOpenWithDlg( const KURL::List& _urls, TQWidget* parent )
+             :TQDialog( parent, "openwith", true )
 {
     setCaption( i18n( "Open With" ) );
-    QString text;
+    TQString text;
     if( _urls.count() == 1 )
     {
         text = i18n("<qt>Select the program that should be used to open <b>%1</b>. "
@@ -331,27 +331,27 @@ KOpenWithDlg::KOpenWithDlg( const KURL::List& _urls, QWidget* parent )
         // Should never happen ??
         text = i18n( "Choose the name of the program with which to open the selected files." );
     setServiceType( _urls );
-    init( text, QString() );
+    init( text, TQString() );
 }
 
-KOpenWithDlg::KOpenWithDlg( const KURL::List& _urls, const QString&_text,
-                            const QString& _value, QWidget *parent)
-             :QDialog( parent, "openwith", true )
+KOpenWithDlg::KOpenWithDlg( const KURL::List& _urls, const TQString&_text,
+                            const TQString& _value, TQWidget *parent)
+             :TQDialog( parent, "openwith", true )
 {
-  QString caption = KStringHandler::csqueeze( _urls.first().prettyURL() );
+  TQString caption = KStringHandler::csqueeze( _urls.first().prettyURL() );
   if (_urls.count() > 1)
-      caption += QString::fromLatin1("...");
+      caption += TQString::fromLatin1("...");
   setCaption(caption);
   setServiceType( _urls );
   init( _text, _value );
 }
 
-KOpenWithDlg::KOpenWithDlg( const QString &serviceType, const QString& value,
-                            QWidget *parent)
-             :QDialog( parent, "openwith", true )
+KOpenWithDlg::KOpenWithDlg( const TQString &serviceType, const TQString& value,
+                            TQWidget *parent)
+             :TQDialog( parent, "openwith", true )
 {
     setCaption(i18n("Choose Application for %1").arg(serviceType));
-  QString text = i18n("<qt>Select the program for the file type: <b>%1</b>. "
+  TQString text = i18n("<qt>Select the program for the file type: <b>%1</b>. "
                       "If the program is not listed, enter the name or click "
                       "the browse button.</qt>").arg(serviceType);
   qServiceType = serviceType;
@@ -360,15 +360,15 @@ KOpenWithDlg::KOpenWithDlg( const QString &serviceType, const QString& value,
       remember->hide();
 }
 
-KOpenWithDlg::KOpenWithDlg( QWidget *parent)
-             :QDialog( parent, "openwith", true )
+KOpenWithDlg::KOpenWithDlg( TQWidget *parent)
+             :TQDialog( parent, "openwith", true )
 {
   setCaption(i18n("Choose Application"));
-  QString text = i18n("<qt>Select a program. "
+  TQString text = i18n("<qt>Select a program. "
                       "If the program is not listed, enter the name or click "
                       "the browse button.</qt>");
-  qServiceType = QString::null;
-  init( text, QString::null );
+  qServiceType = TQString::null;
+  init( text, TQString::null );
 }
 
 void KOpenWithDlg::setServiceType( const KURL::List& _urls )
@@ -376,14 +376,14 @@ void KOpenWithDlg::setServiceType( const KURL::List& _urls )
   if ( _urls.count() == 1 )
   {
     qServiceType = KMimeType::findByURL( _urls.first())->name();
-    if (qServiceType == QString::fromLatin1("application/octet-stream"))
-      qServiceType = QString::null;
+    if (qServiceType == TQString::fromLatin1("application/octet-stream"))
+      qServiceType = TQString::null;
   }
   else
-      qServiceType = QString::null;
+      qServiceType = TQString::null;
 }
 
-void KOpenWithDlg::init( const QString& _text, const QString& _value )
+void KOpenWithDlg::init( const TQString& _text, const TQString& _value )
 {
   d = new KOpenWithDlgPrivate;
   bool bReadOnly = kapp && !kapp->authorize("shell_access");
@@ -392,18 +392,18 @@ void KOpenWithDlg::init( const QString& _text, const QString& _value )
   m_pService = 0L;
   d->curService = 0L;
 
-  QBoxLayout *topLayout = new QVBoxLayout( this, KDialog::marginHint(),
+  TQBoxLayout *topLayout = new TQVBoxLayout( this, KDialog::marginHint(),
           KDialog::spacingHint() );
-  label = new QLabel( _text, this );
+  label = new TQLabel( _text, this );
   topLayout->addWidget(label);
 
-  QHBoxLayout* hbox = new QHBoxLayout(topLayout);
+  TQHBoxLayout* hbox = new TQHBoxLayout(topLayout);
 
-  QToolButton *clearButton = new QToolButton( this );
+  TQToolButton *clearButton = new TQToolButton( this );
   clearButton->setIconSet( BarIcon( "locationbar_erase" ) );
   clearButton->setFixedSize( clearButton->sizeHint() );
-  connect( clearButton, SIGNAL( clicked() ), SLOT( slotClear() ) );
-  QToolTip::add( clearButton, i18n( "Clear input field" ) );
+  connect( clearButton, TQT_SIGNAL( clicked() ), TQT_SLOT( slotClear() ) );
+  TQToolTip::add( clearButton, i18n( "Clear input field" ) );
 
   hbox->addWidget( clearButton );
 
@@ -413,13 +413,13 @@ void KOpenWithDlg::init( const QString& _text, const QString& _value )
     KHistoryCombo *combo = new KHistoryCombo();
     combo->setDuplicatesEnabled( false );
     KConfig *kc = KGlobal::config();
-    KConfigGroupSaver ks( kc, QString::fromLatin1("Open-with settings") );
-    int max = kc->readNumEntry( QString::fromLatin1("Maximum history"), 15 );
+    KConfigGroupSaver ks( kc, TQString::fromLatin1("Open-with settings") );
+    int max = kc->readNumEntry( TQString::fromLatin1("Maximum history"), 15 );
     combo->setMaxCount( max );
-    int mode = kc->readNumEntry(QString::fromLatin1("CompletionMode"),
+    int mode = kc->readNumEntry(TQString::fromLatin1("CompletionMode"),
 				KGlobalSettings::completionMode());
     combo->setCompletionMode((KGlobalSettings::Completion)mode);
-    QStringList list = kc->readListEntry( QString::fromLatin1("History") );
+    TQStringList list = kc->readListEntry( TQString::fromLatin1("History") );
     combo->setHistoryItems( list, true );
     edit = new KURLRequester( combo, this );
   }
@@ -432,7 +432,7 @@ void KOpenWithDlg::init( const QString& _text, const QString& _value )
   }
 
   edit->setURL( _value );
-  QWhatsThis::add(edit,i18n(
+  TQWhatsThis::add(edit,i18n(
     "Following the command, you can have several place holders which will be replaced "
     "with the actual values when the actual program is run:\n"
     "%f - a single file name\n"
@@ -453,38 +453,38 @@ void KOpenWithDlg::init( const QString& _text, const QString& _value )
     edit->comboBox()->setAutoDeleteCompletionObject( true );
   }
 
-  connect ( edit, SIGNAL(returnPressed()), SLOT(slotOK()) );
-  connect ( edit, SIGNAL(textChanged(const QString&)), SLOT(slotTextChanged()) );
+  connect ( edit, TQT_SIGNAL(returnPressed()), TQT_SLOT(slotOK()) );
+  connect ( edit, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(slotTextChanged()) );
 
   m_pTree = new KApplicationTree( this );
   topLayout->addWidget(m_pTree);
 
-  connect( m_pTree, SIGNAL( selected( const QString&, const QString& ) ),
-           SLOT( slotSelected( const QString&, const QString& ) ) );
-  connect( m_pTree, SIGNAL( highlighted( const QString&, const QString& ) ),
-           SLOT( slotHighlighted( const QString&, const QString& ) ) );
-  connect( m_pTree, SIGNAL( doubleClicked(QListViewItem*) ),
-           SLOT( slotDbClick() ) );
+  connect( m_pTree, TQT_SIGNAL( selected( const TQString&, const TQString& ) ),
+           TQT_SLOT( slotSelected( const TQString&, const TQString& ) ) );
+  connect( m_pTree, TQT_SIGNAL( highlighted( const TQString&, const TQString& ) ),
+           TQT_SLOT( slotHighlighted( const TQString&, const TQString& ) ) );
+  connect( m_pTree, TQT_SIGNAL( doubleClicked(TQListViewItem*) ),
+           TQT_SLOT( slotDbClick() ) );
 
-  terminal = new QCheckBox( i18n("Run in &terminal"), this );
+  terminal = new TQCheckBox( i18n("Run in &terminal"), this );
   if (bReadOnly)
      terminal->hide();
-  connect(terminal, SIGNAL(toggled(bool)), SLOT(slotTerminalToggled(bool)));
+  connect(terminal, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotTerminalToggled(bool)));
 
   topLayout->addWidget(terminal);
 
-  QBoxLayout* nocloseonexitLayout = new QHBoxLayout( 0, 0, KDialog::spacingHint() );
-  QSpacerItem* spacer = new QSpacerItem( 20, 0, QSizePolicy::Fixed, QSizePolicy::Minimum );
+  TQBoxLayout* nocloseonexitLayout = new TQHBoxLayout( 0, 0, KDialog::spacingHint() );
+  TQSpacerItem* spacer = new TQSpacerItem( 20, 0, TQSizePolicy::Fixed, TQSizePolicy::Minimum );
   nocloseonexitLayout->addItem( spacer );
 
-  nocloseonexit = new QCheckBox( i18n("&Do not close when command exits"), this );
+  nocloseonexit = new TQCheckBox( i18n("&Do not close when command exits"), this );
   nocloseonexit->setChecked( false );
   nocloseonexit->setDisabled( true );
 
   // check to see if we use konsole if not disable the nocloseonexit
   // because we don't know how to do this on other terminal applications
-  KConfigGroup confGroup( KGlobal::config(), QString::fromLatin1("General") );
-  QString preferredTerminal = confGroup.readPathEntry("TerminalApplication", QString::fromLatin1("konsole"));
+  KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
+  TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::fromLatin1("konsole"));
 
   if (bReadOnly || preferredTerminal != "konsole")
      nocloseonexit->hide();
@@ -494,7 +494,7 @@ void KOpenWithDlg::init( const QString& _text, const QString& _value )
 
   if (!qServiceType.isNull())
   {
-    remember = new QCheckBox(i18n("&Remember application association for this type of file"), this);
+    remember = new TQCheckBox(i18n("&Remember application association for this type of file"), this);
     //    remember->setChecked(true);
     topLayout->addWidget(remember);
   }
@@ -507,10 +507,10 @@ void KOpenWithDlg::init( const QString& _text, const QString& _value )
 
   d->ok = b->addButton( KStdGuiItem::ok() );
   d->ok->setDefault( true );
-  connect(  d->ok, SIGNAL( clicked() ), SLOT( slotOK() ) );
+  connect(  d->ok, TQT_SIGNAL( clicked() ), TQT_SLOT( slotOK() ) );
 
-  QPushButton* cancel = b->addButton(  KStdGuiItem::cancel() );
-  connect(  cancel, SIGNAL( clicked() ), SLOT( reject() ) );
+  TQPushButton* cancel = b->addButton(  KStdGuiItem::cancel() );
+  connect(  cancel, TQT_SIGNAL( clicked() ), TQT_SLOT( reject() ) );
 
   b->layout();
   topLayout->addWidget( b );
@@ -536,14 +536,14 @@ KOpenWithDlg::~KOpenWithDlg()
 
 void KOpenWithDlg::slotClear()
 {
-    edit->setURL(QString::null);
+    edit->setURL(TQString::null);
     edit->setFocus();
 }
 
 
 // ----------------------------------------------------------------------
 
-void KOpenWithDlg::slotSelected( const QString& /*_name*/, const QString& _exec )
+void KOpenWithDlg::slotSelected( const TQString& /*_name*/, const TQString& _exec )
 {
     kdDebug(250)<<"KOpenWithDlg::slotSelected"<<endl;
     KService::Ptr pService = d->curService;
@@ -554,7 +554,7 @@ void KOpenWithDlg::slotSelected( const QString& /*_name*/, const QString& _exec 
 
 // ----------------------------------------------------------------------
 
-void KOpenWithDlg::slotHighlighted( const QString& _name, const QString& )
+void KOpenWithDlg::slotHighlighted( const TQString& _name, const TQString& )
 {
     kdDebug(250)<<"KOpenWithDlg::slotHighlighted"<<endl;
     qName = _name;
@@ -563,7 +563,7 @@ void KOpenWithDlg::slotHighlighted( const QString& _name, const QString& )
     {
         // ### indicate that default value was restored
         terminal->setChecked(d->curService->terminal());
-        QString terminalOptions = d->curService->terminalOptions();
+        TQString terminalOptions = d->curService->terminalOptions();
         nocloseonexit->setChecked( (terminalOptions.contains( "--noclose" ) > 0) );
         m_terminaldirty = false; // slotTerminalToggled changed it
     }
@@ -603,12 +603,12 @@ void KOpenWithDlg::setSaveNewApplications(bool b)
 
 void KOpenWithDlg::slotOK()
 {
-  QString typedExec(edit->url());
-  QString fullExec(typedExec);
+  TQString typedExec(edit->url());
+  TQString fullExec(typedExec);
 
-  QString serviceName;
-  QString initialServiceName;
-  QString preferredTerminal;
+  TQString serviceName;
+  TQString initialServiceName;
+  TQString preferredTerminal;
   m_pService = d->curService;
   if (!m_pService) {
     // No service selected - check the command line
@@ -632,7 +632,7 @@ void KOpenWithDlg::slotOK()
         // also ok if we find the exact same service (well, "kwrite" == "kwrite %U"
         if ( serv && serv->type() == "Application")
         {
-            QString exec = serv->exec();
+            TQString exec = serv->exec();
             fullExec = exec;
             exec.replace("%u", "", false);
             exec.replace("%f", "", false);
@@ -651,7 +651,7 @@ void KOpenWithDlg::slotOK()
         if (!ok) // service was found, but it was different -> keep looking
         {
             ++i;
-            serviceName = initialServiceName + "-" + QString::number(i);
+            serviceName = initialServiceName + "-" + TQString::number(i);
         }
     }
     while (!ok);
@@ -666,13 +666,13 @@ void KOpenWithDlg::slotOK()
 
   if (terminal->isChecked())
   {
-    KConfigGroup confGroup( KGlobal::config(), QString::fromLatin1("General") );
-    preferredTerminal = confGroup.readPathEntry("TerminalApplication", QString::fromLatin1("konsole"));
+    KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
+    preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::fromLatin1("konsole"));
     m_command = preferredTerminal;
     // only add --noclose when we are sure it is konsole we're using
     if (preferredTerminal == "konsole" && nocloseonexit->isChecked())
-      m_command += QString::fromLatin1(" --noclose");
-    m_command += QString::fromLatin1(" -e ");
+      m_command += TQString::fromLatin1(" --noclose");
+    m_command += TQString::fromLatin1(" -e ");
     m_command += edit->url();
     kdDebug(250) << "Setting m_command to " << m_command << endl;
   }
@@ -690,7 +690,7 @@ void KOpenWithDlg::slotOK()
   if (!bRemember && !d->saveNewApps)
   {
     // Create temp service
-    m_pService = new KService(initialServiceName, fullExec, QString::null);
+    m_pService = new KService(initialServiceName, fullExec, TQString::null);
     if (terminal->isChecked())
     {
       m_pService->setTerminal(true);
@@ -706,9 +706,9 @@ void KOpenWithDlg::slotOK()
   // wanted.  The other possibility is that they have asked for the
   // association to be remembered.  Create/update service.
 
-  QString newPath;
-  QString oldPath;
-  QString menuId;
+  TQString newPath;
+  TQString oldPath;
+  TQString menuId;
   if (m_pService)
   {
     oldPath = m_pService->desktopEntryPath();
@@ -740,7 +740,7 @@ void KOpenWithDlg::slotOK()
   {
      desktop = new KDesktopFile(newPath);
   }
-  desktop->writeEntry("Type", QString::fromLatin1("Application"));
+  desktop->writeEntry("Type", TQString::fromLatin1("Application"));
   desktop->writeEntry("Name", initialServiceName);
   desktop->writePathEntry("Exec", fullExec);
   if (terminal->isChecked())
@@ -759,7 +759,7 @@ void KOpenWithDlg::slotOK()
 
   if (bRemember || d->saveNewApps)
   {
-    QStringList mimeList = desktop->readListEntry("MimeType", ';');
+    TQStringList mimeList = desktop->readListEntry("MimeType", ';');
     if (!qServiceType.isEmpty() && !mimeList.contains(qServiceType))
       mimeList.append(qServiceType);
     desktop->writeEntry("MimeType", mimeList, ';');
@@ -786,7 +786,7 @@ void KOpenWithDlg::slotOK()
   accept();
 }
 
-QString KOpenWithDlg::text() const
+TQString KOpenWithDlg::text() const
 {
     if (!m_command.isEmpty())
         return m_command;
@@ -814,16 +814,16 @@ void KOpenWithDlg::accept()
         combo->addToHistory( edit->url() );
 
         KConfig *kc = KGlobal::config();
-        KConfigGroupSaver ks( kc, QString::fromLatin1("Open-with settings") );
-        kc->writeEntry( QString::fromLatin1("History"), combo->historyItems() );
-	kc->writeEntry(QString::fromLatin1("CompletionMode"),
+        KConfigGroupSaver ks( kc, TQString::fromLatin1("Open-with settings") );
+        kc->writeEntry( TQString::fromLatin1("History"), combo->historyItems() );
+	kc->writeEntry(TQString::fromLatin1("CompletionMode"),
 		       combo->completionMode());
         // don't store the completion-list, as it contains all of KURLCompletion's
         // executables
         kc->sync();
     }
 
-    QDialog::accept();
+    TQDialog::accept();
 }
 
 
@@ -832,7 +832,7 @@ void KOpenWithDlg::accept()
 #ifndef KDE_NO_COMPAT
 bool KFileOpenWithHandler::displayOpenWithDialog( const KURL::List& urls )
 {
-    KOpenWithDlg l( urls, i18n("Open with:"), QString::null, 0L );
+    KOpenWithDlg l( urls, i18n("Open with:"), TQString::null, 0L );
     if ( l.exec() )
     {
       KService::Ptr service = l.service();

@@ -27,7 +27,7 @@
 #include <signal.h>
 #include <sys/time.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <kconfig.h>
 #include <kdebug.h>
@@ -63,13 +63,13 @@
 
 using namespace KIO;
 
-template class QPtrList<KLaunchRequest>;
-template class QPtrList<IdleSlave>;
+template class TQPtrList<KLaunchRequest>;
+template class TQPtrList<IdleSlave>;
 
 IdleSlave::IdleSlave(KSocket *socket)
 {
    mConn.init(socket);
-   mConn.connect(this, SLOT(gotInput()));
+   mConn.connect(this, TQT_SLOT(gotInput()));
    mConn.send( CMD_SLAVE_STATUS );
    mPid = 0;
    mBirthDate = time(0);
@@ -80,7 +80,7 @@ void
 IdleSlave::gotInput()
 {
    int cmd;
-   QByteArray data;
+   TQByteArray data;
    if (mConn.read( &cmd, data) == -1)
    {
       // Communication problem with slave.
@@ -98,10 +98,10 @@ IdleSlave::gotInput()
    }
    else
    {
-      QDataStream stream( data, IO_ReadOnly );
+      TQDataStream stream( data, IO_ReadOnly );
       pid_t pid;
-      QCString protocol;
-      QString host;
+      TQCString protocol;
+      TQString host;
       Q_INT8 b;
       stream >> pid >> protocol >> host >> b;
 // Overload with (bool) onHold, (KURL) url.
@@ -122,10 +122,10 @@ IdleSlave::gotInput()
 }
 
 void
-IdleSlave::connect(const QString &app_socket)
+IdleSlave::connect(const TQString &app_socket)
 {
-   QByteArray data;
-   QDataStream stream( data, IO_WriteOnly);
+   TQByteArray data;
+   TQDataStream stream( data, IO_WriteOnly);
    stream << app_socket;
    mConn.send( CMD_SLAVE_CONNECT, data );
    // Timeout!
@@ -138,7 +138,7 @@ IdleSlave::reparseConfiguration()
 }
 
 bool
-IdleSlave::match(const QString &protocol, const QString &host, bool connected)
+IdleSlave::match(const TQString &protocol, const TQString &host, bool connected)
 {
    if (mOnHold) return false;
    if (protocol != mProtocol) return false;
@@ -171,17 +171,17 @@ KLauncher::KLauncher(int _kdeinitSocket, bool new_startup)
 #ifdef Q_WS_X11
    mCached_dpy = NULL;
 #endif
-   connect(&mAutoTimer, SIGNAL(timeout()), this, SLOT(slotAutoStart()));
+   connect(&mAutoTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotAutoStart()));
    requestList.setAutoDelete(true);
    mSlaveWaitRequest.setAutoDelete(true);
    dcopClient()->setNotifications( true );
-   connect(dcopClient(), SIGNAL( applicationRegistered( const QCString &)),
-           this, SLOT( slotAppRegistered( const QCString &)));
+   connect(dcopClient(), TQT_SIGNAL( applicationRegistered( const TQCString &)),
+           this, TQT_SLOT( slotAppRegistered( const TQCString &)));
    dcopClient()->connectDCOPSignal( "DCOPServer", "", "terminateKDE()",
                                     objId(), "terminateKDE()", false );
 
-   QString prefix = locateLocal("socket", "klauncher");
-   KTempFile domainname(prefix, QString::fromLatin1(".slave-socket"));
+   TQString prefix = locateLocal("socket", "klauncher");
+   KTempFile domainname(prefix, TQString::fromLatin1(".slave-socket"));
    if (domainname.status() != 0)
    {
       // Sever error!
@@ -193,15 +193,15 @@ KLauncher::KLauncher(int _kdeinitSocket, bool new_startup)
    domainname.close();
    domainname.unlink();
 #endif
-   mPoolSocket = new KServerSocket(QFile::encodeName(mPoolSocketName));
-   connect(mPoolSocket, SIGNAL(accepted( KSocket *)),
-           SLOT(acceptSlave(KSocket *)));
+   mPoolSocket = new KServerSocket(TQFile::encodeName(mPoolSocketName));
+   connect(mPoolSocket, TQT_SIGNAL(accepted( KSocket *)),
+           TQT_SLOT(acceptSlave(KSocket *)));
 
-   connect(&mTimer, SIGNAL(timeout()), SLOT(idleTimeout()));
+   connect(&mTimer, TQT_SIGNAL(timeout()), TQT_SLOT(idleTimeout()));
 
-   kdeinitNotifier = new QSocketNotifier(kdeinitSocket, QSocketNotifier::Read);
-   connect(kdeinitNotifier, SIGNAL( activated( int )),
-           this, SLOT( slotKDEInitData( int )));
+   kdeinitNotifier = new TQSocketNotifier(kdeinitSocket, TQSocketNotifier::Read);
+   connect(kdeinitNotifier, TQT_SIGNAL( activated( int )),
+           this, TQT_SLOT( slotKDEInitData( int )));
    kdeinitNotifier->setEnabled( true );
    lastRequest = 0;
    bProcessingQueue = false;
@@ -232,7 +232,7 @@ void KLauncher::close()
 {
    if (!mPoolSocketName.isEmpty())
    {
-      QCString filename = QFile::encodeName(mPoolSocketName);
+      TQCString filename = TQFile::encodeName(mPoolSocketName);
       unlink(filename.data());
    }
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
@@ -251,65 +251,65 @@ KLauncher::destruct(int exit_code)
 }
 
 bool
-KLauncher::process(const QCString &fun, const QByteArray &data,
-                   QCString &replyType, QByteArray &replyData)
+KLauncher::process(const TQCString &fun, const TQByteArray &data,
+                   TQCString &replyType, TQByteArray &replyData)
 {
-   if ((fun == "exec_blind(QCString,QValueList<QCString>)")
-       || (fun == "exec_blind(QCString,QValueList<QCString>,QValueList<QCString>,QCString)"))
+   if ((fun == "exec_blind(TQCString,TQValueList<TQCString>)")
+       || (fun == "exec_blind(TQCString,TQValueList<TQCString>,TQValueList<TQCString>,TQCString)"))
    {
-      QDataStream stream(data, IO_ReadOnly);
+      TQDataStream stream(data, IO_ReadOnly);
       replyType = "void";
-      QCString name;
-      QValueList<QCString> arg_list;
-      QCString startup_id = "0";
-      QValueList<QCString> envs;
+      TQCString name;
+      TQValueList<TQCString> arg_list;
+      TQCString startup_id = "0";
+      TQValueList<TQCString> envs;
       stream >> name >> arg_list;
-      if( fun == "exec_blind(QCString,QValueList<QCString>,QValueList<QCString>,QCString)" )
+      if( fun == "exec_blind(TQCString,TQValueList<TQCString>,TQValueList<TQCString>,TQCString)" )
           stream >> envs >> startup_id;
       kdDebug(7016) << "KLauncher: Got exec_blind('" << name << "', ...)" << endl;
       exec_blind( name, arg_list, envs, startup_id);
       return true;
    }
-   if ((fun == "start_service_by_name(QString,QStringList)") ||
-       (fun == "start_service_by_desktop_path(QString,QStringList)")||
-       (fun == "start_service_by_desktop_name(QString,QStringList)")||
-       (fun == "kdeinit_exec(QString,QStringList)") ||
-       (fun == "kdeinit_exec_wait(QString,QStringList)") ||
-       (fun == "start_service_by_name(QString,QStringList,QValueList<QCString>,QCString)") ||
-       (fun == "start_service_by_desktop_path(QString,QStringList,QValueList<QCString>,QCString)")||
-       (fun == "start_service_by_desktop_name(QString,QStringList,QValueList<QCString>,QCString)") ||
-       (fun == "start_service_by_name(QString,QStringList,QValueList<QCString>,QCString,bool)") ||
-       (fun == "start_service_by_desktop_path(QString,QStringList,QValueList<QCString>,QCString,bool)")||
-       (fun == "start_service_by_desktop_name(QString,QStringList,QValueList<QCString>,QCString,bool)") ||
-       (fun == "kdeinit_exec(QString,QStringList,QValueList<QCString>)") ||
-       (fun == "kdeinit_exec_wait(QString,QStringList,QValueList<QCString>)") ||
-       (fun == "kdeinit_exec(QString,QStringList,QValueList<QCString>,QCString)") ||
-       (fun == "kdeinit_exec_wait(QString,QStringList,QValueList<QCString>,QCString)"))
+   if ((fun == "start_service_by_name(TQString,TQStringList)") ||
+       (fun == "start_service_by_desktop_path(TQString,TQStringList)")||
+       (fun == "start_service_by_desktop_name(TQString,TQStringList)")||
+       (fun == "kdeinit_exec(TQString,TQStringList)") ||
+       (fun == "kdeinit_exec_wait(TQString,TQStringList)") ||
+       (fun == "start_service_by_name(TQString,TQStringList,TQValueList<TQCString>,TQCString)") ||
+       (fun == "start_service_by_desktop_path(TQString,TQStringList,TQValueList<TQCString>,TQCString)")||
+       (fun == "start_service_by_desktop_name(TQString,TQStringList,TQValueList<TQCString>,TQCString)") ||
+       (fun == "start_service_by_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)") ||
+       (fun == "start_service_by_desktop_path(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)")||
+       (fun == "start_service_by_desktop_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)") ||
+       (fun == "kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>)") ||
+       (fun == "kdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>)") ||
+       (fun == "kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)") ||
+       (fun == "kdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>,TQCString)"))
    {
-      QDataStream stream(data, IO_ReadOnly);
+      TQDataStream stream(data, IO_ReadOnly);
       bool bNoWait = false;
-      QString serviceName;
-      QStringList urls;
-      QValueList<QCString> envs;
-      QCString startup_id = "";
+      TQString serviceName;
+      TQStringList urls;
+      TQValueList<TQCString> envs;
+      TQCString startup_id = "";
       DCOPresult.result = -1;
       DCOPresult.dcopName = 0;
-      DCOPresult.error = QString::null;
+      DCOPresult.error = TQString::null;
       DCOPresult.pid = 0;
       stream >> serviceName >> urls;
-      if ((fun == "start_service_by_name(QString,QStringList,QValueList<QCString>,QCString,bool)") ||
-          (fun == "start_service_by_desktop_path(QString,QStringList,QValueList<QCString>,QCString,bool)")||
-          (fun == "start_service_by_desktop_name(QString,QStringList,QValueList<QCString>,QCString,bool)"))
+      if ((fun == "start_service_by_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)") ||
+          (fun == "start_service_by_desktop_path(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)")||
+          (fun == "start_service_by_desktop_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)"))
          stream >> envs >> startup_id >> bNoWait;
-      else if ((fun == "start_service_by_name(QString,QStringList,QValueList<QCString>,QCString)") ||
-          (fun == "start_service_by_desktop_path(QString,QStringList,QValueList<QCString>,QCString)")||
-          (fun == "start_service_by_desktop_name(QString,QStringList,QValueList<QCString>,QCString)"))
+      else if ((fun == "start_service_by_name(TQString,TQStringList,TQValueList<TQCString>,TQCString)") ||
+          (fun == "start_service_by_desktop_path(TQString,TQStringList,TQValueList<TQCString>,TQCString)")||
+          (fun == "start_service_by_desktop_name(TQString,TQStringList,TQValueList<TQCString>,TQCString)"))
          stream >> envs >> startup_id;
-      else if ((fun == "kdeinit_exec(QString,QStringList,QValueList<QCString>)") ||
-          (fun == "kdeinit_exec_wait(QString,QStringList,QValueList<QCString>)"))
+      else if ((fun == "kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>)") ||
+          (fun == "kdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>)"))
          stream >> envs;
-      else if ((fun == "kdeinit_exec(QString,QStringList,QValueList<QCString>,QCString)") ||
-          (fun == "kdeinit_exec_wait(QString,QStringList,QValueList<QCString>,QCString)"))
+      else if ((fun == "kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)") ||
+          (fun == "kdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>,TQCString)"))
          stream >> envs >> startup_id;
       bool finished;
       if (strncmp(fun, "start_service_by_name(", 22) == 0)
@@ -327,9 +327,9 @@ KLauncher::process(const QCString &fun, const QByteArray &data,
          kdDebug(7016) << "KLauncher: Got start_service_by_desktop_name('" << serviceName << "', ...)" << endl;
          finished = start_service_by_desktop_name(serviceName, urls, envs, startup_id, bNoWait );
       }
-      else if ((fun == "kdeinit_exec(QString,QStringList)")
-              || (fun == "kdeinit_exec(QString,QStringList,QValueList<QCString>)")
-              || (fun == "kdeinit_exec(QString,QStringList,QValueList<QCString>,QCString)"))
+      else if ((fun == "kdeinit_exec(TQString,TQStringList)")
+              || (fun == "kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>)")
+              || (fun == "kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)"))
       {
          kdDebug(7016) << "KLauncher: Got kdeinit_exec('" << serviceName << "', ...)" << endl;
          finished = kdeinit_exec(serviceName, urls, envs, startup_id, false);
@@ -342,40 +342,40 @@ KLauncher::process(const QCString &fun, const QByteArray &data,
       if (!finished)
       {
          replyType = "serviceResult";
-         QDataStream stream2(replyData, IO_WriteOnly);
+         TQDataStream stream2(replyData, IO_WriteOnly);
          stream2 << DCOPresult.result << DCOPresult.dcopName << DCOPresult.error << DCOPresult.pid;
       }
       return true;
    }
-   else if (fun == "requestSlave(QString,QString,QString)")
+   else if (fun == "requestSlave(TQString,TQString,TQString)")
    {
-      QDataStream stream(data, IO_ReadOnly);
-      QString protocol;
-      QString host;
-      QString app_socket;
+      TQDataStream stream(data, IO_ReadOnly);
+      TQString protocol;
+      TQString host;
+      TQString app_socket;
       stream >> protocol >> host >> app_socket;
-      replyType = "QString";
-      QString error;
+      replyType = "TQString";
+      TQString error;
       pid_t pid = requestSlave(protocol, host, app_socket, error);
-      QDataStream stream2(replyData, IO_WriteOnly);
+      TQDataStream stream2(replyData, IO_WriteOnly);
       stream2 << pid << error;
       return true;
    }
-   else if (fun == "requestHoldSlave(KURL,QString)")
+   else if (fun == "requestHoldSlave(KURL,TQString)")
    {
-      QDataStream stream(data, IO_ReadOnly);
+      TQDataStream stream(data, IO_ReadOnly);
       KURL url;
-      QString app_socket;
+      TQString app_socket;
       stream >> url >> app_socket;
       replyType = "pid_t";
       pid_t pid = requestHoldSlave(url, app_socket);
-      QDataStream stream2(replyData, IO_WriteOnly);
+      TQDataStream stream2(replyData, IO_WriteOnly);
       stream2 << pid;
       return true;
    }
    else if (fun == "waitForSlave(pid_t)")
    {
-      QDataStream stream(data, IO_ReadOnly);
+      TQDataStream stream(data, IO_ReadOnly);
       pid_t pid;
       stream >> pid;
       waitForSlave(pid);
@@ -383,11 +383,11 @@ KLauncher::process(const QCString &fun, const QByteArray &data,
       return true;
 
    }
-   else if (fun == "setLaunchEnv(QCString,QCString)")
+   else if (fun == "setLaunchEnv(TQCString,TQCString)")
    {
-      QDataStream stream(data, IO_ReadOnly);
-      QCString name;
-      QCString value;
+      TQDataStream stream(data, IO_ReadOnly);
+      TQCString name;
+      TQCString value;
       stream >> name >> value;
       setLaunchEnv(name, value);
       replyType = "void";
@@ -425,7 +425,7 @@ KLauncher::process(const QCString &fun, const QByteArray &data,
    else if (fun == "autoStart(int)")
    {
       kdDebug() << "KLauncher::process ---> autoStart(int)" << endl;
-      QDataStream stream(data, IO_ReadOnly);
+      TQDataStream stream(data, IO_ReadOnly);
       int phase;
       stream >> phase;
       autoStart(phase);
@@ -453,25 +453,25 @@ QCStringList
 KLauncher::functions()
 {
     QCStringList funcs = DCOPObject::functions();
-    funcs << "void exec_blind(QCString,QValueList<QCString>)";
-    funcs << "void exec_blind(QCString,QValueList<QCString>,QValueList<QCString>,QCString)";
-    funcs << "serviceResult start_service_by_name(QString,QStringList)";
-    funcs << "serviceResult start_service_by_desktop_path(QString,QStringList)";
-    funcs << "serviceResult start_service_by_desktop_name(QString,QStringList)";
-    funcs << "serviceResult kdeinit_exec(QString,QStringList)";
-    funcs << "serviceResult kdeinit_exec_wait(QString,QStringList)";
-    funcs << "serviceResult start_service_by_name(QString,QStringList,QValueList<QCString>,QCString)";
-    funcs << "serviceResult start_service_by_desktop_path(QString,QStringList,QValueList<QCString>,QCString)";
-    funcs << "serviceResult start_service_by_desktop_name(QString,QStringList,QValueList<QCString>,QCString)";
-    funcs << "serviceResult start_service_by_name(QString,QStringList,QValueList<QCString>,QCString,bool)";
-    funcs << "serviceResult start_service_by_desktop_path(QString,QStringList,QValueList<QCString>,QCString,bool)";
-    funcs << "serviceResult start_service_by_desktop_name(QString,QStringList,QValueList<QCString>,QCString,bool)";
-    funcs << "serviceResult kdeinit_exec(QString,QStringList,QValueList<QCString>)";
-    funcs << "serviceResult kdeinit_exec_wait(QString,QStringList,QValueList<QCString>)";
-    funcs << "QString requestSlave(QString,QString,QString)";
-    funcs << "pid_t requestHoldSlave(KURL,QString)";
+    funcs << "void exec_blind(TQCString,TQValueList<TQCString>)";
+    funcs << "void exec_blind(TQCString,TQValueList<TQCString>,TQValueList<TQCString>,TQCString)";
+    funcs << "serviceResult start_service_by_name(TQString,TQStringList)";
+    funcs << "serviceResult start_service_by_desktop_path(TQString,TQStringList)";
+    funcs << "serviceResult start_service_by_desktop_name(TQString,TQStringList)";
+    funcs << "serviceResult kdeinit_exec(TQString,TQStringList)";
+    funcs << "serviceResult kdeinit_exec_wait(TQString,TQStringList)";
+    funcs << "serviceResult start_service_by_name(TQString,TQStringList,TQValueList<TQCString>,TQCString)";
+    funcs << "serviceResult start_service_by_desktop_path(TQString,TQStringList,TQValueList<TQCString>,TQCString)";
+    funcs << "serviceResult start_service_by_desktop_name(TQString,TQStringList,TQValueList<TQCString>,TQCString)";
+    funcs << "serviceResult start_service_by_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)";
+    funcs << "serviceResult start_service_by_desktop_path(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)";
+    funcs << "serviceResult start_service_by_desktop_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)";
+    funcs << "serviceResult kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>)";
+    funcs << "serviceResult kdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>)";
+    funcs << "TQString requestSlave(TQString,TQString,TQString)";
+    funcs << "pid_t requestHoldSlave(KURL,TQString)";
     funcs << "void waitForSlave(pid_t)";
-    funcs << "void setLaunchEnv(QCString,QCString)";
+    funcs << "void setLaunchEnv(TQCString,TQCString)";
     funcs << "void reparseConfiguration()";
 //    funcs << "void terminateKDE()";
     funcs << "void autoStart()";
@@ -479,13 +479,13 @@ KLauncher::functions()
     return funcs;
 }
 
-void KLauncher::setLaunchEnv(const QCString &name, const QCString &_value)
+void KLauncher::setLaunchEnv(const TQCString &name, const TQCString &_value)
 {
-   QCString value(_value);
+   TQCString value(_value);
    if (value.isNull())
       value = "";
    klauncher_header request_header;
-   QByteArray requestData(name.length()+value.length()+2);
+   TQByteArray requestData(name.length()+value.length()+2);
    memcpy(requestData.data(), name.data(), name.length()+1);
    memcpy(requestData.data()+name.length()+1, value.data(), value.length()+1);
    request_header.cmd = LAUNCHER_SETENV;
@@ -524,7 +524,7 @@ void
 KLauncher::slotKDEInitData(int)
 {
    klauncher_header request_header;
-   QByteArray requestData;
+   TQByteArray requestData;
    if( dontBlockReading )
    {
    // in case we get a request to start an application and data arrive
@@ -600,7 +600,7 @@ KLauncher::slotKDEInitData(int)
    {
      lastRequest->status = KLaunchRequest::Error;
      if (!requestData.isEmpty())
-        lastRequest->errorMsg = QString::fromUtf8((char *) requestData.data());
+        lastRequest->errorMsg = TQString::fromUtf8((char *) requestData.data());
      lastRequest = 0;
      return;
    }
@@ -631,7 +631,7 @@ KLauncher::processDied(pid_t pid, long /* exitStatus */)
 }
 
 void
-KLauncher::slotAppRegistered(const QCString &appId)
+KLauncher::slotAppRegistered(const TQCString &appId)
 {
    const char *cAppId = appId.data();
    if (!cAppId) return;
@@ -694,7 +694,7 @@ KLauncher::slotAutoStart()
    KService::Ptr s;
    do
    {
-      QString service = mAutoStart.startService();
+      TQString service = mAutoStart.startService();
       if (service.isEmpty())
       {
          // Done
@@ -704,24 +704,24 @@ KLauncher::slotAutoStart()
 	    // Emit signal
             if( newStartup )
             {
-	       QCString autoStartSignal;
+	       TQCString autoStartSignal;
                autoStartSignal.sprintf( "autoStart%dDone()", mAutoStart.phase());
-               emitDCOPSignal(autoStartSignal, QByteArray());
+               emitDCOPSignal(autoStartSignal, TQByteArray());
             }
             else
             {
-	       QCString autoStartSignal( "autoStartDone()" );
+	       TQCString autoStartSignal( "autoStartDone()" );
 	       int phase = mAutoStart.phase();
 	       if ( phase > 1 )
 	           autoStartSignal.sprintf( "autoStart%dDone()", phase );
-               emitDCOPSignal(autoStartSignal, QByteArray());
+               emitDCOPSignal(autoStartSignal, TQByteArray());
             }
 	 }
          return;
       }
       s = new KService(service);
    }
-   while (!start_service(s, QStringList(), QValueList<QCString>(), "0", false, true));
+   while (!start_service(s, TQStringList(), TQValueList<TQCString>(), "0", false, true));
    // Loop till we find a service that we can start.
 }
 
@@ -733,7 +733,7 @@ KLauncher::requestDone(KLaunchRequest *request)
    {
       DCOPresult.result = 0;
       DCOPresult.dcopName = request->dcop_name;
-      DCOPresult.error = QString::null;
+      DCOPresult.error = TQString::null;
       DCOPresult.pid = request->pid;
    }
    else
@@ -775,10 +775,10 @@ KLauncher::requestDone(KLaunchRequest *request)
 
    if (request->transaction)
    {
-      QByteArray replyData;
-      QCString replyType;
+      TQByteArray replyData;
+      TQCString replyType;
       replyType = "serviceResult";
-      QDataStream stream2(replyData, IO_WriteOnly);
+      TQDataStream stream2(replyData, IO_WriteOnly);
       stream2 << DCOPresult.result << DCOPresult.dcopName << DCOPresult.error << DCOPresult.pid;
       dcopClient()->endTransaction( request->transaction,
                                     replyType, replyData);
@@ -792,18 +792,18 @@ KLauncher::requestStart(KLaunchRequest *request)
    requestList.append( request );
    // Send request to kdeinit.
    klauncher_header request_header;
-   QByteArray requestData;
+   TQByteArray requestData;
    int length = 0;
    length += sizeof(long); // Nr of. Args
    length += request->name.length() + 1; // Cmd
-   for(QValueList<QCString>::Iterator it = request->arg_list.begin();
+   for(TQValueList<TQCString>::Iterator it = request->arg_list.begin();
        it != request->arg_list.end();
        it++)
    {
       length += (*it).length() + 1; // Args...
    }
    length += sizeof(long); // Nr of. envs
-   for(QValueList<QCString>::ConstIterator it = request->envs.begin();
+   for(TQValueList<TQCString>::ConstIterator it = request->envs.begin();
        it != request->envs.end();
        it++)
    {
@@ -826,7 +826,7 @@ KLauncher::requestStart(KLaunchRequest *request)
    p += sizeof(long);
    strcpy(p, request->name.data());
    p += strlen(p) + 1;
-   for(QValueList<QCString>::Iterator it = request->arg_list.begin();
+   for(TQValueList<TQCString>::Iterator it = request->arg_list.begin();
        it != request->arg_list.end();
        it++)
    {
@@ -836,7 +836,7 @@ KLauncher::requestStart(KLaunchRequest *request)
    l = request->envs.count();
    memcpy(p, &l, sizeof(long));
    p += sizeof(long);
-   for(QValueList<QCString>::ConstIterator it = request->envs.begin();
+   for(TQValueList<TQCString>::ConstIterator it = request->envs.begin();
        it != request->envs.end();
        it++)
    {
@@ -878,8 +878,8 @@ KLauncher::requestStart(KLaunchRequest *request)
 }
 
 void
-KLauncher::exec_blind( const QCString &name, const QValueList<QCString> &arg_list,
-    const QValueList<QCString> &envs, const QCString& startup_id )
+KLauncher::exec_blind( const TQCString &name, const TQValueList<TQCString> &arg_list,
+    const TQValueList<TQCString> &envs, const TQCString& startup_id )
 {
    KLaunchRequest *request = new KLaunchRequest;
    request->autoStart = false;
@@ -895,7 +895,7 @@ KLauncher::exec_blind( const QCString &name, const QValueList<QCString> &arg_lis
    KService::Ptr service = KService::serviceByDesktopName( name.mid( name.findRev( '/' ) + 1 ));
    if (service != NULL)
        send_service_startup_info( request,  service,
-           startup_id, QValueList< QCString >());
+           startup_id, TQValueList< TQCString >());
    else // no .desktop file, no startup info
        cancel_service_startup_info( request, startup_id, envs );
 
@@ -906,8 +906,8 @@ KLauncher::exec_blind( const QCString &name, const QValueList<QCString> &arg_lis
 
 
 bool
-KLauncher::start_service_by_name(const QString &serviceName, const QStringList &urls,
-    const QValueList<QCString> &envs, const QCString& startup_id, bool blind)
+KLauncher::start_service_by_name(const TQString &serviceName, const TQStringList &urls,
+    const TQValueList<TQCString> &envs, const TQCString& startup_id, bool blind)
 {
    KService::Ptr service = 0;
    // Find service
@@ -923,8 +923,8 @@ KLauncher::start_service_by_name(const QString &serviceName, const QStringList &
 }
 
 bool
-KLauncher::start_service_by_desktop_path(const QString &serviceName, const QStringList &urls,
-    const QValueList<QCString> &envs, const QCString& startup_id, bool blind)
+KLauncher::start_service_by_desktop_path(const TQString &serviceName, const TQStringList &urls,
+    const TQValueList<TQCString> &envs, const TQCString& startup_id, bool blind)
 {
    KService::Ptr service = 0;
    // Find service
@@ -948,8 +948,8 @@ KLauncher::start_service_by_desktop_path(const QString &serviceName, const QStri
 }
 
 bool
-KLauncher::start_service_by_desktop_name(const QString &serviceName, const QStringList &urls,
-    const QValueList<QCString> &envs, const QCString& startup_id, bool blind)
+KLauncher::start_service_by_desktop_name(const TQString &serviceName, const TQStringList &urls,
+    const TQValueList<TQCString> &envs, const TQCString& startup_id, bool blind)
 {
    KService::Ptr service = 0;
    // Find service
@@ -965,10 +965,10 @@ KLauncher::start_service_by_desktop_name(const QString &serviceName, const QStri
 }
 
 bool
-KLauncher::start_service(KService::Ptr service, const QStringList &_urls,
-    const QValueList<QCString> &envs, const QCString& startup_id, bool blind, bool autoStart)
+KLauncher::start_service(KService::Ptr service, const TQStringList &_urls,
+    const TQValueList<TQCString> &envs, const TQCString& startup_id, bool blind, bool autoStart)
 {
-   QStringList urls = _urls;
+   TQStringList urls = _urls;
    if (!service->isValid())
    {
       DCOPresult.result = ENOEXEC;
@@ -986,19 +986,19 @@ KLauncher::start_service(KService::Ptr service, const QStringList &_urls,
       // For the first file we launch the application in the
       // usual way. The reported result is based on this
       // application.
-      QStringList::ConstIterator it = urls.begin();
+      TQStringList::ConstIterator it = urls.begin();
       for(++it;
           it != urls.end();
           ++it)
       {
-         QStringList singleUrl;
+         TQStringList singleUrl;
          singleUrl.append(*it);
-         QCString startup_id2 = startup_id;
+         TQCString startup_id2 = startup_id;
          if( !startup_id2.isEmpty() && startup_id2 != "0" )
              startup_id2 = "0"; // can't use the same startup_id several times
          start_service( service, singleUrl, envs, startup_id2, true);
       }
-      QString firstURL = *(urls.begin());
+      TQString firstURL = *(urls.begin());
       urls.clear();
       urls.append(firstURL);
    }
@@ -1022,12 +1022,12 @@ KLauncher::start_service(KService::Ptr service, const QStringList &_urls,
    if ((request->dcop_service_type == KService::DCOP_Unique) ||
        (request->dcop_service_type == KService::DCOP_Multi))
    {
-      QVariant v = service->property("X-DCOP-ServiceName");
+      TQVariant v = service->property("X-DCOP-ServiceName");
       if (v.isValid())
          request->dcop_name = v.toString().utf8();
       if (request->dcop_name.isEmpty())
       {
-         request->dcop_name = QFile::encodeName(KRun::binaryName(service->exec(), true));
+         request->dcop_name = TQFile::encodeName(KRun::binaryName(service->exec(), true));
       }
    }
 
@@ -1046,8 +1046,8 @@ KLauncher::start_service(KService::Ptr service, const QStringList &_urls,
 }
 
 void
-KLauncher::send_service_startup_info( KLaunchRequest *request, KService::Ptr service, const QCString& startup_id,
-    const QValueList<QCString> &envs )
+KLauncher::send_service_startup_info( KLaunchRequest *request, KService::Ptr service, const TQCString& startup_id,
+    const TQValueList<TQCString> &envs )
 {
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
 //#ifdef Q_WS_X11 // KStartup* isn't implemented for Qt/Embedded yet
@@ -1055,13 +1055,13 @@ KLauncher::send_service_startup_info( KLaunchRequest *request, KService::Ptr ser
     if( startup_id == "0" )
         return;
     bool silent;
-    QCString wmclass;
-    if( !KRun::checkStartupNotify( QString::null, service, &silent, &wmclass ))
+    TQCString wmclass;
+    if( !KRun::checkStartupNotify( TQString::null, service, &silent, &wmclass ))
         return;
     KStartupInfoId id;
     id.initId( startup_id );
     const char* dpy_str = NULL;
-    for( QValueList<QCString>::ConstIterator it = envs.begin();
+    for( TQValueList<TQCString>::ConstIterator it = envs.begin();
          it != envs.end();
          ++it )
         if( strncmp( *it, "DISPLAY=", 8 ) == 0 )
@@ -1101,8 +1101,8 @@ KLauncher::send_service_startup_info( KLaunchRequest *request, KService::Ptr ser
 }
 
 void
-KLauncher::cancel_service_startup_info( KLaunchRequest* request, const QCString& startup_id,
-    const QValueList<QCString> &envs )
+KLauncher::cancel_service_startup_info( KLaunchRequest* request, const TQCString& startup_id,
+    const TQValueList<TQCString> &envs )
 {
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
 //#ifdef Q_WS_X11 // KStartup* isn't implemented for Qt/Embedded yet
@@ -1111,7 +1111,7 @@ KLauncher::cancel_service_startup_info( KLaunchRequest* request, const QCString&
     if( !startup_id.isEmpty() && startup_id != "0" )
     {
         const char* dpy_str = NULL;
-        for( QValueList<QCString>::ConstIterator it = envs.begin();
+        for( TQValueList<TQCString>::ConstIterator it = envs.begin();
              it != envs.end();
              ++it )
             if( strncmp( *it, "DISPLAY=", 8 ) == 0 )
@@ -1135,17 +1135,17 @@ KLauncher::cancel_service_startup_info( KLaunchRequest* request, const QCString&
 }
 
 bool
-KLauncher::kdeinit_exec(const QString &app, const QStringList &args,
-   const QValueList<QCString> &envs, QCString startup_id, bool wait)
+KLauncher::kdeinit_exec(const TQString &app, const TQStringList &args,
+   const TQValueList<TQCString> &envs, TQCString startup_id, bool wait)
 {
    KLaunchRequest *request = new KLaunchRequest;
    request->autoStart = false;
 
-   for(QStringList::ConstIterator it = args.begin();
+   for(TQStringList::ConstIterator it = args.begin();
        it != args.end();
        it++)
    {
-       QString arg = *it;
+       TQString arg = *it;
        request->arg_list.append(arg.local8Bit());
    }
 
@@ -1167,7 +1167,7 @@ KLauncher::kdeinit_exec(const QString &app, const QStringList &args,
        KService::Ptr service = KService::serviceByDesktopName( app.mid( app.findRev( '/' ) + 1 ));
        if (service != NULL)
            send_service_startup_info( request,  service,
-               startup_id, QValueList< QCString >());
+               startup_id, TQValueList< TQCString >());
        else // no .desktop file, no startup info
            cancel_service_startup_info( request, startup_id, envs );
    }
@@ -1183,7 +1183,7 @@ KLauncher::queueRequest(KLaunchRequest *request)
    if (!bProcessingQueue)
    {
       bProcessingQueue = true;
-      QTimer::singleShot(0, this, SLOT( slotDequeue() ));
+      TQTimer::singleShot(0, this, TQT_SLOT( slotDequeue() ));
    }
 }
 
@@ -1207,22 +1207,22 @@ KLauncher::slotDequeue()
 
 void
 KLauncher::createArgs( KLaunchRequest *request, const KService::Ptr service ,
-                       const QStringList &urls)
+                       const TQStringList &urls)
 {
-  QStringList params = KRun::processDesktopExec(*service, urls, false);
+  TQStringList params = KRun::processDesktopExec(*service, urls, false);
 
-  for(QStringList::ConstIterator it = params.begin();
+  for(TQStringList::ConstIterator it = params.begin();
       it != params.end(); ++it)
   {
      request->arg_list.append((*it).local8Bit());
   }
-  request->cwd = QFile::encodeName(service->path());
+  request->cwd = TQFile::encodeName(service->path());
 }
 
 ///// IO-Slave functions
 
 pid_t
-KLauncher::requestHoldSlave(const KURL &url, const QString &app_socket)
+KLauncher::requestHoldSlave(const KURL &url, const TQString &app_socket)
 {
     IdleSlave *slave;
     for(slave = mSlaveList.first(); slave; slave = mSlaveList.next())
@@ -1241,10 +1241,10 @@ KLauncher::requestHoldSlave(const KURL &url, const QString &app_socket)
 
 
 pid_t
-KLauncher::requestSlave(const QString &protocol,
-                        const QString &host,
-                        const QString &app_socket,
-                        QString &error)
+KLauncher::requestSlave(const TQString &protocol,
+                        const TQString &host,
+                        const TQString &app_socket,
+                        TQString &error)
 {
     IdleSlave *slave;
     for(slave = mSlaveList.first(); slave; slave = mSlaveList.next())
@@ -1264,7 +1264,7 @@ KLauncher::requestSlave(const QString &protocol,
     {
        for(slave = mSlaveList.first(); slave; slave = mSlaveList.next())
        {
-          if (slave->match(protocol, QString::null, false))
+          if (slave->match(protocol, TQString::null, false))
              break;
        }
     }
@@ -1275,18 +1275,18 @@ KLauncher::requestSlave(const QString &protocol,
        return slave->pid();
     }
 
-    QString _name = KProtocolInfo::exec(protocol);
+    TQString _name = KProtocolInfo::exec(protocol);
     if (_name.isEmpty())
     {
 	error = i18n("Unknown protocol '%1'.\n").arg(protocol);
         return 0;
     }
 
-    QCString name = _name.latin1(); // ex: "kio_ftp"
-    QCString arg1 = protocol.latin1();
-    QCString arg2 = QFile::encodeName(mPoolSocketName);
-    QCString arg3 = QFile::encodeName(app_socket);
-    QValueList<QCString> arg_list;
+    TQCString name = _name.latin1(); // ex: "kio_ftp"
+    TQCString arg1 = protocol.latin1();
+    TQCString arg2 = TQFile::encodeName(mPoolSocketName);
+    TQCString arg3 = TQFile::encodeName(app_socket);
+    TQValueList<TQCString> arg_list;
     arg_list.append(arg1);
     arg_list.append(arg2);
     arg_list.append(arg3);
@@ -1301,11 +1301,11 @@ KLauncher::requestSlave(const QString &protocol,
     }
     if (mSlaveValgrind == arg1)
     {
-       arg_list.prepend(QFile::encodeName(KLibLoader::findLibrary(name)));
-       arg_list.prepend(QFile::encodeName(locate("exe", "kioslave")));
+       arg_list.prepend(TQFile::encodeName(KLibLoader::findLibrary(name)));
+       arg_list.prepend(TQFile::encodeName(locate("exe", "kioslave")));
        name = "valgrind";
        if (!mSlaveValgrindSkin.isEmpty()) {
-           arg_list.prepend(QCString("--tool=") + mSlaveValgrindSkin);
+           arg_list.prepend(TQCString("--tool=") + mSlaveValgrindSkin);
        } else
 	   arg_list.prepend("--tool=memcheck");
     }
@@ -1357,9 +1357,9 @@ KLauncher::acceptSlave(KSocket *slaveSocket)
     IdleSlave *slave = new IdleSlave(slaveSocket);
     // Send it a SLAVE_STATUS command.
     mSlaveList.append(slave);
-    connect(slave, SIGNAL(destroyed()), this, SLOT(slotSlaveGone()));
-    connect(slave, SIGNAL(statusUpdate(IdleSlave *)),
-	    this, SLOT(slotSlaveStatus(IdleSlave *)));
+    connect(slave, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotSlaveGone()));
+    connect(slave, TQT_SIGNAL(statusUpdate(IdleSlave *)),
+	    this, TQT_SLOT(slotSlaveStatus(IdleSlave *)));
     if (!mTimer.isActive())
     {
        mTimer.start(1000*10);
@@ -1374,8 +1374,8 @@ KLauncher::slotSlaveStatus(IdleSlave *slave)
     {
        if (waitRequest->pid == slave->pid())
        {
-          QByteArray replyData;
-          QCString replyType;
+          TQByteArray replyData;
+          TQCString replyType;
           replyType = "void";
           dcopClient()->endTransaction( waitRequest->transaction, replyType, replyData);
           mSlaveWaitRequest.removeRef(waitRequest);

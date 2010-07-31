@@ -21,7 +21,7 @@
 #ifndef _KDIALOG_H_
 #define _KDIALOG_H_
 
-#include <qdialog.h>
+#include <tqdialog.h>
 #include <kdelibs_export.h>
 
 class QLayoutItem;
@@ -57,9 +57,9 @@ class KDEUI_EXPORT KDialog : public QDialog
     /**
      * Constructor.
      *
-     * Takes the same arguments as QDialog.
+     * Takes the same arguments as TQDialog.
      */
-    KDialog(QWidget *parent = 0, const char *name = 0,
+    KDialog(TQWidget *parent = 0, const char *name = 0,
 	    bool modal = false, WFlags f = 0);
 
     /**
@@ -81,7 +81,7 @@ class KDEUI_EXPORT KDialog : public QDialog
      * @param margin The new layout margin.
      * @param spacing The new layout spacing.
      */
-    static void resizeLayout( QWidget *widget, int margin, int spacing );
+    static void resizeLayout( TQWidget *widget, int margin, int spacing );
 
     /**
      * Resize every layout associated with @p lay and its children.
@@ -90,7 +90,7 @@ class KDEUI_EXPORT KDialog : public QDialog
      * @param margin The new layout margin
      * @param spacing The new layout spacing
      */
-    static void resizeLayout( QLayoutItem *lay, int margin, int spacing );
+    static void resizeLayout( TQLayoutItem *lay, int margin, int spacing );
 
     /**
      * Centers @p widget on the desktop, taking multi-head setups into
@@ -102,7 +102,7 @@ class KDEUI_EXPORT KDialog : public QDialog
      * in use, or merged display placement is not enabled in kdeglobals.
      * @since 3.1
      */
-    static void centerOnScreen( QWidget *widget, int screen = -1 );
+    static void centerOnScreen( TQWidget *widget, int screen = -1 );
 
     /**
      * Places @p widget so that it doesn't cover a certain @p area of the screen.
@@ -113,11 +113,11 @@ class KDEUI_EXPORT KDialog : public QDialog
      * false on failure (not enough space found)
      * @since 3.2
      */
-    static bool avoidArea( QWidget *widget, const QRect& area, int screen = -1 );
+    static bool avoidArea( TQWidget *widget, const TQRect& area, int screen = -1 );
 
   public slots:
     /**
-     * If the dialog starts with focus in a QLineEdit child,
+     * If the dialog starts with focus in a TQLineEdit child,
      * then call selectAll() on the child.
      */
     virtual void polish();
@@ -129,7 +129,7 @@ class KDEUI_EXPORT KDialog : public QDialog
      * in this string. It will be added automatically according to the KDE
      * standard.
      */
-    virtual void setCaption( const QString &caption );
+    virtual void setCaption( const TQString &caption );
 
     /**
      * Make a plain caption without any modifications.
@@ -137,14 +137,14 @@ class KDEUI_EXPORT KDialog : public QDialog
      * @param caption Your caption. This is the string that will be
      * displayed in the window title.
      */
-    virtual void setPlainCaption( const QString &caption );
+    virtual void setPlainCaption( const TQString &caption );
 
 
   protected:
     /**
      * @internal
      */
-    virtual void keyPressEvent(QKeyEvent*);
+    virtual void keyPressEvent(TQKeyEvent*);
 
 
    signals:
@@ -191,7 +191,7 @@ class KDEUI_EXPORT KDialogQueue : public QObject
 
 public:
 
-      static void queueDialog(QDialog *);
+      static void queueDialog(TQDialog *);
 
       ~KDialogQueue();
 

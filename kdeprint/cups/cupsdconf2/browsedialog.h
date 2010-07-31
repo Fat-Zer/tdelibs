@@ -31,12 +31,12 @@ class BrowseDialog : public KDialogBase
 	Q_OBJECT
 
 public:
-	BrowseDialog(QWidget *parent = 0, const char *name = 0);
+	BrowseDialog(TQWidget *parent = 0, const char *name = 0);
 
-	QString addressString();
+	TQString addressString();
 	void setInfos(CupsdConf*);
-	static QString newAddress(QWidget *parent = 0, CupsdConf *conf = 0);
-	static QString editAddress(const QString& s, QWidget *parent = 0, CupsdConf *conf = 0);
+	static TQString newAddress(TQWidget *parent = 0, CupsdConf *conf = 0);
+	static TQString editAddress(const TQString& s, TQWidget *parent = 0, CupsdConf *conf = 0);
 
 protected slots:
 	void slotTypeChanged(int);

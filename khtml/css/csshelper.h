@@ -22,8 +22,8 @@
 #ifndef css_helper_h
 #define css_helper_h
 
-#include <qcolor.h>
-#include <qfont.h>
+#include <tqcolor.h>
+#include <tqfont.h>
 
 #include "dom/dom_string.h"
 

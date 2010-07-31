@@ -27,10 +27,10 @@
 
 #include <kaction.h>
 
-#include <qkeysequence.h>
-#include <qobject.h>
-#include <qvaluelist.h>
-#include <qguardedptr.h>
+#include <tqkeysequence.h>
+#include <tqobject.h>
+#include <tqvaluelist.h>
+#include <tqguardedptr.h>
 #include <kguiitem.h>
 #include <kshortcut.h>
 #include <kstdaction.h>
@@ -56,7 +56,7 @@ class KPopupMenu;
 class KMainWindow;
 class KXMLGUIClient;
 
-typedef QValueList<KAction *> KActionPtrList;
+typedef TQValueList<KAction *> KActionPtrList;
 
 /**
  * A managed set of KAction objects.
@@ -69,10 +69,10 @@ typedef QValueList<KAction *> KActionPtrList;
  *
  * \code
  * actionCollection()->setHighlightingEnabled(true);  
- * connect(actionCollection(), SIGNAL( actionStatusText( const QString & ) ),
- *           statusBar(), SLOT( message( const QString & ) ) );
- * connect(actionCollection(), SIGNAL( clearStatusText() ),
- *           statusBar(), SLOT( clear() ) );
+ * connect(actionCollection(), TQT_SIGNAL( actionStatusText( const TQString & ) ),
+ *           statusBar(), TQT_SLOT( message( const TQString & ) ) );
+ * connect(actionCollection(), TQT_SIGNAL( clearStatusText() ),
+ *           statusBar(), TQT_SLOT( clear() ) );
  * \endcode
  */
 class KDEUI_EXPORT KActionCollection : public QObject
@@ -83,13 +83,13 @@ class KDEUI_EXPORT KActionCollection : public QObject
   Q_OBJECT
 
 public:
-  KActionCollection( QWidget *parent, const char *name = 0, KInstance *instance = 0 );
+  KActionCollection( TQWidget *parent, const char *name = 0, KInstance *instance = 0 );
   /**
    * Use this constructor if you want the collection's actions to restrict
    * their accelerator keys to @p watch rather than the @p parent.  If
    * you don't require shortcuts, you can pass a null to the @p watch parameter.
    */
-  KActionCollection( QWidget *watch, QObject* parent, const char *name = 0, KInstance *instance = 0 );
+  KActionCollection( TQWidget *watch, TQObject* parent, const char *name = 0, KInstance *instance = 0 );
 #ifndef KDE_NO_COMPAT
   KActionCollection( const KActionCollection &copy );
 #endif
@@ -99,7 +99,7 @@ public:
    * This sets the widget to which the keyboard shortcuts should be attached.
    * You only need to call this if a null pointer was passed in the constructor.
    */
-  virtual void setWidget( QWidget *widget );
+  virtual void setWidget( TQWidget *widget );
 
   /**
    * This indicates whether new actions which are created in this collection
@@ -179,23 +179,23 @@ public:
    * @see KAction::group()
    * @see KAction::setGroup()
    */
-  virtual QStringList groups() const;
+  virtual TQStringList groups() const;
   /**
    * Returns the list of actions in a particular group managed by this action collection.
    * @param group The name of the group.
    */
-  virtual KActionPtrList actions( const QString& group ) const;
+  virtual KActionPtrList actions( const TQString& group ) const;
   /** Returns the list of actions managed by this action collection. */
   virtual KActionPtrList actions() const;
 
   /**
    * Used for reading shortcut configuration from a non-XML rc file.
    */
-  bool readShortcutSettings( const QString& sConfigGroup = QString::null, KConfigBase* pConfig = 0 );
+  bool readShortcutSettings( const TQString& sConfigGroup = TQString::null, KConfigBase* pConfig = 0 );
   /**
    * Used for writing shortcut configuration to a non-XML rc file.
    */
-  bool writeShortcutSettings( const QString& sConfigGroup = QString::null, KConfigBase* pConfig = 0 ) const;
+  bool writeShortcutSettings( const TQString& sConfigGroup = TQString::null, KConfigBase* pConfig = 0 ) const;
 
   void setInstance( KInstance *instance );
   /** The instance with which this class is associated. */
@@ -204,11 +204,11 @@ public:
   /**
    * @deprecated
    */
-  void setXMLFile( const QString& );
+  void setXMLFile( const TQString& );
   /**
    * @deprecated
    */
-  const QString& xmlFile() const;
+  const TQString& xmlFile() const;
 
   //TODO FOR KDE4 make this default true
   /**
@@ -238,7 +238,7 @@ public:
    * This is only needed if you do not add this action to this container.
    * You will generally not need to call this function.
    * 
-   * @param container A container in which the KAction is plugged (must inherit QPopupMenu or KToolBar)
+   * @param container A container in which the KAction is plugged (must inherit TQPopupMenu or KToolBar)
    * @param action The action you are interested in
    * @see disconnectHighlight()
    * @see actionHighlighted()
@@ -246,13 +246,13 @@ public:
    * @see highlightingEnabled()
    * @see actionHighlighted()
    */
-  void connectHighlight( QWidget *container, KAction *action );
+  void connectHighlight( TQWidget *container, KAction *action );
   /**
    * Disconnect highlight notifications for a particular pair of contianer and action.
    * This is only needed if you do not add this action to this container.
    * You will generally not need to call this function.
    * 
-   * @param container A container in which the KAction is plugged (must inherit QPopupMenu or KToolBar)
+   * @param container A container in which the KAction is plugged (must inherit TQPopupMenu or KToolBar)
    * @param action The action you are interested in
    * @see connectHighlight()
    * @see actionHighlighted()
@@ -260,7 +260,7 @@ public:
    * @see highlightingEnabled()
    * @see actionHighlighted()
    */
-  void disconnectHighlight( QWidget *container, KAction *action );
+  void disconnectHighlight( TQWidget *container, KAction *action );
 
   /**
    * The parent KXMLGUIClient, return 0L if not available.
@@ -298,7 +298,7 @@ signals:
    *  
    * @see setHighlightingEnabled()
    */
-  void actionStatusText( const QString &text );
+  void actionStatusText( const TQString &text );
   /** Emitted when an action loses highlighting.
    *  This is only emitted if you have setHighlightingEnabled()
    *  
@@ -313,7 +313,7 @@ private:
    * widget it should connect widget-scope actions to, and what
    * main window it should connect
    */
-  void beginXMLPlug( QWidget *widget );
+  void beginXMLPlug( TQWidget *widget );
   void endXMLPlug();
   /** @internal.  Only to be called by KXMLGUIFactory::removeClient() */
   void prepareXMLUnplug();
@@ -331,11 +331,11 @@ private slots:
    void slotDestroyed();
 
 private:
-   KAction *findAction( QWidget *container, int id );
+   KAction *findAction( TQWidget *container, int id );
 
 #ifndef KDE_NO_COMPAT
 public:
-  KActionCollection( QObject *parent, const char *name = 0, KInstance *instance = 0 );
+  KActionCollection( TQObject *parent, const char *name = 0, KInstance *instance = 0 );
 #endif
 
 public:

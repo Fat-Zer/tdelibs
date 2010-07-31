@@ -3,13 +3,13 @@
 public:
 OrgValue();
 OrgValue(const OrgValue&);
-OrgValue(const QCString&);
+OrgValue(const TQCString&);
 OrgValue & operator = (OrgValue&);
-OrgValue & operator = (const QCString&);
+OrgValue & operator = (const TQCString&);
 bool operator ==(OrgValue&);
 bool operator !=(OrgValue& x) {return !(*this==x);}
-bool operator ==(const QCString& s) {OrgValue a(s);return(*this==a);} 
-bool operator != (const QCString& s) {return !(*this == s);}
+bool operator ==(const TQCString& s) {OrgValue a(s);return(*this==a);} 
+bool operator != (const TQCString& s) {return !(*this == s);}
 
 virtual ~OrgValue();
 void parse() {if(!parsed_) _parse();parsed_=true;assembled_=false;}

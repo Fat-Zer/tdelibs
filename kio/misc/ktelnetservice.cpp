@@ -51,10 +51,10 @@ int main(int argc, char **argv)
 
 	KConfig *config = new KConfig("kdeglobals", true);
 	config->setGroup("General");
-	QString terminal = config->readPathEntry("TerminalApplication", "konsole");
+	TQString terminal = config->readPathEntry("TerminalApplication", "konsole");
 
 	KURL url(args->arg(0));
-	QStringList cmd;
+	TQStringList cmd;
 	if (terminal == "konsole")
 	    cmd << "--noclose";
 
@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 		cmd << url.user();
 	}
 
-        QString host;
+        TQString host;
         if (!url.host().isEmpty())
            host = url.host(); // telnet://host
         else if (!url.path().isEmpty())
@@ -99,9 +99,9 @@ int main(int argc, char **argv)
         
 	if (url.port()){
             if ( url.protocol() == "ssh" )
-		cmd << "-p" << QString::number(url.port());
+		cmd << "-p" << TQString::number(url.port());
 	    else
-		cmd << QString::number(url.port());
+		cmd << TQString::number(url.port());
 	}
 
 	app.kdeinitExec(terminal, cmd);

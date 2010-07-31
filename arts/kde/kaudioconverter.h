@@ -22,7 +22,7 @@
 #ifndef KAUDIOCONVERTER_H
 #define KAUDIOCONVERTER_H
 
-#include <qobject.h>
+#include <tqobject.h>
 #include "artskde.h"
 #include "kplayobject.h"
 
@@ -52,12 +52,12 @@ signals:
 	void rawStreamFinished();
 
 private slots:
-	void slotMimeType(const QString &mimeType);
+	void slotMimeType(const TQString &mimeType);
 	
 private:
 	Arts::KDataRequest m_request;
 	KPlayObject *m_incoming;
-	QString m_mimeType;
+	TQString m_mimeType;
 
 	bool m_started;
 };

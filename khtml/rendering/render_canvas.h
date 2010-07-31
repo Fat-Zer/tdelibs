@@ -123,7 +123,7 @@ public:
 
     RenderPage* page();
 
-    QRect selectionRect() const;
+    TQRect selectionRect() const;
 
     void setMaximalOutlineSize(int o) { m_maximalOutlineSize = o; }
     int maximalOutlineSize() const { return m_maximalOutlineSize; }
@@ -143,7 +143,7 @@ protected:
 
     virtual void selectionStartEnd(int& spos, int& epos);
 
-    virtual QRect viewRect() const;
+    virtual TQRect viewRect() const;
 
     KHTMLView *m_view;
 
@@ -181,7 +181,7 @@ protected:
     RenderPage* m_page;
 
     int m_maximalOutlineSize; // Used to apply a fudge factor to dirty-rect checks on blocks/tables.
-    QValueList<RenderObject*> m_dirtyChildren;
+    TQValueList<RenderObject*> m_dirtyChildren;
 };
 
 inline RenderCanvas* RenderObject::canvas() const

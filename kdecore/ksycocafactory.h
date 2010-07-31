@@ -22,15 +22,15 @@
 #include "ksycocatype.h"
 #include "ksycocaentry.h"
 
-#include <qdict.h>
-#include <qptrlist.h>
+#include <tqdict.h>
+#include <tqptrlist.h>
 class KSycoca;
 class QStringList;
 class QString;
 class KSycocaDict;
 class KSycocaResourceList;
 
-typedef QDict<KSycocaEntry::Ptr> KSycocaEntryDict;
+typedef TQDict<KSycocaEntry::Ptr> KSycocaEntryDict;
 
 /**
  * @internal
@@ -65,7 +65,7 @@ public:
     * Construct an entry from a config file.
     * To be implemented in the real factories.
     */
-   virtual KSycocaEntry *createEntry(const QString &file, const char *resource) = 0;
+   virtual KSycocaEntry *createEntry(const TQString &file, const char *resource) = 0;
 
    /**
     * Add an entry
@@ -99,7 +99,7 @@ public:
     * Don't forget to call the parent first when you override 
     * this function.
     */
-   virtual void save(QDataStream &str);
+   virtual void save(TQDataStream &str);
 
    /**
     * Writes out a header to the stream 'str'.
@@ -108,7 +108,7 @@ public:
     * Don't forget to call the parent first when you override 
     * this function.
     */
-   virtual void saveHeader(QDataStream &str);
+   virtual void saveHeader(TQDataStream &str);
 
    /**
     * @return the resources for which this factory is responsible.
@@ -122,7 +122,7 @@ protected:
    int m_sycocaDictOffset;
    int m_beginEntryOffset;
    int m_endEntryOffset;
-   QDataStream *m_str;
+   TQDataStream *m_str;
 
    KSycocaResourceList *m_resourceList;
    KSycocaEntryDict *m_entryDict;
@@ -134,7 +134,7 @@ protected:
 /** This, instead of a typedef, allows to declare "class ..." in header files
  * @internal
  */
-class KDECORE_EXPORT KSycocaFactoryList : public QPtrList<KSycocaFactory>
+class KDECORE_EXPORT KSycocaFactoryList : public TQPtrList<KSycocaFactory>
 {
 public:
    KSycocaFactoryList() { }

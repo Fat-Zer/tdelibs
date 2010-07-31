@@ -80,20 +80,20 @@ extern "C" {
 #define SOMAXCONN 5
 #endif
 
-#include <qapplication.h>
-#include <qsocketnotifier.h>
+#include <tqapplication.h>
+#include <tqsocketnotifier.h>
 
 #include "netsupp.h"		// leave this last
 
 #ifdef __CYGWIN__
-#include "qwindowdefs.h"
+#include "tqwindowdefs.h"
 #endif 
 
 class KSocketPrivate
 {
 public:
-  QSocketNotifier *readNotifier;
-  QSocketNotifier *writeNotifier;
+  TQSocketNotifier *readNotifier;
+  TQSocketNotifier *writeNotifier;
 
   KSocketPrivate() :
     readNotifier(0), writeNotifier(0)
@@ -134,8 +134,8 @@ void KSocket::enableRead( bool _state )
     {
 	  if ( !d->readNotifier  )
 		{
-		  d->readNotifier = new QSocketNotifier( sock, QSocketNotifier::Read );
-		  QObject::connect( d->readNotifier, SIGNAL( activated(int) ), this, SLOT( slotRead(int) ) );
+		  d->readNotifier = new TQSocketNotifier( sock, TQSocketNotifier::Read );
+		  TQObject::connect( d->readNotifier, TQT_SIGNAL( activated(int) ), this, TQT_SLOT( slotRead(int) ) );
 		}
 	  else
 	    d->readNotifier->setEnabled( true );
@@ -150,9 +150,9 @@ void KSocket::enableWrite( bool _state )
     {
 	  if ( !d->writeNotifier )
 		{
-		  d->writeNotifier = new QSocketNotifier( sock, QSocketNotifier::Write );
-		  QObject::connect( d->writeNotifier, SIGNAL( activated(int) ), this,
-							SLOT( slotWrite(int) ) );
+		  d->writeNotifier = new TQSocketNotifier( sock, TQSocketNotifier::Write );
+		  TQObject::connect( d->writeNotifier, TQT_SIGNAL( activated(int) ), this,
+							TQT_SLOT( slotWrite(int) ) );
 		}
 	  else
 	    d->writeNotifier->setEnabled( true );
@@ -182,7 +182,7 @@ void KSocket::slotWrite( int )
  */
 bool KSocket::connect( const char *_path )
 {
-  KExtendedSocket ks(QString::null, _path, KExtendedSocket::unixSocket);
+  KExtendedSocket ks(TQString::null, _path, KExtendedSocket::unixSocket);
 
   ks.connect();
   sock = ks.fd();
@@ -194,7 +194,7 @@ bool KSocket::connect( const char *_path )
 /*
  * Connects the socket to _host, _port.
  */
-bool KSocket::connect( const QString& _host, unsigned short int _port, int _timeout )
+bool KSocket::connect( const TQString& _host, unsigned short int _port, int _timeout )
 {
   KExtendedSocket ks(_host, _port, KExtendedSocket::inetSocket);
   ks.setTimeout(_timeout, 0);
@@ -240,7 +240,7 @@ bool KSocket::initSockaddr (ksockaddr_in *server_name, const char *hostname, uns
   if (domain != PF_INET)
     return false;
 
-  QPtrList<KAddressInfo> list = KExtendedSocket::lookup(hostname, QString::number(port),
+  TQPtrList<KAddressInfo> list = KExtendedSocket::lookup(hostname, TQString::number(port),
                                                         KExtendedSocket::ipv4Socket);
   list.setAutoDelete(true);
 
@@ -278,7 +278,7 @@ class KServerSocketPrivate
 {
 public:
    bool bind;
-   QCString path;
+   TQCString path;
    unsigned short int port;
    KExtendedSocket *ks;
 };
@@ -307,7 +307,7 @@ bool KServerSocket::init( const char *_path )
   unlink(_path );
   d->path = _path;
 
-  KExtendedSocket *ks = new KExtendedSocket(QString::null, _path, KExtendedSocket::passiveSocket |
+  KExtendedSocket *ks = new KExtendedSocket(TQString::null, _path, KExtendedSocket::passiveSocket |
 					    KExtendedSocket::unixSocket);
   d->ks = ks;
 
@@ -321,7 +321,7 @@ bool KServerSocket::init( unsigned short int _port )
 {
   d->port = _port;
   KExtendedSocket *ks;
-  ks = new KExtendedSocket(QString::null, _port, KExtendedSocket::passiveSocket |
+  ks = new KExtendedSocket(TQString::null, _port, KExtendedSocket::passiveSocket |
 			   KExtendedSocket::inetSocket);
   d->ks = ks;
 
@@ -349,7 +349,7 @@ bool KServerSocket::bindAndListen()
 
   sock = d->ks->fd();
 
-  connect( d->ks->readNotifier(), SIGNAL( activated(int) ), this, SLOT( slotAccept(int) ) );
+  connect( d->ks->readNotifier(), TQT_SIGNAL( activated(int) ), this, TQT_SLOT( slotAccept(int) ) );
   return true;
 }
 

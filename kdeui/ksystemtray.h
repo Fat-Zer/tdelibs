@@ -19,7 +19,7 @@
 #define KSYSTEMTRAY_H
 
 #include <kglobal.h>
-#include <qlabel.h>
+#include <tqlabel.h>
 
 class KActionCollection;
 class KPopupMenu;
@@ -78,7 +78,7 @@ public:
      * when the user clicks on the trray window with the left mouse
      * button.
      **/
-    KSystemTray( QWidget* parent = 0, const char* name  = 0 );
+    KSystemTray( TQWidget* parent = 0, const char* name  = 0 );
 
     /*
       Destructor
@@ -101,13 +101,13 @@ public:
     /**
      * Changes the tray's icon.
      */
-    virtual void setPixmap( const QPixmap& icon );
+    virtual void setPixmap( const TQPixmap& icon );
 
     /**
      * Changes the tray's text description (which can be seen e.g. in the systray
      * configuration dialog). The default value is KAboutData::programName().
      */
-    virtual void setCaption( const QString& title );
+    virtual void setCaption( const TQString& title );
 
     /**
      * Loads an icon @p icon using the icon loader class of the given instance @p instance.
@@ -117,7 +117,7 @@ public:
      *
      * @since 3.2
      */
-    static QPixmap loadIcon( const QString &icon, KInstance *instance=KGlobal::instance() );
+    static TQPixmap loadIcon( const TQString &icon, KInstance *instance=KGlobal::instance() );
 
     /**
      * Loads an icon @p icon using the icon loader class of the given instance @p instance.
@@ -128,7 +128,7 @@ public:
      *
      * @since 3.5.12
      */
-    static QPixmap loadSizedIcon( const QString &icon, int iconWidth, KInstance *instance=KGlobal::instance() );
+    static TQPixmap loadSizedIcon( const TQString &icon, int iconWidth, KInstance *instance=KGlobal::instance() );
 
 signals:
     /**
@@ -167,7 +167,7 @@ protected:
 
        Feel free to reimplement this if you need something special.
      */
-    void mousePressEvent( QMouseEvent * );
+    void mousePressEvent( TQMouseEvent * );
 
     /**
        Reimplemented to provide the standard show/raise behavior
@@ -175,7 +175,7 @@ protected:
 
        Feel free to reimplement this if you need something special.
      */
-    void mouseReleaseEvent( QMouseEvent * );
+    void mouseReleaseEvent( TQMouseEvent * );
 
 
 
@@ -188,12 +188,12 @@ protected:
     /**
        Reimplemented for internal reasons.
      */
-    void showEvent( QShowEvent * );
+    void showEvent( TQShowEvent * );
 
     /**
        Reimplemented for internal reasons.
      */
-    void enterEvent( QEvent* );
+    void enterEvent( TQEvent* );
 
 private slots:
     void minimizeRestoreAction();

@@ -42,7 +42,7 @@ KFileTreeViewItem::KFileTreeViewItem( KFileTreeViewItem *parent,
 KFileTreeViewItem::KFileTreeViewItem( KFileTreeView* parent,
 				      KFileItem* item,
 				      KFileTreeBranch *brnch )
-   :KListViewItem( (QListView*)parent ),
+   :KListViewItem( (TQListView*)parent ),
     m_kfileitem(item ),
     m_branch( brnch ),
     m_wasListed(false)
@@ -72,9 +72,9 @@ KURL KFileTreeViewItem::url() const
     return m_kfileitem ? m_kfileitem->url() : KURL();
 }
 
-QString KFileTreeViewItem::path()  const
+TQString KFileTreeViewItem::path()  const
 {
-    return m_kfileitem ? m_kfileitem->url().path() : QString::null;
+    return m_kfileitem ? m_kfileitem->url().path() : TQString::null;
 }
 
 bool KFileTreeViewItem::isDir() const

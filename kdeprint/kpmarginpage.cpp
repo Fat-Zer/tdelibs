@@ -25,30 +25,30 @@
 #include "driver.h"
 #include "marginwidget.h"
 
-#include <qgroupbox.h>
-#include <qlayout.h>
-#include <qprinter.h>
-#include <qpaintdevicemetrics.h>
+#include <tqgroupbox.h>
+#include <tqlayout.h>
+#include <tqprinter.h>
+#include <tqpaintdevicemetrics.h>
 
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kglobal.h>
 
-KPMarginPage::KPMarginPage(KPrinter *prt, DrMain *driver, QWidget *parent, const char *name)
+KPMarginPage::KPMarginPage(KPrinter *prt, DrMain *driver, TQWidget *parent, const char *name)
 : KPrintDialogPage(0, driver, parent, name)
 {
 	m_printer = prt;
 	setTitle(i18n("Margins"));
 	m_usedriver = true;
 
-	QGroupBox	*box = new QGroupBox(1, Qt::Vertical, i18n("Margins"), this);
+	QGroupBox	*box = new TQGroupBox(1, Qt::Vertical, i18n("Margins"), this);
 	m_margin = new MarginWidget(box, "MarginWidget", (m_printer != 0));
 	//m_margin->setSymetricMargins(true);
 	//if (m_printer)
 	//	m_margin->setResolution(m_printer->resolution());
 
-	QVBoxLayout	*l0 = new QVBoxLayout(this, 0, 10);
+	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
 	l0->addWidget(box);
 	l0->addStretch(1);
 }
@@ -57,12 +57,12 @@ KPMarginPage::~KPMarginPage()
 {
 }
 
-void KPMarginPage::initPageSize(const QString& ps, bool landscape)
+void KPMarginPage::initPageSize(const TQString& ps, bool landscape)
 {
 	// first retrieve the Qt values for page size and margins
-	QPrinter	prt(QPrinter::PrinterResolution);
+	QPrinter	prt(TQPrinter::PrinterResolution);
 	prt.setFullPage(true);
-	prt.setPageSize((QPrinter::PageSize)(ps.isEmpty() ? KGlobal::locale()->pageSize() : ps.toInt()));
+	prt.setPageSize((TQPrinter::PageSize)(ps.isEmpty() ? KGlobal::locale()->pageSize() : ps.toInt()));
 	QPaintDeviceMetrics	metrics(&prt);
 	float	w = metrics.width();
 	float	h = metrics.height();
@@ -103,11 +103,11 @@ void KPMarginPage::initPageSize(const QString& ps, bool landscape)
 	m_margin->setCustomEnabled(false);
 }
 
-void KPMarginPage::setOptions(const QMap<QString,QString>& opts)
+void KPMarginPage::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	QString	orient = opts["orientation-requested"];
 	bool 	land = (orient.isEmpty()? opts["kde-orientation"] == "Landscape" : orient == "4" || orient == "5");
-	QString ps = opts[ "kde-printsize" ];
+	TQString ps = opts[ "kde-printsize" ];
 	if ( ps.isEmpty() )
 	{
 		m_usedriver = true;
@@ -144,14 +144,14 @@ void KPMarginPage::setOptions(const QMap<QString,QString>& opts)
 	m_margin->setCustomEnabled(marginset);
 }
 
-void KPMarginPage::getOptions(QMap<QString,QString>& opts, bool /* incldef */)
+void KPMarginPage::getOptions(TQMap<TQString,TQString>& opts, bool /* incldef */)
 {
 	if (m_margin->isCustomEnabled() /*|| incldef*/)
 	{
-		opts["kde-margin-top"] = QString::number(m_margin->top());
-		opts["kde-margin-left"] = QString::number(m_margin->left());
-		opts["kde-margin-bottom"] = QString::number(m_margin->bottom());
-		opts["kde-margin-right"] = QString::number(m_margin->right());
+		opts["kde-margin-top"] = TQString::number(m_margin->top());
+		opts["kde-margin-left"] = TQString::number(m_margin->left());
+		opts["kde-margin-bottom"] = TQString::number(m_margin->bottom());
+		opts["kde-margin-right"] = TQString::number(m_margin->right());
 	}
 	else
 	{

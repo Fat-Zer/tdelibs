@@ -29,9 +29,9 @@
 #include <iostream>
 using namespace std;
 
-#include <qregexp.h>
-#include <qdir.h>
-#include <qmetaobject.h>
+#include <tqregexp.h>
+#include <tqdir.h>
+#include <tqmetaobject.h>
 
 #include <kdebug.h>
 #include <klibloader.h>
@@ -51,10 +51,10 @@ namespace KUnitTest
         Runner::self()->m_registry.insert(name, test);
     }
 
-    void Runner::loadModules(const QString &folder, const QString &query)
+    void Runner::loadModules(const TQString &folder, const TQString &query)
     {
-        QRegExp reQuery(query);
-        QDir dir(folder, "kunittest_*.la");
+        TQRegExp reQuery(query);
+        TQDir dir(folder, "kunittest_*.la");
 
         // Add the folder to the "module" resource such that the KLibLoader can
         // find the modules in this folder.
@@ -62,11 +62,11 @@ namespace KUnitTest
         kdDebug() << "Looking in folder: " << dir.absPath() << endl;
 
         // Get a list of all modules.
-        QStringList modules = dir.entryList();
+        TQStringList modules = dir.entryList();
 
         for ( uint i = 0; i < modules.count(); ++i )
         {
-            QString module = modules[i];
+            TQString module = modules[i];
             kdDebug() << "Module: " << dir.absPath() + "/" + module << endl;
 
             if ( reQuery.search(module) != -1 )
@@ -174,30 +174,30 @@ namespace KUnitTest
         cout << "    Total skipped test steps                       :  " << globalSkipped << endl;
 #else
         unsigned int numTests = m_registry.count(); // should this be globalSteps instead?
-        QString str;
+        TQString str;
         if ( globalFails == 0 )
             if ( globalXFails == 0 )
-                str = QString( "All %1 tests passed" ).arg( numTests );
+                str = TQString( "All %1 tests passed" ).arg( numTests );
             else
-                str = QString( "All %1 tests behaved as expected (%2 expected failures)" ).arg( numTests ).arg( globalXFails );
+                str = TQString( "All %1 tests behaved as expected (%2 expected failures)" ).arg( numTests ).arg( globalXFails );
         else
             if ( globalXPasses == 0 )
-                str = QString( "%1 of %2 tests failed" ).arg( globalFails ).arg( numTests );
+                str = TQString( "%1 of %2 tests failed" ).arg( globalFails ).arg( numTests );
             else
-                str = QString( "%1 of %2 tests did not behave as expected (%1 unexpected passes)" ).arg( globalFails ).arg( numTests ).arg( globalXPasses );
+                str = TQString( "%1 of %2 tests did not behave as expected (%1 unexpected passes)" ).arg( globalFails ).arg( numTests ).arg( globalXPasses );
         if ( globalSkipped )
-            str += QString( " (%1 tests skipped)" ).arg( globalSkipped );
+            str += TQString( " (%1 tests skipped)" ).arg( globalSkipped );
         cout << str.local8Bit() << endl;
 #endif
 
         return m_registry.count();
     }
 
-    void Runner::runMatchingTests(const QString &prefix)
+    void Runner::runMatchingTests(const TQString &prefix)
     {
         RegistryIteratorType it(m_registry);
         for( ; it.current(); ++it )
-            if ( QString(it.currentKey()).startsWith(prefix) )
+            if ( TQString(it.currentKey()).startsWith(prefix) )
                 runTest(it.currentKey());
     }
 
@@ -224,10 +224,10 @@ namespace KUnitTest
         int numXFail = 0;
         int numXPass = 0;
         int numSkip = 0;
-        QStringList xpassList;
-        QStringList errorList;
-        QStringList xfailList;
-        QStringList skipList;
+        TQStringList xpassList;
+        TQStringList errorList;
+        TQStringList xfailList;
+        TQStringList skipList;
 
         if ( test->inherits("KUnitTest::SlotTester") )
         {
@@ -286,29 +286,29 @@ namespace KUnitTest
 
         if ( 0 < numXPass  ) {
         cout << "    Unexpected pass" << ( ( 1 == numXPass )?"":"es") << ":" << endl;
-        QStringList list = xpassList;
-        for ( QStringList::Iterator itr = list.begin(); itr != list.end(); ++itr ) {
+        TQStringList list = xpassList;
+        for ( TQStringList::Iterator itr = list.begin(); itr != list.end(); ++itr ) {
             cout << "\t" << (*itr).latin1() << endl;
         }
         }
         if ( 0 < (numFail - numXFail) ) {
         cout << "    Unexpected failure" << ( ( 1 == numFail )?"":"s") << ":" << endl;
-        QStringList list = errorList;
-        for ( QStringList::Iterator itr = list.begin(); itr != list.end(); ++itr ) {
+        TQStringList list = errorList;
+        for ( TQStringList::Iterator itr = list.begin(); itr != list.end(); ++itr ) {
             cout << "\t" << (*itr).latin1() << endl;
         }
         }
         if ( 0 < numXFail ) {
         cout << "    Expected failure" << ( ( 1 == numXFail)?"":"s") << ":" << endl;
-        QStringList list = xfailList;
-        for ( QStringList::Iterator itr = list.begin(); itr != list.end(); ++itr ) {
+        TQStringList list = xfailList;
+        for ( TQStringList::Iterator itr = list.begin(); itr != list.end(); ++itr ) {
             cout << "\t" << (*itr).latin1() << endl;
         }
         }
         if ( 0 < numSkip ) {
             cout << "    Skipped test" << ( ( 1 == numSkip )?"":"s") << ":" << endl;
-            QStringList list = skipList;
-            for ( QStringList::Iterator itr = list.begin(); itr != list.end(); ++itr ) {
+            TQStringList list = skipList;
+            for ( TQStringList::Iterator itr = list.begin(); itr != list.end(); ++itr ) {
             cout << "\t" << (*itr).latin1() << endl;
             }
         }

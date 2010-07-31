@@ -28,7 +28,7 @@
 #include "kglobalaccel_emb.h"
 #endif
 
-#include <qstring.h>
+#include <tqstring.h>
 #include "kaccelbase.h"
 #include <kdebug.h>
 #include <kshortcut.h>
@@ -36,8 +36,8 @@
 
 //----------------------------------------------------
 
-KGlobalAccel::KGlobalAccel( QObject* pParent, const char* psName )
-: QObject( pParent, psName )
+KGlobalAccel::KGlobalAccel( TQObject* pParent, const char* psName )
+: TQObject( pParent, psName )
 {
 	kdDebug(125) << "KGlobalAccel(): this = " << this << endl;
 	d = new KGlobalAccelPrivate();
@@ -74,9 +74,9 @@ void KGlobalAccel::blockShortcuts( bool block )
 void KGlobalAccel::disableBlocking( bool disable )
         { d->disableBlocking( disable ); }
 
-KAccelAction* KGlobalAccel::insert( const QString& sAction, const QString& sDesc, const QString& sHelp,
+KAccelAction* KGlobalAccel::insert( const TQString& sAction, const TQString& sDesc, const TQString& sHelp,
 		const KShortcut& cutDef3, const KShortcut& cutDef4,
-		const QObject* pObjSlot, const char* psMethodSlot,
+		const TQObject* pObjSlot, const char* psMethodSlot,
 		bool bConfigurable, bool bEnabled )
 {
 	return d->insert( sAction, sDesc, sHelp,
@@ -85,38 +85,38 @@ KAccelAction* KGlobalAccel::insert( const QString& sAction, const QString& sDesc
 		bConfigurable, bEnabled );
 }
 
-KAccelAction* KGlobalAccel::insert( const QString& sName, const QString& sDesc )
+KAccelAction* KGlobalAccel::insert( const TQString& sName, const TQString& sDesc )
 	{ return d->insert( sName, sDesc ); }
 bool KGlobalAccel::updateConnections()
 	{ return d->updateConnections(); }
 
-bool KGlobalAccel::remove( const QString& sAction )
+bool KGlobalAccel::remove( const TQString& sAction )
         { return d->remove( sAction ); }
 
-const KShortcut& KGlobalAccel::shortcut( const QString& sAction ) const
+const KShortcut& KGlobalAccel::shortcut( const TQString& sAction ) const
 {
 	const KAccelAction* pAction = d->actions().actionPtr( sAction );
 	return (pAction) ? pAction->shortcut() : KShortcut::null();
 }
 
-bool KGlobalAccel::setShortcut( const QString& sAction, const KShortcut& cut )
+bool KGlobalAccel::setShortcut( const TQString& sAction, const KShortcut& cut )
 	{ return d->setShortcut( sAction, cut ); }
-bool KGlobalAccel::setSlot( const QString& sAction, const QObject* pObjSlot, const char* psMethodSlot )
+bool KGlobalAccel::setSlot( const TQString& sAction, const TQObject* pObjSlot, const char* psMethodSlot )
 	{ return d->setActionSlot( sAction, pObjSlot, psMethodSlot ); }
-QString KGlobalAccel::label( const QString& sAction ) const
+TQString KGlobalAccel::label( const TQString& sAction ) const
 {
 	const KAccelAction* pAction = d->actions().actionPtr( sAction );
-	return (pAction) ? pAction->label() : QString();
+	return (pAction) ? pAction->label() : TQString();
 }
-bool KGlobalAccel::setActionEnabled( const QString& sAction, bool bEnable )
+bool KGlobalAccel::setActionEnabled( const TQString& sAction, bool bEnable )
 {
         return d->setActionEnabled( sAction, bEnable );
 }
 
-const QString& KGlobalAccel::configGroup() const
+const TQString& KGlobalAccel::configGroup() const
 	{ return d->configGroup(); }
 // for kdemultimedia/kmix
-void KGlobalAccel::setConfigGroup( const QString& s )
+void KGlobalAccel::setConfigGroup( const TQString& s )
 	{ d->setConfigGroup( s ); }
 
 bool KGlobalAccel::readSettings( KConfigBase* pConfig )

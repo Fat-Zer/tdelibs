@@ -23,21 +23,21 @@
 #define KABC_LDAPCLIENT_H
 
 
-#include <qobject.h>
-#include <qstring.h>
-#include <qcstring.h>
-#include <qstringlist.h>
-#include <qmemarray.h>
-#include <qguardedptr.h>
-#include <qtimer.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqcstring.h>
+#include <tqstringlist.h>
+#include <tqmemarray.h>
+#include <tqguardedptr.h>
+#include <tqtimer.h>
 
 #include <kio/job.h>
 
 namespace KABC {
 
 class LdapClient;
-typedef QValueList<QByteArray> LdapAttrValue;
-typedef QMap<QString,LdapAttrValue > LdapAttrMap;
+typedef TQValueList<TQByteArray> LdapAttrValue;
+typedef TQMap<TQString,LdapAttrValue > LdapAttrMap;
 
 /**
   * This class is internal. Binary compatibiliy might be broken any time
@@ -50,8 +50,8 @@ class KABC_EXPORT LdapObject
 {
   public:
     LdapObject()
-      : dn( QString::null ), client( 0 ) {}
-    explicit LdapObject( const QString& _dn, LdapClient* _cl ) : dn( _dn ), client( _cl ) {}
+      : dn( TQString::null ), client( 0 ) {}
+    explicit LdapObject( const TQString& _dn, LdapClient* _cl ) : dn( _dn ), client( _cl ) {}
     LdapObject( const LdapObject& that ) { assign( that ); }
 
     LdapObject& operator=( const LdapObject& that )
@@ -60,11 +60,11 @@ class KABC_EXPORT LdapObject
       return *this;
     }
 
-    QString toString() const;
+    TQString toString() const;
 
     void clear();
 
-    QString dn;
+    TQString dn;
     LdapAttrMap attrs;
     LdapClient* client;
 
@@ -87,7 +87,7 @@ class KABC_EXPORT LdapClient : public QObject
   Q_OBJECT
 
   public:
-    LdapClient( QObject* parent = 0, const char* name = 0 );
+    LdapClient( TQObject* parent = 0, const char* name = 0 );
     virtual ~LdapClient();
 
     /*! returns true if there is a query running */
@@ -98,7 +98,7 @@ class KABC_EXPORT LdapClient : public QObject
     void done();
 
     /*! Emitted in case of error */
-    void error( const QString& );
+    void error( const TQString& );
 
     /*! Emitted once for each object returned
      * from the query
@@ -109,47 +109,47 @@ class KABC_EXPORT LdapClient : public QObject
     /*!
      * Set the name or IP of the LDAP server
      */
-    void setHost( const QString& host );
-    QString host() const { return mHost; }
+    void setHost( const TQString& host );
+    TQString host() const { return mHost; }
 
     /*!
      * Set the port of the LDAP server
      * if using a nonstandard port
      */
-    void setPort( const QString& port );
-    QString port() const { return mPort; }
+    void setPort( const TQString& port );
+    TQString port() const { return mPort; }
 
     /*!
      * Set the base DN
      */
-    void setBase( const QString& base );
-    QString base() const { return mBase; }
+    void setBase( const TQString& base );
+    TQString base() const { return mBase; }
 
     /*!
      * Set the bind DN
      */
-    void setBindDN( const QString& bindDN );
-    QString bindDN() const;
+    void setBindDN( const TQString& bindDN );
+    TQString bindDN() const;
 
     /*!
      * Set the bind password DN
      */
-    void setPwdBindDN( const QString& pwdBindDN );
-    QString pwdBindDN() const;
+    void setPwdBindDN( const TQString& pwdBindDN );
+    TQString pwdBindDN() const;
 
     /*! Set the attributes that should be
      * returned, or an empty list if
      * all attributes are wanted
      */
-    void setAttrs( const QStringList& attrs );
-    QStringList attrs() const { return mAttrs; }
+    void setAttrs( const TQStringList& attrs );
+    TQStringList attrs() const { return mAttrs; }
 
-    void setScope( const QString scope ) { mScope = scope; }
+    void setScope( const TQString scope ) { mScope = scope; }
 
     /*!
      * Start the query with filter filter
      */
-    void startQuery( const QString& filter );
+    void startQuery( const TQString& filter );
 
     /*!
      * Abort a running query
@@ -157,28 +157,28 @@ class KABC_EXPORT LdapClient : public QObject
     void cancelQuery();
 
   protected slots:
-    void slotData( KIO::Job*, const QByteArray &data );
-    void slotInfoMessage( KIO::Job*, const QString &info );
+    void slotData( KIO::Job*, const TQByteArray &data );
+    void slotInfoMessage( KIO::Job*, const TQString &info );
     void slotDone();
 
   protected:
     void startParseLDIF();
-    void parseLDIF( const QByteArray& data );
+    void parseLDIF( const TQByteArray& data );
     void endParseLDIF();
 
-    QString mHost;
-    QString mPort;
-    QString mBase;
-    QString mScope;
-    QStringList mAttrs;
+    TQString mHost;
+    TQString mPort;
+    TQString mBase;
+    TQString mScope;
+    TQStringList mAttrs;
 
-    QGuardedPtr<KIO::SimpleJob> mJob;
+    TQGuardedPtr<KIO::SimpleJob> mJob;
     bool mActive;
 
     LdapObject mCurrentObject;
-    QCString mBuf;
-    QCString mLastAttrName;
-    QCString mLastAttrValue;
+    TQCString mBuf;
+    TQCString mLastAttrName;
+    TQCString mLastAttrValue;
     bool mIsBase64;
 
   private:
@@ -190,11 +190,11 @@ class KABC_EXPORT LdapClient : public QObject
  * Structure describing one result returned by a LDAP query
  */
 struct LdapResult {
-  QString name;     ///< full name
-  QString email;    ///< email
+  TQString name;     ///< full name
+  TQString email;    ///< email
   int clientNumber; ///< for sorting
 };
-typedef QValueList<LdapResult> LdapResultList;
+typedef TQValueList<LdapResult> LdapResultList;
 
 
 /**
@@ -211,14 +211,14 @@ class KABC_EXPORT LdapSearch : public QObject
   public:
     LdapSearch();
 
-    void startSearch( const QString& txt );
+    void startSearch( const TQString& txt );
     void cancelSearch();
     bool isAvailable() const;
 
   signals:
     /// Results, assembled as "Full Name <email>"
     /// (This signal can be emitted many times)
-    void searchData( const QStringList& );
+    void searchData( const TQStringList& );
     /// Another form for the results, with separate fields
     /// (This signal can be emitted many times)
     void searchData( const KABC::LdapResultList& );
@@ -226,19 +226,19 @@ class KABC_EXPORT LdapSearch : public QObject
 
   private slots:
     void slotLDAPResult( const KABC::LdapObject& );
-    void slotLDAPError( const QString& );
+    void slotLDAPError( const TQString& );
     void slotLDAPDone();
     void slotDataTimer();
 
   private:
     void finish();
-    void makeSearchData( QStringList& ret, LdapResultList& resList );
-    QValueList< LdapClient* > mClients;
-    QString mSearchText;
-    QTimer mDataTimer;
+    void makeSearchData( TQStringList& ret, LdapResultList& resList );
+    TQValueList< LdapClient* > mClients;
+    TQString mSearchText;
+    TQTimer mDataTimer;
     int mActiveClients;
     bool mNoLDAPLookup;
-    QValueList< LdapObject > mResults;
+    TQValueList< LdapObject > mResults;
 
   private:
     class LdapSearchPrivate* d;

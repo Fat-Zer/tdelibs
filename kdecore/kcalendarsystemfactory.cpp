@@ -40,7 +40,7 @@ KCalendarSystemFactory::~KCalendarSystemFactory()
 {
 }
 
-KCalendarSystem *KCalendarSystemFactory::create( const QString &calType,
+KCalendarSystem *KCalendarSystemFactory::create( const TQString &calType,
                                                  const KLocale * locale )
 {
   if ( calType == "hebrew" )
@@ -58,9 +58,9 @@ KCalendarSystem *KCalendarSystemFactory::create( const QString &calType,
   return new KCalendarSystemGregorian(locale);
 }
 
-QStringList KCalendarSystemFactory::calendarSystems()
+TQStringList KCalendarSystemFactory::calendarSystems()
 {
-   QStringList lst;
+   TQStringList lst;
    lst.append("hebrew");
    lst.append("hijri");
    lst.append("gregorian");

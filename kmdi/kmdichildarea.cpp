@@ -36,7 +36,7 @@
 #include <kglobalsettings.h>
 
 #include <math.h>
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -45,21 +45,21 @@
 
 //============ KMdiChildArea ============//
 
-KMdiChildArea::KMdiChildArea( QWidget *parent )
-		: QFrame( parent, "kmdi_childarea" )
+KMdiChildArea::KMdiChildArea( TQWidget *parent )
+		: TQFrame( parent, "kmdi_childarea" )
 {
-	setFrameStyle( QFrame::Panel | QFrame::Sunken );
-	m_captionFont = QFont();
-	QFontMetrics fm( m_captionFont );
+	setFrameStyle( TQFrame::Panel | TQFrame::Sunken );
+	m_captionFont = TQFont();
+	TQFontMetrics fm( m_captionFont );
 	m_captionFontLineSpacing = fm.lineSpacing();
 	m_captionActiveBackColor = KGlobalSettings::activeTitleColor();
 	m_captionActiveForeColor = KGlobalSettings::activeTextColor();
 	m_captionInactiveBackColor = KGlobalSettings::inactiveTitleColor();
 	m_captionInactiveForeColor = KGlobalSettings::inactiveTextColor();
-	m_pZ = new QPtrList<KMdiChildFrm>;
+	m_pZ = new TQPtrList<KMdiChildFrm>;
 	m_pZ->setAutoDelete( true );
 	setFocusPolicy( ClickFocus );
-	m_defaultChildFrmSize = QSize( 400, 300 );
+	m_defaultChildFrmSize = TQSize( 400, 300 );
 }
 
 
@@ -77,7 +77,7 @@ void KMdiChildArea::manageChild( KMdiChildFrm* child, bool show, bool cascade )
 	//remove old references. There can be more than one so we remove them all
 	if ( m_pZ->findRef( child ) != -1 )
 	{
-		//QPtrList::find* moves current() to the found item
+		//TQPtrList::find* moves current() to the found item
 		m_pZ->take(); 
 		while ( m_pZ->findNextRef( child ) != -1 )
 			m_pZ->take();
@@ -112,7 +112,7 @@ void KMdiChildArea::destroyChild( KMdiChildFrm *child, bool focusTop )
 	bool wasMaximized = ( child->state() == KMdiChildFrm::Maximized );
 
 	// destroy the old one
-	QObject::disconnect( child );
+	TQObject::disconnect( child );
 	child->blockSignals( true );
 	m_pZ->setAutoDelete( false );
 	m_pZ->removeRef( child );
@@ -144,7 +144,7 @@ void KMdiChildArea::destroyChildButNotItsView( KMdiChildFrm* child, bool focusTo
 	bool wasMaximized = ( child->state() == KMdiChildFrm::Maximized );
 
 	// destroy the old one
-	QObject::disconnect( child );
+	TQObject::disconnect( child );
 	child->unsetClient();
 	m_pZ->setAutoDelete( false );
 	m_pZ->removeRef( child );
@@ -182,7 +182,7 @@ void KMdiChildArea::setTopChild( KMdiChildFrm* child, bool /* bSetFocus */ )
 		m_pZ->setAutoDelete( true );
 		
 		//disable the labels of all the other children
-		QPtrListIterator<KMdiChildFrm> it( *m_pZ );
+		TQPtrListIterator<KMdiChildFrm> it( *m_pZ );
 		for ( ; ( *it ); ++it )
 			( *it )->m_pCaption->setActive( false );
 		
@@ -218,13 +218,13 @@ void KMdiChildArea::setTopChild( KMdiChildFrm* child, bool /* bSetFocus */ )
 		else
 			child->raise();
 		
-		QFocusEvent::setReason( QFocusEvent::Other );
+		TQFocusEvent::setReason( TQFocusEvent::Other );
 		child->m_pClient->setFocus();
 	}
 }
 
 
-void KMdiChildArea::resizeEvent( QResizeEvent* e )
+void KMdiChildArea::resizeEvent( TQResizeEvent* e )
 {
 	//If we have a maximized children at the top , adjust its size
 	KMdiChildFrm* child = topChild();
@@ -241,12 +241,12 @@ void KMdiChildArea::resizeEvent( QResizeEvent* e )
 
 	}
 	layoutMinimizedChildren();
-	QWidget::resizeEvent( e );
+	TQWidget::resizeEvent( e );
 }
 
 //=============== mousePressEvent =============//
 
-void KMdiChildArea::mousePressEvent( QMouseEvent *e )
+void KMdiChildArea::mousePressEvent( TQMouseEvent *e )
 {
 	//Popup the window menu
 	if ( e->button() & RightButton )
@@ -255,7 +255,7 @@ void KMdiChildArea::mousePressEvent( QMouseEvent *e )
 
 //=============== getCascadePoint ============//
 
-QPoint KMdiChildArea::getCascadePoint( int indexOfWindow )
+TQPoint KMdiChildArea::getCascadePoint( int indexOfWindow )
 {
 	if ( indexOfWindow < 0 )
 	{
@@ -264,10 +264,10 @@ QPoint KMdiChildArea::getCascadePoint( int indexOfWindow )
 			<< indexOfWindow << " as new index" << endl;
 	}
 
-	QPoint pnt( 0, 0 );
+	TQPoint pnt( 0, 0 );
 	if ( indexOfWindow == 0 )
 	{
-		kdDebug( 760 ) << k_funcinfo << "No windows. Returning QPoint( 0, 0 ) as the cascade point" << endl;
+		kdDebug( 760 ) << k_funcinfo << "No windows. Returning TQPoint( 0, 0 ) as the cascade point" << endl;
 		return pnt;
 	}
 
@@ -282,8 +282,8 @@ QPoint KMdiChildArea::getCascadePoint( int indexOfWindow )
 	
 	//default values
 	int step = 20;
-	int h = ( topLevelMode ? QApplication::desktop()->height() : height() );
-	int w = ( topLevelMode ? QApplication::desktop()->width() : width() );
+	int h = ( topLevelMode ? TQApplication::desktop()->height() : height() );
+	int w = ( topLevelMode ? TQApplication::desktop()->width() : width() );
 	
 	int availableHeight = h - m_defaultChildFrmSize.height();
 	int availableWidth = w - m_defaultChildFrmSize.width();
@@ -365,7 +365,7 @@ void KMdiChildArea::focusTopChild()
 	if ( !lastChild->m_pClient->hasFocus() )
 	{
 		//disable the labels of all the other children
-		QPtrListIterator<KMdiChildFrm> it ( *m_pZ );
+		TQPtrListIterator<KMdiChildFrm> it ( *m_pZ );
 		for ( ; ( *it ); ++it )
 		{
 			if ( ( *it ) != lastChild )
@@ -383,7 +383,7 @@ void KMdiChildArea::cascadeWindows()
 {
 	kdDebug( 760 ) << k_funcinfo << "cascading windows but not changing their size" << endl;
 	int idx = 0;
-	QPtrList<KMdiChildFrm> list( *m_pZ );
+	TQPtrList<KMdiChildFrm> list( *m_pZ );
 	list.setAutoDelete( false );
 	while ( !list.isEmpty() )
 	{
@@ -405,7 +405,7 @@ void KMdiChildArea::cascadeMaximized()
 {
 	kdDebug( 760 ) << k_funcinfo << "cascading windows. will make sure they are minimum sized" << endl;
 	int idx = 0;
-	QPtrList<KMdiChildFrm> list( *m_pZ );
+	TQPtrList<KMdiChildFrm> list( *m_pZ );
 
 	list.setAutoDelete( false );
 	while ( !list.isEmpty() )
@@ -416,9 +416,9 @@ void KMdiChildArea::cascadeMaximized()
 			if (childFrm->state() == KMdiChildFrm::Maximized )
 				childFrm->restorePressed();
 			
-			QPoint pnt( getCascadePoint( idx ) );
+			TQPoint pnt( getCascadePoint( idx ) );
 			childFrm->move( pnt );
-			QSize curSize( width() - pnt.x(), height() - pnt.y() );
+			TQSize curSize( width() - pnt.x(), height() - pnt.y() );
 			
 			if ( ( childFrm->minimumSize().width() > curSize.width() ) ||
 			     ( childFrm->minimumSize().height() > curSize.height() ) )
@@ -439,7 +439,7 @@ void KMdiChildArea::expandVertical()
 {
 	kdDebug( 760 ) << k_funcinfo << "expanding all child frames vertically" << endl;
 	int idx = 0;
-	QPtrList<KMdiChildFrm> list( *m_pZ );
+	TQPtrList<KMdiChildFrm> list( *m_pZ );
 	list.setAutoDelete( false );
 	while ( !list.isEmpty() )
 	{
@@ -461,7 +461,7 @@ void KMdiChildArea::expandHorizontal()
 {
 	kdDebug( 760 ) << k_funcinfo << "expanding all child frames horizontally" << endl;
 	int idx = 0;
-	QPtrList<KMdiChildFrm> list( *m_pZ );
+	TQPtrList<KMdiChildFrm> list( *m_pZ );
 	list.setAutoDelete( false );
 	while ( !list.isEmpty() )
 	{
@@ -482,7 +482,7 @@ void KMdiChildArea::expandHorizontal()
 int KMdiChildArea::getVisibleChildCount() const
 {
 	int visibleChildCount = 0;
-	QPtrListIterator<KMdiChildFrm> it( *m_pZ );
+	TQPtrListIterator<KMdiChildFrm> it( *m_pZ );
 	for ( ; ( *it ); ++it )
 	{
 		if ( ( *it )->state() != KMdiChildFrm::Minimized && ( *it )->isVisible() )
@@ -555,7 +555,7 @@ void KMdiChildArea::tileAllInternal( int maxWnds )
 	int curCol = 1;
 	int curWin = 1;
 	
-	QPtrListIterator<KMdiChildFrm> it( *m_pZ );
+	TQPtrListIterator<KMdiChildFrm> it( *m_pZ );
 	for ( ; ( *it ); ++it )
 	{
 		KMdiChildFrm* child = ( *it );
@@ -641,7 +641,7 @@ void KMdiChildArea::tileAnodine()
 	// it's great when a kick-ass theory works!!!                      // Pragma :)
 	int xQuantum = width() / numCols;
 	int yQuantum = height() / numRows[numCurCol];
-	QPtrListIterator<KMdiChildFrm> it( *m_pZ );
+	TQPtrListIterator<KMdiChildFrm> it( *m_pZ );
 	for ( ; ( *it ); ++it )
 	{
 		KMdiChildFrm* child = ( *it );
@@ -692,7 +692,7 @@ void KMdiChildArea::tileVertically()
 	int posX = 0;
 	int countVisible = 0;
 
-	QPtrListIterator<KMdiChildFrm> it( *m_pZ );
+	TQPtrListIterator<KMdiChildFrm> it( *m_pZ );
 	for ( ; ( *it ); ++it )
 	{
 		KMdiChildFrm* child = ( *it );
@@ -724,7 +724,7 @@ void KMdiChildArea::layoutMinimizedChildren()
 {
 	int posX = 0;
 	int posY = height();
-	QPtrListIterator<KMdiChildFrm> it( *m_pZ );
+	TQPtrListIterator<KMdiChildFrm> it( *m_pZ );
 	for ( ; ( *it ); ++it )
 	{
 		KMdiChildFrm* child = *( it );
@@ -744,41 +744,41 @@ void KMdiChildArea::layoutMinimizedChildren()
 }
 
 
-void KMdiChildArea::setMdiCaptionFont( const QFont& fnt )
+void KMdiChildArea::setMdiCaptionFont( const TQFont& fnt )
 {
 	m_captionFont = fnt;
-	QFontMetrics fm( m_captionFont );
+	TQFontMetrics fm( m_captionFont );
 	m_captionFontLineSpacing = fm.lineSpacing();
 
-	QPtrListIterator<KMdiChildFrm> it( *m_pZ );
+	TQPtrListIterator<KMdiChildFrm> it( *m_pZ );
 	for ( ; ( *it ); ++it )
 		( *it )->doResize();
 
 }
 
-void KMdiChildArea::setMdiCaptionActiveForeColor( const QColor& clr )
+void KMdiChildArea::setMdiCaptionActiveForeColor( const TQColor& clr )
 {
 	m_captionActiveForeColor = clr;
 }
 
-void KMdiChildArea::setMdiCaptionActiveBackColor( const QColor& clr )
+void KMdiChildArea::setMdiCaptionActiveBackColor( const TQColor& clr )
 {
 	m_captionActiveBackColor = clr;
 }
 
-void KMdiChildArea::setMdiCaptionInactiveForeColor( const QColor& clr )
+void KMdiChildArea::setMdiCaptionInactiveForeColor( const TQColor& clr )
 {
 	m_captionInactiveForeColor = clr;
 }
 
-void KMdiChildArea::setMdiCaptionInactiveBackColor( const QColor& clr )
+void KMdiChildArea::setMdiCaptionInactiveBackColor( const TQColor& clr )
 {
 	m_captionInactiveBackColor = clr;
 }
 
 //KDE4: remove
-void KMdiChildArea::getCaptionColors( const QPalette& /*pal*/, QColor& activeBG,
-                                      QColor& activeFG, QColor& inactiveBG, QColor& inactiveFG )
+void KMdiChildArea::getCaptionColors( const TQPalette& /*pal*/, TQColor& activeBG,
+                                      TQColor& activeFG, TQColor& inactiveBG, TQColor& inactiveFG )
 {
 	activeBG = KGlobalSettings::activeTitleColor();
 	activeFG = KGlobalSettings::activeTextColor();

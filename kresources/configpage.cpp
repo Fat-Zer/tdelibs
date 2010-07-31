@@ -21,9 +21,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 
 #include <kapplication.h>
 #include <kcombobox.h>
@@ -61,8 +61,8 @@ ResourcePageInfo::~ResourcePageInfo() {
 class ConfigViewItem : public QCheckListItem
 {
   public:
-    ConfigViewItem( QListView *parent, Resource* resource ) :
-      QCheckListItem( parent, resource->resourceName(), CheckBox ),
+    ConfigViewItem( TQListView *parent, Resource* resource ) :
+      TQCheckListItem( parent, resource->resourceName(), CheckBox ),
       mResource( resource ),
       mIsStandard( false )
     {
@@ -72,7 +72,7 @@ class ConfigViewItem : public QCheckListItem
 
     void setStandard( bool value )
     {
-      setText( 2, ( value ? i18n( "Yes" ) : QString::null ) );
+      setText( 2, ( value ? i18n( "Yes" ) : TQString::null ) );
       mIsStandard = value;
     }
 
@@ -86,7 +86,7 @@ class ConfigViewItem : public QCheckListItem
       setOn( mResource->isActive() );
       setText( 0, mResource->resourceName() );
       setText( 1, mResource->type() );
-      setText( 2, mIsStandard ? i18n( "Yes" ) : QString::null );
+      setText( 2, mIsStandard ? i18n( "Yes" ) : TQString::null );
     }
 
   private:
@@ -95,20 +95,20 @@ class ConfigViewItem : public QCheckListItem
     bool mIsStandard;
 };
 
-ConfigPage::ConfigPage( QWidget *parent, const char *name )
-  : QWidget( parent, name ),
+ConfigPage::ConfigPage( TQWidget *parent, const char *name )
+  : TQWidget( parent, name ),
     mCurrentManager( 0 ),
     mCurrentConfig( 0 )
 {
   setCaption( i18n( "Resource Configuration" ) );
 
-  QVBoxLayout *mainLayout = new QVBoxLayout( this );
+  TQVBoxLayout *mainLayout = new TQVBoxLayout( this );
 
-  QGroupBox *groupBox = new QGroupBox( i18n( "Resources" ), this );
+  TQGroupBox *groupBox = new TQGroupBox( i18n( "Resources" ), this );
   groupBox->setColumnLayout(0, Qt::Vertical );
   groupBox->layout()->setSpacing( 6 );
   groupBox->layout()->setMargin( 11 );
-  QGridLayout *groupBoxLayout = new QGridLayout( groupBox->layout(), 2, 2 );
+  TQGridLayout *groupBoxLayout = new TQGridLayout( groupBox->layout(), 2, 2 );
 
   mFamilyCombo = new KComboBox( false, groupBox );
   groupBoxLayout->addMultiCellWidget( mFamilyCombo, 0, 0, 0, 1 );
@@ -121,14 +121,14 @@ ConfigPage::ConfigPage( QWidget *parent, const char *name )
   mListView->addColumn( i18n( "Standard" ) );
 
   groupBoxLayout->addWidget( mListView, 1, 0 );
-  connect(  mListView, SIGNAL( doubleClicked( QListViewItem *, const QPoint &, int ) ), this, SLOT( slotEdit() ) );
+  connect(  mListView, TQT_SIGNAL( doubleClicked( TQListViewItem *, const TQPoint &, int ) ), this, TQT_SLOT( slotEdit() ) );
   KButtonBox *buttonBox = new KButtonBox( groupBox, Vertical );
-  mAddButton = buttonBox->addButton( i18n( "&Add..." ), this, SLOT(slotAdd()) );
-  mRemoveButton = buttonBox->addButton( i18n( "&Remove" ), this, SLOT(slotRemove()) );
+  mAddButton = buttonBox->addButton( i18n( "&Add..." ), this, TQT_SLOT(slotAdd()) );
+  mRemoveButton = buttonBox->addButton( i18n( "&Remove" ), this, TQT_SLOT(slotRemove()) );
   mRemoveButton->setEnabled( false );
-  mEditButton = buttonBox->addButton( i18n( "&Edit..." ), this, SLOT(slotEdit()) );
+  mEditButton = buttonBox->addButton( i18n( "&Edit..." ), this, TQT_SLOT(slotEdit()) );
   mEditButton->setEnabled( false );
-  mStandardButton = buttonBox->addButton( i18n( "&Use as Standard" ), this, SLOT(slotStandard()) );
+  mStandardButton = buttonBox->addButton( i18n( "&Use as Standard" ), this, TQT_SLOT(slotStandard()) );
   mStandardButton->setEnabled( false );
   buttonBox->layout();
 
@@ -136,12 +136,12 @@ ConfigPage::ConfigPage( QWidget *parent, const char *name )
 
   mainLayout->addWidget( groupBox );
 
-  connect( mFamilyCombo, SIGNAL( activated( int ) ),
-           SLOT( slotFamilyChanged( int ) ) );
-  connect( mListView, SIGNAL( selectionChanged() ),
-           SLOT( slotSelectionChanged() ) );
-  connect( mListView, SIGNAL( clicked( QListViewItem * ) ),
-           SLOT( slotItemClicked( QListViewItem * ) ) );
+  connect( mFamilyCombo, TQT_SIGNAL( activated( int ) ),
+           TQT_SLOT( slotFamilyChanged( int ) ) );
+  connect( mListView, TQT_SIGNAL( selectionChanged() ),
+           TQT_SLOT( slotSelectionChanged() ) );
+  connect( mListView, TQT_SIGNAL( clicked( TQListViewItem * ) ),
+           TQT_SLOT( slotItemClicked( TQListViewItem * ) ) );
 
   mLastItem = 0;
 
@@ -153,7 +153,7 @@ ConfigPage::ConfigPage( QWidget *parent, const char *name )
 
 ConfigPage::~ConfigPage()
 {
-  QValueList<KSharedPtr<ResourcePageInfo> >::Iterator it;
+  TQValueList<KSharedPtr<ResourcePageInfo> >::Iterator it;
   for ( it = mInfoMap.begin(); it != mInfoMap.end(); ++it ) {
     (*it)->mManager->removeObserver( this );
   }
@@ -170,15 +170,15 @@ void ConfigPage::load()
   mListView->clear();
   mFamilyMap.clear();
   mInfoMap.clear();
-  QStringList familyDisplayNames;
+  TQStringList familyDisplayNames;
 
   // KDE-3.3 compatibility code: get families from the plugins
-  QStringList compatFamilyNames;
+  TQStringList compatFamilyNames;
   const KTrader::OfferList plugins = KTrader::self()->query( "KResources/Plugin" );
   KTrader::OfferList::ConstIterator it = plugins.begin();
   KTrader::OfferList::ConstIterator end = plugins.end();
   for ( ; it != end; ++it ) {
-    const QString family = (*it)->property( "X-KDE-ResourceFamily" ).toString();
+    const TQString family = (*it)->property( "X-KDE-ResourceFamily" ).toString();
     if ( compatFamilyNames.find( family ) == compatFamilyNames.end() )
         compatFamilyNames.append( family );
   }
@@ -186,9 +186,9 @@ void ConfigPage::load()
   const KTrader::OfferList managers = KTrader::self()->query( "KResources/Manager" );
   KTrader::OfferList::ConstIterator m_it;
   for( m_it = managers.begin(); m_it != managers.end(); ++m_it ) {
-    QString displayName = (*m_it)->property( "Name" ).toString();
+    TQString displayName = (*m_it)->property( "Name" ).toString();
     familyDisplayNames.append( displayName );
-    QString family = (*m_it)->property( "X-KDE-ResourceFamily" ).toString();
+    TQString family = (*m_it)->property( "X-KDE-ResourceFamily" ).toString();
     if ( !family.isEmpty() ) {
       compatFamilyNames.remove( family );
       mFamilyMap.append( family );
@@ -197,7 +197,7 @@ void ConfigPage::load()
   }
 
   // Rest of the kde-3.3 compat code
-  QStringList::ConstIterator cfit = compatFamilyNames.begin();
+  TQStringList::ConstIterator cfit = compatFamilyNames.begin();
   for ( ; cfit != compatFamilyNames.end(); ++cfit ) {
       mFamilyMap.append( *cfit );
       familyDisplayNames.append( *cfit );
@@ -215,7 +215,7 @@ void ConfigPage::load()
   emit changed( false );
 }
 
-void ConfigPage::loadManager( const QString& family )
+void ConfigPage::loadManager( const TQString& family )
 {
   mCurrentManager = new Manager<Resource>( family );
   if ( mCurrentManager ) {
@@ -234,7 +234,7 @@ void ConfigPage::save()
 {
   saveResourceSettings();
 
-  QValueList<KSharedPtr<ResourcePageInfo> >::Iterator it;
+  TQValueList<KSharedPtr<ResourcePageInfo> >::Iterator it;
   for ( it = mInfoMap.begin(); it != mInfoMap.end(); ++it )
     (*it)->mManager->writeConfig( (*it)->mConfig );
 
@@ -291,16 +291,16 @@ void ConfigPage::slotAdd()
   if ( !mCurrentManager )
     return;
 
-  QStringList types = mCurrentManager->resourceTypeNames();
-  QStringList descs = mCurrentManager->resourceTypeDescriptions();
+  TQStringList types = mCurrentManager->resourceTypeNames();
+  TQStringList descs = mCurrentManager->resourceTypeDescriptions();
   bool ok = false;
-  QString desc = KInputDialog::getItem( i18n( "Resource Configuration" ),
+  TQString desc = KInputDialog::getItem( i18n( "Resource Configuration" ),
                     i18n( "Please select type of the new resource:" ), descs,
                     0, false, &ok, this );
   if ( !ok )
     return;
 
-  QString type = types[ descs.findIndex( desc ) ];
+  TQString type = types[ descs.findIndex( desc ) ];
 
   // Create new resource
   Resource *resource = mCurrentManager->createResource( type );
@@ -325,7 +325,7 @@ void ConfigPage::slotAdd()
     // as standard resource
     if ( !resource->readOnly() ) {
       bool onlyReadOnly = true;
-      QListViewItem *it = mListView->firstChild();
+      TQListViewItem *it = mListView->firstChild();
       while ( it != 0 ) {
         ConfigViewItem *confIt = static_cast<ConfigViewItem*>( it );
         if ( !confIt->readOnly() && confIt != item )
@@ -350,7 +350,7 @@ void ConfigPage::slotRemove()
   if ( !mCurrentManager )
     return;
 
-  QListViewItem *item = mListView->currentItem();
+  TQListViewItem *item = mListView->currentItem();
   ConfigViewItem *confItem = static_cast<ConfigViewItem*>( item );
 
   if ( !confItem )
@@ -377,7 +377,7 @@ void ConfigPage::slotEdit()
   if ( !mCurrentManager )
     return;
 
-  QListViewItem *item = mListView->currentItem();
+  TQListViewItem *item = mListView->currentItem();
   ConfigViewItem *configItem = static_cast<ConfigViewItem*>( item );
   if ( !configItem )
     return;
@@ -419,7 +419,7 @@ void ConfigPage::slotStandard()
     return;
   }
 
-  QListViewItem *it = mListView->firstChild();
+  TQListViewItem *it = mListView->firstChild();
   while ( it != 0 ) {
     ConfigViewItem *configItem = static_cast<ConfigViewItem*>( it );
     if ( configItem->standard() )
@@ -481,7 +481,7 @@ void ConfigPage::resourceDeleted( Resource *resource )
 
 ConfigViewItem *ConfigPage::findItem( Resource *resource )
 {
-  QListViewItem *i;
+  TQListViewItem *i;
   for( i = mListView->firstChild(); i; i = i->nextSibling() ) {
     ConfigViewItem *item = static_cast<ConfigViewItem *>( i );
     if ( item->resource() == resource ) return item;
@@ -489,7 +489,7 @@ ConfigViewItem *ConfigPage::findItem( Resource *resource )
   return 0;
 }
 
-void ConfigPage::slotItemClicked( QListViewItem *item )
+void ConfigPage::slotItemClicked( TQListViewItem *item )
 {
   ConfigViewItem *configItem = static_cast<ConfigViewItem *>( item );
   if ( !configItem ) return;
@@ -508,7 +508,7 @@ void ConfigPage::slotItemClicked( QListViewItem *item )
 void ConfigPage::saveResourceSettings()
 {
   if ( mCurrentManager ) {
-    QListViewItem *item = mListView->firstChild();
+    TQListViewItem *item = mListView->firstChild();
     while ( item ) {
       ConfigViewItem *configItem = static_cast<ConfigViewItem *>( item );
 

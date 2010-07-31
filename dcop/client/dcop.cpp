@@ -30,16 +30,16 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <qbuffer.h>
-#include <qcolor.h>
-#include <qdir.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qimage.h>
-#include <qmap.h>
-#include <qstringlist.h>
-#include <qtextstream.h>
-#include <qvariant.h>
+#include <tqbuffer.h>
+#include <tqcolor.h>
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqimage.h>
+#include <tqmap.h>
+#include <tqstringlist.h>
+#include <tqtextstream.h>
+#include <tqvariant.h>
 
 #include "../dcopclient.h"
 #include "../dcopref.h"
@@ -52,13 +52,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <X11/Xatom.h>
 #endif
 
-typedef QMap<QString, QString> UserList;
+typedef TQMap<TQString, TQString> UserList;
 
 static DCOPClient* dcop = 0;
 
-static QTextStream cin_ ( stdin,  IO_ReadOnly );
-static QTextStream cout_( stdout, IO_WriteOnly );
-static QTextStream cerr_( stderr, IO_WriteOnly );
+static TQTextStream cin_ ( stdin,  IO_ReadOnly );
+static TQTextStream cout_( stdout, IO_WriteOnly );
+static TQTextStream cerr_( stderr, IO_WriteOnly );
 
 /**
  * Session to send call to
@@ -71,12 +71,12 @@ static QTextStream cerr_( stderr, IO_WriteOnly );
  */
 enum Session { DefaultSession = 0, AllSessions, QuerySessions, CustomSession };
 
-bool startsWith(const QCString &id, const char *str, int n)
+bool startsWith(const TQCString &id, const char *str, int n)
 {
   return !n || (strncmp(id.data(), str, n) == 0);
 }
 
-bool endsWith(QCString &id, char c)
+bool endsWith(TQCString &id, char c)
 {
    if (id.length() && (id[id.length()-1] == c))
    {
@@ -86,13 +86,13 @@ bool endsWith(QCString &id, char c)
    return false;
 }
 
-void queryApplications(const QCString &filter)
+void queryApplications(const TQCString &filter)
 {
     int filterLen = filter.length();
     QCStringList apps = dcop->registeredApplications();
     for ( QCStringList::Iterator it = apps.begin(); it != apps.end(); ++it )
     {
-        QCString &clientId = *it;
+        TQCString &clientId = *it;
 	if ( (clientId != dcop->appId()) &&
              !startsWith(clientId, "anonymous",9) &&
              startsWith(clientId, filter, filterLen)
@@ -107,7 +107,7 @@ void queryApplications(const QCString &filter)
     }
 }
 
-void queryObjects( const QCString &app, const QCString &filter )
+void queryObjects( const TQCString &app, const TQCString &filter )
 {
     int filterLen = filter.length();
     bool ok = false;
@@ -115,7 +115,7 @@ void queryObjects( const QCString &app, const QCString &filter )
     QCStringList objs = dcop->remoteObjects( app, &ok );
     for ( QCStringList::Iterator it = objs.begin(); it != objs.end(); ++it )
     {
-        QCString &objId = *it;
+        TQCString &objId = *it;
 
         if (objId == "default")
         {
@@ -158,7 +158,7 @@ void queryFunctions( const char* app, const char* obj )
 
 int callFunction( const char* app, const char* obj, const char* func, const QCStringList args )
 {
-    QString f = func; // Qt is better with unicode strings, so use one.
+    TQString f = func; // Qt is better with unicode strings, so use one.
     int left = f.find( '(' );
     int right = f.find( ')' );
 
@@ -172,7 +172,7 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 	// try to get the interface from the server
 	bool ok = false;
 	QCStringList funcs = dcop->remoteFunctions( app, obj, &ok );
-	QCString realfunc;
+	TQCString realfunc;
 	if ( !ok && args.isEmpty() )
 	    goto doit;
 	if ( !ok )
@@ -195,7 +195,7 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 
 	    if ( l > 0 && (*it).mid( s, l - s ) == func ) {
 		realfunc = (*it).mid( s );
-		const QString arguments = (*it).mid(l+1,(*it).find( ')' )-l-1);
+		const TQString arguments = (*it).mid(l+1,(*it).find( ')' )-l-1);
 		uint a = arguments.contains(',');
 		if ( (a==0 && !arguments.isEmpty()) || a>0)
 			a++;
@@ -221,26 +221,26 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
     // of dcop, so it should be OK.
     //
     //
-    QStringList intTypes;
+    TQStringList intTypes;
     intTypes << "int" << "unsigned" << "long" << "bool" ;
 
-    QStringList types;
+    TQStringList types;
     if ( left >0 && left + 1 < right - 1) {
-	types = QStringList::split( ',', f.mid( left + 1, right - left - 1) );
-	for ( QStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
-	    QString lt = (*it).simplifyWhiteSpace();
+	types = TQStringList::split( ',', f.mid( left + 1, right - left - 1) );
+	for ( TQStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
+	    TQString lt = (*it).simplifyWhiteSpace();
 
 	    int s = lt.find(' ');
 
 	    // If there are spaces in the name, there may be two
 	    // reasons: the parameter name is still there, ie.
-	    // "QString URL" or it's a complicated int type, ie.
+	    // "TQString URL" or it's a complicated int type, ie.
 	    // "unsigned long long int bool".
 	    //
 	    //
 	    if ( s > 0 )
 	    {
-		QStringList partl = QStringList::split(' ' , lt);
+		TQStringList partl = TQStringList::split(' ' , lt);
 
 		// The zero'th part is -- at the very least -- a
 		// type part. Any trailing parts *might* be extra
@@ -271,10 +271,10 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 
 	    (*it) = lt;
 	}
-	QString fc = f.left( left );
+	TQString fc = f.left( left );
 	fc += '(';
 	bool first = true;
-	for ( QStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
+	for ( TQStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
 	    if ( !first )
 		fc +=",";
 	    first = false;
@@ -284,12 +284,12 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 	f = fc;
     }
 
-    QByteArray data, replyData;
-    QCString replyType;
-    QDataStream arg(data, IO_WriteOnly);
+    TQByteArray data, replyData;
+    TQCString replyType;
+    TQDataStream arg(data, IO_WriteOnly);
 
     uint i = 0;
-    for( QStringList::Iterator it = types.begin(); it != types.end(); ++it )
+    for( TQStringList::Iterator it = types.begin(); it != types.end(); ++it )
         marshall( arg, args, i, *it );
 
     if ( i != args.count() )
@@ -302,11 +302,11 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 	qWarning( "call failed");
 	return( 1 );
     } else {
-	QDataStream reply(replyData, IO_ReadOnly);
+	TQDataStream reply(replyData, IO_ReadOnly);
 
         if ( replyType != "void" && replyType != "ASYNC" )
         {
-            QCString replyString = demarshal( reply, replyType );
+            TQCString replyString = demarshal( reply, replyType );
             if ( !replyString.isEmpty() )
                 printf( "%s\n", replyString.data() );
             else
@@ -380,7 +380,7 @@ static UserList userList()
 
     while( passwd* pstruct = getpwent() )
     {
-        result[ QString::fromLocal8Bit(pstruct->pw_name) ] = QFile::decodeName(pstruct->pw_dir);
+        result[ TQString::fromLocal8Bit(pstruct->pw_name) ] = TQFile::decodeName(pstruct->pw_dir);
     }
 
     return result;
@@ -390,7 +390,7 @@ static UserList userList()
  * Return a list of available DCOP sessions for the specified user
  * An empty list means no sessions are available, or an error occurred.
  */
-QStringList dcopSessionList( const QString &user, const QString &home )
+TQStringList dcopSessionList( const TQString &user, const TQString &home )
 {
     if( home.isEmpty() )
     {
@@ -398,16 +398,16 @@ QStringList dcopSessionList( const QString &user, const QString &home )
 	     << user << "!" << endl
 	     << "Please check permissions or set the $DCOPSERVER variable manually before" << endl
 	     << "calling dcop." << endl;
-	return QStringList();
+	return TQStringList();
     }
 
-    QStringList result;
-    QFileInfo dirInfo( home );
+    TQStringList result;
+    TQFileInfo dirInfo( home );
     if( !dirInfo.exists() || !dirInfo.isReadable() )
 	return result;
 
-    QDir d( home );
-    d.setFilter( QDir::Files | QDir::Hidden | QDir::NoSymLinks );
+    TQDir d( home );
+    d.setFilter( TQDir::Files | TQDir::Hidden | TQDir::NoSymLinks );
     d.setNameFilter( ".DCOPserver*" );
 
     const QFileInfoList *list = d.entryInfoList();
@@ -415,7 +415,7 @@ QStringList dcopSessionList( const QString &user, const QString &home )
 	return result;
 
     QFileInfoListIterator it( *list );
-    QFileInfo *fi;
+    TQFileInfo *fi;
 
     while ( ( fi = it.current() ) != 0 )
     {
@@ -455,12 +455,12 @@ void sendUserTime( const char* app )
  * Do the actual DCOP call
  */
 int runDCOP( QCStringList args, UserList users, Session session,
-              const QString sessionName, bool readStdin, bool updateUserTime )
+              const TQString sessionName, bool readStdin, bool updateUserTime )
 {
     bool DCOPrefmode=false;
-    QCString app;
-    QCString objid;
-    QCString function;
+    TQCString app;
+    TQCString objid;
+    TQCString function;
     QCStringList params;
     DCOPClient *client = 0L;
     int retval = 0;
@@ -505,10 +505,10 @@ int runDCOP( QCStringList args, UserList users, Session session,
 
     bool firstRun = true;
     UserList::Iterator it;
-    QStringList sessions;
+    TQStringList sessions;
     bool presetDCOPServer = false;
 //    char *dcopStr = 0L;
-    QString dcopServer;
+    TQString dcopServer;
 
     for( it = users.begin(); it != users.end() || firstRun; ++it )
     {
@@ -518,7 +518,7 @@ int runDCOP( QCStringList args, UserList users, Session session,
 
 	if( session == QuerySessions )
 	{
-	    QStringList sessions = dcopSessionList( it.key(), it.data() );
+	    TQStringList sessions = dcopSessionList( it.key(), it.data() );
 	    if( sessions.isEmpty() )
 	    {
 		if( users.count() <= 1 )
@@ -536,7 +536,7 @@ int runDCOP( QCStringList args, UserList users, Session session,
 		    cout_ << "for user " << *it << " ";
 		cout_ << ":" << endl;
 
-		QStringList::Iterator sIt = sessions.begin();
+		TQStringList::Iterator sIt = sessions.begin();
 		for( ; sIt != sessions.end(); ++sIt )
 		    cout_ << "  " << *sIt << endl;
 
@@ -593,9 +593,9 @@ int runDCOP( QCStringList args, UserList users, Session session,
 	    ( getenv( "ICEAUTHORITY" ) == 0 || getenv( "DISPLAY" ) == 0 ) ) )
 	{
 	    // Check for ICE authority file and if the file can be read by us
-	    QString home = it.data();
-	    QString iceFile = it.data() + "/.ICEauthority";
-	    QFileInfo fi( iceFile );
+	    TQString home = it.data();
+	    TQString iceFile = it.data() + "/.ICEauthority";
+	    TQFileInfo fi( iceFile );
 	    if( iceFile.isEmpty() )
 	    {
 		cerr_ << "WARNING: Cannot determine home directory for user "
@@ -638,20 +638,20 @@ int runDCOP( QCStringList args, UserList users, Session session,
 	// If users is an empty list we're calling for the currently logged
 	// in user. In this case we don't have a session, but still want
 	// to iterate the loop once.
-	QStringList::Iterator sIt = sessions.begin();
+	TQStringList::Iterator sIt = sessions.begin();
 	for( ; sIt != sessions.end() || users.isEmpty(); ++sIt )
 	{
 	    if( !presetDCOPServer && !users.isEmpty() )
 	    {
-		QString dcopFile = it.data() + "/" + *sIt;
-		QFile f( dcopFile );
+		TQString dcopFile = it.data() + "/" + *sIt;
+		TQFile f( dcopFile );
 		if( !f.open( IO_ReadOnly ) )
 		{
 		    cerr_ << "Can't open " << dcopFile << " for reading!" << endl;
 		    exit( -1 );
 		}
 
-		QStringList l( QStringList::split( '\n', f.readAll() ) );
+		TQStringList l( TQStringList::split( '\n', f.readAll() ) );
 		dcopServer = l.first();
 
 		if( dcopServer.isEmpty() )
@@ -717,7 +717,7 @@ int runDCOP( QCStringList args, UserList users, Session session,
 		    // read line
 		    while ( !cin_.atEnd() )
 		    {
-			QString buf = cin_.readLine();
+			TQString buf = cin_.readLine();
 
 			if( replaceArg != params.end() )
 			    *replaceArg = buf.local8Bit();
@@ -759,12 +759,12 @@ int main( int argc, char** argv )
 {
     bool readStdin = false;
     int numOptions = 0;
-    QString user;
+    TQString user;
     Session session = DefaultSession;
-    QString sessionName;
+    TQString sessionName;
     bool updateUserTime = true;
 
-    cin_.setEncoding( QTextStream::Locale );
+    cin_.setEncoding( TQTextStream::Locale );
 
     // Scan for command-line options first
     for( int pos = 1 ; pos <= argc - 1 ; pos++ )
@@ -780,7 +780,7 @@ int main( int argc, char** argv )
 	{
 	    if( pos <= argc - 2 )
 	    {
-		user = QString::fromLocal8Bit( argv[ pos + 1] );
+		user = TQString::fromLocal8Bit( argv[ pos + 1] );
 		numOptions +=2;
 		pos++;
 	    }
@@ -799,7 +799,7 @@ int main( int argc, char** argv )
 	    }
 	    else if( pos <= argc - 2 )
 	    {
-		sessionName = QString::fromLocal8Bit( argv[ pos + 1] );
+		sessionName = TQString::fromLocal8Bit( argv[ pos + 1] );
 		numOptions +=2;
 		pos++;
 	    }
@@ -851,7 +851,7 @@ int main( int argc, char** argv )
 #ifdef DCOPQUIT
     if (argc > 1)
     {
-       QCString prog = argv[ numOptions + 1 ];
+       TQCString prog = argv[ numOptions + 1 ];
        
        if (!prog.isEmpty())
        {

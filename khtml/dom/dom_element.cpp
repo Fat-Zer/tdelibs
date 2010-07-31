@@ -369,7 +369,7 @@ bool Element::khtmlValidAttrName(const DOMString &name)
     // Check if name is valid
     // http://www.w3.org/TR/2000/REC-xml-20001006#NT-Name
     DOMStringImpl* _name = name.implementation();
-    QChar ch = _name->s[0];
+    TQChar ch = _name->s[0];
     if ( !ch.isLetter() && ch != '_' && ch != ':' )
         return false; // first char isn't valid
     for ( uint i = 0; i < _name->l; ++i )
@@ -377,7 +377,7 @@ bool Element::khtmlValidAttrName(const DOMString &name)
         ch = _name->s[i];
         if ( !ch.isLetter() && !ch.isDigit() && ch != '.'
              && ch != '-' && ch != '_' && ch != ':'
-             && ch.category() != QChar::Mark_SpacingCombining
+             && ch.category() != TQChar::Mark_SpacingCombining
              /* no idea what "extender is" */ )
             return false;
     }

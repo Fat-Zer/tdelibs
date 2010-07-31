@@ -29,7 +29,7 @@ class KRESOURCES_EXPORT KCMKResources : public KCModule
   Q_OBJECT
 
   public:
-    KCMKResources( QWidget *parent, const char *name, const QStringList& );
+    KCMKResources( TQWidget *parent, const char *name, const TQStringList& );
 
     void load();
     void save();

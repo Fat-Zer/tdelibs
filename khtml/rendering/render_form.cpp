@@ -38,7 +38,7 @@
 #include <kurlcompletion.h>
 #include <kwin.h>
 
-#include <qstyle.h>
+#include <tqstyle.h>
 
 #include "misc/helper.h"
 #include "xml/dom2_eventsimpl.h"
@@ -52,8 +52,8 @@
 #include "khtml_ext.h"
 #include "xml/dom_docimpl.h"
 
-#include <qpopupmenu.h>
-#include <qbitmap.h>
+#include <tqpopupmenu.h>
+#include <tqbitmap.h>
 
 using namespace khtml;
 
@@ -138,7 +138,7 @@ short RenderButton::baselinePosition( bool f ) const
 RenderCheckBox::RenderCheckBox(HTMLInputElementImpl *element)
     : RenderButton(element)
 {
-    QCheckBox* b = new QCheckBox(view()->viewport(), "__khtml");
+    TQCheckBox* b = new TQCheckBox(view()->viewport(), "__khtml");
     b->setAutoMask(true);
     b->setMouseTracking(true);
     setQWidget(b);
@@ -146,7 +146,7 @@ RenderCheckBox::RenderCheckBox(HTMLInputElementImpl *element)
     // prevent firing toggled() signals on initialization
     b->setChecked(element->checked());
 
-    connect(b,SIGNAL(stateChanged(int)),this,SLOT(slotStateChanged(int)));
+    connect(b,TQT_SIGNAL(stateChanged(int)),this,TQT_SLOT(slotStateChanged(int)));
 }
 
 
@@ -154,9 +154,9 @@ void RenderCheckBox::calcMinMaxWidth()
 {
     KHTMLAssert( !minMaxKnown() );
 
-    QCheckBox *cb = static_cast<QCheckBox *>( m_widget );
-    QSize s( cb->style().pixelMetric( QStyle::PM_IndicatorWidth ),
-             cb->style().pixelMetric( QStyle::PM_IndicatorHeight ) );
+    TQCheckBox *cb = static_cast<TQCheckBox *>( m_widget );
+    TQSize s( cb->style().pixelMetric( TQStyle::PM_IndicatorWidth ),
+             cb->style().pixelMetric( TQStyle::PM_IndicatorHeight ) );
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
 
@@ -172,8 +172,8 @@ void RenderCheckBox::updateFromElement()
 
 void RenderCheckBox::slotStateChanged(int state)
 {
-    element()->setChecked(state == QButton::On);
-    element()->setIndeterminate(state == QButton::NoChange);
+    element()->setChecked(state == TQButton::On);
+    element()->setIndeterminate(state == TQButton::NoChange);
 
     ref();
     element()->onChange();
@@ -185,14 +185,14 @@ void RenderCheckBox::slotStateChanged(int state)
 RenderRadioButton::RenderRadioButton(HTMLInputElementImpl *element)
     : RenderButton(element)
 {
-    QRadioButton* b = new QRadioButton(view()->viewport(), "__khtml");
+    TQRadioButton* b = new TQRadioButton(view()->viewport(), "__khtml");
     b->setMouseTracking(true);
     setQWidget(b);
 
     // prevent firing toggled() signals on initialization
     b->setChecked(element->checked());
 
-    connect(b,SIGNAL(toggled(bool)),this,SLOT(slotToggled(bool)));
+    connect(b,TQT_SIGNAL(toggled(bool)),this,TQT_SLOT(slotToggled(bool)));
 }
 
 void RenderRadioButton::updateFromElement()
@@ -206,9 +206,9 @@ void RenderRadioButton::calcMinMaxWidth()
 {
     KHTMLAssert( !minMaxKnown() );
 
-    QRadioButton *rb = static_cast<QRadioButton *>( m_widget );
-    QSize s( rb->style().pixelMetric( QStyle::PM_ExclusiveIndicatorWidth ),
-             rb->style().pixelMetric( QStyle::PM_ExclusiveIndicatorHeight ) );
+    TQRadioButton *rb = static_cast<TQRadioButton *>( m_widget );
+    TQSize s( rb->style().pixelMetric( TQStyle::PM_ExclusiveIndicatorWidth ),
+             rb->style().pixelMetric( TQStyle::PM_ExclusiveIndicatorHeight ) );
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
 
@@ -230,17 +230,17 @@ void RenderRadioButton::slotToggled(bool activated)
 RenderSubmitButton::RenderSubmitButton(HTMLInputElementImpl *element)
     : RenderButton(element)
 {
-    QPushButton* p = new QPushButton(view()->viewport(), "__khtml");
+    TQPushButton* p = new TQPushButton(view()->viewport(), "__khtml");
     setQWidget(p);
     p->setAutoMask(true);
     p->setMouseTracking(true);
 }
 
-QString RenderSubmitButton::rawText()
+TQString RenderSubmitButton::rawText()
 {
-    QString value = element()->valueWithDefault().string();
+    TQString value = element()->valueWithDefault().string();
     value = value.stripWhiteSpace();
-    QString raw;
+    TQString raw;
     for(unsigned int i = 0; i < value.length(); i++) {
         raw += value[i];
         if(value[i] == '&')
@@ -253,29 +253,29 @@ void RenderSubmitButton::calcMinMaxWidth()
 {
     KHTMLAssert( !minMaxKnown() );
 
-    QString raw = rawText();
-    QPushButton* pb = static_cast<QPushButton*>(m_widget);
+    TQString raw = rawText();
+    TQPushButton* pb = static_cast<TQPushButton*>(m_widget);
     pb->setText(raw);
     pb->setFont(style()->font());
 
     bool empty = raw.isEmpty();
     if ( empty )
-        raw = QString::fromLatin1("X");
-    QFontMetrics fm = pb->fontMetrics();
-    QSize ts = fm.size( ShowPrefix, raw);
-    QSize s(pb->style().sizeFromContents( QStyle::CT_PushButton, pb, ts )
-            .expandedTo(QApplication::globalStrut()));
-    int margin = pb->style().pixelMetric( QStyle::PM_ButtonMargin, pb) +
-		 pb->style().pixelMetric( QStyle::PM_DefaultFrameWidth, pb ) * 2;
+        raw = TQString::fromLatin1("X");
+    TQFontMetrics fm = pb->fontMetrics();
+    TQSize ts = fm.size( ShowPrefix, raw);
+    TQSize s(pb->style().sizeFromContents( TQStyle::CT_PushButton, pb, ts )
+            .expandedTo(TQApplication::globalStrut()));
+    int margin = pb->style().pixelMetric( TQStyle::PM_ButtonMargin, pb) +
+		 pb->style().pixelMetric( TQStyle::PM_DefaultFrameWidth, pb ) * 2;
     int w = ts.width() + margin;
     int h = s.height();
     if (pb->isDefault() || pb->autoDefault()) {
-	int dbw = pb->style().pixelMetric( QStyle::PM_ButtonDefaultIndicator, pb ) * 2;
+	int dbw = pb->style().pixelMetric( TQStyle::PM_ButtonDefaultIndicator, pb ) * 2;
 	w += dbw;
     }
 
     // add 30% margins to the width (heuristics to make it look similar to IE)
-    s = QSize( w*13/10, h ).expandedTo(QApplication::globalStrut());
+    s = TQSize( w*13/10, h ).expandedTo(TQApplication::globalStrut());
 
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
@@ -285,9 +285,9 @@ void RenderSubmitButton::calcMinMaxWidth()
 
 void RenderSubmitButton::updateFromElement()
 {
-    QString oldText = static_cast<QPushButton*>(m_widget)->text();
-    QString newText = rawText();
-    static_cast<QPushButton*>(m_widget)->setText(newText);
+    TQString oldText = static_cast<TQPushButton*>(m_widget)->text();
+    TQString newText = rawText();
+    static_cast<TQPushButton*>(m_widget)->setText(newText);
     if ( oldText != newText )
         setNeedsLayoutAndMinMaxRecalc();
     RenderFormElement::updateFromElement();
@@ -307,12 +307,12 @@ RenderResetButton::RenderResetButton(HTMLInputElementImpl *element)
 
 // -------------------------------------------------------------------------------
 
-LineEditWidget::LineEditWidget(DOM::HTMLInputElementImpl* input, KHTMLView* view, QWidget* parent)
+LineEditWidget::LineEditWidget(DOM::HTMLInputElementImpl* input, KHTMLView* view, TQWidget* parent)
     : KLineEdit(parent, "__khtml"), m_input(input), m_view(view), m_spell(0)
 {
     setMouseTracking(true);
     KActionCollection *ac = new KActionCollection(this);
-    m_spellAction = KStdAction::spelling( this, SLOT( slotCheckSpelling() ), ac );
+    m_spellAction = KStdAction::spelling( this, TQT_SLOT( slotCheckSpelling() ), ac );
 }
 
 LineEditWidget::~LineEditWidget()
@@ -328,14 +328,14 @@ void LineEditWidget::slotCheckSpelling()
     }
 
     delete m_spell;
-    m_spell = new KSpell( this, i18n( "Spell Checking" ), this, SLOT( slotSpellCheckReady( KSpell *) ), 0, true, true);
+    m_spell = new KSpell( this, i18n( "Spell Checking" ), this, TQT_SLOT( slotSpellCheckReady( KSpell *) ), 0, true, true);
 
-    connect( m_spell, SIGNAL( death() ),this, SLOT( spellCheckerFinished() ) );
-    connect( m_spell, SIGNAL( misspelling( const QString &, const QStringList &, unsigned int ) ),this, SLOT( spellCheckerMisspelling( const QString &, const QStringList &, unsigned int ) ) );
-    connect( m_spell, SIGNAL( corrected( const QString &, const QString &, unsigned int ) ),this, SLOT( spellCheckerCorrected( const QString &, const QString &, unsigned int ) ) );
+    connect( m_spell, TQT_SIGNAL( death() ),this, TQT_SLOT( spellCheckerFinished() ) );
+    connect( m_spell, TQT_SIGNAL( misspelling( const TQString &, const TQStringList &, unsigned int ) ),this, TQT_SLOT( spellCheckerMisspelling( const TQString &, const TQStringList &, unsigned int ) ) );
+    connect( m_spell, TQT_SIGNAL( corrected( const TQString &, const TQString &, unsigned int ) ),this, TQT_SLOT( spellCheckerCorrected( const TQString &, const TQString &, unsigned int ) ) );
 }
 
-void LineEditWidget::spellCheckerMisspelling( const QString &_text, const QStringList &, unsigned int pos)
+void LineEditWidget::spellCheckerMisspelling( const TQString &_text, const TQStringList &, unsigned int pos)
 {
     highLightWord( _text.length(),pos );
 }
@@ -345,7 +345,7 @@ void LineEditWidget::highLightWord( unsigned int length, unsigned int pos )
     setSelection ( pos, length );
 }
 
-void LineEditWidget::spellCheckerCorrected( const QString &old, const QString &corr, unsigned int pos )
+void LineEditWidget::spellCheckerCorrected( const TQString &old, const TQString &corr, unsigned int pos )
 {
     if( old!= corr )
     {
@@ -362,26 +362,26 @@ void LineEditWidget::spellCheckerFinished()
 void LineEditWidget::slotSpellCheckReady( KSpell *s )
 {
     s->check( text() );
-    connect( s, SIGNAL( done( const QString & ) ), this, SLOT( slotSpellCheckDone( const QString & ) ) );
+    connect( s, TQT_SIGNAL( done( const TQString & ) ), this, TQT_SLOT( slotSpellCheckDone( const TQString & ) ) );
 }
 
-void LineEditWidget::slotSpellCheckDone( const QString &s )
+void LineEditWidget::slotSpellCheckDone( const TQString &s )
 {
     if( s != text() )
         setText( s );
 }
 
 
-QPopupMenu *LineEditWidget::createPopupMenu()
+TQPopupMenu *LineEditWidget::createPopupMenu()
 {
-    QPopupMenu *popup = KLineEdit::createPopupMenu();
+    TQPopupMenu *popup = KLineEdit::createPopupMenu();
 
     if ( !popup ) {
         return 0L;
     }
 
-    connect( popup, SIGNAL( activated( int ) ),
-             this, SLOT( extendedMenuActivated( int ) ) );
+    connect( popup, TQT_SIGNAL( activated( int ) ),
+             this, TQT_SLOT( extendedMenuActivated( int ) ) );
 
     if (m_input->autoComplete()) {
         popup->insertSeparator();
@@ -389,7 +389,7 @@ QPopupMenu *LineEditWidget::createPopupMenu()
         popup->setItemEnabled( id, (compObj() && !compObj()->isEmpty()) );
     }
 
-    if (echoMode() == QLineEdit::Normal &&
+    if (echoMode() == TQLineEdit::Normal &&
         !isReadOnly()) {
         popup->insertSeparator();
 
@@ -414,13 +414,13 @@ void LineEditWidget::extendedMenuActivated( int id)
     }
 }
 
-bool LineEditWidget::event( QEvent *e )
+bool LineEditWidget::event( TQEvent *e )
 {
     if (KLineEdit::event(e))
 	return true;
 
-    if ( e->type() == QEvent::AccelAvailable && isReadOnly() ) {
-        QKeyEvent* ke = (QKeyEvent*) e;
+    if ( e->type() == TQEvent::AccelAvailable && isReadOnly() ) {
+        TQKeyEvent* ke = (TQKeyEvent*) e;
         if ( ke->state() & ControlButton ) {
             switch ( ke->key() ) {
                 case Key_Left:
@@ -438,7 +438,7 @@ bool LineEditWidget::event( QEvent *e )
     return false;
 }
 
-void LineEditWidget::mouseMoveEvent(QMouseEvent *e)
+void LineEditWidget::mouseMoveEvent(TQMouseEvent *e)
 {
     // hack to prevent Qt from calling setCursor on the widget
     setDragEnabled(false);
@@ -453,14 +453,14 @@ RenderLineEdit::RenderLineEdit(HTMLInputElementImpl *element)
     : RenderFormElement(element)
 {
     LineEditWidget *edit = new LineEditWidget(element, view(), view()->viewport());
-    connect(edit,SIGNAL(returnPressed()), this, SLOT(slotReturnPressed()));
-    connect(edit,SIGNAL(textChanged(const QString &)),this,SLOT(slotTextChanged(const QString &)));
+    connect(edit,TQT_SIGNAL(returnPressed()), this, TQT_SLOT(slotReturnPressed()));
+    connect(edit,TQT_SIGNAL(textChanged(const TQString &)),this,TQT_SLOT(slotTextChanged(const TQString &)));
 
     if(element->inputType() == HTMLInputElementImpl::PASSWORD)
-        edit->setEchoMode( QLineEdit::Password );
+        edit->setEchoMode( TQLineEdit::Password );
 
     if ( element->autoComplete() ) {
-        QStringList completions = view()->formCompletionItems(element->name().string());
+        TQStringList completions = view()->formCompletionItems(element->name().string());
         if (completions.count()) {
             edit->completionObject()->setItems(completions);
             edit->setContextMenuEnabled(true);
@@ -518,16 +518,16 @@ void RenderLineEdit::calcMinMaxWidth()
 {
     KHTMLAssert( !minMaxKnown() );
 
-    const QFontMetrics &fm = style()->fontMetrics();
-    QSize s;
+    const TQFontMetrics &fm = style()->fontMetrics();
+    TQSize s;
 
     int size = element()->size();
 
     int h = fm.lineSpacing();
     int w = fm.width( 'x' ) * (size > 0 ? size+1 : 17); // "some"
-    s = QSize(w + 2 + 2*widget()->frameWidth(),
+    s = TQSize(w + 2 + 2*widget()->frameWidth(),
               kMax(h, 14) + 2 + 2*widget()->frameWidth())
-        .expandedTo(QApplication::globalStrut());
+        .expandedTo(TQApplication::globalStrut());
 
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
@@ -560,7 +560,7 @@ void RenderLineEdit::updateFromElement()
     RenderFormElement::updateFromElement();
 }
 
-void RenderLineEdit::slotTextChanged(const QString &string)
+void RenderLineEdit::slotTextChanged(const TQString &string)
 {
     // don't use setValue here!
     element()->m_value = string;
@@ -679,12 +679,12 @@ void RenderFieldset::paintBoxDecorations(PaintInfo& pI, int _tx, int _ty)
 	    paintBorderMinusLegend(pI.p, _tx, _ty, w, h, style(), legend->xPos(), legend->width());
 }
 
-void RenderFieldset::paintBorderMinusLegend(QPainter *p, int _tx, int _ty, int w, int h,
+void RenderFieldset::paintBorderMinusLegend(TQPainter *p, int _tx, int _ty, int w, int h,
                                             const RenderStyle* style, int lx, int lw)
 {
 
-    const QColor& tc = style->borderTopColor();
-    const QColor& bc = style->borderBottomColor();
+    const TQColor& tc = style->borderTopColor();
+    const TQColor& bc = style->borderBottomColor();
 
     EBorderStyle ts = style->borderTopStyle();
     EBorderStyle bs = style->borderBottomStyle();
@@ -710,7 +710,7 @@ void RenderFieldset::paintBorderMinusLegend(QPainter *p, int _tx, int _ty, int w
 
     if(render_l)
     {
-	const QColor& lc = style->borderLeftColor();
+	const TQColor& lc = style->borderLeftColor();
 
 	bool ignore_top =
 	  (tc == lc) &&
@@ -729,7 +729,7 @@ void RenderFieldset::paintBorderMinusLegend(QPainter *p, int _tx, int _ty, int w
 
     if(render_r)
     {
-	const QColor& rc = style->borderRightColor();
+	const TQColor& rc = style->borderRightColor();
 
 	bool ignore_top =
 	  (tc == rc) &&
@@ -769,9 +769,9 @@ RenderFileButton::RenderFileButton(HTMLInputElementImpl *element)
     w->setMode(KFile::File | KFile::ExistingOnly);
     w->completionObject()->setDir(KGlobalSettings::documentPath());
 
-    connect(w->lineEdit(), SIGNAL(returnPressed()), this, SLOT(slotReturnPressed()));
-    connect(w->lineEdit(), SIGNAL(textChanged(const QString &)),this,SLOT(slotTextChanged(const QString &)));
-    connect(w, SIGNAL(urlSelected(const QString &)),this,SLOT(slotUrlSelected(const QString &)));
+    connect(w->lineEdit(), TQT_SIGNAL(returnPressed()), this, TQT_SLOT(slotReturnPressed()));
+    connect(w->lineEdit(), TQT_SIGNAL(textChanged(const TQString &)),this,TQT_SLOT(slotTextChanged(const TQString &)));
+    connect(w, TQT_SIGNAL(urlSelected(const TQString &)),this,TQT_SLOT(slotUrlSelected(const TQString &)));
 
     setQWidget(w);
     m_haveFocus = false;
@@ -783,17 +783,17 @@ void RenderFileButton::calcMinMaxWidth()
 {
     KHTMLAssert( !minMaxKnown() );
 
-    const QFontMetrics &fm = style()->fontMetrics();
+    const TQFontMetrics &fm = style()->fontMetrics();
     int size = element()->size();
 
     int h = fm.lineSpacing();
     int w = fm.width( 'x' ) * (size > 0 ? size+1 : 17); // "some"
     KLineEdit* edit = static_cast<KURLRequester*>( m_widget )->lineEdit();
-    QSize s = edit->style().sizeFromContents(QStyle::CT_LineEdit,
+    TQSize s = edit->style().sizeFromContents(TQStyle::CT_LineEdit,
                                              edit,
-          QSize(w + 2 + 2*edit->frameWidth(), kMax(h, 14) + 2 + 2*edit->frameWidth()))
-        .expandedTo(QApplication::globalStrut());
-    QSize bs = static_cast<KURLRequester*>( m_widget )->minimumSizeHint() - edit->minimumSizeHint();
+          TQSize(w + 2 + 2*edit->frameWidth(), kMax(h, 14) + 2 + 2*edit->frameWidth()))
+        .expandedTo(TQApplication::globalStrut());
+    TQSize bs = static_cast<KURLRequester*>( m_widget )->minimumSizeHint() - edit->minimumSizeHint();
 
     setIntrinsicWidth( s.width() + bs.width() );
     setIntrinsicHeight( kMax(s.height(), bs.height()) );
@@ -828,12 +828,12 @@ void RenderFileButton::slotReturnPressed()
 	element()->form()->submitFromKeyboard();
 }
 
-void RenderFileButton::slotTextChanged(const QString &/*string*/)
+void RenderFileButton::slotTextChanged(const TQString &/*string*/)
 {
    element()->m_value = KURL( widget()->url() ).prettyURL( 0, KURL::StripFileProtocol );
 }
 
-void RenderFileButton::slotUrlSelected(const QString &)
+void RenderFileButton::slotUrlSelected(const TQString &)
 {
 	element()->onChange();
 }
@@ -860,7 +860,7 @@ RenderLegend::RenderLegend(HTMLGenericFormElementImpl *element)
 
 // -------------------------------------------------------------------------------
 
-ComboBoxWidget::ComboBoxWidget(QWidget *parent)
+ComboBoxWidget::ComboBoxWidget(TQWidget *parent)
     : KComboBox(false, parent, "__khtml")
 {
     setAutoMask(true);
@@ -868,13 +868,13 @@ ComboBoxWidget::ComboBoxWidget(QWidget *parent)
     setMouseTracking(true);
 }
 
-bool ComboBoxWidget::event(QEvent *e)
+bool ComboBoxWidget::event(TQEvent *e)
 {
     if (KComboBox::event(e))
 	return true;
-    if (e->type()==QEvent::KeyPress)
+    if (e->type()==TQEvent::KeyPress)
     {
-	QKeyEvent *ke = static_cast<QKeyEvent *>(e);
+	TQKeyEvent *ke = static_cast<TQKeyEvent *>(e);
 	switch(ke->key())
 	{
 	case Key_Return:
@@ -889,21 +889,21 @@ bool ComboBoxWidget::event(QEvent *e)
     return false;
 }
 
-bool ComboBoxWidget::eventFilter(QObject *dest, QEvent *e)
+bool ComboBoxWidget::eventFilter(TQObject *dest, TQEvent *e)
 {
-    if (dest==listBox() &&  e->type()==QEvent::KeyPress)
+    if (dest==listBox() &&  e->type()==TQEvent::KeyPress)
     {
-	QKeyEvent *ke = static_cast<QKeyEvent *>(e);
+	TQKeyEvent *ke = static_cast<TQKeyEvent *>(e);
 	bool forward = false;
 	switch(ke->key())
 	{
 	case Key_Tab:
 	    forward=true;
 	case Key_BackTab:
-	    // ugly hack. emulate popdownlistbox() (private in QComboBox)
+	    // ugly hack. emulate popdownlistbox() (private in TQComboBox)
 	    // we re-use ke here to store the reference to the generated event.
-	    ke = new QKeyEvent(QEvent::KeyPress, Key_Escape, 0, 0);
-	    QApplication::sendEvent(dest,ke);
+	    ke = new TQKeyEvent(TQEvent::KeyPress, Key_Escape, 0, 0);
+	    TQApplication::sendEvent(dest,ke);
 	    focusNextPrevChild(forward);
 	    delete ke;
 	    return true;
@@ -955,7 +955,7 @@ void RenderSelect::updateFromElement()
         }
 
         if (m_useListBox && oldMultiple != m_multiple) {
-            static_cast<KListBox*>(m_widget)->setSelectionMode(m_multiple ? QListBox::Extended : QListBox::Single);
+            static_cast<KListBox*>(m_widget)->setSelectionMode(m_multiple ? TQListBox::Extended : TQListBox::Single);
         }
         m_selectionChanged = true;
         m_optionsChanged = true;
@@ -965,7 +965,7 @@ void RenderSelect::updateFromElement()
     if ( m_optionsChanged ) {
         if (element()->m_recalcListItems)
             element()->recalcListItems();
-        QMemArray<HTMLGenericFormElementImpl*> listItems = element()->listItems();
+        TQMemArray<HTMLGenericFormElementImpl*> listItems = element()->listItems();
         int listIndex;
 
         if(m_useListBox) {
@@ -982,27 +982,27 @@ void RenderSelect::updateFromElement()
                     text = "";
 
                 if(m_useListBox) {
-                    QListBoxText *item = new QListBoxText(QString(text.implementation()->s, text.implementation()->l));
+                    TQListBoxText *item = new TQListBoxText(TQString(text.implementation()->s, text.implementation()->l));
                     static_cast<KListBox*>(m_widget)
                         ->insertItem(item, listIndex);
                     item->setSelectable(false);
                 }
                 else {
                     static_cast<KComboBox*>(m_widget)
-                        ->insertItem(QString(text.implementation()->s, text.implementation()->l), listIndex);
+                        ->insertItem(TQString(text.implementation()->s, text.implementation()->l), listIndex);
 		    static_cast<KComboBox*>(m_widget)->listBox()->item(listIndex)->setSelectable(false);
 		}
             }
             else if (listItems[listIndex]->id() == ID_OPTION) {
                 HTMLOptionElementImpl* optElem = static_cast<HTMLOptionElementImpl*>(listItems[listIndex]);
-                QString text = optElem->text().string();
+                TQString text = optElem->text().string();
                 if (optElem->parentNode()->id() == ID_OPTGROUP)
                 {
                     // Prefer label if set
                     DOMString label = optElem->getAttribute(ATTR_LABEL);
                     if (!label.isEmpty())
                         text = label.string();
-                    text = QString::fromLatin1("    ")+text;
+                    text = TQString::fromLatin1("    ")+text;
                 }
 
                 if(m_useListBox) {
@@ -1020,7 +1020,7 @@ void RenderSelect::updateFromElement()
             m_selectionChanged = true;
         }
 
-        // QComboBox caches the size hint unless you call setFont (ref: TT docu)
+        // TQComboBox caches the size hint unless you call setFont (ref: TT docu)
         if(!m_useListBox) {
             KComboBox *that = static_cast<KComboBox*>(m_widget);
             that->setFont( that->font() );
@@ -1069,7 +1069,7 @@ void RenderSelect::layout( )
     if(m_useListBox) {
         KListBox* w = static_cast<KListBox*>(m_widget);
 
-        QListBoxItem* p = w->firstItem();
+        TQListBoxItem* p = w->firstItem();
         int width = 0;
         int height = 0;
         while(p) {
@@ -1098,7 +1098,7 @@ void RenderSelect::layout( )
         setIntrinsicHeight( height );
     }
     else {
-        QSize s(m_widget->sizeHint());
+        TQSize s(m_widget->sizeHint());
         setIntrinsicWidth( s.width() );
         setIntrinsicHeight( s.height() );
     }
@@ -1108,7 +1108,7 @@ void RenderSelect::layout( )
     RenderFormElement::layout();
 
     // and now disable the widget in case there is no <option> given
-    QMemArray<HTMLGenericFormElementImpl*> listItems = element()->listItems();
+    TQMemArray<HTMLGenericFormElementImpl*> listItems = element()->listItems();
 
     bool foundOption = false;
     for (uint i = 0; i < listItems.size() && !foundOption; i++)
@@ -1123,7 +1123,7 @@ void RenderSelect::slotSelected(int index) // emitted by the combobox only
 
     KHTMLAssert( !m_useListBox );
 
-    QMemArray<HTMLGenericFormElementImpl*> listItems = element()->listItems();
+    TQMemArray<HTMLGenericFormElementImpl*> listItems = element()->listItems();
     if(index >= 0 && index < int(listItems.size()))
     {
         bool found = ( listItems[index]->id() == ID_OPTION );
@@ -1186,7 +1186,7 @@ void RenderSelect::slotSelectionChanged() // emitted by the listbox only
 
     // don't use listItems() here as we have to avoid recalculations - changing the
     // option list will make use update options not in the way the user expects them
-    QMemArray<HTMLGenericFormElementImpl*> listItems = element()->m_listItems;
+    TQMemArray<HTMLGenericFormElementImpl*> listItems = element()->m_listItems;
     for ( unsigned i = 0; i < listItems.count(); i++ )
         // don't use setSelected() here because it will cause us to be called
         // again with updateSelection.
@@ -1207,11 +1207,11 @@ void RenderSelect::setOptionsChanged(bool _optionsChanged)
 KListBox* RenderSelect::createListBox()
 {
     KListBox *lb = new KListBox(view()->viewport(), "__khtml");
-    lb->setSelectionMode(m_multiple ? QListBox::Extended : QListBox::Single);
+    lb->setSelectionMode(m_multiple ? TQListBox::Extended : TQListBox::Single);
     // ### looks broken
     //lb->setAutoMask(true);
-    connect( lb, SIGNAL( selectionChanged() ), this, SLOT( slotSelectionChanged() ) );
-//     connect( lb, SIGNAL( clicked( QListBoxItem * ) ), this, SLOT( slotClicked() ) );
+    connect( lb, TQT_SIGNAL( selectionChanged() ), this, TQT_SLOT( slotSelectionChanged() ) );
+//     connect( lb, TQT_SIGNAL( clicked( TQListBoxItem * ) ), this, TQT_SLOT( slotClicked() ) );
     m_ignoreSelectEvents = false;
     lb->setMouseTracking(true);
 
@@ -1221,13 +1221,13 @@ KListBox* RenderSelect::createListBox()
 ComboBoxWidget *RenderSelect::createComboBox()
 {
     ComboBoxWidget *cb = new ComboBoxWidget(view()->viewport());
-    connect(cb, SIGNAL(activated(int)), this, SLOT(slotSelected(int)));
+    connect(cb, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotSelected(int)));
     return cb;
 }
 
 void RenderSelect::updateSelection()
 {
-    QMemArray<HTMLGenericFormElementImpl*> listItems = element()->listItems();
+    TQMemArray<HTMLGenericFormElementImpl*> listItems = element()->listItems();
     int i;
     if (m_useListBox) {
         // if multi-select, we select only the new selected index
@@ -1260,28 +1260,28 @@ void RenderSelect::updateSelection()
 
 // -------------------------------------------------------------------------
 
-TextAreaWidget::TextAreaWidget(int wrap, QWidget* parent)
+TextAreaWidget::TextAreaWidget(int wrap, TQWidget* parent)
     : KTextEdit(parent, "__khtml"), m_findDlg(0), m_find(0), m_repDlg(0), m_replace(0)
 {
     if(wrap != DOM::HTMLTextAreaElementImpl::ta_NoWrap) {
-        setWordWrap(QTextEdit::WidgetWidth);
+        setWordWrap(TQTextEdit::WidgetWidth);
         setHScrollBarMode( AlwaysOff );
         setVScrollBarMode( AlwaysOn );
     }
     else {
-        setWordWrap(QTextEdit::NoWrap);
+        setWordWrap(TQTextEdit::NoWrap);
         setHScrollBarMode( Auto );
         setVScrollBarMode( Auto );
     }
     KCursor::setAutoHideCursor(viewport(), true);
-    setTextFormat(QTextEdit::PlainText);
+    setTextFormat(TQTextEdit::PlainText);
     setAutoMask(true);
     setMouseTracking(true);
 
     KActionCollection *ac = new KActionCollection(this);
-    m_findAction = KStdAction::find( this, SLOT( slotFind() ), ac );
-    m_findNextAction = KStdAction::findNext( this, SLOT( slotFindNext() ), ac );
-    m_replaceAction = KStdAction::replace( this, SLOT( slotReplace() ), ac );
+    m_findAction = KStdAction::find( this, TQT_SLOT( slotFind() ), ac );
+    m_findNextAction = KStdAction::findNext( this, TQT_SLOT( slotFindNext() ), ac );
+    m_replaceAction = KStdAction::replace( this, TQT_SLOT( slotReplace() ), ac );
 }
 
 
@@ -1298,9 +1298,9 @@ TextAreaWidget::~TextAreaWidget()
 }
 
 
-QPopupMenu *TextAreaWidget::createPopupMenu(const QPoint& pos)
+TQPopupMenu *TextAreaWidget::createPopupMenu(const TQPoint& pos)
 {
-    QPopupMenu *popup = KTextEdit::createPopupMenu(pos);
+    TQPopupMenu *popup = KTextEdit::createPopupMenu(pos);
 
     if ( !popup ) {
         return 0L;
@@ -1323,7 +1323,7 @@ QPopupMenu *TextAreaWidget::createPopupMenu(const QPoint& pos)
 }
 
 
-void TextAreaWidget::slotFindHighlight(const QString& text, int matchingIndex, int matchingLength)
+void TextAreaWidget::slotFindHighlight(const TQString& text, int matchingIndex, int matchingLength)
 {
     Q_UNUSED(text)
     //kdDebug() << "Highlight: [" << text << "] mi:" << matchingIndex << " ml:" << matchingLength << endl;
@@ -1338,7 +1338,7 @@ void TextAreaWidget::slotFindHighlight(const QString& text, int matchingIndex, i
 }
 
 
-void TextAreaWidget::slotReplaceText(const QString &text, int replacementIndex, int /*replacedLength*/, int matchedLength) {
+void TextAreaWidget::slotReplaceText(const TQString &text, int replacementIndex, int /*replacedLength*/, int matchedLength) {
     Q_UNUSED(text)
     //kdDebug() << "Replace: [" << text << "] ri:" << replacementIndex << " rl:" << replacedLength << " ml:" << matchedLength << endl;
     setSelection(m_repPara, replacementIndex, m_repPara, replacementIndex + matchedLength);
@@ -1371,11 +1371,11 @@ void TextAreaWidget::slotDoReplace()
 
     // Connect highlight signal to code which handles highlighting
     // of found text.
-    connect(m_replace, SIGNAL(highlight(const QString &, int, int)),
-            this, SLOT(slotFindHighlight(const QString &, int, int)));
-    connect(m_replace, SIGNAL(findNext()), this, SLOT(slotReplaceNext()));
-    connect(m_replace, SIGNAL(replace(const QString &, int, int, int)),
-            this, SLOT(slotReplaceText(const QString &, int, int, int)));
+    connect(m_replace, TQT_SIGNAL(highlight(const TQString &, int, int)),
+            this, TQT_SLOT(slotFindHighlight(const TQString &, int, int)));
+    connect(m_replace, TQT_SIGNAL(findNext()), this, TQT_SLOT(slotReplaceNext()));
+    connect(m_replace, TQT_SIGNAL(replace(const TQString &, int, int, int)),
+            this, TQT_SLOT(slotReplaceText(const TQString &, int, int, int)));
 
     m_repDlg->close();
     slotReplaceNext();
@@ -1470,9 +1470,9 @@ void TextAreaWidget::slotDoFind()
 
     // Connect highlight signal to code which handles highlighting
     // of found text.
-    connect(m_find, SIGNAL(highlight(const QString &, int, int)),
-            this, SLOT(slotFindHighlight(const QString &, int, int)));
-    connect(m_find, SIGNAL(findNext()), this, SLOT(slotFindNext()));
+    connect(m_find, TQT_SIGNAL(highlight(const TQString &, int, int)),
+            this, TQT_SLOT(slotFindHighlight(const TQString &, int, int)));
+    connect(m_find, TQT_SIGNAL(findNext()), this, TQT_SLOT(slotFindNext()));
 
     m_findDlg->close();
     m_find->closeFindNextDialog();
@@ -1546,7 +1546,7 @@ void TextAreaWidget::slotFind()
       KWin::activateWindow( m_findDlg->winId() );
     } else {
       m_findDlg = new KFindDialog(false, this, "KHTML Text Area Find Dialog");
-      connect( m_findDlg, SIGNAL(okClicked()), this, SLOT(slotDoFind()) );
+      connect( m_findDlg, TQT_SIGNAL(okClicked()), this, TQT_SLOT(slotDoFind()) );
     }
     m_findDlg->show();
 }
@@ -1561,17 +1561,17 @@ void TextAreaWidget::slotReplace()
       KWin::activateWindow( m_repDlg->winId() );
     } else {
       m_repDlg = new KReplaceDialog(this, "KHTMLText Area Replace Dialog", 0,
-                                    QStringList(), QStringList(), false);
-      connect( m_repDlg, SIGNAL(okClicked()), this, SLOT(slotDoReplace()) );
+                                    TQStringList(), TQStringList(), false);
+      connect( m_repDlg, TQT_SIGNAL(okClicked()), this, TQT_SLOT(slotDoReplace()) );
     }
     m_repDlg->show();
 }
 
 
-bool TextAreaWidget::event( QEvent *e )
+bool TextAreaWidget::event( TQEvent *e )
 {
-    if ( e->type() == QEvent::AccelAvailable && isReadOnly() ) {
-        QKeyEvent* ke = (QKeyEvent*) e;
+    if ( e->type() == TQEvent::AccelAvailable && isReadOnly() ) {
+        TQKeyEvent* ke = (TQKeyEvent*) e;
         if ( ke->state() & ControlButton ) {
             switch ( ke->key() ) {
                 case Key_Left:
@@ -1602,7 +1602,7 @@ RenderTextArea::RenderTextArea(HTMLTextAreaElementImpl *element)
     edit->setCheckSpellingEnabled( settings->autoSpellCheck() );
     edit->setTabChangesFocus( ! settings->allowTabulation() );
 
-    connect(edit,SIGNAL(textChanged()),this,SLOT(slotTextChanged()));
+    connect(edit,TQT_SIGNAL(textChanged()),this,TQT_SLOT(slotTextChanged()));
 }
 
 RenderTextArea::~RenderTextArea()
@@ -1632,12 +1632,12 @@ void RenderTextArea::calcMinMaxWidth()
     KHTMLAssert( !minMaxKnown() );
 
     TextAreaWidget* w = static_cast<TextAreaWidget*>(m_widget);
-    const QFontMetrics &m = style()->fontMetrics();
+    const TQFontMetrics &m = style()->fontMetrics();
     w->setTabStopWidth(8 * m.width(" "));
-    QSize size( kMax(element()->cols(), 1L)*m.width('x') + w->frameWidth() +
+    TQSize size( kMax(element()->cols(), 1L)*m.width('x') + w->frameWidth() +
                 w->verticalScrollBar()->sizeHint().width(),
                 kMax(element()->rows(), 1L)*m.lineSpacing() + w->frameWidth()*4 +
-                (w->wordWrap() == QTextEdit::NoWrap ?
+                (w->wordWrap() == TQTextEdit::NoWrap ?
                  w->horizontalScrollBar()->sizeHint().height() : 0)
         );
 
@@ -1681,7 +1681,7 @@ void RenderTextArea::updateFromElement()
 {
     TextAreaWidget* w = static_cast<TextAreaWidget*>(m_widget);
     w->setReadOnly(element()->readOnly());
-    QString elementText = element()->value().string();
+    TQString elementText = element()->value().string();
     if ( elementText != text() )
     {
         w->blockSignals(true);
@@ -1707,28 +1707,28 @@ void RenderTextArea::close( )
 }
 
 
-QString RenderTextArea::text()
+TQString RenderTextArea::text()
 {
-    QString txt;
+    TQString txt;
     TextAreaWidget* w = static_cast<TextAreaWidget*>(m_widget);
 
     if(element()->wrap() == DOM::HTMLTextAreaElementImpl::ta_Physical) {
-        // yeah, QTextEdit has no accessor for getting the visually wrapped text
+        // yeah, TQTextEdit has no accessor for getting the visually wrapped text
         for (int p=0; p < w->paragraphs(); ++p) {
             int ll = 0;
             int lindex = w->lineOfChar(p, 0);
-            QString paragraphText = w->text(p);
+            TQString paragraphText = w->text(p);
             int pl = w->paragraphLength(p);
             paragraphText = paragraphText.left(pl); //Snip invented space.
             for (int l = 0; l < pl; ++l) {
                 if (lindex != w->lineOfChar(p, l)) {
-                    paragraphText.insert(l+ll++, QString::fromLatin1("\n"));
+                    paragraphText.insert(l+ll++, TQString::fromLatin1("\n"));
                     lindex = w->lineOfChar(p, l);
                 }
             }
             txt += paragraphText;
             if (p < w->paragraphs() - 1)
-                txt += QString::fromLatin1("\n");
+                txt += TQString::fromLatin1("\n");
         }
     }
     else
@@ -1745,7 +1745,7 @@ int RenderTextArea::queryParagraphInfo(int para, Mode m, int param) {
 
     bool physWrap     = element()->wrap() == DOM::HTMLTextAreaElementImpl::ta_Physical;
 
-    QString paragraphText = w->text(para);
+    TQString paragraphText = w->text(para);
     int pl                = w->paragraphLength(para);
     int physicalPL        = pl;
     if (m == ParaPortionLength)

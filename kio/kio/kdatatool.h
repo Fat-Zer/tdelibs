@@ -21,8 +21,8 @@
 #ifndef KDATATOOL_H
 #define KDATATOOL_H
 
-#include <qobject.h>
-#include <qvaluelist.h>
+#include <tqobject.h>
+#include <tqvaluelist.h>
 
 #include <kaction.h>
 #include <kservice.h>
@@ -69,14 +69,14 @@ public:
     /**
      * Returns the data type that the DataTool can accept.
      * @return the C++ data type that this DataTool accepts.
-     *         For example "QString" or "QImage" or something more
+     *         For example "TQString" or "TQImage" or something more
      *         complicated.
      */
-    QString dataType() const;
+    TQString dataType() const;
     /**
      * Returns a list of mime type that will be accepted by the DataTool.
      * The mimetypes are only used if the dataType can be used to store
-     * different mimetypes. For example in a "QString" you could save "text/plain"
+     * different mimetypes. For example in a "TQString" you could save "text/plain"
      * or "text/html" or "text/xml".
      *
      * @return the mime types accepted by this DataTool. For example
@@ -84,7 +84,7 @@ public:
      *         determines the accepted type of data perfectly. In this cases
      *         this list may be empty.
      */
-    QStringList mimeTypes() const;
+    TQStringList mimeTypes() const;
 
     /**
      * Checks whether the DataTool is read-only.
@@ -97,20 +97,20 @@ public:
      * @return a large pixmap for the DataTool.
      * @deprecated, use iconName()
      */
-    QPixmap icon() const KDE_DEPRECATED;
+    TQPixmap icon() const KDE_DEPRECATED;
     /**
      * Returns the mini icon of this data tool.
      * @return a mini pixmap for the DataTool.
      * @deprecated, use iconName()
      */
-    QPixmap miniIcon() const KDE_DEPRECATED;
+    TQPixmap miniIcon() const KDE_DEPRECATED;
     /**
      * Returns the icon name for this DataTool.
      * @return the name of the icon for the DataTool
      */
-    QString iconName() const;
+    TQString iconName() const;
     /**
-     * Returns a list of strings that you can put in a QPopupMenu item, for example to
+     * Returns a list of strings that you can put in a TQPopupMenu item, for example to
      * offer the DataTools services to the user. The returned value
      * is usually something like "Spell checking", "Shrink Image", "Rotate Image"
      * or something like that.     
@@ -120,9 +120,9 @@ public:
      * Each of the strings returned corresponds to a string in the list returned by
      * commands.
      *
-     * @return a list of strings that you can put in a QPopupMenu item
+     * @return a list of strings that you can put in a TQPopupMenu item
      */
-    QStringList userCommands() const;
+    TQStringList userCommands() const;
     /**
      * Returns the list of commands the DataTool can execute. The application
      * passes the command to the KDataTool::run method.
@@ -134,15 +134,15 @@ public:
      * @return the list of commands the DataTool can execute, suitable for 
      *         the KDataTool::run method.
      */
-    QStringList commands() const;
+    TQStringList commands() const;
 
     /**
      * Creates the data tool described by this KDataToolInfo.
-     * @param parent the parent of the QObject (or 0 for parent-less KDataTools)
-     * @param name the name of the QObject, can be 0
+     * @param parent the parent of the TQObject (or 0 for parent-less KDataTools)
+     * @param name the name of the TQObject, can be 0
      * @return a pointer to the created data tool or 0 on error.
      */
-    KDataTool* createTool( QObject* parent = 0, const char* name = 0 ) const;
+    KDataTool* createTool( TQObject* parent = 0, const char* name = 0 ) const;
 
     /**
      * The KDataToolInfo's service that is represented by this class.
@@ -165,13 +165,13 @@ public:
 
     /**
      * Queries the KTrader about installed KDataTool implementations.
-     * @param datatype a type that the application can 'export' to the tools (e.g. QString)
+     * @param datatype a type that the application can 'export' to the tools (e.g. TQString)
      * @param mimetype the mimetype of the data (e.g. text/plain)
      * @param instance the application (or the part)'s instance (to check if a tool is excluded from this part,
      * and also used if the tool wants to read its configuration in the app's config file).
      * @return the list of results
      */
-    static QValueList<KDataToolInfo> query( const QString& datatype, const QString& mimetype, KInstance * instance );
+    static TQValueList<KDataToolInfo> query( const TQString& datatype, const TQString& mimetype, KInstance * instance );
 
 private:
     KService::Ptr m_service;
@@ -204,7 +204,7 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KDataToolAction( const QString & text, const KDataToolInfo & info, const QString & command, QObject * parent = 0, const char * name = 0);
+    KDataToolAction( const TQString & text, const KDataToolInfo & info, const TQString & command, TQObject * parent = 0, const char * name = 0);
 
     /**
      * Creates a list of actions from a list of information about data-tools.
@@ -216,7 +216,7 @@ public:
      * @param slot the slot that will receive the toolActivated() signals
      * @return the KActions
      */
-    static QPtrList<KAction> dataToolActionList( const QValueList<KDataToolInfo> & tools, const QObject *receiver, const char* slot );
+    static TQPtrList<KAction> dataToolActionList( const TQValueList<KDataToolInfo> & tools, const TQObject *receiver, const char* slot );
 
 signals:
     /**
@@ -224,13 +224,13 @@ signals:
      * @param info a description of the activated tools
      * @param command the command for the tool
      */
-    void toolActivated( const KDataToolInfo & info, const QString & command );
+    void toolActivated( const KDataToolInfo & info, const TQString & command );
 
 protected:
     virtual void slotActivated();
 
 private:
-    QString m_command;
+    TQString m_command;
     KDataToolInfo m_info;
 protected:
     virtual void virtual_hook( int id, void* data );
@@ -257,10 +257,10 @@ public:
     /**
      * Constructor
      * The data-tool is only created when a menu-item, that relates to it, is activated.
-     * @param parent the parent of the QObject (or 0 for parent-less KDataTools)
-     * @param name the name of the QObject, can be 0
+     * @param parent the parent of the TQObject (or 0 for parent-less KDataTools)
+     * @param name the name of the TQObject, can be 0
      */
-    KDataTool( QObject* parent = 0, const char* name = 0 );
+    KDataTool( TQObject* parent = 0, const char* name = 0 );
 
     /**
      * @internal. Do not use under any circumstance (including bad weather).
@@ -284,10 +284,10 @@ public:
      *             and for getting it back and updating itself with it, after the tool ran.
      * @param datatype defines the type of @p data.
      * @param mimetype defines the mimetype of the data (for instance datatype may be
-     *                 QString, but the mimetype can be text/plain, text/html etc.)
+     *                 TQString, but the mimetype can be text/plain, text/html etc.)
      * @return true if successful, false otherwise
      */
-    virtual bool run( const QString& command, void* data, const QString& datatype, const QString& mimetype) = 0;
+    virtual bool run( const TQString& command, void* data, const TQString& datatype, const TQString& mimetype) = 0;
 
 private:
     KInstance * m_instance;

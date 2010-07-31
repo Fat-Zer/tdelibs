@@ -33,10 +33,10 @@ public:
 	KSVGIconEngine();
 	~KSVGIconEngine();
 	
-	bool load(int width, int height, const QString &path);
+	bool load(int width, int height, const TQString &path);
 
 	KSVGIconPainter *painter();
-	QImage *image();
+	TQImage *image();
 
 	double width();
 	double height();

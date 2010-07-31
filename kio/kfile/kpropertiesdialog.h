@@ -28,8 +28,8 @@
 #ifndef __propsdlg_h
 #define __propsdlg_h
 
-#include <qstring.h>
-#include <qptrlist.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
 
 #include <kdemacros.h>
 #include <kurl.h>
@@ -95,7 +95,7 @@ public:
    * @param autoShow tells the dialog whether it should show itself automatically.
    */
   KPropertiesDialog( KFileItem * item,
-                     QWidget* parent = 0L, const char* name = 0L,
+                     TQWidget* parent = 0L, const char* name = 0L,
                      bool modal = false, bool autoShow = true);
 
   /**
@@ -113,7 +113,7 @@ public:
    * @param autoShow tells the dialog whether it should show itself automatically.
    */
   KPropertiesDialog( KFileItemList _items,
-                     QWidget *parent = 0L, const char* name = 0L,
+                     TQWidget *parent = 0L, const char* name = 0L,
                      bool modal = false, bool autoShow = true);
 
 #ifndef KDE_NO_COMPAT
@@ -128,7 +128,7 @@ public:
    * @param modal tells the dialog whether it should be modal.
    * @param autoShow tells the dialog whether it should show itself automatically.  */
   KPropertiesDialog( const KURL& _url, mode_t _mode,
-                     QWidget* parent = 0L, const char* name = 0L,
+                     TQWidget* parent = 0L, const char* name = 0L,
                      bool modal = false, bool autoShow = true) KDE_DEPRECATED;
 #endif
 
@@ -150,7 +150,7 @@ public:
    * @param autoShow tells the dialog whethr it should show itself automatically.
    */
   KPropertiesDialog( const KURL& _url,
-                     QWidget* parent = 0L, const char* name = 0L,
+                     TQWidget* parent = 0L, const char* name = 0L,
                      bool modal = false, bool autoShow = true);
 
   /**
@@ -168,8 +168,8 @@ public:
    * @param autoShow tells the dialog whethr it should show itself automatically.
    */
   KPropertiesDialog( const KURL& _tempUrl, const KURL& _currentDir,
-                     const QString& _defaultName,
-                     QWidget* parent = 0L, const char* name = 0L,
+                     const TQString& _defaultName,
+                     TQWidget* parent = 0L, const char* name = 0L,
                      bool modal = false, bool autoShow = true);
 
   /**
@@ -181,8 +181,8 @@ public:
    * @param name is the internal name.
    * @param modal tells the dialog whether it should be modal.
    */
-  KPropertiesDialog (const QString& title,
-                     QWidget* parent = 0L, const char* name = 0L, bool modal = false);
+  KPropertiesDialog (const TQString& title,
+                     TQWidget* parent = 0L, const char* name = 0L, bool modal = false);
 
   /**
    * Cleans up the properties dialog and frees any associated resources,
@@ -200,7 +200,7 @@ public:
    * @return true on succesfull dialog displaying (can be false on win32).
    * @since 3.4
    */
-  static bool showDialog(KFileItem* item, QWidget* parent = 0, 
+  static bool showDialog(KFileItem* item, TQWidget* parent = 0, 
                          const char* name = 0, bool modal = false);
 
   /**
@@ -212,7 +212,7 @@ public:
    * @return true on succesfull dialog displaying (can be false on win32).
    * @since 3.4
    */
-  static bool showDialog(const KURL& _url, QWidget* parent = 0, 
+  static bool showDialog(const KURL& _url, TQWidget* parent = 0, 
                          const char* name = 0, bool modal = false);
 
   /**
@@ -225,7 +225,7 @@ public:
    * @return true on succesfull dialog displaying (can be false on win32).
    * @since 3.4
    */
-  static bool showDialog(const KFileItemList& _items, QWidget* parent = 0, 
+  static bool showDialog(const KFileItemList& _items, TQWidget* parent = 0, 
                          const char* name = 0, bool modal = false);
 
   /**
@@ -279,20 +279,20 @@ public:
 
   /**
    * If the dialog is being built from a template, this method
-   * returns the current directory. If no template, it returns QString::null.
+   * returns the current directory. If no template, it returns TQString::null.
    * See the template form of the constructor.
    *
-   * @return the current directory or QString::null
+   * @return the current directory or TQString::null
    */
   const KURL& currentDir() const { return m_currentDir; }
 
   /**
    * If the dialog is being built from a template, this method
-   * returns the default name. If no template, it returns QString::null.
+   * returns the default name. If no template, it returns TQString::null.
    * See the template form of the constructor.
-   * @return the default name or QString::null
+   * @return the default name or TQString::null
    */
-  const QString& defaultName() const { return m_defaultName; }
+  const TQString& defaultName() const { return m_defaultName; }
 
   /**
    * Updates the item URL (either called by rename or because
@@ -308,7 +308,7 @@ public:
    * @param _name new filename, encoded.
    * \see FilePropsDlgPlugin::applyChanges
    */
-  void rename( const QString& _name );
+  void rename( const TQString& _name );
 
   /**
    * To abort applying changes.
@@ -332,7 +332,7 @@ public:
    * \see showFileSharingPage
    * @since 3.3
    */
-  void setFileSharingPage(QWidget* page);
+  void setFileSharingPage(TQWidget* page);
 
    /**
     * Call this to make the filename lineedit readonly, to prevent the user
@@ -403,13 +403,13 @@ private:
   /**
    * For templates
    */
-  QString m_defaultName;
+  TQString m_defaultName;
   KURL m_currentDir;
 
   /**
    * List of all plugins inserted ( first one first )
    */
-  QPtrList<KPropsDlgPlugin> m_pageList;
+  TQPtrList<KPropsDlgPlugin> m_pageList;
 
 private slots:
   void slotStatResult( KIO::Job * ); // No longer used
@@ -527,7 +527,7 @@ protected slots:
   void slotFileRenamed( KIO::Job *, const KURL &, const KURL & );
   void slotDirSizeUpdate();
   void slotDirSizeFinished( KIO::Job * );
-  void slotFoundMountPoint( const QString& mp, unsigned long kBSize,
+  void slotFoundMountPoint( const TQString& mp, unsigned long kBSize,
 			    unsigned long kBUsed, unsigned long kBAvail );
   void slotSizeStop();
   void slotSizeDetermine();
@@ -535,28 +535,28 @@ protected slots:
 private slots:
   // workaround for compiler bug
   void slotFoundMountPoint( const unsigned long& kBSize, const unsigned long&
-			  kBUsed, const unsigned long& kBAvail, const QString& mp );
-  void nameFileChanged(const QString &text );
+			  kBUsed, const unsigned long& kBAvail, const TQString& mp );
+  void nameFileChanged(const TQString &text );
   void slotIconChanged();
 
 private:
-  void determineRelativePath( const QString & path );
+  void determineRelativePath( const TQString & path );
   void applyIconChanges();
 
-  QWidget *iconArea;
-  QWidget *nameArea;
+  TQWidget *iconArea;
+  TQWidget *nameArea;
 
-  QLabel *m_sizeLabel;
-  QPushButton *m_sizeDetermineButton;
-  QPushButton *m_sizeStopButton;
+  TQLabel *m_sizeLabel;
+  TQPushButton *m_sizeDetermineButton;
+  TQPushButton *m_sizeStopButton;
 
-  QString m_sRelativePath;
+  TQString m_sRelativePath;
   bool m_bFromTemplate;
 
   /**
    * The initial filename
    */
-  QString oldName;
+  TQString oldName;
 
   class KFilePropsPluginPrivate;
   KFilePropsPluginPrivate *d;
@@ -604,7 +604,7 @@ private slots:
   void slotShowAdvancedPermissions();
 
 private:
-  void setComboContent(QComboBox *combo, PermissionsTarget target,
+  void setComboContent(TQComboBox *combo, PermissionsTarget target,
 		       mode_t permissions, mode_t partial);
   bool isIrregular(mode_t permissions, bool isDir, bool isLink);
   void enableAccessControls(bool enable);
@@ -619,9 +619,9 @@ private:
   static const char *permissionsTexts[4][4];
 
   // unused, for binary compatibility!
-  QCheckBox *permBox[3][4];
+  TQCheckBox *permBox[3][4];
 
-  QComboBox *grpCombo;
+  TQComboBox *grpCombo;
 
   KLineEdit *usrEdit, *grpEdit;
 
@@ -632,11 +632,11 @@ private:
   /**
    * Old group
    */
-  QString strGroup;
+  TQString strGroup;
   /**
    * Old owner
    */
-  QString strOwner;
+  TQString strOwner;
 
   // unused, for compatibility
   static mode_t fperm[3][4];
@@ -672,11 +672,11 @@ private:
   KURLRequester *URLEdit;
   KIconButton *iconBox;
 
-  QString URLStr;
-  QString iconStr;
+  TQString URLStr;
+  TQString iconStr;
 
-  QPixmap pixmap;
-  QString pixmapFile;
+  TQPixmap pixmap;
+  TQString pixmapFile;
 private:
   class KURLPropsPluginPrivate;
   KURLPropsPluginPrivate *d;
@@ -704,12 +704,12 @@ public:
 
 private:
 
-  QLineEdit *commentEdit;
-  QLineEdit *patternEdit;
-  QLineEdit *mimeEdit;
-  QString m_sMimeStr;
+  TQLineEdit *commentEdit;
+  TQLineEdit *patternEdit;
+  TQLineEdit *mimeEdit;
+  TQString m_sMimeStr;
 
-  QCheckBox * cbAutoEmbed;
+  TQCheckBox * cbAutoEmbed;
 
   class KBindingPropsPluginPrivate;
   KBindingPropsPluginPrivate *d;
@@ -736,26 +736,26 @@ private slots:
   void slotFoundMountPoint( const unsigned long& kBSize,
                             const unsigned long& /*kBUsed*/,
                             const unsigned long& kBAvail,
-                            const QString& );
+                            const TQString& );
 
 private:
   void updateInfo();
 
 private:
-  QComboBox* device;
-  QLabel* mountpoint;
-  QCheckBox* readonly;
+  TQComboBox* device;
+  TQLabel* mountpoint;
+  TQCheckBox* readonly;
   void* unused;
   //KIconButton* mounted;
   KIconButton* unmounted;
 
-  QStringList m_devicelist;
+  TQStringList m_devicelist;
   int indexDevice;
   int indexMountPoint;
   int indexFSType;
 
-  QPixmap pixmap;
-  QString pixmapFile;
+  TQPixmap pixmap;
+  TQString pixmapFile;
 
   class KDevicePropsPluginPrivate;
   KDevicePropsPluginPrivate *d;
@@ -798,10 +798,10 @@ private:
 private:
   KPropertiesDesktopBase* w;
 
-  QString m_origCommandStr;
-  QString m_terminalOptionStr;
-  QString m_suidUserStr;
-  QString m_dcopServiceType;
+  TQString m_origCommandStr;
+  TQString m_terminalOptionStr;
+  TQString m_suidUserStr;
+  TQString m_dcopServiceType;
   bool m_terminalBool;
   bool m_terminalCloseBool;
   bool m_suidBool;
@@ -845,24 +845,24 @@ private slots:
 
 private:
 
-    QLabel *terminalLabel;
-    QLabel *suidLabel;
+    TQLabel *terminalLabel;
+    TQLabel *suidLabel;
     KLineEdit *execEdit;
-    QCheckBox *terminalCheck;
-    QCheckBox *suidCheck;
+    TQCheckBox *terminalCheck;
+    TQCheckBox *suidCheck;
     KLineEdit *terminalEdit;
     KLineEdit *suidEdit;
     KLineEdit *swallowExecEdit;
     KLineEdit *swallowTitleEdit;
-    QButton *execBrowse;
+    TQButton *execBrowse;
 
-    QString execStr;
-    QString swallowExecStr;
-    QString swallowTitleStr;
-    QString termOptionsStr;
+    TQString execStr;
+    TQString swallowExecStr;
+    TQString swallowTitleStr;
+    TQString termOptionsStr;
     bool termBool;
     bool suidBool;
-    QString suidUserStr;
+    TQString suidUserStr;
 
     class KExecPropsPluginPrivate;
     KExecPropsPluginPrivate *d;
@@ -900,15 +900,15 @@ private slots:
   void updateButton();
 
 private:
-  void addMimeType( const QString & name );
+  void addMimeType( const TQString & name );
 
-  QLineEdit *commentEdit;
-  QLineEdit *genNameEdit;
-  QLineEdit *nameEdit;
-  QListBox  *extensionsList;
-  QListBox  *availableExtensionsList;
-  QPushButton *addExtensionButton;
-  QPushButton *delExtensionButton;
+  TQLineEdit *commentEdit;
+  TQLineEdit *genNameEdit;
+  TQLineEdit *nameEdit;
+  TQListBox  *extensionsList;
+  TQListBox  *availableExtensionsList;
+  TQPushButton *addExtensionButton;
+  TQPushButton *delExtensionButton;
 
   class KApplicationPropsPluginPrivate;
   KApplicationPropsPluginPrivate *d;

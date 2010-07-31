@@ -21,8 +21,8 @@
 #include "kkeynative.h"
 #include "kkeyserver.h"
 
-#include <qevent.h>
-#include <qstringlist.h>
+#include <tqevent.h>
+#include <tqstringlist.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -42,10 +42,10 @@ static KShortcut* g_pcut = 0;
 KKey::KKey()                          { clear(); }
 KKey::KKey( uint key, uint modFlags ) { init( key, modFlags ); }
 KKey::KKey( int keyQt )               { init( keyQt ); }
-KKey::KKey( const QKeySequence& seq ) { init( seq ); }
-KKey::KKey( const QKeyEvent* pEvent ) { init( pEvent ); }
+KKey::KKey( const TQKeySequence& seq ) { init( seq ); }
+KKey::KKey( const TQKeyEvent* pEvent ) { init( pEvent ); }
 KKey::KKey( const KKey& key )         { init( key ); }
-KKey::KKey( const QString& sKey )     { init( sKey ); }
+KKey::KKey( const TQString& sKey )     { init( sKey ); }
 
 KKey::~KKey()
 {
@@ -79,13 +79,13 @@ bool KKey::init( int keyQt )
 	}
 }
 
-bool KKey::init( const QKeySequence& key )
+bool KKey::init( const TQKeySequence& key )
 {
 	// TODO: if key.count() > 1, should we return failure?
 	return init( (int) key );
 }
 
-bool KKey::init( const QKeyEvent* pEvent )
+bool KKey::init( const TQKeyEvent* pEvent )
 {
 	int keyQt = pEvent->key();
 	if( pEvent->state() & Qt::ShiftButton )   keyQt |= Qt::SHIFT;
@@ -102,22 +102,22 @@ bool KKey::init( const KKey& key )
 	return true;
 }
 
-bool KKey::init( const QString& sSpec )
+bool KKey::init( const TQString& sSpec )
 {
 	clear();
 
-	QString sKey = sSpec.stripWhiteSpace();
+	TQString sKey = sSpec.stripWhiteSpace();
 	if( sKey.startsWith( "default(" ) && sKey.endsWith( ")" ) )
 		sKey = sKey.mid( 8, sKey.length() - 9 );
 	// i.e., "Ctrl++" = "Ctrl+Plus"
 	if( sKey.endsWith( "++" ) )
 		sKey = sKey.left( sKey.length() - 1 ) + "plus";
-	QStringList rgs = QStringList::split( '+', sKey, true );
+	TQStringList rgs = TQStringList::split( '+', sKey, true );
 
 	uint i;
 	// Check for modifier keys first.
 	for( i = 0; i < rgs.size(); i++ ) {
-		QString s = rgs[i].lower();
+		TQString s = rgs[i].lower();
 		if( s == "shift" )     m_mod |= KKey::SHIFT;
 		else if( s == "ctrl" ) m_mod |= KKey::CTRL;
 		else if( s == "alt" )  m_mod |= KKey::ALT;
@@ -139,8 +139,8 @@ bool KKey::init( const QString& sSpec )
 		m_mod = 0;
 
 	kdDebug(125) << "KKey::init( \"" << sSpec << "\" ):"
-		<< " m_sym = " << QString::number(m_sym, 16)
-		<< ", m_mod = " << QString::number(m_mod, 16) << endl;
+		<< " m_sym = " << TQString::number(m_sym, 16)
+		<< ", m_mod = " << TQString::number(m_mod, 16) << endl;
 
 	return m_sym != 0;
 }
@@ -163,9 +163,9 @@ int KKey::keyCodeQt() const
 	return KKeyNative( *this ).keyCodeQt();
 }
 
-QString KKey::toString() const
+TQString KKey::toString() const
 {
-	QString s;
+	TQString s;
 
 	s = KKeyServer::modToStringUser( m_mod );
 	if( !s.isEmpty() )
@@ -175,12 +175,12 @@ QString KKey::toString() const
 	return s;
 }
 
-QString KKey::toStringInternal() const
+TQString KKey::toStringInternal() const
 {
 	//kdDebug(125) << "KKey::toStringInternal(): this = " << this
-	//	<< " mod = " << QString::number(m_mod, 16)
-	//	<< " key = " << QString::number(m_sym, 16) << endl;
-	QString s;
+	//	<< " mod = " << TQString::number(m_mod, 16)
+	//	<< " key = " << TQString::number(m_sym, 16) << endl;
+	TQString s;
 
 	s = KKeyServer::modToStringInternal( m_mod );
 	if( !s.isEmpty() )
@@ -198,7 +198,7 @@ KKey& KKey::null()
 	return *g_pspec;
 }
 
-QString KKey::modFlagLabel( ModFlag modFlag )
+TQString KKey::modFlagLabel( ModFlag modFlag )
 {
 	return KKeyServer::modToStringUser( modFlag );
 }
@@ -208,10 +208,10 @@ QString KKey::modFlagLabel( ModFlag modFlag )
 //---------------------------------------------------------------------
 
 KKeySequence::KKeySequence()                          { clear(); }
-KKeySequence::KKeySequence( const QKeySequence& seq ) { init( seq ); }
+KKeySequence::KKeySequence( const TQKeySequence& seq ) { init( seq ); }
 KKeySequence::KKeySequence( const KKey& key )         { init( key ); }
 KKeySequence::KKeySequence( const KKeySequence& seq ) { init( seq ); }
-KKeySequence::KKeySequence( const QString& s )        { init( s ); }
+KKeySequence::KKeySequence( const TQString& s )        { init( s ); }
 
 KKeySequence::~KKeySequence()
 {
@@ -223,7 +223,7 @@ void KKeySequence::clear()
 	m_bTriggerOnRelease = false;
 }
 
-bool KKeySequence::init( const QKeySequence& seq )
+bool KKeySequence::init( const TQKeySequence& seq )
 {
 	clear();
 	if( !seq.isEmpty() ) {
@@ -264,11 +264,11 @@ bool KKeySequence::init( const KKeySequence& seq )
 	return true;
 }
 
-bool KKeySequence::init( const QString& s )
+bool KKeySequence::init( const TQString& s )
 {
 	m_bTriggerOnRelease = false;
 	//kdDebug(125) << "KKeySequence::init( " << s << " )" << endl;
-	QStringList rgs = QStringList::split( ',', s );
+	TQStringList rgs = TQStringList::split( ',', s );
 	if( s == "none" || rgs.size() == 0 ) {
 		clear();
 		return true;
@@ -343,13 +343,13 @@ int KKeySequence::compare( const KKeySequence& seq ) const
 		return 0;
 }
 
-QKeySequence KKeySequence::qt() const
+TQKeySequence KKeySequence::qt() const
 {
 	int k[4] = { 0, 0, 0, 0 };
 	
 	for( uint i = 0; i < count(); i++ )
 		k[i] = KKeyNative(key(i)).keyCodeQt();
-	QKeySequence seq( k[0], k[1], k[2], k[3] );
+	TQKeySequence seq( k[0], k[1], k[2], k[3] );
 	return seq;
 }
 
@@ -358,11 +358,11 @@ int KKeySequence::keyCodeQt() const
 	return (count() == 1) ? KKeyNative(key(0)).keyCodeQt() : 0;
 }
 
-QString KKeySequence::toString() const
+TQString KKeySequence::toString() const
 {
-	if( m_nKeys < 1 ) return QString::null;
+	if( m_nKeys < 1 ) return TQString::null;
 
-	QString s;
+	TQString s;
 	s = m_rgvar[0].toString();
 	for( uint i = 1; i < m_nKeys; i++ ) {
 		s += ",";
@@ -372,11 +372,11 @@ QString KKeySequence::toString() const
 	return s;
 }
 
-QString KKeySequence::toStringInternal() const
+TQString KKeySequence::toStringInternal() const
 {
-	if( m_nKeys < 1 ) return QString::null;
+	if( m_nKeys < 1 ) return TQString::null;
 
-	QString s;
+	TQString s;
 	s = m_rgvar[0].toStringInternal();
 	for( uint i = 1; i < m_nKeys; i++ ) {
 		s += ",";
@@ -401,12 +401,12 @@ KKeySequence& KKeySequence::null()
 
 KShortcut::KShortcut()                            { clear(); }
 KShortcut::KShortcut( int keyQt )                 { init( keyQt ); }
-KShortcut::KShortcut( const QKeySequence& key )   { init( key ); }
+KShortcut::KShortcut( const TQKeySequence& key )   { init( key ); }
 KShortcut::KShortcut( const KKey& key )           { init( key ); }
 KShortcut::KShortcut( const KKeySequence& seq )   { init( seq ); }
 KShortcut::KShortcut( const KShortcut& cut )      { init( cut ); }
-KShortcut::KShortcut( const char* ps )            { init( QString(ps) ); }
-KShortcut::KShortcut( const QString& s )          { init( s ); }
+KShortcut::KShortcut( const char* ps )            { init( TQString(ps) ); }
+KShortcut::KShortcut( const TQString& s )          { init( s ); }
 
 KShortcut::~KShortcut()
 {
@@ -421,13 +421,13 @@ bool KShortcut::init( int keyQt )
 {
 	if( keyQt ) {
 		m_nSeqs = 1;
-		m_rgseq[0].init( QKeySequence(keyQt) );
+		m_rgseq[0].init( TQKeySequence(keyQt) );
 	} else
 		clear();
 	return true;
 }
 
-bool KShortcut::init( const QKeySequence& key )
+bool KShortcut::init( const TQKeySequence& key )
 {
 	m_nSeqs = 1;
 	m_rgseq[0].init( key );
@@ -456,17 +456,17 @@ bool KShortcut::init( const KShortcut& cut )
 	return true;
 }
 
-bool KShortcut::init( const QString& s )
+bool KShortcut::init( const TQString& s )
 {
 	bool bRet = true;
-	QStringList rgs = QStringList::split( ';', s );
+	TQStringList rgs = TQStringList::split( ';', s );
 
 	if( s == "none" || rgs.size() == 0 )
 		clear();
 	else if( rgs.size() <= MAX_SEQUENCES ) {
 		m_nSeqs = rgs.size();
 		for( uint i = 0; i < m_nSeqs; i++ ) {
-			QString& sSeq = rgs[i];
+			TQString& sSeq = rgs[i];
 			if( sSeq.startsWith( "default(" ) )
 				sSeq = sSeq.mid( 8, sSeq.length() - 9 );
 			m_rgseq[i].init( sSeq );
@@ -478,15 +478,15 @@ bool KShortcut::init( const QString& s )
 	}
 
 	if( !s.isEmpty() ) {
-		QString sDebug;
-		QTextStream os( &sDebug, IO_WriteOnly );
+		TQString sDebug;
+		TQTextStream os( &sDebug, IO_WriteOnly );
 		os << "KShortcut::init( \"" << s << "\" ): ";
 		for( uint i = 0; i < m_nSeqs; i++ ) {
 			os << " m_rgseq[" << i << "]: ";
 			KKeyServer::Variations vars;
 			vars.init( m_rgseq[i].key(0), true );
 			for( uint j = 0; j < vars.count(); j++ )
-				os << QString::number(vars.m_rgkey[j].keyCodeQt(),16) << ',';
+				os << TQString::number(vars.m_rgkey[j].keyCodeQt(),16) << ',';
 		}
 		kdDebug(125) << sDebug << endl;
 	}
@@ -508,7 +508,7 @@ int KShortcut::keyCodeQt() const
 {
 	if( m_nSeqs >= 1 )
 		return m_rgseq[0].keyCodeQt();
-	return QKeySequence();
+	return TQKeySequence();
 }
 
 bool KShortcut::isNull() const
@@ -621,17 +621,17 @@ bool KShortcut::append( const KShortcut& cut )
 	return true;
 }
 
-KShortcut::operator QKeySequence () const
+KShortcut::operator TQKeySequence () const
 {
 	if( count() >= 1 )
 		return m_rgseq[0].qt();
 	else
-		return QKeySequence();
+		return TQKeySequence();
 }
 
-QString KShortcut::toString() const
+TQString KShortcut::toString() const
 {
-	QString s;
+	TQString s;
 
 	for( uint i = 0; i < count(); i++ ) {
 		s += m_rgseq[i].toString();
@@ -642,9 +642,9 @@ QString KShortcut::toString() const
 	return s;
 }
 
-QString KShortcut::toStringInternal( const KShortcut* pcutDefault ) const
+TQString KShortcut::toStringInternal( const KShortcut* pcutDefault ) const
 {
-	QString s;
+	TQString s;
 
 	for( uint i = 0; i < count(); i++ ) {
 		const KKeySequence& seq = m_rgseq[i];

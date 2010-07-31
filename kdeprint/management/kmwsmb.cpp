@@ -25,11 +25,11 @@
 
 #include <klocale.h>
 #include <kpushbutton.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqlabel.h>
 
-KMWSmb::KMWSmb(QWidget *parent, const char *name)
+KMWSmb::KMWSmb(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_title = i18n("SMB Printer Settings");
@@ -37,20 +37,20 @@ KMWSmb::KMWSmb(QWidget *parent, const char *name)
 	m_nextpage = KMWizard::Driver;
 
 	m_view = new SmbView(this,"SmbView");
-	m_loginlabel = new QLabel( this );
+	m_loginlabel = new TQLabel( this );
 	QPushButton	*m_scan = new KPushButton(KGuiItem(i18n("Scan"), "viewmag"), this);
 	QPushButton	*m_abort = new KPushButton(KGuiItem(i18n("Abort"), "stop"), this);
 	m_abort->setEnabled(false);
-	QLabel		*m_worklabel = new QLabel(i18n("Workgroup:"), this);
-	QLabel		*m_serverlabel = new QLabel(i18n("Server:"), this);
-	QLabel		*m_printerlabel = new QLabel(i18n("Printer:"), this);
-	m_work = new QLineEdit(this);
-	m_server = new QLineEdit(this);
-	m_printer = new QLineEdit(this);
+	QLabel		*m_worklabel = new TQLabel(i18n("Workgroup:"), this);
+	QLabel		*m_serverlabel = new TQLabel(i18n("Server:"), this);
+	QLabel		*m_printerlabel = new TQLabel(i18n("Printer:"), this);
+	m_work = new TQLineEdit(this);
+	m_server = new TQLineEdit(this);
+	m_printer = new TQLineEdit(this);
 
-	QVBoxLayout	*lay0 = new QVBoxLayout(this, 0, 10);
-	QGridLayout	*lay1 = new QGridLayout(0, 3, 2, 0, 10);
-	QHBoxLayout	*lay3 = new QHBoxLayout(0, 0, 10);
+	QVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, 10);
+	QGridLayout	*lay1 = new TQGridLayout(0, 3, 2, 0, 10);
+	QHBoxLayout	*lay3 = new TQHBoxLayout(0, 0, 10);
 	lay0->addLayout(lay1,0);
 	lay0->addWidget(m_view,1);
 	lay0->addLayout(lay3,0);
@@ -67,13 +67,13 @@ KMWSmb::KMWSmb(QWidget *parent, const char *name)
 	lay3->addWidget(m_scan);
 	lay3->addWidget(m_abort);
 
-	connect(m_scan,SIGNAL(clicked()),SLOT(slotScan()));
-	connect(m_abort,SIGNAL(clicked()),SLOT(slotAbort()));
-	connect(m_view,SIGNAL(printerSelected(const QString&,const QString&,const QString&)),SLOT(slotPrinterSelected(const QString&,const QString&,const QString&)));
-	connect(m_view,SIGNAL(running(bool)),m_abort,SLOT(setEnabled(bool)));
+	connect(m_scan,TQT_SIGNAL(clicked()),TQT_SLOT(slotScan()));
+	connect(m_abort,TQT_SIGNAL(clicked()),TQT_SLOT(slotAbort()));
+	connect(m_view,TQT_SIGNAL(printerSelected(const TQString&,const TQString&,const TQString&)),TQT_SLOT(slotPrinterSelected(const TQString&,const TQString&,const TQString&)));
+	connect(m_view,TQT_SIGNAL(running(bool)),m_abort,TQT_SLOT(setEnabled(bool)));
 }
 
-bool KMWSmb::isValid(QString& msg)
+bool KMWSmb::isValid(TQString& msg)
 {
 	if (m_server->text().isEmpty())
 		msg = i18n("Empty server name.");
@@ -86,7 +86,7 @@ bool KMWSmb::isValid(QString& msg)
 
 void KMWSmb::updatePrinter(KMPrinter *printer)
 {
-	QString uri = buildSmbURI( m_work->text(), m_server->text(), m_printer->text(), printer->option( "kde-login" ), printer->option( "kde-password" ) );
+	TQString uri = buildSmbURI( m_work->text(), m_server->text(), m_printer->text(), printer->option( "kde-login" ), printer->option( "kde-password" ) );
 	printer->setDevice( uri );
 }
 
@@ -94,7 +94,7 @@ void KMWSmb::initPrinter(KMPrinter *printer)
 {
 	if (printer)
 	{
-		QString login = printer->option( "kde-login" );
+		TQString login = printer->option( "kde-login" );
 		m_view->setLoginInfos(login,printer->option("kde-password"));
 		m_loginlabel->setText( i18n( "Login: %1" ).arg( login.isEmpty() ? i18n( "<anonymous>" ) : login ) );
 	}
@@ -110,7 +110,7 @@ void KMWSmb::slotAbort()
 	m_view->abort();
 }
 
-void KMWSmb::slotPrinterSelected(const QString& work, const QString& server, const QString& printer)
+void KMWSmb::slotPrinterSelected(const TQString& work, const TQString& server, const TQString& printer)
 {
 	m_work->setText(work);
 	m_server->setText(server);

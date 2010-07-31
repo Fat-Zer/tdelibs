@@ -18,32 +18,32 @@
 
 #include "kmdifocuslist.h"
 #include "kmdifocuslist.moc"
-#include <qobjectlist.h>
+#include <tqobjectlist.h>
 #include <kdebug.h>
 
-KMdiFocusList::KMdiFocusList( QObject *parent ) : QObject( parent )
+KMdiFocusList::KMdiFocusList( TQObject *parent ) : TQObject( parent )
 {}
 
 KMdiFocusList::~KMdiFocusList()
 {}
 
-void KMdiFocusList::addWidgetTree( QWidget* w )
+void KMdiFocusList::addWidgetTree( TQWidget* w )
 {
 	//this method should never be called twice on the same hierarchy
 	m_list.insert( w, w->focusPolicy() );
-	w->setFocusPolicy( QWidget::ClickFocus );
+	w->setFocusPolicy( TQWidget::ClickFocus );
 	kdDebug( 760 ) << "KMdiFocusList::addWidgetTree: adding toplevel" << endl;
-	connect( w, SIGNAL( destroyed( QObject * ) ), this, SLOT( objectHasBeenDestroyed( QObject* ) ) );
-	QObjectList *l = w->queryList( "QWidget" );
-	QObjectListIt it( *l );
-	QObject *obj;
+	connect( w, TQT_SIGNAL( destroyed( TQObject * ) ), this, TQT_SLOT( objectHasBeenDestroyed( TQObject* ) ) );
+	TQObjectList *l = w->queryList( "TQWidget" );
+	TQObjectListIt it( *l );
+	TQObject *obj;
 	while ( ( obj = it.current() ) != 0 )
 	{
-		QWidget * wid = ( QWidget* ) obj;
+		TQWidget * wid = ( TQWidget* ) obj;
 		m_list.insert( wid, wid->focusPolicy() );
-		wid->setFocusPolicy( QWidget::ClickFocus );
+		wid->setFocusPolicy( TQWidget::ClickFocus );
 		kdDebug( 760 ) << "KMdiFocusList::addWidgetTree: adding widget" << endl;
-		connect( wid, SIGNAL( destroyed( QObject * ) ), this, SLOT( objectHasBeenDestroyed( QObject* ) ) );
+		connect( wid, TQT_SIGNAL( destroyed( TQObject * ) ), this, TQT_SLOT( objectHasBeenDestroyed( TQObject* ) ) );
 		++it;
 	}
 	delete l;
@@ -51,7 +51,7 @@ void KMdiFocusList::addWidgetTree( QWidget* w )
 
 void KMdiFocusList::restore()
 {
-	for ( QMap<QWidget*, QWidget::FocusPolicy>::const_iterator it = m_list.constBegin();it != m_list.constEnd();++it )
+	for ( TQMap<TQWidget*, TQWidget::FocusPolicy>::const_iterator it = m_list.constBegin();it != m_list.constEnd();++it )
 	{
 		it.key() ->setFocusPolicy( it.data() );
 	}
@@ -59,11 +59,11 @@ void KMdiFocusList::restore()
 }
 
 
-void KMdiFocusList::objectHasBeenDestroyed( QObject * o )
+void KMdiFocusList::objectHasBeenDestroyed( TQObject * o )
 {
 	if ( !o || !o->isWidgetType() )
 		return ;
-	QWidget *w = ( QWidget* ) o;
+	TQWidget *w = ( TQWidget* ) o;
 	m_list.remove( w );
 }
 

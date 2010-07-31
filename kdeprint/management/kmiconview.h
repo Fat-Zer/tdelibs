@@ -21,22 +21,22 @@
 #define KMICONVIEW_H
 
 #include <kiconview.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 #include "kmobject.h"
 
 class KMPrinter;
 
-class KMIconViewItem : public QIconViewItem, public KMObject
+class KMIconViewItem : public TQIconViewItem, public KMObject
 {
 public:
-	KMIconViewItem(QIconView *parent, KMPrinter *p);
-	void updatePrinter(KMPrinter *printer = 0, int mode = QIconView::Bottom);
+	KMIconViewItem(TQIconView *parent, KMPrinter *p);
+	void updatePrinter(KMPrinter *printer = 0, int mode = TQIconView::Bottom);
 	bool isClass() const	{ return m_isclass; }
 
 protected:
-	virtual void paintItem(QPainter*, const QColorGroup&);
-	virtual void calcRect(const QString& text_ = QString::null);
+	virtual void paintItem(TQPainter*, const TQColorGroup&);
+	virtual void calcRect(const TQString& text_ = TQString::null);
 
 private:
 	int		m_mode;
@@ -51,27 +51,27 @@ class KMIconView : public KIconView
 public:
 	enum ViewMode { Big, Small };
 
-	KMIconView(QWidget *parent = 0, const char *name = 0);
+	KMIconView(TQWidget *parent = 0, const char *name = 0);
 	~KMIconView();
 
-	void setPrinterList(QPtrList<KMPrinter> *list);
-	void setPrinter(const QString&);
+	void setPrinterList(TQPtrList<KMPrinter> *list);
+	void setPrinter(const TQString&);
 	void setPrinter(KMPrinter*);
 	void setViewMode(ViewMode);
 
 signals:
-	void rightButtonClicked(const QString&, const QPoint&);
-	void printerSelected(const QString&);
+	void rightButtonClicked(const TQString&, const TQPoint&);
+	void printerSelected(const TQString&);
 
 protected slots:
-	void slotRightButtonClicked(QIconViewItem*, const QPoint&);
+	void slotRightButtonClicked(TQIconViewItem*, const TQPoint&);
 	void slotSelectionChanged();
 
 private:
 	KMIconViewItem* findItem(KMPrinter *p);
 
 private:
-	QPtrList<KMIconViewItem>	m_items;
+	TQPtrList<KMIconViewItem>	m_items;
 	ViewMode		m_mode;
 };
 

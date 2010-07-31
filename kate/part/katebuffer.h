@@ -25,10 +25,10 @@
 
 #include <kvmallocator.h>
 
-#include <qptrlist.h>
-#include <qobject.h>
-#include <qtimer.h>
-#include <qvaluevector.h>
+#include <tqptrlist.h>
+#include <tqobject.h>
+#include <tqtimer.h>
+#include <tqvaluevector.h>
 
 class KateLineInfo;
 class KateDocument;
@@ -202,7 +202,7 @@ class KateBufBlock
     /**
      * list of textlines
      */
-    QValueVector<KateTextLine::Ptr> m_stringList;
+    TQValueVector<KateTextLine::Ptr> m_stringList;
 
     /**
      * parent buffer.
@@ -453,7 +453,7 @@ class KateBuffer : public QObject
      * @param m_file filename to open
      * @return success
      */
-    bool openFile (const QString &m_file);
+    bool openFile (const TQString &m_file);
 
     /**
      * was the last loading broken because of not enough tmp disk space ?
@@ -479,7 +479,7 @@ class KateBuffer : public QObject
      * @param m_file filename to save to
      * @return success
      */
-    bool saveFile (const QString &m_file);
+    bool saveFile (const TQString &m_file);
 
   public:
     /**
@@ -503,7 +503,7 @@ class KateBuffer : public QObject
      */
      KateTextLine::Ptr line_internal (KateBufBlock *buf, uint i);
 
-     inline void addIndentBasedFoldingInformation(QMemArray<uint> &foldingList,bool addindent,uint deindent);
+     inline void addIndentBasedFoldingInformation(TQMemArray<uint> &foldingList,bool addindent,uint deindent);
      inline void updatePreviousNotEmptyLine(KateBufBlock *blk,uint current_line,bool addindent,uint deindent);
   public:
     /**
@@ -640,7 +640,7 @@ class KateBuffer : public QObject
      * ALL blocks
      * in order of linenumbers
      */
-    QValueVector<KateBufBlock*> m_blocks;
+    TQValueVector<KateBufBlock*> m_blocks;
 
     /**
      * last block where the start/end line is in sync with real life

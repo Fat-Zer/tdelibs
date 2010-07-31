@@ -20,10 +20,10 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qclipboard.h>
-#include <qlistbox.h>
-#include <qpopupmenu.h>
-#include <qapplication.h>
+#include <tqclipboard.h>
+#include <tqlistbox.h>
+#include <tqpopupmenu.h>
+#include <tqapplication.h>
 
 #include <kcompletionbox.h>
 #include <kcursor.h>
@@ -56,14 +56,14 @@ public:
     KLineEdit *klineEdit;
 };
 
-KComboBox::KComboBox( QWidget *parent, const char *name )
-    : QComboBox( parent, name ), d(new KComboBoxPrivate)
+KComboBox::KComboBox( TQWidget *parent, const char *name )
+    : TQComboBox( parent, name ), d(new KComboBoxPrivate)
 {
     init();
 }
 
-KComboBox::KComboBox( bool rw, QWidget *parent, const char *name )
-    : QComboBox( rw, parent, name ), d(new KComboBoxPrivate)
+KComboBox::KComboBox( bool rw, TQWidget *parent, const char *name )
+    : TQComboBox( rw, parent, name ), d(new KComboBoxPrivate)
 {
     init();
 
@@ -82,7 +82,7 @@ KComboBox::~KComboBox()
 void KComboBox::init()
 {
     // Permanently set some parameters in the parent object.
-    QComboBox::setAutoCompletion( false );
+    TQComboBox::setAutoCompletion( false );
 
     // Enable context menu by default if widget
     // is editable.
@@ -90,7 +90,7 @@ void KComboBox::init()
 }
 
 
-bool KComboBox::contains( const QString& _text ) const
+bool KComboBox::contains( const TQString& _text ) const
 {
     if ( _text.isEmpty() )
         return false;
@@ -140,19 +140,19 @@ bool KComboBox::isURLDropsEnabled() const
 }
 
 
-void KComboBox::setCompletedText( const QString& text, bool marked )
+void KComboBox::setCompletedText( const TQString& text, bool marked )
 {
     if ( d->klineEdit )
         d->klineEdit->setCompletedText( text, marked );
 }
 
-void KComboBox::setCompletedText( const QString& text )
+void KComboBox::setCompletedText( const TQString& text )
 {
     if ( d->klineEdit )
         d->klineEdit->setCompletedText( text );
 }
 
-void KComboBox::makeCompletion( const QString& text )
+void KComboBox::makeCompletion( const TQString& text )
 {
     if( d->klineEdit )
         d->klineEdit->makeCompletion( text );
@@ -175,9 +175,9 @@ void KComboBox::rotateText( KCompletionBase::KeyBindingType type )
 }
 
 // not needed anymore
-bool KComboBox::eventFilter( QObject* o, QEvent* ev )
+bool KComboBox::eventFilter( TQObject* o, TQEvent* ev )
 {
-    return QComboBox::eventFilter( o, ev );
+    return TQComboBox::eventFilter( o, ev );
 }
 
 void KComboBox::setTrapReturnKey( bool grab )
@@ -196,30 +196,30 @@ bool KComboBox::trapReturnKey() const
 
 void KComboBox::setEditURL( const KURL& url )
 {
-    QComboBox::setEditText( url.prettyURL() );
+    TQComboBox::setEditText( url.prettyURL() );
 }
 
 void KComboBox::insertURL( const KURL& url, int index )
 {
-    QComboBox::insertItem( url.prettyURL(), index );
+    TQComboBox::insertItem( url.prettyURL(), index );
 }
 
-void KComboBox::insertURL( const QPixmap& pixmap, const KURL& url, int index )
+void KComboBox::insertURL( const TQPixmap& pixmap, const KURL& url, int index )
 {
-    QComboBox::insertItem( pixmap, url.prettyURL(), index );
+    TQComboBox::insertItem( pixmap, url.prettyURL(), index );
 }
 
 void KComboBox::changeURL( const KURL& url, int index )
 {
-    QComboBox::changeItem( url.prettyURL(), index );
+    TQComboBox::changeItem( url.prettyURL(), index );
 }
 
-void KComboBox::changeURL( const QPixmap& pixmap, const KURL& url, int index )
+void KComboBox::changeURL( const TQPixmap& pixmap, const KURL& url, int index )
 {
-    QComboBox::changeItem( pixmap, url.prettyURL(), index );
+    TQComboBox::changeItem( pixmap, url.prettyURL(), index );
 }
 
-void KComboBox::setCompletedItems( const QStringList& items )
+void KComboBox::setCompletedItems( const TQStringList& items )
 {
     if ( d->klineEdit )
         d->klineEdit->setCompletedItems( items );
@@ -232,40 +232,40 @@ KCompletionBox * KComboBox::completionBox( bool create )
     return 0;
 }
 
-// QWidget::create() turns off mouse-Tracking which would break auto-hiding
+// TQWidget::create() turns off mouse-Tracking which would break auto-hiding
 void KComboBox::create( WId id, bool initializeWindow, bool destroyOldWindow )
 {
-    QComboBox::create( id, initializeWindow, destroyOldWindow );
+    TQComboBox::create( id, initializeWindow, destroyOldWindow );
     KCursor::setAutoHideCursor( lineEdit(), true, true );
 }
 
-void KComboBox::wheelEvent( QWheelEvent *ev )
+void KComboBox::wheelEvent( TQWheelEvent *ev )
 {
     // Not necessary anymore
-    QComboBox::wheelEvent( ev );
+    TQComboBox::wheelEvent( ev );
 }
 
-void KComboBox::setLineEdit( QLineEdit *edit )
+void KComboBox::setLineEdit( TQLineEdit *edit )
 {
     if ( !editable() && edit &&
-         !qstrcmp( edit->className(), "QLineEdit" ) )
+         !qstrcmp( edit->className(), "TQLineEdit" ) )
     {
         // uic generates code that creates a read-only KComboBox and then
-        // calls combo->setEditable( true ), which causes QComboBox to set up
-        // a dumb QLineEdit instead of our nice KLineEdit.
+        // calls combo->setEditable( true ), which causes TQComboBox to set up
+        // a dumb TQLineEdit instead of our nice KLineEdit.
         // As some KComboBox features rely on the KLineEdit, we reject
         // this order here.
         delete edit;
         edit = new KLineEdit( this, "combo edit" );
     }
 
-    QComboBox::setLineEdit( edit );
+    TQComboBox::setLineEdit( edit );
     d->klineEdit = dynamic_cast<KLineEdit*>( edit );
     setDelegate( d->klineEdit );
 
     // Connect the returnPressed signal for both Q[K]LineEdits'
     if (edit)
-        connect( edit, SIGNAL( returnPressed() ), SIGNAL( returnPressed() ));
+        connect( edit, TQT_SIGNAL( returnPressed() ), TQT_SIGNAL( returnPressed() ));
 
     if ( d->klineEdit )
     {
@@ -273,36 +273,36 @@ void KComboBox::setLineEdit( QLineEdit *edit )
         // lineedit without us noticing. And KCompletionBase::delegate would
         // be a dangling pointer then, so prevent that. Note: only do this
         // when it is a KLineEdit!
-        connect( edit, SIGNAL( destroyed() ), SLOT( lineEditDeleted() ));
+        connect( edit, TQT_SIGNAL( destroyed() ), TQT_SLOT( lineEditDeleted() ));
 
-        connect( d->klineEdit, SIGNAL( returnPressed( const QString& )),
-                 SIGNAL( returnPressed( const QString& ) ));
+        connect( d->klineEdit, TQT_SIGNAL( returnPressed( const TQString& )),
+                 TQT_SIGNAL( returnPressed( const TQString& ) ));
 
-        connect( d->klineEdit, SIGNAL( completion( const QString& )),
-                 SIGNAL( completion( const QString& )) );
+        connect( d->klineEdit, TQT_SIGNAL( completion( const TQString& )),
+                 TQT_SIGNAL( completion( const TQString& )) );
 
-        connect( d->klineEdit, SIGNAL( substringCompletion( const QString& )),
-                 SIGNAL( substringCompletion( const QString& )) );
-
-        connect( d->klineEdit,
-                 SIGNAL( textRotation( KCompletionBase::KeyBindingType )),
-                 SIGNAL( textRotation( KCompletionBase::KeyBindingType )) );
+        connect( d->klineEdit, TQT_SIGNAL( substringCompletion( const TQString& )),
+                 TQT_SIGNAL( substringCompletion( const TQString& )) );
 
         connect( d->klineEdit,
-                 SIGNAL( completionModeChanged( KGlobalSettings::Completion )),
-                 SIGNAL( completionModeChanged( KGlobalSettings::Completion)));
+                 TQT_SIGNAL( textRotation( KCompletionBase::KeyBindingType )),
+                 TQT_SIGNAL( textRotation( KCompletionBase::KeyBindingType )) );
 
         connect( d->klineEdit,
-                 SIGNAL( aboutToShowContextMenu( QPopupMenu * )),
-                 SIGNAL( aboutToShowContextMenu( QPopupMenu * )) );
+                 TQT_SIGNAL( completionModeChanged( KGlobalSettings::Completion )),
+                 TQT_SIGNAL( completionModeChanged( KGlobalSettings::Completion)));
 
         connect( d->klineEdit,
-                 SIGNAL( completionBoxActivated( const QString& )),
-                 SIGNAL( activated( const QString& )) );
+                 TQT_SIGNAL( aboutToShowContextMenu( TQPopupMenu * )),
+                 TQT_SIGNAL( aboutToShowContextMenu( TQPopupMenu * )) );
+
+        connect( d->klineEdit,
+                 TQT_SIGNAL( completionBoxActivated( const TQString& )),
+                 TQT_SIGNAL( activated( const TQString& )) );
     }
 }
 
-void KComboBox::setCurrentItem( const QString& item, bool insert, int index )
+void KComboBox::setCurrentItem( const TQString& item, bool insert, int index )
 {
     int sel = -1;
 
@@ -345,7 +345,7 @@ void KComboBox::lineEditDeleted()
 
 
 // we are always read-write
-KHistoryCombo::KHistoryCombo( QWidget *parent, const char *name )
+KHistoryCombo::KHistoryCombo( TQWidget *parent, const char *name )
     : KComboBox( true, parent, name ), d(0)
 {
     init( true ); // using completion
@@ -353,7 +353,7 @@ KHistoryCombo::KHistoryCombo( QWidget *parent, const char *name )
 
 // we are always read-write
 KHistoryCombo::KHistoryCombo( bool useCompletion,
-                              QWidget *parent, const char *name )
+                              TQWidget *parent, const char *name )
     : KComboBox( true, parent, name ), d(0)
 {
     init( useCompletion );
@@ -373,14 +373,14 @@ void KHistoryCombo::init( bool useCompletion )
     myPixProvider = 0L;
 
     // obey HISTCONTROL setting
-    QCString histControl = getenv("HISTCONTROL");
+    TQCString histControl = getenv("HISTCONTROL");
     if ( histControl == "ignoredups" || histControl == "ignoreboth" )
         setDuplicatesEnabled( false );
 
-    connect( this, SIGNAL(aboutToShowContextMenu(QPopupMenu*)),
-             SLOT(addContextMenuItems(QPopupMenu*)) );
-    connect( this, SIGNAL( activated(int) ), SLOT( slotReset() ));
-    connect( this, SIGNAL( returnPressed(const QString&) ), SLOT(slotReset()));
+    connect( this, TQT_SIGNAL(aboutToShowContextMenu(TQPopupMenu*)),
+             TQT_SLOT(addContextMenuItems(TQPopupMenu*)) );
+    connect( this, TQT_SIGNAL( activated(int) ), TQT_SLOT( slotReset() ));
+    connect( this, TQT_SIGNAL( returnPressed(const TQString&) ), TQT_SLOT(slotReset()));
 }
 
 KHistoryCombo::~KHistoryCombo()
@@ -388,7 +388,7 @@ KHistoryCombo::~KHistoryCombo()
     delete myPixProvider;
 }
 
-void KHistoryCombo::setHistoryItems( QStringList items,
+void KHistoryCombo::setHistoryItems( TQStringList items,
                                      bool setCompletionList )
 {
     KComboBox::clear();
@@ -417,9 +417,9 @@ void KHistoryCombo::setHistoryItems( QStringList items,
     clearEdit();
 }
 
-QStringList KHistoryCombo::historyItems() const
+TQStringList KHistoryCombo::historyItems() const
 {
-    QStringList list;
+    TQStringList list;
     const int itemCount = count();
     for ( int i = 0; i < itemCount; ++i )
         list.append( text( i ) );
@@ -429,25 +429,25 @@ QStringList KHistoryCombo::historyItems() const
 
 void KHistoryCombo::clearHistory()
 {
-    const QString temp = currentText();
+    const TQString temp = currentText();
     KComboBox::clear();
     if ( useCompletion() )
         completionObject()->clear();
     setEditText( temp );
 }
 
-void KHistoryCombo::addContextMenuItems( QPopupMenu* menu )
+void KHistoryCombo::addContextMenuItems( TQPopupMenu* menu )
 {
     if ( menu )
     {
         menu->insertSeparator();
-        int id = menu->insertItem( SmallIconSet("history_clear"), i18n("Clear &History"), this, SLOT( slotClear()));
+        int id = menu->insertItem( SmallIconSet("history_clear"), i18n("Clear &History"), this, TQT_SLOT( slotClear()));
         if (!count())
            menu->setItemEnabled(id, false);
     }
 }
 
-void KHistoryCombo::addToHistory( const QString& item )
+void KHistoryCombo::addToHistory( const TQString& item )
 {
     if ( item.isEmpty() || (count() > 0 && item == text(0) )) {
         return;
@@ -489,7 +489,7 @@ void KHistoryCombo::addToHistory( const QString& item )
         // remove the last item, as long as we are longer than maxCount()
         // remove the removed item from the completionObject if it isn't
         // anymore available at all in the combobox.
-        const QString rmItem = text( rmIndex );
+        const TQString rmItem = text( rmIndex );
         removeItem( rmIndex );
         if ( useComp && !contains( rmItem ) )
             completionObject()->removeItem( rmItem );
@@ -499,13 +499,13 @@ void KHistoryCombo::addToHistory( const QString& item )
         completionObject()->addItem( item );
 }
 
-bool KHistoryCombo::removeFromHistory( const QString& item )
+bool KHistoryCombo::removeFromHistory( const TQString& item )
 {
     if ( item.isEmpty() )
         return false;
 
     bool removed = false;
-    const QString temp = currentText();
+    const TQString temp = currentText();
     int i = 0;
     int itemCount = count();
     while ( i < itemCount ) {
@@ -535,7 +535,7 @@ void KHistoryCombo::rotateUp()
 
     // skip duplicates/empty items
     const int last = count() - 1; // last valid index
-    const QString currText = currentText();
+    const TQString currText = currentText();
 
     while ( myIterateIndex < last &&
             (currText == text( myIterateIndex ) ||
@@ -564,7 +564,7 @@ void KHistoryCombo::rotateDown()
 
     --myIterateIndex;
 
-    const QString currText = currentText();
+    const TQString currText = currentText();
     // skip duplicates/empty items
     while ( myIterateIndex >= 0 &&
             (currText == text( myIterateIndex ) ||
@@ -594,11 +594,11 @@ void KHistoryCombo::rotateDown()
 
 }
 
-void KHistoryCombo::keyPressEvent( QKeyEvent *e )
+void KHistoryCombo::keyPressEvent( TQKeyEvent *e )
 {
     KKey event_key( e );
 
-    // going up in the history, rotating when reaching QListBox::count()
+    // going up in the history, rotating when reaching TQListBox::count()
     if ( KStdAccel::rotateUp().contains(event_key) )
         rotateUp();
 
@@ -610,13 +610,13 @@ void KHistoryCombo::keyPressEvent( QKeyEvent *e )
         KComboBox::keyPressEvent( e );
 }
 
-void KHistoryCombo::wheelEvent( QWheelEvent *ev )
+void KHistoryCombo::wheelEvent( TQWheelEvent *ev )
 {
     // Pass to poppable listbox if it's up
-    QListBox* const lb = listBox();
+    TQListBox* const lb = listBox();
     if ( lb && lb->isVisible() )
     {
-        QApplication::sendEvent( lb, ev );
+        TQApplication::sendEvent( lb, ev );
         return;
     }
     // Otherwise make it change the text without emitting activated
@@ -647,19 +647,19 @@ void KHistoryCombo::setPixmapProvider( KPixmapProvider *prov )
     // I would prefer to use changeItem(), but that doesn't honor the pixmap
     // when using an editable combobox (what we do)
     if ( count() > 0 ) {
-        QStringList items( historyItems() );
+        TQStringList items( historyItems() );
         clear();
         insertItems( items );
     }
 }
 
-void KHistoryCombo::insertItems( const QStringList& items )
+void KHistoryCombo::insertItems( const TQStringList& items )
 {
-    QStringList::ConstIterator it = items.constBegin();
-    const QStringList::ConstIterator itEnd = items.constEnd();
+    TQStringList::ConstIterator it = items.constBegin();
+    const TQStringList::ConstIterator itEnd = items.constEnd();
 
     while ( it != itEnd ) {
-        const QString item = *it;
+        const TQString item = *it;
         if ( !item.isEmpty() ) { // only insert non-empty items
             if ( myPixProvider )
                 insertItem( myPixProvider->pixmapFor(item, KIcon::SizeSmall),

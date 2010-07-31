@@ -27,7 +27,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include <krfcdate.h>
 
@@ -95,7 +95,7 @@ static const struct {
 };
 
 time_t
-KRFCDate::parseDate(const QString &_date)
+KRFCDate::parseDate(const TQString &_date)
 {
      if (_date.isEmpty())
          return 0;
@@ -340,7 +340,7 @@ KRFCDate::parseDate(const QString &_date)
 }
 
 time_t
-KRFCDate::parseDateISO8601( const QString& input_ )
+KRFCDate::parseDateISO8601( const TQString& input_ )
 {
   if (input_.isEmpty())
     return 0;
@@ -360,7 +360,7 @@ KRFCDate::parseDateISO8601( const QString& input_ )
 
   int offset = 0;
 
-  QString input = input_;
+  TQString input = input_;
 
   // First find the 'T' separator, if any.
   int tPos = input.find('T');
@@ -380,11 +380,11 @@ KRFCDate::parseDateISO8601( const QString& input_ )
 
   // Now parse the date part.
 
-  QString dateString = input.left(tPos).stripWhiteSpace();
+  TQString dateString = input.left(tPos).stripWhiteSpace();
 
-  QString timeString = input.mid(tPos + 1).stripWhiteSpace();
+  TQString timeString = input.mid(tPos + 1).stripWhiteSpace();
 
-  QStringList l = QStringList::split('-', dateString);
+  TQStringList l = TQStringList::split('-', dateString);
 
   if (l.size() < 3)
     return 0;
@@ -403,7 +403,7 @@ KRFCDate::parseDateISO8601( const QString& input_ )
   int plusPos = timeString.findRev('+');
 
   if (-1 != plusPos) {
-    QString offsetString = timeString.mid(plusPos + 1);
+    TQString offsetString = timeString.mid(plusPos + 1);
 
     offset = offsetString.left(2).toUInt() * 60 + offsetString.right(2).toUInt();
 
@@ -412,7 +412,7 @@ KRFCDate::parseDateISO8601( const QString& input_ )
     int minusPos = timeString.findRev('-');
 
     if (-1 != minusPos) {
-      QString offsetString = timeString.mid(minusPos + 1);
+      TQString offsetString = timeString.mid(minusPos + 1);
 
       offset = - int(offsetString.left(2).toUInt() * 60 + offsetString.right(2).toUInt());
 
@@ -429,7 +429,7 @@ KRFCDate::parseDateISO8601( const QString& input_ )
 
   // Now parse the time part.
 
-  l = QStringList::split(':', timeString);
+  l = TQStringList::split(':', timeString);
 
   if (l.size() < 3)
     return 0;
@@ -481,13 +481,13 @@ static const char * const month_names[] = {
 };
 
 
-QCString KRFCDate::rfc2822DateString(time_t utcTime, int utcOffset)
+TQCString KRFCDate::rfc2822DateString(time_t utcTime, int utcOffset)
 {
     utcTime += utcOffset * 60;
     tm *tM = gmtime(&utcTime);
     char sgn = (utcOffset < 0) ? '-' : '+';
     int z = (utcOffset < 0) ? -utcOffset : utcOffset;
-    QCString dateStr;
+    TQCString dateStr;
 
     dateStr.sprintf("%s, %02d %s %04d %02d:%02d:%02d %c%02d%02d",
                     day_names[tM->tm_wday], tM->tm_mday,
@@ -499,7 +499,7 @@ QCString KRFCDate::rfc2822DateString(time_t utcTime, int utcOffset)
 }
 
 
-QCString KRFCDate::rfc2822DateString(time_t utcTime)
+TQCString KRFCDate::rfc2822DateString(time_t utcTime)
 {
     return rfc2822DateString(utcTime, localUTCOffset());
 }

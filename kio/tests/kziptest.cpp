@@ -20,14 +20,14 @@
 #include <stdio.h>
 #include <kinstance.h>
 #include <kdebug.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <assert.h>
 
-void recursive_print( const KArchiveDirectory * dir, const QString & path )
+void recursive_print( const KArchiveDirectory * dir, const TQString & path )
 {
-  QStringList l = dir->entries();
-  QStringList::Iterator it = l.begin();
+  TQStringList l = dir->entries();
+  TQStringList::Iterator it = l.begin();
   for( ; it != l.end(); ++it )
   {
     const KArchiveEntry* entry = dir->entry( (*it) );
@@ -36,7 +36,7 @@ void recursive_print( const KArchiveDirectory * dir, const QString & path )
 	entry->isDirectory() ? 0 : ((KArchiveFile*)entry)->size(),
 	entry->isDirectory() ? 0 : ((KArchiveFile*)entry)->position(),
 	path.latin1(), (*it).latin1(), entry->isDirectory(),
-	!entry->symlink() ? "" : QString(" symlink: %1").arg(entry->symlink()).latin1() );
+	!entry->symlink() ? "" : TQString(" symlink: %1").arg(entry->symlink()).latin1() );
 
 //    if (!entry->isDirectory()) printf("%d", ((KArchiveFile*)entry)->size());
     printf("\n");
@@ -47,10 +47,10 @@ void recursive_print( const KArchiveDirectory * dir, const QString & path )
 
 
 void recursive_transfer(const KArchiveDirectory * dir,
-	    const QString & path, KZip * zip)
+	    const TQString & path, KZip * zip)
 {
-    QStringList l = dir->entries();
-    QStringList::Iterator it = l.begin();
+    TQStringList l = dir->entries();
+    TQStringList::Iterator it = l.begin();
     for( ; it != l.end(); ++it )
     {
         const KArchiveEntry* e = dir->entry( (*it) );
@@ -61,9 +61,9 @@ void recursive_transfer(const KArchiveDirectory * dir,
     	    const KArchiveFile* f = (KArchiveFile*)e;
     	    printf("FILE=%s\n", e->name().latin1());
 
-    	    QByteArray arr( f->data() );
+    	    TQByteArray arr( f->data() );
     	    printf("SIZE=%i\n",arr.size() );
-    	    QString str( arr );
+    	    TQString str( arr );
     	    printf("DATA=%s\n", str.latin1());
 
 	    if (e->symlink().isEmpty()) {
@@ -99,7 +99,7 @@ int main( int argc, char** argv )
     return 1;
   }
   KInstance instance("kziptest");
-  QString command = argv[1];
+  TQString command = argv[1];
   if ( command == "list" )
   {
     KZip zip( argv[2] );
@@ -178,10 +178,10 @@ int main( int argc, char** argv )
     Q_ASSERT( e && e->isFile() );
     const KArchiveFile* f = (KArchiveFile*)e;
 
-    QByteArray arr( f->data() );
+    TQByteArray arr( f->data() );
     Q_ASSERT( arr.size() == 13 );
     printf("SIZE=%i\n",arr.size() );
-    QString str( arr );
+    TQString str( arr );
     Q_ASSERT( str == "Noch so einer" );
     printf("DATA=%s\n", str.latin1());
 
@@ -211,7 +211,7 @@ int main( int argc, char** argv )
     // Generate long filenames of each possible length bigger than 98...
     for (int i = 98; i < 500 ; i++ )
     {
-      QString str, num;
+      TQString str, num;
       str.fill( 'a', i-10 );
       num.setNum( i );
       num = num.rightJustify( 10, '0' );
@@ -233,10 +233,10 @@ int main( int argc, char** argv )
     const KArchiveEntry* entry = dir->entry( "my/dir/test3" );
     if ( entry && entry->isFile() )
     {
-        QIODevice *dev = static_cast<const KZipFileEntry *>(entry)->device();
+        TQIODevice *dev = static_cast<const KZipFileEntry *>(entry)->device();
         if ( dev ) {
-            QByteArray contents = dev->readAll();
-            printf("contents='%s'\n", QCString(contents, contents.size()+1).data());
+            TQByteArray contents = dev->readAll();
+            printf("contents='%s'\n", TQCString(contents, contents.size()+1).data());
         }
     } else
         printf("entry=%p - not found if 0, otherwise not a file\n", (void*)entry);
@@ -253,8 +253,8 @@ int main( int argc, char** argv )
     }
     const KArchiveDirectory* dir = zip.directory();
     kdDebug() << "Listing toplevel of zip file" << endl;
-    QStringList l = dir->entries();
-    QStringList::Iterator it = l.begin();
+    TQStringList l = dir->entries();
+    TQStringList::Iterator it = l.begin();
     for( ; it != l.end(); ++it )
     {
         const KArchiveEntry* e = dir->entry( (*it) );
@@ -264,9 +264,9 @@ int main( int argc, char** argv )
     	    Q_ASSERT( e && e->isFile() );
     	    const KArchiveFile* f = (KArchiveFile*)e;
 
-    	    QByteArray arr( f->data() );
+    	    TQByteArray arr( f->data() );
     	    printf("SIZE=%i\n",arr.size() );
-    	    QString str( arr );
+    	    TQString str( arr );
     	    printf("DATA=%s\n", str.latin1());
 	}
     }
@@ -291,9 +291,9 @@ int main( int argc, char** argv )
     Q_ASSERT( e && e->isFile() );
     const KArchiveFile* f = (KArchiveFile*)e;
 
-    QByteArray arr( f->data() );
+    TQByteArray arr( f->data() );
     printf("SIZE=%i\n",arr.size() );
-    QString str( arr );
+    TQString str( arr );
 //    printf("DATA=%s\n", str.latin1());
     printf("%s", str.latin1());
     zip.close();
@@ -318,16 +318,16 @@ int main( int argc, char** argv )
 //    Q_ASSERT( e && e->isFile() );
 //    const KArchiveFile* f = (KArchiveFile*)e;
 
-//    QCString data( "This is some new data that goes into " );
+//    TQCString data( "This is some new data that goes into " );
   //  data += argv[3];
-    QFile f ( argv[3] );
+    TQFile f ( argv[3] );
     if (!f.open( IO_ReadOnly )) 
     {
       printf("Could not open %s for reading\n", argv[2] );
       return 1;
     }
     	
-    QDataStream s( &f );
+    TQDataStream s( &f );
     
     
 //    zip.writeFile( argv[3], "", "", data.size(), data.data() );
@@ -402,9 +402,9 @@ int main( int argc, char** argv )
     Q_ASSERT( e && e->isFile() );
     const KArchiveFile* f = (KArchiveFile*)e;
 
-    QByteArray arr( f->data() );
+    TQByteArray arr( f->data() );
     printf("SIZE=%i\n",arr.size() );
-    QString str( arr );
+    TQString str( arr );
     printf("DATA=%s\n", str.latin1());
 
     zip.close();
@@ -419,9 +419,9 @@ int main( int argc, char** argv )
     Q_ASSERT( e && e->isFile() );
     const KArchiveFile* f = (KArchiveFile*)e;
 
-    QByteArray arr( f->data() );
+    TQByteArray arr( f->data() );
 //    printf("SIZE=%i\n",arr.size() );
-    QString str( arr );
+    TQString str( arr );
 //    printf("DATA=%s\n", str.latin1());
     printf("%s", str.latin1());
     zip.close();

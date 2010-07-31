@@ -23,7 +23,7 @@
 
 #include <kdebug.h>
 #include <assert.h>
-#include <qpainter.h>
+#include <tqpainter.h>
 #include <kglobal.h>
 
 #include "rendering/render_flow.h"
@@ -102,7 +102,7 @@ void InlineBox::operator delete(void* ptr, size_t sz)
 static bool needsOutlinePhaseRepaint(RenderObject* o, RenderObject::PaintInfo& i, int tx, int ty) {
     if (o->style()->outlineWidth() <= 0)
         return false;
-    QRect r(tx+o->xPos(),ty+o->yPos(),o->width(),o->height());
+    TQRect r(tx+o->xPos(),ty+o->yPos(),o->width(),o->height());
     if (r.intersects(i.r))
         return false;
     r.addCoords(-o->style()->outlineSize(),
@@ -184,8 +184,8 @@ bool InlineBox::canAccommodateEllipsisBox(bool ltr, int blockEdge, int ellipsisW
     if (!m_object || !m_object->isReplaced())
         return true;
 
-    QRect boxRect(m_x, 0, m_width, 10);
-    QRect ellipsisRect(ltr ? blockEdge - ellipsisWidth : blockEdge, 0, ellipsisWidth, 10);
+    TQRect boxRect(m_x, 0, m_width, 10);
+    TQRect ellipsisRect(ltr ? blockEdge - ellipsisWidth : blockEdge, 0, ellipsisWidth, 10);
     return !(boxRect.intersects(ellipsisRect));
 }
 
@@ -539,7 +539,7 @@ void InlineFlowBox::placeBoxesVertically(int y, int maxHeight, int maxAscent, bo
         int overflowTop = 0;
         int overflowBottom = 0;
         if (curr->isInlineTextBox() || curr->isInlineFlowBox()) {
-            const QFontMetrics &fm = curr->object()->fontMetrics( m_firstLine );
+            const TQFontMetrics &fm = curr->object()->fontMetrics( m_firstLine );
 #ifdef APPLE_CHANGES
             newBaseline = fm.ascent();
             newY += curr->baseline() - newBaseline;
@@ -580,7 +580,7 @@ void InlineFlowBox::placeBoxesVertically(int y, int maxHeight, int maxAscent, bo
     }
 
     if (isRootInlineBox()) {
-        const QFontMetrics &fm = object()->fontMetrics( m_firstLine );
+        const TQFontMetrics &fm = object()->fontMetrics( m_firstLine );
 #ifdef APPLE_CHANGES
         setHeight(fm.ascent()+fm.descent());
         setYPos(yPos() + baseline() - fm.ascent());
@@ -635,7 +635,7 @@ bool InlineFlowBox::nodeAtPoint(RenderObject::NodeInfo& i, int x, int y, int tx,
     }
 
     // Now check ourselves.
-    QRect rect(tx + m_x, ty + m_y, m_width, m_height);
+    TQRect rect(tx + m_x, ty + m_y, m_width, m_height);
     if (object()->style()->visibility() == VISIBLE && rect.contains(x, y)) {
         object()->setInnerNode(i);
         return true;
@@ -660,7 +660,7 @@ void InlineFlowBox::paint(RenderObject::PaintInfo& i, int tx, int ty)
             if (object()->style()->visibility() == VISIBLE && object()->style()->outlineWidth() > 0 &&
                 !object()->isInlineContinuation() && !isRootInlineBox()) {
                 if (!i.outlineObjects)
-                    i.outlineObjects = new QValueList<RenderFlow*>;
+                    i.outlineObjects = new TQValueList<RenderFlow*>;
                 i.outlineObjects->append(static_cast<RenderFlow*>(object()));
             }
         }
@@ -685,7 +685,7 @@ void InlineFlowBox::paint(RenderObject::PaintInfo& i, int tx, int ty)
 }
 
 
-void InlineFlowBox::paintBackgrounds(QPainter* p, const QColor& c, const BackgroundLayer* bgLayer,
+void InlineFlowBox::paintBackgrounds(TQPainter* p, const TQColor& c, const BackgroundLayer* bgLayer,
                                      int my, int mh, int _tx, int _ty, int w, int h)
 {
     if (!bgLayer)
@@ -694,7 +694,7 @@ void InlineFlowBox::paintBackgrounds(QPainter* p, const QColor& c, const Backgro
     paintBackground(p, c, bgLayer, my, mh, _tx, _ty, w, h);
 }
 
-void InlineFlowBox::paintBackground(QPainter* p, const QColor& c, const BackgroundLayer* bgLayer,
+void InlineFlowBox::paintBackground(TQPainter* p, const TQColor& c, const BackgroundLayer* bgLayer,
                                     int my, int mh, int _tx, int _ty, int w, int h)
 {
     CachedImage* bg = bgLayer->backgroundImage();
@@ -719,7 +719,7 @@ void InlineFlowBox::paintBackground(QPainter* p, const QColor& c, const Backgrou
         for (InlineRunBox* curr = this; curr; curr = curr->nextLineBox())
             totalWidth += curr->width();
         p->save();
-        p->setClipRect(QRect(_tx, _ty, width(), height()), QPainter::CoordPainter);
+        p->setClipRect(TQRect(_tx, _ty, width(), height()), TQPainter::CoordPainter);
         object()->paintBackgroundExtended(p, c, bgLayer, my, mh, startX, _ty,
                                           totalWidth, h, borderLeft(), borderRight(), paddingLeft(), paddingRight());
         p->restore();
@@ -750,7 +750,7 @@ void InlineFlowBox::paintBackgroundAndBorder(RenderObject::PaintInfo& pI, int _t
     RenderStyle* styleToUse = object()->style(m_firstLine);
     if ((!parent() && m_firstLine && styleToUse != object()->style()) ||
         (parent() && object()->shouldPaintBackgroundOrBorder())) {
-        QColor c = styleToUse->backgroundColor();
+        TQColor c = styleToUse->backgroundColor();
         paintBackgrounds(pI.p, c, styleToUse->backgroundLayers(), my, mh, _tx, _ty, w, h);
 
         // :first-line cannot be used to put borders on a line. Always paint borders with our
@@ -797,10 +797,10 @@ void InlineFlowBox::paintDecorations(RenderObject::PaintInfo& pI, int _tx, int _
         int w = m_width - (borderLeft() + paddingLeft() + borderRight() + paddingRight());
         if ( !w )
             return;
-        const QFontMetrics &fm = object()->fontMetrics( m_firstLine );
+        const TQFontMetrics &fm = object()->fontMetrics( m_firstLine );
         // thick lines on small fonts look ugly
         int thickness = fm.height() > 20 ? fm.lineWidth() : 1;
-        QColor underline, overline, linethrough;
+        TQColor underline, overline, linethrough;
         underline = overline = linethrough = styleToUse->color();
         if (!parent())
             object()->getTextDecorationColors(deco, underline, overline, linethrough);
@@ -851,13 +851,13 @@ void InlineFlowBox::clearTruncation()
 
 void EllipsisBox::paint(RenderObject::PaintInfo& i, int _tx, int _ty)
 {
-    QPainter* p = i.p;
+    TQPainter* p = i.p;
     RenderStyle* _style = m_firstLine ? m_object->style(true) : m_object->style();
     if (_style->font() != p->font())
         p->setFont(_style->font());
 
     const Font* font = &_style->htmlFont();
-    QColor textColor = _style->color();
+    TQColor textColor = _style->color();
     if (textColor != p->pen().color())
         p->setPen(textColor);
     /*
@@ -874,7 +874,7 @@ void EllipsisBox::paint(RenderObject::PaintInfo& i, int _tx, int _ty)
                       (str.implementation())->s,
                       str.length(), 0, str.length(),
                       0,
-                      QPainter::LTR, _style->visuallyOrdered());
+                      TQPainter::LTR, _style->visuallyOrdered());
 
     /*
     if (setShadow)
@@ -901,7 +901,7 @@ bool EllipsisBox::nodeAtPoint(RenderObject::NodeInfo& info, int _x, int _y, int 
         }
     }
 
-    QRect rect(_tx + m_x, _ty + m_y, m_width, m_height);
+    TQRect rect(_tx + m_x, _ty + m_y, m_width, m_height);
     if (object()->style()->visibility() == VISIBLE && rect.contains(_x, _y)) {
         object()->setInnerNode(info);
         return true;

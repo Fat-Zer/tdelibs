@@ -25,7 +25,7 @@
 #ifndef KDATAGRAMSOCKET_H
 #define KDATAGRAMSOCKET_H
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include "ksocketaddress.h"
 #include "kclientsocketbase.h"
@@ -43,14 +43,14 @@ class KResolverEntry;
  * consists of data as well as a network address associated (whither to send
  * the data or whence it came).
  *
- * This is a lightweight class. Data is stored in a @ref QByteArray, which means
+ * This is a lightweight class. Data is stored in a @ref TQByteArray, which means
  * that it is explicitly shared.
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
 class KDECORE_EXPORT KDatagramPacket
 {
-  QByteArray m_data;
+  TQByteArray m_data;
   KSocketAddress m_address;
 
 public:
@@ -63,7 +63,7 @@ public:
   /**
    * Constructs the datagram with the specified content.
    */
-  KDatagramPacket(const QByteArray& content)
+  KDatagramPacket(const TQByteArray& content)
     : m_data(content)
   { }
 
@@ -78,7 +78,7 @@ public:
   /**
    * Constructs the datagram with the specified content and address.
    */
-  KDatagramPacket(const QByteArray& content, const KSocketAddress& addr)
+  KDatagramPacket(const TQByteArray& content, const KSocketAddress& addr)
     : m_data(content), m_address(addr)
   { }
 
@@ -104,7 +104,7 @@ public:
   /**
    * Returns the data.
    */
-  const QByteArray& data() const
+  const TQByteArray& data() const
   { return m_data; }
 
   /**
@@ -145,7 +145,7 @@ public:
 
   /**
    * Detaches our data from a shared pool.
-   * @see QByteArray::detach
+   * @see TQByteArray::detach
    */
   void detach()
   { m_data.detach(); }
@@ -153,7 +153,7 @@ public:
   /**
    * Sets the data to the given value. Data is explicitly shared.
    */
-  void setData(const QByteArray& data)
+  void setData(const TQByteArray& data)
   { m_data = data; }
 
   /**
@@ -185,7 +185,7 @@ public:
   /**
    * Default constructor.
    */
-  KDatagramSocket(QObject* parent = 0L, const char *name = 0L);
+  KDatagramSocket(TQObject* parent = 0L, const char *name = 0L);
 
   /**
    * Destructor. This closes the socket.
@@ -205,8 +205,8 @@ public:
    * Some protocol families will use anonymous source addresses, while others
    * will allocate an address automatically.
    */
-  virtual bool bind(const QString& node = QString::null,
-		    const QString& service = QString::null);
+  virtual bool bind(const TQString& node = TQString::null,
+		    const TQString& service = TQString::null);
 
   /**
    * @overload
@@ -227,8 +227,8 @@ public:
    * @note Calling connect will not cause the socket to be bound. You have
    *       to call @ref bind explicitly.
    */
-  virtual bool connect(const QString& node = QString::null,
-		       const QString& service = QString::null);
+  virtual bool connect(const TQString& node = TQString::null,
+		       const TQString& service = TQString::null);
 
   /**
    * @overload

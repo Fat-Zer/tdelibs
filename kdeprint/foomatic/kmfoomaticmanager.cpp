@@ -21,14 +21,14 @@
 #include "kpipeprocess.h"
 #include "driver.h"
 
-#include <qdom.h>
+#include <tqdom.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kprocess.h>
 
 #include <unistd.h>
 
-KMFoomaticManager::KMFoomaticManager(QObject *parent, const char *name, const QStringList & /*args*/)
+KMFoomaticManager::KMFoomaticManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMManager(parent,name)
 {
 	setHasManagement(getuid() == 0);
@@ -87,7 +87,7 @@ DrMain* KMFoomaticManager::loadPrinterDriver(KMPrinter *printer, bool)
 	return createDriverFromXML(&docElem);
 }
 
-KMPrinter* KMFoomaticManager::createPrinterFromElement(QDomElement *elem)
+KMPrinter* KMFoomaticManager::createPrinterFromElement(TQDomElement *elem)
 {
 	QDomElement	e = elem->namedItem("name").toElement();
 	if (!e.isNull())
@@ -128,7 +128,7 @@ KMPrinter* KMFoomaticManager::createPrinterFromElement(QDomElement *elem)
 	return NULL;
 }
 
-DrMain* KMFoomaticManager::createDriverFromXML(QDomElement *elem)
+DrMain* KMFoomaticManager::createDriverFromXML(TQDomElement *elem)
 {
 	DrMain	*driver = new DrMain();
 	QDomElement	pelem = elem->namedItem("printer").toElement(), delem = elem->namedItem("driver").toElement();
@@ -136,7 +136,7 @@ DrMain* KMFoomaticManager::createDriverFromXML(QDomElement *elem)
 	{
 		driver->set("manufacturer", pelem.namedItem("make").toElement().text());
 		driver->set("model", pelem.namedItem("model").toElement().text());
-		QString	s = QString::fromLatin1("%1 %2 (%3)").arg(driver->get("manufacturer")).arg(driver->get("model")).arg(delem.namedItem("name").toElement().text());
+		QString	s = TQString::fromLatin1("%1 %2 (%3)").arg(driver->get("manufacturer")).arg(driver->get("model")).arg(delem.namedItem("name").toElement().text());
 		driver->set("description", s);
 		driver->set("text", s);
 

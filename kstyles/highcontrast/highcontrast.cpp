@@ -24,25 +24,25 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <qdrawutil.h>
-#include <qpainter.h>
-#include <qpointarray.h>
-#include <qstyleplugin.h>
+#include <tqdrawutil.h>
+#include <tqpainter.h>
+#include <tqpointarray.h>
+#include <tqstyleplugin.h>
 
-#include <qfont.h>
-#include <qcombobox.h>
-#include <qheader.h>
-#include <qmenubar.h>
-#include <qpushbutton.h>
-#include <qscrollbar.h>
-#include <qslider.h>
-#include <qtabbar.h>
-#include <qtoolbutton.h>
-#include <qtoolbar.h>
-#include <qpopupmenu.h>
-#include <qprogressbar.h>
-#include <qlistview.h>
-#include <qsettings.h>
+#include <tqfont.h>
+#include <tqcombobox.h>
+#include <tqheader.h>
+#include <tqmenubar.h>
+#include <tqpushbutton.h>
+#include <tqscrollbar.h>
+#include <tqslider.h>
+#include <tqtabbar.h>
+#include <tqtoolbutton.h>
+#include <tqtoolbar.h>
+#include <tqpopupmenu.h>
+#include <tqprogressbar.h>
+#include <tqlistview.h>
+#include <tqsettings.h>
 
 #include <kdrawutil.h>
 #include <kpixmapeffect.h>
@@ -57,12 +57,12 @@ class HighContrastStylePlugin : public QStylePlugin
 		HighContrastStylePlugin() {}
 		~HighContrastStylePlugin() {}
 
-		QStringList keys() const
+		TQStringList keys() const
 		{
-			return QStringList() << "HighContrast";
+			return TQStringList() << "HighContrast";
 		}
 
-		QStyle* create( const QString& key )
+		TQStyle* create( const TQString& key )
 		{
 			if ( key == "highcontrast" )
 				return new HighContrastStyle();
@@ -82,7 +82,7 @@ static const int arrowHMargin    = 6;
 static const int rightBorder     = 12;
 
 
-void addOffset (QRect* r, int offset, int lineWidth = 0)
+void addOffset (TQRect* r, int offset, int lineWidth = 0)
 {
 	int offset1 = offset;
 	int offset2 = offset;
@@ -112,7 +112,7 @@ void addOffset (QRect* r, int offset, int lineWidth = 0)
 HighContrastStyle::HighContrastStyle()
 	: KStyle( 0, ThreeButtonScrollBar )
 {
-	QSettings settings;
+	TQSettings settings;
 	settings.beginGroup("/highcontraststyle/Settings/");
 	bool useWideLines = settings.readBoolEntry("wideLines", false);
 	hoverWidget = 0L;
@@ -125,42 +125,42 @@ HighContrastStyle::~HighContrastStyle()
 }
 
 
-void HighContrastStyle::polish( QPalette& pal )
+void HighContrastStyle::polish( TQPalette& pal )
 {
 	//We do not want the disabled widgets to be greyed out, 
 	//as that may be hard indeed (and since we use crossed-out text instead),
 	//so we make disabled colors be the same as active foreground and
 	//background colour
-	for (int c = 0; c < QColorGroup::NColorRoles; ++c)
+	for (int c = 0; c < TQColorGroup::NColorRoles; ++c)
 		switch (c)
 		{
-			case QColorGroup::Button:
-			case QColorGroup::Base:
-			case QColorGroup::Highlight:
-				pal.setColor(QPalette::Disabled, QColorGroup::ColorRole(c), pal.color(QPalette::Active, QColorGroup::Background));
+			case TQColorGroup::Button:
+			case TQColorGroup::Base:
+			case TQColorGroup::Highlight:
+				pal.setColor(TQPalette::Disabled, TQColorGroup::ColorRole(c), pal.color(TQPalette::Active, TQColorGroup::Background));
 				break;
-			case QColorGroup::ButtonText:
-			case QColorGroup::Text:
-			case QColorGroup::HighlightedText:
-				pal.setColor(QPalette::Disabled, QColorGroup::ColorRole(c), pal.color(QPalette::Active, QColorGroup::Foreground));
+			case TQColorGroup::ButtonText:
+			case TQColorGroup::Text:
+			case TQColorGroup::HighlightedText:
+				pal.setColor(TQPalette::Disabled, TQColorGroup::ColorRole(c), pal.color(TQPalette::Active, TQColorGroup::Foreground));
 				break;
 			default:
-				pal.setColor(QPalette::Disabled, QColorGroup::ColorRole(c), pal.color(QPalette::Active, QColorGroup::ColorRole(c)));
+				pal.setColor(TQPalette::Disabled, TQColorGroup::ColorRole(c), pal.color(TQPalette::Active, TQColorGroup::ColorRole(c)));
 		}
 }
 
 
-void HighContrastStyle::polish (QWidget* widget)
+void HighContrastStyle::polish (TQWidget* widget)
 {
-	if (widget->inherits ("QButton")
-		   || widget->inherits ("QComboBox")
-		   || widget->inherits ("QSpinWidget")
-		   || widget->inherits ("QLineEdit")
-		   || widget->inherits ("QTextEdit"))
+	if (widget->inherits ("TQButton")
+		   || widget->inherits ("TQComboBox")
+		   || widget->inherits ("TQSpinWidget")
+		   || widget->inherits ("TQLineEdit")
+		   || widget->inherits ("TQTextEdit"))
 	{
 		widget->installEventFilter (this);
 
-		QSpinWidget* spinwidget = dynamic_cast<QSpinWidget*>(widget);
+		TQSpinWidget* spinwidget = dynamic_cast<TQSpinWidget*>(widget);
 		if (spinwidget && spinwidget->editWidget())
 			spinwidget->editWidget()->installEventFilter (this);
 	}
@@ -169,54 +169,54 @@ void HighContrastStyle::polish (QWidget* widget)
 }
 
 
-void HighContrastStyle::unPolish (QWidget* widget)
+void HighContrastStyle::unPolish (TQWidget* widget)
 {
-	if (widget->inherits ("QWidget") || widget->inherits ("QComboBox") || widget->inherits ("QSpinWidget") || widget->inherits ("QLineEdit") || widget->inherits ("QTextEdit"))
+	if (widget->inherits ("TQWidget") || widget->inherits ("TQComboBox") || widget->inherits ("TQSpinWidget") || widget->inherits ("TQLineEdit") || widget->inherits ("TQTextEdit"))
 		widget->removeEventFilter (this);
 	KStyle::unPolish (widget);
 }
 
-void HighContrastStyle::setColorsNormal (QPainter* p, const QColorGroup& cg, int flags, int highlight) const
+void HighContrastStyle::setColorsNormal (TQPainter* p, const TQColorGroup& cg, int flags, int highlight) const
 {
 	setColorsByState (p, cg, cg.foreground(), cg.background(), flags, highlight);
 }
 
-void HighContrastStyle::setColorsButton (QPainter* p, const QColorGroup& cg, int flags, int highlight) const
+void HighContrastStyle::setColorsButton (TQPainter* p, const TQColorGroup& cg, int flags, int highlight) const
 {
 	setColorsByState (p, cg, cg.buttonText(), cg.button(), flags, highlight);
 }
 
-void HighContrastStyle::setColorsText (QPainter* p, const QColorGroup& cg, int flags, int highlight) const
+void HighContrastStyle::setColorsText (TQPainter* p, const TQColorGroup& cg, int flags, int highlight) const
 {
 	setColorsByState (p, cg, cg.text(), cg.base(), flags, highlight);
 }
 
-void HighContrastStyle::setColorsHighlight (QPainter* p, const QColorGroup& cg, int flags) const
+void HighContrastStyle::setColorsHighlight (TQPainter* p, const TQColorGroup& cg, int flags) const
 {
 	setColorsByState (p, cg, cg.highlightedText(), cg.highlight(), flags, 0);
 }
 
-void HighContrastStyle::setColorsByState (QPainter* p, const QColorGroup& cg, const QColor& fg, const QColor& bg, int flags, int highlight) const
+void HighContrastStyle::setColorsByState (TQPainter* p, const TQColorGroup& cg, const TQColor& fg, const TQColor& bg, int flags, int highlight) const
 {
-	QFont font = p->font();
+	TQFont font = p->font();
 	font.setStrikeOut (! (flags & Style_Enabled));
 	p->setFont (font);
 
 	if ((flags & Style_Enabled) && (flags & highlight))
 	{
-		p->setPen  (QPen (cg.highlightedText(), basicLineWidth, flags & Style_Enabled ? Qt::SolidLine : Qt::DotLine));
+		p->setPen  (TQPen (cg.highlightedText(), basicLineWidth, flags & Style_Enabled ? Qt::SolidLine : Qt::DotLine));
 		p->setBackgroundColor (cg.highlight());
 	}
 	else
 	{
-		p->setPen  (QPen (fg, basicLineWidth, flags & Style_Enabled ? Qt::SolidLine : Qt::DotLine));
+		p->setPen  (TQPen (fg, basicLineWidth, flags & Style_Enabled ? Qt::SolidLine : Qt::DotLine));
 		p->setBackgroundColor (bg);
 	}
 
-	p->setBrush (QBrush ());
+	p->setBrush (TQBrush ());
 }
 
-void HighContrastStyle::drawRect (QPainter* p, QRect r, int offset, bool filled) const
+void HighContrastStyle::drawRect (TQPainter* p, TQRect r, int offset, bool filled) const
 {
 	addOffset (&r, offset, p->pen().width());
 	if (filled)
@@ -225,16 +225,16 @@ void HighContrastStyle::drawRect (QPainter* p, QRect r, int offset, bool filled)
 	p->drawRect (r);
 }
 
-void HighContrastStyle::drawRoundRect (QPainter* p, QRect r, int offset, bool filled) const
+void HighContrastStyle::drawRoundRect (TQPainter* p, TQRect r, int offset, bool filled) const
 {
 	int lineWidth = p->pen().width();
 	if ((r.width() >= 5*lineWidth + 2*offset) && (r.height() >= 5*lineWidth + 2*offset))
 	{
-		QRect r2 (r);
+		TQRect r2 (r);
 		addOffset (&r2, offset, lineWidth);
 
 		addOffset (&r, offset);	
-		QRect r3 (r);
+		TQRect r3 (r);
 		addOffset (&r3, lineWidth);
 
 		p->save();
@@ -257,7 +257,7 @@ void HighContrastStyle::drawRoundRect (QPainter* p, QRect r, int offset, bool fi
 		drawRect (p, r, offset, filled);
 }
 
-void HighContrastStyle::drawEllipse (QPainter* p, QRect r, int offset, bool filled) const
+void HighContrastStyle::drawEllipse (TQPainter* p, TQRect r, int offset, bool filled) const
 {
 	addOffset (&r, offset, p->pen().width());
 
@@ -271,12 +271,12 @@ void HighContrastStyle::drawEllipse (QPainter* p, QRect r, int offset, bool fill
 	p->drawRoundRect (r, 99, 99);
 }
 
-void HighContrastStyle::drawArrow (QPainter* p, QRect r, PrimitiveElement arrow, int offset) const
+void HighContrastStyle::drawArrow (TQPainter* p, TQRect r, PrimitiveElement arrow, int offset) const
 {
 	p->save();
 	addOffset (&r, offset);
 
-	QPoint center = r.center();
+	TQPoint center = r.center();
 	if (r.height() < r.width())
 		r.setWidth (r.height());
 	if (r.width() % 2 != 0)
@@ -284,7 +284,7 @@ void HighContrastStyle::drawArrow (QPainter* p, QRect r, PrimitiveElement arrow,
 	r.setHeight (r.width());
 	r.moveCenter (center);
 			
-	QPointArray points (3);
+	TQPointArray points (3);
 	switch (arrow) {
 		case PE_ArrowUp:
 		case PE_SpinWidgetUp:
@@ -323,11 +323,11 @@ void HighContrastStyle::drawArrow (QPainter* p, QRect r, PrimitiveElement arrow,
 
 // This function draws primitive elements
 void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
-								QPainter *p,
-								const QRect &r,
-								const QColorGroup &cg,
+								TQPainter *p,
+								const TQRect &r,
+								const TQColorGroup &cg,
 								SFlags flags,
-								const QStyleOption& opt ) const
+								const TQStyleOption& opt ) const
 {
 	switch(pe)
 	{
@@ -353,10 +353,10 @@ void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
 		// -------------------------------------------------------------------
 		case PE_FocusRect: {
 			p->save();
-			p->setBrush (QBrush ());
-			p->setPen (QPen (cg.highlight(), basicLineWidth, Qt::SolidLine));
+			p->setBrush (TQBrush ());
+			p->setPen (TQPen (cg.highlight(), basicLineWidth, Qt::SolidLine));
 			drawRoundRect (p, r, basicLineWidth, false);
-			p->setPen (QPen (cg.highlightedText(), basicLineWidth, Qt::DashLine));
+			p->setPen (TQPen (cg.highlightedText(), basicLineWidth, Qt::DashLine));
 			drawRoundRect (p, r, basicLineWidth, false);
 			p->restore();
 			break;
@@ -387,7 +387,7 @@ void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
 				drawRoundRect (p, r);
 
 				if (r.width() >= 7*basicLineWidth && r.height() >= 7*basicLineWidth) {
-					QRect r2 (r);
+					TQRect r2 (r);
 					r2.setWidth (4*basicLineWidth);
 					r2.setHeight (4*basicLineWidth);
 					r2.moveCenter (r.center());
@@ -402,7 +402,7 @@ void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
 			setColorsNormal (p, cg);
 			p->fillRect (r, p->backgroundColor());
 
-			QRect r2 (r);
+			TQRect r2 (r);
 			if (flags & Style_Horizontal)
 			{
 				if (r2.height() > 5*basicLineWidth)
@@ -426,7 +426,7 @@ void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
 				r2.addCoords (0, basicLineWidth, 0, -basicLineWidth);
 			else
 				r2.addCoords (basicLineWidth, 0, -basicLineWidth, 0);
-			QPen pen = p->pen();
+			TQPen pen = p->pen();
 			pen.setColor (p->backgroundColor());
 			p->setPen (pen);
 			drawRect (p, r2);
@@ -469,7 +469,7 @@ void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
 
 			if (!(flags & Style_Off))
 			{
-				QRect r2 (r);
+				TQRect r2 (r);
 				addOffset (&r2, basicLineWidth);
 				if (flags & Style_On)
 				{
@@ -480,7 +480,7 @@ void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
 				{	// Tristate
 					p->drawLine (r2.left(), r2.top()+r2.width()/2, r2.right(), r2.top()+r2.width()/2);
 				}
-				QPen pen = p->pen();
+				TQPen pen = p->pen();
 				pen.setColor (p->backgroundColor());
 				p->setPen (pen);
 				drawRect (p, r2, 0, false);
@@ -533,7 +533,7 @@ void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
 			setColorsButton (p, cg, flags);
 			p->fillRect (r, p->backgroundColor());
 			
-			p->setPen (QPen (p->pen().color(), 1, Qt::DashLine));
+			p->setPen (TQPen (p->pen().color(), 1, Qt::DashLine));
 			if (flags & Style_Horizontal)
 				p->drawLine (r.center().x(), r.top(), r.center().x(), r.bottom());
 			else
@@ -550,7 +550,7 @@ void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
 			setColorsNormal (p, cg, flags, 0);
 			if (!opt.isDefault())
 			{
-				QPen pen = p->pen();
+				TQPen pen = p->pen();
 				pen.setWidth (opt.lineWidth());
 				p->setPen (pen);
 			}
@@ -570,7 +570,7 @@ void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
 			setColorsText (p, cg, flags, 0);
 			drawRoundRect (p, r);
 			if (flags & (Style_HasFocus | Style_Active))
-				drawPrimitive (PE_FocusRect, p, r, cg, flags, QStyleOption (p->backgroundColor()));
+				drawPrimitive (PE_FocusRect, p, r, cg, flags, TQStyleOption (p->backgroundColor()));
 			break;
 		}
 		case PE_PanelTabWidget:
@@ -637,12 +637,12 @@ void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
 
 
 void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
-										QPainter* p,
-										const QWidget* widget,
-										const QRect &r,
-										const QColorGroup &cg,
+										TQPainter* p,
+										const TQWidget* widget,
+										const TQRect &r,
+										const TQColorGroup &cg,
 										SFlags flags,
-										const QStyleOption &opt ) const
+										const TQStyleOption &opt ) const
 {
 	if ( widget == hoverWidget )
 		flags |= Style_MouseOver;
@@ -657,7 +657,7 @@ void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
 		{
 			setColorsButton (p, cg);
 			p->fillRect (r, p->backgroundColor());
-			p->setBrush (QBrush (p->pen().color(), Qt::BDiagPattern));
+			p->setBrush (TQBrush (p->pen().color(), Qt::BDiagPattern));
 			drawRoundRect (p, r);
 			break;
 		}
@@ -667,8 +667,8 @@ void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
 		// -------------------------------------------------------------------
 		case KPE_SliderGroove: {
 			setColorsText (p, cg, flags);
-			QRect r2 (r);
-			const QSlider *slider = dynamic_cast<const QSlider*>(widget);
+			TQRect r2 (r);
+			const TQSlider *slider = dynamic_cast<const TQSlider*>(widget);
 			if (slider != 0)
 			{
 				if (slider->orientation() == Qt::Horizontal)
@@ -730,12 +730,12 @@ void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
 
 
 void HighContrastStyle::drawControl (ControlElement element,
-								QPainter *p,
-								const QWidget *widget,
-								const QRect &r,
-								const QColorGroup &cg,
+								TQPainter *p,
+								const TQWidget *widget,
+								const TQRect &r,
+								const TQColorGroup &cg,
 								SFlags flags,
-								const QStyleOption& opt ) const
+								const TQStyleOption& opt ) const
 {
 	if ( widget == hoverWidget )
 		flags |= Style_MouseOver;
@@ -754,10 +754,10 @@ void HighContrastStyle::drawControl (ControlElement element,
 			setColorsNormal (p, cg, flags, Style_Selected);
 			drawRoundRect (p, r);
 			
-			const QTabBar *tb = static_cast< const QTabBar * >(widget);
-            QTabBar::Shape shape = tb->shape();
-			if (shape == QTabBar::TriangularBelow || 
-				shape == QTabBar::RoundedBelow) {
+			const TQTabBar *tb = static_cast< const TQTabBar * >(widget);
+            TQTabBar::Shape shape = tb->shape();
+			if (shape == TQTabBar::TriangularBelow || 
+				shape == TQTabBar::RoundedBelow) {
 				p->fillRect (r.left(), r.top(), 
 							 r.width(), 2*basicLineWidth, 
 							 p->pen().color());
@@ -783,8 +783,8 @@ void HighContrastStyle::drawControl (ControlElement element,
 		// PUSHBUTTON
 		// -------------------------------------------------------------------
 		case CE_PushButton: {
-			QPushButton *button = (QPushButton*) widget;
-			QRect br = r;
+			TQPushButton *button = (TQPushButton*) widget;
+			TQRect br = r;
 			bool btnDefault = button->isDefault();
 
 			if (( btnDefault || button->autoDefault() ) && (button->isEnabled())) {
@@ -810,49 +810,49 @@ void HighContrastStyle::drawControl (ControlElement element,
 		case CE_CheckBoxLabel:
 		case CE_ToolButtonLabel:
 		case CE_PushButtonLabel: {
-			const QPixmap* pixmap = 0;
-			QPixmap icon;
-			QString text;
+			const TQPixmap* pixmap = 0;
+			TQPixmap icon;
+			TQString text;
 			bool popup = false;
 			
-			QIconSet::Mode  mode  = flags & Style_Enabled ? ((flags & Style_HasFocus) ? QIconSet::Active : QIconSet::Normal) : QIconSet::Disabled;
-			QIconSet::State state = flags & Style_On ? QIconSet::On : QIconSet::Off;
+			TQIconSet::Mode  mode  = flags & Style_Enabled ? ((flags & Style_HasFocus) ? TQIconSet::Active : TQIconSet::Normal) : TQIconSet::Disabled;
+			TQIconSet::State state = flags & Style_On ? TQIconSet::On : TQIconSet::Off;
 
 			int x, y, w, h;
 			r.rect( &x, &y, &w, &h );
 			
 			if (element == CE_ProgressBarLabel) {
-				QProgressBar* progressbar = (QProgressBar*) widget;
+				TQProgressBar* progressbar = (TQProgressBar*) widget;
 				text = progressbar->progressString();
 				setColorsNormal (p, cg, flags);
 			}
 			else if (element == CE_TabBarLabel) {
 				if (!opt.isDefault()) {
-					QTab* tab = opt.tab();
+					TQTab* tab = opt.tab();
 					text = tab->text();
 				}
 				setColorsNormal (p, cg, flags, Style_Selected);
 			}
 			else if (element == CE_ToolButtonLabel) {
-				QToolButton* toolbutton = (QToolButton*) widget;
+				TQToolButton* toolbutton = (TQToolButton*) widget;
 				text = toolbutton->text();
 				pixmap = toolbutton->pixmap();
 				if (!toolbutton->iconSet().isNull())
-					icon = toolbutton->iconSet().pixmap (QIconSet::Small, mode, state);
+					icon = toolbutton->iconSet().pixmap (TQIconSet::Small, mode, state);
 				popup = toolbutton->popup();
 				setColorsButton (p, cg, flags);
 			}
 			else if (element == CE_PushButtonLabel) {
-				QPushButton* pushbutton = (QPushButton*) widget;
+				TQPushButton* pushbutton = (TQPushButton*) widget;
 				text = pushbutton->text();
 				pixmap = pushbutton->pixmap();
 				if (pushbutton->iconSet() && !pushbutton->iconSet()->isNull())
-					icon = pushbutton->iconSet()->pixmap (QIconSet::Small, mode, state);
+					icon = pushbutton->iconSet()->pixmap (TQIconSet::Small, mode, state);
 				popup = pushbutton->popup();
 				setColorsButton (p, cg, flags);
 			}
 			else {
-				const QButton* button = (const QButton*)widget;
+				const TQButton* button = (const TQButton*)widget;
 				pixmap = button->pixmap();
 				text = button->text();
 				setColorsNormal (p, cg);
@@ -861,7 +861,7 @@ void HighContrastStyle::drawControl (ControlElement element,
 			// Does the button have a popup menu?
 			if (popup) {
 				int dx = pixelMetric (PM_MenuButtonIndicator, widget);
-				drawArrow (p, QRect(x + w - dx - 2, y + 2, dx, h - 4), PE_ArrowDown);
+				drawArrow (p, TQRect(x + w - dx - 2, y + 2, dx, h - 4), PE_ArrowDown);
 				w -= dx;
 			}
 
@@ -882,11 +882,11 @@ void HighContrastStyle::drawControl (ControlElement element,
 
 			// Draw a focus rect if the button has focus
 			if (flags & Style_HasFocus)
-				drawPrimitive (PE_FocusRect, p, r, cg, flags, QStyleOption (p->backgroundColor()));
+				drawPrimitive (PE_FocusRect, p, r, cg, flags, TQStyleOption (p->backgroundColor()));
 
 			// Draw the label itself
-			QColor color = p->pen().color();
-			drawItem (p, QRect(x, y, w, h),
+			TQColor color = p->pen().color();
+			drawItem (p, TQRect(x, y, w, h),
 					  (element == CE_RadioButtonLabel || element == CE_CheckBoxLabel || element == CE_ProgressBarLabel) ? AlignVCenter|AlignLeft|ShowPrefix : AlignCenter|ShowPrefix,
 					  cg, flags & Style_Enabled, pixmap, text, -1, &color);
 			break;
@@ -914,9 +914,9 @@ void HighContrastStyle::drawControl (ControlElement element,
 			setColorsNormal (p, cg, flags, Style_Active|Style_MouseOver);
 			p->fillRect (r, p->backgroundColor ());
 			if (!opt.isDefault()) {
-				QMenuItem *mi = opt.menuItem();
+				TQMenuItem *mi = opt.menuItem();
 
-				QColor color = p->pen().color();
+				TQColor color = p->pen().color();
 				drawItem (p, r, AlignCenter | AlignVCenter | ShowPrefix
 						| DontClip | SingleLine, cg, flags,
 						mi->pixmap(), mi->text(), -1, &color);
@@ -942,9 +942,9 @@ void HighContrastStyle::drawControl (ControlElement element,
 		// -------------------------------------------------------------------
 		case CE_ProgressBarGroove: {
 			setColorsText (p, cg, flags);
-			const QProgressBar *progressbar = dynamic_cast<const QProgressBar*>(widget);
+			const TQProgressBar *progressbar = dynamic_cast<const TQProgressBar*>(widget);
 			if (progressbar) {
-				QRect r2 (r);
+				TQRect r2 (r);
 				r2.setLeft (p->boundingRect (r, AlignVCenter|AlignLeft|ShowPrefix, progressbar->progressString()).right()
 						+ 4*basicLineWidth);
 				drawRoundRect (p, r2);
@@ -952,10 +952,10 @@ void HighContrastStyle::drawControl (ControlElement element,
 			break;
 		}
 		case CE_ProgressBarContents: {
-			const QProgressBar *progressbar = dynamic_cast<const QProgressBar*>(widget);
+			const TQProgressBar *progressbar = dynamic_cast<const TQProgressBar*>(widget);
 			if (progressbar)
 			{
-				QRect r2 (r);
+				TQRect r2 (r);
 				r2.setLeft (p->boundingRect (r, AlignVCenter|AlignLeft|ShowPrefix, progressbar->progressString()).right()
 						+ 4*basicLineWidth);
 				long progress = r2.width() * progressbar->progress();
@@ -985,15 +985,15 @@ void HighContrastStyle::drawControl (ControlElement element,
 			setColorsNormal (p, cg, flags, Style_Active|Style_MouseOver);
 			p->fillRect (r, p->backgroundColor ());
 
-			const QPopupMenu *popupmenu = (const QPopupMenu *) widget;
-			QMenuItem *mi = opt.menuItem();
+			const TQPopupMenu *popupmenu = (const TQPopupMenu *) widget;
+			TQMenuItem *mi = opt.menuItem();
 			if (!mi)
 				break;
 
 			int  tab        = opt.tabWidth();
 			int  checkcol   = opt.maxIconWidth();
 			bool checkable  = popupmenu->isCheckable();
-			bool reverse    = QApplication::reverseLayout();
+			bool reverse    = TQApplication::reverseLayout();
 			int x, y, w, h;
 			r.rect( &x, &y, &w, &h );
 
@@ -1008,20 +1008,20 @@ void HighContrastStyle::drawControl (ControlElement element,
 
 			// Do we have an icon?
 			if ( mi->iconSet() && !mi->iconSet()->isNull() ) {
-				QIconSet::Mode mode;
-				QRect cr = visualRect( QRect(x, y, checkcol, h), r );
+				TQIconSet::Mode mode;
+				TQRect cr = visualRect( TQRect(x, y, checkcol, h), r );
 
 				// Select the correct icon from the iconset
 				if (!(flags & Style_Enabled))
-					mode = QIconSet::Disabled;
+					mode = TQIconSet::Disabled;
 				else if (flags & Style_Active)
-					mode = QIconSet::Active;
+					mode = TQIconSet::Active;
 				else
-					mode = QIconSet::Normal;
+					mode = TQIconSet::Normal;
 
 				// Draw the icon
-				QPixmap pixmap = mi->iconSet()->pixmap( QIconSet::Small, mode );
-				QRect pmr( 0, 0, pixmap.width(), pixmap.height() );
+				TQPixmap pixmap = mi->iconSet()->pixmap( TQIconSet::Small, mode );
+				TQRect pmr( 0, 0, pixmap.width(), pixmap.height() );
 				pmr.moveCenter( cr.center() );
 				p->drawPixmap( pmr.topLeft(), pixmap );
 
@@ -1037,9 +1037,9 @@ void HighContrastStyle::drawControl (ControlElement element,
 			else if ( checkable && mi->isChecked() ) {
 				int cx = reverse ? x+w - checkcol : x;
 
-				QRect rc (cx, y, checkcol, h);
+				TQRect rc (cx, y, checkcol, h);
 				addOffset (&rc, 2*basicLineWidth);
-				QPoint center = rc.center();
+				TQPoint center = rc.center();
 				if (rc.width() > rc.height())
 					rc.setWidth (rc.height());
 				else
@@ -1071,7 +1071,7 @@ void HighContrastStyle::drawControl (ControlElement element,
 			}
 			else {
 				// The menu item doesn't draw it's own label
-				QString s = mi->text();
+				TQString s = mi->text();
 
 				// Does the menu item have a text label?
 				if ( !s.isNull() ) {
@@ -1100,7 +1100,7 @@ void HighContrastStyle::drawControl (ControlElement element,
 				// The menu item doesn't have a text label
 				// Check if it has a pixmap instead
 				else if ( mi->pixmap() ) {
-					QPixmap *pixmap = mi->pixmap();
+					TQPixmap *pixmap = mi->pixmap();
 
 					// Draw the pixmap
 					if ( pixmap->depth() == 1 )
@@ -1119,7 +1119,7 @@ void HighContrastStyle::drawControl (ControlElement element,
 			if ( mi->popup() ) {
 				PrimitiveElement arrow = reverse ? PE_ArrowLeft : PE_ArrowRight;
 				int dim = pixelMetric(PM_MenuButtonIndicator);
-				QRect vr = visualRect( QRect( x + w - arrowHMargin - 2*itemFrame - dim,
+				TQRect vr = visualRect( TQRect( x + w - arrowHMargin - 2*itemFrame - dim,
 							y + h / 2 - dim / 2, dim, dim), r );
 
 				// Draw an arrow at the far end of the menu item
@@ -1134,10 +1134,10 @@ void HighContrastStyle::drawControl (ControlElement element,
 }
 
 void HighContrastStyle::drawControlMask (ControlElement element,
-										QPainter *p,
-										const QWidget *w,
-										const QRect &r,
-										const QStyleOption &opt) const
+										TQPainter *p,
+										const TQWidget *w,
+										const TQRect &r,
+										const TQStyleOption &opt) const
 {
 	switch (element) {
 		case CE_PushButton:
@@ -1164,9 +1164,9 @@ void HighContrastStyle::drawControlMask (ControlElement element,
 
 // Helper to find the next sibling that's not hidden
 // Lifted from kstyle.cpp
-static QListViewItem* nextVisibleSibling(QListViewItem* item)
+static TQListViewItem* nextVisibleSibling(TQListViewItem* item)
 {
-    QListViewItem* sibling = item;
+    TQListViewItem* sibling = item;
     do
     {
         sibling = sibling->nextSibling();
@@ -1177,14 +1177,14 @@ static QListViewItem* nextVisibleSibling(QListViewItem* item)
 }
 
 void HighContrastStyle::drawComplexControl (ComplexControl control,
-									QPainter *p,
-									const QWidget *widget,
-									const QRect &r,
-									const QColorGroup &cg,
+									TQPainter *p,
+									const TQWidget *widget,
+									const TQRect &r,
+									const TQColorGroup &cg,
 									SFlags flags,
 									SCFlags controls,
 									SCFlags active,
-									const QStyleOption& opt ) const
+									const TQStyleOption& opt ) const
 {
 	if ( widget == hoverWidget )
 		flags |= Style_MouseOver;
@@ -1197,15 +1197,15 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 			setColorsText (p, cg, flags);
 			drawRoundRect (p, r);
 			
-			QRect r2 = QStyle::visualRect (querySubControlMetrics (CC_ComboBox, widget, SC_ComboBoxArrow), widget);
+			TQRect r2 = TQStyle::visualRect (querySubControlMetrics (CC_ComboBox, widget, SC_ComboBoxArrow), widget);
 			if (flags & Style_HasFocus) {
-				QRect r3 (r);
+				TQRect r3 (r);
 				if (r2.left() > 0)
 					r3.setRight (r2.left()+basicLineWidth-1);
 				else
 					r3.setLeft (r2.right()-basicLineWidth+1);
 
-				drawPrimitive (PE_FocusRect, p, r3, cg, flags, QStyleOption (p->backgroundColor()));
+				drawPrimitive (PE_FocusRect, p, r3, cg, flags, TQStyleOption (p->backgroundColor()));
 			}
 			
 			setColorsButton (p, cg, flags);
@@ -1226,18 +1226,18 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 				setColorsText (p, cg, flags);
 				drawRoundRect (p, r);
 				if (flags & Style_HasFocus)
-					drawPrimitive(PE_FocusRect, p, r, cg, flags, QStyleOption (p->backgroundColor()));
+					drawPrimitive(PE_FocusRect, p, r, cg, flags, TQStyleOption (p->backgroundColor()));
 			}
 			
 			setColorsButton (p, cg, flags);
 			// Draw arrows if required
 			if (controls & SC_SpinWidgetDown) {
-				QRect r2 = QStyle::visualRect (querySubControlMetrics (CC_SpinWidget, widget, SC_SpinWidgetDown), widget);
+				TQRect r2 = TQStyle::visualRect (querySubControlMetrics (CC_SpinWidget, widget, SC_SpinWidgetDown), widget);
 				drawRoundRect (p, r2);
 				drawArrow (p, r2, PE_SpinWidgetDown, 2*basicLineWidth);
 			}
 			if (controls & SC_SpinWidgetUp) {
-				QRect r2 = QStyle::visualRect (querySubControlMetrics (CC_SpinWidget, widget, SC_SpinWidgetUp), widget);
+				TQRect r2 = TQStyle::visualRect (querySubControlMetrics (CC_SpinWidget, widget, SC_SpinWidgetUp), widget);
 				drawRoundRect (p, r2);
 				drawArrow (p, r2, PE_SpinWidgetUp, 2*basicLineWidth);
 			}
@@ -1249,12 +1249,12 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 		// TOOLBUTTON
 		// -------------------------------------------------------------------
 		case CC_ToolButton: {
-			const QToolButton *toolbutton = (const QToolButton *) widget;
+			const TQToolButton *toolbutton = (const TQToolButton *) widget;
 
 			setColorsButton (p, cg, flags);
 			p->fillRect (r, p->backgroundColor ());
 
-			QRect button, menuarea;
+			TQRect button, menuarea;
 			button   = querySubControlMetrics(control, widget, SC_ToolButton, opt);
 			menuarea = querySubControlMetrics(control, widget, SC_ToolButtonMenu, opt);
 
@@ -1277,7 +1277,7 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 						  toolbutton->parentWidget()->backgroundPixmap() &&
 						  !toolbutton->parentWidget()->backgroundPixmap()->isNull() )
 				{
-					QPixmap pixmap = *(toolbutton->parentWidget()->backgroundPixmap());
+					TQPixmap pixmap = *(toolbutton->parentWidget()->backgroundPixmap());
 					p->drawTiledPixmap( r, pixmap, toolbutton->pos() );
 				}
 			}
@@ -1291,9 +1291,9 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 			}
 
 			if (toolbutton->hasFocus() && !toolbutton->focusProxy()) {
-				QRect fr = toolbutton->rect();
+				TQRect fr = toolbutton->rect();
 				addOffset (&fr, 3);
-				drawPrimitive(PE_FocusRect, p, fr, cg, flags, QStyleOption (p->backgroundColor()));
+				drawPrimitive(PE_FocusRect, p, fr, cg, flags, TQStyleOption (p->backgroundColor()));
 			}
 
 			break;
@@ -1306,13 +1306,13 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 			 * Sigh... Lifted and modified from kstyle.cpp 
 			 */
 			/* 
-			 * Many thanks to TrollTech AS for donating CC_ListView from QWindowsStyle.
+			 * Many thanks to TrollTech AS for donating CC_ListView from TQWindowsStyle.
 			 * CC_ListView code is Copyright (C) 1998-2000 TrollTech AS.
 			 */
 
 			// Paint the icon and text.
 			if ( controls & SC_ListView )
-				QCommonStyle::drawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
+				TQCommonStyle::drawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
 
 			// If we're have a branch or are expanded...
 			if ( controls & (SC_ListViewBranch | SC_ListViewExpand) )
@@ -1321,20 +1321,20 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 				if (opt.isDefault())
 					break;
 
-				QListViewItem *item  = opt.listViewItem();
-				QListViewItem *child = item->firstChild();
+				TQListViewItem *item  = opt.listViewItem();
+				TQListViewItem *child = item->firstChild();
 
 				int y = r.y();
 				int c;	// dotline vertice count
 				int dotoffset = 0;
-				QPointArray dotlines;
+				TQPointArray dotlines;
 
 				if ( active == SC_All && controls == SC_ListViewExpand ) {
 					// We only need to draw a vertical line
 					c = 2;
 					dotlines.resize(2);
-					dotlines[0] = QPoint( r.right(), r.top() );
-					dotlines[1] = QPoint( r.right(), r.bottom() );
+					dotlines[0] = TQPoint( r.right(), r.top() );
+					dotlines[1] = TQPoint( r.right(), r.bottom() );
 
 				} else {
 
@@ -1354,15 +1354,15 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 					int bx = r.width() / 2;
 
 					// paint stuff in the magical area
-					QListView* v = item->listView();
+					TQListView* v = item->listView();
 					int lh = QMAX( p->fontMetrics().height() + 2 * v->itemMargin(),
-								   QApplication::globalStrut().height() );
+								   TQApplication::globalStrut().height() );
 					if ( lh % 2 > 0 )
 						lh++;
 
 					// Draw all the expand/close boxes...
-					QRect boxrect;
-					QStyle::StyleFlags boxflags;
+					TQRect boxrect;
+					TQStyle::StyleFlags boxflags;
 					while ( child && y < r.height() )
 					{
 						linebot = y + lh/2;
@@ -1376,23 +1376,23 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 								h &= ~1; // Force an even number of pixels
 			
 							// The primitive requires a rect.
-							boxrect = QRect( bx-h/2, linebot-h/2, h, h );
-							boxflags = child->isOpen() ? QStyle::Style_Off : QStyle::Style_On;
+							boxrect = TQRect( bx-h/2, linebot-h/2, h, h );
+							boxflags = child->isOpen() ? TQStyle::Style_Off : TQStyle::Style_On;
 
 							// KStyle extension: Draw the box and expand/collapse indicator
 							drawKStylePrimitive( KPE_ListViewExpander, p, NULL, boxrect, cg, boxflags, opt );
 
 							// dotlinery
 							p->setPen( cg.mid() );
-							dotlines[c++] = QPoint( bx, linetop );
-							dotlines[c++] = QPoint( bx, linebot - 5 );
-							dotlines[c++] = QPoint( bx + 5, linebot );
-							dotlines[c++] = QPoint( r.width(), linebot );
+							dotlines[c++] = TQPoint( bx, linetop );
+							dotlines[c++] = TQPoint( bx, linebot - 5 );
+							dotlines[c++] = TQPoint( bx + 5, linebot );
+							dotlines[c++] = TQPoint( r.width(), linebot );
 							linetop = linebot + 5;
 						} else {
 							// just dotlinery
-							dotlines[c++] = QPoint( bx+1, linebot );
-							dotlines[c++] = QPoint( r.width(), linebot );
+							dotlines[c++] = TQPoint( bx+1, linebot );
+							dotlines[c++] = TQPoint( r.width(), linebot );
 						}
 
 						y += child->totalHeight();
@@ -1404,16 +1404,16 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 
 					if ( linetop < linebot )
 					{
-						dotlines[c++] = QPoint( bx, linetop );
-						dotlines[c++] = QPoint( bx, linebot );
+						dotlines[c++] = TQPoint( bx, linetop );
+						dotlines[c++] = TQPoint( bx, linebot );
 					}
 				}
 
 				// Draw all the branches...
 				static int thickness = kPixelMetric( KPM_ListViewBranchThickness );
 				int line; // index into dotlines
-				QRect branchrect;
-				QStyle::StyleFlags branchflags;
+				TQRect branchrect;
+				TQStyle::StyleFlags branchflags;
 				for( line = 0; line < c; line += 2 )
 				{
 					// assumptions here: lines are horizontal or vertical.
@@ -1430,8 +1430,8 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 						int point = dotlines[line].x();
 						int other = dotlines[line].y();
 
-						branchrect  = QRect( point, other-(thickness/2), end-point, thickness );
-						branchflags = QStyle::Style_Horizontal;
+						branchrect  = TQRect( point, other-(thickness/2), end-point, thickness );
+						branchflags = TQStyle::Style_Horizontal;
 
 						// KStyle extension: Draw the horizontal branch
 						drawKStylePrimitive( KPE_ListViewBranch, p, NULL, branchrect, cg, branchflags, opt );
@@ -1443,11 +1443,11 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 						int other = dotlines[line].x();
 						int pixmapoffset = ((point & 1) != dotoffset ) ? 1 : 0;
 
-						branchrect  = QRect( other-(thickness/2), point, thickness, end-point );
+						branchrect  = TQRect( other-(thickness/2), point, thickness, end-point );
 						if (!pixmapoffset)	// ### Hackish - used to hint the offset
-							branchflags = QStyle::Style_NoChange;
+							branchflags = TQStyle::Style_NoChange;
 						else
-							branchflags = QStyle::Style_Default;
+							branchflags = TQStyle::Style_Default;
 
 						// KStyle extension: Draw the vertical branch
 						drawKStylePrimitive( KPE_ListViewBranch, p, NULL, branchrect, cg, branchflags, opt );
@@ -1465,10 +1465,10 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 }
 
 void HighContrastStyle::drawComplexControlMask(ComplexControl c,
-											   QPainter *p,
-											   const QWidget *w,
-											   const QRect &r,
-											   const QStyleOption &o) const
+											   TQPainter *p,
+											   const TQWidget *w,
+											   const TQRect &r,
+											   const TQStyleOption &o) const
 {
 	switch (c) {
 		case CC_SpinWidget:
@@ -1483,20 +1483,20 @@ void HighContrastStyle::drawComplexControlMask(ComplexControl c,
 	}
 }
 
-void HighContrastStyle::drawItem( QPainter *p,
-							   const QRect &r,
+void HighContrastStyle::drawItem( TQPainter *p,
+							   const TQRect &r,
 							   int flags,
-							   const QColorGroup &cg,
+							   const TQColorGroup &cg,
 							   bool enabled,
-							   const QPixmap *pixmap,
-							   const QString &text,
+							   const TQPixmap *pixmap,
+							   const TQString &text,
 							   int len,
-							   const QColor *penColor ) const
+							   const TQColor *penColor ) const
 {
 	p->save();
 
 	// make the disabled things use the cross-line
-	QFont font = p->font();
+	TQFont font = p->font();
 	font.setStrikeOut (!enabled);
 	p->setFont (font);
 	
@@ -1507,10 +1507,10 @@ void HighContrastStyle::drawItem( QPainter *p,
 	p->restore();
 }
 
-QRect HighContrastStyle::querySubControlMetrics( ComplexControl control,
-									const QWidget* widget,
+TQRect HighContrastStyle::querySubControlMetrics( ComplexControl control,
+									const TQWidget* widget,
 								  SubControl subcontrol,
-								  const QStyleOption& opt ) const
+								  const TQStyleOption& opt ) const
 {
 	switch (control)
 	{
@@ -1519,11 +1519,11 @@ QRect HighContrastStyle::querySubControlMetrics( ComplexControl control,
 			switch (subcontrol)
 			{
 				case SC_ComboBoxFrame:
-					return QRect (0, 0, widget->width(), widget->height());
+					return TQRect (0, 0, widget->width(), widget->height());
 				case SC_ComboBoxArrow:
-					return QRect (widget->width() - arrow, 0, arrow, widget->height());
+					return TQRect (widget->width() - arrow, 0, arrow, widget->height());
 				case SC_ComboBoxEditField:
-					return QRect (2*basicLineWidth, 2*basicLineWidth,
+					return TQRect (2*basicLineWidth, 2*basicLineWidth,
 								widget->width() - arrow - 3*basicLineWidth, widget->height() - 4*basicLineWidth);
 	
 				default: break;
@@ -1535,16 +1535,16 @@ QRect HighContrastStyle::querySubControlMetrics( ComplexControl control,
 			switch (subcontrol)
 			{
 				case SC_SpinWidgetFrame:
-					return QRect (0, 0, widget->width(), widget->height());
+					return TQRect (0, 0, widget->width(), widget->height());
 				case SC_SpinWidgetButtonField:
-					return QRect (widget->width() - arrow, 0, arrow, widget->height());
+					return TQRect (widget->width() - arrow, 0, arrow, widget->height());
 				case SC_SpinWidgetUp:
-					return QRect (widget->width() - arrow, 0, arrow, widget->height()/2);
+					return TQRect (widget->width() - arrow, 0, arrow, widget->height()/2);
 				case SC_SpinWidgetDown:
-					return QRect (widget->width() - arrow, widget->height()/2,
+					return TQRect (widget->width() - arrow, widget->height()/2,
 							arrow, widget->height()-widget->height()/2);
 				case SC_SpinWidgetEditField:
-					return QRect (2*basicLineWidth, 2*basicLineWidth,
+					return TQRect (2*basicLineWidth, 2*basicLineWidth,
 							widget->width() - arrow - 3*basicLineWidth, widget->height() - 4*basicLineWidth);
 	
 				default: break;
@@ -1559,7 +1559,7 @@ QRect HighContrastStyle::querySubControlMetrics( ComplexControl control,
 }
 
 
-int HighContrastStyle::pixelMetric(PixelMetric m, const QWidget *widget) const
+int HighContrastStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
 {
 	//### TODO: Use the tab metrics changes from Ker.
 	switch(m)
@@ -1592,7 +1592,7 @@ int HighContrastStyle::pixelMetric(PixelMetric m, const QWidget *widget) const
 		}
 
 		case PM_DefaultFrameWidth: {
-			if (widget && (widget->inherits ("QLineEdit") || widget->inherits ("QTextEdit")))
+			if (widget && (widget->inherits ("TQLineEdit") || widget->inherits ("TQTextEdit")))
 				return 2*basicLineWidth;
 			else 
 				return basicLineWidth;
@@ -1647,7 +1647,7 @@ int HighContrastStyle::pixelMetric(PixelMetric m, const QWidget *widget) const
 	}
 }
 
-int HighContrastStyle::kPixelMetric( KStylePixelMetric kpm, const QWidget *widget ) const
+int HighContrastStyle::kPixelMetric( KStylePixelMetric kpm, const TQWidget *widget ) const
 {
 	switch (kpm) {
 		case KPM_ListViewBranchThickness:
@@ -1659,17 +1659,17 @@ int HighContrastStyle::kPixelMetric( KStylePixelMetric kpm, const QWidget *widge
 	}
 }
 
-QSize HighContrastStyle::sizeFromContents( ContentsType contents,
-										const QWidget* widget,
-										const QSize &contentSize,
-										const QStyleOption& opt ) const
+TQSize HighContrastStyle::sizeFromContents( ContentsType contents,
+										const TQWidget* widget,
+										const TQSize &contentSize,
+										const TQStyleOption& opt ) const
 {
 	switch (contents)
 	{
 		// PUSHBUTTON SIZE
 		// ------------------------------------------------------------------
 		case CT_PushButton: {
-			const QPushButton* button = (const QPushButton*) widget;
+			const TQPushButton* button = (const TQPushButton*) widget;
 			int w  = contentSize.width();
 			int h  = contentSize.height();
 			int bm = pixelMetric( PM_ButtonMargin, widget );
@@ -1692,7 +1692,7 @@ QSize HighContrastStyle::sizeFromContents( ContentsType contents,
 			if ( h < 22 )
 				h = 22;
 
-			return QSize( w + basicLineWidth*2, h + basicLineWidth*2 );
+			return TQSize( w + basicLineWidth*2, h + basicLineWidth*2 );
 		}
 
 		// TOOLBUTTON SIZE
@@ -1700,17 +1700,17 @@ QSize HighContrastStyle::sizeFromContents( ContentsType contents,
 		case CT_ToolButton: {
 			int w  = contentSize.width();
 			int h  = contentSize.height();
-			return QSize(w + basicLineWidth*2 + 6, h + basicLineWidth*2 + 5);
+			return TQSize(w + basicLineWidth*2 + 6, h + basicLineWidth*2 + 5);
 			break;
 		}
 
 		// COMBOBOX SIZE
 		// -----------------------------------------------------------------
 		case CT_ComboBox: {
-			const QComboBox *cb = static_cast< const QComboBox* > (widget);
+			const TQComboBox *cb = static_cast< const TQComboBox* > (widget);
 			int borderSize =  (cb->editable() ? 4 : 2) * basicLineWidth;
 			int arrowSize = pixelMetric (PM_ScrollBarExtent, cb);
-			return QSize(borderSize + basicLineWidth + arrowSize, borderSize) + contentSize;
+			return TQSize(borderSize + basicLineWidth + arrowSize, borderSize) + contentSize;
 		}
 
 		// POPUPMENU ITEM SIZE
@@ -1719,9 +1719,9 @@ QSize HighContrastStyle::sizeFromContents( ContentsType contents,
 			if ( ! widget || opt.isDefault() )
 				return contentSize;
 
-			const QPopupMenu *popup = (const QPopupMenu *) widget;
+			const TQPopupMenu *popup = (const TQPopupMenu *) widget;
 			bool checkable = popup->isCheckable();
-			QMenuItem *mi = opt.menuItem();
+			TQMenuItem *mi = opt.menuItem();
 			int maxpmw = opt.maxIconWidth();
 			int w = contentSize.width(), h = contentSize.height();
 
@@ -1749,7 +1749,7 @@ QSize HighContrastStyle::sizeFromContents( ContentsType contents,
 
 				if ( mi->iconSet() && ! mi->iconSet()->isNull() )
 					h = QMAX( h, mi->iconSet()->pixmap(
-								QIconSet::Small, QIconSet::Normal).height() +
+								TQIconSet::Small, TQIconSet::Normal).height() +
 								2 * itemFrame );
 			}
 
@@ -1767,14 +1767,14 @@ QSize HighContrastStyle::sizeFromContents( ContentsType contents,
 
 			w += rightBorder;
 
-			return QSize( w, h );
+			return TQSize( w, h );
 		}
 
 
 		// LINEDIT SIZE
 		// -----------------------------------------------------------------
 		case CT_LineEdit: {
-			return contentSize + QSize (4*basicLineWidth, 4*basicLineWidth);
+			return contentSize + TQSize (4*basicLineWidth, 4*basicLineWidth);
 		}
 
 
@@ -1783,7 +1783,7 @@ QSize HighContrastStyle::sizeFromContents( ContentsType contents,
 	}
 }
 
-QRect HighContrastStyle::subRect (SubRect subrect, const QWidget * widget) const
+TQRect HighContrastStyle::subRect (SubRect subrect, const TQWidget * widget) const
 {
 	switch (subrect) {
 		case SR_ProgressBarGroove:
@@ -1795,38 +1795,38 @@ QRect HighContrastStyle::subRect (SubRect subrect, const QWidget * widget) const
 	}
 }
 
-bool HighContrastStyle::eventFilter (QObject *object, QEvent *event)
+bool HighContrastStyle::eventFilter (TQObject *object, TQEvent *event)
 {
-	QWidget* widget = dynamic_cast<QWidget*>(object);
+	TQWidget* widget = dynamic_cast<TQWidget*>(object);
 	if (widget)
 	{
 		// Handle hover effects.
-		if (event->type() == QEvent::Enter
-				&& (widget->inherits ("QButton")
-					|| widget->inherits ("QComboBox")
-					|| widget->inherits ("QSpinWidget")))
+		if (event->type() == TQEvent::Enter
+				&& (widget->inherits ("TQButton")
+					|| widget->inherits ("TQComboBox")
+					|| widget->inherits ("TQSpinWidget")))
 		{
 			hoverWidget = widget;
 			widget->repaint (false);
 		}
-		else if (event->type() == QEvent::Leave
-					&& (widget->inherits ("QButton")
-						|| widget->inherits ("QComboBox")
-						|| widget->inherits ("QSpinWidget")))
+		else if (event->type() == TQEvent::Leave
+					&& (widget->inherits ("TQButton")
+						|| widget->inherits ("TQComboBox")
+						|| widget->inherits ("TQSpinWidget")))
 		{
 			if (object == hoverWidget)
 				hoverWidget = 0L;
 			widget->repaint (false);
 		}
 		// Make sure the focus rectangle is shown correctly.
-		else if (event->type() == QEvent::FocusIn || event->type() == QEvent::FocusOut)
+		else if (event->type() == TQEvent::FocusIn || event->type() == TQEvent::FocusOut)
 		{
-			QWidget* widgetparent = dynamic_cast<QWidget*>(widget->parent());
+			TQWidget* widgetparent = dynamic_cast<TQWidget*>(widget->parent());
 			while (widgetparent
-							&& ! widgetparent->inherits ("QComboBox")
-							&& ! widgetparent->inherits ("QSpinWidget"))
+							&& ! widgetparent->inherits ("TQComboBox")
+							&& ! widgetparent->inherits ("TQSpinWidget"))
 			{
-				widgetparent = dynamic_cast<QWidget*>(widgetparent->parent());
+				widgetparent = dynamic_cast<TQWidget*>(widgetparent->parent());
 			}
 
 			if (widgetparent)

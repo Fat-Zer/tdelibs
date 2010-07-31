@@ -30,7 +30,7 @@ namespace Keramik
 	class GradientPainter
 	{
 	public:
-		static void renderGradient( QPainter* p, const QRect& r, QColor cr, 
+		static void renderGradient( TQPainter* p, const TQRect& r, TQColor cr, 
 					    bool horizontal, bool menu = false,
 					    int px = 0, int py = 0, int pwidth = -1, int pheight = -1 );
 					    

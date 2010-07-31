@@ -18,9 +18,9 @@
 #include "kisofile.h"
 #include <kdebug.h>
 
-KIsoFile::KIsoFile( KArchive* archive, const QString& name, int access,
-    int date, int adate,int cdate, const QString& user, const QString& group,
-    const QString& symlink,int pos, int size) :
+KIsoFile::KIsoFile( KArchive* archive, const TQString& name, int access,
+    int date, int adate,int cdate, const TQString& user, const TQString& group,
+    const TQString& symlink,int pos, int size) :
         KArchiveFile(archive, name, access, date, user, group, symlink, pos, size) {
 
 
@@ -38,8 +38,8 @@ void KIsoFile::setZF(char algo[2],char parms[2],int realsize) {
     m_realsize=realsize;
 }
 
-QByteArray KIsoFile::data(long long pos, int count) const {
-    QByteArray r;
+TQByteArray KIsoFile::data(long long pos, int count) const {
+    TQByteArray r;
     int rlen;
     
     if ( archive()->device()->at(position()+pos) &&

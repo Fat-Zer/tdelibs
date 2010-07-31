@@ -28,7 +28,7 @@ ClipboardInterface::ClipboardInterface()
 	d = new PrivateClipboardInterface();
 	globalClipboardInterfaceNumber++;
         myClipboardInterfaceNumber = globalClipboardInterfaceNumber++;
-	QString name = "ClipboardInterface#" + QString::number(myClipboardInterfaceNumber);
+	TQString name = "ClipboardInterface#" + TQString::number(myClipboardInterfaceNumber);
 	d->interface = new ClipboardDCOPInterface(this, name.latin1());
 }
 ClipboardInterface::~ClipboardInterface()
@@ -42,7 +42,7 @@ unsigned int ClipboardInterface::clipboardInterfaceNumber () const
   return myClipboardInterfaceNumber;
 }
 
-void ClipboardInterface::setClipboardInterfaceDCOPSuffix (const QCString &suffix)
+void ClipboardInterface::setClipboardInterfaceDCOPSuffix (const TQCString &suffix)
 {
   d->interface->setObjId ("ClipboardInterface#"+suffix);
 }

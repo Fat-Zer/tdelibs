@@ -22,9 +22,9 @@ using namespace std;
 
 #include <list>
 #include <map>
-#include <qwidget.h>
-#include <qcstring.h>
-#include <qstrlist.h>
+#include <tqwidget.h>
+#include <tqcstring.h>
+#include <tqstrlist.h>
 
 class QTimer;
 class QDate;
@@ -44,18 +44,18 @@ class QTextStream;
  * it is called with.
  */
 struct QCStringLess 
-  : public binary_function<const QCString&, const QCString&, bool> 
+  : public binary_function<const TQCString&, const TQCString&, bool> 
 {
   /**
    * The function operator, inline.
    */
-  bool operator()(const QCString& x, const QCString& y) const 
+  bool operator()(const TQCString& x, const TQCString& y) const 
   { 
     return x < (const char*)y; // make one Qt operator fit exactly
   }
 };
 
-typedef map<QCString, QCString, QCStringLess> StringStringMap;
+typedef map<TQCString, TQCString, QCStringLess> StringStringMap;
 
 /**
  *  The class KeyValueMap is used for managing key-value-pairs
@@ -63,7 +63,7 @@ typedef map<QCString, QCString, QCStringLess> StringStringMap;
  *  used as they are or in conjunction with the  configuration
  *  database class.
  *  While the first version used the string class, this second
- *  uses the QCString class.
+ *  uses the TQCString class.
  *  The class uses pairs of methods for each datatype, they are 
  *  called ::get and ::insert. Every overloaded version of this 
  *  methods get the key of the settings and a reference to the
@@ -98,9 +98,9 @@ typedef map<QCString, QCString, QCStringLess> StringStringMap;
  *    guarantees anything, don't you?)  that every value that 
  *    has been  stored  by one of the member functions of the 
  *    class like <BR>
- *      <TT> insert(const QCString& key, [value&]); </TT> <BR>
+ *      <TT> insert(const TQCString& key, [value&]); </TT> <BR>
  *    can also be retrieved using <BR>
- *      <TT> get(const QCString& key, [value&]);</TT> <BR>
+ *      <TT> get(const TQCString& key, [value&]);</TT> <BR>
  *    without being modified. <BR>
  *    (Please report anything that does not do so!) </LI> </OL> 
  *  The class is used to implement the #QConfigDB class.
@@ -127,23 +127,23 @@ protected:
    * Returns true if there where no errors while parsing.
    * @see makeComplexString
    */
-  bool parseComplexString(const QCString& orig, int index,
-			  QCString& result, int& noOfChars) const; 
+  bool parseComplexString(const TQCString& orig, int index,
+			  TQCString& result, int& noOfChars) const; 
   /**
    * Codes a normal string into a complex string. 
    * @see parseComplexString
    */
-  QCString makeComplexString(const QCString& orig); 
+  TQCString makeComplexString(const TQCString& orig); 
   /**
    * Inserts a complex string into the map.
    * The string must be coded already, no tests are performed. 
    * \a if force is false, an existing value will not be overridden.
    */
-  bool insertRaw(const QCString& key, const QCString& value, bool force=false);
+  bool insertRaw(const TQCString& key, const TQCString& value, bool force=false);
   /**
    * Retrieves the undecoded value (a complex string) of the given key.
    */
-  bool getRaw(const QCString& key, QCString& value) const; 
+  bool getRaw(const TQCString& key, TQCString& value) const; 
   // ----------------------------------------------------------------------------
 public:
   /**
@@ -184,181 +184,181 @@ public:
    * already declared in the database and are declared again in the file.
    * If \a relax is true, the value of a string may be empty.
    */
-  bool fill(const QString&, bool force=false, bool relax=false); 
+  bool fill(const TQString&, bool force=false, bool relax=false); 
   /**
    * Saves the database to a file. 
    * Only overrides existing files if force is true.
    */
-  bool save(const QString&, bool force=false); 
+  bool save(const TQString&, bool force=false); 
   /**
    * Saves contents to an already open text stream.
    * \a count spaces are inserted before each line. This method is 
    * called when save hierarchical databases.
    * @see ::QConfigDB
    */
-  bool save(QTextStream& file, int count); 
+  bool save(TQTextStream& file, int count); 
   /**
    * Get the value for the key as a string. 
    * \a key is the key to search for, \a value is a reference to the object
    * the value for the key is assigned to.
    */
-  bool get(const QCString& key, QCString& value) const;
+  bool get(const TQCString& key, TQCString& value) const;
   /**
    * Insert a string value for the given key. 
    * If force is true, an existing value for this key will be overridden.
    * The method returns false if the key exists and \a force is false.
    */
-  bool insert(const QCString& key, const QCString& value, bool force=false);
+  bool insert(const TQCString& key, const TQCString& value, bool force=false);
   /**
    * Insert a character pointer  for the given key. 
    * pgcc treats character pointers as boolean objects, not as strings.
    * If force is true, an existing value for this key will be overridden.
    * The method returns false if the key exists and \a force is false.
    */
-  inline bool insert(const QCString& key, const char* value, bool force=false);
+  inline bool insert(const TQCString& key, const char* value, bool force=false);
   /**
    * Insert a line like "key_a="Hallo!" into the map as a key-value-pair. 
    * If force is true existing keys will be overridden.
    * If relax is true the value may be empty an empty string.
    * If encode is false, the string will not be coded (do not use!).
    */
-  bool insertLine(QCString, bool force=false, bool relax=false, bool encode=true);
+  bool insertLine(TQCString, bool force=false, bool relax=false, bool encode=true);
   // ---------------
   /**
    * Get the value for the key as a long integer. 
    * \a key is the key to search for, \a value is a reference to the object
    * the value for the key is assigned to.
    */
-  bool get(const QCString&, long&) const;
+  bool get(const TQCString&, long&) const;
   /**
    * Insert a long integer value for the given key. 
    * If force is true, an existing value for this key will be overridden.
    * The method returns false if the key exists and \a force is false.
    */
-  bool insert(const QCString&, const long&, bool force=false);
+  bool insert(const TQCString&, const long&, bool force=false);
   // ---------------
   /**
    * For insertion of UNICODE strings, a special method pair is created. The 
-   * data will be translated to utf8 and inserted in the map as a QCString. 
+   * data will be translated to utf8 and inserted in the map as a TQCString. 
    * This will probably be not fast, but this methods are not suited to save 
    * large amounts of data. For saving anything else than UNICODE strings,
    * no such conversion is needed.
    * \a key is the key to search for, \a value is a reference to the object
    * the value for the key is assigned to.
    */
-  bool get(const QCString&, QString&) const;
+  bool get(const TQCString&, TQString&) const;
   /**
    * Insert a UNICODE string value for the given key. 
    * If force is true, an existing value for this key will be overridden.
    * The method returns false if the key exists and \a force is false.
    */
-  bool insert(const QCString&, const QString&, bool force=false);
+  bool insert(const TQCString&, const TQString&, bool force=false);
   // ---------------
   /**
    * Get the value for the key as a double. 
    * \a key is the key to search for, \a value is a reference to the object
    * the value for the key is assigned to.
    */
-  bool get(const QCString&, double&) const;
+  bool get(const TQCString&, double&) const;
   /**
    * Insert a double value for the given key. 
    * If force is true, an existing value for this key will be overridden.
    * The method returns false if the key exists and \a force is false.
    */
-  bool insert(const QCString&, const double&, bool force=false);
+  bool insert(const TQCString&, const double&, bool force=false);
   // ---------------
   /**
    * Get the value for the key as a boolean value. 
    * \a key is the key to search for, \a value is a reference to the object
    * the value for the key is assigned to.
    */
-  bool get(const QCString&, bool&) const;
+  bool get(const TQCString&, bool&) const;
   /**
    * Insert a boolean value for the given key. 
    * If force is true, an existing value for this key will be overridden.
    * The method returns false if the key exists and \a force is false.
    */
-  bool insert(const QCString&, const bool&, bool force=false);
+  bool insert(const TQCString&, const bool&, bool force=false);
   // ---------------
   /**
    * Get the value for the key as a list of strings. 
    * \a key is the key to search for, \a value is a reference to the object
    * the value for the key is assigned to.
    */
-  bool get(const QCString&, list<QCString>&) const;
+  bool get(const TQCString&, list<TQCString>&) const;
   /**
    * Insert a list of strings for the given key. 
    * If force is true, an existing value for this key will be overridden.
    * The method returns false if the key exists and \a force is false.
    */
-  bool insert(const QCString&, const list<QCString>&, bool force=false);
+  bool insert(const TQCString&, const list<TQCString>&, bool force=false);
   // --------------
   /**
-   * Get the value for the key as a QStrList. 
+   * Get the value for the key as a TQStrList. 
    * \a key is the key to search for, \a value is a reference to the object
    * the value for the key is assigned to.
    */
-  bool get(const QCString&, QStrList&) const;
+  bool get(const TQCString&, TQStrList&) const;
   /**
-   * Insert a QStrList for the given key. 
+   * Insert a TQStrList for the given key. 
    * If force is true, an existing value for this key will be overridden.
    * The method returns false if the key exists and \a force is false.
    */
-  bool insert(const QCString&, const QStrList&, bool force=false);
+  bool insert(const TQCString&, const TQStrList&, bool force=false);
   // --------------
   /**
-   * Get the value for the key as a QStringList. Beware of the difference -
-   * a QStringList is a list of QString objects, while QStrList handles
+   * Get the value for the key as a TQStringList. Beware of the difference -
+   * a TQStringList is a list of TQString objects, while TQStrList handles
    * char* like objects.
    * \a key is the key to search for, \a value is a reference to the object
    * the value for the key is assigned to.
    */
-  bool get(const QCString&, QStringList&) const;
+  bool get(const TQCString&, TQStringList&) const;
   /**
-   * Insert a QStringList for the given key. 
+   * Insert a TQStringList for the given key. 
    * If force is true, an existing value for this key will be overridden.
    * The method returns false if the key exists and \a force is false.
    */
-  bool insert(const QCString&, const QStringList&, bool force=false);
+  bool insert(const TQCString&, const TQStringList&, bool force=false);
   // --------------
   /**
    * Get the value for the key as a list of long integers. 
    * \a key is the key to search for, \a value is a reference to the object
    * the value for the key is assigned to.
    */
-  bool get(const QCString&, list<long>&) const;
+  bool get(const TQCString&, list<long>&) const;
   /**
    * Insert a list of long integers for the given key. 
    * If force is true, an existing value for this key will be overridden.
    * The method returns false if the key exists and \a force is false.
    */
-  bool insert(const QCString&, const list<long>&, bool force=false);
+  bool insert(const TQCString&, const list<long>&, bool force=false);
   // --------------
   /**
    * Get the value for the key as a list of integers. 
    * \a key is the key to search for, \a value is a reference to the object
    * the value for the key is assigned to.
    */
-  bool get(const QCString&, list<int>&) const;
+  bool get(const TQCString&, list<int>&) const;
   /**
    * Insert a list of integers for the given key. 
    * If force is true, an existing value for this key will be overridden.
    * The method returns false if the key exists and \a force is false.
    */
-  bool insert(const QCString&, const list<int>&, bool force=false);
+  bool insert(const TQCString&, const list<int>&, bool force=false);
   // -------------- some Qt high-level data types:
   /**
-   * Get the value for the key as a QDate.
+   * Get the value for the key as a TQDate.
    * The value will be parsed to a integer list that must be a \e valid
-   * date (see QDate documentation). \c false will be returned if the value
+   * date (see TQDate documentation). \c false will be returned if the value
    * is not valid or a null date. This situation might only happen in
    * manually created files, since the insert-method for QDates rejects to
    * insert inalid dates, it inserts null dates instead.
-   * @see get(const QCString&, QDate &)
+   * @see get(const TQCString&, TQDate &)
    */
-  bool get(const QCString&, QDate &) const;
+  bool get(const TQCString&, TQDate &) const;
   /**
-   * Insert a QDate for the given key.
+   * Insert a TQDate for the given key.
    * If force is true, an existing value for this key will be overridden.
    * The method returns false if the key exists and \a force is false.
    * \e Attention: If you insert an invalid date a null date will be used.
@@ -366,20 +366,20 @@ public:
    * You will not be able to store an invalid date and retrieve it using
    * ::get!
    */
-  bool insert(const QCString&, const QDate&, bool force=false);
+  bool insert(const TQCString&, const TQDate&, bool force=false);
   // --------------
   /**
    * Get the value for the key as a list of doubles. 
    * \a key is the key to search for, \a value is a reference to the object
    * the value for the key is assigned to.
    */
-  bool get(const QCString&, list<double>&) const;
+  bool get(const TQCString&, list<double>&) const;
   /**
    * Insert a list of doubles for the given key. 
    * If force is true, an existing value for this key will be overridden.
    * The method returns false if the key exists and \a force is false.
    */
-  bool insert(const QCString&, const list<double>&, bool force=false);
+  bool insert(const TQCString&, const list<double>&, bool force=false);
   // --------------
   // end of corresponding get-insert-pairs
   /**
@@ -389,7 +389,7 @@ public:
   /**
    * Erases all key-value-pairs in the map.
    */ 
-  bool erase(const QCString& key); 
+  bool erase(const TQCString& key); 
   // ############################################################################
 };
 
@@ -409,7 +409,7 @@ public:
   /**
    * The StringSectionMap type is defined to make the code more readable.
    */
-  typedef map<QCString, Section*, QCStringLess> StringSectionMap;
+  typedef map<TQCString, Section*, QCStringLess> StringSectionMap;
   // ----------------------------------------------------------------------------
 protected:
   /**
@@ -427,23 +427,23 @@ protected:
   /**
    * Insert the spaces for indention the lines of this section when saving.
    */
-  void insertIndentSpace(QTextStream& file, int level);
+  void insertIndentSpace(TQTextStream& file, int level);
   /**
    * Check whether the string (one line of the file currently read) marks the
    *  beginning of a new subsection (usually [sectionname]).
    */
-  bool isBeginOfSection(QCString);
+  bool isBeginOfSection(TQCString);
   /**
    * Check whether the string (one line of the file currently read) marks the
    *  end of a new subsection (usually [END]).
    */
-  bool isEndOfSection(QCString);
+  bool isEndOfSection(TQCString);
   /**
    * Extract the name of the section from the string.
    * The string must contain the line that starts the section.
    * @see ::isBeginOfSection
    */
-  QCString nameOfSection(const QCString&);
+  TQCString nameOfSection(const TQCString&);
   // ----------------------------------------------------------------------------
 public:
   /**
@@ -458,23 +458,23 @@ public:
   /**
    * Add an empty new section.
    */
-  bool add(const QCString&);
+  bool add(const TQCString&);
   /**
    * Add the section.
    */
-  bool add(const QCString&, Section*);
+  bool add(const TQCString&, Section*);
   /**
    * Search for the section, returning an iterator to it.
    */
-  bool find(const QCString&, StringSectionMap::iterator&);
+  bool find(const TQCString&, StringSectionMap::iterator&);
   /**
    * Search for the section, returning a pointer to the section object.
    */
-  bool find(const QCString&, Section*&);
+  bool find(const TQCString&, Section*&);
   /**
    * Remove this subsection.
    */
-  bool remove(const QCString&);
+  bool remove(const TQCString&);
   /**
    * Return the key-value-pairs of this (!) section.
    */
@@ -484,14 +484,14 @@ public:
    * Level is the position in section tree depth (the hierarchy level). 
    * It is used for indenting.
    */
-  bool save(QTextStream& stream, int level=0);
+  bool save(TQTextStream& stream, int level=0);
   /**
    * Read one section from the given input stream.
    * The method does not expect the line that marks the begin of the 
    * section. If finish is false, the code does also not except the 
    * section to be ended with a line like [END].
    */
-  bool readSection(QTextStream& file, bool finish=true);
+  bool readSection(TQTextStream& file, bool finish=true);
   /**
    * Clears both subsections and keys.
    */
@@ -520,7 +520,7 @@ public:
 /**
  *  The class QConfigDB is used to manage text-based data files 
  *  with hierarchical structure. <BR>
- *  It is derived from ::QWidget, so it may be derived to display 
+ *  It is derived from ::TQWidget, so it may be derived to display 
  *  its contents. The basic implementation here does not display 
  *  anything to make it a lean class.  <BR>
  *  Some notes about the philosophy of the configuration 
@@ -561,13 +561,13 @@ protected:
   /**
    * A timer pointer for watching the file.
    */
-  QTimer *timer;
+  TQTimer *timer;
   // ----------------------------------------------------------------------------
 public:
   /**
    * The Qt standard constructor.
    */
-  QConfigDB(QWidget* parent=0, const char* name=0);
+  QConfigDB(TQWidget* parent=0, const char* name=0);
   /**
    * The virtual destructor.
    */
@@ -575,21 +575,21 @@ public:
   /**
    * Get the key-value-map for the section referenced by \a key.
    */
-  bool get(const QCString& key, KeyValueMap*& map);
+  bool get(const TQCString& key, KeyValueMap*& map);
   /**
    * Get the key-value-map for the section referenced by \a key as key list.
    */
-  bool get(const list<QCString>& key, KeyValueMap*& map);
+  bool get(const list<TQCString>& key, KeyValueMap*& map);
   /**
    * Get the address of the specified Section object by its path. 
    * Never delete the section returned to you.
    */
-  bool get(const QCString& key, Section*&);
+  bool get(const TQCString& key, Section*&);
   /**
    * Get the address of the specified Section object by a path list. 
    * Never delete the section returned to you.
    */  
-  bool get(const list<QCString>& key, Section*&);
+  bool get(const list<TQCString>& key, Section*&);
   /**
    * Get the keys of the toplevel section.
    */
@@ -598,12 +598,12 @@ public:
    * Create the section with this path. 
    * All elements of the path that do not exist are created.
    */
-  bool createSection(const QCString& key);
+  bool createSection(const TQCString& key);
   /**
    * Create the section with a path like the path list. 
    * All elements of the path that do not exist are created.
    */
-  bool createSection(const list<QCString>& key);
+  bool createSection(const list<TQCString>& key);
   /**
    * Load the file.
    * @see ::setFileName
@@ -630,7 +630,7 @@ public:
    * altered. Subsequent calls may be used to check if a file already 
    * exists.
    */
-  bool setFileName(const QString& name, bool mustexist=true, bool ro=false);
+  bool setFileName(const TQString& name, bool mustexist=true, bool ro=false);
   /**
    * Store the modification time of the file for later check of changes.
    */
@@ -638,7 +638,7 @@ public:
   /**
    * Give the current filename.
    */
-  QString fileName(); 
+  TQString fileName(); 
   /**
    * Returns if the current file name is set for read only access.
    */
@@ -661,7 +661,7 @@ public:
    * locking the file, a number < zero reports an error and indicates
    * that the file is locked.
    */
-  static int IsLocked(const QString& fn);
+  static int IsLocked(const TQString& fn);
   /**
    * Check an existing lock file for its validity.
    * \a fn is the name of the DATA file that is locked.
@@ -677,7 +677,7 @@ public:
    * Returns false if the lockfile exists and is definitely stale or there 
    * is none, returns true if the lockfile seems to be really valid.
    */
-  static bool CheckLockFile(const QString& filename);
+  static bool CheckLockFile(const TQString& filename);
   /**
    * The static method CleanLockFiles removes all files in the list 
    * ::LockFiles when called.
@@ -709,11 +709,11 @@ protected:
    * Transform a given path into a list of strings. 
    * All internal path handling is done with lists.
    */
-  list<QCString> stringToKeylist(const QCString&);
+  list<TQCString> stringToKeylist(const TQCString&);
   /**
    * The current filename.
    */
-  QString filename; 
+  TQString filename; 
   /**
    * The current file opening mode.
    */
@@ -729,11 +729,11 @@ protected:
    * does not exist by now. 
    * @see ::storeFileAge
    */
-  QDateTime *mtime;
+  TQDateTime *mtime;
   /**
    * Lock the file.
    */
-  bool lock(const QString& file);
+  bool lock(const TQString& file);
   /**
    * Debugging aid, called from REQUIRE and ENSURE macros when the Nana library 
    * is used.
@@ -743,7 +743,7 @@ protected:
    * All created lockfiles are notified in this list. 
    * The list contains the names of the lockfiles, not of the files itselfes.
    */
-  static list<QString> LockFiles;
+  static list<TQString> LockFiles;
   // ----------------------------------------------------------------------------
 public slots:
   /**
@@ -770,9 +770,9 @@ signals:
 };
 
 // ----- inline functions:
-bool KeyValueMap::insert(const QCString& key, const char* value, bool force)
+bool KeyValueMap::insert(const TQCString& key, const char* value, bool force)
 { 
-  return insert(key, (QCString)value, force); 
+  return insert(key, (TQCString)value, force); 
 }
 // -----
 

@@ -38,8 +38,8 @@ extern "C" {
 #include <pwd.h>
 #include <grp.h>
 }
-#include <qtimer.h>
-#include <qfile.h>
+#include <tqtimer.h>
+#include <tqfile.h>
 
 #include <kapplication.h>
 #include <kglobal.h>
@@ -79,12 +79,12 @@ extern "C" {
 #endif
 
 using namespace KIO;
-template class QPtrList<KIO::Job>;
+template class TQPtrList<KIO::Job>;
 
 //this will update the report dialog with 5 Hz, I think this is fast enough, aleXXX
 #define REPORT_TIMEOUT 200
 
-#define KIO_ARGS QByteArray packedArgs; QDataStream stream( packedArgs, IO_WriteOnly ); stream
+#define KIO_ARGS TQByteArray packedArgs; TQDataStream stream( packedArgs, IO_WriteOnly ); stream
 
 class Job::JobPrivate
 {
@@ -97,8 +97,8 @@ public:
     bool m_autoErrorHandling;
     bool m_autoWarningHandling;
     bool m_interactive;
-    QGuardedPtr<QWidget> m_errorParentWidget;
-    // Maybe we could use the QObject parent/child mechanism instead
+    TQGuardedPtr<TQWidget> m_errorParentWidget;
+    // Maybe we could use the TQObject parent/child mechanism instead
     // (requires a new ctor, and moving the ctor code to some init()).
     Job* m_parentJob;
     int m_extraFlags;
@@ -106,7 +106,7 @@ public:
     unsigned long m_userTimestamp;
 };
 
-Job::Job(bool showProgressInfo) : QObject(0, "job"), m_error(0), m_percent(0)
+Job::Job(bool showProgressInfo) : TQObject(0, "job"), m_error(0), m_percent(0)
    , m_progressId(0), m_speedTimer(0), d( new JobPrivate )
 {
     // All jobs delete themselves after emiting 'result'.
@@ -115,19 +115,19 @@ Job::Job(bool showProgressInfo) : QObject(0, "job"), m_error(0), m_percent(0)
     if ( showProgressInfo )
     {
         m_progressId = Observer::self()->newJob( this, true );
-        addMetaData("progress-id", QString::number(m_progressId));
+        addMetaData("progress-id", TQString::number(m_progressId));
         //kdDebug(7007) << "Created job " << this << " with progress info -- m_progressId=" << m_progressId << endl;
         // Connect global progress info signals
-        connect( this, SIGNAL( percent( KIO::Job*, unsigned long ) ),
-                 Observer::self(), SLOT( slotPercent( KIO::Job*, unsigned long ) ) );
-        connect( this, SIGNAL( infoMessage( KIO::Job*, const QString & ) ),
-                 Observer::self(), SLOT( slotInfoMessage( KIO::Job*, const QString & ) ) );
-        connect( this, SIGNAL( totalSize( KIO::Job*, KIO::filesize_t ) ),
-                 Observer::self(), SLOT( slotTotalSize( KIO::Job*, KIO::filesize_t ) ) );
-        connect( this, SIGNAL( processedSize( KIO::Job*, KIO::filesize_t ) ),
-                 Observer::self(), SLOT( slotProcessedSize( KIO::Job*, KIO::filesize_t ) ) );
-        connect( this, SIGNAL( speed( KIO::Job*, unsigned long ) ),
-                 Observer::self(), SLOT( slotSpeed( KIO::Job*, unsigned long ) ) );
+        connect( this, TQT_SIGNAL( percent( KIO::Job*, unsigned long ) ),
+                 Observer::self(), TQT_SLOT( slotPercent( KIO::Job*, unsigned long ) ) );
+        connect( this, TQT_SIGNAL( infoMessage( KIO::Job*, const TQString & ) ),
+                 Observer::self(), TQT_SLOT( slotInfoMessage( KIO::Job*, const TQString & ) ) );
+        connect( this, TQT_SIGNAL( totalSize( KIO::Job*, KIO::filesize_t ) ),
+                 Observer::self(), TQT_SLOT( slotTotalSize( KIO::Job*, KIO::filesize_t ) ) );
+        connect( this, TQT_SIGNAL( processedSize( KIO::Job*, KIO::filesize_t ) ),
+                 Observer::self(), TQT_SLOT( slotProcessedSize( KIO::Job*, KIO::filesize_t ) ) );
+        connect( this, TQT_SIGNAL( speed( KIO::Job*, unsigned long ) ),
+                 Observer::self(), TQT_SLOT( slotSpeed( KIO::Job*, unsigned long ) ) );
     }
     // Don't exit while this job is running
     if (kapp)
@@ -164,15 +164,15 @@ void Job::addSubjob(Job *job, bool inheritMetaData)
     //kdDebug(7007) << "addSubjob(" << job << ") this = " << this << endl;
     subjobs.append(job);
 
-    connect( job, SIGNAL(result(KIO::Job*)),
-             SLOT(slotResult(KIO::Job*)) );
+    connect( job, TQT_SIGNAL(result(KIO::Job*)),
+             TQT_SLOT(slotResult(KIO::Job*)) );
 
     // Forward information from that subjob.
-    connect( job, SIGNAL(speed( KIO::Job*, unsigned long )),
-             SLOT(slotSpeed(KIO::Job*, unsigned long)) );
+    connect( job, TQT_SIGNAL(speed( KIO::Job*, unsigned long )),
+             TQT_SLOT(slotSpeed(KIO::Job*, unsigned long)) );
 
-    connect( job, SIGNAL(infoMessage( KIO::Job*, const QString & )),
-             SLOT(slotInfoMessage(KIO::Job*, const QString &)) );
+    connect( job, TQT_SIGNAL(infoMessage( KIO::Job*, const TQString & )),
+             TQT_SLOT(slotInfoMessage(KIO::Job*, const TQString &)) );
 
     if (inheritMetaData)
        job->mergeMetaData(m_outgoingMetaData);
@@ -218,8 +218,8 @@ void Job::emitSpeed( unsigned long bytes_per_second )
   //kdDebug(7007) << "Job " << this << " emitSpeed " << bytes_per_second << endl;
   if ( !m_speedTimer )
   {
-    m_speedTimer = new QTimer();
-    connect( m_speedTimer, SIGNAL( timeout() ), SLOT( slotSpeedTimeout() ) );
+    m_speedTimer = new TQTimer();
+    connect( m_speedTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( slotSpeedTimeout() ) );
   }
   emit speed( this, bytes_per_second );
   m_speedTimer->start( 5000 );   // 5 seconds interval should be enough
@@ -240,7 +240,7 @@ void Job::kill( bool quietly )
 {
   kdDebug(7007) << "Job::kill this=" << this << " " << className() << " m_progressId=" << m_progressId << " quietly=" << quietly << endl;
   // kill all subjobs, without triggering their result slot
-  QPtrListIterator<Job> it( subjobs );
+  TQPtrListIterator<Job> it( subjobs );
   for ( ; it.current() ; ++it )
      (*it)->kill( true );
   subjobs.clear();
@@ -275,7 +275,7 @@ void Job::slotSpeed( KIO::Job*, unsigned long speed )
   emitSpeed( speed );
 }
 
-void Job::slotInfoMessage( KIO::Job*, const QString & msg )
+void Job::slotInfoMessage( KIO::Job*, const TQString & msg )
 {
   emit infoMessage( this, msg );
 }
@@ -291,7 +291,7 @@ void Job::slotSpeedTimeout()
 
 //Job::errorString is implemented in global.cpp
 
-void Job::showErrorDialog( QWidget * parent )
+void Job::showErrorDialog( TQWidget * parent )
 {
   //kdDebug(7007) << "Job::showErrorDialog parent=" << parent << endl;
   kapp->enableStyles();
@@ -303,9 +303,9 @@ void Job::showErrorDialog( QWidget * parent )
       KMessageBox::queuedMessageBox( parent, KMessageBox::Error, errorString() );
 #if 0
     } else {
-      QStringList errors = detailedErrorStrings();
-      QString caption, err, detail;
-      QStringList::const_iterator it = errors.begin();
+      TQStringList errors = detailedErrorStrings();
+      TQString caption, err, detail;
+      TQStringList::const_iterator it = errors.begin();
       if ( it != errors.end() )
         caption = *(it++);
       if ( it != errors.end() )
@@ -318,7 +318,7 @@ void Job::showErrorDialog( QWidget * parent )
   }
 }
 
-void Job::setAutoErrorHandlingEnabled( bool enable, QWidget *parentWidget )
+void Job::setAutoErrorHandlingEnabled( bool enable, TQWidget *parentWidget )
 {
   d->m_autoErrorHandling = enable;
   d->m_errorParentWidget = parentWidget;
@@ -349,13 +349,13 @@ bool Job::isInteractive() const
   return d->m_interactive;
 }
 
-void Job::setWindow(QWidget *window)
+void Job::setWindow(TQWidget *window)
 {
   m_window = window;
   KIO::Scheduler::registerWindow(window);
 }
 
-QWidget *Job::window() const
+TQWidget *Job::window() const
 {
   return m_window;
 }
@@ -390,10 +390,10 @@ MetaData Job::metaData() const
     return m_incomingMetaData;
 }
 
-QString Job::queryMetaData(const QString &key)
+TQString Job::queryMetaData(const TQString &key)
 {
     if (!m_incomingMetaData.contains(key))
-       return QString::null;
+       return TQString::null;
     return m_incomingMetaData[key];
 }
 
@@ -402,21 +402,21 @@ void Job::setMetaData( const KIO::MetaData &_metaData)
     m_outgoingMetaData = _metaData;
 }
 
-void Job::addMetaData( const QString &key, const QString &value)
+void Job::addMetaData( const TQString &key, const TQString &value)
 {
     m_outgoingMetaData.insert(key, value);
 }
 
-void Job::addMetaData( const QMap<QString,QString> &values)
+void Job::addMetaData( const TQMap<TQString,TQString> &values)
 {
-    QMapConstIterator<QString,QString> it = values.begin();
+    TQMapConstIterator<TQString,TQString> it = values.begin();
     for(;it != values.end(); ++it)
       m_outgoingMetaData.insert(it.key(), it.data());
 }
 
-void Job::mergeMetaData( const QMap<QString,QString> &values)
+void Job::mergeMetaData( const TQMap<TQString,TQString> &values)
 {
-    QMapConstIterator<QString,QString> it = values.begin();
+    TQMapConstIterator<TQString,TQString> it = values.begin();
     for(;it != values.end(); ++it)
       m_outgoingMetaData.insert(it.key(), it.data(), false);
 }
@@ -427,7 +427,7 @@ MetaData Job::outgoingMetaData() const
 }
 
 
-SimpleJob::SimpleJob(const KURL& url, int command, const QByteArray &packedArgs,
+SimpleJob::SimpleJob(const KURL& url, int command, const TQByteArray &packedArgs,
                      bool showProgressInfo )
   : Job(showProgressInfo), m_slave(0), m_packedArgs(packedArgs),
     m_url(url), m_command(command), m_totalSize(0)
@@ -449,7 +449,7 @@ SimpleJob::SimpleJob(const KURL& url, int command, const QByteArray &packedArgs,
         kdDebug() << "ERR_MALFORMED_URL" << endl;
         m_error = ERR_MALFORMED_URL;
         m_errorText = m_url.url();
-        QTimer::singleShot(0, this, SLOT(slotFinished()) );
+        TQTimer::singleShot(0, this, TQT_SLOT(slotFinished()) );
         return;
     }
 }
@@ -495,51 +495,51 @@ void SimpleJob::start(Slave *slave)
 {
     m_slave = slave;
 
-    connect( m_slave, SIGNAL( error( int , const QString & ) ),
-             SLOT( slotError( int , const QString & ) ) );
+    connect( m_slave, TQT_SIGNAL( error( int , const TQString & ) ),
+             TQT_SLOT( slotError( int , const TQString & ) ) );
 
-    connect( m_slave, SIGNAL( warning( const QString & ) ),
-             SLOT( slotWarning( const QString & ) ) );
+    connect( m_slave, TQT_SIGNAL( warning( const TQString & ) ),
+             TQT_SLOT( slotWarning( const TQString & ) ) );
 
-    connect( m_slave, SIGNAL( infoMessage( const QString & ) ),
-             SLOT( slotInfoMessage( const QString & ) ) );
+    connect( m_slave, TQT_SIGNAL( infoMessage( const TQString & ) ),
+             TQT_SLOT( slotInfoMessage( const TQString & ) ) );
 
-    connect( m_slave, SIGNAL( connected() ),
-             SLOT( slotConnected() ) );
+    connect( m_slave, TQT_SIGNAL( connected() ),
+             TQT_SLOT( slotConnected() ) );
 
-    connect( m_slave, SIGNAL( finished() ),
-             SLOT( slotFinished() ) );
+    connect( m_slave, TQT_SIGNAL( finished() ),
+             TQT_SLOT( slotFinished() ) );
 
     if ((extraFlags() & EF_TransferJobDataSent) == 0)
     {
-        connect( m_slave, SIGNAL( totalSize( KIO::filesize_t ) ),
-                 SLOT( slotTotalSize( KIO::filesize_t ) ) );
+        connect( m_slave, TQT_SIGNAL( totalSize( KIO::filesize_t ) ),
+                 TQT_SLOT( slotTotalSize( KIO::filesize_t ) ) );
 
-        connect( m_slave, SIGNAL( processedSize( KIO::filesize_t ) ),
-                 SLOT( slotProcessedSize( KIO::filesize_t ) ) );
+        connect( m_slave, TQT_SIGNAL( processedSize( KIO::filesize_t ) ),
+                 TQT_SLOT( slotProcessedSize( KIO::filesize_t ) ) );
 
-        connect( m_slave, SIGNAL( speed( unsigned long ) ),
-                 SLOT( slotSpeed( unsigned long ) ) );
+        connect( m_slave, TQT_SIGNAL( speed( unsigned long ) ),
+                 TQT_SLOT( slotSpeed( unsigned long ) ) );
     }
 
-    connect( slave, SIGNAL( needProgressId() ),
-             SLOT( slotNeedProgressId() ) );
+    connect( slave, TQT_SIGNAL( needProgressId() ),
+             TQT_SLOT( slotNeedProgressId() ) );
 
-    connect( slave, SIGNAL(metaData( const KIO::MetaData& ) ),
-             SLOT( slotMetaData( const KIO::MetaData& ) ) );
+    connect( slave, TQT_SIGNAL(metaData( const KIO::MetaData& ) ),
+             TQT_SLOT( slotMetaData( const KIO::MetaData& ) ) );
 
     if (m_window)
     {
-       QString id;
+       TQString id;
        addMetaData("window-id", id.setNum((ulong)m_window->winId()));
     }
     if (userTimestamp())
     {
-       QString id;
+       TQString id;
        addMetaData("user-timestamp", id.setNum(userTimestamp()));
     }
 
-    QString sslSession = KSSLCSessionCache::getSessionForURL(m_url);
+    TQString sslSession = KSSLCSessionCache::getSessionForURL(m_url);
     if ( !sslSession.isNull() )
     {
         addMetaData("ssl_session_id", sslSession);
@@ -592,7 +592,7 @@ void SimpleJob::slotFinished( )
             else /*if ( m_command == CMD_RENAME )*/
             {
                 KURL src, dst;
-                QDataStream str( m_packedArgs, IO_ReadOnly );
+                TQDataStream str( m_packedArgs, IO_ReadOnly );
                 str >> src >> dst;
                 if ( src.directory() == dst.directory() ) // For the user, moving isn't renaming. Only renaming is.
                     allDirNotify.FileRenamed( src, dst );
@@ -602,19 +602,19 @@ void SimpleJob::slotFinished( )
     }
 }
 
-void SimpleJob::slotError( int error, const QString & errorText )
+void SimpleJob::slotError( int error, const TQString & errorText )
 {
     m_error = error;
     m_errorText = errorText;
     if ((m_error == ERR_UNKNOWN_HOST) && m_url.host().isEmpty())
-       m_errorText = QString::null;
+       m_errorText = TQString::null;
     // error terminates the job
     slotFinished();
 }
 
-void SimpleJob::slotWarning( const QString & errorText )
+void SimpleJob::slotWarning( const TQString & errorText )
 {
-    QGuardedPtr<SimpleJob> guard( this );
+    TQGuardedPtr<SimpleJob> guard( this );
     if (isInteractive() && isAutoWarningHandlingEnabled())
     {
         static uint msgBoxDisplayed = 0;
@@ -631,7 +631,7 @@ void SimpleJob::slotWarning( const QString & errorText )
         emit warning( this, errorText );
 }
 
-void SimpleJob::slotInfoMessage( const QString & msg )
+void SimpleJob::slotInfoMessage( const TQString & msg )
 {
     emit infoMessage( this, msg );
 }
@@ -680,7 +680,7 @@ void SimpleJob::slotMetaData( const KIO::MetaData &_metaData)
 }
 
 void SimpleJob::storeSSLSessionFromJob(const KURL &m_redirectionURL) {
-    QString sslSession = queryMetaData("ssl_session_id");
+    TQString sslSession = queryMetaData("ssl_session_id");
 
     if ( !sslSession.isNull() ) {
 	    const KURL &queryURL = m_redirectionURL.isEmpty()?m_url:m_redirectionURL;
@@ -690,15 +690,15 @@ void SimpleJob::storeSSLSessionFromJob(const KURL &m_redirectionURL) {
 
 //////////
 MkdirJob::MkdirJob( const KURL& url, int command,
-                    const QByteArray &packedArgs, bool showProgressInfo )
+                    const TQByteArray &packedArgs, bool showProgressInfo )
     : SimpleJob(url, command, packedArgs, showProgressInfo)
 {
 }
 
 void MkdirJob::start(Slave *slave)
 {
-    connect( slave, SIGNAL( redirection(const KURL &) ),
-             SLOT( slotRedirection(const KURL &) ) );
+    connect( slave, TQT_SIGNAL( redirection(const KURL &) ),
+             TQT_SLOT( slotRedirection(const KURL &) ) );
 
     SimpleJob::start(slave);
 }
@@ -733,13 +733,13 @@ void MkdirJob::slotFinished()
             emit permanentRedirection(this, m_url, m_redirectionURL);
         KURL dummyUrl;
         int permissions;
-        QDataStream istream( m_packedArgs, IO_ReadOnly );
+        TQDataStream istream( m_packedArgs, IO_ReadOnly );
         istream >> dummyUrl >> permissions;
 
         m_url = m_redirectionURL;
         m_redirectionURL = KURL();
         m_packedArgs.truncate(0);
-        QDataStream stream( m_packedArgs, IO_WriteOnly );
+        TQDataStream stream( m_packedArgs, IO_WriteOnly );
         stream << m_url << permissions;
 
         // Return slave to the scheduler
@@ -776,30 +776,30 @@ SimpleJob *KIO::rename( const KURL& src, const KURL & dest, bool overwrite )
     return new SimpleJob(src, CMD_RENAME, packedArgs, false);
 }
 
-SimpleJob *KIO::symlink( const QString& target, const KURL & dest, bool overwrite, bool showProgressInfo )
+SimpleJob *KIO::symlink( const TQString& target, const KURL & dest, bool overwrite, bool showProgressInfo )
 {
     //kdDebug(7007) << "symlink target=" << target << " " << dest << endl;
     KIO_ARGS << target << dest << (Q_INT8) overwrite;
     return new SimpleJob(dest, CMD_SYMLINK, packedArgs, showProgressInfo);
 }
 
-SimpleJob *KIO::special(const KURL& url, const QByteArray & data, bool showProgressInfo)
+SimpleJob *KIO::special(const KURL& url, const TQByteArray & data, bool showProgressInfo)
 {
     //kdDebug(7007) << "special " << url << endl;
     return new SimpleJob(url, CMD_SPECIAL, data, showProgressInfo);
 }
 
-SimpleJob *KIO::mount( bool ro, const char *fstype, const QString& dev, const QString& point, bool showProgressInfo )
+SimpleJob *KIO::mount( bool ro, const char *fstype, const TQString& dev, const TQString& point, bool showProgressInfo )
 {
     KIO_ARGS << int(1) << Q_INT8( ro ? 1 : 0 )
-             << QString::fromLatin1(fstype) << dev << point;
+             << TQString::fromLatin1(fstype) << dev << point;
     SimpleJob *job = special( KURL("file:/"), packedArgs, showProgressInfo );
     if ( showProgressInfo )
          Observer::self()->mounting( job, dev, point );
     return job;
 }
 
-SimpleJob *KIO::unmount( const QString& point, bool showProgressInfo )
+SimpleJob *KIO::unmount( const TQString& point, bool showProgressInfo )
 {
     KIO_ARGS << int(2) << point;
     SimpleJob *job = special( KURL("file:/"), packedArgs, showProgressInfo );
@@ -813,7 +813,7 @@ SimpleJob *KIO::unmount( const QString& point, bool showProgressInfo )
 //////////
 
 StatJob::StatJob( const KURL& url, int command,
-                  const QByteArray &packedArgs, bool showProgressInfo )
+                  const TQByteArray &packedArgs, bool showProgressInfo )
     : SimpleJob(url, command, packedArgs, showProgressInfo),
     m_bSource(true), m_details(2)
 {
@@ -822,12 +822,12 @@ StatJob::StatJob( const KURL& url, int command,
 void StatJob::start(Slave *slave)
 {
     m_outgoingMetaData.replace( "statSide", m_bSource ? "source" : "dest" );
-    m_outgoingMetaData.replace( "details", QString::number(m_details) );
+    m_outgoingMetaData.replace( "details", TQString::number(m_details) );
 
-    connect( slave, SIGNAL( statEntry( const KIO::UDSEntry& ) ),
-             SLOT( slotStatEntry( const KIO::UDSEntry & ) ) );
-    connect( slave, SIGNAL( redirection(const KURL &) ),
-             SLOT( slotRedirection(const KURL &) ) );
+    connect( slave, TQT_SIGNAL( statEntry( const KIO::UDSEntry& ) ),
+             TQT_SLOT( slotStatEntry( const KIO::UDSEntry & ) ) );
+    connect( slave, TQT_SIGNAL( redirection(const KURL &) ),
+             TQT_SLOT( slotRedirection(const KURL &) ) );
 
     SimpleJob::start(slave);
 }
@@ -869,7 +869,7 @@ void StatJob::slotFinished()
         m_url = m_redirectionURL;
         m_redirectionURL = KURL();
         m_packedArgs.truncate(0);
-        QDataStream stream( m_packedArgs, IO_WriteOnly );
+        TQDataStream stream( m_packedArgs, IO_WriteOnly );
         stream << m_url;
 
         // Return slave to the scheduler
@@ -914,8 +914,8 @@ SimpleJob *KIO::http_update_cache( const KURL& url, bool no_cache, time_t expire
 //////////
 
 TransferJob::TransferJob( const KURL& url, int command,
-                          const QByteArray &packedArgs,
-                          const QByteArray &_staticData,
+                          const TQByteArray &packedArgs,
+                          const TQByteArray &_staticData,
                           bool showProgressInfo)
     : SimpleJob(url, command, packedArgs, showProgressInfo), staticData( _staticData)
 {
@@ -927,7 +927,7 @@ TransferJob::TransferJob( const KURL& url, int command,
 }
 
 // Slave sends data
-void TransferJob::slotData( const QByteArray &_data)
+void TransferJob::slotData( const TQByteArray &_data)
 {
     if(m_redirectionURL.isEmpty() || !m_redirectionURL.isValid() || m_error)
       emit data( this, _data);
@@ -985,13 +985,13 @@ void TransferJob::slotFinished()
         m_url = m_redirectionURL;
         m_redirectionURL = KURL();
         // The very tricky part is the packed arguments business
-        QString dummyStr;
+        TQString dummyStr;
         KURL dummyUrl;
-        QDataStream istream( m_packedArgs, IO_ReadOnly );
+        TQDataStream istream( m_packedArgs, IO_ReadOnly );
         switch( m_command ) {
             case CMD_GET: {
                 m_packedArgs.truncate(0);
-                QDataStream stream( m_packedArgs, IO_WriteOnly );
+                TQDataStream stream( m_packedArgs, IO_WriteOnly );
                 stream << m_url;
                 break;
             }
@@ -1000,7 +1000,7 @@ void TransferJob::slotFinished()
                 Q_INT8 iOverwrite, iResume;
                 istream >> dummyUrl >> iOverwrite >> iResume >> permissions;
                 m_packedArgs.truncate(0);
-                QDataStream stream( m_packedArgs, IO_WriteOnly );
+                TQDataStream stream( m_packedArgs, IO_WriteOnly );
                 stream << m_url << iOverwrite << iResume << permissions;
                 break;
             }
@@ -1011,7 +1011,7 @@ void TransferJob::slotFinished()
                 {
                    addMetaData("cache","reload");
                    m_packedArgs.truncate(0);
-                   QDataStream stream( m_packedArgs, IO_WriteOnly );
+                   TQDataStream stream( m_packedArgs, IO_WriteOnly );
                    stream << m_url;
                    m_command = CMD_GET;
                 }
@@ -1033,7 +1033,7 @@ void TransferJob::setAsyncDataEnabled(bool enabled)
        extraFlags() &= ~EF_TransferJobAsync;
 }
 
-void TransferJob::sendAsyncData(const QByteArray &dataForSlave)
+void TransferJob::sendAsyncData(const TQByteArray &dataForSlave)
 {
     if (extraFlags() & EF_TransferJobNeedData)
     {
@@ -1070,14 +1070,14 @@ bool TransferJob::reportDataSent()
 // Slave requests data
 void TransferJob::slotDataReq()
 {
-    QByteArray dataForSlave;
+    TQByteArray dataForSlave;
 
     extraFlags() |= EF_TransferJobNeedData;
 
     if (!staticData.isEmpty())
     {
        dataForSlave = staticData;
-       staticData = QByteArray();
+       staticData = TQByteArray();
     }
     else
     {
@@ -1105,7 +1105,7 @@ void TransferJob::slotDataReq()
     }
 }
 
-void TransferJob::slotMimetype( const QString& type )
+void TransferJob::slotMimetype( const TQString& type )
 {
     m_mimetype = type;
     emit mimetype( this, m_mimetype);
@@ -1129,26 +1129,26 @@ void TransferJob::resume()
 void TransferJob::start(Slave *slave)
 {
     assert(slave);
-    connect( slave, SIGNAL( data( const QByteArray & ) ),
-             SLOT( slotData( const QByteArray & ) ) );
+    connect( slave, TQT_SIGNAL( data( const TQByteArray & ) ),
+             TQT_SLOT( slotData( const TQByteArray & ) ) );
 
-    connect( slave, SIGNAL( dataReq() ),
-             SLOT( slotDataReq() ) );
+    connect( slave, TQT_SIGNAL( dataReq() ),
+             TQT_SLOT( slotDataReq() ) );
 
-    connect( slave, SIGNAL( redirection(const KURL &) ),
-             SLOT( slotRedirection(const KURL &) ) );
+    connect( slave, TQT_SIGNAL( redirection(const KURL &) ),
+             TQT_SLOT( slotRedirection(const KURL &) ) );
 
-    connect( slave, SIGNAL(mimeType( const QString& ) ),
-             SLOT( slotMimetype( const QString& ) ) );
+    connect( slave, TQT_SIGNAL(mimeType( const TQString& ) ),
+             TQT_SLOT( slotMimetype( const TQString& ) ) );
 
-    connect( slave, SIGNAL(errorPage() ),
-             SLOT( slotErrorPage() ) );
+    connect( slave, TQT_SIGNAL(errorPage() ),
+             TQT_SLOT( slotErrorPage() ) );
 
-    connect( slave, SIGNAL( needSubURLData() ),
-             SLOT( slotNeedSubURLData() ) );
+    connect( slave, TQT_SIGNAL( needSubURLData() ),
+             TQT_SLOT( slotNeedSubURLData() ) );
 
-    connect( slave, SIGNAL(canResume( KIO::filesize_t ) ),
-             SLOT( slotCanResume( KIO::filesize_t ) ) );
+    connect( slave, TQT_SIGNAL(canResume( KIO::filesize_t ) ),
+             TQT_SLOT( slotCanResume( KIO::filesize_t ) ) );
 
     if (slave->suspended())
     {
@@ -1167,12 +1167,12 @@ void TransferJob::slotNeedSubURLData()
     // Job needs data from subURL.
     m_subJob = KIO::get( m_subUrl, false, false);
     suspend(); // Put job on hold until we have some data.
-    connect(m_subJob, SIGNAL( data(KIO::Job*,const QByteArray &)),
-            SLOT( slotSubURLData(KIO::Job*,const QByteArray &)));
+    connect(m_subJob, TQT_SIGNAL( data(KIO::Job*,const TQByteArray &)),
+            TQT_SLOT( slotSubURLData(KIO::Job*,const TQByteArray &)));
     addSubjob(m_subJob);
 }
 
-void TransferJob::slotSubURLData(KIO::Job*, const QByteArray &data)
+void TransferJob::slotSubURLData(KIO::Job*, const TQByteArray &data)
 {
     // The Alternating Bitburg protocol in action again.
     staticData = data;
@@ -1221,7 +1221,7 @@ TransferJob *KIO::get( const KURL& url, bool reload, bool showProgressInfo )
 {
     // Send decoded path and encoded query
     KIO_ARGS << url;
-    TransferJob * job = new TransferJob( url, CMD_GET, packedArgs, QByteArray(), showProgressInfo );
+    TransferJob * job = new TransferJob( url, CMD_GET, packedArgs, TQByteArray(), showProgressInfo );
     if (reload)
        job->addMetaData("cache", "reload");
     return job;
@@ -1231,7 +1231,7 @@ class PostErrorJob : public TransferJob
 {
 public:
 
-  PostErrorJob(int _error, const QString& url, const QByteArray &packedArgs, const QByteArray &postData, bool showProgressInfo)
+  PostErrorJob(int _error, const TQString& url, const TQByteArray &packedArgs, const TQByteArray &postData, bool showProgressInfo)
       : TransferJob(KURL(), CMD_SPECIAL, packedArgs, postData, showProgressInfo)
   {
     m_error = _error;
@@ -1240,7 +1240,7 @@ public:
 
 };
 
-TransferJob *KIO::http_post( const KURL& url, const QByteArray &postData, bool showProgressInfo )
+TransferJob *KIO::http_post( const KURL& url, const TQByteArray &postData, bool showProgressInfo )
 {
     int _error = 0;
 
@@ -1317,15 +1317,15 @@ TransferJob *KIO::http_post( const KURL& url, const QByteArray &postData, bool s
     if( _error )
     {
 	static bool override_loaded = false;
-	static QValueList< int >* overriden_ports = NULL;
+	static TQValueList< int >* overriden_ports = NULL;
 	if( !override_loaded )
 	{
 	    KConfig cfg( "kio_httprc", true );
-	    overriden_ports = new QValueList< int >;
+	    overriden_ports = new TQValueList< int >;
 	    *overriden_ports = cfg.readIntListEntry( "OverriddenPorts" );
 	    override_loaded = true;
 	}
-	for( QValueList< int >::ConstIterator it = overriden_ports->begin();
+	for( TQValueList< int >::ConstIterator it = overriden_ports->begin();
 	     it != overriden_ports->end();
 	     ++it )
 	    if( overriden_ports->contains( url.port()))
@@ -1361,7 +1361,7 @@ TransferJob *KIO::http_post( const KURL& url, const QByteArray &postData, bool s
                                          packedArgs, postData, showProgressInfo );
 
     if (redirection)
-      QTimer::singleShot(0, job, SLOT(slotPostRedirection()) );
+      TQTimer::singleShot(0, job, TQT_SLOT(slotPostRedirection()) );
 
     return job;
 }
@@ -1381,43 +1381,43 @@ TransferJob *KIO::put( const KURL& url, int permissions,
                   bool overwrite, bool resume, bool showProgressInfo )
 {
     KIO_ARGS << url << Q_INT8( overwrite ? 1 : 0 ) << Q_INT8( resume ? 1 : 0 ) << permissions;
-    TransferJob * job = new TransferJob( url, CMD_PUT, packedArgs, QByteArray(), showProgressInfo );
+    TransferJob * job = new TransferJob( url, CMD_PUT, packedArgs, TQByteArray(), showProgressInfo );
     return job;
 }
 
 //////////
 
 StoredTransferJob::StoredTransferJob(const KURL& url, int command,
-                                     const QByteArray &packedArgs,
-                                     const QByteArray &_staticData,
+                                     const TQByteArray &packedArgs,
+                                     const TQByteArray &_staticData,
                                      bool showProgressInfo)
     : TransferJob( url, command, packedArgs, _staticData, showProgressInfo ),
       m_uploadOffset( 0 )
 {
-    connect( this, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
-             SLOT( slotStoredData( KIO::Job *, const QByteArray & ) ) );
-    connect( this, SIGNAL( dataReq( KIO::Job *, QByteArray & ) ),
-             SLOT( slotStoredDataReq( KIO::Job *, QByteArray & ) ) );
+    connect( this, TQT_SIGNAL( data( KIO::Job *, const TQByteArray & ) ),
+             TQT_SLOT( slotStoredData( KIO::Job *, const TQByteArray & ) ) );
+    connect( this, TQT_SIGNAL( dataReq( KIO::Job *, TQByteArray & ) ),
+             TQT_SLOT( slotStoredDataReq( KIO::Job *, TQByteArray & ) ) );
 }
 
-void StoredTransferJob::setData( const QByteArray& arr )
+void StoredTransferJob::setData( const TQByteArray& arr )
 {
     Q_ASSERT( m_data.isNull() ); // check that we're only called once
     Q_ASSERT( m_uploadOffset == 0 ); // no upload started yet
     m_data = arr;
 }
 
-void StoredTransferJob::slotStoredData( KIO::Job *, const QByteArray &data )
+void StoredTransferJob::slotStoredData( KIO::Job *, const TQByteArray &data )
 {
   // check for end-of-data marker:
   if ( data.size() == 0 )
     return;
   unsigned int oldSize = m_data.size();
-  m_data.resize( oldSize + data.size(), QGArray::SpeedOptim );
+  m_data.resize( oldSize + data.size(), TQGArray::SpeedOptim );
   memcpy( m_data.data() + oldSize, data.data(), data.size() );
 }
 
-void StoredTransferJob::slotStoredDataReq( KIO::Job *, QByteArray &data )
+void StoredTransferJob::slotStoredDataReq( KIO::Job *, TQByteArray &data )
 {
   // Inspired from kmail's KMKernel::byteArrayToRemoteFile
   // send the data in 64 KB chunks
@@ -1432,7 +1432,7 @@ void StoredTransferJob::slotStoredDataReq( KIO::Job *, QByteArray &data )
   } else {
     // send the remaining bytes to the receiver (deep copy)
     data.duplicate( m_data.data() + m_uploadOffset, remainingBytes );
-    m_data = QByteArray();
+    m_data = TQByteArray();
     m_uploadOffset = 0;
     //kdDebug() << "Sending " << remainingBytes << " bytes\n";
   }
@@ -1442,17 +1442,17 @@ StoredTransferJob *KIO::storedGet( const KURL& url, bool reload, bool showProgre
 {
     // Send decoded path and encoded query
     KIO_ARGS << url;
-    StoredTransferJob * job = new StoredTransferJob( url, CMD_GET, packedArgs, QByteArray(), showProgressInfo );
+    StoredTransferJob * job = new StoredTransferJob( url, CMD_GET, packedArgs, TQByteArray(), showProgressInfo );
     if (reload)
        job->addMetaData("cache", "reload");
     return job;
 }
 
-StoredTransferJob *KIO::storedPut( const QByteArray& arr, const KURL& url, int permissions,
+StoredTransferJob *KIO::storedPut( const TQByteArray& arr, const KURL& url, int permissions,
                                    bool overwrite, bool resume, bool showProgressInfo )
 {
     KIO_ARGS << url << Q_INT8( overwrite ? 1 : 0 ) << Q_INT8( resume ? 1 : 0 ) << permissions;
-    StoredTransferJob * job = new StoredTransferJob( url, CMD_PUT, packedArgs, QByteArray(), showProgressInfo );
+    StoredTransferJob * job = new StoredTransferJob( url, CMD_PUT, packedArgs, TQByteArray(), showProgressInfo );
     job->setData( arr );
     return job;
 }
@@ -1460,8 +1460,8 @@ StoredTransferJob *KIO::storedPut( const QByteArray& arr, const KURL& url, int p
 //////////
 
 MimetypeJob::MimetypeJob( const KURL& url, int command,
-                  const QByteArray &packedArgs, bool showProgressInfo )
-    : TransferJob(url, command, packedArgs, QByteArray(), showProgressInfo)
+                  const TQByteArray &packedArgs, bool showProgressInfo )
+    : TransferJob(url, command, packedArgs, TQByteArray(), showProgressInfo)
 {
 }
 
@@ -1480,7 +1480,7 @@ void MimetypeJob::slotFinished( )
         // Due to the "protocol doesn't support listing" code in KRun, we
         // assumed it was a file.
         kdDebug(7007) << "It is in fact a directory!" << endl;
-        m_mimetype = QString::fromLatin1("inode/directory");
+        m_mimetype = TQString::fromLatin1("inode/directory");
         emit TransferJob::mimetype( this, m_mimetype );
         m_error = 0;
     }
@@ -1497,7 +1497,7 @@ void MimetypeJob::slotFinished( )
         m_url = m_redirectionURL;
         m_redirectionURL = KURL();
         m_packedArgs.truncate(0);
-        QDataStream stream( m_packedArgs, IO_WriteOnly );
+        TQDataStream stream( m_packedArgs, IO_WriteOnly );
         stream << m_url;
 
         // Return slave to the scheduler
@@ -1518,15 +1518,15 @@ MimetypeJob *KIO::mimetype(const KURL& url, bool showProgressInfo )
 //////////////////////////
 
 DirectCopyJob::DirectCopyJob( const KURL& url, int command,
-                              const QByteArray &packedArgs, bool showProgressInfo )
+                              const TQByteArray &packedArgs, bool showProgressInfo )
     : SimpleJob(url, command, packedArgs, showProgressInfo)
 {
 }
 
 void DirectCopyJob::start( Slave* slave )
 {
-    connect( slave, SIGNAL(canResume( KIO::filesize_t ) ),
-             SLOT( slotCanResume( KIO::filesize_t ) ) );
+    connect( slave, TQT_SIGNAL(canResume( KIO::filesize_t ) ),
+             TQT_SLOT( slotCanResume( KIO::filesize_t ) ) );
     SimpleJob::start(slave);
 }
 
@@ -1573,7 +1573,7 @@ FileCopyJob::FileCopyJob( const KURL& src, const KURL& dest, int permissions,
     d->m_delJob = 0;
     d->m_sourceSize = (KIO::filesize_t) -1;
     d->m_modificationTime = static_cast<time_t>( -1 );
-    QTimer::singleShot(0, this, SLOT(slotStart()));
+    TQTimer::singleShot(0, this, TQT_SLOT(slotStart()));
 }
 
 void FileCopyJob::slotStart()
@@ -1667,8 +1667,8 @@ void FileCopyJob::startCopyJob(const KURL &slave_url)
     m_copyJob = new DirectCopyJob(slave_url, CMD_COPY, packedArgs, false);
     addSubjob( m_copyJob );
     connectSubjob( m_copyJob );
-    connect( m_copyJob, SIGNAL(canResume(KIO::Job *, KIO::filesize_t)),
-             SLOT( slotCanResume(KIO::Job *, KIO::filesize_t)));
+    connect( m_copyJob, TQT_SIGNAL(canResume(KIO::Job *, KIO::filesize_t)),
+             TQT_SLOT( slotCanResume(KIO::Job *, KIO::filesize_t)));
 }
 
 void FileCopyJob::startRenameJob(const KURL &slave_url)
@@ -1681,14 +1681,14 @@ void FileCopyJob::startRenameJob(const KURL &slave_url)
 
 void FileCopyJob::connectSubjob( SimpleJob * job )
 {
-    connect( job, SIGNAL(totalSize( KIO::Job*, KIO::filesize_t )),
-             this, SLOT( slotTotalSize(KIO::Job*, KIO::filesize_t)) );
+    connect( job, TQT_SIGNAL(totalSize( KIO::Job*, KIO::filesize_t )),
+             this, TQT_SLOT( slotTotalSize(KIO::Job*, KIO::filesize_t)) );
 
-    connect( job, SIGNAL(processedSize( KIO::Job*, KIO::filesize_t )),
-             this, SLOT( slotProcessedSize(KIO::Job*, KIO::filesize_t)) );
+    connect( job, TQT_SIGNAL(processedSize( KIO::Job*, KIO::filesize_t )),
+             this, TQT_SLOT( slotProcessedSize(KIO::Job*, KIO::filesize_t)) );
 
-    connect( job, SIGNAL(percent( KIO::Job*, unsigned long )),
-             this, SLOT( slotPercent(KIO::Job*, unsigned long)) );
+    connect( job, TQT_SIGNAL(percent( KIO::Job*, unsigned long )),
+             this, TQT_SLOT( slotPercent(KIO::Job*, unsigned long)) );
 
 }
 
@@ -1729,17 +1729,17 @@ void FileCopyJob::startDataPump()
     m_getJob = 0L; // for now
     m_putJob = put( m_dest, m_permissions, m_overwrite, m_resume, false /* no GUI */);
     if ( d->m_modificationTime != static_cast<time_t>( -1 ) ) {
-        QDateTime dt; dt.setTime_t( d->m_modificationTime );
+        TQDateTime dt; dt.setTime_t( d->m_modificationTime );
         m_putJob->addMetaData( "modified", dt.toString( Qt::ISODate ) );
     }
     //kdDebug(7007) << "FileCopyJob: m_putJob = " << m_putJob << " m_dest=" << m_dest << endl;
 
     // The first thing the put job will tell us is whether we can
     // resume or not (this is always emitted)
-    connect( m_putJob, SIGNAL(canResume(KIO::Job *, KIO::filesize_t)),
-             SLOT( slotCanResume(KIO::Job *, KIO::filesize_t)));
-    connect( m_putJob, SIGNAL(dataReq(KIO::Job *, QByteArray&)),
-             SLOT( slotDataReq(KIO::Job *, QByteArray&)));
+    connect( m_putJob, TQT_SIGNAL(canResume(KIO::Job *, KIO::filesize_t)),
+             TQT_SLOT( slotCanResume(KIO::Job *, KIO::filesize_t)));
+    connect( m_putJob, TQT_SIGNAL(dataReq(KIO::Job *, TQByteArray&)),
+             TQT_SLOT( slotDataReq(KIO::Job *, TQByteArray&)));
     addSubjob( m_putJob );
 }
 
@@ -1754,7 +1754,7 @@ void FileCopyJob::slotCanResume( KIO::Job* job, KIO::filesize_t offset )
 
             if (!KProtocolManager::autoResume() && !m_overwrite)
             {
-                QString newPath;
+                TQString newPath;
                 KIO::Job* job = ( !m_progressId && parentJob() ) ? parentJob() : this;
                 // Ask confirmation about resuming previous transfer
                 res = Observer::self()->open_RenameDlg(
@@ -1798,8 +1798,8 @@ void FileCopyJob::slotCanResume( KIO::Job* job, KIO::filesize_t offset )
                 m_getJob->addMetaData( "resume", KIO::number(offset) );
 
                 // Might or might not get emitted
-                connect( m_getJob, SIGNAL(canResume(KIO::Job *, KIO::filesize_t)),
-                         SLOT( slotCanResume(KIO::Job *, KIO::filesize_t)));
+                connect( m_getJob, TQT_SIGNAL(canResume(KIO::Job *, KIO::filesize_t)),
+                         TQT_SLOT( slotCanResume(KIO::Job *, KIO::filesize_t)));
             }
             m_putJob->slave()->setOffset( offset );
 
@@ -1808,10 +1808,10 @@ void FileCopyJob::slotCanResume( KIO::Job* job, KIO::filesize_t offset )
             connectSubjob( m_getJob ); // Progress info depends on get
             m_getJob->resume(); // Order a beer
 
-            connect( m_getJob, SIGNAL(data(KIO::Job*,const QByteArray&)),
-                     SLOT( slotData(KIO::Job*,const QByteArray&)) );
-            connect( m_getJob, SIGNAL(mimetype(KIO::Job*,const QString&) ),
-                     SLOT(slotMimetype(KIO::Job*,const QString&)) );
+            connect( m_getJob, TQT_SIGNAL(data(KIO::Job*,const TQByteArray&)),
+                     TQT_SLOT( slotData(KIO::Job*,const TQByteArray&)) );
+            connect( m_getJob, TQT_SIGNAL(mimetype(KIO::Job*,const TQString&) ),
+                     TQT_SLOT(slotMimetype(KIO::Job*,const TQString&)) );
         }
         else // copyjob
         {
@@ -1831,7 +1831,7 @@ void FileCopyJob::slotCanResume( KIO::Job* job, KIO::filesize_t offset )
                         << " m_getJob=" << m_getJob << " m_putJob=" << m_putJob << endl;
 }
 
-void FileCopyJob::slotData( KIO::Job * , const QByteArray &data)
+void FileCopyJob::slotData( KIO::Job * , const TQByteArray &data)
 {
    //kdDebug(7007) << "FileCopyJob::slotData" << endl;
    //kdDebug(7007) << " data size : " << data.size() << endl;
@@ -1851,7 +1851,7 @@ void FileCopyJob::slotData( KIO::Job * , const QByteArray &data)
    }
 }
 
-void FileCopyJob::slotDataReq( KIO::Job * , QByteArray &data)
+void FileCopyJob::slotDataReq( KIO::Job * , TQByteArray &data)
 {
    //kdDebug(7007) << "FileCopyJob::slotDataReq" << endl;
    if (!m_resumeAnswerSent && !m_getJob)
@@ -1869,10 +1869,10 @@ void FileCopyJob::slotDataReq( KIO::Job * , QByteArray &data)
       m_putJob->suspend();
    }
    data = m_buffer;
-   m_buffer = QByteArray();
+   m_buffer = TQByteArray();
 }
 
-void FileCopyJob::slotMimetype( KIO::Job*, const QString& type )
+void FileCopyJob::slotMimetype( KIO::Job*, const TQString& type )
 {
     emit mimetype( this, type );
 }
@@ -1980,14 +1980,14 @@ SimpleJob *KIO::file_delete( const KURL& src, bool showProgressInfo)
 
 //////////
 
-// KDE 4: Make it const QString & _prefix
-ListJob::ListJob(const KURL& u, bool showProgressInfo, bool _recursive, QString _prefix, bool _includeHidden) :
-    SimpleJob(u, CMD_LISTDIR, QByteArray(), showProgressInfo),
+// KDE 4: Make it const TQString & _prefix
+ListJob::ListJob(const KURL& u, bool showProgressInfo, bool _recursive, TQString _prefix, bool _includeHidden) :
+    SimpleJob(u, CMD_LISTDIR, TQByteArray(), showProgressInfo),
     recursive(_recursive), includeHidden(_includeHidden), prefix(_prefix), m_processedEntries(0)
 {
     // We couldn't set the args when calling the parent constructor,
     // so do it now.
-    QDataStream stream( m_packedArgs, IO_WriteOnly );
+    TQDataStream stream( m_packedArgs, IO_WriteOnly );
     stream << u;
 }
 
@@ -2031,7 +2031,7 @@ void ListJob::slotListEntries( const KIO::UDSEntryList& list )
                 }
             }
             if (isDir && !isLink) {
-                const QString filename = itemURL.fileName();
+                const TQString filename = itemURL.fileName();
                 // skip hidden dirs when listing if requested
                 if (filename != ".." && filename != "." && (includeHidden || filename[0] != '.')) {
                     ListJob *job = new ListJob(itemURL,
@@ -2040,9 +2040,9 @@ void ListJob::slotListEntries( const KIO::UDSEntryList& list )
                                                prefix + filename + "/",
                                                includeHidden);
                     Scheduler::scheduleJob(job);
-                    connect(job, SIGNAL(entries( KIO::Job *,
+                    connect(job, TQT_SIGNAL(entries( KIO::Job *,
                                                  const KIO::UDSEntryList& )),
-                            SLOT( gotEntries( KIO::Job*,
+                            TQT_SLOT( gotEntries( KIO::Job*,
                                               const KIO::UDSEntryList& )));
                     addSubjob(job);
                 }
@@ -2065,7 +2065,7 @@ void ListJob::slotListEntries( const KIO::UDSEntryList& list )
 
             UDSEntry newone = *it;
             UDSEntry::Iterator it2 = newone.begin();
-            QString filename;
+            TQString filename;
             for( ; it2 != newone.end(); it2++ ) {
                 if ((*it2).m_uds == UDS_NAME) {
                     filename = (*it2).m_str;
@@ -2115,7 +2115,7 @@ void ListJob::slotFinished()
     if ( m_error == KIO::ERR_IS_FILE && m_url.isLocalFile() ) {
         KMimeType::Ptr ptr = KMimeType::findByURL( m_url, 0, true, true );
         if ( ptr ) {
-            QString proto = ptr->property("X-KDE-LocalProtocol").toString();
+            TQString proto = ptr->property("X-KDE-LocalProtocol").toString();
             if ( !proto.isEmpty() && KProtocolInfo::isKnownProtocol(proto) ) {
                 m_redirectionURL = m_url;
                 m_redirectionURL.setProtocol( proto );
@@ -2135,7 +2135,7 @@ void ListJob::slotFinished()
         m_url = m_redirectionURL;
         m_redirectionURL = KURL();
         m_packedArgs.truncate(0);
-        QDataStream stream( m_packedArgs, IO_WriteOnly );
+        TQDataStream stream( m_packedArgs, IO_WriteOnly );
         stream << m_url;
 
         // Return slave to the scheduler
@@ -2151,13 +2151,13 @@ void ListJob::slotMetaData( const KIO::MetaData &_metaData) {
 
 ListJob *KIO::listDir( const KURL& url, bool showProgressInfo, bool includeHidden )
 {
-    ListJob * job = new ListJob(url, showProgressInfo,false,QString::null,includeHidden);
+    ListJob * job = new ListJob(url, showProgressInfo,false,TQString::null,includeHidden);
     return job;
 }
 
 ListJob *KIO::listRecursive( const KURL& url, bool showProgressInfo, bool includeHidden )
 {
-    ListJob * job = new ListJob(url, showProgressInfo, true,QString::null,includeHidden);
+    ListJob * job = new ListJob(url, showProgressInfo, true,TQString::null,includeHidden);
     return job;
 }
 
@@ -2175,15 +2175,15 @@ void ListJob::start(Slave *slave)
     {
         m_error = ERR_ACCESS_DENIED;
         m_errorText = m_url.url();
-        QTimer::singleShot(0, this, SLOT(slotFinished()) );
+        TQTimer::singleShot(0, this, TQT_SLOT(slotFinished()) );
         return;
     }
-    connect( slave, SIGNAL( listEntries( const KIO::UDSEntryList& )),
-             SLOT( slotListEntries( const KIO::UDSEntryList& )));
-    connect( slave, SIGNAL( totalSize( KIO::filesize_t ) ),
-             SLOT( slotTotalSize( KIO::filesize_t ) ) );
-    connect( slave, SIGNAL( redirection(const KURL &) ),
-             SLOT( slotRedirection(const KURL &) ) );
+    connect( slave, TQT_SIGNAL( listEntries( const KIO::UDSEntryList& )),
+             TQT_SLOT( slotListEntries( const KIO::UDSEntryList& )));
+    connect( slave, TQT_SIGNAL( totalSize( KIO::filesize_t ) ),
+             TQT_SLOT( slotTotalSize( KIO::filesize_t ) ) );
+    connect( slave, TQT_SIGNAL( redirection(const KURL &) ),
+             TQT_SLOT( slotRedirection(const KURL &) ) );
 
     SimpleJob::start(slave);
 }
@@ -2208,7 +2208,7 @@ public:
     bool m_bURLDirty;
     // Used after copying all the files into the dirs, to set mtime (TODO: and permissions?)
     // after the copy is done
-    QValueList<CopyInfo> m_directoriesCopied;
+    TQValueList<CopyInfo> m_directoriesCopied;
 };
 
 CopyJob::CopyJob( const KURL::List& src, const KURL& dest, CopyMode mode, bool asMethod, bool showProgressInfo )
@@ -2226,13 +2226,13 @@ CopyJob::CopyJob( const KURL::List& src, const KURL& dest, CopyMode mode, bool a
     d->m_globalDestinationState = destinationState;
 
     if ( showProgressInfo ) {
-        connect( this, SIGNAL( totalFiles( KIO::Job*, unsigned long ) ),
-                 Observer::self(), SLOT( slotTotalFiles( KIO::Job*, unsigned long ) ) );
+        connect( this, TQT_SIGNAL( totalFiles( KIO::Job*, unsigned long ) ),
+                 Observer::self(), TQT_SLOT( slotTotalFiles( KIO::Job*, unsigned long ) ) );
 
-        connect( this, SIGNAL( totalDirs( KIO::Job*, unsigned long ) ),
-                 Observer::self(), SLOT( slotTotalDirs( KIO::Job*, unsigned long ) ) );
+        connect( this, TQT_SIGNAL( totalDirs( KIO::Job*, unsigned long ) ),
+                 Observer::self(), TQT_SLOT( slotTotalDirs( KIO::Job*, unsigned long ) ) );
     }
-    QTimer::singleShot(0, this, SLOT(slotStart()));
+    TQTimer::singleShot(0, this, TQT_SLOT(slotStart()));
     /**
        States:
        STATE_STATING for the dest
@@ -2261,9 +2261,9 @@ void CopyJob::slotStart()
        Calling a function via a signal takes approx. 65 times the time
        compared to calling it directly (at least on my machine). aleXXX
     */
-    m_reportTimer = new QTimer(this);
+    m_reportTimer = new TQTimer(this);
 
-    connect(m_reportTimer,SIGNAL(timeout()),this,SLOT(slotReport()));
+    connect(m_reportTimer,TQT_SIGNAL(timeout()),this,TQT_SLOT(slotReport()));
     m_reportTimer->start(REPORT_TIMEOUT,false);
 
     // Stat the dest
@@ -2314,8 +2314,8 @@ void CopyJob::slotResultStating( Job *job )
     UDSEntry entry = ((StatJob*)job)->statResult();
     bool bDir = false;
     bool bLink = false;
-    QString sName;
-    QString sLocalPath;
+    TQString sName;
+    TQString sLocalPath;
     UDSEntry::ConstIterator it2 = entry.begin();
     for( ; it2 != entry.end(); it2++ ) {
         if ( ((*it2).m_uds) == UDS_FILE_TYPE )
@@ -2398,7 +2398,7 @@ void CopyJob::slotResultStating( Job *job )
             if ( !m_asMethod )
             {
                 // Use <desturl>/<directory_copied> as destination, from now on
-                QString directory = srcurl.fileName();
+                TQString directory = srcurl.fileName();
                 if ( !sName.isEmpty() && KProtocolInfo::fileNameUsedForCopying( srcurl ) == KProtocolInfo::Name )
                 {
                     directory = sName;
@@ -2502,9 +2502,9 @@ void CopyJob::slotEntries(KIO::Job* job, const UDSEntryList& list)
         info.mtime = (time_t) -1;
         info.ctime = (time_t) -1;
         info.size = (KIO::filesize_t)-1;
-        QString displayName;
+        TQString displayName;
         KURL url;
-        QString localPath;
+        TQString localPath;
         bool isDir = false;
         for( ; it2 != (*it).end(); it2++ ) {
             switch ((*it2).m_uds) {
@@ -2566,13 +2566,13 @@ void CopyJob::slotEntries(KIO::Job* job, const UDSEntryList& list)
                  // (passed here during stating) but not its children (during listing)
                  ( ! ( m_asMethod && state == STATE_STATING ) ) )
             {
-                QString destFileName;
+                TQString destFileName;
                 if ( hasCustomURL &&
                      KProtocolInfo::fileNameUsedForCopying( url ) == KProtocolInfo::FromURL ) {
                     //destFileName = url.fileName(); // Doesn't work for recursive listing
                     // Count the number of prefixes used by the recursive listjob
                     int numberOfSlashes = displayName.contains( '/' ); // don't make this a find()!
-                    QString path = url.path();
+                    TQString path = url.path();
                     int pos = 0;
                     for ( int n = 0; n < numberOfSlashes + 1; ++n ) {
                         pos = path.findRev( '/', pos - 1 );
@@ -2707,7 +2707,7 @@ void CopyJob::statCurrentSrc()
 
         // if the file system doesn't support deleting, we do not even stat
         if (m_mode == Move && !KProtocolInfo::supportsDeleting(m_currentSrcURL)) {
-            QGuardedPtr<CopyJob> that = this;
+            TQGuardedPtr<CopyJob> that = this;
             if (isInteractive())
                 KMessageBox::information( 0, buildErrorString(ERR_CANNOT_DELETE, m_currentSrcURL.prettyURL()));
             if (that)
@@ -2759,7 +2759,7 @@ void CopyJob::startRenameJob( const KURL& slave_url )
     info.size = (KIO::filesize_t)-1;
     info.uSource = m_currentSrcURL;
     info.uDest = dest;
-    QValueList<CopyInfo> files;
+    TQValueList<CopyInfo> files;
     files.append(info);
     emit aboutToCreate( this, files );
 
@@ -2777,9 +2777,9 @@ void CopyJob::startListing( const KURL & src )
     d->m_bURLDirty = true;
     ListJob * newjob = listRecursive( src, false );
     newjob->setUnrestricted(true);
-    connect(newjob, SIGNAL(entries( KIO::Job *,
+    connect(newjob, TQT_SIGNAL(entries( KIO::Job *,
                                     const KIO::UDSEntryList& )),
-            SLOT( slotEntries( KIO::Job*,
+            TQT_SLOT( slotEntries( KIO::Job*,
                                const KIO::UDSEntryList& )));
     addSubjob( newjob );
 }
@@ -2798,20 +2798,20 @@ void CopyJob::skip( const KURL & sourceUrl )
     dirsToRemove.remove( sourceUrl );
 }
 
-bool CopyJob::shouldOverwrite( const QString& path ) const
+bool CopyJob::shouldOverwrite( const TQString& path ) const
 {
     if ( m_bOverwriteAll )
         return true;
-    QStringList::ConstIterator sit = m_overwriteList.begin();
+    TQStringList::ConstIterator sit = m_overwriteList.begin();
     for( ; sit != m_overwriteList.end(); ++sit )
         if ( path.startsWith( *sit ) )
             return true;
     return false;
 }
 
-bool CopyJob::shouldSkip( const QString& path ) const
+bool CopyJob::shouldSkip( const TQString& path ) const
 {
-    QStringList::ConstIterator sit = m_skipList.begin();
+    TQStringList::ConstIterator sit = m_skipList.begin();
     for( ; sit != m_skipList.end(); ++sit )
         if ( path.startsWith( *sit ) )
             return true;
@@ -2821,7 +2821,7 @@ bool CopyJob::shouldSkip( const QString& path ) const
 void CopyJob::slotResultCreatingDirs( Job * job )
 {
     // The dir we are trying to create:
-    QValueList<CopyInfo>::Iterator it = dirs.begin();
+    TQValueList<CopyInfo>::Iterator it = dirs.begin();
     // Was there an error creating a dir ?
     if ( job->error() )
     {
@@ -2838,7 +2838,7 @@ void CopyJob::slotResultCreatingDirs( Job * job )
                 dirs.remove( it ); // Move on to next dir
             } else {
                 // Did the user choose to overwrite already?
-                const QString destFile = (*it).uDest.path();
+                const TQString destFile = (*it).uDest.path();
                 if ( shouldOverwrite( destFile ) ) { // overwrite => just skip
                     emit copyingDone( this, ( *it ).uSource, ( *it ).uDest, true /* directory */, false /* renamed */ );
                     dirs.remove( it ); // Move on to next dir
@@ -2890,12 +2890,12 @@ void CopyJob::slotResultConflictCreatingDirs( KIO::Job * job )
     // We come here after a conflict has been detected and we've stated the existing dir
 
     // The dir we were trying to create:
-    QValueList<CopyInfo>::Iterator it = dirs.begin();
+    TQValueList<CopyInfo>::Iterator it = dirs.begin();
     // Its modification time:
     time_t destmtime = (time_t)-1;
     time_t destctime = (time_t)-1;
     KIO::filesize_t destsize = 0;
-    QString linkDest;
+    TQString linkDest;
 
     UDSEntry entry = ((KIO::StatJob*)job)->statResult();
     KIO::UDSEntry::ConstIterator it2 = entry.begin();
@@ -2931,8 +2931,8 @@ void CopyJob::slotResultConflictCreatingDirs( KIO::Job * job )
           mode = (RenameDlg_Mode)( mode | M_OVERWRITE );
     }
 
-    QString existingDest = (*it).uDest.path();
-    QString newPath;
+    TQString existingDest = (*it).uDest.path();
+    TQString newPath;
     if (m_reportTimer)
         m_reportTimer->stop();
     RenameDlg_Result r = Observer::self()->open_RenameDlg( this, i18n("Folder Already Exists"),
@@ -2951,7 +2951,7 @@ void CopyJob::slotResultConflictCreatingDirs( KIO::Job * job )
             return;
         case R_RENAME:
         {
-            QString oldPath = (*it).uDest.path( 1 );
+            TQString oldPath = (*it).uDest.path( 1 );
             KURL newUrl( (*it).uDest );
             newUrl.setPath( newPath );
             emit renamed( this, (*it).uDest, newUrl ); // for e.g. kpropsdlg
@@ -2959,14 +2959,14 @@ void CopyJob::slotResultConflictCreatingDirs( KIO::Job * job )
             // Change the current one and strip the trailing '/'
             (*it).uDest.setPath( newUrl.path( -1 ) );
             newPath = newUrl.path( 1 ); // With trailing slash
-            QValueList<CopyInfo>::Iterator renamedirit = it;
+            TQValueList<CopyInfo>::Iterator renamedirit = it;
             ++renamedirit;
             // Change the name of subdirectories inside the directory
             for( ; renamedirit != dirs.end() ; ++renamedirit )
             {
-                QString path = (*renamedirit).uDest.path();
+                TQString path = (*renamedirit).uDest.path();
                 if ( path.left(oldPath.length()) == oldPath ) {
-                    QString n = path;
+                    TQString n = path;
                     n.replace( 0, oldPath.length(), newPath );
                     kdDebug(7007) << "dirs list: " << (*renamedirit).uSource.path()
                                   << " was going to be " << path
@@ -2975,12 +2975,12 @@ void CopyJob::slotResultConflictCreatingDirs( KIO::Job * job )
                 }
             }
             // Change filenames inside the directory
-            QValueList<CopyInfo>::Iterator renamefileit = files.begin();
+            TQValueList<CopyInfo>::Iterator renamefileit = files.begin();
             for( ; renamefileit != files.end() ; ++renamefileit )
             {
-                QString path = (*renamefileit).uDest.path();
+                TQString path = (*renamefileit).uDest.path();
                 if ( path.left(oldPath.length()) == oldPath ) {
-                    QString n = path;
+                    TQString n = path;
                     n.replace( 0, oldPath.length(), newPath );
                     kdDebug(7007) << "files list: " << (*renamefileit).uSource.path()
                                   << " was going to be " << path
@@ -3032,11 +3032,11 @@ void CopyJob::createNextDir()
     if ( !dirs.isEmpty() )
     {
         // Take first dir to create out of list
-        QValueList<CopyInfo>::Iterator it = dirs.begin();
+        TQValueList<CopyInfo>::Iterator it = dirs.begin();
         // Is this URL on the skip list or the overwrite list ?
         while( it != dirs.end() && udir.isEmpty() )
         {
-            const QString dir = (*it).uDest.path();
+            const TQString dir = (*it).uDest.path();
             if ( shouldSkip( dir ) ) {
                 dirs.remove( it );
                 it = dirs.begin();
@@ -3071,7 +3071,7 @@ void CopyJob::createNextDir()
 void CopyJob::slotResultCopyingFiles( Job * job )
 {
     // The file we were trying to copy:
-    QValueList<CopyInfo>::Iterator it = files.begin();
+    TQValueList<CopyInfo>::Iterator it = files.begin();
     if ( job->error() )
     {
         // Should we skip automatically ?
@@ -3138,7 +3138,7 @@ void CopyJob::slotResultCopyingFiles( Job * job )
 
         if ( m_bCurrentOperationIsLink )
         {
-            QString target = ( m_mode == Link ? (*it).uSource.path() : (*it).linkDest );
+            TQString target = ( m_mode == Link ? (*it).uSource.path() : (*it).linkDest );
             //required for the undo feature
             emit copyingLinkDone( this, (*it).uSource, target, (*it).uDest );
         }
@@ -3165,10 +3165,10 @@ void CopyJob::slotResultConflictCopyingFiles( KIO::Job * job )
 {
     // We come here after a conflict has been detected and we've stated the existing file
     // The file we were trying to create:
-    QValueList<CopyInfo>::Iterator it = files.begin();
+    TQValueList<CopyInfo>::Iterator it = files.begin();
 
     RenameDlg_Result res;
-    QString newPath;
+    TQString newPath;
 
     if (m_reportTimer)
         m_reportTimer->stop();
@@ -3181,7 +3181,7 @@ void CopyJob::slotResultConflictCopyingFiles( KIO::Job * job )
         time_t destmtime = (time_t)-1;
         time_t destctime = (time_t)-1;
         KIO::filesize_t destsize = 0;
-        QString linkDest;
+        TQString linkDest;
         UDSEntry entry = ((KIO::StatJob*)job)->statResult();
         KIO::UDSEntry::ConstIterator it2 = entry.begin();
         for( ; it2 != entry.end(); it2++ ) {
@@ -3271,7 +3271,7 @@ void CopyJob::slotResultConflictCopyingFiles( KIO::Job * job )
             emit renamed( this, (*it).uDest, newUrl ); // for e.g. kpropsdlg
             (*it).uDest = newUrl;
 
-            QValueList<CopyInfo> files;
+            TQValueList<CopyInfo> files;
             files.append(*it);
             emit aboutToCreate( this, files );
         }
@@ -3306,11 +3306,11 @@ void CopyJob::copyNextFile()
     bool bCopyFile = false;
     //kdDebug(7007) << "CopyJob::copyNextFile()" << endl;
     // Take the first file in the list
-    QValueList<CopyInfo>::Iterator it = files.begin();
+    TQValueList<CopyInfo>::Iterator it = files.begin();
     // Is this URL on the skip list ?
     while (it != files.end() && !bCopyFile)
     {
-        const QString destFile = (*it).uDest.path();
+        const TQString destFile = (*it).uDest.path();
         bCopyFile = !shouldSkip( destFile );
         if ( !bCopyFile ) {
             files.remove( it );
@@ -3322,7 +3322,7 @@ void CopyJob::copyNextFile()
     {
         // Do we set overwrite ?
         bool bOverwrite;
-        const QString destFile = (*it).uDest.path();
+        const TQString destFile = (*it).uDest.path();
         kdDebug(7007) << "copying " << destFile << endl;
         if ( (*it).uDest == (*it).uSource )
             bOverwrite = false;
@@ -3359,18 +3359,18 @@ void CopyJob::copyNextFile()
                     bool devicesOk=false;
 
                     // if the source is a devices url, handle it a littlebit special
-                    if ((*it).uSource.protocol()==QString::fromLatin1("devices"))
+                    if ((*it).uSource.protocol()==TQString::fromLatin1("devices"))
                     {
-                       QByteArray data;
-                       QByteArray param;
-                       QCString retType;
-                       QDataStream streamout(param,IO_WriteOnly);
+                       TQByteArray data;
+                       TQByteArray param;
+                       TQCString retType;
+                       TQDataStream streamout(param,IO_WriteOnly);
                        streamout<<(*it).uSource;
                        streamout<<(*it).uDest;
                        if ( kapp && kapp->dcopClient()->call( "kded",
                             "mountwatcher", "createLink(KURL, KURL)", param,retType,data,false ) )
                        {
-                          QDataStream streamin(data,IO_ReadOnly);
+                          TQDataStream streamin(data,IO_ReadOnly);
                           streamin>>devicesOk;
                        }
                        if (devicesOk)
@@ -3385,9 +3385,9 @@ void CopyJob::copyNextFile()
 
                     if (!devicesOk)
                     {
-                       QString path = (*it).uDest.path();
+                       TQString path = (*it).uDest.path();
                        //kdDebug(7007) << "CopyJob::copyNextFile path=" << path << endl;
-                       QFile f( path );
+                       TQFile f( path );
                        if ( f.open( IO_ReadWrite ) )
                        {
                            f.close();
@@ -3395,20 +3395,20 @@ void CopyJob::copyNextFile()
                            config.setDesktopGroup();
                            KURL url = (*it).uSource;
                            url.setPass( "" );
-                           config.writePathEntry( QString::fromLatin1("URL"), url.url() );
-                           config.writeEntry( QString::fromLatin1("Name"), url.url() );
-                           config.writeEntry( QString::fromLatin1("Type"), QString::fromLatin1("Link") );
-                           QString protocol = (*it).uSource.protocol();
-                           if ( protocol == QString::fromLatin1("ftp") )
-                               config.writeEntry( QString::fromLatin1("Icon"), QString::fromLatin1("ftp") );
-                           else if ( protocol == QString::fromLatin1("http") )
-                               config.writeEntry( QString::fromLatin1("Icon"), QString::fromLatin1("www") );
-                           else if ( protocol == QString::fromLatin1("info") )
-                               config.writeEntry( QString::fromLatin1("Icon"), QString::fromLatin1("info") );
-                           else if ( protocol == QString::fromLatin1("mailto") )   // sven:
-                               config.writeEntry( QString::fromLatin1("Icon"), QString::fromLatin1("kmail") ); // added mailto: support
+                           config.writePathEntry( TQString::fromLatin1("URL"), url.url() );
+                           config.writeEntry( TQString::fromLatin1("Name"), url.url() );
+                           config.writeEntry( TQString::fromLatin1("Type"), TQString::fromLatin1("Link") );
+                           TQString protocol = (*it).uSource.protocol();
+                           if ( protocol == TQString::fromLatin1("ftp") )
+                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("ftp") );
+                           else if ( protocol == TQString::fromLatin1("http") )
+                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("www") );
+                           else if ( protocol == TQString::fromLatin1("info") )
+                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("info") );
+                           else if ( protocol == TQString::fromLatin1("mailto") )   // sven:
+                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("kmail") ); // added mailto: support
                            else
-                               config.writeEntry( QString::fromLatin1("Icon"), QString::fromLatin1("unknown") );
+                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("unknown") );
                            config.sync();
                            files.remove( it );
                            m_processedFiles++;
@@ -3484,10 +3484,10 @@ void CopyJob::copyNextFile()
             d->m_bURLDirty = true;
         }
         addSubjob(newjob);
-        connect( newjob, SIGNAL( processedSize( KIO::Job*, KIO::filesize_t ) ),
-                 this, SLOT( slotProcessedSize( KIO::Job*, KIO::filesize_t ) ) );
-        connect( newjob, SIGNAL( totalSize( KIO::Job*, KIO::filesize_t ) ),
-                 this, SLOT( slotTotalSize( KIO::Job*, KIO::filesize_t ) ) );
+        connect( newjob, TQT_SIGNAL( processedSize( KIO::Job*, KIO::filesize_t ) ),
+                 this, TQT_SLOT( slotProcessedSize( KIO::Job*, KIO::filesize_t ) ) );
+        connect( newjob, TQT_SIGNAL( totalSize( KIO::Job*, KIO::filesize_t ) ),
+                 this, TQT_SLOT( slotTotalSize( KIO::Job*, KIO::filesize_t ) ) );
     }
     else
     {
@@ -3524,11 +3524,11 @@ void CopyJob::setNextDirAttribute()
         state = STATE_SETTING_DIR_ATTRIBUTES;
 #ifdef Q_OS_UNIX
         // TODO KDE4: this should use a SlaveBase method, but we have none yet in KDE3.
-        QValueList<CopyInfo>::Iterator it = d->m_directoriesCopied.begin();
+        TQValueList<CopyInfo>::Iterator it = d->m_directoriesCopied.begin();
         for ( ; it != d->m_directoriesCopied.end() ; ++it ) {
             const KURL& url = (*it).uDest;
             if ( url.isLocalFile() && (*it).mtime != (time_t)-1 ) {
-                const QCString path = QFile::encodeName( url.path() );
+                const TQCString path = TQFile::encodeName( url.path() );
                 KDE_struct_stat statbuf;
                 if (KDE_lstat(path, &statbuf) == 0) {
                     struct utimbuf utbuf;
@@ -3633,7 +3633,7 @@ void CopyJob::slotResultSettingDirAttributes( Job * job )
 void CopyJob::slotResultRenaming( Job* job )
 {
     int err = job->error();
-    const QString errText = job->errorText();
+    const TQString errText = job->errorText();
     removeSubjob( job, true, false ); // merge metadata
     assert ( subjobs.isEmpty() );
     // Determine dest again
@@ -3652,15 +3652,15 @@ void CopyJob::slotResultRenaming( Job* job )
                err == ERR_IDENTICAL_FILES ) )
         {
             kdDebug(7007) << "Couldn't rename directly, dest already exists. Detected special case of lower/uppercase renaming in same dir, try with 2 rename calls" << endl;
-            QCString _src( QFile::encodeName(m_currentSrcURL.path()) );
-            QCString _dest( QFile::encodeName(dest.path()) );
+            TQCString _src( TQFile::encodeName(m_currentSrcURL.path()) );
+            TQCString _dest( TQFile::encodeName(dest.path()) );
             KTempFile tmpFile( m_currentSrcURL.directory(false) );
-            QCString _tmp( QFile::encodeName(tmpFile.name()) );
+            TQCString _tmp( TQFile::encodeName(tmpFile.name()) );
             kdDebug(7007) << "CopyJob::slotResult KTempFile status:" << tmpFile.status() << " using " << _tmp << " as intermediary" << endl;
             tmpFile.unlink();
             if ( ::rename( _src, _tmp ) == 0 )
             {
-                if ( !QFile::exists( _dest ) && ::rename( _tmp, _dest ) == 0 )
+                if ( !TQFile::exists( _dest ) && ::rename( _tmp, _dest ) == 0 )
                 {
                     kdDebug(7007) << "Success." << endl;
                     err = 0;
@@ -3706,7 +3706,7 @@ void CopyJob::slotResultRenaming( Job* job )
             } else if ( m_bOverwriteAll ) {
                 ; // nothing to do, stat+copy+del will overwrite
             } else {
-                QString newPath;
+                TQString newPath;
                 // If src==dest, use "overwrite-itself"
                 RenameDlg_Mode mode = (RenameDlg_Mode)
                                       ( ( m_currentSrcURL == dest ) ? M_OVERWRITE_ITSELF : M_OVERWRITE );
@@ -3728,13 +3728,13 @@ void CopyJob::slotResultRenaming( Job* job )
 
                 KDE_struct_stat stat_buf;
                 if ( m_currentSrcURL.isLocalFile() &&
-                     KDE_stat(QFile::encodeName(m_currentSrcURL.path()), &stat_buf) == 0 ) {
+                     KDE_stat(TQFile::encodeName(m_currentSrcURL.path()), &stat_buf) == 0 ) {
                     sizeSrc = stat_buf.st_size;
                     ctimeSrc = stat_buf.st_ctime;
                     mtimeSrc = stat_buf.st_mtime;
                 }
                 if ( dest.isLocalFile() &&
-                     KDE_stat(QFile::encodeName(dest.path()), &stat_buf) == 0 ) {
+                     KDE_stat(TQFile::encodeName(dest.path()), &stat_buf) == 0 ) {
                     sizeDest = stat_buf.st_size;
                     ctimeDest = stat_buf.st_ctime;
                     mtimeDest = stat_buf.st_mtime;
@@ -3967,29 +3967,29 @@ DeleteJob::DeleteJob( const KURL::List& src, bool /*shred*/, bool showProgressIn
 {
   if ( showProgressInfo ) {
 
-     connect( this, SIGNAL( totalFiles( KIO::Job*, unsigned long ) ),
-              Observer::self(), SLOT( slotTotalFiles( KIO::Job*, unsigned long ) ) );
+     connect( this, TQT_SIGNAL( totalFiles( KIO::Job*, unsigned long ) ),
+              Observer::self(), TQT_SLOT( slotTotalFiles( KIO::Job*, unsigned long ) ) );
 
-     connect( this, SIGNAL( totalDirs( KIO::Job*, unsigned long ) ),
-              Observer::self(), SLOT( slotTotalDirs( KIO::Job*, unsigned long ) ) );
+     connect( this, TQT_SIGNAL( totalDirs( KIO::Job*, unsigned long ) ),
+              Observer::self(), TQT_SLOT( slotTotalDirs( KIO::Job*, unsigned long ) ) );
 
      // See slotReport
-     /*connect( this, SIGNAL( processedFiles( KIO::Job*, unsigned long ) ),
-      m_observer, SLOT( slotProcessedFiles( KIO::Job*, unsigned long ) ) );
+     /*connect( this, TQT_SIGNAL( processedFiles( KIO::Job*, unsigned long ) ),
+      m_observer, TQT_SLOT( slotProcessedFiles( KIO::Job*, unsigned long ) ) );
 
-      connect( this, SIGNAL( processedDirs( KIO::Job*, unsigned long ) ),
-      m_observer, SLOT( slotProcessedDirs( KIO::Job*, unsigned long ) ) );
+      connect( this, TQT_SIGNAL( processedDirs( KIO::Job*, unsigned long ) ),
+      m_observer, TQT_SLOT( slotProcessedDirs( KIO::Job*, unsigned long ) ) );
 
-      connect( this, SIGNAL( deleting( KIO::Job*, const KURL& ) ),
-      m_observer, SLOT( slotDeleting( KIO::Job*, const KURL& ) ) );*/
+      connect( this, TQT_SIGNAL( deleting( KIO::Job*, const KURL& ) ),
+      m_observer, TQT_SLOT( slotDeleting( KIO::Job*, const KURL& ) ) );*/
 
-     m_reportTimer=new QTimer(this);
-     connect(m_reportTimer,SIGNAL(timeout()),this,SLOT(slotReport()));
+     m_reportTimer=new TQTimer(this);
+     connect(m_reportTimer,TQT_SIGNAL(timeout()),this,TQT_SLOT(slotReport()));
      //this will update the report dialog with 5 Hz, I think this is fast enough, aleXXX
      m_reportTimer->start(REPORT_TIMEOUT,false);
   }
 
-  QTimer::singleShot(0, this, SLOT(slotStart()));
+  TQTimer::singleShot(0, this, TQT_SLOT(slotStart()));
 }
 
 void DeleteJob::slotStart()
@@ -4040,7 +4040,7 @@ void DeleteJob::slotEntries(KIO::Job* job, const UDSEntryList& list)
       UDSEntry::ConstIterator it2 = (*it).begin();
       bool bDir = false;
       bool bLink = false;
-      QString displayName;
+      TQString displayName;
       KURL url;
       int atomsFound(0);
       for( ; it2 != (*it).end(); it2++ )
@@ -4100,7 +4100,7 @@ void DeleteJob::statNextSrc()
 
         // if the file system doesn't support deleting, we do not even stat
         if (!KProtocolInfo::supportsDeleting(m_currentURL)) {
-            QGuardedPtr<DeleteJob> that = this;
+            TQGuardedPtr<DeleteJob> that = this;
             ++m_currentStat;
             if (isInteractive())
                 KMessageBox::information( 0, buildErrorString(ERR_CANNOT_DELETE, m_currentURL.prettyURL()));
@@ -4124,7 +4124,7 @@ void DeleteJob::statNextSrc()
         // To speed things up and prevent double-notification, we disable KDirWatch
         // on those dirs temporarily (using KDirWatch::self, that's the instanced
         // used by e.g. kdirlister).
-        for ( QStringList::Iterator it = m_parentDirs.begin() ; it != m_parentDirs.end() ; ++it )
+        for ( TQStringList::Iterator it = m_parentDirs.begin() ; it != m_parentDirs.end() ; ++it )
             KDirWatch::self()->stopDirScan( *it );
         state = STATE_DELETING_FILES;
 	deleteNextFile();
@@ -4148,7 +4148,7 @@ void DeleteJob::deleteNextFile()
             }
             // Normal deletion
             // If local file, try do it directly
-            if ( (*it).isLocalFile() && unlink( QFile::encodeName((*it).path()) ) == 0 ) {
+            if ( (*it).isLocalFile() && unlink( TQFile::encodeName((*it).path()) ) == 0 ) {
                 //kdDebug(7007) << "DeleteJob deleted " << (*it).path() << endl;
                 job = 0;
                 m_processedFiles++;
@@ -4185,7 +4185,7 @@ void DeleteJob::deleteNextDir()
             // Take first dir to delete out of list - last ones first !
             KURL::List::Iterator it = dirs.fromLast();
             // If local dir, try to rmdir it directly
-            if ( (*it).isLocalFile() && ::rmdir( QFile::encodeName((*it).path()) ) == 0 ) {
+            if ( (*it).isLocalFile() && ::rmdir( TQFile::encodeName((*it).path()) ) == 0 ) {
 
                 m_processedDirs++;
                 if ( m_processedDirs % 100 == 0 ) { // update progress info every 100 dirs
@@ -4211,7 +4211,7 @@ void DeleteJob::deleteNextDir()
     }
 
     // Re-enable watching on the dirs that held the deleted files
-    for ( QStringList::Iterator it = m_parentDirs.begin() ; it != m_parentDirs.end() ; ++it )
+    for ( TQStringList::Iterator it = m_parentDirs.begin() ; it != m_parentDirs.end() ; ++it )
         KDirWatch::self()->restartDirScan( *it );
 
     // Finished - tell the world
@@ -4315,9 +4315,9 @@ void DeleteJob::slotResult( Job *job )
                 ListJob *newjob = listRecursive( url, false );
                 newjob->setUnrestricted(true); // No KIOSK restrictions
                 Scheduler::scheduleJob(newjob);
-                connect(newjob, SIGNAL(entries( KIO::Job *,
+                connect(newjob, TQT_SIGNAL(entries( KIO::Job *,
                                                 const KIO::UDSEntryList& )),
-                        SLOT( slotEntries( KIO::Job*,
+                        TQT_SLOT( slotEntries( KIO::Job*,
                                            const KIO::UDSEntryList& )));
                 addSubjob(newjob);
             } else {
@@ -4399,7 +4399,7 @@ DeleteJob *KIO::del( const KURL::List& src, bool shred, bool showProgressInfo )
 
 MultiGetJob::MultiGetJob(const KURL& url,
                          bool showProgressInfo)
- : TransferJob(url, 0, QByteArray(), QByteArray(), showProgressInfo)
+ : TransferJob(url, 0, TQByteArray(), TQByteArray(), showProgressInfo)
 {
    m_waitQueue.setAutoDelete(true);
    m_activeQueue.setAutoDelete(true);
@@ -4409,11 +4409,11 @@ MultiGetJob::MultiGetJob(const KURL& url,
 void MultiGetJob::get(long id, const KURL &url, const MetaData &metaData)
 {
    GetRequest *entry = new GetRequest(id, url, metaData);
-   entry->metaData["request-id"] = QString("%1").arg(id);
+   entry->metaData["request-id"] = TQString("%1").arg(id);
    m_waitQueue.append(entry);
 }
 
-void MultiGetJob::flushQueue(QPtrList<GetRequest> &queue)
+void MultiGetJob::flushQueue(TQPtrList<GetRequest> &queue)
 {
    GetRequest *entry;
    // Use multi-get
@@ -4541,18 +4541,18 @@ void MultiGetJob::slotFinished()
   }
 }
 
-void MultiGetJob::slotData( const QByteArray &_data)
+void MultiGetJob::slotData( const TQByteArray &_data)
 {
   if(!m_currentEntry) return;// Error, unknown request!
   if(m_redirectionURL.isEmpty() || !m_redirectionURL.isValid() || m_error)
      emit data(m_currentEntry->id, _data);
 }
 
-void MultiGetJob::slotMimetype( const QString &_mimetype )
+void MultiGetJob::slotMimetype( const TQString &_mimetype )
 {
   if (b_multiGetActive)
   {
-     QPtrList<GetRequest> newQueue;
+     TQPtrList<GetRequest> newQueue;
      flushQueue(newQueue);
      if (!newQueue.isEmpty())
      {
@@ -4579,11 +4579,11 @@ CacheInfo::CacheInfo(const KURL &url)
     m_url = url;
 }
 
-QString CacheInfo::cachedFileName()
+TQString CacheInfo::cachedFileName()
 {
-   const QChar separator = '_';
+   const TQChar separator = '_';
 
-   QString CEF = m_url.path();
+   TQString CEF = m_url.path();
 
    int p = CEF.find('/');
 
@@ -4593,10 +4593,10 @@ QString CacheInfo::cachedFileName()
       p = CEF.find('/', p);
    }
 
-   QString host = m_url.host().lower();
+   TQString host = m_url.host().lower();
    CEF = host + CEF + '_';
 
-   QString dir = KProtocolManager::cacheDir();
+   TQString dir = KProtocolManager::cacheDir();
    if (dir[dir.length()-1] != '/')
       dir += "/";
 
@@ -4613,13 +4613,13 @@ QString CacheInfo::cachedFileName()
       dir += "0";
 
    unsigned long hash = 0x00000000;
-   QCString u = m_url.url().latin1();
+   TQCString u = m_url.url().latin1();
    for(int i = u.length(); i--;)
    {
       hash = (hash * 12211 + u[i]) % 2147483563;
    }
 
-   QString hashString;
+   TQString hashString;
    hashString.sprintf("%08lx", hash);
 
    CEF = CEF + hashString;
@@ -4629,7 +4629,7 @@ QString CacheInfo::cachedFileName()
    return CEF;
 }
 
-QFile *CacheInfo::cachedFile()
+TQFile *CacheInfo::cachedFile()
 {
 #ifdef Q_WS_WIN
    const char *mode = (readWrite ? "rb+" : "rb");
@@ -4637,7 +4637,7 @@ QFile *CacheInfo::cachedFile()
    const char *mode = (readWrite ? "r+" : "r");
 #endif
 
-   FILE *fs = fopen(QFile::encodeName(CEF), mode); // Open for reading and writing
+   FILE *fs = fopen(TQFile::encodeName(CEF), mode); // Open for reading and writing
    if (!fs)
       return 0;
 
@@ -4701,7 +4701,7 @@ QFile *CacheInfo::cachedFile()
       ok = false;
    if (ok)
    {
-      m_etag = QString(buffer).stripWhiteSpace();
+      m_etag = TQString(buffer).stripWhiteSpace();
    }
 
    // Last-Modified
@@ -4709,7 +4709,7 @@ QFile *CacheInfo::cachedFile()
       ok = false;
    if (ok)
    {
-      m_lastModified = QString(buffer).stripWhiteSpace();
+      m_lastModified = TQString(buffer).stripWhiteSpace();
    }
 
    fclose(fs);
@@ -4717,7 +4717,7 @@ QFile *CacheInfo::cachedFile()
    if (ok)
       return fs;
 
-   unlink( QFile::encodeName(CEF) );
+   unlink( TQFile::encodeName(CEF) );
    return 0;
 
 }

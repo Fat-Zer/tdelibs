@@ -20,9 +20,9 @@
 #ifndef _KPART_H
 #define _KPART_H
 
-#include <qstring.h>
-#include <qdom.h>
-#include <qguardedptr.h>
+#include <tqstring.h>
+#include <tqdom.h>
+#include <tqguardedptr.h>
 #include <kurl.h>
 
 #include <kxmlguiclient.h>
@@ -74,8 +74,8 @@ public:
    *
    * @internal
    */
-  void setPartObject( QObject *object );
-  QObject *partObject() const;
+  void setPartObject( TQObject *object );
+  TQObject *partObject() const;
 
 protected:
   /**
@@ -129,8 +129,8 @@ protected:
    * \code
    * if( factory() )
    * {
-   *   QPtrList<KParts::Plugin> plugins = KParts::Plugin::pluginObjects( this );
-   *   QPtrListIterator<KParts::Plugin> it( plugins );
+   *   TQPtrList<KParts::Plugin> plugins = KParts::Plugin::pluginObjects( this );
+   *   TQPtrListIterator<KParts::Plugin> it( plugins );
    *   KParts::Plugin * plugin;
    *   while( ( plugin = it.current() ) != 0 )
    *   {
@@ -140,7 +140,7 @@ protected:
    * }
    * \endcode
    */
-  void loadPlugins( QObject *parent, KXMLGUIClient *parentGUIClient, KInstance *instance );
+  void loadPlugins( TQObject *parent, KXMLGUIClient *parentGUIClient, KInstance *instance );
 
   /**
    * For a KParts::Part: call this before setInstance().
@@ -150,7 +150,7 @@ protected:
 
 private:
     PartBasePrivate *d;
-    QObject *m_obj;
+    TQObject *m_obj;
 };
 
 /**
@@ -163,9 +163,9 @@ private:
  *
  * <b>About the widget:</b>\n
  *
- * Note that KParts::Part does not inherit QWidget.
+ * Note that KParts::Part does not inherit TQWidget.
  * This is due to the fact that the "visual representation"
- * will probably not be a mere QWidget, but an elaborate one.
+ * will probably not be a mere TQWidget, but an elaborate one.
  * That's why when implementing your KParts::Part (or derived)
  * you should call KParts::Part::setWidget() in your constructor.
  *
@@ -178,7 +178,7 @@ private:
  * framework for a "viewer" part and for an "editor"-like part.
  * Use Part directly only if your part doesn't fit into those.
  */
-class KPARTS_EXPORT Part : public QObject, public PartBase
+class KPARTS_EXPORT Part : public TQObject, public PartBase
 {
     Q_OBJECT
 
@@ -190,7 +190,7 @@ public:
      *  @param parent Parent object of the part.
      *  @param name   QT-internal name of the part.
      */
-    Part( QObject *parent = 0, const char* name = 0 );
+    Part( TQObject *parent = 0, const char* name = 0 );
 
     /**
      *  Destructor.
@@ -201,19 +201,19 @@ public:
      * Embed this part into a host widget.
      *
      * You don't need to do this if you created the widget with the
-     * correct parent widget - this is just a QWidget::reparent().
+     * correct parent widget - this is just a TQWidget::reparent().
      * Note that the Part is still the holder
-     * of the QWidget, meaning that if you delete the Part,
+     * of the TQWidget, meaning that if you delete the Part,
      * then the widget gets destroyed as well, and vice-versa.
      * This method is not recommended since creating the widget with the correct
      * parent is simpler anyway.
      */
-    virtual void embed( QWidget * parentWidget );
+    virtual void embed( TQWidget * parentWidget );
 
     /**
      * @return The widget defined by this part, set by setWidget().
      */
-    virtual QWidget *widget();
+    virtual TQWidget *widget();
 
     /**
      * @internal
@@ -234,7 +234,7 @@ public:
      * @param widget the part widget being clicked - usually the same as widget(), except in koffice.
      * @param globalPos the mouse coordinates in global coordinates
      */
-    virtual Part *hitTest( QWidget *widget, const QPoint &globalPos );
+    virtual Part *hitTest( TQWidget *widget, const TQPoint &globalPos );
 
     /**
      *  @param selectable Indicates whether the part is selectable or not.
@@ -251,12 +251,12 @@ signals:
      * Emitted by the part, to set the caption of the window(s)
      * hosting this part
      */
-    void setWindowCaption( const QString & caption );
+    void setWindowCaption( const TQString & caption );
     /**
      * Emited by the part, to set a text in the statusbar of the window(s)
      * hosting this part
      */
-    void setStatusBarText( const QString & text );
+    void setStatusBarText( const TQString & text );
 
 protected:
 
@@ -265,12 +265,12 @@ protected:
      *
      * Call this in the Part-inherited class constructor.
      */
-    virtual void setWidget( QWidget * widget );
+    virtual void setWidget( TQWidget * widget );
 
     /**
      * @internal
      */
-    virtual void customEvent( QCustomEvent *event );
+    virtual void customEvent( TQCustomEvent *event );
 
     /**
      * Convenience method which is called when the Part received a PartActivateEvent .
@@ -299,13 +299,13 @@ protected:
      * Convenience method for KXMLGUIFactory::container.
      * @return a container widget owned by the Part's GUI.
      */
-    QWidget *hostContainer( const QString &containerName );
+    TQWidget *hostContainer( const TQString &containerName );
 
 private slots:
     void slotWidgetDestroyed();
 
 private:
-    QGuardedPtr<QWidget> m_widget;
+    TQGuardedPtr<TQWidget> m_widget;
 
     PartManager * m_manager;
 
@@ -344,7 +344,7 @@ public:
    * Constructor
    * See also Part for the setXXX methods to call.
    */
-  ReadOnlyPart( QObject *parent = 0, const char *name = 0 );
+  ReadOnlyPart( TQObject *parent = 0, const char *name = 0 );
 
   /**
    * Destructor
@@ -410,7 +410,7 @@ public:
    * every ReadOnlyPart has a URL (see url()), so this simply sets it.
    * @return true if the part supports progressive loading and accepts data, false otherwise.
    */
-  bool openStream( const QString& mimeType, const KURL& url );
+  bool openStream( const TQString& mimeType, const KURL& url );
 
   /**
    * Send some data to the part. openStream must have been called previously,
@@ -418,7 +418,7 @@ public:
    * @return true if the data was accepted by the part. If false is returned,
    * the application should stop sending data, and doesn't have to call closeStream.
    */
-  bool writeStream( const QByteArray& data );
+  bool writeStream( const TQByteArray& data );
 
   /**
    * Terminate the sending of data to the part.
@@ -434,14 +434,14 @@ private: // Makes no sense for inherited classes to call those. But make it prot
    * Parts which implement progress loading should check the @p mimeType
    * parameter, and return true if they can accept a data stream of that type.
    */
-  virtual bool doOpenStream( const QString& /*mimeType*/ ) { return false; }
+  virtual bool doOpenStream( const TQString& /*mimeType*/ ) { return false; }
   /**
    * Receive some data from the hosting application.
    * In this method the part should attempt to display the data progressively.
    * With some data types (text, html...) closeStream might never actually be called,
    * in the case of continuous streams. This can't happen with e.g. images.
    */
-  virtual bool doWriteStream( const QByteArray& /*data*/ ) { return false; }
+  virtual bool doWriteStream( const TQByteArray& /*data*/ ) { return false; }
   /**
    * This is called by closeStream(), to indicate that all the data has been sent.
    * Parts should ensure that all of the data is displayed at this point.
@@ -479,7 +479,7 @@ signals:
    * Emit this if loading is canceled by the user or by an error.
    * @param errMsg the error message, empty if the user canceled the loading voluntarily.
    */
-  void canceled( const QString &errMsg );
+  void canceled( const TQString &errMsg );
 
 protected slots:
   void slotJobFinished( KIO::Job * job );
@@ -516,7 +516,7 @@ protected:
   /**
    * Local file - the only one the part implementation should deal with.
    */
-  QString m_file;
+  TQString m_file;
   /**
    * If @p true, @p m_file is a temporary file that needs to be deleted later.
    */
@@ -549,7 +549,7 @@ public:
    * Constructor.
    * See parent constructor for instructions.
    */
-  ReadWritePart( QObject *parent = 0, const char *name = 0 );
+  ReadWritePart( TQObject *parent = 0, const char *name = 0 );
   /**
    * Destructor.
    * Applications using a ReadWritePart should make sure, before

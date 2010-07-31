@@ -50,7 +50,7 @@ class ProviderDialog : public KDialogBase
       @param engine a KNewStuff engine object
       @param parent the parent window
     */
-    ProviderDialog( Engine *engine, QWidget *parent );
+    ProviderDialog( Engine *engine, TQWidget *parent );
 
     /**
       Clears the list of providers.

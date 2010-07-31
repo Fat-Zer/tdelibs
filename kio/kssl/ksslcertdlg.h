@@ -21,7 +21,7 @@
 #ifndef _KSSLCERTDLG_H
 #define _KSSLCERTDLG_H
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <kdialog.h>
 
 class QWidget;
@@ -50,7 +50,7 @@ public:
 	 *  @param name the internal name of this instance
 	 *  @param modal create a modal dialog if set to true
 	 */
-	KSSLCertDlg(QWidget *parent=0L, const char *name=0L, bool modal=false);
+	KSSLCertDlg(TQWidget *parent=0L, const char *name=0L, bool modal=false);
 
 	/**
 	 *  Destroy this object and close the dialog
@@ -65,7 +65,7 @@ public:
 	 *  @param sendChecked send the checked item to the remote host
 	 *  @deprecated
 	 */
-	void setup(QStringList certs, bool saveChecked = false, bool sendChecked = true) KDE_DEPRECATED;
+	void setup(TQStringList certs, bool saveChecked = false, bool sendChecked = true) KDE_DEPRECATED;
 
 	/**
 	 *  Setup the dialog. Call this before you display the dialog.
@@ -74,14 +74,14 @@ public:
 	 *  @param saveChecked save the checked item for the future
 	 *  @param sendChecked send the checked item to the remote host
 	 */
-	void setupDialog(const QStringList& certs, bool saveChecked = false, bool sendChecked = true);
+	void setupDialog(const TQStringList& certs, bool saveChecked = false, bool sendChecked = true);
 
 	/**
 	 *  Obtain the name of the certificate the user wants to send
 	 *
 	 *  @return the name of the certificate
 	 */
-	QString getChoice();
+	TQString getChoice();
 
 	/**
 	 *  Determine if the user wants to send a certificate.
@@ -102,7 +102,7 @@ public:
 	 *
 	 *  @param host the hostname
 	 */
-	void setHost(const QString& host);
+	void setHost(const TQString& host);
 
 private slots:
 	void slotSend();
@@ -111,18 +111,18 @@ private slots:
 private:
 	class KSSLCertDlgPrivate;
 	KSSLCertDlgPrivate *d;
-	QCheckBox *_save;
-	QRadioButton *_send, *_dont;
-	QListView *_certs;
-	QPushButton *_ok;
-	QString _host;
+	TQCheckBox *_save;
+	TQRadioButton *_send, *_dont;
+	TQListView *_certs;
+	TQPushButton *_ok;
+	TQString _host;
 };
 
 
 class KIO_EXPORT KSSLCertDlgRet {
 public:
    bool ok;
-   QString choice;
+   TQString choice;
    bool send;
    bool save;
 
@@ -131,8 +131,8 @@ protected:
    KSSLCertDlgRetPrivate *d;
 };
 
-KIO_EXPORT QDataStream& operator<<(QDataStream& s, const KSSLCertDlgRet& r);
-KIO_EXPORT QDataStream& operator>>(QDataStream& s, KSSLCertDlgRet& r);
+KIO_EXPORT TQDataStream& operator<<(TQDataStream& s, const KSSLCertDlgRet& r);
+KIO_EXPORT TQDataStream& operator>>(TQDataStream& s, KSSLCertDlgRet& r);
 
 #endif
 

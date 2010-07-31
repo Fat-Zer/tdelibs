@@ -1,9 +1,9 @@
 #include "kfileaudiopreview.h"
 
-#include <qcheckbox.h>
-#include <qhbox.h>
-#include <qlayout.h>
-#include <qvgroupbox.h>
+#include <tqcheckbox.h>
+#include <tqhbox.h>
+#include <tqlayout.h>
+#include <tqvgroupbox.h>
 
 #include <kglobal.h>
 #include <kconfig.h>
@@ -20,12 +20,12 @@
 class KFileAudioPreviewFactory : public KLibFactory
 {
 protected:
-    virtual QObject *createObject( QObject *parent, const char *name,
-                           const char *className, const QStringList & args)
+    virtual TQObject *createObject( TQObject *parent, const char *name,
+                           const char *className, const TQStringList & args)
     {
         Q_UNUSED(className);
         Q_UNUSED(args);
-        return new KFileAudioPreview( dynamic_cast<QWidget*>( parent ), name );
+        return new KFileAudioPreview( dynamic_cast<TQWidget*>( parent ), name );
     }
 };
 
@@ -39,9 +39,9 @@ K_EXPORT_COMPONENT_FACTORY( kfileaudiopreview, KFileAudioPreviewFactory )
 class KFileAudioPreview::KFileAudioPreviewPrivate
 {
 public:
-    KFileAudioPreviewPrivate( QWidget *parent )
+    KFileAudioPreviewPrivate( TQWidget *parent )
     {
-        player = KParts::ComponentFactory::createInstanceFromQuery<KMediaPlayer::Player>( "KMediaPlayer/Player", QString::null, parent );
+        player = KParts::ComponentFactory::createInstanceFromQuery<KMediaPlayer::Player>( "KMediaPlayer/Player", TQString::null, parent );
     }
 
     ~KFileAudioPreviewPrivate()
@@ -53,22 +53,22 @@ public:
 };
 
 
-KFileAudioPreview::KFileAudioPreview( QWidget *parent, const char *name )
+KFileAudioPreview::KFileAudioPreview( TQWidget *parent, const char *name )
     : KPreviewWidgetBase( parent, name )
 {
     KGlobal::locale()->insertCatalogue("kfileaudiopreview");    
 
-    QStringList formats = KDE::PlayObjectFactory::mimeTypes();
+    TQStringList formats = KDE::PlayObjectFactory::mimeTypes();
     // ###
-    QStringList::ConstIterator it = formats.begin();
+    TQStringList::ConstIterator it = formats.begin();
     for ( ; it != formats.end(); ++it )
         m_supportedFormats.insert( *it, (void*) 1 );
 
-    QVGroupBox *box = new QVGroupBox( i18n("Media Player"), this );
-    QVBoxLayout *layout = new QVBoxLayout( this );
+    TQVGroupBox *box = new TQVGroupBox( i18n("Media Player"), this );
+    TQVBoxLayout *layout = new TQVBoxLayout( this );
     layout->addWidget( box );
 
-    (void) new QWidget( box ); // spacer
+    (void) new TQWidget( box ); // spacer
 
     d = new KFileAudioPreviewPrivate( 0L ); // not box -- being reparented anyway
     if ( d->player ) // only if there actually is a component...
@@ -81,19 +81,19 @@ KFileAudioPreview::KFileAudioPreview( QWidget *parent, const char *name )
         // So, reparent first the video widget, then the view.
         if ( view->videoWidget() )
         {
-            QHBox *frame = new QHBox( box );
-            frame->setFrameStyle( QFrame::Panel | QFrame::Sunken );
-            frame->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding ) );
-            view->videoWidget()->reparent( frame, QPoint(0,0) );
+            TQHBox *frame = new TQHBox( box );
+            frame->setFrameStyle( TQFrame::Panel | TQFrame::Sunken );
+            frame->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+            view->videoWidget()->reparent( frame, TQPoint(0,0) );
         }
 
-        view->reparent( box, QPoint(0,0) );
+        view->reparent( box, TQPoint(0,0) );
     }
 
-    m_autoPlay = new QCheckBox( i18n("Play &automatically"), box );
+    m_autoPlay = new TQCheckBox( i18n("Play &automatically"), box );
     KConfigGroup config( KGlobal::config(), ConfigGroup );
     m_autoPlay->setChecked( config.readBoolEntry( "Autoplay sounds", true ) );
-    connect( m_autoPlay, SIGNAL(toggled(bool)), SLOT(toggleAuto(bool)) );
+    connect( m_autoPlay, TQT_SIGNAL(toggled(bool)), TQT_SLOT(toggleAuto(bool)) );
 }
 
 KFileAudioPreview::~KFileAudioPreview()

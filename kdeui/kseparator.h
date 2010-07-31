@@ -20,7 +20,7 @@
 #ifndef __KSEPARATOR_H__
 #define __KSEPARATOR_H__
 
-#include <qframe.h>
+#include <tqframe.h>
 
 #include <kdelibs_export.h>
 
@@ -39,9 +39,9 @@ class KDEUI_EXPORT KSeparator : public QFrame
    * Constructor.
    * @param parent parent object.
    * @param name name of the new object.
-   * @param f extra QWidget flags.
+   * @param f extra TQWidget flags.
    **/
-  KSeparator(QWidget* parent=0, const char* name=0, WFlags f=0);
+  KSeparator(TQWidget* parent=0, const char* name=0, WFlags f=0);
 
   /**
    * Constructor.
@@ -49,9 +49,9 @@ class KDEUI_EXPORT KSeparator : public QFrame
    * Possible values are HLine or Horizontal and VLine or Vertical.
    * @param parent parent object.
    * @param name name of the new object.
-   * @param f extra QWidget flags.
+   * @param f extra TQWidget flags.
    **/
-  KSeparator(int orientation, QWidget* parent=0, const char* name=0, 
+  KSeparator(int orientation, TQWidget* parent=0, const char* name=0, 
 	     WFlags f=0);
   
   /**
@@ -70,13 +70,13 @@ class KDEUI_EXPORT KSeparator : public QFrame
   /**
    * The recommended height (width) for a horizontal (vertical) separator.
    **/
-  virtual QSize sizeHint() const;
+  virtual TQSize sizeHint() const;
 
 protected:
   /**
    * @param p pointer to painter
    */
-  virtual void drawFrame( QPainter *p );
+  virtual void drawFrame( TQPainter *p );
 protected:
   virtual void virtual_hook( int id, void* data );
 private:

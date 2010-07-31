@@ -9,20 +9,20 @@
 *****************************************************************************/
 
 #include "hello.h"
-#include <qpushbutton.h>
-#include <qtimer.h>
-#include <qpainter.h>
-#include <qpixmap.h>
+#include <tqpushbutton.h>
+#include <tqtimer.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
 
 /*
   Constructs a Hello widget. Starts a 40 ms animation timer.
 */
 
-Hello::Hello( const char *title, const char *text, QWidget *parentWidget )
+Hello::Hello( const char *title, const char *text, TQWidget *parentWidget )
     : KMdiChildView(title, parentWidget), t(text), b(0)
 {
-    QTimer *timer = new QTimer(this);
-    QObject::connect( timer, SIGNAL(timeout()), SLOT(animate()) );
+    TQTimer *timer = new TQTimer(this);
+    TQObject::connect( timer, TQT_SIGNAL(timeout()), TQT_SLOT(animate()) );
     timer->start( 40 );
 
     resize( 260, 130 );
@@ -47,7 +47,7 @@ void Hello::animate()
   the widget.
 */
 
-void Hello::mouseReleaseEvent( QMouseEvent *e )
+void Hello::mouseReleaseEvent( TQMouseEvent *e )
 {
     if ( rect().contains( e->pos() ) )
         emit clicked();
@@ -61,7 +61,7 @@ void Hello::mouseReleaseEvent( QMouseEvent *e )
   pixmap is then blt'ed to the screen.
 */
 
-void Hello::paintEvent( QPaintEvent * )
+void Hello::paintEvent( TQPaintEvent * )
 {
     static int sin_tbl[16] = {
         0, 38, 71, 92, 100, 92, 71, 38,	0, -38, -71, -92, -100, -92, -71, -38};
@@ -70,18 +70,18 @@ void Hello::paintEvent( QPaintEvent * )
         return;
 
     // 1: Compute some sizes, positions etc.
-    QFontMetrics fm = fontMetrics();
+    TQFontMetrics fm = fontMetrics();
     int w = fm.width(t) + 20;
     int h = fm.height() * 2;
     int pmx = width()/2 - w/2;
     int pmy = height()/2 - h/2;
 
     // 2: Create the pixmap and fill it with the widget's background
-    QPixmap pm( w, h );
+    TQPixmap pm( w, h );
     pm.fill( this, pmx, pmy );
 
     // 3: Paint the pixmap. Cool wave effect
-    QPainter p;
+    TQPainter p;
     int x = 10;
     int y = h/2 + fm.descent();
     int i = 0;
@@ -89,7 +89,7 @@ void Hello::paintEvent( QPaintEvent * )
     p.setFont( font() );
     while ( !t[i].isNull() ) {
         int i16 = (b+i) & 15;
-        p.setPen( QColor((15-i16)*16,255,255,QColor::Hsv) );
+        p.setPen( TQColor((15-i16)*16,255,255,TQColor::Hsv) );
         p.drawText( x, y-sin_tbl[i16]*h/800, t.mid(i,1), 1 );
         x += fm.width( t[i] );
         i++;

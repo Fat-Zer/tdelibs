@@ -3,8 +3,8 @@
 #include <kstandarddirs.h>
 #include <dcopclient.h>
 
-TestWidget::TestWidget(QWidget *parent, const char *name)
-    : QLabel(parent, name)
+TestWidget::TestWidget(TQWidget *parent, const char *name)
+    : TQLabel(parent, name)
 {
     testMenu = new KPanelAppMenu(locate("mini", "x.png"), "Client Test", this,
                               "menu1");
@@ -15,8 +15,8 @@ TestWidget::TestWidget(QWidget *parent, const char *name)
 
     KPanelAppMenu *ssub = subMenu->insertMenu(locate("mini", "x.png"), "One more");
    
-    connect(testMenu, SIGNAL(activated(int)), SLOT(slotMenuCalled(int)));
-    connect(subMenu, SIGNAL(activated(int)), SLOT(slotSubMenuCalled(int)));
+    connect(testMenu, TQT_SIGNAL(activated(int)), TQT_SLOT(slotMenuCalled(int)));
+    connect(subMenu, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSubMenuCalled(int)));
     init();
     
     setText("We added \"Client Test\" to kicker. Click the K Menu to check.");
@@ -50,7 +50,7 @@ void TestWidget::slotMenuCalled(int id)
 
 void TestWidget::slotSubMenuCalled(int id)
 {
-  QString msg("Called with id=%1");
+  TQString msg("Called with id=%1");
   setText(msg.arg(id));
 }
 

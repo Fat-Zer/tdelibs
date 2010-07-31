@@ -22,8 +22,8 @@
 #ifndef _KJS_PROXY_H_
 #define _KJS_PROXY_H_
 
-#include <qvariant.h>
-#include <qstring.h>
+#include <tqvariant.h>
+#include <tqstring.h>
 #include <sys/time.h>
 
 class KHTMLPart;
@@ -55,10 +55,10 @@ class KJSProxy {
 public:
   KJSProxy() { m_handlerLineno = 0; }
   virtual ~KJSProxy() { }
-  virtual QVariant evaluate(QString filename, int baseLine, const QString &, const DOM::Node &n,
+  virtual TQVariant evaluate(TQString filename, int baseLine, const TQString &, const DOM::Node &n,
 			    KJS::Completion *completion = 0) = 0;
   virtual void clear() = 0;
-  virtual DOM::EventListener *createHTMLEventHandler(QString sourceUrl, QString name, QString code, DOM::NodeImpl* node) = 0;
+  virtual DOM::EventListener *createHTMLEventHandler(TQString sourceUrl, TQString name, TQString code, DOM::NodeImpl* node) = 0;
   virtual void finishedWithEvent(const DOM::Event &event) = 0;
   virtual KJS::Interpreter *interpreter() = 0;
 

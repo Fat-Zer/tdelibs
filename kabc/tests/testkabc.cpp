@@ -5,8 +5,8 @@
 #include <kcmdlineargs.h>
 #include <kstandarddirs.h>
 
-#include <qfile.h>
-#include <qimage.h>
+#include <tqfile.h>
+#include <tqimage.h>
 
 #include "geo.h"
 #include "secrecy.h"
@@ -31,7 +31,7 @@ int main(int argc,char **argv)
 #ifdef READ
     AddressBook::Iterator it;
     for ( it = ab->begin(); it != ab->end(); ++it ) {
-      QString vcard;
+      TQString vcard;
       VCardConverter converter;
       converter.addresseeToVCard( *it, vcard );
       kdDebug() << "card=" << vcard << endl;
@@ -44,11 +44,11 @@ int main(int argc,char **argv)
 
 
     Picture pic;
-    QImage img;
+    TQImage img;
     img.load("/home/tobias/test.png");
 /*
     pic.setData(img);
-    pic.setType(QImage::imageFormat("/home/tobias/test.png"));
+    pic.setType(TQImage::imageFormat("/home/tobias/test.png"));
 */
     pic.setUrl("http://www.mypict.de");
     addr.setLogo( pic );

@@ -22,12 +22,12 @@
 #ifndef KABC_VCARD21FORMAT_H
 #define KABC_VCARD21FORMAT_H
 
-#include <qdatetime.h>
+#include <tqdatetime.h>
 #include <kdebug.h>
-#include <qregexp.h>
-#include <qstring.h>
+#include <tqregexp.h>
+#include <tqstring.h>
 #include <kurl.h>
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 #include "addressee.h"
 #include "addressbook.h"
@@ -160,17 +160,17 @@ public:
    * @param ab  The address book.
    * @param str The vcard string.
    */
-  void readFromString( KABC::AddressBook *ab, const QString &str );
+  void readFromString( KABC::AddressBook *ab, const TQString &str );
 
   /**
    * FIXME: we need a writeToString method
-   * QString writeToString (KABC::AddressBook *);
+   * TQString writeToString (KABC::AddressBook *);
    */
 
   /**
    * Parses a string in vcard2.1 format and returns the inherent addressee.
    */
-  KABC::Addressee readFromString( const QString &data);
+  KABC::Addressee readFromString( const TQString &data);
 
   /**
    * Helper method to store a address.
@@ -178,7 +178,7 @@ public:
    * @param data  A string list, that is filled with 'street', 'house number' ...
    * @param type  The type of the returned address.
    */
-  static KABC::Address readAddressFromQStringList (const QStringList &data, const int type);
+  static KABC::Address readAddressFromQStringList (const TQStringList &data, const int type);
 };
 
 }
@@ -189,10 +189,10 @@ public:
 class KABC_EXPORT VCardLineX
 {
 public:
-  QString name;
+  TQString name;
   bool qualified;
-  QValueList<QString> qualifiers;
-  QValueList<QString> parameters;
+  TQValueList<TQString> qualifiers;
+  TQValueList<TQString> parameters;
   bool isValid() const;
 };
 
@@ -206,16 +206,16 @@ class KABC_EXPORT VCard21ParserImpl
 public:
   VCard21ParserImpl();
   virtual ~VCard21ParserImpl();
-  static VCard21ParserImpl *parseVCard(const QString& vc, int *err = NULL);
-  QString getValue(const QString& name, const QString& qualifier);
-  QString getValue(const QString& name);
-  QStringList getValues(const QString& name, const QString& qualifier);
-  QStringList getValues(const QString& name);
+  static VCard21ParserImpl *parseVCard(const TQString& vc, int *err = NULL);
+  TQString getValue(const TQString& name, const TQString& qualifier);
+  TQString getValue(const TQString& name);
+  TQStringList getValues(const TQString& name, const TQString& qualifier);
+  TQStringList getValues(const TQString& name);
 
-  QValueList<VCardLineX> *_vcdata;
+  TQValueList<VCardLineX> *_vcdata;
 
 private:
-  VCard21ParserImpl (QValueList<VCardLineX> *_vcd);
+  VCard21ParserImpl (TQValueList<VCardLineX> *_vcd);
 };
 
 #endif

@@ -17,13 +17,13 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qfile.h>
-#include <qdir.h>
+#include <tqfile.h>
+#include <tqdir.h>
 #include <time.h>
 #include <kdebug.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <kmimetype.h>
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include "kfilterdev.h"
 #include "kar.h"
@@ -39,19 +39,19 @@ public:
     KArPrivate() {}
 };
 
-KAr::KAr( const QString& filename )
+KAr::KAr( const TQString& filename )
     : KArchive( 0L )
 {
     //kdDebug(7042) << "KAr(filename) reached." << endl;
     m_filename = filename;
     d = new KArPrivate;
-    setDevice( new QFile( filename ) );
+    setDevice( new TQFile( filename ) );
 }
 
-KAr::KAr( QIODevice * dev )
+KAr::KAr( TQIODevice * dev )
     : KArchive( dev )
 {
-    //kdDebug(7042) << "KAr::KAr( QIODevice * dev) reached." << endl;
+    //kdDebug(7042) << "KAr::KAr( TQIODevice * dev) reached." << endl;
     d = new KArPrivate;
 }
 
@@ -80,7 +80,7 @@ bool KAr::openArchive( int mode )
         return false;
     }
 
-    QIODevice* dev = device();
+    TQIODevice* dev = device();
     if ( !dev )
         return false;
 
@@ -93,9 +93,9 @@ bool KAr::openArchive( int mode )
 
     char *ar_longnames = 0;
     while (! dev->atEnd()) {
-        QCString ar_header;
+        TQCString ar_header;
         ar_header.resize(61);
-        QCString name;
+        TQCString name;
         int date, uid, gid, mode, size;
 
         dev->at( dev->at() + (2 - (dev->at() % 2)) % 2 ); // Ar headers are padded to byte boundary

@@ -18,11 +18,11 @@ uint EncodingDCOPInterface::encodingInterfaceNumber ()
 {
 	return m_parent->encodingInterfaceNumber ();
 }
-void EncodingDCOPInterface::setEncoding (QString e) 
+void EncodingDCOPInterface::setEncoding (TQString e) 
 {
 	m_parent->setEncoding (e); 
 }
-QString EncodingDCOPInterface::encoding()
+TQString EncodingDCOPInterface::encoding()
 {
 	return m_parent->encoding();
 }

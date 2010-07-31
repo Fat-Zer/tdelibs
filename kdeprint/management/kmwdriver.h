@@ -27,9 +27,9 @@ class KMDriverDbWidget;
 class KMWDriver : public KMWizardPage
 {
 public:
-	KMWDriver(QWidget *parent = 0, const char *name = 0);
+	KMWDriver(TQWidget *parent = 0, const char *name = 0);
 
-	bool isValid(QString&);
+	bool isValid(TQString&);
 	void updatePrinter(KMPrinter*);
 	void initPrinter(KMPrinter*);
 

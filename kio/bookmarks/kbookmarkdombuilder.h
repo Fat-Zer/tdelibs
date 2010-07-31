@@ -20,27 +20,27 @@
 #ifndef __kbookmarkdombuilder_h
 #define __kbookmarkdombuilder_h
 
-#include <qvaluestack.h>
-#include <qobject.h>
+#include <tqvaluestack.h>
+#include <tqobject.h>
 #include <kbookmark.h>
 
 /**
  * @since 3.2
  */
-class KIO_EXPORT KBookmarkDomBuilder : public QObject {
+class KIO_EXPORT KBookmarkDomBuilder : public TQObject {
    Q_OBJECT
 public:
    KBookmarkDomBuilder(const KBookmarkGroup &group, KBookmarkManager *);
    virtual ~KBookmarkDomBuilder();
-   void connectImporter(const QObject *);
+   void connectImporter(const TQObject *);
 protected slots:
-   void newBookmark(const QString &text, const QCString &url, const QString &additionalInfo);
-   void newFolder(const QString &text, bool open, const QString &additionalInfo);
+   void newBookmark(const TQString &text, const TQCString &url, const TQString &additionalInfo);
+   void newFolder(const TQString &text, bool open, const TQString &additionalInfo);
    void newSeparator();
    void endFolder();
 private:
-   QValueStack<KBookmarkGroup> m_stack;
-   QValueList<KBookmarkGroup> m_list;
+   TQValueStack<KBookmarkGroup> m_stack;
+   TQValueList<KBookmarkGroup> m_list;
    KBookmarkManager *m_manager;
    class KBookmarkDomBuilderPrivate *p;
 };

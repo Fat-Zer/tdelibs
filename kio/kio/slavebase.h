@@ -45,7 +45,7 @@ class SlaveBasePrivate;
 class KIO_EXPORT SlaveBase
 {
 public:
-    SlaveBase( const QCString &protocol, const QCString &pool_socket, const QCString &app_socket);
+    SlaveBase( const TQCString &protocol, const TQCString &pool_socket, const TQCString &app_socket);
     virtual ~SlaveBase();
 
     /**
@@ -77,11 +77,11 @@ public:
      * Sends data in the slave to the job (i.e. in get).
      *
      * To signal end of data, simply send an empty
-     * QByteArray().
+     * TQByteArray().
      *
      * @param data the data read by the slave
      */
-    void data( const QByteArray &data );
+    void data( const TQByteArray &data );
 
     /**
      * Asks for data from the job.
@@ -106,7 +106,7 @@ public:
      * @param _errid the error code from KIO::Error
      * @param _text the rich text error message
      */
-    void error( int _errid, const QString &_text );
+    void error( int _errid, const TQString &_text );
 
     /**
      * Call in openConnection, if you reimplement it, when you're done.
@@ -130,7 +130,7 @@ public:
      *        empty if not connected)
      * @param connected Whether an actual network connection exists.
      **/
-    void slaveStatus(const QString &host, bool connected);
+    void slaveStatus(const TQString &host, bool connected);
 
     /**
      * Call this from stat() to express details about an object, the
@@ -216,18 +216,18 @@ public:
      * Call this in mimetype() and in get(), when you know the mimetype.
      * See mimetype about other ways to implement it.
      */
-    void mimeType( const QString &_type );
+    void mimeType( const TQString &_type );
 
     /**
      * Call to signal a warning, to be displayed in a dialog box.
      */
-    void warning( const QString &msg );
+    void warning( const TQString &msg );
 
     /**
      * Call to signal a message, to be displayed if the application wants to,
      * for instance in a status bar. Usual examples are "connecting to host xyz", etc.
      */
-    void infoMessage( const QString &msg );
+    void infoMessage( const TQString &msg );
 
     enum MessageBoxType { QuestionYesNo = 1, WarningYesNo = 2, WarningContinueCancel = 3, WarningYesNoCancel = 4, Information = 5, SSLMessageBox = 6 };
 
@@ -244,10 +244,10 @@ public:
      *       and for Information, none is used.
      * @return a button code, as defined in KMessageBox, or 0 on communication error.
      */
-    int messageBox( MessageBoxType type, const QString &text,
-                    const QString &caption = QString::null,
-                    const QString &buttonYes = QString::null,
-                    const QString &buttonNo = QString::null );
+    int messageBox( MessageBoxType type, const TQString &text,
+                    const TQString &caption = TQString::null,
+                    const TQString &buttonYes = TQString::null,
+                    const TQString &buttonNo = TQString::null );
 
     /**
      * Call this to show a message box from the slave
@@ -265,43 +265,43 @@ public:
      * @return a button code, as defined in KMessageBox, or 0 on communication error.
      * @since 3.3
      */
-    int messageBox( const QString &text, MessageBoxType type,
-                    const QString &caption = QString::null,
-                    const QString &buttonYes = QString::null,
-                    const QString &buttonNo = QString::null,
-                    const QString &dontAskAgainName = QString::null );
+    int messageBox( const TQString &text, MessageBoxType type,
+                    const TQString &caption = TQString::null,
+                    const TQString &buttonYes = TQString::null,
+                    const TQString &buttonNo = TQString::null,
+                    const TQString &dontAskAgainName = TQString::null );
 
     /**
      * Sets meta-data to be send to the application before the first
      * data() or finished() signal.
      */
-    void setMetaData(const QString &key, const QString &value);
+    void setMetaData(const TQString &key, const TQString &value);
 
     /**
      * Queries for the existence of a certain config/meta-data entry
      * send by the application to the slave.
      * @since 3.2
      */
-    bool hasMetaData(const QString &key) const;
+    bool hasMetaData(const TQString &key) const;
 
     /**
      * Queries for config/meta-data send by the application to the slave.
      * @since 3.2
      */
-    QString metaData(const QString &key) const;
+    TQString metaData(const TQString &key) const;
 
     /**
      * @obsolete kept for binary compatibility
      * Queries for the existence of a certain config/meta-data entry
      * send by the application to the slave.
      */
-    bool hasMetaData(const QString &key);
+    bool hasMetaData(const TQString &key);
 
     /**
      * @obsolete kept for binary compatibility
      * Queries for config/meta-data sent by the application to the slave.
      */
-    QString metaData(const QString &key);
+    TQString metaData(const TQString &key);
 
     /**
      * @internal for ForwardingSlaveBase
@@ -344,7 +344,7 @@ public:
      *
      * This method is called whenever a change in host, port or user occurs.
      */
-    virtual void setHost(const QString& host, int port, const QString& user, const QString& pass);
+    virtual void setHost(const TQString& host, int port, const TQString& user, const TQString& pass);
 
     /**
      * Prepare slave for streaming operation
@@ -453,7 +453,7 @@ public:
      * @param dest The symlink to create.
      * @param overwrite whether to automatically overwrite if the dest exists
      */
-    virtual void symlink( const QString& target, const KURL& dest, bool overwrite );
+    virtual void symlink( const TQString& target, const KURL& dest, bool overwrite );
 
     /**
      * Change permissions on @p path
@@ -492,7 +492,7 @@ public:
      *        slave, but usually starts with an int for the command number.
      * Document your slave's commands, at least in its header file.
      */
-    virtual void special( const QByteArray & data );
+    virtual void special( const TQByteArray & data );
 
     /**
      * Used for multiple get. Currently only used foir HTTP pielining
@@ -501,7 +501,7 @@ public:
      * @param data packed data; Contains number of URLs to fetch, and for
      * each URL the URL itself and its associated MetaData.
      */
-    virtual void multiGet( const QByteArray & data );
+    virtual void multiGet( const TQByteArray & data );
 
     /**
      * Called to get the status of the slave. Slave should respond
@@ -552,7 +552,7 @@ public:
      * cancels any pending timeout.
      * @since 3.1
      */
-    void setTimeoutSpecialCommand(int timeout, const QByteArray &data=QByteArray());
+    void setTimeoutSpecialCommand(int timeout, const TQByteArray &data=TQByteArray());
 
     /**
      * @internal
@@ -574,7 +574,7 @@ public:
     /**
      * @internal
      */
-    virtual void dispatch( int command, const QByteArray &data );
+    virtual void dispatch( int command, const TQByteArray &data );
 
     /**
      * Read data send by the job, after a dataReq
@@ -584,7 +584,7 @@ public:
      *         > 0 bytes read
      *         < 0 error
      **/
-    int readData( QByteArray &buffer );
+    int readData( TQByteArray &buffer );
 
     /**
      * internal function to be called by the slave.
@@ -603,7 +603,7 @@ public:
      * internal function to connect a slave to/ disconnect from
      * either the slave pool or the application
      */
-    void connectSlave(const QString& path);
+    void connectSlave(const TQString& path);
     void disconnectSlave();
 
     /**
@@ -618,10 +618,10 @@ public:
      * KIO::AuthInfo authInfo;
      * if ( openPassDlg( authInfo ) )
      * {
-     *    kdDebug() << QString::fromLatin1("User: ")
+     *    kdDebug() << TQString::fromLatin1("User: ")
      *              << authInfo.username << endl;
-     *    kdDebug() << QString::fromLatin1("Password: ")
-     *              << QString::fromLatin1("Not displayed here!") << endl;
+     *    kdDebug() << TQString::fromLatin1("Password: ")
+     *              << TQString::fromLatin1("Not displayed here!") << endl;
      * }
      * \endcode
      *
@@ -632,13 +632,13 @@ public:
      * KIO::AuthInfo authInfo;
      * authInfo.caption= "Acme Password Dialog";
      * authInfo.username= "Wile E. Coyote";
-     * QString errorMsg = "You entered an incorrect password.";
+     * TQString errorMsg = "You entered an incorrect password.";
      * if ( openPassDlg( authInfo, errorMsg ) )
      * {
-     *    kdDebug() << QString::fromLatin1("User: ")
+     *    kdDebug() << TQString::fromLatin1("User: ")
      *              << authInfo.username << endl;
-     *    kdDebug() << QString::fromLatin1("Password: ")
-     *              << QString::fromLatin1("Not displayed here!") << endl;
+     *    kdDebug() << TQString::fromLatin1("Password: ")
+     *              << TQString::fromLatin1("Not displayed here!") << endl;
      * }
      * \endcode
      *
@@ -655,7 +655,7 @@ public:
      * @return      @p true if user clicks on "OK", @p false otherwsie.
      * @since 3.1
      */
-    bool openPassDlg( KIO::AuthInfo& info, const QString &errorMsg );
+    bool openPassDlg( KIO::AuthInfo& info, const TQString &errorMsg );
 
     /**
      * Same as above function except it does not need error message.
@@ -712,7 +712,7 @@ public:
      * Creates a basic key to be used to cache the password.
      * @param url   the url from which the key is supposed to be generated
      */
-    QString createAuthCacheKey( const KURL& url );
+    TQString createAuthCacheKey( const KURL& url );
 
     /**
      * @obsolete as of 3.1. Use openPassDlg instead.
@@ -721,7 +721,7 @@ public:
      * Cache authentication information is now stored automatically
      * by openPassDlg.
      */
-    void sendAuthenticationKey( const QCString& gKey, const QCString& key, bool keep );
+    void sendAuthenticationKey( const TQCString& gKey, const TQCString& key, bool keep );
 
     /**
      * @obsolete as of 3.1. Use openPassDlg instead.
@@ -731,7 +731,7 @@ public:
      * removed automatically when a given session ends, i.e. the
      * application is closed.
      */
-    void delCachedAuthentication( const QString& key );
+    void delCachedAuthentication( const TQString& key );
 
     /**
      * @obsolete as of 3.1. Use openPassDlg instead.
@@ -763,7 +763,7 @@ public:
      * @return true in theorie, the host is reachable
      *         false the system is offline and the host is in a remote network.
      */
-    bool requestNetwork(const QString& host = QString::null);
+    bool requestNetwork(const TQString& host = TQString::null);
 
     /**
      * Used by the slave to withdraw a connection requested by
@@ -778,7 +778,7 @@ public:
      *
      * A slave should call this function every time it disconnect from a host.
      * */
-    void dropNetwork(const QString& host = QString::null);
+    void dropNetwork(const TQString& host = TQString::null);
 
     /**
      * Return the dcop client used by this slave.
@@ -790,7 +790,7 @@ public:
      * Wait for an answer to our request, until we get @p expected1 or @p expected2
      * @return the result from readData, as well as the cmd in *pCmd if set, and the data in @p data
      */
-    int waitForAnswer( int expected1, int expected2, QByteArray & data, int * pCmd = 0 );
+    int waitForAnswer( int expected1, int expected2, TQByteArray & data, int * pCmd = 0 );
 
     /**
      * Internal function to transmit meta data to the application.
@@ -800,7 +800,7 @@ public:
     /**
      * Name of the protocol supported by this slave
      */
-    QCString mProtocol;
+    TQCString mProtocol;
 
     Connection * m_pConnection;
 
@@ -826,8 +826,8 @@ protected:
     uint listEntryCurrentSize;
     long listEntry_sec, listEntry_usec;
     Connection *appconn;
-    QString mPoolSocket;
-    QString mAppSocket;
+    TQString mPoolSocket;
+    TQString mAppSocket;
     bool mConnectedToApp;
     static long s_seqNr;
     virtual void virtual_hook( int id, void* data );

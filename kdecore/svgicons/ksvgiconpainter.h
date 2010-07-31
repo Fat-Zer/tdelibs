@@ -39,9 +39,9 @@ public:
 	void setDrawWidth(int dwidth);
 	void setDrawHeight(int dheight);
 
-	QImage *image();
+	TQImage *image();
 
-	QWMatrix *worldMatrix();
+	TQWMatrix *worldMatrix();
 
 	void finish();
 
@@ -49,49 +49,49 @@ public:
 	void setUseStroke(bool stroke);
 
 	void setStrokeWidth(double width);
-	void setStrokeMiterLimit(const QString &miter);
-	void setCapStyle(const QString &cap);
-	void setJoinStyle(const QString &join);
-	void setStrokeColor(const QString &stroke);
-	void setFillColor(const QString &fill);
-	void setFillRule(const QString &fillRule);
-	void setOpacity(const QString &opacity);
-	void setFillOpacity(const QString &fillOpacity);
-	void setStrokeOpacity(const QString &strokeOpacity);
-	void setStrokeDashOffset(const QString &dashOffset);
-	void setStrokeDashArray(const QString &dashes);
+	void setStrokeMiterLimit(const TQString &miter);
+	void setCapStyle(const TQString &cap);
+	void setJoinStyle(const TQString &join);
+	void setStrokeColor(const TQString &stroke);
+	void setFillColor(const TQString &fill);
+	void setFillRule(const TQString &fillRule);
+	void setOpacity(const TQString &opacity);
+	void setFillOpacity(const TQString &fillOpacity);
+	void setStrokeOpacity(const TQString &strokeOpacity);
+	void setStrokeDashOffset(const TQString &dashOffset);
+	void setStrokeDashArray(const TQString &dashes);
 
-	void setWorldMatrix(QWMatrix *worldMatrix);
+	void setWorldMatrix(TQWMatrix *worldMatrix);
 	void setClippingRect(int x, int y, int w, int h);
 
 	void drawRectangle(double x, double y, double w, double h, double rx, double ry);
 	void drawEllipse(double cx, double cy, double rx, double ry);
 	void drawLine(double x1, double y1, double x2, double y2);
-	void drawPolyline(QPointArray polyArray, int points = -1);
-	void drawPolygon(QPointArray polyArray);
-	void drawPath(const QString &data, bool fill);
-	void drawImage(double x, double y, QImage &image);
+	void drawPolyline(TQPointArray polyArray, int points = -1);
+	void drawPolygon(TQPointArray polyArray);
+	void drawPath(const TQString &data, bool fill);
+	void drawImage(double x, double y, TQImage &image);
 
-	QColor parseColor(const QString &param);
-	Q_UINT32 toArtColor(const QColor &color);
-	Q_UINT32 parseOpacity(const QString &data);
+	TQColor parseColor(const TQString &param);
+	Q_UINT32 toArtColor(const TQColor &color);
+	Q_UINT32 parseOpacity(const TQString &data);
 
-	double toPixel(const QString &s, bool hmode);
+	double toPixel(const TQString &s, bool hmode);
 	double dpi();
 
-	ArtGradientLinear *linearGradient(const QString &id);
-	void addLinearGradient(const QString &id, ArtGradientLinear *gradient);
+	ArtGradientLinear *linearGradient(const TQString &id);
+	void addLinearGradient(const TQString &id, ArtGradientLinear *gradient);
 
-	QDomElement linearGradientElement(ArtGradientLinear *linear);
-	void addLinearGradientElement(ArtGradientLinear *gradient, QDomElement element);
+	TQDomElement linearGradientElement(ArtGradientLinear *linear);
+	void addLinearGradientElement(ArtGradientLinear *gradient, TQDomElement element);
 
-	ArtGradientRadial *radialGradient(const QString &id);
-	void addRadialGradient(const QString &id, ArtGradientRadial *gradient);
+	ArtGradientRadial *radialGradient(const TQString &id);
+	void addRadialGradient(const TQString &id, ArtGradientRadial *gradient);
 
-	QDomElement radialGradientElement(ArtGradientRadial *radial);
-	void addRadialGradientElement(ArtGradientRadial *gradient, QDomElement element);
+	TQDomElement radialGradientElement(ArtGradientRadial *radial);
+	void addRadialGradientElement(ArtGradientRadial *gradient, TQDomElement element);
 
-	QWMatrix parseTransform(const QString &transform);
+	TQWMatrix parseTransform(const TQString &transform);
 
 private:
 	struct Private;

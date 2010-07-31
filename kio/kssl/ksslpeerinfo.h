@@ -23,8 +23,8 @@
 
 class KSSL;
 
-#include <qglobal.h>
-#include <qstringlist.h>
+#include <tqglobal.h>
+#include <tqstringlist.h>
 #include <ksslcertificate.h>
 
 class KSSLPeerInfoPrivate;
@@ -73,7 +73,7 @@ public:
 	 *  @return true if it matches
 	 *  @see setPeerHost
 	 */
-	bool cnMatchesAddress(QString cn);
+	bool cnMatchesAddress(TQString cn);
 
 	/**
 	 *  Set the host that we are connected to.  This is generally set by
@@ -82,12 +82,12 @@ public:
 	 *
 	 *  @param host the hostname
 	 */
-	void setPeerHost(QString host = QString::null);
+	void setPeerHost(TQString host = TQString::null);
 
 	/**
 	 *  Returns the host we are connected to.
 	 */
-	const QString& peerHost() const;
+	const TQString& peerHost() const;
 
 	/**
 	 *  Clear out the host name.

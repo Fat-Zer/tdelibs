@@ -20,9 +20,9 @@
 #ifndef __kservices_h__
 #define __kservices_h__
 
-#include <qstringlist.h>
-#include <qmap.h>
-#include <qvariant.h>
+#include <tqstringlist.h>
+#include <tqmap.h>
+#include <tqvariant.h>
 #include <kicontheme.h>
 
 #include "ksycocaentry.h"
@@ -53,7 +53,7 @@ class KIO_EXPORT KService : public KSycocaEntry
 
 public:
   typedef KSharedPtr<KService> Ptr;
-  typedef QValueList<Ptr> List;
+  typedef TQValueList<Ptr> List;
 public:
   /**
    * Construct a temporary service with a given name, exec-line and icon.
@@ -61,14 +61,14 @@ public:
    * @param _exec the executable
    * @param _icon the name of the icon
    */
-  KService( const QString & _name, const QString &_exec, const QString &_icon);
+  KService( const TQString & _name, const TQString &_exec, const TQString &_icon);
 
   /**
    * Construct a service and take all information from a config file.
    *
    * @param _fullpath Full path to the config file.
    */
-  explicit KService( const QString & _fullpath );
+  explicit KService( const TQString & _fullpath );
 
   /**
    * Construct a service and take all information from a desktop file.
@@ -81,7 +81,7 @@ public:
    * Construct a service from a stream.
    * The stream must already be positionned at the correct offset.
    */
-  KService( QDataStream& _str, int offset );
+  KService( TQDataStream& _str, int offset );
 
   virtual ~KService();
 
@@ -89,48 +89,48 @@ public:
    * Returns the type of the service.
    * @return the type of the service ("Application" or "Service")
    */
-  virtual QString type() const { return m_strType; }
+  virtual TQString type() const { return m_strType; }
   /**
    * Returns the name of the service.
    * @return the name of the service,
-   *         or QString::null if not set
+   *         or TQString::null if not set
    */
-  virtual QString name() const { return m_strName; }
+  virtual TQString name() const { return m_strName; }
   /**
    * Returns the executable.
    * @return the command that the service executes,
-   *         or QString::null if not set
+   *         or TQString::null if not set
    */
-  QString exec() const { return m_strExec; }
+  TQString exec() const { return m_strExec; }
   /**
    * Returns the name of the service's library.
    * @return the name of the library that contains the services
    *         implementation,
-   *         or QString::null if not set
+   *         or TQString::null if not set
    */
-  QString library() const { return m_strLibrary; }
+  TQString library() const { return m_strLibrary; }
   /**
    * Returns the name of the init function to call (KControl modules).
    * @return the name of the init function to call in this service
    *         during startup of KDE. (KControl modules only),
-   *         or QString::null if not set
+   *         or TQString::null if not set
    */
-  QString init() const { return m_strInit; }
+  TQString init() const { return m_strInit; }
 
   /**
    * Returns the name of the icon.
    * @return the icon associated with the service,
    *         or "unknown" if not set
    */
-  QString icon() const { return m_strIcon; }
+  TQString icon() const { return m_strIcon; }
   /**
    * Returns the pixmap that represents the icon.
    * @return a pixmap for this service (finds and loads icon()),
    *         null if not set
    * @see icon()
    */
-  QPixmap pixmap( KIcon::Group _group, int _force_size = 0, int _state = 0,
-                  QString * _path = 0L ) const;
+  TQPixmap pixmap( KIcon::Group _group, int _force_size = 0, int _state = 0,
+                  TQString * _path = 0L ) const;
   /**
    * Checks whethe the service should be run in a terminal.
    * @return true if the service is to be run in a terminal.
@@ -142,9 +142,9 @@ public:
    *
    * The service must be a tty-oriented program.
    * @return the terminal options,
-   *         or QString::null if not set
+   *         or TQString::null if not set
    */
-  QString terminalOptions() const { return m_strTerminalOptions; }
+  TQString terminalOptions() const { return m_strTerminalOptions; }
   /**
    * Checks whether the service runs with a different user id.
    * @return true if the service has to be run under a different uid.
@@ -155,10 +155,10 @@ public:
    * Returns the user name, if the service runs with a
    * different user id.
    * @return the username under which the service has to be run,
-   *         or QString::null if not set
+   *         or TQString::null if not set
    * @see substututeUid()a
    */
-  QString username() const;
+  TQString username() const;
 
   /**
    * Returns the path to the location where the service desktop entry
@@ -169,17 +169,17 @@ public:
    * It is a full path if the desktop entry originates from another
    * location.
    * @return the path of the service's desktop file,
-   *         or QString::null if not set
+   *         or TQString::null if not set
    */
-  QString desktopEntryPath() const { return entryPath(); }
+  TQString desktopEntryPath() const { return entryPath(); }
 
   /**
    * Returns the filename of the service desktop entry without any
    * extension. E.g. "kppp"
    * @return the name of the desktop entry without path or extension,
-   *         or QString::null if not set
+   *         or TQString::null if not set
    */
-  QString desktopEntryName() const { return m_strDesktopEntryName; }
+  TQString desktopEntryName() const { return m_strDesktopEntryName; }
 
   /**
    * Returns the menu ID of the service desktop entry.
@@ -187,7 +187,7 @@ public:
    * @return the menu ID
    * @since 3.2
    */
-  QString menuId() const;
+  TQString menuId() const;
 
   /**
    * Returns a normalized ID suitable for storing in configuration files.
@@ -196,7 +196,7 @@ public:
    * @return the storage ID
    * @since 3.2
    */
-  QString storageId() const;
+  TQString storageId() const;
 
   /**
    * Describes the DCOP type of the service.
@@ -221,53 +221,53 @@ public:
   /**
    * Returns the working directory to run the program in.
    * @return the working directory to run the program in,
-   *         or QString::null if not set
+   *         or TQString::null if not set
    */
-  QString path() const { return m_strPath; }
+  TQString path() const { return m_strPath; }
 
   /**
    * Returns the descriptive comment for the service, if there is one.
-   * @return the descriptive comment for the service, or QString::null
+   * @return the descriptive comment for the service, or TQString::null
    *         if not set
    */
-  QString comment() const { return m_strComment; }
+  TQString comment() const { return m_strComment; }
 
   /**
    * Returns the generic name for the service, if there is one
    * (e.g. "Mail Client").
    * @return the generic name,
-   *         or QString::null if not set
+   *         or TQString::null if not set
    */
-  QString genericName() const { return m_strGenName; }
+  TQString genericName() const { return m_strGenName; }
 
   /**
    * Returns the untranslated (US English) generic name
    * for the service, if there is one
    * (e.g. "Mail Client").
    * @return the generic name,
-   *         or QString::null if not set
+   *         or TQString::null if not set
    * @since 3.2
    */
-  QString untranslatedGenericName() const;
+  TQString untranslatedGenericName() const;
 
   /**
    * Returns a list of descriptive keywords the service, if there are any.
    * @return the list of keywords
    */
-  QStringList keywords() const { return m_lstKeywords; }
+  TQStringList keywords() const { return m_lstKeywords; }
 
   /**
    * Returns a list of VFolder categories.
    * @return the list of VFolder categories
    * @since 3.1
    */
-  QStringList categories() const;
+  TQStringList categories() const;
 
   /**
    * Returns the service types that this service supports.
    * @return the list of service types that are supported
    */
-  QStringList serviceTypes() const { return m_lstServiceTypes; }
+  TQStringList serviceTypes() const { return m_lstServiceTypes; }
 
   /**
    * Checks whether the service supports this service type
@@ -277,7 +277,7 @@ public:
    * @return true if the service you specified is supported,
    *        otherwise false.
    */
-  bool hasServiceType( const QString& _service ) const;
+  bool hasServiceType( const TQString& _service ) const;
 
   /**
    * Set to true if it is allowed to use this service as the default (main)
@@ -315,7 +315,7 @@ public:
    * @return the service preference level of the service for
    * this mimetype
    */
-  int initialPreferenceForMimeType( const QString& mimeType ) const;
+  int initialPreferenceForMimeType( const TQString& mimeType ) const;
 
   /**
    * @internal. Allows KServiceType::offers to tweak the initial preference.
@@ -331,10 +331,10 @@ public:
   /**
    * Name of the application this service belongs to.
    * (Useful for e.g. plugins)
-   * @return the parent application, or QString::null if not set
+   * @return the parent application, or TQString::null if not set
    * @since 3.1
    */
-  QString parentApp() const;
+  TQString parentApp() const;
 
   /**
    * Returns the requested property. Some often used properties
@@ -348,7 +348,7 @@ public:
    * @return the property, or invalid if not found
    * @see KServiceType
    */
-  virtual QVariant property( const QString& _name ) const;
+  virtual TQVariant property( const TQString& _name ) const;
 
   /**
    * Returns the requested property.
@@ -359,14 +359,14 @@ public:
    * @see KServiceType
    * @since 3.2
    */
-  QVariant property( const QString& _name, QVariant::Type t ) const;
+  TQVariant property( const TQString& _name, TQVariant::Type t ) const;
 
   /**
    * Returns the list of all properties that this service can have.
    * That means, that some of these properties may be empty.
    * @return the list of supported properties
    */
-  virtual QStringList propertyNames() const;
+  virtual TQStringList propertyNames() const;
 
   /**
    * Checks whether the service is valid.
@@ -380,23 +380,23 @@ public:
    * @return path that can be used for saving changes to this service
    * @since 3.2
    */
-  QString locateLocal();
+  TQString locateLocal();
 
   /**
    * @internal
    * Load the service from a stream.
    */
-  virtual void load( QDataStream& );
+  virtual void load( TQDataStream& );
   /**
    * @internal
    * Save the service to a stream.
    */
-  virtual void save( QDataStream& );
+  virtual void save( TQDataStream& );
   /**
    * @internal
    * Set the menu id
    */
-  void setMenuId(const QString &menuId);
+  void setMenuId(const TQString &menuId);
   /**
    * @internal
    * Sets whether to use a terminal or not
@@ -406,7 +406,7 @@ public:
    * @internal
    * Sets the terminal options to use
    */
-  void setTerminalOptions(const QString &options) { m_strTerminalOptions = options; }
+  void setTerminalOptions(const TQString &options) { m_strTerminalOptions = options; }
 
   /**
    * Find a service by name, i.e. the translated Name field. You should
@@ -417,7 +417,7 @@ public:
    *         unknown.
    * @em Very @em important: Don't store the result in a KService* !
    */
-  static Ptr serviceByName( const QString& _name );
+  static Ptr serviceByName( const TQString& _name );
 
   /**
    * Find a service based on its path as returned by desktopEntryPath().
@@ -428,7 +428,7 @@ public:
    *         unknown.
    * @em Very @em important: Don't store the result in a KService* !
    */
-  static Ptr serviceByDesktopPath( const QString& _path );
+  static Ptr serviceByDesktopPath( const TQString& _path );
 
   /**
    * Find a service by the name of its desktop file, not depending on
@@ -444,7 +444,7 @@ public:
    *         unknown.
    * @em Very @em important: Don't store the result in a KService* !
    */
-  static Ptr serviceByDesktopName( const QString& _name );
+  static Ptr serviceByDesktopName( const TQString& _name );
 
   /**
    * Find a service by its menu-id
@@ -455,7 +455,7 @@ public:
    * @em Very @em important: Don't store the result in a KService* !
    * @since 3.2
    */
-  static Ptr serviceByMenuId( const QString& _menuId );
+  static Ptr serviceByMenuId( const TQString& _menuId );
 
   /**
    * Find a service by its storage-id or desktop-file path. This
@@ -467,7 +467,7 @@ public:
    * @em Very @em important: Don't store the result in a KService* !
    * @since 3.2
    */
-  static Ptr serviceByStorageId( const QString& _storageId );
+  static Ptr serviceByStorageId( const TQString& _storageId );
 
   /**
    * Returns the whole list of services.
@@ -503,9 +503,9 @@ public:
    * @return The path to use for the new KService.
    * @since 3.2
    */
-  static QString newServicePath(bool showInMenu, const QString &suggestedName,
-                                QString *menuId = 0,
-                                const QStringList *reservedMenuIds = 0);
+  static TQString newServicePath(bool showInMenu, const TQString &suggestedName,
+                                TQString *menuId = 0,
+                                const TQStringList *reservedMenuIds = 0);
 
 
   /**
@@ -513,42 +513,42 @@ public:
    * @param parent Parent widget for the progress dialog
    * @since 3.2
    */
-  static void rebuildKSycoca(QWidget *parent);
+  static void rebuildKSycoca(TQWidget *parent);
 
 protected:
 
   void init(KDesktopFile *config);
 
-  QStringList &accessServiceTypes() { return m_lstServiceTypes; }
+  TQStringList &accessServiceTypes() { return m_lstServiceTypes; }
 
 
 private:
   KService( const KService& ); // forbidden
   KService& operator=(const KService&);
 
-  QString m_strType;
-  QString m_strName;
-  QString m_strExec;
-  QString m_strIcon;
-  QString m_strTerminalOptions;
-  QString m_strPath;
-  QString m_strComment;
-  QString m_strLibrary;
-  QStringList m_lstServiceTypes;
+  TQString m_strType;
+  TQString m_strName;
+  TQString m_strExec;
+  TQString m_strIcon;
+  TQString m_strTerminalOptions;
+  TQString m_strPath;
+  TQString m_strComment;
+  TQString m_strLibrary;
+  TQStringList m_lstServiceTypes;
   bool m_bAllowAsDefault;
   int m_initialPreference;
   bool m_bTerminal;
   //bool m_bSuid;
-  //QString m_strUsername;
-  QString m_strDesktopEntryName;
-  //QString m_docPath;
+  //TQString m_strUsername;
+  TQString m_strDesktopEntryName;
+  //TQString m_docPath;
   //bool m_bHideFromPanel;
   DCOPServiceType_t m_DCOPServiceType;
-  QMap<QString,QVariant> m_mapProps;
+  TQMap<TQString,TQVariant> m_mapProps;
   bool m_bValid;
-  QStringList m_lstKeywords;
-  QString m_strInit;
-  QString m_strGenName;
+  TQStringList m_lstKeywords;
+  TQString m_strInit;
+  TQString m_strGenName;
 protected:
   virtual void virtual_hook( int id, void* data );
 private:

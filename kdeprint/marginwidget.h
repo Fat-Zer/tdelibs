@@ -20,8 +20,8 @@
 #ifndef MARGINWIDGET_H
 #define MARGINWIDGET_H
 
-#include <qwidget.h>
-#include <qvaluevector.h>
+#include <tqwidget.h>
+#include <tqvaluevector.h>
 
 #include <kdelibs_export.h>
 
@@ -34,7 +34,7 @@ class KDEPRINT_EXPORT MarginWidget : public QWidget
 {
 	Q_OBJECT
 public:
-	MarginWidget(QWidget *parent = 0, const char *name = 0, bool allowMetricUnit = true);
+	MarginWidget(TQWidget *parent = 0, const char *name = 0, bool allowMetricUnit = true);
 	~MarginWidget();
 
 	void setSymetricMargins(bool on);
@@ -67,8 +67,8 @@ private:
 	QComboBox		*m_units;
 	QCheckBox		*m_custom;
 	bool			m_symetric, m_block;
-	QValueVector<float>	m_default;
-	QValueVector<float>	m_pagesize;
+	TQValueVector<float>	m_default;
+	TQValueVector<float>	m_pagesize;
 	bool			m_landscape;
 };
 

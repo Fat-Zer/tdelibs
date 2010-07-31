@@ -21,7 +21,7 @@
 #ifndef __KATE_AUTO_INDENT_H__
 #define __KATE_AUTO_INDENT_H__
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include "katecursor.h"
 #include "kateconfig.h"
@@ -51,7 +51,7 @@ class IndenterConfigPage : public QWidget
      * @param parent parent widget
      * @param name name
      */
-    IndenterConfigPage ( QWidget *parent=0, const char *name=0 ) : QWidget(parent, name) {}
+    IndenterConfigPage ( TQWidget *parent=0, const char *name=0 ) : TQWidget(parent, name) {}
     virtual ~IndenterConfigPage () {}
 
   public slots:
@@ -87,28 +87,28 @@ class KateAutoIndent : public QObject
      * List all possible modes by name
      * @return list of modes
      */
-    static QStringList listModes ();
+    static TQStringList listModes ();
 
     /**
      * Return the mode name given the mode
      * @param mode mode index
      * @return name for this mode index
      */
-    static QString modeName (uint mode);
+    static TQString modeName (uint mode);
 
     /**
      * Return the mode description
      * @param mode mode index
      * @return mode index
      */
-    static QString modeDescription (uint mode);
+    static TQString modeDescription (uint mode);
 
     /**
      * Maps name -> index
      * @param name mode name
      * @return mode index
      */
-    static uint modeNumber (const QString &name);
+    static uint modeNumber (const TQString &name);
 
     /**
      * Config page support
@@ -121,7 +121,7 @@ class KateAutoIndent : public QObject
      * Support for a config page.
      * @return config page or 0 if not available.
      */
-    static IndenterConfigPage* configPage(QWidget *parent, uint mode);
+    static IndenterConfigPage* configPage(TQWidget *parent, uint mode);
 
   public:
     /**
@@ -160,7 +160,7 @@ class KateAutoIndent : public QObject
      * Called every time a character is inserted into the document.
      * @param c character inserted
      */
-    virtual void processChar (QChar c) { Q_UNUSED(c); }
+    virtual void processChar (TQChar c) { Q_UNUSED(c); }
 
     /**
      * Aligns/indents the given line to the proper indent position.
@@ -197,7 +197,7 @@ class KateViewIndentationAction : public KActionMenu
   Q_OBJECT
 
   public:
-    KateViewIndentationAction(KateDocument *_doc, const QString& text, QObject* parent = 0, const char* name = 0);
+    KateViewIndentationAction(KateDocument *_doc, const TQString& text, TQObject* parent = 0, const char* name = 0);
 
     ~KateViewIndentationAction(){;};
 
@@ -255,7 +255,7 @@ public:
      * Called every time a character is inserted into the document.
      * @param c character inserted
      */
-  virtual void processChar (QChar c) { Q_UNUSED(c); }
+  virtual void processChar (TQChar c) { Q_UNUSED(c); }
 
     /**
      * Aligns/indents the given line to the proper indent position.
@@ -292,7 +292,7 @@ protected:
      * @param pos Contains the position of the first @p open character in the line.
      * @return True if @p open and @p close have an equal number of occurances between @p begin and @p end. False otherwise.
      */
-  bool isBalanced (KateDocCursor &begin, const KateDocCursor &end, QChar open, QChar close, uint &pos) const;
+  bool isBalanced (KateDocCursor &begin, const KateDocCursor &end, TQChar open, TQChar close, uint &pos) const;
 
     /**
      * Skip all whitespace starting at @p cur and ending at @p max. Spans lines if @p newline is set.
@@ -316,9 +316,9 @@ protected:
      * Produces a string with the proper indentation characters for its length.
      *
      * @param length The length of the indention in characters.
-     * @return A QString representing @p length characters (factoring in tabs and spaces)
+     * @return A TQString representing @p length characters (factoring in tabs and spaces)
      */
-  QString tabString(uint length) const;
+  TQString tabString(uint length) const;
 
   uint  tabWidth;     //!< The number of characters simulated for a tab
   uint  indentWidth;  //!< The number of characters used when tabs are replaced by spaces
@@ -354,7 +354,7 @@ class KateCSmartIndent : public KateNormalIndent
     ~KateCSmartIndent ();
 
     virtual void processNewline (KateDocCursor &cur, bool needContinue);
-    virtual void processChar (QChar c);
+    virtual void processChar (TQChar c);
 
     virtual void processLine (KateDocCursor &line);
     virtual void processSection (const KateDocCursor &begin, const KateDocCursor &end);
@@ -390,11 +390,11 @@ class KatePythonIndent : public KateNormalIndent
 
   private:
     int calcExtra (int &prevBlock, int &pos, KateDocCursor &end);
-    void traverseString( const QChar &stringChar, KateDocCursor &cur, KateDocCursor &end );
+    void traverseString( const TQChar &stringChar, KateDocCursor &cur, KateDocCursor &end );
 
-    static QRegExp endWithColon;
-    static QRegExp stopStmt;
-    static QRegExp blockBegin;
+    static TQRegExp endWithColon;
+    static TQRegExp stopStmt;
+    static TQRegExp blockBegin;
 };
 
 class KateXmlIndent : public KateNormalIndent
@@ -407,7 +407,7 @@ class KateXmlIndent : public KateNormalIndent
 
     virtual uint modeNumber () const { return KateDocumentConfig::imXmlStyle; }
     virtual void processNewline (KateDocCursor &cur, bool needContinue);
-    virtual void processChar (QChar c);
+    virtual void processChar (TQChar c);
     virtual void processLine (KateDocCursor &line);
     virtual bool canProcessLine() const { return true; }
     virtual void processSection (const KateDocCursor &begin, const KateDocCursor &end);
@@ -422,8 +422,8 @@ class KateXmlIndent : public KateNormalIndent
       uint &attrCol, bool &unclosedTag);
 
     // useful regular expressions
-    static const QRegExp startsWithCloseTag;
-    static const QRegExp unclosedDoctype;
+    static const TQRegExp startsWithCloseTag;
+    static const TQRegExp unclosedDoctype;
 };
 
 class KateCSAndSIndent : public KateNormalIndent
@@ -435,7 +435,7 @@ class KateCSAndSIndent : public KateNormalIndent
     ~KateCSAndSIndent ();
 
     virtual void processNewline (KateDocCursor &begin, bool needContinue);
-    virtual void processChar (QChar c);
+    virtual void processChar (TQChar c);
 
     virtual void processLine (KateDocCursor &line);
     virtual void processSection (const KateDocCursor &begin, const KateDocCursor &end);
@@ -451,17 +451,17 @@ class KateCSAndSIndent : public KateNormalIndent
     int lastNonCommentChar( const KateDocCursor &line );
     bool startsWithLabel( int line );
     bool inStatement( const KateDocCursor &begin );
-    QString continuationIndent( const KateDocCursor &begin );
+    TQString continuationIndent( const KateDocCursor &begin );
 
-    QString calcIndent (const KateDocCursor &begin);
-    QString calcIndentAfterKeyword(const KateDocCursor &indentCursor, const KateDocCursor &keywordCursor, int keywordPos, bool blockKeyword);
-    QString calcIndentInBracket(const KateDocCursor &indentCursor, const KateDocCursor &bracketCursor, int bracketPos);
-    QString calcIndentInBrace(const KateDocCursor &indentCursor, const KateDocCursor &braceCursor, int bracePos);
+    TQString calcIndent (const KateDocCursor &begin);
+    TQString calcIndentAfterKeyword(const KateDocCursor &indentCursor, const KateDocCursor &keywordCursor, int keywordPos, bool blockKeyword);
+    TQString calcIndentInBracket(const KateDocCursor &indentCursor, const KateDocCursor &bracketCursor, int bracketPos);
+    TQString calcIndentInBrace(const KateDocCursor &indentCursor, const KateDocCursor &braceCursor, int bracePos);
 
     bool handleDoxygen (KateDocCursor &begin);
-    QString findOpeningCommentIndentation (const KateDocCursor &start);
+    TQString findOpeningCommentIndentation (const KateDocCursor &start);
 
-    QString indentString;
+    TQString indentString;
 };
 
 /**
@@ -508,7 +508,7 @@ class KateVarIndent : public KateNormalIndent
     virtual ~KateVarIndent();
 
     virtual void processNewline (KateDocCursor &cur, bool needContinue);
-    virtual void processChar (QChar c);
+    virtual void processChar (TQChar c);
 
     virtual void processLine (KateDocCursor &line);
     virtual void processSection (const KateDocCursor &begin, const KateDocCursor &end);
@@ -518,7 +518,7 @@ class KateVarIndent : public KateNormalIndent
     virtual uint modeNumber () const { return KateDocumentConfig::imVarIndent; };
 
   private slots:
-    void slotVariableChanged(const QString&, const QString&);
+    void slotVariableChanged(const TQString&, const TQString&);
 
   private:
     /**
@@ -529,7 +529,7 @@ class KateVarIndent : public KateNormalIndent
      * @param attrib the attribute the characters must have, defaults to
      *               KateAutoIndent::symbolAttrib
      */
-    int coupleBalance( int line, const QChar &open, const QChar &close ) const;
+    int coupleBalance( int line, const TQChar &open, const TQChar &close ) const;
 
     /**
      * @return true if there is a matching opening with the correct attribute
@@ -549,7 +549,7 @@ class KateScriptIndent : public KateNormalIndent
     ~KateScriptIndent();
 
     virtual void processNewline( KateDocCursor &cur, bool needContinue );
-    virtual void processChar( QChar c );
+    virtual void processChar( TQChar c );
 
     virtual void processLine (KateDocCursor &line);
 //     virtual void processSection (const KateDocCursor &begin, const KateDocCursor &end);
@@ -566,7 +566,7 @@ class ScriptIndentConfigPage : public IndenterConfigPage
     Q_OBJECT
 
   public:
-    ScriptIndentConfigPage ( QWidget *parent=0, const char *name=0 );
+    ScriptIndentConfigPage ( TQWidget *parent=0, const char *name=0 );
     virtual ~ScriptIndentConfigPage ();
 
   public slots:

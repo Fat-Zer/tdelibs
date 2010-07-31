@@ -23,10 +23,10 @@
 #include "kmdriverdbwidget.h"
 #include "kmdriverdb.h"
 
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
-KMWDriver::KMWDriver(QWidget *parent, const char *name)
+KMWDriver::KMWDriver(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_ID = KMWizard::Driver;
@@ -35,7 +35,7 @@ KMWDriver::KMWDriver(QWidget *parent, const char *name)
 
 	m_widget = new KMDriverDbWidget(this);
 
-	QVBoxLayout	*lay1 = new QVBoxLayout(this, 0, 0);
+	QVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 0);
 	lay1->addWidget(m_widget);
 }
 
@@ -44,7 +44,7 @@ void KMWDriver::initPrinter(KMPrinter *p)
 	m_widget->init();
 	if (p)
 	{
-		QString autoDetect = p->option( "kde-autodetect" );
+		TQString autoDetect = p->option( "kde-autodetect" );
 		if ( !autoDetect.isEmpty() )
 		{
 			// use auto-detection info instead: split the string
@@ -52,7 +52,7 @@ void KMWDriver::initPrinter(KMPrinter *p)
 			int p = autoDetect.find( ' ' );
 			if ( p != -1 )
 			{
-				QString manu = autoDetect.left( p ), model = autoDetect.mid( p+1 );
+				TQString manu = autoDetect.left( p ), model = autoDetect.mid( p+1 );
 				KMDBEntryList *l = KMDriverDB::self()->findPnpEntry( manu, model );
 				if ( l && l->count() > 0 )
 				{
@@ -69,11 +69,11 @@ void KMWDriver::updatePrinter(KMPrinter *p)
 {
 	if (p)
 	{
-		p->setManufacturer(QString::null);
-		p->setModel(QString::null);
+		p->setManufacturer(TQString::null);
+		p->setModel(TQString::null);
 		p->setDbEntry(0);
-		p->setDriverInfo(QString::null);
-		p->setOption("kde-driver",QString::null);
+		p->setDriverInfo(TQString::null);
+		p->setOption("kde-driver",TQString::null);
 		setNextPage(KMWizard::DriverTest);
 		if (m_widget->isRaw())
 		{
@@ -104,7 +104,7 @@ void KMWDriver::updatePrinter(KMPrinter *p)
 	}
 }
 
-bool KMWDriver::isValid(QString& msg)
+bool KMWDriver::isValid(TQString& msg)
 {
 	if (m_widget->isRaw() || m_widget->isExternal() || m_widget->drivers())
 		return true;

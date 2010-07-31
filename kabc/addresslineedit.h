@@ -23,9 +23,9 @@
 #define KABC_ADDRESSLINEEDIT_H
 // $Id$
 
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qtimer.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqtimer.h>
 
 #include "klineedit.h"
 #include "kcompletion.h"
@@ -41,7 +41,7 @@ class LdapSearch;
  *
  * This lineedit is supposed to be used wherever the user types email addresses
  * and might want a completion. You can simply use it as a replacement for
- * KLineEdit or QLineEdit.
+ * KLineEdit or TQLineEdit.
  *
  * You can enable or disable the lineedit at any time.
  *
@@ -51,7 +51,7 @@ class KABC_EXPORT AddressLineEdit : public KLineEdit
 {
   Q_OBJECT
 public:
-  AddressLineEdit(QWidget* parent, bool useCompletion = true,
+  AddressLineEdit(TQWidget* parent, bool useCompletion = true,
 		const char *name = 0L);
   virtual ~AddressLineEdit();
 
@@ -59,7 +59,7 @@ public:
    * Reimplented for internal reasons.
    * @ see KLineEdit::setFont()
    */
-  virtual void setFont( const QFont& );
+  virtual void setFont( const TQFont& );
 
   static KConfig *config();
 
@@ -79,38 +79,38 @@ protected:
    * Use addAddress() to add addresses.
    */
   virtual void loadAddresses();
-  void addAddress( const QString& );
-  virtual void keyPressEvent(QKeyEvent*);
-  virtual void dropEvent(QDropEvent *e);
+  void addAddress( const TQString& );
+  virtual void keyPressEvent(TQKeyEvent*);
+  virtual void dropEvent(TQDropEvent *e);
   virtual void paste();
-  virtual void insert(const QString &t);
-  virtual void mouseReleaseEvent( QMouseEvent * e );
+  virtual void insert(const TQString &t);
+  virtual void mouseReleaseEvent( TQMouseEvent * e );
   void doCompletion(bool ctrlT);
 
 private slots:
   void slotCompletion() { doCompletion(false); }
-  void slotPopupCompletion( const QString& );
+  void slotPopupCompletion( const TQString& );
   void slotStartLDAPLookup();
-  void slotLDAPSearchData( const QStringList& );
+  void slotLDAPSearchData( const TQStringList& );
 
 private:
   void init();
   void startLoadingLDAPEntries();
   void stopLDAPLookup();
-  QStringList addresses();
-  QStringList removeMailDupes( const QStringList& adrs );
+  TQStringList addresses();
+  TQStringList removeMailDupes( const TQStringList& adrs );
 
-  QString m_previousAddresses;
+  TQString m_previousAddresses;
   bool m_useCompletion;
   bool m_completionInitialized;
   bool m_smartPaste;
-  QString m_typedText; // unused
+  TQString m_typedText; // unused
 
   static bool s_addressesDirty;
   static KCompletion *s_completion;
-  static QTimer *s_LDAPTimer;
+  static TQTimer *s_LDAPTimer;
   static LdapSearch *s_LDAPSearch;
-  static QString *s_LDAPText;
+  static TQString *s_LDAPText;
   static AddressLineEdit *s_LDAPLineEdit;
   static KConfig *s_config;
 

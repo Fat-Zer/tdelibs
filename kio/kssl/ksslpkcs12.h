@@ -72,15 +72,15 @@ public:
 	 *  certificate instead of passing the object itself.
 	 *  @return the name of the certificate
 	 */
-	QString name();
+	TQString name();
 
 	/**
-	 *  Create a KSSLPKCS12 object from a Base64 in a QString.
+	 *  Create a KSSLPKCS12 object from a Base64 in a TQString.
 	 *  @param base64 the base64 encoded certificate
 	 *  @param password a password for the certificate if encrypted
 	 *  @return the PKCS#12 object, or NULL on failure.
 	 */
-	static KSSLPKCS12* fromString(QString base64, QString password = "");
+	static KSSLPKCS12* fromString(TQString base64, TQString password = "");
 
 	/**
 	 *  Create a KSSLPKCS12 object by reading a PKCS#12 file.
@@ -88,13 +88,13 @@ public:
 	 *  @param password a password for the certificate if encrypted
 	 *  @return the PKCS#12 object, or NULL on failure.
 	 */
-	static KSSLPKCS12* loadCertFile(QString filename, QString password = "");
+	static KSSLPKCS12* loadCertFile(TQString filename, TQString password = "");
 
 	/**
 	 *  Convert to a Base64 string.
 	 *  @return the certificate in base64 form
 	 */
-	QString toString();
+	TQString toString();
 
 	/**
 	 *  Raw set the PKCS12 object.
@@ -109,7 +109,7 @@ public:
 	 *  @param pnew the new password
 	 *  @return true on success
 	 */
-	bool changePassword(QString pold, QString pnew);
+	bool changePassword(TQString pold, TQString pnew);
  
 	/**
 	 *  Get the private key.
@@ -129,7 +129,7 @@ public:
 	 *  @param filename the file to write to
 	 *  @return true on success
 	 */
-	bool toFile(QString filename);
+	bool toFile(TQString filename);
 
 	/**
 	 *  Check the X.509 and private key to make sure they're valid.
@@ -178,7 +178,7 @@ public:
 
 protected:
 	KSSLPKCS12();
-	bool parse(QString pass);
+	bool parse(TQString pass);
 
 private:
 	KSSLPKCS12Private *d;

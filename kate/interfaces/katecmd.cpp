@@ -36,7 +36,7 @@ KateCmd::~KateCmd ()
 
 bool KateCmd::registerCommand (Kate::Command *cmd)
 {
-  QStringList l = cmd->cmds ();
+  TQStringList l = cmd->cmds ();
 
   for (uint z=0; z<l.count(); z++)
     if (m_dict[l[z]])
@@ -54,18 +54,18 @@ bool KateCmd::registerCommand (Kate::Command *cmd)
 
 bool KateCmd::unregisterCommand (Kate::Command *cmd)
 {
-  QStringList l;
-  QDictIterator<Kate::Command> it(m_dict);
+  TQStringList l;
+  TQDictIterator<Kate::Command> it(m_dict);
   for( ; it.current(); ++it )
     if (it.current()==cmd) l<<it.currentKey();
-  for ( QStringList::Iterator it1 = l.begin(); it1 != l.end(); ++it1 ) {
+  for ( TQStringList::Iterator it1 = l.begin(); it1 != l.end(); ++it1 ) {
     m_dict.remove(*it1);
     kdDebug()<<"Removed command:"<<*it1<<endl;
   }
   return true;
 }
 
-Kate::Command *KateCmd::queryCommand (const QString &cmd)
+Kate::Command *KateCmd::queryCommand (const TQString &cmd)
 {
   // a command can be named ".*[\w\-]+" with the constrain that it must
   // contain at least one letter.
@@ -81,7 +81,7 @@ Kate::Command *KateCmd::queryCommand (const QString &cmd)
   return m_dict[cmd.left(f)];
 }
 
-QStringList KateCmd::cmds ()
+TQStringList KateCmd::cmds ()
 {
   return m_cmds;
 }
@@ -96,7 +96,7 @@ KateCmd *KateCmd::self ()
   return s_self;
 }
 
-void KateCmd::appendHistory( const QString &cmd )
+void KateCmd::appendHistory( const TQString &cmd )
 {
   if ( !m_history.isEmpty() && m_history.last() == cmd )
     return;
@@ -107,10 +107,10 @@ void KateCmd::appendHistory( const QString &cmd )
   m_history.append( cmd );
 }
 
-const QString KateCmd::fromHistory( uint index ) const
+const TQString KateCmd::fromHistory( uint index ) const
 {
   if ( index > m_history.count() - 1 )
-    return QString();
+    return TQString();
   return m_history[ index ];
 }
 //END KateCmd
@@ -131,7 +131,7 @@ KateCmdShellCompletion::KateCmdShellCompletion()
   m_escape_char = '\\';
 }
 
-QString KateCmdShellCompletion::makeCompletion( const QString &text )
+TQString KateCmdShellCompletion::makeCompletion( const TQString &text )
 {
         // Split text at the last unquoted space
   //
@@ -142,7 +142,7 @@ QString KateCmdShellCompletion::makeCompletion( const QString &text )
   return KCompletion::makeCompletion( m_text_compl );
 }
 
-void KateCmdShellCompletion::postProcessMatch( QString *match ) const
+void KateCmdShellCompletion::postProcessMatch( TQString *match ) const
 {
   if ( match->isNull() )
     return;
@@ -150,9 +150,9 @@ void KateCmdShellCompletion::postProcessMatch( QString *match ) const
   match->prepend( m_text_start );
 }
 
-void KateCmdShellCompletion::postProcessMatches( QStringList *matches ) const
+void KateCmdShellCompletion::postProcessMatches( TQStringList *matches ) const
 {
-  for ( QStringList::Iterator it = matches->begin();
+  for ( TQStringList::Iterator it = matches->begin();
         it != matches->end(); it++ )
     if ( !(*it).isNull() )
       (*it).prepend( m_text_start );
@@ -166,12 +166,12 @@ void KateCmdShellCompletion::postProcessMatches( KCompletionMatches *matches ) c
       (*it).value().prepend( m_text_start );
 }
 
-void KateCmdShellCompletion::splitText(const QString &text, QString &text_start,
-                                 QString &text_compl) const
+void KateCmdShellCompletion::splitText(const TQString &text, TQString &text_start,
+                                 TQString &text_compl) const
 {
   bool in_quote = false;
   bool escaped = false;
-  QChar p_last_quote_char;
+  TQChar p_last_quote_char;
   int last_unquoted_space = -1;
   int end_space_len = 0;
 

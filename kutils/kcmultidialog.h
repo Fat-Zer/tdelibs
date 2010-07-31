@@ -23,7 +23,7 @@
 #ifndef KCMULTIDIALOG_H
 #define KCMULTIDIALOG_H
 
-#include <qptrdict.h>
+#include <tqptrdict.h>
 
 #include <kdialogbase.h>
 #include <klocale.h>
@@ -52,7 +52,7 @@ public:
      * @param name The widget name
      * @param modal If you pass true here, the dialog will be modal
      **/
-    KCMultiDialog( QWidget *parent=0, const char *name=0, bool modal=false );
+    KCMultiDialog( TQWidget *parent=0, const char *name=0, bool modal=false );
 
     /**
      * Construct a personalized KCMultiDialog.
@@ -67,7 +67,7 @@ public:
      *        program interface (example: other dialogs) is accessible while
      *        the dialog is open.
      */
-    KCMultiDialog( int dialogFace, const QString & caption, QWidget * parent = 0, 
+    KCMultiDialog( int dialogFace, const TQString & caption, TQWidget * parent = 0, 
             const char * name = 0, bool modal = false );
 
 
@@ -101,7 +101,7 @@ public:
      */
     KCMultiDialog( int dialogFace, const KGuiItem &user2,
             const KGuiItem &user3=KGuiItem(), int buttonMask=User2,
-            const QString &caption=i18n("Configure"), QWidget *parent=0,
+            const TQString &caption=i18n("Configure"), TQWidget *parent=0,
             const char *name=0, bool modal=false ) KDE_DEPRECATED;
     // KDE4 remove the user3 argument, and instead initialize it to KStdGuiItem::adminMode.
 
@@ -119,7 +119,7 @@ public:
      * @param withfallback Try harder to load the module. Might result
      *                     in the module appearing outside the dialog.
      **/
-    void addModule(const QString& module, bool withfallback=true);
+    void addModule(const TQString& module, bool withfallback=true);
 
     /**
      * Add a module.
@@ -137,7 +137,7 @@ public:
      *                     in the module appearing outside the dialog.
      **/
     void addModule(const KCModuleInfo& moduleinfo, QStringList
-            parentmodulenames = QStringList(), bool withfallback=false);
+            parentmodulenames = TQStringList(), bool withfallback=false);
 
     /**
      * Remove all modules from the dialog.
@@ -174,7 +174,7 @@ signals:
      * @param instanceName The name of the instance that needs to reload its
      *                     configuration.
      */
-    void configCommitted( const QCString & instanceName );
+    void configCommitted( const TQCString & instanceName );
 
 protected slots:
     /**
@@ -223,7 +223,7 @@ protected slots:
 
 private slots:
 
-    void slotAboutToShow(QWidget *);
+    void slotAboutToShow(TQWidget *);
 
     void clientChanged(bool state);
 
@@ -265,14 +265,14 @@ private:
         KService::Ptr service;
         /* KDE 4 Move to Private class */
     };
-    typedef QValueList<CreatedModule> ModuleList;
+    typedef TQValueList<CreatedModule> ModuleList;
     ModuleList m_modules;
 
-    typedef QMap<KService::Ptr, KCModuleProxy*> OrphanMap;
+    typedef TQMap<KService::Ptr, KCModuleProxy*> OrphanMap;
     OrphanMap m_orphanModules;
 
-    QPtrDict<QStringList> moduleParentComponents;
-    QString _docPath;
+    TQPtrDict<TQStringList> moduleParentComponents;
+    TQString _docPath;
     int dialogface;
 
     class KCMultiDialogPrivate;

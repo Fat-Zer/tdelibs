@@ -60,10 +60,10 @@ class KJSProxyImpl : public KJSProxy {
 public:
   KJSProxyImpl(khtml::ChildFrame *frame);
   virtual ~KJSProxyImpl();
-  virtual QVariant evaluate(QString filename, int baseLine, const QString &, const DOM::Node &n,
+  virtual TQVariant evaluate(TQString filename, int baseLine, const TQString &, const DOM::Node &n,
 			    Completion *completion = 0);
   virtual void clear();
-  virtual DOM::EventListener *createHTMLEventHandler(QString sourceUrl, QString name, QString code, DOM::NodeImpl *node);
+  virtual DOM::EventListener *createHTMLEventHandler(TQString sourceUrl, TQString name, TQString code, DOM::NodeImpl *node);
   virtual void finishedWithEvent(const DOM::Event &event);
   virtual KJS::Interpreter *interpreter();
 
@@ -128,8 +128,8 @@ KJSProxyImpl::~KJSProxyImpl()
 #endif
 }
 
-QVariant KJSProxyImpl::evaluate(QString filename, int baseLine,
-                                const QString&str, const DOM::Node &n, Completion *completion) {
+TQVariant KJSProxyImpl::evaluate(TQString filename, int baseLine,
+                                const TQString&str, const DOM::Node &n, Completion *completion) {
   // evaluate code. Returns the JS return value or an invalid QVariant
   // if there was none, an error occurred or the type couldn't be converted.
 
@@ -170,7 +170,7 @@ QVariant KJSProxyImpl::evaluate(QString filename, int baseLine,
     *completion = comp;
 
 #ifdef KJS_DEBUGGER
-    //    KJSDebugWin::debugWindow()->setCode(QString::null);
+    //    KJSDebugWin::debugWindow()->setCode(TQString::null);
 #endif
 
   window->afterScriptExecution();
@@ -185,7 +185,7 @@ QVariant KJSProxyImpl::evaluate(QString filename, int baseLine,
         UString msg = comp.value().toString(m_script->globalExec());
         kdDebug(6070) << "WARNING: Script threw exception: " << msg.qstring() << endl;
     }
-    return QVariant();
+    return TQVariant();
   }
 }
 
@@ -237,7 +237,7 @@ void KJSProxyImpl::clear() {
   }
 }
 
-DOM::EventListener *KJSProxyImpl::createHTMLEventHandler(QString sourceUrl, QString name, QString code, DOM::NodeImpl *node)
+DOM::EventListener *KJSProxyImpl::createHTMLEventHandler(TQString sourceUrl, TQString name, TQString code, DOM::NodeImpl *node)
 {
   initScript();
 
@@ -341,10 +341,10 @@ void KJSProxyImpl::initScript()
 void KJSProxyImpl::applyUserAgent()
 {
   assert( m_script );
-  QString host = m_frame->m_part->url().isLocalFile() ? "localhost" : m_frame->m_part->url().host();
-  QString userAgent = KProtocolManager::userAgentForHost(host);
-  if (userAgent.find(QString::fromLatin1("Microsoft")) >= 0 ||
-      userAgent.find(QString::fromLatin1("MSIE")) >= 0)
+  TQString host = m_frame->m_part->url().isLocalFile() ? "localhost" : m_frame->m_part->url().host();
+  TQString userAgent = KProtocolManager::userAgentForHost(host);
+  if (userAgent.find(TQString::fromLatin1("Microsoft")) >= 0 ||
+      userAgent.find(TQString::fromLatin1("MSIE")) >= 0)
   {
     m_script->setCompatMode(Interpreter::IECompat);
 #ifdef KJS_VERBOSE
@@ -353,9 +353,9 @@ void KJSProxyImpl::applyUserAgent()
   }
   else
     // If we find "Mozilla" but not "(compatible, ...)" we are a real Netscape
-    if (userAgent.find(QString::fromLatin1("Mozilla")) >= 0 &&
-        userAgent.find(QString::fromLatin1("compatible")) == -1 &&
-        userAgent.find(QString::fromLatin1("KHTML")) == -1)
+    if (userAgent.find(TQString::fromLatin1("Mozilla")) >= 0 &&
+        userAgent.find(TQString::fromLatin1("compatible")) == -1 &&
+        userAgent.find(TQString::fromLatin1("KHTML")) == -1)
     {
       m_script->setCompatMode(Interpreter::NetscapeCompat);
 #ifdef KJS_VERBOSE

@@ -22,7 +22,7 @@
 #ifndef _KLOCALE_H
 #define _KLOCALE_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kdelibs_export.h>
 
 class QStringList;
@@ -67,7 +67,7 @@ class KCalendarSystem;
  * \relates KLocale
  *  i18n is the function that does everything you need to translate
  *  a string. You just wrap around every user visible string a i18n
- *  call to get a QString with the string in the user's preferred
+ *  call to get a TQString with the string in the user's preferred
  *  language.
  *
  *  The argument must be an UTF-8 encoded string (If you only use
@@ -75,7 +75,7 @@ class KCalendarSystem;
  *  for e.g. German umlauts or French accents should be recoded to
  *  UTF-8)
  **/
-KDECORE_EXPORT QString i18n(const char *text);
+KDECORE_EXPORT TQString i18n(const char *text);
 
 /**
  * \relates KLocale
@@ -84,7 +84,7 @@ KDECORE_EXPORT QString i18n(const char *text);
  *  text.
  *  @see translate
  **/
-KDECORE_EXPORT QString i18n(const char *comment, const char *text);
+KDECORE_EXPORT TQString i18n(const char *comment, const char *text);
 
 /**
  * \relates KLocale
@@ -97,7 +97,7 @@ KDECORE_EXPORT QString i18n(const char *comment, const char *text);
  *          depending on n
  *  @see translate
  **/
-KDECORE_EXPORT QString i18n(const char *singular, const char *plural, unsigned long n);
+KDECORE_EXPORT TQString i18n(const char *singular, const char *plural, unsigned long n);
 
 /**
  * \relates KLocale
@@ -105,7 +105,7 @@ KDECORE_EXPORT QString i18n(const char *singular, const char *plural, unsigned l
  * with our i18n method. We use uic -tr tr2i18n to redirect
  * to the right i18n() function
 **/
-inline QString tr2i18n(const char* message, const char* =0) {
+inline TQString tr2i18n(const char* message, const char* =0) {
   return i18n(message);
 }
 
@@ -141,7 +141,7 @@ public:
    * @param catalog The name of the main language file
    * @param config The configuration file to use.
    */
-  KLocale( const QString& catalog, KConfig *config = 0 );
+  KLocale( const TQString& catalog, KConfig *config = 0 );
 
   /**
    * Copy constructor.
@@ -176,7 +176,7 @@ public:
    *
    * @param index The lookup text and default text, if not found.
    */
-  QString translate( const char *index ) const;
+  TQString translate( const char *index ) const;
 
   /**
    * Translates the string into the corresponding string in the
@@ -203,7 +203,7 @@ public:
    * @param fallback the default text, if not found
    * @return translation
    */
-  QString translate( const char *comment, const char *fallback) const;
+  TQString translate( const char *comment, const char *fallback) const;
 
   /**
    * Used to get the correct, translated singular or plural of a
@@ -215,7 +215,7 @@ public:
    * @return the correct singular or plural for the selected language,
    *         depending on n
    */
-  QString translate( const char *singular, const char *plural,
+  TQString translate( const char *singular, const char *plural,
 		     unsigned long n) const;
 
   /**
@@ -236,7 +236,7 @@ public:
    *
    * @return True on success.
    */
-  bool setLanguage(const QString & language);
+  bool setLanguage(const TQString & language);
 
   /**
    * Changes the list of prefed languages for the locale. The first valid
@@ -247,7 +247,7 @@ public:
    *
    * @return True if one of the specified languages were used.
    */
-  bool setLanguage(const QStringList & languages);
+  bool setLanguage(const TQStringList & languages);
  
   /**
    * Changes the current country. The current country will be left
@@ -258,7 +258,7 @@ public:
    *
    * @return True on success.
    */
-  bool setCountry(const QString & country);
+  bool setCountry(const TQString & country);
 
   /**
    * Various positions for where to place the positive or negative
@@ -274,7 +274,7 @@ public:
    *
    * @return The decimal symbol used by locale.
    */
-  QString decimalSymbol() const;
+  TQString decimalSymbol() const;
 
   /**
    * Returns what the thousands separator should look
@@ -283,7 +283,7 @@ public:
    *
    * @return The thousands separator used by locale.
    */
-  QString thousandsSeparator() const;
+  TQString thousandsSeparator() const;
 
   /**
    * Returns what the symbol denoting currency in the current locale
@@ -291,7 +291,7 @@ public:
    *
    * @return The default currency symbol used by locale.
    */
-  QString currencySymbol() const;
+  TQString currencySymbol() const;
 
   /**
    * Returns what a decimal point should look like ("." or "," etc.)
@@ -300,7 +300,7 @@ public:
    *
    * @return The monetary decimal symbol used by locale.
    */
-  QString monetaryDecimalSymbol() const;
+  TQString monetaryDecimalSymbol() const;
 
   /**
    * Returns what a thousands separator for monetary values should
@@ -309,7 +309,7 @@ public:
    *
    * @return The monetary thousands separator used by locale.
    */
-  QString monetaryThousandsSeparator() const;
+  TQString monetaryThousandsSeparator() const;
 
   /**
    * Returns what a positive sign should look like ("+", " ", etc.)
@@ -317,7 +317,7 @@ public:
    *
    * @return The positive sign used by locale.
    */
-  QString positiveSign() const;
+  TQString positiveSign() const;
 
   /**
    * Returns what a negative sign should look like ("-", etc.)
@@ -325,7 +325,7 @@ public:
    *
    * @return The negative sign used by locale.
    */
-  QString negativeSign() const;
+  TQString negativeSign() const;
 
   /**
    * The number of fractional digits to include in numeric/monetary
@@ -383,8 +383,8 @@ public:
    * @return The number of money as a localized string
    * @see fracDigits()
    */
-  QString formatMoney(double num,
-		      const QString & currency = QString::null,
+  TQString formatMoney(double num,
+		      const TQString & currency = TQString::null,
 		      int digits = -1) const;
 
   /**
@@ -400,18 +400,18 @@ public:
    * @param precision Number of fractional digits used.
    *
    * @return The number as a localized string
-   * @see formatNumber(const QString, bool, int)
+   * @see formatNumber(const TQString, bool, int)
    */
-  QString formatNumber(double num, int precision = -1) const;
+  TQString formatNumber(double num, int precision = -1) const;
 
   /**
    * @deprecated
    *
-   * KDE 4.0: merge with formatNumber(const QString int)
+   * KDE 4.0: merge with formatNumber(const TQString int)
    *
    * calls formatNumber(numStr, 2)
    */
-  QString formatNumber(const QString &numStr) const KDE_DEPRECATED;
+  TQString formatNumber(const TQString &numStr) const KDE_DEPRECATED;
 
   /**
    * Given a string representing a number, converts that to a numeric
@@ -426,7 +426,7 @@ public:
    * @return The number as a localized string
    * @since 3.5
    */
-  QString formatNumber(const QString &numStr, bool round, int precision) const;
+  TQString formatNumber(const TQString &numStr, bool round, int precision) const;
 
   /**
    * Given an integer, converts that to a numeric string containing
@@ -439,7 +439,7 @@ public:
    * @return The number as a localized string
    * @since 3.2
    */
-  QString formatLong(long num) const;
+  TQString formatLong(long num) const;
 
   /**
    * Use this to determine whether nouns are declined in
@@ -460,7 +460,7 @@ public:
    *
    * @return The date as a string
    */
-  QString formatDate(const QDate &pDate, bool shortFormat = false) const;
+  TQString formatDate(const TQDate &pDate, bool shortFormat = false) const;
 
   /**
    * Use this to determine whether in dates a possessive form of month
@@ -483,7 +483,7 @@ public:
    *
    * @return The time as a string
    */
-  QString formatTime(const QTime &pTime, bool includeSecs, bool isDuration /*=false*/) const;
+  TQString formatTime(const TQTime &pTime, bool includeSecs, bool isDuration /*=false*/) const;
 
   /**
    * Returns a string formatted to the current locale's conventions
@@ -495,7 +495,7 @@ public:
    *
    * @return The time as a string
    */
-  QString formatTime(const QTime &pTime, bool includeSecs = false) const; // BIC: merge with above
+  TQString formatTime(const TQTime &pTime, bool includeSecs = false) const; // BIC: merge with above
 
   /**
    * Use this to determine if the user wants a 12 hour clock.
@@ -534,7 +534,7 @@ public:
    * @return The name of the month
    * 
    * Typically the correct replacement for this deprecated class is
-   * calendar()->monthString(), which requires a QDate (rather than an
+   * calendar()->monthString(), which requires a TQDate (rather than an
    * integer month) or both a month and a year.
    * This will work across different calendars.
    * Note that you also need to add 
@@ -543,7 +543,7 @@ public:
    * \endcode
    * to the applicable file.
    */
-  QString monthName(int i, bool shortName = false) const KDE_DEPRECATED;
+  TQString monthName(int i, bool shortName = false) const KDE_DEPRECATED;
 
   /**
    * @deprecated
@@ -559,7 +559,7 @@ public:
    * @since 3.1
    *
    * Typically the correct replacement for this deprecated class is
-   * calendar()->monthNamePossessive(), which requires a QDate (rather than
+   * calendar()->monthNamePossessive(), which requires a TQDate (rather than
    * an integer month) or both a month and a year.
    * This will work across different calendars.
    * Note that you also need to add 
@@ -568,7 +568,7 @@ public:
    * \endcode
    * to the applicable file.
   */
-  QString monthNamePossessive(int i, bool shortName = false) const KDE_DEPRECATED;
+  TQString monthNamePossessive(int i, bool shortName = false) const KDE_DEPRECATED;
 
   /**
    * @deprecated use calendar()->weekDayName
@@ -580,7 +580,7 @@ public:
    *
    * @return The name of the day
    */
-  QString weekDayName(int i, bool shortName = false) const KDE_DEPRECATED;
+  TQString weekDayName(int i, bool shortName = false) const KDE_DEPRECATED;
 
   /**
    * Returns a pointer to the calendar system object.
@@ -597,7 +597,7 @@ public:
    * @return the name of the calendar system
    * @since 3.2
    */
-  QString calendarType() const;
+  TQString calendarType() const;
 
   /**
    * Changes the current calendar system to the calendar specified.
@@ -607,7 +607,7 @@ public:
    * @param calendarType the name of the calendar type
    * @since 3.2
    */
-  void setCalendar(const QString & calendarType);
+  void setCalendar(const TQString & calendarType);
 
   /**
    * Returns a string formated to the current locale's conventions
@@ -619,7 +619,7 @@ public:
    *
    * @return The date and time as a string
    */
-  QString formatDateTime(const QDateTime &pDateTime,
+  TQString formatDateTime(const TQDateTime &pDateTime,
 			 bool shortFormat = true,
 			 bool includeSecs = false) const;
 
@@ -632,7 +632,7 @@ public:
    *
    * @return The string converted to a double
    */
-  double readMoney(const QString &numStr, bool * ok = 0) const;
+  double readMoney(const TQString &numStr, bool * ok = 0) const;
 
   /**
    * Converts a localized numeric string to a double.
@@ -643,10 +643,10 @@ public:
    *
    * @return The string converted to a double
    */
-  double readNumber(const QString &numStr, bool * ok = 0) const;
+  double readNumber(const TQString &numStr, bool * ok = 0) const;
 
   /**
-   * Converts a localized date string to a QDate.
+   * Converts a localized date string to a TQDate.
    * The bool pointed by ok will be invalid if the date entered was not valid.
    *
    * @param str the string we want to convert.
@@ -655,13 +655,13 @@ public:
    *
    * @return The string converted to a QDate
    */
-  QDate readDate(const QString &str, bool* ok = 0) const;
+  TQDate readDate(const TQString &str, bool* ok = 0) const;
 
   /**
-   * Converts a localized date string to a QDate, using the specified format.
+   * Converts a localized date string to a TQDate, using the specified format.
    * You will usually not want to use this method.
    */
-  QDate readDate( const QString &intstr, const QString &fmt, bool* ok = 0) const;
+  TQDate readDate( const TQString &intstr, const TQString &fmt, bool* ok = 0) const;
 
   enum ReadDateFlags {
       NormalFormat = 1,
@@ -669,7 +669,7 @@ public:
   };
 
   /**
-   * Converts a localized date string to a QDate.
+   * Converts a localized date string to a TQDate.
    * This method is stricter than readDate(str,&ok): it will either accept
    * a date in full format or a date in short format, depending on @p flags.
    *
@@ -681,10 +681,10 @@ public:
    * @return The string converted to a QDate
    * @since 3.2
    */
-  QDate readDate(const QString &str, ReadDateFlags flags, bool *ok = 0) const;
+  TQDate readDate(const TQString &str, ReadDateFlags flags, bool *ok = 0) const;
 
   /**
-   * Converts a localized time string to a QTime.
+   * Converts a localized time string to a TQTime.
    * This method will try to parse it with seconds, then without seconds.
    * The bool pointed to by @p ok will be set to false if the time entered was 
    * not valid.
@@ -695,14 +695,14 @@ public:
    *
    * @return The string converted to a QTime
    */
-  QTime readTime(const QString &str, bool* ok = 0) const;
+  TQTime readTime(const TQString &str, bool* ok = 0) const;
 
   enum ReadTimeFlags {
       WithSeconds = 0, // default (no flag set)
       WithoutSeconds = 1
   }; // (maybe use this enum as a bitfield, if adding independent features?)
   /**
-   * Converts a localized time string to a QTime.
+   * Converts a localized time string to a TQTime.
    * This method is stricter than readTime(str,&ok): it will either accept
    * a time with seconds or a time without seconds.
    * Use this method when the format is known by the application.
@@ -715,7 +715,7 @@ public:
    * @return The string converted to a QTime
    * @since 3.2
    */
-  QTime readTime(const QString &str, ReadTimeFlags flags, bool *ok = 0) const;
+  TQTime readTime(const TQString &str, ReadTimeFlags flags, bool *ok = 0) const;
 
   /**
    * Returns the language used by this object. The domain AND the
@@ -724,7 +724,7 @@ public:
    *
    * @return The currently used language.
    */
-  QString language() const;
+  TQString language() const;
 
   /**
    * Returns the country code of the country where the user lives.
@@ -732,7 +732,7 @@ public:
    *
    * @return The country code for the user.
    */
-  QString country() const;
+  TQString country() const;
 
   /**
    * Returns the preferred languages as ISO 639-1 codes. This means
@@ -747,7 +747,7 @@ public:
    *
    * @see languageList
    */
-  QStringList languagesTwoAlpha() const;
+  TQStringList languagesTwoAlpha() const;
 
   /**
    * Returns the languages selected by user. The codes returned here is the
@@ -757,7 +757,7 @@ public:
    *
    * @see languagesTwoAlpha
    */
-  QStringList languageList() const;
+  TQStringList languageList() const;
 
   /**
    * Returns the user's preferred encoding.
@@ -786,15 +786,15 @@ public:
    * @see encoding
    * @see encodingMib
    */
-  QTextCodec * codecForEncoding() const;
+  TQTextCodec * codecForEncoding() const;
 
   /**
    * Returns the file encoding.
    *
    * @return The Mib of the file encoding
    *
-   * @see QFile::encodeName
-   * @see QFile::decodeName
+   * @see TQFile::encodeName
+   * @see TQFile::decodeName
    */
   int fileEncodingMib() const;
 
@@ -820,7 +820,7 @@ public:
    *
    * @param format The new date format
    */
-  void setDateFormat(const QString & format);
+  void setDateFormat(const TQString & format);
   /**
    * Changes the current short date format.
    *
@@ -843,7 +843,7 @@ public:
    *
    * @param format The new short date format
    */
-  void setDateFormatShort(const QString & format);
+  void setDateFormatShort(const TQString & format);
   /**
    * Changes the form of month name used in dates.
    *
@@ -870,7 +870,7 @@ public:
    *
    * @param format The new time format
    */
-  void setTimeFormat(const QString & format);
+  void setTimeFormat(const TQString & format);
 
   /**
    * @deprecated
@@ -896,47 +896,47 @@ public:
    * @return Current date format.
    * @see setDateFormat()
    */
-  QString dateFormat() const;
+  TQString dateFormat() const;
   /**
    * Returns the currently selected short date format.
    *
    * @return Current short date format.
    * @see setDateFormatShort()
    */
-  QString dateFormatShort() const;
+  TQString dateFormatShort() const;
   /**
    * Returns the currently selected time format.
    *
    * @return Current time format.
    * @see setTimeFormat()
    */
-  QString timeFormat() const;
+  TQString timeFormat() const;
 
   /**
    * Changes the symbol used to identify the decimal pointer.
    *
    * @param symbol The new decimal symbol.
    */
-  void setDecimalSymbol(const QString & symbol);
+  void setDecimalSymbol(const TQString & symbol);
   /**
    * Changes the separator used to group digits when formating numbers.
    *
    * @param separator The new thousands separator.
    */
-  void setThousandsSeparator(const QString & separator);
+  void setThousandsSeparator(const TQString & separator);
   /**
    * Changes the sign used to identify a positive number. Normally this is
    * left blank.
    *
    * @param sign Sign used for positive numbers.
    */
-  void setPositiveSign(const QString & sign);
+  void setPositiveSign(const TQString & sign);
   /**
    * Changes the sign used to identify a negative number.
    *
    * @param sign Sign used for negative numbers.
    */
-  void setNegativeSign(const QString & sign);
+  void setNegativeSign(const TQString & sign);
   /**
    * Changes the sign position used for positive monetary values.
    *
@@ -976,32 +976,32 @@ public:
    *
    * @param separator The new thousands separator.
    */
-  void setMonetaryThousandsSeparator(const QString & separator);
+  void setMonetaryThousandsSeparator(const TQString & separator);
   /**
    * Changes the symbol used to identify the decimal pointer for monetary
    * values.
    *
    * @param symbol The new decimal symbol.
    */
-  void setMonetaryDecimalSymbol(const QString & symbol);
+  void setMonetaryDecimalSymbol(const TQString & symbol);
   /**
    * Changes the current currency symbol.
    *
    * @param symbol The new currency symbol
    */
-  void setCurrencySymbol(const QString & symbol);
+  void setCurrencySymbol(const TQString & symbol);
 
   /**
    * Returns the preferred page size for printing.
    *
-   * @return The preferred page size, cast it to QPrinter::PageSize
+   * @return The preferred page size, cast it to TQPrinter::PageSize
    */
   int pageSize() const;
 
   /**
    * Changes the preferred page size when printing.
    *
-   * @param paperFormat the new preferred page size in the format QPrinter::PageSize
+   * @param paperFormat the new preferred page size in the format TQPrinter::PageSize
    */
   void setPageSize(int paperFormat);
 
@@ -1035,28 +1035,28 @@ public:
    *
    * @param catalog The catalog to add.
    */
-  void insertCatalogue(const QString& catalog);
+  void insertCatalogue(const TQString& catalog);
 
   /**
    * Removes a catalog for translation lookup.
    * @param catalog The catalog to remove.
    * @see insertCatalogue()
    */
-  void removeCatalogue(const QString &catalog);
+  void removeCatalogue(const TQString &catalog);
 
   /**
    * Sets the active catalog for translation lookup.
    * @param catalog The catalog to activate.
    */
-  void setActiveCatalogue(const QString &catalog);
+  void setActiveCatalogue(const TQString &catalog);
 
   /**
    * Translates a message as a QTranslator is supposed to.
    * The parameters are similar to i18n(), but the result
-   * value has other semantics (it can be QString::null)
+   * value has other semantics (it can be TQString::null)
    * @since 3.1
    **/
-  QString translateQt(const char *context,
+  TQString translateQt(const char *context,
 		      const char *sourceText,
 		      const char *message) const;
 
@@ -1065,7 +1065,7 @@ public:
    * @return a list of all language codes
    * @since 3.1
    */
-  QStringList allLanguagesTwoAlpha() const;
+  TQStringList allLanguagesTwoAlpha() const;
 
   /**
    * Convert a ISO 639-1 code to a human readable form.
@@ -1073,14 +1073,14 @@ public:
    * @return the human readable form
    * @since 3.1
    */
-  QString twoAlphaToLanguageName(const QString &code) const;
+  TQString twoAlphaToLanguageName(const TQString &code) const;
 
   /**
    * Returns list of all known country codes.
    * @return a list of all country codes
    * @since 3.1
    */
-  QStringList allCountriesTwoAlpha() const;
+  TQStringList allCountriesTwoAlpha() const;
 
   /**
    * Convert a country code to a human readable form.
@@ -1088,7 +1088,7 @@ public:
    * @return the human readable form of the country name
    * @since 3.1
    */
-  QString twoAlphaToCountryName(const QString &code) const;
+  TQString twoAlphaToCountryName(const TQString &code) const;
 
   /**
    * Returns the parts of the parameter str understood as language setting
@@ -1099,10 +1099,10 @@ public:
    * @param country This will be set to the country part of the string.
    * @param charset This will be set to the charset part of the string.
    */
-  static void splitLocale(const QString & str,
-			  QString & language,
-			  QString & country,
-			  QString & charset);
+  static void splitLocale(const TQString & str,
+			  TQString & language,
+			  TQString & country,
+			  TQString & charset);
 
   /**
    * Use this as main catalog for *all* KLocales, if not the appname
@@ -1120,27 +1120,27 @@ public:
    * @param fname relative path to find
    * @param rtype resource type to use
    */
-  static QString langLookup(const QString &fname, const char *rtype = "html");
+  static TQString langLookup(const TQString &fname, const char *rtype = "html");
 
   /**
    * Returns the name of the internal language.
    *
    * @return Name of the default language
    */
-  static QString defaultLanguage();
+  static TQString defaultLanguage();
 
   /**
    * Returns the name of the default country.
    *
    * @return Name of the default country
    */
-  static QString defaultCountry();
+  static TQString defaultCountry();
 
 
   /**
    * @internal Called from KConfigBackend to initialize language.
    */
-  static QString _initLanguage(KConfigBase *config);
+  static TQString _initLanguage(KConfigBase *config);
 
 #ifdef KDE_NO_COMPAT
 private:
@@ -1149,7 +1149,7 @@ private:
    * @deprecated
    * use formatMoney(double)
    */
-  QString formatMoney(const QString &numStr) const KDE_DEPRECATED;
+  TQString formatMoney(const TQString &numStr) const KDE_DEPRECATED;
 
   /**
    * @deprecated
@@ -1157,19 +1157,19 @@ private:
    *
    * @return String containing language codes separated by colons
    */
-  QString languages() const KDE_DEPRECATED;
+  TQString languages() const KDE_DEPRECATED;
 
   /**
    * @deprecated
    * @return True
    */
-  bool setCharset(const QString & charset) KDE_DEPRECATED;
+  bool setCharset(const TQString & charset) KDE_DEPRECATED;
 
   /**
    * @deprecated
    * @see encoding
    */
-  QString charset() const KDE_DEPRECATED;
+  TQString charset() const KDE_DEPRECATED;
 
 protected:
   /**
@@ -1193,7 +1193,7 @@ private:
    * @param config The configuration object used for init
    * @param useEnv True if we should use environment variables
    */
-  void initMainCatalogues(const QString & catalog);
+  void initMainCatalogues(const TQString & catalog);
   
   /**
    * @internal Initializes the list of valid languages from the user's point of view. This is the list of
@@ -1214,19 +1214,19 @@ private:
 
   /**
    * @internal Figures out which encoding the user prefers for filenames
-   * and sets up the appropriate QFile encoding and decoding functions.
+   * and sets up the appropriate TQFile encoding and decoding functions.
    */
   void initFileNameEncoding(KConfig *config);
 
   /**
-   * @internal A QFile filename encoding function (QFile::encodeFn).
+   * @internal A TQFile filename encoding function (TQFile::encodeFn).
    */
-  static QCString encodeFileNameUTF8( const QString & fileName );
+  static TQCString encodeFileNameUTF8( const TQString & fileName );
 
   /**
-   * @internal QFile filename decoding function (QFile::decodeFn).
+   * @internal TQFile filename decoding function (TQFile::decodeFn).
    */
-  static QString decodeFileNameUTF8( const QCString & localFileName );
+  static TQString decodeFileNameUTF8( const TQCString & localFileName );
 
   /**
    * @internal Changes the file name of the catalog to the correct
@@ -1247,7 +1247,7 @@ private:
   /**
    * @internal function used by the two translate versions
    */
-  QString translate_priv(const char *index,
+  TQString translate_priv(const char *index,
 			 const char *text,
 			 const char ** original = 0,
 			 int* pluralType = 0) const;
@@ -1260,7 +1260,7 @@ private:
   /**
    * @internal Checks if the specified language is installed
    */
-  bool isLanguageInstalled(const QString & language) const;
+  bool isLanguageInstalled(const TQString & language) const;
   
   /**
    * @internal evaluate the list of catalogs and check that all instances for all languages are loaded 
@@ -1277,7 +1277,7 @@ private:
    *
    * @param language The language to examine
    */
-  int pluralType( const QString & language );
+  int pluralType( const TQString & language );
   
   /**
    * @internal Find the plural type information for a given catalog. This catalog will be a kdelibs.mo. Method
@@ -1292,14 +1292,14 @@ private:
    * @param language language of the catalog
    * @param name name of the catalog
    */
-  // const KCatalogue * catalog( const QString & language, const QString & name );
+  // const KCatalogue * catalog( const TQString & language, const TQString & name );
   
 
   /**
-   * @internal Retrieves the file name of the catalog, or QString::null
+   * @internal Retrieves the file name of the catalog, or TQString::null
    *           if not found.
    */
-  static QString catalogueFileName(const QString & language,
+  static TQString catalogueFileName(const TQString & language,
 				   const KCatalogue & catalog);
 public:
   /**
@@ -1307,28 +1307,28 @@ public:
    *
    * @param language language to check
    */
-   bool isApplicationTranslatedInto( const QString & language);
+   bool isApplicationTranslatedInto( const TQString & language);
    
 private:
   // Numbers and money
-  QString m_decimalSymbol;
-  QString m_thousandsSeparator;
-  QString m_currencySymbol;
-  QString m_monetaryDecimalSymbol;
-  QString m_monetaryThousandsSeparator;
-  QString m_positiveSign;
-  QString m_negativeSign;
+  TQString m_decimalSymbol;
+  TQString m_thousandsSeparator;
+  TQString m_currencySymbol;
+  TQString m_monetaryDecimalSymbol;
+  TQString m_monetaryThousandsSeparator;
+  TQString m_positiveSign;
+  TQString m_negativeSign;
   int m_fracDigits;
   SignPosition m_positiveMonetarySignPosition;
   SignPosition m_negativeMonetarySignPosition;
 
   // Date and time
-  QString m_timeFormat;
-  QString m_dateFormat;
-  QString m_dateFormatShort;
+  TQString m_timeFormat;
+  TQString m_dateFormat;
+  TQString m_dateFormatShort;
 
-  QString m_language;
-  QString m_country;
+  TQString m_language;
+  TQString m_country;
 
   bool m_weekStartsMonday; //### remove for KDE 4.0
   bool m_positivePrefixCurrencySymbol;

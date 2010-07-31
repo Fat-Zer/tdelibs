@@ -8,14 +8,14 @@
 **
 *****************************************************************************/
 
-#include <qwidget.h>
-#include <qpainter.h>
+#include <tqwidget.h>
+#include <tqpainter.h>
 #include <kprinter.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <qbuttongroup.h>
+#include <tqpushbutton.h>
+#include <tqradiobutton.h>
+#include <tqbuttongroup.h>
 #include <kapplication.h>
-#include <qapplication.h>
+#include <tqapplication.h>
 #include <math.h>
 
 
@@ -24,27 +24,27 @@
 // The coordinate system x=(0..500), y=(0..500) spans the paint device.
 //
 
-void drawColorWheel( QPainter *p )
+void drawColorWheel( TQPainter *p )
 {
-    QFont f( "times", 18, QFont::Bold );
+    TQFont f( "times", 18, TQFont::Bold );
     p->setFont( f );
     p->setPen( Qt::black );
     p->setWindow( 0, 0, 500, 500 );		// defines coordinate system
 
     for ( int i=0; i<36; i++ ) {		// draws 36 rotated rectangles
 
-        QWMatrix matrix;
+        TQWMatrix matrix;
         matrix.translate( 250.0F, 250.0F );	// move to center
         matrix.shear( 0.0F, 0.3F );		// twist it
         matrix.rotate( (float)i*10 );		// rotate 0,10,20,.. degrees
         p->setWorldMatrix( matrix );		// use this world matrix
 
-        QColor c;
+        TQColor c;
         c.setHsv( i*10, 255, 255 );		// rainbow effect
         p->setBrush( c );			// solid fill with color c
         p->drawRect( 70, -10, 80, 10 );		// draw the rectangle
 
-        QString n;
+        TQString n;
         n.sprintf( "H=%d", i*10 );
         p->drawText( 80+70+5, 0, n );		// draw the hue number
     }
@@ -55,7 +55,7 @@ void drawColorWheel( QPainter *p )
 // This function draws a few lines of text using different fonts.
 //
 
-void drawFonts( QPainter *p )
+void drawFonts( TQPainter *p )
 {
     static const char *fonts[] = { "Helvetica", "Courier", "Times", 0 };
     static int	 sizes[] = { 10, 12, 18, 24, 36, 0 };
@@ -64,9 +64,9 @@ void drawFonts( QPainter *p )
     while ( fonts[f] ) {
         int s = 0;
         while ( sizes[s] ) {
-            QFont font( fonts[f], sizes[s] );
+            TQFont font( fonts[f], sizes[s] );
             p->setFont( font );
-            QFontMetrics fm = p->fontMetrics();
+            TQFontMetrics fm = p->fontMetrics();
             y += fm.ascent();
             p->drawText( 10, y, "Quartz Glyph Job Vex'd Cwm Finks" );
             y += fm.descent();
@@ -81,12 +81,12 @@ void drawFonts( QPainter *p )
 // This function draws some shapes
 //
 
-void drawShapes( QPainter *p )
+void drawShapes( TQPainter *p )
 {
-    QBrush b1( Qt::blue );
-    QBrush b2( Qt::green, Qt::Dense6Pattern );		// green 12% fill
-    QBrush b3( Qt::NoBrush );				// void brush
-    QBrush b4( Qt::CrossPattern );			// black cross pattern
+    TQBrush b1( Qt::blue );
+    TQBrush b2( Qt::green, Qt::Dense6Pattern );		// green 12% fill
+    TQBrush b3( Qt::NoBrush );				// void brush
+    TQBrush b4( Qt::CrossPattern );			// black cross pattern
 
     p->setPen( Qt::red );
     p->setBrush( b1 );
@@ -100,7 +100,7 @@ void drawShapes( QPainter *p )
 }
 
 
-typedef void (*draw_func)(QPainter*);
+typedef void (*draw_func)(TQPainter*);
 
 struct DrawThing {
     draw_func	 f;
@@ -131,15 +131,15 @@ DrawView::DrawView()
     setBackgroundColor( white );
 
     // Create a button group to contain all buttons
-    bgroup = new QButtonGroup( this );
+    bgroup = new TQButtonGroup( this );
     bgroup->resize( 200, 200 );
-    connect( bgroup, SIGNAL(clicked(int)), SLOT(updateIt(int)) );
+    connect( bgroup, TQT_SIGNAL(clicked(int)), TQT_SLOT(updateIt(int)) );
 
     // Calculate the size for the radio buttons
     int maxwidth = 80;
     int i;
     const char *n;
-    QFontMetrics fm = bgroup->fontMetrics();
+    TQFontMetrics fm = bgroup->fontMetrics();
     for ( i=0; (n=ourDrawFunctions[i].name) != 0; i++ ) {
         int w = fm.width( n );
         maxwidth = QMAX(w,maxwidth);
@@ -147,7 +147,7 @@ DrawView::DrawView()
     maxwidth = maxwidth + 20;			// add 20 pixels
 
     for ( i=0; (n=ourDrawFunctions[i].name) != 0; i++ ) {
-        QRadioButton *rb = new QRadioButton( n, bgroup );
+        TQRadioButton *rb = new TQRadioButton( n, bgroup );
         rb->setGeometry( 10, i*30+10, maxwidth, 30 );
         if ( i == 0 )
             rb->setChecked( true );
@@ -161,10 +161,10 @@ DrawView::DrawView()
     printer = new KPrinter;
 
     // Create and setup the print button
-    print = new QPushButton( "Print...", bgroup );
+    print = new TQPushButton( "Print...", bgroup );
     print->resize( 80, 30 );
     print->move( maxwidth/2 - print->width()/2, maxindex*30+20 );
-    connect( print, SIGNAL(clicked()), SLOT(printIt()) );
+    connect( print, TQT_SIGNAL(clicked()), TQT_SLOT(printIt()) );
 
     bgroup->resize( maxwidth, print->y()+print->height()+10 );
 
@@ -197,7 +197,7 @@ void DrawView::updateIt( int index )
 // Calls the drawing function as specified by the radio buttons.
 //
 
-void DrawView::drawIt( QPainter *p )
+void DrawView::drawIt( TQPainter *p )
 {
     (*ourDrawFunctions[drawindex].f)(p);
 }
@@ -210,7 +210,7 @@ void DrawView::printIt()
 {
 #ifndef QT_NO_PRINTER
     if ( printer->setup( this ) ) {
-        QPainter paint( printer );
+        TQPainter paint( printer );
         drawIt( &paint );
     }
 #endif
@@ -220,9 +220,9 @@ void DrawView::printIt()
 // Called when the widget needs to be updated.
 //
 
-void DrawView::paintEvent( QPaintEvent * )
+void DrawView::paintEvent( TQPaintEvent * )
 {
-    QPainter paint( this );
+    TQPainter paint( this );
     drawIt( &paint );
 }
 
@@ -231,7 +231,7 @@ void DrawView::paintEvent( QPaintEvent * )
 // Moves the button group to the upper right corner
 // of the widget.
 
-void DrawView::resizeEvent( QResizeEvent * )
+void DrawView::resizeEvent( TQResizeEvent * )
 {
     bgroup->move( width()-bgroup->width(), 0 );
 }

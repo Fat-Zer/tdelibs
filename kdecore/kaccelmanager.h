@@ -61,7 +61,7 @@ public:
      * @param widget The toplevel widget you want to manage.
      */
 
-    static void manage(QWidget *widget);
+    static void manage(TQWidget *widget);
 
     /**
      * Does the same as the above function, but puts hints in the GUI so the
@@ -72,16 +72,16 @@ public:
      * @param programmers_mode if true, KAcceleratorManager adds (&) for removed
      *             accels and & before added accels
      */
-    static void manage(QWidget *widget, bool programmers_mode);
+    static void manage(TQWidget *widget, bool programmers_mode);
 
     /** \internal returns the result of the last manage operation. */
-    static void last_manage(QString &added,  QString &changed,  QString &removed);
+    static void last_manage(TQString &added,  TQString &changed,  TQString &removed);
 
     /**
      * Use this method for a widget (and its children) you want no accels to be set on.
      * @since 3.4
      */
-    static void setNoAccel( QWidget *widget );
+    static void setNoAccel( TQWidget *widget );
 };
 
 

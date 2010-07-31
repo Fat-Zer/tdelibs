@@ -21,11 +21,11 @@
 #include <stdaddressbook.h>
 #include <addressee.h>
 #include <addresseedialog.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include <qdatetime.h>
-#include <qregexp.h>
+#include <tqdatetime.h>
+#include <tqregexp.h>
 #include <kmessagebox.h>
 #include <kcalendarsystem.h>
 #include <unistd.h>
@@ -49,7 +49,7 @@ uint TemplateInterface::templateInterfaceNumber () const
   return myTemplateInterfaceNumber;
 }
 
-void TemplateInterface::setTemplateInterfaceDCOPSuffix ( const QCString &suffix )
+void TemplateInterface::setTemplateInterfaceDCOPSuffix ( const TQCString &suffix )
 {}
 
 #define INITKABC do { \
@@ -70,18 +70,18 @@ void TemplateInterface::setTemplateInterfaceDCOPSuffix ( const QCString &suffix 
   } \
 } while(false)
 
-bool TemplateInterface::expandMacros( QMap<QString, QString> &map, QWidget *parentWindow )
+bool TemplateInterface::expandMacros( TQMap<TQString, TQString> &map, TQWidget *parentWindow )
 {
   KABC::StdAddressBook *addrBook = 0;
   KABC::Addressee userAddress;
-  QDateTime datetime = QDateTime::currentDateTime();
-  QDate date = datetime.date();
-  QTime time = datetime.time();
+  TQDateTime datetime = TQDateTime::currentDateTime();
+  TQDate date = datetime.date();
+  TQTime time = datetime.time();
 
-  QMap<QString,QString>::Iterator it;
+  TQMap<TQString,TQString>::Iterator it;
   for ( it = map.begin(); it != map.end(); ++it )
   {
-    QString placeholder = it.key();
+    TQString placeholder = it.key();
     if ( map[ placeholder ].isEmpty() )
     {
       if ( placeholder == "index" ) map[ placeholder ] = "i";
@@ -125,11 +125,11 @@ bool TemplateInterface::expandMacros( QMap<QString, QString> &map, QWidget *pare
       }
       else if ( placeholder == "month" )
       {
-        map[ placeholder ] = QString::number( KGlobal::locale() ->calendar() ->month( date ) );
+        map[ placeholder ] = TQString::number( KGlobal::locale() ->calendar() ->month( date ) );
       }
       else if ( placeholder == "day" )
       {
-        map[ placeholder ] = QString::number( KGlobal::locale() ->calendar() ->day( date ) );
+        map[ placeholder ] = TQString::number( KGlobal::locale() ->calendar() ->day( date ) );
       }
       else if ( placeholder == "hostname" )
       {
@@ -137,7 +137,7 @@ bool TemplateInterface::expandMacros( QMap<QString, QString> &map, QWidget *pare
         hostname[ 0 ] = 0;
         gethostname( hostname, 255 );
         hostname[ 255 ] = 0;
-        map[ placeholder ] = QString::fromLocal8Bit( hostname );
+        map[ placeholder ] = TQString::fromLocal8Bit( hostname );
       }
       else if ( placeholder == "cursor" )
       {
@@ -149,11 +149,11 @@ bool TemplateInterface::expandMacros( QMap<QString, QString> &map, QWidget *pare
   return true;
 }
 
-bool TemplateInterface::insertTemplateText ( uint line, uint column, const QString &templateString, const QMap<QString, QString> &initialValues, QWidget *parentWindow )
+bool TemplateInterface::insertTemplateText ( uint line, uint column, const TQString &templateString, const TQMap<TQString, TQString> &initialValues, TQWidget *parentWindow )
 {
-  QMap<QString, QString> enhancedInitValues( initialValues );
+  TQMap<TQString, TQString> enhancedInitValues( initialValues );
 
-  QRegExp rx( "[$%]\\{([^}\\s]+)\\}" );
+  TQRegExp rx( "[$%]\\{([^}\\s]+)\\}" );
   rx.setMinimal( true );
   int pos = 0;
   int opos = 0;
@@ -172,7 +172,7 @@ bool TemplateInterface::insertTemplateText ( uint line, uint column, const QStri
           continue;
         }
       }
-      QString placeholder = rx.cap( 1 );
+      TQString placeholder = rx.cap( 1 );
       if ( ! enhancedInitValues.contains( placeholder ) )
         enhancedInitValues[ placeholder ] = "";
 

@@ -17,11 +17,11 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qhbox.h>
-#include <qregexp.h>
-#include <qimage.h>
-#include <qpushbutton.h>
-#include <qdir.h>
+#include <tqhbox.h>
+#include <tqregexp.h>
+#include <tqimage.h>
+#include <tqpushbutton.h>
+#include <tqdir.h>
 
 #include <kbuttonbox.h>
 #include <klocale.h>
@@ -38,15 +38,15 @@
 class KCustomMenuEditor::Item : public QListViewItem
 {
 public:
-   Item(QListView *parent, KService::Ptr service)
-     : QListViewItem(parent),
+   Item(TQListView *parent, KService::Ptr service)
+     : TQListViewItem(parent),
        s(service)
    {
       init();
    }
 
-   Item(QListViewItem *parent, KService::Ptr service)
-     : QListViewItem(parent),
+   Item(TQListViewItem *parent, KService::Ptr service)
+     : TQListViewItem(parent),
        s(service)
    {
       init();
@@ -54,18 +54,18 @@ public:
 
    void init()
    {
-      QString serviceName = s->name();
+      TQString serviceName = s->name();
 
       // item names may contain ampersands. To avoid them being converted
       // to accelators, replace them with two ampersands.
       serviceName.replace("&", "&&");
 
-      QPixmap normal = KGlobal::instance()->iconLoader()->loadIcon(s->icon(), KIcon::Small,
+      TQPixmap normal = KGlobal::instance()->iconLoader()->loadIcon(s->icon(), KIcon::Small,
                               0, KIcon::DefaultState, 0L, true);
 
       // make sure they are not larger than 16x16
       if (normal.width() > 16 || normal.height() > 16) {
-          QImage tmp = normal.convertToImage();
+          TQImage tmp = normal.convertToImage();
           tmp = tmp.smoothScale(16, 16);
           normal.convertFromImage(tmp);
       }
@@ -79,28 +79,28 @@ public:
 class KCustomMenuEditor::KCustomMenuEditorPrivate
 {
 public:
-    QPushButton * pbRemove;
-    QPushButton * pbMoveUp;
-    QPushButton * pbMoveDown;
+    TQPushButton * pbRemove;
+    TQPushButton * pbMoveUp;
+    TQPushButton * pbMoveDown;
 };
 
-KCustomMenuEditor::KCustomMenuEditor(QWidget *parent)
+KCustomMenuEditor::KCustomMenuEditor(TQWidget *parent)
   : KDialogBase(parent, "custommenueditor", true, i18n("Menu Editor"), Ok|Cancel, Ok, true),
     m_listView(0)
 {
     d = new KCustomMenuEditorPrivate;
-   QHBox *page = makeHBoxMainWidget();
+   TQHBox *page = makeHBoxMainWidget();
    m_listView = new KListView(page);
    m_listView->addColumn(i18n("Menu"));
    m_listView->setFullWidth(true);
    m_listView->setSorting(-1);
    KButtonBox *buttonBox = new KButtonBox(page, Vertical);
-   buttonBox->addButton(i18n("New..."), this, SLOT(slotNewItem()));
-   d->pbRemove=buttonBox->addButton(i18n("Remove"), this, SLOT(slotRemoveItem()));
-   d->pbMoveUp=buttonBox->addButton(i18n("Move Up"), this, SLOT(slotMoveUp()));
-   d->pbMoveDown=buttonBox->addButton(i18n("Move Down"), this, SLOT(slotMoveDown()));
+   buttonBox->addButton(i18n("New..."), this, TQT_SLOT(slotNewItem()));
+   d->pbRemove=buttonBox->addButton(i18n("Remove"), this, TQT_SLOT(slotRemoveItem()));
+   d->pbMoveUp=buttonBox->addButton(i18n("Move Up"), this, TQT_SLOT(slotMoveUp()));
+   d->pbMoveDown=buttonBox->addButton(i18n("Move Down"), this, TQT_SLOT(slotMoveDown()));
    buttonBox->layout();
-   connect( m_listView, SIGNAL( selectionChanged () ), this, SLOT( refreshButton() ) );
+   connect( m_listView, TQT_SIGNAL( selectionChanged () ), this, TQT_SLOT( refreshButton() ) );
    refreshButton();
 }
 
@@ -112,7 +112,7 @@ KCustomMenuEditor::~KCustomMenuEditor()
 
 void KCustomMenuEditor::refreshButton()
 {
-    QListViewItem *item = m_listView->currentItem();
+    TQListViewItem *item = m_listView->currentItem();
     d->pbRemove->setEnabled( item );
     d->pbMoveUp->setEnabled( item && item->itemAbove() );
     d->pbMoveDown->setEnabled( item && item->itemBelow() );
@@ -121,12 +121,12 @@ void KCustomMenuEditor::refreshButton()
 void
 KCustomMenuEditor::load(KConfigBase *cfg)
 {
-   cfg->setGroup(QString::null);
+   cfg->setGroup(TQString::null);
    int count = cfg->readNumEntry("NrOfItems");
-   QListViewItem *last = 0;
+   TQListViewItem *last = 0;
    for(int i = 0; i < count; i++)
    {
-      QString entry = cfg->readPathEntry(QString("Item%1").arg(i+1));
+      TQString entry = cfg->readPathEntry(TQString("Item%1").arg(i+1));
       if (entry.isEmpty())
          continue;
 
@@ -140,7 +140,7 @@ KCustomMenuEditor::load(KConfigBase *cfg)
       if (!menuItem->isValid())
          continue;
 
-      QListViewItem *item = new Item(m_listView, menuItem);
+      TQListViewItem *item = new Item(m_listView, menuItem);
       item->moveItem(last);
       last = item;
    }
@@ -150,23 +150,23 @@ void
 KCustomMenuEditor::save(KConfigBase *cfg)
 {
    // First clear the whole config file.
-   QStringList groups = cfg->groupList();
-   for(QStringList::ConstIterator it = groups.begin();
+   TQStringList groups = cfg->groupList();
+   for(TQStringList::ConstIterator it = groups.begin();
       it != groups.end(); ++it)
    {
       cfg->deleteGroup(*it);
    }
 
-   cfg->setGroup(QString::null);
+   cfg->setGroup(TQString::null);
    Item * item = (Item *) m_listView->firstChild();
    int i = 0;
    while(item)
    {
       i++;
-      QString path = item->s->desktopEntryPath();
-      if (QDir::isRelativePath(path) || QDir::isRelativePath(KGlobal::dirs()->relativeLocation("xdgdata-apps", path)))
+      TQString path = item->s->desktopEntryPath();
+      if (TQDir::isRelativePath(path) || TQDir::isRelativePath(KGlobal::dirs()->relativeLocation("xdgdata-apps", path)))
          path = item->s->desktopEntryName();
-      cfg->writePathEntry(QString("Item%1").arg(i), path);
+      cfg->writePathEntry(TQString("Item%1").arg(i), path);
       item = (Item *) item->nextSibling();
    }
    cfg->writeEntry("NrOfItems", i);
@@ -175,7 +175,7 @@ KCustomMenuEditor::save(KConfigBase *cfg)
 void
 KCustomMenuEditor::slotNewItem()
 {
-   QListViewItem *item = m_listView->currentItem();
+   TQListViewItem *item = m_listView->currentItem();
 
    KOpenWithDlg dlg(this);
    dlg.setSaveNewApplications(true);
@@ -195,7 +195,7 @@ KCustomMenuEditor::slotNewItem()
 void
 KCustomMenuEditor::slotRemoveItem()
 {
-   QListViewItem *item = m_listView->currentItem();
+   TQListViewItem *item = m_listView->currentItem();
    if (!item)
       return;
 
@@ -206,14 +206,14 @@ KCustomMenuEditor::slotRemoveItem()
 void
 KCustomMenuEditor::slotMoveUp()
 {
-   QListViewItem *item = m_listView->currentItem();
+   TQListViewItem *item = m_listView->currentItem();
    if (!item)
       return;
 
-   QListViewItem *searchItem = m_listView->firstChild();
+   TQListViewItem *searchItem = m_listView->firstChild();
    while(searchItem)
    {
-      QListViewItem *next = searchItem->nextSibling();
+      TQListViewItem *next = searchItem->nextSibling();
       if (next == item)
       {
          searchItem->moveItem(item);
@@ -227,11 +227,11 @@ KCustomMenuEditor::slotMoveUp()
 void
 KCustomMenuEditor::slotMoveDown()
 {
-   QListViewItem *item = m_listView->currentItem();
+   TQListViewItem *item = m_listView->currentItem();
    if (!item)
       return;
 
-   QListViewItem *after = item->nextSibling();
+   TQListViewItem *after = item->nextSibling();
    if (!after)
       return;
 

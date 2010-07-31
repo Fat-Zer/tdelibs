@@ -34,11 +34,11 @@ class KPPosterPage : public KPrintDialogPage
 {
 	Q_OBJECT
 public:
-	KPPosterPage( QWidget *parent = 0, const char *name = 0 );
+	KPPosterPage( TQWidget *parent = 0, const char *name = 0 );
 	~KPPosterPage();
 
-	void setOptions( const QMap<QString,QString>& opts );
-	void getOptions( QMap<QString,QString>& opts, bool incldef = false );
+	void setOptions( const TQMap<TQString,TQString>& opts );
+	void getOptions( TQMap<TQString,TQString>& opts, bool incldef = false );
 	bool isValid();
 
 protected slots:
@@ -47,14 +47,14 @@ protected slots:
 	void slotLockToggled( bool );
 
 private:
-	QComboBox *m_postersize;
-	QComboBox *m_printsize;
+	TQComboBox *m_postersize;
+	TQComboBox *m_printsize;
 	PosterPreview *m_preview;
-	QCheckBox *m_postercheck;
-	QLabel *m_mediasize;
+	TQCheckBox *m_postercheck;
+	TQLabel *m_mediasize;
 	KIntNumInput *m_cutmargin;
-	QPushButton *m_lockbtn;
-	QLineEdit *m_selection;
+	TQPushButton *m_lockbtn;
+	TQLineEdit *m_selection;
 };
 
 #endif /* KPPOSTERPAGE_H */

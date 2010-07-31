@@ -25,21 +25,21 @@
 
 #include <assert.h>
 #include <stdlib.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qtextedit.h>
-#include <qlistbox.h>
-#include <qmultilineedit.h>
-#include <qapplication.h>
-#include <qsplitter.h>
-#include <qcombobox.h>
-#include <qbitmap.h>
-#include <qwidgetlist.h>
-#include <qlabel.h>
-#include <qdatastream.h>
-#include <qcstring.h>
-#include <qpainter.h>
-#include <qscrollbar.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqtextedit.h>
+#include <tqlistbox.h>
+#include <tqmultilineedit.h>
+#include <tqapplication.h>
+#include <tqsplitter.h>
+#include <tqcombobox.h>
+#include <tqbitmap.h>
+#include <tqwidgetlist.h>
+#include <tqlabel.h>
+#include <tqdatastream.h>
+#include <tqcstring.h>
+#include <tqpainter.h>
+#include <tqscrollbar.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -75,11 +75,11 @@
 using namespace KJS;
 using namespace khtml;
 
-SourceDisplay::SourceDisplay(KJSDebugWin *debugWin, QWidget *parent, const char *name)
-  : QScrollView(parent,name), m_currentLine(-1), m_sourceFile(0), m_debugWin(debugWin),
+SourceDisplay::SourceDisplay(KJSDebugWin *debugWin, TQWidget *parent, const char *name)
+  : TQScrollView(parent,name), m_currentLine(-1), m_sourceFile(0), m_debugWin(debugWin),
     m_font(KGlobalSettings::fixedFont())
 {
-  verticalScrollBar()->setLineStep(QFontMetrics(m_font).height());
+  verticalScrollBar()->setLineStep(TQFontMetrics(m_font).height());
   viewport()->setBackgroundMode(Qt::NoBackground);
   m_breakpointIcon = KGlobal::iconLoader()->loadIcon("stop",KIcon::Small);
 }
@@ -106,20 +106,20 @@ void SourceDisplay::setSource(SourceFile *sourceFile)
     return;
   }
 
-  QString code = sourceFile->getCode();
-  const QChar *chars = code.unicode();
+  TQString code = sourceFile->getCode();
+  const TQChar *chars = code.unicode();
   uint len = code.length();
-  QChar newLine('\n');
-  QChar cr('\r');
-  QChar tab('\t');
-  QString tabstr("        ");
-  QString line;
+  TQChar newLine('\n');
+  TQChar cr('\r');
+  TQChar tab('\t');
+  TQString tabstr("        ");
+  TQString line;
   m_lines.clear();
   int width = 0;
-  QFontMetrics metrics(m_font);
+  TQFontMetrics metrics(m_font);
 
   for (uint pos = 0; pos < len; pos++) {
-    QChar c = chars[pos];
+    TQChar c = chars[pos];
     if (c == cr) {
       if (pos < len-1 && chars[pos+1] == newLine)
 	continue;
@@ -158,7 +158,7 @@ void SourceDisplay::setCurrentLine(int lineno, bool doCenter)
   m_currentLine = lineno;
 
   if (doCenter && m_currentLine >= 0) {
-    QFontMetrics metrics(m_font);
+    TQFontMetrics metrics(m_font);
     int height = metrics.height();
     center(0,height*m_currentLine+height/2);
   }
@@ -166,27 +166,27 @@ void SourceDisplay::setCurrentLine(int lineno, bool doCenter)
   updateContents();
 }
 
-void SourceDisplay::contentsMousePressEvent(QMouseEvent *e)
+void SourceDisplay::contentsMousePressEvent(TQMouseEvent *e)
 {
-  QScrollView::mouseDoubleClickEvent(e);
-  QFontMetrics metrics(m_font);
+  TQScrollView::mouseDoubleClickEvent(e);
+  TQFontMetrics metrics(m_font);
   int lineno = e->y()/metrics.height();
   emit lineDoubleClicked(lineno+1); // line numbers start from 1
 }
 
-void SourceDisplay::showEvent(QShowEvent *)
+void SourceDisplay::showEvent(TQShowEvent *)
 {
     setSource(m_sourceFile);
 }
 
-void SourceDisplay::drawContents(QPainter *p, int clipx, int clipy, int clipw, int cliph)
+void SourceDisplay::drawContents(TQPainter *p, int clipx, int clipy, int clipw, int cliph)
 {
   if (!m_sourceFile) {
     p->fillRect(clipx,clipy,clipw,cliph,palette().active().base());
     return;
   }
 
-  QFontMetrics metrics(m_font);
+  TQFontMetrics metrics(m_font);
   int height = metrics.height();
 
   int bottom = clipy + cliph;
@@ -204,7 +204,7 @@ void SourceDisplay::drawContents(QPainter *p, int clipx, int clipy, int clipw, i
   int linenoWidth = metrics.width("888888");
 
   for (int lineno = firstLine; lineno <= lastLine; lineno++) {
-    QString linenoStr = QString().sprintf("%d",lineno+1);
+    TQString linenoStr = TQString().sprintf("%d",lineno+1);
 
 
     p->fillRect(0,height*lineno,linenoWidth,height,palette().active().mid());
@@ -212,8 +212,8 @@ void SourceDisplay::drawContents(QPainter *p, int clipx, int clipy, int clipw, i
     p->setPen(palette().active().text());
     p->drawText(0,height*lineno,linenoWidth,height,Qt::AlignRight,linenoStr);
 
-    QColor bgColor;
-    QColor textColor;
+    TQColor bgColor;
+    TQColor textColor;
 
     if (lineno == m_currentLine) {
       bgColor = palette().active().highlight();
@@ -246,16 +246,16 @@ void SourceDisplay::drawContents(QPainter *p, int clipx, int clipy, int clipw, i
 
 KJSDebugWin * KJSDebugWin::kjs_html_debugger = 0;
 
-QString SourceFile::getCode()
+TQString SourceFile::getCode()
 {
   if (interpreter) {
     KHTMLPart *part = ::qt_cast<KHTMLPart*>(static_cast<ScriptInterpreter*>(interpreter)->part());
     if (part && url == part->url().url() && KHTMLPageCache::self()->isValid(part->cacheId())) {
       Decoder *decoder = part->createDecoder();
-      QByteArray data;
-      QDataStream stream(data,IO_WriteOnly);
+      TQByteArray data;
+      TQDataStream stream(data,IO_WriteOnly);
       KHTMLPageCache::self()->saveData(part->cacheId(),&stream);
-      QString str;
+      TQString str;
       if (data.size() == 0)
 	str = "";
       else
@@ -287,28 +287,28 @@ SourceFragment::~SourceFragment()
 
 //-------------------------------------------------------------------------
 
-KJSErrorDialog::KJSErrorDialog(QWidget *parent, const QString& errorMessage, bool showDebug)
+KJSErrorDialog::KJSErrorDialog(TQWidget *parent, const TQString& errorMessage, bool showDebug)
   : KDialogBase(parent,0,true,i18n("JavaScript Error"),
 		showDebug ? KDialogBase::Ok|KDialogBase::User1 : KDialogBase::Ok,
 		KDialogBase::Ok,false,KGuiItem("&Debug","gear"))
 {
-  QWidget *page = new QWidget(this);
+  TQWidget *page = new TQWidget(this);
   setMainWidget(page);
 
-  QLabel *iconLabel = new QLabel("",page);
+  TQLabel *iconLabel = new TQLabel("",page);
   iconLabel->setPixmap(KGlobal::iconLoader()->loadIcon("messagebox_critical",
 						       KIcon::NoGroup,KIcon::SizeMedium,
 						       KIcon::DefaultState,0,true));
 
-  QWidget *contents = new QWidget(page);
-  QLabel *label = new QLabel(errorMessage,contents);
-  m_dontShowAgainCb = new QCheckBox(i18n("&Do not show this message again"),contents);
+  TQWidget *contents = new TQWidget(page);
+  TQLabel *label = new TQLabel(errorMessage,contents);
+  m_dontShowAgainCb = new TQCheckBox(i18n("&Do not show this message again"),contents);
 
-  QVBoxLayout *vl = new QVBoxLayout(contents,0,spacingHint());
+  TQVBoxLayout *vl = new TQVBoxLayout(contents,0,spacingHint());
   vl->addWidget(label);
   vl->addWidget(m_dontShowAgainCb);
 
-  QHBoxLayout *topLayout = new QHBoxLayout(page,0,spacingHint());
+  TQHBoxLayout *topLayout = new TQHBoxLayout(page,0,spacingHint());
   topLayout->addWidget(iconLabel);
   topLayout->addWidget(contents);
   topLayout->addStretch(10);
@@ -327,11 +327,11 @@ void KJSErrorDialog::slotUser1()
 }
 
 //-------------------------------------------------------------------------
-EvalMultiLineEdit::EvalMultiLineEdit(QWidget *parent)
-    : QMultiLineEdit(parent) {
+EvalMultiLineEdit::EvalMultiLineEdit(TQWidget *parent)
+    : TQMultiLineEdit(parent) {
 }
 
-void EvalMultiLineEdit::keyPressEvent(QKeyEvent * e)
+void EvalMultiLineEdit::keyPressEvent(TQKeyEvent * e)
 {
     if (e->key() == Qt::Key_Return) {
         if (hasSelectedText()) {
@@ -343,10 +343,10 @@ void EvalMultiLineEdit::keyPressEvent(QKeyEvent * e)
         }
         end();
     }
-    QMultiLineEdit::keyPressEvent(e);
+    TQMultiLineEdit::keyPressEvent(e);
 }
 //-------------------------------------------------------------------------
-KJSDebugWin::KJSDebugWin(QWidget *parent, const char *name)
+KJSDebugWin::KJSDebugWin(TQWidget *parent, const char *name)
   : KMainWindow(parent, name, WType_TopLevel), KInstance("kjs_debugger")
 {
   m_breakpoints = 0;
@@ -362,73 +362,73 @@ KJSDebugWin::KJSDebugWin(QWidget *parent, const char *name)
   m_steppingDepth = 0;
 
   m_stopIcon = KGlobal::iconLoader()->loadIcon("stop",KIcon::Small);
-  m_emptyIcon = QPixmap(m_stopIcon.width(),m_stopIcon.height());
-  QBitmap emptyMask(m_stopIcon.width(),m_stopIcon.height(),true);
+  m_emptyIcon = TQPixmap(m_stopIcon.width(),m_stopIcon.height());
+  TQBitmap emptyMask(m_stopIcon.width(),m_stopIcon.height(),true);
   m_emptyIcon.setMask(emptyMask);
 
   setCaption(i18n("JavaScript Debugger"));
 
-  QWidget *mainWidget = new QWidget(this);
+  TQWidget *mainWidget = new TQWidget(this);
   setCentralWidget(mainWidget);
 
-  QVBoxLayout *vl = new QVBoxLayout(mainWidget,5);
+  TQVBoxLayout *vl = new TQVBoxLayout(mainWidget,5);
 
   // frame list & code
-  QSplitter *hsplitter = new QSplitter(Qt::Vertical,mainWidget);
-  QSplitter *vsplitter = new QSplitter(hsplitter);
-  QFont font(KGlobalSettings::fixedFont());
+  TQSplitter *hsplitter = new TQSplitter(Qt::Vertical,mainWidget);
+  TQSplitter *vsplitter = new TQSplitter(hsplitter);
+  TQFont font(KGlobalSettings::fixedFont());
 
-  QWidget *contextContainer = new QWidget(vsplitter);
+  TQWidget *contextContainer = new TQWidget(vsplitter);
 
-  QLabel *contextLabel = new QLabel(i18n("Call stack"),contextContainer);
-  QWidget *contextListContainer = new QWidget(contextContainer);
-  m_contextList = new QListBox(contextListContainer);
+  TQLabel *contextLabel = new TQLabel(i18n("Call stack"),contextContainer);
+  TQWidget *contextListContainer = new TQWidget(contextContainer);
+  m_contextList = new TQListBox(contextListContainer);
   m_contextList->setMinimumSize(100,200);
-  connect(m_contextList,SIGNAL(highlighted(int)),this,SLOT(slotShowFrame(int)));
+  connect(m_contextList,TQT_SIGNAL(highlighted(int)),this,TQT_SLOT(slotShowFrame(int)));
 
-  QHBoxLayout *clistLayout = new QHBoxLayout(contextListContainer);
+  TQHBoxLayout *clistLayout = new TQHBoxLayout(contextListContainer);
   clistLayout->addWidget(m_contextList);
   clistLayout->addSpacing(KDialog::spacingHint());
 
-  QVBoxLayout *contextLayout = new QVBoxLayout(contextContainer);
+  TQVBoxLayout *contextLayout = new TQVBoxLayout(contextContainer);
   contextLayout->addWidget(contextLabel);
   contextLayout->addSpacing(KDialog::spacingHint());
   contextLayout->addWidget(contextListContainer);
 
   // source selection & display
-  QWidget *sourceSelDisplay = new QWidget(vsplitter);
-  QVBoxLayout *ssdvl = new QVBoxLayout(sourceSelDisplay);
+  TQWidget *sourceSelDisplay = new TQWidget(vsplitter);
+  TQVBoxLayout *ssdvl = new TQVBoxLayout(sourceSelDisplay);
 
-  m_sourceSel = new QComboBox(toolBar());
-  connect(m_sourceSel,SIGNAL(activated(int)),this,SLOT(slotSourceSelected(int)));
+  m_sourceSel = new TQComboBox(toolBar());
+  connect(m_sourceSel,TQT_SIGNAL(activated(int)),this,TQT_SLOT(slotSourceSelected(int)));
 
   m_sourceDisplay = new SourceDisplay(this,sourceSelDisplay);
   ssdvl->addWidget(m_sourceDisplay);
-  connect(m_sourceDisplay,SIGNAL(lineDoubleClicked(int)),SLOT(slotToggleBreakpoint(int)));
+  connect(m_sourceDisplay,TQT_SIGNAL(lineDoubleClicked(int)),TQT_SLOT(slotToggleBreakpoint(int)));
 
-  QValueList<int> vsplitSizes;
+  TQValueList<int> vsplitSizes;
   vsplitSizes.insert(vsplitSizes.end(),120);
   vsplitSizes.insert(vsplitSizes.end(),480);
   vsplitter->setSizes(vsplitSizes);
 
   // evaluate
 
-  QWidget *evalContainer = new QWidget(hsplitter);
+  TQWidget *evalContainer = new TQWidget(hsplitter);
 
-  QLabel *evalLabel = new QLabel(i18n("JavaScript console"),evalContainer);
+  TQLabel *evalLabel = new TQLabel(i18n("JavaScript console"),evalContainer);
   m_evalEdit = new EvalMultiLineEdit(evalContainer);
-  m_evalEdit->setWordWrap(QMultiLineEdit::NoWrap);
+  m_evalEdit->setWordWrap(TQMultiLineEdit::NoWrap);
   m_evalEdit->setFont(font);
-  connect(m_evalEdit,SIGNAL(returnPressed()),SLOT(slotEval()));
+  connect(m_evalEdit,TQT_SIGNAL(returnPressed()),TQT_SLOT(slotEval()));
   m_evalDepth = 0;
 
-  QVBoxLayout *evalLayout = new QVBoxLayout(evalContainer);
+  TQVBoxLayout *evalLayout = new TQVBoxLayout(evalContainer);
   evalLayout->addSpacing(KDialog::spacingHint());
   evalLayout->addWidget(evalLabel);
   evalLayout->addSpacing(KDialog::spacingHint());
   evalLayout->addWidget(m_evalEdit);
 
-  QValueList<int> hsplitSizes;
+  TQValueList<int> hsplitSizes;
   hsplitSizes.insert(hsplitSizes.end(),400);
   hsplitSizes.insert(hsplitSizes.end(),200);
   hsplitter->setSizes(hsplitSizes);
@@ -445,18 +445,18 @@ KJSDebugWin::KJSDebugWin(QWidget *parent, const char *name)
   // Venkman use F12, KDevelop F10
   KShortcut scNext = KShortcut(KKeySequence(KKey(Qt::Key_F12)));
   scNext.append(KKeySequence(KKey(Qt::Key_F10)));
-  m_nextAction       = new KAction(i18n("Next breakpoint","&Next"),"dbgnext",scNext,this,SLOT(slotNext()),
+  m_nextAction       = new KAction(i18n("Next breakpoint","&Next"),"dbgnext",scNext,this,TQT_SLOT(slotNext()),
 				   m_actionCollection,"next");
-  m_stepAction       = new KAction(i18n("&Step"),"dbgstep",KShortcut(Qt::Key_F11),this,SLOT(slotStep()),
+  m_stepAction       = new KAction(i18n("&Step"),"dbgstep",KShortcut(Qt::Key_F11),this,TQT_SLOT(slotStep()),
 				   m_actionCollection,"step");
   // Venkman use F5, Kdevelop F9
   KShortcut scCont = KShortcut(KKeySequence(KKey(Qt::Key_F5)));
   scCont.append(KKeySequence(KKey(Qt::Key_F9)));
-  m_continueAction   = new KAction(i18n("&Continue"),"dbgrun",scCont,this,SLOT(slotContinue()),
+  m_continueAction   = new KAction(i18n("&Continue"),"dbgrun",scCont,this,TQT_SLOT(slotContinue()),
 				   m_actionCollection,"cont");
-  m_stopAction       = new KAction(i18n("St&op"),"stop",KShortcut(Qt::Key_F4),this,SLOT(slotStop()),
+  m_stopAction       = new KAction(i18n("St&op"),"stop",KShortcut(Qt::Key_F4),this,TQT_SLOT(slotStop()),
 				   m_actionCollection,"stop");
-  m_breakAction      = new KAction(i18n("&Break at Next Statement"),"dbgrunto",KShortcut(Qt::Key_F8),this,SLOT(slotBreakNext()),
+  m_breakAction      = new KAction(i18n("&Break at Next Statement"),"dbgrunto",KShortcut(Qt::Key_F8),this,TQT_SLOT(slotBreakNext()),
 				   m_actionCollection,"breaknext");
 
 
@@ -553,7 +553,7 @@ void KJSDebugWin::slotToggleBreakpoint(int lineno)
   // Find the source fragment containing the selected line (if any)
   int sourceId = -1;
   int highestBaseLine = -1;
-  QMap<int,SourceFragment*>::Iterator it;
+  TQMap<int,SourceFragment*>::Iterator it;
 
   for (it = m_sourceFragments.begin(); it != m_sourceFragments.end(); ++it) {
     SourceFragment *sourceFragment = it.data();
@@ -627,7 +627,7 @@ void KJSDebugWin::slotEval()
 
   // Evaluate the js code from m_evalEdit
   UString code(m_evalEdit->code());
-  QString msg;
+  TQString msg;
 
   KJSCPUGuard guard;
   guard.start();
@@ -657,49 +657,49 @@ void KJSDebugWin::slotEval()
   updateContextList();
 }
 
-void KJSDebugWin::closeEvent(QCloseEvent *e)
+void KJSDebugWin::closeEvent(TQCloseEvent *e)
 {
   while (!m_execStates.isEmpty()) // ### not sure if this will work
     leaveSession();
-  return QWidget::closeEvent(e);
+  return TQWidget::closeEvent(e);
 }
 
-bool KJSDebugWin::eventFilter(QObject *o, QEvent *e)
+bool KJSDebugWin::eventFilter(TQObject *o, TQEvent *e)
 {
   switch (e->type()) {
-  case QEvent::MouseButtonPress:
-  case QEvent::MouseButtonRelease:
-  case QEvent::MouseButtonDblClick:
-  case QEvent::MouseMove:
-  case QEvent::KeyPress:
-  case QEvent::KeyRelease:
-  case QEvent::Destroy:
-  case QEvent::Close:
-  case QEvent::Quit:
+  case TQEvent::MouseButtonPress:
+  case TQEvent::MouseButtonRelease:
+  case TQEvent::MouseButtonDblClick:
+  case TQEvent::MouseMove:
+  case TQEvent::KeyPress:
+  case TQEvent::KeyRelease:
+  case TQEvent::Destroy:
+  case TQEvent::Close:
+  case TQEvent::Quit:
     while (o->parent())
       o = o->parent();
     if (o == this)
-      return QWidget::eventFilter(o,e);
+      return TQWidget::eventFilter(o,e);
     else
       return true;
     break;
   default:
-    return QWidget::eventFilter(o,e);
+    return TQWidget::eventFilter(o,e);
   }
 }
 
 void KJSDebugWin::disableOtherWindows()
 {
-  QWidgetList *widgets = QApplication::allWidgets();
-  QWidgetListIt it(*widgets);
+  TQWidgetList *widgets = TQApplication::allWidgets();
+  TQWidgetListIt it(*widgets);
   for (; it.current(); ++it)
     it.current()->installEventFilter(this);
 }
 
 void KJSDebugWin::enableOtherWindows()
 {
-  QWidgetList *widgets = QApplication::allWidgets();
-  QWidgetListIt it(*widgets);
+  TQWidgetList *widgets = TQApplication::allWidgets();
+  TQWidgetListIt it(*widgets);
   for (; it.current(); ++it)
     it.current()->removeEventFilter(this);
 }
@@ -717,12 +717,12 @@ bool KJSDebugWin::sourceParsed(KJS::ExecState *exec, int sourceId,
     index = m_sourceSel->count();
     if (!m_nextSourceUrl.isEmpty()) {
 
-      QString code = source.qstring();
+      TQString code = source.qstring();
       KParts::ReadOnlyPart *part = static_cast<ScriptInterpreter*>(exec->interpreter())->part();
       if (m_nextSourceUrl == part->url().url()) {
 	// Only store the code here if it's not from the part's html page... in that
 	// case we can get it from KHTMLPageCache
-	code = QString::null;
+	code = TQString::null;
       }
 
       sourceFile = new SourceFile(m_nextSourceUrl,code,exec->interpreter());
@@ -735,7 +735,7 @@ bool KJSDebugWin::sourceParsed(KJS::ExecState *exec, int sourceId,
       // but we still know the interpreter
       sourceFile = new SourceFile("(unknown)",source.qstring(),exec->interpreter());
       m_sourceSelFiles.append(sourceFile);
-      m_sourceSel->insertItem(QString::number(index) += "-???");
+      m_sourceSel->insertItem(TQString::number(index) += "-???");
     }
   }
   else {
@@ -809,9 +809,9 @@ bool KJSDebugWin::exception(ExecState *exec, const Value &value, bool inTryCatch
   if (khtmlpart && !khtmlpart->settings()->isJavaScriptErrorReportingEnabled())
     return true;
 
-  QWidget *dlgParent = (m_evalDepth == 0) ? (QWidget*)part->widget() : (QWidget*)this;
+  TQWidget *dlgParent = (m_evalDepth == 0) ? (TQWidget*)part->widget() : (TQWidget*)this;
 
-  QString exceptionMsg = value.toString(exec).qstring();
+  TQString exceptionMsg = value.toString(exec).qstring();
 
   // Syntax errors are a special case. For these we want to display the url & lineno,
   // which isn't included in the exception messeage. So we work it out from the values
@@ -834,7 +834,7 @@ bool KJSDebugWin::exception(ExecState *exec, const Value &value, bool inTryCatch
     // An exception occurred and we're not currently executing any code... this can
     // happen in some cases e.g. a parse error, or native code accessing funcitons like
     // Object::put()
-    QString msg = i18n("An error occurred while attempting to run a script on this page.\n\n%1")
+    TQString msg = i18n("An error occurred while attempting to run a script on this page.\n\n%1")
 		  .arg(exceptionMsg);
     KJSErrorDialog dlg(dlgParent,msg,false);
     dlg.exec();
@@ -843,9 +843,9 @@ bool KJSDebugWin::exception(ExecState *exec, const Value &value, bool inTryCatch
   else {
     Context ctx = m_execs[m_execsCount-1]->context();
     SourceFragment *sourceFragment = m_sourceFragments[ctx.sourceId()];
-    QString msg = i18n("An error occurred while attempting to run a script on this page.\n\n%1 line %2:\n%3")
+    TQString msg = i18n("An error occurred while attempting to run a script on this page.\n\n%1 line %2:\n%3")
 		  .arg(KStringHandler::rsqueeze( sourceFragment->sourceFile->url,80),
-		  QString::number( sourceFragment->baseLine+ctx.curStmtFirstLine()-1),
+		  TQString::number( sourceFragment->baseLine+ctx.curStmtFirstLine()-1),
 		  exceptionMsg);
 
     KJSErrorDialog dlg(dlgParent,msg,true);
@@ -861,10 +861,10 @@ bool KJSDebugWin::exception(ExecState *exec, const Value &value, bool inTryCatch
 
   if (dontShowAgain) {
     KConfig *config = kapp->config();
-    KConfigGroupSaver saver(config,QString::fromLatin1("Java/JavaScript Settings"));
-    config->writeEntry("ReportJavaScriptErrors",QVariant(false,0));
+    KConfigGroupSaver saver(config,TQString::fromLatin1("Java/JavaScript Settings"));
+    config->writeEntry("ReportJavaScriptErrors",TQVariant(false,0));
     config->sync();
-    QByteArray data;
+    TQByteArray data;
     kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", data );
   }
 
@@ -937,13 +937,13 @@ void KJSDebugWin::setSourceLine(int sourceId, int lineno)
   m_sourceDisplay->setCurrentLine(source->baseLine+lineno-2);
 }
 
-void KJSDebugWin::setNextSourceInfo(QString url, int baseLine)
+void KJSDebugWin::setNextSourceInfo(TQString url, int baseLine)
 {
   m_nextSourceUrl = url;
   m_nextSourceBaseLine = baseLine;
 }
 
-void KJSDebugWin::sourceChanged(Interpreter *interpreter, QString url)
+void KJSDebugWin::sourceChanged(Interpreter *interpreter, TQString url)
 {
   SourceFile *sourceFile = getSourceFile(interpreter,url);
   if (sourceFile && m_curSourceFile == sourceFile)
@@ -952,31 +952,31 @@ void KJSDebugWin::sourceChanged(Interpreter *interpreter, QString url)
 
 void KJSDebugWin::clearInterpreter(Interpreter *interpreter)
 {
-  QMap<int,SourceFragment*>::Iterator it;
+  TQMap<int,SourceFragment*>::Iterator it;
 
   for (it = m_sourceFragments.begin(); it != m_sourceFragments.end(); ++it)
     if (it.data() && it.data()->sourceFile->interpreter == interpreter)
       it.data()->sourceFile->interpreter = 0;
 }
 
-SourceFile *KJSDebugWin::getSourceFile(Interpreter *interpreter, QString url)
+SourceFile *KJSDebugWin::getSourceFile(Interpreter *interpreter, TQString url)
 {
-  QString key = QString("%1|%2").arg((long)interpreter).arg(url);
+  TQString key = TQString("%1|%2").arg((long)interpreter).arg(url);
   return m_sourceFiles[key];
 }
 
-void KJSDebugWin::setSourceFile(Interpreter *interpreter, QString url, SourceFile *sourceFile)
+void KJSDebugWin::setSourceFile(Interpreter *interpreter, TQString url, SourceFile *sourceFile)
 {
-  QString key = QString("%1|%2").arg((long)interpreter).arg(url);
+  TQString key = TQString("%1|%2").arg((long)interpreter).arg(url);
   sourceFile->ref();
   if (SourceFile* oldFile = m_sourceFiles[key])
     oldFile->deref();
   m_sourceFiles[key] = sourceFile;
 }
 
-void KJSDebugWin::removeSourceFile(Interpreter *interpreter, QString url)
+void KJSDebugWin::removeSourceFile(Interpreter *interpreter, TQString url)
 {
-  QString key = QString("%1|%2").arg((long)interpreter).arg(url);
+  TQString key = TQString("%1|%2").arg((long)interpreter).arg(url);
   if (SourceFile* oldFile = m_sourceFiles[key])
     oldFile->deref();
   m_sourceFiles.remove(key);
@@ -1048,7 +1048,7 @@ void KJSDebugWin::leaveSession()
 
 void KJSDebugWin::updateContextList()
 {
-  disconnect(m_contextList,SIGNAL(highlighted(int)),this,SLOT(slotShowFrame(int)));
+  disconnect(m_contextList,TQT_SIGNAL(highlighted(int)),this,TQT_SLOT(slotShowFrame(int)));
 
   m_contextList->clear();
   for (int i = 0; i < m_execsCount; i++)
@@ -1060,28 +1060,28 @@ void KJSDebugWin::updateContextList()
     setSourceLine(ctx.sourceId(),ctx.curStmtFirstLine());
   }
 
-  connect(m_contextList,SIGNAL(highlighted(int)),this,SLOT(slotShowFrame(int)));
+  connect(m_contextList,TQT_SIGNAL(highlighted(int)),this,TQT_SLOT(slotShowFrame(int)));
 }
 
-QString KJSDebugWin::contextStr(const Context &ctx)
+TQString KJSDebugWin::contextStr(const Context &ctx)
 {
-  QString str = "";
+  TQString str = "";
   SourceFragment *sourceFragment = m_sourceFragments[ctx.sourceId()];
-  QString url = sourceFragment->sourceFile->url;
+  TQString url = sourceFragment->sourceFile->url;
   int fileLineno = sourceFragment->baseLine+ctx.curStmtFirstLine()-1;
 
   switch (ctx.codeType()) {
   case GlobalCode:
-    str = QString("Global code at %1:%2").arg(url).arg(fileLineno);
+    str = TQString("Global code at %1:%2").arg(url).arg(fileLineno);
     break;
   case EvalCode:
-    str = QString("Eval code at %1:%2").arg(url).arg(fileLineno);
+    str = TQString("Eval code at %1:%2").arg(url).arg(fileLineno);
     break;
   case FunctionCode:
     if (!ctx.functionName().isNull())
-      str = QString("%1() at %2:%3").arg(ctx.functionName().qstring()).arg(url).arg(fileLineno);
+      str = TQString("%1() at %2:%3").arg(ctx.functionName().qstring()).arg(url).arg(fileLineno);
     else
-      str = QString("Anonymous function at %1:%2").arg(url).arg(fileLineno);
+      str = TQString("Anonymous function at %1:%2").arg(url).arg(fileLineno);
     break;
   }
 

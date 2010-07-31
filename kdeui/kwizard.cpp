@@ -17,9 +17,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qstring.h>
-#include <qapplication.h>
-#include <qpushbutton.h>
+#include <tqstring.h>
+#include <tqapplication.h>
+#include <tqpushbutton.h>
 
 #include <kiconloader.h>
 #include <klocale.h>
@@ -28,8 +28,8 @@
 
 #include "kwizard.h"
 
-KWizard::KWizard( QWidget *parent, const char *name, bool modal, WFlags f )
-            : QWizard( parent, name, modal, f )
+KWizard::KWizard( TQWidget *parent, const char *name, bool modal, WFlags f )
+            : TQWizard( parent, name, modal, f )
 {
   bool useIcons = KGlobalSettings::showIconsOnPushButtons();
 
@@ -49,7 +49,7 @@ KWizard::KWizard( QWidget *parent, const char *name, bool modal, WFlags f )
     nextButton()->setText( i18n( "Opposite to Back","&Next" ) );
   }
 
-  QFont font = titleFont();
+  TQFont font = titleFont();
   font.setBold( true );
   setTitleFont( font );
 }

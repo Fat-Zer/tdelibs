@@ -40,12 +40,12 @@ bool StdAddressBook::mAutomaticSave = true;
 
 static KStaticDeleter<StdAddressBook> addressBookDeleter;
 
-QString StdAddressBook::fileName()
+TQString StdAddressBook::fileName()
 {
   return locateLocal( "data", "kabc/std.vcf" );
 }
 
-QString StdAddressBook::directoryName()
+TQString StdAddressBook::directoryName()
 {
   return locateLocal( "data", "kabc/stdvcf" );
 }
@@ -100,18 +100,18 @@ void StdAddressBook::init( bool asynchronous )
   for ( it = manager->activeBegin(); it != manager->activeEnd(); ++it ) {
     (*it)->setAddressBook( this );
     if ( !(*it)->open() ) {
-      error( QString( "Unable to open resource '%1'!" ).arg( (*it)->resourceName() ) );
+      error( TQString( "Unable to open resource '%1'!" ).arg( (*it)->resourceName() ) );
       continue;
     }
-    connect( *it, SIGNAL( loadingFinished( Resource* ) ),
-             this, SLOT( resourceLoadingFinished( Resource* ) ) );
-    connect( *it, SIGNAL( savingFinished( Resource* ) ),
-             this, SLOT( resourceSavingFinished( Resource* ) ) );
+    connect( *it, TQT_SIGNAL( loadingFinished( Resource* ) ),
+             this, TQT_SLOT( resourceLoadingFinished( Resource* ) ) );
+    connect( *it, TQT_SIGNAL( savingFinished( Resource* ) ),
+             this, TQT_SLOT( resourceSavingFinished( Resource* ) ) );
 
-    connect( *it, SIGNAL( loadingError( Resource*, const QString& ) ),
-             this, SLOT( resourceLoadingError( Resource*, const QString& ) ) );
-    connect( *it, SIGNAL( savingError( Resource*, const QString& ) ),
-             this, SLOT( resourceSavingError( Resource*, const QString& ) ) );
+    connect( *it, TQT_SIGNAL( loadingError( Resource*, const TQString& ) ),
+             this, TQT_SLOT( resourceLoadingError( Resource*, const TQString& ) ) );
+    connect( *it, TQT_SIGNAL( savingError( Resource*, const TQString& ) ),
+             this, TQT_SLOT( resourceSavingError( Resource*, const TQString& ) ) );
   }
 
   Resource *res = standardResource();

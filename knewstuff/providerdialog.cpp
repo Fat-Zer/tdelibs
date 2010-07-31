@@ -18,9 +18,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qlayout.h>
-#include <qstring.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqstring.h>
+#include <tqlabel.h>
 
 #include <klistview.h>
 #include <klocale.h>
@@ -49,16 +49,16 @@ class ProviderItem : public KListViewItem
     Provider *mProvider;
 };
 
-ProviderDialog::ProviderDialog( Engine *engine, QWidget *parent ) :
+ProviderDialog::ProviderDialog( Engine *engine, TQWidget *parent ) :
   KDialogBase( Plain, i18n("Hot New Stuff Providers"), Ok | Cancel, Cancel,
                parent, 0, false, true ),
   mEngine( engine )
 {
-  QFrame *topPage = plainPage();
+  TQFrame *topPage = plainPage();
 
-  QBoxLayout *topLayout = new QVBoxLayout( topPage );
+  TQBoxLayout *topLayout = new TQVBoxLayout( topPage );
 
-  QLabel *description = new QLabel( i18n("Please select one of the providers listed below:"), topPage );
+  TQLabel *description = new TQLabel( i18n("Please select one of the providers listed below:"), topPage );
   topLayout->addWidget( description );
 
   mListView = new KListView( topPage );

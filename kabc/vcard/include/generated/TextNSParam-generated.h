@@ -3,13 +3,13 @@
 public:
 TextNSParam();
 TextNSParam(const TextNSParam&);
-TextNSParam(const QCString&);
+TextNSParam(const TQCString&);
 TextNSParam & operator = (TextNSParam&);
-TextNSParam & operator = (const QCString&);
+TextNSParam & operator = (const TQCString&);
 bool operator ==(TextNSParam&);
 bool operator !=(TextNSParam& x) {return !(*this==x);}
-bool operator ==(const QCString& s) {TextNSParam a(s);return(*this==a);} 
-bool operator != (const QCString& s) {return !(*this == s);}
+bool operator ==(const TQCString& s) {TextNSParam a(s);return(*this==a);} 
+bool operator != (const TQCString& s) {return !(*this == s);}
 
 virtual ~TextNSParam();
 void parse() {if(!parsed_) _parse();parsed_=true;assembled_=false;}

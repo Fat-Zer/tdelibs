@@ -35,22 +35,22 @@
 #include <klocale.h>
 #include <kpopupmenu.h>
 
-#include <qregexp.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qgroupbox.h>
-#include <qhbox.h>
-#include <qheader.h>
-#include <qhgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qtoolbutton.h>
-#include <qvbox.h>
-#include <qvgroupbox.h>
-#include <qwhatsthis.h>
-#include <qwidgetstack.h>
+#include <tqregexp.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqgroupbox.h>
+#include <tqhbox.h>
+#include <tqheader.h>
+#include <tqhgroupbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqpushbutton.h>
+#include <tqtoolbutton.h>
+#include <tqvbox.h>
+#include <tqvgroupbox.h>
+#include <tqwhatsthis.h>
+#include <tqwidgetstack.h>
 
 #define KATE_FT_HOWMANY 1024
 //END Includes
@@ -74,7 +74,7 @@ void KateFileTypeManager::update ()
 {
   KConfig config ("katefiletyperc", false, false);
 
-  QStringList g (config.groupList());
+  TQStringList g (config.groupList());
   g.sort ();
 
   m_types.clear ();
@@ -99,11 +99,11 @@ void KateFileTypeManager::update ()
 //
 // save the given list to config file + update
 //
-void KateFileTypeManager::save (QPtrList<KateFileType> *v)
+void KateFileTypeManager::save (TQPtrList<KateFileType> *v)
 {
   KConfig config ("katefiletyperc", false, false);
 
-  QStringList newg;
+  TQStringList newg;
   for (uint z=0; z < v->count(); z++)
   {
     config.setGroup (v->at(z)->name);
@@ -113,8 +113,8 @@ void KateFileTypeManager::save (QPtrList<KateFileType> *v)
     config.writeEntry ("Mimetypes", v->at(z)->mimetypes, ';');
     config.writeEntry ("Priority", v->at(z)->priority);
 
-    QString varLine = v->at(z)->varLine;
-    if (QRegExp("kate:(.*)").search(varLine) < 0)
+    TQString varLine = v->at(z)->varLine;
+    if (TQRegExp("kate:(.*)").search(varLine) < 0)
       varLine.prepend ("kate: ");
 
     config.writeEntry ("Variables", varLine);
@@ -122,7 +122,7 @@ void KateFileTypeManager::save (QPtrList<KateFileType> *v)
     newg << v->at(z)->name;
   }
 
-  QStringList g (config.groupList());
+  TQStringList g (config.groupList());
 
   for (uint z=0; z < g.count(); z++)
   {
@@ -144,7 +144,7 @@ int KateFileTypeManager::fileType (KateDocument *doc)
   if (m_types.isEmpty())
     return -1;
 
-  QString fileName = doc->url().prettyURL();
+  TQString fileName = doc->url().prettyURL();
   int length = doc->url().prettyURL().length();
 
   int result;
@@ -152,18 +152,18 @@ int KateFileTypeManager::fileType (KateDocument *doc)
   // Try wildcards
   if ( ! fileName.isEmpty() )
   {
-    static QStringList commonSuffixes = QStringList::split (";", ".orig;.new;~;.bak;.BAK");
+    static TQStringList commonSuffixes = TQStringList::split (";", ".orig;.new;~;.bak;.BAK");
 
     if ((result = wildcardsFind(fileName)) != -1)
       return result;
 
-    QString backupSuffix = KateDocumentConfig::global()->backupSuffix();
+    TQString backupSuffix = KateDocumentConfig::global()->backupSuffix();
     if (fileName.endsWith(backupSuffix)) {
       if ((result = wildcardsFind(fileName.left(length - backupSuffix.length()))) != -1)
         return result;
     }
 
-    for (QStringList::Iterator it = commonSuffixes.begin(); it != commonSuffixes.end(); ++it) {
+    for (TQStringList::Iterator it = commonSuffixes.begin(); it != commonSuffixes.end(); ++it) {
       if (*it != backupSuffix && fileName.endsWith(*it)) {
         if ((result = wildcardsFind(fileName.left(length - (*it).length()))) != -1)
           return result;
@@ -183,7 +183,7 @@ int KateFileTypeManager::fileType (KateDocument *doc)
   // Try content-based mimetype
   KMimeType::Ptr mt = doc->mimeTypeForContent();
 
-  QPtrList<KateFileType> types;
+  TQPtrList<KateFileType> types;
 
   for (uint z=0; z < m_types.count(); z++)
   {
@@ -212,17 +212,17 @@ int KateFileTypeManager::fileType (KateDocument *doc)
   return -1;
 }
 
-int KateFileTypeManager::wildcardsFind (const QString &fileName)
+int KateFileTypeManager::wildcardsFind (const TQString &fileName)
 {
-  QPtrList<KateFileType> types;
+  TQPtrList<KateFileType> types;
 
   for (uint z=0; z < m_types.count(); z++)
   {
-    for( QStringList::Iterator it = m_types.at(z)->wildcards.begin(); it != m_types.at(z)->wildcards.end(); ++it )
+    for( TQStringList::Iterator it = m_types.at(z)->wildcards.begin(); it != m_types.at(z)->wildcards.end(); ++it )
     {
       // anders: we need to be sure to match the end of string, as eg a css file
       // would otherwise end up with the c hl
-      QRegExp re(*it, true, true);
+      TQRegExp re(*it, true, true);
       if ( ( re.search( fileName ) > -1 ) && ( re.matchedLength() == (int)fileName.length() ) )
         types.append (m_types.at(z));
     }
@@ -258,63 +258,63 @@ const KateFileType *KateFileTypeManager::fileType (uint number)
 //END KateFileTypeManager
 
 //BEGIN KateFileTypeConfigTab
-KateFileTypeConfigTab::KateFileTypeConfigTab( QWidget *parent )
+KateFileTypeConfigTab::KateFileTypeConfigTab( TQWidget *parent )
   : KateConfigPage( parent )
 {
   m_types.setAutoDelete (true);
   m_lastType = 0;
 
-  QVBoxLayout *layout = new QVBoxLayout(this, 0, KDialog::spacingHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
 
   // hl chooser
-  QHBox *hbHl = new QHBox( this );
+  TQHBox *hbHl = new TQHBox( this );
   layout->add (hbHl);
   hbHl->setSpacing( KDialog::spacingHint() );
-  QLabel *lHl = new QLabel( i18n("&Filetype:"), hbHl );
-  typeCombo = new QComboBox( false, hbHl );
+  TQLabel *lHl = new TQLabel( i18n("&Filetype:"), hbHl );
+  typeCombo = new TQComboBox( false, hbHl );
   lHl->setBuddy( typeCombo );
-  connect( typeCombo, SIGNAL(activated(int)),
-           this, SLOT(typeChanged(int)) );
+  connect( typeCombo, TQT_SIGNAL(activated(int)),
+           this, TQT_SLOT(typeChanged(int)) );
 
-  QPushButton *btnnew = new QPushButton( i18n("&New"), hbHl );
-  connect( btnnew, SIGNAL(clicked()), this, SLOT(newType()) );
+  TQPushButton *btnnew = new TQPushButton( i18n("&New"), hbHl );
+  connect( btnnew, TQT_SIGNAL(clicked()), this, TQT_SLOT(newType()) );
 
-  btndel = new QPushButton( i18n("&Delete"), hbHl );
-  connect( btndel, SIGNAL(clicked()), this, SLOT(deleteType()) );
+  btndel = new TQPushButton( i18n("&Delete"), hbHl );
+  connect( btndel, TQT_SIGNAL(clicked()), this, TQT_SLOT(deleteType()) );
 
-  gbProps = new QGroupBox( 2, Qt::Horizontal, i18n("Properties"), this );
+  gbProps = new TQGroupBox( 2, Qt::Horizontal, i18n("Properties"), this );
   layout->add (gbProps);
 
   // file & mime types
-  QLabel *lname = new QLabel( i18n("N&ame:"), gbProps );
-  name  = new QLineEdit( gbProps );
+  TQLabel *lname = new TQLabel( i18n("N&ame:"), gbProps );
+  name  = new TQLineEdit( gbProps );
   lname->setBuddy( name );
 
   // file & mime types
-  QLabel *lsec = new QLabel( i18n("&Section:"), gbProps );
-  section  = new QLineEdit( gbProps );
+  TQLabel *lsec = new TQLabel( i18n("&Section:"), gbProps );
+  section  = new TQLineEdit( gbProps );
   lsec->setBuddy( section );
 
   // file & mime types
-  QLabel *lvar = new QLabel( i18n("&Variables:"), gbProps );
-  varLine  = new QLineEdit( gbProps );
+  TQLabel *lvar = new TQLabel( i18n("&Variables:"), gbProps );
+  varLine  = new TQLineEdit( gbProps );
   lvar->setBuddy( varLine );
 
   // file & mime types
-  QLabel *lFileExts = new QLabel( i18n("File e&xtensions:"), gbProps );
-  wildcards  = new QLineEdit( gbProps );
+  TQLabel *lFileExts = new TQLabel( i18n("File e&xtensions:"), gbProps );
+  wildcards  = new TQLineEdit( gbProps );
   lFileExts->setBuddy( wildcards );
 
-  QLabel *lMimeTypes = new QLabel( i18n("MIME &types:"), gbProps);
-  QHBox *hbMT = new QHBox (gbProps);
-  mimetypes = new QLineEdit( hbMT );
+  TQLabel *lMimeTypes = new TQLabel( i18n("MIME &types:"), gbProps);
+  TQHBox *hbMT = new TQHBox (gbProps);
+  mimetypes = new TQLineEdit( hbMT );
   lMimeTypes->setBuddy( mimetypes );
 
-  QToolButton *btnMTW = new QToolButton(hbMT);
-  btnMTW->setIconSet(QIconSet(SmallIcon("wizard")));
-  connect(btnMTW, SIGNAL(clicked()), this, SLOT(showMTDlg()));
+  TQToolButton *btnMTW = new TQToolButton(hbMT);
+  btnMTW->setIconSet(TQIconSet(SmallIcon("wizard")));
+  connect(btnMTW, TQT_SIGNAL(clicked()), this, TQT_SLOT(showMTDlg()));
 
-  QLabel *lprio = new QLabel( i18n("Prio&rity:"), gbProps);
+  TQLabel *lprio = new TQLabel( i18n("Prio&rity:"), gbProps);
   priority = new KIntNumInput( gbProps );
   lprio->setBuddy( priority );
 
@@ -322,36 +322,36 @@ KateFileTypeConfigTab::KateFileTypeConfigTab( QWidget *parent )
 
   reload();
 
-  connect( name, SIGNAL( textChanged ( const QString & ) ), this, SLOT( slotChanged() ) );
-  connect( section, SIGNAL( textChanged ( const QString & ) ), this, SLOT( slotChanged() ) );
-  connect( varLine, SIGNAL( textChanged ( const QString & ) ), this, SLOT( slotChanged() ) );
-  connect( wildcards, SIGNAL( textChanged ( const QString & ) ), this, SLOT( slotChanged() ) );
-  connect( mimetypes, SIGNAL( textChanged ( const QString & ) ), this, SLOT( slotChanged() ) );
-  connect( priority, SIGNAL( valueChanged ( int ) ), this, SLOT( slotChanged() ) );
+  connect( name, TQT_SIGNAL( textChanged ( const TQString & ) ), this, TQT_SLOT( slotChanged() ) );
+  connect( section, TQT_SIGNAL( textChanged ( const TQString & ) ), this, TQT_SLOT( slotChanged() ) );
+  connect( varLine, TQT_SIGNAL( textChanged ( const TQString & ) ), this, TQT_SLOT( slotChanged() ) );
+  connect( wildcards, TQT_SIGNAL( textChanged ( const TQString & ) ), this, TQT_SLOT( slotChanged() ) );
+  connect( mimetypes, TQT_SIGNAL( textChanged ( const TQString & ) ), this, TQT_SLOT( slotChanged() ) );
+  connect( priority, TQT_SIGNAL( valueChanged ( int ) ), this, TQT_SLOT( slotChanged() ) );
 
-  QWhatsThis::add( btnnew, i18n("Create a new file type.") );
-  QWhatsThis::add( btndel, i18n("Delete the current file type.") );
-  QWhatsThis::add( name, i18n(
+  TQWhatsThis::add( btnnew, i18n("Create a new file type.") );
+  TQWhatsThis::add( btndel, i18n("Delete the current file type.") );
+  TQWhatsThis::add( name, i18n(
       "The name of the filetype will be the text of the corresponding menu item.") );
-  QWhatsThis::add( section, i18n(
+  TQWhatsThis::add( section, i18n(
       "The section name is used to organize the file types in menus.") );
-  QWhatsThis::add( varLine, i18n(
+  TQWhatsThis::add( varLine, i18n(
       "<p>This string allows you to configure Kate's settings for the files "
       "selected by this mimetype using Kate variables. You can set almost any "
       "configuration option, such as highlight, indent-mode, encoding, etc.</p>"
       "<p>For a full list of known variables, see the manual.</p>") );
-  QWhatsThis::add( wildcards, i18n(
+  TQWhatsThis::add( wildcards, i18n(
       "The wildcards mask allows you to select files by filename. A typical "
       "mask uses an asterisk and the file extension, for example "
       "<code>*.txt; *.text</code>. The string is a semicolon-separated list "
       "of masks.") );
-  QWhatsThis::add( mimetypes, i18n(
+  TQWhatsThis::add( mimetypes, i18n(
       "The mime type mask allows you to select files by mimetype. The string is "
       "a semicolon-separated list of mimetypes, for example "
       "<code>text/plain; text/english</code>.") );
-  QWhatsThis::add( btnMTW, i18n(
+  TQWhatsThis::add( btnMTW, i18n(
       "Displays a wizard that helps you easily select mimetypes.") );
-  QWhatsThis::add( priority, i18n(
+  TQWhatsThis::add( priority, i18n(
       "Sets a priority for this file type. If more than one file type selects the same "
       "file, the one with the highest priority will be used." ) );
 }
@@ -399,7 +399,7 @@ void KateFileTypeConfigTab::update ()
 
   for( uint i = 0; i < m_types.count(); i++) {
     if (m_types.at(i)->section.length() > 0)
-      typeCombo->insertItem(m_types.at(i)->section + QString ("/") + m_types.at(i)->name);
+      typeCombo->insertItem(m_types.at(i)->section + TQString ("/") + m_types.at(i)->name);
     else
       typeCombo->insertItem(m_types.at(i)->name);
   }
@@ -424,7 +424,7 @@ void KateFileTypeConfigTab::deleteType ()
 
 void KateFileTypeConfigTab::newType ()
 {
-  QString newN = i18n("New Filetype");
+  TQString newN = i18n("New Filetype");
 
   for( uint i = 0; i < m_types.count(); i++) {
     if (m_types.at(i)->name == newN)
@@ -451,8 +451,8 @@ void KateFileTypeConfigTab::save ()
     m_lastType->name = name->text ();
     m_lastType->section = section->text ();
     m_lastType->varLine = varLine->text ();
-    m_lastType->wildcards = QStringList::split (";", wildcards->text ());
-    m_lastType->mimetypes = QStringList::split (";", mimetypes->text ());
+    m_lastType->wildcards = TQStringList::split (";", wildcards->text ());
+    m_lastType->mimetypes = TQStringList::split (";", mimetypes->text ());
     m_lastType->priority = priority->value();
   }
 }
@@ -501,8 +501,8 @@ void KateFileTypeConfigTab::typeChanged (int type)
 void KateFileTypeConfigTab::showMTDlg()
 {
 
-  QString text = i18n("Select the MimeTypes you want for this file type.\nPlease note that this will automatically edit the associated file extensions as well.");
-  QStringList list = QStringList::split( QRegExp("\\s*;\\s*"), mimetypes->text() );
+  TQString text = i18n("Select the MimeTypes you want for this file type.\nPlease note that this will automatically edit the associated file extensions as well.");
+  TQStringList list = TQStringList::split( TQRegExp("\\s*;\\s*"), mimetypes->text() );
   KMimeTypeChooserDialog d( i18n("Select Mime Types"), text, list, "text", this );
   if ( d.exec() == KDialogBase::Accepted ) {
     // do some checking, warn user if mime types or patterns are removed.
@@ -519,9 +519,9 @@ void KateViewFileTypeAction::init()
   m_doc = 0;
   subMenus.setAutoDelete( true );
 
-  popupMenu()->insertItem ( i18n("None"), this, SLOT(setType(int)), 0,  0);
+  popupMenu()->insertItem ( i18n("None"), this, TQT_SLOT(setType(int)), 0,  0);
 
-  connect(popupMenu(),SIGNAL(aboutToShow()),this,SLOT(slotAboutToShow()));
+  connect(popupMenu(),TQT_SIGNAL(aboutToShow()),this,TQT_SLOT(slotAboutToShow()));
 }
 
 void KateViewFileTypeAction::updateMenu (Kate::Document *doc)
@@ -536,27 +536,27 @@ void KateViewFileTypeAction::slotAboutToShow()
 
   for (int z=0; z<count; z++)
   {
-    QString hlName = KateFactory::self()->fileTypeManager()->list()->at(z)->name;
-    QString hlSection = KateFactory::self()->fileTypeManager()->list()->at(z)->section;
+    TQString hlName = KateFactory::self()->fileTypeManager()->list()->at(z)->name;
+    TQString hlSection = KateFactory::self()->fileTypeManager()->list()->at(z)->section;
 
     if ( !hlSection.isEmpty() && (names.contains(hlName) < 1) )
     {
       if (subMenusName.contains(hlSection) < 1)
       {
         subMenusName << hlSection;
-        QPopupMenu *menu = new QPopupMenu ();
+        TQPopupMenu *menu = new TQPopupMenu ();
         subMenus.append(menu);
         popupMenu()->insertItem (hlSection, menu);
       }
 
       int m = subMenusName.findIndex (hlSection);
       names << hlName;
-      subMenus.at(m)->insertItem ( hlName, this, SLOT(setType(int)), 0,  z+1);
+      subMenus.at(m)->insertItem ( hlName, this, TQT_SLOT(setType(int)), 0,  z+1);
     }
     else if (names.contains(hlName) < 1)
     {
       names << hlName;
-      popupMenu()->insertItem ( hlName, this, SLOT(setType(int)), 0,  z+1);
+      popupMenu()->insertItem ( hlName, this, TQT_SLOT(setType(int)), 0,  z+1);
     }
   }
 

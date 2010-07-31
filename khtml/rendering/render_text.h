@@ -30,7 +30,7 @@
 #include "rendering/render_object.h"
 #include "rendering/render_line.h"
 
-#include <qptrvector.h>
+#include <tqptrvector.h>
 #include <assert.h>
 
 class QPainter;
@@ -80,9 +80,9 @@ public:
     virtual bool isInlineTextBox() const { return true; }
 
     void paint(RenderObject::PaintInfo& i, int tx, int ty);
-    void paintDecoration(QPainter *pt, const Font *f, int _tx, int _ty, int decoration);
-    void paintShadow(QPainter *pt, const Font* f, int _tx, int _ty, const ShadowData *shadow );
-    void paintSelection(const Font *f, RenderText *text, QPainter *p, RenderStyle* style, int tx, int ty, int startPos, int endPos, int deco);
+    void paintDecoration(TQPainter *pt, const Font *f, int _tx, int _ty, int decoration);
+    void paintShadow(TQPainter *pt, const Font* f, int _tx, int _ty, const ShadowData *shadow );
+    void paintSelection(const Font *f, RenderText *text, TQPainter *p, RenderStyle* style, int tx, int ty, int startPos, int endPos, int deco);
     
     void selectionStartEnd(int& sPos, int& ePos);
     RenderObject::SelectionState selectionState();
@@ -147,7 +147,7 @@ private:
     friend class RenderText;
 };
 
-class InlineTextBoxArray : public QPtrVector<InlineTextBox>
+class InlineTextBoxArray : public TQPtrVector<InlineTextBox>
 {
 public:
     InlineTextBoxArray();
@@ -193,7 +193,7 @@ public:
 						     SelPointState & );
 
     unsigned int length() const { if (str) return str->l; else return 0; }
-    QChar *text() const { if (str) return str->s; else return 0; }
+    TQChar *text() const { if (str) return str->s; else return 0; }
     unsigned int stringLength() const { return str->l; } // non virtual implementation of length()
     virtual void position(InlineBox* box, int from, int len, bool reverse);
 
@@ -231,7 +231,7 @@ public:
 
     bool hasReturn() const { return m_hasReturn; }
 
-    virtual const QFont &font();
+    virtual const TQFont &font();
     virtual short verticalPositionHint( bool firstLine ) const;
 
     bool isFixedWidthFont() const;
@@ -250,7 +250,7 @@ public:
     virtual void repaint(Priority p=NormalPriority);
 
     bool hasBreakableChar() const { return m_hasBreakableChar; }
-    const QFontMetrics &metrics(bool firstLine) const;
+    const TQFontMetrics &metrics(bool firstLine) const;
     const Font *htmlFont(bool firstLine) const;
 
     DOM::TextImpl *element() const
@@ -274,7 +274,7 @@ public:
     const InlineTextBoxArray &inlineTextBoxes() const { return m_lines; }
 
 #ifdef ENABLE_DUMP
-    virtual void dump(QTextStream &stream, const QString &ind) const;
+    virtual void dump(TQTextStream &stream, const TQString &ind) const;
 #endif
 
     /** Find the text box that includes the character at @p offset

@@ -27,10 +27,10 @@
 #include <kdebug.h>
 #include <kstaticdeleter.h>
 
-#include <qtl.h>
+#include <tqtl.h>
 
-template class QPtrList<KServiceTypeProfile>;
-typedef QPtrList<KServiceTypeProfile> KServiceTypeProfileList;
+template class TQPtrList<KServiceTypeProfile>;
+typedef TQPtrList<KServiceTypeProfile> KServiceTypeProfileList;
 
 /*********************************************
  *
@@ -55,24 +55,24 @@ void KServiceTypeProfile::initStatic()
 
   KConfig config( "profilerc", true, false);
 
-  static const QString & defaultGroup = KGlobal::staticQString("<default>");
+  static const TQString & defaultGroup = KGlobal::staticQString("<default>");
 
-  QStringList tmpList = config.groupList();
-  for (QStringList::Iterator aIt = tmpList.begin();
+  TQStringList tmpList = config.groupList();
+  for (TQStringList::Iterator aIt = tmpList.begin();
        aIt != tmpList.end(); ++aIt) {
     if ( *aIt == defaultGroup )
       continue;
 
     config.setGroup( *aIt );
 
-    QString appId = config.readEntry( "Application" );
+    TQString appId = config.readEntry( "Application" );
 
     KService::Ptr pService = KService::serviceByStorageId(appId);
 
     if ( pService ) {
-      QString application = pService->storageId();
-      QString type = config.readEntry( "ServiceType" );
-      QString type2 = config.readEntry( "GenericServiceType" );
+      TQString application = pService->storageId();
+      TQString type = config.readEntry( "ServiceType" );
+      TQString type2 = config.readEntry( "GenericServiceType" );
       if (type2.isEmpty()) // compat code
           type2 = (pService->type() == "Application") ? "Application" : "KParts/ReadOnlyPart";
       int pref = config.readNumEntry( "Preference" );
@@ -107,10 +107,10 @@ void KServiceTypeProfile::clear()
 }
 
 //static
-KServiceTypeProfile::OfferList KServiceTypeProfile::offers( const QString& _servicetype, const QString& _genericServiceType )
+KServiceTypeProfile::OfferList KServiceTypeProfile::offers( const TQString& _servicetype, const TQString& _genericServiceType )
 {
     OfferList offers;
-    QStringList serviceList;
+    TQStringList serviceList;
     //kdDebug(7014) << "KServiceTypeProfile::offers( " << _servicetype << "," << _genericServiceType << " )" << endl;
 
     // Note that KServiceTypeProfile::offers() calls KServiceType::offers(),
@@ -120,7 +120,7 @@ KServiceTypeProfile::OfferList KServiceTypeProfile::offers( const QString& _serv
         initStatic();
         // We want all profiles for servicetype, if we have profiles.
         // ## Slow loop, if profilerc is big. We should use a map instead?
-        QPtrListIterator<KServiceTypeProfile> it( *s_lstProfiles );
+        TQPtrListIterator<KServiceTypeProfile> it( *s_lstProfiles );
         for( ; it.current(); ++it )
             if ( it.current()->m_strServiceType == _servicetype )
             {
@@ -159,7 +159,7 @@ KServiceTypeProfile::OfferList KServiceTypeProfile::offers( const QString& _serv
     // but it's also the case for any service that's neither App nor ReadOnlyPart, e.g. RenameDlg/Plugin
     KService::List list = KServiceType::offers( _servicetype );
     //kdDebug(7014) << "Using KServiceType::offers, result: " << list.count() << " offers" << endl;
-    QValueListIterator<KService::Ptr> it = list.begin();
+    TQValueListIterator<KService::Ptr> it = list.begin();
     for( ; it != list.end(); ++it )
     {
         if (_genericServiceType.isEmpty() /*no constraint*/ || (*it)->hasServiceType( _genericServiceType ))
@@ -191,7 +191,7 @@ KServiceTypeProfile::OfferList KServiceTypeProfile::offers( const QString& _serv
     return offers;
 }
 
-KServiceTypeProfile::KServiceTypeProfile( const QString& _servicetype, const QString& _genericServiceType )
+KServiceTypeProfile::KServiceTypeProfile( const TQString& _servicetype, const TQString& _genericServiceType )
 {
   initStatic();
 
@@ -203,26 +203,26 @@ KServiceTypeProfile::~KServiceTypeProfile()
 {
 }
 
-void KServiceTypeProfile::addService( const QString& _service,
+void KServiceTypeProfile::addService( const TQString& _service,
 				      int _preference, bool _allow_as_default )
 {
   m_mapServices[ _service ].m_iPreference = _preference;
   m_mapServices[ _service ].m_bAllowAsDefault = _allow_as_default;
 }
 
-int KServiceTypeProfile::preference( const QString& _service ) const
+int KServiceTypeProfile::preference( const TQString& _service ) const
 {
   KService::Ptr service = KService::serviceByName( _service );
   if (!service)
     return 0;
-  QMap<QString,Service>::ConstIterator it = m_mapServices.find( service->storageId() );
+  TQMap<TQString,Service>::ConstIterator it = m_mapServices.find( service->storageId() );
   if ( it == m_mapServices.end() )
     return 0;
 
   return it.data().m_iPreference;
 }
 
-bool KServiceTypeProfile::allowAsDefault( const QString& _service ) const
+bool KServiceTypeProfile::allowAsDefault( const TQString& _service ) const
 {
   KService::Ptr service = KService::serviceByName( _service );
   if (!service)
@@ -233,21 +233,21 @@ bool KServiceTypeProfile::allowAsDefault( const QString& _service ) const
     return false;
 
   // Look what the user says ...
-  QMap<QString,Service>::ConstIterator it = m_mapServices.find( service->storageId() );
+  TQMap<TQString,Service>::ConstIterator it = m_mapServices.find( service->storageId() );
   if ( it == m_mapServices.end() )
     return 0;
 
   return it.data().m_bAllowAsDefault;
 }
 
-KServiceTypeProfile* KServiceTypeProfile::serviceTypeProfile( const QString& _servicetype, const QString& _genericServiceType )
+KServiceTypeProfile* KServiceTypeProfile::serviceTypeProfile( const TQString& _servicetype, const TQString& _genericServiceType )
 {
   initStatic();
-  static const QString& app_str = KGlobal::staticQString("Application");
+  static const TQString& app_str = KGlobal::staticQString("Application");
 
-  const QString &_genservicetype  = ((!_genericServiceType.isEmpty()) ? _genericServiceType : app_str);
+  const TQString &_genservicetype  = ((!_genericServiceType.isEmpty()) ? _genericServiceType : app_str);
 
-  QPtrListIterator<KServiceTypeProfile> it( *s_lstProfiles );
+  TQPtrListIterator<KServiceTypeProfile> it( *s_lstProfiles );
   for( ; it.current(); ++it )
     if (( it.current()->m_strServiceType == _servicetype ) &&
         ( it.current()->m_strGenericServiceType == _genservicetype))
@@ -263,14 +263,14 @@ KServiceTypeProfile::OfferList KServiceTypeProfile::offers() const
 
   kdDebug(7014) << "KServiceTypeProfile::offers serviceType=" << m_strServiceType << " genericServiceType=" << m_strGenericServiceType << endl;
   KService::List list = KServiceType::offers( m_strServiceType );
-  QValueListIterator<KService::Ptr> it = list.begin();
+  TQValueListIterator<KService::Ptr> it = list.begin();
   for( ; it != list.end(); ++it )
   {
     //kdDebug(7014) << "KServiceTypeProfile::offers considering " << (*it)->name() << endl;
     if ( m_strGenericServiceType.isEmpty() || (*it)->hasServiceType( m_strGenericServiceType ) )
     {
       // Now look into the profile, to find this service's preference.
-      QMap<QString,Service>::ConstIterator it2 = m_mapServices.find( (*it)->storageId() );
+      TQMap<TQString,Service>::ConstIterator it2 = m_mapServices.find( (*it)->storageId() );
 
       if( it2 != m_mapServices.end() )
       {
@@ -300,7 +300,7 @@ KServiceTypeProfile::OfferList KServiceTypeProfile::offers() const
   return offers;
 }
 
-KService::Ptr KServiceTypeProfile::preferredService( const QString & _serviceType, const QString & _genericServiceType )
+KService::Ptr KServiceTypeProfile::preferredService( const TQString & _serviceType, const TQString & _genericServiceType )
 {
   OfferList lst = offers( _serviceType, _genericServiceType );
 

@@ -38,7 +38,7 @@
      * @param len lenght of change
      * @param text text removed/inserted
      */
-    KateUndo (KateUndoGroup::UndoType type, uint line, uint col, uint len, const QString &text);
+    KateUndo (KateUndoGroup::UndoType type, uint line, uint col, uint len, const TQString &text);
     
     /**
      * Destructor
@@ -112,7 +112,7 @@
      * text inserted/removed
      * @return text
      */
-    inline const QString& text() const { return m_text; };
+    inline const TQString& text() const { return m_text; };
 
   private:
     /**
@@ -138,10 +138,10 @@
     /**
      * text
      */
-    QString m_text;
+    TQString m_text;
 };
 
-KateUndo::KateUndo (KateUndoGroup::UndoType type, uint line, uint col, uint len, const QString &text)
+KateUndo::KateUndo (KateUndoGroup::UndoType type, uint line, uint col, uint len, const TQString &text)
 : m_type (type),
   m_line (line),
   m_col (col),
@@ -329,7 +329,7 @@ void KateUndoGroup::redo ()
   m_doc->editEnd ();
 }
 
-void KateUndoGroup::addItem (KateUndoGroup::UndoType type, uint line, uint col, uint len, const QString &text)
+void KateUndoGroup::addItem (KateUndoGroup::UndoType type, uint line, uint col, uint len, const TQString &text)
 {
   addItem(new KateUndo(type, line, col, len, text));
 }

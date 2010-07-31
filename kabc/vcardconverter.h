@@ -21,7 +21,7 @@
 #ifndef KABC_VCARDCONVERTER_H
 #define KABC_VCARDCONVERTER_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include "addressee.h"
 
@@ -37,10 +37,10 @@ namespace KABC {
 
   \code
 
-  QFile file( "myfile.vcf" );
+  TQFile file( "myfile.vcf" );
   file.open( IO_ReadOnly );
   
-  QString data = file.readAll();
+  TQString data = file.readAll();
 
   VCardConverter converter;
   Addressee::List list = converter.parseVCards( data );
@@ -81,7 +81,7 @@ class KABC_EXPORT VCardConverter
       @param addr The contact object
       @param version The version of the generated vCard format
      */
-    QString createVCard( const Addressee &addr, Version version = v3_0 );
+    TQString createVCard( const Addressee &addr, Version version = v3_0 );
 
     /**
       Creates a string in vCard format which contains the given
@@ -91,39 +91,39 @@ class KABC_EXPORT VCardConverter
       @param version The version of the generated vCard format
      */
     // FIXME: Add error handling
-    QString createVCards( Addressee::List list, Version version = v3_0 );
+    TQString createVCards( Addressee::List list, Version version = v3_0 );
 
     // FIXME: Add "createVCards( AddressBook * )"
 
     /**
       Parses a string in vCard format and returns the first contact.
      */
-    Addressee parseVCard( const QString& vcard );
+    Addressee parseVCard( const TQString& vcard );
 
     /**
       Parses a string in vCard format and returns a list of contact objects.
      */
     // FIXME: Add error handling
-    Addressee::List parseVCards( const QString& vcard );
+    Addressee::List parseVCards( const TQString& vcard );
 
-    // FIXME: Add "bool parseVCards( AddressBook *, const QString &vcard )"
-
-    /**
-      @deprecated
-     */
-    bool vCardToAddressee( const QString&, Addressee &, Version version = v3_0 ) KDE_DEPRECATED;
+    // FIXME: Add "bool parseVCards( AddressBook *, const TQString &vcard )"
 
     /**
       @deprecated
      */
-    bool addresseeToVCard( const Addressee&, QString&, Version version = v3_0 ) KDE_DEPRECATED;
+    bool vCardToAddressee( const TQString&, Addressee &, Version version = v3_0 ) KDE_DEPRECATED;
+
+    /**
+      @deprecated
+     */
+    bool addresseeToVCard( const Addressee&, TQString&, Version version = v3_0 ) KDE_DEPRECATED;
 
   private:
     /**
       Split a string and replaces escaped separators on the fly with
       unescaped ones.
      */
-    QStringList splitString( const QChar &sep, const QString &value );
+    TQStringList splitString( const TQChar &sep, const TQString &value );
 
     struct VCardConverterData;
     VCardConverterData *d;
@@ -135,29 +135,29 @@ class KABC_EXPORT VCardConverter
   */
 
 /**
-  * Converts a QDateTime to a date string as it is used in VCard and LDIF files.
+  * Converts a TQDateTime to a date string as it is used in VCard and LDIF files.
   * The return value is in the form "yyyyMMddThhmmssZ" (e.g. "20031201T120000Z")
   * @param dateTime date and time to be converted 
   * @since 3.2
   */
-KABC_EXPORT QString dateToVCardString( const QDateTime &dateTime );
+KABC_EXPORT TQString dateToVCardString( const TQDateTime &dateTime );
 
 /**
-  * Converts a QDate to a short date string as it is used in VCard and LDIF files.
+  * Converts a TQDate to a short date string as it is used in VCard and LDIF files.
   * The return value is in the form "yyyyMMdd" (e.g. "20031201")
   * @param date date to be converted 
   * @since 3.2
   */
-KABC_EXPORT QString dateToVCardString( const QDate &date );
+KABC_EXPORT TQString dateToVCardString( const TQDate &date );
 
 /**
-  * Converts a date string as it is used in VCard and LDIF files to a QDateTime value.
+  * Converts a date string as it is used in VCard and LDIF files to a TQDateTime value.
   * If the date string does not contain a time value, it will be returned as 00:00:00.
-  * (e.g. "20031201T120000" will return a QDateTime for 2003-12-01 at 12:00)
+  * (e.g. "20031201T120000" will return a TQDateTime for 2003-12-01 at 12:00)
   * @param dateString string representing the date and time.
   * @since 3.2
   */
-KABC_EXPORT QDateTime VCardStringToDate( const QString &dateString );
+KABC_EXPORT TQDateTime VCardStringToDate( const TQString &dateString );
 
 }
 #endif

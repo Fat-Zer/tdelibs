@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <errno.h>
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include "ltdl.h"
 
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
         fprintf(stderr, "Usage: kioslave <slave-lib> <protocol> <klauncher-socket> <app-socket>\n\nThis program is part of KDE.\n");
         exit(1);
      }
-     QCString libpath = argv[1];     
+     TQCString libpath = argv[1];     
 
      if (libpath.isEmpty())
      {

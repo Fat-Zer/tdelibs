@@ -26,14 +26,14 @@
 
 #include "kiconviewsearchline.h"
 
-#include <qiconview.h>
+#include <tqiconview.h>
 #include <klocale.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 #include <kdebug.h>
 
 #define DEFAULT_CASESENSITIVE false
 
-typedef QValueList <QIconViewItem *> QIconViewItemList;
+typedef TQValueList <TQIconViewItem *> QIconViewItemList;
 
 class KIconViewSearchLine::KIconViewSearchLinePrivate
 {
@@ -45,10 +45,10 @@ public:
     hiddenListChanged( 0 ),
     queuedSearches( 0 ) {}
 
-  QIconView *iconView;
+  TQIconView *iconView;
   bool caseSensitive;
   bool activeSearch;
-  QString search;
+  TQString search;
   int queuedSearches;
   int hiddenListChanged;
   QIconViewItemList hiddenItems;
@@ -57,8 +57,8 @@ public:
 /******************************************************************************
  * Public Methods                                                             *
  *****************************************************************************/
-KIconViewSearchLine::KIconViewSearchLine( QWidget *parent,
-					  QIconView *iconView,
+KIconViewSearchLine::KIconViewSearchLine( TQWidget *parent,
+					  TQIconView *iconView,
 					  const char *name ) :
   KLineEdit( parent, name )
 {
@@ -66,7 +66,7 @@ KIconViewSearchLine::KIconViewSearchLine( QWidget *parent,
   init( iconView );
 }
 
-KIconViewSearchLine::KIconViewSearchLine( QWidget *parent, const char *name ) :
+KIconViewSearchLine::KIconViewSearchLine( TQWidget *parent, const char *name ) :
   KLineEdit( parent, name )
 {
   d = NULL;
@@ -84,7 +84,7 @@ bool KIconViewSearchLine::caseSensitive() const
   return d->caseSensitive;
 }
 
-QIconView *KIconViewSearchLine::iconView() const
+TQIconView *KIconViewSearchLine::iconView() const
 {
   return d->iconView;
 }
@@ -92,7 +92,7 @@ QIconView *KIconViewSearchLine::iconView() const
 /******************************************************************************
  * Public Slots                                                               *
  *****************************************************************************/
-void KIconViewSearchLine::updateSearch( const QString &s )
+void KIconViewSearchLine::updateSearch( const TQString &s )
 {
 	long original_count;
 	int original_hiddenListChanged;
@@ -100,13 +100,13 @@ void KIconViewSearchLine::updateSearch( const QString &s )
 	if( ! d->iconView )
 		return; // disabled
 
-	QString search = d->search = s.isNull() ? text() : s;
-	QIconViewItem *currentItem = d->iconView->currentItem();
+	TQString search = d->search = s.isNull() ? text() : s;
+	TQIconViewItem *currentItem = d->iconView->currentItem();
 
-	QIconViewItem *item = NULL;
+	TQIconViewItem *item = NULL;
 
 	// Remove Non-Matching items, add them them to hidden list
-	QIconViewItem *i = d->iconView->firstItem();
+	TQIconViewItem *i = d->iconView->firstItem();
 	while ( i != NULL ) {
 		item = i;
 		i = i->nextItem(); // Point to next, otherwise will loose it.
@@ -143,8 +143,8 @@ void KIconViewSearchLine::updateSearch( const QString &s )
 
 void KIconViewSearchLine::clear()
 {
-  // Clear hidden list, give items back to QIconView, if it still exists
-  QIconViewItem *item = NULL;
+  // Clear hidden list, give items back to TQIconView, if it still exists
+  TQIconViewItem *item = NULL;
   QIconViewItemList::iterator it = d->hiddenItems.begin();
   while ( it != d->hiddenItems.end() )
     {
@@ -168,9 +168,9 @@ void KIconViewSearchLine::clear()
   KLineEdit::clear();
 }
 
-void KIconViewSearchLine::iconDeleted(const QString &filename) {
-	// Clear hidden list, give items back to QIconView, if it still exists
-	QIconViewItem *item = NULL;
+void KIconViewSearchLine::iconDeleted(const TQString &filename) {
+	// Clear hidden list, give items back to TQIconView, if it still exists
+	TQIconViewItem *item = NULL;
 	QIconViewItemList::iterator it = d->hiddenItems.begin();
 	while ( it != d->hiddenItems.end() )
 	{
@@ -193,18 +193,18 @@ void KIconViewSearchLine::setCaseSensitive( bool cs )
   d->caseSensitive = cs;
 }
 
-void KIconViewSearchLine::setIconView( QIconView *iv )
+void KIconViewSearchLine::setIconView( TQIconView *iv )
 {
   if ( d->iconView != NULL )
-    disconnect( d->iconView, SIGNAL( destroyed() ),
-		this,        SLOT(   iconViewDeleted() ) );
+    disconnect( d->iconView, TQT_SIGNAL( destroyed() ),
+		this,        TQT_SLOT(   iconViewDeleted() ) );
 
   d->iconView = iv;
 
   if ( iv != NULL )
     {
-      connect( d->iconView, SIGNAL( destroyed() ),
-	       this,        SLOT(   iconViewDeleted() ) );
+      connect( d->iconView, TQT_SIGNAL( destroyed() ),
+	       this,        TQT_SLOT(   iconViewDeleted() ) );
       setEnabled( true );
     }
   else
@@ -214,8 +214,8 @@ void KIconViewSearchLine::setIconView( QIconView *iv )
 /******************************************************************************
  * Protected Methods                                                          *
  *****************************************************************************/
-bool KIconViewSearchLine::itemMatches( const QIconViewItem *item,
-				       const QString &s ) const
+bool KIconViewSearchLine::itemMatches( const TQIconViewItem *item,
+				       const TQString &s ) const
 {
   if ( s.isEmpty() )
     return true;
@@ -223,31 +223,31 @@ bool KIconViewSearchLine::itemMatches( const QIconViewItem *item,
   if ( item == NULL )
     return false;
 
-  QString itemtext = item->text();
+  TQString itemtext = item->text();
   return ( itemtext.find( s, 0, caseSensitive() ) >= 0 );
 }
 
-void KIconViewSearchLine::init( QIconView *iconView )
+void KIconViewSearchLine::init( TQIconView *iconView )
 {
   delete d;
   d = new KIconViewSearchLinePrivate;
 
   d->iconView = iconView;
 
-  connect( this, SIGNAL( textChanged( const QString & ) ),
-	   this, SLOT(   queueSearch( const QString & ) ) );
+  connect( this, TQT_SIGNAL( textChanged( const TQString & ) ),
+	   this, TQT_SLOT(   queueSearch( const TQString & ) ) );
 
   if ( iconView != NULL )
     {
-      connect( iconView, SIGNAL( destroyed() ),
-	       this,     SLOT(   iconViewDeleted() ) );
+      connect( iconView, TQT_SIGNAL( destroyed() ),
+	       this,     TQT_SLOT(   iconViewDeleted() ) );
       setEnabled( true );
     }
   else
     setEnabled( false );
 }
 
-void KIconViewSearchLine::hideItem( QIconViewItem *item )
+void KIconViewSearchLine::hideItem( TQIconViewItem *item )
 {
   if ( ( item == NULL ) || ( d->iconView == NULL ) )
     return;
@@ -257,7 +257,7 @@ void KIconViewSearchLine::hideItem( QIconViewItem *item )
   d->iconView->takeItem( item );
 }
 
-void KIconViewSearchLine::showItem( QIconViewItem *item )
+void KIconViewSearchLine::showItem( TQIconViewItem *item )
 {
   if ( d->iconView == NULL )
     {
@@ -275,11 +275,11 @@ void KIconViewSearchLine::showItem( QIconViewItem *item )
 /******************************************************************************
  * Protected Slots                                                            *
  *****************************************************************************/
-void KIconViewSearchLine::queueSearch( const QString &s )
+void KIconViewSearchLine::queueSearch( const TQString &s )
 {
   d->queuedSearches++;
   d->search = s;
-  QTimer::singleShot( 200, this, SLOT( activateSearch() ) );
+  TQTimer::singleShot( 200, this, TQT_SLOT( activateSearch() ) );
 }
 
 void KIconViewSearchLine::activateSearch()
@@ -292,7 +292,7 @@ void KIconViewSearchLine::activateSearch()
       d->queuedSearches = 0;
   }
   else {
-      QTimer::singleShot( 200, this, SLOT( activateSearch() ) );
+      TQTimer::singleShot( 200, this, TQT_SLOT( activateSearch() ) );
   }
 }
 

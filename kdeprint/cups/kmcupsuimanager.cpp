@@ -53,14 +53,14 @@
 #include "ipprequest.h"
 #include "cupsinfos.h"
 
-#include <qlistview.h>
-#include <qwhatsthis.h>
+#include <tqlistview.h>
+#include <tqwhatsthis.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kaction.h>
 #include <kmessagebox.h>
 
-KMCupsUiManager::KMCupsUiManager(QObject *parent, const char *name, const QStringList & /*args*/)
+KMCupsUiManager::KMCupsUiManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMUiManager(parent,name)
 {
 }
@@ -81,28 +81,28 @@ void KMCupsUiManager::setupPropertyPages(KMPropertyPage *p)
 
 void KMCupsUiManager::setupWizard(KMWizard *wizard)
 {
-	QString whatsThisRemoteCUPSIPPBackend =
+	TQString whatsThisRemoteCUPSIPPBackend =
 		i18n( "<qt><p>Print queue on remote CUPS server</p>"
 			  "<p>Use this for a print queue installed on a remote "
 			  "machine running a CUPS server. This allows to use "
 			  "remote printers when CUPS browsing is turned off.</p></qt>"
 			);
 
-	QString whatsThisRemotePrinterIPPBackend =
+	TQString whatsThisRemotePrinterIPPBackend =
 		i18n( "<qt><p>Network IPP printer</p>"
 			  "<p>Use this for a network-enabled printer using the "
 			  "IPP protocol. Modern high-end printers can use this mode. "
 			  "Use this mode instead of TCP if your printer can do both.</p></qt>"
 			);
 
-	QString whatsThisSerialFaxModemBackend =
+	TQString whatsThisSerialFaxModemBackend =
 		i18n( "<qt><p>Fax/Modem printer</p>"
 			  "<p>Use this for a fax/modem printer. This requires the installation "
 			  "of the <a href=\"http://vigna.dsi.unimi.it/fax4CUPS/\">fax4CUPS</a> backend. Documents sent on this printer will be faxed "
 			  "to the given target fax number.</p></qt>"
 			);
 
-	QString whatsThisOtherPrintertypeBackend =
+	TQString whatsThisOtherPrintertypeBackend =
 		i18n( "<qt><p>Other printer</p>"
 			  "<p>Use this for any printer type. To use this option, you must know "
 			  "the URI of the printer you want to install. Refer to the CUPS documentation "
@@ -110,7 +110,7 @@ void KMCupsUiManager::setupWizard(KMWizard *wizard)
 			  "printer types using 3rd party backends not covered by the other possibilities.</p></qt>"
 			);
 
-	QString whatsThisClassOfPrinters =
+	TQString whatsThisClassOfPrinters =
 		i18n( "<qt><p>Class of printers</p>"
 			  "<p>Use this to create a class of printers. When sending a document to a class, "
 			  "the document is actually sent to the first available (idle) printer in the class. "
@@ -135,7 +135,7 @@ void KMCupsUiManager::setupWizard(KMWizard *wizard)
 	QString		uri;
 
 	req.setOperation(CUPS_GET_DEVICES);
-	uri = QString::fromLocal8Bit("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
+	uri = TQString::fromLocal8Bit("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
 	req.addURI(IPP_TAG_OPERATION,"printer-uri",uri);
 
 	if (req.doRequest("/"))
@@ -204,13 +204,13 @@ int KMCupsUiManager::pluginPageCap()
 	return (KMUiManager::CopyAll & ~KMUiManager::Current);
 }
 
-void KMCupsUiManager::setupPrintDialogPages(QPtrList<KPrintDialogPage>* pages)
+void KMCupsUiManager::setupPrintDialogPages(TQPtrList<KPrintDialogPage>* pages)
 {
 	pages->append(new KPSchedulePage());
 	pages->append(new KPTagsPage());
 }
 
-void KMCupsUiManager::setupJobViewer(QListView *lv)
+void KMCupsUiManager::setupJobViewer(TQListView *lv)
 {
 	lv->addColumn(i18n("Priority"));
 	lv->setColumnAlignment(lv->columns()-1, Qt::AlignRight|Qt::AlignVCenter);

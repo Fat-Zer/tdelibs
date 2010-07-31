@@ -24,7 +24,7 @@
 #ifndef  TEXTBINVALUE_H
 #define  TEXTBINVALUE_H
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <VCardValue.h>
 
@@ -39,17 +39,17 @@ class KVCARD_EXPORT TextBinValue : public Value
   TextBinValue *clone();
 
   bool isBinary() { parse(); return mIsBinary_; }
-  QByteArray data() { parse(); return mData_; }
-  QString url() { parse(); return mUrl_; }
+  TQByteArray data() { parse(); return mData_; }
+  TQString url() { parse(); return mUrl_; }
 
-  void setData( const QByteArray &data )
+  void setData( const TQByteArray &data )
   {
     mData_ = data;
     mIsBinary_ = true;
     assembled_ = false;
   }
 
-  void setUrl( const QString &url )
+  void setUrl( const TQString &url )
   {
     mUrl_ = url;
     mIsBinary_ = false;
@@ -58,8 +58,8 @@ class KVCARD_EXPORT TextBinValue : public Value
 
 	private:
     int mIsBinary_;
-    QByteArray mData_;
-    QString mUrl_;
+    TQByteArray mData_;
+    TQString mUrl_;
 };
 
 }

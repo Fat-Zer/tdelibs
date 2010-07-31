@@ -20,7 +20,7 @@
 #ifndef FOOMATIC2LOADER_H
 #define FOOMATIC2LOADER_H
 
-#include <qvariant.h>
+#include <tqvariant.h>
 
 #include <kdelibs_export.h>
 
@@ -33,24 +33,24 @@ public:
 	Foomatic2Loader();
 	~Foomatic2Loader();
 
-	bool read( QIODevice *d );
-	bool readFromBuffer( const QString& buffer );
-	bool readFromFile( const QString& filename );
-	QMap<QString,QVariant> data() const;
+	bool read( TQIODevice *d );
+	bool readFromBuffer( const TQString& buffer );
+	bool readFromFile( const TQString& filename );
+	TQMap<TQString,TQVariant> data() const;
 	DrMain* buildDriver() const;
 	DrMain* modifyDriver( DrMain* ) const;
 
-	static DrMain* loadDriver( const QString& filename );
+	static DrMain* loadDriver( const TQString& filename );
 
 private:
-	QMap<QString,QVariant> m_foodata;
+	TQMap<TQString,TQVariant> m_foodata;
 
 	friend int kdeprint_foomatic2parse( void* );
-	DrBase* createValue( const QString&, const QMap<QString,QVariant>& ) const;
-	DrBase* createOption( const QMap<QString,QVariant>& ) const;
+	DrBase* createValue( const TQString&, const TQMap<TQString,TQVariant>& ) const;
+	DrBase* createOption( const TQMap<TQString,TQVariant>& ) const;
 };
 
-inline QMap<QString,QVariant> Foomatic2Loader::data() const
+inline TQMap<TQString,TQVariant> Foomatic2Loader::data() const
 { return m_foodata; }
 
 #endif /* FOOMATIC2LOADER_H */

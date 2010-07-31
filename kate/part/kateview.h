@@ -32,7 +32,7 @@
 #include <ktexteditor/viewstatusmsginterface.h>
 #include <ktexteditor/texthintinterface.h>
 
-#include <qguardedptr.h>
+#include <tqguardedptr.h>
 
 class KateDocument;
 class KateBookmarks;
@@ -69,7 +69,7 @@ class KateView : public Kate::View,
     friend class KateCodeCompletion;
 
   public:
-    KateView( KateDocument* doc, QWidget* parent = 0L, const char* name = 0 );
+    KateView( KateDocument* doc, TQWidget* parent = 0L, const char* name = 0 );
     ~KateView ();
 
   //
@@ -94,9 +94,9 @@ class KateView : public Kate::View,
 
   // helper to export text as html stuff
   private:
-    QString selectionAsHtml ();
-    QString textAsHtml ( uint startLine, uint startCol, uint endLine, uint endCol, bool blockwise);
-    void textAsHtmlStream ( uint startLine, uint startCol, uint endLine, uint endCol, bool blockwise, QTextStream *ts);
+    TQString selectionAsHtml ();
+    TQString textAsHtml ( uint startLine, uint startCol, uint endLine, uint endCol, bool blockwise);
+    void textAsHtmlStream ( uint startLine, uint startCol, uint endLine, uint endCol, bool blockwise, TQTextStream *ts);
 
     /**
      * Gets a substring in valid-xml html.
@@ -110,7 +110,7 @@ class KateView : public Kate::View,
      *                 attributes.
      * @param outputStream A stream to write the html to
      */
-    void lineAsHTML (KateTextLine::Ptr line, uint startCol, uint length, QTextStream *outputStream);
+    void lineAsHTML (KateTextLine::Ptr line, uint startCol, uint length, TQTextStream *outputStream);
 
   public slots:
     void exportAsHTML ();
@@ -119,14 +119,14 @@ class KateView : public Kate::View,
   // KTextEditor::PopupMenuInterface
   //
   public:
-    void installPopup( QPopupMenu* menu ) { m_rmbMenu = menu; }
-    QPopupMenu* popup() const             { return m_rmbMenu; }
+    void installPopup( TQPopupMenu* menu ) { m_rmbMenu = menu; }
+    TQPopupMenu* popup() const             { return m_rmbMenu; }
 
   //
   // KTextEditor::ViewCursorInterface
   //
   public slots:
-    QPoint cursorCoordinates()
+    TQPoint cursorCoordinates()
         { return m_viewInternal->cursorCoordinates();                 }
     void cursorPosition( uint* l, uint* c )
         { if( l ) *l = cursorLine(); if( c ) *c = cursorColumn();     }
@@ -149,15 +149,15 @@ class KateView : public Kate::View,
   // KTextEditor::CodeCompletionInterface
   //
   public slots:
-    void showArgHint( QStringList arg1, const QString& arg2, const QString& arg3 );
-    void showCompletionBox( QValueList<KTextEditor::CompletionEntry> arg1, int offset = 0, bool cs = true );
+    void showArgHint( TQStringList arg1, const TQString& arg2, const TQString& arg3 );
+    void showCompletionBox( TQValueList<KTextEditor::CompletionEntry> arg1, int offset = 0, bool cs = true );
 
   signals:
     void completionAborted();
     void completionDone();
     void argHintHidden();
     void completionDone(KTextEditor::CompletionEntry);
-    void filterInsertString(KTextEditor::CompletionEntry*,QString *);
+    void filterInsertString(KTextEditor::CompletionEntry*,TQString *);
     void aboutToShowCompletionBox();
 
   //
@@ -168,7 +168,7 @@ class KateView : public Kate::View,
     void disableTextHints();
 
   signals:
-    void needTextHint(int line, int col, QString &text);
+    void needTextHint(int line, int col, TQString &text);
 
   //
   // KTextEditor::DynWordWrapInterface
@@ -189,7 +189,7 @@ class KateView : public Kate::View,
     bool clearSelection (bool redraw, bool finishedChangingSelection = true);
 
     bool hasSelection () const;
-    QString selection () const ;
+    TQString selection () const ;
 
     bool removeSelectedText ();
 
@@ -282,16 +282,16 @@ class KateView : public Kate::View,
     bool isOverwriteMode() const;
     void setOverwriteMode( bool b );
 
-    QString currentTextLine()
+    TQString currentTextLine()
         { return getDoc()->textLine( cursorLine() ); }
-    QString currentWord()
+    TQString currentWord()
         { return m_doc->getWord( m_viewInternal->getCursor() ); }
-    void insertText( const QString& mark )
+    void insertText( const TQString& mark )
         { getDoc()->insertText( cursorLine(), cursorColumnReal(), mark ); }
     bool canDiscard();
     int tabWidth()                { return m_doc->config()->tabWidth(); }
     void setTabWidth( int w )     { m_doc->config()->setTabWidth(w);  }
-    void setEncoding( QString e ) { m_doc->setEncoding(e);       }
+    void setEncoding( TQString e ) { m_doc->setEncoding(e);       }
     bool isLastView()             { return m_doc->isLastView(1); }
 
   public slots:
@@ -377,9 +377,9 @@ class KateView : public Kate::View,
     int getEol();
     void setEol( int eol );
     void find();
-    void find( const QString&, long, bool add=true ); ///< proxy for KateSearch
+    void find( const TQString&, long, bool add=true ); ///< proxy for KateSearch
     void replace();
-    void replace( const QString&, const QString &, long ); ///< proxy for KateSearch
+    void replace( const TQString&, const TQString &, long ); ///< proxy for KateSearch
     /** Highly confusing but KateSearch::findAgain() is backwards too. */
     void findAgain( bool back );
     void findAgain()              { findAgain( false );          }
@@ -442,14 +442,14 @@ class KateView : public Kate::View,
     void slotReadWriteChanged ();
 
   signals:
-    void dropEventPass(QDropEvent*);
-    void viewStatusMsg (const QString &msg);
+    void dropEventPass(TQDropEvent*);
+    void viewStatusMsg (const TQString &msg);
 
   public:
     bool setCursorPositionInternal( uint line, uint col, uint tabwidth = 1, bool calledExternally = false );
 
   protected:
-    void contextMenuEvent( QContextMenuEvent* );
+    void contextMenuEvent( TQContextMenuEvent* );
     bool checkOverwrite( KURL );
 
   public slots:
@@ -458,9 +458,9 @@ class KateView : public Kate::View,
   private slots:
     void slotGotFocus();
     void slotLostFocus();
-    void slotDropEventPass( QDropEvent* ev );
+    void slotDropEventPass( TQDropEvent* ev );
     void slotStatusMsg();
-    void slotSaveCanceled( const QString& error );
+    void slotSaveCanceled( const TQString& error );
     void slotExpandToplevel();
     void slotCollapseLocal();
     void slotExpandLocal();
@@ -504,19 +504,19 @@ class KateView : public Kate::View,
     KateSearch*            m_search;
     KateSpell             *m_spell;
     KateBookmarks*         m_bookmarks;
-    QGuardedPtr<QPopupMenu>  m_rmbMenu;
+    TQGuardedPtr<TQPopupMenu>  m_rmbMenu;
     KateCodeCompletion*    m_codeCompletion;
 
     KateCmdLine *m_cmdLine;
     bool m_cmdLineOn;
 
-    QGridLayout *m_grid;
+    TQGridLayout *m_grid;
 
     bool       m_active;
     bool       m_hasWrap;
 
   private slots:
-    void slotNeedTextHint(int line, int col, QString &text);
+    void slotNeedTextHint(int line, int col, TQString &text);
     void slotHlChanged();
 
   /**

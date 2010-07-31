@@ -20,7 +20,7 @@
 #ifndef _KKEYBUTTON_H_
 #define _KKEYBUTTON_H_
 
-#include <qpushbutton.h>
+#include <tqpushbutton.h>
 #include <kshortcut.h>
 
 /**
@@ -45,7 +45,7 @@ class KDEUI_EXPORT KKeyButton: public QPushButton
 	/**
 	* Constructs  key button widget.
 	*/
-	KKeyButton( QWidget *parent = 0, const char *name = 0 );
+	KKeyButton( TQWidget *parent = 0, const char *name = 0 );
 	/**
 	* Destructs the key button widget.
 	*/
@@ -61,7 +61,7 @@ class KDEUI_EXPORT KKeyButton: public QPushButton
 	/**
 	* Reimplemented for internal purposes.
 	*/
-	void setText( const QString& text );
+	void setText( const TQString& text );
 
  signals:
 	void capturedShortcut( const KShortcut& );
@@ -80,7 +80,7 @@ class KDEUI_EXPORT KKeyButton: public QPushButton
 	/**
 	* Reimplemented for internal reasons.
 	*/
-	void drawButton( QPainter* _painter );
+	void drawButton( TQPainter* _painter );
 
  protected:
 	virtual void virtual_hook( int id, void* data );

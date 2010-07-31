@@ -24,12 +24,12 @@ class KRegExpPrivate;
 
 /**
  * @deprecated
- * Please use QRegExp instead.
+ * Please use TQRegExp instead.
  *
  * Regular expression (regexp) matching with back-references.
  *
  * This was implemented
- * because QRegExp did not support back-references. It now does and
+ * because TQRegExp did not support back-references. It now does and
  * is recommended over KRegExp because of the unicode support and the
  * more powerful API.
  *

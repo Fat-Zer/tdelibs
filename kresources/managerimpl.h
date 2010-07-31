@@ -23,9 +23,9 @@
 #ifndef KRESOURCES_MANAGERIMPL_H
 #define KRESOURCES_MANAGERIMPL_H
 
-#include <qstring.h>
-#include <qptrlist.h>
-#include <qdict.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
+#include <tqdict.h>
 
 #include "manageriface.h"
 #include <kresources/resource.h>
@@ -46,7 +46,7 @@ class ManagerNotifier;
 class KRESOURCES_EXPORT ManagerImpl : virtual public ManagerIface
 {
   public:
-    ManagerImpl( ManagerNotifier *, const QString &family );
+    ManagerImpl( ManagerNotifier *, const TQString &family );
     ~ManagerImpl();
 
     void readConfig( KConfig * );
@@ -63,39 +63,39 @@ class KRESOURCES_EXPORT ManagerImpl : virtual public ManagerIface
 
     Resource::List *resourceList();
 
-    QPtrList<Resource> resources();
+    TQPtrList<Resource> resources();
 
     // Get only active or passive resources
-    QPtrList<Resource> resources( bool active );
+    TQPtrList<Resource> resources( bool active );
 
-    QStringList resourceNames();
+    TQStringList resourceNames();
 
-    static QString defaultConfigFile( const QString &family );
+    static TQString defaultConfigFile( const TQString &family );
 
   private:
     // dcop calls
-    void dcopKResourceAdded( QString managerId, QString resourceId );
-    void dcopKResourceModified( QString managerId, QString resourceId );
-    void dcopKResourceDeleted( QString managerId, QString resourceId );
+    void dcopKResourceAdded( TQString managerId, TQString resourceId );
+    void dcopKResourceModified( TQString managerId, TQString resourceId );
+    void dcopKResourceDeleted( TQString managerId, TQString resourceId );
 
   private:
     void createStandardConfig();
 
-    Resource *readResourceConfig( const QString& identifier, bool checkActive );
+    Resource *readResourceConfig( const TQString& identifier, bool checkActive );
     void writeResourceConfig( Resource *resource, bool checkActive );
 
     void removeResource( Resource *resource );
     Resource *getResource( Resource *resource );
-    Resource *getResource( const QString& identifier );
+    Resource *getResource( const TQString& identifier );
 
     ManagerNotifier *mNotifier;
-    QString mFamily;
+    TQString mFamily;
     KConfig *mConfig;
     KConfig *mStdConfig;
     Resource *mStandard;
     Factory *mFactory;
     Resource::List mResources;
-    QString mId;
+    TQString mId;
     bool mConfigRead;
 
     class ManagerImplPrivate;

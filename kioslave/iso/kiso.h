@@ -25,10 +25,10 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include <qdatetime.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qdict.h>
+#include <tqdatetime.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqdict.h>
 
 #include "kisofile.h"
 #include "kisodirectory.h"
@@ -50,15 +50,15 @@ public:
      * Do not use application/x-tgz or so. Only the compression layer !
      * If the mimetype is ommitted, it will be determined from the filename.
      */
-    KIso( const QString& filename, const QString & mimetype = QString::null );
+    KIso( const TQString& filename, const TQString & mimetype = TQString::null );
 
     /**
      * Creates an instance that operates on the given device.
-     * The device can be compressed (KFilterDev) or not (QFile, etc.).
-     * WARNING: don't assume that giving a QFile here will decompress the file,
+     * The device can be compressed (KFilterDev) or not (TQFile, etc.).
+     * WARNING: don't assume that giving a TQFile here will decompress the file,
      * in case it's compressed!
      */
-    KIso( QIODevice * dev );
+    KIso( TQIODevice * dev );
 
     /**
      * If the .iso is still opened, then it will be
@@ -68,12 +68,12 @@ public:
 
     /**
      * The name of the os file, as passed to the constructor
-     * Null if you used the QIODevice constructor.
+     * Null if you used the TQIODevice constructor.
      */
-    QString fileName() { return m_filename; }
+    TQString fileName() { return m_filename; }
 
-    bool writeDir( const QString& , const QString& , const QString& );
-    bool prepareWriting( const QString& , const QString& , const QString& , uint );
+    bool writeDir( const TQString& , const TQString& , const TQString& );
+    bool prepareWriting( const TQString& , const TQString& , const TQString& , uint );
     bool doneWriting( uint );
 
     void setStartSec(int startsec) { m_startsec = startsec; }
@@ -98,10 +98,10 @@ private:
      * @internal
      */
     void addBoot(struct el_torito_boot_descriptor* bootdesc);
-    void prepareDevice( const QString & filename, const QString & mimetype, bool forced = false );
+    void prepareDevice( const TQString & filename, const TQString & mimetype, bool forced = false );
     int m_startsec;
 
-    QString m_filename;
+    TQString m_filename;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:

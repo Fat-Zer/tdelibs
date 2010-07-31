@@ -1,11 +1,11 @@
 #ifndef _OPT_KDECVS_SRC_KDELIBS_DCOP_TEST_TESTER_H
 #define _OPT_KDECVS_SRC_KDELIBS_DCOP_TEST_TESTER_H
 #include "test_stub.h"
-#include <qobject.h>
+#include <tqobject.h>
 
 
 
-class Driver : public QObject, public Test_stub
+class Driver : public TQObject, public Test_stub
 {
 	Q_OBJECT
 

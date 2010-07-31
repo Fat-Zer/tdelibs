@@ -26,8 +26,8 @@
 #include "kateattribute.h"
 #include "katetextline.h"
 
-#include <qfont.h>
-#include <qfontmetrics.h>
+#include <tqfont.h>
+#include <tqfontmetrics.h>
 
 class KateDocument;
 class KateView;
@@ -147,8 +147,8 @@ public:
      */
     void increaseFontSizes();
     void decreaseFontSizes();
-    const QFont* currentFont();
-    const QFontMetrics* currentFontMetrics();
+    const TQFont* currentFont();
+    const TQFontMetrics* currentFontMetrics();
 
     /**
      * @return whether the renderer is configured to paint in a
@@ -207,7 +207,7 @@ public:
      * The text line is painted from the upper limit of (0,0).  To move that,
      * apply a transform to your painter.
      */
-    void paintTextLine(QPainter& paint, const KateLineRange* range, int xStart, int xEnd, const KateTextCursor* cursor = 0L, const KateBracketRange* bracketmark = 0L);
+    void paintTextLine(TQPainter& paint, const KateLineRange* range, int xStart, int xEnd, const KateTextCursor* cursor = 0L, const KateBracketRange* bracketmark = 0L);
 
     /**
      * Paint the background of a line
@@ -218,7 +218,7 @@ public:
      *
      * @return whether the selection has been painted or not
      */
-    bool paintTextLineBackground(QPainter& paint, int line, bool isCurrentLine, int xStart, int xEnd);
+    bool paintTextLineBackground(TQPainter& paint, int line, bool isCurrentLine, int xStart, int xEnd);
 
     /**
      * This takes an in index, and returns all the attributes for it.
@@ -235,10 +235,10 @@ public:
      *
      * Currently only used by the tabs, but it will also be used for highlighting trailing whitespace
      */
-    void paintWhitespaceMarker(QPainter &paint, uint x, uint y);
+    void paintWhitespaceMarker(TQPainter &paint, uint x, uint y);
 
     /** Paint a SciTE-like indent marker. */
-    void paintIndentMarker(QPainter &paint, uint x, uint y);
+    void paintIndentMarker(TQPainter &paint, uint x, uint y);
 
     KateDocument* m_doc;
     KateView *m_view;
@@ -255,7 +255,7 @@ public:
     bool m_showTabs;
     bool m_printerFriendly;
 
-    QMemArray<KateAttribute> *m_attributes;
+    TQMemArray<KateAttribute> *m_attributes;
 
   /**
    * Configuration

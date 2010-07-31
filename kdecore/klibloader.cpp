@@ -19,11 +19,11 @@
 #include "config.h"
 
 #include <config.h>
-#include <qclipboard.h>
-#include <qfile.h>
-#include <qdir.h>
-#include <qtimer.h>
-#include <qobjectdict.h>
+#include <tqclipboard.h>
+#include <tqfile.h>
+#include <tqdir.h>
+#include <tqtimer.h>
+#include <tqobjectdict.h>
 
 #include "kapplication.h"
 #include "klibloader.h"
@@ -33,7 +33,7 @@
 
 #include "ltdl.h"
 
-template class QAsciiDict<KLibrary>;
+template class TQAsciiDict<KLibrary>;
 
 #include <stdlib.h> //getenv
 
@@ -57,19 +57,19 @@ template class QAsciiDict<KLibrary>;
 class KLibLoaderPrivate
 {
 public:
-    QPtrList<KLibWrapPrivate> loaded_stack;
-    QPtrList<KLibWrapPrivate> pending_close;
+    TQPtrList<KLibWrapPrivate> loaded_stack;
+    TQPtrList<KLibWrapPrivate> pending_close;
     enum {UNKNOWN, UNLOAD, DONT_UNLOAD} unload_mode;
 
-    QString errorMessage;
+    TQString errorMessage;
 };
 
 KLibLoader* KLibLoader::s_self = 0;
 
 // -------------------------------------------------------------------------
 
-KLibFactory::KLibFactory( QObject* parent, const char* name )
-    : QObject( parent, name )
+KLibFactory::KLibFactory( TQObject* parent, const char* name )
+    : TQObject( parent, name )
 {
 }
 
@@ -78,16 +78,16 @@ KLibFactory::~KLibFactory()
 //    kdDebug(150) << "Deleting KLibFactory " << this << endl;
 }
 
-QObject* KLibFactory::create( QObject* parent, const char* name, const char* classname, const QStringList &args )
+TQObject* KLibFactory::create( TQObject* parent, const char* name, const char* classname, const TQStringList &args )
 {
-    QObject* obj = createObject( parent, name, classname, args );
+    TQObject* obj = createObject( parent, name, classname, args );
     if ( obj )
 	emit objectCreated( obj );
     return obj;
 }
 
 
-QObject* KLibFactory::createObject( QObject*, const char*, const char*, const QStringList &)
+TQObject* KLibFactory::createObject( TQObject*, const char*, const char*, const TQStringList &)
 {
     return 0;
 }
@@ -95,7 +95,7 @@ QObject* KLibFactory::createObject( QObject*, const char*, const char*, const QS
 
 // -----------------------------------------------
 
-KLibrary::KLibrary( const QString& libname, const QString& filename, void * handle )
+KLibrary::KLibrary( const TQString& libname, const TQString& filename, void * handle )
 {
     /* Make sure, we have a KLibLoader */
     (void) KLibLoader::self();
@@ -115,12 +115,12 @@ KLibrary::~KLibrary()
     // If any object is remaining, delete
     if ( m_objs.count() > 0 )
 	{
-	    QPtrListIterator<QObject> it( m_objs );
+	    TQPtrListIterator<TQObject> it( m_objs );
 	    for ( ; it.current() ; ++it )
 		{
 		    kdDebug(150) << "Factory still has object " << it.current() << " " << it.current()->name () << " Library = " << m_libname << endl;
-		    disconnect( it.current(), SIGNAL( destroyed() ),
-				this, SLOT( slotObjectDestroyed() ) );
+		    disconnect( it.current(), TQT_SIGNAL( destroyed() ),
+				this, TQT_SLOT( slotObjectDestroyed() ) );
 		}
 	    m_objs.setAutoDelete(true);
 	    m_objs.clear();
@@ -133,12 +133,12 @@ KLibrary::~KLibrary()
     }
 }
 
-QString KLibrary::name() const
+TQString KLibrary::name() const
 {
     return m_libname;
 }
 
-QString KLibrary::fileName() const
+TQString KLibrary::fileName() const
 {
     return m_filename;
 }
@@ -148,7 +148,7 @@ KLibFactory* KLibrary::factory()
     if ( m_factory )
         return m_factory;
 
-    QCString symname;
+    TQCString symname;
     symname.sprintf("init_%s", name().latin1() );
 
     void* sym = symbol( symname );
@@ -170,8 +170,8 @@ KLibFactory* KLibrary::factory()
         return 0;
     }
 
-    connect( m_factory, SIGNAL( objectCreated( QObject * ) ),
-             this, SLOT( slotObjectCreated( QObject * ) ) );
+    connect( m_factory, TQT_SIGNAL( objectCreated( TQObject * ) ),
+             this, TQT_SLOT( slotObjectCreated( TQObject * ) ) );
 
     return m_factory;
 }
@@ -181,7 +181,7 @@ void* KLibrary::symbol( const char* symname ) const
     void* sym = lt_dlsym( (lt_dlhandle) m_handle, symname );
     if ( !sym )
     {
-        KLibLoader::self()->d->errorMessage = "KLibrary: " + QString::fromLocal8Bit( lt_dlerror() );
+        KLibLoader::self()->d->errorMessage = "KLibrary: " + TQString::fromLocal8Bit( lt_dlerror() );
         kdWarning(150) << KLibLoader::self()->d->errorMessage << endl;
         return 0;
     }
@@ -198,10 +198,10 @@ bool KLibrary::hasSymbol( const char* symname ) const
 void KLibrary::unload() const
 {
    if (KLibLoader::s_self)
-      KLibLoader::s_self->unloadLibrary(QFile::encodeName(name()));
+      KLibLoader::s_self->unloadLibrary(TQFile::encodeName(name()));
 }
 
-void KLibrary::slotObjectCreated( QObject *obj )
+void KLibrary::slotObjectCreated( TQObject *obj )
 {
   if ( !obj )
     return;
@@ -212,8 +212,8 @@ void KLibrary::slotObjectCreated( QObject *obj )
   if ( m_objs.containsRef( obj ) )
       return; // we know this object already
 
-  connect( obj, SIGNAL( destroyed() ),
-           this, SLOT( slotObjectDestroyed() ) );
+  connect( obj, TQT_SIGNAL( destroyed() ),
+           this, TQT_SLOT( slotObjectDestroyed() ) );
 
   m_objs.append( obj );
 }
@@ -229,9 +229,9 @@ void KLibrary::slotObjectDestroyed()
 
     if ( !m_timer )
     {
-      m_timer = new QTimer( this, "klibrary_shutdown_timer" );
-      connect( m_timer, SIGNAL( timeout() ),
-               this, SLOT( slotTimeout() ) );
+      m_timer = new TQTimer( this, "klibrary_shutdown_timer" );
+      connect( m_timer, TQT_SIGNAL( timeout() ),
+               this, TQT_SLOT( slotTimeout() ) );
     }
 
     // as long as it's not stable make the timeout short, for debugging
@@ -267,8 +267,8 @@ public:
     enum {UNKNOWN, UNLOAD, DONT_UNLOAD} unload_mode;
     int ref_count;
     lt_dlhandle handle;
-    QString name;
-    QString filename;
+    TQString name;
+    TQString filename;
 };
 
 KLibWrapPrivate::KLibWrapPrivate(KLibrary *l, lt_dlhandle h)
@@ -299,8 +299,8 @@ void KLibLoader::cleanUp()
   s_self = 0L;
 }
 
-KLibLoader::KLibLoader( QObject* parent, const char* name )
-    : QObject( parent, name )
+KLibLoader::KLibLoader( TQObject* parent, const char* name )
+    : TQObject( parent, name )
 {
     s_self = this;
     d = new KLibLoaderPrivate;
@@ -317,7 +317,7 @@ KLibLoader::~KLibLoader()
 {
 //    kdDebug(150) << "Deleting KLibLoader " << this << "  " << name() << endl;
 
-    QAsciiDictIterator<KLibWrapPrivate> it( m_libs );
+    TQAsciiDictIterator<KLibWrapPrivate> it( m_libs );
     for (; it.current(); ++it )
     {
       kdDebug(150) << "The KLibLoader contains the library " << it.current()->name
@@ -331,9 +331,9 @@ KLibLoader::~KLibLoader()
     d = 0L;
 }
 
-static inline QCString makeLibName( const char* name )
+static inline TQCString makeLibName( const char* name )
 {
-    QCString libname(name);
+    TQCString libname(name);
     // only append ".la" if there is no extension
     // this allows to load non-libtool libraries as well
     // (mhk, 20000228)
@@ -346,15 +346,15 @@ static inline QCString makeLibName( const char* name )
 }
 
 //static
-QString KLibLoader::findLibrary( const char * name, const KInstance * instance )
+TQString KLibLoader::findLibrary( const char * name, const KInstance * instance )
 {
-    QCString libname = makeLibName( name );
+    TQCString libname = makeLibName( name );
 
     // only look up the file if it is not an absolute filename
     // (mhk, 20000228)
-    QString libfile;
-    if (!QDir::isRelativePath(libname))
-      libfile = QFile::decodeName( libname );
+    TQString libfile;
+    if (!TQDir::isRelativePath(libname))
+      libfile = TQFile::decodeName( libname );
     else
     {
       libfile = instance->dirs()->findResource( "module", libname );
@@ -401,7 +401,7 @@ KLibrary* KLibLoader::library( const char *name )
 
     /* Test if this library was loaded at some time, but got
        unloaded meanwhile, whithout being dlclose()'ed.  */
-    QPtrListIterator<KLibWrapPrivate> it(d->loaded_stack);
+    TQPtrListIterator<KLibWrapPrivate> it(d->loaded_stack);
     for (; it.current(); ++it) {
       if (it.current()->name == name)
         wrap = it.current();
@@ -415,10 +415,10 @@ KLibrary* KLibLoader::library( const char *name )
       }
       wrap->ref_count++;
     } else {
-      QString libfile = findLibrary( name );
+      TQString libfile = findLibrary( name );
       if ( libfile.isEmpty() )
       {
-        const QCString libname = makeLibName( name );
+        const TQCString libname = makeLibName( name );
 #ifndef NDEBUG
         kdDebug(150) << "library=" << name << ": No file named " << libname << " found in paths." << endl;
 #endif
@@ -426,18 +426,18 @@ KLibrary* KLibLoader::library( const char *name )
         return 0;
       }
 
-      lt_dlhandle handle = lt_dlopen( QFile::encodeName(libfile) );
+      lt_dlhandle handle = lt_dlopen( TQFile::encodeName(libfile) );
       if ( !handle )
       {
         const char* errmsg = lt_dlerror();
         if(errmsg)
-            d->errorMessage = QString::fromLocal8Bit(errmsg);
+            d->errorMessage = TQString::fromLocal8Bit(errmsg);
         else
-            d->errorMessage = QString::null;
+            d->errorMessage = TQString::null;
         return 0;
       }
       else
-        d->errorMessage = QString::null;
+        d->errorMessage = TQString::null;
 
       KLibrary *lib = new KLibrary( name, libfile, handle );
       wrap = new KLibWrapPrivate(lib, handle);
@@ -445,13 +445,13 @@ KLibrary* KLibLoader::library( const char *name )
     }
     m_libs.insert( name, wrap );
 
-    connect( wrap->lib, SIGNAL( destroyed() ),
-             this, SLOT( slotLibraryDestroyed() ) );
+    connect( wrap->lib, TQT_SIGNAL( destroyed() ),
+             this, TQT_SLOT( slotLibraryDestroyed() ) );
 
     return wrap->lib;
 }
 
-QString KLibLoader::lastErrorMessage() const
+TQString KLibLoader::lastErrorMessage() const
 {
     return d->errorMessage;
 }
@@ -468,8 +468,8 @@ void KLibLoader::unloadLibrary( const char *libname )
 
   m_libs.remove( libname );
 
-  disconnect( wrap->lib, SIGNAL( destroyed() ),
-              this, SLOT( slotLibraryDestroyed() ) );
+  disconnect( wrap->lib, TQT_SIGNAL( destroyed() ),
+              this, TQT_SLOT( slotLibraryDestroyed() ) );
   close_pending( wrap );
 }
 
@@ -486,7 +486,7 @@ void KLibLoader::slotLibraryDestroyed()
 {
   const KLibrary *lib = static_cast<const KLibrary *>( sender() );
 
-  QAsciiDictIterator<KLibWrapPrivate> it( m_libs );
+  TQAsciiDictIterator<KLibWrapPrivate> it( m_libs );
   for (; it.current(); ++it )
     if ( it.current()->lib == lib )
     {
@@ -505,12 +505,12 @@ void KLibLoader::close_pending(KLibWrapPrivate *wrap)
 
   /* First delete all KLibrary objects in pending_close, but _don't_ unload
      the DSO behind it.  */
-  QPtrListIterator<KLibWrapPrivate> it(d->pending_close);
+  TQPtrListIterator<KLibWrapPrivate> it(d->pending_close);
   for (; it.current(); ++it) {
     wrap = it.current();
     if (wrap->lib) {
-      disconnect( wrap->lib, SIGNAL( destroyed() ),
-                  this, SLOT( slotLibraryDestroyed() ) );
+      disconnect( wrap->lib, TQT_SIGNAL( destroyed() ),
+                  this, TQT_SLOT( slotLibraryDestroyed() ) );
       KLibrary* to_delete = wrap->lib;
       wrap->lib = 0L; // unset first, because KLibrary dtor can cause
       delete to_delete; // recursive call to close_pending()

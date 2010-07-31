@@ -30,13 +30,13 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <qptrlist.h>
-#include <qptrstack.h>
-#include <qvaluestack.h>
-#include <qmap.h>
-#include <qcstring.h>
-#include <qdir.h>
-#include <qfile.h>
+#include <tqptrlist.h>
+#include <tqptrstack.h>
+#include <tqvaluestack.h>
+#include <tqmap.h>
+#include <tqcstring.h>
+#include <tqdir.h>
+#include <tqfile.h>
 
 #include <kdebug.h>
 #include <kfilterdev.h>
@@ -46,7 +46,7 @@
 #include "karchive.h"
 #include "klimitediodevice.h"
 
-template class QDict<KArchiveEntry>;
+template class TQDict<KArchiveEntry>;
 
 
 class KArchive::KArchivePrivate
@@ -56,10 +56,10 @@ public:
     bool closeSucceeded;
 };
 
-class PosSortedPtrList : public QPtrList<KArchiveFile> {
+class PosSortedPtrList : public TQPtrList<KArchiveFile> {
 protected:
-    int compareItems( QPtrCollection::Item i1,
-                      QPtrCollection::Item i2 )
+    int compareItems( TQPtrCollection::Item i1,
+                      TQPtrCollection::Item i2 )
     {
         int pos1 = static_cast<KArchiveFile*>( i1 )->position();
         int pos2 = static_cast<KArchiveFile*>( i2 )->position();
@@ -72,7 +72,7 @@ protected:
 /////////////////////////// KArchive ///////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-KArchive::KArchive( QIODevice * dev )
+KArchive::KArchive( TQIODevice * dev )
 {
     d = new KArchivePrivate;
     d->rootDir = 0;
@@ -133,9 +133,9 @@ const KArchiveDirectory* KArchive::directory() const
 }
 
 
-bool KArchive::addLocalFile( const QString& fileName, const QString& destName )
+bool KArchive::addLocalFile( const TQString& fileName, const TQString& destName )
 {
-    QFileInfo fileInfo( fileName );
+    TQFileInfo fileInfo( fileName );
     if ( !fileInfo.isFile() && !fileInfo.isSymLink() )
     {
         kdWarning() << "KArchive::addLocalFile " << fileName << " doesn't exist or is not a regular file." << endl;
@@ -143,7 +143,7 @@ bool KArchive::addLocalFile( const QString& fileName, const QString& destName )
     }
 
     KDE_struct_stat fi;
-    if (KDE_lstat(QFile::encodeName(fileName),&fi) == -1) {
+    if (KDE_lstat(TQFile::encodeName(fileName),&fi) == -1) {
         kdWarning() << "KArchive::addLocalFile stating " << fileName
         	<< " failed: " << strerror(errno) << endl;
         return false;
@@ -160,7 +160,7 @@ bool KArchive::addLocalFile( const QString& fileName, const QString& destName )
     // the file must be opened before prepareWriting is called, otherwise
     // if the opening fails, no content will follow the already written
     // header and the tar file is effectively f*cked up
-    QFile file( fileName );
+    TQFile file( fileName );
     if ( !file.open( IO_ReadOnly ) )
     {
         kdWarning() << "KArchive::addLocalFile couldn't open file " << fileName << endl;
@@ -175,7 +175,7 @@ bool KArchive::addLocalFile( const QString& fileName, const QString& destName )
     }
 
     // Read and write data in chunks to minimize memory usage
-    QByteArray array(8*1024);
+    TQByteArray array(8*1024);
     int n;
     uint total = 0;
     while ( ( n = file.readBlock( array.data(), array.size() ) ) > 0 )
@@ -197,23 +197,23 @@ bool KArchive::addLocalFile( const QString& fileName, const QString& destName )
     return true;
 }
 
-bool KArchive::addLocalDirectory( const QString& path, const QString& destName )
+bool KArchive::addLocalDirectory( const TQString& path, const TQString& destName )
 {
-    QString dot = ".";
-    QString dotdot = "..";
-    QDir dir( path );
+    TQString dot = ".";
+    TQString dotdot = "..";
+    TQDir dir( path );
     if ( !dir.exists() )
         return false;
-    dir.setFilter(dir.filter() | QDir::Hidden);
-    QStringList files = dir.entryList();
-    for ( QStringList::Iterator it = files.begin(); it != files.end(); ++it )
+    dir.setFilter(dir.filter() | TQDir::Hidden);
+    TQStringList files = dir.entryList();
+    for ( TQStringList::Iterator it = files.begin(); it != files.end(); ++it )
     {
         if ( *it != dot && *it != dotdot )
         {
-            QString fileName = path + "/" + *it;
+            TQString fileName = path + "/" + *it;
 //            kdDebug() << "storing " << fileName << endl;
-            QString dest = destName.isEmpty() ? *it : (destName + "/" + *it);
-            QFileInfo fileInfo( fileName );
+            TQString dest = destName.isEmpty() ? *it : (destName + "/" + *it);
+            TQFileInfo fileInfo( fileName );
 
             if ( fileInfo.isFile() || fileInfo.isSymLink() )
                 addLocalFile( fileName, dest );
@@ -225,15 +225,15 @@ bool KArchive::addLocalDirectory( const QString& path, const QString& destName )
     return true;
 }
 
-bool KArchive::writeFile( const QString& name, const QString& user, const QString& group, uint size, const char* data )
+bool KArchive::writeFile( const TQString& name, const TQString& user, const TQString& group, uint size, const char* data )
 {
     mode_t perm = 0100644;
     time_t the_time = time(0);
     return writeFile(name,user,group,size,perm,the_time,the_time,the_time,data);
 }
 
-bool KArchive::prepareWriting( const QString& name, const QString& user,
-    			const QString& group, uint size, mode_t perm,
+bool KArchive::prepareWriting( const TQString& name, const TQString& user,
+    			const TQString& group, uint size, mode_t perm,
        			time_t atime, time_t mtime, time_t ctime ) {
   PrepareWritingParams params;
   params.name = &name;
@@ -248,16 +248,16 @@ bool KArchive::prepareWriting( const QString& name, const QString& user,
   return params.retval;
 }
 
-bool KArchive::prepareWriting_impl(const QString &name, const QString &user,
-    			const QString &group, uint size, mode_t /*perm*/,
+bool KArchive::prepareWriting_impl(const TQString &name, const TQString &user,
+    			const TQString &group, uint size, mode_t /*perm*/,
        			time_t /*atime*/, time_t /*mtime*/, time_t /*ctime*/ ) {
   kdWarning(7040) << "New prepareWriting API not implemented in this class." << endl
   		<< "Falling back to old API (metadata information will be lost)" << endl;
   return prepareWriting(name,user,group,size);
 }
 
-bool KArchive::writeFile( const QString& name, const QString& user,
-    			const QString& group, uint size, mode_t perm,
+bool KArchive::writeFile( const TQString& name, const TQString& user,
+    			const TQString& group, uint size, mode_t perm,
        			time_t atime, time_t mtime, time_t ctime,
        			const char* data ) {
   WriteFileParams params;
@@ -274,8 +274,8 @@ bool KArchive::writeFile( const QString& name, const QString& user,
   return params.retval;
 }
 
-bool KArchive::writeFile_impl( const QString& name, const QString& user,
-    			const QString& group, uint size, mode_t perm,
+bool KArchive::writeFile_impl( const TQString& name, const TQString& user,
+    			const TQString& group, uint size, mode_t perm,
        			time_t atime, time_t mtime, time_t ctime,
        			const char* data ) {
 
@@ -301,8 +301,8 @@ bool KArchive::writeFile_impl( const QString& name, const QString& user,
     return true;
 }
 
-bool KArchive::writeDir(const QString& name, const QString& user,
-    			const QString& group, mode_t perm,
+bool KArchive::writeDir(const TQString& name, const TQString& user,
+    			const TQString& group, mode_t perm,
        			time_t atime, time_t mtime, time_t ctime) {
   WriteDirParams params;
   params.name = &name;
@@ -316,16 +316,16 @@ bool KArchive::writeDir(const QString& name, const QString& user,
   return params.retval;
 }
 
-bool KArchive::writeDir_impl(const QString &name, const QString &user,
-    			const QString &group, mode_t /*perm*/,
+bool KArchive::writeDir_impl(const TQString &name, const TQString &user,
+    			const TQString &group, mode_t /*perm*/,
        			time_t /*atime*/, time_t /*mtime*/, time_t /*ctime*/ ) {
   kdWarning(7040) << "New writeDir API not implemented in this class." << endl
   		<< "Falling back to old API (metadata information will be lost)" << endl;
   return writeDir(name,user,group);
 }
 
-bool KArchive::writeSymLink(const QString &name, const QString &target,
-    			const QString &user, const QString &group,
+bool KArchive::writeSymLink(const TQString &name, const TQString &target,
+    			const TQString &user, const TQString &group,
     			mode_t perm, time_t atime, time_t mtime, time_t ctime) {
   WriteSymlinkParams params;
   params.name = &name;
@@ -340,8 +340,8 @@ bool KArchive::writeSymLink(const QString &name, const QString &target,
   return params.retval;
 }
 
-bool KArchive::writeSymLink_impl(const QString &/*name*/,const QString &/*target*/,
-    			const QString &/*user*/, const QString &/*group*/,
+bool KArchive::writeSymLink_impl(const TQString &/*name*/,const TQString &/*target*/,
+    			const TQString &/*user*/, const TQString &/*group*/,
     			mode_t /*perm*/, time_t /*atime*/, time_t /*mtime*/,
     			time_t /*ctime*/) {
   kdWarning(7040) << "writeSymLink not implemented in this class." << endl
@@ -372,15 +372,15 @@ KArchiveDirectory * KArchive::rootDir()
         //kdDebug() << "Making root dir " << endl;
         struct passwd* pw =  getpwuid( getuid() );
         struct group* grp = getgrgid( getgid() );
-        QString username = pw ? QFile::decodeName(pw->pw_name) : QString::number( getuid() );
-        QString groupname = grp ? QFile::decodeName(grp->gr_name) : QString::number( getgid() );
+        TQString username = pw ? TQFile::decodeName(pw->pw_name) : TQString::number( getuid() );
+        TQString groupname = grp ? TQFile::decodeName(grp->gr_name) : TQString::number( getgid() );
 
-        d->rootDir = new KArchiveDirectory( this, QString::fromLatin1("/"), (int)(0777 + S_IFDIR), 0, username, groupname, QString::null );
+        d->rootDir = new KArchiveDirectory( this, TQString::fromLatin1("/"), (int)(0777 + S_IFDIR), 0, username, groupname, TQString::null );
     }
     return d->rootDir;
 }
 
-KArchiveDirectory * KArchive::findOrCreate( const QString & path )
+KArchiveDirectory * KArchive::findOrCreate( const TQString & path )
 {
     //kdDebug() << "KArchive::findOrCreate " << path << endl;
     if ( path.isEmpty() || path == "/" || path == "." ) // root dir => found
@@ -408,7 +408,7 @@ KArchiveDirectory * KArchive::findOrCreate( const QString & path )
     // Otherwise go up and try again
     int pos = path.findRev( '/' );
     KArchiveDirectory * parent;
-    QString dirname;
+    TQString dirname;
     if ( pos == -1 ) // no more slash => create in root dir
     {
         parent =  rootDir();
@@ -416,7 +416,7 @@ KArchiveDirectory * KArchive::findOrCreate( const QString & path )
     }
     else
     {
-        QString left = path.left( pos );
+        TQString left = path.left( pos );
         dirname = path.mid( pos + 1 );
         parent = findOrCreate( left ); // recursive call... until we find an existing dir.
     }
@@ -425,12 +425,12 @@ KArchiveDirectory * KArchive::findOrCreate( const QString & path )
     // Found -> add the missing piece
     KArchiveDirectory * e = new KArchiveDirectory( this, dirname, d->rootDir->permissions(),
                                                    d->rootDir->date(), d->rootDir->user(),
-                                                   d->rootDir->group(), QString::null );
+                                                   d->rootDir->group(), TQString::null );
     parent->addEntry( e );
     return e; // now a directory to <path> exists
 }
 
-void KArchive::setDevice( QIODevice * dev )
+void KArchive::setDevice( TQIODevice * dev )
 {
     m_dev = dev;
 }
@@ -444,9 +444,9 @@ void KArchive::setRootDir( KArchiveDirectory *rootDir )
 ////////////////////////////////////////////////////////////////////////
 /////////////////////// KArchiveEntry //////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
-KArchiveEntry::KArchiveEntry( KArchive* t, const QString& name, int access, int date,
-                      const QString& user, const QString& group, const
-                      QString& symlink)
+KArchiveEntry::KArchiveEntry( KArchive* t, const TQString& name, int access, int date,
+                      const TQString& user, const TQString& group, const
+                      TQString& symlink)
 {
   m_name = name;
   m_access = access;
@@ -458,9 +458,9 @@ KArchiveEntry::KArchiveEntry( KArchive* t, const QString& name, int access, int 
 
 }
 
-QDateTime KArchiveEntry::datetime() const
+TQDateTime KArchiveEntry::datetime() const
 {
-  QDateTime d;
+  TQDateTime d;
   d.setTime_t( m_date );
   return d;
 }
@@ -469,9 +469,9 @@ QDateTime KArchiveEntry::datetime() const
 /////////////////////// KArchiveFile ///////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-KArchiveFile::KArchiveFile( KArchive* t, const QString& name, int access, int date,
-                    const QString& user, const QString& group,
-                    const QString & symlink,
+KArchiveFile::KArchiveFile( KArchive* t, const TQString& name, int access, int date,
+                    const TQString& user, const TQString& group,
+                    const TQString & symlink,
                     int pos, int size )
   : KArchiveEntry( t, name, access, date, user, group, symlink )
 {
@@ -489,12 +489,12 @@ int KArchiveFile::size() const
   return m_size;
 }
 
-QByteArray KArchiveFile::data() const
+TQByteArray KArchiveFile::data() const
 {
   archive()->device()->at( m_pos );
 
   // Read content
-  QByteArray arr( m_size );
+  TQByteArray arr( m_size );
   if ( m_size )
   {
     assert( arr.data() );
@@ -506,14 +506,14 @@ QByteArray KArchiveFile::data() const
 }
 
 // ** This should be a virtual method, and this code should be in ktar.cpp
-QIODevice *KArchiveFile::device() const
+TQIODevice *KArchiveFile::device() const
 {
     return new KLimitedIODevice( archive()->device(), m_pos, m_size );
 }
 
-void KArchiveFile::copyTo(const QString& dest) const
+void KArchiveFile::copyTo(const TQString& dest) const
 {
-  QFile f( dest + "/"  + name() );
+  TQFile f( dest + "/"  + name() );
   f.open( IO_ReadWrite | IO_Truncate );
   f.writeBlock( data() );
   f.close();
@@ -524,28 +524,28 @@ void KArchiveFile::copyTo(const QString& dest) const
 ////////////////////////////////////////////////////////////////////////
 
 
-KArchiveDirectory::KArchiveDirectory( KArchive* t, const QString& name, int access,
+KArchiveDirectory::KArchiveDirectory( KArchive* t, const TQString& name, int access,
                               int date,
-                              const QString& user, const QString& group,
-                              const QString &symlink)
+                              const TQString& user, const TQString& group,
+                              const TQString &symlink)
   : KArchiveEntry( t, name, access, date, user, group, symlink )
 {
   m_entries.setAutoDelete( true );
 }
 
-QStringList KArchiveDirectory::entries() const
+TQStringList KArchiveDirectory::entries() const
 {
-  QStringList l;
+  TQStringList l;
 
-  QDictIterator<KArchiveEntry> it( m_entries );
+  TQDictIterator<KArchiveEntry> it( m_entries );
   for( ; it.current(); ++it )
     l.append( it.currentKey() );
 
   return l;
 }
 
-KArchiveEntry* KArchiveDirectory::entry( QString name )
-  // not "const QString & name" since we want a local copy
+KArchiveEntry* KArchiveDirectory::entry( TQString name )
+  // not "const TQString & name" since we want a local copy
   // (to remove leading slash if any)
 {
   int pos = name.find( '/' );
@@ -567,8 +567,8 @@ KArchiveEntry* KArchiveDirectory::entry( QString name )
   }
   if ( pos != -1 )
   {
-    QString left = name.left( pos );
-    QString right = name.mid( pos + 1 );
+    TQString left = name.left( pos );
+    TQString right = name.mid( pos + 1 );
 
     //kdDebug() << "KArchiveDirectory::entry left=" << left << " right=" << right << endl;
 
@@ -581,7 +581,7 @@ KArchiveEntry* KArchiveDirectory::entry( QString name )
   return m_entries[ name ];
 }
 
-const KArchiveEntry* KArchiveDirectory::entry( QString name ) const
+const KArchiveEntry* KArchiveDirectory::entry( TQString name ) const
 {
   return ((KArchiveDirectory*)this)->entry( name );
 }
@@ -596,26 +596,26 @@ void KArchiveDirectory::addEntry( KArchiveEntry* entry )
   m_entries.insert( entry->name(), entry );
 }
 
-void KArchiveDirectory::copyTo(const QString& dest, bool recursiveCopy ) const
+void KArchiveDirectory::copyTo(const TQString& dest, bool recursiveCopy ) const
 {
-  QDir root;
+  TQDir root;
 
   PosSortedPtrList fileList;
-  QMap<int, QString> fileToDir;
+  TQMap<int, TQString> fileToDir;
 
-  QStringList::Iterator it;
+  TQStringList::Iterator it;
 
   // placeholders for iterated items
   KArchiveDirectory* curDir;
-  QString curDirName;
+  TQString curDirName;
 
-  QStringList dirEntries;
+  TQStringList dirEntries;
   KArchiveEntry* curEntry;
   KArchiveFile* curFile;
 
 
-  QPtrStack<KArchiveDirectory> dirStack;
-  QValueStack<QString> dirNameStack;
+  TQPtrStack<KArchiveDirectory> dirStack;
+  TQValueStack<TQString> dirNameStack;
 
   dirStack.push( this );     // init stack at current directory
   dirNameStack.push( dest ); // ... with given path
@@ -628,7 +628,7 @@ void KArchiveDirectory::copyTo(const QString& dest, bool recursiveCopy ) const
     for ( it = dirEntries.begin(); it != dirEntries.end(); ++it ) {
       curEntry = curDir->entry(*it);
       if (!curEntry->symlink().isEmpty()) {
-          const QString linkName = curDirName+'/'+curEntry->name();
+          const TQString linkName = curDirName+'/'+curEntry->name();
           kdDebug() << "symlink(" << curEntry->symlink() << ',' << linkName << ')';
 #ifdef Q_OS_UNIX
           if (!::symlink(curEntry->symlink().local8Bit(), linkName.local8Bit())) {

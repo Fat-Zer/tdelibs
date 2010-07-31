@@ -28,8 +28,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-#include <qcstring.h>
-#include <qstring.h>
+#include <tqcstring.h>
+#include <tqstring.h>
 
 #include <kurl.h>
 #include <kio/slavebase.h>
@@ -38,10 +38,10 @@
 
 struct FtpEntry
 {
-  QString name;
-  QString owner;
-  QString group;
-  QString link;
+  TQString name;
+  TQString owner;
+  TQString group;
+  TQString link;
 
   KIO::filesize_t size;
   mode_t type;
@@ -238,10 +238,10 @@ class Ftp : public KIO::SlaveBase
   // Ftp()	{}
 
 public:
-  Ftp( const QCString &pool, const QCString &app );
+  Ftp( const TQCString &pool, const TQCString &app );
   virtual ~Ftp();
 
-  virtual void setHost( const QString& host, int port, const QString& user, const QString& pass );
+  virtual void setHost( const TQString& host, int port, const TQString& user, const TQString& pass );
 
   /**
    * Connects to a ftp server and logs us in
@@ -337,7 +337,7 @@ private:
    *
    * return true if any response received, false on error
    */
-  bool ftpSendCmd( const QCString& cmd, int maxretries = 1 );
+  bool ftpSendCmd( const TQCString& cmd, int maxretries = 1 );
 
   /**
    * Use the SIZE command to get the file size.
@@ -345,12 +345,12 @@ private:
    * @return true on success
    * Gets the size into m_size.
    */
-  bool ftpSize( const QString & path, char mode );
+  bool ftpSize( const TQString & path, char mode );
 
   /**
    * Set the current working directory, but only if not yet current
    */
-  bool ftpFolder(const QString& path, bool bReportError);
+  bool ftpFolder(const TQString& path, bool bReportError);
 
   /**
    * Runs a command on the ftp server like "list" or "retr". In contrast to
@@ -363,7 +363,7 @@ private:
    *
    * @return true if the command was accepted by the server.
    */
-  bool ftpOpenCommand( const char *command, const QString & path, char mode,
+  bool ftpOpenCommand( const char *command, const TQString & path, char mode,
                        int errorcode, KIO::fileoffset_t offset = 0 );
 
   /**
@@ -419,10 +419,10 @@ private:
    */
   int ftpAcceptConnect();
 
-  bool ftpChmod( const QString & path, int permissions );
+  bool ftpChmod( const TQString & path, int permissions );
 
   // used by listDir
-  bool ftpOpenDir( const QString & path );
+  bool ftpOpenDir( const TQString & path );
   /**
     * Called to parse directory listings, call this until it returns false
     */
@@ -431,25 +431,25 @@ private:
   /**
     * Helper to fill an UDSEntry
     */
-  void ftpCreateUDSEntry( const QString & filename, FtpEntry& ftpEnt, KIO::UDSEntry& entry, bool isDir );
+  void ftpCreateUDSEntry( const TQString & filename, FtpEntry& ftpEnt, KIO::UDSEntry& entry, bool isDir );
 
-  void ftpShortStatAnswer( const QString& filename, bool isDir );
+  void ftpShortStatAnswer( const TQString& filename, bool isDir );
 
-  void ftpStatAnswerNotFound( const QString & path, const QString & filename );
+  void ftpStatAnswerNotFound( const TQString & path, const TQString & filename );
 
   /**
    * This is the internal implementation of rename() - set put().
    *
    * @return true on success.
    */
-  bool ftpRename( const QString & src, const QString & dst, bool overwrite );
+  bool ftpRename( const TQString & src, const TQString & dst, bool overwrite );
 
   /**
    * Called by openConnection. It opens the control connection to the ftp server.
    *
    * @return true on success.
    */
-  bool ftpOpenControlConnection( const QString & host, unsigned short int port );
+  bool ftpOpenControlConnection( const TQString & host, unsigned short int port );
 
   /**
    * closes the socket holding the control connection (see ftpOpenControlConnection)
@@ -499,7 +499,7 @@ private:
    * @param sCopyFile   path of the local source file
    * @return 0 for success, -1 for server error, -2 for client error
    */
-  StatusCode ftpCopyPut(int& iError, int& iCopyFile, QString sCopyFile, const KURL& url, int permissions, bool overwrite);
+  StatusCode ftpCopyPut(int& iError, int& iCopyFile, TQString sCopyFile, const KURL& url, int permissions, bool overwrite);
 
   /**
    * helper called from copy() to implement FTP -> FILE transfers
@@ -509,24 +509,24 @@ private:
    * @param sCopyFile   path of the local destination file
    * @return 0 for success, -1 for server error, -2 for client error
    */
-  StatusCode ftpCopyGet(int& iError, int& iCopyFile, QString sCopyFile, const KURL& url, int permissions, bool overwrite);
+  StatusCode ftpCopyGet(int& iError, int& iCopyFile, TQString sCopyFile, const KURL& url, int permissions, bool overwrite);
 
 private: // data members
 
-  QString m_host;
+  TQString m_host;
   unsigned short int m_port;
-  QString m_user;
-  QString m_pass;
+  TQString m_user;
+  TQString m_pass;
   /**
    * Where we end up after connecting
    */
-  QString m_initialPath;
+  TQString m_initialPath;
   KURL m_proxyURL;
 
  /**
    * the current working directory - see ftpFolder
    */
-  QString m_currentPath;
+  TQString m_currentPath;
 
   /**
    * the status returned by the FTP protocol, set in ftpResponse()

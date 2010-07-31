@@ -19,7 +19,7 @@
 #ifndef KDCOPSERVICESTARTER_H
 #define KDCOPSERVICESTARTER_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kstaticdeleter.h>
 
 class KDCOPServiceStarter;
@@ -58,10 +58,10 @@ public:
      *
      * @return an error code indicating success (== 0) or failure (> 0).
      */
-    int findServiceFor( const QString& serviceType,
-                        const QString& constraint = QString::null,
-                        const QString& preferences = QString::null,
-                        QString *error=0, QCString* dcopService=0,
+    int findServiceFor( const TQString& serviceType,
+                        const TQString& constraint = TQString::null,
+                        const TQString& preferences = TQString::null,
+                        TQString *error=0, TQCString* dcopService=0,
                         int flags=0 );
 
     /**
@@ -86,10 +86,10 @@ public:
      *
      * @return an error code indicating success (== 0) or failure (> 0).
      */
-    virtual int startServiceFor( const QString& serviceType,
-                                 const QString& constraint = QString::null,
-                                 const QString& preferences = QString::null,
-                                 QString *error=0, QCString* dcopService=0,
+    virtual int startServiceFor( const TQString& serviceType,
+                                 const TQString& constraint = TQString::null,
+                                 const TQString& preferences = TQString::null,
+                                 TQString *error=0, TQCString* dcopService=0,
                                  int flags=0 );
 protected:
     KDCOPServiceStarter();

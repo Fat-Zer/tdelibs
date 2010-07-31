@@ -41,10 +41,10 @@
 namespace KMdi
 {
    /** extent Qt events
-      @see QCustomEvent, QEvent::User
+      @see TQCustomEvent, TQEvent::User
       \code
-      bool B_MyWidget::event( QEvent* e) {
-         if( e->type() == QEvent::Type(QEvent::User + int(KMdi::EV_Move))) {
+      bool B_MyWidget::event( TQEvent* e) {
+         if( e->type() == TQEvent::Type(TQEvent::User + int(KMdi::EV_Move))) {
             ...
          }
          ...

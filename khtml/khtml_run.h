@@ -42,15 +42,15 @@ public:
   KHTMLRun( KHTMLPart *part, khtml::ChildFrame *child, const KURL &url,
             const KParts::URLArgs &args, bool hideErrorDialog );
 
-  virtual void foundMimeType( const QString &mimetype );
+  virtual void foundMimeType( const TQString &mimetype );
 
   //KHTMLPart *htmlPart() const;
 
 protected:
   virtual void handleError( KIO::Job * job );
 
-  virtual void save( const KURL & url, const QString & suggestedFilename );
-  bool askSave( const KURL & url, KService::Ptr offer, const QString & mimeType, const QString & suggestedFilename );
+  virtual void save( const KURL & url, const TQString & suggestedFilename );
+  bool askSave( const KURL & url, KService::Ptr offer, const TQString & mimeType, const TQString & suggestedFilename );
 
 private:
   khtml::ChildFrame *m_child;

@@ -21,8 +21,8 @@
 #ifndef KDIROPERATOR_H_
 #define KDIROPERATOR_H_
 
-#include <qwidget.h>
-#include <qptrstack.h>
+#include <tqwidget.h>
+#include <tqptrstack.h>
 
 #include <kaction.h>
 #include <kcompletion.h>
@@ -73,14 +73,14 @@ namespace KIO {
  * \code
  *   KDirOperator *op = new KDirOperator( KURL( "file:/home/gis" ), this );
  *   // some signals you might be interested in
- *   connect(op, SIGNAL(urlEntered(const KURL&)),
- *           SLOT(urlEntered(const KURL&)));
- *   connect(op, SIGNAL(fileHighlighted(const KFileItem *)),
- *           SLOT(fileHighlighted(const KFileItem *)));
- *   connect(op, SIGNAL(fileSelected(const KFileItem *)),
- *           SLOT(fileSelected(const KFileItem *)));
- *   connect(op, SIGNAL(finishedLoading()),
- *           SLOT(slotLoadingFinished()));
+ *   connect(op, TQT_SIGNAL(urlEntered(const KURL&)),
+ *           TQT_SLOT(urlEntered(const KURL&)));
+ *   connect(op, TQT_SIGNAL(fileHighlighted(const KFileItem *)),
+ *           TQT_SLOT(fileHighlighted(const KFileItem *)));
+ *   connect(op, TQT_SIGNAL(fileSelected(const KFileItem *)),
+ *           TQT_SLOT(fileSelected(const KFileItem *)));
+ *   connect(op, TQT_SIGNAL(finishedLoading()),
+ *           TQT_SLOT(slotLoadingFinished()));
  *
  *   op->readConfig( KGlobal::config(), "Your KDiroperator ConfigGroup" );
  *   op->setView(KFile::Default);
@@ -116,7 +116,7 @@ class KIO_EXPORT KDirOperator : public QWidget
      * This constructor doesn't start loading the url, setView will do it.
      */
     KDirOperator(const KURL& urlName = KURL(),
-		 QWidget *parent = 0, const char* name = 0);
+		 TQWidget *parent = 0, const char* name = 0);
     /**
      * Destroys the KDirOperator.
      */
@@ -138,7 +138,7 @@ class KIO_EXPORT KDirOperator : public QWidget
      */
     void close();
     /// Reimplemented to avoid "hidden virtual" warnings
-    virtual bool close( bool alsoDelete ) { return QWidget::close( alsoDelete ); }
+    virtual bool close( bool alsoDelete ) { return TQWidget::close( alsoDelete ); }
 
     /**
      * Sets a filter like "*.cpp *.h *.o". Only files matching that filter
@@ -147,13 +147,13 @@ class KIO_EXPORT KDirOperator : public QWidget
      * @see KDirLister::setNameFilter
      * @see nameFilter
      */
-    void setNameFilter(const QString& filter);
+    void setNameFilter(const TQString& filter);
 
     /**
      * @returns the current namefilter.
      * @see setNameFilter
      */
-    const QString& nameFilter() const { return dir->nameFilter(); }
+    const TQString& nameFilter() const { return dir->nameFilter(); }
 
     /**
      * Sets a list of mimetypes as filter. Only files of those mimetypes
@@ -161,7 +161,7 @@ class KIO_EXPORT KDirOperator : public QWidget
      *
      * Example:
      * \code
-     * QStringList filter;
+     * TQStringList filter;
      * filter << "text/html" << "image/png" << "inode/directory";
      * dirOperator->setMimefilter( filter );
      * \endcode
@@ -172,12 +172,12 @@ class KIO_EXPORT KDirOperator : public QWidget
      * @see KDirLister::setMimeFilter
      * @see mimeFilter
      */
-    void setMimeFilter( const QStringList& mimetypes );
+    void setMimeFilter( const TQStringList& mimetypes );
 
     /**
      * @returns the current mime filter.
      */
-    QStringList mimeFilter() const { return dir->mimeFilters(); }
+    TQStringList mimeFilter() const { return dir->mimeFilters(); }
 
     /**
      * Clears both the namefilter and mimetype filter, so that all files and
@@ -205,7 +205,7 @@ class KIO_EXPORT KDirOperator : public QWidget
      * Clears the current selection and attempts to set @p filename
      * the current file. filename is just the name, no path or url.
      */
-    void setCurrentItem( const QString& filename );
+    void setCurrentItem( const TQString& filename );
 
     /**
      * Sets a new KFileView to be used for showing and browsing files.
@@ -230,7 +230,7 @@ class KIO_EXPORT KDirOperator : public QWidget
      * Returns the widget of the current view. 0L if there is no view/widget.
      * (KFileView itself is not a widget.)
      */
-    QWidget * viewWidget() const { return m_fileView ? m_fileView->widget() : 0L; }
+    TQWidget * viewWidget() const { return m_fileView ? m_fileView->widget() : 0L; }
 
     /**
      * Sets one of the predefined fileviews
@@ -242,17 +242,17 @@ class KIO_EXPORT KDirOperator : public QWidget
     /**
      * Sets the way to sort files and directories.
      */
-    void setSorting( QDir::SortSpec );
+    void setSorting( TQDir::SortSpec );
 
     /**
      * @returns the current way of sorting files and directories
      */
-    QDir::SortSpec sorting() const { return mySorting; }
+    TQDir::SortSpec sorting() const { return mySorting; }
 
     /**
      * @returns true if we are displaying the root directory of the current url
      */
-    bool isRoot() const { return url().path() == QChar('/'); }
+    bool isRoot() const { return url().path() == TQChar('/'); }
 
     /**
      * @returns the object listing the directory
@@ -289,7 +289,7 @@ class KIO_EXPORT KDirOperator : public QWidget
      * delete it yourself!
      */
 	// ### KDE4: make virtual
-    void setPreviewWidget(const QWidget *w);
+    void setPreviewWidget(const TQWidget *w);
 
     /**
      * @returns a list of all currently selected items. If there is no view,
@@ -407,7 +407,7 @@ class KIO_EXPORT KDirOperator : public QWidget
      * @since 3.1
      */
 	// ### KDE4: make virtual
-    void setViewConfig( KConfig *config, const QString& group );
+    void setViewConfig( KConfig *config, const TQString& group );
 
     /**
      * Returns the KConfig object used for saving and restoring view's
@@ -425,7 +425,7 @@ class KIO_EXPORT KDirOperator : public QWidget
      * configuration.
      * @since 3.1
      */
-    QString viewConfigGroup() const;
+    TQString viewConfigGroup() const;
 
     /**
      * Reads the default settings for a view, i.e. the default KFile::FileView.
@@ -440,7 +440,7 @@ class KIO_EXPORT KDirOperator : public QWidget
      * @see setViewConfig
      * @see writeConfig
      */
-    virtual void readConfig( KConfig *, const QString& group = QString::null );
+    virtual void readConfig( KConfig *, const TQString& group = TQString::null );
 
     /**
      * Saves the current settings like sorting, simple or detailed view.
@@ -448,7 +448,7 @@ class KIO_EXPORT KDirOperator : public QWidget
      * @see readConfig
      * @see setViewConfig
      */
-    virtual void writeConfig( KConfig *, const QString& group = QString::null );
+    virtual void writeConfig( KConfig *, const TQString& group = TQString::null );
 
 
     /**
@@ -478,8 +478,8 @@ class KIO_EXPORT KDirOperator : public QWidget
      * to the user.
      * @returns true if the directory could be created.
      */
-	// ### KDE4: make virtual and turn QString into KURL
-    bool mkdir( const QString& directory, bool enterDirectory = true );
+	// ### KDE4: make virtual and turn TQString into KURL
+    bool mkdir( const TQString& directory, bool enterDirectory = true );
 
     /**
      * Starts and returns a KIO::DeleteJob to delete the given @p items.
@@ -502,7 +502,7 @@ class KIO_EXPORT KDirOperator : public QWidget
      * @since 3.1
      */
 	// ### KDE4: make virtual
-    KIO::DeleteJob * del( const KFileItemList& items, QWidget *parent,
+    KIO::DeleteJob * del( const KFileItemList& items, TQWidget *parent,
                           bool ask = true, bool showProgress = true );
 
     /**
@@ -572,14 +572,14 @@ class KIO_EXPORT KDirOperator : public QWidget
      * @since 3.4
      */
      // ### KDE4: make virtual
-    KIO::CopyJob * trash( const KFileItemList& items, QWidget *parent,
+    KIO::CopyJob * trash( const KFileItemList& items, TQWidget *parent,
                        bool ask = true, bool showProgress = true );
 
 protected:
     /**
      * A view factory for creating predefined fileviews. Called internally by setView
 	 * , but you can also call it directly. Reimplement this if you depend on self defined fileviews.
-	 * @param parent is the QWidget to be set as parent
+	 * @param parent is the TQWidget to be set as parent
 	 * @param view is the predefined view to be set, note: this can be several ones OR:ed together.
 	 * @returns the created KFileView
      * @see KFileView
@@ -590,14 +590,14 @@ protected:
      * @see KFile::FileView
      * @see setView
      */
-     virtual KFileView* createView( QWidget* parent, KFile::FileView view );
+     virtual KFileView* createView( TQWidget* parent, KFile::FileView view );
      /**
      * Sets a custom KDirLister to list directories.
      */
 	// ### KDE4: make virtual
     void setDirLister( KDirLister *lister );
 
-    virtual void resizeEvent( QResizeEvent * );
+    virtual void resizeEvent( TQResizeEvent * );
 
     /**
      * Sets up all the actions. Called from the constructor, you usually
@@ -698,12 +698,12 @@ public slots:
     /**
      * Tries to complete the given string (only completes files).
      */
-    QString makeCompletion(const QString&);
+    TQString makeCompletion(const TQString&);
 
     /**
      * Tries to complete the given string (only completes directores).
      */
-    QString makeDirCompletion(const QString&);
+    TQString makeDirCompletion(const TQString&);
 
     /**
      * Trashes the currently selected files/directories.
@@ -756,7 +756,7 @@ protected slots:
     /**
      * Called upon right-click to activate the popupmenu.
      */
-    virtual void activatedMenu( const KFileItem *, const QPoint& pos );
+    virtual void activatedMenu( const KFileItem *, const TQPoint& pos );
 
     /**
      * Changes sorting to sort by name
@@ -792,12 +792,12 @@ protected slots:
      * Tries to make the given @p match as current item in the view and emits
      * completion( match )
      */
-    void slotCompletionMatch(const QString& match);
+    void slotCompletionMatch(const TQString& match);
 
 signals:
     void urlEntered(const KURL& );
     void updateInformation(int files, int dirs);
-    void completion(const QString&);
+    void completion(const TQString&);
     void finishedLoading();
 
     /**
@@ -823,17 +823,17 @@ signals:
      * @param urls the urls that where dropped.
      * @since 3.2
      */
-    void dropped(const KFileItem *item, QDropEvent*event, const KURL::List&urls);
+    void dropped(const KFileItem *item, TQDropEvent*event, const KURL::List&urls);
 private:
     /**
      * Contains all URLs you can reach with the back button.
      */
-    QPtrStack<KURL> backStack;
+    TQPtrStack<KURL> backStack;
 
     /**
      * Contains all URLs you can reach with the forward button.
      */
-    QPtrStack<KURL> forwardStack;
+    TQPtrStack<KURL> forwardStack;
 
     KDirLister *dir;
     KURL currUrl;
@@ -841,7 +841,7 @@ private:
     KCompletion myCompletion;
     KCompletion myDirCompletion;
     bool myCompleteListDirty;
-    QDir::SortSpec mySorting;
+    TQDir::SortSpec mySorting;
 
     /**
      * Checks whether we preview support is available for the current
@@ -853,7 +853,7 @@ private:
       * takes action on the new location. If it's a directory, change
       * into it, if it's a file, correct the name, etc.
       */
-    void checkPath(const QString& txt, bool takeFiles = false);
+    void checkPath(const TQString& txt, bool takeFiles = false);
 
     void connectView(KFileView *);
 
@@ -869,7 +869,7 @@ private:
     KFile::Mode myMode;
     KProgress *progress;
 
-    const QWidget *myPreview;    // temporary pointer for the preview widget
+    const TQWidget *myPreview;    // temporary pointer for the preview widget
 
     // actions for the popupmenus
     // ### clean up all those -- we have them all in the actionMenu!
@@ -928,7 +928,7 @@ private slots:
 
     void slotViewActionAdded( KAction * );
     void slotViewActionRemoved( KAction * );
-    void slotViewSortingChanged( QDir::SortSpec );
+    void slotViewSortingChanged( TQDir::SortSpec );
 
     void slotClearView();
     void slotRefreshItems( const KFileItemList& items );

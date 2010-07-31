@@ -52,18 +52,18 @@ class KDEUI_EXPORT KSpellDlg : public KDialogBase
   KLineEdit *editbox;
   KProgress *progbar;
   KListBox *listbox;
-  QStringList *sugg;
-  QPushButton *qpbrep, *qpbrepa;
-  QLabel *wordlabel;
-  QString word, newword;
+  TQStringList *sugg;
+  TQPushButton *qpbrep, *qpbrepa;
+  TQLabel *wordlabel;
+  TQString word, newword;
   bool progressbar;
 
 public:
-  KSpellDlg( QWidget *parent, const char *name,
+  KSpellDlg( TQWidget *parent, const char *name,
 	     bool _progressbar = false, bool _modal = false );
   ~KSpellDlg();
 
-  QString replacement() const
+  TQString replacement() const
     { return newword; }
 
   /**
@@ -71,9 +71,9 @@ public:
    *  and enable the disabled buttons on the dialog box.
    * (Buttons are disabled by standby().)
    **/
-  void init( const QString& _word, QStringList* _sugg );
-  void init( const QString& _word, QStringList* _sugg,
-             const QString& context );
+  void init( const TQString& _word, TQStringList* _sugg );
+  void init( const TQString& _word, TQStringList* _sugg,
+             const TQString& context );
 
   void standby() { emit ready( false ); }
 
@@ -84,7 +84,7 @@ public:
   void slotProgress( unsigned int p );
 
 protected:
-  virtual void closeEvent( QCloseEvent * e );
+  virtual void closeEvent( TQCloseEvent * e );
   void done( int i );
 
  signals:
@@ -106,9 +106,9 @@ protected slots:
   void stop();
   void slotConfigChanged();
 
-  void textChanged( const QString & );
+  void textChanged( const TQString & );
 
-  void slotSelectionChanged( QListViewItem* item );
+  void slotSelectionChanged( TQListViewItem* item );
 };
 
 #endif

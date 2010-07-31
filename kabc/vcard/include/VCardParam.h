@@ -24,8 +24,8 @@
 #ifndef  PARAM_H
 #define  PARAM_H
 
-#include <qcstring.h>
-#include <qptrlist.h>
+#include <tqcstring.h>
+#include <tqptrlist.h>
 
 #include <VCardEntity.h>
 
@@ -37,22 +37,22 @@ class KVCARD_EXPORT Param : public Entity
 
 #include "Param-generated.h"
 
-        Param(const QCString &name, const QCString &value);
+        Param(const TQCString &name, const TQCString &value);
 
-	void setName(const QCString &);
-	void setValue(const QCString &);
+	void setName(const TQCString &);
+	void setValue(const TQCString &);
 		
-	QCString name();
-	QCString value();
+	TQCString name();
+	TQCString value();
 	
 	private:
 		
-		QCString name_;
-		QCString value_;
+		TQCString name_;
+		TQCString value_;
 };
 
-typedef QPtrList<Param> ParamList;
-typedef QPtrListIterator<Param> ParamListIterator;
+typedef TQPtrList<Param> ParamList;
+typedef TQPtrListIterator<Param> ParamListIterator;
 
 }
 

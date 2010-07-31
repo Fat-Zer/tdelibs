@@ -21,8 +21,8 @@
 #ifndef __k_build_service_factory_h__
 #define __k_build_service_factory_h__
 
-#include <qptrdict.h>
-#include <qstringlist.h>
+#include <tqptrdict.h>
+#include <tqstringlist.h>
 
 #include <kservicefactory.h>
 // We export the services to the service group factory!
@@ -43,12 +43,12 @@ public:
 
   virtual ~KBuildServiceFactory();
 
-  KService *findServiceByName(const QString &_name);
+  KService *findServiceByName(const TQString &_name);
 
   /**
    * Construct a KService from a config file.
    */
-  virtual KSycocaEntry * createEntry(const QString &file, const char *resource);
+  virtual KSycocaEntry * createEntry(const TQString &file, const char *resource);
 
   virtual KService * createEntry( int ) { assert(0); return 0L; }
 
@@ -60,7 +60,7 @@ public:
   /**
    * Write out service specific index files.
    */
-  virtual void save(QDataStream &str);
+  virtual void save(TQDataStream &str);
 
   /**
    * Write out header information
@@ -68,18 +68,18 @@ public:
    * Don't forget to call the parent first when you override
    * this function.
    */
-  virtual void saveHeader(QDataStream &str);
+  virtual void saveHeader(TQDataStream &str);
 
   /**
    * Returns all resource types for this service factory
    */  
-  static QStringList resourceTypes();
+  static TQStringList resourceTypes();
 private:
-  void saveOfferList(QDataStream &str);
-  void saveInitList(QDataStream &str);
+  void saveOfferList(TQDataStream &str);
+  void saveInitList(TQDataStream &str);
 
-  QDict<KService> m_serviceDict;
-  QPtrDict<KService> m_dupeDict;
+  TQDict<KService> m_serviceDict;
+  TQPtrDict<KService> m_dupeDict;
   KSycocaFactory *m_serviceTypeFactory;
   KBuildServiceGroupFactory *m_serviceGroupFactory;
 };

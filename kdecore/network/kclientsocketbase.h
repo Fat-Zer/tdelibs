@@ -25,8 +25,8 @@
 #ifndef KCLIENTSOCKETBASE_H
 #define KCLIENTSOCKETBASE_H
 
-#include <qobject.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqstring.h>
 
 #include "ksocketbase.h"
 #include "kresolver.h"
@@ -46,7 +46,7 @@ class KClientSocketBasePrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KClientSocketBase : public QObject, public KActiveSocketBase
+class KDECORE_EXPORT KClientSocketBase : public TQObject, public KActiveSocketBase
 {
   Q_OBJECT
 
@@ -87,10 +87,10 @@ public:
   /**
    * Default constructor.
    *
-   * @param parent	the parent QObject object
+   * @param parent	the parent TQObject object
    * @param name	the name of this object
    */
-  KClientSocketBase(QObject* parent, const char *name);
+  KClientSocketBase(TQObject* parent, const char *name);
 
   /**
    * Destructor.
@@ -202,14 +202,14 @@ public:
    * @param node	the nodename
    * @param service	the service
    */
-  virtual bool bind(const QString& node = QString::null,
-		    const QString& service = QString::null) = 0;
+  virtual bool bind(const TQString& node = TQString::null,
+		    const TQString& service = TQString::null) = 0;
 
   /**
    * Reimplemented from KSocketBase. Connect this socket to this
    * specific address.
    *
-   * Unlike @ref bind(const QString&, const QString&) above, this function
+   * Unlike @ref bind(const TQString&, const TQString&) above, this function
    * really does bind the socket. No lookup is performed. The @ref bound
    * signal will be emitted.
    */
@@ -243,8 +243,8 @@ public:
    * @param node	the nodename
    * @param service	the service
    */
-  virtual bool connect(const QString& node = QString::null,
-		       const QString& service = QString::null) = 0;
+  virtual bool connect(const TQString& node = TQString::null,
+		       const TQString& service = TQString::null) = 0;
 
   /**
    * @overload
@@ -255,10 +255,10 @@ public:
   /**
    * @deprecated
    * This is a convenience function provided to ease migrating from
-   * Qt 3.x's QSocket class.
+   * Qt 3.x's TQSocket class.
    */
-  inline void connectToHost(const QString& host, Q_UINT16 port)
-  { connect(host, QString::number(port)); }
+  inline void connectToHost(const TQString& host, Q_UINT16 port)
+  { connect(host, TQString::number(port)); }
 
   /**
    * Disconnects the socket.
@@ -267,7 +267,7 @@ public:
   virtual bool disconnect();
 
   /**
-   * Opens the socket. Reimplemented from QIODevice.
+   * Opens the socket. Reimplemented from TQIODevice.
    *
    * You should not call this function; instead, use @ref connect
    */
@@ -275,7 +275,7 @@ public:
   { return connect(); }
 
   /**
-   * Closes the socket. Reimplemented from QIODevice.
+   * Closes the socket. Reimplemented from TQIODevice.
    *
    * The closing of the socket causes the emission of the
    * signal @ref closed.
@@ -283,7 +283,7 @@ public:
   virtual void close();
 
   /**
-   * This call is not supported on sockets. Reimplemented from QIODevice.
+   * This call is not supported on sockets. Reimplemented from TQIODevice.
    */
   virtual void flush()
   { }

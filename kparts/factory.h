@@ -41,13 +41,13 @@ class KPARTS_EXPORT Factory : public KLibFactory
 {
   Q_OBJECT
 public:
-  Factory( QObject *parent = 0, const char *name = 0 );
+  Factory( TQObject *parent = 0, const char *name = 0 );
   virtual ~Factory();
 
     /**
      * Creates a part.
      *
-     * The QStringList can be used to pass additional arguments to the part.
+     * The TQStringList can be used to pass additional arguments to the part.
      * If the part needs additional arguments, it should take them as
      * name="value" pairs. This is the way additional arguments will get passed
      * to the part from eg. khtml. You can for example embed the part into HTML
@@ -61,7 +61,7 @@ public:
      * This could result in a call to
      * \code
      *     createPart( parentWidget, name, parentObject, parentName, "KParts::Part",
-     *                 QStringList("name1="value1"", "name2="value2") );
+     *                 TQStringList("name1="value1"", "name2="value2") );
      * \endcode
      *
      * @returns the newly created part.
@@ -71,7 +71,7 @@ public:
      * important for reference counting, and allows unloading the
      * library automatically once all its objects have been destroyed.
      */
-     Part *createPart( QWidget *parentWidget = 0, const char *widgetName = 0, QObject *parent = 0, const char *name = 0, const char *classname = "KParts::Part", const QStringList &args = QStringList() );
+     Part *createPart( TQWidget *parentWidget = 0, const char *widgetName = 0, TQObject *parent = 0, const char *name = 0, const char *classname = "KParts::Part", const TQStringList &args = TQStringList() );
 
      /**
       * If you have a part contained in a shared library you might want to query
@@ -88,14 +88,14 @@ public:
       *
       * @param libraryName name of the library to query the instance from
       */
-     static const KInstance *partInstanceFromLibrary( const QCString &libraryName );
+     static const KInstance *partInstanceFromLibrary( const TQCString &libraryName );
 
 protected:
 
     /**
      * Reimplement this method in your implementation to create the Part.
      *
-     * The QStringList can be used to pass additional arguments to the part.
+     * The TQStringList can be used to pass additional arguments to the part.
      * If the part needs additional arguments, it should take them as
      * name="value" pairs. This is the way additional arguments will get passed
      * to the part from eg. khtml. You can for example emebed the part into HTML
@@ -109,17 +109,17 @@ protected:
      * This could result in a call to
      * \code
      *     createPart( parentWidget, name, parentObject, parentName, "Kparts::Part",
-     *                 QStringList("name1="value1"", "name2="value2") );
+     *                 TQStringList("name1="value1"", "name2="value2") );
      * \endcode
      *
      * @returns the newly created part.
      */
-    virtual Part *createPartObject( QWidget *parentWidget = 0, const char *widgetName = 0, QObject *parent = 0, const char *name = 0, const char *classname = "KParts::Part", const QStringList &args = QStringList() ) = 0;
+    virtual Part *createPartObject( TQWidget *parentWidget = 0, const char *widgetName = 0, TQObject *parent = 0, const char *name = 0, const char *classname = "KParts::Part", const TQStringList &args = TQStringList() ) = 0;
     
     /**
      * Reimplemented from KLibFactory. Calls createPart()
      */
-    virtual QObject *createObject( QObject *parent = 0, const char *name = 0, const char *classname = "QObject", const QStringList &args = QStringList() );
+    virtual TQObject *createObject( TQObject *parent = 0, const char *name = 0, const char *classname = "TQObject", const TQStringList &args = TQStringList() );
 
     /** This 'enum' along with the structure below is NOT part of the public API.
       * It's going to disappear in KDE 4.0 and is likely to change inbetween.

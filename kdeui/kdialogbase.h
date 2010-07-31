@@ -27,7 +27,7 @@
 #include <kjanuswidget.h>
 #include <kguiitem.h>
 #include <kstdguiitem.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 class QPushButton;
 class KSeparator;
@@ -83,8 +83,8 @@ class KDialogBaseTile;
  * to connect a signal instead of overriding the slot.
  * The default implementation of slotHelp() will automatically enable
  * the help system if you have provided a path to the help text.
- * slotCancel() and slotClose() will run QDialog::reject()
- * while slotOk() will run QDialog::accept(). You define a default
+ * slotCancel() and slotClose() will run TQDialog::reject()
+ * while slotOk() will run TQDialog::accept(). You define a default
  * button in the constructor.
  *
  * If you don't want any buttons at all because your dialog is special
@@ -147,18 +147,18 @@ class KDialogBaseTile;
  * Example:
  *
  * \code
- * UrlDlg::UrlDlg( QWidget *parent, const QString& caption,
- *                 const QString& urltext)
+ * UrlDlg::UrlDlg( TQWidget *parent, const TQString& caption,
+ *                 const TQString& urltext)
  *   : KDialogBase( parent, "urldialog", true, caption, Ok|Cancel, Ok, true )
  * {
- *   QWidget *page = new QWidget( this );
+ *   TQWidget *page = new TQWidget( this );
  *   setMainWidget(page);
- *   QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+ *   TQVBoxLayout *topLayout = new TQVBoxLayout( page, 0, spacingHint() );
  *
- *   QLabel *label = new QLabel( caption, page, "caption" );
+ *   TQLabel *label = new TQLabel( caption, page, "caption" );
  *   topLayout->addWidget( label );
  *
- *   lineedit = new QLineEdit( urltext, page, "lineedit" );
+ *   lineedit = new TQLineEdit( urltext, page, "lineedit" );
  *   lineedit->setMinimumWidth(fontMetrics().maxWidth()*20);
  *   topLayout->addWidget( lineedit );
  *
@@ -170,14 +170,14 @@ class KDialogBaseTile;
  * simpler but you lose the ability to add a stretchable area:
  *
  * \code
- * UrlDlg::UrlDlg( QWidget *parent, const QString& caption,
- *                 const QString& urltext)
+ * UrlDlg::UrlDlg( TQWidget *parent, const TQString& caption,
+ *                 const TQString& urltext)
  * : KDialogBase( parent, "urldialog", true, caption, Ok|Cancel, Ok, true )
  * {
- *   QVBox *page = makeVBoxMainWidget();
- *   QLabel *label = new QLabel( caption, page, "caption" );
+ *   TQVBox *page = makeVBoxMainWidget();
+ *   TQLabel *label = new TQLabel( caption, page, "caption" );
  *
- *   lineedit = new QLineEdit( urltext, page, "lineedit" );
+ *   lineedit = new TQLineEdit( urltext, page, "lineedit" );
  *   lineedit->setMinimumWidth(fontMetrics().maxWidth()*20);
  * }
  * \endcode
@@ -227,7 +227,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
     /**
      *  @li @p TreeList - A dialog with a tree on the left side and a
      *                    representation of the contents on the right side.
-     *  @li @p Tabbed -   A dialog using a QTabWidget.
+     *  @li @p Tabbed -   A dialog using a TQTabWidget.
      *  @li @p Plain -    A normal dialog. Use plainPage() as parent for widgets.
      *  @li @p Swallow -  Simplifes the usage of existing widgets. You specify
      *                    the widget to be displayed by setMainWidget().
@@ -267,8 +267,8 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param user2 User button2 item.
      * @param user3 User button3 item.
      */
-    KDialogBase( QWidget *parent=0, const char *name=0, bool modal=true,
-		 const QString &caption=QString::null,
+    KDialogBase( TQWidget *parent=0, const char *name=0, bool modal=true,
+		 const TQString &caption=TQString::null,
 		 int buttonMask=Ok|Apply|Cancel, ButtonCode defaultButton=Ok,
 		 bool separator=false,
 		 const KGuiItem &user1=KGuiItem(),
@@ -302,9 +302,9 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param user2 User button2 text item.
      * @param user3 User button3 text item.
      */
-    KDialogBase( int dialogFace, const QString &caption,
+    KDialogBase( int dialogFace, const TQString &caption,
 		 int buttonMask, ButtonCode defaultButton,
-		 QWidget *parent=0, const char *name=0, bool modal=true,
+		 TQWidget *parent=0, const char *name=0, bool modal=true,
 		 bool separator=false,
 		 const KGuiItem &user1=KGuiItem(),
 		 const KGuiItem &user2=KGuiItem(),
@@ -339,8 +339,8 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      */
 
     KDialogBase( KDialogBase::DialogType dialogFace, WFlags f,
-		 QWidget *parent=0, const char *name=0, bool modal=true,
-		 const QString &caption=QString::null,
+		 TQWidget *parent=0, const char *name=0, bool modal=true,
+		 const TQString &caption=TQString::null,
 		 int buttonMask=Ok|Apply|Cancel, ButtonCode defaultButton=Ok,
 		 bool separator=false,
 		 const KGuiItem &user1=KGuiItem(),
@@ -378,9 +378,9 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param no Text to use for the second button (defaults to i18n("No"))
      * @param cancel Text to use for the third button (defaults to i18n("Cancel"))
      */
-    KDialogBase( const QString &caption, int buttonMask=Yes|No|Cancel,
+    KDialogBase( const TQString &caption, int buttonMask=Yes|No|Cancel,
 		 ButtonCode defaultButton=Yes, ButtonCode escapeButton=Cancel,
-		 QWidget *parent=0, const char *name=0,
+		 TQWidget *parent=0, const char *name=0,
 		 bool modal=true, bool separator=false,
 		 const KGuiItem &yes = KStdGuiItem::yes(), // i18n("&Yes")
 		 const KGuiItem &no = KStdGuiItem::no(), // i18n("&No"),
@@ -420,14 +420,14 @@ class KDEUI_EXPORT KDialogBase : public KDialog
 
     /**
      * Adjust the size of the dialog to fit the contents just before
-     * QDialog::exec() or QDialog::show() is called.
+     * TQDialog::exec() or TQDialog::show() is called.
      *
      * This method will not be called if the dialog has been explicitly
      * resized before showing it.
      **/
     virtual void adjustSize();
-    virtual QSize sizeHint() const;
-    virtual QSize minimumSizeHint() const;
+    virtual TQSize sizeHint() const;
+    virtual TQSize minimumSizeHint() const;
 
     /**
      * Retrieve the empty page when the predefined layout is used in @p Plain
@@ -439,7 +439,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @return The widget or 0 if the predefined layout mode is not @p Plain
      *         or if you don't use any predefined layout.
      */
-    QFrame *plainPage();
+    TQFrame *plainPage();
 
     /**
      * Add a page to the dialog when the class is used in @p TreeList ,
@@ -452,9 +452,9 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * create a layout yourself as the example below illustrates:
      *
      * \code
-     * QFrame *page = addPage( i18n("Layout") );
-     * QVBoxLayout *topLayout = new QVBoxLayout( page, 0, KDialog::spacingHint() );
-     * QLabel *label = new QLabel( i18n("Layout type"), page );
+     * TQFrame *page = addPage( i18n("Layout") );
+     * TQVBoxLayout *topLayout = new TQVBoxLayout( page, 0, KDialog::spacingHint() );
+     * TQLabel *label = new TQLabel( i18n("Layout type"), page );
      * topLayout->addWidget( label );
      * ..
      * \endcode
@@ -468,9 +468,9 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @return The page widget which must be used as the toplevel widget for
      *         the page.
      */
-    QFrame  *addPage( const QString &itemName,
-		      const QString &header=QString::null,
-		      const QPixmap &pixmap=QPixmap() );
+    TQFrame  *addPage( const TQString &itemName,
+		      const TQString &header=TQString::null,
+		      const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * This is like addPage() just above, with the difference that the first
@@ -483,9 +483,9 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * be added for the @p IconList face too. In other faces than the
      * @p TreeList, all the strings except the last one is ignored.
      **/
-    QFrame  *addPage( const QStringList &items,
-		      const QString &header=QString::null,
-		      const QPixmap &pixmap=QPixmap() );
+    TQFrame  *addPage( const TQStringList &items,
+		      const TQString &header=TQString::null,
+		      const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * Add a page to the dialog when the class is used in @p TreeList,
@@ -497,8 +497,8 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * use it as follows:
      *
      * \code
-     * QVBox *page = addVBoxPage( i18n("Layout") );
-     * QLabel *label = new QLabel( i18n("Layout type"), page );
+     * TQVBox *page = addVBoxPage( i18n("Layout") );
+     * TQLabel *label = new TQLabel( i18n("Layout type"), page );
      * ..
      * \endcode
      *
@@ -511,9 +511,9 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @return The page widget which must be used as the toplevel widget for
      *         the page.
      */
-    QVBox *addVBoxPage( const QString &itemName,
-			const QString &header=QString::null,
-			const QPixmap &pixmap=QPixmap() );
+    TQVBox *addVBoxPage( const TQString &itemName,
+			const TQString &header=TQString::null,
+			const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * This is like addVBoxPage() just above, with the difference
@@ -526,9 +526,9 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * be added for the @p IconList face too. In other faces than the
      * @p TreeList, all the strings except the last one is ignored.
      **/
-    QVBox *addVBoxPage( const QStringList &items,
-			const QString &header=QString::null,
-			const QPixmap &pixmap=QPixmap() );
+    TQVBox *addVBoxPage( const TQStringList &items,
+			const TQString &header=TQString::null,
+			const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * Add a page to the dialog when the class is used in @p TreeList,
@@ -536,7 +536,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      *
      * The returned widget must be used as the
      * toplevel widget for this particular page. The widget contains a
-     * QHBoxLayout layout so the widget children are lined up horizontally.
+     * TQHBoxLayout layout so the widget children are lined up horizontally.
      * You can use it as follows:
      *
      * @param itemName String used in the list or as tab item name.
@@ -548,9 +548,9 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @return The page widget which must be used as the toplevel widget for
      *         the page.
      */
-    QHBox *addHBoxPage( const QString &itemName,
-			const QString &header=QString::null,
-			const QPixmap &pixmap=QPixmap() );
+    TQHBox *addHBoxPage( const TQString &itemName,
+			const TQString &header=TQString::null,
+			const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * This is like addHBoxPage() just above, with the
@@ -563,9 +563,9 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * be added for the @p IconList face too. In other faces than the
      * @p TreeList, all the strings except the last one is ignored.
      **/
-    QHBox *addHBoxPage( const QStringList &items,
-			const QString &header=QString::null,
-			const QPixmap &pixmap=QPixmap() );
+    TQHBox *addHBoxPage( const TQStringList &items,
+			const TQString &header=TQString::null,
+			const TQPixmap &pixmap=TQPixmap() );
 
     /**
      * Add a page to the dialog when the class is used in @p TreeList,
@@ -573,7 +573,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      *
      * The returned widget must be used as the
      * toplevel widget for this particular page. The widget contains a
-     * QGridLayout layout so the widget children are  positioned in a grid.
+     * TQGridLayout layout so the widget children are  positioned in a grid.
      *
      * @param n Specifies the number of columns if @p dir is Qt::Horizontal
      *          or the number of rows if @p dir is Qt::Vertical.
@@ -587,10 +587,10 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @return The page widget which must be used as the toplevel widget for
      *         the page.
      */
-    QGrid *addGridPage( int n, Orientation dir,
-			const QString &itemName,
-			const QString &header=QString::null,
-			const QPixmap &pixmap=QPixmap() );
+    TQGrid *addGridPage( int n, Orientation dir,
+			const TQString &itemName,
+			const TQString &header=TQString::null,
+			const TQPixmap &pixmap=TQPixmap() );
 
 
     /**
@@ -604,10 +604,10 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * be added for the @p IconList face too. In other faces than the
      * @p TreeList, all the strings except the last one is ignored.
      **/
-    QGrid *addGridPage( int n, Orientation dir,
-			const QStringList &items,
-			const QString &header=QString::null,
-			const QPixmap &pixmap=QPixmap() );
+    TQGrid *addGridPage( int n, Orientation dir,
+			const TQStringList &items,
+			const TQString &header=TQString::null,
+			const TQPixmap &pixmap=TQPixmap() );
 
 
     /**
@@ -616,12 +616,12 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param path The path for which this icon should be shown.
      * @param pixmap The icon used.
      **/
-    void setFolderIcon(const QStringList &path,const QPixmap &pixmap);
+    void setFolderIcon(const TQStringList &path,const TQPixmap &pixmap);
 
     /**
      * Make a main widget.
      *
-     * The function will make a QFrame widget
+     * The function will make a TQFrame widget
      * and use setMainWidget() to register it. You can @em not use this
      * function more than once, @em not if you have already defined a
      * main widget with setMainWidget() and @em not if you have used the
@@ -631,12 +631,12 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @return The main widget or 0 if any of the rules described above
      *         were broken.
      */
-    QFrame *makeMainWidget();
+    TQFrame *makeMainWidget();
 
     /**
      * Make a main widget.
      *
-     * The function will make a QVBox widget
+     * The function will make a TQVBox widget
      * and use setMainWidget() to register it. You @em can use this
      * function more than once, but @em not if you have already defined a
      * main widget with setMainWidget() and @em not if you have used the
@@ -646,12 +646,12 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @return The main widget or 0 if any of the rules described above
      *         were broken.
      */
-    QVBox *makeVBoxMainWidget();
+    TQVBox *makeVBoxMainWidget();
 
     /**
      * Make a main widget.
      *
-     * The function will make a QHBox widget
+     * The function will make a TQHBox widget
      * and use setMainWidget() to register it. You can @em not use this
      * function more than once, @em not if you have already defined a
      * main widget with setMainWidget() and @p not if you have used the
@@ -661,12 +661,12 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @return The main widget or 0 if any of the rules described above
      *         were broken.
      */
-    QHBox *makeHBoxMainWidget();
+    TQHBox *makeHBoxMainWidget();
 
     /**
      * Make a main widget.
      *
-     * The function will make a QGrid widget
+     * The function will make a TQGrid widget
      * and use setMainWidget() to register it. You can @em not use this
      * function more than once, @em not if you have already defined a
      * main widget with setMainWidget and @em not if you have used the
@@ -680,7 +680,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @return The main widget or 0 if any of the rules described above
      *         were broken.
      */
-    QGrid *makeGridMainWidget( int n, Orientation dir );
+    TQGrid *makeGridMainWidget( int n, Orientation dir );
 
 
     /**
@@ -768,7 +768,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @return The index or -1 if the face is not Tabbed, TreeList or
      *         IconList
      */
-    int pageIndex( QWidget *widget ) const;
+    int pageIndex( TQWidget *widget ) const;
 
 
     /**
@@ -783,14 +783,14 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * is 0, then the dialog will show an empty space of 100x100 pixels
      * instead.
      */
-    void setMainWidget( QWidget *widget );
+    void setMainWidget( TQWidget *widget );
 
     /**
      * Returns the main widget if any.
      *
      * @return The current main widget. Can be 0 if no widget has been defined.
      */
-    QWidget *mainWidget();
+    TQWidget *mainWidget();
 
     /**
      * Convenience method.
@@ -812,7 +812,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param s Startup size.
      * @param noResize If @p true the dialog cannot be resized.
      */
-    void setInitialSize( const QSize &s, bool noResize=false );
+    void setInitialSize( const TQSize &s, bool noResize=false );
 
     /**
      * Convenience method. Add a size to the default minimum size of a
@@ -824,7 +824,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param s  Size added to minimum size.
      * @param noResize If @p true the dialog cannot be resized.
      */
-    void incInitialSize( const QSize &s, bool noResize=false );
+    void incInitialSize( const TQSize &s, bool noResize=false );
 
    /**
     * read the dialogs size from the configuration according to the screen size.
@@ -833,7 +833,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
     * @param groupName Name of the group to read from. The old group
     *                  of KGlobal::config is preserved.
     */
-   QSize configDialogSize( const QString& groupName ) const;
+   TQSize configDialogSize( const TQString& groupName ) const;
 
    /**
     * read the dialogs size from the configuration according to the screen size.
@@ -844,7 +844,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
     *                  of KGlobal::config is preserved.
     * @since 3.2
     */
-   QSize configDialogSize( KConfig& config, const QString& groupName ) const;
+   TQSize configDialogSize( KConfig& config, const TQString& groupName ) const;
 
    /**
     * save the dialogs size dependant on the screen dimension either to the
@@ -855,7 +855,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
     * @param global Set to true if the entry should go to the global config rather
     *        than to the applications config. Default is false.
     */
-   void saveDialogSize( const QString& groupName, bool global=false );
+   void saveDialogSize( const TQString& groupName, bool global=false );
 
    /**
     * save the dialogs size dependant on the screen dimension.
@@ -867,7 +867,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
     *        Default is false.
     * @since 3.2
     */
-   void saveDialogSize( KConfig& config, const QString& groupName,
+   void saveDialogSize( KConfig& config, const TQString& groupName,
 			     bool global=false ) const;
 
     /**
@@ -896,9 +896,9 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param tooltip Tooltip text.
      * @param quickhelp Quick help text.
      */
-    void setButtonOKText( const QString &text=QString::null,
-			  const QString &tooltip=QString::null,
-			  const QString &quickhelp=QString::null ) KDE_DEPRECATED;
+    void setButtonOKText( const TQString &text=TQString::null,
+			  const TQString &tooltip=TQString::null,
+			  const TQString &quickhelp=TQString::null ) KDE_DEPRECATED;
 
     /**
      * Sets the appearance of the Apply button.
@@ -926,9 +926,9 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param tooltip Tooltip text.
      * @param quickhelp Quick help text.
      */
-    void setButtonApplyText( const QString &text=QString::null,
-			     const QString &tooltip=QString::null,
-			     const QString &quickhelp=QString::null ) KDE_DEPRECATED;
+    void setButtonApplyText( const TQString &text=TQString::null,
+			     const TQString &tooltip=TQString::null,
+			     const TQString &quickhelp=TQString::null ) KDE_DEPRECATED;
 
     /**
      * Sets the appearance of the Cancel button.
@@ -954,9 +954,9 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param tooltip Tooltip text.
      * @param quickhelp Quick help text.
      */
-    void setButtonCancelText( const QString &text=QString::null,
-			      const QString &tooltip=QString::null,
-			      const QString &quickhelp=QString::null ) KDE_DEPRECATED;
+    void setButtonCancelText( const TQString &text=TQString::null,
+			      const TQString &tooltip=TQString::null,
+			      const TQString &quickhelp=TQString::null ) KDE_DEPRECATED;
 
     /**
      * Sets the text of any button.
@@ -964,7 +964,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param id The button identifier.
      * @param text Button text.
      */
-    void setButtonText( ButtonCode id, const QString &text );
+    void setButtonText( ButtonCode id, const TQString &text );
 
     /**
      * Sets the tooltip text of any button.
@@ -972,7 +972,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param id The button identifier.
      * @param text Button text.
      */
-    void setButtonTip( ButtonCode id, const QString &text );
+    void setButtonTip( ButtonCode id, const TQString &text );
 
     /**
      * Sets the "What's this?" text of any button.
@@ -980,7 +980,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param id The button identifier.
      * @param text Button text.
      */
-    void setButtonWhatsThis( ButtonCode id, const QString &text );
+    void setButtonWhatsThis( ButtonCode id, const TQString &text );
 
     /**
      * Sets the KGuiItem directly for the button instead of using 3 methods to
@@ -1025,7 +1025,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * This function has only effect in TreeList mode.
      *
      * This tells the widgets whether the root should be decorated.
-     * For details see QListView::setRootIsDecorated
+     * For details see TQListView::setRootIsDecorated
      *
      * @param state Root will be decorated if true.
      **/
@@ -1054,7 +1054,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      *                KJanusWidget, too. To be on the save side just don't keep
      *                the pointer to this widget.
      */
-    void addWidgetBelowList( QWidget * widget );
+    void addWidgetBelowList( TQWidget * widget );
 
     /**
      * Add a button at the bottom of the TreeList/IconList.
@@ -1066,7 +1066,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      *
      * @since 3.2
      */
-    void addButtonBelowList( const QString & text, QObject * recv, const char * slot );
+    void addButtonBelowList( const TQString & text, TQObject * recv, const char * slot );
 
     /**
      * The same as the above function, but with a KGuiItem providing the text
@@ -1079,7 +1079,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      *
      * @since 3.2
      */
-    void addButtonBelowList( const KGuiItem & guiitem, QObject * recv, const char * slot );
+    void addButtonBelowList( const KGuiItem & guiitem, TQObject * recv, const char * slot );
 
     /**
      * This function has only effect in IconList mode.
@@ -1108,12 +1108,12 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @return The tile pointer or 0 if no tile is defined.
      *
      **/
-    static const QPixmap *backgroundTile();
+    static const TQPixmap *backgroundTile();
     /**
      * @deprecated
      * Use backgroundTile() instead.
      */
-    static const QPixmap *getBackgroundTile() KDE_DEPRECATED;
+    static const TQPixmap *getBackgroundTile() KDE_DEPRECATED;
 
     /**
      * Sets the background tile.
@@ -1122,7 +1122,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      *
      * @param pix The background tile.
      */
-    static void setBackgroundTile( const QPixmap *pix );
+    static void setBackgroundTile( const TQPixmap *pix );
 
     /**
      * Enable hiding of the background tile (if any).
@@ -1155,7 +1155,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * If you need the "overhead" the dialog needs for its elements,
      * use getBorderWidths().
      */
-    QRect getContentsRect() const KDE_DEPRECATED;
+    TQRect getContentsRect() const KDE_DEPRECATED;
 
     /**
      * Calculate the size hint for the dialog.
@@ -1174,7 +1174,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @return The minimum width and height of the dialog using @p w and @p h
      * as the size of the main widget.
      */
-    QSize calculateSize( int w, int h ) const;
+    TQSize calculateSize( int w, int h ) const;
 
     /**
      * Returns the help link text.
@@ -1184,7 +1184,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      *
      * @return The help link text.
      */
-    QString helpLinkText() const;
+    TQString helpLinkText() const;
 
     /**
      * Returns the action button that corresponds to the @p id.
@@ -1197,9 +1197,9 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param id Integer identifier of the button.
      * @return The action button or 0 if the button does not exists.
      *
-     * FIXME KDE 4: Return the actual KPushButton instead of QPushButton (Martijn)
+     * FIXME KDE 4: Return the actual KPushButton instead of TQPushButton (Martijn)
      */
-    QPushButton *actionButton( ButtonCode id );
+    TQPushButton *actionButton( ButtonCode id );
 
   public slots:
     /**
@@ -1257,7 +1257,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      *
      * @param text The link text.
      */
-    void setHelpLinkText( const QString &text );
+    void setHelpLinkText( const TQString &text );
 
     /**
      * Sets the help path and topic.
@@ -1271,13 +1271,13 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * function for Dialogs of that type.  See
      * KCMultiDialog::slotHelp() for more information.
      */
-    void setHelp( const QString &anchor,
-		  const QString &appname = QString::null );
+    void setHelp( const TQString &anchor,
+		  const TQString &appname = TQString::null );
 
     /**
      * Connected to help link label.
      */
-    void helpClickedSlot( const QString & );
+    void helpClickedSlot( const TQString & );
 
     /**
      * Sets the status of the Details button.
@@ -1290,7 +1290,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * The dialog takes over ownership of the widget.
      * Any previously set widget gets deleted.
      */
-    void setDetailsWidget(QWidget *detailsWidget);
+    void setDetailsWidget(TQWidget *detailsWidget);
 
     /**
      * This method is called automatically whenever the background has
@@ -1428,7 +1428,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * A page is about to be shown. This signal is only emitted for the TreeList
      * and IconList faces.
      */
-    void aboutToShowPage(QWidget *page);
+    void aboutToShowPage(TQWidget *page);
 
   protected:
     /**
@@ -1436,21 +1436,21 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * button if present and Escape to the Cancel or Close if present. The
      * button action event is animated.
      */
-    virtual void keyPressEvent( QKeyEvent *e );
+    virtual void keyPressEvent( TQKeyEvent *e );
 
     /**
      * Emits the #hidden signal. You can connect to that signal to
      * detect when a dialog has been closed.
      */
-    virtual void hideEvent( QHideEvent * );
+    virtual void hideEvent( TQHideEvent * );
 
     /**
      * Detects when a dialog is being closed from the window manager
      * controls. If the Cancel or Close button is present then the button
-     * is activated. Otherwise standard QDialog behavior
+     * is activated. Otherwise standard TQDialog behavior
      * will take place.
      */
-    virtual void closeEvent( QCloseEvent *e );
+    virtual void closeEvent( TQCloseEvent *e );
 
   protected slots:
     /**
@@ -1487,7 +1487,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
 
     /**
      * Activated when the Ok button has been clicked. The
-     * QDialog::accept() is activated.
+     * TQDialog::accept() is activated.
      */
     virtual void slotOk();
 
@@ -1503,26 +1503,26 @@ class KDEUI_EXPORT KDialogBase : public KDialog
 
     /**
      * Activated when the Yes button has been clicked. The
-     * QDialog::done( Yes ) is activated.
+     * TQDialog::done( Yes ) is activated.
      */
     virtual void slotYes();
 
     /**
      * Activated when the Yes button has been clicked. The
-     * QDialog::done( No ) is activated.
+     * TQDialog::done( No ) is activated.
      */
     virtual void slotNo();
 
     /**
      * Activated when the Cancel button has been clicked. The
-     * QDialog::reject() is activated in regular mode and
-     * QDialog::done( Cancel ) when in message box mode.
+     * TQDialog::reject() is activated in regular mode and
+     * TQDialog::done( Cancel ) when in message box mode.
      */
     virtual void slotCancel();
 
     /**
      * Activated when the Close button has been clicked. The
-     * QDialog::reject() is activated.
+     * TQDialog::reject() is activated.
      */
     virtual void slotClose();
 
@@ -1540,7 +1540,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
 
     /**
      * Deletes the dialog immediately. If you want to delete the dialog
-     * delayed use delayedDestruct() or QObject::deleteLater().
+     * delayed use delayedDestruct() or TQObject::deleteLater().
      *
      * Attention: Do no use connect this slot to signals from user
      * actions!
@@ -1584,7 +1584,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param isDefault If true, make the button default
      * @param isFocus If true, give the button focus.
      */
-    void setButtonFocus( QPushButton *p, bool isDefault, bool isFocus );
+    void setButtonFocus( TQPushButton *p, bool isDefault, bool isFocus );
 
     /**
      * Prints an error message using qDebug if makeMainWidget ,
@@ -1603,17 +1603,17 @@ class KDEUI_EXPORT KDialogBase : public KDialog
 
 
   private:
-    QBoxLayout   *mTopLayout;
-    QWidget      *mMainWidget;
+    TQBoxLayout   *mTopLayout;
+    TQWidget      *mMainWidget;
     KURLLabel    *mUrlHelp;
     KJanusWidget *mJanus;
     KSeparator   *mActionSep;
 
     bool mIsActivated;
 
-    QString mAnchor;
-    QString mHelpApp;
-    QString mHelpLinkText;
+    TQString mAnchor;
+    TQString mHelpApp;
+    TQString mHelpLinkText;
 
     static KDialogBaseTile *mTile;
     bool   mShowTile;

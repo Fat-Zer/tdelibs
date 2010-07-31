@@ -11,24 +11,24 @@
 #ifndef ARTSKDE_KVIDEOWIDGET_H
 #define ARTSKDE_KVIDEOWIDGET_H
 
-#include <qevent.h>
-#include <qimage.h>
-#include <qwidget.h>
+#include <tqevent.h>
+#include <tqimage.h>
+#include <tqwidget.h>
 #include <kmedia2.h>
 #include <kxmlguiclient.h>
 
 
-class KDE_ARTS_EXPORT KVideoWidget : public QWidget, virtual public KXMLGUIClient
+class KDE_ARTS_EXPORT KVideoWidget : public TQWidget, virtual public KXMLGUIClient
 {
 Q_OBJECT
 
 public:
-    KVideoWidget( KXMLGUIClient *clientParent, QWidget *parent = 0, const char *name = 0, WFlags f = 0 );
-    KVideoWidget( QWidget *parent = 0, const char *name = 0, WFlags f = 0 );
+    KVideoWidget( KXMLGUIClient *clientParent, TQWidget *parent = 0, const char *name = 0, WFlags f = 0 );
+    KVideoWidget( TQWidget *parent = 0, const char *name = 0, WFlags f = 0 );
     virtual ~KVideoWidget();
 
     void embed( Arts::VideoPlayObject vpo );
-    static QImage snapshot( Arts::VideoPlayObject vpo );
+    static TQImage snapshot( Arts::VideoPlayObject vpo );
 
     bool isEmbedded();
     bool isFullscreen();
@@ -36,14 +36,14 @@ public:
     bool isNormalSize();
     bool isDoubleSize();
 
-    QSize sizeHint() const;
+    TQSize sizeHint() const;
 
     virtual int heightForWidth ( int w ) const;
 
 protected:
-    virtual void mousePressEvent( QMouseEvent *event );
-    virtual void mouseDoubleClickEvent( QMouseEvent *event);
-    virtual void resizeEvent( QResizeEvent *event );
+    virtual void mousePressEvent( TQMouseEvent *event );
+    virtual void mouseDoubleClickEvent( TQMouseEvent *event);
+    virtual void resizeEvent( TQResizeEvent *event );
     virtual bool x11Event( XEvent *event );
 
 public slots:
@@ -63,17 +63,17 @@ protected slots:
 
 signals:
     void adaptSize( int width, int height );
-    void mouseButtonPressed( int type, const QPoint &, int state );
-    void mouseButtonDoubleClick( const QPoint &, int state );
+    void mouseButtonPressed( int type, const TQPoint &, int state );
+    void mouseButtonDoubleClick( const TQPoint &, int state );
     /**
      * @deprecated
-     * use mouseButtonPressed( int type, const QPoint & ) instead.
+     * use mouseButtonPressed( int type, const TQPoint & ) instead.
      */
-    void rightButtonPressed( const QPoint & );
+    void rightButtonPressed( const TQPoint & );
 
 private:
     void init(void);
-    QWidget *fullscreenWidget;
+    TQWidget *fullscreenWidget;
     int videoWidth;
     int videoHeight;
     Arts::VideoPlayObject poVideo;

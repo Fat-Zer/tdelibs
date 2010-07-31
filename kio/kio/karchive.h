@@ -24,10 +24,10 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include <qdatetime.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qdict.h>
+#include <tqdatetime.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqdict.h>
 
 #include <kdelibs_export.h>
 
@@ -47,7 +47,7 @@ protected:
      * @param dev the I/O device where the archive reads its data
      * Note that this can be a file, but also a data buffer, a compression filter, etc.
      */
-    KArchive( QIODevice * dev );
+    KArchive( TQIODevice * dev );
 
 public:
     virtual ~KArchive();
@@ -93,7 +93,7 @@ public:
      * The underlying device.
      * @return the underlying device.
      */
-    QIODevice * device() const { return m_dev; }
+    TQIODevice * device() const { return m_dev; }
 
     /**
      * If an archive is opened for reading, then the contents
@@ -112,7 +112,7 @@ public:
      * @param fileName full path to an existing local file, to be added to the archive.
      * @param destName the resulting name (or relative path) of the file in the archive.
      */
-    bool addLocalFile( const QString& fileName, const QString& destName );
+    bool addLocalFile( const TQString& fileName, const TQString& destName );
 
     /**
      * Writes a local directory into the archive, including all its contents, recursively.
@@ -125,7 +125,7 @@ public:
      * @param path full path to an existing local directory, to be added to the archive.
      * @param destName the resulting name (or relative path) of the file in the archive.
      */
-    bool addLocalDirectory( const QString& path, const QString& destName );
+    bool addLocalDirectory( const TQString& path, const TQString& destName );
 
     /**
      * If an archive is opened for writing then you can add new directories
@@ -139,7 +139,7 @@ public:
      * writeDir(name,user,group,perm,atime,mtime,ctime)
      * or eliminate it
      */
-    virtual bool writeDir( const QString& name, const QString& user, const QString& group ) = 0;
+    virtual bool writeDir( const TQString& name, const TQString& user, const TQString& group ) = 0;
 
     /**
      * If an archive is opened for writing then you can add new directories
@@ -158,7 +158,7 @@ public:
      * @since 3.2
      * @todo TODO(BIC): make this virtual. For now use virtual hook
      */
-    bool writeDir( const QString& name, const QString& user, const QString& group,
+    bool writeDir( const TQString& name, const TQString& user, const TQString& group,
     			mode_t perm, time_t atime, time_t mtime, time_t ctime );
 
     /**
@@ -175,8 +175,8 @@ public:
      * @since 3.2
      * @todo TODO(BIC) make virtual. For now it must be implemented by virtual_hook.
      */
-    bool writeSymLink(const QString &name, const QString &target,
-    			const QString &user, const QString &group,
+    bool writeSymLink(const TQString &name, const TQString &target,
+    			const TQString &user, const TQString &group,
     			mode_t perm, time_t atime, time_t mtime, time_t ctime);
 
     /**
@@ -192,7 +192,7 @@ public:
      * @todo TODO(BIC): make this a thin non-virtual wrapper around
      *   writeFile(name,user,group,size,perm,atime,mtime,ctime,data)
      */
-    virtual bool writeFile( const QString& name, const QString& user, const QString& group, uint size, const char* data );
+    virtual bool writeFile( const TQString& name, const TQString& user, const TQString& group, uint size, const char* data );
 
     /**
      * If an archive is opened for writing then you can add a new file
@@ -215,7 +215,7 @@ public:
      * @since 3.2
      * @todo TODO(BIC): make virtual. For now use virtual hook
      */
-    bool writeFile( const QString& name, const QString& user, const QString& group,
+    bool writeFile( const TQString& name, const TQString& user, const TQString& group,
     			uint size, mode_t perm, time_t atime, time_t mtime,
        			time_t ctime, const char* data );
 
@@ -235,7 +235,7 @@ public:
      * prepareWriting(name,user,group,size,perm,atime,mtime,ctime)
      * or eliminate it.
      */
-    virtual bool prepareWriting( const QString& name, const QString& user, const QString& group, uint size ) = 0;
+    virtual bool prepareWriting( const TQString& name, const TQString& user, const TQString& group, uint size ) = 0;
 
     /**
      * Here's another way of writing a file into an archive:
@@ -258,8 +258,8 @@ public:
      * @since 3.2
      * @todo TODO(BIC): make this virtual. For now use virtual hook.
      */
-    bool prepareWriting( const QString& name, const QString& user,
-    			const QString& group, uint size, mode_t perm,
+    bool prepareWriting( const TQString& name, const TQString& user,
+    			const TQString& group, uint size, mode_t perm,
        			time_t atime, time_t mtime, time_t ctime );
 
     /**
@@ -304,12 +304,12 @@ protected:
      * @param path the path of the directory
      * @return the directory with the given @p path
      */
-    KArchiveDirectory * findOrCreate( const QString & path );
+    KArchiveDirectory * findOrCreate( const TQString & path );
 
     /**
      * @internal for inherited constructors
      */
-    void setDevice( QIODevice *dev );
+    void setDevice( TQIODevice *dev );
 
     /**
      * @internal for inherited classes
@@ -317,7 +317,7 @@ protected:
     void setRootDir( KArchiveDirectory *rootDir );
 
 private:
-    QIODevice * m_dev;
+    TQIODevice * m_dev;
     bool m_open;
     char m_mode;
 protected:
@@ -325,51 +325,51 @@ protected:
     /* @internal for virtual_hook */
     enum { VIRTUAL_WRITE_DATA = 1, VIRTUAL_WRITE_SYMLINK, VIRTUAL_WRITE_DIR,
     	VIRTUAL_WRITE_FILE, VIRTUAL_PREPARE_WRITING };
-    bool prepareWriting_impl( const QString& name, const QString& user,
-    			const QString& group, uint size, mode_t perm,
+    bool prepareWriting_impl( const TQString& name, const TQString& user,
+    			const TQString& group, uint size, mode_t perm,
     			time_t atime, time_t mtime, time_t ctime );
     struct PrepareWritingParams {
-	const QString *name;
-	const QString *user;
-	const QString *group;
+	const TQString *name;
+	const TQString *user;
+	const TQString *group;
 	uint size;
 	mode_t perm;
 	time_t atime, mtime, ctime;
 	bool retval;
     };
-    bool writeFile_impl( const QString& name, const QString& user,
-    			const QString& group, uint size, mode_t perm,
+    bool writeFile_impl( const TQString& name, const TQString& user,
+    			const TQString& group, uint size, mode_t perm,
     			time_t atime, time_t mtime, time_t ctime,
        			const char* data );
     struct WriteFileParams {
-	const QString *name;
-	const QString *user;
-	const QString *group;
+	const TQString *name;
+	const TQString *user;
+	const TQString *group;
 	uint size;
 	mode_t perm;
 	time_t atime, mtime, ctime;
 	const char *data;
 	bool retval;
     };
-    bool writeDir_impl(const QString& name, const QString& user,
-    			const QString& group, mode_t perm,
+    bool writeDir_impl(const TQString& name, const TQString& user,
+    			const TQString& group, mode_t perm,
     			time_t atime, time_t mtime, time_t ctime);
     struct WriteDirParams {
-	const QString *name;
-	const QString *user;
-	const QString *group;
+	const TQString *name;
+	const TQString *user;
+	const TQString *group;
 	mode_t perm;
 	time_t atime, mtime, ctime;
 	bool retval;
     };
-    bool writeSymLink_impl(const QString &name, const QString &target,
-    			const QString &user, const QString &group,
+    bool writeSymLink_impl(const TQString &name, const TQString &target,
+    			const TQString &user, const TQString &group,
     			mode_t perm, time_t atime, time_t mtime, time_t ctime);
     struct WriteSymlinkParams {
-	const QString *name;
-	const QString *target;
-	const QString *user;
-	const QString *group;
+	const TQString *name;
+	const TQString *target;
+	const TQString *user;
+	const TQString *group;
 	mode_t perm;
 	time_t atime, mtime, ctime;
 	bool retval;
@@ -403,11 +403,11 @@ public:
      * @param date the date (in seconds since 1970)
      * @param user the user that owns the entry
      * @param group the group that owns the entry
-     * @param symlink the symlink, or QString::null
+     * @param symlink the symlink, or TQString::null
      */
-    KArchiveEntry( KArchive* archive, const QString& name, int access, int date,
-               const QString& user, const QString& group,
-               const QString &symlink );
+    KArchiveEntry( KArchive* archive, const TQString& name, int access, int date,
+               const TQString& user, const TQString& group,
+               const TQString &symlink );
 
     virtual ~KArchiveEntry() { }
 
@@ -415,7 +415,7 @@ public:
      * Creation date of the file.
      * @return the creation date
      */
-    QDateTime datetime() const;
+    TQDateTime datetime() const;
 
     /**
      * Creation date of the file.
@@ -427,7 +427,7 @@ public:
      * Name of the file without path.
      * @return the file name without path
      */
-    QString name() const { return m_name; }
+    TQString name() const { return m_name; }
     /**
      * The permissions and mode flags as returned by the stat() function
      * in st_mode.
@@ -438,18 +438,18 @@ public:
      * User who created the file.
      * @return the owner of the file
      */
-    QString user() const { return m_user; }
+    TQString user() const { return m_user; }
     /**
      * Group of the user who created the file.
      * @return the group of the file
      */
-    QString group() const { return m_group; }
+    TQString group() const { return m_group; }
 
     /**
      * Symlink if there is one.
-     * @return the symlink, or QString::null
+     * @return the symlink, or TQString::null
      */
-    QString symlink() const { return m_symlink; }
+    TQString symlink() const { return m_symlink; }
 
     /**
      * Checks whether the entry is a file.
@@ -467,12 +467,12 @@ protected:
     KArchive* archive() const { return m_archive; }
 
 private:
-    QString m_name;
+    TQString m_name;
     int m_date;
     mode_t m_access;
-    QString m_user;
-    QString m_group;
-    QString m_symlink;
+    TQString m_user;
+    TQString m_group;
+    TQString m_symlink;
     KArchive* m_archive;
 protected:
     virtual void virtual_hook( int id, void* data );
@@ -498,12 +498,12 @@ public:
      * @param date the date (in seconds since 1970)
      * @param user the user that owns the entry
      * @param group the group that owns the entry
-     * @param symlink the symlink, or QString::null
+     * @param symlink the symlink, or TQString::null
      * @param pos the position of the file in the directory
      * @param size the size of the file
      */
-    KArchiveFile( KArchive* archive, const QString& name, int access, int date,
-              const QString& user, const QString& group, const QString &symlink,
+    KArchiveFile( KArchive* archive, const TQString& name, int access, int date,
+              const TQString& user, const TQString& group, const TQString &symlink,
               int pos, int size );
 
     virtual ~KArchiveFile() { }
@@ -529,17 +529,17 @@ public:
      * Call data() with care (only once per file), this data isn't cached.
      * @return the content of this file.
      */
-    virtual QByteArray data() const;
+    virtual TQByteArray data() const;
 
     /**
-     * This method returns QIODevice (internal class: KLimitedIODevice)
-     * on top of the underlying QIODevice. This is obviously for reading only.
+     * This method returns TQIODevice (internal class: KLimitedIODevice)
+     * on top of the underlying TQIODevice. This is obviously for reading only.
      * Note that the ownership of the device is being transferred to the caller,
      * who will have to delete it.
      * The returned device auto-opens (in readonly mode), no need to open it.
-     * @return the QIODevice of the file
+     * @return the TQIODevice of the file
      */
-    QIODevice *device() const; // TODO make virtual
+    TQIODevice *device() const; // TODO make virtual
 
     /**
      * Checks whether this entry is a file.
@@ -552,7 +552,7 @@ public:
      * @param dest the directory to extract to
      * @since 3.1
      */
-    void copyTo(const QString& dest) const;
+    void copyTo(const TQString& dest) const;
 
 private:
     int m_pos; // TODO use Q_LONG in KDE-4.0
@@ -581,11 +581,11 @@ public:
      * @param date the date (in seconds since 1970)
      * @param user the user that owns the entry
      * @param group the group that owns the entry
-     * @param symlink the symlink, or QString::null
+     * @param symlink the symlink, or TQString::null
      */
-    KArchiveDirectory( KArchive* archive, const QString& name, int access, int date,
-                   const QString& user, const QString& group,
-                   const QString& symlink);
+    KArchiveDirectory( KArchive* archive, const TQString& name, int access, int date,
+                   const TQString& user, const TQString& group,
+                   const TQString& symlink);
 
     virtual ~KArchiveDirectory() { }
 
@@ -593,19 +593,19 @@ public:
      * Returns a list of sub-entries.
      * @return the names of all entries in this directory (filenames, no path).
      */
-    QStringList entries() const;
+    TQStringList entries() const;
     /**
      * Returns the entry with the given name.
      * @param name may be "test1", "mydir/test3", "mydir/mysubdir/test3", etc.
      * @return a pointer to the entry in the directory.
      */
-    KArchiveEntry* entry( QString name );
+    KArchiveEntry* entry( TQString name );
     /**
      * Returns the entry with the given name.
      * @param name may be "test1", "mydir/test3", "mydir/mysubdir/test3", etc.
      * @return a pointer to the entry in the directory.
      */
-    const KArchiveEntry* entry( QString name ) const;
+    const KArchiveEntry* entry( TQString name ) const;
 
     /**
      * @internal
@@ -626,10 +626,10 @@ public:
      * @param recursive if set to true, subdirectories are extracted as well
      * @since 3.1
      */
-     void copyTo(const QString& dest, bool recursive = true) const;
+     void copyTo(const TQString& dest, bool recursive = true) const;
 
 private:
-    QDict<KArchiveEntry> m_entries;
+    TQDict<KArchiveEntry> m_entries;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:

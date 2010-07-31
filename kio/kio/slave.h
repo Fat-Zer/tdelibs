@@ -25,7 +25,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kurl.h>
 
@@ -52,12 +52,12 @@ namespace KIO {
 	 * @internal
 	 * @since 3.2
 	 */
-	Slave(bool derived, KServerSocket *unixdomain, const QString &protocol,
-		const QString &socketname);	// TODO(BIC): Remove in KDE 4
+	Slave(bool derived, KServerSocket *unixdomain, const TQString &protocol,
+		const TQString &socketname);	// TODO(BIC): Remove in KDE 4
 
     public:
 	Slave(KServerSocket *unixdomain,
-	      const QString &protocol, const QString &socketname);
+	      const TQString &protocol, const TQString &socketname);
 
         virtual ~Slave();
 
@@ -82,8 +82,8 @@ namespace KIO {
          * @param user to login as
          * @param passwd to login with
          */
-        void setHost( const QString &host, int port,
-                      const QString &user, const QString &passwd); // TODO(BIC): make virtual
+        void setHost( const TQString &host, int port,
+                      const TQString &user, const TQString &passwd); // TODO(BIC): make virtual
 
         /**
          * Clear host info.
@@ -100,9 +100,9 @@ namespace KIO {
 	 *
          * @return name of protocol handled by this slave, as seen by the user
          */
-        QString protocol() { return m_protocol; }
+        TQString protocol() { return m_protocol; }
 
-        void setProtocol(const QString & protocol);
+        void setProtocol(const TQString & protocol);
         /**
 	 * The actual protocol used to handle the request.
 	 *
@@ -115,12 +115,12 @@ namespace KIO {
 	 *
          * @return the actual protocol (io-slave) that handled the request
          */
-        QString slaveProtocol() { return m_slaveProtocol; }
+        TQString slaveProtocol() { return m_slaveProtocol; }
 
         /**
          * @return Host this slave is (was?) connected to
          */
-        QString host() { return m_host; }
+        TQString host() { return m_host; }
 
         /**
          * @return port this slave is (was?) connected to
@@ -130,12 +130,12 @@ namespace KIO {
         /**
          * @return User this slave is (was?) logged in as
          */
-        QString user() { return m_user; }
+        TQString user() { return m_user; }
 
         /**
          * @return Passwd used to log in
          */
-        QString passwd() { return m_passwd; }
+        TQString passwd() { return m_passwd; }
 
 	/**
 	 * Creates a new slave.
@@ -148,9 +148,9 @@ namespace KIO {
 	 * @return 0 on failure, or a pointer to a slave otherwise.
 	 * @todo What are legal @p protocol values?
 	 */
-	static Slave* createSlave( const QString &protocol, const KURL& url, int& error, QString& error_text );
+	static Slave* createSlave( const TQString &protocol, const KURL& url, int& error, TQString& error_text );
 
-        static Slave* holdSlave( const QString &protocol, const KURL& url );
+        static Slave* holdSlave( const TQString &protocol, const KURL& url );
 
 	// == communication with connected kioslave ==
 	// whenever possible prefer these methods over the respective
@@ -175,7 +175,7 @@ namespace KIO {
 	 * @param data byte array containing data
 	 * @since 3.2
 	 */
-        void send(int cmd, const QByteArray &data = QByteArray());// TODO(BIC): make virtual
+        void send(int cmd, const TQByteArray &data = TQByteArray());// TODO(BIC): make virtual
 	// == end communication with connected kioslave ==
 
 	/**
@@ -220,14 +220,14 @@ namespace KIO {
         void unlinkSocket();
 
     private:
-        QString m_protocol;
-        QString m_slaveProtocol;
-        QString m_host;
+        TQString m_protocol;
+        TQString m_slaveProtocol;
+        TQString m_host;
         int m_port;
-        QString m_user;
-        QString m_passwd;
+        TQString m_user;
+        TQString m_passwd;
 	KServerSocket *serv;
-	QString m_socket;
+	TQString m_socket;
 	pid_t m_pid;
 	bool contacted;
 	bool dead;
@@ -243,7 +243,7 @@ namespace KIO {
 		VIRTUAL_SET_HOST, VIRTUAL_SET_CONFIG };
 	struct SendParams {
 	  int cmd;
-	  const QByteArray *arr;
+	  const TQByteArray *arr;
 	};
 	struct HoldParams {
 	  const KURL *url;
@@ -252,10 +252,10 @@ namespace KIO {
 	  bool retval;
 	};
 	struct SetHostParams {
-	  const QString *host;
+	  const TQString *host;
 	  int port;
-	  const QString *user;
-	  const QString *passwd;
+	  const TQString *user;
+	  const TQString *passwd;
 	};
 	struct SetConfigParams {
 	  const MetaData *config;

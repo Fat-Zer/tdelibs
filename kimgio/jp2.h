@@ -5,8 +5,8 @@
 class QImageIO;
 
 extern "C" {
-	void kimgio_jp2_read( QImageIO* io );
-	void kimgio_jp2_write( QImageIO* io );
+	void kimgio_jp2_read( TQImageIO* io );
+	void kimgio_jp2_write( TQImageIO* io );
 } // extern "C"
 
 #endif

@@ -21,9 +21,9 @@
 #ifndef LDAPCONFIGWIDGET_H
 #define LDAPCONFIGWIDGET_H
 
-#include <qwidget.h>
-#include <qmap.h>
-#include <qstring.h>
+#include <tqwidget.h>
+#include <tqmap.h>
+#include <tqstring.h>
 
 #include <kabc/ldapurl.h>
 #include <kabc/ldif.h>
@@ -51,16 +51,16 @@ namespace KABC {
   {
     Q_OBJECT
     Q_PROPERTY( LCW_Flags flags READ flags WRITE setFlags )
-    Q_PROPERTY( QString user READ user WRITE setUser )
-    Q_PROPERTY( QString password READ password WRITE setPassword )
-    Q_PROPERTY( QString bindDN READ bindDN WRITE setBindDN )
-    Q_PROPERTY( QString realm READ realm WRITE setRealm )
-    Q_PROPERTY( QString host READ host WRITE setHost )
+    Q_PROPERTY( TQString user READ user WRITE setUser )
+    Q_PROPERTY( TQString password READ password WRITE setPassword )
+    Q_PROPERTY( TQString bindDN READ bindDN WRITE setBindDN )
+    Q_PROPERTY( TQString realm READ realm WRITE setRealm )
+    Q_PROPERTY( TQString host READ host WRITE setHost )
     Q_PROPERTY( int port READ port WRITE setPort )
     Q_PROPERTY( int ver READ ver WRITE setVer )
-    Q_PROPERTY( QString dn READ dn WRITE setDn )
-    Q_PROPERTY( QString filter READ filter WRITE setFilter )
-    Q_PROPERTY( QString mech READ mech WRITE setMech )
+    Q_PROPERTY( TQString dn READ dn WRITE setDn )
+    Q_PROPERTY( TQString filter READ filter WRITE setFilter )
+    Q_PROPERTY( TQString mech READ mech WRITE setMech )
     Q_PROPERTY( bool secNO READ isSecNO WRITE setSecNO )
     Q_PROPERTY( bool secSSL READ isSecSSL WRITE setSecSSL )
     Q_PROPERTY( bool secTLS READ isSecSSL WRITE setSecTLS )
@@ -93,41 +93,41 @@ namespace KABC {
       /** Constructs an empty configuration widget.
        * You need to call setFlags() after this.
        */
-      LdapConfigWidget( QWidget* parent = 0, 
+      LdapConfigWidget( TQWidget* parent = 0, 
         const char* name = 0, WFlags fl = 0 );
       /** Constructs a configuration widget */
-      LdapConfigWidget( int flags, QWidget* parent = 0,
+      LdapConfigWidget( int flags, TQWidget* parent = 0,
         const char* name = 0, WFlags fl = 0 );
       /** Destructs a configuration widget */
       virtual ~LdapConfigWidget();
 
       /** Sets the user name. Kconfig widget name: kcfg_ldapuser */
-      void setUser( const QString &user );
+      void setUser( const TQString &user );
       /** Gets the user name. Kconfig widget name: kcfg_ldapuser */
-      QString user() const;
+      TQString user() const;
 
       /** Sets the password. Kconfig widget name: kcfg_ldappassword */
-      void setPassword( const QString &password );
+      void setPassword( const TQString &password );
       /** Gets the password. Kconfig widget name: kcfg_ldappassword */
-      QString password() const;
+      TQString password() const;
 
       /**
        * Sets the bind dn. Useful for SASL proxy auth.
        * Kconfig widget name: kcfg_ldapbinddn
        */
-      void setBindDN( const QString &binddn );
+      void setBindDN( const TQString &binddn );
       /** Gets the bind dn. Kconfig widget name: kcfg_ldapbinddn*/
-      QString bindDN() const;
+      TQString bindDN() const;
 
       /** Sets the SASL realm. Kconfig widget name: kcfg_ldaprealm */
-      void setRealm( const QString &realm );
+      void setRealm( const TQString &realm );
       /** Gets the SASL realm. Kconfig widget name: kcfg_ldaprealm */
-      QString realm() const;
+      TQString realm() const;
 
       /** Sets the host name. Kconfig widget name: kcfg_ldaphost */
-      void setHost( const QString &host );
+      void setHost( const TQString &host );
       /** Gets the host name. Kconfig widget name: kcfg_ldaphost */
-      QString host() const;
+      TQString host() const;
 
       /** Sets the LDAP port. Kconfig widget name: kcfg_ldapport */
       void setPort( int port );
@@ -140,19 +140,19 @@ namespace KABC {
       int ver() const;
 
       /** Sets the LDAP Base DN. Kconfig widget name: kcfg_ldapdn */
-      void setDn( const QString &dn );
+      void setDn( const TQString &dn );
       /** Gets the LDAP Base DN. Kconfig widget name: kcfg_ldapdn */
-      QString dn() const;
+      TQString dn() const;
 
       /** Sets the LDAP Filter. Kconfig widget name: kcfg_ldapfilter */
-      void setFilter( const QString &filter );
+      void setFilter( const TQString &filter );
       /** Gets the LDAP Filter. Kconfig widget name: kcfg_ldapfilter */
-      QString filter() const;
+      TQString filter() const;
 
       /** Sets the SASL Mechanism. Kconfig widget name: kcfg_ldapsaslmech */
-      void setMech( const QString &mech );
+      void setMech( const TQString &mech );
       /** Gets the SASL Mechanism. Kconfig widget name: kcfg_ldapsaslmech */
-      QString mech() const;
+      TQString mech() const;
 
       /**
        * Sets the configuration to no transport security.
@@ -259,33 +259,33 @@ namespace KABC {
       void setSASL( int state );
       void mQueryDNClicked();
       void mQueryMechClicked();
-      void loadData( KIO::Job*, const QByteArray& );
+      void loadData( KIO::Job*, const TQByteArray& );
       void loadResult( KIO::Job* );  
     private:
 
       int mFlags;
       LDIF mLdif;
-      QStringList mQResult;
-      QString mAttr;
+      TQStringList mQResult;
+      TQString mAttr;
 
       KLineEdit *mUser;
       KLineEdit *mPassword;
       KLineEdit *mHost;
-      QSpinBox  *mPort, *mVer, *mSizeLimit, *mTimeLimit;
+      TQSpinBox  *mPort, *mVer, *mSizeLimit, *mTimeLimit;
       KLineEdit *mDn, *mBindDN, *mRealm;
       KLineEdit *mFilter;
-      QRadioButton *mAnonymous,*mSimple,*mSASL;
-      QCheckBox *mSubTree;
-      QPushButton *mEditButton;
-      QPushButton *mQueryMech;
-      QRadioButton *mSecNO,*mSecTLS,*mSecSSL;
+      TQRadioButton *mAnonymous,*mSimple,*mSASL;
+      TQCheckBox *mSubTree;
+      TQPushButton *mEditButton;
+      TQPushButton *mQueryMech;
+      TQRadioButton *mSecNO,*mSecTLS,*mSecSSL;
       KComboBox *mMech;
 
-      QString mErrorMsg;
+      TQString mErrorMsg;
       bool mCancelled;
       KProgressDialog *mProg;
 
-      QGridLayout *mainLayout;
+      TQGridLayout *mainLayout;
       class LDAPConfigWidgetPrivate;
       LDAPConfigWidgetPrivate *d;
 

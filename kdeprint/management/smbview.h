@@ -29,16 +29,16 @@ class SmbView : public KListView
 {
 	Q_OBJECT
 public:
-	SmbView(QWidget *parent = 0, const char *name = 0);
+	SmbView(TQWidget *parent = 0, const char *name = 0);
 	~SmbView();
 
-	void setLoginInfos(const QString& login, const QString& password);
-	void setOpen(QListViewItem*, bool);
+	void setLoginInfos(const TQString& login, const TQString& password);
+	void setOpen(TQListViewItem*, bool);
 	void init();
 	void abort();
 
 signals:
-	void printerSelected(const QString& work, const QString& server, const QString& printer);
+	void printerSelected(const TQString& work, const TQString& server, const TQString& printer);
 	void running(bool);
 
 protected:
@@ -51,7 +51,7 @@ protected:
 protected slots:
 	void slotReceivedStdout(KProcess*, char*, int);
 	void slotProcessExited(KProcess*);
-	void slotSelectionChanged(QListViewItem*);
+	void slotSelectionChanged(TQListViewItem*);
 
 private:
 	enum State { GroupListing, ServerListing, ShareListing, Idle };

@@ -19,9 +19,9 @@
 */
 #include <stdio.h>
 
-#include <qfile.h>
-#include <qtextcodec.h>
-#include <qstylesheet.h>
+#include <tqfile.h>
+#include <tqtextcodec.h>
+#include <tqstylesheet.h>
 
 #include <kdebug.h>
 #include <klocale.h>

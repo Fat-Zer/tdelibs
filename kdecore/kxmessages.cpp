@@ -37,8 +37,8 @@ DEALINGS IN THE SOFTWARE.
 const long BROADCAST_MASK = PropertyChangeMask;
 // CHECKME
 
-KXMessages::KXMessages( const char* accept_broadcast_P, QWidget* parent_P )
-    : QWidget( parent_P )
+KXMessages::KXMessages( const char* accept_broadcast_P, TQWidget* parent_P )
+    : TQWidget( parent_P )
     {
     if( accept_broadcast_P != NULL )
         {
@@ -51,11 +51,11 @@ KXMessages::KXMessages( const char* accept_broadcast_P, QWidget* parent_P )
         {
         accept_atom1 = accept_atom2 = None;
         }
-    handle = new QWidget( this );
+    handle = new TQWidget( this );
     }
 
-KXMessages::KXMessages( const char* accept_broadcast_P, QWidget* parent_P, bool obsolete_P )
-    : QWidget( parent_P )
+KXMessages::KXMessages( const char* accept_broadcast_P, TQWidget* parent_P, bool obsolete_P )
+    : TQWidget( parent_P )
     {
     if( accept_broadcast_P != NULL )
         {
@@ -63,13 +63,13 @@ KXMessages::KXMessages( const char* accept_broadcast_P, QWidget* parent_P, bool 
         kapp->installX11EventFilter( this ); // i.e. PropertyChangeMask
         accept_atom2 = XInternAtom( qt_xdisplay(), accept_broadcast_P, false );
         accept_atom1 = obsolete_P ? accept_atom2
-            : XInternAtom( qt_xdisplay(), QCString( accept_broadcast_P ) + "_BEGIN", false );
+            : XInternAtom( qt_xdisplay(), TQCString( accept_broadcast_P ) + "_BEGIN", false );
         }
     else
         {
         accept_atom1 = accept_atom2 = None;
         }
-    handle = new QWidget( this );
+    handle = new TQWidget( this );
     }
 
 KXMessages::~KXMessages()    
@@ -78,47 +78,47 @@ KXMessages::~KXMessages()
     }
 
 
-void KXMessages::broadcastMessage( const char* msg_type_P, const QString& message_P )
+void KXMessages::broadcastMessage( const char* msg_type_P, const TQString& message_P )
     {
     broadcastMessage( msg_type_P, message_P, -1, true );
     }
     
-void KXMessages::broadcastMessage( const char* msg_type_P, const QString& message_P,
+void KXMessages::broadcastMessage( const char* msg_type_P, const TQString& message_P,
     int screen_P, bool obsolete_P )
     {
     Atom a2 = XInternAtom( qt_xdisplay(), msg_type_P, false );
-    Atom a1 = obsolete_P ? a2 : XInternAtom( qt_xdisplay(), QCString( msg_type_P ) + "_BEGIN", false );
+    Atom a1 = obsolete_P ? a2 : XInternAtom( qt_xdisplay(), TQCString( msg_type_P ) + "_BEGIN", false );
     Window root = screen_P == -1 ? qt_xrootwin() : qt_xrootwin( screen_P );
     send_message_internal( root, message_P, BROADCAST_MASK, qt_xdisplay(),
         a1, a2, handle->winId());
     }
 
-void KXMessages::sendMessage( WId w_P, const char* msg_type_P, const QString& message_P )
+void KXMessages::sendMessage( WId w_P, const char* msg_type_P, const TQString& message_P )
     {
     sendMessage( w_P, msg_type_P, message_P, true );
     }
     
-void KXMessages::sendMessage( WId w_P, const char* msg_type_P, const QString& message_P,
+void KXMessages::sendMessage( WId w_P, const char* msg_type_P, const TQString& message_P,
     bool obsolete_P )
     {
     Atom a2 = XInternAtom( qt_xdisplay(), msg_type_P, false );
-    Atom a1 = obsolete_P ? a2 : XInternAtom( qt_xdisplay(), QCString( msg_type_P ) + "_BEGIN", false );
+    Atom a1 = obsolete_P ? a2 : XInternAtom( qt_xdisplay(), TQCString( msg_type_P ) + "_BEGIN", false );
     send_message_internal( w_P, message_P, 0, qt_xdisplay(), a1, a2, handle->winId());
     }
     
 bool KXMessages::broadcastMessageX( Display* disp, const char* msg_type_P,
-    const QString& message_P )
+    const TQString& message_P )
     {
     return broadcastMessageX( disp, msg_type_P, message_P, -1, true );
     }
     
 bool KXMessages::broadcastMessageX( Display* disp, const char* msg_type_P,
-    const QString& message_P, int screen_P, bool obsolete_P )
+    const TQString& message_P, int screen_P, bool obsolete_P )
     {
     if( disp == NULL )
         return false;
     Atom a2 = XInternAtom( disp, msg_type_P, false );
-    Atom a1 = obsolete_P ? a2 : XInternAtom( disp, QCString( msg_type_P ) + "_BEGIN", false );
+    Atom a1 = obsolete_P ? a2 : XInternAtom( disp, TQCString( msg_type_P ) + "_BEGIN", false );
     Window root = screen_P == -1 ? DefaultRootWindow( disp ) : RootWindow( disp, screen_P );
     Window win = XCreateSimpleWindow( disp, root, 0, 0, 1, 1,
         0, BlackPixel( disp, screen_P == -1 ? DefaultScreen( disp ) : screen_P ),
@@ -130,18 +130,18 @@ bool KXMessages::broadcastMessageX( Display* disp, const char* msg_type_P,
     }
 
 bool KXMessages::sendMessageX( Display* disp, WId w_P, const char* msg_type_P,
-    const QString& message_P )
+    const TQString& message_P )
     {
     return sendMessageX( disp, w_P, msg_type_P, message_P, true );
     }
     
 bool KXMessages::sendMessageX( Display* disp, WId w_P, const char* msg_type_P,
-    const QString& message_P, bool obsolete_P )
+    const TQString& message_P, bool obsolete_P )
     {
     if( disp == NULL )
         return false;
     Atom a2 = XInternAtom( disp, msg_type_P, false );
-    Atom a1 = obsolete_P ? a2 : XInternAtom( disp, QCString( msg_type_P ) + "_BEGIN", false );
+    Atom a1 = obsolete_P ? a2 : XInternAtom( disp, TQCString( msg_type_P ) + "_BEGIN", false );
     Window win = XCreateSimpleWindow( disp, DefaultRootWindow( disp ), 0, 0, 1, 1,
         0, BlackPixelOfScreen( DefaultScreenOfDisplay( disp )),
         BlackPixelOfScreen( DefaultScreenOfDisplay( disp )));
@@ -150,11 +150,11 @@ bool KXMessages::sendMessageX( Display* disp, WId w_P, const char* msg_type_P,
     return true;
     }
     
-void KXMessages::send_message_internal( WId w_P, const QString& msg_P, long mask_P,
+void KXMessages::send_message_internal( WId w_P, const TQString& msg_P, long mask_P,
     Display* disp, Atom atom1_P, Atom atom2_P, Window handle_P )
     {
     unsigned int pos = 0;
-    QCString msg = msg_P.utf8();
+    TQCString msg = msg_P.utf8();
     unsigned int len = strlen( msg );
     XEvent e;
     e.xclient.type = ClientMessage;
@@ -179,9 +179,9 @@ void KXMessages::send_message_internal( WId w_P, const QString& msg_P, long mask
 bool KXMessages::x11Event( XEvent* ev_P )
     {
     if( ev_P->type != ClientMessage || ev_P->xclient.format != 8 )
-        return QWidget::x11Event( ev_P );
+        return TQWidget::x11Event( ev_P );
     if( ev_P->xclient.message_type != accept_atom1 && ev_P->xclient.message_type != accept_atom2 )
-        return QWidget::x11Event( ev_P );
+        return TQWidget::x11Event( ev_P );
     char buf[ 21 ]; // can't be longer
     int i;
     for( i = 0;
@@ -193,7 +193,7 @@ bool KXMessages::x11Event( XEvent* ev_P )
         {
         if( ev_P->xclient.message_type == accept_atom1 && accept_atom1 != accept_atom2 )
             // two different messages on the same window at the same time shouldn't happen anyway
-            incoming_messages[ ev_P->xclient.window ] = QCString();
+            incoming_messages[ ev_P->xclient.window ] = TQCString();
         incoming_messages[ ev_P->xclient.window ] += buf;
         }
     else
@@ -204,7 +204,7 @@ bool KXMessages::x11Event( XEvent* ev_P )
         }
     if( i < 20 ) // last message fragment
         {
-        emit gotMessage( QString::fromUtf8( incoming_messages[ ev_P->xclient.window ] ));
+        emit gotMessage( TQString::fromUtf8( incoming_messages[ ev_P->xclient.window ] ));
         incoming_messages.remove( ev_P->xclient.window );
         }
     return false; // lets other KXMessages instances get the event too

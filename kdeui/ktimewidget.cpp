@@ -1,5 +1,5 @@
-#include <qdatetimeedit.h>
-#include <qlayout.h>
+#include <tqdatetimeedit.h>
+#include <tqlayout.h>
 
 #include "kdebug.h"
 #include "kdialog.h"
@@ -12,15 +12,15 @@ public:
   QTimeEdit * timeWidget;
 };
 
-KTimeWidget::KTimeWidget(QWidget * parent, const char * name)
-  : QWidget(parent, name)
+KTimeWidget::KTimeWidget(TQWidget * parent, const char * name)
+  : TQWidget(parent, name)
 {
   init();
 }
 
-KTimeWidget::KTimeWidget(const QTime & time,
-                         QWidget * parent, const char * name)
-  : QWidget(parent, name)
+KTimeWidget::KTimeWidget(const TQTime & time,
+                         TQWidget * parent, const char * name)
+  : TQWidget(parent, name)
 {
   init();
 
@@ -36,21 +36,21 @@ void KTimeWidget::init()
 {
   d = new KTimeWidgetPrivate;
 
-  QHBoxLayout *layout = new QHBoxLayout(this, 0, KDialog::spacingHint());
+  TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
   layout->setAutoAdd(true);
 
   d->timeWidget = new QTimeEdit(this);
 
-  connect(d->timeWidget, SIGNAL(valueChanged(const QTime &)),
-          SIGNAL(valueChanged(const QTime &)));
+  connect(d->timeWidget, TQT_SIGNAL(valueChanged(const TQTime &)),
+          TQT_SIGNAL(valueChanged(const TQTime &)));
 }
 
-void KTimeWidget::setTime(const QTime & time)
+void KTimeWidget::setTime(const TQTime & time)
 {
   d->timeWidget->setTime(time);
 }
 
-QTime KTimeWidget::time() const
+TQTime KTimeWidget::time() const
 {
   return d->timeWidget->time();
 }

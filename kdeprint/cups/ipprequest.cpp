@@ -25,8 +25,8 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <qdatetime.h>
-#include <qregexp.h>
+#include <tqdatetime.h>
+#include <tqregexp.h>
 #include <cups/cups.h>
 
 #ifdef HAVE_CONFIG_H
@@ -34,11 +34,11 @@
 #endif
 
 #ifdef HAVE_CUPS_NO_PWD_CACHE
-#include <qcstring.h>
-static QCString cups_authstring = "";
+#include <tqcstring.h>
+static TQCString cups_authstring = "";
 #endif
 
-void dumpRequest(ipp_t *req, bool answer = false, const QString& s = QString::null)
+void dumpRequest(ipp_t *req, bool answer = false, const TQString& s = TQString::null)
 {
 	kdDebug(500) << "==========" << endl;
 	if (s.isEmpty())
@@ -51,29 +51,29 @@ void dumpRequest(ipp_t *req, bool answer = false, const QString& s = QString::nu
 		kdDebug(500) << "Null request" << endl;
 		return;
 	}
-	kdDebug(500) << "State = 0x" << QString::number(req->state, 16) << endl;
-	kdDebug(500) << "ID = 0x" << QString::number(req->request.status.request_id, 16) << endl;
+	kdDebug(500) << "State = 0x" << TQString::number(req->state, 16) << endl;
+	kdDebug(500) << "ID = 0x" << TQString::number(req->request.status.request_id, 16) << endl;
 	if (answer)
 	{
-		kdDebug(500) << "Status = 0x" << QString::number(req->request.status.status_code, 16) << endl;
+		kdDebug(500) << "Status = 0x" << TQString::number(req->request.status.status_code, 16) << endl;
 		kdDebug(500) << "Status message = " << ippErrorString(req->request.status.status_code) << endl;
 	}
 	else
-		kdDebug(500) << "Operation = 0x" << QString::number(req->request.op.operation_id, 16) << endl;
+		kdDebug(500) << "Operation = 0x" << TQString::number(req->request.op.operation_id, 16) << endl;
 	kdDebug(500) << "Version = " << (int)(req->request.status.version[0]) << "." << (int)(req->request.status.version[1]) << endl;
 	kdDebug(500) << endl;
 
 	ipp_attribute_t *attr = req->attrs;
 	while (attr)
 	{
-		QString s = QString::fromLatin1("%1 (0x%2) = ").arg(attr->name).arg(attr->value_tag, 0, 16);
+		TQString s = TQString::fromLatin1("%1 (0x%2) = ").arg(attr->name).arg(attr->value_tag, 0, 16);
 		for (int i=0;i<attr->num_values;i++)
 		{
 			switch (attr->value_tag)
 			{
 				case IPP_TAG_INTEGER:
 				case IPP_TAG_ENUM:
-					s += ("0x"+QString::number(attr->values[i].integer, 16));
+					s += ("0x"+TQString::number(attr->values[i].integer, 16));
 					break;
 				case IPP_TAG_BOOLEAN:
 					s += (attr->values[i].boolean ? "true" : "false");
@@ -101,7 +101,7 @@ void dumpRequest(ipp_t *req, bool answer = false, const QString& s = QString::nu
 	}
 }
 
-QString errorString(int status)
+TQString errorString(int status)
 {
 	QString	str;
 	switch (status)
@@ -122,7 +122,7 @@ QString errorString(int status)
 			str = i18n("The target printer is not accepting print jobs.");
 			break;
 		default:
-			str = QString::fromLocal8Bit(ippErrorString((ipp_status_t)status));
+			str = TQString::fromLocal8Bit(ippErrorString((ipp_status_t)status));
 			break;
 	}
 	return str;
@@ -134,7 +134,7 @@ IppRequest::IppRequest()
 {
 	request_ = 0;
 	port_ = -1;
-	host_ = QString::null;
+	host_ = TQString::null;
 	dump_ = 0;
 	init();
 }
@@ -155,7 +155,7 @@ void IppRequest::init()
 	}
 	request_ = ippNew();
 	//kdDebug(500) << "kdeprint: IPP request, lang=" << KGlobal::locale()->language() << endl;
-        QCString langstr = KGlobal::locale()->language().latin1();
+        TQCString langstr = KGlobal::locale()->language().latin1();
 	cups_lang_t*	lang = cupsLangGet(langstr.data());
 	// default charset to UTF-8 (ugly hack)
 	lang->encoding = CUPS_UTF8;
@@ -164,51 +164,51 @@ void IppRequest::init()
 	cupsLangFree(lang);
 }
 
-void IppRequest::addString_p(int group, int type, const QString& name, const QString& value)
+void IppRequest::addString_p(int group, int type, const TQString& name, const TQString& value)
 {
 	if (!name.isEmpty())
 		ippAddString(request_,(ipp_tag_t)group,(ipp_tag_t)type,name.latin1(),NULL,(value.isEmpty() ? "" : value.local8Bit().data()));
 }
 
-void IppRequest::addStringList_p(int group, int type, const QString& name, const QStringList& values)
+void IppRequest::addStringList_p(int group, int type, const TQString& name, const TQStringList& values)
 {
 	if (!name.isEmpty())
 	{
 		ipp_attribute_t	*attr = ippAddStrings(request_,(ipp_tag_t)group,(ipp_tag_t)type,name.latin1(),(int)(values.count()),NULL,NULL);
 		int	i(0);
-		for (QStringList::ConstIterator it=values.begin(); it != values.end(); ++it, i++)
+		for (TQStringList::ConstIterator it=values.begin(); it != values.end(); ++it, i++)
 			attr->values[i].string.text = strdup((*it).local8Bit());
 	}
 }
 
-void IppRequest::addInteger_p(int group, int type, const QString& name, int value)
+void IppRequest::addInteger_p(int group, int type, const TQString& name, int value)
 {
 	if (!name.isEmpty()) ippAddInteger(request_,(ipp_tag_t)group,(ipp_tag_t)type,name.latin1(),value);
 }
 
-void IppRequest::addIntegerList_p(int group, int type, const QString& name, const QValueList<int>& values)
+void IppRequest::addIntegerList_p(int group, int type, const TQString& name, const TQValueList<int>& values)
 {
 	if (!name.isEmpty())
 	{
 		ipp_attribute_t	*attr = ippAddIntegers(request_,(ipp_tag_t)group,(ipp_tag_t)type,name.latin1(),(int)(values.count()),NULL);
 		int	i(0);
-		for (QValueList<int>::ConstIterator it=values.begin(); it != values.end(); ++it, i++)
+		for (TQValueList<int>::ConstIterator it=values.begin(); it != values.end(); ++it, i++)
 			attr->values[i].integer = *it;
 	}
 }
 
-void IppRequest::addBoolean(int group, const QString& name, bool value)
+void IppRequest::addBoolean(int group, const TQString& name, bool value)
 {
 	if (!name.isEmpty()) ippAddBoolean(request_,(ipp_tag_t)group,name.latin1(),(char)value);
 }
 
-void IppRequest::addBoolean(int group, const QString& name, const QValueList<bool>& values)
+void IppRequest::addBoolean(int group, const TQString& name, const TQValueList<bool>& values)
 {
 	if (!name.isEmpty())
 	{
 		ipp_attribute_t	*attr = ippAddBooleans(request_,(ipp_tag_t)group,name.latin1(),(int)(values.count()),NULL);
 		int	i(0);
-		for (QValueList<bool>::ConstIterator it=values.begin(); it != values.end(); ++it, i++)
+		for (TQValueList<bool>::ConstIterator it=values.begin(); it != values.end(); ++it, i++)
 			attr->values[i].boolean = (char)(*it);
 	}
 }
@@ -224,7 +224,7 @@ int IppRequest::status()
 	return (request_ ? request_->request.status.status_code : (connect_ ? cupsLastError() : -2));
 }
 
-QString IppRequest::statusMessage()
+TQString IppRequest::statusMessage()
 {
 	QString	msg;
 	switch (status())
@@ -242,7 +242,7 @@ QString IppRequest::statusMessage()
 	return msg;
 }
 
-bool IppRequest::integerValue_p(const QString& name, int& value, int type)
+bool IppRequest::integerValue_p(const TQString& name, int& value, int type)
 {
 	if (!request_ || name.isEmpty()) return false;
 	ipp_attribute_t	*attr = ippFindAttribute(request_, name.latin1(), (ipp_tag_t)type);
@@ -254,19 +254,19 @@ bool IppRequest::integerValue_p(const QString& name, int& value, int type)
 	else return false;
 }
 
-bool IppRequest::stringValue_p(const QString& name, QString& value, int type)
+bool IppRequest::stringValue_p(const TQString& name, TQString& value, int type)
 {
 	if (!request_ || name.isEmpty()) return false;
 	ipp_attribute_t	*attr = ippFindAttribute(request_, name.latin1(), (ipp_tag_t)type);
 	if (attr)
 	{
-		value = QString::fromLocal8Bit(attr->values[0].string.text);
+		value = TQString::fromLocal8Bit(attr->values[0].string.text);
 		return true;
 	}
 	else return false;
 }
 
-bool IppRequest::stringListValue_p(const QString& name, QStringList& values, int type)
+bool IppRequest::stringListValue_p(const TQString& name, TQStringList& values, int type)
 {
 	if (!request_ || name.isEmpty()) return false;
 	ipp_attribute_t	*attr = ippFindAttribute(request_, name.latin1(), (ipp_tag_t)type);
@@ -274,13 +274,13 @@ bool IppRequest::stringListValue_p(const QString& name, QStringList& values, int
 	if (attr)
 	{
 		for (int i=0;i<attr->num_values;i++)
-			values.append(QString::fromLocal8Bit(attr->values[i].string.text));
+			values.append(TQString::fromLocal8Bit(attr->values[i].string.text));
 		return true;
 	}
 	else return false;
 }
 
-bool IppRequest::boolean(const QString& name, bool& value)
+bool IppRequest::boolean(const TQString& name, bool& value)
 {
 	if (!request_ || name.isEmpty()) return false;
 	ipp_attribute_t	*attr = ippFindAttribute(request_, name.latin1(), IPP_TAG_BOOLEAN);
@@ -292,7 +292,7 @@ bool IppRequest::boolean(const QString& name, bool& value)
 	else return false;
 }
 
-bool IppRequest::doFileRequest(const QString& res, const QString& filename)
+bool IppRequest::doFileRequest(const TQString& res, const TQString& filename)
 {
 	QString	myHost = host_;
 	int 	myPort = port_;
@@ -319,7 +319,7 @@ bool IppRequest::doFileRequest(const QString& res, const QString& filename)
 
 	if (dump_ > 0)
 	{
-		dumpRequest(request_, false, "Request to "+myHost+":"+QString::number(myPort));
+		dumpRequest(request_, false, "Request to "+myHost+":"+TQString::number(myPort));
 	}
 
 	request_ = cupsDoFileRequest(HTTP, request_, (res.isEmpty() ? "/" : res.latin1()), (filename.isEmpty() ? NULL : filename.latin1()));
@@ -348,7 +348,7 @@ bool IppRequest::doFileRequest(const QString& res, const QString& filename)
 	return true;
 }
 
-bool IppRequest::htmlReport(int group, QTextStream& output)
+bool IppRequest::htmlReport(int group, TQTextStream& output)
 {
 	if (!request_) return false;
 	// start table
@@ -430,9 +430,9 @@ bool IppRequest::htmlReport(int group, QTextStream& output)
 	return true;
 }
 
-QMap<QString,QString> IppRequest::toMap(int group)
+TQMap<TQString,TQString> IppRequest::toMap(int group)
 {
-	QMap<QString,QString>	opts;
+	TQMap<TQString,TQString>	opts;
 	if (request_)
 	{
 		ipp_attribute_t	*attr = first();
@@ -450,19 +450,19 @@ QMap<QString,QString> IppRequest::toMap(int group)
 				{
 					case IPP_TAG_INTEGER:
 					case IPP_TAG_ENUM:
-						value.append(QString::number(attr->values[i].integer)).append(",");
+						value.append(TQString::number(attr->values[i].integer)).append(",");
 						break;
 					case IPP_TAG_BOOLEAN:
 						value.append((attr->values[i].boolean ? "true" : "false")).append(",");
 						break;
 					case IPP_TAG_RANGE:
 						if (attr->values[i].range.lower > 0)
-							value.append(QString::number(attr->values[i].range.lower));
+							value.append(TQString::number(attr->values[i].range.lower));
 						if (attr->values[i].range.lower != attr->values[i].range.upper)
 						{
 							value.append("-");
 							if (attr->values[i].range.upper > 0)
-								value.append(QString::number(attr->values[i].range.upper));
+								value.append(TQString::number(attr->values[i].range.upper));
 						}
 						value.append(",");
 						break;
@@ -476,7 +476,7 @@ QMap<QString,QString> IppRequest::toMap(int group)
 					case IPP_TAG_TEXTLANG:
 					case IPP_TAG_CHARSET:
 					case IPP_TAG_LANGUAGE:
-						value.append(QString::fromLocal8Bit(attr->values[i].string.text)).append(",");
+						value.append(TQString::fromLocal8Bit(attr->values[i].string.text)).append(",");
 						break;
 					default:
 						break;
@@ -484,14 +484,14 @@ QMap<QString,QString> IppRequest::toMap(int group)
 			}
 			if (!value.isEmpty())
 				value.truncate(value.length()-1);
-			opts[QString::fromLocal8Bit(attr->name)] = value;
+			opts[TQString::fromLocal8Bit(attr->name)] = value;
 			attr = attr->next;
 		}
 	}
 	return opts;
 }
 
-void IppRequest::setMap(const QMap<QString,QString>& opts)
+void IppRequest::setMap(const TQMap<TQString,TQString>& opts)
 {
 	if (!request_)
 		return;
@@ -499,7 +499,7 @@ void IppRequest::setMap(const QMap<QString,QString>& opts)
 	QRegExp	re("^\"|\"$");
 	cups_option_t	*options = NULL;
 	int	n = 0;
-	for (QMap<QString,QString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
+	for (TQMap<TQString,TQString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
 	{
 		if (it.key().startsWith("kde-") || it.key().startsWith("app-"))
 			continue;

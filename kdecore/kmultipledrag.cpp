@@ -22,13 +22,13 @@
 
 #ifndef QT_NO_DRAGANDDROP
 
-KMultipleDrag::KMultipleDrag( QWidget *dragSource, const char *name )
-    : QDragObject( dragSource, name )
+KMultipleDrag::KMultipleDrag( TQWidget *dragSource, const char *name )
+    : TQDragObject( dragSource, name )
 {
     m_dragObjects.setAutoDelete( true );
 }
 
-void KMultipleDrag::addDragObject( QDragObject *dragObject )
+void KMultipleDrag::addDragObject( TQDragObject *dragObject )
 {
     //kdDebug() << "KMultipleDrag::addDragObject" << endl;
     m_dragObjects.append( dragObject );
@@ -39,11 +39,11 @@ void KMultipleDrag::addDragObject( QDragObject *dragObject )
     m_numberFormats.append( i ); // e.g. if it supports two formats, 0 and 1, store 2.
 }
 
-QByteArray KMultipleDrag::encodedData( const char *mime ) const
+TQByteArray KMultipleDrag::encodedData( const char *mime ) const
 {
     //kdDebug() << "KMultipleDrag::encodedData " << mime << endl;
     // Iterate over the drag objects, and find the format in the right one
-    QPtrListIterator<QDragObject> it( m_dragObjects );
+    TQPtrListIterator<TQDragObject> it( m_dragObjects );
     for ( ; it.current(); ++it )
     {
         for ( int i = 0; it.current()->format( i ); ++i )
@@ -52,7 +52,7 @@ QByteArray KMultipleDrag::encodedData( const char *mime ) const
                 return it.current()->encodedData( mime );
         }
     }
-    return QByteArray();
+    return TQByteArray();
 }
 
 const char* KMultipleDrag::format( int i ) const
@@ -64,9 +64,9 @@ const char* KMultipleDrag::format( int i ) const
     // i=1 -> textdrag->format( 0 )
     // i=2 -> textdrag->format( 1 )
     // etc.
-    QValueList<int>::ConstIterator nit = m_numberFormats.begin();
-    QValueList<int>::ConstIterator nend = m_numberFormats.end();
-    QPtrListIterator<QDragObject> it( m_dragObjects );
+    TQValueList<int>::ConstIterator nit = m_numberFormats.begin();
+    TQValueList<int>::ConstIterator nend = m_numberFormats.end();
+    TQPtrListIterator<TQDragObject> it( m_dragObjects );
     for ( ; nit != nend && i >= *nit ; ++nit, ++it )
         i -= *nit;
     if ( it.current() )

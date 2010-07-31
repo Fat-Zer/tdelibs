@@ -21,8 +21,8 @@
 #ifndef BACKGROUNDTEST_H
 #define BACKGROUNDTEST_H
 
-#include <qobject.h>
-#include <qdatetime.h>
+#include <tqobject.h>
+#include <tqdatetime.h>
 
 #include "backgroundchecker.h"
 
@@ -34,11 +34,11 @@ public:
 
 protected slots:
     void slotDone();
-    void slotMisspelling( const QString& word, int start );
+    void slotMisspelling( const TQString& word, int start );
 
 private:
     KSpell2::BackgroundChecker *m_checker;
-    QTime m_timer;
+    TQTime m_timer;
     int m_len;
 };
 

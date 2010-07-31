@@ -25,7 +25,7 @@
 #include "kplayobjectcreator.moc"
 #include "kioinputstream_impl.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <kdebug.h>
 
@@ -38,13 +38,13 @@ KDE::PlayObjectCreator::~PlayObjectCreator()
 {
 }
 
-bool KDE::PlayObjectCreator::create(const KURL& url, bool createBUS, const QObject* receiver, const char* slot)
+bool KDE::PlayObjectCreator::create(const KURL& url, bool createBUS, const TQObject* receiver, const char* slot)
 {
 	// no need to go any further, and I hate deep indentation
 	if (m_server.isNull() || url.isEmpty() )
 		return false;
 
-	connect( this, SIGNAL( playObjectCreated( Arts::PlayObject ) ),
+	connect( this, TQT_SIGNAL( playObjectCreated( Arts::PlayObject ) ),
 			receiver, slot );
 
 	// check if the URL is a local file
@@ -57,8 +57,8 @@ bool KDE::PlayObjectCreator::create(const KURL& url, bool createBUS, const QObje
 		m_instream = Arts::KIOInputStream::_from_base(instream_impl);
 
 		// signal will be called once the ioslave knows the mime-type of the stream
-		connect(instream_impl, SIGNAL(mimeTypeFound(const QString &)),
-				 this, SLOT(slotMimeType(const QString &)));
+		connect(instream_impl, TQT_SIGNAL(mimeTypeFound(const TQString &)),
+				 this, TQT_SLOT(slotMimeType(const TQString &)));
 
 		// GO!
 		m_instream.openURL(url.url().latin1());
@@ -71,22 +71,22 @@ bool KDE::PlayObjectCreator::create(const KURL& url, bool createBUS, const QObje
 	// usual stuff if we have a local file
 	KMimeType::Ptr mimetype = KMimeType::findByURL(url);
 	emit playObjectCreated (
-		m_server.createPlayObjectForURL(std::string(QFile::encodeName(url.path())), 
+		m_server.createPlayObjectForURL(std::string(TQFile::encodeName(url.path())), 
 						 std::string(mimetype->name().latin1()), 
 						 createBUS)
 		);
 	return true;
 }
 
-void KDE::PlayObjectCreator::slotMimeType(const QString& mimetype)
+void KDE::PlayObjectCreator::slotMimeType(const TQString& mimetype)
 {
 
 	kdDebug( 400 ) << "slotMimeType called: " << mimetype << endl;
 
-	QString mimetype_copy = mimetype;
+	TQString mimetype_copy = mimetype;
 
 	if ( mimetype_copy == "application/octet-stream" )
-	    mimetype_copy = QString("audio/x-mp3");
+	    mimetype_copy = TQString("audio/x-mp3");
 
 	if (mimetype_copy == "application/x-zerosize")
 		emit playObjectCreated(Arts::PlayObject::null());

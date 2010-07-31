@@ -38,14 +38,14 @@ class QLabel;
 class KIO_EXPORT KFileIconViewItem : public KIconViewItem
 {
 public:
-    KFileIconViewItem( QIconView *parent, const QString &text,
-		       const QPixmap &pixmap,
+    KFileIconViewItem( TQIconView *parent, const TQString &text,
+		       const TQPixmap &pixmap,
 		       KFileItem *fi )
 	: KIconViewItem( parent, text, pixmap ), inf( fi ) {}
     /**
      * @since 3.1
      */
-    KFileIconViewItem( QIconView *parent, KFileItem *fi )
+    KFileIconViewItem( TQIconView *parent, KFileItem *fi )
 	: KIconViewItem( parent ), inf( fi ) {}
 
     virtual ~KFileIconViewItem();
@@ -83,10 +83,10 @@ class KIO_EXPORT KFileIconView : public KIconView, public KFileView
     Q_OBJECT
 
 public:
-    KFileIconView(QWidget *parent, const char *name);
+    KFileIconView(TQWidget *parent, const char *name);
     virtual ~KFileIconView();
 
-    virtual QWidget *widget() { return this; }
+    virtual TQWidget *widget() { return this; }
     virtual void clearView();
     virtual void setAutoUpdate( bool ) {} // ### unused. remove in KDE4
 
@@ -137,15 +137,15 @@ public:
 
     void ensureItemVisible( const KFileItem * );
 
-    virtual void setSorting(QDir::SortSpec sort);
+    virtual void setSorting(TQDir::SortSpec sort);
 
-    virtual void readConfig( KConfig *, const QString& group = QString::null );
-    virtual void writeConfig( KConfig *, const QString& group = QString::null);
+    virtual void readConfig( KConfig *, const TQString& group = TQString::null );
+    virtual void writeConfig( KConfig *, const TQString& group = TQString::null);
 
     // for KMimeTypeResolver
     void mimeTypeDeterminationFinished();
     void determineIcon( KFileIconViewItem *item );
-    QScrollView *scrollWidget() const { return (QScrollView*) this; }
+    TQScrollView *scrollWidget() const { return (TQScrollView*) this; }
     void setAcceptDrops(bool b) 
     {  
       KIconView::setAcceptDrops(b); 
@@ -173,37 +173,37 @@ public slots:
 
 protected:
     /**
-     * Reimplemented to not let QIconView eat return-key events
+     * Reimplemented to not let TQIconView eat return-key events
      */
-    virtual void keyPressEvent( QKeyEvent * );
+    virtual void keyPressEvent( TQKeyEvent * );
 
     /**
      * Reimplemented to remove an eventual tooltip
      */
-    virtual void hideEvent( QHideEvent * );
+    virtual void hideEvent( TQHideEvent * );
 
     // ### workaround for Qt3 bug (see #35080)
-    virtual void showEvent( QShowEvent * );
+    virtual void showEvent( TQShowEvent * );
 
-    virtual bool eventFilter( QObject *o, QEvent *e );
+    virtual bool eventFilter( TQObject *o, TQEvent *e );
 
     // DND support
-    virtual QDragObject *dragObject();
-    virtual void contentsDragEnterEvent( QDragEnterEvent *e );
-    virtual void contentsDragMoveEvent( QDragMoveEvent *e );
-    virtual void contentsDragLeaveEvent( QDragLeaveEvent *e );
-    virtual void contentsDropEvent( QDropEvent *ev );
+    virtual TQDragObject *dragObject();
+    virtual void contentsDragEnterEvent( TQDragEnterEvent *e );
+    virtual void contentsDragMoveEvent( TQDragMoveEvent *e );
+    virtual void contentsDragLeaveEvent( TQDragLeaveEvent *e );
+    virtual void contentsDropEvent( TQDropEvent *ev );
 
     // KDE4: Make virtual
-    bool acceptDrag(QDropEvent* e ) const;
+    bool acceptDrag(TQDropEvent* e ) const;
 
 private slots:
-    void selected( QIconViewItem *item );
-    void slotActivate( QIconViewItem * );
-    void highlighted( QIconViewItem *item );
-    void showToolTip( QIconViewItem *item );
+    void selected( TQIconViewItem *item );
+    void slotActivate( TQIconViewItem * );
+    void highlighted( TQIconViewItem *item );
+    void showToolTip( TQIconViewItem *item );
     void removeToolTip();
-    void slotActivateMenu( QIconViewItem *, const QPoint& );
+    void slotActivateMenu( TQIconViewItem *, const TQPoint& );
     void slotSelectionChanged();
 
     void slotSmallColumns();
@@ -211,7 +211,7 @@ private slots:
     void slotPreviewsToggled( bool );
 
     void slotPreviewResult( KIO::Job * );
-    void gotPreview( const KFileItem *item, const QPixmap& pix );
+    void gotPreview( const KFileItem *item, const TQPixmap& pix );
     void slotAutoOpen();
 
 signals:
@@ -221,25 +221,25 @@ signals:
      * user dropped on empty space.
      * @since 3.2
      */
-    void dropped(QDropEvent *event, KFileItem *fileItem);
+    void dropped(TQDropEvent *event, KFileItem *fileItem);
     /**
      * The user dropped the URLs @p urls.
      * @p url points to the item dropped on or can be empty if the
      * user dropped on empty space.
      * @since 3.2
      */
-    void dropped(QDropEvent *event, const KURL::List &urls, const KURL &url);
+    void dropped(TQDropEvent *event, const KURL::List &urls, const KURL &url);
 
 private:
     KMimeTypeResolver<KFileIconViewItem,KFileIconView> *m_resolver;
 
-    QLabel *toolTip;
+    TQLabel *toolTip;
     int th;
     int myIconSize;
 
-    virtual void insertItem(QIconViewItem *a, QIconViewItem *b) { KIconView::insertItem(a, b); }
-    virtual void setSelectionMode(QIconView::SelectionMode m) { KIconView::setSelectionMode(m); }
-    virtual void setSelected(QIconViewItem *i, bool a, bool b) { KIconView::setSelected(i, a, b); }
+    virtual void insertItem(TQIconViewItem *a, TQIconViewItem *b) { KIconView::insertItem(a, b); }
+    virtual void setSelectionMode(TQIconView::SelectionMode m) { KIconView::setSelectionMode(m); }
+    virtual void setSelected(TQIconViewItem *i, bool a, bool b) { KIconView::setSelected(i, a, b); }
 
     bool canPreview( const KFileItem * ) const;
     void stopPreview();

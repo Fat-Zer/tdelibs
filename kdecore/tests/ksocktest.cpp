@@ -37,12 +37,12 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-bool check(QString txt, QString a, QString b)
+bool check(TQString txt, TQString a, TQString b)
 {
   if (a.isEmpty())
-     a = QString::null;
+     a = TQString::null;
   if (b.isEmpty())
-     b = QString::null;
+     b = TQString::null;
   if (a == b) {
     kdDebug() << txt << " : checking '" << a << "' against expected value '" << b << "'... " << "ok" << endl;
   }
@@ -63,7 +63,7 @@ main(int argc, char *argv[])
 
    KApplication app;
 
-   QString host, port;
+   TQString host, port;
 
    KInetSocketAddress host_address("213.203.58.36", 80);
 
@@ -73,7 +73,7 @@ main(int argc, char *argv[])
    printf( "resolve result: %d\n", result );
    check("KExtendedSocket::resolve() host=", host, "www.kde.org");
 //   check("KExtendedSocket::resolve() port=", port, "http");
-   QPtrList<KAddressInfo> list;
+   TQPtrList<KAddressInfo> list;
    list = KExtendedSocket::lookup("www.kde.org", "http", KExtendedSocket::inetSocket);
    for(KAddressInfo *info = list.first(); info; info = list.next())
    {
@@ -88,7 +88,7 @@ main(int argc, char *argv[])
 
    int err;
 
-   QPtrList<KAddressInfo> cns = KExtendedSocket::lookup("www.kde.org", 0, KExtendedSocket::canonName, &err);
+   TQPtrList<KAddressInfo> cns = KExtendedSocket::lookup("www.kde.org", 0, KExtendedSocket::canonName, &err);
    for (KAddressInfo *x = cns.first(); x; x = cns.next()) {
         const char *canon = x->canonname();
         qWarning( "Lookup: %s", canon ? canon : "<Null>");
@@ -96,7 +96,7 @@ main(int argc, char *argv[])
    check("KExtendedSocket::lookup() canonical", cns.first()->canonname(), "www.kde.org");
 
    KExtendedSocket * sock2 = new KExtendedSocket( "www.kde.org", 80 );
-   check( "KExtendedSocket ctor / connect", QString::number( sock2->connect() ), "0" );
+   check( "KExtendedSocket ctor / connect", TQString::number( sock2->connect() ), "0" );
 
    printf("FD %d\n", sock2->fd());
 

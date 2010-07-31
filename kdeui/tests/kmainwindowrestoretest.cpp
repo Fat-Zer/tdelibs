@@ -3,12 +3,12 @@
 
 #include <kapplication.h>
 
-#include <qlabel.h>
+#include <tqlabel.h>
 
 #define MAKE_WINDOW( kind, title ) do { \
   MainWin##kind * m = new MainWin##kind; \
   m->setCaption( title ); \
-  m->setCentralWidget( new QLabel( title, m ) ); \
+  m->setCentralWidget( new TQLabel( title, m ) ); \
   m->show(); \
 } while ( false )
 

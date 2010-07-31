@@ -25,7 +25,7 @@
 #ifndef KSTREAMSOCKET_H
 #define KSTREAMSOCKET_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include "kclientsocketbase.h"
 
@@ -54,30 +54,30 @@ class KStreamSocketPrivate;
  *
  * Sample usage:
  * \code
- *   QByteArray httpGet(const QString& hostname)
+ *   TQByteArray httpGet(const TQString& hostname)
  *   {
  *     KStreamSocket socket(hostname, "http");
  *     if (!socket.connect())
- *       return QByteArray();
- *     QByteArray data = socket.readAll();
+ *       return TQByteArray();
+ *     TQByteArray data = socket.readAll();
  *     return data;
  *   }
  * \endcode
  *
  * Here's another sample, showing asynchronous operation:
  * \code
- *  DataRetriever::DataRetriever(const QString& hostname, const QString& port)
+ *  DataRetriever::DataRetriever(const TQString& hostname, const TQString& port)
  *    : socket(hostname, port)
  *  {
  *    // connect signals to our slots
- *    QObject::connect(&socket, SIGNAL(connected(const KResolverEntry&)),
- *                     this, SLOT(slotSocketConnected()));
- *    QObject::connect(&socket, SIGNAL(gotError(int)),
- *                     this, SLOT(slotSocketError(int)));
- *    QObject::connect(&socket, SIGNAL(readyRead()),
- *                     this, SLOT(slotSocketReadyToRead()));
- *    QObject::connect(&socket, SIGNAL(readyWrite()),
- *                     this, SLOT(slotSocketReadyToWrite()));
+ *    TQObject::connect(&socket, TQT_SIGNAL(connected(const KResolverEntry&)),
+ *                     this, TQT_SLOT(slotSocketConnected()));
+ *    TQObject::connect(&socket, TQT_SIGNAL(gotError(int)),
+ *                     this, TQT_SLOT(slotSocketError(int)));
+ *    TQObject::connect(&socket, TQT_SIGNAL(readyRead()),
+ *                     this, TQT_SLOT(slotSocketReadyToRead()));
+ *    TQObject::connect(&socket, TQT_SIGNAL(readyWrite()),
+ *                     this, TQT_SLOT(slotSocketReadyToWrite()));
  *
  *    // set non-blocking mode in order to work asynchronously
  *    socket.setBlocking(false);
@@ -104,11 +104,11 @@ public:
    *
    * @param node	destination host
    * @param service	destination service to connect to
-   * @param parent	the parent QObject object
+   * @param parent	the parent TQObject object
    * @param name        name for this object
    */
-  KStreamSocket(const QString& node = QString::null, const QString& service = QString::null,
-		QObject* parent = 0L, const char *name = 0L);
+  KStreamSocket(const TQString& node = TQString::null, const TQString& service = TQString::null,
+		TQObject* parent = 0L, const char *name = 0L);
 
   /**
    * Destructor. This closes the socket.
@@ -142,7 +142,7 @@ public:
    * Binds this socket to the given nodename and service,
    * or use the default ones if none are given. In order to bind to a service
    * and allow the operating system to choose the interface, set @p node to
-   * QString::null.
+   * TQString::null.
    * 
    * Reimplemented from KClientSocketBase.
    *
@@ -161,14 +161,14 @@ public:
    * @param node	the nodename
    * @param service	the service
    */
-  virtual bool bind(const QString& node = QString::null,
-		    const QString& service = QString::null);
+  virtual bool bind(const TQString& node = TQString::null,
+		    const TQString& service = TQString::null);
 
   /**
    * Reimplemented from KClientSocketBase. Connect this socket to this
    * specific address.
    *
-   * Unlike @ref bind(const QString&, const QString&) above, this function
+   * Unlike @ref bind(const TQString&, const TQString&) above, this function
    * really does bind the socket. No lookup is performed. The @ref bound
    * signal will be emitted.
    */
@@ -196,8 +196,8 @@ public:
    * @param node	the remote node to connect to
    * @param service	the service on the remote node to connect to
    */
-  virtual bool connect(const QString& node = QString::null,
-		       const QString& service = QString::null);
+  virtual bool connect(const TQString& node = TQString::null,
+		       const TQString& service = TQString::null);
 
   /**
    * Unshadowing from KClientSocketBase.

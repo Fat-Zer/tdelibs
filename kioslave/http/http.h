@@ -30,9 +30,9 @@
 #include <stdio.h>
 #include <time.h>
 
-#include <qptrlist.h>
-#include <qstrlist.h>
-#include <qstringlist.h>
+#include <tqptrlist.h>
+#include <tqstrlist.h>
+#include <tqstringlist.h>
 
 #include <kurl.h>
 #include "kio/tcpslavebase.h"
@@ -46,12 +46,12 @@ namespace KIO {
     class AuthInfo;
 }
 
-class HTTPProtocol : public QObject, public KIO::TCPSlaveBase
+class HTTPProtocol : public TQObject, public KIO::TCPSlaveBase
 {
   Q_OBJECT
 public:
-  HTTPProtocol( const QCString &protocol, const QCString &pool,
-                const QCString &app );
+  HTTPProtocol( const TQCString &protocol, const TQCString &pool,
+                const TQCString &app );
   virtual ~HTTPProtocol();
 
   /** HTTP version **/
@@ -75,11 +75,11 @@ public:
       doProxy = false;
     }
 
-    QString hostname;
-    QString encoded_hostname;
+    TQString hostname;
+    TQString encoded_hostname;
     short unsigned int port;
-    QString user;
-    QString passwd;
+    TQString user;
+    TQString passwd;
     bool  doProxy;
   };
 
@@ -92,7 +92,7 @@ public:
       depth = 0;
     }
 
-    QString desturl;
+    TQString desturl;
     bool overwrite;
     int depth;
   };
@@ -121,44 +121,44 @@ public:
       creationDate = 0;
     }
 
-    QString hostname;
-    QString encoded_hostname;
+    TQString hostname;
+    TQString encoded_hostname;
     short unsigned int port;
-    QString user;
-    QString passwd;
-    QString path;
-    QString query;
+    TQString user;
+    TQString passwd;
+    TQString path;
+    TQString query;
     KIO::HTTP_METHOD method;
     KIO::CacheControl cache;
     KIO::filesize_t offset;
     bool doProxy;
     KURL url;
-    QString window;                 // Window Id this request is related to.
-    QString referrer;
-    QString charsets;
-    QString languages;
+    TQString window;                 // Window Id this request is related to.
+    TQString referrer;
+    TQString charsets;
+    TQString languages;
     bool allowCompressedPage;
     bool disablePassDlg;
-    QString userAgent;
-    QString id;
+    TQString userAgent;
+    TQString id;
     DAVRequest davData;
 
     bool bNoAuth; // Do not authenticate
 
     // Cache related
-    QString cef; // Cache Entry File belonging to this URL.
+    TQString cef; // Cache Entry File belonging to this URL.
     bool bUseCache; // Whether the cache is active
     bool bCachedRead; // Whether the file is to be read from m_fcache.
     bool bCachedWrite; // Whether the file is to be written to m_fcache.
     FILE* fcache; // File stream of a cache entry
-    QString etag; // ETag header.
-    QString lastModified; // Last modified.
+    TQString etag; // ETag header.
+    TQString lastModified; // Last modified.
     bool bMustRevalidate; // Cache entry is expired.
     long cacheExpireDateOffset; // Position in the cache entry where the
                                   // 16 byte expire date is stored.
     time_t expireDate; // Date when the cache entry will expire
     time_t creationDate; // Date when the cache entry was created
-    QString strCharset; // Charset
+    TQString strCharset; // Charset
 
     // Indicates whether an error-page or error-msg should is preferred.
     bool bErrorPage;
@@ -170,22 +170,22 @@ public:
 
   struct DigestAuthInfo
   {
-    QCString nc;
-    QCString qop;
-    QCString realm;
-    QCString nonce;
-    QCString method;
-    QCString cnonce;
-    QCString username;
-    QCString password;
-    QStrList digestURI;
-    QCString algorithm;
-    QCString entityBody;
+    TQCString nc;
+    TQCString qop;
+    TQCString realm;
+    TQCString nonce;
+    TQCString method;
+    TQCString cnonce;
+    TQCString username;
+    TQCString password;
+    TQStrList digestURI;
+    TQCString algorithm;
+    TQCString entityBody;
   };
 
 //---------------------- Re-implemented methods ----------------
-  virtual void setHost(const QString& host, int port, const QString& user,
-                       const QString& pass);
+  virtual void setHost(const TQString& host, int port, const TQString& user,
+                       const TQString& pass);
 
   virtual void slave_status();
 
@@ -208,15 +208,15 @@ public:
   void davGeneric( const KURL& url, KIO::HTTP_METHOD method );
 
   // Send requests to lock and unlock resources
-  void davLock( const KURL& url, const QString& scope,
-                const QString& type, const QString& owner );
+  void davLock( const KURL& url, const TQString& scope,
+                const TQString& type, const TQString& owner );
   void davUnlock( const KURL& url );
 
   // Calls httpClose() and finished()
   void davFinished();
 
   // Handle error conditions
-  QString davError( int code = -1, QString url = QString::null );
+  TQString davError( int code = -1, TQString url = TQString::null );
 //---------------------------- End WebDAV -----------------------
 
   /**
@@ -228,7 +228,7 @@ public:
    * 5 - DAV LOCK     (see
    * 6 - DAV UNLOCK     README.webdav)
    */
-  virtual void special( const QByteArray &data );
+  virtual void special( const TQByteArray &data );
 
   virtual void mimetype( const KURL& url);
 
@@ -239,7 +239,7 @@ public:
   virtual void closeConnection(); // Forced close of connection
 
   void post( const KURL& url );
-  void multiGet(const QByteArray &data);
+  void multiGet(const TQByteArray &data);
   bool checkRequestURL( const KURL& );
   void cacheUpdate( const KURL &url, bool nocache, time_t expireDate);
 
@@ -248,8 +248,8 @@ public:
   bool isOffline(const KURL &url); // Check network status
 
 protected slots:
-  void slotData(const QByteArray &);
-  void error( int _errid, const QString &_text );
+  void slotData(const TQByteArray &);
+  void error( int _errid, const TQString &_text );
 
 protected:
   int readChunked();    // Read a chunk
@@ -281,7 +281,7 @@ protected:
     * is nececesary because transfer encodings and
     * content encodings must be handled separately.
     */
-  void addEncoding(QString, QStringList &);
+  void addEncoding(TQString, TQStringList &);
 
   void configAuth( char *, bool );
 
@@ -305,37 +305,37 @@ protected:
   /**
    * Performs a WebDAV stat or list
    */
-  void davSetRequest( const QCString& requestXML );
+  void davSetRequest( const TQCString& requestXML );
   void davStatList( const KURL& url, bool stat = true );
-  void davParsePropstats( const QDomNodeList& propstats, KIO::UDSEntry& entry );
-  void davParseActiveLocks( const QDomNodeList& activeLocks,
+  void davParsePropstats( const TQDomNodeList& propstats, KIO::UDSEntry& entry );
+  void davParseActiveLocks( const TQDomNodeList& activeLocks,
                             uint& lockCount );
 
   /**
    * Parses a date & time string
    */
-  long parseDateTime( const QString& input, const QString& type );
+  long parseDateTime( const TQString& input, const TQString& type );
 
   /**
    * Returns the error code from a "HTTP/1.1 code Code Name" string
    */
-  int codeFromResponse( const QString& response );
+  int codeFromResponse( const TQString& response );
 
   /**
    * Extracts locks from metadata
    * Returns the appropriate If: header
    */
-  QString davProcessLocks();
+  TQString davProcessLocks();
 
   /**
    * Send a cookie to the cookiejar
    */
-  void addCookies( const QString &url, const QCString &cookieHeader);
+  void addCookies( const TQString &url, const TQCString &cookieHeader);
 
   /**
    * Look for cookies in the cookiejar
    */
-  QString findCookies( const QString &url);
+  TQString findCookies( const TQString &url);
 
   /**
    * Do a cache lookup for the current url. (m_state.url)
@@ -355,7 +355,7 @@ protected:
    *
    * Set the contents type of the cache entry to 'mimetype'.
    */
-  void createCacheEntry(const QString &mimetype, time_t expireDate);
+  void createCacheEntry(const TQString &mimetype, time_t expireDate);
 
   /**
    * Write data to cache.
@@ -413,7 +413,7 @@ protected:
    * Returns any pre-cached proxy authentication info
    * info in HTTP header format.
    */
-  QString proxyAuthenticationHeader();
+  TQString proxyAuthenticationHeader();
 
   /**
    * Retrieves authorization info from cache or user.
@@ -428,32 +428,32 @@ protected:
   /**
    * Creates the entity-header for Basic authentication.
    */
-  QString createBasicAuth( bool isForProxy = false );
+  TQString createBasicAuth( bool isForProxy = false );
 
   /**
    * Creates the entity-header for Digest authentication.
    */
-  QString createDigestAuth( bool isForProxy = false );
+  TQString createDigestAuth( bool isForProxy = false );
 
   /**
    * Creates the entity-header for NTLM authentication.
    */
-  QString createNTLMAuth( bool isForProxy = false );
+  TQString createNTLMAuth( bool isForProxy = false );
 
   /**
    * Creates the entity-header for Negotiate authentication.
    */
-  QString createNegotiateAuth();
+  TQString createNegotiateAuth();
 
   /**
    * create GSS error string
    */
-  QCString gssError( int major_status, int minor_status );
+  TQCString gssError( int major_status, int minor_status );
 
   /**
    * Calcualtes the message digest response based on RFC 2617.
    */
-  void calculateResponse( DigestAuthInfo &info, QCString &Response );
+  void calculateResponse( DigestAuthInfo &info, TQCString &Response );
 
   /**
    * Prompts the user for authorization retry.
@@ -468,14 +468,14 @@ protected:
 protected:
   HTTPState m_state;
   HTTPRequest m_request;
-  QPtrList<HTTPRequest> m_requestQueue;
+  TQPtrList<HTTPRequest> m_requestQueue;
 
   bool m_bBusy; // Busy handling request queue.
   bool m_bEOF;
   bool m_bEOD;
 
 //--- Settings related to a single response only
-  QStringList m_responseHeader; // All headers
+  TQStringList m_responseHeader; // All headers
   KURL m_redirectLocation;
   bool m_bRedirect; // Indicates current request is a redirection
 
@@ -484,7 +484,7 @@ protected:
   KIO::filesize_t m_iSize; // Expected size of message
   KIO::filesize_t m_iBytesLeft; // # of bytes left to receive in this message.
   KIO::filesize_t m_iContentLeft; // # of content bytes left
-  QByteArray m_bufReceive; // Receive buffer
+  TQByteArray m_bufReceive; // Receive buffer
   bool m_dataInternal; // Data is for internal consumption
   char m_lineBuf[1024];
   char m_rewindBuf[8192];
@@ -497,19 +497,19 @@ protected:
 
   // Mimetype determination
   bool m_cpMimeBuffer;
-  QByteArray m_mimeTypeBuffer;
+  TQByteArray m_mimeTypeBuffer;
 
   // Language/Encoding related
-  QStringList m_qTransferEncodings;
-  QStringList m_qContentEncodings;
-  QString m_sContentMD5;
-  QString m_strMimeType;
+  TQStringList m_qTransferEncodings;
+  TQStringList m_qContentEncodings;
+  TQString m_sContentMD5;
+  TQString m_strMimeType;
 
 
 //--- WebDAV
   // Data structure to hold data which will be passed to an internal func.
-  QByteArray m_bufWebDavData;
-  QStringList m_davCapabilities;
+  TQByteArray m_bufWebDavData;
+  TQStringList m_davCapabilities;
 
   bool m_davHostOk;
   bool m_davHostUnsupported;
@@ -518,12 +518,12 @@ protected:
   // Holds the POST data so it won't get lost on if we
   // happend to get a 401/407 response when submitting,
   // a form.
-  QByteArray m_bufPOST;
+  TQByteArray m_bufPOST;
 
   // Cache related
   int m_maxCacheAge; // Maximum age of a cache entry.
   long m_maxCacheSize; // Maximum cache size in Kb.
-  QString m_strCacheDir; // Location of the cache.
+  TQString m_strCacheDir; // Location of the cache.
 
 
 
@@ -534,15 +534,15 @@ protected:
   bool m_bProxyAuthValid;
   int m_iProxyPort;
   KURL m_proxyURL;
-  QString m_strProxyRealm;
+  TQString m_strProxyRealm;
 
   // Operation mode
-  QCString m_protocol;
+  TQCString m_protocol;
 
   // Authentication
-  QString m_strRealm;
-  QString m_strAuthorization;
-  QString m_strProxyAuthorization;
+  TQString m_strRealm;
+  TQString m_strAuthorization;
+  TQString m_strProxyAuthorization;
   HTTP_AUTH Authentication;
   HTTP_AUTH ProxyAuthentication;
   bool m_bUnauthorized;

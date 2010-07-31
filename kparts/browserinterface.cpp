@@ -1,15 +1,15 @@
 
 #include "browserinterface.h"
 
-#include <qmetaobject.h>
+#include <tqmetaobject.h>
 
 #include <config.h>
 #include <private/qucomextra_p.h>
 
 using namespace KParts;
 
-BrowserInterface::BrowserInterface( QObject *parent, const char *name )
-    : QObject( parent, name )
+BrowserInterface::BrowserInterface( TQObject *parent, const char *name )
+    : TQObject( parent, name )
 {
 }
 
@@ -17,7 +17,7 @@ BrowserInterface::~BrowserInterface()
 {
 }
 
-void BrowserInterface::callMethod( const char *name, const QVariant &argument )
+void BrowserInterface::callMethod( const char *name, const TQVariant &argument )
 {
     int slot = metaObject()->findSlot( name );
 
@@ -25,28 +25,28 @@ void BrowserInterface::callMethod( const char *name, const QVariant &argument )
         return;
 
     QUObject o[ 2 ];
-    QStringList strLst;
+    TQStringList strLst;
     uint i;
 
     switch ( argument.type() )
     {
-        case QVariant::Invalid:
+        case TQVariant::Invalid:
             break;
-        case QVariant::String:
+        case TQVariant::String:
             static_QUType_QString.set( o + 1, argument.toString() );
             break;
-        case QVariant::StringList:
+        case TQVariant::StringList:
 	    strLst = argument.toStringList();
             static_QUType_ptr.set( o + 1, &strLst );
             break;
-        case QVariant::Int:
+        case TQVariant::Int:
             static_QUType_int.set( o + 1, argument.toInt() );
             break;
-        case QVariant::UInt:
+        case TQVariant::UInt:
 	    i = argument.toUInt();
 	    static_QUType_ptr.set( o + 1, &i );
             break;
-        case QVariant::Bool:
+        case TQVariant::Bool:
 	    static_QUType_bool.set( o + 1, argument.toBool() );
             break;
         default: return;

@@ -35,7 +35,7 @@ class KTEXTEDITOR_EXPORT Document : public KTextEditor::Editor
   Q_OBJECT
 
   public:
-    Document ( QObject *parent = 0, const char *name = 0 );
+    Document ( TQObject *parent = 0, const char *name = 0 );
     virtual ~Document ();
 
     /**
@@ -46,19 +46,19 @@ class KTEXTEDITOR_EXPORT Document : public KTextEditor::Editor
     /**
      * Returns this document's DCOP suffix for identifiying its DCOP interface.
      */
-    QCString documentDCOPSuffix () const;
+    TQCString documentDCOPSuffix () const;
 
     /**
     * Create a view that will display the document data. You can create as many
     * views as you like. When the user modifies data in one view then all other
     * views will be updated as well.
     */
-    virtual class View *createView ( QWidget *parent, const char *name = 0 ) = 0;
+    virtual class View *createView ( TQWidget *parent, const char *name = 0 ) = 0;
 
     /*
     * Returns a list of all views of this document.
     */
-    virtual QPtrList<class View> views () const = 0;
+    virtual TQPtrList<class View> views () const = 0;
 
   private:
     class PrivateDocument *d;
@@ -66,7 +66,7 @@ class KTEXTEDITOR_EXPORT Document : public KTextEditor::Editor
     unsigned int myDocumentNumber;
 };
 
-KTEXTEDITOR_EXPORT Document *createDocument ( const char* libname, QObject *parent = 0, const char *name = 0 );
+KTEXTEDITOR_EXPORT Document *createDocument ( const char* libname, TQObject *parent = 0, const char *name = 0 );
 
 }
 

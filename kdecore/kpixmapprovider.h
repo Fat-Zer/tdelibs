@@ -21,7 +21,7 @@
 #ifndef KPIXMAPPROVIDER_H
 #define KPIXMAPPROVIDER_H
 
-#include <qpixmap.h>
+#include <tqpixmap.h>
 #include "kdelibs_export.h"
 
 /**
@@ -46,7 +46,7 @@ public:
      *             See KIcon::StdSize.
      * @return the pixmap for the arguments, or null if there is none
      */
-    virtual QPixmap pixmapFor( const QString& text, int size = 0 ) = 0;
+    virtual TQPixmap pixmapFor( const TQString& text, int size = 0 ) = 0;
 protected:
     virtual void virtual_hook( int id, void* data );
 };

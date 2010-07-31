@@ -19,10 +19,10 @@
 
 #ifndef __KPIXMAPREGIONSELECTORWIDGET_H__
 #define __KPIXMAPREGIONSELECTORWIDGET_H__
-#include <qvbox.h>
-#include <qpixmap.h>
-#include <qrect.h>
-#include <qlabel.h>
+#include <tqvbox.h>
+#include <tqpixmap.h>
+#include <tqrect.h>
+#include <tqlabel.h>
 #include <kimageeffect.h>
 
 class KPopupMenu;
@@ -48,7 +48,7 @@ public:
    /**
     * Constructor for a KPixmapRegionSelectorWidget.
     */
-   KPixmapRegionSelectorWidget( QWidget *parent = 0L, const char *name=0L);
+   KPixmapRegionSelectorWidget( TQWidget *parent = 0L, const char *name=0L);
 
    /**
     * Destructor for a KPixmapRegionSelectorWidget
@@ -60,28 +60,28 @@ public:
     * @param pixmap The pixmap.  Must be non-null.
     * 
     */
-   void setPixmap( const QPixmap &pixmap );
+   void setPixmap( const TQPixmap &pixmap );
 
    /**
     * @return the original whole pixmap that we're using in this widget as the
     * pixmap the user is selecting a region from.
     */
-   QPixmap pixmap() const { return m_unzoomedPixmap; }
+   TQPixmap pixmap() const { return m_unzoomedPixmap; }
 
    /**
     * Sets the selected region to be @p rect (in zoomed pixmap coordinates)
     */
-   void setSelectedRegion(const QRect &rect);
+   void setSelectedRegion(const TQRect &rect);
 
    /**
     * Returns the selected region ( in zoomed pixmap coordinates )
     */
-   QRect selectedRegion() const;
+   TQRect selectedRegion() const;
 
    /**
     * Returns the selected region ( in unzoomed, original pixmap coordinates )
     */
-   QRect unzoomedSelectedRegion() const;
+   TQRect unzoomedSelectedRegion() const;
 
    /**
     * Resets the selection to use the whole image
@@ -89,10 +89,10 @@ public:
    void resetSelection();
 
    /**
-    * @returns a QImage object with just the region the user selected from the
+    * @returns a TQImage object with just the region the user selected from the
     * image
     */
-   QImage selectedImage() const;
+   TQImage selectedImage() const;
 
    /**
     * Sets the aspect ration that the selected subimage should have. The way to
@@ -140,7 +140,7 @@ protected:
    virtual KPopupMenu *createPopupMenu();
 
 private:
-   bool eventFilter(QObject *obj, QEvent *ev);
+   bool eventFilter(TQObject *obj, TQEvent *ev);
 
    /**
     * Recalculates the pixmap that is shown based on the current selected area,
@@ -148,18 +148,18 @@ private:
     */
    void updatePixmap();
 
-   QRect calcSelectionRectangle( const QPoint &startPoint, const QPoint & endPoint );
+   TQRect calcSelectionRectangle( const TQPoint &startPoint, const TQPoint & endPoint );
 
    enum CursorState { None=0, Resizing, Moving };
    CursorState m_state;
 
-   QPixmap m_unzoomedPixmap;
-   QPixmap m_originalPixmap;
-   QPixmap m_linedPixmap;
-   QRect   m_selectedRegion;
-   QLabel *m_label;
+   TQPixmap m_unzoomedPixmap;
+   TQPixmap m_originalPixmap;
+   TQPixmap m_linedPixmap;
+   TQRect   m_selectedRegion;
+   TQLabel *m_label;
 
-   QPoint m_tempFirstClick;
+   TQPoint m_tempFirstClick;
    double m_forcedAspectRatio;
 
    int m_maxWidth, m_maxHeight;

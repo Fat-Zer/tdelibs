@@ -9,18 +9,18 @@
 
 #include "pcx.h"
 
-#include <qimage.h>
+#include <tqimage.h>
 
 #include <kdebug.h>
 
-static QDataStream &operator>>( QDataStream &s, RGB &rgb )
+static TQDataStream &operator>>( TQDataStream &s, RGB &rgb )
 {
   s >> rgb.r >> rgb.g >> rgb.b;
 
   return s;
 }
 
-static QDataStream &operator>>( QDataStream &s, Palette &pal )
+static TQDataStream &operator>>( TQDataStream &s, Palette &pal )
 {
   for ( int i=0; i<16; ++i )
     s >> pal.rgb[ i ];
@@ -28,7 +28,7 @@ static QDataStream &operator>>( QDataStream &s, Palette &pal )
   return s;
 }
 
-static QDataStream &operator>>( QDataStream &s, PCXHEADER &ph )
+static TQDataStream &operator>>( TQDataStream &s, PCXHEADER &ph )
 {
   s >> ph.Manufacturer;
   s >> ph.Version;
@@ -52,14 +52,14 @@ static QDataStream &operator>>( QDataStream &s, PCXHEADER &ph )
   return s;
 }
 
-static QDataStream &operator<<( QDataStream &s, const RGB &rgb )
+static TQDataStream &operator<<( TQDataStream &s, const RGB &rgb )
 {
   s << rgb.r << rgb.g << rgb.b;
 
   return s;
 }
 
-static QDataStream &operator<<( QDataStream &s, const Palette &pal )
+static TQDataStream &operator<<( TQDataStream &s, const Palette &pal )
 {
   for ( int i=0; i<16; ++i )
     s << pal.rgb[ i ];
@@ -67,7 +67,7 @@ static QDataStream &operator<<( QDataStream &s, const Palette &pal )
   return s;
 }
 
-static QDataStream &operator<<( QDataStream &s, const PCXHEADER &ph )
+static TQDataStream &operator<<( TQDataStream &s, const PCXHEADER &ph )
 {
   s << ph.Manufacturer;
   s << ph.Version;
@@ -93,13 +93,13 @@ static QDataStream &operator<<( QDataStream &s, const PCXHEADER &ph )
 PCXHEADER::PCXHEADER()
 {
   // Initialize all data to zero
-  QByteArray dummy( 128 );
+  TQByteArray dummy( 128 );
   dummy.fill( 0 );
-  QDataStream s( dummy, IO_ReadOnly );
+  TQDataStream s( dummy, IO_ReadOnly );
   s >> *this;
 }
 
-static void readLine( QDataStream &s, QByteArray &buf, const PCXHEADER &header )
+static void readLine( TQDataStream &s, TQByteArray &buf, const PCXHEADER &header )
 {
   Q_UINT32 i=0;
   Q_UINT32 size = buf.size();
@@ -132,11 +132,11 @@ static void readLine( QDataStream &s, QByteArray &buf, const PCXHEADER &header )
   }
 }
 
-static void readImage1( QImage &img, QDataStream &s, const PCXHEADER &header )
+static void readImage1( TQImage &img, TQDataStream &s, const PCXHEADER &header )
 {
-  QByteArray buf( header.BytesPerLine );
+  TQByteArray buf( header.BytesPerLine );
 
-  if(!img.create( header.width(), header.height(), 1, 2, QImage::BigEndian ))
+  if(!img.create( header.width(), header.height(), 1, 2, TQImage::BigEndian ))
     return;
 
   for ( int y=0; y<header.height(); ++y )
@@ -159,10 +159,10 @@ static void readImage1( QImage &img, QDataStream &s, const PCXHEADER &header )
   img.setColor( 1, qRgb( 255, 255, 255 ) );
 }
 
-static void readImage4( QImage &img, QDataStream &s, const PCXHEADER &header )
+static void readImage4( TQImage &img, TQDataStream &s, const PCXHEADER &header )
 {
-  QByteArray buf( header.BytesPerLine*4 );
-  QByteArray pixbuf( header.width() );
+  TQByteArray buf( header.BytesPerLine*4 );
+  TQByteArray pixbuf( header.width() );
 
   if(!img.create( header.width(), header.height(), 8, 16 ))
     return;
@@ -196,9 +196,9 @@ static void readImage4( QImage &img, QDataStream &s, const PCXHEADER &header )
     img.setColor( i, header.ColorMap.color( i ) );
 }
 
-static void readImage8( QImage &img, QDataStream &s, const PCXHEADER &header )
+static void readImage8( TQImage &img, TQDataStream &s, const PCXHEADER &header )
 {
-  QByteArray buf( header.BytesPerLine );
+  TQByteArray buf( header.BytesPerLine );
 
   if(!img.create( header.width(), header.height(), 8, 256 ))
     return;
@@ -235,11 +235,11 @@ static void readImage8( QImage &img, QDataStream &s, const PCXHEADER &header )
   }
 }
 
-static void readImage24( QImage &img, QDataStream &s, const PCXHEADER &header )
+static void readImage24( TQImage &img, TQDataStream &s, const PCXHEADER &header )
 {
-  QByteArray r_buf( header.BytesPerLine );
-  QByteArray g_buf( header.BytesPerLine );
-  QByteArray b_buf( header.BytesPerLine );
+  TQByteArray r_buf( header.BytesPerLine );
+  TQByteArray g_buf( header.BytesPerLine );
+  TQByteArray b_buf( header.BytesPerLine );
 
   if(!img.create( header.width(), header.height(), 32 ))
     return;
@@ -262,10 +262,10 @@ static void readImage24( QImage &img, QDataStream &s, const PCXHEADER &header )
   }
 }
 
-KDE_EXPORT void kimgio_pcx_read( QImageIO *io )
+KDE_EXPORT void kimgio_pcx_read( TQImageIO *io )
 {
-  QDataStream s( io->ioDevice() );
-  s.setByteOrder( QDataStream::LittleEndian );
+  TQDataStream s( io->ioDevice() );
+  s.setByteOrder( TQDataStream::LittleEndian );
 
   if ( s.device()->size() < 128 )
   {
@@ -297,7 +297,7 @@ KDE_EXPORT void kimgio_pcx_read( QImageIO *io )
   kdDebug( 399 ) << "BytesPerLine: " << header.BytesPerLine << endl;
   kdDebug( 399 ) << "NPlanes: " << header.NPlanes << endl;
 
-  QImage img;
+  TQImage img;
 
   if ( header.Bpp == 1 && header.NPlanes == 1 )
   {
@@ -331,7 +331,7 @@ KDE_EXPORT void kimgio_pcx_read( QImageIO *io )
   }
 }
 
-static void writeLine( QDataStream &s, QByteArray &buf )
+static void writeLine( TQDataStream &s, TQByteArray &buf )
 {
   Q_UINT32 i = 0;
   Q_UINT32 size = buf.size();
@@ -361,9 +361,9 @@ static void writeLine( QDataStream &s, QByteArray &buf )
   }
 }
 
-static void writeImage1( QImage &img, QDataStream &s, PCXHEADER &header )
+static void writeImage1( TQImage &img, TQDataStream &s, PCXHEADER &header )
 {
-  img = img.convertBitOrder( QImage::BigEndian );
+  img = img.convertBitOrder( TQImage::BigEndian );
 
   header.Bpp = 1;
   header.NPlanes = 1;
@@ -371,13 +371,13 @@ static void writeImage1( QImage &img, QDataStream &s, PCXHEADER &header )
 
   s << header;
 
-  QByteArray buf( header.BytesPerLine );
+  TQByteArray buf( header.BytesPerLine );
 
   for ( int y=0; y<header.height(); ++y )
   {
     Q_UINT8 *p = img.scanLine( y );
 
-    // Invert as QImage uses reverse palette for monochrome images?
+    // Invert as TQImage uses reverse palette for monochrome images?
     for ( int i=0; i<header.BytesPerLine; ++i )
       buf[ i ] = ~p[ i ];
 
@@ -385,7 +385,7 @@ static void writeImage1( QImage &img, QDataStream &s, PCXHEADER &header )
   }
 }
 
-static void writeImage4( QImage &img, QDataStream &s, PCXHEADER &header )
+static void writeImage4( TQImage &img, TQDataStream &s, PCXHEADER &header )
 {
   header.Bpp = 1;
   header.NPlanes = 4;
@@ -396,7 +396,7 @@ static void writeImage4( QImage &img, QDataStream &s, PCXHEADER &header )
 
   s << header;
 
-  QByteArray buf[ 4 ];
+  TQByteArray buf[ 4 ];
 
   for ( int i=0; i<4; ++i )
       buf[ i ].resize( header.BytesPerLine );
@@ -420,7 +420,7 @@ static void writeImage4( QImage &img, QDataStream &s, PCXHEADER &header )
   }
 }
 
-static void writeImage8( QImage &img, QDataStream &s, PCXHEADER &header )
+static void writeImage8( TQImage &img, TQDataStream &s, PCXHEADER &header )
 {
   header.Bpp = 8;
   header.NPlanes = 1;
@@ -428,7 +428,7 @@ static void writeImage8( QImage &img, QDataStream &s, PCXHEADER &header )
 
   s << header;
 
-  QByteArray buf( header.BytesPerLine );
+  TQByteArray buf( header.BytesPerLine );
 
   for ( int y=0; y<header.height(); ++y )
   {
@@ -449,7 +449,7 @@ static void writeImage8( QImage &img, QDataStream &s, PCXHEADER &header )
     s << RGB( img.color( i ) );
 }
 
-static void writeImage24( QImage &img, QDataStream &s, PCXHEADER &header )
+static void writeImage24( TQImage &img, TQDataStream &s, PCXHEADER &header )
 {
   header.Bpp = 8;
   header.NPlanes = 3;
@@ -457,9 +457,9 @@ static void writeImage24( QImage &img, QDataStream &s, PCXHEADER &header )
 
   s << header;
 
-  QByteArray r_buf( header.width() );
-  QByteArray g_buf( header.width() );
-  QByteArray b_buf( header.width() );
+  TQByteArray r_buf( header.width() );
+  TQByteArray g_buf( header.width() );
+  TQByteArray b_buf( header.width() );
 
   for ( int y=0; y<header.height(); ++y )
   {
@@ -479,12 +479,12 @@ static void writeImage24( QImage &img, QDataStream &s, PCXHEADER &header )
   }
 }
 
-KDE_EXPORT void kimgio_pcx_write( QImageIO *io )
+KDE_EXPORT void kimgio_pcx_write( TQImageIO *io )
 {
-  QDataStream s( io->ioDevice() );
-  s.setByteOrder( QDataStream::LittleEndian );
+  TQDataStream s( io->ioDevice() );
+  s.setByteOrder( TQDataStream::LittleEndian );
 
-  QImage img = io->image();
+  TQImage img = io->image();
 
   int w = img.width();
   int h = img.height();

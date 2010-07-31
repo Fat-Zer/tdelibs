@@ -30,7 +30,7 @@
 #include <zlib.h>
 #endif
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <kmdcodec.h>
 
 class HTTPFilterBase : public QObject
@@ -43,11 +43,11 @@ public:
     void chain(HTTPFilterBase *previous);
 
 public slots:
-    virtual void slotInput(const QByteArray &d) = 0;
+    virtual void slotInput(const TQByteArray &d) = 0;
     
 signals:
-    void output(const QByteArray &d);
-    void error(int, const QString &);
+    void output(const TQByteArray &d);
+    void error(int, const TQString &);
 
 protected:
     HTTPFilterBase *last;
@@ -62,7 +62,7 @@ public:
     void addFilter(HTTPFilterBase *filter);
 
 public slots:
-    void slotInput(const QByteArray &d);
+    void slotInput(const TQByteArray &d);
 
 private:
     HTTPFilterBase *first;
@@ -74,10 +74,10 @@ class HTTPFilterMD5 : public HTTPFilterBase
 public:
     HTTPFilterMD5();
 
-    QString md5();
+    TQString md5();
 
 public slots:
-    void slotInput(const QByteArray &d);
+    void slotInput(const TQByteArray &d);
     
 private:
     KMD5 context;      
@@ -92,7 +92,7 @@ public:
     ~HTTPFilterGZip();
 
 public slots:
-    void slotInput(const QByteArray &d);
+    void slotInput(const TQByteArray &d);
     
 protected:
     int get_byte();
@@ -104,7 +104,7 @@ protected:
     bool bHasFinished : 1;
     bool bPlainText : 1;
     bool bEatTrailer : 1;
-    QByteArray headerData;
+    TQByteArray headerData;
     int iTrailer;
 #endif
 };

@@ -63,7 +63,7 @@ public:
 
   /**
    * Helper class for locking the resolver subsystem. 
-   * Similar to QMutexLocker.
+   * Similar to TQMutexLocker.
    * 
    * @author Luís Pedro Coelho
    * @since 3.4
@@ -134,12 +134,12 @@ public:
   /**
    * This is the hostname to be looked for
    */
-  QString nodeName() const;
+  TQString nodeName() const;
 
   /**
    * And this is the service name
    */
-  QString serviceName() const;
+  TQString serviceName() const;
 
   /**
    * gets the flags
@@ -164,7 +164,7 @@ public:
   /**
    * gets the protocol name, if applicable
    */
-  QCString protocolName() const;
+  TQCString protocolName() const;
 
   /**
    * Call this function to indicate that processing

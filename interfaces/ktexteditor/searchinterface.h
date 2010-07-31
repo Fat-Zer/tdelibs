@@ -43,14 +43,14 @@ class KTEXTEDITOR_EXPORT SearchInterface
     unsigned int searchInterfaceNumber () const;
 
   protected:  
-    void setSearchInterfaceDCOPSuffix (const QCString &suffix);  
+    void setSearchInterfaceDCOPSuffix (const TQCString &suffix);  
     
   //
   // slots !!!
   //
   public:
-    virtual bool searchText (unsigned int startLine, unsigned int startCol, const QString &text, unsigned int *foundAtLine, unsigned int *foundAtCol, unsigned int *matchLen, bool casesensitive = true, bool backwards = false) = 0;
-    virtual bool searchText (unsigned int startLine, unsigned int startCol, const QRegExp &regexp, unsigned int *foundAtLine, unsigned int *foundAtCol, unsigned int *matchLen, bool backwards = false) = 0;
+    virtual bool searchText (unsigned int startLine, unsigned int startCol, const TQString &text, unsigned int *foundAtLine, unsigned int *foundAtCol, unsigned int *matchLen, bool casesensitive = true, bool backwards = false) = 0;
+    virtual bool searchText (unsigned int startLine, unsigned int startCol, const TQRegExp &regexp, unsigned int *foundAtLine, unsigned int *foundAtCol, unsigned int *matchLen, bool backwards = false) = 0;
 
   private:
     class PrivateSearchInterface *d;

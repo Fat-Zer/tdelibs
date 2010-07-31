@@ -21,10 +21,10 @@
 #ifndef __kbookmarkimporter_crash_h
 #define __kbookmarkimporter_crash_h
 
-#include <qdom.h>
-#include <qcstring.h>
-#include <qstringlist.h>
-#include <qmap.h>
+#include <tqdom.h>
+#include <tqcstring.h>
+#include <tqstringlist.h>
+#include <tqmap.h>
 #include <ksimpleconfig.h>
 #include <kdemacros.h>
 
@@ -38,19 +38,19 @@ class KIO_EXPORT_DEPRECATED KCrashBookmarkImporter : public QObject
 {
     Q_OBJECT
 public:
-    KCrashBookmarkImporter( const QString & fileName ) : m_fileName(fileName) {}
+    KCrashBookmarkImporter( const TQString & fileName ) : m_fileName(fileName) {}
     ~KCrashBookmarkImporter() {}
     void parseCrashBookmarks( bool del = true );
-    static QString crashBookmarksDir( );
-    static QStringList getCrashLogs(); // EMPTY!
+    static TQString crashBookmarksDir( );
+    static TQStringList getCrashLogs(); // EMPTY!
 signals:
-    void newBookmark( const QString & text, const QCString & url, const QString & additionalInfo );
-    void newFolder( const QString & text, bool open, const QString & additionalInfo );
+    void newBookmark( const TQString & text, const TQCString & url, const TQString & additionalInfo );
+    void newFolder( const TQString & text, bool open, const TQString & additionalInfo );
     void newSeparator();
     void endFolder();
 protected:
-    QString m_fileName;
-    void parseCrashLog( QString filename, bool del ); // EMPTY!
+    TQString m_fileName;
+    void parseCrashLog( TQString filename, bool del ); // EMPTY!
 };
 
 /**
@@ -63,11 +63,11 @@ public:
     KCrashBookmarkImporterImpl() : m_shouldDelete(false) { }
     void setShouldDelete(bool);
     virtual void parse();
-    virtual QString findDefaultLocation(bool forSaving = false) const;
-    static QStringList getCrashLogs();
+    virtual TQString findDefaultLocation(bool forSaving = false) const;
+    static TQStringList getCrashLogs();
 private:
     bool m_shouldDelete;
-    QMap<QString, QString> parseCrashLog_noemit( const QString & filename, bool del );
+    TQMap<TQString, TQString> parseCrashLog_noemit( const TQString & filename, bool del );
     class KCrashBookmarkImporterImplPrivate *d;
 };
 

@@ -20,35 +20,35 @@
 #include "kprintprocess.h"
 #include <kapplication.h>
 #include <klocale.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 KPrintProcess::KPrintProcess()
 : KShellProcess()
 {
 	// redirect everything to a single buffer
-	connect(this,SIGNAL(receivedStdout(KProcess*,char*,int)),SLOT(slotReceivedStderr(KProcess*,char*,int)));
-	connect(this,SIGNAL(receivedStderr(KProcess*,char*,int)),SLOT(slotReceivedStderr(KProcess*,char*,int)));
-	connect( this, SIGNAL( processExited( KProcess* ) ), SLOT( slotExited( KProcess* ) ) );
+	connect(this,TQT_SIGNAL(receivedStdout(KProcess*,char*,int)),TQT_SLOT(slotReceivedStderr(KProcess*,char*,int)));
+	connect(this,TQT_SIGNAL(receivedStderr(KProcess*,char*,int)),TQT_SLOT(slotReceivedStderr(KProcess*,char*,int)));
+	connect( this, TQT_SIGNAL( processExited( KProcess* ) ), TQT_SLOT( slotExited( KProcess* ) ) );
 	m_state = None;
 }
 
 KPrintProcess::~KPrintProcess()
 {
 	if ( !m_tempoutput.isEmpty() )
-		QFile::remove( m_tempoutput );
+		TQFile::remove( m_tempoutput );
 	if ( m_tempfiles.size() > 0 )
-		for ( QStringList::ConstIterator it=m_tempfiles.begin(); it!=m_tempfiles.end(); ++it )
-			QFile::remove( *it );
+		for ( TQStringList::ConstIterator it=m_tempfiles.begin(); it!=m_tempfiles.end(); ++it )
+			TQFile::remove( *it );
 }
 
-QString KPrintProcess::errorMessage() const
+TQString KPrintProcess::errorMessage() const
 {
 	return m_buffer;
 }
 
 bool KPrintProcess::print()
 {
-	m_buffer = QString::null;
+	m_buffer = TQString::null;
 	m_state = Printing;
 	return start(NotifyOnExit,All);
 }
@@ -57,7 +57,7 @@ void KPrintProcess::slotReceivedStderr(KProcess *proc, char *buf, int len)
 {
 	if (proc == this)
 	{
-		QCString	str = QCString(buf,len).stripWhiteSpace();
+		QCString	str = TQCString(buf,len).stripWhiteSpace();
 		m_buffer.append(str.append("\n"));
 	}
 }

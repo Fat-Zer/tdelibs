@@ -21,20 +21,20 @@
 #include "kmprinter.h"
 #include "kmobject.h"
 
-#include <qheader.h>
-#include <qpainter.h>
+#include <tqheader.h>
+#include <tqpainter.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kcursor.h>
 
-class KMListViewItem : public QListViewItem, public KMObject
+class KMListViewItem : public TQListViewItem, public KMObject
 {
 public:
-	KMListViewItem(QListView *parent, const QString& txt);
-	KMListViewItem(QListViewItem *parent, const QString& txt);
-	KMListViewItem(QListViewItem *parent, KMPrinter *p);
+	KMListViewItem(TQListView *parent, const TQString& txt);
+	KMListViewItem(TQListViewItem *parent, const TQString& txt);
+	KMListViewItem(TQListViewItem *parent, KMPrinter *p);
 
-	virtual void paintCell(QPainter*, const QColorGroup&, int, int, int);
+	virtual void paintCell(TQPainter*, const TQColorGroup&, int, int, int);
 	void updatePrinter(KMPrinter *p);
 	bool isClass() const	{ return m_isclass; }
 
@@ -46,20 +46,20 @@ private:
 	bool	m_isclass;
 };
 
-KMListViewItem::KMListViewItem(QListView *parent, const QString& txt)
-: QListViewItem(parent,txt)
+KMListViewItem::KMListViewItem(TQListView *parent, const TQString& txt)
+: TQListViewItem(parent,txt)
 {
 	init();
 }
 
-KMListViewItem::KMListViewItem(QListViewItem *parent, const QString& txt)
-: QListViewItem(parent,txt)
+KMListViewItem::KMListViewItem(TQListViewItem *parent, const TQString& txt)
+: TQListViewItem(parent,txt)
 {
 	init();
 }
 
-KMListViewItem::KMListViewItem(QListViewItem *parent, KMPrinter *p)
-: QListViewItem(parent)
+KMListViewItem::KMListViewItem(TQListViewItem *parent, KMPrinter *p)
+: TQListViewItem(parent)
 {
 	init(p);
 }
@@ -92,7 +92,7 @@ void KMListViewItem::updatePrinter(KMPrinter *p)
 		repaint();
 }
 
-void KMListViewItem::paintCell(QPainter *p, const QColorGroup& cg, int c, int w, int a)
+void KMListViewItem::paintCell(TQPainter *p, const TQColorGroup& cg, int c, int w, int a)
 {
 	if (m_state != 0)
 	{
@@ -101,26 +101,26 @@ void KMListViewItem::paintCell(QPainter *p, const QColorGroup& cg, int c, int w,
 		if (m_state & 0x2) f.setItalic(true);
 		p->setFont(f);
 	}
-	QListViewItem::paintCell(p,cg,c,w,a);
+	TQListViewItem::paintCell(p,cg,c,w,a);
 }
 
 //************************************************************************************************
 
-KMListView::KMListView(QWidget *parent, const char *name)
-: QListView(parent,name)
+KMListView::KMListView(TQWidget *parent, const char *name)
+: TQListView(parent,name)
 {
 	m_items.setAutoDelete(false);
 
 	addColumn("");
 	header()->hide();
-	setFrameStyle(QFrame::WinPanel|QFrame::Sunken);
+	setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	setLineWidth(1);
 	setSorting(0);
 
-	connect(this,SIGNAL(contextMenuRequested(QListViewItem*,const QPoint&,int)),SLOT(slotRightButtonClicked(QListViewItem*,const QPoint&,int)));
-	connect(this,SIGNAL(selectionChanged()),SLOT(slotSelectionChanged()));
-	connect(this,SIGNAL(onItem(QListViewItem*)),SLOT(slotOnItem(QListViewItem*)));
-	connect(this,SIGNAL(onViewport()),SLOT(slotOnViewport()));
+	connect(this,TQT_SIGNAL(contextMenuRequested(TQListViewItem*,const TQPoint&,int)),TQT_SLOT(slotRightButtonClicked(TQListViewItem*,const TQPoint&,int)));
+	connect(this,TQT_SIGNAL(selectionChanged()),TQT_SLOT(slotSelectionChanged()));
+	connect(this,TQT_SIGNAL(onItem(TQListViewItem*)),TQT_SLOT(slotOnItem(TQListViewItem*)));
+	connect(this,TQT_SIGNAL(onViewport()),TQT_SLOT(slotOnViewport()));
 
 	m_root = new KMListViewItem(this,i18n("Print System"));
 	m_root->setPixmap(0,SmallIcon("kdeprint_printer"));
@@ -142,16 +142,16 @@ KMListView::~KMListView()
 {
 }
 
-void KMListView::slotRightButtonClicked(QListViewItem *item, const QPoint& p, int)
+void KMListView::slotRightButtonClicked(TQListViewItem *item, const TQPoint& p, int)
 {
-	emit rightButtonClicked(item && item->depth() == 2 ? item->text(0) : QString::null, p);
+	emit rightButtonClicked(item && item->depth() == 2 ? item->text(0) : TQString::null, p);
 }
 
 KMListViewItem* KMListView::findItem(KMPrinter *p)
 {
 	if (p)
 	{
-		QPtrListIterator<KMListViewItem>	it(m_items);
+		TQPtrListIterator<KMListViewItem>	it(m_items);
 		bool	isVirtual(p->isVirtual()), isClass(p->isClass());
 		for (;it.current();++it)
 			if (isVirtual)
@@ -169,26 +169,26 @@ KMListViewItem* KMListView::findItem(KMPrinter *p)
 	return 0;
 }
 
-KMListViewItem* KMListView::findItem(const QString& prname)
+KMListViewItem* KMListView::findItem(const TQString& prname)
 {
-	QPtrListIterator<KMListViewItem>	it(m_items);
+	TQPtrListIterator<KMListViewItem>	it(m_items);
 	for (; it.current(); ++it)
 		if (it.current()->depth() == 2 && it.current()->text(0) == prname)
 			return it.current();
 	return 0;
 }
 
-void KMListView::setPrinterList(QPtrList<KMPrinter> *list)
+void KMListView::setPrinterList(TQPtrList<KMPrinter> *list)
 {
 	bool 	changed(false);
 
-	QPtrListIterator<KMListViewItem>	it(m_items);
+	TQPtrListIterator<KMListViewItem>	it(m_items);
 	for (;it.current();++it)
 		it.current()->setDiscarded(true);
 
 	if (list)
 	{
-		QPtrListIterator<KMPrinter>	it(*list);
+		TQPtrListIterator<KMPrinter>	it(*list);
 		KMListViewItem			*item (0);
 		for (;it.current();++it)
 		{
@@ -213,7 +213,7 @@ void KMListView::setPrinterList(QPtrList<KMPrinter> *list)
 		}
 	}
 
-	QPtrList<KMListViewItem>	deleteList;
+	TQPtrList<KMListViewItem>	deleteList;
 	deleteList.setAutoDelete(true);
 	for (uint i=0; i<m_items.count(); i++)
 		if (m_items.at(i)->isDiscarded())
@@ -237,12 +237,12 @@ void KMListView::setPrinterList(QPtrList<KMPrinter> *list)
 void KMListView::slotSelectionChanged()
 {
 	KMListViewItem	*item = static_cast<KMListViewItem*>(currentItem());
-	emit printerSelected((item && !item->isDiscarded() && item->depth() == 2 ? item->text(0) : QString::null));
+	emit printerSelected((item && !item->isDiscarded() && item->depth() == 2 ? item->text(0) : TQString::null));
 }
 
-void KMListView::setPrinter(const QString& prname)
+void KMListView::setPrinter(const TQString& prname)
 {
-	QPtrListIterator<KMListViewItem>	it(m_items);
+	TQPtrListIterator<KMListViewItem>	it(m_items);
 	for (;it.current();++it)
 		if (it.current()->text(0) == prname)
 		{
@@ -253,10 +253,10 @@ void KMListView::setPrinter(const QString& prname)
 
 void KMListView::setPrinter(KMPrinter *p)
 {
-	setPrinter(p ? p->name() : QString::null);
+	setPrinter(p ? p->name() : TQString::null);
 }
 
-void KMListView::slotOnItem(QListViewItem *)
+void KMListView::slotOnItem(TQListViewItem *)
 {
 	setCursor(KCursor::handCursor());
 }

@@ -20,7 +20,7 @@
 #ifndef KNOTIFY_H
 #define KNOTIFY_H
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <knotifyclient.h>
 #include <dcopobject.h>
 
@@ -28,7 +28,7 @@ class KNotifyPrivate;
 class KProcess;
 class KConfig;
 
-class KNotify : public QObject, public DCOPObject
+class KNotify : public TQObject, public DCOPObject
 {
 Q_OBJECT
 K_DCOP
@@ -51,17 +51,17 @@ public:
 protected:
 k_dcop:
 	// deprecated
-	void notify(const QString &event, const QString &fromApp,
-                         const QString &text, QString sound, QString file,
+	void notify(const TQString &event, const TQString &fromApp,
+                         const TQString &text, TQString sound, TQString file,
                          int present, int level);
 
 	// deprecated
-	void notify(const QString &event, const QString &fromApp,
-                         const QString &text, QString sound, QString file,
+	void notify(const TQString &event, const TQString &fromApp,
+                         const TQString &text, TQString sound, TQString file,
                          int present, int level, int winId);
 
-	void notify(const QString &event, const QString &fromApp,
-                         const QString &text, QString sound, QString file,
+	void notify(const TQString &event, const TQString &fromApp,
+                         const TQString &text, TQString sound, TQString file,
                          int present, int level, int winId, int eventId);
 
 
@@ -70,31 +70,31 @@ k_dcop:
         void sessionReady(); // from ksmserver
 
 private:
-	bool notifyBySound(const QString &sound, const QString &appname, int eventId);
-	bool notifyByMessagebox(const QString &text, int level, WId winId);
-	bool notifyByLogfile(const QString &text, const QString &file);
-	bool notifyByStderr(const QString &text);
-	bool notifyByPassivePopup(const QString &text, const QString &appName,
+	bool notifyBySound(const TQString &sound, const TQString &appname, int eventId);
+	bool notifyByMessagebox(const TQString &text, int level, WId winId);
+	bool notifyByLogfile(const TQString &text, const TQString &file);
+	bool notifyByStderr(const TQString &text);
+	bool notifyByPassivePopup(const TQString &text, const TQString &appName,
                                   KConfig* eventsFile, WId winId );
-	bool notifyByExecute(const QString &command, 
-                             const QString& event, 
-                             const QString& fromApp, 
-                             const QString& text,
+	bool notifyByExecute(const TQString &command, 
+                             const TQString& event, 
+                             const TQString& fromApp, 
+                             const TQString& text,
                              int winId,
                              int eventId );
     bool notifyByTaskbar( WId winId );
 	
-	bool isPlaying( const QString& soundFile ) const;
+	bool isPlaying( const TQString& soundFile ) const;
 
     void soundFinished( int eventId, PlayingFinishedStatus reason );
     void abortFirstPlayObject();
 	
-        WId checkWinId( const QString& appName, WId senderWinId );
+        WId checkWinId( const TQString& appName, WId senderWinId );
 
 	/**
 	 * checks if eventname is a global event (exists in config/eventsrc)
 	 **/
-	bool isGlobal(const QString &eventname);
+	bool isGlobal(const TQString &eventname);
 
 private slots:
     void playTimeout();

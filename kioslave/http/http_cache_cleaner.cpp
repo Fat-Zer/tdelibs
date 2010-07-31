@@ -28,9 +28,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <time.h>
 #include <stdlib.h>
 
-#include <qdir.h>
-#include <qstring.h>
-#include <qptrlist.h>
+#include <tqdir.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
 
 #include <kinstance.h>
 #include <klocale.h>
@@ -61,18 +61,18 @@ static const KCmdLineOptions options[] =
 };
 
 struct FileInfo {
-   QString name;
+   TQString name;
    int size; // Size in Kb.
    int age;
 };
 
-template class QPtrList<FileInfo>;
+template class TQPtrList<FileInfo>;
 
-class FileInfoList : public QPtrList<FileInfo>
+class FileInfoList : public TQPtrList<FileInfo>
 {
 public:
-   FileInfoList() : QPtrList<FileInfo>() { }
-   int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
+   FileInfoList() : TQPtrList<FileInfo>() { }
+   int compareItems(TQPtrCollection::Item item1, TQPtrCollection::Item item2)
       { return ((FileInfo *)item1)->age - ((FileInfo *)item2)->age; }
 };
 
@@ -80,9 +80,9 @@ public:
 // Keep the following in sync with the cache code in http.cc
 #define CACHE_REVISION "7\n"
 
-FileInfo *readEntry( const QString &filename)
+FileInfo *readEntry( const TQString &filename)
 {
-   QCString CEF = QFile::encodeName(filename);
+   TQCString CEF = TQFile::encodeName(filename);
    FILE *fs = fopen( CEF.data(), "r");
    if (!fs)
       return 0;
@@ -161,16 +161,16 @@ FileInfo *readEntry( const QString &filename)
 // Keep the above in sync with the cache code in http.cc
 // !END OF SYNC!
 
-void scanDirectory(FileInfoList &fileEntries, const QString &name, const QString &strDir)
+void scanDirectory(FileInfoList &fileEntries, const TQString &name, const TQString &strDir)
 {
-   QDir dir(strDir);
+   TQDir dir(strDir);
    if (!dir.exists()) return;
 
    QFileInfoList *newEntries = (QFileInfoList *) dir.entryInfoList();
 
    if (!newEntries) return; // Directory not accessible ??
 
-   for(QFileInfo *qFileInfo = newEntries->first();
+   for(TQFileInfo *qFileInfo = newEntries->first();
        qFileInfo;
        qFileInfo = newEntries->next())
    {
@@ -205,7 +205,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    if (!deleteAll)
    {
       DCOPClient *dcop = new DCOPClient();
-      QCString name = dcop->registerAs(appName, false);
+      TQCString name = dcop->registerAs(appName, false);
       if (!name.isEmpty() && (name != appName))
       {
          fprintf(stderr, "%s: Already running! (%s)\n", appName, name.data());
@@ -220,20 +220,20 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    if (deleteAll)
       m_maxCacheSize = -1;
 
-   QString strCacheDir = KGlobal::dirs()->saveLocation("cache", "http");
+   TQString strCacheDir = KGlobal::dirs()->saveLocation("cache", "http");
 
-   QDir cacheDir( strCacheDir );
+   TQDir cacheDir( strCacheDir );
    if (!cacheDir.exists())
    {
       fprintf(stderr, "%s: '%s' does not exist.\n", appName, strCacheDir.ascii());
       return 0;
    }
 
-   QStringList dirs = cacheDir.entryList( );
+   TQStringList dirs = cacheDir.entryList( );
 
    FileInfoList cachedEntries;
 
-   for(QStringList::Iterator it = dirs.begin();
+   for(TQStringList::Iterator it = dirs.begin();
        it != dirs.end();
        it++)
    {
@@ -253,7 +253,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    {
       if (fileInfo->size > maxCachedSize)
       {
-         QCString filename = QFile::encodeName( strCacheDir + "/" + fileInfo->name);
+         TQCString filename = TQFile::encodeName( strCacheDir + "/" + fileInfo->name);
          unlink(filename.data());
 //         kdDebug () << appName << ": Object too big, deleting '" << filename.data() << "' (" << result<< ")" << endl;
       }
@@ -267,7 +267,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    {
       if ((totalSize + fileInfo->size) > m_maxCacheSize)
       {
-         QCString filename = QFile::encodeName( strCacheDir + "/" + fileInfo->name);
+         TQCString filename = TQFile::encodeName( strCacheDir + "/" + fileInfo->name);
          unlink(filename.data());
 //         kdDebug () << appName << ": Cache too big, deleting '" << filename.data() << "' (" << fileInfo->size << ")" << endl;
       }

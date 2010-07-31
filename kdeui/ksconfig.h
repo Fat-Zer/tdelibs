@@ -18,9 +18,9 @@
 #ifndef KDELIBS_KSCONFIG_H
 #define KDELIBS_KSCONFIG_H
 
-#include <qwidget.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqwidget.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -100,7 +100,7 @@ class KDEUI_EXPORT KSpellConfig : public QWidget
      * activateHelp for more information.
      *
      */
-    KSpellConfig( QWidget *parent=0, const char *name=0,
+    KSpellConfig( TQWidget *parent=0, const char *name=0,
 		  KSpellConfig *spellConfig=0, bool addHelpButton = true );
 
     KSpellConfig( const KSpellConfig & );
@@ -131,7 +131,7 @@ class KDEUI_EXPORT KSpellConfig : public QWidget
      * @since 3.2
      *
      */
-    void fillDicts( QComboBox* box, QStringList* dictionaries = 0 );
+    void fillDicts( TQComboBox* box, TQStringList* dictionaries = 0 );
 
     /**
      * @sect Options setting routines.
@@ -147,14 +147,14 @@ class KDEUI_EXPORT KSpellConfig : public QWidget
      * It may be useful to save this list with the document being
      * edited to facilitate quicker future spellchecking.
      */
-    void setIgnoreList( QStringList _ignorelist );
+    void setIgnoreList( TQStringList _ignorelist );
 
     /**
      * The @p _replaceAllList contains word you like that replace
      * word. Be careful that this list contains word which is replaced
      * and new word.
      */
-    void setReplaceAllList( QStringList _replaceAllList );
+    void setReplaceAllList( TQStringList _replaceAllList );
 
     /**
      * Set an ISpell option.
@@ -173,7 +173,7 @@ class KDEUI_EXPORT KSpellConfig : public QWidget
     /**
      * Set the name of the dictionary to use.
      */
-    void setDictionary( const QString qs );
+    void setDictionary( const TQString qs );
     void setDictFromList( bool dfl );
     //void setPersonalDict (const char *s);
 
@@ -188,12 +188,12 @@ class KDEUI_EXPORT KSpellConfig : public QWidget
      */
     bool noRootAffix() const;
     bool runTogether() const;
-    const QString dictionary() const;
+    const TQString dictionary() const;
     bool dictFromList() const;
-    //QString personalDict () const;
+    //TQString personalDict () const;
     int encoding() const;
-    QStringList ignoreList() const;
-    QStringList replaceAllList() const;
+    TQStringList ignoreList() const;
+    TQStringList replaceAllList() const;
 
     int client() const; ///< Spell checker client, see KSpellClients
 
@@ -221,7 +221,7 @@ class KDEUI_EXPORT KSpellConfig : public QWidget
      *
      * @return true if <pre>lname.data()==$LANG</pre>
      */
-    bool interpret( QString &fname, QString &lname, QString &hname );
+    bool interpret( TQString &fname, TQString &lname, TQString &hname );
 
 
   public slots:
@@ -260,21 +260,21 @@ class KDEUI_EXPORT KSpellConfig : public QWidget
     bool bruntogether;		// -B
     bool dictfromlist;
     bool nodialog;
-    QString qsdict;		// -d [dict]
-    QString qspdict;		// -p [dict]
-    QStringList ignorelist;
+    TQString qsdict;		// -d [dict]
+    TQString qspdict;		// -p [dict]
+    TQStringList ignorelist;
     enum {rdictlist=3, rencoding=4, rhelp=6};
     KConfig *kc;
     int iclient;            // defaults to ispell, may be aspell, too
 
-    QCheckBox *cb1, *cb2;
+    TQCheckBox *cb1, *cb2;
     //KLineEdit *kle1, *kle2;
-    //QButtonGroup *dictgroup;
-    //QRadioButton *dictlistbutton, *dicteditbutton;
-    QLabel *dictlist;
-    QComboBox *dictcombo, *encodingcombo, *clientcombo;
-    //QPushButton *browsebutton1;
-    QStringList langfnames;
+    //TQButtonGroup *dictgroup;
+    //TQRadioButton *dictlistbutton, *dicteditbutton;
+    TQLabel *dictlist;
+    TQComboBox *dictcombo, *encodingcombo, *clientcombo;
+    //TQPushButton *browsebutton1;
+    TQStringList langfnames;
 
 signals:
     void configChanged();

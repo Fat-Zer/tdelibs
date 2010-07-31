@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <kapplication.h>
 #include <kstandarddirs.h>
@@ -61,11 +61,11 @@ static KCmdLineOptions options[] =
 
 int jobCounter = 0;
 
-QPtrList<KIO::Job>* jobList = 0L;
+TQPtrList<KIO::Job>* jobList = 0L;
 
 KIOExec::KIOExec()
 {
-    jobList = new QPtrList<KIO::Job>;
+    jobList = new TQPtrList<KIO::Job>;
     jobList->setAutoDelete( false ); // jobs autodelete themselves
 
     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
@@ -74,7 +74,7 @@ KIOExec::KIOExec()
 
     tempfiles = args->isSet("tempfiles");
     if ( args->isSet( "suggestedfilename" ) )
-        suggestedFileName = QString::fromLocal8Bit( args->getOption( "suggestedfilename" ) );
+        suggestedFileName = TQString::fromLocal8Bit( args->getOption( "suggestedfilename" ) );
     expectedCounter = 0;
     command = args->arg(0);
     kdDebug() << "command=" << command << endl;
@@ -105,14 +105,14 @@ KIOExec::KIOExec()
             else
             // We must fetch the file
             {
-                QString fileName = KIO::encodeFileName( url.fileName() );
+                TQString fileName = KIO::encodeFileName( url.fileName() );
                 if ( !suggestedFileName.isEmpty() )
                     fileName = suggestedFileName;
                 // Build the destination filename, in ~/.kde/cache-*/krun/
                 // Unlike KDE-1.1, we put the filename at the end so that the extension is kept
                 // (Some programs rely on it)
-                QString tmp = KGlobal::dirs()->saveLocation( "cache", "krun/" ) +
-                              QString("%1.%2.%3").arg(getpid()).arg(jobCounter++).arg(fileName);
+                TQString tmp = KGlobal::dirs()->saveLocation( "cache", "krun/" ) +
+                              TQString("%1.%2.%3").arg(getpid()).arg(jobCounter++).arg(fileName);
                 fileInfo file;
                 file.path = tmp;
                 file.url = url;
@@ -125,7 +125,7 @@ KIOExec::KIOExec()
                 KIO::Job *job = KIO::file_copy( url, dest );
                 jobList->append( job );
 
-                connect( job, SIGNAL( result( KIO::Job * ) ), SLOT( slotResult( KIO::Job * ) ) );
+                connect( job, TQT_SIGNAL( result( KIO::Job * ) ), TQT_SLOT( slotResult( KIO::Job * ) ) );
             }
         }
     }
@@ -133,7 +133,7 @@ KIOExec::KIOExec()
 
     if ( tempfiles ) {
         // #113991
-        QTimer::singleShot( 0, this, SLOT( slotRunApp() ) );
+        TQTimer::singleShot( 0, this, TQT_SLOT( slotRunApp() ) );
         //slotRunApp(); // does not return
         return;
     }
@@ -152,9 +152,9 @@ void KIOExec::slotResult( KIO::Job * job )
         if ( (job->error() != KIO::ERR_USER_CANCELED) )
             KMessageBox::error( 0L, job->errorString() );
 
-        QString path = static_cast<KIO::FileCopyJob*>(job)->destURL().path();
+        TQString path = static_cast<KIO::FileCopyJob*>(job)->destURL().path();
 
-        QValueList<fileInfo>::Iterator it = fileList.begin();
+        TQValueList<fileInfo>::Iterator it = fileList.begin();
         for(;it != fileList.end(); ++it)
         {
            if ((*it).path == path)
@@ -174,7 +174,7 @@ void KIOExec::slotResult( KIO::Job * job )
 
     kdDebug() << "All files downloaded, will call slotRunApp shortly" << endl;
     // We know we can run the app now - but let's finish the job properly first.
-    QTimer::singleShot( 0, this, SLOT( slotRunApp() ) );
+    TQTimer::singleShot( 0, this, TQT_SLOT( slotRunApp() ) );
 
     jobList->clear();
 }
@@ -186,21 +186,21 @@ void KIOExec::slotRunApp()
         exit(1);
     }
 
-    KService service("dummy", command, QString::null);
+    KService service("dummy", command, TQString::null);
 
     KURL::List list;
     // Store modification times
-    QValueList<fileInfo>::Iterator it = fileList.begin();
+    TQValueList<fileInfo>::Iterator it = fileList.begin();
     for ( ; it != fileList.end() ; ++it )
     {
         KDE_struct_stat buff;
-        (*it).time = KDE_stat( QFile::encodeName((*it).path), &buff ) ? 0 : buff.st_mtime;
+        (*it).time = KDE_stat( TQFile::encodeName((*it).path), &buff ) ? 0 : buff.st_mtime;
         KURL url;
         url.setPath((*it).path);
         list << url;
     }
 
-    QStringList params = KRun::processDesktopExec(service, list, false /*no shell*/);
+    TQStringList params = KRun::processDesktopExec(service, list, false /*no shell*/);
 
     kdDebug() << "EXEC " << KShell::joinArgs( params ) << endl;
 
@@ -226,9 +226,9 @@ void KIOExec::slotRunApp()
     for( ;it != fileList.end(); ++it )
     {
         KDE_struct_stat buff;
-        QString src = (*it).path;
+        TQString src = (*it).path;
         KURL dest = (*it).url;
-        if ( (KDE_stat( QFile::encodeName(src), &buff ) == 0) &&
+        if ( (KDE_stat( TQFile::encodeName(src), &buff ) == 0) &&
              ((*it).time != buff.st_mtime) )
         {
             if ( tempfiles )
@@ -244,7 +244,7 @@ void KIOExec::slotRunApp()
                                                  i18n( "The file\n%1\nhas been modified.\nDo you want to upload the changes?" ).arg(dest.prettyURL()),
                                                  i18n( "File Changed" ), i18n("Upload"), i18n("Do Not Upload") ) == KMessageBox::Yes )
                 {
-                    kdDebug() << QString("src='%1'  dest='%2'").arg(src).arg(dest.url()).ascii() << endl;
+                    kdDebug() << TQString("src='%1'  dest='%2'").arg(src).arg(dest.url()).ascii() << endl;
                     // Do it the synchronous way.
                     if ( !KIO::NetAccess::upload( src, dest, 0 ) )
                     {
@@ -261,7 +261,7 @@ void KIOExec::slotRunApp()
             kdDebug() << "sleeping..." << endl;
             sleep(180); // 3 mn
             kdDebug() << "about to delete " << src << endl;
-            unlink( QFile::encodeName(src) );
+            unlink( TQFile::encodeName(src) );
         }
     }
 

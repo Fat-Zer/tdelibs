@@ -20,22 +20,22 @@
 #include "kmconfigcommand.h"
 #include "kxmlcommandselector.h"
 
-#include <qlabel.h>
-#include <qgroupbox.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqgroupbox.h>
+#include <tqlayout.h>
 
 #include <klocale.h>
 #include <kdialog.h>
 
-KMConfigCommand::KMConfigCommand(QWidget *parent, const char *name)
+KMConfigCommand::KMConfigCommand(TQWidget *parent, const char *name)
 : KMConfigPage(parent, name)
 {
 	setPageName(i18n("Commands"));
 	setPageHeader(i18n("Command Settings"));
 	setPagePixmap("exec");
 
-	QGroupBox	*gb = new QGroupBox(0, Qt::Horizontal, i18n("Edit/Create Commands"), this);
-	QLabel	*lab = new QLabel(i18n(
+	QGroupBox	*gb = new TQGroupBox(0, Qt::Horizontal, i18n("Edit/Create Commands"), this);
+	QLabel	*lab = new TQLabel(i18n(
 				"<p>Command objects perform a conversion from input to output.<br>"
                 "They are used as the basis to build both print filters "
 				"and special printers. They are described by a command string, a "
@@ -44,10 +44,10 @@ KMConfigCommand::KMConfigCommand(QWidget *parent, const char *name)
 				"changes will only be effective for you."), gb);
 	KXmlCommandSelector	*sel = new KXmlCommandSelector(false, gb);
 
-	QVBoxLayout	*l0 = new QVBoxLayout(this, 0, KDialog::spacingHint());
+	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	l0->addWidget(gb);
 	l0->addStretch(1);
-	QVBoxLayout	*l2 = new QVBoxLayout(gb->layout(), KDialog::spacingHint());
+	QVBoxLayout	*l2 = new TQVBoxLayout(gb->layout(), KDialog::spacingHint());
 	l2->addWidget(lab);
 	l2->addWidget(sel);
 }

@@ -20,9 +20,9 @@
 #if !defined(__QEVENTLOOPEX_H_)
 #define __QEVENTLOOPEX_H_
 
-#include <qsocketnotifier.h>
-#include <qeventloop.h>
-#include <qthread.h>
+#include <tqsocketnotifier.h>
+#include <tqeventloop.h>
+#include <tqthread.h>
 
 #include <winsock2.h>
 
@@ -33,15 +33,15 @@ class QEventLoopEx : public QEventLoop
 	Q_OBJECT
 
 public:
-	QEventLoopEx( QObject *parent = 0, const char *name = 0 );
+	QEventLoopEx( TQObject *parent = 0, const char *name = 0 );
 	virtual ~QEventLoopEx();
 
 public:
-	virtual void registerSocketNotifier( QSocketNotifier * );
-	virtual void unregisterSocketNotifier( QSocketNotifier * );
+	virtual void registerSocketNotifier( TQSocketNotifier * );
+	virtual void unregisterSocketNotifier( TQSocketNotifier * );
 	virtual bool processEvents( ProcessEventsFlags flags );
 
-	void setSocketNotifierPending( QSocketNotifier *notifier );
+	void setSocketNotifierPending( TQSocketNotifier *notifier );
 	int activateSocketNotifiers();
 
 protected:

@@ -36,7 +36,7 @@ Value::Value(const Value & x)
 {
 }
 
-Value::Value(const QCString & s)
+Value::Value(const TQCString & s)
 	:	Entity(s)
 {
 }
@@ -51,7 +51,7 @@ Value::operator = (Value & x)
 }
 
 	Value &
-Value::operator = (const QCString & s)
+Value::operator = (const TQCString & s)
 {
 	Entity::operator = (s);
 	return *this;

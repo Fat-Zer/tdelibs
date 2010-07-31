@@ -20,8 +20,8 @@
 #ifndef KFILEFILTERCOMBO_H
 #define KFILEFILTERCOMBO_H
 
-#include <qstringlist.h>
-#include <qptrdict.h>
+#include <tqstringlist.h>
+#include <tqptrdict.h>
 
 #include <kcombobox.h>
 #include <kmimetype.h>
@@ -33,31 +33,31 @@ class KIO_EXPORT KFileFilterCombo : public KComboBox
     Q_OBJECT
 
  public:
-    KFileFilterCombo(QWidget *parent= 0, const char *name= 0);
+    KFileFilterCombo(TQWidget *parent= 0, const char *name= 0);
     ~KFileFilterCombo();
 
-    void setFilter(const QString& filter);
+    void setFilter(const TQString& filter);
 
     /**
      * @returns the current filter, either something like "*.cpp *.h"
      * or the current mimetype, like "text/html", or a list of those, like
      " "text/html text/plain image/png", all separated with one space.
      */
-    QString currentFilter() const;
+    TQString currentFilter() const;
 
     /**
      * Sets the current filter. Filter must match one of the filter items
      * passed before to this widget.
      * @since 3.4
      */
-    void setCurrentFilter( const QString& filter );
+    void setCurrentFilter( const TQString& filter );
 
     /**
      * Sets a list of mimetypes.
      * If @p defaultType is set, it will be set as the current item.
      * Otherwise, a first item showing all the mimetypes will be created.
      */
-    void setMimeFilter( const QStringList& types, const QString& defaultType );
+    void setMimeFilter( const TQStringList& types, const TQString& defaultType );
 
     /**
      * @return true if the filter's first item is the list of all mimetypes
@@ -72,19 +72,19 @@ class KIO_EXPORT KFileFilterCombo : public KComboBox
      * By default, this is set to i18n("*|All Files")
      * @see defaultFilter
      */
-    void setDefaultFilter( const QString& filter );
+    void setDefaultFilter( const TQString& filter );
 
     /**
      * @return the default filter, used when an empty filter is set.
      * @see setDefaultFilter
      */
-    QString defaultFilter() const;
+    TQString defaultFilter() const;
 
  protected:
-    virtual bool eventFilter( QObject *o, QEvent *e );
+    virtual bool eventFilter( TQObject *o, TQEvent *e );
 
 // KDE4: those variables are private. filters() was added
-    QStringList filters;
+    TQStringList filters;
     bool m_allTypes;
 
  signals:

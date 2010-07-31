@@ -33,7 +33,7 @@ class HighContrastStyleConfig: public QWidget
 {
 	Q_OBJECT
 public:
-	HighContrastStyleConfig(QWidget* parent);
+	HighContrastStyleConfig(TQWidget* parent);
 	~HighContrastStyleConfig();
 
 	// This signal and the next two slots are the plugin
@@ -52,7 +52,7 @@ protected slots:
 protected:
 	// We store settings directly in widgets to
 	// avoid the hassle of sync'ing things
-	QCheckBox* wideLinesBox;
+	TQCheckBox* wideLinesBox;
 
 	// Original settings, for accurate dirtiness tracking
 	bool       originalWideLinesState;

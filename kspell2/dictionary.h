@@ -22,8 +22,8 @@
 #ifndef KSPELL_DICTIONARY_H
 #define KSPELL_DICTIONARY_H
 
-#include <qstringlist.h>
-#include <qstring.h>
+#include <tqstringlist.h>
+#include <tqstring.h>
 
 namespace KSpell2
 {
@@ -43,44 +43,44 @@ namespace KSpell2
          * Checks the given word.
          * @return false if the word is misspelled. true otherwise
          */
-        virtual bool check( const QString& word ) =0;
+        virtual bool check( const TQString& word ) =0;
 
         /**
          * Fetches suggestions for the word.
          *
          * @return list of all suggestions for the word
          */
-        virtual QStringList suggest( const QString& word ) =0;
+        virtual TQStringList suggest( const TQString& word ) =0;
 
         /**
          * Checks the word and fetches suggestions for it.
          */
-        virtual bool checkAndSuggest( const QString& word,
-                                      QStringList& suggestions ) =0;
+        virtual bool checkAndSuggest( const TQString& word,
+                                      TQStringList& suggestions ) =0;
 
         /**
          * Stores user defined good replacement for the bad word.
          * @returns true on success
          */
-        virtual bool storeReplacement( const QString& bad,
-                                       const QString& good ) =0;
+        virtual bool storeReplacement( const TQString& bad,
+                                       const TQString& good ) =0;
 
         /**
          * Adds word to the list of of personal words.
          * @return true on success
          */
-        virtual bool addToPersonal( const QString& word ) =0;
+        virtual bool addToPersonal( const TQString& word ) =0;
 
         /**
          * Adds word to the words recognizable in the current session.
          * @return true on success
          */
-        virtual bool addToSession( const QString& word ) =0;
+        virtual bool addToSession( const TQString& word ) =0;
 
         /**
          * Returns language supported by this dictionary.
          */
-        QString language() const
+        TQString language() const
         {
             return m_language;
         }
@@ -95,11 +95,11 @@ namespace KSpell2
         }
 
     protected:
-        Dictionary( const QString& lang, bool def = false )
+        Dictionary( const TQString& lang, bool def = false )
             : m_language( lang ), m_default( def ) {}
     protected:
         friend class Broker;
-        QString m_language;
+        TQString m_language;
         bool    m_default;
     private:
         class Private;

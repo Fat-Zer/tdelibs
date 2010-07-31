@@ -20,7 +20,7 @@
 #ifndef KMDRIVERDBWIDGET_H
 #define KMDRIVERDBWIDGET_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include "kmdbentry.h"
 
 class QListBox;
@@ -31,28 +31,28 @@ class KMDriverDbWidget : public QWidget
 {
 	Q_OBJECT
 public:
-	KMDriverDbWidget(QWidget *parent = 0, const char *name = 0);
+	KMDriverDbWidget(TQWidget *parent = 0, const char *name = 0);
 	~KMDriverDbWidget();
 
 	void init();
 	void setHaveRaw(bool on);
 	void setHaveOther(bool on);
-	void setDriver(const QString& manu, const QString& model);
+	void setDriver(const TQString& manu, const TQString& model);
 
-	QString manufacturer();
-	QString model();
-	QString description()		{ return m_desc; }
+	TQString manufacturer();
+	TQString model();
+	TQString description()		{ return m_desc; }
 	KMDBEntryList* drivers();
-	QString driverFile();
+	TQString driverFile();
 	bool isRaw();
 	bool isExternal();
 
 protected slots:
 	void slotDbLoaded(bool reloaded);
-	void slotManufacturerSelected(const QString& name);
+	void slotManufacturerSelected(const TQString& name);
 	void slotPostscriptToggled(bool);
 	void slotOtherClicked();
-	void slotError(const QString&);
+	void slotError(const TQString&);
 
 private:
 	QListBox	*m_manu;
@@ -65,7 +65,7 @@ private:
 	bool		m_valid;
 };
 
-inline QString KMDriverDbWidget::driverFile()
+inline TQString KMDriverDbWidget::driverFile()
 { return m_external; }
 
 inline bool KMDriverDbWidget::isExternal()

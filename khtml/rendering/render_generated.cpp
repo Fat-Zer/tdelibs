@@ -72,28 +72,28 @@ RenderCounter::RenderCounter(DOM::NodeImpl* node, const DOM::CounterImpl* counte
 {
 }
 
-QString RenderCounter::toListStyleType(int value, int total, EListStyleType type)
+TQString RenderCounter::toListStyleType(int value, int total, EListStyleType type)
 {
-    QString item;
+    TQString item;
     switch(type)
     {
     case LNONE:
         break;
 // Glyphs: (these values are not really used and instead handled by RenderGlyph)
     case LDISC:
-        item = QChar(0x2022);
+        item = TQChar(0x2022);
         break;
     case LCIRCLE:
-        item = QChar(0x25e6);
+        item = TQChar(0x25e6);
         break;
     case LSQUARE:
-        item = QChar(0x25a0);
+        item = TQChar(0x25a0);
         break;
     case LBOX:
-        item = QChar(0x25a1);
+        item = TQChar(0x25a1);
         break;
     case LDIAMOND:
-        item = QChar(0x25c6);
+        item = TQChar(0x25c6);
         break;
 // Numeric:
     case LDECIMAL:
@@ -107,7 +107,7 @@ QString RenderCounter::toListStyleType(int value, int total, EListStyleType type
             decimals++;
         }
         decimals = kMax(decimals, 2);
-        QString num = QString::number(value);
+        TQString num = TQString::number(value);
         item.fill('0',decimals-num.length());
         item.append(num);
         break;
@@ -273,7 +273,7 @@ void RenderQuote::generateContent()
          case NO_OPEN_QUOTE:
          case NO_CLOSE_QUOTE:
          case NO_QUOTE:
-            m_item = QString();
+            m_item = TQString();
     }
 }
 
@@ -290,8 +290,8 @@ void RenderGlyph::setStyle(RenderStyle *_style)
 {
     RenderBox::setStyle(_style);
 
-    const QFontMetrics &fm = style()->fontMetrics();
-    QRect xSize= fm.boundingRect('x');
+    const TQFontMetrics &fm = style()->fontMetrics();
+    TQRect xSize= fm.boundingRect('x');
     m_height = xSize.height();
     m_width = xSize.width();;
 
@@ -342,15 +342,15 @@ void RenderGlyph::paint(PaintInfo& paintInfo, int _tx, int _ty)
     if((_ty > paintInfo.r.bottom()) || (_ty + m_height <= paintInfo.r.top()))
         return;
 
-    QPainter* p = paintInfo.p;
+    TQPainter* p = paintInfo.p;
 
-    const QColor color( style()->color() );
+    const TQColor color( style()->color() );
     p->setPen( color );
 
     int xHeight = m_height;
     int bulletWidth = (xHeight+1)/2;
     int yoff = (xHeight - 1)/4;
-    QRect marker(_tx, _ty + yoff, bulletWidth, bulletWidth);
+    TQRect marker(_tx, _ty + yoff, bulletWidth, bulletWidth);
 
     switch(m_type) {
     case LDISC:
@@ -370,14 +370,14 @@ void RenderGlyph::paint(PaintInfo& paintInfo, int _tx, int _ty)
         p->drawRect( marker );
         return;
     case LDIAMOND: {
-        static QPointArray diamond(4);
+        static TQPointArray diamond(4);
         int x = marker.x();
         int y = marker.y();
         int s = bulletWidth/2;
-        diamond[0] = QPoint(x+s,   y);
-        diamond[1] = QPoint(x+2*s, y+s);
-        diamond[2] = QPoint(x+s,   y+2*s);
-        diamond[3] = QPoint(x,     y+s);
+        diamond[0] = TQPoint(x+s,   y);
+        diamond[1] = TQPoint(x+2*s, y+s);
+        diamond[2] = TQPoint(x+s,   y+2*s);
+        diamond[3] = TQPoint(x,     y+s);
         p->setBrush( color );
         p->drawConvexPolygon( diamond, 0, 4 );
         return;

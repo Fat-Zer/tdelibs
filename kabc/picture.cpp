@@ -27,12 +27,12 @@ Picture::Picture()
 {
 }
 
-Picture::Picture( const QString &url )
+Picture::Picture( const TQString &url )
   : mUrl( url ), mIntern( false )
 {
 }
 
-Picture::Picture( const QImage &data )
+Picture::Picture( const TQImage &data )
   : mData( data ), mIntern( true )
 {
 }
@@ -61,19 +61,19 @@ bool Picture::operator!=( const Picture &p ) const
   return !( p == *this );
 }
 
-void Picture::setUrl( const QString &url )
+void Picture::setUrl( const TQString &url )
 {
   mUrl = url;
   mIntern = false;
 }
 
-void Picture::setData( const QImage &data )
+void Picture::setData( const TQImage &data )
 {
   mData = data;
   mIntern = true;
 }
 
-void Picture::setType( const QString &type )
+void Picture::setType( const TQString &type )
 {
   mType = type;
 }
@@ -83,22 +83,22 @@ bool Picture::isIntern() const
   return mIntern;
 }
 
-QString Picture::url() const
+TQString Picture::url() const
 {
   return mUrl;
 }
 
-QImage Picture::data() const
+TQImage Picture::data() const
 {
   return mData;
 }
 
-QString Picture::type() const
+TQString Picture::type() const
 {
   return mType;
 }
 
-QString Picture::asString() const
+TQString Picture::asString() const
 {
   if ( mIntern )
     return "intern picture";
@@ -106,13 +106,13 @@ QString Picture::asString() const
     return mUrl;
 }
 
-QDataStream &KABC::operator<<( QDataStream &s, const Picture &picture )
+TQDataStream &KABC::operator<<( TQDataStream &s, const Picture &picture )
 {
   return s << picture.mIntern << picture.mUrl << picture.mType;
 //  return s << picture.mIntern << picture.mUrl << picture.mType << picture.mData;
 }
 
-QDataStream &KABC::operator>>( QDataStream &s, Picture &picture )
+TQDataStream &KABC::operator>>( TQDataStream &s, Picture &picture )
 {
   s >> picture.mIntern >> picture.mUrl >> picture.mType;
 //  s >> picture.mIntern >> picture.mUrl >> picture.mType >> picture.mData;

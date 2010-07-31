@@ -8,8 +8,8 @@
 *
 */
 
-#include <qlayout.h>
-#include <qvgroupbox.h>
+#include <tqlayout.h>
+#include <tqvgroupbox.h>
 
 #include <kapplication.h>
 #include <knuminput.h>
@@ -26,15 +26,15 @@ void TopLevel::slotPrint( double n ) {
   kdDebug() << "slotPrint( " << n << " )" << endl;
 }
 
-#define conn(x,y) connect( x, SIGNAL(valueChanged(y)), SLOT(slotPrint(y)))
-TopLevel::TopLevel(QWidget *parent, const char *name)
-    : QWidget(parent, name)
+#define conn(x,y) connect( x, TQT_SIGNAL(valueChanged(y)), TQT_SLOT(slotPrint(y)))
+TopLevel::TopLevel(TQWidget *parent, const char *name)
+    : TQWidget(parent, name)
 {
     setCaption("KNumInput test application");
 
-    QBoxLayout* l = new QHBoxLayout(this, 10);
+    TQBoxLayout* l = new TQHBoxLayout(this, 10);
 
-    QGroupBox* b1 = new QVGroupBox("KIntNumInput", this);
+    TQGroupBox* b1 = new TQVGroupBox("KIntNumInput", this);
 
     i1 = new KIntNumInput(42, b1, 10, "perc_no_slider");
     i1->setLabel("percent of usage (no slider)");
@@ -67,10 +67,10 @@ TopLevel::TopLevel(QWidget *parent, const char *name)
     i6->setLabel("Height (should be 2xWidth):");
     i6->setRange(0, 200, 1, false);
     i6->setReferencePoint( 10 );
-    connect( i5, SIGNAL(relativeValueChanged(double)),
-	     i6, SLOT(setRelativeValue(double)) );
-    connect( i6, SIGNAL(relativeValueChanged(double)),
-	     i5, SLOT(setRelativeValue(double)) );
+    connect( i5, TQT_SIGNAL(relativeValueChanged(double)),
+	     i6, TQT_SLOT(setRelativeValue(double)) );
+    connect( i6, TQT_SIGNAL(relativeValueChanged(double)),
+	     i5, TQT_SLOT(setRelativeValue(double)) );
 
     i7 = new KIntNumInput(i6, 0, b1, 10);
     i7->setLabel("math test:", AlignVCenter|AlignLeft );
@@ -79,7 +79,7 @@ TopLevel::TopLevel(QWidget *parent, const char *name)
 
     l->addWidget(b1);
 
-    QGroupBox* b2 = new QVGroupBox("KDoubleNumInput", this);
+    TQGroupBox* b2 = new TQVGroupBox("KDoubleNumInput", this);
 
     d1 = new KDoubleNumInput(4.0, b2, "perc_double_no_slider");
     d1->setLabel("percent of usage (no slider)", AlignTop | AlignRight);
@@ -119,10 +119,10 @@ TopLevel::TopLevel(QWidget *parent, const char *name)
     d7 = new KDoubleNumInput(d6, -30, 30, 0, 0.001, 3, b2, "d7");
     d7->setReferencePoint( -3 );
 
-    connect( d6, SIGNAL(relativeValueChanged(double)),
-	     d7, SLOT(setRelativeValue(double)) );
-    connect( d7, SIGNAL(relativeValueChanged(double)),
-	     d6, SLOT(setRelativeValue(double)) );
+    connect( d6, TQT_SIGNAL(relativeValueChanged(double)),
+	     d7, TQT_SLOT(setRelativeValue(double)) );
+    connect( d7, TQT_SIGNAL(relativeValueChanged(double)),
+	     d6, TQT_SLOT(setRelativeValue(double)) );
 
     l->addWidget(b2);
 }

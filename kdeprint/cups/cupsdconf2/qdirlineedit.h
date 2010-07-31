@@ -20,8 +20,8 @@
 #ifndef QDIRLINEEDIT_H
 #define	QDIRLINEEDIT_H
 
-#include <qwidget.h>
-#include <qstring.h>
+#include <tqwidget.h>
+#include <tqstring.h>
 
 class QLineEdit;
 class QPushButton;
@@ -30,11 +30,11 @@ class QDirLineEdit : public QWidget
 {
 	Q_OBJECT
 public:
-	QDirLineEdit(bool file, QWidget *parent = 0, const char *name = 0);
+	QDirLineEdit(bool file, TQWidget *parent = 0, const char *name = 0);
 	~QDirLineEdit();
 
-	void setURL(const QString& txt);
-	QString url();
+	void setURL(const TQString& txt);
+	TQString url();
 	void setFileEdit(bool on = true);
 
 private slots:

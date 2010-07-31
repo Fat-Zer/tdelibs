@@ -28,9 +28,9 @@
 #ifndef HTMLTOKENIZER_H
 #define HTMLTOKENIZER_H
 
-#include <qstring.h>
-#include <qobject.h>
-#include <qptrqueue.h>
+#include <tqstring.h>
+#include <tqobject.h>
+#include <tqptrqueue.h>
 
 #include "misc/loader_client.h"
 #include "misc/htmltags.h"
@@ -72,7 +72,7 @@ namespace khtml {
             if(attrs) attrs->deref();
             if(text) text->deref();
         }
-        void addAttribute(DocumentImpl* doc, QChar* buffer, const QString& attrName, const DOMString& v)
+        void addAttribute(DocumentImpl* doc, TQChar* buffer, const TQString& attrName, const DOMString& v)
         {
             DOMStringImpl *value = 0;
             NodeImpl::Id tid = 0;
@@ -130,7 +130,7 @@ public:
     void write( const khtml::TokenizerString &str, bool appendData );
     void end();
     void finish();
-    void timerEvent( QTimerEvent *e );
+    void timerEvent( TQTimerEvent *e );
     virtual void setOnHold(bool _onHold);
     void abort() { m_abort = true; }
     virtual void setAutoClose(bool b=true);
@@ -149,10 +149,10 @@ protected:
     void parseListing(khtml::TokenizerString &str);
     void parseSpecial(khtml::TokenizerString &str);
     void parseTag(khtml::TokenizerString &str);
-    void parseEntity(khtml::TokenizerString &str, QChar *&dest, bool start = false);
+    void parseEntity(khtml::TokenizerString &str, TQChar *&dest, bool start = false);
     void parseProcessingInstruction(khtml::TokenizerString &str);
     void scriptHandler();
-    void scriptExecution(const QString& script, const QString& scriptURL = QString::null, int baseLine = 0);
+    void scriptExecution(const TQString& script, const TQString& scriptURL = TQString::null, int baseLine = 0);
     void setSrc(const TokenizerString& source);
 
     // check if we have enough space in the buffer.
@@ -177,8 +177,8 @@ protected:
 protected:
     // Internal buffers
     ///////////////////
-    QChar *buffer;
-    QChar *dest;
+    TQChar *buffer;
+    TQChar *dest;
 
     khtml::Token currToken;
 
@@ -245,7 +245,7 @@ protected:
     // are we in a <script> ... </script> block
     bool script;
 
-    QChar EntityChar;
+    TQChar EntityChar;
 
     // Are we in a <pre> ... </pre> block
     bool pre;
@@ -288,10 +288,10 @@ protected:
     bool brokenScript;
 
     // name of an unknown attribute
-    QString attrName;
+    TQString attrName;
 
     // Used to store the code of a srcipting sequence
-    QChar *scriptCode;
+    TQChar *scriptCode;
     // Size of the script sequenze stored in scriptCode
     int scriptCodeSize;
     // Maximal size that can be stored in scriptCode
@@ -300,11 +300,11 @@ protected:
     int scriptCodeResync;
 
     // Stores characters if we are scanning for a string like "</script>"
-    QChar searchBuffer[ 10 ];
+    TQChar searchBuffer[ 10 ];
     // Counts where we are in the string we are scanning for
     int searchCount;
     // The string we are searching for
-    const QChar *searchFor;
+    const TQChar *searchFor;
     // the stopper string
     const char* searchStopper;
     // the stopper len
@@ -313,15 +313,15 @@ protected:
     // may be still downloading) and finish
     bool noMoreData;
     // URL to get source code of script from
-    QString scriptSrc;
-    QString scriptSrcCharset;
+    TQString scriptSrc;
+    TQString scriptSrcCharset;
     bool javascript;
     // the HTML code we will parse after the external script we are waiting for has loaded
     TokenizerQueue pendingQueue;
     // true if we are executing a script while parsing a document. This causes the parsing of
     // the output of the script to be postponed until after the script has finished executing
     int m_executingScript;
-    QPtrQueue<khtml::CachedScript> cachedScript;
+    TQPtrQueue<khtml::CachedScript> cachedScript;
     // you can pause the tokenizer if you need to display a dialog or something
     bool onHold;
     // you can ask the tokenizer to abort the current write() call, e.g. to redirect somewhere else

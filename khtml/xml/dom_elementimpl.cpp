@@ -46,7 +46,7 @@
 #include "css/cssproperties.h"
 #include "xml/dom_xmlimpl.h"
 
-#include <qtextstream.h>
+#include <tqtextstream.h>
 #include <kdebug.h>
 #include <stdlib.h>
 
@@ -746,12 +746,12 @@ void ElementImpl::updateId(DOMStringImpl* oldId, DOMStringImpl* newId)
         addId(DOMString(newId).string());
 }
 
-void ElementImpl::removeId(const QString& id)
+void ElementImpl::removeId(const TQString& id)
 {
   getDocument()->getElementByIdCache().remove(id, this);
 }
 
-void ElementImpl::addId(const QString& id)
+void ElementImpl::addId(const TQString& id)
 {
   getDocument()->getElementByIdCache().add(id, this);
 }
@@ -805,7 +805,7 @@ DOMString ElementImpl::openTagStartToString(bool expandurls) const
                             //We need to sanitize the urls - strip out the passwords.
 			    //FIXME:   are src=  and href=  the only places that might have a password and need to be sanitized?
                             KURL safeURL(getDocument()->completeURL(attribute->value().string()));
-                            safeURL.setPass(QString::null);
+                            safeURL.setPass(TQString::null);
 			    result += safeURL.htmlURL();
 			}
 		        else {
@@ -848,14 +848,14 @@ DOMString ElementImpl::selectionToString(NodeImpl *selectionStart, NodeImpl *sel
 
 DOMString ElementImpl::toString() const
 {
-    QString result = openTagStartToString().string(); //Accumulate in QString, since DOMString can't append well.
+    TQString result = openTagStartToString().string(); //Accumulate in TQString, since DOMString can't append well.
 
     if (hasChildNodes()) {
 	result += ">";
 
 	for (NodeImpl *child = firstChild(); child != NULL; child = child->nextSibling()) {
 	    DOMString kid = child->toString();
-	    result += QConstString(kid.unicode(), kid.length()).string();
+	    result += TQConstString(kid.unicode(), kid.length()).string();
 	}
 
 	result += "</";

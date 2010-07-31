@@ -22,7 +22,7 @@
 #include <kstringhandler.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 
 #include <sys/types.h>
 #include <stddef.h>
@@ -34,20 +34,20 @@
 
 void KOperaBookmarkImporter::parseOperaBookmarks( )
 {
-   QFile file(m_fileName);
+   TQFile file(m_fileName);
    if(!file.open(IO_ReadOnly)) {
       return;
    }
 
-   QTextCodec * codec = QTextCodec::codecForName("UTF-8");
+   TQTextCodec * codec = TQTextCodec::codecForName("UTF-8");
    Q_ASSERT(codec);
    if (!codec)
       return;
 
    int lineno = 0;
-   QString url, name, type;
+   TQString url, name, type;
    static const int g_lineLimit = 16*1024; 
-   QCString line(g_lineLimit);
+   TQCString line(g_lineLimit);
 
    while ( file.readLine(line.data(), g_lineLimit) >=0 ) {
       lineno++;
@@ -56,7 +56,7 @@ void KOperaBookmarkImporter::parseOperaBookmarks( )
       if ( line[line.length()-1] != '\n' || lineno <= 2 )
           continue;
     
-      QString currentLine = codec->toUnicode(line).stripWhiteSpace();
+      TQString currentLine = codec->toUnicode(line).stripWhiteSpace();
     
       if (currentLine.isEmpty()) {
          // end of data block
@@ -67,9 +67,9 @@ void KOperaBookmarkImporter::parseOperaBookmarks( )
          else if (type == "FOLDER" )
             emit newFolder( name, false, "" ); 
 
-         type = QString::null;
-         name = QString::null;
-         url = QString::null;
+         type = TQString::null;
+         name = TQString::null;
+         url = TQString::null;
          
       } else if (currentLine == "-") {
          // end of folder
@@ -77,7 +77,7 @@ void KOperaBookmarkImporter::parseOperaBookmarks( )
     
       } else {
          // data block line
-         QString tag;
+         TQString tag;
          if ( tag = "#", currentLine.startsWith( tag ) )
             type = currentLine.remove( 0, tag.length() );
          else if ( tag = "NAME=", currentLine.startsWith( tag ) )
@@ -89,7 +89,7 @@ void KOperaBookmarkImporter::parseOperaBookmarks( )
 
 }
 
-QString KOperaBookmarkImporter::operaBookmarksFile()
+TQString KOperaBookmarkImporter::operaBookmarksFile()
 {
    static KOperaBookmarkImporterImpl *p = 0;
    if (!p) 
@@ -103,13 +103,13 @@ void KOperaBookmarkImporterImpl::parse() {
    importer.parseOperaBookmarks();
 }
 
-QString KOperaBookmarkImporterImpl::findDefaultLocation(bool saving) const
+TQString KOperaBookmarkImporterImpl::findDefaultLocation(bool saving) const
 {
    return saving ? KFileDialog::getSaveFileName( 
-                       QDir::homeDirPath() + "/.opera", 
+                       TQDir::homeDirPath() + "/.opera", 
                        i18n("*.adr|Opera Bookmark Files (*.adr)") )
                  : KFileDialog::getOpenFileName( 
-                       QDir::homeDirPath() + "/.opera", 
+                       TQDir::homeDirPath() + "/.opera", 
                        i18n("*.adr|Opera Bookmark Files (*.adr)") );
 }
 
@@ -118,14 +118,14 @@ QString KOperaBookmarkImporterImpl::findDefaultLocation(bool saving) const
 class OperaExporter : private KBookmarkGroupTraverser {
 public:
     OperaExporter();
-    QString generate( const KBookmarkGroup &grp ) { traverse(grp); return m_string; };
+    TQString generate( const KBookmarkGroup &grp ) { traverse(grp); return m_string; };
 private:
     virtual void visit( const KBookmark & );
     virtual void visitEnter( const KBookmarkGroup & );
     virtual void visitLeave( const KBookmarkGroup & );
 private:
-    QString m_string;
-    QTextStream m_out;
+    TQString m_string;
+    TQTextStream m_out;
 };
 
 OperaExporter::OperaExporter() : m_out(&m_string, IO_WriteOnly) {
@@ -156,14 +156,14 @@ void OperaExporter::visitLeave( const KBookmarkGroup & ) {
 
 void KOperaBookmarkExporterImpl::write(KBookmarkGroup parent) {
     OperaExporter exporter;
-    QString content = exporter.generate( parent );
-    QFile file(m_fileName);
+    TQString content = exporter.generate( parent );
+    TQFile file(m_fileName);
     if (!file.open(IO_WriteOnly)) {
        kdError(7043) << "Can't write to file " << m_fileName << endl;
        return;
     }
-    QTextStream fstream(&file);
-    fstream.setEncoding(QTextStream::UnicodeUTF8);
+    TQTextStream fstream(&file);
+    fstream.setEncoding(TQTextStream::UnicodeUTF8);
     fstream << content;
 }
 

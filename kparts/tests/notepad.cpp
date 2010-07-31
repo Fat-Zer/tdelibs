@@ -3,10 +3,10 @@
 #include <kparts/partmanager.h>
 #include <kparts/mainwindow.h>
 
-#include <qsplitter.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qmultilineedit.h>
+#include <tqsplitter.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqmultilineedit.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -16,17 +16,17 @@
 #include <kstatusbar.h>
 #include <kstandarddirs.h>
 
-NotepadPart::NotepadPart( QWidget* parentWidget, const char*,
-                          QObject* parent, const char* name,
-                          const QStringList& )
+NotepadPart::NotepadPart( TQWidget* parentWidget, const char*,
+                          TQObject* parent, const char* name,
+                          const TQStringList& )
  : KParts::ReadWritePart( parent, name )
 {
   setInstance( NotepadFactory::instance() );
 
-  m_edit = new QMultiLineEdit( parentWidget, "NotepadPart's multiline edit" );
+  m_edit = new TQMultiLineEdit( parentWidget, "NotepadPart's multiline edit" );
   setWidget( m_edit );
 
-  (void)new KAction( "Search and replace", 0, this, SLOT( slotSearchReplace() ), actionCollection(), "searchreplace" );
+  (void)new KAction( "Search and replace", 0, this, TQT_SLOT( slotSearchReplace() ), actionCollection(), "searchreplace" );
   setXMLFile( "notepadpart.rc" );
   setReadWrite( true );
 }
@@ -39,9 +39,9 @@ void NotepadPart::setReadWrite( bool rw )
 {
     m_edit->setReadOnly( !rw );
     if (rw)
-        connect( m_edit, SIGNAL( textChanged() ), this, SLOT( setModified() ) );
+        connect( m_edit, TQT_SIGNAL( textChanged() ), this, TQT_SLOT( setModified() ) );
     else
-        disconnect( m_edit, SIGNAL( textChanged() ), this, SLOT( setModified() ) );
+        disconnect( m_edit, TQT_SIGNAL( textChanged() ), this, TQT_SLOT( setModified() ) );
 
     ReadWritePart::setReadWrite( rw );
 }
@@ -55,10 +55,10 @@ bool NotepadPart::openFile()
 {
   kdDebug() << "NotepadPart: opening " << m_file << endl;
   // Hehe this is from a tutorial I did some time ago :)
-  QFile f(m_file);
-  QString s;
+  TQFile f(m_file);
+  TQString s;
   if ( f.open(IO_ReadOnly) ) {
-    QTextStream t( &f );
+    TQTextStream t( &f );
     while ( !t.eof() ) {
       s += t.readLine() + "\n";
     }
@@ -75,10 +75,10 @@ bool NotepadPart::saveFile()
 {
   if ( !isReadWrite() )
     return false;
-  QFile f(m_file);
-  QString s;
+  TQFile f(m_file);
+  TQString s;
   if ( f.open(IO_WriteOnly) ) {
-    QTextStream t( &f );
+    TQTextStream t( &f );
     t << m_edit->text();
     f.close();
     return true;
@@ -90,9 +90,9 @@ void NotepadPart::slotSearchReplace()
 {
   // What's this ? (David)
 /*
-  QValueList<KParts::XMLGUIServant *> plugins = KParts::Plugin::pluginServants( this );
-  QValueList<KParts::XMLGUIServant *>::ConstIterator it = plugins.begin();
-  QValueList<KParts::XMLGUIServant *>::ConstIterator end = plugins.end();
+  TQValueList<KParts::XMLGUIServant *> plugins = KParts::Plugin::pluginServants( this );
+  TQValueList<KParts::XMLGUIServant *>::ConstIterator it = plugins.begin();
+  TQValueList<KParts::XMLGUIServant *>::ConstIterator end = plugins.end();
   for (; it != end; ++it )
     factory()->removeServant( *it );
 */

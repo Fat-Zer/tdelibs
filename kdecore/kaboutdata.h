@@ -19,9 +19,9 @@
  *
  */
 
-#include <qvaluelist.h>
-#include <qstring.h>
-#include <qimage.h>
+#include <tqvaluelist.h>
+#include <tqstring.h>
+#include <tqimage.h>
 #include <klocale.h>
 
 #ifndef _KABOUTDATA_H_
@@ -83,31 +83,31 @@ public:
 
     /**
      * The person's name
-     * @return the person's name (can be QString::null, if it has been
+     * @return the person's name (can be TQString::null, if it has been
      *           constructed with a null name)
      */
-    QString name() const;
+    TQString name() const;
 
     /**
      * The person's task
-     * @return the person's task (can be QString::null, if it has been
+     * @return the person's task (can be TQString::null, if it has been
      *           constructed with a null task)
      */
-    QString task() const;
+    TQString task() const;
 
     /**
      * The person's email address
-     * @return the person's email address (can be QString::null, if it has been
+     * @return the person's email address (can be TQString::null, if it has been
      *           constructed with a null email)
      */
-    QString emailAddress() const;
+    TQString emailAddress() const;
 
     /**
      * The home page or a relevant link
-     * @return the persons home page (can be QString::null, if it has been
+     * @return the persons home page (can be TQString::null, if it has been
      *           constructed with a null home page)
      */
-    QString webAddress() const;
+    TQString webAddress() const;
 
 private:
     const char *mName;
@@ -141,26 +141,26 @@ public:
      *
      * @param emailAddress The email address of the person.
      */
-    KAboutTranslator(const QString & name=QString::null,
-                     const QString & emailAddress=QString::null);
+    KAboutTranslator(const TQString & name=TQString::null,
+                     const TQString & emailAddress=TQString::null);
 
     /**
      * The translator's name
-     * @return the translators's name (can be QString::null, if it has been
+     * @return the translators's name (can be TQString::null, if it has been
      *           constructed with a null name)
      */
-    QString name() const;
+    TQString name() const;
 
     /**
      * The translator's email
-     * @return the translator's email address (can be QString::null, if it has been
+     * @return the translator's email address (can be TQString::null, if it has been
      *           constructed with a null email)
      */
-    QString emailAddress() const;
+    TQString emailAddress() const;
 
 private:
-    QString mName;
-    QString mEmail;
+    TQString mName;
+    TQString mEmail;
     KAboutTranslatorPrivate* d;
 };
 
@@ -344,7 +344,7 @@ class KDECORE_EXPORT KAboutData
      *
      * @param file File containing the license text.
      */
-    void setLicenseTextFile( const QString &file );
+    void setLicenseTextFile( const TQString &file );
 
     /**
      * Defines the program name used internally.
@@ -372,7 +372,7 @@ class KDECORE_EXPORT KAboutData
      * @see programLogo()
      * @since 3.4
     */
-    void setProgramLogo(const QImage& image);
+    void setProgramLogo(const TQImage& image);
 
     /**
      * Defines the program version string.
@@ -462,7 +462,7 @@ class KDECORE_EXPORT KAboutData
      * Returns the translated program name.
      * @return the program name (translated).
      */
-    QString programName() const;
+    TQString programName() const;
 
     /**
      * @internal
@@ -479,13 +479,13 @@ class KDECORE_EXPORT KAboutData
      * no custom application logo defined.
      * @since 3.4
      */
-    QImage programLogo() const;
+    TQImage programLogo() const;
 
     /**
      * Returns the program's version.
      * @return the version string.
      */
-    QString version() const;
+    TQString version() const;
 
     /**
      * @internal
@@ -495,22 +495,22 @@ class KDECORE_EXPORT KAboutData
     /**
      * Returns a short, translated description.
      * @return the short description (translated). Can be
-     *         QString::null if not set.
+     *         TQString::null if not set.
      */
-    QString shortDescription() const;
+    TQString shortDescription() const;
 
     /**
      * Returns the application homepage.
-     * @return the application homepage URL. Can be QString::null if
+     * @return the application homepage URL. Can be TQString::null if
      *         not set.
      */
-    QString homepage() const;
+    TQString homepage() const;
 
     /**
      * Returns the email address for bugs.
      * @return the email address where to report bugs.
      */
-    QString bugAddress() const;
+    TQString bugAddress() const;
     
     /**
      * @internal
@@ -521,31 +521,31 @@ class KDECORE_EXPORT KAboutData
      * Returns a list of authors.
      * @return author information (list of persons).
      */
-    const QValueList<KAboutPerson> authors() const;
+    const TQValueList<KAboutPerson> authors() const;
 
     /**
      * Returns a list of persons who contributed.
      * @return credit information (list of persons).
      */
-    const QValueList<KAboutPerson> credits() const;
+    const TQValueList<KAboutPerson> credits() const;
 
     /**
      * Returns a list of translators.
      * @return translators information (list of persons)
      */
-    const QValueList<KAboutTranslator> translators() const;
+    const TQValueList<KAboutTranslator> translators() const;
 
     /**
      * Returns a message about the translation team.
      * @return a message about the translation team
      */
-    static QString aboutTranslationTeam();
+    static TQString aboutTranslationTeam();
 
     /**
      * Returns a translated, free form text.
-     * @return the free form text (translated). Can be QString::null if not set.
+     * @return the free form text (translated). Can be TQString::null if not set.
      */
-    QString otherText() const;
+    TQString otherText() const;
 
     /**
      * Returns the license. If the licenseType argument of the constructor has been
@@ -554,31 +554,31 @@ class KDECORE_EXPORT KAboutData
      *
      * @return The license text.
      */
-    QString license() const;
+    TQString license() const;
 
     /**
      * Returns the copyright statement.
-     * @return the copyright statement. Can be QString::null if not set.
+     * @return the copyright statement. Can be TQString::null if not set.
      */
-    QString copyrightStatement() const;
+    TQString copyrightStatement() const;
 
     /**
      * Returns the plain text displayed around the list of authors instead
      * of the default message telling users to send bug reports to bugAddress().
      *
      * @return the plain text displayed around the list of authors instead
-     *         of the default message.  Can be QString::null.
+     *         of the default message.  Can be TQString::null.
      */
-    QString customAuthorPlainText() const;
+    TQString customAuthorPlainText() const;
 
     /**
      * Returns the rich text displayed around the list of authors instead
      * of the default message telling users to send bug reports to bugAddress().
      *
      * @return the rich text displayed around the list of authors instead
-     *         of the default message.  Can be QString::null.
+     *         of the default message.  Can be TQString::null.
      */
-    QString customAuthorRichText() const;
+    TQString customAuthorRichText() const;
 
     /**
      * Returns whether custom text should be displayed around the list of
@@ -596,10 +596,10 @@ class KDECORE_EXPORT KAboutData
      * @param plainText The plain text.
      * @param richText The rich text.
      *
-     * Both parameters can be QString::null to not display any message at
+     * Both parameters can be TQString::null to not display any message at
      * all.  Call unsetCustomAuthorText() to revert to the default mesage.
      */
-    void setCustomAuthorText(const QString &plainText, const QString &richText);
+    void setCustomAuthorText(const TQString &plainText, const TQString &richText);
     
     /**
      * Clears any custom text displayed around the list of authors and falls
@@ -618,8 +618,8 @@ class KDECORE_EXPORT KAboutData
     const char *mOtherText;
     const char *mHomepageAddress;
     const char *mBugEmailAddress;
-    QValueList<KAboutPerson> mAuthorList;
-    QValueList<KAboutPerson> mCreditList;
+    TQValueList<KAboutPerson> mAuthorList;
+    TQValueList<KAboutPerson> mCreditList;
     const char *mLicenseText;
 
     KAboutDataPrivate *d;

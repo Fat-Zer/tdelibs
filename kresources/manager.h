@@ -24,8 +24,8 @@
 #ifndef KRESOURCES_MANAGER_H
 #define KRESOURCES_MANAGER_H
 
-#include <qdict.h>
-#include <qstringlist.h>
+#include <tqdict.h>
+#include <tqstringlist.h>
 
 #include <kdebug.h>
 #include <kresources/factory.h>
@@ -209,7 +209,7 @@ class Manager : private ManagerNotifier
       Create manager for given resource family. The family argument is used as
       identifier for loading and saving resource configurations.
     */
-    Manager( const QString &family )
+    Manager( const TQString &family )
     {
       mFactory = Factory::self( family );
       // The managerimpl will use the same Factory object as the manager
@@ -295,7 +295,7 @@ class Manager : private ManagerNotifier
       Returns a list of the names of the resources managed by the
       Manager for this family.
     */
-    QStringList resourceNames() const
+    TQStringList resourceNames() const
     {
       return mImpl->resourceNames();
     }
@@ -310,7 +310,7 @@ class Manager : private ManagerNotifier
       @param type   The type of the resource, one of those returned
                     by resourceTypeNames()
     */
-    T *createResource( const QString& type )
+    T *createResource( const TQString& type )
     {
       return dynamic_cast<T *>( mFactory->resource( type, 0 ) );
     }
@@ -318,7 +318,7 @@ class Manager : private ManagerNotifier
     /**
       Returns a list of the names of all available resource types.
     */
-    QStringList resourceTypeNames() const
+    TQStringList resourceTypeNames() const
     {
       return mFactory->typeNames();
     }
@@ -326,16 +326,16 @@ class Manager : private ManagerNotifier
     /**
       Return list of descriptions of all available resource types.
     */
-    QStringList resourceTypeDescriptions() const
+    TQStringList resourceTypeDescriptions() const
     {
-      QStringList typeDescs;
-      QStringList types = mFactory->typeNames();
+      TQStringList typeDescs;
+      TQStringList types = mFactory->typeNames();
 
-      for ( QStringList::ConstIterator it = types.begin(); it != types.end();
+      for ( TQStringList::ConstIterator it = types.begin(); it != types.end();
             ++it ) {
-        QString desc = mFactory->typeName( *it );
+        TQString desc = mFactory->typeName( *it );
         if ( !mFactory->typeDescription( *it ).isEmpty() )
-          desc += QString::fromLatin1(" (") + mFactory->typeDescription( *it ) + QString::fromLatin1(")");
+          desc += TQString::fromLatin1(" (") + mFactory->typeDescription( *it ) + TQString::fromLatin1(")");
 
         typeDescs.append( desc );
       }
@@ -414,7 +414,7 @@ class Manager : private ManagerNotifier
   private:
     ManagerImpl *mImpl;
     Factory *mFactory;
-    QPtrList<ManagerObserver<T> > mObservers;
+    TQPtrList<ManagerObserver<T> > mObservers;
 };
 
 }

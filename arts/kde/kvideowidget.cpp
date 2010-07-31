@@ -16,8 +16,8 @@
 #ifdef HAVE_USLEEP
 #include <unistd.h>
 #endif
-#include <qaccel.h>
-#include <qcursor.h>
+#include <tqaccel.h>
+#include <tqcursor.h>
 
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
 #include <X11/Xlib.h>
@@ -49,7 +49,7 @@ KFullscreenVideoWidget::KFullscreenVideoWidget( KVideoWidget *parent, const char
 {
     this->videoWidget = parent;
     setEraseColor( black );
-    setCursor(QCursor(Qt::BlankCursor));
+    setCursor(TQCursor(Qt::BlankCursor));
 }
 
 void KFullscreenVideoWidget::windowActivationChange( bool )
@@ -73,18 +73,18 @@ bool KFullscreenVideoWidget::x11Event( XEvent *event )
     return false;
 }
 
-KVideoWidget::KVideoWidget( KXMLGUIClient *clientParent, QWidget *parent, const char *name, WFlags f )
+KVideoWidget::KVideoWidget( KXMLGUIClient *clientParent, TQWidget *parent, const char *name, WFlags f )
     : KXMLGUIClient( clientParent ),
-    QWidget( parent, name, f )
+    TQWidget( parent, name, f )
 {
 	init();
 	// ???
-	QString toolbarName = i18n("Video Toolbar");
-	setXML(QString("<!DOCTYPE kpartgui>\n<kpartgui name=\"kvideowidget\" version=\"1\"><MenuBar><Menu name=\"edit\"><Separator/><Action name=\"double_size\"/><Action name=\"normal_size\"/><Action name=\"half_size\"/><Separator/><Action name=\"fullscreen_mode\"/></Menu></MenuBar><Toolbar name=\"VideoToolbar\"><text>Video Toolbar</text><Action name=\"fullscreen_mode\"/></Toolbar></kpartgui>"), true);
+	TQString toolbarName = i18n("Video Toolbar");
+	setXML(TQString("<!DOCTYPE kpartgui>\n<kpartgui name=\"kvideowidget\" version=\"1\"><MenuBar><Menu name=\"edit\"><Separator/><Action name=\"double_size\"/><Action name=\"normal_size\"/><Action name=\"half_size\"/><Separator/><Action name=\"fullscreen_mode\"/></Menu></MenuBar><Toolbar name=\"VideoToolbar\"><text>Video Toolbar</text><Action name=\"fullscreen_mode\"/></Toolbar></kpartgui>"), true);
 }
 
-KVideoWidget::KVideoWidget( QWidget *parent, const char *name, WFlags f )
-    : QWidget( parent, name, f )
+KVideoWidget::KVideoWidget( TQWidget *parent, const char *name, WFlags f )
+    : TQWidget( parent, name, f )
 {
 	init();
 }
@@ -92,7 +92,7 @@ KVideoWidget::KVideoWidget( QWidget *parent, const char *name, WFlags f )
 void KVideoWidget::init(void)
 {
     setMinimumSize(0, 0);
-    setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding ) );
+    setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
     setFocusPolicy( ClickFocus );
 
     fullscreenWidget = 0;
@@ -102,16 +102,16 @@ void KVideoWidget::init(void)
 
     // Setup actions
     new KToggleAction( i18n("Fullscreen &Mode"), "window_fullscreen",
-		       CTRL+SHIFT+Key_F, this, SLOT(fullscreenActivated()),
+		       CTRL+SHIFT+Key_F, this, TQT_SLOT(fullscreenActivated()),
 		       actionCollection(), "fullscreen_mode" );
     new KRadioAction( i18n("&Half Size"), ALT+Key_0,
-		      this, SLOT(halfSizeActivated()),
+		      this, TQT_SLOT(halfSizeActivated()),
 		      actionCollection(), "half_size" );
     new KRadioAction( i18n("&Normal Size"), ALT+Key_1,
-		      this, SLOT(normalSizeActivated()),
+		      this, TQT_SLOT(normalSizeActivated()),
 		      actionCollection(), "normal_size" );
     new KRadioAction( i18n("&Double Size"), ALT+Key_2,
-		      this, SLOT(doubleSizeActivated()),
+		      this, TQT_SLOT(doubleSizeActivated()),
 		      actionCollection(), "double_size" );
 
     ((KToggleAction *)action( "half_size" ))->setExclusiveGroup( "KVideoWidget::zoom" );
@@ -189,7 +189,7 @@ void KVideoWidget::embed( Arts::VideoPlayObject vpo )
     action("fullscreen_mode")->setEnabled(enable);
 }
 
-QImage KVideoWidget::snapshot( Arts::VideoPlayObject vpo )
+TQImage KVideoWidget::snapshot( Arts::VideoPlayObject vpo )
 {
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
     Window root;
@@ -199,7 +199,7 @@ QImage KVideoWidget::snapshot( Arts::VideoPlayObject vpo )
     int x, y;
 
     if (vpo.isNull() || (long)(pixmap = vpo.x11Snapshot()) == -1)
-	return QImage();
+	return TQImage();
 
     // Get 32bit RGBA image data (stored in 1bpp pixmap)
     XGetGeometry( qt_xdisplay(), pixmap, &root, &x, &y, &width, &height, &border, &depth );
@@ -209,11 +209,11 @@ QImage KVideoWidget::snapshot( Arts::VideoPlayObject vpo )
     if (xImage == 0)
     {
 	XFreePixmap( qt_xdisplay(), pixmap );
-	return QImage();
+	return TQImage();
     }
 
     // Convert 32bit RGBA image data into Qt image
-    QImage qImage = QImage( (uchar *)xImage->data, width/32, height, 32, (QRgb *)0, 0, QImage::IgnoreEndian ).copy();
+    TQImage qImage = TQImage( (uchar *)xImage->data, width/32, height, 32, (QRgb *)0, 0, TQImage::IgnoreEndian ).copy();
 
     // Free X11 resources and return Qt image
     XDestroyImage( xImage );
@@ -286,9 +286,9 @@ void KVideoWidget::setDoubleSize()
     doubleSizeActivated();
 }
 
-QSize KVideoWidget::sizeHint() const
+TQSize KVideoWidget::sizeHint() const
 {
-    return QSize( videoWidth, videoHeight );
+    return TQSize( videoWidth, videoHeight );
 }
 
 int KVideoWidget::heightForWidth( int w ) const
@@ -299,9 +299,9 @@ int KVideoWidget::heightForWidth( int w ) const
 		return int( double(w)*double(videoHeight)/double(videoWidth) );
 }
 
-void KVideoWidget::mousePressEvent( QMouseEvent *event )
+void KVideoWidget::mousePressEvent( TQMouseEvent *event )
 {
-	QPoint pos = mapToGlobal( event->pos() );
+	TQPoint pos = mapToGlobal( event->pos() );
 
 	emit mouseButtonPressed( event->button(), pos, event->state() );
 
@@ -310,14 +310,14 @@ void KVideoWidget::mousePressEvent( QMouseEvent *event )
 		emit rightButtonPressed( pos );
 }
 
-void KVideoWidget::mouseDoubleClickEvent( QMouseEvent *event )
+void KVideoWidget::mouseDoubleClickEvent( TQMouseEvent *event )
 {
 	emit mouseButtonDoubleClick( mapToGlobal( event->pos() ), event->state() );
 }
 
-void KVideoWidget::resizeEvent( QResizeEvent *event )
+void KVideoWidget::resizeEvent( TQResizeEvent *event )
 {
-    QWidget::resizeEvent( event );
+    TQWidget::resizeEvent( event );
 
     if (width() > minimumWidth() || height() > minimumHeight())
     {
@@ -379,20 +379,20 @@ void KVideoWidget::fullscreenActivated()
 	fullscreenWidget = new KFullscreenVideoWidget( this );
 
 	// Interconnect mouse button signals
-	connect( fullscreenWidget, SIGNAL(mouseButtonPressed( int, const QPoint &, int )),
-		 this, SIGNAL(mouseButtonPressed( int, const QPoint &, int)) );
+	connect( fullscreenWidget, TQT_SIGNAL(mouseButtonPressed( int, const TQPoint &, int )),
+		 this, TQT_SIGNAL(mouseButtonPressed( int, const TQPoint &, int)) );
 
-	connect( fullscreenWidget, SIGNAL(mouseButtonDoubleClick( const QPoint &, int )),
-		 this, SIGNAL(mouseButtonDoubleClick( const QPoint &, int )) );
+	connect( fullscreenWidget, TQT_SIGNAL(mouseButtonDoubleClick( const TQPoint &, int )),
+		 this, TQT_SIGNAL(mouseButtonDoubleClick( const TQPoint &, int )) );
 
 	// ### Remove in KDE4
-	 connect( fullscreenWidget, SIGNAL(rightButtonPressed(const QPoint &)),
-		this, SIGNAL(rightButtonPressed(const QPoint &)) );
+	 connect( fullscreenWidget, TQT_SIGNAL(rightButtonPressed(const TQPoint &)),
+		this, TQT_SIGNAL(rightButtonPressed(const TQPoint &)) );
 		 
 	// Leave fullscreen mode with <Escape> key
-	QAccel *a = new QAccel( fullscreenWidget );
+	TQAccel *a = new TQAccel( fullscreenWidget );
 	a->connectItem( a->insertItem( Key_Escape ),
-			this, SLOT(setWindowed()) );
+			this, TQT_SLOT(setWindowed()) );
 
 	fullscreenWidget->setFocus();
 	fullscreenWidget->showFullScreen();

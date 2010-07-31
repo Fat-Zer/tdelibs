@@ -39,7 +39,7 @@ TextListValue::TextListValue(const TextListValue & x)
 {
 }
 
-TextListValue::TextListValue(const QCString & s)
+TextListValue::TextListValue(const TQCString & s)
 	:	Value(s)
 {
 }
@@ -54,7 +54,7 @@ TextListValue::operator = (TextListValue & x)
 }
 
 	TextListValue &
-TextListValue::operator = (const QCString & s)
+TextListValue::operator = (const TQCString & s)
 {
 	Value::operator = (s);
 	return *this;
@@ -82,7 +82,7 @@ TextListValue::_assemble()
 {
 	bool first(true);
 	
-	QStrListIterator it(valueList_);
+	TQStrListIterator it(valueList_);
 	
 	for (; it.current(); ++it) {
 		if (!first) strRep_ += ';';

@@ -24,7 +24,7 @@
 #ifndef _KJS_USTRING_H_
 #define _KJS_USTRING_H_
 
-#include <qstring.h>
+#include <tqstring.h>
 #include "global.h"
 
 /**
@@ -46,7 +46,7 @@ namespace KJS {
    * @short Unicode character.
    *
    * UChar represents a 16 bit Unicode character. It's internal data
-   * representation is compatible to XChar2b and QChar. It's therefore
+   * representation is compatible to XChar2b and TQChar. It's therefore
    * possible to exchange data with X and Qt with shallow copies.
    */
   struct KJS_EXPORT UChar {
@@ -257,14 +257,14 @@ namespace KJS {
     UString(const UString &s) { attach(s.rep); }
     /**
      * Convenience declaration only ! You'll be on your own to write the
-     * implementation for a construction from QString.
+     * implementation for a construction from TQString.
      *
      * Note: feel free to contact me if you want to see a dummy header for
      * your favorite FooString class here !
      */
-    UString(const QString &);
+    UString(const TQString &);
     /**
-     * Convenience declaration only ! See UString(const QString&).
+     * Convenience declaration only ! See UString(const TQString&).
      */
     UString(const DOM::DOMString &);
     /**
@@ -312,17 +312,17 @@ namespace KJS {
      */
     char *ascii() const;
     /**
-     * @see UString(const QString&).
+     * @see UString(const TQString&).
      */
     DOM::DOMString string() const;
     /**
-     * @see UString(const QString&).
+     * @see UString(const TQString&).
      */
-    QString qstring() const;
+    TQString qstring() const;
     /**
-     * @see UString(const QString&).
+     * @see UString(const TQString&).
      */
-    QConstString qconststring() const;
+    TQConstString qconststring() const;
 
     /**
      * Assignment operator.

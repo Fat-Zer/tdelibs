@@ -20,8 +20,8 @@
 #ifndef KSETTINGS_DISPATCHER_H
 #define KSETTINGS_DISPATCHER_H
 
-#include <qobject.h>
-#include <qmap.h>
+#include <tqobject.h>
+#include <tqmap.h>
 #include <kdelibs_export.h>
 
 class QCString;
@@ -42,7 +42,7 @@ namespace KSettings
  * into the KConfigureDialog you need a way to get notified. This is what you
  * do:
  * \code
- * Dispatcher::self()->registerInstance( instance(), this, SLOT( loadSettings() ) );
+ * Dispatcher::self()->registerInstance( instance(), this, TQT_SLOT( loadSettings() ) );
  * \endcode
  *
  * @author Matthias Kretz <kretz@kde.org>
@@ -69,26 +69,26 @@ class KUTILS_EXPORT Dispatcher : public QObject
          *
          * @param instance     The KInstance object
          * @param recv         The object that should receive the signal
-         * @param slot         The slot to be called: SLOT( slotName() )
+         * @param slot         The slot to be called: TQT_SLOT( slotName() )
          */
-        void registerInstance( KInstance * instance, QObject * recv, const char * slot );
+        void registerInstance( KInstance * instance, TQObject * recv, const char * slot );
 
         /**
          * @return the KConfig object that belongs to the instanceName
          */
-        KConfig * configForInstanceName( const QCString & instanceName );
+        KConfig * configForInstanceName( const TQCString & instanceName );
 
         /**
          * @return a list of all the instance names that are currently
          * registered
          */
-        QStrList instanceNames() const;
+        TQStrList instanceNames() const;
 
 //X         /**
 //X          * @return The KInstance object belonging to the instance name you pass
 //X          * (only works for registered instances of course).
 //X          */
-//X         KInstance * instanceForName( const QCString & instanceName );
+//X         KInstance * instanceForName( const TQCString & instanceName );
 
     public slots:
         /**
@@ -97,7 +97,7 @@ class KUTILS_EXPORT Dispatcher : public QObject
          *
          * @param instanceName The value of X-KDE-ParentComponents.
          */
-        void reparseConfiguration( const QCString & instanceName );
+        void reparseConfiguration( const TQCString & instanceName );
 
         /**
          * When this slot is called the KConfig objects of all the registered
@@ -108,20 +108,20 @@ class KUTILS_EXPORT Dispatcher : public QObject
         void syncConfiguration();
 
     private slots:
-        void unregisterInstance( QObject * );
+        void unregisterInstance( TQObject * );
 
     private:
-        Dispatcher( QObject * parent = 0, const char * name = 0 );
+        Dispatcher( TQObject * parent = 0, const char * name = 0 );
         ~Dispatcher();
         static Dispatcher * m_self;
 
         struct InstanceInfo {
             KInstance * instance;
-            QSignal * signal;
+            TQSignal * signal;
             int count;
         };
-        QMap<QCString, InstanceInfo> m_instanceInfo;
-        QMap<QObject *, QCString> m_instanceName;
+        TQMap<TQCString, InstanceInfo> m_instanceInfo;
+        TQMap<TQObject *, TQCString> m_instanceName;
 
         class DispatcherPrivate;
         DispatcherPrivate * d;

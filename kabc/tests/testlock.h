@@ -23,7 +23,7 @@
 
 #include "lock.h"
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class QLabel;
 class QListView;
@@ -32,7 +32,7 @@ class KABC_EXPORT LockWidget : public QWidget
 {
     Q_OBJECT
   public:
-    LockWidget( const QString &identifier );
+    LockWidget( const TQString &identifier );
     ~LockWidget();
 
   protected slots:
@@ -44,8 +44,8 @@ class KABC_EXPORT LockWidget : public QWidget
   private:
     KABC::Lock *mLock;
 
-    QLabel *mStatus;
-    QListView *mLockView;
+    TQLabel *mStatus;
+    TQListView *mLockView;
 };
 
 #endif

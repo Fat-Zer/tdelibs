@@ -20,31 +20,31 @@
 #ifndef KLISTVIEW_H
 #define KLISTVIEW_H
 
-#include <qlistview.h>
+#include <tqlistview.h>
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <kdelibs_export.h>
 
 class QDragObject;
 class KConfig;
 class KLineEdit;
 /**
- * This Widget extends the functionality of QListView to honor the system
+ * This Widget extends the functionality of TQListView to honor the system
  * wide settings for Single Click/Double Click mode, AutoSelection and
  * ChangeCursorOverLink (TM).
  *
  * There is a new signal executed(). It gets connected to either
- * QListView::clicked() or QListView::doubleClicked() depending on the KDE
+ * TQListView::clicked() or TQListView::doubleClicked() depending on the KDE
  * wide Single Click/Double Click settings. It is strongly recommended that
  * you use this signal instead of the above mentioned. This way you don´t
  * need to care about the current settings.
  * If you want to get informed when the user selects something connect to the
- * QListView::selectionChanged() signal.
+ * TQListView::selectionChanged() signal.
  *
  * Drag-and-Drop is supported with the signal dropped(), just setAcceptDrops(true)
  * and connect it to a suitable slot.
  * To see where you are dropping, setDropVisualizer(true).
- * And also you'll need acceptDrag(QDropEvent*)
+ * And also you'll need acceptDrag(TQDropEvent*)
  *
  * KListView is drag-enabled, too: to benefit from that you have to derive from it.
  * Reimplement dragObject() and (possibly) startDrag(),
@@ -64,7 +64,7 @@ class KDEUI_EXPORT KListView : public QListView
   Q_PROPERTY( bool dropVisualizer READ dropVisualizer WRITE setDropVisualizer )
   Q_PROPERTY( int tooltipColumn READ tooltipColumn WRITE  setTooltipColumn )
   Q_PROPERTY( int dropVisualizerWidth READ dropVisualizerWidth WRITE  setDropVisualizerWidth )
-  Q_PROPERTY( QColor alternateBackground READ alternateBackground WRITE  setAlternateBackground )
+  Q_PROPERTY( TQColor alternateBackground READ alternateBackground WRITE  setAlternateBackground )
   Q_PROPERTY( bool shadeSortColumn READ shadeSortColumn WRITE setShadeSortColumn )
 
   Q_OVERRIDE( SelectionModeExt selectionMode READ selectionModeExt WRITE setSelectionModeExt )
@@ -73,7 +73,7 @@ public:
   /**
    * Possible selection modes.
    *
-   * The first four correspond directly to QListView::SelectionMode, while
+   * The first four correspond directly to TQListView::SelectionMode, while
    * the FileManager selection mode is defined as follows:
    *   @li home: move to the first
    *   @li end: move to the last
@@ -102,10 +102,10 @@ public:
    *   This way e.g. SHIFT+up/PgUp then SHIFT+down/PgDn leaves no item selected
    */
   enum SelectionModeExt {
-	Single = QListView::Single,
-	Multi = QListView::Multi,
-	Extended = QListView::Extended,
-	NoSelection = QListView::NoSelection,
+	Single = TQListView::Single,
+	Multi = TQListView::Multi,
+	Extended = TQListView::Extended,
+	NoSelection = TQListView::NoSelection,
 	FileManager
   };
 
@@ -113,9 +113,9 @@ public:
    * Constructor.
    *
    * The parameters @p parent and @p name are handled by
-   * QListView, as usual.
+   * TQListView, as usual.
    */
-  KListView (QWidget *parent = 0, const char *name = 0);
+  KListView (TQWidget *parent = 0, const char *name = 0);
 
   /**
    * Destructor.
@@ -133,14 +133,14 @@ public:
 
   /**
    * This function determines whether the given coordinates are within the
-   * execute area. The execute area is the part of a QListViewItem where mouse
+   * execute area. The execute area is the part of a TQListViewItem where mouse
    * clicks or double clicks respectively generate a executed() signal.
-   * Depending on QListView::allColumnsShowFocus() this is either the
+   * Depending on TQListView::allColumnsShowFocus() this is either the
    * whole item or only the first column.
    * @return true if point is inside execute area of an item, false in all
    * other cases including the case that it is over the viewport.
    */
-  virtual bool isExecuteArea( const QPoint& point );
+  virtual bool isExecuteArea( const TQPoint& point );
 
   /**
    * Same thing, but from an x coordinate only. This only checks if x is in
@@ -154,7 +154,7 @@ public:
    *
    * @deprecated
    */
-  QPtrList<QListViewItem> selectedItems() const;
+  TQPtrList<TQListViewItem> selectedItems() const;
 
   /**
    * @return a list containing the currently selected items.
@@ -166,7 +166,7 @@ public:
    *
    * @since 3.4
    */
-  QPtrList<QListViewItem> selectedItems(bool includeHiddenItems) const; // ### BIC: KDE 4: use an implicitly shared class! (QValutList?) and merge with above, default to true
+  TQPtrList<TQListViewItem> selectedItems(bool includeHiddenItems) const; // ### BIC: KDE 4: use an implicitly shared class! (QValutList?) and merge with above, default to true
 
   /**
    * Arbitrarily move @p item to @p parent, positioned immediately after item @p after.
@@ -174,25 +174,25 @@ public:
    *
    * (Un-deprecated in kde-3.4)
    */
-  void moveItem(QListViewItem *item, QListViewItem *parent, QListViewItem *after);
+  void moveItem(TQListViewItem *item, TQListViewItem *parent, TQListViewItem *after);
 
   /**
    * @return the last item (not child!) of this listview.
    *
    * @see lastChild()
    */
-  QListViewItem *lastItem() const;
+  TQListViewItem *lastItem() const;
 
   /**
    * @return the last child of this listview.
    *
    * @see lastItem()
    */
-  QListViewItem* lastChild () const;
+  TQListViewItem* lastChild () const;
 
   /**
    * @return the lineedit used for inline renaming.
-   * Use that to setup a KCompletion or QValidator for the lineedit
+   * Use that to setup a KCompletion or TQValidator for the lineedit
    *
    * @since 3.2
    */
@@ -284,14 +284,14 @@ public:
    * @p item doesn't exist in this list view. This function takes
    * all items into account not only the visible ones.
    */
-  int itemIndex( const QListViewItem *item ) const;
+  int itemIndex( const TQListViewItem *item ) const;
 
   /**
    * Returns the item of @p index within the item tree or 0 if
    * @p index doesn't exist in this list view. This function takes
    * all items into account not only the visible ones.
    */
-  QListViewItem* itemAtIndex(int index);
+  TQListViewItem* itemAtIndex(int index);
 
   /**
    * @deprecated
@@ -318,11 +318,11 @@ public:
    *
    * @see removeColumn()
    */
-  virtual int addColumn(const QString& label, int width = -1);
+  virtual int addColumn(const TQString& label, int width = -1);
   /**
    * Reimplemented for full width support
    */
-  virtual int addColumn(const QIconSet& iconset, const QString& label, int width = -1);
+  virtual int addColumn(const TQIconSet& iconset, const TQString& label, int width = -1);
   /**
    * Reimplemented for full width support
    *
@@ -339,13 +339,13 @@ public:
    *
    * @see alternateBackground()
    **/
-  void setAlternateBackground(const QColor &c);
+  void setAlternateBackground(const TQColor &c);
   /**
    * @return the alternate background color
    *
    * @see setAlternateBackground()
    */
-  const QColor &alternateBackground() const;
+  const TQColor &alternateBackground() const;
 
   /**
    * Saves the list view's layout (column widtsh, column order, sort column)
@@ -354,7 +354,7 @@ public:
    * @param config the KConfig object to write to
    * @param group the config group to use
    */
-  void saveLayout(KConfig *config, const QString &group) const;
+  void saveLayout(KConfig *config, const TQString &group) const;
   /**
    * Reads the list view's layout from a KConfig group as stored with
    * saveLayout
@@ -362,7 +362,7 @@ public:
    * @param config the KConfig object to read from
    * @param group the config group to use
    */
-  void restoreLayout(KConfig *config, const QString &group);
+  void restoreLayout(KConfig *config, const TQString &group);
   /**
    * Reimplemented to remember the current sort column and order.
    * @param column is the column to be sorted, or -1 to sort in order of
@@ -384,7 +384,7 @@ public:
   /**
    * Reimplemented for internal reasons.
    */
-  virtual void takeItem(QListViewItem *i);
+  virtual void takeItem(TQListViewItem *i);
 
   /**
    * Set to true if the currently sorted column should be drawn shaded. Defaults to true
@@ -409,10 +409,10 @@ signals:
    * setting the user clicked or double clicked on that item.
    * @param item is the pointer to the executed listview item.
    *
-   * Note that you may not delete any QListViewItem objects in slots
+   * Note that you may not delete any TQListViewItem objects in slots
    * connected to this signal.
    */
-  void executed( QListViewItem *item );
+  void executed( TQListViewItem *item );
 
   /**
    * This signal is emitted whenever the user executes an listview item.
@@ -422,10 +422,10 @@ signals:
    * @param pos is the position where the user has clicked
    * @param c is the column into which the user clicked.
    *
-   * Note that you may not delete any QListViewItem objects in slots
+   * Note that you may not delete any TQListViewItem objects in slots
    * connected to this signal.
    */
-  void executed( QListViewItem *item, const QPoint &pos, int c );
+  void executed( TQListViewItem *item, const TQPoint &pos, int c );
 
   /**
    * This signal gets emitted whenever something acceptable is
@@ -437,7 +437,7 @@ signals:
    *
    * @see acceptDrop()
    */
-  void dropped (QDropEvent * e, QListViewItem *after);
+  void dropped (TQDropEvent * e, TQListViewItem *after);
 
   /**
    * This signal gets emitted whenever something acceptable is
@@ -451,7 +451,7 @@ signals:
    * @param after is the item after which the drop occurred (or 0L, if
    * the drop was above all items
    */
-  void dropped (KListView* list, QDropEvent* e, QListViewItem* after);
+  void dropped (KListView* list, TQDropEvent* e, TQListViewItem* after);
 
   /**
    * This signal gets emitted whenever something acceptable is
@@ -465,7 +465,7 @@ signals:
    * @param after is the item after which the drop occurred (or 0L, if
    * the drop was above all items
    */
-  void dropped (KListView* list, QDropEvent* e, QListViewItem* parent, QListViewItem* after);
+  void dropped (KListView* list, TQDropEvent* e, TQListViewItem* parent, TQListViewItem* after);
 
   /**
    * This signal gets emitted whenever something acceptable is
@@ -478,7 +478,7 @@ signals:
    * @param after is the item after which the drop occurred (or 0L, if
    * the drop was above all items
    */
-  void dropped (QDropEvent* e, QListViewItem* parent, QListViewItem* after);
+  void dropped (TQDropEvent* e, TQListViewItem* parent, TQListViewItem* after);
 
   /**
    * This signal is emitted when ever the user moves an item in the list via
@@ -509,7 +509,7 @@ signals:
    * @param afterFirst the item that parameter item was in before the move, in the list
    * @param afterNow the item it's currently after.
    */
-  void moved (QListViewItem *item, QListViewItem *afterFirst, QListViewItem *afterNow);
+  void moved (TQListViewItem *item, TQListViewItem *afterFirst, TQListViewItem *afterNow);
 
 
   /**
@@ -517,7 +517,7 @@ signals:
    * each and every item moved, in order.  The first element in @p items associates
    * with the first of afterFirst and afterNow.
    */
-  void moved(QPtrList<QListViewItem> &items, QPtrList<QListViewItem> &afterFirst, QPtrList<QListViewItem> &afterNow);
+  void moved(TQPtrList<TQListViewItem> &items, TQPtrList<TQListViewItem> &afterFirst, TQPtrList<TQListViewItem> &afterNow);
 
   /**
    * This signal gets emitted when an item is renamed via in-place renaming.
@@ -526,24 +526,24 @@ signals:
    * @param str is the new value of column @p col.
    * @param col is the renamed column.
    */
-  void itemRenamed(QListViewItem* item, const QString &str, int col);
+  void itemRenamed(TQListViewItem* item, const TQString &str, int col);
 
   /**
    * Same as above, but without the extra information.
    */
-  void itemRenamed(QListViewItem* item);
+  void itemRenamed(TQListViewItem* item);
 
   /**
    * This signal is emitted when the shortcut key for popup-menus is pressed.
    *
    * Normally you should not use this, just connect a slot to signal
-   * contextMenu (KListView*, QListViewItem*, const QPoint&) to correctly
+   * contextMenu (KListView*, TQListViewItem*, const TQPoint&) to correctly
    * handle showing context menus regardless of settings.
    *
    * @param list is this listview.
    * @param item is the currentItem() at the time the key was pressed. May be 0L.
    */
-  void menuShortCutPressed (KListView* list, QListViewItem* item);
+  void menuShortCutPressed (KListView* list, TQListViewItem* item);
 
   /**
    * This signal is emitted whenever a context-menu should be shown for item @p i.
@@ -553,16 +553,16 @@ signals:
    * @param i is the item for which the menu should be shown. May be 0L.
    * @param p is the point at which the menu should be shown.
    */
-  void contextMenu (KListView* l, QListViewItem* i, const QPoint& p);
+  void contextMenu (KListView* l, TQListViewItem* i, const TQPoint& p);
 
-  void itemAdded(QListViewItem *item);
-  void itemRemoved(QListViewItem *item);
+  void itemAdded(TQListViewItem *item);
+  void itemRemoved(TQListViewItem *item);
 
 public slots:
   /**
    * Rename column @p c of @p item.
    */
-  virtual void rename(QListViewItem *item, int c);
+  virtual void rename(TQListViewItem *item, int c);
 
   /**
    * By default, if you called setItemsRenameable(true),
@@ -643,7 +643,7 @@ public slots:
   /**
    * Set the selection mode.
    *
-   * A different name was chosen to avoid API-clashes with QListView::setSelectionMode().
+   * A different name was chosen to avoid API-clashes with TQListView::setSelectionMode().
    */
   void setSelectionModeExt (SelectionModeExt mode);
 
@@ -662,19 +662,19 @@ public slots:
 protected:
   /**
    * Determine whether a drop on position @p p would count as
-   * being above or below the QRect @p rect.
+   * being above or below the TQRect @p rect.
    *
    * @param rect is the rectangle we examine.
    * @param p is the point located in the rectangle, p is assumed to be in
    * viewport coordinates.
    */
-  inline bool below (const QRect& rect, const QPoint& p)
+  inline bool below (const TQRect& rect, const TQPoint& p)
   {
 	return (p.y() > (rect.top() + (rect.bottom() - rect.top())/2));
   }
 
   /**
-   * An overloaded version of below(const QRect&, const QPoint&).
+   * An overloaded version of below(const TQRect&, const TQPoint&).
    *
    * It differs from the above only in what arguments it takes.
    *
@@ -682,7 +682,7 @@ protected:
    * @param p is translated from contents coordinates to viewport coordinates
    * before being passed to the above function.
    */
-  inline bool below (QListViewItem* i, const QPoint& p)
+  inline bool below (TQListViewItem* i, const TQPoint& p)
   {
 	return below (itemRect(i), contentsToViewport(p));
   }
@@ -691,13 +691,13 @@ protected:
    * Reimplemented to reload the alternate background in palette changes.
    * @internal
    */
-  virtual bool event( QEvent * );
+  virtual bool event( TQEvent * );
 
   /**
    * Emit signal executed.
    * @internal
    */
-  void emitExecute( QListViewItem *item, const QPoint &pos, int c );
+  void emitExecute( TQListViewItem *item, const TQPoint &pos, int c );
 
   /**
    * Reimplemented for internal reasons.
@@ -706,7 +706,7 @@ protected:
    *
    * The API is unaffected.
    */
-   virtual void focusInEvent(QFocusEvent* fe);
+   virtual void focusInEvent(TQFocusEvent* fe);
 
    /**
    * Reimplemented for internal reasons.
@@ -715,7 +715,7 @@ protected:
    *
    * The API is unaffected.
    */
-  virtual void focusOutEvent( QFocusEvent *fe );
+  virtual void focusOutEvent( TQFocusEvent *fe );
 
   /**
    * Reimplemented for internal reasons.
@@ -724,17 +724,17 @@ protected:
    *
    * The API is unaffected.
    */
-  virtual void leaveEvent( QEvent *e );
+  virtual void leaveEvent( TQEvent *e );
 
   /**
    * @return the tooltip for @p column of @p item.
    */
-  virtual QString tooltip(QListViewItem* item, int column) const;
+  virtual TQString tooltip(TQListViewItem* item, int column) const;
 
   /**
    * @return whether the tooltip for @p column of @p item shall be shown at point @p pos.
    */
-  virtual bool showTooltip(QListViewItem *item, const QPoint &pos, int column) const;
+  virtual bool showTooltip(TQListViewItem *item, const TQPoint &pos, int column) const;
 
   /**
    * Reimplemented for internal reasons.
@@ -743,7 +743,7 @@ protected:
    *
    * The API is unaffected.
    */
-  virtual void contentsDragMoveEvent (QDragMoveEvent *event);
+  virtual void contentsDragMoveEvent (TQDragMoveEvent *event);
 
   /**
    * Reimplemented for internal reasons.
@@ -752,7 +752,7 @@ protected:
    *
    * The API is unaffected.
    */
-  virtual void contentsMousePressEvent( QMouseEvent *e );
+  virtual void contentsMousePressEvent( TQMouseEvent *e );
 
   /**
    * Reimplemented for internal reasons.
@@ -761,7 +761,7 @@ protected:
    *
    * The API is unaffected.
    */
-  virtual void contentsMouseMoveEvent( QMouseEvent *e );
+  virtual void contentsMouseMoveEvent( TQMouseEvent *e );
 
   /**
    * Reimplemented for internal reasons.
@@ -770,7 +770,7 @@ protected:
    *
    * The API is unaffected.
    */
-  virtual void contentsMouseDoubleClickEvent ( QMouseEvent *e );
+  virtual void contentsMouseDoubleClickEvent ( TQMouseEvent *e );
 
   /**
    * Reimplemented for internal reasons.
@@ -779,7 +779,7 @@ protected:
    *
    * The API is unaffected.
    */
-  virtual void contentsDragLeaveEvent (QDragLeaveEvent *event);
+  virtual void contentsDragLeaveEvent (TQDragLeaveEvent *event);
 
   /**
    * Reimplemented for internal reasons.
@@ -788,7 +788,7 @@ protected:
    *
    * The API is unaffected.
    */
-  virtual void contentsMouseReleaseEvent (QMouseEvent*);
+  virtual void contentsMouseReleaseEvent (TQMouseEvent*);
 
   /**
    * Reimplemented for internal reasons.
@@ -797,7 +797,7 @@ protected:
    *
    * The API is unaffected.
    */
-  virtual void contentsDropEvent (QDropEvent*);
+  virtual void contentsDropEvent (TQDropEvent*);
 
   /**
    * Reimplemented for internal reasons.
@@ -806,21 +806,21 @@ protected:
    *
    * The API is unaffected.
    */
-  virtual void contentsDragEnterEvent (QDragEnterEvent *);
+  virtual void contentsDragEnterEvent (TQDragEnterEvent *);
 
   /**
    * @return a dragobject encoding the current selection.
    *
    * @see setDragEnabled()
    */
-  virtual QDragObject *dragObject();
+  virtual TQDragObject *dragObject();
 
   /**
    * @return true if the @p event provides some acceptable
    * format.
    * A common mistake is to forget the "const" in your reimplementation
    */
-  virtual bool acceptDrag (QDropEvent* event) const;
+  virtual bool acceptDrag (TQDropEvent* event) const;
 
   /**
    * Paint the drag line. If painter is null, don't try to :)
@@ -829,7 +829,7 @@ protected:
    *
    * @return the rectangle that you painted to.
    */
-  virtual QRect drawDropVisualizer (QPainter *p, QListViewItem *parent, QListViewItem *after);
+  virtual TQRect drawDropVisualizer (TQPainter *p, TQListViewItem *parent, TQListViewItem *after);
 
   /**
    * Paint the drag rectangle. If painter is null, don't try to :)
@@ -837,7 +837,7 @@ protected:
    *
    * @return the rectangle that you painted to.
    */
-  virtual QRect drawItemHighlighter(QPainter *painter, QListViewItem *item);
+  virtual TQRect drawItemHighlighter(TQPainter *painter, TQListViewItem *item);
 
   /**
    * This method calls dragObject() and starts the drag.
@@ -854,7 +854,7 @@ protected:
    *
    * The API is unaffected.
    */
-  virtual void keyPressEvent (QKeyEvent*);
+  virtual void keyPressEvent (TQKeyEvent*);
 
   /**
    * Reimplemented for internal reasons.
@@ -863,7 +863,7 @@ protected:
    *
    * The API is unaffected.
    */
-  virtual void viewportPaintEvent(QPaintEvent*);
+  virtual void viewportPaintEvent(TQPaintEvent*);
 
   /**
    * In FileManager selection mode: explicitly activate the mode
@@ -885,7 +885,7 @@ protected:
   /**
    * Reimplemented for setFullWidth()
    */
-  virtual void viewportResizeEvent(QResizeEvent* e);
+  virtual void viewportResizeEvent(TQResizeEvent* e);
 
   /**
    * Disable AutoSelection. This overrides the system wide setting for
@@ -905,10 +905,10 @@ protected:
 
   /**
    * @deprecated This is just here for binary compatibility.  Use the signal
-   * in QListView instead.
+   * in TQListView instead.
    */
   // KDE 4: remove
-  void doubleClicked( QListViewItem *item, const QPoint &pos, int c );
+  void doubleClicked( TQListViewItem *item, const TQPoint &pos, int c );
 
 protected slots:
   /**
@@ -917,8 +917,8 @@ protected slots:
    */
   void slotSettingsChanged(int);
 
-  void slotMouseButtonClicked( int btn, QListViewItem *item, const QPoint &pos, int c );
-  void doneEditing(QListViewItem *item, int row);
+  void slotMouseButtonClicked( int btn, TQListViewItem *item, const TQPoint &pos, int c );
+  void doneEditing(TQListViewItem *item, int row);
 
   /**
    * Repaint the rect where I was drawing the drop line.
@@ -933,18 +933,18 @@ protected slots:
   /**
    * Emit the contextMenu signal. This slot is for mouse actions.
    */
-  void emitContextMenu (QListViewItem*, const QPoint&, int);
+  void emitContextMenu (TQListViewItem*, const TQPoint&, int);
 
   /**
    * Emit the contextMenu signal. This slot is for key presses.
    */
-  void emitContextMenu (KListView*, QListViewItem*);
+  void emitContextMenu (KListView*, TQListViewItem*);
 
   /**
    * Accessory slot for AutoSelect
    * @internal
    */
-  void slotOnItem( QListViewItem *item );
+  void slotOnItem( TQListViewItem *item );
 
   /**
    * Accessory slot for AutoSelect/ChangeCursorOverItem
@@ -970,20 +970,20 @@ protected:
   /**
    * Handle dropEvent when itemsMovable() is set to true.
    */
-  virtual void movableDropEvent (QListViewItem* parent, QListViewItem* afterme);
+  virtual void movableDropEvent (TQListViewItem* parent, TQListViewItem* afterme);
 
   /**
-   * Where is the nearest QListViewItem that I'm going to drop?
+   * Where is the nearest TQListViewItem that I'm going to drop?
    *
    * FIXME KDE 4.0: Make this method const so it can be called from an
    * acceptDrag method without ugly casts
    */
-  virtual void findDrop(const QPoint &pos, QListViewItem *&parent, QListViewItem *&after);
+  virtual void findDrop(const TQPoint &pos, TQListViewItem *&parent, TQListViewItem *&after);
 
   /**
    * A special keyPressEvent (for FileManager selection mode).
    */
-  void fileManagerKeyPressEvent (QKeyEvent*);
+  void fileManagerKeyPressEvent (TQKeyEvent*);
 
   /**
    * Convert the depth of an item into its indentation in pixels
@@ -997,7 +997,7 @@ protected:
 private:
   class KListViewPrivate;
   KListViewPrivate* const d;
-  bool isExecuteArea( int x, QListViewItem* item );
+  bool isExecuteArea( int x, TQListViewItem* item );
 };
 
 /**
@@ -1011,44 +1011,44 @@ class KDEUI_EXPORT KListViewItem : public QListViewItem
   friend class KListView;
 public:
   /**
-   * constructors. The semantics remain as in QListViewItem.
-   * Although they accept a QListViewItem as parent, please
+   * constructors. The semantics remain as in TQListViewItem.
+   * Although they accept a TQListViewItem as parent, please
    * don't mix KListViewItem (or subclasses) with QListViewItem
    * (or subclasses).
    */
-  KListViewItem(QListView *parent);
-  KListViewItem(QListViewItem *parent);
-  KListViewItem(QListView *parent, QListViewItem *after);
-  KListViewItem(QListViewItem *parent, QListViewItem *after);
+  KListViewItem(TQListView *parent);
+  KListViewItem(TQListViewItem *parent);
+  KListViewItem(TQListView *parent, TQListViewItem *after);
+  KListViewItem(TQListViewItem *parent, TQListViewItem *after);
 
-  KListViewItem(QListView *parent,
-    QString, QString = QString::null,
-    QString = QString::null, QString = QString::null,
-    QString = QString::null, QString = QString::null,
-    QString = QString::null, QString = QString::null);
+  KListViewItem(TQListView *parent,
+    TQString, TQString = TQString::null,
+    TQString = TQString::null, TQString = TQString::null,
+    TQString = TQString::null, TQString = TQString::null,
+    TQString = TQString::null, TQString = TQString::null);
 
-  KListViewItem(QListViewItem *parent,
-    QString, QString = QString::null,
-    QString = QString::null, QString = QString::null,
-    QString = QString::null, QString = QString::null,
-    QString = QString::null, QString = QString::null);
+  KListViewItem(TQListViewItem *parent,
+    TQString, TQString = TQString::null,
+    TQString = TQString::null, TQString = TQString::null,
+    TQString = TQString::null, TQString = TQString::null,
+    TQString = TQString::null, TQString = TQString::null);
 
-  KListViewItem(QListView *parent, QListViewItem *after,
-    QString, QString = QString::null,
-    QString = QString::null, QString = QString::null,
-    QString = QString::null, QString = QString::null,
-    QString = QString::null, QString = QString::null);
+  KListViewItem(TQListView *parent, TQListViewItem *after,
+    TQString, TQString = TQString::null,
+    TQString = TQString::null, TQString = TQString::null,
+    TQString = TQString::null, TQString = TQString::null,
+    TQString = TQString::null, TQString = TQString::null);
 
-  KListViewItem(QListViewItem *parent, QListViewItem *after,
-    QString, QString = QString::null,
-    QString = QString::null, QString = QString::null,
-    QString = QString::null, QString = QString::null,
-    QString = QString::null, QString = QString::null);
+  KListViewItem(TQListViewItem *parent, TQListViewItem *after,
+    TQString, TQString = TQString::null,
+    TQString = TQString::null, TQString = TQString::null,
+    TQString = TQString::null, TQString = TQString::null,
+    TQString = TQString::null, TQString = TQString::null);
 
   virtual ~KListViewItem();
 
-  virtual void insertItem(QListViewItem *item);
-  virtual void takeItem(QListViewItem *item);
+  virtual void insertItem(TQListViewItem *item);
+  virtual void takeItem(TQListViewItem *item);
   /**
    * returns true if this item is to be drawn with the alternate background
    */
@@ -1056,7 +1056,7 @@ public:
   /**
    * returns the background color for this item
    */
-  const QColor &backgroundColor() KDE_DEPRECATED;  // #### should be removed in 4.0; use below instead
+  const TQColor &backgroundColor() KDE_DEPRECATED;  // #### should be removed in 4.0; use below instead
 
   /**
    * returns the background color for this item at given column
@@ -1066,9 +1066,9 @@ public:
    * ### only 1 column
    * @since 3.4
    */
-  QColor backgroundColor(int column);
+  TQColor backgroundColor(int column);
 
-  virtual void paintCell(QPainter *p, const QColorGroup &cg,
+  virtual void paintCell(TQPainter *p, const TQColorGroup &cg,
     int column, int width, int alignment);
 
 private:

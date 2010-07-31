@@ -21,8 +21,8 @@
 #ifndef kate_undo_h
 #define kate_undo_h
 
-#include <qptrlist.h>
-#include <qstring.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
 
 class KateDocument;
 class KateUndo;
@@ -79,7 +79,7 @@ class KateUndoGroup
      * @param len lenght of change
      * @param text text removed/inserted
      */
-    void addItem (KateUndoGroup::UndoType type, uint line, uint col, uint len, const QString &text);
+    void addItem (KateUndoGroup::UndoType type, uint line, uint col, uint len, const TQString &text);
 
     /**
      * merge this group with an other
@@ -128,7 +128,7 @@ class KateUndoGroup
     /**
      * list of items contained
      */
-    QPtrList<KateUndo> m_items;
+    TQPtrList<KateUndo> m_items;
 
     /**
      * prohibit merging with the next group

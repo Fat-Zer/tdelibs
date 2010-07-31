@@ -27,10 +27,10 @@ class KFileList;
 class KPFileSelectPage : public KPrintDialogPage
 {
 public:
-	KPFileSelectPage(QWidget *parent = 0, const char *name = 0);
+	KPFileSelectPage(TQWidget *parent = 0, const char *name = 0);
 
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
-	void setOptions(const QMap<QString,QString>& opts);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
+	void setOptions(const TQMap<TQString,TQString>& opts);
 
 private:
 	KFileList	*m_files;

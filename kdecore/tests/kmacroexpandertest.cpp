@@ -6,12 +6,12 @@
 
 #include <stdlib.h>
 
-bool check(QString txt, QString s, QString a, QString b)
+bool check(TQString txt, TQString s, TQString a, TQString b)
 {
   if (a.isEmpty())
-     a = QString::null;
+     a = TQString::null;
   if (b.isEmpty())
-     b = QString::null;
+     b = TQString::null;
   if (a == b)
     kdDebug() << txt << " (" << s << ") : '" << a << "' - ok" << endl;
   else {
@@ -25,10 +25,10 @@ class MyCExpander : public KCharMacroExpander {
 public:
   MyCExpander() : KCharMacroExpander() {}
 protected:
-  bool expandMacro(QChar chr, QStringList &ret)
+  bool expandMacro(TQChar chr, TQStringList &ret)
   {
     if (chr == 'm') {
-      ret = QString("expanded");
+      ret = TQString("expanded");
       return true;
     }
     return false;
@@ -39,10 +39,10 @@ class MyWExpander : public KWordMacroExpander {
 public:
   MyWExpander() : KWordMacroExpander() {}
 protected:
-  bool expandMacro(const QString &str, QStringList &ret)
+  bool expandMacro(const TQString &str, TQStringList &ret)
   {
     if (str == "macro") {
-      ret = QString("expanded");
+      ret = TQString("expanded");
       return true;
     }
     return false;
@@ -53,11 +53,11 @@ int main(int argc, char *argv[])
 {
   KCmdLineArgs::init(argc, argv, ":", "", "", "");
   KApplication app(false,false);
-  QString s, s2;
+  TQString s, s2;
 
-  QMap<QChar,QStringList> map1;
+  TQMap<TQChar,TQStringList> map1;
   map1.insert('n', "Restaurant \"Chew It\"");
-  QStringList li;
+  TQStringList li;
   li << "element1" << "'element2'";
   map1.insert('l', li);
 
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
   s = "text \"%l %n\" text";
   check( "KMacroExpander::expandMacrosShellQuote", s, KMacroExpander::expandMacrosShellQuote(s, map1), "text \"element1 'element2' Restaurant \\\"Chew It\\\"\" text");
 
-  QMap<QChar,QString> map;
+  TQMap<TQChar,TQString> map;
   map.insert('a', "%n");
   map.insert('f', "filename.txt");
   map.insert('u', "http://www.kde.org/index.html");
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
   s = "kedit --caption \"`echo %n`\" %f";
   check( "KMacroExpander::expandMacrosShellQuote", s, KMacroExpander::expandMacrosShellQuote(s, map), "kedit --caption \"$( echo 'Restaurant `echo hello`')\" 'filename.txt'");
 
-  QMap<QString,QString> smap;
+  TQMap<TQString,TQString> smap;
   smap.insert("foo", "%n");
   smap.insert("file", "filename.txt");
   smap.insert("url", "http://www.kde.org/index.html");

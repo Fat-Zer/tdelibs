@@ -67,9 +67,9 @@ class KTimerDialog : public KDialogBase
      *
      * For the rest of the arguments, See @see KDialogBase .
      */
-    KTimerDialog( int msec, TimerStyle style=CountDown, QWidget *parent=0,
+    KTimerDialog( int msec, TimerStyle style=CountDown, TQWidget *parent=0,
                  const char *name=0, bool modal=true,
-                 const QString &caption=QString::null,
+                 const TQString &caption=TQString::null,
                  int buttonMask=Ok|Apply|Cancel, ButtonCode defaultButton=Ok,
                  bool separator=false,
                  const KGuiItem &user1=KGuiItem(),
@@ -82,7 +82,7 @@ class KTimerDialog : public KDialogBase
     ~KTimerDialog();
 
     /**
-     * Execute the dialog modelessly - see @see QDialog .
+     * Execute the dialog modelessly - see @see TQDialog .
      */
     virtual void show();
 
@@ -117,7 +117,7 @@ class KTimerDialog : public KDialogBase
      * Overridden function which is used to set the main widget of the dialog.
      * @see KDialogBase::setMainWidget.
      */
-    void setMainWidget( QWidget *widget );
+    void setMainWidget( TQWidget *widget );
 
   signals:
     /**
@@ -127,7 +127,7 @@ class KTimerDialog : public KDialogBase
 
   public slots:
     /**
-     * Execute the dialog modally - see @see QDialog .
+     * Execute the dialog modally - see @see TQDialog .
      */
     int exec();
 
@@ -148,17 +148,17 @@ class KTimerDialog : public KDialogBase
      */
     void setupLayout();
 
-    QTimer *totalTimer;
-    QTimer *updateTimer;
+    TQTimer *totalTimer;
+    TQTimer *updateTimer;
     int msecRemaining, updateInterval, msecTotal;
 
     ButtonCode buttonOnTimeout;
     TimerStyle tStyle;
     
-    QHBox *timerWidget;
-    QProgressBar *timerProgress;
-    QLabel *timerLabel;
-    QVBox *mainWidget;
+    TQHBox *timerWidget;
+    TQProgressBar *timerProgress;
+    TQLabel *timerLabel;
+    TQVBox *mainWidget;
 
     class KTimerDialogPrivate;
     KTimerDialogPrivate *d;

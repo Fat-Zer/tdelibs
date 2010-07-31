@@ -22,8 +22,8 @@
 #ifndef _KCOMBOBOX_H
 #define _KCOMBOBOX_H
 
-#include <qlineedit.h>
-#include <qcombobox.h>
+#include <tqlineedit.h>
+#include <tqcombobox.h>
 
 #include <kcompletion.h>
 
@@ -41,18 +41,18 @@ class KURL;
  *
  * \b Detail \n
  *
- * This widget inherits from QComboBox and implements the following
+ * This widget inherits from TQComboBox and implements the following
  * additional functionalities:  a completion object that provides both automatic
  * and manual text completion as well as text rotation features, configurable
  * key-bindings to activate these features, and a popup-menu item that can be
  * used to allow the user to change the text completion mode on the fly.
  *
  * To support these new features KComboBox emits a few additional signals
- * such as completion( const QString& ) and textRotation( KeyBindgingType ).
+ * such as completion( const TQString& ) and textRotation( KeyBindgingType ).
  * The completion signal can be connected to a slot that will assist the user in
  * filling out the remaining text while the rotation signal can be used to traverse
  * through all possible matches whenever text completion results in multiple matches.
- * Additionally, a returnPressed() and a returnPressed( const QString& )
+ * Additionally, a returnPressed() and a returnPressed( const TQString& )
  * signals are emitted when the user presses the Enter/Return key.
  *
  * KCombobox by default creates a completion object when you invoke the
@@ -67,7 +67,7 @@ class KURL;
  *
  * Beware: The completion object can be deleted on you, especially if a call
  * such as setEditable(false) is made.  Store the pointer at your own risk,
- * and consider using QGuardedPtr<KCompletion>.
+ * and consider using TQGuardedPtr<KCompletion>.
  *
  * The default key-bindings for completion and rotation is determined from the
  * global settings in KStdAccel. These values, however, can be overridden
@@ -107,7 +107,7 @@ class KURL;
  * KComboBox *combo = new KComboBox( true, this, "mywidget" );
  * KCompletion *comp = combo->completionObject();
  * // Connect to the return pressed signal - optional
- * connect(combo,SIGNAL(returnPressed(const QString&)),comp,SLOT(addItem(const QString&)));
+ * connect(combo,TQT_SIGNAL(returnPressed(const TQString&)),comp,TQT_SLOT(addItem(const TQString&)));
  *
  * // Provide the to be completed strings. Note that those are separate from the combo's
  * // contents.
@@ -121,7 +121,7 @@ class KURL;
  * KURLCompletion *comp = new KURLCompletion();
  * combo->setCompletionObject( comp );
  * // Connect to the return pressed signal - optional
- * connect(combo,SIGNAL(returnPressed(const QString&)),comp,SLOT(addItem(const QString&)));
+ * connect(combo,TQT_SIGNAL(returnPressed(const TQString&)),comp,TQT_SLOT(addItem(const TQString&)));
  * \endcode
  *
  * Note that you have to either delete the allocated completion object
@@ -141,7 +141,7 @@ class KURL;
  *
  * @author Dawit Alemayehu <adawit@kde.org>
  */
-class KDEUI_EXPORT KComboBox : public QComboBox, public KCompletionBase
+class KDEUI_EXPORT KComboBox : public TQComboBox, public KCompletionBase
 {
   Q_OBJECT
   Q_PROPERTY( bool autoCompletion READ autoCompletion WRITE setAutoCompletion )
@@ -158,7 +158,7 @@ public:
     * @param parent The parent object of this widget
     * @param name The name of this widget
     */
-    KComboBox( QWidget *parent=0, const char *name=0 );
+    KComboBox( TQWidget *parent=0, const char *name=0 );
 
     /**
     * Constructs a "read-write" or "read-only" combo box depending on
@@ -169,7 +169,7 @@ public:
     * @param parent The parent object of this widget.
     * @param name The name of this widget.
     */
-    KComboBox( bool rw, QWidget *parent=0, const char *name=0 );
+    KComboBox( bool rw, TQWidget *parent=0, const char *name=0 );
 
     /**
     * Destructor.
@@ -196,7 +196,7 @@ public:
      * KURL::prettyURL() is used so that the url is properly decoded
      * for displaying.
      */
-    void insertURL( const QPixmap& pixmap, const KURL& url, int index = -1 );
+    void insertURL( const TQPixmap& pixmap, const KURL& url, int index = -1 );
 
     /**
      * Replaces the item at position @p index with @p url.
@@ -210,7 +210,7 @@ public:
      * KURL::prettyURL() is used so that the url is properly decoded
      * for displaying.
      */
-    void changeURL( const QPixmap& pixmap, const KURL& url, int index );
+    void changeURL( const TQPixmap& pixmap, const KURL& url, int index );
 
     /**
     * Returns the current cursor position.
@@ -223,7 +223,7 @@ public:
     int cursorPosition() const { return ( lineEdit() ) ? lineEdit()->cursorPosition() : -1; }
 
     /**
-    * Re-implemented from QComboBox.
+    * Re-implemented from TQComboBox.
     *
     * If @p true, the completion mode will be set to automatic.
     * Otherwise, it is defaulted to the global setting.  This
@@ -235,7 +235,7 @@ public:
     virtual void setAutoCompletion( bool autocomplete );
 
     /**
-    * Re-implemented from QComboBox.
+    * Re-implemented from TQComboBox.
     *
     * Returns @p true if the current completion mode is set
     * to automatic.  See its more comprehensive replacement
@@ -272,7 +272,7 @@ public:
     /**
      * Enables/Disables handling of URL drops. If enabled and the user
      * drops an URL, the decoded URL will be inserted. Otherwise the default
-     * behavior of QComboBox is used, which inserts the encoded URL.
+     * behavior of TQComboBox is used, which inserts the encoded URL.
      *
      * @param enable If @p true, insert decoded URLs
      */
@@ -292,7 +292,7 @@ public:
      *
      * @return @p true if an item with the string @p text is in the combobox.
      */
-    bool contains( const QString& text ) const;
+    bool contains( const TQString& text ) const;
 
     /**
      * By default, KComboBox recognizes Key_Return and Key_Enter
@@ -320,7 +320,7 @@ public:
     /**
     * Re-implemented for internal reasons.  API not affected.
     */
-    virtual bool eventFilter( QObject *, QEvent * );
+    virtual bool eventFilter( TQObject *, TQEvent * );
 
     /**
      * @returns the completion-box, that is used in completion mode
@@ -339,7 +339,7 @@ public:
      * any attempt to assign a line-edit to a non-editable combobox will
      * simply be ignored.
      */
-    virtual void setLineEdit( QLineEdit * );
+    virtual void setLineEdit( TQLineEdit * );
 
 signals:
     /**
@@ -358,7 +358,7 @@ signals:
     * Note that this signal is only emitted when the
     * widget is editable.
     */
-    void returnPressed( const QString& );
+    void returnPressed( const TQString& );
 
     /**
     * Emitted when the completion key is pressed.
@@ -368,12 +368,12 @@ signals:
     * Note that this signal is @em not available when the widget is non-editable
     * or the completion mode is set to @p KGlobalSettings::CompletionNone.
     */
-    void completion( const QString& );
+    void completion( const TQString& );
 
     /**
      * Emitted when the shortcut for substring completion is pressed.
      */
-    void substringCompletion( const QString& );
+    void substringCompletion( const TQString& );
 
    /**
     * Emitted when the text rotation key-bindings are pressed.
@@ -398,12 +398,12 @@ signals:
      * Emitted before the context menu is displayed.
      *
      * The signal allows you to add your own entries into the context menu.
-     * Note that you MUST NOT store the pointer to the QPopupMenu since it is
+     * Note that you MUST NOT store the pointer to the TQPopupMenu since it is
      * created and deleted on demand.  Otherwise, you can crash your app.
      *
      * @param p the context menu about to be displayed
      */
-    void aboutToShowContextMenu( QPopupMenu * p );
+    void aboutToShowContextMenu( TQPopupMenu * p );
 
 public slots:
 
@@ -418,7 +418,7 @@ public slots:
     * iteration will not work if there are no previous matches, i.e.
     * no text has been completed and the *nix shell history list
     * rotation is only available if the insertion policy for this
-    * widget is set either @p QComobBox::AtTop or @p QComboBox::AtBottom.
+    * widget is set either @p QComobBox::AtTop or @p TQComboBox::AtBottom.
     * For other insertion modes whatever has been typed by the user
     * when the rotation event was initiated will be lost.
     *
@@ -431,33 +431,33 @@ public slots:
      *
      * This function is a re-implementation of @p setCompletedText.
      */
-    virtual void setCompletedText( const QString& );
+    virtual void setCompletedText( const TQString& );
 
     /**
      * Sets @p items into the completion-box if completionMode() is
      * CompletionPopup. The popup will be shown immediately.
      */
-    void setCompletedItems( const QStringList& items );
+    void setCompletedItems( const TQStringList& items );
 
     /**
      * Selects the first item that matches @p item. If there is no such item,
      * it is inserted at position @p index if @p insert is true. Otherwise,
      * no item is selected.
      */
-    void setCurrentItem( const QString& item, bool insert = false, int index = -1 );
+    void setCurrentItem( const TQString& item, bool insert = false, int index = -1 );
 
     /**
      * Simply calls QComboBox' implementation. Only here to not become
      * shadowed.
      */
-    void setCurrentItem(int index) { QComboBox::setCurrentItem(index); }
+    void setCurrentItem(int index) { TQComboBox::setCurrentItem(index); }
 
 protected slots:
 
     /**
     * @deprecated
     */
-    virtual void itemSelected( QListBoxItem* ) {}
+    virtual void itemSelected( TQListBoxItem* ) {}
 
     /**
     * Completes text according to the completion mode.
@@ -470,7 +470,7 @@ protected slots:
     * through the remaining matches.  This way the rotation functionality
     * is left to iterate through the list as usual.
     */
-    virtual void makeCompletion( const QString& );
+    virtual void makeCompletion( const TQString& );
 
 protected:
     /*
@@ -481,7 +481,7 @@ protected:
     * @param
     * @param
     */
-    virtual void setCompletedText( const QString& /* */, bool /*marked*/ );
+    virtual void setCompletedText( const TQString& /* */, bool /*marked*/ );
 
     /**
      * Reimplemented for internal reasons, the API is not affected.
@@ -489,7 +489,7 @@ protected:
     virtual void create( WId = 0, bool initializeWindow = true,
                          bool destroyOldWindow = true );
 
-    virtual void wheelEvent( QWheelEvent *ev );
+    virtual void wheelEvent( TQWheelEvent *ev );
 
 private slots:
     void lineEditDeleted();
@@ -533,7 +533,7 @@ class KPixmapProvider;
 class KDEUI_EXPORT KHistoryCombo : public KComboBox
 {
     Q_OBJECT
-    Q_PROPERTY( QStringList historyItems READ historyItems WRITE setHistoryItems )
+    Q_PROPERTY( TQStringList historyItems READ historyItems WRITE setHistoryItems )
 
 public:
     /**
@@ -546,16 +546,16 @@ public:
      * use
      *
      * \code
-     * connect( combo, SIGNAL( activated( const QString& )),
-     *          combo, SLOT( addToHistory( const QString& )));
+     * connect( combo, TQT_SIGNAL( activated( const TQString& )),
+     *          combo, TQT_SLOT( addToHistory( const TQString& )));
      * \endcode
      *
-     * Use QComboBox::setMaxCount() to limit the history.
+     * Use TQComboBox::setMaxCount() to limit the history.
      *
      * @p parent the parent object of this widget.
      * @p name the name of this widget.
      */
-    KHistoryCombo( QWidget *parent = 0L, const char *name = 0L );
+    KHistoryCombo( TQWidget *parent = 0L, const char *name = 0L );
 
     // ### merge these two constructors
     /**
@@ -565,7 +565,7 @@ public:
      * contents of the combobox.
      */
     KHistoryCombo( bool useCompletion,
-		   QWidget *parent = 0L, const char *name = 0L );
+		   TQWidget *parent = 0L, const char *name = 0L );
 
     /**
      * Destructs the combo, the completion-object and the pixmap-provider
@@ -578,7 +578,7 @@ public:
      *
      * @see historyItems
      */
-    inline void setHistoryItems( QStringList items ) {
+    inline void setHistoryItems( TQStringList items ) {
         setHistoryItems(items, false);
     }
 
@@ -593,7 +593,7 @@ public:
      * you should do something like
      * \code
      * KConfig *config = kapp->config();
-     * QStringList list;
+     * TQStringList list;
      *
      * // load the history and completion list after creating the history combo
      * list = config->readListEntry( "Completion list" );
@@ -623,7 +623,7 @@ public:
      * @see KCompletion::setItems
      * @see KCompletion::items
      */
-    void setHistoryItems( QStringList items, bool setCompletionList );
+    void setHistoryItems( TQStringList items, bool setCompletionList );
 
     /**
      * Returns the list of history items. Empty, when this is not a read-write
@@ -631,7 +631,7 @@ public:
      *
      * @see setHistoryItems
      */
-    QStringList historyItems() const;
+    TQStringList historyItems() const;
 
     /**
      * Removes all items named @p item.
@@ -640,7 +640,7 @@ public:
      *
      * @see addToHistory
      */
-    bool removeFromHistory( const QString& item );
+    bool removeFromHistory( const TQString& item );
 
     /**
      * Sets a pixmap provider, so that items in the combobox can have a pixmap.
@@ -687,9 +687,9 @@ public slots:
      * not in the combobox, and vice versa.
      *
      * @see removeFromHistory
-     * @see QComboBox::setDuplicatesEnabled
+     * @see TQComboBox::setDuplicatesEnabled
      */
-    void addToHistory( const QString& item );
+    void addToHistory( const TQString& item );
 
     /**
      * Clears the history and the completion list.
@@ -706,12 +706,12 @@ protected:
     /**
      * Handling key-events, the shortcuts to rotate the items.
      */
-    virtual void keyPressEvent( QKeyEvent * );
+    virtual void keyPressEvent( TQKeyEvent * );
 
     /**
      * Handling wheel-events, to rotate the items.
      */
-    virtual void wheelEvent( QWheelEvent *ev );
+    virtual void wheelEvent( TQWheelEvent *ev );
 
     /**
      * Inserts @p items into the combo, honoring pixmapProvider()
@@ -721,7 +721,7 @@ protected:
      *
      * Called from setHistoryItems() and setPixmapProvider()
      */
-    void insertItems( const QStringList& items );
+    void insertItems( const TQStringList& items );
 
     /**
      * @returns if we can modify the completion object or not.
@@ -743,7 +743,7 @@ private slots:
     /**
      * Appends our own context menu entry.
      */
-    void addContextMenuItems( QPopupMenu* );
+    void addContextMenuItems( TQPopupMenu* );
 
 private:
     void init( bool useCompletion );
@@ -758,7 +758,7 @@ private:
     /**
      * The text typed before Up or Down was pressed.
      */
-    QString myText;
+    TQString myText;
 
     /**
      * Indicates that the user at least once rotated Up through the entire list

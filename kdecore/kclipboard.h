@@ -19,10 +19,10 @@
 #ifndef KCLIPBOARD_H
 #define KCLIPBOARD_H
 
-#include <qclipboard.h>
-#include <qmime.h>
-#include <qobject.h>
-#include <qstrlist.h>
+#include <tqclipboard.h>
+#include <tqmime.h>
+#include <tqobject.h>
+#include <tqstrlist.h>
 #include "kdelibs_export.h"
 
 /**
@@ -100,10 +100,10 @@ private slots:
     void slotClipboardChanged();
 
 private:
-    KClipboardSynchronizer( QObject *parent = 0, const char *name = 0L );
+    KClipboardSynchronizer( TQObject *parent = 0, const char *name = 0L );
     void setupSignals();
 
-    static void setClipboard( QMimeSource* data, QClipboard::Mode mode );
+    static void setClipboard( TQMimeSource* data, QClipboard::Mode mode );
 
     static KClipboardSynchronizer *s_self;
     static bool s_sync;

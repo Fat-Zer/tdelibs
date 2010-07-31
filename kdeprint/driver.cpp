@@ -20,8 +20,8 @@
 #include "driver.h"
 #include "driveritem.h"
 
-#include <qfile.h>
-#include <qstringlist.h>
+#include <tqfile.h>
+#include <tqstringlist.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <stdlib.h>
@@ -40,17 +40,17 @@ DrBase::~DrBase()
 {
 }
 
-QString DrBase::valueText()
+TQString DrBase::valueText()
 {
-	return QString::null;
+	return TQString::null;
 }
 
-QString DrBase::prettyText()
+TQString DrBase::prettyText()
 {
 	return valueText();
 }
 
-void DrBase::setValueText(const QString&)
+void DrBase::setValueText(const TQString&)
 {
 }
 
@@ -59,12 +59,12 @@ DriverItem* DrBase::createItem(DriverItem *parent, DriverItem *after)
 	return new DriverItem(parent, after, this);
 }
 
-void DrBase::setOptions(const QMap<QString,QString>& opts)
+void DrBase::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	if (opts.contains(name())) setValueText(opts[name()]);
 }
 
-void DrBase::getOptions(QMap<QString,QString>& opts, bool incldef)
+void DrBase::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	QString	val = valueText();
 	if ( incldef || get( "persistent" ) == "1" || get("default") != val )
@@ -109,10 +109,10 @@ DrMain::~DrMain()
 {
 	// remove a possible temporary file
 	if (has("temporary"))
-		QFile::remove(get("temporary"));
+		TQFile::remove(get("temporary"));
 }
 
-DriverItem* DrMain::createTreeView(QListView *parent)
+DriverItem* DrMain::createTreeView(TQListView *parent)
 {
 	DriverItem	*root = new DriverItem(parent, this);
 	createTree(root);
@@ -123,7 +123,7 @@ int DrMain::checkConstraints()
 {
 	int 	result(0);
 	clearConflict();
-	QPtrListIterator<DrConstraint>	it(m_constraints);
+	TQPtrListIterator<DrConstraint>	it(m_constraints);
 	for (;it.current();++it)
 		if (it.current()->check(this))
 			result++;
@@ -135,7 +135,7 @@ void DrMain::addPageSize(DrPageSize *ps)
 	m_pagesizes.insert(ps->pageName(),ps);
 }
 
-void DrMain::removeOptionGlobally(const QString& name)
+void DrMain::removeOptionGlobally(const TQString& name)
 {
 	DrGroup	*grp(0);
 	DrBase	*opt = findOption(name, &grp);
@@ -159,9 +159,9 @@ void DrMain::removeGroupGlobally(DrGroup *grp)
 	}
 }
 
-QMap<QString, DrBase*> DrMain::flatten()
+TQMap<TQString, DrBase*> DrMain::flatten()
 {
-	QMap<QString, DrBase*>	optmap;
+	TQMap<TQString, DrBase*>	optmap;
 	int	index(0);
 	flattenGroup(optmap, index);
 	return optmap;
@@ -171,11 +171,11 @@ DrMain* DrMain::cloneDriver()
 {
 	DrMain	*driver = static_cast<DrMain*>(clone());
 
-	QPtrListIterator<DrConstraint>	cit(m_constraints);
+	TQPtrListIterator<DrConstraint>	cit(m_constraints);
 	for (; cit.current(); ++cit)
 		driver->addConstraint(new DrConstraint(*(cit.current())));
 
-	QDictIterator<DrPageSize>	pit(m_pagesizes);
+	TQDictIterator<DrPageSize>	pit(m_pagesizes);
 	for (; pit.current(); ++pit)
 		driver->addPageSize(new DrPageSize(*(pit.current())));
 
@@ -222,7 +222,7 @@ void DrGroup::addObject(DrBase *optgrp)
 		addGroup(static_cast<DrGroup*>(optgrp));
 }
 
-void DrGroup::removeOption(const QString& name)
+void DrGroup::removeOption(const TQString& name)
 {
 	DrBase	*opt = m_options.find(name);
 	if (opt)
@@ -253,21 +253,21 @@ void DrGroup::createTree(DriverItem *parent)
 {
 	DriverItem	*item(0);
 
-	QPtrListIterator<DrGroup>	lit(m_subgroups);
+	TQPtrListIterator<DrGroup>	lit(m_subgroups);
 	for (;lit.current();++lit)
 		item = lit.current()->createItem(parent, item);
 
-	QPtrListIterator<DrBase>	dit(m_listoptions);
+	TQPtrListIterator<DrBase>	dit(m_listoptions);
 	for (;dit.current();++dit)
 		item = dit.current()->createItem(parent, item);
 }
 
-DrBase* DrGroup::findOption(const QString& name, DrGroup **parentGroup)
+DrBase* DrGroup::findOption(const TQString& name, DrGroup **parentGroup)
 {
 	DrBase	*opt = m_options.find(name);
 	if (!opt)
 	{
-		QPtrListIterator<DrGroup>	it(m_subgroups);
+		TQPtrListIterator<DrGroup>	it(m_subgroups);
 		for (;it.current() && !opt; ++it)
 			opt = it.current()->findOption(name, parentGroup);
 	}
@@ -281,7 +281,7 @@ DrGroup* DrGroup::findGroup(DrGroup *grp, DrGroup ** parentGroup)
 	DrGroup	*group = (m_subgroups.findRef(grp) == -1 ? 0 : grp);
 	if (!group)
 	{
-		QPtrListIterator<DrGroup>	it(m_subgroups);
+		TQPtrListIterator<DrGroup>	it(m_subgroups);
 		for (;it.current() && !group; ++it)
 			group = it.current()->findGroup(grp, parentGroup);
 	}
@@ -292,49 +292,49 @@ DrGroup* DrGroup::findGroup(DrGroup *grp, DrGroup ** parentGroup)
 
 void DrGroup::clearConflict()
 {
-	QDictIterator<DrBase>	dit(m_options);
+	TQDictIterator<DrBase>	dit(m_options);
 	for (;dit.current();++dit)
 		dit.current()->setConflict(false);
 
-	QPtrListIterator<DrGroup>	lit(m_subgroups);
+	TQPtrListIterator<DrGroup>	lit(m_subgroups);
 	for (;lit.current();++lit)
 		lit.current()->clearConflict();
 }
 
-void DrGroup::setOptions(const QMap<QString,QString>& opts)
+void DrGroup::setOptions(const TQMap<TQString,TQString>& opts)
 {
-	QDictIterator<DrBase>	dit(m_options);
+	TQDictIterator<DrBase>	dit(m_options);
 	for (;dit.current();++dit)
 		dit.current()->setOptions(opts);
 
-	QPtrListIterator<DrGroup>	lit(m_subgroups);
+	TQPtrListIterator<DrGroup>	lit(m_subgroups);
 	for (;lit.current();++lit)
 		lit.current()->setOptions(opts);
 }
 
-void DrGroup::getOptions(QMap<QString,QString>& opts, bool incldef)
+void DrGroup::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
-	QDictIterator<DrBase>	dit(m_options);
+	TQDictIterator<DrBase>	dit(m_options);
 	for (;dit.current();++dit)
 		dit.current()->getOptions(opts,incldef);
 
-	QPtrListIterator<DrGroup>	lit(m_subgroups);
+	TQPtrListIterator<DrGroup>	lit(m_subgroups);
 	for (;lit.current();++lit)
 		lit.current()->getOptions(opts,incldef);
 }
 
-void DrGroup::flattenGroup(QMap<QString, DrBase*>& optmap, int& index)
+void DrGroup::flattenGroup(TQMap<TQString, DrBase*>& optmap, int& index)
 {
-	QPtrListIterator<DrGroup>	git(m_subgroups);
+	TQPtrListIterator<DrGroup>	git(m_subgroups);
 	for (; git.current(); ++git)
 		git.current()->flattenGroup(optmap, index);
 
-	QDictIterator<DrBase>	oit(m_options);
+	TQDictIterator<DrBase>	oit(m_options);
 	for (; oit.current(); ++oit)
 		optmap[oit.current()->name()] = oit.current();
 
 	if (name().isEmpty())
-		optmap[QString::fromLatin1("group%1").arg(index++)] = this;
+		optmap[TQString::fromLatin1("group%1").arg(index++)] = this;
 	else
 		optmap[name()] = this;
 
@@ -351,20 +351,20 @@ DrBase* DrGroup::clone()
 {
 	DrGroup	*grp = static_cast<DrGroup*>(DrBase::clone());
 
-	QPtrListIterator<DrGroup>	git(m_subgroups);
+	TQPtrListIterator<DrGroup>	git(m_subgroups);
 	for (; git.current(); ++git)
 		grp->addGroup(static_cast<DrGroup*>(git.current()->clone()));
 
-	QPtrListIterator<DrBase>	oit(m_listoptions);
+	TQPtrListIterator<DrBase>	oit(m_listoptions);
 	for (; oit.current(); ++oit)
 		grp->addOption(oit.current()->clone());
 
 	return static_cast<DrBase*>(grp);
 }
 
-QString DrGroup::groupForOption( const QString& optname )
+TQString DrGroup::groupForOption( const TQString& optname )
 {
-   QString grpname;
+   TQString grpname;
    if ( optname == "PageSize" ||
 		 optname == "InputSlot" ||
 		 optname == "ManualFeed" ||
@@ -424,12 +424,12 @@ DrStringOption::~DrStringOption()
 {
 }
 
-QString DrStringOption::valueText()
+TQString DrStringOption::valueText()
 {
 	return m_value;
 }
 
-void DrStringOption::setValueText(const QString& s)
+void DrStringOption::setValueText(const TQString& s)
 {
 	m_value = s;
 }
@@ -451,25 +451,25 @@ DrIntegerOption::~DrIntegerOption()
 {
 }
 
-QString DrIntegerOption::valueText()
+TQString DrIntegerOption::valueText()
 {
-	QString	s = QString::number(m_value);
+	QString	s = TQString::number(m_value);
 	return s;
 }
 
-void DrIntegerOption::setValueText(const QString& s)
+void DrIntegerOption::setValueText(const TQString& s)
 {
 	m_value = s.toInt();
 }
 
-QString DrIntegerOption::fixedVal()
+TQString DrIntegerOption::fixedVal()
 {
-	QStringList	vals = QStringList::split("|", get("fixedvals"), false);
+	QStringList	vals = TQStringList::split("|", get("fixedvals"), false);
 	if (vals.count() == 0)
 		return valueText();
 	int	d(0);
 	QString	val;
-	for (QStringList::Iterator it=vals.begin(); it!=vals.end(); ++it)
+	for (TQStringList::Iterator it=vals.begin(); it!=vals.end(); ++it)
 	{
 		int	thisVal = (*it).toInt();
 		if (val.isEmpty() || abs(thisVal - m_value) < d)
@@ -501,25 +501,25 @@ DrFloatOption::~DrFloatOption()
 {
 }
 
-QString DrFloatOption::valueText()
+TQString DrFloatOption::valueText()
 {
-	QString	s = QString::number(m_value,'f',3);
+	QString	s = TQString::number(m_value,'f',3);
 	return s;
 }
 
-void DrFloatOption::setValueText(const QString& s)
+void DrFloatOption::setValueText(const TQString& s)
 {
 	m_value = s.toFloat();
 }
 
-QString DrFloatOption::fixedVal()
+TQString DrFloatOption::fixedVal()
 {
-	QStringList	vals = QStringList::split("|", get("fixedvals"), false);
+	QStringList	vals = TQStringList::split("|", get("fixedvals"), false);
 	if (vals.count() == 0)
 		return valueText();
 	float	d(0);
 	QString	val;
-	for (QStringList::Iterator it=vals.begin(); it!=vals.end(); ++it)
+	for (TQStringList::Iterator it=vals.begin(); it!=vals.end(); ++it)
 	{
 		float	thisVal = (*it).toFloat();
 		if (val.isEmpty() || fabs(thisVal - m_value) < d)
@@ -551,21 +551,21 @@ DrListOption::~DrListOption()
 {
 }
 
-QString DrListOption::valueText()
+TQString DrListOption::valueText()
 {
-	QString	s = (m_current ? m_current->name() : QString::null);
+	QString	s = (m_current ? m_current->name() : TQString::null);
 	return s;
 }
 
-QString DrListOption::prettyText()
+TQString DrListOption::prettyText()
 {
 	if (m_current)
 		return m_current->get("text");
 	else
-		return QString::null;
+		return TQString::null;
 }
 
-void DrListOption::setValueText(const QString& s)
+void DrListOption::setValueText(const TQString& s)
 {
 	m_current = findChoice(s);
 	if (!m_current)
@@ -577,9 +577,9 @@ void DrListOption::setValueText(const QString& s)
 	}
 }
 
-DrBase* DrListOption::findChoice(const QString& txt)
+DrBase* DrListOption::findChoice(const TQString& txt)
 {
-	QPtrListIterator<DrBase>	it(m_choices);
+	TQPtrListIterator<DrBase>	it(m_choices);
 	for (;it.current();++it)
 		if (it.current()->name() == txt)
 			return it.current();
@@ -590,7 +590,7 @@ DrBase* DrListOption::clone()
 {
 	DrListOption	*opt = static_cast<DrListOption*>(DrBase::clone());
 
-	QPtrListIterator<DrBase>	it(m_choices);
+	TQPtrListIterator<DrBase>	it(m_choices);
 	for (; it.current(); ++it)
 		opt->addChoice(it.current()->clone());
 
@@ -599,14 +599,14 @@ DrBase* DrListOption::clone()
 	return static_cast<DrBase*>(opt);
 }
 
-void DrListOption::getOptions(QMap<QString,QString>& opts, bool incldef)
+void DrListOption::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	DrBase::getOptions(opts, incldef);
 	if (currentChoice() && currentChoice()->type() == DrBase::ChoiceGroup)
 		currentChoice()->getOptions(opts, incldef);
 }
 
-void DrListOption::setOptions(const QMap<QString,QString>& opts)
+void DrListOption::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	DrBase::setOptions(opts);
 	if (currentChoice() && currentChoice()->type() == DrBase::ChoiceGroup)
@@ -635,7 +635,7 @@ void DrListOption::setChoice(int choicenum)
  * DrConstraint members *
  ************************/
 
-DrConstraint::DrConstraint(const QString& o1, const QString& o2, const QString& c1, const QString& c2)
+DrConstraint::DrConstraint(const TQString& o1, const TQString& o2, const TQString& c1, const TQString& c2)
 : m_opt1(o1), m_opt2(o2), m_choice1(c1), m_choice2(c2), m_option1(0), m_option2(0)
 {
 }
@@ -676,7 +676,7 @@ bool DrConstraint::check(DrMain *driver)
  * DrPageSize members *
  **********************/
 
-DrPageSize::DrPageSize(const QString& s, float width, float height, float left, float bottom, float right, float top)
+DrPageSize::DrPageSize(const TQString& s, float width, float height, float left, float bottom, float right, float top)
 : m_name(s),
   m_width( width ),
   m_height( height ),
@@ -698,17 +698,17 @@ DrPageSize::DrPageSize(const DrPageSize& d)
 {
 }
 
-QSize DrPageSize::pageSize() const
+TQSize DrPageSize::pageSize() const
 {
-	return QSize( ( int )m_width, ( int )m_height );
+	return TQSize( ( int )m_width, ( int )m_height );
 }
 
-QRect DrPageSize::pageRect() const
+TQRect DrPageSize::pageRect() const
 {
-	return QRect( ( int )( m_left+0.5 ), ( int )( m_top+0.5 ), ( int )( m_width-m_left-m_right ), ( int )( m_height-m_top-m_bottom ) );
+	return TQRect( ( int )( m_left+0.5 ), ( int )( m_top+0.5 ), ( int )( m_width-m_left-m_right ), ( int )( m_height-m_top-m_bottom ) );
 }
 
-QSize DrPageSize::margins() const
+TQSize DrPageSize::margins() const
 {
-	return QSize( ( int )( m_left+0.5 ), ( int )( m_top+0.5 ) );
+	return TQSize( ( int )( m_left+0.5 ), ( int )( m_top+0.5 ) );
 }

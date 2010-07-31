@@ -24,8 +24,8 @@
 #ifndef KRESOURCES_FACTORY_H
 #define KRESOURCES_FACTORY_H
 
-#include <qdict.h>
-#include <qstring.h>
+#include <tqdict.h>
+#include <tqstring.h>
 
 #include <kconfig.h>
 #include <klibloader.h>
@@ -66,7 +66,7 @@ class KRESOURCES_EXPORT Factory
     /**
      * Returns the global resource factory.
      */
-    static Factory *self( const QString& resourceFamily );
+    static Factory *self( const TQString& resourceFamily );
 
     ~Factory();
 
@@ -77,7 +77,7 @@ class KRESOURCES_EXPORT Factory
      * @param type   The type of the resource, returned by typeNames()
      * @param parent The parent widget
      */
-    ConfigWidget *configWidget( const QString& type, QWidget *parent = 0 );
+    ConfigWidget *configWidget( const TQString& type, TQWidget *parent = 0 );
 
     /**
      * Returns a pointer to a resource object or a null pointer
@@ -87,31 +87,31 @@ class KRESOURCES_EXPORT Factory
      * @param config The config object where the resource get it settings from,
      *               or 0 if a resource with default values should be created.
      */
-    Resource *resource( const QString& type, const KConfig *config );
+    Resource *resource( const TQString& type, const KConfig *config );
 
     /**
      * Returns a list of all available resource types.
      */
-    QStringList typeNames() const;
+    TQStringList typeNames() const;
 
     /**
      * Returns the name for a special type.
      */
-    QString typeName( const QString &type ) const;
+    TQString typeName( const TQString &type ) const;
 
     /**
      * Returns the description for a special type.
      */
-    QString typeDescription( const QString &type ) const;
+    TQString typeDescription( const TQString &type ) const;
 
   protected:
-    Factory( const QString& resourceFamily );
+    Factory( const TQString& resourceFamily );
 
   private:
-    static QDict<Factory> *mSelves;
+    static TQDict<Factory> *mSelves;
 
-    QString mResourceFamily;
-    QMap<QString, KService::Ptr> mTypeMap;
+    TQString mResourceFamily;
+    TQMap<TQString, KService::Ptr> mTypeMap;
 };
 
 }

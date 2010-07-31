@@ -1,11 +1,11 @@
-#include <qpopupmenu.h>
-#include <qwidget.h>
-#include <qstring.h>
-#include <qmessagebox.h>
-#include <qmultilineedit.h>
-#include <qkeycode.h>
-#include <qpixmap.h>
-#include <qcursor.h>
+#include <tqpopupmenu.h>
+#include <tqwidget.h>
+#include <tqstring.h>
+#include <tqmessagebox.h>
+#include <tqmultilineedit.h>
+#include <tqkeycode.h>
+#include <tqpixmap.h>
+#include <tqcursor.h>
 
 #include <stdlib.h>
 
@@ -15,7 +15,7 @@
 #include <kmenubar.h>
 #include "kstatusbartest.h"
 
-testWindow::testWindow (QWidget *, const char *name)
+testWindow::testWindow (TQWidget *, const char *name)
     : KMainWindow (0, name)
  {
     // Setup Menus
@@ -23,7 +23,7 @@ testWindow::testWindow (QWidget *, const char *name)
     fileMenu = new QPopupMenu;
     menuBar->insertItem ("&File", fileMenu);
     fileMenu->insertItem ("&Exit", KApplication::kApplication(),
-                          SLOT( quit() ), ALT + Key_Q );
+                          TQT_SLOT( quit() ), ALT + Key_Q );
     statusbar = new KStatusBar (this);
     statusbar->insertItem("Zoom: XXXX", 0);
     statusbar->insertItem("XXX", 1);
@@ -34,10 +34,10 @@ testWindow::testWindow (QWidget *, const char *name)
     insert = true;
     statusbar->changeItem("Line: 13567", 2);
 
-    connect (statusbar, SIGNAL(pressed(int)), this, SLOT(slotPress(int)));
-    connect (statusbar, SIGNAL(released(int)), this, SLOT(slotClick(int)));
+    connect (statusbar, TQT_SIGNAL(pressed(int)), this, TQT_SLOT(slotPress(int)));
+    connect (statusbar, TQT_SIGNAL(released(int)), this, TQT_SLOT(slotClick(int)));
 
-    widget = new QMultiLineEdit (this);
+    widget = new TQMultiLineEdit (this);
 
     setCentralWidget(widget);
 
@@ -53,7 +53,7 @@ testWindow::testWindow (QWidget *, const char *name)
     smenu->insertItem("400%");
     smenu->insertItem("oo%");
 
-    connect (smenu, SIGNAL(activated(int)), this, SLOT(slotMenu(int)));
+    connect (smenu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotMenu(int)));
 }
 
 void testWindow::slotClick(int id)
@@ -77,7 +77,7 @@ void testWindow::slotClick(int id)
       break;
 
     case 2:
-      QMessageBox::information(0, "Go to line", "Enter line number:", "where?");
+      TQMessageBox::information(0, "Go to line", "Enter line number:", "where?");
       statusbar->changeItem("16543", 2);
       break;
    }
@@ -86,12 +86,12 @@ void testWindow::slotClick(int id)
 void testWindow::slotPress(int id)
 {
   if (id == 0)
-    smenu->popup(QCursor::pos()); // This popup should understand keys up and down
+    smenu->popup(TQCursor::pos()); // This popup should understand keys up and down
 }
 
 void testWindow::slotMenu(int id)
 {
-  QString s = "Zoom: ";
+  TQString s = "Zoom: ";
   s.append (smenu->text(id));
   statusbar->changeItem(s,0);
 }

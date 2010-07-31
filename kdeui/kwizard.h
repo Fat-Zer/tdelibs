@@ -23,7 +23,7 @@
 #ifndef __KWIZARD_H
 #define __KWIZARD_H
 
-#include <qwizard.h>
+#include <tqwizard.h>
 
 #include <kdelibs_export.h>
 
@@ -35,8 +35,8 @@
 * "Cancel" and "Help" buttons. A wizard comes in handy for tutorials or
 * configuration dialogs with sequential steps.  
 * 
-* KWizard is just a wrapper for Qt's QWizard class. See the
-* QWizard documentation for a detailed description of available
+* KWizard is just a wrapper for Qt's TQWizard class. See the
+* TQWizard documentation for a detailed description of available
 * functions. The only added functionality is a KDE conformant translation
 * mechanism for the built-in buttons.
 *
@@ -50,7 +50,7 @@ public:
 /**
 * Constructor
 */
-  KWizard(QWidget *parent = 0, const char *name = 0, bool modal = false, WFlags f = 0);
+  KWizard(TQWidget *parent = 0, const char *name = 0, bool modal = false, WFlags f = 0);
 /**
 * Destructor
 */

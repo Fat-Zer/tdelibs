@@ -86,7 +86,7 @@ DrMain* KMPrinter::takeDriver()
 	return dr;
 }
 
-QString KMPrinter::pixmap()
+TQString KMPrinter::pixmap()
 {
 	if (!m_pixmap.isEmpty()) return m_pixmap;
 
@@ -117,13 +117,13 @@ int KMPrinter::compare(KMPrinter *p1, KMPrinter *p2)
 	if (p1 && p2)
 	{
 		bool	s1(p1->isSpecial()), s2(p2->isSpecial());
-		if (s1 && s2) return QString::compare(p1->name(),p2->name());
+		if (s1 && s2) return TQString::compare(p1->name(),p2->name());
 		else if (s1) return 1;
 		else if (s2) return -1;
 		else
 		{
 			bool	c1(p1->isClass(false)), c2(p2->isClass(false));
-			if (c1 == c2) return QString::compare(p1->name(),p2->name());
+			if (c1 == c2) return TQString::compare(p1->name(),p2->name());
 			else if (c1 && !c2) return -1;
 			else if (!c1 && c2) return 1;
 		}
@@ -131,7 +131,7 @@ int KMPrinter::compare(KMPrinter *p1, KMPrinter *p2)
 	return 0;
 }
 
-QString KMPrinter::stateString() const
+TQString KMPrinter::stateString() const
 {
 	QString	s;
 	switch (state())
@@ -145,7 +145,7 @@ QString KMPrinter::stateString() const
 	return s;
 }
 
-bool KMPrinter::autoConfigure(KPrinter *printer, QWidget *parent)
+bool KMPrinter::autoConfigure(KPrinter *printer, TQWidget *parent)
 {
 	// standard settings
 	printer->setPrinterName(printerName());
@@ -160,7 +160,7 @@ bool KMPrinter::autoConfigure(KPrinter *printer, QWidget *parent)
 		if (option("kde-special-file") == "1")
 		{
 			// build-up default filename/directory
-			QString fName = printer->docFileName(), ext = option( "kde-special-extension" );
+			TQString fName = printer->docFileName(), ext = option( "kde-special-extension" );
 			if ( fName.isEmpty() )
 				fName = ( printer->docName() + "." + ext );
 			else
@@ -178,7 +178,7 @@ bool KMPrinter::autoConfigure(KPrinter *printer, QWidget *parent)
 
 			// build-up file dialog
 			KFileDialog *dialog = new KFileDialog (fName,
-								QString::null,
+								TQString::null,
 								parent,
 								"filedialog",
 								true);
@@ -188,7 +188,7 @@ bool KMPrinter::autoConfigure(KPrinter *printer, QWidget *parent)
 
 			if (!mimetype.isEmpty())
 			{
-				QStringList filter;
+				TQStringList filter;
 				filter << mimetype;
 				filter << "all/allfiles";
 				dialog->setMimeFilter (filter, mimetype);
@@ -214,11 +214,11 @@ bool KMPrinter::autoConfigure(KPrinter *printer, QWidget *parent)
 	return true;
 }
 
-QString KMPrinter::deviceProtocol() const
+TQString KMPrinter::deviceProtocol() const
 {
 	int p = m_device.find( ':' );
 	if ( p != -1 )
 		return m_device.left( p );
 	else
-		return QString::null;
+		return TQString::null;
 }

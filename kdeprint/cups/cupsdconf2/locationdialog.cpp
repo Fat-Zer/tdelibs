@@ -22,28 +22,28 @@
 #include "editlist.h"
 #include "addressdialog.h"
 
-#include <qlineedit.h>
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qwhatsthis.h>
+#include <tqlineedit.h>
+#include <tqcombobox.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
+#include <tqwhatsthis.h>
 
 #include <klocale.h>
 #include <kiconloader.h>
 
-LocationDialog::LocationDialog(QWidget *parent, const char *name)
-	: KDialogBase(parent, name, true, QString::null, Ok|Cancel, Ok, true)
+LocationDialog::LocationDialog(TQWidget *parent, const char *name)
+	: KDialogBase(parent, name, true, TQString::null, Ok|Cancel, Ok, true)
 {
-	QWidget	*dummy = new QWidget(this);
+	QWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
-	resource_ = new QComboBox(dummy);
-	authtype_ = new QComboBox(dummy);
-	authclass_ = new QComboBox(dummy);
-	authname_ = new QLineEdit(dummy);
-	encryption_ = new QComboBox(dummy);
-	satisfy_ = new QComboBox(dummy);
-	order_ = new QComboBox(dummy);
+	resource_ = new TQComboBox(dummy);
+	authtype_ = new TQComboBox(dummy);
+	authclass_ = new TQComboBox(dummy);
+	authname_ = new TQLineEdit(dummy);
+	encryption_ = new TQComboBox(dummy);
+	satisfy_ = new TQComboBox(dummy);
+	order_ = new TQComboBox(dummy);
 	addresses_ = new EditList(dummy);
 
 	authtype_->insertItem(i18n("None"));
@@ -66,19 +66,19 @@ LocationDialog::LocationDialog(QWidget *parent, const char *name)
 	order_->insertItem(i18n("Allow, Deny"));
 	order_->insertItem(i18n("Deny, Allow"));
 
-	connect(authclass_, SIGNAL(activated(int)), SLOT(slotClassChanged(int)));
-	connect(authtype_, SIGNAL(activated(int)), SLOT(slotTypeChanged(int)));
+	connect(authclass_, TQT_SIGNAL(activated(int)), TQT_SLOT(slotClassChanged(int)));
+	connect(authtype_, TQT_SIGNAL(activated(int)), TQT_SLOT(slotTypeChanged(int)));
 
-	QLabel	*l1 = new QLabel(i18n("Resource:"), dummy);
-	QLabel	*l2 = new QLabel(i18n("Authentication:"), dummy);
-	QLabel	*l3 = new QLabel(i18n("Class:"), dummy);
-	QLabel	*l4 = new QLabel(i18n("Names:"), dummy);
-	QLabel	*l5 = new QLabel(i18n("Encryption:"), dummy);
-	QLabel	*l6 = new QLabel(i18n("Satisfy:"), dummy);
-	QLabel	*l7 = new QLabel(i18n("ACL order:"), dummy);
-	QLabel	*l8 = new QLabel(i18n("ACL addresses:"),dummy);
+	QLabel	*l1 = new TQLabel(i18n("Resource:"), dummy);
+	QLabel	*l2 = new TQLabel(i18n("Authentication:"), dummy);
+	QLabel	*l3 = new TQLabel(i18n("Class:"), dummy);
+	QLabel	*l4 = new TQLabel(i18n("Names:"), dummy);
+	QLabel	*l5 = new TQLabel(i18n("Encryption:"), dummy);
+	QLabel	*l6 = new TQLabel(i18n("Satisfy:"), dummy);
+	QLabel	*l7 = new TQLabel(i18n("ACL order:"), dummy);
+	QLabel	*l8 = new TQLabel(i18n("ACL addresses:"),dummy);
 
-	QGridLayout	*m1 = new QGridLayout(dummy, 8, 2, 0, 5);
+	QGridLayout	*m1 = new TQGridLayout(dummy, 8, 2, 0, 5);
 	m1->setColStretch(1, 1);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);
 	m1->addWidget(l2, 1, 0, Qt::AlignRight);
@@ -104,26 +104,26 @@ LocationDialog::LocationDialog(QWidget *parent, const char *name)
 	slotClassChanged(AUTHCLASS_ANONYMOUS);
 	encryption_->setCurrentItem(ENCRYPT_IFREQUESTED);
 
-	connect(addresses_, SIGNAL(add()), SLOT(slotAdd()));
-	connect(addresses_, SIGNAL(edit(int)), SLOT(slotEdit(int)));
-	connect(addresses_, SIGNAL(defaultList()), SLOT(slotDefaultList()));
+	connect(addresses_, TQT_SIGNAL(add()), TQT_SLOT(slotAdd()));
+	connect(addresses_, TQT_SIGNAL(edit(int)), TQT_SLOT(slotEdit(int)));
+	connect(addresses_, TQT_SIGNAL(defaultList()), TQT_SLOT(slotDefaultList()));
 }
 
 void LocationDialog::setInfos(CupsdConf *conf)
 {
 	conf_ = conf;
 
-	QPtrListIterator<CupsResource>	it(conf->resources_);
+	TQPtrListIterator<CupsResource>	it(conf->resources_);
 	for (; it.current(); ++it)
 		resource_->insertItem(SmallIcon(it.current()->typeToIconName(it.current()->type_)), it.current()->text_);
 
-	QWhatsThis::add(encryption_, conf_->comments_.toolTip("encryption"));
-	QWhatsThis::add(order_, conf_->comments_.toolTip("order"));
-	QWhatsThis::add(authclass_, conf_->comments_.toolTip("authclass"));
-	QWhatsThis::add(authtype_, conf_->comments_.toolTip("authtype"));
-	QWhatsThis::add(authname_, conf_->comments_.toolTip("authname"));
-	QWhatsThis::add(satisfy_, conf_->comments_.toolTip("satisfy"));
-	QWhatsThis::add(addresses_, conf_->comments_.toolTip("allowdeny"));
+	TQWhatsThis::add(encryption_, conf_->comments_.toolTip("encryption"));
+	TQWhatsThis::add(order_, conf_->comments_.toolTip("order"));
+	TQWhatsThis::add(authclass_, conf_->comments_.toolTip("authclass"));
+	TQWhatsThis::add(authtype_, conf_->comments_.toolTip("authtype"));
+	TQWhatsThis::add(authname_, conf_->comments_.toolTip("authname"));
+	TQWhatsThis::add(satisfy_, conf_->comments_.toolTip("satisfy"));
+	TQWhatsThis::add(addresses_, conf_->comments_.toolTip("allowdeny"));
 }
 
 void LocationDialog::fillLocation(CupsLocation *loc)
@@ -132,7 +132,7 @@ void LocationDialog::fillLocation(CupsLocation *loc)
 	loc->resourcename_ = loc->resource_->path_;
 	loc->authtype_ = authtype_->currentItem();
 	loc->authclass_ = (loc->authtype_ == AUTHTYPE_NONE ? AUTHCLASS_ANONYMOUS : authclass_->currentItem());
-	loc->authname_ = (loc->authclass_ == AUTHCLASS_USER || loc->authclass_ == AUTHCLASS_GROUP ? authname_->text() : QString::null);
+	loc->authname_ = (loc->authclass_ == AUTHCLASS_USER || loc->authclass_ == AUTHCLASS_GROUP ? authname_->text() : TQString::null);
 	loc->encryption_ = encryption_->currentItem();
 	loc->satisfy_ = satisfy_->currentItem();
 	loc->order_ = order_->currentItem();
@@ -169,7 +169,7 @@ void LocationDialog::slotClassChanged(int index)
 	authname_->setEnabled((index == AUTHCLASS_USER || index == AUTHCLASS_GROUP));
 }
 
-bool LocationDialog::newLocation(CupsLocation *loc, QWidget *parent, CupsdConf *conf)
+bool LocationDialog::newLocation(CupsLocation *loc, TQWidget *parent, CupsdConf *conf)
 {
 	LocationDialog	dlg(parent);
 	if (conf)
@@ -183,7 +183,7 @@ bool LocationDialog::newLocation(CupsLocation *loc, QWidget *parent, CupsdConf *
 		return false;
 }
 
-bool LocationDialog::editLocation(CupsLocation *loc, QWidget *parent, CupsdConf *conf)
+bool LocationDialog::editLocation(CupsLocation *loc, TQWidget *parent, CupsdConf *conf)
 {
 	LocationDialog	dlg(parent);
 	if (conf)
@@ -201,14 +201,14 @@ bool LocationDialog::editLocation(CupsLocation *loc, QWidget *parent, CupsdConf 
 
 void LocationDialog::slotAdd()
 {
-	QString addr = AddressDialog::newAddress(this);
+	TQString addr = AddressDialog::newAddress(this);
 	if (!addr.isEmpty())
 		addresses_->insertItem(addr);
 }
 
 void LocationDialog::slotEdit(int index)
 {
-	QString addr = addresses_->text(index);
+	TQString addr = addresses_->text(index);
 	addr = AddressDialog::editAddress(addr, this);
 	if (!addr.isEmpty())
 		addresses_->insertItem(addr);

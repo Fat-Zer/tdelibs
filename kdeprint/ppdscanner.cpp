@@ -538,14 +538,14 @@ char *yytext;
  *  Boston, MA 02110-1301, USA.
  **/
 
-#include <qstringlist.h>
-#include <qiodevice.h>
+#include <tqstringlist.h>
+#include <tqiodevice.h>
 #define YYSTYPE QStringList
 #include "ppdparser.cpp.h"
 
 #define yylval kdeprint_ppdlval
 
-QIODevice *kdeprint_ppdscanner_device = NULL;
+TQIODevice *kdeprint_ppdscanner_device = NULL;
 #define YY_INPUT(buf,result,max_size) \
 	{ \
 		if (kdeprint_ppdscanner_device) \
@@ -1895,7 +1895,7 @@ int main()
 #line 123 "./ppdscanner.l"
 
 
-void kdeprint_ppdscanner_init(QIODevice *d)
+void kdeprint_ppdscanner_init(TQIODevice *d)
 {
 	kdeprint_ppdscanner_device = d;
 	kdeprint_ppdscanner_lno = 1;

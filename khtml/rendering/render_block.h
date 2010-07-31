@@ -26,7 +26,7 @@
 #ifndef RENDER_BLOCK_H
 #define RENDER_BLOCK_H
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 #include "render_flow.h"
 
@@ -188,7 +188,7 @@ public:
 
 #ifdef ENABLE_DUMP
     virtual void printTree(int indent=0) const;
-    virtual void dump(QTextStream &stream, const QString &ind) const;
+    virtual void dump(TQTextStream &stream, const TQString &ind) const;
 #endif
 
 protected:
@@ -355,8 +355,8 @@ protected:
     int m_overflowLeft;
 
 private:
-    QPtrList<FloatingObject>* m_floatingObjects;
-    QPtrList<RenderObject>* m_positionedObjects;
+    TQPtrList<FloatingObject>* m_floatingObjects;
+    TQPtrList<RenderObject>* m_positionedObjects;
 
     bool m_childrenInline : 1;
     bool m_firstLine      : 1; // used in inline layouting

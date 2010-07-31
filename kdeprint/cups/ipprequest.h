@@ -20,10 +20,10 @@
 #ifndef IPPREQUEST_H
 #define IPPREQUEST_H
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qtextstream.h>
-#include <qmap.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqtextstream.h>
+#include <tqmap.h>
 
 #include <cups/ipp.h>
 
@@ -36,64 +36,64 @@ public:
 	void init();	// re-initializes the request
 
 	// request building functions
-	void addMime(int group, const QString& name, const QString& mime);
-	void addKeyword(int group, const QString& name, const QString& key);
-	void addKeyword(int group, const QString& name, const QStringList& keys);
-	void addURI(int group, const QString& name, const QString& uri);
-	void addURI(int group, const QString& name, const QStringList& uris);
-	void addText(int group, const QString& name, const QString& txt);
-	void addText(int group, const QString& name, const QStringList& txts);
-	void addName(int group, const QString& name, const QString& nm);
-	void addName(int group, const QString& name, const QStringList& nms);
-	void addInteger(int group, const QString& name, int value);
-	void addInteger(int group, const QString& name, const QValueList<int>& values);
-	void addEnum(int group, const QString& name, int value);
-	void addEnum(int group, const QString& name, const QValueList<int>& values);
-	void addBoolean(int group, const QString& name, bool value);
-	void addBoolean(int group, const QString& name, const QValueList<bool>& values);
+	void addMime(int group, const TQString& name, const TQString& mime);
+	void addKeyword(int group, const TQString& name, const TQString& key);
+	void addKeyword(int group, const TQString& name, const TQStringList& keys);
+	void addURI(int group, const TQString& name, const TQString& uri);
+	void addURI(int group, const TQString& name, const TQStringList& uris);
+	void addText(int group, const TQString& name, const TQString& txt);
+	void addText(int group, const TQString& name, const TQStringList& txts);
+	void addName(int group, const TQString& name, const TQString& nm);
+	void addName(int group, const TQString& name, const TQStringList& nms);
+	void addInteger(int group, const TQString& name, int value);
+	void addInteger(int group, const TQString& name, const TQValueList<int>& values);
+	void addEnum(int group, const TQString& name, int value);
+	void addEnum(int group, const TQString& name, const TQValueList<int>& values);
+	void addBoolean(int group, const TQString& name, bool value);
+	void addBoolean(int group, const TQString& name, const TQValueList<bool>& values);
 
 	void setOperation(int op);
-	void setHost(const QString& host);
+	void setHost(const TQString& host);
 	void setPort(int p);
 
 	// request answer functions
 	int status();
-	QString statusMessage();
-	bool integer(const QString& name, int& value);
-	bool boolean(const QString& name, bool& value);
-	bool enumvalue(const QString& name, int& value);
-	bool name(const QString& name, QString& value);
-	bool name(const QString& name, QStringList& value);
-	bool text(const QString& name, QString& value);
-	bool text(const QString& name, QStringList& value);
-	bool uri(const QString& name, QString& value);
-	bool uri(const QString& name, QStringList& value);
-	bool keyword(const QString& name, QString& value);
-	bool keyword(const QString& name, QStringList& value);
-	bool mime(const QString& name, QString& value);
+	TQString statusMessage();
+	bool integer(const TQString& name, int& value);
+	bool boolean(const TQString& name, bool& value);
+	bool enumvalue(const TQString& name, int& value);
+	bool name(const TQString& name, TQString& value);
+	bool name(const TQString& name, TQStringList& value);
+	bool text(const TQString& name, TQString& value);
+	bool text(const TQString& name, TQStringList& value);
+	bool uri(const TQString& name, TQString& value);
+	bool uri(const TQString& name, TQStringList& value);
+	bool keyword(const TQString& name, TQString& value);
+	bool keyword(const TQString& name, TQStringList& value);
+	bool mime(const TQString& name, TQString& value);
 	ipp_attribute_t* first();
 	ipp_attribute_t* last();
-	QMap<QString,QString> toMap(int group = -1);
-	void setMap(const QMap<QString,QString>& opts);
+	TQMap<TQString,TQString> toMap(int group = -1);
+	void setMap(const TQMap<TQString,TQString>& opts);
 
 	// processing functions
-	bool doRequest(const QString& res);
-	bool doFileRequest(const QString& res, const QString& filename = QString::null);
+	bool doRequest(const TQString& res);
+	bool doFileRequest(const TQString& res, const TQString& filename = TQString::null);
 
 	// report functions
-	bool htmlReport(int group, QTextStream& output);
+	bool htmlReport(int group, TQTextStream& output);
 
 	// debug function
 	void dump(int state);
 
 protected:
-	void addString_p(int group, int type, const QString& name, const QString& value);
-	void addStringList_p(int group, int type, const QString& name, const QStringList& values);
-	void addInteger_p(int group, int type, const QString& name, int value);
-	void addIntegerList_p(int group, int type, const QString& name, const QValueList<int>& values);
-	bool stringValue_p(const QString& name, QString& value, int type);
-	bool stringListValue_p(const QString& name, QStringList& values, int type);
-	bool integerValue_p(const QString& name, int& value, int type);
+	void addString_p(int group, int type, const TQString& name, const TQString& value);
+	void addStringList_p(int group, int type, const TQString& name, const TQStringList& values);
+	void addInteger_p(int group, int type, const TQString& name, int value);
+	void addIntegerList_p(int group, int type, const TQString& name, const TQValueList<int>& values);
+	bool stringValue_p(const TQString& name, TQString& value, int type);
+	bool stringListValue_p(const TQString& name, TQStringList& values, int type);
+	bool integerValue_p(const TQString& name, int& value, int type);
 
 private:
 	ipp_t	*request_;
@@ -103,79 +103,79 @@ private:
 	int	dump_;
 };
 
-inline void IppRequest::addMime(int group, const QString& name, const QString& mime)
+inline void IppRequest::addMime(int group, const TQString& name, const TQString& mime)
 { addString_p(group, IPP_TAG_MIMETYPE, name, mime); }
 
-inline void IppRequest::addKeyword(int group, const QString& name, const QString& key)
+inline void IppRequest::addKeyword(int group, const TQString& name, const TQString& key)
 { addString_p(group, IPP_TAG_KEYWORD, name, key); }
 
-inline void IppRequest::addKeyword(int group, const QString& name, const QStringList& keys)
+inline void IppRequest::addKeyword(int group, const TQString& name, const TQStringList& keys)
 { addStringList_p(group, IPP_TAG_KEYWORD, name, keys); }
 
-inline void IppRequest::addURI(int group, const QString& name, const QString& uri)
+inline void IppRequest::addURI(int group, const TQString& name, const TQString& uri)
 { addString_p(group, IPP_TAG_URI, name, uri); }
 
-inline void IppRequest::addURI(int group, const QString& name, const QStringList& uris)
+inline void IppRequest::addURI(int group, const TQString& name, const TQStringList& uris)
 { addStringList_p(group, IPP_TAG_URI, name, uris); }
 
-inline void IppRequest::addText(int group, const QString& name, const QString& txt)
+inline void IppRequest::addText(int group, const TQString& name, const TQString& txt)
 { addString_p(group, IPP_TAG_TEXT, name, txt); }
 
-inline void IppRequest::addText(int group, const QString& name, const QStringList& txts)
+inline void IppRequest::addText(int group, const TQString& name, const TQStringList& txts)
 { addStringList_p(group, IPP_TAG_TEXT, name, txts); }
 
-inline void IppRequest::addName(int group, const QString& name, const QString& nm)
+inline void IppRequest::addName(int group, const TQString& name, const TQString& nm)
 { addString_p(group, IPP_TAG_NAME, name, nm); }
 
-inline void IppRequest::addName(int group, const QString& name, const QStringList& nms)
+inline void IppRequest::addName(int group, const TQString& name, const TQStringList& nms)
 { addStringList_p(group, IPP_TAG_NAME, name, nms); }
 
-inline void IppRequest::addInteger(int group, const QString& name, int value)
+inline void IppRequest::addInteger(int group, const TQString& name, int value)
 { addInteger_p(group, IPP_TAG_INTEGER, name, value); }
 
-inline void IppRequest::addInteger(int group, const QString& name, const QValueList<int>& values)
+inline void IppRequest::addInteger(int group, const TQString& name, const TQValueList<int>& values)
 { addIntegerList_p(group, IPP_TAG_INTEGER, name, values); }
 
-inline void IppRequest::addEnum(int group, const QString& name, int value)
+inline void IppRequest::addEnum(int group, const TQString& name, int value)
 { addInteger_p(group, IPP_TAG_ENUM, name, value); }
 
-inline void IppRequest::addEnum(int group, const QString& name, const QValueList<int>& values)
+inline void IppRequest::addEnum(int group, const TQString& name, const TQValueList<int>& values)
 { addIntegerList_p(group, IPP_TAG_ENUM, name, values); }
 
-inline bool IppRequest::integer(const QString& name, int& value)
+inline bool IppRequest::integer(const TQString& name, int& value)
 { return integerValue_p(name, value, IPP_TAG_INTEGER); }
 
-inline bool IppRequest::enumvalue(const QString& name, int& value)
+inline bool IppRequest::enumvalue(const TQString& name, int& value)
 { return integerValue_p(name, value, IPP_TAG_ENUM); }
 
-inline bool IppRequest::name(const QString& name, QString& value)
+inline bool IppRequest::name(const TQString& name, TQString& value)
 { return stringValue_p(name, value, IPP_TAG_NAME); }
 
-inline bool IppRequest::name(const QString& name, QStringList& values)
+inline bool IppRequest::name(const TQString& name, TQStringList& values)
 { return stringListValue_p(name, values, IPP_TAG_NAME); }
 
-inline bool IppRequest::text(const QString& name, QString& value)
+inline bool IppRequest::text(const TQString& name, TQString& value)
 { return stringValue_p(name, value, IPP_TAG_TEXT); }
 
-inline bool IppRequest::text(const QString& name, QStringList& values)
+inline bool IppRequest::text(const TQString& name, TQStringList& values)
 { return stringListValue_p(name, values, IPP_TAG_TEXT); }
 
-inline bool IppRequest::uri(const QString& name, QString& value)
+inline bool IppRequest::uri(const TQString& name, TQString& value)
 { return stringValue_p(name, value, IPP_TAG_URI); }
 
-inline bool IppRequest::uri(const QString& name, QStringList& values)
+inline bool IppRequest::uri(const TQString& name, TQStringList& values)
 { return stringListValue_p(name, values, IPP_TAG_URI); }
 
-inline bool IppRequest::keyword(const QString& name, QString& value)
+inline bool IppRequest::keyword(const TQString& name, TQString& value)
 { return stringValue_p(name, value, IPP_TAG_KEYWORD); }
 
-inline bool IppRequest::keyword(const QString& name, QStringList& values)
+inline bool IppRequest::keyword(const TQString& name, TQStringList& values)
 { return stringListValue_p(name, values, IPP_TAG_KEYWORD); }
 
-inline bool IppRequest::mime(const QString& name, QString& value)
+inline bool IppRequest::mime(const TQString& name, TQString& value)
 { return stringValue_p(name, value, IPP_TAG_MIMETYPE); }
 
-inline bool IppRequest::doRequest(const QString& res)
+inline bool IppRequest::doRequest(const TQString& res)
 { return doFileRequest(res); }
 
 inline ipp_attribute_t* IppRequest::first()
@@ -184,7 +184,7 @@ inline ipp_attribute_t* IppRequest::first()
 inline ipp_attribute_t* IppRequest::last()
 { return (request_ ? request_->last : NULL); }
 
-inline void IppRequest::setHost(const QString& host)
+inline void IppRequest::setHost(const TQString& host)
 { host_ = host; }
 
 inline void IppRequest::setPort(int p)

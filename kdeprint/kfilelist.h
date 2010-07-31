@@ -20,8 +20,8 @@
 #ifndef KFILELIST_H
 #define KFILELIST_H
 
-#include <qwidget.h>
-#include <qptrlist.h>
+#include <tqwidget.h>
+#include <tqptrlist.h>
 #include <kurl.h>
 
 class KListView;
@@ -32,12 +32,12 @@ class KFileList : public QWidget
 {
 	Q_OBJECT
 public:
-	KFileList(QWidget *parent = 0, const char *name = 0);
+	KFileList(TQWidget *parent = 0, const char *name = 0);
 	virtual ~KFileList();
 
-	void setFileList(const QStringList&);
-	QStringList fileList() const;
-	QSize sizeHint() const;
+	void setFileList(const TQStringList&);
+	TQStringList fileList() const;
+	TQSize sizeHint() const;
 
 protected slots:
 	void slotAddFile();
@@ -48,10 +48,10 @@ protected slots:
 	void slotDown();
 
 protected:
-	void dragEnterEvent(QDragEnterEvent*);
-	void dropEvent(QDropEvent*);
+	void dragEnterEvent(TQDragEnterEvent*);
+	void dropEvent(TQDropEvent*);
 	void addFiles(const KURL::List&);
-	void selection(QPtrList<QListViewItem>&);
+	void selection(TQPtrList<TQListViewItem>&);
 
 private:
 	KListView	*m_files;

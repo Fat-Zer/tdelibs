@@ -21,14 +21,14 @@
 #define KMINFOPAGE_H
 
 #include "kmprinterpage.h"
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class QLabel;
 
-class KMInfoPage : public QWidget, public KMPrinterPage
+class KMInfoPage : public TQWidget, public KMPrinterPage
 {
 public:
-	KMInfoPage(QWidget *parent = 0, const char *name = 0);
+	KMInfoPage(TQWidget *parent = 0, const char *name = 0);
 	~KMInfoPage();
 
 	void setPrinter(KMPrinter *p);

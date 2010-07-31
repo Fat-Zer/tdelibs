@@ -21,9 +21,9 @@
 #ifndef __kpartmanager_h__
 #define __kpartmanager_h__
 
-#include <qobject.h>
-#include <qwidget.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqwidget.h>
+#include <tqptrlist.h>
 
 #include <kdelibs_export.h>
 
@@ -59,7 +59,7 @@ public:
   enum SelectionPolicy { Direct, TriState };
 
   /**
-   * This extends QFocusEvent::Reason with the non-focus-event reasons for partmanager to activate a part.
+   * This extends TQFocusEvent::Reason with the non-focus-event reasons for partmanager to activate a part.
    * To test for "any focusin reason", use < ReasonLeftClick.
    * NoReason usually means: explicit activation with @ref setActivePart.
    * @since 3.3
@@ -74,17 +74,17 @@ public:
    *               events
    * @param name   The object's name, if any.
    */
-  PartManager( QWidget * parent, const char * name = 0L );
+  PartManager( TQWidget * parent, const char * name = 0L );
   /**
    * Constructs a part manager.
    *
    * @param topLevel The toplevel widget (window / dialog ) the
    *                 partmanager should monitor for activation/selection
    *                 events
-   * @param parent   The parent QObject.
+   * @param parent   The parent TQObject.
    * @param name     The object's name, if any.
    */
-  PartManager( QWidget * topLevel, QObject *parent, const char *name = 0 );
+  PartManager( TQWidget * topLevel, TQObject *parent, const char *name = 0 );
   virtual ~PartManager();
 
   /**
@@ -142,7 +142,7 @@ public:
   /**
    * @internal
    */
-  virtual bool eventFilter( QObject *obj, QEvent *ev );
+  virtual bool eventFilter( TQObject *obj, TQEvent *ev );
 
   /**
    * Adds a part to the manager.
@@ -175,7 +175,7 @@ public:
    * @p widget can be used to specify which widget was responsible for the activation.
    * This is important if you have multiple views for a document/part, like in KOffice.
    */
-  virtual void setActivePart( Part *part, QWidget *widget = 0L );
+  virtual void setActivePart( Part *part, TQWidget *widget = 0L );
 
   /**
    * Returns the active part.
@@ -185,7 +185,7 @@ public:
   /**
    * Returns the active widget of the current active part (see activePart()).
    */
-  virtual QWidget *activeWidget() const;
+  virtual TQWidget *activeWidget() const;
 
   /**
    * Sets the selected part.
@@ -195,7 +195,7 @@ public:
    * @p widget can be used to specify which widget was responsible for the selection.
    * This is important if you have multiple views for a document/part, like in KOffice.
    */
-  virtual void setSelectedPart( Part *part, QWidget *widget = 0L );
+  virtual void setSelectedPart( Part *part, TQWidget *widget = 0L );
 
   /**
    * Returns the current selected part.
@@ -205,12 +205,12 @@ public:
   /**
    * Returns the selected widget of the current selected part (see selectedPart()).
    */
-  virtual QWidget *selectedWidget() const;
+  virtual TQWidget *selectedWidget() const;
 
   /**
    * Returns the list of parts being managed by the partmanager.
    */
-  const QPtrList<Part> *parts() const;
+  const TQPtrList<Part> *parts() const;
 
   /**
    * Adds the @p topLevel widget to the list of managed toplevel widgets.
@@ -219,12 +219,12 @@ public:
    * constructor. Sometimes however (like for example when using the KDE dockwidget
    * library), it is necessary to extend this.
    */
-  void addManagedTopLevelWidget( const QWidget *topLevel );
+  void addManagedTopLevelWidget( const TQWidget *topLevel );
   /**
    * Removes the @p topLevel widget from the list of managed toplevel widgets.
    * @see addManagedTopLevelWidget
    */
-  void removeManagedTopLevelWidget( const QWidget *topLevel );
+  void removeManagedTopLevelWidget( const TQWidget *topLevel );
 
   /**
    * @return the reason for the last activePartChanged signal emitted.
@@ -274,8 +274,8 @@ protected slots:
    */
   void slotManagedTopLevelWidgetDestroyed();
 private:
-  Part * findPartFromWidget( QWidget * widget, const QPoint &pos );
-  Part * findPartFromWidget( QWidget * widget );
+  Part * findPartFromWidget( TQWidget * widget, const TQPoint &pos );
+  Part * findPartFromWidget( TQWidget * widget );
 
 protected:
   virtual void virtual_hook( int id, void* data );

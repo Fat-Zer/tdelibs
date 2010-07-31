@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <kglobal.h>
 #include <kconfig.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include "kpanelmenu.h"
 #include "kpanelmenu.moc"
@@ -36,31 +36,31 @@ class KPanelMenuPrivate
 public:
     bool init;
     int clearDelay;
-    QString startPath;
-    QTimer t;
+    TQString startPath;
+    TQTimer t;
 };
 
-KPanelMenu::KPanelMenu(const QString &startDir, QWidget *parent, const char *name)
+KPanelMenu::KPanelMenu(const TQString &startDir, TQWidget *parent, const char *name)
   : KPopupMenu(parent, name)
 {
     init(startDir);
 }
 
-KPanelMenu::KPanelMenu(QWidget *parent, const char *name)
+KPanelMenu::KPanelMenu(TQWidget *parent, const char *name)
   : KPopupMenu(parent, name)
 {
     init();
 }
 
-void KPanelMenu::init(const QString& path)
+void KPanelMenu::init(const TQString& path)
 {
     d = new KPanelMenuPrivate;
 
     setInitialized( false );
     d->startPath = path;
 
-    connect(this, SIGNAL(activated(int)), SLOT(slotExec(int)));
-    connect(this, SIGNAL(aboutToShow()), SLOT(slotAboutToShow()));
+    connect(this, TQT_SIGNAL(activated(int)), TQT_SLOT(slotExec(int)));
+    connect(this, TQT_SIGNAL(aboutToShow()), TQT_SLOT(slotAboutToShow()));
 
     // setup cache timer
     KConfig *config = KGlobal::config();
@@ -95,15 +95,15 @@ void KPanelMenu::slotClear()
     clear();
 }
 
-void KPanelMenu::hideEvent(QHideEvent *ev)
+void KPanelMenu::hideEvent(TQHideEvent *ev)
 {
     // start the cache timer
     if(d->clearDelay) {
-        disconnect(&(d->t), SIGNAL(timeout()), this, SLOT(slotClear()));
-        connect(&(d->t), SIGNAL(timeout()), this, SLOT(slotClear()));
+        disconnect(&(d->t), TQT_SIGNAL(timeout()), this, TQT_SLOT(slotClear()));
+        connect(&(d->t), TQT_SIGNAL(timeout()), this, TQT_SLOT(slotClear()));
         d->t.start(d->clearDelay, true);
     }
-    QPopupMenu::hideEvent(ev);
+    TQPopupMenu::hideEvent(ev);
 }
 
 void KPanelMenu::disableAutoClear()
@@ -111,12 +111,12 @@ void KPanelMenu::disableAutoClear()
     d->clearDelay = 0;
 }
 
-const QString& KPanelMenu::path() const
+const TQString& KPanelMenu::path() const
 {
     return d->startPath;
 }
 
-void KPanelMenu::setPath(const QString& p)
+void KPanelMenu::setPath(const TQString& p)
 {
     d->startPath = p;
 }

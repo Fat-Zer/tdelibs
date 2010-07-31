@@ -22,7 +22,7 @@
 #define KSPELL_ASPELLCLIENT_H
 
 #include "client.h"
-#include <qobject.h>
+#include <tqobject.h>
 
 #include "aspell.h"
 
@@ -35,18 +35,18 @@ class ASpellClient : public KSpell2::Client
 {
     Q_OBJECT
 public:
-    ASpellClient( QObject *parent, const char *name, const QStringList & /* args */  );
+    ASpellClient( TQObject *parent, const char *name, const TQStringList & /* args */  );
     ~ASpellClient();
 
     virtual int reliability() const {
         return 20;
     }
 
-    virtual Dictionary* dictionary( const QString& language );
+    virtual Dictionary* dictionary( const TQString& language );
 
-    virtual QStringList languages() const;
+    virtual TQStringList languages() const;
 
-    virtual QString name() const {
+    virtual TQString name() const {
         return "ASpell";
     }
 private:

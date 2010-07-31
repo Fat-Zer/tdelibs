@@ -18,7 +18,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qdatastream.h>
+#include <tqdatastream.h>
 
 #include "timezone.h"
 
@@ -66,17 +66,17 @@ bool TimeZone::operator!=( const TimeZone &t ) const
   return false;
 }
 
-QString TimeZone::asString() const
+TQString TimeZone::asString() const
 {
-  return QString::number( mOffset );
+  return TQString::number( mOffset );
 }
 
-QDataStream &KABC::operator<<( QDataStream &s, const TimeZone &zone )
+TQDataStream &KABC::operator<<( TQDataStream &s, const TimeZone &zone )
 {
     return s << zone.mOffset;
 }
 
-QDataStream &KABC::operator>>( QDataStream &s, TimeZone &zone )
+TQDataStream &KABC::operator>>( TQDataStream &s, TimeZone &zone )
 {
     s >> zone.mOffset;
     zone.mValid = true;

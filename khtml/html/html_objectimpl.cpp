@@ -26,10 +26,10 @@
 #include "dom/dom_string.h"
 #include "misc/htmlhashes.h"
 #include "khtmlview.h"
-#include <qstring.h>
-#include <qvariant.h>
-#include <qmap.h>
-#include <qtimer.h>
+#include <tqstring.h>
+#include <tqvariant.h>
+#include <tqmap.h>
+#include <tqtimer.h>
 
 #include <kdebug.h>
 #include <kimageio.h>
@@ -55,7 +55,7 @@ HTMLObjectBaseElementImpl::HTMLObjectBaseElementImpl(DocumentImpl *doc)
     m_renderAlternative = false;
 }
 
-void HTMLObjectBaseElementImpl::setServiceType(const QString & val) {
+void HTMLObjectBaseElementImpl::setServiceType(const TQString & val) {
     serviceType = val.lower();
     int pos = serviceType.find( ";" );
     if ( pos!=-1 )
@@ -70,7 +70,7 @@ void HTMLObjectBaseElementImpl::parseAttribute(AttributeImpl *attr)
         case ATTR_CODETYPE:
 	    if (attr->val()) {
 	      DOM::DOMStringImpl *stringImpl = attr->val();
-	      QString val = QConstString( stringImpl->s, stringImpl->l ).string();
+	      TQString val = TQConstString( stringImpl->s, stringImpl->l ).string();
 	      setServiceType( val );
               needWidgetUpdate = true;
 	    }
@@ -111,13 +111,13 @@ void HTMLObjectBaseElementImpl::insertedIntoDocument()
     HTMLElementImpl::insertedIntoDocument();
 }
 
-void HTMLObjectBaseElementImpl::removeId(const QString& id)
+void HTMLObjectBaseElementImpl::removeId(const TQString& id)
 {
     getDocument()->underDocNamedCache().remove(id, this);
     HTMLElementImpl::removeId(id);
 }
 
-void HTMLObjectBaseElementImpl::addId   (const QString& id)
+void HTMLObjectBaseElementImpl::addId   (const TQString& id)
 {
     getDocument()->underDocNamedCache().add(id, this);
     HTMLElementImpl::addId(id);
@@ -136,7 +136,7 @@ void HTMLObjectBaseElementImpl::recalcStyle( StyleChange ch )
 void HTMLObjectBaseElementImpl::renderAlternative()
 {
     if ( m_renderAlternative ) return;
-    QTimer::singleShot( 0, this, SLOT( slotRenderAlternative() ) );
+    TQTimer::singleShot( 0, this, TQT_SLOT( slotRenderAlternative() ) );
 }
 
 void HTMLObjectBaseElementImpl::slotRenderAlternative()
@@ -421,7 +421,7 @@ DocumentImpl* HTMLObjectElementImpl::contentDocument() const
 {
     if ( !m_render ) return 0;
     if ( !m_render->isWidget() ) return 0;
-    QWidget* widget = static_cast<RenderWidget*>( m_render )->widget();
+    TQWidget* widget = static_cast<RenderWidget*>( m_render )->widget();
     if( widget && ::qt_cast<KHTMLView*>( widget ) )
         return static_cast<KHTMLView*>( widget )->part()->xmlDocImpl();
     return 0;

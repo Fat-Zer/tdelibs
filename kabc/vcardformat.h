@@ -20,7 +20,7 @@
 #ifndef KABC_VCARDFORMAT_H
 #define KABC_VCARDFORMAT_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include "format.h"
 
@@ -37,8 +37,8 @@ class KABC_EXPORT_DEPRECATED VCardFormat : public Format {
     VCardFormat();
     virtual ~VCardFormat();
   
-    bool load( AddressBook *, const QString &fileName );
-    bool save( AddressBook *, const QString &fileName );
+    bool load( AddressBook *, const TQString &fileName );
+    bool save( AddressBook *, const TQString &fileName );
 
   private:
     VCardFormatImpl *mImpl;

@@ -21,7 +21,7 @@
 #ifndef KABC_RESOURCESELECTDIALOG_H
 #define KABC_RESOURCESELECTDIALOG_H
 
-#include <qmap.h>
+#include <tqmap.h>
 
 #include <kdialog.h>
 #include <kdemacros.h>
@@ -41,15 +41,15 @@ class KABC_EXPORT_DEPRECATED ResourceSelectDialog : KDialog
   Q_OBJECT
 
   public:
-    ResourceSelectDialog( AddressBook *ab, QWidget *parent = 0,
+    ResourceSelectDialog( AddressBook *ab, TQWidget *parent = 0,
                           const char *name = 0);
     Resource *resource();
 
-    static Resource *getResource( AddressBook *ab, QWidget *parent = 0 );
+    static Resource *getResource( AddressBook *ab, TQWidget *parent = 0 );
 
   private:
     KListBox *mResourceId;
-    QMap<int, Resource*> mResourceMap;
+    TQMap<int, Resource*> mResourceMap;
 };
 
 }

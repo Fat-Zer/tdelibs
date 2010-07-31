@@ -21,10 +21,10 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include <qmessagebox.h>
-#include <qwidget.h>
-#include <qlayout.h>
-#include <qlabel.h>
+#include <tqmessagebox.h>
+#include <tqwidget.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -38,7 +38,7 @@
 
 using namespace KIO;
 
-SkipDlg::SkipDlg(QWidget *parent, bool _multi, const QString& _error_text, bool _modal ) :
+SkipDlg::SkipDlg(TQWidget *parent, bool _multi, const TQString& _error_text, bool _modal ) :
   KDialog ( parent, "" , _modal )
 {
   // TODO : port to KDialogBase
@@ -56,28 +56,28 @@ SkipDlg::SkipDlg(QWidget *parent, bool _multi, const QString& _error_text, bool 
   setCaption( i18n( "Information" ) );
 
   b0 = new KPushButton( KStdGuiItem::cancel(), this );
-  connect(b0, SIGNAL(clicked()), this, SLOT(b0Pressed()));
+  connect(b0, TQT_SIGNAL(clicked()), this, TQT_SLOT(b0Pressed()));
 
   if ( _multi )
   {
-    b1 = new QPushButton( i18n( "Skip" ), this );
-    connect(b1, SIGNAL(clicked()), this, SLOT(b1Pressed()));
+    b1 = new TQPushButton( i18n( "Skip" ), this );
+    connect(b1, TQT_SIGNAL(clicked()), this, TQT_SLOT(b1Pressed()));
 
-    b2 = new QPushButton( i18n( "Auto Skip" ), this );
-    connect(b2, SIGNAL(clicked()), this, SLOT(b2Pressed()));
+    b2 = new TQPushButton( i18n( "Auto Skip" ), this );
+    connect(b2, TQT_SIGNAL(clicked()), this, TQT_SLOT(b2Pressed()));
   }
 
-  QVBoxLayout *vlayout = new QVBoxLayout( this, 10, 0 );
+  TQVBoxLayout *vlayout = new TQVBoxLayout( this, 10, 0 );
   // vlayout->addStrut( 360 );	makes dlg at least that wide
 
-  QLabel * lb = new QLabel( _error_text, this );
+  TQLabel * lb = new TQLabel( _error_text, this );
   lb->setFixedHeight( lb->sizeHint().height() );
   lb->setMinimumWidth( lb->sizeHint().width() );
   vlayout->addWidget( lb );
 
   vlayout->addSpacing( 10 );
 
-  QHBoxLayout* layout = new QHBoxLayout();
+  TQHBoxLayout* layout = new TQHBoxLayout();
   vlayout->addLayout( layout );
   if ( b0 )
   {
@@ -132,7 +132,7 @@ void SkipDlg::b2Pressed()
     emit result( this, 2 );
 }
 
-SkipDlg_Result KIO::open_SkipDlg( bool _multi, const QString& _error_text )
+SkipDlg_Result KIO::open_SkipDlg( bool _multi, const TQString& _error_text )
 {
   Q_ASSERT(kapp);
 

@@ -21,7 +21,7 @@
 #ifndef KABC_DISTRIBUTIONLISTDIALOG_H
 #define KABC_DISTRIBUTIONLISTDIALOG_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kdialogbase.h>
 
@@ -63,7 +63,7 @@ class KABC_EXPORT DistributionListDialog : public KDialogBase
       @param ab     The addressbook, the addressees should be used from
       @param parent The parent widget
     */
-    DistributionListDialog( AddressBook *ab, QWidget *parent );
+    DistributionListDialog( AddressBook *ab, TQWidget *parent );
 
     /**
       Destructor.
@@ -83,16 +83,16 @@ class KABC_EXPORT DistributionListDialog : public KDialogBase
 class KABC_EXPORT EmailSelector : public KDialogBase
 {
   public:
-    EmailSelector( const QStringList &emails, const QString &current,
-        QWidget *parent );
+    EmailSelector( const TQStringList &emails, const TQString &current,
+        TQWidget *parent );
 
-    QString selected();
+    TQString selected();
 
-    static QString getEmail( const QStringList &emails, const QString &current,
-        QWidget *parent );
+    static TQString getEmail( const TQStringList &emails, const TQString &current,
+        TQWidget *parent );
 
   private:
-    QButtonGroup *mButtonGroup;
+    TQButtonGroup *mButtonGroup;
 };
 
 /**
@@ -103,7 +103,7 @@ class KABC_EXPORT DistributionListEditorWidget : public QWidget
     Q_OBJECT
 
   public:
-    DistributionListEditorWidget( AddressBook *, QWidget *parent );
+    DistributionListEditorWidget( AddressBook *, TQWidget *parent );
     virtual ~DistributionListEditorWidget();
 
   private slots:
@@ -121,15 +121,15 @@ class KABC_EXPORT DistributionListEditorWidget : public QWidget
     void save();
 
   private:
-    QComboBox *mNameCombo;  
-    QLabel *mListLabel;
-    QListView *mEntryView;
-    QListView *mAddresseeView;
+    TQComboBox *mNameCombo;  
+    TQLabel *mListLabel;
+    TQListView *mEntryView;
+    TQListView *mAddresseeView;
 
     AddressBook *mAddressBook;
     DistributionListManager *mManager;
-    QPushButton *mNewButton, *mEditButton, *mRemoveButton;
-    QPushButton *mChangeEmailButton, *mRemoveEntryButton, *mAddEntryButton;
+    TQPushButton *mNewButton, *mEditButton, *mRemoveButton;
+    TQPushButton *mChangeEmailButton, *mRemoveEntryButton, *mAddEntryButton;
 
     struct Data;
     Data *d;

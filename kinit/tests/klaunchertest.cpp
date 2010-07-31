@@ -18,11 +18,11 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <stdio.h>
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 #include <kservice.h>
 
 
@@ -35,17 +35,17 @@ int main(int argc, char *argv[])
    kapp->dcopClient()->registerAs( kapp->name()) ;
 
 #if 0
-   QString error;
-   QCString dcopService;
+   TQString error;
+   TQCString dcopService;
    int pid;
    int result = KApplication::startServiceByDesktopName(
-		QString::fromLatin1("konsole"), QString::null, &error, &dcopService, &pid );
+		TQString::fromLatin1("konsole"), TQString::null, &error, &dcopService, &pid );
 
    printf("Result = %d, error = \"%s\", dcopService = \"%s\", pid = %d\n",
       result, error.ascii(), dcopService.data(), pid);
 
    result = KApplication::startServiceByDesktopName(
-		QString::fromLatin1("konqueror"), QString::null,  &error, &dcopService, &pid );
+		TQString::fromLatin1("konqueror"), TQString::null,  &error, &dcopService, &pid );
 
    printf("Result = %d, error = \"%s\", dcopService = \"%s\", pid = %d\n",
       result, error.ascii(), dcopService.data(), pid);

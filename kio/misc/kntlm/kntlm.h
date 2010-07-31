@@ -20,9 +20,9 @@
 #ifndef KNTLM_H
 #define KNTLM_H
 
-#include <qglobal.h>
-#include <qcstring.h>
-#include <qstring.h>
+#include <tqglobal.h>
+#include <tqcstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -137,8 +137,8 @@ public:
    *
    * @return true if creating the structure succeeds, false otherwise.   
    */
-  static bool getNegotiate( QByteArray &negotiate, const QString &domain = QString::null, 
-    const QString &workstation = QString::null,
+  static bool getNegotiate( TQByteArray &negotiate, const TQString &domain = TQString::null, 
+    const TQString &workstation = TQString::null,
     Q_UINT32 flags = Negotiate_Unicode | Request_Target | Negotiate_NTLM );
   /**
    * Creates the type 3 message which should be sent to the server after 
@@ -159,74 +159,74 @@ public:
    * (challenge data invalid, or NTLM authentication forced, but the challenge data says
    * no NTLM supported).
    */
-  static bool getAuth( QByteArray &auth, const QByteArray &challenge, const QString &user,
-    const QString &password, const QString &domain = QString::null, 
-    const QString &workstation = QString::null, bool forceNTLM = false, bool forceNTLMv2 = false );
+  static bool getAuth( TQByteArray &auth, const TQByteArray &challenge, const TQString &user,
+    const TQString &password, const TQString &domain = TQString::null, 
+    const TQString &workstation = TQString::null, bool forceNTLM = false, bool forceNTLMv2 = false );
 
   /**
    * Returns the LanManager response from the password and the server challenge.
    */
-  static QByteArray getLMResponse( const QString &password, const unsigned char *challenge );
+  static TQByteArray getLMResponse( const TQString &password, const unsigned char *challenge );
   /**
    * Calculates the LanManager hash of the specified password.
    */
-  static QByteArray lmHash( const QString &password );
+  static TQByteArray lmHash( const TQString &password );
   /**
    * Calculates the LanManager response from the LanManager hash and the server challenge.
    */
-  static QByteArray lmResponse( const QByteArray &hash, const unsigned char *challenge );
+  static TQByteArray lmResponse( const TQByteArray &hash, const unsigned char *challenge );
 
   /**
    * Returns the NTLM response from the password and the server challenge.
    */
-  static QByteArray getNTLMResponse( const QString &password, const unsigned char *challenge );
+  static TQByteArray getNTLMResponse( const TQString &password, const unsigned char *challenge );
   /**
    * Returns the NTLM hash (MD4) from the password.
    */
-  static QByteArray ntlmHash( const QString &password );
+  static TQByteArray ntlmHash( const TQString &password );
 
   /**
    * Calculates the NTLMv2 response.
    */
-  static QByteArray getNTLMv2Response( const QString &target, const QString &user, 
-    const QString &password, const QByteArray &targetInformation, 
+  static TQByteArray getNTLMv2Response( const TQString &target, const TQString &user, 
+    const TQString &password, const TQByteArray &targetInformation, 
     const unsigned char *challenge );
 
   /**
    * Calculates the LMv2 response.
    */
-  static QByteArray getLMv2Response( const QString &target, const QString &user,
-    const QString &password, const unsigned char *challenge );
+  static TQByteArray getLMv2Response( const TQString &target, const TQString &user,
+    const TQString &password, const unsigned char *challenge );
 
   /**
    * Returns the NTLMv2 hash.
    */
-  static QByteArray ntlmv2Hash( const QString &target, const QString &user, const QString &password );
+  static TQByteArray ntlmv2Hash( const TQString &target, const TQString &user, const TQString &password );
 
   /**
    * Calculates the LMv2 response.
    */
-  static QByteArray lmv2Response( const QByteArray &hash,
-    const QByteArray &clientData, const unsigned char *challenge );
+  static TQByteArray lmv2Response( const TQByteArray &hash,
+    const TQByteArray &clientData, const unsigned char *challenge );
 
   /**
    * Extracts a string field from an NTLM structure.
    */
-  static QString getString( const QByteArray &buf, const SecBuf &secbuf, bool unicode );
+  static TQString getString( const TQByteArray &buf, const SecBuf &secbuf, bool unicode );
   /**
    * Extracts a byte array from an NTLM structure.
    */
-  static QByteArray getBuf( const QByteArray &buf, const SecBuf &secbuf );
+  static TQByteArray getBuf( const TQByteArray &buf, const SecBuf &secbuf );
 
-  static QByteArray createBlob( const QByteArray &targetinfo );
+  static TQByteArray createBlob( const TQByteArray &targetinfo );
 
-  static QByteArray hmacMD5( const QByteArray &data, const QByteArray &key );
+  static TQByteArray hmacMD5( const TQByteArray &data, const TQByteArray &key );
 private:
-  static QByteArray QString2UnicodeLE( const QString &target );
-  static QString UnicodeLE2QString( const QChar* data, uint len );
+  static TQByteArray QString2UnicodeLE( const TQString &target );
+  static TQString UnicodeLE2TQString( const TQChar* data, uint len );
 
-  static void addBuf( QByteArray &buf, SecBuf &secbuf, QByteArray &data );
-  static void addString( QByteArray &buf, SecBuf &secbuf, const QString &str, bool unicode = false );
+  static void addBuf( TQByteArray &buf, SecBuf &secbuf, TQByteArray &data );
+  static void addString( TQByteArray &buf, SecBuf &secbuf, const TQString &str, bool unicode = false );
   static void convertKey( unsigned char *key_56, void* ks );
 };
 

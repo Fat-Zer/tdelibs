@@ -21,23 +21,23 @@
 #ifndef VCARDLINE_H
 #define VCARDLINE_H
 
-#include <qstringlist.h>
-#include <qvaluelist.h>
-#include <qvariant.h>
-#include <qmap.h>
-#include <qstring.h>
+#include <tqstringlist.h>
+#include <tqvaluelist.h>
+#include <tqvariant.h>
+#include <tqmap.h>
+#include <tqstring.h>
 
 namespace KABC {
 
 class VCardLine
 {
   public:
-    typedef QValueList<VCardLine> List;
-    typedef QMap<QString, QStringList> ParamMap;
+    typedef TQValueList<VCardLine> List;
+    typedef TQMap<TQString, TQStringList> ParamMap;
 
     VCardLine();
-    VCardLine( const QString &identifier );
-    VCardLine( const QString &identifier, const QVariant &value );
+    VCardLine( const TQString &identifier );
+    VCardLine( const TQString &identifier, const TQVariant &value );
     VCardLine( const VCardLine& );
 
     ~VCardLine();
@@ -47,32 +47,32 @@ class VCardLine
     /**
      * Sets the identifier of this line e.g. UID, FN, CLASS
      */
-    void setIdentifier( const QString& identifier );
+    void setIdentifier( const TQString& identifier );
 
     /**
      * Returns the identifier of this line.
      */
-    QString identifier() const;
+    TQString identifier() const;
 
     /**
      * Sets the value of of this line.
      */
-    void setValue( const QVariant& value );
+    void setValue( const TQVariant& value );
 
     /**
      * Returns the value of this line.
      */
-    QVariant value() const;
+    TQVariant value() const;
 
     /**
      * Sets the group the line belongs to.
      */
-    void setGroup( const QString& group );
+    void setGroup( const TQString& group );
 
     /**
      * Returns the group the line belongs to.
      */
-    QString group() const;
+    TQString group() const;
 
     /**
      * Returns whether the line belongs to a group.
@@ -82,29 +82,29 @@ class VCardLine
     /**
      * Returns all parameters.
      */
-    QStringList parameterList() const;
+    TQStringList parameterList() const;
 
     /**
      * Add a new parameter to the line.
      */
-    void addParameter( const QString& param, const QString& value );
+    void addParameter( const TQString& param, const TQString& value );
 
     /**
      * Returns the values of a special parameter.
      * You can get a list of all parameters with paramList().
      */
-    QStringList parameters( const QString& param ) const;
+    TQStringList parameters( const TQString& param ) const;
 
     /**
      * Returns only the first value of a special parameter.
      * You can get a list of all parameters with paramList().
      */
-    QString parameter( const QString& param ) const;
+    TQString parameter( const TQString& param ) const;
 
   private:
     ParamMap mParamMap;
-    QString mIdentifier;
-    QVariant mValue;
+    TQString mIdentifier;
+    TQVariant mValue;
 
     class VCardLinePrivate;
     VCardLinePrivate *d;

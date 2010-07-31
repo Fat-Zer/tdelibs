@@ -21,11 +21,11 @@
 #ifndef kfile_tree_view_h
 #define kfile_tree_view_h
 
-#include <qmap.h>
-#include <qpoint.h>
-#include <qpixmap.h>
-#include <qstrlist.h>
-#include <qtooltip.h>
+#include <tqmap.h>
+#include <tqpoint.h>
+#include <tqpixmap.h>
+#include <tqstrlist.h>
+#include <tqtooltip.h>
 
 #include <klistview.h>
 #include <kdirnotify.h>
@@ -40,13 +40,13 @@ class QTimer;
 class KIO_EXPORT KFileTreeViewToolTip : public QToolTip
 {
 public:
-    KFileTreeViewToolTip( QListView *view ) : QToolTip( view ), m_view( view ) {}
+    KFileTreeViewToolTip( TQListView *view ) : TQToolTip( view ), m_view( view ) {}
 
 protected:
-    virtual void maybeTip( const QPoint & );
+    virtual void maybeTip( const TQPoint & );
 
 private:
-    QListView *m_view;
+    TQListView *m_view;
 };
 
 
@@ -67,7 +67,7 @@ class KIO_EXPORT KFileTreeView : public KListView
 {
     Q_OBJECT
 public:
-    KFileTreeView( QWidget *parent, const char *name = 0 );
+    KFileTreeView( TQWidget *parent, const char *name = 0 );
     virtual ~KFileTreeView();
 
     /**
@@ -93,13 +93,13 @@ public:
     *  @param name is the name of the branch, which will be the text for column 0
     *  @param showHidden says if hidden files and directories should be visible
     */
-   KFileTreeBranch* addBranch( const KURL &path, const QString& name, bool showHidden = false );
+   KFileTreeBranch* addBranch( const KURL &path, const TQString& name, bool showHidden = false );
 
    /**
     *  same as the function above but with a pixmap to set for the branch.
     */
-   virtual KFileTreeBranch* addBranch( const KURL &path, const QString& name ,
-				       const QPixmap& pix, bool showHidden = false  );
+   virtual KFileTreeBranch* addBranch( const KURL &path, const TQString& name ,
+				       const TQPixmap& pix, bool showHidden = false  );
 
    /**
     *  same as the function above but letting the user create the branch.
@@ -117,7 +117,7 @@ public:
     *  @returns a pointer to the KFileTreeBranch in the KFileTreeView or zero on failure.
     *  @param searchName is the name of a branch
     */
-   KFileTreeBranch *branch( const QString& searchName );
+   KFileTreeBranch *branch( const TQString& searchName );
 
 
    /**
@@ -139,12 +139,12 @@ public:
     * @param brnch  is a pointer to the branch to search in
     * @param relUrl is the branch relativ url
     */
-   KFileTreeViewItem *findItem( KFileTreeBranch* brnch, const QString& relUrl );
+   KFileTreeViewItem *findItem( KFileTreeBranch* brnch, const TQString& relUrl );
 
    /**
     * see method above, differs only in the first parameter. Finds the branch by its name.
     */
-   KFileTreeViewItem *findItem( const QString& branchName, const QString& relUrl );
+   KFileTreeViewItem *findItem( const TQString& branchName, const TQString& relUrl );
 
    /**
     * @returns a flag indicating if extended folder pixmaps are displayed or not.
@@ -168,15 +168,15 @@ protected:
     * @returns true if we can decode the drag and support the action
     */
 
-   virtual bool acceptDrag(QDropEvent* event) const;
-    virtual QDragObject * dragObject();
+   virtual bool acceptDrag(TQDropEvent* event) const;
+    virtual TQDragObject * dragObject();
 
     virtual void startAnimation( KFileTreeViewItem* item, const char * iconBaseName = "kde", uint iconCount = 6 );
     virtual void stopAnimation( KFileTreeViewItem* item );
-    virtual void contentsDragEnterEvent( QDragEnterEvent *e );
-    virtual void contentsDragMoveEvent( QDragMoveEvent *e );
-    virtual void contentsDragLeaveEvent( QDragLeaveEvent *e );
-    virtual void contentsDropEvent( QDropEvent *ev );
+    virtual void contentsDragEnterEvent( TQDragEnterEvent *e );
+    virtual void contentsDragMoveEvent( TQDragMoveEvent *e );
+    virtual void contentsDragLeaveEvent( TQDragLeaveEvent *e );
+    virtual void contentsDropEvent( TQDropEvent *ev );
 
 protected slots:
     virtual void slotNewTreeViewItems( KFileTreeBranch*,
@@ -185,12 +185,12 @@ protected slots:
     virtual void slotSetNextUrlToSelect( const KURL &url )
       { m_nextUrlToSelect = url; }
 
-    virtual QPixmap itemIcon( KFileTreeViewItem*, int gap = 0 ) const;
+    virtual TQPixmap itemIcon( KFileTreeViewItem*, int gap = 0 ) const;
 
 private slots:
-    void slotExecuted( QListViewItem * );
-    void slotExpanded( QListViewItem * );
-    void slotCollapsed( QListViewItem *item );
+    void slotExecuted( TQListViewItem * );
+    void slotExpanded( TQListViewItem * );
+    void slotCollapsed( TQListViewItem *item );
 
     void slotSelectionChanged();
 
@@ -198,26 +198,26 @@ private slots:
 
     void slotAutoOpenFolder();
 
-    void slotOnItem( QListViewItem * );
-    void slotItemRenamed(QListViewItem*, const QString &, int);
+    void slotOnItem( TQListViewItem * );
+    void slotItemRenamed(TQListViewItem*, const TQString &, int);
 
    void slotPopulateFinished( KFileTreeViewItem* );
 
 
 signals:
 
-   void onItem( const QString& );
+   void onItem( const TQString& );
    /* New signals if you like it ? */
-   void dropped( QWidget*, QDropEvent* );
-   void dropped( QWidget*, QDropEvent*, KURL::List& );
+   void dropped( TQWidget*, TQDropEvent* );
+   void dropped( TQWidget*, TQDropEvent*, KURL::List& );
    void dropped( KURL::List&, KURL& );
    // The drop event allows to differentiate between move and copy
-   void dropped( QWidget*, QDropEvent*, KURL::List&, KURL& );
+   void dropped( TQWidget*, TQDropEvent*, KURL::List&, KURL& );
 
-   void dropped( QDropEvent *e, QListViewItem * after);
-   void dropped(KFileTreeView *, QDropEvent *, QListViewItem *);
-   void dropped(QDropEvent *e, QListViewItem * parent, QListViewItem * after);
-   void dropped(KFileTreeView *, QDropEvent *, QListViewItem *, QListViewItem *);
+   void dropped( TQDropEvent *e, TQListViewItem * after);
+   void dropped(KFileTreeView *, TQDropEvent *, TQListViewItem *);
+   void dropped(TQDropEvent *e, TQListViewItem * parent, TQListViewItem * after);
+   void dropped(KFileTreeView *, TQDropEvent *, TQListViewItem *, TQListViewItem *);
 
 protected:
    KURL m_nextUrlToSelect;
@@ -225,7 +225,7 @@ protected:
 
 private:
     // Returns whether item is still a valid item in the tree
-    bool isValidItem( QListViewItem *item);
+    bool isValidItem( TQListViewItem *item);
     void clearTree();
 
 
@@ -235,30 +235,30 @@ private:
 
     struct AnimationInfo
     {
-        AnimationInfo( const char * _iconBaseName, uint _iconCount, const QPixmap & _originalPixmap )
+        AnimationInfo( const char * _iconBaseName, uint _iconCount, const TQPixmap & _originalPixmap )
             : iconBaseName(_iconBaseName), iconCount(_iconCount), iconNumber(1), originalPixmap(_originalPixmap) {}
         AnimationInfo() : iconCount(0) {}
-        QCString iconBaseName;
+        TQCString iconBaseName;
         uint iconCount;
         uint iconNumber;
-        QPixmap originalPixmap;
+        TQPixmap originalPixmap;
     };
-    typedef QMap<KFileTreeViewItem *, AnimationInfo> MapCurrentOpeningFolders;
+    typedef TQMap<KFileTreeViewItem *, AnimationInfo> MapCurrentOpeningFolders;
     MapCurrentOpeningFolders m_mapCurrentOpeningFolders;
 
 
-    QTimer *m_animationTimer;
+    TQTimer *m_animationTimer;
 
-    QPoint m_dragPos;
+    TQPoint m_dragPos;
     bool m_bDrag;
 
    bool m_wantOpenFolderPixmaps; // Flag weather the folder should have open-folder pixmaps
 
-    QListViewItem *m_currentBeforeDropItem; // The item that was current before the drag-enter event happened
-    QListViewItem *m_dropItem; // The item we are moving the mouse over (during a drag)
-    QStrList m_lstDropFormats;
-   QPixmap  m_openFolderPixmap;
-    QTimer *m_autoOpenTimer;
+    TQListViewItem *m_currentBeforeDropItem; // The item that was current before the drag-enter event happened
+    TQListViewItem *m_dropItem; // The item we are moving the mouse over (during a drag)
+    TQStrList m_lstDropFormats;
+   TQPixmap  m_openFolderPixmap;
+    TQTimer *m_autoOpenTimer;
 
     KFileTreeViewToolTip m_toolTip;
 

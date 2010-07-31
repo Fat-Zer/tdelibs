@@ -20,9 +20,9 @@
 #ifndef KSOCKADDR_H
 #define KSOCKADDR_H
 
-#include <qobject.h>
-#include <qcstring.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqcstring.h>
+#include <tqstring.h>
 #include "kdelibs_export.h"
 
 /*
@@ -69,7 +69,7 @@ public:
    * Returns a string representation of this socket.
    * @return a pretty string representation
    */
-  virtual QString pretty() const;
+  virtual TQString pretty() const;
 
   /**
    * Returns a sockaddr structure, for passing down to library functions.
@@ -152,19 +152,19 @@ public:
    * Returns the node name of this socket, as KExtendedSocket::lookup expects
    * as the first argument.
    * In the case of Internet sockets, this is the hostname.
-   * The default implementation returns QString::null.
-   * @return the node name, can be QString::null
+   * The default implementation returns TQString::null.
+   * @return the node name, can be TQString::null
    */
-  virtual QString nodeName() const;
+  virtual TQString nodeName() const;
 
   /**
    * Returns the service name for this socket, as KExtendedSocket::lookup expects
    * as the service argument.
    * In the case of Internet sockets, this is the port number.
-   * The default implementation returns QString::null.
-   * @return the service name, can be QString::null
+   * The default implementation returns TQString::null.
+   * @return the service name, can be TQString::null
    */
-  virtual QString serviceName() const;
+  virtual TQString serviceName() const;
 
 protected:
   sockaddr*	data;
@@ -281,7 +281,7 @@ public:
    *                    family type
    * @see setAddress
    */
-  KInetSocketAddress(const QString& addr, unsigned short port, int family = -1);
+  KInetSocketAddress(const TQString& addr, unsigned short port, int family = -1);
 
   /**
    * Destructor
@@ -346,7 +346,7 @@ public:
    * @param family	the address family, -1 for any
    * @return true if successful, false otherwise
    */
-  bool setAddress(const QString& addr, unsigned short port, int family = -1);
+  bool setAddress(const TQString& addr, unsigned short port, int family = -1);
 
   /**
    * Sets this socket's host address to given raw address.
@@ -368,7 +368,7 @@ public:
    * @param family	the address family, -1 to guess the family
    * @return true if successful, false otherwise
    */
-  bool setHost(const QString& addr, int family = -1);
+  bool setHost(const TQString& addr, int family = -1);
 
   /**
    * Sets this socket's port number to given port number.
@@ -404,20 +404,20 @@ public:
    * Returns a pretty representation of this address.
    * @return a pretty representation
    */
-  virtual QString pretty() const;
+  virtual TQString pretty() const;
 
   /**
    * Returns the text representation of the host address.
    * @return a text representation of the host address
    */
-  virtual QString nodeName() const;
-  //  QString prettyHost() const;
+  virtual TQString nodeName() const;
+  //  TQString prettyHost() const;
 
   /**
    * Returns the text representation of the port number.
    * @return the name of the service (a number)
    */
-  virtual QString serviceName() const;
+  virtual TQString serviceName() const;
 
   /**
    * Returns the socket address.
@@ -536,12 +536,12 @@ private:
 public:
   /**
    * Convert s the given raw address into text form.
-   * This function returns QString::null if the address cannot be converted.
+   * This function returns TQString::null if the address cannot be converted.
    * @param family	the family of the address
    * @param addr	the address, in raw form
-   * @return the converted address, or QString::null if not possible.
+   * @return the converted address, or TQString::null if not possible.
    */
-  static QString addrToString(int family, const void *addr);
+  static TQString addrToString(int family, const void *addr);
 
   /**
    * Converts the address given in text form into raw form.
@@ -574,7 +574,7 @@ class KUnixSocketAddressPrivate;
  *
  * This is a Unix socket address.
  *
- * This class expects QCString instead of QString values, which means the
+ * This class expects TQCString instead of TQString values, which means the
  * filenames should be encoded in whatever form locale/system deems necessary
  * before passing down to the function
  *
@@ -601,7 +601,7 @@ public:
    * Constructor from pathname.
    * @param pathname	pathname
    */
-  KUnixSocketAddress(QCString pathname);
+  KUnixSocketAddress(TQCString pathname);
 
   /**
    * Destructor
@@ -621,28 +621,28 @@ public:
    * @param path	pathname
    * @return true if successful, false otherwise
    */
-  bool setAddress(QCString path);
+  bool setAddress(TQCString path);
 
   /**
    * Returns the pathname.
-   * @return the pathname, can be QCString::null if uninitialized, or
+   * @return the pathname, can be TQCString::null if uninitialized, or
    *         "" if unknown
    */
-  QCString pathname() const;
+  TQCString pathname() const;
 
   /**
    * Returns pretty representation of this socket.
    * @return a pretty text representation of the socket.
    */
-  virtual QString pretty() const;
+  virtual TQString pretty() const;
 
   /*
-   * Returns the path in the form of a QString.
+   * Returns the path in the form of a TQString.
    * This can be fed into KExtendedSocket.
-   * @return the path (can be QString::null).
+   * @return the path (can be TQString::null).
    * @see pathname()
    */
-  virtual QString serviceName() const;
+  virtual TQString serviceName() const;
 
   /**
    * Returns raw socket address.

@@ -188,7 +188,7 @@ public:
     void setAttributeMap ( NamedAttrMapImpl* list );
 
     // State of the element.
-    virtual QString state() { return QString::null; }
+    virtual TQString state() { return TQString::null; }
 
     virtual void attach();
     virtual void close();
@@ -238,9 +238,9 @@ public:
 
     void updateId(DOMStringImpl* oldId, DOMStringImpl* newId);
     //Called when mapping from id to this node in document should be removed
-    virtual void removeId(const QString& id);
+    virtual void removeId(const TQString& id);
     //Called when mapping from id to this node in document should be added
-    virtual void addId   (const QString& id);
+    virtual void addId   (const TQString& id);
 
 protected:
     void createAttributeMap() const;

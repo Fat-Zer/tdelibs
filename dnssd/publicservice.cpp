@@ -26,7 +26,7 @@
 #endif
 #include <netinet/in.h>
 #include <sys/socket.h>
-#include <qapplication.h>
+#include <tqapplication.h>
 #include <network/ksocketaddress.h>
 #include <kurl.h>
 #include <unistd.h>
@@ -74,15 +74,15 @@ public:
 
 };
 
-PublicService::PublicService(const QString& name, const QString& type, unsigned int port,
-			      const QString& domain)
-  		: QObject(), ServiceBase(name, type, QString::null, domain, port)
+PublicService::PublicService(const TQString& name, const TQString& type, unsigned int port,
+			      const TQString& domain)
+  		: TQObject(), ServiceBase(name, type, TQString::null, domain, port)
 {
 	d = new PublicServicePrivate;
 #ifdef HAVE_DNSSD
 	if (Responder::self().client()) {
 		d->m_group = avahi_entry_group_new(Responder::self().client(), publish_callback,this);
-		connect(&Responder::self(),SIGNAL(stateChanged(AvahiClientState)),this,SLOT(clientState(AvahiClientState)));
+		connect(&Responder::self(),TQT_SIGNAL(stateChanged(AvahiClientState)),this,TQT_SLOT(clientState(AvahiClientState)));
 	}
 #endif
 	if (domain.isNull())
@@ -108,7 +108,7 @@ void PublicService::tryApply()
     }
 }
 
-void PublicService::setServiceName(const QString& serviceName)
+void PublicService::setServiceName(const TQString& serviceName)
 {
 	m_serviceName = serviceName;
 #ifdef HAVE_DNSSD
@@ -119,7 +119,7 @@ void PublicService::setServiceName(const QString& serviceName)
 #endif
 }
 
-void PublicService::setDomain(const QString& domain)
+void PublicService::setDomain(const TQString& domain)
 {
 	m_domain = domain;
 #ifdef HAVE_DNSSD
@@ -131,7 +131,7 @@ void PublicService::setDomain(const QString& domain)
 }
 
 
-void PublicService::setType(const QString& type)
+void PublicService::setType(const TQString& type)
 {
 	m_type = type;
 #ifdef HAVE_DNSSD
@@ -153,7 +153,7 @@ void PublicService::setPort(unsigned short port)
 #endif
 }
 
-void PublicService::setTextData(const QMap<QString,QString>& textData)
+void PublicService::setTextData(const TQMap<TQString,TQString>& textData)
 {
 	m_textData = textData;
 #ifdef HAVE_DNSSD
@@ -187,8 +187,8 @@ bool PublicService::fillEntryGroup()
 {
 #ifdef HAVE_DNSSD
     AvahiStringList *s=0;
-    QMap<QString,QString>::ConstIterator itEnd = m_textData.end();
-    for (QMap<QString,QString>::ConstIterator it = m_textData.begin(); it!=itEnd ; ++it)
+    TQMap<TQString,TQString>::ConstIterator itEnd = m_textData.end();
+    for (TQMap<TQString,TQString>::ConstIterator it = m_textData.begin(); it!=itEnd ; ++it)
 	s = avahi_string_list_add_pair(s, it.key().utf8(),it.data().utf8());
 #ifdef AVAHI_API_0_6
     bool res = (!avahi_entry_group_add_service_strlst(d->m_group, AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC, (AvahiPublishFlags)0,
@@ -255,14 +255,14 @@ void PublicService::publishAsync()
 #ifdef HAVE_DNSSD
 void publish_callback (AvahiEntryGroup*, AvahiEntryGroupState s,  void *context)
 {
-	QObject *obj = reinterpret_cast<QObject*>(context);
+	TQObject *obj = reinterpret_cast<TQObject*>(context);
 	if (s!=AVAHI_ENTRY_GROUP_ESTABLISHED && s!=AVAHI_ENTRY_GROUP_COLLISION) return;
 	PublishEvent* pev=new PublishEvent(s==AVAHI_ENTRY_GROUP_ESTABLISHED);
-	QApplication::postEvent(obj, pev);
+	TQApplication::postEvent(obj, pev);
 }
 #endif
 
-const KURL PublicService::toInvitation(const QString& host)
+const KURL PublicService::toInvitation(const TQString& host)
 {
 	KURL url;
 	url.setProtocol("invitation");
@@ -275,19 +275,19 @@ const KURL PublicService::toInvitation(const QString& host)
 	//FIXME: if there is no public interface, select any non-loopback
 	url.setPort(m_port);
 	url.setPath("/"+m_type+"/"+KURL::encode_string(m_serviceName));
-	QString query;
-	QMap<QString,QString>::ConstIterator itEnd = m_textData.end();
-	for (QMap<QString,QString>::ConstIterator it = m_textData.begin(); it!=itEnd ; ++it)
+	TQString query;
+	TQMap<TQString,TQString>::ConstIterator itEnd = m_textData.end();
+	for (TQMap<TQString,TQString>::ConstIterator it = m_textData.begin(); it!=itEnd ; ++it)
 		url.addQueryItem(it.key(),it.data());;
 	return url;
 }
 
-void PublicService::customEvent(QCustomEvent* event)
+void PublicService::customEvent(TQCustomEvent* event)
 {
 #ifdef HAVE_DNSSD
-	if (event->type()==QEvent::User+SD_PUBLISH) {
+	if (event->type()==TQEvent::User+SD_PUBLISH) {
 		if (!static_cast<PublishEvent*>(event)->m_ok) {
-		    setServiceName(QString::fromUtf8(avahi_alternative_service_name(m_serviceName.utf8())));
+		    setServiceName(TQString::fromUtf8(avahi_alternative_service_name(m_serviceName.utf8())));
 		    return;
 		}
 		d->m_published=true;

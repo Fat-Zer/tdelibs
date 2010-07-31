@@ -30,7 +30,7 @@ extern "C"
 	}
 };
 
-KLpdFactory::KLpdFactory(QObject *parent, const char *name)
+KLpdFactory::KLpdFactory(TQObject *parent, const char *name)
 : KLibFactory(parent,name)
 {
 }
@@ -39,7 +39,7 @@ KLpdFactory::~KLpdFactory()
 {
 }
 
-QObject* KLpdFactory::createObject(QObject *parent, const char *name, const char *classname, const QStringList&)
+TQObject* KLpdFactory::createObject(TQObject *parent, const char *name, const char *classname, const TQStringList&)
 {
 	if (strcmp(classname,"KMManager") == 0)
 		return new KMLpdManager(parent,name);

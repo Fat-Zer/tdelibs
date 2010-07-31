@@ -22,8 +22,8 @@
 #define __KSMIMECRYPTO_H
 
 
-#include <qcstring.h>
-#include <qptrlist.h>
+#include <tqcstring.h>
+#include <tqptrlist.h>
 #include "ksslpkcs12.h"
 #include "ksslcertificate.h"
 
@@ -60,10 +60,10 @@ class KIO_EXPORT KSMIMECrypto {
      * @param detached create detached or opaque signature
      * @return 0 on success
      */
-    rc signMessage(const QCString &clearText,
-		   QByteArray &cipherText,
+    rc signMessage(const TQCString &clearText,
+		   TQByteArray &cipherText,
 		   const KSSLPKCS12 &privKey,
-		   const QPtrList<KSSLCertificate> &certs,
+		   const TQPtrList<KSSLCertificate> &certs,
 		   bool detached);
 
     /**
@@ -75,9 +75,9 @@ class KIO_EXPORT KSMIMECrypto {
      * @param foundCerts certificates found in this message
      * @return 0 on success
      */
-    rc checkDetachedSignature(const QCString &clearText,
-			      const QByteArray &signature,
-			      QPtrList<KSSLCertificate> &foundCerts);
+    rc checkDetachedSignature(const TQCString &clearText,
+			      const TQByteArray &signature,
+			      TQPtrList<KSSLCertificate> &foundCerts);
 
     /**
      * Check an opaque signed message
@@ -88,9 +88,9 @@ class KIO_EXPORT KSMIMECrypto {
      * @param foundCerts certificates found in this mesasge
      * @return 0 on success
      */
-    rc checkOpaqueSignature(const QByteArray &signedText,
-			    QCString &clearText,
-			    QPtrList<KSSLCertificate> &foundCerts);
+    rc checkOpaqueSignature(const TQByteArray &signedText,
+			    TQCString &clearText,
+			    TQPtrList<KSSLCertificate> &foundCerts);
     
     /**
      * Encrypt a message
@@ -104,10 +104,10 @@ class KIO_EXPORT KSMIMECrypto {
      * @param recip recipient certificates
      * @return 0 on success
      */
-    rc encryptMessage(const QCString &clearText,
-		      QByteArray &cipherText,
+    rc encryptMessage(const TQCString &clearText,
+		      TQByteArray &cipherText,
 		      algo algorithm,
-		      const QPtrList<KSSLCertificate> &recip);
+		      const TQPtrList<KSSLCertificate> &recip);
 
     /**
      * Decrypt a message
@@ -116,8 +116,8 @@ class KIO_EXPORT KSMIMECrypto {
      * @param privKey private key to use
      * @return 0 on success
      */
-    rc decryptMessage(const QByteArray &cipherText,
-		      QCString &clearText,
+    rc decryptMessage(const TQByteArray &cipherText,
+		      TQCString &clearText,
 		      const KSSLPKCS12 &privKey);
 
  private:

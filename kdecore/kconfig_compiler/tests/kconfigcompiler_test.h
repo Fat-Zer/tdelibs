@@ -28,7 +28,7 @@ public:
 public slots:
 	void testExpectedOutput();
 private:
-	void performCompare(const QString &fileName, bool fail=false);
+	void performCompare(const TQString &fileName, bool fail=false);
 };
 
 #endif

@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "dcopclient.h"
 #include "dcopobject.h"
 
-#include <qdatastream.h>
+#include <tqdatastream.h>
 
 #define STR( s ) ( s.data() ? s.data() : "" )
 
@@ -47,12 +47,12 @@ bool DCOPReply::typeCheck( const char* t, bool warn )
 }
 
 // this has to stay BC too even if private, because it's called from inlines
-DCOPReply DCOPRef::callInternal( const QCString& fun, const QCString& args, const QByteArray& data )
+DCOPReply DCOPRef::callInternal( const TQCString& fun, const TQCString& args, const TQByteArray& data )
 {
     return callInternal( fun, args, data, NoEventLoop, -1 );
 }
 
-DCOPReply DCOPRef::callInternal( const QCString& fun, const QCString& args, const QByteArray& data,
+DCOPReply DCOPRef::callInternal( const TQCString& fun, const TQCString& args, const TQByteArray& data,
 				 EventLoopFlag useEventLoop, int timeout )
 {
     DCOPReply reply;
@@ -61,7 +61,7 @@ DCOPReply DCOPRef::callInternal( const QCString& fun, const QCString& args, cons
 		  STR( fun ) );
 	return reply;
     }
-    QCString sig = fun;
+    TQCString sig = fun;
     if ( fun.find('(') == -1 ) {
 	sig += args;
 	if( args.find( "<unknown" ) != -1 )
@@ -78,7 +78,7 @@ DCOPReply DCOPRef::callInternal( const QCString& fun, const QCString& args, cons
     return reply;
 }
 
-bool DCOPRef::sendInternal( const QCString& fun, const QCString& args, const QByteArray& data )
+bool DCOPRef::sendInternal( const TQCString& fun, const TQCString& args, const TQByteArray& data )
 {
     if ( isNull() ) {
 	qWarning( "DCOPRef: send '%s' on null reference error",
@@ -86,7 +86,7 @@ bool DCOPRef::sendInternal( const QCString& fun, const QCString& args, const QBy
 	return false;
     }
     Q_UNUSED( data );
-    QCString sig = fun;
+    TQCString sig = fun;
     if ( fun.find('(') == -1 ) {
 	sig += args;
 	if( args.find( "<unknown" ) != -1 )
@@ -116,18 +116,18 @@ DCOPRef::DCOPRef( const DCOPRef& ref )
 }
 
 DCOPRef::DCOPRef( DCOPObject *o )
-    : m_app( DCOPClient::mainClient() ? DCOPClient::mainClient()->appId() : QCString() ),
+    : m_app( DCOPClient::mainClient() ? DCOPClient::mainClient()->appId() : TQCString() ),
     m_obj( o->objId() ), m_type( o->interfaces().last() ), d(0)
 
 {
 }
 
-DCOPRef::DCOPRef( const QCString& _app, const QCString& obj )
+DCOPRef::DCOPRef( const TQCString& _app, const TQCString& obj )
     : m_app( _app ), m_obj( obj ), d(0)
 {
 }
 
-DCOPRef::DCOPRef( const QCString& _app, const QCString& _obj, const QCString& _type )
+DCOPRef::DCOPRef( const TQCString& _app, const TQCString& _obj, const TQCString& _type )
     : m_app( _app ), m_obj( _obj ), m_type( _type ), d(0)
 {
 }
@@ -137,23 +137,23 @@ bool DCOPRef::isNull() const
     return ( m_app.isNull() || m_obj.isNull() );
 }
 
-QCString DCOPRef::app() const
+TQCString DCOPRef::app() const
 {
     return m_app;
 }
 
-QCString DCOPRef::obj() const
+TQCString DCOPRef::obj() const
 {
     return m_obj;
 }
 
-QCString DCOPRef::object() const
+TQCString DCOPRef::object() const
 {
     return m_obj;
 }
 
 
-QCString DCOPRef::type() const
+TQCString DCOPRef::type() const
 {
     return m_type;
 }
@@ -177,14 +177,14 @@ DCOPRef& DCOPRef::operator=( const DCOPRef& ref )
     return *this;
 }
 
-void DCOPRef::setRef( const QCString& _app, const QCString& _obj )
+void DCOPRef::setRef( const TQCString& _app, const TQCString& _obj )
 {
     m_app = _app;
     m_obj = _obj;
     m_type = 0;
 }
 
-void DCOPRef::setRef( const QCString& _app, const QCString& _obj, const QCString& _type )
+void DCOPRef::setRef( const TQCString& _app, const TQCString& _obj, const TQCString& _type )
 {
     m_app = _app;
     m_obj = _obj;
@@ -198,7 +198,7 @@ void DCOPRef::clear()
     m_type = 0;
 }
 
-QDataStream& operator<<( QDataStream& str, const DCOPRef& ref )
+TQDataStream& operator<<( TQDataStream& str, const DCOPRef& ref )
 {
     str << ref.app();
     str << ref.obj();
@@ -207,9 +207,9 @@ QDataStream& operator<<( QDataStream& str, const DCOPRef& ref )
     return str;
 }
 
-QDataStream& operator>>( QDataStream& str, DCOPRef& ref )
+TQDataStream& operator>>( TQDataStream& str, DCOPRef& ref )
 {
-    QCString a, o, t;
+    TQCString a, o, t;
     str >> a >> o >> t;
 
     ref.setRef( a, o, t );

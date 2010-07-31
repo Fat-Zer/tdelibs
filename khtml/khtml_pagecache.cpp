@@ -24,8 +24,8 @@
 #include <ktempfile.h>
 #include <kstandarddirs.h>
 
-#include <qintdict.h>
-#include <qtimer.h>
+#include <tqintdict.h>
+#include <tqtimer.h>
 
 #include <sys/types.h>
 #include <unistd.h>
@@ -36,7 +36,7 @@
 #define KHTML_PAGE_CACHE_SIZE 12
 #endif
 
-template class QPtrList<KHTMLPageCacheDelivery>;
+template class TQPtrList<KHTMLPageCacheDelivery>;
 class KHTMLPageCacheEntry
 {
   friend class KHTMLPageCache;
@@ -45,18 +45,18 @@ public:
 
   ~KHTMLPageCacheEntry();
 
-  void addData(const QByteArray &data);
+  void addData(const TQByteArray &data);
 
   void endData();
 
   bool isComplete()
    { return m_complete; }
 
-  KHTMLPageCacheDelivery *fetchData(QObject *recvObj, const char *recvSlot);
+  KHTMLPageCacheDelivery *fetchData(TQObject *recvObj, const char *recvSlot);
 private:
   long m_id;
   bool m_complete;
-  QValueList<QByteArray> m_data;
+  TQValueList<TQByteArray> m_data;
   KTempFile *m_file;
 };
 
@@ -64,15 +64,15 @@ class KHTMLPageCachePrivate
 {
 public:
   long newId;
-  QIntDict<KHTMLPageCacheEntry> dict;
-  QPtrList<KHTMLPageCacheDelivery> delivery;
-  QPtrList<KHTMLPageCacheEntry> expireQueue;
+  TQIntDict<KHTMLPageCacheEntry> dict;
+  TQPtrList<KHTMLPageCacheDelivery> delivery;
+  TQPtrList<KHTMLPageCacheEntry> expireQueue;
   bool deliveryActive;
 };
 
 KHTMLPageCacheEntry::KHTMLPageCacheEntry(long id) : m_id(id), m_complete(false)
 {
-  QString path = locateLocal("tmp", "khtmlcache");
+  TQString path = locateLocal("tmp", "khtmlcache");
   m_file = new KTempFile(path);
   m_file->unlink();
 }
@@ -84,7 +84,7 @@ KHTMLPageCacheEntry::~KHTMLPageCacheEntry()
 
 
 void
-KHTMLPageCacheEntry::addData(const QByteArray &data)
+KHTMLPageCacheEntry::addData(const TQByteArray &data)
 {
   if (m_file->status() == 0)
      m_file->dataStream()->writeRawBytes(data.data(), data.size());
@@ -102,13 +102,13 @@ KHTMLPageCacheEntry::endData()
 
 
 KHTMLPageCacheDelivery *
-KHTMLPageCacheEntry::fetchData(QObject *recvObj, const char *recvSlot)
+KHTMLPageCacheEntry::fetchData(TQObject *recvObj, const char *recvSlot)
 {
   // Duplicate fd so that entry can be safely deleted while delivering the data.
   int fd = dup(m_file->handle());
   lseek(fd, 0, SEEK_SET);
   KHTMLPageCacheDelivery *delivery = new KHTMLPageCacheDelivery(fd);
-  recvObj->connect(delivery, SIGNAL(emitData(const QByteArray&)), recvSlot);
+  recvObj->connect(delivery, TQT_SIGNAL(emitData(const TQByteArray&)), recvSlot);
   delivery->recvObj = recvObj;
   return delivery;
 }
@@ -155,7 +155,7 @@ KHTMLPageCache::createCacheEntry()
 }
 
 void
-KHTMLPageCache::addData(long id, const QByteArray &data)
+KHTMLPageCache::addData(long id, const TQByteArray &data)
 {
   KHTMLPageCacheEntry *entry = d->dict.find(id);
   if (entry)
@@ -197,7 +197,7 @@ KHTMLPageCache::isComplete(long id)
 }
 
 void
-KHTMLPageCache::fetchData(long id, QObject *recvObj, const char *recvSlot)
+KHTMLPageCache::fetchData(long id, TQObject *recvObj, const char *recvSlot)
 {
   KHTMLPageCacheEntry *entry = d->dict.find(id);
   if (!entry || !entry->isComplete()) return;
@@ -210,12 +210,12 @@ KHTMLPageCache::fetchData(long id, QObject *recvObj, const char *recvSlot)
   if (!d->deliveryActive)
   {
      d->deliveryActive = true;
-     QTimer::singleShot(20, this, SLOT(sendData()));
+     TQTimer::singleShot(20, this, TQT_SLOT(sendData()));
   }
 }
 
 void
-KHTMLPageCache::cancelFetch(QObject *recvObj)
+KHTMLPageCache::cancelFetch(TQObject *recvObj)
 {
   KHTMLPageCacheDelivery *next;
   for(KHTMLPageCacheDelivery* delivery = d->delivery.first();
@@ -243,7 +243,7 @@ KHTMLPageCache::sendData()
   assert(delivery);
 
   char buf[8192];
-  QByteArray byteArray;
+  TQByteArray byteArray;
 
   int n = read(delivery->fd, buf, 8192);
 
@@ -265,11 +265,11 @@ KHTMLPageCache::sendData()
      byteArray.resetRawData(buf, n);
      d->delivery.append( delivery );
   }
-  QTimer::singleShot(0, this, SLOT(sendData()));
+  TQTimer::singleShot(0, this, TQT_SLOT(sendData()));
 }
 
 void
-KHTMLPageCache::saveData(long id, QDataStream *str)
+KHTMLPageCache::saveData(long id, TQDataStream *str)
 {
   KHTMLPageCacheEntry *entry = d->dict.find(id);
   assert(entry);

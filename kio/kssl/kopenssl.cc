@@ -27,7 +27,7 @@
 #include <kdebug.h>
 #include <kconfig.h>
 #include <kstaticdeleter.h>
-#include <qregexp.h>
+#include <tqregexp.h>
 
 
 #include <stdio.h>
@@ -218,27 +218,27 @@ void KOpenSSLProxy::destroy() {
 }
 
 #ifdef __OpenBSD__
-#include <qdir.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqdir.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
-static QString findMostRecentLib(QString dir, QString name)
+static TQString findMostRecentLib(TQString dir, TQString name)
 {
        // Grab all shared libraries in the directory
-       QString filter = "lib"+name+".so.*";
-       QDir d(dir, filter);
+       TQString filter = "lib"+name+".so.*";
+       TQDir d(dir, filter);
        if (!d.exists())
                return 0L;
-       QStringList l = d.entryList();
+       TQStringList l = d.entryList();
 
        // Find the best one
        int bestmaj = -1;
        int bestmin = -1;
-       QString best = 0L;
+       TQString best = 0L;
        // where do we start
        uint s = filter.length()-1;
-       for (QStringList::Iterator it = l.begin(); it != l.end(); ++it) {
-               QString numberpart = (*it).mid(s);
+       for (TQStringList::Iterator it = l.begin(); it != l.end(); ++it) {
+               TQString numberpart = (*it).mid(s);
                uint endmaj = numberpart.find('.');
                if (endmaj == -1)
                        continue;
@@ -266,7 +266,7 @@ static QString findMostRecentLib(QString dir, QString name)
 KOpenSSLProxy::KOpenSSLProxy() {
 KLibLoader *ll = KLibLoader::self();
 _ok = false;
-QStringList libpaths, libnamesc, libnamess;
+TQStringList libpaths, libnamesc, libnamess;
 KConfig *cfg;
 
    _cryptoLib = 0L;
@@ -274,7 +274,7 @@ KConfig *cfg;
 
    cfg = new KConfig("cryptodefaults", false, false);
    cfg->setGroup("OpenSSL");
-   QString upath = cfg->readPathEntry("Path");
+   TQString upath = cfg->readPathEntry("Path");
    if (!upath.isEmpty())
       libpaths << upath;
 
@@ -282,7 +282,7 @@ KConfig *cfg;
 
 #ifdef __OpenBSD__
    {
-   QString libname = findMostRecentLib("/usr/lib" KDELIBSUFF, "crypto");
+   TQString libname = findMostRecentLib("/usr/lib" KDELIBSUFF, "crypto");
    if (!libname.isNull())
          _cryptoLib = ll->globalLibrary(libname.latin1());
    }
@@ -352,18 +352,18 @@ KConfig *cfg;
 	     ;
 #endif
 
-   for (QStringList::Iterator it = libpaths.begin();
+   for (TQStringList::Iterator it = libpaths.begin();
                               it != libpaths.end();
                               ++it) {
-      for (QStringList::Iterator shit = libnamesc.begin();
+      for (TQStringList::Iterator shit = libnamesc.begin();
                                  shit != libnamesc.end();
                                  ++shit) {
-         QString alib = *it;
+         TQString alib = *it;
          if (!alib.isEmpty() && !alib.endsWith("/"))
             alib += "/";
          alib += *shit;
-	 QString tmpStr(alib.latin1());
-	 tmpStr.replace(QRegExp("\\(.*\\)"), "");
+	 TQString tmpStr(alib.latin1());
+	 tmpStr.replace(TQRegExp("\\(.*\\)"), "");
 	 if (!access(tmpStr.latin1(), R_OK))
             _cryptoLib = ll->globalLibrary(alib.latin1());
          if (_cryptoLib) break;
@@ -499,23 +499,23 @@ KConfig *cfg;
 
 #ifdef __OpenBSD__
    {
-   QString libname = findMostRecentLib("/usr/lib", "ssl");
+   TQString libname = findMostRecentLib("/usr/lib", "ssl");
    if (!libname.isNull())
          _sslLib = ll->globalLibrary(libname.latin1());
    }
 #else
-   for (QStringList::Iterator it = libpaths.begin();
+   for (TQStringList::Iterator it = libpaths.begin();
                               it != libpaths.end();
                               ++it) {
-      for (QStringList::Iterator shit = libnamess.begin();
+      for (TQStringList::Iterator shit = libnamess.begin();
                                  shit != libnamess.end();
                                  ++shit) {
-         QString alib = *it;
+         TQString alib = *it;
          if (!alib.isEmpty() && !alib.endsWith("/"))
             alib += "/";
          alib += *shit;
-	 QString tmpStr(alib.latin1());
-	 tmpStr.replace(QRegExp("\\(.*\\)"), "");
+	 TQString tmpStr(alib.latin1());
+	 tmpStr.replace(TQRegExp("\\(.*\\)"), "");
 	 if (!access(tmpStr.latin1(), R_OK))
          	_sslLib = ll->globalLibrary(alib.latin1());
          if (_sslLib) break;

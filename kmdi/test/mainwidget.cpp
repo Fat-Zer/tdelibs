@@ -15,18 +15,18 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <qlayout.h>
-#include <qmenubar.h>
-#include <qtoolbar.h>
-#include <qmultilineedit.h>
-#include <qlistview.h>
-#include <qfile.h>
+#include <tqlayout.h>
+#include <tqmenubar.h>
+#include <tqtoolbar.h>
+#include <tqmultilineedit.h>
+#include <tqlistview.h>
+#include <tqfile.h>
 #include <kmdimainfrm.h>
 #include <kmditoolviewaccessor.h>
 
 #include "mainwidget.h"
 
-MainWidget::MainWidget(QDomElement& dockConfig,KMdi::MdiMode mode)
+MainWidget::MainWidget(TQDomElement& dockConfig,KMdi::MdiMode mode)
 : KMdiMainFrm(0L, "theMDIMainFrm",mode)
  ,m_dockConfig(dockConfig)
 {
@@ -39,43 +39,43 @@ MainWidget::MainWidget(QDomElement& dockConfig,KMdi::MdiMode mode)
         readDockConfig(m_dockConfig);
    }
 
-   QMultiLineEdit* mle = new QMultiLineEdit(0L,"theMultiLineEditWidget");
-   mle->setText("This is a QMultiLineEdit widget.");
+   TQMultiLineEdit* mle = new TQMultiLineEdit(0L,"theMultiLineEditWidget");
+   mle->setText("This is a TQMultiLineEdit widget.");
    addToolWindow( mle, KDockWidget::DockBottom, m_pMdi, 70);
 
-   QMultiLineEdit* mle2 = new QMultiLineEdit(0L,"theMultiLineEditWidget2");
+   TQMultiLineEdit* mle2 = new TQMultiLineEdit(0L,"theMultiLineEditWidget2");
    addToolWindow( mle2, KDockWidget::DockCenter, mle, 70);
 
-   QMultiLineEdit* mle3 = new QMultiLineEdit(0L,"theMultiLineEditWidget3");
+   TQMultiLineEdit* mle3 = new TQMultiLineEdit(0L,"theMultiLineEditWidget3");
    addToolWindow( mle3, KDockWidget::DockCenter, mle, 70);
 
-   QMultiLineEdit* mle4 = new QMultiLineEdit(0L,"theMultiLineEditWidget4");
+   TQMultiLineEdit* mle4 = new TQMultiLineEdit(0L,"theMultiLineEditWidget4");
    addToolWindow( mle4, KDockWidget::DockCenter, mle, 70);
 
    KMdiToolViewAccessor *tva=createToolWindow();
-   tva->setWidgetToWrap(new QMultiLineEdit(tva->wrapperWidget(),"theMultiLineEditWidget5"));
+   tva->setWidgetToWrap(new TQMultiLineEdit(tva->wrapperWidget(),"theMultiLineEditWidget5"));
    tva->placeAndShow(KDockWidget::DockCenter,mle,70);   
 
-   QListView* lv = new QListView(0L,"theListViewWidget");
+   TQListView* lv = new TQListView(0L,"theListViewWidget");
 #include "../res/filenew.xpm"
    lv->setIcon(filenew);
    lv->addColumn("Test", 50);
    lv->addColumn("KMDI", 70);
-   new QListViewItem(lv,QString("test"),QString("test"));
+   new TQListViewItem(lv,TQString("test"),TQString("test"));
    addToolWindow( lv, KDockWidget::DockLeft, m_pMdi, 35, "1");
 
-   QListView* lv2 = new QListView(0L,"theListViewWidget2");
+   TQListView* lv2 = new TQListView(0L,"theListViewWidget2");
    lv2->setIcon(filenew);
    lv2->addColumn("Test2", 50);
    lv2->addColumn("KMDI2", 70);
-   new QListViewItem(lv,QString("test2"),QString("test2"));
+   new TQListViewItem(lv,TQString("test2"),TQString("test2"));
    addToolWindow( lv2, KDockWidget::DockCenter, lv, 35, "2");
    
-   QListView* lv3 = new QListView(0L,"theListViewWidget3");
+   TQListView* lv3 = new TQListView(0L,"theListViewWidget3");
    lv3->setIcon(filenew);
    lv3->addColumn("Test3", 50);
    lv3->addColumn("KMDI3", 70);
-   new QListViewItem(lv,QString("test3"),QString("test3"));
+   new TQListViewItem(lv,TQString("test3"),TQString("test3"));
    addToolWindow( lv3, KDockWidget::DockCenter, lv, 35, "3");
 
    dockManager->finishReadDockConfig();
@@ -86,9 +86,9 @@ MainWidget::MainWidget(QDomElement& dockConfig,KMdi::MdiMode mode)
 MainWidget::~MainWidget()
 {
     writeDockConfig(m_dockConfig);
-    QDomDocument doc = m_dockConfig.ownerDocument();
-    QString s = doc.toString();
-    QFile f("/tmp/dc.txt");
+    TQDomDocument doc = m_dockConfig.ownerDocument();
+    TQString s = doc.toString();
+    TQFile f("/tmp/dc.txt");
     f.open(IO_ReadWrite);
     f.writeBlock(s.latin1(), s.length());
     f.close();
@@ -101,7 +101,7 @@ void MainWidget::initMenu()
 }
 
 /** additionally fit the system menu button position to the menu position */
-void MainWidget::resizeEvent( QResizeEvent *pRSE)
+void MainWidget::resizeEvent( TQResizeEvent *pRSE)
 {
    KMdiMainFrm::resizeEvent( pRSE);
    setSysButtonsAtMenuPosition();
@@ -110,11 +110,11 @@ void MainWidget::resizeEvent( QResizeEvent *pRSE)
 RestartWidget::RestartWidget():KMainWindow()
 {
     mdimode=KMdi::ChildframeMode;
-    QVBoxLayout* bl = new QVBoxLayout(this);
-    QLabel* l = new QLabel("This is for the testing of\nKMdiMainFrm::read/writeDockConfig().\n", this);
-    QCheckBox* b1 = new QCheckBox("KMdiMainFrm close/restart", this);
+    TQVBoxLayout* bl = new TQVBoxLayout(this);
+    TQLabel* l = new TQLabel("This is for the testing of\nKMdiMainFrm::read/writeDockConfig().\n", this);
+    TQCheckBox* b1 = new TQCheckBox("KMdiMainFrm close/restart", this);
     b1->toggle();
-    QObject::connect(b1, SIGNAL(stateChanged(int)), this, SLOT(onStateChanged(int)));
+    TQObject::connect(b1, TQT_SIGNAL(stateChanged(int)), this, TQT_SLOT(onStateChanged(int)));
     bl->add(l);
     bl->add(b1);
     bl->setMargin(10);

@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <qimage.h>
+#include <tqimage.h>
 
 #include <kdelibs_export.h>
 
@@ -19,12 +19,12 @@
 static const int b_255_3[]= {0,85,170,255},  // index*255/3
            rg_255_7[]={0,36,72,109,145,182,218,255}; // index *255/7
 
-KDE_EXPORT void kimgio_xv_read( QImageIO *_imageio )
+KDE_EXPORT void kimgio_xv_read( TQImageIO *_imageio )
 {      
 	int x=-1;
 	int y=-1;
 	int maxval=-1;
-	QIODevice *iodev = _imageio->ioDevice();
+	TQIODevice *iodev = _imageio->ioDevice();
 
 	char str[ BUFSIZE ];
 
@@ -69,7 +69,7 @@ KDE_EXPORT void kimgio_xv_read( QImageIO *_imageio )
 	}
 
 	// Create the image
-	QImage image( x, y, 8, maxval + 1, QImage::BigEndian );
+	TQImage image( x, y, 8, maxval + 1, TQImage::BigEndian );
 	if( image.isNull()) {
                 free(block);
 		return;
@@ -100,13 +100,13 @@ KDE_EXPORT void kimgio_xv_read( QImageIO *_imageio )
 	return;
 }
 
-KDE_EXPORT void kimgio_xv_write( QImageIO *imageio )
+KDE_EXPORT void kimgio_xv_write( TQImageIO *imageio )
 {
-	QIODevice& f = *( imageio->ioDevice() );
+	TQIODevice& f = *( imageio->ioDevice() );
 
 	// Removed "f.open(...)" and "f.close()" (tanghus)
 
-	const QImage& image = imageio->image();
+	const TQImage& image = imageio->image();
 	int w = image.width(), h = image.height();
 
 	char str[ 1024 ];

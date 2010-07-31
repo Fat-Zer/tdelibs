@@ -41,10 +41,10 @@ KSSLSession::~KSSLSession() {
 }
 
 
-QString KSSLSession::toString() const {
-QString rc;
+TQString KSSLSession::toString() const {
+TQString rc;
 #ifdef KSSL_HAVE_SSL
-QByteArray qba;
+TQByteArray qba;
 SSL_SESSION *session = static_cast<SSL_SESSION*>(_session);
 unsigned int slen = KOpenSSLProxy::self()->i2d_SSL_SESSION(session, 0L);
 unsigned char *csess = new unsigned char[slen];
@@ -52,7 +52,7 @@ unsigned char *p = csess;
 
 	if (!KOpenSSLProxy::self()->i2d_SSL_SESSION(session, &p)) {
 		delete[] csess;
-		return QString::null;
+		return TQString::null;
 	}
 
 	// encode it into a QString
@@ -64,10 +64,10 @@ return rc;
 }
 
 
-KSSLSession *KSSLSession::fromString(const QString& s) {
+KSSLSession *KSSLSession::fromString(const TQString& s) {
 KSSLSession *session = 0L;
 #ifdef KSSL_HAVE_SSL
-QByteArray qba, qbb = s.local8Bit().copy();
+TQByteArray qba, qbb = s.local8Bit().copy();
 	KCodecs::base64Decode(qbb, qba);
 	unsigned char *qbap = reinterpret_cast<unsigned char *>(qba.data());
 	SSL_SESSION *ss = KOSSL::self()->d2i_SSL_SESSION(0L, &qbap, qba.size());

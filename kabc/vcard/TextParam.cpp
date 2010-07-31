@@ -37,7 +37,7 @@ TextParam::TextParam(const TextParam & x)
 {
 }
 
-TextParam::TextParam(const QCString & s)
+TextParam::TextParam(const TQCString & s)
 	:	Param(s)
 {
 }
@@ -52,7 +52,7 @@ TextParam::operator = (TextParam & x)
 }
 
 	TextParam &
-TextParam::operator = (const QCString & s)
+TextParam::operator = (const TQCString & s)
 {
 	Param::operator = (s);
 	return *this;

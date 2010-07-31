@@ -18,10 +18,10 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qdom.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqdom.h>
 #include <kmdimainfrm.h>
 
 /**
@@ -31,14 +31,14 @@ class MainWidget : public KMdiMainFrm
 {
     Q_OBJECT
 public:
-    MainWidget(QDomElement& dockConfig,KMdi::MdiMode mode);
+    MainWidget(TQDomElement& dockConfig,KMdi::MdiMode mode);
     virtual ~MainWidget();
     void initMenu();
 
 protected: // Protected methods
-    virtual void resizeEvent( QResizeEvent *pRSE);
+    virtual void resizeEvent( TQResizeEvent *pRSE);
 private:
-    QDomElement m_dockConfig;
+    TQDomElement m_dockConfig;
 };
 
 
@@ -61,8 +61,8 @@ private slots:
 
 // attributes
 public:
-    QDomDocument domDoc;
-    QDomElement dockConfig;
+    TQDomDocument domDoc;
+    TQDomElement dockConfig;
     KMdi::MdiMode mdimode;
 private:
     MainWidget *m_w;

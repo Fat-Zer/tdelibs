@@ -20,7 +20,7 @@
 #ifndef KTEXTEDIT_H
 #define KTEXTEDIT_H
 
-#include <qtextedit.h>
+#include <tqtextedit.h>
 
 #include <kdelibs_export.h>
 
@@ -29,12 +29,12 @@ class KSpell;
 /**
  * @short A KDE'ified QTextEdit
  *
- * This is just a little subclass of QTextEdit, implementing
+ * This is just a little subclass of TQTextEdit, implementing
  * some standard KDE features, like Cursor auto-hiding, configurable
  * wheelscrolling (fast-scroll or zoom) and deleting of entire
  * words with Ctrl-Backspace or Ctrl-Delete.
  *
- * Basic rule: whenever you want to use QTextEdit, use KTextEdit!
+ * Basic rule: whenever you want to use TQTextEdit, use KTextEdit!
  *
  * @see QTextEdit
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
@@ -46,18 +46,18 @@ class KDEUI_EXPORT KTextEdit : public QTextEdit
 
 public:
     /**
-     * Constructs a KTextEdit object. See QTextEdit::QTextEdit
+     * Constructs a KTextEdit object. See TQTextEdit::QTextEdit
      * for details.
      */
-    KTextEdit( const QString& text,
-               const QString& context = QString::null,
-               QWidget * parent = 0, const char *name = 0 );
+    KTextEdit( const TQString& text,
+               const TQString& context = TQString::null,
+               TQWidget * parent = 0, const char *name = 0 );
     /**
-     * Constructs a KTextEdit object. See QTextEdit::QTextEdit
+     * Constructs a KTextEdit object. See TQTextEdit::QTextEdit
      * for details.
      */
 
-    KTextEdit( QWidget *parent = 0L, const char *name = 0 );
+    KTextEdit( TQWidget *parent = 0L, const char *name = 0 );
     /**
      * Destroys the KTextEdit object.
      */
@@ -71,7 +71,7 @@ public:
     /**
      * Reimplemented for tracking custom palettes.
      */
-    virtual void setPalette( const QPalette& palette );
+    virtual void setPalette( const TQPalette& palette );
 
     /**
      * Turns spell checking for this text edit on or off. Note that spell
@@ -110,19 +110,19 @@ protected:
     /**
      * Reimplemented to catch "delete word" key events.
      */
-    virtual void keyPressEvent( QKeyEvent * );
+    virtual void keyPressEvent( TQKeyEvent * );
 
     /**
      * Reimplemented to instantiate a KDictSpellingHighlighter, if
      * spellchecking is enabled.
      */
-    virtual void focusInEvent( QFocusEvent * );
+    virtual void focusInEvent( TQFocusEvent * );
 
     /**
      * Reimplemented to allow fast-wheelscrolling with Ctrl-Wheel
      * or zoom.
      */
-    virtual void contentsWheelEvent( QWheelEvent * );
+    virtual void contentsWheelEvent( TQWheelEvent * );
 
     /**
      * Deletes a word backwards from the current cursor position,
@@ -137,29 +137,29 @@ protected:
     virtual void deleteWordForward();
 
     /**
-     * Reimplemented from QTextEdit to add spelling related items
+     * Reimplemented from TQTextEdit to add spelling related items
      * when appropriate.
      */
-    virtual QPopupMenu *createPopupMenu( const QPoint &pos );
+    virtual TQPopupMenu *createPopupMenu( const TQPoint &pos );
 
     /**
-     * This is just a reimplementation of a deprecated method from QTextEdit and
+     * This is just a reimplementation of a deprecated method from TQTextEdit and
      * is just here to keep source compatibility.  This should not be used in
      * new code.  Specifically reimplementing this method will probably not do
      * what you expect.  See the method above.
      *
      * @deprecated
      */
-    virtual QPopupMenu *createPopupMenu();
+    virtual TQPopupMenu *createPopupMenu();
 
 protected:
     virtual void virtual_hook( int id, void* data );
 
 private slots:
     void slotSpellCheckReady( KSpell *s );
-    void slotSpellCheckDone( const QString &s );
-    void spellCheckerMisspelling( const QString &text, const QStringList &, unsigned int pos);
-    void spellCheckerCorrected( const QString &, const QString &, unsigned int );
+    void slotSpellCheckDone( const TQString &s );
+    void spellCheckerMisspelling( const TQString &text, const TQStringList &, unsigned int pos);
+    void spellCheckerCorrected( const TQString &, const TQString &, unsigned int );
     void spellCheckerFinished();
     void toggleAutoSpellCheck();
     void slotAllowTab();

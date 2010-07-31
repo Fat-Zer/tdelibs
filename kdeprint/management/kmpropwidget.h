@@ -20,7 +20,7 @@
 #ifndef KMPROPWIDGET_H
 #define KMPROPWIDGET_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kdelibs_export.h>
 
@@ -31,14 +31,14 @@ class KDEPRINT_EXPORT KMPropWidget : public QWidget
 {
 	Q_OBJECT
 public:
-	KMPropWidget(QWidget *parent = 0, const char *name = 0);
+	KMPropWidget(TQWidget *parent = 0, const char *name = 0);
 	virtual ~KMPropWidget();
 
 	virtual void setPrinter(KMPrinter*);
 	void setPrinterBase(KMPrinter*);
-	QString pixmap() const 	{ return m_pixmap; }
-	QString title() const 	{ return m_title; }
-	QString header() const 	{ return m_header; }
+	TQString pixmap() const 	{ return m_pixmap; }
+	TQString title() const 	{ return m_title; }
+	TQString header() const 	{ return m_header; }
 	bool canChange() const 	{ return m_canchange; }
 
 signals:

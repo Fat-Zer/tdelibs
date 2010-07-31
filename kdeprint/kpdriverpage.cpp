@@ -21,10 +21,10 @@
 #include "driverview.h"
 #include "driver.h"
 
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
-KPDriverPage::KPDriverPage(KMPrinter *p, DrMain *d, QWidget *parent, const char *name)
+KPDriverPage::KPDriverPage(KMPrinter *p, DrMain *d, TQWidget *parent, const char *name)
 : KPrintDialogPage(p,d,parent,name)
 {
 	setTitle(i18n("Driver Settings"));
@@ -33,7 +33,7 @@ KPDriverPage::KPDriverPage(KMPrinter *p, DrMain *d, QWidget *parent, const char 
 	m_view->setAllowFixed(false);
 	if (driver()) m_view->setDriver(driver());
 
-	QVBoxLayout	*lay1 = new QVBoxLayout(this, 0, 0);
+	QVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 0);
 	lay1->addWidget(m_view);
 }
 
@@ -41,7 +41,7 @@ KPDriverPage::~KPDriverPage()
 {
 }
 
-bool KPDriverPage::isValid(QString& msg)
+bool KPDriverPage::isValid(TQString& msg)
 {
 	if (m_view->hasConflict())
 	{
@@ -52,12 +52,12 @@ bool KPDriverPage::isValid(QString& msg)
 	return true;
 }
 
-void KPDriverPage::setOptions(const QMap<QString,QString>& opts)
+void KPDriverPage::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	m_view->setOptions(opts);
 }
 
-void KPDriverPage::getOptions(QMap<QString,QString>& opts, bool incldef)
+void KPDriverPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	m_view->getOptions(opts,incldef);
 }

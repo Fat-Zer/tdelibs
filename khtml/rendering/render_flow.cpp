@@ -25,7 +25,7 @@
 
 #include <kdebug.h>
 #include <assert.h>
-#include <qpainter.h>
+#include <tqpainter.h>
 #include <kglobal.h>
 
 #include "rendering/render_flow.h"
@@ -222,7 +222,7 @@ void RenderFlow::paintLines(PaintInfo& i, int _tx, int _ty)
     }
 
     if (i.phase == PaintActionOutline && i.outlineObjects) {
-          QValueList<RenderFlow *>::iterator it;;
+          TQValueList<RenderFlow *>::iterator it;;
           for( it = (*i.outlineObjects).begin(); it != (*i.outlineObjects).end(); ++it )
               if ((*it)->isRenderInline())
                   static_cast<RenderInline*>(*it)->paintOutlines(i.p, _tx, _ty);

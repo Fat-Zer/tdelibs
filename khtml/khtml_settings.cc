@@ -17,7 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qfontdatabase.h>
+#include <tqfontdatabase.h>
 
 #include "khtml_settings.h"
 #include "khtmldefaults.h"
@@ -26,8 +26,8 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <qregexp.h>
-#include <qvaluevector.h>
+#include <tqregexp.h>
+#include <tqvaluevector.h>
 #include <kmessagebox.h>
 
 /**
@@ -46,7 +46,7 @@ struct KPerDomainSettings {
     KHTMLSettings::KJSWindowResizePolicy m_windowResizePolicy : 1;
 
 #ifdef DEBUG_SETTINGS
-    void dump(const QString &infix = QString::null) const {
+    void dump(const TQString &infix = TQString::null) const {
       kdDebug() << "KPerDomainSettings " << infix << " @" << this << ":" << endl;
       kdDebug() << "  m_bEnableJava: " << m_bEnableJava << endl;
       kdDebug() << "  m_bEnableJavaScript: " << m_bEnableJavaScript << endl;
@@ -60,7 +60,7 @@ struct KPerDomainSettings {
 #endif
 };
 
-typedef QMap<QString,KPerDomainSettings> PolicyMap;
+typedef TQMap<TQString,KPerDomainSettings> PolicyMap;
 
 class KHTMLSettingsPrivate
 {
@@ -94,20 +94,20 @@ public:
     int m_maxFormCompletionItems;
     KHTMLSettings::KAnimationAdvice m_showAnimations;
 
-    QString m_encoding;
-    QString m_userSheet;
+    TQString m_encoding;
+    TQString m_userSheet;
 
-    QColor m_textColor;
-    QColor m_baseColor;
-    QColor m_linkColor;
-    QColor m_vLinkColor;
+    TQColor m_textColor;
+    TQColor m_baseColor;
+    TQColor m_linkColor;
+    TQColor m_vLinkColor;
 
     PolicyMap domainPolicy;
-    QStringList fonts;
-    QStringList defaultFonts;
+    TQStringList fonts;
+    TQStringList defaultFonts;
 
-    QValueVector<QRegExp> adFilters;
-    QValueList< QPair< QString, QChar > > m_fallbackAccessKeysAssignments;
+    TQValueVector<TQRegExp> adFilters;
+    TQValueList< QPair< TQString, TQChar > > m_fallbackAccessKeysAssignments;
 };
 
 
@@ -116,11 +116,11 @@ public:
   */
 static KPerDomainSettings &setup_per_domain_policy(
 				KHTMLSettingsPrivate *d,
-				const QString &domain) {
+				const TQString &domain) {
   if (domain.isEmpty()) {
     kdWarning() << "setup_per_domain_policy: domain is empty" << endl;
   }
-  const QString ldomain = domain.lower();
+  const TQString ldomain = domain.lower();
   PolicyMap::iterator it = d->domainPolicy.find(ldomain);
   if (it == d->domainPolicy.end()) {
     // simply copy global domain settings (they should have been initialized
@@ -131,16 +131,16 @@ static KPerDomainSettings &setup_per_domain_policy(
 }
 
 
-KHTMLSettings::KJavaScriptAdvice KHTMLSettings::strToAdvice(const QString& _str)
+KHTMLSettings::KJavaScriptAdvice KHTMLSettings::strToAdvice(const TQString& _str)
 {
   KJavaScriptAdvice ret = KJavaScriptDunno;
 
   if (!_str)
         ret = KJavaScriptDunno;
 
-  if (_str.lower() == QString::fromLatin1("accept"))
+  if (_str.lower() == TQString::fromLatin1("accept"))
         ret = KJavaScriptAccept;
-  else if (_str.lower() == QString::fromLatin1("reject"))
+  else if (_str.lower() == TQString::fromLatin1("reject"))
         ret = KJavaScriptReject;
 
   return ret;
@@ -157,10 +157,10 @@ const char* KHTMLSettings::adviceToStr(KJavaScriptAdvice _advice)
 }
 
 
-void KHTMLSettings::splitDomainAdvice(const QString& configStr, QString &domain,
+void KHTMLSettings::splitDomainAdvice(const TQString& configStr, TQString &domain,
                                       KJavaScriptAdvice &javaAdvice, KJavaScriptAdvice& javaScriptAdvice)
 {
-    QString tmp(configStr);
+    TQString tmp(configStr);
     int splitIndex = tmp.find(':');
     if ( splitIndex == -1)
     {
@@ -171,7 +171,7 @@ void KHTMLSettings::splitDomainAdvice(const QString& configStr, QString &domain,
     else
     {
         domain = tmp.left(splitIndex).lower();
-        QString adviceString = tmp.mid( splitIndex+1, tmp.length() );
+        TQString adviceString = tmp.mid( splitIndex+1, tmp.length() );
         int splitIndex2 = adviceString.find( ':' );
         if( splitIndex2 == -1 ) {
             // Java advice only
@@ -188,64 +188,64 @@ void KHTMLSettings::splitDomainAdvice(const QString& configStr, QString &domain,
 
 void KHTMLSettings::readDomainSettings(KConfig *config, bool reset,
 	bool global, KPerDomainSettings &pd_settings) {
-  QString jsPrefix = global ? QString::null
-  				: QString::fromLatin1("javascript.");
-  QString javaPrefix = global ? QString::null
-  				: QString::fromLatin1("java.");
-  QString pluginsPrefix = global ? QString::null
-  				: QString::fromLatin1("plugins.");
+  TQString jsPrefix = global ? TQString::null
+  				: TQString::fromLatin1("javascript.");
+  TQString javaPrefix = global ? TQString::null
+  				: TQString::fromLatin1("java.");
+  TQString pluginsPrefix = global ? TQString::null
+  				: TQString::fromLatin1("plugins.");
 
   // The setting for Java
-  QString key = javaPrefix + QString::fromLatin1("EnableJava");
+  TQString key = javaPrefix + TQString::fromLatin1("EnableJava");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_bEnableJava = config->readBoolEntry( key, false );
   else if ( !global )
     pd_settings.m_bEnableJava = d->global.m_bEnableJava;
 
   // The setting for Plugins
-  key = pluginsPrefix + QString::fromLatin1("EnablePlugins");
+  key = pluginsPrefix + TQString::fromLatin1("EnablePlugins");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_bEnablePlugins = config->readBoolEntry( key, true );
   else if ( !global )
     pd_settings.m_bEnablePlugins = d->global.m_bEnablePlugins;
 
   // The setting for JavaScript
-  key = jsPrefix + QString::fromLatin1("EnableJavaScript");
+  key = jsPrefix + TQString::fromLatin1("EnableJavaScript");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_bEnableJavaScript = config->readBoolEntry( key, true );
   else if ( !global )
     pd_settings.m_bEnableJavaScript = d->global.m_bEnableJavaScript;
 
   // window property policies
-  key = jsPrefix + QString::fromLatin1("WindowOpenPolicy");
+  key = jsPrefix + TQString::fromLatin1("WindowOpenPolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowOpenPolicy = (KJSWindowOpenPolicy)
     		config->readUnsignedNumEntry( key, KJSWindowOpenSmart );
   else if ( !global )
     pd_settings.m_windowOpenPolicy = d->global.m_windowOpenPolicy;
 
-  key = jsPrefix + QString::fromLatin1("WindowMovePolicy");
+  key = jsPrefix + TQString::fromLatin1("WindowMovePolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowMovePolicy = (KJSWindowMovePolicy)
     		config->readUnsignedNumEntry( key, KJSWindowMoveAllow );
   else if ( !global )
     pd_settings.m_windowMovePolicy = d->global.m_windowMovePolicy;
 
-  key = jsPrefix + QString::fromLatin1("WindowResizePolicy");
+  key = jsPrefix + TQString::fromLatin1("WindowResizePolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowResizePolicy = (KJSWindowResizePolicy)
     		config->readUnsignedNumEntry( key, KJSWindowResizeAllow );
   else if ( !global )
     pd_settings.m_windowResizePolicy = d->global.m_windowResizePolicy;
 
-  key = jsPrefix + QString::fromLatin1("WindowStatusPolicy");
+  key = jsPrefix + TQString::fromLatin1("WindowStatusPolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowStatusPolicy = (KJSWindowStatusPolicy)
     		config->readUnsignedNumEntry( key, KJSWindowStatusAllow );
   else if ( !global )
     pd_settings.m_windowStatusPolicy = d->global.m_windowStatusPolicy;
 
-  key = jsPrefix + QString::fromLatin1("WindowFocusPolicy");
+  key = jsPrefix + TQString::fromLatin1("WindowFocusPolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowFocusPolicy = (KJSWindowFocusPolicy)
     		config->readUnsignedNumEntry( key, KJSWindowFocusAllow );
@@ -301,7 +301,7 @@ void KHTMLSettings::init()
 
 void KHTMLSettings::init( KConfig * config, bool reset )
 {
-  QString group_save = config->group();
+  TQString group_save = config->group();
   if (reset || config->hasGroup("MainView Settings"))
   {
     config->setGroup( "MainView Settings" );
@@ -326,13 +326,13 @@ void KHTMLSettings::init( KConfig * config, bool reset )
 
       d->adFilters.clear();
 
-      QMap<QString,QString> entryMap = config->entryMap("Filter Settings");
-      QMap<QString,QString>::ConstIterator it;
+      TQMap<TQString,TQString> entryMap = config->entryMap("Filter Settings");
+      TQMap<TQString,TQString>::ConstIterator it;
       d->adFilters.reserve(entryMap.count());
       for( it = entryMap.constBegin(); it != entryMap.constEnd(); ++it )
       {
-          QString name = it.key();
-          QString url = it.data();
+          TQString name = it.key();
+          TQString url = it.data();
 
           if (url.startsWith("!"))
               continue;
@@ -341,13 +341,13 @@ void KHTMLSettings::init( KConfig * config, bool reset )
           {
               if (url.length()>2 && url[0]=='/' && url[url.length()-1] == '/')
               {
-                  QString inside = url.mid(1, url.length()-2);
-                  QRegExp rx(inside);
+                  TQString inside = url.mid(1, url.length()-2);
+                  TQRegExp rx(inside);
                   d->adFilters.append(rx);
               }
               else
               {
-                  QRegExp rx;
+                  TQRegExp rx;
                   int left,right;
 
                   for (right=url.length(); right>0 && url[right-1]=='*' ; --right);
@@ -368,14 +368,14 @@ void KHTMLSettings::init( KConfig * config, bool reset )
     config->setGroup( "HTML Settings" );
     // Fonts and colors
     if( reset ) {
-        d->defaultFonts = QStringList();
+        d->defaultFonts = TQStringList();
         d->defaultFonts.append( config->readEntry( "StandardFont", KGlobalSettings::generalFont().family() ) );
         d->defaultFonts.append( config->readEntry( "FixedFont", KGlobalSettings::fixedFont().family() ) );
         d->defaultFonts.append( config->readEntry( "SerifFont", HTML_DEFAULT_VIEW_SERIF_FONT ) );
         d->defaultFonts.append( config->readEntry( "SansSerifFont", HTML_DEFAULT_VIEW_SANSSERIF_FONT ) );
         d->defaultFonts.append( config->readEntry( "CursiveFont", HTML_DEFAULT_VIEW_CURSIVE_FONT ) );
         d->defaultFonts.append( config->readEntry( "FantasyFont", HTML_DEFAULT_VIEW_FANTASY_FONT ) );
-        d->defaultFonts.append( QString( "0" ) ); // font size adjustment
+        d->defaultFonts.append( TQString( "0" ) ); // font size adjustment
     }
 
     if ( reset || config->hasKey( "MinimumFontSize" ) )
@@ -420,7 +420,7 @@ void KHTMLSettings::init( KConfig * config, bool reset )
 
     if ( reset || config->hasKey( "ShowAnimations" ) )
     {
-      QString value = config->readEntry( "ShowAnimations").lower();
+      TQString value = config->readEntry( "ShowAnimations").lower();
       if (value == "disabled")
          d->m_showAnimations = KAnimationDisabled;
       else if (value == "looponce")
@@ -438,9 +438,9 @@ void KHTMLSettings::init( KConfig * config, bool reset )
     d->m_maxFormCompletionItems = config->readNumEntry("MaxFormCompletionItems", 10);
     d->m_autoDelayedActionsEnabled = config->readBoolEntry ("AutoDelayedActions", true);
     d->m_jsErrorsEnabled = config->readBoolEntry("ReportJSErrors", true);
-    QStringList accesskeys = config->readListEntry("FallbackAccessKeysAssignments");
+    TQStringList accesskeys = config->readListEntry("FallbackAccessKeysAssignments");
     d->m_fallbackAccessKeysAssignments.clear();
-    for( QStringList::ConstIterator it = accesskeys.begin(); it != accesskeys.end(); ++it )
+    for( TQStringList::ConstIterator it = accesskeys.begin(); it != accesskeys.end(); ++it )
         if( (*it).length() > 2 && (*it)[ 1 ] == ':' )
             d->m_fallbackAccessKeysAssignments.append( qMakePair( (*it).mid( 2 ), (*it)[ 0 ] ));
   }
@@ -497,18 +497,18 @@ void KHTMLSettings::init( KConfig * config, bool reset )
     bool check_old_ecma_settings = true;
     bool check_old_java_settings = true;
     // merge all domains into one list
-    QMap<QString,int> domainList;	// why can't Qt have a QSet?
+    TQMap<TQString,int> domainList;	// why can't Qt have a QSet?
     for (unsigned i = 0; i < sizeof domain_keys/sizeof domain_keys[0]; ++i) {
       if ( reset || config->hasKey(domain_keys[i]) ) {
         if (i == 0) check_old_ecma_settings = false;
 	else if (i == 1) check_old_java_settings = false;
-        const QStringList dl = config->readListEntry( domain_keys[i] );
-	const QMap<QString,int>::Iterator notfound = domainList.end();
-	QStringList::ConstIterator it = dl.begin();
-	const QStringList::ConstIterator itEnd = dl.end();
+        const TQStringList dl = config->readListEntry( domain_keys[i] );
+	const TQMap<TQString,int>::Iterator notfound = domainList.end();
+	TQStringList::ConstIterator it = dl.begin();
+	const TQStringList::ConstIterator itEnd = dl.end();
 	for (; it != itEnd; ++it) {
-	  const QString domain = (*it).lower();
-	  QMap<QString,int>::Iterator pos = domainList.find(domain);
+	  const TQString domain = (*it).lower();
+	  TQMap<TQString,int>::Iterator pos = domainList.find(domain);
 	  if (pos == notfound) domainList.insert(domain,0);
 	}/*next it*/
       }
@@ -517,13 +517,13 @@ void KHTMLSettings::init( KConfig * config, bool reset )
     if (reset)
       d->domainPolicy.clear();
 
-    QString js_group_save = config->group();
+    TQString js_group_save = config->group();
     {
-      QMap<QString,int>::ConstIterator it = domainList.begin();
-      const QMap<QString,int>::ConstIterator itEnd = domainList.end();
+      TQMap<TQString,int>::ConstIterator it = domainList.begin();
+      const TQMap<TQString,int>::ConstIterator itEnd = domainList.end();
       for ( ; it != itEnd; ++it)
       {
-        const QString domain = it.key();
+        const TQString domain = it.key();
         config->setGroup(domain);
         readDomainSettings(config,reset,false,d->domainPolicy[domain]);
 #ifdef DEBUG_SETTINGS
@@ -538,12 +538,12 @@ void KHTMLSettings::init( KConfig * config, bool reset )
     	&& check_old_java_settings )
     {
       check_old_java = false;
-      const QStringList domainList = config->readListEntry( "JavaDomainSettings" );
-      QStringList::ConstIterator it = domainList.begin();
-      const QStringList::ConstIterator itEnd = domainList.end();
+      const TQStringList domainList = config->readListEntry( "JavaDomainSettings" );
+      TQStringList::ConstIterator it = domainList.begin();
+      const TQStringList::ConstIterator itEnd = domainList.end();
       for ( ; it != itEnd; ++it)
       {
-        QString domain;
+        TQString domain;
         KJavaScriptAdvice javaAdvice;
         KJavaScriptAdvice javaScriptAdvice;
         splitDomainAdvice(*it, domain, javaAdvice, javaScriptAdvice);
@@ -560,12 +560,12 @@ void KHTMLSettings::init( KConfig * config, bool reset )
 	&& check_old_ecma_settings )
     {
       check_old_ecma = false;
-      const QStringList domainList = config->readListEntry( "ECMADomainSettings" );
-      QStringList::ConstIterator it = domainList.begin();
-      const QStringList::ConstIterator itEnd = domainList.end();
+      const TQStringList domainList = config->readListEntry( "ECMADomainSettings" );
+      TQStringList::ConstIterator it = domainList.begin();
+      const TQStringList::ConstIterator itEnd = domainList.end();
       for ( ; it != itEnd; ++it)
       {
-        QString domain;
+        TQString domain;
         KJavaScriptAdvice javaAdvice;
         KJavaScriptAdvice javaScriptAdvice;
         splitDomainAdvice(*it, domain, javaAdvice, javaScriptAdvice);
@@ -581,12 +581,12 @@ void KHTMLSettings::init( KConfig * config, bool reset )
              && ( check_old_java || check_old_ecma )
 	     && ( check_old_ecma_settings || check_old_java_settings ) )
     {
-      const QStringList domainList = config->readListEntry( "JavaScriptDomainAdvice" );
-      QStringList::ConstIterator it = domainList.begin();
-      const QStringList::ConstIterator itEnd = domainList.end();
+      const TQStringList domainList = config->readListEntry( "JavaScriptDomainAdvice" );
+      TQStringList::ConstIterator it = domainList.begin();
+      const TQStringList::ConstIterator itEnd = domainList.end();
       for ( ; it != itEnd; ++it)
       {
-        QString domain;
+        TQString domain;
         KJavaScriptAdvice javaAdvice;
         KJavaScriptAdvice javaScriptAdvice;
         splitDomainAdvice(*it, domain, javaAdvice, javaScriptAdvice);
@@ -605,26 +605,26 @@ void KHTMLSettings::init( KConfig * config, bool reset )
 #if 0
       if( check_old_java )
       {
-        QStringList domainConfig;
+        TQStringList domainConfig;
         PolicyMap::Iterator it;
         for( it = d->javaDomainPolicy.begin(); it != d->javaDomainPolicy.end(); ++it )
         {
-          QCString javaPolicy = adviceToStr( it.data() );
-          QCString javaScriptPolicy = adviceToStr( KJavaScriptDunno );
-          domainConfig.append(QString::fromLatin1("%1:%2:%3").arg(it.key()).arg(javaPolicy).arg(javaScriptPolicy));
+          TQCString javaPolicy = adviceToStr( it.data() );
+          TQCString javaScriptPolicy = adviceToStr( KJavaScriptDunno );
+          domainConfig.append(TQString::fromLatin1("%1:%2:%3").arg(it.key()).arg(javaPolicy).arg(javaScriptPolicy));
         }
         config->writeEntry( "JavaDomainSettings", domainConfig );
       }
 
       if( check_old_ecma )
       {
-        QStringList domainConfig;
+        TQStringList domainConfig;
         PolicyMap::Iterator it;
         for( it = d->javaScriptDomainPolicy.begin(); it != d->javaScriptDomainPolicy.end(); ++it )
         {
-          QCString javaPolicy = adviceToStr( KJavaScriptDunno );
-          QCString javaScriptPolicy = adviceToStr( it.data() );
-          domainConfig.append(QString::fromLatin1("%1:%2:%3").arg(it.key()).arg(javaPolicy).arg(javaScriptPolicy));
+          TQCString javaPolicy = adviceToStr( KJavaScriptDunno );
+          TQCString javaScriptPolicy = adviceToStr( it.data() );
+          domainConfig.append(TQString::fromLatin1("%1:%2:%3").arg(it.key()).arg(javaPolicy).arg(javaScriptPolicy));
         }
         config->writeEntry( "ECMADomainSettings", domainConfig );
       }
@@ -641,7 +641,7 @@ void KHTMLSettings::init( KConfig * config, bool reset )
   */
 static const KPerDomainSettings &lookup_hostname_policy(
 			const KHTMLSettingsPrivate *d,
-			const QString& hostname)
+			const TQString& hostname)
 {
 #ifdef DEBUG_SETTINGS
   kdDebug() << "lookup_hostname_policy(" << hostname << ")" << endl;
@@ -668,9 +668,9 @@ static const KPerDomainSettings &lookup_hostname_policy(
 
   // Now, check for partial match.  Chop host from the left until
   // there's no dots left.
-  QString host_part = hostname;
+  TQString host_part = hostname;
   int dot_idx = -1;
-  while( (dot_idx = host_part.find(QChar('.'))) >= 0 ) {
+  while( (dot_idx = host_part.find(TQChar('.'))) >= 0 ) {
     host_part.remove(0,dot_idx);
     it = d->domainPolicy.find(host_part);
     Q_ASSERT(notfound == d->domainPolicy.end());
@@ -681,7 +681,7 @@ static const KPerDomainSettings &lookup_hostname_policy(
 #endif
       return *it;
     }
-    // assert(host_part[0] == QChar('.'));
+    // assert(host_part[0] == TQChar('.'));
     host_part.remove(0,1); // Chop off the dot.
   }
 
@@ -718,14 +718,14 @@ bool KHTMLSettings::isHideAdsEnabled() const
     return d->m_hideAdsEnabled;
 }
 
-bool KHTMLSettings::isAdFiltered( const QString &url ) const
+bool KHTMLSettings::isAdFiltered( const TQString &url ) const
 {
     if (d->m_adFilterEnabled)
     {
         if (!url.startsWith("data:"))
         {
-            QValueVector<QRegExp>::const_iterator it(d->adFilters.constBegin());
-            QValueVector<QRegExp>::const_iterator end(d->adFilters.constEnd());
+            TQValueVector<TQRegExp>::const_iterator it(d->adFilters.constBegin());
+            TQValueVector<TQRegExp>::const_iterator end(d->adFilters.constEnd());
             for (; it != end; ++it)
             {
                 if ((*it).search(url) != -1)
@@ -739,15 +739,15 @@ bool KHTMLSettings::isAdFiltered( const QString &url ) const
     return false;
 }
 
-void KHTMLSettings::addAdFilter( const QString &url )
+void KHTMLSettings::addAdFilter( const TQString &url )
 {
     KConfig config( "khtmlrc", false, false );
     config.setGroup( "Filter Settings" );
 
-    QRegExp rx;
+    TQRegExp rx;
     if (url.length()>2 && url[0]=='/' && url[url.length()-1] == '/')
     {
-        QString inside = url.mid(1, url.length()-2);
+        TQString inside = url.mid(1, url.length()-2);
         rx.setWildcard(false);
         rx.setPattern(inside);
     }
@@ -765,7 +765,7 @@ void KHTMLSettings::addAdFilter( const QString &url )
     if (rx.isValid())
     {
         int last=config.readNumEntry("Count",0);
-        QString key = "Filter-" + QString::number(last);
+        TQString key = "Filter-" + TQString::number(last);
         config.writeEntry(key, url);
         config.writeEntry("Count",last+1);
         config.sync();
@@ -780,55 +780,55 @@ void KHTMLSettings::addAdFilter( const QString &url )
     }
 }
 
-bool KHTMLSettings::isJavaEnabled( const QString& hostname )
+bool KHTMLSettings::isJavaEnabled( const TQString& hostname )
 {
   return lookup_hostname_policy(d,hostname.lower()).m_bEnableJava;
 }
 
-bool KHTMLSettings::isJavaScriptEnabled( const QString& hostname )
+bool KHTMLSettings::isJavaScriptEnabled( const TQString& hostname )
 {
   return lookup_hostname_policy(d,hostname.lower()).m_bEnableJavaScript;
 }
 
-bool KHTMLSettings::isJavaScriptDebugEnabled( const QString& /*hostname*/ )
+bool KHTMLSettings::isJavaScriptDebugEnabled( const TQString& /*hostname*/ )
 {
   // debug setting is global for now, but could change in the future
   return d->m_bEnableJavaScriptDebug;
 }
 
-bool KHTMLSettings::isJavaScriptErrorReportingEnabled( const QString& /*hostname*/ ) const
+bool KHTMLSettings::isJavaScriptErrorReportingEnabled( const TQString& /*hostname*/ ) const
 {
   // error reporting setting is global for now, but could change in the future
   return d->m_bEnableJavaScriptErrorReporting;
 }
 
-bool KHTMLSettings::isPluginsEnabled( const QString& hostname )
+bool KHTMLSettings::isPluginsEnabled( const TQString& hostname )
 {
   return lookup_hostname_policy(d,hostname.lower()).m_bEnablePlugins;
 }
 
 KHTMLSettings::KJSWindowOpenPolicy KHTMLSettings::windowOpenPolicy(
-				const QString& hostname) const {
+				const TQString& hostname) const {
   return lookup_hostname_policy(d,hostname.lower()).m_windowOpenPolicy;
 }
 
 KHTMLSettings::KJSWindowMovePolicy KHTMLSettings::windowMovePolicy(
-				const QString& hostname) const {
+				const TQString& hostname) const {
   return lookup_hostname_policy(d,hostname.lower()).m_windowMovePolicy;
 }
 
 KHTMLSettings::KJSWindowResizePolicy KHTMLSettings::windowResizePolicy(
-				const QString& hostname) const {
+				const TQString& hostname) const {
   return lookup_hostname_policy(d,hostname.lower()).m_windowResizePolicy;
 }
 
 KHTMLSettings::KJSWindowStatusPolicy KHTMLSettings::windowStatusPolicy(
-				const QString& hostname) const {
+				const TQString& hostname) const {
   return lookup_hostname_policy(d,hostname.lower()).m_windowStatusPolicy;
 }
 
 KHTMLSettings::KJSWindowFocusPolicy KHTMLSettings::windowFocusPolicy(
-				const QString& hostname) const {
+				const TQString& hostname) const {
   return lookup_hostname_policy(d,hostname.lower()).m_windowFocusPolicy;
 }
 
@@ -842,10 +842,10 @@ int KHTMLSettings::minFontSize() const
   return d->m_minFontSize;
 }
 
-QString KHTMLSettings::settingsToCSS() const
+TQString KHTMLSettings::settingsToCSS() const
 {
     // lets start with the link properties
-    QString str = "a:link {\ncolor: ";
+    TQString str = "a:link {\ncolor: ";
     str += d->m_linkColor.name();
     str += ";";
     if(d->m_underlineLink)
@@ -873,18 +873,18 @@ QString KHTMLSettings::settingsToCSS() const
     return str;
 }
 
-const QString &KHTMLSettings::availableFamilies()
+const TQString &KHTMLSettings::availableFamilies()
 {
     if ( !avFamilies ) {
         avFamilies = new QString;
-        QFontDatabase db;
-        QStringList families = db.families();
-        QStringList s;
-        QRegExp foundryExp(" \\[.+\\]");
+        TQFontDatabase db;
+        TQStringList families = db.families();
+        TQStringList s;
+        TQRegExp foundryExp(" \\[.+\\]");
 
         //remove foundry info
-        QStringList::Iterator f = families.begin();
-        const QStringList::Iterator fEnd = families.end();
+        TQStringList::Iterator f = families.begin();
+        const TQStringList::Iterator fEnd = families.end();
 
         for ( ; f != fEnd; ++f ) {
                 (*f).replace( foundryExp, "");
@@ -899,9 +899,9 @@ const QString &KHTMLSettings::availableFamilies()
   return *avFamilies;
 }
 
-QString KHTMLSettings::lookupFont(int i) const
+TQString KHTMLSettings::lookupFont(int i) const
 {
-    QString font;
+    TQString font;
     if (d->fonts.count() > (uint) i)
        font = d->fonts[i];
     if (font.isEmpty())
@@ -909,51 +909,51 @@ QString KHTMLSettings::lookupFont(int i) const
     return font;
 }
 
-QString KHTMLSettings::stdFontName() const
+TQString KHTMLSettings::stdFontName() const
 {
     return lookupFont(0);
 }
 
-QString KHTMLSettings::fixedFontName() const
+TQString KHTMLSettings::fixedFontName() const
 {
     return lookupFont(1);
 }
 
-QString KHTMLSettings::serifFontName() const
+TQString KHTMLSettings::serifFontName() const
 {
     return lookupFont(2);
 }
 
-QString KHTMLSettings::sansSerifFontName() const
+TQString KHTMLSettings::sansSerifFontName() const
 {
     return lookupFont(3);
 }
 
-QString KHTMLSettings::cursiveFontName() const
+TQString KHTMLSettings::cursiveFontName() const
 {
     return lookupFont(4);
 }
 
-QString KHTMLSettings::fantasyFontName() const
+TQString KHTMLSettings::fantasyFontName() const
 {
     return lookupFont(5);
 }
 
-void KHTMLSettings::setStdFontName(const QString &n)
+void KHTMLSettings::setStdFontName(const TQString &n)
 {
     while(d->fonts.count() <= 0)
-        d->fonts.append(QString::null);
+        d->fonts.append(TQString::null);
     d->fonts[0] = n;
 }
 
-void KHTMLSettings::setFixedFontName(const QString &n)
+void KHTMLSettings::setFixedFontName(const TQString &n)
 {
     while(d->fonts.count() <= 1)
-        d->fonts.append(QString::null);
+        d->fonts.append(TQString::null);
     d->fonts[1] = n;
 }
 
-QString KHTMLSettings::userStyleSheet() const
+TQString KHTMLSettings::userStyleSheet() const
 {
     return d->m_userSheet;
 }
@@ -968,7 +968,7 @@ int KHTMLSettings::maxFormCompletionItems() const
   return d->m_maxFormCompletionItems;
 }
 
-const QString &KHTMLSettings::encoding() const
+const TQString &KHTMLSettings::encoding() const
 {
   return d->m_encoding;
 }
@@ -978,22 +978,22 @@ bool KHTMLSettings::followSystemColors() const
     return d->m_follow_system_colors;
 }
 
-const QColor& KHTMLSettings::textColor() const
+const TQColor& KHTMLSettings::textColor() const
 {
   return d->m_textColor;
 }
 
-const QColor& KHTMLSettings::baseColor() const
+const TQColor& KHTMLSettings::baseColor() const
 {
   return d->m_baseColor;
 }
 
-const QColor& KHTMLSettings::linkColor() const
+const TQColor& KHTMLSettings::linkColor() const
 {
   return d->m_linkColor;
 }
 
-const QColor& KHTMLSettings::vLinkColor() const
+const TQColor& KHTMLSettings::vLinkColor() const
 {
   return d->m_vLinkColor;
 }
@@ -1043,7 +1043,7 @@ bool KHTMLSettings::autoSpellCheck() const
     return d->m_autoSpellCheck;
 }
 
-QValueList< QPair< QString, QChar > > KHTMLSettings::fallbackAccessKeysAssignments() const
+TQValueList< QPair< TQString, TQChar > > KHTMLSettings::fallbackAccessKeysAssignments() const
 {
     return d->m_fallbackAccessKeysAssignments;
 }

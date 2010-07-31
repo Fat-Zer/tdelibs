@@ -17,9 +17,9 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qapplication.h>
-#include <qheader.h>
-#include <qtimer.h>
+#include <tqapplication.h>
+#include <tqheader.h>
+#include <tqtimer.h>
 #include <kdebug.h>
 #include <kdirnotify_stub.h>
 #include <kglobalsettings.h>
@@ -39,7 +39,7 @@
 #include "kfiletreebranch.h"
 #include "kfiletreeviewitem.h"
 
-KFileTreeView::KFileTreeView( QWidget *parent, const char *name )
+KFileTreeView::KFileTreeView( TQWidget *parent, const char *name )
     : KListView( parent, name ),
       m_wantOpenFolderPixmaps( true ),
       m_toolTip( this )
@@ -47,33 +47,33 @@ KFileTreeView::KFileTreeView( QWidget *parent, const char *name )
     setDragEnabled(true);
     setSelectionModeExt( KListView::Single );
 
-    m_animationTimer = new QTimer( this );
-    connect( m_animationTimer, SIGNAL( timeout() ),
-             this, SLOT( slotAnimation() ) );
+    m_animationTimer = new TQTimer( this );
+    connect( m_animationTimer, TQT_SIGNAL( timeout() ),
+             this, TQT_SLOT( slotAnimation() ) );
 
     m_currentBeforeDropItem = 0;
     m_dropItem = 0;
 
-    m_autoOpenTimer = new QTimer( this );
-    connect( m_autoOpenTimer, SIGNAL( timeout() ),
-             this, SLOT( slotAutoOpenFolder() ) );
+    m_autoOpenTimer = new TQTimer( this );
+    connect( m_autoOpenTimer, TQT_SIGNAL( timeout() ),
+             this, TQT_SLOT( slotAutoOpenFolder() ) );
 
     /* The executed-Slot only opens  a path, while the expanded-Slot populates it */
-    connect( this, SIGNAL( executed( QListViewItem * ) ),
-             this, SLOT( slotExecuted( QListViewItem * ) ) );
-    connect( this, SIGNAL( expanded ( QListViewItem *) ),
-    	     this, SLOT( slotExpanded( QListViewItem *) ));
-    connect( this, SIGNAL( collapsed( QListViewItem *) ),
-	     this, SLOT( slotCollapsed( QListViewItem* )));
+    connect( this, TQT_SIGNAL( executed( TQListViewItem * ) ),
+             this, TQT_SLOT( slotExecuted( TQListViewItem * ) ) );
+    connect( this, TQT_SIGNAL( expanded ( TQListViewItem *) ),
+    	     this, TQT_SLOT( slotExpanded( TQListViewItem *) ));
+    connect( this, TQT_SIGNAL( collapsed( TQListViewItem *) ),
+	     this, TQT_SLOT( slotCollapsed( TQListViewItem* )));
 
 
     /* connections from the konqtree widget */
-    connect( this, SIGNAL( selectionChanged() ),
-             this, SLOT( slotSelectionChanged() ) );
-    connect( this, SIGNAL( onItem( QListViewItem * )),
-	     this, SLOT( slotOnItem( QListViewItem * ) ) );
-    connect( this, SIGNAL(itemRenamed(QListViewItem*, const QString &, int)),
-             this, SLOT(slotItemRenamed(QListViewItem*, const QString &, int)));
+    connect( this, TQT_SIGNAL( selectionChanged() ),
+             this, TQT_SLOT( slotSelectionChanged() ) );
+    connect( this, TQT_SIGNAL( onItem( TQListViewItem * )),
+	     this, TQT_SLOT( slotOnItem( TQListViewItem * ) ) );
+    connect( this, TQT_SIGNAL(itemRenamed(TQListViewItem*, const TQString &, int)),
+             this, TQT_SLOT(slotItemRenamed(TQListViewItem*, const TQString &, int)));
 
 
     m_bDrag = false;
@@ -93,12 +93,12 @@ KFileTreeView::~KFileTreeView()
 }
 
 
-bool KFileTreeView::isValidItem( QListViewItem *item)
+bool KFileTreeView::isValidItem( TQListViewItem *item)
 {
    if (!item)
       return false;
-   QPtrList<QListViewItem> lst;
-   QListViewItemIterator it( this );
+   TQPtrList<TQListViewItem> lst;
+   TQListViewItemIterator it( this );
    while ( it.current() )
    {
       if ( it.current() == item )
@@ -108,7 +108,7 @@ bool KFileTreeView::isValidItem( QListViewItem *item)
    return false;
 }
 
-void KFileTreeView::contentsDragEnterEvent( QDragEnterEvent *ev )
+void KFileTreeView::contentsDragEnterEvent( TQDragEnterEvent *ev )
 {
    if ( ! acceptDrag( ev ) )
    {
@@ -118,7 +118,7 @@ void KFileTreeView::contentsDragEnterEvent( QDragEnterEvent *ev )
    ev->acceptAction();
    m_currentBeforeDropItem = selectedItem();
 
-   QListViewItem *item = itemAt( contentsToViewport( ev->pos() ) );
+   TQListViewItem *item = itemAt( contentsToViewport( ev->pos() ) );
    if( item )
    {
       m_dropItem = item;
@@ -130,7 +130,7 @@ void KFileTreeView::contentsDragEnterEvent( QDragEnterEvent *ev )
 }
 }
 
-void KFileTreeView::contentsDragMoveEvent( QDragMoveEvent *e )
+void KFileTreeView::contentsDragMoveEvent( TQDragMoveEvent *e )
 {
    if( ! acceptDrag( e ) )
    {
@@ -140,13 +140,13 @@ void KFileTreeView::contentsDragMoveEvent( QDragMoveEvent *e )
    e->acceptAction();
 
 
-   QListViewItem *afterme;
-   QListViewItem *parent;
+   TQListViewItem *afterme;
+   TQListViewItem *parent;
 
    findDrop( e->pos(), parent, afterme );
 
    // "afterme" is 0 when aiming at a directory itself
-   QListViewItem *item = afterme ? afterme : parent;
+   TQListViewItem *item = afterme ? afterme : parent;
 
    if( item && item->isSelectable() )
    {
@@ -164,7 +164,7 @@ void KFileTreeView::contentsDragMoveEvent( QDragMoveEvent *e )
    }
 }
 
-void KFileTreeView::contentsDragLeaveEvent( QDragLeaveEvent * )
+void KFileTreeView::contentsDragLeaveEvent( TQDragLeaveEvent * )
 {
    // Restore the current item to what it was before the dragging (#17070)
    if ( isValidItem(m_currentBeforeDropItem) )
@@ -179,7 +179,7 @@ void KFileTreeView::contentsDragLeaveEvent( QDragLeaveEvent * )
 
 }
 
-void KFileTreeView::contentsDropEvent( QDropEvent *e )
+void KFileTreeView::contentsDropEvent( TQDropEvent *e )
 {
 
     m_autoOpenTimer->stop();
@@ -192,12 +192,12 @@ void KFileTreeView::contentsDropEvent( QDropEvent *e )
     }
 
     e->acceptAction();
-    QListViewItem *afterme;
-    QListViewItem *parent;
+    TQListViewItem *afterme;
+    TQListViewItem *parent;
     findDrop(e->pos(), parent, afterme);
 
-    //kdDebug(250) << " parent=" << (parent?parent->text(0):QString::null)
-    //             << " afterme=" << (afterme?afterme->text(0):QString::null) << endl;
+    //kdDebug(250) << " parent=" << (parent?parent->text(0):TQString::null)
+    //             << " afterme=" << (afterme?afterme->text(0):TQString::null) << endl;
 
     if (e->source() == viewport() && itemsMovable())
         movableDropEvent(parent, afterme);
@@ -225,7 +225,7 @@ void KFileTreeView::contentsDropEvent( QDropEvent *e )
     }
 }
 
-bool KFileTreeView::acceptDrag(QDropEvent* e ) const
+bool KFileTreeView::acceptDrag(TQDropEvent* e ) const
 {
 
    bool ancestOK= acceptDrops();
@@ -242,25 +242,25 @@ bool KFileTreeView::acceptDrag(QDropEvent* e ) const
     */
    return ancestOK && KURLDrag::canDecode( e ) &&
        // Why this test? All DnDs are one of those AFAIK (DF)
-      ( e->action() == QDropEvent::Copy
-	|| e->action() == QDropEvent::Move
-	|| e->action() == QDropEvent::Link );
+      ( e->action() == TQDropEvent::Copy
+	|| e->action() == TQDropEvent::Move
+	|| e->action() == TQDropEvent::Link );
 }
 
 
 
-QDragObject * KFileTreeView::dragObject()
+TQDragObject * KFileTreeView::dragObject()
 {
 
    KURL::List urls;
-   const QPtrList<QListViewItem> fileList = selectedItems();
-   QPtrListIterator<QListViewItem> it( fileList );
+   const TQPtrList<TQListViewItem> fileList = selectedItems();
+   TQPtrListIterator<TQListViewItem> it( fileList );
    for ( ; it.current(); ++it )
    {
       urls.append( static_cast<KFileTreeViewItem*>(it.current())->url() );
    }
-   QPoint hotspot;
-   QPixmap pixmap;
+   TQPoint hotspot;
+   TQPixmap pixmap;
    if( urls.count() > 1 ){
       pixmap = DesktopIcon( "kmultiple", 16 );
    }
@@ -268,7 +268,7 @@ QDragObject * KFileTreeView::dragObject()
       pixmap = currentKFileTreeViewItem()->fileItem()->pixmap( 16 );
    hotspot.setX( pixmap.width() / 2 );
    hotspot.setY( pixmap.height() / 2 );
-   QDragObject* dragObject = new KURLDrag( urls, this );
+   TQDragObject* dragObject = new KURLDrag( urls, this );
    if( dragObject )
       dragObject->setPixmap( pixmap, hotspot );
    return dragObject;
@@ -276,7 +276,7 @@ QDragObject * KFileTreeView::dragObject()
 
 
 
-void KFileTreeView::slotCollapsed( QListViewItem *item )
+void KFileTreeView::slotCollapsed( TQListViewItem *item )
 {
    KFileTreeViewItem *kftvi = static_cast<KFileTreeViewItem*>(item);
    kdDebug(250) << "hit slotCollapsed" << endl;
@@ -286,7 +286,7 @@ void KFileTreeView::slotCollapsed( QListViewItem *item )
    }
 }
 
-void KFileTreeView::slotExpanded( QListViewItem *item )
+void KFileTreeView::slotExpanded( TQListViewItem *item )
 {
    kdDebug(250) << "slotExpanded here !" << endl;
 
@@ -320,7 +320,7 @@ void KFileTreeView::slotExpanded( QListViewItem *item )
 
 
 
-void KFileTreeView::slotExecuted( QListViewItem *item )
+void KFileTreeView::slotExecuted( TQListViewItem *item )
 {
     if ( !item )
         return;
@@ -354,16 +354,16 @@ void KFileTreeView::slotSelectionChanged()
 }
 
 
-KFileTreeBranch* KFileTreeView::addBranch( const KURL &path, const QString& name,
+KFileTreeBranch* KFileTreeView::addBranch( const KURL &path, const TQString& name,
                               bool showHidden )
 {
-    const QPixmap& folderPix = KMimeType::mimeType("inode/directory")->pixmap( KIcon::Desktop,KIcon::SizeSmall );
+    const TQPixmap& folderPix = KMimeType::mimeType("inode/directory")->pixmap( KIcon::Desktop,KIcon::SizeSmall );
 
     return addBranch( path, name, folderPix, showHidden);
 }
 
-KFileTreeBranch* KFileTreeView::addBranch( const KURL &path, const QString& name,
-                              const QPixmap& pix, bool showHidden )
+KFileTreeBranch* KFileTreeView::addBranch( const KURL &path, const TQString& name,
+                              const TQPixmap& pix, bool showHidden )
 {
    kdDebug(250) << "adding another root " << path.prettyURL() << endl;
 
@@ -375,26 +375,26 @@ KFileTreeBranch* KFileTreeView::addBranch( const KURL &path, const QString& name
 
 KFileTreeBranch *KFileTreeView::addBranch(KFileTreeBranch *newBranch)
 {
-   connect( newBranch, SIGNAL(populateFinished( KFileTreeViewItem* )),
-            this, SLOT( slotPopulateFinished( KFileTreeViewItem* )));
+   connect( newBranch, TQT_SIGNAL(populateFinished( KFileTreeViewItem* )),
+            this, TQT_SLOT( slotPopulateFinished( KFileTreeViewItem* )));
 
-   connect( newBranch, SIGNAL( newTreeViewItems( KFileTreeBranch*,
+   connect( newBranch, TQT_SIGNAL( newTreeViewItems( KFileTreeBranch*,
                                const KFileTreeViewItemList& )),
-            this, SLOT( slotNewTreeViewItems( KFileTreeBranch*,
+            this, TQT_SLOT( slotNewTreeViewItems( KFileTreeBranch*,
                         const KFileTreeViewItemList& )));
 
    m_branches.append( newBranch );
    return( newBranch );
 }
 
-KFileTreeBranch *KFileTreeView::branch( const QString& searchName )
+KFileTreeBranch *KFileTreeView::branch( const TQString& searchName )
 {
    KFileTreeBranch *branch = 0;
-   QPtrListIterator<KFileTreeBranch> it( m_branches );
+   TQPtrListIterator<KFileTreeBranch> it( m_branches );
 
    while ( (branch = it.current()) != 0 ) {
       ++it;
-      QString bname = branch->name();
+      TQString bname = branch->name();
       kdDebug(250) << "This is the branches name: " << bname << endl;
       if( bname == searchName )
       {
@@ -463,7 +463,7 @@ void KFileTreeView::slotNewTreeViewItems( KFileTreeBranch* branch, const KFileTr
 
 	 if( m_nextUrlToSelect.equals(url, true ))   // ignore trailing / on dirs
 	 {
-	    setCurrentItem( static_cast<QListViewItem*>(*it) );
+	    setCurrentItem( static_cast<TQListViewItem*>(*it) );
 	    m_nextUrlToSelect = KURL();
 	    end = true;
 	 }
@@ -471,9 +471,9 @@ void KFileTreeView::slotNewTreeViewItems( KFileTreeBranch* branch, const KFileTr
    }
 }
 
-QPixmap KFileTreeView::itemIcon( KFileTreeViewItem *item, int gap ) const
+TQPixmap KFileTreeView::itemIcon( KFileTreeViewItem *item, int gap ) const
 {
-   QPixmap pix;
+   TQPixmap pix;
    kdDebug(250) << "Setting icon for column " << gap << endl;
 
    if( item )
@@ -497,7 +497,7 @@ QPixmap KFileTreeView::itemIcon( KFileTreeViewItem *item, int gap ) const
           * change the fileitem's pixmap to the open folder pixmap. */
          if( item->isDir() && m_wantOpenFolderPixmaps )
          {
-            if( isOpen( static_cast<QListViewItem*>(item)))
+            if( isOpen( static_cast<TQListViewItem*>(item)))
                pix = m_openFolderPixmap;
          }
       }
@@ -522,7 +522,7 @@ void KFileTreeView::slotAnimation()
       }
          
       uint & iconNumber = it.data().iconNumber;
-      QString icon = QString::fromLatin1( it.data().iconBaseName ).append( QString::number( iconNumber ) );
+      TQString icon = TQString::fromLatin1( it.data().iconBaseName ).append( TQString::number( iconNumber ) );
       // kdDebug(250) << "Loading icon " << icon << endl;
       item->setPixmap( 0, DesktopIcon( icon,KIcon::SizeSmall,KIcon::ActiveState )); // KFileTreeViewFactory::instance() ) );
 
@@ -597,7 +597,7 @@ KURL KFileTreeView::currentURL() const
         return KURL();
 }
 
-void KFileTreeView::slotOnItem( QListViewItem *item )
+void KFileTreeView::slotOnItem( TQListViewItem *item )
 {
     KFileTreeViewItem *i = static_cast<KFileTreeViewItem *>( item );
     if( i )
@@ -610,28 +610,28 @@ void KFileTreeView::slotOnItem( QListViewItem *item )
     }
 }
 
-void KFileTreeView::slotItemRenamed(QListViewItem* item, const QString &name, int col)
+void KFileTreeView::slotItemRenamed(TQListViewItem* item, const TQString &name, int col)
 {
    (void) item;
    kdDebug(250) << "Do not bother: " << name << col << endl;
 }
 
-KFileTreeViewItem *KFileTreeView::findItem( const QString& branchName, const QString& relUrl )
+KFileTreeViewItem *KFileTreeView::findItem( const TQString& branchName, const TQString& relUrl )
 {
    KFileTreeBranch *br = branch( branchName );
    return( findItem( br, relUrl ));
 }
 
-KFileTreeViewItem *KFileTreeView::findItem( KFileTreeBranch* brnch, const QString& relUrl )
+KFileTreeViewItem *KFileTreeView::findItem( KFileTreeBranch* brnch, const TQString& relUrl )
 {
    KFileTreeViewItem *ret = 0;
    if( brnch )
    {
       KURL url = brnch->rootUrl();
 
-      if( ! relUrl.isEmpty() && QDir::isRelativePath(relUrl) )
+      if( ! relUrl.isEmpty() && TQDir::isRelativePath(relUrl) )
       {
-         QString partUrl( relUrl );
+         TQString partUrl( relUrl );
 
          if( partUrl.endsWith("/"))
             partUrl.truncate( relUrl.length()-1 );
@@ -659,12 +659,12 @@ KFileTreeViewItem *KFileTreeView::findItem( KFileTreeBranch* brnch, const QStrin
 ///////////////////////////////////////////////////////////////////
 
 
-void KFileTreeViewToolTip::maybeTip( const QPoint & )
+void KFileTreeViewToolTip::maybeTip( const TQPoint & )
 {
 #if 0
-    QListViewItem *item = m_view->itemAt( point );
+    TQListViewItem *item = m_view->itemAt( point );
     if ( item ) {
-	QString text = static_cast<KFileViewItem*>( item )->toolTipText();
+	TQString text = static_cast<KFileViewItem*>( item )->toolTipText();
 	if ( !text.isEmpty() )
 	    tip ( m_view->itemRect( item ), text );
     }

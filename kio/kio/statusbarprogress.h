@@ -69,7 +69,7 @@ public:
    * @param button true to add an abort button. The button will be
    *               connected to ProgressBase::slotStop()
    */
-  StatusbarProgress( QWidget* parent, bool button = true );
+  StatusbarProgress( TQWidget* parent, bool button = true );
   ~StatusbarProgress() {}
 
   /**
@@ -86,8 +86,8 @@ public slots:
 
 protected:
   KProgress* m_pProgressBar;
-  QLabel* m_pLabel;
-  QPushButton* m_pButton;
+  TQLabel* m_pLabel;
+  TQPushButton* m_pButton;
 
   KIO::filesize_t m_iTotalSize;
 
@@ -98,9 +98,9 @@ protected:
 
   void setMode();
 
-  virtual bool eventFilter( QObject *, QEvent * );
-  QBoxLayout *box;
-  QWidgetStack *stack;
+  virtual bool eventFilter( TQObject *, TQEvent * );
+  TQBoxLayout *box;
+  TQWidgetStack *stack;
 protected:
   virtual void virtual_hook( int id, void* data );
 private:

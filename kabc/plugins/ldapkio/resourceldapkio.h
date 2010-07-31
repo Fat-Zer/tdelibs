@@ -62,23 +62,23 @@ class KABC_EXPORT ResourceLDAPKIO : public Resource
 
     virtual void removeAddressee( const Addressee& addr );
 
-    void setUser( const QString &user );
-    QString user() const;
+    void setUser( const TQString &user );
+    TQString user() const;
 
-    void setPassword( const QString &password );
-    QString password() const;
+    void setPassword( const TQString &password );
+    TQString password() const;
     
-    void setRealm( const QString &realm );
-    QString realm() const;
+    void setRealm( const TQString &realm );
+    TQString realm() const;
     
-    void setBindDN( const QString &binddn );
-    QString bindDN() const;
+    void setBindDN( const TQString &binddn );
+    TQString bindDN() const;
 
-    void setDn( const QString &dn );
-    QString dn() const;
+    void setDn( const TQString &dn );
+    TQString dn() const;
 
-    void setHost( const QString &host );
-    QString host() const;
+    void setHost( const TQString &host );
+    TQString host() const;
 
     void setPort( int port );
     int port() const;
@@ -92,14 +92,14 @@ class KABC_EXPORT ResourceLDAPKIO : public Resource
     void setTimeLimit( int timelimit );
     int timeLimit();
 
-    void setFilter( const QString &filter );
-    QString filter() const;
+    void setFilter( const TQString &filter );
+    TQString filter() const;
 
     void setIsAnonymous( bool value );
     bool isAnonymous() const;
 
-    void setAttributes( const QMap<QString, QString> &attributes );
-    QMap<QString, QString> attributes() const;
+    void setAttributes( const TQMap<TQString, TQString> &attributes );
+    TQMap<TQString, TQString> attributes() const;
     
     void setRDNPrefix( int value );
     int RDNPrefix() const;
@@ -116,8 +116,8 @@ class KABC_EXPORT ResourceLDAPKIO : public Resource
     void setIsSASL( bool value );
     bool isSASL() const ;
 
-    void setMech( const QString &mech );
-    QString mech() const;
+    void setMech( const TQString &mech );
+    TQString mech() const;
 
     void setCachePolicy( int pol );
     int cachePolicy() const;
@@ -125,42 +125,42 @@ class KABC_EXPORT ResourceLDAPKIO : public Resource
     void setAutoCache( bool value );
     bool autoCache();
     
-    QString cacheDst() const;
+    TQString cacheDst() const;
     
 protected slots:
     void entries( KIO::Job*, const KIO::UDSEntryList& );
-    void data( KIO::Job*, const QByteArray& );
+    void data( KIO::Job*, const TQByteArray& );
     void result( KIO::Job* );
     void listResult( KIO::Job* );
     void syncLoadSaveResult( KIO::Job* );
     void saveResult( KIO::Job* );
-    void saveData( KIO::Job*, QByteArray& );
+    void saveData( KIO::Job*, TQByteArray& );
     void loadCacheResult( KIO::Job* );
   
   private:
-    QString mUser;
-    QString mPassword;
-    QString mDn;
-    QString mHost;
-    QString mFilter;
+    TQString mUser;
+    TQString mPassword;
+    TQString mDn;
+    TQString mHost;
+    TQString mFilter;
     int mPort;
     bool mAnonymous;
-    QMap<QString, QString> mAttributes;
+    TQMap<TQString, TQString> mAttributes;
 
     KURL mLDAPUrl;
     int mGetCounter; //KDE 4: remove
     bool mErrorOccured; //KDE 4: remove
-    QString mErrorMsg;
-    QMap<KIO::Job*, QByteArray> mJobMap; //KDE 4: remove
+    TQString mErrorMsg;
+    TQMap<KIO::Job*, TQByteArray> mJobMap; //KDE 4: remove
 
     KIO::Job *loadFromCache();
     void createCache();
     void activateCache();
     void enter_loop();
-    QCString addEntry( const QString &attr, const QString &value, bool mod );
-    QString findUid( const QString &uid );
-    bool AddresseeToLDIF( QByteArray &ldif, const Addressee &addr, 
-      const QString &olddn );
+    TQCString addEntry( const TQString &attr, const TQString &value, bool mod );
+    TQString findUid( const TQString &uid );
+    bool AddresseeToLDIF( TQByteArray &ldif, const Addressee &addr, 
+      const TQString &olddn );
     
     class ResourceLDAPKIOPrivate;
     ResourceLDAPKIOPrivate *d;

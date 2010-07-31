@@ -21,11 +21,11 @@
 #include "kmwizard.h"
 #include "kmprinter.h"
 
-#include <qlayout.h>
-#include <qregexp.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
-#include <qwhatsthis.h>
+#include <tqlayout.h>
+#include <tqregexp.h>
+#include <tqbuttongroup.h>
+#include <tqradiobutton.h>
+#include <tqwhatsthis.h>
 
 #include <kcursor.h>
 #include <klocale.h>
@@ -36,32 +36,32 @@
 class KRadioButton : public QRadioButton
 {
 public:
-	KRadioButton(const QString& txt, QWidget *parent = 0, const char *name = 0);
+	KRadioButton(const TQString& txt, TQWidget *parent = 0, const char *name = 0);
 };
 
-KRadioButton::KRadioButton(const QString& txt, QWidget *parent, const char *name)
-: QRadioButton(txt,parent,name)
+KRadioButton::KRadioButton(const TQString& txt, TQWidget *parent, const char *name)
+: TQRadioButton(txt,parent,name)
 {
 	setCursor(KCursor::handCursor());
 }
 
 //********************************************************************************************************
 
-KMWBackend::KMWBackend(QWidget *parent, const char *name)
+KMWBackend::KMWBackend(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_ID = KMWizard::Backend;
 	m_title = i18n("Backend Selection");
 
-	m_buttons = new QButtonGroup(this);
+	m_buttons = new TQButtonGroup(this);
 	m_buttons->hide();
 
-	m_layout = new QVBoxLayout(this, 0, KDialog::spacingHint());
+	m_layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	m_layout->addStretch(1);
 	m_count = 0;
 }
 
-bool KMWBackend::isValid(QString& msg)
+bool KMWBackend::isValid(TQString& msg)
 {
 	if (!m_buttons->selected())
 	{
@@ -100,9 +100,9 @@ void KMWBackend::updatePrinter(KMPrinter *p)
 	int	ID = m_buttons->id(m_buttons->selected());
 	if (ID == KMWizard::Class) p->setType(KMPrinter::Class);
 	else p->setType(KMPrinter::Printer);
-	p->setOption("kde-backend",QString::number(ID));
+	p->setOption("kde-backend",TQString::number(ID));
 	QString	s = m_buttons->selected()->text();
-	s.replace(QRegExp("&(?=\\w)"), QString::fromLatin1(""));
+	s.replace(TQRegExp("&(?=\\w)"), TQString::fromLatin1(""));
 	p->setOption("kde-backend-description",s);
 	setNextPage((m_map.contains(ID) ? m_map[ID] : KMWizard::Error));
 }
@@ -142,14 +142,14 @@ void KMWBackend::addBackend( int ID, bool on, int nextpage )
 					nextpage );
 			break;
 		case -1:
-			addBackend( ID, QString::null, on, QString::null, nextpage );
+			addBackend( ID, TQString::null, on, TQString::null, nextpage );
 			break;
 		default:
 			kdError( 500 ) << "Non standard wizard page ID: " << ID << endl;
 	}
 }
 
-void KMWBackend::addBackend(int ID, const QString& txt, bool on, const QString& whatsThis, int nextpage)
+void KMWBackend::addBackend(int ID, const TQString& txt, bool on, const TQString& whatsThis, int nextpage)
 {
 	if (ID == -1)
 	{
@@ -161,7 +161,7 @@ void KMWBackend::addBackend(int ID, const QString& txt, bool on, const QString& 
 		KRadioButton	*btn = new KRadioButton(txt, this);
 		btn->setEnabled(on);
 		if ( !whatsThis.isEmpty() )
-			QWhatsThis::add( btn, whatsThis );
+			TQWhatsThis::add( btn, whatsThis );
 		m_buttons->insert(btn, ID);
 		m_map[ID] = (nextpage == -1 ? ID : nextpage);	// use nextpage if specified, default to ID
 		m_layout->insertWidget(m_count, btn);

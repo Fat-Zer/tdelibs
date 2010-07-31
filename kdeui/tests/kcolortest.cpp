@@ -3,25 +3,25 @@
 #include <kapplication.h>
 #include <kimageeffect.h>
 #include <stdio.h>
-#include <qdatetime.h>
+#include <tqdatetime.h>
 
 bool fullscreen = false, oldway = false, intvsfade = false;
 int max = 20; // how many steps
 
-KColorWidget::KColorWidget(QWidget *parent, const char *name)
-    : QWidget(parent, name)
+KColorWidget::KColorWidget(TQWidget *parent, const char *name)
+    : TQWidget(parent, name)
 {
 
   if (fullscreen || intvsfade) {
-    QPixmap shot = QPixmap::grabWindow(QApplication::desktop()->winId());
+    TQPixmap shot = TQPixmap::grabWindow(TQApplication::desktop()->winId());
     original = shot.convertToImage();
   }
   else
-    original = QImage("testimage.png");
+    original = TQImage("testimage.png");
   resize(original.width(), original.height());
 }
 
-void KColorWidget::paintEvent(QPaintEvent *)
+void KColorWidget::paintEvent(TQPaintEvent *)
 {
   if(!pixmap.isNull())
     bitBlt(this, 0, 0, &pixmap, 0, 0, pixmap.width(), pixmap.height(),
@@ -33,7 +33,7 @@ void KColorWidget::doIntensityLoop()
     int count;
 
     int start, stop;
-    QTime t;
+    TQTime t;
 
     t.start();
 

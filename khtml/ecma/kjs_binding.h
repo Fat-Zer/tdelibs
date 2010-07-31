@@ -26,8 +26,8 @@
 #include <kjs/function_object.h> /// for FunctionPrototypeImp
 
 #include <dom/dom_node.h>
-#include <qvariant.h>
-#include <qptrdict.h>
+#include <tqvariant.h>
+#include <tqptrdict.h>
 #include <kurl.h>
 #include <kjs/lookup.h>
 
@@ -144,8 +144,8 @@ namespace KJS {
 
   private:
     khtml::ChildFrame* m_frame;
-    QPtrDict<DOMObject> m_domObjects;
-    QPtrDict<void> m_customizedDomObjects; //Objects which had custom properties set,
+    TQPtrDict<DOMObject> m_domObjects;
+    TQPtrDict<void> m_customizedDomObjects; //Objects which had custom properties set,
                                            //and should not be GC'd. key is DOMObject*
     DOM::Event *m_evt;
     bool m_inlineCode;
@@ -182,7 +182,7 @@ namespace KJS {
   /**
    * Convery a KJS value into a QVariant
    */
-  QVariant ValueToVariant(ExecState* exec, const Value& val);
+  TQVariant ValueToVariant(ExecState* exec, const Value& val);
 
   /**
    * We need a modified version of lookupGet because
@@ -330,7 +330,7 @@ namespace KJS {
     int id; \
   }; 
 
-  Value getLiveConnectValue(KParts::LiveConnectExtension *lc, const QString & name, const int type, const QString & value, int id);
+  Value getLiveConnectValue(KParts::LiveConnectExtension *lc, const TQString & name, const int type, const TQString & value, int id);
 
 
 // This is used to create pseudo-constructor objects, like Mozillaish

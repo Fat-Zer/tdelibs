@@ -29,7 +29,7 @@
 
 #include "khtml_part.h"
 
-#include <qguardedptr.h>
+#include <tqguardedptr.h>
 
 #include <kaction.h>
 #include <kio/global.h>
@@ -49,12 +49,12 @@ public:
   virtual int xOffset();
   virtual int yOffset();
 
-  virtual void saveState( QDataStream &stream );
-  virtual void restoreState( QDataStream &stream );
+  virtual void saveState( TQDataStream &stream );
+  virtual void restoreState( TQDataStream &stream );
 
     // internal
-    void editableWidgetFocused( QWidget *widget );
-    void editableWidgetBlurred( QWidget *widget );
+    void editableWidgetFocused( TQWidget *widget );
+    void editableWidgetBlurred( TQWidget *widget );
 
     void setExtensionProxy( KParts::BrowserExtension *proxyExtension );
 
@@ -85,8 +85,8 @@ private:
     void callExtensionProxyMethod( const char *method );
 
     KHTMLPart *m_part;
-    QGuardedPtr<QWidget> m_editableFormWidget;
-    QGuardedPtr<KParts::BrowserExtension> m_extensionProxy;
+    TQGuardedPtr<TQWidget> m_editableFormWidget;
+    TQGuardedPtr<KParts::BrowserExtension> m_extensionProxy;
     bool m_connectedToClipboard;
 };
 
@@ -96,9 +96,9 @@ public:
   KHTMLPartBrowserHostExtension( KHTMLPart *part );
   virtual ~KHTMLPartBrowserHostExtension();
 
-  virtual QStringList frameNames() const;
+  virtual TQStringList frameNames() const;
 
-  virtual const QPtrList<KParts::ReadOnlyPart> frames() const;
+  virtual const TQPtrList<KParts::ReadOnlyPart> frames() const;
 
   virtual bool openURLInFrame( const KURL &url, const KParts::URLArgs &urlArgs );
 
@@ -112,20 +112,20 @@ private:
  * @internal
  * INTERNAL class. *NOT* part of the public API.
  */
-class KHTMLPopupGUIClient : public QObject, public KXMLGUIClient
+class KHTMLPopupGUIClient : public TQObject, public KXMLGUIClient
 {
   Q_OBJECT
 public:
-  KHTMLPopupGUIClient( KHTMLPart *khtml, const QString &doc, const KURL &url );
+  KHTMLPopupGUIClient( KHTMLPart *khtml, const TQString &doc, const KURL &url );
   virtual ~KHTMLPopupGUIClient();
 
-  static void saveURL( QWidget *parent, const QString &caption, const KURL &url,
-                       const QMap<QString, QString> &metaData = KIO::MetaData(),
-                       const QString &filter = QString::null, long cacheId = 0,
-                       const QString &suggestedFilename = QString::null );
+  static void saveURL( TQWidget *parent, const TQString &caption, const KURL &url,
+                       const TQMap<TQString, TQString> &metaData = KIO::MetaData(),
+                       const TQString &filter = TQString::null, long cacheId = 0,
+                       const TQString &suggestedFilename = TQString::null );
 
   static void saveURL( const KURL &url, const KURL &destination,
-                       const QMap<QString, QString> &metaData = KIO::MetaData(),
+                       const TQMap<TQString, TQString> &metaData = KIO::MetaData(),
                        long cacheId = 0 );
 private slots:
   void slotSaveLinkAs();
@@ -154,13 +154,13 @@ class KHTMLZoomFactorAction : public KAction
     Q_OBJECT
 public:
     //BCI: remove in KDE 4
-    KHTMLZoomFactorAction( KHTMLPart *part, bool direction, const QString &text, const QString &icon, const QObject *receiver, const char *slot, QObject *parent, const char *name );
-    KHTMLZoomFactorAction( KHTMLPart *part, bool direction, const QString &text,
-            const QString &icon, const KShortcut& cut, const QObject *receiver,
-            const char *slot, QObject *parent, const char *name );
+    KHTMLZoomFactorAction( KHTMLPart *part, bool direction, const TQString &text, const TQString &icon, const TQObject *receiver, const char *slot, TQObject *parent, const char *name );
+    KHTMLZoomFactorAction( KHTMLPart *part, bool direction, const TQString &text,
+            const TQString &icon, const KShortcut& cut, const TQObject *receiver,
+            const char *slot, TQObject *parent, const char *name );
     virtual ~KHTMLZoomFactorAction();
 
-    virtual int plug( QWidget *widget, int index );
+    virtual int plug( TQWidget *widget, int index );
 
 private slots:
     void slotActivated( int );
@@ -169,7 +169,7 @@ protected slots:
 private:
     void init(KHTMLPart *part, bool direction);
 private:
-    QPopupMenu *m_popup;
+    TQPopupMenu *m_popup;
     bool m_direction;
     KHTMLPart *m_part;
 };

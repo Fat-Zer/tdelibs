@@ -20,16 +20,16 @@
 #ifndef KDEPRINTCHECK_H
 #define KDEPRINTCHECK_H
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 #include <kconfig.h>
 #include <kurl.h>
 
 class KDEPRINT_EXPORT KdeprintChecker
 {
 public:
-	static bool check(KConfig *conf, const QString& group = QString::null);
-	static bool check(const QStringList& uris);
+	static bool check(KConfig *conf, const TQString& group = TQString::null);
+	static bool check(const TQStringList& uris);
 
 private:
 	static bool checkURL(const KURL&);

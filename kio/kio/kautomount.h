@@ -19,8 +19,8 @@
 #ifndef __auto_mount_h__
 #define __auto_mount_h__
 
-#include <qobject.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -54,8 +54,8 @@ public:
    * @param show_filemanager_window if true, a file-manager window for that mountpoint is shown after
    * the mount, if successful.
    */
-  KAutoMount( bool readonly, const QString& format, const QString& device, const QString& mountpoint,
-              const QString & desktopFile, bool show_filemanager_window = true );
+  KAutoMount( bool readonly, const TQString& format, const TQString& device, const TQString& mountpoint,
+              const TQString & desktopFile, bool show_filemanager_window = true );
 
 signals:
   /** Emitted when the directory has been mounted */
@@ -67,9 +67,9 @@ protected slots:
   void slotResult( KIO::Job * );
 
 protected:
-  QString m_strDevice;
+  TQString m_strDevice;
   bool m_bShowFilemanagerWindow;
-  QString m_desktopFile;
+  TQString m_desktopFile;
 private:
   /** KAutoMount deletes itself. Don't delete it manually. */
   ~KAutoMount() {}
@@ -94,7 +94,7 @@ public:
    * @param desktopFile the file the user clicked on - to notify KDirWatch of the fact that
    * it should emit fileDirty for it (to have the icon change)
    */
-  KAutoUnmount( const QString & mountpoint, const QString & desktopFile );
+  KAutoUnmount( const TQString & mountpoint, const TQString & desktopFile );
 
 signals:
   /** Emitted when the directory has been unmounted */
@@ -105,8 +105,8 @@ signals:
 protected slots:
   void slotResult( KIO::Job * );
 private:
-  QString m_desktopFile;
-  QString m_mountpoint;
+  TQString m_desktopFile;
+  TQString m_mountpoint;
 private:
   /** KAutoUnmount deletes itself. Don't delete it manually. */
   ~KAutoUnmount() {}

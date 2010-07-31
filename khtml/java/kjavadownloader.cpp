@@ -26,7 +26,7 @@
 #include <kio/job.h>
 #include <kio/jobclasses.h>
 #include <kdebug.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 static const int DATA = 0;
 static const int FINISHED = 1;
@@ -43,7 +43,7 @@ static const int KJAS_RESUME = 2;
 
 KJavaKIOJob::~KJavaKIOJob() {}
 
-void KJavaKIOJob::data( const QByteArray& )
+void KJavaKIOJob::data( const TQByteArray& )
 {
     kdError(6100) << "Job id mixup" << endl;
 }
@@ -63,14 +63,14 @@ public:
 private:
     int               loaderID;
     KURL*             url;
-    QByteArray        file;
+    TQByteArray        file;
     KIO::TransferJob* job;
     int               responseCode;
     bool              isfirstdata;
 };
 
 
-KJavaDownloader::KJavaDownloader( int ID, const QString& url )
+KJavaDownloader::KJavaDownloader( int ID, const TQString& url )
 {
     kdDebug(6100) << "KJavaDownloader(" << ID << ") = " << url << endl;
 
@@ -81,14 +81,14 @@ KJavaDownloader::KJavaDownloader( int ID, const QString& url )
 
     d->job = KIO::get( *d->url, false, false );
     d->job->addMetaData("PropagateHttpHeader", "true");
-    connect( d->job,  SIGNAL(data( KIO::Job*, const QByteArray& )),
-             this,    SLOT(slotData( KIO::Job*, const QByteArray& )) );
-    connect( d->job, SIGNAL(connected(KIO::Job*)),
-             this, SLOT(slotConnected(KIO::Job*)));
-    connect( d->job, SIGNAL(mimetype(KIO::Job*, const QString&)),
-             this, SLOT(slotMimetype(KIO::Job*, const QString&)));
-    connect( d->job, SIGNAL(result(KIO::Job*)),
-             this,   SLOT(slotResult(KIO::Job*)) );
+    connect( d->job,  TQT_SIGNAL(data( KIO::Job*, const TQByteArray& )),
+             this,    TQT_SLOT(slotData( KIO::Job*, const TQByteArray& )) );
+    connect( d->job, TQT_SIGNAL(connected(KIO::Job*)),
+             this, TQT_SLOT(slotConnected(KIO::Job*)));
+    connect( d->job, TQT_SIGNAL(mimetype(KIO::Job*, const TQString&)),
+             this, TQT_SLOT(slotMimetype(KIO::Job*, const TQString&)));
+    connect( d->job, TQT_SIGNAL(result(KIO::Job*)),
+             this,   TQT_SLOT(slotResult(KIO::Job*)) );
 }
 
 KJavaDownloader::~KJavaDownloader()
@@ -96,13 +96,13 @@ KJavaDownloader::~KJavaDownloader()
     delete d;
 }
 
-void KJavaDownloader::slotData( KIO::Job*, const QByteArray& qb )
+void KJavaDownloader::slotData( KIO::Job*, const TQByteArray& qb )
 {
     //kdDebug(6100) << "slotData(" << d->loaderID << ")" << endl;
 
     KJavaAppletServer* server = KJavaAppletServer::allocateJavaServer();
     if (d->isfirstdata) {
-        QString headers = d->job->queryMetaData("HTTP-Headers");
+        TQString headers = d->job->queryMetaData("HTTP-Headers");
         if (!headers.isEmpty()) {
             d->file.resize( headers.length() );
             memcpy( d->file.data(), headers.ascii(), headers.length() );
@@ -122,7 +122,7 @@ void KJavaDownloader::slotConnected(KIO::Job*)
     d->responseCode = d->job->error();
 }
 
-void KJavaDownloader::slotMimetype(KIO::Job*, const QString & type) {
+void KJavaDownloader::slotMimetype(KIO::Job*, const TQString & type) {
     kdDebug(6100) << "slave mimetype " << type << endl;
 }
 
@@ -137,7 +137,7 @@ void KJavaDownloader::slotResult( KIO::Job* )
         int code = d->job->error();
         if (!code)
             code = 404;
-        QString codestr = QString::number(code);
+        TQString codestr = TQString::number(code);
         d->file.resize(codestr.length());
         memcpy( d->file.data(), codestr.ascii(), codestr.length() );
         kdDebug(6100) << "slave had an error = " << code << endl;
@@ -191,12 +191,12 @@ public:
     }
     int               loaderID;
     KURL*             url;
-    QByteArray        file;
+    TQByteArray        file;
     KIO::TransferJob* job;
     bool              finished;
 };
 
-KJavaUploader::KJavaUploader( int ID, const QString& url )
+KJavaUploader::KJavaUploader( int ID, const TQString& url )
 {
     kdDebug(6100) << "KJavaUploader(" << ID << ") = " << url << endl;
 
@@ -215,10 +215,10 @@ void KJavaUploader::start()
     // create a suspended job
     d->job = KIO::put( *d->url, -1, false, false, false );
     d->job->suspend();
-    connect( d->job, SIGNAL(dataReq( KIO::Job*, QByteArray& )),
-            this,   SLOT(slotDataRequest( KIO::Job*, QByteArray& )) );
-    connect( d->job, SIGNAL(result(KIO::Job*)),
-            this,   SLOT(slotResult(KIO::Job*)) );
+    connect( d->job, TQT_SIGNAL(dataReq( KIO::Job*, TQByteArray& )),
+            this,   TQT_SLOT(slotDataRequest( KIO::Job*, TQByteArray& )) );
+    connect( d->job, TQT_SIGNAL(result(KIO::Job*)),
+            this,   TQT_SLOT(slotResult(KIO::Job*)) );
     server->sendURLData( d->loaderID, CONNECTED, d->file );
     KJavaAppletServer::freeJavaServer();
 }
@@ -228,7 +228,7 @@ KJavaUploader::~KJavaUploader()
     delete d;
 }
 
-void KJavaUploader::slotDataRequest( KIO::Job*, QByteArray& qb )
+void KJavaUploader::slotDataRequest( KIO::Job*, TQByteArray& qb )
 {
     // send our data and suspend
     kdDebug(6100) << "slotDataRequest(" << d->loaderID << ") finished:" << d->finished << endl;
@@ -248,7 +248,7 @@ void KJavaUploader::slotDataRequest( KIO::Job*, QByteArray& qb )
     KJavaAppletServer::freeJavaServer();
 }
 
-void KJavaUploader::data( const QByteArray& qb )
+void KJavaUploader::data( const TQByteArray& qb )
 {
     kdDebug(6100) << "KJavaUploader::data(" << d->loaderID << ")" << endl;
     d->file.resize( qb.size() );
@@ -266,7 +266,7 @@ void KJavaUploader::slotResult( KIO::Job* )
     if (d->job->error())
     {
         int code = d->job->error();
-        QString codestr = QString::number(code);
+        TQString codestr = TQString::number(code);
         d->file.resize(codestr.length());
         memcpy( d->file.data(), codestr.ascii(), codestr.length() );
         kdDebug(6100) << "slave had an error " << code <<  ": " << d->job->errorString() << endl;

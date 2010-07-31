@@ -39,12 +39,12 @@ void KAppDCOPInterface::disableSessionManagement()
 
 }
 
-QCString KAppDCOPInterface::startupId()
+TQCString KAppDCOPInterface::startupId()
 {
 	return "";
 }
 
-QCString KAppDCOPInterface::caption()
+TQCString KAppDCOPInterface::caption()
 {
 	return "";
 }

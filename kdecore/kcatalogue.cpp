@@ -19,7 +19,7 @@
 
 #include <config.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <kdebug.h>
 
@@ -45,14 +45,14 @@ struct kde_loaded_l10nfile
 class KCataloguePrivate
 {
 public:
-  QString name;
-  QString language;
+  TQString name;
+  TQString language;
   int	  pluralType;
 
   kde_loaded_l10nfile domain;
 };
 
-KCatalogue::KCatalogue(const QString & name, const QString & language )
+KCatalogue::KCatalogue(const TQString & name, const TQString & language )
   : d( new KCataloguePrivate )
 {
   d->name = name;
@@ -62,7 +62,7 @@ KCatalogue::KCatalogue(const QString & name, const QString & language )
   // has to be set after we have the first catalog objects.
   d->pluralType = -1; 
 
-  QString path = QString::fromLatin1("%1/LC_MESSAGES/%2.mo")
+  TQString path = TQString::fromLatin1("%1/LC_MESSAGES/%2.mo")
     .arg( d->language )
     .arg( d->name );
 
@@ -93,12 +93,12 @@ KCatalogue::~KCatalogue()
   delete d;
 }
 
-QString KCatalogue::name() const
+TQString KCatalogue::name() const
 {
   return d->name;
 }
 
-QString KCatalogue::language() const
+TQString KCatalogue::language() const
 {
   return d->language;
 }	  
@@ -114,14 +114,14 @@ int KCatalogue::pluralType() const
 }
 
   
-void KCatalogue::setFileName( const QString & fileName )
+void KCatalogue::setFileName( const TQString & fileName )
 {
   // nothing to do if the file name is already the same
   if ( this->fileName() == fileName ) return;
 
   doUnload();
 
-  QCString newFileName = QFile::encodeName( fileName );
+  TQCString newFileName = TQFile::encodeName( fileName );
 
   if ( !fileName.isEmpty() )
     {
@@ -132,9 +132,9 @@ void KCatalogue::setFileName( const QString & fileName )
     }
 }
 
-QString KCatalogue::fileName() const
+TQString KCatalogue::fileName() const
 {
-  return QFile::decodeName( d->domain.filename );
+  return TQFile::decodeName( d->domain.filename );
 }
 
 const char * KCatalogue::translate(const char * msgid) const

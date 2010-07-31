@@ -38,7 +38,7 @@ class PrivateConfigInterfaceExtension
 
 using namespace KTextEditor;
 
-ConfigPage::ConfigPage ( QWidget *parent, const char *name ) : QWidget (parent, name) { ; }
+ConfigPage::ConfigPage ( TQWidget *parent, const char *name ) : TQWidget (parent, name) { ; }
  
 ConfigPage::~ConfigPage () { ; }
 
@@ -62,7 +62,7 @@ unsigned int ConfigInterfaceExtension::configInterfaceExtensionNumber () const
   return myConfigInterfaceExtensionNumber;
 }
 
-void ConfigInterfaceExtension::setConfigInterfaceExtensionDCOPSuffix (const QCString &/*suffix*/)
+void ConfigInterfaceExtension::setConfigInterfaceExtensionDCOPSuffix (const TQCString &/*suffix*/)
 {
   //d->interface->setObjId ("ConfigInterfaceExtension#"+suffix);
 }

@@ -24,8 +24,8 @@
 #ifndef  ADRPARAM_H
 #define  ADRPARAM_H
 
-#include <qcstring.h>
-#include <qstrlist.h>
+#include <tqcstring.h>
+#include <tqstrlist.h>
 
 #include <VCardParam.h>
 
@@ -37,16 +37,16 @@ class KVCARD_EXPORT AdrParam : public Param
 
 #include "AdrParam-generated.h"
 	
-	QStrList adrTypeList()
+	TQStrList adrTypeList()
 	{ parse(); return adrTypeList_; }
 	
-	QCString textParam()
+	TQCString textParam()
 	{ parse(); return textParam_; }
 	
-	void setAdrTypeList(const QStrList & l)
+	void setAdrTypeList(const TQStrList & l)
 	{ adrTypeList_ = l; assembled_ = false; }
 	
-	void setTextParam(const QCString & s)
+	void setTextParam(const TQCString & s)
 	{ textParam_ = s; assembled_ = false; }
 	
 	enum AdrType {

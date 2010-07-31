@@ -36,7 +36,7 @@
 #include <kurl.h>
 #include <kshellcompletion.h>
 
-#include <qregexp.h>
+#include <tqregexp.h>
 
 
 //BEGIN CoreCommands
@@ -50,7 +50,7 @@ static void setDocFlag( KateDocumentConfig::ConfigFlags flag, bool enable,
 // this returns wheather the string s could be converted to
 // a bool value, one of on|off|1|0|true|false. the argument val is
 // set to the extracted value in case of success
-static bool getBoolArg( QString s, bool *val  )
+static bool getBoolArg( TQString s, bool *val  )
 {
   bool res( false );
   s = s.lower();
@@ -69,9 +69,9 @@ static bool getBoolArg( QString s, bool *val  )
   return false;
 }
 
-QStringList KateCommands::CoreCommands::cmds()
+TQStringList KateCommands::CoreCommands::cmds()
 {
-  QStringList l;
+  TQStringList l;
   l << "indent" << "unindent" << "cleanindent"
     << "comment" << "uncomment" << "goto" << "kill-line"
     << "set-tab-width" << "set-replace-tabs" << "set-show-tabs"
@@ -87,8 +87,8 @@ QStringList KateCommands::CoreCommands::cmds()
 }
 
 bool KateCommands::CoreCommands::exec(Kate::View *view,
-                            const QString &_cmd,
-                            QString &errorMsg)
+                            const TQString &_cmd,
+                            TQString &errorMsg)
 {
 #define KCC_ERR(s) { errorMsg=s; return false; }
   // cast it hardcore, we know that it is really a kateview :)
@@ -98,8 +98,8 @@ bool KateCommands::CoreCommands::exec(Kate::View *view,
     KCC_ERR( i18n("Could not access view") );
 
   //create a list of args
-  QStringList args( QStringList::split( QRegExp("\\s+"), _cmd ) );
-  QString cmd ( args.first() );
+  TQStringList args( TQStringList::split( TQRegExp("\\s+"), _cmd ) );
+  TQString cmd ( args.first() );
   args.remove( args.first() );
 
   // ALL commands that takes no arguments.
@@ -157,7 +157,7 @@ bool KateCommands::CoreCommands::exec(Kate::View *view,
   }
   else if ( cmd == "set-highlight" )
   {
-    QString val = _cmd.section( ' ', 1 ).lower();
+    TQString val = _cmd.section( ' ', 1 ).lower();
     for ( uint i=0; i < v->doc()->hlModeCount(); i++ )
     {
       if ( v->doc()->hlModeName( i ).lower() == val )
@@ -279,12 +279,12 @@ bool KateCommands::CoreCommands::exec(Kate::View *view,
   KCC_ERR( i18n("Unknown command '%1'").arg(cmd) );
 }
 
-KCompletion *KateCommands::CoreCommands::completionObject( const QString &cmd, Kate::View *view )
+KCompletion *KateCommands::CoreCommands::completionObject( const TQString &cmd, Kate::View *view )
 {
   if ( cmd == "set-highlight" )
   {
     KateView *v = (KateView*)view;
-    QStringList l;
+    TQStringList l;
     for ( uint i = 0; i < v->doc()->hlModeCount(); i++ )
       l << v->doc()->hlModeName( i );
 
@@ -298,7 +298,7 @@ KCompletion *KateCommands::CoreCommands::completionObject( const QString &cmd, K
 //END CoreCommands
 
 //BEGIN SedReplace
-static void replace(QString &s, const QString &needle, const QString &with)
+static void replace(TQString &s, const TQString &needle, const TQString &with)
 {
   int pos=0;
   while (1)
@@ -311,7 +311,7 @@ static void replace(QString &s, const QString &needle, const QString &with)
 
 }
 
-static int backslashString(const QString &haystack, const QString &needle, int index)
+static int backslashString(const TQString &haystack, const TQString &needle, int index)
 {
   int len=haystack.length();
   int searchlen=needle.length();
@@ -339,7 +339,7 @@ static int backslashString(const QString &haystack, const QString &needle, int i
 }
 
 // exchange "\t" for the actual tab character, for example
-static void exchangeAbbrevs(QString &str)
+static void exchangeAbbrevs(TQString &str)
 {
   // the format is (findreplace)*[nullzero]
   const char *magic="a\x07t\tn\n";
@@ -348,9 +348,9 @@ static void exchangeAbbrevs(QString &str)
   {
     int index=0;
     char replace=magic[1];
-    while ((index=backslashString(str, QChar(*magic), index))!=-1)
+    while ((index=backslashString(str, TQChar(*magic), index))!=-1)
     {
-      str.replace(index, 2, QChar(replace));
+      str.replace(index, 2, TQChar(replace));
       index++;
     }
     magic++;
@@ -359,7 +359,7 @@ static void exchangeAbbrevs(QString &str)
 }
 
 int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
-                                        const QString &find, const QString &repOld, const QString &delim,
+                                        const TQString &find, const TQString &repOld, const TQString &delim,
                                         bool noCase, bool repeat,
                                         uint startcol, int endcol )
 {
@@ -376,7 +376,7 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
   // * handle capatures by putting them in one list.
   // * the existing insertion is fine, including the line calculation.
 
-  QStringList patterns = QStringList::split( QRegExp("(^\\\\n|(?![^\\\\])\\\\n)"), find, true );
+  TQStringList patterns = TQStringList::split( TQRegExp("(^\\\\n|(?![^\\\\])\\\\n)"), find, true );
 
   if ( patterns.count() > 1 )
   {
@@ -391,7 +391,7 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
     }
   }
 
-  QRegExp matcher(patterns[0], noCase);
+  TQRegExp matcher(patterns[0], noCase);
 
   uint len;
   int matches = 0;
@@ -405,19 +405,19 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
     matches++;
 
 
-    QString rep=repOld;
+    TQString rep=repOld;
 
     // now set the backreferences in the replacement
-    QStringList backrefs=matcher.capturedTexts();
+    TQStringList backrefs=matcher.capturedTexts();
     int refnum=1;
 
-    QStringList::Iterator i = backrefs.begin();
+    TQStringList::Iterator i = backrefs.begin();
     ++i;
 
     for (; i!=backrefs.end(); ++i)
     {
       // I need to match "\\" or "", but not "\"
-      QString number=QString::number(refnum);
+      TQString number=TQString::number(refnum);
 
       int index=0;
       while (index!=-1)
@@ -468,11 +468,11 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
   return matches;
 }
 
-bool KateCommands::SedReplace::exec (Kate::View *view, const QString &cmd, QString &msg)
+bool KateCommands::SedReplace::exec (Kate::View *view, const TQString &cmd, TQString &msg)
 {
    kdDebug(13025)<<"SedReplace::execCmd( "<<cmd<<" )"<<endl;
 
-  QRegExp delim("^[$%]?s\\s*([^\\w\\s])");
+  TQRegExp delim("^[$%]?s\\s*([^\\w\\s])");
   if ( delim.search( cmd ) < 0 ) return false;
 
   bool fullFile=cmd[0]=='%';
@@ -480,16 +480,16 @@ bool KateCommands::SedReplace::exec (Kate::View *view, const QString &cmd, QStri
   bool repeat=cmd[cmd.length()-1]=='g' || cmd[cmd.length()-2]=='g';
   bool onlySelect=cmd[0]=='$';
 
-  QString d = delim.cap(1);
+  TQString d = delim.cap(1);
    kdDebug(13025)<<"SedReplace: delimiter is '"<<d<<"'"<<endl;
 
-  QRegExp splitter( QString("^[$%]?s\\s*")  + d + "((?:[^\\\\\\" + d + "]|\\\\.)*)\\" + d +"((?:[^\\\\\\" + d + "]|\\\\.)*)\\" + d + "[ig]{0,2}$" );
+  TQRegExp splitter( TQString("^[$%]?s\\s*")  + d + "((?:[^\\\\\\" + d + "]|\\\\.)*)\\" + d +"((?:[^\\\\\\" + d + "]|\\\\.)*)\\" + d + "[ig]{0,2}$" );
   if (splitter.search(cmd)<0) return false;
 
-  QString find=splitter.cap(1);
+  TQString find=splitter.cap(1);
    kdDebug(13025)<< "SedReplace: find=" << find.latin1() <<endl;
 
-  QString replace=splitter.cap(2);
+  TQString replace=splitter.cap(2);
   exchangeAbbrevs(replace);
    kdDebug(13025)<< "SedReplace: replace=" << replace.latin1() <<endl;
 
@@ -546,12 +546,12 @@ bool KateCommands::SedReplace::exec (Kate::View *view, const QString &cmd, QStri
 //END SedReplace
 
 //BEGIN Character
-bool KateCommands::Character::exec (Kate::View *view, const QString &_cmd, QString &)
+bool KateCommands::Character::exec (Kate::View *view, const TQString &_cmd, TQString &)
 {
-  QString cmd = _cmd;
+  TQString cmd = _cmd;
 
   // hex, octal, base 9+1
-  QRegExp num("^char *(0?x[0-9A-Fa-f]{1,4}|0[0-7]{1,6}|[0-9]{1,3})$");
+  TQRegExp num("^char *(0?x[0-9A-Fa-f]{1,4}|0[0-7]{1,6}|[0-9]{1,3})$");
   if (num.search(cmd)==-1) return false;
 
   cmd=num.cap(1);
@@ -562,7 +562,7 @@ bool KateCommands::Character::exec (Kate::View *view, const QString &_cmd, QStri
   int base=10;
   if (cmd[0]=='x' || cmd.left(2)=="0x")
   {
-    cmd.replace(QRegExp("^0?x"), "");
+    cmd.replace(TQRegExp("^0?x"), "");
     base=16;
   }
   else if (cmd[0]=='0')
@@ -575,12 +575,12 @@ bool KateCommands::Character::exec (Kate::View *view, const QString &_cmd, QStri
     char buf[2];
     buf[0]=(char)number;
     buf[1]=0;
-    view->insertText(QString(buf));
+    view->insertText(TQString(buf));
   }
   else
   { // do the unicode thing
-    QChar c(number);
-    view->insertText(QString(&c, 1));
+    TQChar c(number);
+    view->insertText(TQString(&c, 1));
   }
 
   return true;
@@ -588,15 +588,15 @@ bool KateCommands::Character::exec (Kate::View *view, const QString &_cmd, QStri
 //END Character
 
 //BEGIN Date
-bool KateCommands::Date::exec (Kate::View *view, const QString &cmd, QString &)
+bool KateCommands::Date::exec (Kate::View *view, const TQString &cmd, TQString &)
 {
   if (cmd.left(4) != "date")
     return false;
 
-  if (QDateTime::currentDateTime().toString(cmd.mid(5, cmd.length()-5)).length() > 0)
-    view->insertText(QDateTime::currentDateTime().toString(cmd.mid(5, cmd.length()-5)));
+  if (TQDateTime::currentDateTime().toString(cmd.mid(5, cmd.length()-5)).length() > 0)
+    view->insertText(TQDateTime::currentDateTime().toString(cmd.mid(5, cmd.length()-5)));
   else
-    view->insertText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+    view->insertText(TQDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
 
   return true;
 }

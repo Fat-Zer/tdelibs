@@ -22,9 +22,9 @@
 
 #include "kmmanager.h"
 
-#include <qdict.h>
-#include <qptrlist.h>
-#include <qdatetime.h>
+#include <tqdict.h>
+#include <tqptrlist.h>
+#include <tqdatetime.h>
 #include <kurl.h>
 
 class LprHandler;
@@ -36,7 +36,7 @@ class KMLprManager : public KMManager
 {
 	Q_OBJECT
 public:
-	KMLprManager(QObject *parent, const char *name, const QStringList & /*args*/);
+	KMLprManager(TQObject *parent, const char *name, const TQStringList & /*args*/);
 
 	bool completePrinter(KMPrinter*);
 	bool completePrinterShort(KMPrinter*);
@@ -44,19 +44,19 @@ public:
 	bool startPrinter(KMPrinter*, bool);
 	bool savePrinterDriver(KMPrinter*, DrMain*);
 	DrMain* loadPrinterDriver(KMPrinter*, bool = false);
-	DrMain* loadFileDriver(const QString&);
+	DrMain* loadFileDriver(const TQString&);
 	bool createPrinter(KMPrinter*);
 	bool removePrinter(KMPrinter*);
 
-	QString driverDbCreationProgram();
-	QString driverDirectory();
+	TQString driverDbCreationProgram();
+	TQString driverDirectory();
 
 	LpcHelper* lpcHelper()	{ return m_lpchelper; }
-	QString printOptions(KPrinter*);
+	TQString printOptions(KPrinter*);
 
 	void createPluginActions(KActionCollection*);
 	void validatePluginActions(KActionCollection*, KMPrinter*);
-	QString stateInformation();
+	TQString stateInformation();
 
 protected slots:
 	void slotEditPrintcap();
@@ -71,9 +71,9 @@ protected:
 	bool savePrintcapFile();
 
 private:
-	QDict<LprHandler>	m_handlers;
-	QPtrList<LprHandler>    m_handlerlist;
-	QDict<PrintcapEntry>	m_entries;
+	TQDict<LprHandler>	m_handlers;
+	TQPtrList<LprHandler>    m_handlerlist;
+	TQDict<PrintcapEntry>	m_entries;
 	QDateTime		m_updtime;
 	LpcHelper		*m_lpchelper;
 	KMPrinter		*m_currentprinter;

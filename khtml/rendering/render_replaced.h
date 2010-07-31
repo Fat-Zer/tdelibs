@@ -23,8 +23,8 @@
 #define render_replaced_h
 
 #include "rendering/render_block.h"
-#include <qobject.h>
-#include <qscrollview.h>
+#include <tqobject.h>
+#include <tqscrollview.h>
 
 class KHTMLView;
 class QWidget;
@@ -81,7 +81,7 @@ protected:
 };
 
 
-class RenderWidget : public QObject, public RenderReplaced, public khtml::Shared<RenderWidget>
+class RenderWidget : public TQObject, public RenderReplaced, public khtml::Shared<RenderWidget>
 {
     Q_OBJECT
 public:
@@ -99,7 +99,7 @@ public:
 
     virtual void updateFromElement();
 
-    QWidget *widget() const { return m_widget; }
+    TQWidget *widget() const { return m_widget; }
     KHTMLView* view() const { return m_view; }
 
     void deref();
@@ -107,11 +107,11 @@ public:
     void cancelPendingResize();
     bool needsMask() const { return m_needsMask; }
 
-    static void paintWidget(PaintInfo& pI, QWidget *widget, int tx, int ty);
+    static void paintWidget(PaintInfo& pI, TQWidget *widget, int tx, int ty);
     virtual bool handleEvent(const DOM::EventImpl& ev);
 
 #ifdef ENABLE_DUMP
-    virtual void dump(QTextStream &stream, const QString &ind) const;
+    virtual void dump(TQTextStream &stream, const TQString &ind) const;
 #endif
 
     // for ECMA to flush all pending resizes
@@ -127,13 +127,13 @@ protected:
     virtual bool acceptsSyntheticEvents() const { return true; }
 
     virtual void handleFocusOut() {}
-    bool event( QEvent *e );
+    bool event( TQEvent *e );
 
-    bool eventFilter(QObject* /*o*/, QEvent* e);
-    void setQWidget(QWidget *widget);
+    bool eventFilter(TQObject* /*o*/, TQEvent* e);
+    void setQWidget(TQWidget *widget);
     void resizeWidget( int w, int h );
 
-    QWidget *m_widget;
+    TQWidget *m_widget;
     KHTMLView* m_view;
 
     //Because we mess with normal detach due to ref/deref,
@@ -152,13 +152,13 @@ public:
     virtual int borderLeft() const { return canHaveBorder() ? RenderReplaced::borderLeft() : 0; }
     virtual int borderRight() const { return canHaveBorder() ? RenderReplaced::borderRight() : 0; }
 
-    class EventPropagator : public QWidget {
+    class EventPropagator : public TQWidget {
     public:
-        void sendEvent(QEvent *e);
+        void sendEvent(TQEvent *e);
     };
-    class ScrollViewEventPropagator : public QScrollView {
+    class ScrollViewEventPropagator : public TQScrollView {
     public:
-        void sendEvent(QEvent *e);
+        void sendEvent(TQEvent *e);
     };
 };
 

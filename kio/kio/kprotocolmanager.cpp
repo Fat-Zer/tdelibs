@@ -48,10 +48,10 @@ public:
    KConfig *http_config;
    bool init_busy;
    KURL url;
-   QString protocol;
-   QString proxy;
-   QString modifiers;
-   QString useragent;
+   TQString protocol;
+   TQString proxy;
+   TQString modifiers;
+   TQString useragent;
 };
 
 static KProtocolManagerPrivate* d = 0;
@@ -72,7 +72,7 @@ KProtocolManagerPrivate::~KProtocolManagerPrivate()
 
 // DEFAULT USERAGENT STRING
 #define CFG_DEFAULT_UAGENT(X) \
-QString("Mozilla/5.0 (compatible; Konqueror/%1.%2%3) KHTML/%4.%5.%6 (like Gecko)") \
+TQString("Mozilla/5.0 (compatible; Konqueror/%1.%2%3) KHTML/%4.%5.%6 (like Gecko)") \
         .arg(KDE_VERSION_MAJOR).arg(KDE_VERSION_MINOR).arg(X).arg(KDE_VERSION_MAJOR).arg(KDE_VERSION_MINOR).arg(KDE_VERSION_RELEASE)
 
 void KProtocolManager::reparseConfiguration()
@@ -112,7 +112,7 @@ KConfig *KProtocolManager::http_config()
 int KProtocolManager::readTimeout()
 {
   KConfig *cfg = config();
-  cfg->setGroup( QString::null );
+  cfg->setGroup( TQString::null );
   int val = cfg->readNumEntry( "ReadTimeout", DEFAULT_READ_TIMEOUT );
   return QMAX(MIN_TIMEOUT_VALUE, val);
 }
@@ -120,7 +120,7 @@ int KProtocolManager::readTimeout()
 int KProtocolManager::connectTimeout()
 {
   KConfig *cfg = config();
-  cfg->setGroup( QString::null );
+  cfg->setGroup( TQString::null );
   int val = cfg->readNumEntry( "ConnectTimeout", DEFAULT_CONNECT_TIMEOUT );
   return QMAX(MIN_TIMEOUT_VALUE, val);
 }
@@ -128,7 +128,7 @@ int KProtocolManager::connectTimeout()
 int KProtocolManager::proxyConnectTimeout()
 {
   KConfig *cfg = config();
-  cfg->setGroup( QString::null );
+  cfg->setGroup( TQString::null );
   int val = cfg->readNumEntry( "ProxyConnectTimeout", DEFAULT_PROXY_CONNECT_TIMEOUT );
   return QMAX(MIN_TIMEOUT_VALUE, val);
 }
@@ -136,7 +136,7 @@ int KProtocolManager::proxyConnectTimeout()
 int KProtocolManager::responseTimeout()
 {
   KConfig *cfg = config();
-  cfg->setGroup( QString::null );
+  cfg->setGroup( TQString::null );
   int val = cfg->readNumEntry( "ResponseTimeout", DEFAULT_RESPONSE_TIMEOUT );
   return QMAX(MIN_TIMEOUT_VALUE, val);
 }
@@ -180,13 +180,13 @@ bool KProtocolManager::useCache()
 KIO::CacheControl KProtocolManager::cacheControl()
 {
   KConfig *cfg = http_config();
-  QString tmp = cfg->readEntry("cache");
+  TQString tmp = cfg->readEntry("cache");
   if (tmp.isEmpty())
     return DEFAULT_CACHE_CONTROL;
   return KIO::parseCacheControl(tmp);
 }
 
-QString KProtocolManager::cacheDir()
+TQString KProtocolManager::cacheDir()
 {
   KConfig *cfg = http_config();
   return cfg->readPathEntry("CacheDir", KGlobal::dirs()->saveLocation("cache","http"));
@@ -204,7 +204,7 @@ int KProtocolManager::maxCacheSize()
   return cfg->readNumEntry( "MaxCacheSize", DEFAULT_MAX_CACHE_SIZE ); // 5 MB
 }
 
-QString KProtocolManager::noProxyForRaw()
+TQString KProtocolManager::noProxyForRaw()
 {
   KConfig *cfg = config();
   cfg->setGroup( "Proxy Settings" );
@@ -212,18 +212,18 @@ QString KProtocolManager::noProxyForRaw()
   return cfg->readEntry( "NoProxyFor" );
 }
 
-QString KProtocolManager::noProxyFor()
+TQString KProtocolManager::noProxyFor()
 {
-  QString noProxy = noProxyForRaw();
+  TQString noProxy = noProxyForRaw();
   if (proxyType() == EnvVarProxy)
-    noProxy = QString::fromLocal8Bit(getenv(noProxy.local8Bit()));
+    noProxy = TQString::fromLocal8Bit(getenv(noProxy.local8Bit()));
 
   return noProxy;
 }
 
-QString KProtocolManager::proxyFor( const QString& protocol )
+TQString KProtocolManager::proxyFor( const TQString& protocol )
 {
-  QString scheme = protocol.lower();
+  TQString scheme = protocol.lower();
 
   if (scheme == "webdav")
     scheme = "http";
@@ -235,9 +235,9 @@ QString KProtocolManager::proxyFor( const QString& protocol )
   return cfg->readEntry( scheme + "Proxy" );
 }
 
-QString KProtocolManager::proxyForURL( const KURL &url )
+TQString KProtocolManager::proxyForURL( const KURL &url )
 {
-  QString proxy;
+  TQString proxy;
   ProxyType pt = proxyType();
 
   switch (pt)
@@ -247,7 +247,7 @@ QString KProtocolManager::proxyForURL( const KURL &url )
           if (!url.host().isEmpty())
           {
             KURL u (url);
-            QString p = u.protocol().lower();
+            TQString p = u.protocol().lower();
 
             // webdav is a KDE specific protocol. Look up proxy
             // information using HTTP instead...
@@ -267,7 +267,7 @@ QString KProtocolManager::proxyForURL( const KURL &url )
           }
           break;
       case EnvVarProxy:
-          proxy = QString::fromLocal8Bit(getenv(proxyFor(url.protocol()).local8Bit())).stripWhiteSpace();
+          proxy = TQString::fromLocal8Bit(getenv(proxyFor(url.protocol()).local8Bit())).stripWhiteSpace();
           break;
       case ManualProxy:
           proxy = proxyFor( url.protocol() );
@@ -277,10 +277,10 @@ QString KProtocolManager::proxyForURL( const KURL &url )
           break;
   }
 
-  return (proxy.isEmpty() ? QString::fromLatin1("DIRECT") : proxy);
+  return (proxy.isEmpty() ? TQString::fromLatin1("DIRECT") : proxy);
 }
 
-void KProtocolManager::badProxy( const QString &proxy )
+void KProtocolManager::badProxy( const TQString &proxy )
 {
   DCOPRef( "kded", "proxyscout" ).send( "blackListProxy", proxy );
 }
@@ -326,7 +326,7 @@ static bool revmatch(const char *host, const char *nplist)
   return false;
 }
 
-QString KProtocolManager::slaveProtocol(const KURL &url, QString &proxy)
+TQString KProtocolManager::slaveProtocol(const KURL &url, TQString &proxy)
 {
   if (url.hasSubURL()) // We don't want the suburl's protocol
   {
@@ -353,7 +353,7 @@ QString KProtocolManager::slaveProtocol(const KURL &url, QString &proxy)
         KProtocolManager::ProxyType type = proxyType();
         bool useRevProxy = ((type == ManualProxy) && useReverseProxy());
 
-        QString noProxy;
+        TQString noProxy;
         // Check no proxy information iff the proxy type is either
         // ManualProxy or EnvVarProxy
         if ( (type == ManualProxy) || (type == EnvVarProxy) )
@@ -361,9 +361,9 @@ QString KProtocolManager::slaveProtocol(const KURL &url, QString &proxy)
 
         if (!noProxy.isEmpty())
         {
-           QString qhost = url.host().lower();
+           TQString qhost = url.host().lower();
            const char *host = qhost.latin1();
-           QString qno_proxy = noProxy.stripWhiteSpace().lower();
+           TQString qno_proxy = noProxy.stripWhiteSpace().lower();
            const char *no_proxy = qno_proxy.latin1();
            isRevMatch = revmatch(host, no_proxy);
 
@@ -372,7 +372,7 @@ QString KProtocolManager::slaveProtocol(const KURL &url, QString &proxy)
            // users to enter host:port in the No-proxy-For list.
            if (!isRevMatch && url.port() > 0)
            {
-              qhost += ':' + QString::number (url.port());
+              qhost += ':' + TQString::number (url.port());
               host = qhost.latin1();
               isRevMatch = revmatch (host, no_proxy);
            }
@@ -390,7 +390,7 @@ QString KProtocolManager::slaveProtocol(const KURL &url, QString &proxy)
            {
               // The idea behind slave protocols is not applicable to http
               // and webdav protocols.
-              QString protocol = url.protocol().lower();
+              TQString protocol = url.protocol().lower();
               if (protocol.startsWith("http") || protocol.startsWith("webdav"))
                 d->protocol = protocol;
               else
@@ -408,20 +408,20 @@ QString KProtocolManager::slaveProtocol(const KURL &url, QString &proxy)
   }
 
   d->url = url;
-  d->proxy = proxy = QString::null;
+  d->proxy = proxy = TQString::null;
   d->protocol = url.protocol();
   return d->protocol;
 }
 
 /*================================= USER-AGENT SETTINGS =====================*/
 
-QString KProtocolManager::userAgentForHost( const QString& hostname )
+TQString KProtocolManager::userAgentForHost( const TQString& hostname )
 {
-  QString sendUserAgent = KIO::SlaveConfig::self()->configData("http", hostname.lower(), "SendUserAgent").lower();
+  TQString sendUserAgent = KIO::SlaveConfig::self()->configData("http", hostname.lower(), "SendUserAgent").lower();
   if (sendUserAgent == "false")
-     return QString::null;
+     return TQString::null;
 
-  QString useragent = KIO::SlaveConfig::self()->configData("http", hostname.lower(), "UserAgent");
+  TQString useragent = KIO::SlaveConfig::self()->configData("http", hostname.lower(), "UserAgent");
 
   // Return the default user-agent if none is specified
   // for the requested host.
@@ -431,56 +431,56 @@ QString KProtocolManager::userAgentForHost( const QString& hostname )
   return useragent;
 }
 
-QString KProtocolManager::defaultUserAgent( )
+TQString KProtocolManager::defaultUserAgent( )
 {
-  QString modifiers = KIO::SlaveConfig::self()->configData("http", QString::null, "UserAgentKeys");
+  TQString modifiers = KIO::SlaveConfig::self()->configData("http", TQString::null, "UserAgentKeys");
   return defaultUserAgent(modifiers);
 }
 
-QString KProtocolManager::defaultUserAgent( const QString &_modifiers )
+TQString KProtocolManager::defaultUserAgent( const TQString &_modifiers )
 {
   if (!d)
      d = new KProtocolManagerPrivate;
 
-  QString modifiers = _modifiers.lower();
+  TQString modifiers = _modifiers.lower();
   if (modifiers.isEmpty())
      modifiers = DEFAULT_USER_AGENT_KEYS;
 
   if (d->modifiers == modifiers)
      return d->useragent;
 
-  QString supp;
+  TQString supp;
   struct utsname nam;
   if( uname(&nam) >= 0 )
   {
     if( modifiers.contains('o') )
     {
-      supp += QString("; %1").arg(nam.sysname);
+      supp += TQString("; %1").arg(nam.sysname);
       if ( modifiers.contains('v') )
-        supp += QString(" %1").arg(nam.release);
+        supp += TQString(" %1").arg(nam.release);
     }
     if( modifiers.contains('p') )
     {
       // TODO: determine this value instead of hardcoding it...
-      supp += QString::fromLatin1("; X11");
+      supp += TQString::fromLatin1("; X11");
     }
     if( modifiers.contains('m') )
     {
-      supp += QString("; %1").arg(nam.machine);
+      supp += TQString("; %1").arg(nam.machine);
     }
     if( modifiers.contains('l') )
     {
-      QStringList languageList = KGlobal::locale()->languageList();
-      QStringList::Iterator it = languageList.find( QString::fromLatin1("C") );
+      TQStringList languageList = KGlobal::locale()->languageList();
+      TQStringList::Iterator it = languageList.find( TQString::fromLatin1("C") );
       if( it != languageList.end() )
       {
-        if( languageList.contains( QString::fromLatin1("en") ) > 0 )
+        if( languageList.contains( TQString::fromLatin1("en") ) > 0 )
           languageList.remove( it );
         else
-          (*it) = QString::fromLatin1("en");
+          (*it) = TQString::fromLatin1("en");
       }
       if( languageList.count() )
-        supp += QString("; %1").arg(languageList.join(", "));
+        supp += TQString("; %1").arg(languageList.join(", "));
     }
   }
   d->modifiers = modifiers;
@@ -493,14 +493,14 @@ QString KProtocolManager::defaultUserAgent( const QString &_modifiers )
 bool KProtocolManager::markPartial()
 {
   KConfig *cfg = config();
-  cfg->setGroup( QString::null );
+  cfg->setGroup( TQString::null );
   return cfg->readBoolEntry( "MarkPartial", true );
 }
 
 int KProtocolManager::minimumKeepSize()
 {
   KConfig *cfg = config();
-  cfg->setGroup( QString::null );
+  cfg->setGroup( TQString::null );
   return cfg->readNumEntry( "MinimumKeepSize",
                             DEFAULT_MINIMUM_KEEP_SIZE ); // 5000 byte
 }
@@ -508,25 +508,25 @@ int KProtocolManager::minimumKeepSize()
 bool KProtocolManager::autoResume()
 {
   KConfig *cfg = config();
-  cfg->setGroup( QString::null );
+  cfg->setGroup( TQString::null );
   return cfg->readBoolEntry( "AutoResume", false );
 }
 
 bool KProtocolManager::persistentConnections()
 {
   KConfig *cfg = config();
-  cfg->setGroup( QString::null );
+  cfg->setGroup( TQString::null );
   return cfg->readBoolEntry( "PersistentConnections", true );
 }
 
 bool KProtocolManager::persistentProxyConnection()
 {
   KConfig *cfg = config();
-  cfg->setGroup( QString::null );
+  cfg->setGroup( TQString::null );
   return cfg->readBoolEntry( "PersistentProxyConnection", false );
 }
 
-QString KProtocolManager::proxyConfigScript()
+TQString KProtocolManager::proxyConfigScript()
 {
   KConfig *cfg = config();
   cfg->setGroup( "Proxy Settings" );

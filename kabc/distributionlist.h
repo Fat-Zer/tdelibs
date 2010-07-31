@@ -48,14 +48,14 @@ class KABC_EXPORT DistributionList
     */
     struct Entry
     {
-      typedef QValueList<Entry> List;
+      typedef TQValueList<Entry> List;
 
       Entry() {}
-      Entry( const Addressee &_addressee, const QString &_email ) :
+      Entry( const Addressee &_addressee, const TQString &_email ) :
           addressee( _addressee ), email( _email ) {}
 
       Addressee addressee;
-      QString email;
+      TQString email;
     };
 
     /**
@@ -64,7 +64,7 @@ class KABC_EXPORT DistributionList
       @param manager Managing object of this list.
       @param name    Name of this list.
     */
-    DistributionList( DistributionListManager *manager, const QString &name );
+    DistributionList( DistributionListManager *manager, const TQString &name );
 
     /**
       Destructor.
@@ -75,30 +75,30 @@ class KABC_EXPORT DistributionList
       Set name of this list. The name is used as key by the
       DistributinListManager.
     */
-    void setName( const QString & );
+    void setName( const TQString & );
 
     /**
       Get name of this list.
     */
-    QString name() const;
+    TQString name() const;
 
     /**
       Insert an entry into this distribution list. If the entry already exists
       nothing happens.
     */
-    void insertEntry( const Addressee &, const QString &email=QString::null );
+    void insertEntry( const Addressee &, const TQString &email=TQString::null );
 
     /**
       Remove an entry from this distribution list. If the entry doesn't exist
       nothing happens.
     */
-    void removeEntry( const Addressee &, const QString &email=QString::null );
+    void removeEntry( const Addressee &, const TQString &email=TQString::null );
 
     /**
       Return list of email addresses, which belong to this distributon list.
       These addresses can be directly used by e.g. a mail client.
     */
-    QStringList emails() const;
+    TQStringList emails() const;
 
     /**
       Return list of entries belonging to this distribution list. This function
@@ -108,7 +108,7 @@ class KABC_EXPORT DistributionList
 
   private:
     DistributionListManager *mManager;
-    QString mName;
+    TQString mName;
 
     Entry::List mEntries;
 };
@@ -135,7 +135,7 @@ class KABC_EXPORT DistributionListManager
     /**
       Return distribution list with given name.
     */
-    DistributionList *list( const QString &name ); // KDE4: add bool caseSensitive = true
+    DistributionList *list( const TQString &name ); // KDE4: add bool caseSensitive = true
 
     /**
       Insert distribution list. If a list with this name already exists, nothing
@@ -152,7 +152,7 @@ class KABC_EXPORT DistributionListManager
     /**
       Return names of all distribution lists managed by this manager.
     */
-    QStringList listNames();
+    TQStringList listNames();
 
     /**
       Load distribution lists form disk.
@@ -168,7 +168,7 @@ class KABC_EXPORT DistributionListManager
     class DistributionListManagerPrivate;
     DistributionListManagerPrivate *d;
 
-    QPtrList<DistributionList> mLists;
+    TQPtrList<DistributionList> mLists;
 };
 
 /**
@@ -182,7 +182,7 @@ class KABC_EXPORT DistributionListManager
   \code
   KABC::DistributionListWatcher *watchdog = KABC::DistributionListWatcher::self()
 
-  connect( watchdog, SIGNAL( changed() ), SLOT( doSomething() ) );
+  connect( watchdog, TQT_SIGNAL( changed() ), TQT_SLOT( doSomething() ) );
   \endcode
 */
 

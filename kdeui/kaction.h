@@ -26,10 +26,10 @@
 #ifndef __kaction_h__
 #define __kaction_h__
 
-#include <qkeysequence.h>
-#include <qobject.h>
-#include <qvaluelist.h>
-#include <qguardedptr.h>
+#include <tqkeysequence.h>
+#include <tqobject.h>
+#include <tqvaluelist.h>
+#include <tqguardedptr.h>
 #include <kguiitem.h>
 #include <kshortcut.h>
 #include <kstdaction.h>
@@ -105,16 +105,16 @@ class KMainWindow;
  * If you are in the situation of wanting to map the activated()
  * signal of multiple action objects to one slot, with a special
  * argument bound to each action, then you might consider using
- * QSignalMapper . A tiny example:
+ * TQSignalMapper . A tiny example:
  *
  * \code
- * QSignalMapper *desktopNumberMapper = new QSignalMapper( this );
- * connect( desktopNumberMapper, SIGNAL( mapped( int ) ),
- *          this, SLOT( moveWindowToDesktop( int ) ) );
+ * TQSignalMapper *desktopNumberMapper = new TQSignalMapper( this );
+ * connect( desktopNumberMapper, TQT_SIGNAL( mapped( int ) ),
+ *          this, TQT_SLOT( moveWindowToDesktop( int ) ) );
  *
  * for ( uint i = 0; i < numberOfDesktops; ++i ) {
  *     KAction *desktopAction = new KAction( i18n( "Move Window to Desktop %i" ).arg( i ), ... );
- *     connect( desktopAction, SIGNAL( activated() ), desktopNumberMapper, SLOT( map() ) );
+ *     connect( desktopAction, TQT_SIGNAL( activated() ), desktopNumberMapper, TQT_SLOT( map() ) );
  *     desktopNumberMapper->setMapping( desktopAction, i );
  * }
  * \endcode
@@ -135,7 +135,7 @@ class KMainWindow;
  * \code
  * KAction *newAct = new KAction(i18n("&New"), "filenew",
  *                               KStdAccel::shortcut(KStdAccel::New),
- *                               this, SLOT(fileNew()),
+ *                               this, TQT_SLOT(fileNew()),
  *                               actionCollection(), "new");
  * \endcode
  * This line creates our action.  It says that wherever this action is
@@ -144,7 +144,7 @@ class KMainWindow;
  * is invoked, it will use the fileNew() slot to execute it.
  *
  * \code
- * QPopupMenu *file = new QPopupMenu;
+ * TQPopupMenu *file = new QPopupMenu;
  * newAct->plug(file);
  * \endcode
  * That just inserted the action into the File menu.  The point is, it's not
@@ -204,18 +204,18 @@ class KDEUI_EXPORT KAction : public QObject
   friend class KActionCollection;
   Q_OBJECT
   Q_PROPERTY( int containerCount READ containerCount )
-  Q_PROPERTY( QString plainText READ plainText )
-  Q_PROPERTY( QString text READ text WRITE setText )
-  Q_PROPERTY( QString shortcut READ shortcutText WRITE setShortcutText )
+  Q_PROPERTY( TQString plainText READ plainText )
+  Q_PROPERTY( TQString text READ text WRITE setText )
+  Q_PROPERTY( TQString shortcut READ shortcutText WRITE setShortcutText )
   Q_PROPERTY( bool enabled READ isEnabled WRITE setEnabled )
-  Q_PROPERTY( QString group READ group WRITE setGroup )
-  Q_PROPERTY( QString whatsThis READ whatsThis WRITE setWhatsThis )
-  Q_PROPERTY( QString toolTip READ toolTip WRITE setToolTip )
-  Q_PROPERTY( QString icon READ icon WRITE setIcon )
+  Q_PROPERTY( TQString group READ group WRITE setGroup )
+  Q_PROPERTY( TQString whatsThis READ whatsThis WRITE setWhatsThis )
+  Q_PROPERTY( TQString toolTip READ toolTip WRITE setToolTip )
+  Q_PROPERTY( TQString icon READ icon WRITE setIcon )
 public:
     /**
      * Constructs an action with text, potential keyboard
-     * shortcut, and a SLOT to call when this action is invoked by
+     * shortcut, and a TQT_SLOT to call when this action is invoked by
      * the user.
      *
      * If you do not want or have a keyboard shortcut,
@@ -229,17 +229,17 @@ public:
      * @param text The text that will be displayed.
      * @param cut The corresponding keyboard shortcut.
      * @param receiver The SLOT's parent.
-     * @param slot The SLOT to invoke to execute this action.
+     * @param slot The TQT_SLOT to invoke to execute this action.
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KAction( const QString& text, const KShortcut& cut,
-             const QObject* receiver, const char* slot,
+    KAction( const TQString& text, const KShortcut& cut,
+             const TQObject* receiver, const char* slot,
              KActionCollection* parent, const char* name );
 
     /**
      * Constructs an action with text, icon, potential keyboard
-     * shortcut, and a SLOT to call when this action is invoked by
+     * shortcut, and a TQT_SLOT to call when this action is invoked by
      * the user.
      *
      * If you do not want or have a keyboard shortcut, set the
@@ -252,17 +252,17 @@ public:
      * @param pix The icon to display.
      * @param cut The corresponding keyboard shortcut.
      * @param receiver The SLOT's parent.
-     * @param slot The SLOT to invoke to execute this action.
+     * @param slot The TQT_SLOT to invoke to execute this action.
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KAction( const QString& text, const QIconSet& pix, const KShortcut& cut,
-             const QObject* receiver, const char* slot,
+    KAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+             const TQObject* receiver, const char* slot,
              KActionCollection* parent, const char* name );
 
     /**
      * Constructs an action with text, icon, potential keyboard
-     * shortcut, and a SLOT to call when this action is invoked by
+     * shortcut, and a TQT_SLOT to call when this action is invoked by
      * the user.  The icon is loaded on demand later based on where it
      * is plugged in.
      *
@@ -276,12 +276,12 @@ public:
      * @param pix The icon to display.
      * @param cut The corresponding keyboard shortcut (shortcut).
      * @param receiver The SLOT's parent.
-     * @param slot The SLOT to invoke to execute this action.
+     * @param slot The TQT_SLOT to invoke to execute this action.
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KAction( const QString& text, const QString& pix, const KShortcut& cut,
-             const QObject* receiver, const char* slot,
+    KAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+             const TQObject* receiver, const char* slot,
              KActionCollection* parent, const char* name );
 
     /**
@@ -291,48 +291,48 @@ public:
      * @param item The KGuiItem with the label and (optional) icon.
      * @param cut The corresponding keyboard shortcut (shortcut).
      * @param receiver The SLOT's parent.
-     * @param slot The SLOT to invoke to execute this action.
+     * @param slot The TQT_SLOT to invoke to execute this action.
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
     KAction( const KGuiItem& item, const KShortcut& cut,
-             const QObject* receiver, const char* slot,
+             const TQObject* receiver, const char* slot,
              KActionCollection* parent, const char* name );
 
 	/**
 	 * @obsolete
 	 */
-	KAction( const QString& text, const KShortcut& cut = KShortcut(), QObject* parent = 0, const char* name = 0 );
+	KAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0, const char* name = 0 );
 	/**
 	 * @obsolete
 	 */
-	KAction( const QString& text, const KShortcut& cut,
-		const QObject* receiver, const char* slot, QObject* parent, const char* name = 0 );
+	KAction( const TQString& text, const KShortcut& cut,
+		const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 	/**
 	 * @obsolete
 	 */
-	KAction( const QString& text, const QIconSet& pix, const KShortcut& cut = KShortcut(),
-		QObject* parent = 0, const char* name = 0 );
+	KAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+		TQObject* parent = 0, const char* name = 0 );
 	/**
 	 * @obsolete
 	 */
-	KAction( const QString& text, const QString& pix, const KShortcut& cut = KShortcut(),
-		QObject* parent = 0, const char* name = 0 );
+	KAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+		TQObject* parent = 0, const char* name = 0 );
 	/**
 	 * @obsolete
 	 */
-	KAction( const QString& text, const QIconSet& pix, const KShortcut& cut,
-		const QObject* receiver, const char* slot, QObject* parent, const char* name = 0 );
+	KAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+		const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 	/**
 	 * @obsolete
 	 */
-	KAction( const QString& text, const QString& pix, const KShortcut& cut,
-		const QObject* receiver, const char* slot, QObject* parent,
+	KAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+		const TQObject* receiver, const char* slot, TQObject* parent,
 		const char* name = 0 );
 	/**
 	 * @obsolete
 	 */
-	KAction( QObject* parent = 0, const char* name = 0 );
+	KAction( TQObject* parent = 0, const char* name = 0 );
 
     /**
      * Standard destructor
@@ -352,7 +352,7 @@ public:
      * @param index The position into which the action is plugged. If
      * this is negative, the action is inserted at the end.
      */
-    virtual int plug( QWidget *widget, int index = -1 );
+    virtual int plug( TQWidget *widget, int index = -1 );
 
     /**
      * @deprecated.  Shouldn't be used.  No substitute available.
@@ -378,7 +378,7 @@ public:
      *
      * @param w Remove the action from this GUI element.
      */
-    virtual void unplug( QWidget *w );
+    virtual void unplug( TQWidget *w );
 
     /**
      * @deprecated.  Complement method to plugAccel().
@@ -395,23 +395,23 @@ public:
     /**
      * returns whether the action is plugged into the given container
      */
-    bool isPlugged( const QWidget *container ) const;
+    bool isPlugged( const TQWidget *container ) const;
 
     /**
      * returns whether the action is plugged into the given container with the given, container specific, id (often
      * menu or toolbar id ) .
      */
-    virtual bool isPlugged( const QWidget *container, int id ) const;
+    virtual bool isPlugged( const TQWidget *container, int id ) const;
 
     /**
      * returns whether the action is plugged into the given container with the given, container specific, representative
      * container widget item.
      */
-    virtual bool isPlugged( const QWidget *container, const QWidget *_representative ) const;
+    virtual bool isPlugged( const TQWidget *container, const TQWidget *_representative ) const;
 
-    QWidget* container( int index ) const;
+    TQWidget* container( int index ) const;
     int itemId( int index ) const;
-    QWidget* representative( int index ) const;
+    TQWidget* representative( int index ) const;
     int containerCount() const;
     /// @since 3.1
     uint kaccelCount() const;
@@ -420,12 +420,12 @@ public:
 #ifndef KDE_NO_COMPAT
     bool hasIconSet() const { return hasIcon(); }
 #endif
-    virtual QString plainText() const;
+    virtual TQString plainText() const;
 
     /**
      * Get the text associated with this action.
      */
-    virtual QString text() const;
+    virtual TQString text() const;
 
     /**
      * Get the keyboard shortcut associated with this action.
@@ -437,8 +437,8 @@ public:
     virtual const KShortcut& shortcutDefault() const;
 
     // These two methods are for Q_PROPERTY
-    QString shortcutText() const;
-    void setShortcutText( const QString& );
+    TQString shortcutText() const;
+    void setShortcutText( const TQString& );
 
     /**
      * Returns true if this action is enabled.
@@ -450,32 +450,32 @@ public:
      */
     virtual bool isShortcutConfigurable() const;
 
-    virtual QString group() const;
+    virtual TQString group() const;
 
     /**
      * Get the What's this text for the action.
      */
-    virtual QString whatsThis() const;
+    virtual TQString whatsThis() const;
 
     /**
      * Get the tooltip text for the action.
      */
-    virtual QString toolTip() const;
+    virtual TQString toolTip() const;
 
     /**
-     * Get the QIconSet from which the icons used to display this action will
+     * Get the TQIconSet from which the icons used to display this action will
      * be chosen.
      *
      * In KDE4 set group default to KIcon::Small while removing the other
      * iconSet() function.
      */
-    virtual QIconSet iconSet( KIcon::Group group, int size=0 ) const;
+    virtual TQIconSet iconSet( KIcon::Group group, int size=0 ) const;
     /**
      * Remove in KDE4
      */
-    QIconSet iconSet() const { return iconSet( KIcon::Small ); }
+    TQIconSet iconSet() const { return iconSet( KIcon::Small ); }
 
-    virtual QString icon() const;
+    virtual TQString icon() const;
 
     KActionCollection *parentCollection() const;
 
@@ -498,14 +498,14 @@ public slots:
      * Sets the text associated with this action. The text is used for menu
      * and toolbar labels etc.
      */
-    virtual void setText(const QString &text);
+    virtual void setText(const TQString &text);
 
     /**
      * Sets the keyboard shortcut associated with this action.
      */
     virtual bool setShortcut( const KShortcut& );
 
-    virtual void setGroup( const QString& );
+    virtual void setGroup( const TQString& );
 
     /**
      * Sets the What's this text for the action. This text will be displayed when
@@ -514,7 +514,7 @@ public slots:
      *
      * The What's this text can include QML markup as well as raw text.
      */
-    virtual void setWhatsThis( const QString& text );
+    virtual void setWhatsThis( const TQString& text );
 
     /**
      * Sets the tooltip text for the action.
@@ -530,15 +530,15 @@ public slots:
      * @see KActionCollection
      *
      */
-    virtual void setToolTip( const QString& );
+    virtual void setToolTip( const TQString& );
 
     /**
-     * Sets the QIconSet from which the icons used to display this action will
+     * Sets the TQIconSet from which the icons used to display this action will
      * be chosen.
      */
-    virtual void setIconSet( const QIconSet &iconSet );
+    virtual void setIconSet( const TQIconSet &iconSet );
 
-    virtual void setIcon( const QString& icon );
+    virtual void setIcon( const TQString& icon );
 
     /**
      * Enables or disables this action. All uses of this action (eg. in menus
@@ -574,17 +574,17 @@ protected slots:
 
 protected:
     KToolBar* toolBar( int index ) const;
-    QPopupMenu* popupMenu( int index ) const;
+    TQPopupMenu* popupMenu( int index ) const;
     void removeContainer( int index );
-    int findContainer( const QWidget* widget ) const;
+    int findContainer( const TQWidget* widget ) const;
     int findContainer( int id ) const;
-    void plugMainWindowAccel( QWidget *w );
+    void plugMainWindowAccel( TQWidget *w );
 
-    void addContainer( QWidget* parent, int id );
-    void addContainer( QWidget* parent, QWidget* representative );
+    void addContainer( TQWidget* parent, int id );
+    void addContainer( TQWidget* parent, TQWidget* representative );
 
     virtual void updateShortcut( int i );
-    virtual void updateShortcut( QPopupMenu* menu, int id );
+    virtual void updateShortcut( TQPopupMenu* menu, int id );
     virtual void updateGroup( int id );
     virtual void updateText(int i );
     virtual void updateEnabled(int i);
@@ -594,7 +594,7 @@ protected:
     virtual void updateWhatsThis( int i );
 
     KActionCollection *m_parentCollection;
-    QString whatsThisWithIcon() const;
+    TQString whatsThisWithIcon() const;
     /**
      * Return the underlying KGuiItem
      * @since 3.3
@@ -624,8 +624,8 @@ signals:
     void enabled( bool );
 
 private:
-    void initPrivate( const QString& text, const KShortcut& cut,
-                  const QObject* receiver, const char* slot );
+    void initPrivate( const TQString& text, const KShortcut& cut,
+                  const TQObject* receiver, const char* slot );
     KAccel* kaccelCurrent();
     bool initShortcut( const KShortcut& );
     void plugShortcut();
@@ -642,7 +642,7 @@ public:
      */
     int accel() const KDE_DEPRECATED;
 
-    QString statusText() const
+    TQString statusText() const
         { return toolTip(); }
 
     /**
@@ -654,7 +654,7 @@ public:
     /**
      * @deprecated. Use setToolTip instead (they do the same thing now).
      */
-    void setStatusText( const QString &text )
+    void setStatusText( const TQString &text )
          { setToolTip( text ); }
 
     /**

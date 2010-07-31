@@ -20,7 +20,7 @@
 #ifndef KABC_DISTRIBUTIONLISTEDITOR_H
 #define KABC_DISTRIBUTIONLISTEDITOR_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kdialogbase.h>
 
@@ -36,16 +36,16 @@ class DistributionListManager;
 class KABC_EXPORT EmailSelectDialog : public KDialogBase
 {
   public:
-    EmailSelectDialog( const QStringList &emails, const QString &current,
-                       QWidget *parent );
+    EmailSelectDialog( const TQStringList &emails, const TQString &current,
+                       TQWidget *parent );
     
-    QString selected();
+    TQString selected();
 
-    static QString getEmail( const QStringList &emails, const QString &current,
-                             QWidget *parent );
+    static TQString getEmail( const TQStringList &emails, const TQString &current,
+                             TQWidget *parent );
 
   private:
-    QButtonGroup *mButtonGroup;
+    TQButtonGroup *mButtonGroup;
 };
 
 /**
@@ -55,7 +55,7 @@ class DistributionListEditor : public QWidget
 {
     Q_OBJECT
   public:
-    DistributionListEditor( AddressBook *, QWidget *parent );
+    DistributionListEditor( AddressBook *, TQWidget *parent );
     virtual ~DistributionListEditor();
 
   private slots:
@@ -71,14 +71,14 @@ class DistributionListEditor : public QWidget
     void slotSelectionAddresseeViewChanged();
 
   private:
-    QComboBox *mNameCombo;  
-    QListView *mEntryView;
-    QListView *mAddresseeView;
+    TQComboBox *mNameCombo;  
+    TQListView *mEntryView;
+    TQListView *mAddresseeView;
 
     AddressBook *mAddressBook;
     DistributionListManager *mManager;
-    QPushButton *newButton, *removeButton;
-    QPushButton *changeEmailButton,*removeEntryButton,*addEntryButton;
+    TQPushButton *newButton, *removeButton;
+    TQPushButton *changeEmailButton,*removeEntryButton,*addEntryButton;
 };
 
 }

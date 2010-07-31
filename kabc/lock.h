@@ -21,8 +21,8 @@
 #ifndef KABC_LOCK_H
 #define KABC_LOCK_H
 
-#include <qstring.h>
-#include <qobject.h>
+#include <tqstring.h>
+#include <tqobject.h>
 
 #include <kdelibs_export.h>
 
@@ -42,7 +42,7 @@ class KABC_EXPORT Lock : public QObject
       @param identifier An identifier for the resource to be locked, e.g. a file
                         name.
      */
-    Lock( const QString &identifier );
+    Lock( const TQString &identifier );
 
     /**
       Destruct lock object. This also removes the lock on the resource.
@@ -59,25 +59,25 @@ class KABC_EXPORT Lock : public QObject
     */
     virtual bool unlock();
 
-    virtual QString error() const;
+    virtual TQString error() const;
 
-    QString lockFileName() const;
+    TQString lockFileName() const;
 
-    static bool readLockFile( const QString &filename, int &pid, QString &app );
-    static bool writeLockFile( const QString &filename );
+    static bool readLockFile( const TQString &filename, int &pid, TQString &app );
+    static bool writeLockFile( const TQString &filename );
 
-    static QString locksDir();
+    static TQString locksDir();
 
   signals:
     void locked();
     void unlocked();
 
   private:
-    QString mIdentifier;
+    TQString mIdentifier;
     
-    QString mLockUniqueName;
+    TQString mLockUniqueName;
 
-    QString mError;
+    TQString mError;
 
     class Private;
     Private *d;

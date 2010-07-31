@@ -18,7 +18,7 @@
 
 #include "ktoolbarhandler.h"
 
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 #include <kapplication.h>
 #include <ktoolbar.h>
 #include <kmainwindow.h>
@@ -44,11 +44,11 @@ namespace
     class BarActionBuilder
     {
     public:
-        BarActionBuilder( KActionCollection *actionCollection, KMainWindow *mainWindow, QPtrList<KToolBar> &oldToolBarList )
+        BarActionBuilder( KActionCollection *actionCollection, KMainWindow *mainWindow, TQPtrList<KToolBar> &oldToolBarList )
             : m_actionCollection( actionCollection ), m_mainWindow( mainWindow ), m_needsRebuild( false )
         {
-            QPtrList<QDockWindow> dockWindows = m_mainWindow->dockWindows();
-            QPtrListIterator<QDockWindow> dockWindowIt( dockWindows );
+            TQPtrList<TQDockWindow> dockWindows = m_mainWindow->dockWindows();
+            TQPtrListIterator<TQDockWindow> dockWindowIt( dockWindows );
             for ( ; dockWindowIt.current(); ++dockWindowIt ) {
 
                 KToolBar *toolBar = dynamic_cast<KToolBar *>( dockWindowIt.current() );
@@ -67,16 +67,16 @@ namespace
 
         bool needsRebuild() const { return m_needsRebuild; }
 
-        QPtrList<KAction> create()
+        TQPtrList<KAction> create()
         {
             if ( !m_needsRebuild )
-                return QPtrList<KAction>();
+                return TQPtrList<KAction>();
 
-            QPtrListIterator<KToolBar> toolBarIt( m_toolBars );
+            TQPtrListIterator<KToolBar> toolBarIt( m_toolBars );
             for ( ; toolBarIt.current(); ++toolBarIt )
                 handleToolBar( toolBarIt.current() );
 
-            QPtrList<KAction> actions;
+            TQPtrList<KAction> actions;
 
             if ( m_toolBarActions.count() == 0 )
                 return actions;
@@ -90,7 +90,7 @@ namespace
 
             KActionMenu *menuAction = new KActionMenu( i18n( "Toolbars" ), m_actionCollection, "toolbars_submenu_action" );
 
-            QPtrListIterator<KAction> actionIt( m_toolBarActions );
+            TQPtrListIterator<KAction> actionIt( m_toolBarActions );
             for ( ; actionIt.current(); ++actionIt )
                 menuAction->insert( actionIt.current() );
 
@@ -98,7 +98,7 @@ namespace
             return actions;
         }
 
-        const QPtrList<KToolBar> &toolBars() const { return m_toolBars; }
+        const TQPtrList<KToolBar> &toolBars() const { return m_toolBars; }
 
     private:
         void handleToolBar( KToolBar *toolBar )
@@ -115,8 +115,8 @@ namespace
         KActionCollection *m_actionCollection;
         KMainWindow *m_mainWindow;
 
-        QPtrList<KToolBar> m_toolBars;
-        QPtrList<KAction> m_toolBarActions;
+        TQPtrList<KToolBar> m_toolBars;
+        TQPtrList<KAction> m_toolBarActions;
 
         bool m_needsRebuild : 1;
     };
@@ -125,13 +125,13 @@ namespace
 using namespace KDEPrivate;
 
 ToolBarHandler::ToolBarHandler( KMainWindow *mainWindow, const char *name )
-    : QObject( mainWindow, name ), KXMLGUIClient( mainWindow )
+    : TQObject( mainWindow, name ), KXMLGUIClient( mainWindow )
 {
     init( mainWindow );
 }
 
-ToolBarHandler::ToolBarHandler( KMainWindow *mainWindow, QObject *parent, const char *name )
-    : QObject( parent, name ), KXMLGUIClient( mainWindow )
+ToolBarHandler::ToolBarHandler( KMainWindow *mainWindow, TQObject *parent, const char *name )
+    : TQObject( parent, name ), KXMLGUIClient( mainWindow )
 {
     init( mainWindow );
 }
@@ -167,7 +167,7 @@ void ToolBarHandler::setupActions()
     m_actions = builder.create();
 
     /*
-    for (  QPtrListIterator<KToolBar> toolBarIt( m_toolBars );
+    for (  TQPtrListIterator<KToolBar> toolBarIt( m_toolBars );
            toolBarIt.current(); ++toolBarIt )
         toolBarIt.current()->disconnect( this );
         */
@@ -175,10 +175,10 @@ void ToolBarHandler::setupActions()
     m_toolBars = builder.toolBars();
 
     /*
-    for (  QPtrListIterator<KToolBar> toolBarIt( m_toolBars );
+    for (  TQPtrListIterator<KToolBar> toolBarIt( m_toolBars );
            toolBarIt.current(); ++toolBarIt )
-        connect( toolBarIt.current(), SIGNAL( destroyed() ),
-                 this, SLOT( setupActions() ) );
+        connect( toolBarIt.current(), TQT_SIGNAL( destroyed() ),
+                 this, TQT_SLOT( setupActions() ) );
                  */
 
     if (kapp && kapp->authorizeKAction("options_show_toolbar"))
@@ -198,8 +198,8 @@ void ToolBarHandler::init( KMainWindow *mainWindow )
     d = 0;
     m_mainWindow = mainWindow;
 
-    connect( m_mainWindow->guiFactory(), SIGNAL( clientAdded( KXMLGUIClient * ) ),
-             this, SLOT( clientAdded( KXMLGUIClient * ) ) );
+    connect( m_mainWindow->guiFactory(), TQT_SIGNAL( clientAdded( KXMLGUIClient * ) ),
+             this, TQT_SLOT( clientAdded( KXMLGUIClient * ) ) );
 
     /* re-use an existing resource file if it exists. can happen if the user launches the
      * toolbar editor */
@@ -209,7 +209,7 @@ void ToolBarHandler::init( KMainWindow *mainWindow )
 
     if ( domDocument().documentElement().isNull() ) {
 
-        QString completeDescription = QString::fromLatin1( guiDescription )
+        TQString completeDescription = TQString::fromLatin1( guiDescription )
             .arg( actionListName );
 
         setXML( completeDescription, false /*merge*/ );
@@ -218,7 +218,7 @@ void ToolBarHandler::init( KMainWindow *mainWindow )
 
 void ToolBarHandler::connectToActionContainers()
 {
-    QPtrListIterator<KAction> actionIt( m_actions );
+    TQPtrListIterator<KAction> actionIt( m_actions );
     for ( ; actionIt.current(); ++actionIt )
         connectToActionContainer( actionIt.current() );
 }
@@ -230,14 +230,14 @@ void ToolBarHandler::connectToActionContainer( KAction *action )
         connectToActionContainer( action->container( i ) );
 }
 
-void ToolBarHandler::connectToActionContainer( QWidget *container )
+void ToolBarHandler::connectToActionContainer( TQWidget *container )
 {
-    QPopupMenu *popupMenu = dynamic_cast<QPopupMenu *>( container );
+    TQPopupMenu *popupMenu = dynamic_cast<TQPopupMenu *>( container );
     if ( !popupMenu )
         return;
 
-    connect( popupMenu, SIGNAL( aboutToShow() ),
-             this, SLOT( setupActions() ) );
+    connect( popupMenu, TQT_SIGNAL( aboutToShow() ),
+             this, TQT_SLOT( setupActions() ) );
 }
 
 #include "ktoolbarhandler.moc"

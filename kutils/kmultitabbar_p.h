@@ -24,26 +24,26 @@
 
 #ifndef K_MULTI_TAB_BAR_P_H
 #define K_MULTI_TAB_BAR_P_H
-#include <qscrollview.h>
+#include <tqscrollview.h>
 #include <kmultitabbar.h>
 
 class KMultiTabBarInternal: public QScrollView
 {
         Q_OBJECT
 public:
-        KMultiTabBarInternal(QWidget *parent,KMultiTabBar::KMultiTabBarMode bm);
-        int appendTab(const QPixmap &,int=-1,const QString& =QString::null);
+        KMultiTabBarInternal(TQWidget *parent,KMultiTabBar::KMultiTabBarMode bm);
+        int appendTab(const TQPixmap &,int=-1,const TQString& =TQString::null);
         KMultiTabBarTab *tab(int) const;
         void removeTab(int);
         void setPosition(enum KMultiTabBar::KMultiTabBarPosition pos);
         void setStyle(enum KMultiTabBar::KMultiTabBarStyle style);
         void showActiveTabTexts(bool show);
-        QPtrList<KMultiTabBarTab>* tabs(){return &m_tabs;}
+        TQPtrList<KMultiTabBarTab>* tabs(){return &m_tabs;}
 private:
         friend class KMultiTabBar;
-        QWidget *box;
-	QBoxLayout *mainLayout;
-        QPtrList<KMultiTabBarTab> m_tabs;
+        TQWidget *box;
+	TQBoxLayout *mainLayout;
+        TQPtrList<KMultiTabBarTab> m_tabs;
         enum KMultiTabBar::KMultiTabBarPosition m_position;
         bool m_showActiveTabTexts;
         enum  KMultiTabBar::KMultiTabBarStyle m_style;
@@ -51,17 +51,17 @@ private:
 	int m_lines;
 	KMultiTabBar::KMultiTabBarMode m_barMode;
 protected:
-	virtual bool eventFilter(QObject *,QEvent*);
-        virtual void drawContents ( QPainter *, int, int, int, int);
+	virtual bool eventFilter(TQObject *,TQEvent*);
+        virtual void drawContents ( TQPainter *, int, int, int, int);
 
         /**
          * [contentsM|m]ousePressEvent are reimplemented from QScrollView
          * in order to ignore all mouseEvents on the viewport, so that the
          * parent can handle them.
          */
-        virtual void contentsMousePressEvent(QMouseEvent *);
-        virtual void mousePressEvent(QMouseEvent *);
-	virtual void resizeEvent(QResizeEvent *);
+        virtual void contentsMousePressEvent(TQMouseEvent *);
+        virtual void mousePressEvent(TQMouseEvent *);
+	virtual void resizeEvent(TQResizeEvent *);
 };
 #endif
 

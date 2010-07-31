@@ -28,19 +28,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <qptrcollection.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qptrlist.h>
-#include <qpixmap.h>
-#include <qtextcodec.h>
-#include <qtooltip.h>
-#include <qtimer.h>
-#include <qwhatsthis.h>
-#include <qfiledialog.h>
+#include <tqptrcollection.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqptrlist.h>
+#include <tqpixmap.h>
+#include <tqtextcodec.h>
+#include <tqtooltip.h>
+#include <tqtimer.h>
+#include <tqwhatsthis.h>
+#include <tqfiledialog.h>
 
 #include <kaccel.h>
 #include <kaction.h>
@@ -97,7 +97,7 @@
 enum Buttons { HOTLIST_BUTTON,
                PATH_COMBO, CONFIGURE_BUTTON };
 
-template class QPtrList<KIO::StatJob>;
+template class TQPtrList<KIO::StatJob>;
 
 namespace {
     static void silenceQToolBar(QtMsgType, const char *)
@@ -111,36 +111,36 @@ struct KFileDialogPrivate
     KURL url;
 
     // the selected filenames in multiselection mode -- FIXME
-    QString filenames;
+    TQString filenames;
 
     // the name of the filename set by setSelection
-    QString selection;
+    TQString selection;
 
     // now following all kind of widgets, that I need to rebuild
     // the geometry management
-    QBoxLayout *boxLayout;
-    QWidget *mainWidget;
+    TQBoxLayout *boxLayout;
+    TQWidget *mainWidget;
 
-    QLabel *locationLabel;
+    TQLabel *locationLabel;
 
     // @deprecated remove in KDE4
-    QLabel *filterLabel;
+    TQLabel *filterLabel;
     KURLComboBox *pathCombo;
     KPushButton *okButton, *cancelButton;
     KFileSpeedBar *urlBar;
-    QHBoxLayout *urlBarLayout;
-    QWidget *customWidget;
+    TQHBoxLayout *urlBarLayout;
+    TQWidget *customWidget;
 
     // Automatically Select Extension stuff
-    QCheckBox *autoSelectExtCheckBox;
+    TQCheckBox *autoSelectExtCheckBox;
     bool autoSelectExtChecked; // whether or not the _user_ has checked the above box
-    QString extension; // current extension for this filter
+    TQString extension; // current extension for this filter
 
-    QPtrList<KIO::StatJob> statJobs;
+    TQPtrList<KIO::StatJob> statJobs;
 
     KURL::List urlList; //the list of selected urls
 
-    QStringList mimetypes; //the list of possible mimetypes to save as
+    TQStringList mimetypes; //the list of possible mimetypes to save as
 
     // indicates if the location edit should be kept or cleared when changing
     // directories
@@ -154,7 +154,7 @@ struct KFileDialogPrivate
     KFileDialog::OperationMode operationMode;
 
     // The file class used for KRecentDirs
-    QString fileClass;
+    TQString fileClass;
 
     KFileBookmarkHandler *bookmarkHandler;
 
@@ -166,16 +166,16 @@ KURL *KFileDialog::lastDirectory; // to set the start path
 
 static KStaticDeleter<KURL> ldd;
 
-KFileDialog::KFileDialog(const QString& startDir, const QString& filter,
-                         QWidget *parent, const char* name, bool modal)
-    : KDialogBase( parent, name, modal, QString::null, 0 )
+KFileDialog::KFileDialog(const TQString& startDir, const TQString& filter,
+                         TQWidget *parent, const char* name, bool modal)
+    : KDialogBase( parent, name, modal, TQString::null, 0 )
 {
     init( startDir, filter, 0 );
 }
 
-KFileDialog::KFileDialog(const QString& startDir, const QString& filter,
-                         QWidget *parent, const char* name, bool modal, QWidget* widget)
-    : KDialogBase( parent, name, modal, QString::null, 0 )
+KFileDialog::KFileDialog(const TQString& startDir, const TQString& filter,
+                         TQWidget *parent, const char* name, bool modal, TQWidget* widget)
+    : KDialogBase( parent, name, modal, TQString::null, 0 )
 {
     init( startDir, filter, widget );
 }
@@ -197,12 +197,12 @@ KFileDialog::~KFileDialog()
     delete d;
 }
 
-void KFileDialog::setLocationLabel(const QString& text)
+void KFileDialog::setLocationLabel(const TQString& text)
 {
     d->locationLabel->setText(text);
 }
 
-void KFileDialog::setFilter(const QString& filter)
+void KFileDialog::setFilter(const TQString& filter)
 {
     int pos = filter.find('/');
 
@@ -210,7 +210,7 @@ void KFileDialog::setFilter(const QString& filter)
     // interpret as a MIME filter.
 
     if (pos > 0 && filter[pos - 1] != '\\') {
-        QStringList filters = QStringList::split( " ", filter );
+        TQStringList filters = TQStringList::split( " ", filter );
         setMimeFilter( filters );
         return;
     }
@@ -218,7 +218,7 @@ void KFileDialog::setFilter(const QString& filter)
     // Strip the escape characters from
     // escaped '/' characters.
 
-    QString copy (filter);
+    TQString copy (filter);
     for (pos = 0; (pos = copy.find("\\/", pos)) != -1; ++pos)
         copy.remove(pos, 1);
 
@@ -231,13 +231,13 @@ void KFileDialog::setFilter(const QString& filter)
     updateAutoSelectExtension ();
 }
 
-QString KFileDialog::currentFilter() const
+TQString KFileDialog::currentFilter() const
 {
     return filterWidget->currentFilter();
 }
 
 // deprecated
-void KFileDialog::setFilterMimeType(const QString &label,
+void KFileDialog::setFilterMimeType(const TQString &label,
                                     const KMimeType::List &types,
                                     const KMimeType::Ptr &defaultType)
 {
@@ -251,14 +251,14 @@ void KFileDialog::setFilterMimeType(const QString &label,
     setMimeFilter( d->mimetypes, defaultType->name() );
 }
 
-void KFileDialog::setMimeFilter( const QStringList& mimeTypes,
-                                 const QString& defaultType )
+void KFileDialog::setMimeFilter( const TQStringList& mimeTypes,
+                                 const TQString& defaultType )
 {
     d->mimetypes = mimeTypes;
     filterWidget->setMimeFilter( mimeTypes, defaultType );
 
-    QStringList types = QStringList::split(" ", filterWidget->currentFilter());
-    types.append( QString::fromLatin1( "inode/directory" ));
+    TQStringList types = TQStringList::split(" ", filterWidget->currentFilter());
+    types.append( TQString::fromLatin1( "inode/directory" ));
     ops->clearFilter();
     ops->setMimeFilter( types );
     d->hasDefaultFilter = !defaultType.isEmpty();
@@ -271,7 +271,7 @@ void KFileDialog::setMimeFilter( const QStringList& mimeTypes,
 void KFileDialog::clearFilter()
 {
     d->mimetypes.clear();
-    filterWidget->setFilter( QString::null );
+    filterWidget->setFilter( TQString::null );
     ops->clearFilter();
     d->hasDefaultFilter = false;
     filterWidget->setEditable( true );
@@ -279,7 +279,7 @@ void KFileDialog::clearFilter()
     updateAutoSelectExtension ();
 }
 
-QString KFileDialog::currentMimeFilter() const
+TQString KFileDialog::currentMimeFilter() const
 {
     int i = filterWidget->currentItem();
     if (filterWidget->showsAllTypes())
@@ -287,7 +287,7 @@ QString KFileDialog::currentMimeFilter() const
 
     if ((i >= 0) && (i < (int) d->mimetypes.count()))
         return d->mimetypes[i];
-    return QString::null; // The "all types" item has no mimetype
+    return TQString::null; // The "all types" item has no mimetype
 }
 
 KMimeType::Ptr KFileDialog::currentFilterMimeType()
@@ -295,7 +295,7 @@ KMimeType::Ptr KFileDialog::currentFilterMimeType()
     return KMimeType::mimeType( currentMimeFilter() );
 }
 
-void KFileDialog::setPreviewWidget(const QWidget *w) {
+void KFileDialog::setPreviewWidget(const TQWidget *w) {
     ops->setPreviewWidget(w);
     ops->clearHistory();
     d->hasView = true;
@@ -307,14 +307,14 @@ void KFileDialog::setPreviewWidget(const KPreviewWidgetBase *w) {
     d->hasView = true;
 }
 
-KURL KFileDialog::getCompleteURL(const QString &_url)
+KURL KFileDialog::getCompleteURL(const TQString &_url)
 {
-    QString url = KShell::tildeExpand(_url);
+    TQString url = KShell::tildeExpand(_url);
     KURL u;
 
     if ( KURL::isRelativeURL(url) ) // only a full URL isn't relative. Even /path is.
     {
-        if (!url.isEmpty() && !QDir::isRelativePath(url) ) // absolute path
+        if (!url.isEmpty() && !TQDir::isRelativePath(url) ) // absolute path
             u.setPath( url );
         else
         {
@@ -342,7 +342,7 @@ void KFileDialog::slotOk()
         if ( locationEdit->currentText().stripWhiteSpace().isEmpty() ) {
             if ( !items || items->isEmpty() )
             {
-                QString msg;
+                TQString msg;
                 if ( d->operationMode == Saving )
                     msg = i18n("Please specify the filename to save to.");
                 else
@@ -357,8 +357,8 @@ void KFileDialog::slotOk()
 
                 bool multi = (mode() & KFile::Files) != 0;
                 KFileItemListIterator it( *items );
-                QString endQuote = QString::fromLatin1("\" ");
-                QString name, files;
+                TQString endQuote = TQString::fromLatin1("\" ");
+                TQString name, files;
                 while ( it.current() ) {
                     name = (*it)->name();
                     if ( multi ) {
@@ -382,7 +382,7 @@ void KFileDialog::slotOk()
          !(items->isEmpty() && !dirOnly) ) {
 
         d->urlList.clear();
-        d->filenames = QString::null;
+        d->filenames = TQString::null;
 
         if ( dirOnly ) {
             d->url = ops->url();
@@ -421,7 +421,7 @@ void KFileDialog::slotOk()
     KURL selectedURL;
 
     if ( (mode() & KFile::Files) == KFile::Files ) {// multiselection mode
-        QString locationText = locationEdit->currentText();
+        TQString locationText = locationEdit->currentText();
         if ( locationText.contains( '/' )) {
             // relative path? -> prepend the current directory
             KURL u( ops->url(), KShell::tildeExpand(locationText));
@@ -464,9 +464,9 @@ void KFileDialog::slotOk()
         bool done = true;
         if ( d->url.isLocalFile() ) {
             if ( locationEdit->currentText().stripWhiteSpace().isEmpty() ) {
-                QFileInfo info( d->url.path() );
+                TQFileInfo info( d->url.path() );
                 if ( info.isDir() ) {
-                    d->filenames = QString::null;
+                    d->filenames = TQString::null;
                     d->urlList.clear();
                     d->urlList.append( d->url );
                     accept();
@@ -492,10 +492,10 @@ void KFileDialog::slotOk()
                     if ( ops->dirOnlyMode() )
                     {
                         KURL fullURL(d->url, locationEdit->currentText());
-                        if ( QFile::exists( fullURL.path() ) )
+                        if ( TQFile::exists( fullURL.path() ) )
                         {
                             d->url = fullURL;
-                            d->filenames = QString::null;
+                            d->filenames = TQString::null;
                             d->urlList.clear();
                             accept();
                             return;
@@ -512,7 +512,7 @@ void KFileDialog::slotOk()
         }
         else { // FIXME: remote directory, should we allow that?
 //             qDebug( "**** Selected remote directory: %s", d->url.url().latin1());
-            d->filenames = QString::null;
+            d->filenames = TQString::null;
             d->urlList.clear();
             d->urlList.append( d->url );
 
@@ -528,7 +528,7 @@ void KFileDialog::slotOk()
 
     if (!kapp->authorizeURLAction("open", KURL(), d->url))
     {
-        QString msg = KIO::buildErrorString(KIO::ERR_ACCESS_DENIED, d->url.prettyURL());
+        TQString msg = KIO::buildErrorString(KIO::ERR_ACCESS_DENIED, d->url.prettyURL());
         KMessageBox::error( d->mainWidget, msg);
         return;
     }
@@ -546,7 +546,7 @@ void KFileDialog::slotOk()
         {
             if (!kapp->authorizeURLAction("open", KURL(), *it))
             {
-                QString msg = KIO::buildErrorString(KIO::ERR_ACCESS_DENIED, (*it).prettyURL());
+                TQString msg = KIO::buildErrorString(KIO::ERR_ACCESS_DENIED, (*it).prettyURL());
                 KMessageBox::error( d->mainWidget, msg);
                 return;
             }
@@ -558,8 +558,8 @@ void KFileDialog::slotOk()
             job->setWindow (topLevelWidget());
             KIO::Scheduler::scheduleJob( job );
             d->statJobs.append( job );
-            connect( job, SIGNAL( result(KIO::Job *) ),
-                     SLOT( slotStatResult( KIO::Job *) ));
+            connect( job, TQT_SIGNAL( result(KIO::Job *) ),
+                     TQT_SLOT( slotStatResult( KIO::Job *) ));
         }
         return;
     }
@@ -567,7 +567,7 @@ void KFileDialog::slotOk()
     job = KIO::stat(d->url,!d->url.isLocalFile());
     job->setWindow (topLevelWidget());
     d->statJobs.append( job );
-    connect(job, SIGNAL(result(KIO::Job*)), SLOT(slotStatResult(KIO::Job*)));
+    connect(job, TQT_SIGNAL(result(KIO::Job*)), TQT_SLOT(slotStatResult(KIO::Job*)));
 }
 
 
@@ -616,7 +616,7 @@ void KFileDialog::slotStatResult(KIO::Job* job)
     {
         if ( ops->dirOnlyMode() )
         {
-            d->filenames = QString::null;
+            d->filenames = TQString::null;
             d->urlList.clear();
             accept();
         }
@@ -644,23 +644,23 @@ void KFileDialog::slotStatResult(KIO::Job* job)
 
 void KFileDialog::accept()
 {
-    setResult( QDialog::Accepted ); // parseSelectedURLs() checks that
+    setResult( TQDialog::Accepted ); // parseSelectedURLs() checks that
 
     *lastDirectory = ops->url();
     if (!d->fileClass.isEmpty())
        KRecentDirs::add(d->fileClass, ops->url().url());
 
     // clear the topmost item, we insert it as full path later on as item 1
-    locationEdit->changeItem( QString::null, 0 );
+    locationEdit->changeItem( TQString::null, 0 );
 
     KURL::List list = selectedURLs();
-    QValueListConstIterator<KURL> it = list.begin();
+    TQValueListConstIterator<KURL> it = list.begin();
     for ( ; it != list.end(); ++it ) {
         const KURL& url = *it;
         // we strip the last slash (-1) because KURLComboBox does that as well
         // when operating in file-mode. If we wouldn't , dupe-finding wouldn't
         // work.
-        QString file = url.isLocalFile() ? url.path(-1) : url.prettyURL(-1);
+        TQString file = url.isLocalFile() ? url.path(-1) : url.prettyURL(-1);
 
         // remove dupes
         for ( int i = 1; i < locationEdit->count(); i++ ) {
@@ -751,9 +751,9 @@ void KFileDialog::multiSelectionChanged()
         return;
     }
 
-    static const QString &begin = KGlobal::staticQString(" \"");
+    static const TQString &begin = KGlobal::staticQString(" \"");
     KFileItemListIterator it ( *list );
-    QString text;
+    TQString text;
     while ( (item = it.current()) ) {
         text.append( begin ).append( item->name() ).append( '\"' );
         ++it;
@@ -762,16 +762,16 @@ void KFileDialog::multiSelectionChanged()
     setLocationText( text.stripWhiteSpace() );
 }
 
-void KFileDialog::setLocationText( const QString& text )
+void KFileDialog::setLocationText( const TQString& text )
 {
     // setCurrentItem() will cause textChanged() being emitted,
     // so slotLocationChanged() will be called. Make sure we don't clear
     // the KDirOperator's view-selection in there
-    disconnect( locationEdit, SIGNAL( textChanged( const QString& ) ),
-                this, SLOT( slotLocationChanged( const QString& ) ) );
+    disconnect( locationEdit, TQT_SIGNAL( textChanged( const TQString& ) ),
+                this, TQT_SLOT( slotLocationChanged( const TQString& ) ) );
     locationEdit->setCurrentItem( 0 );
-    connect( locationEdit, SIGNAL( textChanged( const QString& ) ),
-             SLOT( slotLocationChanged( const QString& )) );
+    connect( locationEdit, TQT_SIGNAL( textChanged( const TQString& ) ),
+             TQT_SLOT( slotLocationChanged( const TQString& )) );
     locationEdit->setEditText( text );
 
     // don't change selection when user has clicked on an item
@@ -785,7 +785,7 @@ static const char autocompletionWhatsThisText[] = I18N_NOOP("<p>While typing in 
                                                   "and selecting a preferred mode from the <b>Text Completion</b> menu.")  "</qt>";
 void KFileDialog::updateLocationWhatsThis (void)
 {
-    QString whatsThisText;
+    TQString whatsThisText;
     if (d->operationMode == KFileDialog::Saving)
     {
         whatsThisText = "<qt>" + i18n("This is the name to save the file as.") +
@@ -804,11 +804,11 @@ void KFileDialog::updateLocationWhatsThis (void)
                              i18n (autocompletionWhatsThisText);
     }
 
-    QWhatsThis::add(d->locationLabel, whatsThisText);
-    QWhatsThis::add(locationEdit, whatsThisText);
+    TQWhatsThis::add(d->locationLabel, whatsThisText);
+    TQWhatsThis::add(locationEdit, whatsThisText);
 }
 
-void KFileDialog::init(const QString& startDir, const QString& filter, QWidget* widget)
+void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidget* widget)
 {
     initStatic();
     d = new KFileDialogPrivate();
@@ -819,13 +819,13 @@ void KFileDialog::init(const QString& startDir, const QString& filter, QWidget* 
     d->bookmarkHandler = 0;
     d->hasDefaultFilter = false;
     d->hasView = false;
-    d->mainWidget = new QWidget( this, "KFileDialog::mainWidget");
+    d->mainWidget = new TQWidget( this, "KFileDialog::mainWidget");
     setMainWidget( d->mainWidget );
     d->okButton = new KPushButton( KStdGuiItem::ok(), d->mainWidget );
     d->okButton->setDefault( true );
     d->cancelButton = new KPushButton(KStdGuiItem::cancel(), d->mainWidget);
-    connect( d->okButton, SIGNAL( clicked() ), SLOT( slotOk() ));
-    connect( d->cancelButton, SIGNAL( clicked() ), SLOT( slotCancel() ));
+    connect( d->okButton, TQT_SIGNAL( clicked() ), TQT_SLOT( slotOk() ));
+    connect( d->cancelButton, TQT_SIGNAL( clicked() ), TQT_SLOT( slotCancel() ));
     d->customWidget = widget;
     d->autoSelectExtCheckBox = 0; // delayed loading
     d->autoSelectExtChecked = false;
@@ -838,20 +838,20 @@ void KFileDialog::init(const QString& startDir, const QString& filter, QWidget* 
 
     d->pathCombo = new KURLComboBox( KURLComboBox::Directories, true,
                                      toolbar, "path combo" );
-    QToolTip::add( d->pathCombo, i18n("Current location") );
-    QWhatsThis::add( d->pathCombo, "<qt>" + i18n("This is the currently listed location. "
+    TQToolTip::add( d->pathCombo, i18n("Current location") );
+    TQWhatsThis::add( d->pathCombo, "<qt>" + i18n("This is the currently listed location. "
                                                  "The drop-down list also lists commonly used locations. "
                                                  "This includes standard locations, such as your home folder, as well as "
                                                  "locations that have been visited recently.") + i18n (autocompletionWhatsThisText));
 
     KURL u;
-    u.setPath( QDir::rootDirPath() );
-    QString text = i18n("Root Folder: %1").arg( u.path() );
+    u.setPath( TQDir::rootDirPath() );
+    TQString text = i18n("Root Folder: %1").arg( u.path() );
     d->pathCombo->addDefaultURL( u,
                                  KMimeType::pixmapForURL( u, 0, KIcon::Small ),
                                  text );
 
-    u.setPath( QDir::homeDirPath() );
+    u.setPath( TQDir::homeDirPath() );
     text = i18n("Home Folder: %1").arg( u.path( +1 ) );
     d->pathCombo->addDefaultURL( u, KMimeType::pixmapForURL( u, 0, KIcon::Small ),
                                  text );
@@ -859,7 +859,7 @@ void KFileDialog::init(const QString& startDir, const QString& filter, QWidget* 
     KURL docPath;
     docPath.setPath( KGlobalSettings::documentPath() );
     if ( (u.path(+1) != docPath.path(+1)) &&
-         QDir(docPath.path(+1)).exists() )
+         TQDir(docPath.path(+1)).exists() )
     {
         text = i18n("Documents: %1").arg( docPath.path( +1 ) );
         d->pathCombo->addDefaultURL( docPath,
@@ -879,10 +879,10 @@ void KFileDialog::init(const QString& startDir, const QString& filter, QWidget* 
     // If local, check it exists. If not, go up until it exists.
     if ( d->url.isLocalFile() )
     {
-        if ( !QFile::exists( d->url.path() ) )
+        if ( !TQFile::exists( d->url.path() ) )
         {
             d->url = d->url.upURL();
-            QDir dir( d->url.path() );
+            TQDir dir( d->url.path() );
             while ( !dir.exists() )
             {
                 d->url = d->url.upURL();
@@ -893,14 +893,14 @@ void KFileDialog::init(const QString& startDir, const QString& filter, QWidget* 
 
     ops = new KDirOperator(d->url, d->mainWidget, "KFileDialog::ops");
     ops->setOnlyDoubleClickSelectsFiles( true );
-    connect(ops, SIGNAL(urlEntered(const KURL&)),
-            SLOT(urlEntered(const KURL&)));
-    connect(ops, SIGNAL(fileHighlighted(const KFileItem *)),
-            SLOT(fileHighlighted(const KFileItem *)));
-    connect(ops, SIGNAL(fileSelected(const KFileItem *)),
-            SLOT(fileSelected(const KFileItem *)));
-    connect(ops, SIGNAL(finishedLoading()),
-            SLOT(slotLoadingFinished()));
+    connect(ops, TQT_SIGNAL(urlEntered(const KURL&)),
+            TQT_SLOT(urlEntered(const KURL&)));
+    connect(ops, TQT_SIGNAL(fileHighlighted(const KFileItem *)),
+            TQT_SLOT(fileHighlighted(const KFileItem *)));
+    connect(ops, TQT_SIGNAL(fileSelected(const KFileItem *)),
+            TQT_SLOT(fileSelected(const KFileItem *)));
+    connect(ops, TQT_SIGNAL(finishedLoading()),
+            TQT_SLOT(slotLoadingFinished()));
 
     ops->setupMenu(KDirOperator::SortActions |
                    KDirOperator::FileActions |
@@ -925,14 +925,14 @@ void KFileDialog::init(const QString& startDir, const QString& filter, QWidget* 
     KToggleAction *showSidebarAction =
         new KToggleAction(i18n("Show Quick Access Navigation Panel"), Key_F9, coll,"toggleSpeedbar");
     showSidebarAction->setCheckedState(i18n("Hide Quick Access Navigation Panel"));
-    connect( showSidebarAction, SIGNAL( toggled( bool ) ),
-             SLOT( toggleSpeedbar( bool )) );
+    connect( showSidebarAction, TQT_SIGNAL( toggled( bool ) ),
+             TQT_SLOT( toggleSpeedbar( bool )) );
 
     KToggleAction *showBookmarksAction =
             new KToggleAction(i18n("Show Bookmarks"), 0, coll, "toggleBookmarks");
     showBookmarksAction->setCheckedState(i18n("Hide Bookmarks"));
-    connect( showBookmarksAction, SIGNAL( toggled( bool ) ),
-             SLOT( toggleBookmarks( bool )) );
+    connect( showBookmarksAction, TQT_SIGNAL( toggled( bool ) ),
+             TQT_SLOT( toggleBookmarks( bool )) );
 
     KActionMenu *menu = new KActionMenu( i18n("Configure"), "configure", this, "extra menu" );
     menu->setWhatsThis(i18n("<qt>This is the configuration menu for the file dialog. "
@@ -960,8 +960,8 @@ void KFileDialog::init(const QString& startDir, const QString& filter, QWidget* 
     menu->insert( coll->action( "separate dirs" ));
 
     menu->setDelayed( false );
-    connect( menu->popupMenu(), SIGNAL( aboutToShow() ),
-             ops, SLOT( updateSelectionDependentActions() ));
+    connect( menu->popupMenu(), TQT_SIGNAL( aboutToShow() ),
+             ops, TQT_SLOT( updateSelectionDependentActions() ));
     menu->plug( toolbar );
 
     //Insert a separator.
@@ -981,37 +981,37 @@ void KFileDialog::init(const QString& startDir, const QString& filter, QWidget* 
     d->pathCombo->setCompletionObject( pathCompletionObj );
     d->pathCombo->setAutoDeleteCompletionObject( true );
 
-    connect( d->pathCombo, SIGNAL( urlActivated( const KURL&  )),
-             this,  SLOT( enterURL( const KURL& ) ));
-    connect( d->pathCombo, SIGNAL( returnPressed( const QString&  )),
-             this,  SLOT( enterURL( const QString& ) ));
+    connect( d->pathCombo, TQT_SIGNAL( urlActivated( const KURL&  )),
+             this,  TQT_SLOT( enterURL( const KURL& ) ));
+    connect( d->pathCombo, TQT_SIGNAL( returnPressed( const TQString&  )),
+             this,  TQT_SLOT( enterURL( const TQString& ) ));
 
-    QString whatsThisText;
+    TQString whatsThisText;
 
     // the Location label/edit
-    d->locationLabel = new QLabel(i18n("&Location:"), d->mainWidget);
+    d->locationLabel = new TQLabel(i18n("&Location:"), d->mainWidget);
     locationEdit = new KURLComboBox(KURLComboBox::Files, true,
                                     d->mainWidget, "LocationEdit");
-    connect( locationEdit, SIGNAL( textChanged( const QString& ) ),
-             SLOT( slotLocationChanged( const QString& )) );
+    connect( locationEdit, TQT_SIGNAL( textChanged( const TQString& ) ),
+             TQT_SLOT( slotLocationChanged( const TQString& )) );
 
     updateLocationWhatsThis ();
     d->locationLabel->setBuddy(locationEdit);
 
     locationEdit->setFocus();
     KURLCompletion *fileCompletionObj = new KURLCompletion( KURLCompletion::FileCompletion );
-    QString dir = d->url.url(+1);
+    TQString dir = d->url.url(+1);
     pathCompletionObj->setDir( dir );
     fileCompletionObj->setDir( dir );
     locationEdit->setCompletionObject( fileCompletionObj );
     locationEdit->setAutoDeleteCompletionObject( true );
-    connect( fileCompletionObj, SIGNAL( match( const QString& ) ),
-             SLOT( fileCompletion( const QString& )) );
+    connect( fileCompletionObj, TQT_SIGNAL( match( const TQString& ) ),
+             TQT_SLOT( fileCompletion( const TQString& )) );
 
-    connect( locationEdit, SIGNAL( returnPressed() ),
-             this, SLOT( slotOk()));
-    connect(locationEdit, SIGNAL( activated( const QString&  )),
-            this,  SLOT( locationActivated( const QString& ) ));
+    connect( locationEdit, TQT_SIGNAL( returnPressed() ),
+             this, TQT_SLOT( slotOk()));
+    connect(locationEdit, TQT_SIGNAL( activated( const TQString&  )),
+            this,  TQT_SLOT( locationActivated( const TQString& ) ));
 
     // the Filter label/edit
     whatsThisText = i18n("<qt>This is the filter to apply to the file list. "
@@ -1020,19 +1020,19 @@ void KFileDialog::init(const QString& startDir, const QString& filter, QWidget* 
                          "drop down menu, or you may enter a custom filter "
                          "directly into the text area.<p>"
                          "Wildcards such as * and ? are allowed.</qt>");
-    d->filterLabel = new QLabel(i18n("&Filter:"), d->mainWidget);
-    QWhatsThis::add(d->filterLabel, whatsThisText);
+    d->filterLabel = new TQLabel(i18n("&Filter:"), d->mainWidget);
+    TQWhatsThis::add(d->filterLabel, whatsThisText);
     filterWidget = new KFileFilterCombo(d->mainWidget,
                                         "KFileDialog::filterwidget");
-    QWhatsThis::add(filterWidget, whatsThisText);
+    TQWhatsThis::add(filterWidget, whatsThisText);
     setFilter(filter);
     d->filterLabel->setBuddy(filterWidget);
-    connect(filterWidget, SIGNAL(filterChanged()), SLOT(slotFilterChanged()));
+    connect(filterWidget, TQT_SIGNAL(filterChanged()), TQT_SLOT(slotFilterChanged()));
 
     // the Automatically Select Extension checkbox
     // (the text, visibility etc. is set in updateAutoSelectExtension(), which is called by readConfig())
-    d->autoSelectExtCheckBox = new QCheckBox (d->mainWidget);
-    connect(d->autoSelectExtCheckBox, SIGNAL(clicked()), SLOT(slotAutoSelectExtClicked()));
+    d->autoSelectExtCheckBox = new TQCheckBox (d->mainWidget);
+    connect(d->autoSelectExtCheckBox, TQT_SIGNAL(clicked()), TQT_SLOT(slotAutoSelectExtClicked()));
 
     initGUI(); // activate GM
 
@@ -1049,8 +1049,8 @@ void KFileDialog::init(const QString& startDir, const QString& filter, QWidget* 
 void KFileDialog::initSpeedbar()
 {
     d->urlBar = new KFileSpeedBar( d->mainWidget, "url bar" );
-    connect( d->urlBar, SIGNAL( activated( const KURL& )),
-             SLOT( enterURL( const KURL& )) );
+    connect( d->urlBar, TQT_SIGNAL( activated( const KURL& )),
+             TQT_SLOT( enterURL( const KURL& )) );
 
     // need to set the current url of the urlbar manually (not via urlEntered()
     // here, because the initial url of KDirOperator might be the same as the
@@ -1065,16 +1065,16 @@ void KFileDialog::initGUI()
 {
     delete d->boxLayout; // deletes all sub layouts
 
-    d->boxLayout = new QVBoxLayout( d->mainWidget, 0, KDialog::spacingHint());
+    d->boxLayout = new TQVBoxLayout( d->mainWidget, 0, KDialog::spacingHint());
     d->boxLayout->addWidget(toolbar, AlignTop);
 
-    d->urlBarLayout = new QHBoxLayout( d->boxLayout ); // needed for the urlBar that may appear
-    QVBoxLayout *vbox = new QVBoxLayout( d->urlBarLayout );
+    d->urlBarLayout = new TQHBoxLayout( d->boxLayout ); // needed for the urlBar that may appear
+    TQVBoxLayout *vbox = new TQVBoxLayout( d->urlBarLayout );
 
     vbox->addWidget(ops, 4);
     vbox->addSpacing(3);
 
-    QGridLayout* lafBox= new QGridLayout(2, 3, KDialog::spacingHint());
+    TQGridLayout* lafBox= new TQGridLayout(2, 3, KDialog::spacingHint());
 
     lafBox->addWidget(d->locationLabel, 0, 0, AlignVCenter);
     lafBox->addWidget(locationEdit, 0, 1, AlignVCenter);
@@ -1107,7 +1107,7 @@ void KFileDialog::initGUI()
         // ...add it to the dialog, below the filter list box.
 
         // Change the parent so that this widget is a child of the main widget
-        d->customWidget->reparent( d->mainWidget, QPoint() );
+        d->customWidget->reparent( d->mainWidget, TQPoint() );
 
         vbox->addWidget( d->customWidget );
         vbox->addSpacing(3);
@@ -1130,11 +1130,11 @@ void KFileDialog::initGUI()
 
 void KFileDialog::slotFilterChanged()
 {
-    QString filter = filterWidget->currentFilter();
+    TQString filter = filterWidget->currentFilter();
     ops->clearFilter();
 
     if ( filter.find( '/' ) > -1 ) {
-        QStringList types = QStringList::split( " ", filter );
+        TQStringList types = TQStringList::split( " ", filter );
         types.prepend( "inode/directory" );
         ops->setMimeFilter( types );
     }
@@ -1151,15 +1151,15 @@ void KFileDialog::slotFilterChanged()
 
 void KFileDialog::setURL(const KURL& url, bool clearforward)
 {
-    d->selection = QString::null;
+    d->selection = TQString::null;
     ops->setURL( url, clearforward);
 }
 
 // Protected
 void KFileDialog::urlEntered(const KURL& url)
 {
-    QString filename = locationEdit->currentText();
-    d->selection = QString::null;
+    TQString filename = locationEdit->currentText();
+    d->selection = TQString::null;
 
     if ( d->pathCombo->count() != 0 ) { // little hack
         d->pathCombo->setURL( url );
@@ -1172,7 +1172,7 @@ void KFileDialog::urlEntered(const KURL& url)
 
     locationEdit->blockSignals( false );
 
-    QString dir = url.url(+1);
+    TQString dir = url.url(+1);
     static_cast<KURLCompletion*>( d->pathCombo->completionObject() )->setDir( dir );
     static_cast<KURLCompletion*>( locationEdit->completionObject() )->setDir( dir );
 
@@ -1180,7 +1180,7 @@ void KFileDialog::urlEntered(const KURL& url)
         d->urlBar->setCurrentItem( url );
 }
 
-void KFileDialog::locationActivated( const QString& url )
+void KFileDialog::locationActivated( const TQString& url )
 {
     // This guard prevents any URL _typed_ by the user from being interpreted
     // twice (by returnPressed/slotOk and here, activated/locationActivated)
@@ -1196,7 +1196,7 @@ void KFileDialog::enterURL( const KURL& url)
     setURL( url );
 }
 
-void KFileDialog::enterURL( const QString& url )
+void KFileDialog::enterURL( const TQString& url )
 {
     setURL( KURL::fromPathOrURL( KURLCompletion::replacedPath( url, true, true )) );
 }
@@ -1210,12 +1210,12 @@ void KFileDialog::toolbarCallback(int) // SLOT
 }
 
 
-void KFileDialog::setSelection(const QString& url)
+void KFileDialog::setSelection(const TQString& url)
 {
     kdDebug(kfile_area) << "setSelection " << url << endl;
 
     if (url.isEmpty()) {
-        d->selection = QString::null;
+        d->selection = TQString::null;
         return;
     }
 
@@ -1235,7 +1235,7 @@ void KFileDialog::setSelection(const QString& url)
      */
     KFileItem i(KFileItem::Unknown, KFileItem::Unknown, u, true );
     //    KFileItem i(u.path());
-    if ( i.isDir() && u.isLocalFile() && QFile::exists( u.path() ) ) {
+    if ( i.isDir() && u.isLocalFile() && TQFile::exists( u.path() ) ) {
         // trust isDir() only if the file is
         // local (we cannot stat non-local urls) and if it exists!
         // (as KFileItem does not check if the file exists or not
@@ -1243,13 +1243,13 @@ void KFileDialog::setSelection(const QString& url)
         setURL(u, true);
     }
     else {
-        QString filename = u.url();
+        TQString filename = u.url();
         int sep = filename.findRev('/');
         if (sep >= 0) { // there is a / in it
             if ( KProtocolInfo::supportsListing( u )) {
                 KURL dir(u);
-                dir.setQuery( QString::null );
-                dir.setFileName( QString::null );
+                dir.setQuery( TQString::null );
+                dir.setFileName( TQString::null );
                 setURL(dir, true );
             }
 
@@ -1282,13 +1282,13 @@ void KFileDialog::slotLoadingFinished()
 }
 
 // ### remove in KDE4
-void KFileDialog::pathComboChanged( const QString& )
+void KFileDialog::pathComboChanged( const TQString& )
 {
 }
-void KFileDialog::dirCompletion( const QString& ) // SLOT
+void KFileDialog::dirCompletion( const TQString& ) // SLOT
 {
 }
-void KFileDialog::fileCompletion( const QString& match )
+void KFileDialog::fileCompletion( const TQString& match )
 {
     if ( match.isEmpty() && ops->view() )
         ops->view()->clearSelection();
@@ -1296,7 +1296,7 @@ void KFileDialog::fileCompletion( const QString& match )
         ops->setCurrentItem( match );
 }
 
-void KFileDialog::slotLocationChanged( const QString& text )
+void KFileDialog::slotLocationChanged( const TQString& text )
 {
     if ( text.isEmpty() && ops->view() )
         ops->view()->clearSelection();
@@ -1309,9 +1309,9 @@ void KFileDialog::updateStatusLine(int /* dirs */, int /* files */)
     kdWarning() << "KFileDialog::updateStatusLine is deprecated! The status line no longer exists. Do not try and use it!" << endl;
 }
 
-QString KFileDialog::getOpenFileName(const QString& startDir,
-                                     const QString& filter,
-                                     QWidget *parent, const QString& caption)
+TQString KFileDialog::getOpenFileName(const TQString& startDir,
+                                     const TQString& filter,
+                                     TQWidget *parent, const TQString& caption)
 {
     KFileDialog dlg(startDir, filter, parent, "filedialog", true);
     dlg.setOperationMode( Opening );
@@ -1325,11 +1325,11 @@ QString KFileDialog::getOpenFileName(const QString& startDir,
     return dlg.selectedFile();
 }
 
-QString KFileDialog::getOpenFileNameWId(const QString& startDir,
-                                        const QString& filter,
-                                        WId parent_id, const QString& caption)
+TQString KFileDialog::getOpenFileNameWId(const TQString& startDir,
+                                        const TQString& filter,
+                                        WId parent_id, const TQString& caption)
 {
-    QWidget* parent = QWidget::find( parent_id );
+    TQWidget* parent = TQWidget::find( parent_id );
     KFileDialog dlg(startDir, filter, parent, "filedialog", true);
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id != 0 )
@@ -1349,10 +1349,10 @@ QString KFileDialog::getOpenFileNameWId(const QString& startDir,
     return dlg.selectedFile();
 }
 
-QStringList KFileDialog::getOpenFileNames(const QString& startDir,
-                                          const QString& filter,
-                                          QWidget *parent,
-                                          const QString& caption)
+TQStringList KFileDialog::getOpenFileNames(const TQString& startDir,
+                                          const TQString& filter,
+                                          TQWidget *parent,
+                                          const TQString& caption)
 {
     KFileDialog dlg(startDir, filter, parent, "filedialog", true);
     dlg.setOperationMode( Opening );
@@ -1365,8 +1365,8 @@ QStringList KFileDialog::getOpenFileNames(const QString& startDir,
     return dlg.selectedFiles();
 }
 
-KURL KFileDialog::getOpenURL(const QString& startDir, const QString& filter,
-                                QWidget *parent, const QString& caption)
+KURL KFileDialog::getOpenURL(const TQString& startDir, const TQString& filter,
+                                TQWidget *parent, const TQString& caption)
 {
     KFileDialog dlg(startDir, filter, parent, "filedialog", true);
     dlg.setOperationMode( Opening );
@@ -1379,10 +1379,10 @@ KURL KFileDialog::getOpenURL(const QString& startDir, const QString& filter,
     return dlg.selectedURL();
 }
 
-KURL::List KFileDialog::getOpenURLs(const QString& startDir,
-                                          const QString& filter,
-                                          QWidget *parent,
-                                          const QString& caption)
+KURL::List KFileDialog::getOpenURLs(const TQString& startDir,
+                                          const TQString& filter,
+                                          TQWidget *parent,
+                                          const TQString& caption)
 {
     KFileDialog dlg(startDir, filter, parent, "filedialog", true);
     dlg.setOperationMode( Opening );
@@ -1395,19 +1395,19 @@ KURL::List KFileDialog::getOpenURLs(const QString& startDir,
     return dlg.selectedURLs();
 }
 
-KURL KFileDialog::getExistingURL(const QString& startDir,
-                                       QWidget *parent,
-                                       const QString& caption)
+KURL KFileDialog::getExistingURL(const TQString& startDir,
+                                       TQWidget *parent,
+                                       const TQString& caption)
 {
     return KDirSelectDialog::selectDirectory(startDir, false, parent, caption);
 }
 
-QString KFileDialog::getExistingDirectory(const QString& startDir,
-                                          QWidget *parent,
-                                          const QString& caption)
+TQString KFileDialog::getExistingDirectory(const TQString& startDir,
+                                          TQWidget *parent,
+                                          const TQString& caption)
 {
 #ifdef Q_WS_WIN
-    return QFileDialog::getExistingDirectory(startDir, parent, "getExistingDirectory",
+    return TQFileDialog::getExistingDirectory(startDir, parent, "getExistingDirectory",
                                              caption, true, true);
 #else
     KURL url = KDirSelectDialog::selectDirectory(startDir, true, parent,
@@ -1415,14 +1415,14 @@ QString KFileDialog::getExistingDirectory(const QString& startDir,
     if ( url.isValid() )
         return url.path();
 
-    return QString::null;
+    return TQString::null;
 #endif
 }
 
-KURL KFileDialog::getImageOpenURL( const QString& startDir, QWidget *parent,
-                                   const QString& caption)
+KURL KFileDialog::getImageOpenURL( const TQString& startDir, TQWidget *parent,
+                                   const TQString& caption)
 {
-    QStringList mimetypes = KImageIO::mimeTypes( KImageIO::Reading );
+    TQStringList mimetypes = KImageIO::mimeTypes( KImageIO::Reading );
     KFileDialog dlg(startDir,
                     mimetypes.join(" "),
                     parent, "filedialog", true);
@@ -1439,7 +1439,7 @@ KURL KFileDialog::getImageOpenURL( const QString& startDir, QWidget *parent,
 
 KURL KFileDialog::selectedURL() const
 {
-    if ( result() == QDialog::Accepted )
+    if ( result() == TQDialog::Accepted )
         return d->url;
     else
         return KURL();
@@ -1448,7 +1448,7 @@ KURL KFileDialog::selectedURL() const
 KURL::List KFileDialog::selectedURLs() const
 {
     KURL::List list;
-    if ( result() == QDialog::Accepted ) {
+    if ( result() == TQDialog::Accepted ) {
         if ( (ops->mode() & KFile::Files) == KFile::Files )
             list = parseSelectedURLs();
         else
@@ -1466,7 +1466,7 @@ KURL::List& KFileDialog::parseSelectedURLs() const
 
     d->urlList.clear();
     if ( d->filenames.contains( '/' )) { // assume _one_ absolute filename
-        static const QString &prot = KGlobal::staticQString(":/");
+        static const TQString &prot = KGlobal::staticQString(":/");
         KURL u;
         if ( d->filenames.find( prot ) != -1 )
             u = d->filenames;
@@ -1485,18 +1485,18 @@ KURL::List& KFileDialog::parseSelectedURLs() const
     else
         d->urlList = tokenize( d->filenames );
 
-    d->filenames = QString::null; // indicate that we parsed that one
+    d->filenames = TQString::null; // indicate that we parsed that one
 
     return d->urlList;
 }
 
 
 // FIXME: current implementation drawback: a filename can't contain quotes
-KURL::List KFileDialog::tokenize( const QString& line ) const
+KURL::List KFileDialog::tokenize( const TQString& line ) const
 {
     KURL::List urls;
     KURL u( ops->url() );
-    QString name;
+    TQString name;
 
     int count = line.contains( '"' );
     if ( count == 0 ) { // no " " -> assume one single file
@@ -1508,7 +1508,7 @@ KURL::List KFileDialog::tokenize( const QString& line ) const
     }
 
     if ( (count % 2) == 1 ) { // odd number of " -> error
-        QWidget *that = const_cast<KFileDialog *>(this);
+        TQWidget *that = const_cast<KFileDialog *>(this);
         KMessageBox::sorry(that, i18n("The requested filenames\n"
                                       "%1\n"
                                       "do not appear to be valid;\n"
@@ -1538,9 +1538,9 @@ KURL::List KFileDialog::tokenize( const QString& line ) const
 }
 
 
-QString KFileDialog::selectedFile() const
+TQString KFileDialog::selectedFile() const
 {
-    if ( result() == QDialog::Accepted )
+    if ( result() == TQDialog::Accepted )
     {
       KURL url = KIO::NetAccess::mostLocalURL(d->url,topLevelWidget());
        if (url.isLocalFile())
@@ -1551,18 +1551,18 @@ QString KFileDialog::selectedFile() const
                                i18n("Remote Files Not Accepted") );
        }
     }
-    return QString::null;
+    return TQString::null;
 }
 
-QStringList KFileDialog::selectedFiles() const
+TQStringList KFileDialog::selectedFiles() const
 {
-    QStringList list;
+    TQStringList list;
     KURL url;
 
-    if ( result() == QDialog::Accepted ) {
+    if ( result() == TQDialog::Accepted ) {
         if ( (ops->mode() & KFile::Files) == KFile::Files ) {
             KURL::List urls = parseSelectedURLs();
-            QValueListConstIterator<KURL> it = urls.begin();
+            TQValueListConstIterator<KURL> it = urls.begin();
             while ( it != urls.end() ) {
               url = KIO::NetAccess::mostLocalURL(*it,topLevelWidget());
                 if ( url.isLocalFile() )
@@ -1585,12 +1585,12 @@ KURL KFileDialog::baseURL() const
     return ops->url();
 }
 
-QString KFileDialog::getSaveFileName(const QString& dir, const QString& filter,
-                                     QWidget *parent,
-                                     const QString& caption)
+TQString KFileDialog::getSaveFileName(const TQString& dir, const TQString& filter,
+                                     TQWidget *parent,
+                                     const TQString& caption)
 {
     bool specialDir = dir.at(0) == ':';
-    KFileDialog dlg( specialDir ? dir : QString::null, filter, parent, "filedialog", true);
+    KFileDialog dlg( specialDir ? dir : TQString::null, filter, parent, "filedialog", true);
     if ( !specialDir )
         dlg.setSelection( dir ); // may also be a filename
 
@@ -1599,20 +1599,20 @@ QString KFileDialog::getSaveFileName(const QString& dir, const QString& filter,
 
     dlg.exec();
 
-    QString filename = dlg.selectedFile();
+    TQString filename = dlg.selectedFile();
     if (!filename.isEmpty())
         KRecentDocument::add(filename);
 
     return filename;
 }
 
-QString KFileDialog::getSaveFileNameWId(const QString& dir, const QString& filter,
+TQString KFileDialog::getSaveFileNameWId(const TQString& dir, const TQString& filter,
                                      WId parent_id,
-                                     const QString& caption)
+                                     const TQString& caption)
 {
     bool specialDir = dir.at(0) == ':';
-    QWidget* parent = QWidget::find( parent_id );
-    KFileDialog dlg( specialDir ? dir : QString::null, filter, parent, "filedialog", true);
+    TQWidget* parent = TQWidget::find( parent_id );
+    KFileDialog dlg( specialDir ? dir : TQString::null, filter, parent, "filedialog", true);
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id != 0 )
         XSetTransientForHint(qt_xdisplay(), dlg.winId(), parent_id);
@@ -1628,18 +1628,18 @@ QString KFileDialog::getSaveFileNameWId(const QString& dir, const QString& filte
 
     dlg.exec();
 
-    QString filename = dlg.selectedFile();
+    TQString filename = dlg.selectedFile();
     if (!filename.isEmpty())
         KRecentDocument::add(filename);
 
     return filename;
 }
 
-KURL KFileDialog::getSaveURL(const QString& dir, const QString& filter,
-                             QWidget *parent, const QString& caption)
+KURL KFileDialog::getSaveURL(const TQString& dir, const TQString& filter,
+                             TQWidget *parent, const TQString& caption)
 {
     bool specialDir = dir.at(0) == ':';
-    KFileDialog dlg(specialDir ? dir : QString::null, filter, parent, "filedialog", true);
+    KFileDialog dlg(specialDir ? dir : TQString::null, filter, parent, "filedialog", true);
     if ( !specialDir )
     dlg.setSelection( dir ); // may also be a filename
 
@@ -1690,12 +1690,12 @@ KFile::Mode KFileDialog::mode() const
 }
 
 
-void KFileDialog::readConfig( KConfig *kc, const QString& group )
+void KFileDialog::readConfig( KConfig *kc, const TQString& group )
 {
     if ( !kc )
         return;
 
-    QString oldGroup = kc->group();
+    TQString oldGroup = kc->group();
     if ( !group.isEmpty() )
         kc->setGroup( group );
 
@@ -1736,17 +1736,17 @@ void KFileDialog::readConfig( KConfig *kc, const QString& group )
     if (w1 < w2)
         setMinimumWidth(w2);
 
-    QSize size = configDialogSize( group );
+    TQSize size = configDialogSize( group );
     resize( size );
     kc->setGroup( oldGroup );
 }
 
-void KFileDialog::writeConfig( KConfig *kc, const QString& group )
+void KFileDialog::writeConfig( KConfig *kc, const TQString& group )
 {
     if ( !kc )
         return;
 
-    QString oldGroup = kc->group();
+    TQString oldGroup = kc->group();
     if ( !group.isEmpty() )
         kc->setGroup( group );
 
@@ -1765,14 +1765,14 @@ void KFileDialog::writeConfig( KConfig *kc, const QString& group )
 
 void KFileDialog::readRecentFiles( KConfig *kc )
 {
-    QString oldGroup = kc->group();
+    TQString oldGroup = kc->group();
     kc->setGroup( ConfigGroup );
 
     locationEdit->setMaxItems( kc->readNumEntry( RecentFilesNumber,
                                                  DefaultRecentURLsNumber ) );
     locationEdit->setURLs( kc->readPathListEntry( RecentFiles ),
                            KURLComboBox::RemoveBottom );
-    locationEdit->insertItem( QString::null, 0 ); // dummy item without pixmap
+    locationEdit->insertItem( TQString::null, 0 ); // dummy item without pixmap
     locationEdit->setCurrentItem( 0 );
 
     kc->setGroup( oldGroup );
@@ -1780,7 +1780,7 @@ void KFileDialog::readRecentFiles( KConfig *kc )
 
 void KFileDialog::saveRecentFiles( KConfig *kc )
 {
-    QString oldGroup = kc->group();
+    TQString oldGroup = kc->group();
     kc->setGroup( ConfigGroup );
 
     kc->writePathEntry( RecentFiles, locationEdit->urls() );
@@ -1858,13 +1858,13 @@ void KFileDialog::slotAutoSelectExtClicked()
     updateLocationEditExtension (d->extension /* extension hasn't changed */);
 }
 
-static QString getExtensionFromPatternList (const QStringList &patternList)
+static TQString getExtensionFromPatternList (const TQStringList &patternList)
 {
-    QString ret;
+    TQString ret;
     kdDebug (kfile_area) << "\tgetExtension " << patternList << endl;
 
-    QStringList::ConstIterator patternListEnd = patternList.end ();
-    for (QStringList::ConstIterator it = patternList.begin ();
+    TQStringList::ConstIterator patternListEnd = patternList.end ();
+    for (TQStringList::ConstIterator it = patternList.begin ();
          it != patternListEnd;
          it++)
     {
@@ -1889,9 +1889,9 @@ static QString getExtensionFromPatternList (const QStringList &patternList)
     return ret;
 }
 
-static QString stripUndisplayable (const QString &string)
+static TQString stripUndisplayable (const TQString &string)
 {
-    QString ret = string;
+    TQString ret = string;
 
     ret.remove (':');
     ret.remove ('&');
@@ -1900,7 +1900,7 @@ static QString stripUndisplayable (const QString &string)
 }
 
 
-QString KFileDialog::currentFilterExtension (void)
+TQString KFileDialog::currentFilterExtension (void)
 {
     return d->extension;
 }
@@ -1917,8 +1917,8 @@ void KFileDialog::updateAutoSelectExtension (void)
     //
 
     kdDebug (kfile_area) << "Figure out an extension: " << endl;
-    QString lastExtension = d->extension;
-    d->extension = QString::null;
+    TQString lastExtension = d->extension;
+    d->extension = TQString::null;
 
     // Automatically Select Extension is only valid if the user is _saving_ a _file_
     if ((operationMode () == Saving) && (mode () & KFile::File))
@@ -1927,13 +1927,13 @@ void KFileDialog::updateAutoSelectExtension (void)
         // Get an extension from the filter
         //
 
-        QString filter = currentFilter ();
+        TQString filter = currentFilter ();
         if (!filter.isEmpty ())
         {
             // e.g. "*.cpp"
             if (filter.find ('/') < 0)
             {
-                d->extension = getExtensionFromPatternList (QStringList::split (" ", filter)).lower ();
+                d->extension = getExtensionFromPatternList (TQStringList::split (" ", filter)).lower ();
                 kdDebug (kfile_area) << "\tsetFilter-style: pattern ext=\'"
                                     << d->extension << "\'" << endl;
             }
@@ -1943,7 +1943,7 @@ void KFileDialog::updateAutoSelectExtension (void)
                 KMimeType::Ptr mime = KMimeType::mimeType (filter);
 
                 // first try X-KDE-NativeExtension
-                QString nativeExtension = mime->property ("X-KDE-NativeExtension").toString ();
+                TQString nativeExtension = mime->property ("X-KDE-NativeExtension").toString ();
                 if (nativeExtension.at (0) == '.')
                 {
                     d->extension = nativeExtension.lower ();
@@ -1966,7 +1966,7 @@ void KFileDialog::updateAutoSelectExtension (void)
         // GUI: checkbox
         //
 
-        QString whatsThisExtension;
+        TQString whatsThisExtension;
         if (!d->extension.isEmpty ())
         {
             // remember: sync any changes to the string with below
@@ -1986,9 +1986,9 @@ void KFileDialog::updateAutoSelectExtension (void)
             d->autoSelectExtCheckBox->setEnabled (false);
         }
 
-        const QString locationLabelText = stripUndisplayable (d->locationLabel->text ());
-        const QString filterLabelText = stripUndisplayable (d->filterLabel->text ());
-        QWhatsThis::add (d->autoSelectExtCheckBox,
+        const TQString locationLabelText = stripUndisplayable (d->locationLabel->text ());
+        const TQString filterLabelText = stripUndisplayable (d->filterLabel->text ());
+        TQWhatsThis::add (d->autoSelectExtCheckBox,
             "<qt>" +
                 i18n (
                   "This option enables some convenient features for "
@@ -2038,12 +2038,12 @@ void KFileDialog::updateAutoSelectExtension (void)
 // Updates the extension of the filename specified in locationEdit if the
 // Automatically Select Extension feature is enabled.
 // (this prevents you from accidently saving "file.kwd" as RTF, for example)
-void KFileDialog::updateLocationEditExtension (const QString &lastExtension)
+void KFileDialog::updateLocationEditExtension (const TQString &lastExtension)
 {
     if (!d->autoSelectExtCheckBox->isChecked () || d->extension.isEmpty ())
         return;
 
-    QString urlStr = locationEdit->currentText ();
+    TQString urlStr = locationEdit->currentText ();
     if (urlStr.isEmpty ())
         return;
 
@@ -2051,7 +2051,7 @@ void KFileDialog::updateLocationEditExtension (const QString &lastExtension)
     kdDebug (kfile_area) << "updateLocationEditExtension (" << url << ")" << endl;
 
     const int fileNameOffset = urlStr.findRev ('/') + 1;
-    QString fileName = urlStr.mid (fileNameOffset);
+    TQString fileName = urlStr.mid (fileNameOffset);
 
     const int dot = fileName.findRev ('.');
     const int len = fileName.length ();
@@ -2088,7 +2088,7 @@ void KFileDialog::updateLocationEditExtension (const QString &lastExtension)
             fileName.truncate (dot);
 
         // add extension
-        const QString newText = urlStr.left (fileNameOffset) + fileName + d->extension;
+        const TQString newText = urlStr.left (fileNameOffset) + fileName + d->extension;
         if ( newText != locationEdit->currentText() )
         {
             locationEdit->setCurrentText (urlStr.left (fileNameOffset) + fileName + d->extension);
@@ -2102,7 +2102,7 @@ void KFileDialog::updateLocationEditExtension (const QString &lastExtension)
 void KFileDialog::updateFilter ()
 {
     if ((operationMode() == Saving) && (mode() & KFile::File) ) {
-        const QString urlStr = locationEdit->currentText ();
+        const TQString urlStr = locationEdit->currentText ();
         if (urlStr.isEmpty ())
             return;
 
@@ -2122,7 +2122,7 @@ void KFileDialog::appendExtension (KURL &url)
     if (!d->autoSelectExtCheckBox->isChecked () || d->extension.isEmpty ())
         return;
 
-    QString fileName = url.fileName ();
+    TQString fileName = url.fileName ();
     if (fileName.isEmpty ())
         return;
 
@@ -2178,8 +2178,8 @@ void KFileDialog::addToRecentDocuments()
     int m = ops->mode();
 
     if ( m & KFile::LocalOnly ) {
-        QStringList files = selectedFiles();
-        QStringList::ConstIterator it = files.begin();
+        TQStringList files = selectedFiles();
+        TQStringList::ConstIterator it = files.begin();
         for ( ; it != files.end(); ++it )
             KRecentDocument::add( *it );
     }
@@ -2199,7 +2199,7 @@ KActionCollection * KFileDialog::actionCollection() const
     return ops->actionCollection();
 }
 
-void KFileDialog::keyPressEvent( QKeyEvent *e )
+void KFileDialog::keyPressEvent( TQKeyEvent *e )
 {
     if ( e->key() == Key_Escape )
     {
@@ -2222,7 +2222,7 @@ void KFileDialog::toggleSpeedbar( bool show )
         // check to see if they have a home item defined, if not show the home button
         KURLBarItem *urlItem = static_cast<KURLBarItem*>( d->urlBar->listBox()->firstItem() );
         KURL homeURL;
-        homeURL.setPath( QDir::homeDirPath() );
+        homeURL.setPath( TQDir::homeDirPath() );
         while ( urlItem )
         {
             if ( homeURL.equals( urlItem->url(), true ) )
@@ -2256,15 +2256,15 @@ void KFileDialog::toggleBookmarks(bool show)
         }
 
         d->bookmarkHandler = new KFileBookmarkHandler( this );
-        connect( d->bookmarkHandler, SIGNAL( openURL( const QString& )),
-                    SLOT( enterURL( const QString& )));
+        connect( d->bookmarkHandler, TQT_SIGNAL( openURL( const TQString& )),
+                    TQT_SLOT( enterURL( const TQString& )));
 
-        toolbar->insertButton(QString::fromLatin1("bookmark"),
+        toolbar->insertButton(TQString::fromLatin1("bookmark"),
                               (int)HOTLIST_BUTTON, true,
                               i18n("Bookmarks"), 5);
         toolbar->getButton(HOTLIST_BUTTON)->setPopup(d->bookmarkHandler->menu(),
                                                      true);
-        QWhatsThis::add(toolbar->getButton(HOTLIST_BUTTON),
+        TQWhatsThis::add(toolbar->getButton(HOTLIST_BUTTON),
                         i18n("<qt>This button allows you to bookmark specific locations. "
                                 "Click on this button to open the bookmark menu where you may add, "
                                 "edit or select a bookmark.<p>"
@@ -2296,12 +2296,12 @@ void KFileDialog::initStatic()
 }
 
 // static
-KURL KFileDialog::getStartURL( const QString& startDir,
-                               QString& recentDirClass )
+KURL KFileDialog::getStartURL( const TQString& startDir,
+                               TQString& recentDirClass )
 {
     initStatic();
 
-    recentDirClass = QString::null;
+    recentDirClass = TQString::null;
     KURL ret;
 
     bool useDefaultStartDir = startDir.isEmpty();
@@ -2314,7 +2314,7 @@ KURL KFileDialog::getStartURL( const QString& startDir,
         }
         else
         {
-            ret = KCmdLineArgs::makeURL( QFile::encodeName(startDir) );
+            ret = KCmdLineArgs::makeURL( TQFile::encodeName(startDir) );
             // If we won't be able to list it (e.g. http), then use default
             if ( !KProtocolInfo::supportsListing( ret ) )
                 useDefaultStartDir = true;
@@ -2326,15 +2326,15 @@ KURL KFileDialog::getStartURL( const QString& startDir,
         if (lastDirectory->isEmpty()) {
             lastDirectory->setPath(KGlobalSettings::documentPath());
             KURL home;
-            home.setPath( QDir::homeDirPath() );
+            home.setPath( TQDir::homeDirPath() );
             // if there is no docpath set (== home dir), we prefer the current
             // directory over it. We also prefer the homedir when our CWD is
             // different from our homedirectory or when the document dir
             // does not exist
             if ( lastDirectory->path(+1) == home.path(+1) ||
-                 QDir::currentDirPath() != QDir::homeDirPath() ||
-                 !QDir(lastDirectory->path(+1)).exists() )
-                lastDirectory->setPath(QDir::currentDirPath());
+                 TQDir::currentDirPath() != TQDir::homeDirPath() ||
+                 !TQDir(lastDirectory->path(+1)).exists() )
+                lastDirectory->setPath(TQDir::currentDirPath());
         }
         ret = *lastDirectory;
     }
@@ -2352,7 +2352,7 @@ void KFileDialog::setStartDir( const KURL& directory )
 void KFileDialog::setNonExtSelection()
 {
     // Enhanced rename: Don't highlight the file extension.
-    QString pattern, filename = locationEdit->currentText().stripWhiteSpace();
+    TQString pattern, filename = locationEdit->currentText().stripWhiteSpace();
     KServiceTypeFactory::self()->findFromPattern( filename, &pattern );
 
     if ( !pattern.isEmpty() && pattern.at( 0 ) == '*' && pattern.find( '*' , 1 ) == -1 )

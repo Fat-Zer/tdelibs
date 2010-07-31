@@ -25,10 +25,10 @@
 #ifndef KHTMLFONT_H
 #define KHTMLFONT_H
 
-#include <qfont.h>
-#include <qfontmetrics.h>
-#include <qmap.h>
-#include <qpainter.h>
+#include <tqfont.h>
+#include <tqfontmetrics.h>
+#include <tqmap.h>
+#include <tqpainter.h>
 
 class QFontDatabase;
 class QPaintDeviceMetrics;
@@ -51,7 +51,7 @@ public:
                  weight == other.weight );
     }
 
-    QString family;
+    TQString family;
     short int size;
     bool italic 		: 1;
     bool smallCaps 		: 1;
@@ -70,7 +70,7 @@ public:
         :  fontDef( fd ), f(), fm( f ), scFont( 0 ), letterSpacing( 0 ), wordSpacing( 0 )
         {}
     Font(const Font& o)
-        : fontDef(o.fontDef), f(o.f), fm(o.fm), scFont(o.scFont), letterSpacing(o.letterSpacing), wordSpacing(o.wordSpacing) { if (o.scFont) scFont = new QFont(*o.scFont); }
+        : fontDef(o.fontDef), f(o.f), fm(o.fm), scFont(o.scFont), letterSpacing(o.letterSpacing), wordSpacing(o.wordSpacing) { if (o.scFont) scFont = new TQFont(*o.scFont); }
     ~Font() { delete scFont; }
 
     bool operator == ( const Font &other ) const {
@@ -81,7 +81,7 @@ public:
 
     const FontDef& getFontDef() const { return fontDef; }
 
-    void update( QPaintDeviceMetrics *devMetrics ) const;
+    void update( TQPaintDeviceMetrics *devMetrics ) const;
 
     /**
      * Draws a piece from the given piece of text.
@@ -107,8 +107,8 @@ public:
      *		decoration painting
      * @param deco combined text decoration (see Decoration)
      */
-    void drawText( QPainter *p, int x, int y, QChar *str, int slen, int pos, int len, int width,
-                   QPainter::TextDirection d, int from=-1, int to=-1, QColor bg=QColor(),
+    void drawText( TQPainter *p, int x, int y, TQChar *str, int slen, int pos, int len, int width,
+                   TQPainter::TextDirection d, int from=-1, int to=-1, TQColor bg=TQColor(),
 		   int uy=-1, int h=-1, int deco=0 ) const;
 
     /** returns the width of the given string chunk in pixels.
@@ -126,7 +126,7 @@ public:
      * str. Note that toAdd applies to all spaces within str, but only those
      * within [pos, pos+len) are counted towards the width.
      */
-    int width( QChar *str, int slen, int pos, int len, int start = 0, int end = 0, int toAdd = 0 ) const;
+    int width( TQChar *str, int slen, int pos, int len, int start = 0, int end = 0, int toAdd = 0 ) const;
     /** return the width of the given char in pixels.
      *
      * The method also considers various styles like text-align and font-variant
@@ -134,7 +134,7 @@ public:
      * @param slen total length of string
      * @param pos zero-based position of char in string
      */
-    int width( QChar *str, int slen, int pos) const;
+    int width( TQChar *str, int slen, int pos) const;
 
     /** Text decoration constants.
      *
@@ -154,7 +154,7 @@ public:
      * @param deco decoration to be drawn (see Decoration). The enumeration
      *		constants may be combined.
      */
-    void drawDecoration(QPainter *p, int x, int y, int baseline, int width, int height, int deco) const;
+    void drawDecoration(TQPainter *p, int x, int y, int baseline, int width, int height, int deco) const;
 
     /** returns letter spacing
      */
@@ -165,9 +165,9 @@ public:
 
 private:
     mutable FontDef fontDef;
-    mutable QFont f;
-    mutable QFontMetrics fm;
-    mutable QFont *scFont;
+    mutable TQFont f;
+    mutable TQFontMetrics fm;
+    mutable TQFont *scFont;
     short letterSpacing;
     short wordSpacing;
 
@@ -178,9 +178,9 @@ private:
         Yes
     };
 
-    static QMap<ScalKey, ScalInfo>* scalCache;
-    static QMap<ScalKey, QValueList<int> >* scalSizesCache;
-    static bool isFontScalable(QFontDatabase& db, const QFont& font);
+    static TQMap<ScalKey, ScalInfo>* scalCache;
+    static TQMap<ScalKey, TQValueList<int> >* scalSizesCache;
+    static bool isFontScalable(TQFontDatabase& db, const TQFont& font);
 };
 
 } // namespace

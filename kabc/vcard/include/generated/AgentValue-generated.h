@@ -3,13 +3,13 @@
 public:
 AgentValue();
 AgentValue(const AgentValue&);
-AgentValue(const QCString&);
+AgentValue(const TQCString&);
 AgentValue & operator = (AgentValue&);
-AgentValue & operator = (const QCString&);
+AgentValue & operator = (const TQCString&);
 bool operator ==(AgentValue&);
 bool operator !=(AgentValue& x) {return !(*this==x);}
-bool operator ==(const QCString& s) {AgentValue a(s);return(*this==a);} 
-bool operator != (const QCString& s) {return !(*this == s);}
+bool operator ==(const TQCString& s) {AgentValue a(s);return(*this==a);} 
+bool operator != (const TQCString& s) {return !(*this == s);}
 
 virtual ~AgentValue();
 void parse() {if(!parsed_) _parse();parsed_=true;assembled_=false;}

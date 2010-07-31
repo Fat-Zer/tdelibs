@@ -13,10 +13,10 @@
 #ifndef __KIconEffect_h_Included__
 #define __KIconEffect_h_Included__
 
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qcolor.h>
-#include <qrect.h>
+#include <tqimage.h>
+#include <tqpixmap.h>
+#include <tqcolor.h>
+#include <tqrect.h>
 #include "kdelibs_export.h"
 
 class QWidget;
@@ -74,13 +74,13 @@ public:
 
     /**
      * Returns a fingerprint for the effect by encoding
-     * the given @p group and @p state into a QString. This
+     * the given @p group and @p state into a TQString. This
      * is useful for caching.
      * @param group the group, see KIcon::Group
      * @param state the state, see KIcon::States
      * @return the fingerprint of the given @p group+@p state
      */
-     QString fingerprint(int group, int state) const;
+     TQString fingerprint(int group, int state) const;
 
     /**
      * Applies an effect to an image. The effect to apply depends on the
@@ -90,7 +90,7 @@ public:
      * @param state The icon's state, see KIcon::States
      * @return An image with the effect applied.
      */
-    QImage apply(QImage src, int group, int state) const;
+    TQImage apply(TQImage src, int group, int state) const;
 
     /**
      * Applies an effect to an image.
@@ -102,11 +102,11 @@ public:
      * @return An image with the effect applied.
      */
     // KDE4: make them references
-    QImage apply(QImage src, int effect, float value, const QColor rgb, bool trans) const;
+    TQImage apply(TQImage src, int effect, float value, const TQColor rgb, bool trans) const;
     /**
      * @since 3.4
      */
-    QImage apply(QImage src, int effect, float value, const QColor rgb, const QColor rgb2, bool trans) const;
+    TQImage apply(TQImage src, int effect, float value, const TQColor rgb, const TQColor rgb2, bool trans) const;
 
     /**
      * Applies an effect to a pixmap.
@@ -115,7 +115,7 @@ public:
      * @param state The icon's state, see KIcon::States
      * @return A pixmap with the effect applied.
      */
-    QPixmap apply(QPixmap src, int group, int state) const;
+    TQPixmap apply(TQPixmap src, int group, int state) const;
 
     /**
      * Applies an effect to a pixmap.
@@ -126,18 +126,18 @@ public:
      * @param trans Add Transparency if trans = true.
      * @return A pixmap with the effect applied.
      */
-    QPixmap apply(QPixmap src, int effect, float value, const QColor rgb, bool trans) const;
+    TQPixmap apply(TQPixmap src, int effect, float value, const TQColor rgb, bool trans) const;
     /**
      * @since 3.4
      */
-    QPixmap apply(QPixmap src, int effect, float value, const QColor rgb, const QColor rgb2, bool trans) const;
+    TQPixmap apply(TQPixmap src, int effect, float value, const TQColor rgb, const TQColor rgb2, bool trans) const;
 
     /**
      * Returns an image twice as large, consisting of 2x2 pixels.
      * @param src the image.
      * @return the scaled image.
      */
-    QImage doublePixels(QImage src) const;
+    TQImage doublePixels(TQImage src) const;
 
     /**
      * Provides visual feedback to show activation of an icon on a widget.
@@ -151,8 +151,8 @@ public:
      * @param widget The widget on which the effect should be painted
      * @param rect This rectangle defines the effect's borders
      */
-    static void visualActivate(QWidget *widget, QRect rect);
-    static void visualActivate(QWidget *widget, QRect rect, QPixmap *pixmap);
+    static void visualActivate(TQWidget *widget, TQRect rect);
+    static void visualActivate(TQWidget *widget, TQRect rect, TQPixmap *pixmap);
 
     /**
      * Tints an image gray.
@@ -160,7 +160,7 @@ public:
      * @param image The image
      * @param value Strength of the effect. 0 <= @p value <= 1
      */
-    static void toGray(QImage &image, float value);
+    static void toGray(TQImage &image, float value);
 
     /**
      * Colorizes an image with a specific color.
@@ -169,7 +169,7 @@ public:
      * @param col The color with which the @p image is tinted
      * @param value Strength of the effect. 0 <= @p value <= 1
      */
-    static void colorize(QImage &image, const QColor &col, float value);
+    static void colorize(TQImage &image, const TQColor &col, float value);
 
     /**
      * Produces a monochrome icon with a given foreground and background color
@@ -180,7 +180,7 @@ public:
      * @param value Strength of the effect. 0 <= @p value <= 1
      * @since 3.4
      */
-    static void toMonochrome(QImage &image, const QColor &black, const QColor &white, float value);
+    static void toMonochrome(TQImage &image, const TQColor &black, const TQColor &white, float value);
 
     /**
      * Desaturates an image.
@@ -188,7 +188,7 @@ public:
      * @param image The image
      * @param value Strength of the effect. 0 <= @p value <= 1
      */
-    static void deSaturate(QImage &image, float value);
+    static void deSaturate(TQImage &image, float value);
 
     /**
      * Changes the gamma value of an image.
@@ -196,21 +196,21 @@ public:
      * @param image The image
      * @param value Strength of the effect. 0 <= @p value <= 1
      */
-    static void toGamma(QImage &image, float value);
+    static void toGamma(TQImage &image, float value);
 
     /**
      * Renders an image semi-transparent.
      *
      * @param image The image
      */
-    static void semiTransparent(QImage &image);
+    static void semiTransparent(TQImage &image);
 
     /**
      * Renders a pixmap semi-transparent.
      *
      * @param pixmap The pixmap
      */
-    static void semiTransparent(QPixmap &pixmap);
+    static void semiTransparent(TQPixmap &pixmap);
 
     /**
      * Overlays an image with an other image.
@@ -218,12 +218,12 @@ public:
      * @param src The image
      * @param overlay The image to overlay @p src with
      */
-    static void overlay(QImage &src, QImage &overlay);
+    static void overlay(TQImage &src, TQImage &overlay);
 
 private:
     int mEffect[6][3];
     float mValue[6][3];
-    QColor mColor[6][3];
+    TQColor mColor[6][3];
     bool mTrans[6][3];
     KIconEffectPrivate *d;
 };

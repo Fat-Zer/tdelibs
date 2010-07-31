@@ -28,7 +28,7 @@
 #ifndef __KRECENTDIRS_H
 #define __KRECENTDIRS_H
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -54,17 +54,17 @@ public:
      * Returns a list of directories associated with this file-class.
      * The most recently used directory is at the front of the list.
      */
-    static QStringList list(const QString &fileClass);
+    static TQStringList list(const TQString &fileClass);
     
     /**
      * Returns the most recently used directory accociated with this file-class.
      */
-    static QString dir(const QString &fileClass);
+    static TQString dir(const TQString &fileClass);
     
     /**
      * Associates @p directory with @p fileClass
      */
-    static void add(const QString &fileClass, const QString &directory);
+    static void add(const TQString &fileClass, const TQString &directory);
 };
 
 #endif

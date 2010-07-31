@@ -12,6 +12,6 @@ int main( int argc, char** argv )
 
     KIDLTest_stub* t = new KIDLTest_stub( "kidlservertest", "Hello" );
 
-    QString ret = t->hello("Torben");
+    TQString ret = t->hello("Torben");
     qDebug("Server says: %s", ret.latin1() );
 }

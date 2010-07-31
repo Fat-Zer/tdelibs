@@ -31,8 +31,8 @@
 
 #include <kdebug.h>
 
-#include <qpainter.h>
-#include <qpopupmenu.h>
+#include <tqpainter.h>
+#include <tqpopupmenu.h>
 
 KateRenderer::KateRenderer(KateDocument* doc, KateView *view)
   : m_doc(doc), m_view (view), m_caretStyle(KateRenderer::Insert)
@@ -120,7 +120,7 @@ void KateRenderer::setShowSelections(bool showSelections)
 
 void KateRenderer::increaseFontSizes()
 {
-  QFont f ( *config()->font () );
+  TQFont f ( *config()->font () );
   f.setPointSize (f.pointSize ()+1);
 
   config()->setFont (f);
@@ -128,7 +128,7 @@ void KateRenderer::increaseFontSizes()
 
 void KateRenderer::decreaseFontSizes()
 {
-  QFont f ( *config()->font () );
+  TQFont f ( *config()->font () );
 
   if ((f.pointSize ()-1) > 0)
     f.setPointSize (f.pointSize ()-1);
@@ -149,7 +149,7 @@ void KateRenderer::setPrinterFriendly(bool printerFriendly)
   setDrawCaret(false);
 }
 
-bool KateRenderer::paintTextLineBackground(QPainter& paint, int line, bool isCurrentLine, int xStart, int xEnd)
+bool KateRenderer::paintTextLineBackground(TQPainter& paint, int line, bool isCurrentLine, int xStart, int xEnd)
 {
   if (isPrinterFriendly())
     return false;
@@ -158,7 +158,7 @@ bool KateRenderer::paintTextLineBackground(QPainter& paint, int line, bool isCur
   KateFontStruct *fs = config()->fontStruct();
 
   // Normal background color
-  QColor backgroundColor( config()->backgroundColor() );
+  TQColor backgroundColor( config()->backgroundColor() );
 
   bool selectionPainted = false;
   if (showSelections() && m_view->lineSelected(line))
@@ -184,7 +184,7 @@ bool KateRenderer::paintTextLineBackground(QPainter& paint, int line, bool isCur
         KTextEditor::MarkInterface::MarkTypes markType = (KTextEditor::MarkInterface::MarkTypes)(1<<bit);
         if (mrk & markType)
         {
-          QColor markColor = config()->lineMarkerColor(markType);
+          TQColor markColor = config()->lineMarkerColor(markType);
 
           if (markColor.isValid()) {
             markCount++;
@@ -214,9 +214,9 @@ bool KateRenderer::paintTextLineBackground(QPainter& paint, int line, bool isCur
   return selectionPainted;
 }
 
-void KateRenderer::paintWhitespaceMarker(QPainter &paint, uint x, uint y)
+void KateRenderer::paintWhitespaceMarker(TQPainter &paint, uint x, uint y)
 {
-  QPen penBackup( paint.pen() );
+  TQPen penBackup( paint.pen() );
   paint.setPen( config()->tabMarkerColor() );
   paint.drawPoint(x,     y);
   paint.drawPoint(x + 1, y);
@@ -225,9 +225,9 @@ void KateRenderer::paintWhitespaceMarker(QPainter &paint, uint x, uint y)
 }
 
 
-void KateRenderer::paintIndentMarker(QPainter &paint, uint x, uint row)
+void KateRenderer::paintIndentMarker(TQPainter &paint, uint x, uint row)
 {
-  QPen penBackup( paint.pen() );
+  TQPen penBackup( paint.pen() );
   paint.setPen( config()->tabMarkerColor() );
 
   const int top = paint.window().top();
@@ -250,7 +250,7 @@ void KateRenderer::paintIndentMarker(QPainter &paint, uint x, uint row)
 }
 
 
-void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, int xStart, int xEnd, const KateTextCursor* cursor, const KateBracketRange* bracketmark)
+void KateRenderer::paintTextLine(TQPainter& paint, const KateLineRange* range, int xStart, int xEnd, const KateTextCursor* cursor, const KateBracketRange* bracketmark)
 {
   int line = range->line;
 
@@ -341,7 +341,7 @@ void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, in
   // text attribs font/style data
   KateAttribute* attr = m_doc->highlight()->attributes(m_schema)->data();
 
-  const QColor *cursorColor = &attr[0].textColor();
+  const TQColor *cursorColor = &attr[0].textColor();
 
   // Start arbitrary highlighting
   KateTextCursor currentPos(line, startcol);
@@ -352,7 +352,7 @@ void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, in
 
   // Draws the dashed underline at the start of a folded block of text.
   if (range->startsInvisibleBlock) {
-    paint.setPen(QPen(config()->wordWrapMarkerColor(), 1, Qt::DashLine));
+    paint.setPen(TQPen(config()->wordWrapMarkerColor(), 1, Qt::DashLine));
     paint.drawLine(0, fs->fontHeight - 1, xEnd - xStart, fs->fontHeight - 1);
   }
 
@@ -360,7 +360,7 @@ void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, in
   if (range->xOffset() && range->xOffset() > xStart)
   {
     paint.fillRect(0, 0, range->xOffset() - xStart, fs->fontHeight,
-      QBrush(config()->wordWrapMarkerColor(), QBrush::DiagCrossPattern));
+      TQBrush(config()->wordWrapMarkerColor(), TQBrush::DiagCrossPattern));
   }
 
   // painting loop
@@ -373,7 +373,7 @@ void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, in
     if (showCursor && (cursor->col() >= int(startcol)))
     {
       cursorVisible = true;
-      cursorXPos = xPos + cursor->col() * fs->myFontMetrics.width(QChar(' '));
+      cursorXPos = xPos + cursor->col() * fs->myFontMetrics.width(TQChar(' '));
     }
   }
   else
@@ -385,8 +385,8 @@ void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, in
 
     KateAttribute customHL;
 
-    const QColor *curColor = 0;
-    const QColor *oldColor = 0;
+    const TQColor *curColor = 0;
+    const TQColor *oldColor = 0;
 
     KateAttribute* oldAt = &attr[0];
 
@@ -414,7 +414,7 @@ void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, in
     const uint lastIndentColumn = textLine->firstChar();
 
     // Could be precomputed.
-    const uint spaceWidth = fs->width (QChar(' '), false, false, m_tabWidth);
+    const uint spaceWidth = fs->width (TQChar(' '), false, false, m_tabWidth);
 
     // Get current x position.
     int curPos = textLine->cursorX(curCol, m_tabWidth);
@@ -425,17 +425,17 @@ void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, in
       // ### if uncommented, causes an O(n^2) behaviour
       //Q_ASSERT(curPos == textLine->cursorX(curCol, m_tabWidth));
 
-      QChar curChar = textLine->string()[curCol];
+      TQChar curChar = textLine->string()[curCol];
       // Decide if this character is a tab - we treat the spacing differently
       // TODO: move tab width calculation elsewhere?
-      bool isTab = curChar == QChar('\t');
+      bool isTab = curChar == TQChar('\t');
 
       // Determine current syntax highlighting attribute
       // A bit legacy but doesn't need to change
       KateAttribute* curAt = (noAttribs || ((*textAttributes) >= atLen)) ? &attr[0] : &attr[*textAttributes];
 
       // X position calculation. Incorrect for fonts with non-zero leftBearing() and rightBearing() results.
-      // TODO: make internal charWidth() function, use QFontMetrics::charWidth().
+      // TODO: make internal charWidth() function, use TQFontMetrics::charWidth().
       xPosAfter += curAt->width(*fs, curChar, m_tabWidth);
 
       // Tab special treatment, move to charWidth().
@@ -514,7 +514,7 @@ void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, in
 
           // the next char is a tab (removed the "and this isn't" because that's dealt with above)
           // i.e. we have to draw the current text so the tab can be rendered as above.
-          || (textLine->string()[nextCol] == QChar('\t'))
+          || (textLine->string()[nextCol] == TQChar('\t'))
 
           // input method edit area
           || ( m_view && (isIMEdit != m_view->isIMEdit( line, nextCol )) )
@@ -532,21 +532,21 @@ void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, in
           {
             bool paintBackground = true;
             uint width = xPosAfter - oldXPos;
-            QColor fillColor;
+            TQColor fillColor;
 
             if (isIMSel && !isTab)
             {
               // input method selection
-              fillColor = m_view->colorGroup().color(QColorGroup::Foreground);
+              fillColor = m_view->colorGroup().color(TQColorGroup::Foreground);
             }
             else if (isIMEdit && !isTab)
             {
               // XIM support
               // input method edit area
-              const QColorGroup& cg = m_view->colorGroup();
+              const TQColorGroup& cg = m_view->colorGroup();
               int h1, s1, v1, h2, s2, v2;
-              cg.color( QColorGroup::Base ).hsv( &h1, &s1, &v1 );
-              cg.color( QColorGroup::Background ).hsv( &h2, &s2, &v2 );
+              cg.color( TQColorGroup::Base ).hsv( &h1, &s1, &v1 );
+              cg.color( TQColorGroup::Background ).hsv( &h2, &s2, &v2 );
               fillColor.setHsv( h1, s1, ( v1 + v2 ) / 2 );
             }
             else if (!selectionPainted && (isSel || currentHL.itemSet(KateAttribute::BGColor)))
@@ -576,7 +576,7 @@ void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, in
             if (isIMSel && paintBackground && !isTab)
             {
               paint.save();
-              paint.setPen( m_view->colorGroup().color( QColorGroup::BrightText ) );
+              paint.setPen( m_view->colorGroup().color( TQColorGroup::BrightText ) );
             }
 
             // Draw indentation markers.
@@ -612,11 +612,11 @@ void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, in
           if (isTab || (curCol >= trailingWhitespaceColumn))
           {
             // Draw spaces too, because it might be eg. underlined
-            static QString spaces;
+            static TQString spaces;
             if (int(spaces.length()) != m_tabWidth)
               spaces.fill(' ', m_tabWidth);
 
-            paint.drawText(oldXPos-xStart, y, isTab ? spaces : QString(" "));
+            paint.drawText(oldXPos-xStart, y, isTab ? spaces : TQString(" "));
 
             if (showTabs())
             {
@@ -636,7 +636,7 @@ void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, in
 
             // Draw preedit's underline
             if (isIMEdit) {
-              QRect r( oldXPos - xStart, 0, xPosAfter - oldXPos, fs->fontHeight );
+              TQRect r( oldXPos - xStart, 0, xPosAfter - oldXPos, fs->fontHeight );
               paint.drawLine( r.bottomLeft(), r.bottomRight() );
             }
 
@@ -707,7 +707,7 @@ void KateRenderer::paintTextLine(QPainter& paint, const KateLineRange* range, in
     if (showCursor && (cursor->col() >= int(curCol)))
     {
       cursorVisible = true;
-      cursorXPos = xPos + (cursor->col() - int(curCol)) * fs->myFontMetrics.width(QChar(' '));
+      cursorXPos = xPos + (cursor->col() - int(curCol)) * fs->myFontMetrics.width(TQChar(' '));
       cursorMaxWidth = xPosAfter - xPos;
       cursorColor = &oldAt->textColor();
     }
@@ -745,8 +745,8 @@ uint KateRenderer::textWidth(const KateTextLine::Ptr &textLine, int cursorCol)
 
   KateFontStruct *fs = config()->fontStruct();
 
-  const QChar *unicode = textLine->text();
-  const QString &textString = textLine->string();
+  const TQChar *unicode = textLine->text();
+  const TQString &textString = textLine->string();
 
   int x = 0;
   int width;
@@ -758,12 +758,12 @@ uint KateRenderer::textWidth(const KateTextLine::Ptr &textLine, int cursorCol)
     } else {
       // DF: commented out. It happens all the time.
       //Q_ASSERT(!m_doc->wrapCursor());
-      width = a->width(*fs, QChar(' '), m_tabWidth);
+      width = a->width(*fs, TQChar(' '), m_tabWidth);
     }
 
     x += width;
 
-    if (z < len && unicode[z] == QChar('\t'))
+    if (z < len && unicode[z] == TQChar('\t'))
       x -= x % width;
   }
 
@@ -787,8 +787,8 @@ uint KateRenderer::textWidth(const KateTextLine::Ptr &textLine, uint startcol, u
   *needWrap = false;
 
   const uint len = textLine->length();
-  const QChar *unicode = textLine->text();
-  const QString &textString = textLine->string();
+  const TQChar *unicode = textLine->text();
+  const TQString &textString = textLine->string();
 
   uint z = startcol;
   for (; z < len; z++)
@@ -800,7 +800,7 @@ uint KateRenderer::textWidth(const KateTextLine::Ptr &textLine, uint startcol, u
 
     // How should tabs be treated when they word-wrap on a print-out?
     // if startcol != 0, this messes up (then again, word wrapping messes up anyway)
-    if (unicode[z] == QChar('\t'))
+    if (unicode[z] == TQChar('\t'))
       x -= x % width;
 
     if (unicode[z].isSpace())
@@ -887,8 +887,8 @@ uint KateRenderer::textWidth( KateTextCursor &cursor, int xPos, uint startCol)
   if (!textLine) return 0;
 
   const uint len = textLine->length();
-  const QChar *unicode = textLine->text();
-  const QString &textString = textLine->string();
+  const TQChar *unicode = textLine->text();
+  const TQString &textString = textLine->string();
 
   x = oldX = 0;
   uint z = startCol;
@@ -902,11 +902,11 @@ uint KateRenderer::textWidth( KateTextCursor &cursor, int xPos, uint startCol)
     if (z < len)
       width = a->width(*fs, textString, z, m_tabWidth);
     else
-      width = a->width(*fs, QChar(' '), m_tabWidth);
+      width = a->width(*fs, TQChar(' '), m_tabWidth);
 
     x += width;
 
-    if (z < len && unicode[z] == QChar('\t'))
+    if (z < len && unicode[z] == TQChar('\t'))
       x -= x % width;
 
     z++;
@@ -919,12 +919,12 @@ uint KateRenderer::textWidth( KateTextCursor &cursor, int xPos, uint startCol)
   return x;
 }
 
-const QFont *KateRenderer::currentFont()
+const TQFont *KateRenderer::currentFont()
 {
   return config()->font();
 }
 
-const QFontMetrics* KateRenderer::currentFontMetrics()
+const TQFontMetrics* KateRenderer::currentFontMetrics()
 {
   return config()->fontMetrics();
 }
@@ -947,7 +947,7 @@ uint KateRenderer::textPos(const KateTextLine::Ptr &textLine, int xPos, uint sta
 
   uint z = startCol;
   const uint len = textLine->length();
-  const QString &textString = textLine->string();
+  const TQString &textString = textLine->string();
 
   while ( (x < xPos)  && (z < len)) {
     oldX = x;
@@ -1026,7 +1026,7 @@ void KateRenderer::updateConfig ()
 
 uint KateRenderer::spaceWidth()
 {
-  return attribute(0)->width(*config()->fontStruct(), QChar(' '), m_tabWidth);
+  return attribute(0)->width(*config()->fontStruct(), TQChar(' '), m_tabWidth);
 }
 
 // kate: space-indent on; indent-width 2; replace-tabs on;

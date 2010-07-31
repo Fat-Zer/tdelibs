@@ -17,7 +17,7 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#include <qdir.h>
+#include <tqdir.h>
 
 #include "kded.h"
 #include "kdedmodule.h"
@@ -30,8 +30,8 @@
 #include <signal.h>
 #include <time.h>
 
-#include <qfile.h>
-#include <qtimer.h>
+#include <tqfile.h>
+#include <tqtimer.h>
 
 #include <dcopclient.h>
 
@@ -58,9 +58,9 @@ Kded *Kded::_self = 0;
 static bool checkStamps = true;
 static bool delayedCheck = false;
 
-static void runBuildSycoca(QObject *callBackObj=0, const char *callBackSlot=0)
+static void runBuildSycoca(TQObject *callBackObj=0, const char *callBackSlot=0)
 {
-   QStringList args;
+   TQStringList args;
    args.append("--incremental");
    if(checkStamps)
       args.append("--checkstamps");
@@ -70,12 +70,12 @@ static void runBuildSycoca(QObject *callBackObj=0, const char *callBackSlot=0)
       checkStamps = false; // useful only during kded startup
    if (callBackObj)
    {
-      QByteArray data;
-      QDataStream dataStream( data, IO_WriteOnly );
-      dataStream << QString("kbuildsycoca") << args;
-      QCString _launcher = KApplication::launcher();
+      TQByteArray data;
+      TQDataStream dataStream( data, IO_WriteOnly );
+      dataStream << TQString("kbuildsycoca") << args;
+      TQCString _launcher = KApplication::launcher();
 
-      kapp->dcopClient()->callAsync(_launcher, _launcher, "kdeinit_exec_wait(QString,QStringList)", data, callBackObj, callBackSlot);
+      kapp->dcopClient()->callAsync(_launcher, _launcher, "kdeinit_exec_wait(TQString,TQStringList)", data, callBackObj, callBackSlot);
    }
    else
    {
@@ -85,14 +85,14 @@ static void runBuildSycoca(QObject *callBackObj=0, const char *callBackSlot=0)
 
 static void runKonfUpdate()
 {
-   KApplication::kdeinitExecWait( "kconf_update", QStringList(), 0, 0, "0" /*no startup notification*/ );
+   KApplication::kdeinitExecWait( "kconf_update", TQStringList(), 0, 0, "0" /*no startup notification*/ );
 }
 
-static void runDontChangeHostname(const QCString &oldName, const QCString &newName)
+static void runDontChangeHostname(const TQCString &oldName, const TQCString &newName)
 {
-   QStringList args;
-   args.append(QFile::decodeName(oldName));
-   args.append(QFile::decodeName(newName));
+   TQStringList args;
+   args.append(TQFile::decodeName(oldName));
+   args.append(TQFile::decodeName(newName));
    KApplication::kdeinitExecWait( "kdontchangethehostname", args );
 }
 
@@ -103,16 +103,16 @@ Kded::Kded(bool checkUpdates, bool new_startup)
     m_newStartup( new_startup )
 {
   _self = this;
-  QCString cPath;
-  QCString ksycoca_env = getenv("KDESYCOCA");
+  TQCString cPath;
+  TQCString ksycoca_env = getenv("KDESYCOCA");
   if (ksycoca_env.isEmpty())
-     cPath = QFile::encodeName(KGlobal::dirs()->saveLocation("tmp")+"ksycoca");
+     cPath = TQFile::encodeName(KGlobal::dirs()->saveLocation("tmp")+"ksycoca");
   else
      cPath = ksycoca_env;
-  m_pTimer = new QTimer(this);
-  connect(m_pTimer, SIGNAL(timeout()), this, SLOT(recreate()));
+  m_pTimer = new TQTimer(this);
+  connect(m_pTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(recreate()));
 
-  QTimer::singleShot(100, this, SLOT(installCrashHandler()));
+  TQTimer::singleShot(100, this, TQT_SLOT(installCrashHandler()));
 
   m_pDirWatch = 0;
 
@@ -130,14 +130,14 @@ Kded::~Kded()
   delete m_pDirWatch;
   // We have to delete the modules while we're still able to process incoming
   // DCOP messages, since modules might make DCOP calls in their destructors.
-  QAsciiDictIterator<KDEDModule> it(m_modules);
+  TQAsciiDictIterator<KDEDModule> it(m_modules);
   while (!it.isEmpty()) 
 	delete it.toFirst();
 }
 
-bool Kded::process(const QCString &obj, const QCString &fun,
-                   const QByteArray &data,
-                   QCString &replyType, QByteArray &replyData)
+bool Kded::process(const TQCString &obj, const TQCString &fun,
+                   const TQByteArray &data,
+                   TQCString &replyType, TQByteArray &replyData)
 {
   if (obj == "ksycoca") return false; // Ignore this one.
 
@@ -162,8 +162,8 @@ void Kded::initModules()
         kde_running = false;
      // Preload kded modules.
      KService::List kdedModules = KServiceType::offers("KDEDModule");
-     QString version = getenv( "KDE_SESSION_VERSION" );
-     QStringList blacklist;
+     TQString version = getenv( "KDE_SESSION_VERSION" );
+     TQStringList blacklist;
      if ( version >= "4" )
      {
          kdDebug(7020) << "KDE4 is running." << endl;
@@ -172,10 +172,10 @@ void Kded::initModules()
      for(KService::List::ConstIterator it = kdedModules.begin(); it != kdedModules.end(); ++it)
      {
          KService::Ptr service = *it;
-         bool autoload = service->property("X-KDE-Kded-autoload", QVariant::Bool).toBool();
-         config->setGroup(QString("Module-%1").arg(service->desktopEntryName()));
+         bool autoload = service->property("X-KDE-Kded-autoload", TQVariant::Bool).toBool();
+         config->setGroup(TQString("Module-%1").arg(service->desktopEntryName()));
          autoload = config->readBoolEntry("autoload", autoload);
-         for (QStringList::Iterator module = blacklist.begin(); module != blacklist.end(); ++module)
+         for (TQStringList::Iterator module = blacklist.begin(); module != blacklist.end(); ++module)
          {
             if (service->desktopEntryName() == *module)
             {
@@ -186,7 +186,7 @@ void Kded::initModules()
          if( m_newStartup )
          {
             // see ksmserver's README for description of the phases
-            QVariant phasev = service->property("X-KDE-Kded-phase", QVariant::Int );
+            TQVariant phasev = service->property("X-KDE-Kded-phase", TQVariant::Int );
             int phase = phasev.isValid() ? phasev.toInt() : 2;
             bool prevent_autoload = false;
             switch( phase )
@@ -211,7 +211,7 @@ void Kded::initModules()
                loadModule(service, false);
          }
          bool dontLoad = false;
-         QVariant p = service->property("X-KDE-Kded-load-on-demand", QVariant::Bool);
+         TQVariant p = service->property("X-KDE-Kded-load-on-demand", TQVariant::Bool);
          if (p.isValid() && (p.toBool() == false))
             dontLoad = true;
          if (dontLoad)
@@ -230,22 +230,22 @@ void Kded::loadSecondPhase()
      for(KService::List::ConstIterator it = kdedModules.begin(); it != kdedModules.end(); ++it)
      {
          KService::Ptr service = *it;
-         bool autoload = service->property("X-KDE-Kded-autoload", QVariant::Bool).toBool();
-         config->setGroup(QString("Module-%1").arg(service->desktopEntryName()));
+         bool autoload = service->property("X-KDE-Kded-autoload", TQVariant::Bool).toBool();
+         config->setGroup(TQString("Module-%1").arg(service->desktopEntryName()));
          autoload = config->readBoolEntry("autoload", autoload);
-         QVariant phasev = service->property("X-KDE-Kded-phase", QVariant::Int );
+         TQVariant phasev = service->property("X-KDE-Kded-phase", TQVariant::Int );
          int phase = phasev.isValid() ? phasev.toInt() : 2;
          if( phase == 2 && autoload )
             loadModule(service, false);
      }
 }
 
-void Kded::noDemandLoad(const QString &obj)
+void Kded::noDemandLoad(const TQString &obj)
 {
   m_dontLoad.insert(obj.latin1(), this);
 }
 
-KDEDModule *Kded::loadModule(const QCString &obj, bool onDemand)
+KDEDModule *Kded::loadModule(const TQCString &obj, bool onDemand)
 {
   KDEDModule *module = m_modules.find(obj);
   if (module)
@@ -259,14 +259,14 @@ KDEDModule *Kded::loadModule(const KService *s, bool onDemand)
   KDEDModule *module = 0;
   if (s && !s->library().isEmpty())
   {
-    QCString obj = s->desktopEntryName().latin1();
+    TQCString obj = s->desktopEntryName().latin1();
     KDEDModule *oldModule = m_modules.find(obj);
     if (oldModule)
        return oldModule;
 
     if (onDemand)
     {
-      QVariant p = s->property("X-KDE-Kded-load-on-demand", QVariant::Bool);
+      TQVariant p = s->property("X-KDE-Kded-load-on-demand", TQVariant::Bool);
       if (p.isValid() && (p.toBool() == false))
       {
          noDemandLoad(s->desktopEntryName());
@@ -277,49 +277,49 @@ KDEDModule *Kded::loadModule(const KService *s, bool onDemand)
 
     KLibLoader *loader = KLibLoader::self();
 
-    QVariant v = s->property("X-KDE-FactoryName", QVariant::String);
-    QString factory = v.isValid() ? v.toString() : QString::null;
+    TQVariant v = s->property("X-KDE-FactoryName", TQVariant::String);
+    TQString factory = v.isValid() ? v.toString() : TQString::null;
     if (factory.isEmpty())
     {
        // Stay bugward compatible
-       v = s->property("X-KDE-Factory", QVariant::String);
-       factory = v.isValid() ? v.toString() : QString::null;
+       v = s->property("X-KDE-Factory", TQVariant::String);
+       factory = v.isValid() ? v.toString() : TQString::null;
     }
     if (factory.isEmpty())
       factory = s->library();
 
     factory = "create_" + factory;
-    QString libname = "kded_"+s->library();
+    TQString libname = "kded_"+s->library();
 
-    KLibrary *lib = loader->library(QFile::encodeName(libname));
+    KLibrary *lib = loader->library(TQFile::encodeName(libname));
     if (!lib)
     {
       kdWarning() << k_funcinfo << "Could not load library. [ "
 		  << loader->lastErrorMessage() << " ]" << endl;
       libname.prepend("lib");
-      lib = loader->library(QFile::encodeName(libname));
+      lib = loader->library(TQFile::encodeName(libname));
     }
     if (lib)
     {
       // get the create_ function
-      void *create = lib->symbol(QFile::encodeName(factory));
+      void *create = lib->symbol(TQFile::encodeName(factory));
 
       if (create)
       {
         // create the module
-        KDEDModule* (*func)(const QCString &);
-        func = (KDEDModule* (*)(const QCString &)) create;
+        KDEDModule* (*func)(const TQCString &);
+        func = (KDEDModule* (*)(const TQCString &)) create;
         module = func(obj);
         if (module)
         {
           m_modules.insert(obj, module);
           m_libs.insert(obj, lib);
-          connect(module, SIGNAL(moduleDeleted(KDEDModule *)), SLOT(slotKDEDModuleRemoved(KDEDModule *)));
+          connect(module, TQT_SIGNAL(moduleDeleted(KDEDModule *)), TQT_SLOT(slotKDEDModuleRemoved(KDEDModule *)));
           kdDebug(7020) << "Successfully loaded module '" << obj << "'\n";
           return module;
         }
       }
-      loader->unloadLibrary(QFile::encodeName(libname));
+      loader->unloadLibrary(TQFile::encodeName(libname));
     }
     else
     {
@@ -331,7 +331,7 @@ KDEDModule *Kded::loadModule(const KService *s, bool onDemand)
   return 0;
 }
 
-bool Kded::unloadModule(const QCString &obj)
+bool Kded::unloadModule(const TQCString &obj)
 {
   KDEDModule *module = m_modules.take(obj);
   if (!module)
@@ -345,7 +345,7 @@ bool Kded::unloadModule(const QCString &obj)
 QCStringList Kded::loadedModules()
 {
 	QCStringList modules;
-	QAsciiDictIterator<KDEDModule> it( m_modules );
+	TQAsciiDictIterator<KDEDModule> it( m_modules );
 	for ( ; it.current(); ++it)
 		modules.append( it.currentKey() );
 
@@ -367,22 +367,22 @@ void Kded::slotKDEDModuleRemoved(KDEDModule *module)
      lib->unload();
 }
 
-void Kded::slotApplicationRemoved(const QCString &appId)
+void Kded::slotApplicationRemoved(const TQCString &appId)
 {
-  for(QAsciiDictIterator<KDEDModule> it(m_modules); it.current(); ++it)
+  for(TQAsciiDictIterator<KDEDModule> it(m_modules); it.current(); ++it)
   {
      it.current()->removeAll(appId);
   }
 
-  QValueList<long> *windowIds = m_windowIdList.find(appId);
+  TQValueList<long> *windowIds = m_windowIdList.find(appId);
   if (windowIds)
   {
-     for( QValueList<long>::ConstIterator it = windowIds->begin();
+     for( TQValueList<long>::ConstIterator it = windowIds->begin();
           it != windowIds->end(); ++it)
      {
         long windowId = *it;
         m_globalWindowIdList.remove(windowId);
-        for(QAsciiDictIterator<KDEDModule> it(m_modules); it.current(); ++it)
+        for(TQAsciiDictIterator<KDEDModule> it(m_modules); it.current(); ++it)
         {
             emit it.current()->windowUnregistered(windowId);
         }
@@ -398,15 +398,15 @@ void Kded::updateDirWatch()
   delete m_pDirWatch;
   m_pDirWatch = new KDirWatch;
 
-  QObject::connect( m_pDirWatch, SIGNAL(dirty(const QString&)),
-           this, SLOT(update(const QString&)));
-  QObject::connect( m_pDirWatch, SIGNAL(created(const QString&)),
-           this, SLOT(update(const QString&)));
-  QObject::connect( m_pDirWatch, SIGNAL(deleted(const QString&)),
-           this, SLOT(dirDeleted(const QString&)));
+  TQObject::connect( m_pDirWatch, TQT_SIGNAL(dirty(const TQString&)),
+           this, TQT_SLOT(update(const TQString&)));
+  TQObject::connect( m_pDirWatch, TQT_SIGNAL(created(const TQString&)),
+           this, TQT_SLOT(update(const TQString&)));
+  TQObject::connect( m_pDirWatch, TQT_SIGNAL(deleted(const TQString&)),
+           this, TQT_SLOT(dirDeleted(const TQString&)));
 
   // For each resource
-  for( QStringList::ConstIterator it = m_allResourceDirs.begin();
+  for( TQStringList::ConstIterator it = m_allResourceDirs.begin();
        it != m_allResourceDirs.end();
        ++it )
   {
@@ -422,9 +422,9 @@ void Kded::updateResourceList()
 
   if (delayedCheck) return;
 
-  QStringList dirs = KSycoca::self()->allResourceDirs();
+  TQStringList dirs = KSycoca::self()->allResourceDirs();
   // For each resource
-  for( QStringList::ConstIterator it = dirs.begin();
+  for( TQStringList::ConstIterator it = dirs.begin();
        it != dirs.end();
        ++it )
   {
@@ -474,7 +474,7 @@ void Kded::recreate(bool initial)
    if (!initial)
    {
       updateDirWatch(); // Update tree first, to be sure to miss nothing.
-      runBuildSycoca(this, SLOT(recreateDone()));
+      runBuildSycoca(this, TQT_SLOT(recreateDone()));
    }
    else
    {
@@ -485,7 +485,7 @@ void Kded::recreate(bool initial)
       if(delayedCheck)
       {
          // do a proper ksycoca check after a delay
-         QTimer::singleShot( 60000, this, SLOT( runDelayedCheck()));
+         TQTimer::singleShot( 60000, this, TQT_SLOT( runDelayedCheck()));
          m_needDelayedCheck = true;
          delayedCheck = false;
       }
@@ -500,8 +500,8 @@ void Kded::recreateDone()
 
    for(; m_recreateCount; m_recreateCount--)
    {
-      QCString replyType = "void";
-      QByteArray replyData;
+      TQCString replyType = "void";
+      TQByteArray replyData;
       DCOPClientTransaction *transaction = m_recreateRequests.first();
       if (transaction)
          kapp->dcopClient()->endTransaction(transaction, replyType, replyData);
@@ -517,12 +517,12 @@ void Kded::recreateDone()
    }
 }
 
-void Kded::dirDeleted(const QString& path)
+void Kded::dirDeleted(const TQString& path)
 {
   update(path);
 }
 
-void Kded::update(const QString& )
+void Kded::update(const TQString& )
 {
   if (!m_recreateBusy)
   {
@@ -534,8 +534,8 @@ void Kded::update(const QString& )
   }
 }
 
-bool Kded::process(const QCString &fun, const QByteArray &data,
-                           QCString &replyType, QByteArray &replyData)
+bool Kded::process(const TQCString &fun, const TQByteArray &data,
+                           TQCString &replyType, TQByteArray &replyData)
 {
   if (fun == "recreate()") {
     if (!m_recreateBusy)
@@ -556,17 +556,17 @@ bool Kded::process(const QCString &fun, const QByteArray &data,
 }
 
 
-void Kded::readDirectory( const QString& _path )
+void Kded::readDirectory( const TQString& _path )
 {
-  QString path( _path );
+  TQString path( _path );
   if ( path.right(1) != "/" )
     path += "/";
 
   if ( m_pDirWatch->contains( path ) ) // Already seen this one?
      return;
 
-  QDir d( _path, QString::null, QDir::Unsorted, QDir::Readable | QDir::Executable | QDir::Dirs | QDir::Hidden );
-  // set QDir ...
+  TQDir d( _path, TQString::null, TQDir::Unsorted, TQDir::Readable | TQDir::Executable | TQDir::Dirs | TQDir::Hidden );
+  // set TQDir ...
 
 
   //************************************************************************
@@ -577,7 +577,7 @@ void Kded::readDirectory( const QString& _path )
 
   if ( !d.exists() )                            // exists&isdir?
   {
-    kdDebug(7020) << QString("Does not exist! (%1)").arg(_path) << endl;
+    kdDebug(7020) << TQString("Does not exist! (%1)").arg(_path) << endl;
     return;                             // return false
   }
 
@@ -586,7 +586,7 @@ void Kded::readDirectory( const QString& _path )
   //************************************************************************
   //                               Reading
   //************************************************************************
-  QString file;
+  TQString file;
   unsigned int i;                           // counter and string length.
   unsigned int count = d.count();
   for( i = 0; i < count; i++ )                        // check all entries
@@ -611,19 +611,19 @@ bool Kded::isWindowRegistered(long windowId)
 void Kded::registerWindowId(long windowId)
 {
   m_globalWindowIdList.replace(windowId, &windowId);
-  QCString sender = callingDcopClient()->senderId();
+  TQCString sender = callingDcopClient()->senderId();
   if( sender.isEmpty()) // local call
       sender = callingDcopClient()->appId();
-  QValueList<long> *windowIds = m_windowIdList.find(sender);
+  TQValueList<long> *windowIds = m_windowIdList.find(sender);
   if (!windowIds)
   {
-    windowIds = new QValueList<long>;
+    windowIds = new TQValueList<long>;
     m_windowIdList.insert(sender, windowIds);
   }
   windowIds->append(windowId);
 
 
-  for(QAsciiDictIterator<KDEDModule> it(m_modules); it.current(); ++it)
+  for(TQAsciiDictIterator<KDEDModule> it(m_modules); it.current(); ++it)
   {
      emit it.current()->windowRegistered(windowId);
   }
@@ -633,10 +633,10 @@ void Kded::registerWindowId(long windowId)
 void Kded::unregisterWindowId(long windowId)
 {
   m_globalWindowIdList.remove(windowId);
-  QCString sender = callingDcopClient()->senderId();
+  TQCString sender = callingDcopClient()->senderId();
   if( sender.isEmpty()) // local call
       sender = callingDcopClient()->appId();
-  QValueList<long> *windowIds = m_windowIdList.find(sender);
+  TQValueList<long> *windowIds = m_windowIdList.find(sender);
   if (windowIds)
   {
      windowIds->remove(windowId);
@@ -644,7 +644,7 @@ void Kded::unregisterWindowId(long windowId)
         m_windowIdList.remove(sender);
   }
 
-  for(QAsciiDictIterator<KDEDModule> it(m_modules); it.current(); ++it)
+  for(TQAsciiDictIterator<KDEDModule> it(m_modules); it.current(); ++it)
   {
     emit it.current()->windowUnregistered(windowId);
   }
@@ -661,16 +661,16 @@ KUpdateD::KUpdateD()
 {
     m_pDirWatch = new KDirWatch;
     m_pTimer = new QTimer;
-    connect(m_pTimer, SIGNAL(timeout()), this, SLOT(runKonfUpdate()));
-    QObject::connect( m_pDirWatch, SIGNAL(dirty(const QString&)),
-           this, SLOT(slotNewUpdateFile()));
+    connect(m_pTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(runKonfUpdate()));
+    TQObject::connect( m_pDirWatch, TQT_SIGNAL(dirty(const TQString&)),
+           this, TQT_SLOT(slotNewUpdateFile()));
 
-    QStringList dirs = KGlobal::dirs()->findDirs("data", "kconf_update");
-    for( QStringList::ConstIterator it = dirs.begin();
+    TQStringList dirs = KGlobal::dirs()->findDirs("data", "kconf_update");
+    for( TQStringList::ConstIterator it = dirs.begin();
          it != dirs.end();
          ++it )
     {
-       QString path = *it;
+       TQString path = *it;
        if (path[path.length()-1] != '/')
           path += "/";
 
@@ -698,7 +698,7 @@ void KUpdateD::slotNewUpdateFile()
 KHostnameD::KHostnameD(int pollInterval)
 {
     m_Timer.start(pollInterval, false /* repetitive */ );
-    connect(&m_Timer, SIGNAL(timeout()), this, SLOT(checkHostname()));
+    connect(&m_Timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(checkHostname()));
     checkHostname();
 }
 
@@ -723,7 +723,7 @@ void KHostnameD::checkHostname()
     if (m_hostname == buf)
        return;
 
-    QCString newHostname = buf;
+    TQCString newHostname = buf;
 
     runDontChangeHostname(m_hostname, newHostname);
     m_hostname = newHostname;
@@ -742,8 +742,8 @@ class KDEDQtDCOPObject : public DCOPObject
 public:
   KDEDQtDCOPObject() : DCOPObject("qt/kded") { }
 
-  virtual bool process(const QCString &fun, const QByteArray &data,
-                       QCString& replyType, QByteArray &replyData)
+  virtual bool process(const TQCString &fun, const TQByteArray &data,
+                       TQCString& replyType, TQByteArray &replyData)
     {
       if ( kapp && (fun == "quit()") )
       {
@@ -779,7 +779,7 @@ public:
           if( Kded::self()->newStartup())
              Kded::self()->initModules();
           else
-	     QTimer::singleShot(500, Kded::self(), SLOT(initModules()));
+	     TQTimer::singleShot(500, Kded::self(), TQT_SLOT(initModules()));
        } else 
           runBuildSycoca();
 
@@ -789,8 +789,8 @@ public:
   QCStringList functions()
     {
        QCStringList res = KUniqueApplication::functions();
-       res += "bool loadModule(QCString)";
-       res += "bool unloadModule(QCString)";
+       res += "bool loadModule(TQCString)";
+       res += "bool unloadModule(TQCString)";
        res += "void registerWindowId(long int)";
        res += "void unregisterWindowId(long int)";
        res += "QCStringList loadedModules()";
@@ -800,32 +800,32 @@ public:
        return res;
     }
 
-  bool process(const QCString &fun, const QByteArray &data,
-               QCString &replyType, QByteArray &replyData)
+  bool process(const TQCString &fun, const TQByteArray &data,
+               TQCString &replyType, TQByteArray &replyData)
   {
-    if (fun == "loadModule(QCString)") {
-      QCString module;
-      QDataStream arg( data, IO_ReadOnly );
+    if (fun == "loadModule(TQCString)") {
+      TQCString module;
+      TQDataStream arg( data, IO_ReadOnly );
       arg >> module;
       bool result = (Kded::self()->loadModule(module, false) != 0);
       replyType = "bool";
-      QDataStream _replyStream( replyData, IO_WriteOnly );
+      TQDataStream _replyStream( replyData, IO_WriteOnly );
       _replyStream << result;
       return true;
     }
-    else if (fun == "unloadModule(QCString)") {
-      QCString module;
-      QDataStream arg( data, IO_ReadOnly );
+    else if (fun == "unloadModule(TQCString)") {
+      TQCString module;
+      TQDataStream arg( data, IO_ReadOnly );
       arg >> module;
       bool result = Kded::self()->unloadModule(module);
       replyType = "bool";
-      QDataStream _replyStream( replyData, IO_WriteOnly );
+      TQDataStream _replyStream( replyData, IO_WriteOnly );
       _replyStream << result;
       return true;
     }
     else if (fun == "registerWindowId(long int)") {
       long windowId;
-      QDataStream arg( data, IO_ReadOnly );
+      TQDataStream arg( data, IO_ReadOnly );
       arg >> windowId;
       Kded::self()->setCallingDcopClient(callingDcopClient());
       Kded::self()->registerWindowId(windowId);
@@ -834,7 +834,7 @@ public:
     }
      else if (fun == "unregisterWindowId(long int)") {
       long windowId;
-      QDataStream arg( data, IO_ReadOnly );
+      TQDataStream arg( data, IO_ReadOnly );
       arg >> windowId;
       Kded::self()->setCallingDcopClient(callingDcopClient());
       Kded::self()->unregisterWindowId(windowId);
@@ -843,7 +843,7 @@ public:
     }
     else if (fun == "loadedModules()") {
       replyType = "QCStringList";
-      QDataStream _replyStream(replyData, IO_WriteOnly);
+      TQDataStream _replyStream(replyData, IO_WriteOnly);
       _replyStream << Kded::self()->loadedModules();
       return true;
     }
@@ -896,7 +896,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
      // Check DCOP communication.
      {
         DCOPClient testDCOP;
-        QCString dcopName = testDCOP.registerAs("kded", false);
+        TQCString dcopName = testDCOP.registerAs("kded", false);
         if (dcopName.isEmpty())
         {
            kdFatal() << "DCOP communication problem!" << endl;
@@ -949,8 +949,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
         (void) new KHostnameD(HostnamePollInterval); // Watch for hostname changes
 
      DCOPClient *client = kapp->dcopClient();
-     QObject::connect(client, SIGNAL(applicationRemoved(const QCString&)),
-             kded, SLOT(slotApplicationRemoved(const QCString&)));
+     TQObject::connect(client, TQT_SIGNAL(applicationRemoved(const TQCString&)),
+             kded, TQT_SLOT(slotApplicationRemoved(const TQCString&)));
      client->setNotifications(true);
      client->setDaemonMode( true );
 
@@ -960,9 +960,9 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
      // If the database changed, kbuildsycoca's signal didn't go anywhere
      // anyway, because it was too early, so let's send this signal
      // unconditionnally (David)
-     QByteArray data;
+     TQByteArray data;
      client->send( "*", "ksycoca", "notifyDatabaseChanged()", data );
-     client->send( "ksplash", "", "upAndRunning(QString)",  QString("kded"));
+     client->send( "ksplash", "", "upAndRunning(TQString)",  TQString("kded"));
 #ifdef Q_WS_X11
      XEvent e;
      e.xclient.type = ClientMessage;

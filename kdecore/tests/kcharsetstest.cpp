@@ -5,8 +5,8 @@
 
 int main()
 {
-    QString input( "&lt;Hello &amp;World&gt;" );
-    QString output = KCharsets::resolveEntities( input );
+    TQString input( "&lt;Hello &amp;World&gt;" );
+    TQString output = KCharsets::resolveEntities( input );
     assert( output == "<Hello &World>" );
     return 0;
 }

@@ -20,11 +20,11 @@
 #ifndef KNEWSTUFF_PROVIDER_H
 #define KNEWSTUFF_PROVIDER_H
 
-#include <qcstring.h>
-#include <qdom.h>
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qstring.h>
+#include <tqcstring.h>
+#include <tqdom.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
 
 #include <kurl.h>
 
@@ -46,7 +46,7 @@ namespace KNS {
 class KDE_EXPORT Provider
 {
   public:
-    typedef QPtrList<Provider> List;
+    typedef TQPtrList<Provider> List;
 
     /**
      * Constructor.
@@ -56,7 +56,7 @@ class KDE_EXPORT Provider
     /**
      * Constructor with XML feed.
      */
-    Provider( const QDomElement & );
+    Provider( const TQDomElement & );
 
     /**
      * Destructor.
@@ -66,14 +66,14 @@ class KDE_EXPORT Provider
     /**
      * Sets the common name of the provider.
      */
-    void setName( const QString & );
+    void setName( const TQString & );
 
     /**
      * Retrieves the common name of the provider.
      *
      * @return provider name
      */
-    QString name() const;
+    TQString name() const;
 
     /**
      * Sets the download URL.
@@ -93,7 +93,7 @@ class KDE_EXPORT Provider
      *
      * @return download specific URL
      */
-    KURL downloadUrlVariant( QString variant ) const;
+    KURL downloadUrlVariant( TQString variant ) const;
 
     /**
      * Sets the upload URL.
@@ -150,12 +150,12 @@ class KDE_EXPORT Provider
     KURL icon() const;
 
   protected:
-    void parseDomElement( const QDomElement & );
+    void parseDomElement( const TQDomElement & );
 
-    QDomElement createDomElement( QDomDocument &, QDomElement &parent );
+    TQDomElement createDomElement( TQDomDocument &, TQDomElement &parent );
 
   private:
-    QString mName;
+    TQString mName;
     KURL mDownloadUrl;
     KURL mUploadUrl;
     KURL mNoUploadUrl;
@@ -178,7 +178,7 @@ class KDE_EXPORT ProviderLoader : public QObject
      *
      * @param parentWidget the parent widget
      */
-    ProviderLoader( QWidget *parentWidget );
+    ProviderLoader( TQWidget *parentWidget );
 
     /**
      * Starts asynchronously loading the list of providers of the
@@ -189,7 +189,7 @@ class KDE_EXPORT ProviderLoader : public QObject
      *    we first try the ProvidersUrl from KGlobal::config, then we
      *    fall back to a hardcoded value.
      */
-    void load( const QString &type, const QString &providerList = QString::null );
+    void load( const TQString &type, const TQString &providerList = TQString::null );
 
   signals:
     /**
@@ -198,13 +198,13 @@ class KDE_EXPORT ProviderLoader : public QObject
     void providersLoaded( Provider::List * );
 
   protected slots:
-    void slotJobData( KIO::Job *, const QByteArray & );
+    void slotJobData( KIO::Job *, const TQByteArray & );
     void slotJobResult( KIO::Job * );
 
   private:
-    QWidget *mParentWidget;
+    TQWidget *mParentWidget;
 
-    QString mJobData;
+    TQString mJobData;
 
     Provider::List mProviders;
 };

@@ -22,11 +22,11 @@
 #ifndef __kio_jobclasses_h__
 #define __kio_jobclasses_h__
 
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qguardedptr.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqguardedptr.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -51,8 +51,8 @@ namespace KIO {
      *
      * \code
      *   KIO::Job * job = KIO::someoperation( some parameters );
-     *   connect( job, SIGNAL( result( KIO::Job * ) ),
-     *            this, SLOT( slotResult( KIO::Job * ) ) );
+     *   connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
+     *            this, TQT_SLOT( slotResult( KIO::Job * ) ) );
      * \endcode
      *   (other connects, specific to the job)
      *
@@ -65,7 +65,7 @@ namespace KIO {
      * @see KIO::Scheduler
      * @see KIO::Slave
      */
-    class KIO_EXPORT Job : public QObject {
+    class KIO_EXPORT Job : public TQObject {
         Q_OBJECT
 
     protected:
@@ -108,7 +108,7 @@ namespace KIO {
          * @return a string to help understand the error, usually the url
          * related to the error. Only valid if error() is not 0.
          */
-        const QString & errorText() const { return m_errorText; }
+        const TQString & errorText() const { return m_errorText; }
 
         /**
          * Converts an error code and a non-i18n error message into an
@@ -127,7 +127,7 @@ namespace KIO {
 	 *         telling the user that the app is broken, so check with
 	 *         error() whether there is an error
          */
-        QString errorString() const;
+        TQString errorString() const;
 
         /**
          * Converts an error code and a non-i18n error message into i18n
@@ -139,7 +139,7 @@ namespace KIO {
          * @return the following strings: caption, error + description,
 	 *         causes+solutions
          */
-        QStringList detailedErrorStrings(const KURL *reqUrl = 0L,
+        TQStringList detailedErrorStrings(const KURL *reqUrl = 0L,
                                          int method = -1) const;
 
         /**
@@ -150,7 +150,7 @@ namespace KIO {
          * @param parent the parent widget for the dialog box, can be 0 for
 	 *        top-level
          */
-        void showErrorDialog( QWidget * parent = 0L );
+        void showErrorDialog( TQWidget * parent = 0L );
 
         /**
          * Enable or disable the automatic error handling. When automatic
@@ -165,7 +165,7 @@ namespace KIO {
 	 *        Can be 0 for top-level
 	 * @see isAutoErrorHandlingEnabled(), showErrorDialog()
          */
-        void setAutoErrorHandlingEnabled( bool enable, QWidget *parentWidget = 0 );
+        void setAutoErrorHandlingEnabled( bool enable, TQWidget *parentWidget = 0 );
 
         /**
          * Returns whether automatic error handling is enabled or disabled.
@@ -219,14 +219,14 @@ namespace KIO {
 	 * @param window the window to associate to
 	 * @see window()
          */
-        void setWindow(QWidget *window);
+        void setWindow(TQWidget *window);
 
         /**
          * Returns the window this job is associated with.
 	 * @return the associated window
 	 * @see setWindow()
          */
-        QWidget *window() const;
+        TQWidget *window() const;
 
         /**
          * Updates the last user action timestamp to the given time.
@@ -271,7 +271,7 @@ namespace KIO {
 	 * @see setMetaData()
 	 * @see mergeMetaData()
          */
-        void addMetaData(const QString &key, const QString &value);
+        void addMetaData(const TQString &key, const TQString &value);
 
         /**
          * Add key/value pairs to the meta data that is sent to the slave.
@@ -280,7 +280,7 @@ namespace KIO {
 	 * @see setMetaData()
 	 * @see mergeMetaData()
          */
-        void addMetaData(const QMap<QString,QString> &values);
+        void addMetaData(const TQMap<TQString,TQString> &values);
 
         /**
          * Add key/value pairs to the meta data that is sent to the slave.
@@ -289,7 +289,7 @@ namespace KIO {
 	 * @see setMetaData()
 	 * @see addMetaData()
          */
-        void mergeMetaData(const QMap<QString,QString> &values);
+        void mergeMetaData(const TQMap<TQString,TQString> &values);
 
         /**
          * @internal. For the scheduler. Do not use.
@@ -307,10 +307,10 @@ namespace KIO {
          * Query meta data received from the slave.
          * (Valid when first data is received and/or slave is finished)
 	 * @param key the key of the meta data to retrieve
-	 * @return the value of the meta data, or QString::null if the
+	 * @return the value of the meta data, or TQString::null if the
 	 *         @p key does not exist
          */
-        QString queryMetaData(const QString &key);
+        TQString queryMetaData(const TQString &key);
 
         /**
          * Returns the processed size for this job.
@@ -342,7 +342,7 @@ namespace KIO {
 	 * @param job the job that emitted this signal
 	 * @param msg the info message
          */
-        void infoMessage( KIO::Job *job, const QString & msg );
+        void infoMessage( KIO::Job *job, const TQString & msg );
         // KDE4: Separate rich-text string from plain-text string, for different widgets.
 
         /**
@@ -351,7 +351,7 @@ namespace KIO {
          * @param msg the info message
          * @since 3.5
          */
-        void warning( KIO::Job *job, const QString & msg );
+        void warning( KIO::Job *job, const TQString & msg );
         // KDE4: Separate rich-text string from plain-text string, for different widgets.
 
         /**
@@ -419,7 +419,7 @@ namespace KIO {
 	 * @param msg the info message
 	 * @see infoMessage()
          */
-        void slotInfoMessage( KIO::Job *job, const QString &msg );
+        void slotInfoMessage( KIO::Job *job, const TQString &msg );
 
         /**
          * Remove speed information.
@@ -503,13 +503,13 @@ namespace KIO {
                EF_ListJobUnrestricted = (1 << 3) };
         int &extraFlags();
 
-        QPtrList<Job> subjobs;
+        TQPtrList<Job> subjobs;
         int m_error;
-        QString m_errorText;
+        TQString m_errorText;
         unsigned long m_percent;
         int m_progressId; // for uiserver
-        QTimer *m_speedTimer;
-        QGuardedPtr<QWidget> m_window;
+        TQTimer *m_speedTimer;
+        TQGuardedPtr<TQWidget> m_window;
         MetaData m_outgoingMetaData;
         MetaData m_incomingMetaData;
     protected:
@@ -537,7 +537,7 @@ namespace KIO {
 	 * @param packedArgs the arguments
 	 * @param showProgressInfo true to show progress information to the user
 	 */
-        SimpleJob(const KURL& url, int command, const QByteArray &packedArgs,
+        SimpleJob(const KURL& url, int command, const TQByteArray &packedArgs,
                   bool showProgressInfo);
 
         ~SimpleJob();
@@ -611,14 +611,14 @@ namespace KIO {
          * @internal
          * Called on a slave's warning.
          */
-        void slotWarning( const QString & ); // KDE4: make virtual
+        void slotWarning( const TQString & ); // KDE4: make virtual
 
         /**
          * Called on a slave's info message.
 	 * @param s the info message
 	 * @see infoMessage()
          */
-        void slotInfoMessage( const QString &s ); // KDE4: make virtual
+        void slotInfoMessage( const TQString &s ); // KDE4: make virtual
 
         /**
          * Called on a slave's connected signal.
@@ -652,7 +652,7 @@ namespace KIO {
          * Called on a slave's error.
          * Made public for the scheduler.
          */
-        virtual void slotError( int , const QString & );
+        virtual void slotError( int , const TQString & );
 
     protected slots:
         /**
@@ -662,7 +662,7 @@ namespace KIO {
 
     protected:
         Slave * m_slave;
-        QByteArray m_packedArgs;
+        TQByteArray m_packedArgs;
         KURL m_url;
         KURL m_subUrl;
         int m_command;
@@ -697,7 +697,7 @@ namespace KIO {
 	 * @param packedArgs the arguments
 	 * @param showProgressInfo true to show progress information to the user
 	 */
-        StatJob(const KURL& url, int command, const QByteArray &packedArgs, bool showProgressInfo);
+        StatJob(const KURL& url, int command, const TQByteArray &packedArgs, bool showProgressInfo);
 
         /**
 	 * A stat() can have two meanings. Either we want to read from this URL,
@@ -789,7 +789,7 @@ namespace KIO {
 	 * @param packedArgs the arguments
 	 * @param showProgressInfo true to show progress information to the user
 	 */
-        MkdirJob(const KURL& url, int command, const QByteArray &packedArgs, bool showProgressInfo);
+        MkdirJob(const KURL& url, int command, const TQByteArray &packedArgs, bool showProgressInfo);
 
         /**
 	 * @internal
@@ -843,7 +843,7 @@ namespace KIO {
         /**
          * Do not create a DirectCopyJob. Use KIO::copy() or KIO::file_copy() instead.
          */
-        DirectCopyJob(const KURL& url, int command, const QByteArray &packedArgs,
+        DirectCopyJob(const KURL& url, int command, const TQByteArray &packedArgs,
                       bool showProgressInfo);
         /**
 	 * @internal
@@ -886,8 +886,8 @@ namespace KIO {
 	* @param showProgressInfo true to show progress information to the user
 	*/
         TransferJob(const KURL& url, int command,
-                    const QByteArray &packedArgs,
-                    const QByteArray &_staticData,
+                    const TQByteArray &packedArgs,
+                    const TQByteArray &_staticData,
                     bool showProgressInfo);
 
         /**
@@ -945,7 +945,7 @@ namespace KIO {
          * Sending an empty block indicates end of data.
          * @since 3.2
          */
-        void sendAsyncData(const QByteArray &data);
+        void sendAsyncData(const TQByteArray &data);
 
         /**
          * When enabled, the job reports the amount of data that has been sent,
@@ -974,7 +974,7 @@ namespace KIO {
          * should not be certain of data.size() == 0 ever happening (e.g. in case
          * of an error), so you should rely on result() instead.
          */
-        void data( KIO::Job *job, const QByteArray &data );
+        void data( KIO::Job *job, const TQByteArray &data );
 
         /**
          * Request for data.
@@ -987,7 +987,7 @@ namespace KIO {
          * @param data buffer to fill with data to send to the
          * slave. An empty buffer indicates end of data. (EOD)
          */
-        void dataReq( KIO::Job *job, QByteArray &data );
+        void dataReq( KIO::Job *job, TQByteArray &data );
 
         /**
          * Signals a redirection.
@@ -1013,7 +1013,7 @@ namespace KIO {
 	 * @param job the job that emitted this signal
 	 * @param type the mime type
          */
-        void mimetype( KIO::Job *job, const QString &type );
+        void mimetype( KIO::Job *job, const TQString &type );
 
         /**
          * @internal
@@ -1028,11 +1028,11 @@ namespace KIO {
     protected slots:
         virtual void slotRedirection( const KURL &url);
         virtual void slotFinished();
-        virtual void slotData( const QByteArray &data);
+        virtual void slotData( const TQByteArray &data);
         virtual void slotDataReq();
-        virtual void slotMimetype( const QString &mimetype );
+        virtual void slotMimetype( const TQString &mimetype );
         virtual void slotNeedSubURLData();
-        virtual void slotSubURLData(KIO::Job*, const QByteArray &);
+        virtual void slotSubURLData(KIO::Job*, const TQByteArray &);
         virtual void slotMetaData( const KIO::MetaData &_metaData);
         void slotErrorPage();
         void slotCanResume( KIO::filesize_t offset );
@@ -1041,10 +1041,10 @@ namespace KIO {
     protected:
         bool m_suspended;
         bool m_errorPage;
-        QByteArray staticData;
+        TQByteArray staticData;
         KURL m_redirectionURL;
         KURL::List m_redirectionList;
-        QString m_mimetype;
+        TQString m_mimetype;
         TransferJob *m_subJob;
     protected:
 	virtual void virtual_hook( int id, void* data );
@@ -1054,21 +1054,21 @@ namespace KIO {
 
     /**
      * StoredTransferJob is a TransferJob (for downloading or uploading data) that
-     * also stores a QByteArray with the data, making it simpler to use than the
+     * also stores a TQByteArray with the data, making it simpler to use than the
      * standard TransferJob.
      *
-     * For KIO::storedGet it puts the data into the member QByteArray, so the user
+     * For KIO::storedGet it puts the data into the member TQByteArray, so the user
      * of this class can get hold of the whole data at once by calling data()
      * when the result signal is emitted.
      * You should only use StoredTransferJob to download data if you cannot
      * process the data by chunks while it's being downloaded, since storing
-     * everything in a QByteArray can potentially require a lot of memory.
+     * everything in a TQByteArray can potentially require a lot of memory.
      *
      * For KIO::storedPut the user of this class simply provides the bytearray from
      * the start, and the job takes care of uploading it.
      * You should only use StoredTransferJob to upload data if you cannot
      * provide the in chunks while it's being uploaded, since storing
-     * everything in a QByteArray can potentially require a lot of memory.
+     * everything in a TQByteArray can potentially require a lot of memory.
      *
      * @since 3.3
      */
@@ -1086,28 +1086,28 @@ namespace KIO {
 	* @param showProgressInfo true to show progress information to the user
 	*/
         StoredTransferJob(const KURL& url, int command,
-                          const QByteArray &packedArgs,
-                          const QByteArray &_staticData,
+                          const TQByteArray &packedArgs,
+                          const TQByteArray &_staticData,
                           bool showProgressInfo);
 
         /**
          * Set data to be uploaded. This is for put jobs.
-         * Automatically called by KIO::storedPut(const QByteArray &, ...),
+         * Automatically called by KIO::storedPut(const TQByteArray &, ...),
          * do not call this yourself.
          */
-        void setData( const QByteArray& arr );
+        void setData( const TQByteArray& arr );
 
         /**
          * Get hold of the downloaded data. This is for get jobs.
          * You're supposed to call this only from the slot connected to the result() signal.
          */
-        QByteArray data() const { return m_data; }
+        TQByteArray data() const { return m_data; }
 
     private slots:
-        void slotStoredData( KIO::Job *job, const QByteArray &data );
-        void slotStoredDataReq( KIO::Job *job, QByteArray &data );
+        void slotStoredData( KIO::Job *job, const TQByteArray &data );
+        void slotStoredDataReq( KIO::Job *job, TQByteArray &data );
     private:
-        QByteArray m_data;
+        TQByteArray m_data;
         int m_uploadOffset;
     };
 
@@ -1154,14 +1154,14 @@ namespace KIO {
          * @param data data received from the slave.
          * End of data (EOD) has been reached if data.size() == 0
          */
-        void data( long id, const QByteArray &data);
+        void data( long id, const TQByteArray &data);
 
         /**
          * Mimetype determined
 	 * @param id the id of the request
 	 * @param type the mime type
          */
-        void mimetype( long id, const QString &type );
+        void mimetype( long id, const TQString &type );
 
         /**
          * File transfer completed.
@@ -1175,8 +1175,8 @@ namespace KIO {
     protected slots:
         virtual void slotRedirection( const KURL &url);
         virtual void slotFinished();
-        virtual void slotData( const QByteArray &data);
-        virtual void slotMimetype( const QString &mimetype );
+        virtual void slotData( const TQByteArray &data);
+        virtual void slotMimetype( const TQString &mimetype );
     private:
         struct GetRequest {
         public:
@@ -1187,10 +1187,10 @@ namespace KIO {
            MetaData metaData;
         };
         bool findCurrentEntry();
-        void flushQueue(QPtrList<GetRequest> &queue);
+        void flushQueue(TQPtrList<GetRequest> &queue);
 
-        QPtrList<GetRequest> m_waitQueue;
-        QPtrList<GetRequest> m_activeQueue;
+        TQPtrList<GetRequest> m_waitQueue;
+        TQPtrList<GetRequest> m_activeQueue;
         bool b_multiGetActive;
         GetRequest *m_currentEntry;
     protected:
@@ -1217,14 +1217,14 @@ namespace KIO {
 	* @param packedArgs the arguments
 	* @param showProgressInfo true to show progress information to the user
 	*/
-        MimetypeJob(const KURL& url, int command, const QByteArray &packedArgs, bool showProgressInfo);
+        MimetypeJob(const KURL& url, int command, const TQByteArray &packedArgs, bool showProgressInfo);
 
         /**
          * Call this in the slot connected to result,
          * and only after making sure no error happened.
 	 * @return the mimetype of the URL
          */
-         QString mimetype() const { return m_mimetype; }
+         TQString mimetype() const { return m_mimetype; }
 
         /**
 	 * @internal
@@ -1310,13 +1310,13 @@ namespace KIO {
          *
          * @since 3.5.7
          */
-        void mimetype( KIO::Job *job, const QString &type );
+        void mimetype( KIO::Job *job, const TQString &type );
 
     public slots:
         void slotStart();
-        void slotData( KIO::Job *, const QByteArray &data);
-        void slotDataReq( KIO::Job *, QByteArray &data);
-        void slotMimetype( KIO::Job *, const QString& type );
+        void slotData( KIO::Job *, const TQByteArray &data);
+        void slotDataReq( KIO::Job *, TQByteArray &data);
+        void slotMimetype( KIO::Job *, const TQString& type );
 
     protected slots:
         /**
@@ -1369,7 +1369,7 @@ namespace KIO {
         bool m_resume:1;
         bool m_canResume:1;
         bool m_resumeAnswerSent:1;
-        QByteArray m_buffer;
+        TQByteArray m_buffer;
         SimpleJob *m_moveJob;
         SimpleJob *m_copyJob;
         TransferJob *m_getJob;
@@ -1400,11 +1400,11 @@ namespace KIO {
 	* @param showProgressInfo true to show progress information to the user
 	* @param recursive true to get the data recursively from child directories,
 	*        false to get only the content of the specified dir
-	* @param prefix the prefix of the files, or QString::null for no prefix
+	* @param prefix the prefix of the files, or TQString::null for no prefix
 	* @param includeHidden true to include hidden files (those starting with '.')
 	*/
         ListJob(const KURL& url, bool showProgressInfo,
-                bool recursive = false, QString prefix = QString::null,
+                bool recursive = false, TQString prefix = TQString::null,
                 bool includeHidden = true);
 
         /**
@@ -1471,7 +1471,7 @@ namespace KIO {
     private:
         bool recursive;
         bool includeHidden;
-        QString prefix;
+        TQString prefix;
         unsigned long m_processedEntries;
         KURL m_redirectionURL;
     protected:
@@ -1485,7 +1485,7 @@ namespace KIO {
     {
         KURL uSource;
         KURL uDest;
-        QString linkDest; // for symlinks only
+        TQString linkDest; // for symlinks only
         int permissions;
         //mode_t type;
         time_t ctime;
@@ -1594,7 +1594,7 @@ namespace KIO {
 	 * @param job the job that emitted this signal
 	 * @param files a list of items that are about to be created.
 	 */
-        void aboutToCreate( KIO::Job *job, const QValueList<KIO::CopyInfo> &files);
+        void aboutToCreate( KIO::Job *job, const TQValueList<KIO::CopyInfo> &files);
 
         /**
 	 * Sends the number of processed files.
@@ -1624,7 +1624,7 @@ namespace KIO {
 	 *             being linked
 	 * @param to the destination of the current operation
          */
-        void linking( KIO::Job *job, const QString& target, const KURL& to );
+        void linking( KIO::Job *job, const TQString& target, const KURL& to );
         /**
          * The job is moving a file or directory.
 	 * @param job the job that emitted this signal
@@ -1669,7 +1669,7 @@ namespace KIO {
 	 * @param target the target
          * @param to the destination URL
          */
-        void copyingLinkDone( KIO::Job *job, const KURL &from, const QString& target, const KURL& to );
+        void copyingLinkDone( KIO::Job *job, const KURL &from, const TQString& target, const KURL& to );
 
     protected:
         void statCurrentSrc();
@@ -1692,8 +1692,8 @@ namespace KIO {
         void setNextDirAttribute();
     private:
         void startRenameJob(const KURL &slave_url);
-        bool shouldOverwrite( const QString& path ) const;
-        bool shouldSkip( const QString& path ) const;
+        bool shouldOverwrite( const TQString& path ) const;
+        bool shouldSkip( const TQString& path ) const;
         void skipSrc();
 
     protected slots:
@@ -1724,8 +1724,8 @@ namespace KIO {
         KIO::filesize_t m_fileProcessedSize;
         int m_processedFiles;
         int m_processedDirs;
-        QValueList<CopyInfo> files;
-        QValueList<CopyInfo> dirs;
+        TQValueList<CopyInfo> files;
+        TQValueList<CopyInfo> dirs;
         KURL::List dirsToRemove;
         KURL::List m_srcList;
         KURL::List::Iterator m_currentStatSrc;
@@ -1736,13 +1736,13 @@ namespace KIO {
         KURL m_dest;
         KURL m_currentDest;
         //
-        QStringList m_skipList;
-        QStringList m_overwriteList;
+        TQStringList m_skipList;
+        TQStringList m_overwriteList;
         bool m_bAutoSkip;
         bool m_bOverwriteAll;
         int m_conflictError;
 
-        QTimer *m_reportTimer;
+        TQTimer *m_reportTimer;
         //these both are used for progress dialog reporting
         KURL m_currentSrcURL;
         KURL m_currentDestURL;
@@ -1848,9 +1848,9 @@ namespace KIO {
         KURL::List dirs;
         KURL::List m_srcList;
         KURL::List::Iterator m_currentStat;
-	QStringList m_parentDirs;
+	TQStringList m_parentDirs;
         bool m_shred; // BIC: remove in KDE4
-        QTimer *m_reportTimer;
+        TQTimer *m_reportTimer;
     protected:
         /** \internal */
 	virtual void virtual_hook( int id, void* data );

@@ -21,11 +21,11 @@
 #define __konq_htmlsettings_h__
 
 class KConfig;
-#include <qcolor.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qfont.h>
-#include <qmap.h>
+#include <tqcolor.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqfont.h>
+#include <tqmap.h>
 
 #include <kdelibs_export.h>
 
@@ -128,16 +128,16 @@ public:
     KAnimationAdvice showAnimations() const;
 
     // Font settings
-    QString stdFontName() const;
-    QString fixedFontName() const;
-    QString serifFontName() const;
-    QString sansSerifFontName() const;
-    QString cursiveFontName() const;
-    QString fantasyFontName() const;
+    TQString stdFontName() const;
+    TQString fixedFontName() const;
+    TQString serifFontName() const;
+    TQString sansSerifFontName() const;
+    TQString cursiveFontName() const;
+    TQString fantasyFontName() const;
 
     // these two can be set. Mainly for historical reasons (the method in KHTMLPart exists...)
-    void setStdFontName(const QString &n);
-    void setFixedFontName(const QString &n);
+    void setStdFontName(const TQString &n);
+    void setFixedFontName(const TQString &n);
 
     int minFontSize() const;
     int mediumFontSize() const;
@@ -145,15 +145,15 @@ public:
     bool jsErrorsEnabled() const;
     void setJSErrorsEnabled(bool enabled);
 
-    const QString &encoding() const;
+    const TQString &encoding() const;
 
     bool followSystemColors() const;
 
     // Color settings
-    const QColor& textColor() const;
-    const QColor& baseColor() const;
-    const QColor& linkColor() const;
-    const QColor& vLinkColor() const;
+    const TQColor& textColor() const;
+    const TQColor& baseColor() const;
+    const TQColor& linkColor() const;
+    const TQColor& vLinkColor() const;
 
     // Autoload images
     bool autoLoadImages() const;
@@ -164,30 +164,30 @@ public:
 
     // Java and JavaScript
     // ### BIC make these const
-    bool isJavaEnabled( const QString& hostname = QString::null );
-    bool isJavaScriptEnabled( const QString& hostname = QString::null );
-    bool isJavaScriptDebugEnabled( const QString& hostname = QString::null );
-    bool isJavaScriptErrorReportingEnabled( const QString& hostname = QString::null ) const;
-    bool isPluginsEnabled( const QString& hostname = QString::null );
+    bool isJavaEnabled( const TQString& hostname = TQString::null );
+    bool isJavaScriptEnabled( const TQString& hostname = TQString::null );
+    bool isJavaScriptDebugEnabled( const TQString& hostname = TQString::null );
+    bool isJavaScriptErrorReportingEnabled( const TQString& hostname = TQString::null ) const;
+    bool isPluginsEnabled( const TQString& hostname = TQString::null );
 
     // AdBlocK Filtering
-    bool isAdFiltered( const QString &url ) const;
+    bool isAdFiltered( const TQString &url ) const;
     bool isAdFilterEnabled() const;
     bool isHideAdsEnabled() const;
-    void addAdFilter( const QString &url );
+    void addAdFilter( const TQString &url );
 
     // Access Keys
     bool accessKeysEnabled() const;
 
-    KJSWindowOpenPolicy windowOpenPolicy( const QString& hostname = QString::null ) const;
-    KJSWindowMovePolicy windowMovePolicy( const QString& hostname = QString::null ) const;
-    KJSWindowResizePolicy windowResizePolicy( const QString& hostname = QString::null ) const;
-    KJSWindowStatusPolicy windowStatusPolicy( const QString& hostname = QString::null ) const;
-    KJSWindowFocusPolicy windowFocusPolicy( const QString& hostname = QString::null ) const;
+    KJSWindowOpenPolicy windowOpenPolicy( const TQString& hostname = TQString::null ) const;
+    KJSWindowMovePolicy windowMovePolicy( const TQString& hostname = TQString::null ) const;
+    KJSWindowResizePolicy windowResizePolicy( const TQString& hostname = TQString::null ) const;
+    KJSWindowStatusPolicy windowStatusPolicy( const TQString& hostname = TQString::null ) const;
+    KJSWindowFocusPolicy windowFocusPolicy( const TQString& hostname = TQString::null ) const;
 
     // helpers for parsing domain-specific configuration, used in KControl module as well
-    static KJavaScriptAdvice strToAdvice(const QString& _str);
-    static void splitDomainAdvice(const QString& configStr, QString &domain,
+    static KJavaScriptAdvice strToAdvice(const TQString& _str);
+    static void splitDomainAdvice(const TQString& configStr, TQString &domain,
 				  KJavaScriptAdvice &javaAdvice, KJavaScriptAdvice& javaScriptAdvice);
     static const char* adviceToStr(KJavaScriptAdvice _advice);
 
@@ -202,10 +202,10 @@ public:
     void readDomainSettings(KConfig *config, bool reset,
 			bool global, KPerDomainSettings &pd_settings);
 
-    QString settingsToCSS() const;
-    static const QString &availableFamilies();
+    TQString settingsToCSS() const;
+    static const TQString &availableFamilies();
 
-    QString userStyleSheet() const;
+    TQString userStyleSheet() const;
 
     // Form completion
     bool isFormCompletionEnabled() const;
@@ -214,7 +214,7 @@ public:
     // Meta refresh/redirect (http-equiv)
     bool isAutoDelayedActionsEnabled () const;
 
-    QValueList< QPair< QString, QChar > > fallbackAccessKeysAssignments() const;
+    TQValueList< QPair< TQString, TQChar > > fallbackAccessKeysAssignments() const;
 
     // Whether to show passive popup when windows are blocked
     // @since 3.5
@@ -223,10 +223,10 @@ public:
 
 private:
     friend class KHTMLFactory;
-    QString lookupFont(int i) const;
+    TQString lookupFont(int i) const;
 
     KHTMLSettingsPrivate *d;
-    static QString *avFamilies;
+    static TQString *avFamilies;
 };
 
 #endif

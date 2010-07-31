@@ -32,11 +32,11 @@ class QStrList;
  *
  * Note that besides the functions below here, KonsolePart also has
  * some signals you can connect to.  They aren't in this class cause
- * we can't have signals without having a QObject, which
+ * we can't have signals without having a TQObject, which
  * TerminalInterface is not.
  * These are the signals you can connect to:
  *  void processExited( KProcess *process );
- *  void receivedData( const QString& s );
+ *  void receivedData( const TQString& s );
  * See the example code below for how to connect to these..
  * 
  * The process provided by processExited() is obviously exited,
@@ -54,7 +54,7 @@ class QStrList;
  *  };
  *  // fetch the part..
  *  KParts::Part* p = static_cast<KParts::Part*>(
- *      factory->create( this, "tralala", "QObject",
+ *      factory->create( this, "tralala", "TQObject",
  *                       "KParts::ReadOnlyPart" ) );
  *  assert( p );
  *  setCentralWidget( p->widget() );
@@ -71,16 +71,16 @@ class QStrList;
  *    return;
  *  };
  *  // now use the interface in all sorts of ways, e.g.
- *  //    t->showShellInDir( QDir::home().path() );
+ *  //    t->showShellInDir( TQDir::home().path() );
  *  // or:
- *  //    QStrList l;
+ *  //    TQStrList l;
  *  //    l.append( "python" );
- *  //    t->startProgram( QString::fromUtf8( "/usr/bin/python" ), l);
+ *  //    t->startProgram( TQString::fromUtf8( "/usr/bin/python" ), l);
  *  // or connect to one of the signals.  Connect to the Part object,
- *  // not to the TerminalInterface, since the latter is no QObject,
+ *  // not to the TerminalInterface, since the latter is no TQObject,
  *  // and as such cannot have signals..:
- *  //    connect( p, SIGNAL( processExited( int ) ),
- *  //             this, SLOT( shellExited( int ) ) );
+ *  //    connect( p, TQT_SIGNAL( processExited( int ) ),
+ *  //             this, TQT_SLOT( shellExited( int ) ) );
  *  // etc.
  *
  * \endcode
@@ -95,20 +95,20 @@ public:
   /**
    * This starts @p program, with arguments @p args
    */
-  virtual void startProgram( const QString& program,
-                             const QStrList& args ) = 0;
+  virtual void startProgram( const TQString& program,
+                             const TQStrList& args ) = 0;
   /**
    * If a shell is currently shown, this sends it a cd
    * command. Otherwise, this starts a shell, and sends it a cd
    * command too...
    */
-  virtual void showShellInDir( const QString& dir ) = 0;
+  virtual void showShellInDir( const TQString& dir ) = 0;
 
   /**
    * This sends @param text as input to the currently running
    * program..
    */
-  virtual void sendInput( const QString& text ) = 0;
+  virtual void sendInput( const TQString& text ) = 0;
 
 };
 
@@ -132,20 +132,20 @@ public:
   /**
    * This starts @p program, with arguments @p args
    */
-  virtual void startProgram( const QString& program,
-                             const QStrList& args ) = 0;
+  virtual void startProgram( const TQString& program,
+                             const TQStrList& args ) = 0;
   /**
    * If a shell is currently shown, this sends it a cd
    * command. Otherwise, this starts a shell, and sends it a cd
    * command too...
    */
-  virtual void showShellInDir( const QString& dir ) = 0;
+  virtual void showShellInDir( const TQString& dir ) = 0;
 
   /**
    * This sends @param text as input to the currently running
    * program..
    */
-  virtual void sendInput( const QString& text ) = 0;
+  virtual void sendInput( const TQString& text ) = 0;
 
   /**
      Call this to disable the automatic shell that

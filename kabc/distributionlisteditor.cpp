@@ -18,12 +18,12 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qlistview.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
+#include <tqlistview.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqcombobox.h>
+#include <tqbuttongroup.h>
+#include <tqradiobutton.h>
 
 #include <kinputdialog.h>
 #include <klocale.h>
@@ -38,42 +38,42 @@
 
 using namespace KABC;
 
-EmailSelectDialog::EmailSelectDialog( const QStringList &emails, const QString &current,
-                                      QWidget *parent ) :
+EmailSelectDialog::EmailSelectDialog( const TQStringList &emails, const TQString &current,
+                                      TQWidget *parent ) :
   KDialogBase( KDialogBase::Plain, i18n("Select Email Address"), Ok, Ok,
                parent )
 {
-  QFrame *topFrame = plainPage();
-  QBoxLayout *topLayout = new QVBoxLayout( topFrame );
+  TQFrame *topFrame = plainPage();
+  TQBoxLayout *topLayout = new TQVBoxLayout( topFrame );
 
-  mButtonGroup = new QButtonGroup( 1, Horizontal, i18n("Email Addresses"),
+  mButtonGroup = new TQButtonGroup( 1, Horizontal, i18n("Email Addresses"),
                                    topFrame );
   mButtonGroup->setRadioButtonExclusive( true );
   topLayout->addWidget( mButtonGroup );
 
-  QStringList::ConstIterator it;
+  TQStringList::ConstIterator it;
   for( it = emails.begin(); it != emails.end(); ++it ) {
-    QRadioButton *button = new QRadioButton( *it, mButtonGroup );
+    TQRadioButton *button = new TQRadioButton( *it, mButtonGroup );
     if ( (*it) == current ) {
       button->setDown( true );
     }
   }
 }
 
-QString EmailSelectDialog::selected()
+TQString EmailSelectDialog::selected()
 {
-  QButton *button = mButtonGroup->selected();
+  TQButton *button = mButtonGroup->selected();
   if ( button ) return button->text();
-  return QString::null;
+  return TQString::null;
 }
 
-QString EmailSelectDialog::getEmail( const QStringList &emails, const QString &current,
-                                     QWidget *parent )
+TQString EmailSelectDialog::getEmail( const TQStringList &emails, const TQString &current,
+                                     TQWidget *parent )
 {
   EmailSelectDialog *dlg = new EmailSelectDialog( emails, current, parent );
   dlg->exec();
 
-  QString result = dlg->selected();
+  TQString result = dlg->selected();
 
   delete dlg;
 
@@ -83,9 +83,9 @@ QString EmailSelectDialog::getEmail( const QStringList &emails, const QString &c
 class EditEntryItem : public QListViewItem
 {
   public:
-    EditEntryItem( QListView *parent, const Addressee &addressee,
-               const QString &email=QString::null ) :
-      QListViewItem( parent ),
+    EditEntryItem( TQListView *parent, const Addressee &addressee,
+               const TQString &email=TQString::null ) :
+      TQListViewItem( parent ),
       mAddressee( addressee ),
       mEmail( email )
     {
@@ -104,66 +104,66 @@ class EditEntryItem : public QListViewItem
       return mAddressee;
     }
 
-    QString email() const
+    TQString email() const
     {
       return mEmail;
     }
 
   private:
     Addressee mAddressee;
-    QString mEmail;
+    TQString mEmail;
 };
 
-DistributionListEditor::DistributionListEditor( AddressBook *addressBook, QWidget *parent) :
-  QWidget( parent ),
+DistributionListEditor::DistributionListEditor( AddressBook *addressBook, TQWidget *parent) :
+  TQWidget( parent ),
   mAddressBook( addressBook )
 {
   kdDebug(5700) << "DistributionListEditor()" << endl;
 
-  QBoxLayout *topLayout = new QVBoxLayout( this );
+  TQBoxLayout *topLayout = new TQVBoxLayout( this );
   topLayout->setMargin( KDialog::marginHint() );
   topLayout->setSpacing( KDialog::spacingHint() );
 
-  QBoxLayout *nameLayout = new QHBoxLayout( topLayout) ;
+  TQBoxLayout *nameLayout = new TQHBoxLayout( topLayout) ;
 
-  mNameCombo = new QComboBox( this );
+  mNameCombo = new TQComboBox( this );
   nameLayout->addWidget( mNameCombo );
-  connect( mNameCombo, SIGNAL( activated( int ) ), SLOT( updateEntryView() ) );
+  connect( mNameCombo, TQT_SIGNAL( activated( int ) ), TQT_SLOT( updateEntryView() ) );
 
-  newButton = new QPushButton( i18n("New List"), this );
+  newButton = new TQPushButton( i18n("New List"), this );
   nameLayout->addWidget( newButton );
-  connect( newButton, SIGNAL( clicked() ), SLOT( newList() ) );
+  connect( newButton, TQT_SIGNAL( clicked() ), TQT_SLOT( newList() ) );
 
-  removeButton = new QPushButton( i18n("Remove List"), this );
+  removeButton = new TQPushButton( i18n("Remove List"), this );
   nameLayout->addWidget( removeButton );
-  connect( removeButton, SIGNAL( clicked() ), SLOT( removeList() ) );
+  connect( removeButton, TQT_SIGNAL( clicked() ), TQT_SLOT( removeList() ) );
 
-  mEntryView = new QListView( this );
+  mEntryView = new TQListView( this );
   mEntryView->addColumn( i18n("Name") );
   mEntryView->addColumn( i18n("Email") );
   mEntryView->addColumn( i18n("Use Preferred") );
   topLayout->addWidget( mEntryView );
-  connect(mEntryView,SIGNAL(selectionChanged ()),this, SLOT(slotSelectionEntryViewChanged()));
+  connect(mEntryView,TQT_SIGNAL(selectionChanged ()),this, TQT_SLOT(slotSelectionEntryViewChanged()));
 
-  changeEmailButton = new QPushButton( i18n("Change Email"), this );
+  changeEmailButton = new TQPushButton( i18n("Change Email"), this );
   topLayout->addWidget( changeEmailButton );
-  connect( changeEmailButton, SIGNAL( clicked() ), SLOT( changeEmail() ) );
+  connect( changeEmailButton, TQT_SIGNAL( clicked() ), TQT_SLOT( changeEmail() ) );
 
-  removeEntryButton = new QPushButton( i18n("Remove Entry"), this );
+  removeEntryButton = new TQPushButton( i18n("Remove Entry"), this );
   topLayout->addWidget( removeEntryButton );
-  connect( removeEntryButton, SIGNAL( clicked() ), SLOT( removeEntry() ) );
+  connect( removeEntryButton, TQT_SIGNAL( clicked() ), TQT_SLOT( removeEntry() ) );
 
-  addEntryButton = new QPushButton( i18n("Add Entry"), this );
+  addEntryButton = new TQPushButton( i18n("Add Entry"), this );
   topLayout->addWidget( addEntryButton );
-  connect( addEntryButton, SIGNAL( clicked() ), SLOT( addEntry() ) );
+  connect( addEntryButton, TQT_SIGNAL( clicked() ), TQT_SLOT( addEntry() ) );
 
-  mAddresseeView = new QListView( this );
+  mAddresseeView = new TQListView( this );
   mAddresseeView->addColumn( i18n("Name") );
   mAddresseeView->addColumn( i18n("Preferred Email") );
   topLayout->addWidget( mAddresseeView );
 
 
-  connect(mAddresseeView,SIGNAL(selectionChanged ()),this, SLOT(slotSelectionAddresseeViewChanged()));
+  connect(mAddresseeView,TQT_SIGNAL(selectionChanged ()),this, TQT_SLOT(slotSelectionAddresseeViewChanged()));
 
   mManager = new DistributionListManager( mAddressBook );
   mManager->load();
@@ -193,9 +193,9 @@ void DistributionListEditor::slotSelectionEntryViewChanged()
 void DistributionListEditor::newList()
 {
   bool ok = false;
-  QString name = KInputDialog::getText( i18n("New Distribution List"),
+  TQString name = KInputDialog::getText( i18n("New Distribution List"),
                                         i18n("Please enter name:"),
-                                        QString::null, &ok, this );
+                                        TQString::null, &ok, this );
   if ( !ok )
     return;
 
@@ -258,7 +258,7 @@ void DistributionListEditor::changeEmail()
       dynamic_cast<EditEntryItem *>( mEntryView->selectedItem() );
   if ( !entryItem ) return;
 
-  QString email = EmailSelectDialog::getEmail( entryItem->addressee().emails(),
+  TQString email = EmailSelectDialog::getEmail( entryItem->addressee().emails(),
                                                entryItem->email(), this );
   list->removeEntry( entryItem->addressee(), entryItem->email() );
   list->insertEntry( entryItem->addressee(), email );

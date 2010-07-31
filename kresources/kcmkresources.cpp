@@ -19,7 +19,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <kaboutdata.h>
 #include <kgenericfactory.h>
@@ -29,16 +29,16 @@
 
 #include "kcmkresources.h"
 
-typedef KGenericFactory<KCMKResources, QWidget> ResourcesFactory;
+typedef KGenericFactory<KCMKResources, TQWidget> ResourcesFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_kresources, ResourcesFactory( "kcmkresources" ) )
 
-KCMKResources::KCMKResources( QWidget *parent, const char *name, const QStringList& )
+KCMKResources::KCMKResources( TQWidget *parent, const char *name, const TQStringList& )
   : KCModule( ResourcesFactory::instance(), parent, name )
 {
-  QVBoxLayout *layout = new QVBoxLayout( this );
+  TQVBoxLayout *layout = new TQVBoxLayout( this );
   mConfigPage = new KRES::ConfigPage( this );
   layout->addWidget( mConfigPage );
-  connect( mConfigPage, SIGNAL( changed( bool ) ), SIGNAL( changed( bool ) ) );
+  connect( mConfigPage, TQT_SIGNAL( changed( bool ) ), TQT_SIGNAL( changed( bool ) ) );
   setButtons( Help | Apply );
   KAboutData *about =
    new KAboutData( I18N_NOOP( "kcmkresources" ),

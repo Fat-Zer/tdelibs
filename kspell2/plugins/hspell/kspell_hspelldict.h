@@ -31,23 +31,23 @@ extern "C" {
 class HSpellDict : public KSpell2::Dictionary
 {
 public:
-    HSpellDict( const QString& lang );
+    HSpellDict( const TQString& lang );
     ~HSpellDict();
-    virtual bool check( const QString& word );
+    virtual bool check( const TQString& word );
 
-    virtual QStringList suggest( const QString& word );
+    virtual TQStringList suggest( const TQString& word );
 
-    virtual bool checkAndSuggest( const QString& word,
-                                  QStringList& suggestions ) ;
+    virtual bool checkAndSuggest( const TQString& word,
+                                  TQStringList& suggestions ) ;
 
-    virtual bool storeReplacement( const QString& bad,
-                                   const QString& good );
+    virtual bool storeReplacement( const TQString& bad,
+                                   const TQString& good );
 
-    virtual bool addToPersonal( const QString& word );
-    virtual bool addToSession( const QString& word );
+    virtual bool addToPersonal( const TQString& word );
+    virtual bool addToSession( const TQString& word );
 private:
     struct dict_radix *m_speller;
-    QTextCodec *codec;
+    TQTextCodec *codec;
 };
 
 #endif

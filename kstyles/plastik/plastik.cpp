@@ -38,34 +38,34 @@
    Boston, MA 02110-1301, USA.
  */
 
-#include <qimage.h>
-#include <qstylefactory.h>
-#include <qpointarray.h>
-#include <qpainter.h>
-#include <qtabbar.h>
-#include <qprogressbar.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qcleanuphandler.h>
-#include <qheader.h>
-#include <qlineedit.h>
-#include <qlistbox.h>
-#include <qscrollbar.h>
-#include <qstyleplugin.h>
-#include <qpushbutton.h>
-#include <qtabwidget.h>
-#include <qtimer.h>
-#include <qtoolbutton.h>
-#include <qtoolbar.h>
-#include <qmenubar.h>
-#include <qpopupmenu.h>
-#include <qdrawutil.h>
-#include <qapplication.h>
-#include <qvariant.h>
-#include <qradiobutton.h>
-#include <qregion.h>
-#include <qslider.h>
-#include <qsettings.h>
+#include <tqimage.h>
+#include <tqstylefactory.h>
+#include <tqpointarray.h>
+#include <tqpainter.h>
+#include <tqtabbar.h>
+#include <tqprogressbar.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqcleanuphandler.h>
+#include <tqheader.h>
+#include <tqlineedit.h>
+#include <tqlistbox.h>
+#include <tqscrollbar.h>
+#include <tqstyleplugin.h>
+#include <tqpushbutton.h>
+#include <tqtabwidget.h>
+#include <tqtimer.h>
+#include <tqtoolbutton.h>
+#include <tqtoolbar.h>
+#include <tqmenubar.h>
+#include <tqpopupmenu.h>
+#include <tqdrawutil.h>
+#include <tqapplication.h>
+#include <tqvariant.h>
+#include <tqradiobutton.h>
+#include <tqregion.h>
+#include <tqslider.h>
+#include <tqsettings.h>
 #include <kpixmap.h>
 
 #include "plastik.h"
@@ -137,11 +137,11 @@ class PlastikStylePlugin : public QStylePlugin
         PlastikStylePlugin() {}
         ~PlastikStylePlugin() {}
 
-        QStringList keys() const {
-            return QStringList() << "Plastik";
+        TQStringList keys() const {
+            return TQStringList() << "Plastik";
         }
 
-        QStyle* create( const QString& key ) {
+        TQStyle* create( const TQString& key ) {
             if (key.lower() == "plastik")
                 return new PlastikStyle;
             return 0;
@@ -163,7 +163,7 @@ PlastikStyle::PlastikStyle() : KStyle( AllowMenuTransparency, ThreeButtonScrollB
     horizontalLine = 0;
     verticalLine = 0;
 
-    QSettings settings;
+    TQSettings settings;
     _contrast = settings.readNumEntry("/Qt/KDE/contrast", 6);
     settings.beginGroup("/plastikstyle/Settings");
     _scrollBarLines = settings.readBoolEntry("/scrollBarLines", false);
@@ -182,29 +182,29 @@ PlastikStyle::PlastikStyle() : KStyle( AllowMenuTransparency, ThreeButtonScrollB
     settings.endGroup();
 
     // setup pixmap cache...
-    pixmapCache = new QIntCache<CacheEntry>(150000, 499);
+    pixmapCache = new TQIntCache<CacheEntry>(150000, 499);
     pixmapCache->setAutoDelete(true);
 
     if ( _animateProgressBar )
     {
-        animationTimer = new QTimer( this );
-        connect( animationTimer, SIGNAL(timeout()), this, SLOT(updateProgressPos()) );
+        animationTimer = new TQTimer( this );
+        connect( animationTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(updateProgressPos()) );
     }
 }
 
 
 void PlastikStyle::updateProgressPos()
 {
-    QProgressBar* pb;
+    TQProgressBar* pb;
     //Update the registered progressbars.
-    QMap<QWidget*, int>::iterator iter;
+    TQMap<TQWidget*, int>::iterator iter;
     bool visible = false;
     for (iter = progAnimWidgets.begin(); iter != progAnimWidgets.end(); ++iter)
     {   
-        if ( !::qt_cast<QProgressBar*>(iter.key()) )
+        if ( !::qt_cast<TQProgressBar*>(iter.key()) )
             continue;
         
-        pb = dynamic_cast<QProgressBar*>(iter.key());
+        pb = dynamic_cast<TQProgressBar*>(iter.key());
         if ( iter.key() -> isEnabled() && 
              pb -> progress() != pb->totalSteps() )
         {
@@ -227,7 +227,7 @@ PlastikStyle::~PlastikStyle()
     delete verticalLine;
 }
 
-void PlastikStyle::polish(QApplication* app)
+void PlastikStyle::polish(TQApplication* app)
 {
     if (!qstrcmp(app->argv()[0], "kicker"))
         kickerMode = true;
@@ -235,38 +235,38 @@ void PlastikStyle::polish(QApplication* app)
         kornMode = true;
 }
 
-void PlastikStyle::polish(QWidget* widget)
+void PlastikStyle::polish(TQWidget* widget)
 {
     if( !strcmp(widget->name(), "__khtml") ) { // is it a khtml widget...?
         khtmlWidgets[widget] = true;
-        connect(widget, SIGNAL(destroyed(QObject*)), this, SLOT(khtmlWidgetDestroyed(QObject*)));
+        connect(widget, TQT_SIGNAL(destroyed(TQObject*)), this, TQT_SLOT(khtmlWidgetDestroyed(TQObject*)));
     }
 
     // use qt_cast where possible to check if the widget inheits one of the classes. might improve
-    // performance compared to QObject::inherits()
-    if ( ::qt_cast<QPushButton*>(widget) || ::qt_cast<QComboBox*>(widget) ||
-            ::qt_cast<QSpinWidget*>(widget) || ::qt_cast<QSlider*>(widget) ||
-            ::qt_cast<QCheckBox*>(widget) || ::qt_cast<QRadioButton*>(widget) ||
-            ::qt_cast<QToolButton*>(widget) || widget->inherits("QSplitterHandle") )
+    // performance compared to TQObject::inherits()
+    if ( ::qt_cast<TQPushButton*>(widget) || ::qt_cast<TQComboBox*>(widget) ||
+            ::qt_cast<TQSpinWidget*>(widget) || ::qt_cast<TQSlider*>(widget) ||
+            ::qt_cast<TQCheckBox*>(widget) || ::qt_cast<TQRadioButton*>(widget) ||
+            ::qt_cast<TQToolButton*>(widget) || widget->inherits("QSplitterHandle") )
     {
 //         widget->setBackgroundMode(PaletteBackground);
         widget->installEventFilter(this);
-    } else if (::qt_cast<QLineEdit*>(widget)) {
+    } else if (::qt_cast<TQLineEdit*>(widget)) {
         widget->installEventFilter(this);
-    } else if (::qt_cast<QTabBar*>(widget)) {
+    } else if (::qt_cast<TQTabBar*>(widget)) {
         widget->setMouseTracking(true);
         widget->installEventFilter(this);
-    } else if (::qt_cast<QPopupMenu*>(widget)) {
+    } else if (::qt_cast<TQPopupMenu*>(widget)) {
         widget->setBackgroundMode( NoBackground );
     } else if ( !qstrcmp(widget->name(), "kde toolbar widget") ) {
         widget->installEventFilter(this);
     }
 
-    if( _animateProgressBar && ::qt_cast<QProgressBar*>(widget) )
+    if( _animateProgressBar && ::qt_cast<TQProgressBar*>(widget) )
     {
         widget->installEventFilter(this);
         progAnimWidgets[widget] = 0;
-        connect(widget, SIGNAL(destroyed(QObject*)), this, SLOT(progressBarDestroyed(QObject*)));
+        connect(widget, TQT_SIGNAL(destroyed(TQObject*)), this, TQT_SLOT(progressBarDestroyed(TQObject*)));
         if (!animationTimer->isActive())
             animationTimer->start( 50, false );
     }
@@ -274,31 +274,31 @@ void PlastikStyle::polish(QWidget* widget)
     KStyle::polish(widget);
 }
 
-void PlastikStyle::unPolish(QWidget* widget)
+void PlastikStyle::unPolish(TQWidget* widget)
 {
     if( !strcmp(widget->name(), "__khtml") ) { // is it a khtml widget...?
         khtmlWidgets.remove(widget);
     }
 
     // use qt_cast to check if the widget inheits one of the classes.
-    if ( ::qt_cast<QPushButton*>(widget) || ::qt_cast<QComboBox*>(widget) ||
-            ::qt_cast<QSpinWidget*>(widget) || ::qt_cast<QSlider*>(widget) ||
-            ::qt_cast<QCheckBox*>(widget) || ::qt_cast<QRadioButton*>(widget) ||
-            ::qt_cast<QToolButton*>(widget) || ::qt_cast<QLineEdit*>(widget) ||
+    if ( ::qt_cast<TQPushButton*>(widget) || ::qt_cast<TQComboBox*>(widget) ||
+            ::qt_cast<TQSpinWidget*>(widget) || ::qt_cast<TQSlider*>(widget) ||
+            ::qt_cast<TQCheckBox*>(widget) || ::qt_cast<TQRadioButton*>(widget) ||
+            ::qt_cast<TQToolButton*>(widget) || ::qt_cast<TQLineEdit*>(widget) ||
             widget->inherits("QSplitterHandle") )
     {
         widget->removeEventFilter(this);
     }
-    else if (::qt_cast<QTabBar*>(widget)) {
+    else if (::qt_cast<TQTabBar*>(widget)) {
         widget->setMouseTracking(false);
         widget->removeEventFilter(this);
-    } else if (::qt_cast<QPopupMenu*>(widget)) {
+    } else if (::qt_cast<TQPopupMenu*>(widget)) {
         widget->setBackgroundMode( PaletteBackground );
     } else if ( !qstrcmp(widget->name(), "kde toolbar widget") ) {
         widget->removeEventFilter(this);
     }
 
-    if ( ::qt_cast<QProgressBar*>(widget) )
+    if ( ::qt_cast<TQProgressBar*>(widget) )
     {
         progAnimWidgets.remove(widget);
     }
@@ -306,20 +306,20 @@ void PlastikStyle::unPolish(QWidget* widget)
     KStyle::unPolish(widget);
 }
 
-void PlastikStyle::khtmlWidgetDestroyed(QObject* obj)
+void PlastikStyle::khtmlWidgetDestroyed(TQObject* obj)
 {
-    khtmlWidgets.remove(static_cast<QWidget*>(obj));
+    khtmlWidgets.remove(static_cast<TQWidget*>(obj));
 }
 
-void PlastikStyle::progressBarDestroyed(QObject* obj)
+void PlastikStyle::progressBarDestroyed(TQObject* obj)
 {
-    progAnimWidgets.remove(static_cast<QWidget*>(obj));
+    progAnimWidgets.remove(static_cast<TQWidget*>(obj));
 }
 
-void PlastikStyle::renderContour(QPainter *p,
-                                const QRect &r,
-                                const QColor &backgroundColor,
-                                const QColor &contour,
+void PlastikStyle::renderContour(TQPainter *p,
+                                const TQRect &r,
+                                const TQColor &backgroundColor,
+                                const TQColor &contour,
                                 const uint flags) const
 {
     if((r.width() <= 0)||(r.height() <= 0))
@@ -332,7 +332,7 @@ void PlastikStyle::renderContour(QPainter *p,
     const bool disabled = flags&Is_Disabled;
     const bool alphaBlend = flags&Draw_AlphaBlend;
 
-    QColor contourColor;
+    TQColor contourColor;
     if (disabled) {
         contourColor = backgroundColor.dark(150);
     } else {
@@ -417,49 +417,49 @@ void PlastikStyle::renderContour(QPainter *p,
     if(drawLeft && drawTop) {
         switch(flags&Round_UpperLeft) {
             case false:
-                renderPixel(p,QPoint(r.left(),r.top()),alphaAA,contourColor,backgroundColor,alphaBlend);
+                renderPixel(p,TQPoint(r.left(),r.top()),alphaAA,contourColor,backgroundColor,alphaBlend);
                 break;
             default:
-                renderPixel(p,QPoint(r.left()+1,r.top()),alphaAA,contourColor,backgroundColor,alphaBlend);
-                renderPixel(p,QPoint(r.left(),r.top()+1),alphaAA,contourColor,backgroundColor,alphaBlend);
+                renderPixel(p,TQPoint(r.left()+1,r.top()),alphaAA,contourColor,backgroundColor,alphaBlend);
+                renderPixel(p,TQPoint(r.left(),r.top()+1),alphaAA,contourColor,backgroundColor,alphaBlend);
         }
     }
     if(drawLeft && drawBottom) {
         switch(flags&Round_BottomLeft) {
             case false:
-                renderPixel(p,QPoint(r.left(),r.bottom()),alphaAA,contourColor,backgroundColor,alphaBlend);
+                renderPixel(p,TQPoint(r.left(),r.bottom()),alphaAA,contourColor,backgroundColor,alphaBlend);
                 break;
             default:
-                renderPixel(p,QPoint(r.left()+1,r.bottom()),alphaAA,contourColor,backgroundColor,alphaBlend);
-                renderPixel(p,QPoint(r.left(),r.bottom()-1),alphaAA,contourColor,backgroundColor,alphaBlend);
+                renderPixel(p,TQPoint(r.left()+1,r.bottom()),alphaAA,contourColor,backgroundColor,alphaBlend);
+                renderPixel(p,TQPoint(r.left(),r.bottom()-1),alphaAA,contourColor,backgroundColor,alphaBlend);
         }
     }
     if(drawRight && drawTop) {
         switch(flags&Round_UpperRight) {
             case false:
-                renderPixel(p,QPoint(r.right(),r.top()),alphaAA,contourColor,backgroundColor,alphaBlend);
+                renderPixel(p,TQPoint(r.right(),r.top()),alphaAA,contourColor,backgroundColor,alphaBlend);
                 break;
             default:
-                renderPixel(p,QPoint(r.right()-1,r.top()),alphaAA,contourColor,backgroundColor,alphaBlend);
-                renderPixel(p,QPoint(r.right(),r.top()+1),alphaAA,contourColor,backgroundColor,alphaBlend);
+                renderPixel(p,TQPoint(r.right()-1,r.top()),alphaAA,contourColor,backgroundColor,alphaBlend);
+                renderPixel(p,TQPoint(r.right(),r.top()+1),alphaAA,contourColor,backgroundColor,alphaBlend);
         }
     }
     if(drawRight && drawBottom) {
         switch(flags&Round_BottomRight) {
             case false:
-                renderPixel(p,QPoint(r.right(),r.bottom()),alphaAA,contourColor,backgroundColor,alphaBlend);
+                renderPixel(p,TQPoint(r.right(),r.bottom()),alphaAA,contourColor,backgroundColor,alphaBlend);
                 break;
             default:
-                renderPixel(p,QPoint(r.right()-1,r.bottom()),alphaAA,contourColor,backgroundColor,alphaBlend);
-                renderPixel(p,QPoint(r.right(),r.bottom()-1),alphaAA,contourColor,backgroundColor,alphaBlend);
+                renderPixel(p,TQPoint(r.right()-1,r.bottom()),alphaAA,contourColor,backgroundColor,alphaBlend);
+                renderPixel(p,TQPoint(r.right(),r.bottom()-1),alphaAA,contourColor,backgroundColor,alphaBlend);
         }
     }
 
 }
 
-void PlastikStyle::renderMask(QPainter *p,
-                              const QRect &r,
-                              const QColor &color,
+void PlastikStyle::renderMask(TQPainter *p,
+                              const TQRect &r,
+                              const TQColor &color,
                               const uint flags) const
 {
     if((r.width() <= 0)||(r.height() <= 0))
@@ -471,7 +471,7 @@ void PlastikStyle::renderMask(QPainter *p,
     const bool roundBottomRight = flags&Round_BottomRight;
 
 
-    p->fillRect (QRect(r.x()+1, r.y()+1, r.width()-2, r.height()-2) , color);
+    p->fillRect (TQRect(r.x()+1, r.y()+1, r.width()-2, r.height()-2) , color);
 
     p->setPen(color);
     // sides
@@ -485,11 +485,11 @@ void PlastikStyle::renderMask(QPainter *p,
                 r.right(), roundBottomLeft?r.bottom()-1:r.bottom() );
 }
 
-void PlastikStyle::renderSurface(QPainter *p,
-                                 const QRect &r,
-                                 const QColor &backgroundColor,
-                                 const QColor &buttonColor,
-                                 const QColor &highlightColor,
+void PlastikStyle::renderSurface(TQPainter *p,
+                                 const TQRect &r,
+                                 const TQColor &backgroundColor,
+                                 const TQColor &buttonColor,
+                                 const TQColor &highlightColor,
                                  int intensity,
                                  const uint flags) const
 {
@@ -522,7 +522,7 @@ void PlastikStyle::renderSurface(QPainter *p,
         highlightBottom = (flags&Highlight_Bottom);
     }
 
-    QColor baseColor = alphaBlendColors(backgroundColor, disabled?backgroundColor:buttonColor, 10);
+    TQColor baseColor = alphaBlendColors(backgroundColor, disabled?backgroundColor:buttonColor, 10);
     if (disabled) {
         intensity = 2;
     } else if (highlight) {
@@ -535,13 +535,13 @@ void PlastikStyle::renderSurface(QPainter *p,
     }
 // some often needed colors...
     // 1 more intensive than 2 and 3.
-    const QColor colorTop1 = alphaBlendColors(baseColor,
+    const TQColor colorTop1 = alphaBlendColors(baseColor,
                     sunken?baseColor.dark(100+intensity*2):baseColor.light(100+intensity*2), 80);
-    const QColor colorTop2 = alphaBlendColors(baseColor,
+    const TQColor colorTop2 = alphaBlendColors(baseColor,
                     sunken?baseColor.dark(100+intensity):baseColor.light(100+intensity), 80);
-    const QColor colorBottom1 = alphaBlendColors(baseColor,
+    const TQColor colorBottom1 = alphaBlendColors(baseColor,
                         sunken?baseColor.light(100+intensity*2):baseColor.dark(100+intensity*2), 80);
-    const QColor colorBottom2 = alphaBlendColors(baseColor,
+    const TQColor colorBottom2 = alphaBlendColors(baseColor,
                         sunken?baseColor.light(100+intensity):baseColor.dark(100+intensity), 80);
 
 // sides
@@ -550,7 +550,7 @@ void PlastikStyle::renderSurface(QPainter *p,
             int height = r.height();
             if (roundUpperLeft || !drawTop) height--;
             if (roundBottomLeft || !drawBottom) height--;
-            renderGradient(p, QRect(r.left(), (roundUpperLeft&&drawTop)?r.top()+1:r.top(), 1, height),
+            renderGradient(p, TQRect(r.left(), (roundUpperLeft&&drawTop)?r.top()+1:r.top(), 1, height),
                             colorTop1, baseColor);
         } else {
             p->setPen(colorTop1 );
@@ -565,7 +565,7 @@ void PlastikStyle::renderSurface(QPainter *p,
             //       and we don't whant to draw the Top, we have a unpainted area
             if (roundUpperRight || !drawTop) height--;
             if (roundBottomRight || !drawBottom) height--;
-            renderGradient(p, QRect(r.right(), (roundUpperRight&&drawTop)?r.top()+1:r.top(), 1, height),
+            renderGradient(p, TQRect(r.right(), (roundUpperRight&&drawTop)?r.top()+1:r.top(), 1, height),
                             baseColor, colorBottom1);
         } else {
             p->setPen(colorBottom1 );
@@ -582,7 +582,7 @@ void PlastikStyle::renderSurface(QPainter *p,
             int width = r.width();
             if (roundUpperLeft || !drawLeft) width--;
             if (roundUpperRight || !drawRight) width--;
-            renderGradient(p, QRect((roundUpperLeft&&drawLeft)?r.left()+1:r.left(), r.top(), width, 1),
+            renderGradient(p, TQRect((roundUpperLeft&&drawLeft)?r.left()+1:r.left(), r.top(), width, 1),
                             colorTop1, colorTop2);
         }
     }
@@ -595,7 +595,7 @@ void PlastikStyle::renderSurface(QPainter *p,
             int width = r.width();
             if (roundBottomLeft || !drawLeft) width--;
             if (roundBottomRight || !drawRight) width--;
-            renderGradient(p, QRect((roundBottomLeft&&drawLeft)?r.left()+1:r.left(), r.bottom(), width, 1),
+            renderGradient(p, TQRect((roundBottomLeft&&drawLeft)?r.left()+1:r.left(), r.bottom(), width, 1),
                             colorBottom2, colorBottom1);
         }
     }
@@ -607,7 +607,7 @@ void PlastikStyle::renderSurface(QPainter *p,
     if (drawRight) width--;
     if (drawTop) height--;
     if (drawBottom) height--;
-    renderGradient(p, QRect(drawLeft?r.left()+1:r.left(), drawTop?r.top()+1:r.top(), width, height),
+    renderGradient(p, TQRect(drawLeft?r.left()+1:r.left(), drawTop?r.top()+1:r.top(), width, height),
                     colorTop2, colorBottom2, horizontal);
 
 
@@ -646,11 +646,11 @@ void PlastikStyle::renderSurface(QPainter *p,
     }
 }
 
-void PlastikStyle::renderPixel(QPainter *p,
-            const QPoint &pos,
+void PlastikStyle::renderPixel(TQPainter *p,
+            const TQPoint &pos,
             const int alpha,
-            const QColor &color,
-            const QColor &background,
+            const TQColor &color,
+            const TQColor &background,
             bool fullAlphaBlend) const
 {    
     if(fullAlphaBlend)
@@ -673,10 +673,10 @@ void PlastikStyle::renderPixel(QPainter *p,
         }
 
 
-        QImage aImg(1,1,32); // 1x1
+        TQImage aImg(1,1,32); // 1x1
         aImg.setAlphaBuffer(true);
         aImg.setPixel(0,0,qRgba(qRed(rgb),qGreen(rgb),qBlue(rgb),alpha));
-        QPixmap *result = new QPixmap(aImg);
+        TQPixmap *result = new TQPixmap(aImg);
 
         p->drawPixmap(pos, *result);
 
@@ -696,7 +696,7 @@ void PlastikStyle::renderPixel(QPainter *p,
         if(a<0) a = 0;
         int a_inv = 255 - a;
 
-        QColor res  = QColor( qRgb(qRed(rgb_b)*a_inv/255 + qRed(rgb_a)*a/255,
+        TQColor res  = TQColor( qRgb(qRed(rgb_b)*a_inv/255 + qRed(rgb_a)*a/255,
                               qGreen(rgb_b)*a_inv/255 + qGreen(rgb_a)*a/255,
                               qBlue(rgb_b)*a_inv/255 + qBlue(rgb_a)*a/255) );
         p->setPen(res);
@@ -704,9 +704,9 @@ void PlastikStyle::renderPixel(QPainter *p,
     } 
 }
 
-void PlastikStyle::renderButton(QPainter *p,
-                               const QRect &r,
-                               const QColorGroup &g,
+void PlastikStyle::renderButton(TQPainter *p,
+                               const TQRect &r,
+                               const TQColorGroup &g,
                                bool sunken,
                                bool mouseOver,
                                bool horizontal,
@@ -716,7 +716,7 @@ void PlastikStyle::renderButton(QPainter *p,
     // small fix for the kicker buttons...
     if(kickerMode) enabled = true;
 
-    const QPen oldPen( p->pen() );
+    const TQPen oldPen( p->pen() );
 
     uint contourFlags = Draw_Left|Draw_Right|Draw_Top|Draw_Bottom;
     if(!enabled) contourFlags|=Is_Disabled;
@@ -747,12 +747,12 @@ void PlastikStyle::renderButton(QPainter *p,
 
         renderContour(p, r, g.background(), getColor(g,ButtonContour),
                     contourFlags);
-        renderSurface(p, QRect(r.left()+1, r.top()+1, r.width()-2, r.height()-2),
+        renderSurface(p, TQRect(r.left()+1, r.top()+1, r.width()-2, r.height()-2),
                     g.background(), g.button(), getColor(g,MouseOverHighlight), _contrast, surfaceFlags);
     } else {
         renderContour(p, r, g.background(), g.button().dark(105+_contrast*3),
                       contourFlags);
-        renderSurface(p, QRect(r.left()+1, r.top()+1, r.width()-2, r.height()-2),
+        renderSurface(p, TQRect(r.left()+1, r.top()+1, r.width()-2, r.height()-2),
                       g.background(), g.button(), getColor(g,MouseOverHighlight), _contrast/2, surfaceFlags);
 
         flatMode = false;
@@ -761,14 +761,14 @@ void PlastikStyle::renderButton(QPainter *p,
     p->setPen(oldPen);
 }
 
-void PlastikStyle::renderDot(QPainter *p,
-                             const QPoint &point,
-                             const QColor &baseColor,
+void PlastikStyle::renderDot(TQPainter *p,
+                             const TQPoint &point,
+                             const TQColor &baseColor,
                              const bool thick,
                              const bool sunken) const
 {
-    const QColor topColor = alphaBlendColors(baseColor, sunken?baseColor.dark(130):baseColor.light(150), 70);
-    const QColor bottomColor = alphaBlendColors(baseColor, sunken?baseColor.light(150):baseColor.dark(130), 70);
+    const TQColor topColor = alphaBlendColors(baseColor, sunken?baseColor.dark(130):baseColor.light(150), 70);
+    const TQColor bottomColor = alphaBlendColors(baseColor, sunken?baseColor.light(150):baseColor.dark(130), 70);
     p->setPen(topColor );
     p->drawLine(point.x(), point.y(), point.x()+1, point.y());
     p->drawPoint(point.x(), point.y()+1);
@@ -781,10 +781,10 @@ void PlastikStyle::renderDot(QPainter *p,
     }
 }
 
-void PlastikStyle::renderGradient(QPainter *painter,
-                                  const QRect &rect,
-                                  const QColor &c1,
-                                  const QColor &c2,
+void PlastikStyle::renderGradient(TQPainter *painter,
+                                  const TQRect &rect,
+                                  const TQColor &c1,
+                                  const TQColor &c2,
                                   bool horizontal) const
 {
     if((rect.width() <= 0)||(rect.height() <= 0))
@@ -812,9 +812,9 @@ void PlastikStyle::renderGradient(QPainter *painter,
     }
 
     // there wasn't anything matching in the cache, create the pixmap now...
-    QPixmap *result = new QPixmap(horizontal ? 10 : rect.width(),
+    TQPixmap *result = new TQPixmap(horizontal ? 10 : rect.width(),
                                   horizontal ? rect.height() : 10);
-    QPainter p(result);
+    TQPainter p(result);
 
     int r_w = result->rect().width();
     int r_h = result->rect().height();
@@ -846,7 +846,7 @@ void PlastikStyle::renderGradient(QPainter *painter,
             gl += gdelta;
             bl += bdelta;
 
-            p.setPen(QColor(rl>>16, gl>>16, bl>>16));
+            p.setPen(TQColor(rl>>16, gl>>16, bl>>16));
             p.drawLine(r_x, r_y+y, r_x2, r_y+y);
         }
     } else {
@@ -855,7 +855,7 @@ void PlastikStyle::renderGradient(QPainter *painter,
             gl += gdelta;
             bl += bdelta;
 
-            p.setPen(QColor(rl>>16, gl>>16, bl>>16));
+            p.setPen(TQColor(rl>>16, gl>>16, bl>>16));
             p.drawLine(r_x+x, r_y, r_x+x, r_y2);
         }
     }
@@ -874,9 +874,9 @@ void PlastikStyle::renderGradient(QPainter *painter,
         delete result;
 }
 
-void PlastikStyle::renderPanel(QPainter *p,
-                              const QRect &r,
-                              const QColorGroup &g,
+void PlastikStyle::renderPanel(TQPainter *p,
+                              const TQRect &r,
+                              const TQColorGroup &g,
                               const bool pseudo3d,
                               const bool sunken) const
 {
@@ -885,21 +885,21 @@ void PlastikStyle::renderPanel(QPainter *p,
     r.coords(&x, &y, &x2, &y2);
 
     if (kickerMode &&
-            p->device() && p->device()->devType() == QInternal::Widget &&
-            QCString(static_cast<QWidget*>(p->device())->className()) == "FittsLawFrame") {
+            p->device() && p->device()->devType() == TQInternal::Widget &&
+            TQCString(static_cast<TQWidget*>(p->device())->className()) == "FittsLawFrame") {
     //  Stolen wholesale from Keramik. I don't like it, but oh well.
         if (sunken) {
             const QCOORD corners[] = { x2, y, x2, y2, x, y2, x, y };
             p->setPen(g.background().dark());
-            p->drawConvexPolygon(QPointArray(4, corners));
+            p->drawConvexPolygon(TQPointArray(4, corners));
             p->setPen(g.background().light());
-            p->drawPolyline(QPointArray(4, corners), 0, 3);
+            p->drawPolyline(TQPointArray(4, corners), 0, 3);
         } else {
             const QCOORD corners[] = { x, y2, x, y, x2, y, x2, y2 };
             p->setPen(g.background().dark());
-            p->drawPolygon(QPointArray(4, corners));
+            p->drawPolygon(TQPointArray(4, corners));
             p->setPen(g.background().light());
-            p->drawPolyline(QPointArray(4, corners), 0, 3);
+            p->drawPolyline(TQPointArray(4, corners), 0, 3);
         }
     } else {
         renderContour(p, r, g.background(), getColor(g, PanelContour) );
@@ -923,15 +923,15 @@ void PlastikStyle::renderPanel(QPainter *p,
     }
 }
 
-void PlastikStyle::renderMenuBlendPixmap( KPixmap &pix, const QColorGroup &cg,
-    const QPopupMenu* /* popup */ ) const
+void PlastikStyle::renderMenuBlendPixmap( KPixmap &pix, const TQColorGroup &cg,
+    const TQPopupMenu* /* popup */ ) const
 {
     pix.fill( cg.background().light(105) );
 }
 
-void PlastikStyle::renderTab(QPainter *p,
-                            const QRect &r,
-                            const QColorGroup &g,
+void PlastikStyle::renderTab(TQPainter *p,
+                            const TQRect &r,
+                            const TQColorGroup &g,
                             bool mouseOver,
                             const bool selected,
                             const bool bottom,
@@ -939,7 +939,7 @@ void PlastikStyle::renderTab(QPainter *p,
                             const bool triangular,
                             const bool cornerWidget) const
 {
-    const bool reverseLayout = QApplication::reverseLayout();
+    const bool reverseLayout = TQApplication::reverseLayout();
 
     const bool isFirst = (pos == First) || (pos == Single);
     const bool isLast = (pos == Last);
@@ -949,27 +949,27 @@ void PlastikStyle::renderTab(QPainter *p,
     // is selected
 
     // the top part of the tab which is nearly the same for all positions
-        QRect Rc; // contour
+        TQRect Rc; // contour
         if (!bottom) {
             if (isFirst && !cornerWidget && !reverseLayout) {
-                Rc = QRect(r.x(), r.y(), r.width()-1, r.height()-3);
+                Rc = TQRect(r.x(), r.y(), r.width()-1, r.height()-3);
             } else if (isFirst && !cornerWidget && reverseLayout) {
-                Rc = QRect(r.x()+1, r.y(), r.width()-1, r.height()-3);
+                Rc = TQRect(r.x()+1, r.y(), r.width()-1, r.height()-3);
             } else {
-                Rc = QRect(r.x()+1, r.y(), r.width()-2, r.height()-3);
+                Rc = TQRect(r.x()+1, r.y(), r.width()-2, r.height()-3);
             }
         } else {
             if (isFirst && !cornerWidget && !reverseLayout) {
-                Rc = QRect(r.x(), r.y()+3, r.width()-1, r.height()-3);
+                Rc = TQRect(r.x(), r.y()+3, r.width()-1, r.height()-3);
             } else if (isFirst && !cornerWidget && reverseLayout) {
-                Rc = QRect(r.x()+1, r.y()+3, r.width()-1, r.height()-3);
+                Rc = TQRect(r.x()+1, r.y()+3, r.width()-1, r.height()-3);
             } else {
-                Rc = QRect(r.x()+1, r.y()+3, r.width()-2, r.height()-3);
+                Rc = TQRect(r.x()+1, r.y()+3, r.width()-2, r.height()-3);
             }
         }
-        const QRect Rs(Rc.x()+1, bottom?Rc.y():Rc.y()+1, Rc.width()-2, Rc.height()-1); // the resulting surface
+        const TQRect Rs(Rc.x()+1, bottom?Rc.y():Rc.y()+1, Rc.width()-2, Rc.height()-1); // the resulting surface
         // the area where the fake border shoudl appear
-        const QRect Rb(r.x(), bottom?r.top():Rc.bottom()+1, r.width(), r.height()-Rc.height() );
+        const TQRect Rb(r.x(), bottom?r.top():Rc.bottom()+1, r.width(), r.height()-Rc.height() );
 
         uint contourFlags = Draw_Left|Draw_Right;
         if(!bottom) {
@@ -985,16 +985,16 @@ void PlastikStyle::renderTab(QPainter *p,
         if(!bottom) {
             p->setPen(getColor(g,PanelLight) );
             p->drawLine(Rs.x()+1, Rs.y(), Rs.right()-1, Rs.y() );
-            renderGradient(p, QRect(Rs.x(), Rs.y()+1, 1, Rs.height()-1),
+            renderGradient(p, TQRect(Rs.x(), Rs.y()+1, 1, Rs.height()-1),
                            getColor(g,PanelLight), getColor(g,PanelLight2));
-            renderGradient(p, QRect(Rs.right(), Rs.y()+1, 1, Rs.height()-1),
+            renderGradient(p, TQRect(Rs.right(), Rs.y()+1, 1, Rs.height()-1),
                             getColor(g,PanelDark), getColor(g,PanelDark2));
         } else {
             p->setPen(alphaBlendColors(g.background(), g.background().dark(160), 100) );
             p->drawLine(Rs.x()+1, Rs.bottom(), Rs.right()-1, Rs.bottom() );
-            renderGradient(p, QRect(Rs.x(), Rs.y(), 1, Rs.height()-1),
+            renderGradient(p, TQRect(Rs.x(), Rs.y(), 1, Rs.height()-1),
                             getColor(g,PanelLight), getColor(g,PanelLight2));
-            renderGradient(p, QRect(Rs.right(), Rs.y(), 1, Rs.height()-1),
+            renderGradient(p, TQRect(Rs.right(), Rs.y(), 1, Rs.height()-1),
                             getColor(g,PanelDark), getColor(g,PanelDark2));
         }
 
@@ -1004,13 +1004,13 @@ void PlastikStyle::renderTab(QPainter *p,
             p->setPen(alphaBlendColors(g.background(), getColor(g, ButtonContour), 50) );
             if( (!isFirst&&!reverseLayout) || (!isLast&&reverseLayout) ) {
                 p->drawPoint(r.left(), bottom?(triangular?r.bottom()-2:r.bottom()-3):(triangular?r.top()+2:r.top()+3) );
-                renderSurface(p, QRect(r.left(), bottom?r.top()+3:(triangular?r.top()+3:r.top()+4), 1, (triangular?r.height()-6:r.height()-7) ),
+                renderSurface(p, TQRect(r.left(), bottom?r.top()+3:(triangular?r.top()+3:r.top()+4), 1, (triangular?r.height()-6:r.height()-7) ),
                             g.background(), g.button(), getColor(g,MouseOverHighlight), _contrast,
                             Draw_Top|Draw_Bottom|Is_Horizontal);
             }
             if( (!isLast&&!reverseLayout) || (!isFirst&&reverseLayout) ) {
                 p->drawPoint(r.right(), bottom?(triangular?r.bottom()-2:r.bottom()-3):(triangular?r.top()+2:r.top()+3) );
-                renderSurface(p, QRect(r.right(), bottom?r.top()+3:(triangular?r.top()+3:r.top()+4), 1, (triangular?r.height()-6:r.height()-7) ),
+                renderSurface(p, TQRect(r.right(), bottom?r.top()+3:(triangular?r.top()+3:r.top()+4), 1, (triangular?r.height()-6:r.height()-7) ),
                             g.background(), g.button(), getColor(g,MouseOverHighlight), _contrast,
                             Draw_Top|Draw_Bottom|Is_Horizontal);
             }
@@ -1068,20 +1068,20 @@ void PlastikStyle::renderTab(QPainter *p,
     // inactive tabs
 
     // the top part of the tab which is nearly the same for all positions
-        QRect Rc; // contour
+        TQRect Rc; // contour
         if (isFirst&&reverseLayout ) {
-            Rc = QRect(r.x()+1, (bottom?r.y()+2:(triangular?r.y()+2:r.y()+3)), r.width()-2, (triangular?r.height()-4:r.height()-5) );
+            Rc = TQRect(r.x()+1, (bottom?r.y()+2:(triangular?r.y()+2:r.y()+3)), r.width()-2, (triangular?r.height()-4:r.height()-5) );
         } else {
-            Rc = QRect(r.x()+1, (bottom?r.y()+2:(triangular?r.y()+2:r.y()+3)), r.width()-1, (triangular?r.height()-4:r.height()-5) );
+            Rc = TQRect(r.x()+1, (bottom?r.y()+2:(triangular?r.y()+2:r.y()+3)), r.width()-1, (triangular?r.height()-4:r.height()-5) );
         }
-        QRect Rs; // the resulting surface
+        TQRect Rs; // the resulting surface
         if ( (isFirst&&!reverseLayout) || (isLast&&reverseLayout) ) {
-            Rs = QRect(Rc.x()+1, bottom?Rc.y():Rc.y()+1, Rc.width()-2, Rc.height()-1);
+            Rs = TQRect(Rc.x()+1, bottom?Rc.y():Rc.y()+1, Rc.width()-2, Rc.height()-1);
         } else {
-            Rs = QRect(Rc.x(), bottom?Rc.y():Rc.y()+1, Rc.width()-1, Rc.height()-1);
+            Rs = TQRect(Rc.x(), bottom?Rc.y():Rc.y()+1, Rc.width()-1, Rc.height()-1);
         }
         // the area where the fake border shoudl appear
-        const QRect Rb(r.x(), bottom?r.y():Rc.bottom()+1, r.width(), 2 );
+        const TQRect Rb(r.x(), bottom?r.y():Rc.bottom()+1, r.width(), 2 );
 
         uint contourFlags;
         if(!bottom) {
@@ -1191,12 +1191,12 @@ void PlastikStyle::renderTab(QPainter *p,
 }
 
 void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
-                                      QPainter *p,
-                                      const QWidget* widget,
-                                      const QRect &r,
-                                      const QColorGroup &cg,
+                                      TQPainter *p,
+                                      const TQWidget* widget,
+                                      const TQRect &r,
+                                      const TQColorGroup &cg,
                                       SFlags flags,
-                                      const QStyleOption& opt) const
+                                      const TQStyleOption& opt) const
 {
     // some "global" vars...
     const bool enabled = (flags & Style_Enabled);
@@ -1205,17 +1205,17 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
 //  ------
     switch( kpe ) {
         case KPE_SliderGroove: {
-            const QSlider* slider = (const QSlider*)widget;
+            const TQSlider* slider = (const TQSlider*)widget;
             bool horizontal = slider->orientation() == Horizontal;
 
             if (horizontal) {
                 int center = r.y()+r.height()/2;
-                renderContour(p, QRect(r.left(), center-2, r.width(), 4),
+                renderContour(p, TQRect(r.left(), center-2, r.width(), 4),
                               cg.background(), cg.background().dark(enabled?150:130),
                               Draw_Left|Draw_Right|Draw_Top|Draw_Bottom);
             } else {
                 int center = r.x()+r.width()/2;
-                renderContour(p, QRect(center-2, r.top(), 4, r.height()),
+                renderContour(p, TQRect(center-2, r.top(), 4, r.height()),
                               cg.background(), cg.background().dark(enabled?150:130),
                               Draw_Left|Draw_Right|Draw_Top|Draw_Bottom);
             }
@@ -1223,19 +1223,19 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
         }
 
         case KPE_SliderHandle: {
-                const QSlider* slider = (const QSlider*)widget;
+                const TQSlider* slider = (const TQSlider*)widget;
                 bool horizontal = slider->orientation() == Horizontal;
 
                 const bool pressed = (flags&Style_Active);
                 const WidgetState s = enabled?(pressed?IsPressed:IsEnabled):IsDisabled;
-                const QColor contour = getColor(cg,DragButtonContour,s),
+                const TQColor contour = getColor(cg,DragButtonContour,s),
                              surface = getColor(cg,DragButtonSurface,s);
 
                 int xcenter = (r.left()+r.right()) / 2;
                 int ycenter = (r.top()+r.bottom()) / 2;
 
                 if (horizontal) {
-                    renderContour(p, QRect(xcenter-5, ycenter-6, 11, 10),
+                    renderContour(p, TQRect(xcenter-5, ycenter-6, 11, 10),
                                 cg.background(), contour,
                                 Draw_Left|Draw_Right|Draw_Top|Round_UpperLeft|Round_UpperRight);
 
@@ -1266,27 +1266,27 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
                     p->drawPoint(xcenter+5-4, ycenter+8);
 
 
-                    QRegion mask(xcenter-4, ycenter-5, 9, 13);
-                    mask -= QRegion(xcenter-4, ycenter+4, 1, 4);
-                    mask -= QRegion(xcenter-3, ycenter+5, 1, 3);
-                    mask -= QRegion(xcenter-2, ycenter+6, 1, 2);
-                    mask -= QRegion(xcenter-1, ycenter+7, 1, 1);
-                    mask -= QRegion(xcenter+1, ycenter+7, 1, 1);
-                    mask -= QRegion(xcenter+2, ycenter+6, 1, 2);
-                    mask -= QRegion(xcenter+3, ycenter+5, 1, 3);
-                    mask -= QRegion(xcenter+4, ycenter+4, 1, 4);
+                    TQRegion mask(xcenter-4, ycenter-5, 9, 13);
+                    mask -= TQRegion(xcenter-4, ycenter+4, 1, 4);
+                    mask -= TQRegion(xcenter-3, ycenter+5, 1, 3);
+                    mask -= TQRegion(xcenter-2, ycenter+6, 1, 2);
+                    mask -= TQRegion(xcenter-1, ycenter+7, 1, 1);
+                    mask -= TQRegion(xcenter+1, ycenter+7, 1, 1);
+                    mask -= TQRegion(xcenter+2, ycenter+6, 1, 2);
+                    mask -= TQRegion(xcenter+3, ycenter+5, 1, 3);
+                    mask -= TQRegion(xcenter+4, ycenter+4, 1, 4);
                     p->setClipRegion(mask);
                     uint surfaceFlags = Draw_Left|Draw_Right|Draw_Top|Round_UpperLeft|Round_UpperRight|Is_Horizontal;
                     if(!enabled)
                         surfaceFlags |= Is_Disabled;
-                    renderSurface(p, QRect(xcenter-4, ycenter-5, 9, 13),
+                    renderSurface(p, TQRect(xcenter-4, ycenter-5, 9, 13),
                                 cg.background(), surface, getColor(cg,MouseOverHighlight),
                                 _contrast+3, surfaceFlags);
-                    renderDot(p, QPoint(xcenter-3, ycenter-3), surface, false, true );
-                    renderDot(p, QPoint(xcenter+2,   ycenter-3), surface, false, true );
+                    renderDot(p, TQPoint(xcenter-3, ycenter-3), surface, false, true );
+                    renderDot(p, TQPoint(xcenter+2,   ycenter-3), surface, false, true );
                     p->setClipping(false);
                 } else {
-                    renderContour(p, QRect(xcenter-6, ycenter-5, 10, 11),
+                    renderContour(p, TQRect(xcenter-6, ycenter-5, 10, 11),
                                 cg.background(), contour,
                                 Draw_Left|Draw_Top|Draw_Bottom|Round_UpperLeft|Round_BottomLeft);
 
@@ -1316,25 +1316,25 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
                     p->drawPoint(xcenter+8, ycenter-5+4);
                     p->drawPoint(xcenter+8, ycenter+5-4);
 
-                    QRegion mask(xcenter-5, ycenter-4, 13, 9);
-                    mask -= QRegion(xcenter+4, ycenter-4, 4, 1);
-                    mask -= QRegion(xcenter+5, ycenter-3, 3, 1);
-                    mask -= QRegion(xcenter+6, ycenter-2, 2, 1);
-                    mask -= QRegion(xcenter+7, ycenter-1, 1, 1);
-                    mask -= QRegion(xcenter+7, ycenter+1, 1, 1);
-                    mask -= QRegion(xcenter+6, ycenter+2, 2, 1);
-                    mask -= QRegion(xcenter+5, ycenter+3, 3, 1);
-                    mask -= QRegion(xcenter+4, ycenter+4, 4, 1);
+                    TQRegion mask(xcenter-5, ycenter-4, 13, 9);
+                    mask -= TQRegion(xcenter+4, ycenter-4, 4, 1);
+                    mask -= TQRegion(xcenter+5, ycenter-3, 3, 1);
+                    mask -= TQRegion(xcenter+6, ycenter-2, 2, 1);
+                    mask -= TQRegion(xcenter+7, ycenter-1, 1, 1);
+                    mask -= TQRegion(xcenter+7, ycenter+1, 1, 1);
+                    mask -= TQRegion(xcenter+6, ycenter+2, 2, 1);
+                    mask -= TQRegion(xcenter+5, ycenter+3, 3, 1);
+                    mask -= TQRegion(xcenter+4, ycenter+4, 4, 1);
                     p->setClipRegion(mask);
                     uint surfaceFlags = Draw_Left|Draw_Top|Draw_Bottom|Round_UpperLeft|Round_BottomLeft|
                                     Round_UpperRight|Is_Horizontal;
                     if(!enabled)
                         surfaceFlags |= Is_Disabled;
-                    renderSurface(p, QRect(xcenter-5, ycenter-4, 13, 9),
+                    renderSurface(p, TQRect(xcenter-5, ycenter-4, 13, 9),
                                 cg.background(), surface, getColor(cg,MouseOverHighlight),
                                 _contrast+3, surfaceFlags);
-                    renderDot(p, QPoint(xcenter-3, ycenter-3), surface, false, true );
-                    renderDot(p, QPoint(xcenter-3,   ycenter+2), surface, false, true );
+                    renderDot(p, TQPoint(xcenter-3, ycenter-3), surface, false, true );
+                    renderDot(p, TQPoint(xcenter-3,   ycenter+2), surface, false, true );
                     p->setClipping(false);
                 }
 
@@ -1357,9 +1357,9 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
                     p->drawLine( centerx, centery - radius, centerx, centery + radius );
             } else if(_drawTriangularExpander) {
               if( flags & Style_On )
-                drawPrimitive(PE_ArrowRight, p, QRect(r.x()+1,r.y()+1,r.width(),r.height()), cg,ButtonContour, flags);
+                drawPrimitive(PE_ArrowRight, p, TQRect(r.x()+1,r.y()+1,r.width(),r.height()), cg,ButtonContour, flags);
               if( flags & Style_Off )
-                drawPrimitive(PE_ArrowDown, p, QRect(r.x()+1,r.y()+1,r.width(),r.height()), cg,ButtonContour, flags);
+                drawPrimitive(PE_ArrowDown, p, TQRect(r.x()+1,r.y()+1,r.width(),r.height()), cg,ButtonContour, flags);
             }
 
             break;
@@ -1374,10 +1374,10 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
         {
             // make 128*1 and 1*128 bitmaps that can be used for
             // drawing the right sort of lines.
-            verticalLine   = new QBitmap( 1, 129, true );
-            horizontalLine = new QBitmap( 128, 1, true );
-            QPointArray a( 64 );
-            QPainter p2;
+            verticalLine   = new TQBitmap( 1, 129, true );
+            horizontalLine = new TQBitmap( 128, 1, true );
+            TQPointArray a( 64 );
+            TQPainter p2;
             p2.begin( verticalLine );
 
             int i;
@@ -1386,7 +1386,7 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
             p2.setPen( color1 );
             p2.drawPoints( a );
             p2.end();
-            QApplication::flushX();
+            TQApplication::flushX();
             verticalLine->setMask( *verticalLine );
 
             p2.begin( horizontalLine );
@@ -1395,7 +1395,7 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
             p2.setPen( color1 );
             p2.drawPoints( a );
             p2.end();
-            QApplication::flushX();
+            TQApplication::flushX();
             horizontalLine->setMask( *horizontalLine );
         }
 
@@ -1444,11 +1444,11 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
 
 
 void PlastikStyle::drawPrimitive(PrimitiveElement pe,
-                                QPainter *p,
-                                const QRect &r,
-                                const QColorGroup &cg,
+                                TQPainter *p,
+                                const TQRect &r,
+                                const TQColorGroup &cg,
                                 SFlags flags,
-                                const QStyleOption &opt ) const
+                                const TQStyleOption &opt ) const
 {
     bool down   = flags & Style_Down;
     bool on     = flags & Style_On;
@@ -1482,7 +1482,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
             if(!kickerMode) {
                 // detect if this is the left most header item
                 bool isFirst = false;
-                QHeader *header = dynamic_cast<QHeader*>(p->device() );
+                TQHeader *header = dynamic_cast<TQHeader*>(p->device() );
                 if (header) {
                     isFirst = header->mapToIndex(header->sectionAt(r.x() ) ) == 0;
                 }
@@ -1504,7 +1504,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
                         }
                     }
                 }
-                renderSurface(p, QRect(isFirst?r.left()+1:r.left(), r.top()+1, isFirst?r.width()-2:r.width()-1, r.height()-2),
+                renderSurface(p, TQRect(isFirst?r.left()+1:r.left(), r.top()+1, isFirst?r.width()-2:r.width()-1, r.height()-2),
                                 cg.background(), cg.button(), getColor(cg,MouseOverHighlight), _contrast,
                                 surfaceFlags);
 
@@ -1537,7 +1537,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
             // make the length even so that we get a nice symmetric plus...
             if(l%2 != 0)
                 --l;
-            QPoint c = r.center();
+            TQPoint c = r.center();
 
             p->drawLine( c.x()-l/2, c.y(), c.x()+l/2, c.y() );
             if ( pe == PE_SpinWidgetPlus ) {
@@ -1548,7 +1548,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
 
         case PE_ScrollBarSlider: {
             const WidgetState s = enabled?(down?IsPressed:IsEnabled):IsDisabled;
-            const QColor surface = getColor(cg, DragButtonSurface, s);
+            const TQColor surface = getColor(cg, DragButtonSurface, s);
 
             uint contourFlags = Draw_Left|Draw_Right|Draw_Top|Draw_Bottom;
             if(!enabled) contourFlags|=Is_Disabled;
@@ -1559,7 +1559,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
             if(horiz) surfaceFlags|=Is_Horizontal;
             if(!enabled) surfaceFlags|=Is_Disabled;
             if(r.height() >= 4)
-                renderSurface(p, QRect(r.left()+1, r.top()+1, r.width()-2, r.height()-2),
+                renderSurface(p, TQRect(r.left()+1, r.top()+1, r.width()-2, r.height()-2),
                         cg.background(), surface, cg.background(),
                         _contrast+3, surfaceFlags);
 
@@ -1577,7 +1577,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
                     else
                     {
                         for(int k = 3; k <= 13; k+=4) {
-                            renderDot(p, QPoint(k, yPos), surface, false, true );
+                            renderDot(p, TQPoint(k, yPos), surface, false, true );
                         }
                     }
                 }
@@ -1589,7 +1589,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
                     else
                     {
                         for(int k = 3; k <= 13; k+=4) {
-                            renderDot(p, QPoint(xPos, k), surface, false, true );
+                            renderDot(p, TQPoint(xPos, k), surface, false, true );
                         }
                     }
                 }
@@ -1601,17 +1601,17 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
         case PE_ScrollBarAddPage:
         case PE_ScrollBarSubPage: {
             // draw double buffered to avoid flicker...
-            QPixmap buffer;
+            TQPixmap buffer;
             if(flags & Style_Horizontal) {
                 buffer.resize(2, r.height() );
             } else {
                 buffer.resize(r.width(), 2 );
             }
-            QRect br(buffer.rect() );
-            QPainter bp(&buffer);
+            TQRect br(buffer.rect() );
+            TQPainter bp(&buffer);
 
             if (on || down) {
-                bp.fillRect(br, QBrush(cg.mid().dark()));
+                bp.fillRect(br, TQBrush(cg.mid().dark()));
             } else {
                 if(flags & Style_Horizontal) {
                     bp.setPen(cg.background().dark(106));
@@ -1628,11 +1628,11 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
                 }
             }
 
-            bp.fillRect(br, QBrush(cg.background().light(), Dense4Pattern));
+            bp.fillRect(br, TQBrush(cg.background().light(), Dense4Pattern));
 
             bp.end();
 
-            p->drawTiledPixmap(r, buffer, QPoint(0, r.top()%2) );
+            p->drawTiledPixmap(r, buffer, TQPoint(0, r.top()%2) );
             break;
         }
 
@@ -1655,7 +1655,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
             }
             renderContour(p, r, cg.background(), getColor(cg, ButtonContour),
                     contourFlags);
-            renderSurface(p, QRect(r.left()+1, r.top()+1, r.width()-2, r.height()-2),
+            renderSurface(p, TQRect(r.left()+1, r.top()+1, r.width()-2, r.height()-2),
                     cg.background(), cg.button(), getColor(cg,MouseOverHighlight), _contrast+3,
                     surfaceFlags);
 
@@ -1681,7 +1681,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
             }
             renderContour(p, r, cg.background(), getColor(cg, ButtonContour),
                     contourFlags);
-            renderSurface(p, QRect(r.left()+1, r.top()+1, r.width()-2, r.height()-2),
+            renderSurface(p, TQRect(r.left()+1, r.top()+1, r.width()-2, r.height()-2),
                     cg.background(), cg.button(), getColor(cg,MouseOverHighlight), _contrast+3,
                     surfaceFlags);
 
@@ -1693,7 +1693,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
     // CHECKBOXES
     // ----------
         case PE_Indicator: {
-            QColor contentColor = enabled?cg.base():cg.background();
+            TQColor contentColor = enabled?cg.base():cg.background();
 
             uint contourFlags = Draw_Left|Draw_Right|Draw_Top|Draw_Bottom;
             if(!enabled) {
@@ -1712,7 +1712,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
                 surfaceFlags |= Highlight_Left|Highlight_Right|
                         Highlight_Top|Highlight_Bottom;
             }
-            renderSurface(p, QRect(r.x()+1, r.y()+1, r.width()-2, r.height()-2),
+            renderSurface(p, TQRect(r.x()+1, r.y()+1, r.width()-2, r.height()-2),
                     cg.background(), contentColor, getColor(cg,MouseOverHighlight), enabled?_contrast+3:(_contrast/2), surfaceFlags);
 
             drawPrimitive(PE_CheckMark, p, r, cg, flags);
@@ -1728,11 +1728,11 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
     // RADIOBUTTONS
     // ------------
         case PE_ExclusiveIndicator: {
-            const QColor contourColor = getColor(cg, ButtonContour, enabled);
-            QColor contentColor = enabled?cg.base():cg.background();
+            const TQColor contourColor = getColor(cg, ButtonContour, enabled);
+            TQColor contentColor = enabled?cg.base():cg.background();
 
-            QBitmap bmp;
-            bmp = QBitmap(13, 13, radiobutton_mask_bits, true);
+            TQBitmap bmp;
+            bmp = TQBitmap(13, 13, radiobutton_mask_bits, true);
             // first the surface...
             uint surfaceFlags = Draw_Left|Draw_Right|Draw_Top|Draw_Bottom|Is_Horizontal;
             if(!enabled) {
@@ -1747,28 +1747,28 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
 
             // ...then contour, anti-alias, mouseOver...
             // contour
-            bmp = QBitmap(13, 13, radiobutton_contour_bits, true);
+            bmp = TQBitmap(13, 13, radiobutton_contour_bits, true);
             bmp.setMask(bmp);
             p->setPen(alphaBlendColors(cg.background(), contourColor, 50) );
             p->drawPixmap(x, y, bmp);
             // anti-alias outside
-            bmp = QBitmap(13, 13, radiobutton_aa_outside_bits, true);
+            bmp = TQBitmap(13, 13, radiobutton_aa_outside_bits, true);
             bmp.setMask(bmp);
             p->setPen(alphaBlendColors(cg.background(), contourColor, 150) );
             p->drawPixmap(x, y, bmp);
             // highlighting...
             if(mouseOver) {
-                bmp = QBitmap(13, 13, radiobutton_highlight1_bits, true);
+                bmp = TQBitmap(13, 13, radiobutton_highlight1_bits, true);
                 bmp.setMask(bmp);
                 p->setPen(alphaBlendColors(contentColor, getColor(cg,MouseOverHighlight), 80) );
                 p->drawPixmap(x, y, bmp);
-                bmp = QBitmap(13, 13, radiobutton_highlight2_bits, true);
+                bmp = TQBitmap(13, 13, radiobutton_highlight2_bits, true);
                 bmp.setMask(bmp);
                 p->setPen(alphaBlendColors(contentColor, getColor(cg,MouseOverHighlight), 150) );
                 p->drawPixmap(x, y, bmp);
             }
             // anti-alias inside, "above" the higlighting!
-            bmp = QBitmap(13, 13, radiobutton_aa_inside_bits, true);
+            bmp = TQBitmap(13, 13, radiobutton_aa_inside_bits, true);
             bmp.setMask(bmp);
             if(mouseOver) {
                 p->setPen(alphaBlendColors(getColor(cg,MouseOverHighlight), contourColor, 180) );
@@ -1778,22 +1778,22 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
             p->drawPixmap(x, y, bmp);
 
 
-            QColor checkmarkColor = enabled?getColor(cg,CheckMark):cg.background();
+            TQColor checkmarkColor = enabled?getColor(cg,CheckMark):cg.background();
             if(flags & Style_Down) {
                 checkmarkColor = alphaBlendColors(contentColor, checkmarkColor, 150);
             }
 
             // draw the radio mark
             if (flags & Style_On || flags & Style_Down) {
-                bmp = QBitmap(CHECKMARKSIZE, CHECKMARKSIZE, radiomark_dark_bits, true);
+                bmp = TQBitmap(CHECKMARKSIZE, CHECKMARKSIZE, radiomark_dark_bits, true);
                 bmp.setMask(bmp);
                 p->setPen(alphaBlendColors(contentColor, checkmarkColor.dark(150), 50) );
                 p->drawPixmap(x+2, y+2, bmp);
-                bmp = QBitmap(CHECKMARKSIZE, CHECKMARKSIZE, radiomark_light_bits, true);
+                bmp = TQBitmap(CHECKMARKSIZE, CHECKMARKSIZE, radiomark_light_bits, true);
                 bmp.setMask(bmp);
                 p->setPen(alphaBlendColors(contentColor, checkmarkColor.dark(125), 50) );
                 p->drawPixmap(x+2, y+2, bmp);
-                bmp = QBitmap(CHECKMARKSIZE, CHECKMARKSIZE, radiomark_aa_bits, true);
+                bmp = TQBitmap(CHECKMARKSIZE, CHECKMARKSIZE, radiomark_aa_bits, true);
                 bmp.setMask(bmp);
                 p->setPen(alphaBlendColors(contentColor, checkmarkColor.dark(150), 150) );
                 p->drawPixmap(x+2, y+2, bmp);
@@ -1805,8 +1805,8 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
         case PE_ExclusiveIndicatorMask: {
             p->fillRect(r, color0);
 
-            QBitmap bmp;
-            bmp = QBitmap(13, 13, radiobutton_mask_bits, true);
+            TQBitmap bmp;
+            bmp = TQBitmap(13, 13, radiobutton_mask_bits, true);
             bmp.setMask(bmp);
             p->setPen(color1);
             p->drawPixmap(x, y, bmp);
@@ -1818,20 +1818,20 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
     // --------------
         case PE_Splitter: {
             // highlight on mouse over
-            QColor color = (hoverWidget == p->device())?cg.background().light(100+_contrast):cg.background();
+            TQColor color = (hoverWidget == p->device())?cg.background().light(100+_contrast):cg.background();
             p->fillRect(r, color);
             if (w > h) {
                 if (h > 4) {
                     int ycenter = r.height()/2;
                     for(int k = 2*r.width()/10; k < 8*r.width()/10; k+=5) {
-                        renderDot(p, QPoint(k, ycenter-1), color, false, true);
+                        renderDot(p, TQPoint(k, ycenter-1), color, false, true);
                     }
                 }
             } else {
                 if (w > 4) {
                     int xcenter = r.width()/2;
                     for(int k = 2*r.height()/10; k < 8*r.height()/10; k+=5) {
-                        renderDot(p, QPoint(xcenter-1, k), color, false, true);
+                        renderDot(p, TQPoint(xcenter-1, k), color, false, true);
                     }
                 }
             }
@@ -1861,9 +1861,9 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
             bool isEnabled = true;
             // panel is highlighted by default if it has focus, but if we have access to the
             // widget itself we can try to avoid highlighting in case it's readOnly or disabled.
-            if (p->device() && dynamic_cast<QLineEdit*>(p->device()))
+            if (p->device() && dynamic_cast<TQLineEdit*>(p->device()))
             {
-                QLineEdit* lineEdit = dynamic_cast<QLineEdit*>(p->device());
+                TQLineEdit* lineEdit = dynamic_cast<TQLineEdit*>(p->device());
                 isReadOnly = lineEdit->isReadOnly();
                 isEnabled = lineEdit->isEnabled();
             }
@@ -1878,9 +1878,9 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
             //
             // In this place there is no reliable way to detect if we are in khtml; the
             // only thing we know is that khtml buffers its widgets into a pixmap. So
-            // when the paint device is a QPixmap, chances are high that we are in khtml.
+            // when the paint device is a TQPixmap, chances are high that we are in khtml.
             // It's possible that this breaks other things, so let's see how it works...
-            if (p->device() && dynamic_cast<QPixmap*>(p->device() ) ) {
+            if (p->device() && dynamic_cast<TQPixmap*>(p->device() ) ) {
                 contourFlags += Draw_AlphaBlend;
             }
 
@@ -1894,7 +1894,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
                 renderContour(p, r, cg.background(),
                               getColor(cg, ButtonContour, enabled), contourFlags );
             }
-            const QColor contentColor = enabled?cg.base():cg.background();
+            const TQColor contentColor = enabled?cg.base():cg.background();
             if (_inputFocusHighlight && hasFocus && !isReadOnly && isEnabled)
             {
                 p->setPen( getColor(cg,FocusHighlight).dark(130) );
@@ -1941,10 +1941,10 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
         case PE_PanelMenuBar:
         case PE_PanelDockWindow: {
             // fix for toolbar lag (from Mosfet Liquid) 
-            QWidget* w = dynamic_cast<QWidget*>(p->device());
+            TQWidget* w = dynamic_cast<TQWidget*>(p->device());
             if(w && w->backgroundMode() == PaletteButton) 
                 w->setBackgroundMode(PaletteBackground);
-            p->fillRect(r, cg.brush(QColorGroup::Background));
+            p->fillRect(r, cg.brush(TQColorGroup::Background));
 
             if ( _drawToolBarSeparator ) {
                 if ( r.width() > r.height() ) {
@@ -1979,9 +1979,9 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
                 int center = r.left()+r.width()/2;
                 for(int j = r.top()+2; j <= r.bottom()-3; j+=3) {
                     if(counter%2 == 0) {
-                        renderDot(p, QPoint(center+1, j), cg.background(), true, true);
+                        renderDot(p, TQPoint(center+1, j), cg.background(), true, true);
                     } else {
-                        renderDot(p, QPoint(center-2, j), cg.background(), true, true);
+                        renderDot(p, TQPoint(center-2, j), cg.background(), true, true);
                     }
                     counter++;
                 }
@@ -1989,9 +1989,9 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
                 int center = r.top()+r.height()/2;
                 for(int j = r.left()+2; j <= r.right()-3; j+=3) {
                     if(counter%2 == 0) {
-                        renderDot(p, QPoint(j, center+1), cg.background(), true, true);
+                        renderDot(p, TQPoint(j, center+1), cg.background(), true, true);
                     } else {
-                        renderDot(p, QPoint(j, center-2), cg.background(), true, true);
+                        renderDot(p, TQPoint(j, center-2), cg.background(), true, true);
                     }
                     counter++;
                 }
@@ -2024,31 +2024,31 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
         }
 
         case PE_CheckMark: {
-            const QColor contentColor = enabled?cg.base():cg.background();
-            QColor checkmarkColor = enabled?getColor(cg,CheckMark):cg.background();
+            const TQColor contentColor = enabled?cg.base():cg.background();
+            TQColor checkmarkColor = enabled?getColor(cg,CheckMark):cg.background();
             if(flags & Style_Down) {
                 checkmarkColor = alphaBlendColors(contentColor, checkmarkColor, 150);
             }
 
             int x = r.center().x() - 4, y = r.center().y() - 4;
-            QBitmap bmp;
+            TQBitmap bmp;
             if( flags & Style_On ) {
-                bmp = QBitmap(CHECKMARKSIZE, CHECKMARKSIZE, checkmark_dark_bits, true);
+                bmp = TQBitmap(CHECKMARKSIZE, CHECKMARKSIZE, checkmark_dark_bits, true);
                 bmp.setMask(bmp);
                 p->setPen(alphaBlendColors(contentColor, checkmarkColor.dark(150), 50) );
                 p->drawPixmap(x, y, bmp);
-                bmp = QBitmap(CHECKMARKSIZE, CHECKMARKSIZE, checkmark_light_bits, true);
+                bmp = TQBitmap(CHECKMARKSIZE, CHECKMARKSIZE, checkmark_light_bits, true);
                 bmp.setMask(bmp);
                 p->setPen(alphaBlendColors(contentColor, checkmarkColor.dark(125), 50) );
                 p->drawPixmap(x, y, bmp);
-                bmp = QBitmap(CHECKMARKSIZE, CHECKMARKSIZE, checkmark_aa_bits, true);
+                bmp = TQBitmap(CHECKMARKSIZE, CHECKMARKSIZE, checkmark_aa_bits, true);
                 bmp.setMask(bmp);
                 p->setPen(alphaBlendColors(contentColor, checkmarkColor.dark(150), 150) );
                 p->drawPixmap(x, y, bmp);
             } else if ( flags & Style_Off ) {
                 // empty
             } else { // tristate
-                bmp = QBitmap(CHECKMARKSIZE, CHECKMARKSIZE, checkmark_tristate_bits, true);
+                bmp = TQBitmap(CHECKMARKSIZE, CHECKMARKSIZE, checkmark_tristate_bits, true);
                 bmp.setMask(bmp);
                 p->setPen(alphaBlendColors(contentColor, checkmarkColor.dark(150), 50) );
                 p->drawPixmap(x, y, bmp);
@@ -2064,7 +2064,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
         case PE_ArrowDown:
         case PE_ArrowLeft:
         case PE_ArrowRight: {
-            QPointArray a;
+            TQPointArray a;
 
             switch (pe) {
                 case PE_SpinWidgetUp:
@@ -2094,7 +2094,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
                 }
             }
 
-            const QWMatrix oldMatrix( p->worldMatrix() );
+            const TQWMatrix oldMatrix( p->worldMatrix() );
 
             if (flags & Style_Down) {
                 p->translate(pixelMetric(PM_ButtonShiftHorizontal),
@@ -2116,7 +2116,7 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
                     a.translate(0, 0);
             }
 
-            if (p->pen() == QPen::NoPen) {
+            if (p->pen() == TQPen::NoPen) {
                 if (flags & Style_Enabled) {
                     p->setPen(cg.buttonText());
                 } else {
@@ -2139,14 +2139,14 @@ void PlastikStyle::drawPrimitive(PrimitiveElement pe,
 
 
 void PlastikStyle::drawControl(ControlElement element,
-                              QPainter *p,
-                              const QWidget *widget,
-                              const QRect &r,
-                              const QColorGroup &cg,
+                              TQPainter *p,
+                              const TQWidget *widget,
+                              const TQRect &r,
+                              const TQColorGroup &cg,
                               SFlags flags,
-                              const QStyleOption& opt) const
+                              const TQStyleOption& opt) const
 {
-    const bool reverseLayout = QApplication::reverseLayout();
+    const bool reverseLayout = TQApplication::reverseLayout();
 
     const bool enabled = (flags & Style_Enabled);
 
@@ -2155,7 +2155,7 @@ void PlastikStyle::drawControl(ControlElement element,
     // PROGRESSBAR
     // -----------
         case CE_ProgressBarGroove: {
-            const QColor content = enabled?cg.base():cg.background();
+            const TQColor content = enabled?cg.base():cg.background();
             renderContour(p, r, cg.background(), getColor(cg, ButtonContour, enabled) );
             p->setPen(content.dark(105) );
             p->drawLine(r.left()+2, r.top()+1, r.right()-2, r.top()+1 );
@@ -2167,11 +2167,11 @@ void PlastikStyle::drawControl(ControlElement element,
         }
 
         case CE_ProgressBarContents: {
-            const QProgressBar *pb = dynamic_cast<const QProgressBar*>(widget);
+            const TQProgressBar *pb = dynamic_cast<const TQProgressBar*>(widget);
             int steps = pb->totalSteps();
 
-            const QColor bg = enabled?cg.base():cg.background(); // background
-            const QColor fg = enabled?cg.highlight():cg.background().dark(110); // foreground
+            const TQColor bg = enabled?cg.base():cg.background(); // background
+            const TQColor fg = enabled?cg.highlight():cg.background().dark(110); // foreground
 
             if( steps == 0 ) { // Busy indicator
                 static const int barWidth = 10;
@@ -2180,12 +2180,12 @@ void PlastikStyle::drawControl(ControlElement element,
                     progress = 0;
                 if( progress > r.width()-barWidth )
                     progress = (r.width()-barWidth)-(progress-(r.width()-barWidth));
-                p->fillRect( QRect( r.x(), r.y(), r.width(), r.height() ), bg );
-                renderContour( p, QRect( r.x()+progress, r.y(), barWidth, r.height() ),
+                p->fillRect( TQRect( r.x(), r.y(), r.width(), r.height() ), bg );
+                renderContour( p, TQRect( r.x()+progress, r.y(), barWidth, r.height() ),
                                 bg, fg.dark(160),
                                 Draw_Left|Draw_Right|Draw_Top|Draw_Bottom|Round_UpperRight|
                                     Round_BottomRight|Round_UpperLeft|Round_BottomLeft );
-                renderSurface(p, QRect( r.x()+progress+1, r.y()+1, barWidth-2, r.height()-2 ),
+                renderSurface(p, TQRect( r.x()+progress+1, r.y()+1, barWidth-2, r.height()-2 ),
                                     bg, fg, cg.highlight(),
                                     2*(_contrast/3),
                                     Draw_Right|Draw_Left|Draw_Top|Draw_Bottom|
@@ -2200,9 +2200,9 @@ void PlastikStyle::drawControl(ControlElement element,
                 if(w<4) w = 4;
                 int w2 = r.width()-(r.width()-w);
 
-                QRect Rempty(reverseLayout?r.left():r.left()+w-1, r.top(), r.width()-w+1, r.height() );
-                QRect Rcontour(reverseLayout?r.right()-w2+1:r.left(), r.top(), w2, r.height() );
-                QRect Rsurface(Rcontour.left()+1, Rcontour.top()+1, w2-2, Rcontour.height()-2);
+                TQRect Rempty(reverseLayout?r.left():r.left()+w-1, r.top(), r.width()-w+1, r.height() );
+                TQRect Rcontour(reverseLayout?r.right()-w2+1:r.left(), r.top(), w2, r.height() );
+                TQRect Rsurface(Rcontour.left()+1, Rcontour.top()+1, w2-2, Rcontour.height()-2);
 
                 p->fillRect(Rempty, bg);
 
@@ -2211,18 +2211,18 @@ void PlastikStyle::drawControl(ControlElement element,
                               reverseLayout ? Draw_Left|Draw_Right|Draw_Top|Draw_Bottom|Round_UpperLeft|Round_BottomLeft
                               : Draw_Left|Draw_Right|Draw_Top|Draw_Bottom|Round_UpperRight|Round_BottomRight);
 
-                QRegion mask(Rsurface);
+                TQRegion mask(Rsurface);
                 if(reverseLayout) {
-                    mask -= QRegion(Rsurface.left(), Rsurface.top(), 1, 1);
-                    mask -= QRegion(Rsurface.left(), Rsurface.bottom(), 1, 1);
+                    mask -= TQRegion(Rsurface.left(), Rsurface.top(), 1, 1);
+                    mask -= TQRegion(Rsurface.left(), Rsurface.bottom(), 1, 1);
                 } else {
-                    mask -= QRegion(Rsurface.right(), Rsurface.top(), 1, 1);
-                    mask -= QRegion(Rsurface.right(), Rsurface.bottom(), 1, 1);
+                    mask -= TQRegion(Rsurface.right(), Rsurface.top(), 1, 1);
+                    mask -= TQRegion(Rsurface.right(), Rsurface.bottom(), 1, 1);
                 }
                 p->setClipRegion(mask);
                 int counter = 0;
-                QPixmap surfaceTile(21, r.height()-2);
-                QPainter surfacePainter(&surfaceTile);
+                TQPixmap surfaceTile(21, r.height()-2);
+                TQPainter surfacePainter(&surfaceTile);
                 // - 21 pixel -
                 //  __________
                 // |    `    `| <- 3
@@ -2234,7 +2234,7 @@ void PlastikStyle::drawControl(ControlElement element,
                 const int tileHeight = surfaceTile.height();
                 // 3
                 renderSurface(&surfacePainter,
-                                QRect(20, 0, 11, tileHeight),
+                                TQRect(20, 0, 11, tileHeight),
                                 fg.light(105), fg, cg.highlight(), 2*(_contrast/3),
                                 reverseLayout ? Draw_Right|Draw_Left|Draw_Top|Draw_Bottom|
                                         Round_UpperLeft|Round_BottomLeft|Is_Horizontal
@@ -2242,7 +2242,7 @@ void PlastikStyle::drawControl(ControlElement element,
                                         Round_UpperRight|Round_BottomRight|Is_Horizontal);
                 // 2
                 renderSurface(&surfacePainter,
-                                QRect(10, 0, 11, tileHeight),
+                                TQRect(10, 0, 11, tileHeight),
                                 fg, fg.light(105), cg.highlight(), 2*(_contrast/3),
                                 reverseLayout ? Draw_Right|Draw_Left|Draw_Top|Draw_Bottom|
                                         Round_UpperLeft|Round_BottomLeft|Is_Horizontal
@@ -2250,7 +2250,7 @@ void PlastikStyle::drawControl(ControlElement element,
                                         Round_UpperRight|Round_BottomRight|Is_Horizontal);
                 // 1
                 renderSurface(&surfacePainter,
-                                QRect(0, 0, 11, tileHeight),
+                                TQRect(0, 0, 11, tileHeight),
                                 fg.light(105), fg, cg.highlight(), 2*(_contrast/3),
                                 reverseLayout ? Draw_Right|Draw_Left|Draw_Top|Draw_Bottom|
                                         Round_UpperLeft|Round_BottomLeft|Is_Horizontal
@@ -2264,8 +2264,8 @@ void PlastikStyle::drawControl(ControlElement element,
                     staticShift = (reverseLayout ? Rsurface.left() : Rsurface.right()) % 40 - 40;
                 } else {
                     // find the animation Offset for the current Widget
-                    QWidget* nonConstWidget = const_cast<QWidget*>(widget);
-                    QMapConstIterator<QWidget*, int> iter = progAnimWidgets.find(nonConstWidget);
+                    TQWidget* nonConstWidget = const_cast<TQWidget*>(widget);
+                    TQMapConstIterator<TQWidget*, int> iter = progAnimWidgets.find(nonConstWidget);
                     if (iter != progAnimWidgets.end())
                         animShift = iter.data();
                 }
@@ -2291,16 +2291,16 @@ void PlastikStyle::drawControl(ControlElement element,
     // TABS
     // ----
         case CE_TabBarTab: {
-            const QTabBar * tb = (const QTabBar *) widget;
+            const TQTabBar * tb = (const TQTabBar *) widget;
             bool cornerWidget = false;
-            if( ::qt_cast<QTabWidget*>(tb->parent()) ) {
-                const QTabWidget *tw = (const QTabWidget*)tb->parent();
+            if( ::qt_cast<TQTabWidget*>(tb->parent()) ) {
+                const TQTabWidget *tw = (const TQTabWidget*)tb->parent();
                 // is there a corner widget in the (top) left edge?
-                QWidget *cw = tw->cornerWidget(Qt::TopLeft);
+                TQWidget *cw = tw->cornerWidget(Qt::TopLeft);
                 if(cw)
                     cornerWidget = true;
             }
-            QTabBar::Shape tbs = tb->shape();
+            TQTabBar::Shape tbs = tb->shape();
             bool selected = false;
             if (flags & Style_Selected) selected = true;
             TabPosition pos;
@@ -2321,18 +2321,18 @@ void PlastikStyle::drawControl(ControlElement element,
             }
 
             switch (tbs) {
-                case QTabBar::TriangularAbove:
+                case TQTabBar::TriangularAbove:
 //                     renderTriangularTab(p, r, cg, (flags & Style_MouseOver), selected, false, pos);
                     renderTab(p, r, cg, mouseOver, selected, false, pos, true, cornerWidget);
                     break;
-                case QTabBar::RoundedAbove:
+                case TQTabBar::RoundedAbove:
                     renderTab(p, r, cg, mouseOver, selected, false, pos, false, cornerWidget);
                     break;
-                case QTabBar::TriangularBelow:
+                case TQTabBar::TriangularBelow:
 //                     renderTriangularTab(p, r, cg, (flags & Style_MouseOver), selected, true, pos);
                     renderTab(p, r, cg, mouseOver, selected, true, pos, true, cornerWidget);
                     break;
-                case QTabBar::RoundedBelow:
+                case TQTabBar::RoundedBelow:
                     renderTab(p, r, cg, mouseOver, selected, true, pos, false, cornerWidget);
                     break;
                     default:
@@ -2343,7 +2343,7 @@ void PlastikStyle::drawControl(ControlElement element,
         }
 
         case CE_PushButton: {
-            QPushButton *button = (QPushButton *)widget;
+            TQPushButton *button = (TQPushButton *)widget;
 
             const bool isDefault = enabled && button->isDefault();
 
@@ -2353,12 +2353,12 @@ void PlastikStyle::drawControl(ControlElement element,
             if (widget == hoverWidget)
                 flags |= Style_MouseOver;
 
-            QColorGroup g2 = cg;
+            TQColorGroup g2 = cg;
             if (isDefault)
-                g2.setColor(QColorGroup::Background, cg.background().dark(120) );
+                g2.setColor(TQColorGroup::Background, cg.background().dark(120) );
             drawPrimitive(PE_ButtonBevel, p,
-                    isDefault?QRect(r.x()+1,r.y()+1,r.width()-2,r.height()-2):r,
-                    g2, flags, QStyleOption(button) );
+                    isDefault?TQRect(r.x()+1,r.y()+1,r.width()-2,r.height()-2):r,
+                    g2, flags, TQStyleOption(button) );
 
             if (isDefault ) {
                 drawPrimitive(PE_ButtonDefault, p, r, cg, flags);
@@ -2372,7 +2372,7 @@ void PlastikStyle::drawControl(ControlElement element,
             int x, y, w, h;
             r.rect( &x, &y, &w, &h );
 
-            const QPushButton* button = static_cast<const QPushButton *>( widget );
+            const TQPushButton* button = static_cast<const TQPushButton *>( widget );
             bool active = button->isOn() || button->isDown();
             bool cornArrow = false;
 
@@ -2389,14 +2389,14 @@ void PlastikStyle::drawControl(ControlElement element,
             {
                 int dx = pixelMetric( PM_MenuButtonIndicator, widget );
                 if ( button->iconSet() && !button->iconSet()->isNull()  &&
-                    (dx + button->iconSet()->pixmap (QIconSet::Small, QIconSet::Normal, QIconSet::Off ).width()) >= w )
+                    (dx + button->iconSet()->pixmap (TQIconSet::Small, TQIconSet::Normal, TQIconSet::Off ).width()) >= w )
                 {
                     cornArrow = true; //To little room. Draw the arrow in the corner, don't adjust the widget
                 }
                 else
                 {
 		    p->setPen(cg.buttonText());
-                    drawPrimitive( PE_ArrowDown, p, visualRect( QRect(x + w - dx - 8, y + 2, dx, h - 4), r ),
+                    drawPrimitive( PE_ArrowDown, p, visualRect( TQRect(x + w - dx - 8, y + 2, dx, h - 4), r ),
                                 cg, flags, opt );
                     w -= dx;
                 }
@@ -2405,15 +2405,15 @@ void PlastikStyle::drawControl(ControlElement element,
             // Draw the icon if there is one
             if ( button->iconSet() && !button->iconSet()->isNull() )
             {
-                QIconSet::Mode  mode  = QIconSet::Disabled;
-                QIconSet::State state = QIconSet::Off;
+                TQIconSet::Mode  mode  = TQIconSet::Disabled;
+                TQIconSet::State state = TQIconSet::Off;
 
                 if (button->isEnabled())
-                    mode = button->hasFocus() ? QIconSet::Active : QIconSet::Normal;
+                    mode = button->hasFocus() ? TQIconSet::Active : TQIconSet::Normal;
                 if (button->isToggleButton() && button->isOn())
-                    state = QIconSet::On;
+                    state = TQIconSet::On;
 
-                QPixmap pixmap = button->iconSet()->pixmap( QIconSet::Small, mode, state );
+                TQPixmap pixmap = button->iconSet()->pixmap( TQIconSet::Small, mode, state );
 
                 if (button->text().isEmpty() && !button->pixmap())
                     p->drawPixmap( x + w/2 - pixmap.width()/2, y + h / 2 - pixmap.height() / 2,
@@ -2422,7 +2422,7 @@ void PlastikStyle::drawControl(ControlElement element,
                     p->drawPixmap( x + 4, y + h / 2 - pixmap.height() / 2, pixmap );
 
                 if (cornArrow) //Draw over the icon
-                    drawPrimitive( PE_ArrowDown, p, visualRect( QRect(x + w - 6, x + h - 6, 7, 7), r ),
+                    drawPrimitive( PE_ArrowDown, p, visualRect( TQRect(x + w - 6, x + h - 6, 7, 7), r ),
                                 cg, flags, opt );
 
 
@@ -2432,7 +2432,7 @@ void PlastikStyle::drawControl(ControlElement element,
             }
 
             // Make the label indicate if the button is a default button or not
-            drawItem( p, QRect(x, y, w, h), AlignCenter|ShowPrefix, button->colorGroup(),
+            drawItem( p, TQRect(x, y, w, h), AlignCenter|ShowPrefix, button->colorGroup(),
                         button->isEnabled(), button->pixmap(), button->text(), -1,
                         &button->colorGroup().buttonText() );
 
@@ -2447,7 +2447,7 @@ void PlastikStyle::drawControl(ControlElement element,
     // MENUBAR ITEM (sunken panel on mouse over)
     // -----------------------------------------
         case CE_MenuBarItem: {
-            QMenuItem *mi = opt.menuItem();
+            TQMenuItem *mi = opt.menuItem();
             bool active  = flags & Style_Active;
             bool focused = flags & Style_HasFocus;
             bool down = flags & Style_Down;
@@ -2472,12 +2472,12 @@ void PlastikStyle::drawControl(ControlElement element,
     // POPUPMENU ITEM (highlighted on mouseover)
     // ------------------------------------------
         case CE_PopupMenuItem: {
-            const QPopupMenu *popupmenu = static_cast< const QPopupMenu * >( widget );
-            QMenuItem *mi = opt.menuItem();
+            const TQPopupMenu *popupmenu = static_cast< const TQPopupMenu * >( widget );
+            TQMenuItem *mi = opt.menuItem();
 
             if ( !mi )
             {
-                // Don't leave blank holes if we set NoBackground for the QPopupMenu.
+                // Don't leave blank holes if we set NoBackground for the TQPopupMenu.
                 // This only happens when the popupMenu spans more than one column.
                 if (! ( widget->erasePixmap() && !widget->erasePixmap()->isNull() ) )
                     p->fillRect( r, cg.background().light( 105 ) );
@@ -2490,7 +2490,7 @@ void PlastikStyle::drawControl(ControlElement element,
             bool checkable  = popupmenu->isCheckable();
             bool active     = flags & Style_Active;
             bool etchtext   = styleHint( SH_EtchDisabledText );
-            bool reverse    = QApplication::reverseLayout();
+            bool reverse    = TQApplication::reverseLayout();
             if ( checkable )
                 checkcol = QMAX( checkcol, 20 );
 
@@ -2524,26 +2524,26 @@ void PlastikStyle::drawControl(ControlElement element,
                 break;
             }
 
-            QRect cr = visualRect( QRect( r.x() + 2, r.y() + 2, checkcol - 1, r.height() - 4 ), r );
+            TQRect cr = visualRect( TQRect( r.x() + 2, r.y() + 2, checkcol - 1, r.height() - 4 ), r );
             // Do we have an icon?
             if ( mi->iconSet() )
             {
-                QIconSet::Mode mode;
+                TQIconSet::Mode mode;
 
                 // Select the correct icon from the iconset
                 if (active)
-                    mode = enabled?QIconSet::Active:QIconSet::Disabled;
+                    mode = enabled?TQIconSet::Active:TQIconSet::Disabled;
                 else
-                    mode = enabled?QIconSet::Normal:QIconSet::Disabled;
+                    mode = enabled?TQIconSet::Normal:TQIconSet::Disabled;
 
                 // Do we have an icon and are checked at the same time?
                 // Then draw a "pressed" background behind the icon
                 if ( checkable && /*!active &&*/ mi->isChecked() )
                     qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(),
-                                        cg, true, 1, &cg.brush(QColorGroup::Midlight) );
+                                        cg, true, 1, &cg.brush(TQColorGroup::Midlight) );
                 // Draw the icon
-                QPixmap pixmap = mi->iconSet()->pixmap(QIconSet::Small, mode);
-                QRect pmr( 0, 0, pixmap.width(), pixmap.height() );
+                TQPixmap pixmap = mi->iconSet()->pixmap(TQIconSet::Small, mode);
+                TQRect pmr( 0, 0, pixmap.width(), pixmap.height() );
                 pmr.moveCenter( cr.center() );
                 p->drawPixmap( pmr.topLeft(), pixmap );
             }
@@ -2555,7 +2555,7 @@ void PlastikStyle::drawControl(ControlElement element,
                 // if it's active the "pressed" background is already drawn
             // if ( ! active )
                     qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(), cg, true, 1,
-                                        &cg.brush(QColorGroup::Midlight) );
+                                        &cg.brush(TQColorGroup::Midlight) );
 
                 // Draw the checkmark
                 SFlags cflags = Style_On;
@@ -2582,7 +2582,7 @@ void PlastikStyle::drawControl(ControlElement element,
 
             // This color will be used instead of the above if the menu item
             // is active and disabled at the same time. (etched text)
-            QColor discol = cg.mid();
+            TQColor discol = cg.mid();
 
             // Does the menu item draw it's own label?
             if ( mi->custom() ) {
@@ -2602,7 +2602,7 @@ void PlastikStyle::drawControl(ControlElement element,
             }
             else {
                 // The menu item doesn't draw it's own label
-                QString s = mi->text();
+                TQString s = mi->text();
                 // Does the menu item have a text label?
                 if ( !s.isNull() ) {
                     int t = s.find( '\t' );
@@ -2610,8 +2610,8 @@ void PlastikStyle::drawControl(ControlElement element,
                     int text_flags = AlignVCenter | ShowPrefix | DontClip | SingleLine;
                     text_flags |= reverse ? AlignRight : AlignLeft;
 
-                    //QColor draw = cg.text();
-                    QColor draw = (active && enabled) ? cg.highlightedText () : cg.foreground();
+                    //TQColor draw = cg.text();
+                    TQColor draw = (active && enabled) ? cg.highlightedText () : cg.foreground();
                     p->setPen(draw);
 
 
@@ -2650,7 +2650,7 @@ void PlastikStyle::drawControl(ControlElement element,
                 // The menu item doesn't have a text label
                 // Check if it has a pixmap instead
                 else if ( mi->pixmap() ) {
-                    QPixmap *pixmap = mi->pixmap();
+                    TQPixmap *pixmap = mi->pixmap();
 
                     // Draw the pixmap
                     if ( pixmap->depth() == 1 )
@@ -2669,7 +2669,7 @@ void PlastikStyle::drawControl(ControlElement element,
             if ( mi->popup() ) {
                 PrimitiveElement arrow = reverse ? PE_ArrowLeft : PE_ArrowRight;
                 int dim = pixelMetric(PM_MenuButtonIndicator) - 1;
-                QRect vr = visualRect( QRect( r.x() + r.width() - 5 - 1 - dim,
+                TQRect vr = visualRect( TQRect( r.x() + r.width() - 5 - 1 - dim,
                             r.y() + r.height() / 2 - dim / 2, dim, dim), r );
 
                 // Draw an arrow at the far end of the menu item
@@ -2677,7 +2677,7 @@ void PlastikStyle::drawControl(ControlElement element,
                     if ( enabled )
                         discol = cg.buttonText();
 
-                    QColorGroup g2( discol, cg.highlight(), white, white,
+                    TQColorGroup g2( discol, cg.highlight(), white, white,
                                     enabled ? white : discol, discol, white );
 
                     drawPrimitive( arrow, p, vr, g2, Style_Enabled );
@@ -2710,10 +2710,10 @@ void PlastikStyle::drawControl(ControlElement element,
 }
 
 void PlastikStyle::drawControlMask(ControlElement element,
-                                  QPainter *p,
-                                  const QWidget *w,
-                                  const QRect &r,
-                                  const QStyleOption &opt) const
+                                  TQPainter *p,
+                                  const TQWidget *w,
+                                  const TQRect &r,
+                                  const TQStyleOption &opt) const
 {
     switch (element) {
         case CE_PushButton: {
@@ -2730,10 +2730,10 @@ void PlastikStyle::drawControlMask(ControlElement element,
 }
 
 void PlastikStyle::drawComplexControlMask(ComplexControl c,
-                                         QPainter *p,
-                                         const QWidget *w,
-                                         const QRect &r,
-                                         const QStyleOption &o) const
+                                         TQPainter *p,
+                                         const TQWidget *w,
+                                         const TQRect &r,
+                                         const TQStyleOption &o) const
 {
     switch (c) {
         case CC_SpinWidget:
@@ -2751,16 +2751,16 @@ void PlastikStyle::drawComplexControlMask(ComplexControl c,
 }
 
 void PlastikStyle::drawComplexControl(ComplexControl control,
-                                     QPainter *p,
-                                     const QWidget *widget,
-                                     const QRect &r,
-                                     const QColorGroup &cg,
+                                     TQPainter *p,
+                                     const TQWidget *widget,
+                                     const TQRect &r,
+                                     const TQColorGroup &cg,
                                      SFlags flags,
                                      SCFlags controls,
                                      SCFlags active,
-                                     const QStyleOption& opt) const
+                                     const TQStyleOption& opt) const
 {
-    const bool reverseLayout = QApplication::reverseLayout();
+    const bool reverseLayout = TQApplication::reverseLayout();
 
     const bool enabled = (flags & Style_Enabled);
 
@@ -2770,7 +2770,7 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
         case CC_ComboBox: {
             static const unsigned int handleWidth = 15;
 
-            const QComboBox *cb = dynamic_cast<const QComboBox *>(widget);
+            const TQComboBox *cb = dynamic_cast<const TQComboBox *>(widget);
             // at the moment cb is only needed to check if the combo box is editable or not.
             // if cb doesn't exist, just assume false and the app (gideon! ;) ) at least doesn't crash.
             bool editable = false;
@@ -2780,8 +2780,8 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
                 hasFocus = cb->hasFocus();
             }
 
-            const QColor buttonColor = enabled?cg.button():cg.background();
-            const QColor inputColor = enabled?(editable?cg.base():cg.button())
+            const TQColor buttonColor = enabled?cg.button():cg.background();
+            const TQColor inputColor = enabled?(editable?cg.base():cg.button())
                                               :cg.background();
 
             uint contourFlags = 0;
@@ -2790,9 +2790,9 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
             
             if (_inputFocusHighlight && hasFocus && editable && enabled)
             {
-                QRect editField = querySubControlMetrics(control, widget, SC_ComboBoxEditField);
-                QRect editFrame = r;
-                QRect buttonFrame = r;
+                TQRect editField = querySubControlMetrics(control, widget, SC_ComboBoxEditField);
+                TQRect editFrame = r;
+                TQRect buttonFrame = r;
                 
                 uint editFlags = contourFlags;
                 uint buttonFlags = contourFlags;
@@ -2833,9 +2833,9 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
                 p->drawLine(r.right()-handleWidth-1, r.top()+1, r.right()-handleWidth-1, r.bottom()-1);
             }
 
-            const QRect RbuttonSurface(reverseLayout?r.left()+1:r.right()-handleWidth, r.top()+1,
+            const TQRect RbuttonSurface(reverseLayout?r.left()+1:r.right()-handleWidth, r.top()+1,
                                         handleWidth, r.height()-2);
-            const QRect RcontentSurface(reverseLayout?r.left()+1+handleWidth+1:r.left()+1, r.top()+1,
+            const TQRect RcontentSurface(reverseLayout?r.left()+1+handleWidth+1:r.left()+1, r.top()+1,
                                          r.width()-handleWidth-3, r.height()-2);
 
             // handler
@@ -2873,7 +2873,7 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
                                surfaceFlags);
                 if (hasFocus) {
                     drawPrimitive(PE_FocusRect, p,
-                        QRect(RcontentSurface.x() + 2,
+                        TQRect(RcontentSurface.x() + 2,
                             RcontentSurface.y() + 2,
                             RcontentSurface.width() - 4,
                             RcontentSurface.height() - 4), cg);
@@ -2913,7 +2913,7 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
             p->setPen(cg.foreground());
             drawPrimitive(PE_SpinWidgetDown, p, RbuttonSurface, cg, Style_Default|Style_Enabled|Style_Raised);
 
-            // QComboBox draws the text using cg.text(), we can override this
+            // TQComboBox draws the text using cg.text(), we can override this
             // from here
             p->setPen( cg.buttonText() );
             p->setBackgroundColor( cg.button() );
@@ -2923,9 +2923,9 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
     // TOOLBUTTON
     // ----------
         case CC_ToolButton: {
-            const QToolButton *tb = (const QToolButton *) widget;
+            const TQToolButton *tb = (const TQToolButton *) widget;
 
-            QRect button, menuarea;
+            TQRect button, menuarea;
             button   = querySubControlMetrics(control, widget, SC_ToolButton, opt);
             menuarea = querySubControlMetrics(control, widget, SC_ToolButtonMenu, opt);
 
@@ -2954,7 +2954,7 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
                 } else if (tb->parentWidget() &&
                             tb->parentWidget()->backgroundPixmap() &&
                             !tb->parentWidget()->backgroundPixmap()->isNull()) {
-                    QPixmap pixmap = *(tb->parentWidget()->backgroundPixmap());
+                    TQPixmap pixmap = *(tb->parentWidget()->backgroundPixmap());
                     p->drawTiledPixmap( r, pixmap, tb->pos() );
                 }
             }
@@ -2968,7 +2968,7 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
             }
 
             if (tb->hasFocus() && !tb->focusProxy()) {
-                QRect fr = tb->rect();
+                TQRect fr = tb->rect();
                 fr.addCoords(2, 2, -2, -2);
                 drawPrimitive(PE_FocusRect, p, fr, cg);
             }
@@ -2984,7 +2984,7 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
         case CC_SpinWidget: {
             static const unsigned int handleWidth = 15;
 
-            const QSpinWidget *sw = dynamic_cast<const QSpinWidget *>(widget);
+            const TQSpinWidget *sw = dynamic_cast<const TQSpinWidget *>(widget);
             SFlags sflags = flags;
             PrimitiveElement pe;
 
@@ -2992,16 +2992,16 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
             if (sw)
                 hasFocus = sw->hasFocus();
 
-            const QColor buttonColor = enabled?cg.button():cg.background();
-            const QColor inputColor = enabled?cg.base():cg.background();
+            const TQColor buttonColor = enabled?cg.button():cg.background();
+            const TQColor inputColor = enabled?cg.base():cg.background();
 
             // contour
             const bool heightDividable = ((r.height()%2) == 0);
             if (_inputFocusHighlight && hasFocus && enabled)
             {
-                QRect editField = querySubControlMetrics(control, widget, SC_SpinWidgetEditField);
-                QRect editFrame = r;
-                QRect buttonFrame = r;
+                TQRect editField = querySubControlMetrics(control, widget, SC_SpinWidgetEditField);
+                TQRect editFrame = r;
+                TQRect buttonFrame = r;
                 
                 uint editFlags = 0;
                 uint buttonFlags = 0;
@@ -3043,14 +3043,14 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
                         reverseLayout?r.left()+handleWidth:r.right()-1, r.top()+1+(r.height()-2)/2-1);
 
             // surface
-            QRect upRect = QRect(reverseLayout?r.left()+1:r.right()-handleWidth, r.top()+1,
+            TQRect upRect = TQRect(reverseLayout?r.left()+1:r.right()-handleWidth, r.top()+1,
                     handleWidth, (r.height()-2)/2);
-            QRect downRect = QRect(reverseLayout?r.left()+1:r.right()-handleWidth,
+            TQRect downRect = TQRect(reverseLayout?r.left()+1:r.right()-handleWidth,
                     heightDividable?r.top()+1+((r.height()-2)/2):r.top()+1+((r.height()-2)/2)+1,
                     handleWidth, ((r.height()-2)/2) );
             if(heightDividable) {
-                upRect = QRect(upRect.left(), upRect.top(), upRect.width(), upRect.height()-1 );
-                downRect = QRect(downRect.left(), downRect.top()+1, downRect.width(), downRect.height()-1 );
+                upRect = TQRect(upRect.left(), upRect.top(), upRect.width(), upRect.height()-1 );
+                downRect = TQRect(downRect.left(), downRect.top()+1, downRect.width(), downRect.height()-1 );
             }
 
             uint surfaceFlags = Draw_Left|Draw_Right|Draw_Top|Draw_Bottom|Is_Horizontal;
@@ -3089,7 +3089,7 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
                 sflags |= Style_Sunken;
             } else
                 sflags |= Style_Raised;
-            if (sw->buttonSymbols() == QSpinWidget::PlusMinus)
+            if (sw->buttonSymbols() == TQSpinWidget::PlusMinus)
                 pe = PE_SpinWidgetPlus;
             else
                 pe = PE_SpinWidgetUp;
@@ -3102,7 +3102,7 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
                 sflags |= Style_Sunken;
             } else
                 sflags |= Style_Raised;
-            if (sw->buttonSymbols() == QSpinWidget::PlusMinus)
+            if (sw->buttonSymbols() == TQSpinWidget::PlusMinus)
                 pe = PE_SpinWidgetMinus;
             else
                 pe = PE_SpinWidgetDown;
@@ -3110,7 +3110,7 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
             drawPrimitive(pe, p, downRect, cg, sflags);
 
             // thin frame around the input area
-            const QRect Rcontent = QRect(reverseLayout?r.left()+1+handleWidth+1:r.left()+1, r.top()+1,
+            const TQRect Rcontent = TQRect(reverseLayout?r.left()+1+handleWidth+1:r.left()+1, r.top()+1,
                     r.width()-1-2-handleWidth, r.height()-2);
             if (_inputFocusHighlight && hasFocus && enabled)
             {
@@ -3148,7 +3148,7 @@ void PlastikStyle::drawComplexControl(ComplexControl control,
 }
 
 
-QRect PlastikStyle::subRect(SubRect r, const QWidget *widget) const
+TQRect PlastikStyle::subRect(SubRect r, const TQWidget *widget) const
 {
     switch (r) {
         case SR_ComboBoxFocusRect: {
@@ -3158,12 +3158,12 @@ QRect PlastikStyle::subRect(SubRect r, const QWidget *widget) const
         // Don't use KStyles progressbar subrect
         // TODO:
         case SR_ProgressBarGroove: {
-            return QRect(widget->rect());
+            return TQRect(widget->rect());
         }
         case SR_ProgressBarContents:
         case SR_ProgressBarLabel: {
-            QRect rw = widget->rect();
-            return QRect(rw.left()+2, rw.top()+2, rw.width()-4, rw.height()-4 );
+            TQRect rw = widget->rect();
+            return TQRect(rw.left()+2, rw.top()+2, rw.width()-4, rw.height()-4 );
         }
 
         default: {
@@ -3172,22 +3172,22 @@ QRect PlastikStyle::subRect(SubRect r, const QWidget *widget) const
     }
 }
 
-QRect PlastikStyle::querySubControlMetrics(ComplexControl control,
-                                          const QWidget *widget,
+TQRect PlastikStyle::querySubControlMetrics(ComplexControl control,
+                                          const TQWidget *widget,
                                           SubControl subcontrol,
-                                          const QStyleOption &opt) const
+                                          const TQStyleOption &opt) const
 {
     if (!widget) {
-        return QRect();
+        return TQRect();
     }
 
-    QRect r(widget->rect());
+    TQRect r(widget->rect());
     switch (control) {
         case CC_ComboBox: {
             switch (subcontrol) {
                 case SC_ComboBoxEditField: {
                     // TODO: is the handler width in pixelmetric?
-                    return QRect(r.left()+2, r.top()+2, r.width()-4-15-1, r.height()-4);
+                    return TQRect(r.left()+2, r.top()+2, r.width()-4-15-1, r.height()-4);
                 }
                 default: {
                     return KStyle::querySubControlMetrics(control, widget, subcontrol, opt);
@@ -3200,7 +3200,7 @@ QRect PlastikStyle::querySubControlMetrics(ComplexControl control,
 
             const bool heightDividable = ((r.height()%2) == 0);
 
-            QSize bs;
+            TQSize bs;
             if(heightDividable) {
                 bs.setHeight(QMAX(8, (r.height()-2)/2));
             } else {
@@ -3212,26 +3212,26 @@ QRect PlastikStyle::querySubControlMetrics(ComplexControl control,
 
             switch (subcontrol) {
                 case SC_SpinWidgetUp: {
-                    return QRect(buttonsLeft, r.top()+1, bs.width(), bs.height() );
+                    return TQRect(buttonsLeft, r.top()+1, bs.width(), bs.height() );
                 }
                 case SC_SpinWidgetDown: {
                     if(heightDividable) {
-                        return QRect(buttonsLeft, r.top()+1+bs.height(),
+                        return TQRect(buttonsLeft, r.top()+1+bs.height(),
                                 bs.width(), r.height()-(bs.height()+2) );
                     } else {
-                        return QRect(buttonsLeft, r.top()+1+bs.height()+1,
+                        return TQRect(buttonsLeft, r.top()+1+bs.height()+1,
                                 bs.width(), r.height()-(bs.height()+2+1) );
                     }
                 }
                 case SC_SpinWidgetFrame: {
-                    return QRect(r.left(), r.top(), r.width(), r.height() );
+                    return TQRect(r.left(), r.top(), r.width(), r.height() );
                 }
                 case SC_SpinWidgetEditField: {
-                    return QRect(r.left()+fw, r.top()+fw,
+                    return TQRect(r.left()+fw, r.top()+fw,
                             r.width()-(bs.width()+1+2*fw), r.height()-2*fw);
                 }
                 case SC_SpinWidgetButtonField: {
-                    return QRect(buttonsLeft, r.top()+1, bs.width(), r.height()-2);
+                    return TQRect(buttonsLeft, r.top()+1, bs.width(), r.height()-2);
                 }
                 default: {
                     return KStyle::querySubControlMetrics(control, widget, subcontrol, opt);
@@ -3245,15 +3245,15 @@ QRect PlastikStyle::querySubControlMetrics(ComplexControl control,
     }
 }
 
-int PlastikStyle::pixelMetric(PixelMetric m, const QWidget *widget) const
+int PlastikStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
 {
     switch(m) {
     // TABS
     // ----
         case PM_TabBarTabVSpace: {
-            const QTabBar * tb = (const QTabBar *) widget;
-            if (tb->shape() == QTabBar::RoundedAbove ||
-                tb->shape() == QTabBar::RoundedBelow)
+            const TQTabBar * tb = (const TQTabBar *) widget;
+            if (tb->shape() == TQTabBar::RoundedAbove ||
+                tb->shape() == TQTabBar::RoundedBelow)
                 return 12;
             else
                 return 4;
@@ -3322,7 +3322,7 @@ int PlastikStyle::pixelMetric(PixelMetric m, const QWidget *widget) const
             return 1;
 
         case PM_DefaultFrameWidth: {
-            if(widget && ::qt_cast<QPopupMenu*>(widget))
+            if(widget && ::qt_cast<TQPopupMenu*>(widget))
                 return 1;
             else
                 return 2;
@@ -3347,18 +3347,18 @@ int PlastikStyle::pixelMetric(PixelMetric m, const QWidget *widget) const
 }
 
 
-QSize PlastikStyle::sizeFromContents(ContentsType t,
-                                    const QWidget *widget,
-                                    const QSize &s,
-                                    const QStyleOption &opt) const
+TQSize PlastikStyle::sizeFromContents(ContentsType t,
+                                    const TQWidget *widget,
+                                    const TQSize &s,
+                                    const TQStyleOption &opt) const
 {
     switch (t) {
         case CT_PopupMenuItem: {
             if (!widget || opt.isDefault())
                 return s;
 
-            const QPopupMenu *popup = dynamic_cast<const QPopupMenu *>(widget);
-            QMenuItem *mi = opt.menuItem();
+            const TQPopupMenu *popup = dynamic_cast<const TQPopupMenu *>(widget);
+            TQMenuItem *mi = opt.menuItem();
             int maxpmw = opt.maxIconWidth();
             int w = s.width(), h = s.height();
             bool checkable = popup->isCheckable();
@@ -3382,7 +3382,7 @@ QSize PlastikStyle::sizeFromContents(ContentsType t,
                 }
 
                 if (mi->iconSet()) {
-                    h = QMAX(h, mi->iconSet()->pixmap(QIconSet::Small, QIconSet::Normal).height() + 2);
+                    h = QMAX(h, mi->iconSet()->pixmap(TQIconSet::Small, TQIconSet::Normal).height() + 2);
                 }
             }
 
@@ -3404,24 +3404,24 @@ QSize PlastikStyle::sizeFromContents(ContentsType t,
 
             w += rightBorder;
 
-            return QSize(w, h);
+            return TQSize(w, h);
         }
 
         case CT_PushButton:
         {
-            const QPushButton* btn = static_cast<const QPushButton*>(widget);
+            const TQPushButton* btn = static_cast<const TQPushButton*>(widget);
 
             int w = s.width() + 2 * pixelMetric(PM_ButtonMargin, widget);
             int h = s.height() + 2 * pixelMetric(PM_ButtonMargin, widget);
-            if ( btn->text().isEmpty() && s.width() < 32 ) return QSize(w, h);
+            if ( btn->text().isEmpty() && s.width() < 32 ) return TQSize(w, h);
 
-            return QSize( w+25, h+5 );
+            return TQSize( w+25, h+5 );
         }
 
         case CT_ToolButton:
         {
-            if(widget->parent() && ::qt_cast<QToolBar*>(widget->parent()) )
-                return QSize( s.width()+2*4, s.height()+2*4 );
+            if(widget->parent() && ::qt_cast<TQToolBar*>(widget->parent()) )
+                return TQSize( s.width()+2*4, s.height()+2*4 );
             else
                 return KStyle::sizeFromContents (t, widget, s, opt);
         }
@@ -3434,8 +3434,8 @@ QSize PlastikStyle::sizeFromContents(ContentsType t,
 }
 
 int PlastikStyle::styleHint( StyleHint stylehint,
-                                   const QWidget *widget,
-                                   const QStyleOption &option,
+                                   const TQWidget *widget,
+                                   const TQStyleOption &option,
                                    QStyleHintReturn* returnData ) const
 {
     switch (stylehint) {
@@ -3447,7 +3447,7 @@ int PlastikStyle::styleHint( StyleHint stylehint,
     }
 }
 
-bool PlastikStyle::eventFilter(QObject *obj, QEvent *ev)
+bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
 {
     if (KStyle::eventFilter(obj, ev) )
         return true;
@@ -3455,20 +3455,20 @@ bool PlastikStyle::eventFilter(QObject *obj, QEvent *ev)
     if (!obj->isWidgetType() ) return false;
  
     // focus highlight
-    if ( ::qt_cast<QLineEdit*>(obj) ) {
-        QWidget* widget = static_cast<QWidget*>(obj);
+    if ( ::qt_cast<TQLineEdit*>(obj) ) {
+        TQWidget* widget = static_cast<TQWidget*>(obj);
 
-        if ( ::qt_cast<QSpinWidget*>(widget->parentWidget()) )
+        if ( ::qt_cast<TQSpinWidget*>(widget->parentWidget()) )
         {
-            QWidget* spinbox = widget->parentWidget();
-            if ((ev->type() == QEvent::FocusIn) || (ev->type() == QEvent::FocusOut))
+            TQWidget* spinbox = widget->parentWidget();
+            if ((ev->type() == TQEvent::FocusIn) || (ev->type() == TQEvent::FocusOut))
             {
                 spinbox->repaint(false);
             }
             return false;
         }
 
-        if ((ev->type() == QEvent::FocusIn) || (ev->type() == QEvent::FocusOut))
+        if ((ev->type() == TQEvent::FocusIn) || (ev->type() == TQEvent::FocusOut))
         {
             widget->repaint(false);
         }
@@ -3476,36 +3476,36 @@ bool PlastikStyle::eventFilter(QObject *obj, QEvent *ev)
     }
     
     //Hover highlight... use qt_cast to check if the widget inheits one of the classes.
-    if ( ::qt_cast<QPushButton*>(obj) || ::qt_cast<QComboBox*>(obj) ||
-            ::qt_cast<QSpinWidget*>(obj) || ::qt_cast<QCheckBox*>(obj) ||
-            ::qt_cast<QRadioButton*>(obj) || ::qt_cast<QToolButton*>(obj) || obj->inherits("QSplitterHandle") )
+    if ( ::qt_cast<TQPushButton*>(obj) || ::qt_cast<TQComboBox*>(obj) ||
+            ::qt_cast<TQSpinWidget*>(obj) || ::qt_cast<TQCheckBox*>(obj) ||
+            ::qt_cast<TQRadioButton*>(obj) || ::qt_cast<TQToolButton*>(obj) || obj->inherits("QSplitterHandle") )
     {
-        if ((ev->type() == QEvent::Enter) && static_cast<QWidget*>(obj)->isEnabled())
+        if ((ev->type() == TQEvent::Enter) && static_cast<TQWidget*>(obj)->isEnabled())
         {
-            QWidget* button = static_cast<QWidget*>(obj);
+            TQWidget* button = static_cast<TQWidget*>(obj);
             hoverWidget = button;
             button->repaint(false);
         }
-        else if ((ev->type() == QEvent::Leave) && (obj == hoverWidget) )
+        else if ((ev->type() == TQEvent::Leave) && (obj == hoverWidget) )
         {
-            QWidget* button = static_cast<QWidget*>(obj);
+            TQWidget* button = static_cast<TQWidget*>(obj);
             hoverWidget = 0;
             button->repaint(false);
         }
         return false;
     }
-    if ( ::qt_cast<QTabBar*>(obj) ) {
-        if ((ev->type() == QEvent::Enter) && static_cast<QWidget*>(obj)->isEnabled())
+    if ( ::qt_cast<TQTabBar*>(obj) ) {
+        if ((ev->type() == TQEvent::Enter) && static_cast<TQWidget*>(obj)->isEnabled())
         {
-            QWidget* tabbar = static_cast<QWidget*>(obj);
+            TQWidget* tabbar = static_cast<TQWidget*>(obj);
             hoverWidget = tabbar;
             hoverTab = 0;
             tabbar->repaint(false);
         }
-        else if (ev->type() == QEvent::MouseMove)
+        else if (ev->type() == TQEvent::MouseMove)
         {
-            QTabBar *tabbar = dynamic_cast<QTabBar*>(obj);
-            QMouseEvent *me = dynamic_cast<QMouseEvent*>(ev);
+            TQTabBar *tabbar = dynamic_cast<TQTabBar*>(obj);
+            TQMouseEvent *me = dynamic_cast<TQMouseEvent*>(ev);
 
             if (tabbar && me) {
                 // avoid unnecessary repaints (which otherwise would occour on every
@@ -3513,7 +3513,7 @@ bool PlastikStyle::eventFilter(QObject *obj, QEvent *ev)
 
                 bool repaint = true;
 
-                QTab *tab = tabbar->selectTab(me->pos() );
+                TQTab *tab = tabbar->selectTab(me->pos() );
                 if (hoverTab == tab)
                     repaint = false;
                 hoverTab = tab;
@@ -3522,9 +3522,9 @@ bool PlastikStyle::eventFilter(QObject *obj, QEvent *ev)
                     tabbar->repaint(false);
             }
         }
-        else if (ev->type() == QEvent::Leave)
+        else if (ev->type() == TQEvent::Leave)
         {
-            QWidget* tabbar = static_cast<QWidget*>(obj);
+            TQWidget* tabbar = static_cast<TQWidget*>(obj);
             hoverWidget = 0;
             hoverTab = 0;
             tabbar->repaint(false);
@@ -3532,16 +3532,16 @@ bool PlastikStyle::eventFilter(QObject *obj, QEvent *ev)
         return false;
     }
     // Track show events for progress bars
-    if ( _animateProgressBar && ::qt_cast<QProgressBar*>(obj) )
+    if ( _animateProgressBar && ::qt_cast<TQProgressBar*>(obj) )
     {
-        if ((ev->type() == QEvent::Show) && !animationTimer->isActive())
+        if ((ev->type() == TQEvent::Show) && !animationTimer->isActive())
         {
             animationTimer->start( 50, false );
         }
     }
     if ( !qstrcmp(obj->name(), "kde toolbar widget") )
     {
-        QWidget* lb = static_cast<QWidget*>(obj);
+        TQWidget* lb = static_cast<TQWidget*>(obj);
         if (lb->backgroundMode() == Qt::PaletteButton)
             lb->setBackgroundMode(Qt::PaletteBackground);
         lb->removeEventFilter(this);
@@ -3550,12 +3550,12 @@ bool PlastikStyle::eventFilter(QObject *obj, QEvent *ev)
     return false;
 }
 
-QColor PlastikStyle::getColor(const QColorGroup &cg, const ColorType t, const bool enabled)const
+TQColor PlastikStyle::getColor(const TQColorGroup &cg, const ColorType t, const bool enabled)const
 {
     return getColor(cg, t, enabled?IsEnabled:IsDisabled);
 }
 
-QColor PlastikStyle::getColor(const QColorGroup &cg, const ColorType t, const WidgetState s)const
+TQColor PlastikStyle::getColor(const TQColorGroup &cg, const ColorType t, const WidgetState s)const
 {
     const bool enabled = (s != IsDisabled) &&
             ((s == IsEnabled) || (s == IsPressed) || (s == IsHighlighted));

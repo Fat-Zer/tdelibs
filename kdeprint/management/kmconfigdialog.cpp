@@ -29,12 +29,12 @@
 #include "kmconfigfonts.h"
 #include "kmconfigjobs.h"
 
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kconfig.h>
 
-KMConfigDialog::KMConfigDialog(QWidget *parent, const char *name)
+KMConfigDialog::KMConfigDialog(TQWidget *parent, const char *name)
 : KDialogBase(IconList,i18n("KDE Print Configuration"),Ok|Cancel,Ok,parent,name,true,true)
 {
 	m_pages.setAutoDelete(false);
@@ -48,7 +48,7 @@ KMConfigDialog::KMConfigDialog(QWidget *parent, const char *name)
 
 	// initialize pages
 	KConfig	*conf = KMFactory::self()->printConfig();
-	QPtrListIterator<KMConfigPage>	it(m_pages);
+	TQPtrListIterator<KMConfigPage>	it(m_pages);
 	for (;it.current();++it)
 		it.current()->loadConfig(conf);
 
@@ -60,15 +60,15 @@ void KMConfigDialog::addConfigPage(KMConfigPage *page)
 {
 	if (page)
 	{
-		QPixmap icon = KGlobal::instance()->iconLoader()->loadIcon(
+		TQPixmap icon = KGlobal::instance()->iconLoader()->loadIcon(
 		                                                           page->pagePixmap(),
 		                                                           KIcon::NoGroup,
                         	                                           KIcon::SizeMedium
 		                                                          );
 
 		QFrame	*frame = addPage(page->pageName(),page->pageHeader(),icon);
-		page->reparent(frame,QPoint(0,0));
-		QVBoxLayout	*lay = new QVBoxLayout(frame, 0, 0);
+		page->reparent(frame,TQPoint(0,0));
+		QVBoxLayout	*lay = new TQVBoxLayout(frame, 0, 0);
 		lay->addWidget(page);
 		m_pages.append(page);
 	}
@@ -78,7 +78,7 @@ void KMConfigDialog::slotOk()
 {
 	// save configuration
 	KConfig	*conf = KMFactory::self()->printConfig();
-	QPtrListIterator<KMConfigPage>	it(m_pages);
+	TQPtrListIterator<KMConfigPage>	it(m_pages);
 	for (;it.current();++it)
 		it.current()->saveConfig(conf);
 	KMFactory::self()->saveConfig();

@@ -21,8 +21,8 @@
 
 #include <iostream>
 
-#include <qcstring.h>
-#include <qfile.h> 
+#include <tqcstring.h>
+#include <tqfile.h> 
 
 #include <dcopclient.h>
 #include <qxembed.h>
@@ -62,7 +62,7 @@ static KCmdLineOptions options[] =
     KCmdLineLastOption
 };
 
-static void listModules(const QString &baseGroup)
+static void listModules(const TQString &baseGroup)
 {
 
   KServiceGroup::Ptr group = KServiceGroup::group(baseGroup);
@@ -88,9 +88,9 @@ static void listModules(const QString &baseGroup)
   }
 }
 
-static KService::Ptr locateModule(const QCString& module)
+static KService::Ptr locateModule(const TQCString& module)
 {
-    QString path = QFile::decodeName(module);
+    TQString path = TQFile::decodeName(module);
 
     if (!path.endsWith(".desktop"))
         path += ".desktop";
@@ -126,12 +126,12 @@ bool KCMShell::isRunning()
     dcopClient()->attach(); // Reregister as anonymous
     dcopClient()->setNotifications(true);
 
-    QByteArray data;
-    QDataStream str( data, IO_WriteOnly );
+    TQByteArray data;
+    TQDataStream str( data, IO_WriteOnly );
     str << kapp->startupId();
-    QCString replyType;
-    QByteArray replyData;
-    if (!dcopClient()->call(m_dcopName, "dialog", "activate(QCString)", 
+    TQCString replyType;
+    TQByteArray replyData;
+    if (!dcopClient()->call(m_dcopName, "dialog", "activate(TQCString)", 
                 data, replyType, replyData))
     {
         kdDebug(780) << "Calling DCOP function dialog::activate() failed." << endl;
@@ -141,21 +141,21 @@ bool KCMShell::isRunning()
     return true;
 }
 
-KCMShellMultiDialog::KCMShellMultiDialog( int dialogFace, const QString& caption,
-        QWidget *parent, const char *name, bool modal)
+KCMShellMultiDialog::KCMShellMultiDialog( int dialogFace, const TQString& caption,
+        TQWidget *parent, const char *name, bool modal)
     : KCMultiDialog( dialogFace, caption, parent, name, modal ),
         DCOPObject("dialog")
 {
 }
 
-void KCMShellMultiDialog::activate( QCString asn_id )
+void KCMShellMultiDialog::activate( TQCString asn_id )
 {
     kdDebug(780) << k_funcinfo << endl;
 
     KStartupInfo::setNewStartupId( this, asn_id );
 }
 
-void KCMShell::setDCOPName(const QCString &dcopName, bool rootMode )
+void KCMShell::setDCOPName(const TQCString &dcopName, bool rootMode )
 {
     m_dcopName = "kcmshell_";
     if( rootMode )
@@ -170,12 +170,12 @@ void KCMShell::waitForExit()
 {
     kdDebug(780) << k_funcinfo << endl;
 
-    connect(dcopClient(), SIGNAL(applicationRemoved(const QCString&)),
-            SLOT( appExit(const QCString&) ));
+    connect(dcopClient(), TQT_SIGNAL(applicationRemoved(const TQCString&)),
+            TQT_SLOT( appExit(const TQCString&) ));
     exec();
 }
 
-void KCMShell::appExit(const QCString &appId)
+void KCMShell::appExit(const TQCString &appId)
 {
     kdDebug(780) << k_funcinfo << endl;
 
@@ -186,10 +186,10 @@ void KCMShell::appExit(const QCString &appId)
     }
 }
 
-static void setIcon(QWidget *w, const QString &iconName)
+static void setIcon(TQWidget *w, const TQString &iconName)
 {
-    QPixmap icon = DesktopIcon(iconName);
-    QPixmap miniIcon = SmallIcon(iconName);
+    TQPixmap icon = DesktopIcon(iconName);
+    TQPixmap miniIcon = SmallIcon(iconName);
     w->setIcon( icon ); //standard X11
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
     KWin::setIcons(w->winId(), icon, miniIcon );
@@ -219,7 +219,7 @@ extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
 
     const KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
-    const QCString lang = args->getOption("lang");
+    const TQCString lang = args->getOption("lang");
     if( !lang.isNull() )
         KGlobal::locale()->setLanguage(lang);
 
@@ -240,7 +240,7 @@ extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
 
         for( KService::List::ConstIterator it = m_modules.begin(); it != m_modules.end(); ++it)
         {
-            QString entry("%1 - %2");
+            TQString entry("%1 - %2");
 
             entry = entry.arg((*it)->desktopEntryName().leftJustify(maxLen, ' '))
                          .arg(!(*it)->comment().isEmpty() ? (*it)->comment() 
@@ -257,7 +257,7 @@ extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
         return -1;
     }
 
-    QCString dcopName;
+    TQCString dcopName;
     KService::List modules;
     for (int i = 0; i < args->count(); i++)
     {

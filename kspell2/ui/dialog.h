@@ -33,30 +33,30 @@ namespace KSpell2
         Q_OBJECT
     public:
         Dialog( BackgroundChecker *checker,
-                QWidget *parent, const char *name=0 );
+                TQWidget *parent, const char *name=0 );
         ~Dialog();
 
-        QString originalBuffer() const;
-        QString buffer() const;
+        TQString originalBuffer() const;
+        TQString buffer() const;
 
         void show();
         void activeAutoCorrect( bool _active );
 
     public slots:
-        void setBuffer( const QString& );
+        void setBuffer( const TQString& );
         void setFilter( Filter* filter );
 
     signals:
-        void done( const QString& newBuffer );
-        void misspelling( const QString& word, int start );
-        void replace( const QString& oldWord, int start,
-                      const QString& newWord );
+        void done( const TQString& newBuffer );
+        void misspelling( const TQString& word, int start );
+        void replace( const TQString& oldWord, int start,
+                      const TQString& newWord );
 
         void stop();
         void cancel();
-        void autoCorrect( const QString & currentWord, const QString & replaceWord );
+        void autoCorrect( const TQString & currentWord, const TQString & replaceWord );
     private slots:
-        void slotMisspelling(const QString& word, int start );
+        void slotMisspelling(const TQString& word, int start );
         void slotDone();
 
         void slotFinished();
@@ -68,13 +68,13 @@ namespace KSpell2
         void slotSkip();
         void slotSkipAll();
         void slotSuggest();
-        void slotChangeLanguage( const QString& );
-        void slotSelectionChanged( QListViewItem * );
+        void slotChangeLanguage( const TQString& );
+        void slotSelectionChanged( TQListViewItem * );
         void slotAutocorrect();
 
     private:
-        void updateDialog( const QString& word );
-        void fillSuggestions( const QStringList& suggs );
+        void updateDialog( const TQString& word );
+        void fillSuggestions( const TQStringList& suggs );
         void initConnections();
         void initGui();
         void continueChecking();

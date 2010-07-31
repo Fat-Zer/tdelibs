@@ -44,8 +44,8 @@
 #ifndef render_layer_h
 #define render_layer_h
 
-#include <qcolor.h>
-#include <qrect.h>
+#include <tqcolor.h>
+#include <tqrect.h>
 #include <assert.h>
 
 #include "render_object.h"
@@ -85,7 +85,7 @@ class Marquee: public QObject
 public:
     Marquee(RenderLayer* l);
 
-    void timerEvent(QTimerEvent*);
+    void timerEvent(TQTimerEvent*);
 
     int speed() const { return m_speed; }
     int marqueeSpeed() const;
@@ -128,7 +128,7 @@ class RenderLayer
 {
 public:
 #ifdef APPLE_CHANGES
-    static QScrollBar* gScrollBar;
+    static TQScrollBar* gScrollBar;
 #endif
 
     RenderLayer(RenderObject* object);
@@ -194,11 +194,11 @@ public:
     void scrollToXOffset(int x) { scrollToOffset(x, m_scrollY); }
     void scrollToYOffset(int y) { scrollToOffset(m_scrollX, y); }
     void showScrollbar(Qt::Orientation, bool);
-    QScrollBar* horizontalScrollbar() { return m_hBar; }
-    QScrollBar* verticalScrollbar() { return m_vBar; }
+    TQScrollBar* horizontalScrollbar() { return m_hBar; }
+    TQScrollBar* verticalScrollbar() { return m_vBar; }
     int verticalScrollbarWidth();
     int horizontalScrollbarHeight();
-    void positionScrollbars(const QRect &damageRect);
+    void positionScrollbars(const TQRect &damageRect);
     void paintScrollbars(RenderObject::PaintInfo& pI);
     void checkScrollbarsAfterLayout();
     void slotValueChanged(int);
@@ -215,17 +215,17 @@ public:
 
     void dirtyZOrderLists();
     void updateZOrderLists();
-    QPtrVector<RenderLayer>* posZOrderList() const { return m_posZOrderList; }
-    QPtrVector<RenderLayer>* negZOrderList() const { return m_negZOrderList; }
+    TQPtrVector<RenderLayer>* posZOrderList() const { return m_posZOrderList; }
+    TQPtrVector<RenderLayer>* negZOrderList() const { return m_negZOrderList; }
 
     void dirtyOverflowList();
     void updateOverflowList();
-    QValueList<RenderLayer*>* overflowList() const { return m_overflowList; }
+    TQValueList<RenderLayer*>* overflowList() const { return m_overflowList; }
 
     void setHasOverlaidWidgets(bool b=true) { m_hasOverlaidWidgets = b; }
     bool hasOverlaidWidgets() const { return m_hasOverlaidWidgets; }
-    QRegion getMask() const { return m_region; }
-    QRegion paintedRegion(RenderLayer* rootLayer);
+    TQRegion getMask() const { return m_region; }
+    TQRegion paintedRegion(RenderLayer* rootLayer);
     void updateWidgetMasks(RenderLayer* rootLayer);
 
     // Gets the nearest enclosing positioned ancestor layer (also includes
@@ -241,26 +241,26 @@ public:
     // paints the layers that intersect the damage rect from back to
     // front.  The nodeAtPoint method looks for mouse events by walking
     // layers that intersect the point from front to back.
-    KDE_EXPORT void paint(QPainter *p, const QRect& damageRect, bool selectionOnly=false);
+    KDE_EXPORT void paint(TQPainter *p, const TQRect& damageRect, bool selectionOnly=false);
     bool nodeAtPoint(RenderObject::NodeInfo& info, int x, int y);
 
     // This method figures out our layerBounds in coordinates relative to
     // |rootLayer}.  It also computes our background and foreground clip rects
     // for painting/event handling.
-    void calculateRects(const RenderLayer* rootLayer, const QRect& paintDirtyRect, QRect& layerBounds,
-                        QRect& backgroundRect, QRect& foregroundRect);
-    void calculateClipRects(const RenderLayer* rootLayer, QRect& overflowClipRect,
-                            QRect& posClipRect, QRect& fixedClipRect);
+    void calculateRects(const RenderLayer* rootLayer, const TQRect& paintDirtyRect, TQRect& layerBounds,
+                        TQRect& backgroundRect, TQRect& foregroundRect);
+    void calculateClipRects(const RenderLayer* rootLayer, TQRect& overflowClipRect,
+                            TQRect& posClipRect, TQRect& fixedClipRect);
 
-    bool intersectsDamageRect(const QRect& layerBounds, const QRect& damageRect) const;
-    bool containsPoint(int x, int y, const QRect& damageRect) const;
+    bool intersectsDamageRect(const TQRect& layerBounds, const TQRect& damageRect) const;
+    bool containsPoint(int x, int y, const TQRect& damageRect) const;
 
     void updateHoverActiveState(RenderObject::NodeInfo& info);
 
     void detach(RenderArena* renderArena);
 
 #ifdef ENABLE_DUMP
-    KDE_EXPORT void dump(QTextStream &stream, const QString &ind = QString::null);
+    KDE_EXPORT void dump(TQTextStream &stream, const TQString &ind = TQString::null);
 #endif
 
      // Overloaded new operator.  Derived classes must override operator new
@@ -281,11 +281,11 @@ private:
     void setFirstChild(RenderLayer* first) { m_first = first; }
     void setLastChild(RenderLayer* last) { m_last = last; }
 
-    void collectLayers(QPtrVector<RenderLayer>*&, QPtrVector<RenderLayer>*&);
+    void collectLayers(TQPtrVector<RenderLayer>*&, TQPtrVector<RenderLayer>*&);
 
-    KDE_EXPORT void paintLayer(RenderLayer* rootLayer, QPainter *p, const QRect& paintDirtyRect, bool selectionOnly=false);
+    KDE_EXPORT void paintLayer(RenderLayer* rootLayer, TQPainter *p, const TQRect& paintDirtyRect, bool selectionOnly=false);
     RenderLayer* nodeAtPointForLayer(RenderLayer* rootLayer, RenderObject::NodeInfo& info,
-                                     int x, int y, const QRect& hitTestRect);
+                                     int x, int y, const TQRect& hitTestRect);
     bool shouldBeOverflowOnly() const;
 
 protected:
@@ -311,19 +311,19 @@ protected:
     int m_scrollHeight;
 
     // For layers with overflow, we have a pair of scrollbars.
-    QScrollBar* m_hBar;
-    QScrollBar* m_vBar;
+    TQScrollBar* m_hBar;
+    TQScrollBar* m_vBar;
     RenderScrollMediator* m_scrollMediator;
 
     // For layers that establish stacking contexts, m_posZOrderList holds a sorted list of all the
     // descendant layers within the stacking context that have z-indices of 0 or greater
     // (auto will count as 0).  m_negZOrderList holds descendants within our stacking context with negative
     // z-indices.
-    QPtrVector<RenderLayer>* m_posZOrderList;
-    QPtrVector<RenderLayer>* m_negZOrderList;
+    TQPtrVector<RenderLayer>* m_posZOrderList;
+    TQPtrVector<RenderLayer>* m_negZOrderList;
     
     // This list contains our overflow child layers.
-    QValueList<RenderLayer*>* m_overflowList;
+    TQValueList<RenderLayer*>* m_overflowList;
    
     bool m_zOrderListsDirty: 1;
     bool m_overflowListDirty: 1;
@@ -331,9 +331,9 @@ protected:
     bool m_markedForRepaint: 1;
     bool m_hasOverlaidWidgets: 1; 
 
-    QRect m_visibleRect;
+    TQRect m_visibleRect;
 
-    QRegion m_region; // used by overlaid (non z-order aware) widgets
+    TQRegion m_region; // used by overlaid (non z-order aware) widgets
 
     Marquee* m_marquee; // Used by layers with overflow:marquee
 };

@@ -1,5 +1,5 @@
-#include <qstring.h>
-#include <qvariant.h>
+#include <tqstring.h>
+#include <tqvariant.h>
 
 #include <kaccel.h>
 #include "kaccelaction.h"
@@ -28,7 +28,7 @@ bool KShortcutList::isGlobal( uint ) const
 	return false;
 }
 
-int KShortcutList::index( const QString& sName ) const
+int KShortcutList::index( const TQString& sName ) const
 {
 	uint nSize = count();
         for( uint i = 0;
@@ -58,22 +58,22 @@ const KInstance* KShortcutList::instance() const
 	return 0;
 }
 
-QVariant KShortcutList::getOther( Other, uint ) const
+TQVariant KShortcutList::getOther( Other, uint ) const
 {
-	return QVariant();
+	return TQVariant();
 }
 
-bool KShortcutList::setOther( Other, uint, QVariant )
+bool KShortcutList::setOther( Other, uint, TQVariant )
 {
 	return false;
 }
 
-bool KShortcutList::readSettings( const QString& sConfigGroup, KConfigBase* pConfig )
+bool KShortcutList::readSettings( const TQString& sConfigGroup, KConfigBase* pConfig )
 {
 	kdDebug(125) << "KShortcutList::readSettings( \"" << sConfigGroup << "\", " << pConfig << " ) start" << endl;
 	if( !pConfig )
 		pConfig = KGlobal::config();
-	QString sGroup = (!sConfigGroup.isEmpty()) ? sConfigGroup : QString("Shortcuts");
+	TQString sGroup = (!sConfigGroup.isEmpty()) ? sConfigGroup : TQString("Shortcuts");
 
 	// If the config file still has the old group name:
 	// FIXME: need to rename instead? -- and don't do this if hasGroup( "Shortcuts" ).
@@ -89,7 +89,7 @@ bool KShortcutList::readSettings( const QString& sConfigGroup, KConfigBase* pCon
 	uint nSize = count();
 	for( uint i = 0; i < nSize; i++ ) {
 		if( isConfigurable(i) ) {
-			QString sEntry = pConfig->readEntry( name(i) );
+			TQString sEntry = pConfig->readEntry( name(i) );
 			if( !sEntry.isEmpty() ) {
 				if( sEntry == "none" )
 					setShortcut( i, KShortcut() );
@@ -106,13 +106,13 @@ bool KShortcutList::readSettings( const QString& sConfigGroup, KConfigBase* pCon
 	return true;
 }
 
-bool KShortcutList::writeSettings( const QString &sConfigGroup, KConfigBase* pConfig, bool bWriteAll, bool bGlobal ) const
+bool KShortcutList::writeSettings( const TQString &sConfigGroup, KConfigBase* pConfig, bool bWriteAll, bool bGlobal ) const
 {
 	kdDebug(125) << "KShortcutList::writeSettings( " << sConfigGroup << ", " << pConfig << ", " << bWriteAll << ", " << bGlobal << " )" << endl;
 	if( !pConfig )
 		pConfig = KGlobal::config();
 
-	QString sGroup = (!sConfigGroup.isEmpty()) ? sConfigGroup : QString("Shortcuts");
+	TQString sGroup = (!sConfigGroup.isEmpty()) ? sConfigGroup : TQString("Shortcuts");
 
 	// If it has the deprecated group [Keys], remove it
 	if( pConfig->hasGroup( "Keys" ) )
@@ -123,13 +123,13 @@ bool KShortcutList::writeSettings( const QString &sConfigGroup, KConfigBase* pCo
 	uint nSize = count();
 	for( uint i = 0; i < nSize; i++ ) {
 		if( isConfigurable(i) ) {
-			const QString& sName = name(i);
+			const TQString& sName = name(i);
 			bool bConfigHasAction = !pConfig->readEntry( sName ).isEmpty();
 			bool bSameAsDefault = (shortcut(i) == shortcutDefault(i));
 			// If we're using a global config or this setting
 			//  differs from the default, then we want to write.
 			if( bWriteAll || !bSameAsDefault ) {
-				QString s = shortcut(i).toStringInternal();
+				TQString s = shortcut(i).toStringInternal();
 				if( s.isEmpty() )
 					s = "none";
 				kdDebug(125) << "\twriting " << sName << " = " << s << endl;
@@ -155,7 +155,7 @@ bool KShortcutList::writeSettings( const QString &sConfigGroup, KConfigBase* pCo
 class KAccelShortcutListPrivate
 {
 	public:
-		QString m_configGroup;
+		TQString m_configGroup;
 };
 
 KAccelShortcutList::KAccelShortcutList( KAccel* pAccel )
@@ -186,11 +186,11 @@ KAccelShortcutList::~KAccelShortcutList()
 	{  delete d;}
 uint KAccelShortcutList::count() const
 	{ return m_actions.count(); }
-QString KAccelShortcutList::name( uint i ) const
+TQString KAccelShortcutList::name( uint i ) const
 	{ return m_actions.actionPtr(i)->name(); }
-QString KAccelShortcutList::label( uint i ) const
+TQString KAccelShortcutList::label( uint i ) const
 	{ return m_actions.actionPtr(i)->label(); }
-QString KAccelShortcutList::whatsThis( uint i ) const
+TQString KAccelShortcutList::whatsThis( uint i ) const
 	{ return m_actions.actionPtr(i)->whatsThis(); }
 const KShortcut& KAccelShortcutList::shortcut( uint i ) const
 	{ return m_actions.actionPtr(i)->shortcut(); }
@@ -200,11 +200,11 @@ bool KAccelShortcutList::isConfigurable( uint i ) const
 	{ return m_actions.actionPtr(i)->isConfigurable(); }
 bool KAccelShortcutList::setShortcut( uint i, const KShortcut& cut )
 	{ return m_actions.actionPtr(i)->setShortcut( cut ); }
-QVariant KAccelShortcutList::getOther( Other, uint ) const
-	{ return QVariant(); }
+TQVariant KAccelShortcutList::getOther( Other, uint ) const
+	{ return TQVariant(); }
 bool KAccelShortcutList::isGlobal( uint ) const
 	{ return m_bGlobal; }
-bool KAccelShortcutList::setOther( Other, uint, QVariant )
+bool KAccelShortcutList::setOther( Other, uint, TQVariant )
 	{ return false; }
 bool KAccelShortcutList::save() const
 	{ return writeSettings( d->m_configGroup ); }

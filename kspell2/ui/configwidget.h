@@ -21,7 +21,7 @@
 #ifndef KSPELL_CONFIGWIDGET_H
 #define KSPELL_CONFIGWIDGET_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kdelibs_export.h>
 
 namespace KSpell2
@@ -31,7 +31,7 @@ namespace KSpell2
     {
         Q_OBJECT
     public:
-        ConfigWidget( Broker *broker, QWidget *parent, const char *name =0 );
+        ConfigWidget( Broker *broker, TQWidget *parent, const char *name =0 );
         ~ConfigWidget();
 
         bool backgroundCheckingButtonShown() const;
@@ -46,7 +46,7 @@ namespace KSpell2
     private:
         void init( Broker *broker );
         void setFromGUI();
-        void setCorrectLanguage( const QStringList& langs );
+        void setCorrectLanguage( const TQStringList& langs );
 
     private:
         class Private;

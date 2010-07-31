@@ -24,9 +24,9 @@
 #ifndef KRESOURCES_SELECTDIALOG_H
 #define KRESOURCES_SELECTDIALOG_H
 
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qmap.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqmap.h>
 
 #include <kdialog.h>
 
@@ -43,7 +43,7 @@ class Resource;
  *
  * \code
  *
- * QPtrList<Resource> list = ... // can be retrived from KRES::Manager (e.g. KABC::AddressBook)
+ * TQPtrList<Resource> list = ... // can be retrived from KRES::Manager (e.g. KABC::AddressBook)
  *
  * KABC::Resource *res = KABC::SelectDialog::getResource( list, parentWdg );
  * if ( !res ) {
@@ -62,7 +62,7 @@ class KRESOURCES_EXPORT SelectDialog : KDialog
      * @param parent The parent widget
      * @param name   The name of the dialog
      */
-    SelectDialog( QPtrList<Resource> list, QWidget *parent = 0,
+    SelectDialog( TQPtrList<Resource> list, TQWidget *parent = 0,
         const char *name = 0);
 
     /**
@@ -74,12 +74,12 @@ class KRESOURCES_EXPORT SelectDialog : KDialog
      * Opens a dialog showing the available resources and returns the resource the
      * user has selected. Returns 0, if the dialog was canceled.
      */
-    static Resource *getResource( QPtrList<Resource> list, QWidget *parent = 0 );
+    static Resource *getResource( TQPtrList<Resource> list, TQWidget *parent = 0 );
 
   private:
     KListBox *mResourceId;
 
-    QMap<int, Resource*> mResourceMap;
+    TQMap<int, Resource*> mResourceMap;
 };
 
 }

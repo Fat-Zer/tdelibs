@@ -19,8 +19,8 @@
 #ifndef __kio_paste_h__
 #define __kio_paste_h__
 
-#include <qstring.h>
-#include <qmemarray.h>
+#include <tqstring.h>
+#include <tqmemarray.h>
 #include <kurl.h>
 class QWidget;
 class QMimeSource;
@@ -54,7 +54,7 @@ namespace KIO {
    * @param data the data to copy
    * @see pasteClipboard()
    */
-  KIO_EXPORT void pasteData( const KURL& destURL, const QByteArray& data );
+  KIO_EXPORT void pasteData( const KURL& destURL, const TQByteArray& data );
 
   /**
    * Pastes the given @p data to the given destination URL.
@@ -66,7 +66,7 @@ namespace KIO {
    * @param data the data to copy
    * @see pasteClipboard()
    */
-  KIO_EXPORT CopyJob *pasteDataAsync( const KURL& destURL, const QByteArray& data );
+  KIO_EXPORT CopyJob *pasteDataAsync( const KURL& destURL, const TQByteArray& data );
 
   /**
    * Pastes the given @p data to the given destination URL.
@@ -79,7 +79,7 @@ namespace KIO {
    * @param dialogText the text to show in the dialog
    * @see pasteClipboard()
    */
-  KIO_EXPORT CopyJob *pasteDataAsync( const KURL& destURL, const QByteArray& data, const QString& dialogText ); // KDE4: merge with above
+  KIO_EXPORT CopyJob *pasteDataAsync( const KURL& destURL, const TQByteArray& data, const TQString& dialogText ); // KDE4: merge with above
 
 
   /**
@@ -88,20 +88,20 @@ namespace KIO {
    * This is the method used when handling drops (of anything else than URLs)
    * onto kdesktop and konqueror.
    *
-   * @param data the QMimeSource (e.g. a QDropEvent)
+   * @param data the TQMimeSource (e.g. a TQDropEvent)
    * @param destURL the URL of the directory where the data will be pasted.
    * The filename to use in that directory is prompted by this method.
    * @param dialogText the text to show in the dialog
    * @param widget parent widget to use for dialogs
-   * @param clipboard whether the QMimeSource comes from QClipboard. If you
+   * @param clipboard whether the TQMimeSource comes from QClipboard. If you
    * use pasteClipboard for that case, you never have to worry about this parameter.
    *
    * @see pasteClipboard()
    *
    * @since 3.5
    */
-  KIO_EXPORT CopyJob* pasteMimeSource( QMimeSource* data, const KURL& destURL,
-                                       const QString& dialogText, QWidget* widget,
+  KIO_EXPORT CopyJob* pasteMimeSource( TQMimeSource* data, const KURL& destURL,
+                                       const TQString& dialogText, TQWidget* widget,
                                        bool clipboard = false );
 
   /**
@@ -119,7 +119,7 @@ namespace KIO {
    *
    * @since 3.5
    */
-  KIO_EXPORT QString pasteActionText();
+  KIO_EXPORT TQString pasteActionText();
 }
 
 #endif

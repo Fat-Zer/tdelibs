@@ -19,7 +19,7 @@
 #include "kmimemagic.h"
 #include <kdebug.h>
 #include <kapplication.h>
-#include <qfile.h>
+#include <tqfile.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kstaticdeleter.h>
@@ -27,7 +27,7 @@
 #include <assert.h>
 
 static int fsmagic(struct config_rec* conf, const char *fn, KDE_struct_stat *sb);
-static void process(struct config_rec* conf,  const QString &);
+static void process(struct config_rec* conf,  const TQString &);
 static int ascmagic(struct config_rec* conf, unsigned char *buf, int nbytes);
 static int tagmagic(unsigned char *buf, int nbytes);
 static int textmagic(struct config_rec* conf, unsigned char *, int);
@@ -63,8 +63,8 @@ void KMimeMagic::initStatic()
 #include <time.h>
 #include <utime.h>
 #include <stdarg.h>
-#include <qregexp.h>
-#include <qstring.h>
+#include <tqregexp.h>
+#include <tqstring.h>
 
 //#define MIME_MAGIC_DEBUG_TABLE // untested
 
@@ -525,15 +525,15 @@ class KMimeMagicUtimeConf
 public:
     KMimeMagicUtimeConf()
     {
-        tmpDirs << QString::fromLatin1("/tmp"); // default value
+        tmpDirs << TQString::fromLatin1("/tmp"); // default value
 
         // The trick is that we also don't want the user to override globally set
         // directories. So we have to misuse KStandardDirs :}
-        QStringList confDirs = KGlobal::dirs()->resourceDirs( "config" );
+        TQStringList confDirs = KGlobal::dirs()->resourceDirs( "config" );
         if ( !confDirs.isEmpty() )
         {
-            QString globalConf = confDirs.last() + "kmimemagicrc";
-            if ( QFile::exists( globalConf ) )
+            TQString globalConf = confDirs.last() + "kmimemagicrc";
+            if ( TQFile::exists( globalConf ) )
             {
                 KSimpleConfig cfg( globalConf );
                 cfg.setGroup( "Settings" );
@@ -541,42 +541,42 @@ public:
             }
             if ( confDirs.count() > 1 )
             {
-                QString localConf = confDirs.first() + "kmimemagicrc";
-                if ( QFile::exists( localConf ) )
+                TQString localConf = confDirs.first() + "kmimemagicrc";
+                if ( TQFile::exists( localConf ) )
                 {
                     KSimpleConfig cfg( localConf );
                     cfg.setGroup( "Settings" );
                     tmpDirs += cfg.readListEntry( "atimeDirs" );
                 }
             }
-            for ( QStringList::Iterator it = tmpDirs.begin() ; it != tmpDirs.end() ; ++it )
+            for ( TQStringList::Iterator it = tmpDirs.begin() ; it != tmpDirs.end() ; ++it )
             {
-                QString dir = *it;
+                TQString dir = *it;
                 if ( !dir.isEmpty() && dir[ dir.length()-1 ] != '/' )
                     (*it) += '/';
             }
         }
 #if 0
         // debug code
-        for ( QStringList::Iterator it = tmpDirs.begin() ; it != tmpDirs.end() ; ++it )
+        for ( TQStringList::Iterator it = tmpDirs.begin() ; it != tmpDirs.end() ; ++it )
             kdDebug(7018) << " atimeDir: " << *it << endl;
 #endif
     }
 
-    bool restoreAccessTime( const QString & file ) const
+    bool restoreAccessTime( const TQString & file ) const
     {
-        QString dir = file.left( file.findRev( '/' ) );
+        TQString dir = file.left( file.findRev( '/' ) );
         bool res = tmpDirs.contains( dir );
         //kdDebug(7018) << "restoreAccessTime " << file << " dir=" << dir << " result=" << res << endl;
         return res;
     }
-    QStringList tmpDirs;
+    TQStringList tmpDirs;
 };
 
 /* current config */
 struct config_rec {
     bool followLinks;
-    QString resultBuf;
+    TQString resultBuf;
     int accuracy;
 
     struct magic *magic,    /* head of magic config list */
@@ -646,18 +646,18 @@ int KMimeMagic::parse_line(char *line, int *rule, int lineno)
 /*
  * apprentice - load configuration from the magic file.
  */
-int KMimeMagic::apprentice( const QString& magicfile )
+int KMimeMagic::apprentice( const TQString& magicfile )
 {
 	FILE *f;
 	char line[BUFSIZ + 1];
 	int errs = 0;
 	int lineno;
 	int rule = 0;
-	QCString fname;
+	TQCString fname;
 
 	if (magicfile.isEmpty())
 		return -1;
-	fname = QFile::encodeName(magicfile);
+	fname = TQFile::encodeName(magicfile);
 	f = fopen(fname, "r");
 	if (f == NULL) {
 		kdError(7018) << "can't read magic file " << fname.data() << ": " << strerror(errno) << endl;
@@ -1351,14 +1351,14 @@ mcheck(union VALUETYPE *p, struct magic *m)
  * fixed-size buffer to begin processing the contents.
  */
 
-void process(struct config_rec* conf, const QString & fn)
+void process(struct config_rec* conf, const TQString & fn)
 {
 	int fd = 0;
 	unsigned char buf[HOWMANY + 1];	/* one extra for terminating '\0' */
 	KDE_struct_stat sb;
 	int nbytes = 0;         /* number of bytes read from a datafile */
         int tagbytes = 0;       /* size of prefixed tag */
-        QCString fileName = QFile::encodeName( fn );
+        TQCString fileName = TQFile::encodeName( fn );
 
 	/*
 	 * first try judging the file based on its filesystem status
@@ -1518,7 +1518,7 @@ fsmagic(struct config_rec* conf, const char *fn, KDE_struct_stat *sb)
                 strcpy(buf, tmp);
         }
         if (conf->followLinks)
-            process( conf, QFile::decodeName( buf ) );
+            process( conf, TQFile::decodeName( buf ) );
         else
             conf->resultBuf = MIME_INODE_LINK;
         return 1;
@@ -1898,27 +1898,27 @@ static int ascmagic(struct config_rec* conf, unsigned char *buf, int nbytes)
 #endif
 			if (jonly > 1 && foundClass) {
 				// At least two java-only tokens have matched, including "class"
-				conf->resultBuf = QString(types[P_JAVA].type);
+				conf->resultBuf = TQString(types[P_JAVA].type);
 				return 1;
 			}
 			if (jconly > 1) {
 				// At least two non-C (only C++ or Java) token have matched.
 				if (typecount[P_JAVA] < typecount[P_CPP])
-				  conf->resultBuf = QString(types[P_CPP].type);
+				  conf->resultBuf = TQString(types[P_CPP].type);
 				else
-				  conf->resultBuf = QString(types[P_JAVA].type);
+				  conf->resultBuf = TQString(types[P_JAVA].type);
 				return 1;
 			}
                         if (conly + cpponly > 1) {
 			     // Either C or C++.
         		      if (cpponly > 0)
-                                conf->resultBuf = QString(types[P_CPP].type);
+                                conf->resultBuf = TQString(types[P_CPP].type);
                               else
-                                conf->resultBuf = QString(types[P_C].type);
+                                conf->resultBuf = TQString(types[P_C].type);
                               return 1;
                         }
 			if (objconly > 0) {
-				conf->resultBuf =  QString(types[P_OBJC].type);
+				conf->resultBuf =  TQString(types[P_OBJC].type);
 				return 1;
 			}
 	      }
@@ -1952,7 +1952,7 @@ static int ascmagic(struct config_rec* conf, unsigned char *buf, int nbytes)
 #ifdef DEBUG_MIMEMAGIC
                 kdDebug(7018) << "mostaccurate=" << mostaccurate << " pcts=" << pcts[mostaccurate] << " pctsum=" << pctsum << " accuracy=" << conf->accuracy << endl;
 #endif
-		conf->resultBuf = QString(types[mostaccurate].type);
+		conf->resultBuf = TQString(types[mostaccurate].type);
 		return 1;
             }
 	}
@@ -2118,21 +2118,21 @@ from_oct(int digs, char *where)
 KMimeMagic::KMimeMagic()
 {
     // Magic file detection init
-    QString mimefile = locate( "mime", "magic" );
+    TQString mimefile = locate( "mime", "magic" );
     init( mimefile );
     // Add snippets from share/config/magic/*
-    QStringList snippets = KGlobal::dirs()->findAllResources( "config", "magic/*.magic", true );
-    for ( QStringList::Iterator it = snippets.begin() ; it != snippets.end() ; ++it )
+    TQStringList snippets = KGlobal::dirs()->findAllResources( "config", "magic/*.magic", true );
+    for ( TQStringList::Iterator it = snippets.begin() ; it != snippets.end() ; ++it )
         if ( !mergeConfig( *it ) )
             kdWarning() << k_funcinfo << "Failed to parse " << *it << endl;
 }
 
-KMimeMagic::KMimeMagic(const QString & _configfile)
+KMimeMagic::KMimeMagic(const TQString & _configfile)
 {
     init( _configfile );
 }
 
-void KMimeMagic::init( const QString& _configfile )
+void KMimeMagic::init( const TQString& _configfile )
 {
 	int result;
 	conf = new config_rec;
@@ -2173,7 +2173,7 @@ KMimeMagic::~KMimeMagic()
 }
 
 bool
-KMimeMagic::mergeConfig(const QString & _configfile)
+KMimeMagic::mergeConfig(const TQString & _configfile)
 {
 	kdDebug(7018) << k_funcinfo << _configfile << endl;
 	int result;
@@ -2214,11 +2214,11 @@ KMimeMagic::setFollowLinks( bool _enable )
 }
 
 KMimeMagicResult *
-KMimeMagic::findBufferType(const QByteArray &array)
+KMimeMagic::findBufferType(const TQByteArray &array)
 {
 	unsigned char buf[HOWMANY + 1];	/* one extra for terminating '\0' */
 
-	conf->resultBuf = QString::null;
+	conf->resultBuf = TQString::null;
 	if ( !magicResult )
 	  magicResult = new KMimeMagicResult();
 	magicResult->setInvalid();
@@ -2242,9 +2242,9 @@ KMimeMagic::findBufferType(const QByteArray &array)
 }
 
 static void
-refineResult(KMimeMagicResult *r, const QString & _filename)
+refineResult(KMimeMagicResult *r, const TQString & _filename)
 {
-	QString tmp = r->mimeType();
+	TQString tmp = r->mimeType();
 	if (tmp.isEmpty())
 		return;
 	if ( tmp == "text/x-c" || tmp == "text/x-objc" )
@@ -2279,8 +2279,8 @@ refineResult(KMimeMagicResult *r, const QString & _filename)
 }
 
 KMimeMagicResult *
-KMimeMagic::findBufferFileType( const QByteArray &data,
-				const QString &fn)
+KMimeMagic::findBufferFileType( const TQByteArray &data,
+				const TQString &fn)
 {
         KMimeMagicResult * r = findBufferType( data );
 	refineResult(r, fn);
@@ -2290,12 +2290,12 @@ KMimeMagic::findBufferFileType( const QByteArray &data,
 /*
  * Find the content-type of the given file.
  */
-KMimeMagicResult* KMimeMagic::findFileType(const QString & fn)
+KMimeMagicResult* KMimeMagic::findFileType(const TQString & fn)
 {
 #ifdef DEBUG_MIMEMAGIC
     kdDebug(7018) << "KMimeMagic::findFileType " << fn << endl;
 #endif
-    conf->resultBuf = QString::null;
+    conf->resultBuf = TQString::null;
 
         if ( !magicResult )
 	  magicResult = new KMimeMagicResult();

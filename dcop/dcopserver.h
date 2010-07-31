@@ -22,17 +22,17 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef DCOPSERVER_H
 #define DCOPSERVER_H "$Id$"
 
-#include <qobject.h>
+#include <tqobject.h>
 
-#include <qstring.h>
-#include <qsocketnotifier.h>
-#include <qptrlist.h>
-#include <qvaluelist.h>
-#include <qcstring.h>
-#include <qdict.h>
-#include <qptrdict.h>
-#include <qintdict.h>
-#include <qapplication.h>
+#include <tqstring.h>
+#include <tqsocketnotifier.h>
+#include <tqptrlist.h>
+#include <tqvaluelist.h>
+#include <tqcstring.h>
+#include <tqdict.h>
+#include <tqptrdict.h>
+#include <tqintdict.h>
+#include <tqapplication.h>
 
 #define INT32 QINT32
 #ifdef Q_WS_X11
@@ -61,7 +61,7 @@ class QTextStream;
 class QFile;
 #endif
 
-typedef QValueList<QCString> QCStringList;
+typedef TQValueList<TQCString> QCStringList;
 
 /**
  * @internal
@@ -76,14 +76,14 @@ public:
 
     // Add the data from offset @p start in @p _data to the output
     // buffer and schedule it for later transmission.
-    void waitForOutputReady(const QByteArray &_data, int start);
+    void waitForOutputReady(const TQByteArray &_data, int start);
 
     // Called from DCOPServer::slotOutputReady()
     // Flush the output buffer.
     void slotOutputReady();
 
-    QCString appId;
-    QCString plainAppId;
+    TQCString appId;
+    TQCString plainAppId;
     IceConn iceConn;
     int notifyRegister;
     /**
@@ -97,15 +97,15 @@ public:
      * This allows us to do proper bookkeeping in case client A, client B
      * or both unregister during the call.
      */
-    QPtrList <_IceConn> waitingOnReply;
-    QPtrList <_IceConn> waitingForReply;
-    QPtrList <_IceConn> waitingForDelayedReply;
+    TQPtrList <_IceConn> waitingOnReply;
+    TQPtrList <_IceConn> waitingForReply;
+    TQPtrList <_IceConn> waitingForDelayedReply;
     DCOPSignalConnectionList *_signalConnectionList;
     bool daemon;
     bool outputBlocked;
-    QValueList <QByteArray> outputBuffer;
+    TQValueList <TQByteArray> outputBuffer;
     unsigned long outputBufferStart;
-    QSocketNotifier *outputBufferNotifier;
+    TQSocketNotifier *outputBufferNotifier;
 };
 
 
@@ -124,17 +124,17 @@ public:
     void processMessage( IceConn iceConn, int opcode, unsigned long length, Bool swap);
     void ioError( IceConn iceConn );
 
-    bool receive(const QCString &app, const QCString &obj,
-                 const QCString &fun, const QByteArray& data,
-                 QCString& replyType, QByteArray &replyData, IceConn iceConn);
+    bool receive(const TQCString &app, const TQCString &obj,
+                 const TQCString &fun, const TQByteArray& data,
+                 TQCString& replyType, TQByteArray &replyData, IceConn iceConn);
 
-    DCOPConnection *findApp(const QCString &appId);
+    DCOPConnection *findApp(const TQCString &appId);
     DCOPConnection *findConn(IceConn iceConn)
        { return clients.find(iceConn); }
 
-    void sendMessage(DCOPConnection *conn, const QCString &sApp,
-                     const QCString &rApp, const QCString &rObj,
-                     const QCString &rFun, const QByteArray &data);
+    void sendMessage(DCOPConnection *conn, const TQCString &sApp,
+                     const TQCString &rApp, const TQCString &rObj,
+                     const TQCString &rFun, const TQByteArray &data);
 
 private slots:
     void newClient( int socket );
@@ -153,21 +153,21 @@ private:
     static DWORD WINAPI TerminatorThread(void * pParam);
 #endif
 private:
-    void broadcastApplicationRegistration( DCOPConnection* conn, const QCString type,
-        const QCString& data );
+    void broadcastApplicationRegistration( DCOPConnection* conn, const TQCString type,
+        const TQCString& data );
     bool suicide;
     bool shutdown;
     int majorOpcode;
     int currentClientNumber;
     CARD32 serverKey;
     DCOPSignals *dcopSignals;
-    QTimer *m_timer;
-    QTimer *m_deadConnectionTimer;
-    QPtrList<DCOPListener> listener;
-    QAsciiDict<DCOPConnection> appIds; // index on app id
-    QPtrDict<DCOPConnection> clients; // index on iceConn
-    QIntDict<DCOPConnection> fd_clients; // index on fd
-    QPtrList<_IceConn> deadConnections;
+    TQTimer *m_timer;
+    TQTimer *m_deadConnectionTimer;
+    TQPtrList<DCOPListener> listener;
+    TQAsciiDict<DCOPConnection> appIds; // index on app id
+    TQPtrDict<DCOPConnection> clients; // index on iceConn
+    TQIntDict<DCOPConnection> fd_clients; // index on fd
+    TQPtrList<_IceConn> deadConnections;
 
 #ifdef Q_OS_WIN
     HANDLE m_evTerminate;
@@ -176,8 +176,8 @@ private:
 #endif
 
 #ifdef DCOP_LOG
-    QTextStream *m_stream;
-    QFile *m_logger;
+    TQTextStream *m_stream;
+    TQFile *m_logger;
 #endif
 };
 

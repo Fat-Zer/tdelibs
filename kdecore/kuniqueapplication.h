@@ -152,8 +152,8 @@ public:
    * @param replyData the reply
    * @see DCOPObject
    */
-  bool process(const QCString &fun, const QByteArray &data,
-	       QCString &replyType, QByteArray &replyData);
+  bool process(const TQCString &fun, const TQByteArray &data,
+	       TQCString &replyType, TQByteArray &replyData);
 
   /**
    * Creates a new "instance" of the application.
@@ -194,7 +194,7 @@ private:
   /**
    * Delays the processing of a DCOP request.
    */
-  void delayRequest(const QCString &fun, const QByteArray &data);
+  void delayRequest(const TQCString &fun, const TQByteArray &data);
 
 private slots:
   /**

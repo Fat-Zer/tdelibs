@@ -43,24 +43,24 @@
 #include <kparts/part.h>
 #include <kiconloader.h>
 
-#include <qregexp.h>
-#include <qstring.h>
-#include <qdict.h>
-#include <qspinbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qhbox.h>
-#include <qwhatsthis.h>
-#include <qcheckbox.h>
+#include <tqregexp.h>
+#include <tqstring.h>
+#include <tqdict.h>
+#include <tqspinbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqhbox.h>
+#include <tqwhatsthis.h>
+#include <tqcheckbox.h>
 
 // #include <kdebug.h>
 //END
 
 //BEGIN DocWordCompletionPlugin
 K_EXPORT_COMPONENT_FACTORY( ktexteditor_docwordcompletion, KGenericFactory<DocWordCompletionPlugin>( "ktexteditor_docwordcompletion" ) )
-DocWordCompletionPlugin::DocWordCompletionPlugin( QObject *parent,
+DocWordCompletionPlugin::DocWordCompletionPlugin( TQObject *parent,
                             const char* name,
-                            const QStringList& /*args*/ )
+                            const TQStringList& /*args*/ )
 	: KTextEditor::Plugin ( (KTextEditor::Document*) parent, name )
 {
   readConfig();
@@ -99,23 +99,23 @@ void DocWordCompletionPlugin::removeView(KTextEditor::View *view)
     }
 }
 
-KTextEditor::ConfigPage* DocWordCompletionPlugin::configPage( uint, QWidget *parent, const char *name )
+KTextEditor::ConfigPage* DocWordCompletionPlugin::configPage( uint, TQWidget *parent, const char *name )
 {
   return new DocWordCompletionConfigPage( this, parent, name );
 }
 
-QString DocWordCompletionPlugin::configPageName( uint ) const
+TQString DocWordCompletionPlugin::configPageName( uint ) const
 {
   return i18n("Word Completion Plugin");
 }
 
-QString DocWordCompletionPlugin::configPageFullName( uint ) const
+TQString DocWordCompletionPlugin::configPageFullName( uint ) const
 {
   return i18n("Configure the Word Completion Plugin");
 }
 
 // FIXME provide sucn a icon
-       QPixmap DocWordCompletionPlugin::configPagePixmap( uint, int size ) const
+       TQPixmap DocWordCompletionPlugin::configPagePixmap( uint, int size ) const
 {
   return UserIcon( "kte_wordcompletion", size );
 }
@@ -127,16 +127,16 @@ struct DocWordCompletionPluginViewPrivate
   uint line, col;       // start position of last match (where to search from)
   uint cline, ccol;     // cursor position
   uint lilen;           // length of last insertion
-  QString last;         // last word we were trying to match
-  QString lastIns;      // latest applied completion
-  QRegExp re;           // hrm
+  TQString last;         // last word we were trying to match
+  TQString lastIns;      // latest applied completion
+  TQRegExp re;           // hrm
   KToggleAction *autopopup; // for accessing state
   uint treshold;        // the required length of a word before popping up the completion list automatically
   int directionalPos;   // be able to insert "" at the correct time
 };
 
 DocWordCompletionPluginView::DocWordCompletionPluginView( uint treshold, bool autopopup, KTextEditor::View *view, const char *name )
-  : QObject( view, name ),
+  : TQObject( view, name ),
     KXMLGUIClient( view ),
     m_view( view ),
     d( new DocWordCompletionPluginViewPrivate )
@@ -146,15 +146,15 @@ DocWordCompletionPluginView::DocWordCompletionPluginView( uint treshold, bool au
   setInstance( KGenericFactory<DocWordCompletionPlugin>::instance() );
 
   (void) new KAction( i18n("Reuse Word Above"), CTRL+Key_8, this,
-    SLOT(completeBackwards()), actionCollection(), "doccomplete_bw" );
+    TQT_SLOT(completeBackwards()), actionCollection(), "doccomplete_bw" );
   (void) new KAction( i18n("Reuse Word Below"), CTRL+Key_9, this,
-    SLOT(completeForwards()), actionCollection(), "doccomplete_fw" );
+    TQT_SLOT(completeForwards()), actionCollection(), "doccomplete_fw" );
   (void) new KAction( i18n("Pop Up Completion List"), 0, this,
-    SLOT(popupCompletionList()), actionCollection(), "doccomplete_pu" );
+    TQT_SLOT(popupCompletionList()), actionCollection(), "doccomplete_pu" );
   (void) new KAction( i18n("Shell Completion"), 0, this,
-    SLOT(shellComplete()), actionCollection(), "doccomplete_sh" );
+    TQT_SLOT(shellComplete()), actionCollection(), "doccomplete_sh" );
   d->autopopup = new KToggleAction( i18n("Automatic Completion Popup"), 0, this,
-    SLOT(toggleAutoPopup()), actionCollection(), "enable_autopopup" );
+    TQT_SLOT(toggleAutoPopup()), actionCollection(), "enable_autopopup" );
 
   d->autopopup->setChecked( autopopup );
   toggleAutoPopup();
@@ -164,12 +164,12 @@ DocWordCompletionPluginView::DocWordCompletionPluginView( uint treshold, bool au
   KTextEditor::VariableInterface *vi = KTextEditor::variableInterface( view->document() );
   if ( vi )
   {
-    QString e = vi->variable("wordcompletion-autopopup");
+    TQString e = vi->variable("wordcompletion-autopopup");
     if ( ! e.isEmpty() )
       d->autopopup->setEnabled( e == "true" );
 
-    connect( view->document(), SIGNAL(variableChanged(const QString &, const QString &)),
-             this, SLOT(slotVariableChanged(const QString &, const QString &)) );
+    connect( view->document(), TQT_SIGNAL(variableChanged(const TQString &, const TQString &)),
+             this, TQT_SLOT(slotVariableChanged(const TQString &, const TQString &)) );
   }
 }
 
@@ -189,7 +189,7 @@ void DocWordCompletionPluginView::completeForwards()
 }
 
 // Pop up the editors completion list if applicable
-void DocWordCompletionPluginView::popupCompletionList( QString w )
+void DocWordCompletionPluginView::popupCompletionList( TQString w )
 {
   if ( w.isEmpty() )
     w = word();
@@ -203,15 +203,15 @@ void DocWordCompletionPluginView::popupCompletionList( QString w )
 void DocWordCompletionPluginView::toggleAutoPopup()
 {
   if ( d->autopopup->isChecked() ) {
-    if ( ! connect( m_view->document(), SIGNAL(charactersInteractivelyInserted(int ,int ,const QString&)),
-         this, SLOT(autoPopupCompletionList()) ))
+    if ( ! connect( m_view->document(), TQT_SIGNAL(charactersInteractivelyInserted(int ,int ,const TQString&)),
+         this, TQT_SLOT(autoPopupCompletionList()) ))
     {
-      connect( m_view->document(), SIGNAL(textChanged()), this, SLOT(autoPopupCompletionList()) );
+      connect( m_view->document(), TQT_SIGNAL(textChanged()), this, TQT_SLOT(autoPopupCompletionList()) );
     }
   } else {
-    disconnect( m_view->document(), SIGNAL(textChanged()), this, SLOT(autoPopupCompletionList()) );
-    disconnect( m_view->document(), SIGNAL(charactersInteractivelyInserted(int ,int ,const QString&)),
-                this, SLOT(autoPopupCompletionList()) );
+    disconnect( m_view->document(), TQT_SIGNAL(textChanged()), this, TQT_SLOT(autoPopupCompletionList()) );
+    disconnect( m_view->document(), TQT_SIGNAL(charactersInteractivelyInserted(int ,int ,const TQString&)),
+                this, TQT_SLOT(autoPopupCompletionList()) );
 
   }
 }
@@ -220,7 +220,7 @@ void DocWordCompletionPluginView::toggleAutoPopup()
 void DocWordCompletionPluginView::autoPopupCompletionList()
 {
   if ( ! m_view->hasFocus() ) return;
-  QString w = word();
+  TQString w = word();
   if ( w.length() >= d->treshold )
   {
       popupCompletionList( w );
@@ -235,14 +235,14 @@ void DocWordCompletionPluginView::shellComplete()
     // find the word we are typing
   uint cline, ccol;
   viewCursorInterface(m_view)->cursorPositionReal(&cline, &ccol);
-  QString wrd = word();
+  TQString wrd = word();
   if (wrd.isEmpty())
     return;
 
-  QValueList < KTextEditor::CompletionEntry > matches = allMatches(wrd);
+  TQValueList < KTextEditor::CompletionEntry > matches = allMatches(wrd);
   if (matches.size() == 0)
     return;
-  QString partial = findLongestUnique(matches);
+  TQString partial = findLongestUnique(matches);
   if (partial.length() == wrd.length())
   {
     KTextEditor::CodeCompletionInterface * cci = codeCompletionInterface(m_view);
@@ -264,7 +264,7 @@ void DocWordCompletionPluginView::complete( bool fw )
   // find the word we are typing
   uint cline, ccol;
   viewCursorInterface( m_view )->cursorPositionReal( &cline, &ccol );
-  QString wrd = word();
+  TQString wrd = word();
   if ( wrd.isEmpty() )
     return;
 
@@ -320,7 +320,7 @@ void DocWordCompletionPluginView::complete( bool fw )
 
   d->re.setPattern( "\\b" + wrd + "(\\w+)" );
   int pos ( 0 );
-  QString ln = ei->textLine( d->line );
+  TQString ln = ei->textLine( d->line );
 
   while ( true )
   {
@@ -330,7 +330,7 @@ void DocWordCompletionPluginView::complete( bool fw )
 
     if ( pos > -1 ) // we matched a word
     {
-      QString m = d->re.cap( 1 );
+      TQString m = d->re.cap( 1 );
       if ( m != d->lastIns )
       {
         // we got good a match! replace text and return.
@@ -393,10 +393,10 @@ void DocWordCompletionPluginView::complete( bool fw )
 }
 
 // Contributed by <brain@hdsnet.hu>
-QString DocWordCompletionPluginView::findLongestUnique(const QValueList < KTextEditor::CompletionEntry > &matches)
+TQString DocWordCompletionPluginView::findLongestUnique(const TQValueList < KTextEditor::CompletionEntry > &matches)
 {
-  QString partial = matches.front().text;
-  QValueList < KTextEditor::CompletionEntry >::const_iterator i = matches.begin();
+  TQString partial = matches.front().text;
+  TQValueList < KTextEditor::CompletionEntry >::const_iterator i = matches.begin();
   for (++i; i != matches.end(); ++i)
   {
     if (!(*i).text.startsWith(partial))
@@ -410,7 +410,7 @@ QString DocWordCompletionPluginView::findLongestUnique(const QValueList < KTextE
         }
       }
       if (partial.length() == 0)
-        return QString();
+        return TQString();
     }
   }
 
@@ -418,31 +418,31 @@ QString DocWordCompletionPluginView::findLongestUnique(const QValueList < KTextE
 }
 
 // Return the string to complete (the letters behind the cursor)
-QString DocWordCompletionPluginView::word()
+TQString DocWordCompletionPluginView::word()
 {
   uint cline, ccol;
   viewCursorInterface( m_view )->cursorPositionReal( &cline, &ccol );
-  if ( ! ccol ) return QString::null; // no word
+  if ( ! ccol ) return TQString::null; // no word
   KTextEditor::EditInterface *ei = KTextEditor::editInterface( m_view->document() );
   d->re.setPattern( "\\b(\\w+)$" );
   if ( d->re.searchRev(
         ei->text( cline, 0, cline, ccol )
         ) < 0 )
-    return QString::null; // no word
+    return TQString::null; // no word
   return d->re.cap( 1 );
 }
 
 // Scan throught the entire document for possible completions,
 // ignoring any dublets
-QValueList<KTextEditor::CompletionEntry> DocWordCompletionPluginView::allMatches( const QString &word )
+TQValueList<KTextEditor::CompletionEntry> DocWordCompletionPluginView::allMatches( const TQString &word )
 {
-  QValueList<KTextEditor::CompletionEntry> l;
+  TQValueList<KTextEditor::CompletionEntry> l;
   uint i( 0 );
   int pos( 0 );
   d->re.setPattern( "\\b("+word+"\\w+)" );
-  QString s, m;
+  TQString s, m;
   KTextEditor::EditInterface *ei = KTextEditor::editInterface( m_view->document() );
-  QDict<int> seen; // maybe slow with > 17 matches
+  TQDict<int> seen; // maybe slow with > 17 matches
   int sawit(1);    // to ref for the dict
   uint cline, ccol;// needed to avoid constructing a word at cursor position
   viewCursorInterface( m_view )->cursorPositionReal( &cline, &ccol );
@@ -478,7 +478,7 @@ QValueList<KTextEditor::CompletionEntry> DocWordCompletionPluginView::allMatches
   return l;
 }
 
-void DocWordCompletionPluginView::slotVariableChanged( const QString &var, const QString &val )
+void DocWordCompletionPluginView::slotVariableChanged( const TQString &var, const TQString &val )
 {
   if ( var == "wordcompletion-autopopup" )
     d->autopopup->setEnabled( val == "true" );
@@ -488,20 +488,20 @@ void DocWordCompletionPluginView::slotVariableChanged( const QString &var, const
 //END
 
 //BEGIN DocWordCompletionConfigPage
-DocWordCompletionConfigPage::DocWordCompletionConfigPage( DocWordCompletionPlugin *completion, QWidget *parent, const char *name )
+DocWordCompletionConfigPage::DocWordCompletionConfigPage( DocWordCompletionPlugin *completion, TQWidget *parent, const char *name )
   : KTextEditor::ConfigPage( parent, name )
   , m_completion( completion )
 {
-  QVBoxLayout *lo = new QVBoxLayout( this );
+  TQVBoxLayout *lo = new TQVBoxLayout( this );
   lo->setSpacing( KDialog::spacingHint() );
 
-  cbAutoPopup = new QCheckBox( i18n("Automatically &show completion list"), this );
+  cbAutoPopup = new TQCheckBox( i18n("Automatically &show completion list"), this );
   lo->addWidget( cbAutoPopup );
 
-  QHBox *hb = new QHBox( this );
+  TQHBox *hb = new TQHBox( this );
   hb->setSpacing( KDialog::spacingHint() );
   lo->addWidget( hb );
-  QLabel *l = new QLabel( i18n(
+  TQLabel *l = new TQLabel( i18n(
       "Translators: This is the first part of two strings wich will comprise the "
       "sentence 'Show completions when a word is at least N characters'. The first "
       "part is on the right side of the N, which is represented by a spinbox "
@@ -509,17 +509,17 @@ DocWordCompletionConfigPage::DocWordCompletionConfigPage( DocWordCompletionPlugi
       "ingeger number between and including 1 and 30. Feel free to leave the "
       "second part of the sentence blank if it suits your language better. ",
       "Show completions &when a word is at least"), hb );
-  sbAutoPopup = new QSpinBox( 1, 30, 1, hb );
+  sbAutoPopup = new TQSpinBox( 1, 30, 1, hb );
   l->setBuddy( sbAutoPopup );
-  lSbRight = new QLabel( i18n(
+  lSbRight = new TQLabel( i18n(
       "This is the second part of two strings that will comprise teh sentence "
       "'Show completions when a word is at least N characters'",
       "characters long."), hb );
 
-  QWhatsThis::add( cbAutoPopup, i18n(
+  TQWhatsThis::add( cbAutoPopup, i18n(
       "Enable the automatic completion list popup as default. The popup can "
       "be disabled on a view basis from the 'Tools' menu.") );
-  QWhatsThis::add( sbAutoPopup, i18n(
+  TQWhatsThis::add( sbAutoPopup, i18n(
       "Define the length a word should have before the completion list "
       "is displayed.") );
 

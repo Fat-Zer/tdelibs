@@ -22,7 +22,7 @@
 
 #include "kmwizardpage.h"
 #include <kdelibs_export.h>
-#include <qmap.h>
+#include <tqmap.h>
 
 class QButtonGroup;
 class QVBoxLayout;
@@ -30,13 +30,13 @@ class QVBoxLayout;
 class KDEPRINT_EXPORT KMWBackend : public KMWizardPage
 {
 public:
-	KMWBackend(QWidget *parent = 0, const char *name = 0);
+	KMWBackend(TQWidget *parent = 0, const char *name = 0);
 
-	bool isValid(QString&);
+	bool isValid(TQString&);
 	void initPrinter(KMPrinter*);
 	void updatePrinter(KMPrinter*);
 
-	void addBackend(int ID, const QString& txt, bool on = true, const QString& whatsThis = QString::null, int nextpage = -1);
+	void addBackend(int ID, const TQString& txt, bool on = true, const TQString& whatsThis = TQString::null, int nextpage = -1);
 	void addBackend(int ID = -1, bool on = true, int nextpage = -1);
 	void enableBackend(int ID, bool on = true);
 
@@ -47,7 +47,7 @@ private:
 	// to have different backends switching to the same page (like backends requiring
 	// a password). If the next page is not given when adding the backend, the ID is
 	// used by default.
-	QMap<int,int>	m_map;
+	TQMap<int,int>	m_map;
 	int 		m_count;
 };
 

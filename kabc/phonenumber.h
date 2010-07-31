@@ -21,8 +21,8 @@
 #ifndef KABC_PHONENUMBER_H
 #define KABC_PHONENUMBER_H
 
-#include <qvaluelist.h>
-#include <qstring.h>
+#include <tqvaluelist.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -37,12 +37,12 @@ namespace KABC {
 */
 class KABC_EXPORT PhoneNumber
 {
-    friend KABC_EXPORT QDataStream &operator<<( QDataStream &, const PhoneNumber & );
-    friend KABC_EXPORT QDataStream &operator>>( QDataStream &, PhoneNumber & );
+    friend KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const PhoneNumber & );
+    friend KABC_EXPORT TQDataStream &operator>>( TQDataStream &, PhoneNumber & );
 
   public:
-    typedef QValueList<PhoneNumber> List;
-    typedef QValueList<int> TypeList;
+    typedef TQValueList<PhoneNumber> List;
+    typedef TQValueList<int> TypeList;
 
     /**
       @li @p Home -  Home number
@@ -76,7 +76,7 @@ class KABC_EXPORT PhoneNumber
       @param type   Type as defined in enum. Multiple types can be
                     specified by combining them by a logical or.
     */
-    PhoneNumber( const QString &number, int type = Home );
+    PhoneNumber( const TQString &number, int type = Home );
 
     /**
       Destructor.
@@ -89,22 +89,22 @@ class KABC_EXPORT PhoneNumber
     /**
       Sets the unique identifier.
     */
-    void setId( const QString &id );
+    void setId( const TQString &id );
 
     /**
       Returns the unique identifier.
     */
-    QString id() const;
+    TQString id() const;
     
     /**
       Sets the number.
     */
-    void setNumber( const QString & );
+    void setNumber( const TQString & );
 
     /**
       Returns the number.
     */
-    QString number() const;
+    TQString number() const;
     
     /**
       Sets the type. Multiple types can be specified by combining them by
@@ -120,12 +120,12 @@ class KABC_EXPORT PhoneNumber
     /**
       Returns a translated string of all types the address has.
     */
-    QString typeLabel() const;
+    TQString typeLabel() const;
 
     /**
       Returns the translated label for phone number depending on its type.
     */
-    QString label() const;
+    TQString label() const;
 
     /**
       Returns a list of all available types
@@ -135,26 +135,26 @@ class KABC_EXPORT PhoneNumber
     /**
       Returns the translated label for phone number type.
     */
-    static QString typeLabel( int type );
+    static TQString typeLabel( int type );
 
     /**
       Returns the translated label for phone number type.
       @obsolete
     */
-    static QString label( int type );
+    static TQString label( int type );
 
   private:
     void init();
-    void validateNumber( const QString& );
+    void validateNumber( const TQString& );
 
-    QString mId;
+    TQString mId;
   
     int mType;
-    QString mNumber;
+    TQString mNumber;
 };
 
-KABC_EXPORT QDataStream &operator<<( QDataStream &, const PhoneNumber & );
-KABC_EXPORT QDataStream &operator>>( QDataStream &, PhoneNumber & );
+KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const PhoneNumber & );
+KABC_EXPORT TQDataStream &operator>>( TQDataStream &, PhoneNumber & );
 
 }
 

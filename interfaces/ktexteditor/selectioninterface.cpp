@@ -28,7 +28,7 @@ SelectionInterface::SelectionInterface()
 	d = new PrivateSelectionInterface();
 	globalSelectionInterfaceNumber++;
         mySelectionInterfaceNumber = globalSelectionInterfaceNumber;
-	QString name = "SelectionInterface#" + QString::number(mySelectionInterfaceNumber);
+	TQString name = "SelectionInterface#" + TQString::number(mySelectionInterfaceNumber);
 	 d->interface = new SelectionDCOPInterface(this, name.latin1());
 }
 SelectionInterface::~SelectionInterface()
@@ -42,7 +42,7 @@ unsigned int SelectionInterface::selectionInterfaceNumber () const
   return mySelectionInterfaceNumber;
 }
 
-void SelectionInterface::setSelectionInterfaceDCOPSuffix (const QCString &suffix)
+void SelectionInterface::setSelectionInterfaceDCOPSuffix (const TQCString &suffix)
 {
   d->interface->setObjId ("SelectionInterface#"+suffix);
 }

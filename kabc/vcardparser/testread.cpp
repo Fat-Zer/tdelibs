@@ -20,8 +20,8 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
 #include <kprocess.h>
 #include <kdebug.h>
@@ -59,18 +59,18 @@ int main( int argc, char **argv )
     return 1;
   }
 
-  QString inputFile( args->arg( 0 ) );
+  TQString inputFile( args->arg( 0 ) );
 
-  QFile file( inputFile );
+  TQFile file( inputFile );
   if ( !file.open( IO_ReadOnly ) ) {
     qDebug( "Unable to open file '%s' for reading!", file.name().latin1() );
     return 1;
   }
 
-  QString text;
+  TQString text;
 
-  QTextStream s( &file );
-  s.setEncoding( QTextStream::Latin1 );
+  TQTextStream s( &file );
+  s.setEncoding( TQTextStream::Latin1 );
   text = s.read();
   file.close();
 

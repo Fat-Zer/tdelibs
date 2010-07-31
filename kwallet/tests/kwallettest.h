@@ -1,7 +1,7 @@
 #ifndef KWALLETASYNC_H
 #define KWALLETASYNC_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 namespace KWallet { class Wallet; }
 

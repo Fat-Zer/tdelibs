@@ -23,7 +23,7 @@
 #define _DOM_DOMString_h_
 
 #include <kdebug.h>
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -33,7 +33,7 @@ class DOMStringImpl;
 
 /**
  * This class implements the basic string we use in the DOM. We do not use
- * QString for 2 reasons: Memory overhead, and the missing explicit sharing
+ * TQString for 2 reasons: Memory overhead, and the missing explicit sharing
  * of strings we need for the DOM.
  *
  * All DOMStrings are explicitly shared (they behave like pointers), meaning
@@ -50,8 +50,8 @@ public:
      */
     DOMString() : impl(0) {}
 
-    DOMString(const QChar *str, uint len);
-    DOMString(const QString &);
+    DOMString(const TQChar *str, uint len);
+    DOMString(const TQString &);
     DOMString(const char *str);
     DOMString(DOMStringImpl *i);
 
@@ -76,9 +76,9 @@ public:
      * The character at position i of the DOMString. If i >= length(), the
      * character returned will be 0.
      */
-    const QChar &operator [](unsigned int i) const;
+    const TQChar &operator [](unsigned int i) const;
 
-    int find(const QChar c, int start = 0) const;
+    int find(const TQChar c, int start = 0) const;
 
     uint length() const;
     void truncate( unsigned int len );
@@ -97,8 +97,8 @@ public:
      */
     DOMString upper() const;
 
-    QChar *unicode() const;
-    QString string() const;
+    TQChar *unicode() const;
+    TQString string() const;
 
     int toInt() const;
     bool percentage(int &_percentage) const;
@@ -129,10 +129,10 @@ inline kndbgstream &operator<<(kndbgstream &stream, const DOMString &) {
 #endif
 
 KHTML_EXPORT bool operator==( const DOMString &a, const DOMString &b );
-KHTML_EXPORT bool operator==( const DOMString &a, const QString &b );
+KHTML_EXPORT bool operator==( const DOMString &a, const TQString &b );
 KHTML_EXPORT bool operator==( const DOMString &a, const char *b );
 inline bool operator!=( const DOMString &a, const DOMString &b ) { return !(a==b); }
-inline bool operator!=( const DOMString &a, const QString &b ) { return !(a==b); }
+inline bool operator!=( const DOMString &a, const TQString &b ) { return !(a==b); }
 inline bool operator!=( const DOMString &a, const char *b )  { return !(a==b); }
 inline bool strcmp( const DOMString &a, const DOMString &b ) { return a != b; }
 

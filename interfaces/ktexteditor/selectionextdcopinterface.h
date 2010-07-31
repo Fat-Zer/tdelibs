@@ -24,7 +24,7 @@
 
 #include "selectioninterfaceext.h"
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <dcopobject.h>
 #include <dcopref.h>
 

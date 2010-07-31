@@ -54,10 +54,10 @@ class KDEUI_EXPORT KAboutApplication : public KAboutDialog
      * @param name Internal name of the widget. This name is not used in the
      *        caption.
      * @param modal If false, this widget will be modeless and must be
-     *        made visible using QWidget::show(). Otherwise it will be
-     *        modal and must be made visible using QWidget::exec().
+     *        made visible using TQWidget::show(). Otherwise it will be
+     *        modal and must be made visible using TQWidget::exec().
      */
-    KAboutApplication( QWidget *parent=0, const char *name=0, bool modal=true );
+    KAboutApplication( TQWidget *parent=0, const char *name=0, bool modal=true );
 
     /**
      * Constructor. Mostly does the same stuff as the previous constructor, except
@@ -73,15 +73,15 @@ class KDEUI_EXPORT KAboutApplication : public KAboutDialog
      * @param name Internal name of the widget. This name is not used in the
      *        caption.
      * @param modal If false, this widget will be modeless and must be
-     *        made visible using QWidget::show(). Otherwise it will be
-     *        modal and must be made visible using QWidget::exec().
+     *        made visible using TQWidget::show(). Otherwise it will be
+     *        modal and must be made visible using TQWidget::exec().
      */
-    KAboutApplication( const KAboutData *aboutData, QWidget *parent=0, const char *name=0, bool modal=true );
+    KAboutApplication( const KAboutData *aboutData, TQWidget *parent=0, const char *name=0, bool modal=true );
 
 /*
  FIXME: The two constructors should be replaced with the following  after the lib freeze:
 
-    KAboutApplication( const KAboutData *aboutData=0, QWidget *parent=0, const char *name=0, bool modal=true );
+    KAboutApplication( const KAboutData *aboutData=0, TQWidget *parent=0, const char *name=0, bool modal=true );
 
  This will make buildDialog() obsolete as well (Frerich).
 */

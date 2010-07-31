@@ -21,10 +21,10 @@
 
 #include "kswitchlanguagedialog.h"
 
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qlabel.h>
-#include <qmap.h>
+#include <tqlayout.h>
+#include <tqtooltip.h>
+#include <tqlabel.h>
+#include <tqmap.h>
 
 #include <klanguagebutton.h>
 #include <kconfig.h>
@@ -35,12 +35,12 @@
 
 struct LanguageRowData
 {
-    QLabel *label;
+    TQLabel *label;
     KLanguageButton *languageButton;
     KPushButton *removeButton;
     
     void setRowWidgets(
-        QLabel *label,
+        TQLabel *label,
         KLanguageButton *languageButton,
         KPushButton *removeButton
         )
@@ -67,47 +67,47 @@ public:
     /**
         Adds one button with language to widget.
     */
-    void addLanguageButton(const QString & languageCode, bool primaryLanguage);
+    void addLanguageButton(const TQString & languageCode, bool primaryLanguage);
     
     /**
         Returns list of languages chosen for application or default languages is they are not set.
     */
-    QStringList applicationLanguageList();
+    TQStringList applicationLanguageList();
     
-    QMap<KPushButton*, LanguageRowData> languageRows;
-    QPtrList<KLanguageButton> languageButtons;
-    QGridLayout *languagesLayout;
-    QWidget *page;
+    TQMap<KPushButton*, LanguageRowData> languageRows;
+    TQPtrList<KLanguageButton> languageButtons;
+    TQGridLayout *languagesLayout;
+    TQWidget *page;
 };
 
 /*************************** KSwitchLanguageDialog **************************/
 
 KSwitchLanguageDialog::KSwitchLanguageDialog(
-    QWidget *parent, 
+    TQWidget *parent, 
     const char *name, 
     bool modal
     ):
     KDialogBase(parent, name, modal, i18n("Switch application language"), Ok|Cancel, Ok, true ),
     d(new KSwitchLanguageDialogPrivate(this))
 {
-    d->page = new QWidget( this );
+    d->page = new TQWidget( this );
     setMainWidget(d->page);
-    QVBoxLayout *topLayout = new QVBoxLayout( d->page, 0, spacingHint() );
-    QLabel *label = new QLabel( i18n("Please choose language which should be used for this application"), d->page, "label1" );
+    TQVBoxLayout *topLayout = new TQVBoxLayout( d->page, 0, spacingHint() );
+    TQLabel *label = new TQLabel( i18n("Please choose language which should be used for this application"), d->page, "label1" );
     topLayout->addWidget( label );
     
-    QHBoxLayout *languageHorizontalLayout = new QHBoxLayout();
+    TQHBoxLayout *languageHorizontalLayout = new TQHBoxLayout();
     topLayout->addLayout(languageHorizontalLayout);
     
-    d->languagesLayout = new QGridLayout(0 , 2);
+    d->languagesLayout = new TQGridLayout(0 , 2);
     languageHorizontalLayout->addLayout(d->languagesLayout);
     languageHorizontalLayout->addStretch();
     
-    QStringList defaultLanguages = d->applicationLanguageList();
+    TQStringList defaultLanguages = d->applicationLanguageList();
     
-    for ( QStringList::ConstIterator it = defaultLanguages.begin(); it != defaultLanguages.end(); ++it )
+    for ( TQStringList::ConstIterator it = defaultLanguages.begin(); it != defaultLanguages.end(); ++it )
     {
-        QString language = *it;
+        TQString language = *it;
         bool primaryLanguage = (it == defaultLanguages.begin());
         d->addLanguageButton(language, primaryLanguage);
     }
@@ -117,12 +117,12 @@ KSwitchLanguageDialog::KSwitchLanguageDialog(
         d->addLanguageButton(KGlobal::locale()->defaultLanguage(), true);
     }
     
-    QHBoxLayout *addButtonHorizontalLayout = new QHBoxLayout();
+    TQHBoxLayout *addButtonHorizontalLayout = new TQHBoxLayout();
     topLayout->addLayout(addButtonHorizontalLayout);
     
     KPushButton *addLangButton = new KPushButton(i18n("Add fallback language"), d->page, "addLangButton");
-    QToolTip::add(addLangButton, i18n("Adds one more language which will be used if other translations do not contain proper translation"));
-    connect(addLangButton, SIGNAL(clicked()), this, SLOT(slotAddLanguageButton()));
+    TQToolTip::add(addLangButton, i18n("Adds one more language which will be used if other translations do not contain proper translation"));
+    connect(addLangButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotAddLanguageButton()));
     addButtonHorizontalLayout->addWidget(addLangButton);
     addButtonHorizontalLayout->addStretch();
     
@@ -142,7 +142,7 @@ void KSwitchLanguageDialog::slotAddLanguageButton()
 
 void KSwitchLanguageDialog::removeButtonClicked()
 {
-    QObject const *signalSender = sender();
+    TQObject const *signalSender = sender();
     
     if (signalSender == NULL)
     {
@@ -158,7 +158,7 @@ void KSwitchLanguageDialog::removeButtonClicked()
         return;
     }
     
-    QMap<KPushButton *, LanguageRowData>::iterator it = d->languageRows.find(removeButton);
+    TQMap<KPushButton *, LanguageRowData>::iterator it = d->languageRows.find(removeButton);
     
     if (it == d->languageRows.end())
     {
@@ -176,9 +176,9 @@ void KSwitchLanguageDialog::removeButtonClicked()
     d->languageRows.erase(it);
 }
 
-void KSwitchLanguageDialog::languageOnButtonChanged(const QString & languageCode)
+void KSwitchLanguageDialog::languageOnButtonChanged(const TQString & languageCode)
 {
-    for ( QPtrList<KLanguageButton>::ConstIterator it = d->languageButtons.begin(); it != d->languageButtons.end(); ++it )
+    for ( TQPtrList<KLanguageButton>::ConstIterator it = d->languageButtons.begin(); it != d->languageButtons.end(); ++it )
     {
         KLanguageButton *languageButton = *it;
         if (languageButton->current() == languageCode)
@@ -192,10 +192,10 @@ void KSwitchLanguageDialog::languageOnButtonChanged(const QString & languageCode
 
 void KSwitchLanguageDialog::slotOk()
 {
-    QString languageString;
+    TQString languageString;
     bool first = true;
     
-    for ( QPtrList<KLanguageButton>::ConstIterator it = d->languageButtons.begin(); it != d->languageButtons.end(); ++it )
+    for ( TQPtrList<KLanguageButton>::ConstIterator it = d->languageButtons.begin(); it != d->languageButtons.end(); ++it )
     {
         KLanguageButton *languageButton = *it;
         
@@ -242,10 +242,10 @@ KSwitchLanguageDialogPrivate::KSwitchLanguageDialogPrivate(
 void KSwitchLanguageDialogPrivate::fillApplicationLanguages(KLanguageButton *button)
 {
     KLocale *locale = KGlobal::locale();
-    QStringList allLanguages = locale->allLanguagesTwoAlpha();
-    for ( QStringList::ConstIterator it = allLanguages.begin(); it != allLanguages.end(); ++it )
+    TQStringList allLanguages = locale->allLanguagesTwoAlpha();
+    for ( TQStringList::ConstIterator it = allLanguages.begin(); it != allLanguages.end(); ++it )
     {
-        QString languageCode = *it;
+        TQString languageCode = *it;
         if (locale->isApplicationTranslatedInto(languageCode))
         {
             button->insertItem(
@@ -256,10 +256,10 @@ void KSwitchLanguageDialogPrivate::fillApplicationLanguages(KLanguageButton *but
     }
 }
 
-QStringList KSwitchLanguageDialogPrivate::applicationLanguageList()
+TQStringList KSwitchLanguageDialogPrivate::applicationLanguageList()
 {
     KConfig *config = KGlobal::config();
-    QStringList languagesList;
+    TQStringList languagesList;
     
     if (config->hasGroup("Locale"))
     {
@@ -277,9 +277,9 @@ QStringList KSwitchLanguageDialogPrivate::applicationLanguageList()
     return languagesList;
 }
 
-void KSwitchLanguageDialogPrivate::addLanguageButton(const QString & languageCode, bool primaryLanguage)
+void KSwitchLanguageDialogPrivate::addLanguageButton(const TQString & languageCode, bool primaryLanguage)
 {
-    QString labelText = primaryLanguage ? i18n("Primary language:") : i18n("Fallback language:");
+    TQString labelText = primaryLanguage ? i18n("Primary language:") : i18n("Fallback language:");
     
     KLanguageButton *languageButton = new KLanguageButton(page);
     
@@ -289,11 +289,11 @@ void KSwitchLanguageDialogPrivate::addLanguageButton(const QString & languageCod
     
     languageButton->setCurrentItem(languageCode);
     
-    QObject::connect(
+    TQObject::connect(
         languageButton, 
-        SIGNAL(activated( const QString &)), 
+        TQT_SIGNAL(activated( const TQString &)), 
         p,
-        SLOT(languageOnButtonChanged(const QString &))
+        TQT_SLOT(languageOnButtonChanged(const TQString &))
         );
     
     LanguageRowData languageRowData;
@@ -303,26 +303,26 @@ void KSwitchLanguageDialogPrivate::addLanguageButton(const QString & languageCod
     {
         removeButton = new KPushButton(i18n("Remove"), page);
         
-        QObject::connect(
+        TQObject::connect(
             removeButton, 
-            SIGNAL(clicked()),
+            TQT_SIGNAL(clicked()),
             p,
-            SLOT(removeButtonClicked())
+            TQT_SLOT(removeButtonClicked())
             );
     }
         
     if (primaryLanguage)
     {
-        QToolTip::add(languageButton, i18n("This is main application language which will be used first before any other languages"));
+        TQToolTip::add(languageButton, i18n("This is main application language which will be used first before any other languages"));
     }
     else
     {
-        QToolTip::add(languageButton, i18n("This is language which will be used if any previous languages does not contain proper translation"));
+        TQToolTip::add(languageButton, i18n("This is language which will be used if any previous languages does not contain proper translation"));
     }
     
     int numRows = languagesLayout->numRows();
     
-    QLabel *languageLabel = new QLabel(labelText, page);
+    TQLabel *languageLabel = new TQLabel(labelText, page);
     languagesLayout->addWidget( languageLabel, numRows + 1, 1, Qt::AlignAuto );
     languagesLayout->addWidget( languageButton, numRows + 1, 2, Qt::AlignAuto );
     

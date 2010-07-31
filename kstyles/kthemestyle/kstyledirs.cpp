@@ -1,7 +1,7 @@
 /*
  $Id$
 
- Simple helper routines for style's use of KStandardDirs with QSettings, etc.
+ Simple helper routines for style's use of KStandardDirs with TQSettings, etc.
 
  This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
@@ -21,7 +21,7 @@
  This file is part of the KDE libraries
 */
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <kstandarddirs.h>
 #include "kstyledirs.h"
 
@@ -37,12 +37,12 @@ KStyleDirs::~KStyleDirs()
 {
 }
 
-void KStyleDirs::addToSearch( const char* type, QSettings& s ) const
+void KStyleDirs::addToSearch( const char* type, TQSettings& s ) const
 {
-    const QStringList & dirs = resourceDirs(type);
+    const TQStringList & dirs = resourceDirs(type);
     for ( int c = dirs.size()-1; c >= 0 ; c-- )
     {
-        s.insertSearchPath( QSettings::Unix, dirs[ c ]);
+        s.insertSearchPath( TQSettings::Unix, dirs[ c ]);
     }
 }
 

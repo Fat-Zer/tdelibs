@@ -20,7 +20,7 @@
 #ifndef QDIRMULTILINEEDIT_H
 #define QDIRMULTILINEEDIT_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class KListView;
 class QListViewItem;
@@ -31,19 +31,19 @@ class QDirMultiLineEdit : public QWidget
 	Q_OBJECT
 
 public:
-	QDirMultiLineEdit(QWidget *parent = 0, const char *name = 0);
+	QDirMultiLineEdit(TQWidget *parent = 0, const char *name = 0);
 	~QDirMultiLineEdit();
 
-	void setURLs(const QStringList&);
-	QStringList urls();
+	void setURLs(const TQStringList&);
+	TQStringList urls();
 
 protected:
-	void addURL(const QString&);
+	void addURL(const TQString&);
 
 private slots:
 	void slotAddClicked();
 	void slotRemoveClicked();
-	void slotSelected(QListViewItem*);
+	void slotSelected(TQListViewItem*);
 
 private:
 	KListView	*m_view;

@@ -20,7 +20,7 @@
 #ifndef _THUMBCREATOR_H_
 #define _THUMBCREATOR_H_
 
-#include <qstring.h>
+#include <tqstring.h>
 
 class QString;
 class QImage;
@@ -106,7 +106,7 @@ public:
      *
      * @return true if preview generation succeeded
      */
-    virtual bool create(const QString &path, int width, int height, QImage &img) = 0;
+    virtual bool create(const TQString &path, int width, int height, TQImage &img) = 0;
 
     /**
      * The flags of this plugin:

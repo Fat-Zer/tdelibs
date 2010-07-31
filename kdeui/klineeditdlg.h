@@ -43,25 +43,25 @@ public:
    * Create a dialog that asks for a single line of text. _value is
    * the initial value of the line. _text appears as label on top of
    * the entry box. If the internal line edit has an associated
-   * QValidator set, the OK button is disabled as long as the
+   * TQValidator set, the OK button is disabled as long as the
    * validator doesn't return Acceptable. If there's no validator, the
    * OK button is enabled whenever the line edit isn't empty.
    *
-   * If you want to accept empty input, make a trivial QValidator that
-   * always returns Acceptable, e.g. QRegExpValidator with a
+   * If you want to accept empty input, make a trivial TQValidator that
+   * always returns Acceptable, e.g. TQRegExpValidator with a
    * regexp of ".*".
    *
    * @param _text      Text of the label
    * @param _value     Initial value of the inputline
    * @param parent     Parent widget for the line edit dialog
    */
-  KLineEditDlg( const QString& _text, const QString& _value, QWidget *parent ) KDE_DEPRECATED;
+  KLineEditDlg( const TQString& _text, const TQString& _value, TQWidget *parent ) KDE_DEPRECATED;
   virtual ~KLineEditDlg();
 
   /**
    * @return the value the user entered
    */
-  QString text() const;
+  TQString text() const;
 
   /**
    * @return the line edit widget
@@ -77,8 +77,8 @@ public:
    * @param validator Validator to be stuffed into the line edit.
    * @param parent    The parent widget
    */
-  static QString getText(const QString &text, const QString& value,
-		 bool *ok, QWidget *parent, QValidator *validator=0 ) KDE_DEPRECATED;
+  static TQString getText(const TQString &text, const TQString& value,
+		 bool *ok, TQWidget *parent, TQValidator *validator=0 ) KDE_DEPRECATED;
 
   /**
    * Static convenience function to get a textual input from the user.
@@ -92,10 +92,10 @@ public:
    * @param parent    The parent widget for this text input dialog
    * @param validator Validator to be stuffed into the line edit.
    */
-  static QString getText(const QString &caption, const QString &text,
-                         const QString& value=QString::null,
-                         bool *ok=0, QWidget *parent=0,
-			 QValidator *validator=0) KDE_DEPRECATED;
+  static TQString getText(const TQString &caption, const TQString &text,
+                         const TQString& value=TQString::null,
+                         bool *ok=0, TQWidget *parent=0,
+			 TQValidator *validator=0) KDE_DEPRECATED;
 
 public slots:
   /**
@@ -106,9 +106,9 @@ public slots:
 protected slots:
   /**
    * Enables and disables the OK button depending on the state
-   * returned by the lineedit's QValidator.
+   * returned by the lineedit's TQValidator.
    */
-  void slotTextChanged( const QString& );
+  void slotTextChanged( const TQString& );
 
 protected:
   /**

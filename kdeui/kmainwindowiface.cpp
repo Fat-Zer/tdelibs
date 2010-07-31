@@ -25,7 +25,7 @@
 #include <kdcoppropertyproxy.h>
 #include <kmainwindow.h>
 #include <kaction.h>
-#include <qclipboard.h>
+#include <tqclipboard.h>
 
 
 KMainWindowInterface::KMainWindowInterface(KMainWindow * mainWindow)
@@ -47,15 +47,15 @@ QCStringList KMainWindowInterface::actions()
 	delete m_dcopActionProxy;
 	m_dcopActionProxy = new KDCOPActionProxy( m_MainWindow->actionCollection(), this );
 	QCStringList tmp_actions;
-	QValueList<KAction *> lst = m_dcopActionProxy->actions();
-	QValueList<KAction *>::ConstIterator it = lst.begin();
-	QValueList<KAction *>::ConstIterator end = lst.end();
+	TQValueList<KAction *> lst = m_dcopActionProxy->actions();
+	TQValueList<KAction *>::ConstIterator it = lst.begin();
+	TQValueList<KAction *>::ConstIterator end = lst.end();
 	for (; it != end; ++it )
 		if ((*it)->isPlugged())
-			tmp_actions.append( (QCString)(*it)->name() );
+			tmp_actions.append( (TQCString)(*it)->name() );
 	return tmp_actions;
 }
-bool KMainWindowInterface::activateAction( QCString action)
+bool KMainWindowInterface::activateAction( TQCString action)
 {
 	delete m_dcopActionProxy;
 	m_dcopActionProxy = new KDCOPActionProxy( m_MainWindow->actionCollection(), this );
@@ -68,7 +68,7 @@ bool KMainWindowInterface::activateAction( QCString action)
 	else
 		return false;
 }
-bool KMainWindowInterface::disableAction( QCString action)
+bool KMainWindowInterface::disableAction( TQCString action)
 {
 	delete m_dcopActionProxy;
 	m_dcopActionProxy = new KDCOPActionProxy( m_MainWindow->actionCollection(), this );
@@ -81,7 +81,7 @@ bool KMainWindowInterface::disableAction( QCString action)
 	else
 		return false;
 }
-bool KMainWindowInterface::enableAction( QCString action)
+bool KMainWindowInterface::enableAction( TQCString action)
 {
 	delete m_dcopActionProxy;
 	m_dcopActionProxy = new KDCOPActionProxy( m_MainWindow->actionCollection(), this );
@@ -94,7 +94,7 @@ bool KMainWindowInterface::enableAction( QCString action)
 	else
 		return false;
 }
-bool KMainWindowInterface::actionIsEnabled( QCString action)
+bool KMainWindowInterface::actionIsEnabled( TQCString action)
 {
 	delete m_dcopActionProxy;
 	m_dcopActionProxy = new KDCOPActionProxy( m_MainWindow->actionCollection(), this );
@@ -106,7 +106,7 @@ bool KMainWindowInterface::actionIsEnabled( QCString action)
 	else
 		return false;
 }
-QCString KMainWindowInterface::actionToolTip( QCString action)
+TQCString KMainWindowInterface::actionToolTip( TQCString action)
 {
 	delete m_dcopActionProxy;
 	m_dcopActionProxy = new KDCOPActionProxy( m_MainWindow->actionCollection(), this );
@@ -119,12 +119,12 @@ QCString KMainWindowInterface::actionToolTip( QCString action)
 		return "Error no such object!";
 }
 
-DCOPRef KMainWindowInterface::action( const QCString &name )
+DCOPRef KMainWindowInterface::action( const TQCString &name )
 {
 	return DCOPRef( kapp->dcopClient()->appId(), m_dcopActionProxy->actionObjectId( name ) );
 }
 
-QMap<QCString,DCOPRef> KMainWindowInterface::actionMap()
+TQMap<TQCString,DCOPRef> KMainWindowInterface::actionMap()
 {
 	return m_dcopActionProxy->actionMap();
 }
@@ -135,8 +135,8 @@ int KMainWindowInterface::getWinID()
 }
 void KMainWindowInterface::grabWindowToClipBoard()
 {
-	QClipboard *clipboard = QApplication::clipboard();
-	clipboard->setPixmap(QPixmap::grabWidget(m_MainWindow));
+	QClipboard *clipboard = TQApplication::clipboard();
+	clipboard->setPixmap(TQPixmap::grabWidget(m_MainWindow));
 }
 void KMainWindowInterface::hide()
 {
@@ -186,7 +186,7 @@ QCStringList KMainWindowInterface::functionsDynamic()
 {
 	return m_dcopPropertyProxy->functions();
 }
-bool KMainWindowInterface::processDynamic(const QCString &fun, const QByteArray &data, QCString& replyType, QByteArray &replyData)
+bool KMainWindowInterface::processDynamic(const TQCString &fun, const TQByteArray &data, TQCString& replyType, TQByteArray &replyData)
 {
 	return m_dcopPropertyProxy->processPropertyRequest( fun, data, replyType, replyData);
 

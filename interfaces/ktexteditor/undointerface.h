@@ -40,7 +40,7 @@ class KTEXTEDITOR_EXPORT UndoInterface
     unsigned int undoInterfaceNumber () const;
     
   protected:  
-    void setUndoInterfaceDCOPSuffix (const QCString &suffix); 
+    void setUndoInterfaceDCOPSuffix (const TQCString &suffix); 
 
   //
   // slots !!!

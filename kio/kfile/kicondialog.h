@@ -14,9 +14,9 @@
 #ifndef __KIconDialog_h__
 #define __KIconDialog_h__
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qpushbutton.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqpushbutton.h>
 
 #include <kicontheme.h>
 #include <kdialogbase.h>
@@ -37,18 +37,18 @@ class KIO_EXPORT KIconCanvas: public KIconView
     Q_OBJECT
 
 public:
-    KIconCanvas(QWidget *parent=0L, const char *name=0L);
+    KIconCanvas(TQWidget *parent=0L, const char *name=0L);
     ~KIconCanvas();
 
     /**
      * Load icons into the canvas.
      */
-    void loadFiles(const QStringList& files);
+    void loadFiles(const TQStringList& files);
 
     /**
      * Returns the current icon.
      */
-    QString getCurrent() const;
+    TQString getCurrent() const;
 
 public slots:
     void stopLoading();
@@ -57,8 +57,8 @@ signals:
     /**
      * Emitted when the current icon has changed.
      */
-    void nameChanged(QString);
-    /* KDE 4: Make it const QString & */
+    void nameChanged(TQString);
+    /* KDE 4: Make it const TQString & */
 
     void startLoading(int);
     void progress(int);
@@ -66,11 +66,11 @@ signals:
 
 private slots:
     void slotLoadFiles();
-    void slotCurrentChanged(QIconViewItem *item);
+    void slotCurrentChanged(TQIconViewItem *item);
 
 private:
-    QStringList mFiles;
-    QTimer *mpTimer;
+    TQStringList mFiles;
+    TQTimer *mpTimer;
     KIconLoader *mpLoader; // unused
 
 protected:
@@ -96,11 +96,11 @@ public:
     /**
      * Constructs an icon selection dialog using the global iconloader.
      */
-    KIconDialog(QWidget *parent=0L, const char *name=0L);
+    KIconDialog(TQWidget *parent=0L, const char *name=0L);
     /**
      * Constructs an icon selection dialog using a specific iconloader.
      */
-    KIconDialog(KIconLoader *loader, QWidget *parent=0,
+    KIconDialog(KIconLoader *loader, TQWidget *parent=0,
 	    const char *name=0);
     /**
      * Destructs the dialog.
@@ -122,7 +122,7 @@ public:
      * sets a custom icon directory
      * @since 3.1
      */
-    void setCustomLocation( const QString& location );
+    void setCustomLocation( const TQString& location );
 
     /**
      * Sets the size of the icons to be shown / selected.
@@ -141,7 +141,7 @@ public:
     /**
      * @deprecated in KDE 3.0, use the static method getIcon instead.
      */
-    QString selectIcon(KIcon::Group group=KIcon::Desktop, KIcon::Context
+    TQString selectIcon(KIcon::Group group=KIcon::Desktop, KIcon::Context
 	    context=KIcon::Application, bool user=false);
 #endif
 
@@ -169,15 +169,15 @@ public:
 
     /**
      * exec()utes this modal dialog and returns the name of the selected icon,
-     * or QString::null if the dialog was aborted.
+     * or TQString::null if the dialog was aborted.
      * @returns the name of the icon, suitable for loading with KIconLoader.
      * @see getIcon
      */
-    QString openDialog();
+    TQString openDialog();
 
     /**
-     * show()es this dialog and emits a newIcon(const QString&) signal when
-     * successful. QString::null will be emitted if the dialog was aborted.
+     * show()es this dialog and emits a newIcon(const TQString&) signal when
+     * successful. TQString::null will be emitted if the dialog was aborted.
      */
     void showDialog();
 
@@ -200,14 +200,14 @@ public:
      * @return The name of the icon, suitable for loading with KIconLoader.
      * @version New in 3.0
      */
-    static QString getIcon(KIcon::Group group=KIcon::Desktop,
+    static TQString getIcon(KIcon::Group group=KIcon::Desktop,
                            KIcon::Context context=KIcon::Application,
                            bool strictIconSize=false, int iconSize = 0,
-                           bool user=false, QWidget *parent=0,
-                           const QString &caption=QString::null);
+                           bool user=false, TQWidget *parent=0,
+                           const TQString &caption=TQString::null);
 
 signals:
-    void newIconName(const QString&);
+    void newIconName(const TQString&);
 
 protected slots:
     void slotOk();
@@ -228,10 +228,10 @@ private:
     KIcon::Context mContext;
     int mType;
 
-    QStringList mFileList;
-    QComboBox *mpCombo;
-    QPushButton *mpBrowseBut;
-    QRadioButton *mpRb1, *mpRb2;
+    TQStringList mFileList;
+    TQComboBox *mpCombo;
+    TQPushButton *mpBrowseBut;
+    TQRadioButton *mpRb1, *mpRb2;
     KProgress *mpProgress;
     KIconLoader *mpLoader;
     KIconCanvas *mpCanvas;
@@ -257,7 +257,7 @@ private:
 class KIO_EXPORT KIconButton: public QPushButton
 {
     Q_OBJECT
-    Q_PROPERTY( QString icon READ icon WRITE setIcon RESET resetIcon )
+    Q_PROPERTY( TQString icon READ icon WRITE setIcon RESET resetIcon )
     Q_PROPERTY( int iconSize READ iconSize WRITE setIconSize)
     Q_PROPERTY( bool strictIconSize READ strictIconSize WRITE setStrictIconSize )
 
@@ -265,12 +265,12 @@ public:
     /**
      * Constructs a KIconButton using the global iconloader.
      */
-    KIconButton(QWidget *parent=0L, const char *name=0L);
+    KIconButton(TQWidget *parent=0L, const char *name=0L);
 
     /**
      * Constructs a KIconButton using a specific KIconLoader.
      */
-    KIconButton(KIconLoader *loader, QWidget *parent, const char *name=0L);
+    KIconButton(KIconLoader *loader, TQWidget *parent, const char *name=0L);
     /**
      * Destructs the button.
      */
@@ -296,7 +296,7 @@ public:
     /**
      * Sets the button's initial icon.
      */
-    void setIcon(const QString& icon);
+    void setIcon(const TQString& icon);
 
     /**
      * Resets the icon (reverts to an empty button).
@@ -306,7 +306,7 @@ public:
     /**
      * Returns the name of the selected icon.
      */
-    QString icon() const { return mIcon; }
+    TQString icon() const { return mIcon; }
 
     /**
      * Sets the size of the icon to be shown / selected.
@@ -325,12 +325,12 @@ signals:
     /**
      * Emitted when the icon has changed.
      */
-    void iconChanged(QString icon);
-    /* KDE 4: Make it const QString & */
+    void iconChanged(TQString icon);
+    /* KDE 4: Make it const TQString & */
 
 private slots:
     void slotChangeIcon();
-    void newIconName(const QString& name);
+    void newIconName(const TQString& name);
 
 private:
     void init( KIconLoader *loader );
@@ -339,7 +339,7 @@ private:
     KIcon::Group mGroup;
     KIcon::Context mContext;
 
-    QString mIcon;
+    TQString mIcon;
     KIconDialog *mpDialog;
     KIconLoader *mpLoader;
     class KIconButtonPrivate;

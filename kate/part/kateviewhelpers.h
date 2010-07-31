@@ -24,11 +24,11 @@
 #include <kaction.h>
 #include <klineedit.h>
 
-#include <qwidget.h>
-#include <qpixmap.h>
-#include <qcolor.h>
-#include <qscrollbar.h>
-#include <qintdict.h>
+#include <tqwidget.h>
+#include <tqpixmap.h>
+#include <tqcolor.h>
+#include <tqscrollbar.h>
+#include <tqintdict.h>
 
 class KateDocument;
 class KateView;
@@ -59,12 +59,12 @@ class KateScrollBar : public QScrollBar
     void sliderMMBMoved(int value);
 
   protected:
-    virtual void mousePressEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void mouseMoveEvent (QMouseEvent* e);
-    virtual void paintEvent(QPaintEvent *);
-    virtual void resizeEvent(QResizeEvent *);
-    virtual void styleChange(QStyle &oldStyle);
+    virtual void mousePressEvent(TQMouseEvent* e);
+    virtual void mouseReleaseEvent(TQMouseEvent* e);
+    virtual void mouseMoveEvent (TQMouseEvent* e);
+    virtual void paintEvent(TQPaintEvent *);
+    virtual void resizeEvent(TQResizeEvent *);
+    virtual void styleChange(TQStyle &oldStyle);
     virtual void valueChange();
     virtual void rangeChange();
 
@@ -87,7 +87,7 @@ class KateScrollBar : public QScrollBar
     int m_bottomMargin;
     uint m_savVisibleLines;
 
-    QIntDict<QColor> m_lines;
+    TQIntDict<TQColor> m_lines;
 
     bool m_showMarks;
 };
@@ -100,18 +100,18 @@ class KateCmdLine : public KLineEdit
     KateCmdLine (KateView *view);
 
   private slots:
-    void slotReturnPressed ( const QString& cmd );
+    void slotReturnPressed ( const TQString& cmd );
     void hideMe ();
 
   protected:
-    void focusInEvent ( QFocusEvent *ev );
-    void keyPressEvent( QKeyEvent *ev );
+    void focusInEvent ( TQFocusEvent *ev );
+    void keyPressEvent( TQKeyEvent *ev );
 
   private:
     void fromHistory( bool up );
     KateView *m_view;
     bool m_msgMode;
-    QString m_oldText;
+    TQString m_oldText;
     uint m_histpos; ///< position in the history
     uint m_cmdend; ///< the point where a command ends in the text, if we have a valid one.
     Kate::Command *m_command; ///< For completing flags/args and interactiveness
@@ -124,10 +124,10 @@ class KateIconBorder : public QWidget
   Q_OBJECT
 
   public:
-    KateIconBorder( KateViewInternal* internalView, QWidget *parent );
+    KateIconBorder( KateViewInternal* internalView, TQWidget *parent );
 
     // VERY IMPORTANT ;)
-    virtual QSize sizeHint() const;
+    virtual TQSize sizeHint() const;
 
     void updateFont();
     int lineNumberWidth() const;
@@ -146,21 +146,21 @@ class KateIconBorder : public QWidget
     bool foldingMarkersOn()   const { return m_foldingMarkersOn; }
 
     enum BorderArea { None, LineNumbers, IconBorder, FoldingMarkers };
-    BorderArea positionToArea( const QPoint& ) const;
+    BorderArea positionToArea( const TQPoint& ) const;
 
   signals:
     void toggleRegionVisibility( unsigned int );
 
   private:
-    void paintEvent( QPaintEvent* );
+    void paintEvent( TQPaintEvent* );
     void paintBorder (int x, int y, int width, int height);
 
-    void mousePressEvent( QMouseEvent* );
-    void mouseMoveEvent( QMouseEvent* );
-    void mouseReleaseEvent( QMouseEvent* );
-    void mouseDoubleClickEvent( QMouseEvent* );
+    void mousePressEvent( TQMouseEvent* );
+    void mouseMoveEvent( TQMouseEvent* );
+    void mouseReleaseEvent( TQMouseEvent* );
+    void mouseDoubleClickEvent( TQMouseEvent* );
 
-    void showMarkMenu( uint line, const QPoint& pos );
+    void showMarkMenu( uint line, const TQPoint& pos );
 
     KateView *m_view;
     KateDocument *m_doc;
@@ -178,8 +178,8 @@ class KateIconBorder : public QWidget
 
     int m_maxCharWidth;
 
-    mutable QPixmap m_arrow;
-    mutable QColor m_oldBackgroundColor;
+    mutable TQPixmap m_arrow;
+    mutable TQColor m_oldBackgroundColor;
 };
 
 class KateViewEncodingAction : public KActionMenu
@@ -187,7 +187,7 @@ class KateViewEncodingAction : public KActionMenu
   Q_OBJECT
 
   public:
-    KateViewEncodingAction(KateDocument *_doc, KateView *_view, const QString& text, QObject* parent = 0, const char* name = 0);
+    KateViewEncodingAction(KateDocument *_doc, KateView *_view, const TQString& text, TQObject* parent = 0, const char* name = 0);
 
     ~KateViewEncodingAction(){;};
 

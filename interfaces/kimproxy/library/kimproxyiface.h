@@ -32,7 +32,7 @@ class KIMProxyIface : virtual public DCOPObject
 {
 	K_DCOP
 	k_dcop:
-		virtual void contactPresenceChanged( QString uid, QCString appId, int presence ) = 0;
+		virtual void contactPresenceChanged( TQString uid, TQCString appId, int presence ) = 0;
 };
 
 #endif

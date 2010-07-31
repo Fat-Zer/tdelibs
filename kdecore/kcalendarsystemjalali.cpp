@@ -21,9 +21,9 @@
  */
 
 
-#include <qdatetime.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqdatetime.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 #include <math.h>
 
 #include <kglobal.h>
@@ -165,11 +165,11 @@ return (&sd);
 static SDATE *gregorianToJalali(int y,int m, int d)
 {
     static SDATE sd;
-    long   jdn = civil_jdn(y,m,d);//QDate::gregorianToJulian(y, m, d);
+    long   jdn = civil_jdn(y,m,d);//TQDate::gregorianToJulian(y, m, d);
     sd = jdn_jalali(jdn);
     return(&sd);
 }
-static void gregorianToJalali(const QDate & date, int * pYear, int * pMonth,
+static void gregorianToJalali(const TQDate & date, int * pYear, int * pMonth,
                                int * pDay)
 {
   SDATE *sd;
@@ -209,7 +209,7 @@ KCalendarSystemJalali::~KCalendarSystemJalali()
 {
 }
 
-int KCalendarSystemJalali::year(const QDate& date) const
+int KCalendarSystemJalali::year(const TQDate& date) const
 
 {
   kdDebug(5400) << "Jalali year..." <<  endl;
@@ -218,7 +218,7 @@ int y;
   return y;
 }
 
-int KCalendarSystemJalali::month (const QDate& date) const
+int KCalendarSystemJalali::month (const TQDate& date) const
 
 {
   kdDebug(5400) << "Jalali month..." <<  endl;
@@ -227,7 +227,7 @@ int m;
   return m;
 }
 
-int KCalendarSystemJalali::day(const QDate& date) const
+int KCalendarSystemJalali::day(const TQDate& date) const
 
 {
   kdDebug(5400) << "Jalali day..." <<  endl;
@@ -236,7 +236,7 @@ int d;
   return d;
 }
 
-int KCalendarSystemJalali::dayOfWeek(const QDate& date) const
+int KCalendarSystemJalali::dayOfWeek(const TQDate& date) const
 {
 //same same I think?!
   return date.dayOfWeek();
@@ -244,16 +244,16 @@ int KCalendarSystemJalali::dayOfWeek(const QDate& date) const
 }
 
 //NOT TESTED YET
-int KCalendarSystemJalali::dayOfYear(const QDate & date) const
+int KCalendarSystemJalali::dayOfYear(const TQDate & date) const
 {
-  QDate first;
+  TQDate first;
   setYMD(first, year(date), 1, 1);
 
   return first.daysTo(date) + 1;
 }
 
 //MAY BE BUGGY
-bool KCalendarSystemJalali::setYMD(QDate & date, int y, int m, int d) const
+bool KCalendarSystemJalali::setYMD(TQDate & date, int y, int m, int d) const
 {
   // range checks
   if ( y < minValidYear() || y > maxValidYear() )
@@ -270,18 +270,18 @@ bool KCalendarSystemJalali::setYMD(QDate & date, int y, int m, int d) const
   return date.setYMD(gd->year, gd->mon, gd->day);
 }
 
-QDate KCalendarSystemJalali::addYears( const QDate & date, int nyears ) const
+TQDate KCalendarSystemJalali::addYears( const TQDate & date, int nyears ) const
 {
-  QDate result = date;
+  TQDate result = date;
   int y = year(date) + nyears;
   setYMD( result, y, month(date), day(date) );
 
   return result;
 }
 
-QDate KCalendarSystemJalali::addMonths( const QDate & date, int nmonths ) const
+TQDate KCalendarSystemJalali::addMonths( const TQDate & date, int nmonths ) const
 {
-  QDate result = date;
+  TQDate result = date;
   int m = month(date);
   int y = year(date);
 
@@ -302,19 +302,19 @@ QDate KCalendarSystemJalali::addMonths( const QDate & date, int nmonths ) const
   return result;
 }
 
-QDate KCalendarSystemJalali::addDays( const QDate & date, int ndays ) const
+TQDate KCalendarSystemJalali::addDays( const TQDate & date, int ndays ) const
 {
   return date.addDays( ndays );
 }
 
-int KCalendarSystemJalali::monthsInYear( const QDate & date ) const
+int KCalendarSystemJalali::monthsInYear( const TQDate & date ) const
 {
   Q_UNUSED( date )
 
   return 12;
 }
 
-int KCalendarSystemJalali::daysInYear(const QDate & date) const
+int KCalendarSystemJalali::daysInYear(const TQDate & date) const
 {
 Q_UNUSED(date);
 int result;
@@ -326,7 +326,7 @@ int result;
 return result;
 }
 
-int KCalendarSystemJalali::daysInMonth(const QDate & date) const
+int KCalendarSystemJalali::daysInMonth(const TQDate & date) const
 {
 SDATE *sd = gregorianToJalali(date.year(),date.month(),date.day());
 return hndays(sd->mon,sd->year);
@@ -340,9 +340,9 @@ int KCalendarSystemJalali::weeksInYear(int year) const
 return 52;
 }
 
-int KCalendarSystemJalali::weekNumber(const QDate& date, int * yearNum) const
+int KCalendarSystemJalali::weekNumber(const TQDate& date, int * yearNum) const
 {
-  QDate firstDayWeek1, lastDayOfYear;
+  TQDate firstDayWeek1, lastDayOfYear;
   int y = year(date);
   int week;
   int weekDay1, dayOfWeek1InYear;
@@ -380,7 +380,7 @@ int KCalendarSystemJalali::weekNumber(const QDate& date, int * yearNum) const
   return week;
 }
 
-QString KCalendarSystemJalali::monthName(int month, int year, bool shortName)
+TQString KCalendarSystemJalali::monthName(int month, int year, bool shortName)
   const
 {
   Q_UNUSED(year);
@@ -442,10 +442,10 @@ QString KCalendarSystemJalali::monthName(int month, int year, bool shortName)
         return locale()->translate("Esfand");
       }
 
-  return QString::null;
+  return TQString::null;
 }
 
-QString KCalendarSystemJalali::monthName(const QDate& date, bool shortName)
+TQString KCalendarSystemJalali::monthName(const TQDate& date, bool shortName)
   const
 {
   int mon;
@@ -454,20 +454,20 @@ QString KCalendarSystemJalali::monthName(const QDate& date, bool shortName)
   return (monthName(mon, 0, shortName));
 }
 
-QString KCalendarSystemJalali::monthNamePossessive(const QDate& date,
+TQString KCalendarSystemJalali::monthNamePossessive(const TQDate& date,
                                                      bool shortName  ) const
 {
   return monthName(date,shortName);
 }
 
-QString KCalendarSystemJalali::monthNamePossessive(int month, int year,
+TQString KCalendarSystemJalali::monthNamePossessive(int month, int year,
                                                      bool shortName ) const
 {
   return monthName(month,year,shortName);
 }
 
 
-QString KCalendarSystemJalali::weekDayName(int day, bool shortName) const
+TQString KCalendarSystemJalali::weekDayName(int day, bool shortName) const
 {
   if ( shortName )
     switch (day)
@@ -506,10 +506,10 @@ QString KCalendarSystemJalali::weekDayName(int day, bool shortName) const
         return locale()->translate("Yek-shanbe");
       }
 
-  return QString::null;
+  return TQString::null;
 }
 
-QString KCalendarSystemJalali::weekDayName(const QDate &date,bool shortName)
+TQString KCalendarSystemJalali::weekDayName(const TQDate &date,bool shortName)
   const
 {
  return weekDayName(dayOfWeek(date), shortName);
@@ -518,7 +518,7 @@ QString KCalendarSystemJalali::weekDayName(const QDate &date,bool shortName)
 // Min valid year that may be converted to QDate
 int KCalendarSystemJalali::minValidYear() const
 {
-  QDate date(1753, 1, 1);
+  TQDate date(1753, 1, 1);
 
   return year(date);
 }
@@ -527,7 +527,7 @@ int KCalendarSystemJalali::minValidYear() const
 int KCalendarSystemJalali::maxValidYear() const
 {
 /*
-  QDate date(8000, 1, 1);
+  TQDate date(8000, 1, 1);
 
   SDATE *sd = toJalali(date);
 
@@ -539,9 +539,9 @@ int KCalendarSystemJalali::weekDayOfPray() const
 {
   return 5; // friday
 }
-QString KCalendarSystemJalali::calendarName() const
+TQString KCalendarSystemJalali::calendarName() const
 {
-  return QString::fromLatin1("jalali");
+  return TQString::fromLatin1("jalali");
 }
 
 bool KCalendarSystemJalali::isLunar() const

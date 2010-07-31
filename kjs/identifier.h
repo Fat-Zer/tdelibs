@@ -52,9 +52,9 @@ namespace KJS {
         const UString &ustring() const { return _ustring; }
         DOM::DOMString string() const;
         /**
-	* returns a QString of the identifier
+	* returns a TQString of the identifier
 	*/
-	QString qstring() const;
+	TQString qstring() const;
 
 	/**
 	* returns a UChar pointer to the string of the identifier with a size defined by @ref size().

@@ -23,8 +23,8 @@
 #ifndef _CSS_css_stylesheetimpl_h_
 #define _CSS_css_stylesheetimpl_h_
 
-#include <qvaluelist.h>
-#include <qptrlist.h>
+#include <tqvaluelist.h>
+#include <tqptrlist.h>
 
 #include "dom/dom_string.h"
 #include "css/css_base.h"
@@ -143,7 +143,7 @@ public:
     void add(StyleSheetImpl* s);
     void remove(StyleSheetImpl* s);
 
-    QPtrList<StyleSheetImpl> styleSheets;
+    TQPtrList<StyleSheetImpl> styleSheets;
 };
 
 // ----------------------------------------------------------------------------
@@ -182,7 +182,7 @@ public:
     bool contains( const DOM::DOMString &medium ) const;
 
 protected:
-    QValueList<DOM::DOMString> m_lstMedia;
+    TQValueList<DOM::DOMString> m_lstMedia;
 };
 
 

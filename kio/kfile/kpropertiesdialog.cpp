@@ -54,24 +54,24 @@ extern "C" {
 #include <algorithm>
 #include <functional>
 
-#include <qfile.h>
-#include <qdir.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qcheckbox.h>
-#include <qstrlist.h>
-#include <qstringlist.h>
-#include <qtextstream.h>
-#include <qpainter.h>
-#include <qlayout.h>
-#include <qcombobox.h>
-#include <qgroupbox.h>
-#include <qwhatsthis.h>
-#include <qtooltip.h>
-#include <qstyle.h>
-#include <qprogressbar.h>
-#include <qvbox.h>
-#include <qvaluevector.h>
+#include <tqfile.h>
+#include <tqdir.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
+#include <tqcheckbox.h>
+#include <tqstrlist.h>
+#include <tqstringlist.h>
+#include <tqtextstream.h>
+#include <tqpainter.h>
+#include <tqlayout.h>
+#include <tqcombobox.h>
+#include <tqgroupbox.h>
+#include <tqwhatsthis.h>
+#include <tqtooltip.h>
+#include <tqstyle.h>
+#include <tqprogressbar.h>
+#include <tqvbox.h>
+#include <tqvaluevector.h>
 
 #ifdef USE_POSIX_ACL
 extern "C" {
@@ -139,7 +139,7 @@ extern "C" {
 # include <win32_utils.h>
 #endif
 
-static QString nameFromFileName(QString nameStr)
+static TQString nameFromFileName(TQString nameStr)
 {
    if ( nameStr.endsWith(".desktop") )
       nameStr.truncate( nameStr.length() - 8 );
@@ -168,11 +168,11 @@ public:
   {
   }
   bool m_aborted:1;
-  QWidget* fileSharePage;
+  TQWidget* fileSharePage;
 };
 
 KPropertiesDialog::KPropertiesDialog (KFileItem* item,
-                                      QWidget* parent, const char* name,
+                                      TQWidget* parent, const char* name,
                                       bool modal, bool autoShow)
   : KDialogBase (KDialogBase::Tabbed, i18n( "Properties for %1" ).arg(KIO::decodeFileName(item->url().fileName())),
                  KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Ok,
@@ -188,8 +188,8 @@ KPropertiesDialog::KPropertiesDialog (KFileItem* item,
   init (modal, autoShow);
 }
 
-KPropertiesDialog::KPropertiesDialog (const QString& title,
-                                      QWidget* parent, const char* name, bool modal)
+KPropertiesDialog::KPropertiesDialog (const TQString& title,
+                                      TQWidget* parent, const char* name, bool modal)
   : KDialogBase (KDialogBase::Tabbed, i18n ("Properties for %1").arg(title),
                  KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Ok,
                  parent, name, modal)
@@ -200,7 +200,7 @@ KPropertiesDialog::KPropertiesDialog (const QString& title,
 }
 
 KPropertiesDialog::KPropertiesDialog (KFileItemList _items,
-                                      QWidget* parent, const char* name,
+                                      TQWidget* parent, const char* name,
                                       bool modal, bool autoShow)
   : KDialogBase (KDialogBase::Tabbed,
                  // TODO: replace <never used> with "Properties for 1 item". It's very confusing how it has to be translated otherwise
@@ -226,7 +226,7 @@ KPropertiesDialog::KPropertiesDialog (KFileItemList _items,
 
 #ifndef KDE_NO_COMPAT
 KPropertiesDialog::KPropertiesDialog (const KURL& _url, mode_t /* _mode is now unused */,
-                                      QWidget* parent, const char* name,
+                                      TQWidget* parent, const char* name,
                                       bool modal, bool autoShow)
   : KDialogBase (KDialogBase::Tabbed,
 		 i18n( "Properties for %1" ).arg(KIO::decodeFileName(_url.fileName())),
@@ -246,7 +246,7 @@ KPropertiesDialog::KPropertiesDialog (const KURL& _url, mode_t /* _mode is now u
 #endif
 
 KPropertiesDialog::KPropertiesDialog (const KURL& _url,
-                                      QWidget* parent, const char* name,
+                                      TQWidget* parent, const char* name,
                                       bool modal, bool autoShow)
   : KDialogBase (KDialogBase::Tabbed,
 		 i18n( "Properties for %1" ).arg(KIO::decodeFileName(_url.fileName())),
@@ -265,8 +265,8 @@ KPropertiesDialog::KPropertiesDialog (const KURL& _url,
 }
 
 KPropertiesDialog::KPropertiesDialog (const KURL& _tempUrl, const KURL& _currentDir,
-                                      const QString& _defaultName,
-                                      QWidget* parent, const char* name,
+                                      const TQString& _defaultName,
+                                      TQWidget* parent, const char* name,
                                       bool modal, bool autoShow)
   : KDialogBase (KDialogBase::Tabbed,
 		 i18n( "Properties for %1" ).arg(KIO::decodeFileName(_tempUrl.fileName())),
@@ -286,11 +286,11 @@ KPropertiesDialog::KPropertiesDialog (const KURL& _tempUrl, const KURL& _current
   init (modal, autoShow);
 }
 
-bool KPropertiesDialog::showDialog(KFileItem* item, QWidget* parent,
+bool KPropertiesDialog::showDialog(KFileItem* item, TQWidget* parent,
                                    const char* name, bool modal)
 {
 #ifdef Q_WS_WIN
-  QString localPath = item->localPath();
+  TQString localPath = item->localPath();
   if (!localPath.isEmpty())
     return showWin32FilePropertyDialog(localPath);
 #endif
@@ -298,7 +298,7 @@ bool KPropertiesDialog::showDialog(KFileItem* item, QWidget* parent,
   return true;
 }
 
-bool KPropertiesDialog::showDialog(const KURL& _url, QWidget* parent,
+bool KPropertiesDialog::showDialog(const KURL& _url, TQWidget* parent,
                                    const char* name, bool modal)
 {
 #ifdef Q_WS_WIN
@@ -309,7 +309,7 @@ bool KPropertiesDialog::showDialog(const KURL& _url, QWidget* parent,
   return true;
 }
 
-bool KPropertiesDialog::showDialog(const KFileItemList& _items, QWidget* parent,
+bool KPropertiesDialog::showDialog(const KFileItemList& _items, TQWidget* parent,
                                    const char* name, bool modal)
 {
   if (_items.count()==1)
@@ -341,7 +341,7 @@ void KPropertiesDialog::showFileSharingPage()
   }
 }
 
-void KPropertiesDialog::setFileSharingPage(QWidget* page) {
+void KPropertiesDialog::setFileSharingPage(TQWidget* page) {
   d->fileSharePage = page;
 }
 
@@ -372,8 +372,8 @@ KPropertiesDialog::~KPropertiesDialog()
 
 void KPropertiesDialog::insertPlugin (KPropsDlgPlugin* plugin)
 {
-  connect (plugin, SIGNAL (changed ()),
-           plugin, SLOT (setDirty ()));
+  connect (plugin, TQT_SIGNAL (changed ()),
+           plugin, TQT_SLOT (setDirty ()));
 
   m_pageList.append (plugin);
 }
@@ -511,12 +511,12 @@ void KPropertiesDialog::insertPages()
     return;
 
   KFileItem *item = m_items.first();
-  QString mimetype = item->mimetype();
+  TQString mimetype = item->mimetype();
 
   if ( mimetype.isEmpty() )
     return;
 
-  QString query = QString::fromLatin1(
+  TQString query = TQString::fromLatin1(
       "('KPropsDlg/Plugin' in ServiceTypes) and "
       "((not exist [X-KDE-Protocol]) or "
       " ([X-KDE-Protocol] == '%1'  )   )"          ).arg(item->url().protocol());
@@ -551,7 +551,7 @@ void KPropertiesDialog::updateUrl( const KURL& _newUrl )
   assert(!m_singleUrl.isEmpty());
   // If we have an Desktop page, set it dirty, so that a full file is saved locally
   // Same for a URL page (because of the Name= hack)
-  for ( QPtrListIterator<KPropsDlgPlugin> it(m_pageList); it.current(); ++it )
+  for ( TQPtrListIterator<KPropsDlgPlugin> it(m_pageList); it.current(); ++it )
    if ( it.current()->isA("KExecPropsPlugin") || // KDE4 remove me
         it.current()->isA("KURLPropsPlugin") ||
         it.current()->isA("KDesktopPropsPlugin"))
@@ -562,7 +562,7 @@ void KPropertiesDialog::updateUrl( const KURL& _newUrl )
    }
 }
 
-void KPropertiesDialog::rename( const QString& _name )
+void KPropertiesDialog::rename( const TQString& _name )
 {
   Q_ASSERT( m_items.count() == 1 );
   kdDebug(250) << "KPropertiesDialog::rename " << _name << endl;
@@ -575,7 +575,7 @@ void KPropertiesDialog::rename( const QString& _name )
   }
   else
   {
-    QString tmpurl = m_singleUrl.url();
+    TQString tmpurl = m_singleUrl.url();
     if ( tmpurl.at(tmpurl.length() - 1) == '/')
       // It's a directory, so strip the trailing slash first
       tmpurl.truncate( tmpurl.length() - 1);
@@ -604,7 +604,7 @@ public:
 };
 
 KPropsDlgPlugin::KPropsDlgPlugin( KPropertiesDialog *_props )
-: QObject( _props, 0L )
+: TQObject( _props, 0L )
 {
   d = new KPropsDlgPluginPrivate;
   properties = _props;
@@ -629,10 +629,10 @@ bool KPropsDlgPlugin::isDesktopFile( KFileItem * _item )
   if ( !S_ISREG( _item->mode() ) )
     return false;
 
-  QString t( url.path() );
+  TQString t( url.path() );
 
   // only if readable
-  FILE *f = fopen( QFile::encodeName(t), "r" );
+  FILE *f = fopen( TQFile::encodeName(t), "r" );
   if ( f == 0L )
     return false;
   fclose(f);
@@ -680,15 +680,15 @@ public:
   }
 
   KDirSize * dirSizeJob;
-  QTimer *dirSizeUpdateTimer;
-  QFrame *m_frame;
+  TQTimer *dirSizeUpdateTimer;
+  TQFrame *m_frame;
   bool bMultiple;
   bool bIconChanged;
   bool bKDesktopMode;
   bool bDesktopFile;
-  QLabel *m_freeSpaceLabel;
-  QString mimeType;
-  QString oldFileName;
+  TQLabel *m_freeSpaceLabel;
+  TQString mimeType;
+  TQString oldFileName;
   KLineEdit* m_lined;
 };
 
@@ -698,7 +698,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   d = new KFilePropsPluginPrivate;
   d->bMultiple = (properties->items().count() > 1);
   d->bIconChanged = false;
-  d->bKDesktopMode = (QCString(qApp->name()) == "kdesktop"); // nasty heh?
+  d->bKDesktopMode = (TQCString(qApp->name()) == "kdesktop"); // nasty heh?
   d->bDesktopFile = KDesktopPropsPlugin::supports(properties->items());
   kdDebug(250) << "KFilePropsPlugin::KFilePropsPlugin bMultiple=" << d->bMultiple << endl;
 
@@ -712,15 +712,15 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   kdDebug() << "url=" << url << " bDesktopFile=" << bDesktopFile << " isLocal=" << isLocal << " isReallyLocal=" << isReallyLocal << endl;
   mode_t mode = item->mode();
   bool hasDirs = item->isDir() && !item->isLink();
-  bool hasRoot = url.path() == QString::fromLatin1("/");
-  QString iconStr = KMimeType::iconForURL(url, mode);
-  QString directory = properties->kurl().directory();
-  QString protocol = properties->kurl().protocol();
-  QString mimeComment = item->mimeComment();
+  bool hasRoot = url.path() == TQString::fromLatin1("/");
+  TQString iconStr = KMimeType::iconForURL(url, mode);
+  TQString directory = properties->kurl().directory();
+  TQString protocol = properties->kurl().protocol();
+  TQString mimeComment = item->mimeComment();
   d->mimeType = item->mimetype();
   bool hasTotalSize;
   KIO::filesize_t totalSize = item->size(hasTotalSize);
-  QString magicMimeComment;
+  TQString magicMimeComment;
   if ( isLocal ) {
       KMimeType::Ptr magicMimeType = KMimeType::findByFileContent( url.path() );
       if ( magicMimeType->name() != KMimeType::defaultMimeType() )
@@ -728,7 +728,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   }
 
   // Those things only apply to 'single file' mode
-  QString filename = QString::null;
+  TQString filename = TQString::null;
   bool isTrash = false;
   bool isDevice = false;
   m_bFromTemplate = false;
@@ -739,9 +739,9 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
 
   d->m_frame = properties->addPage (i18n("&General"));
 
-  QVBoxLayout *vbl = new QVBoxLayout( d->m_frame, 0,
+  TQVBoxLayout *vbl = new TQVBoxLayout( d->m_frame, 0,
                                       KDialog::spacingHint(), "vbl");
-  QGridLayout *grid = new QGridLayout(0, 3); // unknown rows
+  TQGridLayout *grid = new TQGridLayout(0, 3); // unknown rows
   grid->setColStretch(0, 0);
   grid->setColStretch(1, 0);
   grid->setColStretch(2, 1);
@@ -751,7 +751,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
 
   if ( !d->bMultiple )
   {
-    QString path;
+    TQString path;
     if ( !m_bFromTemplate ) {
       isTrash = ( properties->kurl().protocol().find( "trash", 0, false)==0 );
       if ( properties->kurl().protocol().find("device", 0, false)==0)
@@ -814,18 +814,18 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
       if ( KMimeType::iconForURL(url, mode) != iconStr )
         iconStr = "kmultiple";
       if ( url.directory() != directory )
-        directory = QString::null;
+        directory = TQString::null;
       if ( url.protocol() != protocol )
-        protocol = QString::null;
+        protocol = TQString::null;
       if ( !mimeComment.isNull() && (*it)->mimeComment() != mimeComment )
-        mimeComment = QString::null;
+        mimeComment = TQString::null;
       if ( isLocal && !magicMimeComment.isNull() ) {
           KMimeType::Ptr magicMimeType = KMimeType::findByFileContent( url.path() );
           if ( magicMimeType->comment() != magicMimeComment )
-              magicMimeComment = QString::null;
+              magicMimeComment = TQString::null;
       }
 
-      if ( url.path() == QString::fromLatin1("/") )
+      if ( url.path() == TQString::fromLatin1("/") )
         hasRoot = true;
       if ( (*it)->isDir() && !(*it)->isLink() )
       {
@@ -853,13 +853,13 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   if ( !isDevice && !isTrash && (bDesktopFile || S_ISDIR(mode)) && !d->bMultiple /*not implemented for multiple*/ )
   {
     KIconButton *iconButton = new KIconButton( d->m_frame );
-    int bsize = 66 + 2 * iconButton->style().pixelMetric(QStyle::PM_ButtonMargin);
+    int bsize = 66 + 2 * iconButton->style().pixelMetric(TQStyle::PM_ButtonMargin);
     iconButton->setFixedSize(bsize, bsize);
     iconButton->setIconSize(48);
     iconButton->setStrictIconSize(false);
     // This works for everything except Device icons on unmounted devices
     // So we have to really open .desktop files
-    QString iconStr = KMimeType::findByURL( url, mode )->icon( url, isLocal );
+    TQString iconStr = KMimeType::findByURL( url, mode )->icon( url, isLocal );
     if ( bDesktopFile && isLocal )
     {
       KDesktopFile config( url.path(), true );
@@ -873,11 +873,11 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
       iconButton->setIconType( KIcon::Desktop, KIcon::FileSystem );
     iconButton->setIcon(iconStr);
     iconArea = iconButton;
-    connect( iconButton, SIGNAL( iconChanged(QString) ),
-             this, SLOT( slotIconChanged() ) );
+    connect( iconButton, TQT_SIGNAL( iconChanged(TQString) ),
+             this, TQT_SLOT( slotIconChanged() ) );
   } else {
-    QLabel *iconLabel = new QLabel( d->m_frame );
-    int bsize = 66 + 2 * iconLabel->style().pixelMetric(QStyle::PM_ButtonMargin);
+    TQLabel *iconLabel = new TQLabel( d->m_frame );
+    int bsize = 66 + 2 * iconLabel->style().pixelMetric(TQStyle::PM_ButtonMargin);
     iconLabel->setFixedSize(bsize, bsize);
     iconLabel->setPixmap( KGlobal::iconLoader()->loadIcon( iconStr, KIcon::Desktop, 48) );
     iconArea = iconLabel;
@@ -886,7 +886,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
 
   if (d->bMultiple || isTrash || isDevice || hasRoot)
   {
-    QLabel *lab = new QLabel(d->m_frame );
+    TQLabel *lab = new TQLabel(d->m_frame );
     if ( d->bMultiple )
       lab->setText( KIO::itemsSummaryString( iFileCount + iDirCount, iFileCount, iDirCount, 0, false ) );
     else
@@ -900,7 +900,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     d->m_lined->setFocus();
 
     // Enhanced rename: Don't highlight the file extension.
-    QString pattern;
+    TQString pattern;
     KServiceTypeFactory::self()->findFromPattern( filename, &pattern );
     if (!pattern.isEmpty() && pattern.at(0)=='*' && pattern.find('*',1)==-1)
       d->m_lined->setSelection(0, filename.length()-pattern.stripWhiteSpace().length()+1);
@@ -911,8 +911,8 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
         d->m_lined->setSelection(0, lastDot);
     }
 
-    connect( d->m_lined, SIGNAL( textChanged( const QString & ) ),
-             this, SLOT( nameFileChanged(const QString & ) ) );
+    connect( d->m_lined, TQT_SIGNAL( textChanged( const TQString & ) ),
+             this, TQT_SLOT( nameFileChanged(const TQString & ) ) );
   }
 
   grid->addWidget(nameArea, curRow++, 2);
@@ -921,31 +921,31 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   grid->addMultiCellWidget(sep, curRow, curRow, 0, 2);
   ++curRow;
 
-  QLabel *l;
+  TQLabel *l;
   if ( !mimeComment.isEmpty() && !isDevice && !isTrash)
   {
-    l = new QLabel(i18n("Type:"), d->m_frame );
+    l = new TQLabel(i18n("Type:"), d->m_frame );
 
     grid->addWidget(l, curRow, 0);
 
-    QHBox *box = new QHBox(d->m_frame);
+    TQHBox *box = new TQHBox(d->m_frame);
     box->setSpacing(20);
-    l = new QLabel(mimeComment, box );
+    l = new TQLabel(mimeComment, box );
 
 #ifdef Q_WS_X11
     //TODO: wrap for win32 or mac?
-    QPushButton *button = new QPushButton(box);
+    TQPushButton *button = new TQPushButton(box);
 
-    QIconSet iconSet = SmallIconSet(QString::fromLatin1("configure"));
-    QPixmap pixMap = iconSet.pixmap( QIconSet::Small, QIconSet::Normal );
+    TQIconSet iconSet = SmallIconSet(TQString::fromLatin1("configure"));
+    TQPixmap pixMap = iconSet.pixmap( TQIconSet::Small, TQIconSet::Normal );
     button->setIconSet( iconSet );
     button->setFixedSize( pixMap.width()+8, pixMap.height()+8 );
     if ( d->mimeType == KMimeType::defaultMimeType() )
-       QToolTip::add(button, i18n("Create new file type"));
+       TQToolTip::add(button, i18n("Create new file type"));
     else
-       QToolTip::add(button, i18n("Edit file type"));
+       TQToolTip::add(button, i18n("Edit file type"));
 
-    connect( button, SIGNAL( clicked() ), SLOT( slotEditFileType() ));
+    connect( button, TQT_SIGNAL( clicked() ), TQT_SLOT( slotEditFileType() ));
 
     if (!kapp->authorizeKAction("editfiletype"))
        button->hide();
@@ -956,16 +956,16 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
 
   if ( !magicMimeComment.isEmpty() && magicMimeComment != mimeComment )
   {
-    l = new QLabel(i18n("Contents:"), d->m_frame );
+    l = new TQLabel(i18n("Contents:"), d->m_frame );
     grid->addWidget(l, curRow, 0);
 
-    l = new QLabel(magicMimeComment, d->m_frame );
+    l = new TQLabel(magicMimeComment, d->m_frame );
     grid->addWidget(l, curRow++, 2);
   }
 
   if ( !directory.isEmpty() )
   {
-    l = new QLabel( i18n("Location:"), d->m_frame );
+    l = new TQLabel( i18n("Location:"), d->m_frame );
     grid->addWidget(l, curRow, 0);
 
     l = new KSqueezedTextLabel( d->m_frame );
@@ -974,10 +974,10 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   }
 
   if( hasDirs || hasTotalSize ) {
-    l = new QLabel(i18n("Size:"), d->m_frame );
+    l = new TQLabel(i18n("Size:"), d->m_frame );
     grid->addWidget(l, curRow, 0);
 
-    m_sizeLabel = new QLabel( d->m_frame );
+    m_sizeLabel = new TQLabel( d->m_frame );
     grid->addWidget( m_sizeLabel, curRow++, 2 );
   } else {
     m_sizeLabel = 0;
@@ -994,14 +994,14 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   }
   else // Directory
   {
-    QHBoxLayout * sizelay = new QHBoxLayout(KDialog::spacingHint());
+    TQHBoxLayout * sizelay = new TQHBoxLayout(KDialog::spacingHint());
     grid->addLayout( sizelay, curRow++, 2 );
 
     // buttons
-    m_sizeDetermineButton = new QPushButton( i18n("Calculate"), d->m_frame );
-    m_sizeStopButton = new QPushButton( i18n("Stop"), d->m_frame );
-    connect( m_sizeDetermineButton, SIGNAL( clicked() ), this, SLOT( slotSizeDetermine() ) );
-    connect( m_sizeStopButton, SIGNAL( clicked() ), this, SLOT( slotSizeStop() ) );
+    m_sizeDetermineButton = new TQPushButton( i18n("Calculate"), d->m_frame );
+    m_sizeStopButton = new TQPushButton( i18n("Stop"), d->m_frame );
+    connect( m_sizeDetermineButton, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotSizeDetermine() ) );
+    connect( m_sizeStopButton, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotSizeStop() ) );
     sizelay->addWidget(m_sizeDetermineButton, 0);
     sizelay->addWidget(m_sizeStopButton, 0);
     sizelay->addStretch(10); // so that the buttons don't grow horizontally
@@ -1017,7 +1017,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   }
 
   if (!d->bMultiple && item->isLink()) {
-    l = new QLabel(i18n("Points to:"), d->m_frame );
+    l = new TQLabel(i18n("Points to:"), d->m_frame );
     grid->addWidget(l, curRow, 0);
 
     l = new KSqueezedTextLabel(item->linkDest(), d->m_frame );
@@ -1026,38 +1026,38 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
 
   if (!d->bMultiple) // Dates for multiple don't make much sense...
   {
-    QDateTime dt;
+    TQDateTime dt;
     bool hasTime;
     time_t tim = item->time(KIO::UDS_CREATION_TIME, hasTime);
     if ( hasTime )
     {
-      l = new QLabel(i18n("Created:"), d->m_frame );
+      l = new TQLabel(i18n("Created:"), d->m_frame );
       grid->addWidget(l, curRow, 0);
 
       dt.setTime_t( tim );
-      l = new QLabel(KGlobal::locale()->formatDateTime(dt), d->m_frame );
+      l = new TQLabel(KGlobal::locale()->formatDateTime(dt), d->m_frame );
       grid->addWidget(l, curRow++, 2);
     }
 
     tim = item->time(KIO::UDS_MODIFICATION_TIME, hasTime);
     if ( hasTime )
     {
-      l = new QLabel(i18n("Modified:"), d->m_frame );
+      l = new TQLabel(i18n("Modified:"), d->m_frame );
       grid->addWidget(l, curRow, 0);
 
       dt.setTime_t( tim );
-      l = new QLabel(KGlobal::locale()->formatDateTime(dt), d->m_frame );
+      l = new TQLabel(KGlobal::locale()->formatDateTime(dt), d->m_frame );
       grid->addWidget(l, curRow++, 2);
     }
 
     tim = item->time(KIO::UDS_ACCESS_TIME, hasTime);
     if ( hasTime )
     {
-      l = new QLabel(i18n("Accessed:"), d->m_frame );
+      l = new TQLabel(i18n("Accessed:"), d->m_frame );
       grid->addWidget(l, curRow, 0);
 
       dt.setTime_t( tim );
-      l = new QLabel(KGlobal::locale()->formatDateTime(dt), d->m_frame );
+      l = new TQLabel(KGlobal::locale()->formatDateTime(dt), d->m_frame );
       grid->addWidget(l, curRow++, 2);
     }
   }
@@ -1068,35 +1068,35 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     grid->addMultiCellWidget(sep, curRow, curRow, 0, 2);
     ++curRow;
 
-    QString mountPoint = KIO::findPathMountPoint( url.path() );
+    TQString mountPoint = KIO::findPathMountPoint( url.path() );
 
     if (mountPoint != "/")
     {
-        l = new QLabel(i18n("Mounted on:"), d->m_frame );
+        l = new TQLabel(i18n("Mounted on:"), d->m_frame );
         grid->addWidget(l, curRow, 0);
 
         l = new KSqueezedTextLabel( mountPoint, d->m_frame );
         grid->addWidget( l, curRow++, 2 );
     }
 
-    l = new QLabel(i18n("Free disk space:"), d->m_frame );
+    l = new TQLabel(i18n("Free disk space:"), d->m_frame );
     grid->addWidget(l, curRow, 0);
 
-    d->m_freeSpaceLabel = new QLabel( d->m_frame );
+    d->m_freeSpaceLabel = new TQLabel( d->m_frame );
     grid->addWidget( d->m_freeSpaceLabel, curRow++, 2 );
 
     KDiskFreeSp * job = new KDiskFreeSp;
-    connect( job, SIGNAL( foundMountPoint( const unsigned long&, const unsigned long&,
-             const unsigned long&, const QString& ) ),
-             this, SLOT( slotFoundMountPoint( const unsigned long&, const unsigned long&,
-          const unsigned long&, const QString& ) ) );
+    connect( job, TQT_SIGNAL( foundMountPoint( const unsigned long&, const unsigned long&,
+             const unsigned long&, const TQString& ) ),
+             this, TQT_SLOT( slotFoundMountPoint( const unsigned long&, const unsigned long&,
+          const unsigned long&, const TQString& ) ) );
     job->readDF( mountPoint );
   }
 
   vbl->addStretch(1);
 }
 
-// QString KFilePropsPlugin::tabName () const
+// TQString KFilePropsPlugin::tabName () const
 // {
 //   return i18n ("&General");
 // }
@@ -1109,7 +1109,7 @@ void KFilePropsPlugin::setFileNameReadOnly( bool ro )
     if (ro)
     {
        // Don't put the initial focus on the line edit when it is ro
-       QPushButton *button = properties->actionButton(KDialogBase::Ok);
+       TQPushButton *button = properties->actionButton(KDialogBase::Ok);
        if (button)
           button->setFocus();
     }
@@ -1119,7 +1119,7 @@ void KFilePropsPlugin::setFileNameReadOnly( bool ro )
 void KFilePropsPlugin::slotEditFileType()
 {
 #ifdef Q_WS_X11
-  QString mime;
+  TQString mime;
   if ( d->mimeType == KMimeType::defaultMimeType() ) {
     int pos = d->oldFileName.findRev( '.' );
     if ( pos != -1 )
@@ -1130,9 +1130,9 @@ void KFilePropsPlugin::slotEditFileType()
   else
     mime = d->mimeType;
     //TODO: wrap for win32 or mac?
-  QString keditfiletype = QString::fromLatin1("keditfiletype");
+  TQString keditfiletype = TQString::fromLatin1("keditfiletype");
   KRun::runCommand( keditfiletype
-                    + " --parent " + QString::number( (ulong)properties->topLevelWidget()->winId())
+                    + " --parent " + TQString::number( (ulong)properties->topLevelWidget()->winId())
                     + " " + KProcess::quote(mime),
                     keditfiletype, keditfiletype /*unused*/);
 #endif
@@ -1144,21 +1144,21 @@ void KFilePropsPlugin::slotIconChanged()
   emit changed();
 }
 
-void KFilePropsPlugin::nameFileChanged(const QString &text )
+void KFilePropsPlugin::nameFileChanged(const TQString &text )
 {
   properties->enableButtonOK(!text.isEmpty());
   emit changed();
 }
 
-void KFilePropsPlugin::determineRelativePath( const QString & path )
+void KFilePropsPlugin::determineRelativePath( const TQString & path )
 {
     // now let's make it relative
-    QStringList dirs;
+    TQStringList dirs;
     if (KBindingPropsPlugin::supports(properties->items()))
     {
        m_sRelativePath =KGlobal::dirs()->relativeLocation("mime", path);
        if (m_sRelativePath.startsWith("/"))
-          m_sRelativePath = QString::null;
+          m_sRelativePath = TQString::null;
     }
     else
     {
@@ -1167,7 +1167,7 @@ void KFilePropsPlugin::determineRelativePath( const QString & path )
        {
           m_sRelativePath =KGlobal::dirs()->relativeLocation("xdgdata-apps", path);
           if (m_sRelativePath.startsWith("/"))
-             m_sRelativePath = QString::null;
+             m_sRelativePath = TQString::null;
           else
              m_sRelativePath = path;
        }
@@ -1179,7 +1179,7 @@ void KFilePropsPlugin::determineRelativePath( const QString & path )
     }
 }
 
-void KFilePropsPlugin::slotFoundMountPoint( const QString&,
+void KFilePropsPlugin::slotFoundMountPoint( const TQString&,
 					    unsigned long kBSize,
 					    unsigned long /*kBUsed*/,
 					    unsigned long kBAvail )
@@ -1197,7 +1197,7 @@ void KFilePropsPlugin::slotFoundMountPoint( const QString&,
 void KFilePropsPlugin::slotFoundMountPoint( const unsigned long& kBSize,
 					    const unsigned long& /*kBUsed*/,
 					    const unsigned long& kBAvail,
-					    const QString& )
+					    const TQString& )
 {
     d->m_freeSpaceLabel->setText(
 	// xgettext:no-c-format  --  Don't warn about translating the %1 out of %2 part.
@@ -1228,7 +1228,7 @@ void KFilePropsPlugin::slotDirSizeFinished( KIO::Job * job )
     KIO::filesize_t totalSize = static_cast<KDirSize*>(job)->totalSize();
 	KIO::filesize_t totalFiles = static_cast<KDirSize*>(job)->totalFiles();
 	KIO::filesize_t totalSubdirs = static_cast<KDirSize*>(job)->totalSubdirs();
-    m_sizeLabel->setText( QString::fromLatin1("%1 (%2)\n%3, %4")
+    m_sizeLabel->setText( TQString::fromLatin1("%1 (%2)\n%3, %4")
 			  .arg(KIO::convertSize(totalSize))
 			  .arg(KGlobal::locale()->formatNumber(totalSize, 0))
         .arg(i18n("1 file","%n files",totalFiles))
@@ -1249,12 +1249,12 @@ void KFilePropsPlugin::slotSizeDetermine()
   kdDebug(250) << " KFilePropsPlugin::slotSizeDetermine() properties->item()=" <<  properties->item() << endl;
   kdDebug(250) << " URL=" << properties->item()->url().url() << endl;
   d->dirSizeJob = KDirSize::dirSizeJob( properties->items() );
-  d->dirSizeUpdateTimer = new QTimer(this);
-  connect( d->dirSizeUpdateTimer, SIGNAL( timeout() ),
-           SLOT( slotDirSizeUpdate() ) );
+  d->dirSizeUpdateTimer = new TQTimer(this);
+  connect( d->dirSizeUpdateTimer, TQT_SIGNAL( timeout() ),
+           TQT_SLOT( slotDirSizeUpdate() ) );
   d->dirSizeUpdateTimer->start(500);
-  connect( d->dirSizeJob, SIGNAL( result( KIO::Job * ) ),
-           SLOT( slotDirSizeFinished( KIO::Job * ) ) );
+  connect( d->dirSizeJob, TQT_SIGNAL( result( KIO::Job * ) ),
+           TQT_SLOT( slotDirSizeFinished( KIO::Job * ) ) );
   m_sizeStopButton->setEnabled(true);
   m_sizeDetermineButton->setEnabled(false);
 
@@ -1264,13 +1264,13 @@ void KFilePropsPlugin::slotSizeDetermine()
     bool isLocal;
     KFileItem * item = properties->item();
     KURL url = item->mostLocalURL( isLocal );
-    QString mountPoint = KIO::findPathMountPoint( url.path() );
+    TQString mountPoint = KIO::findPathMountPoint( url.path() );
 
     KDiskFreeSp * job = new KDiskFreeSp;
-    connect( job, SIGNAL( foundMountPoint( const unsigned long&, const unsigned long&,
-             const unsigned long&, const QString& ) ),
-             this, SLOT( slotFoundMountPoint( const unsigned long&, const unsigned long&,
-          const unsigned long&, const QString& ) ) );
+    connect( job, TQT_SIGNAL( foundMountPoint( const unsigned long&, const unsigned long&,
+             const unsigned long&, const TQString& ) ),
+             this, TQT_SLOT( slotFoundMountPoint( const unsigned long&, const unsigned long&,
+          const unsigned long&, const TQString& ) ) );
     job->readDF( mountPoint );
   }
 }
@@ -1301,8 +1301,8 @@ bool KFilePropsPlugin::supports( KFileItemList /*_items*/ )
 }
 
 // Don't do this at home
-void qt_enter_modal( QWidget *widget );
-void qt_leave_modal( QWidget *widget );
+void qt_enter_modal( TQWidget *widget );
+void qt_leave_modal( TQWidget *widget );
 
 void KFilePropsPlugin::applyChanges()
 {
@@ -1311,9 +1311,9 @@ void KFilePropsPlugin::applyChanges()
 
   kdDebug(250) << "KFilePropsPlugin::applyChanges" << endl;
 
-  if (nameArea->inherits("QLineEdit"))
+  if (nameArea->inherits("TQLineEdit"))
   {
-    QString n = ((QLineEdit *) nameArea)->text();
+    TQString n = ((TQLineEdit *) nameArea)->text();
     // Remove trailing spaces (#4345)
     while ( n[n.length()-1].isSpace() )
       n.truncate( n.length() - 1 );
@@ -1331,7 +1331,7 @@ void KFilePropsPlugin::applyChanges()
       KIO::Job * job = 0L;
       KURL oldurl = properties->kurl();
 
-      QString newFileName = KIO::encodeFileName(n);
+      TQString newFileName = KIO::encodeFileName(n);
       if (d->bDesktopFile && !newFileName.endsWith(".desktop") && !newFileName.endsWith(".kdelnk"))
          newFileName += ".desktop";
 
@@ -1351,12 +1351,12 @@ void KFilePropsPlugin::applyChanges()
       else // Copying a template
         job = KIO::copy( oldurl, properties->kurl() );
 
-      connect( job, SIGNAL( result( KIO::Job * ) ),
-               SLOT( slotCopyFinished( KIO::Job * ) ) );
-      connect( job, SIGNAL( renamed( KIO::Job *, const KURL &, const KURL & ) ),
-               SLOT( slotFileRenamed( KIO::Job *, const KURL &, const KURL & ) ) );
+      connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
+               TQT_SLOT( slotCopyFinished( KIO::Job * ) ) );
+      connect( job, TQT_SIGNAL( renamed( KIO::Job *, const KURL &, const KURL & ) ),
+               TQT_SLOT( slotFileRenamed( KIO::Job *, const KURL &, const KURL & ) ) );
       // wait for job
-      QWidget dummy(0,0,WType_Dialog|WShowModal);
+      TQWidget dummy(0,0,WType_Dialog|WShowModal);
       qt_enter_modal(&dummy);
       qApp->enter_loop();
       qt_leave_modal(&dummy);
@@ -1412,7 +1412,7 @@ void KFilePropsPlugin::slotCopyFinished( KIO::Job * job )
       // Renamed? Update Name field
       if ( d->oldFileName != properties->kurl().fileName() || m_bFromTemplate ) {
           KDesktopFile config( properties->kurl().path() );
-          QString nameStr = nameFromFileName(properties->kurl().fileName());
+          TQString nameStr = nameFromFileName(properties->kurl().fileName());
           config.writeEntry( "Name", nameStr );
           config.writeEntry( "Name", nameStr, true, false, true );
       }
@@ -1429,11 +1429,11 @@ void KFilePropsPlugin::applyIconChanges()
   KURL url = properties->kurl();
   url = KIO::NetAccess::mostLocalURL( url, properties );
   if (url.isLocalFile()) {
-    QString path;
+    TQString path;
 
     if (S_ISDIR(properties->item()->mode()))
     {
-      path = url.path(1) + QString::fromLatin1(".directory");
+      path = url.path(1) + TQString::fromLatin1(".directory");
       // don't call updateUrl because the other tabs (i.e. permissions)
       // apply to the directory, not the .directory file.
     }
@@ -1441,17 +1441,17 @@ void KFilePropsPlugin::applyIconChanges()
       path = url.path();
 
     // Get the default image
-    QString str = KMimeType::findByURL( url,
+    TQString str = KMimeType::findByURL( url,
                                         properties->item()->mode(),
                                         true )->KServiceType::icon();
     // Is it another one than the default ?
-    QString sIcon;
+    TQString sIcon;
     if ( str != iconButton->icon() )
       sIcon = iconButton->icon();
     // (otherwise write empty value)
 
     kdDebug(250) << "**" << path << "**" << endl;
-    QFile f( path );
+    TQFile f( path );
 
     // If default icon and no .directory file -> don't create one
     if ( !sIcon.isEmpty() || f.exists() )
@@ -1502,11 +1502,11 @@ public:
   {
   }
 
-  QFrame *m_frame;
-  QCheckBox *cbRecursive;
-  QLabel *explanationLabel;
-  QComboBox *ownerPermCombo, *groupPermCombo, *othersPermCombo;
-  QCheckBox *extraCheckbox;
+  TQFrame *m_frame;
+  TQCheckBox *cbRecursive;
+  TQLabel *explanationLabel;
+  TQComboBox *ownerPermCombo, *groupPermCombo, *othersPermCombo;
+  TQCheckBox *extraCheckbox;
   mode_t partialPermissions;
   KFilePermissionsPropsPlugin::PermissionsMode pmode;
   bool canChangePermissions;
@@ -1554,8 +1554,8 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
   d->cbRecursive = 0L;
   grpCombo = 0L; grpEdit = 0;
   usrEdit = 0L;
-  QString path = properties->kurl().path(-1);
-  QString fname = properties->kurl().fileName();
+  TQString path = properties->kurl().path(-1);
+  TQString fname = properties->kurl().fileName();
   bool isLocal = properties->kurl().isLocalFile();
   bool isTrash = ( properties->kurl().protocol().find("trash", 0, false)==0 );
   bool IamRoot = (geteuid() == 0);
@@ -1597,9 +1597,9 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
         d->partialPermissions |= (*it)->permissions();
       }
       if ( (*it)->user() != strOwner )
-        strOwner = QString::null;
+        strOwner = TQString::null;
       if ( (*it)->group() != strGroup )
-        strGroup = QString::null;
+        strGroup = TQString::null;
     }
   }
 
@@ -1621,7 +1621,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
     struct passwd *myself = getpwuid( geteuid() );
     if ( myself != 0L )
     {
-      isMyFile = (strOwner == QString::fromLocal8Bit(myself->pw_name));
+      isMyFile = (strOwner == TQString::fromLocal8Bit(myself->pw_name));
     } else
       kdWarning() << "I don't exist ?! geteuid=" << geteuid() << endl;
   } else {
@@ -1638,24 +1638,24 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
 
   d->m_frame = properties->addPage(i18n("&Permissions"));
 
-  QBoxLayout *box = new QVBoxLayout( d->m_frame, 0, KDialog::spacingHint() );
+  TQBoxLayout *box = new TQVBoxLayout( d->m_frame, 0, KDialog::spacingHint() );
 
-  QWidget *l;
-  QLabel *lbl;
-  QGroupBox *gb;
-  QGridLayout *gl;
-  QPushButton* pbAdvancedPerm = 0;
+  TQWidget *l;
+  TQLabel *lbl;
+  TQGroupBox *gb;
+  TQGridLayout *gl;
+  TQPushButton* pbAdvancedPerm = 0;
 
   /* Group: Access Permissions */
-  gb = new QGroupBox ( 0, Qt::Vertical, i18n("Access Permissions"), d->m_frame );
+  gb = new TQGroupBox ( 0, Qt::Vertical, i18n("Access Permissions"), d->m_frame );
   gb->layout()->setSpacing(KDialog::spacingHint());
   gb->layout()->setMargin(KDialog::marginHint());
   box->addWidget (gb);
 
-  gl = new QGridLayout (gb->layout(), 7, 2);
+  gl = new TQGridLayout (gb->layout(), 7, 2);
   gl->setColStretch(1, 1);
 
-  l = d->explanationLabel = new QLabel( "", gb );
+  l = d->explanationLabel = new TQLabel( "", gb );
   if (isLink)
     d->explanationLabel->setText(i18n("This file is a link and does not have permissions.",
 				      "All files are links and do not have permissions.",
@@ -1664,39 +1664,39 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
     d->explanationLabel->setText(i18n("Only the owner can change permissions."));
   gl->addMultiCellWidget(l, 0, 0, 0, 1);
 
-  lbl = new QLabel( i18n("O&wner:"), gb);
+  lbl = new TQLabel( i18n("O&wner:"), gb);
   gl->addWidget(lbl, 1, 0);
-  l = d->ownerPermCombo = new QComboBox(gb);
+  l = d->ownerPermCombo = new TQComboBox(gb);
   lbl->setBuddy(l);
   gl->addWidget(l, 1, 1);
-  connect(l, SIGNAL( highlighted(int) ), this, SIGNAL( changed() ));
-  QWhatsThis::add(l, i18n("Specifies the actions that the owner is allowed to do."));
+  connect(l, TQT_SIGNAL( highlighted(int) ), this, TQT_SIGNAL( changed() ));
+  TQWhatsThis::add(l, i18n("Specifies the actions that the owner is allowed to do."));
 
-  lbl = new QLabel( i18n("Gro&up:"), gb);
+  lbl = new TQLabel( i18n("Gro&up:"), gb);
   gl->addWidget(lbl, 2, 0);
-  l = d->groupPermCombo = new QComboBox(gb);
+  l = d->groupPermCombo = new TQComboBox(gb);
   lbl->setBuddy(l);
   gl->addWidget(l, 2, 1);
-  connect(l, SIGNAL( highlighted(int) ), this, SIGNAL( changed() ));
-  QWhatsThis::add(l, i18n("Specifies the actions that the members of the group are allowed to do."));
+  connect(l, TQT_SIGNAL( highlighted(int) ), this, TQT_SIGNAL( changed() ));
+  TQWhatsThis::add(l, i18n("Specifies the actions that the members of the group are allowed to do."));
 
-  lbl = new QLabel( i18n("O&thers:"), gb);
+  lbl = new TQLabel( i18n("O&thers:"), gb);
   gl->addWidget(lbl, 3, 0);
-  l = d->othersPermCombo = new QComboBox(gb);
+  l = d->othersPermCombo = new TQComboBox(gb);
   lbl->setBuddy(l);
   gl->addWidget(l, 3, 1);
-  connect(l, SIGNAL( highlighted(int) ), this, SIGNAL( changed() ));
-  QWhatsThis::add(l, i18n("Specifies the actions that all users, who are neither "
+  connect(l, TQT_SIGNAL( highlighted(int) ), this, TQT_SIGNAL( changed() ));
+  TQWhatsThis::add(l, i18n("Specifies the actions that all users, who are neither "
 			  "owner nor in the group, are allowed to do."));
 
   if (!isLink) {
-    l = d->extraCheckbox = new QCheckBox(hasDir ?
+    l = d->extraCheckbox = new TQCheckBox(hasDir ?
 					 i18n("Only own&er can rename and delete folder content") :
 					 i18n("Is &executable"),
 					 gb );
-    connect( d->extraCheckbox, SIGNAL( clicked() ), this, SIGNAL( changed() ) );
+    connect( d->extraCheckbox, TQT_SIGNAL( clicked() ), this, TQT_SIGNAL( changed() ) );
     gl->addWidget(l, 4, 1);
-    QWhatsThis::add(l, hasDir ? i18n("Enable this option to allow only the folder's owner to "
+    TQWhatsThis::add(l, hasDir ? i18n("Enable this option to allow only the folder's owner to "
 				     "delete or rename the contained files and folders. Other "
 				     "users can only add new files, which requires the 'Modify "
 				     "Content' permission.")
@@ -1704,28 +1704,28 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
 			   "sense for programs and scripts. It is required when you want to "
 			   "execute them."));
 
-    QLayoutItem *spacer = new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    TQLayoutItem *spacer = new TQSpacerItem(0, 20, TQSizePolicy::Minimum, TQSizePolicy::Expanding);
     gl->addMultiCell(spacer, 5, 5, 0, 1);
 
-    pbAdvancedPerm = new QPushButton(i18n("A&dvanced Permissions"), gb);
+    pbAdvancedPerm = new TQPushButton(i18n("A&dvanced Permissions"), gb);
     gl->addMultiCellWidget(pbAdvancedPerm, 6, 6, 0, 1, AlignRight);
-    connect(pbAdvancedPerm, SIGNAL( clicked() ), this, SLOT( slotShowAdvancedPermissions() ));
+    connect(pbAdvancedPerm, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotShowAdvancedPermissions() ));
   }
   else
     d->extraCheckbox = 0;
 
 
   /**** Group: Ownership ****/
-  gb = new QGroupBox ( 0, Qt::Vertical, i18n("Ownership"), d->m_frame );
+  gb = new TQGroupBox ( 0, Qt::Vertical, i18n("Ownership"), d->m_frame );
   gb->layout()->setSpacing(KDialog::spacingHint());
   gb->layout()->setMargin(KDialog::marginHint());
   box->addWidget (gb);
 
-  gl = new QGridLayout (gb->layout(), 4, 3);
+  gl = new TQGridLayout (gb->layout(), 4, 3);
   gl->addRowSpacing(0, 10);
 
   /*** Set Owner ***/
-  l = new QLabel( i18n("User:"), gb );
+  l = new TQLabel( i18n("User:"), gb );
   gl->addWidget (l, 1, 0);
 
   /* GJ: Don't autocomplete more than 1000 users. This is a kind of random
@@ -1738,7 +1738,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
   struct group *ge;
 
   /* File owner: For root, offer a KLineEdit with autocompletion.
-   * For a user, who can never chown() a file, offer a QLabel.
+   * For a user, who can never chown() a file, offer a TQLabel.
    */
   if (IamRoot && isLocal)
   {
@@ -1747,25 +1747,25 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
     kcom->setOrder(KCompletion::Sorted);
     setpwent();
     for (i=0; ((user = getpwent()) != 0L) && (i < maxEntries); i++)
-      kcom->addItem(QString::fromLatin1(user->pw_name));
+      kcom->addItem(TQString::fromLatin1(user->pw_name));
     endpwent();
     usrEdit->setCompletionMode((i < maxEntries) ? KGlobalSettings::CompletionAuto :
                                KGlobalSettings::CompletionNone);
     usrEdit->setText(strOwner);
     gl->addWidget(usrEdit, 1, 1);
-    connect( usrEdit, SIGNAL( textChanged( const QString & ) ),
-             this, SIGNAL( changed() ) );
+    connect( usrEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+             this, TQT_SIGNAL( changed() ) );
   }
   else
   {
-    l = new QLabel(strOwner, gb);
+    l = new TQLabel(strOwner, gb);
     gl->addWidget(l, 1, 1);
   }
 
   /*** Set Group ***/
 
-  QStringList groupList;
-  QCString strUser;
+  TQStringList groupList;
+  TQCString strUser;
   user = getpwuid(geteuid());
   if (user != 0L)
     strUser = user->pw_name;
@@ -1775,7 +1775,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
   for (i=0; ((ge = getgrent()) != 0L) && (i < maxEntries); i++)
   {
     if (IamRoot)
-      groupList += QString::fromLatin1(ge->gr_name);
+      groupList += TQString::fromLatin1(ge->gr_name);
     else
     {
       /* pick the groups to which the user belongs */
@@ -1783,7 +1783,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
       char * member;
       while ((member = *members) != 0L) {
         if (strUser == member) {
-          groupList += QString::fromLocal8Bit(ge->gr_name);
+          groupList += TQString::fromLocal8Bit(ge->gr_name);
           break;
         }
         ++members;
@@ -1796,7 +1796,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
   /* add the effective Group to the list .. */
   ge = getgrgid (getegid());
   if (ge) {
-    QString name = QString::fromLatin1(ge->gr_name);
+    TQString name = TQString::fromLatin1(ge->gr_name);
     if (name.isEmpty())
       name.setNum(ge->gr_gid);
     if (groupList.find(name) == groupList.end())
@@ -1811,14 +1811,14 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
   if (!isMyGroup)
     groupList += strGroup;
 
-  l = new QLabel( i18n("Group:"), gb );
+  l = new TQLabel( i18n("Group:"), gb );
   gl->addWidget (l, 2, 0);
 
   /* Set group: if possible to change:
    * - Offer a KLineEdit for root, since he can change to any group.
-   * - Offer a QComboBox for a normal user, since he can change to a fixed
+   * - Offer a TQComboBox for a normal user, since he can change to a fixed
    *   (small) set of groups only.
-   * If not changeable: offer a QLabel.
+   * If not changeable: offer a TQLabel.
    */
   if (IamRoot && isLocal)
   {
@@ -1830,21 +1830,21 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
     grpEdit->setCompletionMode(KGlobalSettings::CompletionAuto);
     grpEdit->setText(strGroup);
     gl->addWidget(grpEdit, 2, 1);
-    connect( grpEdit, SIGNAL( textChanged( const QString & ) ),
-             this, SIGNAL( changed() ) );
+    connect( grpEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+             this, TQT_SIGNAL( changed() ) );
   }
   else if ((groupList.count() > 1) && isMyFile && isLocal)
   {
-    grpCombo = new QComboBox(gb, "combogrouplist");
+    grpCombo = new TQComboBox(gb, "combogrouplist");
     grpCombo->insertStringList(groupList);
     grpCombo->setCurrentItem(groupList.findIndex(strGroup));
     gl->addWidget(grpCombo, 2, 1);
-    connect( grpCombo, SIGNAL( activated( int ) ),
-             this, SIGNAL( changed() ) );
+    connect( grpCombo, TQT_SIGNAL( activated( int ) ),
+             this, TQT_SIGNAL( changed() ) );
   }
   else
   {
-    l = new QLabel(strGroup, gb);
+    l = new TQLabel(strGroup, gb);
     gl->addWidget(l, 2, 1);
   }
 
@@ -1853,8 +1853,8 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
   // "Apply recursive" checkbox
   if ( hasDir && !isLink && !isTrash  )
   {
-      d->cbRecursive = new QCheckBox( i18n("Apply changes to all subfolders and their contents"), d->m_frame );
-      connect( d->cbRecursive, SIGNAL( clicked() ), this, SIGNAL( changed() ) );
+      d->cbRecursive = new TQCheckBox( i18n("Apply changes to all subfolders and their contents"), d->m_frame );
+      connect( d->cbRecursive, TQT_SIGNAL( clicked() ), this, TQT_SIGNAL( changed() ) );
       box->addWidget( d->cbRecursive );
   }
 
@@ -1873,7 +1873,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
 }
 
 #ifdef USE_POSIX_ACL
-static bool fileSystemSupportsACL( const QCString& pathCString )
+static bool fileSystemSupportsACL( const TQCString& pathCString )
 {
     bool fileSystemSupportsACLs = false;
 #ifdef Q_OS_FREEBSD
@@ -1901,118 +1901,118 @@ void KFilePermissionsPropsPlugin::slotShowAdvancedPermissions() {
   KDialogBase dlg(properties, 0, true, i18n("Advanced Permissions"),
 		  KDialogBase::Ok|KDialogBase::Cancel);
 
-  QLabel *l, *cl[3];
-  QGroupBox *gb;
-  QGridLayout *gl;
+  TQLabel *l, *cl[3];
+  TQGroupBox *gb;
+  TQGridLayout *gl;
 
-  QVBox *mainVBox = dlg.makeVBoxMainWidget();
+  TQVBox *mainVBox = dlg.makeVBoxMainWidget();
 
   // Group: Access Permissions
-  gb = new QGroupBox ( 0, Qt::Vertical, i18n("Access Permissions"), mainVBox );
+  gb = new TQGroupBox ( 0, Qt::Vertical, i18n("Access Permissions"), mainVBox );
   gb->layout()->setSpacing(KDialog::spacingHint());
   gb->layout()->setMargin(KDialog::marginHint());
 
-  gl = new QGridLayout (gb->layout(), 6, 6);
+  gl = new TQGridLayout (gb->layout(), 6, 6);
   gl->addRowSpacing(0, 10);
 
-  QValueVector<QWidget*> theNotSpecials;
+  TQValueVector<TQWidget*> theNotSpecials;
 
-  l = new QLabel(i18n("Class"), gb );
+  l = new TQLabel(i18n("Class"), gb );
   gl->addWidget(l, 1, 0);
   theNotSpecials.append( l );
 
   if (isDir)
-    l = new QLabel( i18n("Show\nEntries"), gb );
+    l = new TQLabel( i18n("Show\nEntries"), gb );
   else
-    l = new QLabel( i18n("Read"), gb );
+    l = new TQLabel( i18n("Read"), gb );
   gl->addWidget (l, 1, 1);
   theNotSpecials.append( l );
-  QString readWhatsThis;
+  TQString readWhatsThis;
   if (isDir)
     readWhatsThis = i18n("This flag allows viewing the content of the folder.");
   else
     readWhatsThis = i18n("The Read flag allows viewing the content of the file.");
-  QWhatsThis::add(l, readWhatsThis);
+  TQWhatsThis::add(l, readWhatsThis);
 
   if (isDir)
-    l = new QLabel( i18n("Write\nEntries"), gb );
+    l = new TQLabel( i18n("Write\nEntries"), gb );
   else
-    l = new QLabel( i18n("Write"), gb );
+    l = new TQLabel( i18n("Write"), gb );
   gl->addWidget (l, 1, 2);
   theNotSpecials.append( l );
-  QString writeWhatsThis;
+  TQString writeWhatsThis;
   if (isDir)
     writeWhatsThis = i18n("This flag allows adding, renaming and deleting of files. "
 			  "Note that deleting and renaming can be limited using the Sticky flag.");
   else
     writeWhatsThis = i18n("The Write flag allows modifying the content of the file.");
-  QWhatsThis::add(l, writeWhatsThis);
+  TQWhatsThis::add(l, writeWhatsThis);
 
-  QString execWhatsThis;
+  TQString execWhatsThis;
   if (isDir) {
-    l = new QLabel( i18n("Enter folder", "Enter"), gb );
+    l = new TQLabel( i18n("Enter folder", "Enter"), gb );
     execWhatsThis = i18n("Enable this flag to allow entering the folder.");
   }
   else {
-    l = new QLabel( i18n("Exec"), gb );
+    l = new TQLabel( i18n("Exec"), gb );
     execWhatsThis = i18n("Enable this flag to allow executing the file as a program.");
   }
-  QWhatsThis::add(l, execWhatsThis);
+  TQWhatsThis::add(l, execWhatsThis);
   theNotSpecials.append( l );
   // GJ: Add space between normal and special modes
-  QSize size = l->sizeHint();
+  TQSize size = l->sizeHint();
   size.setWidth(size.width() + 15);
   l->setFixedSize(size);
   gl->addWidget (l, 1, 3);
 
-  l = new QLabel( i18n("Special"), gb );
+  l = new TQLabel( i18n("Special"), gb );
   gl->addMultiCellWidget(l, 1, 1, 4, 5);
-  QString specialWhatsThis;
+  TQString specialWhatsThis;
   if (isDir)
     specialWhatsThis = i18n("Special flag. Valid for the whole folder, the exact "
 			    "meaning of the flag can be seen in the right hand column.");
   else
     specialWhatsThis = i18n("Special flag. The exact meaning of the flag can be seen "
 			    "in the right hand column.");
-  QWhatsThis::add(l, specialWhatsThis);
+  TQWhatsThis::add(l, specialWhatsThis);
 
-  cl[0] = new QLabel( i18n("User"), gb );
+  cl[0] = new TQLabel( i18n("User"), gb );
   gl->addWidget (cl[0], 2, 0);
   theNotSpecials.append( cl[0] );
 
-  cl[1] = new QLabel( i18n("Group"), gb );
+  cl[1] = new TQLabel( i18n("Group"), gb );
   gl->addWidget (cl[1], 3, 0);
   theNotSpecials.append( cl[1] );
 
-  cl[2] = new QLabel( i18n("Others"), gb );
+  cl[2] = new TQLabel( i18n("Others"), gb );
   gl->addWidget (cl[2], 4, 0);
   theNotSpecials.append( cl[2] );
 
-  l = new QLabel(i18n("Set UID"), gb);
+  l = new TQLabel(i18n("Set UID"), gb);
   gl->addWidget(l, 2, 5);
-  QString setUidWhatsThis;
+  TQString setUidWhatsThis;
   if (isDir)
     setUidWhatsThis = i18n("If this flag is set, the owner of this folder will be "
 			   "the owner of all new files.");
   else
     setUidWhatsThis = i18n("If this file is an executable and the flag is set, it will "
 			   "be executed with the permissions of the owner.");
-  QWhatsThis::add(l, setUidWhatsThis);
+  TQWhatsThis::add(l, setUidWhatsThis);
 
-  l = new QLabel(i18n("Set GID"), gb);
+  l = new TQLabel(i18n("Set GID"), gb);
   gl->addWidget(l, 3, 5);
-  QString setGidWhatsThis;
+  TQString setGidWhatsThis;
   if (isDir)
     setGidWhatsThis = i18n("If this flag is set, the group of this folder will be "
 			   "set for all new files.");
   else
     setGidWhatsThis = i18n("If this file is an executable and the flag is set, it will "
 			   "be executed with the permissions of the group.");
-  QWhatsThis::add(l, setGidWhatsThis);
+  TQWhatsThis::add(l, setGidWhatsThis);
 
-  l = new QLabel(i18n("File permission", "Sticky"), gb);
+  l = new TQLabel(i18n("File permission", "Sticky"), gb);
   gl->addWidget(l, 4, 5);
-  QString stickyWhatsThis;
+  TQString stickyWhatsThis;
   if (isDir)
     stickyWhatsThis = i18n("If the Sticky flag is set on a folder, only the owner "
 			   "and root can delete or rename files. Otherwise everybody "
@@ -2020,7 +2020,7 @@ void KFilePermissionsPropsPlugin::slotShowAdvancedPermissions() {
   else
     stickyWhatsThis = i18n("The Sticky flag on a file is ignored on Linux, but may "
 			   "be used on some systems");
-  QWhatsThis::add(l, stickyWhatsThis);
+  TQWhatsThis::add(l, stickyWhatsThis);
 
   mode_t aPermissions, aPartialPermissions;
   mode_t dummy1, dummy2;
@@ -2052,10 +2052,10 @@ void KFilePermissionsPropsPlugin::slotShowAdvancedPermissions() {
   }
 
   // Draw Checkboxes
-  QCheckBox *cba[3][4];
+  TQCheckBox *cba[3][4];
   for (int row = 0; row < 3 ; ++row) {
     for (int col = 0; col < 4; ++col) {
-      QCheckBox *cb = new QCheckBox( gb );
+      TQCheckBox *cb = new TQCheckBox( gb );
       if ( col != 3 ) theNotSpecials.append( cb );
       cba[row][col] = cb;
       cb->setChecked(aPermissions & fperm[row][col]);
@@ -2071,24 +2071,24 @@ void KFilePermissionsPropsPlugin::slotShowAdvancedPermissions() {
       gl->addWidget (cb, row+2, col+1);
       switch(col) {
       case 0:
-	QWhatsThis::add(cb, readWhatsThis);
+	TQWhatsThis::add(cb, readWhatsThis);
 	break;
       case 1:
-	QWhatsThis::add(cb, writeWhatsThis);
+	TQWhatsThis::add(cb, writeWhatsThis);
 	break;
       case 2:
-	QWhatsThis::add(cb, execWhatsThis);
+	TQWhatsThis::add(cb, execWhatsThis);
 	break;
       case 3:
 	switch(row) {
 	case 0:
-	  QWhatsThis::add(cb, setUidWhatsThis);
+	  TQWhatsThis::add(cb, setUidWhatsThis);
 	  break;
 	case 1:
-	  QWhatsThis::add(cb, setGidWhatsThis);
+	  TQWhatsThis::add(cb, setGidWhatsThis);
 	  break;
 	case 2:
-	  QWhatsThis::add(cb, stickyWhatsThis);
+	  TQWhatsThis::add(cb, stickyWhatsThis);
 	  break;
 	}
 	break;
@@ -2102,11 +2102,11 @@ void KFilePermissionsPropsPlugin::slotShowAdvancedPermissions() {
 
   // FIXME make it work with partial entries
   if ( properties->items().count() == 1 ) {
-      QCString pathCString = QFile::encodeName( properties->item()->url().path() );
+      TQCString pathCString = TQFile::encodeName( properties->item()->url().path() );
       d->fileSystemSupportsACLs = fileSystemSupportsACL( pathCString );
   }
   if ( d->fileSystemSupportsACLs  ) {
-    std::for_each( theNotSpecials.begin(), theNotSpecials.end(), std::mem_fun( &QWidget::hide ) );
+    std::for_each( theNotSpecials.begin(), theNotSpecials.end(), std::mem_fun( &TQWidget::hide ) );
     extendedACLs = new KACLEditWidget( mainVBox );
     if ( d->extendedACL.isValid() && d->extendedACL.isExtended() )
       extendedACLs->setACL( d->extendedACL );
@@ -2132,10 +2132,10 @@ void KFilePermissionsPropsPlugin::slotShowAdvancedPermissions() {
     for (int col = 0; col < 4; ++col) {
       switch (cba[row][col]->state())
       {
-      case QCheckBox::On:
+      case TQCheckBox::On:
 	orPermissions |= fperm[row][col];
 	//fall through
-      case QCheckBox::Off:
+      case TQCheckBox::Off:
 	andPermissions &= ~fperm[row][col];
 	break;
       default: // NoChange
@@ -2171,7 +2171,7 @@ void KFilePermissionsPropsPlugin::slotShowAdvancedPermissions() {
   emit changed();
 }
 
-// QString KFilePermissionsPropsPlugin::tabName () const
+// TQString KFilePermissionsPropsPlugin::tabName () const
 // {
 //   return i18n ("&Permissions");
 // }
@@ -2193,7 +2193,7 @@ bool KFilePermissionsPropsPlugin::supports( KFileItemList _items )
 }
 
 // sets a combo box in the Access Control frame
-void KFilePermissionsPropsPlugin::setComboContent(QComboBox *combo, PermissionsTarget target,
+void KFilePermissionsPropsPlugin::setComboContent(TQComboBox *combo, PermissionsTarget target,
 						  mode_t permissions, mode_t partial) {
   combo->clear();
   if (d->pmode == PermissionsOnlyLinks) {
@@ -2379,11 +2379,11 @@ void KFilePermissionsPropsPlugin::getPermissionMasks(mode_t &andFilePermissions,
     orFilePermissions |= m & UniOwner;
     if ((m & UniOwner) &&
 	((d->pmode == PermissionsMixed) ||
-	 ((d->pmode == PermissionsOnlyFiles) && (d->extraCheckbox->state() == QButton::NoChange))))
+	 ((d->pmode == PermissionsOnlyFiles) && (d->extraCheckbox->state() == TQButton::NoChange))))
       andFilePermissions &= ~(S_IRUSR | S_IWUSR);
     else {
       andFilePermissions &= ~(S_IRUSR | S_IWUSR | S_IXUSR);
-      if ((m & S_IRUSR) && (d->extraCheckbox->state() == QButton::On))
+      if ((m & S_IRUSR) && (d->extraCheckbox->state() == TQButton::On))
 	orFilePermissions |= S_IXUSR;
     }
 
@@ -2398,11 +2398,11 @@ void KFilePermissionsPropsPlugin::getPermissionMasks(mode_t &andFilePermissions,
     orFilePermissions |= m & UniGroup;
     if ((m & UniGroup) &&
 	((d->pmode == PermissionsMixed) ||
-	 ((d->pmode == PermissionsOnlyFiles) && (d->extraCheckbox->state() == QButton::NoChange))))
+	 ((d->pmode == PermissionsOnlyFiles) && (d->extraCheckbox->state() == TQButton::NoChange))))
       andFilePermissions &= ~(S_IRGRP | S_IWGRP);
     else {
       andFilePermissions &= ~(S_IRGRP | S_IWGRP | S_IXGRP);
-      if ((m & S_IRGRP) && (d->extraCheckbox->state() == QButton::On))
+      if ((m & S_IRGRP) && (d->extraCheckbox->state() == TQButton::On))
 	orFilePermissions |= S_IXGRP;
     }
 
@@ -2417,11 +2417,11 @@ void KFilePermissionsPropsPlugin::getPermissionMasks(mode_t &andFilePermissions,
     orFilePermissions |= m & UniOthers;
     if ((m & UniOthers) &&
 	((d->pmode == PermissionsMixed) ||
-	 ((d->pmode == PermissionsOnlyFiles) && (d->extraCheckbox->state() == QButton::NoChange))))
+	 ((d->pmode == PermissionsOnlyFiles) && (d->extraCheckbox->state() == TQButton::NoChange))))
       andFilePermissions &= ~(S_IROTH | S_IWOTH);
     else {
       andFilePermissions &= ~(S_IROTH | S_IWOTH | S_IXOTH);
-      if ((m & S_IROTH) && (d->extraCheckbox->state() == QButton::On))
+      if ((m & S_IROTH) && (d->extraCheckbox->state() == TQButton::On))
 	orFilePermissions |= S_IXOTH;
     }
 
@@ -2432,9 +2432,9 @@ void KFilePermissionsPropsPlugin::getPermissionMasks(mode_t &andFilePermissions,
   }
 
   if (((d->pmode == PermissionsMixed) || (d->pmode == PermissionsOnlyDirs)) &&
-      (d->extraCheckbox->state() != QButton::NoChange)) {
+      (d->extraCheckbox->state() != TQButton::NoChange)) {
     andDirPermissions &= ~S_ISVTX;
-    if (d->extraCheckbox->state() == QButton::On)
+    if (d->extraCheckbox->state() == TQButton::On)
       orDirPermissions |= S_ISVTX;
   }
 }
@@ -2461,7 +2461,7 @@ void KFilePermissionsPropsPlugin::applyChanges()
     andDirPermissions = d->partialPermissions;
   }
 
-  QString owner, group;
+  TQString owner, group;
   if (usrEdit)
     owner = usrEdit->text();
   if (grpEdit)
@@ -2470,10 +2470,10 @@ void KFilePermissionsPropsPlugin::applyChanges()
     group = grpCombo->currentText();
 
   if (owner == strOwner)
-      owner = QString::null; // no change
+      owner = TQString::null; // no change
 
   if (group == strGroup)
-      group = QString::null;
+      group = TQString::null;
 
   bool recursive = d->cbRecursive && d->cbRecursive->isChecked();
   bool permissionChange = false;
@@ -2509,10 +2509,10 @@ void KFilePermissionsPropsPlugin::applyChanges()
     if ( defaultACLChange && d->fileSystemSupportsACLs )
       job->addMetaData( "DEFAULT_ACL_STRING", d->defaultACL.isValid()?d->defaultACL.asString():"ACL_DELETE" );
 
-    connect( job, SIGNAL( result( KIO::Job * ) ),
-        SLOT( slotChmodResult( KIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
+        TQT_SLOT( slotChmodResult( KIO::Job * ) ) );
     // Wait for job
-    QWidget dummy(0,0,WType_Dialog|WShowModal);
+    TQWidget dummy(0,0,WType_Dialog|WShowModal);
     qt_enter_modal(&dummy);
     qApp->enter_loop();
     qt_leave_modal(&dummy);
@@ -2525,10 +2525,10 @@ void KFilePermissionsPropsPlugin::applyChanges()
     if ( defaultACLChange && d->fileSystemSupportsACLs )
       job->addMetaData( "DEFAULT_ACL_STRING", d->defaultACL.isValid()?d->defaultACL.asString():"ACL_DELETE" );
 
-    connect( job, SIGNAL( result( KIO::Job * ) ),
-        SLOT( slotChmodResult( KIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
+        TQT_SLOT( slotChmodResult( KIO::Job * ) ) );
     // Wait for job
-    QWidget dummy(0,0,WType_Dialog|WShowModal);
+    TQWidget dummy(0,0,WType_Dialog|WShowModal);
     qt_enter_modal(&dummy);
     qApp->enter_loop();
     qt_leave_modal(&dummy);
@@ -2557,7 +2557,7 @@ public:
   {
   }
 
-  QFrame *m_frame;
+  TQFrame *m_frame;
 };
 
 KURLPropsPlugin::KURLPropsPlugin( KPropertiesDialog *_props )
@@ -2565,19 +2565,19 @@ KURLPropsPlugin::KURLPropsPlugin( KPropertiesDialog *_props )
 {
   d = new KURLPropsPluginPrivate;
   d->m_frame = properties->addPage(i18n("U&RL"));
-  QVBoxLayout *layout = new QVBoxLayout(d->m_frame, 0, KDialog::spacingHint());
+  TQVBoxLayout *layout = new TQVBoxLayout(d->m_frame, 0, KDialog::spacingHint());
 
-  QLabel *l;
-  l = new QLabel( d->m_frame, "Label_1" );
+  TQLabel *l;
+  l = new TQLabel( d->m_frame, "Label_1" );
   l->setText( i18n("URL:") );
   layout->addWidget(l);
 
   URLEdit = new KURLRequester( d->m_frame, "URL Requester" );
   layout->addWidget(URLEdit);
 
-  QString path = properties->kurl().path();
+  TQString path = properties->kurl().path();
 
-  QFile f( path );
+  TQFile f( path );
   if ( !f.open( IO_ReadOnly ) )
     return;
   f.close();
@@ -2589,8 +2589,8 @@ KURLPropsPlugin::KURLPropsPlugin( KPropertiesDialog *_props )
   if ( !URLStr.isNull() )
     URLEdit->setURL( URLStr );
 
-  connect( URLEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
+  connect( URLEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
 
   layout->addStretch (1);
 }
@@ -2600,7 +2600,7 @@ KURLPropsPlugin::~KURLPropsPlugin()
   delete d;
 }
 
-// QString KURLPropsPlugin::tabName () const
+// TQString KURLPropsPlugin::tabName () const
 // {
 //   return i18n ("U&RL");
 // }
@@ -2621,9 +2621,9 @@ bool KURLPropsPlugin::supports( KFileItemList _items )
 
 void KURLPropsPlugin::applyChanges()
 {
-  QString path = properties->kurl().path();
+  TQString path = properties->kurl().path();
 
-  QFile f( path );
+  TQFile f( path );
   if ( !f.open( IO_ReadWrite ) ) {
     KMessageBox::sorry( 0, i18n("<qt>Could not save properties. You do not have "
 				"sufficient access to write to <b>%1</b>.</qt>").arg(path));
@@ -2633,13 +2633,13 @@ void KURLPropsPlugin::applyChanges()
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
-  config.writeEntry( "Type", QString::fromLatin1("Link"));
+  config.writeEntry( "Type", TQString::fromLatin1("Link"));
   config.writePathEntry( "URL", URLEdit->url() );
   // Users can't create a Link .desktop file with a Name field,
   // but distributions can. Update the Name field in that case.
   if ( config.hasKey("Name") )
   {
-    QString nameStr = nameFromFileName(properties->kurl().fileName());
+    TQString nameStr = nameFromFileName(properties->kurl().fileName());
     config.writeEntry( "Name", nameStr );
     config.writeEntry( "Name", nameStr, true, false, true );
 
@@ -2663,7 +2663,7 @@ public:
   {
   }
 
-  QFrame *m_frame;
+  TQFrame *m_frame;
 };
 
 KBindingPropsPlugin::KBindingPropsPlugin( KPropertiesDialog *_props ) : KPropsDlgPlugin( _props )
@@ -2674,10 +2674,10 @@ KBindingPropsPlugin::KBindingPropsPlugin( KPropertiesDialog *_props ) : KPropsDl
   commentEdit = new KLineEdit( d->m_frame, "LineEdit_2" );
   mimeEdit = new KLineEdit( d->m_frame, "LineEdit_3" );
 
-  QBoxLayout *mainlayout = new QVBoxLayout(d->m_frame, 0, KDialog::spacingHint());
-  QLabel* tmpQLabel;
+  TQBoxLayout *mainlayout = new TQVBoxLayout(d->m_frame, 0, KDialog::spacingHint());
+  TQLabel* tmpQLabel;
 
-  tmpQLabel = new QLabel( d->m_frame, "Label_1" );
+  tmpQLabel = new TQLabel( d->m_frame, "Label_1" );
   tmpQLabel->setText(  i18n("Pattern ( example: *.html;*.htm )") );
   tmpQLabel->setMinimumSize(tmpQLabel->sizeHint());
   mainlayout->addWidget(tmpQLabel, 1);
@@ -2689,7 +2689,7 @@ KBindingPropsPlugin::KBindingPropsPlugin( KPropertiesDialog *_props ) : KPropsDl
   patternEdit->setFixedHeight( fontHeight );
   mainlayout->addWidget(patternEdit, 1);
 
-  tmpQLabel = new QLabel( d->m_frame, "Label_2" );
+  tmpQLabel = new TQLabel( d->m_frame, "Label_2" );
   tmpQLabel->setText(  i18n("Mime Type") );
   tmpQLabel->setMinimumSize(tmpQLabel->sizeHint());
   mainlayout->addWidget(tmpQLabel, 1);
@@ -2700,7 +2700,7 @@ KBindingPropsPlugin::KBindingPropsPlugin( KPropertiesDialog *_props ) : KPropsDl
   mimeEdit->setFixedHeight( fontHeight );
   mainlayout->addWidget(mimeEdit, 1);
 
-  tmpQLabel = new QLabel( d->m_frame, "Label_3" );
+  tmpQLabel = new TQLabel( d->m_frame, "Label_3" );
   tmpQLabel->setText(  i18n("Comment") );
   tmpQLabel->setMinimumSize(tmpQLabel->sizeHint());
   mainlayout->addWidget(tmpQLabel, 1);
@@ -2711,22 +2711,22 @@ KBindingPropsPlugin::KBindingPropsPlugin( KPropertiesDialog *_props ) : KPropsDl
   commentEdit->setFixedHeight( fontHeight );
   mainlayout->addWidget(commentEdit, 1);
 
-  cbAutoEmbed = new QCheckBox( i18n("Left click previews"), d->m_frame, "cbAutoEmbed" );
+  cbAutoEmbed = new TQCheckBox( i18n("Left click previews"), d->m_frame, "cbAutoEmbed" );
   mainlayout->addWidget(cbAutoEmbed, 1);
 
   mainlayout->addStretch (10);
   mainlayout->activate();
 
-  QFile f( _props->kurl().path() );
+  TQFile f( _props->kurl().path() );
   if ( !f.open( IO_ReadOnly ) )
     return;
   f.close();
 
   KSimpleConfig config( _props->kurl().path() );
   config.setDesktopGroup();
-  QString patternStr = config.readEntry( "Patterns" );
-  QString iconStr = config.readEntry( "Icon" );
-  QString commentStr = config.readEntry( "Comment" );
+  TQString patternStr = config.readEntry( "Patterns" );
+  TQString iconStr = config.readEntry( "Icon" );
+  TQString commentStr = config.readEntry( "Comment" );
   m_sMimeStr = config.readEntry( "MimeType" );
 
   if ( !patternStr.isEmpty() )
@@ -2741,14 +2741,14 @@ KBindingPropsPlugin::KBindingPropsPlugin( KPropertiesDialog *_props ) : KPropsDl
   else
       cbAutoEmbed->setNoChange();
 
-  connect( patternEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
-  connect( commentEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
-  connect( mimeEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
-  connect( cbAutoEmbed, SIGNAL( toggled( bool ) ),
-           this, SIGNAL( changed() ) );
+  connect( patternEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( commentEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( mimeEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( cbAutoEmbed, TQT_SIGNAL( toggled( bool ) ),
+           this, TQT_SIGNAL( changed() ) );
 }
 
 KBindingPropsPlugin::~KBindingPropsPlugin()
@@ -2756,7 +2756,7 @@ KBindingPropsPlugin::~KBindingPropsPlugin()
   delete d;
 }
 
-// QString KBindingPropsPlugin::tabName () const
+// TQString KBindingPropsPlugin::tabName () const
 // {
 //   return i18n ("A&ssociation");
 // }
@@ -2777,8 +2777,8 @@ bool KBindingPropsPlugin::supports( KFileItemList _items )
 
 void KBindingPropsPlugin::applyChanges()
 {
-  QString path = properties->kurl().path();
-  QFile f( path );
+  TQString path = properties->kurl().path();
+  TQFile f( path );
 
   if ( !f.open( IO_ReadWrite ) )
   {
@@ -2790,14 +2790,14 @@ void KBindingPropsPlugin::applyChanges()
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
-  config.writeEntry( "Type", QString::fromLatin1("MimeType") );
+  config.writeEntry( "Type", TQString::fromLatin1("MimeType") );
 
   config.writeEntry( "Patterns",  patternEdit->text() );
   config.writeEntry( "Comment", commentEdit->text() );
   config.writeEntry( "Comment",
 		     commentEdit->text(), true, false, true ); // for compat
   config.writeEntry( "MimeType", mimeEdit->text() );
-  if ( cbAutoEmbed->state() == QButton::NoChange )
+  if ( cbAutoEmbed->state() == TQButton::NoChange )
       config.deleteEntry( "X-KDE-AutoEmbed", false );
   else
       config.writeEntry( "X-KDE-AutoEmbed", cbAutoEmbed->isChecked() );
@@ -2820,11 +2820,11 @@ public:
   {
   }
 
-  QFrame *m_frame;
-  QStringList mountpointlist;
-  QLabel *m_freeSpaceText;
-  QLabel *m_freeSpaceLabel;
-  QProgressBar *m_freeSpaceBar;
+  TQFrame *m_frame;
+  TQStringList mountpointlist;
+  TQLabel *m_freeSpaceText;
+  TQLabel *m_freeSpaceLabel;
+  TQProgressBar *m_freeSpaceBar;
 };
 
 KDevicePropsPlugin::KDevicePropsPlugin( KPropertiesDialog *_props ) : KPropsDlgPlugin( _props )
@@ -2832,73 +2832,73 @@ KDevicePropsPlugin::KDevicePropsPlugin( KPropertiesDialog *_props ) : KPropsDlgP
   d = new KDevicePropsPluginPrivate;
   d->m_frame = properties->addPage(i18n("De&vice"));
 
-  QStringList devices;
+  TQStringList devices;
   KMountPoint::List mountPoints = KMountPoint::possibleMountPoints();
 
   for(KMountPoint::List::ConstIterator it = mountPoints.begin();
       it != mountPoints.end(); ++it)
   {
      KMountPoint *mp = *it;
-     QString mountPoint = mp->mountPoint();
-     QString device = mp->mountedFrom();
+     TQString mountPoint = mp->mountPoint();
+     TQString device = mp->mountedFrom();
      kdDebug()<<"mountPoint :"<<mountPoint<<" device :"<<device<<" mp->mountType() :"<<mp->mountType()<<endl;
 
      if ((mountPoint != "-") && (mountPoint != "none") && !mountPoint.isEmpty()
           && device != "none")
      {
-        devices.append( device + QString::fromLatin1(" (")
-                        + mountPoint + QString::fromLatin1(")") );
+        devices.append( device + TQString::fromLatin1(" (")
+                        + mountPoint + TQString::fromLatin1(")") );
         m_devicelist.append(device);
         d->mountpointlist.append(mountPoint);
      }
   }
 
-  QGridLayout *layout = new QGridLayout( d->m_frame, 0, 2, 0,
+  TQGridLayout *layout = new TQGridLayout( d->m_frame, 0, 2, 0,
                                         KDialog::spacingHint());
   layout->setColStretch(1, 1);
 
-  QLabel* label;
-  label = new QLabel( d->m_frame );
+  TQLabel* label;
+  label = new TQLabel( d->m_frame );
   label->setText( devices.count() == 0 ?
                       i18n("Device (/dev/fd0):") : // old style
                       i18n("Device:") ); // new style (combobox)
   layout->addWidget(label, 0, 0);
 
-  device = new QComboBox( true, d->m_frame, "ComboBox_device" );
+  device = new TQComboBox( true, d->m_frame, "ComboBox_device" );
   device->insertStringList( devices );
   layout->addWidget(device, 0, 1);
-  connect( device, SIGNAL( activated( int ) ),
-           this, SLOT( slotActivated( int ) ) );
+  connect( device, TQT_SIGNAL( activated( int ) ),
+           this, TQT_SLOT( slotActivated( int ) ) );
 
-  readonly = new QCheckBox( d->m_frame, "CheckBox_readonly" );
+  readonly = new TQCheckBox( d->m_frame, "CheckBox_readonly" );
   readonly->setText(  i18n("Read only") );
   layout->addWidget(readonly, 1, 1);
 
-  label = new QLabel( d->m_frame );
+  label = new TQLabel( d->m_frame );
   label->setText( i18n("File system:") );
   layout->addWidget(label, 2, 0);
 
-  QLabel *fileSystem = new QLabel( d->m_frame );
+  TQLabel *fileSystem = new TQLabel( d->m_frame );
   layout->addWidget(fileSystem, 2, 1);
 
-  label = new QLabel( d->m_frame );
+  label = new TQLabel( d->m_frame );
   label->setText( devices.count()==0 ?
                       i18n("Mount point (/mnt/floppy):") : // old style
                       i18n("Mount point:")); // new style (combobox)
   layout->addWidget(label, 3, 0);
 
-  mountpoint = new QLabel( d->m_frame, "LineEdit_mountpoint" );
+  mountpoint = new TQLabel( d->m_frame, "LineEdit_mountpoint" );
 
   layout->addWidget(mountpoint, 3, 1);
 
   // show disk free
-  d->m_freeSpaceText = new QLabel(i18n("Free disk space:"), d->m_frame );
+  d->m_freeSpaceText = new TQLabel(i18n("Free disk space:"), d->m_frame );
   layout->addWidget(d->m_freeSpaceText, 4, 0);
 
-  d->m_freeSpaceLabel = new QLabel( d->m_frame );
+  d->m_freeSpaceLabel = new TQLabel( d->m_frame );
   layout->addWidget( d->m_freeSpaceLabel, 4, 1 );
 
-  d->m_freeSpaceBar = new QProgressBar( d->m_frame, "freeSpaceBar" );
+  d->m_freeSpaceBar = new TQProgressBar( d->m_frame, "freeSpaceBar" );
   layout->addMultiCellWidget(d->m_freeSpaceBar, 5, 5, 0, 1);
 
   // we show it in the slot when we know the values
@@ -2910,29 +2910,29 @@ KDevicePropsPlugin::KDevicePropsPlugin( KPropertiesDialog *_props ) : KPropsDlgP
   layout->addMultiCellWidget(sep, 6, 6, 0, 1);
 
   unmounted = new KIconButton( d->m_frame );
-  int bsize = 66 + 2 * unmounted->style().pixelMetric(QStyle::PM_ButtonMargin);
+  int bsize = 66 + 2 * unmounted->style().pixelMetric(TQStyle::PM_ButtonMargin);
   unmounted->setFixedSize(bsize, bsize);
   unmounted->setIconType(KIcon::Desktop, KIcon::Device);
   layout->addWidget(unmounted, 7, 0);
 
-  label = new QLabel( i18n("Unmounted Icon"),  d->m_frame );
+  label = new TQLabel( i18n("Unmounted Icon"),  d->m_frame );
   layout->addWidget(label, 7, 1);
 
   layout->setRowStretch(8, 1);
 
-  QString path( _props->kurl().path() );
+  TQString path( _props->kurl().path() );
 
-  QFile f( path );
+  TQFile f( path );
   if ( !f.open( IO_ReadOnly ) )
     return;
   f.close();
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
-  QString deviceStr = config.readEntry( "Dev" );
-  QString mountPointStr = config.readEntry( "MountPoint" );
+  TQString deviceStr = config.readEntry( "Dev" );
+  TQString mountPointStr = config.readEntry( "MountPoint" );
   bool ro = config.readBoolEntry( "ReadOnly", false );
-  QString unmountedStr = config.readEntry( "UnmountIcon" );
+  TQString unmountedStr = config.readEntry( "UnmountIcon" );
 
   fileSystem->setText( i18n(config.readEntry("FSType").local8Bit()) );
 
@@ -2960,17 +2960,17 @@ KDevicePropsPlugin::KDevicePropsPlugin( KPropertiesDialog *_props ) : KPropsDlgP
 
   unmounted->setIcon( unmountedStr );
 
-  connect( device, SIGNAL( activated( int ) ),
-           this, SIGNAL( changed() ) );
-  connect( device, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
-  connect( readonly, SIGNAL( toggled( bool ) ),
-           this, SIGNAL( changed() ) );
-  connect( unmounted, SIGNAL( iconChanged( QString ) ),
-           this, SIGNAL( changed() ) );
+  connect( device, TQT_SIGNAL( activated( int ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( device, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( readonly, TQT_SIGNAL( toggled( bool ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( unmounted, TQT_SIGNAL( iconChanged( TQString ) ),
+           this, TQT_SIGNAL( changed() ) );
 
-  connect( device, SIGNAL( textChanged( const QString & ) ),
-           this, SLOT( slotDeviceChanged() ) );
+  connect( device, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SLOT( slotDeviceChanged() ) );
 }
 
 KDevicePropsPlugin::~KDevicePropsPlugin()
@@ -2978,7 +2978,7 @@ KDevicePropsPlugin::~KDevicePropsPlugin()
   delete d;
 }
 
-// QString KDevicePropsPlugin::tabName () const
+// TQString KDevicePropsPlugin::tabName () const
 // {
 //   return i18n ("De&vice");
 // }
@@ -2993,10 +2993,10 @@ void KDevicePropsPlugin::updateInfo()
   if ( !mountpoint->text().isEmpty() )
   {
     KDiskFreeSp * job = new KDiskFreeSp;
-    connect( job, SIGNAL( foundMountPoint( const unsigned long&, const unsigned long&,
-                                           const unsigned long&, const QString& ) ),
-             this, SLOT( slotFoundMountPoint( const unsigned long&, const unsigned long&,
-                                              const unsigned long&, const QString& ) ) );
+    connect( job, TQT_SIGNAL( foundMountPoint( const unsigned long&, const unsigned long&,
+                                           const unsigned long&, const TQString& ) ),
+             this, TQT_SLOT( slotFoundMountPoint( const unsigned long&, const unsigned long&,
+                                              const unsigned long&, const TQString& ) ) );
 
     job->readDF( mountpoint->text() );
   }
@@ -3018,7 +3018,7 @@ void KDevicePropsPlugin::slotDeviceChanged()
   if ( index != -1 )
     mountpoint->setText( d->mountpointlist[index] );
   else
-    mountpoint->setText( QString::null );
+    mountpoint->setText( TQString::null );
 
   updateInfo();
 }
@@ -3026,7 +3026,7 @@ void KDevicePropsPlugin::slotDeviceChanged()
 void KDevicePropsPlugin::slotFoundMountPoint( const unsigned long& kBSize,
                                               const unsigned long& /*kBUsed*/,
                                               const unsigned long& kBAvail,
-                                              const QString& )
+                                              const TQString& )
 {
   d->m_freeSpaceText->show();
   d->m_freeSpaceLabel->show();
@@ -3059,8 +3059,8 @@ bool KDevicePropsPlugin::supports( KFileItemList _items )
 
 void KDevicePropsPlugin::applyChanges()
 {
-  QString path = properties->kurl().path();
-  QFile f( path );
+  TQString path = properties->kurl().path();
+  TQFile f( path );
   if ( !f.open( IO_ReadWrite ) )
   {
     KMessageBox::sorry( 0, i18n("<qt>Could not save properties. You do not have sufficient "
@@ -3071,7 +3071,7 @@ void KDevicePropsPlugin::applyChanges()
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
-  config.writeEntry( "Type", QString::fromLatin1("FSDevice") );
+  config.writeEntry( "Type", TQString::fromLatin1("FSDevice") );
 
   config.writeEntry( "Dev", device->currentText() );
   config.writeEntry( "MountPoint", mountpoint->text() );
@@ -3095,13 +3095,13 @@ void KDevicePropsPlugin::applyChanges()
 KDesktopPropsPlugin::KDesktopPropsPlugin( KPropertiesDialog *_props )
   : KPropsDlgPlugin( _props )
 {
-  QFrame *frame = properties->addPage(i18n("&Application"));
-  QVBoxLayout *mainlayout = new QVBoxLayout( frame, 0, KDialog::spacingHint() );
+  TQFrame *frame = properties->addPage(i18n("&Application"));
+  TQVBoxLayout *mainlayout = new TQVBoxLayout( frame, 0, KDialog::spacingHint() );
 
   w = new KPropertiesDesktopBase(frame);
   mainlayout->addWidget(w);
 
-  bool bKDesktopMode = (QCString(qApp->name()) == "kdesktop"); // nasty heh?
+  bool bKDesktopMode = (TQCString(qApp->name()) == "kdesktop"); // nasty heh?
 
   if (bKDesktopMode)
   {
@@ -3113,29 +3113,29 @@ KDesktopPropsPlugin::KDesktopPropsPlugin( KPropertiesDialog *_props )
   w->pathEdit->setMode(KFile::Directory | KFile::LocalOnly);
   w->pathEdit->lineEdit()->setAcceptDrops(false);
 
-  connect( w->nameEdit, SIGNAL( textChanged( const QString & ) ), this, SIGNAL( changed() ) );
-  connect( w->genNameEdit, SIGNAL( textChanged( const QString & ) ), this, SIGNAL( changed() ) );
-  connect( w->commentEdit, SIGNAL( textChanged( const QString & ) ), this, SIGNAL( changed() ) );
-  connect( w->commandEdit, SIGNAL( textChanged( const QString & ) ), this, SIGNAL( changed() ) );
-  connect( w->pathEdit, SIGNAL( textChanged( const QString & ) ), this, SIGNAL( changed() ) );
+  connect( w->nameEdit, TQT_SIGNAL( textChanged( const TQString & ) ), this, TQT_SIGNAL( changed() ) );
+  connect( w->genNameEdit, TQT_SIGNAL( textChanged( const TQString & ) ), this, TQT_SIGNAL( changed() ) );
+  connect( w->commentEdit, TQT_SIGNAL( textChanged( const TQString & ) ), this, TQT_SIGNAL( changed() ) );
+  connect( w->commandEdit, TQT_SIGNAL( textChanged( const TQString & ) ), this, TQT_SIGNAL( changed() ) );
+  connect( w->pathEdit, TQT_SIGNAL( textChanged( const TQString & ) ), this, TQT_SIGNAL( changed() ) );
 
-  connect( w->browseButton, SIGNAL( clicked() ), this, SLOT( slotBrowseExec() ) );
-  connect( w->addFiletypeButton, SIGNAL( clicked() ), this, SLOT( slotAddFiletype() ) );
-  connect( w->delFiletypeButton, SIGNAL( clicked() ), this, SLOT( slotDelFiletype() ) );
-  connect( w->advancedButton, SIGNAL( clicked() ), this, SLOT( slotAdvanced() ) );
+  connect( w->browseButton, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotBrowseExec() ) );
+  connect( w->addFiletypeButton, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotAddFiletype() ) );
+  connect( w->delFiletypeButton, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotDelFiletype() ) );
+  connect( w->advancedButton, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotAdvanced() ) );
 
   // now populate the page
-  QString path = _props->kurl().path();
-  QFile f( path );
+  TQString path = _props->kurl().path();
+  TQFile f( path );
   if ( !f.open( IO_ReadOnly ) )
     return;
   f.close();
 
   KDesktopFile  config( path );
-  QString nameStr = config.readName();
-  QString genNameStr = config.readGenericName();
-  QString commentStr = config.readComment();
-  QString commandStr = config.readPathEntry( "Exec" );
+  TQString nameStr = config.readName();
+  TQString genNameStr = config.readGenericName();
+  TQString commentStr = config.readComment();
+  TQString commandStr = config.readPathEntry( "Exec" );
   if (commandStr.left(12) == "ksystraycmd ")
   {
     commandStr.remove(0, 12);
@@ -3145,7 +3145,7 @@ KDesktopPropsPlugin::KDesktopPropsPlugin( KPropertiesDialog *_props )
     m_systrayBool = false;
 
   m_origCommandStr = commandStr;
-  QString pathStr = config.readPathEntry( "Path" );
+  TQString pathStr = config.readPathEntry( "Path" );
   m_terminalBool = config.readBoolEntry( "Terminal" );
   m_terminalOptionStr = config.readEntry( "TerminalOptions" );
   m_suidBool = config.readBoolEntry( "X-KDE-SubstituteUID" );
@@ -3156,7 +3156,7 @@ KDesktopPropsPlugin::KDesktopPropsPlugin( KPropertiesDialog *_props )
     m_startupBool = config.readBoolEntry( "X-KDE-StartupNotify", true );
   m_dcopServiceType = config.readEntry("X-DCOP-ServiceType").lower();
 
-  QStringList mimeTypes = config.readListEntry( "MimeType", ';' );
+  TQStringList mimeTypes = config.readListEntry( "MimeType", ';' );
 
   if ( nameStr.isEmpty() || bKDesktopMode ) {
     // We'll use the file name if no name is specified
@@ -3174,12 +3174,12 @@ KDesktopPropsPlugin::KDesktopPropsPlugin( KPropertiesDialog *_props )
   w->filetypeList->setAllColumnsShowFocus(true);
 
   KMimeType::Ptr defaultMimetype = KMimeType::defaultMimeTypePtr();
-  for(QStringList::ConstIterator it = mimeTypes.begin();
+  for(TQStringList::ConstIterator it = mimeTypes.begin();
       it != mimeTypes.end(); )
   {
     KMimeType::Ptr p = KMimeType::mimeType(*it);
     ++it;
-    QString preference;
+    TQString preference;
     if (it != mimeTypes.end())
     {
        bool numeric;
@@ -3192,7 +3192,7 @@ KDesktopPropsPlugin::KDesktopPropsPlugin( KPropertiesDialog *_props )
     }
     if (p && (p != defaultMimetype))
     {
-       new QListViewItem(w->filetypeList, p->name(), p->comment(), preference);
+       new TQListViewItem(w->filetypeList, p->name(), p->comment(), preference);
     }
   }
 
@@ -3204,8 +3204,8 @@ KDesktopPropsPlugin::~KDesktopPropsPlugin()
 
 void KDesktopPropsPlugin::slotSelectMimetype()
 {
-  QListView *w = (QListView*)sender();
-  QListViewItem *item = w->firstChild();
+  TQListView *w = (TQListView*)sender();
+  TQListViewItem *item = w->firstChild();
   while(item)
   {
      if (item->isSelected())
@@ -3220,7 +3220,7 @@ void KDesktopPropsPlugin::slotAddFiletype()
                   i18n("Add File Type for %1").arg(properties->kurl().fileName()),
                   KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok);
 
-  KGuiItem okItem(i18n("&Add"), QString::null /* no icon */,
+  KGuiItem okItem(i18n("&Add"), TQString::null /* no icon */,
                   i18n("Add the selected file types to\nthe list of supported file types."),
                   i18n("Add the selected file types to\nthe list of supported file types."));
   dlg.setButtonOK(okItem);
@@ -3231,31 +3231,31 @@ void KDesktopPropsPlugin::slotAddFiletype()
 
   {
      mw->listView->setRootIsDecorated(true);
-     mw->listView->setSelectionMode(QListView::Extended);
+     mw->listView->setSelectionMode(TQListView::Extended);
      mw->listView->setAllColumnsShowFocus(true);
      mw->listView->setFullWidth(true);
      mw->listView->setMinimumSize(500,400);
 
-     connect(mw->listView, SIGNAL(selectionChanged()),
-             this, SLOT(slotSelectMimetype()));
-     connect(mw->listView, SIGNAL(doubleClicked( QListViewItem *, const QPoint &, int )),
-             &dlg, SLOT( slotOk()));
+     connect(mw->listView, TQT_SIGNAL(selectionChanged()),
+             this, TQT_SLOT(slotSelectMimetype()));
+     connect(mw->listView, TQT_SIGNAL(doubleClicked( TQListViewItem *, const TQPoint &, int )),
+             &dlg, TQT_SLOT( slotOk()));
 
-     QMap<QString,QListViewItem*> majorMap;
-     QListViewItem *majorGroup;
+     TQMap<TQString,TQListViewItem*> majorMap;
+     TQListViewItem *majorGroup;
      KMimeType::List mimetypes = KMimeType::allMimeTypes();
-     QValueListIterator<KMimeType::Ptr> it(mimetypes.begin());
+     TQValueListIterator<KMimeType::Ptr> it(mimetypes.begin());
      for (; it != mimetypes.end(); ++it) {
-        QString mimetype = (*it)->name();
+        TQString mimetype = (*it)->name();
         if (mimetype == KMimeType::defaultMimeType())
            continue;
         int index = mimetype.find("/");
-        QString maj = mimetype.left(index);
-        QString min = mimetype.mid(index+1);
+        TQString maj = mimetype.left(index);
+        TQString min = mimetype.mid(index+1);
 
-        QMapIterator<QString,QListViewItem*> mit = majorMap.find( maj );
+        TQMapIterator<TQString,TQListViewItem*> mit = majorMap.find( maj );
         if ( mit == majorMap.end() ) {
-           majorGroup = new QListViewItem( mw->listView, maj );
+           majorGroup = new TQListViewItem( mw->listView, maj );
            majorGroup->setExpandable(true);
            mw->listView->setOpen(majorGroup, true);
            majorMap.insert( maj, majorGroup );
@@ -3265,10 +3265,10 @@ void KDesktopPropsPlugin::slotAddFiletype()
            majorGroup = mit.data();
         }
 
-        QListViewItem *item = new QListViewItem(majorGroup, min, (*it)->comment());
+        TQListViewItem *item = new TQListViewItem(majorGroup, min, (*it)->comment());
         item->setPixmap(0, (*it)->pixmap(KIcon::Small, IconSize(KIcon::Small)));
      }
-     QMapIterator<QString,QListViewItem*> mit = majorMap.find( "all" );
+     TQMapIterator<TQString,TQListViewItem*> mit = majorMap.find( "all" );
      if ( mit != majorMap.end())
      {
         mw->listView->setCurrentItem(mit.data());
@@ -3279,23 +3279,23 @@ void KDesktopPropsPlugin::slotAddFiletype()
   if (dlg.exec() == KDialogBase::Accepted)
   {
      KMimeType::Ptr defaultMimetype = KMimeType::defaultMimeTypePtr();
-     QListViewItem *majorItem = mw->listView->firstChild();
+     TQListViewItem *majorItem = mw->listView->firstChild();
      while(majorItem)
      {
-        QString major = majorItem->text(0);
+        TQString major = majorItem->text(0);
 
-        QListViewItem *minorItem = majorItem->firstChild();
+        TQListViewItem *minorItem = majorItem->firstChild();
         while(minorItem)
         {
            if (minorItem->isSelected())
            {
-              QString mimetype = major + "/" + minorItem->text(0);
+              TQString mimetype = major + "/" + minorItem->text(0);
               KMimeType::Ptr p = KMimeType::mimeType(mimetype);
               if (p && (p != defaultMimetype))
               {
                  mimetype = p->name();
                  bool found = false;
-                 QListViewItem *item = w->filetypeList->firstChild();
+                 TQListViewItem *item = w->filetypeList->firstChild();
                  while (item)
                  {
                     if (mimetype == item->text(0))
@@ -3306,7 +3306,7 @@ void KDesktopPropsPlugin::slotAddFiletype()
                     item = item->nextSibling();
                  }
                  if (!found) {
-                    new QListViewItem(w->filetypeList, p->name(), p->comment());
+                    new TQListViewItem(w->filetypeList, p->name(), p->comment());
                     emit changed();
                  }
               }
@@ -3331,17 +3331,17 @@ void KDesktopPropsPlugin::checkCommandChanged()
   if (KRun::binaryName(w->commandEdit->text(), true) !=
       KRun::binaryName(m_origCommandStr, true))
   {
-    QString m_origCommandStr = w->commandEdit->text();
-    m_dcopServiceType= QString::null; // Reset
+    TQString m_origCommandStr = w->commandEdit->text();
+    m_dcopServiceType= TQString::null; // Reset
   }
 }
 
 void KDesktopPropsPlugin::applyChanges()
 {
   kdDebug(250) << "KDesktopPropsPlugin::applyChanges" << endl;
-  QString path = properties->kurl().path();
+  TQString path = properties->kurl().path();
 
-  QFile f( path );
+  TQFile f( path );
 
   if ( !f.open( IO_ReadWrite ) ) {
     KMessageBox::sorry( 0, i18n("<qt>Could not save properties. You do not have "
@@ -3356,7 +3356,7 @@ void KDesktopPropsPlugin::applyChanges()
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
-  config.writeEntry( "Type", QString::fromLatin1("Application"));
+  config.writeEntry( "Type", TQString::fromLatin1("Application"));
   config.writeEntry( "Comment", w->commentEdit->text() );
   config.writeEntry( "Comment", w->commentEdit->text(), true, false, true ); // for compat
   config.writeEntry( "GenericName", w->genNameEdit->text() );
@@ -3369,11 +3369,11 @@ void KDesktopPropsPlugin::applyChanges()
   config.writePathEntry( "Path", w->pathEdit->lineEdit()->text() );
 
   // Write mimeTypes
-  QStringList mimeTypes;
-  for( QListViewItem *item = w->filetypeList->firstChild();
+  TQStringList mimeTypes;
+  for( TQListViewItem *item = w->filetypeList->firstChild();
        item; item = item->nextSibling() )
   {
-    QString preference = item->text(2);
+    TQString preference = item->text(2);
     mimeTypes.append(item->text(0));
     if (!preference.isEmpty())
        mimeTypes.append(preference);
@@ -3382,7 +3382,7 @@ void KDesktopPropsPlugin::applyChanges()
   config.writeEntry( "MimeType", mimeTypes, ';' );
 
   if ( !w->nameEdit->isHidden() ) {
-      QString nameStr = w->nameEdit->text();
+      TQString nameStr = w->nameEdit->text();
       config.writeEntry( "Name", nameStr );
       config.writeEntry( "Name", nameStr, true, false, true );
   }
@@ -3396,7 +3396,7 @@ void KDesktopPropsPlugin::applyChanges()
   config.sync();
 
   // KSycoca update needed?
-  QString sycocaPath = KGlobal::dirs()->relativeLocation("apps", path);
+  TQString sycocaPath = KGlobal::dirs()->relativeLocation("apps", path);
   bool updateNeeded = !sycocaPath.startsWith("/");
   if (!updateNeeded)
   {
@@ -3410,8 +3410,8 @@ void KDesktopPropsPlugin::applyChanges()
 
 void KDesktopPropsPlugin::slotBrowseExec()
 {
-  KURL f = KFileDialog::getOpenURL( QString::null,
-                                      QString::null, w );
+  KURL f = KFileDialog::getOpenURL( TQString::null,
+                                      TQString::null, w );
   if ( f.isEmpty() )
     return;
 
@@ -3420,7 +3420,7 @@ void KDesktopPropsPlugin::slotBrowseExec()
     return;
   }
 
-  QString path = f.path();
+  TQString path = f.path();
   KRun::shellQuote( path );
   w->commandEdit->setText( path );
 }
@@ -3440,9 +3440,9 @@ void KDesktopPropsPlugin::slotAdvanced()
 
   // check to see if we use konsole if not do not add the nocloseonexit
   // because we don't know how to do this on other terminal applications
-  KConfigGroup confGroup( KGlobal::config(), QString::fromLatin1("General") );
-  QString preferredTerminal = confGroup.readPathEntry("TerminalApplication",
-						  QString::fromLatin1("konsole"));
+  KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
+  TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication",
+						  TQString::fromLatin1("konsole"));
 
   bool terminalCloseBool = false;
 
@@ -3487,7 +3487,7 @@ void KDesktopPropsPlugin::slotAdvanced()
   int i, maxEntries = 1000;
   setpwent();
   for (i=0; ((pw = getpwent()) != 0L) && (i < maxEntries); i++)
-    kcom->addItem(QString::fromLatin1(pw->pw_name));
+    kcom->addItem(TQString::fromLatin1(pw->pw_name));
   endpwent();
   if (i < maxEntries)
   {
@@ -3500,24 +3500,24 @@ void KDesktopPropsPlugin::slotAdvanced()
     delete kcom;
   }
 
-  connect( w->terminalEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
-  connect( w->terminalCloseCheck, SIGNAL( toggled( bool ) ),
-           this, SIGNAL( changed() ) );
-  connect( w->terminalCheck, SIGNAL( toggled( bool ) ),
-           this, SIGNAL( changed() ) );
-  connect( w->suidCheck, SIGNAL( toggled( bool ) ),
-           this, SIGNAL( changed() ) );
-  connect( w->suidEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
-  connect( w->startupInfoCheck, SIGNAL( toggled( bool ) ),
-           this, SIGNAL( changed() ) );
-  connect( w->systrayCheck, SIGNAL( toggled( bool ) ),
-           this, SIGNAL( changed() ) );
-  connect( w->dcopCombo, SIGNAL( highlighted( int ) ),
-           this, SIGNAL( changed() ) );
+  connect( w->terminalEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( w->terminalCloseCheck, TQT_SIGNAL( toggled( bool ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( w->terminalCheck, TQT_SIGNAL( toggled( bool ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( w->suidCheck, TQT_SIGNAL( toggled( bool ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( w->suidEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( w->startupInfoCheck, TQT_SIGNAL( toggled( bool ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( w->systrayCheck, TQT_SIGNAL( toggled( bool ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( w->dcopCombo, TQT_SIGNAL( highlighted( int ) ),
+           this, TQT_SIGNAL( changed() ) );
 
-  if ( dlg.exec() == QDialog::Accepted )
+  if ( dlg.exec() == TQDialog::Accepted )
   {
     m_terminalOptionStr = w->terminalEdit->text().stripWhiteSpace();
     m_terminalBool = w->terminalCheck->isChecked();
@@ -3579,8 +3579,8 @@ public:
   {
   }
 
-  QFrame *m_frame;
-  QCheckBox *nocloseonexitCheck;
+  TQFrame *m_frame;
+  TQCheckBox *nocloseonexitCheck;
 };
 
 KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
@@ -3588,21 +3588,21 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 {
   d = new KExecPropsPluginPrivate;
   d->m_frame = properties->addPage(i18n("E&xecute"));
-  QVBoxLayout * mainlayout = new QVBoxLayout( d->m_frame, 0,
+  TQVBoxLayout * mainlayout = new TQVBoxLayout( d->m_frame, 0,
       KDialog::spacingHint());
 
   // Now the widgets in the top layout
 
-  QLabel* l;
-  l = new QLabel( i18n( "Comman&d:" ), d->m_frame );
+  TQLabel* l;
+  l = new TQLabel( i18n( "Comman&d:" ), d->m_frame );
   mainlayout->addWidget(l);
 
-  QHBoxLayout * hlayout;
-  hlayout = new QHBoxLayout(KDialog::spacingHint());
+  TQHBoxLayout * hlayout;
+  hlayout = new TQHBoxLayout(KDialog::spacingHint());
   mainlayout->addLayout(hlayout);
 
   execEdit = new KLineEdit( d->m_frame );
-  QWhatsThis::add(execEdit,i18n(
+  TQWhatsThis::add(execEdit,i18n(
     "Following the command, you can have several place holders which will be replaced "
     "with the actual values when the actual program is run:\n"
     "%f - a single file name\n"
@@ -3618,22 +3618,22 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 
   l->setBuddy( execEdit );
 
-  execBrowse = new QPushButton( d->m_frame );
+  execBrowse = new TQPushButton( d->m_frame );
   execBrowse->setText( i18n("&Browse...") );
   hlayout->addWidget(execBrowse);
 
   // The groupbox about swallowing
-  QGroupBox* tmpQGroupBox;
-  tmpQGroupBox = new QGroupBox( i18n("Panel Embedding"), d->m_frame );
+  TQGroupBox* tmpQGroupBox;
+  tmpQGroupBox = new TQGroupBox( i18n("Panel Embedding"), d->m_frame );
   tmpQGroupBox->setColumnLayout( 0, Qt::Horizontal );
 
   mainlayout->addWidget(tmpQGroupBox);
 
-  QGridLayout *grid = new QGridLayout(tmpQGroupBox->layout(), 2, 2);
+  TQGridLayout *grid = new TQGridLayout(tmpQGroupBox->layout(), 2, 2);
   grid->setSpacing( KDialog::spacingHint() );
   grid->setColStretch(1, 1);
 
-  l = new QLabel( i18n( "&Execute on click:" ), tmpQGroupBox );
+  l = new TQLabel( i18n( "&Execute on click:" ), tmpQGroupBox );
   grid->addWidget(l, 0, 0);
 
   swallowExecEdit = new KLineEdit( tmpQGroupBox );
@@ -3641,7 +3641,7 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 
   l->setBuddy( swallowExecEdit );
 
-  l = new QLabel( i18n( "&Window title:" ), tmpQGroupBox );
+  l = new TQLabel( i18n( "&Window title:" ), tmpQGroupBox );
   grid->addWidget(l, 1, 0);
 
   swallowTitleEdit = new KLineEdit( tmpQGroupBox );
@@ -3651,36 +3651,36 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 
   // The groupbox about run in terminal
 
-  tmpQGroupBox = new QGroupBox( d->m_frame );
+  tmpQGroupBox = new TQGroupBox( d->m_frame );
   tmpQGroupBox->setColumnLayout( 0, Qt::Horizontal );
 
   mainlayout->addWidget(tmpQGroupBox);
 
-  grid = new QGridLayout(tmpQGroupBox->layout(), 3, 2);
+  grid = new TQGridLayout(tmpQGroupBox->layout(), 3, 2);
   grid->setSpacing( KDialog::spacingHint() );
   grid->setColStretch(1, 1);
 
-  terminalCheck = new QCheckBox( tmpQGroupBox );
+  terminalCheck = new TQCheckBox( tmpQGroupBox );
   terminalCheck->setText( i18n("&Run in terminal") );
   grid->addMultiCellWidget(terminalCheck, 0, 0, 0, 1);
 
   // check to see if we use konsole if not do not add the nocloseonexit
   // because we don't know how to do this on other terminal applications
-  KConfigGroup confGroup( KGlobal::config(), QString::fromLatin1("General") );
-  QString preferredTerminal = confGroup.readPathEntry("TerminalApplication",
-						  QString::fromLatin1("konsole"));
+  KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
+  TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication",
+						  TQString::fromLatin1("konsole"));
 
   int posOptions = 1;
   d->nocloseonexitCheck = 0L;
   if (preferredTerminal == "konsole")
   {
     posOptions = 2;
-    d->nocloseonexitCheck = new QCheckBox( tmpQGroupBox );
+    d->nocloseonexitCheck = new TQCheckBox( tmpQGroupBox );
     d->nocloseonexitCheck->setText( i18n("Do not &close when command exits") );
     grid->addMultiCellWidget(d->nocloseonexitCheck, 1, 1, 0, 1);
   }
 
-  terminalLabel = new QLabel( i18n( "&Terminal options:" ), tmpQGroupBox );
+  terminalLabel = new TQLabel( i18n( "&Terminal options:" ), tmpQGroupBox );
   grid->addWidget(terminalLabel, posOptions, 0);
 
   terminalEdit = new KLineEdit( tmpQGroupBox );
@@ -3690,20 +3690,20 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 
   // The groupbox about run with substituted uid.
 
-  tmpQGroupBox = new QGroupBox( d->m_frame );
+  tmpQGroupBox = new TQGroupBox( d->m_frame );
   tmpQGroupBox->setColumnLayout( 0, Qt::Horizontal );
 
   mainlayout->addWidget(tmpQGroupBox);
 
-  grid = new QGridLayout(tmpQGroupBox->layout(), 2, 2);
+  grid = new TQGridLayout(tmpQGroupBox->layout(), 2, 2);
   grid->setSpacing(KDialog::spacingHint());
   grid->setColStretch(1, 1);
 
-  suidCheck = new QCheckBox(tmpQGroupBox);
+  suidCheck = new TQCheckBox(tmpQGroupBox);
   suidCheck->setText(i18n("Ru&n as a different user"));
   grid->addMultiCellWidget(suidCheck, 0, 0, 0, 1);
 
-  suidLabel = new QLabel(i18n( "&Username:" ), tmpQGroupBox);
+  suidLabel = new TQLabel(i18n( "&Username:" ), tmpQGroupBox);
   grid->addWidget(suidLabel, 1, 0);
 
   suidEdit = new KLineEdit(tmpQGroupBox);
@@ -3714,8 +3714,8 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
   mainlayout->addStretch(1);
 
   // now populate the page
-  QString path = _props->kurl().path();
-  QFile f( path );
+  TQString path = _props->kurl().path();
+  TQFile f( path );
   if ( !f.open( IO_ReadOnly ) )
     return;
   f.close();
@@ -3761,7 +3761,7 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
   int i, maxEntries = 1000;
   setpwent();
   for (i=0; ((pw = getpwent()) != 0L) && (i < maxEntries); i++)
-    kcom->addItem(QString::fromLatin1(pw->pw_name));
+    kcom->addItem(TQString::fromLatin1(pw->pw_name));
   endpwent();
   if (i < maxEntries)
   {
@@ -3774,27 +3774,27 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
     delete kcom;
   }
 
-  connect( swallowExecEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
-  connect( swallowTitleEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
-  connect( execEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
-  connect( terminalEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
+  connect( swallowExecEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( swallowTitleEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( execEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( terminalEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
   if (d->nocloseonexitCheck)
-    connect( d->nocloseonexitCheck, SIGNAL( toggled( bool ) ),
-           this, SIGNAL( changed() ) );
-  connect( terminalCheck, SIGNAL( toggled( bool ) ),
-           this, SIGNAL( changed() ) );
-  connect( suidCheck, SIGNAL( toggled( bool ) ),
-           this, SIGNAL( changed() ) );
-  connect( suidEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
+    connect( d->nocloseonexitCheck, TQT_SIGNAL( toggled( bool ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( terminalCheck, TQT_SIGNAL( toggled( bool ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( suidCheck, TQT_SIGNAL( toggled( bool ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( suidEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
 
-  connect( execBrowse, SIGNAL( clicked() ), this, SLOT( slotBrowseExec() ) );
-  connect( terminalCheck, SIGNAL( clicked() ), this,  SLOT( enableCheckedEdit() ) );
-  connect( suidCheck, SIGNAL( clicked() ), this,  SLOT( enableSuidEdit() ) );
+  connect( execBrowse, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotBrowseExec() ) );
+  connect( terminalCheck, TQT_SIGNAL( clicked() ), this,  TQT_SLOT( enableCheckedEdit() ) );
+  connect( suidCheck, TQT_SIGNAL( clicked() ), this,  TQT_SLOT( enableSuidEdit() ) );
 
 }
 
@@ -3835,9 +3835,9 @@ bool KExecPropsPlugin::supports( KFileItemList _items )
 void KExecPropsPlugin::applyChanges()
 {
   kdDebug(250) << "KExecPropsPlugin::applyChanges" << endl;
-  QString path = properties->kurl().path();
+  TQString path = properties->kurl().path();
 
-  QFile f( path );
+  TQFile f( path );
 
   if ( !f.open( IO_ReadWrite ) ) {
     KMessageBox::sorry( 0, i18n("<qt>Could not save properties. You do not have "
@@ -3848,15 +3848,15 @@ void KExecPropsPlugin::applyChanges()
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
-  config.writeEntry( "Type", QString::fromLatin1("Application"));
+  config.writeEntry( "Type", TQString::fromLatin1("Application"));
   config.writePathEntry( "Exec", execEdit->text() );
   config.writePathEntry( "SwallowExec", swallowExecEdit->text() );
   config.writeEntry( "SwallowTitle", swallowTitleEdit->text() );
   config.writeEntry( "Terminal", terminalCheck->isChecked() );
-  QString temp = terminalEdit->text();
+  TQString temp = terminalEdit->text();
   if (d->nocloseonexitCheck )
     if ( d->nocloseonexitCheck->isChecked() )
-      temp += QString::fromLatin1("--noclose ");
+      temp += TQString::fromLatin1("--noclose ");
   temp = temp.stripWhiteSpace();
   config.writeEntry( "TerminalOptions", temp );
   config.writeEntry( "X-KDE-SubstituteUID", suidCheck->isChecked() );
@@ -3866,8 +3866,8 @@ void KExecPropsPlugin::applyChanges()
 
 void KExecPropsPlugin::slotBrowseExec()
 {
-    KURL f = KFileDialog::getOpenURL( QString::null,
-                                      QString::null, d->m_frame );
+    KURL f = KFileDialog::getOpenURL( TQString::null,
+                                      TQString::null, d->m_frame );
     if ( f.isEmpty() )
         return;
 
@@ -3876,7 +3876,7 @@ void KExecPropsPlugin::slotBrowseExec()
         return;
     }
 
-    QString path = f.path();
+    TQString path = f.path();
     KRun::shellQuote( path );
     execEdit->setText( path );
 }
@@ -3886,13 +3886,13 @@ class KApplicationPropsPlugin::KApplicationPropsPluginPrivate
 public:
   KApplicationPropsPluginPrivate()
   {
-      m_kdesktopMode = QCString(qApp->name()) == "kdesktop"; // nasty heh?
+      m_kdesktopMode = TQCString(qApp->name()) == "kdesktop"; // nasty heh?
   }
   ~KApplicationPropsPluginPrivate()
   {
   }
 
-  QFrame *m_frame;
+  TQFrame *m_frame;
   bool m_kdesktopMode;
 };
 
@@ -3901,29 +3901,29 @@ KApplicationPropsPlugin::KApplicationPropsPlugin( KPropertiesDialog *_props )
 {
   d = new KApplicationPropsPluginPrivate;
   d->m_frame = properties->addPage(i18n("&Application"));
-  QVBoxLayout *toplayout = new QVBoxLayout( d->m_frame, 0, KDialog::spacingHint());
+  TQVBoxLayout *toplayout = new TQVBoxLayout( d->m_frame, 0, KDialog::spacingHint());
 
-  QIconSet iconSet;
-  QPixmap pixMap;
+  TQIconSet iconSet;
+  TQPixmap pixMap;
 
-  addExtensionButton = new QPushButton( QString::null, d->m_frame );
+  addExtensionButton = new TQPushButton( TQString::null, d->m_frame );
   iconSet = SmallIconSet( "back" );
   addExtensionButton->setIconSet( iconSet );
-  pixMap = iconSet.pixmap( QIconSet::Small, QIconSet::Normal );
+  pixMap = iconSet.pixmap( TQIconSet::Small, TQIconSet::Normal );
   addExtensionButton->setFixedSize( pixMap.width()+8, pixMap.height()+8 );
-  connect( addExtensionButton, SIGNAL( clicked() ),
-            SLOT( slotAddExtension() ) );
+  connect( addExtensionButton, TQT_SIGNAL( clicked() ),
+            TQT_SLOT( slotAddExtension() ) );
 
-  delExtensionButton = new QPushButton( QString::null, d->m_frame );
+  delExtensionButton = new TQPushButton( TQString::null, d->m_frame );
   iconSet = SmallIconSet( "forward" );
   delExtensionButton->setIconSet( iconSet );
   delExtensionButton->setFixedSize( pixMap.width()+8, pixMap.height()+8 );
-  connect( delExtensionButton, SIGNAL( clicked() ),
-            SLOT( slotDelExtension() ) );
+  connect( delExtensionButton, TQT_SIGNAL( clicked() ),
+            TQT_SLOT( slotDelExtension() ) );
 
-  QLabel *l;
+  TQLabel *l;
 
-  QGridLayout *grid = new QGridLayout(2, 2);
+  TQGridLayout *grid = new TQGridLayout(2, 2);
   grid->setColStretch(1, 1);
   toplayout->addLayout(grid);
 
@@ -3934,61 +3934,61 @@ KApplicationPropsPlugin::KApplicationPropsPlugin( KPropertiesDialog *_props )
   }
   else
   {
-      l = new QLabel(i18n("Name:"), d->m_frame, "Label_4" );
+      l = new TQLabel(i18n("Name:"), d->m_frame, "Label_4" );
       grid->addWidget(l, 0, 0);
 
       nameEdit = new KLineEdit( d->m_frame, "LineEdit_3" );
       grid->addWidget(nameEdit, 0, 1);
   }
 
-  l = new QLabel(i18n("Description:"),  d->m_frame, "Label_5" );
+  l = new TQLabel(i18n("Description:"),  d->m_frame, "Label_5" );
   grid->addWidget(l, 1, 0);
 
   genNameEdit = new KLineEdit( d->m_frame, "LineEdit_4" );
   grid->addWidget(genNameEdit, 1, 1);
 
-  l = new QLabel(i18n("Comment:"),  d->m_frame, "Label_3" );
+  l = new TQLabel(i18n("Comment:"),  d->m_frame, "Label_3" );
   grid->addWidget(l, 2, 0);
 
   commentEdit = new KLineEdit( d->m_frame, "LineEdit_2" );
   grid->addWidget(commentEdit, 2, 1);
 
-  l = new QLabel(i18n("File types:"), d->m_frame);
+  l = new TQLabel(i18n("File types:"), d->m_frame);
   toplayout->addWidget(l, 0, AlignLeft);
 
-  grid = new QGridLayout(4, 3);
+  grid = new TQGridLayout(4, 3);
   grid->setColStretch(0, 1);
   grid->setColStretch(2, 1);
   grid->setRowStretch( 0, 1 );
   grid->setRowStretch( 3, 1 );
   toplayout->addLayout(grid, 2);
 
-  extensionsList = new QListBox( d->m_frame );
-  extensionsList->setSelectionMode( QListBox::Extended );
+  extensionsList = new TQListBox( d->m_frame );
+  extensionsList->setSelectionMode( TQListBox::Extended );
   grid->addMultiCellWidget(extensionsList, 0, 3, 0, 0);
 
   grid->addWidget(addExtensionButton, 1, 1);
   grid->addWidget(delExtensionButton, 2, 1);
 
-  availableExtensionsList = new QListBox( d->m_frame );
-  availableExtensionsList->setSelectionMode( QListBox::Extended );
+  availableExtensionsList = new TQListBox( d->m_frame );
+  availableExtensionsList->setSelectionMode( TQListBox::Extended );
   grid->addMultiCellWidget(availableExtensionsList, 0, 3, 2, 2);
 
-  QString path = properties->kurl().path() ;
-  QFile f( path );
+  TQString path = properties->kurl().path() ;
+  TQFile f( path );
   if ( !f.open( IO_ReadOnly ) )
     return;
   f.close();
 
   KDesktopFile config( path );
-  QString commentStr = config.readComment();
-  QString genNameStr = config.readGenericName();
+  TQString commentStr = config.readComment();
+  TQString genNameStr = config.readGenericName();
 
-  QStringList selectedTypes = config.readListEntry( "ServiceTypes" );
+  TQStringList selectedTypes = config.readListEntry( "ServiceTypes" );
   // For compatibility with KDE 1.x
   selectedTypes += config.readListEntry( "MimeType", ';' );
 
-  QString nameStr = config.readName();
+  TQString nameStr = config.readName();
   if ( nameStr.isEmpty() || d->m_kdesktopMode ) {
     // We'll use the file name if no name is specified
     // because we _need_ a Name for a valid file.
@@ -4002,39 +4002,39 @@ KApplicationPropsPlugin::KApplicationPropsPlugin( KPropertiesDialog *_props )
       nameEdit->setText( nameStr );
 
   selectedTypes.sort();
-  QStringList::Iterator sit = selectedTypes.begin();
+  TQStringList::Iterator sit = selectedTypes.begin();
   for( ; sit != selectedTypes.end(); ++sit ) {
     if ( !((*sit).isEmpty()) )
       extensionsList->insertItem( *sit );
   }
 
   KMimeType::List mimeTypes = KMimeType::allMimeTypes();
-  QValueListIterator<KMimeType::Ptr> it2 = mimeTypes.begin();
+  TQValueListIterator<KMimeType::Ptr> it2 = mimeTypes.begin();
   for ( ; it2 != mimeTypes.end(); ++it2 )
     addMimeType ( (*it2)->name() );
 
   updateButton();
 
-  connect( extensionsList, SIGNAL( highlighted( int ) ),
-           this, SLOT( updateButton() ) );
-  connect( availableExtensionsList, SIGNAL( highlighted( int ) ),
-           this, SLOT( updateButton() ) );
+  connect( extensionsList, TQT_SIGNAL( highlighted( int ) ),
+           this, TQT_SLOT( updateButton() ) );
+  connect( availableExtensionsList, TQT_SIGNAL( highlighted( int ) ),
+           this, TQT_SLOT( updateButton() ) );
 
-  connect( addExtensionButton, SIGNAL( clicked() ),
-           this, SIGNAL( changed() ) );
-  connect( delExtensionButton, SIGNAL( clicked() ),
-           this, SIGNAL( changed() ) );
+  connect( addExtensionButton, TQT_SIGNAL( clicked() ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( delExtensionButton, TQT_SIGNAL( clicked() ),
+           this, TQT_SIGNAL( changed() ) );
   if ( nameEdit )
-      connect( nameEdit, SIGNAL( textChanged( const QString & ) ),
-               this, SIGNAL( changed() ) );
-  connect( commentEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
-  connect( genNameEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SIGNAL( changed() ) );
-  connect( availableExtensionsList, SIGNAL( selected( int ) ),
-           this, SIGNAL( changed() ) );
-  connect( extensionsList, SIGNAL( selected( int ) ),
-           this, SIGNAL( changed() ) );
+      connect( nameEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+               this, TQT_SIGNAL( changed() ) );
+  connect( commentEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( genNameEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( availableExtensionsList, TQT_SIGNAL( selected( int ) ),
+           this, TQT_SIGNAL( changed() ) );
+  connect( extensionsList, TQT_SIGNAL( selected( int ) ),
+           this, TQT_SIGNAL( changed() ) );
 }
 
 KApplicationPropsPlugin::~KApplicationPropsPlugin()
@@ -4042,7 +4042,7 @@ KApplicationPropsPlugin::~KApplicationPropsPlugin()
   delete d;
 }
 
-// QString KApplicationPropsPlugin::tabName () const
+// TQString KApplicationPropsPlugin::tabName () const
 // {
 //   return i18n ("&Application");
 // }
@@ -4053,7 +4053,7 @@ void KApplicationPropsPlugin::updateButton()
     delExtensionButton->setEnabled(extensionsList->currentItem()>-1);
 }
 
-void KApplicationPropsPlugin::addMimeType( const QString & name )
+void KApplicationPropsPlugin::addMimeType( const TQString & name )
 {
   // Add a mimetype to the list of available mime types if not in the extensionsList
 
@@ -4078,9 +4078,9 @@ bool KApplicationPropsPlugin::supports( KFileItemList _items )
 
 void KApplicationPropsPlugin::applyChanges()
 {
-  QString path = properties->kurl().path();
+  TQString path = properties->kurl().path();
 
-  QFile f( path );
+  TQFile f( path );
 
   if ( !f.open( IO_ReadWrite ) ) {
     KMessageBox::sorry( 0, i18n("<qt>Could not save properties. You do not "
@@ -4091,13 +4091,13 @@ void KApplicationPropsPlugin::applyChanges()
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
-  config.writeEntry( "Type", QString::fromLatin1("Application"));
+  config.writeEntry( "Type", TQString::fromLatin1("Application"));
   config.writeEntry( "Comment", commentEdit->text() );
   config.writeEntry( "Comment", commentEdit->text(), true, false, true ); // for compat
   config.writeEntry( "GenericName", genNameEdit->text() );
   config.writeEntry( "GenericName", genNameEdit->text(), true, false, true ); // for compat
 
-  QStringList selectedTypes;
+  TQStringList selectedTypes;
   for ( uint i = 0; i < extensionsList->count(); i++ )
     selectedTypes.append( extensionsList->text( i ) );
 
@@ -4105,7 +4105,7 @@ void KApplicationPropsPlugin::applyChanges()
   config.writeEntry( "ServiceTypes", "" );
   // hmm, actually it should probably be the contrary (but see also typeslistitem.cpp)
 
-  QString nameStr = nameEdit ? nameEdit->text() : QString::null;
+  TQString nameStr = nameEdit ? nameEdit->text() : TQString::null;
   if ( nameStr.isEmpty() ) // nothing entered, or widget not existing at all (kdesktop mode)
     nameStr = nameFromFileName(properties->kurl().fileName());
 
@@ -4117,8 +4117,8 @@ void KApplicationPropsPlugin::applyChanges()
 
 void KApplicationPropsPlugin::slotAddExtension()
 {
-  QListBoxItem *item = availableExtensionsList->firstItem();
-  QListBoxItem *nextItem;
+  TQListBoxItem *item = availableExtensionsList->firstItem();
+  TQListBoxItem *nextItem;
 
   while ( item )
   {
@@ -4139,8 +4139,8 @@ void KApplicationPropsPlugin::slotAddExtension()
 
 void KApplicationPropsPlugin::slotDelExtension()
 {
-  QListBoxItem *item = extensionsList->firstItem();
-  QListBoxItem *nextItem;
+  TQListBoxItem *item = extensionsList->firstItem();
+  TQListBoxItem *nextItem;
 
   while ( item )
   {

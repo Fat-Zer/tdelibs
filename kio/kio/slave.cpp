@@ -30,8 +30,8 @@
 #include <signal.h>
 #include <sys/types.h>
 
-#include <qfile.h>
-#include <qtimer.h>
+#include <tqfile.h>
+#include <tqtimer.h>
 
 #include <dcopclient.h>
 #include <kdebug.h>
@@ -94,16 +94,16 @@ void Slave::accept(KSocket *socket)
 #endif
     delete serv;
     serv = 0;
-    slaveconn.connect(this, SLOT(gotInput()));
+    slaveconn.connect(this, TQT_SLOT(gotInput()));
     unlinkSocket();
 }
 
 void Slave::unlinkSocket()
 {
     if (m_socket.isEmpty()) return;
-    QCString filename = QFile::encodeName(m_socket);
+    TQCString filename = TQFile::encodeName(m_socket);
     unlink(filename.data());
-    m_socket = QString::null;
+    m_socket = TQString::null;
 }
 
 void Slave::timeout()
@@ -116,7 +116,7 @@ void Slave::timeout()
       kdDebug(7002) << "slave is slow... pid=" << m_pid << " t=" << delta_t << endl;
       if (delta_t < SLAVE_CONNECTION_TIMEOUT_MAX)
       {
-         QTimer::singleShot(1000*SLAVE_CONNECTION_TIMEOUT_MIN, this, SLOT(timeout()));
+         TQTimer::singleShot(1000*SLAVE_CONNECTION_TIMEOUT_MIN, this, TQT_SLOT(timeout()));
          return;
       }
    }
@@ -125,7 +125,7 @@ void Slave::timeout()
    serv = 0;
    unlinkSocket();
    dead = true;
-   QString arg = m_protocol;
+   TQString arg = m_protocol;
    if (!m_host.isEmpty())
       arg += "://"+m_host;
    kdDebug(7002) << "slave died pid = " << m_pid << endl;
@@ -138,7 +138,7 @@ void Slave::timeout()
    deref();
 }
 
-Slave::Slave(KServerSocket *socket, const QString &protocol, const QString &socketname)
+Slave::Slave(KServerSocket *socket, const TQString &protocol, const TQString &socketname)
   : SlaveInterface(&slaveconn), serv(socket), contacted(false),
   	d(new SlavePrivate(false))
 {
@@ -152,13 +152,13 @@ Slave::Slave(KServerSocket *socket, const QString &protocol, const QString &sock
     m_pid = 0;
     m_port = 0;
 #ifndef Q_WS_WIN
-    connect(serv, SIGNAL(accepted( KSocket* )),
-	    SLOT(accept(KSocket*) ) );
+    connect(serv, TQT_SIGNAL(accepted( KSocket* )),
+	    TQT_SLOT(accept(KSocket*) ) );
 #endif
 }
 
-Slave::Slave(bool /*derived*/, KServerSocket *socket, const QString &protocol,
-	const QString &socketname)
+Slave::Slave(bool /*derived*/, KServerSocket *socket, const TQString &protocol,
+	const TQString &socketname)
   : SlaveInterface(&slaveconn), serv(socket), contacted(false),
   	d(new SlavePrivate(true))
 {
@@ -174,8 +174,8 @@ Slave::Slave(bool /*derived*/, KServerSocket *socket, const QString &protocol,
     m_port = 0;
     if (serv != 0) {
 #ifndef Q_WS_WIN
-      connect(serv, SIGNAL(accepted( KSocket* )),
-        SLOT(accept(KSocket*) ) );
+      connect(serv, TQT_SIGNAL(accepted( KSocket* )),
+        TQT_SLOT(accept(KSocket*) ) );
 #endif
     }
 }
@@ -193,7 +193,7 @@ Slave::~Slave()
     d = 0;
 }
 
-void Slave::setProtocol(const QString & protocol)
+void Slave::setProtocol(const TQString & protocol)
 {
     m_protocol = protocol;
 }
@@ -224,8 +224,8 @@ void Slave::hold(const KURL &url)
 
    ref();
    {
-      QByteArray data;
-      QDataStream stream( data, IO_WriteOnly );
+      TQByteArray data;
+      TQDataStream stream( data, IO_WriteOnly );
       stream << url;
       slaveconn.send( CMD_SLAVE_HOLD, data );
       slaveconn.close();
@@ -239,13 +239,13 @@ void Slave::hold(const KURL &url)
       if (!client->isAttached())
          client->attach();
 
-      QByteArray params, reply;
-      QCString replyType;
-      QDataStream stream(params, IO_WriteOnly);
+      TQByteArray params, reply;
+      TQCString replyType;
+      TQDataStream stream(params, IO_WriteOnly);
       pid_t pid = m_pid;
       stream << pid;
 
-      QCString launcher = KApplication::launcher();
+      TQCString launcher = KApplication::launcher();
       client->call(launcher, launcher, "waitForSlave(pid_t)",
 	    params, replyType, reply);
    }
@@ -282,7 +282,7 @@ bool Slave::suspended()
    return slaveconn.suspended();
 }
 
-void Slave::send(int cmd, const QByteArray &arr) {
+void Slave::send(int cmd, const TQByteArray &arr) {
    if (d->derived) {		// TODO: clean up before KDE 4
      SendParams params;
      params.cmd = cmd;
@@ -301,7 +301,7 @@ void Slave::gotInput()
     {
         slaveconn.close();
         dead = true;
-        QString arg = m_protocol;
+        TQString arg = m_protocol;
         if (!m_host.isEmpty())
             arg += "://"+m_host;
         kdDebug(7002) << "slave died pid = " << m_pid << endl;
@@ -325,16 +325,16 @@ void Slave::kill()
     }
 }
 
-void Slave::setHost( const QString &host, int port,
-                     const QString &user, const QString &passwd)
+void Slave::setHost( const TQString &host, int port,
+                     const TQString &user, const TQString &passwd)
 {
     m_host = host;
     m_port = port;
     m_user = user;
     m_passwd = passwd;
 
-    QByteArray data;
-    QDataStream stream( data, IO_WriteOnly );
+    TQByteArray data;
+    TQDataStream stream( data, IO_WriteOnly );
     stream << m_host << m_port << m_user << m_passwd;
     slaveconn.send( CMD_HOST, data );
 }
@@ -346,13 +346,13 @@ void Slave::resetHost()
 
 void Slave::setConfig(const MetaData &config)
 {
-    QByteArray data;
-    QDataStream stream( data, IO_WriteOnly );
+    TQByteArray data;
+    TQDataStream stream( data, IO_WriteOnly );
     stream << config;
     slaveconn.send( CMD_CONFIG, data );
 }
 
-Slave* Slave::createSlave( const QString &protocol, const KURL& url, int& error, QString& error_text )
+Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error, TQString& error_text )
 {
     //kdDebug(7002) << "createSlave '" << protocol << "' for " << url.prettyURL() << endl;
     // Firstly take into account all special slaves
@@ -363,8 +363,8 @@ Slave* Slave::createSlave( const QString &protocol, const KURL& url, int& error,
     if (!client->isAttached())
 	client->attach();
 
-    QString prefix = locateLocal("socket", KGlobal::instance()->instanceName());
-    KTempFile socketfile(prefix, QString::fromLatin1(".slave-socket"));
+    TQString prefix = locateLocal("socket", KGlobal::instance()->instanceName());
+    KTempFile socketfile(prefix, TQString::fromLatin1(".slave-socket"));
     if ( socketfile.status() != 0 )
     {
 	error_text = i18n("Unable to create io-slave: %1").arg(strerror(errno));
@@ -377,7 +377,7 @@ Slave* Slave::createSlave( const QString &protocol, const KURL& url, int& error,
 #endif
     
 #ifndef Q_WS_WIN
-    KServerSocket *kss = new KServerSocket(QFile::encodeName(socketfile.name()));
+    KServerSocket *kss = new KServerSocket(TQFile::encodeName(socketfile.name()));
 
     Slave *slave = new Slave(kss, protocol, socketfile.name());
 #else
@@ -391,11 +391,11 @@ Slave* Slave::createSlave( const QString &protocol, const KURL& url, int& error,
     // In such case we start the slave via KProcess.
     // It's possible to force this by setting the env. variable
     // KDE_FORK_SLAVES, Clearcase seems to require this.
-    static bool bForkSlaves = !QCString(getenv("KDE_FORK_SLAVES")).isEmpty();
+    static bool bForkSlaves = !TQCString(getenv("KDE_FORK_SLAVES")).isEmpty();
     
     if (bForkSlaves || !client->isAttached() || client->isAttachedToForeignServer())
     {
-       QString _name = KProtocolInfo::exec(protocol);
+       TQString _name = KProtocolInfo::exec(protocol);
        if (_name.isEmpty())
        {
           error_text = i18n("Unknown protocol '%1'.").arg(protocol);
@@ -403,7 +403,7 @@ Slave* Slave::createSlave( const QString &protocol, const KURL& url, int& error,
           delete slave;
           return 0;
        }
-       QString lib_path = KLibLoader::findLibrary(_name.latin1());
+       TQString lib_path = KLibLoader::findLibrary(_name.latin1());
        if (lib_path.isEmpty())
        {
           error_text = i18n("Can not find io-slave for protocol '%1'.").arg(protocol);
@@ -414,33 +414,33 @@ Slave* Slave::createSlave( const QString &protocol, const KURL& url, int& error,
        KProcess proc;
 
        proc << locate("exe", "kioslave") << lib_path << protocol << "" << socketfile.name();
-       kdDebug(7002) << "kioslave" << ", " << lib_path << ", " << protocol << ", " << QString::null << ", " << socketfile.name() << endl;
+       kdDebug(7002) << "kioslave" << ", " << lib_path << ", " << protocol << ", " << TQString::null << ", " << socketfile.name() << endl;
 
        proc.start(KProcess::DontCare);
 
 #ifndef Q_WS_WIN
        slave->setPID(proc.pid());
-       QTimer::singleShot(1000*SLAVE_CONNECTION_TIMEOUT_MIN, slave, SLOT(timeout()));
+       TQTimer::singleShot(1000*SLAVE_CONNECTION_TIMEOUT_MIN, slave, TQT_SLOT(timeout()));
 #endif
        return slave;
     }
 
 
-    QByteArray params, reply;
-    QCString replyType;
-    QDataStream stream(params, IO_WriteOnly);
+    TQByteArray params, reply;
+    TQCString replyType;
+    TQDataStream stream(params, IO_WriteOnly);
     stream << protocol << url.host() << socketfile.name();
 
-    QCString launcher = KApplication::launcher();
-    if (!client->call(launcher, launcher, "requestSlave(QString,QString,QString)",
+    TQCString launcher = KApplication::launcher();
+    if (!client->call(launcher, launcher, "requestSlave(TQString,TQString,TQString)",
 	    params, replyType, reply)) {
 	error_text = i18n("Cannot talk to klauncher");
 	error = KIO::ERR_SLAVE_DEFINED;
         delete slave;
         return 0;
     }
-    QDataStream stream2(reply, IO_ReadOnly);
-    QString errorStr;
+    TQDataStream stream2(reply, IO_ReadOnly);
+    TQString errorStr;
     pid_t pid;
     stream2 >> pid >> errorStr;
     if (!pid)
@@ -452,12 +452,12 @@ Slave* Slave::createSlave( const QString &protocol, const KURL& url, int& error,
     }
 #ifndef Q_WS_WIN
     slave->setPID(pid);
-    QTimer::singleShot(1000*SLAVE_CONNECTION_TIMEOUT_MIN, slave, SLOT(timeout()));
+    TQTimer::singleShot(1000*SLAVE_CONNECTION_TIMEOUT_MIN, slave, TQT_SLOT(timeout()));
 #endif
     return slave;
 }
 
-Slave* Slave::holdSlave( const QString &protocol, const KURL& url )
+Slave* Slave::holdSlave( const TQString &protocol, const KURL& url )
 {
     //kdDebug(7002) << "holdSlave '" << protocol << "' for " << url.prettyURL() << endl;
     // Firstly take into account all special slaves
@@ -468,8 +468,8 @@ Slave* Slave::holdSlave( const QString &protocol, const KURL& url )
     if (!client->isAttached())
 	client->attach();
 
-    QString prefix = locateLocal("socket", KGlobal::instance()->instanceName());
-    KTempFile socketfile(prefix, QString::fromLatin1(".slave-socket"));
+    TQString prefix = locateLocal("socket", KGlobal::instance()->instanceName());
+    KTempFile socketfile(prefix, TQString::fromLatin1(".slave-socket"));
     if ( socketfile.status() != 0 )
 	return 0;
 
@@ -479,25 +479,25 @@ Slave* Slave::holdSlave( const QString &protocol, const KURL& url )
 #endif
 
 #ifndef Q_WS_WIN
-    KServerSocket *kss = new KServerSocket(QFile::encodeName(socketfile.name()));
+    KServerSocket *kss = new KServerSocket(TQFile::encodeName(socketfile.name()));
 
     Slave *slave = new Slave(kss, protocol, socketfile.name());
 #else
     Slave *slave = 0;
 #endif
 
-    QByteArray params, reply;
-    QCString replyType;
-    QDataStream stream(params, IO_WriteOnly);
+    TQByteArray params, reply;
+    TQCString replyType;
+    TQDataStream stream(params, IO_WriteOnly);
     stream << url << socketfile.name();
 
-    QCString launcher = KApplication::launcher();
-    if (!client->call(launcher, launcher, "requestHoldSlave(KURL,QString)",
+    TQCString launcher = KApplication::launcher();
+    if (!client->call(launcher, launcher, "requestHoldSlave(KURL,TQString)",
         params, replyType, reply)) {
         delete slave;
         return 0;
     }
-    QDataStream stream2(reply, IO_ReadOnly);
+    TQDataStream stream2(reply, IO_ReadOnly);
     pid_t pid;
     stream2 >> pid;
     if (!pid)
@@ -507,7 +507,7 @@ Slave* Slave::holdSlave( const QString &protocol, const KURL& url )
     }
 #ifndef Q_WS_WIN
     slave->setPID(pid);
-    QTimer::singleShot(1000*SLAVE_CONNECTION_TIMEOUT_MIN, slave, SLOT(timeout()));
+    TQTimer::singleShot(1000*SLAVE_CONNECTION_TIMEOUT_MIN, slave, TQT_SLOT(timeout()));
 #endif
     return slave;
 }

@@ -21,24 +21,24 @@
 
 #include "ksslutils.h"
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <qdatetime.h>
+#include <tqdatetime.h>
 
 #include "kopenssl.h"
 
 #ifdef KSSL_HAVE_SSL
 // This code is mostly taken from OpenSSL v0.9.5a
 // by Eric Young
-QDateTime ASN1_UTCTIME_QDateTime(ASN1_UTCTIME *tm, int *isGmt) {
-QDateTime qdt;
+TQDateTime ASN1_UTCTIME_QDateTime(ASN1_UTCTIME *tm, int *isGmt) {
+TQDateTime qdt;
 char *v;
 int gmt=0;
 int i;
 int y=0,M=0,d=0,h=0,m=0,s=0;
-QDate qdate;
-QTime qtime;
+TQDate qdate;
+TQTime qtime;
  
   i = tm->length;
   v = (char *)tm->data;
@@ -68,10 +68,10 @@ return qdt;
 }
 
 
-QString ASN1_UTCTIME_QString(ASN1_UTCTIME *tm) {
-  QString qstr;
+TQString ASN1_UTCTIME_QString(ASN1_UTCTIME *tm) {
+  TQString qstr;
   int gmt;
-  QDateTime qdt = ASN1_UTCTIME_QDateTime(tm, &gmt);
+  TQDateTime qdt = ASN1_UTCTIME_QDateTime(tm, &gmt);
 
   qstr = KGlobal::locale()->formatDateTime(qdt, false, true);
   if (gmt) { 
@@ -82,9 +82,9 @@ QString ASN1_UTCTIME_QString(ASN1_UTCTIME *tm) {
 }
 
 
-QString ASN1_INTEGER_QString(ASN1_INTEGER *aint) {
+TQString ASN1_INTEGER_QString(ASN1_INTEGER *aint) {
 char *rep = KOSSL::self()->i2s_ASN1_INTEGER(NULL, aint);
-QString yy = rep;
+TQString yy = rep;
 KOSSL::self()->OPENSSL_free(rep);
 return yy;
 }

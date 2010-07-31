@@ -1,6 +1,6 @@
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qdragobject.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqdragobject.h>
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
@@ -9,119 +9,119 @@
 
 #include "ktabwidgettest.h"
 
-Test::Test( QWidget* parent, const char *name )
-  :QVBox( parent, name ), mChange(0), mLeftWidget(0), mRightWidget(0),
+Test::Test( TQWidget* parent, const char *name )
+  :TQVBox( parent, name ), mChange(0), mLeftWidget(0), mRightWidget(0),
   mLeftPopup( false ), mRightPopup( false ), mTabbarContextPopup( false ), mContextPopup( false )
 
 {
   resize( 600,300 );
 
   mWidget = new KTabWidget( this );
-  mWidget->addTab( new QLabel( "Testlabel 1", mWidget ), "One" );
-  mWidget->addTab( new QLabel( "Testlabel 2", mWidget ), "Two" );
-  mWidget->addTab( new QWidget( mWidget), SmallIcon( "konsole" ), "Three" );
-  mWidget->addTab( new QWidget( mWidget), "Four" );
+  mWidget->addTab( new TQLabel( "Testlabel 1", mWidget ), "One" );
+  mWidget->addTab( new TQLabel( "Testlabel 2", mWidget ), "Two" );
+  mWidget->addTab( new TQWidget( mWidget), SmallIcon( "konsole" ), "Three" );
+  mWidget->addTab( new TQWidget( mWidget), "Four" );
   mWidget->setTabColor( mWidget->page(0), Qt::red );
   mWidget->setTabColor( mWidget->page(1), Qt::blue );
 
-  connect( mWidget, SIGNAL( currentChanged( QWidget * ) ), SLOT( currentChanged( QWidget * ) ) );
-  connect( mWidget, SIGNAL( contextMenu( QWidget *, const QPoint & )), SLOT(contextMenu( QWidget *, const QPoint & )));
-  connect( mWidget, SIGNAL( contextMenu( const QPoint & )), SLOT(tabbarContextMenu( const QPoint & )));
-  connect( mWidget, SIGNAL( mouseDoubleClick( QWidget * )), SLOT(mouseDoubleClick( QWidget * )));
-  connect( mWidget, SIGNAL( mouseMiddleClick() ), SLOT(addTab() ));
-  connect( mWidget, SIGNAL( mouseMiddleClick( QWidget * )), SLOT(mouseMiddleClick( QWidget * )));
-  connect( mWidget, SIGNAL( closeRequest( QWidget * )), SLOT(mouseMiddleClick( QWidget * )));
-  connect( mWidget, SIGNAL( testCanDecode(const QDragMoveEvent *, bool & )), SLOT(testCanDecode(const QDragMoveEvent *, bool & )));
-  connect( mWidget, SIGNAL( receivedDropEvent( QDropEvent * )), SLOT(receivedDropEvent( QDropEvent * )));
-  connect( mWidget, SIGNAL( receivedDropEvent( QWidget *, QDropEvent * )), SLOT(receivedDropEvent( QWidget *, QDropEvent * )));
-  connect( mWidget, SIGNAL( initiateDrag( QWidget * )), SLOT(initiateDrag( QWidget * )));
-  connect( mWidget, SIGNAL( movedTab( int, int )), SLOT(movedTab( int, int )));
+  connect( mWidget, TQT_SIGNAL( currentChanged( TQWidget * ) ), TQT_SLOT( currentChanged( TQWidget * ) ) );
+  connect( mWidget, TQT_SIGNAL( contextMenu( TQWidget *, const TQPoint & )), TQT_SLOT(contextMenu( TQWidget *, const TQPoint & )));
+  connect( mWidget, TQT_SIGNAL( contextMenu( const TQPoint & )), TQT_SLOT(tabbarContextMenu( const TQPoint & )));
+  connect( mWidget, TQT_SIGNAL( mouseDoubleClick( TQWidget * )), TQT_SLOT(mouseDoubleClick( TQWidget * )));
+  connect( mWidget, TQT_SIGNAL( mouseMiddleClick() ), TQT_SLOT(addTab() ));
+  connect( mWidget, TQT_SIGNAL( mouseMiddleClick( TQWidget * )), TQT_SLOT(mouseMiddleClick( TQWidget * )));
+  connect( mWidget, TQT_SIGNAL( closeRequest( TQWidget * )), TQT_SLOT(mouseMiddleClick( TQWidget * )));
+  connect( mWidget, TQT_SIGNAL( testCanDecode(const TQDragMoveEvent *, bool & )), TQT_SLOT(testCanDecode(const TQDragMoveEvent *, bool & )));
+  connect( mWidget, TQT_SIGNAL( receivedDropEvent( TQDropEvent * )), TQT_SLOT(receivedDropEvent( TQDropEvent * )));
+  connect( mWidget, TQT_SIGNAL( receivedDropEvent( TQWidget *, TQDropEvent * )), TQT_SLOT(receivedDropEvent( TQWidget *, TQDropEvent * )));
+  connect( mWidget, TQT_SIGNAL( initiateDrag( TQWidget * )), TQT_SLOT(initiateDrag( TQWidget * )));
+  connect( mWidget, TQT_SIGNAL( movedTab( int, int )), TQT_SLOT(movedTab( int, int )));
   mWidget->setTabReorderingEnabled( true );
 
-  QWidget * grid = new QWidget(this);
-  QGridLayout * gridlayout = new QGridLayout( grid, 5, 2 );
+  TQWidget * grid = new TQWidget(this);
+  TQGridLayout * gridlayout = new TQGridLayout( grid, 5, 2 );
 
-  QPushButton * addTab = new QPushButton( "Add Tab", grid );
+  TQPushButton * addTab = new TQPushButton( "Add Tab", grid );
   gridlayout->addWidget( addTab, 0, 0 );
-  connect( addTab, SIGNAL( clicked() ), SLOT( addTab() ) );
+  connect( addTab, TQT_SIGNAL( clicked() ), TQT_SLOT( addTab() ) );
 
-  QPushButton * removeTab = new QPushButton( "Remove Current Tab", grid );
+  TQPushButton * removeTab = new TQPushButton( "Remove Current Tab", grid );
   gridlayout->addWidget( removeTab, 0, 1 );
-  connect( removeTab, SIGNAL( clicked() ), SLOT( removeCurrentTab() ) );
+  connect( removeTab, TQT_SIGNAL( clicked() ), TQT_SLOT( removeCurrentTab() ) );
 
-  mLeftButton = new QCheckBox( "Show left button", grid );
+  mLeftButton = new TQCheckBox( "Show left button", grid );
   gridlayout->addWidget( mLeftButton, 1, 0 );
-  connect( mLeftButton, SIGNAL( toggled(bool) ), SLOT( toggleLeftButton(bool) ) );
+  connect( mLeftButton, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleLeftButton(bool) ) );
   mLeftButton->setChecked(true);
 
-  QCheckBox * leftPopup = new QCheckBox( "Enable left popup", grid );
+  TQCheckBox * leftPopup = new TQCheckBox( "Enable left popup", grid );
   gridlayout->addWidget( leftPopup, 2, 0 );
-  connect( leftPopup, SIGNAL( toggled(bool) ), SLOT( toggleLeftPopup(bool) ) );
+  connect( leftPopup, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleLeftPopup(bool) ) );
   leftPopup->setChecked(true);
 
-  mRightButton = new QCheckBox( "Show right button", grid );
+  mRightButton = new TQCheckBox( "Show right button", grid );
   gridlayout->addWidget( mRightButton, 1, 1 );
-  connect( mRightButton, SIGNAL( toggled(bool) ), SLOT( toggleRightButton(bool) ) );
+  connect( mRightButton, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleRightButton(bool) ) );
   mRightButton->setChecked(true);
 
-  QCheckBox * rightPopup = new QCheckBox( "Enable right popup", grid );
+  TQCheckBox * rightPopup = new TQCheckBox( "Enable right popup", grid );
   gridlayout->addWidget( rightPopup, 2, 1 );
-  connect( rightPopup, SIGNAL( toggled(bool) ), SLOT( toggleRightPopup(bool) ) );
+  connect( rightPopup, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleRightPopup(bool) ) );
   rightPopup->setChecked(true);
 
-  mTabsBottom = new QCheckBox( "Show tabs at bottom", grid );
+  mTabsBottom = new TQCheckBox( "Show tabs at bottom", grid );
   gridlayout->addWidget( mTabsBottom, 3, 0 );
-  connect( mTabsBottom, SIGNAL( toggled(bool) ), SLOT( toggleTabPosition(bool) ) );
+  connect( mTabsBottom, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleTabPosition(bool) ) );
 
-  QCheckBox * tabshape = new QCheckBox( "Triangular tab shape", grid );
+  TQCheckBox * tabshape = new TQCheckBox( "Triangular tab shape", grid );
   gridlayout->addWidget( tabshape, 3, 1 );
-  connect( tabshape, SIGNAL( toggled(bool) ), SLOT( toggleTabShape(bool) ) );
+  connect( tabshape, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleTabShape(bool) ) );
 
-  QCheckBox *tabClose = new QCheckBox( "Close button on icon hover", grid );
+  TQCheckBox *tabClose = new TQCheckBox( "Close button on icon hover", grid );
   gridlayout->addWidget( tabClose, 4, 0 );
-  connect( tabClose, SIGNAL( toggled(bool) ), SLOT( toggleCloseButtons(bool) ) );
+  connect( tabClose, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleCloseButtons(bool) ) );
   tabClose->setChecked(true);
 
-  QCheckBox * showlabels = new QCheckBox( "Show labels", grid );
+  TQCheckBox * showlabels = new TQCheckBox( "Show labels", grid );
   gridlayout->addWidget( showlabels, 4, 1 );
-  connect( showlabels, SIGNAL( toggled(bool) ), this, SLOT( toggleLabels(bool) ) );
+  connect( showlabels, TQT_SIGNAL( toggled(bool) ), this, TQT_SLOT( toggleLabels(bool) ) );
 }
 
-void Test::currentChanged(QWidget* w)
+void Test::currentChanged(TQWidget* w)
 {
   mWidget->setTabColor( w, Qt::black );
 }
 
 void Test::addTab()
 {
-  mWidget->addTab( new QWidget( mWidget ), SmallIcon( "konsole" ), QString("Tab %1").arg( mWidget->count()+1 ) );
+  mWidget->addTab( new TQWidget( mWidget ), SmallIcon( "konsole" ), TQString("Tab %1").arg( mWidget->count()+1 ) );
 }
 
-void Test::testCanDecode(const QDragMoveEvent *e, bool &accept /* result */)
+void Test::testCanDecode(const TQDragMoveEvent *e, bool &accept /* result */)
 {
-  if ( QTextDrag::canDecode(e) )    // don't accept=false if it cannot be decoded!
+  if ( TQTextDrag::canDecode(e) )    // don't accept=false if it cannot be decoded!
     accept = true;
 }
 
-void Test::receivedDropEvent( QDropEvent *e )
+void Test::receivedDropEvent( TQDropEvent *e )
 {
-  QString dropText;
-  if (QTextDrag::decode(e, dropText)) {
-    mWidget->addTab( new QWidget( mWidget), dropText );
+  TQString dropText;
+  if (TQTextDrag::decode(e, dropText)) {
+    mWidget->addTab( new TQWidget( mWidget), dropText );
   }
 }
 
-void Test::receivedDropEvent( QWidget *w, QDropEvent *e )
+void Test::receivedDropEvent( TQWidget *w, TQDropEvent *e )
 {
-  QString dropText;
-  if (QTextDrag::decode(e, dropText)) {
+  TQString dropText;
+  if (TQTextDrag::decode(e, dropText)) {
     mWidget->changeTab( w, dropText );
   }
 }
 
-void Test::initiateDrag( QWidget *w )
+void Test::initiateDrag( TQWidget *w )
 {
-   QDragObject *d = new QTextDrag( mWidget->label( mWidget->indexOf( w ) ), this );
+   TQDragObject *d = new TQTextDrag( mWidget->label( mWidget->indexOf( w ) ), this );
    d->dragCopy(); // do NOT delete d.
 }
 
@@ -136,11 +136,11 @@ void Test::toggleLeftButton(bool state)
 {
   if (state) {
     if (!mLeftWidget) {
-      mLeftWidget = new QToolButton( mWidget );
-      connect( mLeftWidget, SIGNAL( clicked() ), SLOT( addTab() ) );
+      mLeftWidget = new TQToolButton( mWidget );
+      connect( mLeftWidget, TQT_SIGNAL( clicked() ), TQT_SLOT( addTab() ) );
       mLeftWidget->setIconSet( SmallIcon( "tab_new" ) );
       mLeftWidget->setTextLabel("New");
-      mLeftWidget->setTextPosition(QToolButton::Right);
+      mLeftWidget->setTextPosition(TQToolButton::Right);
       mLeftWidget->adjustSize();
     //mLeftWidget->setGeometry( 0, 0, h, h );
       mLeftWidget->setPopup(mLeftPopup);
@@ -156,13 +156,13 @@ void Test::toggleLeftPopup(bool state)
 {
   if (state) {
     if (!mLeftPopup) {
-      mLeftPopup = new QPopupMenu(this);
+      mLeftPopup = new TQPopupMenu(this);
       mLeftPopup->insertItem(SmallIcon( "tab_new" ), "Empty Tab", 0);
       mLeftPopup->insertItem(SmallIcon( "tab_new" ), "Empty Tab After First", 3);
       mLeftPopup->insertSeparator();
       mLeftPopup->insertItem(SmallIcon( "tab_new" ), "Button Tab", 1);
       mLeftPopup->insertItem(SmallIcon( "tab_new" ), "Label Tab", 2);
-      connect(mLeftPopup, SIGNAL(activated(int)), SLOT(leftPopupActivated(int)));
+      connect(mLeftPopup, TQT_SIGNAL(activated(int)), TQT_SLOT(leftPopupActivated(int)));
     }
     mLeftWidget->setPopup(mLeftPopup);
   }
@@ -173,13 +173,13 @@ void Test::toggleLeftPopup(bool state)
 void Test::leftPopupActivated(int item)
 {
   switch (item) {
-    case 0: mWidget->addTab( new QWidget( mWidget), QString("Tab %1").arg( mWidget->count()+1 ) );
+    case 0: mWidget->addTab( new TQWidget( mWidget), TQString("Tab %1").arg( mWidget->count()+1 ) );
             break;
-    case 1: mWidget->addTab( new QPushButton( "Testbutton", mWidget ), QString("Tab %1").arg( mWidget->count()+1 ) );
+    case 1: mWidget->addTab( new TQPushButton( "Testbutton", mWidget ), TQString("Tab %1").arg( mWidget->count()+1 ) );
             break;
-    case 2: mWidget->addTab( new QLabel( "Testlabel", mWidget ), QString("Tab %1").arg( mWidget->count()+1 ) );
+    case 2: mWidget->addTab( new TQLabel( "Testlabel", mWidget ), TQString("Tab %1").arg( mWidget->count()+1 ) );
             break;
-    case 3: mWidget->insertTab( new QWidget( mWidget), QString("Tab %1").arg( mWidget->count()+1 ), 1 );
+    case 3: mWidget->insertTab( new TQWidget( mWidget), TQString("Tab %1").arg( mWidget->count()+1 ), 1 );
   }
 }
 
@@ -187,11 +187,11 @@ void Test::toggleRightButton(bool state)
 {
 if (state) {
     if ( !mRightWidget) {
-      mRightWidget = new QToolButton( mWidget );
-      QObject::connect( mRightWidget, SIGNAL( clicked() ), SLOT( removeCurrentTab() ) );
+      mRightWidget = new TQToolButton( mWidget );
+      TQObject::connect( mRightWidget, TQT_SIGNAL( clicked() ), TQT_SLOT( removeCurrentTab() ) );
       mRightWidget->setIconSet( SmallIcon( "tab_remove" ) );
       mRightWidget->setTextLabel("Close");
-      mRightWidget->setTextPosition(QToolButton::Right);
+      mRightWidget->setTextPosition(TQToolButton::Right);
       mRightWidget->adjustSize();
     //mRightButton->setGeometry( 0, 0, h, h );
       mRightWidget->setPopup(mRightPopup);
@@ -207,12 +207,12 @@ void Test::toggleRightPopup(bool state)
 {
   if (state) {
     if (!mRightPopup) {
-      mRightPopup = new QPopupMenu(this);
+      mRightPopup = new TQPopupMenu(this);
       mRightPopup->insertItem(SmallIcon( "tab_remove" ), "Current Tab", 1);
       mRightPopup->insertSeparator();
       mRightPopup->insertItem(SmallIcon( "tab_remove" ), "Most Left Tab", 0);
       mRightPopup->insertItem(SmallIcon( "tab_remove" ), "Most Right Tab", 2);
-      connect(mRightPopup, SIGNAL(activated(int)), SLOT(rightPopupActivated(int)));
+      connect(mRightPopup, TQT_SIGNAL(activated(int)), TQT_SLOT(rightPopupActivated(int)));
     }
     mRightWidget->setPopup(mRightPopup);
   }
@@ -238,12 +238,12 @@ void Test::rightPopupActivated(int item)
 
 void Test::toggleTabPosition(bool state)
 {
-  mWidget->setTabPosition(state ? QTabWidget::Bottom : QTabWidget::Top);
+  mWidget->setTabPosition(state ? TQTabWidget::Bottom : TQTabWidget::Top);
 }
 
 void Test::toggleTabShape(bool state)
 {
-  mWidget->setTabShape(state ? QTabWidget::Triangular : QTabWidget::Rounded);
+  mWidget->setTabShape(state ? TQTabWidget::Triangular : TQTabWidget::Rounded);
 }
 
 void Test::toggleCloseButtons(bool state)
@@ -251,12 +251,12 @@ void Test::toggleCloseButtons(bool state)
   mWidget->setHoverCloseButton( state );
 }
 
-void Test::contextMenu(QWidget *w, const QPoint &p)
+void Test::contextMenu(TQWidget *w, const TQPoint &p)
 {
   if (mContextPopup)
       delete mContextPopup;
 
-  mContextPopup = new QPopupMenu(this);
+  mContextPopup = new TQPopupMenu(this);
   mContextPopup->insertItem( "Activate Tab", 4);
   mContextPopup->insertSeparator();
   mContextPopup->insertItem(SmallIcon( "konsole" ), "Set This Icon", 0);
@@ -264,7 +264,7 @@ void Test::contextMenu(QWidget *w, const QPoint &p)
   mContextPopup->insertSeparator();
   mContextPopup->insertItem( mWidget->isTabEnabled(w) ? "Disable Tab" : "Enable Tab", 2);
   mContextPopup->insertItem( mWidget->tabToolTip(w).isEmpty() ? "Set Tooltip" : "Remove Tooltip", 3);
-  connect(mContextPopup, SIGNAL(activated(int)), SLOT(contextMenuActivated(int)));
+  connect(mContextPopup, TQT_SIGNAL(activated(int)), TQT_SLOT(contextMenuActivated(int)));
 
   mContextWidget = w;
   mContextPopup->popup(p);
@@ -290,17 +290,17 @@ void Test::contextMenuActivated(int item)
   mContextPopup = 0;
 }
 
-void Test::tabbarContextMenu(const QPoint &p)
+void Test::tabbarContextMenu(const TQPoint &p)
 {
   if (mTabbarContextPopup)
       delete mTabbarContextPopup;
 
-  mTabbarContextPopup = new QPopupMenu(this);
+  mTabbarContextPopup = new TQPopupMenu(this);
   mTabbarContextPopup->insertItem(SmallIcon( "tab_new" ), mLeftWidget->isVisible() ? "Hide \"Add\" Button" : "Show \"Add\" Button", 0);
   mTabbarContextPopup->insertItem(SmallIcon( "tab_remove" ), mRightWidget->isVisible() ? "Hide \"Remove\" Button" : "Show \"Remove\" Button", 1);
   mTabbarContextPopup->insertSeparator();
-  mTabbarContextPopup->insertItem(mWidget->tabPosition()==QTabWidget::Top ? "Put Tabbar to Bottom" : "Put Tabbar to Top", 2);
-  connect(mTabbarContextPopup, SIGNAL(activated(int)), SLOT(tabbarContextMenuActivated(int)));
+  mTabbarContextPopup->insertItem(mWidget->tabPosition()==TQTabWidget::Top ? "Put Tabbar to Bottom" : "Put Tabbar to Top", 2);
+  connect(mTabbarContextPopup, TQT_SIGNAL(activated(int)), TQT_SLOT(tabbarContextMenuActivated(int)));
 
   mTabbarContextPopup->popup(p);
 }
@@ -318,10 +318,10 @@ void Test::tabbarContextMenuActivated(int item)
   mTabbarContextPopup = 0;
 }
 
-void Test::mouseDoubleClick(QWidget *w)
+void Test::mouseDoubleClick(TQWidget *w)
 {
   bool ok;
-  QString text = KInputDialog::getText(
+  TQString text = KInputDialog::getText(
             "Rename Tab", "Enter new name:",
             mWidget->label( mWidget->indexOf( w ) ), &ok, this );
   if ( ok && !text.isEmpty() ) {
@@ -330,7 +330,7 @@ void Test::mouseDoubleClick(QWidget *w)
   }
 }
 
-void Test::mouseMiddleClick(QWidget *w)
+void Test::mouseMiddleClick(TQWidget *w)
 {
   if ( mWidget->count()==1 ) return;
 

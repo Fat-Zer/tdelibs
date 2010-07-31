@@ -33,7 +33,7 @@ class KABC_EXPORT ResourceNetConfig : public KRES::ConfigWidget
   Q_OBJECT
 
   public:
-    ResourceNetConfig( QWidget* parent = 0, const char* name = 0 );
+    ResourceNetConfig( TQWidget* parent = 0, const char* name = 0 );
 
     void setEditMode( bool value );
 
@@ -45,7 +45,7 @@ class KABC_EXPORT ResourceNetConfig : public KRES::ConfigWidget
     KComboBox* mFormatBox;
     KURLRequester* mUrlEdit;
 
-    QStringList mFormatTypes;
+    TQStringList mFormatTypes;
     bool mInEditMode;
 };
 

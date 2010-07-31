@@ -18,7 +18,7 @@
 #ifndef KISODIRECTORY_H
 #define KISODIRECTORY_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <karchive.h>
 
 /**
@@ -27,9 +27,9 @@
 
 class KIsoDirectory : public KArchiveDirectory  {
 public: 
-    KIsoDirectory( KArchive* archive, const QString& name, int access, int date,
-                    int adate,int cdate, const QString& user, const QString& group,
-                   const QString& symlink);
+    KIsoDirectory( KArchive* archive, const TQString& name, int access, int date,
+                    int adate,int cdate, const TQString& user, const TQString& group,
+                   const TQString& symlink);
     ~KIsoDirectory();
     int adate() const { return m_adate; }
     int cdate() const { return m_cdate; }

@@ -20,12 +20,12 @@
 #include "kextprinterimpl.h"
 #include "kprinter.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <klocale.h>
 
-KExtPrinterImpl::KExtPrinterImpl(QObject *parent, const char *name, const QStringList & /*args*/)
+KExtPrinterImpl::KExtPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KPrinterImpl(parent,name)
 {
 }
@@ -36,10 +36,10 @@ KExtPrinterImpl::~KExtPrinterImpl()
 
 void KExtPrinterImpl::preparePrinting(KPrinter *printer)
 {
-	printer->setOption("kde-qtcopies",QString::number(printer->numCopies()));
+	printer->setOption("kde-qtcopies",TQString::number(printer->numCopies()));
 }
 
-bool KExtPrinterImpl::setupCommand(QString& cmd, KPrinter *printer)
+bool KExtPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 {
 	cmd = printer->option("kde-printcommand").stripWhiteSpace();
 	if (cmd.isEmpty())

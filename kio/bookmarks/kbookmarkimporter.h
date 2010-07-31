@@ -21,9 +21,9 @@
 #ifndef __kbookmarkimporter_h
 #define __kbookmarkimporter_h
 
-#include <qdom.h>
-#include <qcstring.h>
-#include <qstringlist.h>
+#include <tqdom.h>
+#include <tqcstring.h>
+#include <tqstringlist.h>
 #include <ksimpleconfig.h>
 
 #include "kbookmark.h"
@@ -41,27 +41,27 @@ public:
     KBookmarkImporterBase() {}
     virtual ~KBookmarkImporterBase() {}
 
-    void setFilename(const QString &filename) { m_fileName = filename; }
+    void setFilename(const TQString &filename) { m_fileName = filename; }
 
     virtual void parse() = 0;
-    virtual QString findDefaultLocation(bool forSaving = false) const = 0;
+    virtual TQString findDefaultLocation(bool forSaving = false) const = 0;
 
     // TODO - make this static?
-    void setupSignalForwards(QObject *src, QObject *dst);
-    static KBookmarkImporterBase *factory(const QString &type);
+    void setupSignalForwards(TQObject *src, TQObject *dst);
+    static KBookmarkImporterBase *factory(const TQString &type);
 
 signals:
     /**
      * Notify about a new bookmark
      * Use "html" for the icon
      */
-    void newBookmark(const QString & text, const QCString & url, const QString & additionalInfo);
+    void newBookmark(const TQString & text, const TQCString & url, const TQString & additionalInfo);
 
     /**
      * Notify about a new folder
      * Use "bookmark_folder" for the icon
      */
-    void newFolder(const QString & text, bool open, const QString & additionalInfo);
+    void newFolder(const TQString & text, bool open, const TQString & additionalInfo);
 
     /**
      * Notify about a new separator
@@ -75,7 +75,7 @@ signals:
     void endFolder();
 
 protected:
-    QString m_fileName;
+    TQString m_fileName;
 
 private:
     class KBookmarkImporterBasePrivate *d;
@@ -90,7 +90,7 @@ class KIO_EXPORT KXBELBookmarkImporterImpl : public KBookmarkImporterBase, prote
 public:
     KXBELBookmarkImporterImpl() {}
     virtual void parse();
-    virtual QString findDefaultLocation(bool = false) const { return QString::null; }
+    virtual TQString findDefaultLocation(bool = false) const { return TQString::null; }
 protected:
     virtual void visit(const KBookmark &);
     virtual void visitEnter(const KBookmarkGroup &);

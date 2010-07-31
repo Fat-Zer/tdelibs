@@ -1,5 +1,5 @@
 #include <kiconloader.h>
-#include <qdatetime.h>
+#include <tqdatetime.h>
 #include <stdio.h>
 #include <kapplication.h>
 #include <stdlib.h>
@@ -11,16 +11,16 @@ int main(int argc, char *argv[])
 
   KIconLoader * mpLoader = KGlobal::iconLoader();
   KIcon::Context mContext = KIcon::Application;
-  QTime dt;
+  TQTime dt;
   dt.start();
   int count = 0;
   for ( int mGroup = 0; mGroup < KIcon::LastGroup ; ++mGroup )
   {
       kdDebug() << "queryIcons " << mGroup << "," << mContext << endl;
-      QStringList filelist=mpLoader->queryIcons(mGroup, mContext);
+      TQStringList filelist=mpLoader->queryIcons(mGroup, mContext);
       kdDebug() << " -> found " << filelist.count() << " icons." << endl;
       int i=0;
-      for(QStringList::Iterator it = filelist.begin();
+      for(TQStringList::Iterator it = filelist.begin();
           it != filelist.end() /*&& i<10*/;
           ++it, ++i )
       {

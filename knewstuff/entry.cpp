@@ -20,8 +20,8 @@
 
 #include "entry.h"
 
-#include <qptrdict.h>
-#include <qwindowdefs.h>
+#include <tqptrdict.h>
+#include <tqwindowdefs.h>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -34,17 +34,17 @@ class EntryPrivate
 {
   public:
   EntryPrivate(){}
-  QString mEmail;
-  QMap<QString,QString> mNameMap;
+  TQString mEmail;
+  TQMap<TQString,TQString> mNameMap;
 };
 
-static QPtrDict<EntryPrivate> *d_ptr = 0;
+static TQPtrDict<EntryPrivate> *d_ptr = 0;
 
 static EntryPrivate *d(const Entry *e)
 {
   if(!d_ptr)
   {
-    d_ptr = new QPtrDict<EntryPrivate>();
+    d_ptr = new TQPtrDict<EntryPrivate>();
     d_ptr->setAutoDelete(true);
   }
   EntryPrivate *ret = d_ptr->find((void*)e);
@@ -56,31 +56,31 @@ static EntryPrivate *d(const Entry *e)
   return ret;
 }
 
-QString Entry::authorEmail() const
+TQString Entry::authorEmail() const
 {
   return d(this)->mEmail;
 }
 
-void Entry::setAuthorEmail( const QString& email )
+void Entry::setAuthorEmail( const TQString& email )
 {
   d(this)->mEmail = email;
 }
 
-QString Entry::name( const QString &lang ) const
+TQString Entry::name( const TQString &lang ) const
 {
-  if ( d(this)->mNameMap.isEmpty() ) return QString::null;
+  if ( d(this)->mNameMap.isEmpty() ) return TQString::null;
 
   if ( !d(this)->mNameMap[ lang ].isEmpty() ) return d(this)->mNameMap[ lang ];
   else {
-    QStringList langs = KGlobal::locale()->languageList();
-    for(QStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
+    TQStringList langs = KGlobal::locale()->languageList();
+    for(TQStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
       if( !d(this)->mNameMap[ *it ].isEmpty() ) return d(this)->mNameMap[ *it ];
   }
-  if ( !d(this)->mNameMap[ QString::null ].isEmpty() ) return d(this)->mNameMap[ QString::null ];
+  if ( !d(this)->mNameMap[ TQString::null ].isEmpty() ) return d(this)->mNameMap[ TQString::null ];
   else return *(mSummaryMap.begin());
 }
 
-void Entry::setName( const QString &name, const QString &lang )
+void Entry::setName( const TQString &name, const TQString &lang )
 {
   d(this)->mNameMap.insert( lang, name );
 
@@ -90,12 +90,12 @@ void Entry::setName( const QString &name, const QString &lang )
 // BCI part ends here
 
 Entry::Entry() :
-  mRelease( 0 ), mReleaseDate( QDate::currentDate() ), mRating( 0 ),
+  mRelease( 0 ), mReleaseDate( TQDate::currentDate() ), mRating( 0 ),
   mDownloads( 0 )
 {
 }
 
-Entry::Entry( const QDomElement &e ) :
+Entry::Entry( const TQDomElement &e ) :
   mRelease( 0 ), mRating( 0 ), mDownloads( 0 )
 {
   parseDomElement( e );
@@ -118,78 +118,78 @@ Entry::~Entry()
 }
 
 
-void Entry::setName( const QString &name )
+void Entry::setName( const TQString &name )
 {
   mName = name;
 }
 
-QString Entry::name() const
+TQString Entry::name() const
 {
   return mName;
 }
 
 
-void Entry::setType( const QString &type )
+void Entry::setType( const TQString &type )
 {
   mType = type;
 }
 
-QString Entry::type() const
+TQString Entry::type() const
 {
   return mType;
 }
 
 
-void Entry::setAuthor( const QString &author )
+void Entry::setAuthor( const TQString &author )
 {
   mAuthor = author;
 }
 
-QString Entry::author() const
+TQString Entry::author() const
 {
   return mAuthor;
 }
 
 
-void Entry::setLicence( const QString &license )
+void Entry::setLicence( const TQString &license )
 {
   mLicence = license;
 }
 
-QString Entry::license() const
+TQString Entry::license() const
 {
   return mLicence;
 }
 
 
-void Entry::setSummary( const QString &text, const QString &lang )
+void Entry::setSummary( const TQString &text, const TQString &lang )
 {
   mSummaryMap.insert( lang, text );
 
   if ( mLangs.find( lang ) == mLangs.end() ) mLangs.append( lang );
 }
 
-QString Entry::summary( const QString &lang ) const
+TQString Entry::summary( const TQString &lang ) const
 {
-  if ( mSummaryMap.isEmpty() ) return QString::null;
+  if ( mSummaryMap.isEmpty() ) return TQString::null;
 
   if ( !mSummaryMap[ lang ].isEmpty() ) return mSummaryMap[ lang ];
   else {
-    QStringList langs = KGlobal::locale()->languageList();
-    for(QStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
+    TQStringList langs = KGlobal::locale()->languageList();
+    for(TQStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
       if( !mSummaryMap[ *it ].isEmpty() ) return mSummaryMap[ *it ];
   }
-  if ( !mSummaryMap[ QString::null ].isEmpty() ) return mSummaryMap[ QString::null ];
+  if ( !mSummaryMap[ TQString::null ].isEmpty() ) return mSummaryMap[ TQString::null ];
   else return *(mSummaryMap.begin());
 }
 
 
-void Entry::setVersion( const QString &version )
+void Entry::setVersion( const TQString &version )
 {
   mVersion = version;
 }
 
-QString Entry::version() const
+TQString Entry::version() const
 {
   return mVersion;
 }
@@ -206,33 +206,33 @@ int Entry::release() const
 }
 
 
-void Entry::setReleaseDate( const QDate &d )
+void Entry::setReleaseDate( const TQDate &d )
 {
   mReleaseDate = d;
 }
 
-QDate Entry::releaseDate() const
+TQDate Entry::releaseDate() const
 {
   return mReleaseDate;
 }
 
 
-void Entry::setPayload( const KURL &url, const QString &lang )
+void Entry::setPayload( const KURL &url, const TQString &lang )
 {
   mPayloadMap.insert( lang, url );
 
   if ( mLangs.find( lang ) == mLangs.end() ) mLangs.append( lang );
 }
 
-KURL Entry::payload( const QString &lang ) const
+KURL Entry::payload( const TQString &lang ) const
 {
   KURL payload = mPayloadMap[ lang ];
   if ( payload.isEmpty() ) {
-    QStringList langs = KGlobal::locale()->languageList();
-    for(QStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
+    TQStringList langs = KGlobal::locale()->languageList();
+    for(TQStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
       if( !mPayloadMap[ *it ].isEmpty() ) return mPayloadMap[ *it ];
   }
-  if ( payload.isEmpty() ) payload = mPayloadMap [ QString::null ];
+  if ( payload.isEmpty() ) payload = mPayloadMap [ TQString::null ];
   if ( payload.isEmpty() && !mPayloadMap.isEmpty() ) {
     payload = *(mPayloadMap.begin());
   }
@@ -240,22 +240,22 @@ KURL Entry::payload( const QString &lang ) const
 }
 
 
-void Entry::setPreview( const KURL &url, const QString &lang )
+void Entry::setPreview( const KURL &url, const TQString &lang )
 {
   mPreviewMap.insert( lang, url );
   
   if ( mLangs.find( lang ) == mLangs.end() ) mLangs.append( lang );
 }
 
-KURL Entry::preview( const QString &lang ) const
+KURL Entry::preview( const TQString &lang ) const
 {
   KURL preview = mPreviewMap[ lang ];
   if ( preview.isEmpty() ) {
-    QStringList langs = KGlobal::locale()->languageList();
-    for(QStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
+    TQStringList langs = KGlobal::locale()->languageList();
+    for(TQStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
       if( !mPreviewMap[ *it ].isEmpty() ) return mPreviewMap[ *it ];
   }
-  if ( preview.isEmpty() ) preview = mPreviewMap [ QString::null ];
+  if ( preview.isEmpty() ) preview = mPreviewMap [ TQString::null ];
   if ( preview.isEmpty() && !mPreviewMap.isEmpty() ) {
     preview = *(mPreviewMap.begin());
   }
@@ -284,56 +284,56 @@ int Entry::downloads()
   return mDownloads;
 }
 
-QString Entry::fullName()
+TQString Entry::fullName()
 {
   if ( version().isEmpty() )
     return name();
   else
-    return name() + "-" + version() + "-" + QString::number( release() );
+    return name() + "-" + version() + "-" + TQString::number( release() );
 }
 
-QStringList Entry::langs()
+TQStringList Entry::langs()
 {
   return mLangs;
 }
 
-void Entry::parseDomElement( const QDomElement &element )
+void Entry::parseDomElement( const TQDomElement &element )
 {
   if ( element.tagName() != "stuff" ) return;
   mType = element.attribute("type");
 
-  QDomNode n;
+  TQDomNode n;
   for( n = element.firstChild(); !n.isNull(); n = n.nextSibling() ) {
-    QDomElement e = n.toElement();
+    TQDomElement e = n.toElement();
     if ( e.tagName() == "name" )
     {
-      QString lang = e.attribute( "lang" );
+      TQString lang = e.attribute( "lang" );
       setName( e.text().stripWhiteSpace(), lang );
       if(lang.isNull()) setName( e.text().stripWhiteSpace() ); /* primary key - no i18n */
     }
     if ( e.tagName() == "author" ) {
       setAuthor( e.text().stripWhiteSpace() );
-      QString email = e.attribute( "email" );
+      TQString email = e.attribute( "email" );
       setAuthorEmail( email );
     }
     if ( e.tagName() == "email" ) setAuthorEmail( e.text().stripWhiteSpace() ); /* kde-look; change on server! */
     if ( e.tagName() == "licence" ) setLicence( e.text().stripWhiteSpace() );
     if ( e.tagName() == "summary" ) {
-      QString lang = e.attribute( "lang" );
+      TQString lang = e.attribute( "lang" );
       setSummary( e.text().stripWhiteSpace(), lang );
     }
     if ( e.tagName() == "version" ) setVersion( e.text().stripWhiteSpace() );
     if ( e.tagName() == "release" ) setRelease( e.text().toInt() );
     if ( e.tagName() == "releasedate" ) {
-      QDate date = QDate::fromString( e.text().stripWhiteSpace(), Qt::ISODate );
+      TQDate date = TQDate::fromString( e.text().stripWhiteSpace(), Qt::ISODate );
       setReleaseDate( date );
     }
     if ( e.tagName() == "preview" ) {
-      QString lang = e.attribute( "lang" );
+      TQString lang = e.attribute( "lang" );
       setPreview( KURL( e.text().stripWhiteSpace() ), lang );
     }
     if ( e.tagName() == "payload" ) {
-      QString lang = e.attribute( "lang" );
+      TQString lang = e.attribute( "lang" );
       setPayload( KURL( e.text().stripWhiteSpace() ), lang );
     }
     if ( e.tagName() == "rating" ) setRating( e.text().toInt() );
@@ -341,10 +341,10 @@ void Entry::parseDomElement( const QDomElement &element )
   }
 }
 
-QDomElement Entry::createDomElement( QDomDocument &doc,
-                                              QDomElement &parent )
+TQDomElement Entry::createDomElement( TQDomDocument &doc,
+                                              TQDomElement &parent )
 {
-  QDomElement entry = doc.createElement( "stuff" );
+  TQDomElement entry = doc.createElement( "stuff" );
   entry.setAttribute("type", mType);
   parent.appendChild( entry );
 
@@ -353,17 +353,17 @@ QDomElement Entry::createDomElement( QDomDocument &doc,
   addElement( doc, entry, "email", authorEmail() );
   addElement( doc, entry, "licence", license() );
   addElement( doc, entry, "version", version() );
-  addElement( doc, entry, "release", QString::number( release() ) );
-  addElement( doc, entry, "rating", QString::number( rating() ) );
-  addElement( doc, entry, "downloads", QString::number( downloads() ) );
+  addElement( doc, entry, "release", TQString::number( release() ) );
+  addElement( doc, entry, "rating", TQString::number( rating() ) );
+  addElement( doc, entry, "downloads", TQString::number( downloads() ) );
 
   addElement( doc, entry, "releasedate",
               releaseDate().toString( Qt::ISODate ) );
 
-  QStringList ls = langs();
-  QStringList::ConstIterator it;
+  TQStringList ls = langs();
+  TQStringList::ConstIterator it;
   for( it = ls.begin(); it != ls.end(); ++it ) {
-    QDomElement e = addElement( doc, entry, "summary", summary( *it ) );
+    TQDomElement e = addElement( doc, entry, "summary", summary( *it ) );
     e.setAttribute( "lang", *it );
     e = addElement( doc, entry, "preview", preview( *it ).url() );
     e.setAttribute( "lang", *it );
@@ -374,10 +374,10 @@ QDomElement Entry::createDomElement( QDomDocument &doc,
   return entry;
 }
 
-QDomElement Entry::addElement( QDomDocument &doc, QDomElement &parent,
-                               const QString &tag, const QString &value )
+TQDomElement Entry::addElement( TQDomDocument &doc, TQDomElement &parent,
+                               const TQString &tag, const TQString &value )
 {
-  QDomElement n = doc.createElement( tag );
+  TQDomElement n = doc.createElement( tag );
   n.appendChild( doc.createTextNode( value ) );
   parent.appendChild( n );
 

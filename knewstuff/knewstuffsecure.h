@@ -17,7 +17,7 @@
 #define KNEWSTUFFSECURE_H
 
 //qt includes
-#include <qobject.h>
+#include <tqobject.h>
 
 //kde includes
 #include "knewstuff.h"
@@ -37,7 +37,7 @@ to the standard KNewStuff class.
 
 @author Andras Mantia <amantia@kde.org>
 */
-class KDE_EXPORT KNewStuffSecure : public  QObject, public KNewStuff
+class KDE_EXPORT KNewStuffSecure : public  TQObject, public KNewStuff
 {
   Q_OBJECT
 
@@ -49,16 +49,16 @@ public:
       @param parentWidget parent widget of dialogs opened by the KNewStuff
               engine
      */
-    KNewStuffSecure(const QString &type,  QWidget *parentWidget=0);
+    KNewStuffSecure(const TQString &type,  TQWidget *parentWidget=0);
     virtual ~KNewStuffSecure();
 
     /** Installs the downloaded resource. Do not call or reimplement directly. 
         It's reimplemented from KNewStuff for internal reasons. 
     */
-    bool install( const QString &fileName );
+    bool install( const TQString &fileName );
     
     /** Reimplemented for internal reasons. */
-    bool createUploadFile(const QString &fileName);
+    bool createUploadFile(const TQString &fileName);
     
     /** Initiates a download. This is the method that must be called in
     * order to download a signed resource. */
@@ -67,7 +67,7 @@ public:
     /** Signs the file and uploads to the central server.
     * @param fileName The file to be signed and uploaded
     */
-    void uploadResource(const QString &fileName);
+    void uploadResource(const TQString &fileName);
     
 
 private slots:
@@ -93,9 +93,9 @@ protected:
     void removeTempDirectory();    
     
     KTempDir *m_tempDir;
-    QString m_tarName; 
-    QString m_signedFileName;
-    QMap<QString, QString> m_installedResources;
+    TQString m_tarName; 
+    TQString m_signedFileName;
+    TQMap<TQString, TQString> m_installedResources;
 };
 
 #endif

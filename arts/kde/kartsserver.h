@@ -22,7 +22,7 @@
 #define KARTSSERVER_H
 
 #include "kmedia2.h"
-#include <qobject.h>
+#include <tqobject.h>
 #include "soundserver.h"
 #include <kdelibs_export.h>
 
@@ -43,7 +43,7 @@ public:
 	 * Create a new KArtsServer. Don't forget to create a KArtsDispatcher
 	 * before using KArtsServer.
 	 */
-	KArtsServer(QObject *parent = 0, const char *name = 0);
+	KArtsServer(TQObject *parent = 0, const char *name = 0);
 	virtual ~KArtsServer(void);
 
 	/**

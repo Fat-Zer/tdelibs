@@ -46,13 +46,13 @@
 
 #include <sys/stat.h>
 #include <assert.h>
-#include <qdir.h>
-#include <qfile.h>
-#include <qintdict.h>
-#include <qptrlist.h>
-#include <qsocketnotifier.h>
-#include <qstringlist.h>
-#include <qtimer.h>
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqintdict.h>
+#include <tqptrlist.h>
+#include <tqsocketnotifier.h>
+#include <tqstringlist.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -120,7 +120,7 @@ void KDirWatchPrivate::dnotify_handler(int, siginfo_t *si, void *)
   Entry* e = dwp_self->fd_Entry.find(si->si_fd);
 
 //  kdDebug(7001) << "DNOTIFY Handler: fd " << si->si_fd << " path "
-//		<< QString(e ? e->path:"unknown") << endl;
+//		<< TQString(e ? e->path:"unknown") << endl;
 
   if(e && e->dn_fd == si->si_fd)
     e->dirty = true;
@@ -177,7 +177,7 @@ void KDirWatchPrivate::dnotify_sigio_handler(int sig, siginfo_t *si, void *p)
  * At the moment, the following methods for file watching
  * are supported:
  * - Polling: All files to be watched are polled regularly
- *   using stat (more precise: QFileInfo.lastModified()).
+ *   using stat (more precise: TQFileInfo.lastModified()).
  *   The polling frequency is determined from global kconfig
  *   settings, defaulting to 500 ms for local directories
  *   and 5000 ms for remote mounts
@@ -201,32 +201,32 @@ void KDirWatchPrivate::dnotify_sigio_handler(int sig, siginfo_t *si, void *p)
 KDirWatchPrivate::KDirWatchPrivate()
   : rescan_timer(0, "KDirWatchPrivate::rescan_timer")
 {
-  timer = new QTimer(this, "KDirWatchPrivate::timer");
-  connect (timer, SIGNAL(timeout()), this, SLOT(slotRescan()));
+  timer = new TQTimer(this, "KDirWatchPrivate::timer");
+  connect (timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotRescan()));
   freq = 3600000; // 1 hour as upper bound
   statEntries = 0;
   delayRemove = false;
   m_ref = 0;
 
-  KConfigGroup config(KGlobal::config(), QCString("DirWatch"));
+  KConfigGroup config(KGlobal::config(), TQCString("DirWatch"));
   m_nfsPollInterval = config.readNumEntry("NFSPollInterval", 5000);
   m_PollInterval = config.readNumEntry("PollInterval", 500);
 
-  QString available("Stat");
+  TQString available("Stat");
 
   // used for FAM and DNOTIFY
   rescan_all = false;
-  connect(&rescan_timer, SIGNAL(timeout()), this, SLOT(slotRescan()));
+  connect(&rescan_timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotRescan()));
 
 #ifdef HAVE_FAM
   // It's possible that FAM server can't be started
   if (FAMOpen(&fc) ==0) {
     available += ", FAM";
     use_fam=true;
-    sn = new QSocketNotifier( FAMCONNECTION_GETFD(&fc),
-			      QSocketNotifier::Read, this);
-    connect( sn, SIGNAL(activated(int)),
- 	     this, SLOT(famEventReceived()) );
+    sn = new TQSocketNotifier( FAMCONNECTION_GETFD(&fc),
+			      TQSocketNotifier::Read, this);
+    connect( sn, TQT_SIGNAL(activated(int)),
+ 	     this, TQT_SLOT(famEventReceived()) );
   }
   else {
     kdDebug(7001) << "Can't use FAM (fam daemon not running?)" << endl;
@@ -261,8 +261,8 @@ KDirWatchPrivate::KDirWatchPrivate()
     available += ", Inotify";
     fcntl(m_inotify_fd, F_SETFD, FD_CLOEXEC);
 
-    mSn = new QSocketNotifier( m_inotify_fd, QSocketNotifier::Read, this );
-    connect( mSn, SIGNAL(activated( int )), this, SLOT( slotActivated() ) );
+    mSn = new TQSocketNotifier( m_inotify_fd, TQSocketNotifier::Read, this );
+    connect( mSn, TQT_SIGNAL(activated( int )), this, TQT_SLOT( slotActivated() ) );
   }
 #endif
 
@@ -295,8 +295,8 @@ KDirWatchPrivate::KDirWatchPrivate()
     fcntl(mPipe[1], F_SETFD, FD_CLOEXEC);
     fcntl(mPipe[0], F_SETFL, O_NONBLOCK | fcntl(mPipe[0], F_GETFL));
     fcntl(mPipe[1], F_SETFL, O_NONBLOCK | fcntl(mPipe[1], F_GETFL));
-    mSn = new QSocketNotifier( mPipe[0], QSocketNotifier::Read, this);
-    connect(mSn, SIGNAL(activated(int)), this, SLOT(slotActivated()));
+    mSn = new TQSocketNotifier( mPipe[0], TQSocketNotifier::Read, this);
+    connect(mSn, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotActivated()));
     // Install the signal handler only once
     if ( dnotify_signal == 0 )
     {
@@ -388,9 +388,9 @@ void KDirWatchPrivate::slotActivated()
       pending -= sizeof( struct inotify_event ) + event->len;
       offset += sizeof( struct inotify_event ) + event->len;
 
-      QString path;
+      TQString path;
       if ( event->len )
-        path = QFile::decodeName( QCString( event->name, event->len ) );
+        path = TQFile::decodeName( TQCString( event->name, event->len ) );
 
       if ( path.length() && isNoisyFile( path.latin1() ) )
         continue;
@@ -411,9 +411,9 @@ void KDirWatchPrivate::slotActivated()
               kdDebug(7001) << "-->got deleteself signal for " << e->path << endl;
               e->m_status = NonExistent;
               if (e->isDir)
-                addEntry(0, QDir::cleanDirPath(e->path+"/.."), e, true);
+                addEntry(0, TQDir::cleanDirPath(e->path+"/.."), e, true);
               else
-                addEntry(0, QFileInfo(e->path).dirPath(true), e, true);
+                addEntry(0, TQFileInfo(e->path).dirPath(true), e, true);
             }
             if ( event->mask & IN_IGNORED ) {
               e->wd = 0;
@@ -426,7 +426,7 @@ void KDirWatchPrivate::slotActivated()
               if (sub_entry /*&& sub_entry->isDir*/) {
                 removeEntry(0,e->path, sub_entry);
                 KDE_struct_stat stat_buf;
-                QCString tpath = QFile::encodeName(path);
+                TQCString tpath = TQFile::encodeName(path);
                 KDE_stat(tpath, &stat_buf);
 
                 //sub_entry->isDir = S_ISDIR(stat_buf.st_mode);
@@ -459,7 +459,7 @@ void KDirWatchPrivate::slotActivated()
  */
 void KDirWatchPrivate::Entry::propagate_dirty()
 {
-  for (QPtrListIterator<Entry> sub_entry (m_entries); 
+  for (TQPtrListIterator<Entry> sub_entry (m_entries); 
        sub_entry.current(); ++sub_entry)
   {
      if (!sub_entry.current()->dirty)
@@ -521,14 +521,14 @@ int KDirWatchPrivate::Entry::clients()
 }
 
 
-KDirWatchPrivate::Entry* KDirWatchPrivate::entry(const QString& _path)
+KDirWatchPrivate::Entry* KDirWatchPrivate::entry(const TQString& _path)
 {
 // we only support absolute paths
-  if (QDir::isRelativePath(_path)) {
+  if (TQDir::isRelativePath(_path)) {
     return 0;
   }
 
-  QString path = _path;
+  TQString path = _path;
 
   if ( path.length() > 1 && path.right(1) == "/" )
     path.truncate( path.length() - 1 );
@@ -570,10 +570,10 @@ bool KDirWatchPrivate::useFAM(Entry* e)
   if (e->isDir) {
     if (e->m_status == NonExistent) {
       // If the directory does not exist we watch the parent directory
-      addEntry(0, QDir::cleanDirPath(e->path+"/.."), e, true);
+      addEntry(0, TQDir::cleanDirPath(e->path+"/.."), e, true);
     }
     else {
-      int res =FAMMonitorDirectory(&fc, QFile::encodeName(e->path),
+      int res =FAMMonitorDirectory(&fc, TQFile::encodeName(e->path),
 				   &(e->fr), e);
       if (res<0) {
 	e->m_mode = UnknownMode;
@@ -588,10 +588,10 @@ bool KDirWatchPrivate::useFAM(Entry* e)
   else {
     if (e->m_status == NonExistent) {
       // If the file does not exist we watch the directory
-      addEntry(0, QFileInfo(e->path).dirPath(true), e, true);
+      addEntry(0, TQFileInfo(e->path).dirPath(true), e, true);
     }
     else {
-      int res = FAMMonitorFile(&fc, QFile::encodeName(e->path),
+      int res = FAMMonitorFile(&fc, TQFile::encodeName(e->path),
 			       &(e->fr), e);
       if (res<0) {
 	e->m_mode = UnknownMode;
@@ -626,7 +626,7 @@ bool KDirWatchPrivate::useDNotify(Entry* e)
 
   if (e->isDir) {
     if (e->m_status == Normal) {
-      int fd = KDE_open(QFile::encodeName(e->path).data(), O_RDONLY);
+      int fd = KDE_open(TQFile::encodeName(e->path).data(), O_RDONLY);
       // Migrate fd to somewhere above 128. Some libraries have
       // constructs like:
       //    fd = socket(...)
@@ -673,13 +673,13 @@ bool KDirWatchPrivate::useDNotify(Entry* e)
 		    << ") for " << e->path << endl;
     }
     else { // NotExisting
-      addEntry(0, QDir::cleanDirPath(e->path+"/.."), e, true);
+      addEntry(0, TQDir::cleanDirPath(e->path+"/.."), e, true);
     }
   }
   else { // File
     // we always watch the directory (DNOTIFY can't watch files alone)
     // this notifies us about changes of files therein
-    addEntry(0, QFileInfo(e->path).dirPath(true), e, true);
+    addEntry(0, TQFileInfo(e->path).dirPath(true), e, true);
   }
 
   return true;
@@ -708,14 +708,14 @@ bool KDirWatchPrivate::useINotify( Entry* e )
   }
 
   if ( ( e->wd = inotify_add_watch( m_inotify_fd,
-        QFile::encodeName( e->path ), mask) ) > 0 )
+        TQFile::encodeName( e->path ), mask) ) > 0 )
     return true;
 
   if ( e->m_status == NonExistent ) {
     if (e->isDir) 
-      addEntry(0, QDir::cleanDirPath(e->path+"/.."), e, true);
+      addEntry(0, TQDir::cleanDirPath(e->path+"/.."), e, true);
     else
-      addEntry(0, QFileInfo(e->path).dirPath(true), e, true);
+      addEntry(0, TQFileInfo(e->path).dirPath(true), e, true);
     return true;
   }
 
@@ -753,10 +753,10 @@ bool KDirWatchPrivate::useStat(Entry* e)
  * Sometimes, entries are dependant on each other: if <sub_entry> !=0,
  * this entry needs another entry to watch himself (when notExistent).
  */
-void KDirWatchPrivate::addEntry(KDirWatch* instance, const QString& _path,
+void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
 				Entry* sub_entry, bool isDir)
 {
-  QString path = _path;
+  TQString path = _path;
   if (path.startsWith("/dev/") || (path == "/dev"))
     return; // Don't even go there.
 
@@ -801,7 +801,7 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const QString& _path,
            mask |= IN_ONLYDIR;
 
          inotify_rm_watch (m_inotify_fd, e->wd);
-         e->wd = inotify_add_watch( m_inotify_fd, QFile::encodeName( e->path ), mask);
+         e->wd = inotify_add_watch( m_inotify_fd, TQFile::encodeName( e->path ), mask);
        }
     }
 #endif
@@ -811,7 +811,7 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const QString& _path,
        (*it).addClient(instance);
        kdDebug(7001) << "Added already watched Entry " << path
 		     << " (now " <<  (*it).clients() << " clients)"
-		     << QString(" [%1]").arg(instance->name()) << endl;
+		     << TQString(" [%1]").arg(instance->name()) << endl;
     }
     return;
   }
@@ -819,7 +819,7 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const QString& _path,
   // we have a new path to watch
 
   KDE_struct_stat stat_buf;
-  QCString tpath = QFile::encodeName(path);
+  TQCString tpath = TQFile::encodeName(path);
   bool exists = (KDE_stat(tpath, &stat_buf) == 0);
 
   Entry newEntry;
@@ -854,8 +854,8 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const QString& _path,
 
   kdDebug(7001) << "Added " << (e->isDir ? "Dir ":"File ") << path
 		<< (e->m_status == NonExistent ? " NotExisting" : "")
-		<< (sub_entry ? QString(" for %1").arg(sub_entry->path) : QString(""))
-		<< (instance ? QString(" [%1]").arg(instance->name()) : QString(""))
+		<< (sub_entry ? TQString(" for %1").arg(sub_entry->path) : TQString(""))
+		<< (instance ? TQString(" [%1]").arg(instance->name()) : TQString(""))
 		<< endl;
 
 
@@ -883,7 +883,7 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const QString& _path,
 
 
 void KDirWatchPrivate::removeEntry( KDirWatch* instance,
-				    const QString& _path, Entry* sub_entry )
+				    const TQString& _path, Entry* sub_entry )
 {
   kdDebug(7001) << "KDirWatchPrivate::removeEntry for '" << _path << "' sub_entry: " << sub_entry << endl;
   Entry* e = entry(_path);
@@ -920,9 +920,9 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
     }
     else {
       if (e->isDir)
-	removeEntry(0, QDir::cleanDirPath(e->path+"/.."), e);
+	removeEntry(0, TQDir::cleanDirPath(e->path+"/.."), e);
       else
-	removeEntry(0, QFileInfo(e->path).dirPath(true), e);
+	removeEntry(0, TQFileInfo(e->path).dirPath(true), e);
     }
   }
 #endif
@@ -938,9 +938,9 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
     }
     else {
       if (e->isDir)
-	removeEntry(0, QDir::cleanDirPath(e->path+"/.."), e);
+	removeEntry(0, TQDir::cleanDirPath(e->path+"/.."), e);
       else
-	removeEntry(0, QFileInfo(e->path).dirPath(true), e);
+	removeEntry(0, TQFileInfo(e->path).dirPath(true), e);
     }
   }
 #endif
@@ -948,7 +948,7 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
 #ifdef HAVE_DNOTIFY
   if (e->m_mode == DNotifyMode) {
     if (!e->isDir) {
-      removeEntry(0, QFileInfo(e->path).dirPath(true), e);
+      removeEntry(0, TQFileInfo(e->path).dirPath(true), e);
     }
     else { // isDir
       // must close the FD.
@@ -964,7 +964,7 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
 	}
       }
       else {
-	removeEntry(0, QDir::cleanDirPath(e->path+"/.."), e);
+	removeEntry(0, TQDir::cleanDirPath(e->path+"/.."), e);
       }
     }
   }
@@ -979,8 +979,8 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
   }
 
   kdDebug(7001) << "Removed " << (e->isDir ? "Dir ":"File ") << e->path
-		<< (sub_entry ? QString(" for %1").arg(sub_entry->path) : QString(""))
-		<< (instance ? QString(" [%1]").arg(instance->name()) : QString(""))
+		<< (sub_entry ? TQString(" for %1").arg(sub_entry->path) : TQString(""))
+		<< (instance ? TQString(" [%1]").arg(instance->name()) : TQString(""))
 		<< endl;
   m_mapEntries.remove( e->path ); // <e> not valid any more
 }
@@ -991,7 +991,7 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
  */
 void KDirWatchPrivate::removeEntries( KDirWatch* instance )
 {
-  QPtrList<Entry> list;
+  TQPtrList<Entry> list;
   int minfreq = 3600000;
 
   // put all entries where instance is a client in list
@@ -1069,7 +1069,7 @@ bool KDirWatchPrivate::restartEntryScan( KDirWatch* instance, Entry* e,
   if (wasWatching == 0) {
     if (!notify) {
       KDE_struct_stat stat_buf;
-      bool exists = (KDE_stat(QFile::encodeName(e->path), &stat_buf) == 0);
+      bool exists = (KDE_stat(TQFile::encodeName(e->path), &stat_buf) == 0);
       if (exists) {
 	e->m_ctime = stat_buf.st_ctime;
 	e->m_status = Normal;
@@ -1161,7 +1161,7 @@ int KDirWatchPrivate::scanEntry(Entry* e)
   }
 
   KDE_struct_stat stat_buf;
-  bool exists = (KDE_stat(QFile::encodeName(e->path), &stat_buf) == 0);
+  bool exists = (KDE_stat(TQFile::encodeName(e->path), &stat_buf) == 0);
   if (exists) {
 
     if (e->m_status == NonExistent) {
@@ -1201,22 +1201,22 @@ int KDirWatchPrivate::scanEntry(Entry* e)
  * and stored pending events. When watching is stopped, the event is
  * added to the pending events.
  */
-void KDirWatchPrivate::emitEvent(Entry* e, int event, const QString &fileName)
+void KDirWatchPrivate::emitEvent(Entry* e, int event, const TQString &fileName)
 {
-  QString path = e->path;
+  TQString path = e->path;
   if (!fileName.isEmpty()) {
-    if (!QDir::isRelativePath(fileName))
+    if (!TQDir::isRelativePath(fileName))
       path = fileName;
     else
 #ifdef Q_OS_UNIX
       path += "/" + fileName;
 #elif defined(Q_WS_WIN)
       //current drive is passed instead of /
-      path += QDir::currentDirPath().left(2) + "/" + fileName;
+      path += TQDir::currentDirPath().left(2) + "/" + fileName;
 #endif
   }
 
-  QPtrListIterator<Client> cit( e->m_clients );
+  TQPtrListIterator<Client> cit( e->m_clients );
   for ( ; cit.current(); ++cit )
   {
     Client* c = cit.current();
@@ -1282,7 +1282,7 @@ void KDirWatchPrivate::slotRescan()
   delayRemove = true;
 
 #if defined(HAVE_DNOTIFY) || defined(HAVE_INOTIFY)
-  QPtrList<Entry> dList, cList;
+  TQPtrList<Entry> dList, cList;
 #endif
 
   if (rescan_all)
@@ -1354,17 +1354,17 @@ void KDirWatchPrivate::slotRescan()
   // Scan parent of deleted directories for new creation
   Entry* e;
   for(e=dList.first();e;e=dList.next())
-    addEntry(0, QDir::cleanDirPath( e->path+"/.."), e, true);
+    addEntry(0, TQDir::cleanDirPath( e->path+"/.."), e, true);
 
   // Remove watch of parent of new created directories
   for(e=cList.first();e;e=cList.next())
-    removeEntry(0, QDir::cleanDirPath( e->path+"/.."), e);
+    removeEntry(0, TQDir::cleanDirPath( e->path+"/.."), e);
 #endif
 
   if ( timerRunning )
     timer->start(freq);
 
-  QTimer::singleShot(0, this, SLOT(slotRemoveDelayed()));
+  TQTimer::singleShot(0, this, TQT_SLOT(slotRemoveDelayed()));
 }
 
 bool KDirWatchPrivate::isNoisyFile( const char * filename )
@@ -1413,7 +1413,7 @@ void KDirWatchPrivate::famEventReceived()
       checkFAMEvent(&fe);
   }
 
-  QTimer::singleShot(0, this, SLOT(slotRemoveDelayed()));
+  TQTimer::singleShot(0, this, TQT_SLOT(slotRemoveDelayed()));
 }
 
 void KDirWatchPrivate::checkFAMEvent(FAMEvent* fe)
@@ -1475,7 +1475,7 @@ void KDirWatchPrivate::checkFAMEvent(FAMEvent* fe)
     {
       case FAMDeleted:
        // file absolute: watched dir
-        if (!QDir::isRelativePath(fe->filename))
+        if (!TQDir::isRelativePath(fe->filename))
         {
           // a watched directory was deleted
 
@@ -1485,7 +1485,7 @@ void KDirWatchPrivate::checkFAMEvent(FAMEvent* fe)
                         << FAMREQUEST_GETREQNUM(&(e->fr))
                         << " for " << e->path << endl;
           // Scan parent for a new creation
-          addEntry(0, QDir::cleanDirPath( e->path+"/.."), e, true);
+          addEntry(0, TQDir::cleanDirPath( e->path+"/.."), e, true);
         }
         break;
 
@@ -1495,7 +1495,7 @@ void KDirWatchPrivate::checkFAMEvent(FAMEvent* fe)
           for(;sub_entry; sub_entry = e->m_entries.next())
             if (sub_entry->path == e->path + "/" + fe->filename) break;
           if (sub_entry && sub_entry->isDir) {
-            QString path = e->path;
+            TQString path = e->path;
             removeEntry(0,e->path,sub_entry); // <e> can be invalid here!!
             sub_entry->m_status = Normal;
             if (!useFAM(sub_entry))
@@ -1539,7 +1539,7 @@ void KDirWatchPrivate::statistics()
 
       Client* c = e->m_clients.first();
       for(;c; c = e->m_clients.next()) {
-	QString pending;
+	TQString pending;
 	if (c->watchingStopped) {
 	  if (c->pending & Deleted) pending += "deleted ";
 	  if (c->pending & Created) pending += "created ";
@@ -1585,14 +1585,14 @@ bool KDirWatch::exists()
   return s_pSelf != 0;
 }
 
-KDirWatch::KDirWatch (QObject* parent, const char* name)
-  : QObject(parent,name)
+KDirWatch::KDirWatch (TQObject* parent, const char* name)
+  : TQObject(parent,name)
 {
   if (!name) {
     static int nameCounter = 0;
 
     nameCounter++;
-    setName(QString("KDirWatch-%1").arg(nameCounter).ascii());
+    setName(TQString("KDirWatch-%1").arg(nameCounter).ascii());
   }
 
   if (!dwp_self)
@@ -1616,7 +1616,7 @@ KDirWatch::~KDirWatch()
 
 
 // TODO: add watchFiles/recursive support
-void KDirWatch::addDir( const QString& _path,
+void KDirWatch::addDir( const TQString& _path,
 			bool watchFiles, bool recursive)
 {
   if (watchFiles || recursive) {
@@ -1625,34 +1625,34 @@ void KDirWatch::addDir( const QString& _path,
   if (d) d->addEntry(this, _path, 0, true);
 }
 
-void KDirWatch::addFile( const QString& _path )
+void KDirWatch::addFile( const TQString& _path )
 {
   if (d) d->addEntry(this, _path, 0, false);
 }
 
-QDateTime KDirWatch::ctime( const QString &_path )
+TQDateTime KDirWatch::ctime( const TQString &_path )
 {
   KDirWatchPrivate::Entry* e = d->entry(_path);
 
   if (!e)
-    return QDateTime();
+    return TQDateTime();
 
-  QDateTime result;
+  TQDateTime result;
   result.setTime_t(e->m_ctime);
   return result;
 }
 
-void KDirWatch::removeDir( const QString& _path )
+void KDirWatch::removeDir( const TQString& _path )
 {
   if (d) d->removeEntry(this, _path, 0);
 }
 
-void KDirWatch::removeFile( const QString& _path )
+void KDirWatch::removeFile( const TQString& _path )
 {
   if (d) d->removeEntry(this, _path, 0);
 }
 
-bool KDirWatch::stopDirScan( const QString& _path )
+bool KDirWatch::stopDirScan( const TQString& _path )
 {
   if (d) {
     KDirWatchPrivate::Entry *e = d->entry(_path);
@@ -1661,7 +1661,7 @@ bool KDirWatch::stopDirScan( const QString& _path )
   return false;
 }
 
-bool KDirWatch::restartDirScan( const QString& _path )
+bool KDirWatch::restartDirScan( const TQString& _path )
 {
   if (d) {
     KDirWatchPrivate::Entry *e = d->entry(_path);
@@ -1685,7 +1685,7 @@ void KDirWatch::startScan( bool notify, bool skippedToo )
 }
 
 
-bool KDirWatch::contains( const QString& _path ) const
+bool KDirWatch::contains( const TQString& _path ) const
 {
   KDirWatchPrivate::Entry* e = d->entry(_path);
   if (!e)
@@ -1708,19 +1708,19 @@ void KDirWatch::statistics()
 }
 
 
-void KDirWatch::setCreated( const QString & _file )
+void KDirWatch::setCreated( const TQString & _file )
 {
   kdDebug(7001) << name() << " emitting created " << _file << endl;
   emit created( _file );
 }
 
-void KDirWatch::setDirty( const QString & _file )
+void KDirWatch::setDirty( const TQString & _file )
 {
   kdDebug(7001) << name() << " emitting dirty " << _file << endl;
   emit dirty( _file );
 }
 
-void KDirWatch::setDeleted( const QString & _file )
+void KDirWatch::setDeleted( const TQString & _file )
 {
   kdDebug(7001) << name() << " emitting deleted " << _file << endl;
   emit deleted( _file );

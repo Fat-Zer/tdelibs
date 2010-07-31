@@ -18,15 +18,15 @@
 #ifndef __KDRAWUTIL_H
 #define __KDRAWUTIL_H
 
-#include <qnamespace.h>
-#include <qpainter.h>
-#include <qbitmap.h>
-#include <qpalette.h>
+#include <tqnamespace.h>
+#include <tqpainter.h>
+#include <tqbitmap.h>
+#include <tqpalette.h>
 
 #include <kdelibs_export.h>
 
 /*
- * Various drawing routines. Also see Qt's qdrawutil.h for some more routines
+ * Various drawing routines. Also see Qt's tqdrawutil.h for some more routines
  * contained in Qt.
  *
  * (C) Daniel M. Duley <mosfet@kde.org>
@@ -45,16 +45,16 @@
  * @param fill    The brush to use for filling the interior of the button.
  *                Pass @a null to prevent the button from being filled.
  */
-KDEFX_EXPORT void kDrawNextButton(QPainter *p, const QRect &r, const QColorGroup &g,
-                     bool sunken=false, const QBrush *fill=0);
+KDEFX_EXPORT void kDrawNextButton(TQPainter *p, const TQRect &r, const TQColorGroup &g,
+                     bool sunken=false, const TQBrush *fill=0);
 
 /**
  * @relates KStyle
  * @overload
  */
-KDEFX_EXPORT void kDrawNextButton(QPainter *p, int x, int y, int w, int h,
-                     const QColorGroup &g, bool sunken=false, 
-                     const QBrush *fill=0);
+KDEFX_EXPORT void kDrawNextButton(TQPainter *p, int x, int y, int w, int h,
+                     const TQColorGroup &g, bool sunken=false, 
+                     const TQBrush *fill=0);
 
 /**
  * @relates KStyle
@@ -69,17 +69,17 @@ KDEFX_EXPORT void kDrawNextButton(QPainter *p, int x, int y, int w, int h,
  * @param fill    The brush to use for filling the interior of the button.
  *                Pass @a null to prevent the button from being filled.
  */
-KDEFX_EXPORT void kDrawBeButton(QPainter *p, QRect &r, const QColorGroup &g,
-                   bool sunken=false, const QBrush *fill=0);
+KDEFX_EXPORT void kDrawBeButton(TQPainter *p, TQRect &r, const TQColorGroup &g,
+                   bool sunken=false, const TQBrush *fill=0);
 
 /**
  * @relates KStyle
  * @c \#include @c <kdrawutil.h>
  * @overload
  */
-KDEFX_EXPORT void kDrawBeButton(QPainter *p, int x, int y, int w, int h,
-                   const QColorGroup &g, bool sunken=false, 
-                   const QBrush *fill=0);
+KDEFX_EXPORT void kDrawBeButton(TQPainter *p, int x, int y, int w, int h,
+                   const TQColorGroup &g, bool sunken=false, 
+                   const TQBrush *fill=0);
 
 /**
  * @relates KStyle
@@ -93,15 +93,15 @@ KDEFX_EXPORT void kDrawBeButton(QPainter *p, int x, int y, int w, int h,
  * @param g       Specifies the shading colors.
  * @param sunken  Whether to draw the button as sunken (pressed) or not.
  */
-KDEFX_EXPORT void kDrawRoundButton(QPainter *p, const QRect &r, const QColorGroup &g,
+KDEFX_EXPORT void kDrawRoundButton(TQPainter *p, const TQRect &r, const TQColorGroup &g,
                       bool sunken=false);
 
 /**
  * @relates KStyle
  * @overload
  */
-KDEFX_EXPORT void kDrawRoundButton(QPainter *p, int x, int y, int w, int h,
-                      const QColorGroup &g, bool sunken=false);
+KDEFX_EXPORT void kDrawRoundButton(TQPainter *p, int x, int y, int w, int h,
+                      const TQColorGroup &g, bool sunken=false);
 
 /**
  * @relates KStyle
@@ -118,14 +118,14 @@ KDEFX_EXPORT void kDrawRoundButton(QPainter *p, int x, int y, int w, int h,
  *
  * @see kDrawRoundButton() and kDrawRoundMask()
  */
-KDEFX_EXPORT void kRoundMaskRegion(QRegion &r, int x, int y, int w, int h);
+KDEFX_EXPORT void kRoundMaskRegion(TQRegion &r, int x, int y, int w, int h);
 
 /**
  * @relates KStyle
  * @c \#include @c <kdrawutil.h>
  *
  * Paints the pixels covered by a round button of the given size with
- * Qt::color1. This function is useful in QStyle::drawControlMask().
+ * Qt::color1. This function is useful in TQStyle::drawControlMask().
  *
  * @param p      The painter to use for drawing the button.
  * @param x      The X coordinate of the button.
@@ -135,7 +135,7 @@ KDEFX_EXPORT void kRoundMaskRegion(QRegion &r, int x, int y, int w, int h);
  * @param clear  Whether to clear the rectangle specified by @p (x, y, w, h) to
  *               Qt::color0 before drawing the mask.
  */
-KDEFX_EXPORT void kDrawRoundMask(QPainter *p, int x, int y, int w, int h, bool clear=false);
+KDEFX_EXPORT void kDrawRoundMask(TQPainter *p, int x, int y, int w, int h, bool clear=false);
 
 /**
  * @relates KStyle
@@ -161,17 +161,17 @@ KDEFX_EXPORT void kDrawRoundMask(QPainter *p, int x, int y, int w, int h, bool c
  *
  * @see QColorGroup
  */
-KDEFX_EXPORT void kColorBitmaps(QPainter *p, const QColorGroup &g, int x, int y,
-                   QBitmap *lightColor=0, QBitmap *midColor=0,
-                   QBitmap *midlightColor=0, QBitmap *darkColor=0,
-                   QBitmap *blackColor=0, QBitmap *whiteColor=0);
+KDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int y,
+                   TQBitmap *lightColor=0, TQBitmap *midColor=0,
+                   TQBitmap *midlightColor=0, TQBitmap *darkColor=0,
+                   TQBitmap *blackColor=0, TQBitmap *whiteColor=0);
 
 /**
  * @relates KStyle
  * @c \#include @c <kdrawutil.h>
  * @overload
  */
- KDEFX_EXPORT void kColorBitmaps(QPainter *p, const QColorGroup &g, int x, int y, int w,
+ KDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int y, int w,
                    int h, bool isXBitmaps=true, const uchar *lightColor = 0,
                    const uchar *midColor=0, const uchar *midlightColor=0,
                    const uchar *darkColor=0, const uchar *blackColor=0,

@@ -23,7 +23,7 @@
 #ifndef __kbookmarkexporter_h
 #define __kbookmarkexporter_h
 
-#include <qtextstream.h>
+#include <tqtextstream.h>
 #include <kbookmark.h>
 
 /**
@@ -32,13 +32,13 @@
 class KIO_EXPORT KBookmarkExporterBase
 {
 public:
-    KBookmarkExporterBase(KBookmarkManager* mgr, const QString & fileName)
+    KBookmarkExporterBase(KBookmarkManager* mgr, const TQString & fileName)
         : m_fileName(fileName), m_pManager(mgr) 
     { ; }
     virtual ~KBookmarkExporterBase() {}
     virtual void write(KBookmarkGroup) = 0;
 protected:
-    QString m_fileName;
+    TQString m_fileName;
     KBookmarkManager* m_pManager;
 private:
     class KBookmarkExporterBasePrivate *d;

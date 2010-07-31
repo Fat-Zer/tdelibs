@@ -18,7 +18,7 @@
 */
 #ifndef __scriptclientinterface_h__
 #define __scriptclientinterface_h__
-#include <qvariant.h>
+#include <tqvariant.h>
 
 class QString;
 
@@ -32,11 +32,11 @@ class QString;
 	*	There are currently a few implementations of script managers around but developers can implement their own custom
 	*	interfaces with this class.
 	* @code
-	*	class MyScript : public QObject, public KScriptClientInterface {
+	*	class MyScript : public TQObject, public KScriptClientInterface {
 	*	Q_OBJECT
 	*	public:
 	*
-	*	MyScript(QObject *parent)
+	*	MyScript(TQObject *parent)
 	*	{
 	*		// Create your @ref KScriptInterface here.
 	*		m_interface = KParts::ComponentFactory::createInstanceFromQuery<KScriptInterface>( 
@@ -49,14 +49,14 @@ class QString;
 	*	}
 	*
 	*	signals:
-	*	void error ( const QString &msg );
-	*	void warning ( const QString &msg );
-	*	void output ( const QString &msg );
+	*	void error ( const TQString &msg );
+	*	void warning ( const TQString &msg );
+	*	void output ( const TQString &msg );
 	*	void progress ( int percent );
-	*	void done ( KScriptClientInterface::Result result, const QVariant &returned );
+	*	void done ( KScriptClientInterface::Result result, const TQVariant &returned );
 	*
 	*	public slots:
-	*	void activate(const QVariant &args)
+	*	void activate(const TQVariant &args)
 	*	{
 	*		m_interface->run(parent(), args);
 	*	}
@@ -80,21 +80,21 @@ class QString;
 		*	For script clients its best to implement this as a signal so feedback
 		*	can be sent to the main application.
 		*/
-		virtual void error( const QString &msg ) =0;
+		virtual void error( const TQString &msg ) =0;
 		/**
 		*	This function will allow the main application of any warnings
 		*	that have occurred during the processing of the script.
 		*	For script clients its best to implement this as a signal so feedback
 		*	can be sent to the main application.
 		*/
-		virtual void warning( const QString &msg ) =0;
+		virtual void warning( const TQString &msg ) =0;
 		/**
 		*	This function will allow the main application of any normal
 		*	output that has occurred during the processing of the script.
 		*	For script clients its best to implement this as a signal so feedback
 		*	can be sent to the main application.
 		*/
-		virtual void output( const QString &msg ) =0;
+		virtual void output( const TQString &msg ) =0;
 		/**
 		*	This function will allow feedback to any progress bars in the main
 		*	application as to how far along the script is.  This is very useful when
@@ -111,7 +111,7 @@ class QString;
 		*	For script clients its best to implement this as a signal so feedback
 		*	can be sent to the main application.
 		*/
-		virtual void done( KScriptClientInterface::Result result, const QVariant &returned )  =0;
+		virtual void done( KScriptClientInterface::Result result, const TQVariant &returned )  =0;
 		/**
 		*	Returned when the script has finished running.
 		*	For script clients its best to implement this as a signal so feedback

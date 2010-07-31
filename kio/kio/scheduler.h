@@ -24,9 +24,9 @@
 
 #include "kio/job.h"
 #include "kio/jobclasses.h"
-#include <qtimer.h>
-#include <qptrdict.h>
-#include <qmap.h>
+#include <tqtimer.h>
+#include <tqptrdict.h>
+#include <tqmap.h>
 
 #include <dcopobject.h>
 
@@ -108,11 +108,11 @@ namespace KIO {
      * @see KIO::Job
      **/
 
-    class KIO_EXPORT Scheduler : public QObject, virtual public DCOPObject {
+    class KIO_EXPORT Scheduler : public TQObject, virtual public DCOPObject {
         Q_OBJECT
 
     public:
-        typedef QPtrList<SimpleJob> JobList;
+        typedef TQPtrList<SimpleJob> JobList;
 
         // InfoDict needs Info, so we can't declare it private
         class ProtocolInfo;
@@ -236,18 +236,18 @@ namespace KIO {
          * the that was started.
          * Register the mainwindow @p wid with the KIO subsystem
          * Do not call this, it is called automatically from
-         * void KIO::Job::setWindow(QWidget*).
+         * void KIO::Job::setWindow(TQWidget*).
 	 * @param wid the window to register
 	 * @since 3.1
          */
-        static void registerWindow(QWidget *wid)
+        static void registerWindow(TQWidget *wid)
         { self()->_registerWindow(wid); }
         
         /**
          * @internal
          * Unregisters the window registered by registerWindow().
          */
-        static void unregisterWindow(QObject *wid)
+        static void unregisterWindow(TQObject *wid)
         { self()->slotUnregisterWindow(wid); }
 
         /**
@@ -256,21 +256,21 @@ namespace KIO {
          * @see slaveConnected()
          * @see slaveError()
          */
-        static bool connect( const char *signal, const QObject *receiver,
+        static bool connect( const char *signal, const TQObject *receiver,
                              const char *member)
-        { return QObject::connect(self(), signal, receiver, member); }
+        { return TQObject::connect(self(), signal, receiver, member); }
 
-        static bool connect( const QObject* sender, const char* signal,
-                             const QObject* receiver, const char* member )
-        { return QObject::connect(sender, signal, receiver, member); }
+        static bool connect( const TQObject* sender, const char* signal,
+                             const TQObject* receiver, const char* member )
+        { return TQObject::connect(sender, signal, receiver, member); }
 
-        static bool disconnect( const QObject* sender, const char* signal,
-                                const QObject* receiver, const char* member )
-        { return QObject::disconnect(sender, signal, receiver, member); }
+        static bool disconnect( const TQObject* sender, const char* signal,
+                                const TQObject* receiver, const char* member )
+        { return TQObject::disconnect(sender, signal, receiver, member); }
 
-        bool connect( const QObject *sender, const char *signal,
+        bool connect( const TQObject *sender, const char *signal,
                       const char *member )
-        { return QObject::connect(sender, signal, member); }
+        { return TQObject::connect(sender, signal, member); }
 
         /**
          * When true, the next job will check whether KLauncher has a slave 
@@ -281,21 +281,21 @@ namespace KIO {
 
         void debug_info();
 
-        virtual bool process(const QCString &fun, const QByteArray &data,
-                             QCString& replyType, QByteArray &replyData);
+        virtual bool process(const TQCString &fun, const TQByteArray &data,
+                             TQCString& replyType, TQByteArray &replyData);
 
         virtual QCStringList functions();
 
     public slots:
         void slotSlaveDied(KIO::Slave *slave);
-        void slotSlaveStatus(pid_t pid, const QCString &protocol,
-                             const QString &host, bool connected);
+        void slotSlaveStatus(pid_t pid, const TQCString &protocol,
+                             const TQString &host, bool connected);
     signals:
         void slaveConnected(KIO::Slave *slave);
-        void slaveError(KIO::Slave *slave, int error, const QString &errorMsg);
+        void slaveError(KIO::Slave *slave, int error, const TQString &errorMsg);
 
     protected:
-        void setupSlave(KIO::Slave *slave, const KURL &url, const QString &protocol, const QString &proxy , bool newSlave, const KIO::MetaData *config=0);
+        void setupSlave(KIO::Slave *slave, const KURL &url, const TQString &protocol, const TQString &proxy , bool newSlave, const KIO::MetaData *config=0);
         bool startJobScheduled(ProtocolInfo *protInfo);
         bool startJobDirect();
         Scheduler();
@@ -304,10 +304,10 @@ namespace KIO {
         void startStep();
         void slotCleanIdleSlaves();
         void slotSlaveConnected();
-        void slotSlaveError(int error, const QString &errorMsg);
+        void slotSlaveError(int error, const TQString &errorMsg);
         void slotScheduleCoSlave();
       /// @since 3.1
-        void slotUnregisterWindow(QObject *);
+        void slotUnregisterWindow(TQObject *);
 
     private:
         class ProtocolInfoDict;
@@ -328,15 +328,15 @@ namespace KIO {
         bool _disconnectSlave(KIO::Slave *slave);
         void _checkSlaveOnHold(bool b);
         void _publishSlaveOnHold();
-        void _registerWindow(QWidget *wid);
+        void _registerWindow(TQWidget *wid);
         
         Slave *findIdleSlave(ProtocolInfo *protInfo, SimpleJob *job, bool &exact);
         Slave *createSlave(ProtocolInfo *protInfo, SimpleJob *job, const KURL &url);
         
 
-        QTimer slaveTimer;
-        QTimer coSlaveTimer;
-        QTimer cleanupTimer;
+        TQTimer slaveTimer;
+        TQTimer coSlaveTimer;
+        TQTimer cleanupTimer;
         bool busy;
 
         SlaveList *slaveList;
@@ -348,12 +348,12 @@ namespace KIO {
         KURL urlOnHold;
         JobList newJobs;
 
-        QPtrDict<JobList> coSlaves;
+        TQPtrDict<JobList> coSlaves;
         ExtraJobData *extraJobData;
         SlaveConfig *slaveConfig;
         SessionData *sessionData;
         bool checkOnHold;
-        QMap<QObject *,WId> m_windowList;
+        TQMap<TQObject *,WId> m_windowList;
     protected:
 	virtual void virtual_hook( int id, void* data );
     private:

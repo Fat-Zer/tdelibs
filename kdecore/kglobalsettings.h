@@ -18,9 +18,9 @@
 #ifndef _KGLOBALSETTINGS_H
 #define _KGLOBALSETTINGS_H
 
-#include <qstring.h>
-#include <qcolor.h>
-#include <qfont.h>
+#include <tqstring.h>
+#include <tqcolor.h>
+#include <tqfont.h>
 #include "kdelibs_export.h"
 
 #define KDE_DEFAULT_SINGLECLICK true
@@ -55,25 +55,25 @@ class KDECORE_EXPORT KGlobalSettings
      * to click on something but moved the mouse a bit while doing so.
      *
      * For this to work you must save the position of the mouse (oldPos)
-     * in the QWidget::mousePressEvent().
+     * in the TQWidget::mousePressEvent().
      * When the position of the mouse (newPos)
-     * in a QWidget::mouseMoveEvent() exceeds this threshold
+     * in a TQWidget::mouseMoveEvent() exceeds this threshold
      * you may start a drag
      * which should originate from oldPos.
      *
      * Example code:
      * \code
-     * void KColorCells::mousePressEvent( QMouseEvent *e )
+     * void KColorCells::mousePressEvent( TQMouseEvent *e )
      * {
      *    mOldPos = e->pos();
      * }
      *
-     * void KColorCells::mouseMoveEvent( QMouseEvent *e )
+     * void KColorCells::mouseMoveEvent( TQMouseEvent *e )
      * {
      *    if( !(e->state() && LeftButton)) return;
      *
      *    int delay = KGlobalSettings::dndEventDelay();
-     *    QPoint newPos = e->pos();
+     *    TQPoint newPos = e->pos();
      *    if(newPos.x() > mOldPos.x()+delay || newPos.x() < mOldPos.x()-delay ||
      *       newPos.y() > mOldPos.y()+delay || newPos.y() < mOldPos.y()-delay)
      *    {
@@ -222,20 +222,20 @@ class KDECORE_EXPORT KGlobalSettings
      * The path to the desktop directory of the current user.
      * @return the user's desktop directory
      */
-    static QString desktopPath() { initStatic(); return *s_desktopPath; }
+    static TQString desktopPath() { initStatic(); return *s_desktopPath; }
 
     /**
      * The path to the autostart directory of the current user.
      * @return the path of the autostart directory
      */
-    static QString autostartPath() { initStatic(); return *s_autostartPath; }
+    static TQString autostartPath() { initStatic(); return *s_autostartPath; }
 
     /**
      * DEPRECATED (starting from kde-3.4).
      * This isn't where the trash contents is, anymore.
      * Use KIO::trash() to trash files, "trash:/" to list the trash contents.
      */
-    static QString trashPath() { initStatic(); return *s_trashPath; }
+    static TQString trashPath() { initStatic(); return *s_trashPath; }
     // KDE4: if you want to remove the above, move it to kdesktop/init.cc, which needs
     // to know the old location of the trash
 
@@ -243,38 +243,38 @@ class KDECORE_EXPORT KGlobalSettings
      * The path where documents are stored of the current user.
      * @return the path of the document directory
      */
-    static QString documentPath() { initStatic(); return *s_documentPath; }
+    static TQString documentPath() { initStatic(); return *s_documentPath; }
 
 
     /**
      * The default color to use when highlighting toolbar buttons.
      * @return the toolbar highlight color
      */
-    static QColor toolBarHighlightColor();
+    static TQColor toolBarHighlightColor();
 
     /**
      * The default color to use for inactive titles.
      * @return the inactive title color
      */
-    static QColor inactiveTitleColor();
+    static TQColor inactiveTitleColor();
 
     /**
      * The default color to use for inactive texts.
      * @return the inactive text color
      */
-    static QColor inactiveTextColor();
+    static TQColor inactiveTextColor();
 
     /**
      * The default color to use for active titles.
      * @return the active title color
      */
-    static QColor activeTitleColor();
+    static TQColor activeTitleColor();
 
     /**
      * The default color to use for active texts.
      * @return the active text color
      */
-    static QColor activeTextColor();
+    static TQColor activeTextColor();
 
     /**
      * Returns the contrast for borders.
@@ -288,54 +288,54 @@ class KDECORE_EXPORT KGlobalSettings
      * @return the button background color
      * @since 3.4
      */
-    static QColor buttonBackground();
+    static TQColor buttonBackground();
 
     /**
      * Returns the button text color
      * @return the button text color
      * @since 3.4
      */
-    static QColor buttonTextColor();
+    static TQColor buttonTextColor();
 
     /**
      * Returns the default base (background) color.
      * @return the default base (background) color
-     * @see QColorGroup::base()
+     * @see TQColorGroup::base()
      */
-    static QColor baseColor();
+    static TQColor baseColor();
 
     /**
      * Returns the default text color.
      * @return the default text color
-     * @see QColorGroup::text()
+     * @see TQColorGroup::text()
      */
-    static QColor textColor();
+    static TQColor textColor();
 
     /**
      * Returns the default link color.
      * @return the default link color
      */
-    static QColor linkColor();
+    static TQColor linkColor();
 
     /**
      * Returns the default color for visited links.
      * @return the default color for visited links
      */
-    static QColor visitedLinkColor();
+    static TQColor visitedLinkColor();
 
     /**
      * Returns the default color for highlighted text.
      * @return the default color for highlighted text
-     * @see QColorGroup::hightlightedText()
+     * @see TQColorGroup::hightlightedText()
      */
-    static QColor highlightedTextColor();
+    static TQColor highlightedTextColor();
 
     /**
      * Returns the default color for text highlights.
      * @return the default color for text highlights
-     * @see QColorGroup::hightlight()
+     * @see TQColorGroup::hightlight()
      */
-    static QColor highlightColor();
+    static TQColor highlightColor();
 
     /**
      * Returns the alternate background color used by KListView with
@@ -345,7 +345,7 @@ class KDECORE_EXPORT KGlobalSettings
      * @return the alternate background color
      * @see calculateAlternateBackgroundColor
      */
-    static QColor alternateBackgroundColor();
+    static TQColor alternateBackgroundColor();
 
     /**
      * Calculates a color based on @p base to be used as alternating
@@ -354,7 +354,7 @@ class KDECORE_EXPORT KGlobalSettings
      * @return the calculated color
      * @see alternateBackgroundColor
      */
-    static QColor calculateAlternateBackgroundColor(const QColor& base);
+    static TQColor calculateAlternateBackgroundColor(const TQColor& base);
 
     /**
       * Returns if the sorted column in a KListView shall be drawn with a
@@ -368,37 +368,37 @@ class KDECORE_EXPORT KGlobalSettings
      * Returns the default general font.
      * @return the default general font.
      */
-    static QFont generalFont();
+    static TQFont generalFont();
 
     /**
      * Returns the default fixed font.
      * @return the default fixed font.
      */
-    static QFont fixedFont();
+    static TQFont fixedFont();
 
     /**
      * Returns the default toolbar font.
      * @return the default toolbar font.
      */
-    static QFont toolBarFont();
+    static TQFont toolBarFont();
 
     /**
      * Returns the default menu font.
      * @return the default menu font.
      */
-    static QFont menuFont();
+    static TQFont menuFont();
 
     /**
      * Returns the default window title font.
      * @return the default window title font.
      */
-    static QFont windowTitleFont();
+    static TQFont windowTitleFont();
 
     /**
      * Returns the default taskbar font.
      * @return the default taskbar font.
      */
-    static QFont taskbarFont();
+    static TQFont taskbarFont();
 
     /**
      * Returns a font of approx. 48 pt. capable of showing @p text.
@@ -406,7 +406,7 @@ class KDECORE_EXPORT KGlobalSettings
      * @return the font that is capable to show the text with 48 pt
      * @since 3.1
      */
-    static QFont largeFont(const QString &text = QString::null);
+    static TQFont largeFont(const TQString &text = TQString::null);
 
     /**
      * Returns if the user specified multihead. In case the display
@@ -418,9 +418,9 @@ class KDECORE_EXPORT KGlobalSettings
     static bool isMultiHead();
 
     /**
-     * Typically, QScrollView derived classes can be scrolled fast by
+     * Typically, TQScrollView derived classes can be scrolled fast by
      * holding down the Ctrl-button during wheel-scrolling.
-     * But QTextEdit and derived classes perform zooming instead of fast
+     * But TQTextEdit and derived classes perform zooming instead of fast
      * scrolling.
      *
      * This value determines whether the user wants to zoom or scroll fast
@@ -441,7 +441,7 @@ class KDECORE_EXPORT KGlobalSettings
      *         start at (0,0).
      * @since 3.2
      */
-    static QRect splashScreenDesktopGeometry();
+    static TQRect splashScreenDesktopGeometry();
 
     /**
      * This function returns the desktop geometry for an application that needs
@@ -459,7 +459,7 @@ class KDECORE_EXPORT KGlobalSettings
      *         start at (0,0).
      * @since 3.2
      */
-    static QRect desktopGeometry(const QPoint& point);
+    static TQRect desktopGeometry(const TQPoint& point);
 
     /**
      * This function returns the desktop geometry for an application that needs
@@ -474,7 +474,7 @@ class KDECORE_EXPORT KGlobalSettings
      *         start at (0,0).
      * @since 3.2
      */
-    static QRect desktopGeometry(QWidget* w);
+    static TQRect desktopGeometry(TQWidget* w);
 
     /**
      * This function determines if the user wishes to see icons on the
@@ -498,7 +498,7 @@ class KDECORE_EXPORT KGlobalSettings
 
     /**
      * Whether the user wishes to use opaque resizing. Primarily
-     * intended for QSplitter::setOpaqueResize()
+     * intended for TQSplitter::setOpaqueResize()
      * 
      * @return Returns true if user wants to use opaque resizing.
      *
@@ -538,26 +538,26 @@ private:
     static void rereadMouseSettings();
 
 
-    static QString* s_desktopPath;
-    static QString* s_autostartPath;
-    static QString* s_trashPath;
-    static QString* s_documentPath;
-    static QFont *_generalFont;
-    static QFont *_fixedFont;
-    static QFont *_toolBarFont;
-    static QFont *_menuFont;
-    static QFont *_windowTitleFont;
-    static QFont *_taskbarFont;
-    static QFont *_largeFont;
-    static QColor * _kde34Blue;
-    static QColor * _inactiveBackground;
-    static QColor * _inactiveForeground;
-    static QColor * _activeBackground;
-    static QColor * _buttonBackground;
-    static QColor * _selectBackground;
-    static QColor * _linkColor;
-    static QColor * _visitedLinkColor;
-    static QColor * alternateColor;
+    static TQString* s_desktopPath;
+    static TQString* s_autostartPath;
+    static TQString* s_trashPath;
+    static TQString* s_documentPath;
+    static TQFont *_generalFont;
+    static TQFont *_fixedFont;
+    static TQFont *_toolBarFont;
+    static TQFont *_menuFont;
+    static TQFont *_windowTitleFont;
+    static TQFont *_taskbarFont;
+    static TQFont *_largeFont;
+    static TQColor * _kde34Blue;
+    static TQColor * _inactiveBackground;
+    static TQColor * _inactiveForeground;
+    static TQColor * _activeBackground;
+    static TQColor * _buttonBackground;
+    static TQColor * _selectBackground;
+    static TQColor * _linkColor;
+    static TQColor * _visitedLinkColor;
+    static TQColor * alternateColor;
     static KMouseSettings *s_mouseSettings;
 
     friend class KApplication;

@@ -33,7 +33,7 @@ class PlastikStyleConfig: public QWidget
 {
 	Q_OBJECT
 public:
-	PlastikStyleConfig(QWidget* parent);
+	PlastikStyleConfig(TQWidget* parent);
 	~PlastikStyleConfig();
 
 	//This signal and the next two slots are the plugin
@@ -52,18 +52,18 @@ protected slots:
 protected:
 	//We store settings directly in widgets to
 	//avoid the hassle of sync'ing things
-// 	QCheckBox*       scrollBarLines;
-	QCheckBox* animateProgressBar;
-	QCheckBox* drawToolBarSeparator;
-	QCheckBox*       drawToolBarItemSeparator;
-// 	QCheckBox*       drawFocusRect;
-	QCheckBox*       drawTriangularExpander;
-	QCheckBox*       inputFocusHighlight;
-	QCheckBox*       customOverHighlightColor;
+// 	TQCheckBox*       scrollBarLines;
+	TQCheckBox* animateProgressBar;
+	TQCheckBox* drawToolBarSeparator;
+	TQCheckBox*       drawToolBarItemSeparator;
+// 	TQCheckBox*       drawFocusRect;
+	TQCheckBox*       drawTriangularExpander;
+	TQCheckBox*       inputFocusHighlight;
+	TQCheckBox*       customOverHighlightColor;
 	KColorButton*    overHighlightColor;
-	QCheckBox*       customFocusHighlightColor;
+	TQCheckBox*       customFocusHighlightColor;
 	KColorButton*    focusHighlightColor;
-	QCheckBox*       customCheckMarkColor;
+	TQCheckBox*       customCheckMarkColor;
 	KColorButton*    checkMarkColor;
 
 	//Original settings, for accurate dirtiness tracking
@@ -75,11 +75,11 @@ protected:
 	bool       origDrawTriangularExpander;
 	bool       origInputFocusHighlight;
 	bool       origCustomOverHighlightColor;
-	QColor     origOverHighlightColor;
+	TQColor     origOverHighlightColor;
 	bool       origCustomFocusHighlightColor;
-	QColor     origFocusHighlightColor;
+	TQColor     origFocusHighlightColor;
 	bool       origCustomCheckMarkColor;
-	QColor     origCheckMarkColor;
+	TQColor     origCheckMarkColor;
 };
 
 #endif

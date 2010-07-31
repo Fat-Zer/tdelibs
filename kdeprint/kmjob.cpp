@@ -71,11 +71,11 @@ void KMJob::copy(const KMJob& j)
 	setDiscarded(false);
 }
 
-QString KMJob::pixmap()
+TQString KMJob::pixmap()
 {
 	// special case
 	if (m_type == KMJob::Threaded)
-		return QString::fromLatin1("exec");
+		return TQString::fromLatin1("exec");
 
 	// normal case
 	QString	str("kdeprint_job");
@@ -102,7 +102,7 @@ QString KMJob::pixmap()
 	return str;
 }
 
-QString KMJob::stateString()
+TQString KMJob::stateString()
 {
 	QString	str;
 	switch (m_state)

@@ -23,24 +23,24 @@
 #define _KATELUAINDENTSCRIPT_H_
 
 #include "kateindentscriptabstracts.h"
-#include <qdict.h>
+#include <tqdict.h>
 
 struct lua_State;
 
 class KateLUAIndentScriptImpl: public KateIndentScriptImplAbstract {
   public:
-    KateLUAIndentScriptImpl(const QString& internalName,
-        const QString  &filePath, const QString &niceName,
-        const QString &copyright, double version);
+    KateLUAIndentScriptImpl(const TQString& internalName,
+        const TQString  &filePath, const TQString &niceName,
+        const TQString &copyright, double version);
     ~KateLUAIndentScriptImpl();
     
-    virtual bool processChar( class Kate::View *view, QChar c, QString &errorMsg );
-    virtual bool processLine( class Kate::View *view, const KateDocCursor &line, QString &errorMsg );
-    virtual bool processNewline( class Kate::View *view, const KateDocCursor &begin, bool needcontinue, QString &errorMsg );
+    virtual bool processChar( class Kate::View *view, TQChar c, TQString &errorMsg );
+    virtual bool processLine( class Kate::View *view, const KateDocCursor &line, TQString &errorMsg );
+    virtual bool processNewline( class Kate::View *view, const KateDocCursor &begin, bool needcontinue, TQString &errorMsg );
   protected:
     virtual void decRef();
   private:
-    bool setupInterpreter(QString &errorMsg);
+    bool setupInterpreter(TQString &errorMsg);
     void deleteInterpreter();
     struct lua_State *m_interpreter;
 };
@@ -51,16 +51,16 @@ class KateLUAIndentScriptManager: public KateIndentScriptManagerAbstract
   public:
     KateLUAIndentScriptManager ();
     virtual ~KateLUAIndentScriptManager ();
-    virtual KateIndentScript script(const QString &scriptname);
+    virtual KateIndentScript script(const TQString &scriptname);
   private:
     /**
      * go, search our scripts
      * @param force force cache updating?
      */
     void collectScripts (bool force = false);
-    void parseScriptHeader(const QString &filePath,
-        QString *niceName,QString *copyright,double *version);
-    QDict<KateLUAIndentScriptImpl> m_scripts;
+    void parseScriptHeader(const TQString &filePath,
+        TQString *niceName,TQString *copyright,double *version);
+    TQDict<KateLUAIndentScriptImpl> m_scripts;
 };
 
 #endif

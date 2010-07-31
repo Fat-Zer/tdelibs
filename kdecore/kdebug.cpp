@@ -32,19 +32,19 @@
 #include "kinstance.h"
 #include "kstandarddirs.h"
 
-#include <qmessagebox.h>
+#include <tqmessagebox.h>
 #include <klocale.h>
-#include <qfile.h>
-#include <qintdict.h>
-#include <qstring.h>
-#include <qdatetime.h>
-#include <qpoint.h>
-#include <qrect.h>
-#include <qregion.h>
-#include <qstringlist.h>
-#include <qpen.h>
-#include <qbrush.h>
-#include <qsize.h>
+#include <tqfile.h>
+#include <tqintdict.h>
+#include <tqstring.h>
+#include <tqdatetime.h>
+#include <tqpoint.h>
+#include <tqrect.h>
+#include <tqregion.h>
+#include <tqstringlist.h>
+#include <tqpen.h>
+#include <tqbrush.h>
+#include <tqsize.h>
 
 #include <kurl.h>
 
@@ -68,19 +68,19 @@ class KDebugEntry;
 class KDebugEntry
 {
 public:
-    KDebugEntry (int n, const QCString& d) {number=n; descr=d;}
+    KDebugEntry (int n, const TQCString& d) {number=n; descr=d;}
     unsigned int number;
-    QCString descr;
+    TQCString descr;
 };
 
-static QIntDict<KDebugEntry> *KDebugCache;
+static TQIntDict<KDebugEntry> *KDebugCache;
 
-static KStaticDeleter< QIntDict<KDebugEntry> > kdd;
+static KStaticDeleter< TQIntDict<KDebugEntry> > kdd;
 
-static QCString getDescrFromNum(unsigned int _num)
+static TQCString getDescrFromNum(unsigned int _num)
 {
   if (!KDebugCache) {
-    kdd.setObject(KDebugCache, new QIntDict<KDebugEntry>( 601 ));
+    kdd.setObject(KDebugCache, new TQIntDict<KDebugEntry>( 601 ));
     // Do not call this deleter from ~KApplication
     KGlobal::unregisterStaticDeleter(&kdd);
     KDebugCache->setAutoDelete(true);
@@ -91,21 +91,21 @@ static QCString getDescrFromNum(unsigned int _num)
     return ent->descr;
 
   if ( !KDebugCache->isEmpty() ) // areas already loaded
-    return QCString();
+    return TQCString();
 
-  QString filename(locate("config","kdebug.areas"));
+  TQString filename(locate("config","kdebug.areas"));
   if (filename.isEmpty())
-      return QCString();
+      return TQCString();
 
-  QFile file(filename);
+  TQFile file(filename);
   if (!file.open(IO_ReadOnly)) {
     qWarning("Couldn't open %s", filename.local8Bit().data());
     file.close();
-    return QCString();
+    return TQCString();
   }
 
   uint lineNumber=0;
-  QCString line(1024);
+  TQCString line(1024);
   int len;
 
   while (( len = file.readLine(line.data(),line.size()-1) ) > 0) {
@@ -143,7 +143,7 @@ static QCString getDescrFromNum(unsigned int _num)
   if ( ent )
       return ent->descr;
 
-  return QCString();
+  return TQCString();
 }
 
 enum DebugLevels {
@@ -160,7 +160,7 @@ struct kDebugPrivate {
 
   ~kDebugPrivate() { delete config; }
 
-  QCString aAreaName;
+  TQCString aAreaName;
   unsigned int oldarea;
   KConfig *config;
 };
@@ -197,7 +197,7 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
   }
 
   if (kDebug_data->config && kDebug_data->oldarea != nArea) {
-    kDebug_data->config->setGroup( QString::number(static_cast<int>(nArea)) );
+    kDebug_data->config->setGroup( TQString::number(static_cast<int>(nArea)) );
     kDebug_data->oldarea = nArea;
     if ( nArea > 0 && KGlobal::_instance )
       kDebug_data->aAreaName = getDescrFromNum(nArea);
@@ -207,11 +207,11 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
   }
 
   int nPriority = 0;
-  QString aCaption;
+  TQString aCaption;
 
     /* Determine output */
 
-  QString key;
+  TQString key;
   switch( nLevel )
   {
   case KDEBUG_INFO:
@@ -241,7 +241,7 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
   // if no output mode is specified default to no debug output
   short nOutput = kDebug_data->config ? kDebug_data->config->readNumEntry(key, 4) : 4;
 
-  // If the application doesn't have a QApplication object it can't use
+  // If the application doesn't have a TQApplication object it can't use
   // a messagebox.
   if (!kapp && (nOutput == 1))
     nOutput = 2;
@@ -281,7 +281,7 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
           aKey = "ErrorFilename";
           break;
       }
-      QFile aOutputFile( kDebug_data->config->readPathEntry(aKey, "kdebug.dbg") );
+      TQFile aOutputFile( kDebug_data->config->readPathEntry(aKey, "kdebug.dbg") );
       aOutputFile.open( IO_WriteOnly | IO_Append | IO_Raw );
       aOutputFile.writeBlock( buf, strlen( buf ) );
       aOutputFile.close();
@@ -290,10 +290,10 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
   case 1: // Message Box
   {
       // Since we are in kdecore here, we cannot use KMsgBox and use
-      // QMessageBox instead
+      // TQMessageBox instead
       if ( !kDebug_data->aAreaName.isEmpty() )
-          aCaption += QString("(%1)").arg( kDebug_data->aAreaName );
-      QMessageBox::warning( 0L, aCaption, data, i18n("&OK") );
+          aCaption += TQString("(%1)").arg( kDebug_data->aAreaName );
+      TQMessageBox::warning( 0L, aCaption, data, i18n("&OK") );
       break;
   }
   case 2: // Shell
@@ -314,7 +314,7 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
         abort();
 }
 
-kdbgstream &perror( kdbgstream &s) { return s << QString::fromLocal8Bit(strerror(errno)); }
+kdbgstream &perror( kdbgstream &s) { return s << TQString::fromLocal8Bit(strerror(errno)); }
 kdbgstream kdDebug(int area) { return kdbgstream(area, KDEBUG_INFO); }
 kdbgstream kdDebug(bool cond, int area) { if (cond) return kdbgstream(area, KDEBUG_INFO); else return kdbgstream(0, 0, false); }
 
@@ -335,7 +335,7 @@ void kdbgstream::flush() {
     if (output.isEmpty() || !print)
 	return;
     kDebugBackend( level, area, output.local8Bit().data() );
-    output = QString::null;
+    output = TQString::null;
 }
 
 kdbgstream &kdbgstream::form(const char *format, ...)
@@ -361,7 +361,7 @@ kdbgstream& kdbgstream::operator << (char ch)
 {
   if (!print) return *this;
   if (!isprint(ch))
-    output += "\\x" + QString::number( static_cast<uint>( ch ), 16 ).rightJustify(2, '0');
+    output += "\\x" + TQString::number( static_cast<uint>( ch ), 16 ).rightJustify(2, '0');
   else {
     output += ch;
     if (ch == '\n') flush();
@@ -369,11 +369,11 @@ kdbgstream& kdbgstream::operator << (char ch)
   return *this;
 }
 
-kdbgstream& kdbgstream::operator << (QChar ch)
+kdbgstream& kdbgstream::operator << (TQChar ch)
 {
   if (!print) return *this;
   if (!ch.isPrint())
-    output += "\\x" + QString::number( ch.unicode(), 16 ).rightJustify(2, '0');
+    output += "\\x" + TQString::number( ch.unicode(), 16 ).rightJustify(2, '0');
   else {
     output += ch;
     if (ch == '\n') flush();
@@ -381,33 +381,33 @@ kdbgstream& kdbgstream::operator << (QChar ch)
   return *this;
 }
 
-kdbgstream& kdbgstream::operator << (QWidget* widget)
+kdbgstream& kdbgstream::operator << (TQWidget* widget)
 {
-    return *this << const_cast< const QWidget* >( widget );
+    return *this << const_cast< const TQWidget* >( widget );
 }
 
-kdbgstream& kdbgstream::operator << (const QWidget* widget)
+kdbgstream& kdbgstream::operator << (const TQWidget* widget)
 {
-  QString string, temp;
+  TQString string, temp;
   // -----
   if(widget==0)
     {
-      string=(QString)"[Null pointer]";
+      string=(TQString)"[Null pointer]";
     } else {
       temp.setNum((ulong)widget, 16);
-      string=(QString)"["+widget->className()+" pointer "
+      string=(TQString)"["+widget->className()+" pointer "
 	+ "(0x" + temp + ")";
       if(widget->name(0)==0)
 	{
 	  string += " to unnamed widget, ";
 	} else {
-	  string += (QString)" to widget " + widget->name() + ", ";
+	  string += (TQString)" to widget " + widget->name() + ", ";
 	}
       string += "geometry="
-	+ QString().setNum(widget->width())
-	+ "x"+QString().setNum(widget->height())
-	+ "+"+QString().setNum(widget->x())
-	+ "+"+QString().setNum(widget->y())
+	+ TQString().setNum(widget->width())
+	+ "x"+TQString().setNum(widget->height())
+	+ "+"+TQString().setNum(widget->x())
+	+ "+"+TQString().setNum(widget->y())
 	+ "]";
     }
   if (!print)
@@ -423,40 +423,40 @@ kdbgstream& kdbgstream::operator << (const QWidget* widget)
 }
 /*
  * either use 'output' directly and do the flush if needed
- * or use the QString operator which calls the char* operator
+ * or use the TQString operator which calls the char* operator
  *
  */
-kdbgstream& kdbgstream::operator<<( const QDateTime& time) {
+kdbgstream& kdbgstream::operator<<( const TQDateTime& time) {
     *this << time.toString();
     return *this;
 }
-kdbgstream& kdbgstream::operator<<( const QDate& date) {
+kdbgstream& kdbgstream::operator<<( const TQDate& date) {
     *this << date.toString();
 
     return *this;
 }
-kdbgstream& kdbgstream::operator<<( const QTime& time ) {
+kdbgstream& kdbgstream::operator<<( const TQTime& time ) {
     *this << time.toString();
     return *this;
 }
-kdbgstream& kdbgstream::operator<<( const QPoint& p ) {
+kdbgstream& kdbgstream::operator<<( const TQPoint& p ) {
     *this << "(" << p.x() << ", " << p.y() << ")";
     return *this;
 }
-kdbgstream& kdbgstream::operator<<( const QSize& s ) {
+kdbgstream& kdbgstream::operator<<( const TQSize& s ) {
     *this << "[" << s.width() << "x" << s.height() << "]";
     return *this;
 }
-kdbgstream& kdbgstream::operator<<( const QRect& r ) {
+kdbgstream& kdbgstream::operator<<( const TQRect& r ) {
     *this << "[" << r.x() << "," << r.y() << " - " << r.width() << "x" << r.height() << "]";
     return *this;
 }
-kdbgstream& kdbgstream::operator<<( const QRegion& reg ) {
+kdbgstream& kdbgstream::operator<<( const TQRegion& reg ) {
     *this<< "[ ";
 
-    QMemArray<QRect>rs=reg.rects();
+    TQMemArray<TQRect>rs=reg.rects();
     for (uint i=0;i<rs.size();++i)
-        *this << QString("[%1,%2 - %3x%4] ").arg(rs[i].x()).arg(rs[i].y()).arg(rs[i].width()).arg(rs[i].height() ) ;
+        *this << TQString("[%1,%2 - %3x%4] ").arg(rs[i].x()).arg(rs[i].y()).arg(rs[i].width()).arg(rs[i].height() ) ;
 
     *this <<"]";
     return *this;
@@ -465,21 +465,21 @@ kdbgstream& kdbgstream::operator<<( const KURL& u ) {
     *this << u.prettyURL();
     return *this;
 }
-kdbgstream& kdbgstream::operator<<( const QStringList& l ) {
+kdbgstream& kdbgstream::operator<<( const TQStringList& l ) {
     *this << "(";
     *this << l.join(",");
     *this << ")";
 
     return *this;
 }
-kdbgstream& kdbgstream::operator<<( const QColor& c ) {
+kdbgstream& kdbgstream::operator<<( const TQColor& c ) {
     if ( c.isValid() )
         *this <<c.name();
     else
         *this << "(invalid/default)";
     return *this;
 }
-kdbgstream& kdbgstream::operator<<( const QPen& p ) {
+kdbgstream& kdbgstream::operator<<( const TQPen& p ) {
     static const char* const s_penStyles[] = {
         "NoPen", "SolidLine", "DashLine", "DotLine", "DashDotLine",
         "DashDotDotLine" };
@@ -503,7 +503,7 @@ kdbgstream& kdbgstream::operator<<( const QPen& p ) {
     *this <<" ]";
     return *this;
 }
-kdbgstream& kdbgstream::operator<<( const QBrush& b) {
+kdbgstream& kdbgstream::operator<<( const TQBrush& b) {
     static const char* const s_brushStyles[] = {
         "NoBrush", "SolidPattern", "Dense1Pattern", "Dense2Pattern", "Dense3Pattern",
         "Dense4Pattern", "Dense5Pattern", "Dense6Pattern", "Dense7Pattern",
@@ -524,7 +524,7 @@ kdbgstream& kdbgstream::operator<<( const QBrush& b) {
     return *this;
 }
 
-kdbgstream& kdbgstream::operator<<( const QVariant& v) {
+kdbgstream& kdbgstream::operator<<( const TQVariant& v) {
     *this << "[variant: ";
     *this << v.typeName();
     // For now we just attempt a conversion to string.
@@ -535,13 +535,13 @@ kdbgstream& kdbgstream::operator<<( const QVariant& v) {
     return *this;
 }
 
-kdbgstream& kdbgstream::operator<<( const QByteArray& data) {
+kdbgstream& kdbgstream::operator<<( const TQByteArray& data) {
     if (!print) return *this;
     output += '[';
     unsigned int i = 0;
     unsigned int sz = QMIN( data.size(), 64 );
     for ( ; i < sz ; ++i ) {
-        output += QString::number( (unsigned char) data[i], 16 ).rightJustify(2, '0');
+        output += TQString::number( (unsigned char) data[i], 16 ).rightJustify(2, '0');
         if ( i < sz )
             output += ' ';
     }
@@ -551,9 +551,9 @@ kdbgstream& kdbgstream::operator<<( const QByteArray& data) {
     return *this;
 }
 
-QString kdBacktrace(int levels)
+TQString kdBacktrace(int levels)
 {
-    QString s;
+    TQString s;
 #ifdef HAVE_BACKTRACE
     void* trace[256];
     int n = backtrace(trace, 256);
@@ -566,9 +566,9 @@ QString kdBacktrace(int levels)
     s = "[\n";
 
     for (int i = 0; i < n; ++i)
-        s += QString::number(i) +
-             QString::fromLatin1(": ") +
-             QString::fromLatin1(strings[i]) + QString::fromLatin1("\n");
+        s += TQString::number(i) +
+             TQString::fromLatin1(": ") +
+             TQString::fromLatin1(strings[i]) + TQString::fromLatin1("\n");
     s += "]\n";
     if (strings)
         free (strings);
@@ -576,7 +576,7 @@ QString kdBacktrace(int levels)
     return s;
 }
 
-QString kdBacktrace()
+TQString kdBacktrace()
 {
     return kdBacktrace(-1 /*all*/);
 }

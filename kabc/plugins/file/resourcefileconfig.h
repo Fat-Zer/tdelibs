@@ -33,7 +33,7 @@ class KABC_EXPORT ResourceFileConfig : public KRES::ConfigWidget
   Q_OBJECT
 
 public:
-  ResourceFileConfig( QWidget* parent = 0, const char* name = 0 );
+  ResourceFileConfig( TQWidget* parent = 0, const char* name = 0 );
 
   void setEditMode( bool value );
 
@@ -42,14 +42,14 @@ public slots:
   void saveSettings( KRES::Resource *resource );
 
 protected slots:
-  void checkFilePermissions( const QString& fileName );
+  void checkFilePermissions( const TQString& fileName );
 
 private:
   KComboBox* mFormatBox;
   KURLRequester* mFileNameEdit;
   bool mInEditMode;
 
-  QStringList mFormatTypes;
+  TQStringList mFormatTypes;
 };
 
 }

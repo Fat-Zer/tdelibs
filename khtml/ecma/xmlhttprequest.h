@@ -77,31 +77,31 @@ namespace KJS {
 #ifdef APPLE_CHANGES
     void slotData( KIO::Job* job, const char *data, int size );
 #else
-    void slotData( KIO::Job* job, const QByteArray &data );
+    void slotData( KIO::Job* job, const TQByteArray &data );
 #endif
     void slotFinished( KIO::Job* );
     void slotRedirection( KIO::Job*, const KURL& );
 
-    void processSyncLoadResults(const QByteArray &data, const KURL &finalURL, const QString &headers);
+    void processSyncLoadResults(const TQByteArray &data, const KURL &finalURL, const TQString &headers);
 
-    void open(const QString& _method, const KURL& _url, bool _async);
-    void send(const QString& _body);
+    void open(const TQString& _method, const KURL& _url, bool _async);
+    void send(const TQString& _body);
     void abort();
-    void setRequestHeader(const QString& name, const QString &value);
-    void overrideMIMEType(const QString& override);
+    void setRequestHeader(const TQString& name, const TQString &value);
+    void overrideMIMEType(const TQString& override);
     Value getAllResponseHeaders() const;
-    Value getResponseHeader(const QString& name) const;
+    Value getResponseHeader(const TQString& name) const;
 
     void changeState(XMLHttpRequestState newState);
 
-    QGuardedPtr<DOM::DocumentImpl> doc;
+    TQGuardedPtr<DOM::DocumentImpl> doc;
 
     KURL url;
-    QString method;
+    TQString method;
     bool async;
-    QMap<QString,QString> requestHeaders;
-    QString m_mimeTypeOverride;
-    QString contentType;
+    TQMap<TQString,TQString> requestHeaders;
+    TQString m_mimeTypeOverride;
+    TQString contentType;
 
     KIO::TransferJob * job;
 
@@ -110,10 +110,10 @@ namespace KJS {
     JSEventListener *onLoadListener;
 
     khtml::Decoder *decoder;
-    QString encoding;
-    QString responseHeaders;
+    TQString encoding;
+    TQString responseHeaders;
 
-    QString response;
+    TQString response;
     mutable bool createdDocument;
     mutable bool typeIsXML;
     mutable DOM::Document responseXML;
@@ -122,14 +122,14 @@ namespace KJS {
   };
 
 
-  class XMLHttpRequestQObject : public QObject {
+  class XMLHttpRequestQObject : public TQObject {
     Q_OBJECT
 
   public:
     XMLHttpRequestQObject(XMLHttpRequest *_jsObject);
 
   public slots:
-    void slotData( KIO::Job* job, const QByteArray &data );
+    void slotData( KIO::Job* job, const TQByteArray &data );
     void slotFinished( KIO::Job* job );
     void slotRedirection( KIO::Job* job, const KURL& url);
 

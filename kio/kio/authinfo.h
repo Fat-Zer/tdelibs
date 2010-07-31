@@ -21,8 +21,8 @@
 #ifndef __KIO_AUTHINFO_H
 #define __KIO_AUTHINFO_H
 
-#include <qmap.h>
-#include <qvaluelist.h>
+#include <tqmap.h>
+#include <tqvaluelist.h>
 #include <kurl.h>
 
 
@@ -50,8 +50,8 @@ namespace KIO {
  */
 class KIO_EXPORT AuthInfo
 {
-    KIO_EXPORT friend QDataStream& operator<< (QDataStream& s, const AuthInfo& a);
-    KIO_EXPORT friend QDataStream& operator>> (QDataStream& s, AuthInfo& a);
+    KIO_EXPORT friend TQDataStream& operator<< (TQDataStream& s, const AuthInfo& a);
+    KIO_EXPORT friend TQDataStream& operator>> (TQDataStream& s, AuthInfo& a);
 
 public:
    /**
@@ -96,12 +96,12 @@ public:
    /**
     * This is @em required for caching.
     */
-   QString username;
+   TQString username;
 
    /**
     * This is @em required for caching.
     */
-   QString password;
+   TQString password;
 
    /**
     * Information to be displayed when prompting
@@ -112,7 +112,7 @@ public:
     *
     * This setting is @em optional and empty by default.
     */
-   QString prompt;
+   TQString prompt;
 
    /**
     * The text to displayed in the title bar of
@@ -123,7 +123,7 @@ public:
     *
     * This setting is @em optional and empty by default.
     */
-   QString caption;
+   TQString caption;
 
    /**
     * Additional comment to be displayed when prompting
@@ -147,7 +147,7 @@ public:
     *
     * This setting is @em optional and empty by default.
     */
-   QString comment;
+   TQString comment;
 
    /**
     * Descriptive label to be displayed in front of the
@@ -156,7 +156,7 @@ public:
     * This setting is @em optional and only applicable when
     * the comment field is also set.
     */
-   QString commentLabel;
+   TQString commentLabel;
 
    /**
     * A unique identifier that allows caching of multiple
@@ -174,7 +174,7 @@ public:
     *
     * This setting is @em optional and not set by default.
     */
-   QString realmValue;
+   TQString realmValue;
 
    /**
     * Field to store any extra authentication information for
@@ -184,7 +184,7 @@ public:
     * protocol.  However, any protocol can make use of it to
     * store extra info.
     */
-   QString digestInfo;
+   TQString digestInfo;
 
    /**
     * Flag that, if set, indicates whether a path match should be
@@ -225,8 +225,8 @@ private:
     class AuthInfoPrivate* d;
 };
 
-KIO_EXPORT QDataStream& operator<< (QDataStream& s, const AuthInfo& a);
-KIO_EXPORT QDataStream& operator>> (QDataStream& s, AuthInfo& a);
+KIO_EXPORT TQDataStream& operator<< (TQDataStream& s, const AuthInfo& a);
+KIO_EXPORT TQDataStream& operator>> (TQDataStream& s, AuthInfo& a);
 
 /**
  * A Singleton class that provides access to passwords
@@ -264,11 +264,11 @@ public:
    */
   struct AutoLogin
   {
-    QString type;
-    QString machine;
-    QString login;
-    QString password;
-    QMap<QString, QStringList> macdef;
+    TQString type;
+    TQString machine;
+    TQString login;
+    TQString password;
+    TQMap<TQString, TQStringList> macdef;
   };
 
   /**
@@ -289,7 +289,7 @@ public:
    */
   bool lookup( const KURL& url, AutoLogin& login,
                bool userealnetrc = false,
-               QString type = QString::null,
+               TQString type = TQString::null,
                int mode = (exactOnly|defaultOnly) );
   /**
    * Reloads the auto login information.
@@ -297,8 +297,8 @@ public:
   void reload() { isDirty = true; }
 
 protected:
-  QString extract( const char*, const char*, int& );
-  int openf( const QString& );
+  TQString extract( const char*, const char*, int& );
+  int openf( const TQString& );
   bool parse( int );
 
 private:
@@ -308,8 +308,8 @@ private:
 private:
   bool isDirty;
 
-  typedef QValueList<AutoLogin> LoginList;
-  typedef QMap<QString, LoginList> LoginMap;
+  typedef TQValueList<AutoLogin> LoginList;
+  typedef TQMap<TQString, LoginList> LoginMap;
   LoginMap loginMap;
 
   static NetRC* instance;

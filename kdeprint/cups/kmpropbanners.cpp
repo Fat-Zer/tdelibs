@@ -22,23 +22,23 @@
 #include "kmwizard.h"
 #include "kmwbanners.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
-KMPropBanners::KMPropBanners(QWidget *parent, const char *name)
+KMPropBanners::KMPropBanners(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)
 {
-	m_startbanner = new QLabel(this);
-	m_stopbanner = new QLabel(this);
+	m_startbanner = new TQLabel(this);
+	m_stopbanner = new TQLabel(this);
 
-	QLabel	*l1 = new QLabel(i18n("&Starting banner:"), this);
-	QLabel	*l2 = new QLabel(i18n("&Ending banner:"), this);
+	QLabel	*l1 = new TQLabel(i18n("&Starting banner:"), this);
+	QLabel	*l2 = new TQLabel(i18n("&Ending banner:"), this);
 
 	l1->setBuddy(m_startbanner);
 	l2->setBuddy(m_stopbanner);
 
-	QGridLayout	*main_ = new QGridLayout(this, 3, 2, 10, 10);
+	QGridLayout	*main_ = new TQGridLayout(this, 3, 2, 10, 10);
 	main_->setColStretch(1,1);
 	main_->setRowStretch(2,1);
 	main_->addWidget(l1,0,0);
@@ -59,7 +59,7 @@ void KMPropBanners::setPrinter(KMPrinter *p)
 {
 	if (p && p->isPrinter())
 	{
-		QStringList	l = QStringList::split(',',p->option("kde-banners"),false);
+		QStringList	l = TQStringList::split(',',p->option("kde-banners"),false);
 		while ( l.count() < 2 )
 			l.append( "none" );
 		m_startbanner->setText(i18n(mapBanner(l[0]).utf8()));

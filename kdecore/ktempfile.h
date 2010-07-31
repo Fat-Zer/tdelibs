@@ -20,7 +20,7 @@
 #ifndef _KTEMPFILE_H_
 #define _KTEMPFILE_H_
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <stdio.h>
 #include <errno.h>
 #include "kdelibs_export.h"
@@ -62,14 +62,14 @@ public:
     *
     * The default @p filePrefix is "$KDEHOME/tmp-$HOST/appname/"
     * The default @p fileExtension is ".tmp"
-    * @param filePrefix the prefix of the file name, or QString::null
+    * @param filePrefix the prefix of the file name, or TQString::null
     *        for the default value
-    * @param fileExtension the extension of the prefix, or QString::null for the
+    * @param fileExtension the extension of the prefix, or TQString::null for the
     *        default value
     * @param mode the file permissions
     **/
-   KTempFile(QString filePrefix=QString::null,
-             QString fileExtension=QString::null,
+   KTempFile(TQString filePrefix=TQString::null,
+             TQString fileExtension=TQString::null,
              int mode = 0600 );
 
 
@@ -116,10 +116,10 @@ public:
     * since it may lead to the kind of symlink vulnerabilities that the KTempFile 
     * design attempts to prevent.
     *
-    * @return The name of the file, or QString::null if opening the
+    * @return The name of the file, or TQString::null if opening the
     *         file has failed or the file has been unlinked already.
     **/
-   QString name() const;
+   TQString name() const;
    
    /**
     * An integer file descriptor open for writing to the file 
@@ -136,25 +136,25 @@ public:
    FILE *fstream();
 
    /**
-    * Returns the QTextStream for writing.
-    * @return QTextStream open for writing to the file, or 0
+    * Returns the TQTextStream for writing.
+    * @return TQTextStream open for writing to the file, or 0
     *         if opening the file failed
     **/
-   QTextStream *textStream();
+   TQTextStream *textStream();
 
    /**
-    * Returns a QDataStream for writing.
-    * @return QDataStream open for writing to the file, or 0 
+    * Returns a TQDataStream for writing.
+    * @return TQDataStream open for writing to the file, or 0 
     *         if opening the file failed
     **/
-   QDataStream *dataStream();
+   TQDataStream *dataStream();
 
    /**
-    * Returns a QFile.
-    * @return A QFile open for writing to the file, or 0 if 
+    * Returns a TQFile.
+    * @return A TQFile open for writing to the file, or 0 if 
     *         opening the file failed.
     **/
-   QFile *file();
+   TQFile *file();
 
    /**
     * Unlinks the file from the directory. The file is
@@ -192,18 +192,18 @@ protected:
     * @internal
     * Create function used internally by KTempFile and KSaveFile
     **/
-   bool create(const QString &filePrefix, 
-               const QString &fileExtension, int mode);
+   bool create(const TQString &filePrefix, 
+               const TQString &fileExtension, int mode);
 
    void setError(int error) { mError = error; }
 private:
    int mError;
-   QString mTmpName;
+   TQString mTmpName;
    int mFd;
    FILE *mStream;
-   QFile *mFile;
-   QTextStream *mTextStream;
-   QDataStream *mDataStream;
+   TQFile *mFile;
+   TQTextStream *mTextStream;
+   TQDataStream *mDataStream;
    bool bOpen;
    bool bAutoDelete;
 

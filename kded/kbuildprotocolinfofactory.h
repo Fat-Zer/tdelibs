@@ -21,7 +21,7 @@
 
 #include <kprotocolinfofactory.h>
 #include <assert.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 /**
  * Protocol Info factory for building ksycoca
@@ -40,7 +40,7 @@ public:
   /**
    * Create new entry.
    */
-  virtual KProtocolInfo* createEntry(const QString &, const char *);
+  virtual KProtocolInfo* createEntry(const TQString &, const char *);
 
   virtual KProtocolInfo* createEntry(int) { assert(0); return 0L; }
 
@@ -52,7 +52,7 @@ public:
   /**
    * Returns all resource types for this service factory
    */  
-  static QStringList resourceTypes();
+  static TQStringList resourceTypes();
 };
 
 #endif

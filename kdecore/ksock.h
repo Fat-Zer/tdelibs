@@ -24,7 +24,7 @@
 
 #ifdef Q_OS_UNIX
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <sys/types.h>
 // we define STRICT_ANSI to get rid of some warnings in glibc
 #ifndef __STRICT_ANSI__
@@ -210,7 +210,7 @@ public slots:
     void slotRead( int x );
 
 protected:
-    bool connect( const QString& _host, unsigned short int _port, int timeout = 0 );
+    bool connect( const TQString& _host, unsigned short int _port, int timeout = 0 );
     bool connect( const char *_path );
 
     /******************************************************

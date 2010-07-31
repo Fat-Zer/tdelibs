@@ -1,7 +1,7 @@
 #include "viewcursordcopinterface.h"
 #include "viewcursorinterface.h"
 
-#include <qpoint.h>
+#include <tqpoint.h>
 
 #include <dcopclient.h>
 using namespace KTextEditor;
@@ -22,7 +22,7 @@ uint ViewCursorDCOPInterface::viewCursorInterfaceNumber ()
 	return m_parent->viewCursorInterfaceNumber ();
 }
 
-::QPoint ViewCursorDCOPInterface::cursorCoordinates ()
+::TQPoint ViewCursorDCOPInterface::cursorCoordinates ()
 {
 	return m_parent->cursorCoordinates ();
 }

@@ -26,9 +26,9 @@
 
 #include <kdeprint/kmprinter.h>
 
-#include <qobject.h>
-#include <qstring.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
 
 class DrMain;
 class KMDBEntry;
@@ -69,14 +69,14 @@ public:
 		ServerAll        = 0xF
 	};
 
-	KMManager(QObject *parent = 0, const char *name = 0);
+	KMManager(TQObject *parent = 0, const char *name = 0);
 	virtual ~KMManager();
 
     static KMManager* self();
 
 	// error management functions
-	QString errorMsg() const		{ return m_errormsg; }
-	void setErrorMsg(const QString& s)	{ m_errormsg = s; }
+	TQString errorMsg() const		{ return m_errormsg; }
+	void setErrorMsg(const TQString& s)	{ m_errormsg = s; }
 
 	// support management ?
 	bool hasManagement() const 		{ return m_hasmanagement; }
@@ -92,47 +92,47 @@ public:
 	virtual bool testPrinter(KMPrinter *p);
 	bool upPrinter(KMPrinter *p, bool state);
 	bool modifyPrinter(KMPrinter *oldp, KMPrinter *newp);
-	bool removePrinter(const QString& name);
-	bool enablePrinter(const QString& name, bool state);
-	bool startPrinter(const QString& name, bool state);
-	bool completePrinter(const QString& name);
-	bool setDefaultPrinter(const QString& name);
+	bool removePrinter(const TQString& name);
+	bool enablePrinter(const TQString& name, bool state);
+	bool startPrinter(const TQString& name, bool state);
+	bool completePrinter(const TQString& name);
+	bool setDefaultPrinter(const TQString& name);
 	int printerOperationMask() const 	{ return m_printeroperationmask; }
-	int addPrinterWizard(QWidget *parent = 0);
+	int addPrinterWizard(TQWidget *parent = 0);
 
 	// special printer management functions
 	bool createSpecialPrinter(KMPrinter *p);
 	bool removeSpecialPrinter(KMPrinter *p);
 
 	// printer listing functions
-	KMPrinter* findPrinter(const QString& name);
-	QPtrList<KMPrinter>* printerList(bool reload = true);
-	QPtrList<KMPrinter>* printerListComplete(bool reload = true);
+	KMPrinter* findPrinter(const TQString& name);
+	TQPtrList<KMPrinter>* printerList(bool reload = true);
+	TQPtrList<KMPrinter>* printerListComplete(bool reload = true);
 	KMPrinter* defaultPrinter();
 	void enableFilter(bool on);
 	bool isFilterEnabled() const;
 
 	// driver DB functions
-	virtual QString driverDbCreationProgram();
-	virtual QString driverDirectory();
+	virtual TQString driverDbCreationProgram();
+	virtual TQString driverDirectory();
 
 	// driver functions
 	virtual DrMain* loadPrinterDriver(KMPrinter *p, bool config = false);
 	virtual DrMain* loadDbDriver(KMDBEntry *entry);
-	virtual DrMain* loadFileDriver(const QString& filename);
+	virtual DrMain* loadFileDriver(const TQString& filename);
 	DrMain* loadDriver(KMPrinter *p, bool config = false);
 	virtual bool savePrinterDriver(KMPrinter *p, DrMain *d);
 	virtual bool validateDbDriver(KMDBEntry *entry);
 
 	// configuration functions
-	bool invokeOptionsDialog(QWidget *parent = 0);
-	virtual QString stateInformation();
+	bool invokeOptionsDialog(TQWidget *parent = 0);
+	virtual TQString stateInformation();
 
 	// server functions
 	int serverOperationMask() const 	{ return m_serveroperationmask; }
 	virtual bool restartServer();
-	virtual bool configureServer(QWidget *parent = 0);
-	virtual QStringList detectLocalPrinters();
+	virtual bool configureServer(TQWidget *parent = 0);
+	virtual TQStringList detectLocalPrinters();
 
 	// additional actions (for print manager)
 	virtual void createPluginActions(KActionCollection*);
@@ -158,12 +158,12 @@ protected:
 	// this function uncompress the given file (or does nothing
 	// if the file is not compressed). Returns wether the file was
 	// compressed or not.
-	bool uncompressFile(const QString& srcname, QString& destname);
+	bool uncompressFile(const TQString& srcname, TQString& destname);
 	bool notImplemented();
 	void setHasManagement(bool on)		{ m_hasmanagement = on; }
 	void setPrinterOperationMask(int m)	{ m_printeroperationmask = m; }
 	void setServerOperationMask(int m)	{ m_serveroperationmask = m; }
-	QString testPage();
+	TQString testPage();
 	void discardAllPrinters(bool);
 	void setUpdatePossible( bool );
 	virtual void checkUpdatePossibleInternal();

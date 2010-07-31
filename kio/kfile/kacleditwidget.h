@@ -38,7 +38,7 @@ class KACLEditWidget : QWidget
 {
   Q_OBJECT
 public:
-  KACLEditWidget( QWidget *parent = 0, const char *name = 0 );
+  KACLEditWidget( TQWidget *parent = 0, const char *name = 0 );
   KACL getACL() const;
   KACL getDefaultACL() const;
   void setACL( const KACL & );
@@ -50,9 +50,9 @@ private slots:
 
 private:
   KACLListView* m_listView;
-  QPushButton *m_AddBtn;
-  QPushButton *m_EditBtn;
-  QPushButton *m_DelBtn;
+  TQPushButton *m_AddBtn;
+  TQPushButton *m_EditBtn;
+  TQPushButton *m_DelBtn;
 };
 
 

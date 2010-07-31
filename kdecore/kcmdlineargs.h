@@ -22,11 +22,11 @@
 #include "kdelibs_export.h"
 #include <kurl.h>
 
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 
-typedef QValueList<QCString> QCStringList;
+typedef TQValueList<TQCString> QCStringList;
 
 /**
  * @short Structure that holds command line options.
@@ -118,13 +118,13 @@ class KCmdLineArgsPrivate;
  *        ....
  *
  *     // An option which takes an additional argument
- *     QCString anotherOptionArg = args->getOption("another-option");
+ *     TQCString anotherOptionArg = args->getOption("another-option");
  *
  *     // Arguments (e.g. files to open)
  *     for(int i = 0; i < args->count(); i++) // Counting start at 0!
  *     {
  *        // don't forget to convert to Unicode!
- *        openFile( QFile::decodeName( args->arg(i)));
+ *        openFile( TQFile::decodeName( args->arg(i)));
  *        // Or more convenient:
  *        // openURL( args->url(i));
  *
@@ -223,7 +223,7 @@ class KDECORE_EXPORT KCmdLineArgs
 {
   friend class KApplication;
   friend class KUniqueApplication;
-  friend class QPtrList<KCmdLineArgs>;
+  friend class TQPtrList<KCmdLineArgs>;
 public:
   // Static functions:
 
@@ -242,7 +242,7 @@ public:
    * @param _description A short description of what your application is about.
    * @param _version A version.
    * @param noKApp Set this true to not add commandline options for
-   *        QApplication / KApplication
+   *        TQApplication / KApplication
    *
    * @since 3.2
    */
@@ -270,7 +270,7 @@ public:
    * @param _argv As passed to @p main(...).
    * @param about A KAboutData object describing your program.
    * @param noKApp Set this true to not add commandline options for
-   *        QApplication / KApplication
+   *        TQApplication / KApplication
    */
   static void init(int _argc, char **_argv,
                    const KAboutData *about, bool noKApp = false);
@@ -378,7 +378,7 @@ public:
    * where the user started a second instance.
    * @return the current working directory
    **/
-  static QString cwd();
+  static TQString cwd();
 
   /**
    * Get the appname according to argv[0].
@@ -399,7 +399,7 @@ public:
    * Print an error to stderr and the usage help to stdout and exit.
    * @param error the error to print
    **/
-  static void usage(const QString &error);
+  static void usage(const TQString &error);
 
   /**
    * Enable i18n to be able to print a translated error message.
@@ -430,7 +430,7 @@ public:
    *          If the option was present more than the value of the
    *          last occurrence is used.
    */
-  QCString getOption(const char *option) const;
+  TQCString getOption(const char *option) const;
 
   /**
    *  Read out all occurrences of a string option.
@@ -532,7 +532,7 @@ public:
   /**
    * Load arguments from a stream.
    */
-  static void loadAppArgs( QDataStream &);
+  static void loadAppArgs( TQDataStream &);
 
   /**
    * Add standard option --tempfile
@@ -571,7 +571,7 @@ private:
    *
    * Checks what to do with a single option
    */
-  static void findOption(const char *_opt, QCString opt, int &i, bool enabled, bool &moreOptions);
+  static void findOption(const char *_opt, TQCString opt, int &i, bool enabled, bool &moreOptions);
 
   /**
    * @internal
@@ -610,21 +610,21 @@ private:
    *
    * Save all but the Qt and KDE arguments to a stream.
    */
-  static void saveAppArgs( QDataStream &);
+  static void saveAppArgs( TQDataStream &);
 
   /**
    * @internal
    *
    *  Set a boolean option
    */
-  void setOption(const QCString &option, bool enabled);
+  void setOption(const TQCString &option, bool enabled);
 
   /**
    * @internal
    *
    *  Set a string option
    */
-  void setOption(const QCString &option, const char *value);
+  void setOption(const TQCString &option, const char *value);
 
   /**
    * @internal
@@ -638,14 +638,14 @@ private:
    *
    * Save to a stream.
    */
-  void save( QDataStream &) const;
+  void save( TQDataStream &) const;
 
   /**
    * @internal
    *
    * Restore from a stream.
    */
-  void load( QDataStream &);
+  void load( TQDataStream &);
 
   /**
    * @internal for KApplication only
@@ -664,7 +664,7 @@ private:
    */
   static void initIgnore(int _argc, char **_argv, const char *_appname);
 
-  static void printQ(const QString &msg);
+  static void printQ(const TQString &msg);
 
   const KCmdLineOptions *options;
   const char *name;

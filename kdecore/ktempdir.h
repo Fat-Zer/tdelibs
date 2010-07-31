@@ -20,7 +20,7 @@
 #ifndef _KTEMPDIR_H_
 #define _KTEMPDIR_H_
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <stdio.h>
 #include <errno.h>
 #include "kdelibs_export.h"
@@ -59,7 +59,7 @@ public:
     *
     * The default \p directoryPrefix is "$KDEHOME/tmp-$HOST/appname"
     * @param directoryPrefix the prefix of the file name, or
-    *        QString::null for the default value
+    *        TQString::null for the default value
     * @param mode the file permissions,
     * almost always in octal. The first digit selects permissions for
     * the user who owns the file: read (4), write (2), and execute
@@ -68,7 +68,7 @@ public:
     * users not in the file's group, with the same values.
     *
     **/
-   KTempDir(QString directoryPrefix=QString::null,
+   KTempDir(TQString directoryPrefix=TQString::null,
              int mode = 0700 );
 
 
@@ -97,18 +97,18 @@ public:
 
    /**
     * Returns the full path and name of the directory, including a trailing '/'.
-    * @return The name of the directory, or QString::null if creating the
+    * @return The name of the directory, or TQString::null if creating the
     *         directory has failed or the directory has been unlinked
     **/
-   QString name() const;
+   TQString name() const;
 
 
    /**
-    * Returns the QDir* of the temporary directory.
-    * @return QDir directory information of the directory or 0 if their is no managed directory
+    * Returns the TQDir* of the temporary directory.
+    * @return TQDir directory information of the directory or 0 if their is no managed directory
     * The caller has to free the pointer open for writing to the
     **/
-   QDir *qDir();
+   TQDir *qDir();
 
    /**
     * Deletes the directory recursively
@@ -141,7 +141,7 @@ public:
     * (Use errno for more details about the error.)
     * @since 3.5.2
     */
-    static bool removeDir( const QString& path );
+    static bool removeDir( const TQString& path );
 
 protected:
 
@@ -152,7 +152,7 @@ protected:
     * @param mode directory permissions
     * @return bool true upon sucess
     */
-   bool create(const QString &directoryPrefix,  int mode);
+   bool create(const TQString &directoryPrefix,  int mode);
 
    /**
     * Sets the errno value
@@ -162,7 +162,7 @@ protected:
 
 private:
    int mError;
-   QString mTmpName;
+   TQString mTmpName;
    bool bExisting;
    bool bAutoDelete;
 

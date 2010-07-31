@@ -71,27 +71,27 @@ public:
 	 *  certificate instead of passing the object itself.
 	 *  @return the name of the certificate
 	 */
-	QString name();
+	TQString name();
 
 	/**
-	 *  Create a KSSLPKCS7 object from a Base64 in a QString.
+	 *  Create a KSSLPKCS7 object from a Base64 in a TQString.
 	 *  @param base64 the base64 representation of the certificate
 	 *  @return a PKCS#7 object, or NULL on failure
 	 */
-	static KSSLPKCS7* fromString(QString base64);
+	static KSSLPKCS7* fromString(TQString base64);
 
 	/**
 	 *  Create a KSSLPKCS7 object by reading a PKCS#7 file.
 	 *  @param filename the filename to read the certificate from
 	 *  @return a PKCS#7 object, or NULL on failure
 	 */
-	static KSSLPKCS7* loadCertFile(QString filename);
+	static KSSLPKCS7* loadCertFile(TQString filename);
 
 	/**
 	 *  Convert to a Base64 string.
 	 *  @return the PKCS#7 object in base64 form
 	 */
-	QString toString();
+	TQString toString();
 
 	/**
 	 *  Raw set the PKCS7 object.
@@ -119,7 +119,7 @@ public:
 	 *  @param filename the filename to write
 	 *  @return true on success
 	 */
-	bool toFile(QString filename);
+	bool toFile(TQString filename);
 
 	/**
 	 *  Check the chain to make sure it's valid.

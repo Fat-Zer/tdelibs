@@ -21,30 +21,30 @@
 #include "kmwizard.h"
 #include "kmprinter.h"
 
-#include <qlabel.h>
-#include <qlineedit.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
 #include <klocale.h>
-#include <qvalidator.h>
+#include <tqvalidator.h>
 
 #include <cups/http.h>
 
-KMWIpp::KMWIpp(QWidget *parent, const char *name)
+KMWIpp::KMWIpp(TQWidget *parent, const char *name)
 : KMWInfoBase(2,parent,name)
 {
 	m_ID = KMWizard::IPP;
 	m_title = i18n("Remote IPP server");
 	m_nextpage = KMWizard::IPPSelect;
-	lineEdit( 1 )->setValidator( new QIntValidator( this ) );
+	lineEdit( 1 )->setValidator( new TQIntValidator( this ) );
 
 	setInfo(i18n("<p>Enter the information concerning the remote IPP server "
 		     "owning the targeted printer. This wizard will poll the server "
 		     "before continuing.</p>"));
 	setLabel(0,i18n("Host:"));
 	setLabel(1,i18n("Port:"));
-	setText( 1, QString::fromLatin1( "631" ) );
+	setText( 1, TQString::fromLatin1( "631" ) );
 }
 
-bool KMWIpp::isValid(QString& msg)
+bool KMWIpp::isValid(TQString& msg)
 {
 	// check informations
 	if (text(0).isEmpty())

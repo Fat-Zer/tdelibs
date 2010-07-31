@@ -21,7 +21,7 @@
   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <qcstring.h>
+#include <tqcstring.h>
 #include <ctype.h>
 
 #include <VCardEnum.h>
@@ -236,7 +236,7 @@ VCARD::EntityTypeToParamName(EntityType e)
 }
 
 	EntityType
-VCARD::EntityNameToEntityType(const QCString & s)
+VCARD::EntityNameToEntityType(const TQCString & s)
 {
 	if (s.isEmpty()) return EntityUnknown;
 

@@ -20,8 +20,8 @@
 #ifndef	KMWSOCKETUTIL_H
 #define	KMWSOCKETUTIL_H
 
-#include <qstring.h>
-#include <qptrlist.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
 #include <kdialogbase.h>
 
 struct SocketInfo
@@ -41,7 +41,7 @@ class SocketConfig : public KDialogBase
 	friend class KMWSocketUtil;
 	Q_OBJECT
 public:
-	SocketConfig(KMWSocketUtil *util, QWidget *parent = 0, const char *name = 0);
+	SocketConfig(KMWSocketUtil *util, TQWidget *parent = 0, const char *name = 0);
 	~SocketConfig();
 
 protected slots:
@@ -59,15 +59,15 @@ class KMWSocketUtil
 public:
 	KMWSocketUtil();
 
-	bool checkPrinter(const QString& host, int port, QString* hostname = 0);
+	bool checkPrinter(const TQString& host, int port, TQString* hostname = 0);
 
-	const QPtrList<SocketInfo>* printerList() { return &printerlist_; }
-	bool scanNetwork(QProgressBar *bar = 0);
-	void configureScan(QWidget *parent = 0);
+	const TQPtrList<SocketInfo>* printerList() { return &printerlist_; }
+	bool scanNetwork(TQProgressBar *bar = 0);
+	void configureScan(TQWidget *parent = 0);
 	void setDefaultPort(int p) { port_ = p; }
 
 private:
-	QPtrList<SocketInfo>	printerlist_;
+	TQPtrList<SocketInfo>	printerlist_;
 	QString			root_;
 	int			port_;
 	int			timeout_;	// in milliseconds

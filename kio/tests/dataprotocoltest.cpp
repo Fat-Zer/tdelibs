@@ -18,8 +18,8 @@
 
 #include <kio/global.h>
 
-#include <qcstring.h>
-#include <qstring.h>
+#include <tqcstring.h>
+#include <tqstring.h>
 
 #include <iostream.h>
 
@@ -35,7 +35,7 @@ public:
   virtual void get(const KURL &) = 0;
   virtual void mimetype(const KURL &) = 0;
 
-  void mimeType(const QString &type) {
+  void mimeType(const TQString &type) {
     testStrings("MIME Type: ",mime_type_expected,type);
   }
 
@@ -43,10 +43,10 @@ public:
 //    cout << "content size: " << bytes << " bytes" << endl;
   }
 
-  void setMetaData(const QString &key, const QString &value) {
+  void setMetaData(const TQString &key, const TQString &value) {
 //    meta_data[key] = value;
 //    cout << "§ " << key << " = " << value << endl;
-    QString prefix = "Metadata[\""+key+"\"]: ";
+    TQString prefix = "Metadata[\""+key+"\"]: ";
     KIO::MetaData::Iterator it = attributes_expected.find(key);
     if (it != attributes_expected.end()) {
       testStrings(prefix,it.data(),value);
@@ -69,7 +69,7 @@ public:
     }
   }
 
-  void data(const QByteArray &a) {
+  void data(const TQByteArray &a) {
     if (a.isEmpty())
 /*      cout << "<no more data>" << endl*/;
     else {
@@ -88,14 +88,14 @@ public:
 private:
   int testcaseno;	// number of testcase
   bool failure;		// true if any testcase failed
-  QMap<int,bool> failed_testcases;
+  TQMap<int,bool> failed_testcases;
 
   // -- testcase related members
-  QString mime_type_expected;	// expected mime type
+  TQString mime_type_expected;	// expected mime type
   /** contains all attributes and values the testcase has to set */
   KIO::MetaData attributes_expected;
   /** contains the content as it is expected to be returned */
-  QByteArray content_expected;
+  TQByteArray content_expected;
   int passed;		// # of passed tests
   int total;		// # of total tests
 
@@ -106,8 +106,8 @@ private:
    * @param s string to compare to template
    * @param casesensitive true if case sensitive compare (currently not used)
    */
-  void testStrings(const QString &prefix, const QString &templat,
-                   const QString &s, bool /*casesensitive*/ = true) {
+  void testStrings(const TQString &prefix, const TQString &templat,
+                   const TQString &s, bool /*casesensitive*/ = true) {
     if (templat == s)
       passed++;
     else {
@@ -143,7 +143,7 @@ public:
   /**
    * sets the mime type that this testcase is expected to return
    */
-  void setExpectedMimeType(const QString &mime_type) {
+  void setExpectedMimeType(const TQString &mime_type) {
     mime_type_expected = mime_type;
   }
 
@@ -157,7 +157,7 @@ public:
   /**
    * sets content as expected to be delivered by the testcase.
    */
-  void setExpectedContent(const QByteArray &content) {
+  void setExpectedContent(const TQByteArray &content) {
     content_expected = content;
   }
 
@@ -177,7 +177,7 @@ public:
 
   void endTestrun() {
     if (failure) {
-      QMap<int,bool>::ConstIterator it = failed_testcases.begin();
+      TQMap<int,bool>::ConstIterator it = failed_testcases.begin();
       for (; it != failed_testcases.end(); ++it) {
         cout << "Testcase " << it.key() << " failed" << endl;
       }
@@ -246,7 +246,7 @@ const char * const url;
 // == charset tests
 	// -------------------- string
 const QChar
-const QChar * const charset_urls[] = {
+const TQChar * const charset_urls[] = {
 #endif
 
 int main(int /*argc*/,char* /*argv*/[]) {
@@ -270,7 +270,7 @@ int main(int /*argc*/,char* /*argv*/[]) {
     if (!has_charset) exp_attrs["charset"] = "us-ascii";
     kio_data.setExpectedAttributes(exp_attrs);
 
-    QByteArray exp_content;
+    TQByteArray exp_content;
     uint exp_content_len = strlen(testcases[i].exp_content);
     exp_content.setRawData(testcases[i].exp_content,exp_content_len);
     kio_data.setExpectedContent(exp_content);

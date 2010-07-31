@@ -7,10 +7,10 @@ class KIDLTest : virtual public DCOPObject
 {
     K_DCOP
 public:
-    KIDLTest( const QCString& id );
+    KIDLTest( const TQCString& id );
 
 k_dcop:
-    virtual QString hello( const QString& name );
+    virtual TQString hello( const TQString& name );
 };
 
 #endif

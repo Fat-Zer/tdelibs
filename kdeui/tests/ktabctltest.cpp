@@ -3,22 +3,22 @@
  */
 
 #include <kapplication.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qobject.h>
-#include <qlistbox.h>
-#include <qgroupbox.h>
-#include <qevent.h>
-#include <qcombobox.h>
-#include <qlineedit.h>
-#include <qradiobutton.h>
-#include <qcheckbox.h>
-#include <qtabdialog.h>
-#include <qtooltip.h>
-#include <qmessagebox.h>
-#include <qtabbar.h>
-#include <qpalette.h>
-#include <qmultilineedit.h>
+#include <tqpushbutton.h>
+#include <tqlabel.h>
+#include <tqobject.h>
+#include <tqlistbox.h>
+#include <tqgroupbox.h>
+#include <tqevent.h>
+#include <tqcombobox.h>
+#include <tqlineedit.h>
+#include <tqradiobutton.h>
+#include <tqcheckbox.h>
+#include <tqtabdialog.h>
+#include <tqtooltip.h>
+#include <tqmessagebox.h>
+#include <tqtabbar.h>
+#include <tqpalette.h>
+#include <tqmultilineedit.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,12 +28,12 @@
 #include "ktabctl.h"
 #include "ktabctltest.h"
 
-QFont default_font("Helvetica", 12);
+TQFont default_font("Helvetica", 12);
 
 KApplication *a;
 
-TopLevel::TopLevel(QWidget *parent, const char *name)
-    : QWidget(parent, name)
+TopLevel::TopLevel(TQWidget *parent, const char *name)
+    : TQWidget(parent, name)
 {
     setCaption("KTabCtl test application");
     setMinimumSize(300, 200);
@@ -43,22 +43,22 @@ TopLevel::TopLevel(QWidget *parent, const char *name)
      */
     
     test = new KTabCtl(this, "test");
-    connect(test, SIGNAL(tabSelected(int)), this, SLOT(tabChanged(int)));
-    QWidget *w = new QWidget(test, "_page1");
-    QPushButton *bt = new QPushButton("Click me to quit", w, "_bt1");
-    connect(bt, SIGNAL(clicked()), this, SLOT(okPressed()));
+    connect(test, TQT_SIGNAL(tabSelected(int)), this, TQT_SLOT(tabChanged(int)));
+    TQWidget *w = new TQWidget(test, "_page1");
+    TQPushButton *bt = new TQPushButton("Click me to quit", w, "_bt1");
+    connect(bt, TQT_SIGNAL(clicked()), this, TQT_SLOT(okPressed()));
     bt->adjustSize();
     bt->move(20, 20);
     test->addTab(w, "Seite 1");
     pages[0] = w;
-    w = new QWidget(test, "_page2");
-    e = new QMultiLineEdit(w, "_editor");
+    w = new TQWidget(test, "_page2");
+    e = new TQMultiLineEdit(w, "_editor");
     e->setText("Write some usesless stuff here :-)");
     w->resize(width(), height());
     test->addTab(w, "Seite 2");
     pages[1] = w;
-    w = new QWidget(test, "_page3");
-    bt = new QPushButton("This button does absolutely nothing", w, "_bt3");
+    w = new TQWidget(test, "_page3");
+    bt = new TQPushButton("This button does absolutely nothing", w, "_bt3");
     bt->adjustSize();
     bt->move(20, 20);
     test->addTab(w, "Seite 3");
@@ -70,7 +70,7 @@ TopLevel::TopLevel(QWidget *parent, const char *name)
     adjustSize();
 }
 
-void TopLevel::resizeEvent( QResizeEvent * )
+void TopLevel::resizeEvent( TQResizeEvent * )
 {
     test->resize(width(), height());
     e->setGeometry(10, 10, pages[1]->width() - 20, pages[1]->height() - 20);

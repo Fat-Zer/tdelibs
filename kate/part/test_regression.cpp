@@ -33,8 +33,8 @@
 
 #include <kapplication.h>
 #include <kstandarddirs.h>
-#include <qimage.h>
-#include <qfile.h>
+#include <tqimage.h>
+#include <tqfile.h>
 #include "test_regression.h"
 #include <unistd.h>
 #include <stdio.h>
@@ -47,22 +47,22 @@
 #include <ksimpleconfig.h>
 #include <kglobalsettings.h>
 
-#include <qcolor.h>
-#include <qcursor.h>
-#include <qdir.h>
-#include <qevent.h>
-#include <qobject.h>
-#include <qpushbutton.h>
-#include <qscrollview.h>
-#include <qstring.h>
-#include <qregexp.h>
-#include <qtextstream.h>
-#include <qvaluelist.h>
-#include <qwidget.h>
-#include <qfileinfo.h>
-#include <qtimer.h>
+#include <tqcolor.h>
+#include <tqcursor.h>
+#include <tqdir.h>
+#include <tqevent.h>
+#include <tqobject.h>
+#include <tqpushbutton.h>
+#include <tqscrollview.h>
+#include <tqstring.h>
+#include <tqregexp.h>
+#include <tqtextstream.h>
+#include <tqvaluelist.h>
+#include <tqwidget.h>
+#include <tqfileinfo.h>
+#include <tqtimer.h>
 #include <kstatusbar.h>
-#include <qfileinfo.h>
+#include <tqfileinfo.h>
 
 #include "katedocument.h"
 #include "kateview.h"
@@ -260,7 +260,7 @@ Value KateViewFunction::call(ExecState *exec, Object &/*thisObj*/, const List &a
         REP_CALL(ShiftToMatchingBracket, shiftToMatchingBracket);
         case Type: {
             UString str = args[0].toString(exec);
-            QString res = str.qstring();
+            TQString res = str.qstring();
             return Boolean(m_view->doc()->typeChars(m_view, res));
         }
     }
@@ -316,13 +316,13 @@ bool OutputFunction::implementsCall() const
 
 KJS::Value OutputFunction::call(KJS::ExecState *exec, KJS::Object &thisObj, const KJS::List &args)
 {
-    if (!*o->changed) *o->outstr = QString();
+    if (!*o->changed) *o->outstr = TQString();
 
     switch (id) {
         case Write:
         case Writeln: {
             // Gather all parameters and concatenate to string
-            QString res;
+            TQString res;
             for (int i = 0; i < args.size(); i++) {
                 res += args[i].toString(exec).qstring();
             }
@@ -336,7 +336,7 @@ KJS::Value OutputFunction::call(KJS::ExecState *exec, KJS::Object &thisObj, cons
         case WriteCursorPositionln:
         case WriteCursorPosition: {
             // Gather all parameters and concatenate to string
-            QString res;
+            TQString res;
             for (int i = 0; i < args.size(); i++) {
                 res += args[i].toString(exec).qstring();
             }
@@ -344,7 +344,7 @@ KJS::Value OutputFunction::call(KJS::ExecState *exec, KJS::Object &thisObj, cons
             // Append cursor position
             uint l, c;
             o->view->cursorPosition(&l, &c);
-            res += "(" + QString::number(l) + "," + QString::number(c) + ")";
+            res += "(" + TQString::number(l) + "," + TQString::number(c) + ")";
 
             if (id == WriteCursorPositionln)
                 res += "\n";
@@ -364,10 +364,10 @@ KJS::Value OutputFunction::call(KJS::ExecState *exec, KJS::Object &thisObj, cons
 
 const char failureSnapshotPrefix[] = "testkateregressionrc-FS.";
 
-static QString findMostRecentFailureSnapshot() {
-    QDir dir(kapp->dirs()->saveLocation("config"),
-             QString(failureSnapshotPrefix)+"*",
-             QDir::Time, QDir::Files);
+static TQString findMostRecentFailureSnapshot() {
+    TQDir dir(kapp->dirs()->saveLocation("config"),
+             TQString(failureSnapshotPrefix)+"*",
+             TQDir::Time, TQDir::Files);
     return dir[0].mid(sizeof failureSnapshotPrefix - 1);
 }
 
@@ -402,7 +402,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    QString kh("/var/tmp/%1_kate_non_existent");
+    TQString kh("/var/tmp/%1_kate_non_existent");
     kh = kh.arg( pw->pw_name );
     setenv( "KDEHOME", kh.latin1(), 1 );
     setenv( "LC_ALL", "C", 1 );
@@ -416,12 +416,12 @@ int main(int argc, char *argv[])
 
     KCmdLineArgs *args = KCmdLineArgs::parsedArgs( );
 
-    QCString baseDir = args->getOption("base");
-    QCString baseDirConfigFile(::getenv("HOME") + QCString(BASE_DIR_CONFIG));
+    TQCString baseDir = args->getOption("base");
+    TQCString baseDirConfigFile(::getenv("HOME") + TQCString(BASE_DIR_CONFIG));
     {
-        QFile baseDirConfig(baseDirConfigFile);
+        TQFile baseDirConfig(baseDirConfigFile);
         if (baseDirConfig.open(IO_ReadOnly)) {
-            QTextStream bds(&baseDirConfig);
+            TQTextStream bds(&baseDirConfig);
             baseDir = bds.readLine().latin1();
         }
     }
@@ -449,12 +449,12 @@ int main(int argc, char *argv[])
     int testcase_index = 0;
     if (baseDir.isEmpty()) baseDir = args->arg(testcase_index++);
 
-    QFileInfo bdInfo(baseDir);
-    baseDir = QFile::encodeName(bdInfo.absFilePath());
+    TQFileInfo bdInfo(baseDir);
+    baseDir = TQFile::encodeName(bdInfo.absFilePath());
 
     const char *subdirs[] = {"tests", "baseline", "output", "resources"};
     for ( int i = 0; i < 2; i++ ) {
-        QFileInfo sourceDir(QFile::encodeName( baseDir ) + "/" + subdirs[i]);
+        TQFileInfo sourceDir(TQFile::encodeName( baseDir ) + "/" + subdirs[i]);
         if ( !sourceDir.exists() || !sourceDir.isDir() ) {
             fprintf(stderr,"ERROR: Source directory \"%s/%s\": no such directory.\n", (const char *)baseDir, subdirs[i]);
             exit(1);
@@ -501,7 +501,7 @@ int main(int argc, char *argv[])
                                7001, 7011, 6070, 6080, 6090, 0};
         int channel = args->isSet( "debug" ) ? 2 : 4;
         for ( int i = 0; areas[i]; ++i ) {
-            dc.setGroup( QString::number( areas[i] ) );
+            dc.setGroup( TQString::number( areas[i] ) );
             dc.writeEntry( "InfoOutput", channel );
         }
         dc.sync();
@@ -549,16 +549,16 @@ int main(int argc, char *argv[])
                                                         baseDir,
                                                         args->getOption("output"),
                                                         args->isSet("genoutput"));
-    QObject::connect(part->browserExtension(), SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),
-		     regressionTest, SLOT(slotOpenURL(const KURL&, const KParts::URLArgs &)));
-    QObject::connect(part->browserExtension(), SIGNAL(resizeTopLevelWidget( int, int )),
-		     regressionTest, SLOT(resizeTopLevelWidget( int, int )));
+    TQObject::connect(part->browserExtension(), TQT_SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),
+		     regressionTest, TQT_SLOT(slotOpenURL(const KURL&, const KParts::URLArgs &)));
+    TQObject::connect(part->browserExtension(), TQT_SIGNAL(resizeTopLevelWidget( int, int )),
+		     regressionTest, TQT_SLOT(resizeTopLevelWidget( int, int )));
 
     regressionTest->m_keepOutput = args->isSet("keep-output");
     regressionTest->m_showGui = args->isSet("show");
 
     {
-        QString failureSnapshot = args->getOption("cmp-failures");
+        TQString failureSnapshot = args->getOption("cmp-failures");
         if (failureSnapshot.isEmpty())
             failureSnapshot = findMostRecentFailureSnapshot();
         if (!failureSnapshot.isEmpty())
@@ -568,7 +568,7 @@ int main(int argc, char *argv[])
     }
 
     if (args->isSet("save-failures")) {
-        QString failureSaver = args->getOption("save-failures");
+        TQString failureSaver = args->getOption("save-failures");
         regressionTest->setFailureSnapshotSaver(
                 new KSimpleConfig(failureSnapshotPrefix + failureSaver, false),
                 failureSaver);
@@ -580,7 +580,7 @@ int main(int argc, char *argv[])
     for (; testcase_index < args->count(); testcase_index++)
         tests << args->arg(testcase_index);
     if (tests.count() > 0)
-        for (QValueListConstIterator<QCString> it = tests.begin(); it != tests.end(); ++it) {
+        for (TQValueListConstIterator<TQCString> it = tests.begin(); it != tests.end(); ++it) {
 	    result = regressionTest->runTests(*it,true);
             if (!result) break;
         }
@@ -614,18 +614,18 @@ int main(int argc, char *argv[])
             if ( regressionTest->m_errors )
                 printf("Errors:   %d\n",regressionTest->m_errors);
 
-            QFile list( regressionTest->m_outputDir + "/links.html" );
+            TQFile list( regressionTest->m_outputDir + "/links.html" );
             list.open( IO_WriteOnly|IO_Append );
-            QString link, cl;
-            link = QString( "<hr>%1 failures. (%2 expected failures)" )
+            TQString link, cl;
+            link = TQString( "<hr>%1 failures. (%2 expected failures)" )
                    .arg(regressionTest->m_failures_work )
                    .arg( regressionTest->m_failures_fail );
             if (regressionTest->m_failures_new)
-                link += QString(" <span style=\"color:red;font-weight:bold\">(%1 new failures since %2)</span>")
+                link += TQString(" <span style=\"color:red;font-weight:bold\">(%1 new failures since %2)</span>")
                         .arg(regressionTest->m_failures_new)
                         .arg(regressionTest->m_failureComp->group());
             if (regressionTest->m_passes_new)
-                link += QString(" <p style=\"color:green;font-weight:bold\">%1 new passes since %2</p>")
+                link += TQString(" <p style=\"color:green;font-weight:bold\">%1 new passes since %2</p>")
                         .arg(regressionTest->m_passes_new)
                         .arg(regressionTest->m_failureComp->group());
             list.writeBlock( link.latin1(), link.length() );
@@ -651,9 +651,9 @@ int main(int argc, char *argv[])
 RegressionTest *RegressionTest::curr = 0;
 
 RegressionTest::RegressionTest(KateDocument *part, KConfig *baseConfig,
-                               const QString &baseDir,
-                               const QString &outputDir, bool _genOutput)
-  : QObject(part)
+                               const TQString &baseDir,
+                               const TQString &outputDir, bool _genOutput)
+  : TQObject(part)
 {
     m_part = part;
     m_view = static_cast<KateView *>(m_part->widget());
@@ -676,9 +676,9 @@ RegressionTest::RegressionTest(KateDocument *part, KConfig *baseConfig,
     m_failures_work = m_failures_fail = m_failures_new = 0;
     m_errors = 0;
 
-    ::unlink( QFile::encodeName( m_outputDir + "/links.html" ) );
-    QFile f( m_outputDir + "/empty.html" );
-    QString s;
+    ::unlink( TQFile::encodeName( m_outputDir + "/links.html" ) );
+    TQFile f( m_outputDir + "/empty.html" );
+    TQString s;
     f.open( IO_WriteOnly | IO_Truncate );
     s = "<html><body>Follow the white rabbit";
     f.writeBlock( s.latin1(), s.length() );
@@ -692,22 +692,22 @@ RegressionTest::RegressionTest(KateDocument *part, KConfig *baseConfig,
     curr = this;
 }
 
-#include <qobjectlist.h>
+#include <tqobjectlist.h>
 
-static QStringList readListFile( const QString &filename )
+static TQStringList readListFile( const TQString &filename )
 {
     // Read ignore file for this directory
-    QString ignoreFilename = filename;
-    QFileInfo ignoreInfo(ignoreFilename);
-    QStringList ignoreFiles;
+    TQString ignoreFilename = filename;
+    TQFileInfo ignoreInfo(ignoreFilename);
+    TQStringList ignoreFiles;
     if (ignoreInfo.exists()) {
-        QFile ignoreFile(ignoreFilename);
+        TQFile ignoreFile(ignoreFilename);
         if (!ignoreFile.open(IO_ReadOnly)) {
             fprintf(stderr,"Can't open %s\n",ignoreFilename.latin1());
             exit(1);
         }
-        QTextStream ignoreStream(&ignoreFile);
-        QString line;
+        TQTextStream ignoreStream(&ignoreFile);
+        TQString line;
         while (!(line = ignoreStream.readLine()).isNull())
             ignoreFiles.append(line);
         ignoreFile.close();
@@ -723,23 +723,23 @@ RegressionTest::~RegressionTest()
     delete m_failureSave;
 }
 
-void RegressionTest::setFailureSnapshotConfig(KConfig *cfg, const QString &sname)
+void RegressionTest::setFailureSnapshotConfig(KConfig *cfg, const TQString &sname)
 {
     Q_ASSERT(cfg);
     m_failureComp = cfg;
     m_failureComp->setGroup(sname);
 }
 
-void RegressionTest::setFailureSnapshotSaver(KConfig *cfg, const QString &sname)
+void RegressionTest::setFailureSnapshotSaver(KConfig *cfg, const TQString &sname)
 {
     Q_ASSERT(cfg);
     m_failureSave = cfg;
     m_failureSave->setGroup(sname);
 }
 
-QStringList RegressionTest::concatListFiles(const QString &relPath, const QString &filename)
+TQStringList RegressionTest::concatListFiles(const TQString &relPath, const TQString &filename)
 {
-    QStringList cmds;
+    TQStringList cmds;
     int pos = relPath.findRev('/');
     if (pos >= 0)
         cmds += concatListFiles(relPath.left(pos), filename);
@@ -747,17 +747,17 @@ QStringList RegressionTest::concatListFiles(const QString &relPath, const QStrin
     return cmds;
 }
 
-bool RegressionTest::runTests(QString relPath, bool mustExist, int known_failure)
+bool RegressionTest::runTests(TQString relPath, bool mustExist, int known_failure)
 {
-    m_currentOutput = QString::null;
+    m_currentOutput = TQString::null;
 
-    if (!QFile(m_baseDir + "/tests/"+relPath).exists()) {
+    if (!TQFile(m_baseDir + "/tests/"+relPath).exists()) {
 	fprintf(stderr,"%s: No such file or directory\n",relPath.latin1());
 	return false;
     }
 
-    QString fullPath = m_baseDir + "/tests/"+relPath;
-    QFileInfo info(fullPath);
+    TQString fullPath = m_baseDir + "/tests/"+relPath;
+    TQFileInfo info(fullPath);
 
     if (!info.exists() && mustExist) {
 	fprintf(stderr,"%s: No such file or directory\n",relPath.latin1());
@@ -770,14 +770,14 @@ bool RegressionTest::runTests(QString relPath, bool mustExist, int known_failure
     }
 
     if (info.isDir()) {
-        QStringList ignoreFiles = readListFile(  m_baseDir + "/tests/"+relPath+"/ignore" );
-        QStringList failureFiles = readListFile(  m_baseDir + "/tests/"+relPath+"/KNOWN_FAILURES" );
+        TQStringList ignoreFiles = readListFile(  m_baseDir + "/tests/"+relPath+"/ignore" );
+        TQStringList failureFiles = readListFile(  m_baseDir + "/tests/"+relPath+"/KNOWN_FAILURES" );
 
 	// Run each test in this directory, recusively
-	QDir sourceDir(m_baseDir + "/tests/"+relPath);
+	TQDir sourceDir(m_baseDir + "/tests/"+relPath);
 	for (uint fileno = 0; fileno < sourceDir.count(); fileno++) {
-	    QString filename = sourceDir[fileno];
-	    QString relFilename = relPath.isEmpty() ? filename : relPath+"/"+filename;
+	    TQString filename = sourceDir[fileno];
+	    TQString relFilename = relPath.isEmpty() ? filename : relPath+"/"+filename;
 
             if (filename.startsWith(".") || ignoreFiles.contains(filename) )
                 continue;
@@ -791,8 +791,8 @@ bool RegressionTest::runTests(QString relPath, bool mustExist, int known_failure
     }
     else if (info.isFile()) {
 
-	QString relativeDir = QFileInfo(relPath).dirPath();
-	QString filename = info.fileName();
+	TQString relativeDir = TQFileInfo(relPath).dirPath();
+	TQString filename = info.fileName();
 	m_currentBase = m_baseDir + "/tests/"+relativeDir;
 	m_currentCategory = relativeDir;
 	m_currentTest = filename;
@@ -800,7 +800,7 @@ bool RegressionTest::runTests(QString relPath, bool mustExist, int known_failure
         m_outputCustomised = false;
         // gather commands
         // directory-specific commands
-        QStringList commands = concatListFiles(relPath, ".kateconfig-commands");
+        TQStringList commands = concatListFiles(relPath, ".kateconfig-commands");
         // testcase-specific commands
         commands += readListFile(m_currentBase + "/" + filename + "-commands");
 
@@ -827,14 +827,14 @@ bool RegressionTest::runTests(QString relPath, bool mustExist, int known_failure
     return true;
 }
 
-void RegressionTest::createLink( const QString& test, int failures )
+void RegressionTest::createLink( const TQString& test, int failures )
 {
     createMissingDirs( m_outputDir + "/" + test + "-compare.html" );
 
-    QFile list( m_outputDir + "/links.html" );
+    TQFile list( m_outputDir + "/links.html" );
     list.open( IO_WriteOnly|IO_Append );
-    QString link;
-    link = QString( "<a href=\"%1\" target=\"content\" title=\"%2\">" )
+    TQString link;
+    link = TQString( "<a href=\"%1\" target=\"content\" title=\"%2\">" )
            .arg( test + "-compare.html" )
            .arg( test );
     link += m_currentTest;
@@ -858,10 +858,10 @@ void RegressionTest::createLink( const QString& test, int failures )
  * @return path with all elements replaced by .. and concerning path elements
  *	to be relatively reachable from base.
  */
-static QString makeRelativePath(const QString &base, const QString &path)
+static TQString makeRelativePath(const TQString &base, const TQString &path)
 {
-    QString absBase = QFileInfo(base).absFilePath();
-    QString absPath = QFileInfo(path).absFilePath();
+    TQString absBase = TQFileInfo(base).absFilePath();
+    TQString absPath = TQFileInfo(path).absFilePath();
 //     kdDebug() << "absPath: \"" << absPath << "\"" << endl;
 //     kdDebug() << "absBase: \"" << absBase << "\"" << endl;
 
@@ -871,8 +871,8 @@ static QString makeRelativePath(const QString &base, const QString &path)
         pos++;
         int newpos = absBase.find('/', pos);
         if (newpos == -1) newpos = absBase.length();
-        QConstString cmpPathComp(absPath.unicode() + pos, newpos - pos);
-        QConstString cmpBaseComp(absBase.unicode() + pos, newpos - pos);
+        TQConstString cmpPathComp(absPath.unicode() + pos, newpos - pos);
+        TQConstString cmpBaseComp(absBase.unicode() + pos, newpos - pos);
 //         kdDebug() << "cmpPathComp: \"" << cmpPathComp.string() << "\"" << endl;
 //         kdDebug() << "cmpBaseComp: \"" << cmpBaseComp.string() << "\"" << endl;
 //         kdDebug() << "pos: " << pos << " newpos: " << newpos << endl;
@@ -884,10 +884,10 @@ static QString makeRelativePath(const QString &base, const QString &path)
 
 //     kdDebug() << "basepos " << basepos << " pathpos " << pathpos << endl;
 
-    QString rel;
+    TQString rel;
     {
-        QConstString relBase(absBase.unicode() + basepos, absBase.length() - basepos);
-        QConstString relPath(absPath.unicode() + pathpos, absPath.length() - pathpos);
+        TQConstString relBase(absBase.unicode() + basepos, absBase.length() - basepos);
+        TQConstString relPath(absPath.unicode() + pathpos, absPath.length() - pathpos);
         // generate as many .. as there are path elements in relBase
         if (relBase.string().length() > 0) {
             for (int i = relBase.string().contains('/'); i > 0; --i)
@@ -903,43 +903,43 @@ static QString makeRelativePath(const QString &base, const QString &path)
 /** processes events for at least \c msec milliseconds */
 static void pause(int msec)
 {
-    QTime t;
+    TQTime t;
     t.start();
     do {
         kapp->processEvents();
     } while (t.elapsed() < msec);
 }
 
-void RegressionTest::doFailureReport( const QString& test, int failures )
+void RegressionTest::doFailureReport( const TQString& test, int failures )
 {
     if ( failures == NoFailure ) {
-        ::unlink( QFile::encodeName( m_outputDir + "/" + test + "-compare.html" ) );
+        ::unlink( TQFile::encodeName( m_outputDir + "/" + test + "-compare.html" ) );
         return;
     }
 
     createLink( test, failures );
 
-    QFile compare( m_outputDir + "/" + test + "-compare.html" );
+    TQFile compare( m_outputDir + "/" + test + "-compare.html" );
 
-    QString testFile = QFileInfo(test).fileName();
+    TQString testFile = TQFileInfo(test).fileName();
 
-    QString renderDiff;
-    QString domDiff;
+    TQString renderDiff;
+    TQString domDiff;
 
-    QString relOutputDir = makeRelativePath(m_baseDir, m_outputDir);
+    TQString relOutputDir = makeRelativePath(m_baseDir, m_outputDir);
 
     // are blocking reads possible with KProcess?
     char pwd[PATH_MAX];
     (void) getcwd( pwd, PATH_MAX );
-    chdir( QFile::encodeName( m_baseDir ) );
+    chdir( TQFile::encodeName( m_baseDir ) );
 
     if ( failures & ResultFailure ) {
         domDiff += "<pre>";
-        FILE *pipe = popen( QString::fromLatin1( "diff -u baseline/%1-result %3/%2-result" )
+        FILE *pipe = popen( TQString::fromLatin1( "diff -u baseline/%1-result %3/%2-result" )
                             .arg ( test, test, relOutputDir ).latin1(), "r" );
-        QTextIStream *is = new QTextIStream( pipe );
+        TQTextIStream *is = new TQTextIStream( pipe );
         for ( int line = 0; line < 100 && !is->eof(); ++line ) {
-            QString line = is->readLine();
+            TQString line = is->readLine();
             line = line.replace( '<', "&lt;" );
             line = line.replace( '>', "&gt;" );
             domDiff += line  + "\n";
@@ -952,13 +952,13 @@ void RegressionTest::doFailureReport( const QString& test, int failures )
     chdir( pwd );
 
     // create a relative path so that it works via web as well. ugly
-    QString relpath = makeRelativePath(m_outputDir + "/"
-        + QFileInfo(test).dirPath(), m_baseDir);
+    TQString relpath = makeRelativePath(m_outputDir + "/"
+        + TQFileInfo(test).dirPath(), m_baseDir);
 
     compare.open( IO_WriteOnly|IO_Truncate );
-    QString cl;
-    cl = QString( "<html><head><title>%1</title>" ).arg( test );
-    cl += QString( "<script>\n"
+    TQString cl;
+    cl = TQString( "<html><head><title>%1</title>" ).arg( test );
+    cl += TQString( "<script>\n"
                   "var pics = new Array();\n"
                   "pics[0]=new Image();\n"
                   "pics[0].src = '%1';\n"
@@ -969,7 +969,7 @@ void RegressionTest::doFailureReport( const QString& test, int failures )
                   "var lastb=0;\n" )
           .arg( relpath+"/baseline/"+test+"-dump.png" )
           .arg( testFile+"-dump.png" );
-    cl += QString( "function toggleVisible(visible) {\n"
+    cl += TQString( "function toggleVisible(visible) {\n"
                   "     document.getElementById('render').style.visibility= visible == 'render' ? 'visible' : 'hidden';\n"
                   "     document.getElementById('image').style.visibility= visible == 'image' ? 'visible' : 'hidden';\n"
                   "     document.getElementById('dom').style.visibility= visible == 'dom' ? 'visible' : 'hidden';\n"
@@ -978,7 +978,7 @@ void RegressionTest::doFailureReport( const QString& test, int failures )
                   "document.getElementById('image').style.borderColor = t && !doflicker ? 'red' : 'gray';\n"
                   "toggleVisible('image');\n"
                    "}" );
-    cl += QString ( "function runSlideShow(){\n"
+    cl += TQString ( "function runSlideShow(){\n"
                   "   document.getElementById('image').src = pics[t].src;\n"
                   "   if (doflicker)\n"
                   "       t = 1 - t;\n"
@@ -995,24 +995,24 @@ void RegressionTest::doFailureReport( const QString& test, int failures )
                   "}\n"
                    "</script>\n");
 
-    cl += QString ("<style>\n"
+    cl += TQString ("<style>\n"
                    ".buttondown { cursor: pointer; padding: 0px 20px; color: white; background-color: blue; border: inset blue 2px;}\n"
                    ".button { cursor: pointer; padding: 0px 20px; color: black; background-color: white; border: outset blue 2px;}\n"
                    ".diff { position: absolute; left: 10px; top: 100px; visibility: hidden; border: 1px black solid; background-color: white; color: black; /* width: 800; height: 600; overflow: scroll; */ }\n"
                    "</style>\n" );
 
-    cl += QString( "<body onload=\"m(5); toggleVisible('dom');\"" );
-    cl += QString(" text=black bgcolor=gray>\n<h1>%3</h1>\n" ).arg( test );
+    cl += TQString( "<body onload=\"m(5); toggleVisible('dom');\"" );
+    cl += TQString(" text=black bgcolor=gray>\n<h1>%3</h1>\n" ).arg( test );
     if ( renderDiff.length() )
         cl += "<span id='b4' class='button' onclick='showRender();m(4)'>R-DIFF</span>&nbsp;\n";
     if ( domDiff.length() )
         cl += "<span id='b5' class='button' onclick='showDom();m(5);'>D-DIFF</span>&nbsp;\n";
     // The test file always exists - except for checkOutput called from *.js files
-    if ( QFile::exists( m_baseDir + "/tests/"+ test ) )
-        cl += QString( "<a class=button href=\"%1\">HTML</a>&nbsp;" )
+    if ( TQFile::exists( m_baseDir + "/tests/"+ test ) )
+        cl += TQString( "<a class=button href=\"%1\">HTML</a>&nbsp;" )
               .arg( relpath+"/tests/"+test );
 
-    cl += QString( "<hr>"
+    cl += TQString( "<hr>"
                    "<img style='border: solid 5px gray' src=\"%1\" id='image'>" )
           .arg( relpath+"/baseline/"+test+"-dump.png" );
 
@@ -1024,7 +1024,7 @@ void RegressionTest::doFailureReport( const QString& test, int failures )
     compare.close();
 }
 
-void RegressionTest::testStaticFile(const QString & filename, const QStringList &commands)
+void RegressionTest::testStaticFile(const TQString & filename, const TQStringList &commands)
 {
     qApp->mainWidget()->resize( 800, 600); // restore size
 
@@ -1035,16 +1035,16 @@ void RegressionTest::testStaticFile(const QString & filename, const QStringList 
     // load page
     KURL url;
     url.setProtocol("file");
-    url.setPath(QFileInfo(m_baseDir + "/tests/"+filename).absFilePath());
+    url.setPath(TQFileInfo(m_baseDir + "/tests/"+filename).absFilePath());
     m_part->openURL(url);
 
     // inject commands
-    for (QStringList::ConstIterator cit = commands.begin(); cit != commands.end(); ++cit) {
-        QString str = (*cit).stripWhiteSpace();
+    for (TQStringList::ConstIterator cit = commands.begin(); cit != commands.end(); ++cit) {
+        TQString str = (*cit).stripWhiteSpace();
         if (str.isEmpty() || str.startsWith("#")) continue;
         Kate::Command *cmd = KateCmd::self()->queryCommand(str);
         if (cmd) {
-            QString msg;
+            TQString msg;
             if (!cmd->exec(m_view, str, msg))
                 fprintf(stderr, "ERROR executing command '%s': %s\n", str.latin1(), msg.latin1());
         }
@@ -1060,7 +1060,7 @@ void RegressionTest::testStaticFile(const QString & filename, const QStringList 
         TestJScriptEnv jsenv(m_part);
         jsenv.output()->setChangedFlag(&m_outputCustomised);
         jsenv.output()->setOutputString(&m_outputString);
-        script_error = evalJS(jsenv.interpreter(), m_baseDir + "/tests/"+QFileInfo(filename).dirPath()+"/.kateconfig-script", true)
+        script_error = evalJS(jsenv.interpreter(), m_baseDir + "/tests/"+TQFileInfo(filename).dirPath()+"/.kateconfig-script", true)
             && evalJS(jsenv.interpreter(), m_baseDir + "/tests/"+filename+"-script");
     }
 
@@ -1093,10 +1093,10 @@ bail_out:
     m_part->closeURL();
 }
 
-bool RegressionTest::evalJS(Interpreter &interp, const QString &filename, bool ignore_nonexistent)
+bool RegressionTest::evalJS(Interpreter &interp, const TQString &filename, bool ignore_nonexistent)
 {
-    QString fullSourceName = filename;
-    QFile sourceFile(fullSourceName);
+    TQString fullSourceName = filename;
+    TQFile sourceFile(fullSourceName);
 
     if (!sourceFile.open(IO_ReadOnly)) {
         if (!ignore_nonexistent) {
@@ -1106,9 +1106,9 @@ bool RegressionTest::evalJS(Interpreter &interp, const QString &filename, bool i
         return ignore_nonexistent;
     }
 
-    QTextStream stream ( &sourceFile );
-    stream.setEncoding( QTextStream::UnicodeUTF8 );
-    QString code = stream.read();
+    TQTextStream stream ( &sourceFile );
+    stream.setEncoding( TQTextStream::UnicodeUTF8 );
+    TQString code = stream.read();
     sourceFile.close();
 
     saw_failure = false;
@@ -1117,7 +1117,7 @@ bool RegressionTest::evalJS(Interpreter &interp, const QString &filename, bool i
 
     if ( /*report_result &&*/ !ignore_errors) {
         if (c.complType() == Throw) {
-            QString errmsg = c.value().toString(interp.globalExec()).qstring();
+            TQString errmsg = c.value().toString(interp.globalExec()).qstring();
             printf( "ERROR: %s (%s)\n",filename.latin1(), errmsg.latin1());
             m_errors++;
             return false;
@@ -1131,9 +1131,9 @@ public:
   virtual UString className() const { return "global"; }
 };
 
-RegressionTest::CheckResult RegressionTest::checkOutput(const QString &againstFilename)
+RegressionTest::CheckResult RegressionTest::checkOutput(const TQString &againstFilename)
 {
-    QString absFilename = QFileInfo(m_baseDir + "/baseline/" + againstFilename).absFilePath();
+    TQString absFilename = TQFileInfo(m_baseDir + "/baseline/" + againstFilename).absFilePath();
     if ( svnIgnored( absFilename ) ) {
         m_known_failures = NoFailure;
         return Ignored;
@@ -1142,7 +1142,7 @@ RegressionTest::CheckResult RegressionTest::checkOutput(const QString &againstFi
     CheckResult result = Success;
 
     // compare result to existing file
-    QString outputFilename = QFileInfo(m_outputDir + "/" + againstFilename).absFilePath();
+    TQString outputFilename = TQFileInfo(m_outputDir + "/" + againstFilename).absFilePath();
     bool kf = false;
     if ( m_known_failures & AllFailure )
         kf = true;
@@ -1153,23 +1153,23 @@ RegressionTest::CheckResult RegressionTest::checkOutput(const QString &againstFi
         outputFilename = absFilename;
 
     // get existing content
-    QString data;
+    TQString data;
     if (m_outputCustomised) {
         data = m_outputString;
     } else {
         data = m_part->text();
     }
 
-    QFile file(absFilename);
+    TQFile file(absFilename);
     if (file.open(IO_ReadOnly)) {
-        QTextStream stream ( &file );
-        stream.setEncoding( QTextStream::UnicodeUTF8 );
+        TQTextStream stream ( &file );
+        stream.setEncoding( TQTextStream::UnicodeUTF8 );
 
-        QString fileData = stream.read();
+        TQString fileData = stream.read();
 
         result = ( fileData == data ) ? Success : Failure;
         if ( !m_genOutput && result == Success && !m_keepOutput ) {
-            ::unlink( QFile::encodeName( outputFilename ) );
+            ::unlink( TQFile::encodeName( outputFilename ) );
             return Success;
         }
     } else if (!m_genOutput) {
@@ -1179,14 +1179,14 @@ RegressionTest::CheckResult RegressionTest::checkOutput(const QString &againstFi
 
     // generate result file
     createMissingDirs( outputFilename );
-    QFile file2(outputFilename);
+    TQFile file2(outputFilename);
     if (!file2.open(IO_WriteOnly)) {
         fprintf(stderr,"Error writing to file %s\n",outputFilename.latin1());
         exit(1);
     }
 
-    QTextStream stream2(&file2);
-    stream2.setEncoding( QTextStream::UnicodeUTF8 );
+    TQTextStream stream2(&file2);
+    stream2.setEncoding( TQTextStream::UnicodeUTF8 );
     stream2 << data;
     if ( m_genOutput )
         printf("Generated %s\n", outputFilename.latin1());
@@ -1202,7 +1202,7 @@ void RegressionTest::rereadConfig()
     m_view->config()->readConfig(m_baseConfig);
 }
 
-bool RegressionTest::reportResult(CheckResult result, const QString & description, bool *newfail)
+bool RegressionTest::reportResult(CheckResult result, const TQString & description, bool *newfail)
 {
     if ( result == Ignored ) {
         //printf("IGNORED: ");
@@ -1212,14 +1212,14 @@ bool RegressionTest::reportResult(CheckResult result, const QString & descriptio
         return reportResult( result == Success, description, newfail );
 }
 
-bool RegressionTest::reportResult(bool passed, const QString & description, bool *newfail)
+bool RegressionTest::reportResult(bool passed, const TQString & description, bool *newfail)
 {
     if (newfail) *newfail = false;
 
     if (m_genOutput)
 	return true;
 
-    QString filename(m_currentTest + "-" + description);
+    TQString filename(m_currentTest + "-" + description);
     if (!m_currentCategory.isEmpty())
         filename = m_currentCategory + "/" + filename;
 
@@ -1262,7 +1262,7 @@ bool RegressionTest::reportResult(bool passed, const QString & description, bool
     return passed;
 }
 
-void RegressionTest::printDescription(const QString& description)
+void RegressionTest::printDescription(const TQString& description)
 {
     if (!m_currentCategory.isEmpty())
 	printf("%s/", m_currentCategory.latin1());
@@ -1270,7 +1270,7 @@ void RegressionTest::printDescription(const QString& description)
     printf("%s", m_currentTest.latin1());
 
     if (!description.isEmpty()) {
-        QString desc = description;
+        TQString desc = description;
         desc.replace( '\n', ' ' );
 	printf(" [%s]", desc.latin1());
     }
@@ -1279,28 +1279,28 @@ void RegressionTest::printDescription(const QString& description)
     fflush(stdout);
 }
 
-void RegressionTest::createMissingDirs(const QString & filename)
+void RegressionTest::createMissingDirs(const TQString & filename)
 {
-    QFileInfo dif(filename);
-    QFileInfo dirInfo( dif.dirPath() );
+    TQFileInfo dif(filename);
+    TQFileInfo dirInfo( dif.dirPath() );
     if (dirInfo.exists())
 	return;
 
-    QStringList pathComponents;
-    QFileInfo parentDir = dirInfo;
+    TQStringList pathComponents;
+    TQFileInfo parentDir = dirInfo;
     pathComponents.prepend(parentDir.absFilePath());
     while (!parentDir.exists()) {
-	QString parentPath = parentDir.absFilePath();
+	TQString parentPath = parentDir.absFilePath();
 	int slashPos = parentPath.findRev('/');
 	if (slashPos < 0)
 	    break;
 	parentPath = parentPath.left(slashPos);
 	pathComponents.prepend(parentPath);
-	parentDir = QFileInfo(parentPath);
+	parentDir = TQFileInfo(parentPath);
     }
     for (uint pathno = 1; pathno < pathComponents.count(); pathno++) {
-	if (!QFileInfo(pathComponents[pathno]).exists() &&
-	    !QDir(pathComponents[pathno-1]).mkdir(pathComponents[pathno])) {
+	if (!TQFileInfo(pathComponents[pathno]).exists() &&
+	    !TQDir(pathComponents[pathno-1]).mkdir(pathComponents[pathno])) {
 	    fprintf(stderr,"Error creating directory %s\n",pathComponents[pathno].latin1());
 	    exit(1);
 	}
@@ -1314,16 +1314,16 @@ void RegressionTest::slotOpenURL(const KURL &url, const KParts::URLArgs &args)
     m_part->openURL(url);
 }
 
-bool RegressionTest::svnIgnored( const QString &filename )
+bool RegressionTest::svnIgnored( const TQString &filename )
 {
-    QFileInfo fi( filename );
-    QString ignoreFilename = fi.dirPath() + "/svnignore";
-    QFile ignoreFile(ignoreFilename);
+    TQFileInfo fi( filename );
+    TQString ignoreFilename = fi.dirPath() + "/svnignore";
+    TQFile ignoreFile(ignoreFilename);
     if (!ignoreFile.open(IO_ReadOnly))
         return false;
 
-    QTextStream ignoreStream(&ignoreFile);
-    QString line;
+    TQTextStream ignoreStream(&ignoreFile);
+    TQString line;
     while (!(line = ignoreStream.readLine()).isNull()) {
         if ( line == fi.fileName() )
             return true;
@@ -1335,8 +1335,8 @@ bool RegressionTest::svnIgnored( const QString &filename )
 void RegressionTest::resizeTopLevelWidget( int w, int h )
 {
     qApp->mainWidget()->resize( w, h );
-    // Since we're not visible, this doesn't have an immediate effect, QWidget posts the event
-    QApplication::sendPostedEvents( 0, QEvent::Resize );
+    // Since we're not visible, this doesn't have an immediate effect, TQWidget posts the event
+    TQApplication::sendPostedEvents( 0, TQEvent::Resize );
 }
 
 #include "test_regression.moc"

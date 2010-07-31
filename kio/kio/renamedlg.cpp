@@ -24,11 +24,11 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include <qfileinfo.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qdir.h>
+#include <tqfileinfo.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqdir.h>
 
 #include <kmessagebox.h>
 #include <kpushbutton.h>
@@ -64,25 +64,25 @@ class RenameDlg::RenameDlgPrivate
     m_pLineEdit = 0;
   }
   KPushButton *bCancel;
-  QPushButton *bRename;
-  QPushButton *bSkip;
-  QPushButton *bAutoSkip;
-  QPushButton *bOverwrite;
-  QPushButton *bOverwriteAll;
-  QPushButton *bResume;
-  QPushButton *bResumeAll;
-  QPushButton *bSuggestNewName;
-  QLineEdit* m_pLineEdit;
+  TQPushButton *bRename;
+  TQPushButton *bSkip;
+  TQPushButton *bAutoSkip;
+  TQPushButton *bOverwrite;
+  TQPushButton *bOverwriteAll;
+  TQPushButton *bResume;
+  TQPushButton *bResumeAll;
+  TQPushButton *bSuggestNewName;
+  TQLineEdit* m_pLineEdit;
   KURL src;
   KURL dest;
-  QString mimeSrc;
-  QString mimeDest;
+  TQString mimeSrc;
+  TQString mimeDest;
   bool modal;
   bool plugin;
 };
 
-RenameDlg::RenameDlg(QWidget *parent, const QString & _caption,
-                     const QString &_src, const QString &_dest,
+RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
+                     const TQString &_src, const TQString &_dest,
                      RenameDlg_Mode _mode,
                      KIO::filesize_t sizeSrc,
                      KIO::filesize_t sizeDest,
@@ -91,7 +91,7 @@ RenameDlg::RenameDlg(QWidget *parent, const QString & _caption,
                      time_t mtimeSrc,
                      time_t mtimeDest,
                      bool _modal)
-  : QDialog ( parent, "KIO::RenameDialog" , _modal )
+  : TQDialog ( parent, "KIO::RenameDialog" , _modal )
 {
     d = new RenameDlgPrivate( );
     d->modal = _modal;
@@ -113,52 +113,52 @@ RenameDlg::RenameDlg(QWidget *parent, const QString & _caption,
     setCaption( _caption );
 
     d->bCancel = new KPushButton( KStdGuiItem::cancel(), this );
-    connect(d->bCancel, SIGNAL(clicked()), this, SLOT(b0Pressed()));
+    connect(d->bCancel, TQT_SIGNAL(clicked()), this, TQT_SLOT(b0Pressed()));
 
     if ( ! (_mode & M_NORENAME ) ) {
-        d->bRename = new QPushButton( i18n( "&Rename" ), this );
+        d->bRename = new TQPushButton( i18n( "&Rename" ), this );
         d->bRename->setEnabled(false);
-        d->bSuggestNewName = new QPushButton( i18n( "Suggest New &Name" ), this );
-        connect(d->bSuggestNewName, SIGNAL(clicked()), this, SLOT(b8Pressed()));
-        connect(d->bRename, SIGNAL(clicked()), this, SLOT(b1Pressed()));
+        d->bSuggestNewName = new TQPushButton( i18n( "Suggest New &Name" ), this );
+        connect(d->bSuggestNewName, TQT_SIGNAL(clicked()), this, TQT_SLOT(b8Pressed()));
+        connect(d->bRename, TQT_SIGNAL(clicked()), this, TQT_SLOT(b1Pressed()));
     }
 
     if ( ( _mode & M_MULTI ) && ( _mode & M_SKIP ) ) {
-        d->bSkip = new QPushButton( i18n( "&Skip" ), this );
-        connect(d->bSkip, SIGNAL(clicked()), this, SLOT(b2Pressed()));
+        d->bSkip = new TQPushButton( i18n( "&Skip" ), this );
+        connect(d->bSkip, TQT_SIGNAL(clicked()), this, TQT_SLOT(b2Pressed()));
 
-        d->bAutoSkip = new QPushButton( i18n( "&Auto Skip" ), this );
-        connect(d->bAutoSkip, SIGNAL(clicked()), this, SLOT(b3Pressed()));
+        d->bAutoSkip = new TQPushButton( i18n( "&Auto Skip" ), this );
+        connect(d->bAutoSkip, TQT_SIGNAL(clicked()), this, TQT_SLOT(b3Pressed()));
     }
 
     if ( _mode & M_OVERWRITE ) {
-        d->bOverwrite = new QPushButton( i18n( "&Overwrite" ), this );
-        connect(d->bOverwrite, SIGNAL(clicked()), this, SLOT(b4Pressed()));
+        d->bOverwrite = new TQPushButton( i18n( "&Overwrite" ), this );
+        connect(d->bOverwrite, TQT_SIGNAL(clicked()), this, TQT_SLOT(b4Pressed()));
 
         if ( _mode & M_MULTI ) {
-            d->bOverwriteAll = new QPushButton( i18n( "O&verwrite All" ), this );
-            connect(d->bOverwriteAll, SIGNAL(clicked()), this, SLOT(b5Pressed()));
+            d->bOverwriteAll = new TQPushButton( i18n( "O&verwrite All" ), this );
+            connect(d->bOverwriteAll, TQT_SIGNAL(clicked()), this, TQT_SLOT(b5Pressed()));
         }
     }
 
     if ( _mode & M_RESUME ) {
-        d->bResume = new QPushButton( i18n( "&Resume" ), this );
-        connect(d->bResume, SIGNAL(clicked()), this, SLOT(b6Pressed()));
+        d->bResume = new TQPushButton( i18n( "&Resume" ), this );
+        connect(d->bResume, TQT_SIGNAL(clicked()), this, TQT_SLOT(b6Pressed()));
 
         if ( _mode & M_MULTI )
         {
-            d->bResumeAll = new QPushButton( i18n( "R&esume All" ), this );
-            connect(d->bResumeAll, SIGNAL(clicked()), this, SLOT(b7Pressed()));
+            d->bResumeAll = new TQPushButton( i18n( "R&esume All" ), this );
+            connect(d->bResumeAll, TQT_SIGNAL(clicked()), this, TQT_SLOT(b7Pressed()));
         }
     }
 
-    QVBoxLayout* pLayout = new QVBoxLayout( this, KDialog::marginHint(),
+    TQVBoxLayout* pLayout = new TQVBoxLayout( this, KDialog::marginHint(),
                                     KDialog::spacingHint() );
     pLayout->addStrut( 360 );	// makes dlg at least that wide
 
     // User tries to overwrite a file with itself ?
     if ( _mode & M_OVERWRITE_ITSELF ) {
-        QLabel *lb = new QLabel( i18n( "This action would overwrite '%1' with itself.\n"
+        TQLabel *lb = new TQLabel( i18n( "This action would overwrite '%1' with itself.\n"
                                        "Please enter a new file name:" ).arg( KStringHandler::csqueeze( d->src.pathOrURL(),100 ) ), this );
         d->bRename->setText(i18n("C&ontinue"));
         pLayout->addWidget( lb );
@@ -180,7 +180,7 @@ RenameDlg::RenameDlg(QWidget *parent, const QString & _caption,
             KTrader::OfferList::ConstIterator it = plugin_offers.begin();
             KTrader::OfferList::ConstIterator end = plugin_offers.end();
             for( ; it != end; ++it ){
-                QString libName = (*it)->library();
+                TQString libName = (*it)->library();
                 if( libName.isEmpty() ){
                     kdDebug(7024) << "lib is empty" << endl;
                     continue;
@@ -194,7 +194,7 @@ RenameDlg::RenameDlg(QWidget *parent, const QString & _caption,
                     lib->unload();
                     continue;
                 }
-                QObject *obj = factory->create( this, (*it)->name().latin1() );
+                TQObject *obj = factory->create( this, (*it)->name().latin1() );
                 if(!obj) {
                     lib->unload();
                     continue;
@@ -221,13 +221,13 @@ RenameDlg::RenameDlg(QWidget *parent, const QString & _caption,
 
         if( !d->plugin ){
             // No plugin found, build default dialog
-            QGridLayout * gridLayout = new QGridLayout( 0L, 9, 2, KDialog::marginHint(),
+            TQGridLayout * gridLayout = new TQGridLayout( 0L, 9, 2, KDialog::marginHint(),
                                                         KDialog::spacingHint() );
             pLayout->addLayout(gridLayout);
             gridLayout->setColStretch(0,0);
             gridLayout->setColStretch(1,10);
 
-            QString sentence1;
+            TQString sentence1;
             if (mtimeDest < mtimeSrc)
                 sentence1 = i18n("An older item named '%1' already exists.");
             else if (mtimeDest == mtimeSrc)
@@ -235,32 +235,32 @@ RenameDlg::RenameDlg(QWidget *parent, const QString & _caption,
             else
                 sentence1 = i18n("A newer item named '%1' already exists.");
 
-            QLabel * lb1 = new KSqueezedTextLabel( sentence1.arg(d->dest.pathOrURL() ), this );
+            TQLabel * lb1 = new KSqueezedTextLabel( sentence1.arg(d->dest.pathOrURL() ), this );
             gridLayout->addMultiCellWidget( lb1, 0, 0, 0, 1 ); // takes the complete first line
 
-            lb1 = new QLabel( this );
+            lb1 = new TQLabel( this );
             lb1->setPixmap( KMimeType::pixmapForURL( d->dest ) );
             gridLayout->addMultiCellWidget( lb1, 1, 3, 0, 0 ); // takes the first column on rows 1-3
 
             int row = 1;
             if ( sizeDest != (KIO::filesize_t)-1 )
             {
-                QLabel * lb = new QLabel( i18n("size %1").arg( KIO::convertSize(sizeDest) ), this );
+                TQLabel * lb = new TQLabel( i18n("size %1").arg( KIO::convertSize(sizeDest) ), this );
                 gridLayout->addWidget( lb, row, 1 );
                 row++;
 
             }
             if ( ctimeDest != (time_t)-1 )
             {
-                QDateTime dctime; dctime.setTime_t( ctimeDest );
-                QLabel * lb = new QLabel( i18n("created on %1").arg( KGlobal::locale()->formatDateTime(dctime) ), this );
+                TQDateTime dctime; dctime.setTime_t( ctimeDest );
+                TQLabel * lb = new TQLabel( i18n("created on %1").arg( KGlobal::locale()->formatDateTime(dctime) ), this );
                 gridLayout->addWidget( lb, row, 1 );
                 row++;
             }
             if ( mtimeDest != (time_t)-1 )
             {
-                QDateTime dmtime; dmtime.setTime_t( mtimeDest );
-                QLabel * lb = new QLabel( i18n("modified on %1").arg( KGlobal::locale()->formatDateTime(dmtime) ), this );
+                TQDateTime dmtime; dmtime.setTime_t( mtimeDest );
+                TQLabel * lb = new TQLabel( i18n("modified on %1").arg( KGlobal::locale()->formatDateTime(dmtime) ), this );
                 gridLayout->addWidget( lb, row, 1 );
                 row++;
             }
@@ -270,10 +270,10 @@ RenameDlg::RenameDlg(QWidget *parent, const QString & _caption,
                 // rows 1 to 3 are the details (size/ctime/mtime), row 4 is empty
                 gridLayout->addRowSpacing( 4, 20 );
 
-                QLabel * lb2 = new KSqueezedTextLabel( i18n("The source file is '%1'").arg(d->src.pathOrURL()), this );
+                TQLabel * lb2 = new KSqueezedTextLabel( i18n("The source file is '%1'").arg(d->src.pathOrURL()), this );
                 gridLayout->addMultiCellWidget( lb2, 5, 5, 0, 1 ); // takes the complete first line
 
-                lb2 = new QLabel( this );
+                lb2 = new TQLabel( this );
                 lb2->setPixmap( KMimeType::pixmapForURL( d->src ) );
                 gridLayout->addMultiCellWidget( lb2, 6, 8, 0, 0 ); // takes the first column on rows 6-8
 
@@ -281,21 +281,21 @@ RenameDlg::RenameDlg(QWidget *parent, const QString & _caption,
 
                 if ( sizeSrc != (KIO::filesize_t)-1 )
                 {
-                    QLabel * lb = new QLabel( i18n("size %1").arg( KIO::convertSize(sizeSrc) ), this );
+                    TQLabel * lb = new TQLabel( i18n("size %1").arg( KIO::convertSize(sizeSrc) ), this );
                     gridLayout->addWidget( lb, row, 1 );
                     row++;
                 }
                 if ( ctimeSrc != (time_t)-1 )
                 {
-                    QDateTime dctime; dctime.setTime_t( ctimeSrc );
-                    QLabel * lb = new QLabel( i18n("created on %1").arg( KGlobal::locale()->formatDateTime(dctime) ), this );
+                    TQDateTime dctime; dctime.setTime_t( ctimeSrc );
+                    TQLabel * lb = new TQLabel( i18n("created on %1").arg( KGlobal::locale()->formatDateTime(dctime) ), this );
                     gridLayout->addWidget( lb, row, 1 );
                     row++;
                 }
                 if ( mtimeSrc != (time_t)-1 )
                 {
-                    QDateTime dmtime; dmtime.setTime_t( mtimeSrc );
-                    QLabel * lb = new QLabel( i18n("modified on %1").arg( KGlobal::locale()->formatDateTime(dmtime) ), this );
+                    TQDateTime dmtime; dmtime.setTime_t( mtimeSrc );
+                    TQLabel * lb = new TQLabel( i18n("modified on %1").arg( KGlobal::locale()->formatDateTime(dmtime) ), this );
                     gridLayout->addWidget( lb, row, 1 );
                     row++;
                 }
@@ -306,7 +306,7 @@ RenameDlg::RenameDlg(QWidget *parent, const QString & _caption,
     {
         // This is the case where we don't want to allow overwriting, the existing
         // file must be preserved (e.g. when renaming).
-        QString sentence1;
+        TQString sentence1;
         if (mtimeDest < mtimeSrc)
             sentence1 = i18n("An older item named '%1' already exists.");
         else if (mtimeDest == mtimeSrc)
@@ -314,19 +314,19 @@ RenameDlg::RenameDlg(QWidget *parent, const QString & _caption,
         else
             sentence1 = i18n("A newer item named '%1' already exists.");
 
-        QLabel *lb = new KSqueezedTextLabel( sentence1.arg(d->dest.pathOrURL()), this );
+        TQLabel *lb = new KSqueezedTextLabel( sentence1.arg(d->dest.pathOrURL()), this );
         pLayout->addWidget(lb);
     }
-    QHBoxLayout* layout2 = new QHBoxLayout();
+    TQHBoxLayout* layout2 = new TQHBoxLayout();
     pLayout->addLayout( layout2 );
 
-    d->m_pLineEdit = new QLineEdit( this );
+    d->m_pLineEdit = new TQLineEdit( this );
     layout2->addWidget( d->m_pLineEdit );
-    QString fileName = d->dest.fileName();
+    TQString fileName = d->dest.fileName();
     d->m_pLineEdit->setText( KIO::decodeFileName( fileName ) );
     if ( d->bRename || d->bOverwrite )
-        connect(d->m_pLineEdit, SIGNAL(textChanged(const QString &)),
-                SLOT(enableRenameButton(const QString &)));
+        connect(d->m_pLineEdit, TQT_SIGNAL(textChanged(const TQString &)),
+                TQT_SLOT(enableRenameButton(const TQString &)));
     if ( d->bSuggestNewName )
     {
         layout2->addWidget( d->bSuggestNewName );
@@ -336,7 +336,7 @@ RenameDlg::RenameDlg(QWidget *parent, const QString & _caption,
     KSeparator* separator = new KSeparator( this );
     pLayout->addWidget( separator );
 
-    QHBoxLayout* layout = new QHBoxLayout();
+    TQHBoxLayout* layout = new TQHBoxLayout();
     pLayout->addLayout( layout );
 
     layout->addStretch(1);
@@ -389,7 +389,7 @@ RenameDlg::~RenameDlg()
   // no need to delete Pushbuttons,... qt will do this
 }
 
-void RenameDlg::enableRenameButton(const QString &newDest)
+void RenameDlg::enableRenameButton(const TQString &newDest)
 {
   if ( newDest != KIO::decodeFileName( d->dest.fileName() ) && !newDest.isEmpty() )
   {
@@ -409,7 +409,7 @@ void RenameDlg::enableRenameButton(const QString &newDest)
 KURL RenameDlg::newDestURL()
 {
   KURL newDest( d->dest );
-  QString fileName = d->m_pLineEdit->text();
+  TQString fileName = d->m_pLineEdit->text();
   newDest.setFileName( KIO::encodeFileName( fileName ) );
   return newDest;
 }
@@ -435,10 +435,10 @@ void RenameDlg::b1Pressed()
   done( 1 );
 }
 
-QString RenameDlg::suggestName(const KURL& baseURL, const QString& oldName)
+TQString RenameDlg::suggestName(const KURL& baseURL, const TQString& oldName)
 {
-  QString dotSuffix, suggestedName;
-  QString basename = oldName;
+  TQString dotSuffix, suggestedName;
+  TQString basename = oldName;
 
   int index = basename.find( '.' );
   if ( index != -1 ) {
@@ -448,7 +448,7 @@ QString RenameDlg::suggestName(const KURL& baseURL, const QString& oldName)
 
   int pos = basename.findRev( '_' );
   if(pos != -1 ){
-    QString tmp = basename.mid( pos+1 );
+    TQString tmp = basename.mid( pos+1 );
     bool ok;
     int number = tmp.toInt( &ok );
     if ( !ok ) {// ok there is no number
@@ -456,7 +456,7 @@ QString RenameDlg::suggestName(const KURL& baseURL, const QString& oldName)
     }
     else {
      // yes there's already a number behind the _ so increment it by one
-      basename.replace( pos+1, tmp.length(), QString::number(number+1) );
+      basename.replace( pos+1, tmp.length(), TQString::number(number+1) );
       suggestedName = basename + dotSuffix;
     }
   }
@@ -468,7 +468,7 @@ QString RenameDlg::suggestName(const KURL& baseURL, const QString& oldName)
   // TODO: network transparency. However, using NetAccess from a modal dialog
   // could be a problem, no? (given that it uses a modal widget itself....)
   if ( baseURL.isLocalFile() )
-     exists = QFileInfo( baseURL.path(+1) + suggestedName ).exists();
+     exists = TQFileInfo( baseURL.path(+1) + suggestedName ).exists();
 
   if ( !exists )
     return suggestedName;
@@ -519,11 +519,11 @@ void RenameDlg::b7Pressed()
   done( 7 );
 }
 
-static QString mime( const KURL& src )
+static TQString mime( const KURL& src )
 {
   KMimeType::Ptr type = KMimeType::findByURL( src );
   //if( type->name() == KMimeType::defaultMimeType() ){ // ok no mimetype
-    //    QString ty = KIO::NetAccess::mimetype(d->src );
+    //    TQString ty = KIO::NetAccess::mimetype(d->src );
     // return ty;
     return type->name();
 }
@@ -544,10 +544,10 @@ void RenameDlg::pluginHandling()
 }
 
 
-RenameDlg_Result KIO::open_RenameDlg( const QString & _caption,
-                                      const QString & _src, const QString & _dest,
+RenameDlg_Result KIO::open_RenameDlg( const TQString & _caption,
+                                      const TQString & _src, const TQString & _dest,
                                       RenameDlg_Mode _mode,
-                                      QString& _new,
+                                      TQString& _new,
                                       KIO::filesize_t sizeSrc,
                                       KIO::filesize_t sizeDest,
                                       time_t ctimeSrc,

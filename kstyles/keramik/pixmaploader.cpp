@@ -20,13 +20,13 @@
 
 // $Id$
 
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qglobal.h>
-#include <qimage.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qpixmapcache.h>
+#include <tqapplication.h>
+#include <tqbitmap.h>
+#include <tqglobal.h>
+#include <tqimage.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqpixmapcache.h>
 
 #include "pixmaploader.h"
 
@@ -55,7 +55,7 @@ void PixmapLoader::clear()
 	//m_cache.clear();
 }
 
-QImage* PixmapLoader::getDisabled(int name, const QColor& color, const QColor& back, bool blend)
+TQImage* PixmapLoader::getDisabled(int name, const TQColor& color, const TQColor& back, bool blend)
 {
 	KeramikEmbedImage* edata = KeramikGetDbImage(name);
 	if (!edata)
@@ -64,7 +64,7 @@ QImage* PixmapLoader::getDisabled(int name, const QColor& color, const QColor& b
 	//Like getColored, but desaturate a bit, and lower gamma..
 
 	//Create a real image...
-	QImage* img = new QImage(edata->width, edata->height, 32);
+	TQImage* img = new TQImage(edata->width, edata->height, 32);
 
 
 
@@ -148,14 +148,14 @@ QImage* PixmapLoader::getDisabled(int name, const QColor& color, const QColor& b
 	return img;
 }
 
-QImage* PixmapLoader::getColored(int name, const QColor& color, const QColor& back, bool blend)
+TQImage* PixmapLoader::getColored(int name, const TQColor& color, const TQColor& back, bool blend)
 {
 	KeramikEmbedImage* edata = KeramikGetDbImage(name);
 	if (!edata)
 		return 0;
 
 	//Create a real image...
-	QImage* img = new QImage(edata->width, edata->height, 32);
+	TQImage* img = new TQImage(edata->width, edata->height, 32);
 
 	//OK, now, fill it in, using the color..
 	Q_UINT32 r, g,b;
@@ -247,13 +247,13 @@ QImage* PixmapLoader::getColored(int name, const QColor& color, const QColor& ba
 	return img;
 }
 
-QPixmap PixmapLoader::pixmap( int name, const QColor& color, const QColor& bg, bool disabled, bool blend )
+TQPixmap PixmapLoader::pixmap( int name, const TQColor& color, const TQColor& bg, bool disabled, bool blend )
 {
 	return scale(name, 0, 0, color, bg, disabled, blend);
 }
 
 
-QPixmap PixmapLoader::scale( int name, int width, int height, const QColor& color,  const QColor& bg, bool disabled, bool blend )
+TQPixmap PixmapLoader::scale( int name, int width, int height, const TQColor& color,  const TQColor& bg, bool disabled, bool blend )
 {
 	KeramikCacheEntry entry(name, color, bg, disabled, blend, width, height);
 	KeramikCacheEntry* cacheEntry;
@@ -269,8 +269,8 @@ QPixmap PixmapLoader::scale( int name, int width, int height, const QColor& colo
 	}
 
 
-	QImage* img = 0;
-	QPixmap* result = 0;
+	TQImage* img = 0;
+	TQPixmap* result = 0;
 
 	if (disabled)
 		img = getDisabled(name, color, bg, blend);
@@ -280,15 +280,15 @@ QPixmap PixmapLoader::scale( int name, int width, int height, const QColor& colo
 	if (!img)
 	{
 		KeramikCacheEntry* toAdd = new KeramikCacheEntry(entry);
-		toAdd->m_pixmap = new QPixmap();
+		toAdd->m_pixmap = new TQPixmap();
 		m_pixmapCache.insert(key, toAdd, 16);
-		return QPixmap();
+		return TQPixmap();
 	}
 
 	if (width == 0 && height == 0)
-		result = new QPixmap(*img);
+		result = new TQPixmap(*img);
 	else
-		result = new QPixmap(img->smoothScale( width ? width : img->width(),
+		result = new TQPixmap(img->smoothScale( width ? width : img->width(),
 											   height ? height: img->height()));
 	delete img;
 
@@ -296,7 +296,7 @@ QPixmap PixmapLoader::scale( int name, int width, int height, const QColor& colo
 	toAdd->m_pixmap = result;
 
 	if (!m_pixmapCache.insert(key, toAdd, result->width()*result->height()*result->depth()/8)) {
-		QPixmap toRet = *result;
+		TQPixmap toRet = *result;
 		delete toAdd;
 		return toRet;
 	}
@@ -304,15 +304,15 @@ QPixmap PixmapLoader::scale( int name, int width, int height, const QColor& colo
 	return *result;
 }
 
-QSize PixmapLoader::size( int id )
+TQSize PixmapLoader::size( int id )
 {
 	KeramikEmbedImage* edata = KeramikGetDbImage(id);
 	if (!edata)
-		return QSize(0,0);
-	return QSize(edata->width, edata->height);
+		return TQSize(0,0);
+	return TQSize(edata->width, edata->height);
 }
 
-void TilePainter::draw( QPainter *p, int x, int y, int width, int height, const QColor& color, const QColor& bg, bool disabled, PaintMode mode )
+void TilePainter::draw( TQPainter *p, int x, int y, int width, int height, const TQColor& color, const TQColor& bg, bool disabled, PaintMode mode )
 {
 	if (mode == PaintTrivialMask)
 	{
@@ -422,7 +422,7 @@ void TilePainter::draw( QPainter *p, int x, int y, int width, int height, const 
 					}
 					else
 					{
-						const QBitmap* mask  = scale( col, row, w, h, color,  bg, disabled, false ).mask();
+						const TQBitmap* mask  = scale( col, row, w, h, color,  bg, disabled, false ).mask();
 						if (mask)
 						{
 							p->setBackgroundColor(Qt::color0);
@@ -442,7 +442,7 @@ void TilePainter::draw( QPainter *p, int x, int y, int width, int height, const 
 					}
 					else
 					{
-						const QBitmap* mask = tile( col, row, color, bg, disabled, false ).mask();
+						const TQBitmap* mask = tile( col, row, color, bg, disabled, false ).mask();
 						if (mask)
 						{
 							p->setBackgroundColor(Qt::color0);
@@ -570,13 +570,13 @@ InactiveTabPainter::InactiveTabPainter( Mode mode, bool bottom )
 	tile.
     */
 
-	Mode rightMost = QApplication::reverseLayout() ? First : Last;
+	Mode rightMost = TQApplication::reverseLayout() ? First : Last;
 	m_columns = (m_mode == rightMost ? 3 : 2);
 }
 
 int InactiveTabPainter::tileName( unsigned int column, unsigned int row ) const
 {
-	Mode leftMost = QApplication::reverseLayout() ? Last : First;
+	Mode leftMost = TQApplication::reverseLayout() ? Last : First;
 	if ( column == 0 && m_mode != leftMost )
 		return KeramikTileSeparator;
 	if ( m_bottom )

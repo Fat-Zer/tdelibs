@@ -31,7 +31,7 @@ class KIso;
 class kio_isoProtocol : public KIO::SlaveBase
 {
 public:
-    kio_isoProtocol( const QCString &pool, const QCString &app );
+    kio_isoProtocol( const TQCString &pool, const TQCString &app );
     virtual ~kio_isoProtocol();
 
     virtual void listDir( const KURL & url );
@@ -39,9 +39,9 @@ public:
     virtual void get( const KURL & url );
 
 protected:
-    void getFile( const KIsoFile *isoFileEntry, const QString &path );
+    void getFile( const KIsoFile *isoFileEntry, const TQString &path );
     void createUDSEntry( const KArchiveEntry * isoEntry, KIO::UDSEntry & entry );
-    bool checkNewFile( QString fullPath, QString & path, int startsec );
+    bool checkNewFile( TQString fullPath, TQString & path, int startsec );
 
     KIso * m_isoFile;
     time_t m_mtime;

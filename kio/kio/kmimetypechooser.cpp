@@ -27,34 +27,34 @@
 #include <krun.h>
 #include <ksycoca.h>
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qwhatsthis.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqpushbutton.h>
+#include <tqwhatsthis.h>
 
 //BEGIN KMimeTypeChooserPrivate
 class KMimeTypeChooserPrivate
 {
   public:
     KListView *lvMimeTypes;
-    QPushButton *btnEditMimeType;
+    TQPushButton *btnEditMimeType;
 
-    QString defaultgroup;
-    QStringList groups;
+    TQString defaultgroup;
+    TQStringList groups;
     int visuals;
 };
 //END
 
 //BEGIN KMimeTypeChooser
-KMimeTypeChooser::KMimeTypeChooser( const QString &text,
-                              const QStringList &selMimeTypes,
-                              const QString &defaultGroup,
-                              const QStringList &groupsToShow,
+KMimeTypeChooser::KMimeTypeChooser( const TQString &text,
+                              const TQStringList &selMimeTypes,
+                              const TQString &defaultGroup,
+                              const TQStringList &groupsToShow,
                               int visuals,
-                              QWidget *parent,
+                              TQWidget *parent,
                               const char *name )
-    : QVBox( parent, name )
+    : TQVBox( parent, name )
 {
   d = new KMimeTypeChooserPrivate();
   d->lvMimeTypes = 0;
@@ -67,18 +67,18 @@ KMimeTypeChooser::KMimeTypeChooser( const QString &text,
 
   if ( !text.isEmpty() )
   {
-    new QLabel( text, this );
+    new TQLabel( text, this );
   }
 
   d->lvMimeTypes = new KListView( this );
 
   d->lvMimeTypes->addColumn( i18n("Mime Type") );
-//   d->lvMimeTypes->setColumnWidthMode( 0, QListView::Manual );
+//   d->lvMimeTypes->setColumnWidthMode( 0, TQListView::Manual );
 
   if ( visuals & Comments )
   {
     d->lvMimeTypes->addColumn( i18n("Comment") );
-    d->lvMimeTypes->setColumnWidthMode( 1, QListView::Manual );
+    d->lvMimeTypes->setColumnWidthMode( 1, TQListView::Manual );
   }
   if ( visuals & Patterns )
     d->lvMimeTypes->addColumn( i18n("Patterns") );
@@ -89,18 +89,18 @@ KMimeTypeChooser::KMimeTypeChooser( const QString &text,
 
   if (visuals & KMimeTypeChooser::EditButton)
   {
-    QHBox *btns = new QHBox( this );
-    ((QBoxLayout*)btns->layout())->addStretch(1);
-    d->btnEditMimeType = new QPushButton( i18n("&Edit..."), btns );
+    TQHBox *btns = new TQHBox( this );
+    ((TQBoxLayout*)btns->layout())->addStretch(1);
+    d->btnEditMimeType = new TQPushButton( i18n("&Edit..."), btns );
 
-    connect( d->btnEditMimeType, SIGNAL(clicked()), this, SLOT(editMimeType()) );
+    connect( d->btnEditMimeType, TQT_SIGNAL(clicked()), this, TQT_SLOT(editMimeType()) );
     d->btnEditMimeType->setEnabled( false );
-    connect( d->lvMimeTypes, SIGNAL( doubleClicked ( QListViewItem * )),
-             this, SLOT( editMimeType()));
-    connect( d->lvMimeTypes, SIGNAL(currentChanged(QListViewItem*)),
-             this, SLOT(slotCurrentChanged(QListViewItem*)) );
+    connect( d->lvMimeTypes, TQT_SIGNAL( doubleClicked ( TQListViewItem * )),
+             this, TQT_SLOT( editMimeType()));
+    connect( d->lvMimeTypes, TQT_SIGNAL(currentChanged(TQListViewItem*)),
+             this, TQT_SLOT(slotCurrentChanged(TQListViewItem*)) );
 
-    QWhatsThis::add( d->btnEditMimeType, i18n(
+    TQWhatsThis::add( d->btnEditMimeType, i18n(
         "Click this button to display the familiar KDE mime type editor.") );
   }
 }
@@ -110,9 +110,9 @@ KMimeTypeChooser::~KMimeTypeChooser()
   delete d;
 }
 
-void KMimeTypeChooser::loadMimeTypes( const QStringList &_selectedMimeTypes )
+void KMimeTypeChooser::loadMimeTypes( const TQStringList &_selectedMimeTypes )
 {
-  QStringList selMimeTypes;
+  TQStringList selMimeTypes;
 
   if ( !_selectedMimeTypes.isEmpty() )
     selMimeTypes = _selectedMimeTypes;
@@ -121,31 +121,31 @@ void KMimeTypeChooser::loadMimeTypes( const QStringList &_selectedMimeTypes )
 
   d->lvMimeTypes->clear();
 
-  QMap<QString,QListViewItem*> groups;
+  TQMap<TQString,TQListViewItem*> groups;
   // thanks to kdebase/kcontrol/filetypes/filetypesview
   KMimeType::List mimetypes = KMimeType::allMimeTypes();
-  QValueListIterator<KMimeType::Ptr> it(mimetypes.begin());
+  TQValueListIterator<KMimeType::Ptr> it(mimetypes.begin());
 
-  QListViewItem *groupItem;
+  TQListViewItem *groupItem;
   bool agroupisopen = false;
-  QListViewItem *idefault = 0; //open this, if all other fails
-  QListViewItem *firstChecked = 0; // make this one visible after the loop
+  TQListViewItem *idefault = 0; //open this, if all other fails
+  TQListViewItem *firstChecked = 0; // make this one visible after the loop
 
   for (; it != mimetypes.end(); ++it)
   {
-    QString mimetype = (*it)->name();
+    TQString mimetype = (*it)->name();
     int index = mimetype.find("/");
-    QString maj = mimetype.left(index);
+    TQString maj = mimetype.left(index);
 
     if ( d->groups.count() && !d->groups.contains( maj ) )
       continue;
 
-    QString min = mimetype.right(mimetype.length() - (index+1));
+    TQString min = mimetype.right(mimetype.length() - (index+1));
 
-    QMapIterator<QString,QListViewItem*> mit = groups.find( maj );
+    TQMapIterator<TQString,TQListViewItem*> mit = groups.find( maj );
     if ( mit == groups.end() )
     {
-      groupItem = new QListViewItem( d->lvMimeTypes, maj );
+      groupItem = new TQListViewItem( d->lvMimeTypes, maj );
       groups.insert( maj, groupItem );
        if ( maj == d->defaultgroup )
          idefault = groupItem;
@@ -153,14 +153,14 @@ void KMimeTypeChooser::loadMimeTypes( const QStringList &_selectedMimeTypes )
     else
         groupItem = mit.data();
 
-    QCheckListItem *item = new QCheckListItem( groupItem, min, QCheckListItem::CheckBox );
-    item->setPixmap( 0, SmallIcon( (*it)->icon(QString::null,false) ) );
+    TQCheckListItem *item = new TQCheckListItem( groupItem, min, TQCheckListItem::CheckBox );
+    item->setPixmap( 0, SmallIcon( (*it)->icon(TQString::null,false) ) );
 
     int cl = 1;
 
     if ( d->visuals & Comments )
     {
-      item->setText( cl, (*it)->comment(QString::null, false) );
+      item->setText( cl, (*it)->comment(TQString::null, false) );
       cl++;
     }
 
@@ -191,18 +191,18 @@ void KMimeTypeChooser::editMimeType()
 {
   if ( !(d->lvMimeTypes->currentItem() && (d->lvMimeTypes->currentItem())->parent()) )
     return;
-  QString mt = (d->lvMimeTypes->currentItem()->parent())->text( 0 ) + "/" + (d->lvMimeTypes->currentItem())->text( 0 );
+  TQString mt = (d->lvMimeTypes->currentItem()->parent())->text( 0 ) + "/" + (d->lvMimeTypes->currentItem())->text( 0 );
   // thanks to libkonq/konq_operations.cc
-  connect( KSycoca::self(), SIGNAL(databaseChanged()),
-           this, SLOT(slotSycocaDatabaseChanged()) );
-  QString keditfiletype = QString::fromLatin1("keditfiletype");
+  connect( KSycoca::self(), TQT_SIGNAL(databaseChanged()),
+           this, TQT_SLOT(slotSycocaDatabaseChanged()) );
+  TQString keditfiletype = TQString::fromLatin1("keditfiletype");
   KRun::runCommand( keditfiletype
-                    + " --parent " + QString::number( (ulong)topLevelWidget()->winId())
+                    + " --parent " + TQString::number( (ulong)topLevelWidget()->winId())
                     + " " + KProcess::quote(mt),
                     keditfiletype, keditfiletype /*unused*/);
 }
 
-void KMimeTypeChooser::slotCurrentChanged(QListViewItem* i)
+void KMimeTypeChooser::slotCurrentChanged(TQListViewItem* i)
 {
   if ( d->btnEditMimeType )
     d->btnEditMimeType->setEnabled( i->parent() );
@@ -214,27 +214,27 @@ void KMimeTypeChooser::slotSycocaDatabaseChanged()
     loadMimeTypes();
 }
 
-QStringList KMimeTypeChooser::mimeTypes() const
+TQStringList KMimeTypeChooser::mimeTypes() const
 {
-  QStringList l;
-  QListViewItemIterator it( d->lvMimeTypes );
+  TQStringList l;
+  TQListViewItemIterator it( d->lvMimeTypes );
   for (; it.current(); ++it)
   {
-    if ( it.current()->parent() && ((QCheckListItem*)it.current())->isOn() )
+    if ( it.current()->parent() && ((TQCheckListItem*)it.current())->isOn() )
       l << it.current()->parent()->text(0) + "/" + it.current()->text(0); // FIXME uncecked, should be Ok unless someone changes mimetypes during this!
   }
   return l;
 }
 
-QStringList KMimeTypeChooser::patterns() const
+TQStringList KMimeTypeChooser::patterns() const
 {
-  QStringList l;
+  TQStringList l;
   KMimeType::Ptr p;
-  QString defMT = KMimeType::defaultMimeType();
-  QListViewItemIterator it( d->lvMimeTypes );
+  TQString defMT = KMimeType::defaultMimeType();
+  TQListViewItemIterator it( d->lvMimeTypes );
   for (; it.current(); ++it)
   {
-    if ( it.current()->parent() && ((QCheckListItem*)it.current())->isOn() )
+    if ( it.current()->parent() && ((TQCheckListItem*)it.current())->isOn() )
     {
       p = KMimeType::mimeType( it.current()->parent()->text(0) + "/" + it.current()->text(0) );
       if ( p->name() != defMT )
@@ -247,13 +247,13 @@ QStringList KMimeTypeChooser::patterns() const
 
 //BEGIN KMimeTypeChooserDialog
 KMimeTypeChooserDialog::KMimeTypeChooserDialog(
-                         const QString &caption,
-                         const QString& text,
-                         const QStringList &selMimeTypes,
-                         const QString &defaultGroup,
-                         const QStringList &groupsToShow,
+                         const TQString &caption,
+                         const TQString& text,
+                         const TQStringList &selMimeTypes,
+                         const TQString &defaultGroup,
+                         const TQStringList &groupsToShow,
                          int visuals,
-                         QWidget *parent, const char *name )
+                         TQWidget *parent, const char *name )
     : KDialogBase(parent, name, true, caption, Cancel|Ok, Ok)
 {
   m_chooser = new KMimeTypeChooser( text, selMimeTypes,
@@ -262,26 +262,26 @@ KMimeTypeChooserDialog::KMimeTypeChooserDialog(
   setMainWidget(m_chooser);
 
   KConfigGroup group( KGlobal::config(), "KMimeTypeChooserDialog");
-  QSize defaultSize( 400, 300 );
+  TQSize defaultSize( 400, 300 );
   resize( group.readSizeEntry("size", &defaultSize) );
 }
 
 KMimeTypeChooserDialog::KMimeTypeChooserDialog(
-                         const QString &caption,
-                         const QString& text,
-                         const QStringList &selMimeTypes,
-                         const QString &defaultGroup,
-                         QWidget *parent, const char *name )
+                         const TQString &caption,
+                         const TQString& text,
+                         const TQStringList &selMimeTypes,
+                         const TQString &defaultGroup,
+                         TQWidget *parent, const char *name )
     : KDialogBase(parent, name, true, caption, Cancel|Ok, Ok)
 {
   m_chooser = new KMimeTypeChooser( text, selMimeTypes,
-                                  defaultGroup, QStringList(),
+                                  defaultGroup, TQStringList(),
                                   KMimeTypeChooser::Comments|KMimeTypeChooser::Patterns|KMimeTypeChooser::EditButton,
                                   this, "chooser" );
   setMainWidget(m_chooser);
 
   KConfigGroup group( KGlobal::config(), "KMimeTypeChooserDialog");
-  QSize defaultSize( 400, 300 );
+  TQSize defaultSize( 400, 300 );
   resize( group.readSizeEntry("size", &defaultSize) );
 }
 

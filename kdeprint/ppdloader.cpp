@@ -24,27 +24,27 @@
 #include <kfilterdev.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <qfile.h>
+#include <tqfile.h>
 #include <math.h>
 
-void kdeprint_ppdscanner_init( QIODevice* );
+void kdeprint_ppdscanner_init( TQIODevice* );
 void kdeprint_ppdscanner_terminate( bool deleteIt = true );
 int kdeprint_ppdscanner_numberoflines();
 
-static QString processLocaleString( const QString& s )
+static TQString processLocaleString( const TQString& s )
 {
-	QString res;
+	TQString res;
 	uint pos = 0;
 	while ( pos < s.length() )
 	{
-		QChar c = s[ pos++ ];
+		TQChar c = s[ pos++ ];
 		if ( c == '<' )
 		{
 			bool flag = false;
 			uint hc = 0;
 			while ( pos < s.length() )
 			{
-				QChar cc = s[ pos++ ];
+				TQChar cc = s[ pos++ ];
 				uint _hc = 0;
 				if ( cc == '>' )
 					break;
@@ -55,7 +55,7 @@ static QString processLocaleString( const QString& s )
 				if ( flag )
 				{
 					hc |= _hc;
-					res.append( QChar( hc ) );
+					res.append( TQChar( hc ) );
 					hc = 0;
 				}
 				else
@@ -71,10 +71,10 @@ static QString processLocaleString( const QString& s )
 	return res;
 }
 
-static QValueList<float> splitNumberString( const QString& _s )
+static TQValueList<float> splitNumberString( const TQString& _s )
 {
-        QString s = _s.simplifyWhiteSpace();
-	QValueList<float> l;
+        TQString s = _s.simplifyWhiteSpace();
+	TQValueList<float> l;
 	int p1 = 1, p2 = 0;
 	while ( true )
 	{
@@ -96,7 +96,7 @@ static QValueList<float> splitNumberString( const QString& _s )
 
 struct PS_private
 {
-	QString name;
+	TQString name;
 	struct
 	{
 		float width, height;
@@ -117,14 +117,14 @@ PPDLoader::~PPDLoader()
 {
 }
 
-DrMain* PPDLoader::readFromFile( const QString& filename )
+DrMain* PPDLoader::readFromFile( const TQString& filename )
 {
 	// Initialization
 	m_groups.clear();
 	m_option = NULL;
 	m_fonts.clear();
 	// Open driver file
-	QIODevice *d = KFilterDev::deviceForFile( filename );
+	TQIODevice *d = KFilterDev::deviceForFile( filename );
 	if ( d && d->open( IO_ReadOnly ) )
 	{
 		DrMain *driver = new DrMain;
@@ -165,7 +165,7 @@ DrMain* PPDLoader::readFromFile( const QString& filename )
 	return 0;
 }
 
-DrMain* PPDLoader::loadDriver( const QString& filename, QString* msg )
+DrMain* PPDLoader::loadDriver( const TQString& filename, TQString* msg )
 {
 	PPDLoader loader;
 	DrMain *driver = loader.readFromFile( filename );
@@ -174,7 +174,7 @@ DrMain* PPDLoader::loadDriver( const QString& filename, QString* msg )
 	return driver;
 }
 
-bool PPDLoader::openUi( const QString& name, const QString& desc, const QString& type )
+bool PPDLoader::openUi( const TQString& name, const TQString& desc, const TQString& type )
 {
 	if ( m_option )
 	{
@@ -199,7 +199,7 @@ bool PPDLoader::openUi( const QString& name, const QString& desc, const QString&
 	return true;
 }
 
-bool PPDLoader::endUi( const QString& name )
+bool PPDLoader::endUi( const TQString& name )
 {
 	if ( m_option && ( m_option->name() == name || m_option->name() == name.mid( 1 ) ) )
 	{
@@ -207,7 +207,7 @@ bool PPDLoader::endUi( const QString& name )
 			delete m_option;
 		else
 		{
-			QString defval = m_option->get( "default" );
+			TQString defval = m_option->get( "default" );
 			DrGroup *grp = 0;
 			if ( !defval.isEmpty() )
 				m_option->setValueText( defval );
@@ -229,7 +229,7 @@ bool PPDLoader::endUi( const QString& name )
 	return false;
 }
 
-bool PPDLoader::openGroup( const QString& name, const QString& desc )
+bool PPDLoader::openGroup( const TQString& name, const TQString& desc )
 {
 	DrGroup *grp = new DrGroup;
 	grp->setName( name );
@@ -242,7 +242,7 @@ bool PPDLoader::openGroup( const QString& name, const QString& desc )
 	return true;
 }
 
-bool PPDLoader::endGroup( const QString& name )
+bool PPDLoader::endGroup( const TQString& name )
 {
 	if ( m_groups.size() > 1 && m_groups.top()->name() == name )
 	{
@@ -252,7 +252,7 @@ bool PPDLoader::endGroup( const QString& name )
 	return false;
 }
 
-bool PPDLoader::putStatement( const QString& keyword, const QString& name, const QString& desc, const QStringList& values )
+bool PPDLoader::putStatement( const TQString& keyword, const TQString& name, const TQString& desc, const TQStringList& values )
 {
 	if ( m_option )
 	{
@@ -270,7 +270,7 @@ bool PPDLoader::putStatement( const QString& keyword, const QString& name, const
 			}
 			else
 			{
-				QString fv = m_option->get( "fixedvals" );
+				TQString fv = m_option->get( "fixedvals" );
 				if ( fv.isEmpty() )
 					fv = name;
 				else
@@ -281,7 +281,7 @@ bool PPDLoader::putStatement( const QString& keyword, const QString& name, const
 		else if ( keyword == "FoomaticRIPOption" && name == m_option->name()
 				&& values.size() > 1 )
 		{
-			QString type = values[ 0 ];
+			TQString type = values[ 0 ];
 			if ( type == "float" || type == "int" )
 			{
 				DrBase *opt = 0;
@@ -294,8 +294,8 @@ bool PPDLoader::putStatement( const QString& keyword, const QString& name, const
 				opt->set( "default", m_option->get( "default" ) );
 				if ( m_option->type() == DrBase::List )
 				{
-					QStringList vals;
-					QPtrListIterator<DrBase> it( *( static_cast<DrListOption*>( m_option )->choices() ) );
+					TQStringList vals;
+					TQPtrListIterator<DrBase> it( *( static_cast<DrListOption*>( m_option )->choices() ) );
 					for ( ; it.current(); ++it )
 						vals.append( it.current()->name() );
 					opt->set( "fixedvals", vals.join( "|" ) );
@@ -319,7 +319,7 @@ bool PPDLoader::putStatement( const QString& keyword, const QString& name, const
 	return true;
 }
 
-bool PPDLoader::putStatement2( const QString& keyword, const QString& value )
+bool PPDLoader::putStatement2( const TQString& keyword, const TQString& value )
 {
 	if ( !m_option && m_groups.size() == 1 )
 	{
@@ -339,7 +339,7 @@ bool PPDLoader::putStatement2( const QString& keyword, const QString& value )
 	return true;
 }
 
-bool PPDLoader::putDefault( const QString& keyword, const QString& value )
+bool PPDLoader::putDefault( const TQString& keyword, const TQString& value )
 {
 	if ( keyword == "Resolution" && m_groups.size() > 0 )
 	{
@@ -358,7 +358,7 @@ bool PPDLoader::putDefault( const QString& keyword, const QString& value )
 		return false;
 }
 
-bool PPDLoader::putConstraint( const QString& opt1, const QString& opt2, const QString& ch1, const QString& ch2 )
+bool PPDLoader::putConstraint( const TQString& opt1, const TQString& opt2, const TQString& ch1, const TQString& ch2 )
 {
 	if ( !m_option && m_groups.size() == 1 )
 	{
@@ -368,7 +368,7 @@ bool PPDLoader::putConstraint( const QString& opt1, const QString& opt2, const Q
 	return true;
 }
 
-bool PPDLoader::putFooData( const QString& data )
+bool PPDLoader::putFooData( const TQString& data )
 {
 	if ( !m_option && m_groups.size() == 1 )
 	{
@@ -377,16 +377,16 @@ bool PPDLoader::putFooData( const QString& data )
 	return true;
 }
 
-bool PPDLoader::putFooProcessedData( const QVariant& var )
+bool PPDLoader::putFooProcessedData( const TQVariant& var )
 {
-	QMap<QString,QVariant>::ConstIterator it = var.mapFind( "args_byname" );
+	TQMap<TQString,TQVariant>::ConstIterator it = var.mapFind( "args_byname" );
 	if ( it != var.mapEnd() )
 	{
-		QVariant opts = it.data();
+		TQVariant opts = it.data();
 		for ( it = opts.mapBegin(); it != opts.mapEnd(); ++it )
 		{
-			QMap<QString,QVariant> opt = it.data().toMap();
-			QString type = opt[ "type" ].toString();
+			TQMap<TQString,TQVariant> opt = it.data().toMap();
+			TQString type = opt[ "type" ].toString();
 			if ( type == "float" || type == "int" )
 			{
 				DrBase *o;
@@ -407,8 +407,8 @@ bool PPDLoader::putFooProcessedData( const QVariant& var )
 				{
 					if ( old->type() == DrBase::List )
 					{
-						QStringList vals;
-						QPtrListIterator<DrBase> it( *( static_cast<DrListOption*>( old )->choices() ) );
+						TQStringList vals;
+						TQPtrListIterator<DrBase> it( *( static_cast<DrListOption*>( old )->choices() ) );
 						for ( ; it.current(); ++it )
 							vals.append( it.current()->name() );
 						o->set( "fixedvals", vals.join( "|" ) );
@@ -427,9 +427,9 @@ bool PPDLoader::putFooProcessedData( const QVariant& var )
 	return true;
 }
 
-bool PPDLoader::putPaperDimension( const QString& name, const QString& s )
+bool PPDLoader::putPaperDimension( const TQString& name, const TQString& s )
 {
-	QValueList<float> l = splitNumberString( s );
+	TQValueList<float> l = splitNumberString( s );
 
 	PS_private *ps = m_ps.find( name );
 	if ( !ps )
@@ -444,9 +444,9 @@ bool PPDLoader::putPaperDimension( const QString& name, const QString& s )
 	return true;
 }
 
-bool PPDLoader::putImageableArea( const QString& name, const QString& s )
+bool PPDLoader::putImageableArea( const TQString& name, const TQString& s )
 {
-	QValueList<float> l = splitNumberString( s );
+	TQValueList<float> l = splitNumberString( s );
 
 	PS_private *ps = m_ps.find( name );
 	if ( !ps )
@@ -463,9 +463,9 @@ bool PPDLoader::putImageableArea( const QString& name, const QString& s )
 	return true;
 }
 
-DrGroup* PPDLoader::findOrCreateGroupForOption( const QString& optname )
+DrGroup* PPDLoader::findOrCreateGroupForOption( const TQString& optname )
 {
-	QString grpname;
+	TQString grpname;
 	if ( optname == "PageSize" ||
 			optname == "InputSlot" ||
 			optname == "ManualFeed" ||
@@ -486,7 +486,7 @@ DrGroup* PPDLoader::findOrCreateGroupForOption( const QString& optname )
 		grpname = "Others";
 
 	DrGroup *grp = 0;
-	for ( QPtrListIterator<DrGroup> it( m_groups[ 0 ]->groups() ); it.current(); ++it )
+	for ( TQPtrListIterator<DrGroup> it( m_groups[ 0 ]->groups() ); it.current(); ++it )
 		if ( it.current()->name() == grpname )
 		{
 			grp = it.current();
@@ -504,7 +504,7 @@ DrGroup* PPDLoader::findOrCreateGroupForOption( const QString& optname )
 
 void PPDLoader::processPageSizes( DrMain *driver )
 {
-	QDictIterator<PS_private> it( m_ps );
+	TQDictIterator<PS_private> it( m_ps );
 	for ( ; it.current(); ++it )
 	{
 		//qDebug( "ADDING PAGESIZE: %16s, Size = ( %.2f, %.2f ),  Area = ( %.2f, %.2f, %.2f, %.2f )", it.current()->name.latin1(),
@@ -520,12 +520,12 @@ void PPDLoader::processPageSizes( DrMain *driver )
 	m_ps.clear();
 }
 
-void PPDLoader::setErrorMsg( const QString& msg )
+void PPDLoader::setErrorMsg( const TQString& msg )
 {
 	m_errormsg = msg;
 }
 
-QString PPDLoader::errorMsg() const
+TQString PPDLoader::errorMsg() const
 {
 	return m_errormsg;
 }

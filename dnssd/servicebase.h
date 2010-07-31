@@ -21,7 +21,7 @@
 #ifndef DNSSDSERVICEBASE_H
 #define DNSSDSERVICEBASE_H
 
-#include <qmap.h>
+#include <tqmap.h>
 #include <ksharedptr.h>
 
 class QString;
@@ -49,8 +49,8 @@ public:
 	@param host Host name
 	@param port Port number
 	 */
-	ServiceBase(const QString& name=QString::null,const QString& type=QString::null,
-		    const QString& domain=QString::null, const QString& host=QString::null,
+	ServiceBase(const TQString& name=TQString::null,const TQString& type=TQString::null,
+		    const TQString& domain=TQString::null, const TQString& host=TQString::null,
 		    unsigned short port=0);
 
 	virtual  ~ServiceBase();
@@ -58,23 +58,23 @@ public:
 	/**
 	Returns name of service. This is empty for metaservices
 	 */
-	const QString& serviceName() const;
+	const TQString& serviceName() const;
 
 	/**
 	Returns type of service. It always in format _sometype._udp or _sometype._tcp and
 	it is empty for domains.
 	 */
-	const QString& type() const;
+	const TQString& type() const;
 
 	/**
 	Returns domain that given service belongs to. It is "local." for link-local services.
 	 */
-	const QString& domain() const;
+	const TQString& domain() const;
 
 	/**
 	Returns hostname. It is only valid for local and resolved remote services.
 	 */
-	const QString& hostName() const;
+	const TQString& hostName() const;
 
 	/**
 	Returns port number. It is only valid for local and resolved remote services.
@@ -84,31 +84,31 @@ public:
 	/**
 	Returns read only map of text properties.  It is only valid for local and resolved remote services.
 	 */
-	const QMap<QString,QString>& textData() const;
+	const TQMap<TQString,TQString>& textData() const;
 
 protected:
-	QString m_serviceName;
-	QString m_type;
-	QString m_domain;
-	QString m_hostName;
+	TQString m_serviceName;
+	TQString m_type;
+	TQString m_domain;
+	TQString m_hostName;
 	unsigned short m_port;
 
 	/**
 	Map of TXT properties
 	 */
-	QMap<QString,QString> m_textData;
+	TQMap<TQString,TQString> m_textData;
 	/**
 	Encode service name, type and domain into string that can be used as DNS-SD PTR label
 	 */
-	QString encode();
+	TQString encode();
 	/**
 	Decode PTR label returned by DNS resolver into service name, type and domain. It also
 	handles special cases - metaservices and domains.
 	 */
-	void decode(const QString& name);
+	void decode(const TQString& name);
 
-	friend KDNSSD_EXPORT QDataStream & operator<< (QDataStream & s, const ServiceBase & a);
-	friend KDNSSD_EXPORT QDataStream & operator>> (QDataStream & s, ServiceBase & a);
+	friend KDNSSD_EXPORT TQDataStream & operator<< (TQDataStream & s, const ServiceBase & a);
+	friend KDNSSD_EXPORT TQDataStream & operator>> (TQDataStream & s, ServiceBase & a);
 
 	virtual void virtual_hook(int, void*);
 private:

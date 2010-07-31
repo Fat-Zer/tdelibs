@@ -8,7 +8,7 @@ class DockTest : public KDockArea
 {
   Q_OBJECT
 public:
-  DockTest( QWidget* parent=0 );
+  DockTest( TQWidget* parent=0 );
 
 private:
   KDockWidget* m_blueDock;

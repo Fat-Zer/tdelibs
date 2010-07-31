@@ -23,8 +23,8 @@
 
 #include <kcompletion.h>
 
-#include <qdict.h>
-#include <qstringlist.h>
+#include <tqdict.h>
+#include <tqstringlist.h>
 
 class KATEPARTINTERFACES_EXPORT KateCmd
 {
@@ -38,18 +38,18 @@ class KATEPARTINTERFACES_EXPORT KateCmd
 
     bool registerCommand (Kate::Command *cmd);
     bool unregisterCommand (Kate::Command *cmd);
-    Kate::Command *queryCommand (const QString &cmd);
+    Kate::Command *queryCommand (const TQString &cmd);
 
-    QStringList cmds ();
-    void appendHistory( const QString &cmd );
-    const QString fromHistory( uint i ) const;
+    TQStringList cmds ();
+    void appendHistory( const TQString &cmd );
+    const TQString fromHistory( uint i ) const;
     uint historyLength() const { return m_history.count(); }
 
   private:
     static KateCmd *s_self;
-    QDict<Kate::Command> m_dict;
-    QStringList m_cmds;
-    QStringList m_history;
+    TQDict<Kate::Command> m_dict;
+    TQStringList m_cmds;
+    TQStringList m_history;
 };
 
 /**
@@ -67,14 +67,14 @@ class KATEPARTINTERFACES_EXPORT KateCmdShellCompletion : public KCompletion
      * Finds completions to the given text.
      * The first match is returned and emitted in the signal match().
      * @param text the text to complete
-     * @return the first match, or QString::null if not found
+     * @return the first match, or TQString::null if not found
      */
-    QString makeCompletion(const QString &text);
+    TQString makeCompletion(const TQString &text);
 
   protected:
         // Called by KCompletion
-    void postProcessMatch( QString *match ) const;
-    void postProcessMatches( QStringList *matches ) const;
+    void postProcessMatch( TQString *match ) const;
+    void postProcessMatches( TQStringList *matches ) const;
     void postProcessMatches( KCompletionMatches *matches ) const;
 
   private:
@@ -84,15 +84,15 @@ class KATEPARTINTERFACES_EXPORT KateCmdShellCompletion : public KCompletion
    * @param text_start will be set to the text at the left, including the space
    * @param text_compl Will be set to the text at the right. This is the text to complete.
    */
-   void splitText( const QString &text, QString &text_start, QString &text_compl ) const;
+   void splitText( const TQString &text, TQString &text_start, TQString &text_compl ) const;
 
-   QChar m_word_break_char;
-   QChar m_quote_char1;
-   QChar m_quote_char2;
-   QChar m_escape_char;
+   TQChar m_word_break_char;
+   TQChar m_quote_char1;
+   TQChar m_quote_char2;
+   TQChar m_escape_char;
 
-   QString m_text_start;
-   QString m_text_compl;
+   TQString m_text_start;
+   TQString m_text_compl;
 
 };
 

@@ -18,10 +18,10 @@
 #include "config.h"
 #include "kglobalsettings.h"
 
-#include <qdir.h>
-#include <qpixmap.h>
-#include <qfontdatabase.h>
-#include <qcursor.h>
+#include <tqdir.h>
+#include <tqpixmap.h>
+#include <tqfontdatabase.h>
+#include <tqcursor.h>
 
 #include <kconfig.h>
 #include <ksimpleconfig.h>
@@ -46,61 +46,61 @@ static QRgb qt_colorref2qrgb(COLORREF col)
 #include <kcharsets.h>
 #include <kaccel.h>
 #include <klocale.h>
-#include <qfontinfo.h>
+#include <tqfontinfo.h>
 #include <stdlib.h>
 #include <kprotocolinfo.h>
 
-#include <qtextcodec.h>
-#include <qtextstream.h>
-#include <qfile.h>
+#include <tqtextcodec.h>
+#include <tqtextstream.h>
+#include <tqfile.h>
 
 #ifdef Q_WS_X11
 #include <X11/Xlib.h>
 #endif
 
-QString* KGlobalSettings::s_desktopPath = 0;
-QString* KGlobalSettings::s_autostartPath = 0;
-QString* KGlobalSettings::s_trashPath = 0;
-QString* KGlobalSettings::s_documentPath = 0;
-QFont *KGlobalSettings::_generalFont = 0;
-QFont *KGlobalSettings::_fixedFont = 0;
-QFont *KGlobalSettings::_toolBarFont = 0;
-QFont *KGlobalSettings::_menuFont = 0;
-QFont *KGlobalSettings::_windowTitleFont = 0;
-QFont *KGlobalSettings::_taskbarFont = 0;
-QFont *KGlobalSettings::_largeFont = 0;
-QColor *KGlobalSettings::_kde34Blue = 0;
-QColor *KGlobalSettings::_inactiveBackground = 0;
-QColor *KGlobalSettings::_inactiveForeground = 0;
-QColor *KGlobalSettings::_activeBackground = 0;
-QColor *KGlobalSettings::_buttonBackground = 0;
-QColor *KGlobalSettings::_selectBackground = 0;
-QColor *KGlobalSettings::_linkColor = 0;
-QColor *KGlobalSettings::_visitedLinkColor = 0;
-QColor *KGlobalSettings::alternateColor = 0;
+TQString* KGlobalSettings::s_desktopPath = 0;
+TQString* KGlobalSettings::s_autostartPath = 0;
+TQString* KGlobalSettings::s_trashPath = 0;
+TQString* KGlobalSettings::s_documentPath = 0;
+TQFont *KGlobalSettings::_generalFont = 0;
+TQFont *KGlobalSettings::_fixedFont = 0;
+TQFont *KGlobalSettings::_toolBarFont = 0;
+TQFont *KGlobalSettings::_menuFont = 0;
+TQFont *KGlobalSettings::_windowTitleFont = 0;
+TQFont *KGlobalSettings::_taskbarFont = 0;
+TQFont *KGlobalSettings::_largeFont = 0;
+TQColor *KGlobalSettings::_kde34Blue = 0;
+TQColor *KGlobalSettings::_inactiveBackground = 0;
+TQColor *KGlobalSettings::_inactiveForeground = 0;
+TQColor *KGlobalSettings::_activeBackground = 0;
+TQColor *KGlobalSettings::_buttonBackground = 0;
+TQColor *KGlobalSettings::_selectBackground = 0;
+TQColor *KGlobalSettings::_linkColor = 0;
+TQColor *KGlobalSettings::_visitedLinkColor = 0;
+TQColor *KGlobalSettings::alternateColor = 0;
 
 KGlobalSettings::KMouseSettings *KGlobalSettings::s_mouseSettings = 0;
 
 // helper function for reading xdg user dirs: it is required in order to take 
 // care of locale stuff
-void readXdgUserDirs(QString *desktop, QString *documents)
+void readXdgUserDirs(TQString *desktop, TQString *documents)
 {
-	QFile f( QDir::homeDirPath() + "/.config/user-dirs.dirs" );
+	TQFile f( TQDir::homeDirPath() + "/.config/user-dirs.dirs" );
 
 	if (!f.open(IO_ReadOnly))
 		return;
 
 	// set the codec for the current locale
-	QTextStream s(&f);
-	s.setCodec( QTextCodec::codecForLocale() );
+	TQTextStream s(&f);
+	s.setCodec( TQTextCodec::codecForLocale() );
 
-	QString line = s.readLine();
+	TQString line = s.readLine();
 	while (!line.isNull())
 	{
 		if (line.startsWith("XDG_DESKTOP_DIR="))
-			*desktop = line.remove("XDG_DESKTOP_DIR=").remove("\"").replace("$HOME", QDir::homeDirPath());
+			*desktop = line.remove("XDG_DESKTOP_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
 		else if (line.startsWith("XDG_DOCUMENTS_DIR="))
-			*documents = line.remove("XDG_DOCUMENTS_DIR=").remove("\"").replace("$HOME", QDir::homeDirPath());
+			*documents = line.remove("XDG_DOCUMENTS_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
 
 		line = s.readLine();
 	}
@@ -109,7 +109,7 @@ void readXdgUserDirs(QString *desktop, QString *documents)
 int KGlobalSettings::dndEventDelay()
 {
     KConfigGroup g( KGlobal::config(), "General" );
-    return g.readNumEntry("StartDragDist", QApplication::startDragDistance());
+    return g.readNumEntry("StartDragDist", TQApplication::startDragDistance());
 }
 
 bool KGlobalSettings::singleClick()
@@ -184,51 +184,51 @@ int KGlobalSettings::contextMenuKey ()
     return cut.keyCodeQt();
 }
 
-QColor KGlobalSettings::toolBarHighlightColor()
+TQColor KGlobalSettings::toolBarHighlightColor()
 {
     initColors();
     KConfigGroup g( KGlobal::config(), "Toolbar style" );
     return g.readColorEntry("HighlightColor", _kde34Blue);
 }
 
-QColor KGlobalSettings::inactiveTitleColor()
+TQColor KGlobalSettings::inactiveTitleColor()
 {
 #ifdef Q_WS_WIN
     return qt_colorref2qrgb(GetSysColor(COLOR_INACTIVECAPTION));
 #else
     if (!_inactiveBackground)
-        _inactiveBackground = new QColor(157, 170, 186);
+        _inactiveBackground = new TQColor(157, 170, 186);
     KConfigGroup g( KGlobal::config(), "WM" );
     return g.readColorEntry( "inactiveBackground", _inactiveBackground );
 #endif
 }
 
-QColor KGlobalSettings::inactiveTextColor()
+TQColor KGlobalSettings::inactiveTextColor()
 {
 #ifdef Q_WS_WIN
     return qt_colorref2qrgb(GetSysColor(COLOR_INACTIVECAPTIONTEXT));
 #else
     if (!_inactiveForeground)
-       _inactiveForeground = new QColor(221,221,221);
+       _inactiveForeground = new TQColor(221,221,221);
     KConfigGroup g( KGlobal::config(), "WM" );
     return g.readColorEntry( "inactiveForeground", _inactiveForeground );
 #endif
 }
 
-QColor KGlobalSettings::activeTitleColor()
+TQColor KGlobalSettings::activeTitleColor()
 {
 #ifdef Q_WS_WIN
     return qt_colorref2qrgb(GetSysColor(COLOR_ACTIVECAPTION));
 #else
     initColors();
     if (!_activeBackground)
-      _activeBackground = new QColor(65,142,220);
+      _activeBackground = new TQColor(65,142,220);
     KConfigGroup g( KGlobal::config(), "WM" );
     return g.readColorEntry( "activeBackground", _activeBackground);
 #endif
 }
 
-QColor KGlobalSettings::activeTextColor()
+TQColor KGlobalSettings::activeTextColor()
 {
 #ifdef Q_WS_WIN
     return qt_colorref2qrgb(GetSysColor(COLOR_CAPTIONTEXT));
@@ -244,15 +244,15 @@ int KGlobalSettings::contrast()
     return g.readNumEntry( "contrast", 7 );
 }
 
-QColor KGlobalSettings::buttonBackground()
+TQColor KGlobalSettings::buttonBackground()
 {
     if (!_buttonBackground)
-      _buttonBackground = new QColor(221,223,228);
+      _buttonBackground = new TQColor(221,223,228);
     KConfigGroup g( KGlobal::config(), "General" );
     return g.readColorEntry( "buttonBackground", _buttonBackground );
 }
 
-QColor KGlobalSettings::buttonTextColor()
+TQColor KGlobalSettings::buttonTextColor()
 {
     KConfigGroup g( KGlobal::config(), "General" );
     return g.readColorEntry( "buttonForeground", &Qt::black );
@@ -261,7 +261,7 @@ QColor KGlobalSettings::buttonTextColor()
 // IMPORTANT:
 //  This function should be get in sync with
 //   KApplication::kdisplaySetPalette()
-QColor KGlobalSettings::baseColor()
+TQColor KGlobalSettings::baseColor()
 {
     KConfigGroup g( KGlobal::config(), "General" );
     return g.readColorEntry( "windowBackground", &Qt::white );
@@ -270,7 +270,7 @@ QColor KGlobalSettings::baseColor()
 // IMPORTANT:
 //  This function should be get in sync with
 //   KApplication::kdisplaySetPalette()
-QColor KGlobalSettings::textColor()
+TQColor KGlobalSettings::textColor()
 {
     KConfigGroup g( KGlobal::config(), "General" );
     return g.readColorEntry( "windowForeground", &Qt::black );
@@ -279,7 +279,7 @@ QColor KGlobalSettings::textColor()
 // IMPORTANT:
 //  This function should be get in sync with
 //   KApplication::kdisplaySetPalette()
-QColor KGlobalSettings::highlightedTextColor()
+TQColor KGlobalSettings::highlightedTextColor()
 {
     KConfigGroup g( KGlobal::config(), "General" );
     return g.readColorEntry( "selectForeground", &Qt::white );
@@ -288,16 +288,16 @@ QColor KGlobalSettings::highlightedTextColor()
 // IMPORTANT:
 //  This function should be get in sync with
 //   KApplication::kdisplaySetPalette()
-QColor KGlobalSettings::highlightColor()
+TQColor KGlobalSettings::highlightColor()
 {
     initColors();
     if (!_selectBackground)
-        _selectBackground = new QColor(103,141,178);
+        _selectBackground = new TQColor(103,141,178);
     KConfigGroup g( KGlobal::config(), "General" );
     return g.readColorEntry( "selectBackground", _selectBackground );
 }
 
-QColor KGlobalSettings::alternateBackgroundColor()
+TQColor KGlobalSettings::alternateBackgroundColor()
 {
     initColors();
     KConfigGroup g( KGlobal::config(), "General" );
@@ -305,10 +305,10 @@ QColor KGlobalSettings::alternateBackgroundColor()
     return g.readColorEntry( "alternateBackground", alternateColor );
 }
 
-QColor KGlobalSettings::calculateAlternateBackgroundColor(const QColor& base)
+TQColor KGlobalSettings::calculateAlternateBackgroundColor(const TQColor& base)
 {
     if (base == Qt::white)
-        return QColor(238,246,255);
+        return TQColor(238,246,255);
     else
     {
         int h, s, v;
@@ -318,7 +318,7 @@ QColor KGlobalSettings::calculateAlternateBackgroundColor(const QColor& base)
         else if (base != Qt::black)
             return base.light(110);
 
-        return QColor(32,32,32);
+        return TQColor(32,32,32);
     }
 }
 
@@ -328,32 +328,32 @@ bool KGlobalSettings::shadeSortColumn()
     return g.readBoolEntry( "shadeSortColumn", KDE_DEFAULT_SHADE_SORT_COLUMN );
 }
 
-QColor KGlobalSettings::linkColor()
+TQColor KGlobalSettings::linkColor()
 {
     initColors();
     if (!_linkColor)
-        _linkColor = new QColor(0,0,238);
+        _linkColor = new TQColor(0,0,238);
     KConfigGroup g( KGlobal::config(), "General" );
     return g.readColorEntry( "linkColor", _linkColor );
 }
 
-QColor KGlobalSettings::visitedLinkColor()
+TQColor KGlobalSettings::visitedLinkColor()
 {
     if (!_visitedLinkColor)
-        _visitedLinkColor = new QColor(82,24,139);
+        _visitedLinkColor = new TQColor(82,24,139);
     KConfigGroup g( KGlobal::config(), "General" );
     return g.readColorEntry( "visitedLinkColor", _visitedLinkColor );
 }
 
-QFont KGlobalSettings::generalFont()
+TQFont KGlobalSettings::generalFont()
 {
     if (_generalFont)
         return *_generalFont;
 
     // Sync default with kdebase/kcontrol/fonts/fonts.cpp
-    _generalFont = new QFont("Sans Serif", 10);
+    _generalFont = new TQFont("Sans Serif", 10);
     _generalFont->setPointSize(10);
-    _generalFont->setStyleHint(QFont::SansSerif);
+    _generalFont->setStyleHint(TQFont::SansSerif);
 
     KConfigGroup g( KGlobal::config(), "General" );
     *_generalFont = g.readFontEntry("font", _generalFont);
@@ -361,15 +361,15 @@ QFont KGlobalSettings::generalFont()
     return *_generalFont;
 }
 
-QFont KGlobalSettings::fixedFont()
+TQFont KGlobalSettings::fixedFont()
 {
     if (_fixedFont)
         return *_fixedFont;
 
     // Sync default with kdebase/kcontrol/fonts/fonts.cpp
-    _fixedFont = new QFont("Monospace", 10);
+    _fixedFont = new TQFont("Monospace", 10);
     _fixedFont->setPointSize(10);
-    _fixedFont->setStyleHint(QFont::TypeWriter);
+    _fixedFont->setStyleHint(TQFont::TypeWriter);
 
     KConfigGroup g( KGlobal::config(), "General" );
     *_fixedFont = g.readFontEntry("fixed", _fixedFont);
@@ -377,15 +377,15 @@ QFont KGlobalSettings::fixedFont()
     return *_fixedFont;
 }
 
-QFont KGlobalSettings::toolBarFont()
+TQFont KGlobalSettings::toolBarFont()
 {
     if(_toolBarFont)
         return *_toolBarFont;
 
     // Sync default with kdebase/kcontrol/fonts/fonts.cpp
-    _toolBarFont = new QFont("Sans Serif", 10);
+    _toolBarFont = new TQFont("Sans Serif", 10);
     _toolBarFont->setPointSize(10);
-    _toolBarFont->setStyleHint(QFont::SansSerif);
+    _toolBarFont->setStyleHint(TQFont::SansSerif);
 
     KConfigGroup g( KGlobal::config(), "General" );
     *_toolBarFont = g.readFontEntry("toolBarFont", _toolBarFont);
@@ -393,15 +393,15 @@ QFont KGlobalSettings::toolBarFont()
     return *_toolBarFont;
 }
 
-QFont KGlobalSettings::menuFont()
+TQFont KGlobalSettings::menuFont()
 {
     if(_menuFont)
         return *_menuFont;
 
     // Sync default with kdebase/kcontrol/fonts/fonts.cpp
-    _menuFont = new QFont("Sans Serif", 10);
+    _menuFont = new TQFont("Sans Serif", 10);
     _menuFont->setPointSize(10);
-    _menuFont->setStyleHint(QFont::SansSerif);
+    _menuFont->setStyleHint(TQFont::SansSerif);
 
     KConfigGroup g( KGlobal::config(), "General" );
     *_menuFont = g.readFontEntry("menuFont", _menuFont);
@@ -409,15 +409,15 @@ QFont KGlobalSettings::menuFont()
     return *_menuFont;
 }
 
-QFont KGlobalSettings::windowTitleFont()
+TQFont KGlobalSettings::windowTitleFont()
 {
     if(_windowTitleFont)
         return *_windowTitleFont;
 
     // Sync default with kdebase/kcontrol/fonts/fonts.cpp
-    _windowTitleFont = new QFont("Sans Serif", 9, QFont::Bold);
+    _windowTitleFont = new TQFont("Sans Serif", 9, TQFont::Bold);
     _windowTitleFont->setPointSize(10);
-    _windowTitleFont->setStyleHint(QFont::SansSerif);
+    _windowTitleFont->setStyleHint(TQFont::SansSerif);
 
     KConfigGroup g( KGlobal::config(), "WM" );
     *_windowTitleFont = g.readFontEntry("activeFont", _windowTitleFont); // inconsistency
@@ -425,15 +425,15 @@ QFont KGlobalSettings::windowTitleFont()
     return *_windowTitleFont;
 }
 
-QFont KGlobalSettings::taskbarFont()
+TQFont KGlobalSettings::taskbarFont()
 {
     if(_taskbarFont)
         return *_taskbarFont;
 
     // Sync default with kdebase/kcontrol/fonts/fonts.cpp
-    _taskbarFont = new QFont("Sans Serif", 10);
+    _taskbarFont = new TQFont("Sans Serif", 10);
     _taskbarFont->setPointSize(10);
-    _taskbarFont->setStyleHint(QFont::SansSerif);
+    _taskbarFont->setStyleHint(TQFont::SansSerif);
 
     KConfigGroup g( KGlobal::config(), "General" );
     *_taskbarFont = g.readFontEntry("taskbarFont", _taskbarFont);
@@ -442,10 +442,10 @@ QFont KGlobalSettings::taskbarFont()
 }
 
 
-QFont KGlobalSettings::largeFont(const QString &text)
+TQFont KGlobalSettings::largeFont(const TQString &text)
 {
-    QFontDatabase db;
-    QStringList fam = db.families();
+    TQFontDatabase db;
+    TQStringList fam = db.families();
 
     // Move a bunch of preferred fonts to the front.
     if (fam.remove("Arial"))
@@ -466,14 +466,14 @@ QFont KGlobalSettings::largeFont(const QString &text)
     if (_largeFont)
         fam.prepend(_largeFont->family());
 
-    for(QStringList::ConstIterator it = fam.begin();
+    for(TQStringList::ConstIterator it = fam.begin();
         it != fam.end(); ++it)
     {
         if (db.isSmoothlyScalable(*it) && !db.isFixedPitch(*it))
         {
-            QFont font(*it);
+            TQFont font(*it);
             font.setPixelSize(75);
-            QFontMetrics metrics(font);
+            TQFontMetrics metrics(font);
             int h = metrics.height();
             if ((h < 60) || ( h > 90))
                 continue;
@@ -491,11 +491,11 @@ QFont KGlobalSettings::largeFont(const QString &text)
                 continue;
 
             font.setPointSize(48);
-            _largeFont = new QFont(font);
+            _largeFont = new TQFont(font);
             return *_largeFont;
         }
     }
-    _largeFont = new QFont(KGlobalSettings::generalFont());
+    _largeFont = new TQFont(KGlobalSettings::generalFont());
     _largeFont->setPointSize(48);
     return *_largeFont;
 }
@@ -505,28 +505,28 @@ void KGlobalSettings::initStatic() // should be called initPaths(). Don't put an
     if ( s_desktopPath != 0 )
         return;
 
-    s_desktopPath = new QString();
-    s_autostartPath = new QString();
-    s_trashPath = new QString();
-    s_documentPath = new QString();
+    s_desktopPath = new TQString();
+    s_autostartPath = new TQString();
+    s_trashPath = new TQString();
+    s_documentPath = new TQString();
 
     KConfigGroup g( KGlobal::config(), "Paths" );
 
 	// Read desktop and documents path using XDG_USER_DIRS
 	readXdgUserDirs(s_desktopPath, s_documentPath);
 	
-    *s_desktopPath = QDir::cleanDirPath( *s_desktopPath );
+    *s_desktopPath = TQDir::cleanDirPath( *s_desktopPath );
     if ( !s_desktopPath->endsWith("/") )
       s_desktopPath->append('/');
 
-    *s_documentPath = QDir::cleanDirPath( *s_documentPath );
+    *s_documentPath = TQDir::cleanDirPath( *s_documentPath );
     if ( !s_documentPath->endsWith("/"))
       s_documentPath->append('/');
 
     // Trash Path - TODO remove in KDE4 (kio_trash can't use it for interoperability reasons)
     *s_trashPath = *s_desktopPath + i18n("Trash") + "/";
     *s_trashPath = g.readPathEntry( "Trash" , *s_trashPath);
-    *s_trashPath = QDir::cleanDirPath( *s_trashPath );
+    *s_trashPath = TQDir::cleanDirPath( *s_trashPath );
     if ( !s_trashPath->endsWith("/") )
       s_trashPath->append('/');
     // We need to save it in any case, in case the language changes later on,
@@ -539,7 +539,7 @@ void KGlobalSettings::initStatic() // should be called initPaths(). Don't put an
     // Autostart Path
     *s_autostartPath = KGlobal::dirs()->localkdedir() + "Autostart/";
     *s_autostartPath = g.readPathEntry( "Autostart" , *s_autostartPath);
-    *s_autostartPath = QDir::cleanDirPath( *s_autostartPath );
+    *s_autostartPath = TQDir::cleanDirPath( *s_autostartPath );
     if ( !s_autostartPath->endsWith("/") )
       s_autostartPath->append('/');
 
@@ -551,13 +551,13 @@ void KGlobalSettings::initStatic() // should be called initPaths(). Don't put an
 void KGlobalSettings::initColors()
 {
     if (!_kde34Blue) {
-      if (QPixmap::defaultDepth() > 8)
-        _kde34Blue = new QColor(103,141,178);
+      if (TQPixmap::defaultDepth() > 8)
+        _kde34Blue = new TQColor(103,141,178);
       else
-        _kde34Blue = new QColor(0, 0, 192);
+        _kde34Blue = new TQColor(0, 0, 192);
     }
     if (!alternateColor)
-      alternateColor = new QColor(237, 244, 249);
+      alternateColor = new TQColor(237, 244, 249);
 }
 
 void KGlobalSettings::rereadFontSettings()
@@ -598,7 +598,7 @@ KGlobalSettings::KMouseSettings & KGlobalSettings::mouseSettings()
 
 #ifndef Q_WS_WIN
         KConfigGroup g( KGlobal::config(), "Mouse" );
-        QString setting = g.readEntry("MouseButtonMapping");
+        TQString setting = g.readEntry("MouseButtonMapping");
         if (setting == "RightHanded")
             s.handed = KMouseSettings::RightHanded;
         else if (setting == "LeftHanded")
@@ -652,7 +652,7 @@ bool KGlobalSettings::isMultiHead()
 #ifdef Q_WS_WIN
     return GetSystemMetrics(SM_CMONITORS) > 1;
 #else
-    QCString multiHead = getenv("KDE_MULTIHEAD");
+    TQCString multiHead = getenv("KDE_MULTIHEAD");
     if (!multiHead.isEmpty()) {
         return (multiHead.lower() == "true");
     }
@@ -666,16 +666,16 @@ bool KGlobalSettings::wheelMouseZooms()
     return g.readBoolEntry( "WheelMouseZooms", KDE_DEFAULT_WHEEL_ZOOM );
 }
 
-QRect KGlobalSettings::splashScreenDesktopGeometry()
+TQRect KGlobalSettings::splashScreenDesktopGeometry()
 {
-    QDesktopWidget *dw = QApplication::desktop();
+    TQDesktopWidget *dw = TQApplication::desktop();
 
     if (dw->isVirtualDesktop()) {
         KConfigGroup group(KGlobal::config(), "Windows");
         int scr = group.readNumEntry("Unmanaged", -3);
         if (group.readBoolEntry("XineramaEnabled", true) && scr != -2) {
             if (scr == -3)
-                scr = dw->screenNumber(QCursor::pos());
+                scr = dw->screenNumber(TQCursor::pos());
             return dw->screenGeometry(scr);
         } else {
             return dw->geometry();
@@ -685,9 +685,9 @@ QRect KGlobalSettings::splashScreenDesktopGeometry()
     }
 }
 
-QRect KGlobalSettings::desktopGeometry(const QPoint& point)
+TQRect KGlobalSettings::desktopGeometry(const TQPoint& point)
 {
-    QDesktopWidget *dw = QApplication::desktop();
+    TQDesktopWidget *dw = TQApplication::desktop();
 
     if (dw->isVirtualDesktop()) {
         KConfigGroup group(KGlobal::config(), "Windows");
@@ -702,9 +702,9 @@ QRect KGlobalSettings::desktopGeometry(const QPoint& point)
     }
 }
 
-QRect KGlobalSettings::desktopGeometry(QWidget* w)
+TQRect KGlobalSettings::desktopGeometry(TQWidget* w)
 {
-    QDesktopWidget *dw = QApplication::desktop();
+    TQDesktopWidget *dw = TQApplication::desktop();
 
     if (dw->isVirtualDesktop()) {
         KConfigGroup group(KGlobal::config(), "Windows");
@@ -731,7 +731,7 @@ bool KGlobalSettings::showIconsOnPushButtons()
 bool KGlobalSettings::showFilePreview(const KURL &url)
 {
     KConfigGroup g(KGlobal::config(), "PreviewSettings");
-    QString protocol = url.protocol();
+    TQString protocol = url.protocol();
     bool defaultSetting = KProtocolInfo::showFilePreview( protocol );
     return g.readBoolEntry(protocol, defaultSetting );
 }

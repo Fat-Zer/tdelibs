@@ -26,10 +26,10 @@
 
 #include "kmpropgeneral.h"
 
-#include <qvbox.h>
+#include <tqvbox.h>
 #include <kiconloader.h>
 
-KMPropertyPage::KMPropertyPage(QWidget *parent, const char *name)
+KMPropertyPage::KMPropertyPage(TQWidget *parent, const char *name)
 : CJanusWidget(parent,name)
 {
 	m_widgets.setAutoDelete(false);
@@ -43,7 +43,7 @@ KMPropertyPage::~KMPropertyPage()
 
 void KMPropertyPage::setPrinter(KMPrinter *p)
 {
-	QPtrListIterator<KMPropWidget>	it(m_widgets);
+	TQPtrListIterator<KMPropWidget>	it(m_widgets);
 	for (;it.current();++it)
 		it.current()->setPrinterBase(p);
 }
@@ -55,9 +55,9 @@ void KMPropertyPage::addPropPage(KMPropWidget *w)
 		m_widgets.append(w);
 		KMPropContainer	*ctn = new KMPropContainer(this,"Container");
 		ctn->setWidget(w);
-		connect(ctn,SIGNAL(enable(bool)),SLOT(slotEnable(bool)));
+		connect(ctn,TQT_SIGNAL(enable(bool)),TQT_SLOT(slotEnable(bool)));
 
-		QPixmap icon = KGlobal::instance()->iconLoader()->loadIcon(
+		TQPixmap icon = KGlobal::instance()->iconLoader()->loadIcon(
 		                                                           w->pixmap(),
 		                                                           KIcon::NoGroup,
 		                                                           KIcon::SizeMedium
@@ -68,7 +68,7 @@ void KMPropertyPage::addPropPage(KMPropWidget *w)
 
 void KMPropertyPage::slotEnable(bool on)
 {
-	QWidget	*w = (QWidget*)(sender());
+	QWidget	*w = (TQWidget*)(sender());
 	if (on)
 		enablePage(w);
 	else

@@ -40,7 +40,7 @@ EmailParam::EmailParam(const EmailParam & x)
 {
 }
 
-EmailParam::EmailParam(const QCString & s)
+EmailParam::EmailParam(const TQCString & s)
 	:	Param(s)
 {
 }
@@ -58,7 +58,7 @@ EmailParam::operator = (EmailParam & x)
 }
 
 	EmailParam &
-EmailParam::operator = (const QCString & s)
+EmailParam::operator = (const TQCString & s)
 {
 	Param::operator = (s);
 	return *this;

@@ -18,14 +18,14 @@
  **/
 
 #include "util.h"
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
-void urlToSmb(const KURL& url, QString& work, QString& server, QString& printer)
+void urlToSmb(const KURL& url, TQString& work, TQString& server, TQString& printer)
 {
 	if (url.protocol() != "smb")
 		return;
 	QString	h = url.host();
-	QStringList	l = QStringList::split('/', url.path(), false);
+	QStringList	l = TQStringList::split('/', url.path(), false);
 	if (l.count() > 1)
 	{
 		work = h;
@@ -34,13 +34,13 @@ void urlToSmb(const KURL& url, QString& work, QString& server, QString& printer)
 	}
 	else
 	{
-		work = QString::null;
+		work = TQString::null;
 		server = h;
 		printer = l[0];
 	}
 }
 
-KURL smbToUrl(const QString& s)
+KURL smbToUrl(const TQString& s)
 {
 	// allow to handle non-encoded chars in login/password
 	KURL	url;
@@ -76,9 +76,9 @@ int findIndex(int ID)
 	return 4;
 }
 
-QString buildSmbURI( const QString& work, const QString& server, const QString& printer, const QString& user, const QString& passwd )
+TQString buildSmbURI( const TQString& work, const TQString& server, const TQString& printer, const TQString& user, const TQString& passwd )
 {
-	QString uri = server + "/" + printer;
+	TQString uri = server + "/" + printer;
 	if ( !work.isEmpty() )
 		uri.prepend( work + "/" );
 	if ( !user.isEmpty() )
@@ -92,7 +92,7 @@ QString buildSmbURI( const QString& work, const QString& server, const QString& 
 	return uri;
 }
 
-bool splitSmbURI( const QString& uri, QString& work, QString& server, QString& printer, QString& user, QString& passwd )
+bool splitSmbURI( const TQString& uri, TQString& work, TQString& server, TQString& printer, TQString& user, TQString& passwd )
 {
 	int p( 0 );
 	if ( !uri.startsWith( "smb://" ) )
@@ -118,7 +118,7 @@ bool splitSmbURI( const QString& uri, QString& work, QString& server, QString& p
 		}
 		else
 			p2 = p-1;
-		QStringList l = QStringList::split( '/', uri.mid( p2+1 ), false );
+		TQStringList l = TQStringList::split( '/', uri.mid( p2+1 ), false );
 		switch ( l.count() )
 		{
 			case 3:

@@ -19,8 +19,8 @@
 #ifndef __KTIMEWIDGET__
 #define __KTIMEWIDGET__
 
-#include <qwidget.h>
-#include <qdatetime.h>
+#include <tqwidget.h>
+#include <tqdatetime.h>
 
 #include <kdelibs_export.h>
 
@@ -37,20 +37,20 @@
 class KDEUI_EXPORT KTimeWidget : public QWidget
 {
   Q_OBJECT
-  Q_PROPERTY( QTime time READ time WRITE setTime )
+  Q_PROPERTY( TQTime time READ time WRITE setTime )
 
 public:
   /**
    * Constructs a time selection widget.
    */
-  KTimeWidget(QWidget * parent = 0, const char * name = 0);
+  KTimeWidget(TQWidget * parent = 0, const char * name = 0);
 
   /**
    * Constructs a time selection widget with the initial time set to
    * @p time.
    */
-  KTimeWidget(const QTime & time,
-              QWidget * parent = 0, const char * name = 0 );
+  KTimeWidget(const TQTime & time,
+              TQWidget * parent = 0, const char * name = 0 );
 
   /**
    * Destructs the time selection widget.
@@ -60,20 +60,20 @@ public:
   /**
    * Returns the currently selected time.
    */
-  QTime time() const;
+  TQTime time() const;
 
 public slots:
   /**
    * Changes the selected time to @p time.
    */
-  void setTime(const QTime & time);
+  void setTime(const TQTime & time);
 
 signals:
   /**
    * Emitted whenever the time of the widget
    * is changed, either with setTime() or via user selection.
    */
-  void valueChanged(const QTime & time);
+  void valueChanged(const TQTime & time);
 
 private:
   void init();

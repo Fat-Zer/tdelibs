@@ -24,13 +24,13 @@
 #include "ksycocaentry.h"
 #include "kservice.h"
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qptrlist.h>
-#include <qmap.h>
-#include <qshared.h>
-#include <qdatastream.h>
-#include <qvariant.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqptrlist.h>
+#include <tqmap.h>
+#include <tqshared.h>
+#include <tqdatastream.h>
+#include <tqvariant.h>
 
 #include <ksimpleconfig.h>
 
@@ -48,7 +48,7 @@ class KIO_EXPORT KServiceType : public KSycocaEntry
 
 public:
   typedef KSharedPtr<KServiceType> Ptr;
-  typedef QValueList<Ptr> List;
+  typedef TQValueList<Ptr> List;
 public:
 
   /**
@@ -59,15 +59,15 @@ public:
    * @param _icon the icon name of the service type (can be null)
    * @param _comment a comment (can be null)
    */
-  KServiceType( const QString & _fullpath, const QString& _name,
-                const QString& _icon, const QString& _comment);
+  KServiceType( const TQString & _fullpath, const TQString& _name,
+                const TQString& _icon, const TQString& _comment);
 
   /**
    * Construct a service type and take all informations from a config file.
    * @param _fullpath path of the desktop file, set to "" if calling from
    *                  a inherited constructor.
    */
-  KServiceType( const QString & _fullpath );
+  KServiceType( const TQString & _fullpath );
 
   /**
    * Construct a service type and take all informations from a deskop file.
@@ -79,7 +79,7 @@ public:
    * @internal construct a service from a stream.
    * The stream must already be positionned at the correct offset
    */
-  KServiceType( QDataStream& _str, int offset );
+  KServiceType( TQDataStream& _str, int offset );
 
   virtual ~KServiceType();
 
@@ -89,21 +89,21 @@ public:
    *         example an URL and returns a special icon for this
    *         URL. An example is KMimeType, KFolderType and
    *         others.
-   * @return the name of the icon, can be QString::null.
+   * @return the name of the icon, can be TQString::null.
    */
-  QString icon() const { return m_strIcon; }
+  TQString icon() const { return m_strIcon; }
 
   /**
    * Returns the descriptive comment associated, if any.
-   * @return the comment, or QString::null
+   * @return the comment, or TQString::null
    */
-  QString comment() const { return m_strComment; }
+  TQString comment() const { return m_strComment; }
 
   /**
    * Returns the name of this service type.
    * @return the name of the service type
    */
-  QString name() const { return m_strName; }
+  TQString name() const { return m_strName; }
 
   /**
    * Returns the relative path to the desktop entry file responsible for
@@ -111,7 +111,7 @@ public:
    * For instance inode/directory.desktop, or kpart.desktop
    * @return the path of the desktop file
    */
-  QString desktopEntryPath() const { return entryPath(); }
+  TQString desktopEntryPath() const { return entryPath(); }
 
   /**
    * Checks whether this service type inherits another one.
@@ -123,17 +123,17 @@ public:
   /**
    * If this service type inherits from another service type,
    * return the name of the parent.
-   * @return the parent service type, or QString:: null if not set
+   * @return the parent service type, or TQString:: null if not set
    * @see isDerived()
    */
-  QString parentServiceType() const;
+  TQString parentServiceType() const;
 
   /**
    * Checks whether this service type is or inherits from @p servTypeName.
    * @return true if this servicetype is or inherits from @p servTypeName
    * @since 3.1
    */
-  bool inherits( const QString& servTypeName ) const;
+  bool inherits( const TQString& servTypeName ) const;
 
   /**
    * Returns the requested property. Some often used properties
@@ -143,13 +143,13 @@ public:
    * @param _name the name of the property
    * @return the property, or invalid if not found
    */
-  virtual QVariant property( const QString& _name ) const;
+  virtual TQVariant property( const TQString& _name ) const;
 
   /**
    * Returns the list of all properties of this service type.
    * @return the list of properties
    */
-  virtual QStringList propertyNames() const;
+  virtual TQStringList propertyNames() const;
 
   /**
    * Checks whether the service type is valid.
@@ -163,22 +163,22 @@ public:
    * @param _name the name of the property
    * @return the property type, or null if not found
    */
-  virtual QVariant::Type propertyDef( const QString& _name ) const;
+  virtual TQVariant::Type propertyDef( const TQString& _name ) const;
 
-  virtual QStringList propertyDefNames() const;
-  virtual const QMap<QString,QVariant::Type>& propertyDefs() const { return m_mapPropDefs; }
+  virtual TQStringList propertyDefNames() const;
+  virtual const TQMap<TQString,TQVariant::Type>& propertyDefs() const { return m_mapPropDefs; }
 
   /**
    * @internal
    * Save ourselves to the data stream.
    */
-  virtual void save( QDataStream& );
+  virtual void save( TQDataStream& );
 
   /**
    * @internal
    * Load ourselves from the data stream.
    */
-  virtual void load( QDataStream& );
+  virtual void load( TQDataStream& );
 
   /**
    * @internal
@@ -204,7 +204,7 @@ public:
    * @param _name the name of the service type to search
    * @return the pointer to the service type, or 0
    */
-  static Ptr serviceType( const QString& _name );
+  static Ptr serviceType( const TQString& _name );
 
   /**
    * Returns all services supporting the given servicetype name.
@@ -214,7 +214,7 @@ public:
    * @param _servicetype the name of the service type to search
    * @return the list of all services of the given type
    */
-  static KService::List offers( const QString& _servicetype );
+  static KService::List offers( const TQString& _servicetype );
 
   /**
    * Returns a list of all the supported servicetypes. Useful for
@@ -230,11 +230,11 @@ protected:
   void init( KDesktopFile *config );
 
 protected:
-  QString m_strName;
-  QString m_strIcon;
-  QString m_strComment;
-  QMap<QString,QVariant> m_mapProps;
-  QMap<QString,QVariant::Type> m_mapPropDefs;
+  TQString m_strName;
+  TQString m_strIcon;
+  TQString m_strComment;
+  TQMap<TQString,TQVariant> m_mapProps;
+  TQMap<TQString,TQVariant::Type> m_mapPropDefs;
 
   bool m_bValid:1;
   bool m_bDerived:1;
@@ -245,7 +245,7 @@ private:
   KServiceTypePrivate* d;
 };
 
-//QDataStream& operator>>( QDataStream& _str, KServiceType& s );
-//QDataStream& operator<<( QDataStream& _str, KServiceType& s );
+//TQDataStream& operator>>( TQDataStream& _str, KServiceType& s );
+//TQDataStream& operator<<( TQDataStream& _str, KServiceType& s );
 
 #endif

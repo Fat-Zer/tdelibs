@@ -21,13 +21,13 @@
 #include <kglobal.h>
 #include <kglobalsettings.h>
 
-#include <qpixmap.h>
+#include <tqpixmap.h>
 
 #include "ksplashscreen.h"
 
-KSplashScreen::KSplashScreen(const QPixmap &pixmap, WFlags f): QSplashScreen(pixmap, f)
+KSplashScreen::KSplashScreen(const TQPixmap &pixmap, WFlags f): TQSplashScreen(pixmap, f)
 {
-	QRect desk = KGlobalSettings::splashScreenDesktopGeometry();
+	TQRect desk = KGlobalSettings::splashScreenDesktopGeometry();
 	resize(pixmap.width(), pixmap.height());
   setGeometry( ( desk.width() / 2 ) - ( width() / 2 ) + desk.left(),
       ( desk.height() / 2 ) - ( height() / 2 ) + desk.top(),

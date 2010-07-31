@@ -25,7 +25,7 @@
 #ifndef __KFILEDIALOG_H__
 #define __KFILEDIALOG_H__
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdialogbase.h>
 #include <kfile.h>
@@ -58,7 +58,7 @@ struct KFileDialogPrivate;
  * select files and directories.
  *
  * The widget can be used as a drop in replacement for the
- * QFileDialog widget, but has greater functionality and a nicer GUI.
+ * TQFileDialog widget, but has greater functionality and a nicer GUI.
  *
  * You will usually want to use one of the static methods
  * getOpenFileName(), getSaveFileName(), getOpenURL()
@@ -98,7 +98,7 @@ public:
       *
       * @param startDir This can either be
       *         @li The URL of the directory to start in.
-      *         @li QString::null to start in the current working
+      *         @li TQString::null to start in the current working
       *		    directory, or the last directory where a file has been
       *		    selected.
       *         @li ':&lt;keyword&gt;' to start in the directory last used
@@ -116,15 +116,15 @@ public:
       * See setFilter() for details on how to use this argument.
       *
       */
-    KFileDialog(const QString& startDir, const QString& filter,
-		QWidget *parent, const char *name,
+    KFileDialog(const TQString& startDir, const TQString& filter,
+		TQWidget *parent, const char *name,
 		bool modal);
 
     /**
       * Constructs a file dialog.
       *
       * The parameters here are identical to the first constructor except
-      * for the addition of a QWidget parameter.
+      * for the addition of a TQWidget parameter.
       *
       * Historical note: The original version of KFileDialog did not have this extra
       * parameter. It was added later, and, in order to maintain binary compatibility,
@@ -132,7 +132,7 @@ public:
       *
       * @param startDir This can either be
       *         @li The URL of the directory to start in.
-      *         @li QString::null to start in the current working
+      *         @li TQString::null to start in the current working
       *             directory, or the last directory where a file has been
       *             selected.
       *         @li ':&lt;keyword&gt;' to start in the directory last used
@@ -156,9 +156,9 @@ public:
       * @param modal Whether to create a modal dialog or not
       * @since 3.1
       */
-    KFileDialog(const QString& startDir, const QString& filter,
-		QWidget *parent, const char *name,
-		bool modal, QWidget* widget);
+    KFileDialog(const TQString& startDir, const TQString& filter,
+		TQWidget *parent, const char *name,
+		bool modal, TQWidget* widget);
 
 
     /**
@@ -185,12 +185,12 @@ public:
      * Returns the full path of the selected file in the local filesystem.
      * (Local files only)
      */
-    QString selectedFile() const;
+    TQString selectedFile() const;
 
     /**
      * Returns a list of all selected local files.
      */
-    QStringList selectedFiles() const;
+    TQStringList selectedFiles() const;
 
     /**
      * Sets the directory to view.
@@ -206,7 +206,7 @@ public:
      *
      * This takes absolute URLs and relative file names.
      */
-    void setSelection(const QString& name);
+    void setSelection(const TQString& name);
 
     /**
      * Sets the operational mode of the filedialog to @p Saving, @p Opening
@@ -289,7 +289,7 @@ public:
      * @see filterChanged
      * @see setMimeFilter
      */
-    void setFilter(const QString& filter);
+    void setFilter(const TQString& filter);
 
     /**
      * Returns the current filter as entered by the user or one of the
@@ -298,7 +298,7 @@ public:
      * @see setFilter()
      * @see filterChanged()
      */
-    QString currentFilter() const;
+    TQString currentFilter() const;
 
     /**
      * Sets the filter up to specify the output type.
@@ -310,7 +310,7 @@ public:
      * Do not use in conjunction with setFilter()
      * @deprecated
      */
-    void setFilterMimeType(const QString &label, const KMimeType::List &types, const KMimeType::Ptr &defaultType) KDE_DEPRECATED;
+    void setFilterMimeType(const TQString &label, const KMimeType::List &types, const KMimeType::Ptr &defaultType) KDE_DEPRECATED;
 
     /**
      * Returns the mimetype for the desired output format.
@@ -333,8 +333,8 @@ public:
      *
      * Do not use in conjunction with setFilter()
      */
-    void setMimeFilter( const QStringList& types,
-                        const QString& defaultType = QString::null );
+    void setMimeFilter( const TQStringList& types,
+                        const TQString& defaultType = TQString::null );
 
     /**
      * The mimetype for the desired output format.
@@ -344,7 +344,7 @@ public:
      *
      * @see setMimeFilter()
      */
-    QString currentMimeFilter() const;
+    TQString currentMimeFilter() const;
 
     /**
      *  Clears any mime- or namefilter. Does not reload the directory.
@@ -357,7 +357,7 @@ public:
      *
      * In this mode
      * the dialog is split and the right part contains your widget.
-     * This widget has to inherit QWidget and it has to implement
+     * This widget has to inherit TQWidget and it has to implement
      * a slot showPreview(const KURL &); which is called
      * every time the file changes. You may want to look at
      * koffice/lib/kofficecore/koFilterManager.cc for some hints :)
@@ -365,7 +365,7 @@ public:
      * Ownership is transferred to KFileDialog. You need to create the
      * preview-widget with "new", i.e. on the heap.
      */
-    void setPreviewWidget(const QWidget *w) KDE_DEPRECATED;
+    void setPreviewWidget(const TQWidget *w) KDE_DEPRECATED;
 
     /**
      * Adds a preview widget and enters the preview mode.
@@ -389,7 +389,7 @@ public:
      *
      * @param startDir This can either be
      *         @li The URL of the directory to start in.
-     *         @li QString::null to start in the current working
+     *         @li TQString::null to start in the current working
      *		    directory, or the last directory where a file has been
      *		    selected.
      *         @li ':&lt;keyword&gt;' to start in the directory last used
@@ -405,23 +405,23 @@ public:
      * @param parent The widget the dialog will be centered on initially.
      * @param caption The name of the dialog widget.
      */
-    static QString getOpenFileName(const QString& startDir= QString::null,
-				   const QString& filter= QString::null,
-				   QWidget *parent= 0,
-				   const QString& caption = QString::null);
+    static TQString getOpenFileName(const TQString& startDir= TQString::null,
+				   const TQString& filter= TQString::null,
+				   TQWidget *parent= 0,
+				   const TQString& caption = TQString::null);
 
 
    /**
-     * Use this version only if you have no QWidget available as
+     * Use this version only if you have no TQWidget available as
      * parent widget. This can be the case if the parent widget is
      * a widget in another process or if the parent widget is a
      * non-Qt widget. For example, in a GTK program.
      *
      * @since 3.4
     */
-   static QString getOpenFileNameWId(const QString& startDir,
-                                     const QString& filter,
-                                     WId parent_id, const QString& caption);
+   static TQString getOpenFileNameWId(const TQString& startDir,
+                                     const TQString& filter,
+                                     WId parent_id, const TQString& caption);
 
     /**
      * Creates a modal file dialog and returns the selected
@@ -432,7 +432,7 @@ public:
      *
      * @param startDir This can either be
      *         @li The URL of the directory to start in.
-     *         @li QString::null to start in the current working
+     *         @li TQString::null to start in the current working
      *		    directory, or the last directory where a file has been
      *		    selected.
      *         @li ':&lt;keyword&gt;' to start in the directory last used
@@ -448,10 +448,10 @@ public:
      * @param parent The widget the dialog will be centered on initially.
      * @param caption The name of the dialog widget.
      */
-    static QStringList getOpenFileNames(const QString& startDir= QString::null,
-					const QString& filter= QString::null,
-					QWidget *parent = 0,
-					const QString& caption= QString::null);
+    static TQStringList getOpenFileNames(const TQString& startDir= TQString::null,
+					const TQString& filter= TQString::null,
+					TQWidget *parent = 0,
+					const TQString& caption= TQString::null);
 
 
 
@@ -464,7 +464,7 @@ public:
      *
      * @param startDir This can either be
      *         @li The URL of the directory to start in.
-     *         @li QString::null to start in the current working
+     *         @li TQString::null to start in the current working
      *		    directory, or the last directory where a file has been
      *		    selected.
      *         @li ':&lt;keyword&gt;' to start in the directory last used
@@ -480,10 +480,10 @@ public:
      * @param parent The widget the dialog will be centered on initially.
      * @param caption The name of the dialog widget.
      */
-    static KURL getOpenURL(const QString& startDir = QString::null,
-			   const QString& filter= QString::null,
-			   QWidget *parent= 0,
-			   const QString& caption = QString::null);
+    static KURL getOpenURL(const TQString& startDir = TQString::null,
+			   const TQString& filter= TQString::null,
+			   TQWidget *parent= 0,
+			   const TQString& caption = TQString::null);
 
 
 
@@ -496,7 +496,7 @@ public:
      *
      * @param startDir This can either be
      *         @li The URL of the directory to start in.
-     *         @li QString::null to start in the current working
+     *         @li TQString::null to start in the current working
      *		    directory, or the last directory where a file has been
      *		    selected.
      *         @li ':&lt;keyword&gt;' to start in the directory last used
@@ -512,10 +512,10 @@ public:
      * @param parent The widget the dialog will be centered on initially.
      * @param caption The name of the dialog widget.
      */
-    static KURL::List getOpenURLs(const QString& startDir= QString::null,
-				  const QString& filter= QString::null,
-				  QWidget *parent = 0,
-				  const QString& caption= QString::null);
+    static KURL::List getOpenURLs(const TQString& startDir= TQString::null,
+				  const TQString& filter= TQString::null,
+				  TQWidget *parent = 0,
+				  const TQString& caption= TQString::null);
 
 
 
@@ -530,7 +530,7 @@ public:
      *         @li The URL of the directory to start in.
      *         @li a relative path or a filename determining the
      *             directory to start in and the file to be selected.
-     *         @li QString::null to start in the current working
+     *         @li TQString::null to start in the current working
      *		    directory, or the last directory where a file has been
      *		    selected.
      *         @li ':&lt;keyword&gt;' to start in the directory last used
@@ -546,20 +546,20 @@ public:
      * @param parent The widget the dialog will be centered on initially.
      * @param caption The name of the dialog widget.
      */
-    static QString getSaveFileName(const QString& startDir= QString::null,
-				   const QString& filter= QString::null,
-				   QWidget *parent= 0,
-				   const QString& caption = QString::null);
+    static TQString getSaveFileName(const TQString& startDir= TQString::null,
+				   const TQString& filter= TQString::null,
+				   TQWidget *parent= 0,
+				   const TQString& caption = TQString::null);
            
                    
     /**
      * This function accepts the window id of the parent window, instead
-     * of QWidget*. It should be used only when necessary.
+     * of TQWidget*. It should be used only when necessary.
      * @since 3.4
      */         
-    static QString getSaveFileNameWId(const QString& dir, const QString& filter,
+    static TQString getSaveFileNameWId(const TQString& dir, const TQString& filter,
                                      WId parent_id,
-                                     const QString& caption);
+                                     const TQString& caption);
 
     /**
      * Creates a modal file dialog and returns the selected
@@ -572,7 +572,7 @@ public:
      *         @li The URL of the directory to start in.
      *         @li a relative path or a filename determining the
      *             directory to start in and the file to be selected.
-     *         @li QString::null to start in the current working
+     *         @li TQString::null to start in the current working
      *		    directory, or the last directory where a file has been
      *		    selected.
      *         @li ':&lt;keyword&gt;' to start in the directory last used
@@ -588,10 +588,10 @@ public:
      * @param parent The widget the dialog will be centered on initially.
      * @param caption The name of the dialog widget.
      */
-    static KURL getSaveURL(const QString& startDir= QString::null,
-			   const QString& filter= QString::null,
-			   QWidget *parent= 0,
-			   const QString& caption = QString::null);
+    static KURL getSaveURL(const TQString& startDir= TQString::null,
+			   const TQString& filter= TQString::null,
+			   TQWidget *parent= 0,
+			   const TQString& caption = TQString::null);
 
 
     /**
@@ -600,7 +600,7 @@ public:
      *
      * @param startDir This can either be
      *         @li The URL of the directory to start in.
-     *         @li QString::null to start in the current working
+     *         @li TQString::null to start in the current working
      *		    directory, or the last directory where a file has been
      *		    selected.
      *         @li ':&lt;keyword&gt;' to start in the directory last used
@@ -612,9 +612,9 @@ public:
      * @param parent The widget the dialog will be centered on initially.
      * @param caption The name of the dialog widget.
      */
-    static QString getExistingDirectory(const QString & startDir = QString::null,
-					QWidget * parent = 0,
-					const QString& caption= QString::null);
+    static TQString getExistingDirectory(const TQString & startDir = TQString::null,
+					TQWidget * parent = 0,
+					const TQString& caption= TQString::null);
 
     /**
      * Creates a modal file dialog and returns the selected
@@ -625,7 +625,7 @@ public:
      *
      * @param startDir This can either be
      *         @li The URL of the directory to start in.
-     *         @li QString::null to start in the current working
+     *         @li TQString::null to start in the current working
      *		    directory, or the last directory where a file has been
      *		    selected.
      *         @li ':&lt;keyword&gt;' to start in the directory last used
@@ -638,16 +638,16 @@ public:
      * @param caption The name of the dialog widget.
      * @since 3.1
      */
-    static KURL getExistingURL(const QString & startDir = QString::null,
-                                  QWidget * parent = 0,
-                                  const QString& caption= QString::null);
+    static KURL getExistingURL(const TQString & startDir = TQString::null,
+                                  TQWidget * parent = 0,
+                                  const TQString& caption= TQString::null);
     /**
      * Creates a modal file dialog with an image previewer and returns the
      * selected url or an empty string if none was chosen.
      *
      * @param startDir This can either be
      *         @li The URL of the directory to start in.
-     *         @li QString::null to start in the current working
+     *         @li TQString::null to start in the current working
      *		    directory, or the last directory where a file has been
      *		    selected.
      *         @li ':&lt;keyword&gt;' to start in the directory last used
@@ -659,9 +659,9 @@ public:
      * @param parent The widget the dialog will be centered on initially.
      * @param caption The name of the dialog widget.
      */
-    static KURL getImageOpenURL( const QString& startDir = QString::null,
-				 QWidget *parent = 0,
-				 const QString& caption = QString::null );
+    static KURL getImageOpenURL( const TQString& startDir = TQString::null,
+				 TQWidget *parent = 0,
+				 const TQString& caption = TQString::null );
     virtual void show();
 
     /**
@@ -705,7 +705,7 @@ public:
      * Most useful if you want to make clear what
      * the location is used for.
      */
-    void setLocationLabel(const QString& text);
+    void setLocationLabel(const TQString& text);
 
     /**
      * Returns a pointer to the toolbar.
@@ -714,7 +714,7 @@ public:
      * items into it, e.g.:
      * \code
      *      yourAction = new KAction( i18n("Your Action"), 0,
-     *                                this, SLOT( yourSlot() ),
+     *                                this, TQT_SLOT( yourSlot() ),
      *                                this, "action name" );
      *      yourAction->plug( kfileDialog->toolBar() );
      * \endcode
@@ -774,7 +774,7 @@ public:
      *         KDirSelectDialog).
      * @since 3.1
      */
-    static KURL getStartURL( const QString& startDir, QString& recentDirClass );
+    static KURL getStartURL( const TQString& startDir, TQString& recentDirClass );
 
     /**
      * @internal
@@ -790,12 +790,12 @@ signals:
       * and call selectedFile(), selectedFiles(),
       * selectedURL() or selectedURLs().
       */
-    void fileSelected(const QString&);
+    void fileSelected(const TQString&);
 
     /**
       * Emitted when the user highlights a file.
       */
-    void fileHighlighted(const QString&);
+    void fileHighlighted(const TQString&);
 
     /**
      * Emitted when the user hilights one or more files in multiselection mode.
@@ -817,7 +817,7 @@ signals:
      * @see setFilter()
      * @see currentFilter()
      */
-    void filterChanged( const QString& filter );
+    void filterChanged( const TQString& filter );
 
 protected:
     KToolBar *toolbar;
@@ -831,13 +831,13 @@ protected:
     /**
      * Reimplemented to animate the cancel button.
      */
-    virtual void keyPressEvent( QKeyEvent *e );
+    virtual void keyPressEvent( TQKeyEvent *e );
 
     /**
       * Perform basic initialization tasks. Called by constructors.
       * @since 3.1
       */
-    void init(const QString& startDir, const QString& filter, QWidget* widget);
+    void init(const TQString& startDir, const TQString& filter, TQWidget* widget);
 
     /**
       * rebuild geometry management.
@@ -854,12 +854,12 @@ protected:
     /**
      * Reads configuration and applies it (size, recent directories, ...)
      */
-    virtual void readConfig( KConfig *, const QString& group = QString::null );
+    virtual void readConfig( KConfig *, const TQString& group = TQString::null );
 
     /**
      * Saves the current configuration
      */
-    virtual void writeConfig( KConfig *, const QString& group = QString::null );
+    virtual void writeConfig( KConfig *, const TQString& group = TQString::null );
 
     /**
      * Reads the recent used files and inserts them into the location combobox
@@ -877,21 +877,21 @@ protected:
      * an empty list will be returned. Otherwise, all items enclosed in " "
      * will be returned as correct urls.
      */
-    KURL::List tokenize(const QString& line) const;
+    KURL::List tokenize(const TQString& line) const;
 
     /**
      * Returns the absolute version of the URL specified in locationEdit.
      * @since 3.2
      */
-    KURL getCompleteURL(const QString&);
+    KURL getCompleteURL(const TQString&);
 
     /**
      * Returns the filename extension associated with the currentFilter().
-     * QString::null is returned if an extension is not available or if
+     * TQString::null is returned if an extension is not available or if
      * operationMode() != Saving.
      * @since 3.2
      */
-    QString currentFilterExtension();
+    TQString currentFilterExtension();
 
     /**
      * Updates the currentFilterExtension and the availability of the
@@ -907,8 +907,8 @@ protected:
 protected slots:
     void urlEntered( const KURL& );
     void enterURL( const KURL& url );
-    void enterURL( const QString& url );
-    void locationActivated( const QString& url );
+    void enterURL( const TQString& url );
+    void locationActivated( const TQString& url );
 
     /**
      * @deprecated,
@@ -919,12 +919,12 @@ protected slots:
      * @deprecated
      */
     // ### remove in KDE4
-    void pathComboChanged( const QString& );
+    void pathComboChanged( const TQString& );
     /**
      * @deprecated
      */
     // ### remove in KDE4
-    void dirCompletion( const QString& );
+    void dirCompletion( const TQString& );
 
     void slotFilterChanged();
     void fileHighlighted(const KFileItem *i);
@@ -932,7 +932,7 @@ protected slots:
     void slotStatResult(KIO::Job* job);
     void slotLoadingFinished();
 
-    void fileCompletion( const QString& );
+    void fileCompletion( const TQString& );
     /**
      * @since 3.1
      */
@@ -957,17 +957,17 @@ protected slots:
     void initSpeedbar();
 
 private slots:
-    void slotLocationChanged( const QString& text );
+    void slotLocationChanged( const TQString& text );
 
 private:
     KFileDialog(const KFileDialog&);
     KFileDialog operator=(const KFileDialog&);
 
-    void setLocationText( const QString& text );
+    void setLocationText( const TQString& text );
     void updateLocationWhatsThis();
 
     void appendExtension(KURL &url);
-    void updateLocationEditExtension(const QString &);
+    void updateLocationEditExtension(const TQString &);
     void updateFilter();
 
     static void initStatic();

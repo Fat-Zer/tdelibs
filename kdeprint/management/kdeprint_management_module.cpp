@@ -32,25 +32,25 @@
 
 extern "C"
 {
-	KDEPRINT_EXPORT int add_printer_wizard(QWidget *parent)
+	KDEPRINT_EXPORT int add_printer_wizard(TQWidget *parent)
 	{
                 return kdeprint_management_add_printer_wizard( parent );
 	}
 
-	KDEPRINT_EXPORT bool config_dialog(QWidget *parent)
+	KDEPRINT_EXPORT bool config_dialog(TQWidget *parent)
 	{
 		KMConfigDialog	dlg(parent);
 		return dlg.exec();
 	}
 
-	KDEPRINT_EXPORT QString select_command( QWidget* parent )
+	KDEPRINT_EXPORT TQString select_command( TQWidget* parent )
 	{
 		KDialogBase dlg( parent, 0, true, i18n( "Select Command" ), KDialogBase::Ok|KDialogBase::Cancel );
 		KXmlCommandSelector *xmlSel = new KXmlCommandSelector( false, &dlg, "CommandSelector", &dlg );
 		dlg.setMainWidget( xmlSel );
 		if ( dlg.exec() )
 			return xmlSel->command();
-		return QString::null;
+		return TQString::null;
 	}
 }
 

@@ -18,23 +18,23 @@
 #ifndef KMDI_FOCUS_LIST
 #define KMDI_FOCUS_LIST
 
-#include <qobject.h>
-#include <qmap.h>
-#include <qwidget.h>
+#include <tqobject.h>
+#include <tqmap.h>
+#include <tqwidget.h>
 #include <kdelibs_export.h>
 
 class KMDI_EXPORT KMdiFocusList: public QObject
 {
 	Q_OBJECT
 public:
-	KMdiFocusList( QObject *parent );
+	KMdiFocusList( TQObject *parent );
 	~KMdiFocusList();
-	void addWidgetTree( QWidget* );
+	void addWidgetTree( TQWidget* );
 	void restore();
 protected slots:
-	void objectHasBeenDestroyed( QObject* );
+	void objectHasBeenDestroyed( TQObject* );
 private:
-	QMap<QWidget*, QWidget::FocusPolicy> m_list;
+	TQMap<TQWidget*, TQWidget::FocusPolicy> m_list;
 
 };
 

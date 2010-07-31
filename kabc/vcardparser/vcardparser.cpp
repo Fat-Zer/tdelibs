@@ -18,8 +18,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qregexp.h>
-#include <qtextcodec.h>
+#include <tqregexp.h>
+#include <tqtextcodec.h>
 
 #include <kmdcodec.h>
 
@@ -29,12 +29,12 @@
 
 using namespace KABC;
 
-static QString backslash( "\\\\" );
-static QString comma( "\\," );
-static QString newline( "\\n" );
-static QString cr( "\\r" );
+static TQString backslash( "\\\\" );
+static TQString comma( "\\," );
+static TQString newline( "\\n" );
+static TQString cr( "\\r" );
 
-static void addEscapes( QString &str )
+static void addEscapes( TQString &str )
 {
   str.replace( '\\', backslash );
   str.replace( ',', comma );
@@ -42,7 +42,7 @@ static void addEscapes( QString &str )
   str.replace( '\n', newline );
 }
 
-static void removeEscapes( QString &str )
+static void removeEscapes( TQString &str )
 {
   str.replace( cr, "\\r" );
   str.replace( newline, "\n" );
@@ -58,26 +58,26 @@ VCardParser::~VCardParser()
 {
 }
 
-VCard::List VCardParser::parseVCards( const QString& text )
+VCard::List VCardParser::parseVCards( const TQString& text )
 {
-  static QRegExp sep( "[\x0d\x0a]" );
+  static TQRegExp sep( "[\x0d\x0a]" );
 
   VCard currentVCard;
   VCard::List vCardList;
-  QString currentLine;
+  TQString currentLine;
 
-  const QStringList lines = QStringList::split( sep, text );
-  QStringList::ConstIterator it;
+  const TQStringList lines = TQStringList::split( sep, text );
+  TQStringList::ConstIterator it;
 
   bool inVCard = false;
-  QStringList::ConstIterator linesEnd( lines.end() );
+  TQStringList::ConstIterator linesEnd( lines.end() );
   for ( it = lines.begin(); it != linesEnd; ++it ) {
 
     if ( (*it).isEmpty() ) // empty line
       continue;
 
     if ( (*it)[ 0 ] == ' ' || (*it)[ 0 ] == '\t' ) { // folded line => append to previous
-      currentLine += QString( *it ).remove( 0, 1 );
+      currentLine += TQString( *it ).remove( 0, 1 );
       continue;
     } else {
       if ( inVCard && !currentLine.isEmpty() ) { // now parse the line
@@ -88,23 +88,23 @@ VCard::List VCardParser::parseVCards( const QString& text )
         }
 
         VCardLine vCardLine;
-        const QString key = currentLine.left( colon ).stripWhiteSpace();
-        QString value = currentLine.mid( colon + 1 );
+        const TQString key = currentLine.left( colon ).stripWhiteSpace();
+        TQString value = currentLine.mid( colon + 1 );
 
-        QStringList params = QStringList::split( ';', key );
+        TQStringList params = TQStringList::split( ';', key );
 
         // check for group
         if ( params[0].find( '.' ) != -1 ) {
-          const QStringList groupList = QStringList::split( '.', params[0] );
+          const TQStringList groupList = TQStringList::split( '.', params[0] );
           vCardLine.setGroup( groupList[0] );
           vCardLine.setIdentifier( groupList[1] );
         } else
           vCardLine.setIdentifier( params[0] );
 
         if ( params.count() > 1 ) { // find all parameters
-          QStringList::ConstIterator paramIt = params.begin();
+          TQStringList::ConstIterator paramIt = params.begin();
           for ( ++paramIt; paramIt != params.end(); ++paramIt ) {
-            QStringList pair = QStringList::split( '=', *paramIt );
+            TQStringList pair = TQStringList::split( '=', *paramIt );
             if ( pair.size() == 1 ) {
               // correct the fucking 2.1 'standard'
               if ( pair[0].lower() == "quoted-printable" ) {
@@ -119,8 +119,8 @@ VCard::List VCardParser::parseVCards( const QString& text )
             }
             // This is pretty much a faster pair[1].contains( ',' )...
             if ( pair[1].find( ',' ) != -1 ) { // parameter in type=x,y,z format
-              const QStringList args = QStringList::split( ',', pair[ 1 ] );
-              QStringList::ConstIterator argIt;
+              const TQStringList args = TQStringList::split( ',', pair[ 1 ] );
+              TQStringList::ConstIterator argIt;
               for ( argIt = args.begin(); argIt != args.end(); ++argIt )
                 vCardLine.addParameter( pair[0].lower(), *argIt );
             } else
@@ -130,13 +130,13 @@ VCard::List VCardParser::parseVCards( const QString& text )
 
         removeEscapes( value );
 
-        QByteArray output;
+        TQByteArray output;
         bool wasBase64Encoded = false;
 
         params = vCardLine.parameterList();
         if ( params.findIndex( "encoding" ) != -1 ) { // have to decode the data
-          QByteArray input;
-          input = QCString(value.latin1());
+          TQByteArray input;
+          input = TQCString(value.latin1());
           if ( vCardLine.parameter( "encoding" ).lower() == "b" ||
                vCardLine.parameter( "encoding" ).lower() == "base64" ) {
             KCodecs::base64Decode( input, output );
@@ -148,25 +148,25 @@ VCard::List VCardParser::parseVCards( const QString& text )
               value = value.remove( value.length() - 1, 1 ) + (*it);
               ++it;
             }
-            input = QCString(value.latin1());
+            input = TQCString(value.latin1());
             KCodecs::quotedPrintableDecode( input, output );
           }
         } else {
-          output = QCString(value.latin1());
+          output = TQCString(value.latin1());
         }
 
         if ( params.findIndex( "charset" ) != -1 ) { // have to convert the data
-          QTextCodec *codec =
-            QTextCodec::codecForName( vCardLine.parameter( "charset" ).latin1() );
+          TQTextCodec *codec =
+            TQTextCodec::codecForName( vCardLine.parameter( "charset" ).latin1() );
           if ( codec ) {
             vCardLine.setValue( codec->toUnicode( output ) );
           } else {
-            vCardLine.setValue( QString::fromUtf8( output ) );
+            vCardLine.setValue( TQString::fromUtf8( output ) );
           }
         } else if ( wasBase64Encoded ) {
             vCardLine.setValue( output );
         } else {  // if charset not given, assume it's in UTF-8 (as used in previous KDE versions)
-            vCardLine.setValue( QString::fromUtf8( output ) );
+            vCardLine.setValue( TQString::fromUtf8( output ) );
         }
 
         currentVCard.addLine( vCardLine );
@@ -195,17 +195,17 @@ VCard::List VCardParser::parseVCards( const QString& text )
   return vCardList;
 }
 
-QString VCardParser::createVCards( const VCard::List& list )
+TQString VCardParser::createVCards( const VCard::List& list )
 {
-  QString text;
-  QString textLine;
-  QString encodingType;
-  QStringList idents;
-  QStringList params;
-  QStringList values;
-  QStringList::ConstIterator identIt;
-  QStringList::Iterator paramIt;
-  QStringList::ConstIterator valueIt;
+  TQString text;
+  TQString textLine;
+  TQString encodingType;
+  TQStringList idents;
+  TQStringList params;
+  TQStringList values;
+  TQStringList::ConstIterator identIt;
+  TQStringList::Iterator paramIt;
+  TQStringList::ConstIterator valueIt;
 
   VCardLine::List lines;
   VCardLine::List::ConstIterator lineIt;
@@ -227,7 +227,7 @@ QString VCardParser::createVCards( const VCard::List& list )
       // iterate over the lines
       for ( lineIt = lines.constBegin(); lineIt != lines.constEnd(); ++lineIt ) {
         if ( !(*lineIt).value().asString().isEmpty() ) {
-          if ((*lineIt).identifier() != QString("URI")) {
+          if ((*lineIt).identifier() != TQString("URI")) {
             if ( (*lineIt).hasGroup() )
               textLine = (*lineIt).group() + "." + (*lineIt).identifier();
             else
@@ -252,7 +252,7 @@ QString VCardParser::createVCards( const VCard::List& list )
             }
 
             if ( hasEncoding ) { // have to encode the data
-              QByteArray input, output;
+              TQByteArray input, output;
               if ( encodingType == "b" ) {
                 input = (*lineIt).value().toByteArray();
                 KCodecs::base64Encode( input, output );
@@ -262,11 +262,11 @@ QString VCardParser::createVCards( const VCard::List& list )
                 KCodecs::quotedPrintableEncode( input, output, false );
               }
 
-              QString value( output );
+              TQString value( output );
               addEscapes( value );
               textLine.append( ":" + value );
             } else {
-              QString value( (*lineIt).value().asString() );
+              TQString value( (*lineIt).value().asString() );
               addEscapes( value );
               textLine.append( ":" + value );
             }
@@ -280,7 +280,7 @@ QString VCardParser::createVCards( const VCard::List& list )
           else {
             // URIs can be full of weird symbols, etc. so bypass all checks
             textLine = (*lineIt).identifier();
-            QString value( (*lineIt).value().asString() );
+            TQString value( (*lineIt).value().asString() );
             addEscapes( value );
             textLine.append( ":" + value );
             text.append( textLine + "\r\n" );

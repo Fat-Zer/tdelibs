@@ -22,13 +22,13 @@
 #include "qdirlineedit.h"
 #include "qdirmultilineedit.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <klocale.h>
 
-CupsdDirPage::CupsdDirPage(QWidget *parent, const char *name)
+CupsdDirPage::CupsdDirPage(TQWidget *parent, const char *name)
 	: CupsdPage(parent, name)
 {
 	setPageLabel(i18n("Folders"));
@@ -43,15 +43,15 @@ CupsdDirPage::CupsdDirPage(QWidget *parent, const char *name)
 	serverfiles_ = new QDirLineEdit(false, this);
 	tmpfiles_ = new QDirLineEdit(false, this);
 
-	QLabel *l1 = new QLabel(i18n("Data folder:"), this);
-	QLabel *l2 = new QLabel(i18n("Document folder:"), this);
-	QLabel *l3 = new QLabel(i18n("Font path:"), this);
-	QLabel *l4 = new QLabel(i18n("Request folder:"), this);
-	QLabel *l5 = new QLabel(i18n("Server binaries:"), this);
-	QLabel *l6 = new QLabel(i18n("Server files:"), this);
-	QLabel *l7 = new QLabel(i18n("Temporary files:"), this);
+	TQLabel *l1 = new TQLabel(i18n("Data folder:"), this);
+	TQLabel *l2 = new TQLabel(i18n("Document folder:"), this);
+	TQLabel *l3 = new TQLabel(i18n("Font path:"), this);
+	TQLabel *l4 = new TQLabel(i18n("Request folder:"), this);
+	TQLabel *l5 = new TQLabel(i18n("Server binaries:"), this);
+	TQLabel *l6 = new TQLabel(i18n("Server files:"), this);
+	TQLabel *l7 = new TQLabel(i18n("Temporary files:"), this);
 
-	QGridLayout	*m1 = new QGridLayout(this, 8, 2, 10, 7);
+	QGridLayout	*m1 = new TQGridLayout(this, 8, 2, 10, 7);
 	m1->setRowStretch(7, 1);
 	m1->setColStretch(1, 1);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);
@@ -70,7 +70,7 @@ CupsdDirPage::CupsdDirPage(QWidget *parent, const char *name)
 	m1->addWidget(tmpfiles_, 6, 1);
 }
 
-bool CupsdDirPage::loadConfig(CupsdConf *conf, QString&)
+bool CupsdDirPage::loadConfig(CupsdConf *conf, TQString&)
 {
 	conf_ = conf;
 	datadir_->setURL(conf_->datadir_);
@@ -84,7 +84,7 @@ bool CupsdDirPage::loadConfig(CupsdConf *conf, QString&)
 	return true;
 }
 
-bool CupsdDirPage::saveConfig(CupsdConf *conf, QString&)
+bool CupsdDirPage::saveConfig(CupsdConf *conf, TQString&)
 {
 	conf->datadir_ = datadir_->url();
 	conf->documentdir_ = documentdir_->url();
@@ -99,11 +99,11 @@ bool CupsdDirPage::saveConfig(CupsdConf *conf, QString&)
 
 void CupsdDirPage::setInfos(CupsdConf *conf)
 {
-	QWhatsThis::add(datadir_, conf->comments_.toolTip("datadir"));
-	QWhatsThis::add(documentdir_, conf->comments_.toolTip("documentroot"));
-	QWhatsThis::add(fontpath_, conf->comments_.toolTip("fontpath"));
-	QWhatsThis::add(requestdir_, conf->comments_.toolTip("requestroot"));
-	QWhatsThis::add(serverbin_, conf->comments_.toolTip("serverbin"));
-	QWhatsThis::add(serverfiles_, conf->comments_.toolTip("serverroot"));
-	QWhatsThis::add(tmpfiles_, conf->comments_.toolTip("tempdir"));
+	TQWhatsThis::add(datadir_, conf->comments_.toolTip("datadir"));
+	TQWhatsThis::add(documentdir_, conf->comments_.toolTip("documentroot"));
+	TQWhatsThis::add(fontpath_, conf->comments_.toolTip("fontpath"));
+	TQWhatsThis::add(requestdir_, conf->comments_.toolTip("requestroot"));
+	TQWhatsThis::add(serverbin_, conf->comments_.toolTip("serverbin"));
+	TQWhatsThis::add(serverfiles_, conf->comments_.toolTip("serverroot"));
+	TQWhatsThis::add(tmpfiles_, conf->comments_.toolTip("tempdir"));
 }

@@ -22,26 +22,26 @@
 #include "imagepreview.h"
 #include "driver.h"
 
-#include <qcombobox.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
-#include <qgroupbox.h>
-#include <qpushbutton.h>
-#include <qapplication.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqcombobox.h>
+#include <tqbuttongroup.h>
+#include <tqradiobutton.h>
+#include <tqgroupbox.h>
+#include <tqpushbutton.h>
+#include <tqapplication.h>
+#include <tqimage.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 #include <klocale.h>
 #include <knuminput.h>
 #include <kseparator.h>
 #include <kstandarddirs.h>
 
-KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
+KPImagePage::KPImagePage(DrMain *driver, TQWidget *parent, const char *name)
 : KPrintDialogPage(parent, name)
 {
 	//WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThisBrightnessImagePage = i18n( " <qt> "
+	TQString whatsThisBrightnessImagePage = i18n( " <qt> "
 			" <p><b>Brightness:</b> Slider to control the brightness value of all colors used.</p>"
 			" <p> The brightness value can range from 0 to 200. Values greater than 100 will "
 			" lighten the print. Values less than 100 will darken the print. </p> "
@@ -55,7 +55,7 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisHueImagePage = i18n( " <qt> "
+	TQString whatsThisHueImagePage = i18n( " <qt> "
 			" <p><b>Hue (Tint):</b> Slider to control the hue value for color rotation.</p>"
 			" <p> The hue value is a number from -360 to 360 and represents the color hue rotation. "
 			" The following table summarizes the change you will see for the base colors: "
@@ -80,7 +80,7 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisSaturationImagePage = i18n( " <qt> "
+	TQString whatsThisSaturationImagePage = i18n( " <qt> "
 			" <p><b>Saturation:</b> Slider to control the saturation value for all colors used.</p>"
 			" <p> The saturation value adjusts the saturation of the colors in an image, similar to "
 			" the color knob on your television. The color saturation value.can range from 0 to 200."
@@ -98,7 +98,7 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisGammaImagePage = i18n( " <qt> "
+	TQString whatsThisGammaImagePage = i18n( " <qt> "
 			" <p><b>Gamma:</b> Slider to control the gamma value for color correction.</p>"
 			" <p> The gamma value can range from 1 to 3000. "
 			" A gamma values greater than 1000 lightens the print. A gamma value less than 1000 "
@@ -115,7 +115,7 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisImagePage = i18n( " <qt> "
+	TQString whatsThisImagePage = i18n( " <qt> "
 			" <p><b>Image Printing Options</b></p> "
 			" <p>All options controlled on this page only apply to printing images. "
 			" Most image file formats are supported. To name a few: JPEG, TIFF, PNG, GIF, "
@@ -133,7 +133,7 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisColorationPreviewImagePage = i18n( " <qt> "
+	TQString whatsThisColorationPreviewImagePage = i18n( " <qt> "
 			" <p><b>Coloration Preview Thumbnail</b></p> "
 			" <p>The coloration preview thumbnail indicates change of image coloration by different settings. "
 			" Options to influence output are: "
@@ -149,7 +149,7 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisSizeImagePage = i18n( " <qt> "
+	TQString whatsThisSizeImagePage = i18n( " <qt> "
 			" <p><b>Image Size:</b> Dropdown menu to control the image size on the printed paper. Dropdown "
 			" works in conjunction with slider below. Dropdown options are:.</p>"
 			" <ul> "
@@ -189,7 +189,7 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisPreviewPositionImagePage = i18n( " <qt> "
+	TQString whatsThisPreviewPositionImagePage = i18n( " <qt> "
 			" <p><b>Position Preview Thumbnail</b></p> "
 			" <p>This position preview thumbnail indicates the position of the image on the paper sheet. "
 			" <p>Click on horizontal and vertical radio buttons to move image alignment on paper around. Options are: "
@@ -207,7 +207,7 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisResetButtonImagePage = i18n( " <qt> "
+	TQString whatsThisResetButtonImagePage = i18n( " <qt> "
 			" <p><b>Reset to Default Values</b> </p> "
 			" <p> Reset all coloration settings to default values. Default values are: "
 			" <ul> "
@@ -219,7 +219,7 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisPositionImagePage = i18n( " <qt> "
+	TQString whatsThisPositionImagePage = i18n( " <qt> "
 			" <p><b>Image Positioning:</b></p> "
 			" <p>Select a pair of radiobuttons to "
 			" move image to the position you want on the paper printout. Default "
@@ -236,42 +236,42 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 
 	setTitle(i18n("Image"));
 
-	QGroupBox	*colorbox = new QGroupBox(0, Qt::Vertical, i18n("Color Settings"), this);
-	  QWhatsThis::add(this, whatsThisImagePage);
-	QGroupBox	*sizebox = new QGroupBox(0, Qt::Vertical, i18n("Image Size"), this);
-	  QWhatsThis::add(sizebox, whatsThisSizeImagePage);
-	QGroupBox	*positionbox = new QGroupBox(0, Qt::Vertical, i18n("Image Position"), this);
-	  QWhatsThis::add(positionbox, whatsThisPositionImagePage);
+	QGroupBox	*colorbox = new TQGroupBox(0, Qt::Vertical, i18n("Color Settings"), this);
+	  TQWhatsThis::add(this, whatsThisImagePage);
+	QGroupBox	*sizebox = new TQGroupBox(0, Qt::Vertical, i18n("Image Size"), this);
+	  TQWhatsThis::add(sizebox, whatsThisSizeImagePage);
+	QGroupBox	*positionbox = new TQGroupBox(0, Qt::Vertical, i18n("Image Position"), this);
+	  TQWhatsThis::add(positionbox, whatsThisPositionImagePage);
 
 	m_brightness = new KIntNumInput(100, colorbox);
 	m_brightness->setLabel(i18n("&Brightness:"));
 	m_brightness->setRange(0, 200, 20, true);
-	  QWhatsThis::add(m_brightness, whatsThisBrightnessImagePage);
+	  TQWhatsThis::add(m_brightness, whatsThisBrightnessImagePage);
 
 	m_hue = new KIntNumInput(m_brightness, 0, colorbox);
 	m_hue->setLabel(i18n("&Hue (Color rotation):"));
 	m_hue->setRange(-360, 360, 36, true);
-	  QWhatsThis::add(m_hue, whatsThisHueImagePage);
+	  TQWhatsThis::add(m_hue, whatsThisHueImagePage);
 
 	m_saturation = new KIntNumInput(m_brightness, 100, colorbox);
 	m_saturation->setLabel(i18n("&Saturation:"));
 	m_saturation->setRange(0, 200, 20, true);
-	  QWhatsThis::add(m_saturation, whatsThisSaturationImagePage);
+	  TQWhatsThis::add(m_saturation, whatsThisSaturationImagePage);
 
 	m_gamma = new KIntNumInput(m_saturation, 1000, colorbox);
 	m_gamma->setLabel(i18n("&Gamma (Color correction):"));
 	m_gamma->setRange(1, 3000, 100, true);
-	  QWhatsThis::add(m_gamma, whatsThisGammaImagePage);
+	  TQWhatsThis::add(m_gamma, whatsThisGammaImagePage);
 
-	connect(m_brightness, SIGNAL(valueChanged(int)), SLOT(slotImageSettingsChanged()));
-	connect(m_hue, SIGNAL(valueChanged(int)), SLOT(slotImageSettingsChanged()));
-	connect(m_saturation, SIGNAL(valueChanged(int)), SLOT(slotImageSettingsChanged()));
-	//connect(m_gamma, SIGNAL(valueChanged(int)), SLOT(slotImageSettingsChanged()));
+	connect(m_brightness, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotImageSettingsChanged()));
+	connect(m_hue, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotImageSettingsChanged()));
+	connect(m_saturation, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotImageSettingsChanged()));
+	//connect(m_gamma, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotImageSettingsChanged()));
 
 	m_preview = new ImagePreview(colorbox);
 	bool	useColor = (driver ? driver->get("colordevice") == "1" : true);
 	m_preview->setBlackAndWhite(!useColor);
-	  QWhatsThis::add(m_preview, whatsThisColorationPreviewImagePage);
+	  TQWhatsThis::add(m_preview, whatsThisColorationPreviewImagePage);
 
 	m_hue->setEnabled(useColor);
 	m_saturation->setEnabled(useColor);
@@ -280,12 +280,12 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 
 	KSeparator	*sep = new KSeparator(Qt::Horizontal, colorbox);
 
-	QPushButton	*defbtn = new QPushButton(i18n("&Default Settings"), colorbox);
-	  QWhatsThis::add(defbtn, whatsThisResetButtonImagePage);
-	connect(defbtn, SIGNAL(clicked()), SLOT(slotDefaultClicked()));
+	QPushButton	*defbtn = new TQPushButton(i18n("&Default Settings"), colorbox);
+	  TQWhatsThis::add(defbtn, whatsThisResetButtonImagePage);
+	connect(defbtn, TQT_SIGNAL(clicked()), TQT_SLOT(slotDefaultClicked()));
 	slotDefaultClicked();
 
-	m_sizetype = new QComboBox(sizebox);
+	m_sizetype = new TQComboBox(sizebox);
 	m_sizetype->insertItem(i18n("Natural Image Size"));
 	m_sizetype->insertItem(i18n("Resolution (ppi)"));
 	// xgettext:no-c-format
@@ -297,22 +297,22 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 	m_size->setRange(1, 1200, 20, true);
 	m_size->setValue(72);
 
-	connect(m_sizetype, SIGNAL(activated(int)), SLOT(slotSizeTypeChanged(int)));
+	connect(m_sizetype, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSizeTypeChanged(int)));
 	m_sizetype->setCurrentItem(0);
 	slotSizeTypeChanged(0);
 
-	QLabel	*lab = new QLabel(i18n("&Image size type:"), sizebox);
+	QLabel	*lab = new TQLabel(i18n("&Image size type:"), sizebox);
 	lab->setBuddy(m_sizetype);
 
 	m_position = new ImagePosition(positionbox);
-	  QWhatsThis::add(m_position, whatsThisPreviewPositionImagePage);
+	  TQWhatsThis::add(m_position, whatsThisPreviewPositionImagePage);
 
-	QRadioButton	*bottom = new QRadioButton(positionbox);
-	QRadioButton	*top = new QRadioButton(positionbox);
-	QRadioButton	*vcenter = new QRadioButton(positionbox);
-	QRadioButton	*left = new QRadioButton(positionbox);
-	QRadioButton	*right = new QRadioButton(positionbox);
-	QRadioButton	*hcenter = new QRadioButton(positionbox);
+	QRadioButton	*bottom = new TQRadioButton(positionbox);
+	QRadioButton	*top = new TQRadioButton(positionbox);
+	QRadioButton	*vcenter = new TQRadioButton(positionbox);
+	QRadioButton	*left = new TQRadioButton(positionbox);
+	QRadioButton	*right = new TQRadioButton(positionbox);
+	QRadioButton	*hcenter = new TQRadioButton(positionbox);
 	QSize	sz = bottom->sizeHint();
 	bottom->setFixedSize(sz);
 	vcenter->setFixedSize(sz);
@@ -321,16 +321,16 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 	hcenter->setFixedSize(sz);
 	right->setFixedSize(sz);
 
-	m_vertgrp = new QButtonGroup(positionbox);
+	m_vertgrp = new TQButtonGroup(positionbox);
 	m_vertgrp->hide();
 
-	m_horizgrp = new QButtonGroup(positionbox);
+	m_horizgrp = new TQButtonGroup(positionbox);
 	m_horizgrp->hide();
 
 	m_vertgrp->insert(top, 0);
 	m_vertgrp->insert(vcenter, 1);
 	m_vertgrp->insert(bottom, 2);
-	if ( QApplication::reverseLayout() )
+	if ( TQApplication::reverseLayout() )
 	{
 	    m_horizgrp->insert(left, 2);
 	    m_horizgrp->insert(hcenter, 1);
@@ -342,18 +342,18 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 	    m_horizgrp->insert(hcenter, 1);
 	    m_horizgrp->insert(right, 2);
 	}
-	connect(m_vertgrp, SIGNAL(clicked(int)), SLOT(slotPositionChanged()));
-	connect(m_horizgrp, SIGNAL(clicked(int)), SLOT(slotPositionChanged()));
+	connect(m_vertgrp, TQT_SIGNAL(clicked(int)), TQT_SLOT(slotPositionChanged()));
+	connect(m_horizgrp, TQT_SIGNAL(clicked(int)), TQT_SLOT(slotPositionChanged()));
 	m_vertgrp->setButton(1);
 	m_horizgrp->setButton(1);
 	slotPositionChanged();
 
-	QGridLayout	*l0 = new QGridLayout(this, 2, 2, 0, 10);
+	QGridLayout	*l0 = new TQGridLayout(this, 2, 2, 0, 10);
 	l0->addMultiCellWidget(colorbox, 0, 0, 0, 1);
 	l0->addWidget(sizebox, 1, 0);
 	l0->addWidget(positionbox, 1, 1);
 	l0->setColStretch(0, 1);
-	QGridLayout	*l1 = new QGridLayout(colorbox->layout(), 5, 2, 10);
+	QGridLayout	*l1 = new TQGridLayout(colorbox->layout(), 5, 2, 10);
 	l1->addWidget(m_brightness, 0, 0);
 	l1->addWidget(m_hue, 1, 0);
 	l1->addWidget(m_saturation, 2, 0);
@@ -361,16 +361,16 @@ KPImagePage::KPImagePage(DrMain *driver, QWidget *parent, const char *name)
 	l1->addWidget(m_gamma, 4, 0);
 	l1->addMultiCellWidget(m_preview, 0, 3, 1, 1);
 	l1->addWidget(defbtn, 4, 1);
-	QVBoxLayout	*l2 = new QVBoxLayout(sizebox->layout(), 3);
+	QVBoxLayout	*l2 = new TQVBoxLayout(sizebox->layout(), 3);
 	l2->addStretch(1);
 	l2->addWidget(lab);
 	l2->addWidget(m_sizetype);
 	l2->addSpacing(10);
 	l2->addWidget(m_size);
 	l2->addStretch(1);
-	QGridLayout	*l3 = new QGridLayout(positionbox->layout(), 2, 2, 10);
-	QHBoxLayout	*l4 = new QHBoxLayout(0, 0, 10);
-	QVBoxLayout	*l5 = new QVBoxLayout(0, 0, 10);
+	QGridLayout	*l3 = new TQGridLayout(positionbox->layout(), 2, 2, 10);
+	QHBoxLayout	*l4 = new TQHBoxLayout(0, 0, 10);
+	QVBoxLayout	*l5 = new TQVBoxLayout(0, 0, 10);
 	l3->addLayout(l4, 0, 1);
 	l3->addLayout(l5, 1, 0);
 	l3->addWidget(m_position, 1, 1);
@@ -386,7 +386,7 @@ KPImagePage::~KPImagePage()
 {
 }
 
-void KPImagePage::setOptions(const QMap<QString,QString>& opts)
+void KPImagePage::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	QString	value;
 	if (!(value=opts["brightness"]).isEmpty())
@@ -420,19 +420,19 @@ void KPImagePage::setOptions(const QMap<QString,QString>& opts)
 	}
 }
 
-void KPImagePage::getOptions(QMap<QString,QString>& opts, bool incldef)
+void KPImagePage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	if (incldef || m_brightness->value() != 100)
-		opts["brightness"] = QString::number(m_brightness->value());
+		opts["brightness"] = TQString::number(m_brightness->value());
 	if (m_hue->isEnabled())
 	{
 		if (incldef || m_hue->value() != 0)
-			opts["hue"] = QString::number(m_hue->value());
+			opts["hue"] = TQString::number(m_hue->value());
 		if (incldef || m_saturation->value() != 100)
-			opts["saturation"] = QString::number(m_saturation->value());
+			opts["saturation"] = TQString::number(m_saturation->value());
 	}
 	if (incldef || m_gamma->value() != 1000)
-		opts["gamma"] = QString::number(m_gamma->value());
+		opts["gamma"] = TQString::number(m_gamma->value());
 
 	QString	name;
 	if (incldef)
@@ -449,7 +449,7 @@ void KPImagePage::getOptions(QMap<QString,QString>& opts, bool incldef)
 		case 3: name = "natural-scaling"; break;
 	}
 	if (!name.isEmpty())
-		opts[name] = QString::number(m_size->value());
+		opts[name] = TQString::number(m_size->value());
 
 	if (incldef || m_position->position() != ImagePosition::Center)
 		opts["position"] = m_position->positionString();

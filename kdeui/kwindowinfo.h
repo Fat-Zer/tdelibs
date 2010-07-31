@@ -9,9 +9,9 @@
 #ifndef KWINDOWINFO_H
 #define KWINDOWINFO_H
 
-#include <qobject.h>
-#include <qpixmap.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqpixmap.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -28,7 +28,7 @@
  * default timeout to ensure the message is only displayed for 1
  * second.
  * \code
- *    QPixmap px;
+ *    TQPixmap px;
  *    px.load( "lo16-app-logtracker.png" );
  *    KWindowInfo::showMessage( this, i18n("Message Body"), px, 1000 );
  * \endcode
@@ -46,7 +46,7 @@ public:
     /**
      * Creates a KWindowInfo with the specified parent.
      */
-    KWindowInfo( QWidget *parent, const char *name=0 );
+    KWindowInfo( TQWidget *parent, const char *name=0 );
 
     /**
      * Cleans up.
@@ -68,30 +68,30 @@ public:
      * Utility method to display a title bar message for the specified
      * window.
      */
-    static void showMessage( QWidget *window, const QString &text, int timeout = -1 );
+    static void showMessage( TQWidget *window, const TQString &text, int timeout = -1 );
 
     /**
      * Utility method to display a title bar message and icon for the
      * specified window.
      */
-    static void showMessage( QWidget *window, const QString &text,
-			     const QPixmap &pix, int timeout = -1 );
+    static void showMessage( TQWidget *window, const TQString &text,
+			     const TQPixmap &pix, int timeout = -1 );
 
 public slots:
     /**
      * Shows the specified text in the window title.
      */
-    void message( const QString &text );
+    void message( const TQString &text );
 
     /**
      * Shows the specified text in the window title, and sets the window icon.
      */
-    void message( const QString &text, const QPixmap &pix );
+    void message( const TQString &text, const TQPixmap &pix );
 
     /**
      * Shows the specified text in the window title for the specified time.
      */
-    void message( const QString &text, int timeout );
+    void message( const TQString &text, int timeout );
 
     /**
      * Shows the specified icon and text in the window title and WM
@@ -100,23 +100,23 @@ public slots:
      * values are -1 which means the default timeout should be used,
      * and 0 which means the message is permanent.
      */
-    void message( const QString &text, const QPixmap &pix, int timeout );
+    void message( const TQString &text, const TQPixmap &pix, int timeout );
 
     /**
      * Shows the specified text in the window title with no timeout.
      */
-    void permanent( const QString &text );
+    void permanent( const TQString &text );
 
     /**
      * Shows the specified text and icon in the window title with no timeout.
      */
-    void permanent( const QString &text, const QPixmap &pix );
+    void permanent( const TQString &text, const TQPixmap &pix );
 
 protected:
     /**
      * Displays the message in the titlebar/icon.
      */
-    virtual void display( const QString &text, const QPixmap &pix );
+    virtual void display( const TQString &text, const TQPixmap &pix );
 
 protected slots:
     /**
@@ -131,10 +131,10 @@ protected slots:
     virtual void restore();
 
 private:
-    QWidget *win;
-    QPixmap oldIcon;
-    QPixmap oldMiniIcon;
-    QString oldText;
+    TQWidget *win;
+    TQPixmap oldIcon;
+    TQPixmap oldMiniIcon;
+    TQString oldText;
     bool autoDel;
 
     /* @internal */

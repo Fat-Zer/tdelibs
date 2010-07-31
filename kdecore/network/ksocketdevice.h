@@ -25,7 +25,7 @@
 #ifndef KSOCKETDEVICE_H
 #define KSOCKETDEVICE_H
 
-#include <qsocketnotifier.h>
+#include <tqsocketnotifier.h>
 #include "ksocketbase.h"
 
 namespace KNetwork {
@@ -140,19 +140,19 @@ public:
   virtual bool setSocketOptions(int opts);
 
   /**
-   * Reimplementation from QIODevice. You should not call this function in sockets.
+   * Reimplementation from TQIODevice. You should not call this function in sockets.
    */
   virtual bool open(int mode);
 
   /**
-   * Closes the socket. Reimplemented from QIODevice.
+   * Closes the socket. Reimplemented from TQIODevice.
    *
    * Use this function to close the socket this object is holding open.
    */
   virtual void close();
 
   /**
-   * This call is not supported on sockets. Reimplemented from QIODevice.
+   * This call is not supported on sockets. Reimplemented from TQIODevice.
    */
   virtual void flush()
   { }
@@ -272,7 +272,7 @@ public:
    *
    * This function might return NULL.
    */
-  QSocketNotifier* readNotifier() const;
+  TQSocketNotifier* readNotifier() const;
 
   /**
    * Returns a socket notifier for output on this socket.
@@ -280,7 +280,7 @@ public:
    *
    * This function might return NULL.
    */
-  QSocketNotifier* writeNotifier() const;
+  TQSocketNotifier* writeNotifier() const;
 
   /**
    * Returns a socket notifier for exceptional events on this socket.
@@ -288,7 +288,7 @@ public:
    *
    * This function might return NULL.
    */
-  QSocketNotifier* exceptionNotifier() const;
+  TQSocketNotifier* exceptionNotifier() const;
 
   /**
    * Executes a poll in the socket, via select(2) or poll(2).
@@ -344,12 +344,12 @@ protected:
    * not need to call this function again.
    *
    * Reimplement this function in your derived class if your socket type
-   * requires a different kind of QSocketNotifier. The return value should
+   * requires a different kind of TQSocketNotifier. The return value should
    * be deleteable with delete. (@ref close deletes them).
    *
    * @param type	the socket notifier type
    */
-  virtual QSocketNotifier* createNotifier(QSocketNotifier::Type type) const;
+  virtual TQSocketNotifier* createNotifier(TQSocketNotifier::Type type) const;
 
 public:
   /**

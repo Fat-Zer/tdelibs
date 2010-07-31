@@ -1,4 +1,4 @@
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>

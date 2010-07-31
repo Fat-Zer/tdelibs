@@ -20,11 +20,11 @@
 #ifndef PPDLOADER_H
 #define PPDLOADER_H
 
-#include <qvaluestack.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qvariant.h>
-#include <qdict.h>
+#include <tqvaluestack.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqvariant.h>
+#include <tqdict.h>
 
 #include <kdelibs_export.h>
 
@@ -39,35 +39,35 @@ public:
 	PPDLoader();
 	~PPDLoader();
 
-	DrMain* readFromFile( const QString& filename );
+	DrMain* readFromFile( const TQString& filename );
 
-	bool openUi( const QString& name, const QString& desc, const QString& type );
-	bool endUi( const QString& name );
-	bool openGroup( const QString& name, const QString& desc );
-	bool endGroup( const QString& name );
-	bool putStatement( const QString& keyword, const QString& name, const QString& desc, const QStringList& values );
-	bool putStatement2( const QString& keyword, const QString& value );
-	bool putDefault( const QString& keyword, const QString& value );
-	bool putConstraint( const QString& opt1, const QString& opt2, const QString& ch1, const QString& ch2 );
-	bool putFooData( const QString& data );
-	bool putFooProcessedData( const QVariant& var );
-	bool putPaperDimension( const QString& name, const QString& s );
-	bool putImageableArea( const QString& name, const QString& s );
+	bool openUi( const TQString& name, const TQString& desc, const TQString& type );
+	bool endUi( const TQString& name );
+	bool openGroup( const TQString& name, const TQString& desc );
+	bool endGroup( const TQString& name );
+	bool putStatement( const TQString& keyword, const TQString& name, const TQString& desc, const TQStringList& values );
+	bool putStatement2( const TQString& keyword, const TQString& value );
+	bool putDefault( const TQString& keyword, const TQString& value );
+	bool putConstraint( const TQString& opt1, const TQString& opt2, const TQString& ch1, const TQString& ch2 );
+	bool putFooData( const TQString& data );
+	bool putFooProcessedData( const TQVariant& var );
+	bool putPaperDimension( const TQString& name, const TQString& s );
+	bool putImageableArea( const TQString& name, const TQString& s );
 
-	void setErrorMsg( const QString& msg );
-	QString errorMsg() const;
+	void setErrorMsg( const TQString& msg );
+	TQString errorMsg() const;
 
-	static DrMain* loadDriver( const QString& filename, QString* msg = NULL );
+	static DrMain* loadDriver( const TQString& filename, TQString* msg = NULL );
 
 private:
-	QValueStack<DrGroup*> m_groups;
+	TQValueStack<DrGroup*> m_groups;
 	DrBase*               m_option;
-	QDict<PS_private>     m_ps;
-	QStringList           m_fonts;
-	QString               m_errormsg;
+	TQDict<PS_private>     m_ps;
+	TQStringList           m_fonts;
+	TQString               m_errormsg;
 
 	friend int kdeprint_ppdparse(void*);
-	DrGroup* findOrCreateGroupForOption( const QString& );
+	DrGroup* findOrCreateGroupForOption( const TQString& );
 	void processPageSizes( DrMain* );
 };
 

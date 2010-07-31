@@ -19,7 +19,7 @@
 #ifndef _KEDITTOOLBAR_H
 #define _KEDITTOOLBAR_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kxmlguiclient.h>
 #include <kdialogbase.h>
 
@@ -68,7 +68,7 @@ namespace
  * {
  *   saveMainWindowSettings( KGlobal::config(), "MainWindow" );
  *   KEditToolbar dlg(actionCollection());
- *   connect(&dlg,SIGNAL(newToolbarConfig()),this,SLOT(slotNewToolbarConfig()));
+ *   connect(&dlg,TQT_SIGNAL(newToolbarConfig()),this,TQT_SLOT(slotNewToolbarConfig()));
  *   dlg.exec();
  * }
  *
@@ -93,7 +93,7 @@ namespace
  * \code
  * saveMainWindowSettings( KGlobal::config(), "MainWindow" );
  * KEditToolbar dlg(factory());
- * connect(&dlg,SIGNAL(newToolbarConfig()),this,SLOT(slotNewToolbarConfig()));
+ * connect(&dlg,TQT_SIGNAL(newToolbarConfig()),this,TQT_SLOT(slotNewToolbarConfig()));
  * dlg.exec();
  *
  * void MyClass::slotNewToolbarConfig() // This is called when OK, Apply or Defaults is clicked
@@ -142,8 +142,8 @@ public:
    * @param name An internal name.
    */
   KEditToolbar(KActionCollection *collection,
-               const QString& xmlfile = QString::null, bool global = true,
-			   QWidget* parent = 0, const char* name = 0);
+               const TQString& xmlfile = TQString::null, bool global = true,
+			   TQWidget* parent = 0, const char* name = 0);
 
   //KDE 4.0: merge the two constructors
   /* Constructor for apps that do not use components, which has an extra argument
@@ -157,9 +157,9 @@ public:
    * @param name An internal name.
    * @since 3.2
    */
-  KEditToolbar(const QString& defaultToolbar, KActionCollection *collection,
-               const QString& xmlfile = QString::null, bool global = true,
-               QWidget* parent = 0, const char* name = 0);
+  KEditToolbar(const TQString& defaultToolbar, KActionCollection *collection,
+               const TQString& xmlfile = TQString::null, bool global = true,
+               TQWidget* parent = 0, const char* name = 0);
   /**
    * Constructor for KParts based apps.
    *
@@ -183,7 +183,7 @@ public:
    * This works, but only _if_ setting conserveMemory to false when calling
    * KMainWindow::createGUI()! If not, use the other KEditToolbar constructor.
    */
-  KEditToolbar(KXMLGUIFactory* factory, QWidget* parent = 0, const char* name = 0);
+  KEditToolbar(KXMLGUIFactory* factory, TQWidget* parent = 0, const char* name = 0);
 
   //KDE 4.0: merge the two constructors
   /** Constructor for KParts based apps, which has an extra argument
@@ -195,8 +195,8 @@ public:
    * @param name An internal name.
    * @since 3.2
    */
-  KEditToolbar(const QString& defaultToolbar, KXMLGUIFactory* factory,
-               QWidget* parent = 0, const char* name = 0);
+  KEditToolbar(const TQString& defaultToolbar, KXMLGUIFactory* factory,
+               TQWidget* parent = 0, const char* name = 0);
 
   /// destructor
   ~KEditToolbar();
@@ -267,7 +267,7 @@ private:
  * @author Kurt Granroth <granroth@kde.org>
  * @version $Id$
  */
-class KDEUI_EXPORT KEditToolbarWidget : public QWidget, virtual public KXMLGUIClient
+class KDEUI_EXPORT KEditToolbarWidget : public TQWidget, virtual public KXMLGUIClient
 {
   Q_OBJECT
 public:
@@ -301,8 +301,8 @@ public:
    * @param parent This widget's parent
    */
   KEditToolbarWidget(KActionCollection *collection,
-                     const QString& xmlfile = QString::null,
-                     bool global = true, QWidget *parent = 0L);
+                     const TQString& xmlfile = TQString::null,
+                     bool global = true, TQWidget *parent = 0L);
 
    //KDE 4.0: merge the two constructors
    /* Same as above, with an extra agrument specifying the toolbar to be shown.
@@ -315,11 +315,11 @@ public:
    * @param parent This widget's parent
    * @since 3.2
    */
-  KEditToolbarWidget(const QString& defaultToolbar,
+  KEditToolbarWidget(const TQString& defaultToolbar,
                      KActionCollection *collection,
-                     const QString& file = QString::null,
+                     const TQString& file = TQString::null,
                      bool global = true,
-                     QWidget *parent = 0L);
+                     TQWidget *parent = 0L);
 
   /**
    * Constructor for KParts based apps.
@@ -341,7 +341,7 @@ public:
    * @param factory Your application's factory object
    * @param parent This widget's parent
    */
-  KEditToolbarWidget(KXMLGUIFactory* factory, QWidget *parent = 0L);
+  KEditToolbarWidget(KXMLGUIFactory* factory, TQWidget *parent = 0L);
 
    //KDE 4.0: merge the two constructors
    /* Same as above, with an extra agrument specifying the toolbar to be shown.
@@ -352,9 +352,9 @@ public:
    * @param parent This widget's parent
    * @since 3.2
    */
-  KEditToolbarWidget(const QString& defaultToolbar,
+  KEditToolbarWidget(const TQString& defaultToolbar,
                      KXMLGUIFactory* factory,
-                     QWidget *parent = 0L);
+                     TQWidget *parent = 0L);
 
   /**
    * Destructor.  Note that any changes done in this widget will
@@ -391,12 +391,12 @@ signals:
   void enableOk(bool);
 
 protected slots:
-  void slotToolbarSelected(const QString& text);
+  void slotToolbarSelected(const TQString& text);
 
-  void slotInactiveSelected(QListViewItem *item);
-  void slotActiveSelected(QListViewItem *item);
+  void slotInactiveSelected(TQListViewItem *item);
+  void slotActiveSelected(TQListViewItem *item);
 
-  void slotDropped(KListView *list, QDropEvent *e, QListViewItem *after);
+  void slotDropped(KListView *list, TQDropEvent *e, TQListViewItem *after);
 
   void slotInsertButton();
   void slotRemoveButton();
@@ -411,24 +411,24 @@ private slots:
 protected: // KDE4: make private
   void setupLayout();
 
-  void insertActive(ToolbarItem *item, QListViewItem *before, bool prepend = false);
+  void insertActive(ToolbarItem *item, TQListViewItem *before, bool prepend = false);
   void removeActive(ToolbarItem *item);
-  void moveActive(ToolbarItem *item, QListViewItem *before);
-  void initNonKPart(KActionCollection *collection, const QString& file, bool global);
+  void moveActive(ToolbarItem *item, TQListViewItem *before);
+  void initNonKPart(KActionCollection *collection, const TQString& file, bool global);
   void initKPart(KXMLGUIFactory* factory);
-  void loadToolbarCombo(const QString& defaultToolbar = QString::null);
-  void loadActionList(QDomElement& elem);
-  void updateLocal(QDomElement& elem);
+  void loadToolbarCombo(const TQString& defaultToolbar = TQString::null);
+  void loadActionList(TQDomElement& elem);
+  void updateLocal(TQDomElement& elem);
 
 private:
   ToolbarListView *m_inactiveList;
   ToolbarListView *m_activeList;
-  QComboBox *m_toolbarCombo;
+  TQComboBox *m_toolbarCombo;
 
-  QToolButton *m_upAction;
-  QToolButton *m_removeAction;
-  QToolButton *m_insertAction;
-  QToolButton *m_downAction;
+  TQToolButton *m_upAction;
+  TQToolButton *m_removeAction;
+  TQToolButton *m_insertAction;
+  TQToolButton *m_downAction;
 
 protected:
   virtual void virtual_hook( int id, void* data );

@@ -21,7 +21,7 @@
 
 */
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <kaboutdata.h>
 #include <kconfigskeleton.h>
@@ -46,11 +46,11 @@ public:
 
     KInstance *_instance;
     KAboutData *_about;
-    QString _rootOnlyMsg;
+    TQString _rootOnlyMsg;
     bool _useRootOnlyMsg;
     bool _hasOwnInstance;
-    QPtrList<KConfigDialogManager> managers;
-    QString _quickHelp;
+    TQPtrList<KConfigDialogManager> managers;
+    TQString _quickHelp;
 
     // this member is used to record the state on non-automatically
     // managed widgets, allowing for mixed KConfigXT-drive and manual
@@ -59,8 +59,8 @@ public:
     bool _unmanagedWidgetChangeState;
 };
 
-KCModule::KCModule(QWidget *parent, const char *name, const QStringList &)
-    : QWidget(parent, name)
+KCModule::KCModule(TQWidget *parent, const char *name, const TQStringList &)
+    : TQWidget(parent, name)
 {
     init();
     if (name && strlen(name)) {
@@ -74,8 +74,8 @@ KCModule::KCModule(QWidget *parent, const char *name, const QStringList &)
 
 }
 
-KCModule::KCModule(KInstance *instance, QWidget *parent, const QStringList & )
-    : QWidget(parent, instance ? instance->instanceName().data() : 0)
+KCModule::KCModule(KInstance *instance, TQWidget *parent, const TQStringList & )
+    : TQWidget(parent, instance ? instance->instanceName().data() : 0)
 {
     init();
     d->_instance = instance;
@@ -95,10 +95,10 @@ void KCModule::init()
    _btn = Help|Default|Apply;
 }
 
-KConfigDialogManager* KCModule::addConfig( KConfigSkeleton *config, QWidget* widget )
+KConfigDialogManager* KCModule::addConfig( KConfigSkeleton *config, TQWidget* widget )
 {
     KConfigDialogManager* manager = new KConfigDialogManager( widget, config, name() );
-    connect( manager, SIGNAL( widgetModified() ), SLOT( widgetChanged() ));
+    connect( manager, TQT_SIGNAL( widgetModified() ), TQT_SLOT( widgetChanged() ));
     d->managers.append( manager );
     return manager;
 }
@@ -167,12 +167,12 @@ void KCModule::setAboutData( KAboutData* about )
     d->_about = about;
 }
 
-void KCModule::setRootOnlyMsg(const QString& msg)
+void KCModule::setRootOnlyMsg(const TQString& msg)
 {
     d->_rootOnlyMsg = msg;
 }
 
-QString KCModule::rootOnlyMsg() const
+TQString KCModule::rootOnlyMsg() const
 {
     return d->_rootOnlyMsg;
 }
@@ -197,19 +197,19 @@ KInstance *KCModule::instance() const
     return d->_instance;
 }
 
-void KCModule::setQuickHelp( const QString& help )
+void KCModule::setQuickHelp( const TQString& help )
 {
     d->_quickHelp = help;
     emit( quickHelpChanged() );
 }
 
-QString KCModule::quickHelp() const
+TQString KCModule::quickHelp() const
 {
     return d->_quickHelp;
 }
 
 
-const QPtrList<KConfigDialogManager>& KCModule::configs() const
+const TQPtrList<KConfigDialogManager>& KCModule::configs() const
 {
     return d->managers;
 }

@@ -21,24 +21,24 @@
 #include "cupsdconf.h"
 #include "sizewidget.h"
 
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qcombobox.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
+#include <tqcombobox.h>
 
 #include <klocale.h>
 #include <knuminput.h>
 
-CupsdFilterPage::CupsdFilterPage(QWidget *parent, const char *name)
+CupsdFilterPage::CupsdFilterPage(TQWidget *parent, const char *name)
 	: CupsdPage(parent, name)
 {
 	setPageLabel(i18n("Filter"));
 	setHeader(i18n("Filter Settings"));
 	setPixmap("filter");
 
-	user_ = new QLineEdit(this);
-	group_ = new QLineEdit(this);
+	user_ = new TQLineEdit(this);
+	group_ = new TQLineEdit(this);
 	ripcache_ = new SizeWidget(this);
 	filterlimit_ = new KIntNumInput(this);
 
@@ -46,12 +46,12 @@ CupsdFilterPage::CupsdFilterPage(QWidget *parent, const char *name)
 	filterlimit_->setSpecialValueText(i18n("Unlimited"));
 	filterlimit_->setSteps(1, 10);
 
-	QLabel *l1 = new QLabel(i18n("User:"), this);
-	QLabel *l2 = new QLabel(i18n("Group:"), this);
-	QLabel *l3 = new QLabel(i18n("RIP cache:"), this);
-	QLabel *l4 = new QLabel(i18n("Filter limit:"), this);
+	TQLabel *l1 = new TQLabel(i18n("User:"), this);
+	TQLabel *l2 = new TQLabel(i18n("Group:"), this);
+	TQLabel *l3 = new TQLabel(i18n("RIP cache:"), this);
+	TQLabel *l4 = new TQLabel(i18n("Filter limit:"), this);
 
-	QGridLayout	*m1 = new QGridLayout(this, 5, 2, 10, 7);
+	QGridLayout	*m1 = new TQGridLayout(this, 5, 2, 10, 7);
 	m1->setRowStretch(4, 1);
 	m1->setColStretch(1, 1);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);
@@ -64,7 +64,7 @@ CupsdFilterPage::CupsdFilterPage(QWidget *parent, const char *name)
 	m1->addWidget(filterlimit_, 3, 1);
 }
 
-bool CupsdFilterPage::loadConfig(CupsdConf *conf, QString&)
+bool CupsdFilterPage::loadConfig(CupsdConf *conf, TQString&)
 {
 	conf_ = conf;
 	user_->setText(conf_->user_);
@@ -75,7 +75,7 @@ bool CupsdFilterPage::loadConfig(CupsdConf *conf, QString&)
 	return true;
 }
 
-bool CupsdFilterPage::saveConfig(CupsdConf *conf, QString&)
+bool CupsdFilterPage::saveConfig(CupsdConf *conf, TQString&)
 {
 	conf->user_ = user_->text();
 	conf->group_ = group_->text();
@@ -87,8 +87,8 @@ bool CupsdFilterPage::saveConfig(CupsdConf *conf, QString&)
 
 void CupsdFilterPage::setInfos(CupsdConf *conf)
 {
-	QWhatsThis::add(user_, conf->comments_.toolTip("user"));
-	QWhatsThis::add(group_, conf->comments_.toolTip("group"));
-	QWhatsThis::add(ripcache_, conf->comments_.toolTip("ripcache"));
-	QWhatsThis::add(filterlimit_, conf->comments_.toolTip("filterlimit"));
+	TQWhatsThis::add(user_, conf->comments_.toolTip("user"));
+	TQWhatsThis::add(group_, conf->comments_.toolTip("group"));
+	TQWhatsThis::add(ripcache_, conf->comments_.toolTip("ripcache"));
+	TQWhatsThis::add(filterlimit_, conf->comments_.toolTip("filterlimit"));
 }

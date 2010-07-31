@@ -21,10 +21,10 @@
 #ifndef __kxmlguifactory_h__
 #define __kxmlguifactory_h__
 
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qdom.h>
-#include <qvaluelist.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqdom.h>
+#include <tqvaluelist.h>
 
 #include <kdelibs_export.h>
 
@@ -51,7 +51,7 @@ class BuildHelper;
  * actions. KXMLGUIFactory takes care of building (with the help of a KXMLGUIBuilder)
  * and merging the GUI from an unlimited number of clients.
  *
- * Each client provides XML through a QDomDocument and actions through a
+ * Each client provides XML through a TQDomDocument and actions through a
  * KActionCollection . The XML document contains the rules for how to merge the
  * GUI.
  *
@@ -71,7 +71,7 @@ class KDEUI_EXPORT KXMLGUIFactory : public QObject
    * Note that the ownership of the given KXMLGUIBuilder object won't be transferred to this
    * KXMLGUIFactory, so you have to take care of deleting it properly.
    */
-  KXMLGUIFactory( KXMLGUIBuilder *builder, QObject *parent = 0, const char *name = 0 );
+  KXMLGUIFactory( KXMLGUIBuilder *builder, TQObject *parent = 0, const char *name = 0 );
 
   /**
    * Destructor
@@ -79,34 +79,34 @@ class KDEUI_EXPORT KXMLGUIFactory : public QObject
   ~KXMLGUIFactory();
 
   // XXX move to somewhere else? (Simon)
-  static QString readConfigFile( const QString &filename, bool never_null, const KInstance *instance = 0 );
-  static QString readConfigFile( const QString &filename, const KInstance *instance = 0 );
-  static bool saveConfigFile( const QDomDocument& doc, const QString& filename,
+  static TQString readConfigFile( const TQString &filename, bool never_null, const KInstance *instance = 0 );
+  static TQString readConfigFile( const TQString &filename, const KInstance *instance = 0 );
+  static bool saveConfigFile( const TQDomDocument& doc, const TQString& filename,
                               const KInstance *instance = 0 );
 
-  static QString documentToXML( const QDomDocument& doc );
-  static QString elementToXML( const QDomElement& elem );
+  static TQString documentToXML( const TQDomDocument& doc );
+  static TQString elementToXML( const TQDomElement& elem );
 
   /**
-   * Removes all QDomComment objects from the specified node and all its children.
+   * Removes all TQDomComment objects from the specified node and all its children.
    */
-  static void removeDOMComments( QDomNode &node );
+  static void removeDOMComments( TQDomNode &node );
 
   /**
    * @internal
    * Find or create the ActionProperties element, used when saving custom action properties
    */
-  static QDomElement actionPropertiesElement( QDomDocument& doc );
+  static TQDomElement actionPropertiesElement( TQDomDocument& doc );
 
   /**
    * @internal
    * Find or create the element for a given action, by name.
    * Used when saving custom action properties
    */
-  static QDomElement findActionByName( QDomElement& elem, const QString& sName, bool create );
+  static TQDomElement findActionByName( TQDomElement& elem, const TQString& sName, bool create );
 
   /**
-   * Creates the GUI described by the QDomDocument of the client,
+   * Creates the GUI described by the TQDomDocument of the client,
    * using the client's actions, and merges it with the previously
    * created GUI.
    * This also means that the order in which clients are added to the factory
@@ -124,13 +124,13 @@ class KDEUI_EXPORT KXMLGUIFactory : public QObject
    */
   void removeClient( KXMLGUIClient *client );
 
-  void plugActionList( KXMLGUIClient *client, const QString &name, const QPtrList<KAction> &actionList );
-  void unplugActionList( KXMLGUIClient *client, const QString &name );
+  void plugActionList( KXMLGUIClient *client, const TQString &name, const TQPtrList<KAction> &actionList );
+  void unplugActionList( KXMLGUIClient *client, const TQString &name );
 
   /**
    * Returns a list of all clients currently added to this factory
    */
-  QPtrList<KXMLGUIClient> clients() const;
+  TQPtrList<KXMLGUIClient> clients() const;
 
   /**
    * Use this method to get access to a container widget with the name specified with @p containerName
@@ -140,7 +140,7 @@ class KDEUI_EXPORT KXMLGUIFactory : public QObject
    * This function is particularly useful for getting hold of a popupmenu defined in an XMLUI file.
    * For instance:
    * \code
-   * QPopupMenu *popup = static_cast<QPopupMenu*>(factory()->container("my_popup",this));
+   * TQPopupMenu *popup = static_cast<TQPopupMenu*>(factory()->container("my_popup",this));
    * \endcode
    * where @p "my_popup" is the name of the menu in the XMLUI file, and
    * @p "this" is XMLGUIClient which owns the popupmenu (e.g. the mainwindow, or the part, or the plugin...)
@@ -152,9 +152,9 @@ class KDEUI_EXPORT KXMLGUIFactory : public QObject
    *
    * This method may return 0L if no container with the given name exists or is not owned by the client.
    */
-  QWidget *container( const QString &containerName, KXMLGUIClient *client, bool useTagName = false );
+  TQWidget *container( const TQString &containerName, KXMLGUIClient *client, bool useTagName = false );
 
-  QPtrList<QWidget> containers( const QString &tagName );
+  TQPtrList<TQWidget> containers( const TQString &tagName );
 
   /**
    * Use this method to free all memory allocated by the KXMLGUIFactory. This deletes the internal node
@@ -175,7 +175,7 @@ class KDEUI_EXPORT KXMLGUIFactory : public QObject
    * (also note that this will call KXMLGUIClient::setFactory( 0L ) for all clients of the
    * container)
    */
-  void resetContainer( const QString &containerName, bool useTagName = false );
+  void resetContainer( const TQString &containerName, bool useTagName = false );
 
  public slots:
   /**
@@ -184,7 +184,7 @@ class KDEUI_EXPORT KXMLGUIFactory : public QObject
    * This slot can be connected dirrectly to the action to configure shortcuts. This is very simple to
    * do that by adding a single line
    * \code
-   * KStdAction::keyBindings( guiFactory(), SLOT( configureShortcuts() ), actionCollection() );
+   * KStdAction::keyBindings( guiFactory(), TQT_SLOT( configureShortcuts() ), actionCollection() );
    * \endcode
    *
    * @param bAllowLetterShortcuts Set to false if unmodified alphanumeric
@@ -201,13 +201,13 @@ class KDEUI_EXPORT KXMLGUIFactory : public QObject
 
  private:
 
-  QWidget *findRecursive( KXMLGUI::ContainerNode *node, bool tag );
+  TQWidget *findRecursive( KXMLGUI::ContainerNode *node, bool tag );
 
-  QPtrList<QWidget> findRecursive( KXMLGUI::ContainerNode *node, const QString &tagName );
+  TQPtrList<TQWidget> findRecursive( KXMLGUI::ContainerNode *node, const TQString &tagName );
 
-  void applyActionProperties( const QDomElement &element );
-  void configureAction( KAction *action, const QDomNamedNodeMap &attributes );
-  void configureAction( KAction *action, const QDomAttr &attribute );
+  void applyActionProperties( const TQDomElement &element );
+  void configureAction( KAction *action, const TQDomNamedNodeMap &attributes );
+  void configureAction( KAction *action, const TQDomAttr &attribute );
 
 protected:
   virtual void virtual_hook( int id, void* data );

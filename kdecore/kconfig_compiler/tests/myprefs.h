@@ -3,5 +3,5 @@
 class MyPrefs : public KConfigSkeleton
 {
   public:
-    MyPrefs( const QString &a ) : KConfigSkeleton( a ) {}
+    MyPrefs( const TQString &a ) : KConfigSkeleton( a ) {}
 };

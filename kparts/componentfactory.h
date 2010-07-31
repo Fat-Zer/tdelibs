@@ -4,7 +4,7 @@
 #include <kparts/factory.h>
 #include <kparts/part.h>
 #include <ktrader.h>
-#include <qmetaobject.h>
+#include <tqmetaobject.h>
 
 namespace KParts
 {
@@ -50,19 +50,19 @@ namespace KParts
          * \endcode
          *
          * @param factory The factory to ask for the creation of the component
-         * @param parent The parent object (see QObject constructor)
-         * @param name The name of the object to create (see QObject constructor)
+         * @param parent The parent object (see TQObject constructor)
+         * @param name The name of the object to create (see TQObject constructor)
          * @param args A list of string arguments, passed to the factory and possibly
          *             to the component (see KLibFactory)
          * @return A pointer to the newly created object or a null pointer if the
          *         factory was unable to create an object of the given type.
          */
         template <class T>
-        static T *createInstanceFromFactory( KLibFactory *factory, QObject *parent = 0,
+        static T *createInstanceFromFactory( KLibFactory *factory, TQObject *parent = 0,
                                              const char *name = 0,
-                                             const QStringList &args = QStringList() )
+                                             const TQStringList &args = TQStringList() )
         {
-            QObject *object = factory->create( parent, name,
+            TQObject *object = factory->create( parent, name,
                                                T::staticMetaObject()->className(),
                                                args );
 
@@ -84,8 +84,8 @@ namespace KParts
          * @param factory The factory to ask for the creation of the component
          * @param parentWidget the parent widget for the part
          * @param widgetName the name of the part's widget
-         * @param parent The parent object (see QObject constructor)
-         * @param name The name of the object to create (see QObject constructor)
+         * @param parent The parent object (see TQObject constructor)
+         * @param name The name of the object to create (see TQObject constructor)
          * @param args A list of string arguments, passed to the factory and possibly
          *             to the component (see KLibFactory)
          * @return A pointer to the newly created object or a null pointer if the
@@ -93,11 +93,11 @@ namespace KParts
          */
         template <class T>
         static T *createPartInstanceFromFactory( KParts::Factory *factory,
-                                                 QWidget *parentWidget = 0,
+                                                 TQWidget *parentWidget = 0,
                                                  const char *widgetName = 0,
-                                                 QObject *parent = 0,
+                                                 TQObject *parent = 0,
                                                  const char *name = 0,
-                                                 const QStringList &args = QStringList() )
+                                                 const TQStringList &args = TQStringList() )
         {
             KParts::Part *object = factory->createPart( parentWidget, widgetName,
                                                         parent, name,
@@ -115,8 +115,8 @@ namespace KParts
          * factory to create an instance of the given template type.
          *
          * @param libraryName The library to open
-         * @param parent The parent object (see QObject constructor)
-         * @param name The name of the object to create (see QObject constructor)
+         * @param parent The parent object (see TQObject constructor)
+         * @param name The name of the object to create (see TQObject constructor)
          * @param args A list of string arguments, passed to the factory and possibly
          *             to the component (see KLibFactory)
          * @param error
@@ -124,9 +124,9 @@ namespace KParts
          *         factory was unable to create an object of the given type.
          */
         template <class T>
-        static T *createInstanceFromLibrary( const char *libraryName, QObject *parent = 0,
+        static T *createInstanceFromLibrary( const char *libraryName, TQObject *parent = 0,
                                              const char *name = 0,
-                                             const QStringList &args = QStringList(),
+                                             const TQStringList &args = TQStringList(),
                                              int *error = 0 )
         {
             KLibrary *library = KLibLoader::self()->library( libraryName );
@@ -156,11 +156,11 @@ namespace KParts
 
         template <class T>
         static T *createPartInstanceFromLibrary( const char *libraryName,
-                                                 QWidget *parentWidget = 0,
+                                                 TQWidget *parentWidget = 0,
                                                  const char *widgetName = 0,
-                                                 QObject *parent = 0,
+                                                 TQObject *parent = 0,
                                                  const char *name = 0,
-                                                 const QStringList &args = QStringList(),
+                                                 const TQStringList &args = TQStringList(),
                                                  int *error = 0 )
         {
             KLibrary *library = KLibLoader::self()->library( libraryName );
@@ -199,12 +199,12 @@ namespace KParts
 
         template <class T>
         static T *createInstanceFromService( const KService::Ptr &service,
-                                             QObject *parent = 0,
+                                             TQObject *parent = 0,
                                              const char *name = 0,
-                                             const QStringList &args = QStringList(),
+                                             const TQStringList &args = TQStringList(),
                                              int *error = 0 )
         {
-            QString library = service->library();
+            TQString library = service->library();
             if ( library.isEmpty() )
             {
                 if ( error )
@@ -218,14 +218,14 @@ namespace KParts
 
         template <class T>
         static T *createPartInstanceFromService( const KService::Ptr &service,
-                                                 QWidget *parentWidget = 0,
+                                                 TQWidget *parentWidget = 0,
                                                  const char *widgetName = 0,
-                                                 QObject *parent = 0,
+                                                 TQObject *parent = 0,
                                                  const char *name = 0,
-                                                 const QStringList &args = QStringList(),
+                                                 const TQStringList &args = TQStringList(),
                                                  int *error = 0 )
         {
-            QString library = service->library();
+            TQString library = service->library();
             if ( library.isEmpty() )
             {
                 if ( error )
@@ -239,9 +239,9 @@ namespace KParts
 
         template <class T, class ServiceIterator>
         static T *createInstanceFromServices( ServiceIterator begin, ServiceIterator end,
-                                              QObject *parent = 0,
+                                              TQObject *parent = 0,
                                               const char *name = 0,
-                                              const QStringList &args = QStringList(),
+                                              const TQStringList &args = TQStringList(),
                                               int *error = 0 )
         {
             for (; begin != end; ++begin )
@@ -267,11 +267,11 @@ namespace KParts
         template <class T, class ServiceIterator>
         static T *createPartInstanceFromServices( ServiceIterator begin,
                                                   ServiceIterator end,
-                                                  QWidget *parentWidget = 0,
+                                                  TQWidget *parentWidget = 0,
                                                   const char *widgetName = 0,
-                                                  QObject *parent = 0,
+                                                  TQObject *parent = 0,
                                                   const char *name = 0,
-                                                  const QStringList &args = QStringList(),
+                                                  const TQStringList &args = TQStringList(),
                                                   int *error = 0 )
          {
             for (; begin != end; ++begin )
@@ -300,7 +300,7 @@ namespace KParts
          *
          * Example:
          * \code
-         * KMyAppPlugin* plugin = KParts::ComponentFactory::createInstanceFromQuery<KMyAppPlugin>( serviceType, QString::null, parentObject );
+         * KMyAppPlugin* plugin = KParts::ComponentFactory::createInstanceFromQuery<KMyAppPlugin>( serviceType, TQString::null, parentObject );
          * if ( plugin ) {
          *     ....
          * }
@@ -318,11 +318,11 @@ namespace KParts
          *         factory was unable to create an object of the given type.
          */
         template <class T>
-        static T *createInstanceFromQuery( const QString &serviceType,
-                                           const QString &constraint = QString::null,
-                                           QObject *parent = 0,
+        static T *createInstanceFromQuery( const TQString &serviceType,
+                                           const TQString &constraint = TQString::null,
+                                           TQObject *parent = 0,
                                            const char *name = 0,
-                                           const QStringList &args = QStringList(),
+                                           const TQStringList &args = TQStringList(),
                                            int *error = 0 )
         {
             KTrader::OfferList offers = KTrader::self()->query( serviceType, constraint );
@@ -344,12 +344,12 @@ namespace KParts
          * You can use this method to create a generic viewer - that can display any
          * kind of file, provided that there is a ReadOnlyPart installed for it - in 5 lines:
          * \code
-         * // Given the following: KURL url, QWidget* parentWidget and QObject* parentObject.
-         * QString mimetype = KMimeType::findByURL( url )->name();
-         * KParts::ReadOnlyPart* part = KParts::ComponentFactory::createPartInstanceFromQuery<KParts::ReadOnlyPart>( mimetype, QString::null, parentWidget, 0, parentObject, 0 );
+         * // Given the following: KURL url, TQWidget* parentWidget and TQObject* parentObject.
+         * TQString mimetype = KMimeType::findByURL( url )->name();
+         * KParts::ReadOnlyPart* part = KParts::ComponentFactory::createPartInstanceFromQuery<KParts::ReadOnlyPart>( mimetype, TQString::null, parentWidget, 0, parentObject, 0 );
          * if ( part ) {
          *     part->openURL( url );
-         *     part->widget()->show();  // also insert the widget into a layout, or simply use a QVBox as parentWidget
+         *     part->widget()->show();  // also insert the widget into a layout, or simply use a TQVBox as parentWidget
          * }
          * \endcode
          *
@@ -367,16 +367,16 @@ namespace KParts
          *         factory was unable to create an object of the given type.
          */
         template <class T>
-        static T *createPartInstanceFromQuery( const QString &serviceType,
-                                               const QString &constraint,
-                                               QWidget *parentWidget = 0,
+        static T *createPartInstanceFromQuery( const TQString &serviceType,
+                                               const TQString &constraint,
+                                               TQWidget *parentWidget = 0,
                                                const char *widgetName = 0,
-                                               QObject *parent = 0,
+                                               TQObject *parent = 0,
                                                const char *name = 0,
-                                               const QStringList &args = QStringList(),
+                                               const TQStringList &args = TQStringList(),
                                                int *error = 0 )
         {
-            KTrader::OfferList offers = KTrader::self()->query( serviceType, QString::fromLatin1("KParts/ReadOnlyPart"), constraint, QString::null );
+            KTrader::OfferList offers = KTrader::self()->query( serviceType, TQString::fromLatin1("KParts/ReadOnlyPart"), constraint, TQString::null );
             if ( offers.isEmpty() )
             {
                 if ( error )

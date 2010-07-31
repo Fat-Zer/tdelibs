@@ -48,13 +48,13 @@
 #endif
 
 #define QT_CLEAN_NAMESPACE 1
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <dcopclient.h>
 
 #define BUFFER_SIZE 4096
 
-extern QCString dcopServerFile(const QCString &hostname, bool old);
+extern TQCString dcopServerFile(const TQCString &hostname, bool old);
 
 static char *getDisplay()
 {
@@ -63,9 +63,9 @@ static char *getDisplay()
    char *screen;
    char *colon;
 /*
- don't test for a value from qglobal.h but instead distinguish
+ don't test for a value from tqglobal.h but instead distinguish
  Qt/X11 from Qt/Embedded by the fact that Qt/E apps have -DQWS
- on the commandline (which in qglobal.h however triggers Q_WS_QWS,
+ on the commandline (which in tqglobal.h however triggers Q_WS_QWS,
  but we don't want to include that here) (Simon)
 #ifdef Q_WS_X11
  */
@@ -131,8 +131,8 @@ static void killDCOPWin(pid_t pid)
 
 static void cleanupDCOP(int dont_kill_dcop, int wait_for_exit)
 {
-	QCString host;
-	QCString strDCOPServer = DCOPClient::dcopServerFile(host);
+	TQCString host;
+	TQCString strDCOPServer = DCOPClient::dcopServerFile(host);
 
 	if(strDCOPServer.isEmpty())
 	{
@@ -142,10 +142,10 @@ static void cleanupDCOP(int dont_kill_dcop, int wait_for_exit)
 	printf("server file %s\n",(const char *)strDCOPServer);
 
 	pid_t	pid = 0;
-	QFile f(strDCOPServer);
+	TQFile f(strDCOPServer);
 	if(f.open(IO_ReadOnly))
 	{
-		QString str;
+		TQString str;
 		while(f.readLine(str,2048))
 		{
 			pid = str.toULong();
@@ -156,7 +156,7 @@ static void cleanupDCOP(int dont_kill_dcop, int wait_for_exit)
 	}
 	f.close();
 	/* Clean up .DCOPserver file */
-	QFile::remove(strDCOPServer);
+	TQFile::remove(strDCOPServer);
 	printf("remove server file %s\n",(const char *)strDCOPServer);
 
 	if(pid)
@@ -200,7 +200,7 @@ static void cleanupDCOP(int dont_kill_dcop, int wait_for_exit)
 
 int main(int argc, char **argv)
 {
-	QCString host;
+	TQCString host;
 	
    int dont_kill_dcop = (argc == 2) && (strcmp(argv[1], "--nokill") == 0);
    int wait_for_exit = (argc == 2) && (strcmp(argv[1], "--wait") == 0);

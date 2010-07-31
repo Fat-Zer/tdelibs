@@ -2,15 +2,15 @@
 #define KXMLGUITEST_H
 
 #include <kxmlguiclient.h>
-#include <qobject.h>
+#include <tqobject.h>
 
-class Client : public QObject, public KXMLGUIClient
+class Client : public TQObject, public KXMLGUIClient
 {
     Q_OBJECT
 public:
     Client() {}
 
-    void setXMLFile( const QString &f, bool merge = true ) { KXMLGUIClient::setXMLFile( f, merge ); }
+    void setXMLFile( const TQString &f, bool merge = true ) { KXMLGUIClient::setXMLFile( f, merge ); }
     void setInstance( KInstance *inst ) { KXMLGUIClient::setInstance( inst ); }
 
 public slots:

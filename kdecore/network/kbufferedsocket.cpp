@@ -24,8 +24,8 @@
 
 #include <config.h>
 
-#include <qmutex.h>
-#include <qtimer.h>
+#include <tqmutex.h>
+#include <tqtimer.h>
 
 #include "ksocketdevice.h"
 #include "ksocketaddress.h"
@@ -47,8 +47,8 @@ public:
   }
 };
 
-KBufferedSocket::KBufferedSocket(const QString& host, const QString& service,
-				 QObject *parent, const char *name)
+KBufferedSocket::KBufferedSocket(const TQString& host, const TQString& service,
+				 TQObject *parent, const char *name)
   : KStreamSocket(host, service, parent, name),
     d(new KBufferedSocketPrivate)
 {
@@ -86,7 +86,7 @@ void KBufferedSocket::close()
   else
     {
       setState(Closing);
-      QSocketNotifier *n = socketDevice()->readNotifier();
+      TQSocketNotifier *n = socketDevice()->readNotifier();
       if (n)
 	n->setEnabled(false);
       emit stateChanged(Closing);
@@ -177,7 +177,7 @@ Q_LONG KBufferedSocket::writeBlock(const char *data, Q_ULONG len)
       resetError();
 
       // enable notifier to send data
-      QSocketNotifier *n = socketDevice()->writeNotifier();
+      TQSocketNotifier *n = socketDevice()->writeNotifier();
       if (n)
 	n->setEnabled(true);
 
@@ -200,7 +200,7 @@ void KBufferedSocket::enableRead(bool enable)
   if (!enable && d->input)
     {
       // reenable it
-      QSocketNotifier *n = socketDevice()->readNotifier();
+      TQSocketNotifier *n = socketDevice()->readNotifier();
       if (n)
 	n->setEnabled(true);
     }
@@ -208,7 +208,7 @@ void KBufferedSocket::enableRead(bool enable)
   if (enable && state() != Connected && d->input && !d->input->isEmpty())
     // this means the buffer is still dirty
     // allow the signal to be emitted
-    QTimer::singleShot(0, this, SLOT(slotReadActivity()));
+    TQTimer::singleShot(0, this, TQT_SLOT(slotReadActivity()));
 }
 
 void KBufferedSocket::enableWrite(bool enable)
@@ -217,7 +217,7 @@ void KBufferedSocket::enableWrite(bool enable)
   if (!enable && d->output && !d->output->isEmpty())
     {
       // reenable it
-      QSocketNotifier *n = socketDevice()->writeNotifier();
+      TQSocketNotifier *n = socketDevice()->writeNotifier();
       if (n)
 	n->setEnabled(true);
     }
@@ -243,7 +243,7 @@ void KBufferedSocket::stateChanging(SocketState newState)
 
 void KBufferedSocket::setInputBuffering(bool enable)
 {
-  QMutexLocker locker(mutex());
+  TQMutexLocker locker(mutex());
   if (!enable)
     {
       delete d->input;
@@ -262,7 +262,7 @@ KIOBufferBase* KBufferedSocket::inputBuffer()
 
 void KBufferedSocket::setOutputBuffering(bool enable)
 {
-  QMutexLocker locker(mutex());
+  TQMutexLocker locker(mutex());
   if (!enable)
     {
       delete d->output;
@@ -302,7 +302,7 @@ bool KBufferedSocket::canReadLine() const
   return d->input->canReadLine();
 }
 
-QCString KBufferedSocket::readLine()
+TQCString KBufferedSocket::readLine()
 {
   return d->input->readLine();
 }
@@ -358,7 +358,7 @@ void KBufferedSocket::slotReadActivity()
 	{
 	  // buffer isn't empty
 	  // keep emitting signals till it is
-	  QTimer::singleShot(0, this, SLOT(slotReadActivity()));
+	  TQTimer::singleShot(0, this, TQT_SLOT(slotReadActivity()));
 	  emit readyRead();
 	}
     }

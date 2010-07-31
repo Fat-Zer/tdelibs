@@ -41,13 +41,13 @@ bool NameSortMode::lesser( const KABC::Addressee &first, const KABC::Addressee &
 
   switch ( mNameType ) {
     case FormattedName:
-      lesser = QString::localeAwareCompare( first.formattedName(), second.formattedName() ) < 0;
+      lesser = TQString::localeAwareCompare( first.formattedName(), second.formattedName() ) < 0;
       break;
     case FamilyName:
-      lesser = QString::localeAwareCompare( first.familyName(), second.familyName() ) < 0;
+      lesser = TQString::localeAwareCompare( first.familyName(), second.familyName() ) < 0;
       break;
     case GivenName:
-      lesser = QString::localeAwareCompare( first.givenName(), second.givenName() ) < 0;
+      lesser = TQString::localeAwareCompare( first.givenName(), second.givenName() ) < 0;
       break;
     default:
       lesser = false;
@@ -70,7 +70,7 @@ bool FieldSortMode::lesser( const KABC::Addressee &first, const KABC::Addressee 
   if ( !mField )
     return false;
   else {
-    bool lesser = QString::localeAwareCompare( mField->value( first ), mField->value( second ) ) < 0;
+    bool lesser = TQString::localeAwareCompare( mField->value( first ), mField->value( second ) ) < 0;
     if ( !mAscendingOrder )
       lesser = !lesser;
 

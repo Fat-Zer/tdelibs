@@ -27,7 +27,7 @@
 
 #include <time.h>
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -43,14 +43,14 @@
 #endif
 
 extern "C" {
-    KDE_EXPORT KDEDModule *create_kpasswdserver(const QCString &name)
+    KDE_EXPORT KDEDModule *create_kpasswdserver(const TQCString &name)
     {
        return new KPasswdServer(name);
     }
 }
 
 int
-KPasswdServer::AuthInfoList::compareItems(QPtrCollection::Item n1, QPtrCollection::Item n2)
+KPasswdServer::AuthInfoList::compareItems(TQPtrCollection::Item n1, TQPtrCollection::Item n2)
 {
    if (!n1 || !n2)
       return 0;
@@ -69,15 +69,15 @@ KPasswdServer::AuthInfoList::compareItems(QPtrCollection::Item n1, QPtrCollectio
 }
 
 
-KPasswdServer::KPasswdServer(const QCString &name)
+KPasswdServer::KPasswdServer(const TQCString &name)
  : KDEDModule(name)
 {
     m_authDict.setAutoDelete(true);
     m_authPending.setAutoDelete(true);
     m_seqNr = 0;
     m_wallet = 0;
-    connect(this, SIGNAL(windowUnregistered(long)),
-            this, SLOT(removeAuthForWindowId(long)));
+    connect(this, TQT_SIGNAL(windowUnregistered(long)),
+            this, TQT_SLOT(removeAuthForWindowId(long)));
 }
 
 KPasswdServer::~KPasswdServer()
@@ -86,21 +86,21 @@ KPasswdServer::~KPasswdServer()
 }
 
 // Helper - returns the wallet key to use for read/store/checking for existence.
-static QString makeWalletKey( const QString& key, const QString& realm )
+static TQString makeWalletKey( const TQString& key, const TQString& realm )
 {
     return realm.isEmpty() ? key : key + '-' + realm;
 }
 
 // Helper for storeInWallet/readFromWallet
-static QString makeMapKey( const char* key, int entryNumber )
+static TQString makeMapKey( const char* key, int entryNumber )
 {
-    QString str = QString::fromLatin1( key );
+    TQString str = TQString::fromLatin1( key );
     if ( entryNumber > 1 )
-        str += "-" + QString::number( entryNumber );
+        str += "-" + TQString::number( entryNumber );
     return str;
 }
 
-static bool storeInWallet( KWallet::Wallet* wallet, const QString& key, const KIO::AuthInfo &info )
+static bool storeInWallet( KWallet::Wallet* wallet, const TQString& key, const KIO::AuthInfo &info )
 {
     if ( !wallet->hasFolder( KWallet::Wallet::PasswordFolder() ) )
         if ( !wallet->createFolder( KWallet::Wallet::PasswordFolder() ) )
@@ -108,10 +108,10 @@ static bool storeInWallet( KWallet::Wallet* wallet, const QString& key, const KI
     wallet->setFolder( KWallet::Wallet::PasswordFolder() );
     // Before saving, check if there's already an entry with this login.
     // If so, replace it (with the new password). Otherwise, add a new entry.
-    typedef QMap<QString,QString> Map;
+    typedef TQMap<TQString,TQString> Map;
     int entryNumber = 1;
     Map map;
-    QString walletKey = makeWalletKey( key, info.realmValue );
+    TQString walletKey = makeWalletKey( key, info.realmValue );
     kdDebug(130) << "storeInWallet: walletKey=" << walletKey << "  reading existing map" << endl;
     if ( wallet->readMap( walletKey, map ) == 0 ) {
         Map::ConstIterator end = map.end();
@@ -120,12 +120,12 @@ static bool storeInWallet( KWallet::Wallet* wallet, const QString& key, const KI
             if ( it.data() == info.username ) {
                 break; // OK, overwrite this entry
             }
-            it = map.find( QString( "login-" ) + QString::number( ++entryNumber ) );
+            it = map.find( TQString( "login-" ) + TQString::number( ++entryNumber ) );
         }
         // If no entry was found, create a new entry - entryNumber is set already.
     }
-    const QString loginKey = makeMapKey( "login", entryNumber );
-    const QString passwordKey = makeMapKey( "password", entryNumber );
+    const TQString loginKey = makeMapKey( "login", entryNumber );
+    const TQString passwordKey = makeMapKey( "password", entryNumber );
     kdDebug(130) << "storeInWallet: writing to " << loginKey << "," << passwordKey << endl;
     // note the overwrite=true by default
     map.insert( loginKey, info.username );
@@ -135,17 +135,17 @@ static bool storeInWallet( KWallet::Wallet* wallet, const QString& key, const KI
 }
 
 
-static bool readFromWallet( KWallet::Wallet* wallet, const QString& key, const QString& realm, QString& username, QString& password, bool userReadOnly, QMap<QString,QString>& knownLogins )
+static bool readFromWallet( KWallet::Wallet* wallet, const TQString& key, const TQString& realm, TQString& username, TQString& password, bool userReadOnly, TQMap<TQString,TQString>& knownLogins )
 {
     //kdDebug(130) << "readFromWallet: key=" << key << " username=" << username << " password=" /*<< password*/ << " userReadOnly=" << userReadOnly << " realm=" << realm << endl;
     if ( wallet->hasFolder( KWallet::Wallet::PasswordFolder() ) )
     {
         wallet->setFolder( KWallet::Wallet::PasswordFolder() );
 
-        QMap<QString,QString> map;
+        TQMap<TQString,TQString> map;
         if ( wallet->readMap( makeWalletKey( key, realm ), map ) == 0 )
         {
-            typedef QMap<QString,QString> Map;
+            typedef TQMap<TQString,TQString> Map;
             int entryNumber = 1;
             Map::ConstIterator end = map.end();
             Map::ConstIterator it = map.find( "login" );
@@ -158,7 +158,7 @@ static bool readFromWallet( KWallet::Wallet* wallet, const QString& key, const Q
                     knownLogins.insert( it.data(), pwdIter.data() );
                 }
 
-                it = map.find( QString( "login-" ) + QString::number( ++entryNumber ) );
+                it = map.find( TQString( "login-" ) + TQString::number( ++entryNumber ) );
             }
             //kdDebug(130) << knownLogins.count() << " known logins" << endl;
 
@@ -189,10 +189,10 @@ KPasswdServer::checkAuthInfo(KIO::AuthInfo info, long windowId, unsigned long us
     if( usertime != 0 )
         kapp->updateUserTimestamp( usertime );
 
-    QString key = createCacheKey(info);
+    TQString key = createCacheKey(info);
 
     Request *request = m_authPending.first();
-    QString path2 = info.url.directory(false, false);
+    TQString path2 = info.url.directory(false, false);
     for(; request; request = m_authPending.next())
     {
        if (request->key != key)
@@ -200,7 +200,7 @@ KPasswdServer::checkAuthInfo(KIO::AuthInfo info, long windowId, unsigned long us
 
        if (info.verifyPath)
        {
-          QString path1 = request->info.url.directory(false, false);
+          TQString path1 = request->info.url.directory(false, false);
           if (!path2.startsWith(path1))
              continue;
        }
@@ -222,7 +222,7 @@ KPasswdServer::checkAuthInfo(KIO::AuthInfo info, long windowId, unsigned long us
            !KWallet::Wallet::keyDoesNotExist(KWallet::Wallet::NetworkWallet(),
                                              KWallet::Wallet::PasswordFolder(), makeWalletKey(key, info.realmValue)))
        {
-          QMap<QString, QString> knownLogins;
+          TQMap<TQString, TQString> knownLogins;
           if (openWallet(windowId)) {
               if (readFromWallet(m_wallet, key, info.realmValue, info.username, info.password,
                              info.readOnly, knownLogins))
@@ -243,13 +243,13 @@ KPasswdServer::checkAuthInfo(KIO::AuthInfo info, long windowId, unsigned long us
 }
 
 KIO::AuthInfo
-KPasswdServer::queryAuthInfo(KIO::AuthInfo info, QString errorMsg, long windowId, long seqNr)
+KPasswdServer::queryAuthInfo(KIO::AuthInfo info, TQString errorMsg, long windowId, long seqNr)
 {
     return queryAuthInfo(info, errorMsg, windowId, seqNr, 0 );
 }
 
 KIO::AuthInfo
-KPasswdServer::queryAuthInfo(KIO::AuthInfo info, QString errorMsg, long windowId, long seqNr, unsigned long usertime)
+KPasswdServer::queryAuthInfo(KIO::AuthInfo info, TQString errorMsg, long windowId, long seqNr, unsigned long usertime)
 {
     kdDebug(130) << "KPasswdServer::queryAuthInfo: User= " << info.username
               << ", Message= " << info.prompt << ", WindowId = " << windowId << endl;
@@ -258,7 +258,7 @@ KPasswdServer::queryAuthInfo(KIO::AuthInfo info, QString errorMsg, long windowId
     if( usertime != 0 )
         kapp->updateUserTimestamp( usertime );
 
-    QString key = createCacheKey(info);
+    TQString key = createCacheKey(info);
     Request *request = new Request;
     request->client = callingDcopClient();
     request->transaction = request->client->beginTransaction();
@@ -268,7 +268,7 @@ KPasswdServer::queryAuthInfo(KIO::AuthInfo info, QString errorMsg, long windowId
     request->seqNr = seqNr;
     if (errorMsg == "<NoAuthPrompt>")
     {
-       request->errorMsg = QString::null;
+       request->errorMsg = TQString::null;
        request->prompt = false;
     }
     else
@@ -279,7 +279,7 @@ KPasswdServer::queryAuthInfo(KIO::AuthInfo info, QString errorMsg, long windowId
     m_authPending.append(request);
 
     if (m_authPending.count() == 1)
-       QTimer::singleShot(0, this, SLOT(processRequest()));
+       TQTimer::singleShot(0, this, TQT_SLOT(processRequest()));
 
     return info;
 }
@@ -289,7 +289,7 @@ KPasswdServer::addAuthInfo(KIO::AuthInfo info, long windowId)
 {
     kdDebug(130) << "KPasswdServer::addAuthInfo: User= " << info.username
               << ", RealmValue= " << info.realmValue << ", WindowId = " << windowId << endl;
-    QString key = createCacheKey(info);
+    TQString key = createCacheKey(info);
 
     m_seqNr++;
 
@@ -342,7 +342,7 @@ KPasswdServer::processRequest()
         if (result && !info.username.isEmpty() &&
             !request->errorMsg.isEmpty())
         {
-           QString prompt = request->errorMsg;
+           TQString prompt = request->errorMsg;
            prompt += i18n("  Do you want to retry?");
            int dlgResult = KMessageBox::warningContinueCancelWId(request->windowId, prompt,
                            i18n("Authentication"), i18n("Retry"));
@@ -350,13 +350,13 @@ KPasswdServer::processRequest()
               askPw = false;
         }
 
-        int dlgResult = QDialog::Rejected;
+        int dlgResult = TQDialog::Rejected;
         if (askPw)
         {
-            QString username = info.username;
-            QString password = info.password;
+            TQString username = info.username;
+            TQString password = info.password;
             bool hasWalletData = false;
-            QMap<QString, QString> knownLogins;
+            TQMap<TQString, TQString> knownLogins;
 
             if ( ( username.isEmpty() || password.isEmpty() )
                 && !KWallet::Wallet::keyDoesNotExist(KWallet::Wallet::NetworkWallet(), KWallet::Wallet::PasswordFolder(), makeWalletKey( request->key, info.realmValue )) )
@@ -392,7 +392,7 @@ KPasswdServer::processRequest()
 
             dlgResult = dlg.exec();
 
-            if (dlgResult == QDialog::Accepted)
+            if (dlgResult == TQDialog::Accepted)
             {
                info.username = dlg.username();
                info.password = dlg.password();
@@ -411,7 +411,7 @@ KPasswdServer::processRequest()
                }
             }
         }
-        if ( dlgResult != QDialog::Accepted )
+        if ( dlgResult != TQDialog::Accepted )
         {
             addAuthInfoItem(request->key, info, 0, m_seqNr, true);
             info.setModified( false );
@@ -423,10 +423,10 @@ KPasswdServer::processRequest()
         }
     }
 
-    QCString replyType;
-    QByteArray replyData;
+    TQCString replyType;
+    TQByteArray replyData;
 
-    QDataStream stream2(replyData, IO_WriteOnly);
+    TQDataStream stream2(replyData, IO_WriteOnly);
     stream2 << info << m_seqNr;
     replyType = "KIO::AuthInfo";
     request->client->endTransaction( request->transaction,
@@ -439,10 +439,10 @@ KPasswdServer::processRequest()
         waitRequest; )
     {
        bool keepQueued = false;
-       QString key = waitRequest->key;
+       TQString key = waitRequest->key;
 
        request = m_authPending.first();
-       QString path2 = waitRequest->info.url.directory(false, false);
+       TQString path2 = waitRequest->info.url.directory(false, false);
        for(; request; request = m_authPending.next())
        {
            if (request->key != key)
@@ -450,7 +450,7 @@ KPasswdServer::processRequest()
 
            if (info.verifyPath)
            {
-               QString path1 = request->info.url.directory(false, false);
+               TQString path1 = request->info.url.directory(false, false);
                if (!path2.startsWith(path1))
                    continue;
            }
@@ -466,10 +466,10 @@ KPasswdServer::processRequest()
        {
            const AuthInfo *result = findAuthInfoItem(waitRequest->key, waitRequest->info);
 
-           QCString replyType;
-           QByteArray replyData;
+           TQCString replyType;
+           TQByteArray replyData;
 
-           QDataStream stream2(replyData, IO_WriteOnly);
+           TQDataStream stream2(replyData, IO_WriteOnly);
 
            if (!result || result->isCanceled)
            {
@@ -493,20 +493,20 @@ KPasswdServer::processRequest()
     }
 
     if (m_authPending.count())
-       QTimer::singleShot(0, this, SLOT(processRequest()));
+       TQTimer::singleShot(0, this, TQT_SLOT(processRequest()));
 
 }
 
-QString KPasswdServer::createCacheKey( const KIO::AuthInfo &info )
+TQString KPasswdServer::createCacheKey( const KIO::AuthInfo &info )
 {
     if( !info.url.isValid() ) {
         // Note that a null key will break findAuthInfoItem later on...
         kdWarning(130) << "createCacheKey: invalid URL " << info.url << endl;
-        return QString::null;
+        return TQString::null;
     }
 
     // Generate the basic key sequence.
-    QString key = info.url.protocol();
+    TQString key = info.url.protocol();
     key += '-';
     if (!info.url.user().isEmpty())
     {
@@ -518,7 +518,7 @@ QString KPasswdServer::createCacheKey( const KIO::AuthInfo &info )
     if( port )
     {
       key += ':';
-      key += QString::number(port);
+      key += TQString::number(port);
     }
 
     return key;
@@ -539,13 +539,13 @@ KPasswdServer::copyAuthInfo(const AuthInfo *i)
 }
 
 const KPasswdServer::AuthInfo *
-KPasswdServer::findAuthInfoItem(const QString &key, const KIO::AuthInfo &info)
+KPasswdServer::findAuthInfoItem(const TQString &key, const KIO::AuthInfo &info)
 {
    AuthInfoList *authList = m_authDict.find(key);
    if (!authList)
       return 0;
 
-   QString path2 = info.url.directory(false, false);
+   TQString path2 = info.url.directory(false, false);
    for(AuthInfo *current = authList->first();
        current; )
    {
@@ -559,7 +559,7 @@ KPasswdServer::findAuthInfoItem(const QString &key, const KIO::AuthInfo &info)
 
        if (info.verifyPath)
        {
-          QString path1 = current->directory;
+          TQString path1 = current->directory;
           if (path2.startsWith(path1) &&
               (info.username.isEmpty() || info.username == current->username))
              return current;
@@ -577,7 +577,7 @@ KPasswdServer::findAuthInfoItem(const QString &key, const KIO::AuthInfo &info)
 }
 
 void
-KPasswdServer::removeAuthInfoItem(const QString &key, const KIO::AuthInfo &info)
+KPasswdServer::removeAuthInfoItem(const TQString &key, const KIO::AuthInfo &info)
 {
    AuthInfoList *authList = m_authDict.find(key);
    if (!authList)
@@ -604,7 +604,7 @@ KPasswdServer::removeAuthInfoItem(const QString &key, const KIO::AuthInfo &info)
 
 
 void
-KPasswdServer::addAuthInfoItem(const QString &key, const KIO::AuthInfo &info, long windowId, long seqNr, bool canceled)
+KPasswdServer::addAuthInfoItem(const TQString &key, const KIO::AuthInfo &info, long windowId, long seqNr, bool canceled)
 {
    AuthInfoList *authList = m_authDict.find(key);
    if (!authList)
@@ -649,7 +649,7 @@ KPasswdServer::addAuthInfoItem(const QString &key, const KIO::AuthInfo &info, lo
 }
 
 void
-KPasswdServer::updateAuthExpire(const QString &key, const AuthInfo *auth, long windowId, bool keep)
+KPasswdServer::updateAuthExpire(const TQString &key, const AuthInfo *auth, long windowId, bool keep)
 {
    AuthInfo *current = const_cast<AuthInfo *>(auth);
    if (keep)
@@ -670,7 +670,7 @@ KPasswdServer::updateAuthExpire(const QString &key, const AuthInfo *auth, long w
    // Update mWindowIdList
    if (windowId)
    {
-      QStringList *keysChanged = mWindowIdList.find(windowId);
+      TQStringList *keysChanged = mWindowIdList.find(windowId);
       if (!keysChanged)
       {
          keysChanged = new QStringList;
@@ -684,13 +684,13 @@ KPasswdServer::updateAuthExpire(const QString &key, const AuthInfo *auth, long w
 void
 KPasswdServer::removeAuthForWindowId(long windowId)
 {
-   QStringList *keysChanged = mWindowIdList.find(windowId);
+   TQStringList *keysChanged = mWindowIdList.find(windowId);
    if (!keysChanged) return;
 
-   for(QStringList::ConstIterator it = keysChanged->begin();
+   for(TQStringList::ConstIterator it = keysChanged->begin();
        it != keysChanged->end(); ++it)
    {
-      QString key = *it;
+      TQString key = *it;
       AuthInfoList *authList = m_authDict.find(key);
       if (!authList)
          continue;

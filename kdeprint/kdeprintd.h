@@ -21,11 +21,11 @@
 #define KDEPRINTD_H
 
 #include <kdedmodule.h>
-#include <qptrlist.h>
-#include <qstringlist.h>
-#include <qptrdict.h>
-#include <qguardedptr.h>
-#include <qintdict.h>
+#include <tqptrlist.h>
+#include <tqstringlist.h>
+#include <tqptrdict.h>
+#include <tqguardedptr.h>
+#include <tqintdict.h>
 
 class KPrintProcess;
 class KProcess;
@@ -37,30 +37,30 @@ class KDEPrintd : public KDEDModule
 	K_DCOP
 
 public:
-	KDEPrintd(const QCString& obj);
+	KDEPrintd(const TQCString& obj);
 	~KDEPrintd();
 
 k_dcop:
-	int print(const QString& cmd, const QStringList& files, bool remove);
-	QString openPassDlg(const QString& user);
-	ASYNC statusMessage(const QString& msg, int pid = -1, const QString& appName = QString::null);
-	QString requestPassword( const QString& user, const QString& host, int port, int seqNbr );
-	void initPassword( const QString& user, const QString& passwd, const QString& host, int port );
+	int print(const TQString& cmd, const TQStringList& files, bool remove);
+	TQString openPassDlg(const TQString& user);
+	ASYNC statusMessage(const TQString& msg, int pid = -1, const TQString& appName = TQString::null);
+	TQString requestPassword( const TQString& user, const TQString& host, int port, int seqNbr );
+	void initPassword( const TQString& user, const TQString& passwd, const TQString& host, int port );
 
 protected slots:
 	void slotPrintTerminated( KPrintProcess* );
-	void slotPrintError( KPrintProcess*, const QString& );
+	void slotPrintError( KPrintProcess*, const TQString& );
 	void slotClosed();
 	void processRequest();
 
 protected:
-	bool checkFiles(QString& cmd, const QStringList& files);
+	bool checkFiles(TQString& cmd, const TQStringList& files);
 
 private:
 	class Request;
-	QPtrList<KPrintProcess>	m_processpool;
-	QIntDict<StatusWindow>	m_windows;
-	QPtrList<Request>       m_requestsPending;
+	TQPtrList<KPrintProcess>	m_processpool;
+	TQIntDict<StatusWindow>	m_windows;
+	TQPtrList<Request>       m_requestsPending;
 };
 
 #endif

@@ -26,7 +26,7 @@ class KCModuleProxy;
 /***************************************************************/
 /** @internal
     @ingroup internal */
-class KCModuleProxyIfaceImpl: public QObject, virtual public KCModuleProxyIface
+class KCModuleProxyIfaceImpl: public TQObject, virtual public KCModuleProxyIface
 {
 	/* KDE4 Merge KCModuleProxyIfaceImpl with KCModuleProxy(MI)
 	 * if it doesn't break what DCOPClient it binds to.
@@ -38,7 +38,7 @@ class KCModuleProxyIfaceImpl: public QObject, virtual public KCModuleProxyIface
 public:
 
 	/* Reimplementations of DCOP members */
-	KCModuleProxyIfaceImpl( const QCString& name, KCModuleProxy* const client );
+	KCModuleProxyIfaceImpl( const TQCString& name, KCModuleProxy* const client );
 
 	virtual void save();
 
@@ -46,9 +46,9 @@ public:
 
 	virtual void defaults();
 
-	virtual QString applicationName();
+	virtual TQString applicationName();
 
-	virtual QString quickHelp();
+	virtual TQString quickHelp();
 
 	virtual bool changed();
 public slots:
@@ -76,13 +76,13 @@ private:
 /***************************************************************/
 /** @internal
     @ingroup internal */
-class KCModuleProxyRootCommunicatorImpl: public QObject, 
+class KCModuleProxyRootCommunicatorImpl: public TQObject, 
 	virtual public KCModuleProxyRootDispatcher
 {
 	Q_OBJECT
 
 public:
-	KCModuleProxyRootCommunicatorImpl( const QCString& name, KCModuleProxy* const client );
+	KCModuleProxyRootCommunicatorImpl( const TQCString& name, KCModuleProxy* const client );
 
 	/* Reimplementations of DCOP members */
 	virtual void changed( bool c );

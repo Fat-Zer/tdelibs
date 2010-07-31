@@ -3,8 +3,8 @@
 
 #include <dcopobject.h>
 #include <dcopref.h>
-#include <qstringlist.h>
-#include <qcstring.h>
+#include <tqstringlist.h>
+#include <tqcstring.h>
 //#include "editdcopinterface.moc"
 namespace KTextEditor
 {
@@ -34,8 +34,8 @@ namespace KTextEditor
 		virtual ~EncodingDCOPInterface();
 	k_dcop:
 		uint encodingInterfaceNumber ();
-		void setEncoding (QString e) ;
-		QString encoding();
+		void setEncoding (TQString e) ;
+		TQString encoding();
    
 	private:
 		EncodingInterface *m_parent;

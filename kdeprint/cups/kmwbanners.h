@@ -21,14 +21,14 @@
 #define KMWBANNERS_H
 
 #include "kmwizardpage.h"
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 class QComboBox;
 
 class KMWBanners : public KMWizardPage
 {
 public:
-	KMWBanners(QWidget *parent = 0, const char *name = 0);
+	KMWBanners(TQWidget *parent = 0, const char *name = 0);
 
 	void initPrinter(KMPrinter*);
 	void updatePrinter(KMPrinter*);
@@ -38,6 +38,6 @@ private:
 	QStringList	m_bans;
 };
 
-QString mapBanner( const QString& );
+TQString mapBanner( const TQString& );
 
 #endif

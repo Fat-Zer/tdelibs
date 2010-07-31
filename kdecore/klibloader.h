@@ -18,11 +18,11 @@
 #ifndef KLIBLOADER_H
 #define KLIBLOADER_H
 
-#include <qobject.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qasciidict.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqasciidict.h>
+#include <tqptrlist.h>
 #include <kglobal.h>
 
 #include <stdlib.h> // For backwards compatibility
@@ -50,26 +50,26 @@ class KLibraryPrivate;
 class KDECORE_EXPORT KLibrary : public QObject
 {
     friend class KLibLoader;
-    friend class QAsciiDict<KLibrary>;
+    friend class TQAsciiDict<KLibrary>;
 
     Q_OBJECT
 public:
     /**
      * Don't create KLibrary objects on your own. Instead use KLibLoader.
      */
-    KLibrary( const QString& libname, const QString& filename, void * handle );
+    KLibrary( const TQString& libname, const TQString& filename, void * handle );
 
     /**
      * Returns the name of the library.
      * @return The name of the library like "libkspread".
      */
-    QString name() const;
+    TQString name() const;
 
     /**
      * Returns the file name of the library.
      * @return The filename of the library, for example "/opt/kde2&/lib/libkspread.la"
      */
-    QString fileName() const;
+    TQString fileName() const;
 
     /**
      * Returns the factory of the library.
@@ -107,7 +107,7 @@ public:
     void unload() const;
 
 private slots:
-    void slotObjectCreated( QObject *obj );
+    void slotObjectCreated( TQObject *obj );
     void slotObjectDestroyed();
     void slotTimeout();
 
@@ -118,12 +118,12 @@ private:
      */
     ~KLibrary();
 
-    QString m_libname;
-    QString m_filename;
+    TQString m_libname;
+    TQString m_filename;
     KLibFactory* m_factory;
     void * m_handle;
-    QPtrList<QObject> m_objs;
-    QTimer *m_timer;
+    TQPtrList<TQObject> m_objs;
+    TQTimer *m_timer;
     KLibraryPrivate *d;
 };
 
@@ -222,12 +222,12 @@ public:
 
     /**
      * Returns an error message that can be useful to debug the problem.
-     * Returns QString::null if the last call to library() was successful.
+     * Returns TQString::null if the last call to library() was successful.
      * You can call this function more than once. The error message is only
      * reset by a new call to library().
-     * @return the last error message, or QString::null if there was no error
+     * @return the last error message, or TQString::null if there was no error
      */
-    QString lastErrorMessage() const;
+    TQString lastErrorMessage() const;
 
     /**
      * Unloads the library with the given name.
@@ -273,16 +273,16 @@ public:
      *             ".la" will be appended.
      * @param instance a KInstance used to get the standard paths
      */
-    static QString findLibrary( const char * name, const KInstance * instance = KGlobal::instance() );
+    static TQString findLibrary( const char * name, const KInstance * instance = KGlobal::instance() );
 
 protected:
-    KLibLoader( QObject* parent = 0, const char* name = 0 );
+    KLibLoader( TQObject* parent = 0, const char* name = 0 );
 
 private slots:
     void slotLibraryDestroyed();
 private:
     void close_pending( KLibWrapPrivate * );
-    QAsciiDict<KLibWrapPrivate> m_libs;
+    TQAsciiDict<KLibWrapPrivate> m_libs;
 
     static KLibLoader* s_self;
 
@@ -322,7 +322,7 @@ private:
  * The KLibFactory is used to create the components, the library has to offer.
  * The factory of KSpread for example will create instances of KSpreadDoc,
  * while the Konqueror factory will create KonqView widgets.
- * All objects created by the factory must be derived from QObject, since QObject
+ * All objects created by the factory must be derived from TQObject, since QObject
  * offers type safe casting.
  *
  * KLibFactory is an abstract class. Reimplement the
@@ -336,10 +336,10 @@ class KDECORE_EXPORT KLibFactory : public QObject
 public:
     /**
      * Create a new factory.
-     * @param parent the parent of the QObject, 0 for no parent
-     * @param name the name of the QObject, 0 for no name
+     * @param parent the parent of the TQObject, 0 for no parent
+     * @param name the name of the TQObject, 0 for no name
      */
-    KLibFactory( QObject* parent = 0, const char* name = 0 );
+    KLibFactory( TQObject* parent = 0, const char* name = 0 );
     virtual ~KLibFactory();
 
     /**
@@ -349,7 +349,7 @@ public:
      * It is valid behavior to create different kinds of objects
      * depending on the requested @p classname. For example a koffice
      * library may usually return a pointer to KoDocument.  But
-     * if asked for a "QWidget", it could create a wrapper widget,
+     * if asked for a "TQWidget", it could create a wrapper widget,
      * that encapsulates the Koffice specific features.
      *
      * create() automatically emits a signal objectCreated to tell
@@ -357,20 +357,20 @@ public:
      * important for reference counting, and allows unloading the
      * library automatically once all its objects have been destroyed.
      *
-     * @param parent the parent of the QObject, 0 for no parent
-     * @param name the name of the QObject, 0 for no name
+     * @param parent the parent of the TQObject, 0 for no parent
+     * @param name the name of the TQObject, 0 for no name
      * @param classname the name of the class
      * @param args a list of arguments
      */
 
-     QObject* create( QObject* parent = 0, const char* name = 0, const char* classname = "QObject", const QStringList &args = QStringList() );
+     TQObject* create( TQObject* parent = 0, const char* name = 0, const char* classname = "TQObject", const TQStringList &args = TQStringList() );
 
 signals:
     /**
      * Emitted in #create
      * @param obj the new object
      */
-    void objectCreated( QObject *obj );
+    void objectCreated( TQObject *obj );
 
 
 protected:
@@ -382,18 +382,18 @@ protected:
      * It is valid behavior to create different kinds of objects
      * depending on the requested @p className. For example a koffice
      * library may usually return a pointer to KoDocument.  But
-     * if asked for a "QWidget", it could create a wrapper widget,
+     * if asked for a "TQWidget", it could create a wrapper widget,
      * that encapsulates the Koffice specific features.
      *
      * This function is called by #create()
-     * @param parent the parent of the QObject, 0 for no parent
-     * @param name the name of the QObject, 0 for no name
+     * @param parent the parent of the TQObject, 0 for no parent
+     * @param name the name of the TQObject, 0 for no name
      * @param className the name of the class
      * @param args a list of arguments
      */
-    virtual QObject* createObject( QObject* parent = 0, const char* name = 0,
-                                   const char* className = "QObject",
-                                   const QStringList &args = QStringList() ) = 0;
+    virtual TQObject* createObject( TQObject* parent = 0, const char* name = 0,
+                                   const char* className = "TQObject",
+                                   const TQStringList &args = TQStringList() ) = 0;
 
 
 protected:

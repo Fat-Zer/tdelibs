@@ -27,7 +27,7 @@
 #include "xml/dom_elementimpl.h"
 #include "xml/dom2_eventsimpl.h"
 
-#include <qrect.h>
+#include <tqrect.h>
 
 using namespace DOM;
 
@@ -407,9 +407,9 @@ unsigned long Node::index() const
     return impl->nodeIndex();
 }
 
-QString Node::toHTML()
+TQString Node::toHTML()
 {
-    if (!impl) return QString::null;
+    if (!impl) return TQString::null;
     return impl->toString().string();
 }
 
@@ -426,7 +426,7 @@ void Node::getCursor(int offset, int &_x, int &_y, int &height)
     impl->getCaret(offset, false, _x, _y, dummy, height);
 }
 
-QRect Node::getRect()
+TQRect Node::getRect()
 {
     if (!impl) throw DOMException(DOMException::NOT_FOUND_ERR);
     return impl->getRect();

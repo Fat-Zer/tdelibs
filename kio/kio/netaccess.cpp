@@ -28,10 +28,10 @@
 
 #include <cstring>
 
-#include <qstring.h>
-#include <qapplication.h>
-#include <qfile.h>
-#include <qmetaobject.h>
+#include <tqstring.h>
+#include <tqapplication.h>
+#include <tqfile.h>
+#include <tqmetaobject.h>
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -45,16 +45,16 @@
 
 using namespace KIO;
 
-QString * NetAccess::lastErrorMsg;
+TQString * NetAccess::lastErrorMsg;
 int NetAccess::lastErrorCode = 0;
-QStringList* NetAccess::tmpfiles;
+TQStringList* NetAccess::tmpfiles;
 
-bool NetAccess::download(const KURL& u, QString & target)
+bool NetAccess::download(const KURL& u, TQString & target)
 {
   return NetAccess::download (u, target, 0);
 }
 
-bool NetAccess::download(const KURL& u, QString & target, QWidget* window)
+bool NetAccess::download(const KURL& u, TQString & target, TQWidget* window)
 {
   if (u.isLocalFile()) {
     // file protocol. We do not need the network
@@ -86,12 +86,12 @@ bool NetAccess::download(const KURL& u, QString & target, QWidget* window)
                                   false, window, false /*copy*/);
 }
 
-bool NetAccess::upload(const QString& src, const KURL& target)
+bool NetAccess::upload(const TQString& src, const KURL& target)
 {
   return NetAccess::upload(src, target, 0);
 }
 
-bool NetAccess::upload(const QString& src, const KURL& target, QWidget* window)
+bool NetAccess::upload(const TQString& src, const KURL& target, TQWidget* window)
 {
   if (target.isEmpty())
     return false;
@@ -114,13 +114,13 @@ bool NetAccess::copy( const KURL & src, const KURL & target )
   return NetAccess::file_copy( src, target, -1, false /*not overwrite*/, false, 0L );
 }
 
-bool NetAccess::copy( const KURL & src, const KURL & target, QWidget* window )
+bool NetAccess::copy( const KURL & src, const KURL & target, TQWidget* window )
 {
   return NetAccess::file_copy( src, target, -1, false /*not overwrite*/, false, window );
 }
 
 bool NetAccess::file_copy( const KURL& src, const KURL& target, int permissions,
-                           bool overwrite, bool resume, QWidget* window )
+                           bool overwrite, bool resume, TQWidget* window )
 {
   NetAccess kioNet;
   return kioNet.filecopyInternal( src, target, permissions, overwrite, resume,
@@ -129,7 +129,7 @@ bool NetAccess::file_copy( const KURL& src, const KURL& target, int permissions,
 
 
 bool NetAccess::file_move( const KURL& src, const KURL& target, int permissions,
-                           bool overwrite, bool resume, QWidget* window )
+                           bool overwrite, bool resume, TQWidget* window )
 {
   NetAccess kioNet;
   return kioNet.filecopyInternal( src, target, permissions, overwrite, resume,
@@ -141,27 +141,27 @@ bool NetAccess::dircopy( const KURL & src, const KURL & target )
   return NetAccess::dircopy( src, target, 0 );
 }
 
-bool NetAccess::dircopy( const KURL & src, const KURL & target, QWidget* window )
+bool NetAccess::dircopy( const KURL & src, const KURL & target, TQWidget* window )
 {
   KURL::List srcList;
   srcList.append( src );
   return NetAccess::dircopy( srcList, target, window );
 }
 
-bool NetAccess::dircopy( const KURL::List & srcList, const KURL & target, QWidget* window )
+bool NetAccess::dircopy( const KURL::List & srcList, const KURL & target, TQWidget* window )
 {
   NetAccess kioNet;
   return kioNet.dircopyInternal( srcList, target, window, false /*copy*/ );
 }
 
-bool NetAccess::move( const KURL& src, const KURL& target, QWidget* window )
+bool NetAccess::move( const KURL& src, const KURL& target, TQWidget* window )
 {
   KURL::List srcList;
   srcList.append( src );
   return NetAccess::move( srcList, target, window );
 }
 
-bool NetAccess::move( const KURL::List& srcList, const KURL& target, QWidget* window )
+bool NetAccess::move( const KURL::List& srcList, const KURL& target, TQWidget* window )
 {
   NetAccess kioNet;
   return kioNet.dircopyInternal( srcList, target, window, true /*move*/ );
@@ -172,7 +172,7 @@ bool NetAccess::exists( const KURL & url )
   return NetAccess::exists( url, false, 0 );
 }
 
-bool NetAccess::exists( const KURL & url, QWidget* window )
+bool NetAccess::exists( const KURL & url, TQWidget* window )
 {
   return NetAccess::exists( url, false, window );
 }
@@ -182,10 +182,10 @@ bool NetAccess::exists( const KURL & url, bool source )
   return NetAccess::exists( url, source, 0 );
 }
 
-bool NetAccess::exists( const KURL & url, bool source, QWidget* window )
+bool NetAccess::exists( const KURL & url, bool source, TQWidget* window )
 {
   if ( url.isLocalFile() )
-    return QFile::exists( url.path() );
+    return TQFile::exists( url.path() );
   NetAccess kioNet;
   return kioNet.statInternal( url, 0 /*no details*/, source, window );
 }
@@ -195,7 +195,7 @@ bool NetAccess::stat( const KURL & url, KIO::UDSEntry & entry )
   return NetAccess::stat( url, entry, 0 );
 }
 
-bool NetAccess::stat( const KURL & url, KIO::UDSEntry & entry, QWidget* window )
+bool NetAccess::stat( const KURL & url, KIO::UDSEntry & entry, TQWidget* window )
 {
   NetAccess kioNet;
   bool ret = kioNet.statInternal( url, 2 /*all details*/, true /*source*/, window );
@@ -204,7 +204,7 @@ bool NetAccess::stat( const KURL & url, KIO::UDSEntry & entry, QWidget* window )
   return ret;
 }
 
-KURL NetAccess::mostLocalURL(const KURL & url, QWidget* window)
+KURL NetAccess::mostLocalURL(const KURL & url, TQWidget* window)
 {
   if ( url.isLocalFile() )
   {
@@ -217,7 +217,7 @@ KURL NetAccess::mostLocalURL(const KURL & url, QWidget* window)
     return url;
   }
 
-  QString path;
+  TQString path;
 
   // Extract the local path from the KIO::UDSEntry
   KIO::UDSEntry::ConstIterator it = entry.begin();
@@ -247,7 +247,7 @@ bool NetAccess::del( const KURL & url )
   return NetAccess::del( url, 0 );
 }
 
-bool NetAccess::del( const KURL & url, QWidget* window )
+bool NetAccess::del( const KURL & url, TQWidget* window )
 {
   NetAccess kioNet;
   return kioNet.delInternal( url, window );
@@ -258,50 +258,50 @@ bool NetAccess::mkdir( const KURL & url, int permissions )
   return NetAccess::mkdir( url, 0, permissions );
 }
 
-bool NetAccess::mkdir( const KURL & url, QWidget* window, int permissions )
+bool NetAccess::mkdir( const KURL & url, TQWidget* window, int permissions )
 {
   NetAccess kioNet;
   return kioNet.mkdirInternal( url, permissions, window );
 }
 
-QString NetAccess::fish_execute( const KURL & url, const QString command, QWidget* window )
+TQString NetAccess::fish_execute( const KURL & url, const TQString command, TQWidget* window )
 {
   NetAccess kioNet;
   return kioNet.fish_executeInternal( url, command, window );
 }
 
-bool NetAccess::synchronousRun( Job* job, QWidget* window, QByteArray* data,
-                                KURL* finalURL, QMap<QString, QString>* metaData )
+bool NetAccess::synchronousRun( Job* job, TQWidget* window, TQByteArray* data,
+                                KURL* finalURL, TQMap<TQString, TQString>* metaData )
 {
   NetAccess kioNet;
   return kioNet.synchronousRunInternal( job, window, data, finalURL, metaData );
 }
 
-QString NetAccess::mimetype( const KURL& url )
+TQString NetAccess::mimetype( const KURL& url )
 {
   NetAccess kioNet;
   return kioNet.mimetypeInternal( url, 0 );
 }
 
-QString NetAccess::mimetype( const KURL& url, QWidget* window )
+TQString NetAccess::mimetype( const KURL& url, TQWidget* window )
 {
   NetAccess kioNet;
   return kioNet.mimetypeInternal( url, window );
 }
 
-void NetAccess::removeTempFile(const QString& name)
+void NetAccess::removeTempFile(const TQString& name)
 {
   if (!tmpfiles)
     return;
   if (tmpfiles->contains(name))
   {
-    unlink(QFile::encodeName(name));
+    unlink(TQFile::encodeName(name));
     tmpfiles->remove(name);
   }
 }
 
 bool NetAccess::filecopyInternal(const KURL& src, const KURL& target, int permissions,
-                                 bool overwrite, bool resume, QWidget* window, bool move)
+                                 bool overwrite, bool resume, TQWidget* window, bool move)
 {
   bJobOK = true; // success unless further error occurs
 
@@ -310,15 +310,15 @@ bool NetAccess::filecopyInternal(const KURL& src, const KURL& target, int permis
                    ? KIO::file_move( src, target, permissions, overwrite, resume )
                    : KIO::file_copy( src, target, permissions, overwrite, resume );
   job->setWindow (window);
-  connect( job, SIGNAL( result (KIO::Job *) ),
-           this, SLOT( slotResult (KIO::Job *) ) );
+  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
+           this, TQT_SLOT( slotResult (KIO::Job *) ) );
 
   enter_loop();
   return bJobOK;
 }
 
 bool NetAccess::dircopyInternal(const KURL::List& src, const KURL& target,
-                                QWidget* window, bool move)
+                                TQWidget* window, bool move)
 {
   bJobOK = true; // success unless further error occurs
 
@@ -326,72 +326,72 @@ bool NetAccess::dircopyInternal(const KURL::List& src, const KURL& target,
                    ? KIO::move( src, target )
                    : KIO::copy( src, target );
   job->setWindow (window);
-  connect( job, SIGNAL( result (KIO::Job *) ),
-           this, SLOT( slotResult (KIO::Job *) ) );
+  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
+           this, TQT_SLOT( slotResult (KIO::Job *) ) );
 
   enter_loop();
   return bJobOK;
 }
 
 bool NetAccess::statInternal( const KURL & url, int details, bool source,
-                              QWidget* window )
+                              TQWidget* window )
 {
   bJobOK = true; // success unless further error occurs
   KIO::StatJob * job = KIO::stat( url, !url.isLocalFile() );
   job->setWindow (window);
   job->setDetails( details );
   job->setSide( source );
-  connect( job, SIGNAL( result (KIO::Job *) ),
-           this, SLOT( slotResult (KIO::Job *) ) );
+  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
+           this, TQT_SLOT( slotResult (KIO::Job *) ) );
   enter_loop();
   return bJobOK;
 }
 
-bool NetAccess::delInternal( const KURL & url, QWidget* window )
+bool NetAccess::delInternal( const KURL & url, TQWidget* window )
 {
   bJobOK = true; // success unless further error occurs
   KIO::Job * job = KIO::del( url );
   job->setWindow (window);
-  connect( job, SIGNAL( result (KIO::Job *) ),
-           this, SLOT( slotResult (KIO::Job *) ) );
+  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
+           this, TQT_SLOT( slotResult (KIO::Job *) ) );
   enter_loop();
   return bJobOK;
 }
 
 bool NetAccess::mkdirInternal( const KURL & url, int permissions,
-                               QWidget* window )
+                               TQWidget* window )
 {
   bJobOK = true; // success unless further error occurs
   KIO::Job * job = KIO::mkdir( url, permissions );
   job->setWindow (window);
-  connect( job, SIGNAL( result (KIO::Job *) ),
-           this, SLOT( slotResult (KIO::Job *) ) );
+  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
+           this, TQT_SLOT( slotResult (KIO::Job *) ) );
   enter_loop();
   return bJobOK;
 }
 
-QString NetAccess::mimetypeInternal( const KURL & url, QWidget* window )
+TQString NetAccess::mimetypeInternal( const KURL & url, TQWidget* window )
 {
   bJobOK = true; // success unless further error occurs
-  m_mimetype = QString::fromLatin1("unknown");
+  m_mimetype = TQString::fromLatin1("unknown");
   KIO::Job * job = KIO::mimetype( url );
   job->setWindow (window);
-  connect( job, SIGNAL( result (KIO::Job *) ),
-           this, SLOT( slotResult (KIO::Job *) ) );
-  connect( job, SIGNAL( mimetype (KIO::Job *, const QString &) ),
-           this, SLOT( slotMimetype (KIO::Job *, const QString &) ) );
+  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
+           this, TQT_SLOT( slotResult (KIO::Job *) ) );
+  connect( job, TQT_SIGNAL( mimetype (KIO::Job *, const TQString &) ),
+           this, TQT_SLOT( slotMimetype (KIO::Job *, const TQString &) ) );
   enter_loop();
   return m_mimetype;
 }
 
-void NetAccess::slotMimetype( KIO::Job *, const QString & type  )
+void NetAccess::slotMimetype( KIO::Job *, const TQString & type  )
 {
   m_mimetype = type;
 }
 
-QString NetAccess::fish_executeInternal(const KURL & url, const QString command, QWidget* window)
+TQString NetAccess::fish_executeInternal(const KURL & url, const TQString command, TQWidget* window)
 {
-  QString target, remoteTempFileName, resultData;
+  TQString target, remoteTempFileName, resultData;
   KURL tempPathUrl;
   KTempFile tmpFile;
   tmpFile.setAutoDelete( true );
@@ -407,26 +407,26 @@ QString NetAccess::fish_executeInternal(const KURL & url, const QString command,
     remoteTempFileName = "/tmp/fishexec_" + remoteTempFileName.mid(pos + 1);
     tempPathUrl.setPath( remoteTempFileName );
     bJobOK = true; // success unless further error occurs
-    QByteArray packedArgs;
-    QDataStream stream( packedArgs, IO_WriteOnly );
+    TQByteArray packedArgs;
+    TQDataStream stream( packedArgs, IO_WriteOnly );
 
     stream << int('X') << tempPathUrl << command;
 
     KIO::Job * job = KIO::special( tempPathUrl, packedArgs, true );
     job->setWindow( window );
-    connect( job, SIGNAL( result (KIO::Job *) ),
-             this, SLOT( slotResult (KIO::Job *) ) );
+    connect( job, TQT_SIGNAL( result (KIO::Job *) ),
+             this, TQT_SLOT( slotResult (KIO::Job *) ) );
     enter_loop();
 
     // since the KIO::special does not provide feedback we need to download the result
     if( NetAccess::download( tempPathUrl, target, window ) )
     {
-      QFile resultFile( target );
+      TQFile resultFile( target );
 
       if (resultFile.open( IO_ReadOnly ))
       {
-        QTextStream ts( &resultFile );
-        ts.setEncoding( QTextStream::Locale ); // Locale??
+        TQTextStream ts( &resultFile );
+        ts.setEncoding( TQTextStream::Locale ); // Locale??
         resultData = ts.read();
         resultFile.close();
         NetAccess::del( tempPathUrl, window );
@@ -440,14 +440,14 @@ QString NetAccess::fish_executeInternal(const KURL & url, const QString command,
   return resultData;
 }
 
-bool NetAccess::synchronousRunInternal( Job* job, QWidget* window, QByteArray* data,
-                                        KURL* finalURL, QMap<QString,QString>* metaData )
+bool NetAccess::synchronousRunInternal( Job* job, TQWidget* window, TQByteArray* data,
+                                        KURL* finalURL, TQMap<TQString,TQString>* metaData )
 {
   job->setWindow( window );
 
   m_metaData = metaData;
   if ( m_metaData ) {
-      for ( QMap<QString, QString>::iterator it = m_metaData->begin(); it != m_metaData->end(); ++it ) {
+      for ( TQMap<TQString, TQString>::iterator it = m_metaData->begin(); it != m_metaData->end(); ++it ) {
           job->addMetaData( it.key(), it.data() );
       }
   }
@@ -459,21 +459,21 @@ bool NetAccess::synchronousRunInternal( Job* job, QWidget* window, QByteArray* d
       }
   }
 
-  connect( job, SIGNAL( result (KIO::Job *) ),
-           this, SLOT( slotResult (KIO::Job *) ) );
+  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
+           this, TQT_SLOT( slotResult (KIO::Job *) ) );
 
-  QMetaObject *meta = job->metaObject();
+  TQMetaObject *meta = job->metaObject();
 
-  static const char dataSignal[] = "data(KIO::Job*,const QByteArray&)";
+  static const char dataSignal[] = "data(KIO::Job*,const TQByteArray&)";
   if ( meta->findSignal( dataSignal ) != -1 ) {
-      connect( job, SIGNAL(data(KIO::Job*,const QByteArray&)),
-               this, SLOT(slotData(KIO::Job*,const QByteArray&)) );
+      connect( job, TQT_SIGNAL(data(KIO::Job*,const TQByteArray&)),
+               this, TQT_SLOT(slotData(KIO::Job*,const TQByteArray&)) );
   }
 
   static const char redirSignal[] = "redirection(KIO::Job*,const KURL&)";
   if ( meta->findSignal( redirSignal ) != -1 ) {
-      connect( job, SIGNAL(redirection(KIO::Job*,const KURL&)),
-               this, SLOT(slotRedirection(KIO::Job*, const KURL&)) );
+      connect( job, TQT_SIGNAL(redirection(KIO::Job*,const KURL&)),
+               this, TQT_SLOT(slotRedirection(KIO::Job*, const KURL&)) );
   }
 
   enter_loop();
@@ -487,13 +487,13 @@ bool NetAccess::synchronousRunInternal( Job* job, QWidget* window, QByteArray* d
 }
 
 // If a troll sees this, he kills me
-void qt_enter_modal( QWidget *widget );
-void qt_leave_modal( QWidget *widget );
+void qt_enter_modal( TQWidget *widget );
+void qt_leave_modal( TQWidget *widget );
 
 void NetAccess::enter_loop()
 {
-  QWidget dummy(0,0,WType_Dialog | WShowModal);
-  dummy.setFocusPolicy( QWidget::NoFocus );
+  TQWidget dummy(0,0,WType_Dialog | WShowModal);
+  dummy.setFocusPolicy( TQWidget::NoFocus );
   qt_enter_modal(&dummy);
   qApp->enter_loop();
   qt_leave_modal(&dummy);
@@ -518,7 +518,7 @@ void NetAccess::slotResult( KIO::Job * job )
   qApp->exit_loop();
 }
 
-void NetAccess::slotData( KIO::Job*, const QByteArray& data )
+void NetAccess::slotData( KIO::Job*, const TQByteArray& data )
 {
   if ( data.isEmpty() )
     return;

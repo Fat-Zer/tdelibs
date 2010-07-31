@@ -21,7 +21,7 @@
 #ifndef KABC_ADDRESSEEDIALOG_H
 #define KABC_ADDRESSEEDIALOG_H
 
-#include <qdict.h>
+#include <tqdict.h>
 
 #include <kdialogbase.h>
 #include <klineedit.h>
@@ -51,7 +51,7 @@ class KABC_EXPORT AddresseeItem : public QListViewItem
       @param parent    The parent listview.
       @param addressee The associated addressee.
     */
-    AddresseeItem( QListView *parent, const Addressee &addressee );
+    AddresseeItem( TQListView *parent, const Addressee &addressee );
 
     /**
       Returns the addressee.
@@ -59,9 +59,9 @@ class KABC_EXPORT AddresseeItem : public QListViewItem
     Addressee addressee() const { return mAddressee; }
 
     /**
-      Method used by QListView to sort the items.
+      Method used by TQListView to sort the items.
     */
-    virtual QString key( int column, bool ascending ) const;
+    virtual TQString key( int column, bool ascending ) const;
 
   private:
     Addressee mAddressee;
@@ -91,7 +91,7 @@ class KABC_EXPORT AddresseeDialog : public KDialogBase
       @param parent parent widget
       @param multiple if true, indicates a multiple selection.
     */
-    AddresseeDialog( QWidget *parent=0, bool multiple=false );
+    AddresseeDialog( TQWidget *parent=0, bool multiple=false );
 
     /**
       Destructor.
@@ -117,7 +117,7 @@ class KABC_EXPORT AddresseeDialog : public KDialogBase
       If the user doesn't select an entry or presses cancel, the returned
       addressee is empty.
     */
-    static Addressee getAddressee( QWidget *parent );
+    static Addressee getAddressee( TQWidget *parent );
 
     /**
       Select multiple address book entries.
@@ -126,12 +126,12 @@ class KABC_EXPORT AddresseeDialog : public KDialogBase
       If the user doesn't select an entry or presses cancel, the returned
       addressee list is empty.
     */
-    static Addressee::List getAddressees( QWidget *parent );
+    static Addressee::List getAddressees( TQWidget *parent );
 
   private slots:
-    void selectItem( const QString & );
-    void updateEdit( QListViewItem *item );
-    void addSelected( QListViewItem *item );
+    void selectItem( const TQString & );
+    void updateEdit( TQListViewItem *item );
+    void addSelected( TQListViewItem *item );
     void removeSelected();
 
   protected slots:
@@ -139,7 +139,7 @@ class KABC_EXPORT AddresseeDialog : public KDialogBase
 
   private:
     void loadAddressBook();
-    void addCompletionItem( const QString &str, QListViewItem *item );
+    void addCompletionItem( const TQString &str, TQListViewItem *item );
 
     bool mMultiple;
 
@@ -150,8 +150,8 @@ class KABC_EXPORT AddresseeDialog : public KDialogBase
 
     AddressBook *mAddressBook;
 
-    QDict<QListViewItem> mItemDict;
-    QDict<QListViewItem> mSelectedDict;
+    TQDict<TQListViewItem> mItemDict;
+    TQDict<TQListViewItem> mSelectedDict;
 
     class AddresseeDialogPrivate;
     AddresseeDialogPrivate *d;

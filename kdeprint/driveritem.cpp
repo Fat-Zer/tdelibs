@@ -20,20 +20,20 @@
 #include "driveritem.h"
 #include "driver.h"
 
-#include <qpainter.h>
+#include <tqpainter.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 
-DriverItem::DriverItem(QListView *parent, DrBase *item)
-: QListViewItem(parent), m_item(item), m_conflict(false)
+DriverItem::DriverItem(TQListView *parent, DrBase *item)
+: TQListViewItem(parent), m_item(item), m_conflict(false)
 {
 	setOpen(depth() < 3);
 	setPixmap(0,SmallIcon("fileprint"));
 	updateText();
 }
 
-DriverItem::DriverItem(QListViewItem *parent, QListViewItem *after, DrBase *item)
-: QListViewItem(parent, after), m_item(item), m_conflict(false)
+DriverItem::DriverItem(TQListViewItem *parent, TQListViewItem *after, DrBase *item)
+: TQListViewItem(parent, after), m_item(item), m_conflict(false)
 {
 	setOpen(depth() < 3);
 	if (item) setPixmap(0,SmallIcon((item->isOption() ? "document" : "folder")));
@@ -46,7 +46,7 @@ void DriverItem::updateText()
 	{
 		QString	s(m_item->get("text"));
 		if (m_item->isOption())
-			s.append(QString::fromLatin1(": <%1>").arg(m_item->prettyText()));
+			s.append(TQString::fromLatin1(": <%1>").arg(m_item->prettyText()));
 		if (m_item->type() == DrBase::List)
 		{
 			// remove all children: something has changed (otherwise this
@@ -69,7 +69,7 @@ void DriverItem::updateText()
 	widthChanged();
 }
 
-void DriverItem::paintCell(QPainter *p, const QColorGroup& cg, int, int width, int)
+void DriverItem::paintCell(TQPainter *p, const TQColorGroup& cg, int, int width, int)
 {
 	// background
 	p->fillRect(0, 0, width, height(), cg.base());
@@ -107,7 +107,7 @@ void DriverItem::paintCell(QPainter *p, const QColorGroup& cg, int, int width, i
 		p->drawText(w,0,w1,height(),Qt::AlignLeft|Qt::AlignVCenter,s);
 		w += w1;
 		p->setPen(cg.text());
-		s = QString::fromLatin1(">");
+		s = TQString::fromLatin1(">");
 		w1 = p->fontMetrics().width(s);
 		p->drawText(w,0,w1,height(),Qt::AlignLeft|Qt::AlignVCenter,s);
 	}

@@ -21,8 +21,8 @@
 #ifndef DNSSDDOMAINBROWSER_H
 #define DNSSDDOMAINBROWSER_H
 
-#include <qobject.h>
-#include <qdict.h>
+#include <tqobject.h>
+#include <tqdict.h>
 #include <dnssd/remoteservice.h>
 
 // KIPC message ID used by kcm module to signal change in browsing domains list
@@ -47,7 +47,7 @@ public:
 	All changes in configuration are applied immediately.
 	@param parent Parent object.
 	 */
-	DomainBrowser(QObject *parent=0);
+	DomainBrowser(TQObject *parent=0);
 	
 	/**
 	Constructor that creates browser for domain list. This does not use global
@@ -57,14 +57,14 @@ public:
 	@param parent Parent object.
 	This process is recursive.
 	 */
-	DomainBrowser(const QStringList& domains, bool recursive=false, QObject *parent=0);
+	DomainBrowser(const TQStringList& domains, bool recursive=false, TQObject *parent=0);
 
 	~DomainBrowser();
 	
 	/**
 	Current list of domains to browse.
 	 */
-	const QStringList& domains() const;
+	const TQStringList& domains() const;
 	
 	/**
 	Starts browsing. To stop destroy this object.
@@ -80,12 +80,12 @@ signals:
 	/**
 	Emitted when domain has been removed from browsing list
 	 */
-	void domainRemoved(const QString&);
+	void domainRemoved(const TQString&);
 	/**
 	New domain has been discovered. Also emitted for domain specified in constructor
 	and in global configuration
 	 */
-	void domainAdded(const QString&);
+	void domainAdded(const TQString&);
 
 protected:
 	virtual void virtual_hook(int,void*);
@@ -93,8 +93,8 @@ private:
 	friend class DomainBrowserPrivate;
 	DomainBrowserPrivate *d;
 
-	void gotNewDomain(const QString&);
-	void gotRemoveDomain(const QString&);
+	void gotNewDomain(const TQString&);
+	void gotRemoveDomain(const TQString&);
 
 private slots:
 	void domainListChanged(int,int);

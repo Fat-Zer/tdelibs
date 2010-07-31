@@ -13,8 +13,8 @@
     *************************************************************************
 */
 
-#include <qfile.h>
-#include <qstring.h>
+#include <tqfile.h>
+#include <tqstring.h>
 #include <kdebug.h>
 #include <kunittest/module.h>
 #include "kconfigcompiler_test.h"
@@ -44,7 +44,7 @@ static CompilerTestSet testCases =
 
 static CompilerTestSet willFailCases =
 {
-	// where is that QDir comming from?
+	// where is that TQDir comming from?
 	//"test9.cpp", NULL
 	NULL
 };
@@ -61,7 +61,7 @@ void KConfigCompiler_Test::testExpectedOutput()
 	// Known to pass test cases
 	while (testCases[ i ])
 	{
-		performCompare(QString::fromLatin1(testCases[ i ]));
+		performCompare(TQString::fromLatin1(testCases[ i ]));
 		++i;
 	}
 
@@ -69,20 +69,20 @@ void KConfigCompiler_Test::testExpectedOutput()
 	i= 0;
 	while (willFailCases[ i ])
 	{
-		performCompare(QString::fromLatin1(willFailCases[ i ]), true);
+		performCompare(TQString::fromLatin1(willFailCases[ i ]), true);
 		++i;
 	}
 }
 
-void KConfigCompiler_Test::performCompare(const QString &fileName, bool fail)
+void KConfigCompiler_Test::performCompare(const TQString &fileName, bool fail)
 {
-	QFile file(fileName);
-	QFile fileRef(QString::fromLatin1(SRCDIR) + QString::fromLatin1("/") + fileName + QString::fromLatin1(".ref"));
+	TQFile file(fileName);
+	TQFile fileRef(TQString::fromLatin1(SRCDIR) + TQString::fromLatin1("/") + fileName + TQString::fromLatin1(".ref"));
 	
 	if ( file.open(IO_ReadOnly) && fileRef.open(IO_ReadOnly) )
 	{
-		QString content = file.readAll();
-		QString contentRef = fileRef.readAll();
+		TQString content = file.readAll();
+		TQString contentRef = fileRef.readAll();
 		
 		if (!fail)
 			CHECK( content, contentRef);

@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "qapplication.h"
-#include "qpushbutton.h"
-#include "qlineedit.h"
-#include "qhbox.h"
-#include "qvbox.h"
+#include "tqapplication.h"
+#include "tqpushbutton.h"
+#include "tqlineedit.h"
+#include "tqhbox.h"
+#include "tqvbox.h"
 #include "qxembed.h"
 
 WId windowWithName(const char *);
@@ -23,13 +23,13 @@ main(int argc, char**argv)
     }
   
 
-  QApplication a(argc,argv);
+  TQApplication a(argc,argv);
 
-  QWidget *main = new QVBox(NULL,"main",Qt::WDestructiveClose);
-  QWidget *top = new QHBox(main);
-  QPushButton *quit = new QPushButton("Quit", top);
-  QObject::connect( quit, SIGNAL(clicked()), main, SLOT(close()) );
-  QLineEdit *edit = new QLineEdit(top);
+  TQWidget *main = new TQVBox(NULL,"main",Qt::WDestructiveClose);
+  TQWidget *top = new TQHBox(main);
+  TQPushButton *quit = new TQPushButton("Quit", top);
+  TQObject::connect( quit, TQT_SIGNAL(clicked()), main, TQT_SLOT(close()) );
+  TQLineEdit *edit = new TQLineEdit(top);
   edit->setText( "Just to see focus changes");
   QXEmbed *embed = new QXEmbed(main);
   embed->setProtocol(QXEmbed::XPLAIN);
@@ -57,7 +57,7 @@ main(int argc, char**argv)
 
 
 #include <X11/Xlib.h>
-#include <qpaintdevice.h>
+#include <tqpaintdevice.h>
 
 // This is lifted from X11 xprop.
 

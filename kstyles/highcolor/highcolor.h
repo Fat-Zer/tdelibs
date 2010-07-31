@@ -30,8 +30,8 @@
 #ifndef __HIGHCOLOR_H
 #define __HIGHCOLOR_H
 
-#include <qbitmap.h>
-#include <qintdict.h>
+#include <tqbitmap.h>
+#include <tqintdict.h>
 #include <kdrawutil.h>
 #include <kpixmap.h>
 #include <kstyle.h>
@@ -42,14 +42,14 @@ enum GradientType{ VSmall=0, VMed, VLarge, HMed, HLarge, GradientCount };
 class GradientSet
 {
 	public:
-		GradientSet(const QColor &baseColor);
+		GradientSet(const TQColor &baseColor);
 		~GradientSet();
 
 		KPixmap* gradient(GradientType type);
-		QColor* color() { return(&c); }
+		TQColor* color() { return(&c); }
 	private:
 		KPixmap *gradients[5];
-		QColor c;
+		TQColor c;
 };
 
 
@@ -65,96 +65,96 @@ class HighColorStyle : public KStyle
 		HighColorStyle( StyleType );
 		virtual ~HighColorStyle();
 
-		void polish( QWidget* widget );
-		void unPolish( QWidget* widget );
+		void polish( TQWidget* widget );
+		void unPolish( TQWidget* widget );
 
-		void renderMenuBlendPixmap( KPixmap& pix, const QColorGroup &cg,
-								 	const QPopupMenu* popup ) const;
+		void renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup &cg,
+								 	const TQPopupMenu* popup ) const;
 
 		void drawKStylePrimitive( KStylePrimitive kpe,
-					QPainter* p,
-					const QWidget* widget,
-					const QRect &r,
-					const QColorGroup &cg,
+					TQPainter* p,
+					const TQWidget* widget,
+					const TQRect &r,
+					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default ) const;
 		
 		void drawPrimitive( PrimitiveElement pe,
-					QPainter* p,
-					const QRect &r,
-					const QColorGroup &cg,
+					TQPainter* p,
+					const TQRect &r,
+					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 		void drawControl( ControlElement element,
-					QPainter *p,
-					const QWidget *widget,
-					const QRect &r,
-					const QColorGroup &cg,
+					TQPainter *p,
+					const TQWidget *widget,
+					const TQRect &r,
+					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 		void drawControlMask( ControlElement element,
-					QPainter *p,
-					const QWidget *widget,
-					const QRect &r,
-					const QStyleOption& = QStyleOption::Default ) const;
+					TQPainter *p,
+					const TQWidget *widget,
+					const TQRect &r,
+					const TQStyleOption& = TQStyleOption::Default ) const;
 		
 		void drawComplexControl( ComplexControl control,
-					QPainter *p,
-					const QWidget *widget,
-					const QRect &r,
-					const QColorGroup &cg,
+					TQPainter *p,
+					const TQWidget *widget,
+					const TQRect &r,
+					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
 					SCFlags controls = SC_All,
 					SCFlags active = SC_None,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 		void drawComplexControlMask( ComplexControl control,
-					QPainter *p,
-					const QWidget *widget,
-					const QRect &r,
-					const QStyleOption& = QStyleOption::Default ) const;
+					TQPainter *p,
+					const TQWidget *widget,
+					const TQRect &r,
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void drawItem( QPainter *p,
-		                const QRect &r,
+		void drawItem( TQPainter *p,
+		                const TQRect &r,
 		                int flags,
-		                const QColorGroup &cg,
+		                const TQColorGroup &cg,
 		                bool enabled,
-		                const QPixmap *pixmap,
-		                const QString &text,
+		                const TQPixmap *pixmap,
+		                const TQString &text,
 		                int len = -1,
-		                const QColor *penColor = 0 ) const;
+		                const TQColor *penColor = 0 ) const;
 
 		int pixelMetric( PixelMetric m, 
-					const QWidget *widget = 0 ) const;
+					const TQWidget *widget = 0 ) const;
 
-		QSize sizeFromContents( ContentsType contents,
-					const QWidget *widget,
-					const QSize &contentSize,
-					const QStyleOption& opt ) const;
+		TQSize sizeFromContents( ContentsType contents,
+					const TQWidget *widget,
+					const TQSize &contentSize,
+					const TQStyleOption& opt ) const;
 
-		QRect subRect( SubRect r, 
-					const QWidget *widget ) const;
+		TQRect subRect( SubRect r, 
+					const TQWidget *widget ) const;
 
 		// Fix Qt3's wacky image positions
-		QPixmap stylePixmap( StylePixmap stylepixmap,
-					const QWidget *widget = 0,
-					const QStyleOption& = QStyleOption::Default ) const;
+		TQPixmap stylePixmap( StylePixmap stylepixmap,
+					const TQWidget *widget = 0,
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 	protected:
-		bool eventFilter( QObject *object, QEvent *event );
+		bool eventFilter( TQObject *object, TQEvent *event );
 
-		void renderGradient( QPainter* p, 
-					const QRect& r, 
-					QColor clr,
+		void renderGradient( TQPainter* p, 
+					const TQRect& r, 
+					TQColor clr,
 					bool horizontal,
 					int px=0, 
 					int py=0,
 					int pwidth=-1,
 					int pheight=-1 ) const;
 
-		QWidget     *hoverWidget;
+		TQWidget     *hoverWidget;
 		StyleType    type;
 		bool         highcolor;
 		mutable bool selectionBackground;

@@ -60,9 +60,9 @@ class KateSpell : public QObject
     void spellcheck( const KateTextCursor &from, const KateTextCursor &to=KateTextCursor() );
 
     void ready(KSpell *);
-    void misspelling( const QString&, const QStringList&, unsigned int );
-    void corrected  ( const QString&, const QString&, unsigned int);
-    void spellResult( const QString& );
+    void misspelling( const TQString&, const TQStringList&, unsigned int );
+    void corrected  ( const TQString&, const TQString&, unsigned int);
+    void spellResult( const TQString& );
     void spellCleanDone();
 
     void locatePosition( uint pos, uint& line, uint& col );

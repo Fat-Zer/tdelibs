@@ -38,15 +38,15 @@ extern "C" {
 # include <resolv.h>
 #endif
 
-#include <qapplication.h>
-#include <qstring.h>
-#include <qcstring.h>
-#include <qptrlist.h>
-#include <qtimer.h>
-#include <qmutex.h>
-#include <qthread.h>
-#include <qwaitcondition.h>
-#include <qsemaphore.h>
+#include <tqapplication.h>
+#include <tqstring.h>
+#include <tqcstring.h>
+#include <tqptrlist.h>
+#include <tqtimer.h>
+#include <tqmutex.h>
+#include <tqthread.h>
+#include <tqwaitcondition.h>
+#include <tqsemaphore.h>
 
 #include <kde_file.h>
 #include <kdebug.h>
@@ -134,8 +134,8 @@ public:
   int useCount;
 
 # ifndef RES_INIT_THREADSAFE
-  QWaitCondition cond;
-  QMutex mutex;
+  TQWaitCondition cond;
+  TQMutex mutex;
 # endif
 
   bool shouldResInit()
@@ -178,7 +178,7 @@ public:
   void release()
   {
 # ifndef RES_INIT_THREADSAFE
-    QMutexLocker locker(&mutex);
+    TQMutexLocker locker(&mutex);
     if (--useCount == 0)
       {
 	if (shouldResInit())
@@ -264,13 +264,13 @@ void KResolverThread::run()
   // initialisation
   // enter the loop already
 
-  //qDebug("KResolverThread(thread %u/%p): started", pid, (void*)QThread::currentThread());
+  //qDebug("KResolverThread(thread %u/%p): started", pid, (void*)TQThread::currentThread());
   KResolverManager::manager()->registerThread(this);
   while (true)
     {
       data = KResolverManager::manager()->requestData(this, ::maxThreadWaitTime);
       //qDebug("KResolverThread(thread %u/%p) got data %p", KResolverManager::pid, 
-      //       (void*)QThread::currentThread(), (void*)data);
+      //       (void*)TQThread::currentThread(), (void*)data);
       if (data)
 	{
 	  // yes, we got data
@@ -292,7 +292,7 @@ void KResolverThread::run()
     }
 
   KResolverManager::manager()->unregisterThread(this);
-  //qDebug("KResolverThread(thread %u/%p): exiting", pid, (void*)QThread::currentThread());
+  //qDebug("KResolverThread(thread %u/%p): exiting", pid, (void*)TQThread::currentThread());
 }
 
 bool KResolverThread::checkResolver()
@@ -366,7 +366,7 @@ RequestData* KResolverManager::requestData(KResolverThread *th, int maxWaitTime)
 
   // lock the mutex, so that the manager thread or other threads won't
   // interfere.
-  QMutexLocker locker(&mutex);
+  TQMutexLocker locker(&mutex);
   RequestData *data = findData(th);
 
   if (data)
@@ -416,7 +416,7 @@ void KResolverManager::releaseData(KResolverThread *, RequestData* data)
   /////
 
   //qDebug("KResolverManager::releaseData(%u/%p): %p has been released", pid, 
-//	 (void*)QThread::currentThread(), (void*)data);
+//	 (void*)TQThread::currentThread(), (void*)data);
 
   if (data->obj)
     {
@@ -434,7 +434,7 @@ void KResolverManager::releaseData(KResolverThread *, RequestData* data)
 void KResolverManager::handleFinished()
 {  
   bool redo = false;
-  QPtrQueue<RequestData> doneRequests;
+  TQPtrQueue<RequestData> doneRequests;
 
   mutex.lock();
 
@@ -601,7 +601,7 @@ void KResolverManager::doNotifying(RequestData *p)
 	  r.setAddress(p->input->node, p->input->service);
 
 	  //qDebug("KResolverManager::doNotifying(%u/%p): for %p whose status is %d and has %d results", 
-		 //pid, (void*)QThread::currentThread(), (void*)p, p->obj->status, r.count());
+		 //pid, (void*)TQThread::currentThread(), (void*)p, p->obj->status, r.count());
 
 	  p->obj->errorcode = r.error();
 	  p->obj->syserror = r.systemError();
@@ -619,7 +619,7 @@ void KResolverManager::doNotifying(RequestData *p)
 	// no, so we must post an event requesting that the signal be emitted
 	// sorry for the C-style cast, but neither static nor reintepret cast work
 	// here; I'd have to do two casts
-	QApplication::postEvent(parent, new QEvent((QEvent::Type)(ResolutionCompleted)));
+	TQApplication::postEvent(parent, new TQEvent((TQEvent::Type)(ResolutionCompleted)));
 
       // release the mutex
       p->obj->mutex.unlock();
@@ -693,7 +693,7 @@ void KResolverManager::dispatch(RequestData *data)
   // is supposed to verify the availability of threads, start
   // any if necessary
 
-  QMutexLocker locker(&mutex);
+  TQMutexLocker locker(&mutex);
 
   // add to the queue
   newRequests.append(data);
@@ -817,6 +817,6 @@ bool KResolverManager::dequeueNew(KResolver* obj)
 // it's expected to be thread-safe
 void KResolverManager::dequeue(KResolver *obj)
 {
-  QMutexLocker locker(&mutex);
+  TQMutexLocker locker(&mutex);
   dequeueNew(obj);
 }

@@ -20,16 +20,16 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qnamespace.h>
-#include <qwindowdefs.h>
+#include <tqnamespace.h>
+#include <tqwindowdefs.h>
 
 #if defined(Q_WS_X11) || defined(Q_WS_WIN) || defined(Q_WS_MACX) // Only compile this module if we're compiling for X11, mac or win32
 
 #include "kkeynative.h"
 #include "kkeyserver_x11.h"
 
-#include <qmap.h>
-#include <qstringlist.h>
+#include <tqmap.h>
+#include <tqstringlist.h>
 #include "kckey.h"
 #include <kdebug.h>
 #include <klocale.h>

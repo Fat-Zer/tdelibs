@@ -20,28 +20,28 @@
 
 */
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include "kded.h"
 #include "kdedmodule.h"
 #include "kconfigdata.h"
 
-typedef QMap<KEntryKey, KSharedPtr<KShared> > KDEDObjectMap;
+typedef TQMap<KEntryKey, KSharedPtr<KShared> > KDEDObjectMap;
 
 class KDEDModulePrivate
 {
 public:
   KDEDObjectMap *objMap;
   int timeout;
-  QTimer timer;
+  TQTimer timer;
 };
 
-KDEDModule::KDEDModule(const QCString &name) : QObject(), DCOPObject(name)
+KDEDModule::KDEDModule(const TQCString &name) : TQObject(), DCOPObject(name)
 {
    d = new KDEDModulePrivate;
    d->objMap = 0;
    d->timeout = 0;
-   connect(&(d->timer), SIGNAL(timeout()), this, SLOT(idle()));
+   connect(&(d->timer), TQT_SIGNAL(timeout()), this, TQT_SLOT(idle()));
 }
   
 KDEDModule::~KDEDModule()
@@ -62,7 +62,7 @@ void KDEDModule::resetIdle()
       d->timer.start(d->timeout, true);
 }
 
-void KDEDModule::insert(const QCString &app, const QCString &key, KShared *obj)
+void KDEDModule::insert(const TQCString &app, const TQCString &key, KShared *obj)
 {
    if (!d->objMap)
       d->objMap = new KDEDObjectMap;
@@ -80,7 +80,7 @@ void KDEDModule::insert(const QCString &app, const QCString &key, KShared *obj)
    resetIdle();
 }
 
-KShared * KDEDModule::find(const QCString &app, const QCString &key)
+KShared * KDEDModule::find(const TQCString &app, const TQCString &key)
 {
    if (!d->objMap)
       return 0;
@@ -93,7 +93,7 @@ KShared * KDEDModule::find(const QCString &app, const QCString &key)
    return it.data().data();
 }
   
-void KDEDModule::remove(const QCString &app, const QCString &key)
+void KDEDModule::remove(const TQCString &app, const TQCString &key)
 {
    if (!d->objMap)
       return;
@@ -103,7 +103,7 @@ void KDEDModule::remove(const QCString &app, const QCString &key)
    resetIdle();
 }
 
-void KDEDModule::removeAll(const QCString &app)
+void KDEDModule::removeAll(const TQCString &app)
 {
    if (!d->objMap)
       return;

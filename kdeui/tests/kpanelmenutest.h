@@ -2,13 +2,13 @@
 #define __KPANELMENUTEST_H
 
 #include <kpanelappmenu.h>
-#include <qlabel.h>
+#include <tqlabel.h>
 
 class TestWidget : public QLabel
 {
     Q_OBJECT
 public:
-    TestWidget(QWidget *parent=0, const char *name=0);
+    TestWidget(TQWidget *parent=0, const char *name=0);
     ~TestWidget(){delete testMenu;}
 public slots:
     void slotMenuCalled(int id);

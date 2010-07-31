@@ -21,7 +21,7 @@
 #define KICONVIEWSEARCHLINE_H
 
 #include <klineedit.h>
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 class QIconView;
 class QIconViewItem;
@@ -31,7 +31,7 @@ class QIconViewItem;
  * iconview based on a simple text search.
  *
  * No changes to the application other than instantiating this class with an
- * appropriate QIconView should be needed.
+ * appropriate TQIconView should be needed.
  *
  * @since 3.3
  */
@@ -42,21 +42,21 @@ class KDEUI_EXPORT KIconViewSearchLine : public KLineEdit
 public:
 
   /**
-   * Constructs a KIconViewSearchLine with \a iconView being the QIconView to
+   * Constructs a KIconViewSearchLine with \a iconView being the TQIconView to
    * be filtered.
    *
    * If \a iconView is null then the widget will be disabled until a iconview
    * is set with setIconView().
    */
-  KIconViewSearchLine( QWidget *parent = 0,
-		       QIconView *iconView = 0,
+  KIconViewSearchLine( TQWidget *parent = 0,
+		       TQIconView *iconView = 0,
 		       const char *name = 0 );
 
   /**
-   * Constructs a KIconViewSearchLine without any QIconView to filter. The
-   * QIconView object has to be set later with setIconView().
+   * Constructs a KIconViewSearchLine without any TQIconView to filter. The
+   * TQIconView object has to be set later with setIconView().
    */
-  KIconViewSearchLine( QWidget *parent, const char *name );
+  KIconViewSearchLine( TQWidget *parent, const char *name );
 
   /**
    * Destroys the KIconViewSearchLine.
@@ -75,7 +75,7 @@ public:
    *
    * @see setIconView()
    */
-  QIconView *iconView() const;
+  TQIconView *iconView() const;
 
 
 public slots:
@@ -83,7 +83,7 @@ public slots:
    * Updates search to only make visible the items that match \a s.  If
    * \a s is null then the line edit's text will be used.
    */
-  virtual void updateSearch( const QString &s = QString::null );
+  virtual void updateSearch( const TQString &s = TQString::null );
 
   /**
    * Make the search case sensitive or case insensitive.
@@ -93,12 +93,12 @@ public slots:
   void setCaseSensitive( bool cs );
 
   /**
-   * Sets the QIconView that is filtered by this search line.  If \a lv is null
+   * Sets the TQIconView that is filtered by this search line.  If \a lv is null
    * then the widget will be disabled.
    *
    * @see iconView()
    */
-  void setIconView( QIconView *iv );
+  void setIconView( TQIconView *iv );
 
 
   /**
@@ -109,7 +109,7 @@ public slots:
   /**
    * Must be called before updateSearch() whenever an icon is deleted.
    */
-  void iconDeleted(const QString &filename);
+  void iconDeleted(const TQString &filename);
 
 
 protected:
@@ -118,19 +118,19 @@ protected:
    * based on the value of caseSensitive().  This can be overridden in
    * subclasses to implement more complicated matching schemes.
    */
-  virtual bool itemMatches( const QIconViewItem *item,
-			    const QString &s ) const;
+  virtual bool itemMatches( const TQIconViewItem *item,
+			    const TQString &s ) const;
 
 
   /**
    * Do initialization common to both constructors.
    */
-  void init( QIconView *iconView = 0 );
+  void init( TQIconView *iconView = 0 );
 
   /**
    * Hide item.
    */
-  void hideItem( QIconViewItem *item );
+  void hideItem( TQIconViewItem *item );
 
   /**
    * Show item.
@@ -138,7 +138,7 @@ protected:
    * Just unhide it, doesn't necessary show it on screen, for that use
    * iconView->ensureItemVisible()
    */
-  void showItem( QIconViewItem *item );
+  void showItem( TQIconViewItem *item );
 
 
 protected slots:
@@ -155,7 +155,7 @@ protected slots:
    *
    * @see activateSearch()
    */
-  void queueSearch( const QString &s );
+  void queueSearch( const TQString &s );
 
   /**
    * When the timer started with queueSearch() expires this slot is called.

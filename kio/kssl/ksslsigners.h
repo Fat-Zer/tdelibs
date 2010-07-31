@@ -25,7 +25,7 @@
 class KSSLCertificate;
 class DCOPClient;
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -72,7 +72,7 @@ public:
 	 *  @param code allow it to sign for code signing
 	 *  @return true on success
 	 */
-	bool addCA(QString cert, bool ssl, bool email, bool code); 
+	bool addCA(TQString cert, bool ssl, bool email, bool code); 
 
 	/**
 	 *  Regenerate the signer-root file from the user's settings.
@@ -92,7 +92,7 @@ public:
 	 *  @param subject the certificate subject
 	 *  @return true if it can be used for SSL
 	 */
-	bool useForSSL(QString subject);
+	bool useForSSL(TQString subject);
 
 	/**
 	 *  Determine if a certificate can be used for S/MIME certificate signing
@@ -106,7 +106,7 @@ public:
 	 *  @param subject the certificate subject
 	 *  @return true if it can be used for S/MIME
 	 */
-	bool useForEmail(QString subject);
+	bool useForEmail(TQString subject);
 
 	/**
 	 *  Determine if a certificate can be used for code certificate signing
@@ -120,7 +120,7 @@ public:
 	 *  @param subject the certificate subject
 	 *  @return true if it can be used for code
 	 */
-	bool useForCode(QString subject);
+	bool useForCode(TQString subject);
 
 	/**
 	 *  Remove a certificate signer from the database
@@ -134,14 +134,14 @@ public:
 	 *  @param subject the subject of the certificate to remove
 	 *  @return true on success
 	 */
-	bool remove(QString subject);
+	bool remove(TQString subject);
 
 	/**
 	 *  List the signers in the database.
 	 *  @return the list of subjects in the database
 	 *  @see getCert
 	 */
-	QStringList list();
+	TQStringList list();
 
 	/**
 	 *  Get a signer certificate from the database.
@@ -149,7 +149,7 @@ public:
 	 *  @param subject the subject of the certificate desired
 	 *  @return the base64 encoded certificate
 	 */
-	QString getCert(QString subject);
+	TQString getCert(TQString subject);
 
 	/**
 	 *  Set the use of a particular entry in the certificate signer database.
@@ -159,7 +159,7 @@ public:
 	 *  @param code allow this for code certificate signing
 	 *  @return true on success
 	 */
-	bool setUse(QString subject, bool ssl, bool email, bool code);
+	bool setUse(TQString subject, bool ssl, bool email, bool code);
 
 private:
 	class KSSLSignersPrivate;

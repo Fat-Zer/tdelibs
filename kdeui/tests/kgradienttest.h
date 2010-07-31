@@ -7,16 +7,16 @@
 #ifndef __KGRADIENT_TEST_H
 #define __KGRADIENT_TEST_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kpixmap.h>
 
 class KGradientWidget : public QWidget
 {
 public:
-    KGradientWidget(QWidget *parent=0, const char *name=0)
-        : QWidget(parent, name){;}
+    KGradientWidget(TQWidget *parent=0, const char *name=0)
+        : TQWidget(parent, name){;}
 protected:
-    void paintEvent(QPaintEvent *ev);
+    void paintEvent(TQPaintEvent *ev);
 private:
     KPixmap pix;
 };

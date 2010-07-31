@@ -24,7 +24,7 @@
 #include <config.h>
 #endif
 
-#include <qglobal.h>
+#include <tqglobal.h>
 
 #if defined(USE_POSIX_ACL) && !defined(HAVE_NON_POSIX_ACL_EXTENSIIONS)
 

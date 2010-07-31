@@ -21,7 +21,7 @@
 #ifndef KPAC_DOWNLOADER_H
 #define KPAC_DOWNLOADER_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kurl.h>
 
@@ -33,29 +33,29 @@ namespace KPAC
     {
         Q_OBJECT
     public:
-        Downloader( QObject* );
+        Downloader( TQObject* );
 
         void download( const KURL& );
         const KURL& scriptURL() { return m_scriptURL; }
-        const QString& script() { return m_script; }
-        const QString& error() { return m_error; }
+        const TQString& script() { return m_script; }
+        const TQString& error() { return m_error; }
 
     signals:
         void result( bool );
 
     protected:
         virtual void failed();
-        void setError( const QString& );
+        void setError( const TQString& );
 
     private slots:
-        void data( KIO::Job*, const QByteArray& );
+        void data( KIO::Job*, const TQByteArray& );
         void result( KIO::Job* );
 
     private:
-        QByteArray m_data;
+        TQByteArray m_data;
         KURL m_scriptURL;
-        QString m_script;
-        QString m_error;
+        TQString m_script;
+        TQString m_error;
     };
 }
 

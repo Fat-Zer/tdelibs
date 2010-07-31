@@ -7,18 +7,18 @@
 #ifndef __KBLEND_TEST_H
 #define __KBLEND_TEST_H
 
-#include <qwidget.h>
-#include <qimage.h>
+#include <tqwidget.h>
+#include <tqimage.h>
 
 class KBlendWidget : public QWidget
 {
 public:
-    KBlendWidget(QWidget *parent=0, const char *name=0);
+    KBlendWidget(TQWidget *parent=0, const char *name=0);
 protected:
-    void paintEvent(QPaintEvent *ev);
+    void paintEvent(TQPaintEvent *ev);
 private:
-    QImage image, original;
-    QColor bgnd;
+    TQImage image, original;
+    TQColor bgnd;
 };
 
 #endif

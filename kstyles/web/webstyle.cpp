@@ -21,16 +21,16 @@
 #define INCLUDE_MENUITEM_DEF
 #endif
 
-#include <qmenudata.h>
-#include <qpalette.h>
-#include <qbitmap.h>
-#include <qtabbar.h>
-#include <qpointarray.h>
-#include <qscrollbar.h>
-#include <qframe.h>
-#include <qpushbutton.h>
-#include <qdrawutil.h>
-#include <qpainter.h>
+#include <tqmenudata.h>
+#include <tqpalette.h>
+#include <tqbitmap.h>
+#include <tqtabbar.h>
+#include <tqpointarray.h>
+#include <tqscrollbar.h>
+#include <tqframe.h>
+#include <tqpushbutton.h>
+#include <tqdrawutil.h>
+#include <tqpainter.h>
 
 #include <kapplication.h>
 #include <kdrawutil.h>
@@ -41,15 +41,15 @@
 #include "webstyle.h"
 
 static const int  _indicatorSize = 13;
-static QButton *  _highlightedButton = 0;
+static TQButton *  _highlightedButton = 0;
 static const int  _scrollBarExtent = 14;
 
-static QFrame *   _currentFrame = 0;
+static TQFrame *   _currentFrame = 0;
 static int        _savedFrameLineWidth;
 static int        _savedFrameMidLineWidth;
 static ulong      _savedFrameStyle;
 
-static QColor contrastingForeground(const QColor & fg, const QColor & bg)
+static TQColor contrastingForeground(const TQColor & fg, const TQColor & bg)
 {
   int h, s, vbg, vfg;
 
@@ -73,26 +73,26 @@ static QColor contrastingForeground(const QColor & fg, const QColor & bg)
   static void
 scrollBarControlsMetrics
 (
- const QScrollBar * sb,
+ const TQScrollBar * sb,
  int sliderStart,
  int /* sliderMin */,
  int sliderMax,
  int sliderLength,
  int buttonDim,
- QRect & rSub,
- QRect & rAdd,
- QRect & rSubPage,
- QRect & rAddPage,
- QRect & rSlider
+ TQRect & rSub,
+ TQRect & rAdd,
+ TQRect & rSubPage,
+ TQRect & rAddPage,
+ TQRect & rSlider
  )
 {
-  bool horizontal = sb->orientation() == QScrollBar::Horizontal;
+  bool horizontal = sb->orientation() == TQScrollBar::Horizontal;
 
   int len     = horizontal ? sb->width()  : sb->height();
 
   int extent  = horizontal ? sb->height() : sb->width();
 
-  QColorGroup g = sb->colorGroup();
+  TQColorGroup g = sb->colorGroup();
 
   if (sliderStart > sliderMax)
     sliderStart = sliderMax;
@@ -162,7 +162,7 @@ scrollBarControlsMetrics
   static void
 drawFunkyRect
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
@@ -190,7 +190,7 @@ drawFunkyRect
           1,  h - 2
     };
 
-    p->drawPoints(QPointArray(4, pointList));
+    p->drawPoints(TQPointArray(4, pointList));
   }
   else
   {
@@ -211,7 +211,7 @@ drawFunkyRect
           1,  h - 3
     };
 
-    p->drawPoints(QPointArray(8, pointList));
+    p->drawPoints(TQPointArray(8, pointList));
   }
 
   p->translate(-x, -y);
@@ -230,34 +230,34 @@ WebStyle::~WebStyle()
 }
 
   void
-WebStyle::polish(QApplication *)
+WebStyle::polish(TQApplication *)
 {
   // Empty.
 }
 
   void
-WebStyle::polish(QPalette &)
+WebStyle::polish(TQPalette &)
 {
   // Empty.
 }
 
   void
-WebStyle::unPolish(QApplication *)
+WebStyle::unPolish(TQApplication *)
 {
   // Empty.
 }
 
   void
-WebStyle::polish(QWidget * w)
+WebStyle::polish(TQWidget * w)
 {
-  if (w->inherits("QPushButton"))
+  if (w->inherits("TQPushButton"))
     w->installEventFilter(this);
 
-  else if (w->inherits("QGroupBox") || w->inherits("QFrame"))
+  else if (w->inherits("TQGroupBox") || w->inherits("TQFrame"))
   {
-    QFrame * f(static_cast<QFrame *>(w));
+    TQFrame * f(static_cast<TQFrame *>(w));
 
-    if (f->frameStyle() != QFrame::NoFrame)
+    if (f->frameStyle() != TQFrame::NoFrame)
     {
       _currentFrame = f;
 
@@ -265,29 +265,29 @@ WebStyle::polish(QWidget * w)
       _savedFrameMidLineWidth = f->midLineWidth();
       _savedFrameStyle = f->frameStyle();
 
-      if (f->frameShape() == QFrame::HLine || f->frameShape() == QFrame::VLine)
+      if (f->frameShape() == TQFrame::HLine || f->frameShape() == TQFrame::VLine)
       {
         f->setMidLineWidth(1);
-        f->setFrameStyle(f->frameShape() | QFrame::Plain);
+        f->setFrameStyle(f->frameShape() | TQFrame::Plain);
       }
       else
       {
         f->setLineWidth(1);
-        f->setFrameStyle(QFrame::Box | QFrame::Plain);
+        f->setFrameStyle(TQFrame::Box | TQFrame::Plain);
       }
     }
   }
 }
 
   void
-WebStyle::unPolish(QWidget * w)
+WebStyle::unPolish(TQWidget * w)
 {
-  if (w->inherits("QPushButton"))
+  if (w->inherits("TQPushButton"))
     w->removeEventFilter(this);
 
   else if (w == _currentFrame)
   {
-    QFrame * f(static_cast<QFrame *>(w));
+    TQFrame * f(static_cast<TQFrame *>(w));
 
     f->setLineWidth(_savedFrameLineWidth);
     f->setMidLineWidth(_savedFrameMidLineWidth);
@@ -296,16 +296,16 @@ WebStyle::unPolish(QWidget * w)
 }
 
   bool
-WebStyle::eventFilter(QObject * o, QEvent * e)
+WebStyle::eventFilter(TQObject * o, TQEvent * e)
 {
-  QPushButton * pb(static_cast<QPushButton *>(o));
+  TQPushButton * pb(static_cast<TQPushButton *>(o));
 
-  if (e->type() == QEvent::Enter)
+  if (e->type() == TQEvent::Enter)
   {
     _highlightedButton = pb;
     pb->repaint(false);
   }
-  else if (e->type() == QEvent::Leave)
+  else if (e->type() == TQEvent::Leave)
   {
     _highlightedButton = 0;
     pb->repaint(false);
@@ -317,14 +317,14 @@ WebStyle::eventFilter(QObject * o, QEvent * e)
   void
 WebStyle::drawButton
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  bool sunken,
- const QBrush * fill
+ const TQBrush * fill
 )
 {
   p->save();
@@ -344,41 +344,41 @@ WebStyle::drawButton
   QRect
 WebStyle::buttonRect(int x, int y, int w, int h)
 {
-  return QRect(x + 2, y + 2, w - 4, h - 4);
+  return TQRect(x + 2, y + 2, w - 4, h - 4);
 }
 
   void
 WebStyle::drawBevelButton
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  bool sunken,
- const QBrush * fill
+ const TQBrush * fill
 )
 {
   drawButton(p, x, y, w, h, g, sunken, fill);
 }
 
   void
-WebStyle::drawPushButton(QPushButton * b, QPainter * p)
+WebStyle::drawPushButton(TQPushButton * b, TQPainter * p)
 {
   // Note: painter is already translated for us.
 
   bool sunken(b->isDown() || b->isOn());
   bool hl(_highlightedButton == b);
 
-  QColor bg(b->colorGroup().button());
+  TQColor bg(b->colorGroup().button());
 
   p->save();
-  p->fillRect(b->rect(), b->colorGroup().brush(QColorGroup::Background));
+  p->fillRect(b->rect(), b->colorGroup().brush(TQColorGroup::Background));
 
   if (b->isDefault())
   {
-    QColor c(hl ? b->colorGroup().highlight() : b->colorGroup().mid());
+    TQColor c(hl ? b->colorGroup().highlight() : b->colorGroup().mid());
 
     p->setPen(contrastingForeground(c, bg));
 
@@ -391,7 +391,7 @@ WebStyle::drawPushButton(QPushButton * b, QPainter * p)
      4,
      b->width() - 8,
      b->height() - 8,
-     b->colorGroup().brush(QColorGroup::Button)
+     b->colorGroup().brush(TQColorGroup::Button)
     );
 
   if (b->isEnabled())
@@ -419,7 +419,7 @@ WebStyle::drawPushButton(QPushButton * b, QPainter * p)
 }
 
   void
-WebStyle::drawPushButtonLabel(QPushButton * b, QPainter * p)
+WebStyle::drawPushButtonLabel(TQPushButton * b, TQPainter * p)
 {
   // This is complicated stuff and we don't really want to mess with it.
 
@@ -429,8 +429,8 @@ WebStyle::drawPushButtonLabel(QPushButton * b, QPainter * p)
   void
 WebStyle::drawScrollBarControls
 (
- QPainter * p,
- const QScrollBar * sb,
+ TQPainter * p,
+ const TQScrollBar * sb,
  int sliderStart,
  uint controls,
  uint activeControl
@@ -442,7 +442,7 @@ WebStyle::drawScrollBarControls
 
   scrollBarMetrics(sb, sliderMin, sliderMax, sliderLength, buttonDim);
 
-  QRect rSub, rAdd, rSubPage, rAddPage, rSlider;
+  TQRect rSub, rAdd, rSubPage, rAddPage, rSlider;
 
   scrollBarControlsMetrics
     (
@@ -459,13 +459,13 @@ WebStyle::drawScrollBarControls
      rSlider
     );
 
-  QColorGroup g(sb->colorGroup());
+  TQColorGroup g(sb->colorGroup());
 
   if (controls & AddLine && rAdd.isValid())
   {
     bool active(activeControl & AddLine);
 
-    QColor c(active ? g.highlight() : g.dark());
+    TQColor c(active ? g.highlight() : g.dark());
 
     p->setPen(c);
     p->setBrush(g.button());
@@ -494,7 +494,7 @@ WebStyle::drawScrollBarControls
   {
     bool active(activeControl & SubLine);
 
-    QColor c(active ? g.highlight() : g.dark());
+    TQColor c(active ? g.highlight() : g.dark());
 
     p->setPen(c);
     p->setBrush(g.button());
@@ -551,7 +551,7 @@ WebStyle::drawScrollBarControls
         rSlider.width()  - 4
         ;
 
-      QPoint center(rSlider.center());
+      TQPoint center(rSlider.center());
 
       if (Horizontal == sb->orientation())
       {
@@ -575,12 +575,12 @@ WebStyle::drawScrollBarControls
   p->restore();
 }
 
-  QStyle::ScrollControl
+  TQStyle::ScrollControl
 WebStyle::scrollBarPointOver
 (
- const QScrollBar * sb,
+ const TQScrollBar * sb,
  int sliderStart,
- const QPoint & point
+ const TQPoint & point
 )
 {
   if (!sb->rect().contains(point))
@@ -590,7 +590,7 @@ WebStyle::scrollBarPointOver
 
   scrollBarMetrics(sb, sliderMin, sliderMax, sliderLength, buttonDim);
 
-  if (sb->orientation() == QScrollBar::Horizontal)
+  if (sb->orientation() == TQScrollBar::Horizontal)
   {
     int x = point.x();
 
@@ -631,7 +631,7 @@ WebStyle::scrollBarPointOver
   void
 WebStyle::scrollBarMetrics
 (
- const QScrollBar * sb,
+ const TQScrollBar * sb,
  int & sliderMin,
  int & sliderMax,
  int & sliderLength,
@@ -640,7 +640,7 @@ WebStyle::scrollBarMetrics
 {
   int maxlen;
 
-  bool horizontal = sb->orientation() == QScrollBar::Horizontal;
+  bool horizontal = sb->orientation() == TQScrollBar::Horizontal;
 
   int len = (horizontal) ? sb->width() : sb->height();
 
@@ -674,18 +674,18 @@ WebStyle::scrollBarMetrics
   QSize
 WebStyle::indicatorSize() const
 {
-  return QSize(_indicatorSize, _indicatorSize);
+  return TQSize(_indicatorSize, _indicatorSize);
 }
 
   void
 WebStyle::drawIndicator
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  int state,
  bool down,
  bool enabled
@@ -706,11 +706,11 @@ WebStyle::drawIndicator
 
   p->drawRect(x, y, w, h);
 
-  if (state != QButton::Off)
+  if (state != TQButton::Off)
   {
     p->fillRect(x + 2, y + 2, w - 4, h - 4, enabled ? g.highlight() : g.mid());
 
-    if (state == QButton::NoChange)
+    if (state == TQButton::NoChange)
     {
       p->fillRect(x + 4, y + 4, w - 8, h - 8, g.background());
     }
@@ -722,18 +722,18 @@ WebStyle::drawIndicator
   QSize
 WebStyle::exclusiveIndicatorSize() const
 {
-  return QSize(_indicatorSize, _indicatorSize);
+  return TQSize(_indicatorSize, _indicatorSize);
 }
 
   void
 WebStyle::drawExclusiveIndicator
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  bool on,
  bool down,
  bool enabled
@@ -752,7 +752,7 @@ WebStyle::drawExclusiveIndicator
     p->setPen(g.mid());
   }
 
-  p->setBrush(g.brush(QColorGroup::Background));
+  p->setBrush(g.brush(TQColorGroup::Background));
 
   // Avoid misshapen ellipses. Qt or X bug ? Who knows...
 
@@ -777,7 +777,7 @@ WebStyle::drawExclusiveIndicator
   void
 WebStyle::drawIndicatorMask
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
@@ -791,7 +791,7 @@ WebStyle::drawIndicatorMask
   void
 WebStyle::drawExclusiveIndicatorMask
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
@@ -813,22 +813,22 @@ WebStyle::drawExclusiveIndicatorMask
   void
 WebStyle::drawComboButton
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  bool sunken,
  bool editable,
  bool enabled,
- const QBrush * fill
+ const TQBrush * fill
 )
 {
   p->save();
 
   p->setPen(NoPen);
-  p->setBrush(0 == fill ? g.brush(QColorGroup::Background) : *fill);
+  p->setBrush(0 == fill ? g.brush(TQColorGroup::Background) : *fill);
   p->drawRect(x, y, w, h);
 
   if (enabled)
@@ -874,13 +874,13 @@ WebStyle::drawComboButton
   QRect
 WebStyle::comboButtonRect(int x, int y, int w, int h)
 {
-  return QRect(x + 2, y + 2, w - 20, h - 4);
+  return TQRect(x + 2, y + 2, w - 20, h - 4);
 }
 
   QRect
 WebStyle::comboButtonFocusRect(int x, int y, int w, int h)
 {
-  return QRect(x + 2, y + 2, w - 20, h - 4);
+  return TQRect(x + 2, y + 2, w - 20, h - 4);
 }
 
   int
@@ -892,19 +892,19 @@ WebStyle::sliderLength() const
   void
 WebStyle::drawSliderGroove
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  QCOORD /* c */,
  Orientation o
 )
 {
   p->save();
 
-  p->setPen(QPen(g.dark(), 0, Qt::DotLine));
+  p->setPen(TQPen(g.dark(), 0, Qt::DotLine));
 
   if( o == Qt::Horizontal )
     p->drawLine(x, y + h / 2, w, y + h / 2);
@@ -918,16 +918,16 @@ WebStyle::drawSliderGroove
   void
 WebStyle::drawArrow
 (
- QPainter * p,
+ TQPainter * p,
  Qt::ArrowType type,
  bool down,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  bool enabled,
- const QBrush * fill
+ const TQBrush * fill
 )
 {
   KStyle::drawArrow(p, type, down, x, y, w, h, g, enabled, fill);
@@ -936,12 +936,12 @@ WebStyle::drawArrow
   void
 WebStyle::drawSlider
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  Orientation o,
  bool /* tickAbove */,
  bool /* tickBelow */
@@ -967,14 +967,14 @@ WebStyle::drawSlider
   void
 WebStyle::drawKToolBar
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  KToolBarPos /* pos */,
- QBrush * /* fill */
+ TQBrush * /* fill */
 )
 {
   p->save();
@@ -987,14 +987,14 @@ WebStyle::drawKToolBar
   void
 WebStyle::drawKBarHandle
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  KToolBarPos /* pos */,
- QBrush * /* fill */
+ TQBrush * /* fill */
 )
 {
   p->save();
@@ -1007,14 +1007,14 @@ WebStyle::drawKBarHandle
   void
 WebStyle::drawKMenuBar
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  bool /* macMode */,
- QBrush * /* fill */
+ TQBrush * /* fill */
 )
 {
   p->save();
@@ -1027,36 +1027,36 @@ WebStyle::drawKMenuBar
   void
 WebStyle::drawKToolBarButton
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  bool sunken,
  bool raised,
  bool enabled,
  bool popup,
  KToolButtonType type,
- const QString & btext,
- const QPixmap * pixmap,
- QFont * font,
- QWidget * button
+ const TQString & btext,
+ const TQPixmap * pixmap,
+ TQFont * font,
+ TQWidget * button
 )
 {
   bool toggleAndOn = false;
 
-  if (button->inherits("QButton"))
+  if (button->inherits("TQButton"))
   {
-    QButton * b = static_cast<QButton *>(button);
+    TQButton * b = static_cast<TQButton *>(button);
     toggleAndOn = b->isToggleButton() && b->isOn();
   }
 
   p->save();
 
-  QColor borderColour;
-  QColor textColour;
-  QColor fillColour;
+  TQColor borderColour;
+  TQColor textColour;
+  TQColor fillColour;
 
   if (!enabled)
   {
@@ -1249,29 +1249,29 @@ WebStyle::drawKToolBarButton
   void
 WebStyle::drawKMenuItem
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  bool active,
- QMenuItem * mi,
- QBrush * /* fill */
+ TQMenuItem * mi,
+ TQBrush * /* fill */
 )
 {
   p->save();
 
-  QColor bg(active ? g.highlight() : g.background());
+  TQColor bg(active ? g.highlight() : g.background());
 
   p->fillRect(x, y, w, h, bg);
 
-  QColor textColour =
+  TQColor textColour =
     active ?
     contrastingForeground(g.highlightedText(), bg) :
     contrastingForeground(g.text(), bg);
 
-  QApplication::style().drawItem
+  TQApplication::style().drawItem
     (
      p,
      x,
@@ -1293,12 +1293,12 @@ WebStyle::drawKMenuItem
   void
 WebStyle::drawPopupMenuItem
 (
- QPainter * p,
+ TQPainter * p,
  bool checkable,
  int maxpmw,
  int tab,
- QMenuItem * mi,
- const QPalette & pal,
+ TQMenuItem * mi,
+ const TQPalette & pal,
  bool act,
  bool enabled,
  int x,
@@ -1314,13 +1314,13 @@ WebStyle::drawPopupMenuItem
   void
 WebStyle::drawKProgressBlock
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
- QBrush * fill
+ const TQColorGroup & g,
+ TQBrush * fill
 )
 {
   p->save();
@@ -1335,10 +1335,10 @@ WebStyle::drawKProgressBlock
   void
 WebStyle::drawFocusRect
 (
- QPainter * p,
- const QRect & r,
- const QColorGroup & g,
- const QColor * pen,
+ TQPainter * p,
+ const TQRect & r,
+ const TQColorGroup & g,
+ const TQColor * pen,
  bool atBorder
 )
 {
@@ -1350,7 +1350,7 @@ WebStyle::drawFocusRect
 
   if (atBorder)
   {
-    p->drawRect(QRect(r.x() + 1, r.y() + 1, r.width() - 2, r.height() - 2));
+    p->drawRect(TQRect(r.x() + 1, r.y() + 1, r.width() - 2, r.height() - 2));
   }
   else
   {
@@ -1363,15 +1363,15 @@ WebStyle::drawFocusRect
   void
 WebStyle::drawPanel
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  bool /* sunken */,
  int /* lineWidth */,
- const QBrush * fill
+ const TQBrush * fill
 )
 {
   p->save();
@@ -1388,14 +1388,14 @@ WebStyle::drawPanel
   void
 WebStyle::drawPopupPanel
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  int /* lineWidth */,
- const QBrush * fill
+ const TQBrush * fill
 )
 {
   p->save();
@@ -1412,12 +1412,12 @@ WebStyle::drawPopupPanel
   void
 WebStyle::drawSeparator
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
+ const TQColorGroup & g,
  bool /* sunken */,
  int /* lineWidth */,
  int /* midLineWidth */
@@ -1442,25 +1442,25 @@ WebStyle::drawSeparator
   void
 WebStyle::drawTab
 (
- QPainter * p,
- const QTabBar * tabBar,
- QTab * tab,
+ TQPainter * p,
+ const TQTabBar * tabBar,
+ TQTab * tab,
  bool selected
 )
 {
-  QRect r(tab->rect());
+  TQRect r(tab->rect());
 
-  QColorGroup g(tabBar->colorGroup());
+  TQColorGroup g(tabBar->colorGroup());
 
   p->save();
 
   p->setPen(selected ? g.dark() : g.mid());
-  p->fillRect(r, g.brush(QColorGroup::Background));
+  p->fillRect(r, g.brush(TQColorGroup::Background));
 
   switch (tabBar->shape())
   {
-    case QTabBar::RoundedAbove:
-    case QTabBar::TriangularAbove:
+    case TQTabBar::RoundedAbove:
+    case TQTabBar::TriangularAbove:
       p->drawLine(r.left(), r.top(), r.left(), r.bottom());
       p->drawLine(r.left(), r.top(), r.right(), r.top());
       p->drawLine(r.right(), r.top(), r.right(), r.bottom());
@@ -1470,8 +1470,8 @@ WebStyle::drawTab
         p->drawLine(r.left(), r.bottom(), r.right(), r.bottom());
       }
       break;
-    case QTabBar::RoundedBelow:
-    case QTabBar::TriangularBelow:
+    case TQTabBar::RoundedBelow:
+    case TQTabBar::TriangularBelow:
       if (!selected)
       {
         p->setPen(g.dark());
@@ -1489,9 +1489,9 @@ WebStyle::drawTab
   void
 WebStyle::drawTabMask
 (
- QPainter * p,
- const QTabBar *,
- QTab * tab,
+ TQPainter * p,
+ const TQTabBar *,
+ TQTab * tab,
  bool
 )
 {
@@ -1501,13 +1501,13 @@ WebStyle::drawTabMask
   void
 WebStyle::drawKickerHandle
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
- QBrush * fill
+ const TQColorGroup & g,
+ TQBrush * fill
 )
 {
   p->save();
@@ -1524,13 +1524,13 @@ WebStyle::drawKickerHandle
   void
 WebStyle::drawKickerAppletHandle
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
- QBrush * fill
+ const TQColorGroup & g,
+ TQBrush * fill
 )
 {
   p->save();
@@ -1547,21 +1547,21 @@ WebStyle::drawKickerAppletHandle
   void
 WebStyle::drawKickerTaskButton
 (
- QPainter * p,
+ TQPainter * p,
  int x,
  int y,
  int w,
  int h,
- const QColorGroup & g,
- const QString & text,
+ const TQColorGroup & g,
+ const TQString & text,
  bool active,
- QPixmap * icon,
- QBrush * /* fill */
+ TQPixmap * icon,
+ TQBrush * /* fill */
 )
 {
   p->save();
 
-  QColor bg;
+  TQColor bg;
 
   if (active)
   {
@@ -1588,7 +1588,7 @@ WebStyle::drawKickerTaskButton
 
   int textPos = pxWidth;
 
-  QRect br(buttonRect(x, y, w, h));
+  TQRect br(buttonRect(x, y, w, h));
 
   if ((0 != icon) && !icon->isNull())
   {
@@ -1598,10 +1598,10 @@ WebStyle::drawKickerTaskButton
     p->drawPixmap(br.x() + dx, dy, *icon);
   }
 
-  QString s(text);
+  TQString s(text);
 
-  static QString modStr =
-    QString::fromUtf8("[") + i18n("modified") + QString::fromUtf8("]");
+  static TQString modStr =
+    TQString::fromUtf8("[") + i18n("modified") + TQString::fromUtf8("]");
 
   int modStrPos = s.find(modStr);
 
@@ -1610,7 +1610,7 @@ WebStyle::drawKickerTaskButton
     // +1 because we include a space after the closing brace.
     s.remove(modStrPos, modStr.length() + 1);
 
-    QPixmap modPixmap = SmallIcon("modified");
+    TQPixmap modPixmap = SmallIcon("modified");
 
     int dx = (pxWidth - modPixmap.width())  / 2;
     int dy = (h       - modPixmap.height()) / 2;
@@ -1659,7 +1659,7 @@ WebStyle::drawKickerTaskButton
 }
 
   int
-WebStyle::popupMenuItemHeight(bool, QMenuItem * i, const QFontMetrics & fm)
+WebStyle::popupMenuItemHeight(bool, TQMenuItem * i, const TQFontMetrics & fm)
 {
   if (i->isSeparator())
     return 1;
@@ -1675,7 +1675,7 @@ WebStyle::popupMenuItemHeight(bool, QMenuItem * i, const QFontMetrics & fm)
   {
     h = QMAX
       (
-       i->iconSet()->pixmap(QIconSet::Small, QIconSet::Normal).height(),
+       i->iconSet()->pixmap(TQIconSet::Small, TQIconSet::Normal).height(),
        h
       );
   }

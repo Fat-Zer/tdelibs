@@ -29,8 +29,8 @@
  *
  ***********************************************************************/
 
-KAutoMount::KAutoMount( bool _readonly, const QString& _format, const QString& _device,
-                        const QString&  _mountpoint, const QString & _desktopFile,
+KAutoMount::KAutoMount( bool _readonly, const TQString& _format, const TQString& _device,
+                        const TQString&  _mountpoint, const TQString & _desktopFile,
                         bool _show_filemanager_window )
   : m_strDevice( _device ),
     m_desktopFile( _desktopFile )
@@ -39,7 +39,7 @@ KAutoMount::KAutoMount( bool _readonly, const QString& _format, const QString& _
   m_bShowFilemanagerWindow = _show_filemanager_window;
 
   KIO::Job* job = KIO::mount( _readonly, _format.ascii(), _device, _mountpoint );
-  connect( job, SIGNAL( result( KIO::Job * ) ), this, SLOT( slotResult( KIO::Job * ) ) );
+  connect( job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotResult( KIO::Job * ) ) );
 }
 
 void KAutoMount::slotResult( KIO::Job * job )
@@ -77,11 +77,11 @@ void KAutoMount::slotResult( KIO::Job * job )
   delete this;
 }
 
-KAutoUnmount::KAutoUnmount( const QString & _mountpoint, const QString & _desktopFile )
+KAutoUnmount::KAutoUnmount( const TQString & _mountpoint, const TQString & _desktopFile )
   : m_desktopFile( _desktopFile ), m_mountpoint( _mountpoint )
 {
   KIO::Job * job = KIO::unmount( m_mountpoint );
-  connect( job, SIGNAL( result( KIO::Job * ) ), this, SLOT( slotResult( KIO::Job * ) ) );
+  connect( job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotResult( KIO::Job * ) ) );
 }
 
 void KAutoUnmount::slotResult( KIO::Job * job )

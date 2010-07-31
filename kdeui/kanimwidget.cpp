@@ -18,10 +18,10 @@
    Boston, MA 02110-1301, USA.
 */
 #include <kanimwidget.h>
-#include <qpixmap.h>
-#include <qtimer.h>
-#include <qpainter.h>
-#include <qimage.h>
+#include <tqpixmap.h>
+#include <tqtimer.h>
+#include <tqpainter.h>
+#include <tqimage.h>
 #include <ktoolbar.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -34,21 +34,21 @@ public:
   bool                   transparent      : 1;
   int                    frames;
   int                    current_frame;
-  QPixmap                pixmap;
-  QTimer                 timer;
-  QString                icon_name;
+  TQPixmap                pixmap;
+  TQTimer                 timer;
+  TQString                icon_name;
   int                    size;
 };
 
-KAnimWidget::KAnimWidget( const QString& icons, int size, QWidget *parent,
+KAnimWidget::KAnimWidget( const TQString& icons, int size, TQWidget *parent,
                           const char *name )
-  : QFrame( parent, name ),
+  : TQFrame( parent, name ),
     d( new KAnimWidgetPrivate )
 {
-  connect( &d->timer, SIGNAL(timeout()), this, SLOT(slotTimerUpdate()));
+  connect( &d->timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotTimerUpdate()));
 
   if (parent && parent->inherits( "KToolBar" ))
-    connect(parent, SIGNAL(modechange()), this, SLOT(updateIcons()));
+    connect(parent, TQT_SIGNAL(modechange()), this, TQT_SLOT(updateIcons()));
 
   d->loadingCompleted = false;
   d->size = size;
@@ -86,7 +86,7 @@ void KAnimWidget::setSize( int size )
   updateIcons();
 }
 
-void KAnimWidget::setIcons( const QString& icons )
+void KAnimWidget::setIcons( const TQString& icons )
 {
   if ( d->icon_name == icons )
     return;
@@ -95,7 +95,7 @@ void KAnimWidget::setIcons( const QString& icons )
   updateIcons();
 }
 
-QString KAnimWidget::icons( ) const
+TQString KAnimWidget::icons( ) const
 {
    return d->icon_name;
 }
@@ -106,47 +106,47 @@ int KAnimWidget::size( ) const
 }
 
 
-void KAnimWidget::showEvent(QShowEvent* e)
+void KAnimWidget::showEvent(TQShowEvent* e)
 {
   if (!d->initDone)
   {
      d->initDone = true;
      updateIcons();
   }
-  QFrame::showEvent(e);
+  TQFrame::showEvent(e);
 }
 
-void KAnimWidget::hideEvent(QHideEvent* e)
+void KAnimWidget::hideEvent(TQHideEvent* e)
 {
-  QFrame::hideEvent(e);
+  TQFrame::hideEvent(e);
 }
 
-void KAnimWidget::enterEvent( QEvent *e )
+void KAnimWidget::enterEvent( TQEvent *e )
 {
   setFrameStyle( Panel | Raised );
 
-  QFrame::enterEvent( e );
+  TQFrame::enterEvent( e );
 }
 
-void KAnimWidget::leaveEvent( QEvent *e )
+void KAnimWidget::leaveEvent( TQEvent *e )
 {
   setFrameStyle( StyledPanel | Sunken );
 
-  QFrame::leaveEvent( e );
+  TQFrame::leaveEvent( e );
 }
 
-void KAnimWidget::mousePressEvent( QMouseEvent *e )
+void KAnimWidget::mousePressEvent( TQMouseEvent *e )
 {
-  QFrame::mousePressEvent( e );
+  TQFrame::mousePressEvent( e );
 }
 
-void KAnimWidget::mouseReleaseEvent( QMouseEvent *e )
+void KAnimWidget::mouseReleaseEvent( TQMouseEvent *e )
 {
   if ( e->button() == LeftButton &&
        rect().contains( e->pos() ) )
     emit clicked();
 
-  QFrame::mouseReleaseEvent( e );
+  TQFrame::mouseReleaseEvent( e );
 }
 
 void KAnimWidget::slotTimerUpdate()
@@ -165,7 +165,7 @@ void KAnimWidget::slotTimerUpdate()
   repaint(d->transparent);
 }
 
-void KAnimWidget::drawContents( QPainter *p )
+void KAnimWidget::drawContents( TQPainter *p )
 {
   if ( d->pixmap.isNull() )
     return;
@@ -174,7 +174,7 @@ void KAnimWidget::drawContents( QPainter *p )
   int h = w;
   int x = (width()  - w) / 2;
   int y = (height() - h) / 2;
-  p->drawPixmap(QPoint(x, y), d->pixmap, QRect(0, d->current_frame*h, w, h));
+  p->drawPixmap(TQPoint(x, y), d->pixmap, TQRect(0, d->current_frame*h, w, h));
 }
 
 void KAnimWidget::updateIcons()
@@ -187,8 +187,8 @@ void KAnimWidget::updateIcons()
   if (!d->size)
      d->size = KGlobal::iconLoader()->currentSize(KIcon::MainToolbar);
 
-  QString path = KGlobal::iconLoader()->iconPath(d->icon_name, -d->size);
-  QImage img(path);
+  TQString path = KGlobal::iconLoader()->iconPath(d->icon_name, -d->size);
+  TQImage img(path);
   
   if (img.isNull())
      return;

@@ -21,8 +21,8 @@
 #ifndef KRULER_H
 #define KRULER_H
 
-#include <qframe.h>
-#include <qrangecontrol.h>
+#include <tqframe.h>
+#include <tqrangecontrol.h>
 #include <kdelibs_export.h>
 
 /**
@@ -55,12 +55,12 @@
  * To receive mouse clicks or mouse moves,
  * the class has to be overloaded.
  *
- * For performance reasons, the public methods don't call QWidget::repaint().
+ * For performance reasons, the public methods don't call TQWidget::repaint().
  * (Slots do, see documentation below.)
  * All the changed settings will be painted once after leaving
  * to the main event loop.
  * For performance painting the slot methods should be used,
- * they do a fast QWidget::repaint() call after changing the values.
+ * they do a fast TQWidget::repaint() call after changing the values.
  * For setting multiple values like minValue(), maxValue(), offset() etc.
  * using the public methods is recommended
  * so the widget will be painted only once when entering the main event loop.
@@ -111,21 +111,21 @@ public:
   /**
    * Constructs a horizontal ruler.
    */
-  KRuler(QWidget *parent=0, const char *name=0);
+  KRuler(TQWidget *parent=0, const char *name=0);
   /**
    * Constructs a ruler with orientation @p orient.
    *
-   * @p parent, @p name and @p f are passed to QFrame.
+   * @p parent, @p name and @p f are passed to TQFrame.
    * The default look is a raised widget
-   * but may be changed with the inherited QFrame methods.
+   * but may be changed with the inherited TQFrame methods.
    *
    * @param orient     Orientation of the ruler.
-   * @param parent     Will be handed over to QFrame.
-   * @param name       Will be handed over to QFrame.
-   * @param f          Will be handed over to QFrame.
+   * @param parent     Will be handed over to TQFrame.
+   * @param name       Will be handed over to TQFrame.
+   * @param f          Will be handed over to TQFrame.
    *
    **/
-  KRuler(Orientation orient, QWidget *parent=0, const char *name=0,
+  KRuler(Orientation orient, TQWidget *parent=0, const char *name=0,
 	 WFlags f=0);
 
   /**
@@ -134,16 +134,16 @@ public:
    * The width sets the fixed width of the widget. This is useful if you
    * want to draw the ruler bigger or smaller than the default size.
    * Note: The size of the marks doesn't change.
-   * @p parent, @p name and @p f are passed to QFrame.
+   * @p parent, @p name and @p f are passed to TQFrame.
    *
    * @param orient      Orientation of the ruler.
    * @param widgetWidth Fixed width of the widget.
-   * @param parent      Will be handed over to QFrame.
-   * @param name        Will be handed over to QFrame.
-   * @param f           Will be handed over to QFrame.
+   * @param parent      Will be handed over to TQFrame.
+   * @param name        Will be handed over to TQFrame.
+   * @param f           Will be handed over to TQFrame.
    *
    */
-  KRuler(Orientation orient, int widgetWidth, QWidget *parent=0,
+  KRuler(Orientation orient, int widgetWidth, TQWidget *parent=0,
 	 const char *name=0, WFlags f=0);
 
   /**
@@ -323,8 +323,8 @@ public:
    * Sets the label this is drawn at the beginning of the visible part
    * of the ruler to @p label
    **/
-  void setEndLabel(const QString&);
-  QString endLabel() const;
+  void setEndLabel(const TQString&);
+  TQString endLabel() const;
 
   /**
    * Sets up the necessary tasks for the provided styles.
@@ -428,7 +428,7 @@ public slots:
    * Sets the pointer to a new position.
    *
    * The offset is NOT updated.
-   * QWidget::repaint() is called afterwards.
+   * TQWidget::repaint() is called afterwards.
    **/
   void slotNewValue(int);
 
@@ -436,19 +436,19 @@ public slots:
    * Sets the ruler marks to a new position.
    *
    * The pointer is NOT updated.
-   * QWidget::repaint() is called afterwards.
+   * TQWidget::repaint() is called afterwards.
    **/
   void slotNewOffset(int);
 
   void slotEndOffset(int);
 
 protected:
-  virtual void drawContents(QPainter *);
+  virtual void drawContents(TQPainter *);
 
 private:
   void init();
 
-  QRangeControl range;
+  TQRangeControl range;
   Orientation dir;
   int tmDist;
   int lmDist;
@@ -472,7 +472,7 @@ private:
 
   double ppm; /* pixel per mark */
 
-  QString endlabel;
+  TQString endlabel;
 
 protected:
   virtual void virtual_hook( int id, void* data );

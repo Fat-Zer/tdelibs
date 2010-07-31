@@ -21,13 +21,13 @@
 #define KMRLPRMANAGER_H
 
 #include "kmmanager.h"
-#include <qdict.h>
-#include <qdatetime.h>
+#include <tqdict.h>
+#include <tqdatetime.h>
 
 class KMRlprManager : public KMManager
 {
 public:
-	KMRlprManager(QObject *parent, const char *name, const QStringList & /*args*/);
+	KMRlprManager(TQObject *parent, const char *name, const TQStringList & /*args*/);
 	~KMRlprManager();
 
 	bool createPrinter(KMPrinter*);
@@ -37,9 +37,9 @@ public:
 protected:
 	void listPrinters();
 	void savePrinters();
-	void loadPrintersConf(const QString& filename);
-	void savePrintersConf(const QString& filename);
-	QString printerFile();
+	void loadPrintersConf(const TQString& filename);
+	void savePrintersConf(const TQString& filename);
+	TQString printerFile();
 
 private:
 	QDateTime	m_checktime;

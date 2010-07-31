@@ -27,10 +27,10 @@ class KProcess;
 class KRlprPrinterImpl : public KPrinterImpl
 {
 public:
-	KRlprPrinterImpl(QObject *parent, const char *name, const QStringList & /*args*/);
+	KRlprPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/);
 	~KRlprPrinterImpl();
 
-	bool setupCommand(QString&, KPrinter*);
+	bool setupCommand(TQString&, KPrinter*);
 };
 
 #endif

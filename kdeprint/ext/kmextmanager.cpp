@@ -22,7 +22,7 @@
 
 #include <klocale.h>
 
-KMExtManager::KMExtManager(QObject *parent, const char *name, const QStringList & /*args*/)
+KMExtManager::KMExtManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMManager(parent,name)
 {
 	setHasManagement(false);

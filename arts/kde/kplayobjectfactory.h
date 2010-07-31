@@ -51,7 +51,7 @@ public:
 	~KPlayObjectFactory();
 
 	KPlayObject *createPlayObject(const KURL& url, bool createBUS);
-	KPlayObject *createPlayObject(const KURL& url, const QString &mimetype, bool createBUS);
+	KPlayObject *createPlayObject(const KURL& url, const TQString &mimetype, bool createBUS);
 
 	void setAllowStreaming(bool s) { m_allowStreaming = s; }
 	bool allowStreaming() { return m_allowStreaming; }
@@ -76,7 +76,7 @@ class POFHelper;
 	 * use the KDE multimedia framework can be found in the documentation
 	 * for KDE::PlayObject.
 	 */
-class KDE_EXPORT PlayObjectFactory// : public QObject ### for KDE4 make it a QObject to be able to receive signals
+class KDE_EXPORT PlayObjectFactory// : public TQObject ### for KDE4 make it a TQObject to be able to receive signals
 {
 public:
 	/**
@@ -116,7 +116,7 @@ public:
 	 * This method also creates a KDE::PlayObject, but does no automatic
 	 * mimetype detection. Use this method with care.
 	 */
-	KDE::PlayObject *createPlayObject(const KURL& url, const QString &mimetype, bool createBUS);
+	KDE::PlayObject *createPlayObject(const KURL& url, const TQString &mimetype, bool createBUS);
 
 	/**
 	 * setAllowStreaming( true ) allows the factory to create a
@@ -134,7 +134,7 @@ public:
 	/**
 	 * Return the mimetypes that are playable
 	 */
-	static QStringList mimeTypes(void);
+	static TQStringList mimeTypes(void);
 
 /*private slots: ### KDE4 and remove Helper class
 	void connectAmanPlay();*/

@@ -20,7 +20,7 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <kaction.h>
 #include <kxmlguiclient.h>
 
@@ -46,7 +46,7 @@ namespace KParts
  * You should also install a "plugin info" .desktop file with the same name.
  * \see PluginInfo
  */
-class KPARTS_EXPORT Plugin : public QObject, virtual public KXMLGUIClient
+class KPARTS_EXPORT Plugin : public TQObject, virtual public KXMLGUIClient
 {
     Q_OBJECT
 public:
@@ -55,15 +55,15 @@ public:
      */
     struct PluginInfo
     {
-        QString m_relXMLFileName; ///< relative filename, i.e. kpartplugins/name
-        QString m_absXMLFileName; ///< full path of most recent filename matching the relative filename
-        QDomDocument m_document;
+        TQString m_relXMLFileName; ///< relative filename, i.e. kpartplugins/name
+        TQString m_absXMLFileName; ///< full path of most recent filename matching the relative filename
+        TQDomDocument m_document;
     };
 
     /**
      * Construct a new KParts plugin.
      */
-    Plugin( QObject* parent = 0, const char* name = 0 );
+    Plugin( TQObject* parent = 0, const char* name = 0 );
     /**
      * Destructor.
      */
@@ -72,12 +72,12 @@ public:
     /**
      * Reimplemented for internal reasons
      */
-    virtual QString xmlFile() const;
+    virtual TQString xmlFile() const;
 
     /**
      * Reimplemented for internal reasons
      */
-    virtual QString localXMLFile() const;
+    virtual TQString localXMLFile() const;
 
     /**
      * Load the plugin libraries from the directories appropriate
@@ -86,7 +86,7 @@ public:
      * It is recommended to use the last loadPlugins method instead,
      * to support enabling and disabling of plugins.
      */
-    static void loadPlugins( QObject *parent, const KInstance * instance );
+    static void loadPlugins( TQObject *parent, const KInstance * instance );
 
     /**
      * Load the plugin libraries specified by the list @p docs and make the
@@ -95,7 +95,7 @@ public:
      * It is recommended to use the last loadPlugins method instead,
      * to support enabling and disabling of plugins.
      */
-    static void loadPlugins( QObject *parent, const QValueList<PluginInfo> &pluginInfos );
+    static void loadPlugins( TQObject *parent, const TQValueList<PluginInfo> &pluginInfos );
 
     /**
      * Load the plugin libraries specified by the list @p pluginInfos, make the
@@ -104,7 +104,7 @@ public:
      * It is recommended to use the last loadPlugins method instead,
      * to support enabling and disabling of plugins.
      */
-    static void loadPlugins( QObject *parent, const QValueList<PluginInfo> &pluginInfos, const KInstance * instance );
+    static void loadPlugins( TQObject *parent, const TQValueList<PluginInfo> &pluginInfos, const KInstance * instance );
 
     /**
      * Load the plugin libraries for the given @p instance, make the
@@ -129,8 +129,8 @@ public:
      * \code
      * if( factory() )
      * {
-     *   QPtrList<KParts::Plugin> plugins = KParts::Plugin::pluginObjects( this );
-     *   QPtrListIterator<KParts::Plugin> it( plugins );
+     *   TQPtrList<KParts::Plugin> plugins = KParts::Plugin::pluginObjects( this );
+     *   TQPtrListIterator<KParts::Plugin> it( plugins );
      *   KParts::Plugin * plugin;
      *   while( ( plugin = it.current() ) != 0 )
      *   {
@@ -140,34 +140,34 @@ public:
      * }
      * \endcode
      */
-    static void loadPlugins( QObject *parent, KXMLGUIClient* parentGUIClient, KInstance* instance, bool enableNewPluginsByDefault = true );
+    static void loadPlugins( TQObject *parent, KXMLGUIClient* parentGUIClient, KInstance* instance, bool enableNewPluginsByDefault = true );
 
     /**
      * Returns a list of plugin objects loaded for @p parent. This
      * functions basically calls the queryList method of
-     * QObject to retrieve the list of child objects inheriting
+     * TQObject to retrieve the list of child objects inheriting
      * KParts::Plugin .
      **/
-    static QPtrList<Plugin> pluginObjects( QObject *parent );
+    static TQPtrList<Plugin> pluginObjects( TQObject *parent );
 
 protected:
     /**
      * Look for plugins in the @p instance's "data" directory (+"/kpartplugins")
      *
-     * @return A list of QDomDocument s, containing the parsed xml documents returned by plugins.
+     * @return A list of TQDomDocument s, containing the parsed xml documents returned by plugins.
      */
-    static QValueList<Plugin::PluginInfo> pluginInfos( const KInstance * instance );
+    static TQValueList<Plugin::PluginInfo> pluginInfos( const KInstance * instance );
 
     /**
      * @internal
      * @return The plugin created from the library @p libname
      */
-    static Plugin* loadPlugin( QObject * parent, const char* libname );
+    static Plugin* loadPlugin( TQObject * parent, const char* libname );
 
     virtual void setInstance( KInstance *instance );
 
 private:
-    static bool hasPlugin( QObject* parent, const QString& library );
+    static bool hasPlugin( TQObject* parent, const TQString& library );
     class PluginPrivate;
     PluginPrivate *d;
 };

@@ -30,18 +30,18 @@
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
 
-#include <qregexp.h>
-#include <qmemarray.h>
-#include <qevent.h>
+#include <tqregexp.h>
+#include <tqmemarray.h>
+#include <tqevent.h>
 
 /**
    Utility: selection sort
-   sort a QMemArray<uint> in ascending order.
+   sort a TQMemArray<uint> in ascending order.
    max it the largest (zerobased) index to sort.
    To sort the entire array: ssort( *array, array.size() -1 );
    This is only efficient if ran only once.
 */
-static void ssort( QMemArray<uint> &a, int max )
+static void ssort( TQMemArray<uint> &a, int max )
 {
   uint tmp, j, maxpos;
   for ( uint h = max; h >= 1; h-- )
@@ -58,11 +58,11 @@ static void ssort( QMemArray<uint> &a, int max )
 // TODO add a insort() or bubble_sort - more efficient for aboutToShow() ?
 
 KateBookmarks::KateBookmarks( KateView* view, Sorting sort )
-  : QObject( view, "kate bookmarks" )
+  : TQObject( view, "kate bookmarks" )
   , m_view( view )
   , m_sorting( sort )
 {
-  connect (view->getDoc(), SIGNAL(marksChanged()), this, SLOT(marksChanged()));
+  connect (view->getDoc(), TQT_SIGNAL(marksChanged()), this, TQT_SLOT(marksChanged()));
   _tries=0;
   m_bookmarksMenu = 0L;
 }
@@ -75,26 +75,26 @@ void KateBookmarks::createActions( KActionCollection* ac )
 {
   m_bookmarkToggle = new KToggleAction(
     i18n("Set &Bookmark"), "bookmark", CTRL+Key_B,
-    this, SLOT(toggleBookmark()),
+    this, TQT_SLOT(toggleBookmark()),
     ac, "bookmarks_toggle" );
   m_bookmarkToggle->setWhatsThis(i18n("If a line has no bookmark then add one, otherwise remove it."));
   m_bookmarkToggle->setCheckedState( i18n("Clear &Bookmark") );
 
   m_bookmarkClear = new KAction(
     i18n("Clear &All Bookmarks"), 0,
-    this, SLOT(clearBookmarks()),
+    this, TQT_SLOT(clearBookmarks()),
     ac, "bookmarks_clear");
   m_bookmarkClear->setWhatsThis(i18n("Remove all bookmarks of the current document."));
 
   m_goNext = new KAction(
     i18n("Next Bookmark"), "next", ALT + Key_PageDown,
-    this, SLOT(goNext()),
+    this, TQT_SLOT(goNext()),
     ac, "bookmarks_next");
   m_goNext->setWhatsThis(i18n("Go to the next bookmark."));
 
   m_goPrevious = new KAction(
     i18n("Previous Bookmark"), "previous", ALT + Key_PageUp,
-    this, SLOT(goPrevious()),
+    this, TQT_SLOT(goPrevious()),
     ac, "bookmarks_previous");
   m_goPrevious->setWhatsThis(i18n("Go to the previous bookmark."));
 
@@ -102,14 +102,14 @@ void KateBookmarks::createActions( KActionCollection* ac )
 
   //connect the aboutToShow() and aboutToHide() signals with
   //the bookmarkMenuAboutToShow() and bookmarkMenuAboutToHide() slots
-  connect( m_bookmarksMenu, SIGNAL(aboutToShow()), this, SLOT(bookmarkMenuAboutToShow()));
-  connect( m_bookmarksMenu, SIGNAL(aboutToHide()), this, SLOT(bookmarkMenuAboutToHide()) );
+  connect( m_bookmarksMenu, TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(bookmarkMenuAboutToShow()));
+  connect( m_bookmarksMenu, TQT_SIGNAL(aboutToHide()), this, TQT_SLOT(bookmarkMenuAboutToHide()) );
 
   marksChanged ();
   bookmarkMenuAboutToHide();
 
-  connect( m_view, SIGNAL( gotFocus( Kate::View * ) ), this, SLOT( slotViewGotFocus( Kate::View * ) ) );
-  connect( m_view, SIGNAL( lostFocus( Kate::View * ) ), this, SLOT( slotViewLostFocus( Kate::View * ) ) );
+  connect( m_view, TQT_SIGNAL( gotFocus( Kate::View * ) ), this, TQT_SLOT( slotViewGotFocus( Kate::View * ) ) );
+  connect( m_view, TQT_SIGNAL( lostFocus( Kate::View * ) ), this, TQT_SLOT( slotViewLostFocus( Kate::View * ) ) );
 }
 
 void KateBookmarks::toggleBookmark ()
@@ -126,7 +126,7 @@ void KateBookmarks::toggleBookmark ()
 void KateBookmarks::clearBookmarks ()
 {
 
-  QPtrList<KTextEditor::Mark> m = m_view->getDoc()->marks();
+  TQPtrList<KTextEditor::Mark> m = m_view->getDoc()->marks();
   for (uint i=0; i < m.count(); i++)
     m_view->getDoc()->removeMark( m.at(i)->line, KTextEditor::MarkInterface::markType01 );
 
@@ -146,18 +146,18 @@ void KateBookmarks::slotViewLostFocus( Kate::View *v )
     m_bookmarksMenu->clear();
 }
 
-void KateBookmarks::insertBookmarks( QPopupMenu& menu )
+void KateBookmarks::insertBookmarks( TQPopupMenu& menu )
 {
   uint line = m_view->cursorLine();
-  const QRegExp re("&(?!&)");
+  const TQRegExp re("&(?!&)");
   int idx( -1 );
   int old_menu_count = menu.count();
   KTextEditor::Mark *next = 0;
   KTextEditor::Mark *prev = 0;
 
-  QPtrList<KTextEditor::Mark> m = m_view->getDoc()->marks();
-  QMemArray<uint> sortArray( m.count() );
-  QPtrListIterator<KTextEditor::Mark> it( m );
+  TQPtrList<KTextEditor::Mark> m = m_view->getDoc()->marks();
+  TQMemArray<uint> sortArray( m.count() );
+  TQPtrListIterator<KTextEditor::Mark> it( m );
 
   if ( it.count() > 0 )
     menu.insertSeparator();
@@ -166,7 +166,7 @@ void KateBookmarks::insertBookmarks( QPopupMenu& menu )
   {
     if( (*it)->type & KTextEditor::MarkInterface::markType01 )
     {
-      QString bText = KStringHandler::rEmSqueeze
+      TQString bText = KStringHandler::rEmSqueeze
                       ( m_view->getDoc()->textLine( (*it)->line ),
                         menu.fontMetrics(), 32 );
       bText.replace(re, "&&"); // kill undesired accellerators!
@@ -180,8 +180,8 @@ void KateBookmarks::insertBookmarks( QPopupMenu& menu )
       }
 
       menu.insertItem(
-          QString("%1 - \"%2\"").arg( (*it)->line+1 ).arg( bText ),
-          m_view, SLOT(gotoLineNumber(int)), 0, (*it)->line, idx );
+          TQString("%1 - \"%2\"").arg( (*it)->line+1 ).arg( bText ),
+          m_view, TQT_SLOT(gotoLineNumber(int)), 0, (*it)->line, idx );
 
       if ( (*it)->line < line )
       {
@@ -220,7 +220,7 @@ void KateBookmarks::insertBookmarks( QPopupMenu& menu )
 void KateBookmarks::bookmarkMenuAboutToShow()
 {
 
-  QPtrList<KTextEditor::Mark> m = m_view->getDoc()->marks();
+  TQPtrList<KTextEditor::Mark> m = m_view->getDoc()->marks();
 
   m_bookmarksMenu->clear();
   m_bookmarkToggle->setChecked( m_view->getDoc()->mark( m_view->cursorLine() )
@@ -247,7 +247,7 @@ void KateBookmarks::bookmarkMenuAboutToHide()
 
 void KateBookmarks::goNext()
 {
-  QPtrList<KTextEditor::Mark> m = m_view->getDoc()->marks();
+  TQPtrList<KTextEditor::Mark> m = m_view->getDoc()->marks();
   if (m.isEmpty())
     return;
 
@@ -264,7 +264,7 @@ void KateBookmarks::goNext()
 
 void KateBookmarks::goPrevious()
 {
-  QPtrList<KTextEditor::Mark> m = m_view->getDoc()->marks();
+  TQPtrList<KTextEditor::Mark> m = m_view->getDoc()->marks();
   if (m.isEmpty())
     return;
 

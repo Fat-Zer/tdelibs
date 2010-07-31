@@ -40,18 +40,18 @@ public:
     bool hasAllSupportedFiles;
     // true when setMimeFilter was called
     bool isMimeFilter;
-    QString lastFilter;
-    QString defaultFilter;
+    TQString lastFilter;
+    TQString defaultFilter;
 };
 
-KFileFilterCombo::KFileFilterCombo( QWidget *parent, const char *name)
+KFileFilterCombo::KFileFilterCombo( TQWidget *parent, const char *name)
     : KComboBox(true, parent, name), d( new KFileFilterComboPrivate )
 {
     setTrapReturnKey( true );
     setInsertionPolicy(NoInsertion);
-    connect( this, SIGNAL( activated( int )), this, SIGNAL( filterChanged() ));
-    connect( this, SIGNAL( returnPressed() ), this, SIGNAL( filterChanged() ));
-    connect( this, SIGNAL( filterChanged() ), SLOT( slotFilterChanged() ));
+    connect( this, TQT_SIGNAL( activated( int )), this, TQT_SIGNAL( filterChanged() ));
+    connect( this, TQT_SIGNAL( returnPressed() ), this, TQT_SIGNAL( filterChanged() ));
+    connect( this, TQT_SIGNAL( filterChanged() ), TQT_SLOT( slotFilterChanged() ));
     m_allTypes = false;
 }
 
@@ -60,14 +60,14 @@ KFileFilterCombo::~KFileFilterCombo()
     delete d;
 }
 
-void KFileFilterCombo::setFilter(const QString& filter)
+void KFileFilterCombo::setFilter(const TQString& filter)
 {
     clear();
     filters.clear();
     d->hasAllSupportedFiles = false;
 
     if (!filter.isEmpty()) {
-	QString tmp = filter;
+	TQString tmp = filter;
 	int index = tmp.find('\n');
 	while (index > 0) {
 	    filters.append(tmp.left(index));
@@ -79,8 +79,8 @@ void KFileFilterCombo::setFilter(const QString& filter)
     else
 	filters.append( d->defaultFilter );
 
-    QStringList::ConstIterator it;
-	QStringList::ConstIterator end(filters.end());
+    TQStringList::ConstIterator it;
+	TQStringList::ConstIterator end(filters.end());
     for (it = filters.begin(); it != end; ++it) {
 	int tab = (*it).find('|');
 	insertItem((tab < 0) ? *it :
@@ -91,9 +91,9 @@ void KFileFilterCombo::setFilter(const QString& filter)
     d->isMimeFilter = false;
 }
 
-QString KFileFilterCombo::currentFilter() const
+TQString KFileFilterCombo::currentFilter() const
 {
-    QString f = currentText();
+    TQString f = currentText();
     if (f == text(currentItem())) { // user didn't edit the text
 	f = *filters.at(currentItem());
         if ( d->isMimeFilter || (currentItem() == 0 && d->hasAllSupportedFiles) ) {
@@ -108,10 +108,10 @@ QString KFileFilterCombo::currentFilter() const
 	return f.left(tab);
 }
 
-void KFileFilterCombo::setCurrentFilter( const QString& filter )
+void KFileFilterCombo::setCurrentFilter( const TQString& filter )
 {
     int pos = 0;
-    for( QStringList::ConstIterator it = filters.begin();
+    for( TQStringList::ConstIterator it = filters.begin();
          it != filters.end();
          ++it, ++pos ) {
         if( *it == filter ) {
@@ -124,19 +124,19 @@ void KFileFilterCombo::setCurrentFilter( const QString& filter )
     filterChanged();
 }
 
-void KFileFilterCombo::setMimeFilter( const QStringList& types, 
-                                      const QString& defaultType )
+void KFileFilterCombo::setMimeFilter( const TQStringList& types, 
+                                      const TQString& defaultType )
 {
     clear();
     filters.clear();
-    QString delim = QString::fromLatin1(", ");
+    TQString delim = TQString::fromLatin1(", ");
     d->hasAllSupportedFiles = false;
 
     m_allTypes = defaultType.isEmpty() && (types.count() > 1);
 
-    QString allComments, allTypes;
+    TQString allComments, allTypes;
     int i = 0;
-    for(QStringList::ConstIterator it = types.begin(); it != types.end(); ++it,  ++i)
+    for(TQStringList::ConstIterator it = types.begin(); it != types.end(); ++it,  ++i)
     {
         if ( m_allTypes && it != types.begin() ) {
             allComments += delim;
@@ -177,9 +177,9 @@ void KFileFilterCombo::slotFilterChanged()
     d->lastFilter = currentText();
 }
 
-bool KFileFilterCombo::eventFilter( QObject *o, QEvent *e )
+bool KFileFilterCombo::eventFilter( TQObject *o, TQEvent *e )
 {
-    if ( o == lineEdit() && e->type() == QEvent::FocusOut ) {
+    if ( o == lineEdit() && e->type() == TQEvent::FocusOut ) {
         if ( currentText() != d->lastFilter )
             emit filterChanged();
     }
@@ -187,12 +187,12 @@ bool KFileFilterCombo::eventFilter( QObject *o, QEvent *e )
     return KComboBox::eventFilter( o, e );
 }
 
-void KFileFilterCombo::setDefaultFilter( const QString& filter )
+void KFileFilterCombo::setDefaultFilter( const TQString& filter )
 {
     d->defaultFilter = filter;
 }
 
-QString KFileFilterCombo::defaultFilter() const
+TQString KFileFilterCombo::defaultFilter() const
 {
     return d->defaultFilter;
 }

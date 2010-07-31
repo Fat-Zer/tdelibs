@@ -26,22 +26,22 @@
 #include <kdebug.h>
 #include <kcmdlineargs.h>
 
-#include <qfileinfo.h>
-#include <qeventloop.h>
+#include <tqfileinfo.h>
+#include <tqeventloop.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <qdir.h>
+#include <tqdir.h>
 
 // The code comes partly from kdebase/kioslave/trash/testtrash.cpp
 
-static bool check(const QString& txt, QString a, QString b)
+static bool check(const TQString& txt, TQString a, TQString b)
 {
     if (a.isEmpty())
-        a = QString::null;
+        a = TQString::null;
     if (b.isEmpty())
-        b = QString::null;
+        b = TQString::null;
     if (a == b) {
         kdDebug() << txt << " : checking '" << a << "' against expected value '" << b << "'... " << "ok" << endl;
     }
@@ -53,7 +53,7 @@ static bool check(const QString& txt, QString a, QString b)
 }
 
 template<typename T> 
-static bool check(const QString& txt, T a, T b)
+static bool check(const TQString& txt, T a, T b)
 {
     if (a == b) {
         kdDebug() << txt << " : checking '" << a << "' against expected value '" << b << "'... " << "ok" << endl;
@@ -80,22 +80,22 @@ int main(int argc, char *argv[])
 }
 
 #ifdef Q_OS_FREEBSD
-static const QString s_group1 = QString::fromLatin1("staff");
-static const QString s_group2 = QString::fromLatin1("guest");
+static const TQString s_group1 = TQString::fromLatin1("staff");
+static const TQString s_group2 = TQString::fromLatin1("guest");
 #else
-static const QString s_group1 = QString::fromLatin1("audio");
-static const QString s_group2 = QString::fromLatin1("users");
+static const TQString s_group1 = TQString::fromLatin1("audio");
+static const TQString s_group2 = TQString::fromLatin1("users");
 #endif
 
-static const QString s_testACL = QString::fromLatin1( "user::rw-\nuser:bin:rwx\ngroup::rw-\nmask::rwx\nother::r--\n" );
-static const QString s_testACL2 = QString::fromLatin1( "user::rwx\nuser:bin:rwx\ngroup::rw-\n") +
-                                  QString::fromLatin1( "group:" ) + s_group1 + QString::fromLatin1( ":--x\n" ) +
-                                  QString::fromLatin1( "group:" ) + s_group2 + QString::fromLatin1( ":r--\n" ) +
-                                  QString::fromLatin1( "mask::r-x\nother::r--\n" );
-static const QString s_testACLEffective = QString::fromLatin1( "user::rwx\nuser:bin:rwx #effective:r-x\ngroup::rw- #effective:r--\n" ) + 
-                                          QString::fromLatin1( "group:" ) + s_group1 + QString::fromLatin1( ":--x\n" ) +
-                                          QString::fromLatin1( "group:" ) + s_group2 + QString::fromLatin1( ":r--\n" ) +
-                                          QString::fromLatin1( "mask::r-x\nother::r--\n" );
+static const TQString s_testACL = TQString::fromLatin1( "user::rw-\nuser:bin:rwx\ngroup::rw-\nmask::rwx\nother::r--\n" );
+static const TQString s_testACL2 = TQString::fromLatin1( "user::rwx\nuser:bin:rwx\ngroup::rw-\n") +
+                                  TQString::fromLatin1( "group:" ) + s_group1 + TQString::fromLatin1( ":--x\n" ) +
+                                  TQString::fromLatin1( "group:" ) + s_group2 + TQString::fromLatin1( ":r--\n" ) +
+                                  TQString::fromLatin1( "mask::r-x\nother::r--\n" );
+static const TQString s_testACLEffective = TQString::fromLatin1( "user::rwx\nuser:bin:rwx #effective:r-x\ngroup::rw- #effective:r--\n" ) + 
+                                          TQString::fromLatin1( "group:" ) + s_group1 + TQString::fromLatin1( ":--x\n" ) +
+                                          TQString::fromLatin1( "group:" ) + s_group2 + TQString::fromLatin1( ":r--\n" ) +
+                                          TQString::fromLatin1( "mask::r-x\nother::r--\n" );
 
 KACLTest::KACLTest()
 :m_acl( s_testACL )
@@ -147,24 +147,24 @@ void KACLTest::testSetACL()
 
 void KACLTest::testGetOwnerPermissions()
 {
-  check( "Owner permissions: ", QString::number( m_acl.ownerPermissions() ), "6" );
+  check( "Owner permissions: ", TQString::number( m_acl.ownerPermissions() ), "6" );
 }
 
 void KACLTest::testGetOwningGroupPermissions()
 {
-  check( "Owning group permissions: ", QString::number( m_acl.owningGroupPermissions() ), "6" );
+  check( "Owning group permissions: ", TQString::number( m_acl.owningGroupPermissions() ), "6" );
 }
 
 void KACLTest::testGetOthersPermissions()
 {
-  check( "Others permissions: ", QString::number( m_acl.othersPermissions() ), "4" );
+  check( "Others permissions: ", TQString::number( m_acl.othersPermissions() ), "4" );
 }
 
 void KACLTest::testGetMaskPermissions()
 {
   bool exists = false;
   unsigned short mask = m_acl.maskPermissions( exists );
-  check( "Mask permissions: ", QString::number( mask ), "7" );
+  check( "Mask permissions: ", TQString::number( mask ), "7" );
   check( "Mask permissions: ", exists, true );
 }
 
@@ -172,7 +172,7 @@ void KACLTest::testGetAllUserPermissions()
 {
   ACLUserPermissionsList list = m_acl.allUserPermissions();
   ACLUserPermissionsConstIterator it = list.begin();
-  QString name;
+  TQString name;
   unsigned short permissions;
   int count = 0;
   while ( it != list.end() ) {
@@ -181,16 +181,16 @@ void KACLTest::testGetAllUserPermissions()
     ++it;
     ++count;
   }
-  check( "All users count: ", QString::number( count ), "1" );
+  check( "All users count: ", TQString::number( count ), "1" );
   check( "All users name: ", name, "bin" );
-  check( "All users permissions: ", QString::number( permissions ), "7" );
+  check( "All users permissions: ", TQString::number( permissions ), "7" );
 }
 
 void KACLTest::testGetAllGroupsPermissions()
 {
   ACLGroupPermissionsList list = m_acl.allGroupPermissions();
   ACLGroupPermissionsConstIterator it = list.begin();
-  QString name;
+  TQString name;
   unsigned short permissions;
   int count = 0;
   while ( it != list.end() ) {
@@ -199,15 +199,15 @@ void KACLTest::testGetAllGroupsPermissions()
     // setACL sorts them alphabetically ...
     if ( count == 0 ) {
       check( "All groups name: ", name, s_group1 );
-      check( "All groups permissions: ", QString::number( permissions ), "1" );
+      check( "All groups permissions: ", TQString::number( permissions ), "1" );
     } else if ( count == 1 ) {
       check( "All groups name: ", name, s_group2 );
-      check( "All groups permissions: ", QString::number( permissions ), "4" );
+      check( "All groups permissions: ", TQString::number( permissions ), "4" );
     }
     ++it;
     ++count;
   }
-  check( "All users count: ", QString::number( count ), "2" );
+  check( "All users count: ", TQString::number( count ), "2" );
 }
 
 void KACLTest::testIsExtended()
@@ -235,9 +235,9 @@ void KACLTest::testSettingBasic()
   CharlesII.setOwnerPermissions( 7 ); // clearly
   CharlesII.setOwningGroupPermissions( 0 );
   CharlesII.setOthersPermissions( 0 );
-  check( "setOwnerPermissions: ", QString::number( CharlesII.ownerPermissions() ),"7" );
-  check( "setOwningGroupPermissions: ", QString::number( CharlesII.owningGroupPermissions() ),"0" );
-  check( "setOthersPermissions: ", QString::number( CharlesII.othersPermissions() ),"0" );
+  check( "setOwnerPermissions: ", TQString::number( CharlesII.ownerPermissions() ),"7" );
+  check( "setOwningGroupPermissions: ", TQString::number( CharlesII.owningGroupPermissions() ),"0" );
+  check( "setOthersPermissions: ", TQString::number( CharlesII.othersPermissions() ),"0" );
 }
 
 void KACLTest::testSettingExtended()
@@ -245,28 +245,28 @@ void KACLTest::testSettingExtended()
   KACL CharlesII( s_testACL );
   CharlesII.setMaskPermissions( 7 ); // clearly
   bool dummy = false;
-  check( "setMaskPermissions: ", QString::number( CharlesII.maskPermissions( dummy ) ),"7" );
+  check( "setMaskPermissions: ", TQString::number( CharlesII.maskPermissions( dummy ) ),"7" );
 
-  const QString expected( "user::rw-\nuser:root:rwx\nuser:bin:r--\ngroup::rw-\nmask::rwx\nother::r--\n" );
+  const TQString expected( "user::rw-\nuser:root:rwx\nuser:bin:r--\ngroup::rw-\nmask::rwx\nother::r--\n" );
   
   ACLUserPermissionsList users;
-  ACLUserPermissions user = qMakePair( QString( "root" ), ( unsigned short )7 );
+  ACLUserPermissions user = qMakePair( TQString( "root" ), ( unsigned short )7 );
   users.append( user );
-  user = qMakePair( QString( "bin" ), ( unsigned short )4 );
+  user = qMakePair( TQString( "bin" ), ( unsigned short )4 );
   users.append( user );
   CharlesII.setAllUserPermissions( users );
   check( "setAllUserPermissions: ", CharlesII.asString(), expected );
 
   CharlesII.setACL( s_testACL ); // reset
   // it already has an entry for bin, let's change it
-  CharlesII.setNamedUserPermissions( QString("bin"), 4 );
-  CharlesII.setNamedUserPermissions( QString( "root" ), 7 );
+  CharlesII.setNamedUserPermissions( TQString("bin"), 4 );
+  CharlesII.setNamedUserPermissions( TQString( "root" ), 7 );
   check( "setNamedUserPermissions: ", CharlesII.asString(), expected );
 
   // groups, all and named
   
-  const QString expected2 = QString::fromLatin1( "user::rw-\nuser:bin:rwx\ngroup::rw-\ngroup:" ) + s_group1 +
-                            QString::fromLatin1( ":-wx\ngroup:" ) + s_group2 + QString::fromLatin1(":r--\nmask::rwx\nother::r--\n" );
+  const TQString expected2 = TQString::fromLatin1( "user::rw-\nuser:bin:rwx\ngroup::rw-\ngroup:" ) + s_group1 +
+                            TQString::fromLatin1( ":-wx\ngroup:" ) + s_group2 + TQString::fromLatin1(":r--\nmask::rwx\nother::r--\n" );
   CharlesII.setACL( s_testACL ); // reset
   ACLGroupPermissionsList groups;
   ACLGroupPermissions group = qMakePair( s_group1, ( unsigned short )3 );
@@ -304,6 +304,6 @@ void KACLTest::testNewMask()
   check( "mask exists: ", dummy, false );
 
   CharlesII.setMaskPermissions( 6 );
-  check( "new mask set: ", QString::number( CharlesII.maskPermissions( dummy ) ), "6" );
+  check( "new mask set: ", TQString::number( CharlesII.maskPermissions( dummy ) ), "6" );
   check( "mask exists now: ", dummy, true );
 }

@@ -20,13 +20,13 @@
 #include "foomatic2loader.h"
 #include "driver.h"
 
-#include <qfile.h>
-#include <qregexp.h>
-#include <qbuffer.h>
+#include <tqfile.h>
+#include <tqregexp.h>
+#include <tqbuffer.h>
 #include <kdebug.h>
 #include <klocale.h>
 
-void kdeprint_foomatic2scanner_init( QIODevice* );
+void kdeprint_foomatic2scanner_init( TQIODevice* );
 void kdeprint_foomatic2scanner_terminate();
 
 Foomatic2Loader::Foomatic2Loader()
@@ -37,7 +37,7 @@ Foomatic2Loader::~Foomatic2Loader()
 {
 }
 
-bool Foomatic2Loader::read( QIODevice *d )
+bool Foomatic2Loader::read( TQIODevice *d )
 {
 	bool result = true;
 	m_foodata.clear();
@@ -48,26 +48,26 @@ bool Foomatic2Loader::read( QIODevice *d )
 	return result;
 }
 
-bool Foomatic2Loader::readFromFile( const QString& filename )
+bool Foomatic2Loader::readFromFile( const TQString& filename )
 {
-	QFile f( filename );
+	TQFile f( filename );
 	m_foodata.clear();
 	if ( f.open( IO_ReadOnly ) )
 		return read( &f );
 	return false;
 }
 
-bool Foomatic2Loader::readFromBuffer( const QString& buffer )
+bool Foomatic2Loader::readFromBuffer( const TQString& buffer )
 {
-	QCString buf = buffer.utf8();
-	QBuffer d( buf );
+	TQCString buf = buffer.utf8();
+	TQBuffer d( buf );
 	m_foodata.clear();
 	if ( d.open( IO_ReadOnly ) )
 		return read( &d );
 	return false;
 }
 
-DrBase* Foomatic2Loader::createValue( const QString& name, const QMap<QString,QVariant>& m ) const
+DrBase* Foomatic2Loader::createValue( const TQString& name, const TQMap<TQString,TQVariant>& m ) const
 {
 	DrBase *choice = new DrBase;
 	choice->setName( name );
@@ -75,18 +75,18 @@ DrBase* Foomatic2Loader::createValue( const QString& name, const QMap<QString,QV
 	return choice;
 }
 
-DrBase* Foomatic2Loader::createOption( const QMap<QString,QVariant>& m ) const
+DrBase* Foomatic2Loader::createOption( const TQMap<TQString,TQVariant>& m ) const
 {
-	QString type = m.operator[]( "type" ).toString();
+	TQString type = m.operator[]( "type" ).toString();
 	DrBase *opt = NULL;
 	if ( type == "enum" )
 	{
 		DrListOption *lopt = new DrListOption;
-		QVariant a = m.operator[]( "vals_byname" );
-		QMap<QString,QVariant>::ConstIterator it = a.mapBegin();
+		TQVariant a = m.operator[]( "vals_byname" );
+		TQMap<TQString,TQVariant>::ConstIterator it = a.mapBegin();
 		for ( ; it!=a.mapEnd(); ++it )
 		{
-			if ( it.data().type() != QVariant::Map )
+			if ( it.data().type() != TQVariant::Map )
 				continue;
 			DrBase *ch = createValue( it.key(), it.data().toMap() );
 			if ( ch )
@@ -126,7 +126,7 @@ DrBase* Foomatic2Loader::createOption( const QMap<QString,QVariant>& m ) const
 	{
 		opt->setName( m.operator[]( "name" ).toString() );
 		opt->set( "text", m.operator[]( "comment" ).toString() );
-		QString defval = m.operator[]( "default" ).toString();
+		TQString defval = m.operator[]( "default" ).toString();
 		if ( !defval.isEmpty() )
 		{
 			opt->setValueText( defval );
@@ -141,30 +141,30 @@ DrMain* Foomatic2Loader::buildDriver() const
 	if ( m_foodata.isEmpty() )
 		return NULL;
 
-	QVariant v = m_foodata.find( "VAR" ).data();
-	if ( !v.isNull() && v.type() == QVariant::Map )
+	TQVariant v = m_foodata.find( "VAR" ).data();
+	if ( !v.isNull() && v.type() == TQVariant::Map )
 	{
 		DrMain *driver = new DrMain;
-		QMap<QString,DrGroup*> groups;
+		TQMap<TQString,DrGroup*> groups;
 		driver->set( "manufacturer", v.mapFind( "make" ).data().toString() );
 		driver->set( "model", v.mapFind( "model" ).data().toString() );
 		driver->set( "matic_printer", v.mapFind( "id" ).data().toString() );
 		driver->set( "matic_driver", v.mapFind( "driver" ).data().toString() );
-		driver->set( "text", QString( "%1 %2 (%3)" ).arg( driver->get( "manufacturer" ) ).arg( driver->get( "model" ) ).arg( driver->get( "matic_driver" ) ) );
+		driver->set( "text", TQString( "%1 %2 (%3)" ).arg( driver->get( "manufacturer" ) ).arg( driver->get( "model" ) ).arg( driver->get( "matic_driver" ) ) );
 		if ( m_foodata.contains( "POSTPIPE" ) )
 			driver->set( "postpipe", m_foodata.find( "POSTPIPE" ).data().toString() );
 		v = v.mapFind( "args" ).data();
-		if ( !v.isNull() && v.type() == QVariant::List )
+		if ( !v.isNull() && v.type() == TQVariant::List )
 		{
-			QValueList<QVariant>::ConstIterator it = v.listBegin();
+			TQValueList<TQVariant>::ConstIterator it = v.listBegin();
 			for ( ; it!=v.listEnd(); ++it )
 			{
-				if ( ( *it ).type() != QVariant::Map )
+				if ( ( *it ).type() != TQVariant::Map )
 					continue;
 				DrBase *opt = createOption( ( *it ).toMap() );
 				if ( opt )
 				{
-					QString group = DrGroup::groupForOption( opt->name() );
+					TQString group = DrGroup::groupForOption( opt->name() );
 					DrGroup *grp = NULL;
 					if ( !groups.contains( group ) )
 					{
@@ -179,14 +179,14 @@ DrMain* Foomatic2Loader::buildDriver() const
 					if ( opt->name() == "PageSize" )
 					{
 						// try to add the corresponding page sizes
-						QVariant choices = ( *it ).mapFind( "vals_byname" ).data();
-						QRegExp re( "(\\d+) +(\\d+)" );
-						if ( choices.type() == QVariant::Map )
+						TQVariant choices = ( *it ).mapFind( "vals_byname" ).data();
+						TQRegExp re( "(\\d+) +(\\d+)" );
+						if ( choices.type() == TQVariant::Map )
 						{
-							QMap<QString,QVariant>::ConstIterator it = choices.mapBegin();
+							TQMap<TQString,TQVariant>::ConstIterator it = choices.mapBegin();
 							for ( ; it!=choices.mapEnd(); ++it )
 							{
-								QString driverval = ( *it ).mapFind( "driverval" ).data().toString();
+								TQString driverval = ( *it ).mapFind( "driverval" ).data().toString();
 								if ( re.exactMatch( driverval ) )
 								{
 									driver->addPageSize( new DrPageSize( it.key(), re.cap( 1 ).toInt(), re.cap( 2 ).toInt(), 36, 24, 36, 24 ) );
@@ -208,19 +208,19 @@ DrMain* Foomatic2Loader::modifyDriver( DrMain *driver ) const
 {
 	if ( !m_foodata.isEmpty() )
 	{
-		QValueList<DrBase*> optList;
+		TQValueList<DrBase*> optList;
 		DrGroup *grp = NULL;
 
-		QVariant V = m_foodata.find( "VAR" ).data();
-		if ( !V.isNull() && V.type() == QVariant::Map )
+		TQVariant V = m_foodata.find( "VAR" ).data();
+		if ( !V.isNull() && V.type() == TQVariant::Map )
 		{
-			QVariant v = V.mapFind( "args" ).data();
-			if ( !v.isNull() && v.type() == QVariant::List )
+			TQVariant v = V.mapFind( "args" ).data();
+			if ( !v.isNull() && v.type() == TQVariant::List )
 			{
-				QValueList<QVariant>::ConstIterator it = v.listBegin();
+				TQValueList<TQVariant>::ConstIterator it = v.listBegin();
 				for ( ; it!=v.listEnd(); ++it )
 				{
-					if ( ( *it ).type() != QVariant::Map )
+					if ( ( *it ).type() != TQVariant::Map )
 						continue;
 					DrBase *opt = createOption( ( *it ).toMap() );
 					if ( opt )
@@ -232,12 +232,12 @@ DrMain* Foomatic2Loader::modifyDriver( DrMain *driver ) const
 			else
 			{
 				v = V.mapFind( "args_byname" ).data();
-				if ( !v.isNull() && v.type() == QVariant::Map )
+				if ( !v.isNull() && v.type() == TQVariant::Map )
 				{
-					QMap<QString,QVariant>::ConstIterator it = v.mapBegin();
+					TQMap<TQString,TQVariant>::ConstIterator it = v.mapBegin();
 					for ( ; it!=v.mapEnd(); ++it )
 					{
-						if ( ( *it ).type() != QVariant::Map )
+						if ( ( *it ).type() != TQVariant::Map )
 							continue;
 						DrBase *opt = createOption( ( *it ).toMap() );
 						if ( opt )
@@ -249,7 +249,7 @@ DrMain* Foomatic2Loader::modifyDriver( DrMain *driver ) const
 			}
 		}
 
-		for ( QValueList<DrBase*>::ConstIterator it=optList.begin(); it!=optList.end(); ++it )
+		for ( TQValueList<DrBase*>::ConstIterator it=optList.begin(); it!=optList.end(); ++it )
 		{
 			DrBase *opt = ( *it );
 			if ( opt )
@@ -271,8 +271,8 @@ DrMain* Foomatic2Loader::modifyDriver( DrMain *driver ) const
 							DrBase *oldOpt = driver->findOption( opt->name() );
 							if ( oldOpt && oldOpt->type() == DrBase::List )
 							{
-								QPtrListIterator<DrBase> it( *( static_cast<DrListOption*>( oldOpt )->choices() ) );
-								QString fixedvals;
+								TQPtrListIterator<DrBase> it( *( static_cast<DrListOption*>( oldOpt )->choices() ) );
+								TQString fixedvals;
 								for ( ; it.current(); ++it )
 								{
 									fixedvals.append( it.current()->name() );
@@ -292,7 +292,7 @@ DrMain* Foomatic2Loader::modifyDriver( DrMain *driver ) const
 	return driver;
 }
 
-DrMain* Foomatic2Loader::loadDriver( const QString& filename )
+DrMain* Foomatic2Loader::loadDriver( const TQString& filename )
 {
 	Foomatic2Loader loader;
 	if ( loader.readFromFile( filename ) )

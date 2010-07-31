@@ -20,11 +20,11 @@
 #ifndef __kded_h__
 #define __kded_h__ 
 
-#include <qobject.h>
-#include <qstring.h>
-#include <qtimer.h>
-#include <qasciidict.h>
-#include <qintdict.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqtimer.h>
+#include <tqasciidict.h>
+#include <tqintdict.h>
 
 #include <dcopclient.h>
 #include <dcopobject.h>
@@ -38,7 +38,7 @@ class KDirWatch;
 class KService;
 
 // No need for this in libkio - apps only get readonly access
-class Kded : public QObject, public DCOPObject, public DCOPObjectProxy
+class Kded : public TQObject, public DCOPObject, public DCOPObjectProxy
 {
   Q_OBJECT
 public:
@@ -49,25 +49,25 @@ public:
    /**
     * Catch calls to unknown objects.
     */
-   bool process(const QCString &obj, const QCString &fun, 
-                const QByteArray &data, 
-		QCString &replyType, QByteArray &replyData);
+   bool process(const TQCString &obj, const TQCString &fun, 
+                const TQByteArray &data, 
+		TQCString &replyType, TQByteArray &replyData);
 
    /**
     * process DCOP message.  Only calls to "recreate" are supported at
     * this time.
     */
-   bool process(const QCString &fun, const QByteArray &data, 
-		QCString &replyType, QByteArray &replyData);
+   bool process(const TQCString &fun, const TQByteArray &data, 
+		TQCString &replyType, TQByteArray &replyData);
 
    virtual QCStringList functions();
 
-   void noDemandLoad(const QString &obj); // Don't load obj on demand
+   void noDemandLoad(const TQString &obj); // Don't load obj on demand
 
-   KDEDModule *loadModule(const QCString &obj, bool onDemand);
+   KDEDModule *loadModule(const TQCString &obj, bool onDemand);
    KDEDModule *loadModule(const KService *service, bool onDemand);
    QCStringList loadedModules();
-   bool unloadModule(const QCString &obj);
+   bool unloadModule(const TQCString &obj);
    bool isWindowRegistered(long windowId);
    void registerWindowId(long windowId);
    void unregisterWindowId(long windowId);
@@ -103,7 +103,7 @@ public slots:
    /**
     * An application unregistered itself with DCOP
     */
-   void slotApplicationRemoved(const QCString &appId);
+   void slotApplicationRemoved(const TQCString &appId);
 
    /**
     * A KDEDModule is about to get destroyed.
@@ -115,12 +115,12 @@ protected slots:
    /**
     * @internal Triggers rebuilding
     */
-   void dirDeleted(const QString& path);
+   void dirDeleted(const TQString& path);
  
    /**
     * @internal Triggers rebuilding
     */
-   void update (const QString& dir );
+   void update (const TQString& dir );
 
    /**
     * @internal Installs crash handler
@@ -133,7 +133,7 @@ protected:
    /**
     * Scans dir for new files and new subdirectories.
     */
-   void readDirectory(const QString& dir );
+   void readDirectory(const TQString& dir );
    
 
    static void crashHandler(int);
@@ -152,18 +152,18 @@ protected:
     * before rebuilding the binary - so that multiple updates result
     * in only one rebuilding.
     */
-   QTimer* m_pTimer;
+   TQTimer* m_pTimer;
    
-   QValueList<DCOPClientTransaction *> m_recreateRequests;
+   TQValueList<DCOPClientTransaction *> m_recreateRequests;
    int m_recreateCount;
    bool m_recreateBusy;
    
-   QAsciiDict<KDEDModule> m_modules;
-   QAsciiDict<KLibrary> m_libs;
-   QAsciiDict<QObject> m_dontLoad;
-   QAsciiDict<QValueList<long> > m_windowIdList;
-   QIntDict<long> m_globalWindowIdList;
-   QStringList m_allResourceDirs;
+   TQAsciiDict<KDEDModule> m_modules;
+   TQAsciiDict<KLibrary> m_libs;
+   TQAsciiDict<TQObject> m_dontLoad;
+   TQAsciiDict<TQValueList<long> > m_windowIdList;
+   TQIntDict<long> m_globalWindowIdList;
+   TQStringList m_allResourceDirs;
    bool m_needDelayedCheck;
    bool m_newStartup;
 public:
@@ -197,7 +197,7 @@ private:
     * before rebuilding the binary - so that multiple updates result
     * in only one rebuilding.
     */
-   QTimer* m_pTimer;
+   TQTimer* m_pTimer;
 };
 
 class KHostnameD : public QObject
@@ -214,8 +214,8 @@ private:
    /**
     * Timer for interval hostname checking.
     */
-   QTimer m_Timer;
-   QCString m_hostname;
+   TQTimer m_Timer;
+   TQCString m_hostname;
 };
 
 #endif

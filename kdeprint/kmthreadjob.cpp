@@ -21,9 +21,9 @@
 #include "kmjob.h"
 #include "kmjobmanager.h"
 
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qstringlist.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqstringlist.h>
 #include <kstandarddirs.h>
 
 #include <errno.h>
@@ -32,8 +32,8 @@
 
 #define CHARSEP	'$'
 
-KMThreadJob::KMThreadJob(QObject *parent, const char *name)
-: QObject(parent,name)
+KMThreadJob::KMThreadJob(TQObject *parent, const char *name)
+: TQObject(parent,name)
 {
 	m_jobs.setAutoDelete(true);
 }
@@ -42,7 +42,7 @@ KMThreadJob::~KMThreadJob()
 {
 }
 
-QString KMThreadJob::jobFile()
+TQString KMThreadJob::jobFile()
 {
 	QString	f = locateLocal("data","kdeprint/printjobs");
 	return f;
@@ -54,7 +54,7 @@ bool KMThreadJob::saveJobs()
 	if (f.open(IO_WriteOnly))
 	{
 		QTextStream	t(&f);
-		QIntDictIterator<KMJob>	it(m_jobs);
+		TQIntDictIterator<KMJob>	it(m_jobs);
 		for (;it.current();++it)
 			t << it.current()->id() << CHARSEP << it.current()->name() << CHARSEP << it.current()->printer() << CHARSEP << it.current()->owner() << CHARSEP << it.current()->size() << endl;
 		return true;
@@ -76,7 +76,7 @@ bool KMThreadJob::loadJobs()
 			line = t.readLine().stripWhiteSpace();
 			if (line.isEmpty())
 				continue;
-			QStringList	ll = QStringList::split(CHARSEP,line,true);
+			QStringList	ll = TQStringList::split(CHARSEP,line,true);
 			if (ll.count() == 5)
 			{
 				KMJob	*job = new KMJob();
@@ -109,7 +109,7 @@ KMJob* KMThreadJob::findJob(int ID)
 	return m_jobs.find(ID);
 }
 
-KMJob* KMThreadJob::findJob(const QString& uri)
+KMJob* KMThreadJob::findJob(const TQString& uri)
 {
 	if (uri.startsWith("proc:/"))
 	{
@@ -132,7 +132,7 @@ bool KMThreadJob::removeJob(int ID)
 		return false;
 }
 
-void KMThreadJob::createJob(int ID, const QString& printer, const QString& name, const QString& owner, int size)
+void KMThreadJob::createJob(int ID, const TQString& printer, const TQString& name, const TQString& owner, int size)
 {
 	KMThreadJob	mth(0);
 	KMJob	*job = new KMJob();
@@ -161,7 +161,7 @@ void KMThreadJob::createJob(KMJob *job)
 void KMThreadJob::updateManager(KMJobManager *mgr)
 {
 	loadJobs();
-	QIntDictIterator<KMJob>	it(m_jobs);
+	TQIntDictIterator<KMJob>	it(m_jobs);
 	for (;it.current();++it)
 	{
 		KMJob	*job = new KMJob(*(it.current()));

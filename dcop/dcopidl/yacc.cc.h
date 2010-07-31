@@ -167,7 +167,7 @@
 #line 67 "yacc.yy"
 typedef union YYSTYPE {
   long   _int;
-  QString        *_str;
+  TQString        *_str;
   unsigned short          _char;
   double _float;
 } YYSTYPE;

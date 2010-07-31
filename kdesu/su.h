@@ -13,7 +13,7 @@
 #ifndef __SU_h_Included__
 #define __SU_h_Included__
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <kdelibs_export.h>
 
@@ -26,7 +26,7 @@
 class KDESU_EXPORT SuProcess: public StubProcess
 {
 public:
-    SuProcess(const QCString &user=0, const QCString &command=0);
+    SuProcess(const TQCString &user=0, const TQCString &command=0);
     ~SuProcess();
 
     enum Errors { SuNotFound=1, SuNotAllowed, SuIncorrectPassword };
@@ -57,7 +57,7 @@ protected:
 private:
     class SuProcessPrivate;
     SuProcessPrivate *d;
-    QString superUserCommand;
+    TQString superUserCommand;
 };
 
 #endif

@@ -3,26 +3,26 @@
 #include "krulertest.h"
 
 #include "kruler.h"
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qgroupbox.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqgroupbox.h>
 
 /*
 void
 MyCheckBox::mouseReleaseEvent(QMouseEvent *e )
 {
-  QButton::mouseReleaseEvent(e);
+  TQButton::mouseReleaseEvent(e);
   if ();
 }
 */
 
-MouseWidget::MouseWidget( QWidget *parent, const char *name, WFlags f )
-  : QFrame(parent, name, f)
+MouseWidget::MouseWidget( TQWidget *parent, const char *name, WFlags f )
+  : TQFrame(parent, name, f)
 {
 }
 
 void
-MouseWidget::mousePressEvent( QMouseEvent *e )
+MouseWidget::mousePressEvent( TQMouseEvent *e )
 {
   mouseButtonDown = true;
   emit newXPos(e->x());
@@ -30,11 +30,11 @@ MouseWidget::mousePressEvent( QMouseEvent *e )
 }
 
 void
-MouseWidget::mouseReleaseEvent( QMouseEvent * )
+MouseWidget::mouseReleaseEvent( TQMouseEvent * )
 { mouseButtonDown = false; }
 
 void
-MouseWidget::mouseMoveEvent( QMouseEvent *e )
+MouseWidget::mouseMoveEvent( TQMouseEvent *e )
 {
   if (mouseButtonDown) {
     emit newXPos(e->x());
@@ -43,7 +43,7 @@ MouseWidget::mouseMoveEvent( QMouseEvent *e )
 }
 
 void
-MouseWidget::resizeEvent( QResizeEvent *r )
+MouseWidget::resizeEvent( TQResizeEvent *r )
 {
   emit newWidth(r->size().width());
   emit newHeight(r->size().height());
@@ -53,16 +53,16 @@ MouseWidget::resizeEvent( QResizeEvent *r )
 KRulerTest::KRulerTest( const char *name )
   : KMainWindow(0, name)
 {
-  mainframe = new QFrame(this);
+  mainframe = new TQFrame(this);
 
-  layout = new QGridLayout(mainframe, 2, 2);
+  layout = new TQGridLayout(mainframe, 2, 2);
 
-  miniwidget = new QFrame(mainframe);
-  miniwidget->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
+  miniwidget = new TQFrame(mainframe);
+  miniwidget->setFrameStyle(TQFrame::WinPanel | TQFrame::Raised);
   bigwidget = new MouseWidget(mainframe);
-  bigwidget->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
+  bigwidget->setFrameStyle(TQFrame::WinPanel | TQFrame::Sunken);
 
-  //  QRect bwrect = bigwidget->frameRect();
+  //  TQRect bwrect = bigwidget->frameRect();
   //  qDebug("big rect: top%i left%i bottom%i right%i",
   //	bwrect.top(), bwrect.left(), bwrect.bottom(), bwrect.right());
   hruler = new KRuler(Horizontal, mainframe);
@@ -72,98 +72,98 @@ KRulerTest::KRulerTest( const char *name )
   hruler->setOffset( 0 );
 
   vruler = new KRuler(Vertical, mainframe);
-  vruler->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
+  vruler->setFrameStyle(TQFrame::WinPanel | TQFrame::Sunken);
   vruler->setOffset( 0 );
   vruler->setRange( 0, 1000 );
 
-  connect( bigwidget, SIGNAL(newXPos(int)),
-	   hruler, SLOT(slotNewValue(int)) );
-  connect( bigwidget, SIGNAL(newYPos(int)),
-	   vruler, SLOT(slotNewValue(int)) );
-  connect( bigwidget, SIGNAL(newWidth(int)),
-	   SLOT(slotNewWidth(int)) );
-  connect( bigwidget, SIGNAL(newHeight(int)),
-	   SLOT(slotNewHeight(int)) );
+  connect( bigwidget, TQT_SIGNAL(newXPos(int)),
+	   hruler, TQT_SLOT(slotNewValue(int)) );
+  connect( bigwidget, TQT_SIGNAL(newYPos(int)),
+	   vruler, TQT_SLOT(slotNewValue(int)) );
+  connect( bigwidget, TQT_SIGNAL(newWidth(int)),
+	   TQT_SLOT(slotNewWidth(int)) );
+  connect( bigwidget, TQT_SIGNAL(newHeight(int)),
+	   TQT_SLOT(slotNewHeight(int)) );
 
   layout->addWidget(miniwidget, 0, 0);
   layout->addWidget(hruler, 0, 1);
   layout->addWidget(vruler, 1, 0);
   layout->addWidget(bigwidget, 1, 1);
 
-  mouse_message = new QLabel("Press and hold mouse button\nfor pointer movement", bigwidget);
+  mouse_message = new TQLabel("Press and hold mouse button\nfor pointer movement", bigwidget);
   mouse_message->adjustSize();
   mouse_message->move(4,4);
 
-  showMarks = new QGroupBox("Show which marks ?", bigwidget);
+  showMarks = new TQGroupBox("Show which marks ?", bigwidget);
   showMarks->setFixedSize(140, 160);
   showMarks->move(330,4);
-  showTM = new QCheckBox("show tiny marks", showMarks);
+  showTM = new TQCheckBox("show tiny marks", showMarks);
   showTM->adjustSize();
   showTM->move(5,15);
   showTM->setChecked(true);
-  connect(showTM, SIGNAL(toggled(bool)), SLOT(slotSetTinyMarks(bool)) );
-  showLM = new QCheckBox("show little marks", showMarks);
+  connect(showTM, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotSetTinyMarks(bool)) );
+  showLM = new TQCheckBox("show little marks", showMarks);
   showLM->adjustSize();
   showLM->move(5,35);
   showLM->setChecked(true);
-  connect(showLM, SIGNAL(toggled(bool)), SLOT(slotSetLittleMarks(bool)) );
-  showMM = new QCheckBox("show medium marks", showMarks);
+  connect(showLM, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotSetLittleMarks(bool)) );
+  showMM = new TQCheckBox("show medium marks", showMarks);
   showMM->adjustSize();
   showMM->move(5,55);
   showMM->setChecked(true);
-  connect(showMM, SIGNAL(toggled(bool)), SLOT(slotSetMediumMarks(bool)) );
-  showBM = new QCheckBox("show big marks", showMarks);
+  connect(showMM, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotSetMediumMarks(bool)) );
+  showBM = new TQCheckBox("show big marks", showMarks);
   showBM->adjustSize();
   showBM->move(5,75);
   showBM->setChecked(true);
-  connect(showBM, SIGNAL(toggled(bool)), SLOT(slotSetBigMarks(bool)) );
-  showEM = new QCheckBox("show end marks", showMarks);
+  connect(showBM, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotSetBigMarks(bool)) );
+  showEM = new TQCheckBox("show end marks", showMarks);
   showEM->adjustSize();
   showEM->move(5,95);
   showEM->setChecked(true);
-  connect(showEM, SIGNAL(toggled(bool)), SLOT(slotSetEndMarks(bool)) );
-  showPT = new QCheckBox("show ruler pointer", showMarks);
+  connect(showEM, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotSetEndMarks(bool)) );
+  showPT = new TQCheckBox("show ruler pointer", showMarks);
   showPT->adjustSize();
   showPT->move(5,115);
   showPT->setChecked(true);
-  connect(showPT, SIGNAL(toggled(bool)), SLOT(slotSetRulerPointer(bool)) );
-  fixLen = new QCheckBox("fix ruler length", showMarks);
+  connect(showPT, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotSetRulerPointer(bool)) );
+  fixLen = new TQCheckBox("fix ruler length", showMarks);
   fixLen->adjustSize();
   fixLen->move(5,135);
   fixLen->setChecked(true);
-  connect(fixLen, SIGNAL(toggled(bool)), SLOT(slotFixRulerLength(bool)) );
-  connect(fixLen, SIGNAL(toggled(bool)), SLOT(slotCheckLength(bool)) );
+  connect(fixLen, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotFixRulerLength(bool)) );
+  connect(fixLen, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotCheckLength(bool)) );
 
-  lineEdit = new QGroupBox("Value of begin/end", bigwidget);
+  lineEdit = new TQGroupBox("Value of begin/end", bigwidget);
   lineEdit->setFixedSize(140, 80);
   lineEdit->move(330,4+160);
   beginMark = new KIntNumInput(0, lineEdit);
   beginMark->setRange(-1000, 1000, 1, false);
   beginMark->move(5, 15);
   beginMark->setFixedSize(beginMark->sizeHint());
-  connect(beginMark, SIGNAL(valueChanged(int)), 
-	  hruler, SLOT(slotNewOffset(int)) );
-  connect(beginMark, SIGNAL(valueChanged(int)), 
-	  vruler, SLOT(slotNewOffset(int)) );
+  connect(beginMark, TQT_SIGNAL(valueChanged(int)), 
+	  hruler, TQT_SLOT(slotNewOffset(int)) );
+  connect(beginMark, TQT_SIGNAL(valueChanged(int)), 
+	  vruler, TQT_SLOT(slotNewOffset(int)) );
   endMark = new KIntNumInput(0, lineEdit);
   endMark->setRange(-1000, 1000, 1, false);
   endMark->move(5, 35);
   endMark->setFixedSize(endMark->sizeHint());
-  connect(endMark, SIGNAL(valueChanged(int)), 
-	  hruler, SLOT(slotEndOffset(int)) );
-  connect(endMark, SIGNAL(valueChanged(int)), 
-	  vruler, SLOT(slotEndOffset(int)) );
+  connect(endMark, TQT_SIGNAL(valueChanged(int)), 
+	  hruler, TQT_SLOT(slotEndOffset(int)) );
+  connect(endMark, TQT_SIGNAL(valueChanged(int)), 
+	  vruler, TQT_SLOT(slotEndOffset(int)) );
   lengthInput = new KIntNumInput(0, lineEdit);
   lengthInput->setRange(-1000, 1000, 1, false);
   lengthInput->move(5, 55);
   lengthInput->setFixedSize(lengthInput->sizeHint());
-  connect(lengthInput, SIGNAL(valueChanged(int)), 
-	  hruler, SLOT(slotEndOffset(int)) );
-  connect(lengthInput, SIGNAL(valueChanged(int)), 
-	  vruler, SLOT(slotEndOffset(int)) );
+  connect(lengthInput, TQT_SIGNAL(valueChanged(int)), 
+	  hruler, TQT_SLOT(slotEndOffset(int)) );
+  connect(lengthInput, TQT_SIGNAL(valueChanged(int)), 
+	  vruler, TQT_SLOT(slotEndOffset(int)) );
 
 
-  vertrot = new QGroupBox("Value of rotate translate for Vert.", bigwidget);
+  vertrot = new TQGroupBox("Value of rotate translate for Vert.", bigwidget);
   vertrot->setFixedSize(140, 80);
   vertrot->move(330,4+160+80+4);
   transX = new KDoubleNumInput(0.0, vertrot);
@@ -171,48 +171,48 @@ KRulerTest::KRulerTest( const char *name )
   transX->move(5, 15);
   transX->setFixedSize(transX->sizeHint());
   //transX->setLabel("transx", AlignLeft);
-  connect(transX, SIGNAL(valueChanged(double)), 
-	  SLOT(slotSetXTrans(double)) );
+  connect(transX, TQT_SIGNAL(valueChanged(double)), 
+	  TQT_SLOT(slotSetXTrans(double)) );
   transY = new KDoubleNumInput(-12.0, vertrot);
   transY->setRange(-1000, 1000, 1, false);
   transY->move(5, 35);
   transY->setFixedSize(transY->sizeHint());
   //transY->setLabel("transy", AlignLeft);
-  connect(transY, SIGNAL(valueChanged(double)), 
-	  SLOT(slotSetYTrans(double)) );
+  connect(transY, TQT_SIGNAL(valueChanged(double)), 
+	  TQT_SLOT(slotSetYTrans(double)) );
   rotV = new KDoubleNumInput(90.0, vertrot);
   rotV->setRange(-1000, 1000, 1, false);
   rotV->move(5, 55);
   rotV->setFixedSize(rotV->sizeHint());
   //rotV->setLabel("rot", AlignLeft);
-  connect(rotV, SIGNAL(valueChanged(double)), 
-	  SLOT(slotSetRotate(double)) );
+  connect(rotV, TQT_SIGNAL(valueChanged(double)), 
+	  TQT_SLOT(slotSetRotate(double)) );
   
 
-  metricstyle = new QButtonGroup("metric styles", bigwidget);
+  metricstyle = new TQButtonGroup("metric styles", bigwidget);
   metricstyle->setFixedSize(100, 120);
   metricstyle->move(330-110,4);
-  pixelmetric = new QRadioButton("pixel", metricstyle);
+  pixelmetric = new TQRadioButton("pixel", metricstyle);
   pixelmetric->adjustSize();
   pixelmetric->move(5,15);
   metricstyle->insert(pixelmetric, (int)KRuler::Pixel);
-  inchmetric = new QRadioButton("inch", metricstyle);
+  inchmetric = new TQRadioButton("inch", metricstyle);
   inchmetric->adjustSize();
   inchmetric->move(5,35);
   metricstyle->insert(inchmetric, (int)KRuler::Inch);
-  mmmetric = new QRadioButton("millimeter", metricstyle);
+  mmmetric = new TQRadioButton("millimeter", metricstyle);
   mmmetric->adjustSize();
   mmmetric->move(5,55);
   metricstyle->insert(mmmetric, (int)KRuler::Millimetres);
-  cmmetric = new QRadioButton("centimeter", metricstyle);
+  cmmetric = new TQRadioButton("centimeter", metricstyle);
   cmmetric->adjustSize();
   cmmetric->move(5,75);
   metricstyle->insert(cmmetric, (int)KRuler::Centimetres);
-  mmetric = new QRadioButton("meter", metricstyle);
+  mmetric = new TQRadioButton("meter", metricstyle);
   mmetric->adjustSize();
   mmetric->move(5,95);
   metricstyle->insert(mmetric, (int)KRuler::Metres);
-  connect ( metricstyle, SIGNAL(clicked(int)), SLOT(slotSetMStyle(int)) );
+  connect ( metricstyle, TQT_SIGNAL(clicked(int)), TQT_SLOT(slotSetMStyle(int)) );
 
   setCentralWidget(mainframe);
 
@@ -362,7 +362,7 @@ int main(int argc, char **argv)
   KRulerTest   *window;
 
   testapp = new KApplication(argc, argv,"krulertest");
-  testapp->setFont(QFont("Helvetica",12),true);
+  testapp->setFont(TQFont("Helvetica",12),true);
 
   window = new KRulerTest("main");
   testapp->setMainWidget(window);

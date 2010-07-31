@@ -36,24 +36,24 @@ public:
 
 	PrinterType	type;
 	QStringList	printers;
-	QWidget *parentWidget;
+	TQWidget *parentWidget;
 };
 
-KPrintAction::KPrintAction(const QString& text, PrinterType type, QWidget *parentWidget, QObject *parent, const char *name)
+KPrintAction::KPrintAction(const TQString& text, PrinterType type, TQWidget *parentWidget, TQObject *parent, const char *name)
 : KActionMenu(text, parent, name)
 {
 	d = new KPrintActionPrivate();
 	initialize(type, parentWidget);
 }
 
-KPrintAction::KPrintAction(const QString& text, const QIconSet& icon, PrinterType type, QWidget *parentWidget, QObject *parent, const char *name)
+KPrintAction::KPrintAction(const TQString& text, const TQIconSet& icon, PrinterType type, TQWidget *parentWidget, TQObject *parent, const char *name)
 : KActionMenu(text, icon, parent, name)
 {
 	d = new KPrintActionPrivate();
 	initialize(type, parentWidget);
 }
 
-KPrintAction::KPrintAction(const QString& text, const QString& icon, PrinterType type, QWidget *parentWidget, QObject *parent, const char *name)
+KPrintAction::KPrintAction(const TQString& text, const TQString& icon, PrinterType type, TQWidget *parentWidget, TQObject *parent, const char *name)
 : KActionMenu(text, icon, parent, name)
 {
 	d = new KPrintActionPrivate();
@@ -65,10 +65,10 @@ KPrintAction::~KPrintAction()
 	delete d;
 }
 
-void KPrintAction::initialize(PrinterType type, QWidget *parentWidget)
+void KPrintAction::initialize(PrinterType type, TQWidget *parentWidget)
 {
-	connect(popupMenu(), SIGNAL(aboutToShow()), SLOT(slotAboutToShow()));
-	connect(popupMenu(), SIGNAL(activated(int)), SLOT(slotActivated(int)));
+	connect(popupMenu(), TQT_SIGNAL(aboutToShow()), TQT_SLOT(slotAboutToShow()));
+	connect(popupMenu(), TQT_SIGNAL(activated(int)), TQT_SLOT(slotActivated(int)));
 
 	d->type = type;
 	d->parentWidget = parentWidget;
@@ -78,10 +78,10 @@ void KPrintAction::slotAboutToShow()
 {
 	popupMenu()->clear();
 	d->printers.clear();
-	QPtrList<KMPrinter>	*prts = KMManager::self()->printerList();
+	TQPtrList<KMPrinter>	*prts = KMManager::self()->printerList();
 	if (prts && !prts->isEmpty())
 	{
-		QPtrListIterator<KMPrinter>	it(*prts);
+		TQPtrListIterator<KMPrinter>	it(*prts);
 		bool	first(false);
 		int	ID(0);
 		for (; it.current(); ++it)
@@ -112,17 +112,17 @@ void KPrintAction::slotActivated(int ID)
 	}
 }
 
-KPrintAction* KPrintAction::exportAll(QWidget *parentWidget, QObject *parent, const char *name)
+KPrintAction* KPrintAction::exportAll(TQWidget *parentWidget, TQObject *parent, const char *name)
 {
 	return new KPrintAction(i18n("&Export..."), All, parentWidget, parent, (name ? name : "export_all"));
 }
 
-KPrintAction* KPrintAction::exportRegular(QWidget *parentWidget, QObject *parent, const char *name)
+KPrintAction* KPrintAction::exportRegular(TQWidget *parentWidget, TQObject *parent, const char *name)
 {
 	return new KPrintAction(i18n("&Export..."), Regular, parentWidget, parent, (name ? name : "export_regular"));
 }
 
-KPrintAction* KPrintAction::exportSpecial(QWidget *parentWidget, QObject *parent, const char *name)
+KPrintAction* KPrintAction::exportSpecial(TQWidget *parentWidget, TQObject *parent, const char *name)
 {
 	return new KPrintAction(i18n("&Export..."), Specials, parentWidget, parent, (name ? name : "export_special"));
 }

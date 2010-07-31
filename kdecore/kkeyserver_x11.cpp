@@ -22,8 +22,8 @@
 
 #include <config.h>
 
-#include <qnamespace.h>
-#include <qwindowdefs.h>
+#include <tqnamespace.h>
+#include <tqwindowdefs.h>
 
 #if defined(Q_WS_X11) || defined(Q_WS_WIN) || defined(Q_WS_MACX) // Only compile this module if we're compiling for X11, mac or win32
 
@@ -81,7 +81,7 @@ struct ModInfo
 	uint modX;
 #endif
 	const char* psName;
-	QString sLabel;
+	TQString sLabel;
 };
 
 struct SymVariation
@@ -107,10 +107,10 @@ struct TransKey {
 
 static ModInfo g_rgModInfo[KKey::MOD_FLAG_COUNT] =
 {
-	{ KKey::SHIFT, Qt::SHIFT,   X11_ONLY(ShiftMask)   I18N_NOOP("Shift"), QString() },
-	{ KKey::CTRL,  Qt::CTRL,    X11_ONLY(ControlMask) I18N_NOOP("Ctrl"), QString() },
-	{ KKey::ALT,   Qt::ALT,     X11_ONLY(Mod1Mask)    I18N_NOOP("Alt"), QString() },
-	{ KKey::WIN,   KKey::QtWIN, X11_ONLY(Mod4Mask)    I18N_NOOP("Win"), QString() }
+	{ KKey::SHIFT, Qt::SHIFT,   X11_ONLY(ShiftMask)   I18N_NOOP("Shift"), TQString() },
+	{ KKey::CTRL,  Qt::CTRL,    X11_ONLY(ControlMask) I18N_NOOP("Ctrl"), TQString() },
+	{ KKey::ALT,   Qt::ALT,     X11_ONLY(Mod1Mask)    I18N_NOOP("Alt"), TQString() },
+	{ KKey::WIN,   KKey::QtWIN, X11_ONLY(Mod4Mask)    I18N_NOOP("Win"), TQString() }
 };
 
 // Special Names List
@@ -365,7 +365,7 @@ bool initializeMods()
 
 	g_bInitializedMods = true;
 
-	kdDebug(125) << "KKeyServer::initializeMods(): Win Mod = 0x" << QString::number(g_rgModInfo[3].modX, 16) << endl;
+	kdDebug(125) << "KKeyServer::initializeMods(): Win Mod = 0x" << TQString::number(g_rgModInfo[3].modX, 16) << endl;
 	return true;
 }
 
@@ -392,7 +392,7 @@ static void intializeKKeyLabels()
 // class Mod
 //---------------------------------------------------------------------
 
-/*void Mod::init( const QString& s )
+/*void Mod::init( const TQString& s )
 {
 
 }*/
@@ -406,7 +406,7 @@ bool Sym::initQt( int keyQt )
 	int symQt = keyQt & 0xffff;
 
 	if( (keyQt & Qt::UNICODE_ACCEL) || symQt < 0x1000 ) {
-		m_sym = QChar(symQt).lower().unicode();
+		m_sym = TQChar(symQt).lower().unicode();
 		return true;
 	}
 
@@ -424,7 +424,7 @@ bool Sym::initQt( int keyQt )
 	m_sym = 0;
 	if( symQt != Qt::Key_Shift && symQt != Qt::Key_Control && symQt != Qt::Key_Alt &&
 	    symQt != Qt::Key_Meta && symQt != Qt::Key_Direction_L && symQt != Qt::Key_Direction_R )
-		kdDebug(125) << "Sym::initQt( " << QString::number(keyQt,16) << " ): failed to convert key." << endl;
+		kdDebug(125) << "Sym::initQt( " << TQString::number(keyQt,16) << " ): failed to convert key." << endl;
 	return false;
 #elif defined(Q_WS_MACX)
         m_sym = symQt;
@@ -432,7 +432,7 @@ bool Sym::initQt( int keyQt )
 #endif
 }
 
-bool Sym::init( const QString& s )
+bool Sym::init( const TQString& s )
 {
 	// If it's a single character, get unicode value.
 	if( s.length() == 1 ) {
@@ -463,7 +463,7 @@ bool Sym::init( const QString& s )
 	if( !m_sym ) {
 		m_sym = XStringToKeysym( s.lower().latin1() );
 		if( !m_sym ) {
-			QString s2 = s;
+			TQString s2 = s;
 			s2[0] = s2[0].upper();
 			m_sym = XStringToKeysym( s2.latin1() );
 		}
@@ -476,7 +476,7 @@ int Sym::qt() const
 {
 	if( m_sym < 0x1000 ) {
 		if( m_sym >= 'a' && m_sym <= 'z' )
-			return QChar(m_sym).upper();
+			return TQChar(m_sym).upper();
 		return m_sym;
 	}
 #ifdef Q_WS_WIN
@@ -493,10 +493,10 @@ int Sym::qt() const
 	return Qt::Key_unknown;
 }
 
-QString Sym::toString( bool bUserSpace ) const
+TQString Sym::toString( bool bUserSpace ) const
 {
 	if( m_sym == 0 )
-		return QString::null;
+		return TQString::null;
 
 	// If it's a unicode character,
 #ifdef Q_WS_WIN
@@ -504,7 +504,7 @@ QString Sym::toString( bool bUserSpace ) const
 #else
 	else if( m_sym < 0x3000 ) {
 #endif
-		QChar c = QChar(m_sym).upper();
+		TQChar c = TQChar(m_sym).upper();
 		// Print all non-space characters directly when output is user-visible.
 		// Otherwise only print alphanumeric latin1 characters directly (A,B,C,1,2,3).
 		if( (c.latin1() && c.isLetterOrNumber())
@@ -515,22 +515,22 @@ QString Sym::toString( bool bUserSpace ) const
 	// Look up in special names list
 	for( int i = 0; g_rgSymNames[i].sym != 0; i++ ) {
 		if( m_sym == g_rgSymNames[i].sym )
-			return bUserSpace ? i18n(g_rgSymNames[i].psName) : QString(g_rgSymNames[i].psName);
+			return bUserSpace ? i18n(g_rgSymNames[i].psName) : TQString(g_rgSymNames[i].psName);
 	}
 
-	QString s;
+	TQString s;
 #ifdef Q_WS_WIN
-	s = QKeySequence( m_sym );
+	s = TQKeySequence( m_sym );
 #elif defined(Q_WS_X11)
 	// Get X-name
 	s = XKeysymToString( m_sym );
 #endif
 	capitalizeKeyname( s );
-	return bUserSpace ? i18n("QAccel", s.latin1()) : s;
+	return bUserSpace ? i18n("TQAccel", s.latin1()) : s;
 }
 
-QString Sym::toStringInternal() const { return toString( false ); }
-QString Sym::toString() const         { return toString( true ); }
+TQString Sym::toStringInternal() const { return toString( false ); }
+TQString Sym::toString() const         { return toString( true ); }
 
 uint Sym::getModsRequired() const
 {
@@ -541,7 +541,7 @@ uint Sym::getModsRequired() const
 	if( m_sym == XK_Break ) return KKey::CTRL;
 
 	if( m_sym < 0x3000 ) {
-		QChar c(m_sym);
+		TQChar c(m_sym);
 		if( c.isLetter() && c.lower() != c.upper() && m_sym == c.upper().unicode() )
 			return KKey::SHIFT;
 	}
@@ -576,7 +576,7 @@ uint Sym::getSymVariation() const
 	return 0;
 }
 
-void Sym::capitalizeKeyname( QString& s )
+void Sym::capitalizeKeyname( TQString& s )
 {
 	s[0] = s[0].upper();
 	int len = s.length();
@@ -773,33 +773,33 @@ bool codeXToSym( uchar codeX, uint modX, uint& sym )
 }
 #endif //!Q_WS_WIN
 
-static QString modToString( uint mod, bool bUserSpace )
+static TQString modToString( uint mod, bool bUserSpace )
 {
 	if( bUserSpace && !g_bInitializedKKeyLabels )
 		intializeKKeyLabels();
 
-	QString s;
+	TQString s;
 	for( int i = KKey::MOD_FLAG_COUNT-1; i >= 0; i-- ) {
 		if( mod & g_rgModInfo[i].mod ) {
 			if( !s.isEmpty() )
 				s += '+';
 			s += (bUserSpace)
 			          ? g_rgModInfo[i].sLabel
-				  : QString(g_rgModInfo[i].psName);
+				  : TQString(g_rgModInfo[i].psName);
 		}
 	}
 	return s;
 }
 
-QString modToStringInternal( uint mod ) { return modToString( mod, false ); }
-QString modToStringUser( uint mod )     { return modToString( mod, true ); }
+TQString modToStringInternal( uint mod ) { return modToString( mod, false ); }
+TQString modToStringUser( uint mod )     { return modToString( mod, true ); }
 
-uint stringUserToMod( const QString& mod )
+uint stringUserToMod( const TQString& mod )
 {
 	if( !g_bInitializedKKeyLabels )
 		intializeKKeyLabels();
 
-	QString s;
+	TQString s;
 	for( int i = KKey::MOD_FLAG_COUNT-1; i >= 0; i-- ) {
 		if( mod.lower() == g_rgModInfo[i].sLabel.lower())
 			return g_rgModInfo[i].mod;
@@ -843,7 +843,7 @@ uint stringUserToMod( const QString& mod )
 
 		// Get X key symbol.  Only works if Qt name is same as X name.
 		if( psKeySym ) {
-			QString sKeySym = psKeySym;
+			TQString sKeySym = psKeySym;
 
 			// Check for lower-case equalent first because most
 			//  X11 names are all lower-case.
@@ -1040,8 +1040,8 @@ void KKey::simplify()
 	}
 
 	// If this is a letter, don't remove any modifiers.
-	if( m_sym < 0x3000 && QChar(m_sym).isLetter() )
-		m_sym = QChar(m_sym).lower().unicode();
+	if( m_sym < 0x3000 && TQChar(m_sym).isLetter() )
+		m_sym = TQChar(m_sym).lower().unicode();
 
 	// Remove modifers from modifier list which are implicit in the symbol.
 	// Ex. Shift+Plus => Plus (en)

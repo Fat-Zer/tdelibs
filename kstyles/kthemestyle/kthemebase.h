@@ -29,16 +29,16 @@ Copyright (C) 1998, 1999, 2000 KDE Team
 #ifndef KTHEMEBASE_H
 #define KTHEMEBASE_H
 
-#include <qtimer.h>
-#include <qdatetime.h>
+#include <tqtimer.h>
+#include <tqdatetime.h>
 #include <kpixmap.h>
-#include <qintcache.h>
-#include <qstring.h>
+#include <tqintcache.h>
+#include <tqstring.h>
 #include <kstyle.h>
-#include <qsettings.h>
-#include <qpalette.h> // for QColorGroup
+#include <tqsettings.h>
+#include <tqpalette.h> // for QColorGroup
 #include "kstyledirs.h"
-#include <qmap.h>
+#include <tqmap.h>
 
 class QImage;
 
@@ -58,34 +58,34 @@ public:
 
     KThemePixmap( bool timer = true );
     KThemePixmap( const KThemePixmap &p );
-    KThemePixmap( const KThemePixmap &p, const QPixmap& rp );
+    KThemePixmap( const KThemePixmap &p, const TQPixmap& rp );
     ~KThemePixmap();
-    QPixmap* border( BorderType type );
-    void setBorder( BorderType type, const QPixmap &p );
+    TQPixmap* border( BorderType type );
+    void setBorder( BorderType type, const TQPixmap &p );
     void updateAccessed();
     bool isOld();
 protected:
-    QTime *t;
-    QPixmap *b[ 8 ];
+    TQTime *t;
+    TQPixmap *b[ 8 ];
 
 private:
     class KThemePixmapPrivate;
     KThemePixmapPrivate *d;
 };
 
-inline QPixmap* KThemePixmap::border( BorderType type )
+inline TQPixmap* KThemePixmap::border( BorderType type )
 {
     return ( b[ type ] );
 }
 
-inline void KThemePixmap::setBorder( BorderType type, const QPixmap &p )
+inline void KThemePixmap::setBorder( BorderType type, const TQPixmap &p )
 {
     if ( b[ type ] )
     {
         qWarning( "KThemePixmap: Overwriting existing border!" );
         delete( b[ type ] );
     }
-    b[ type ] = new QPixmap( p );
+    b[ type ] = new TQPixmap( p );
 }
 
 inline void KThemePixmap::updateAccessed()
@@ -100,14 +100,14 @@ inline bool KThemePixmap::isOld()
 }
 
 /**
- * A very simple pixmap cache for theme plugins. QPixmapCache is not used
- * since it uses QString keys which are not needed. All the information we
- * need can be encoded in a numeric key. Using QIntCache instead allows us to
+ * A very simple pixmap cache for theme plugins. TQPixmapCache is not used
+ * since it uses TQString keys which are not needed. All the information we
+ * need can be encoded in a numeric key. Using TQIntCache instead allows us to
  * skip the string operations.
  *
  * This class is mostly just inline methods that do bit operations on a key
  * composed of the widget ID, width and/or height, and then calls
- * QIntCache::find().
+ * TQIntCache::find().
  *
  * One other thing to note is that full, horizontal, and vertically scaled
  * pixmaps are not used interchangeably. For example, if you insert a fully
@@ -136,7 +136,7 @@ public:
      * @param parent The parent object.
      * @param name The name of the object.
      */
-    KThemeCache( int maxSize, QObject *parent = 0, const char *name = 0 );
+    KThemeCache( int maxSize, TQObject *parent = 0, const char *name = 0 );
     /**
      * Inserts a new pixmap into the cache.
      *
@@ -188,8 +188,8 @@ public:
 protected slots:
     void flushTimeout();
 protected:
-    QIntCache<KThemePixmap> cache;
-    QTimer flushTimer;
+    TQIntCache<KThemePixmap> cache;
+    TQTimer flushTimer;
 
 private:
     class KThemeCachePrivate;
@@ -218,7 +218,7 @@ public:
     /**
      * Constructs a new KThemeBase object.
      */
-    KThemeBase( const QString &dirs, const QString &configFile );
+    KThemeBase( const TQString &dirs, const TQString &configFile );
     ~KThemeBase();
     /**
      * Describes if a pixmap should be scaled fully, horizontally, vertically,
@@ -305,10 +305,10 @@ public:
      * @param widget The widget whose color group to retrieve.
      *
      */
-    const QColorGroup* colorGroup( const QColorGroup &defaultGroup,
+    const TQColorGroup* colorGroup( const TQColorGroup &defaultGroup,
                                    WidgetType widget ) const;
 
-    QBrush pixmapBrush( const QColorGroup &group, QColorGroup::ColorRole role,
+    TQBrush pixmapBrush( const TQColorGroup &group, TQColorGroup::ColorRole role,
                         int w, int h, WidgetType widget );
     /**
      * True if the widget has a pixmap or gradient specified.
@@ -424,7 +424,7 @@ public:
      * height. This will return NULL if no pixmap or gradient is specified.
      * It may also return a different sized pixmap if the scaling
      * is set to Tiled. When using this method, you should call it using
-     * the needed width and height then use QPainter::drawTiledPixmap to
+     * the needed width and height then use TQPainter::drawTiledPixmap to
      * paint it. Doing this, if the pixmap is scaled it will be the proper
      * size, otherwise it will be tiled.
      *
@@ -443,29 +443,29 @@ protected:
      *
      * @param config The configuration file to apply.
      */
-    void applyConfigFile( QSettings & config );
+    void applyConfigFile( TQSettings & config );
 
     /*
     * Generates a new palette based on the values for which have been specified explicitly
     * in the .themerc file.
     */
-    QPalette overridePalette( const QPalette& pal );
+    TQPalette overridePalette( const TQPalette& pal );
 
     /**
-     * Returns a QImage for the given widget if the widget is scaled, NULL
+     * Returns a TQImage for the given widget if the widget is scaled, NULL
      * otherwise. QImages of the original pixmap are stored for scaled
      * widgets in order to facilitate fast and accurate smooth-scaling. This
      * also saves us a conversion from a pixmap to an image then back again.
      */
-    QImage* image( WidgetType widget ) const;
+    TQImage* image( WidgetType widget ) const;
     /**
      * Returns the gradient high color if one is specified, NULL otherwise.
      */
-    QColor* gradientHigh( WidgetType widget ) const;
+    TQColor* gradientHigh( WidgetType widget ) const;
     /**
      * Returns the gradient low color if one is specified, NULL otherwise.
      */
-    QColor* gradientLow( WidgetType widget ) const;
+    TQColor* gradientLow( WidgetType widget ) const;
     /**
      * Reads in all the configuration file entries supported.
      *
@@ -474,48 +474,48 @@ protected:
      * is obsolete.
      */
     void readConfig( Qt::GUIStyle colorStyle = Qt::WindowsStyle );
-    void readWidgetConfig( int i, QSettings *config, QString *pixnames,
-                           QString *brdnames, bool *loadArray );
-    void copyWidgetConfig( int sourceID, int destID, QString *pixnames,
-                           QString *brdnames );
+    void readWidgetConfig( int i, TQSettings *config, TQString *pixnames,
+                           TQString *brdnames, bool *loadArray );
+    void copyWidgetConfig( int sourceID, int destID, TQString *pixnames,
+                           TQString *brdnames );
     /**
      * Makes a full color group based on the given foreground and background
      * colors. This is the same code used by KDE (kapp.cpp) in previous
      * versions.
      */
-    QColorGroup* makeColorGroup( const QColor &fg, const QColor &bg,
+    TQColorGroup* makeColorGroup( const TQColor &fg, const TQColor &bg,
                                  Qt::GUIStyle style = Qt::WindowsStyle );
     KThemePixmap* scale( int w, int h, WidgetType widget ) const;
     KThemePixmap* scaleBorder( int w, int h, WidgetType type ) const;
     KThemePixmap* gradient( int w, int h, WidgetType widget ) const ;
     KThemePixmap* blend( WidgetType widget ) const;
     void generateBorderPix( int i );
-    void applyResourceGroup( QSettings *config, int i );
-    void applyMiscResourceGroup( QSettings *config );
-    void readResourceGroup( int i, QString *pixnames, QString *brdnames,
+    void applyResourceGroup( TQSettings *config, int i );
+    void applyMiscResourceGroup( TQSettings *config );
+    void readResourceGroup( int i, TQString *pixnames, TQString *brdnames,
                             bool *loadArray );
     void readMiscResourceGroup();
     /**
      * Attempts to load a pixmap from the default KThemeBase locations.
      */
-    KThemePixmap* loadPixmap( const QString &name );
+    KThemePixmap* loadPixmap( const TQString &name );
     /**
      * Attempts to load a image from the default KThemeBase locations.
      */
-    QImage* loadImage( const QString &name );
+    TQImage* loadImage( const TQString &name );
 
 
     /**
     These are included for fuuture extension purposes..
     */
-    virtual int pixelMetric ( PixelMetric metric, const QWidget * widget = 0 ) const
+    virtual int pixelMetric ( PixelMetric metric, const TQWidget * widget = 0 ) const
     {
         return KStyle::pixelMetric( metric, widget );
     }
 
-    virtual void drawPrimitive ( PrimitiveElement pe, QPainter * p, const QRect & r, const QColorGroup & cg,
+    virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRect & r, const TQColorGroup & cg,
                                  SFlags flags = Style_Default,
-                                 const QStyleOption& option = QStyleOption::Default ) const
+                                 const TQStyleOption& option = TQStyleOption::Default ) const
     {
         KStyle::drawPrimitive ( pe, p, r, cg,
                                 flags, option );
@@ -523,48 +523,48 @@ protected:
 
 
     virtual void drawControl( ControlElement element,
-                              QPainter *p,
-                              const QWidget *widget,
-                              const QRect &r,
-                              const QColorGroup &cg,
+                              TQPainter *p,
+                              const TQWidget *widget,
+                              const TQRect &r,
+                              const TQColorGroup &cg,
                               SFlags how = Style_Default,
-                              const QStyleOption& opt = QStyleOption::Default ) const
+                              const TQStyleOption& opt = TQStyleOption::Default ) const
     {
         KStyle::drawControl( element, p, widget,
                              r, cg, how, opt );
     }
 
     virtual void drawControlMask( ControlElement element,
-                                  QPainter *p,
-                                  const QWidget *widget,
-                                  const QRect &r,
-                                  const QStyleOption& opt = QStyleOption::Default ) const
+                                  TQPainter *p,
+                                  const TQWidget *widget,
+                                  const TQRect &r,
+                                  const TQStyleOption& opt = TQStyleOption::Default ) const
     {
         KStyle::drawControlMask( element, p, widget, r, opt );
     }
 
 
     virtual void drawComplexControl( ComplexControl control,
-                                     QPainter *p,
-                                     const QWidget* widget,
-                                     const QRect &r,
-                                     const QColorGroup &cg,
+                                     TQPainter *p,
+                                     const TQWidget* widget,
+                                     const TQRect &r,
+                                     const TQColorGroup &cg,
                                      SFlags flags = Style_Default,
                                      SCFlags controls = SC_All,
                                      SCFlags active = SC_None,
-                                     const QStyleOption& opt = QStyleOption::Default ) const
+                                     const TQStyleOption& opt = TQStyleOption::Default ) const
     {
         KStyle::drawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
     }
 
 
     virtual void drawKStylePrimitive( KStylePrimitive kpe,
-                                      QPainter* p,
-                                      const QWidget* widget,
-                                      const QRect &r,
-                                      const QColorGroup &cg,
+                                      TQPainter* p,
+                                      const TQWidget* widget,
+                                      const TQRect &r,
+                                      const TQColorGroup &cg,
                                       SFlags flags = Style_Default,
-                                      const QStyleOption& opt = QStyleOption::Default ) const
+                                      const TQStyleOption& opt = TQStyleOption::Default ) const
     {
         KStyle::drawKStylePrimitive( kpe,
                                      p, widget, r,
@@ -573,8 +573,8 @@ protected:
 
 
     virtual int styleHint( StyleHint sh,
-                           const QWidget *widget = 0,
-                           const QStyleOption& opt = QStyleOption::Default,
+                           const TQWidget *widget = 0,
+                           const TQStyleOption& opt = TQStyleOption::Default,
                            QStyleHintReturn* returnData = 0 ) const
     {
         return KStyle::styleHint( sh,
@@ -583,10 +583,10 @@ protected:
                                   returnData );
     }
 
-    virtual QSize sizeFromContents( ContentsType contents,
-                                    const QWidget *widget,
-                                    const QSize &contentsSize,
-                                    const QStyleOption& opt = QStyleOption::Default ) const
+    virtual TQSize sizeFromContents( ContentsType contents,
+                                    const TQWidget *widget,
+                                    const TQSize &contentsSize,
+                                    const TQStyleOption& opt = TQStyleOption::Default ) const
     {
         return KStyle::sizeFromContents( contents,
                                          widget, contentsSize, opt );
@@ -610,8 +610,8 @@ private:
     bool focus3D;
     KThemeCache *cache;
     int cacheSize;
-    QString configFileName;
-    QString configDirName;
+    TQString configFileName;
+    TQString configDirName;
 
     /**
      * The theme pixmaps. Many of these may be NULL if no pixmap is specified.
@@ -625,7 +625,7 @@ private:
      * The theme images. These are for scaled images and are kept in order
      * to maintain fast smoothscaling.
      */
-    mutable QImage *images[ WIDGETS ];
+    mutable TQImage *images[ WIDGETS ];
     /**
      * The border widths
      */
@@ -641,15 +641,15 @@ private:
     /**
      * All the color groups.
      */
-    mutable QColorGroup *colors[ WIDGETS ];
+    mutable TQColorGroup *colors[ WIDGETS ];
     /**
      * Gradient low colors (or blend background).
      */
-    mutable QColor *grLowColors[ WIDGETS ];
+    mutable TQColor *grLowColors[ WIDGETS ];
     /**
      * Gradient high colors.
      */
-    mutable QColor *grHighColors[ WIDGETS ];
+    mutable TQColor *grHighColors[ WIDGETS ];
     /**
      * Gradient types.
      */
@@ -721,17 +721,17 @@ inline KThemePixmap* KThemeBase::uncached( WidgetType widget ) const
     return ( pixmaps[ widget ] );
 }
 
-inline QBrush KThemeBase::pixmapBrush( const QColorGroup &group,
-                                       QColorGroup::ColorRole role,
+inline TQBrush KThemeBase::pixmapBrush( const TQColorGroup &group,
+                                       TQColorGroup::ColorRole role,
                                        int w, int h, WidgetType widget )
 {
     if ( pixmaps[ widget ] || images[ widget ] )
-        return ( QBrush( group.color( role ), *scalePixmap( w, h, widget ) ) );
+        return ( TQBrush( group.color( role ), *scalePixmap( w, h, widget ) ) );
     else
         return ( group.color( role ) );
 }
 
-inline const QColorGroup* KThemeBase::colorGroup( const QColorGroup &defaultGroup,
+inline const TQColorGroup* KThemeBase::colorGroup( const TQColorGroup &defaultGroup,
         WidgetType widget ) const
 {
     return ( ( colors[ widget ] ) ? colors[ widget ] : &defaultGroup );
@@ -757,17 +757,17 @@ inline int KThemeBase::decoWidth( WidgetType widget ) const
     return ( pbWidth[ widget ] ? pbWidth[ widget ] : borders[ widget ] + highlights[ widget ] );
 }
 
-inline QColor* KThemeBase::gradientHigh( WidgetType widget ) const
+inline TQColor* KThemeBase::gradientHigh( WidgetType widget ) const
 {
     return ( grHighColors[ widget ] );
 }
 
-inline QColor* KThemeBase::gradientLow( WidgetType widget ) const
+inline TQColor* KThemeBase::gradientLow( WidgetType widget ) const
 {
     return ( grLowColors[ widget ] );
 }
 
-inline QImage* KThemeBase::image( WidgetType widget ) const
+inline TQImage* KThemeBase::image( WidgetType widget ) const
 {
     return ( images[ widget ] );
 }

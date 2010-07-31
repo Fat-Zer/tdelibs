@@ -22,22 +22,22 @@
 #include "driveritem.h"
 
 #include <math.h>
-#include <qlineedit.h>
-#include <qslider.h>
-#include <qlabel.h>
+#include <tqlineedit.h>
+#include <tqslider.h>
+#include <tqlabel.h>
 #include <klistbox.h>
-#include <qvbuttongroup.h>
-#include <qradiobutton.h>
-#include <qwidgetstack.h>
-#include <qlayout.h>
-#include <qapplication.h>
+#include <tqvbuttongroup.h>
+#include <tqradiobutton.h>
+#include <tqwidgetstack.h>
+#include <tqlayout.h>
+#include <tqapplication.h>
 
 #include <kcursor.h>
 #include <kdialog.h>
 #include <klocale.h>
 
-OptionBaseView::OptionBaseView(QWidget *parent, const char *name)
-: QWidget(parent,name)
+OptionBaseView::OptionBaseView(TQWidget *parent, const char *name)
+: TQWidget(parent,name)
 {
 	blockSS = false;
 }
@@ -46,27 +46,27 @@ void OptionBaseView::setOption(DrBase*)
 {
 }
 
-void OptionBaseView::setValue(const QString&)
+void OptionBaseView::setValue(const TQString&)
 {
 }
 
 //******************************************************************************************************
 
-OptionNumericView::OptionNumericView(QWidget *parent, const char *name)
+OptionNumericView::OptionNumericView(TQWidget *parent, const char *name)
 : OptionBaseView(parent,name)
 {
-	m_edit = new QLineEdit(this);
-	m_slider = new QSlider(Qt::Horizontal,this);
-	m_slider->setTickmarks(QSlider::Below);
-	QLabel	*lab = new QLabel(i18n("Value:"),this);
-	m_minval = new QLabel(this);
-	m_maxval = new QLabel(this);
+	m_edit = new TQLineEdit(this);
+	m_slider = new TQSlider(Qt::Horizontal,this);
+	m_slider->setTickmarks(TQSlider::Below);
+	QLabel	*lab = new TQLabel(i18n("Value:"),this);
+	m_minval = new TQLabel(this);
+	m_maxval = new TQLabel(this);
 
 	m_integer = true;
 
-	QVBoxLayout	*main_ = new QVBoxLayout(this, 0, 10);
-	QHBoxLayout	*sub_ = new QHBoxLayout(0, 0, 10);
-	QHBoxLayout	*sub2_ = new QHBoxLayout(0, 0, 5);
+	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
+	QHBoxLayout	*sub_ = new TQHBoxLayout(0, 0, 10);
+	QHBoxLayout	*sub2_ = new TQHBoxLayout(0, 0, 5);
 	main_->addStretch(1);
 	main_->addLayout(sub_,0);
 	main_->addLayout(sub2_,0);
@@ -78,8 +78,8 @@ OptionNumericView::OptionNumericView(QWidget *parent, const char *name)
 	sub2_->addWidget(m_slider,1);
 	sub2_->addWidget(m_maxval,0);
 
-	connect(m_slider,SIGNAL(valueChanged(int)),SLOT(slotSliderChanged(int)));
-	connect(m_edit,SIGNAL(textChanged(const QString&)),SLOT(slotEditChanged(const QString&)));
+	connect(m_slider,TQT_SIGNAL(valueChanged(int)),TQT_SLOT(slotSliderChanged(int)));
+	connect(m_edit,TQT_SIGNAL(textChanged(const TQString&)),TQT_SLOT(slotEditChanged(const TQString&)));
 }
 
 void OptionNumericView::setOption(DrBase *opt)
@@ -95,8 +95,8 @@ void OptionNumericView::setOption(DrBase *opt)
 		int	max_ = opt->get("maxval").toInt();
 		m_slider->setRange(min_,max_);
 		m_slider->setSteps(1,QMAX((max_-min_)/20,1));
-		m_minval->setText(QString::number(min_));
-		m_maxval->setText(QString::number(max_));
+		m_minval->setText(TQString::number(min_));
+		m_maxval->setText(TQString::number(max_));
 	}
 	else
 	{
@@ -114,7 +114,7 @@ void OptionNumericView::setOption(DrBase *opt)
 	setValue(opt->valueText());
 }
 
-void OptionNumericView::setValue(const QString& val)
+void OptionNumericView::setValue(const TQString& val)
 {
 	m_edit->setText(val);
 }
@@ -125,16 +125,16 @@ void OptionNumericView::slotSliderChanged(int value)
 
 	QString	txt;
 	if (m_integer)
-		txt = QString::number(value);
+		txt = TQString::number(value);
 	else
-		txt = QString::number(float(value)/1000.0,'f',3);
+		txt = TQString::number(float(value)/1000.0,'f',3);
 	blockSS = true;
 	m_edit->setText(txt);
 	blockSS = false;
 	emit valueChanged(txt);
 }
 
-void OptionNumericView::slotEditChanged(const QString& txt)
+void OptionNumericView::slotEditChanged(const TQString& txt)
 {
 	if (blockSS) return;
 
@@ -154,25 +154,25 @@ void OptionNumericView::slotEditChanged(const QString& txt)
 	else
 	{
 		m_edit->selectAll();
-		QApplication::beep();
+		TQApplication::beep();
 	}
 }
 
 //******************************************************************************************************
 
-OptionStringView::OptionStringView(QWidget *parent, const char *name)
+OptionStringView::OptionStringView(TQWidget *parent, const char *name)
 : OptionBaseView(parent,name)
 {
-	m_edit = new QLineEdit(this);
-	QLabel	*lab = new QLabel(i18n("String value:"),this);
+	m_edit = new TQLineEdit(this);
+	QLabel	*lab = new TQLabel(i18n("String value:"),this);
 
-	QVBoxLayout	*main_ = new QVBoxLayout(this, 0, 5);
+	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 5);
 	main_->addStretch(1);
 	main_->addWidget(lab,0);
 	main_->addWidget(m_edit,0);
 	main_->addStretch(1);
 
-	connect(m_edit,SIGNAL(textChanged(const QString&)),SIGNAL(valueChanged(const QString&)));
+	connect(m_edit,TQT_SIGNAL(textChanged(const TQString&)),TQT_SIGNAL(valueChanged(const TQString&)));
 }
 
 void OptionStringView::setOption(DrBase *opt)
@@ -181,22 +181,22 @@ void OptionStringView::setOption(DrBase *opt)
 		m_edit->setText(opt->valueText());
 }
 
-void OptionStringView::setValue(const QString& val)
+void OptionStringView::setValue(const TQString& val)
 {
 	m_edit->setText(val);
 }
 
 //******************************************************************************************************
 
-OptionListView::OptionListView(QWidget *parent, const char *name)
+OptionListView::OptionListView(TQWidget *parent, const char *name)
 : OptionBaseView(parent,name)
 {
 	m_list = new KListBox(this);
 
-	QVBoxLayout	*main_ = new QVBoxLayout(this, 0, 10);
+	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
 	main_->addWidget(m_list);
 
-	connect(m_list,SIGNAL(selectionChanged()),SLOT(slotSelectionChanged()));
+	connect(m_list,TQT_SIGNAL(selectionChanged()),TQT_SLOT(slotSelectionChanged()));
 }
 
 void OptionListView::setOption(DrBase *opt)
@@ -206,7 +206,7 @@ void OptionListView::setOption(DrBase *opt)
 		blockSS = true;
 		m_list->clear();
 		m_choices.clear();
-		QPtrListIterator<DrBase>	it(*(((DrListOption*)opt)->choices()));
+		TQPtrListIterator<DrBase>	it(*(((DrListOption*)opt)->choices()));
 		for (;it.current();++it)
 		{
 			m_list->insertItem(it.current()->get("text"));
@@ -217,7 +217,7 @@ void OptionListView::setOption(DrBase *opt)
 	}
 }
 
-void OptionListView::setValue(const QString& val)
+void OptionListView::setValue(const TQString& val)
 {
 	m_list->setCurrentItem(m_choices.findIndex(val));
 }
@@ -232,28 +232,28 @@ void OptionListView::slotSelectionChanged()
 
 //******************************************************************************************************
 
-OptionBooleanView::OptionBooleanView(QWidget *parent, const char *name)
+OptionBooleanView::OptionBooleanView(TQWidget *parent, const char *name)
 : OptionBaseView(parent,name)
 {
-	m_group = new QVButtonGroup(this);
-	m_group->setFrameStyle(QFrame::NoFrame);
+	m_group = new TQVButtonGroup(this);
+	m_group->setFrameStyle(TQFrame::NoFrame);
 
-	QRadioButton	*btn = new QRadioButton(m_group);
+	QRadioButton	*btn = new TQRadioButton(m_group);
 	btn->setCursor(KCursor::handCursor());
-	btn = new QRadioButton(m_group);
+	btn = new TQRadioButton(m_group);
 	btn->setCursor(KCursor::handCursor());
 
-	QVBoxLayout	*main_ = new QVBoxLayout(this, 0, 10);
+	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
 	main_->addWidget(m_group);
 
-	connect(m_group,SIGNAL(clicked(int)),SLOT(slotSelected(int)));
+	connect(m_group,TQT_SIGNAL(clicked(int)),TQT_SLOT(slotSelected(int)));
 }
 
 void OptionBooleanView::setOption(DrBase *opt)
 {
 	if (opt->type() == DrBase::Boolean)
 	{
-		QPtrListIterator<DrBase>	it(*(((DrBooleanOption*)opt)->choices()));
+		TQPtrListIterator<DrBase>	it(*(((DrBooleanOption*)opt)->choices()));
 		m_choices.clear();
 		m_group->find(0)->setText(it.toFirst()->get("text"));
 		m_choices.append(it.toFirst()->name());
@@ -263,7 +263,7 @@ void OptionBooleanView::setOption(DrBase *opt)
 	}
 }
 
-void OptionBooleanView::setValue(const QString& val)
+void OptionBooleanView::setValue(const TQString& val)
 {
 	int	ID = m_choices.findIndex(val);
 	m_group->setButton(ID);
@@ -277,29 +277,29 @@ void OptionBooleanView::slotSelected(int ID)
 
 //******************************************************************************************************
 
-DrOptionView::DrOptionView(QWidget *parent, const char *name)
-: QGroupBox(parent,name)
+DrOptionView::DrOptionView(TQWidget *parent, const char *name)
+: TQGroupBox(parent,name)
 {
-	m_stack = new QWidgetStack(this);
+	m_stack = new TQWidgetStack(this);
 
 	OptionBaseView	*w = new OptionListView(m_stack);
-	connect(w,SIGNAL(valueChanged(const QString&)),SLOT(slotValueChanged(const QString&)));
+	connect(w,TQT_SIGNAL(valueChanged(const TQString&)),TQT_SLOT(slotValueChanged(const TQString&)));
 	m_stack->addWidget(w,DrBase::List);
 
 	w = new OptionStringView(m_stack);
-	connect(w,SIGNAL(valueChanged(const QString&)),SLOT(slotValueChanged(const QString&)));
+	connect(w,TQT_SIGNAL(valueChanged(const TQString&)),TQT_SLOT(slotValueChanged(const TQString&)));
 	m_stack->addWidget(w,DrBase::String);
 
 	w = new OptionNumericView(m_stack);
-	connect(w,SIGNAL(valueChanged(const QString&)),SLOT(slotValueChanged(const QString&)));
+	connect(w,TQT_SIGNAL(valueChanged(const TQString&)),TQT_SLOT(slotValueChanged(const TQString&)));
 	m_stack->addWidget(w,DrBase::Integer);
 
 	w = new OptionBooleanView(m_stack);
-	connect(w,SIGNAL(valueChanged(const QString&)),SLOT(slotValueChanged(const QString&)));
+	connect(w,TQT_SIGNAL(valueChanged(const TQString&)),TQT_SLOT(slotValueChanged(const TQString&)));
 	m_stack->addWidget(w,DrBase::Boolean);
 
 	w = new OptionBaseView(m_stack);
-	connect(w,SIGNAL(valueChanged(const QString&)),SLOT(slotValueChanged(const QString&)));
+	connect(w,TQT_SIGNAL(valueChanged(const TQString&)),TQT_SLOT(slotValueChanged(const TQString&)));
 	m_stack->addWidget(w,0);	// empty widget
 
 	m_stack->raiseWidget(w);
@@ -308,7 +308,7 @@ DrOptionView::DrOptionView(QWidget *parent, const char *name)
 	setColumnLayout(0, Qt::Vertical );
 	layout()->setSpacing( KDialog::spacingHint() );
 	layout()->setMargin( KDialog::marginHint() );
-	QVBoxLayout	*main_ = new QVBoxLayout(layout(), KDialog::marginHint());
+	QVBoxLayout	*main_ = new TQVBoxLayout(layout(), KDialog::marginHint());
 	main_->addWidget(m_stack);
 
 	m_item = 0;
@@ -316,7 +316,7 @@ DrOptionView::DrOptionView(QWidget *parent, const char *name)
 	m_allowfixed = true;
 }
 
-void DrOptionView::slotItemSelected(QListViewItem *i)
+void DrOptionView::slotItemSelected(TQListViewItem *i)
 {
 	m_item = (DriverItem*)i;
 	if (m_item && !m_item->drItem()->isOption())
@@ -345,7 +345,7 @@ void DrOptionView::slotItemSelected(QListViewItem *i)
 	}
 }
 
-void DrOptionView::slotValueChanged(const QString& val)
+void DrOptionView::slotValueChanged(const TQString& val)
 {
 	if (m_item && m_item->drItem() && !m_block)
 	{

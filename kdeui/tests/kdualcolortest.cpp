@@ -2,42 +2,42 @@
 #include <kdualcolorbutton.h>
 #include <kapplication.h>
 #include <klocale.h>
-#include <qlayout.h>
-#include <qpalette.h>
+#include <tqlayout.h>
+#include <tqpalette.h>
 
-KDualColorWidget::KDualColorWidget(QWidget *parent, const char *name)
-    : QWidget(parent, name)
+KDualColorWidget::KDualColorWidget(TQWidget *parent, const char *name)
+    : TQWidget(parent, name)
 {
-    lbl = new QLabel("Testing, testing, 1, 2, 3...", this);
+    lbl = new TQLabel("Testing, testing, 1, 2, 3...", this);
     KDualColorButton *colorBtn =
         new KDualColorButton(lbl->colorGroup().text(),
                              lbl->colorGroup().background(), this);
-    connect(colorBtn, SIGNAL(fgChanged(const QColor &)),
-            SLOT(slotFgChanged(const QColor &)));
-    connect(colorBtn, SIGNAL(bgChanged(const QColor &)),
-            SLOT(slotBgChanged(const QColor &)));
-    connect(colorBtn, SIGNAL(currentChanged(KDualColorButton::DualColor)),
-            SLOT(slotCurrentChanged(KDualColorButton::DualColor)));
+    connect(colorBtn, TQT_SIGNAL(fgChanged(const TQColor &)),
+            TQT_SLOT(slotFgChanged(const TQColor &)));
+    connect(colorBtn, TQT_SIGNAL(bgChanged(const TQColor &)),
+            TQT_SLOT(slotBgChanged(const TQColor &)));
+    connect(colorBtn, TQT_SIGNAL(currentChanged(KDualColorButton::DualColor)),
+            TQT_SLOT(slotCurrentChanged(KDualColorButton::DualColor)));
     
-    QHBoxLayout *layout = new QHBoxLayout(this, 5);
+    TQHBoxLayout *layout = new TQHBoxLayout(this, 5);
     layout->addWidget(colorBtn, 0);
     layout->addWidget(lbl, 1);
     layout->activate();
     resize(sizeHint());
 }
 
-void KDualColorWidget::slotFgChanged(const QColor &c)
+void KDualColorWidget::slotFgChanged(const TQColor &c)
 {
-    QPalette p = lbl->palette();
-    p.setColor(QColorGroup::Text, c);
+    TQPalette p = lbl->palette();
+    p.setColor(TQColorGroup::Text, c);
     lbl->setPalette(p);
 }
 
-void KDualColorWidget::slotBgChanged(const QColor &c)
+void KDualColorWidget::slotBgChanged(const TQColor &c)
 {
-    QPalette p = lbl->palette();
-    QBrush b(c, SolidPattern);
-    p.setBrush(QColorGroup::Background, b);
+    TQPalette p = lbl->palette();
+    TQBrush b(c, SolidPattern);
+    p.setBrush(TQColorGroup::Background, b);
     setPalette(p);
 }
 

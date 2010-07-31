@@ -19,35 +19,35 @@
 
 #include "qdirmultilineedit.h"
 
-#include <qlayout.h>
-#include <qheader.h>
-#include <qpushbutton.h>
+#include <tqlayout.h>
+#include <tqheader.h>
+#include <tqpushbutton.h>
 #include <klistview.h>
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kiconloader.h>
 
-QDirMultiLineEdit::QDirMultiLineEdit(QWidget *parent, const char *name)
-: QWidget(parent, name)
+QDirMultiLineEdit::QDirMultiLineEdit(TQWidget *parent, const char *name)
+: TQWidget(parent, name)
 {
 	m_view = new KListView(this);
 	m_view->header()->hide();
 	m_view->addColumn("");
 	m_view->setFullWidth(true);
-	connect(m_view, SIGNAL(selectionChanged(QListViewItem*)), SLOT(slotSelected(QListViewItem*)));
+	connect(m_view, TQT_SIGNAL(selectionChanged(TQListViewItem*)), TQT_SLOT(slotSelected(TQListViewItem*)));
 
-	m_add = new QPushButton(this);
+	m_add = new TQPushButton(this);
 	m_add->setPixmap(SmallIcon("folder_new"));
-	connect(m_add, SIGNAL(clicked()), SLOT(slotAddClicked()));
-	m_remove = new QPushButton(this);
+	connect(m_add, TQT_SIGNAL(clicked()), TQT_SLOT(slotAddClicked()));
+	m_remove = new TQPushButton(this);
 	m_remove->setPixmap(SmallIcon("editdelete"));
-	connect(m_remove, SIGNAL(clicked()), SLOT(slotRemoveClicked()));
+	connect(m_remove, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemoveClicked()));
 	m_remove->setEnabled(false);
 
 	m_view->setFixedHeight(QMAX(m_view->fontMetrics().lineSpacing()*3+m_view->lineWidth()*2, m_add->sizeHint().height()*2));
 
-	QHBoxLayout	*l0 = new QHBoxLayout(this, 0, 3);
-	QVBoxLayout	*l1 = new QVBoxLayout(0, 0, 0);
+	QHBoxLayout	*l0 = new TQHBoxLayout(this, 0, 3);
+	QVBoxLayout	*l1 = new TQVBoxLayout(0, 0, 0);
 	l0->addWidget(m_view);
 	l0->addLayout(l1);
 	l1->addWidget(m_add);
@@ -59,14 +59,14 @@ QDirMultiLineEdit::~QDirMultiLineEdit()
 {
 }
 
-void QDirMultiLineEdit::setURLs(const QStringList& urls)
+void QDirMultiLineEdit::setURLs(const TQStringList& urls)
 {
 	m_view->clear();
-	for (QStringList::ConstIterator it=urls.begin(); it!=urls.end(); ++it)
+	for (TQStringList::ConstIterator it=urls.begin(); it!=urls.end(); ++it)
 		addURL(*it);
 }
 
-QStringList QDirMultiLineEdit::urls()
+TQStringList QDirMultiLineEdit::urls()
 {
 	QListViewItem	*item = m_view->firstChild();
 	QStringList	l;
@@ -78,15 +78,15 @@ QStringList QDirMultiLineEdit::urls()
 	return l;
 }
 
-void QDirMultiLineEdit::addURL(const QString& url)
+void QDirMultiLineEdit::addURL(const TQString& url)
 {
-	QListViewItem	*item = new QListViewItem(m_view, url);
+	QListViewItem	*item = new TQListViewItem(m_view, url);
 	item->setRenameEnabled(0, true);
 }
 
 void QDirMultiLineEdit::slotAddClicked()
 {
-	QString	dirname = KFileDialog::getExistingDirectory(QString::null, this);
+	QString	dirname = KFileDialog::getExistingDirectory(TQString::null, this);
 	if (!dirname.isEmpty())
 		addURL(dirname);
 }
@@ -101,7 +101,7 @@ void QDirMultiLineEdit::slotRemoveClicked()
 	}
 }
 
-void QDirMultiLineEdit::slotSelected(QListViewItem *item)
+void QDirMultiLineEdit::slotSelected(TQListViewItem *item)
 {
 	m_remove->setEnabled((item != NULL));
 }

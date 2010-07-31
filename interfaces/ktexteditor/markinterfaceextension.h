@@ -20,9 +20,9 @@
 #ifndef __ktexteditor_markinterface_extension_h__
 #define __ktexteditor_markinterface_extension_h__
 
-#include <qptrlist.h>
-#include <qpixmap.h>
-#include <qstring.h>
+#include <tqptrlist.h>
+#include <tqpixmap.h>
+#include <tqstring.h>
 #include "markinterface.h"
 
 class QCString;
@@ -47,11 +47,11 @@ class KTEXTEDITOR_EXPORT MarkInterfaceExtension
     unsigned int markInterfaceExtensionNumber () const;
   
   protected:  
-    void setMarkInterfaceExtensionDCOPSuffix (const QCString &suffix);    
+    void setMarkInterfaceExtensionDCOPSuffix (const TQCString &suffix);    
     
   public:
-    virtual void setPixmap(MarkInterface::MarkTypes, const QPixmap &)=0;
-    virtual void setDescription(MarkInterface::MarkTypes, const QString &)=0;
+    virtual void setPixmap(MarkInterface::MarkTypes, const TQPixmap &)=0;
+    virtual void setDescription(MarkInterface::MarkTypes, const TQString &)=0;
     virtual void setMarksUserChangable(uint markMask)=0;
 
     enum MarkChangeAction {

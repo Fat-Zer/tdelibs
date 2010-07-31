@@ -62,7 +62,7 @@ class KABC_EXPORT Resource : public KRES::Resource
       @short Resource Iterator
 
       This class provides an iterator for resource entries.
-      By default it points to a QValueList<Addressee>::Iterator,
+      By default it points to a TQValueList<Addressee>::Iterator,
       but you can reimplement this class to fit your own needs.
     */
     class KABC_EXPORT Iterator
@@ -230,7 +230,7 @@ class KABC_EXPORT Resource : public KRES::Resource
       @return The addressee with the specified unique identifier or an
               empty addressee.
      */
-    virtual Addressee findByUid( const QString &uid );
+    virtual Addressee findByUid( const TQString &uid );
 
     /**
       Searches all addressees which match the specified name.
@@ -238,7 +238,7 @@ class KABC_EXPORT Resource : public KRES::Resource
       @param name The name you are looking for.
       @return A list of all matching addressees.
      */
-    virtual Addressee::List findByName( const QString &name );
+    virtual Addressee::List findByName( const TQString &name );
 
     /**
       Searches all addressees which match the specified email address.
@@ -246,7 +246,7 @@ class KABC_EXPORT Resource : public KRES::Resource
       @param email The email address you are looking for.
       @return A list of all matching addressees.
      */
-    virtual Addressee::List findByEmail( const QString &email );
+    virtual Addressee::List findByEmail( const TQString &email );
 
     /**
       Searches all addressees which belongs to the specified category.
@@ -254,7 +254,7 @@ class KABC_EXPORT Resource : public KRES::Resource
       @param category The category you are looking for.
       @return A list of all matching addressees.
      */
-    virtual Addressee::List findByCategory( const QString &category );
+    virtual Addressee::List findByCategory( const TQString &category );
 
     /**
       Removes all addressees from the resource.
@@ -284,7 +284,7 @@ class KABC_EXPORT Resource : public KRES::Resource
       @param resource The pointer to the resource which emitted this signal.
       @param msg A translated error message.
      */
-    void loadingError( Resource *resource, const QString &msg );
+    void loadingError( Resource *resource, const TQString &msg );
 
     /**
       This signal is emitted when the resource has finished the saving of all
@@ -301,7 +301,7 @@ class KABC_EXPORT Resource : public KRES::Resource
       @param resource The pointer to the resource which emitted this signal.
       @param msg A translated error message.
      */
-    void savingError( Resource *resource, const QString &msg );
+    void savingError( Resource *resource, const TQString &msg );
 
   protected:
     Ticket *createTicket( Resource * );

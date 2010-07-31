@@ -22,9 +22,9 @@
 #include <sys/time.h>
 #endif
 
-#include <qfile.h>
-#include <qstring.h>
-#include <qmap.h>
+#include <tqfile.h>
+#include <tqstring.h>
+#include <tqmap.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -86,9 +86,9 @@ class KSocksTable {
   virtual ~KSocksTable();
 
    // The name of each symbol and it's SOCKS replacement
-   QMap<SymbolKeys,QString>  symbols;
+   TQMap<SymbolKeys,TQString>  symbols;
    // The name of this library
-   QString                   myname;
+   TQString                   myname;
    bool                      hasWorkingAsyncConnect;
 };
 
@@ -269,12 +269,12 @@ KSocks::KSocks(KConfigBase *config) : _socksLib(0L), _st(0L) {
              << "libsocks5_sh.so";             // NEC
 
    // Add the custom library paths here
-   QStringList newlibs = config->readListEntry("SOCKS_lib_path");
+   TQStringList newlibs = config->readListEntry("SOCKS_lib_path");
 
-   for (QStringList::Iterator it = newlibs.begin();
+   for (TQStringList::Iterator it = newlibs.begin();
                               it != newlibs.end();
                               ++it) {
-      QString thisone = *it;
+      TQString thisone = *it;
       if (thisone[thisone.length()-1] != '/') thisone += "/";
       _libPaths << thisone;
       kdDebug(171) << "KSocks added a new library path: " << thisone << endl;
@@ -305,10 +305,10 @@ KSocks::KSocks(KConfigBase *config) : _socksLib(0L), _st(0L) {
          _socksLib = 0L;
       }
    } else              // leave this here   "else for {}"
-   for (QStringList::Iterator pit  = _libPaths.begin();
+   for (TQStringList::Iterator pit  = _libPaths.begin();
                               !_hasSocks && pit != _libPaths.end();
                               ++pit)
-   for (QStringList::Iterator it  = _libNames.begin();
+   for (TQStringList::Iterator it  = _libNames.begin();
                               it != _libNames.end();
                               ++it) {
       _socksLib = ll->library((*pit + *it).latin1());
@@ -336,7 +336,7 @@ KSocks::KSocks(KConfigBase *config) : _socksLib(0L), _st(0L) {
 
    // Load in all the symbols
    if (_st) {
-      for (QMap<SymbolKeys,QString>::Iterator it  = _st->symbols.begin();
+      for (TQMap<SymbolKeys,TQString>::Iterator it  = _st->symbols.begin();
                                               it != _st->symbols.end();
                                               ++it) {
          switch(it.key()) {

@@ -24,8 +24,8 @@
 #ifndef  DATEVALUE_H
 #define  DATEVALUE_H
 
-#include <qcstring.h>
-#include <qdatetime.h>
+#include <tqcstring.h>
+#include <tqdatetime.h>
 
 #include <VCardValue.h>
 
@@ -48,8 +48,8 @@ class KVCARD_EXPORT DateValue : public Value
 		unsigned int	zoneHour = 0,
 		unsigned int	zoneMinute = 0);
 
-	DateValue(const QDate &);
-	DateValue(const QDateTime &);
+	DateValue(const TQDate &);
+	DateValue(const TQDateTime &);
 
 	DateValue *clone();
 	
@@ -77,9 +77,9 @@ class KVCARD_EXPORT DateValue : public Value
 	void setZoneHour		(unsigned int);
 	void setZoneMinute		(unsigned int);
 	
-	QDate qdate();
-	QTime qtime();
-	QDateTime qdt();
+	TQDate qdate();
+	TQTime qtime();
+	TQDateTime qdt();
 	
 	private:
 		

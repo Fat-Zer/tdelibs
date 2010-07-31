@@ -48,7 +48,7 @@ EventImpl::EventImpl()
     m_currentTarget = 0;
     m_eventPhase = 0;
     m_target = 0;
-    m_createTime = QDateTime::currentDateTime();
+    m_createTime = TQDateTime::currentDateTime();
     m_defaultHandled = false;
 }
 
@@ -67,7 +67,7 @@ EventImpl::EventImpl(EventId _id, bool canBubbleArg, bool cancelableArg)
     m_currentTarget = 0;
     m_eventPhase = 0;
     m_target = 0;
-    m_createTime = QDateTime::currentDateTime();
+    m_createTime = TQDateTime::currentDateTime();
     m_defaultHandled = false;
 }
 
@@ -90,7 +90,7 @@ void EventImpl::setTarget(NodeImpl *_target)
 
 DOMTimeStamp EventImpl::timeStamp()
 {
-    QDateTime epoch(QDate(1970,1,1),QTime(0,0));
+    TQDateTime epoch(TQDate(1970,1,1),TQTime(0,0));
     // ### kjs does not yet support long long (?) so the value wraps around
     return epoch.secsTo(m_createTime)*1000+m_createTime.time().msec();
 }
@@ -373,7 +373,7 @@ MouseEventImpl::MouseEventImpl(EventId _id,
 			       bool metaKeyArg,
 			       unsigned short buttonArg,
 			       NodeImpl *relatedTargetArg,
-			       QMouseEvent *qe,
+			       TQMouseEvent *qe,
                                bool isDoubleClick)
 		   : UIEventImpl(_id,canBubbleArg,cancelableArg,viewArg,detailArg)
 {
@@ -499,22 +499,22 @@ public:
     }
 
     L toLeft(R r) {
-        QMapIterator<R,L> i( m_rToL.find(r) );
+        TQMapIterator<R,L> i( m_rToL.find(r) );
         if (i != m_rToL.end())
             return *i;
         return L();
     }
 
     R toRight(L l) {
-        QMapIterator<L,R> i = m_lToR.find(l);
+        TQMapIterator<L,R> i = m_lToR.find(l);
         if (i != m_lToR.end())
             return *i;
         return R();
     }
 
 private:
-    QMap<L, R> m_lToR;
-    QMap<R, L> m_rToL;
+    TQMap<L, R> m_lToR;
+    TQMap<R, L> m_rToL;
 };
 
 #define MAKE_TRANSLATOR(name,L,R,MR,table) static IDTranslator<L,R,MR>* s_##name; \
@@ -578,13 +578,13 @@ IDTranslator<unsigned, unsigned, unsigned>::Info virtKeyToQtKeyTable[] =
 MAKE_TRANSLATOR(virtKeyToQtKey, unsigned, unsigned, unsigned, virtKeyToQtKeyTable)
 
 KeyEventBaseImpl::KeyEventBaseImpl(EventId id, bool canBubbleArg, bool cancelableArg, AbstractViewImpl *viewArg,
-                                        QKeyEvent *key) :
+                                        TQKeyEvent *key) :
      UIEventImpl(id, canBubbleArg, cancelableArg, viewArg, 0)
 {
     m_synthetic = false;
 
     //Here, we need to map Qt's internal info to browser-style info.
-    m_keyEvent = new QKeyEvent(key->type(), key->key(), key->ascii(), key->state(), key->text(), key->isAutoRepeat(), key->count() );
+    m_keyEvent = new TQKeyEvent(key->type(), key->key(), key->ascii(), key->state(), key->text(), key->isAutoRepeat(), key->count() );
 
     m_detail = key->count();
     m_keyVal = key->ascii();
@@ -647,27 +647,27 @@ void KeyEventBaseImpl::buildQKeyEvent() const
 
     int key   = 0;
     int ascii = 0;
-    QString text;
+    TQString text;
     if (m_virtKeyVal)
         key = virtKeyToQtKey()->toRight(m_virtKeyVal);
     if (!key) {
         ascii = m_keyVal; //###?
         key   = m_keyVal;
-        text  = QChar(key);
+        text  = TQChar(key);
     }
 
     //Neuter F keys as well.
     if (key >= Qt::Key_F1 && key <= Qt::Key_F35)
         key = Qt::Key_ScrollLock;
 
-    m_keyEvent = new QKeyEvent(id() == KEYUP_EVENT ? QEvent::KeyRelease : QEvent::KeyPress,
+    m_keyEvent = new TQKeyEvent(id() == KEYUP_EVENT ? TQEvent::KeyRelease : TQEvent::KeyPress,
                         key, ascii, modifiers, text);
 }
 
 //------------------------------------------------------------------------------
 
 
-static const IDTranslator<QCString, unsigned, const char*>::Info keyIdentifiersToVirtKeysTable[] = {
+static const IDTranslator<TQCString, unsigned, const char*>::Info keyIdentifiersToVirtKeysTable[] = {
     {"Alt",         KeyEventBaseImpl::DOM_VK_LEFT_ALT},
     {"Control",     KeyEventBaseImpl::DOM_VK_LEFT_CONTROL},
     {"Shift",       KeyEventBaseImpl::DOM_VK_LEFT_SHIFT},
@@ -719,10 +719,10 @@ static const IDTranslator<QCString, unsigned, const char*>::Info keyIdentifiersT
     {0, 0}
 };
 
-MAKE_TRANSLATOR(keyIdentifiersToVirtKeys, QCString, unsigned, const char*, keyIdentifiersToVirtKeysTable)
+MAKE_TRANSLATOR(keyIdentifiersToVirtKeys, TQCString, unsigned, const char*, keyIdentifiersToVirtKeysTable)
 
 /** These are the modifiers we currently support */
-static const IDTranslator<QCString, unsigned, const char*>::Info keyModifiersToCodeTable[] = {
+static const IDTranslator<TQCString, unsigned, const char*>::Info keyModifiersToCodeTable[] = {
     {"Alt",         Qt::AltButton},
     {"Control",     Qt::ControlButton},
     {"Shift",       Qt::ShiftButton},
@@ -730,7 +730,7 @@ static const IDTranslator<QCString, unsigned, const char*>::Info keyModifiersToC
     {0,             0}
 };
 
-MAKE_TRANSLATOR(keyModifiersToCode, QCString, unsigned, const char*, keyModifiersToCodeTable)
+MAKE_TRANSLATOR(keyModifiersToCode, TQCString, unsigned, const char*, keyModifiersToCodeTable)
 
 KeyboardEventImpl::KeyboardEventImpl() : m_keyLocation(DOM_KEY_LOCATION_STANDARD)
 {}
@@ -739,10 +739,10 @@ DOMString KeyboardEventImpl::keyIdentifier() const
 {
     if (unsigned special = virtKeyVal())
         if (const char* id = keyIdentifiersToVirtKeys()->toLeft(special))
-            return QString::fromLatin1(id);
+            return TQString::fromLatin1(id);
 
     if (unsigned unicode = keyVal())
-        return QString(QChar(unicode));
+        return TQString(TQChar(unicode));
 
     return "Unidentified";
 }
@@ -784,12 +784,12 @@ void KeyboardEventImpl::initKeyboardEvent(const DOMString &typeArg,
         virtKeyVal = keyIdentifiersToVirtKeys()->toRight(keyIdentifierArg.string().latin1());
 
     //Process modifier list.
-    QStringList mods =
-        QStringList::split(' ',
+    TQStringList mods =
+        TQStringList::split(' ',
             modifiersList.string().stripWhiteSpace().simplifyWhiteSpace());
 
     unsigned modifiers = 0;
-    for (QStringList::Iterator i = mods.begin(); i != mods.end(); ++i)
+    for (TQStringList::Iterator i = mods.begin(); i != mods.end(); ++i)
         if (unsigned mask = keyModifiersToCode()->toRight((*i).latin1()))
             modifiers |= mask;
 
@@ -797,8 +797,8 @@ void KeyboardEventImpl::initKeyboardEvent(const DOMString &typeArg,
             keyVal, virtKeyVal, modifiers);
 }
 
-KeyboardEventImpl::KeyboardEventImpl(QKeyEvent* key, DOM::AbstractViewImpl* view) :
-    KeyEventBaseImpl(key->type() == QEvent::KeyRelease ? KEYUP_EVENT : KEYDOWN_EVENT, true, true, view, key)
+KeyboardEventImpl::KeyboardEventImpl(TQKeyEvent* key, DOM::AbstractViewImpl* view) :
+    KeyEventBaseImpl(key->type() == TQEvent::KeyRelease ? KEYUP_EVENT : KEYDOWN_EVENT, true, true, view, key)
 {
     //Try to put something reasonable in location...
     //we don't know direction, so guess left
@@ -819,7 +819,7 @@ int KeyboardEventImpl::keyCode() const
     if (m_virtKeyVal != DOM_VK_UNDEFINED)
         return m_virtKeyVal;
     else
-        return QChar((unsigned short)m_keyVal).upper().unicode();
+        return TQChar((unsigned short)m_keyVal).upper().unicode();
 }
 
 int KeyboardEventImpl::charCode() const
@@ -839,7 +839,7 @@ bool TextEventImpl::isTextInputEvent() const
     return true;
 }
 
-TextEventImpl::TextEventImpl(QKeyEvent* key, DOM::AbstractViewImpl* view) :
+TextEventImpl::TextEventImpl(TQKeyEvent* key, DOM::AbstractViewImpl* view) :
     KeyEventBaseImpl(KEYPRESS_EVENT, true, true, view, key)
 {
     m_outputString = key->text();

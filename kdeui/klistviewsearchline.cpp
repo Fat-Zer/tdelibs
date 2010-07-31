@@ -25,11 +25,11 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <qapplication.h>
-#include <qtimer.h>
-#include <qpopupmenu.h>
-#include <qlabel.h>
-#include <qheader.h>
+#include <tqapplication.h>
+#include <tqtimer.h>
+#include <tqpopupmenu.h>
+#include <tqlabel.h>
+#include <tqheader.h>
 
 #define KLISTVIEWSEARCHLINE_ALLVISIBLECOLUMNS_ID 2004
 
@@ -47,45 +47,45 @@ public:
     bool caseSensitive;
     bool activeSearch;
     bool keepParentsVisible;
-    QString search;
+    TQString search;
     int queuedSearches;
-    QValueList<int> searchColumns;
+    TQValueList<int> searchColumns;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // public methods
 ////////////////////////////////////////////////////////////////////////////////
 
-KListViewSearchLine::KListViewSearchLine(QWidget *parent, KListView *listView, const char *name) :
+KListViewSearchLine::KListViewSearchLine(TQWidget *parent, KListView *listView, const char *name) :
     KLineEdit(parent, name)
 {
     d = new KListViewSearchLinePrivate;
 
     d->listView = listView;
 
-    connect(this, SIGNAL(textChanged(const QString &)),
-            this, SLOT(queueSearch(const QString &)));
+    connect(this, TQT_SIGNAL(textChanged(const TQString &)),
+            this, TQT_SLOT(queueSearch(const TQString &)));
 
     if(listView) {
-        connect(listView, SIGNAL(destroyed()),
-                this, SLOT(listViewDeleted()));
+        connect(listView, TQT_SIGNAL(destroyed()),
+                this, TQT_SLOT(listViewDeleted()));
 
-        connect(listView, SIGNAL(itemAdded(QListViewItem *)),
-                this, SLOT(itemAdded(QListViewItem *)));
+        connect(listView, TQT_SIGNAL(itemAdded(TQListViewItem *)),
+                this, TQT_SLOT(itemAdded(TQListViewItem *)));
     }
     else
         setEnabled(false);
 }
 
-KListViewSearchLine::KListViewSearchLine(QWidget *parent, const char *name) :
+KListViewSearchLine::KListViewSearchLine(TQWidget *parent, const char *name) :
     KLineEdit(parent, name)
 {
     d = new KListViewSearchLinePrivate;
 
     d->listView = 0;
 
-    connect(this, SIGNAL(textChanged(const QString &)),
-            this, SLOT(queueSearch(const QString &)));
+    connect(this, TQT_SIGNAL(textChanged(const TQString &)),
+            this, TQT_SLOT(queueSearch(const TQString &)));
 
     setEnabled(false);
 }
@@ -100,7 +100,7 @@ bool KListViewSearchLine::caseSensitive() const
     return d->caseSensitive;
 }
 
-QValueList<int> KListViewSearchLine::searchColumns() const
+TQValueList<int> KListViewSearchLine::searchColumns() const
 {
     return d->searchColumns;
 }
@@ -119,7 +119,7 @@ KListView *KListViewSearchLine::listView() const
 // public slots
 ////////////////////////////////////////////////////////////////////////////////
 
-void KListViewSearchLine::updateSearch(const QString &s)
+void KListViewSearchLine::updateSearch(const TQString &s)
 {
     if(!d->listView)
         return;
@@ -129,7 +129,7 @@ void KListViewSearchLine::updateSearch(const QString &s)
     // If there's a selected item that is visible, make sure that it's visible
     // when the search changes too (assuming that it still matches).
 
-    QListViewItem *currentItem = 0;
+    TQListViewItem *currentItem = 0;
 
     switch(d->listView->selectionMode())
     {
@@ -140,8 +140,8 @@ void KListViewSearchLine::updateSearch(const QString &s)
         break;
     default:
     {
-        int flags = QListViewItemIterator::Selected | QListViewItemIterator::Visible;
-        for(QListViewItemIterator it(d->listView, flags);
+        int flags = TQListViewItemIterator::Selected | TQListViewItemIterator::Visible;
+        for(TQListViewItemIterator it(d->listView, flags);
             it.current() && !currentItem;
             ++it)
         {
@@ -170,7 +170,7 @@ void KListViewSearchLine::setKeepParentsVisible(bool v)
     d->keepParentsVisible = v;
 }
 
-void KListViewSearchLine::setSearchColumns(const QValueList<int> &columns)
+void KListViewSearchLine::setSearchColumns(const TQValueList<int> &columns)
 {
     d->searchColumns = columns;
 }
@@ -178,21 +178,21 @@ void KListViewSearchLine::setSearchColumns(const QValueList<int> &columns)
 void KListViewSearchLine::setListView(KListView *lv)
 {
     if(d->listView) {
-        disconnect(d->listView, SIGNAL(destroyed()),
-                   this, SLOT(listViewDeleted()));
+        disconnect(d->listView, TQT_SIGNAL(destroyed()),
+                   this, TQT_SLOT(listViewDeleted()));
 
-        disconnect(d->listView, SIGNAL(itemAdded(QListViewItem *)),
-                   this, SLOT(itemAdded(QListViewItem *)));
+        disconnect(d->listView, TQT_SIGNAL(itemAdded(TQListViewItem *)),
+                   this, TQT_SLOT(itemAdded(TQListViewItem *)));
     }
 
     d->listView = lv;
 
     if(lv) {
-        connect(d->listView, SIGNAL(destroyed()),
-                this, SLOT(listViewDeleted()));
+        connect(d->listView, TQT_SIGNAL(destroyed()),
+                this, TQT_SLOT(listViewDeleted()));
 
-        connect(d->listView, SIGNAL(itemAdded(QListViewItem *)),
-                this, SLOT(itemAdded(QListViewItem *)));
+        connect(d->listView, TQT_SIGNAL(itemAdded(TQListViewItem *)),
+                this, TQT_SLOT(itemAdded(TQListViewItem *)));
     }
 
     setEnabled(bool(lv));
@@ -202,7 +202,7 @@ void KListViewSearchLine::setListView(KListView *lv)
 // protected members
 ////////////////////////////////////////////////////////////////////////////////
 
-bool KListViewSearchLine::itemMatches(const QListViewItem *item, const QString &s) const
+bool KListViewSearchLine::itemMatches(const TQListViewItem *item, const TQString &s) const
 {
     if(s.isEmpty())
         return true;
@@ -211,7 +211,7 @@ bool KListViewSearchLine::itemMatches(const QListViewItem *item, const QString &
     // specifified.  If it is empty default to searching all of the columns.
 
     if(!d->searchColumns.isEmpty()) {
-        QValueList<int>::ConstIterator it = d->searchColumns.begin();
+        TQValueList<int>::ConstIterator it = d->searchColumns.begin();
         for(; it != d->searchColumns.end(); ++it) {
             if(*it < item->listView()->columns() &&
                item->text(*it).find(s, 0, d->caseSensitive) >= 0)
@@ -231,13 +231,13 @@ bool KListViewSearchLine::itemMatches(const QListViewItem *item, const QString &
     return false;
 }
 
-QPopupMenu *KListViewSearchLine::createPopupMenu()
+TQPopupMenu *KListViewSearchLine::createPopupMenu()
 {
-    QPopupMenu *popup = KLineEdit::createPopupMenu();
+    TQPopupMenu *popup = KLineEdit::createPopupMenu();
 
     if (d->listView->columns()>1) {
-        QPopupMenu *subMenu = new QPopupMenu(popup);
-        connect(subMenu, SIGNAL(activated(int)), this, SLOT(searchColumnsMenuActivated(int)));
+        TQPopupMenu *subMenu = new TQPopupMenu(popup);
+        connect(subMenu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(searchColumnsMenuActivated(int)));
 
         popup->insertSeparator();
         popup->insertItem(i18n("Search Columns"), subMenu);
@@ -247,11 +247,11 @@ QPopupMenu *KListViewSearchLine::createPopupMenu()
     
         bool allColumnsAreSearchColumns = true;
 	// TODO Make the entry order match the actual column order
-	QHeader* const header = d->listView->header();
+	TQHeader* const header = d->listView->header();
 	int visibleColumns = 0;
 	for(int i = 0; i < d->listView->columns(); i++) {
 	    if(d->listView->columnWidth(i)>0) {
-	        QString columnText = d->listView->columnText(i);
+	        TQString columnText = d->listView->columnText(i);
 	        if(columnText.isEmpty()) {
 		    int visiblePosition=1;
 		    for(int j = 0; j < header->mapToIndex(i); j++)
@@ -281,11 +281,11 @@ QPopupMenu *KListViewSearchLine::createPopupMenu()
 // protected slots
 ////////////////////////////////////////////////////////////////////////////////
 
-void KListViewSearchLine::queueSearch(const QString &search)
+void KListViewSearchLine::queueSearch(const TQString &search)
 {
     d->queuedSearches++;
     d->search = search;
-    QTimer::singleShot(200, this, SLOT(activateSearch()));
+    TQTimer::singleShot(200, this, TQT_SLOT(activateSearch()));
 }
 
 void KListViewSearchLine::activateSearch()
@@ -300,7 +300,7 @@ void KListViewSearchLine::activateSearch()
 // private slots
 ////////////////////////////////////////////////////////////////////////////////
 
-void KListViewSearchLine::itemAdded(QListViewItem *item) const
+void KListViewSearchLine::itemAdded(TQListViewItem *item) const
 {
     item->setVisible(itemMatches(item, text()));
 }
@@ -342,10 +342,10 @@ void KListViewSearchLine::searchColumnsMenuActivated(int id)
 
 void KListViewSearchLine::checkItemParentsNotVisible()
 {
-    QListViewItemIterator it(d->listView);
+    TQListViewItemIterator it(d->listView);
     for(; it.current(); ++it)
     {
-        QListViewItem *item = it.current();
+        TQListViewItem *item = it.current();
         if(itemMatches(item, d->search))
             item->setVisible(true);
         else
@@ -364,14 +364,14 @@ void KListViewSearchLine::checkItemParentsNotVisible()
  *  \return \c true if an item which should be visible is found, \c false if all items found should be hidden. If this function
  *             returns true and \p highestHiddenParent was not 0, highestHiddenParent will have been shown.
  */
-bool KListViewSearchLine::checkItemParentsVisible(QListViewItem *item, QListViewItem *highestHiddenParent)
+bool KListViewSearchLine::checkItemParentsVisible(TQListViewItem *item, TQListViewItem *highestHiddenParent)
 {
     bool visible = false;
-    QListViewItem * first = item;
+    TQListViewItem * first = item;
     for(; item; item = item->nextSibling())
     {
         //What we pass to our children as highestHiddenParent:
-        QListViewItem * hhp = highestHiddenParent ? highestHiddenParent : item->isVisible() ? 0L : item;
+        TQListViewItem * hhp = highestHiddenParent ? highestHiddenParent : item->isVisible() ? 0L : item;
         bool childMatch = false;
         if(item->firstChild() && checkItemParentsVisible(item->firstChild(), hhp))
             childMatch = true;
@@ -384,13 +384,13 @@ bool KListViewSearchLine::checkItemParentsVisible(QListViewItem *item, QListView
                 highestHiddenParent->setVisible(true);
                 // Calling setVisible on our ancestor will unhide all its descendents. Hide the ones
                 // before us that should not be shown.
-                for(QListViewItem *hide = first; hide != item; hide = hide->nextSibling())
+                for(TQListViewItem *hide = first; hide != item; hide = hide->nextSibling())
                     hide->setVisible(false);
                 highestHiddenParent = 0;
                 // If we matched, than none of our children matched, yet the setVisible() call on our
                 // ancestor unhid them, undo the damage:
                 if(!childMatch)
-                    for(QListViewItem *hide = item->firstChild(); hide; hide = hide->nextSibling())
+                    for(TQListViewItem *hide = item->firstChild(); hide; hide = hide->nextSibling())
                         hide->setVisible(false);
             }
             else
@@ -412,20 +412,20 @@ public:
     KListViewSearchLineWidgetPrivate() : listView(0), searchLine(0), clearButton(0) {}
     KListView *listView;
     KListViewSearchLine *searchLine;
-    QToolButton *clearButton;
+    TQToolButton *clearButton;
 };
 
 KListViewSearchLineWidget::KListViewSearchLineWidget(KListView *listView,
-                                                     QWidget *parent,
+                                                     TQWidget *parent,
                                                      const char *name) :
-    QHBox(parent, name)
+    TQHBox(parent, name)
 {
     d = new KListViewSearchLineWidgetPrivate;
     d->listView = listView;
 
     setSpacing(5);
 
-    QTimer::singleShot(0, this, SLOT(createWidgets()));
+    TQTimer::singleShot(0, this, TQT_SLOT(createWidgets()));
 }
 
 KListViewSearchLineWidget::~KListViewSearchLineWidget()
@@ -445,14 +445,14 @@ void KListViewSearchLineWidget::createWidgets()
     positionInToolBar();
 
     if(!d->clearButton) {
-        d->clearButton = new QToolButton(this);
-        QIconSet icon = SmallIconSet(QApplication::reverseLayout() ? "clear_left" : "locationbar_erase");
+        d->clearButton = new TQToolButton(this);
+        TQIconSet icon = SmallIconSet(TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase");
         d->clearButton->setIconSet(icon);
     }
 
     d->clearButton->show();
 
-    QLabel *label = new QLabel(i18n("S&earch:"), this, "kde toolbar widget");
+    TQLabel *label = new TQLabel(i18n("S&earch:"), this, "kde toolbar widget");
 
     d->searchLine = createSearchLine(d->listView);
     d->searchLine->show();
@@ -460,7 +460,7 @@ void KListViewSearchLineWidget::createWidgets()
     label->setBuddy(d->searchLine);
     label->show();
 
-    connect(d->clearButton, SIGNAL(clicked()), d->searchLine, SLOT(clear()));
+    connect(d->clearButton, TQT_SIGNAL(clicked()), d->searchLine, TQT_SLOT(clear()));
 }
 
 KListViewSearchLine *KListViewSearchLineWidget::searchLine() const
@@ -485,7 +485,7 @@ void KListViewSearchLineWidget::positionInToolBar()
             if(toolBar->getWidget(id) == this) {
                 toolBar->setItemAutoSized(id);
                 if(!d->clearButton) {
-                    QString icon = QApplication::reverseLayout() ? "clear_left" : "locationbar_erase";
+                    TQString icon = TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase";
                     d->clearButton = new KToolBarButton(icon, 2005, toolBar);
                 }
                 toolBar->insertWidget(2005, d->clearButton->width(), d->clearButton, index);

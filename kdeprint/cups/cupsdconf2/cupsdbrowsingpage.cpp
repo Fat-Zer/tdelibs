@@ -22,16 +22,16 @@
 #include "editlist.h"
 #include "browsedialog.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qwhatsthis.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqwhatsthis.h>
 
 #include <klocale.h>
 #include <knuminput.h>
 
-CupsdBrowsingPage::CupsdBrowsingPage(QWidget *parent, const char *name)
+CupsdBrowsingPage::CupsdBrowsingPage(TQWidget *parent, const char *name)
 	: CupsdPage(parent, name)
 {
 	setPageLabel(i18n("Browsing"));
@@ -41,15 +41,15 @@ CupsdBrowsingPage::CupsdBrowsingPage(QWidget *parent, const char *name)
 	browseinterval_ = new KIntNumInput(this);
 	browseport_ = new KIntNumInput(this);
 	browsetimeout_ = new KIntNumInput(this);
-	browsing_ = new QCheckBox(i18n("Use browsing"), this);
-	cups_ = new QCheckBox("CUPS", this);
-	slp_ = new QCheckBox("SLP", this);
+	browsing_ = new TQCheckBox(i18n("Use browsing"), this);
+	cups_ = new TQCheckBox("CUPS", this);
+	slp_ = new TQCheckBox("SLP", this);
 	browseaddresses_ = new EditList(this);
-	browseorder_ = new QComboBox(this);
-	useimplicitclasses_ = new QCheckBox(i18n("Implicit classes"), this);
-	hideimplicitmembers_ = new QCheckBox(i18n("Hide implicit members"), this);
-	useshortnames_ = new QCheckBox(i18n("Use short names"), this);
-	useanyclasses_ = new QCheckBox(i18n("Use \"any\" classes"), this);
+	browseorder_ = new TQComboBox(this);
+	useimplicitclasses_ = new TQCheckBox(i18n("Implicit classes"), this);
+	hideimplicitmembers_ = new TQCheckBox(i18n("Hide implicit members"), this);
+	useshortnames_ = new TQCheckBox(i18n("Use short names"), this);
+	useanyclasses_ = new TQCheckBox(i18n("Use \"any\" classes"), this);
 
 	browseorder_->insertItem(i18n("Allow, Deny"));
 	browseorder_->insertItem(i18n("Deny, Allow"));
@@ -63,17 +63,17 @@ CupsdBrowsingPage::CupsdBrowsingPage(QWidget *parent, const char *name)
 	browsetimeout_->setSteps(1, 10);
 	browsetimeout_->setSuffix(i18n(" sec"));
 
-	QLabel *l1 = new QLabel(i18n("Browse port:"), this);
-	QLabel *l2 = new QLabel(i18n("Browse interval:"), this);
-	QLabel *l3 = new QLabel(i18n("Browse timeout:"), this);
-	QLabel *l4 = new QLabel(i18n("Browse addresses:"), this);
-	QLabel *l5 = new QLabel(i18n("Browse order:"), this);
-	QLabel *l6 = new QLabel(i18n("Browse options:"), this);
+	TQLabel *l1 = new TQLabel(i18n("Browse port:"), this);
+	TQLabel *l2 = new TQLabel(i18n("Browse interval:"), this);
+	TQLabel *l3 = new TQLabel(i18n("Browse timeout:"), this);
+	TQLabel *l4 = new TQLabel(i18n("Browse addresses:"), this);
+	TQLabel *l5 = new TQLabel(i18n("Browse order:"), this);
+	TQLabel *l6 = new TQLabel(i18n("Browse options:"), this);
 
-	QGridLayout	*m1 = new QGridLayout(this, 8, 2, 10, 7);
+	QGridLayout	*m1 = new TQGridLayout(this, 8, 2, 10, 7);
 	m1->setRowStretch(7, 1);
 	m1->setColStretch(1, 1);
-	QHBoxLayout	*m2 = new QHBoxLayout(0, 0, 10);
+	QHBoxLayout	*m2 = new TQHBoxLayout(0, 0, 10);
 	m1->addMultiCellLayout(m2, 0, 0, 0, 1);
 	m2->addWidget(browsing_);
 	m2->addWidget(cups_);
@@ -90,40 +90,40 @@ CupsdBrowsingPage::CupsdBrowsingPage(QWidget *parent, const char *name)
 	m1->addWidget(browsetimeout_, 3, 1);
 	m1->addWidget(browseaddresses_, 4, 1);
 	m1->addWidget(browseorder_, 5, 1);
-	QGridLayout	*m3 = new QGridLayout(0, 2, 2, 0, 5);
+	QGridLayout	*m3 = new TQGridLayout(0, 2, 2, 0, 5);
 	m1->addLayout(m3, 6, 1);
 	m3->addWidget(useimplicitclasses_, 0, 0);
 	m3->addWidget(useanyclasses_, 0, 1);
 	m3->addWidget(hideimplicitmembers_, 1, 0);
 	m3->addWidget(useshortnames_, 1, 1);
 
-	connect(browsing_, SIGNAL(toggled(bool)), cups_, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), slp_, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), browseport_, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), browseinterval_, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), browsetimeout_, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), browseaddresses_, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), browseorder_, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), useimplicitclasses_, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), useanyclasses_, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), hideimplicitmembers_, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), useshortnames_, SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), cups_, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), slp_, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), browseport_, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), browseinterval_, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), browsetimeout_, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), browseaddresses_, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), browseorder_, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), useimplicitclasses_, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), useanyclasses_, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), hideimplicitmembers_, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), useshortnames_, TQT_SLOT(setEnabled(bool)));
 
-	connect(browsing_, SIGNAL(toggled(bool)), l1, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), l2, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), l3, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), l4, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), l5, SLOT(setEnabled(bool)));
-	connect(browsing_, SIGNAL(toggled(bool)), l6, SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), l1, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), l2, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), l3, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), l4, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), l5, TQT_SLOT(setEnabled(bool)));
+	connect(browsing_, TQT_SIGNAL(toggled(bool)), l6, TQT_SLOT(setEnabled(bool)));
 
-	connect(browseaddresses_, SIGNAL(add()), SLOT(slotAdd()));
-	connect(browseaddresses_, SIGNAL(edit(int)), SLOT(slotEdit(int)));
-	connect(browseaddresses_, SIGNAL(defaultList()), SLOT(slotDefaultList()));
-	connect(browseinterval_, SIGNAL(valueChanged(int)), SLOT(intervalChanged(int)));
+	connect(browseaddresses_, TQT_SIGNAL(add()), TQT_SLOT(slotAdd()));
+	connect(browseaddresses_, TQT_SIGNAL(edit(int)), TQT_SLOT(slotEdit(int)));
+	connect(browseaddresses_, TQT_SIGNAL(defaultList()), TQT_SLOT(slotDefaultList()));
+	connect(browseinterval_, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(intervalChanged(int)));
 	browsing_->setChecked(true);
 }
 
-bool CupsdBrowsingPage::loadConfig(CupsdConf *conf, QString&)
+bool CupsdBrowsingPage::loadConfig(CupsdConf *conf, TQString&)
 {
 	conf_ = conf;
 	browsing_->setChecked(conf_->browsing_);
@@ -142,7 +142,7 @@ bool CupsdBrowsingPage::loadConfig(CupsdConf *conf, QString&)
 	return true;
 }
 
-bool CupsdBrowsingPage::saveConfig(CupsdConf *conf, QString&)
+bool CupsdBrowsingPage::saveConfig(CupsdConf *conf, TQString&)
 {
 	conf->browsing_ = browsing_->isChecked();
 	QStringList	l;
@@ -164,30 +164,30 @@ bool CupsdBrowsingPage::saveConfig(CupsdConf *conf, QString&)
 
 void CupsdBrowsingPage::setInfos(CupsdConf *conf)
 {
-	QWhatsThis::add(browsing_, conf->comments_.toolTip("browsing"));
-	QWhatsThis::add(cups_, conf->comments_.toolTip("browseprotocols"));
-	QWhatsThis::add(slp_, conf->comments_.toolTip("browseprotocols"));
-	QWhatsThis::add(browseinterval_, conf->comments_.toolTip("browseinterval"));
-	QWhatsThis::add(browseport_, conf->comments_.toolTip("browseport"));
-	QWhatsThis::add(browsetimeout_, conf->comments_.toolTip("browsetimeout"));
-	QWhatsThis::add(browseaddresses_, conf->comments_.toolTip("browseaddresses"));
-	QWhatsThis::add(browseorder_, conf->comments_.toolTip("browseorder"));
-	QWhatsThis::add(useimplicitclasses_, conf->comments_.toolTip("implicitclasses"));
-	QWhatsThis::add(useanyclasses_, conf->comments_.toolTip("implicitanyclasses"));
-	QWhatsThis::add(hideimplicitmembers_, conf->comments_.toolTip("hideimplicitmembers"));
-	QWhatsThis::add(useshortnames_, conf->comments_.toolTip("browseshortnames"));
+	TQWhatsThis::add(browsing_, conf->comments_.toolTip("browsing"));
+	TQWhatsThis::add(cups_, conf->comments_.toolTip("browseprotocols"));
+	TQWhatsThis::add(slp_, conf->comments_.toolTip("browseprotocols"));
+	TQWhatsThis::add(browseinterval_, conf->comments_.toolTip("browseinterval"));
+	TQWhatsThis::add(browseport_, conf->comments_.toolTip("browseport"));
+	TQWhatsThis::add(browsetimeout_, conf->comments_.toolTip("browsetimeout"));
+	TQWhatsThis::add(browseaddresses_, conf->comments_.toolTip("browseaddresses"));
+	TQWhatsThis::add(browseorder_, conf->comments_.toolTip("browseorder"));
+	TQWhatsThis::add(useimplicitclasses_, conf->comments_.toolTip("implicitclasses"));
+	TQWhatsThis::add(useanyclasses_, conf->comments_.toolTip("implicitanyclasses"));
+	TQWhatsThis::add(hideimplicitmembers_, conf->comments_.toolTip("hideimplicitmembers"));
+	TQWhatsThis::add(useshortnames_, conf->comments_.toolTip("browseshortnames"));
 }
 
 void CupsdBrowsingPage::slotAdd()
 {
-	QString s = BrowseDialog::newAddress(this, conf_);
+	TQString s = BrowseDialog::newAddress(this, conf_);
 	if (!s.isEmpty())
 		browseaddresses_->insertItem(s);
 }
 
 void CupsdBrowsingPage::slotEdit(int index)
 {
-	QString s = browseaddresses_->text(index);
+	TQString s = browseaddresses_->text(index);
 	s = BrowseDialog::editAddress(s, this, conf_);
 	if (!s.isEmpty())
 		browseaddresses_->setText(index, s);

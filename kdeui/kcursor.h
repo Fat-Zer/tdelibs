@@ -23,15 +23,15 @@
 #ifndef _KCURSOR_H
 #define _KCURSOR_H
 
-#include <qcursor.h>
+#include <tqcursor.h>
 #include <kdelibs_export.h>
 
 class QWidget;
 
 /**
- * @short A QCursor wrapper allowing "themed" cursors and auto-hiding cursors.
+ * @short A TQCursor wrapper allowing "themed" cursors and auto-hiding cursors.
  *
- * A wrapper around QCursor that allows for "themed" cursors.
+ * A wrapper around TQCursor that allows for "themed" cursors.
  *
  * Currently, the only themed cursor is a hand shaped cursor.
  *
@@ -56,83 +56,83 @@ public:
      * Returns the proper hand cursor according to
      * the current GUI style (static function).
      */
-    static QCursor handCursor();
+    static TQCursor handCursor();
 
     /**
      * Returns the proper arrow+hourglass cursor according to
      * the current GUI style (static function).
      */
-    static QCursor workingCursor();
+    static TQCursor workingCursor();
 
     /**
      * Returns the proper arrow cursor according to
      * the current GUI style (static function).
      */
-    static QCursor arrowCursor();
+    static TQCursor arrowCursor();
 
     /**
      * Returns the proper up arrow cursor according to
      * the current GUI style (static function).
      */
-    static QCursor upArrowCursor();
+    static TQCursor upArrowCursor();
 
     /**
      * Returns the proper cross-hair cursor according to
      * the current GUI style (static function).
      */
-    static QCursor crossCursor();
+    static TQCursor crossCursor();
 
     /**
      * Returns the proper hourglass cursor according to
      * the current GUI style (static function).
      */
-    static QCursor waitCursor();
+    static TQCursor waitCursor();
 
     /**
      * Returns the proper text cursor according to
      * the current GUI style (static function).
      */
-    static QCursor ibeamCursor();
+    static TQCursor ibeamCursor();
 
     /**
      * Returns the proper vertical resize cursor
      * according to the current GUI style (static function).
      */
-    static QCursor sizeVerCursor();
+    static TQCursor sizeVerCursor();
 
     /**
      * Returns the proper horizontal resize cursor
      * according to the current GUI style (static function).
      */
-    static QCursor sizeHorCursor();
+    static TQCursor sizeHorCursor();
 
     /**
      * Returns the proper diagonal resize (/) cursor
      * according to the current GUI style (static function).
      */
-    static QCursor sizeBDiagCursor();
+    static TQCursor sizeBDiagCursor();
 
     /**
      * Returns the proper diagonal resize (\) cursor
      * according to the current GUI style (static function).
      */
-    static QCursor sizeFDiagCursor();
+    static TQCursor sizeFDiagCursor();
 
     /**
      * Returns the proper all-directions resize cursor
      * according to the current GUI style (static function).
      */
-    static QCursor sizeAllCursor();
+    static TQCursor sizeAllCursor();
 
     /**
      * Returns a blank or invisible cursor (static function).
      */
-    static QCursor blankCursor();
+    static TQCursor blankCursor();
 
     /**
      * Returns a WhatsThis cursor (static function).
      */
-    static QCursor whatsThisCursor();
+    static TQCursor whatsThisCursor();
 
     /**
      * Sets auto-hiding the cursor for widget @p w. Enabling it will result in
@@ -153,10 +153,10 @@ public:
      * mouseTracking.
      *
      * If you want to use auto-hiding for widgets that don't take focus, e.g.
-     * a QCanvasView, then you have to pass all key-events that should trigger
+     * a TQCanvasView, then you have to pass all key-events that should trigger
      * auto-hiding to autoHideEventFilter().
      */
-    static void setAutoHideCursor( QWidget *w, bool enable );
+    static void setAutoHideCursor( TQWidget *w, bool enable );
 
     /**
      * Overloaded method for the case where you have an event-filter installed
@@ -167,7 +167,7 @@ public:
      *
      * @see autoHideEventFilter
      */
-    static void setAutoHideCursor( QWidget *w, bool enable,
+    static void setAutoHideCursor( TQWidget *w, bool enable,
 				   bool customEventFilter );
 
     /**
@@ -201,7 +201,7 @@ public:
      *
      * [...]
      *
-     * bool YourClass::eventFilter( QObject *o, QEvent *e )
+     * bool YourClass::eventFilter( TQObject *o, TQEvent *e )
      * {
      *     if ( o == edit ) // only that widget where you enabled auto-hide!
      *         KCursor::autoHideEventFilter( o, e );
@@ -214,10 +214,10 @@ public:
      * Note that you must not call KCursor::autoHideEventFilter() when you
      * didn't enable or after disabling auto-hiding.
      */
-    static void autoHideEventFilter( QObject *, QEvent * );
+    static void autoHideEventFilter( TQObject *, TQEvent * );
 
 private:
-    static QCursor *s_handCursor;
+    static TQCursor *s_handCursor;
 };
 
 

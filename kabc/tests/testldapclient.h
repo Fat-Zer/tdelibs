@@ -19,7 +19,7 @@
 #ifndef TESTLDAPCLIENT_H
 #define TESTLDAPCLIENT_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include "../ldapclient.h"
 typedef KABC::LdapClient LdapClient;
@@ -39,11 +39,11 @@ public:
 
 private slots:
     void slotLDAPResult( const KABC::LdapObject& );
-    void slotLDAPError( const QString& );
+    void slotLDAPError( const TQString& );
     void slotLDAPDone();
 
 private:
-    bool check(const QString& txt, QString a, QString b);
+    bool check(const TQString& txt, TQString a, TQString b);
 
     LdapClient* mClient;
 };

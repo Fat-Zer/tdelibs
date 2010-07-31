@@ -14,7 +14,7 @@
 #include "testkhtml.h"
 #include "testkhtml.moc"
 #include "misc/loader.h"
-#include <qcursor.h>
+#include <tqcursor.h>
 #include <dom_string.h>
 #include "dom/dom2_range.h"
 #include "dom/html_document.h"
@@ -56,10 +56,10 @@ int main(int argc, char *argv[])
     KHTMLPart *doc = new KHTMLPart( toplevel, 0, toplevel, 0, KHTMLPart::BrowserViewGUI );
 
     Dummy *dummy = new Dummy( doc );
-    QObject::connect( doc->browserExtension(), SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs & ) ),
-		      dummy, SLOT( slotOpenURL( const KURL&, const KParts::URLArgs & ) ) );
+    TQObject::connect( doc->browserExtension(), TQT_SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs & ) ),
+		      dummy, TQT_SLOT( slotOpenURL( const KURL&, const KParts::URLArgs & ) ) );
 
-    QObject::connect( doc, SIGNAL(completed()), dummy, SLOT(handleDone()) );
+    TQObject::connect( doc, TQT_SIGNAL(completed()), dummy, TQT_SLOT(handleDone()) );
 
     if (args->url(0).url().right(4).find(".xml", 0, false) == 0) {
         KParts::URLArgs ags(doc->browserExtension()->urlArgs());
@@ -77,9 +77,9 @@ int main(int argc, char *argv[])
 
 //     dtv->resize(toplevel->width()/2, toplevel->height());
 
-    QDomDocument d = doc->domDocument();
-    QDomElement viewMenu = d.documentElement().firstChild().childNodes().item( 2 ).toElement();
-    QDomElement e = d.createElement( "action" );
+    TQDomDocument d = doc->domDocument();
+    TQDomElement viewMenu = d.documentElement().firstChild().childNodes().item( 2 ).toElement();
+    TQDomElement e = d.createElement( "action" );
     e.setAttribute( "name", "debugRenderTree" );
     viewMenu.appendChild( e );
     e = d.createElement( "action" );
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     e.setAttribute( "name", "debugDoBenchmark" );
     viewMenu.appendChild( e );
 
-    QDomElement toolBar = d.documentElement().firstChild().nextSibling().toElement();
+    TQDomElement toolBar = d.documentElement().firstChild().nextSibling().toElement();
     e = d.createElement( "action" );
     e.setAttribute( "name", "editable" );
     toolBar.insertBefore( e, toolBar.firstChild() );
@@ -105,28 +105,28 @@ int main(int argc, char *argv[])
     e.setAttribute( "name", "print" );
     toolBar.insertBefore( e, toolBar.firstChild() );
 
-    (void)new KAction( "Reload", "reload", Qt::Key_F5, dummy, SLOT( reload() ), doc->actionCollection(), "reload" );
-    (void)new KAction( "Benchmark...", 0, 0, dummy, SLOT( doBenchmark() ), doc->actionCollection(), "debugDoBenchmark" );
-    KAction* kprint = new KAction( "Print", "print", 0, doc->browserExtension(), SLOT( print() ), doc->actionCollection(), "print" );
+    (void)new KAction( "Reload", "reload", Qt::Key_F5, dummy, TQT_SLOT( reload() ), doc->actionCollection(), "reload" );
+    (void)new KAction( "Benchmark...", 0, 0, dummy, TQT_SLOT( doBenchmark() ), doc->actionCollection(), "debugDoBenchmark" );
+    KAction* kprint = new KAction( "Print", "print", 0, doc->browserExtension(), TQT_SLOT( print() ), doc->actionCollection(), "print" );
     kprint->setEnabled(true);
     KToggleAction *ta = new KToggleAction( "Navigable", "editclear", 0, doc->actionCollection(), "navigable" );
     ta->setChecked(doc->isCaretMode());
-    QWidget::connect(ta, SIGNAL(toggled(bool)), dummy, SLOT( toggleNavigable(bool) ));
+    TQWidget::connect(ta, TQT_SIGNAL(toggled(bool)), dummy, TQT_SLOT( toggleNavigable(bool) ));
     ta = new KToggleAction( "Editable", "edit", 0, doc->actionCollection(), "editable" );
     ta->setChecked(doc->isEditable());
-    QWidget::connect(ta, SIGNAL(toggled(bool)), dummy, SLOT( toggleEditable(bool) ));
+    TQWidget::connect(ta, TQT_SIGNAL(toggled(bool)), dummy, TQT_SLOT( toggleEditable(bool) ));
     toplevel->guiFactory()->addClient( doc );
 
     doc->setJScriptEnabled(true);
     doc->setJavaEnabled(true);
     doc->setPluginsEnabled( true );
-    doc->setURLCursor(QCursor(Qt::PointingHandCursor));
+    doc->setURLCursor(TQCursor(Qt::PointingHandCursor));
     a.setTopWidget(doc->widget());
-    QWidget::connect(doc, SIGNAL(setWindowCaption(const QString &)),
-		     doc->widget()->topLevelWidget(), SLOT(setCaption(const QString &)));
+    TQWidget::connect(doc, TQT_SIGNAL(setWindowCaption(const TQString &)),
+		     doc->widget()->topLevelWidget(), TQT_SLOT(setCaption(const TQString &)));
     doc->widget()->show();
     toplevel->show();
-    ((QScrollView *)doc->widget())->viewport()->show();
+    ((TQScrollView *)doc->widget())->viewport()->show();
 
 
     int ret = a.exec();
@@ -141,13 +141,13 @@ void Dummy::doBenchmark()
     KConfigGroup settings(KGlobal::config(), "bench");
     results.clear();
 
-    QString directory = KFileDialog::getExistingDirectory(settings.readPathEntry("path"), m_part->view(), 
-            QString::fromLatin1("Please select directory with tests"));
+    TQString directory = KFileDialog::getExistingDirectory(settings.readPathEntry("path"), m_part->view(), 
+            TQString::fromLatin1("Please select directory with tests"));
 
     if (!directory.isEmpty()) {
         settings.writePathEntry("path", directory);
 
-        QDir dirListing(directory, "*.html");
+        TQDir dirListing(directory, "*.html");
         for (int i = 0; i < dirListing.count(); ++i) {
             filesToBenchmark.append(dirListing.absFilePath(dirListing[i]));
         }
@@ -177,21 +177,21 @@ void Dummy::nextRun()
         m_part->begin();
         m_part->write("<table border=1>");
 
-        for (QMap<QString, QValueList<int> >::iterator i = results.begin(); i != results.end(); ++i) {
+        for (TQMap<TQString, TQValueList<int> >::iterator i = results.begin(); i != results.end(); ++i) {
             m_part->write("<tr><td>" + i.key() + "</td>");
-            QValueList<int> timings = i.data();
+            TQValueList<int> timings = i.data();
             int total = 0;
             for (int pos = 0; pos < timings.size(); ++pos) {
                 int t = timings[pos];
                 if (pos < COLD_RUNS)
-		    m_part->write(QString::fromLatin1("<td>(Cold):") + QString::number(t) + "</td>");
+		    m_part->write(TQString::fromLatin1("<td>(Cold):") + TQString::number(t) + "</td>");
                 else {
                     total += t;
-                    m_part->write(QString::fromLatin1("<td><i>") + QString::number(t) + "</i></td>");
+                    m_part->write(TQString::fromLatin1("<td><i>") + TQString::number(t) + "</i></td>");
                 }
             }
 
-            m_part->write(QString::fromLatin1("<td>Average:<b>") + QString::number(double(total) / HOT_RUNS) + "</b></td>");
+            m_part->write(TQString::fromLatin1("<td>Average:<b>") + TQString::number(double(total) / HOT_RUNS) + "</b></td>");
 
             m_part->write("</tr>");
         }

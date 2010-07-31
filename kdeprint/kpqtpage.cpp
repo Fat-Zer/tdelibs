@@ -24,12 +24,12 @@
 #include "driver.h"
 #include "util.h"
 
-#include <qcombobox.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqcombobox.h>
+#include <tqbuttongroup.h>
+#include <tqradiobutton.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <kiconloader.h>
 #include <klocale.h>
@@ -48,13 +48,13 @@
 
 //*****************************************************************************************************
 
-KPQtPage::KPQtPage(QWidget *parent, const char *name)
+KPQtPage::KPQtPage(TQWidget *parent, const char *name)
 : KPrintDialogPage(parent,name)
 {
 	init();
 }
 
-KPQtPage::KPQtPage(DrMain *driver, QWidget *parent, const char *name)
+KPQtPage::KPQtPage(DrMain *driver, TQWidget *parent, const char *name)
 : KPrintDialogPage(0, (driver && driver->findOption("PageSize") ? driver : 0), parent, name)
 {
 	init();
@@ -67,7 +67,7 @@ KPQtPage::~KPQtPage()
 void KPQtPage::init()
 {
         //WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThisColorModeOtPageLabel = i18n( " <qt> "
+	TQString whatsThisColorModeOtPageLabel = i18n( " <qt> "
 			" <b>Selection of color mode:</b> You can choose between 2 options: "
 			" <ul><li><b>Color</b> and</li> "
                         " <li><b>Grayscale</b></li></ul> "
@@ -76,12 +76,12 @@ void KPQtPage::init()
 			" enough information about your print file. In this case the embedded color- or grayscale information "
 			" of your printfile, and the default handling of the printer take precedence. "
 			" </qt>" );
-	QString whatsThisPageSizeOtPageLabel = i18n( " <qt> "
+	TQString whatsThisPageSizeOtPageLabel = i18n( " <qt> "
 			" <b>Selection of page size:</b> Select paper size to be printed on from "
 			" the drop-down menu. "
 			" <p>The exact list of choices depends on the printer driver (\"PPD\") you have installed. "
 			" </qt>" );
-	QString whatsThisPagesPerSheetOtPageLabel = i18n( " <qt> "
+	TQString whatsThisPagesPerSheetOtPageLabel = i18n( " <qt> "
 			" <b>Selection of pages per sheet:</b> "
                         " You can choose to print more than one page onto each sheet of paper. "
                         " This is sometimes useful to save paper. "
@@ -99,7 +99,7 @@ void KPQtPage::init()
 			" <li> and configure it (bottom-most button on the right of the \"Filters\" tab). </li>"
 			" </ul>"
 			" </qt>" );
-	QString whatsThisOrientationOtPageLabel = i18n( " <qt> "
+	TQString whatsThisOrientationOtPageLabel = i18n( " <qt> "
 			" <b>Selection of image orientation:</b> Orientation of the printed "
                         " pageimage on your paper is controlled by the radio buttons. By default, "
                         " the orientation is <em>Portrait</em> "
@@ -113,50 +113,50 @@ void KPQtPage::init()
 	setTitle(i18n("Print Format"));
 
 	// widget creation
-	m_pagesize = new QComboBox(this);
-          QWhatsThis::add(m_pagesize, whatsThisPageSizeOtPageLabel);
-	QLabel	*m_pagesizelabel = new QLabel(i18n("Page s&ize:"), this);
+	m_pagesize = new TQComboBox(this);
+          TQWhatsThis::add(m_pagesize, whatsThisPageSizeOtPageLabel);
+	QLabel	*m_pagesizelabel = new TQLabel(i18n("Page s&ize:"), this);
 	m_pagesizelabel->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
 	m_pagesizelabel->setBuddy(m_pagesize);
-	m_orientbox = new QButtonGroup(0, Qt::Vertical, i18n("Orientation"), this);
-          QWhatsThis::add(m_orientbox, whatsThisOrientationOtPageLabel);
-	m_colorbox = new QButtonGroup(0, Qt::Vertical, i18n("Color Mode"), this);
-          QWhatsThis::add(m_colorbox, whatsThisColorModeOtPageLabel);
-	QRadioButton	*m_portrait = new QRadioButton(i18n("&Portrait"), m_orientbox);
-          QWhatsThis::add(m_portrait, whatsThisOrientationOtPageLabel);
+	m_orientbox = new TQButtonGroup(0, Qt::Vertical, i18n("Orientation"), this);
+          TQWhatsThis::add(m_orientbox, whatsThisOrientationOtPageLabel);
+	m_colorbox = new TQButtonGroup(0, Qt::Vertical, i18n("Color Mode"), this);
+          TQWhatsThis::add(m_colorbox, whatsThisColorModeOtPageLabel);
+	QRadioButton	*m_portrait = new TQRadioButton(i18n("&Portrait"), m_orientbox);
+          TQWhatsThis::add(m_portrait, whatsThisOrientationOtPageLabel);
 
-	QRadioButton	*m_landscape = new QRadioButton(i18n("&Landscape"), m_orientbox);
-          QWhatsThis::add(m_landscape, whatsThisOrientationOtPageLabel);
+	QRadioButton	*m_landscape = new TQRadioButton(i18n("&Landscape"), m_orientbox);
+          TQWhatsThis::add(m_landscape, whatsThisOrientationOtPageLabel);
 
-	m_orientpix = new QLabel(m_orientbox);
+	m_orientpix = new TQLabel(m_orientbox);
 	m_orientpix->setAlignment(Qt::AlignCenter);
-          QWhatsThis::add(m_orientpix, whatsThisOrientationOtPageLabel);
+          TQWhatsThis::add(m_orientpix, whatsThisOrientationOtPageLabel);
 
-	QRadioButton	*m_color = new QRadioButton(i18n("Colo&r"), m_colorbox);
-          QWhatsThis::add(m_color, whatsThisColorModeOtPageLabel);
+	QRadioButton	*m_color = new TQRadioButton(i18n("Colo&r"), m_colorbox);
+          TQWhatsThis::add(m_color, whatsThisColorModeOtPageLabel);
 
-	QRadioButton	*m_grayscale = new QRadioButton(i18n("&Grayscale"), m_colorbox);
-	m_colorpix = new QLabel(m_colorbox);
+	QRadioButton	*m_grayscale = new TQRadioButton(i18n("&Grayscale"), m_colorbox);
+	m_colorpix = new TQLabel(m_colorbox);
 	m_colorpix->setAlignment(Qt::AlignCenter);
-          QWhatsThis::add(m_colorpix, whatsThisColorModeOtPageLabel);
+          TQWhatsThis::add(m_colorpix, whatsThisColorModeOtPageLabel);
 
-	m_nupbox = new QButtonGroup(0, Qt::Vertical, i18n("Pages per Sheet"), this);
-        //  QWhatsThis::add(m_nupbox, whatsThisPagesPerSheetOtPageLabel);
-	QRadioButton	*m_nup1 = new QRadioButton("&1", m_nupbox);
-          QWhatsThis::add(m_nup1, whatsThisPagesPerSheetOtPageLabel);
-	QRadioButton	*m_nup2 = new QRadioButton("&2", m_nupbox);
-          QWhatsThis::add(m_nup2, whatsThisPagesPerSheetOtPageLabel);
-	QRadioButton	*m_nup4 = new QRadioButton("&4", m_nupbox);
-          QWhatsThis::add(m_nup4, whatsThisPagesPerSheetOtPageLabel);
-	QRadioButton	*m_nupother = new QRadioButton(i18n("Ot&her"), m_nupbox);
-          QWhatsThis::add(m_nupother, whatsThisPagesPerSheetOtPageLabel);
+	m_nupbox = new TQButtonGroup(0, Qt::Vertical, i18n("Pages per Sheet"), this);
+        //  TQWhatsThis::add(m_nupbox, whatsThisPagesPerSheetOtPageLabel);
+	QRadioButton	*m_nup1 = new TQRadioButton("&1", m_nupbox);
+          TQWhatsThis::add(m_nup1, whatsThisPagesPerSheetOtPageLabel);
+	QRadioButton	*m_nup2 = new TQRadioButton("&2", m_nupbox);
+          TQWhatsThis::add(m_nup2, whatsThisPagesPerSheetOtPageLabel);
+	QRadioButton	*m_nup4 = new TQRadioButton("&4", m_nupbox);
+          TQWhatsThis::add(m_nup4, whatsThisPagesPerSheetOtPageLabel);
+	QRadioButton	*m_nupother = new TQRadioButton(i18n("Ot&her"), m_nupbox);
+          TQWhatsThis::add(m_nupother, whatsThisPagesPerSheetOtPageLabel);
 
-	m_nuppix = new QLabel(m_nupbox);
+	m_nuppix = new TQLabel(m_nupbox);
 	m_nuppix->setAlignment(Qt::AlignCenter);
-          QWhatsThis::add(m_nuppix, whatsThisPagesPerSheetOtPageLabel);
+          TQWhatsThis::add(m_nuppix, whatsThisPagesPerSheetOtPageLabel);
 
 	// layout creation
-	QGridLayout	*lay0 = new QGridLayout(this, 3, 2, 0, 10);
+	QGridLayout	*lay0 = new TQGridLayout(this, 3, 2, 0, 10);
 	lay0->setRowStretch(1,1);
 	lay0->setRowStretch(2,1);
 	lay0->addWidget(m_pagesizelabel,0,0);
@@ -164,15 +164,15 @@ void KPQtPage::init()
 	lay0->addWidget(m_orientbox,1,0);
 	lay0->addWidget(m_colorbox,1,1);
 	lay0->addWidget(m_nupbox,2,0);
-	QGridLayout	*lay1 = new QGridLayout(m_orientbox->layout(), 2, 2, 10);
+	QGridLayout	*lay1 = new TQGridLayout(m_orientbox->layout(), 2, 2, 10);
 	lay1->addWidget(m_portrait,0,0);
 	lay1->addWidget(m_landscape,1,0);
 	lay1->addMultiCellWidget(m_orientpix,0,1,1,1);
-	QGridLayout	*lay2 = new QGridLayout(m_colorbox->layout(), 2, 2, 10);
+	QGridLayout	*lay2 = new TQGridLayout(m_colorbox->layout(), 2, 2, 10);
 	lay2->addWidget(m_color,0,0);
 	lay2->addWidget(m_grayscale,1,0);
 	lay2->addMultiCellWidget(m_colorpix,0,1,1,1);
-	QGridLayout	*lay3 = new QGridLayout(m_nupbox->layout(), 4, 2, 5);
+	QGridLayout	*lay3 = new TQGridLayout(m_nupbox->layout(), 4, 2, 5);
 	lay3->addWidget(m_nup1,0,0);
 	lay3->addWidget(m_nup2,1,0);
 	lay3->addWidget(m_nup4,2,0);
@@ -208,7 +208,7 @@ void KPQtPage::init()
 	else
 	{
 		DrListOption	*lopt = static_cast<DrListOption*>(driver()->findOption("PageSize"));
-		QPtrListIterator<DrBase>	it(*(lopt->choices()));
+		TQPtrListIterator<DrBase>	it(*(lopt->choices()));
 		for (; it.current(); ++it)
 		{
 			m_pagesize->insertItem(it.current()->get("text"));
@@ -218,9 +218,9 @@ void KPQtPage::init()
 	}
 
 	// connections
-	connect(m_orientbox,SIGNAL(clicked(int)),SLOT(slotOrientationChanged(int)));
-	connect(m_colorbox,SIGNAL(clicked(int)),SLOT(slotColorModeChanged(int)));
-	connect(m_nupbox,SIGNAL(clicked(int)),SLOT(slotNupChanged(int)));
+	connect(m_orientbox,TQT_SIGNAL(clicked(int)),TQT_SLOT(slotOrientationChanged(int)));
+	connect(m_colorbox,TQT_SIGNAL(clicked(int)),TQT_SLOT(slotColorModeChanged(int)));
+	connect(m_nupbox,TQT_SIGNAL(clicked(int)),TQT_SLOT(slotNupChanged(int)));
 }
 
 void KPQtPage::slotOrientationChanged(int ID)
@@ -246,7 +246,7 @@ void KPQtPage::slotNupChanged(int ID)
 	m_nuppix->setPixmap(UserIcon(pixstr));
 }
 
-void KPQtPage::setOptions(const QMap<QString,QString>& opts)
+void KPQtPage::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	int 	ID = (opts["kde-orientation"] == "Landscape" ? ORIENT_LANDSCAPE_ID : ORIENT_PORTRAIT_ID);
 	m_orientbox->setButton(ID);
@@ -296,7 +296,7 @@ void KPQtPage::setOptions(const QMap<QString,QString>& opts)
 		m_pagesize->setDisabled( opts[ "kde-pagesize-fixed" ] == "1" );
 }
 
-void KPQtPage::getOptions(QMap<QString,QString>& opts, bool incldef)
+void KPQtPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	opts["kde-orientation"] = (m_orientbox->id(m_orientbox->selected()) == ORIENT_LANDSCAPE_ID ? "Landscape" : "Portrait");
 	opts["kde-colormode"] = (m_colorbox->id(m_colorbox->selected()) == COLORMODE_GRAYSCALE_ID ? "GrayScale" : "Color");
@@ -313,7 +313,7 @@ void KPQtPage::getOptions(QMap<QString,QString>& opts, bool incldef)
 		}
 	}
 	else
-		opts["kde-pagesize"] = QString::number(page_sizes[m_pagesize->currentItem()].ID);
+		opts["kde-pagesize"] = TQString::number(page_sizes[m_pagesize->currentItem()].ID);
 	int	ID = m_nupbox->id(m_nupbox->selected());
 	QString	s = opts["_kde-filters"];
 	if (ID == NUP_1)
@@ -325,11 +325,11 @@ void KPQtPage::getOptions(QMap<QString,QString>& opts, bool incldef)
 		int	nup(ID == NUP_2 ? 2 : 4);
 		if (s.find("psnup") == -1)
 		{
-			QStringList	fl = QStringList::split(',', s, false);
+			QStringList	fl = TQStringList::split(',', s, false);
 			KXmlCommandManager::self()->insertCommand(fl, "psnup");
 			s = fl.join(",");
 		}
-		opts["_kde-psnup-nup"] = QString::number(nup);
+		opts["_kde-psnup-nup"] = TQString::number(nup);
 	}
 	opts["_kde-filters"] = s;
 }

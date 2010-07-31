@@ -43,8 +43,8 @@ class QImage;
  *     if ( !m_scanDialog ) // no scanning support installed?
  *         return;
  *
- *     connect( m_scanDialog, SIGNAL( finalImage( const QImage&, int )),
- *              SLOT( slotScanned( const QImage&, int ) ));
+ *     connect( m_scanDialog, TQT_SIGNAL( finalImage( const TQImage&, int )),
+ *              TQT_SLOT( slotScanned( const TQImage&, int ) ));
  * }
  *
  * if ( m_scanDialog->setup() ) // only if scanner configured/available
@@ -71,11 +71,11 @@ public:
      * is available. Pass a suitable @p parent widget, if you like. If you
      * don't you have to 'delete' the returned pointer yourself.
      * @param parent the QWidget's parent, or 0
-     * @param name the name of the QObject, can be 0
+     * @param name the name of the TQObject, can be 0
      * @param modal if true the dialog is model
      * @return the KScanDialog, or 0 if the function failed
      */
-    static KScanDialog * getScanDialog( QWidget *parent=0L,
+    static KScanDialog * getScanDialog( TQWidget *parent=0L,
 					const char *name=0, bool modal=false );
     /**
      * Destructs the scan dialog.
@@ -101,12 +101,12 @@ protected:
      * @param buttonMask a ORed mask of all buttons (see
      * KDialogBase::ButtonCode)
      * @param parent the QWidget's parent, or 0
-     * @param name the name of the QObject, can be 0
+     * @param name the name of the TQObject, can be 0
      * @param modal if true the dialog is model
      * @see KDialogBase
      */
     KScanDialog( int dialogFace=Tabbed, int buttonMask = Close|Help,
-		 QWidget *parent=0L, const char *name=0, bool modal=false );
+		 TQWidget *parent=0L, const char *name=0, bool modal=false );
 
     /**
      * Returns the current id for an image. You can use that in your subclass
@@ -140,7 +140,7 @@ signals:
      * @param img the image
      * @param id the image's id
      */
-    void preview( const QImage &img, int id );
+    void preview( const TQImage &img, int id );
 
     /**
      * Informs you that an image has scanned. @p id is the same as in the
@@ -151,17 +151,17 @@ signals:
      * @param img the image
      * @param id the image's id
      */
-    void finalImage( const QImage &img, int id );
+    void finalImage( const TQImage &img, int id );
 
     /**
      * Informs you that the image with the id @p id has been run through
-     * text-recognition. The text is in the QString parameter. In the future,
+     * text-recognition. The text is in the TQString parameter. In the future,
      * a compound document, using rich text will be used instead.
      *
      * @param text the text that has been recognized
      * @param id the id of the image
      */
-    void textRecognized( const QString &text, int id );
+    void textRecognized( const TQString &text, int id );
 
 private:
     int m_currentId;
@@ -188,30 +188,30 @@ public:
      * Your library should reimplement this method to return your KScanDialog
      * derived dialog.
      * @param parent the QWidget's parent, or 0
-     * @param name the name of the QObject, can be 0
+     * @param name the name of the TQObject, can be 0
      * @param modal if true the dialog is model
      */
-    virtual KScanDialog * createDialog( QWidget *parent=0, const char *name=0,
+    virtual KScanDialog * createDialog( TQWidget *parent=0, const char *name=0,
 					bool modal=false ) = 0;
 
 protected:
     /**
      * Creates a new KScanDialogFactory.
      * @param parent the QWidget's parent, or 0
-     * @param name the name of the QObject, can be 0
+     * @param name the name of the TQObject, can be 0
      */
-    KScanDialogFactory( QObject *parent=0, const char *name=0 );
+    KScanDialogFactory( TQObject *parent=0, const char *name=0 );
 
-    virtual QObject* createObject( QObject* parent = 0, const char* name = 0,
-                                   const char* classname = "QObject",
-                                   const QStringList &args = QStringList() );
+    virtual TQObject* createObject( TQObject* parent = 0, const char* name = 0,
+                                   const char* classname = "TQObject",
+                                   const TQStringList &args = TQStringList() );
 
 
     /**
      * Creates a new instance with the given name.
      * @param instanceName the name of the instance
      */
-    void setName( const QCString& instanceName ) {
+    void setName( const TQCString& instanceName ) {
 	delete m_instance;
 	m_instance = new KInstance( instanceName );
     }
@@ -244,11 +244,11 @@ public:
      * is available. Pass a suitable @p parent widget, if you like. If you
      * don't you have to 'delete' the returned pointer yourself.
      * @param parent the QWidget's parent, or 0
-     * @param name the name of the QObject, can be 0
+     * @param name the name of the TQObject, can be 0
      * @param modal if true the dialog is model
      * @return the KOCRDialog, or 0 if the function failed
      */
-    static KOCRDialog * getOCRDialog( QWidget *parent=0L,
+    static KOCRDialog * getOCRDialog( TQWidget *parent=0L,
 					const char *name=0, bool modal=false );
     ~KOCRDialog();
 
@@ -261,11 +261,11 @@ protected:
      * @param buttonMask a ORed mask of all buttons (see
      * KDialogBase::ButtonCode)
      * @param parent the QWidget's parent, or 0
-     * @param name the name of the QObject, can be 0
+     * @param name the name of the TQObject, can be 0
      * @param modal if true the dialog is model
      */
     KOCRDialog( int dialogFace=Tabbed, int buttonMask = Close|Help,
-		 QWidget *parent=0L, const char *name=0, bool modal=false );
+		 TQWidget *parent=0L, const char *name=0, bool modal=false );
 
     /**
      * Returns the current id for an image. You can use that in your subclass
@@ -291,13 +291,13 @@ protected:
 signals:
     /**
      * Informs you that the image with the id @p id has been run through
-     * text-recognition. The text is in the QString parameter. In the future,
+     * text-recognition. The text is in the TQString parameter. In the future,
      * a compound document, using rich text will be used instead.
      *
      * @param text the text that has been recognized
      * @param id the id of the image
      */
-    void textRecognized( const QString &text, int id );
+    void textRecognized( const TQString &text, int id );
 
 private:
     int m_currentId;
@@ -324,30 +324,30 @@ public:
      * Your library should reimplement this method to return your KOCRDialog
      * derived dialog.
      * @param parent the QWidget's parent, or 0
-     * @param name the name of the QObject, can be 0
+     * @param name the name of the TQObject, can be 0
      * @param modal if true the dialog is model
      */
-    virtual KOCRDialog * createDialog( QWidget *parent=0, const char *name=0,
+    virtual KOCRDialog * createDialog( TQWidget *parent=0, const char *name=0,
 					bool modal=false ) = 0;
 
 protected:
     /**
      * Creates a new KScanDialogFactory.
      * @param parent the QWidget's parent, or 0
-     * @param name the name of the QObject, can be 0
+     * @param name the name of the TQObject, can be 0
      */
-    KOCRDialogFactory( QObject *parent=0, const char *name=0 );
+    KOCRDialogFactory( TQObject *parent=0, const char *name=0 );
 
-    virtual QObject* createObject( QObject* parent = 0, const char* name = 0,
-                                   const char* className = "QObject",
-                                   const QStringList &args = QStringList() );
+    virtual TQObject* createObject( TQObject* parent = 0, const char* name = 0,
+                                   const char* className = "TQObject",
+                                   const TQStringList &args = TQStringList() );
 
 
     /**
      * Creates a new instance with the given name.
      * @param instanceName the name of the instance
      */
-    void setName( const QCString& instanceName ) {
+    void setName( const TQCString& instanceName ) {
 	delete m_instance;
 	m_instance = new KInstance( instanceName );
     }

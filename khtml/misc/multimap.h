@@ -23,16 +23,16 @@
 #ifndef _MultiMap_h_
 #define _MultiMap_h_
 
-#include <qptrdict.h>
-#include <qptrlist.h>
+#include <tqptrdict.h>
+#include <tqptrlist.h>
 #include <assert.h>
 #include <stdlib.h>
 
 template<class T> class MultiMapPtrList;
 
 // KMultiMap is an implementaition of a Map with multiple entries per key.
-// It is originally designed to work like a shell for QPtrDict<QPtrList>, but
-// QPtrList have been replaced with a much faster hash set.
+// It is originally designed to work like a shell for TQPtrDict<TQPtrList>, but
+// TQPtrList have been replaced with a much faster hash set.
 template<class T>
 class KMultiMap {
 public:
@@ -63,7 +63,7 @@ public:
         return dict.find(key);
     }
 private:
-    QPtrDict<List> dict;
+    TQPtrDict<List> dict;
 
 };
 

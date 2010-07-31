@@ -21,8 +21,8 @@
 #ifndef KABC_FIELD_H
 #define KABC_FIELD_H
 
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 
 #include "addressee.h"
 
@@ -36,7 +36,7 @@ class KABC_EXPORT Field
   friend class FieldImpl;
 
 public:
-  typedef QValueList<Field *> List;
+  typedef TQValueList<Field *> List;
 
   /**
    * @li @p All -
@@ -61,7 +61,7 @@ public:
   /**
    * Returns the translated label for this field.
    */
-  virtual QString label();
+  virtual TQString label();
 
   /**
    * Returns the  ored categories the field belongs to.
@@ -71,25 +71,25 @@ public:
   /**
    * Returns the translated label for field category.
    */
-  static QString categoryLabel( int category );
+  static TQString categoryLabel( int category );
 
   /**
    * Returns a string representation of the value the field has in the given
-   * Addressee. Returns QString::null, if it is not possible to convert the
+   * Addressee. Returns TQString::null, if it is not possible to convert the
    * value to a string.
    */
-  virtual QString value( const KABC::Addressee & );
+  virtual TQString value( const KABC::Addressee & );
 
   /**
    * Sets the value of the field in the given Addressee. Returns true on success
    * or false, if the given string couldn't be converted to a valid value.
    */
-  virtual bool setValue( KABC::Addressee &, const QString & );
+  virtual bool setValue( KABC::Addressee &, const TQString & );
 
   /**
    * Returns a string, that can be used for sorting.
    */
-  QString sortKey( const KABC::Addressee & );
+  TQString sortKey( const KABC::Addressee & );
 
   /**
    * Returns, if the field is a user-defined field.
@@ -119,8 +119,8 @@ public:
    * @param key      Unique key for this field
    * @param app      Unique app name for this field
    */
-  static Field *createCustomField( const QString &label, int category,
-                                   const QString &key, const QString &app );
+  static Field *createCustomField( const TQString &label, int category,
+                                   const TQString &key, const TQString &app );
 
   /**
    * Delete all fields from list.
@@ -134,13 +134,13 @@ public:
    * @param identifier The unique identifier
    * @param fields     The list of the fields
    */
-  static void saveFields( KConfig *cfg, const QString &identifier,
+  static void saveFields( KConfig *cfg, const TQString &identifier,
                           const Field::List &fields );
   /**
    * This is the same as above, with the difference, that
    * the list is stored in KGlobal::config() in group "KABCFields".
    */
-  static void saveFields( const QString &identifier,
+  static void saveFields( const TQString &identifier,
                           const Field::List &fields );
 
   /**
@@ -149,13 +149,13 @@ public:
    * @param cfg        The config file object
    * @param identifier The unique identifier
    */
-  static Field::List restoreFields( KConfig *cfg, const QString &identifier );
+  static Field::List restoreFields( KConfig *cfg, const TQString &identifier );
 
   /**
    * This is the same as above, with the difference, that
    * the list is loaded from KGlobal::config() from group "KABCFields".
    */
-  static Field::List restoreFields( const QString &identifier );
+  static Field::List restoreFields( const TQString &identifier );
 
 protected:
   static void createField( int id, int category = 0 );

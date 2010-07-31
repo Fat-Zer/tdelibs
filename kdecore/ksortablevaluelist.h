@@ -20,8 +20,8 @@
 #ifndef KSORTABLEVALUELIST_H
 #define KSORTABLEVALUELIST_H
 
-#include <qpair.h>
-#include <qvaluelist.h>
+#include <tqpair.h>
+#include <tqvaluelist.h>
 #include "kdelibs_export.h"
 
 /**
@@ -121,13 +121,13 @@ public:
 
 
 /**
- * KSortableValueList is a special QValueList for
+ * KSortableValueList is a special TQValueList for
  * KSortableItem. It includes convenience operators
  * to get the first value of the KSortableItem and a method
  * to sort all items.
  */
 template <class T, class Key = int>
-class KSortableValueList : public QValueList<KSortableItem<T, Key> >
+class KSortableValueList : public TQValueList<KSortableItem<T, Key> >
 {
 public:
     /**
@@ -136,7 +136,7 @@ public:
      * @param t the second value
      */
     void insert( Key i, const T& t ) {
-        QValueList<KSortableItem<T, Key> >::append( KSortableItem<T, Key>( i, t ) );
+        TQValueList<KSortableItem<T, Key> >::append( KSortableItem<T, Key>( i, t ) );
     }
     // add more as you please...
 
@@ -145,7 +145,7 @@ public:
      * @return the first value of the KSortableItem
      */
     T& operator[]( Key i ) {
-        return QValueList<KSortableItem<T, Key> >::operator[]( i ).value();
+        return TQValueList<KSortableItem<T, Key> >::operator[]( i ).value();
     }
 
     /**
@@ -153,7 +153,7 @@ public:
      * @return the first value of the KSortableItem
      */
     const T& operator[]( Key i ) const {
-        return QValueList<KSortableItem<T, Key> >::operator[]( i ).value();
+        return TQValueList<KSortableItem<T, Key> >::operator[]( i ).value();
     }
 
     /**
@@ -164,7 +164,7 @@ public:
     }
 };
 
-// template <class T> class KSortableValueListIterator : public QValueListIterator<KSortableItem<T>  >
+// template <class T> class KSortableValueListIterator : public TQValueListIterator<KSortableItem<T>  >
 // {
 // };
 

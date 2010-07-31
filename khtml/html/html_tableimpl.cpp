@@ -434,7 +434,7 @@ void HTMLTableElementImpl::parseAttribute(AttributeImpl *attr)
 #ifdef DEBUG_DRAW_BORDER
         border=1;
 #endif
-        DOMString v = QString::number( border );
+        DOMString v = TQString::number( border );
         addCSSLength(CSS_PROP_BORDER_WIDTH, v );
 
         // wanted by HTML4 specs
@@ -464,7 +464,7 @@ void HTMLTableElementImpl::parseAttribute(AttributeImpl *attr)
     case ATTR_BACKGROUND:
     {
         if (!attr->value().isEmpty()) {
-            QString url = khtml::parseURL( attr->value() ).string();
+            TQString url = khtml::parseURL( attr->value() ).string();
             url = getDocument()->completeURL( url );
             addCSSProperty(CSS_PROP_BACKGROUND_IMAGE, "url('"+url+"')" );
         }
@@ -604,7 +604,7 @@ void HTMLTablePartElementImpl::parseAttribute(AttributeImpl *attr)
     case ATTR_BACKGROUND:
     {
         if (attr->val()) {
-            QString url = khtml::parseURL( attr->value() ).string();
+            TQString url = khtml::parseURL( attr->value() ).string();
             url = getDocument()->completeURL( url );
             addCSSProperty(CSS_PROP_BACKGROUND_IMAGE,  "url('"+url+"')" );
         }

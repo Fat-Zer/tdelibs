@@ -25,7 +25,7 @@
 #include "kmedia2.h"
 #include "soundserver.h"
 #include <kurl.h>
-#include <qobject.h>
+#include <tqobject.h>
 
 class KDE_EXPORT KPlayObject : public QObject
 {
@@ -84,7 +84,7 @@ public:
 	/**
 	 * Reimplemented (Arts::PlayObject Wrapper)
 	 */
-	QString description();
+	TQString description();
 	
 	/**
 	 * Reimplemented (Arts::PlayObject Wrapper)
@@ -104,7 +104,7 @@ public:
 	/**
 	 * Reimplemented (Arts::PlayObject Wrapper)
 	 */
-	QString mediaName();
+	TQString mediaName();
 	
 	/**
 	 * Reimplemented (Arts::PlayObject Wrapper)
@@ -163,7 +163,7 @@ class PlayObjectFactory;
   * This has some side effects that developers need to be aware of:
   * Until the real Arts::PlayObject got created,
   * - the capabilities() method returns "zero" capabilities,
-  * - description() and mediaName() will return a null QString,
+  * - description() and mediaName() will return a null TQString,
   * - currentTime() and overallTime() will return "zero",
   * - despite the fact that isNull() returns "false", object().isNull()
   *   will return "true". If you need to directly access methods of the
@@ -239,7 +239,7 @@ public:
 	/**
 	 * Reimplemented (Arts::PlayObject Wrapper)
 	 */
-	QString description();
+	TQString description();
 	
 	/**
 	 * Reimplemented (Arts::PlayObject Wrapper)
@@ -260,7 +260,7 @@ public:
 	/**
 	 * Reimplemented (Arts::PlayObject Wrapper)
 	 */
-	QString mediaName();
+	TQString mediaName();
 	
 	/**
 	 * returns the internal state of the PlayObject. The state can be
@@ -293,7 +293,7 @@ private:
 
 	/* private constructors, to prevent instantiation and copying */
 	PlayObject();
-	PlayObject( const PlayObject& ) : QObject() {};
+	PlayObject( const PlayObject& ) : TQObject() {};
 	PlayObject(Arts::PlayObject playobject, bool isStream);
 	PlayObject( Arts::SoundServerV2 server, const KURL& url, bool isStream, bool createBUS );
 

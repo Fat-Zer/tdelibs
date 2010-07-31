@@ -2,13 +2,13 @@
 #define TESTUTILS_H
 
 #include <kabc/addressee.h>
-#include <qstring.h>
+#include <tqstring.h>
 
 KABC::Addressee vcard1();
 KABC::Addressee vcard2();
 KABC::Addressee vcard3();
 KABC::Addressee::List vCardsAsAddresseeList();
-QString   vCardAsText( const QString& location );
-QString   vCardsAsText();
+TQString   vCardAsText( const TQString& location );
+TQString   vCardsAsText();
 
 #endif

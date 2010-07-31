@@ -31,7 +31,7 @@
 
 #include <klocale.h>
 
-KMLprUiManager::KMLprUiManager(QObject *parent, const char *name, const QStringList & /*args*/)
+KMLprUiManager::KMLprUiManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMUiManager(parent,name)
 {
 }

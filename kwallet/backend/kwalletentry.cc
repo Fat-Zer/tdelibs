@@ -31,25 +31,25 @@ Entry::~Entry() {
 	_value.fill(0);
 }
 
-const QString& Entry::key() const {
+const TQString& Entry::key() const {
 	return _key;
 }
 
 
-const QByteArray& Entry::value() const {
+const TQByteArray& Entry::value() const {
 	return _value;
 }
 
 
-QString Entry::password() const {
-QString x;
-	QDataStream qds(_value, IO_ReadOnly);
+TQString Entry::password() const {
+TQString x;
+	TQDataStream qds(_value, IO_ReadOnly);
 	qds >> x;
 	return x;
 }
 
 
-void Entry::setValue(const QByteArray& val) {
+void Entry::setValue(const TQByteArray& val) {
 	// do a direct copy from one into the other without
 	// temporary variables
 	_value.fill(0);
@@ -57,14 +57,14 @@ void Entry::setValue(const QByteArray& val) {
 }
 
 
-void Entry::setValue(const QString& val) {
+void Entry::setValue(const TQString& val) {
 	_value.fill(0);
-	QDataStream qds(_value, IO_WriteOnly);
+	TQDataStream qds(_value, IO_WriteOnly);
 	qds << val;
 }
 
 
-void Entry::setKey(const QString& key) {
+void Entry::setKey(const TQString& key) {
 	_key = key;
 }
 

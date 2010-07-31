@@ -20,25 +20,25 @@
 #include "posterpreview.h"
 
 #include <kprocess.h>
-#include <qpainter.h>
-#include <qsimplerichtext.h>
-#include <qtimer.h>
-#include <qpixmap.h>
+#include <tqpainter.h>
+#include <tqsimplerichtext.h>
+#include <tqtimer.h>
+#include <tqpixmap.h>
 #include <kprinter.h>
 #include <klocale.h>
 #include <kcursor.h>
 #include <kglobalsettings.h>
 
-PosterPreview::PosterPreview( QWidget *parent, const char *name )
-	: QFrame( parent, name )
+PosterPreview::PosterPreview( TQWidget *parent, const char *name )
+	: TQFrame( parent, name )
 {
 	m_postersize = m_mediasize = "A4";
 	m_cutmargin = 5;
 	init();
 }
 
-PosterPreview::PosterPreview( const QString& postersize, const QString& mediasize, QWidget *parent, const char *name )
-	: QFrame( parent, name )
+PosterPreview::PosterPreview( const TQString& postersize, const TQString& mediasize, TQWidget *parent, const char *name )
+	: TQFrame( parent, name )
 {
 	m_postersize = postersize;
 	m_mediasize = mediasize;
@@ -54,8 +54,8 @@ PosterPreview::~PosterPreview()
 void PosterPreview::init()
 {
 	m_process = new KProcess;
-	connect( m_process, SIGNAL( receivedStderr( KProcess*, char*, int ) ), SLOT( slotProcessStderr( KProcess*, char*, int ) ) );
-	connect( m_process, SIGNAL( processExited( KProcess* ) ), SLOT( slotProcessExited( KProcess* ) ) );
+	connect( m_process, TQT_SIGNAL( receivedStderr( KProcess*, char*, int ) ), TQT_SLOT( slotProcessStderr( KProcess*, char*, int ) ) );
+	connect( m_process, TQT_SIGNAL( processExited( KProcess* ) ), TQT_SLOT( slotProcessExited( KProcess* ) ) );
 
 	m_cols = m_rows = m_pw = m_ph = m_mw = m_mh = 0;
 	m_dirty = false;
@@ -83,7 +83,7 @@ void PosterPreview::setDirty()
 	if ( !m_dirty )
 	{
 		m_dirty = true;
-		QTimer::singleShot( 1, this, SLOT( updatePoster() ) );
+		TQTimer::singleShot( 1, this, TQT_SLOT( updatePoster() ) );
 	}
 }
 
@@ -92,7 +92,7 @@ void PosterPreview::updatePoster()
 	m_buffer = "";
 	m_process->clearArguments();
 	*m_process << "poster" << "-F" << "-m" + m_mediasize << "-p" + m_postersize
-		<< "-c" + QString::number( m_cutmargin ) + "%";
+		<< "-c" + TQString::number( m_cutmargin ) + "%";
 	if ( !m_process->start( KProcess::NotifyOnExit, KProcess::Stderr ) )
 	{
 		m_rows = m_cols = 0;
@@ -101,10 +101,10 @@ void PosterPreview::updatePoster()
 	}
 }
 
-void PosterPreview::drawContents( QPainter *painter )
+void PosterPreview::drawContents( TQPainter *painter )
 {
-	QPixmap pix( width(), height() );
-	QPainter *p = new QPainter( &pix );
+	TQPixmap pix( width(), height() );
+	TQPainter *p = new TQPainter( &pix );
 
 	p->fillRect( 0, 0, width(), height(), colorGroup().background() );
 
@@ -112,16 +112,16 @@ void PosterPreview::drawContents( QPainter *painter )
 	{
 		if ( m_rows <= 0 || m_cols <= 0 || m_pw <= 0 || m_ph <= 0 )
 		{
-			QString txt = i18n( "Poster preview not available. Either the <b>poster</b> "
+			TQString txt = i18n( "Poster preview not available. Either the <b>poster</b> "
 				          "executable is not properly installed, or you don't have "
 						  "the required version; available at http://printing.kde.org/downloads/." );
-			QSimpleRichText richtext( ( m_buffer.isEmpty() ? txt : m_buffer.prepend( "<pre>" ).append( "</pre>" ) ), p->font() );
+			TQSimpleRichText richtext( ( m_buffer.isEmpty() ? txt : m_buffer.prepend( "<pre>" ).append( "</pre>" ) ), p->font() );
 			richtext.adjustSize();
 			int x = ( width()-richtext.widthUsed() )/2, y = ( height()-richtext.height() )/2;
 			x = QMAX( x, 0 );
 			y = QMAX( y, 0 );
-			richtext.draw( p, x, y, QRect( x, y, richtext.widthUsed(), richtext.height() ), colorGroup() );
-			m_boundingrect = QRect();
+			richtext.draw( p, x, y, TQRect( x, y, richtext.widthUsed(), richtext.height() ), colorGroup() );
+			m_boundingrect = TQRect();
 		}
 		else
 		{
@@ -131,7 +131,7 @@ void PosterPreview::drawContents( QPainter *painter )
 			p->scale( scale, -scale );
 			int x = ( int )( width()/scale-totalx )/2, y = ( int )( height()/scale-totaly )/2;
 			p->translate( x, y );
-			m_boundingrect = p->xForm( QRect( 0, 0, totalx, totaly ) );
+			m_boundingrect = p->xForm( TQRect( 0, 0, totalx, totaly ) );
 
 			x = y = 0;
 			int px = m_posterbb.x(), py = m_posterbb.y(), pw = m_posterbb.width(), ph = m_posterbb.height();
@@ -165,7 +165,7 @@ void PosterPreview::drawContents( QPainter *painter )
 	painter->drawPixmap( 0, 0, pix );
 }
 
-void PosterPreview::mouseMoveEvent( QMouseEvent *e )
+void PosterPreview::mouseMoveEvent( TQMouseEvent *e )
 {
 	if ( m_boundingrect.isValid() )
 	{
@@ -176,7 +176,7 @@ void PosterPreview::mouseMoveEvent( QMouseEvent *e )
 	}
 }
 
-void PosterPreview::mousePressEvent( QMouseEvent *e )
+void PosterPreview::mousePressEvent( TQMouseEvent *e )
 {
 	if ( e->button() == Qt::LeftButton && m_boundingrect.isValid() )
 	{
@@ -208,7 +208,7 @@ void PosterPreview::mousePressEvent( QMouseEvent *e )
 
 void PosterPreview::slotProcessStderr( KProcess*, char *buf, int len )
 {
-	m_buffer.append( QCString( buf, len ) );
+	m_buffer.append( TQCString( buf, len ) );
 }
 
 void PosterPreview::slotProcessExited( KProcess* )
@@ -227,7 +227,7 @@ void PosterPreview::setPosterSize( int s )
 	setPosterSize( pageSizeToPageName( KPrinter::PageSize( s ) ) );
 }
 
-void PosterPreview::setPosterSize( const QString& s )
+void PosterPreview::setPosterSize( const TQString& s )
 {
 	if ( m_postersize != s )
 	{
@@ -243,7 +243,7 @@ void PosterPreview::setMediaSize( int s )
 	setMediaSize( pageSizeToPageName( ( KPrinter::PageSize )s ) );
 }
 
-void PosterPreview::setMediaSize( const QString& s )
+void PosterPreview::setMediaSize( const TQString& s )
 {
 	if ( m_mediasize != s )
 	{
@@ -260,11 +260,11 @@ void PosterPreview::setCutMargin( int value )
 	setDirty();
 }
 
-void PosterPreview::setSelectedPages( const QString& s )
+void PosterPreview::setSelectedPages( const TQString& s )
 {
-	QStringList l = QStringList::split( ",", s, false );
+	TQStringList l = TQStringList::split( ",", s, false );
 	m_selectedpages.clear();
-	for ( QStringList::ConstIterator it=l.begin(); it!=l.end(); ++it )
+	for ( TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it )
 	{
 		int p;
 		if ( ( p = ( *it ).find( '-' ) ) == -1 )
@@ -281,11 +281,11 @@ void PosterPreview::setSelectedPages( const QString& s )
 
 void PosterPreview::emitSelectedPages()
 {
-	QString s;
+	TQString s;
 	if ( m_selectedpages.count() > 0 )
 	{
-		for ( QValueList<int>::ConstIterator it=m_selectedpages.begin(); it!=m_selectedpages.end(); ++it )
-			s.append( QString::number( *it ) + "," );
+		for ( TQValueList<int>::ConstIterator it=m_selectedpages.begin(); it!=m_selectedpages.end(); ++it )
+			s.append( TQString::number( *it ) + "," );
 		s.truncate( s.length()-1 );
 	}
 	emit selectionChanged( s );

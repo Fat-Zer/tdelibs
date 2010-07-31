@@ -41,18 +41,18 @@
 #include <kglobalsettings.h>
 #include <kurldrag.h>
 
-#include <qstyle.h>
-#include <qdragobject.h>
-#include <qpopupmenu.h>
-#include <qdropsite.h>
-#include <qpainter.h>
-#include <qlayout.h>
-#include <qclipboard.h>
-#include <qpixmap.h>
-#include <qvbox.h>
+#include <tqstyle.h>
+#include <tqdragobject.h>
+#include <tqpopupmenu.h>
+#include <tqdropsite.h>
+#include <tqpainter.h>
+#include <tqlayout.h>
+#include <tqclipboard.h>
+#include <tqpixmap.h>
+#include <tqvbox.h>
 
 KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
-  : QWidget (view, "", Qt::WStaticContents | Qt::WRepaintNoErase | Qt::WResizeNoErase )
+  : TQWidget (view, "", Qt::WStaticContents | Qt::WRepaintNoErase | Qt::WResizeNoErase )
   , editSessionNumber (0)
   , editIsRunning (false)
   , m_view (view)
@@ -94,18 +94,18 @@ KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
   //
   // scrollbar for lines
   //
-  m_lineScroll = new KateScrollBar(QScrollBar::Vertical, this);
+  m_lineScroll = new KateScrollBar(TQScrollBar::Vertical, this);
   m_lineScroll->show();
   m_lineScroll->setTracking (true);
 
-  m_lineLayout = new QVBoxLayout();
-  m_colLayout = new QHBoxLayout();
+  m_lineLayout = new TQVBoxLayout();
+  m_colLayout = new TQHBoxLayout();
 
   m_colLayout->addWidget(m_lineScroll);
   m_lineLayout->addLayout(m_colLayout);
 
   // bottom corner box
-  m_dummy = new QWidget(m_view);
+  m_dummy = new TQWidget(m_view);
   m_dummy->setFixedHeight(style().scrollBarExtent().width());
 
   if (m_view->dynWordWrap())
@@ -116,14 +116,14 @@ KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
   m_lineLayout->addWidget(m_dummy);
 
   // Hijack the line scroller's controls, so we can scroll nicely for word-wrap
-  connect(m_lineScroll, SIGNAL(prevPage()), SLOT(scrollPrevPage()));
-  connect(m_lineScroll, SIGNAL(nextPage()), SLOT(scrollNextPage()));
+  connect(m_lineScroll, TQT_SIGNAL(prevPage()), TQT_SLOT(scrollPrevPage()));
+  connect(m_lineScroll, TQT_SIGNAL(nextPage()), TQT_SLOT(scrollNextPage()));
 
-  connect(m_lineScroll, SIGNAL(prevLine()), SLOT(scrollPrevLine()));
-  connect(m_lineScroll, SIGNAL(nextLine()), SLOT(scrollNextLine()));
+  connect(m_lineScroll, TQT_SIGNAL(prevLine()), TQT_SLOT(scrollPrevLine()));
+  connect(m_lineScroll, TQT_SIGNAL(nextLine()), TQT_SLOT(scrollNextLine()));
 
-  connect(m_lineScroll, SIGNAL(sliderMoved(int)), SLOT(scrollLines(int)));
-  connect(m_lineScroll, SIGNAL(sliderMMBMoved(int)), SLOT(scrollLines(int)));
+  connect(m_lineScroll, TQT_SIGNAL(sliderMoved(int)), TQT_SLOT(scrollLines(int)));
+  connect(m_lineScroll, TQT_SIGNAL(sliderMMBMoved(int)), TQT_SLOT(scrollLines(int)));
 
   // catch wheel events, completing the hijack
   m_lineScroll->installEventFilter(this);
@@ -131,7 +131,7 @@ KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
   //
   // scrollbar for columns
   //
-  m_columnScroll = new QScrollBar(QScrollBar::Horizontal,m_view);
+  m_columnScroll = new TQScrollBar(TQScrollBar::Horizontal,m_view);
 
   // hide the column scrollbar in the dynamic word wrap mode
   if (m_view->dynWordWrap())
@@ -142,8 +142,8 @@ KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
   m_columnScroll->setTracking(true);
   m_startX = 0;
 
-  connect( m_columnScroll, SIGNAL( valueChanged (int) ),
-           this, SLOT( scrollColumns (int) ) );
+  connect( m_columnScroll, TQT_SIGNAL( valueChanged (int) ),
+           this, TQT_SLOT( scrollColumns (int) ) );
 
   //
   // iconborder ;)
@@ -151,13 +151,13 @@ KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
   leftBorder = new KateIconBorder( this, m_view );
   leftBorder->show ();
 
-  connect( leftBorder, SIGNAL(toggleRegionVisibility(unsigned int)),
-           m_doc->foldingTree(), SLOT(toggleRegionVisibility(unsigned int)));
+  connect( leftBorder, TQT_SIGNAL(toggleRegionVisibility(unsigned int)),
+           m_doc->foldingTree(), TQT_SLOT(toggleRegionVisibility(unsigned int)));
 
-  connect( doc->foldingTree(), SIGNAL(regionVisibilityChangedAt(unsigned int)),
-           this, SLOT(slotRegionVisibilityChangedAt(unsigned int)));
-  connect( doc, SIGNAL(codeFoldingUpdated()),
-           this, SLOT(slotCodeFoldingChanged()) );
+  connect( doc->foldingTree(), TQT_SIGNAL(regionVisibilityChangedAt(unsigned int)),
+           this, TQT_SLOT(slotRegionVisibilityChangedAt(unsigned int)));
+  connect( doc, TQT_SIGNAL(codeFoldingUpdated()),
+           this, TQT_SLOT(slotCodeFoldingChanged()) );
 
   displayCursor.setPos(0, 0);
   cursor.setPos(0, 0);
@@ -182,28 +182,28 @@ KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
   dragInfo.state = diNone;
 
   // timers
-  connect( &m_dragScrollTimer, SIGNAL( timeout() ),
-             this, SLOT( doDragScroll() ) );
+  connect( &m_dragScrollTimer, TQT_SIGNAL( timeout() ),
+             this, TQT_SLOT( doDragScroll() ) );
 
-  connect( &m_scrollTimer, SIGNAL( timeout() ),
-             this, SLOT( scrollTimeout() ) );
+  connect( &m_scrollTimer, TQT_SIGNAL( timeout() ),
+             this, TQT_SLOT( scrollTimeout() ) );
 
-  connect( &m_cursorTimer, SIGNAL( timeout() ),
-             this, SLOT( cursorTimeout() ) );
+  connect( &m_cursorTimer, TQT_SIGNAL( timeout() ),
+             this, TQT_SLOT( cursorTimeout() ) );
 
-  connect( &m_textHintTimer, SIGNAL( timeout() ),
-             this, SLOT( textHintTimeout() ) );
+  connect( &m_textHintTimer, TQT_SIGNAL( timeout() ),
+             this, TQT_SLOT( textHintTimeout() ) );
 
   // selection changed to set anchor
-  connect( m_view, SIGNAL( selectionChanged() ),
-             this, SLOT( viewSelectionChanged() ) );
+  connect( m_view, TQT_SIGNAL( selectionChanged() ),
+             this, TQT_SLOT( viewSelectionChanged() ) );
 
 
 // this is a work arround for RTL desktops
 // should be changed in kde 3.3
 // BTW: this comment has been "ported" from 3.1.X tree
 //      any hacker with BIDI knowlege is welcomed to fix kate problems :)
-  if (QApplication::reverseLayout()){
+  if (TQApplication::reverseLayout()){
       m_view->m_grid->addMultiCellWidget(leftBorder,     0, 1, 2, 2);
       m_view->m_grid->addMultiCellWidget(m_columnScroll, 1, 1, 0, 1);
       m_view->m_grid->addMultiCellLayout(m_lineLayout, 0, 0, 0, 0);
@@ -722,7 +722,7 @@ void KateViewInternal::paintText (int x, int y, int width, int height, bool pain
   uint endz = startz + 1 + (height / h);
   uint lineRangesSize = lineRanges.size();
 
-  static QPixmap drawBuffer;
+  static TQPixmap drawBuffer;
 
   if (drawBuffer.width() < KateViewInternal::width() || drawBuffer.height() < (int)h)
     drawBuffer.resize(KateViewInternal::width(), (int)h);
@@ -730,8 +730,8 @@ void KateViewInternal::paintText (int x, int y, int width, int height, bool pain
   if (drawBuffer.isNull())
     return;
 
-  QPainter paint(this);
-  QPainter paintDrawBuffer(&drawBuffer);
+  TQPainter paint(this);
+  TQPainter paintDrawBuffer(&drawBuffer);
 
   // TODO put in the proper places
   m_view->renderer()->setCaretStyle(m_view->isOverwriteMode() ? KateRenderer::Replace : KateRenderer::Insert);
@@ -839,11 +839,11 @@ void KateViewInternal::slotRegionBeginEndAddedRemoved(unsigned int)
   leftBorder->update();
 }
 
-void KateViewInternal::showEvent ( QShowEvent *e )
+void KateViewInternal::showEvent ( TQShowEvent *e )
 {
   updateView ();
 
-  QWidget::showEvent (e);
+  TQWidget::showEvent (e);
 }
 
 uint KateViewInternal::linesDisplayed() const
@@ -854,17 +854,17 @@ uint KateViewInternal::linesDisplayed() const
   return (h - (h % fh)) / fh;
 }
 
-QPoint KateViewInternal::cursorCoordinates()
+TQPoint KateViewInternal::cursorCoordinates()
 {
   int viewLine = displayViewLine(displayCursor, true);
 
   if (viewLine == -1)
-    return QPoint(-1, -1);
+    return TQPoint(-1, -1);
 
   uint y = viewLine * m_view->renderer()->fontHeight();
   uint x = cXPos - m_startX - lineRanges[viewLine].startX + leftBorder->width() + lineRanges[viewLine].xOffset();
 
-  return QPoint(x, y);
+  return TQPoint(x, y);
 }
 
 void KateViewInternal::updateMicroFocusHint()
@@ -1216,7 +1216,7 @@ void KateViewInternal::moveEdge( Bias bias, bool sel )
 void KateViewInternal::home( bool sel )
 {
   if (m_view->m_codeCompletion->codeCompletionVisible()) {
-    QKeyEvent e(QEvent::KeyPress, Qt::Key_Home, 0, 0);
+    TQKeyEvent e(TQEvent::KeyPress, Qt::Key_Home, 0, 0);
     m_view->m_codeCompletion->handleKey(&e);
     return;
   }
@@ -1257,7 +1257,7 @@ void KateViewInternal::home( bool sel )
 void KateViewInternal::end( bool sel )
 {
   if (m_view->m_codeCompletion->codeCompletionVisible()) {
-    QKeyEvent e(QEvent::KeyPress, Qt::Key_End, 0, 0);
+    TQKeyEvent e(TQEvent::KeyPress, Qt::Key_End, 0, 0);
     m_view->m_codeCompletion->handleKey(&e);
     return;
   }
@@ -1652,13 +1652,13 @@ int KateViewInternal::lineMaxCursorX(const KateLineRange& range)
   int maxX = range.endX;
 
   if (maxX && range.wrap) {
-    QChar lastCharInLine = textLine(range.line)->getChar(range.endCol - 1);
+    TQChar lastCharInLine = textLine(range.line)->getChar(range.endCol - 1);
 
-    if (lastCharInLine == QChar('\t')) {
+    if (lastCharInLine == TQChar('\t')) {
       int lineSize = 0;
       int lastTabSize = 0;
       for(int i = range.startCol; i < range.endCol; i++) {
-        if (textLine(range.line)->getChar(i) == QChar('\t')) {
+        if (textLine(range.line)->getChar(i) == TQChar('\t')) {
           lastTabSize = m_view->tabWidth() - (lineSize % m_view->tabWidth());
           lineSize += lastTabSize;
         } else {
@@ -1687,7 +1687,7 @@ int KateViewInternal::lineMaxCol(const KateLineRange& range)
 void KateViewInternal::cursorUp(bool sel)
 {
   if (m_view->m_codeCompletion->codeCompletionVisible()) {
-    QKeyEvent e(QEvent::KeyPress, Qt::Key_Up, 0, 0);
+    TQKeyEvent e(TQEvent::KeyPress, Qt::Key_Up, 0, 0);
     m_view->m_codeCompletion->handleKey(&e);
     return;
   }
@@ -1754,7 +1754,7 @@ void KateViewInternal::cursorUp(bool sel)
 void KateViewInternal::cursorDown(bool sel)
 {
   if (m_view->m_codeCompletion->codeCompletionVisible()) {
-    QKeyEvent e(QEvent::KeyPress, Qt::Key_Down, 0, 0);
+    TQKeyEvent e(TQEvent::KeyPress, Qt::Key_Down, 0, 0);
     m_view->m_codeCompletion->handleKey(&e);
     return;
   }
@@ -1889,7 +1889,7 @@ void KateViewInternal::setAutoCenterLines(int viewLines, bool updateView)
 void KateViewInternal::pageUp( bool sel )
 {
   if (m_view->m_codeCompletion->codeCompletionVisible()) {
-    QKeyEvent e(QEvent::KeyPress, Qt::Key_PageUp, 0, 0);
+    TQKeyEvent e(TQEvent::KeyPress, Qt::Key_PageUp, 0, 0);
     m_view->m_codeCompletion->handleKey(&e);
     return;
   }
@@ -1938,7 +1938,7 @@ void KateViewInternal::pageUp( bool sel )
 void KateViewInternal::pageDown( bool sel )
 {
   if (m_view->m_codeCompletion->codeCompletionVisible()) {
-    QKeyEvent e(QEvent::KeyPress, Qt::Key_PageDown, 0, 0);
+    TQKeyEvent e(TQEvent::KeyPress, Qt::Key_PageDown, 0, 0);
     m_view->m_codeCompletion->handleKey(&e);
     return;
   }
@@ -2025,7 +2025,7 @@ void KateViewInternal::bottom( bool sel )
 void KateViewInternal::top_home( bool sel )
 {
   if (m_view->m_codeCompletion->codeCompletionVisible()) {
-    QKeyEvent e(QEvent::KeyPress, Qt::Key_Home, 0, 0);
+    TQKeyEvent e(TQEvent::KeyPress, Qt::Key_Home, 0, 0);
     m_view->m_codeCompletion->handleKey(&e);
     return;
   }
@@ -2037,7 +2037,7 @@ void KateViewInternal::top_home( bool sel )
 void KateViewInternal::bottom_end( bool sel )
 {
   if (m_view->m_codeCompletion->codeCompletionVisible()) {
-    QKeyEvent e(QEvent::KeyPress, Qt::Key_End, 0, 0);
+    TQKeyEvent e(TQEvent::KeyPress, Qt::Key_End, 0, 0);
     m_view->m_codeCompletion->handleKey(&e);
     return;
   }
@@ -2389,7 +2389,7 @@ void KateViewInternal::paintCursor()
 }
 
 // Point in content coordinates
-void KateViewInternal::placeCursor( const QPoint& p, bool keepSelection, bool updateSelection )
+void KateViewInternal::placeCursor( const TQPoint& p, bool keepSelection, bool updateSelection )
 {
   KateLineRange thisRange = yToKateLineRange(p.y());
 
@@ -2421,7 +2421,7 @@ void KateViewInternal::placeCursor( const QPoint& p, bool keepSelection, bool up
 }
 
 // Point in content coordinates
-bool KateViewInternal::isTargetSelected( const QPoint& p )
+bool KateViewInternal::isTargetSelected( const TQPoint& p )
 {
   KateLineRange thisRange = yToKateLineRange(p.y());
 
@@ -2436,26 +2436,26 @@ bool KateViewInternal::isTargetSelected( const QPoint& p )
 
 //BEGIN EVENT HANDLING STUFF
 
-bool KateViewInternal::eventFilter( QObject *obj, QEvent *e )
+bool KateViewInternal::eventFilter( TQObject *obj, TQEvent *e )
 {
   if (obj == m_lineScroll)
   {
     // the second condition is to make sure a scroll on the vertical bar doesn't cause a horizontal scroll ;)
-    if (e->type() == QEvent::Wheel && m_lineScroll->minValue() != m_lineScroll->maxValue())
+    if (e->type() == TQEvent::Wheel && m_lineScroll->minValue() != m_lineScroll->maxValue())
     {
-      wheelEvent((QWheelEvent*)e);
+      wheelEvent((TQWheelEvent*)e);
       return true;
     }
 
     // continue processing
-    return QWidget::eventFilter( obj, e );
+    return TQWidget::eventFilter( obj, e );
   }
 
   switch( e->type() )
   {
-    case QEvent::KeyPress:
+    case TQEvent::KeyPress:
     {
-      QKeyEvent *k = (QKeyEvent *)e;
+      TQKeyEvent *k = (TQKeyEvent *)e;
 
       if (m_view->m_codeCompletion->codeCompletionVisible ())
       {
@@ -2478,11 +2478,11 @@ bool KateViewInternal::eventFilter( QObject *obj, QEvent *e )
 
     } break;
 
-    case QEvent::DragMove:
+    case TQEvent::DragMove:
     {
-      QPoint currentPoint = ((QDragMoveEvent*) e)->pos();
+      TQPoint currentPoint = ((TQDragMoveEvent*) e)->pos();
 
-      QRect doNotScrollRegion( scrollMargin, scrollMargin,
+      TQRect doNotScrollRegion( scrollMargin, scrollMargin,
                           width() - scrollMargin * 2,
                           height() - scrollMargin * 2 );
 
@@ -2490,18 +2490,18 @@ bool KateViewInternal::eventFilter( QObject *obj, QEvent *e )
       {
           startDragScroll();
           // Keep sending move events
-          ( (QDragMoveEvent*)e )->accept( QRect(0,0,0,0) );
+          ( (TQDragMoveEvent*)e )->accept( TQRect(0,0,0,0) );
       }
 
-      dragMoveEvent((QDragMoveEvent*)e);
+      dragMoveEvent((TQDragMoveEvent*)e);
     } break;
 
-    case QEvent::DragLeave:
+    case TQEvent::DragLeave:
       // happens only when pressing ESC while dragging
       stopDragScroll();
       break;
 
-    case QEvent::WindowBlocked:
+    case TQEvent::WindowBlocked:
       // next focus originates from an internal dialog:
       // don't show the modonhd prompt
       m_doc->m_isasking = -1;
@@ -2511,10 +2511,10 @@ bool KateViewInternal::eventFilter( QObject *obj, QEvent *e )
       break;
   }
 
-  return QWidget::eventFilter( obj, e );
+  return TQWidget::eventFilter( obj, e );
 }
 
-void KateViewInternal::keyPressEvent( QKeyEvent* e )
+void KateViewInternal::keyPressEvent( TQKeyEvent* e )
 {
   KKey key(e);
 
@@ -2597,7 +2597,7 @@ void KateViewInternal::keyPressEvent( QKeyEvent* e )
         if (m_view->hasSelection() || (m_doc->configFlags() & KateDocumentConfig::cfTabIndentsMode))
           m_doc->indent( m_view, cursor.line(), 1 );
         else if (m_doc->configFlags() & KateDocumentConfig::cfTabInsertsTab)
-          m_doc->typeChars ( m_view, QString ("\t") );
+          m_doc->typeChars ( m_view, TQString ("\t") );
         else
           m_doc->insertIndentChars ( m_view );
 
@@ -2635,7 +2635,7 @@ void KateViewInternal::keyPressEvent( QKeyEvent* e )
   e->ignore();
 }
 
-void KateViewInternal::keyReleaseEvent( QKeyEvent* e )
+void KateViewInternal::keyReleaseEvent( TQKeyEvent* e )
 {
   KKey key(e);
 
@@ -2649,9 +2649,9 @@ void KateViewInternal::keyReleaseEvent( QKeyEvent* e )
 
       if (m_selChangedByUser)
       {
-        QApplication::clipboard()->setSelectionMode( true );
+        TQApplication::clipboard()->setSelectionMode( true );
         m_view->copy();
-        QApplication::clipboard()->setSelectionMode( false );
+        TQApplication::clipboard()->setSelectionMode( false );
 
         m_selChangedByUser = false;
       }
@@ -2662,11 +2662,11 @@ void KateViewInternal::keyReleaseEvent( QKeyEvent* e )
   return;
 }
 
-void KateViewInternal::contextMenuEvent ( QContextMenuEvent * e )
+void KateViewInternal::contextMenuEvent ( TQContextMenuEvent * e )
 {
   // try to show popup menu
 
-  QPoint p = e->pos();
+  TQPoint p = e->pos();
 
   if ( m_view->m_doc->browserView() )
   {
@@ -2674,7 +2674,7 @@ void KateViewInternal::contextMenuEvent ( QContextMenuEvent * e )
     return;
   }
 
-  if ( e->reason() == QContextMenuEvent::Keyboard )
+  if ( e->reason() == TQContextMenuEvent::Keyboard )
   {
     makeVisible( cursor, 0 );
     p = cursorCoordinates();
@@ -2689,7 +2689,7 @@ void KateViewInternal::contextMenuEvent ( QContextMenuEvent * e )
   }
 }
 
-void KateViewInternal::mousePressEvent( QMouseEvent* e )
+void KateViewInternal::mousePressEvent( TQMouseEvent* e )
 {
   switch (e->button())
   {
@@ -2711,9 +2711,9 @@ void KateViewInternal::mousePressEvent( QMouseEvent* e )
             m_view->selectLine( cursor );
           }
 
-          QApplication::clipboard()->setSelectionMode( true );
+          TQApplication::clipboard()->setSelectionMode( true );
           m_view->copy();
-          QApplication::clipboard()->setSelectionMode( false );
+          TQApplication::clipboard()->setSelectionMode( false );
 
           // Keep the line at the select anchor selected during further
           // mouse selection
@@ -2816,7 +2816,7 @@ void KateViewInternal::mousePressEvent( QMouseEvent* e )
   }
 }
 
-void KateViewInternal::mouseDoubleClickEvent(QMouseEvent *e)
+void KateViewInternal::mouseDoubleClickEvent(TQMouseEvent *e)
 {
   switch (e->button())
   {
@@ -2889,9 +2889,9 @@ void KateViewInternal::mouseDoubleClickEvent(QMouseEvent *e)
       // Move cursor to end (or beginning) of selected word
       if (m_view->hasSelection())
       {
-        QApplication::clipboard()->setSelectionMode( true );
+        TQApplication::clipboard()->setSelectionMode( true );
         m_view->copy();
-        QApplication::clipboard()->setSelectionMode( false );
+        TQApplication::clipboard()->setSelectionMode( false );
 
         // Shift+DC before the "cached" word should move the cursor to the
         // beginning of the selection, not the end
@@ -2902,7 +2902,7 @@ void KateViewInternal::mouseDoubleClickEvent(QMouseEvent *e)
       }
 
       possibleTripleClick = true;
-      QTimer::singleShot ( QApplication::doubleClickInterval(), this, SLOT(tripleClickTimeout()) );
+      TQTimer::singleShot ( TQApplication::doubleClickInterval(), this, TQT_SLOT(tripleClickTimeout()) );
 
       scrollX = 0;
       scrollY = 0;
@@ -2923,7 +2923,7 @@ void KateViewInternal::tripleClickTimeout()
   possibleTripleClick = false;
 }
 
-void KateViewInternal::mouseReleaseEvent( QMouseEvent* e )
+void KateViewInternal::mouseReleaseEvent( TQMouseEvent* e )
 {
   switch (e->button())
   {
@@ -2933,9 +2933,9 @@ void KateViewInternal::mouseReleaseEvent( QMouseEvent* e )
 
       if (m_selChangedByUser)
       {
-        QApplication::clipboard()->setSelectionMode( true );
+        TQApplication::clipboard()->setSelectionMode( true );
         m_view->copy();
-        QApplication::clipboard()->setSelectionMode( false );
+        TQApplication::clipboard()->setSelectionMode( false );
         // Set cursor to edge of selection... which edge depends on what
         // "direction" the selection was made in
         if ( m_view->selectStart < selectAnchor )
@@ -2961,9 +2961,9 @@ void KateViewInternal::mouseReleaseEvent( QMouseEvent* e )
 
       if( m_doc->isReadWrite() )
       {
-        QApplication::clipboard()->setSelectionMode( true );
+        TQApplication::clipboard()->setSelectionMode( true );
         m_view->paste ();
-        QApplication::clipboard()->setSelectionMode( false );
+        TQApplication::clipboard()->setSelectionMode( false );
       }
 
       e->accept ();
@@ -2975,7 +2975,7 @@ void KateViewInternal::mouseReleaseEvent( QMouseEvent* e )
   }
 }
 
-void KateViewInternal::mouseMoveEvent( QMouseEvent* e )
+void KateViewInternal::mouseMoveEvent( TQMouseEvent* e )
 {
   if( e->state() & LeftButton )
   {
@@ -2983,7 +2983,7 @@ void KateViewInternal::mouseMoveEvent( QMouseEvent* e )
     {
       // we had a mouse down, but haven't confirmed a drag yet
       // if the mouse has moved sufficiently, we will confirm
-      QPoint p( e->pos() - dragInfo.start );
+      TQPoint p( e->pos() - dragInfo.start );
 
       // we've left the drag square, we can start a real drag operation now
       if( p.manhattanLength() > KGlobalSettings::dndEventDelay() )
@@ -3023,7 +3023,7 @@ void KateViewInternal::mouseMoveEvent( QMouseEvent* e )
       scrollY = d;
     }
 
-    placeCursor( QPoint( mouseX, mouseY ), true );
+    placeCursor( TQPoint( mouseX, mouseY ), true );
 
   }
   else
@@ -3052,12 +3052,12 @@ void KateViewInternal::mouseMoveEvent( QMouseEvent* e )
   }
 }
 
-void KateViewInternal::paintEvent(QPaintEvent *e)
+void KateViewInternal::paintEvent(TQPaintEvent *e)
 {
   paintText(e->rect().x(), e->rect().y(), e->rect().width(), e->rect().height());
 }
 
-void KateViewInternal::resizeEvent(QResizeEvent* e)
+void KateViewInternal::resizeEvent(TQResizeEvent* e)
 {
   bool expandedHorizontally = width() > e->oldSize().width();
   bool expandedVertically = height() > e->oldSize().height();
@@ -3119,7 +3119,7 @@ void KateViewInternal::scrollTimeout ()
   if (scrollX || scrollY)
   {
     scrollLines (startPos().line() + (scrollY / (int)m_view->renderer()->fontHeight()));
-    placeCursor( QPoint( mouseX, mouseY ), true );
+    placeCursor( TQPoint( mouseX, mouseY ), true );
   }
 }
 
@@ -3145,14 +3145,14 @@ void KateViewInternal::textHintTimeout ()
   KateTextCursor c(realLine, 0);
   m_view->renderer()->textWidth( c, startX() + m_textHintMouseX, startCol);
 
-  QString tmp;
+  TQString tmp;
 
   emit m_view->needTextHint(c.line(), c.col(), tmp);
 
   if (!tmp.isEmpty()) kdDebug(13030)<<"Hint text: "<<tmp<<endl;
 }
 
-void KateViewInternal::focusInEvent (QFocusEvent *)
+void KateViewInternal::focusInEvent (TQFocusEvent *)
 {
   if (KApplication::cursorFlashTime() > 0)
     m_cursorTimer.start ( KApplication::cursorFlashTime() / 2 );
@@ -3167,7 +3167,7 @@ void KateViewInternal::focusInEvent (QFocusEvent *)
   emit m_view->gotFocus( m_view );
 }
 
-void KateViewInternal::focusOutEvent (QFocusEvent *)
+void KateViewInternal::focusOutEvent (TQFocusEvent *)
 {
   if( m_view->renderer() && ! m_view->m_codeCompletion->codeCompletionVisible() )
   {
@@ -3184,17 +3184,17 @@ void KateViewInternal::focusOutEvent (QFocusEvent *)
 void KateViewInternal::doDrag()
 {
   dragInfo.state = diDragging;
-  dragInfo.dragObject = new QTextDrag(m_view->selection(), this);
+  dragInfo.dragObject = new TQTextDrag(m_view->selection(), this);
   dragInfo.dragObject->drag();
 }
 
-void KateViewInternal::dragEnterEvent( QDragEnterEvent* event )
+void KateViewInternal::dragEnterEvent( TQDragEnterEvent* event )
 {
-  event->accept( (QTextDrag::canDecode(event) && m_doc->isReadWrite()) ||
+  event->accept( (TQTextDrag::canDecode(event) && m_doc->isReadWrite()) ||
                   KURLDrag::canDecode(event) );
 }
 
-void KateViewInternal::dragMoveEvent( QDragMoveEvent* event )
+void KateViewInternal::dragMoveEvent( TQDragMoveEvent* event )
 {
   // track the cursor to the current drop location
   placeCursor( event->pos(), true, false );
@@ -3204,17 +3204,17 @@ void KateViewInternal::dragMoveEvent( QDragMoveEvent* event )
   event->acceptAction();
 }
 
-void KateViewInternal::dropEvent( QDropEvent* event )
+void KateViewInternal::dropEvent( TQDropEvent* event )
 {
   if ( KURLDrag::canDecode(event) ) {
 
       emit dropEventPass(event);
 
-  } else if ( QTextDrag::canDecode(event) && m_doc->isReadWrite() ) {
+  } else if ( TQTextDrag::canDecode(event) && m_doc->isReadWrite() ) {
 
-    QString text;
+    TQString text;
 
-    if (!QTextDrag::decode(event, text))
+    if (!TQTextDrag::decode(event, text))
       return;
 
     // is the source our own document?
@@ -3235,7 +3235,7 @@ void KateViewInternal::dropEvent( QDropEvent* event )
     m_doc->editStart ();
 
     // on move: remove selected text; on copy: duplicate text
-    if ( event->action() != QDropEvent::Copy )
+    if ( event->action() != TQDropEvent::Copy )
       m_view->removeSelectedText();
 
     m_doc->insertText( cursor.line(), cursor.col(), text );
@@ -3261,7 +3261,7 @@ void KateViewInternal::clear()
   displayCursor.setPos(0, 0);
 }
 
-void KateViewInternal::wheelEvent(QWheelEvent* e)
+void KateViewInternal::wheelEvent(TQWheelEvent* e)
 {
   if (m_lineScroll->minValue() != m_lineScroll->maxValue() && e->orientation() != Qt::Horizontal) {
     // React to this as a vertical event
@@ -3271,15 +3271,15 @@ void KateViewInternal::wheelEvent(QWheelEvent* e)
       else
         scrollNextPage();
     } else {
-      scrollViewLines(-((e->delta() / 120) * QApplication::wheelScrollLines()));
+      scrollViewLines(-((e->delta() / 120) * TQApplication::wheelScrollLines()));
       // maybe a menu was opened or a bubbled window title is on us -> we shall erase it
       update();
       leftBorder->update();
     }
 
   } else if (columnScrollingPossible()) {
-    QWheelEvent copy = *e;
-    QApplication::sendEvent(m_columnScroll, &copy);
+    TQWheelEvent copy = *e;
+    TQApplication::sendEvent(m_columnScroll, &copy);
 
   } else {
     e->ignore();
@@ -3301,7 +3301,7 @@ void KateViewInternal::stopDragScroll()
 
 void KateViewInternal::doDragScroll()
 {
-  QPoint p = this->mapFromGlobal( QCursor::pos() );
+  TQPoint p = this->mapFromGlobal( TQCursor::pos() );
 
   int dx = 0, dy = 0;
   if ( p.y() < scrollMargin ) {
@@ -3411,7 +3411,7 @@ void KateViewInternal::viewSelectionChanged ()
 }
 
 //BEGIN IM INPUT STUFF
-void KateViewInternal::imStartEvent( QIMEvent *e )
+void KateViewInternal::imStartEvent( TQIMEvent *e )
 {
   if ( m_doc->m_bReadOnly ) {
     e->ignore();
@@ -3429,7 +3429,7 @@ void KateViewInternal::imStartEvent( QIMEvent *e )
   m_view->setIMSelectionValue( m_imPreeditStartLine, m_imPreeditStart, 0, 0, 0, true );
 }
 
-void KateViewInternal::imComposeEvent( QIMEvent *e )
+void KateViewInternal::imComposeEvent( TQIMEvent *e )
 {
   if ( m_doc->m_bReadOnly ) {
     e->ignore();
@@ -3462,7 +3462,7 @@ void KateViewInternal::imComposeEvent( QIMEvent *e )
   updateView( true );
 }
 
-void KateViewInternal::imEndEvent( QIMEvent *e )
+void KateViewInternal::imEndEvent( TQIMEvent *e )
 {
   if ( m_doc->m_bReadOnly ) {
     e->ignore();

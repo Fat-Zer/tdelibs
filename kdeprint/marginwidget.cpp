@@ -22,19 +22,19 @@
 #include "marginvaluewidget.h"
 #include "kprinter.h"
 
-#include <qcombobox.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qwhatsthis.h>
+#include <tqcombobox.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqwhatsthis.h>
 #include <klocale.h>
 #include <kglobal.h>
 
-MarginWidget::MarginWidget(QWidget *parent, const char* name, bool allowMetricUnit)
-: QWidget(parent, name), m_default(4, 0), m_pagesize( 2 )
+MarginWidget::MarginWidget(TQWidget *parent, const char* name, bool allowMetricUnit)
+: TQWidget(parent, name), m_default(4, 0), m_pagesize( 2 )
 {
 	//WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThisTopMarginWidget = i18n( " <qt> "
+	TQString whatsThisTopMarginWidget = i18n( " <qt> "
 			" <p><b>Top Margin</b></p>. "
 			" <p>This spinbox/text edit field lets you control the top margin of your printout if the printing "
 			" application does not define its margins internally. </p> "
@@ -54,7 +54,7 @@ MarginWidget::MarginWidget(QWidget *parent, const char* name, bool allowMetricUn
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisBottomMarginWidget = i18n( " <qt> "
+	TQString whatsThisBottomMarginWidget = i18n( " <qt> "
 			" <p><b>Bottom Margin</b></p>. "
 			" <p>This spinbox/text edit field lets you control the bottom margin of your printout if the printing "
 			" application does not define its margins internally. </p> "
@@ -73,7 +73,7 @@ MarginWidget::MarginWidget(QWidget *parent, const char* name, bool allowMetricUn
 			" </pre>"
 			" </qt>" );
 
-	QString whatsThisLeftMarginWidget = i18n( " <qt> "
+	TQString whatsThisLeftMarginWidget = i18n( " <qt> "
 			" <p><b>Left Margin</b></p>. "
 			" <p>This spinbox/text edit field lets you control the left margin of your printout if the printing "
 			" application does not define its margins internally. </p> "
@@ -92,7 +92,7 @@ MarginWidget::MarginWidget(QWidget *parent, const char* name, bool allowMetricUn
 			" </pre>"
 			" </qt>" );
 
-	QString whatsThisRightMarginWidget = i18n( " <qt> "
+	TQString whatsThisRightMarginWidget = i18n( " <qt> "
 			" <p><b>Right Margin</b></p>. "
 			" <p>This spinbox/text edit field lets you control the right margin of your printout if the printing "
 			" application does not define its margins internally. </p> "
@@ -111,14 +111,14 @@ MarginWidget::MarginWidget(QWidget *parent, const char* name, bool allowMetricUn
 			" </pre>"
 			" </qt>" );
 
-	QString whatsThisMeasurementUnitMarginWidget = i18n( " <qt> "
+	TQString whatsThisMeasurementUnitMarginWidget = i18n( " <qt> "
 			" <p><b>Change Measurement Unit<b></p>. "
 			" <p>You can change the units of measurement for the page"
 			" margins here. Select from Millimeter, Centimeter, Inch or Pixels (1 pixel == 1/72 inch). "
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisCheckboxMarginWidget = i18n( " <qt> "
+	TQString whatsThisCheckboxMarginWidget = i18n( " <qt> "
 			" <p><b>Custom Margins Checkbox</b></p>. "
 			" <p>Enable this checkbox if you want to modify the margins of your printouts "
 			" <p>You can change margin settings in 4 ways: "
@@ -135,7 +135,7 @@ MarginWidget::MarginWidget(QWidget *parent, const char* name, bool allowMetricUn
 			" fully utilize the KDEPrint framework, such as OpenOffice.org. </p> "
 			" </qt>" );
 
-	QString whatsThisDragAndPreviewMarginWidget = i18n( " <qt> "
+	TQString whatsThisDragAndPreviewMarginWidget = i18n( " <qt> "
 			" <p><b>\"Drag-your-Margins\" </p>. "
 			" <p>Use your mouse to drag and set each margin on this little preview window. </p> "
 			" </qt>" );
@@ -145,22 +145,22 @@ MarginWidget::MarginWidget(QWidget *parent, const char* name, bool allowMetricUn
 	m_pagesize[ 1 ] = 842;
 	m_landscape = false;
 
-	m_custom = new QCheckBox(i18n("&Use custom margins"), this);
-	  QWhatsThis::add(m_custom, whatsThisCheckboxMarginWidget);
+	m_custom = new TQCheckBox(i18n("&Use custom margins"), this);
+	  TQWhatsThis::add(m_custom, whatsThisCheckboxMarginWidget);
 	m_top = new MarginValueWidget(0, 0.0, this);
-	  QWhatsThis::add(m_top, whatsThisTopMarginWidget);
+	  TQWhatsThis::add(m_top, whatsThisTopMarginWidget);
 	m_bottom = new MarginValueWidget(m_top, 0.0, this);
-	  QWhatsThis::add(m_bottom, whatsThisBottomMarginWidget);
+	  TQWhatsThis::add(m_bottom, whatsThisBottomMarginWidget);
 	m_left = new MarginValueWidget(m_bottom, 0.0, this);
-	  QWhatsThis::add(m_left, whatsThisLeftMarginWidget);
+	  TQWhatsThis::add(m_left, whatsThisLeftMarginWidget);
 	m_right = new MarginValueWidget(m_left, 0.0, this);
-	  QWhatsThis::add(m_right, whatsThisRightMarginWidget);
+	  TQWhatsThis::add(m_right, whatsThisRightMarginWidget);
 	m_top->setLabel(i18n("&Top:"), Qt::AlignLeft|Qt::AlignVCenter);
 	m_bottom->setLabel(i18n("&Bottom:"), Qt::AlignLeft|Qt::AlignVCenter);
 	m_left->setLabel(i18n("Le&ft:"), Qt::AlignLeft|Qt::AlignVCenter);
 	m_right->setLabel(i18n("&Right:"), Qt::AlignLeft|Qt::AlignVCenter);
-	m_units = new QComboBox(this);
-	  QWhatsThis::add(m_units, whatsThisMeasurementUnitMarginWidget);
+	m_units = new TQComboBox(this);
+	  TQWhatsThis::add(m_units, whatsThisMeasurementUnitMarginWidget);
 	m_units->insertItem(i18n("Pixels (1/72nd in)"));
 	if ( allowMetricUnit )
 	{
@@ -169,32 +169,32 @@ MarginWidget::MarginWidget(QWidget *parent, const char* name, bool allowMetricUn
 		m_units->insertItem( i18n( "Millimeters (mm)" ) );
 	}
 	m_units->setCurrentItem(0);
-	connect(m_units, SIGNAL(activated(int)), m_top, SLOT(setMode(int)));
-	connect(m_units, SIGNAL(activated(int)), m_bottom, SLOT(setMode(int)));
-	connect(m_units, SIGNAL(activated(int)), m_left, SLOT(setMode(int)));
-	connect(m_units, SIGNAL(activated(int)), m_right, SLOT(setMode(int)));
+	connect(m_units, TQT_SIGNAL(activated(int)), m_top, TQT_SLOT(setMode(int)));
+	connect(m_units, TQT_SIGNAL(activated(int)), m_bottom, TQT_SLOT(setMode(int)));
+	connect(m_units, TQT_SIGNAL(activated(int)), m_left, TQT_SLOT(setMode(int)));
+	connect(m_units, TQT_SIGNAL(activated(int)), m_right, TQT_SLOT(setMode(int)));
 	m_preview = new MarginPreview(this);
-	  QWhatsThis::add(m_preview, whatsThisDragAndPreviewMarginWidget);
+	  TQWhatsThis::add(m_preview, whatsThisDragAndPreviewMarginWidget);
 	m_preview->setMinimumSize(60, 80);
 	m_preview->setPageSize(m_pagesize[ 0 ], m_pagesize[ 1 ]);
-	connect(m_preview, SIGNAL(marginChanged(int,float)), SLOT(slotMarginPreviewChanged(int,float)));
-	connect(m_top, SIGNAL(marginChanged(float)), SLOT(slotMarginValueChanged()));
-	connect(m_bottom, SIGNAL(marginChanged(float)), SLOT(slotMarginValueChanged()));
-	connect(m_left, SIGNAL(marginChanged(float)), SLOT(slotMarginValueChanged()));
-	connect(m_right, SIGNAL(marginChanged(float)), SLOT(slotMarginValueChanged()));
+	connect(m_preview, TQT_SIGNAL(marginChanged(int,float)), TQT_SLOT(slotMarginPreviewChanged(int,float)));
+	connect(m_top, TQT_SIGNAL(marginChanged(float)), TQT_SLOT(slotMarginValueChanged()));
+	connect(m_bottom, TQT_SIGNAL(marginChanged(float)), TQT_SLOT(slotMarginValueChanged()));
+	connect(m_left, TQT_SIGNAL(marginChanged(float)), TQT_SLOT(slotMarginValueChanged()));
+	connect(m_right, TQT_SIGNAL(marginChanged(float)), TQT_SLOT(slotMarginValueChanged()));
 	slotMarginValueChanged();
-	connect(m_custom, SIGNAL(toggled(bool)), m_top, SLOT(setEnabled(bool)));
-	connect(m_custom, SIGNAL(toggled(bool)), m_left, SLOT(setEnabled(bool)));
-	//connect(m_custom, SIGNAL(toggled(bool)), m_units, SLOT(setEnabled(bool)));
-	connect(m_custom, SIGNAL(toggled(bool)), SLOT(slotCustomMarginsToggled(bool)));
-	connect(m_custom, SIGNAL(toggled(bool)), m_preview, SLOT(enableRubberBand(bool)));
+	connect(m_custom, TQT_SIGNAL(toggled(bool)), m_top, TQT_SLOT(setEnabled(bool)));
+	connect(m_custom, TQT_SIGNAL(toggled(bool)), m_left, TQT_SLOT(setEnabled(bool)));
+	//connect(m_custom, TQT_SIGNAL(toggled(bool)), m_units, TQT_SLOT(setEnabled(bool)));
+	connect(m_custom, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotCustomMarginsToggled(bool)));
+	connect(m_custom, TQT_SIGNAL(toggled(bool)), m_preview, TQT_SLOT(enableRubberBand(bool)));
 	m_top->setEnabled(false);
 	m_bottom->setEnabled(false);
 	m_left->setEnabled(false);
 	m_right->setEnabled(false);
 	//m_units->setEnabled(false);
 
-	QGridLayout	*l3 = new QGridLayout(this, 7, 2, 0, 10);
+	QGridLayout	*l3 = new TQGridLayout(this, 7, 2, 0, 10);
 	l3->addWidget(m_custom, 0, 0);
 	l3->addWidget(m_top, 1, 0);
 	l3->addWidget(m_bottom, 2, 0);
@@ -237,8 +237,8 @@ void MarginWidget::setSymetricMargins(bool on)
 	m_right->setEnabled(on && m_custom->isChecked());
 	if (on)
 	{
-		connect(m_top, SIGNAL(marginChanged(float)), m_bottom, SLOT(setMargin(float)));
-		connect(m_left, SIGNAL(marginChanged(float)), m_right, SLOT(setMargin(float)));
+		connect(m_top, TQT_SIGNAL(marginChanged(float)), m_bottom, TQT_SLOT(setMargin(float)));
+		connect(m_left, TQT_SIGNAL(marginChanged(float)), m_right, TQT_SLOT(setMargin(float)));
 		m_bottom->setMargin(m_top->margin());
 		m_right->setMargin(m_left->margin());
 	}

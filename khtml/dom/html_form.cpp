@@ -447,7 +447,7 @@ long HTMLInputElement::maxLength() const
 void HTMLInputElement::setMaxLength( long _maxLength )
 {
     if(impl) {
-        DOMString value(QString::number(_maxLength));
+        DOMString value(TQString::number(_maxLength));
         ((ElementImpl *)impl)->setAttribute(ATTR_MAXLENGTH,value);
     }
 }
@@ -495,7 +495,7 @@ long HTMLInputElement::getSize() const
 
 void HTMLInputElement::setSize( long value )
 {
-    if(impl) static_cast<ElementImpl*>(impl)->setAttribute(ATTR_SIZE, QString::number(value));
+    if(impl) static_cast<ElementImpl*>(impl)->setAttribute(ATTR_SIZE, TQString::number(value));
 }
 
 DOMString HTMLInputElement::src() const
@@ -897,7 +897,7 @@ void HTMLSelectElement::setSize( long _size )
 {
 
     if(impl) {
-	DOMString value(QString::number(_size));
+	DOMString value(TQString::number(_size));
         static_cast<ElementImpl*>(impl)->setAttribute(ATTR_SIZE,value);
     }
 }
@@ -1009,7 +1009,7 @@ void HTMLTextAreaElement::setCols( long _cols )
 {
 
     if(impl) {
-	DOMString value(QString::number(_cols));
+	DOMString value(TQString::number(_cols));
         static_cast<ElementImpl*>(impl)->setAttribute(ATTR_COLS,value);
     }
 }
@@ -1057,7 +1057,7 @@ void HTMLTextAreaElement::setRows( long _rows )
 {
 
     if(impl) {
-	DOMString value(QString::number(_rows));
+	DOMString value(TQString::number(_rows));
         static_cast<ElementImpl*>(impl)->setAttribute(ATTR_ROWS,value);
     }
 }

@@ -27,7 +27,7 @@
 #include "kcalendarsystemhebrew.h"
 
 static int hebrewDaysElapsed(int y);
-static QString num2heb(int num, bool includeMillenium);
+static TQString num2heb(int num, bool includeMillenium);
 
 class h_date
 {
@@ -143,26 +143,26 @@ static class h_date * gregorianToHebrew(int y, int m, int d)
   return(&h);
 }
 
-static QString num2heb(int num, bool includeMillenium)
+static TQString num2heb(int num, bool includeMillenium)
 {
-  const QChar decade[] = {0x05D8, 0x05D9, 0x05DB, 0x05DC, 0x05DE,
+  const TQChar decade[] = {0x05D8, 0x05D9, 0x05DB, 0x05DC, 0x05DE,
                           0x05E0, 0x05E1, 0x05E2, 0x05E4, 0x05E6};
-  QString result;
+  TQString result;
 
   if (num < 1 || num > 9999)
-    return QString::number(num);
+    return TQString::number(num);
 
   if (num >= 1000) {
     if (includeMillenium || num % 1000 == 0)
-      result += QChar(0x05D0 - 1 + num / 1000);
+      result += TQChar(0x05D0 - 1 + num / 1000);
     num %= 1000;
   }
   if (num >= 100) {
     while (num >= 500) {
-      result += QChar(0x05EA);
+      result += TQChar(0x05EA);
       num -= 400;
     }
-    result += QChar(0x05E7 - 1 + num / 100);
+    result += TQChar(0x05E7 - 1 + num / 100);
     num %= 100;
   }
   if (num >= 10) {
@@ -172,7 +172,7 @@ static QString num2heb(int num, bool includeMillenium)
     num %= 10;
   }
   if (num > 0)
-    result += QChar(0x05D0 - 1 + num);
+    result += TQChar(0x05D0 - 1 + num);
 
   if (result.length() == 1)
     result += "'";
@@ -223,7 +223,7 @@ static int hebrewDaysElapsed(int y)
  */
 static int long_cheshvan(int year)
 {
-  QDate first, last;
+  TQDate first, last;
   class h_date *gd;
 
   gd = hebrewToGregorian(year, 1, 1);
@@ -241,7 +241,7 @@ static int long_cheshvan(int year)
  */
 static int short_kislev(int year)
 {
-  QDate first, last;
+  TQDate first, last;
   class h_date * gd;
 
   gd = hebrewToGregorian(year, 1, 1);
@@ -270,7 +270,7 @@ KCalendarSystemHebrew::~KCalendarSystemHebrew()
 }
 
 // Ok
-static class h_date * toHebrew(const QDate & date)
+static class h_date * toHebrew(const TQDate & date)
 {
   class h_date *sd;
   sd = gregorianToHebrew(date.year(), date.month(), date.day());
@@ -280,14 +280,14 @@ static class h_date * toHebrew(const QDate & date)
 }
 
 // Ok
-int KCalendarSystemHebrew::year(const QDate& date) const
+int KCalendarSystemHebrew::year(const TQDate& date) const
 {
   class h_date *sd = toHebrew(date);
   return sd->hd_year;
 }
 
 // Ok
-int KCalendarSystemHebrew::monthsInYear( const QDate & date ) const
+int KCalendarSystemHebrew::monthsInYear( const TQDate & date ) const
 {
   if ( is_leap_year( year(date) ) )
     return 13;
@@ -298,8 +298,8 @@ int KCalendarSystemHebrew::monthsInYear( const QDate & date ) const
 // Ok
 int KCalendarSystemHebrew::weeksInYear(int year) const
 {
-  QDate temp;
-  setYMD(temp, year, 1, 1);  // don't pass an uninitialized QDate to
+  TQDate temp;
+  setYMD(temp, year, 1, 1);  // don't pass an uninitialized TQDate to
                              // monthsInYear in the next call
   setYMD(temp, year, monthsInYear(temp), hndays(monthsInYear(temp), year) );
 
@@ -313,9 +313,9 @@ int KCalendarSystemHebrew::weeksInYear(int year) const
   return nWeekNumber;
 }
 
-int KCalendarSystemHebrew::weekNumber(const QDate& date, int * yearNum) const
+int KCalendarSystemHebrew::weekNumber(const TQDate& date, int * yearNum) const
 {
-  QDate firstDayWeek1, lastDayOfYear;
+  TQDate firstDayWeek1, lastDayOfYear;
   int y = year(date);
   int week;
   int weekDay1, dayOfWeek1InYear;
@@ -362,31 +362,31 @@ int KCalendarSystemHebrew::weekNumber(const QDate& date, int * yearNum) const
 }
 
 // Ok
-QString KCalendarSystemHebrew::monthName(const QDate& date,
+TQString KCalendarSystemHebrew::monthName(const TQDate& date,
                                         bool shortName) const
 {
   return monthName(month(date), year(date), shortName);
 }
 
 // Ok
-QString KCalendarSystemHebrew::monthNamePossessive(const QDate& date,
+TQString KCalendarSystemHebrew::monthNamePossessive(const TQDate& date,
                                                   bool shortName) const
 {
   return monthNamePossessive(month(date), year(date), shortName);
 }
 
 // ### Fixme
-QString KCalendarSystemHebrew::monthName(int month, int year, bool /*shortName*/) const
+TQString KCalendarSystemHebrew::monthName(int month, int year, bool /*shortName*/) const
 {
   if ( month < 1 )
-    return QString::null;
+    return TQString::null;
   if ( is_leap_year(year) )
   {
     if ( month > 13 )
-      return QString::null;
+      return TQString::null;
   }
   else if ( month > 12 )
-      return QString::null;
+      return TQString::null;
 
   // We must map conversion algorithm month index to real index
   if( month == 6 && is_leap_year(year) )
@@ -430,17 +430,17 @@ QString KCalendarSystemHebrew::monthName(int month, int year, bool /*shortName*/
     break;
   }
 
-  return QString::null;
+  return TQString::null;
 }
 
 // ### Fixme
-QString KCalendarSystemHebrew::monthNamePossessive(int month, int year,
+TQString KCalendarSystemHebrew::monthNamePossessive(int month, int year,
                                                   bool shortName) const
 {
   return "of " + monthName(month, year, shortName);
 }
 
-bool KCalendarSystemHebrew::setYMD(QDate & date, int y, int m, int d) const
+bool KCalendarSystemHebrew::setYMD(TQDate & date, int y, int m, int d) const
 {
   if( y < minValidYear() || y > maxValidYear() )
     return false;
@@ -454,20 +454,20 @@ bool KCalendarSystemHebrew::setYMD(QDate & date, int y, int m, int d) const
   return date.setYMD(gd->hd_year, gd->hd_mon + 1, gd->hd_day + 1);
 }
 
-QString KCalendarSystemHebrew::weekDayName(int day, bool shortName) const
+TQString KCalendarSystemHebrew::weekDayName(int day, bool shortName) const
 {
   return KCalendarSystem::weekDayName(day, shortName);
 }
 
 // Ok
-QString KCalendarSystemHebrew::weekDayName(const QDate& date,
+TQString KCalendarSystemHebrew::weekDayName(const TQDate& date,
                                           bool shortName) const
 {
   return weekDayName(dayOfWeek(date), shortName);
 }
 
 // Ok
-int KCalendarSystemHebrew::dayOfWeek(const QDate& date) const
+int KCalendarSystemHebrew::dayOfWeek(const TQDate& date) const
 {
   class h_date *sd = toHebrew(date);
   if ( sd->hd_dw == 0 )
@@ -477,15 +477,15 @@ int KCalendarSystemHebrew::dayOfWeek(const QDate& date) const
 }
 
 // Ok
-int KCalendarSystemHebrew::dayOfYear(const QDate & date) const
+int KCalendarSystemHebrew::dayOfYear(const TQDate & date) const
 {
-  QDate first;
+  TQDate first;
   setYMD(first, year(date), 1, 1);
 
   return first.daysTo(date) + 1;
 }
 
-int KCalendarSystemHebrew::daysInMonth(const QDate& date) const
+int KCalendarSystemHebrew::daysInMonth(const TQDate& date) const
 {
   return hndays(month(date), year(date));
 }
@@ -514,7 +514,7 @@ int KCalendarSystemHebrew::hndays(int mon, int year) const
 // Min valid year that may be converted to QDate
 int KCalendarSystemHebrew::minValidYear() const
 {
-  QDate date(1753, 1, 1);
+  TQDate date(1753, 1, 1);
 
   return year(date);
 }
@@ -523,13 +523,13 @@ int KCalendarSystemHebrew::minValidYear() const
 // Max valid year that may be converted to QDate
 int KCalendarSystemHebrew::maxValidYear() const
 {
-  QDate date(8000, 1, 1);
+  TQDate date(8000, 1, 1);
 
   return year(date);
 }
 
 // Ok
-int KCalendarSystemHebrew::day(const QDate& date) const
+int KCalendarSystemHebrew::day(const TQDate& date) const
 {
   class h_date *sd = toHebrew(date);
 
@@ -537,7 +537,7 @@ int KCalendarSystemHebrew::day(const QDate& date) const
 }
 
 // Ok
-int KCalendarSystemHebrew::month(const QDate& date) const
+int KCalendarSystemHebrew::month(const TQDate& date) const
 {
   class h_date *sd = toHebrew(date);
 
@@ -556,9 +556,9 @@ int KCalendarSystemHebrew::month(const QDate& date) const
 }
 
 // Ok
-int KCalendarSystemHebrew::daysInYear(const QDate & date) const
+int KCalendarSystemHebrew::daysInYear(const TQDate & date) const
 {
-  QDate first, last;
+  TQDate first, last;
   setYMD(first, year(date), 1, 1); // 1 Tishrey
   setYMD(last, year(date) + 1, 1, 1); // 1 Tishrey the year later
 
@@ -572,15 +572,15 @@ int KCalendarSystemHebrew::weekDayOfPray() const
 }
 
 // Ok
-QDate KCalendarSystemHebrew::addDays( const QDate & date, int ndays ) const
+TQDate KCalendarSystemHebrew::addDays( const TQDate & date, int ndays ) const
 {
   return date.addDays( ndays );
 }
 
 // Ok
-QDate KCalendarSystemHebrew::addMonths( const QDate & date, int nmonths ) const
+TQDate KCalendarSystemHebrew::addMonths( const TQDate & date, int nmonths ) const
 {
-  QDate result = date;
+  TQDate result = date;
 
   while ( nmonths > 0 )
   {
@@ -601,9 +601,9 @@ QDate KCalendarSystemHebrew::addMonths( const QDate & date, int nmonths ) const
 }
 
 // Ok
-QDate KCalendarSystemHebrew::addYears( const QDate & date, int nyears ) const
+TQDate KCalendarSystemHebrew::addYears( const TQDate & date, int nyears ) const
 {
-  QDate result = date;
+  TQDate result = date;
   int y = year(date) + nyears;
 
   setYMD( result, y, month(date), day(date) );
@@ -612,9 +612,9 @@ QDate KCalendarSystemHebrew::addYears( const QDate & date, int nyears ) const
 }
 
 // Ok
-QString KCalendarSystemHebrew::calendarName() const
+TQString KCalendarSystemHebrew::calendarName() const
 {
-  return QString::fromLatin1("hebrew");
+  return TQString::fromLatin1("hebrew");
 }
 
 // Ok
@@ -635,12 +635,12 @@ bool KCalendarSystemHebrew::isSolar() const
   return false;
 }
 
-QString KCalendarSystemHebrew::dayString(const QDate & pDate, bool bShort) const
+TQString KCalendarSystemHebrew::dayString(const TQDate & pDate, bool bShort) const
 {
-  QString sResult;
+  TQString sResult;
 
   // Only use hebrew numbers if the hebrew setting is selected
-  if (locale()->language() == QString::fromLatin1("he"))
+  if (locale()->language() == TQString::fromLatin1("he"))
     sResult = num2heb(day(pDate), false);
   else
     sResult = KCalendarSystem::dayString(pDate, bShort);
@@ -648,12 +648,12 @@ QString KCalendarSystemHebrew::dayString(const QDate & pDate, bool bShort) const
   return sResult;
 }
 
-QString KCalendarSystemHebrew::yearString(const QDate & pDate, bool bShort) const
+TQString KCalendarSystemHebrew::yearString(const TQDate & pDate, bool bShort) const
 {
-  QString sResult;
+  TQString sResult;
 
   // Only use hebrew numbers if the hebrew setting is selected
-  if (locale()->language() == QString::fromLatin1("he"))
+  if (locale()->language() == TQString::fromLatin1("he"))
     sResult = num2heb(year(pDate), !bShort);
   else
     sResult = KCalendarSystem::yearString(pDate, bShort);
@@ -661,9 +661,9 @@ QString KCalendarSystemHebrew::yearString(const QDate & pDate, bool bShort) cons
   return sResult;
 }
 
-static int heb2num(const QString& str, int & iLength) {
-  QChar c;
-  QString s = str;
+static int heb2num(const TQString& str, int & iLength) {
+  TQChar c;
+  TQString s = str;
   int result = 0;
   iLength = 0;
   int decadeValues[14] = {10, 20, 20, 30, 40, 40, 50,
@@ -673,38 +673,38 @@ static int heb2num(const QString& str, int & iLength) {
   for (pos = 0 ; pos < s.length() ; pos++)
   {
     c = s[pos];
-    if (s.length() > pos && (s[pos + 1] == QChar('\'') ||
-                             s[pos + 1] == QChar('\"')))
+    if (s.length() > pos && (s[pos + 1] == TQChar('\'') ||
+                             s[pos + 1] == TQChar('\"')))
     {
       iLength++;
       s.remove(pos + 1, 1);
     }
 
-    if (c >= QChar(0x05D0) && c <= QChar(0x05D7))
+    if (c >= TQChar(0x05D0) && c <= TQChar(0x05D7))
     {
-      if (s.length() > pos && s[pos + 1] >= QChar(0x05D0) &&
-          s[pos + 1] <= QChar(0x05EA))
+      if (s.length() > pos && s[pos + 1] >= TQChar(0x05D0) &&
+          s[pos + 1] <= TQChar(0x05EA))
         result += (c.unicode() - 0x05D0 + 1) * 1000;
       else
         result += c.unicode() - 0x05D0 + 1;
     }
-    else if (c == QChar(0x05D8))
+    else if (c == TQChar(0x05D8))
     {
-      if (s.length() > pos && s[pos + 1] >= QChar(0x05D0) &&
-          s[pos + 1] <= QChar(0x05EA) && s[pos + 1] != QChar(0x05D5) &&
-          s[pos + 1] != QChar(0x05D6))
+      if (s.length() > pos && s[pos + 1] >= TQChar(0x05D0) &&
+          s[pos + 1] <= TQChar(0x05EA) && s[pos + 1] != TQChar(0x05D5) &&
+          s[pos + 1] != TQChar(0x05D6))
         result += 9000;
       else
         result += 9;
     }
-    else if (c >= QChar(0x05D9) && c <= QChar(0x05E6))
+    else if (c >= TQChar(0x05D9) && c <= TQChar(0x05E6))
     {
-      if (s.length() > pos && s[pos + 1] >= QChar(0x05D9))
+      if (s.length() > pos && s[pos + 1] >= TQChar(0x05D9))
         return -1;
       else
         result += decadeValues[c.unicode() - 0x05D9];
     }
-    else if (c >= QChar(0x05E7) && c <= QChar(0x05EA))
+    else if (c >= TQChar(0x05E7) && c <= TQChar(0x05EA))
     {
       result += (c.unicode() - 0x05E7 + 1) * 100;
     }
@@ -719,7 +719,7 @@ static int heb2num(const QString& str, int & iLength) {
   return result;
 }
 
-int KCalendarSystemHebrew::dayStringToInteger(const QString & sNum, int & iLength) const
+int KCalendarSystemHebrew::dayStringToInteger(const TQString & sNum, int & iLength) const
 {
   int iResult;
   if (locale()->language() == "he")
@@ -730,7 +730,7 @@ int KCalendarSystemHebrew::dayStringToInteger(const QString & sNum, int & iLengt
   return iResult;
 }
 
-int KCalendarSystemHebrew::yearStringToInteger(const QString & sNum, int & iLength) const
+int KCalendarSystemHebrew::yearStringToInteger(const TQString & sNum, int & iLength) const
 {
   int iResult;
   if (locale()->language() == "he")

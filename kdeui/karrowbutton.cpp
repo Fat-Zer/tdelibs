@@ -18,8 +18,8 @@
 
 #include "karrowbutton.h"
 
-#include <qstyle.h>
-#include <qpainter.h>
+#include <tqstyle.h>
+#include <tqpainter.h>
 
 class KArrowButtonPrivate
 {
@@ -27,9 +27,9 @@ class KArrowButtonPrivate
 		Qt::ArrowType arrow;
 };
 
-KArrowButton::KArrowButton(QWidget *parent, Qt::ArrowType arrow,
+KArrowButton::KArrowButton(TQWidget *parent, Qt::ArrowType arrow,
 		const char *name)
-	: QPushButton(parent, name)
+	: TQPushButton(parent, name)
 {
 	d = new KArrowButtonPrivate();
 	d->arrow = arrow;
@@ -40,9 +40,9 @@ KArrowButton::~KArrowButton()
 	delete d;
 }
 
-QSize KArrowButton::sizeHint() const
+TQSize KArrowButton::sizeHint() const
 {
-	return QSize( 12, 12 );
+	return TQSize( 12, 12 );
 }
 
 void KArrowButton::setArrowType(Qt::ArrowType a)
@@ -57,16 +57,16 @@ Qt::ArrowType KArrowButton::arrowType() const
 	return d->arrow;
 }
 
-void KArrowButton::drawButton(QPainter *p)
+void KArrowButton::drawButton(TQPainter *p)
 {
 	const unsigned int arrowSize = 8;
 	const unsigned int margin = 2;
 	
-        p->fillRect( rect(), colorGroup().brush( QColorGroup::Background ) );
-	style().drawPrimitive( QStyle::PE_Panel, p, QRect( 0, 0, width(), height() ),
+        p->fillRect( rect(), colorGroup().brush( TQColorGroup::Background ) );
+	style().drawPrimitive( TQStyle::PE_Panel, p, TQRect( 0, 0, width(), height() ),
 			       colorGroup(), 
-			       isDown() ? QStyle::Style_Sunken : QStyle::Style_Default,
-			       QStyleOption( 2, 0 ) );
+			       isDown() ? TQStyle::Style_Sunken : TQStyle::Style_Default,
+			       TQStyleOption( 2, 0 ) );
 
 	if (static_cast<unsigned int>(width()) < arrowSize + margin ||
 	    static_cast<unsigned int>(height()) < arrowSize + margin)
@@ -92,18 +92,18 @@ void KArrowButton::drawButton(QPainter *p)
 		y++;
 	}
 
-	QStyle::PrimitiveElement e = QStyle::PE_ArrowLeft;
+	TQStyle::PrimitiveElement e = TQStyle::PE_ArrowLeft;
 	switch (d->arrow)
 	{
-		case Qt::LeftArrow: e = QStyle::PE_ArrowLeft; break;
-		case Qt::RightArrow: e = QStyle::PE_ArrowRight; break;
-		case Qt::UpArrow: e = QStyle::PE_ArrowUp; break;
-		case Qt::DownArrow: e = QStyle::PE_ArrowDown; break;
+		case Qt::LeftArrow: e = TQStyle::PE_ArrowLeft; break;
+		case Qt::RightArrow: e = TQStyle::PE_ArrowRight; break;
+		case Qt::UpArrow: e = TQStyle::PE_ArrowUp; break;
+		case Qt::DownArrow: e = TQStyle::PE_ArrowDown; break;
 	}
-	int flags = QStyle::Style_Enabled;
+	int flags = TQStyle::Style_Enabled;
 	if ( isDown() )
-		flags |= QStyle::Style_Down;
-	style().drawPrimitive( e, p, QRect( QPoint( x, y ), QSize( arrowSize, arrowSize ) ),
+		flags |= TQStyle::Style_Down;
+	style().drawPrimitive( e, p, TQRect( TQPoint( x, y ), TQSize( arrowSize, arrowSize ) ),
 			       colorGroup(), flags );
 }
 

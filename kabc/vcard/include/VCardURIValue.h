@@ -33,18 +33,18 @@ class KVCARD_EXPORT URIValue : public Value
 {
 #include "URIValue-generated.h"
 
-	URIValue(const QCString & scheme, const QCString & schemeSpecificPart);
+	URIValue(const TQCString & scheme, const TQCString & schemeSpecificPart);
 	
-	QCString scheme();
-	QCString schemeSpecificPart();
+	TQCString scheme();
+	TQCString schemeSpecificPart();
 	
-	void setScheme				(const QCString &);
-	void setSchemeSpecificPart	(const QCString &);
+	void setScheme				(const TQCString &);
+	void setSchemeSpecificPart	(const TQCString &);
 	
 	private:
 	
-		QCString scheme_;
-		QCString schemeSpecificPart_;
+		TQCString scheme_;
+		TQCString schemeSpecificPart_;
 };
 
 }

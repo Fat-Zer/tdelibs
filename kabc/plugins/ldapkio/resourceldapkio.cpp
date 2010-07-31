@@ -20,9 +20,9 @@
 */
 
 
-#include <qapplication.h>
-#include <qbuffer.h>
-#include <qfile.h>
+#include <tqapplication.h>
+#include <tqbuffer.h>
+#include <tqfile.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -44,28 +44,28 @@
 using namespace KABC;
 
 // Hack from Netaccess
-void qt_enter_modal( QWidget *widget );
-void qt_leave_modal( QWidget *widget );
+void qt_enter_modal( TQWidget *widget );
+void qt_leave_modal( TQWidget *widget );
 
 class ResourceLDAPKIO::ResourceLDAPKIOPrivate 
 {
   public:
     LDIF mLdif;
     bool mTLS,mSSL,mSubTree;
-    QString mResultDn;
+    TQString mResultDn;
     Addressee mAddr;
     Address mAd;
     Resource::Iterator mSaveIt;
     bool mSASL;
-    QString mMech;
-    QString mRealm, mBindDN;
+    TQString mMech;
+    TQString mRealm, mBindDN;
     LDAPUrl mLDAPUrl;
     int mVer, mSizeLimit, mTimeLimit, mRDNPrefix;
     int mError;
     int mCachePolicy;
     bool mReadOnly;
     bool mAutoCache;
-    QString mCacheDst;
+    TQString mCacheDst;
     KTempFile *mTmp;
 };
 
@@ -74,8 +74,8 @@ ResourceLDAPKIO::ResourceLDAPKIO( const KConfig *config )
 {
   d = new ResourceLDAPKIOPrivate;
   if ( config ) {
-    QMap<QString, QString> attrList;
-    QStringList attributes = config->readListEntry( "LdapAttributes" );
+    TQMap<TQString, TQString> attrList;
+    TQStringList attributes = config->readListEntry( "LdapAttributes" );
     for ( uint pos = 0; pos < attributes.count(); pos += 2 )
       mAttributes.insert( attributes[ pos ], attributes[ pos + 1 ] );
 
@@ -122,8 +122,8 @@ ResourceLDAPKIO::~ResourceLDAPKIO()
 
 void ResourceLDAPKIO::enter_loop()
 {
-  QWidget dummy(0,0,WType_Dialog | WShowModal);
-  dummy.setFocusPolicy( QWidget::NoFocus );
+  TQWidget dummy(0,0,WType_Dialog | WShowModal);
+  dummy.setFocusPolicy( TQWidget::NoFocus );
   qt_enter_modal(&dummy);
   qApp->enter_loop();
   qt_leave_modal(&dummy);
@@ -157,7 +157,7 @@ void ResourceLDAPKIO::listResult( KIO::Job *job)
   qApp->exit_loop();
 }
 
-QString ResourceLDAPKIO::findUid( const QString &uid ) 
+TQString ResourceLDAPKIO::findUid( const TQString &uid ) 
 {
   LDAPUrl url( d->mLDAPUrl );
   KIO::UDSEntry entry;
@@ -173,18 +173,18 @@ QString ResourceLDAPKIO::findUid( const QString &uid )
   
   KIO::ListJob * listJob = KIO::listDir( url, false /* no GUI */ );
   connect( listJob, 
-    SIGNAL( entries( KIO::Job *, const KIO::UDSEntryList& ) ),
-    SLOT( entries( KIO::Job*, const KIO::UDSEntryList& ) ) );
-  connect( listJob, SIGNAL( result( KIO::Job* ) ), 
-    this, SLOT( listResult( KIO::Job* ) ) );
+    TQT_SIGNAL( entries( KIO::Job *, const KIO::UDSEntryList& ) ),
+    TQT_SLOT( entries( KIO::Job*, const KIO::UDSEntryList& ) ) );
+  connect( listJob, TQT_SIGNAL( result( KIO::Job* ) ), 
+    this, TQT_SLOT( listResult( KIO::Job* ) ) );
 
   enter_loop();
   return d->mResultDn;
 }
 
-QCString ResourceLDAPKIO::addEntry( const QString &attr, const QString &value, bool mod )
+TQCString ResourceLDAPKIO::addEntry( const TQString &attr, const TQString &value, bool mod )
 {
-  QCString tmp;
+  TQCString tmp;
   if ( !attr.isEmpty() ) {
     if ( mod ) tmp += LDIF::assembleLine( "replace", attr ) + "\n";
     tmp += LDIF::assembleLine( attr, value ) + "\n";
@@ -193,12 +193,12 @@ QCString ResourceLDAPKIO::addEntry( const QString &attr, const QString &value, b
   return ( tmp );
 }
 
-bool ResourceLDAPKIO::AddresseeToLDIF( QByteArray &ldif, const Addressee &addr, 
-  const QString &olddn )
+bool ResourceLDAPKIO::AddresseeToLDIF( TQByteArray &ldif, const Addressee &addr, 
+  const TQString &olddn )
 {
-  QCString tmp;
-  QString dn;
-  QByteArray data;
+  TQCString tmp;
+  TQString dn;
+  TQByteArray data;
   bool mod = false;
   
   if ( olddn.isEmpty() ) {
@@ -237,8 +237,8 @@ bool ResourceLDAPKIO::AddresseeToLDIF( QByteArray &ldif, const Addressee &addr,
   if ( mod ) tmp += "changetype: modify\n";
   if ( !mod ) {
     tmp += "objectClass: top\n";
-    QStringList obclass = QStringList::split( ',', mAttributes[ "objectClass" ] );
-    for ( QStringList::iterator it = obclass.begin(); it != obclass.end(); it++ ) {
+    TQStringList obclass = TQStringList::split( ',', mAttributes[ "objectClass" ] );
+    for ( TQStringList::iterator it = obclass.begin(); it != obclass.end(); it++ ) {
       tmp += LDIF::assembleLine( "objectClass", *it ) + "\n";
     }
   }
@@ -273,8 +273,8 @@ bool ResourceLDAPKIO::AddresseeToLDIF( QByteArray &ldif, const Addressee &addr,
     tmp += addEntry( mAttributes[ "postalcode" ], ad.postalCode(), mod );
   }
   
-  QStringList emails = addr.emails();
-  QStringList::ConstIterator mailIt = emails.begin();
+  TQStringList emails = addr.emails();
+  TQStringList::ConstIterator mailIt = emails.begin();
   
   if ( !mAttributes[ "mail" ].isEmpty() ) {
     if ( mod ) tmp += 
@@ -296,8 +296,8 @@ bool ResourceLDAPKIO::AddresseeToLDIF( QByteArray &ldif, const Addressee &addr,
   }
   
   if ( !mAttributes[ "jpegPhoto" ].isEmpty() ) {
-    QByteArray pic;
-    QBuffer buffer( pic );
+    TQByteArray pic;
+    TQBuffer buffer( pic );
     buffer.open( IO_WriteOnly );
     addr.photo().data().save( &buffer, "JPEG" );
     
@@ -308,7 +308,7 @@ bool ResourceLDAPKIO::AddresseeToLDIF( QByteArray &ldif, const Addressee &addr,
   }
   
   tmp += "\n";  
-  kdDebug(7125) << "ldif: " << QString::fromUtf8(tmp) << endl;
+  kdDebug(7125) << "ldif: " << TQString::fromUtf8(tmp) << endl;
   ldif = tmp;
   return true;
 }
@@ -386,8 +386,8 @@ void ResourceLDAPKIO::init()
   d->mLDAPUrl.setDn( mDn );
 
   if (!mAttributes.empty()) {
-    QMap<QString,QString>::Iterator it;
-    QStringList attr;
+    TQMap<TQString,TQString>::Iterator it;
+    TQStringList attr;
     for ( it = mAttributes.begin(); it != mAttributes.end(); ++it ) {
       if ( !it.data().isEmpty() && it.key() != "objectClass" ) 
         attr.append( it.data() );
@@ -400,11 +400,11 @@ void ResourceLDAPKIO::init()
     d->mLDAPUrl.setFilter( mFilter );
   d->mLDAPUrl.setExtension( "x-dir", "base" );
   if ( d->mTLS ) d->mLDAPUrl.setExtension( "x-tls", "" );
-  d->mLDAPUrl.setExtension( "x-ver", QString::number( d->mVer ) );
+  d->mLDAPUrl.setExtension( "x-ver", TQString::number( d->mVer ) );
   if ( d->mSizeLimit ) 
-    d->mLDAPUrl.setExtension( "x-sizelimit", QString::number( d->mSizeLimit ) );
+    d->mLDAPUrl.setExtension( "x-sizelimit", TQString::number( d->mSizeLimit ) );
   if ( d->mTimeLimit ) 
-    d->mLDAPUrl.setExtension( "x-timelimit", QString::number( d->mTimeLimit ) );
+    d->mLDAPUrl.setExtension( "x-timelimit", TQString::number( d->mTimeLimit ) );
   if ( d->mSASL ) {
     d->mLDAPUrl.setExtension( "x-sasl", "" );
     if ( !d->mBindDN.isEmpty() ) d->mLDAPUrl.setExtension( "bindname", d->mBindDN );
@@ -442,8 +442,8 @@ void ResourceLDAPKIO::writeConfig( KConfig *config )
   config->writeEntry( "LdapCachePolicy", d->mCachePolicy );
   config->writeEntry( "LdapAutoCache", d->mAutoCache );
 
-  QStringList attributes;
-  QMap<QString, QString>::Iterator it;
+  TQStringList attributes;
+  TQMap<TQString, TQString>::Iterator it;
   for ( it = mAttributes.begin(); it != mAttributes.end(); ++it )
     attributes << it.key() << it.data();
 
@@ -487,7 +487,7 @@ void ResourceLDAPKIO::activateCache()
 {
   if ( d->mTmp && d->mError == 0 ) {
     d->mTmp->close();
-    rename( QFile::encodeName( d->mTmp->name() ), QFile::encodeName( d->mCacheDst ) );
+    rename( TQFile::encodeName( d->mTmp->name() ), TQFile::encodeName( d->mCacheDst ) );
   }
   if ( d->mTmp ) {
     delete d->mTmp;
@@ -511,8 +511,8 @@ KIO::Job *ResourceLDAPKIO::loadFromCache()
   
     KURL url( d->mCacheDst );
     job = KIO::get( url, true, false );
-    connect( job, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
-      this, SLOT( data( KIO::Job*, const QByteArray& ) ) );
+    connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
+      this, TQT_SLOT( data( KIO::Job*, const TQByteArray& ) ) );
   }
   return job;
 }
@@ -535,17 +535,17 @@ bool ResourceLDAPKIO::load()
   createCache();
   if ( d->mCachePolicy != Cache_Always ) {
     job = KIO::get( d->mLDAPUrl, true, false );
-    connect( job, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
-      this, SLOT( data( KIO::Job*, const QByteArray& ) ) );
-    connect( job, SIGNAL( result( KIO::Job* ) ),
-      this, SLOT( syncLoadSaveResult( KIO::Job* ) ) );
+    connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
+      this, TQT_SLOT( data( KIO::Job*, const TQByteArray& ) ) );
+    connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
+      this, TQT_SLOT( syncLoadSaveResult( KIO::Job* ) ) );
     enter_loop();
   }
 
   job = loadFromCache();    
   if ( job ) {
-    connect( job, SIGNAL( result( KIO::Job* ) ),
-      this, SLOT( syncLoadSaveResult( KIO::Job* ) ) );
+    connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
+      this, TQT_SLOT( syncLoadSaveResult( KIO::Job* ) ) );
     enter_loop();
   }
   if ( mErrorMsg.isEmpty() ) {
@@ -572,17 +572,17 @@ bool ResourceLDAPKIO::asyncLoad()
   createCache();
   if ( d->mCachePolicy != Cache_Always ) {
     KIO::Job *job = KIO::get( d->mLDAPUrl, true, false );
-    connect( job, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
-      this, SLOT( data( KIO::Job*, const QByteArray& ) ) );
-    connect( job, SIGNAL( result( KIO::Job* ) ),
-      this, SLOT( result( KIO::Job* ) ) );
+    connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
+      this, TQT_SLOT( data( KIO::Job*, const TQByteArray& ) ) );
+    connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
+      this, TQT_SLOT( result( KIO::Job* ) ) );
   } else {
     result( NULL );
   }
   return true;
 }
 
-void ResourceLDAPKIO::data( KIO::Job *, const QByteArray &data )
+void ResourceLDAPKIO::data( KIO::Job *, const TQByteArray &data )
 {
   if ( data.size() ) {
     d->mLdif.setLDIF( data );
@@ -594,8 +594,8 @@ void ResourceLDAPKIO::data( KIO::Job *, const QByteArray &data )
   }
   
   LDIF::ParseVal ret;
-  QString name;
-  QByteArray value;
+  TQString name;
+  TQByteArray value;
   do {
     ret = d->mLdif.nextItem();
     switch ( ret ) {
@@ -607,60 +607,60 @@ void ResourceLDAPKIO::data( KIO::Job *, const QByteArray &data )
         value = d->mLdif.val();      
         if ( name == mAttributes[ "commonName" ].lower() ) {
           if ( !d->mAddr.formattedName().isEmpty() ) {
-            QString fn = d->mAddr.formattedName();
-            d->mAddr.setNameFromString( QString::fromUtf8( value, value.size() ) );
+            TQString fn = d->mAddr.formattedName();
+            d->mAddr.setNameFromString( TQString::fromUtf8( value, value.size() ) );
             d->mAddr.setFormattedName( fn );
           } else
-            d->mAddr.setNameFromString( QString::fromUtf8( value, value.size() ) );
+            d->mAddr.setNameFromString( TQString::fromUtf8( value, value.size() ) );
         } else if ( name == mAttributes[ "formattedName" ].lower() ) {
-          d->mAddr.setFormattedName( QString::fromUtf8( value, value.size() ) );
+          d->mAddr.setFormattedName( TQString::fromUtf8( value, value.size() ) );
         } else if ( name == mAttributes[ "givenName" ].lower() ) {
-          d->mAddr.setGivenName( QString::fromUtf8( value, value.size() ) );
+          d->mAddr.setGivenName( TQString::fromUtf8( value, value.size() ) );
         } else if ( name == mAttributes[ "mail" ].lower() ) {
-          d->mAddr.insertEmail( QString::fromUtf8( value, value.size() ), true );
+          d->mAddr.insertEmail( TQString::fromUtf8( value, value.size() ), true );
         } else if ( name == mAttributes[ "mailAlias" ].lower() ) {
-          d->mAddr.insertEmail( QString::fromUtf8( value, value.size() ), false );
+          d->mAddr.insertEmail( TQString::fromUtf8( value, value.size() ), false );
         } else if ( name == mAttributes[ "phoneNumber" ].lower() ) {
           PhoneNumber phone;
-          phone.setNumber( QString::fromUtf8( value, value.size() ) );
+          phone.setNumber( TQString::fromUtf8( value, value.size() ) );
           d->mAddr.insertPhoneNumber( phone );
         } else if ( name == mAttributes[ "telephoneNumber" ].lower() ) {
-          PhoneNumber phone( QString::fromUtf8( value, value.size() ), 
+          PhoneNumber phone( TQString::fromUtf8( value, value.size() ), 
             PhoneNumber::Work );
           d->mAddr.insertPhoneNumber( phone );
         } else if ( name == mAttributes[ "facsimileTelephoneNumber" ].lower() ) {
-          PhoneNumber phone( QString::fromUtf8( value, value.size() ), 
+          PhoneNumber phone( TQString::fromUtf8( value, value.size() ), 
             PhoneNumber::Fax );
           d->mAddr.insertPhoneNumber( phone );
         } else if ( name == mAttributes[ "mobile" ].lower() ) {
-          PhoneNumber phone( QString::fromUtf8( value, value.size() ), 
+          PhoneNumber phone( TQString::fromUtf8( value, value.size() ), 
             PhoneNumber::Cell );
           d->mAddr.insertPhoneNumber( phone );
         } else if ( name == mAttributes[ "pager" ].lower() ) {
-          PhoneNumber phone( QString::fromUtf8( value, value.size() ), 
+          PhoneNumber phone( TQString::fromUtf8( value, value.size() ), 
             PhoneNumber::Pager );
           d->mAddr.insertPhoneNumber( phone );
         } else if ( name == mAttributes[ "description" ].lower() ) {
-          d->mAddr.setNote( QString::fromUtf8( value, value.size() ) );
+          d->mAddr.setNote( TQString::fromUtf8( value, value.size() ) );
         } else if ( name == mAttributes[ "title" ].lower() ) {
-          d->mAddr.setTitle( QString::fromUtf8( value, value.size() ) );
+          d->mAddr.setTitle( TQString::fromUtf8( value, value.size() ) );
         } else if ( name == mAttributes[ "street" ].lower() ) {
-          d->mAd.setStreet( QString::fromUtf8( value, value.size() ) );
+          d->mAd.setStreet( TQString::fromUtf8( value, value.size() ) );
         } else if ( name == mAttributes[ "state" ].lower() ) {
-          d->mAd.setRegion( QString::fromUtf8( value, value.size() ) );
+          d->mAd.setRegion( TQString::fromUtf8( value, value.size() ) );
         } else if ( name == mAttributes[ "city" ].lower() ) {
-          d->mAd.setLocality( QString::fromUtf8( value, value.size() ) );
+          d->mAd.setLocality( TQString::fromUtf8( value, value.size() ) );
         } else if ( name == mAttributes[ "postalcode" ].lower() ) {
-          d->mAd.setPostalCode( QString::fromUtf8( value, value.size() ) );
+          d->mAd.setPostalCode( TQString::fromUtf8( value, value.size() ) );
         } else if ( name == mAttributes[ "organization" ].lower() ) {
-          d->mAddr.setOrganization( QString::fromUtf8( value, value.size() ) );
+          d->mAddr.setOrganization( TQString::fromUtf8( value, value.size() ) );
         } else if ( name == mAttributes[ "familyName" ].lower() ) {
-          d->mAddr.setFamilyName( QString::fromUtf8( value, value.size() ) );
+          d->mAddr.setFamilyName( TQString::fromUtf8( value, value.size() ) );
         } else if ( name == mAttributes[ "uid" ].lower() ) {
-          d->mAddr.setUid( QString::fromUtf8( value, value.size() ) );
+          d->mAddr.setUid( TQString::fromUtf8( value, value.size() ) );
         } else if ( name == mAttributes[ "jpegPhoto" ].lower() ) {
           KABC::Picture photo;
-          QImage img( value );
+          TQImage img( value );
           if ( !img.isNull() ) {
             photo.setData( img );
             photo.setType( "image/jpeg" );
@@ -714,8 +714,8 @@ void ResourceLDAPKIO::result( KIO::Job *job )
   KIO::Job *cjob;
   cjob = loadFromCache();
   if ( cjob ) {
-    connect( cjob, SIGNAL( result( KIO::Job* ) ),
-      this, SLOT( loadCacheResult( KIO::Job* ) ) );
+    connect( cjob, TQT_SIGNAL( result( KIO::Job* ) ),
+      this, TQT_SLOT( loadCacheResult( KIO::Job* ) ) );
   } else {
     if ( !mErrorMsg.isEmpty() )
       emit loadingError( this, mErrorMsg );
@@ -730,10 +730,10 @@ bool ResourceLDAPKIO::save( Ticket* )
   
   d->mSaveIt = begin();
   KIO::Job *job = KIO::put( d->mLDAPUrl, -1, true, false, false );
-  connect( job, SIGNAL( dataReq( KIO::Job*, QByteArray& ) ),
-    this, SLOT( saveData( KIO::Job*, QByteArray& ) ) );
-  connect( job, SIGNAL( result( KIO::Job* ) ),
-    this, SLOT( syncLoadSaveResult( KIO::Job* ) ) );
+  connect( job, TQT_SIGNAL( dataReq( KIO::Job*, TQByteArray& ) ),
+    this, TQT_SLOT( saveData( KIO::Job*, TQByteArray& ) ) );
+  connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
+    this, TQT_SLOT( syncLoadSaveResult( KIO::Job* ) ) );
   enter_loop();
   if ( mErrorMsg.isEmpty() ) {
     kdDebug(7125) << "ResourceLDAPKIO save ok!" << endl; 
@@ -750,10 +750,10 @@ bool ResourceLDAPKIO::asyncSave( Ticket* )
   kdDebug(7125) << "ResourceLDAPKIO asyncSave" << endl;
   d->mSaveIt = begin();
   KIO::Job *job = KIO::put( d->mLDAPUrl, -1, true, false, false );
-  connect( job, SIGNAL( dataReq( KIO::Job*, QByteArray& ) ),
-    this, SLOT( saveData( KIO::Job*, QByteArray& ) ) );
-  connect( job, SIGNAL( result( KIO::Job* ) ),
-    this, SLOT( saveResult( KIO::Job* ) ) );
+  connect( job, TQT_SIGNAL( dataReq( KIO::Job*, TQByteArray& ) ),
+    this, TQT_SLOT( saveData( KIO::Job*, TQByteArray& ) ) );
+  connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
+    this, TQT_SLOT( saveResult( KIO::Job* ) ) );
   return true;
 }
 
@@ -778,7 +778,7 @@ void ResourceLDAPKIO::saveResult( KIO::Job *job )
     emit savingFinished( this );
 }
 
-void ResourceLDAPKIO::saveData( KIO::Job*, QByteArray& data )
+void ResourceLDAPKIO::saveData( KIO::Job*, TQByteArray& data )
 {
   while ( d->mSaveIt != end() &&
        !(*d->mSaveIt).changed() ) d->mSaveIt++;
@@ -792,7 +792,7 @@ void ResourceLDAPKIO::saveData( KIO::Job*, QByteArray& data )
   kdDebug(7125) << "ResourceLDAPKIO saveData: " << (*d->mSaveIt).assembledName() << endl;
   
   AddresseeToLDIF( data, *d->mSaveIt, findUid( (*d->mSaveIt).uid() ) );  
-//  kdDebug(7125) << "ResourceLDAPKIO save LDIF: " << QString::fromUtf8(data) << endl;
+//  kdDebug(7125) << "ResourceLDAPKIO save LDIF: " << TQString::fromUtf8(data) << endl;
   // mark as unchanged
   (*d->mSaveIt).setChanged( false );
 
@@ -801,7 +801,7 @@ void ResourceLDAPKIO::saveData( KIO::Job*, QByteArray& data )
 
 void ResourceLDAPKIO::removeAddressee( const Addressee& addr )
 {
-  QString dn = findUid( addr.uid() );
+  TQString dn = findUid( addr.uid() );
   
   kdDebug(7125) << "ResourceLDAPKIO: removeAddressee: " << dn << endl;
 
@@ -823,42 +823,42 @@ void ResourceLDAPKIO::removeAddressee( const Addressee& addr )
 }
 
 
-void ResourceLDAPKIO::setUser( const QString &user )
+void ResourceLDAPKIO::setUser( const TQString &user )
 {
   mUser = user;
 }
 
-QString ResourceLDAPKIO::user() const
+TQString ResourceLDAPKIO::user() const
 {
   return mUser;
 }
 
-void ResourceLDAPKIO::setPassword( const QString &password )
+void ResourceLDAPKIO::setPassword( const TQString &password )
 {
   mPassword = password;
 }
 
-QString ResourceLDAPKIO::password() const
+TQString ResourceLDAPKIO::password() const
 {
   return mPassword;
 }
 
-void ResourceLDAPKIO::setDn( const QString &dn )
+void ResourceLDAPKIO::setDn( const TQString &dn )
 {
   mDn = dn;
 }
 
-QString ResourceLDAPKIO::dn() const
+TQString ResourceLDAPKIO::dn() const
 {
   return mDn;
 }
 
-void ResourceLDAPKIO::setHost( const QString &host )
+void ResourceLDAPKIO::setHost( const TQString &host )
 {
   mHost = host;
 }
 
-QString ResourceLDAPKIO::host() const
+TQString ResourceLDAPKIO::host() const
 {
   return mHost;
 }
@@ -903,12 +903,12 @@ int ResourceLDAPKIO::timeLimit()
   return d->mTimeLimit;
 }
 
-void ResourceLDAPKIO::setFilter( const QString &filter )
+void ResourceLDAPKIO::setFilter( const TQString &filter )
 {
   mFilter = filter;
 }
 
-QString ResourceLDAPKIO::filter() const
+TQString ResourceLDAPKIO::filter() const
 {
   return mFilter;
 }
@@ -952,12 +952,12 @@ bool ResourceLDAPKIO::isSubTree() const
   return d->mSubTree;
 }
 
-void ResourceLDAPKIO::setAttributes( const QMap<QString, QString> &attributes )
+void ResourceLDAPKIO::setAttributes( const TQMap<TQString, TQString> &attributes )
 {
   mAttributes = attributes;
 }
 
-QMap<QString, QString> ResourceLDAPKIO::attributes() const
+TQMap<TQString, TQString> ResourceLDAPKIO::attributes() const
 {
   return mAttributes;
 }
@@ -982,32 +982,32 @@ bool ResourceLDAPKIO::isSASL() const
   return d->mSASL;
 }
 
-void ResourceLDAPKIO::setMech( const QString &mech )
+void ResourceLDAPKIO::setMech( const TQString &mech )
 {
   d->mMech = mech;
 }
 
-QString ResourceLDAPKIO::mech() const
+TQString ResourceLDAPKIO::mech() const
 {
   return d->mMech;
 }
 
-void ResourceLDAPKIO::setRealm( const QString &realm )
+void ResourceLDAPKIO::setRealm( const TQString &realm )
 {
   d->mRealm = realm;
 }
 
-QString ResourceLDAPKIO::realm() const
+TQString ResourceLDAPKIO::realm() const
 {
   return d->mRealm;
 }
     
-void ResourceLDAPKIO::setBindDN( const QString &binddn )
+void ResourceLDAPKIO::setBindDN( const TQString &binddn )
 {
   d->mBindDN = binddn;
 }
 
-QString ResourceLDAPKIO::bindDN() const
+TQString ResourceLDAPKIO::bindDN() const
 {
   return d->mBindDN;
 }
@@ -1032,7 +1032,7 @@ bool ResourceLDAPKIO::autoCache()
   return d->mAutoCache;
 }
 
-QString ResourceLDAPKIO::cacheDst() const
+TQString ResourceLDAPKIO::cacheDst() const
 {
   return d->mCacheDst;
 }    

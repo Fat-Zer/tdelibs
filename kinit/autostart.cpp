@@ -30,13 +30,13 @@
 class AutoStartItem
 {
 public:
-   QString name;
-   QString service;
-   QString startAfter;
+   TQString name;
+   TQString service;
+   TQString startAfter;
    int     phase;
 };
 
-class AutoStartList: public QPtrList<AutoStartItem>
+class AutoStartList: public TQPtrList<AutoStartItem>
 {
 public:
    AutoStartList() { }
@@ -48,12 +48,12 @@ AutoStart::AutoStart( bool new_startup )
   m_startList = new AutoStartList;
   m_startList->setAutoDelete(true);
   KGlobal::dirs()->addResourceType("autostart", "share/autostart");
-  QString xdgdirs = getenv("XDG_CONFIG_DIRS");
+  TQString xdgdirs = getenv("XDG_CONFIG_DIRS");
   if (xdgdirs.isEmpty())
         xdgdirs = "/etc/xdg";
 
-  QStringList xdgdirslist = QStringList::split( ':', xdgdirs );
-  for ( QStringList::Iterator itr = xdgdirslist.begin(); itr != xdgdirslist.end(); ++itr ) {
+  TQStringList xdgdirslist = TQStringList::split( ':', xdgdirs );
+  for ( TQStringList::Iterator itr = xdgdirslist.begin(); itr != xdgdirslist.end(); ++itr ) {
 	KGlobal::dirs()->addResourceDir("autostart", (*itr) +"/autostart");
   }
 }
@@ -78,7 +78,7 @@ void AutoStart::setPhaseDone()
    m_phasedone = true;
 }
 
-static QString extractName(QString path)
+static TQString extractName(TQString path)
 {
   int i = path.findRev('/');
   if (i >= 0)
@@ -89,12 +89,12 @@ static QString extractName(QString path)
   return path;
 }
 
-static bool startCondition(const QString &condition)
+static bool startCondition(const TQString &condition)
 {
   if (condition.isEmpty())
      return true;
 
-  QStringList list = QStringList::split(':', condition, true);
+  TQStringList list = TQStringList::split(':', condition, true);
   if (list.count() < 4) 
      return true;
   if (list[0].isEmpty() || list[2].isEmpty()) 
@@ -112,9 +112,9 @@ static bool startCondition(const QString &condition)
 void
 AutoStart::loadAutoStartList()
 {
-   QStringList files = KGlobal::dirs()->findAllResources("autostart", "*.desktop", false, true);
+   TQStringList files = KGlobal::dirs()->findAllResources("autostart", "*.desktop", false, true);
    
-   for(QStringList::ConstIterator it = files.begin();
+   for(TQStringList::ConstIterator it = files.begin();
        it != files.end();
        ++it)
    {
@@ -167,7 +167,7 @@ AutoStart::startService()
    {
 
      // Check for items that depend on previously started items
-     QString lastItem = m_started[0];
+     TQString lastItem = m_started[0];
      for(AutoStartItem *item = m_startList->first(); 
          item; item = m_startList->next())
      {
@@ -175,7 +175,7 @@ AutoStart::startService()
         &&  item->startAfter == lastItem)
         {
            m_started.prepend(item->name);
-           QString service = item->service;
+           TQString service = item->service;
            m_startList->remove();
            return service;
         }
@@ -192,7 +192,7 @@ AutoStart::startService()
       &&  item->startAfter.isEmpty())
       {
          m_started.prepend(item->name);
-         QString service = item->service;
+         TQString service = item->service;
          m_startList->remove();
          return service;
       }
@@ -205,7 +205,7 @@ AutoStart::startService()
       if (item->phase == m_phase)
       {
          m_started.prepend(item->name);
-         QString service = item->service;
+         TQString service = item->service;
          m_startList->remove();
          return service;
       }

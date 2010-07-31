@@ -37,7 +37,7 @@
 
 #include <kdebug.h>
 
-template class QPtrList<KHTMLPart>;
+template class TQPtrList<KHTMLPart>;
 
 extern "C" KDE_EXPORT void *init_libkhtml()
 {
@@ -61,8 +61,8 @@ unsigned long int KHTMLFactory::s_refcnt = 0;
 KInstance *KHTMLFactory::s_instance = 0;
 KAboutData *KHTMLFactory::s_about = 0;
 KHTMLSettings *KHTMLFactory::s_settings = 0;
-QPtrList<KHTMLPart> *KHTMLFactory::s_parts = 0;
-QString *KHTMLSettings::avFamilies = 0;
+TQPtrList<KHTMLPart> *KHTMLFactory::s_parts = 0;
+TQString *KHTMLSettings::avFamilies = 0;
 
 KHTMLFactory::KHTMLFactory( bool clone )
 {
@@ -103,7 +103,7 @@ KHTMLFactory::~KHTMLFactory()
         deref();
 }
 
-KParts::Part *KHTMLFactory::createPartObject( QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name, const char *className, const QStringList & )
+KParts::Part *KHTMLFactory::createPartObject( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *className, const TQStringList & )
 {
   KHTMLPart::GUIProfile prof = KHTMLPart::DefaultGUI;
   if ( strcmp( className, "Browser/View" ) == 0 )
@@ -118,7 +118,7 @@ void KHTMLFactory::ref()
     {
         // we can't use a staticdeleter here, because that would mean
         // that the factory gets deleted from within a qPostRoutine, called
-        // from the QApplication destructor. That however is too late, because
+        // from the TQApplication destructor. That however is too late, because
         // we want to destruct a KInstance object, which involves destructing
         // a KConfig object, which might call KGlobal::dirs() (in sync()) which
         // probably is not going to work ;-)
@@ -144,7 +144,7 @@ void KHTMLFactory::deref()
 void KHTMLFactory::registerPart( KHTMLPart *part )
 {
     if ( !s_parts )
-        s_parts = new QPtrList<KHTMLPart>;
+        s_parts = new TQPtrList<KHTMLPart>;
 
     if ( !s_parts->containsRef( part ) )
     {

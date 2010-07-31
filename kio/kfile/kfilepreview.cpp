@@ -24,24 +24,24 @@
 #include <kfilepreview.moc>
 #include <klocale.h>
 
-#include <qlabel.h>
+#include <tqlabel.h>
 
 #include "config-kfile.h"
 
-KFilePreview::KFilePreview(KFileView *view, QWidget *parent, const char *name)
-    : QSplitter(parent, name), KFileView()
+KFilePreview::KFilePreview(KFileView *view, TQWidget *parent, const char *name)
+    : TQSplitter(parent, name), KFileView()
 {
     if ( view )
         init( view );
     else
-        init( new KFileIconView( (QSplitter*) this, "left" ));
+        init( new KFileIconView( (TQSplitter*) this, "left" ));
 }
 
 
-KFilePreview::KFilePreview(QWidget *parent, const char *name) :
-                           QSplitter(parent, name), KFileView()
+KFilePreview::KFilePreview(TQWidget *parent, const char *name) :
+                           TQSplitter(parent, name), KFileView()
 {
-    init( new KFileIconView((QSplitter*)this, "left") );
+    init( new KFileIconView((TQSplitter*)this, "left") );
 }
 
 KFilePreview::~KFilePreview()
@@ -54,7 +54,7 @@ KFilePreview::~KFilePreview()
     // don't delete the preview, we can reuse it
     // (it will get deleted by ~KDirOperator)
     if ( preview && preview->parentWidget() == this ) {
-        preview->reparent(0L, 0, QPoint(0, 0), false);
+        preview->reparent(0L, 0, TQPoint(0, 0), false);
     }
 }
 
@@ -65,13 +65,13 @@ void KFilePreview::init( KFileView *view )
     left = 0L;
     setFileView( view );
 
-    preview = new QWidget((QSplitter*)this, "preview");
-    QString tmp = i18n("No preview available.");
-    QLabel *l = new QLabel(tmp, preview);
+    preview = new TQWidget((TQSplitter*)this, "preview");
+    TQString tmp = i18n("No preview available.");
+    TQLabel *l = new TQLabel(tmp, preview);
     l->setMinimumSize(l->sizeHint());
     l->move(10, 5);
     preview->setMinimumWidth(l->sizeHint().width()+20);
-    setResizeMode(preview, QSplitter::KeepSize);
+    setResizeMode(preview, TQSplitter::KeepSize);
 
     // Why copy the actions? --ellis, 13 Jan 02.
     //for ( uint i = 0; i < view->actionCollection()->count(); i++ )
@@ -89,14 +89,14 @@ void KFilePreview::setFileView( KFileView *view )
     //}
 
     delete left;
-    view->widget()->reparent( this, QPoint(0,0) );
+    view->widget()->reparent( this, TQPoint(0,0) );
     view->KFileView::setViewMode(All);
     view->setParentView(this);
     view->setSorting( sorting() );
     left = view;
 
-    connect( left->signaler(), SIGNAL( fileHighlighted(const KFileItem*) ),
-             SLOT( slotHighlighted( const KFileItem * )));
+    connect( left->signaler(), TQT_SIGNAL( fileHighlighted(const KFileItem*) ),
+             TQT_SLOT( slotHighlighted( const KFileItem * )));
 
     // Why copy the actions? --ellis, 13 Jan 02.
     //for ( uint i = 0; i < view->actionCollection()->count(); i++ )
@@ -105,15 +105,15 @@ void KFilePreview::setFileView( KFileView *view )
 
 // this url parameter is useless... it's the url of the current directory.
 // what for?
-void KFilePreview::setPreviewWidget(const QWidget *w, const KURL &)
+void KFilePreview::setPreviewWidget(const TQWidget *w, const KURL &)
 {
     left->setOnlyDoubleClickSelectsFiles( onlyDoubleClickSelectsFiles() );
 
     if (w) {
-        connect(this, SIGNAL( showPreview(const KURL &) ),
-                w, SLOT( showPreview(const KURL &) ));
-        connect( this, SIGNAL( clearPreview() ),
-                w, SLOT( clearPreview() ));
+        connect(this, TQT_SIGNAL( showPreview(const KURL &) ),
+                w, TQT_SLOT( showPreview(const KURL &) ));
+        connect( this, TQT_SIGNAL( clearPreview() ),
+                w, TQT_SLOT( clearPreview() ));
     }
     else {
         preview->hide();
@@ -121,8 +121,8 @@ void KFilePreview::setPreviewWidget(const QWidget *w, const KURL &)
     }
 
     delete preview;
-    preview = const_cast<QWidget*>(w);
-    preview->reparent((QSplitter*)this, 0, QPoint(0, 0), true);
+    preview = const_cast<TQWidget*>(w);
+    preview->reparent((TQSplitter*)this, 0, TQPoint(0, 0), true);
     preview->resize(preview->sizeHint());
     preview->show();
 }
@@ -133,7 +133,7 @@ void KFilePreview::insertItem(KFileItem *item)
     left->insertItem(item);
 }
 
-void KFilePreview::setSorting( QDir::SortSpec sort )
+void KFilePreview::setSorting( TQDir::SortSpec sort )
 {
     left->setSorting( sort );
     KFileView::setSorting( left->sorting() );
@@ -264,12 +264,12 @@ KActionCollection * KFilePreview::actionCollection() const
     }
 }
 
-void KFilePreview::readConfig( KConfig *config, const QString& group )
+void KFilePreview::readConfig( KConfig *config, const TQString& group )
 {
     left->readConfig( config, group );
 }
 
-void KFilePreview::writeConfig( KConfig *config, const QString& group )
+void KFilePreview::writeConfig( KConfig *config, const TQString& group )
 {
     left->writeConfig( config, group );
 }

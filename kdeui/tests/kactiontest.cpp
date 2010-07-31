@@ -1,5 +1,5 @@
 
-#include <qguardedptr.h>
+#include <tqguardedptr.h>
 
 #include <kapplication.h>
 #include <kaction.h>
@@ -10,15 +10,15 @@ int main( int argc, char **argv )
 {
     KApplication app( argc, argv, "kactiontest" );
 
-    KActionCollection coll( static_cast<QObject *>( 0 ) );
+    KActionCollection coll( static_cast<TQObject *>( 0 ) );
 
-    QGuardedPtr<KAction> action1 = new KRadioAction("test",0, &coll);
-    QGuardedPtr<KAction> action2 = new KRadioAction("test",0, &coll);
-    QGuardedPtr<KAction> action3 = new KRadioAction("test",0, &coll);
-    QGuardedPtr<KAction> action4 = new KRadioAction("test",0, &coll);
-    QGuardedPtr<KAction> action5 = new KRadioAction("test",0, &coll);
-    QGuardedPtr<KAction> action6 = new KRadioAction("test",0, &coll);
-    QGuardedPtr<KAction> action7 = new KRadioAction("test",0, &coll);
+    TQGuardedPtr<KAction> action1 = new KRadioAction("test",0, &coll);
+    TQGuardedPtr<KAction> action2 = new KRadioAction("test",0, &coll);
+    TQGuardedPtr<KAction> action3 = new KRadioAction("test",0, &coll);
+    TQGuardedPtr<KAction> action4 = new KRadioAction("test",0, &coll);
+    TQGuardedPtr<KAction> action5 = new KRadioAction("test",0, &coll);
+    TQGuardedPtr<KAction> action6 = new KRadioAction("test",0, &coll);
+    TQGuardedPtr<KAction> action7 = new KRadioAction("test",0, &coll);
    
     coll.clear();
     assert( coll.isEmpty() );

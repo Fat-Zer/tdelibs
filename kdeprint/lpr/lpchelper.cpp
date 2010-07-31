@@ -23,14 +23,14 @@
 #include "lprsettings.h"
 
 #include <kstandarddirs.h>
-#include <qtextstream.h>
-#include <qregexp.h>
+#include <tqtextstream.h>
+#include <tqregexp.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocess.h>
 #include <stdlib.h>
 
-static QString execute(const QString& cmd)
+static TQString execute(const TQString& cmd)
 {
 	KPipeProcess	proc;
 	QString		output;
@@ -44,8 +44,8 @@ static QString execute(const QString& cmd)
 	return output;
 }
 
-LpcHelper::LpcHelper(QObject *parent, const char *name)
-: QObject(parent, name)
+LpcHelper::LpcHelper(TQObject *parent, const char *name)
+: TQObject(parent, name)
 {
 	// look for the "lpc" executable. Use the PATH variable and
 	// add some specific dirs.
@@ -60,7 +60,7 @@ LpcHelper::~LpcHelper()
 {
 }
 
-KMPrinter::PrinterState LpcHelper::state(const QString& prname) const
+KMPrinter::PrinterState LpcHelper::state(const TQString& prname) const
 {
 	if (m_state.contains(prname))
 		return m_state[prname];
@@ -72,7 +72,7 @@ KMPrinter::PrinterState LpcHelper::state(KMPrinter *prt) const
 	return state(prt->printerName());
 }
 
-void LpcHelper::parseStatusLPR(QTextStream &t)
+void LpcHelper::parseStatusLPR(TQTextStream &t)
 {
 	QString		printer, line;
 	int		p(-1);
@@ -107,7 +107,7 @@ void LpcHelper::parseStatusLPR(QTextStream &t)
 	}
 }
 
-void LpcHelper::parseStatusLPRng(QTextStream& t)
+void LpcHelper::parseStatusLPRng(TQTextStream& t)
 {
 	QStringList	l;
 	int	p(-1);
@@ -118,7 +118,7 @@ void LpcHelper::parseStatusLPRng(QTextStream& t)
 			break;
 	while (!t.atEnd())
 	{
-		l = QStringList::split(QRegExp("\\s"), t.readLine(), false);
+		l = TQStringList::split(TQRegExp("\\s"), t.readLine(), false);
 		if (l.count() < 4)
 			continue;
 		p = l[0].find('@');
@@ -163,7 +163,7 @@ void LpcHelper::updateStates()
 
 }
 
-bool LpcHelper::enable(KMPrinter *prt, bool state, QString& msg)
+bool LpcHelper::enable(KMPrinter *prt, bool state, TQString& msg)
 {
 	int	st = m_state[prt->printerName()] & KMPrinter::StateMask;
 	if (changeState(prt->printerName(), (state ? "enable" : "disable"), msg))
@@ -174,7 +174,7 @@ bool LpcHelper::enable(KMPrinter *prt, bool state, QString& msg)
 	return false;
 }
 
-bool LpcHelper::start(KMPrinter *prt, bool state, QString& msg)
+bool LpcHelper::start(KMPrinter *prt, bool state, TQString& msg)
 {
 	int	rej = m_state[prt->printerName()] & ~KMPrinter::StateMask;
 	if (changeState(prt->printerName(), (state ? "start" : "stop"), msg))
@@ -190,7 +190,7 @@ bool LpcHelper::start(KMPrinter *prt, bool state, QString& msg)
 //   -1 : permission denied
 //   -2 : unknown printer
 //    1 : unknown error
-int LpcHelper::parseStateChangeLPR(const QString& result, const QString& printer)
+int LpcHelper::parseStateChangeLPR(const TQString& result, const TQString& printer)
 {
 	if (result.startsWith(printer + ":"))
 		return 0;
@@ -202,7 +202,7 @@ int LpcHelper::parseStateChangeLPR(const QString& result, const QString& printer
 		return 1;
 }
 
-static QString lprngAnswer(const QString& result, const QString& printer)
+static TQString lprngAnswer(const TQString& result, const TQString& printer)
 {
 	int	p, q;
 
@@ -214,10 +214,10 @@ static QString lprngAnswer(const QString& result, const QString& printer)
 		QString	answer = result.mid(q, p-q).stripWhiteSpace();
 		return answer;
 	}
-	return QString::null;
+	return TQString::null;
 }
 
-int LpcHelper::parseStateChangeLPRng(const QString& result, const QString& printer)
+int LpcHelper::parseStateChangeLPRng(const TQString& result, const TQString& printer)
 {
 	QString	answer = lprngAnswer(result, printer);
 	if (answer == "no")
@@ -228,7 +228,7 @@ int LpcHelper::parseStateChangeLPRng(const QString& result, const QString& print
 		return 1;
 }
 
-bool LpcHelper::changeState(const QString& printer, const QString& op, QString& msg)
+bool LpcHelper::changeState(const TQString& printer, const TQString& op, TQString& msg)
 {
 	if (m_exepath.isEmpty())
 	{
@@ -260,20 +260,20 @@ bool LpcHelper::changeState(const QString& printer, const QString& op, QString& 
 			break;
 		default:
 		case 1:
-			msg = i18n("Unknown error: %1").arg(result.replace(QRegExp("\\n"), " "));
+			msg = i18n("Unknown error: %1").arg(result.replace(TQRegExp("\\n"), " "));
 			break;
 	}
 	return (status == 0);
 }
 
-bool LpcHelper::removeJob(KMJob *job, QString& msg)
+bool LpcHelper::removeJob(KMJob *job, TQString& msg)
 {
 	if (m_lprmpath.isEmpty())
 	{
 		msg = i18n("The executable %1 couldn't be found in your PATH.").arg("lprm");
 		return false;
 	}
-	QString	result = execute(m_lprmpath + " -P " + KProcess::quote(job->printer()) + " " + QString::number(job->id()));
+	QString	result = execute(m_lprmpath + " -P " + KProcess::quote(job->printer()) + " " + TQString::number(job->id()));
 	if (result.find("dequeued") != -1)
 		return true;
 	else if (result.find("Permission denied") != -1 || result.find("no permissions") != -1)
@@ -284,14 +284,14 @@ bool LpcHelper::removeJob(KMJob *job, QString& msg)
 }
 
 // LPRng only
-bool LpcHelper::changeJobState(KMJob *job, int state, QString& msg)
+bool LpcHelper::changeJobState(KMJob *job, int state, TQString& msg)
 {
 	if (m_lprmpath.isEmpty())
 	{
 		msg = i18n("The executable %1 couldn't be found in your PATH.").arg("lpc");
 		return false;
 	}
-	QString	result = execute(m_exepath + (state == KMJob::Held ? " hold " : " release ") + KProcess::quote(job->printer()) + " " + QString::number(job->id()));
+	QString	result = execute(m_exepath + (state == KMJob::Held ? " hold " : " release ") + KProcess::quote(job->printer()) + " " + TQString::number(job->id()));
 	QString	answer = lprngAnswer(result, job->printer());
 	if (answer == "no")
 	{
@@ -302,7 +302,7 @@ bool LpcHelper::changeJobState(KMJob *job, int state, QString& msg)
 		return true;
 }
 
-bool LpcHelper::restart(QString& msg)
+bool LpcHelper::restart(TQString& msg)
 {
 	QString	s;
 	if (m_exepath.isEmpty())
@@ -314,7 +314,7 @@ bool LpcHelper::restart(QString& msg)
 		msg = i18n("The executable %1 couldn't be found in your PATH.").arg(s);
 		return false;
 	}
-	::system(QFile::encodeName(m_exepath + " reread"));
-	::system(QFile::encodeName(m_checkpcpath + " -f"));
+	::system(TQFile::encodeName(m_exepath + " reread"));
+	::system(TQFile::encodeName(m_checkpcpath + " -f"));
 	return true;
 }

@@ -29,23 +29,23 @@
 #include <kstandarddirs.h>
 #include <ksimpleconfig.h>
 
-#include <qdir.h>
-#include <qregexp.h>
+#include <tqdir.h>
+#include <tqregexp.h>
 #include <kio/netaccess.h>
 
 static const char * const s_uritypes[] = { "NET_PROTOCOL", "LOCAL_FILE", "LOCAL_DIR", "EXECUTABLE", "HELP", "SHELL", "BLOCKED", "ERROR", "UNKNOWN" };
 #define NO_FILTERING -2
 
-void filter( const char* u, const char * expectedResult = 0, int expectedUriType = -1, QStringList list = QStringList(), const char * abs_path = 0, bool checkForExecutables = true )
+void filter( const char* u, const char * expectedResult = 0, int expectedUriType = -1, TQStringList list = TQStringList(), const char * abs_path = 0, bool checkForExecutables = true )
 {
-    QString a = QString::fromUtf8( u );
+    TQString a = TQString::fromUtf8( u );
     KURIFilterData * m_filterData = new KURIFilterData;
     m_filterData->setData( a );
     m_filterData->setCheckForExecutables( checkForExecutables );
 
     if( abs_path )
     {
-        m_filterData->setAbsolutePath( QString::fromLatin1( abs_path ) );
+        m_filterData->setAbsolutePath( TQString::fromLatin1( abs_path ) );
         kdDebug() << "Filtering: " << a << " with abs_path=" << abs_path << endl;
     }
     else
@@ -54,7 +54,7 @@ void filter( const char* u, const char * expectedResult = 0, int expectedUriType
     if (KURIFilter::self()->filterURI(*m_filterData, list))
     {
         // Copied from minicli...
-        QString cmd;
+        TQString cmd;
         KURL uri = m_filterData->uri();
 
         if ( uri.isLocalFile() && !uri.hasRef() && uri.query().isEmpty() )
@@ -97,8 +97,8 @@ void filter( const char* u, const char * expectedResult = 0, int expectedUriType
         if ( expectedResult )
         {
             // Hack for other locales than english, normalize google hosts to google.com
-            cmd = cmd.replace( QRegExp( "www\\.google\\.[^/]*/" ), "www.google.com/" );
-            if ( cmd != QString::fromLatin1( expectedResult ) )
+            cmd = cmd.replace( TQRegExp( "www\\.google\\.[^/]*/" ), "www.google.com/" );
+            if ( cmd != TQString::fromLatin1( expectedResult ) )
             {
                 kdError() << " Got " << cmd << " expected " << expectedResult << endl;
                 ::exit(1);
@@ -125,13 +125,13 @@ void filter( const char* u, const char * expectedResult = 0, int expectedUriType
     kdDebug() << "-----" << endl;
 }
 
-void testLocalFile( const QString& filename )
+void testLocalFile( const TQString& filename )
 {
-    QFile tmpFile( filename ); // Yeah, I know, security risk blah blah. This is a test prog!
+    TQFile tmpFile( filename ); // Yeah, I know, security risk blah blah. This is a test prog!
 
     if ( tmpFile.open( IO_ReadWrite ) )
     {
-        QCString fname = QFile::encodeName( tmpFile.name() );
+        TQCString fname = TQFile::encodeName( tmpFile.name() );
         filter(fname, fname, KURIFilterData::LOCAL_FILE);
         tmpFile.close();
         tmpFile.remove();
@@ -155,7 +155,7 @@ int main(int argc, char **argv)
 {
     // Ensure that user configuration doesn't change the results of those tests
     // KDEHOME needs to be writable though, for a ksycoca database
-    setenv( "KDEHOME", QFile::encodeName( QDir::homeDirPath() + "/.kde-kurifiltertest" ), true );
+    setenv( "KDEHOME", TQFile::encodeName( TQDir::homeDirPath() + "/.kde-kurifiltertest" ), true );
     setenv( "KDE_FORK_SLAVES", "yes", true ); // simpler, for the final cleanup
 
     KAboutData aboutData(appName, programName, version, description);
@@ -187,7 +187,7 @@ int main(int argc, char **argv)
       cfg.sync();
     }
 
-    QStringList minicliFilters;
+    TQStringList minicliFilters;
     minicliFilters << "kshorturifilter" << "kurisearchfilter" << "localdomainurifilter";
 
     // URI that should require no filtering
@@ -241,8 +241,8 @@ int main(int argc, char **argv)
 
     filter( "/", "/", KURIFilterData::LOCAL_DIR );
     filter( "/", "/", KURIFilterData::LOCAL_DIR, "kshorturifilter" );
-    filter( "~/.bashrc", QDir::homeDirPath().local8Bit()+"/.bashrc", KURIFilterData::LOCAL_FILE, "kshorturifilter" );
-    filter( "~", QDir::homeDirPath().local8Bit(), KURIFilterData::LOCAL_DIR, "kshorturifilter", "/tmp" );
+    filter( "~/.bashrc", TQDir::homeDirPath().local8Bit()+"/.bashrc", KURIFilterData::LOCAL_FILE, "kshorturifilter" );
+    filter( "~", TQDir::homeDirPath().local8Bit(), KURIFilterData::LOCAL_DIR, "kshorturifilter", "/tmp" );
     filter( "~foobar", 0, KURIFilterData::ERROR, "kshorturifilter" );
     filter( "user@host.domain", "mailto:user@host.domain", KURIFilterData::NET_PROTOCOL ); // new in KDE-3.2
 
@@ -270,7 +270,7 @@ int main(int argc, char **argv)
     // a search using the default search engine
     // 'ls' is a bit of a special case though, due to the toplevel domain called 'ls'
     filter( "cp", "http://www.google.com/search?q=cp&ie=UTF-8&oe=UTF-8", KURIFilterData::NET_PROTOCOL,
-            QStringList(), 0, false /* don't check for executables, see konq_misc.cc */ );
+            TQStringList(), 0, false /* don't check for executables, see konq_misc.cc */ );
 
     // Executable tests - No IKWS in minicli
     filter( "cp", "cp", KURIFilterData::EXECUTABLE, minicliFilters );
@@ -288,13 +288,13 @@ int main(int argc, char **argv)
     setenv( "SOMEVAR", "/somevar", 0 );
     setenv( "ETC", "/etc", 0 );
 
-    QCString qtdir=getenv("QTDIR");
-    QCString home = getenv("HOME");
-    QCString kdehome = getenv("KDEHOME");
+    TQCString qtdir=getenv("QTDIR");
+    TQCString home = getenv("HOME");
+    TQCString kdehome = getenv("KDEHOME");
 
     filter( "$SOMEVAR/kdelibs/kio", 0, KURIFilterData::ERROR ); // note: this dir doesn't exist...
     filter( "$ETC/passwd", "/etc/passwd", KURIFilterData::LOCAL_FILE );
-    filter( "$QTDIR/doc/html/functions.html#s", QCString("file://")+qtdir+"/doc/html/functions.html#s", KURIFilterData::LOCAL_FILE );
+    filter( "$QTDIR/doc/html/functions.html#s", TQCString("file://")+qtdir+"/doc/html/functions.html#s", KURIFilterData::LOCAL_FILE );
     filter( "http://www.kde.org/$USER", "http://www.kde.org/$USER", KURIFilterData::NET_PROTOCOL ); // no expansion
 
     // Assume the default (~/.kde) if
@@ -337,7 +337,7 @@ int main(int argc, char **argv)
     filter( "$HOME", home, KURIFilterData::LOCAL_DIR, "kshorturifilter" ); //use specific filter.
 
 
-    QCString sc;
+    TQCString sc;
     filter( sc.sprintf("gg%cfoo bar",delimiter), "http://www.google.com/search?q=foo+bar&ie=UTF-8&oe=UTF-8", KURIFilterData::NET_PROTOCOL );
     filter( sc.sprintf("bug%c55798", delimiter), "http://bugs.kde.org/show_bug.cgi?id=55798", KURIFilterData::NET_PROTOCOL );
 

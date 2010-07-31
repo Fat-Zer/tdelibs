@@ -32,19 +32,19 @@
 #include <test.h>
 #endif
 
-#include <qdatetime.h>
-#include <qdir.h>
+#include <tqdatetime.h>
+#include <tqdir.h>
 
 #include <kde_file.h>
 #include "kapplication.h"
 #include "ksavefile.h"
 #include "kstandarddirs.h"
 
-KSaveFile::KSaveFile(const QString &filename, int mode)
+KSaveFile::KSaveFile(const TQString &filename, int mode)
  : mTempFile(true)
 {
    // follow symbolic link, if any
-   QString real_filename = KStandardDirs::realFilePath(filename);
+   TQString real_filename = KStandardDirs::realFilePath(filename);
 
    // we only check here if the directory can be written to
    // the actual filename isn't written to, but replaced later
@@ -55,7 +55,7 @@ KSaveFile::KSaveFile(const QString &filename, int mode)
       return;
    }
 
-   if (mTempFile.create(real_filename, QString::fromLatin1(".new"), mode))
+   if (mTempFile.create(real_filename, TQString::fromLatin1(".new"), mode))
    {
       mFileName = real_filename; // Set filename upon success
 
@@ -63,7 +63,7 @@ KSaveFile::KSaveFile(const QString &filename, int mode)
       // permissions are the same as existing file so the existing
       // file's permissions are preserved
       KDE_struct_stat stat_buf;
-      if (KDE_stat(QFile::encodeName(real_filename), &stat_buf)==0)
+      if (KDE_stat(TQFile::encodeName(real_filename), &stat_buf)==0)
       {
          // But only if we own the existing file
          if (stat_buf.st_uid == getuid())
@@ -115,7 +115,7 @@ KSaveFile::close()
    }
    if (mTempFile.close())
    {
-      if (0==KDE_rename(QFile::encodeName(mTempFile.name()), QFile::encodeName(mFileName)))
+      if (0==KDE_rename(TQFile::encodeName(mTempFile.name()), TQFile::encodeName(mFileName)))
          return true; // Success!
       mTempFile.setError(errno);
    }
@@ -142,10 +142,10 @@ write_all(int fd, const char *buf, size_t len)
    return 0;
 }
 
-bool KSaveFile::backupFile( const QString& qFilename, const QString& backupDir,
-                            const QString& backupExtension)
+bool KSaveFile::backupFile( const TQString& qFilename, const TQString& backupDir,
+                            const TQString& backupExtension)
 {
-   QCString cFilename = QFile::encodeName(qFilename);
+   TQCString cFilename = TQFile::encodeName(qFilename);
    const char *filename = cFilename.data();
 
    int fd = KDE_open( filename, O_RDONLY );
@@ -159,23 +159,23 @@ bool KSaveFile::backupFile( const QString& qFilename, const QString& backupDir,
       return false;
    }
 
-   QCString cBackup;
+   TQCString cBackup;
    if ( backupDir.isEmpty() )
        cBackup = cFilename;
    else
    {
-       QCString nameOnly;
+       TQCString nameOnly;
        int slash = cFilename.findRev('/');
        if (slash < 0)
 	   nameOnly = cFilename;
        else
 	   nameOnly = cFilename.mid(slash + 1);
-       cBackup = QFile::encodeName(backupDir);
+       cBackup = TQFile::encodeName(backupDir);
        if ( backupDir[backupDir.length()-1] != '/' )
            cBackup += '/';
        cBackup += nameOnly;
    }
-   cBackup += QFile::encodeName(backupExtension);
+   cBackup += TQFile::encodeName(backupExtension);
    const char *backup = cBackup.data();
    int permissions = buff.st_mode & 07777;
 

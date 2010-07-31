@@ -27,9 +27,9 @@
 #include <kservice.h>
 #include <kde_file.h>
 
-#include <qpushbutton.h>
-#include <qlayout.h>
-#include <qdir.h>
+#include <tqpushbutton.h>
+#include <tqlayout.h>
+#include <tqdir.h>
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -39,7 +39,7 @@ const int MAXKRUNS = 100;
 
 testKRun * myArray[MAXKRUNS];
 
-void testKRun::foundMimeType( const QString& _type )
+void testKRun::foundMimeType( const TQString& _type )
 {
   kdDebug() << "testKRun::foundMimeType " << _type << endl;
   kdDebug() << "testKRun::foundMimeType URL=" << m_strURL.url() << endl;
@@ -50,15 +50,15 @@ void testKRun::foundMimeType( const QString& _type )
 
 Receiver::Receiver()
 {
-        QVBoxLayout *lay = new QVBoxLayout(this);
+        TQVBoxLayout *lay = new TQVBoxLayout(this);
         lay->setAutoAdd(true);
-        QPushButton * h = new QPushButton( "Press here to terminate", this );
-        start = new QPushButton( "Launch KRuns", this );
-        stop = new QPushButton( "Stop those KRuns", this );
+        TQPushButton * h = new TQPushButton( "Press here to terminate", this );
+        start = new TQPushButton( "Launch KRuns", this );
+        stop = new TQPushButton( "Stop those KRuns", this );
         stop->setEnabled(false);
-        QObject::connect( h, SIGNAL(clicked()), kapp, SLOT(quit()) );
-        QObject::connect( start, SIGNAL(clicked()), this, SLOT(slotStart()) );
-        QObject::connect( stop, SIGNAL(clicked()), this, SLOT(slotStop()) );
+        TQObject::connect( h, TQT_SIGNAL(clicked()), kapp, TQT_SLOT(quit()) );
+        TQObject::connect( start, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotStart()) );
+        TQObject::connect( stop, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotStop()) );
 
         adjustSize();
         show();
@@ -87,12 +87,12 @@ void Receiver::slotStart()
   stop->setEnabled(true);
 }
 
-void check(QString txt, QString a, QString b)
+void check(TQString txt, TQString a, TQString b)
 {
   if (a.isEmpty())
-     a = QString::null;
+     a = TQString::null;
   if (b.isEmpty())
-     b = QString::null;
+     b = TQString::null;
   if (a == b)
     kdDebug() << txt << " : '" << a << "' - ok" << endl;
   else {
@@ -103,15 +103,15 @@ void check(QString txt, QString a, QString b)
 
 const char *bt(bool tr) { return tr?"true":"false"; }
 
-void checkBN(QString a, bool tr, QString b)
+void checkBN(TQString a, bool tr, TQString b)
 {
-  check( QString().sprintf("binaryName('%s', %s)", a.latin1(), bt(tr)), KRun::binaryName(a, tr), b);
+  check( TQString().sprintf("binaryName('%s', %s)", a.latin1(), bt(tr)), KRun::binaryName(a, tr), b);
 }
 
-void checkPDE(const KService &service, const KURL::List &urls, bool hs, bool tf, QString b)
+void checkPDE(const KService &service, const KURL::List &urls, bool hs, bool tf, TQString b)
 {
   check(
-   QString().sprintf("processDesktopExec( "
+   TQString().sprintf("processDesktopExec( "
       "service = {\nexec = %s\nterminal = %s, terminalOptions = %s\nsubstituteUid = %s, user = %s },"
        "\nURLs = { %s },\nhas_shell = %s, temp_files = %s )",
       service.exec().latin1(), bt(service.terminal()), service.terminalOptions().latin1(), bt(service.substituteUid()), service.username().latin1(),
@@ -174,7 +174,7 @@ int main(int argc, char **argv)
 		"%s\n%s\n%s\n",execs[ex],terms[te],sus[su]);
           close(fd);
 	  fclose(f);
-          KService s(QDir::currentDirPath() + "/kruntest.desktop");
+          KService s(TQDir::currentDirPath() + "/kruntest.desktop");
           unlink("kruntest.desktop");
           checkPDE( s, l0, hs, false, rslts[ex+te*2+su*4+hs*8]);
         }

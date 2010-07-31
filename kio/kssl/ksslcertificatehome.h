@@ -23,8 +23,8 @@
 
 class KSSLCertificate;
 class KSSLPKCS12;
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -38,48 +38,48 @@ public:
 	 *  These methods might dynamically allocate an object for you.  Be sure
 	 *  to delete them when you are done.
 	 */
-	static KSSLPKCS12* getCertificateByHost(QString host, QString password, KSSLAuthAction* aa);
-	static KSSLPKCS12* getCertificateByName(QString name, QString password);
-	static KSSLPKCS12* getCertificateByName(QString name);
-	static QString getDefaultCertificateName(QString host, KSSLAuthAction *aa = NULL);
-	static QString getDefaultCertificateName(KSSLAuthAction *aa = NULL);
-	static KSSLPKCS12* getDefaultCertificate(QString password, KSSLAuthAction *aa = NULL);
+	static KSSLPKCS12* getCertificateByHost(TQString host, TQString password, KSSLAuthAction* aa);
+	static KSSLPKCS12* getCertificateByName(TQString name, TQString password);
+	static KSSLPKCS12* getCertificateByName(TQString name);
+	static TQString getDefaultCertificateName(TQString host, KSSLAuthAction *aa = NULL);
+	static TQString getDefaultCertificateName(KSSLAuthAction *aa = NULL);
+	static KSSLPKCS12* getDefaultCertificate(TQString password, KSSLAuthAction *aa = NULL);
 	static KSSLPKCS12* getDefaultCertificate(KSSLAuthAction *aa = NULL);
-	static bool hasCertificateByName(QString name);
+	static bool hasCertificateByName(TQString name);
 
 
 	/*
 	 *   These set the default certificate for hosts without a policy.
 	 */
-	static void setDefaultCertificate(QString name, bool send = true, bool prompt = false);
+	static void setDefaultCertificate(TQString name, bool send = true, bool prompt = false);
 	static void setDefaultCertificate(KSSLPKCS12 *cert, bool send = true, bool prompt = false);
 
 
 	/*
 	 *   These set the default certificate for a host.
 	 */
-	static void setDefaultCertificate(QString name, QString host, bool send = true, bool prompt = false);
-	static void setDefaultCertificate(KSSLPKCS12 *cert, QString host, bool send = true, bool prompt = false);
+	static void setDefaultCertificate(TQString name, TQString host, bool send = true, bool prompt = false);
+	static void setDefaultCertificate(KSSLPKCS12 *cert, TQString host, bool send = true, bool prompt = false);
 
 	/*
 	 *   These add a certificate to the repository.
 	 *   Returns: true on success, false error
 	 */
-	static bool addCertificate(QString filename, QString password, bool storePass = false);
-	static bool addCertificate(KSSLPKCS12 *cert, QString passToStore = QString::null);
+	static bool addCertificate(TQString filename, TQString password, bool storePass = false);
+	static bool addCertificate(KSSLPKCS12 *cert, TQString passToStore = TQString::null);
 
 	/*
 	 *   These deletes a certificate from the repository.
 	 *   Returns: true on success, false error
 	 */
-	static bool deleteCertificate(const QString &filename, const QString &password);
+	static bool deleteCertificate(const TQString &filename, const TQString &password);
 	static bool deleteCertificate(KSSLPKCS12 *cert);
-	static bool deleteCertificateByName(const QString &name);
+	static bool deleteCertificateByName(const TQString &name);
  
 	/*
 	 *   Returns the list of certificates available
 	 */
-	static QStringList getCertificateList();
+	static TQStringList getCertificateList();
 
 private:
 	class KSSLCertificateHomePrivate;

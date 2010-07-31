@@ -1,8 +1,8 @@
 #include <break_lines.h>
 #include <klibloader.h>
-#include "qcstring.h"
-#include <qtextcodec.h>
-#include <qcleanuphandler.h>
+#include "tqcstring.h"
+#include <tqtextcodec.h>
+#include <tqcleanuphandler.h>
 #include <config.h>
 
 
@@ -38,7 +38,7 @@ namespace khtml {
             free(isbreakable);
             if (library) library->unload();
         }
-        const QChar *string;
+        const TQChar *string;
         int *wbrpos;
         int *isbreakable;
         int allocated;
@@ -56,9 +56,9 @@ namespace khtml {
 #endif
     }
 
-    bool isBreakableThai( const QChar *string, const int pos, const int len)
+    bool isBreakableThai( const TQChar *string, const int pos, const int len)
     {
-        static QTextCodec *thaiCodec = QTextCodec::codecForMib(2259);
+        static TQTextCodec *thaiCodec = TQTextCodec::codecForMib(2259);
 	//printf("Entering isBreakableThai with pos = %d\n", pos);
 
 #ifndef HAVE_LIBTHAI
@@ -96,7 +96,7 @@ namespace khtml {
         // build up string of thai chars
         if ( string != cache->string ) {
             //fprintf(stderr,"new string found (not in cache), calling libthai\n");
-            QCString cstr = thaiCodec->fromUnicode( QConstString(string,len).string());
+            TQCString cstr = thaiCodec->fromUnicode( TQConstString(string,len).string());
             //printf("About to call libthai::th_brk with str: %s",cstr.data());
 
             cache->numwbrpos = th_brk((const unsigned char*) cstr.data(), cache->wbrpos, cache->allocated);

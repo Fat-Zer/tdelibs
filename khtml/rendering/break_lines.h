@@ -1,7 +1,7 @@
 #ifndef BREAK_LINES_H
 #define BREAK_LINES_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 namespace khtml {
 
@@ -12,8 +12,8 @@ namespace khtml {
       Korean, Chinese ones should work as well
     */
     /*
-      dontbreakbefore[] contains characters not covered by QChar::Punctuation_Close that shouldn't be broken before.
-      chars included in QChar::Punctuation_Close are listed below.(look at UAX #14)
+      dontbreakbefore[] contains characters not covered by TQChar::Punctuation_Close that shouldn't be broken before.
+      chars included in TQChar::Punctuation_Close are listed below.(look at UAX #14)
          - 3001 ideographic comma
          - 3002 ideographic full stop
          - FE50 small comma
@@ -88,7 +88,7 @@ namespace khtml {
         0xFF70  //halfwidth katakana-hiragana prolonged sound mark
     };
 
-    // characters that aren't covered by QChar::Punctuation_Open
+    // characters that aren't covered by TQChar::Punctuation_Open
     const ushort dontbreakafter[] = {
         0x3012, //postal mark
         0xFF03, //full width pound mark
@@ -116,12 +116,12 @@ namespace khtml {
         }
     }
     
-    bool isBreakableThai( const QChar *string, const int pos, const int len);
+    bool isBreakableThai( const TQChar *string, const int pos, const int len);
     void cleanup_thaibreaks();
 
-    inline bool isBreakable( const QChar *str, const int pos, int len )
+    inline bool isBreakable( const TQChar *str, const int pos, int len )
     {
-	const QChar *c = str+pos;
+	const TQChar *c = str+pos;
 	unsigned short ch = c->unicode();
 	if ( ch > 0xff ) {
 	    // not latin1, need to do more sophisticated checks for asian fonts
@@ -140,10 +140,10 @@ namespace khtml {
                     return false; // never break before first character
 
                 // check for simple punctuation cases
-                QChar::Category cat = c->category();
-                if ( cat == QChar::Punctuation_Close ||
-                     cat == QChar::Punctuation_Other ||
-                     (str+(pos-1))->category() == QChar::Punctuation_Open )
+                TQChar::Category cat = c->category();
+                if ( cat == TQChar::Punctuation_Close ||
+                     cat == TQChar::Punctuation_Other ||
+                     (str+(pos-1))->category() == TQChar::Punctuation_Open )
                     return false;
 
                 // do binary search in dontbreak[]

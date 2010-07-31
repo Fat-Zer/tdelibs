@@ -36,7 +36,7 @@
 
 #include <stdio.h>
 #include <setjmp.h>
-#include <qdatetime.h>
+#include <tqdatetime.h>
 #include <kglobal.h>
 
 extern "C" {
@@ -82,9 +82,9 @@ struct khtml_jpeg_source_mgr : public jpeg_source_mgr {
     int valid_buffer_len;
     size_t skip_input_bytes;
     int ateof;
-    QRect change_rect;
-    QRect old_change_rect;
-    QTime decoder_timestamp;
+    TQRect change_rect;
+    TQRect old_change_rect;
+    TQTime decoder_timestamp;
     bool final_pass;
     bool decoding_done;
     bool do_progressive;
@@ -193,7 +193,7 @@ public:
 
     virtual ~KJPEGFormat();
 
-    virtual int decode(QImage& img, QImageConsumer* consumer,
+    virtual int decode(TQImage& img, TQImageConsumer* consumer,
                        const uchar* buffer, int length);
 private:
 
@@ -241,7 +241,7 @@ KJPEGFormat::~KJPEGFormat()
  * return  < 0 means "fatal error in image decoding, don't call me ever again"
  */
 
-int KJPEGFormat::decode(QImage& image, QImageConsumer* consumer, const uchar* buffer, int length)
+int KJPEGFormat::decode(TQImage& image, TQImageConsumer* consumer, const uchar* buffer, int length)
 {
 #ifdef JPEG_DEBUG
     qDebug("KJPEGFormat::decode(%08lx, %08lx, %08lx, %d)",
@@ -438,7 +438,7 @@ again:
 
         if(consumer && completed_scanlines)
         {
-            QRect r(0, oldoutput_scanline, cinfo.output_width, completed_scanlines);
+            TQRect r(0, oldoutput_scanline, cinfo.output_width, completed_scanlines);
 #ifdef JPEG_DEBUG
             qDebug("changing %d/%d %d/%d", r.x(), r.y(), r.width(), r.height());
 #endif
@@ -447,10 +447,10 @@ again:
             if ( jsrc.decoder_timestamp.elapsed() >= max_consumingtime ) {
                 if( !jsrc.old_change_rect.isEmpty()) {
                     consumer->changed(jsrc.old_change_rect);
-                    jsrc.old_change_rect = QRect();
+                    jsrc.old_change_rect = TQRect();
                 }
                 consumer->changed(jsrc.change_rect);
-                jsrc.change_rect = QRect();
+                jsrc.change_rect = TQRect();
                 jsrc.decoder_timestamp.restart();
             }
         }
@@ -463,7 +463,7 @@ again:
                 jsrc.decoding_done = jsrc.final_pass && cinfo.input_scan_number == cinfo.output_scan_number;
                 if ( !jsrc.decoding_done ) {
                     jsrc.old_change_rect |= jsrc.change_rect;
-                    jsrc.change_rect =  QRect();
+                    jsrc.change_rect =  TQRect();
                 }
             }
             else
@@ -521,7 +521,7 @@ again:
 // -----------------------------------------------------------------------------
 // This is the factory that teaches Qt about progressive JPEG's
 
-QImageFormat* khtml::KJPEGFormatType::decoderFor(const unsigned char* buffer, int length)
+TQImageFormat* khtml::KJPEGFormatType::decoderFor(const unsigned char* buffer, int length)
 {
     if(length < 3) return 0;
 

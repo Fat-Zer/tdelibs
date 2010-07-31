@@ -16,12 +16,12 @@
 # include <stdlib.h>
 #endif
 
-#include <qvaluelist.h>
-#include <qfileinfo.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qregexp.h>
-#include <qtextcodec.h>
+#include <tqvaluelist.h>
+#include <tqfileinfo.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqregexp.h>
+#include <tqtextcodec.h>
 
 #include <kdebug.h>
 #include <kurl.h>
@@ -37,20 +37,20 @@
 
 using namespace KIO;
 
-QString HelpProtocol::langLookup(const QString& fname)
+TQString HelpProtocol::langLookup(const TQString& fname)
 {
-    QStringList search;
+    TQStringList search;
 
     // assemble the local search paths
-    const QStringList localDoc = KGlobal::dirs()->resourceDirs("html");
+    const TQStringList localDoc = KGlobal::dirs()->resourceDirs("html");
 
-    QStringList langs = KGlobal::locale()->languageList();
+    TQStringList langs = KGlobal::locale()->languageList();
     langs.append( "en" );
     langs.remove( "C" );
 
     // this is kind of compat hack as we install our docs in en/ but the
     // default language is en_US
-    for (QStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
+    for (TQStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
         if ( *it == "en_US" )
             *it = "en";
 
@@ -58,24 +58,24 @@ QString HelpProtocol::langLookup(const QString& fname)
     int ldCount = localDoc.count();
     for (int id=0; id < ldCount; id++)
     {
-        QStringList::ConstIterator lang;
+        TQStringList::ConstIterator lang;
         for (lang = langs.begin(); lang != langs.end(); ++lang)
-            search.append(QString("%1%2/%3").arg(localDoc[id], *lang, fname));
+            search.append(TQString("%1%2/%3").arg(localDoc[id], *lang, fname));
     }
 
     // try to locate the file
-    QStringList::Iterator it;
+    TQStringList::Iterator it;
     for (it = search.begin(); it != search.end(); ++it)
     {
         kdDebug( 7119 ) << "Looking for help in: " << *it << endl;
 
-        QFileInfo info(*it);
+        TQFileInfo info(*it);
         if (info.exists() && info.isFile() && info.isReadable())
             return *it;
 
         if ( ( *it ).right( 5 ) == ".html" )
         {
-            QString file = (*it).left((*it).findRev('/')) + "/index.docbook";
+            TQString file = (*it).left((*it).findRev('/')) + "/index.docbook";
             kdDebug( 7119 ) << "Looking for help in: " << file << endl;
             info.setFile(file);
             if (info.exists() && info.isFile() && info.isReadable())
@@ -84,16 +84,16 @@ QString HelpProtocol::langLookup(const QString& fname)
     }
 
 
-    return QString::null;
+    return TQString::null;
 }
 
 
-QString HelpProtocol::lookupFile(const QString &fname,
-                                 const QString &query, bool &redirect)
+TQString HelpProtocol::lookupFile(const TQString &fname,
+                                 const TQString &query, bool &redirect)
 {
     redirect = false;
 
-    QString path, result;
+    TQString path, result;
 
     path = fname;
 
@@ -114,7 +114,7 @@ QString HelpProtocol::lookupFile(const QString &fname,
 	{
 	    unicodeError( i18n("There is no documentation available for %1." ).arg(path) );
 	    finished();
-            return QString::null;
+            return TQString::null;
 	}
     } else
         kdDebug( 7119 ) << "result " << result << endl;
@@ -123,16 +123,16 @@ QString HelpProtocol::lookupFile(const QString &fname,
 }
 
 
-void HelpProtocol::unicodeError( const QString &t )
+void HelpProtocol::unicodeError( const TQString &t )
 {
-   data(fromUnicode( QString(
+   data(fromUnicode( TQString(
         "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=%1\"></head>\n"
-        "%2</html>" ).arg( QTextCodec::codecForLocale()->name() ).arg( t ) ) );
+        "%2</html>" ).arg( TQTextCodec::codecForLocale()->name() ).arg( t ) ) );
 }
 
 HelpProtocol *slave = 0;
 
-HelpProtocol::HelpProtocol( bool ghelp, const QCString &pool, const QCString &app )
+HelpProtocol::HelpProtocol( bool ghelp, const TQCString &pool, const TQCString &app )
   : SlaveBase( ghelp ? "ghelp" : "help", pool, app ), mGhelp( ghelp )
 {
     slave = this;
@@ -144,7 +144,7 @@ void HelpProtocol::get( const KURL& url )
               << " query=" << url.query() << endl;
 
     bool redirect;
-    QString doc;
+    TQString doc;
     doc = url.path();
 
     if ( !mGhelp ) {
@@ -181,7 +181,7 @@ void HelpProtocol::get( const KURL& url )
 
     kdDebug( 7119 ) << "target " << target.url() << endl;
 
-    QString file = target.path();
+    TQString file = target.path();
     
     if ( mGhelp ) {
       if ( file.right( 4 ) != ".xml" ) {
@@ -189,11 +189,11 @@ void HelpProtocol::get( const KURL& url )
          return;
       }
     } else {
-        QString docbook_file = file.left(file.findRev('/')) + "/index.docbook";
+        TQString docbook_file = file.left(file.findRev('/')) + "/index.docbook";
         if (!KStandardDirs::exists(file)) {
             file = docbook_file;
         } else {
-            QFileInfo fi(file);
+            TQFileInfo fi(file);
             if (fi.isDir()) {
                 file = file + "/index.docbook";
             } else {
@@ -209,7 +209,7 @@ void HelpProtocol::get( const KURL& url )
     infoMessage(i18n("Preparing document"));
 
     if ( mGhelp ) {
-        QString xsl = "customization/kde-nochunk.xsl";
+        TQString xsl = "customization/kde-nochunk.xsl";
         mParsed = transform(file, locate("dtd", xsl));
 
         kdDebug( 7119 ) << "parsed " << mParsed.length() << endl;
@@ -238,7 +238,7 @@ void HelpProtocol::get( const KURL& url )
             mParsed = transform(file, locate("dtd", "customization/kde-chunk.xsl"));
             if ( !mParsed.isEmpty() ) {
                 infoMessage( i18n( "Saving to cache" ) );
-                QString cache = file.left( file.length() - 7 );
+                TQString cache = file.left( file.length() - 7 );
                 saveToCache( mParsed, locateLocal( "cache",
                                                         "kio_help" + cache +
                                                         "cache.bz2" ) );
@@ -250,7 +250,7 @@ void HelpProtocol::get( const KURL& url )
         if (mParsed.isEmpty()) {
             unicodeError( i18n( "The requested help file could not be parsed:<br>%1" ).arg( file ) );
         } else {
-            QString query = url.query(), anchor;
+            TQString query = url.query(), anchor;
 
             // if we have a query, look if it contains an anchor
             if (!query.isEmpty())
@@ -259,7 +259,7 @@ void HelpProtocol::get( const KURL& url )
 
 			    KURL redirURL(url);
 
-			    redirURL.setQuery(QString::null);
+			    redirURL.setQuery(TQString::null);
 			    redirURL.setHTMLRef(anchor);
 			    redirection(redirURL);
 			    finished();
@@ -274,20 +274,20 @@ void HelpProtocol::get( const KURL& url )
             {
                 int index = 0;
                 while ( true ) {
-                    index = mParsed.find( QRegExp( "<a name=" ), index);
+                    index = mParsed.find( TQRegExp( "<a name=" ), index);
                     if ( index == -1 ) {
                         kdDebug( 7119 ) << "no anchor\n";
                         break; // use whatever is the target, most likely index.html
                     }
 
                     if ( mParsed.mid( index, 11 + anchor.length() ).lower() ==
-                         QString( "<a name=\"%1\">" ).arg( anchor ) )
+                         TQString( "<a name=\"%1\">" ).arg( anchor ) )
                     {
                         index = mParsed.findRev( "<FILENAME filename=", index ) +
                                  strlen( "<FILENAME filename=\"" );
-                        QString filename=mParsed.mid( index, 2000 );
+                        TQString filename=mParsed.mid( index, 2000 );
                         filename = filename.left( filename.find( '\"' ) );
-                        QString path = target.path();
+                        TQString path = target.path();
                         path = path.left( path.findRev( '/' ) + 1) + filename;
                         kdDebug( 7119 ) << "anchor found in " << path <<endl;
                         target.setPath( path );
@@ -307,9 +307,9 @@ void HelpProtocol::emitFile( const KURL& url )
 {
     infoMessage(i18n("Looking up section"));
 
-    QString filename = url.path().mid(url.path().findRev('/') + 1);
+    TQString filename = url.path().mid(url.path().findRev('/') + 1);
 
-    int index = mParsed.find(QString("<FILENAME filename=\"%1\"").arg(filename));
+    int index = mParsed.find(TQString("<FILENAME filename=\"%1\"").arg(filename));
     if (index == -1) {
         if ( filename == "index.html" ) {
             data( fromUnicode( mParsed ) );
@@ -320,11 +320,11 @@ void HelpProtocol::emitFile( const KURL& url )
         return;
     }
 
-    QString filedata = splitOut(mParsed, index);
+    TQString filedata = splitOut(mParsed, index);
     replaceCharsetHeader( filedata );
 
     data( fromUnicode( filedata ) );
-    data( QByteArray() );
+    data( TQByteArray() );
 }
 
 void HelpProtocol::mimetype( const KURL &)
@@ -341,7 +341,7 @@ void HelpProtocol::get_file( const KURL& url )
 {
     kdDebug( 7119 ) << "get_file " << url.url() << endl;
 
-    QCString _path( QFile::encodeName(url.path()));
+    TQCString _path( TQFile::encodeName(url.path()));
     struct stat buff;
     if ( ::stat( _path.data(), &buff ) == -1 ) {
         if ( errno == EACCES )
@@ -370,7 +370,7 @@ void HelpProtocol::get_file( const KURL& url )
     int processed_size = 0;
 
     char buffer[ MAX_IPC_SIZE ];
-    QByteArray array;
+    TQByteArray array;
 
     while( 1 )
     {
@@ -394,7 +394,7 @@ void HelpProtocol::get_file( const KURL& url )
        processedSize( processed_size );
     }
 
-    data( QByteArray() );
+    data( TQByteArray() );
 
     close( fd );
 

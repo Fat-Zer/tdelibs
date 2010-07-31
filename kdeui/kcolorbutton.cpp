@@ -20,11 +20,11 @@
 
 #include <config.h>
 
-#include <qpainter.h>
-#include <qdrawutil.h>
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qstyle.h>
+#include <tqpainter.h>
+#include <tqdrawutil.h>
+#include <tqapplication.h>
+#include <tqclipboard.h>
+#include <tqstyle.h>
 #include <kglobalsettings.h>
 #include <kstdaccel.h>
 #include "kcolordialog.h"
@@ -35,37 +35,37 @@ class KColorButton::KColorButtonPrivate
 {
 public:
     bool m_bdefaultColor;
-    QColor m_defaultColor;
+    TQColor m_defaultColor;
 };
 
-KColorButton::KColorButton( QWidget *parent, const char *name )
-  : QPushButton( parent, name )
+KColorButton::KColorButton( TQWidget *parent, const char *name )
+  : TQPushButton( parent, name )
 {
   d = new KColorButtonPrivate;
   d->m_bdefaultColor = false;
-  d->m_defaultColor = QColor();
+  d->m_defaultColor = TQColor();
   setAcceptDrops( true);
 
   // 2000-10-15 (putzer): fixes broken keyboard usage
-  connect (this, SIGNAL(clicked()), this, SLOT(chooseColor()));
+  connect (this, TQT_SIGNAL(clicked()), this, TQT_SLOT(chooseColor()));
 }
 
-KColorButton::KColorButton( const QColor &c, QWidget *parent,
+KColorButton::KColorButton( const TQColor &c, TQWidget *parent,
 			    const char *name )
-  : QPushButton( parent, name ), col(c)
+  : TQPushButton( parent, name ), col(c)
 {
   d = new KColorButtonPrivate;
   d->m_bdefaultColor = false;
-  d->m_defaultColor = QColor();
+  d->m_defaultColor = TQColor();
   setAcceptDrops( true);
 
   // 2000-10-15 (putzer): fixes broken keyboard usage
-  connect (this, SIGNAL(clicked()), this, SLOT(chooseColor()));
+  connect (this, TQT_SIGNAL(clicked()), this, TQT_SLOT(chooseColor()));
 }
 
-KColorButton::KColorButton( const QColor &c, const QColor &defaultColor, QWidget *parent,
+KColorButton::KColorButton( const TQColor &c, const TQColor &defaultColor, TQWidget *parent,
 			    const char *name )
-  : QPushButton( parent, name ), col(c)
+  : TQPushButton( parent, name ), col(c)
 {
   d = new KColorButtonPrivate;
   d->m_bdefaultColor = true;
@@ -73,7 +73,7 @@ KColorButton::KColorButton( const QColor &c, const QColor &defaultColor, QWidget
   setAcceptDrops( true);
 
   // 2000-10-15 (putzer): fixes broken keyboard usage
-  connect (this, SIGNAL(clicked()), this, SLOT(chooseColor()));
+  connect (this, TQT_SIGNAL(clicked()), this, TQT_SLOT(chooseColor()));
 }
 
 KColorButton::~KColorButton()
@@ -81,7 +81,7 @@ KColorButton::~KColorButton()
   delete d;
 }
 
-void KColorButton::setColor( const QColor &c )
+void KColorButton::setColor( const TQColor &c )
 {
   if ( col != c ) {
     col = c;
@@ -90,89 +90,89 @@ void KColorButton::setColor( const QColor &c )
   }
 }
 
-QColor KColorButton::defaultColor() const
+TQColor KColorButton::defaultColor() const
 {
   return d->m_defaultColor;
 }
 
-void KColorButton::setDefaultColor( const QColor &c )
+void KColorButton::setDefaultColor( const TQColor &c )
 {
   d->m_bdefaultColor = c.isValid();
   d->m_defaultColor = c;
 }
 
 
-void KColorButton::drawButtonLabel( QPainter *painter )
+void KColorButton::drawButtonLabel( TQPainter *painter )
 {
   int x, y, w, h;
-  QRect r = style().subRect( QStyle::SR_PushButtonContents, this );
+  TQRect r = style().subRect( TQStyle::SR_PushButtonContents, this );
   r.rect(&x, &y, &w, &h);
 
-  int margin = style().pixelMetric( QStyle::PM_ButtonMargin, this );
+  int margin = style().pixelMetric( TQStyle::PM_ButtonMargin, this );
   x += margin;
   y += margin;
   w -= 2*margin;
   h -= 2*margin;
 
   if (isOn() || isDown()) {
-    x += style().pixelMetric( QStyle::PM_ButtonShiftHorizontal, this );
-    y += style().pixelMetric( QStyle::PM_ButtonShiftVertical, this );
+    x += style().pixelMetric( TQStyle::PM_ButtonShiftHorizontal, this );
+    y += style().pixelMetric( TQStyle::PM_ButtonShiftVertical, this );
   }
 
-  QColor fillCol = isEnabled() ? col : backgroundColor();
+  TQColor fillCol = isEnabled() ? col : backgroundColor();
   qDrawShadePanel( painter, x, y, w, h, colorGroup(), true, 1, NULL);
   if ( fillCol.isValid() )
     painter->fillRect( x+1, y+1, w-2, h-2, fillCol );
 
   if ( hasFocus() ) {
-    QRect focusRect = style().subRect( QStyle::SR_PushButtonFocusRect, this );
-    style().drawPrimitive( QStyle::PE_FocusRect, painter, focusRect, colorGroup() );
+    TQRect focusRect = style().subRect( TQStyle::SR_PushButtonFocusRect, this );
+    style().drawPrimitive( TQStyle::PE_FocusRect, painter, focusRect, colorGroup() );
   }
 }
 
-QSize KColorButton::sizeHint() const
+TQSize KColorButton::sizeHint() const
 {
-  return style().sizeFromContents(QStyle::CT_PushButton, this, QSize(40, 15)).
-	  	expandedTo(QApplication::globalStrut());
+  return style().sizeFromContents(TQStyle::CT_PushButton, this, TQSize(40, 15)).
+	  	expandedTo(TQApplication::globalStrut());
 }
 
-void KColorButton::dragEnterEvent( QDragEnterEvent *event)
+void KColorButton::dragEnterEvent( TQDragEnterEvent *event)
 {
   event->accept( KColorDrag::canDecode( event) && isEnabled());
 }
 
-void KColorButton::dropEvent( QDropEvent *event)
+void KColorButton::dropEvent( TQDropEvent *event)
 {
-  QColor c;
+  TQColor c;
   if( KColorDrag::decode( event, c)) {
     setColor(c);
   }
 }
 
-void KColorButton::keyPressEvent( QKeyEvent *e )
+void KColorButton::keyPressEvent( TQKeyEvent *e )
 {
   KKey key( e );
 
   if ( KStdAccel::copy().contains( key ) ) {
-    QMimeSource* mime = new KColorDrag( color() );
-    QApplication::clipboard()->setData( mime, QClipboard::Clipboard );
+    TQMimeSource* mime = new KColorDrag( color() );
+    TQApplication::clipboard()->setData( mime, QClipboard::Clipboard );
   }
   else if ( KStdAccel::paste().contains( key ) ) {
-    QColor color;
-    KColorDrag::decode( QApplication::clipboard()->data( QClipboard::Clipboard ), color );
+    TQColor color;
+    KColorDrag::decode( TQApplication::clipboard()->data( QClipboard::Clipboard ), color );
     setColor( color );
   }
   else
-    QPushButton::keyPressEvent( e );
+    TQPushButton::keyPressEvent( e );
 }
 
-void KColorButton::mousePressEvent( QMouseEvent *e)
+void KColorButton::mousePressEvent( TQMouseEvent *e)
 {
   mPos = e->pos();
-  QPushButton::mousePressEvent(e);
+  TQPushButton::mousePressEvent(e);
 }
 
-void KColorButton::mouseMoveEvent( QMouseEvent *e)
+void KColorButton::mouseMoveEvent( TQMouseEvent *e)
 {
   if( (e->state() & LeftButton) &&
     (e->pos()-mPos).manhattanLength() > KGlobalSettings::dndEventDelay() )
@@ -186,16 +186,16 @@ void KColorButton::mouseMoveEvent( QMouseEvent *e)
 
 void KColorButton::chooseColor()
 {
-  QColor c = color();
+  TQColor c = color();
   if ( d->m_bdefaultColor )
   {
-      if( KColorDialog::getColor( c, d->m_defaultColor, this ) != QDialog::Rejected ) {
+      if( KColorDialog::getColor( c, d->m_defaultColor, this ) != TQDialog::Rejected ) {
           setColor( c );
       }
   }
   else
   {
-      if( KColorDialog::getColor( c, this ) != QDialog::Rejected ) {
+      if( KColorDialog::getColor( c, this ) != TQDialog::Rejected ) {
           setColor( c );
       }
   }

@@ -7,84 +7,84 @@
 //
 //----------------------------------------------------------------------------
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <ktabbar.h>
 #include <kpopupmenu.h>
 #include "kmdidocumentviewtabwidget.h"
 
-KMdiDocumentViewTabWidget::KMdiDocumentViewTabWidget( QWidget* parent, const char* name ) : KTabWidget( parent, name )
+KMdiDocumentViewTabWidget::KMdiDocumentViewTabWidget( TQWidget* parent, const char* name ) : KTabWidget( parent, name )
 {
 	m_visibility = KMdi::ShowWhenMoreThanOneTab;
 	tabBar() ->hide();
 	setHoverCloseButton( true );
-	connect( this, SIGNAL( closeRequest( QWidget* ) ), this, SLOT( closeTab( QWidget* ) ) );
+	connect( this, TQT_SIGNAL( closeRequest( TQWidget* ) ), this, TQT_SLOT( closeTab( TQWidget* ) ) );
 }
 
 KMdiDocumentViewTabWidget::~KMdiDocumentViewTabWidget()
 {}
 
-void KMdiDocumentViewTabWidget::closeTab( QWidget* w )
+void KMdiDocumentViewTabWidget::closeTab( TQWidget* w )
 {
 	w->close();
 }
-void KMdiDocumentViewTabWidget::addTab ( QWidget * child, const QString & label )
+void KMdiDocumentViewTabWidget::addTab ( TQWidget * child, const TQString & label )
 {
 	KTabWidget::addTab( child, label );
 	showPage( child );
-	QTimer::singleShot(0, this, SLOT(maybeShow()));
+	TQTimer::singleShot(0, this, TQT_SLOT(maybeShow()));
 }
 
-void KMdiDocumentViewTabWidget::addTab ( QWidget * child, const QIconSet & iconset, const QString & label )
+void KMdiDocumentViewTabWidget::addTab ( TQWidget * child, const TQIconSet & iconset, const TQString & label )
 {
 	KTabWidget::addTab( child, iconset, label );
 	showPage( child );
-	QTimer::singleShot(0, this, SLOT(maybeShow()));
+	TQTimer::singleShot(0, this, TQT_SLOT(maybeShow()));
 }
 
-void KMdiDocumentViewTabWidget::addTab ( QWidget * child, QTab * tab )
+void KMdiDocumentViewTabWidget::addTab ( TQWidget * child, TQTab * tab )
 {
 	KTabWidget::addTab( child, tab );
 	showPage( child );
-	QTimer::singleShot(0, this, SLOT(maybeShow()));
+	TQTimer::singleShot(0, this, TQT_SLOT(maybeShow()));
 }
 
-void KMdiDocumentViewTabWidget::insertTab ( QWidget * child, const QString & label, int index )
+void KMdiDocumentViewTabWidget::insertTab ( TQWidget * child, const TQString & label, int index )
 {
 	KTabWidget::insertTab( child, label, index );
 	showPage( child );
-	QTimer::singleShot(0, this, SLOT(maybeShow()));
+	TQTimer::singleShot(0, this, TQT_SLOT(maybeShow()));
 	tabBar() ->repaint();
 }
 
-void KMdiDocumentViewTabWidget::insertTab ( QWidget * child, const QIconSet & iconset, const QString & label, int index )
+void KMdiDocumentViewTabWidget::insertTab ( TQWidget * child, const TQIconSet & iconset, const TQString & label, int index )
 {
 	KTabWidget::insertTab( child, iconset, label, index );
 	showPage( child );
-	QTimer::singleShot(0, this, SLOT(maybeShow()));
+	TQTimer::singleShot(0, this, TQT_SLOT(maybeShow()));
 	tabBar() ->repaint();
 }
 
-void KMdiDocumentViewTabWidget::insertTab ( QWidget * child, QTab * tab, int index )
+void KMdiDocumentViewTabWidget::insertTab ( TQWidget * child, TQTab * tab, int index )
 {
 	KTabWidget::insertTab( child, tab, index );
 	showPage( child );
-	QTimer::singleShot(0, this, SLOT(maybeShow()));
+	TQTimer::singleShot(0, this, TQT_SLOT(maybeShow()));
 	tabBar() ->repaint();
 }
 
-void KMdiDocumentViewTabWidget::removePage ( QWidget * w )
+void KMdiDocumentViewTabWidget::removePage ( TQWidget * w )
 {
 	KTabWidget::removePage( w );
-	QTimer::singleShot(0, this, SLOT(maybeShow()));
+	TQTimer::singleShot(0, this, TQT_SLOT(maybeShow()));
 }
 
-void KMdiDocumentViewTabWidget::updateIconInView( QWidget *w, QPixmap icon )
+void KMdiDocumentViewTabWidget::updateIconInView( TQWidget *w, TQPixmap icon )
 {
 	changeTab( w, icon, tabLabel( w ) );
 }
 
-void KMdiDocumentViewTabWidget::updateCaptionInView( QWidget *w, const QString &caption )
+void KMdiDocumentViewTabWidget::updateCaptionInView( TQWidget *w, const TQString &caption )
 {
 	changeTab( w, caption );
 }

@@ -27,11 +27,11 @@ class KIO_EXPORT KFileSpeedBar : public KURLBar
 {
     Q_OBJECT
 public:
-    KFileSpeedBar( QWidget *parent = 0, const char *name = 0 );
+    KFileSpeedBar( TQWidget *parent = 0, const char *name = 0 );
     ~KFileSpeedBar();
 
     virtual void save( KConfig *config );
-    virtual QSize sizeHint() const;
+    virtual TQSize sizeHint() const;
 
 private:
     bool m_initializeSpeedbar : 1;

@@ -21,21 +21,21 @@ class KIO_EXPORT KImageIOFormat : public KSycocaEntry
 
 public:
   typedef KSharedPtr<KImageIOFormat> Ptr;
-  typedef QValueList<Ptr> List;
+  typedef TQValueList<Ptr> List;
 public: // KDoc seems to barf on those typedefs and generates no docs after them
   /**
    * Read a KImageIOFormat description file
    */
-  KImageIOFormat( const QString & path);
+  KImageIOFormat( const TQString & path);
   
   /**
    * @internal construct a ImageIOFormat from a stream
    */ 
-  KImageIOFormat( QDataStream& _str, int offset);
+  KImageIOFormat( TQDataStream& _str, int offset);
 
   virtual ~KImageIOFormat();
 
-  virtual QString name() const { return mType; }
+  virtual TQString name() const { return mType; }
 
   virtual bool isValid() const { return true; } 
 
@@ -43,34 +43,34 @@ public: // KDoc seems to barf on those typedefs and generates no docs after them
    * @internal
    * Load the image format from a stream.
    */
-  virtual void load(QDataStream& ); 
+  virtual void load(TQDataStream& ); 
 
   /**
    * @internal
    * Save the image format to a stream.
    */
-  virtual void save(QDataStream& );
+  virtual void save(TQDataStream& );
 
   /**
    * @internal 
    * Calls image IO function
    */
-  void callLibFunc( bool read, QImageIO *);
+  void callLibFunc( bool read, TQImageIO *);
 
 public:  
-  QString mType;
-  QString mHeader;
-  QString mFlags;
+  TQString mType;
+  TQString mHeader;
+  TQString mFlags;
   bool bRead;
   bool bWrite;
-  QStringList mSuffices;
-  QString mPattern;
-  QString mMimetype;
-  QString mLib;
-  QStringList rPaths;
+  TQStringList mSuffices;
+  TQString mPattern;
+  TQString mMimetype;
+  TQString mLib;
+  TQStringList rPaths;
   bool bLibLoaded;
-  void (*mReadFunc)(QImageIO *);
-  void (*mWriteFunc)(QImageIO *);
+  void (*mReadFunc)(TQImageIO *);
+  void (*mWriteFunc)(TQImageIO *);
 protected:
   virtual void virtual_hook( int id, void* data );
 };
@@ -105,12 +105,12 @@ protected: // Internal stuff
   /**
    * @internal Create pattern string
    **/
-  QString createPattern( KImageIO::Mode _mode);
+  TQString createPattern( KImageIO::Mode _mode);
 
   /**
    * @internal Not used.
    */
-  virtual KSycocaEntry *createEntry(const QString &, const char *)
+  virtual KSycocaEntry *createEntry(const TQString &, const char *)
     { return 0; }                                                    
 
   /**
@@ -121,19 +121,19 @@ protected: // Internal stuff
   /**
    * @internal Read an image
    **/
-  static void readImage( QImageIO *iio);
+  static void readImage( TQImageIO *iio);
 
   /**
    * @internal Write an image
    **/
-  static void writeImage( QImageIO *iio);
+  static void writeImage( TQImageIO *iio);
   
 protected:
   static KImageIOFactory *_self;  
   static KImageIOFormatList *formatList;
-  QString mReadPattern;
-  QString mWritePattern;
-  QStringList rPath;
+  TQString mReadPattern;
+  TQString mWritePattern;
+  TQStringList rPath;
 protected:
     virtual void virtual_hook( int id, void* data );
 };

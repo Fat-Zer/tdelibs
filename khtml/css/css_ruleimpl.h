@@ -113,7 +113,7 @@ public:
 
     // from CachedObjectClient
     virtual void setStyleSheet(const DOM::DOMString &url, const DOM::DOMString &sheet, const DOM::DOMString &charset);
-    virtual void error(int err, const QString &text);
+    virtual void error(int err, const TQString &text);
 
     bool isLoading();
     virtual void init();
@@ -146,7 +146,7 @@ public:
 
     void append( CSSRuleImpl *rule ) { m_lstCSSRules.append( rule ); }
 protected:
-    QPtrList<CSSRuleImpl> m_lstCSSRules;
+    TQPtrList<CSSRuleImpl> m_lstCSSRules;
 };
 
 class CSSMediaRuleImpl : public CSSRuleImpl
@@ -209,17 +209,17 @@ public:
 
     virtual bool parseString( const DOMString &string, bool = false );
 
-    void setSelector( QPtrList<CSSSelector> *selector) { m_selector = selector; }
+    void setSelector( TQPtrList<CSSSelector> *selector) { m_selector = selector; }
     void setDeclaration( CSSStyleDeclarationImpl *style);
 
-    QPtrList<CSSSelector> *selector() { return m_selector; }
+    TQPtrList<CSSSelector> *selector() { return m_selector; }
     CSSStyleDeclarationImpl *declaration() { return m_style; }
 
     void setNonCSSHints();
 
 protected:
     CSSStyleDeclarationImpl *m_style;
-    QPtrList<CSSSelector> *m_selector;
+    TQPtrList<CSSSelector> *m_selector;
 };
 
 

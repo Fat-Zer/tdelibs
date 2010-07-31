@@ -52,7 +52,7 @@ class KABC_EXPORT ResourceFile : public Resource
     /**
       Construct file resource on file @arg fileName using format @arg formatName.
      */
-    ResourceFile( const QString &fileName, const QString &formatName = "vcard" );
+    ResourceFile( const TQString &fileName, const TQString &formatName = "vcard" );
 
     /**
       Destructor.
@@ -103,22 +103,22 @@ class KABC_EXPORT ResourceFile : public Resource
     /**
       Set name of file to be used for saving.
      */
-    void setFileName( const QString & );
+    void setFileName( const TQString & );
 
     /**
       Return name of file used for loading and saving the address book.
      */
-    QString fileName() const;
+    TQString fileName() const;
 
     /**
       Sets a new format by name.
      */
-    void setFormat( const QString &name );
+    void setFormat( const TQString &name );
 
     /**
       Returns the format name.
      */
-    QString format() const;
+    TQString format() const;
 
     /**
       Remove a addressee from its source.
@@ -136,14 +136,14 @@ class KABC_EXPORT ResourceFile : public Resource
     void fileChanged();
 
   protected:
-    void init( const QString &fileName, const QString &format );
+    void init( const TQString &fileName, const TQString &format );
 
-    bool lock( const QString &fileName );
-    void unlock( const QString &fileName );
+    bool lock( const TQString &fileName );
+    void unlock( const TQString &fileName );
 
   private:
-    QString mFileName;
-    QString mFormatName;
+    TQString mFileName;
+    TQString mFormatName;
 
     FormatPlugin *mFormat;
 

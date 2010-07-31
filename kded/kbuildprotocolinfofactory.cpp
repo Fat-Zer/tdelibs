@@ -37,9 +37,9 @@ KBuildProtocolInfoFactory::KBuildProtocolInfoFactory() :
 
 // return all service types for this factory
 // i.e. first arguments to m_resourceList->add() above
-QStringList KBuildProtocolInfoFactory::resourceTypes()
+TQStringList KBuildProtocolInfoFactory::resourceTypes()
 {
-    return QStringList() << "services";
+    return TQStringList() << "services";
 }
 
 KBuildProtocolInfoFactory::~KBuildProtocolInfoFactory()
@@ -48,7 +48,7 @@ KBuildProtocolInfoFactory::~KBuildProtocolInfoFactory()
 }
 
 KProtocolInfo *
-KBuildProtocolInfoFactory::createEntry( const QString& file, const char * )
+KBuildProtocolInfoFactory::createEntry( const TQString& file, const char * )
 {
    return new KProtocolInfo(file);
 }

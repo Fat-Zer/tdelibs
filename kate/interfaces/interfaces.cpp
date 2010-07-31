@@ -29,9 +29,9 @@ namespace Kate
 
 bool Document::s_openErrorDialogsActivated = true;
 bool Document::s_fileChangedDialogsActivated = false;
-QString Document::s_defaultEncoding;
+TQString Document::s_defaultEncoding;
 
-Document::Document (QObject* parent, const char* name)
+Document::Document (TQObject* parent, const char* name)
     : KTextEditor::Document (parent, name)
 {
 }
@@ -54,7 +54,7 @@ void Document::setFileChangedDialogsActivated (bool on)
   s_fileChangedDialogsActivated = on;
 }
 
-const QString &Document::defaultEncoding ()
+const TQString &Document::defaultEncoding ()
 {
   return s_defaultEncoding;
 }
@@ -69,12 +69,12 @@ bool Document::unregisterCommand (Command *cmd)
   return KateCmd::self()->unregisterCommand (cmd);
 }
 
-Command *Document::queryCommand (const QString &cmd)
+Command *Document::queryCommand (const TQString &cmd)
 {
   return KateCmd::self()->queryCommand (cmd);
 }
 
-View::View ( KTextEditor::Document *doc, QWidget *parent, const char *name ) : KTextEditor::View (doc, parent, name)
+View::View ( KTextEditor::Document *doc, TQWidget *parent, const char *name ) : KTextEditor::View (doc, parent, name)
 {
 }
 
@@ -111,7 +111,7 @@ DocumentExt *documentExt (KTextEditor::Document *doc)
   return static_cast<DocumentExt*>(doc->qt_cast("Kate::DocumentExt"));
 }
 
-Document *createDocument ( QObject *parent, const char *name )
+Document *createDocument ( TQObject *parent, const char *name )
 {
   return (Document* ) KTextEditor::createDocument ("libkatepart", parent, name);
 }

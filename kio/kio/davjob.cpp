@@ -20,12 +20,12 @@
 
 #include <kurl.h>
 
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qguardedptr.h>
-#include <qdom.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqguardedptr.h>
+#include <tqdom.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -38,24 +38,24 @@
 #include <kio/job.h>
 #include <kio/slaveinterface.h>
 
-#define KIO_ARGS QByteArray packedArgs; QDataStream stream( packedArgs, IO_WriteOnly ); stream
+#define KIO_ARGS TQByteArray packedArgs; TQDataStream stream( packedArgs, IO_WriteOnly ); stream
 
 using namespace KIO;
 
 class DavJob::DavJobPrivate
 {
 public:
-  QByteArray savedStaticData;
-	QByteArray str_response; // replaces the QString previously used in DavJob itself
+  TQByteArray savedStaticData;
+	TQByteArray str_response; // replaces the TQString previously used in DavJob itself
 };
 
-DavJob::DavJob( const KURL& url, int method, const QString& request, bool showProgressInfo )
-  : TransferJob( url, KIO::CMD_SPECIAL, QByteArray(), QByteArray(), showProgressInfo )
+DavJob::DavJob( const KURL& url, int method, const TQString& request, bool showProgressInfo )
+  : TransferJob( url, KIO::CMD_SPECIAL, TQByteArray(), TQByteArray(), showProgressInfo )
 {
   d = new DavJobPrivate;
   // We couldn't set the args when calling the parent constructor,
   // so do it now.
-  QDataStream stream( m_packedArgs, IO_WriteOnly );
+  TQDataStream stream( m_packedArgs, IO_WriteOnly );
   stream << (int) 7 << url << method;
   // Same for static data
   if ( ! request.isEmpty() && ! request.isNull() ) {
@@ -65,7 +65,7 @@ DavJob::DavJob( const KURL& url, int method, const QString& request, bool showPr
   }
 }
 
-void DavJob::slotData( const QByteArray& data )
+void DavJob::slotData( const TQByteArray& data )
 {
   if(m_redirectionURL.isEmpty() || !m_redirectionURL.isValid() || m_error) {
     unsigned int oldSize = d->str_response.size();
@@ -79,7 +79,7 @@ void DavJob::slotFinished()
   // kdDebug(7113) << "DavJob::slotFinished()" << endl;
   // kdDebug(7113) << d->str_response << endl;
 	if (!m_redirectionURL.isEmpty() && m_redirectionURL.isValid() && (m_command == CMD_SPECIAL)) {
-		QDataStream istream( m_packedArgs, IO_ReadOnly );
+		TQDataStream istream( m_packedArgs, IO_ReadOnly );
 		int s_cmd, s_method;
 		KURL s_url;
 		istream >> s_cmd;
@@ -88,16 +88,16 @@ void DavJob::slotFinished()
 		// PROPFIND
 		if ( (s_cmd == 7) && (s_method == (int)KIO::DAV_PROPFIND) ) {
 			m_packedArgs.truncate(0);
-			QDataStream stream( m_packedArgs, IO_WriteOnly );
+			TQDataStream stream( m_packedArgs, IO_WriteOnly );
 			stream << (int)7 << m_redirectionURL << (int)KIO::DAV_PROPFIND;
 		}
   } else if ( ! m_response.setContent( d->str_response, true ) ) {
 		// An error occurred parsing the XML response
-		QDomElement root = m_response.createElementNS( "DAV:", "error-report" );
+		TQDomElement root = m_response.createElementNS( "DAV:", "error-report" );
 		m_response.appendChild( root );
 
-		QDomElement el = m_response.createElementNS( "DAV:", "offending-response" );
-    QDomText textnode = m_response.createTextNode( d->str_response );
+		TQDomElement el = m_response.createElementNS( "DAV:", "offending-response" );
+    TQDomText textnode = m_response.createTextNode( d->str_response );
 		el.appendChild( textnode );
 		root.appendChild( el );
 		delete d; // Should be in virtual destructor
@@ -113,8 +113,8 @@ void DavJob::slotFinished()
 
 /* Convenience methods */
 
-// KDE 4: Make it const QString &
-DavJob* KIO::davPropFind( const KURL& url, const QDomDocument& properties, QString depth, bool showProgressInfo )
+// KDE 4: Make it const TQString &
+DavJob* KIO::davPropFind( const KURL& url, const TQDomDocument& properties, TQString depth, bool showProgressInfo )
 {
   DavJob *job = new DavJob( url, (int) KIO::DAV_PROPFIND, properties.toString(), showProgressInfo );
   job->addMetaData( "davDepth", depth );
@@ -122,17 +122,17 @@ DavJob* KIO::davPropFind( const KURL& url, const QDomDocument& properties, QStri
 }
 
 
-DavJob* KIO::davPropPatch( const KURL& url, const QDomDocument& properties, bool showProgressInfo )
+DavJob* KIO::davPropPatch( const KURL& url, const TQDomDocument& properties, bool showProgressInfo )
 {
   return new DavJob( url, (int) KIO::DAV_PROPPATCH, properties.toString(), showProgressInfo );
 }
 
-DavJob* KIO::davSearch( const KURL& url, const QString& nsURI, const QString& qName, const QString& query, bool showProgressInfo )
+DavJob* KIO::davSearch( const KURL& url, const TQString& nsURI, const TQString& qName, const TQString& query, bool showProgressInfo )
 {
-  QDomDocument doc;
-  QDomElement searchrequest = doc.createElementNS( "DAV:", "searchrequest" );
-  QDomElement searchelement = doc.createElementNS( nsURI, qName );
-  QDomText text = doc.createTextNode( query );
+  TQDomDocument doc;
+  TQDomElement searchrequest = doc.createElementNS( "DAV:", "searchrequest" );
+  TQDomElement searchelement = doc.createElementNS( nsURI, qName );
+  TQDomText text = doc.createTextNode( query );
   searchelement.appendChild( text );
   searchrequest.appendChild( searchelement );
   doc.appendChild( searchrequest );

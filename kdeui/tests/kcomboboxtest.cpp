@@ -13,18 +13,18 @@
 #include <kiconloader.h>
 #include <ksimpleconfig.h>
 
-#include <qpushbutton.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qlabel.h>
-#include <qhbox.h>
-#include <qtimer.h>
+#include <tqpushbutton.h>
+#include <tqlayout.h>
+#include <tqpixmap.h>
+#include <tqlabel.h>
+#include <tqhbox.h>
+#include <tqtimer.h>
 
 
-KComboBoxTest::KComboBoxTest(QWidget* widget, const char* name )
-              :QWidget(widget, name)
+KComboBoxTest::KComboBoxTest(TQWidget* widget, const char* name )
+              :TQWidget(widget, name)
 {
-  QVBoxLayout *vbox = new QVBoxLayout (this, KDialog::marginHint(), KDialog::spacingHint());
+  TQVBoxLayout *vbox = new TQVBoxLayout (this, KDialog::marginHint(), KDialog::spacingHint());
   
   // Test for KCombo's KLineEdit destruction
   KComboBox *testCombo = new KComboBox( true, this ); // rw, with KLineEdit
@@ -33,90 +33,90 @@ KComboBoxTest::KComboBoxTest(QWidget* widget, const char* name )
   delete testCombo; // not needed anymore  
   
   // Qt combobox
-  QHBox* hbox = new QHBox(this);
+  TQHBox* hbox = new TQHBox(this);
   hbox->setSpacing (KDialog::spacingHint());
-  QLabel* lbl = new QLabel("&QCombobox:", hbox);
-  lbl->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Preferred);
+  TQLabel* lbl = new TQLabel("&QCombobox:", hbox);
+  lbl->setSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
   
-  m_qc = new QComboBox(hbox, "QtReadOnlyCombo" );
+  m_qc = new TQComboBox(hbox, "QtReadOnlyCombo" );
   lbl->setBuddy (m_qc);  
-  QObject::connect (m_qc, SIGNAL(activated(int)), SLOT(slotActivated(int)));
-  QObject::connect (m_qc, SIGNAL(activated(const QString&)), SLOT (slotActivated(const QString&)));
+  TQObject::connect (m_qc, TQT_SIGNAL(activated(int)), TQT_SLOT(slotActivated(int)));
+  TQObject::connect (m_qc, TQT_SIGNAL(activated(const TQString&)), TQT_SLOT (slotActivated(const TQString&)));
   vbox->addWidget (hbox);
   
   // Read-only combobox
-  hbox = new QHBox(this);
+  hbox = new TQHBox(this);
   hbox->setSpacing (KDialog::spacingHint());
-  lbl = new QLabel("&Read-Only Combo:", hbox);
-  lbl->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Preferred);
+  lbl = new TQLabel("&Read-Only Combo:", hbox);
+  lbl->setSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
 
   m_ro = new KComboBox(hbox, "ReadOnlyCombo" );
   lbl->setBuddy (m_ro);
   m_ro->setCompletionMode( KGlobalSettings::CompletionAuto );
-  QObject::connect (m_ro, SIGNAL(activated(int)), SLOT(slotActivated(int)));
-  QObject::connect (m_ro, SIGNAL(activated(const QString&)), SLOT (slotActivated(const QString&)));
+  TQObject::connect (m_ro, TQT_SIGNAL(activated(int)), TQT_SLOT(slotActivated(int)));
+  TQObject::connect (m_ro, TQT_SIGNAL(activated(const TQString&)), TQT_SLOT (slotActivated(const TQString&)));
   vbox->addWidget (hbox);
 
   // Read-write combobox
-  hbox = new QHBox(this);
+  hbox = new TQHBox(this);
   hbox->setSpacing (KDialog::spacingHint());
-  lbl = new QLabel("&Editable Combo:", hbox);
-  lbl->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Preferred);
+  lbl = new TQLabel("&Editable Combo:", hbox);
+  lbl->setSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
 
   m_rw = new KComboBox( true, hbox, "ReadWriteCombo" );
   lbl->setBuddy (m_rw);
   m_rw->setDuplicatesEnabled( true );
-  m_rw->setInsertionPolicy( QComboBox::NoInsertion );
+  m_rw->setInsertionPolicy( TQComboBox::NoInsertion );
   m_rw->setTrapReturnKey( true );
-  QObject::connect (m_rw, SIGNAL(activated(int)), SLOT(slotActivated(int)));
-  QObject::connect (m_rw, SIGNAL(activated(const QString&)), SLOT(slotActivated(const QString&)));
-  QObject::connect (m_rw, SIGNAL(returnPressed()), SLOT(slotReturnPressed()));
-  QObject::connect (m_rw, SIGNAL(returnPressed(const QString&)), SLOT(slotReturnPressed(const QString&)));
+  TQObject::connect (m_rw, TQT_SIGNAL(activated(int)), TQT_SLOT(slotActivated(int)));
+  TQObject::connect (m_rw, TQT_SIGNAL(activated(const TQString&)), TQT_SLOT(slotActivated(const TQString&)));
+  TQObject::connect (m_rw, TQT_SIGNAL(returnPressed()), TQT_SLOT(slotReturnPressed()));
+  TQObject::connect (m_rw, TQT_SIGNAL(returnPressed(const TQString&)), TQT_SLOT(slotReturnPressed(const TQString&)));
   vbox->addWidget (hbox);
 
   // History combobox...
-  hbox = new QHBox(this);
+  hbox = new TQHBox(this);
   hbox->setSpacing (KDialog::spacingHint());
-  lbl = new QLabel("&History Combo:", hbox);
-  lbl->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Preferred);
+  lbl = new TQLabel("&History Combo:", hbox);
+  lbl->setSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
 
   m_hc = new KHistoryCombo( true, hbox, "HistoryCombo" );
   lbl->setBuddy (m_hc);
   m_hc->setDuplicatesEnabled( true );
-  m_hc->setInsertionPolicy( QComboBox::NoInsertion );
-  QObject::connect (m_hc, SIGNAL(activated(int)), SLOT(slotActivated(int)));
-  QObject::connect (m_hc, SIGNAL(activated(const QString&)), SLOT(slotActivated(const QString&)));
-  QObject::connect (m_hc, SIGNAL(returnPressed()), SLOT(slotReturnPressed()));  
+  m_hc->setInsertionPolicy( TQComboBox::NoInsertion );
+  TQObject::connect (m_hc, TQT_SIGNAL(activated(int)), TQT_SLOT(slotActivated(int)));
+  TQObject::connect (m_hc, TQT_SIGNAL(activated(const TQString&)), TQT_SLOT(slotActivated(const TQString&)));
+  TQObject::connect (m_hc, TQT_SIGNAL(returnPressed()), TQT_SLOT(slotReturnPressed()));  
   vbox->addWidget (hbox);
   m_hc->setTrapReturnKey(true);
 
   // Read-write combobox that is a replica of code in konqueror...
-  hbox = new QHBox(this);
+  hbox = new TQHBox(this);
   hbox->setSpacing (KDialog::spacingHint());
-  lbl = new QLabel( "&Konq's Combo:", hbox);
-  lbl->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Preferred);
+  lbl = new TQLabel( "&Konq's Combo:", hbox);
+  lbl->setSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
 
   m_konqc = new KComboBox( true, hbox, "KonqyCombo" );
   lbl->setBuddy (m_konqc);
   m_konqc->setMaxCount( 10 );
-  QObject::connect (m_konqc, SIGNAL(activated(int)), SLOT(slotActivated(int)));
-  QObject::connect (m_konqc, SIGNAL(activated(const QString&)), SLOT (slotActivated(const QString&)));
-  QObject::connect (m_konqc, SIGNAL(returnPressed()), SLOT(slotReturnPressed()));
+  TQObject::connect (m_konqc, TQT_SIGNAL(activated(int)), TQT_SLOT(slotActivated(int)));
+  TQObject::connect (m_konqc, TQT_SIGNAL(activated(const TQString&)), TQT_SLOT (slotActivated(const TQString&)));
+  TQObject::connect (m_konqc, TQT_SIGNAL(returnPressed()), TQT_SLOT(slotReturnPressed()));
   vbox->addWidget (hbox);
 
   // Create an exit button
-  hbox = new QHBox (this);
-  m_btnExit = new QPushButton( "E&xit", hbox );
-  QObject::connect( m_btnExit, SIGNAL(clicked()), SLOT(quitApp()) );
+  hbox = new TQHBox (this);
+  m_btnExit = new TQPushButton( "E&xit", hbox );
+  TQObject::connect( m_btnExit, TQT_SIGNAL(clicked()), TQT_SLOT(quitApp()) );
 
   // Create a disable button...
-  m_btnEnable = new QPushButton( "Disa&ble", hbox );
-  QObject::connect (m_btnEnable, SIGNAL(clicked()), SLOT(slotDisable()));
+  m_btnEnable = new TQPushButton( "Disa&ble", hbox );
+  TQObject::connect (m_btnEnable, TQT_SIGNAL(clicked()), TQT_SLOT(slotDisable()));
 
   vbox->addWidget (hbox);
 
   // Popuplate the select-only list box
-  QStringList list;
+  TQStringList list;
   list << "Stone" << "Tree" << "Peables" << "Ocean" << "Sand" << "Chips"
        << "Computer" << "Mankind";
   list.sort();
@@ -145,12 +145,12 @@ KComboBoxTest::KComboBoxTest(QWidget* widget, const char* name )
   s_pCompletion->setCompletionMode( KGlobalSettings::completionMode() );
   m_konqc->setCompletionObject( s_pCompletion );
 
-  QPixmap pix = SmallIcon("www");
+  TQPixmap pix = SmallIcon("www");
   m_konqc->insertItem( pix, "http://www.kde.org" );
   m_konqc->setCurrentItem( m_konqc->count()-1 );
 
-  m_timer = new QTimer (this);
-  connect (m_timer, SIGNAL (timeout()), SLOT (slotTimeout()));
+  m_timer = new TQTimer (this);
+  connect (m_timer, TQT_SIGNAL (timeout()), TQT_SLOT (slotTimeout()));
 }
 
 KComboBoxTest::~KComboBoxTest()
@@ -195,7 +195,7 @@ void KComboBoxTest::slotActivated( int index )
   kdDebug() << "Activated Combo: " << sender()->name() << ", index:" << index << endl;
 }
 
-void KComboBoxTest::slotActivated (const QString& item)
+void KComboBoxTest::slotActivated (const TQString& item)
 {
   kdDebug() << "Activated Combo: " << sender()->name() << ", item: " << item << endl;
 }
@@ -205,7 +205,7 @@ void KComboBoxTest::slotReturnPressed ()
   kdDebug() << "Return Pressed: " << sender()->name() << endl;
 }
 
-void KComboBoxTest::slotReturnPressed(const QString& item)
+void KComboBoxTest::slotReturnPressed(const TQString& item)
 {
   kdDebug() << "Return Pressed, value = " << item << endl;
 }

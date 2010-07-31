@@ -25,15 +25,15 @@
 
 #include <string.h>
 
-#include <qbuttongroup.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qdrawutil.h>
-#include <qpainter.h>
-#include <qradiobutton.h>
-#include <qregexp.h>
-#include <qtoolbutton.h>
-#include <qwhatsthis.h>
+#include <tqbuttongroup.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqdrawutil.h>
+#include <tqpainter.h>
+#include <tqradiobutton.h>
+#include <tqregexp.h>
+#include <tqtoolbutton.h>
+#include <tqwhatsthis.h>
 
 #include <kaccel.h>
 #include <kaction.h>
@@ -59,7 +59,7 @@
 #define XK_MISCELLANY
 #include <X11/Xlib.h>	// For x11Event()
 #include <X11/keysymdef.h> // For XK_...
-#include <qwhatsthis.h>
+#include <tqwhatsthis.h>
 
 #ifdef KeyPress
 const int XFocusOut = FocusOut;
@@ -80,23 +80,23 @@ const int XKeyRelease = KeyRelease;
 class KKeyChooserItem : public KListViewItem
 {
  public:
-	KKeyChooserItem( KListView* parent, QListViewItem* after, KShortcutList* pList, uint iAction );
-	KKeyChooserItem( QListViewItem* parent, QListViewItem* after, KShortcutList* pList, uint iAction );
+	KKeyChooserItem( KListView* parent, TQListViewItem* after, KShortcutList* pList, uint iAction );
+	KKeyChooserItem( TQListViewItem* parent, TQListViewItem* after, KShortcutList* pList, uint iAction );
 
-	QString actionName() const;
+	TQString actionName() const;
 	const KShortcut& shortcut() const;
 	bool isConfigurable() const
 		{ return m_pList->isConfigurable( m_iAction ); }
 	const KShortcut& shortcutDefault() const
 		{ return m_pList->shortcutDefault( m_iAction ); }
-        QString whatsThis() const
+        TQString whatsThis() const
         { return m_pList->whatsThis( m_iAction ); }
 
 	void setShortcut( const KShortcut& cut );
 	void commitChanges();
 
-	virtual QString text( int iCol ) const;
-	virtual int compare( QListViewItem*, int iCol, bool bAscending ) const;
+	virtual TQString text( int iCol ) const;
+	virtual int compare( TQListViewItem*, int iCol, bool bAscending ) const;
 
  protected:
 	KShortcutList* m_pList;
@@ -109,14 +109,14 @@ class KKeyChooserItem : public KListViewItem
 class KKeyChooserWhatsThis : public QWhatsThis
 {
 public:
-    KKeyChooserWhatsThis( QListView* listview )
-        : QWhatsThis( listview->viewport() ), m_listView( listview ) {}
+    KKeyChooserWhatsThis( TQListView* listview )
+        : TQWhatsThis( listview->viewport() ), m_listView( listview ) {}
 
 protected:
-    virtual QString text( const QPoint& p );
+    virtual TQString text( const TQPoint& p );
 
 private:
-    QListView* m_listView;
+    TQListView* m_listView;
 };
 
 //---------------------------------------------------------------------
@@ -126,16 +126,16 @@ private:
 class KKeyChooserPrivate
 {
  public:
-	QValueList<KShortcutList*> rgpLists;
-	QValueList<KShortcutList*> rgpListsAllocated;
+	TQValueList<KShortcutList*> rgpLists;
+	TQValueList<KShortcutList*> rgpListsAllocated;
 
 	KListView *pList;
-	QLabel *lInfo;
+	TQLabel *lInfo;
 	KKeyButton *pbtnShortcut;
-	QGroupBox *fCArea;
-	QButtonGroup *kbGroup;
+	TQGroupBox *fCArea;
+	TQButtonGroup *kbGroup;
 
-	QMap<QString, KShortcut> mapGlobals;
+	TQMap<TQString, KShortcut> mapGlobals;
 
 	// If this is set, then shortcuts require a modifier:
 	//  so 'A' would not be valid, whereas 'Ctrl+A' would be.
@@ -151,45 +151,45 @@ class KKeyChooserPrivate
 // KKeyChooser
 //---------------------------------------------------------------------
 
-KKeyChooser::KKeyChooser( QWidget* parent, ActionType type, bool bAllowLetterShortcuts )
-: QWidget( parent )
+KKeyChooser::KKeyChooser( TQWidget* parent, ActionType type, bool bAllowLetterShortcuts )
+: TQWidget( parent )
 {
 	initGUI( type, bAllowLetterShortcuts );
 }
 
-KKeyChooser::KKeyChooser( KActionCollection* coll, QWidget* parent, bool bAllowLetterShortcuts )
-: QWidget( parent )
+KKeyChooser::KKeyChooser( KActionCollection* coll, TQWidget* parent, bool bAllowLetterShortcuts )
+: TQWidget( parent )
 {
 	initGUI( Application, bAllowLetterShortcuts );
 	insert( coll );
 }
 
-KKeyChooser::KKeyChooser( KAccel* pAccel, QWidget* parent, bool bAllowLetterShortcuts )
-: QWidget( parent )
+KKeyChooser::KKeyChooser( KAccel* pAccel, TQWidget* parent, bool bAllowLetterShortcuts )
+: TQWidget( parent )
 {
 	initGUI( Application, bAllowLetterShortcuts );
 	insert( pAccel );
 }
 
-KKeyChooser::KKeyChooser( KGlobalAccel* pAccel, QWidget* parent )
-: QWidget( parent )
+KKeyChooser::KKeyChooser( KGlobalAccel* pAccel, TQWidget* parent )
+: TQWidget( parent )
 {
 	initGUI( ApplicationGlobal, false );
 	insert( pAccel );
 }
 
-KKeyChooser::KKeyChooser( KShortcutList* pList, QWidget* parent, ActionType type, bool bAllowLetterShortcuts )
-: QWidget( parent )
+KKeyChooser::KKeyChooser( KShortcutList* pList, TQWidget* parent, ActionType type, bool bAllowLetterShortcuts )
+: TQWidget( parent )
 {
 	initGUI( type, bAllowLetterShortcuts );
 	insert( pList );
 }
 
-KKeyChooser::KKeyChooser( KAccel* actions, QWidget* parent,
+KKeyChooser::KKeyChooser( KAccel* actions, TQWidget* parent,
 			bool bCheckAgainstStdKeys,
 			bool bAllowLetterShortcuts,
 			bool bAllowWinKey )
-: QWidget( parent )
+: TQWidget( parent )
 {
 	ActionType type;
 	if( bAllowWinKey )
@@ -201,11 +201,11 @@ KKeyChooser::KKeyChooser( KAccel* actions, QWidget* parent,
 	insert( actions );
 }
 
-KKeyChooser::KKeyChooser( KGlobalAccel* actions, QWidget* parent,
+KKeyChooser::KKeyChooser( KGlobalAccel* actions, TQWidget* parent,
 			bool bCheckAgainstStdKeys,
 			bool bAllowLetterShortcuts,
 			bool /*bAllowWinKey*/ )
-: QWidget( parent )
+: TQWidget( parent )
 {
 	ActionType type = (bCheckAgainstStdKeys) ? ApplicationGlobal : Global;
 
@@ -218,8 +218,8 @@ KKeyChooser::KKeyChooser( KGlobalAccel* actions, QWidget* parent,
 // (just checking against kdeglobals isn't enough, the shortcuts
 // might have changed in KKeyChooser and not being saved yet).
 // Also used when reassigning a shortcut from one chooser to another.
-static QValueList< KKeyChooser* >* allChoosers = NULL;
-static KStaticDeleter< QValueList< KKeyChooser* > > allChoosersDeleter;
+static TQValueList< KKeyChooser* >* allChoosers = NULL;
+static KStaticDeleter< TQValueList< KKeyChooser* > > allChoosersDeleter;
 
 KKeyChooser::~KKeyChooser()
 {
@@ -232,12 +232,12 @@ KKeyChooser::~KKeyChooser()
 
 bool KKeyChooser::insert( KActionCollection *pColl)
 {
-    return insert(pColl, QString::null);
+    return insert(pColl, TQString::null);
 }
 
-bool KKeyChooser::insert( KActionCollection* pColl, const QString &title )
+bool KKeyChooser::insert( KActionCollection* pColl, const TQString &title )
 {
-    QString str = title;
+    TQString str = title;
     if ( title.isEmpty() && pColl->instance()
         && pColl->instance()->aboutData() )
         str = pColl->instance()->aboutData()->programName();
@@ -266,7 +266,7 @@ bool KKeyChooser::insert( KGlobalAccel* pAccel )
 bool KKeyChooser::insert( KShortcutList* pList )
 {
 	d->rgpLists.append( pList );
-	buildListView( d->rgpLists.count() - 1, QString::null );
+	buildListView( d->rgpLists.count() - 1, TQString::null );
 	return true;
 }
 
@@ -274,7 +274,7 @@ void KKeyChooser::commitChanges()
 {
 	kdDebug(125) << "KKeyChooser::commitChanges()" << endl;
 
-	QListViewItemIterator it( d->pList );
+	TQListViewItemIterator it( d->pList );
 	for( ; it.current(); ++it ) {
 		KKeyChooserItem* pItem = dynamic_cast<KKeyChooserItem*>(it.current());
 		if( pItem )
@@ -309,43 +309,43 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
   // Items are added to topLayout as they are created.
   //
 
-  QBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+  TQBoxLayout *topLayout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
 
   //
   // ADD SEARCHLINE
   //
-  QHBoxLayout* searchLayout = new QHBoxLayout(0, 0, KDialog::spacingHint());
+  TQHBoxLayout* searchLayout = new TQHBoxLayout(0, 0, KDialog::spacingHint());
   topLayout->addLayout(searchLayout, 10);
 
-  QToolButton *clearSearch = new QToolButton(this);
+  TQToolButton *clearSearch = new TQToolButton(this);
   clearSearch->setTextLabel(i18n("Clear Search"), true);
-  clearSearch->setIconSet(SmallIconSet(QApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
+  clearSearch->setIconSet(SmallIconSet(TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
   searchLayout->addWidget(clearSearch);
-  QLabel* slbl = new QLabel(i18n("&Search:"), this);
+  TQLabel* slbl = new TQLabel(i18n("&Search:"), this);
   searchLayout->addWidget(slbl);
   KListViewSearchLine* listViewSearch = new KListViewSearchLine(this);
   searchLayout->addWidget(listViewSearch);
   slbl->setBuddy(listViewSearch);
-  connect(clearSearch, SIGNAL(pressed()), listViewSearch, SLOT(clear()));
+  connect(clearSearch, TQT_SIGNAL(pressed()), listViewSearch, TQT_SLOT(clear()));
 
-  QString wtstr = i18n("Search interactively for shortcut names (e.g. Copy) "
+  TQString wtstr = i18n("Search interactively for shortcut names (e.g. Copy) "
                        "or combination of keys (e.g. Ctrl+C) by typing them here.");
 
-  QWhatsThis::add(slbl, wtstr);
-  QWhatsThis::add(listViewSearch, wtstr);
+  TQWhatsThis::add(slbl, wtstr);
+  TQWhatsThis::add(listViewSearch, wtstr);
 
   //
   // CREATE SPLIT LIST BOX
   //
   // fill up the split list box with the action/key pairs.
   //
-  QGridLayout *stackLayout = new QGridLayout(2, 2, 2);
+  TQGridLayout *stackLayout = new TQGridLayout(2, 2, 2);
   topLayout->addLayout( stackLayout, 10 );
   stackLayout->setRowStretch( 1, 10 ); // Only list will stretch
 
   d->pList = new KListView( this );
   listViewSearch->setListView(d->pList); // Plug into search line
-  QValueList<int> columns;
+  TQValueList<int> columns;
   columns.append(0);
   listViewSearch->setSearchColumns(columns);
 
@@ -356,7 +356,7 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
                        "shown in the left column and keys or combination "
                        "of keys (e.g. Ctrl+V) shown in the right column.");
 
-  QWhatsThis::add( d->pList, wtstr );
+  TQWhatsThis::add( d->pList, wtstr );
   new KKeyChooserWhatsThis( d->pList );
 
   d->pList->setAllColumnsShowFocus( true );
@@ -364,71 +364,71 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
   d->pList->addColumn(i18n("Shortcut"));
   d->pList->addColumn(i18n("Alternate"));
 
-  connect( d->pList, SIGNAL(currentChanged(QListViewItem*)),
-           SLOT(slotListItemSelected(QListViewItem*)) );
+  connect( d->pList, TQT_SIGNAL(currentChanged(TQListViewItem*)),
+           TQT_SLOT(slotListItemSelected(TQListViewItem*)) );
 
   // handle double clicking an item
-  connect ( d->pList, SIGNAL ( doubleClicked ( QListViewItem *, const QPoint &, int ) ),
-                       SLOT ( captureCurrentItem()) );
-  connect ( d->pList, SIGNAL ( spacePressed( QListViewItem* )), SLOT( captureCurrentItem()));
+  connect ( d->pList, TQT_SIGNAL ( doubleClicked ( TQListViewItem *, const TQPoint &, int ) ),
+                       TQT_SLOT ( captureCurrentItem()) );
+  connect ( d->pList, TQT_SIGNAL ( spacePressed( TQListViewItem* )), TQT_SLOT( captureCurrentItem()));
   //
   // CREATE CHOOSE KEY GROUP
   //
-  d->fCArea = new QGroupBox( this );
+  d->fCArea = new TQGroupBox( this );
   topLayout->addWidget( d->fCArea, 1 );
 
   d->fCArea->setTitle( i18n("Shortcut for Selected Action") );
-  d->fCArea->setFrameStyle( QFrame::GroupBoxPanel | QFrame::Plain );
+  d->fCArea->setFrameStyle( TQFrame::GroupBoxPanel | TQFrame::Plain );
 
   //
   // CHOOSE KEY GROUP LAYOUT MANAGER
   //
-  QGridLayout *grid = new QGridLayout( d->fCArea, 3, 4, KDialog::spacingHint() );
+  TQGridLayout *grid = new TQGridLayout( d->fCArea, 3, 4, KDialog::spacingHint() );
   grid->addRowSpacing( 0, fontMetrics().lineSpacing() );
 
-  d->kbGroup = new QButtonGroup( d->fCArea );
+  d->kbGroup = new TQButtonGroup( d->fCArea );
   d->kbGroup->hide();
   d->kbGroup->setExclusive( true );
 
-  m_prbNone = new QRadioButton( i18n("no key", "&None"), d->fCArea );
+  m_prbNone = new TQRadioButton( i18n("no key", "&None"), d->fCArea );
   d->kbGroup->insert( m_prbNone, NoKey );
   m_prbNone->setEnabled( false );
   //grid->addMultiCellWidget( rb, 1, 1, 1, 2 );
   grid->addWidget( m_prbNone, 1, 0 );
-  QWhatsThis::add( m_prbNone, i18n("The selected action will not be associated with any key.") );
-  connect( m_prbNone, SIGNAL(clicked()), SLOT(slotNoKey()) );
+  TQWhatsThis::add( m_prbNone, i18n("The selected action will not be associated with any key.") );
+  connect( m_prbNone, TQT_SIGNAL(clicked()), TQT_SLOT(slotNoKey()) );
 
-  m_prbDef = new QRadioButton( i18n("default key", "De&fault"), d->fCArea );
+  m_prbDef = new TQRadioButton( i18n("default key", "De&fault"), d->fCArea );
   d->kbGroup->insert( m_prbDef, DefaultKey );
   m_prbDef->setEnabled( false );
   //grid->addMultiCellWidget( rb, 2, 2, 1, 2 );
   grid->addWidget( m_prbDef, 1, 1 );
-  QWhatsThis::add( m_prbDef, i18n("This will bind the default key to the selected action. Usually a reasonable choice.") );
-  connect( m_prbDef, SIGNAL(clicked()), SLOT(slotDefaultKey()) );
+  TQWhatsThis::add( m_prbDef, i18n("This will bind the default key to the selected action. Usually a reasonable choice.") );
+  connect( m_prbDef, TQT_SIGNAL(clicked()), TQT_SLOT(slotDefaultKey()) );
 
-  m_prbCustom = new QRadioButton( i18n("C&ustom"), d->fCArea );
+  m_prbCustom = new TQRadioButton( i18n("C&ustom"), d->fCArea );
   d->kbGroup->insert( m_prbCustom, CustomKey );
   m_prbCustom->setEnabled( false );
   //grid->addMultiCellWidget( rb, 3, 3, 1, 2 );
   grid->addWidget( m_prbCustom, 1, 2 );
-  QWhatsThis::add( m_prbCustom, i18n("If this option is selected you can create a customized key binding for the"
+  TQWhatsThis::add( m_prbCustom, i18n("If this option is selected you can create a customized key binding for the"
     " selected action using the buttons below.") );
-  connect( m_prbCustom, SIGNAL(clicked()), SLOT(slotCustomKey()) );
+  connect( m_prbCustom, TQT_SIGNAL(clicked()), TQT_SLOT(slotCustomKey()) );
 
-  //connect( d->kbGroup, SIGNAL( clicked( int ) ), SLOT( keyMode( int ) ) );
+  //connect( d->kbGroup, TQT_SIGNAL( clicked( int ) ), TQT_SLOT( keyMode( int ) ) );
 
-  QBoxLayout *pushLayout = new QHBoxLayout( KDialog::spacingHint() );
+  TQBoxLayout *pushLayout = new TQHBoxLayout( KDialog::spacingHint() );
   grid->addLayout( pushLayout, 1, 3 );
 
   d->pbtnShortcut = new KKeyButton(d->fCArea, "key");
   d->pbtnShortcut->setEnabled( false );
-  connect( d->pbtnShortcut, SIGNAL(capturedShortcut(const KShortcut&)), SLOT(capturedShortcut(const KShortcut&)) );
+  connect( d->pbtnShortcut, TQT_SIGNAL(capturedShortcut(const KShortcut&)), TQT_SLOT(capturedShortcut(const KShortcut&)) );
   grid->addRowSpacing( 1, d->pbtnShortcut->sizeHint().height() + 5 );
 
   wtstr = i18n("Use this button to choose a new shortcut key. Once you click it, "
   		"you can press the key-combination which you would like to be assigned "
 		"to the currently selected action.");
-  QWhatsThis::add( d->pbtnShortcut, wtstr );
+  TQWhatsThis::add( d->pbtnShortcut, wtstr );
 
   //
   // Add widgets to the geometry manager
@@ -437,28 +437,28 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
   pushLayout->addWidget( d->pbtnShortcut );
   pushLayout->addStretch( 10 );
 
-  d->lInfo = new QLabel(d->fCArea);
+  d->lInfo = new TQLabel(d->fCArea);
   //resize(0,0);
   //d->lInfo->setAlignment( AlignCenter );
   //d->lInfo->setEnabled( false );
   //d->lInfo->hide();
   grid->addMultiCellWidget( d->lInfo, 2, 2, 0, 3 );
 
-  //d->globalDict = new QDict<int> ( 100, false );
+  //d->globalDict = new TQDict<int> ( 100, false );
   //d->globalDict->setAutoDelete( true );
   readGlobalKeys();
-  //d->stdDict = new QDict<int> ( 100, false );
+  //d->stdDict = new TQDict<int> ( 100, false );
   //d->stdDict->setAutoDelete( true );
   //if (type == Application || type == ApplicationGlobal)
   //  readStdKeys();
-  connect( kapp, SIGNAL( settingsChanged( int )), SLOT( slotSettingsChanged( int )));
+  connect( kapp, TQT_SIGNAL( settingsChanged( int )), TQT_SLOT( slotSettingsChanged( int )));
   if( allChoosers == NULL )
-        allChoosers = allChoosersDeleter.setObject( allChoosers, new QValueList< KKeyChooser* > );
+        allChoosers = allChoosersDeleter.setObject( allChoosers, new TQValueList< KKeyChooser* > );
   allChoosers->append( this );
 }
 
 // Add all shortcuts to the list
-void KKeyChooser::buildListView( uint iList, const QString &title )
+void KKeyChooser::buildListView( uint iList, const TQString &title )
 {
 	KShortcutList* pList = d->rgpLists[iList];
 	KActionShortcutList *pAList = dynamic_cast<KActionShortcutList*>(pList);
@@ -467,14 +467,14 @@ void KKeyChooser::buildListView( uint iList, const QString &title )
 	    d->pList->setSorting( -1 );
 	KListViewItem *pProgramItem, *pGroupItem = 0, *pParentItem, *pItem;
 
-	QString str = (title.isEmpty() ? i18n("Shortcuts") : title);
+	TQString str = (title.isEmpty() ? i18n("Shortcuts") : title);
 	pParentItem = pProgramItem = pItem = new KListViewItem( d->pList, str );
 	pParentItem->setExpandable( true );
 	pParentItem->setOpen( true );
 	pParentItem->setSelectable( false );
 	uint nSize = pList->count();
 	for( uint iAction = 0; iAction < nSize; iAction++ ) {
-		QString sName = pList->name(iAction);
+		TQString sName = pList->name(iAction);
 		kdDebug(125) << "Key: " << sName << endl;
 		if( sName.startsWith( "Program:" ) ) {
 			pItem = new KListViewItem( d->pList, pProgramItem, pList->label(iAction) );
@@ -495,7 +495,7 @@ void KKeyChooser::buildListView( uint iList, const QString &title )
 		} else if( !sName.isEmpty() && sName != "unnamed"  && pList->isConfigurable(iAction) ) {
 			pItem = new KKeyChooserItem( pParentItem, pItem, pList, iAction );
 			if(pAList)
-				pItem->setPixmap(0,pAList->action(iAction)->iconSet().pixmap(QIconSet::Small,QIconSet::Normal));
+				pItem->setPixmap(0,pAList->action(iAction)->iconSet().pixmap(TQIconSet::Small,TQIconSet::Normal));
 		}
 	}
 	if( !pProgramItem->firstChild() )
@@ -527,13 +527,13 @@ void KKeyChooser::updateButtons()
 		const KShortcut& cutDef = pItem->shortcutDefault();
 
 		// Set key strings
-		QString keyStrCfg = pItem->shortcut().toString();
-		QString keyStrDef = cutDef.toString();
+		TQString keyStrCfg = pItem->shortcut().toString();
+		TQString keyStrDef = cutDef.toString();
 
 		d->pbtnShortcut->setShortcut( pItem->shortcut(), bQtShortcut );
 		//item->setText( 1, keyStrCfg );
 		pItem->repaint();
-		d->lInfo->setText( i18n("Default key:") + QString(" %1").arg(keyStrDef.isEmpty() ? i18n("None") : keyStrDef) );
+		d->lInfo->setText( i18n("Default key:") + TQString(" %1").arg(keyStrDef.isEmpty() ? i18n("None") : keyStrDef) );
 
 		// Select the appropriate radio button.
 		int index = (pItem->shortcut().isNull()) ? NoKey
@@ -585,10 +585,10 @@ void KKeyChooser::readGlobalKeys()
         readGlobalKeys( d->mapGlobals );
 }
 
-void KKeyChooser::readGlobalKeys( QMap< QString, KShortcut >& map )
+void KKeyChooser::readGlobalKeys( TQMap< TQString, KShortcut >& map )
 {
-	QMap<QString, QString> mapEntry = KGlobal::config()->entryMap( "Global Shortcuts" );
-	QMap<QString, QString>::Iterator it( mapEntry.begin() );
+	TQMap<TQString, TQString> mapEntry = KGlobal::config()->entryMap( "Global Shortcuts" );
+	TQMap<TQString, TQString>::Iterator it( mapEntry.begin() );
 	for( uint i = 0; it != mapEntry.end(); ++it, i++ )
 		map[it.key()] = KShortcut(*it);
 }
@@ -599,7 +599,7 @@ void KKeyChooser::slotSettingsChanged( int category )
         readGlobalKeys(); // reread
 }
 
-void KKeyChooser::fontChange( const QFont & )
+void KKeyChooser::fontChange( const TQFont & )
 {
         d->fCArea->setMinimumHeight( 4*d->pbtnShortcut->sizeHint().height() );
 
@@ -616,7 +616,7 @@ void KKeyChooser::allDefault()
 {
 	kdDebug(125) << "KKeyChooser::allDefault()" << endl;
 
-	QListViewItemIterator it( d->pList );
+	TQListViewItemIterator it( d->pList );
 	for( ; it.current(); ++it ) {
 		KKeyChooserItem* pItem = dynamic_cast<KKeyChooserItem*>(it.current());
 		if( pItem )
@@ -627,12 +627,12 @@ void KKeyChooser::allDefault()
 	emit keyChange();
 }
 
-void KKeyChooser::slotListItemSelected( QListViewItem* )
+void KKeyChooser::slotListItemSelected( TQListViewItem* )
 {
 	updateButtons();
 }
 
-void KKeyChooser::slotListItemDoubleClicked ( QListViewItem *, const QPoint & , int )
+void KKeyChooser::slotListItemDoubleClicked ( TQListViewItem *, const TQPoint & , int )
 { // KDE4 dump this
   captureCurrentItem();
 }
@@ -675,21 +675,21 @@ void KKeyChooser::listSync()
 	}*/
 }
 
-void KKeyChooser::syncToConfig( const QString& sConfigGroup, KConfigBase* pConfig, bool bClearUnset )
+void KKeyChooser::syncToConfig( const TQString& sConfigGroup, KConfigBase* pConfig, bool bClearUnset )
 {
 	kdDebug(125) << "KKeyChooser::syncToConfig( \"" << sConfigGroup << "\", " << pConfig << " ) start" << endl;
 	if( !pConfig )
 		pConfig = KGlobal::config();
 	KConfigGroupSaver cgs( pConfig, sConfigGroup );
 
-	QListViewItemIterator it( d->pList );
+	TQListViewItemIterator it( d->pList );
 	for( ; it.current(); ++it ) {
 		KKeyChooserItem* pItem = dynamic_cast<KKeyChooserItem*>(it.current());
 		if( pItem ) {
-			QString sEntry = pConfig->readEntry( pItem->actionName() );
+			TQString sEntry = pConfig->readEntry( pItem->actionName() );
 			if( !sEntry.isNull() || bClearUnset ) {
 				if( sEntry == "none" )
-					sEntry = QString::null;
+					sEntry = TQString::null;
 				pItem->setShortcut( sEntry );
 			}
 			kdDebug(125) << pItem->actionName() << " = " << pItem->shortcut().toStringInternal() << endl;
@@ -711,10 +711,10 @@ void KKeyChooser::setShortcut( const KShortcut& cut )
 		const KKey& key = seq.key(0);
 
 		if( !d->bAllowLetterShortcuts && key.modFlags() == 0
-		    && key.sym() < 0x3000 && QChar(key.sym()).isLetterOrNumber() ) {
-			QString s = i18n( 	"In order to use the '%1' key as a shortcut, "
+		    && key.sym() < 0x3000 && TQChar(key.sym()).isLetterOrNumber() ) {
+			TQString s = i18n( 	"In order to use the '%1' key as a shortcut, "
 						"it must be combined with the "
-						"Win, Alt, Ctrl, and/or Shift keys." ).arg(QChar(key.sym()));
+						"Win, Alt, Ctrl, and/or Shift keys." ).arg(TQChar(key.sym()));
 			KMessageBox::sorry( this, s, i18n("Invalid Shortcut Key") );
 			return;
 		}
@@ -760,7 +760,7 @@ bool KKeyChooser::isKeyPresent( const KShortcut& cut, bool bWarnUser )
 
         bool has_global_chooser = false;
         bool has_standard_chooser = false;
-        for( QValueList< KKeyChooser* >::ConstIterator it = allChoosers->begin();
+        for( TQValueList< KKeyChooser* >::ConstIterator it = allChoosers->begin();
              it != allChoosers->end();
              ++it ) {
             has_global_chooser |= ((*it)->m_type == Global);
@@ -778,7 +778,7 @@ bool KKeyChooser::isKeyPresent( const KShortcut& cut, bool bWarnUser )
         // only check the global keys if one of the keychoosers isn't global
         if( !has_global_chooser ) {
             if( checkGlobalShortcutsConflict( cut, bWarnUser, this, d->mapGlobals,
-                m_type == Global ? pItem->actionName() : QString::null ))
+                m_type == Global ? pItem->actionName() : TQString::null ))
                 return true;
         }
 
@@ -786,7 +786,7 @@ bool KKeyChooser::isKeyPresent( const KShortcut& cut, bool bWarnUser )
             return true;
 
         // check also other KKeyChooser's
-        for( QValueList< KKeyChooser* >::ConstIterator it = allChoosers->begin();
+        for( TQValueList< KKeyChooser* >::ConstIterator it = allChoosers->begin();
              it != allChoosers->end();
              ++it ) {
             if( (*it) != this && (*it)->isKeyPresentLocally( cut, NULL, bWarnUser ))
@@ -796,7 +796,7 @@ bool KKeyChooser::isKeyPresent( const KShortcut& cut, bool bWarnUser )
 }
 
 // KDE4 remove
-bool KKeyChooser::isKeyPresentLocally( const KShortcut& cut, KKeyChooserItem* ignoreItem, const QString& warnText )
+bool KKeyChooser::isKeyPresentLocally( const KShortcut& cut, KKeyChooserItem* ignoreItem, const TQString& warnText )
 {
     return isKeyPresentLocally( cut, ignoreItem, !warnText.isNull());
 }
@@ -807,7 +807,7 @@ bool KKeyChooser::isKeyPresentLocally( const KShortcut& cut, KKeyChooserItem* ig
         return false;
 	// Search for shortcut conflicts with other actions in the
 	//  lists we're configuring.
-	for( QListViewItemIterator it( d->pList ); it.current(); ++it ) {
+	for( TQListViewItemIterator it( d->pList ); it.current(); ++it ) {
 		KKeyChooserItem* pItem2 = dynamic_cast<KKeyChooserItem*>(it.current());
 		if( pItem2 && pItem2 != ignoreItem ) {
 			int iSeq = keyConflict( cut, pItem2->shortcut() );
@@ -828,7 +828,7 @@ bool KKeyChooser::isKeyPresentLocally( const KShortcut& cut, KKeyChooserItem* ig
         return false;
 }
 
-bool KKeyChooser::checkStandardShortcutsConflict( const KShortcut& cut, bool bWarnUser, QWidget* parent )
+bool KKeyChooser::checkStandardShortcutsConflict( const KShortcut& cut, bool bWarnUser, TQWidget* parent )
 {
     // For each key sequence in the shortcut,
     for( uint i = 0; i < cut.count(); i++ ) {
@@ -846,17 +846,17 @@ bool KKeyChooser::checkStandardShortcutsConflict( const KShortcut& cut, bool bWa
     return false;
 }
 
-bool KKeyChooser::checkGlobalShortcutsConflict( const KShortcut& cut, bool bWarnUser, QWidget* parent )
+bool KKeyChooser::checkGlobalShortcutsConflict( const KShortcut& cut, bool bWarnUser, TQWidget* parent )
 {
-    QMap< QString, KShortcut > map;
+    TQMap< TQString, KShortcut > map;
     readGlobalKeys( map );
-    return checkGlobalShortcutsConflict( cut, bWarnUser, parent, map, QString::null );
+    return checkGlobalShortcutsConflict( cut, bWarnUser, parent, map, TQString::null );
 }
 
-bool KKeyChooser::checkGlobalShortcutsConflict( const KShortcut& cut, bool bWarnUser, QWidget* parent,
-    const QMap< QString, KShortcut >& map, const QString& ignoreAction )
+bool KKeyChooser::checkGlobalShortcutsConflict( const KShortcut& cut, bool bWarnUser, TQWidget* parent,
+    const TQMap< TQString, KShortcut >& map, const TQString& ignoreAction )
 {
-    QMap<QString, KShortcut>::ConstIterator it;
+    TQMap<TQString, KShortcut>::ConstIterator it;
     for( it = map.begin(); it != map.end(); ++it ) {
 	    int iSeq = keyConflict( cut, (*it) );
 	    if( iSeq > -1 ) {
@@ -872,11 +872,11 @@ bool KKeyChooser::checkGlobalShortcutsConflict( const KShortcut& cut, bool bWarn
     return false;
 }
 
-void KKeyChooser::removeStandardShortcut( const QString& name, KKeyChooser* chooser, const KShortcut &origCut, const KShortcut &cut )
+void KKeyChooser::removeStandardShortcut( const TQString& name, KKeyChooser* chooser, const KShortcut &origCut, const KShortcut &cut )
 {
     bool was_in_choosers = false;
     if( allChoosers != NULL ) {
-        for( QValueList< KKeyChooser* >::ConstIterator it = allChoosers->begin();
+        for( TQValueList< KKeyChooser* >::ConstIterator it = allChoosers->begin();
              it != allChoosers->end();
              ++it ) {
             if( (*it) != chooser && (*it)->m_type == Standard ) {
@@ -896,11 +896,11 @@ void KKeyChooser::removeStandardShortcut( const QString& name, KKeyChooser* choo
     }
 }
 
-void KKeyChooser::removeGlobalShortcut( const QString& name, KKeyChooser* chooser, const KShortcut &origCut, const KShortcut &cut )
+void KKeyChooser::removeGlobalShortcut( const TQString& name, KKeyChooser* chooser, const KShortcut &origCut, const KShortcut &cut )
 {
     bool was_in_choosers = false;
     if( allChoosers != NULL ) {
-        for( QValueList< KKeyChooser* >::ConstIterator it = allChoosers->begin();
+        for( TQValueList< KKeyChooser* >::ConstIterator it = allChoosers->begin();
              it != allChoosers->end();
              ++it ) {
             if( (*it) != chooser && (*it)->m_type == Global ) {
@@ -917,9 +917,9 @@ void KKeyChooser::removeGlobalShortcut( const QString& name, KKeyChooser* choose
     }
 }
 
-bool KKeyChooser::removeShortcut( const QString& name, const KShortcut &cut )
+bool KKeyChooser::removeShortcut( const TQString& name, const KShortcut &cut )
 {
-	for( QListViewItemIterator it( d->pList ); it.current(); ++it ) {
+	for( TQListViewItemIterator it( d->pList ); it.current(); ++it ) {
 		KKeyChooserItem* pItem2 = dynamic_cast<KKeyChooserItem*>(it.current());
                     if( pItem2 && pItem2->actionName() == name ) {
                         // remove the shortcut from it
@@ -935,11 +935,11 @@ bool KKeyChooser::removeShortcut( const QString& name, const KShortcut &cut )
 }
 
 // KDE4 remove this
-void KKeyChooser::_warning( const KKeySequence& cut, QString sAction, QString sTitle )
+void KKeyChooser::_warning( const KKeySequence& cut, TQString sAction, TQString sTitle )
 {
 	sAction = sAction.stripWhiteSpace();
 
-	QString s =
+	TQString s =
 		i18n("The '%1' key combination has already been allocated "
 		"to the \"%2\" action.\n"
 		"Please choose a unique key combination.").
@@ -948,12 +948,12 @@ void KKeyChooser::_warning( const KKeySequence& cut, QString sAction, QString sT
 	KMessageBox::sorry( this, s, sTitle );
 }
 
-bool KKeyChooser::promptForReassign( const KKeySequence& cut, const QString& sAction, ActionType type, QWidget* parent )
+bool KKeyChooser::promptForReassign( const KKeySequence& cut, const TQString& sAction, ActionType type, TQWidget* parent )
 {
         if(cut.isNull())
             return true;
-        QString sTitle;
-        QString s;
+        TQString sTitle;
+        TQString s;
         if( type == Standard ) {
                 sTitle = i18n("Conflict with Standard Application Shortcut");
 		s = i18n("The '%1' key combination has already been allocated "
@@ -978,7 +978,7 @@ bool KKeyChooser::promptForReassign( const KKeySequence& cut, const QString& sAc
 }
 
 //---------------------------------------------------
-KKeyChooserItem::KKeyChooserItem( KListView* parent, QListViewItem* after, KShortcutList* pList, uint iAction )
+KKeyChooserItem::KKeyChooserItem( KListView* parent, TQListViewItem* after, KShortcutList* pList, uint iAction )
 :	KListViewItem( parent, after )
 {
 	m_pList = pList;
@@ -987,7 +987,7 @@ KKeyChooserItem::KKeyChooserItem( KListView* parent, QListViewItem* after, KShor
 	m_cut = m_pList->shortcut(m_iAction);
 }
 
-KKeyChooserItem::KKeyChooserItem( QListViewItem* parent, QListViewItem* after, KShortcutList* pList, uint iAction )
+KKeyChooserItem::KKeyChooserItem( TQListViewItem* parent, TQListViewItem* after, KShortcutList* pList, uint iAction )
 :	KListViewItem( parent, after )
 {
 	m_pList = pList;
@@ -996,7 +996,7 @@ KKeyChooserItem::KKeyChooserItem( QListViewItem* parent, QListViewItem* after, K
 	m_cut = m_pList->shortcut(m_iAction);
 }
 
-QString KKeyChooserItem::actionName() const
+TQString KKeyChooserItem::actionName() const
 {
 	return m_pList->name(m_iAction);
 }
@@ -1019,12 +1019,12 @@ void KKeyChooserItem::commitChanges()
 		m_pList->setShortcut( m_iAction, m_cut );
 }
 
-QString KKeyChooserItem::text( int iCol ) const
+TQString KKeyChooserItem::text( int iCol ) const
 {
 	if( iCol == 0 ) {
 		// Quick HACK to get rid of '&'s.
-		QString s = m_pList->label(m_iAction);
-		QString s2;
+		TQString s = m_pList->label(m_iAction);
+		TQString s2;
 		for( uint i = 0; i < s.length(); i++ )
 			if( s[i] != '&' || ( i+1<s.length() && s[i+1] == '&' ) )
 				s2 += s[i];
@@ -1033,17 +1033,17 @@ QString KKeyChooserItem::text( int iCol ) const
 	else if( iCol <= (int) m_cut.count() )
 		return m_cut.seq(iCol-1).toString();
 	else
-		return QString::null;
+		return TQString::null;
 }
 
-int KKeyChooserItem::compare( QListViewItem* item, int iCol, bool bAscending ) const
+int KKeyChooserItem::compare( TQListViewItem* item, int iCol, bool bAscending ) const
 {
 	KKeyChooserItem* pItem = dynamic_cast<KKeyChooserItem*>( item );
 	if( iCol == 0 && pItem ) {
-		QString psName1 = m_pList->name(m_iAction);
-		QString psName2 = pItem->m_pList->name(pItem->m_iAction);
-		QRegExp rxNumber1( " (\\d+)$" );
-		QRegExp rxNumber2( " (\\d+)$" );
+		TQString psName1 = m_pList->name(m_iAction);
+		TQString psName2 = pItem->m_pList->name(pItem->m_iAction);
+		TQRegExp rxNumber1( " (\\d+)$" );
+		TQRegExp rxNumber2( " (\\d+)$" );
 		int iNumber1 = rxNumber1.search( psName1 );
 		int iNumber2 = rxNumber2.search( psName2 );
 
@@ -1055,23 +1055,23 @@ int KKeyChooserItem::compare( QListViewItem* item, int iCol, bool bAscending ) c
 		}
 	}
 
-	return QListViewItem::compare( item, iCol, bAscending );
+	return TQListViewItem::compare( item, iCol, bAscending );
 }
 
 ////
 
-QString KKeyChooserWhatsThis::text( const QPoint& p ) {
+TQString KKeyChooserWhatsThis::text( const TQPoint& p ) {
     if ( !m_listView )
-        return QString::null;
+        return TQString::null;
 
-    const QListViewItem* item = m_listView->itemAt( p );
+    const TQListViewItem* item = m_listView->itemAt( p );
     const KKeyChooserItem* pItem = dynamic_cast<const KKeyChooserItem*>(item);
     if ( !pItem )
-        return QWhatsThis::textFor( m_listView );
+        return TQWhatsThis::textFor( m_listView );
 
-    const QString itemWhatsThis = pItem->whatsThis();
+    const TQString itemWhatsThis = pItem->whatsThis();
     if ( itemWhatsThis.isEmpty() )
-        return QWhatsThis::textFor( m_listView );
+        return TQWhatsThis::textFor( m_listView );
 
     return itemWhatsThis;
 }
@@ -1087,27 +1087,27 @@ QString KKeyChooserWhatsThis::text( const QPoint& p ) {
 /* (by using KDialogBase there is almost no code left ;)                */
 /*                                                                      */
 /************************************************************************/
-KKeyDialog::KKeyDialog( KKeyChooser::ActionType type, bool bAllowLetterShortcuts, QWidget *parent, const char* name )
+KKeyDialog::KKeyDialog( KKeyChooser::ActionType type, bool bAllowLetterShortcuts, TQWidget *parent, const char* name )
 : KDialogBase( parent, name ? name : "kkeydialog", true, i18n("Configure Shortcuts"), Default|Ok|Cancel, Ok )
 {
 	m_pKeyChooser = new KKeyChooser( this, type, bAllowLetterShortcuts );
 	setMainWidget( m_pKeyChooser );
-	connect( this, SIGNAL(defaultClicked()), m_pKeyChooser, SLOT(allDefault()) );
+	connect( this, TQT_SIGNAL(defaultClicked()), m_pKeyChooser, TQT_SLOT(allDefault()) );
 
 	KConfigGroup group( KGlobal::config(), "KKeyDialog Settings" );
-	QSize sz = size();
+	TQSize sz = size();
 	resize( group.readSizeEntry( "Dialog Size", &sz ) );
 }
 
-KKeyDialog::KKeyDialog( bool bAllowLetterShortcuts, QWidget *parent, const char* name )
+KKeyDialog::KKeyDialog( bool bAllowLetterShortcuts, TQWidget *parent, const char* name )
 : KDialogBase( parent, name ? name : "kkeydialog", true, i18n("Configure Shortcuts"), Default|Ok|Cancel, Ok )
 {
 	m_pKeyChooser = new KKeyChooser( this, KKeyChooser::Application, bAllowLetterShortcuts );
 	setMainWidget( m_pKeyChooser );
-	connect( this, SIGNAL(defaultClicked()), m_pKeyChooser, SLOT(allDefault()) );
+	connect( this, TQT_SIGNAL(defaultClicked()), m_pKeyChooser, TQT_SLOT(allDefault()) );
 
 	KConfigGroup group( KGlobal::config(), "KKeyDialog Settings" );
-	QSize sz = size();
+	TQSize sz = size();
 	resize( group.readSizeEntry( "Dialog Size", &sz ) );
 }
 
@@ -1122,7 +1122,7 @@ bool KKeyDialog::insert( KActionCollection* pColl )
 	return m_pKeyChooser->insert( pColl );
 }
 
-bool KKeyDialog::insert(KActionCollection *pColl, const QString &title)
+bool KKeyDialog::insert(KActionCollection *pColl, const TQString &title)
 {
     return m_pKeyChooser->insert(pColl, title);
 }
@@ -1144,22 +1144,22 @@ void KKeyDialog::commitChanges()
 	m_pKeyChooser->commitChanges();
 }
 
-int KKeyDialog::configure( KActionCollection* coll, QWidget* parent, bool bSaveSettings )
+int KKeyDialog::configure( KActionCollection* coll, TQWidget* parent, bool bSaveSettings )
 {
 	return configure( coll, true, parent, bSaveSettings);
 }
 
-int KKeyDialog::configure( KAccel* keys, QWidget* parent, bool bSaveSettings )
+int KKeyDialog::configure( KAccel* keys, TQWidget* parent, bool bSaveSettings )
 {
 	return configure( keys, true, parent, bSaveSettings);
 }
 
-int KKeyDialog::configure( KGlobalAccel* keys, QWidget* parent, bool bSaveSettings )
+int KKeyDialog::configure( KGlobalAccel* keys, TQWidget* parent, bool bSaveSettings )
 {
 	return configure( keys, true, parent, bSaveSettings);
 }
 
-int KKeyDialog::configure( KAccel* keys, bool bAllowLetterShortcuts, QWidget *parent, bool bSaveSettings )
+int KKeyDialog::configure( KAccel* keys, bool bAllowLetterShortcuts, TQWidget *parent, bool bSaveSettings )
 {
 	KKeyDialog dlg( bAllowLetterShortcuts, parent );
 	dlg.m_pKeyChooser->insert( keys );
@@ -1169,7 +1169,7 @@ int KKeyDialog::configure( KAccel* keys, bool bAllowLetterShortcuts, QWidget *pa
 	return b;
 }
 
-int KKeyDialog::configure( KGlobalAccel* keys, bool bAllowLetterShortcuts, QWidget *parent, bool bSaveSettings )
+int KKeyDialog::configure( KGlobalAccel* keys, bool bAllowLetterShortcuts, TQWidget *parent, bool bSaveSettings )
 {
 	KKeyDialog dlg( KKeyChooser::ApplicationGlobal, bAllowLetterShortcuts, parent );
 	dlg.m_pKeyChooser->insert( keys );
@@ -1179,7 +1179,7 @@ int KKeyDialog::configure( KGlobalAccel* keys, bool bAllowLetterShortcuts, QWidg
 	return b;
 }
 
-int KKeyDialog::configure( KActionCollection* coll, bool bAllowLetterShortcuts, QWidget *parent, bool bSaveSettings )
+int KKeyDialog::configure( KActionCollection* coll, bool bAllowLetterShortcuts, TQWidget *parent, bool bSaveSettings )
 {
 	kdDebug(125) << "KKeyDialog::configureKeys( KActionCollection*, " << bSaveSettings << " )" << endl;
 	KKeyDialog dlg( bAllowLetterShortcuts, parent );
@@ -1187,7 +1187,7 @@ int KKeyDialog::configure( KActionCollection* coll, bool bAllowLetterShortcuts, 
 	return dlg.configure( bSaveSettings );
 }
 
-/*int KKeyDialog::configure( KActionPtrList* coll, const QString& file, QWidget *parent, bool bSaveSettings )
+/*int KKeyDialog::configure( KActionPtrList* coll, const TQString& file, TQWidget *parent, bool bSaveSettings )
 {
 	kdDebug(125) << "KKeyDialog::configureKeys( KActionCollection*, " << file << ", " << bSaveSettings << " )" << endl;
 	KAccelActions actions;

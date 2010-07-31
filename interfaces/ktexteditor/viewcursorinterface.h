@@ -41,7 +41,7 @@ class KTEXTEDITOR_EXPORT ViewCursorInterface
     unsigned int viewCursorInterfaceNumber () const;
     
   protected:  
-    void setViewCursorInterfaceDCOPSuffix (const QCString &suffix); 
+    void setViewCursorInterfaceDCOPSuffix (const TQCString &suffix); 
 
   //
   // slots !!!
@@ -50,7 +50,7 @@ class KTEXTEDITOR_EXPORT ViewCursorInterface
     /**
      * Get the current cursor coordinates in pixels.
      */
-    virtual class QPoint cursorCoordinates () = 0;
+    virtual class TQPoint cursorCoordinates () = 0;
 
     /**
      * Get the cursor position

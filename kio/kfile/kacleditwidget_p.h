@@ -30,8 +30,8 @@
 #include <kacl.h>
 #include <kfileitem.h>
 #include <kdialogbase.h>
-#include <qpixmap.h>
-#include <qcombobox.h>
+#include <tqpixmap.h>
+#include <tqcombobox.h>
 
 class KACLListViewItem;
 class QPushButton;
@@ -66,7 +66,7 @@ public:
                      NamedGroup = 32,
                      AllTypes = 63 };
 
-    KACLListView( QWidget* parent = 0, const char* name = 0 );
+    KACLListView( TQWidget* parent = 0, const char* name = 0 );
     ~KACLListView();
 
     bool hasMaskEntry() const { return m_hasMask; }
@@ -87,8 +87,8 @@ public:
     unsigned short calculateMaskValue( bool defaults ) const;
     void calculateEffectiveRights();
 
-    QStringList allowedUsers( bool defaults, KACLListViewItem *allowedItem = 0 );
-    QStringList allowedGroups( bool defaults, KACLListViewItem *allowedItem = 0 );
+    TQStringList allowedUsers( bool defaults, KACLListViewItem *allowedItem = 0 );
+    TQStringList allowedGroups( bool defaults, KACLListViewItem *allowedItem = 0 );
 
     const KACL getACL() const { return getACL(); }
     KACL getACL();
@@ -96,8 +96,8 @@ public:
     const KACL getDefaultACL() const { return getDefaultACL(); }
     KACL getDefaultACL();
 
-    QPixmap getYesPixmap() const { return *m_yesPixmap; }
-    QPixmap getYesPartialPixmap() const { return *m_yesPartialPixmap; }
+    TQPixmap getYesPixmap() const { return *m_yesPixmap; }
+    TQPixmap getYesPartialPixmap() const { return *m_yesPartialPixmap; }
 
 public slots:
     void slotAddEntry();
@@ -107,9 +107,9 @@ public slots:
     void setDefaultACL( const KACL &anACL );
 
 protected slots:
-    void entryClicked( QListViewItem* pItem, const QPoint& pt, int col );
+    void entryClicked( TQListViewItem* pItem, const TQPoint& pt, int col );
 protected:
-    void contentsMousePressEvent( QMouseEvent * e );
+    void contentsMousePressEvent( TQMouseEvent * e );
 
 private:
     void fillItemsFromACL( const KACL &pACL, bool defaults = false );
@@ -120,10 +120,10 @@ private:
     unsigned short m_mask;
     bool m_hasMask;
     bool m_allowDefaults;
-    QStringList m_allUsers;
-    QStringList m_allGroups;
-    QPixmap* m_yesPixmap;
-    QPixmap* m_yesPartialPixmap;
+    TQStringList m_allUsers;
+    TQStringList m_allGroups;
+    TQPixmap* m_yesPixmap;
+    TQPixmap* m_yesPartialPixmap;
 };
 
 class EditACLEntryDialog : public KDialogBase
@@ -131,10 +131,10 @@ class EditACLEntryDialog : public KDialogBase
     Q_OBJECT
 public:
     EditACLEntryDialog( KACLListView *listView, KACLListViewItem *item,
-                        const QStringList &users,
-                        const QStringList &groups,
-                        const QStringList &defaultUsers,
-                        const QStringList &defaultGroups,
+                        const TQStringList &users,
+                        const TQStringList &groups,
+                        const TQStringList &defaultUsers,
+                        const TQStringList &defaultGroups,
                         int allowedTypes = KACLListView::AllTypes,
                         int allowedDefaultTypes = KACLListView::AllTypes,
                         bool allowDefault = false );
@@ -148,29 +148,29 @@ private slots:
 private:
      KACLListView *m_listView;
      KACLListViewItem *m_item;
-     QStringList m_users;
-     QStringList m_groups;
-     QStringList m_defaultUsers;
-     QStringList m_defaultGroups;
+     TQStringList m_users;
+     TQStringList m_groups;
+     TQStringList m_defaultUsers;
+     TQStringList m_defaultGroups;
      int m_allowedTypes;
      int m_allowedDefaultTypes;
-     QVButtonGroup *m_buttonGroup;
-     QComboBox *m_usersCombo;
-     QComboBox *m_groupsCombo;
-     QWidgetStack *m_widgetStack;
-     QCheckBox *m_defaultCB;
+     TQVButtonGroup *m_buttonGroup;
+     TQComboBox *m_usersCombo;
+     TQComboBox *m_groupsCombo;
+     TQWidgetStack *m_widgetStack;
+     TQCheckBox *m_defaultCB;
 };
 
 
 class KACLListViewItem : public KListViewItem
 {
 public:
-    KACLListViewItem( QListView* parent, KACLListView::EntryType type,
+    KACLListViewItem( TQListView* parent, KACLListView::EntryType type,
                       unsigned short value,
                       bool defaultEntry,
-                      const QString& qualifier = QString::null );
+                      const TQString& qualifier = TQString::null );
     virtual ~KACLListViewItem();
-    virtual QString key( int column, bool ascending ) const;
+    virtual TQString key( int column, bool ascending ) const;
 
     void calcEffectiveRights();
 
@@ -179,7 +179,7 @@ public:
 
     void togglePerm( acl_perm_t perm );
 
-    virtual void paintCell( QPainter *p, const QColorGroup &cg,
+    virtual void paintCell( TQPainter *p, const TQColorGroup &cg,
                             int column, int width, int alignment );
 
     void updatePermPixmaps();
@@ -188,7 +188,7 @@ public:
     KACLListView::EntryType type;
     unsigned short value;
     bool isDefault;
-    QString qualifier;
+    TQString qualifier;
     bool isPartial;
 
 private:

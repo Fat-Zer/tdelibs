@@ -28,9 +28,9 @@ class Test4 : public KConfigSkeleton
       Set Block colors.
     */
     static
-    void setColor( int i, const QColor & v )
+    void setColor( int i, const TQColor & v )
     {
-      if (!self()->isImmutable( QString::fromLatin1( "Color%1" ).arg( i ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "Color%1" ).arg( i ) ))
         self()->mColor[i] = v;
     }
 
@@ -38,7 +38,7 @@ class Test4 : public KConfigSkeleton
       Get Block colors.
     */
     static
-    QColor color( int i )
+    TQColor color( int i )
     {
       return self()->mColor[i];
     }
@@ -49,7 +49,7 @@ class Test4 : public KConfigSkeleton
     static
     void setMouseAction( int i, int v )
     {
-      if (!self()->isImmutable( QString::fromLatin1( "MouseAction%1" ).arg( QString::fromLatin1( EnumButton::enumToString[i] ) ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "MouseAction%1" ).arg( TQString::fromLatin1( EnumButton::enumToString[i] ) ) ))
         self()->mMouseAction[i] = v;
     }
 
@@ -66,9 +66,9 @@ class Test4 : public KConfigSkeleton
       Set foo bar
     */
     static
-    void setFooBar( const QString & v )
+    void setFooBar( const TQString & v )
     {
-      if (!self()->isImmutable( QString::fromLatin1( "FooBar" ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "FooBar" ) ))
         self()->mFooBar = v;
     }
 
@@ -76,7 +76,7 @@ class Test4 : public KConfigSkeleton
       Get foo bar
     */
     static
-    QString fooBar()
+    TQString fooBar()
     {
       return self()->mFooBar;
     }
@@ -99,7 +99,7 @@ class Test4 : public KConfigSkeleton
         v = 88;
       }
 
-      if (!self()->isImmutable( QString::fromLatin1( "Age" ) ))
+      if (!self()->isImmutable( TQString::fromLatin1( "Age" ) ))
         self()->mAge = v;
     }
 
@@ -123,9 +123,9 @@ class Test4 : public KConfigSkeleton
 
 
     // Foo
-    QColor mColor[4];
+    TQColor mColor[4];
     int mMouseAction[3];
-    QString mFooBar;
+    TQString mFooBar;
     int mAge;
 
   private:

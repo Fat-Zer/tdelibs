@@ -33,12 +33,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-bool check(QString txt, QString a, QString b)
+bool check(TQString txt, TQString a, TQString b)
 {
   if (a.isEmpty())
-     a = QString::null;
+     a = TQString::null;
   if (b.isEmpty())
-     b = QString::null;
+     b = TQString::null;
   if (a == b) {
     kdDebug() << txt << " : checking '" << a << "' against expected value '" << b << "'... " << "ok" << endl;
   }
@@ -50,7 +50,7 @@ bool check(QString txt, QString a, QString b)
   return true;
 }
 
-void debug(QString txt)
+void debug(TQString txt)
 {
  fprintf(stderr, "%s\n", txt.ascii());
 }
@@ -69,8 +69,8 @@ int main(int argc, char *argv[])
 {
    KApplication k(argc,argv,"whatever",false/*noGUI*/); // KMessageBox needs KApp for makeStdCaption
 
-   QCString instname = "kword";
-   QString desktopPath = QString::fromLatin1( "Office/%1.desktop" ).arg( instname );
+   TQCString instname = "kword";
+   TQString desktopPath = TQString::fromLatin1( "Office/%1.desktop" ).arg( instname );
    qDebug( "Looking for %s", desktopPath.latin1() );
    KService::Ptr service = KService::serviceByDesktopPath( desktopPath );
    if ( service )
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
    if ( s1 )
    {
      debug("Found it !");
-     debug(QString("Comment is %1").arg(s1->comment(KURL(),false)));
+     debug(TQString("Comment is %1").arg(s1->comment(KURL(),false)));
    }
    else
    {
@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
    if ( s0 )
    {
      debug("Found it !");
-     debug(QString("Comment is %1").arg(s0->comment(KURL(),false)));
+     debug(TQString("Comment is %1").arg(s0->comment(KURL(),false)));
    }
    else
    {
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
    if ( se )
    {
      debug("Found it !");
-     debug(QString("Comment is %1").arg(se->comment()));
+     debug(TQString("Comment is %1").arg(se->comment()));
    }
    else
    {
@@ -128,10 +128,10 @@ int main(int argc, char *argv[])
    if ( se )
    {
      debug("Found it !");
-     debug(QString("Comment is %1").arg(se->comment()));
-     QVariant qv = se->property("DocPath");
-     debug(QString("Property type is %1").arg(qv.typeName()));
-     debug(QString("Property value is %1").arg(qv.toString()));
+     debug(TQString("Comment is %1").arg(se->comment()));
+     TQVariant qv = se->property("DocPath");
+     debug(TQString("Property type is %1").arg(qv.typeName()));
+     debug(TQString("Property value is %1").arg(qv.toString()));
    }
    else
    {
@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
    if ( se )
    {
      debug("Found it !");
-     debug(QString("Comment is %1").arg(se->comment()));
+     debug(TQString("Comment is %1").arg(se->comment()));
    }
    else
    {
@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
    if ( se )
    {
      debug("Found it !");
-     debug(QString("Comment is %1").arg(se->comment()));
+     debug(TQString("Comment is %1").arg(se->comment()));
    }
    else
    {
@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
 #if 1
    debug("Querying userprofile for services associated with text/plain");
    KServiceTypeProfile::OfferList offers = KServiceTypeProfile::offers("text/plain");
-   debug(QString("got %1 offers").arg(offers.count()));
+   debug(TQString("got %1 offers").arg(offers.count()));
    KServiceTypeProfile::OfferList::Iterator it = offers.begin();
    for ( ; it != offers.end() ; it++ )
    {
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 
    debug("Querying userprofile for services associated with KOfficeFilter");
    offers = KServiceTypeProfile::offers("KOfficeFilter");
-   debug(QString("got %1 offers").arg(offers.count()));
+   debug(TQString("got %1 offers").arg(offers.count()));
    it = offers.begin();
    for ( ; it != offers.end() ; it++ )
    {
@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
 
    debug("Querying trader for Konqueror/Plugin");
    KTrader::OfferList traderoffers = KTrader::self()->query("Konqueror/Plugin");
-   debug(QString("got %1 offers").arg(traderoffers.count()));
+   debug(TQString("got %1 offers").arg(traderoffers.count()));
    KTrader::OfferList::Iterator trit = traderoffers.begin();
    for ( ; trit != traderoffers.end() ; trit++ )
    {
@@ -201,7 +201,7 @@ int main(int argc, char *argv[])
 
    //
    debug("\nTrying findByURL for folder_home.png");
-   QString fh;
+   TQString fh;
    (void)k.iconLoader()->loadIcon("folder_home.png",KIcon::Desktop,0,KIcon::DefaultState,&fh);
    mf  = KMimeType::findByURL( fh, 0, true, false );
    assert( mf );
@@ -211,8 +211,8 @@ int main(int argc, char *argv[])
    //debug("\nTrying findByURL for Makefile.am");
    //mf = KMimeType::findByURL( KURL("/tmp/Makefile.am"), 0, true, false );
    //assert( mf );
-   //debug(QString("Name is %1").arg(mf->name()));
-   //debug(QString("Comment is %1").arg(mf->comment(KURL(),false)));
+   //debug(TQString("Name is %1").arg(mf->name()));
+   //debug(TQString("Comment is %1").arg(mf->comment(KURL(),false)));
 
    debug("\nTrying findByURL for man:/ls");
    mf = KMimeType::findByURL( KURL("man:/ls") );
@@ -228,17 +228,17 @@ int main(int argc, char *argv[])
 
    mtl  = KMimeType::allMimeTypes( );
    assert( mtl.count() );
-   debug(QString("Found %1 mime types.").arg(mtl.count()));
+   debug(TQString("Found %1 mime types.").arg(mtl.count()));
    for(int i = 0; i < (int)mtl.count(); i++)
    {
-      debug(QString("Mime type %1: %2.").arg(i).arg(mtl[i]->name()));
+      debug(TQString("Mime type %1: %2.").arg(i).arg(mtl[i]->name()));
    }
 
    KService::List sl;
 
    sl  = KService::allServices( );
    assert( sl.count() );
-   debug(QString("Found %1 services.").arg(sl.count()));
+   debug(TQString("Found %1 services.").arg(sl.count()));
 
    KServiceGroup::Ptr root = KServiceGroup::root();
    KServiceGroup::List list = root->entries();
@@ -248,7 +248,7 @@ int main(int argc, char *argv[])
 
    KServiceGroup::Ptr first;
 
-   debug(QString("Found %1 entries").arg(list.count()));
+   debug(TQString("Found %1 entries").arg(list.count()));
    for( KServiceGroup::List::ConstIterator it = list.begin();
        it != list.end(); it++)
    {
@@ -262,7 +262,7 @@ int main(int argc, char *argv[])
       else if (p->isType(KST_KServiceGroup))
       {
          KServiceGroup *serviceGroup = static_cast<KServiceGroup *>(p);
-         debug(QString("             %1 -->").arg(serviceGroup->caption()));
+         debug(TQString("             %1 -->").arg(serviceGroup->caption()));
          if (!first) first = serviceGroup;
       }
       else
@@ -274,7 +274,7 @@ int main(int argc, char *argv[])
    if (first)
    {
    list = first->entries();
-   debug(QString("Found %1 entries").arg(list.count()));
+   debug(TQString("Found %1 entries").arg(list.count()));
    for( KServiceGroup::List::ConstIterator it = list.begin();
        it != list.end(); it++)
    {
@@ -282,12 +282,12 @@ int main(int argc, char *argv[])
       if (p->isType(KST_KService))
       {
          KService *service = static_cast<KService *>(p);
-         debug(QString("             %1").arg(service->name()));
+         debug(TQString("             %1").arg(service->name()));
       }
       else if (p->isType(KST_KServiceGroup))
       {
          KServiceGroup *serviceGroup = static_cast<KServiceGroup *>(p);
-         debug(QString("             %1 -->").arg(serviceGroup->caption()));
+         debug(TQString("             %1 -->").arg(serviceGroup->caption()));
       }
       else
       {
@@ -307,8 +307,8 @@ int main(int argc, char *argv[])
    debug("--End of list--");
 
    debug("--protocols--");
-   QStringList stringL = KProtocolInfo::protocols();
-   for( QStringList::ConstIterator it = stringL.begin();
+   TQStringList stringL = KProtocolInfo::protocols();
+   for( TQStringList::ConstIterator it = stringL.begin();
        it != stringL.end(); it++)
    {
       debug((*it).ascii());
@@ -319,38 +319,38 @@ int main(int argc, char *argv[])
 #if 0
    KImageIO::registerFormats();
 
-   QStringList types;
+   TQStringList types;
    types = KImageIO::types(KImageIO::Reading);
    debug("Can read:");
-   for(QStringList::ConstIterator it = types.begin();
+   for(TQStringList::ConstIterator it = types.begin();
        it != types.end(); ++it)
-      debug(QString("    %1").arg((*it)));
+      debug(TQString("    %1").arg((*it)));
 
    types = KImageIO::types(KImageIO::Writing);
    debug("Can write:");
-   for(QStringList::ConstIterator it = types.begin();
+   for(TQStringList::ConstIterator it = types.begin();
        it != types.end(); ++it)
-      debug(QString("    %1").arg((*it)));
+      debug(TQString("    %1").arg((*it)));
 
 
-   QString rPattern = KImageIO::pattern( KImageIO::Reading );
+   TQString rPattern = KImageIO::pattern( KImageIO::Reading );
    debug("Read pattern:\n%s", rPattern.ascii());
 
-   QString wPattern = KImageIO::pattern( KImageIO::Writing );
+   TQString wPattern = KImageIO::pattern( KImageIO::Writing );
    debug("Write pattern:\n%s", wPattern.ascii());
 
-   QString suffix = KImageIO::suffix("JPEG");
+   TQString suffix = KImageIO::suffix("JPEG");
    debug("Standard suffix for JPEG: %s", suffix.ascii());
 
    types = KImageIO::mimeTypes(KImageIO::Reading);
    debug("Can read (mimetypes):");
-   for(QStringList::ConstIterator it = types.begin();
+   for(TQStringList::ConstIterator it = types.begin();
        it != types.end(); ++it)
       debug("    %s", (*it).ascii());
 
    types = KImageIO::mimeTypes(KImageIO::Writing);
    debug("Can write (mimetypes):");
-   for(QStringList::ConstIterator it = types.begin();
+   for(TQStringList::ConstIterator it = types.begin();
        it != types.end(); ++it)
       debug("    %s", (*it).ascii());
 

@@ -21,8 +21,8 @@
 // Derived gregorian kde calendar class
 // Just a schema.
 
-#include <qdatetime.h>
-#include <qstring.h>
+#include <tqdatetime.h>
+#include <tqstring.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -38,12 +38,12 @@ KCalendarSystemGregorian::~KCalendarSystemGregorian()
 {
 }
 
-int KCalendarSystemGregorian::year(const QDate& date) const
+int KCalendarSystemGregorian::year(const TQDate& date) const
 {
   return date.year();
 }
 
-int KCalendarSystemGregorian::monthsInYear( const QDate & date ) const
+int KCalendarSystemGregorian::monthsInYear( const TQDate & date ) const
 {
   Q_UNUSED( date )
 
@@ -52,7 +52,7 @@ int KCalendarSystemGregorian::monthsInYear( const QDate & date ) const
 
 int KCalendarSystemGregorian::weeksInYear(int year) const
 {
-  QDate temp;
+  TQDate temp;
   temp.setYMD(year, 12, 31);
 
   // If the last day of the year is in the first week, we have to check the
@@ -63,24 +63,24 @@ int KCalendarSystemGregorian::weeksInYear(int year) const
   return temp.weekNumber();
 }
 
-int KCalendarSystemGregorian::weekNumber(const QDate& date,
+int KCalendarSystemGregorian::weekNumber(const TQDate& date,
                                          int * yearNum) const
 {
   return date.weekNumber(yearNum);
 }
 
-QString KCalendarSystemGregorian::monthName(const QDate& date,
+TQString KCalendarSystemGregorian::monthName(const TQDate& date,
                                             bool shortName) const
 {
   return monthName(month(date), year(date), shortName);
 }
 
-QString KCalendarSystemGregorian::monthNamePossessive(const QDate& date, bool shortName) const
+TQString KCalendarSystemGregorian::monthNamePossessive(const TQDate& date, bool shortName) const
 {
   return monthNamePossessive(month(date), year(date), shortName);
 }
 
-QString KCalendarSystemGregorian::monthName(int month, int year, bool shortName) const
+TQString KCalendarSystemGregorian::monthName(int month, int year, bool shortName) const
 {
   Q_UNUSED(year);
 
@@ -141,10 +141,10 @@ QString KCalendarSystemGregorian::monthName(int month, int year, bool shortName)
         return locale()->translate("December");
       }
 
-  return QString::null;
+  return TQString::null;
 }
 
-QString KCalendarSystemGregorian::monthNamePossessive(int month, int year,
+TQString KCalendarSystemGregorian::monthNamePossessive(int month, int year,
                                                       bool shortName) const
 {
   Q_UNUSED(year);
@@ -206,35 +206,35 @@ QString KCalendarSystemGregorian::monthNamePossessive(int month, int year,
         return locale()->translate("of December");
       }
 
-  return QString::null;
+  return TQString::null;
 }
 
-bool KCalendarSystemGregorian::setYMD(QDate & date, int y, int m, int d) const
+bool KCalendarSystemGregorian::setYMD(TQDate & date, int y, int m, int d) const
 {
   // We don't want Qt to add 1900 to them
   if ( y >= 0 && y <= 99 )
     return false;
 
-  // QDate supports gregorian internally
+  // TQDate supports gregorian internally
   return date.setYMD(y, m, d);
 }
 
-QDate KCalendarSystemGregorian::addYears(const QDate & date, int nyears) const
+TQDate KCalendarSystemGregorian::addYears(const TQDate & date, int nyears) const
 {
   return date.addYears(nyears);
 }
 
-QDate KCalendarSystemGregorian::addMonths(const QDate & date, int nmonths) const
+TQDate KCalendarSystemGregorian::addMonths(const TQDate & date, int nmonths) const
 {
   return date.addMonths(nmonths);
 }
 
-QDate KCalendarSystemGregorian::addDays(const QDate & date, int ndays) const
+TQDate KCalendarSystemGregorian::addDays(const TQDate & date, int ndays) const
 {
   return date.addDays(ndays);
 }
 
-QString KCalendarSystemGregorian::weekDayName(int col, bool shortName) const
+TQString KCalendarSystemGregorian::weekDayName(int col, bool shortName) const
 {
   // ### Should this really be different to each calendar system? Or are we
   //     only going to support weeks with 7 days?
@@ -242,48 +242,48 @@ QString KCalendarSystemGregorian::weekDayName(int col, bool shortName) const
   return KCalendarSystem::weekDayName(col, shortName);
 }
 
-QString KCalendarSystemGregorian::weekDayName(const QDate& date, bool shortName) const
+TQString KCalendarSystemGregorian::weekDayName(const TQDate& date, bool shortName) const
 {
   return weekDayName(dayOfWeek(date), shortName);
 }
 
 
-int KCalendarSystemGregorian::dayOfWeek(const QDate& date) const
+int KCalendarSystemGregorian::dayOfWeek(const TQDate& date) const
 {
   return date.dayOfWeek();
 }
 
-int KCalendarSystemGregorian::dayOfYear(const QDate & date) const
+int KCalendarSystemGregorian::dayOfYear(const TQDate & date) const
 {
   return date.dayOfYear();
 }
 
-int KCalendarSystemGregorian::daysInMonth(const QDate& date) const
+int KCalendarSystemGregorian::daysInMonth(const TQDate& date) const
 {
   return date.daysInMonth();
 }
 
 int KCalendarSystemGregorian::minValidYear() const
 {
-  return 1753; // QDate limit
+  return 1753; // TQDate limit
 }
 
 int KCalendarSystemGregorian::maxValidYear() const
 {
-  return 8000; // QDate limit
+  return 8000; // TQDate limit
 }
 
-int KCalendarSystemGregorian::day(const QDate& date) const
+int KCalendarSystemGregorian::day(const TQDate& date) const
 {
   return date.day();
 }
 
-int KCalendarSystemGregorian::month(const QDate& date) const
+int KCalendarSystemGregorian::month(const TQDate& date) const
 {
   return date.month();
 }
 
-int KCalendarSystemGregorian::daysInYear(const QDate& date) const
+int KCalendarSystemGregorian::daysInYear(const TQDate& date) const
 {
   return date.daysInYear();
 }
@@ -293,9 +293,9 @@ int KCalendarSystemGregorian::weekDayOfPray() const
   return 7; // sunday
 }
 
-QString KCalendarSystemGregorian::calendarName() const
+TQString KCalendarSystemGregorian::calendarName() const
 {
-  return QString::fromLatin1("gregorian");
+  return TQString::fromLatin1("gregorian");
 }
 
 bool KCalendarSystemGregorian::isLunar() const
@@ -313,7 +313,7 @@ bool KCalendarSystemGregorian::isSolar() const
   return true;
 }
 
-int KCalendarSystemGregorian::yearStringToInteger(const QString & sNum, int & iLength) const
+int KCalendarSystemGregorian::yearStringToInteger(const TQString & sNum, int & iLength) const
 {
   int iYear;
   iYear = KCalendarSystem::yearStringToInteger(sNum, iLength);

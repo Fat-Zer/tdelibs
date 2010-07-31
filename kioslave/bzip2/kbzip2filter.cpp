@@ -49,7 +49,7 @@ class KBzip2FilterFactory : public KLibFactory
 public:
     KBzip2FilterFactory() : KLibFactory() {}
     virtual ~KBzip2FilterFactory(){}
-    QObject *createObject( QObject *, const char *, const char*, const QStringList & )
+    TQObject *createObject( TQObject *, const char *, const char*, const TQStringList & )
     {
         return new KBzip2Filter;
     }

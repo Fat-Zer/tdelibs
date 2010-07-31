@@ -27,8 +27,8 @@
 
 //////////////////
 // Needed includes
-#include <qvaluelist.h>
-#include <qobject.h>
+#include <tqvaluelist.h>
+#include <tqobject.h>
 #include "ksocketaddress.h"
 
 
@@ -85,8 +85,8 @@ public:
    * @param encodedName	the ASCII-compatible encoding of the hostname
    */
   KResolverEntry(const KSocketAddress& addr, int socktype, int protocol,
-		const QString& canonName = QString::null,
-		const QCString& encodedName = QCString());
+		const TQString& canonName = TQString::null,
+		const TQCString& encodedName = TQCString());
 
   /**
    * Constructs a new KResolverEntry from raw forms of
@@ -102,8 +102,8 @@ public:
    * @param encodedName	the ASCII-compatible encoding of the hostname
    */
   KResolverEntry(const struct sockaddr *sa, Q_UINT16 salen, int socktype,
-		int protocol, const QString& canonName = QString::null,
-		const QCString& encodedName = QCString());
+		int protocol, const TQString& canonName = TQString::null,
+		const TQCString& encodedName = TQCString());
 
   /**
    * Copy constructor.
@@ -137,21 +137,21 @@ public:
 
   /**
    * Retrieves the canonical name associated with this entry, if there is any.
-   * If the canonical name was not found, this function returns QString::null.
+   * If the canonical name was not found, this function returns TQString::null.
    */
-  QString canonicalName() const;
+  TQString canonicalName() const;
 
   /**
    * Retrieves the encoded domain name associated with this entry, if there is
    * any. If this domain has been resolved through DNS, this will be the
    * the ACE-encoded hostname.
    *
-   * Returns a null QCString if such information is not available.
+   * Returns a null TQCString if such information is not available.
    *
    * Please note that this information is NOT to be presented to the user,
    * unless requested.
    */
-  QCString encodedName() const;
+  TQCString encodedName() const;
 
   /**
    * Retrieves the socket type associated with this entry.
@@ -181,7 +181,7 @@ class KResolverResultsPrivate;
  * @brief Name and service resolution results.
  *
  * This object contains the results of a name and service resolution, as
- * those performed by @ref KResolver. It is also a descendant of QValueList, so
+ * those performed by @ref KResolver. It is also a descendant of TQValueList, so
  * you may use all its member functions here to access the elements.
  *
  * A KResolverResults object is associated with a resolution, so, in addition
@@ -194,7 +194,7 @@ class KResolverResultsPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KResolverResults: public QValueList<KResolverEntry>
+class KDECORE_EXPORT KResolverResults: public TQValueList<KResolverEntry>
 {
 public:
   /**
@@ -250,17 +250,17 @@ public:
   /**
    * The nodename to which the resolution was performed.
    */
-  QString nodeName() const;
+  TQString nodeName() const;
 
   /**
    * The service name to which the resolution was performed.
    */
-  QString serviceName() const;
+  TQString serviceName() const;
 
   /**
    * Sets the new nodename and service name
    */
-  void setAddress(const QString& host, const QString& service);
+  void setAddress(const TQString& host, const TQString& service);
 
 protected:
   virtual void virtual_hook( int id, void* data );
@@ -435,7 +435,7 @@ public:
    * names and flags using the member functions before starting
    * the name resolution.
    */
-  KResolver(QObject * = 0L, const char * = 0L);
+  KResolver(TQObject * = 0L, const char * = 0L);
 
   /**
    * Constructor with host and service names.
@@ -447,8 +447,8 @@ public:
    * @param nodename	The host name we want resolved.
    * @param servicename	The service name associated, like "http".
    */
-  KResolver(const QString& nodename, const QString& servicename = QString::null,
-	    QObject * = 0L, const char * = 0L);
+  KResolver(const TQString& nodename, const TQString& servicename = TQString::null,
+	    TQObject * = 0L, const char * = 0L);
 
   /**
    * Destructor.
@@ -490,7 +490,7 @@ public:
   /**
    * Returns the textual representation of the error in this object.
    */
-  inline QString errorString() const
+  inline TQString errorString() const
   { return errorString(error(), systemError()); }
 
   /**
@@ -501,37 +501,37 @@ public:
   /**
    * The nodename to which the resolution was/is to be performed.
    */
-  QString nodeName() const;
+  TQString nodeName() const;
 
   /**
    * The service name to which the resolution was/is to be performed.
    */
-  QString serviceName() const;
+  TQString serviceName() const;
 
   /**
    * Sets the nodename for the resolution.
    *
-   * Set the nodename to QString::null to unset it.
+   * Set the nodename to TQString::null to unset it.
    * @param nodename		The nodename to be resolved.
    */
-  void setNodeName(const QString& nodename);
+  void setNodeName(const TQString& nodename);
 
   /**
    * Sets the service name to be resolved.
    *
-   * Set it to QString::null to unset it.
+   * Set it to TQString::null to unset it.
    * @param service		The service to be resolved.
    */
-  void setServiceName(const QString& service);
+  void setServiceName(const TQString& service);
 
   /**
    * Sets both the host and the service names.
    *
-   * Setting either value to QString::null will unset them.
+   * Setting either value to TQString::null will unset them.
    * @param node		The nodename
    * @param service		The service name
    */
-  void setAddress(const QString& node, const QString& service);
+  void setAddress(const TQString& node, const TQString& service);
 
   /**
    * Retrieves the flags set for the resolution.
@@ -673,14 +673,14 @@ public:
   KResolverResults results() const;
 
   /**
-   * Handles events. Reimplemented from QObject.
+   * Handles events. Reimplemented from TQObject.
    *
    * This function handles the events generated by the manager indicating that
    * this object has finished processing.
    *
    * Do not post events to this object.
    */
-  virtual bool event(QEvent*);
+  virtual bool event(TQEvent*);
 
 signals:
   // signals
@@ -691,7 +691,7 @@ signals:
    * will contain the resolved data.
    *
    * Note: if you are doing multiple resolutions, you can use the 
-   * QObject::sender() function to distinguish one Resolver object from
+   * TQObject::sender() function to distinguish one Resolver object from
    * another.
    *
    * @param results		the resolved data; might be empty if the resolution
@@ -717,7 +717,7 @@ public:
    * @return		the string representation. This is already
    *			i18n'ed.
    */
-  static QString errorString(int errorcode, int syserror = 0);
+  static TQString errorString(int errorcode, int syserror = 0);
 
   /**
    * Resolve the nodename and service name synchronously
@@ -742,7 +742,7 @@ public:
    * @return a KResolverResults object containing the results
    * @see KResolverResults for information on how to obtain the error code
    */
-  static KResolverResults resolve(const QString& host, const QString& service,
+  static KResolverResults resolve(const TQString& host, const TQString& service,
 				 int flags = 0, int families = KResolver::InternetFamily);
 
   /**
@@ -758,7 +758,7 @@ public:
    *
    * \code
    *   KResolver* qres = new KResolver(host, service);
-   *   QObject::connect(qres, SIGNAL(finished(KResolverResults)),
+   *   TQObject::connect(qres, TQT_SIGNAL(finished(KResolverResults)),
    *			  userObj, userSlot);
    *   qres->setFlags(flags);
    *   qres->setFamily(families);
@@ -767,7 +767,7 @@ public:
    *
    * You should use it like this in your code:
    * \code
-   *   KResolver::resolveAsync(myObj, SLOT(mySlot(KResolverResults)), host, service);
+   *   KResolver::resolveAsync(myObj, TQT_SLOT(mySlot(KResolverResults)), host, service);
    * \endcode
    *
    * @param userObj		the object whose slot @p userSlot we will connect
@@ -779,8 +779,8 @@ public:
    * @return true if the queueing was successful, false if not
    * @see KResolverResults for information on how to obtain the error code
    */
-  static bool resolveAsync(QObject* userObj, const char *userSlot,
-			   const QString& host, const QString& service,
+  static bool resolveAsync(TQObject* userObj, const char *userSlot,
+			   const TQString& host, const TQString& service,
 			   int flags = 0, int families = KResolver::InternetFamily);
 
   /**
@@ -789,7 +789,7 @@ public:
    * over the Internet.
    *
    * Note this function may fail, in which case it'll return a null 
-   * QCString. Reasons for failure include use of unknown code
+   * TQCString. Reasons for failure include use of unknown code
    * points (Unicode characters).
    *
    * Note that the encoding is illegible and, thus, should not be presented
@@ -797,9 +797,9 @@ public:
    *
    * @param unicodeDomain	the domain name to be encoded
    * @return the ACE-encoded suitable for DNS queries if successful, a null
-   *	     QCString if failure.
+   *	     TQCString if failure.
    */
-  static QCString domainToAscii(const QString& unicodeDomain);
+  static TQCString domainToAscii(const TQString& unicodeDomain);
 
   /**
    * Does the inverse of @ref domainToAscii and return an Unicode domain
@@ -819,16 +819,16 @@ public:
    * if successful, the original string if not
    * @note ACE = ASCII-Compatible Encoding, i.e., 7-bit
    */
-  static QString domainToUnicode(const QCString& asciiDomain);
+  static TQString domainToUnicode(const TQCString& asciiDomain);
 
   /**
-   * The same as above, but taking a QString argument.
+   * The same as above, but taking a TQString argument.
    *
    * @param asciiDomain	the ACE-encoded domain name to be decoded
    * @return the Unicode representation of the given domain name
-   * if successful, QString::null if not.
+   * if successful, TQString::null if not.
    */
-  static QString domainToUnicode(const QString& asciiDomain);
+  static TQString domainToUnicode(const TQString& asciiDomain);
 
   /**
    * Normalise a domain name.
@@ -850,21 +850,21 @@ public:
    * hostname.
    *
    * @param domain		a domain to be normalised
-   * @return the normalised domain, or QString::null if the domain is
+   * @return the normalised domain, or TQString::null if the domain is
    * invalid.
    */
-  static QString normalizeDomain(const QString& domain);
+  static TQString normalizeDomain(const TQString& domain);
 
   /**
    * Resolves a protocol number to its names
    *
-   * Note: the returned QStrList operates on deep-copies.
+   * Note: the returned TQStrList operates on deep-copies.
    *
    * @param protonum	the protocol number to be looked for
    * @return all the protocol names in a list. The first is the "proper"
    *		name.
    */
-  static QStrList protocolName(int protonum);
+  static TQStrList protocolName(int protonum);
 
   /**
    * Finds all aliases for a given protocol name
@@ -873,7 +873,7 @@ public:
    * @return all the protocol names in a list. The first is the "proper"
    *		name.
    */
-  static QStrList protocolName(const char *protoname);
+  static TQStrList protocolName(const char *protoname);
 
   /**
    * Resolves a protocol name to its number
@@ -895,26 +895,26 @@ public:
   /**
    * Finds all the aliases for a given service name
    *
-   * Note: the returned QStrList operates on deep-copies.
+   * Note: the returned TQStrList operates on deep-copies.
    *
    * @param servname		the service alias to be looked for
    * @param protoname		the protocol it is associated with
    * @return all the service names in a list. The first is the "proper"
    *		name.
    */
-  static QStrList serviceName(const char *servname, const char *protoname);
+  static TQStrList serviceName(const char *servname, const char *protoname);
 
   /**
    * Resolves a port number to its names
    *
-   * Note: the returned QStrList operates on deep copies.
+   * Note: the returned TQStrList operates on deep copies.
    *
    * @param port		the port number, in host byte-order
    * @param protoname		the protocol it is associated with
    * @return all the service names in a list. The first is the "proper"
    *		name.
    */
-  static QStrList serviceName(int port, const char *protoname);
+  static TQStrList serviceName(int port, const char *protoname);
 
   /**
    * Returns this machine's local hostname.
@@ -922,7 +922,7 @@ public:
    * @return this machine's local hostname
    * @since 3.5
    */
-  static QString localHostName();
+  static TQString localHostName();
 
 protected:
 
@@ -937,7 +937,7 @@ private:
   friend class KResolverResults;
   friend class ::KNetwork::Internal::KResolverManager;
   
-  static QStringList *idnDomains;
+  static TQStringList *idnDomains;
 };
 
 }				// namespace KNetwork

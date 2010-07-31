@@ -17,8 +17,8 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#include <qfile.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqregexp.h>
 
 #include <kdebug.h>
 #include <kmdcodec.h>
@@ -33,12 +33,12 @@
 using namespace KABC;
 using namespace VCARD;
 
-bool VCardFormatImpl::load( Addressee &addressee, QFile *file )
+bool VCardFormatImpl::load( Addressee &addressee, TQFile *file )
 {
   kdDebug(5700) << "VCardFormat::load()" << endl;
 
-  QByteArray fdata = file->readAll();
-  QCString data(fdata.data(), fdata.size()+1);
+  TQByteArray fdata = file->readAll();
+  TQCString data(fdata.data(), fdata.size()+1);
 
   VCardEntity e( data );
 
@@ -53,12 +53,12 @@ bool VCardFormatImpl::load( Addressee &addressee, QFile *file )
   return false;
 }
 
-bool VCardFormatImpl::loadAll( AddressBook *addressBook, Resource *resource, QFile *file )
+bool VCardFormatImpl::loadAll( AddressBook *addressBook, Resource *resource, TQFile *file )
 {
   kdDebug(5700) << "VCardFormat::loadAll()" << endl;
 
-  QByteArray fdata = file->readAll();
-  QCString data(fdata.data(), fdata.size()+1);
+  TQByteArray fdata = file->readAll();
+  TQCString data(fdata.data(), fdata.size()+1);
 
   VCardEntity e( data );
 
@@ -75,7 +75,7 @@ bool VCardFormatImpl::loadAll( AddressBook *addressBook, Resource *resource, QFi
   return true;
 }
 
-void VCardFormatImpl::save( const Addressee &addressee, QFile *file )
+void VCardFormatImpl::save( const Addressee &addressee, TQFile *file )
 {
   VCardEntity vcards;
   VCardList vcardlist;
@@ -88,11 +88,11 @@ void VCardFormatImpl::save( const Addressee &addressee, QFile *file )
   vcardlist.append( v );
   vcards.setCardList( vcardlist );
 
-  QCString vcardData = vcards.asString();
+  TQCString vcardData = vcards.asString();
   file->writeBlock( (const char*)vcardData, vcardData.length() );
 }
 
-void VCardFormatImpl::saveAll( AddressBook *ab, Resource *resource, QFile *file )
+void VCardFormatImpl::saveAll( AddressBook *ab, Resource *resource, TQFile *file )
 {
   VCardEntity vcards;
   VCardList vcardlist;
@@ -110,23 +110,23 @@ void VCardFormatImpl::saveAll( AddressBook *ab, Resource *resource, QFile *file 
 
   vcards.setCardList( vcardlist );
 
-  QCString vcardData = vcards.asString();
+  TQCString vcardData = vcards.asString();
   file->writeBlock( (const char*)vcardData, vcardData.length() );
 }
 
 bool VCardFormatImpl::loadAddressee( Addressee& addressee, VCARD::VCard &v )
 {
-  QPtrList<ContentLine> contentLines = v.contentLineList();
+  TQPtrList<ContentLine> contentLines = v.contentLineList();
   ContentLine *cl;
 
   for( cl = contentLines.first(); cl; cl = contentLines.next() ) {
-    QCString n = cl->name();
+    TQCString n = cl->name();
     if ( n.left( 2 ) == "X-" ) {
       n = n.mid( 2 );
       int posDash = n.find( "-" );
-      addressee.insertCustom( QString::fromUtf8( n.left( posDash ) ),
-                        QString::fromUtf8( n.mid( posDash + 1 ) ),
-                        QString::fromUtf8( cl->value()->asString() ) );
+      addressee.insertCustom( TQString::fromUtf8( n.left( posDash ) ),
+                        TQString::fromUtf8( n.mid( posDash + 1 ) ),
+                        TQString::fromUtf8( cl->value()->asString() ) );
         continue;
     }
 
@@ -206,7 +206,7 @@ bool VCardFormatImpl::loadAddressee( Addressee& addressee, VCARD::VCard &v )
         break;
 
       case EntityCategories:
-        addressee.setCategories( QStringList::split( ",", readTextValue( cl ) ) );
+        addressee.setCategories( TQStringList::split( ",", readTextValue( cl ) ) );
         break;
 
       case EntityBirthday:
@@ -267,7 +267,7 @@ bool VCardFormatImpl::loadAddressee( Addressee& addressee, VCARD::VCard &v )
       if ( address.isEmpty() )
         address.setType( type );
 
-      address.setLabel( QString::fromUtf8( cl->value()->asString() ) );
+      address.setLabel( TQString::fromUtf8( cl->value()->asString() ) );
       addressee.insertAddress( address );
     }
   }
@@ -278,21 +278,21 @@ bool VCardFormatImpl::loadAddressee( Addressee& addressee, VCARD::VCard &v )
 void VCardFormatImpl::saveAddressee( const Addressee &addressee, VCARD::VCard *v, bool intern )
 {
   ContentLine cl;
-  QString value;
+  TQString value;
 
   addTextValue( v, EntityName, addressee.name() );
   addTextValue( v, EntityUID, addressee.uid() );
   addTextValue( v, EntityURI, addressee.uri() );
   addTextValue( v, EntityFullName, addressee.formattedName() );
 
-  QStringList emails = addressee.emails();
-  QStringList::ConstIterator it4;
+  TQStringList emails = addressee.emails();
+  TQStringList::ConstIterator it4;
   for( it4 = emails.begin(); it4 != emails.end(); ++it4 ) {
     addTextValue( v, EntityEmail, *it4 );
   }
 
-  QStringList customs = addressee.customs();
-  QStringList::ConstIterator it5;
+  TQStringList customs = addressee.customs();
+  TQStringList::ConstIterator it5;
   for( it5 = customs.begin(); it5 != customs.end(); ++it5 ) {
     addCustomValue( v, *it5 );
   }
@@ -346,20 +346,20 @@ void VCardFormatImpl::saveAddressee( const Addressee &addressee, VCARD::VCard *v
   addSoundValue( v, addressee.sound(), addressee, intern );
 }
 
-void VCardFormatImpl::addCustomValue( VCARD::VCard *v, const QString &txt )
+void VCardFormatImpl::addCustomValue( VCARD::VCard *v, const TQString &txt )
 {
   if ( txt.isEmpty() ) return;
 
   ContentLine cl;
   cl.setName( "X-" + txt.left( txt.find( ":" ) ).utf8() );
-  QString value = txt.mid( txt.find( ":" ) + 1 );
+  TQString value = txt.mid( txt.find( ":" ) + 1 );
   if ( value.isEmpty() )
     return;
   cl.setValue( new TextValue( value.utf8() ) );
   v->add(cl);
 }
 
-void VCardFormatImpl::addTextValue( VCARD::VCard *v, EntityType type, const QString &txt )
+void VCardFormatImpl::addTextValue( VCARD::VCard *v, EntityType type, const TQString &txt )
 {
   if ( txt.isEmpty() ) return;
 
@@ -370,7 +370,7 @@ void VCardFormatImpl::addTextValue( VCARD::VCard *v, EntityType type, const QStr
 }
 
 void VCardFormatImpl::addDateValue( VCARD::VCard *vcard, EntityType type,
-                                    const QDate &date )
+                                    const TQDate &date )
 {
   if ( !date.isValid() ) return;
 
@@ -383,7 +383,7 @@ void VCardFormatImpl::addDateValue( VCARD::VCard *vcard, EntityType type,
 }
 
 void VCardFormatImpl::addDateTimeValue( VCARD::VCard *vcard, EntityType type,
-                                    const QDateTime &dateTime )
+                                    const TQDateTime &dateTime )
 {
   if ( !dateTime.isValid() ) return;
 
@@ -503,13 +503,13 @@ Address VCardFormatImpl::readAddressValue( ContentLine *cl )
 {
   Address a;
   AdrValue *v = (AdrValue *)cl->value();
-  a.setPostOfficeBox( QString::fromUtf8( v->poBox() ) );
-  a.setExtended( QString::fromUtf8( v->extAddress() ) );
-  a.setStreet( QString::fromUtf8( v->street() ) );
-  a.setLocality( QString::fromUtf8( v->locality() ) );
-  a.setRegion( QString::fromUtf8( v->region() ) );
-  a.setPostalCode( QString::fromUtf8( v->postCode() ) );
-  a.setCountry( QString::fromUtf8( v->countryName() ) );
+  a.setPostOfficeBox( TQString::fromUtf8( v->poBox() ) );
+  a.setExtended( TQString::fromUtf8( v->extAddress() ) );
+  a.setStreet( TQString::fromUtf8( v->street() ) );
+  a.setLocality( TQString::fromUtf8( v->locality() ) );
+  a.setRegion( TQString::fromUtf8( v->region() ) );
+  a.setPostalCode( TQString::fromUtf8( v->postCode() ) );
+  a.setCountry( TQString::fromUtf8( v->countryName() ) );
 
   a.setType( readAddressParam( cl ) );
 
@@ -553,11 +553,11 @@ void VCardFormatImpl::addNValue( VCARD::VCard *vcard, const Addressee &a )
 void VCardFormatImpl::readNValue( ContentLine *cl, Addressee &a )
 {
   NValue *v = (NValue *)cl->value();
-  a.setFamilyName( QString::fromUtf8( v->family() ) );
-  a.setGivenName( QString::fromUtf8( v->given() ) );
-  a.setAdditionalName( QString::fromUtf8( v->middle() ) );
-  a.setPrefix( QString::fromUtf8( v->prefix() ) );
-  a.setSuffix( QString::fromUtf8( v->suffix() ) );
+  a.setFamilyName( TQString::fromUtf8( v->family() ) );
+  a.setGivenName( TQString::fromUtf8( v->given() ) );
+  a.setAdditionalName( TQString::fromUtf8( v->middle() ) );
+  a.setPrefix( TQString::fromUtf8( v->prefix() ) );
+  a.setSuffix( TQString::fromUtf8( v->suffix() ) );
 }
 
 void VCardFormatImpl::addTelephoneValue( VCARD::VCard *v, const PhoneNumber &p )
@@ -593,7 +593,7 @@ PhoneNumber VCardFormatImpl::readTelephoneValue( ContentLine *cl )
 {
   PhoneNumber p;
   TelValue *value = (TelValue *)cl->value();
-  p.setNumber( QString::fromUtf8( value->asString() ) );
+  p.setNumber( TQString::fromUtf8( value->asString() ) );
 
   int type = 0;
   ParamList params = cl->paramList();
@@ -621,33 +621,33 @@ PhoneNumber VCardFormatImpl::readTelephoneValue( ContentLine *cl )
   return p;
 }
 
-QString VCardFormatImpl::readTextValue( ContentLine *cl )
+TQString VCardFormatImpl::readTextValue( ContentLine *cl )
 {
   VCARD::Value *value = cl->value();
   if ( value ) {
-    return QString::fromUtf8( value->asString() );
+    return TQString::fromUtf8( value->asString() );
   } else {
     kdDebug(5700) << "No value: " << cl->asString() << endl;
-    return QString::null;
+    return TQString::null;
   }
 }
 
-QDate VCardFormatImpl::readDateValue( ContentLine *cl )
+TQDate VCardFormatImpl::readDateValue( ContentLine *cl )
 {
   DateValue *dateValue = (DateValue *)cl->value();
   if ( dateValue )
     return dateValue->qdate();
   else
-    return QDate();
+    return TQDate();
 }
 
-QDateTime VCardFormatImpl::readDateTimeValue( ContentLine *cl )
+TQDateTime VCardFormatImpl::readDateTimeValue( ContentLine *cl )
 {
   DateValue *dateValue = (DateValue *)cl->value();
   if ( dateValue )
     return dateValue->qdt();
   else
-    return QDateTime();
+    return TQDateTime();
 }
 
 Geo VCardFormatImpl::readGeoValue( ContentLine *cl )
@@ -742,18 +742,18 @@ Key VCardFormatImpl::readKeyValue( VCARD::ContentLine *cl )
         key.setType( Key::PGP );
       else {
         key.setType( Key::Custom );
-        key.setCustomTypeString( QString::fromUtf8( (*it)->value() ) );
+        key.setCustomTypeString( TQString::fromUtf8( (*it)->value() ) );
       }
     }
   }
 
 
   if ( isBinary ) {
-    QByteArray data;
+    TQByteArray data;
     KCodecs::base64Decode( v->asString().stripWhiteSpace(), data );
     key.setBinaryData( data );
   } else {
-    key.setTextData( QString::fromUtf8( v->asString() ) );
+    key.setTextData( TQString::fromUtf8( v->asString() ) );
   }
 
   return key;
@@ -773,7 +773,7 @@ void VCardFormatImpl::addAgentValue( VCARD::VCard *vcard, const Agent &agent )
 
   ParamList params;
   if ( agent.isIntern() ) {
-    QString vstr;
+    TQString vstr;
     Addressee *addr = agent.addressee();
     if ( addr ) {
       writeToString( (*addr), vstr );
@@ -807,7 +807,7 @@ Agent VCardFormatImpl::readAgentValue( VCARD::ContentLine *cl )
   }
 
   if ( isIntern ) {
-    QString vstr = QString::fromUtf8( v->asString() );
+    TQString vstr = TQString::fromUtf8( v->asString() );
     vstr.replace( "\\n", "\r\n" );
     vstr.replace( "\\:", ":" );
     vstr.replace( "\\,", "," );
@@ -816,7 +816,7 @@ Agent VCardFormatImpl::readAgentValue( VCARD::ContentLine *cl )
     readFromString( vstr, *addr );
     agent.setAddressee( addr );
   } else {
-    agent.setUrl( QString::fromUtf8( v->asString() ) );
+    agent.setUrl( TQString::fromUtf8( v->asString() ) );
   }
 
   return agent;
@@ -835,15 +835,15 @@ void VCardFormatImpl::addPictureValue( VCARD::VCard *vcard, VCARD::EntityType ty
 
   ParamList params;
   if ( pic.isIntern() ) {
-    QImage img = pic.data();
+    TQImage img = pic.data();
     if ( intern ) { // only for vCard export we really write the data inline
-      QByteArray data;
-      QDataStream s( data, IO_WriteOnly );
+      TQByteArray data;
+      TQDataStream s( data, IO_WriteOnly );
       s.setVersion( 4 ); // to produce valid png files
       s << img;
       cl.setValue( new TextValue( KCodecs::base64Encode( data ) ) );
     } else { // save picture in cache
-      QString dir;
+      TQString dir;
       if ( type == EntityPhoto )
         dir = "photos";
       if ( type == EntityLogo )
@@ -868,7 +868,7 @@ Picture VCardFormatImpl::readPictureValue( VCARD::ContentLine *cl, VCARD::Entity
 {
   Picture pic;
   bool isInline = false;
-  QString picType;
+  TQString picType;
   TextValue *v = (TextValue *)cl->value();
 
   ParamList params = cl->paramList();
@@ -877,13 +877,13 @@ Picture VCardFormatImpl::readPictureValue( VCARD::ContentLine *cl, VCARD::Entity
     if ( (*it)->name() == "ENCODING" && (*it)->value() == "b" )
       isInline = true;
     if ( (*it)->name() == "TYPE" && !(*it)->value().isEmpty() )
-      picType = QString::fromUtf8( (*it)->value() );
+      picType = TQString::fromUtf8( (*it)->value() );
   }
 
   if ( isInline ) {
-    QImage img;
+    TQImage img;
     if ( v->asString() == "<dummy>" ) { // no picture inline stored => picture is in cache
-      QString dir;
+      TQString dir;
       if ( type == EntityPhoto )
         dir = "photos";
       if ( type == EntityLogo )
@@ -891,14 +891,14 @@ Picture VCardFormatImpl::readPictureValue( VCARD::ContentLine *cl, VCARD::Entity
 
       img.load( locateLocal( "data", "kabc/" + dir + "/" + addr.uid() ) );
     } else {
-      QByteArray data;
+      TQByteArray data;
       KCodecs::base64Decode( v->asString(), data );
       img.loadFromData( data );
     }
     pic.setData( img );
     pic.setType( picType );
   } else {
-    pic.setUrl( QString::fromUtf8( v->asString() ) );
+    pic.setUrl( TQString::fromUtf8( v->asString() ) );
   }
 
   return pic;
@@ -917,11 +917,11 @@ void VCardFormatImpl::addSoundValue( VCARD::VCard *vcard, const Sound &sound, co
 
   ParamList params;
   if ( sound.isIntern() ) {
-    QByteArray data = sound.data();
+    TQByteArray data = sound.data();
     if ( intern ) { // only for vCard export we really write the data inline
         cl.setValue( new TextValue( KCodecs::base64Encode( data ) ) );
     } else { // save sound in cache
-      QFile file( locateLocal( "data", "kabc/sounds/" + addr.uid() ) );
+      TQFile file( locateLocal( "data", "kabc/sounds/" + addr.uid() ) );
       if ( file.open( IO_WriteOnly ) ) {
         file.writeBlock( data );
       }
@@ -951,9 +951,9 @@ Sound VCardFormatImpl::readSoundValue( VCARD::ContentLine *cl, const Addressee &
   }
 
   if ( isInline ) {
-    QByteArray data;
+    TQByteArray data;
     if ( v->asString() == "<dummy>" ) { // no sound inline stored => sound is in cache
-      QFile file( locateLocal( "data", "kabc/sounds/" + addr.uid() ) );
+      TQFile file( locateLocal( "data", "kabc/sounds/" + addr.uid() ) );
       if ( file.open( IO_ReadOnly ) ) {
         data = file.readAll();
         file.close();
@@ -963,13 +963,13 @@ Sound VCardFormatImpl::readSoundValue( VCARD::ContentLine *cl, const Addressee &
     }
     sound.setData( data );
   } else {
-    sound.setUrl( QString::fromUtf8( v->asString() ) );
+    sound.setUrl( TQString::fromUtf8( v->asString() ) );
   }
 
   return sound;
 }
 
-bool VCardFormatImpl::readFromString( const QString &vcard, Addressee &addressee )
+bool VCardFormatImpl::readFromString( const TQString &vcard, Addressee &addressee )
 {
   VCardEntity e( vcard.utf8() );
   VCardListIterator it( e.cardList() );
@@ -983,7 +983,7 @@ bool VCardFormatImpl::readFromString( const QString &vcard, Addressee &addressee
   return false;
 }
 
-bool VCardFormatImpl::writeToString( const Addressee &addressee, QString &vcard )
+bool VCardFormatImpl::writeToString( const Addressee &addressee, TQString &vcard )
 {
   VCardEntity vcards;
   VCardList vcardlist;
@@ -995,7 +995,7 @@ bool VCardFormatImpl::writeToString( const Addressee &addressee, QString &vcard 
 
   vcardlist.append( v );
   vcards.setCardList( vcardlist );
-  vcard = QString::fromUtf8( vcards.asString() );
+  vcard = TQString::fromUtf8( vcards.asString() );
 
   return true;
 }

@@ -25,16 +25,16 @@
 #include "kmmanager.h"
 #include "kmdriverdialog.h"
 
-#include <qlabel.h>
+#include <tqlabel.h>
 #include <kpushbutton.h>
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <kguiitem.h>
 #include <kio/netaccess.h>
 
-KMWDriverTest::KMWDriverTest(QWidget *parent, const char *name)
+KMWDriverTest::KMWDriverTest(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_ID = KMWizard::DriverTest;
@@ -44,26 +44,26 @@ KMWDriverTest::KMWDriverTest(QWidget *parent, const char *name)
 	m_driver = 0;
 	m_printer = 0;
 
-	m_manufacturer = new QLabel(this);
-	m_model = new QLabel(this);
-	m_driverinfo = new QLabel(this);
+	m_manufacturer = new TQLabel(this);
+	m_model = new TQLabel(this);
+	m_driverinfo = new TQLabel(this);
 	m_driverinfo->setTextFormat(Qt::RichText);
-	QLabel	*l1 = new QLabel(i18n("<b>Manufacturer:</b>"), this);
-	QLabel	*l2 = new QLabel(i18n("<b>Model:</b>"), this);
-	QLabel	*l3 = new QLabel(i18n("<b>Description:</b>"), this);
+	QLabel	*l1 = new TQLabel(i18n("<b>Manufacturer:</b>"), this);
+	QLabel	*l2 = new TQLabel(i18n("<b>Model:</b>"), this);
+	QLabel	*l3 = new TQLabel(i18n("<b>Description:</b>"), this);
 
 	m_test = new KPushButton(KGuiItem(i18n("&Test"), "kdeprint_testprinter"), this);
 	m_settings = new KPushButton(KGuiItem(i18n("&Settings"), "configure"), this);
 
-	QLabel	*l0 = new QLabel(this);
+	QLabel	*l0 = new TQLabel(this);
 	l0->setText(i18n("<p>Now you can test the printer before finishing installation. "
 			 "Use the <b>Settings</b> button to configure the printer driver and "
 			 "the <b>Test</b> button to test your configuration. Use the <b>Back</b> "
 			 "button to change the driver (your current configuration will be discarded).</p>"));
 
-	QVBoxLayout	*lay1 = new QVBoxLayout(this, 0, 15);
-	QGridLayout	*lay2 = new QGridLayout(0, 3, 3, 0, 0);
-	QHBoxLayout	*lay3 = new QHBoxLayout(0, 0, 10);
+	QVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 15);
+	QGridLayout	*lay2 = new TQGridLayout(0, 3, 3, 0, 0);
+	QHBoxLayout	*lay3 = new TQHBoxLayout(0, 0, 10);
 	lay1->addWidget(l0,0);
 	lay1->addLayout(lay2,0);
 	lay1->addLayout(lay3,0);
@@ -80,8 +80,8 @@ KMWDriverTest::KMWDriverTest(QWidget *parent, const char *name)
 	lay3->addWidget(m_settings,0);
 	lay3->addStretch(1);
 
-	connect(m_test,SIGNAL(clicked()),SLOT(slotTest()));
-	connect(m_settings,SIGNAL(clicked()),SLOT(slotSettings()));
+	connect(m_test,TQT_SIGNAL(clicked()),TQT_SLOT(slotTest()));
+	connect(m_settings,TQT_SIGNAL(clicked()),TQT_SLOT(slotSettings()));
 }
 
 KMWDriverTest::~KMWDriverTest()
@@ -115,7 +115,7 @@ void KMWDriverTest::initPrinter(KMPrinter *p)
 	if (checkDriver && !m_driver)
 	{
 		KMessageBox::error(this, i18n("<qt>Unable to load the requested driver:<p>%1</p></qt>").arg(KMManager::self()->errorMsg()));
-		KMManager::self()->setErrorMsg(QString::null);
+		KMManager::self()->setErrorMsg(TQString::null);
 	}
 	m_settings->setEnabled((m_driver != 0));
 }

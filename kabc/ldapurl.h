@@ -21,9 +21,9 @@
 #ifndef _K_LDAPURL_H_
 #define _K_LDAPURL_H_
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qmap.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqmap.h>
 
 #include <kurl.h>
 
@@ -44,7 +44,7 @@ namespace KABC {
   public:
 
     struct Extension {
-      QString value;
+      TQString value;
       bool critical;
     };
     
@@ -59,14 +59,14 @@ namespace KABC {
      * Returns the dn part of the LDAP Url (same as path(), but slash removed
      * from the beginning).
      */
-    const QString& dn() const { return m_dn; }
+    const TQString& dn() const { return m_dn; }
     /** Sets the the dn part of the LDAP Url. */ 
-    void setDn( const QString &dn );
+    void setDn( const TQString &dn );
 
     /** Returns the attributes part of the LDAP Url */
-    const QStringList &attributes() { return m_attributes; }
+    const TQStringList &attributes() { return m_attributes; }
     /** Sets the attributes part of the LDAP Url */
-    void setAttributes( const QStringList &attributes ) 
+    void setAttributes( const TQStringList &attributes ) 
       { m_attributes=attributes; updateQuery(); }
 
     /** Returns the scope part of the LDAP Url */
@@ -75,22 +75,22 @@ namespace KABC {
     void setScope(Scope scope) { m_scope = scope; updateQuery(); }
 
     /** Returns the filter part of the LDAP Url */
-    const QString &filter() const { return m_filter; }
+    const TQString &filter() const { return m_filter; }
     /** Sets the filter part of the LDAP Url */
-    void setFilter( QString filter ) { m_filter = filter; updateQuery(); }
+    void setFilter( TQString filter ) { m_filter = filter; updateQuery(); }
 
     /** Returns if the specified extension exists in the LDAP Url */
-    bool hasExtension( const QString &key ) const;
+    bool hasExtension( const TQString &key ) const;
     /** Returns the specified extension */
-    Extension extension( const QString &key ) const;
+    Extension extension( const TQString &key ) const;
     /** Returns the specified extension */
-    QString extension( const QString &key, bool &critical ) const;
+    TQString extension( const TQString &key, bool &critical ) const;
     /** Sets the specified extension key with the value and criticality in ext */
-    void setExtension( const QString &key, const Extension &ext );
+    void setExtension( const TQString &key, const Extension &ext );
     /** Sets the specified extension key with the value and criticality specified */
-    void setExtension( const QString &key, const QString &value, bool critical = false );
+    void setExtension( const TQString &key, const TQString &value, bool critical = false );
     /** Removes the specified extension */
-    void removeExtension( const QString &key );
+    void removeExtension( const TQString &key );
     /** Updates the query component from the attributes, scope, filter and extensions */
     void updateQuery();
     
@@ -99,11 +99,11 @@ namespace KABC {
 
   private:
 
-    QMap<QString, Extension> m_extensions;
-    QString m_dn;
-    QStringList m_attributes;
+    TQMap<TQString, Extension> m_extensions;
+    TQString m_dn;
+    TQStringList m_attributes;
     Scope m_scope;
-    QString m_filter;
+    TQString m_filter;
   };
 }
 

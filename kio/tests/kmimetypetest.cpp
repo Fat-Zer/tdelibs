@@ -20,14 +20,14 @@
 #include <kinstance.h>
 #include <ktempdir.h>
 #include <kprotocolinfo.h>
-#include <qdir.h>
+#include <tqdir.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-static void checkIcon( const KURL& url, const QString& expectedIcon )
+static void checkIcon( const KURL& url, const TQString& expectedIcon )
 {
-  QString icon = KMimeType::iconForURL( url );
+  TQString icon = KMimeType::iconForURL( url );
   if ( icon == expectedIcon )
     qDebug( "icon for %s is %s, OK", url.prettyURL().latin1(), icon.latin1() );
   else {
@@ -45,32 +45,32 @@ int main( int argc, char** argv )
   KURL url;
 
   // safely check a "regular" folder
-  url.setPath( QDir::homeDirPath() );
+  url.setPath( TQDir::homeDirPath() );
   checkIcon( url, "folder" );
   
   // safely check a non-readable folder
   if (0 != geteuid()) { // can't do this test if we're root
-    KTempDir tmp( QString::null, 0 );
+    KTempDir tmp( TQString::null, 0 );
     tmp.setAutoDelete( true );
     url.setPath( tmp.name() );
     checkIcon( url, "folder_locked" );
-    chmod( QFile::encodeName( tmp.name() ), 0500 ); // so we can 'rm -rf' it
+    chmod( TQFile::encodeName( tmp.name() ), 0500 ); // so we can 'rm -rf' it
   }
 
   // safely check the trash folder
-  if ( KProtocolInfo::isKnownProtocol( QString("trash") ) ) {
+  if ( KProtocolInfo::isKnownProtocol( TQString("trash") ) ) {
     checkIcon( "trash:/", "trashcan_full" ); // #100321
     checkIcon( "trash:/foo/", "folder" );
   }
 
-  QString pdf;
+  TQString pdf;
   KMimeType::diagnoseFileName("foo.pdf", pdf);
   qDebug("extension: '%s'", pdf.latin1());
-  assert(pdf == QString("*.pdf"));
-  QString ps;
+  assert(pdf == TQString("*.pdf"));
+  TQString ps;
   KMimeType::diagnoseFileName("foo.ps", ps);
   qDebug("extension: '%s'", ps.latin1());
-  assert(ps == QString("*.ps"));
+  assert(ps == TQString("*.ps"));
 
   return 0;
 }

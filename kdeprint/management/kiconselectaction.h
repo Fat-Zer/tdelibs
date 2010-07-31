@@ -28,13 +28,13 @@ class KIconSelectAction : public KSelectAction
 {
 	Q_OBJECT
 public:
-	KIconSelectAction(const QString& text, int accel = 0, QObject* parent = 0, const char* name = 0);
+	KIconSelectAction(const TQString& text, int accel = 0, TQObject* parent = 0, const char* name = 0);
 	virtual ~KIconSelectAction();
 
-	virtual int plug(QWidget* widget, int index = -1);
+	virtual int plug(TQWidget* widget, int index = -1);
 
 public slots:
-	virtual void setItems(const QStringList& lst, const QStringList& iconlst);
+	virtual void setItems(const TQStringList& lst, const TQStringList& iconlst);
 	virtual void setCurrentItem(int index);
 
 protected:

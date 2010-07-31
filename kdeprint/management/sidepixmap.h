@@ -20,20 +20,20 @@
 #ifndef SIDEPIXMAP_H
 #define SIDEPIXMAP_H
 
-#include <qframe.h>
-#include <qpixmap.h>
+#include <tqframe.h>
+#include <tqpixmap.h>
 
 #include <kdelibs_export.h>
 
 class KDEPRINT_EXPORT SidePixmap : public QFrame
 {
 public:
-	SidePixmap(QWidget *parent = 0, const char *name = 0);
-	QSize sizeHint() const;
+	SidePixmap(TQWidget *parent = 0, const char *name = 0);
+	TQSize sizeHint() const;
 	bool isValid();
 
 protected:
-	void drawContents(QPainter*);
+	void drawContents(TQPainter*);
 
 private:
 	QPixmap	m_side, m_tileup, m_tiledown;

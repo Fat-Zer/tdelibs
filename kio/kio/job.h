@@ -87,7 +87,7 @@ namespace KIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT SimpleJob * symlink( const QString & target, const KURL& dest, bool overwrite, bool showProgressInfo = true );
+    KIO_EXPORT SimpleJob * symlink( const TQString & target, const KURL& dest, bool overwrite, bool showProgressInfo = true );
 
     /**
      * Execute any command that is specific to one slave (protocol).
@@ -101,7 +101,7 @@ namespace KIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT SimpleJob * special( const KURL& url, const QByteArray & data, bool showProgressInfo = true );
+    KIO_EXPORT SimpleJob * special( const KURL& url, const TQByteArray & data, bool showProgressInfo = true );
 
     /**
      * Mount filesystem.
@@ -115,7 +115,7 @@ namespace KIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT SimpleJob *mount( bool ro, const char *fstype, const QString& dev, const QString& point, bool showProgressInfo = true );
+    KIO_EXPORT SimpleJob *mount( bool ro, const char *fstype, const TQString& dev, const TQString& point, bool showProgressInfo = true );
 
     /**
      * Unmount filesystem.
@@ -126,7 +126,7 @@ namespace KIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT SimpleJob *unmount( const QString & point, bool showProgressInfo = true );
+    KIO_EXPORT SimpleJob *unmount( const TQString & point, bool showProgressInfo = true );
 
     /**
      * HTTP cache update
@@ -230,11 +230,11 @@ namespace KIO {
      * @param showProgressInfo true to display
      * @return the job handling the operation.
      */
-    KIO_EXPORT TransferJob *http_post( const KURL& url, const QByteArray &postData,
+    KIO_EXPORT TransferJob *http_post( const KURL& url, const TQByteArray &postData,
                             bool showProgressInfo = true );
 
     /**
-     * Get (a.k.a. read), into a single QByteArray.
+     * Get (a.k.a. read), into a single TQByteArray.
      * @see StoredTransferJob
      *
      * @param url the URL of the file
@@ -246,7 +246,7 @@ namespace KIO {
     KIO_EXPORT StoredTransferJob *storedGet( const KURL& url, bool reload=false, bool showProgressInfo = true );
 
     /**
-     * Put (a.k.a. write) data from a single QByteArray.
+     * Put (a.k.a. write) data from a single TQByteArray.
      * @see StoredTransferJob
      *
      * @param arr The data to write
@@ -259,7 +259,7 @@ namespace KIO {
      * @return the job handling the operation.
      * @since 3.3
      */
-    KIO_EXPORT StoredTransferJob *storedPut( const QByteArray& arr, const KURL& url, int permissions,
+    KIO_EXPORT StoredTransferJob *storedPut( const TQByteArray& arr, const KURL& url, int permissions,
                                   bool overwrite, bool resume, bool showProgressInfo = true );
 
     /**

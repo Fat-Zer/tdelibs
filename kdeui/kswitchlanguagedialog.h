@@ -50,10 +50,10 @@ class KDEUI_EXPORT KSwitchLanguageDialog : public KDialogBase
             * @param name Internal name of the widget. This name in not used in the
             *        caption.
             * @param modal If false, this widget will be modeless and must be
-            *        made visible using QWidget::show(). Otherwise it will be
-            *        modal and must be made visible using QWidget::exec()
+            *        made visible using TQWidget::show(). Otherwise it will be
+            *        modal and must be made visible using TQWidget::exec()
             */
-        KSwitchLanguageDialog( QWidget *parent=0, const char *name=0, bool modal=true );
+        KSwitchLanguageDialog( TQWidget *parent=0, const char *name=0, bool modal=true );
         
         virtual ~KSwitchLanguageDialog();
     
@@ -66,7 +66,7 @@ class KDEUI_EXPORT KSwitchLanguageDialog : public KDialogBase
         /**
             Called when one of language buttons changes state.
         */
-        virtual void languageOnButtonChanged(const QString & );
+        virtual void languageOnButtonChanged(const TQString & );
         
         /**
             Called to add one language button to dialog.

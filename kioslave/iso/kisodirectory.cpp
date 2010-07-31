@@ -17,9 +17,9 @@
 
 #include "kisodirectory.h"
 
-KIsoDirectory::KIsoDirectory( KArchive* archive, const QString& name, int access,
-    int date, int adate, int cdate, const QString& user, const QString& group,
-    const QString& symlink) :
+KIsoDirectory::KIsoDirectory( KArchive* archive, const TQString& name, int access,
+    int date, int adate, int cdate, const TQString& user, const TQString& group,
+    const TQString& symlink) :
         KArchiveDirectory(archive, name, access, date, user, group, symlink) {
                                
 

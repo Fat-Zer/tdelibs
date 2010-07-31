@@ -37,7 +37,7 @@ class KMCupsManager : public KMManager
 
 	Q_OBJECT
 public:
-	KMCupsManager(QObject *parent, const char *name, const QStringList & /*args*/);
+	KMCupsManager(TQObject *parent, const char *name, const TQStringList & /*args*/);
 	virtual ~KMCupsManager();
 
 	// printer management functions
@@ -52,20 +52,20 @@ public:
 
 	// printer listing functions
 	// driver DB functions
-	QString driverDbCreationProgram();
-	QString driverDirectory();
+	TQString driverDbCreationProgram();
+	TQString driverDirectory();
 
 	DrMain* loadPrinterDriver(KMPrinter *p, bool config = false);
-	DrMain* loadFileDriver(const QString& filename);
+	DrMain* loadFileDriver(const TQString& filename);
 	bool savePrinterDriver(KMPrinter *p, DrMain *d);
 
 	bool restartServer();
-	bool configureServer(QWidget *parent = 0);
-	QStringList detectLocalPrinters();
+	bool configureServer(TQWidget *parent = 0);
+	TQStringList detectLocalPrinters();
 
 	void createPluginActions(KActionCollection*);
 	void validatePluginActions(KActionCollection*, KMPrinter*);
-	QString stateInformation();
+	TQString stateInformation();
 
 public slots:
 	void exportDriver();
@@ -85,14 +85,14 @@ protected:
 	void loadServerPrinters();
 	void processRequest(IppRequest*);
 	bool setPrinterState(KMPrinter *p, int st);
-	DrMain* loadDriverFile(const QString& filename);
-	DrMain* loadMaticDriver(const QString& drname);
-	void saveDriverFile(DrMain *driver, const QString& filename);
+	DrMain* loadDriverFile(const TQString& filename);
+	DrMain* loadMaticDriver(const TQString& drname);
+	void saveDriverFile(DrMain *driver, const TQString& filename);
 	void reportIppError(IppRequest*);
 	void* loadCupsdConfFunction(const char*);
 	void unloadCupsdConf();
-	QString cupsInstallDir();
-	void ippReport(IppRequest&, int, const QString&);
+	TQString cupsInstallDir();
+	void ippReport(IppRequest&, int, const TQString&);
 	void checkUpdatePossibleInternal();
 
 private:

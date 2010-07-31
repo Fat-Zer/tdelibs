@@ -25,43 +25,43 @@
 #include <klineedit.h>
 #include <kmessagebox.h>
 
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qcheckbox.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqcheckbox.h>
 
 #include "factory.h"
 #include "configdialog.h"
 
 using namespace KRES;
 
-ConfigDialog::ConfigDialog( QWidget *parent, const QString& resourceFamily,
-    /*const QString& type,*/ Resource* resource, /*KConfig *config, */const char *name )
+ConfigDialog::ConfigDialog( TQWidget *parent, const TQString& resourceFamily,
+    /*const TQString& type,*/ Resource* resource, /*KConfig *config, */const char *name )
   : KDialogBase( parent, name, true, i18n( "Resource Configuration" ),
     Ok|Cancel, Ok, false )/*, mConfig( config )*/, mResource( resource )
 {
   Factory *factory = Factory::self( resourceFamily );
 
-  QFrame *main = makeMainWidget();
+  TQFrame *main = makeMainWidget();
 
-  QVBoxLayout *mainLayout = new QVBoxLayout( main, 0, spacingHint() );
+  TQVBoxLayout *mainLayout = new TQVBoxLayout( main, 0, spacingHint() );
 
-  QGroupBox *generalGroupBox = new QGroupBox( 2, Qt::Horizontal, main );
+  TQGroupBox *generalGroupBox = new TQGroupBox( 2, Qt::Horizontal, main );
   generalGroupBox->layout()->setSpacing( spacingHint() );
   generalGroupBox->setTitle( i18n( "General Settings" ) );
 
-  new QLabel( i18n( "Name:" ), generalGroupBox );
+  new TQLabel( i18n( "Name:" ), generalGroupBox );
 
   mName = new KLineEdit( generalGroupBox );
 
-  mReadOnly = new QCheckBox( i18n( "Read-only" ), generalGroupBox );
+  mReadOnly = new TQCheckBox( i18n( "Read-only" ), generalGroupBox );
 
   mName->setText( mResource->resourceName() );
   mReadOnly->setChecked( mResource->readOnly() );
 
   mainLayout->addWidget( generalGroupBox );
 
-  QGroupBox *resourceGroupBox = new QGroupBox( 2, Qt::Horizontal,  main );
+  TQGroupBox *resourceGroupBox = new TQGroupBox( 2, Qt::Horizontal,  main );
   resourceGroupBox->layout()->setSpacing( spacingHint() );
   resourceGroupBox->setTitle( i18n( "%1 Resource Settings" )
                               .arg( factory->typeName( resource->type() ) ) );
@@ -74,12 +74,12 @@ ConfigDialog::ConfigDialog( QWidget *parent, const QString& resourceFamily,
     mConfigWidget->setInEditMode( false );
     mConfigWidget->loadSettings( mResource );
     mConfigWidget->show();
-    connect( mConfigWidget, SIGNAL( setReadOnly( bool ) ),
-        SLOT( setReadOnly( bool ) ) );
+    connect( mConfigWidget, TQT_SIGNAL( setReadOnly( bool ) ),
+        TQT_SLOT( setReadOnly( bool ) ) );
   }
 
-  connect( mName, SIGNAL( textChanged(const QString &)),
-      SLOT( slotNameChanged(const QString &)));
+  connect( mName, TQT_SIGNAL( textChanged(const TQString &)),
+      TQT_SLOT( slotNameChanged(const TQString &)));
 
   slotNameChanged( mName->text() );
   setMinimumSize( sizeHint() );
@@ -91,7 +91,7 @@ void ConfigDialog::setInEditMode( bool value )
     mConfigWidget->setInEditMode( value );
 }
 
-void ConfigDialog::slotNameChanged( const QString &text)
+void ConfigDialog::slotNameChanged( const TQString &text)
 {
   enableButtonOK( !text.isEmpty() );
 }

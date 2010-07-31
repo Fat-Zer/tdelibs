@@ -20,11 +20,11 @@ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
-#include <qdom.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqdom.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <string.h>
 #include <stdlib.h>
@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "main.h"
 #include "type.h"
 
-static bool isIntType( const QString& t )
+static bool isIntType( const TQString& t )
 {
   return ((t == "int")
        || (t == "signed int")
@@ -62,13 +62,13 @@ static bool isIntType( const QString& t )
 /*
  * Writes the stub implementation
  */
-void generateStubImpl( const QString& idl, const QString& header, const QString& /*headerBase*/, const QString& filename, QDomElement de )
+void generateStubImpl( const TQString& idl, const TQString& header, const TQString& /*headerBase*/, const TQString& filename, TQDomElement de )
 {
-    QFile impl( filename );
+    TQFile impl( filename );
     if ( !impl.open( IO_WriteOnly ) )
 	qFatal("Could not write to %s", filename.latin1() );
 
-    QTextStream str( &impl );
+    TQTextStream str( &impl );
 
     str << "/****************************************************************************" << endl;
     str << "**" << endl;
@@ -83,19 +83,19 @@ void generateStubImpl( const QString& idl, const QString& header, const QString&
     str << "#include <dcopclient.h>" << endl << endl;
     str << "#include <kdatastream.h>" << endl;
 
-    QDomElement e = de.firstChild().toElement();
+    TQDomElement e = de.firstChild().toElement();
     for( ; !e.isNull(); e = e.nextSibling().toElement() ) {
 	if ( e.tagName() != "CLASS" )
 	    continue;
-	QDomElement n = e.firstChild().toElement();
+	TQDomElement n = e.firstChild().toElement();
 	Q_ASSERT( n.tagName() == "NAME" );
-	QString classNameBase = n.firstChild().toText().data();
-	QString className_stub = classNameBase + "_stub";
+	TQString classNameBase = n.firstChild().toText().data();
+	TQString className_stub = classNameBase + "_stub";
     
-	QString classNameFull = className_stub; // class name with possible namespaces prepended
+	TQString classNameFull = className_stub; // class name with possible namespaces prepended
 					   // namespaces will be removed from className now
 	int namespace_count = 0;
-	QString namespace_tmp = className_stub;
+	TQString namespace_tmp = className_stub;
 	str << endl;
 	for(;;) {
 	    int pos = namespace_tmp.find( "::" );
@@ -111,7 +111,7 @@ void generateStubImpl( const QString& idl, const QString& header, const QString&
 	str << endl;
 
 	// Write constructors
-	str << className_stub << "::" << className_stub << "( const QCString& app, const QCString& obj )" << endl;
+	str << className_stub << "::" << className_stub << "( const TQCString& app, const TQCString& obj )" << endl;
 	str << "  : ";
 
 	// Always explicitly call DCOPStub constructor, because it's virtual base class.           
@@ -121,7 +121,7 @@ void generateStubImpl( const QString& idl, const QString& header, const QString&
 	str << "{" << endl;
 	str << "}" << endl << endl;
 
-	str << className_stub << "::" << className_stub << "( DCOPClient* client, const QCString& app, const QCString& obj )" << endl;
+	str << className_stub << "::" << className_stub << "( DCOPClient* client, const TQCString& app, const TQCString& obj )" << endl;
 	str << "  : ";
     
 	str << "DCOPStub( client, app, obj )" << endl;
@@ -138,13 +138,13 @@ void generateStubImpl( const QString& idl, const QString& header, const QString&
 	str << "}" << endl << endl;
 
 	// Write marshalling code
-	QDomElement s = e.firstChild().toElement();
+	TQDomElement s = e.firstChild().toElement();
 	for( ; !s.isNull(); s = s.nextSibling().toElement() ) {
 	    if (s.tagName() != "FUNC")
 		continue;
-	    QDomElement r = s.firstChild().toElement();
+	    TQDomElement r = s.firstChild().toElement();
 	    Q_ASSERT( r.tagName() == "TYPE" );
-	    QString result = r.firstChild().toText().data();
+	    TQString result = r.firstChild().toText().data();
 	    bool async = result == "ASYNC";
 	    if ( async) {
 		result = "void";
@@ -154,11 +154,11 @@ void generateStubImpl( const QString& idl, const QString& header, const QString&
 
 	    r = r.nextSibling().toElement();
 	    Q_ASSERT ( r.tagName() == "NAME" );
-	    QString funcName = r.firstChild().toText().data();
+	    TQString funcName = r.firstChild().toText().data();
 	    str << className_stub << "::" << funcName << "(";
 
-	    QStringList args;
-	    QStringList argtypes;
+	    TQStringList args;
+	    TQStringList argtypes;
 	    bool first = true;
 	    r = r.nextSibling().toElement();
 	    for( ; !r.isNull(); r = r.nextSibling().toElement() ) {
@@ -168,10 +168,10 @@ void generateStubImpl( const QString& idl, const QString& header, const QString&
 		    str << " ";
 		first = false;
 		Q_ASSERT( r.tagName() == "ARG" );
-		QDomElement a = r.firstChild().toElement();
-		QString type = writeType( str, a );
+		TQDomElement a = r.firstChild().toElement();
+		TQString type = writeType( str, a );
 		argtypes.append( type );
-		args.append( QString("arg" ) + QString::number( args.count() ) ) ;
+		args.append( TQString("arg" ) + TQString::number( args.count() ) ) ;
 		str << args.last();
 	    }
 	    if ( !first )
@@ -188,7 +188,7 @@ void generateStubImpl( const QString& idl, const QString& header, const QString&
 	
 	    funcName += "(";
 	    first = true;
-	    for( QStringList::Iterator it = argtypes.begin(); it != argtypes.end(); ++it ){
+	    for( TQStringList::Iterator it = argtypes.begin(); it != argtypes.end(); ++it ){
 		if ( !first )
 		    funcName += ",";
 		first = false;
@@ -203,10 +203,10 @@ void generateStubImpl( const QString& idl, const QString& header, const QString&
 		str << "\treturn;" << endl;
 		str << "    }" << endl;
 	
-		str << "    QByteArray data;" << endl;
+		str << "    TQByteArray data;" << endl;
 		if ( !args.isEmpty() ) {
-		    str << "    QDataStream arg( data, IO_WriteOnly );" << endl;
-		    for( QStringList::Iterator args_count = args.begin(); args_count != args.end(); ++args_count ){
+		    str << "    TQDataStream arg( data, IO_WriteOnly );" << endl;
+		    for( TQStringList::Iterator args_count = args.begin(); args_count != args.end(); ++args_count ){
 			str << "    arg << " << *args_count << ";" << endl;
 		    }
 		}
@@ -236,12 +236,12 @@ void generateStubImpl( const QString& idl, const QString& header, const QString&
 		    str << "\treturn;" << endl;
 		str << "    }" << endl;
 
-		str << "    QByteArray data, replyData;" << endl;
-		str << "    QCString replyType;" << endl;
+		str << "    TQByteArray data, replyData;" << endl;
+		str << "    TQCString replyType;" << endl;
 	
 		if ( !args.isEmpty() ) {
-		    str << "    QDataStream arg( data, IO_WriteOnly );" << endl;
-		    for( QStringList::Iterator args_count = args.begin(); args_count != args.end(); ++args_count ){
+		    str << "    TQDataStream arg( data, IO_WriteOnly );" << endl;
+		    for( TQStringList::Iterator args_count = args.begin(); args_count != args.end(); ++args_count ){
 			str << "    arg << " << *args_count << ";" << endl;
 		    }
 		}
@@ -249,7 +249,7 @@ void generateStubImpl( const QString& idl, const QString& header, const QString&
 		str << " data, replyType, replyData ) ) {" << endl;
 		if ( result != "void" ) {
 		    str << "\tif ( replyType == \"" << result << "\" ) {" << endl;
-		    str << "\t    QDataStream _reply_stream( replyData, IO_ReadOnly );"  << endl;
+		    str << "\t    TQDataStream _reply_stream( replyData, IO_ReadOnly );"  << endl;
 		    str << "\t    _reply_stream >> result;" << endl;
 		    str << "\t    setStatus( CallSucceeded );" << endl;
 		    str << "\t} else {" << endl;

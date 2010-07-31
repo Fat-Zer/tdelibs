@@ -22,9 +22,9 @@
 #ifndef KRESOURCES_RESOURCE_H
 #define KRESOURCES_RESOURCE_H
 
-#include <qmutex.h>
-#include <qvaluelist.h>
-#include <qwidget.h>
+#include <tqmutex.h>
+#include <tqvaluelist.h>
+#include <tqwidget.h>
 
 #include <klibloader.h>
 
@@ -77,8 +77,8 @@ class ResourceExample : public KRES::Resource
     void writeConfig( KConfig *config );
 
   private:
-    QString mLocation;
-    QString mPassword;
+    TQString mLocation;
+    TQString mPassword;
 }
 \endcode
 
@@ -109,7 +109,7 @@ void ResourceExample::writeConfig( KConfig *config )
 
 extern "C"
 {
-  KRES::ResourceExample *config_widget( QWidget *parent ) {
+  KRES::ResourceExample *config_widget( TQWidget *parent ) {
     return new ResourceExampleConfig( parent, "Configure Example Resource" );
   }
 
@@ -130,7 +130,7 @@ class ResourceExampleConfig : public KRES::ResourceConfigWidget
 {
     Q_OBJECT
   public:
-    ResourceExampleConfig( QWidget *parent = 0, const char *name = 0 );
+    ResourceExampleConfig( TQWidget *parent = 0, const char *name = 0 );
 
   public slots:
     virtual void loadSettings( KRES::Resource *resource);
@@ -144,25 +144,25 @@ class ResourceExampleConfig : public KRES::ResourceConfigWidget
 
   <B>resourceexampleconfig.cpp</B>:
 \code
-#include <qlayout.h>
-#include <qlabel.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
 #include <kresources/resourceconfigwidget.h>
 #include "resourceexample.h"
 #include "resourceexampleconfig.h"
 
-ResourceExampleConfig::ResourceExampleConfig( QWidget *parent,  const char *name )
+ResourceExampleConfig::ResourceExampleConfig( TQWidget *parent,  const char *name )
   : KRES::ResourceConfigWidget( parent, name )
 {
-  QGridLayout *mainLayout = new QGridLayout( this, 2, 2 );
+  TQGridLayout *mainLayout = new TQGridLayout( this, 2, 2 );
 
-  QLabel *label = new QLabel( i18n( "Location:" ), this );
+  TQLabel *label = new TQLabel( i18n( "Location:" ), this );
   mHostEdit = new KLineEdit( this );
   mainLayout->addWidget( label, 1, 0 );
   mainLayout->addWidget( mHostEdit, 1, 1 );
 
-  label = new QLabel( i18n( "Password:" ), this );
+  label = new TQLabel( i18n( "Password:" ), this );
   mPasswordEdit = new KLineEdit( this );
-  mPasswordEdit->setEchoMode( QLineEdit::Password );
+  mPasswordEdit->setEchoMode( TQLineEdit::Password );
   mainLayout->addWidget( label, 2, 0 );
   mainLayout->addWidget( mPasswordEdit, 2, 1 );
 }
@@ -259,7 +259,7 @@ class KRESOURCES_EXPORT Resource : public QObject
 
     Q_OBJECT
   public:
-    typedef QValueList<Resource *> List;
+    typedef TQValueList<Resource *> List;
 
     /**
      * Constructor. Construct resource from config.
@@ -311,12 +311,12 @@ class KRESOURCES_EXPORT Resource : public QObject
      * in the resource family configuration file for this resource.
      * @return This resource's identifier
      */
-    QString identifier() const;
+    TQString identifier() const;
 
     /**
      * Returns the type of this resource.
      */
-    QString type() const;
+    TQString type() const;
 
     /**
      * Mark the resource as read-only. You can override this method,
@@ -333,12 +333,12 @@ class KRESOURCES_EXPORT Resource : public QObject
      * Set the name of resource. You can override this method,
      * but also remember to call Resource::setResourceName().
      */
-    virtual void setResourceName( const QString &name );
+    virtual void setResourceName( const TQString &name );
 
     /**
      * Returns the name of resource.
      */
-    virtual QString resourceName() const;
+    virtual TQString resourceName() const;
 
     /**
       Sets, if the resource is active.
@@ -373,8 +373,8 @@ class KRESOURCES_EXPORT Resource : public QObject
      */
     virtual void doClose() {}
 
-    void setIdentifier( const QString &identifier );
-    void setType( const QString &type );
+    void setIdentifier( const TQString &identifier );
+    void setType( const TQString &type );
 
   private:
     class ResourcePrivate;
@@ -386,11 +386,11 @@ class KRESOURCES_EXPORT PluginFactoryBase : public KLibFactory
   public:
     virtual Resource *resource( const KConfig *config ) = 0;
 
-    virtual ConfigWidget *configWidget( QWidget *parent ) = 0;
+    virtual ConfigWidget *configWidget( TQWidget *parent ) = 0;
 
   protected:
-    virtual QObject* createObject( QObject *parent, const char *name, const char *className,
-                                   const QStringList & args)
+    virtual TQObject* createObject( TQObject *parent, const char *name, const char *className,
+                                   const TQStringList & args)
     {
       Q_UNUSED(parent);
       Q_UNUSED(name);
@@ -409,7 +409,7 @@ class PluginFactory : public PluginFactoryBase
       return new TR( config );
     }
 
-    ConfigWidget *configWidget( QWidget *parent )
+    ConfigWidget *configWidget( TQWidget *parent )
     {
       return new TC( parent );
     }

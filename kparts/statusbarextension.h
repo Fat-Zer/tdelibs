@@ -21,8 +21,8 @@
 #ifndef KPARTS_STATUSBAREXTENSION_H
 #define KPARTS_STATUSBAREXTENSION_H
 
-#include <qwidget.h>
-#include <qvaluelist.h>
+#include <tqwidget.h>
+#include <tqvaluelist.h>
 
 #include <kdelibs_export.h>
 
@@ -63,7 +63,7 @@ namespace KParts
        * If you use this method instead of using statusBar() directly,
        * this extension will take care of removing the items when the parts GUI
        * is deactivated and will re-add them when it is reactivated.
-       * The parameters are the same as QStatusBar::addWidget().
+       * The parameters are the same as TQStatusBar::addWidget().
        *
        * Note that you can't use KStatusBar methods (inserting text items by id)
        * but you can create a KStatusBarLabel with a dummy id instead, and use
@@ -71,7 +71,7 @@ namespace KParts
        *
        * @param widget the widget to add
        * @param stretch the stretch factor. 0 for a minimum size.
-       * @param permanent passed to QStatusBar::addWidget as the "permanent" bool.
+       * @param permanent passed to TQStatusBar::addWidget as the "permanent" bool.
        * Note that the item isn't really permanent though, it goes away when
        * the part is unactivated. This simply controls where temporary messages
        * hide the @p widget, and whether it's added to the left or to the right side.
@@ -79,12 +79,12 @@ namespace KParts
        * IMPORTANT: do NOT add any items immediately after constructing the extension.
        * Give the application time to set the statusbar in the extension if necessary.
        */
-      void addStatusBarItem( QWidget * widget, int stretch, bool permanent );
+      void addStatusBarItem( TQWidget * widget, int stretch, bool permanent );
 
       /**
        * Remove a @p widget from the statusbar for this part.
        */
-      void removeStatusBarItem( QWidget * widget );
+      void removeStatusBarItem( TQWidget * widget );
 
       /**
        * @return the statusbar of the KMainWindow in which this part is currently embedded.
@@ -105,14 +105,14 @@ namespace KParts
        * Queries @p obj for a child object which inherits from this
        * BrowserExtension class. Convenience method.
        */
-      static StatusBarExtension *childObject( QObject *obj );
+      static StatusBarExtension *childObject( TQObject *obj );
 
       /** @internal */
-      virtual bool eventFilter( QObject *watched, QEvent* ev );
+      virtual bool eventFilter( TQObject *watched, TQEvent* ev );
 
     private:
 
-     QValueList<StatusBarItem> m_statusBarItems; // Our statusbar items
+     TQValueList<StatusBarItem> m_statusBarItems; // Our statusbar items
      mutable KStatusBar* m_statusBar;
 
      // for future extensions

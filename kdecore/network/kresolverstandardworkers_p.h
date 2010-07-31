@@ -28,9 +28,9 @@
 #include <sys/types.h>
 #include <netdb.h>
 
-#include <qptrlist.h>
-#include <qcstring.h>
-#include <qstringlist.h>
+#include <tqptrlist.h>
+#include <tqcstring.h>
+#include <tqstringlist.h>
 
 #include "kresolver.h"
 #include "kresolverworkerbase.h"
@@ -48,11 +48,11 @@ namespace KNetwork { namespace Internal
   class KBlacklistWorker: public KNetwork::KResolverWorkerBase
   {
   public:
-    static QStringList blacklist;
+    static TQStringList blacklist;
     
     static void loadBlacklist();
     static void init();
-    static bool isBlacklisted(const QString&);
+    static bool isBlacklisted(const TQString&);
     
     virtual bool preprocess();
     virtual bool run();
@@ -65,10 +65,10 @@ namespace KNetwork { namespace Internal
   class KStandardWorker: public KNetwork::KResolverWorkerBase
   {
   protected:
-    mutable QCString m_encodedName;
+    mutable TQCString m_encodedName;
     Q_UINT16 port;
     int scopeid;
-    QPtrList<KNetwork::KResolverResults> resultList;
+    TQPtrList<KNetwork::KResolverResults> resultList;
 
   public:
     bool sanityCheck();

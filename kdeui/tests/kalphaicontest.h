@@ -1,7 +1,7 @@
 #include <kdebug.h>
-#include <qwidget.h>
-#include <qimage.h>
-#include <qpixmap.h>
+#include <tqwidget.h>
+#include <tqimage.h>
+#include <tqpixmap.h>
 #include <kimageeffect.h>
 #include <kalphapainter.h>
 
@@ -10,11 +10,11 @@ class KAlphaTest : public QWidget
   public:
     KAlphaTest();
   protected:
-    void paintEvent(QPaintEvent *);
+    void paintEvent(TQPaintEvent *);
   private:
-    QImage m_image;
-    QPixmap m_pixmap;
-    QImage m_bg;
+    TQImage m_image;
+    TQPixmap m_pixmap;
+    TQImage m_bg;
 
   public:
     static bool m_useDblBuffer;

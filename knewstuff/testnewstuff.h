@@ -23,7 +23,7 @@
 
 #include <stdlib.h>
 
-#include <qpushbutton.h>
+#include <tqpushbutton.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -35,9 +35,9 @@ class TestNewStuff : public KNewStuff
   public:
     TestNewStuff() : KNewStuff( "korganizer/calendar" ) {}
     
-    bool install( const QString &fileName );
+    bool install( const TQString &fileName );
     
-    bool createUploadFile( const QString &fileName );
+    bool createUploadFile( const TQString &fileName );
 };
 
 class MyWidget : public QWidget

@@ -37,19 +37,19 @@
 #include <kurlrequester.h>
 #include <kio/netaccess.h>
 
-#include <qcheckbox.h>
-#include <qgroupbox.h>
-#include <qheader.h>
-#include <qlabel.h>
-#include <qlistview.h>
-#include <qlayout.h>
-#include <qptrlist.h>
-#include <qpushbutton.h>
-#include <qstring.h>
-#include <qtooltip.h>
-#include <qtimer.h>
-#include <qvbox.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqgroupbox.h>
+#include <tqheader.h>
+#include <tqlabel.h>
+#include <tqlistview.h>
+#include <tqlayout.h>
+#include <tqptrlist.h>
+#include <tqpushbutton.h>
+#include <tqstring.h>
+#include <tqtooltip.h>
+#include <tqtimer.h>
+#include <tqvbox.h>
+#include <tqwhatsthis.h>
 
 using namespace KNotify;
 
@@ -115,8 +115,8 @@ namespace KNotify
     class KNotifyToolTip : public QToolTip
     {
     public:
-        KNotifyToolTip( QHeader *header )
-            : QToolTip( header )
+        KNotifyToolTip( TQHeader *header )
+            : TQToolTip( header )
         {
             m_tips[COL_EXECUTE] = i18n("Execute a program");
             m_tips[COL_STDERR]  = i18n("Print to Standard error output");
@@ -128,9 +128,9 @@ namespace KNotify
         virtual ~KNotifyToolTip() {}
 
     protected:
-        virtual void maybeTip ( const QPoint& p )
+        virtual void maybeTip ( const TQPoint& p )
         {
-            QHeader *header = static_cast<QHeader*>( parentWidget() );
+            TQHeader *header = static_cast<TQHeader*>( parentWidget() );
             int section = 0;
 
             if ( header->orientation() == Horizontal )
@@ -138,40 +138,40 @@ namespace KNotify
             else
                 section= header->sectionAt( p.y() );
 
-            if ( ( section < 0 ) || ( static_cast<uint>( section ) >= (sizeof(m_tips) / sizeof(QString)) ) )
+            if ( ( section < 0 ) || ( static_cast<uint>( section ) >= (sizeof(m_tips) / sizeof(TQString)) ) )
                 return;
 
             tip( header->sectionRect( section ), m_tips[section] );
         }
 
     private:
-        QString m_tips[6];
+        TQString m_tips[6];
     };
 
 }
 
 
-int KNotifyDialog::configure( QWidget *parent, const char *name,
+int KNotifyDialog::configure( TQWidget *parent, const char *name,
                               const KAboutData *aboutData )
 {
     KNotifyDialog dialog( parent, name, true, aboutData );
     return dialog.exec();
 }
 
-KNotifyDialog::KNotifyDialog( QWidget *parent, const char *name, bool modal,
+KNotifyDialog::KNotifyDialog( TQWidget *parent, const char *name, bool modal,
                               const KAboutData *aboutData )
     : KDialogBase(parent, name, modal, i18n("Notification Settings"),
                   Ok | Apply | Cancel | Default, Ok, true )
 {
-    QVBox *box = makeVBoxMainWidget();
+    TQVBox *box = makeVBoxMainWidget();
 
     m_notifyWidget = new KNotifyWidget( box, "knotify widget" );
 
     if ( aboutData )
         addApplicationEvents( aboutData->appName() );
 
-    connect( this, SIGNAL( okClicked() ), m_notifyWidget, SLOT( save() ));
-    connect( this, SIGNAL( applyClicked() ), m_notifyWidget, SLOT( save() ));
+    connect( this, TQT_SIGNAL( okClicked() ), m_notifyWidget, TQT_SLOT( save() ));
+    connect( this, TQT_SIGNAL( applyClicked() ), m_notifyWidget, TQT_SLOT( save() ));
 }
 
 KNotifyDialog::~KNotifyDialog()
@@ -180,11 +180,11 @@ KNotifyDialog::~KNotifyDialog()
 
 void KNotifyDialog::addApplicationEvents( const char *appName )
 {
-    addApplicationEvents( QString::fromUtf8( appName ) +
-                          QString::fromLatin1( "/eventsrc" ) );
+    addApplicationEvents( TQString::fromUtf8( appName ) +
+                          TQString::fromLatin1( "/eventsrc" ) );
 }
 
-void KNotifyDialog::addApplicationEvents( const QString& path )
+void KNotifyDialog::addApplicationEvents( const TQString& path )
 {
     Application *app = m_notifyWidget->addApplicationEvents( path );
     if ( app )
@@ -212,12 +212,12 @@ void KNotifyDialog::slotDefault()
 class KNotifyWidget::Private
 {
 public:
-    QPixmap pixmaps[6];
+    TQPixmap pixmaps[6];
     KNotifyToolTip *toolTip;
 };
 
 // simple access to all knotify-handled applications
-KNotifyWidget::KNotifyWidget( QWidget *parent, const char *name,
+KNotifyWidget::KNotifyWidget( TQWidget *parent, const char *name,
                               bool handleAllApps )
     : KNotifyWidgetBase( parent, name ? name : "KNotifyWidget" )
 {
@@ -237,12 +237,12 @@ KNotifyWidget::KNotifyWidget( QWidget *parent, const char *name,
     m_listview->setFullWidth( true );
     m_listview->setAllColumnsShowFocus( true );
 
-    QPixmap pexec = SmallIcon("exec");
-    QPixmap pstderr = SmallIcon("terminal");
-    QPixmap pmessage = SmallIcon("info");
-    QPixmap plogfile = SmallIcon("log");
-    QPixmap psound = SmallIcon("sound");
-    QPixmap ptaskbar = SmallIcon("kicker");
+    TQPixmap pexec = SmallIcon("exec");
+    TQPixmap pstderr = SmallIcon("terminal");
+    TQPixmap pmessage = SmallIcon("info");
+    TQPixmap plogfile = SmallIcon("log");
+    TQPixmap psound = SmallIcon("sound");
+    TQPixmap ptaskbar = SmallIcon("kicker");
 
     d->pixmaps[COL_EXECUTE] = pexec;
     d->pixmaps[COL_STDERR]  = pstderr;
@@ -253,68 +253,68 @@ KNotifyWidget::KNotifyWidget( QWidget *parent, const char *name,
 
     int w = KIcon::SizeSmall + 6;
 
-    QHeader *header = m_listview->header();
-    header->setLabel( COL_EXECUTE, pexec,    QString::null, w );
-    header->setLabel( COL_STDERR,  pstderr,  QString::null, w );
-    header->setLabel( COL_MESSAGE, pmessage, QString::null, w );
-    header->setLabel( COL_LOGFILE, plogfile, QString::null, w );
-    header->setLabel( COL_SOUND,   psound,   QString::null, w );
-    header->setLabel( COL_TASKBAR, ptaskbar, QString::null, w );
+    TQHeader *header = m_listview->header();
+    header->setLabel( COL_EXECUTE, pexec,    TQString::null, w );
+    header->setLabel( COL_STDERR,  pstderr,  TQString::null, w );
+    header->setLabel( COL_MESSAGE, pmessage, TQString::null, w );
+    header->setLabel( COL_LOGFILE, plogfile, TQString::null, w );
+    header->setLabel( COL_SOUND,   psound,   TQString::null, w );
+    header->setLabel( COL_TASKBAR, ptaskbar, TQString::null, w );
 
     d->toolTip = new KNotifyToolTip( header );
 
     m_playButton->setIconSet( SmallIconSet( "player_play" ) );
-    connect( m_playButton, SIGNAL( clicked() ), SLOT( playSound() ));
+    connect( m_playButton, TQT_SIGNAL( clicked() ), TQT_SLOT( playSound() ));
 
-    connect( m_listview, SIGNAL( currentChanged( QListViewItem * ) ),
-             SLOT( slotEventChanged( QListViewItem * ) ));
-    connect( m_listview, SIGNAL(clicked( QListViewItem *, const QPoint&, int)),
-             SLOT( slotItemClicked( QListViewItem *, const QPoint&, int )));
+    connect( m_listview, TQT_SIGNAL( currentChanged( TQListViewItem * ) ),
+             TQT_SLOT( slotEventChanged( TQListViewItem * ) ));
+    connect( m_listview, TQT_SIGNAL(clicked( TQListViewItem *, const TQPoint&, int)),
+             TQT_SLOT( slotItemClicked( TQListViewItem *, const TQPoint&, int )));
 
-    connect( m_playSound, SIGNAL( toggled( bool )),
-             SLOT( soundToggled( bool )) );
-    connect( m_logToFile, SIGNAL( toggled( bool )),
-             SLOT( loggingToggled( bool )) );
-    connect( m_execute, SIGNAL( toggled( bool )),
-             SLOT( executeToggled( bool )) );
-    connect( m_messageBox, SIGNAL( toggled( bool )),
-             SLOT( messageBoxChanged() ) );
-    connect( m_passivePopup, SIGNAL( toggled( bool )),
-             SLOT( messageBoxChanged() ) );
-    connect( m_stderr, SIGNAL( toggled( bool )),
-             SLOT( stderrToggled( bool ) ) );
-    connect( m_taskbar, SIGNAL( toggled( bool )),
-             SLOT( taskbarToggled( bool ) ) );
+    connect( m_playSound, TQT_SIGNAL( toggled( bool )),
+             TQT_SLOT( soundToggled( bool )) );
+    connect( m_logToFile, TQT_SIGNAL( toggled( bool )),
+             TQT_SLOT( loggingToggled( bool )) );
+    connect( m_execute, TQT_SIGNAL( toggled( bool )),
+             TQT_SLOT( executeToggled( bool )) );
+    connect( m_messageBox, TQT_SIGNAL( toggled( bool )),
+             TQT_SLOT( messageBoxChanged() ) );
+    connect( m_passivePopup, TQT_SIGNAL( toggled( bool )),
+             TQT_SLOT( messageBoxChanged() ) );
+    connect( m_stderr, TQT_SIGNAL( toggled( bool )),
+             TQT_SLOT( stderrToggled( bool ) ) );
+    connect( m_taskbar, TQT_SIGNAL( toggled( bool )),
+             TQT_SLOT( taskbarToggled( bool ) ) );
 
-    connect( m_soundPath, SIGNAL( textChanged( const QString& )),
-             SLOT( soundFileChanged( const QString& )));
-    connect( m_logfilePath, SIGNAL( textChanged( const QString& )),
-             SLOT( logfileChanged( const QString& ) ));
-    connect( m_executePath, SIGNAL( textChanged( const QString& )),
-             SLOT( commandlineChanged( const QString& ) ));
+    connect( m_soundPath, TQT_SIGNAL( textChanged( const TQString& )),
+             TQT_SLOT( soundFileChanged( const TQString& )));
+    connect( m_logfilePath, TQT_SIGNAL( textChanged( const TQString& )),
+             TQT_SLOT( logfileChanged( const TQString& ) ));
+    connect( m_executePath, TQT_SIGNAL( textChanged( const TQString& )),
+             TQT_SLOT( commandlineChanged( const TQString& ) ));
 
-    connect( m_soundPath, SIGNAL( openFileDialog( KURLRequester * )),
-             SLOT( openSoundDialog( KURLRequester * )));
-    connect( m_logfilePath, SIGNAL( openFileDialog( KURLRequester * )),
-             SLOT( openLogDialog( KURLRequester * )));
-    connect( m_executePath, SIGNAL( openFileDialog( KURLRequester * )),
-             SLOT( openExecDialog( KURLRequester * )));
+    connect( m_soundPath, TQT_SIGNAL( openFileDialog( KURLRequester * )),
+             TQT_SLOT( openSoundDialog( KURLRequester * )));
+    connect( m_logfilePath, TQT_SIGNAL( openFileDialog( KURLRequester * )),
+             TQT_SLOT( openLogDialog( KURLRequester * )));
+    connect( m_executePath, TQT_SIGNAL( openFileDialog( KURLRequester * )),
+             TQT_SLOT( openExecDialog( KURLRequester * )));
 
-    connect( m_extension, SIGNAL( clicked() ),
-             SLOT( toggleAdvanced()) );
+    connect( m_extension, TQT_SIGNAL( clicked() ),
+             TQT_SLOT( toggleAdvanced()) );
 
-    connect( m_buttonEnable, SIGNAL( clicked() ), SLOT( enableAll() ));
-    connect( m_buttonDisable, SIGNAL( clicked() ), SLOT( enableAll() ));
+    connect( m_buttonEnable, TQT_SIGNAL( clicked() ), TQT_SLOT( enableAll() ));
+    connect( m_buttonDisable, TQT_SIGNAL( clicked() ), TQT_SLOT( enableAll() ));
 
-    QString whatsThis = i18n("<qt>You may use the following macros<br>"
+    TQString whatsThis = i18n("<qt>You may use the following macros<br>"
         "in the commandline:<br>"
         "<b>%e</b>: for the event name,<br>"
         "<b>%a</b>: for the name of the application that sent the event,<br>"
         "<b>%s</b>: for the notification message,<br>"
         "<b>%w</b>: for the numeric window ID where the event originated,<br>"
         "<b>%i</b>: for the numeric event ID.");
-    QWhatsThis::add( m_execute, whatsThis );
-    QWhatsThis::add( m_executePath, whatsThis );
+    TQWhatsThis::add( m_execute, whatsThis );
+    TQWhatsThis::add( m_executePath, whatsThis );
     
     showAdvanced( false );
 
@@ -337,7 +337,7 @@ void KNotifyWidget::showAdvanced( bool show )
     if ( show )
     {
         m_extension->setText( i18n("Advanced <<") );
-        QToolTip::add( m_extension, i18n("Hide advanced options") );
+        TQToolTip::add( m_extension, i18n("Hide advanced options") );
 
         m_logToFile->show();
         m_logfilePath->show();
@@ -354,7 +354,7 @@ void KNotifyWidget::showAdvanced( bool show )
     else
     {
         m_extension->setText( i18n("Advanced >>") );
-        QToolTip::add( m_extension, i18n("Show advanced options") );
+        TQToolTip::add( m_extension, i18n("Show advanced options") );
 
         m_logToFile->hide();
         m_logfilePath->hide();
@@ -369,10 +369,10 @@ void KNotifyWidget::showAdvanced( bool show )
     }
 }
 
-Application * KNotifyWidget::addApplicationEvents( const QString& path )
+Application * KNotifyWidget::addApplicationEvents( const TQString& path )
 {
     kdDebug() << "**** knotify: adding path: " << path << endl;
-    QString relativePath = path;
+    TQString relativePath = path;
 
     if ( path.at(0) == '/' && KStandardDirs::exists( path ) )
         relativePath = makeRelative( path );
@@ -400,13 +400,13 @@ void KNotifyWidget::clearVisible()
     slotEventChanged( 0L ); // disable widgets
 }
 
-void KNotifyWidget::showEvent( QShowEvent *e )
+void KNotifyWidget::showEvent( TQShowEvent *e )
 {
     selectItem( m_listview->firstChild() );
     KNotifyWidgetBase::showEvent( e );
 }
 
-void KNotifyWidget::slotEventChanged( QListViewItem *item )
+void KNotifyWidget::slotEventChanged( TQListViewItem *item )
 {
     bool on = (item != 0L);
 
@@ -484,7 +484,7 @@ void KNotifyWidget::updateWidgets( ListViewItem *item )
 
 void KNotifyWidget::updatePixmaps( ListViewItem *item )
 {
-    QPixmap emptyPix;
+    TQPixmap emptyPix;
     Event &event = item->event();
 
     bool doIt = (event.presentation & KNotifyClient::Execute) &&
@@ -520,7 +520,7 @@ void KNotifyWidget::addVisibleApp( Application *app )
     m_visibleApps.append( app );
     addToView( app->eventList() );
 
-    QListViewItem *item = m_listview->selectedItem();
+    TQListViewItem *item = m_listview->selectedItem();
     if ( !item )
         item = m_listview->firstChild();
 
@@ -556,8 +556,8 @@ void KNotifyWidget::addToView( const EventList& events )
     }
 }
 
-void KNotifyWidget::widgetChanged( QListViewItem *item,
-                                   int what, bool on, QWidget *buddy )
+void KNotifyWidget::widgetChanged( TQListViewItem *item,
+                                   int what, bool on, TQWidget *buddy )
 {
     if ( signalsBlocked() )
         return;
@@ -580,31 +580,31 @@ void KNotifyWidget::widgetChanged( QListViewItem *item,
 
 void KNotifyWidget::soundToggled( bool on )
 {
-    QListViewItem *item = m_listview->currentItem();
+    TQListViewItem *item = m_listview->currentItem();
     if ( !item )
         return;
     bool doIcon = on && !m_soundPath->url().isEmpty();
-    item->setPixmap( COL_SOUND, doIcon ? d->pixmaps[COL_SOUND] : QPixmap() );
+    item->setPixmap( COL_SOUND, doIcon ? d->pixmaps[COL_SOUND] : TQPixmap() );
     widgetChanged( item, KNotifyClient::Sound, on, m_soundPath );
 }
 
 void KNotifyWidget::loggingToggled( bool on )
 {
-    QListViewItem *item = m_listview->currentItem();
+    TQListViewItem *item = m_listview->currentItem();
     if ( !item )
         return;
     bool doIcon = on && !m_logfilePath->url().isEmpty();
-    item->setPixmap(COL_LOGFILE, doIcon ? d->pixmaps[COL_LOGFILE] : QPixmap());
+    item->setPixmap(COL_LOGFILE, doIcon ? d->pixmaps[COL_LOGFILE] : TQPixmap());
     widgetChanged( item, KNotifyClient::Logfile, on, m_logfilePath );
 }
 
 void KNotifyWidget::executeToggled( bool on )
 {
-    QListViewItem *item = m_listview->currentItem();
+    TQListViewItem *item = m_listview->currentItem();
     if ( !item )
         return;
     bool doIcon = on && !m_executePath->url().isEmpty();
-    item->setPixmap(COL_EXECUTE, doIcon ? d->pixmaps[COL_EXECUTE] : QPixmap());
+    item->setPixmap(COL_EXECUTE, doIcon ? d->pixmaps[COL_EXECUTE] : TQPixmap());
     widgetChanged( item, KNotifyClient::Execute, on, m_executePath );
 }
 
@@ -615,12 +615,12 @@ void KNotifyWidget::messageBoxChanged()
 
     m_passivePopup->setEnabled( m_messageBox->isChecked() );
 
-    QListViewItem *item = m_listview->currentItem();
+    TQListViewItem *item = m_listview->currentItem();
     if ( !item )
         return;
 
     bool on = m_passivePopup->isEnabled();
-    item->setPixmap( COL_MESSAGE, on ? d->pixmaps[COL_MESSAGE] : QPixmap() );
+    item->setPixmap( COL_MESSAGE, on ? d->pixmaps[COL_MESSAGE] : TQPixmap() );
 
     Event &e = static_cast<ListViewItem*>( item )->event();
 
@@ -644,28 +644,28 @@ void KNotifyWidget::messageBoxChanged()
 
 void KNotifyWidget::stderrToggled( bool on )
 {
-    QListViewItem *item = m_listview->currentItem();
+    TQListViewItem *item = m_listview->currentItem();
     if ( !item )
         return;
-    item->setPixmap( COL_STDERR, on ? d->pixmaps[COL_STDERR] : QPixmap() );
+    item->setPixmap( COL_STDERR, on ? d->pixmaps[COL_STDERR] : TQPixmap() );
     widgetChanged( item, KNotifyClient::Stderr, on );
 }
 
 void KNotifyWidget::taskbarToggled( bool on )
 {
-    QListViewItem *item = m_listview->currentItem();
+    TQListViewItem *item = m_listview->currentItem();
     if ( !item )
         return;
-    item->setPixmap( COL_TASKBAR, on ? d->pixmaps[COL_TASKBAR] : QPixmap() );
+    item->setPixmap( COL_TASKBAR, on ? d->pixmaps[COL_TASKBAR] : TQPixmap() );
     widgetChanged( item, KNotifyClient::Taskbar, on );
 }
 
-void KNotifyWidget::soundFileChanged( const QString& text )
+void KNotifyWidget::soundFileChanged( const TQString& text )
 {
     if ( signalsBlocked() )
         return;
 
-    QListViewItem *item = m_listview->currentItem();
+    TQListViewItem *item = m_listview->currentItem();
     if ( !item )
         return;
 
@@ -673,44 +673,44 @@ void KNotifyWidget::soundFileChanged( const QString& text )
 
     currentEvent()->soundfile = text;
     bool ok = !text.isEmpty() && m_playSound->isChecked();
-    item->setPixmap( COL_SOUND, ok ? d->pixmaps[COL_SOUND] : QPixmap() );
+    item->setPixmap( COL_SOUND, ok ? d->pixmaps[COL_SOUND] : TQPixmap() );
 
     emit changed( true );
 }
 
-void KNotifyWidget::logfileChanged( const QString& text )
+void KNotifyWidget::logfileChanged( const TQString& text )
 {
     if ( signalsBlocked() )
         return;
 
-    QListViewItem *item = m_listview->currentItem();
+    TQListViewItem *item = m_listview->currentItem();
     if ( !item )
         return;
 
     currentEvent()->logfile = text;
     bool ok = !text.isEmpty() && m_logToFile->isChecked();
-    item->setPixmap( COL_LOGFILE, ok ? d->pixmaps[COL_LOGFILE] : QPixmap() );
+    item->setPixmap( COL_LOGFILE, ok ? d->pixmaps[COL_LOGFILE] : TQPixmap() );
 
     emit changed( true );
 }
 
-void KNotifyWidget::commandlineChanged( const QString& text )
+void KNotifyWidget::commandlineChanged( const TQString& text )
 {
     if ( signalsBlocked() )
         return;
 
-    QListViewItem *item = m_listview->currentItem();
+    TQListViewItem *item = m_listview->currentItem();
     if ( !item )
         return;
 
     currentEvent()->commandline = text;
     bool ok = !text.isEmpty() && m_execute->isChecked();
-    item->setPixmap( COL_EXECUTE, ok ? d->pixmaps[COL_EXECUTE] : QPixmap() );
+    item->setPixmap( COL_EXECUTE, ok ? d->pixmaps[COL_EXECUTE] : TQPixmap() );
 
     emit changed( true );
 }
 
-void KNotifyWidget::slotItemClicked( QListViewItem *item, const QPoint&,
+void KNotifyWidget::slotItemClicked( TQListViewItem *item, const TQPoint&,
                                      int col )
 {
     if ( !item || !item->isSelected() )
@@ -764,7 +764,7 @@ void KNotifyWidget::sort( bool ascending )
     m_listview->sort();
 }
 
-void KNotifyWidget::selectItem( QListViewItem *item )
+void KNotifyWidget::selectItem( TQListViewItem *item )
 {
     if ( item )
     {
@@ -828,20 +828,20 @@ void KNotifyWidget::save()
 
 // returns e.g. "kwin/eventsrc" from a given path
 // "/opt/kde3/share/apps/kwin/eventsrc"
-QString KNotifyWidget::makeRelative( const QString& fullPath )
+TQString KNotifyWidget::makeRelative( const TQString& fullPath )
 {
     int slash = fullPath.findRev( '/' ) - 1;
     slash = fullPath.findRev( '/', slash );
 
     if ( slash < 0 )
-        return QString::null;
+        return TQString::null;
 
     return fullPath.mid( slash+1 );
 }
 
 Event * KNotifyWidget::currentEvent()
 {
-    QListViewItem *current = m_listview->currentItem();
+    TQListViewItem *current = m_listview->currentItem();
     if ( !current )
         return 0L;
 
@@ -851,27 +851,27 @@ Event * KNotifyWidget::currentEvent()
 void KNotifyWidget::openSoundDialog( KURLRequester *requester )
 {
     // only need to init this once
-    requester->disconnect( SIGNAL( openFileDialog( KURLRequester * )),
-                           this, SLOT( openSoundDialog( KURLRequester * )));
+    requester->disconnect( TQT_SIGNAL( openFileDialog( KURLRequester * )),
+                           this, TQT_SLOT( openSoundDialog( KURLRequester * )));
 
     KFileDialog *fileDialog = requester->fileDialog();
     fileDialog->setCaption( i18n("Select Sound File") );
-    QStringList filters;
+    TQStringList filters;
     filters << "audio/x-wav" << "audio/x-mp3" << "application/ogg"
             << "audio/x-adpcm";
     fileDialog->setMimeFilter( filters );
 
     // find the first "sound"-resource that contains files
     const Application *app = currentEvent()->application();
-    QStringList soundDirs =
+    TQStringList soundDirs =
         KGlobal::dirs()->findDirs("data", app->appName() + "/sounds");
     soundDirs += KGlobal::dirs()->resourceDirs( "sound" );
 
     if ( !soundDirs.isEmpty() ) {
         KURL soundURL;
-        QDir dir;
-        dir.setFilter( QDir::Files | QDir::Readable );
-        QStringList::ConstIterator it = soundDirs.begin();
+        TQDir dir;
+        dir.setFilter( TQDir::Files | TQDir::Readable );
+        TQStringList::ConstIterator it = soundDirs.begin();
         while ( it != soundDirs.end() ) {
             dir = *it;
             if ( dir.isReadable() && dir.count() > 2 ) {
@@ -887,12 +887,12 @@ void KNotifyWidget::openSoundDialog( KURLRequester *requester )
 void KNotifyWidget::openLogDialog( KURLRequester *requester )
 {
     // only need to init this once
-    requester->disconnect( SIGNAL( openFileDialog( KURLRequester * )),
-                           this, SLOT( openLogDialog( KURLRequester * )));
+    requester->disconnect( TQT_SIGNAL( openFileDialog( KURLRequester * )),
+                           this, TQT_SLOT( openLogDialog( KURLRequester * )));
 
     KFileDialog *fileDialog = requester->fileDialog();
     fileDialog->setCaption( i18n("Select Log File") );
-    QStringList filters;
+    TQStringList filters;
     filters << "text/x-log" << "text/plain";
     fileDialog->setMimeFilter( filters );
 }
@@ -900,13 +900,13 @@ void KNotifyWidget::openLogDialog( KURLRequester *requester )
 void KNotifyWidget::openExecDialog( KURLRequester *requester )
 {
     // only need to init this once
-    requester->disconnect( SIGNAL( openFileDialog( KURLRequester * )),
-                           this, SLOT( openExecDialog( KURLRequester * )));
+    requester->disconnect( TQT_SIGNAL( openFileDialog( KURLRequester * )),
+                           this, TQT_SLOT( openExecDialog( KURLRequester * )));
 
 
     KFileDialog *fileDialog = requester->fileDialog();
     fileDialog->setCaption( i18n("Select File to Execute") );
-    QStringList filters;
+    TQStringList filters;
     filters << "application/x-executable" << "application/x-shellscript"
             << "application/x-perl" << "application/x-python";
     fileDialog->setMimeFilter( filters );
@@ -914,19 +914,19 @@ void KNotifyWidget::openExecDialog( KURLRequester *requester )
 
 void KNotifyWidget::playSound()
 {
-    QString soundPath = m_soundPath->url();
+    TQString soundPath = m_soundPath->url();
     if (!KIO::NetAccess::exists( m_soundPath->url(), true, 0 )) {        
         bool foundSound=false;
 
         // find the first "sound"-resource that contains files
         const Application *app = currentEvent()->application();
-        QStringList soundDirs = KGlobal::dirs()->findDirs("data", app->appName() + "/sounds");
+        TQStringList soundDirs = KGlobal::dirs()->findDirs("data", app->appName() + "/sounds");
         soundDirs += KGlobal::dirs()->resourceDirs( "sound" );
 
         if ( !soundDirs.isEmpty() ) {
-           QDir dir;
-           dir.setFilter( QDir::Files | QDir::Readable );
-           QStringList::ConstIterator it = soundDirs.begin();
+           TQDir dir;
+           dir.setFilter( TQDir::Files | TQDir::Readable );
+           TQStringList::ConstIterator it = soundDirs.begin();
            while ( it != soundDirs.end() ) {
                dir = *it;
                if ( dir.isReadable() && dir.count() > 2 && 
@@ -975,14 +975,14 @@ void KNotifyWidget::enableAll( int what, bool enable )
     }
 
     // now make the listview reflect the changes
-    QListViewItemIterator it( m_listview->firstChild() );
+    TQListViewItemIterator it( m_listview->firstChild() );
     for ( ; it.current(); ++it )
     {
         ListViewItem *item = static_cast<ListViewItem*>( it.current() );
         updatePixmaps( item );
     }
 
-    QListViewItem *item = m_listview->currentItem();
+    TQListViewItem *item = m_listview->currentItem();
     if ( !item )
         item = m_listview->firstChild();
     selectItem( item );
@@ -998,17 +998,17 @@ void KNotifyWidget::enableAll( int what, bool enable )
 //
 // path must be "appname/eventsrc", i.e. a relative path
 //
-Application::Application( const QString &path )
+Application::Application( const TQString &path )
 {
-    QString config_file = path;
+    TQString config_file = path;
     config_file[config_file.find('/')] = '.';
     m_events = 0L;
     config = new KConfig(config_file, false, false);
     kc = new KConfig(path, true, false, "data");
-    kc->setGroup( QString::fromLatin1("!Global!") );
-    m_icon = kc->readEntry(QString::fromLatin1("IconName"),
-                           QString::fromLatin1("misc"));
-    m_description = kc->readEntry( QString::fromLatin1("Comment"),
+    kc->setGroup( TQString::fromLatin1("!Global!") );
+    m_icon = kc->readEntry(TQString::fromLatin1("IconName"),
+                           TQString::fromLatin1("misc"));
+    m_description = kc->readEntry( TQString::fromLatin1("Comment"),
                                    i18n("No description available") );
 
     int index = path.find( '/' );
@@ -1070,13 +1070,13 @@ void Application::reloadEvents( bool revertToDefaults )
 
     Event *e = 0L;
 
-    QString global = QString::fromLatin1("!Global!");
-    QString default_group = QString::fromLatin1("<default>");
-    QString name = QString::fromLatin1("Name");
-    QString comment = QString::fromLatin1("Comment");
+    TQString global = TQString::fromLatin1("!Global!");
+    TQString default_group = TQString::fromLatin1("<default>");
+    TQString name = TQString::fromLatin1("Name");
+    TQString comment = TQString::fromLatin1("Comment");
 
-    QStringList conflist = kc->groupList();
-    QStringList::ConstIterator it = conflist.begin();
+    TQStringList conflist = kc->groupList();
+    TQStringList::ConstIterator it = conflist.begin();
 
     while ( it != conflist.end() ) {
         if ( (*it) != global && (*it) != default_group ) { // event group
@@ -1095,9 +1095,9 @@ void Application::reloadEvents( bool revertToDefaults )
                 // default to passive popups over plain messageboxes
                 int default_rep = kc->readNumEntry("default_presentation",
                                                    0 | KNotifyClient::PassivePopup);
-                QString default_logfile = kc->readPathEntry("default_logfile");
-                QString default_soundfile = kc->readPathEntry("default_sound");
-                QString default_commandline = kc->readPathEntry("default_commandline");
+                TQString default_logfile = kc->readPathEntry("default_logfile");
+                TQString default_soundfile = kc->readPathEntry("default_sound");
+                TQString default_commandline = kc->readPathEntry("default_commandline");
 
                 config->setGroup(*it);
 
@@ -1134,14 +1134,14 @@ void Application::reloadEvents( bool revertToDefaults )
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-ListViewItem::ListViewItem( QListView *view, Event *event )
-    : QListViewItem( view ),
+ListViewItem::ListViewItem( TQListView *view, Event *event )
+    : TQListViewItem( view ),
       m_event( event )
 {
     setText( COL_EVENT, event->text() );
 }
 
-int ListViewItem::compare ( QListViewItem * i, int col, bool ascending ) const
+int ListViewItem::compare ( TQListViewItem * i, int col, bool ascending ) const
 {
     ListViewItem *item = static_cast<ListViewItem*>( i );
     int myPres = m_event->presentation;
@@ -1152,7 +1152,7 @@ int ListViewItem::compare ( QListViewItem * i, int col, bool ascending ) const
     switch ( col )
     {
         case COL_EVENT: // use default sorting
-            return QListViewItem::compare( i, col, ascending );
+            return TQListViewItem::compare( i, col, ascending );
 
         case COL_EXECUTE:
             action = KNotifyClient::Execute;
@@ -1177,7 +1177,7 @@ int ListViewItem::compare ( QListViewItem * i, int col, bool ascending ) const
     if ( (myPres & action) == (otherPres & action) )
     {
         // default sorting by event
-        return QListViewItem::compare( i, COL_EVENT, true );
+        return TQListViewItem::compare( i, COL_EVENT, true );
     }
 
     if ( myPres & action )

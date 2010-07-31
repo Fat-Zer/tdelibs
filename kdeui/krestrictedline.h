@@ -30,33 +30,33 @@
 /**
  * @short A line editor for restricted character sets.
  *
- * The KRestrictedLine widget is a variant of QLineEdit which
+ * The KRestrictedLine widget is a variant of TQLineEdit which
  * accepts only a restricted set of characters as input.
  * All other characters will be discarded and the signal invalidChar()
  * will be emitted for each of them.
  *
- * Valid characters can be passed as a QString to the constructor
+ * Valid characters can be passed as a TQString to the constructor
  * or set afterwards via setValidChars().
- * The default key bindings of QLineEdit are still in effect.
+ * The default key bindings of TQLineEdit are still in effect.
  *
  * @author Michael Wiedmann <mw@miwie.in-berlin.de>
  */
 class KDEUI_EXPORT KRestrictedLine : public KLineEdit
 {
   Q_OBJECT
-  Q_PROPERTY( QString validChars READ validChars WRITE setValidChars )
+  Q_PROPERTY( TQString validChars READ validChars WRITE setValidChars )
 
 public:
 
   /**
    * Constructor: This contructor takes three - optional - arguments.
-   *  The first two parameters are simply passed on to QLineEdit.
+   *  The first two parameters are simply passed on to TQLineEdit.
    *  @param parent   pointer to the parent widget
    *  @param name     pointer to the name of this widget
    *  @param valid    pointer to set of valid characters
    */
-  KRestrictedLine( QWidget *parent=0, const char *name=0,
-		   const QString& valid = QString::null);
+  KRestrictedLine( TQWidget *parent=0, const char *name=0,
+		   const TQString& valid = TQString::null);
 
   /**
    * Destructs the restricted line editor.
@@ -67,11 +67,11 @@ public:
    * All characters in the string valid are treated as
    * acceptable characters.
    */
-  void setValidChars(const QString& valid);
+  void setValidChars(const TQString& valid);
   /**
    * @return the string of acceptable characters.
    */
-  QString validChars() const;
+  TQString validChars() const;
 
 signals:
 
@@ -81,10 +81,10 @@ signals:
   void	invalidChar(int);
 
 protected:
-  void	keyPressEvent( QKeyEvent *e );
+  void	keyPressEvent( TQKeyEvent *e );
 
 private:
-  /// QString of valid characters for this line
+  /// TQString of valid characters for this line
   QString	qsValidChars;
 protected:
   virtual void virtual_hook( int id, void* data );

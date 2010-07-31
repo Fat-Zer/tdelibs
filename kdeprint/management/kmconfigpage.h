@@ -20,7 +20,7 @@
 #ifndef KMCONFIGPAGE_H
 #define KMCONFIGPAGE_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kdelibs_export.h>
 
@@ -30,19 +30,19 @@ class KDEPRINT_EXPORT KMConfigPage : public QWidget
 {
 	Q_OBJECT
 public:
-	KMConfigPage(QWidget *parent = 0, const char *name = 0);
+	KMConfigPage(TQWidget *parent = 0, const char *name = 0);
 
 	virtual void loadConfig(KConfig*);
 	virtual void saveConfig(KConfig*);
 
-	QString pageName() const 	{ return m_name; }
-	QString pageHeader() const 	{ return m_header; }
-	QString pagePixmap() const 	{ return m_pixmap; }
+	TQString pageName() const 	{ return m_name; }
+	TQString pageHeader() const 	{ return m_header; }
+	TQString pagePixmap() const 	{ return m_pixmap; }
 
 protected:
-	void setPageName(const QString& s)	{ m_name = s; }
-	void setPageHeader(const QString& s)	{ m_header = s; }
-	void setPagePixmap(const QString& s)	{ m_pixmap = s; }
+	void setPageName(const TQString& s)	{ m_name = s; }
+	void setPageHeader(const TQString& s)	{ m_header = s; }
+	void setPagePixmap(const TQString& s)	{ m_pixmap = s; }
 
 protected:
 	QString	m_name;

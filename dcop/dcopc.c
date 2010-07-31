@@ -23,7 +23,7 @@
 /* We really don't want to require X11 headers...  */
 
 #include "config.h"
-#include <qglobal.h>
+#include <tqglobal.h>
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
 #include <X11/Xlib.h>
 #include <X11/X.h>
@@ -340,10 +340,10 @@ dcop_send_signal(
    * Marshall the arguments for the DCOP message header (callerApp, destApp,
    * destObj, destFunc. The last argument is actually part of the data part of
    * the call, but we add it to the header. It's the size of the marshalled
-   * argument data. In Qt it would look like QDataStream str( ... ) str <<
+   * argument data. In Qt it would look like TQDataStream str( ... ) str <<
    * callerApp << destApp << destObj << destFun <<
    * argumentQByteArrayDataStuff; (where as str is the complete data stream
-   * sent do the dcopserver, excluding the ICE header) As the QByteArray is
+   * sent do the dcopserver, excluding the ICE header) As the TQByteArray is
    * marshalled as [size][data] and as we (below) send the data in two chunks,
    * first the dcop msg header and the the data, we just put the [size] field
    * as last field into the dcop msg header ;-)
@@ -589,7 +589,7 @@ dcop_register(const char * app_name, Bool add_pid)
       dcop_requested_name,
       "DCOPServer",
       "", /* Object irrelevant */
-      "registerAs(QCString)",
+      "registerAs(TQCString)",
       data,
       dataLength,
       &replyType,

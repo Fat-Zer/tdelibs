@@ -1,9 +1,9 @@
-#include <qstring.h>
+#include <tqstring.h>
 #include <ksortablevaluelist.h>
 
 int main( int argc, char **argv )
 {
-    KSortableValueList<QString> list;
+    KSortableValueList<TQString> list;
     list.insert( 1,  "FOO           (1)" );
     list.insert( 2,  "Test          (2)" );
     list.insert( 1,  "Huba!         (1)" );
@@ -12,7 +12,7 @@ int main( int argc, char **argv )
     list.insert( 2,  "I was here :) (2)" );
     list.insert( 4,  "Yeehaa...     (4)" );
     
-    QValueListIterator<KSortableItem<QString> > it = list.begin();
+    TQValueListIterator<KSortableItem<TQString> > it = list.begin();
 
     qDebug("Insertion order:");
     qDebug("================");

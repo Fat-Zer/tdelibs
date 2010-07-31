@@ -20,8 +20,8 @@
 #include <config.h>
 #include "cupsdconf.h"
 
-#include <qfile.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqregexp.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kconfig.h>
@@ -31,18 +31,18 @@
 #include <cups/ipp.h>
 #include <cups/language.h>
 
-QString findDir(const QStringList& list)
+TQString findDir(const TQStringList& list)
 {
-	for (QStringList::ConstIterator it=list.begin(); it!=list.end(); ++it)
-		if (QFile::exists(*it))
+	for (TQStringList::ConstIterator it=list.begin(); it!=list.end(); ++it)
+		if (TQFile::exists(*it))
 			return *it;
 	// if nothing found, just use the first as default value
 	return list[0];
 }
 
-void splitSizeSpec(const QString& s, int& sz, int& suff)
+void splitSizeSpec(const TQString& s, int& sz, int& suff)
 {
-	int	p = s.find(QRegExp("\\D"));
+	int	p = s.find(TQRegExp("\\D"));
 	sz = s.mid(0, p).toInt();
 	if (p != -1)
 	{
@@ -62,28 +62,28 @@ void splitSizeSpec(const QString& s, int& sz, int& suff)
 CupsdConf::CupsdConf()
 {
 	// start by trying to find CUPS directories (useful later)
-	datadir_ = findDir(QStringList("/usr/share/cups")
+	datadir_ = findDir(TQStringList("/usr/share/cups")
 			<< "/usr/local/share/cups"
 			<< "/opt/share/cups"
 			<< "/opt/local/share/cups");
-	documentdir_ = findDir(QStringList(datadir_+"/doc-root")
+	documentdir_ = findDir(TQStringList(datadir_+"/doc-root")
 			<< datadir_.left(datadir_.length()-5)+"/doc/cups");
 	//fontpath_ << (datadir_+"/fonts");
-	requestdir_ = findDir(QStringList("/var/spool/cups")
+	requestdir_ = findDir(TQStringList("/var/spool/cups")
 			<< "/var/cups");
-	serverbin_ = findDir(QStringList("/usr/lib" KDELIBSUFF "/cups")
+	serverbin_ = findDir(TQStringList("/usr/lib" KDELIBSUFF "/cups")
 			<< "/usr/local/lib" KDELIBSUFF "/cups"
 			<< "/opt/lib" KDELIBSUFF "/cups"
 			<< "/opt/local/lib" KDELIBSUFF "/cups");
-	serverfiles_ = findDir(QStringList("/etc/cups")
+	serverfiles_ = findDir(TQStringList("/etc/cups")
 			<< "/usr/local/etc/cups");
 	tmpfiles_ = requestdir_+"/tmp";
 
 	// other options
-	servername_ = QString::null;
-	serveradmin_ = QString::null;
+	servername_ = TQString::null;
+	serveradmin_ = TQString::null;
 	classification_ = CLASS_NONE;
-	otherclassname_ = QString::null;
+	otherclassname_ = TQString::null;
 	classoverride_ = false;
 	charset_ = "utf-8";
 	language_ = "en";
@@ -100,7 +100,7 @@ CupsdConf::CupsdConf()
 	maxrequestsize_ = "0";
 	clienttimeout_ = 300;
 	// listenaddresses_
-	QString	logdir = findDir(QStringList("/var/log/cups")
+	QString	logdir = findDir(TQStringList("/var/log/cups")
 			<< "/var/spool/cups/log"
 			<< "/var/cups/log");
 	accesslog_ = logdir+"/access_log";
@@ -137,7 +137,7 @@ CupsdConf::~CupsdConf()
 {
 }
 
-bool CupsdConf::loadFromFile(const QString& filename)
+bool CupsdConf::loadFromFile(const TQString& filename)
 {
 	QFile	f(filename);
 	if (!f.exists() || !f.open(IO_ReadOnly)) return false;
@@ -173,7 +173,7 @@ bool CupsdConf::loadFromFile(const QString& filename)
 	}
 }
 
-bool CupsdConf::saveToFile(const QString& filename)
+bool CupsdConf::saveToFile(const TQString& filename)
 {
 	QFile	f(filename);
 	if (!f.open(IO_WriteOnly))
@@ -283,7 +283,7 @@ bool CupsdConf::saveToFile(const QString& filename)
 			t << endl;
 			t << "Satisfy " << (loc->satisfy_ == SATISFY_ALL ? "All" : "Any") << endl;
 			t << "Order " << (loc->order_ == ORDER_ALLOW_DENY ? "allow,deny" : "deny,allow") << endl;
-			for (QStringList::ConstIterator it=loc->addresses_.begin(); it!=loc->addresses_.end(); ++it)
+			for (TQStringList::ConstIterator it=loc->addresses_.begin(); it!=loc->addresses_.end(); ++it)
 				t << *it << endl;
 			t << "</Location>" << endl;
 		}
@@ -316,7 +316,7 @@ bool CupsdConf::saveToFile(const QString& filename)
 		t << "Timeout " << clienttimeout_ << endl;
 
 		t << endl << comments_["listen"] << endl;
-		for (QStringList::ConstIterator it=listenaddresses_.begin(); it!=listenaddresses_.end(); ++it)
+		for (TQStringList::ConstIterator it=listenaddresses_.begin(); it!=listenaddresses_.end(); ++it)
 			t << *it << endl;
 
 		t << endl << "# Log" << endl;
@@ -387,7 +387,7 @@ bool CupsdConf::saveToFile(const QString& filename)
 		t << "DocumentRoot " << documentdir_ << endl;
 
 		t << endl << comments_["fontpath"] << endl;
-		for (QStringList::ConstIterator it=fontpath_.begin(); it!=fontpath_.end(); ++it)
+		for (TQStringList::ConstIterator it=fontpath_.begin(); it!=fontpath_.end(); ++it)
 			t << "FontPath " << *it << endl;
 
 		t << endl << comments_["requestroot"] << endl;
@@ -410,7 +410,7 @@ bool CupsdConf::saveToFile(const QString& filename)
 		if (browsing_)
 		{
 			t << "BrowseProtocols ";
-			for (QStringList::ConstIterator it=browseprotocols_.begin(); it!=browseprotocols_.end(); ++it)
+			for (TQStringList::ConstIterator it=browseprotocols_.begin(); it!=browseprotocols_.end(); ++it)
 				t << (*it).upper() << " ";
 			t << endl;
 		}
@@ -426,7 +426,7 @@ bool CupsdConf::saveToFile(const QString& filename)
 
 		t << endl << comments_["browseaddress"] << endl;
 		if (browsing_)
-			for (QStringList::ConstIterator it=browseaddresses_.begin(); it!=browseaddresses_.end(); ++it)
+			for (TQStringList::ConstIterator it=browseaddresses_.begin(); it!=browseaddresses_.end(); ++it)
 				if ((*it).startsWith("Send"))
 					t << "BrowseAddress " << (*it).mid(5) << endl;
 				else
@@ -448,14 +448,14 @@ bool CupsdConf::saveToFile(const QString& filename)
 		if (browsing_) t << "BrowseShortNames " << (useshortnames_ ? "Yes" : "No") << endl;
 		
 		t << endl << "# Unknown" << endl;
-		for (QValueList< QPair<QString,QString> >::ConstIterator it=unknown_.begin(); it!=unknown_.end(); ++it)
+		for (TQValueList< QPair<TQString,TQString> >::ConstIterator it=unknown_.begin(); it!=unknown_.end(); ++it)
 			t << (*it).first << " " << (*it).second << endl;
 
 		return true;
 	}
 }
 
-bool CupsdConf::parseLocation(CupsLocation *location, QTextStream& file)
+bool CupsdConf::parseLocation(CupsLocation *location, TQTextStream& file)
 {
 	QString	line;
 	bool	done(false);
@@ -479,10 +479,10 @@ bool CupsdConf::parseLocation(CupsLocation *location, QTextStream& file)
 	return value;
 }
 
-bool CupsdConf::parseOption(const QString& line)
+bool CupsdConf::parseOption(const TQString& line)
 {
 	int p(-1);
-	QString keyword, value, l(line.simplifyWhiteSpace());
+	TQString keyword, value, l(line.simplifyWhiteSpace());
 
 	if ((p=l.find(' ')) != -1)
 	{
@@ -507,11 +507,11 @@ bool CupsdConf::parseOption(const QString& line)
 	else if (keyword == "browseprotocols")
 	{
 		browseprotocols_.clear();
-		QStringList prots = QStringList::split(QRegExp("\\s"), value, false);
+		TQStringList prots = TQStringList::split(TQRegExp("\\s"), value, false);
 		if (prots.find("all") != prots.end())
 			browseprotocols_ << "CUPS" << "SLP";
 		else
-			for (QStringList::ConstIterator it=prots.begin(); it!=prots.end(); ++it)
+			for (TQStringList::ConstIterator it=prots.begin(); it!=prots.end(); ++it)
 				browseprotocols_ << (*it).upper();
 	}
 	else if (keyword == "browserelay") browseaddresses_.append("Relay "+value);
@@ -540,12 +540,12 @@ bool CupsdConf::parseOption(const QString& line)
 	else if (keyword == "documentroot") documentdir_ = value;
 	else if (keyword == "errorlog") errorlog_ = value;
 	else if (keyword == "filterlimit") filterlimit_ = value.toInt();
-	else if (keyword == "fontpath") fontpath_ += QStringList::split(':', value, false);
+	else if (keyword == "fontpath") fontpath_ += TQStringList::split(':', value, false);
 	else if (keyword == "group") group_ = value;
 	else if (keyword == "hideimplicitmembers") hideimplicitmembers_ = (value.lower() != "no");
 	else if (keyword == "hostnamelookups")
 	{
-		QString h = value.lower();
+		TQString h = value.lower();
 		if (h == "on") hostnamelookup_ = HOSTNAME_ON;
 		else if (h == "double") hostnamelookup_ = HOSTNAME_DOUBLE;
 		else hostnamelookup_ = HOSTNAME_OFF;
@@ -557,7 +557,7 @@ bool CupsdConf::parseOption(const QString& line)
 	else if (keyword == "listen") listenaddresses_.append("Listen "+value);
 	else if (keyword == "loglevel")
 	{
-		QString ll = value.lower();
+		TQString ll = value.lower();
 		if (ll == "none") loglevel_ = LOGLEVEL_NONE;
 		else if (ll == "error") loglevel_ = LOGLEVEL_ERROR;
 		else if (ll == "warn") loglevel_ = LOGLEVEL_WARN;
@@ -600,7 +600,7 @@ bool CupsdConf::parseOption(const QString& line)
 	else
 	{
 		// unrecognized option
-		unknown_ << QPair<QString,QString>(keyword, value);
+		unknown_ << QPair<TQString,TQString>(keyword, value);
 	}
 	return true;
 }
@@ -695,7 +695,7 @@ CupsLocation::CupsLocation()
 	resourcename_ = "";
 	authtype_ = AUTHTYPE_NONE;
 	authclass_ = AUTHCLASS_ANONYMOUS;
-	authname_ = QString::null;
+	authname_ = TQString::null;
 	encryption_ = ENCRYPT_IFREQUESTED;
 	satisfy_ = SATISFY_ALL;
 	order_ = ORDER_ALLOW_DENY;
@@ -715,7 +715,7 @@ CupsLocation::CupsLocation(const CupsLocation& loc)
 {
 }
 
-bool CupsLocation::parseResource(const QString& line)
+bool CupsLocation::parseResource(const TQString& line)
 {
 	QString	str = line.simplifyWhiteSpace();
 	int	p1 = line.find(' '), p2 = line.find('>');
@@ -727,10 +727,10 @@ bool CupsLocation::parseResource(const QString& line)
 	else return false;
 }
 
-bool CupsLocation::parseOption(const QString& line)
+bool CupsLocation::parseOption(const TQString& line)
 {
 	int p(-1);
-	QString keyword, value, l(line.simplifyWhiteSpace());
+	TQString keyword, value, l(line.simplifyWhiteSpace());
 
 	if ((p=l.find(' ')) != -1)
 	{
@@ -744,14 +744,14 @@ bool CupsLocation::parseOption(const QString& line)
 
 	if (keyword == "authtype")
 	{
-		QString a = value.lower();
+		TQString a = value.lower();
 		if (a == "basic") authtype_ = AUTHTYPE_BASIC;
 		else if (a == "digest") authtype_ = AUTHTYPE_DIGEST;
 		else authtype_ = AUTHTYPE_NONE;
 	}
 	else if (keyword == "authclass")
 	{
-		QString a = value.lower();
+		TQString a = value.lower();
 		if (a == "user") authclass_ = AUTHCLASS_USER;
 		else if (a == "system") authclass_ = AUTHCLASS_SYSTEM;
 		else if (a == "group") authclass_ = AUTHCLASS_GROUP;
@@ -764,7 +764,7 @@ bool CupsLocation::parseOption(const QString& line)
 		if (p != -1)
 		{
 			authname_ = value.mid(p+1);
-			QString cl = value.left(p).lower();
+			TQString cl = value.left(p).lower();
 			if (cl == "user")
 				authclass_ = AUTHCLASS_USER;
 			else if (cl == "group")
@@ -776,7 +776,7 @@ bool CupsLocation::parseOption(const QString& line)
 	else if (keyword == "order") order_ = (value.lower() == "deny,allow" ? ORDER_DENY_ALLOW : ORDER_ALLOW_DENY);
 	else if (keyword == "encryption")
 	{
-		QString e = value.lower();
+		TQString e = value.lower();
 		if (e == "always") encryption_ = ENCRYPT_ALWAYS;
 		else if (e == "never") encryption_ = ENCRYPT_NEVER;
 		else if (e == "required") encryption_ = ENCRYPT_REQUIRED;
@@ -794,19 +794,19 @@ CupsResource::CupsResource()
 	type_ = RESOURCE_GLOBAL;
 }
 
-CupsResource::CupsResource(const QString& path)
+CupsResource::CupsResource(const TQString& path)
 {
 	setPath(path);
 }
 
-void CupsResource::setPath(const QString& path)
+void CupsResource::setPath(const TQString& path)
 {
 	path_ = path;
 	type_ = typeFromPath(path_);
 	text_ = pathToText(path_);
 }
 
-int CupsResource::typeFromText(const QString& text)
+int CupsResource::typeFromText(const TQString& text)
 {
 	if (text == i18n("Base", "Root") || text == i18n("All printers") || text == i18n("All classes") || text == i18n("Print jobs")) return RESOURCE_GLOBAL;
 	else if (text == i18n("Administration")) return RESOURCE_ADMIN;
@@ -815,7 +815,7 @@ int CupsResource::typeFromText(const QString& text)
 	else return RESOURCE_PRINTER;
 }
 
-int CupsResource::typeFromPath(const QString& path)
+int CupsResource::typeFromPath(const TQString& path)
 {
 	if (path == "/admin") return RESOURCE_ADMIN;
 	else if (path == "/printers" || path == "/classes" || path == "/" || path == "/jobs") return RESOURCE_GLOBAL;
@@ -824,7 +824,7 @@ int CupsResource::typeFromPath(const QString& path)
 	else return RESOURCE_GLOBAL;
 }
 
-QString CupsResource::textToPath(const QString& text)
+TQString CupsResource::textToPath(const TQString& text)
 {
 	QString	path("/");
 	if (text == i18n("Administration")) path = "/admin";
@@ -845,7 +845,7 @@ QString CupsResource::textToPath(const QString& text)
 	return path;
 }
 
-QString CupsResource::pathToText(const QString& path)
+TQString CupsResource::pathToText(const TQString& path)
 {
 	QString	text(i18n("Base", "Root"));
 	if (path == "/admin") text = i18n("Administration");
@@ -868,17 +868,17 @@ QString CupsResource::pathToText(const QString& path)
 	return text;
 }
 
-QString CupsResource::typeToIconName(int type)
+TQString CupsResource::typeToIconName(int type)
 {
 	switch (type)
 	{
 	   case RESOURCE_ADMIN:
 	   case RESOURCE_GLOBAL:
-	   	return QString("folder");
+	   	return TQString("folder");
 	   case RESOURCE_PRINTER:
-	   	return QString("kdeprint_printer");
+	   	return TQString("kdeprint_printer");
 	   case RESOURCE_CLASS:
-	   	return QString("kdeprint_printer_class");
+	   	return TQString("kdeprint_printer_class");
 	}
-	return QString("folder");
+	return TQString("folder");
 }

@@ -45,7 +45,7 @@ PrintInterface::PrintInterface()
   myPrintInterfaceNumber = globalPrintInterfaceNumber++;
 
   d = new PrivatePrintInterface();
-  QString name = "PrintInterface#" + QString::number(myPrintInterfaceNumber);
+  TQString name = "PrintInterface#" + TQString::number(myPrintInterfaceNumber);
   d->interface = new PrintDCOPInterface(this, name.latin1());
 }
 
@@ -60,7 +60,7 @@ unsigned int PrintInterface::printInterfaceNumber () const
   return myPrintInterfaceNumber;
 }
 
-void PrintInterface::setPrintInterfaceDCOPSuffix (const QCString &suffix)
+void PrintInterface::setPrintInterfaceDCOPSuffix (const TQCString &suffix)
 {
   d->interface->setObjId ("PrintInterface#"+suffix);
 }

@@ -29,9 +29,9 @@
 #include <kparts/factory.h>
 #include <kdialogbase.h>
 #include <kurl.h>
-#include <qobject.h>
-#include <qstringlist.h>
-#include <qguardedptr.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
+#include <tqguardedptr.h>
 
 #include "kjavaappletwidget.h"
 
@@ -48,14 +48,14 @@ class KJavaAppletViewerBrowserExtension : public KParts::BrowserExtension {
     Q_OBJECT
 public:
     KJavaAppletViewerBrowserExtension (KJavaAppletViewer *parent);
-    void urlChanged (const QString & url);
+    void urlChanged (const TQString & url);
     void setLoadingProgress (int percentage);
 
     void setURLArgs (const KParts::URLArgs & args);
-    void saveState (QDataStream & stream);
-    void restoreState (QDataStream & stream);
+    void saveState (TQDataStream & stream);
+    void restoreState (TQDataStream & stream);
 public slots:
-    void showDocument (const QString & doc, const QString & frame);
+    void showDocument (const TQString & doc, const TQString & frame);
 };
 
 class KJavaAppletViewerLiveConnectExtension : public KParts::LiveConnectExtension {
@@ -63,16 +63,16 @@ class KJavaAppletViewerLiveConnectExtension : public KParts::LiveConnectExtensio
 public:
     KJavaAppletViewerLiveConnectExtension(KJavaAppletViewer * parent);
 
-    bool get (const unsigned long objid, const QString & field, KParts::LiveConnectExtension::Type & type, unsigned long & retobjid, QString & value);
-    bool put(const unsigned long, const QString & field, const QString & value);
-    bool call (const unsigned long , const QString & func, const QStringList & args, KParts::LiveConnectExtension::Type & type, unsigned long & retobjid, QString & value);
+    bool get (const unsigned long objid, const TQString & field, KParts::LiveConnectExtension::Type & type, unsigned long & retobjid, TQString & value);
+    bool put(const unsigned long, const TQString & field, const TQString & value);
+    bool call (const unsigned long , const TQString & func, const TQStringList & args, KParts::LiveConnectExtension::Type & type, unsigned long & retobjid, TQString & value);
     void unregister (const unsigned long objid);
 
     int jsSessions () const { return m_jssessions; }
 public slots:
-    void jsEvent (const QStringList & args);
+    void jsEvent (const TQStringList & args);
 signals:
-    virtual void partEvent (const unsigned long objid, const QString & event, const KParts::LiveConnectExtension::ArgList & args);
+    virtual void partEvent (const unsigned long objid, const TQString & event, const KParts::LiveConnectExtension::ArgList & args);
 
 private:
     KJavaAppletViewer * m_viewer;
@@ -82,8 +82,8 @@ private:
 class KJavaAppletViewer : public KParts::ReadOnlyPart {
     Q_OBJECT
 public: 
-    KJavaAppletViewer (QWidget * wparent, const char * wname,
-              QObject * parent, const char * name, const QStringList &args);
+    KJavaAppletViewer (TQWidget * wparent, const char * wname,
+              TQObject * parent, const char * name, const TQStringList &args);
     ~KJavaAppletViewer ();
     CoverWidget * view () const { return m_view; }
     static KAboutData* createAboutData ();
@@ -93,27 +93,27 @@ public:
     KParts::LiveConnectExtension * liveConnectExtension () const
         { return m_liveconnect; }
 
-    bool eventFilter (QObject *o, QEvent *e);
+    bool eventFilter (TQObject *o, TQEvent *e);
 
     bool appletAlive () const;
 public slots:
     virtual bool openURL (const KURL & url);
     virtual bool closeURL ();
     void appletLoaded ();
-    void infoMessage (const QString &);
+    void infoMessage (const TQString &);
 protected:
     bool openFile();
 private slots:
     void delayedCreateTimeOut ();
 private:
-    QGuardedPtr <CoverWidget> m_view;
+    TQGuardedPtr <CoverWidget> m_view;
     KConfig * m_config;
     KJavaProcess * process;
     KJavaAppletViewerBrowserExtension * m_browserextension;
     KJavaAppletViewerLiveConnectExtension * m_liveconnect;
     KParts::StatusBarExtension * m_statusbar;
-    QGuardedPtr <QLabel> m_statusbar_icon;
-    QString baseurl;
+    TQGuardedPtr <TQLabel> m_statusbar_icon;
+    TQString baseurl;
     bool m_closed;
 };
 
@@ -123,9 +123,9 @@ public:
     KJavaAppletViewerFactory ();
     virtual ~KJavaAppletViewerFactory ();
     virtual KParts::Part *createPartObject 
-        (QWidget *wparent, const char *wname,
-         QObject *parent, const char *name,
-         const char *className, const QStringList &args);
+        (TQWidget *wparent, const char *wname,
+         TQObject *parent, const char *name,
+         const char *className, const TQStringList &args);
     static KInstance * instance () { return s_instance; }
 private:
     static KInstance * s_instance;
@@ -139,7 +139,7 @@ protected slots:
     void slotClose ();
 private:
     KJavaAppletWidget * m_appletWidget;
-    QTable * table;
+    TQTable * table;
 };
 
 #endif

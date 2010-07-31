@@ -54,7 +54,7 @@ class UploadDialog : public KDialogBase
       @param engine a KNewStuff engine object to be used for uploads
       @param parent the parent window
     */
-    UploadDialog( Engine *engine, QWidget *parent );
+    UploadDialog( Engine *engine, TQWidget *parent );
 
     /**
       Destructor.
@@ -67,7 +67,7 @@ class UploadDialog : public KDialogBase
 
       @param previewFile the preview image file
     */
-    void setPreviewFile( const QString &previewFile );
+    void setPreviewFile( const TQString &previewFile );
 
     /**
       Sets the payload filename.
@@ -76,7 +76,7 @@ class UploadDialog : public KDialogBase
 
       @param payloadFile the payload data file
     */
-    void setPayloadFile( const QString &payloadFile );
+    void setPayloadFile( const TQString &payloadFile );
 
   protected slots:
     void slotOk();
@@ -84,17 +84,17 @@ class UploadDialog : public KDialogBase
   private:
     Engine *mEngine;
 
-    QLineEdit *mNameEdit;
-    QLineEdit *mAuthorEdit;
-    QLineEdit *mEmailEdit;
-    QLineEdit *mVersionEdit;
-    QSpinBox *mReleaseSpin;
+    TQLineEdit *mNameEdit;
+    TQLineEdit *mAuthorEdit;
+    TQLineEdit *mEmailEdit;
+    TQLineEdit *mVersionEdit;
+    TQSpinBox *mReleaseSpin;
     KURLRequester *mPreviewUrl;
-    QTextEdit *mSummaryEdit;
-    QComboBox *mLanguageCombo;
-    QComboBox *mLicenceCombo;
+    TQTextEdit *mSummaryEdit;
+    TQComboBox *mLanguageCombo;
+    TQComboBox *mLicenceCombo;
 
-    QPtrList<Entry> mEntryList;
+    TQPtrList<Entry> mEntryList;
     KURL mPayloadUrl;
 };
 

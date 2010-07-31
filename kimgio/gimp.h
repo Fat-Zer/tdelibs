@@ -46,7 +46,7 @@ const uchar OPAQUE_OPACITY = 255; //!< Opaque value for 8-bit alpha component.
 
 // From GIMP "apptypes.h" v1.2
 
-//! Basic GIMP image type. QImage converter may produce a deeper image
+//! Basic GIMP image type. TQImage converter may produce a deeper image
 //! than is specified here. For example, a grayscale image with an
 //! alpha channel must (currently) use a 32-bit Qt image.
 

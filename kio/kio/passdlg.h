@@ -48,9 +48,9 @@ public:
      * @param parent        the parent widget (default:NULL).
      * @param name          the dialog name (default:NULL).
      */
-    PasswordDialog( const QString& prompt, const QString& user,
+    PasswordDialog( const TQString& prompt, const TQString& user,
                     bool enableKeep = false, bool modal=true,
-                    QWidget* parent=0, const char* name=0 );
+                    TQWidget* parent=0, const char* name=0 );
 
     /**
      * Destructor
@@ -61,7 +61,7 @@ public:
      * Sets the prompt to show to the user.
      * @param prompt        instructional text to be shown.
      */
-    void setPrompt( const QString& prompt );
+    void setPrompt( const TQString& prompt );
 
     /**
      * Adds a comment line to the dialog.
@@ -73,19 +73,19 @@ public:
      * @param label       label for comment (ex:"Command:")
      * @param comment     the actual comment text.
      */
-    void addCommentLine( const QString& label, const QString comment );
+    void addCommentLine( const TQString& label, const TQString comment );
 
     /**
      * Returns the password entered by the user.
      * @return the password
      */
-    QString password() const;
+    TQString password() const;
 
     /**
      * Returns the username entered by the user.
      * @return the user name
      */
-    QString username() const;
+    TQString username() const;
 
     /**
      * Determines whether supplied authorization should
@@ -122,7 +122,7 @@ public:
      * @param password the password to set
      * @since 3.1
      */
-    void setPassword( const QString& password );
+    void setPassword( const TQString& password );
 
     /**
      * Presets a number of login+password pairs that the user can choose from.
@@ -131,7 +131,7 @@ public:
      * @param knownLogins map of known logins: the keys are usernames, the values are passwords.
      * @since 3.4
      */
-    void setKnownLogins( const QMap<QString, QString>& knownLogins );
+    void setKnownLogins( const TQMap<TQString, TQString>& knownLogins );
 
     /**
      * A convienence static method for obtaining authorization
@@ -149,19 +149,19 @@ public:
      *
      * @return Accepted/Rejected based on the user choice.
      */
-    static int getNameAndPassword( QString& user, QString& pass, bool* keep,
-                                   const QString& prompt = QString::null,
+    static int getNameAndPassword( TQString& user, TQString& pass, bool* keep,
+                                   const TQString& prompt = TQString::null,
                                    bool readOnly = false,
-                                   const QString& caption = QString::null,
-                                   const QString& comment = QString::null,
-                                   const QString& label = QString::null );
+                                   const TQString& caption = TQString::null,
+                                   const TQString& comment = TQString::null,
+                                   const TQString& label = TQString::null );
 
 private slots:
     void slotKeep( bool );
-    void slotActivated( const QString& userName );
+    void slotActivated( const TQString& userName );
 
 private:
-    void init( const QString&, const QString&, bool );
+    void init( const TQString&, const TQString&, bool );
 
 protected:
     virtual void virtual_hook( int id, void* data );

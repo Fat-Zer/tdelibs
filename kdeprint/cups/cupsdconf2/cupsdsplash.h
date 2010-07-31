@@ -25,11 +25,11 @@
 class CupsdSplash : public CupsdPage
 {
 public:
-	CupsdSplash(QWidget *parent = 0, const char *name = 0);
+	CupsdSplash(TQWidget *parent = 0, const char *name = 0);
 	~CupsdSplash();
 
-	bool loadConfig(CupsdConf *conf, QString& msg);
-	bool saveConfig(CupsdConf *conf, QString& msg);
+	bool loadConfig(CupsdConf *conf, TQString& msg);
+	bool saveConfig(CupsdConf *conf, TQString& msg);
 };
 
 #endif

@@ -20,14 +20,14 @@
 #ifndef _KMDI_DOCK_CONTAINER_
 #define _KMDI_DOCK_CONTAINER_
 
-#include <qwidget.h>
-#include <qstringlist.h>
+#include <tqwidget.h>
+#include <tqstringlist.h>
 #include <kdockwidget.h>
-#include <qmap.h>
+#include <tqmap.h>
 
 # include <kdockwidget_p.h>
 
-#include <qpushbutton.h>
+#include <tqpushbutton.h>
 
 class QWidgetStack;
 class KMultiTabBar;
@@ -36,12 +36,12 @@ class KDockButton_Private;
 namespace KMDI
 {
 
-class DockContainer: public QWidget, public KDockContainer
+class DockContainer: public TQWidget, public KDockContainer
 {
   Q_OBJECT
 
   public:
-    DockContainer(QWidget *parent, QWidget *win, int position, int flags);
+    DockContainer(TQWidget *parent, TQWidget *win, int position, int flags);
     virtual ~DockContainer();
 
     /** Get the KDockWidget that is our parent */
@@ -52,7 +52,7 @@ class DockContainer: public QWidget, public KDockContainer
      * \param w the KDockWidget object to add
      * \todo Remove the extra parameters that we don't use?
      */
-    virtual void insertWidget (KDockWidget *w, QPixmap, const QString &, int &);
+    virtual void insertWidget (KDockWidget *w, TQPixmap, const TQString &, int &);
 
     /**
      * Show a KDockWidget in our DockContainer
@@ -66,14 +66,14 @@ class DockContainer: public QWidget, public KDockContainer
      * \todo Actually implement it? Right now, it looks just it
      * does exactly nothing
      */
-    virtual void setToolTip (KDockWidget *, QString &);
+    virtual void setToolTip (KDockWidget *, TQString &);
 
     /**
      * Set a pixmap for one of our dock widgets
      * \param widget the KDockWidget to set the pixmap for
      * \param pixmap the pixmap you want to give the widget
      */
-    virtual void setPixmap(KDockWidget* widget, const QPixmap& pixmap);
+    virtual void setPixmap(KDockWidget* widget, const TQPixmap& pixmap);
 
     /**
      * Undock a widget from the container. This function is called
@@ -91,12 +91,12 @@ class DockContainer: public QWidget, public KDockContainer
 
     void hideIfNeeded();
 
-    virtual void save(KConfig *,const QString& group_or_prefix);
-    virtual void load(KConfig *,const QString& group_or_prefix);
+    virtual void save(KConfig *,const TQString& group_or_prefix);
+    virtual void load(KConfig *,const TQString& group_or_prefix);
 
     void setStyle(int);
   protected:
-    bool eventFilter(QObject*,QEvent*);
+    bool eventFilter(TQObject*,TQEvent*);
 
   public slots:
     void init();
@@ -109,28 +109,28 @@ class DockContainer: public QWidget, public KDockContainer
     void delayedRaise();
     void changeOverlapMode();
   private:
-    QWidget *m_mainWin;
-    QWidgetStack *m_ws;
+    TQWidget *m_mainWin;
+    TQWidgetStack *m_ws;
     KMultiTabBar *m_tb;
     int mTabCnt;
     int oldtab;
     int m_previousTab;
     int m_position;
     int m_separatorPos;
-    QMap<KDockWidget*,int> m_map;
-    QMap<int,KDockWidget*> m_revMap;
-    QMap<KDockWidget*,KDockButton_Private*> m_overlapButtons;
-    QStringList itemNames;
-    QMap<QString,QString> tabCaptions;
-    QMap<QString,QString> tabTooltips;
+    TQMap<KDockWidget*,int> m_map;
+    TQMap<int,KDockWidget*> m_revMap;
+    TQMap<KDockWidget*,KDockButton_Private*> m_overlapButtons;
+    TQStringList itemNames;
+    TQMap<TQString,TQString> tabCaptions;
+    TQMap<TQString,TQString> tabTooltips;
     int m_inserted;
     int m_delayedRaise;
     bool m_vertical;
     bool m_block;
     bool m_tabSwitching;
-    QObject *m_dragPanel;
+    TQObject *m_dragPanel;
     KDockManager *m_dockManager;
-    QMouseEvent *m_startEvent;
+    TQMouseEvent *m_startEvent;
     enum MovingState {NotMoving=0,WaitingForMoveStart,MovingInternal,Moving} m_movingState;
   signals:
         void activated(DockContainer*);

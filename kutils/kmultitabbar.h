@@ -25,13 +25,13 @@
 #ifndef _KMultitabbar_h_
 #define _KMultitabbar_h_
 
-#include <qscrollview.h>
-#include <qvbox.h>
-#include <qhbox.h>
-#include <qlayout.h>
-#include <qstring.h>
-#include <qptrlist.h>
-#include <qpushbutton.h>
+#include <tqscrollview.h>
+#include <tqvbox.h>
+#include <tqhbox.h>
+#include <tqlayout.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
+#include <tqpushbutton.h>
 
 #include <kdelibs_export.h>
 
@@ -92,7 +92,7 @@ public:
 	 * @param parent The parent widget
 	 * @param name The widget's name
 	 */
-	KMultiTabBar(KMultiTabBarMode bm,QWidget *parent=0,const char *name=0);
+	KMultiTabBar(KMultiTabBarMode bm,TQWidget *parent=0,const char *name=0);
 	
 	/**
 	 * Destructor.
@@ -108,7 +108,7 @@ public:
 	 * @param popup A popup menu which should be displayed if the button is clicked
 	 * @param not_used_yet will be used for a popup text in the future
 	 */
- 	int appendButton(const QPixmap &pic,int id=-1,QPopupMenu* popup=0,const QString& not_used_yet=QString::null);
+ 	int appendButton(const TQPixmap &pic,int id=-1,TQPopupMenu* popup=0,const TQString& not_used_yet=TQString::null);
 	/** 
          * remove a button with the given ID
 	 */
@@ -120,7 +120,7 @@ public:
 	 * @param text if a mode with text is used it will be the tab text, otherwise a mouse over hint
 	 * @return Always zero. Can be safely ignored.
 	 */
-	int appendTab(const QPixmap &pic,int id=-1,const QString& text=QString::null);
+	int appendTab(const TQPixmap &pic,int id=-1,const TQString& text=TQString::null);
 	/**
 	 * remove a tab with a given ID
 	 * @param id The ID of the tab to remove
@@ -172,13 +172,13 @@ public:
 	 * @return The list of tabs.
 	 * @warning be careful, don't delete tabs yourself and don't delete the list itself
 	 */
-        QPtrList<KMultiTabBarTab>* tabs();
+        TQPtrList<KMultiTabBarTab>* tabs();
 	/**
 	 * Returns the list of pointers to the tab buttons of type KMultiTabBarButton.
 	 * @return The list of tab buttons.
 	 * @warning be careful, don't delete buttons yourself and don't delete the list itself
 	 */
-	QPtrList<KMultiTabBarButton>* buttons();
+	TQPtrList<KMultiTabBarButton>* buttons();
 
 	/**
 	 * might vanish, not sure yet
@@ -186,13 +186,13 @@ public:
 	void showActiveTabTexts(bool show=true);
 protected:
 	friend class KMultiTabBarButton;
-	virtual void fontChange( const QFont& );
+	virtual void fontChange( const TQFont& );
 	void updateSeparator();
 private:
 	class KMultiTabBarInternal *m_internal;
-	QBoxLayout *m_l;
-	QFrame *m_btnTabSep;
-	QPtrList<KMultiTabBarButton> m_buttons;
+	TQBoxLayout *m_l;
+	TQFrame *m_btnTabSep;
+	TQPtrList<KMultiTabBarButton> m_buttons;
 	KMultiTabBarPosition m_position;
 	KMultiTabBarPrivate *d;
 };
@@ -207,11 +207,11 @@ class KUTILS_EXPORT KMultiTabBarButton: public QPushButton
 	Q_OBJECT
 public:
 	/** @internal */
-	KMultiTabBarButton(const QPixmap& pic,const QString&, QPopupMenu *popup,
-		int id,QWidget *parent, KMultiTabBar::KMultiTabBarPosition pos, KMultiTabBar::KMultiTabBarStyle style);
+	KMultiTabBarButton(const TQPixmap& pic,const TQString&, TQPopupMenu *popup,
+		int id,TQWidget *parent, KMultiTabBar::KMultiTabBarPosition pos, KMultiTabBar::KMultiTabBarStyle style);
 	/** @internal */
-	KMultiTabBarButton(const QString&, QPopupMenu *popup,
-		int id,QWidget *parent, KMultiTabBar::KMultiTabBarPosition pos, KMultiTabBar::KMultiTabBarStyle style);
+	KMultiTabBarButton(const TQString&, TQPopupMenu *popup,
+		int id,TQWidget *parent, KMultiTabBar::KMultiTabBarPosition pos, KMultiTabBar::KMultiTabBarStyle style);
 	/**
 	 * Destructor
 	 */
@@ -237,16 +237,16 @@ public slots:
         /**
 	 * modify the text of the button
          */
-	void setText(const QString &);
+	void setText(const TQString &);
 
-	QSize sizeHint() const;
+	TQSize sizeHint() const;
 
 protected:
 	KMultiTabBar::KMultiTabBarPosition m_position;
 	KMultiTabBar::KMultiTabBarStyle m_style;
-	QString m_text;
-	virtual void hideEvent( class QHideEvent*);
-	virtual void showEvent( class QShowEvent*);
+	TQString m_text;
+	virtual void hideEvent( class TQHideEvent*);
+	virtual void showEvent( class TQShowEvent*);
 private:
 	int m_id;
 	KMultiTabBarButtonPrivate *d;
@@ -270,7 +270,7 @@ class KUTILS_EXPORT KMultiTabBarTab: public KMultiTabBarButton
 	Q_OBJECT
 public:
   /** @internal */
-	KMultiTabBarTab(const QPixmap& pic,const QString&,int id,QWidget *parent,
+	KMultiTabBarTab(const TQPixmap& pic,const TQString&,int id,TQWidget *parent,
 		KMultiTabBar::KMultiTabBarPosition pos,KMultiTabBar::KMultiTabBarStyle style);
 	/**
 	 * Destructor.
@@ -300,17 +300,17 @@ protected:
 	void setSize(int);
 	int neededSize();
 	void updateState();
-	virtual void drawButton(QPainter *);
-	virtual void drawButtonLabel(QPainter *);
-	void drawButtonStyled(QPainter *);
-	void drawButtonClassic(QPainter *);
+	virtual void drawButton(TQPainter *);
+	virtual void drawButtonLabel(TQPainter *);
+	void drawButtonStyled(TQPainter *);
+	void drawButtonClassic(TQPainter *);
 protected slots:
 	virtual void slotClicked();
 	void setTabsPosition(KMultiTabBar::KMultiTabBarPosition);
 
 public slots:
-	virtual void setIcon(const QString&);
-	virtual void setIcon(const QPixmap&);
+	virtual void setIcon(const TQString&);
+	virtual void setIcon(const TQPixmap&);
 };
 
 #endif

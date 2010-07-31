@@ -21,9 +21,9 @@
 #ifndef _K_LDIF_H_
 #define _K_LDIF_H_
 
-#include <qstring.h>
-#include <qcstring.h>
-#include <qmemarray.h>
+#include <tqstring.h>
+#include <tqcstring.h>
+#include <tqmemarray.h>
 
 #include <kdelibs_export.h>
 
@@ -55,26 +55,26 @@ namespace KABC {
      * @param linelen Maximum length of the lines in the result.
      * @param url If true, encode value as url ( use :< ).
      */
-    static QCString assembleLine( const QString &fieldname, 
-      const QByteArray &value, uint linelen=0, bool url=false );
+    static TQCString assembleLine( const TQString &fieldname, 
+      const TQByteArray &value, uint linelen=0, bool url=false );
     /**
      * This is the same as the above function, the only difference that 
-     * this accepts QCString as the value.
+     * this accepts TQCString as the value.
      */
-    static QCString assembleLine( const QString &fieldname, 
-      const QCString &value, uint linelen=0, bool url=false );
+    static TQCString assembleLine( const TQString &fieldname, 
+      const TQCString &value, uint linelen=0, bool url=false );
     /**
      * This is the same as the above function, the only difference that 
-     * this accepts QString as the value.
+     * this accepts TQString as the value.
      */
-    static QCString assembleLine( const QString &fieldname, 
-      const QString &value, uint linelen=0, bool url=false );
+    static TQCString assembleLine( const TQString &fieldname, 
+      const TQString &value, uint linelen=0, bool url=false );
       
     /**
      * Splits one line from an LDIF file to attribute and value components.
      * @returns true if value is an URL, false otherwise
      */
-    static bool splitLine( const QCString &line, QString &fieldname, QByteArray &value );
+    static bool splitLine( const TQCString &line, TQString &fieldname, TQByteArray &value );
     /**
      * Splits a control specification (without the "control:" directive)
      * @param line is the control directive
@@ -82,8 +82,8 @@ namespace KABC {
      * @param critical will contain the criticality of control
      * @param value is the control value
      */
-    static bool splitControl( const QCString &line, QString &oid, bool &critical,
-      QByteArray &value );
+    static bool splitControl( const TQCString &line, TQString &oid, bool &critical,
+      TQByteArray &value );
     /**
      * Starts the parsing of a new LDIF
      */
@@ -108,7 +108,7 @@ namespace KABC {
      * Sets a chunk of LDIF. Call before startParsing(), or if nextItem() returned
      * MoreData.
      */
-    void setLDIF( const QByteArray &ldif ) { mLdif = ldif; mPos = 0; }
+    void setLDIF( const TQByteArray &ldif ) { mLdif = ldif; mPos = 0; }
     /**
       * Indicates the end of the LDIF file/stream. Call if nextItem() returned
       * MoreData, but actually you don't have more data.
@@ -125,15 +125,15 @@ namespace KABC {
     /**
      * Returns the Distinguished Name of the current entry.
      */
-    const QString& dn() const { return mDn; }
+    const TQString& dn() const { return mDn; }
     /**
      * Returns the new Relative Distinguished Name if modType() returned Entry_Modrdn.
      */
-    const QString& newRdn() const { return mNewRdn; }
+    const TQString& newRdn() const { return mNewRdn; }
     /**
      * Returns the new parent of the entry if modType() returned Entry_Modrdn.
      */
-    const QString& newSuperior() const { return mNewSuperior; }
+    const TQString& newSuperior() const { return mNewSuperior; }
     /**
      * Returns if the delete of the old RDN is required.
      */
@@ -141,11 +141,11 @@ namespace KABC {
     /**
      * Returns the attribute name.
      */
-    const QString& attr() const { return mAttr; }
+    const TQString& attr() const { return mAttr; }
     /**
      * Returns the attribute value.
      */
-    const QByteArray& val() const { return mVal; }
+    const TQByteArray& val() const { return mVal; }
     /**
      * Returns if val() is an url
      */
@@ -157,7 +157,7 @@ namespace KABC {
     /**
      * Returns the OID when modType() returned Control.
      */
-    const QString& oid() const { return mOid; }
+    const TQString& oid() const { return mOid; }
     /**
      * Returns the line number which the parser processes.
      */
@@ -165,14 +165,14 @@ namespace KABC {
   private:
     int mModType;
     bool mDelOldRdn, mUrl;
-    QString mDn,mAttr,mNewRdn,mNewSuperior, mOid;
-    QByteArray mLdif, mVal;
+    TQString mDn,mAttr,mNewRdn,mNewSuperior, mOid;
+    TQByteArray mLdif, mVal;
     EntryType mEntryType;
     
     bool mIsNewLine, mIsComment,mCritical;
     ParseVal mLastParseVal;
     uint mPos,mLineNo;  
-    QCString line;
+    TQCString line;
         
     class LDIFPrivate;
     LDIFPrivate *d;

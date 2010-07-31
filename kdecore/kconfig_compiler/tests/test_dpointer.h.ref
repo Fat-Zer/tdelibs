@@ -75,13 +75,13 @@ class TestDPointer : public KConfigSkeleton
       Set Archive File
     */
     static
-    void setArchiveFile( const QString & v );
+    void setArchiveFile( const TQString & v );
 
     /**
       Get Archive File
     */
     static
-    QString archiveFile();
+    TQString archiveFile();
 
     /**
       Get Item object corresponding to ArchiveFile()
@@ -143,13 +143,13 @@ class TestDPointer : public KConfigSkeleton
       Set SelectedPlugins
     */
     static
-    void setSelectedPlugins( const QStringList & v );
+    void setSelectedPlugins( const TQStringList & v );
 
     /**
       Get SelectedPlugins
     */
     static
-    QStringList selectedPlugins();
+    TQStringList selectedPlugins();
 
     /**
       Get Item object corresponding to SelectedPlugins()
@@ -160,13 +160,13 @@ class TestDPointer : public KConfigSkeleton
       Set Highlight color
     */
     static
-    void setHighlightColor( const QColor & v );
+    void setHighlightColor( const TQColor & v );
 
     /**
       Get Highlight color
     */
     static
-    QColor highlightColor();
+    TQColor highlightColor();
 
     /**
       Get Item object corresponding to HighlightColor()
@@ -177,13 +177,13 @@ class TestDPointer : public KConfigSkeleton
       Set Agenda view background color
     */
     static
-    void setAgendaBgColor( const QColor & v );
+    void setAgendaBgColor( const TQColor & v );
 
     /**
       Get Agenda view background color
     */
     static
-    QColor agendaBgColor();
+    TQColor agendaBgColor();
 
     /**
       Get Item object corresponding to AgendaBgColor()
@@ -194,13 +194,13 @@ class TestDPointer : public KConfigSkeleton
       Set Time bar
     */
     static
-    void setTimeBarFont( const QFont & v );
+    void setTimeBarFont( const TQFont & v );
 
     /**
       Get Time bar
     */
     static
-    QFont timeBarFont();
+    TQFont timeBarFont();
 
     /**
       Get Item object corresponding to TimeBarFont()

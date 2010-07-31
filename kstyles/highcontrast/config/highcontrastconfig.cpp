@@ -24,40 +24,40 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qsettings.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqsettings.h>
 #include <kdialog.h>
 #include <kglobal.h>
 #include <klocale.h>
 
 #include "highcontrastconfig.h"
 
-extern "C" KDE_EXPORT QWidget* 
-allocate_kstyle_config(QWidget* parent)
+extern "C" KDE_EXPORT TQWidget* 
+allocate_kstyle_config(TQWidget* parent)
 {
     return new HighContrastStyleConfig(parent);
 }
 
 HighContrastStyleConfig::HighContrastStyleConfig(
-        QWidget* parent): QWidget(parent)
+        TQWidget* parent): TQWidget(parent)
 {
     // Should have no margins here, the dialog provides them
-    QVBoxLayout* layout = new QVBoxLayout(this, 0, 0);
+    TQVBoxLayout* layout = new TQVBoxLayout(this, 0, 0);
     KGlobal::locale()->insertCatalogue("kstyle_highcontrast_config");
 
-    wideLinesBox = new QCheckBox(i18n("Use wider lines"), this);
+    wideLinesBox = new TQCheckBox(i18n("Use wider lines"), this);
 
     layout->add(wideLinesBox);
     layout->addStretch(1);
 
-    QSettings s;
+    TQSettings s;
 
     originalWideLinesState = s.readBoolEntry(
             "/highcontraststyle/Settings/wideLines", false);
     wideLinesBox->setChecked(originalWideLinesState);
 
-    connect(wideLinesBox, SIGNAL(toggled(bool)), SLOT(updateChanged()));
+    connect(wideLinesBox, TQT_SIGNAL(toggled(bool)), TQT_SLOT(updateChanged()));
 }
 
 HighContrastStyleConfig::~HighContrastStyleConfig()
@@ -69,7 +69,7 @@ HighContrastStyleConfig::~HighContrastStyleConfig()
 void 
 HighContrastStyleConfig::save()
 {
-    QSettings s;
+    TQSettings s;
     s.writeEntry("/highcontraststyle/Settings/wideLines", 
             wideLinesBox->isChecked());
 }

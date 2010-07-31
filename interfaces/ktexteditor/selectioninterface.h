@@ -20,7 +20,7 @@
 #ifndef __ktexteditor_selectioninterface_h__
 #define __ktexteditor_selectioninterface_h__
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -41,7 +41,7 @@ class KTEXTEDITOR_EXPORT SelectionInterface
     unsigned int selectionInterfaceNumber () const;
     
   protected:  
-    void setSelectionInterfaceDCOPSuffix (const QCString &suffix);  
+    void setSelectionInterfaceDCOPSuffix (const TQCString &suffix);  
     
   /*
   *  slots !!!
@@ -63,9 +63,9 @@ class KTEXTEDITOR_EXPORT SelectionInterface
     virtual bool hasSelection () const = 0;
 
     /**
-    *  @return a QString for the selected text
+    *  @return a TQString for the selected text
     */
-    virtual QString selection () const = 0;
+    virtual TQString selection () const = 0;
 
     /**
     *  removes the selected Text

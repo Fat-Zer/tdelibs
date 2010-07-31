@@ -21,8 +21,8 @@
 #ifndef KABC_ADDRESSBOOK_H
 #define KABC_ADDRESSBOOK_H
 
-#include <qobject.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
 
 #include <kresources/manager.h>
 
@@ -44,8 +44,8 @@ class KABC_EXPORT AddressBook : public QObject
 {
   Q_OBJECT
 
-  friend KABC_EXPORT QDataStream &operator<<( QDataStream &, const AddressBook & );
-  friend KABC_EXPORT QDataStream &operator>>( QDataStream &, AddressBook & );
+  friend KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const AddressBook & );
+  friend KABC_EXPORT TQDataStream &operator>>( TQDataStream &, AddressBook & );
   friend class StdAddressBook;
 
   public:
@@ -115,7 +115,7 @@ class KABC_EXPORT AddressBook : public QObject
 
       @param config The config file which contains the resource settings.
      */
-    AddressBook( const QString &config );
+    AddressBook( const TQString &config );
 
     /**
       Destructor.
@@ -244,7 +244,7 @@ class KABC_EXPORT AddressBook : public QObject
       @return The addressee with the specified unique identifier or an
               empty addressee.
      */
-    Addressee findByUid( const QString &uid ); // KDE4: const
+    Addressee findByUid( const TQString &uid ); // KDE4: const
 
     /**
       Returns a list of all addressees in the address book.
@@ -257,7 +257,7 @@ class KABC_EXPORT AddressBook : public QObject
       @param name The name you are looking for.
       @return A list of all matching addressees.
      */
-    Addressee::List findByName( const QString &name ); // KDE4: const
+    Addressee::List findByName( const TQString &name ); // KDE4: const
 
     /**
       Searches all addressees which match the specified email address.
@@ -265,7 +265,7 @@ class KABC_EXPORT AddressBook : public QObject
       @param email The email address you are looking for.
       @return A list of all matching addressees.
      */
-    Addressee::List findByEmail( const QString &email ); // KDE4: const
+    Addressee::List findByEmail( const TQString &email ); // KDE4: const
 
     /**
       Searches all addressees which belongs to the specified category.
@@ -273,13 +273,13 @@ class KABC_EXPORT AddressBook : public QObject
       @param category The category you are looking for.
       @return A list of all matching addressees.
      */
-    Addressee::List findByCategory( const QString &category ); // KDE4: const
+    Addressee::List findByCategory( const TQString &category ); // KDE4: const
 
     /**
       Returns a string identifying this addressbook. The identifier is
       created by concatenation of the resource identifiers.
      */
-    virtual QString identifier(); // KDE4: const
+    virtual TQString identifier(); // KDE4: const
 
     /**
       Returns a list of all Fields known to the address book which are associated
@@ -296,9 +296,9 @@ class KABC_EXPORT AddressBook : public QObject
       @param app      String used as application key for reading and writing
                       the field.
      */
-    bool addCustomField( const QString &label, int category = Field::All,
-                         const QString &key = QString::null,
-                         const QString &app = QString::null );
+    bool addCustomField( const TQString &label, int category = Field::All,
+                         const TQString &key = TQString::null,
+                         const TQString &app = TQString::null );
 
     /**
       Adds a resource to the address book.
@@ -319,7 +319,7 @@ class KABC_EXPORT AddressBook : public QObject
     /**
       Returns a list of all resources.
      */
-    QPtrList<Resource> resources(); // KDE4: const
+    TQPtrList<Resource> resources(); // KDE4: const
 
     /**
       Sets the @p ErrorHandler, that is used by error() to
@@ -334,7 +334,7 @@ class KABC_EXPORT AddressBook : public QObject
 
       @param msg The error message that shall be displayed.
      */
-    void error( const QString &msg );
+    void error( const TQString &msg );
 
     /**
       @deprecated There is no need to call this function anymore.
@@ -408,8 +408,8 @@ class KABC_EXPORT AddressBook : public QObject
   protected slots:
     void resourceLoadingFinished( Resource* );
     void resourceSavingFinished( Resource* );
-    void resourceLoadingError( Resource*, const QString& );
-    void resourceSavingError( Resource*, const QString& );
+    void resourceLoadingError( Resource*, const TQString& );
+    void resourceSavingError( Resource*, const TQString& );
 
   protected:
     void deleteRemovedAddressees();
@@ -418,13 +418,13 @@ class KABC_EXPORT AddressBook : public QObject
     KRES::Manager<Resource> *resourceManager();
 
   private:
-    QPtrList<Resource> mDummy; // Remove in KDE 4
+    TQPtrList<Resource> mDummy; // Remove in KDE 4
     struct AddressBookData;
     AddressBookData *d;
 };
 
-KABC_EXPORT QDataStream &operator<<( QDataStream &, const AddressBook & );
-KABC_EXPORT QDataStream &operator>>( QDataStream &, AddressBook & );
+KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const AddressBook & );
+KABC_EXPORT TQDataStream &operator>>( TQDataStream &, AddressBook & );
 
 }
 

@@ -21,7 +21,7 @@
 #ifndef _KIDNA_H
 #define _KIDNA_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include "kdelibs_export.h"
 
 namespace KIDNA {
@@ -31,7 +31,7 @@ namespace KIDNA {
      *
      * If conversion is not possible, an empty string is returned.
      */
-    KDECORE_EXPORT QCString toAsciiCString(const QString &idna);
+    KDECORE_EXPORT TQCString toAsciiCString(const TQString &idna);
 
     /**
      * Converts an International Domain Name @p idna to 
@@ -39,13 +39,13 @@ namespace KIDNA {
      *
      * If conversion is not possible, an empty string is returned.
      */
-    KDECORE_EXPORT QString toAscii(const QString &idna);
+    KDECORE_EXPORT TQString toAscii(const TQString &idna);
 
     /**
      * Converts an International Domain Name @p idna to 
      * its UNICODE representation
      */
-    KDECORE_EXPORT QString toUnicode(const QString &idna);
+    KDECORE_EXPORT TQString toUnicode(const TQString &idna);
 }
 
 #endif /* _KIDNA_H */

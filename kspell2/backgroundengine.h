@@ -23,8 +23,8 @@
 
 #include "broker.h"
 
-#include <qobject.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
 
 namespace KSpell2
 {
@@ -35,17 +35,17 @@ namespace KSpell2
     {
         Q_OBJECT
     public:
-        BackgroundEngine( QObject *parent );
+        BackgroundEngine( TQObject *parent );
         ~BackgroundEngine();
 
         void setBroker( const Broker::Ptr& broker );
         Broker *broker() const { return m_broker; }
 
-        void setText( const QString& );
-        QString text() const;
+        void setText( const TQString& );
+        TQString text() const;
 
-        void changeLanguage( const QString& );
-        QString language() const;
+        void changeLanguage( const TQString& );
+        TQString language() const;
 
         void setFilter( Filter *filter );
         Filter *filter() const { return m_filter; }
@@ -54,11 +54,11 @@ namespace KSpell2
         void continueChecking();
         void stop();
 
-        bool        checkWord( const QString& word );
-        QStringList suggest( const QString& word );
-        bool        addWord( const QString& word );
+        bool        checkWord( const TQString& word );
+        TQStringList suggest( const TQString& word );
+        bool        addWord( const TQString& word );
     signals:
-        void misspelling( const QString&, int );
+        void misspelling( const TQString&, int );
         void done();
     protected slots:
         void checkNext();

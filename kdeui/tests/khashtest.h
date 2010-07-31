@@ -7,7 +7,7 @@
 #ifndef __KHASH_TEST_H
 #define __KHASH_TEST_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kpixmap.h>
 
 class KHashWidget : public QWidget
@@ -15,10 +15,10 @@ class KHashWidget : public QWidget
     Q_OBJECT
 
 public:
-    KHashWidget(QWidget *parent=0, const char *name=0)
-        : QWidget(parent, name){;}
+    KHashWidget(TQWidget *parent=0, const char *name=0)
+        : TQWidget(parent, name){;}
 protected:
-    void paintEvent(QPaintEvent *ev);
+    void paintEvent(TQPaintEvent *ev);
 private:
     KPixmap pix;
 };

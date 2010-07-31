@@ -19,8 +19,8 @@
 
 #include "kpipeprocess.h"
 
-KPipeProcess::KPipeProcess(const QString& cmd, int mode)
-: QFile()
+KPipeProcess::KPipeProcess(const TQString& cmd, int mode)
+: TQFile()
 {
 	m_pipe = NULL;
 	if (!cmd.isEmpty())
@@ -32,7 +32,7 @@ KPipeProcess::~KPipeProcess()
 	close();
 }
 
-bool KPipeProcess::open(const QString& cmd, int mode)
+bool KPipeProcess::open(const TQString& cmd, int mode)
 {
 	// close first if needed
 	close();
@@ -43,7 +43,7 @@ bool KPipeProcess::open(const QString& cmd, int mode)
 	// create the pipe
 	m_pipe = popen(cmd.latin1(),(mode == IO_WriteOnly ? "w" : "r"));
 	if (m_pipe)
-		if (!QFile::open(mode,m_pipe))
+		if (!TQFile::open(mode,m_pipe))
 			close();
 	return (m_pipe != NULL);
 }
@@ -52,7 +52,7 @@ void KPipeProcess::close()
 {
 	if (m_pipe != NULL)
 	{
-		QFile::close();
+		TQFile::close();
 		/* pipe must be close to be sure the process is terminated */
 		pclose( m_pipe );
 		m_pipe = NULL;

@@ -24,12 +24,12 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qhbox.h>
-#include <qsettings.h>
-#include <qcolor.h>
-#include <qgroupbox.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqhbox.h>
+#include <tqsettings.h>
+#include <tqcolor.h>
+#include <tqgroupbox.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kcolorbutton.h>
@@ -39,40 +39,40 @@ DEALINGS IN THE SOFTWARE.
 
 extern "C"
 {
-	KDE_EXPORT QWidget* allocate_kstyle_config(QWidget* parent)
+	KDE_EXPORT TQWidget* allocate_kstyle_config(TQWidget* parent)
 	{
 		KGlobal::locale()->insertCatalogue("kstyle_plastik_config");
 		return new PlastikStyleConfig(parent);
 	}
 }
 
-PlastikStyleConfig::PlastikStyleConfig(QWidget* parent): QWidget(parent)
+PlastikStyleConfig::PlastikStyleConfig(TQWidget* parent): TQWidget(parent)
 {
 	//Should have no margins here, the dialog provides them
-	QVBoxLayout* layout = new QVBoxLayout(this, 0, 0);
+	TQVBoxLayout* layout = new TQVBoxLayout(this, 0, 0);
 	KGlobal::locale()->insertCatalogue("kstyle_plastik_config");
 
-// 	scrollBarLines = new QCheckBox(i18n("Scrollbar handle lines"), this);
-	animateProgressBar = new QCheckBox(i18n("Animate progress bars"), this);
-	drawToolBarSeparator = new QCheckBox(i18n("Draw toolbar separator"), this);
-	drawToolBarItemSeparator = new QCheckBox(i18n("Draw toolbar item separators"), this);
-// 	drawFocusRect = new QCheckBox(i18n("Draw focus rectangles"), this);
-	drawTriangularExpander = new QCheckBox(i18n("Triangular tree expander"), this);
-	inputFocusHighlight = new QCheckBox(i18n("Highlight focused text input fields"), this);
+// 	scrollBarLines = new TQCheckBox(i18n("Scrollbar handle lines"), this);
+	animateProgressBar = new TQCheckBox(i18n("Animate progress bars"), this);
+	drawToolBarSeparator = new TQCheckBox(i18n("Draw toolbar separator"), this);
+	drawToolBarItemSeparator = new TQCheckBox(i18n("Draw toolbar item separators"), this);
+// 	drawFocusRect = new TQCheckBox(i18n("Draw focus rectangles"), this);
+	drawTriangularExpander = new TQCheckBox(i18n("Triangular tree expander"), this);
+	inputFocusHighlight = new TQCheckBox(i18n("Highlight focused text input fields"), this);
 
-    customFocusHighlightColor = new QCheckBox(i18n("Custom text input highlight color:"), this);
-    QHBox *hbox1 = new QHBox(this);
-    hbox1->layout()->addItem(new QSpacerItem(20, 0, QSizePolicy::Fixed, QSizePolicy::Minimum) );
+    customFocusHighlightColor = new TQCheckBox(i18n("Custom text input highlight color:"), this);
+    TQHBox *hbox1 = new TQHBox(this);
+    hbox1->layout()->addItem(new TQSpacerItem(20, 0, TQSizePolicy::Fixed, TQSizePolicy::Minimum) );
     focusHighlightColor = new KColorButton(hbox1);
 
-    customOverHighlightColor = new QCheckBox(i18n("Custom mouseover highlight color:"), this);
-    QHBox *hbox2 = new QHBox(this);
-    hbox2->layout()->addItem(new QSpacerItem(20, 0, QSizePolicy::Fixed, QSizePolicy::Minimum) );
+    customOverHighlightColor = new TQCheckBox(i18n("Custom mouseover highlight color:"), this);
+    TQHBox *hbox2 = new TQHBox(this);
+    hbox2->layout()->addItem(new TQSpacerItem(20, 0, TQSizePolicy::Fixed, TQSizePolicy::Minimum) );
     overHighlightColor = new KColorButton(hbox2);
 
-    customCheckMarkColor = new QCheckBox(i18n("Custom checkmark color:"), this);
-    QHBox *hbox3 = new QHBox(this);
-    hbox3->layout()->addItem(new QSpacerItem(20, 0, QSizePolicy::Fixed, QSizePolicy::Minimum) );
+    customCheckMarkColor = new TQCheckBox(i18n("Custom checkmark color:"), this);
+    TQHBox *hbox3 = new TQHBox(this);
+    hbox3->layout()->addItem(new TQSpacerItem(20, 0, TQSizePolicy::Fixed, TQSizePolicy::Minimum) );
     checkMarkColor = new KColorButton(hbox3);
 
 // 	layout->add(scrollBarLines);
@@ -90,7 +90,7 @@ PlastikStyleConfig::PlastikStyleConfig(QWidget* parent): QWidget(parent)
 	layout->add(hbox3);
 	layout->addStretch(1);
 
-	QSettings s;
+	TQSettings s;
 // 	origScrollBarLines = s.readBoolEntry("/plastikstyle/Settings/scrollBarLines", false);
 // 	scrollBarLines->setChecked(origScrollBarLines);
 	origAnimProgressBar = s.readBoolEntry("/plastikstyle/Settings/animateProgressBar", false);
@@ -118,19 +118,19 @@ PlastikStyleConfig::PlastikStyleConfig(QWidget* parent): QWidget(parent)
 	origCheckMarkColor = s.readEntry("/plastikstyle/Settings/checkMarkColor", "black");
 	checkMarkColor->setColor(origCheckMarkColor);
 
-// 	connect(scrollBarLines, SIGNAL( toggled(bool) ), SLOT( updateChanged() ) );
-	connect(animateProgressBar, SIGNAL( toggled(bool) ), SLOT( updateChanged() ) );
-	connect(drawToolBarSeparator, SIGNAL( toggled(bool) ), SLOT( updateChanged() ) );
-	connect(drawToolBarItemSeparator, SIGNAL( toggled(bool) ), SLOT( updateChanged() ) );
-// 	connect(drawFocusRect, SIGNAL( toggled(bool) ), SLOT( updateChanged() ) );
-	connect(drawTriangularExpander, SIGNAL( toggled(bool) ), SLOT( updateChanged() ) );
-	connect(inputFocusHighlight, SIGNAL( toggled(bool) ), SLOT( updateChanged() ) );
-	connect(customOverHighlightColor, SIGNAL( toggled(bool) ), SLOT( updateChanged() ) );
-	connect(overHighlightColor, SIGNAL( changed(const QColor&) ), SLOT( updateChanged() ) );
-	connect(customFocusHighlightColor, SIGNAL( toggled(bool) ), SLOT( updateChanged() ) );
-	connect(focusHighlightColor, SIGNAL( changed(const QColor&) ), SLOT( updateChanged() ) );
-	connect(customCheckMarkColor, SIGNAL( toggled(bool) ), SLOT( updateChanged() ) );
-	connect(checkMarkColor, SIGNAL( changed(const QColor&) ), SLOT( updateChanged() ) );
+// 	connect(scrollBarLines, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( updateChanged() ) );
+	connect(animateProgressBar, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( updateChanged() ) );
+	connect(drawToolBarSeparator, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( updateChanged() ) );
+	connect(drawToolBarItemSeparator, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( updateChanged() ) );
+// 	connect(drawFocusRect, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( updateChanged() ) );
+	connect(drawTriangularExpander, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( updateChanged() ) );
+	connect(inputFocusHighlight, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( updateChanged() ) );
+	connect(customOverHighlightColor, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( updateChanged() ) );
+	connect(overHighlightColor, TQT_SIGNAL( changed(const TQColor&) ), TQT_SLOT( updateChanged() ) );
+	connect(customFocusHighlightColor, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( updateChanged() ) );
+	connect(focusHighlightColor, TQT_SIGNAL( changed(const TQColor&) ), TQT_SLOT( updateChanged() ) );
+	connect(customCheckMarkColor, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( updateChanged() ) );
+	connect(checkMarkColor, TQT_SIGNAL( changed(const TQColor&) ), TQT_SLOT( updateChanged() ) );
 	if ( customOverHighlightColor->isChecked() )
 	 overHighlightColor->setEnabled(true);
 	else
@@ -152,7 +152,7 @@ PlastikStyleConfig::~PlastikStyleConfig()
 
 void PlastikStyleConfig::save()
 {
-	QSettings s;
+	TQSettings s;
 // 	s.writeEntry("/plastikstyle/Settings/scrollBarLines", scrollBarLines->isChecked());
 	s.writeEntry("/plastikstyle/Settings/animateProgressBar", animateProgressBar->isChecked());
 	s.writeEntry("/plastikstyle/Settings/drawToolBarSeparator", drawToolBarSeparator->isChecked());
@@ -161,11 +161,11 @@ void PlastikStyleConfig::save()
 	s.writeEntry("/plastikstyle/Settings/drawTriangularExpander", drawTriangularExpander->isChecked());
 	s.writeEntry("/plastikstyle/Settings/inputFocusHighlight", inputFocusHighlight->isChecked());
 	s.writeEntry("/plastikstyle/Settings/customOverHighlightColor", customOverHighlightColor->isChecked());
-	s.writeEntry("/plastikstyle/Settings/overHighlightColor", QColor(overHighlightColor->color()).name());
+	s.writeEntry("/plastikstyle/Settings/overHighlightColor", TQColor(overHighlightColor->color()).name());
 	s.writeEntry("/plastikstyle/Settings/customFocusHighlightColor", customFocusHighlightColor->isChecked());
-	s.writeEntry("/plastikstyle/Settings/focusHighlightColor", QColor(focusHighlightColor->color()).name());
+	s.writeEntry("/plastikstyle/Settings/focusHighlightColor", TQColor(focusHighlightColor->color()).name());
 	s.writeEntry("/plastikstyle/Settings/customCheckMarkColor", customCheckMarkColor->isChecked());
-	s.writeEntry("/plastikstyle/Settings/checkMarkColor", QColor(checkMarkColor->color()).name());
+	s.writeEntry("/plastikstyle/Settings/checkMarkColor", TQColor(checkMarkColor->color()).name());
 }
 
 void PlastikStyleConfig::defaults()

@@ -46,7 +46,7 @@ public:
 
     static bool supports( const KFileItemList& items );
 
-    QWidget* page() const;
+    TQWidget* page() const;
 
 protected slots:
     void slotConfigureFileSharing();
@@ -54,12 +54,12 @@ protected slots:
 
 private:
     void init();
-    bool setShared( const QString&path, bool shared );
+    bool setShared( const TQString&path, bool shared );
 
-    QWidget *m_widget;
-    QRadioButton *m_rbShare;
-    QRadioButton *m_rbUnShare;
-    QPushButton *m_pbConfig;
+    TQWidget *m_widget;
+    TQRadioButton *m_rbShare;
+    TQRadioButton *m_rbUnShare;
+    TQPushButton *m_pbConfig;
     class Private;
     Private *d;
 };

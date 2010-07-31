@@ -69,7 +69,7 @@ public:
     { return static_cast<DOM::HTMLFrameSetElementImpl*>(RenderObject::element()); }
 
 #ifdef ENABLE_DUMP
-    virtual void dump(QTextStream &stream, const QString &ind) const;
+    virtual void dump(TQTextStream &stream, const TQString &ind) const;
 #endif
 
 private:
@@ -99,7 +99,7 @@ public:
 
     virtual const char *renderName() const { return "RenderPart"; }
 
-    virtual void setWidget( QWidget *widget );
+    virtual void setWidget( TQWidget *widget );
 
     /**
      * Called by KHTMLPart to notify the frame object that loading the
@@ -112,7 +112,7 @@ public:
      * Return false in the normal case, return true if a fallback was found
      * and the url was successfully opened.
      */
-    virtual bool partLoadingErrorNotify( khtml::ChildFrame *childFrame, const KURL& url, const QString& serviceType );
+    virtual bool partLoadingErrorNotify( khtml::ChildFrame *childFrame, const KURL& url, const TQString& serviceType );
 
     virtual short intrinsicWidth() const;
     virtual int intrinsicHeight() const;
@@ -159,7 +159,7 @@ public:
     
     virtual bool canHaveBorder() const { return true; }
 
-    virtual bool partLoadingErrorNotify( khtml::ChildFrame *childFrame, const KURL& url, const QString& serviceType );
+    virtual bool partLoadingErrorNotify( khtml::ChildFrame *childFrame, const KURL& url, const TQString& serviceType );
 
 public slots:
     void slotViewCleared();

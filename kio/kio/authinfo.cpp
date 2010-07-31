@@ -26,8 +26,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include <qdir.h>
-#include <qfile.h>
+#include <tqdir.h>
+#include <tqfile.h>
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
@@ -72,7 +72,7 @@ AuthInfo& AuthInfo::operator= ( const AuthInfo& info )
     return *this;
 }
 
-QDataStream& KIO::operator<< (QDataStream& s, const AuthInfo& a)
+TQDataStream& KIO::operator<< (TQDataStream& s, const AuthInfo& a)
 {
     s << a.url << a.username << a.password << a.prompt << a.caption
       << a.comment << a.commentLabel << a.realmValue << a.digestInfo
@@ -81,7 +81,7 @@ QDataStream& KIO::operator<< (QDataStream& s, const AuthInfo& a)
     return s;
 }
 
-QDataStream& KIO::operator>> (QDataStream& s, AuthInfo& a)
+TQDataStream& KIO::operator>> (TQDataStream& s, AuthInfo& a)
 {
     Q_UINT8 verify = 0;
     Q_UINT8 ro = 0;
@@ -120,7 +120,7 @@ NetRC* NetRC::self()
 }
 
 bool NetRC::lookup( const KURL& url, AutoLogin& login, bool userealnetrc,
-                    QString type, int mode )
+                    TQString type, int mode )
 {
   // kdDebug() << "AutoLogin lookup for: " << url.host() << endl;
   if ( !url.isValid() )
@@ -133,12 +133,12 @@ bool NetRC::lookup( const KURL& url, AutoLogin& login, bool userealnetrc,
   {
     loginMap.clear();
 
-    QString filename = locateLocal("config", "kionetrc");
+    TQString filename = locateLocal("config", "kionetrc");
     bool status = parse (openf (filename));
 
     if ( userealnetrc )
     {
-      filename =  QDir::homeDirPath()+ QDir::separator() + ".netrc";
+      filename =  TQDir::homeDirPath()+ TQDir::separator() + ".netrc";
       status |= parse (openf(filename));
     }
 
@@ -158,7 +158,7 @@ bool NetRC::lookup( const KURL& url, AutoLogin& login, bool userealnetrc,
     AutoLogin &log = *it;
 
     if ( (mode & defaultOnly) == defaultOnly &&
-          log.machine == QString::fromLatin1("default") &&
+          log.machine == TQString::fromLatin1("default") &&
           (login.login.isEmpty() || login.login == log.login) )
     {
       login.type = log.type;
@@ -169,7 +169,7 @@ bool NetRC::lookup( const KURL& url, AutoLogin& login, bool userealnetrc,
     }
 
     if ( (mode & presetOnly) == presetOnly &&
-          log.machine == QString::fromLatin1("preset") &&
+          log.machine == TQString::fromLatin1("preset") &&
           (login.login.isEmpty() || login.login == log.login) )
     {
       login.type = log.type;
@@ -195,10 +195,10 @@ bool NetRC::lookup( const KURL& url, AutoLogin& login, bool userealnetrc,
   return true;
 }
 
-int NetRC::openf( const QString& f )
+int NetRC::openf( const TQString& f )
 {
   KDE_struct_stat sbuff;
-  QCString ef = QFile::encodeName(f);
+  TQCString ef = TQFile::encodeName(f);
   if ( KDE_stat(ef, &sbuff) != 0 )
     return -1;
 
@@ -210,7 +210,7 @@ int NetRC::openf( const QString& f )
   return KDE_open( ef, O_RDONLY );
 }
 
-QString NetRC::extract( const char* buf, const char* key, int& pos )
+TQString NetRC::extract( const char* buf, const char* key, int& pos )
 {
   int idx = pos;
   int m_len = strlen(key);
@@ -237,12 +237,12 @@ QString NetRC::extract( const char* buf, const char* key, int& pos )
       if ( idx > start )
       {
         pos = idx;
-        return QString::fromLatin1( buf+start, idx-start);
+        return TQString::fromLatin1( buf+start, idx-start);
       }
     }
   }
 
-  return QString::null;
+  return TQString::null;
 }
 
 bool NetRC::parse( int fd )
@@ -250,8 +250,8 @@ bool NetRC::parse( int fd )
   if (fd == -1)
     return false;
 
-  QString type;
-  QString macro;
+  TQString type;
+  TQString macro;
 
   uint index = 0;
   bool isMacro = false;
@@ -280,7 +280,7 @@ bool NetRC::parse( int fd )
       while( buf[tail-1] == '\n' || buf[tail-1] =='\r' )
         tail--;
 
-      QString mac = QString::fromLatin1(buf, tail).stripWhiteSpace();
+      TQString mac = TQString::fromLatin1(buf, tail).stripWhiteSpace();
       if ( !mac.isEmpty() )
         loginMap[type][index].macdef[macro].append( mac );
 
@@ -294,12 +294,12 @@ bool NetRC::parse( int fd )
       if (strncasecmp(buf+pos, "default", 7) == 0 )
       {
         pos += 7;
-        l.machine = QString::fromLatin1("default");
+        l.machine = TQString::fromLatin1("default");
       }
       else if (strncasecmp(buf+pos, "preset", 6) == 0 )
       {
         pos += 6;
-        l.machine = QString::fromLatin1("preset");
+        l.machine = TQString::fromLatin1("preset");
       }
     }
     // kdDebug() << "Machine: " << l.machine << endl;
@@ -314,7 +314,7 @@ bool NetRC::parse( int fd )
 
     type = l.type = extract( buf, "type", pos );
     if ( l.type.isEmpty() && !l.machine.isEmpty() )
-      type = l.type = QString::fromLatin1("ftp");
+      type = l.type = TQString::fromLatin1("ftp");
     // kdDebug() << "Type: " << l.type << endl;
 
     macro = extract( buf, "macdef", pos );

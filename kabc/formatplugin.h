@@ -21,7 +21,7 @@
 #ifndef KABC_FORMATPLUGIN_H
 #define KABC_FORMATPLUGIN_H
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include "plugin.h"
 #include "resource.h"
@@ -46,27 +46,27 @@ public:
   /**
    * Load single addressee from file.
    */
-  virtual bool load( Addressee &, QFile *file ) = 0;
+  virtual bool load( Addressee &, TQFile *file ) = 0;
 
   /**
    * Load whole addressbook from file.
    */
-  virtual bool loadAll( AddressBook *, Resource *, QFile *file ) = 0;
+  virtual bool loadAll( AddressBook *, Resource *, TQFile *file ) = 0;
 
   /**
    * Save a single Addressee to file.
    */
-  virtual void save( const Addressee &, QFile *file ) = 0;
+  virtual void save( const Addressee &, TQFile *file ) = 0;
     
   /**
    * Save whole addressbook to file.
    */
-  virtual void saveAll( AddressBook *, Resource *, QFile *file ) = 0;
+  virtual void saveAll( AddressBook *, Resource *, TQFile *file ) = 0;
     
   /**
    * Checks if given file contains the right format
    */
-  virtual bool checkFormat( QFile *file ) const = 0;
+  virtual bool checkFormat( TQFile *file ) const = 0;
 };
 
 }

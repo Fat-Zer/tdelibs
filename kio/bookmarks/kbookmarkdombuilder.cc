@@ -35,37 +35,37 @@ KBookmarkDomBuilder::~KBookmarkDomBuilder() {
    m_stack.clear();
 }
 
-void KBookmarkDomBuilder::connectImporter(const QObject *importer) {
-   connect(importer, SIGNAL( newBookmark(const QString &, const QCString &, const QString &) ),
-                     SLOT( newBookmark(const QString &, const QCString &, const QString &) ));
-   connect(importer, SIGNAL( newFolder(const QString &, bool, const QString &) ),
-                     SLOT( newFolder(const QString &, bool, const QString &) ));
-   connect(importer, SIGNAL( newSeparator() ),
-                     SLOT( newSeparator() ) );
-   connect(importer, SIGNAL( endFolder() ),
-                     SLOT( endFolder() ) );
+void KBookmarkDomBuilder::connectImporter(const TQObject *importer) {
+   connect(importer, TQT_SIGNAL( newBookmark(const TQString &, const TQCString &, const TQString &) ),
+                     TQT_SLOT( newBookmark(const TQString &, const TQCString &, const TQString &) ));
+   connect(importer, TQT_SIGNAL( newFolder(const TQString &, bool, const TQString &) ),
+                     TQT_SLOT( newFolder(const TQString &, bool, const TQString &) ));
+   connect(importer, TQT_SIGNAL( newSeparator() ),
+                     TQT_SLOT( newSeparator() ) );
+   connect(importer, TQT_SIGNAL( endFolder() ),
+                     TQT_SLOT( endFolder() ) );
 }
 
 void KBookmarkDomBuilder::newBookmark(
-   const QString &text, const QCString &url, const QString &additionalInfo
+   const TQString &text, const TQCString &url, const TQString &additionalInfo
 ) {
    KBookmark bk = m_stack.top().addBookmark(
                                     m_manager, text,
-                                    KURL( QString::fromUtf8(url), 106 /*utf8*/ ),
-                                    QString::null, false);
+                                    KURL( TQString::fromUtf8(url), 106 /*utf8*/ ),
+                                    TQString::null, false);
    // store additional info
    bk.internalElement().setAttribute("netscapeinfo", additionalInfo);
 }
 
 void KBookmarkDomBuilder::newFolder(
-   const QString & text, bool open, const QString & additionalInfo
+   const TQString & text, bool open, const TQString & additionalInfo
 ) {
    // we use a qvaluelist so that we keep pointers to valid objects in the stack
    KBookmarkGroup gp = m_stack.top().createNewFolder(m_manager, text, false);
    m_list.append(gp);
    m_stack.push(m_list.last());
    // store additional info
-   QDomElement element = m_list.last().internalElement();
+   TQDomElement element = m_list.last().internalElement();
    element.setAttribute("netscapeinfo", additionalInfo);
    element.setAttribute("folded", (open?"no":"yes"));
 }

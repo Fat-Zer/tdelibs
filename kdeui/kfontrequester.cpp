@@ -19,37 +19,37 @@
 
 #include "kfontrequester.h"
 
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
+#include <tqlayout.h>
+#include <tqtooltip.h>
+#include <tqwhatsthis.h>
 
 #include <kfontdialog.h>
 #include <klocale.h>
 
-KFontRequester::KFontRequester( QWidget *parent, const char *name,
-    bool onlyFixed ) : QWidget( parent, name ),
+KFontRequester::KFontRequester( TQWidget *parent, const char *name,
+    bool onlyFixed ) : TQWidget( parent, name ),
     m_onlyFixed( onlyFixed )
 {
-  QHBoxLayout *layout = new QHBoxLayout( this, 0, KDialog::spacingHint() );
+  TQHBoxLayout *layout = new TQHBoxLayout( this, 0, KDialog::spacingHint() );
 
-  m_sampleLabel = new QLabel( this, "m_sampleLabel" );
-  m_button = new QPushButton( i18n( "Choose..." ), this, "m_button" );
+  m_sampleLabel = new TQLabel( this, "m_sampleLabel" );
+  m_button = new TQPushButton( i18n( "Choose..." ), this, "m_button" );
 
-  m_sampleLabel->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+  m_sampleLabel->setFrameStyle( TQFrame::StyledPanel | TQFrame::Sunken );
   setFocusProxy( m_button );
 
   layout->addWidget( m_sampleLabel, 1 );
   layout->addWidget( m_button );
 
-  connect( m_button, SIGNAL( clicked() ), SLOT( buttonClicked() ) );
+  connect( m_button, TQT_SIGNAL( clicked() ), TQT_SLOT( buttonClicked() ) );
 
   displaySampleText();
   setToolTip();
 }
 
-void KFontRequester::setFont( const QFont &font, bool onlyFixed )
+void KFontRequester::setFont( const TQFont &font, bool onlyFixed )
 {
   m_selFont = font;
   m_onlyFixed = onlyFixed;
@@ -58,13 +58,13 @@ void KFontRequester::setFont( const QFont &font, bool onlyFixed )
   emit fontSelected( m_selFont );
 }
 
-void KFontRequester::setSampleText( const QString &text )
+void KFontRequester::setSampleText( const TQString &text )
 {
   m_sampleText = text;
   displaySampleText();
 }
 
-void KFontRequester::setTitle( const QString &title )
+void KFontRequester::setTitle( const TQString &title )
 {
   m_title = title;
   setToolTip();
@@ -90,7 +90,7 @@ void KFontRequester::displaySampleText()
     size = m_selFont.pixelSize();
 
   if ( m_sampleText.isEmpty() )
-    m_sampleLabel->setText( QString( "%1 %2" ).arg( m_selFont.family() )
+    m_sampleLabel->setText( TQString( "%1 %2" ).arg( m_selFont.family() )
       .arg( size ) );
   else
     m_sampleLabel->setText( m_sampleText );
@@ -98,24 +98,24 @@ void KFontRequester::displaySampleText()
 
 void KFontRequester::setToolTip()
 {
-  QToolTip::remove( m_button );
-  QToolTip::add( m_button, i18n( "Click to select a font" ) );
+  TQToolTip::remove( m_button );
+  TQToolTip::add( m_button, i18n( "Click to select a font" ) );
 
-  QToolTip::remove( m_sampleLabel );
-  QWhatsThis::remove( m_sampleLabel );
+  TQToolTip::remove( m_sampleLabel );
+  TQWhatsThis::remove( m_sampleLabel );
 
   if ( m_title.isNull() )
   {
-    QToolTip::add( m_sampleLabel, i18n( "Preview of the selected font" ) );
-    QWhatsThis::add( m_sampleLabel, 
+    TQToolTip::add( m_sampleLabel, i18n( "Preview of the selected font" ) );
+    TQWhatsThis::add( m_sampleLabel, 
         i18n( "This is a preview of the selected font. You can change it"
         " by clicking the \"Choose...\" button." ) );
   }
   else
   {
-    QToolTip::add( m_sampleLabel, 
+    TQToolTip::add( m_sampleLabel, 
         i18n( "Preview of the \"%1\" font" ).arg( m_title ) );
-    QWhatsThis::add( m_sampleLabel, 
+    TQWhatsThis::add( m_sampleLabel, 
         i18n( "This is a preview of the \"%1\" font. You can change it"
         " by clicking the \"Choose...\" button." ).arg( m_title ) );
   }

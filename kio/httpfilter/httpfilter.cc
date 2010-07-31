@@ -37,8 +37,8 @@ void
 HTTPFilterBase::chain(HTTPFilterBase *previous)
 {
    last = previous;
-   connect(last, SIGNAL(output(const QByteArray &)),
-           this, SLOT(slotInput(const QByteArray &)));
+   connect(last, TQT_SIGNAL(output(const TQByteArray &)),
+           this, TQT_SLOT(slotInput(const TQByteArray &)));
 }
 
 HTTPFilterChain::HTTPFilterChain()
@@ -55,18 +55,18 @@ HTTPFilterChain::addFilter(HTTPFilterBase *filter)
    }
    else
    {
-      disconnect(last, SIGNAL(output(const QByteArray &)), 0, 0);
+      disconnect(last, TQT_SIGNAL(output(const TQByteArray &)), 0, 0);
       filter->chain(last);
    }
    last = filter;
-   connect(filter, SIGNAL(output(const QByteArray &)),
-           this, SIGNAL(output(const QByteArray &)));
-   connect(filter, SIGNAL(error(int, const QString &)),
-           this, SIGNAL(error(int, const QString &)));
+   connect(filter, TQT_SIGNAL(output(const TQByteArray &)),
+           this, TQT_SIGNAL(output(const TQByteArray &)));
+   connect(filter, TQT_SIGNAL(error(int, const TQString &)),
+           this, TQT_SIGNAL(error(int, const TQString &)));
 }
 
 void
-HTTPFilterChain::slotInput(const QByteArray &d)
+HTTPFilterChain::slotInput(const TQByteArray &d)
 {
    if (first)
       first->slotInput(d);
@@ -78,14 +78,14 @@ HTTPFilterMD5::HTTPFilterMD5()
 {
 }
 
-QString 
+TQString 
 HTTPFilterMD5::md5()
 {
-   return QString::fromLatin1(context.base64Digest());
+   return TQString::fromLatin1(context.base64Digest());
 }
 
 void 
-HTTPFilterMD5::slotInput(const QByteArray &d)
+HTTPFilterMD5::slotInput(const TQByteArray &d)
 {
    context.update(d);
    emit output(d);
@@ -246,7 +246,7 @@ HTTPFilterGZip::checkHeader()
 } 
 
 void 
-HTTPFilterGZip::slotInput(const QByteArray &d)
+HTTPFilterGZip::slotInput(const TQByteArray &d)
 {
 #ifdef DO_GZIP
   if (bPlainText)
@@ -262,7 +262,7 @@ HTTPFilterGZip::slotInput(const QByteArray &d)
      {
         // Make sure we get the last bytes still in the pipe.
         // Needed with "deflate".
-        QByteArray flush(4);
+        TQByteArray flush(4);
         flush.fill(0);
         slotInput(flush);
         if (!bHasFinished && !bHasHeader)
@@ -271,7 +271,7 @@ HTTPFilterGZip::slotInput(const QByteArray &d)
            emit output(headerData);
            bHasFinished = true;
            // End of data
-           emit output(QByteArray());
+           emit output(TQByteArray());
         }
      }
      if (!bHasFinished)
@@ -288,7 +288,7 @@ HTTPFilterGZip::slotInput(const QByteArray &d)
      {
         bHasFinished = true;
         // End of data
-        emit output(QByteArray());
+        emit output(TQByteArray());
      }
      return;
   }
@@ -338,7 +338,7 @@ HTTPFilterGZip::slotInput(const QByteArray &d)
      int bytesOut = 8192 - zstr.avail_out;
      if (bytesOut)
      {
-        QByteArray d;
+        TQByteArray d;
         d.setRawData( buf, bytesOut );
         emit output(d);
         d.resetRawData( buf, bytesOut );
@@ -353,7 +353,7 @@ HTTPFilterGZip::slotInput(const QByteArray &d)
         {
            bHasFinished = true;
            // End of data
-           emit output(QByteArray());
+           emit output(TQByteArray());
         }
         return;
      }

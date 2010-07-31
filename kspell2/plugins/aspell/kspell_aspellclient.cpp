@@ -30,7 +30,7 @@ K_EXPORT_COMPONENT_FACTORY( kspell_aspell, ASpellClientFactory( "kspell_aspell" 
 
 using namespace KSpell2;
 
-ASpellClient::ASpellClient( QObject *parent, const char *name, const QStringList& /* args */  )
+ASpellClient::ASpellClient( TQObject *parent, const char *name, const TQStringList& /* args */  )
     : Client( parent, name )
 {
     m_config = new_aspell_config();
@@ -41,18 +41,18 @@ ASpellClient::~ASpellClient()
     delete_aspell_config( m_config );
 }
 
-Dictionary* ASpellClient::dictionary( const QString& language )
+Dictionary* ASpellClient::dictionary( const TQString& language )
 {
     ASpellDict *ad = new ASpellDict( language );
     return ad;
 }
 
-QStringList ASpellClient::languages() const
+TQStringList ASpellClient::languages() const
 {
     AspellDictInfoList *l = get_aspell_dict_info_list( m_config );
     AspellDictInfoEnumeration *el = aspell_dict_info_list_elements( l );
 
-    QStringList langs;
+    TQStringList langs;
     const AspellDictInfo *di = 0;
     while ( ( di = aspell_dict_info_enumeration_next( el ) ) ) {
         langs.append( di->name );

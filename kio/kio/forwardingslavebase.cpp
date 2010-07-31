@@ -22,8 +22,8 @@
 #include <kmimetype.h>
 #include <kprotocolinfo.h>
 
-#include <qapplication.h>
-#include <qeventloop.h>
+#include <tqapplication.h>
+#include <tqeventloop.h>
 
 #include "forwardingslavebase.h"
 
@@ -34,10 +34,10 @@ class ForwardingSlaveBasePrivate
 {
 };
 
-ForwardingSlaveBase::ForwardingSlaveBase(const QCString &protocol,
-                                         const QCString &poolSocket,
-                                         const QCString &appSocket)
-    : QObject(), SlaveBase(protocol, poolSocket, appSocket)
+ForwardingSlaveBase::ForwardingSlaveBase(const TQCString &protocol,
+                                         const TQCString &poolSocket,
+                                         const TQCString &appSocket)
+    : TQObject(), SlaveBase(protocol, poolSocket, appSocket)
 {
 }
 
@@ -70,7 +70,7 @@ void ForwardingSlaveBase::prepareUDSEntry(KIO::UDSEntry &entry,
               << listing << endl;
 
     bool url_found = false;
-    QString name;
+    TQString name;
     KURL url;
 
     KIO::UDSEntry::iterator it = entry.begin();
@@ -217,7 +217,7 @@ void ForwardingSlaveBase::rename(const KURL &src, const KURL &dest,
     }
 }
 
-void ForwardingSlaveBase::symlink(const QString &target, const KURL &dest,
+void ForwardingSlaveBase::symlink(const TQString &target, const KURL &dest,
                                   bool overwrite)
 {
     kdDebug() << "ForwardingSlaveBase::symlink: " << target << ", " << dest << endl;
@@ -302,45 +302,45 @@ void ForwardingSlaveBase::connectJob(KIO::Job *job)
         kdDebug() << it.key() << " = " << it.data() << endl;
 #endif
 
-    connect( job, SIGNAL( result(KIO::Job *) ),
-             this, SLOT( slotResult(KIO::Job *) ) );
-    connect( job, SIGNAL( warning(KIO::Job *, const QString &) ),
-             this, SLOT( slotWarning(KIO::Job *, const QString &) ) );
-    connect( job, SIGNAL( infoMessage(KIO::Job *, const QString &) ),
-             this, SLOT( slotInfoMessage(KIO::Job *, const QString &) ) );
-    connect( job, SIGNAL( totalSize(KIO::Job *, KIO::filesize_t) ),
-             this, SLOT( slotTotalSize(KIO::Job *, KIO::filesize_t) ) );
-    connect( job, SIGNAL( processedSize(KIO::Job *, KIO::filesize_t) ),
-             this, SLOT( slotProcessedSize(KIO::Job *, KIO::filesize_t) ) );
-    connect( job, SIGNAL( speed(KIO::Job *, unsigned long) ),
-             this, SLOT( slotSpeed(KIO::Job *, unsigned long) ) );
+    connect( job, TQT_SIGNAL( result(KIO::Job *) ),
+             this, TQT_SLOT( slotResult(KIO::Job *) ) );
+    connect( job, TQT_SIGNAL( warning(KIO::Job *, const TQString &) ),
+             this, TQT_SLOT( slotWarning(KIO::Job *, const TQString &) ) );
+    connect( job, TQT_SIGNAL( infoMessage(KIO::Job *, const TQString &) ),
+             this, TQT_SLOT( slotInfoMessage(KIO::Job *, const TQString &) ) );
+    connect( job, TQT_SIGNAL( totalSize(KIO::Job *, KIO::filesize_t) ),
+             this, TQT_SLOT( slotTotalSize(KIO::Job *, KIO::filesize_t) ) );
+    connect( job, TQT_SIGNAL( processedSize(KIO::Job *, KIO::filesize_t) ),
+             this, TQT_SLOT( slotProcessedSize(KIO::Job *, KIO::filesize_t) ) );
+    connect( job, TQT_SIGNAL( speed(KIO::Job *, unsigned long) ),
+             this, TQT_SLOT( slotSpeed(KIO::Job *, unsigned long) ) );
 }
 
 void ForwardingSlaveBase::connectSimpleJob(KIO::SimpleJob *job)
 {
     connectJob(job);
-    connect( job, SIGNAL( redirection(KIO::Job *, const KURL &) ),
-             this, SLOT( slotRedirection(KIO::Job *, const KURL &) ) );
+    connect( job, TQT_SIGNAL( redirection(KIO::Job *, const KURL &) ),
+             this, TQT_SLOT( slotRedirection(KIO::Job *, const KURL &) ) );
 }
 
 void ForwardingSlaveBase::connectListJob(KIO::ListJob *job)
 {
     connectSimpleJob(job);
-    connect( job, SIGNAL( entries(KIO::Job *, const KIO::UDSEntryList &) ),
-             this, SLOT( slotEntries(KIO::Job *, const KIO::UDSEntryList &) ) );
+    connect( job, TQT_SIGNAL( entries(KIO::Job *, const KIO::UDSEntryList &) ),
+             this, TQT_SLOT( slotEntries(KIO::Job *, const KIO::UDSEntryList &) ) );
 }
 
 void ForwardingSlaveBase::connectTransferJob(KIO::TransferJob *job)
 {
     connectSimpleJob(job);
-    connect( job, SIGNAL( data(KIO::Job *, const QByteArray &) ),
-             this, SLOT( slotData(KIO::Job *, const QByteArray &) ) );
-    connect( job, SIGNAL( dataReq(KIO::Job *, QByteArray &) ),
-             this, SLOT( slotDataReq(KIO::Job *, QByteArray &) ) );
-    connect( job, SIGNAL( mimetype(KIO::Job *, const QString &) ),
-             this, SLOT( slotMimetype(KIO::Job *, const QString &) ) );
-    connect( job, SIGNAL( canResume(KIO::Job *, KIO::filesize_t) ),
-             this, SLOT( slotCanResume(KIO::Job *, KIO::filesize_t) ) );
+    connect( job, TQT_SIGNAL( data(KIO::Job *, const TQByteArray &) ),
+             this, TQT_SLOT( slotData(KIO::Job *, const TQByteArray &) ) );
+    connect( job, TQT_SIGNAL( dataReq(KIO::Job *, TQByteArray &) ),
+             this, TQT_SLOT( slotDataReq(KIO::Job *, TQByteArray &) ) );
+    connect( job, TQT_SIGNAL( mimetype(KIO::Job *, const TQString &) ),
+             this, TQT_SLOT( slotMimetype(KIO::Job *, const TQString &) ) );
+    connect( job, TQT_SIGNAL( canResume(KIO::Job *, KIO::filesize_t) ),
+             this, TQT_SLOT( slotCanResume(KIO::Job *, KIO::filesize_t) ) );
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -366,12 +366,12 @@ void ForwardingSlaveBase::slotResult(KIO::Job *job)
     qApp->eventLoop()->exitLoop();
 }
 
-void ForwardingSlaveBase::slotWarning(KIO::Job* /*job*/, const QString &msg)
+void ForwardingSlaveBase::slotWarning(KIO::Job* /*job*/, const TQString &msg)
 {
     warning(msg);
 }
 
-void ForwardingSlaveBase::slotInfoMessage(KIO::Job* /*job*/, const QString &msg)
+void ForwardingSlaveBase::slotInfoMessage(KIO::Job* /*job*/, const TQString &msg)
 {
     infoMessage(msg);
 }
@@ -418,18 +418,18 @@ void ForwardingSlaveBase::slotEntries(KIO::Job* /*job*/,
     listEntries( final_entries );
 }
 
-void ForwardingSlaveBase::slotData(KIO::Job* /*job*/, const QByteArray &d)
+void ForwardingSlaveBase::slotData(KIO::Job* /*job*/, const TQByteArray &d)
 {
     data(d);
 }
 
-void ForwardingSlaveBase::slotDataReq(KIO::Job* /*job*/, QByteArray &data)
+void ForwardingSlaveBase::slotDataReq(KIO::Job* /*job*/, TQByteArray &data)
 {
     dataReq();
     readData(data);
 }
 
-void ForwardingSlaveBase::slotMimetype (KIO::Job* /*job*/, const QString &type)
+void ForwardingSlaveBase::slotMimetype (KIO::Job* /*job*/, const TQString &type)
 {
     mimeType(type);
 }

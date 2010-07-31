@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __KPANELMENU_H__
 #define __KPANELMENU_H__
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kpopupmenu.h>
 #include <kgenericfactory.h>
 
@@ -59,7 +59,7 @@ public:
      * Construct a KPanelMenu object. This is the normal constructor to use when
      * building extrernal menu entries.
      */
-    KPanelMenu(QWidget *parent=0, const char *name=0);
+    KPanelMenu(TQWidget *parent=0, const char *name=0);
     /**
      * Constructor used internally by Kicker. You don't really want to use it.
      * @param startDir a directory to associate with this menu
@@ -67,25 +67,25 @@ public:
      * @param name name of the object
      * @see path(), setPath()
      */
-    KPanelMenu(const QString &startDir, QWidget *parent=0, const char *name=0);
+    KPanelMenu(const TQString &startDir, TQWidget *parent=0, const char *name=0);
     /**
      * Destructor.
      */
     virtual ~KPanelMenu();
 
     /**
-     * Get the directory path associated with this menu, or QString::null if
+     * Get the directory path associated with this menu, or TQString::null if
      * there's no such associated path.
      * @return the associated directory path
      * @see setPath()
      */
-    const QString& path() const;
+    const TQString& path() const;
     /**
      * Set a directory path to be associated with this menu.
      * @param p the directory path
      * @see path()
      */
-    void setPath(const QString &p);
+    void setPath(const TQString &p);
     /**
      * Tell if the menu has been initialized, that is it already contains items.
      * This is useful when you need to know if you have to clear the menu, or to
@@ -161,11 +161,11 @@ protected:
     /**
      * Re-implemented for internal reasons.
      */
-    virtual void hideEvent(QHideEvent *ev);
+    virtual void hideEvent(TQHideEvent *ev);
     /**
      * For internal use only. Used by constructors.
      */
-    void init(const QString& path = QString::null);
+    void init(const TQString& path = TQString::null);
 
 protected:
     virtual void virtual_hook( int id, void* data );

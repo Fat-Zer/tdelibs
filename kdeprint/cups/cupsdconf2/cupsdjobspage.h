@@ -30,10 +30,10 @@ class CupsdJobsPage : public CupsdPage
 	Q_OBJECT
 
 public:
-	CupsdJobsPage(QWidget *parent = 0, const char *name = 0);
+	CupsdJobsPage(TQWidget *parent = 0, const char *name = 0);
 
-	bool loadConfig(CupsdConf*, QString&);
-	bool saveConfig(CupsdConf*, QString&);
+	bool loadConfig(CupsdConf*, TQString&);
+	bool saveConfig(CupsdConf*, TQString&);
 	void setInfos(CupsdConf*);
 
 protected slots:

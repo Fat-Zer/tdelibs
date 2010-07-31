@@ -22,10 +22,10 @@
 
 #include "kfileitem.h"
 
-#include <qmap.h>
-#include <qdict.h>
-#include <qcache.h>
-#include <qwidget.h>
+#include <tqmap.h>
+#include <tqdict.h>
+#include <tqcache.h>
+#include <tqwidget.h>
 
 #include <kurl.h>
 #include <kio/global.h>
@@ -84,7 +84,7 @@ public:
   bool dirOnlyMode;
 
   bool autoErrorHandling;
-  QWidget *errorParent;
+  TQWidget *errorParent;
 
   bool delayedMimeTypes;
 
@@ -93,7 +93,7 @@ public:
     KIO::filesize_t processedSize, totalSize;
   };
 
-  QMap<KIO::ListJob *, JobData> jobData;
+  TQMap<KIO::ListJob *, JobData> jobData;
 
   // file item for the root itself (".")
   KFileItem *rootFileItem;
@@ -105,12 +105,12 @@ public:
 
   int changes;
 
-  QWidget *window; // Main window ths lister is associated with
+  TQWidget *window; // Main window ths lister is associated with
 
-  QString nameFilter;
-  QPtrList<QRegExp> lstFilters, oldFilters;
-  QStringList mimeFilter, oldMimeFilter;
-  QStringList mimeExcludeFilter, oldMimeExcludeFilter;
+  TQString nameFilter;
+  TQPtrList<TQRegExp> lstFilters, oldFilters;
+  TQStringList mimeFilter, oldMimeFilter;
+  TQStringList mimeExcludeFilter, oldMimeExcludeFilter;
 };
 
 /**
@@ -126,7 +126,7 @@ public:
  * a URL -> dirlister holding that URL (urlsCurrentlyHeld)
  * a URL -> dirlister currently listing that URL (urlsCurrentlyListed)
  */
-class KDirListerCache : public QObject, KDirNotify
+class KDirListerCache : public TQObject, KDirNotify
 {
   Q_OBJECT
 public:
@@ -150,7 +150,7 @@ public:
 
   KFileItemList *itemsForDir( const KURL &_dir ) const;
 
-  KFileItem *findByName( const KDirLister *lister, const QString &_name ) const;
+  KFileItem *findByName( const KDirLister *lister, const TQString &_name ) const;
   // if lister is set, it is checked that the url is held by the lister
   KFileItem *findByURL( const KDirLister *lister, const KURL &_url ) const;
 
@@ -185,9 +185,9 @@ public:
   static bool exists(); 
 
 private slots:
-  void slotFileDirty( const QString &_file );
-  void slotFileCreated( const QString &_file );
-  void slotFileDeleted( const QString &_file );
+  void slotFileDirty( const TQString &_file );
+  void slotFileCreated( const TQString &_file );
+  void slotFileDeleted( const TQString &_file );
 
   void slotFileDirtyDelayed();
 
@@ -199,18 +199,18 @@ private slots:
   void slotUpdateResult( KIO::Job *job );
 
 private:
-  KIO::ListJob *jobForUrl( const QString& url, KIO::ListJob *not_job = 0 );
+  KIO::ListJob *jobForUrl( const TQString& url, KIO::ListJob *not_job = 0 );
   const KURL& joburl( KIO::ListJob *job );
 
   void killJob( KIO::ListJob *job );
 
   // check if _url is held by some lister and return true,
   // otherwise schedule a delayed update and return false
-  bool checkUpdate( const QString& _url );
+  bool checkUpdate( const TQString& _url );
   // when there were items deleted from the filesystem all the listers holding
   // the parent directory need to be notified, the unmarked items have to be deleted
   // and removed from the cache including all the childs.
-  void deleteUnmarkedItems( QPtrList<KDirLister> *, KFileItemList * );
+  void deleteUnmarkedItems( TQPtrList<KDirLister> *, KFileItemList * );
   void processPendingUpdates();
   // common for slotRedirection and FileRenamed
   void renameDir( const KURL &oldUrl, const KURL &url );
@@ -255,8 +255,8 @@ private:
       DCOPClient *client = DCOPClient::mainClient();
       if ( !client )
         return;
-      QByteArray data;
-      QDataStream arg( data, IO_WriteOnly );
+      TQByteArray data;
+      TQDataStream arg( data, IO_WriteOnly );
       arg << url;
       client->emitDCOPSignal( "KDirNotify", entering ? "enteredDirectory(KURL)" : "leftDirectory(KURL)", data );
     }
@@ -320,11 +320,11 @@ private:
   };
 
   static const unsigned short MAX_JOBS_PER_LISTER;
-  QMap<KIO::ListJob *, KIO::UDSEntryList> jobs;
+  TQMap<KIO::ListJob *, KIO::UDSEntryList> jobs;
 
   // an item is a complete directory
-  QDict<DirItem> itemsInUse;
-  QCache<DirItem> itemsCached;
+  TQDict<DirItem> itemsInUse;
+  TQCache<DirItem> itemsCached;
 
   // A lister can be EITHER in urlsCurrentlyListed OR urlsCurrentlyHeld but NOT
   // in both at the same time.
@@ -336,13 +336,13 @@ private:
 
   // saves all urls that are currently being listed and maps them
   // to their KDirListers
-  QDict< QPtrList<KDirLister> > urlsCurrentlyListed;
+  TQDict< TQPtrList<KDirLister> > urlsCurrentlyListed;
 
   // saves all KDirListers that are just holding url
-  QDict< QPtrList<KDirLister> > urlsCurrentlyHeld;
+  TQDict< TQPtrList<KDirLister> > urlsCurrentlyHeld;
 
   // running timers for the delayed update
-  QDict<QTimer> pendingUpdates;
+  TQDict<TQTimer> pendingUpdates;
 
   static KDirListerCache *s_pSelf;
 };

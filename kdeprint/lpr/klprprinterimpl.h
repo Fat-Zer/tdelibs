@@ -25,11 +25,11 @@
 class KLprPrinterImpl : public KPrinterImpl
 {
 public:
-	KLprPrinterImpl(QObject *parent, const char *name, const QStringList & /*args*/);
+	KLprPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/);
 	~KLprPrinterImpl();
 
-	bool setupCommand(QString&, KPrinter*);
-	void broadcastOption(const QString& key, const QString& value);
+	bool setupCommand(TQString&, KPrinter*);
+	void broadcastOption(const TQString& key, const TQString& value);
 
 private:
 	QString	m_exepath;

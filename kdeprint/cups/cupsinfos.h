@@ -20,7 +20,7 @@
 #ifndef CUPSINFOS_H
 #define CUPSINFOS_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include "kpreloadobject.h"
 
 class CupsInfos : public KPReloadObject
@@ -31,18 +31,18 @@ public:
 	CupsInfos();
 	~CupsInfos();
 
-	const QString& host() const;
-        QString  hostaddr() const;
+	const TQString& host() const;
+        TQString  hostaddr() const;
 	int port() const;
-	const QString& login() const;
-	const QString& password() const;
-	const QString& realLogin() const;
+	const TQString& login() const;
+	const TQString& password() const;
+	const TQString& realLogin() const;
 	bool savePassword() const;
 
-	void setHost(const QString& s);
+	void setHost(const TQString& s);
 	void setPort(int p);
-	void setLogin(const QString& s);
-	void setPassword(const QString& s);
+	void setLogin(const TQString& s);
+	void setPassword(const TQString& s);
 	void setSavePassword( bool on );
 
 	const char* getPasswordCB();
@@ -67,19 +67,19 @@ private:
 	int	count_;
 };
 
-inline const QString& CupsInfos::host() const
+inline const TQString& CupsInfos::host() const
 { return host_; }
 
 inline int CupsInfos::port() const
 { return port_; }
 
-inline const QString& CupsInfos::login() const
+inline const TQString& CupsInfos::login() const
 { return login_; }
 
-inline const QString& CupsInfos::password() const
+inline const TQString& CupsInfos::password() const
 { return password_; }
 
-inline const QString& CupsInfos::realLogin() const
+inline const TQString& CupsInfos::realLogin() const
 { return reallogin_; }
 
 inline bool CupsInfos::savePassword() const

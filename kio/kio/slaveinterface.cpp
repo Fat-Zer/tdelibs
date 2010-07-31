@@ -30,12 +30,12 @@
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <time.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 
 using namespace KIO;
 
 
-QDataStream &operator <<(QDataStream &s, const KIO::UDSEntry &e )
+TQDataStream &operator <<(TQDataStream &s, const KIO::UDSEntry &e )
 {
     // On 32-bit platforms we send UDS_SIZE with UDS_SIZE_LARGE in front
     // of it to carry the 32 msb. We can't send a 64 bit UDS_SIZE because
@@ -67,7 +67,7 @@ QDataStream &operator <<(QDataStream &s, const KIO::UDSEntry &e )
     return s;
 }
 
-QDataStream &operator >>(QDataStream &s, KIO::UDSEntry &e )
+TQDataStream &operator >>(TQDataStream &s, KIO::UDSEntry &e )
 {
     e.clear();
     Q_UINT32 size;
@@ -124,7 +124,7 @@ public:
   size_t last_time;
   KIO::filesize_t filesize, offset;
 
-  QTimer speed_timer;
+  TQTimer speed_timer;
 };
 
 //////////////
@@ -135,18 +135,18 @@ SlaveInterface::SlaveInterface( Connection * connection )
     m_progressId = 0;
 
     d = new SlaveInterfacePrivate;
-    connect(&d->speed_timer, SIGNAL(timeout()), SLOT(calcSpeed()));
+    connect(&d->speed_timer, TQT_SIGNAL(timeout()), TQT_SLOT(calcSpeed()));
 }
 
 SlaveInterface::~SlaveInterface()
 {
     // Note: no kdDebug() here (scheduler is deleted very late)
-    m_pConnection = 0; // a bit like the "wasDeleted" of QObject...
+    m_pConnection = 0; // a bit like the "wasDeleted" of TQObject...
 
     delete d;
 }
 
-static KIO::filesize_t readFilesize_t(QDataStream &stream)
+static KIO::filesize_t readFilesize_t(TQDataStream &stream)
 {
    KIO::filesize_t result;
    unsigned long ul;
@@ -165,7 +165,7 @@ bool SlaveInterface::dispatch()
     assert( m_pConnection );
 
     int cmd;
-    QByteArray data;
+    TQByteArray data;
 
     if (m_pConnection->read( &cmd, data ) == -1)
       return false;
@@ -218,13 +218,13 @@ void SlaveInterface::calcSpeed()
   }
 }
 
-bool SlaveInterface::dispatch( int _cmd, const QByteArray &rawdata )
+bool SlaveInterface::dispatch( int _cmd, const TQByteArray &rawdata )
 {
     //kdDebug(7007) << "dispatch " << _cmd << endl;
 
-    QDataStream stream( rawdata, IO_ReadOnly );
+    TQDataStream stream( rawdata, IO_ReadOnly );
 
-    QString str1;
+    TQString str1;
     Q_INT32 i;
     Q_INT8 b;
     Q_UINT32 ul;
@@ -282,7 +282,7 @@ bool SlaveInterface::dispatch( int _cmd, const QByteArray &rawdata )
     case MSG_SLAVE_STATUS:
         {
            pid_t pid;
-           QCString protocol;
+           TQCString protocol;
            stream >> pid >> protocol >> str1 >> b;
            emit slaveStatus(pid, protocol, str1, (b != 0));
         }
@@ -337,7 +337,7 @@ bool SlaveInterface::dispatch( int _cmd, const QByteArray &rawdata )
 
 	emit mimeType( str1 );
         if (!m_pConnection->suspended())
-            m_pConnection->sendnow( CMD_NONE, QByteArray() );
+            m_pConnection->sendnow( CMD_NONE, TQByteArray() );
 	break;
     case INF_WARNING:
 	stream >> str1;
@@ -352,7 +352,7 @@ bool SlaveInterface::dispatch( int _cmd, const QByteArray &rawdata )
     }
     case INF_MESSAGEBOX: {
 	kdDebug(7007) << "needs a msg box" << endl;
-	QString text, caption, buttonYes, buttonNo, dontAskAgainName;
+	TQString text, caption, buttonYes, buttonNo, dontAskAgainName;
         int type;
 	stream >> type >> text >> caption >> buttonYes >> buttonNo;
 	if (stream.atEnd())
@@ -364,7 +364,7 @@ bool SlaveInterface::dispatch( int _cmd, const QByteArray &rawdata )
 	break;
     }
     case INF_INFOMESSAGE: {
-        QString msg;
+        TQString msg;
         stream >> msg;
         infoMessage(msg);
         break;
@@ -376,15 +376,15 @@ bool SlaveInterface::dispatch( int _cmd, const QByteArray &rawdata )
         break;
     }
     case MSG_NET_REQUEST: {
-        QString host;
-	QString slaveid;
+        TQString host;
+	TQString slaveid;
         stream >> host >> slaveid;
         requestNetwork(host, slaveid);
         break;
     }
     case MSG_NET_DROP: {
-        QString host;
-	QString slaveid;
+        TQString host;
+	TQString slaveid;
         stream >> host >> slaveid;
         dropNetwork(host, slaveid);
         break;
@@ -395,7 +395,7 @@ bool SlaveInterface::dispatch( int _cmd, const QByteArray &rawdata )
     }
     case MSG_AUTH_KEY: {
         bool keep;
-        QCString key, group;
+        TQCString key, group;
         stream >> key >> group >> keep;
         kdDebug(7007) << "Got auth-key:      " << key << endl
                       << "    group-key:     " << group << endl
@@ -404,7 +404,7 @@ bool SlaveInterface::dispatch( int _cmd, const QByteArray &rawdata )
         break;
     }
     case MSG_DEL_AUTH_KEY: {
-        QCString key;
+        TQCString key;
         stream >> key;
         kdDebug(7007) << "Delete auth-key: " << key << endl;
         emit delAuthorization( key );
@@ -423,16 +423,16 @@ void SlaveInterface::setOffset( KIO::filesize_t o)
 
 KIO::filesize_t SlaveInterface::offset() const { return d->offset; }
 
-void SlaveInterface::requestNetwork(const QString &host, const QString &slaveid)
+void SlaveInterface::requestNetwork(const TQString &host, const TQString &slaveid)
 {
     kdDebug(7007) << "requestNetwork " << host << slaveid << endl;
-    QByteArray packedArgs;
-    QDataStream stream( packedArgs, IO_WriteOnly );
+    TQByteArray packedArgs;
+    TQDataStream stream( packedArgs, IO_WriteOnly );
     stream << true;
     m_pConnection->sendnow( INF_NETWORK_STATUS, packedArgs );
 }
 
-void SlaveInterface::dropNetwork(const QString &host, const QString &slaveid)
+void SlaveInterface::dropNetwork(const TQString &host, const TQString &slaveid)
 {
     kdDebug(7007) << "dropNetwork " << host << slaveid << endl;
 }
@@ -440,10 +440,10 @@ void SlaveInterface::dropNetwork(const QString &host, const QString &slaveid)
 void SlaveInterface::sendResumeAnswer( bool resume )
 {
     kdDebug(7007) << "SlaveInterface::sendResumeAnswer ok for resuming :" << resume << endl;
-    m_pConnection->sendnow( resume ? CMD_RESUMEANSWER : CMD_NONE, QByteArray() );
+    m_pConnection->sendnow( resume ? CMD_RESUMEANSWER : CMD_NONE, TQByteArray() );
 }
 
-void SlaveInterface::openPassDlg( const QString& prompt, const QString& user, bool readOnly )
+void SlaveInterface::openPassDlg( const TQString& prompt, const TQString& user, bool readOnly )
 {
     AuthInfo info;
     info.prompt = prompt;
@@ -452,9 +452,9 @@ void SlaveInterface::openPassDlg( const QString& prompt, const QString& user, bo
     openPassDlg( info );
 }
 
-void SlaveInterface::openPassDlg( const QString& prompt, const QString& user,
-                                  const QString& caption, const QString& comment,
-                                  const QString& label, bool readOnly )
+void SlaveInterface::openPassDlg( const TQString& prompt, const TQString& user,
+                                  const TQString& caption, const TQString& comment,
+                                  const TQString& label, bool readOnly )
 {
     AuthInfo info;
     info.prompt = prompt;
@@ -474,8 +474,8 @@ void SlaveInterface::openPassDlg( AuthInfo& info )
     bool result = Observer::self()->openPassDlg( info );
     if ( m_pConnection )
     {
-        QByteArray data;
-        QDataStream stream( data, IO_WriteOnly );
+        TQByteArray data;
+        TQDataStream stream( data, IO_WriteOnly );
         if ( result )
         {
             stream << info;
@@ -489,26 +489,26 @@ void SlaveInterface::openPassDlg( AuthInfo& info )
     }
 }
 
-void SlaveInterface::messageBox( int type, const QString &text, const QString &_caption,
-                                 const QString &buttonYes, const QString &buttonNo )
+void SlaveInterface::messageBox( int type, const TQString &text, const TQString &_caption,
+                                 const TQString &buttonYes, const TQString &buttonNo )
 {
-    messageBox( type, text, _caption, buttonYes, buttonNo, QString::null );
+    messageBox( type, text, _caption, buttonYes, buttonNo, TQString::null );
 }
 
-void SlaveInterface::messageBox( int type, const QString &text, const QString &_caption,
-                                 const QString &buttonYes, const QString &buttonNo, const QString &dontAskAgainName )
+void SlaveInterface::messageBox( int type, const TQString &text, const TQString &_caption,
+                                 const TQString &buttonYes, const TQString &buttonNo, const TQString &dontAskAgainName )
 {
     kdDebug(7007) << "messageBox " << type << " " << text << " - " << _caption << " " << dontAskAgainName << endl;
-    QByteArray packedArgs;
-    QDataStream stream( packedArgs, IO_WriteOnly );
+    TQByteArray packedArgs;
+    TQDataStream stream( packedArgs, IO_WriteOnly );
 
-    QString caption( _caption );
+    TQString caption( _caption );
     if ( type == KIO::SlaveBase::SSLMessageBox )
-        caption = QString::fromUtf8(kapp->dcopClient()->appId()); // hack, see observer.cpp
+        caption = TQString::fromUtf8(kapp->dcopClient()->appId()); // hack, see observer.cpp
 
     emit needProgressId();
     kdDebug(7007) << "SlaveInterface::messageBox m_progressId=" << m_progressId << endl;
-    QGuardedPtr<SlaveInterface> me = this;
+    TQGuardedPtr<SlaveInterface> me = this;
     m_pConnection->suspend();
     int result = Observer::/*self()->*/messageBox( m_progressId, type, text, caption, buttonYes, buttonNo, dontAskAgainName );
     if ( me && m_pConnection ) // Don't do anything if deleted meanwhile

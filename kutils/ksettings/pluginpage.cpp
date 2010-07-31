@@ -19,7 +19,7 @@
 
 #include "ksettings/pluginpage.h"
 #include "kpluginselector.h"
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <kdialog.h>
 #include "ksettings/dispatcher.h"
 
@@ -37,24 +37,24 @@ class PluginPage::PluginPagePrivate
         KPluginSelector * selwid;
 };
 
-    PluginPage::PluginPage( QWidget * parent, const char * name, const QStringList & args )
+    PluginPage::PluginPage( TQWidget * parent, const char * name, const TQStringList & args )
     : KCModule( parent, name, args )
     , d( new PluginPagePrivate )
 {
-    ( new QVBoxLayout( this, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
+    ( new TQVBoxLayout( this, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
     d->selwid = new KPluginSelector( this );
-    connect( d->selwid, SIGNAL( changed( bool ) ), this, SIGNAL( changed( bool ) ) );
+    connect( d->selwid, TQT_SIGNAL( changed( bool ) ), this, TQT_SIGNAL( changed( bool ) ) );
 }
 
-    PluginPage::PluginPage( KInstance * instance, QWidget * parent, const QStringList & args )
+    PluginPage::PluginPage( KInstance * instance, TQWidget * parent, const TQStringList & args )
     : KCModule( instance, parent, args )
     , d( new PluginPagePrivate )
 {
-    ( new QVBoxLayout( this, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
+    ( new TQVBoxLayout( this, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
     d->selwid = new KPluginSelector( this );
-    connect( d->selwid, SIGNAL( changed( bool ) ), this, SIGNAL( changed( bool ) ) );
-    connect( d->selwid, SIGNAL( configCommitted( const QCString & ) ),
-            Dispatcher::self(), SLOT( reparseConfiguration( const QCString & ) ) );
+    connect( d->selwid, TQT_SIGNAL( changed( bool ) ), this, TQT_SIGNAL( changed( bool ) ) );
+    connect( d->selwid, TQT_SIGNAL( configCommitted( const TQCString & ) ),
+            Dispatcher::self(), TQT_SLOT( reparseConfiguration( const TQCString & ) ) );
 }
 
 PluginPage::~PluginPage()

@@ -28,8 +28,8 @@
 #include "rendering/render_replaced.h"
 #include "dom/dom_string.h"
 
-#include <qmap.h>
-#include <qpixmap.h>
+#include <tqmap.h>
+#include <tqpixmap.h>
 
 namespace khtml {
 
@@ -47,10 +47,10 @@ public:
 
     virtual void layout();
 
-    virtual void setPixmap( const QPixmap &, const QRect&, CachedImage *);
+    virtual void setPixmap( const TQPixmap &, const TQRect&, CachedImage *);
 
     // don't even think about making these methods virtual!
-    QPixmap pixmap() const;
+    TQPixmap pixmap() const;
     DOM::HTMLElementImpl* element() const
     { return static_cast<DOM::HTMLElementImpl*>(RenderObject::element()); }
 
@@ -86,7 +86,7 @@ private:
     /*
      * Cache for images that need resizing
      */
-    QPixmap resizeCache;
+    TQPixmap resizeCache;
 
     // text to display as long as the image isn't available
     DOM::DOMString alt;

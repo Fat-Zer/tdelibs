@@ -21,12 +21,12 @@
 #ifndef KPRINTER_H
 #define KPRINTER_H
 
-#include <qpaintdevice.h>
-#include <qprinter.h>
-#include <qmap.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qvaluelist.h>
+#include <tqpaintdevice.h>
+#include <tqprinter.h>
+#include <tqmap.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqvaluelist.h>
 #include <kdemacros.h>
 #include <kdelibs_export.h>
 
@@ -40,17 +40,17 @@ class DrPageSize;
 /**
  * This class is the main interface to access the KDE print framework. It allows KDE
  * applications to easily access the print system, through an interface that is compatible
- * with QPrinter. So that the porting of an existing application should be as easy as
- * replacing any occurrence of QPrinter by KPrinter. However applications that explicitly
- * used the QPrintDialog class must be changed to the standard KPrinter way of accessing
+ * with TQPrinter. So that the porting of an existing application should be as easy as
+ * replacing any occurrence of TQPrinter by KPrinter. However applications that explicitly
+ * used the TQPrintDialog class must be changed to the standard KPrinter way of accessing
  * the print dialog.
  *
  * Basically, a KDE application will use the KPrinter object as a paint device, and will draw
- * on it using QPainter. In a standard application, the use of the KPrinter class will
+ * on it using TQPainter. In a standard application, the use of the KPrinter class will
  * look like this:
  * \code
  * #include <kprinter.h>
- * #include <qpainter.h>
+ * #include <tqpainter.h>
  *
  * void MyClass::doPrint()
  * {
@@ -63,7 +63,7 @@ class DrPageSize;
  *   if ( printer.setup( this ) )
  *   {
  *     // create a painter to paint on the printer object
- *     QPainter painter;
+ *     TQPainter painter;
  *
  *     // start painting
  *     painter.begin( &printer );
@@ -83,9 +83,9 @@ class DrPageSize;
  *
  * @short The central interface class to access the KDE print system.
  * @author Michael Goffioul
- * @see QPrinter, KPrintDialogPage
+ * @see TQPrinter, KPrintDialogPage
  */
-class KDEPRINT_EXPORT KPrinter : public QPaintDevice, public KPReloadObject
+class KDEPRINT_EXPORT KPrinter : public TQPaintDevice, public KPReloadObject
 {
 friend class KPrinterWrapper;
 friend class KPrinterImpl;
@@ -125,7 +125,7 @@ public:
 	 */
 	enum ApplicationType { Dialog = 0x00, StandAlone = 0x01, StandAlonePersistent = 0x02 };
 
-	// QPrinter extension
+	// TQPrinter extension
 	/**
 	 * Defines the page set to print:
 	 *  @li @p AllPages: all pages
@@ -144,59 +144,59 @@ public:
 	 */
 	enum CollateType { Collate = 0x00, Uncollate = 0x01 };
 
-	// from QPrinter class
+	// from TQPrinter class
 	/**
 	 * Defines the color mode of the printer
-	 * @see QPrinter::ColorMode
+	 * @see TQPrinter::ColorMode
 	 */
-	enum ColorMode { GrayScale = QPrinter::GrayScale, Color = QPrinter::Color };
+	enum ColorMode { GrayScale = TQPrinter::GrayScale, Color = TQPrinter::Color };
 	/**
 	 * Defines the orientation of the paper
-	 * @see QPrinter::Orientation
+	 * @see TQPrinter::Orientation
 	 */
-	enum Orientation { Portrait = QPrinter::Portrait, Landscape = QPrinter::Landscape };
+	enum Orientation { Portrait = TQPrinter::Portrait, Landscape = TQPrinter::Landscape };
 	/**
 	 * Defines the page order of the print job
-	 * @see QPrinter::PageOrder
+	 * @see TQPrinter::PageOrder
 	 */
-	enum PageOrder { FirstPageFirst = QPrinter::FirstPageFirst, LastPageFirst = QPrinter::LastPageFirst };
+	enum PageOrder { FirstPageFirst = TQPrinter::FirstPageFirst, LastPageFirst = TQPrinter::LastPageFirst };
 	/**
 	 * Defines the paper size to use
-	 * @see QPrinter::PageSize
+	 * @see TQPrinter::PageSize
 	 */
 	enum PageSize
 	{
-		A4 = QPrinter::A4,
-		B5 = QPrinter::B5,
-		Letter = QPrinter::Letter,
-		Legal = QPrinter::Legal,
-		Executive = QPrinter::Executive,
-		A0 = QPrinter::A0,
-		A1 = QPrinter::A1,
-		A2 = QPrinter::A2,
-		A3 = QPrinter::A3,
-		A5 = QPrinter::A5,
-		A6 = QPrinter::A6,
-		A7 = QPrinter::A7,
-		A8 = QPrinter::A8,
-		A9 = QPrinter::A9,
-		B0 = QPrinter::B0,
-		B1 = QPrinter::B1,
-		B10 = QPrinter::B10,
-		B2 = QPrinter::B2,
-		B3 = QPrinter::B3,
-		B4 = QPrinter::B4,
-		B6 = QPrinter::B6,
-		B7 = QPrinter::B7,
-		B8 = QPrinter::B8,
-		B9 = QPrinter::B9,
-		C5E = QPrinter::C5E,
-		Comm10E = QPrinter::Comm10E,
-		DLE = QPrinter::DLE,
-		Folio = QPrinter::Folio,
-		Ledger = QPrinter::Ledger,
-		Tabloid = QPrinter::Tabloid,
-		NPageSize = QPrinter::NPageSize
+		A4 = TQPrinter::A4,
+		B5 = TQPrinter::B5,
+		Letter = TQPrinter::Letter,
+		Legal = TQPrinter::Legal,
+		Executive = TQPrinter::Executive,
+		A0 = TQPrinter::A0,
+		A1 = TQPrinter::A1,
+		A2 = TQPrinter::A2,
+		A3 = TQPrinter::A3,
+		A5 = TQPrinter::A5,
+		A6 = TQPrinter::A6,
+		A7 = TQPrinter::A7,
+		A8 = TQPrinter::A8,
+		A9 = TQPrinter::A9,
+		B0 = TQPrinter::B0,
+		B1 = TQPrinter::B1,
+		B10 = TQPrinter::B10,
+		B2 = TQPrinter::B2,
+		B3 = TQPrinter::B3,
+		B4 = TQPrinter::B4,
+		B6 = TQPrinter::B6,
+		B7 = TQPrinter::B7,
+		B8 = TQPrinter::B8,
+		B9 = TQPrinter::B9,
+		C5E = TQPrinter::C5E,
+		Comm10E = TQPrinter::Comm10E,
+		DLE = TQPrinter::DLE,
+		Folio = TQPrinter::Folio,
+		Ledger = TQPrinter::Ledger,
+		Tabloid = TQPrinter::Tabloid,
+		NPageSize = TQPrinter::NPageSize
 	};
 
 	// constructors / destructor
@@ -205,97 +205,97 @@ public:
 	 * the same application run, if @p restore is true. Setting @p restore to false may
 	 * be useful if you want an independent/clean KPrinter object.
 	 * @param restore if true, options will be restored/saved between successive KPrinter objects
-	 * @param m the mode to establish the KPrinter in (see QPrinter::PrinterMode)
+	 * @param m the mode to establish the KPrinter in (see TQPrinter::PrinterMode)
 	 */
-	KPrinter(bool restore = true, QPrinter::PrinterMode m = QPrinter::ScreenResolution );
+	KPrinter(bool restore = true, TQPrinter::PrinterMode m = TQPrinter::ScreenResolution );
 	/**
 	 * Destructor. This also saves the current KPrinter state for future printing.
 	 */
 	~KPrinter();
 
-	// QPrinter interface (+ some extensions)
+	// TQPrinter interface (+ some extensions)
 	/**
-	 * See QPrinter::newPage().
+	 * See TQPrinter::newPage().
 	 */
 	bool newPage();
 	/**
-	 * See QPrinter::abort().
+	 * See TQPrinter::abort().
 	 */
 	bool abort();
 	/**
-	 * See QPrinter::aborted(.)
+	 * See TQPrinter::aborted(.)
 	 */
 	bool aborted() const;
 	/**
-	 * See QPrinter::outputToFile().
+	 * See TQPrinter::outputToFile().
 	 */
 	bool outputToFile() const;
 	/**
-	 * See QPrinter::setOutputToFile().
+	 * See TQPrinter::setOutputToFile().
 	 */
 	void setOutputToFile(bool);
 	/**
-	 * See QPrinter::outputFileName().
+	 * See TQPrinter::outputFileName().
 	 */
-	QString outputFileName() const;
+	TQString outputFileName() const;
 	/**
-	 * See QPrinter::setOutputFileName().
+	 * See TQPrinter::setOutputFileName().
 	 */
-	void setOutputFileName(const QString&);
+	void setOutputFileName(const TQString&);
 	/**
-	 * See QPrinter::docName().
+	 * See TQPrinter::docName().
 	 */
-	QString docName() const;
+	TQString docName() const;
 	/**
-	 * See QPrinter::setDocName().
+	 * See TQPrinter::setDocName().
 	 */
-	void setDocName(const QString&);
+	void setDocName(const TQString&);
 	/**
-	 * See QPrinter::creator().
+	 * See TQPrinter::creator().
 	 */
-	QString creator() const;
+	TQString creator() const;
 	/**
-	 * See QPrinter::setCreator().
+	 * See TQPrinter::setCreator().
 	 */
-	void setCreator(const QString&);
+	void setCreator(const TQString&);
 	/**
-	 * See QPrinter::fullPage().
+	 * See TQPrinter::fullPage().
 	 */
 	bool fullPage() const;
 	/**
-	 * See QPrinter::setFullPage().
+	 * See TQPrinter::setFullPage().
 	 */
 	void setFullPage(bool);
 	/**
-	 * See QPrinter::colorMode().
+	 * See TQPrinter::colorMode().
 	 */
 	ColorMode colorMode() const;
 	/**
-	 * See QPrinter::setColorMode().
+	 * See TQPrinter::setColorMode().
 	 */
 	void setColorMode(ColorMode);
 	/**
-	 * See QPrinter::numCopies().
+	 * See TQPrinter::numCopies().
 	 */
 	int numCopies() const;
 	/**
-	 * See QPrinter::setNumCopies().
+	 * See TQPrinter::setNumCopies().
 	 */
 	void setNumCopies(int n);
 	/**
-	 * See QPrinter::orientation().
+	 * See TQPrinter::orientation().
 	 */
 	Orientation orientation() const;
 	/**
-	 * See QPrinter::setOrientation().
+	 * See TQPrinter::setOrientation().
 	 */
 	void setOrientation(Orientation);
 	/**
-	 * See QPrinter::pageOrder().
+	 * See TQPrinter::pageOrder().
 	 */
 	PageOrder pageOrder() const;
 	/**
-	 * See QPrinter::setPageOrder().
+	 * See TQPrinter::setPageOrder().
 	 */
 	void setPageOrder(PageOrder);
 	/**
@@ -307,15 +307,15 @@ public:
 	 */
 	void setCollate(CollateType type);
 	/**
-	 * See QPrinter::minPage().
+	 * See TQPrinter::minPage().
 	 */
 	int minPage() const;
 	/**
-	 * See QPrinter::maxPage().
+	 * See TQPrinter::maxPage().
 	 */
 	int maxPage() const;
 	/**
-	 * See QPrinter::setMinMax().
+	 * See TQPrinter::setMinMax().
 	 */
 	void setMinMax(int, int);
 	/**
@@ -337,32 +337,32 @@ public:
 	 */
 	int toPage() const;
 	/**
-	 * Sets the first and last page to be printed. See QPrinter::setFromTo().
+	 * Sets the first and last page to be printed. See TQPrinter::setFromTo().
 	 */
 	void setFromTo(int, int);
 	/**
-	 * See QPrinter::pageSize().
+	 * See TQPrinter::pageSize().
 	 */
 	PageSize pageSize() const;
 	/**
-	 * See QPrinter::setPageSize().
+	 * See TQPrinter::setPageSize().
 	 */
 	void setPageSize(PageSize);
 	/**
-	 * See QPrinter::printerName().
+	 * See TQPrinter::printerName().
 	 */
-	QString printerName() const;
+	TQString printerName() const;
 	/**
-	 * See QPrinter::setPrinterName().
+	 * See TQPrinter::setPrinterName().
 	 */
-	void setPrinterName(const QString&);
+	void setPrinterName(const TQString&);
 	/**
 	 * Returns the print program as set by setPrintProgram() or by the print dialog
 	 * if a special printer has been selected.
 	 * @return the print command line
 	 * @see setPrintProgram()
 	 */
-	QString printProgram() const;
+	TQString printProgram() const;
 	/**
 	 * Sets the command line to use when printing. This function is useful
 	 * when using a KPrinter object without the print dialog, to control what
@@ -375,7 +375,7 @@ public:
 	 * @li %psl : the page size in lower case. This may be useful with some
 	 *            programs like gs.
 	 * \code
-	 * void createPNGOutputFile(const QString& filename)
+	 * void createPNGOutputFile(const TQString& filename)
 	 * {
 	 *   // use a clean KPrinter object
 	 *   KPrinter prt(false);
@@ -384,22 +384,22 @@ public:
 	 *   prt.setOutputFileName( filename );
 	 *   prt.setPrintProgram( "gs -sDEVICE=png256 -sPAPERSIZE=%psl -sOutputFile=%out %in" );
 	 *
-	 *   QPainter painter( &prt );
+	 *   TQPainter painter( &prt );
 	 *   doPaint( &painter );
 	 * }
 	 * \endcode
 	 * @param cmd the print command line (containing at least the @p %in tag)
 	 * @see printProgram()
 	 */
-	void setPrintProgram(const QString& cmd);
+	void setPrintProgram(const TQString& cmd);
 	/**
-	 * See QPrinter::printerSelectionOption(). Unused.
+	 * See TQPrinter::printerSelectionOption(). Unused.
 	 */
-	QString printerSelectionOption() const;
+	TQString printerSelectionOption() const;
 	/**
-	 * See QPrinter::setPrinterSelectionOption(). Unused
+	 * See TQPrinter::setPrinterSelectionOption(). Unused
 	 */
-	void setPrinterSelectionOption(const QString&);
+	void setPrinterSelectionOption(const TQString&);
 	/**
 	 * Returns the current page number.
 	 * @see setCurrentPage()
@@ -424,7 +424,7 @@ public:
 	 *   printer.setCurrentPage( mycurrentpage );
 	 *   if ( printer.setup( this ) )
 	 *   {
-	 *     QValueList<int> pages = printer.pageList();
+	 *     TQValueList<int> pages = printer.pageList();
 	 *     // print the pages
 	 *     ...
 	 *   }
@@ -444,40 +444,40 @@ public:
 	 * @param forceExpand force the expansion of the dialog (the show/hide button will be hidden)
 	 * @returns boolean value corresponding to the button clicked by the user
 	 */
-	bool setup(QWidget *parent = 0, const QString& caption = QString::null, bool forceExpand = false);
+	bool setup(TQWidget *parent = 0, const TQString& caption = TQString::null, bool forceExpand = false);
 	/**
-	 * See QPrinter::margins().
+	 * See TQPrinter::margins().
 	 */
-	QSize margins() const;
+	TQSize margins() const;
 	/**
 	 * Not used yet.
 	 */
-	void setMargins(QSize m);
+	void setMargins(TQSize m);
 	/**
 	 * Returns the page size in dot unit ( 1 dot = 1/72th in ). This method is intended for
-	 * internal use, if you want to access actual page size, use a QPaintDeviceMetrics object
+	 * internal use, if you want to access actual page size, use a TQPaintDeviceMetrics object
 	 * instead. Note that the size returned by this method does not take resolution into
 	 * account, and that it can returns invalid size if no page metric was found in the printer
 	 * driver. DO NOT USE, WILL BE REMOVED.
 	 * @see setRealPageSize
 	 * @obsolete
 	 */
-	QSize realPageSize() const;
+	TQSize realPageSize() const;
 	/**
 	 * DO NOT USE, WILL BE REMOVED.
 	 * @obsolete
 	 */
-	void setRealPageSize( QSize p );
+	void setRealPageSize( TQSize p );
 	/**
 	 * DO NOT USE, WILL BE REMOVED.
 	 * @obsolete
 	 */
-	void setRealDrawableArea( const QRect& r );
+	void setRealDrawableArea( const TQRect& r );
 	/**
 	 * DO NOT USE, WILL BE REMOVED.
 	 * @obsolete
 	 */
-	QRect realDrawableArea() const;
+	TQRect realDrawableArea() const;
 
 	void margins( uint *top, uint *left, uint *bottom, uint *right ) const;
 	void setMargins( uint top, uint left, uint bottom, uint right );
@@ -488,7 +488,7 @@ public:
 	 * application does page selection itself.
 	 * @see setCurrentPage()
 	 */
-	QValueList<int> pageList() const;
+	TQValueList<int> pageList() const;
 	/**
 	 * Sets the KPrinter object to preview mode if @p on is true. In this mode, nothing will be
 	 * printed but only a preview dialog will be popped up with the single "Close" action. Using
@@ -501,7 +501,7 @@ public:
 	 *   KPrinter prt( false );
 	 *   prt.setPreviewOnly( true );
 	 *
-	 *   QPainter painter( &prt );
+	 *   TQPainter painter( &prt );
 	 *   doPrint( &painter );
 	 * }
 	 * \endcode
@@ -550,10 +550,10 @@ public:
 	 * Prints the files given in argument. This will first filter the files accorsing to the filtering
 	 * options selected by the user in the print dialog, then send the filtered files to the printer
 	 * with the print options selected. This function is called automatically when calling
-	 * QPainter::end() for a painter object constructed on KPrinter. In normal use, you don't need
+	 * TQPainter::end() for a painter object constructed on KPrinter. In normal use, you don't need
 	 * this use this function explicitly.
 	 */
-	bool printFiles(const QStringList& files, bool removeafter = false, bool startviewer = true);
+	bool printFiles(const TQStringList& files, bool removeafter = false, bool startviewer = true);
 
 	/**
 	 * Adds a customized page to the print dialog. The pages will appear in a tab widget in the
@@ -612,14 +612,14 @@ public:
 	 * @param parent the parent widget for the wizard
 	 * @returns 1: success, 0: cancel, -1: error
 	 */
-	//static int addPrinterWizard(QWidget *parent = 0);
+	//static int addPrinterWizard(TQWidget *parent = 0);
 
 	/**
-	 * The KPrinter object stores all its settings in an internal QMap structure on
-	 * QString. This allows to store any property. This method allows an application to access
+	 * The KPrinter object stores all its settings in an internal TQMap structure on
+	 * TQString. This allows to store any property. This method allows an application to access
 	 * any print option from the KPrinter object, using the option name. For example if your
 	 * application add a customized page to the print dialog, this page will saves its settings
-	 * into the KPrinter object using this QMap<QString,QString> structure. After showing the
+	 * into the KPrinter object using this TQMap<TQString,TQString> structure. After showing the
 	 * print dialog, your application can then access these options using this method. The
 	 * custom option name should follow the form "kde-appname-optionname".
 	 * \code
@@ -633,7 +633,7 @@ public:
 	 *   // open print dialog
 	 *   if ( prt.setup( this ) )
 	 *   {
-	 *      QString fntname = prt.option( "kde-myapp-fontname" );
+	 *      TQString fntname = prt.option( "kde-myapp-fontname" );
 	 *      ...
 	 *      do_something;
 	 *      ...
@@ -641,10 +641,10 @@ public:
 	 * }
 	 * \endcode
 	 * @param key the option name (key)
-	 * @returns the option value correponding to the key, or QString::null
+	 * @returns the option value correponding to the key, or TQString::null
 	 * @see KPrintDialogPage, setOption, options(), setOptions()
 	 */
-	const QString& option(const QString& key) const;
+	const TQString& option(const TQString& key) const;
 	/**
 	 * Adds or modifies an option in the KPrinter object. You probably don't need to use this function
 	 * explicitly. This will be done implicitely for example when reimplementing
@@ -653,26 +653,26 @@ public:
 	 * @param value the option value
 	 * @see option(), KPrintDialogPage
 	 */
-	void setOption(const QString& key, const QString& value);
+	void setOption(const TQString& key, const TQString& value);
 	/**
 	 * Returns the complete set of print options from the KPrinter object. For internal use.
-	 * @returns the option set as a QMap object
+	 * @returns the option set as a TQMap object
 	 */
-	const QMap<QString,QString>& options() const;
+	const TQMap<TQString,TQString>& options() const;
 	/**
 	 * Sets the option set in one operation. This method has some side effects like merging
 	 * the internal map with the one given in argument, but only for option in the form
 	 * "kde-...". For internal use only.
 	 * @param opts the option set to be merged in the KPrinter object
 	 */
-	void setOptions(const QMap<QString,QString>& opts);
+	void setOptions(const TQMap<TQString,TQString>& opts);
 	/**
 	 * For internal use only. Does a similar job as setOption(), except that all possible
 	 * internal printers are initialized with the option if it has the form "kde-...".
 	 * @param opts the option set
 	 * @see setOptions()
 	 */
-	void initOptions(const QMap<QString,QString>& opts);
+	void initOptions(const TQMap<TQString,TQString>& opts);
 
 	/**
 	 * Returns the search name of the printer selected by the user. Each printer is identified by
@@ -680,23 +680,23 @@ public:
 	 * @returns the unique printer search name
 	 * @see setSearchName
 	 */
-	QString searchName() const;
+	TQString searchName() const;
 	/**
 	 * Sets the search name of the KPrinter object. For internal use.
 	 * @param n the unique printer search name
 	 * @see searchName()
 	 */
-	void setSearchName(const QString& n);
+	void setSearchName(const TQString& n);
 	/**
 	 * Returns the last error message issued by the print system. Unimplemented yet.
 	 * @returns the last error message
 	 */
-	QString errorMessage() const;
+	TQString errorMessage() const;
 	/**
 	 * Sets the last error message. For internal use.
 	 * @param msg the error message
 	 */
-	void setErrorMessage(const QString& msg);
+	void setErrorMessage(const TQString& msg);
 	/**
 	 * Configure the KPrinter object to be used with the printer named
 	 * @p prname. After the call, the KPrinter object can be used without
@@ -714,7 +714,7 @@ public:
 	 * user clicked "Cancel" in the file dialog.
 	 * @see setup()
 	 */
-	bool autoConfigure(const QString& prname = QString::null, QWidget *parent = 0);
+	bool autoConfigure(const TQString& prname = TQString::null, TQWidget *parent = 0);
 	/**
 	 * Set the default document filename. This filename will be used as the
 	 * default basename for the output file, instead of the default "print".
@@ -723,14 +723,14 @@ public:
 	 * @param filename the default document basename to use
 	 * @see docFileName()
 	 */
-	void setDocFileName(const QString& filename);
+	void setDocFileName(const TQString& filename);
 	/**
 	 * Get the default document filename, that is the default basename used for
 	 * the output file.
 	 * @returns the default document basename
 	 * @see setDocFileName()
 	 */
-	QString docFileName() const;
+	TQString docFileName() const;
 	/**
 	 * Set the default document directory. This directory will be used as
 	 * the default location for any output file. If not set, $HOME directory
@@ -738,17 +738,17 @@ public:
 	 * @param dir the new default output directory
 	 * @see docDirectory()
 	 */
-	void setDocDirectory( const QString& dir );
+	void setDocDirectory( const TQString& dir );
 	/**
 	 * Get the default document directory, that is the directory used for
 	 * any output file. By default, it is the $HOME directory.
 	 * @returns the default output directory
 	 * @see setDocDirectory
 	 */
-	QString docDirectory() const;
+	TQString docDirectory() const;
 
 protected:
-	virtual bool cmd(int, QPainter*, QPDevCmdParam*);
+	virtual bool cmd(int, TQPainter*, QPDevCmdParam*);
 	virtual int metric(int) const;
 	void translateQtOptions();
 	void loadSettings();
@@ -756,10 +756,10 @@ protected:
 	void preparePrinting();
 	void finishPrinting();
 	void reload();
-	void init(bool restore = true, QPrinter::PrinterMode m = QPrinter::ScreenResolution);
-	bool doPreview(const QString& file);
+	void init(bool restore = true, TQPrinter::PrinterMode m = TQPrinter::ScreenResolution);
+	bool doPreview(const TQString& file);
 	void setRealPageSize(DrPageSize* p);
-	void setOption( const QString& key, const QString& value, bool broadcast );
+	void setOption( const TQString& key, const TQString& value, bool broadcast );
 
 protected:
 	KPrinterPrivate		*d;
@@ -769,12 +769,12 @@ protected:
 
 // Utility functions
 
-KDEPRINT_EXPORT KPrinter::PageSize pageNameToPageSize(const QString& name);
+KDEPRINT_EXPORT KPrinter::PageSize pageNameToPageSize(const TQString& name);
 KDEPRINT_EXPORT const char* pageSizeToPageName(KPrinter::PageSize s);
 /**
  * DO NOT USE, WILL BE REMOVED.
  * @obsolete
  */
-QSize rangeToSize( const QString& );
+TQSize rangeToSize( const TQString& );
 
 #endif

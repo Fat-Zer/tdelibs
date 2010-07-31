@@ -18,7 +18,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include "address.h"
 #include "addressee.h"
@@ -36,12 +36,12 @@ VCardFormatPlugin::~VCardFormatPlugin()
 {
 }
 
-bool VCardFormatPlugin::load( Addressee &addressee, QFile *file )
+bool VCardFormatPlugin::load( Addressee &addressee, TQFile *file )
 {
-  QString data;
+  TQString data;
 
-  QTextStream t( file );
-  t.setEncoding( QTextStream::Latin1 );
+  TQTextStream t( file );
+  t.setEncoding( TQTextStream::Latin1 );
   data = t.read();
 
   VCardConverter converter;
@@ -55,12 +55,12 @@ bool VCardFormatPlugin::load( Addressee &addressee, QFile *file )
   return false;
 }
 
-bool VCardFormatPlugin::loadAll( AddressBook*, Resource *resource, QFile *file )
+bool VCardFormatPlugin::loadAll( AddressBook*, Resource *resource, TQFile *file )
 {
-  QString data;
+  TQString data;
 
-  QTextStream t( file );
-  t.setEncoding( QTextStream::Latin1 );
+  TQTextStream t( file );
+  t.setEncoding( TQTextStream::Latin1 );
   data = t.read();
 
   VCardConverter converter;
@@ -78,7 +78,7 @@ bool VCardFormatPlugin::loadAll( AddressBook*, Resource *resource, QFile *file )
   return true;
 }
 
-void VCardFormatPlugin::save( const Addressee &addressee, QFile *file )
+void VCardFormatPlugin::save( const Addressee &addressee, TQFile *file )
 {
   VCardConverter converter ;
   Addressee::List vcardlist;
@@ -86,12 +86,12 @@ void VCardFormatPlugin::save( const Addressee &addressee, QFile *file )
 
   vcardlist.append( addressee );
 
-  QTextStream t( file );
-  t.setEncoding( QTextStream::UnicodeUTF8 );
+  TQTextStream t( file );
+  t.setEncoding( TQTextStream::UnicodeUTF8 );
   t << converter.createVCards( vcardlist );
 }
 
-void VCardFormatPlugin::saveAll( AddressBook*, Resource *resource, QFile *file )
+void VCardFormatPlugin::saveAll( AddressBook*, Resource *resource, TQFile *file )
 {
   VCardConverter converter;
   Addressee::List vcardlist;
@@ -102,14 +102,14 @@ void VCardFormatPlugin::saveAll( AddressBook*, Resource *resource, QFile *file )
     vcardlist.append( *it );
   }
 
-  QTextStream t( file );
-  t.setEncoding( QTextStream::UnicodeUTF8 );
+  TQTextStream t( file );
+  t.setEncoding( TQTextStream::UnicodeUTF8 );
   t << converter.createVCards( vcardlist );
 }
 
-bool VCardFormatPlugin::checkFormat( QFile *file ) const
+bool VCardFormatPlugin::checkFormat( TQFile *file ) const
 {
-  QString line;
+  TQString line;
 
   file->readLine( line, 1024 );
   line = line.stripWhiteSpace();

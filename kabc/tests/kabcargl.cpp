@@ -18,9 +18,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqregexp.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -42,20 +42,20 @@ int main(int argc,char **argv)
 
   KApplication app;
 
-  QString filename = StdAddressBook::fileName();
+  TQString filename = StdAddressBook::fileName();
   
-  QFile f( filename );
+  TQFile f( filename );
   if ( !f.open( IO_ReadOnly ) ) {
     kdDebug() << "Error opening file '" << filename << "' for reading." << endl;
     return 1;
   }
   
-  QTextStream t( &f );
-  t.setEncoding(QTextStream::UnicodeUTF8);
-  QString text = t.read();
+  TQTextStream t( &f );
+  t.setEncoding(TQTextStream::UnicodeUTF8);
+  TQString text = t.read();
   f.close();
   
-  text = QString::fromUtf8( text.local8Bit() );
+  text = TQString::fromUtf8( text.local8Bit() );
   text.replace( "\n", "\r\n" );
   
   if ( !f.open( IO_WriteOnly ) ) {
@@ -63,8 +63,8 @@ int main(int argc,char **argv)
     return 1;
   }
   
-  QTextStream t2( &f );
-  t2.setEncoding(QTextStream::UnicodeUTF8);
+  TQTextStream t2( &f );
+  t2.setEncoding(TQTextStream::UnicodeUTF8);
   t2 << text;
   f.close();
 }

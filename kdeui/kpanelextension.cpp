@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 
 #include <kconfig.h>
 
@@ -39,14 +39,14 @@ public:
     {}
 
     KPanelExtension::Size _size;
-    QPopupMenu* _customMenu;
+    TQPopupMenu* _customMenu;
     int _customSize;
     bool _reserveStrut;
 };
 
-KPanelExtension::KPanelExtension(const QString& configFile, Type type,
-				 int actions, QWidget *parent, const char *name)
-  : QFrame(parent, name)
+KPanelExtension::KPanelExtension(const TQString& configFile, Type type,
+				 int actions, TQWidget *parent, const char *name)
+  : TQFrame(parent, name)
   , _type(type)
   , _position( Top )
   , _alignment( LeftTop )
@@ -138,12 +138,12 @@ int KPanelExtension::sizeInPixels() const
   return d->_customSize;
 }
 
-QPopupMenu* KPanelExtension::customMenu() const
+TQPopupMenu* KPanelExtension::customMenu() const
 {
     return d->_customMenu;
 }
 
-void KPanelExtension::setCustomMenu(QPopupMenu* menu)
+void KPanelExtension::setCustomMenu(TQPopupMenu* menu)
 {
     d->_customMenu = menu;
 }

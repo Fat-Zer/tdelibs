@@ -22,12 +22,12 @@
 #ifndef _KWALLET_H
 #define _KWALLET_H
 
-#include <qglobal.h>
+#include <tqglobal.h>
 #ifdef Q_OS_UNIX
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qobject.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqobject.h>
 #include <dcopobject.h>
 
 class DCOPRef;
@@ -45,7 +45,7 @@ namespace KWallet {
  * @author George Staikos <staikos@kde.org>
  * @short KDE Wallet Class
  */
-class KIO_EXPORT Wallet : public QObject, public DCOPObject {
+class KIO_EXPORT Wallet : public TQObject, public DCOPObject {
 	K_DCOP
 	Q_OBJECT
 	protected:
@@ -55,7 +55,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @param handle The handle for the wallet.
 		 *  @param name The name of the wallet.
 		 */
-		Wallet(int handle, const QString& name);
+		Wallet(int handle, const TQString& name);
 		/**
 		 *  Copy a KWallet object.
 		 *  @internal
@@ -75,7 +75,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @return Returns a list of the names of all wallets that are
 		 *          open.
 		 */
-		static QStringList walletList();
+		static TQStringList walletList();
 
 		/**
 		 *  Determine if the KDE wallet is enabled.  Normally you do
@@ -89,7 +89,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @param name The name of the wallet to check.
 		 *  @return Returns true if the wallet is open, else false.
 		 */
-		static bool isOpen(const QString& name);
+		static bool isOpen(const TQString& name);
 
 		/**
 		 *  Close the wallet @p name.  The wallet will only be closed
@@ -100,7 +100,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *               is in use by others.
 		 *  @return Returns 0 on success, non-zero on error.
 		 */
-		static int closeWallet(const QString& name, bool force);
+		static int closeWallet(const TQString& name, bool force);
 
 		/**
 		 *  Delete the wallet @p name.  The wallet will be forced closed
@@ -108,7 +108,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @param name The name of the wallet to delete.
 		 *  @return Returns 0 on success, non-zero on error.
 		 */
-		static int deleteWallet(const QString& name);
+		static int deleteWallet(const TQString& name);
 
 		/**
 		 *  Disconnect the application @p app from @p wallet.
@@ -116,7 +116,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @param app The name of the application to disconnect.
 		 *  @return Returns true on success, false on error.
 		 */
-		static bool disconnectApplication(const QString& wallet, const QCString& app);
+		static bool disconnectApplication(const TQString& wallet, const TQCString& app);
 
 		enum OpenType { Synchronous=0, Asynchronous, Path, OpenTypeUnused=0xff };
 
@@ -136,7 +136,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @return Returns a pointer to the wallet if successful,
 		 *          or a null pointer on error or if rejected.
 		 */
-		static Wallet* openWallet(const QString& name, WId w = 0, OpenType ot = Synchronous);
+		static Wallet* openWallet(const TQString& name, WId w = 0, OpenType ot = Synchronous);
 
 		/**
 		 *  List the applications that are using the wallet @p wallet.
@@ -144,17 +144,17 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @return Returns a list of all DCOP application IDs using
 		 *          the wallet.
 		 */
-		static QStringList users(const QString& wallet);
+		static TQStringList users(const TQString& wallet);
 
 		/**
 		 *  The name of the wallet used to store local passwords.
 		 */
-		static const QString LocalWallet();
+		static const TQString LocalWallet();
 
 		/**
 		 *  The name of the wallet used to store network passwords.
 		 */
-		static const QString NetworkWallet();
+		static const TQString NetworkWallet();
 
 		/**
 		 *  The standardized name of the password folder.
@@ -162,7 +162,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  the user may still delete it so you should check for its
 		 *  existence and recreate it if necessary and desired.
 		 */
-		static const QString PasswordFolder();
+		static const TQString PasswordFolder();
 
 		/**
 		 *  The standardized name of the form data folder.
@@ -170,7 +170,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  the user may still delete it so you should check for its
 		 *  existence and recreate it if necessary and desired.
 		 */
-		static const QString FormDataFolder();
+		static const TQString FormDataFolder();
 
 		/**
 		 *  Request to the wallet service to change the password of
@@ -178,7 +178,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @param name The the wallet to change the password of.
 		 *  @param w The window id to associate any dialogs with.
 		 */
-		static void changePassword(const QString& name, WId w = 0);
+		static void changePassword(const TQString& name, WId w = 0);
 
 		/**
 		 *  This syncs the wallet file on disk with what is in memory.
@@ -198,7 +198,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		/**
 		 *  The name of the current wallet.
 		 */
-		virtual const QString& walletName() const;
+		virtual const TQString& walletName() const;
 
 		/**
 		 *  Determine if the current wallet is open, and is a valid
@@ -218,14 +218,14 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  Obtain the list of all folders contained in the wallet.
 		 *  @return Returns an empty list if the wallet is not open.
 		 */
-		virtual QStringList folderList();
+		virtual TQStringList folderList();
 
 		/**
 		 *  Determine if the folder @p f exists in the wallet.
 		 *  @param f the name of the folder to check for
 		 *  @return Returns true if the folder exists in the wallet.
 		 */
-		virtual bool hasFolder(const QString& f);
+		virtual bool hasFolder(const TQString& f);
 
 		/**
 		 *  Set the current working folder to @p f.  The folder must
@@ -234,21 +234,21 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @param f the name of the folder to make the working folder
 		 *  @return Returns true if the folder was successfully set.
 		 */
-		virtual bool setFolder(const QString& f);
+		virtual bool setFolder(const TQString& f);
 
 		/**
 		 *  Remove the folder @p f and all its entries from the wallet.
 		 *  @param f the name of the folder to remove
 		 *  @return Returns true if the folder was successfully removed.
 		 */
-		virtual bool removeFolder(const QString& f);
+		virtual bool removeFolder(const TQString& f);
 
 		/**
 		 *  Created the folder @p f.
 		 *  @param f the name of the folder to create
 		 *  @return Returns true if the folder was successfully created.
 		 */
-		virtual bool createFolder(const QString& f);
+		virtual bool createFolder(const TQString& f);
 
 		/**
 		 *  Determine the current working folder in the wallet.
@@ -256,14 +256,14 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  folder, which is valid but discouraged.
 		 *  @return Returns the current working folder.
 		 */
-		virtual const QString& currentFolder() const;
+		virtual const TQString& currentFolder() const;
 
 		/**
 		 *  Return the list of keys of all entries in this folder.
 		 *  @return Returns an empty list if the wallet is not open, or
 		 *          if the folder is empty.
 		 */
-		virtual QStringList entryList();
+		virtual TQStringList entryList();
 
 		/**
 		 *  Rename the entry @p oldName to @p newName.
@@ -271,18 +271,18 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @param newName The new key of the entry.
 		 *  @return Returns 0 on success, non-zero on error.
 		 */
-		virtual int renameEntry(const QString& oldName, const QString& newName);
+		virtual int renameEntry(const TQString& oldName, const TQString& newName);
 
 		/**
 		 *  Read the entry @p key from the current folder.
 		 *  The entry format is unknown except that it is either a
-		 *  QByteArray or a QDataStream, which effectively means that
+		 *  TQByteArray or a TQDataStream, which effectively means that
 		 *  it is anything.
 		 *  @param key The key of the entry to read.
 		 *  @param value A buffer to fill with the value.
 		 *  @return Returns 0 on success, non-zero on error.
 		 */
-		virtual int readEntry(const QString& key, QByteArray& value);
+		virtual int readEntry(const TQString& key, TQByteArray& value);
 
 		/**
 		 *  Read the map entry @p key from the current folder.
@@ -292,7 +292,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *          return an error if the key was not originally
 		 *          written as a map.
 		 */
-		virtual int readMap(const QString& key, QMap<QString,QString>& value);
+		virtual int readMap(const TQString& key, TQMap<TQString,TQString>& value);
 
 		/**
 		 *  Read the password entry @p key from the current folder.
@@ -302,12 +302,12 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *          return an error if the key was not originally
 		 *          written as a password.
 		 */
-		virtual int readPassword(const QString& key, QString& value);
+		virtual int readPassword(const TQString& key, TQString& value);
 
 		/**
 		 *  Read the entries matching @p key from the current folder.
 		 *  The entry format is unknown except that it is either a
-		 *  QByteArray or a QDataStream, which effectively means that
+		 *  TQByteArray or a TQDataStream, which effectively means that
 		 *  it is anything.
 		 *  @param key The key of the entry to read.  Wildcards
 		 *             are supported.
@@ -316,7 +316,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @return Returns 0 on success, non-zero on error.
 		 *  @since 3.4
 		 */
-		int readEntryList(const QString& key, QMap<QString, QByteArray>& value);
+		int readEntryList(const TQString& key, TQMap<TQString, TQByteArray>& value);
 
 		/**
 		 *  Read the map entry @p key from the current folder.
@@ -329,7 +329,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *          written as a map.
 		 *  @since 3.4
 		 */
-		int readMapList(const QString& key, QMap<QString, QMap<QString, QString> >& value);
+		int readMapList(const TQString& key, TQMap<TQString, TQMap<TQString, TQString> >& value);
 
 		/**
 		 *  Read the password entry @p key from the current folder.
@@ -342,7 +342,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *          written as a password.
 		 *  @since 3.4
 		 */
-		int readPasswordList(const QString& key, QMap<QString, QString>& value);
+		int readPasswordList(const TQString& key, TQMap<TQString, TQString>& value);
 
 		/**
 		 *  Write @p key = @p value as a binary entry to the current
@@ -354,7 +354,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @param entryType The type of the entry.
 		 *  @return Returns 0 on success, non-zero on error.
 		 */
-		virtual int writeEntry(const QString& key, const QByteArray& value, EntryType entryType);
+		virtual int writeEntry(const TQString& key, const TQByteArray& value, EntryType entryType);
 
 		/**
 		 *  Write @p key = @p value as a binary entry to the current
@@ -363,7 +363,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @param value The value of the entry.
 		 *  @return Returns 0 on success, non-zero on error.
 		 */
-		virtual int writeEntry(const QString& key, const QByteArray& value);
+		virtual int writeEntry(const TQString& key, const TQByteArray& value);
 
 		/**
 		 *  Write @p key = @p value as a map to the current folder.
@@ -371,7 +371,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @param value The value of the map.
 		 *  @return Returns 0 on success, non-zero on error.
 		 */
-		virtual int writeMap(const QString& key, const QMap<QString,QString>& value);
+		virtual int writeMap(const TQString& key, const TQMap<TQString,TQString>& value);
 
 		/**
 		 *  Write @p key = @p value as a password to the current folder.
@@ -379,21 +379,21 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @param value The value of the password.
 		 *  @return Returns 0 on success, non-zero on error.
 		 */
-		virtual int writePassword(const QString& key, const QString& value);
+		virtual int writePassword(const TQString& key, const TQString& value);
 
 		/**
 		 *  Determine if the current folder has they entry @p key.
 		 *  @param key The key to search for.
 		 *  @return Returns true if the folder contains @p key.
 		 */
-		virtual bool hasEntry(const QString& key);
+		virtual bool hasEntry(const TQString& key);
 
 		/**
 		 *  Remove the entry @p key from the current folder.
 		 *  @param key The key to remove.
 		 *  @return Returns 0 on success, non-zero on error.
 		 */
-		virtual int removeEntry(const QString& key);
+		virtual int removeEntry(const TQString& key);
 
 		/**
 		 *  Determine the type of the entry @p key in this folder.
@@ -401,7 +401,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @return Returns an enumerated type representing the type
 		 *          of the entry.
 		 */
-		virtual EntryType entryType(const QString& key);
+		virtual EntryType entryType(const TQString& key);
 
 		/**
 		 *  Determine if a folder does not exist in a wallet.  This
@@ -413,7 +413,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @return Returns true if the folder does NOT exist in the
 		 *  wallet, or the wallet does not exist.
 		 */
-		static bool folderDoesNotExist(const QString& wallet, const QString& folder);
+		static bool folderDoesNotExist(const TQString& wallet, const TQString& folder);
 
 		/**
 		 *  Determine if an entry in a folder does not exist in a
@@ -426,8 +426,8 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @return Returns true if the key does NOT exist in the
 		 *  wallet, or the folder or wallet does not exist.
 		 */
-		static bool keyDoesNotExist(const QString& wallet, const QString& folder, 
-					    const QString& key);
+		static bool keyDoesNotExist(const TQString& wallet, const TQString& folder, 
+					    const TQString& key);
 
 	signals:
 		/**
@@ -439,7 +439,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  Emitted when a folder in this wallet is updated.
 		 *  @param folder The folder that was updated.
 		 */
-		void folderUpdated(const QString& folder);
+		void folderUpdated(const TQString& folder);
 
 		/**
 		 *  Emitted when the folder list is changed in this wallet.
@@ -450,7 +450,7 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  Emitted when a folder in this wallet is removed.
 		 *  @param folder The folder that was removed.
 		 */
-		void folderRemoved(const QString& folder);
+		void folderRemoved(const TQString& folder);
 
 		/**
 		 *  Emitted when a wallet is opened in asynchronous mode.
@@ -470,19 +470,19 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @internal
 		 *  DCOP slot for signals emitted by the wallet service.
 		 */
-		ASYNC slotFolderUpdated(const QString& wallet, const QString& folder);
+		ASYNC slotFolderUpdated(const TQString& wallet, const TQString& folder);
 
 		/**
 		 *  @internal
 		 *  DCOP slot for signals emitted by the wallet service.
 		 */
-		ASYNC slotFolderListUpdated(const QString& wallet);
+		ASYNC slotFolderListUpdated(const TQString& wallet);
 
 		/**
 		 *  @internal
 		 *  DCOP slot for signals emitted by the wallet service.
 		 */
-		ASYNC slotApplicationDisconnected(const QString& wallet, const QCString& application);
+		ASYNC slotApplicationDisconnected(const TQString& wallet, const TQCString& application);
 
 		/**
 		 *  @internal
@@ -495,13 +495,13 @@ class KIO_EXPORT Wallet : public QObject, public DCOPObject {
 		 *  @internal
 		 *  Used to detect when the wallet service dies.
 		 */
-		void slotAppUnregistered(const QCString&);
+		void slotAppUnregistered(const TQCString&);
 
 	private:
 		class WalletPrivate;
 		WalletPrivate *d;
-		QString _name;
-		QString _folder;
+		TQString _name;
+		TQString _folder;
 		int _handle;
 		DCOPRef *_dcopRef;
 

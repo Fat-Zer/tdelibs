@@ -33,8 +33,8 @@ namespace KABC {
 class ResourceSql : public Resource
 {
 public:
-  ResourceSql( AddressBook *ab, const QString &user, const QString &password,
-    const QString &db, const QString &host );
+  ResourceSql( AddressBook *ab, const TQString &user, const TQString &password,
+    const TQString &db, const TQString &host );
   ResourceSql( AddressBook *ab, const KConfig * );
   
   bool open();
@@ -45,18 +45,18 @@ public:
   bool load();
   bool save( Ticket * ticket );
 
-  QString identifier() const;
+  TQString identifier() const;
 
 private:
-  void init(const QString &user, const QString &password,
-      const QString &db, const QString &host );
+  void init(const TQString &user, const TQString &password,
+      const TQString &db, const TQString &host );
 
-  QString mUser;
-  QString mPassword;
-  QString mDbName;
-  QString mHost;
+  TQString mUser;
+  TQString mPassword;
+  TQString mDbName;
+  TQString mHost;
 
-  QSqlDatabase *mDb;
+  TQSqlDatabase *mDb;
 };
 
 }

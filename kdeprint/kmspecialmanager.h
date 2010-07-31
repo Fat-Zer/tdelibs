@@ -20,8 +20,8 @@
 #ifndef KMSPECIALMANAGER_H
 #define KMSPECIALMANAGER_H
 
-#include <qobject.h>
-#include <qmap.h>
+#include <tqobject.h>
+#include <tqmap.h>
 
 class KMPrinter;
 class KMManager;
@@ -37,12 +37,12 @@ public:
 	bool savePrinters();
 	void refresh();
 	KXmlCommand* loadCommand(KMPrinter*);
-	KXmlCommand* loadCommand(const QString& cmd);
+	KXmlCommand* loadCommand(const TQString& cmd);
 	DrMain* loadDriver(KMPrinter*);
-	QString setupCommand(const QString& cmd, const QMap<QString,QString>& opts);
+	TQString setupCommand(const TQString& cmd, const TQMap<TQString,TQString>& opts);
 
 protected:
-	bool loadDesktopFile(const QString&);
+	bool loadDesktopFile(const TQString&);
 
 private:
 	KMManager	*m_mgr;

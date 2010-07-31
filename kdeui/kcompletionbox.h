@@ -24,7 +24,7 @@
 #define KCOMPLETIONBOX_H
 
 class QEvent;
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <klistbox.h>
 
 /**
@@ -44,7 +44,7 @@ class KDEUI_EXPORT KCompletionBox : public KListBox
 {
     Q_OBJECT
     Q_PROPERTY( bool isTabHandling READ isTabHandling WRITE setTabHandling )
-    Q_PROPERTY(QString cancelledText READ cancelledText WRITE setCancelledText)
+    Q_PROPERTY(TQString cancelledText READ cancelledText WRITE setCancelledText)
     Q_PROPERTY( bool activateOnSelect READ activateOnSelect WRITE setActivateOnSelect )
 
 public:
@@ -54,14 +54,14 @@ public:
      * The parent widget is used to give the focus back when pressing the
      * up-button on the very first item.
      */
-    KCompletionBox( QWidget *parent, const char *name = 0 );
+    KCompletionBox( TQWidget *parent, const char *name = 0 );
 
     /**
      * Destroys the box
      */
     ~KCompletionBox();
 
-    virtual QSize sizeHint() const;
+    virtual TQSize sizeHint() const;
 
     /**
      * @returns true if selecting an item results in the emition of the selected signal.
@@ -74,19 +74,19 @@ public slots:
     /**
      * Returns a list of all items currently in the box.
      */
-    QStringList items() const;
+    TQStringList items() const;
 
     /**
      * Inserts @p items into the box. Does not clear the items before.
      * @p index determines at which position @p items will be inserted.
      * (defaults to appending them at the end)
      */
-    void insertItems( const QStringList& items, int index = -1 );
+    void insertItems( const TQStringList& items, int index = -1 );
 
     /**
      * Clears the box and inserts @p items.
      */
-    void setItems( const QStringList& items );
+    void setItems( const TQStringList& items );
 
     /**
      * Adjusts the size of the box to fit the width of the parent given in the
@@ -129,15 +129,15 @@ public slots:
      * If the canceled text is not set through this function, the
      * userCancelled signal will not be emitted.
      *
-     * @see userCancelled( const QString& )
+     * @see userCancelled( const TQString& )
      * @param txt  the text to be emitted if the user cancels this box
      */
-    void setCancelledText( const QString& txt);
+    void setCancelledText( const TQString& txt);
 
     /**
-     * @returns the text set via setCancelledText() or QString::null.
+     * @returns the text set via setCancelledText() or TQString::null.
      */
-    QString cancelledText() const;
+    TQString cancelledText() const;
 
     /**
      * Set whether or not the selected signal should be emitted when an
@@ -194,21 +194,21 @@ signals:
      * Emitted when an item was selected, contains the text of
      * the selected item.
      */
-    void activated( const QString& );
+    void activated( const TQString& );
 
     /**
      * Emitted whenever the user chooses to ignore the available
      * selections and close the this box.
      */
-    void userCancelled( const QString& );
+    void userCancelled( const TQString& );
 
 protected:
     /**
      * This calculates the size of the dropdown and the relative position of the top
      * left corner with respect to the parent widget. This matches the geometry and position
-     * normally used by K/QComboBox when used with one.
+     * normally used by K/TQComboBox when used with one.
      */
-    QRect calculateGeometry() const;
+    TQRect calculateGeometry() const;
 
     /**
      * This properly sizes and positions the listbox.
@@ -219,20 +219,20 @@ protected:
      * Reimplemented from KListBox to get events from the viewport (to hide
      * this widget on mouse-click, Escape-presses, etc.
      */
-    virtual bool eventFilter( QObject *, QEvent * );
+    virtual bool eventFilter( TQObject *, TQEvent * );
 
 protected slots:
     /**
      * Called when an item was activated. Emits
      * activated() with the item.
      */
-    virtual void slotActivated( QListBoxItem * );
+    virtual void slotActivated( TQListBoxItem * );
 
 private slots:
-    void slotSetCurrentItem( QListBoxItem *i ) { setCurrentItem( i ); } // grrr
+    void slotSetCurrentItem( TQListBoxItem *i ) { setCurrentItem( i ); } // grrr
     void slotCurrentChanged();
     void canceled();
-    void slotItemClicked( QListBoxItem * );
+    void slotItemClicked( TQListBoxItem * );
 
 protected:
     virtual void virtual_hook( int id, void* data );

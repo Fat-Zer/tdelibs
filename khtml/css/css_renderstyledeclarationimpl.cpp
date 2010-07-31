@@ -267,7 +267,7 @@ DOMString khtml::stringForListStyleType(EListStyleType type)
     return "";
 }
 
-static CSSPrimitiveValueImpl* valueForColor(QColor color)
+static CSSPrimitiveValueImpl* valueForColor(TQColor color)
 {
     if (color.isValid())
         return new CSSPrimitiveValueImpl(color.rgb());//### KDE4: use rgba!
@@ -412,15 +412,15 @@ CSSValueImpl *RenderStyleDeclarationImpl::getPropertyCSSValue( int propertyID ) 
         DOMString string;
         Length length(style->backgroundXPosition());
         if (length.isPercent())
-            string = QString::number(length.value()) + "%";
+            string = TQString::number(length.value()) + "%";
         else
-            string = QString::number(length.minWidth(renderer->contentWidth()));
+            string = TQString::number(length.minWidth(renderer->contentWidth()));
         string += " ";
         length = style->backgroundYPosition();
         if (length.isPercent())
-            string += QString::number(length.value()) + "%";
+            string += TQString::number(length.value()) + "%";
         else
-            string += QString::number(length.minWidth(renderer->contentWidth()));
+            string += TQString::number(length.minWidth(renderer->contentWidth()));
         return new CSSPrimitiveValueImpl(string, CSSPrimitiveValue::CSS_STRING);
     }
     case CSS_PROP_BACKGROUND_POSITION_X:
@@ -434,9 +434,9 @@ CSSValueImpl *RenderStyleDeclarationImpl::getPropertyCSSValue( int propertyID ) 
             return new CSSPrimitiveValueImpl(CSS_VAL_SEPARATE);
     case CSS_PROP_BORDER_SPACING:
     {
-        QString string(QString::number(style->borderHorizontalSpacing()) +
+        TQString string(TQString::number(style->borderHorizontalSpacing()) +
                        "px " +
-                       QString::number(style->borderVerticalSpacing()) +
+                       TQString::number(style->borderVerticalSpacing()) +
                        "px");
         return new CSSPrimitiveValueImpl(string, CSSPrimitiveValue::CSS_STRING);
     }
@@ -651,7 +651,7 @@ CSSValueImpl *RenderStyleDeclarationImpl::getPropertyCSSValue( int propertyID ) 
         // FIXME: this does not reflect the full range of weights
         // that can be expressed with CSS
         FontDef def = style->htmlFont().getFontDef();
-        if (def.weight == QFont::Bold)
+        if (def.weight == TQFont::Bold)
             return new CSSPrimitiveValueImpl(CSS_VAL_BOLD);
         else
             return new CSSPrimitiveValueImpl(CSS_VAL_NORMAL);
@@ -888,7 +888,7 @@ CSSValueImpl *RenderStyleDeclarationImpl::getPropertyCSSValue( int propertyID ) 
         return valueForTextAlign(style->textAlign());
     case CSS_PROP_TEXT_DECORATION:
     {
-        QString string;
+        TQString string;
         if (style->textDecoration() & khtml::UNDERLINE)
             string += "underline";
         if (style->textDecoration() & khtml::OVERLINE) {

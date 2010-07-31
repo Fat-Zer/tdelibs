@@ -4,10 +4,10 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kcharsets.h>
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 #include <krfcdate.h>
 
-bool check(QString txt, time_t a, time_t b)
+bool check(TQString txt, time_t a, time_t b)
 {
   if (a == b) {
     kdDebug() << txt << " : checking '" << a << "' against expected value '" << b << "'... " << "ok" << endl;
@@ -71,9 +71,9 @@ int main(int argc, char *argv[])
 
   // empty/null strings
 
-  check("parseDateISO8601(QString())", KRFCDate::parseDateISO8601(QString()), b);
+  check("parseDateISO8601(TQString())", KRFCDate::parseDateISO8601(TQString()), b);
   check("parseDateISO8601(\"\")", KRFCDate::parseDateISO8601(""), b);
-  check("parseDate(QString())", KRFCDate::parseDate(QString()), b);
+  check("parseDate(TQString())", KRFCDate::parseDate(TQString()), b);
   check("parseDate(\"\")", KRFCDate::parseDate(""), b);
   
   printf("\nTest OK !\n");

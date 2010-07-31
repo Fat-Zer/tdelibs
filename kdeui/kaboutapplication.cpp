@@ -22,7 +22,7 @@
 
 // I (espen) prefer that header files are included alphabetically
 
-#include <qlabel.h>
+#include <tqlabel.h>
 #include <kaboutapplication.h>
 #include <kaboutdialog_private.h>
 #include <kaboutdata.h>
@@ -33,17 +33,17 @@
 #include <kactivelabel.h>
 #include "ktextedit.h"
 
-KAboutApplication::KAboutApplication( QWidget *parent, const char *name,
+KAboutApplication::KAboutApplication( TQWidget *parent, const char *name,
               bool modal )
   :KAboutDialog( AbtTabbed|AbtProduct,
-                 kapp ? kapp->caption() : QString::null,
+                 kapp ? kapp->caption() : TQString::null,
                  Close, Close,
      parent, name, modal )
 {
   buildDialog(KGlobal::instance()->aboutData());
 }
 
-KAboutApplication::KAboutApplication( const KAboutData *aboutData, QWidget *parent,
+KAboutApplication::KAboutApplication( const KAboutData *aboutData, TQWidget *parent,
                                       const char *name, bool modal )
   :KAboutDialog( AbtTabbed|AbtProduct, aboutData->programName(), Close, Close,
      parent, name, modal )
@@ -60,24 +60,24 @@ void KAboutApplication::buildDialog( const KAboutData *aboutData )
     //
 
     //i18n "??" is displayed as (pseudo-)version when no data is known about the application
-    setProduct( kapp ? kapp->caption() : QString::null, i18n("??"), QString::null, QString::null );
+    setProduct( kapp ? kapp->caption() : TQString::null, i18n("??"), TQString::null, TQString::null );
     KAboutContainer *appPage = addContainerPage( i18n("&About"));
 
-    QString appPageText =
+    TQString appPageText =
       i18n("No information available.\n"
      "The supplied KAboutData object does not exist.");
-    QLabel *appPageLabel = new QLabel( "\n\n\n\n"+appPageText+"\n\n\n\n", 0 );
+    TQLabel *appPageLabel = new TQLabel( "\n\n\n\n"+appPageText+"\n\n\n\n", 0 );
     appPage->addWidget( appPageLabel );
     return;
   }
 
   setProduct( aboutData->programName(), aboutData->version(),
-        QString::null, QString::null );
+        TQString::null, TQString::null );
 
   if (!aboutData->programLogo().isNull())
     setProgramLogo( aboutData->programLogo() );
 
-  QString appPageText = aboutData->shortDescription() + "\n";
+  TQString appPageText = aboutData->shortDescription() + "\n";
 
   if (!aboutData->otherText().isEmpty())
     appPageText += "\n" + aboutData->otherText()+"\n";
@@ -87,7 +87,7 @@ void KAboutApplication::buildDialog( const KAboutData *aboutData )
 
   KAboutContainer *appPage = addContainerPage( i18n("&About"));
 
-  QLabel *appPageLabel = new QLabel( appPageText, 0 );
+  TQLabel *appPageLabel = new TQLabel( appPageText, 0 );
   appPage->addWidget( appPageLabel );
 
   if (!aboutData->homepage().isEmpty())
@@ -96,20 +96,20 @@ void KAboutApplication::buildDialog( const KAboutData *aboutData )
     url->setText(aboutData->homepage());
     url->setURL(aboutData->homepage());
     appPage->addWidget( url );
-    connect( url, SIGNAL(leftClickedURL(const QString &)),
-             this, SLOT(openURLSlot(const QString &)));
+    connect( url, TQT_SIGNAL(leftClickedURL(const TQString &)),
+             this, TQT_SLOT(openURLSlot(const TQString &)));
   }
 
   int authorCount = aboutData->authors().count();
   if (authorCount)
   {
-    QString authorPageTitle = authorCount == 1 ?
+    TQString authorPageTitle = authorCount == 1 ?
       i18n("A&uthor") : i18n("A&uthors");
     KAboutContainer *authorPage = addScrolledContainerPage( authorPageTitle );
 
     if (!aboutData->customAuthorTextEnabled() || !aboutData->customAuthorRichText().isEmpty ())
     {
-      QString text;
+      TQString text;
       KActiveLabel* activeLabel = new KActiveLabel( authorPage );
       if (!aboutData->customAuthorTextEnabled())
       {
@@ -133,7 +133,7 @@ void KAboutApplication::buildDialog( const KAboutData *aboutData )
       authorPage->addWidget( activeLabel );
     }
 
-    QValueList<KAboutPerson>::ConstIterator it;
+    TQValueList<KAboutPerson>::ConstIterator it;
     for (it = aboutData->authors().begin();
    it != aboutData->authors().end(); ++it)
     {
@@ -147,7 +147,7 @@ void KAboutApplication::buildDialog( const KAboutData *aboutData )
   {
     KAboutContainer *creditsPage =
       addScrolledContainerPage( i18n("&Thanks To") );
-    QValueList<KAboutPerson>::ConstIterator it;
+    TQValueList<KAboutPerson>::ConstIterator it;
     for (it = aboutData->credits().begin();
    it != aboutData->credits().end(); ++it)
     {
@@ -156,16 +156,16 @@ void KAboutApplication::buildDialog( const KAboutData *aboutData )
     }
   }
 
-  const QValueList<KAboutTranslator> translatorList = aboutData->translators();
+  const TQValueList<KAboutTranslator> translatorList = aboutData->translators();
 
   if(translatorList.count() > 0)
   {
-      QString text = "<qt>";
+      TQString text = "<qt>";
 
-      QValueList<KAboutTranslator>::ConstIterator it;
+      TQValueList<KAboutTranslator>::ConstIterator it;
       for(it = translatorList.begin(); it != translatorList.end(); ++it)
       {
-   text += QString("<p>%1<br>&nbsp;&nbsp;&nbsp;"
+   text += TQString("<p>%1<br>&nbsp;&nbsp;&nbsp;"
        "<a href=\"mailto:%2\">%2</a></p>")
      .arg((*it).name())
      .arg((*it).emailAddress())
@@ -184,5 +184,5 @@ void KAboutApplication::buildDialog( const KAboutData *aboutData )
   //
   // Make sure the dialog has a reasonable width
   //
-  setInitialSize( QSize(400,1) );
+  setInitialSize( TQSize(400,1) );
 }

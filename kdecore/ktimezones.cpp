@@ -26,11 +26,11 @@
 #include <kstringhandler.h>
 #include <ktempfile.h>
 
-#include <qdatetime.h>
-#include <qfile.h>
-#include <qregexp.h>
-#include <qstringlist.h>
-#include <qtextstream.h>
+#include <tqdatetime.h>
+#include <tqfile.h>
+#include <tqregexp.h>
+#include <tqstringlist.h>
+#include <tqtextstream.h>
 
 #include <cerrno>
 #include <climits>
@@ -52,7 +52,7 @@ class AbbreviationsMatch :
     public KTimezoneDetails
 {
 public:
-    AbbreviationsMatch(const QString &stdZone, const QString &dstZone = "")
+    AbbreviationsMatch(const TQString &stdZone, const TQString &dstZone = "")
     {
         m_stdZone = stdZone;
         m_dstZone = dstZone;
@@ -72,10 +72,10 @@ public:
 private:
     bool m_foundStd;
     bool m_foundDst;
-    QString m_stdZone;
-    QString m_dstZone;
+    TQString m_stdZone;
+    TQString m_dstZone;
 
-    virtual void gotAbbreviation(int /*index*/, const QString &value)
+    virtual void gotAbbreviation(int /*index*/, const TQString &value)
     {
         if (m_stdZone == value)
         {
@@ -100,7 +100,7 @@ public:
     {
     }
 
-    virtual bool parse(const QString &/*zone*/, KTimezoneDetails &/*dataReceiver*/) const
+    virtual bool parse(const TQString &/*zone*/, KTimezoneDetails &/*dataReceiver*/) const
     {
         return true;
     }
@@ -138,7 +138,7 @@ public:
         return m_isDst;
     }
 
-    QString abbreviation()
+    TQString abbreviation()
     {
         return m_abbr;
     }
@@ -150,7 +150,7 @@ private:
     int m_abbrIndex;
     int m_offset;
     bool m_isDst;
-    QString m_abbr;
+    TQString m_abbr;
 
     virtual void gotTransitionTime(int index, unsigned transitionTime)
     {
@@ -181,7 +181,7 @@ private:
         }
     }
 
-    virtual void gotAbbreviation(int index, const QString &value)
+    virtual void gotAbbreviation(int index, const TQString &value)
     {
         if (index == m_abbrIndex)
         {
@@ -203,9 +203,9 @@ bool KTimezone::isValidLongitude(float longitude)
 }
 
 KTimezone::KTimezone(
-    KSharedPtr<KTimezoneSource> db, const QString& name,
-    const QString &countryCode, float latitude, float longitude,
-    const QString &comment) :
+    KSharedPtr<KTimezoneSource> db, const TQString& name,
+    const TQString &countryCode, float latitude, float longitude,
+    const TQString &comment) :
     m_db(db),
     m_name(name),
     m_countryCode(countryCode),
@@ -227,12 +227,12 @@ KTimezone::~KTimezone()
     // delete d;
 }
 
-QString KTimezone::comment() const
+TQString KTimezone::comment() const
 {
     return m_comment;
 }
 
-QDateTime KTimezone::convert(const KTimezone *newZone, const QDateTime &dateTime) const
+TQDateTime KTimezone::convert(const KTimezone *newZone, const TQDateTime &dateTime) const
 {
     char *originalZone = ::getenv("TZ");
 
@@ -244,7 +244,7 @@ QDateTime KTimezone::convert(const KTimezone *newZone, const QDateTime &dateTime
     // Set the timezone and convert UTC to localtime.
     ::setenv("TZ", newZone->name().utf8(), 1);
     tzset();
-    QDateTime remoteTime;
+    TQDateTime remoteTime;
     remoteTime.setTime_t(utc, Qt::LocalTime);
 
     // Now restore things
@@ -260,7 +260,7 @@ QDateTime KTimezone::convert(const KTimezone *newZone, const QDateTime &dateTime
     return remoteTime;
 }
 
-QString KTimezone::countryCode() const
+TQString KTimezone::countryCode() const
 {
     return m_countryCode;
 }
@@ -275,7 +275,7 @@ float KTimezone::longitude() const
     return m_longitude;
 }
 
-QString KTimezone::name() const
+TQString KTimezone::name() const
 {
     return m_name;
 }
@@ -285,12 +285,12 @@ int KTimezone::offset(Qt::TimeSpec basisSpec) const
     char *originalZone = ::getenv("TZ");
 
     // Get the time in the current timezone.
-    QDateTime basisTime = QDateTime::currentDateTime(basisSpec);
+    TQDateTime basisTime = TQDateTime::currentDateTime(basisSpec);
 
     // Set the timezone and find out what time it is there compared to the basis.
     ::setenv("TZ", m_name.utf8(), 1);
     tzset();
-    QDateTime remoteTime = QDateTime::currentDateTime(Qt::LocalTime);
+    TQDateTime remoteTime = TQDateTime::currentDateTime(Qt::LocalTime);
     int offset = remoteTime.secsTo(basisTime);
 
     // Now restore things
@@ -306,7 +306,7 @@ int KTimezone::offset(Qt::TimeSpec basisSpec) const
     return offset;
 }
 
-int KTimezone::offset(const QDateTime &dateTime) const
+int KTimezone::offset(const TQDateTime &dateTime) const
 {
     OffsetFind finder(dateTime.toTime_t());
     int result = 0;
@@ -370,7 +370,7 @@ const KTimezones::ZoneMap KTimezones::allZones()
     // is the place to look. The TZI binary value is the TIME_ZONE_INFORMATION structure.
     //
     // For Unix its all easy except knowing where to look. Try the LSB location first.
-    QFile f;
+    TQFile f;
     m_zoneinfoDir = "/usr/share/zoneinfo";
     f.setName(m_zoneinfoDir + "/zone.tab");
     if (!f.open(IO_ReadOnly))
@@ -412,16 +412,16 @@ const KTimezones::ZoneMap KTimezones::allZones()
     }
 
     // Parse the zone.tab.
-    QTextStream str(&f);
-    QRegExp lineSeparator("[ \t]");
-    QRegExp ordinateSeparator("[+-]");
+    TQTextStream str(&f);
+    TQRegExp lineSeparator("[ \t]");
+    TQRegExp ordinateSeparator("[+-]");
     KSharedPtr<KTimezoneSource> db(new KTimezoneSource(m_zoneinfoDir));
     while (!str.atEnd())
     {
-        QString line = str.readLine();
+        TQString line = str.readLine();
         if (line.isEmpty() || '#' == line[0])
             continue;
-        QStringList tokens = KStringHandler::perlSplit(lineSeparator, line, 4);
+        TQStringList tokens = KStringHandler::perlSplit(lineSeparator, line, 4);
         if (tokens.count() < 3)
         {
             kdError() << "invalid record: " << line << endl;
@@ -429,7 +429,7 @@ const KTimezones::ZoneMap KTimezones::allZones()
         }
 
         // Got three tokens. Now check for two ordinates plus first one is "".
-        QStringList ordinates = KStringHandler::perlSplit(ordinateSeparator, tokens[1], 2);
+        TQStringList ordinates = KStringHandler::perlSplit(ordinateSeparator, tokens[1], 2);
         if (ordinates.count() < 2)
         {
             kdError() << "invalid coordinates: " << tokens[1] << endl;
@@ -452,7 +452,7 @@ const KTimezones::ZoneMap KTimezones::allZones()
 /**
  * Convert sHHMM or sHHMMSS to a floating point number of degrees.
  */
-float KTimezones::convertCoordinate(const QString &coordinate)
+float KTimezones::convertCoordinate(const TQString &coordinate)
 {
     int value = coordinate.toInt();
     int degrees = 0;
@@ -500,7 +500,7 @@ const KTimezone *KTimezones::local()
         return local;
 
     // Try to match /etc/localtime against the list of zoneinfo files.
-    QFile f;
+    TQFile f;
     f.setName("/etc/localtime");
     if (f.open(IO_ReadOnly))
     {
@@ -508,8 +508,8 @@ const KTimezone *KTimezones::local()
         KMD5 context("");
         context.reset();
         context.update(f);
-        QIODevice::Offset referenceSize = f.size();
-        QString referenceMd5Sum = context.hexDigest();
+        TQIODevice::Offset referenceSize = f.size();
+        TQString referenceMd5Sum = context.hexDigest();
         f.close();
         if (!m_zoneinfoDir.isEmpty())
         {
@@ -520,8 +520,8 @@ const KTimezone *KTimezones::local()
                 f.setName(m_zoneinfoDir + '/' + zone->name());
                 if (f.open(IO_ReadOnly))
                 {
-                    QIODevice::Offset candidateSize = f.size();
-                    QString candidateMd5Sum;
+                    TQIODevice::Offset candidateSize = f.size();
+                    TQString candidateMd5Sum;
                     if (candidateSize == referenceSize)
                     {
                         // Only do the heavy lifting for file sizes which match.
@@ -544,7 +544,7 @@ const KTimezone *KTimezones::local()
         return local;
 
     // BSD support.
-    QString fileZone;
+    TQString fileZone;
     f.setName("/etc/timezone");
     if (!f.open(IO_ReadOnly))
     {
@@ -558,8 +558,8 @@ const KTimezone *KTimezones::local()
         }
         else
         {
-            QTextStream ts(&f);
-            ts.setEncoding(QTextStream::Latin1);
+            TQTextStream ts(&f);
+            ts.setEncoding(TQTextStream::Latin1);
 
             // Read the last line starting "TZ=".
             while (!ts.atEnd())
@@ -578,8 +578,8 @@ const KTimezone *KTimezones::local()
     }
     else
     {
-        QTextStream ts(&f);
-        ts.setEncoding(QTextStream::Latin1);
+        TQTextStream ts(&f);
+        ts.setEncoding(TQTextStream::Latin1);
 
         // Read the first line.
         if (!ts.atEnd())
@@ -619,7 +619,7 @@ const KTimezone *KTimezones::local()
     return m_UTC;
 }
 
-const KTimezone *KTimezones::zone(const QString &name)
+const KTimezone *KTimezones::zone(const TQString &name)
 {
     if (name.isEmpty())
         return m_UTC;
@@ -639,7 +639,7 @@ KTimezoneDetails::~KTimezoneDetails()
 {
 }
 
-void KTimezoneDetails::gotAbbreviation(int /*index*/, const QString &)
+void KTimezoneDetails::gotAbbreviation(int /*index*/, const TQString &)
 {}
 
 void KTimezoneDetails::gotHeader(
@@ -671,7 +671,7 @@ void KTimezoneDetails::parseEnded()
 void KTimezoneDetails::parseStarted()
 {}
 
-KTimezoneSource::KTimezoneSource(const QString &db) :
+KTimezoneSource::KTimezoneSource(const TQString &db) :
     m_db(db)
 {
 }
@@ -680,14 +680,14 @@ KTimezoneSource::~KTimezoneSource()
 {
 }
 
-QString KTimezoneSource::db()
+TQString KTimezoneSource::db()
 {
     return m_db;
 }
 
-bool KTimezoneSource::parse(const QString &zone, KTimezoneDetails &dataReceiver) const
+bool KTimezoneSource::parse(const TQString &zone, KTimezoneDetails &dataReceiver) const
 {
-    QFile f(m_db + '/' + zone);
+    TQFile f(m_db + '/' + zone);
     if (!f.open(IO_ReadOnly))
     {
         kdError() << "Cannot open " << f.name() << endl;
@@ -718,9 +718,9 @@ bool KTimezoneSource::parse(const QString &zone, KTimezoneDetails &dataReceiver)
     Q_UINT8 isStandard;
     Q_UINT8 isUTC;
 
-    QDataStream str(&f);
+    TQDataStream str(&f);
     str >> T >> z >> i_ >> f_;
-    // kdError() << "signature: " << QChar(T) << QChar(z) << QChar(i_) << QChar(f_) << endl;
+    // kdError() << "signature: " << TQChar(T) << TQChar(z) << TQChar(i_) << TQChar(f_) << endl;
     unsigned i;
     for (i = 0; i < 4; i++)
         str >> tzh.ttisgmtcnt;
@@ -752,7 +752,7 @@ bool KTimezoneSource::parse(const QString &zone, KTimezoneDetails &dataReceiver)
         kdError() << "excessive length for timezone abbreviations: " << tzh.charcnt << endl;
         return false;
     }
-    QByteArray array(tzh.charcnt);
+    TQByteArray array(tzh.charcnt);
     str.readRawBytes(array.data(), array.size());
     char *abbrs = array.data();
     if (abbrs[tzh.charcnt - 1] != 0)

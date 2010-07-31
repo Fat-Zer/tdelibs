@@ -53,7 +53,7 @@ class KATEPARTINTERFACES_EXPORT View : public KTextEditor::View, public KTextEdi
     /**
      Constructor (should much rather take a reference to the document).
     */
-    View ( KTextEditor::Document *, QWidget *, const char *name = 0 );
+    View ( KTextEditor::Document *, TQWidget *, const char *name = 0 );
     /**
      Destructor, you need a destructor if Scott Meyers says so.
     */
@@ -69,21 +69,21 @@ class KATEPARTINTERFACES_EXPORT View : public KTextEditor::View, public KTextEdi
     /**
       Gets the text line where the cursor is on
     */
-    virtual QString currentTextLine() { return 0L; }
+    virtual TQString currentTextLine() { return 0L; }
     /**
       Gets the word where the cursor is on
     */
-    virtual QString currentWord() { return 0L; }
+    virtual TQString currentWord() { return 0L; }
     /**
       Gets the word at position x, y. Can be used to find
       the word under the mouse cursor
     */
-    virtual QString word(int , int ) { return 0L; }
+    virtual TQString word(int , int ) { return 0L; }
     /**
       Insert text at the current cursor position.
       @param mark is unused.
     */
-    virtual void insertText(const QString &mark ) { Q_UNUSED(mark); }
+    virtual void insertText(const TQString &mark ) { Q_UNUSED(mark); }
     /**
       Works exactly like closeURL() of KParts::ReadWritePart
     */
@@ -92,7 +92,7 @@ class KATEPARTINTERFACES_EXPORT View : public KTextEditor::View, public KTextEdi
   public:
     virtual int tabWidth() = 0;
     virtual void setTabWidth(int) = 0;
-    virtual void setEncoding (QString e) = 0;
+    virtual void setEncoding (TQString e) = 0;
 
     /**
       Returns true if this editor is the only owner of its document
@@ -211,7 +211,7 @@ class KATEPARTINTERFACES_EXPORT View : public KTextEditor::View, public KTextEdi
       Set focus to the current window.
     */
     // Should remove this, it's redundant.
-    virtual void setFocus () { QWidget::setFocus(); }
+    virtual void setFocus () { TQWidget::setFocus(); }
     /**
       Searches for the last searched text forward from cursor position.
       @param forward determines the search direction.

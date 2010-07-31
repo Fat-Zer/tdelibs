@@ -24,7 +24,7 @@
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 
-#include <qtimer.h>
+#include <tqtimer.h>
 #include <kdelibs_export.h>
 
 /**
@@ -54,7 +54,7 @@ private slots:
 private:
 	static KMTimer	*m_self;
 	int	m_count;
-	KMTimer(QObject *parent = 0, const char *name = 0);
+	KMTimer(TQObject *parent = 0, const char *name = 0);
 	void releaseTimer(bool do_emit = false);
 	void startTimer(int delay = -1);
 };

@@ -27,8 +27,8 @@
 #include <ktexteditor/selectioninterface.h>        
 
 #include <kxmlguiclient.h>
-#include <qobject.h>
-#include <qguardedptr.h>
+#include <tqobject.h>
+#include <tqguardedptr.h>
 
 class QLabel;
 
@@ -37,17 +37,17 @@ class ISearchPlugin : public KTextEditor::Plugin, public KTextEditor::PluginView
 	Q_OBJECT
 	
 public:
-	ISearchPlugin( QObject *parent = 0, const char* name = 0, const QStringList &args = QStringList() );
+	ISearchPlugin( TQObject *parent = 0, const char* name = 0, const TQStringList &args = TQStringList() );
 	virtual ~ISearchPlugin();
 	
 	void addView (KTextEditor::View *view);
 	void removeView (KTextEditor::View *view);
 	
 private:
-	QPtrList<class ISearchPluginView> m_views;
+	TQPtrList<class ISearchPluginView> m_views;
 };
 
-class ISearchPluginView : public QObject, public KXMLGUIClient
+class ISearchPluginView : public TQObject, public KXMLGUIClient
 {
 	Q_OBJECT
 	
@@ -55,7 +55,7 @@ public:
 	ISearchPluginView( KTextEditor::View *view );
 	virtual ~ISearchPluginView();
 	
-	virtual bool eventFilter( QObject*, QEvent* );
+	virtual bool eventFilter( TQObject*, TQEvent* );
 	
 	void setView( KTextEditor::View* view );   
 	
@@ -69,9 +69,9 @@ private slots:
 	void slotSearchForwardAction();
 	void slotSearchBackwardAction();
 	void slotSearchAction( bool reverse );
-	void slotTextChanged( const QString& text );
-	void slotReturnPressed( const QString& text );
-	void slotAddContextMenuItems( QPopupMenu *menu);
+	void slotTextChanged( const TQString& text );
+	void slotReturnPressed( const TQString& text );
+	void slotAddContextMenuItems( TQPopupMenu *menu);
 	
 private:
 	void readConfig();
@@ -81,11 +81,11 @@ private:
 	                      bool wrapped = false, bool overwrapped = false );
 	void startSearch();
 	void endSearch();
-	void quitToView( const QString &text );
+	void quitToView( const TQString &text );
 
 	void nextMatch( bool reverse );
 	bool iSearch( uint startLine, uint startCol,
-	              const QString& text, bool reverse, bool autoWrap );
+	              const TQString& text, bool reverse, bool autoWrap );
 	
 	KTextEditor::View*     m_view;
 	KTextEditor::Document* m_doc;
@@ -95,9 +95,9 @@ private:
 	KAction*               m_searchForwardAction;
 	KAction*               m_searchBackwardAction;
 	KWidgetAction*         m_comboAction;
-	QGuardedPtr<QLabel>    m_label;
-	QGuardedPtr<KHistoryCombo> m_combo;
-	QString        m_lastString;
+	TQGuardedPtr<TQLabel>    m_label;
+	TQGuardedPtr<KHistoryCombo> m_combo;
+	TQString        m_lastString;
 	bool           m_searchBackward;
 	bool           m_caseSensitive;
 	bool           m_fromBeginning;

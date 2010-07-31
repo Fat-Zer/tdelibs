@@ -20,7 +20,7 @@
 
 #include "sound.h"
 
-#include <qdatastream.h>
+#include <tqdatastream.h>
 
 using namespace KABC;
 
@@ -29,12 +29,12 @@ Sound::Sound()
 {
 }
 
-Sound::Sound( const QString &url )
+Sound::Sound( const TQString &url )
   : mUrl( url ), mIntern( false )
 {
 }
 
-Sound::Sound( const QByteArray &data )
+Sound::Sound( const TQByteArray &data )
   : mData( data ), mIntern( true )
 {
 }
@@ -63,13 +63,13 @@ bool Sound::operator!=( const Sound &s ) const
   return !( s == *this );
 }
 
-void Sound::setUrl( const QString &url )
+void Sound::setUrl( const TQString &url )
 {
   mUrl = url;
   mIntern = false;
 }
 
-void Sound::setData( const QByteArray &data )
+void Sound::setData( const TQByteArray &data )
 {
   mData = data;
   mIntern = true;
@@ -86,17 +86,17 @@ bool Sound::isEmpty() const
 
 }
 
-QString Sound::url() const
+TQString Sound::url() const
 {
   return mUrl;
 }
 
-QByteArray Sound::data() const
+TQByteArray Sound::data() const
 {
   return mData;
 }
 
-QString Sound::asString() const
+TQString Sound::asString() const
 {
   if ( mIntern )
     return "intern sound";
@@ -104,13 +104,13 @@ QString Sound::asString() const
     return mUrl;
 }
 
-QDataStream &KABC::operator<<( QDataStream &s, const Sound &sound )
+TQDataStream &KABC::operator<<( TQDataStream &s, const Sound &sound )
 {
   return s << sound.mIntern << sound.mUrl;
 //  return s << sound.mIntern << sound.mUrl << sound.mData;
 }
 
-QDataStream &KABC::operator>>( QDataStream &s, Sound &sound )
+TQDataStream &KABC::operator>>( TQDataStream &s, Sound &sound )
 {
   s >> sound.mIntern >> sound.mUrl;
 //  s >> sound.mIntern >> sound.mUrl >> sound.mData;

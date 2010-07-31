@@ -22,7 +22,7 @@
 #include <stdio.h> // for EOF
 #include <stdlib.h>
 #include <assert.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 #define BUFFER_SIZE 8*1024
 
@@ -37,9 +37,9 @@ public:
     bool autoDeleteFilterBase;
     bool bOpenedUnderlyingDevice;
     bool bIgnoreData;
-    QByteArray buffer; // Used as 'input buffer' when reading, as 'output buffer' when writing
-    QCString ungetchBuffer;
-    QCString origFileName;
+    TQByteArray buffer; // Used as 'input buffer' when reading, as 'output buffer' when writing
+    TQCString ungetchBuffer;
+    TQCString origFileName;
     KFilterBase::Result result;
 };
 
@@ -63,14 +63,14 @@ KFilterDev::~KFilterDev()
 #ifndef KDE_NO_COMPAT
 //this one is static
 // Cumbersome API. To be removed in KDE 3.0.
-QIODevice* KFilterDev::createFilterDevice(KFilterBase* base, QFile* file)
+TQIODevice* KFilterDev::createFilterDevice(KFilterBase* base, TQFile* file)
 {
    if (file==0)
       return 0;
 
    //we don't need a filter
    if (base==0)
-       return new QFile(file->name()); // A bit strange IMHO. We ask for a QFile but we create another one !?! (DF)
+       return new TQFile(file->name()); // A bit strange IMHO. We ask for a TQFile but we create another one !?! (DF)
 
    base->setDevice(file);
    return new KFilterDev(base);
@@ -78,10 +78,10 @@ QIODevice* KFilterDev::createFilterDevice(KFilterBase* base, QFile* file)
 #endif
 
 //static
-QIODevice * KFilterDev::deviceForFile( const QString & fileName, const QString & mimetype,
+TQIODevice * KFilterDev::deviceForFile( const TQString & fileName, const TQString & mimetype,
                                        bool forceFilter )
 {
-    QFile * f = new QFile( fileName );
+    TQFile * f = new TQFile( fileName );
     KFilterBase * base = mimetype.isEmpty() ? KFilterBase::findFilterByFileName( fileName )
                          : KFilterBase::findFilterByMimeType( mimetype );
     if ( base )
@@ -98,12 +98,12 @@ QIODevice * KFilterDev::deviceForFile( const QString & fileName, const QString &
     }
 }
 
-QIODevice * KFilterDev::device( QIODevice* inDevice, const QString & mimetype)
+TQIODevice * KFilterDev::device( TQIODevice* inDevice, const TQString & mimetype)
 {
     return device( inDevice, mimetype, true );
 }
 
-QIODevice * KFilterDev::device( QIODevice* inDevice, const QString & mimetype, bool autoDeleteInDevice )
+TQIODevice * KFilterDev::device( TQIODevice* inDevice, const TQString & mimetype, bool autoDeleteInDevice )
 {
    if (inDevice==0)
       return 0;
@@ -169,7 +169,7 @@ void KFilterDev::flush()
     // Hmm, might not be enough...
 }
 
-QIODevice::Offset KFilterDev::size() const
+TQIODevice::Offset KFilterDev::size() const
 {
     // Well, hmm, Houston, we have a problem.
     // We can't know the size of the uncompressed data
@@ -182,12 +182,12 @@ QIODevice::Offset KFilterDev::size() const
     return (uint)-1;
 }
 
-QIODevice::Offset KFilterDev::at() const
+TQIODevice::Offset KFilterDev::at() const
 {
     return ioIndex;
 }
 
-bool KFilterDev::at( QIODevice::Offset pos )
+bool KFilterDev::at( TQIODevice::Offset pos )
 {
     //kdDebug(7005) << "KFilterDev::at " << pos << "  currently at " << ioIndex << endl;
 
@@ -219,9 +219,9 @@ bool KFilterDev::at( QIODevice::Offset pos )
     }
 
     //kdDebug(7005) << "KFilterDev::at : reading " << pos << " dummy bytes" << endl;
-    QByteArray dummy( QMIN( pos, 3*BUFFER_SIZE ) );
+    TQByteArray dummy( QMIN( pos, 3*BUFFER_SIZE ) );
     d->bIgnoreData = true;
-    bool result = ( (QIODevice::Offset)readBlock( dummy.data(), pos ) == pos );
+    bool result = ( (TQIODevice::Offset)readBlock( dummy.data(), pos ) == pos );
     d->bIgnoreData = false;
     return result;
 }
@@ -440,12 +440,12 @@ int KFilterDev::getch()
         int ch = d->ungetchBuffer[ len-1 ];
         d->ungetchBuffer.truncate( len - 1 );
         ioIndex++;
-        //kdDebug(7005) << "KFilterDev::getch from ungetch: " << QString(QChar(ch)) << endl;
+        //kdDebug(7005) << "KFilterDev::getch from ungetch: " << TQString(TQChar(ch)) << endl;
         return ch;
     }
     char buf[1];
     int ret = readBlock( buf, 1 ) == 1 ? buf[0] : EOF;
-    //kdDebug(7005) << "KFilterDev::getch ret=" << QString(QChar(ret)) << endl;
+    //kdDebug(7005) << "KFilterDev::getch ret=" << TQString(TQChar(ret)) << endl;
     return ret;
 }
 
@@ -459,7 +459,7 @@ int KFilterDev::putch( int c )
 
 int KFilterDev::ungetch( int ch )
 {
-    //kdDebug(7005) << "KFilterDev::ungetch " << QString(QChar(ch)) << endl;
+    //kdDebug(7005) << "KFilterDev::ungetch " << TQString(TQChar(ch)) << endl;
     if ( ch == EOF )                            // cannot unget EOF
         return ch;
 
@@ -469,7 +469,7 @@ int KFilterDev::ungetch( int ch )
     return ch;
 }
 
-void KFilterDev::setOrigFileName( const QCString & fileName )
+void KFilterDev::setOrigFileName( const TQCString & fileName )
 {
     d->origFileName = fileName;
 }

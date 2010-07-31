@@ -31,10 +31,10 @@
 #include "html/html_documentimpl.h"
 #include "rendering/render_frames.h"
 
-#include <qstylesheet.h>
-#include <qtimer.h>
-#include <qpaintdevicemetrics.h>
-#include <qapplication.h>
+#include <tqstylesheet.h>
+#include <tqtimer.h>
+#include <tqpaintdevicemetrics.h>
+#include <tqapplication.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kinputdialog.h>
@@ -52,8 +52,8 @@
 #endif
 #include <kglobalsettings.h>
 #include <assert.h>
-#include <qstyle.h>
-#include <qobjectlist.h>
+#include <tqstyle.h>
+#include <tqobjectlist.h>
 #include <kstringhandler.h>
 
 #include "kjs_proxy.h"
@@ -85,7 +85,7 @@ namespace KJS {
     static const ClassInfo info;
     enum { Back, Forward, Go, Length };
   private:
-    QGuardedPtr<KHTMLPart> part;
+    TQGuardedPtr<KHTMLPart> part;
   };
 
   class External : public ObjectImp {
@@ -98,7 +98,7 @@ namespace KJS {
     static const ClassInfo info;
     enum { AddFavorite };
   private:
-    QGuardedPtr<KHTMLPart> part;
+    TQGuardedPtr<KHTMLPart> part;
   };
 
   class FrameArray : public ObjectImp {
@@ -109,7 +109,7 @@ namespace KJS {
     virtual Value call(ExecState *exec, Object &thisObj, const List &args);
     virtual bool implementsCall() const { return true; }
   private:
-    QGuardedPtr<KHTMLPart> part;
+    TQGuardedPtr<KHTMLPart> part;
   };
 
 #ifdef Q_WS_QWS
@@ -121,7 +121,7 @@ namespace KJS {
 
   private:
     const Konqueror* konqueror;
-    QCString m_name;
+    TQCString m_name;
   };
 #endif
 } // namespace KJS
@@ -164,8 +164,8 @@ Value Screen::getValueProperty(ExecState *exec, int token) const
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
   KWinModule info(0, KWinModule::INFO_DESKTOP);
 #endif
-  QWidget *thisWidget = Window::retrieveActive(exec)->part()->widget();
-  QRect sg = KGlobalSettings::desktopGeometry(thisWidget);
+  TQWidget *thisWidget = Window::retrieveActive(exec)->part()->widget();
+  TQRect sg = KGlobalSettings::desktopGeometry(thisWidget);
 
   switch( token ) {
   case Height:
@@ -174,12 +174,12 @@ Value Screen::getValueProperty(ExecState *exec, int token) const
     return Number(sg.width());
   case ColorDepth:
   case PixelDepth: {
-    QPaintDeviceMetrics m(QApplication::desktop());
+    TQPaintDeviceMetrics m(TQApplication::desktop());
     return Number(m.depth());
   }
   case AvailLeft: {
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
-    QRect clipped = info.workArea().intersect(sg);
+    TQRect clipped = info.workArea().intersect(sg);
     return Number(clipped.x()-sg.x());
 #else
     return Number(10);
@@ -187,7 +187,7 @@ Value Screen::getValueProperty(ExecState *exec, int token) const
   }
   case AvailTop: {
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
-    QRect clipped = info.workArea().intersect(sg);
+    TQRect clipped = info.workArea().intersect(sg);
     return Number(clipped.y()-sg.y());
 #else
     return Number(10);
@@ -195,7 +195,7 @@ Value Screen::getValueProperty(ExecState *exec, int token) const
   }
   case AvailHeight: {
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
-    QRect clipped = info.workArea().intersect(sg);
+    TQRect clipped = info.workArea().intersect(sg);
     return Number(clipped.height());
 #else
     return Number(100);
@@ -203,7 +203,7 @@ Value Screen::getValueProperty(ExecState *exec, int token) const
   }
   case AvailWidth: {
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
-    QRect clipped = info.workArea().intersect(sg);
+    TQRect clipped = info.workArea().intersect(sg);
     return Number(clipped.width());
 #else
     return Number(100);
@@ -520,14 +520,14 @@ bool Window::hasProperty(ExecState *exec, const Identifier &p) const
   if (!part)
       return false;
 
-  QString q = p.qstring();
+  TQString q = p.qstring();
   if (part->findFramePart(p.qstring()))
     return true;
   // allow window[1] or parent[1] etc. (#56983)
   bool ok;
   unsigned int i = p.toArrayIndex(&ok);
   if (ok) {
-    QPtrList<KParts::ReadOnlyPart> frames = part->frames();
+    TQPtrList<KParts::ReadOnlyPart> frames = part->frames();
     unsigned int len = frames.count();
     if (i < len)
       return true;
@@ -639,7 +639,7 @@ Value Window::get(ExecState *exec, const Identifier &p) const
     }
   } else if (!part) {
     // not a  KHTMLPart
-    QString rvalue;
+    TQString rvalue;
     KParts::LiveConnectExtension::Type rtype;
     unsigned long robjid;
     if (m_frame->m_liveconnect &&
@@ -882,15 +882,15 @@ Value Window::get(ExecState *exec, const Identifier &p) const
     case ScreenX: {
       if (!part->view())
         return Undefined();
-      QRect sg = KGlobalSettings::desktopGeometry(part->view());
-      return Number(part->view()->mapToGlobal(QPoint(0,0)).x() + sg.x());
+      TQRect sg = KGlobalSettings::desktopGeometry(part->view());
+      return Number(part->view()->mapToGlobal(TQPoint(0,0)).x() + sg.x());
     }
     case ScreenTop:
     case ScreenY: {
       if (!part->view())
         return Undefined();
-      QRect sg = KGlobalSettings::desktopGeometry(part->view());
-      return Number(part->view()->mapToGlobal(QPoint(0,0)).y() + sg.y());
+      TQRect sg = KGlobalSettings::desktopGeometry(part->view());
+      return Number(part->view()->mapToGlobal(TQPoint(0,0)).y() + sg.y());
     }
     case ScrollX: {
       if (!part->view())
@@ -1010,7 +1010,7 @@ Value Window::get(ExecState *exec, const Identifier &p) const
   bool ok;
   unsigned int i = p.toArrayIndex(&ok);
   if (ok) {
-    QPtrList<KParts::ReadOnlyPart> frames = part->frames();
+    TQPtrList<KParts::ReadOnlyPart> frames = part->frames();
     unsigned int len = frames.count();
     if (i < len) {
       KParts::ReadOnlyPart* frame = frames.at(i);
@@ -1232,7 +1232,7 @@ void Window::scheduleClose()
 {
   kdDebug(6070) << "Window::scheduleClose window.close() " << m_frame << endl;
   Q_ASSERT(winq);
-  QTimer::singleShot( 0, winq, SLOT( timeoutClose() ) );
+  TQTimer::singleShot( 0, winq, TQT_SLOT( timeoutClose() ) );
 }
 
 void Window::closeNow()
@@ -1256,9 +1256,9 @@ void Window::closeNow()
 void Window::afterScriptExecution()
 {
   DOM::DocumentImpl::updateDocumentsRendering();
-  QValueList<DelayedAction> delayedActions = m_delayed;
+  TQValueList<DelayedAction> delayedActions = m_delayed;
   m_delayed.clear();
-  QValueList<DelayedAction>::Iterator it = delayedActions.begin();
+  TQValueList<DelayedAction>::Iterator it = delayedActions.begin();
   for ( ; it != delayedActions.end() ; ++it )
   {
     switch ((*it).actionId) {
@@ -1393,7 +1393,7 @@ JSEventListener *Window::getJSEventListener(const Value& val, bool html)
   return new JSEventListener(listenerObject, listenerObjectImp, Object(this), html);
 }
 
-JSLazyEventListener *Window::getJSLazyEventListener(const QString& code, const QString& name, DOM::NodeImpl *node)
+JSLazyEventListener *Window::getJSLazyEventListener(const TQString& code, const TQString& name, DOM::NodeImpl *node)
 {
   return new JSLazyEventListener(code, name, Object(this), node);
 }
@@ -1406,7 +1406,7 @@ void Window::clear( ExecState *exec )
   deleteAllProperties( exec );
 
   // Break the dependency between the listeners and their object
-  QPtrDictIterator<JSEventListener> it(jsEventListeners);
+  TQPtrDictIterator<JSEventListener> it(jsEventListeners);
   for (; it.current(); ++it)
     it.current()->clear();
   // Forget about the listeners (the DOM::NodeImpls will delete them)
@@ -1430,23 +1430,23 @@ void Window::setCurrentEvent( DOM::Event *evt )
   //kdDebug(6070) << "Window " << this << " (part=" << m_part << ")::setCurrentEvent m_evt=" << evt << endl;
 }
 
-void Window::goURL(ExecState* exec, const QString& url, bool lockHistory)
+void Window::goURL(ExecState* exec, const TQString& url, bool lockHistory)
 {
   Window* active = Window::retrieveActive(exec);
   KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
   KHTMLPart *active_part = ::qt_cast<KHTMLPart *>(active->part());
   // Complete the URL using the "active part" (running interpreter)
   if (active_part && part) {
-    if (url[0] == QChar('#')) {
+    if (url[0] == TQChar('#')) {
       part->gotoAnchor(url.mid(1));
     } else {
-      QString dstUrl = active_part->htmlDocument().completeURL(url).string();
+      TQString dstUrl = active_part->htmlDocument().completeURL(url).string();
       kdDebug(6070) << "Window::goURL dstUrl=" << dstUrl << endl;
 
       // check if we're allowed to inject javascript
       // SYNC check with khtml_part.cpp::slotRedirect!
       if ( isSafeScript(exec) ||
-            dstUrl.find(QString::fromLatin1("javascript:"), 0, false) != 0 )
+            dstUrl.find(TQString::fromLatin1("javascript:"), 0, false) != 0 )
         part->scheduleRedirection(-1,
                                   dstUrl,
                                   lockHistory);
@@ -1486,7 +1486,7 @@ void Window::goHistory( int steps )
   //emit ext->goHistory(steps);
 }
 
-void KJS::Window::resizeTo(QWidget* tl, int width, int height)
+void KJS::Window::resizeTo(TQWidget* tl, int width, int height)
 {
   KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
   if(!part)
@@ -1504,7 +1504,7 @@ void KJS::Window::resizeTo(QWidget* tl, int width, int height)
     return;
   }
 
-  QRect sg = KGlobalSettings::desktopGeometry(tl);
+  TQRect sg = KGlobalSettings::desktopGeometry(tl);
 
   if ( width > sg.width() || height > sg.height() ) {
     kdDebug(6070) << "Window::resizeTo refused, window would be too big ("<<width<<","<<height<<")" << endl;
@@ -1536,7 +1536,7 @@ Value Window::openWindow(ExecState *exec, const List& args)
     return Undefined();
   KHTMLView *widget = part->view();
   Value v = args[0];
-  QString str;
+  TQString str;
   if (v.isValid() && !v.isA(UndefinedType))
     str = v.toString(exec).qstring();
 
@@ -1556,7 +1556,7 @@ Value Window::openWindow(ExecState *exec, const List& args)
 		part->settings()->windowOpenPolicy(part->url().host());
   if ( policy == KHTMLSettings::KJSWindowOpenAsk ) {
     emit part->browserExtension()->requestFocus(part);
-    QString caption;
+    TQString caption;
     if (!part->url().host().isEmpty())
       caption = part->url().host() + " - ";
     caption += i18n( "Confirmation: JavaScript Popup" );
@@ -1576,10 +1576,10 @@ Value Window::openWindow(ExecState *exec, const List& args)
       policy = KHTMLSettings::KJSWindowOpenAllow;
   }
 
-  QString frameName = args.size() > 1 ? args[1].toString(exec).qstring() : QString("_blank");
+  TQString frameName = args.size() > 1 ? args[1].toString(exec).qstring() : TQString("_blank");
 
   v = args[2];
-  QString features;
+  TQString features;
   if (!v.isNull() && v.type() != UndefinedType && v.toString(exec).size() > 0) {
     features = v.toString(exec).qstring();
     // Buggy scripts have ' at beginning and end, cut those
@@ -1600,7 +1600,7 @@ Value Window::openWindow(ExecState *exec, const List& args)
   }
 }
 
-Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const QString& frameName, const QString& features)
+Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString& frameName, const TQString& features)
 {
     KHTMLPart *p = ::qt_cast<KHTMLPart *>(m_frame->m_part);
     KHTMLView *widget = p->view();
@@ -1613,16 +1613,16 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const QString&
       winargs.toolBarsVisible = false;
       winargs.statusBarVisible = false;
       winargs.scrollBarsVisible = false;
-      QStringList flist = QStringList::split(',', features);
-      QStringList::ConstIterator it = flist.begin();
+      TQStringList flist = TQStringList::split(',', features);
+      TQStringList::ConstIterator it = flist.begin();
       while (it != flist.end()) {
-        QString s = *it++;
-        QString key, val;
+        TQString s = *it++;
+        TQString key, val;
         int pos = s.find('=');
         if (pos >= 0) {
           key = s.left(pos).stripWhiteSpace().lower();
           val = s.mid(pos + 1).stripWhiteSpace().lower();
-          QRect screen = KGlobalSettings::desktopGeometry(widget->topLevelWidget());
+          TQRect screen = KGlobalSettings::desktopGeometry(widget->topLevelWidget());
 
           if (key == "left" || key == "screenx") {
             winargs.x = (int)val.toFloat() + screen.x();
@@ -1633,13 +1633,13 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const QString&
             if (winargs.y < screen.y() || winargs.y > screen.bottom())
               winargs.y = screen.y(); // only safe choice until size is determined
           } else if (key == "height") {
-            winargs.height = (int)val.toFloat() + 2*qApp->style().pixelMetric( QStyle::PM_DefaultFrameWidth ) + 2;
+            winargs.height = (int)val.toFloat() + 2*qApp->style().pixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
             if (winargs.height > screen.height())  // should actually check workspace
               winargs.height = screen.height();
             if (winargs.height < 100)
               winargs.height = 100;
           } else if (key == "width") {
-            winargs.width = (int)val.toFloat() + 2*qApp->style().pixelMetric( QStyle::PM_DefaultFrameWidth ) + 2;
+            winargs.width = (int)val.toFloat() + 2*qApp->style().pixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
             if (winargs.width > screen.width())    // should actually check workspace
               winargs.width = screen.width();
             if (winargs.width < 100)
@@ -1718,9 +1718,9 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const QString&
           khtmlpart->docImpl()->setBaseURL( p->docImpl()->baseURL() );
         }
       }
-      uargs.serviceType = QString::null;
+      uargs.serviceType = TQString::null;
       if (uargs.frameName.lower() == "_blank")
-        uargs.frameName = QString::null;
+        uargs.frameName = TQString::null;
       if (!url.isEmpty())
         emit khtmlpart->browserExtension()->openURLRequest(url,uargs);
       return Window::retrieve(khtmlpart); // global object
@@ -1739,9 +1739,9 @@ void Window::showSuppressedWindows()
   KJS::Interpreter *interpreter = part->jScript()->interpreter();
   ExecState *exec = interpreter->globalExec();
 
-  QValueList<SuppressedWindowInfo> suppressedWindowInfo = m_suppressedWindowInfo;
+  TQValueList<SuppressedWindowInfo> suppressedWindowInfo = m_suppressedWindowInfo;
   m_suppressedWindowInfo.clear();
-  QValueList<SuppressedWindowInfo>::Iterator it = suppressedWindowInfo.begin();
+  TQValueList<SuppressedWindowInfo>::Iterator it = suppressedWindowInfo.begin();
   for ( ; it != suppressedWindowInfo.end() ; ++it ) {
     executeOpenWindow(exec, (*it).url, (*it).frameName, (*it).features);
   }
@@ -1758,7 +1758,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
   }
 
   Window *window = static_cast<Window *>(thisObj.imp());
-  QString str, str2;
+  TQString str, str2;
 
   KHTMLPart *part = ::qt_cast<KHTMLPart *>(window->m_frame->m_part);
   if (!part)
@@ -1772,7 +1772,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     str = s.qstring();
   }
 
-  QString caption;
+  TQString caption;
   if (part && !part->url().host().isEmpty())
     caption = part->url().host() + " - ";
   caption += "JavaScript"; // TODO: i18n
@@ -1785,7 +1785,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
       part->xmlDocImpl()->updateRendering();
     if ( part )
       emit part->browserExtension()->requestFocus(part);
-    KMessageBox::error(widget, QStyleSheet::convertFromPlainText(str, QStyleSheetItem::WhiteSpaceNormal), caption);
+    KMessageBox::error(widget, TQStyleSheet::convertFromPlainText(str, TQStyleSheetItem::WhiteSpaceNormal), caption);
     return Undefined();
   case Window::Confirm:
     if (!widget->dialogsAllowed())
@@ -1794,7 +1794,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
       part->xmlDocImpl()->updateRendering();
     if ( part )
       emit part->browserExtension()->requestFocus(part);
-    return Boolean((KMessageBox::warningYesNo(widget, QStyleSheet::convertFromPlainText(str), caption,
+    return Boolean((KMessageBox::warningYesNo(widget, TQStyleSheet::convertFromPlainText(str), caption,
                                                 KStdGuiItem::ok(), KStdGuiItem::cancel()) == KMessageBox::Yes));
   case Window::Prompt:
 #ifndef KONQ_EMBEDDED
@@ -1807,12 +1807,12 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     bool ok;
     if (args.size() >= 2)
       str2 = KInputDialog::getText(caption,
-                                   QStyleSheet::convertFromPlainText(str),
+                                   TQStyleSheet::convertFromPlainText(str),
                                    args[1].toString(exec).qstring(), &ok, widget);
     else
       str2 = KInputDialog::getText(caption,
-                                   QStyleSheet::convertFromPlainText(str),
-                                   QString::null, &ok, widget);
+                                   TQStyleSheet::convertFromPlainText(str),
+                                   TQString::null, &ok, widget);
     if ( ok )
         return String(str2);
     else
@@ -1911,7 +1911,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
   case Window::AToB: {
       if (!s.is8Bit())
           return Undefined();
-       QByteArray  in, out;
+       TQByteArray  in, out;
        char *binData = s.ascii();
        in.setRawData( binData, s.size() );
        if (id == Window::AToB)
@@ -1950,10 +1950,10 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     {
       KParts::BrowserExtension *ext = part->browserExtension();
       if (ext) {
-        QWidget * tl = widget->topLevelWidget();
-        QRect sg = KGlobalSettings::desktopGeometry(tl);
+        TQWidget * tl = widget->topLevelWidget();
+        TQRect sg = KGlobalSettings::desktopGeometry(tl);
 
-        QPoint dest = tl->pos() + QPoint( args[0].toInt32(exec), args[1].toInt32(exec) );
+        TQPoint dest = tl->pos() + TQPoint( args[0].toInt32(exec), args[1].toInt32(exec) );
         // Security check (the spec talks about UniversalBrowserWrite to disable this check...)
         if ( dest.x() >= sg.x() && dest.y() >= sg.x() &&
              dest.x()+tl->width() <= sg.width()+sg.x() &&
@@ -1970,10 +1970,10 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     {
       KParts::BrowserExtension *ext = part->browserExtension();
       if (ext) {
-        QWidget * tl = widget->topLevelWidget();
-        QRect sg = KGlobalSettings::desktopGeometry(tl);
+        TQWidget * tl = widget->topLevelWidget();
+        TQRect sg = KGlobalSettings::desktopGeometry(tl);
 
-        QPoint dest( args[0].toInt32(exec)+sg.x(), args[1].toInt32(exec)+sg.y() );
+        TQPoint dest( args[0].toInt32(exec)+sg.x(), args[1].toInt32(exec)+sg.y() );
         // Security check (the spec talks about UniversalBrowserWrite to disable this check...)
         if ( dest.x() >= sg.x() && dest.y() >= sg.y() &&
              dest.x()+tl->width() <= sg.width()+sg.x() &&
@@ -1989,8 +1989,8 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     if(policy == KHTMLSettings::KJSWindowResizeAllow
     		&& args.size() == 2 && widget)
     {
-      QWidget * tl = widget->topLevelWidget();
-      QRect geom = tl->frameGeometry();
+      TQWidget * tl = widget->topLevelWidget();
+      TQRect geom = tl->frameGeometry();
       window->resizeTo( tl,
                         geom.width() + args[0].toInt32(exec),
                         geom.height() + args[1].toInt32(exec) );
@@ -2003,7 +2003,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     if(policy == KHTMLSettings::KJSWindowResizeAllow
                && args.size() == 2 && widget)
     {
-      QWidget * tl = widget->topLevelWidget();
+      TQWidget * tl = widget->topLevelWidget();
       window->resizeTo( tl, args[0].toInt32(exec), args[1].toInt32(exec) );
     }
     return Undefined();
@@ -2096,8 +2096,8 @@ ScheduledAction::ScheduledAction(Object _func, List _args, DateTimeMS _nextTime,
   timerId = _timerId;
 }
 
-// KDE 4: Make it const QString &
-ScheduledAction::ScheduledAction(QString _code, DateTimeMS _nextTime, int _interval, bool _singleShot, int _timerId)
+// KDE 4: Make it const TQString &
+ScheduledAction::ScheduledAction(TQString _code, DateTimeMS _nextTime, int _interval, bool _singleShot, int _timerId)
 {
   //kdDebug(6070) << "ScheduledAction::ScheduledAction(!isFunction) " << this << endl;
   //func = 0;
@@ -2170,8 +2170,8 @@ WindowQObject::WindowQObject(Window *w)
   if ( !parent->m_frame )
       kdDebug(6070) << "WARNING: null part in " << k_funcinfo << endl;
   else
-      connect( parent->m_frame, SIGNAL( destroyed() ),
-               this, SLOT( parentDestroyed() ) );
+      connect( parent->m_frame, TQT_SIGNAL( destroyed() ),
+               this, TQT_SLOT( parentDestroyed() ) );
   pausedTime = 0;
   lastTimerId = 0;
   currentlyDispatching = false;
@@ -2187,7 +2187,7 @@ void WindowQObject::parentDestroyed()
 {
   killTimers();
 
-  QPtrListIterator<ScheduledAction> it(scheduledActions);
+  TQPtrListIterator<ScheduledAction> it(scheduledActions);
   for (; it.current(); ++it)
     delete it.current();
   scheduledActions.clear();
@@ -2222,7 +2222,7 @@ int WindowQObject::installTimeout(const Value &func, List args, int t, bool sing
 
 void WindowQObject::clearTimeout(int timerId)
 {
-  QPtrListIterator<ScheduledAction> it(scheduledActions);
+  TQPtrListIterator<ScheduledAction> it(scheduledActions);
   for (; it.current(); ++it) {
     ScheduledAction *action = it.current();
     if (action->timerId == timerId) {
@@ -2241,12 +2241,12 @@ bool WindowQObject::hasTimers() const
 
 void WindowQObject::mark()
 {
-  QPtrListIterator<ScheduledAction> it(scheduledActions);
+  TQPtrListIterator<ScheduledAction> it(scheduledActions);
   for (; it.current(); ++it)
     it.current()->mark();
 }
 
-void WindowQObject::timerEvent(QTimerEvent *)
+void WindowQObject::timerEvent(TQTimerEvent *)
 {
   killTimers();
 
@@ -2261,14 +2261,14 @@ void WindowQObject::timerEvent(QTimerEvent *)
 
   // Work out which actions are to be executed. We take a separate copy of
   // this list since the main one may be modified during action execution
-  QPtrList<ScheduledAction> toExecute;
-  QPtrListIterator<ScheduledAction> it(scheduledActions);
+  TQPtrList<ScheduledAction> toExecute;
+  TQPtrListIterator<ScheduledAction> it(scheduledActions);
   for (; it.current(); ++it)
     if (currentAdjusted >= it.current()->nextTime)
       toExecute.append(it.current());
 
   // ### verify that the window can't be closed (and action deleted) during execution
-  it = QPtrListIterator<ScheduledAction>(toExecute);
+  it = TQPtrListIterator<ScheduledAction>(toExecute);
   for (; it.current(); ++it) {
     ScheduledAction *action = it.current();
     if (!scheduledActions.containsRef(action)) // removed by clearTimeout()
@@ -2352,11 +2352,11 @@ int DateTimeMS::msecsTo(const DateTimeMS &other) const
 DateTimeMS DateTimeMS::now()
 {
   DateTimeMS t;
-  QTime before = QTime::currentTime();
-  t.mDate = QDate::currentDate();
-  t.mTime = QTime::currentTime();
+  TQTime before = TQTime::currentTime();
+  t.mDate = TQDate::currentDate();
+  t.mTime = TQTime::currentTime();
   if (t.mTime < before)
-    t.mDate = QDate::currentDate(); // prevent race condition in hacky way :)
+    t.mDate = TQDate::currentDate(); // prevent race condition in hacky way :)
   return t;
 }
 
@@ -2368,7 +2368,7 @@ void WindowQObject::setNextTimer()
   if (scheduledActions.isEmpty())
     return;
 
-  QPtrListIterator<ScheduledAction> it(scheduledActions);
+  TQPtrListIterator<ScheduledAction> it(scheduledActions);
   DateTimeMS nextTime = it.current()->nextTime;
   for (++it; it.current(); ++it)
     if (nextTime > it.current()->nextTime)
@@ -2394,7 +2394,7 @@ Value FrameArray::get(ExecState *exec, const Identifier &p) const
   if (part.isNull())
     return Undefined();
 
-  QPtrList<KParts::ReadOnlyPart> frames = part->frames();
+  TQPtrList<KParts::ReadOnlyPart> frames = part->frames();
   unsigned int len = frames.count();
   if (p == lengthPropertyName)
     return Number(len);
@@ -2521,11 +2521,11 @@ Value Location::get(ExecState *exec, const Identifier &p) const
   if (entry)
     switch (entry->value) {
     case Hash:
-      return String( url.ref().isNull() ? QString("") : "#" + url.ref() );
+      return String( url.ref().isNull() ? TQString("") : "#" + url.ref() );
     case Host: {
       UString str = url.host();
       if (url.port())
-        str += ":" + QString::number((int)url.port());
+        str += ":" + TQString::number((int)url.port());
       return String(str);
       // Note: this is the IE spec. The NS spec swaps the two, it says
       // "The hostname property is the concatenation of the host and port properties, separated by a colon."
@@ -2543,9 +2543,9 @@ Value Location::get(ExecState *exec, const Identifier &p) const
     case Pathname:
       if (url.isEmpty())
 	return String("");
-      return String( url.path().isEmpty() ? QString("/") : url.path() );
+      return String( url.path().isEmpty() ? TQString("/") : url.path() );
     case Port:
-      return String( url.port() ? QString::number((int)url.port()) : QString::fromLatin1("") );
+      return String( url.port() ? TQString::number((int)url.port()) : TQString::fromLatin1("") );
     case Protocol:
       return String( url.protocol()+":" );
     case Search:
@@ -2587,7 +2587,7 @@ void Location::put(ExecState *exec, const Identifier &p, const Value &v, int att
     if (entry->value != Href && !window->isSafeScript(exec))
       return;
 
-    QString str = v.toString(exec).qstring();
+    TQString str = v.toString(exec).qstring();
     switch (entry->value) {
     case Href: {
       KHTMLPart* p =::qt_cast<KHTMLPart*>(Window::retrieveActive(exec)->part());
@@ -2603,8 +2603,8 @@ void Location::put(ExecState *exec, const Identifier &p, const Value &v, int att
       url.setRef(str);
       break;
     case Host: {
-      QString host = str.left(str.find(":"));
-      QString port = str.mid(str.find(":")+1);
+      TQString host = str.left(str.find(":"));
+      TQString port = str.mid(str.find(":")+1);
       url.setHost(host);
       url.setPort(port.toUInt());
       break;
@@ -2730,8 +2730,8 @@ Value ExternalFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     if (args.size() != 1 && args.size() != 2)
       return Undefined();
 
-    QString url = args[0].toString(exec).qstring();
-    QString title;
+    TQString url = args[0].toString(exec).qstring();
+    TQString title;
     if (args.size() == 2)
       title = args[1].toString(exec).qstring();
 
@@ -2739,7 +2739,7 @@ Value ExternalFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     // just wanted the base js handling code in cvs
     return Undefined();
 
-    QString question;
+    TQString question;
     if ( title.isEmpty() )
       question = i18n("Do you want a bookmark pointing to the location \"%1\" to be added to your collection?")
                  .arg(url);
@@ -2749,7 +2749,7 @@ Value ExternalFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
 
     emit part->browserExtension()->requestFocus(part);
 
-    QString caption;
+    TQString caption;
     if (!part->url().host().isEmpty())
        caption = part->url().host() + " - ";
     caption += i18n("JavaScript Attempted Bookmark Insert");
@@ -2809,9 +2809,9 @@ Value History::getValueProperty(ExecState *, int token) const
     if ( !iface )
       return Number( 0 );
 
-    QVariant length = iface->property( "historyLength" );
+    TQVariant length = iface->property( "historyLength" );
 
-    if ( length.type() != QVariant::UInt )
+    if ( length.type() != TQVariant::UInt )
       return Number( 0 );
 
     return Number( length.toUInt() );
@@ -2886,13 +2886,13 @@ Value Konqueror::get(ExecState *exec, const Identifier &p) const
   if ( ext ) {
     KParts::BrowserInterface *iface = ext->browserInterface();
     if ( iface ) {
-      QVariant prop = iface->property( p.qstring().latin1() );
+      TQVariant prop = iface->property( p.qstring().latin1() );
 
       if ( prop.isValid() ) {
         switch( prop.type() ) {
-        case QVariant::Int:
+        case TQVariant::Int:
           return Number( prop.toInt() );
-        case QVariant::String:
+        case TQVariant::String:
           return String( prop.toString() );
         default:
           break;
@@ -2916,9 +2916,9 @@ Value KonquerorFunc::tryCall(ExecState *exec, Object &, const List &args)
   if ( !iface )
     return Undefined();
 
-  QCString n = m_name.data();
+  TQCString n = m_name.data();
   n += "()";
-  iface->callMethod( n.data(), QVariant() );
+  iface->callMethod( n.data(), TQVariant() );
 
   return Undefined();
 }

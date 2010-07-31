@@ -1,7 +1,7 @@
 #include <klistview.h>
 #include <kapplication.h>
 #include <kdialogbase.h>
-#include <qvbox.h>
+#include <tqvbox.h>
 
 
 int main( int argc, char **argv )

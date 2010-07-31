@@ -41,7 +41,7 @@ TextBinValue::TextBinValue(const TextBinValue & x)
   mUrl_ = x.mUrl_;
 }
 
-TextBinValue::TextBinValue(const QCString & s)
+TextBinValue::TextBinValue(const TQCString & s)
 	:	Value(s)
 {
 }
@@ -60,7 +60,7 @@ TextBinValue::operator = (TextBinValue & x)
 }
 
 	TextBinValue &
-TextBinValue::operator = (const QCString & s)
+TextBinValue::operator = (const TQCString & s)
 {
 	Value::operator = (s);
 	return *this;

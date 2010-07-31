@@ -27,20 +27,20 @@
 
 #ifdef KDE_USE_FINAL
 #undef Always
-#include <qdockwindow.h>
+#include <tqdockwindow.h>
 #endif
 
 #include <string.h>
 
-#include <qpainter.h>
-#include <qtooltip.h>
-#include <qdrawutil.h>
-#include <qstring.h>
-#include <qrect.h>
-#include <qobjectlist.h>
-#include <qtimer.h>
-#include <qstyle.h>
-#include <qlayout.h>
+#include <tqpainter.h>
+#include <tqtooltip.h>
+#include <tqdrawutil.h>
+#include <tqstring.h>
+#include <tqrect.h>
+#include <tqobjectlist.h>
+#include <tqtimer.h>
+#include <tqstyle.h>
+#include <tqlayout.h>
 
 #include <ktoolbar.h>
 #include <kmainwindow.h>
@@ -114,9 +114,9 @@ public:
     bool modified : 1;
     bool positioned : 1;
 
-    QWidget *m_parent;
+    TQWidget *m_parent;
 
-    QMainWindow::ToolBarDock oldPos;
+    TQMainWindow::ToolBarDock oldPos;
 
     KXMLGUIClient *m_xmlguiClient;
 
@@ -130,26 +130,26 @@ public:
     };
 
     ToolBarInfo toolBarInfo;
-    QValueList<int> iconSizes;
-    QTimer repaintTimer;
+    TQValueList<int> iconSizes;
+    TQTimer repaintTimer;
 
   // Default Values.
   bool HiddenDefault;
   int IconSizeDefault;
-  QString IconTextDefault;
+  TQString IconTextDefault;
   bool NewLineDefault;
   int OffsetDefault;
-  QString PositionDefault;
+  TQString PositionDefault;
 
-   QPtrList<QWidget> idleButtons;
+   TQPtrList<TQWidget> idleButtons;
 };
 
-KToolBarSeparator::KToolBarSeparator(Orientation o , bool l, QToolBar *parent,
+KToolBarSeparator::KToolBarSeparator(Orientation o , bool l, TQToolBar *parent,
                                      const char* name )
-    :QFrame( parent, name ), line( l )
+    :TQFrame( parent, name ), line( l )
 {
-    connect( parent, SIGNAL(orientationChanged(Orientation)),
-             this, SLOT(setOrientation(Orientation)) );
+    connect( parent, TQT_SIGNAL(orientationChanged(Orientation)),
+             this, TQT_SLOT(setOrientation(Orientation)) );
     setOrientation( o );
     setBackgroundMode( parent->backgroundMode() );
     setBackgroundOrigin( ParentOrigin );
@@ -161,56 +161,56 @@ void KToolBarSeparator::setOrientation( Orientation o )
     setFrameStyle( NoFrame );
 }
 
-void KToolBarSeparator::drawContents( QPainter* p )
+void KToolBarSeparator::drawContents( TQPainter* p )
 {
     if ( line ) {
-        QStyle::SFlags flags = QStyle::Style_Default;
+        TQStyle::SFlags flags = TQStyle::Style_Default;
 
         if ( orientation() == Horizontal )
-            flags = flags | QStyle::Style_Horizontal;
+            flags = flags | TQStyle::Style_Horizontal;
 
-        style().drawPrimitive(QStyle::PE_DockWindowSeparator, p,
+        style().drawPrimitive(TQStyle::PE_DockWindowSeparator, p,
                               contentsRect(), colorGroup(), flags);
     } else {
-        QFrame::drawContents(p);
+        TQFrame::drawContents(p);
     }
 }
 
-void KToolBarSeparator::styleChange( QStyle& )
+void KToolBarSeparator::styleChange( TQStyle& )
 {
     setOrientation( orient );
 }
 
-QSize KToolBarSeparator::sizeHint() const
+TQSize KToolBarSeparator::sizeHint() const
 {
-    int dim = style().pixelMetric( QStyle::PM_DockWindowSeparatorExtent, this );
-    return orientation() == Vertical ? QSize( 0, dim ) : QSize( dim, 0 );
+    int dim = style().pixelMetric( TQStyle::PM_DockWindowSeparatorExtent, this );
+    return orientation() == Vertical ? TQSize( 0, dim ) : TQSize( dim, 0 );
 }
 
-QSizePolicy KToolBarSeparator::sizePolicy() const
+TQSizePolicy KToolBarSeparator::sizePolicy() const
 {
-    return QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+    return TQSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Minimum );
 }
 
-KToolBar::KToolBar( QWidget *parent, const char *name, bool honorStyle, bool readConfig )
-    : QToolBar( QString::fromLatin1( name ),
-      dynamic_cast<QMainWindow*>(parent),
+KToolBar::KToolBar( TQWidget *parent, const char *name, bool honorStyle, bool readConfig )
+    : TQToolBar( TQString::fromLatin1( name ),
+      dynamic_cast<TQMainWindow*>(parent),
       parent, false,
       name ? name : "mainToolBar")
 {
     init( readConfig, honorStyle );
 }
 
-KToolBar::KToolBar( QMainWindow *parentWindow, QMainWindow::ToolBarDock dock, bool newLine, const char *name, bool honorStyle, bool readConfig )
-    : QToolBar( QString::fromLatin1( name ),
+KToolBar::KToolBar( TQMainWindow *parentWindow, TQMainWindow::ToolBarDock dock, bool newLine, const char *name, bool honorStyle, bool readConfig )
+    : TQToolBar( TQString::fromLatin1( name ),
       parentWindow, dock, newLine,
       name ? name : "mainToolBar")
 {
     init( readConfig, honorStyle );
 }
 
-KToolBar::KToolBar( QMainWindow *parentWindow, QWidget *dock, bool newLine, const char *name, bool honorStyle, bool readConfig )
-    : QToolBar( QString::fromLatin1( name ),
+KToolBar::KToolBar( TQMainWindow *parentWindow, TQWidget *dock, bool newLine, const char *name, bool honorStyle, bool readConfig )
+    : TQToolBar( TQString::fromLatin1( name ),
       parentWindow, dock, newLine,
       name ? name : "mainToolBar")
 {
@@ -229,17 +229,17 @@ void KToolBar::init( bool readConfig, bool honorStyle )
     setFullSize( true );
     d->m_honorStyle = honorStyle;
     context = 0;
-    layoutTimer = new QTimer( this );
-    connect( layoutTimer, SIGNAL( timeout() ),
-             this, SLOT( rebuildLayout() ) );
-    connect( &(d->repaintTimer), SIGNAL( timeout() ),
-             this, SLOT( slotRepaint() ) );
+    layoutTimer = new TQTimer( this );
+    connect( layoutTimer, TQT_SIGNAL( timeout() ),
+             this, TQT_SLOT( rebuildLayout() ) );
+    connect( &(d->repaintTimer), TQT_SIGNAL( timeout() ),
+             this, TQT_SLOT( slotRepaint() ) );
 
     if ( kapp ) { // may be null when started inside designer
-        connect(kapp, SIGNAL(toolbarAppearanceChanged(int)), this, SLOT(slotAppearanceChanged()));
+        connect(kapp, TQT_SIGNAL(toolbarAppearanceChanged(int)), this, TQT_SLOT(slotAppearanceChanged()));
         // request notification of changes in icon style
         kapp->addKipcEventMask(KIPC::IconChanged);
-        connect(kapp, SIGNAL(iconChanged(int)), this, SLOT(slotIconChanged(int)));
+        connect(kapp, TQT_SIGNAL(iconChanged(int)), this, TQT_SLOT(slotIconChanged(int)));
     }
 
     // finally, read in our configurable settings
@@ -247,15 +247,15 @@ void KToolBar::init( bool readConfig, bool honorStyle )
         slotReadConfig();
 
     if ( mainWindow() )
-        connect( mainWindow(), SIGNAL( toolBarPositionChanged( QToolBar * ) ),
-                 this, SLOT( toolBarPosChanged( QToolBar * ) ) );
+        connect( mainWindow(), TQT_SIGNAL( toolBarPositionChanged( TQToolBar * ) ),
+                 this, TQT_SLOT( toolBarPosChanged( TQToolBar * ) ) );
 
     // Hack to make sure we recalculate our size when we dock.
-    connect( this, SIGNAL(placeChanged(QDockWindow::Place)), SLOT(rebuildLayout()) );
+    connect( this, TQT_SIGNAL(placeChanged(TQDockWindow::Place)), TQT_SLOT(rebuildLayout()) );
 }
 
-int KToolBar::insertButton(const QString& icon, int id, bool enabled,
-                            const QString& text, int index, KInstance *_instance )
+int KToolBar::insertButton(const TQString& icon, int id, bool enabled,
+                            const TQString& text, int index, KInstance *_instance )
 {
     KToolBarButton *button = new KToolBarButton( icon, id, this, 0, text, _instance );
 
@@ -266,9 +266,9 @@ int KToolBar::insertButton(const QString& icon, int id, bool enabled,
 }
 
 
-int KToolBar::insertButton(const QString& icon, int id, const char *signal,
-                            const QObject *receiver, const char *slot,
-                            bool enabled, const QString& text, int index, KInstance *_instance )
+int KToolBar::insertButton(const TQString& icon, int id, const char *signal,
+                            const TQObject *receiver, const char *slot,
+                            bool enabled, const TQString& text, int index, KInstance *_instance )
 {
     KToolBarButton *button = new KToolBarButton( icon, id, this, 0, text, _instance);
     insertWidgetInternal( button, index, id );
@@ -279,8 +279,8 @@ int KToolBar::insertButton(const QString& icon, int id, const char *signal,
 }
 
 
-int KToolBar::insertButton(const QPixmap& pixmap, int id, bool enabled,
-                            const QString& text, int index )
+int KToolBar::insertButton(const TQPixmap& pixmap, int id, bool enabled,
+                            const TQString& text, int index )
 {
     KToolBarButton *button = new KToolBarButton( pixmap, id, this, 0, text);
     insertWidgetInternal( button, index, id );
@@ -290,9 +290,9 @@ int KToolBar::insertButton(const QPixmap& pixmap, int id, bool enabled,
 }
 
 
-int KToolBar::insertButton(const QPixmap& pixmap, int id, const char *signal,
-                            const QObject *receiver, const char *slot,
-                            bool enabled, const QString& text,
+int KToolBar::insertButton(const TQPixmap& pixmap, int id, const char *signal,
+                            const TQObject *receiver, const char *slot,
+                            bool enabled, const TQString& text,
                             int index )
 {
     KToolBarButton *button = new KToolBarButton( pixmap, id, this, 0, text);
@@ -304,8 +304,8 @@ int KToolBar::insertButton(const QPixmap& pixmap, int id, const char *signal,
 }
 
 
-int KToolBar::insertButton(const QString& icon, int id, QPopupMenu *popup,
-                            bool enabled, const QString &text, int index )
+int KToolBar::insertButton(const TQString& icon, int id, TQPopupMenu *popup,
+                            bool enabled, const TQString &text, int index )
 {
     KToolBarButton *button = new KToolBarButton( icon, id, this, 0, text );
     insertWidgetInternal( button, index, id );
@@ -316,8 +316,8 @@ int KToolBar::insertButton(const QString& icon, int id, QPopupMenu *popup,
 }
 
 
-int KToolBar::insertButton(const QPixmap& pixmap, int id, QPopupMenu *popup,
-                            bool enabled, const QString &text, int index )
+int KToolBar::insertButton(const TQPixmap& pixmap, int id, TQPopupMenu *popup,
+                            bool enabled, const TQString &text, int index )
 {
     KToolBarButton *button = new KToolBarButton( pixmap, id, this, 0, text );
     insertWidgetInternal( button, index, id );
@@ -328,16 +328,16 @@ int KToolBar::insertButton(const QPixmap& pixmap, int id, QPopupMenu *popup,
 }
 
 
-int KToolBar::insertLined (const QString& text, int id,
+int KToolBar::insertLined (const TQString& text, int id,
                             const char *signal,
-                            const QObject *receiver, const char *slot,
+                            const TQObject *receiver, const char *slot,
                             bool enabled ,
-                            const QString& toolTipText,
+                            const TQString& toolTipText,
                             int size, int index )
 {
     KLineEdit *lined = new KLineEdit ( this, 0 );
     if ( !toolTipText.isEmpty() )
-        QToolTip::add( lined, toolTipText );
+        TQToolTip::add( lined, toolTipText );
     if ( size > 0 )
         lined->setMinimumWidth( size );
     insertWidgetInternal( lined, index, id );
@@ -347,12 +347,12 @@ int KToolBar::insertLined (const QString& text, int id,
     return index;
 }
 
-int KToolBar::insertCombo (const QStringList &list, int id, bool writable,
-                            const char *signal, const QObject *receiver,
+int KToolBar::insertCombo (const TQStringList &list, int id, bool writable,
+                            const char *signal, const TQObject *receiver,
                             const char *slot, bool enabled,
-                            const QString& tooltiptext,
+                            const TQString& tooltiptext,
                             int size, int index,
-                            QComboBox::Policy policy )
+                            TQComboBox::Policy policy )
 {
     KComboBox *combo = new KComboBox ( writable, this );
 
@@ -363,7 +363,7 @@ int KToolBar::insertCombo (const QStringList &list, int id, bool writable,
     if ( size > 0 )
         combo->setMinimumWidth( size );
     if (!tooltiptext.isNull())
-        QToolTip::add( combo, tooltiptext );
+        TQToolTip::add( combo, tooltiptext );
 
     if ( signal && receiver && slot )
         connect ( combo, signal, receiver, slot );
@@ -371,12 +371,12 @@ int KToolBar::insertCombo (const QStringList &list, int id, bool writable,
 }
 
 
-int KToolBar::insertCombo (const QString& text, int id, bool writable,
-                            const char *signal, QObject *receiver,
+int KToolBar::insertCombo (const TQString& text, int id, bool writable,
+                            const char *signal, TQObject *receiver,
                             const char *slot, bool enabled,
-                            const QString& tooltiptext,
+                            const TQString& tooltiptext,
                             int size, int index,
-                            QComboBox::Policy policy )
+                            TQComboBox::Policy policy )
 {
     KComboBox *combo = new KComboBox ( writable, this );
     insertWidgetInternal( combo, index, id );
@@ -386,41 +386,41 @@ int KToolBar::insertCombo (const QString& text, int id, bool writable,
     if ( size > 0 )
         combo->setMinimumWidth( size );
     if (!tooltiptext.isNull())
-        QToolTip::add( combo, tooltiptext );
+        TQToolTip::add( combo, tooltiptext );
     connect (combo, signal, receiver, slot);
     return index;
 }
 
 int KToolBar::insertSeparator(int index, int id)
 {
-    QWidget *w = new KToolBarSeparator( orientation(), false, this, "tool bar separator" );
+    TQWidget *w = new KToolBarSeparator( orientation(), false, this, "tool bar separator" );
     insertWidgetInternal( w, index, id );
     return index;
 }
 
 int KToolBar::insertLineSeparator(int index, int id)
 {
-    QWidget *w = new KToolBarSeparator( orientation(), true, this, "tool bar separator" );
+    TQWidget *w = new KToolBarSeparator( orientation(), true, this, "tool bar separator" );
     insertWidgetInternal( w, index, id );
     return index;
 }
 
 
-int KToolBar::insertWidget(int id, int /*width*/, QWidget *widget, int index)
+int KToolBar::insertWidget(int id, int /*width*/, TQWidget *widget, int index)
 {
     removeWidgetInternal( widget ); // in case we already have it ?
     insertWidgetInternal( widget, index, id );
     return index;
 }
 
-int KToolBar::insertAnimatedWidget(int id, QObject *receiver, const char *slot,
-                                    const QString& icons, int index )
+int KToolBar::insertAnimatedWidget(int id, TQObject *receiver, const char *slot,
+                                    const TQString& icons, int index )
 {
     KAnimWidget *anim = new KAnimWidget( icons, d->m_iconSize, this );
     insertWidgetInternal( anim, index, id );
 
     if ( receiver )
-        connect( anim, SIGNAL(clicked()), receiver, slot);
+        connect( anim, TQT_SIGNAL(clicked()), receiver, slot);
 
     return index;
 }
@@ -433,13 +433,13 @@ KAnimWidget *KToolBar::animatedWidget( int id )
     KAnimWidget *aw = dynamic_cast<KAnimWidget *>(*it);
     if ( aw )
         return aw;
-    QObjectList *l = queryList( "KAnimWidget" );
+    TQObjectList *l = queryList( "KAnimWidget" );
     if ( !l || !l->first() ) {
         delete l;
         return 0;
     }
 
-    for ( QObject *o = l->first(); o; o = l->next() ) {
+    for ( TQObject *o = l->first(); o; o = l->next() ) {
         KAnimWidget *aw = dynamic_cast<KAnimWidget *>(o);
         if ( aw )
         {
@@ -454,22 +454,22 @@ KAnimWidget *KToolBar::animatedWidget( int id )
 
 
 void KToolBar::addConnection (int id, const char *signal,
-                               const QObject *receiver, const char *slot)
+                               const TQObject *receiver, const char *slot)
 {
-    QWidget* w = getWidget( id );
+    TQWidget* w = getWidget( id );
     if ( w )
         connect( w, signal, receiver, slot );
 }
 
 void KToolBar::setItemEnabled( int id, bool enabled )
 {
-    QWidget* w = getWidget( id );
+    TQWidget* w = getWidget( id );
     if ( w )
         w->setEnabled( enabled );
 }
 
 
-void KToolBar::setButtonPixmap( int id, const QPixmap& _pixmap )
+void KToolBar::setButtonPixmap( int id, const TQPixmap& _pixmap )
 {
     KToolBarButton * button = getButton( id );
     if ( button )
@@ -477,14 +477,14 @@ void KToolBar::setButtonPixmap( int id, const QPixmap& _pixmap )
 }
 
 
-void KToolBar::setButtonIcon( int id, const QString& _icon )
+void KToolBar::setButtonIcon( int id, const TQString& _icon )
 {
     KToolBarButton * button = getButton( id );
     if ( button )
         button->setIcon( _icon );
 }
 
-void KToolBar::setButtonIconSet( int id, const QIconSet& iconset )
+void KToolBar::setButtonIconSet( int id, const TQIconSet& iconset )
 {
     KToolBarButton * button = getButton( id );
     if ( button )
@@ -492,7 +492,7 @@ void KToolBar::setButtonIconSet( int id, const QIconSet& iconset )
 }
 
 
-void KToolBar::setDelayedPopup (int id , QPopupMenu *_popup, bool toggle )
+void KToolBar::setDelayedPopup (int id , TQPopupMenu *_popup, bool toggle )
 {
     KToolBarButton * button = getButton( id );
     if ( button )
@@ -539,7 +539,7 @@ bool KToolBar::isButtonOn (int id) const
 }
 
 
-void KToolBar::setLinedText (int id, const QString& text)
+void KToolBar::setLinedText (int id, const TQString& text)
 {
     KLineEdit * lineEdit = getLined( id );
     if ( lineEdit )
@@ -547,21 +547,21 @@ void KToolBar::setLinedText (int id, const QString& text)
 }
 
 
-QString KToolBar::getLinedText (int id) const
+TQString KToolBar::getLinedText (int id) const
 {
     KLineEdit * lineEdit = const_cast<KToolBar*>( this )->getLined( id );
-    return lineEdit ? lineEdit->text() : QString::null;
+    return lineEdit ? lineEdit->text() : TQString::null;
 }
 
 
-void KToolBar::insertComboItem (int id, const QString& text, int index)
+void KToolBar::insertComboItem (int id, const TQString& text, int index)
 {
     KComboBox * comboBox = getCombo( id );
     if (comboBox)
         comboBox->insertItem( text, index );
 }
 
-void KToolBar::insertComboList (int id, const QStringList &list, int index)
+void KToolBar::insertComboList (int id, const TQStringList &list, int index)
 {
     KComboBox * comboBox = getCombo( id );
     if (comboBox)
@@ -585,7 +585,7 @@ void KToolBar::setCurrentComboItem (int id, int index)
 }
 
 
-void KToolBar::changeComboItem  (int id, const QString& text, int index)
+void KToolBar::changeComboItem  (int id, const TQString& text, int index)
 {
     KComboBox * comboBox = getCombo( id );
     if (comboBox)
@@ -601,10 +601,10 @@ void KToolBar::clearCombo (int id)
 }
 
 
-QString KToolBar::getComboItem (int id, int index) const
+TQString KToolBar::getComboItem (int id, int index) const
 {
     KComboBox * comboBox = const_cast<KToolBar*>( this )->getCombo( id );
-    return comboBox ? comboBox->text( index ) : QString::null;
+    return comboBox ? comboBox->text( index ) : TQString::null;
 }
 
 
@@ -647,7 +647,7 @@ void KToolBar::alignItemRight (int id, bool right )
 }
 
 
-QWidget *KToolBar::getWidget (int id)
+TQWidget *KToolBar::getWidget (int id)
 {
     Id2WidgetMap::Iterator it = id2widget.find( id );
     return ( it == id2widget.end() ) ? 0 : (*it);
@@ -656,7 +656,7 @@ QWidget *KToolBar::getWidget (int id)
 
 void KToolBar::setItemAutoSized (int id, bool yes )
 {
-    QWidget *w = getWidget(id);
+    TQWidget *w = getWidget(id);
     if ( w && yes )
         setStretchableWidget( w );
 }
@@ -664,12 +664,12 @@ void KToolBar::setItemAutoSized (int id, bool yes )
 
 void KToolBar::clear ()
 {
-    /* Delete any idle buttons, so QToolBar doesn't delete them itself, making a mess */
-    for(QWidget *w=d->idleButtons.first(); w; w=d->idleButtons.next())
+    /* Delete any idle buttons, so TQToolBar doesn't delete them itself, making a mess */
+    for(TQWidget *w=d->idleButtons.first(); w; w=d->idleButtons.next())
        w->blockSignals(false);    
     d->idleButtons.clear();
      
-    QToolBar::clear();
+    TQToolBar::clear();
     widget2id.clear();
     id2widget.clear();
 }
@@ -683,7 +683,7 @@ void KToolBar::removeItem(int id)
         kdDebug(220) << name() << " KToolBar::removeItem item " << id << " not found" << endl;
         return;
     }
-    QWidget * w = (*it);
+    TQWidget * w = (*it);
     id2widget.remove( id );
     widget2id.remove( w );
     widgets.removeRef( w );
@@ -699,7 +699,7 @@ void KToolBar::removeItemDelayed(int id)
         kdDebug(220) << name() << " KToolBar::removeItem item " << id << " not found" << endl;
         return;
     }
-    QWidget * w = (*it);
+    TQWidget * w = (*it);
     id2widget.remove( id );
     widget2id.remove( w );
     widgets.removeRef( w );
@@ -712,7 +712,7 @@ void KToolBar::removeItemDelayed(int id)
 
 void KToolBar::hideItem (int id)
 {
-    QWidget *w = getWidget(id);
+    TQWidget *w = getWidget(id);
     if ( w )
         w->hide();
 }
@@ -720,7 +720,7 @@ void KToolBar::hideItem (int id)
 
 void KToolBar::showItem (int id)
 {
-    QWidget *w = getWidget(id);
+    TQWidget *w = getWidget(id);
     if ( w )
         w->show();
 }
@@ -728,13 +728,13 @@ void KToolBar::showItem (int id)
 
 int KToolBar::itemIndex (int id)
 {
-    QWidget *w = getWidget(id);
+    TQWidget *w = getWidget(id);
     return w ? widgets.findRef(w) : -1;
 }
 
 int KToolBar::idAt (int index)
 {
-    QWidget *w = widgets.at(index);
+    TQWidget *w = widgets.at(index);
     return widget2id[w];
 }
 
@@ -769,11 +769,11 @@ void KToolBar::setBarPos (BarPosition bpos)
 KToolBar::BarPosition KToolBar::barPos() const
 {
     if ( !this->mainWindow() )
-        return place() == QDockWindow::InDock ? KToolBar::Top : KToolBar::Floating;
+        return place() == TQDockWindow::InDock ? KToolBar::Top : KToolBar::Floating;
     Dock dock;
     int dm1, dm2;
     bool dm3;
-    this->mainWindow()->getLocation( (QToolBar*)this, dock, dm1, dm3, dm2 );
+    this->mainWindow()->getLocation( (TQToolBar*)this, dock, dm1, dm3, dm2 );
     if ( dock == DockUnmanaged ) {
         return (KToolBar::BarPosition)DockTop;
     }
@@ -817,7 +817,7 @@ int KToolBar::maxWidth()
 }
 
 
-void KToolBar::setTitle (const QString& _title)
+void KToolBar::setTitle (const TQString& _title)
 {
     setLabel( _title );
 }
@@ -853,8 +853,8 @@ void KToolBar::setIconText(IconText icontext, bool update)
     if (doUpdate)
         doModeChange(); // tell buttons what happened
 
-    // ugly hack to force a QMainWindow::triggerLayout( true )
-    QMainWindow *mw = mainWindow();
+    // ugly hack to force a TQMainWindow::triggerLayout( true )
+    TQMainWindow *mw = mainWindow();
     if ( mw ) {
         mw->setUpdatesEnabled( false );
         mw->setToolBarsMovable( !mw->toolBarsMovable() );
@@ -890,9 +890,9 @@ void KToolBar::setIconSize(int size, bool update)
     if (doUpdate)
         doModeChange(); // tell buttons what happened
 
-    // ugly hack to force a QMainWindow::triggerLayout( true )
+    // ugly hack to force a TQMainWindow::triggerLayout( true )
     if ( mainWindow() ) {
-        QMainWindow *mw = mainWindow();
+        TQMainWindow *mw = mainWindow();
         mw->setUpdatesEnabled( false );
         mw->setToolBarsMovable( !mw->toolBarsMovable() );
         mw->setToolBarsMovable( !mw->toolBarsMovable() );
@@ -911,7 +911,7 @@ int KToolBar::iconSize() const
 
 int KToolBar::iconSizeDefault() const
 {
-	if (!::qstrcmp(QObject::name(), "mainToolBar"))
+	if (!::qstrcmp(TQObject::name(), "mainToolBar"))
 		return KGlobal::iconLoader()->currentSize(KIcon::MainToolbar);
 
 	return KGlobal::iconLoader()->currentSize(KIcon::Toolbar);
@@ -963,19 +963,19 @@ void KToolBar::saveState()
     // first, try to save to the xml file
     if ( d->m_xmlguiClient && !d->m_xmlguiClient->xmlFile().isEmpty() ) {
         //kdDebug(220) << name() << " saveState: saving to " << d->m_xmlguiClient->xmlFile() << endl;
-        QString barname(!::qstrcmp(name(), "unnamed") ? "mainToolBar" : name());
+        TQString barname(!::qstrcmp(name(), "unnamed") ? "mainToolBar" : name());
         // try to find our toolbar
         d->modified = false;
         // go down one level to get to the right tags
-        QDomElement current;
-        for( QDomNode n = d->m_xmlguiClient->domDocument().documentElement().firstChild();
+        TQDomElement current;
+        for( TQDomNode n = d->m_xmlguiClient->domDocument().documentElement().firstChild();
              !n.isNull(); n = n.nextSibling()) {
             current = n.toElement();
 
             if ( current.tagName().lower() != "toolbar" )
                 continue;
 
-            QString curname(current.attribute( "name" ));
+            TQString curname(current.attribute( "name" ));
 
             if ( curname == barname ) {
                 saveState( current );
@@ -987,21 +987,21 @@ void KToolBar::saveState()
             return;
 
         // now we load in the (non-merged) local file
-        QString local_xml(KXMLGUIFactory::readConfigFile(d->m_xmlguiClient->xmlFile(), true, d->m_xmlguiClient->instance()));
-        QDomDocument local;
+        TQString local_xml(KXMLGUIFactory::readConfigFile(d->m_xmlguiClient->xmlFile(), true, d->m_xmlguiClient->instance()));
+        TQDomDocument local;
         local.setContent(local_xml);
 
         // make sure we don't append if this toolbar already exists locally
         bool just_append = true;
 
-        for( QDomNode n = local.documentElement().firstChild();
+        for( TQDomNode n = local.documentElement().firstChild();
              !n.isNull(); n = n.nextSibling()) {
-            QDomElement elem = n.toElement();
+            TQDomElement elem = n.toElement();
 
             if ( elem.tagName().lower() != "toolbar" )
                 continue;
 
-            QString curname(elem.attribute( "name" ));
+            TQString curname(elem.attribute( "name" ));
 
             if ( curname == barname ) {
                 just_append = false;
@@ -1020,17 +1020,17 @@ void KToolBar::saveState()
 
     // if that didn't work, we save to the config file
     KConfig *config = KGlobal::config();
-    saveSettings(config, QString::null);
+    saveSettings(config, TQString::null);
     config->sync();
 }
 
-QString KToolBar::settingsGroup() const
+TQString KToolBar::settingsGroup() const
 {
-    QString configGroup;
+    TQString configGroup;
     if (!::qstrcmp(name(), "unnamed") || !::qstrcmp(name(), "mainToolBar"))
         configGroup = "Toolbar style";
     else
-        configGroup = QString(name()) + " Toolbar style";
+        configGroup = TQString(name()) + " Toolbar style";
     if ( this->mainWindow() )
     {
         configGroup.prepend(" ");
@@ -1039,14 +1039,14 @@ QString KToolBar::settingsGroup() const
     return configGroup;
 }
 
-void KToolBar::saveSettings(KConfig *config, const QString &_configGroup)
+void KToolBar::saveSettings(KConfig *config, const TQString &_configGroup)
 {
-    QString configGroup = _configGroup;
+    TQString configGroup = _configGroup;
     if (configGroup.isEmpty())
         configGroup = settingsGroup();
     //kdDebug(220) << name() << " saveSettings() group=" << _configGroup << " -> " << configGroup << endl;
 
-    QString position, icontext;
+    TQString position, icontext;
     int index;
     getAttributes( position, icontext, index );
 
@@ -1097,17 +1097,17 @@ void KToolBar::saveSettings(KConfig *config, const QString &_configGroup)
 
     // Don't use kmw->toolBarIterator() because you might
     // mess up someone else's iterator.  Make the list on your own
-    QPtrList<KToolBar> toolbarList;
-    QPtrList<QToolBar> lst;
-    for ( int i = (int)QMainWindow::DockUnmanaged; i <= (int)DockMinimized; ++i ) {
+    TQPtrList<KToolBar> toolbarList;
+    TQPtrList<TQToolBar> lst;
+    for ( int i = (int)TQMainWindow::DockUnmanaged; i <= (int)DockMinimized; ++i ) {
         lst = kmw->toolBars( (ToolBarDock)i );
-        for ( QToolBar *tb = lst.first(); tb; tb = lst.next() ) {
+        for ( TQToolBar *tb = lst.first(); tb; tb = lst.next() ) {
             if ( !tb->inherits( "KToolBar" ) )
                 continue;
             toolbarList.append( (KToolBar*)tb );
         }
     }
-    QPtrListIterator<KToolBar> toolbarIterator( toolbarList );
+    TQPtrListIterator<KToolBar> toolbarIterator( toolbarList );
     if ( !kmw || toolbarIterator.count() > 1 )
         config->writeEntry("Index", index);
     else
@@ -1130,13 +1130,13 @@ void KToolBar::setXMLGUIClient( KXMLGUIClient *client )
     d->m_xmlguiClient = client;
 }
 
-void KToolBar::setText( const QString & txt )
+void KToolBar::setText( const TQString & txt )
 {
     setLabel( txt + " (" + kapp->caption() + ") " );
 }
 
 
-QString KToolBar::text() const
+TQString KToolBar::text() const
 {
     return label();
 }
@@ -1144,22 +1144,22 @@ QString KToolBar::text() const
 
 void KToolBar::doConnections( KToolBarButton *button )
 {
-    connect(button, SIGNAL(clicked(int)), this, SIGNAL( clicked( int ) ) );
-    connect(button, SIGNAL(doubleClicked(int)), this, SIGNAL( doubleClicked( int ) ) );
-    connect(button, SIGNAL(released(int)), this, SIGNAL( released( int ) ) );
-    connect(button, SIGNAL(pressed(int)), this, SIGNAL( pressed( int ) ) );
-    connect(button, SIGNAL(toggled(int)), this, SIGNAL( toggled( int ) ) );
-    connect(button, SIGNAL(highlighted(int, bool)), this, SIGNAL( highlighted( int, bool ) ) );
+    connect(button, TQT_SIGNAL(clicked(int)), this, TQT_SIGNAL( clicked( int ) ) );
+    connect(button, TQT_SIGNAL(doubleClicked(int)), this, TQT_SIGNAL( doubleClicked( int ) ) );
+    connect(button, TQT_SIGNAL(released(int)), this, TQT_SIGNAL( released( int ) ) );
+    connect(button, TQT_SIGNAL(pressed(int)), this, TQT_SIGNAL( pressed( int ) ) );
+    connect(button, TQT_SIGNAL(toggled(int)), this, TQT_SIGNAL( toggled( int ) ) );
+    connect(button, TQT_SIGNAL(highlighted(int, bool)), this, TQT_SIGNAL( highlighted( int, bool ) ) );
 }
 
-void KToolBar::mousePressEvent ( QMouseEvent *m )
+void KToolBar::mousePressEvent ( TQMouseEvent *m )
 {
     if ( !mainWindow() )
         return;
-    QMainWindow *mw = mainWindow();
+    TQMainWindow *mw = mainWindow();
     if ( mw->toolBarsMovable() && d->m_enableContext ) {
         if ( m->button() == RightButton ) {
-	    QGuardedPtr<KToolBar> guard( this );
+	    TQGuardedPtr<KToolBar> guard( this );
             int i = contextMenu()->exec( m->globalPos(), 0 );
 	    // "Configure Toolbars" recreates toolbars, so we might not exist anymore.
 	    if ( guard )
@@ -1212,7 +1212,7 @@ void KToolBar::mousePressEvent ( QMouseEvent *m )
 
 void KToolBar::doModeChange()
 {
-    for(QWidget *w=d->idleButtons.first(); w; w=d->idleButtons.next())
+    for(TQWidget *w=d->idleButtons.first(); w; w=d->idleButtons.next())
        w->blockSignals(false);
     d->idleButtons.clear();
 
@@ -1221,20 +1221,20 @@ void KToolBar::doModeChange()
 
 void KToolBar::rebuildLayout()
 {
-    for(QWidget *w=d->idleButtons.first(); w; w=d->idleButtons.next())
+    for(TQWidget *w=d->idleButtons.first(); w; w=d->idleButtons.next())
        w->blockSignals(false);
     d->idleButtons.clear();
 
     layoutTimer->stop();
-    QApplication::sendPostedEvents( this, QEvent::ChildInserted );
-    QBoxLayout *l = boxLayout();
+    TQApplication::sendPostedEvents( this, TQEvent::ChildInserted );
+    TQBoxLayout *l = boxLayout();
 
     // clear the old layout
-    QLayoutIterator it = l->iterator();
+    TQLayoutIterator it = l->iterator();
     while ( it.current() )
         it.deleteCurrent();
 
-    for ( QWidget *w = widgets.first(); w; w = widgets.next() ) {
+    for ( TQWidget *w = widgets.first(); w; w = widgets.next() ) {
         if ( w == rightAligned )
             continue;
         KToolBarSeparator *ktbs = dynamic_cast<KToolBarSeparator *>(w);
@@ -1243,11 +1243,11 @@ void KToolBar::rebuildLayout()
             w->hide();
             continue;
         }
-        if ( dynamic_cast<QPopupMenu *>(w) ) // w is a QPopupMenu?
+        if ( dynamic_cast<TQPopupMenu *>(w) ) // w is a QPopupMenu?
             continue;
         l->addWidget( w );
         w->show();
-        if ((orientation() == Horizontal) && dynamic_cast<QLineEdit *>(w)) // w is QLineEdit ?
+        if ((orientation() == Horizontal) && dynamic_cast<TQLineEdit *>(w)) // w is TQLineEdit ?
             l->addSpacing(2); // A little bit extra spacing behind it.
     }
     if ( rightAligned ) {
@@ -1263,20 +1263,20 @@ void KToolBar::rebuildLayout()
             l->setStretchFactor( stretchableWidget, 10 );
     }
     l->invalidate();
-    QApplication::postEvent( this, new QEvent( QEvent::LayoutHint ) );
+    TQApplication::postEvent( this, new TQEvent( TQEvent::LayoutHint ) );
 }
 
-void KToolBar::childEvent( QChildEvent *e )
+void KToolBar::childEvent( TQChildEvent *e )
 {
     if ( e->child()->isWidgetType() ) {
-        QWidget * w = dynamic_cast<QWidget *>(e->child());
+        TQWidget * w = dynamic_cast<TQWidget *>(e->child());
         if (!w || !(::qstrcmp( "qt_dockwidget_internal", w->name())))
         {
-           QToolBar::childEvent( e );
+           TQToolBar::childEvent( e );
            return;
         }
-        if ( e->type() == QEvent::ChildInserted ) {
-            if ( !dynamic_cast<QPopupMenu *>(w)) { // e->child() is not a QPopupMenu
+        if ( e->type() == TQEvent::ChildInserted ) {
+            if ( !dynamic_cast<TQPopupMenu *>(w)) { // e->child() is not a QPopupMenu
                 // prevent items that have been explicitly inserted by insert*() from
                 // being inserted again
                 if ( !widget2id.contains( w ) )
@@ -1291,25 +1291,25 @@ void KToolBar::childEvent( QChildEvent *e )
         if ( isVisibleTo( 0 ) )
         {
             layoutTimer->start( 50, true );
-            QBoxLayout *l = boxLayout();
+            TQBoxLayout *l = boxLayout();
 
             // clear the old layout so that we don't get unnecassery layout
             // changes till we have rebuild the thing
-            QLayoutIterator it = l->iterator();
+            TQLayoutIterator it = l->iterator();
             while ( it.current() )
                it.deleteCurrent();
         }
     }
-    QToolBar::childEvent( e );
+    TQToolBar::childEvent( e );
 }
 
-void KToolBar::insertWidgetInternal( QWidget *w, int &index, int id )
+void KToolBar::insertWidgetInternal( TQWidget *w, int &index, int id )
 {
     // we can't have it in widgets, or something is really wrong
     //widgets.removeRef( w );
 
-    connect( w, SIGNAL( destroyed() ),
-             this, SLOT( widgetDestroyed() ) );
+    connect( w, TQT_SIGNAL( destroyed() ),
+             this, TQT_SLOT( widgetDestroyed() ) );
     if ( index == -1 || index > (int)widgets.count() ) {
         index = (int)widgets.count();
         widgets.append( w );
@@ -1322,90 +1322,90 @@ void KToolBar::insertWidgetInternal( QWidget *w, int &index, int id )
     widget2id.insert( w, id );
 }
 
-void KToolBar::showEvent( QShowEvent *e )
+void KToolBar::showEvent( TQShowEvent *e )
 {
-    QToolBar::showEvent( e );
+    TQToolBar::showEvent( e );
     rebuildLayout();
 }
 
-void KToolBar::setStretchableWidget( QWidget *w )
+void KToolBar::setStretchableWidget( TQWidget *w )
 {
-    QToolBar::setStretchableWidget( w );
+    TQToolBar::setStretchableWidget( w );
     stretchableWidget = w;
 }
 
-QSizePolicy KToolBar::sizePolicy() const
+TQSizePolicy KToolBar::sizePolicy() const
 {
     if ( orientation() == Horizontal )
-        return QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
+        return TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed );
     else
-        return QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Expanding );
+        return TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Expanding );
 }
 
-QSize KToolBar::sizeHint() const
+TQSize KToolBar::sizeHint() const
 {
-    QSize minSize(0,0);
+    TQSize minSize(0,0);
     KToolBar *ncThis = const_cast<KToolBar *>(this);
 
     ncThis->polish();
 
-    int margin = static_cast<QWidget*>(ncThis)->layout()->margin() + frameWidth();
+    int margin = static_cast<TQWidget*>(ncThis)->layout()->margin() + frameWidth();
     switch( barPos() )
     {
      case KToolBar::Top:
      case KToolBar::Bottom:
-       for ( QWidget *w = ncThis->widgets.first(); w; w = ncThis->widgets.next() )
+       for ( TQWidget *w = ncThis->widgets.first(); w; w = ncThis->widgets.next() )
        {
-          QSize sh = w->sizeHint();
-          if ( w->sizePolicy().horData() == QSizePolicy::Ignored )
+          TQSize sh = w->sizeHint();
+          if ( w->sizePolicy().horData() == TQSizePolicy::Ignored )
              sh.setWidth( 1 );
-          if ( w->sizePolicy().verData() == QSizePolicy::Ignored )
+          if ( w->sizePolicy().verData() == TQSizePolicy::Ignored )
              sh.setHeight( 1 );
           sh = sh.boundedTo( w->maximumSize() )
-                 .expandedTo( w->minimumSize() ).expandedTo( QSize(1, 1) );
+                 .expandedTo( w->minimumSize() ).expandedTo( TQSize(1, 1) );
 
-          minSize = minSize.expandedTo(QSize(0, sh.height()));
-          minSize += QSize(sh.width()+1, 0);
-          if (dynamic_cast<QLineEdit *>(w)) // w is a QLineEdit ?
-             minSize += QSize(2, 0); // A little bit extra spacing behind it.
+          minSize = minSize.expandedTo(TQSize(0, sh.height()));
+          minSize += TQSize(sh.width()+1, 0);
+          if (dynamic_cast<TQLineEdit *>(w)) // w is a TQLineEdit ?
+             minSize += TQSize(2, 0); // A little bit extra spacing behind it.
        }
 
-       minSize += QSize(QApplication::style().pixelMetric( QStyle::PM_DockWindowHandleExtent ), 0);
-       minSize += QSize(margin*2, margin*2);
+       minSize += TQSize(TQApplication::style().pixelMetric( TQStyle::PM_DockWindowHandleExtent ), 0);
+       minSize += TQSize(margin*2, margin*2);
        break;
 
      case KToolBar::Left:
      case KToolBar::Right:
-       for ( QWidget *w = ncThis->widgets.first(); w; w = ncThis->widgets.next() )
+       for ( TQWidget *w = ncThis->widgets.first(); w; w = ncThis->widgets.next() )
        {
-          QSize sh = w->sizeHint();
-          if ( w->sizePolicy().horData() == QSizePolicy::Ignored )
+          TQSize sh = w->sizeHint();
+          if ( w->sizePolicy().horData() == TQSizePolicy::Ignored )
              sh.setWidth( 1 );
-          if ( w->sizePolicy().verData() == QSizePolicy::Ignored )
+          if ( w->sizePolicy().verData() == TQSizePolicy::Ignored )
              sh.setHeight( 1 );
           sh = sh.boundedTo( w->maximumSize() )
-                 .expandedTo( w->minimumSize() ).expandedTo( QSize(1, 1) );
+                 .expandedTo( w->minimumSize() ).expandedTo( TQSize(1, 1) );
 
-          minSize = minSize.expandedTo(QSize(sh.width(), 0));
-          minSize += QSize(0, sh.height()+1);
+          minSize = minSize.expandedTo(TQSize(sh.width(), 0));
+          minSize += TQSize(0, sh.height()+1);
        }
-       minSize += QSize(0, QApplication::style().pixelMetric( QStyle::PM_DockWindowHandleExtent ));
-       minSize += QSize(margin*2, margin*2);
+       minSize += TQSize(0, TQApplication::style().pixelMetric( TQStyle::PM_DockWindowHandleExtent ));
+       minSize += TQSize(margin*2, margin*2);
        break;
 
      default:
-       minSize = QToolBar::sizeHint();
+       minSize = TQToolBar::sizeHint();
        break;
     }
     return minSize;
 }
 
-QSize KToolBar::minimumSize() const
+TQSize KToolBar::minimumSize() const
 {
     return minimumSizeHint();
 }
 
-QSize KToolBar::minimumSizeHint() const
+TQSize KToolBar::minimumSizeHint() const
 {
     return sizeHint();
 }
@@ -1417,19 +1417,19 @@ bool KToolBar::highlight() const
 
 void KToolBar::hide()
 {
-    QToolBar::hide();
+    TQToolBar::hide();
 }
 
 void KToolBar::show()
 {
-    QToolBar::show();
+    TQToolBar::show();
 }
 
-void KToolBar::resizeEvent( QResizeEvent *e )
+void KToolBar::resizeEvent( TQResizeEvent *e )
 {
     bool b = isUpdatesEnabled();
     setUpdatesEnabled( false );
-    QToolBar::resizeEvent( e );
+    TQToolBar::resizeEvent( e );
     if (b)
     {
       if (layoutTimer->isActive())
@@ -1464,13 +1464,13 @@ void KToolBar::slotReadConfig()
     // Read appearance settings (hmm, we used to do both here,
     // but a well behaved application will call applyMainWindowSettings
     // anyway, right ?)
-    applyAppearanceSettings(KGlobal::config(), QString::null );
+    applyAppearanceSettings(KGlobal::config(), TQString::null );
 }
 
 void KToolBar::slotAppearanceChanged()
 {
     // Read appearance settings from global file.
-    applyAppearanceSettings(KGlobal::config(), QString::null, true /* lose local settings */ );
+    applyAppearanceSettings(KGlobal::config(), TQString::null, true /* lose local settings */ );
 
     // And remember to save the new look later
     KMainWindow *kmw = dynamic_cast<KMainWindow *>(mainWindow());
@@ -1481,25 +1481,25 @@ void KToolBar::slotAppearanceChanged()
 //static
 bool KToolBar::highlightSetting()
 {
-    QString grpToolbar(QString::fromLatin1("Toolbar style"));
+    TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
     KConfigGroupSaver saver(KGlobal::config(), grpToolbar);
-    return KGlobal::config()->readBoolEntry(QString::fromLatin1("Highlighting"),true);
+    return KGlobal::config()->readBoolEntry(TQString::fromLatin1("Highlighting"),true);
 }
 
 //static
 bool KToolBar::transparentSetting()
 {
-    QString grpToolbar(QString::fromLatin1("Toolbar style"));
+    TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
     KConfigGroupSaver saver(KGlobal::config(), grpToolbar);
-    return KGlobal::config()->readBoolEntry(QString::fromLatin1("TransparentMoving"),true);
+    return KGlobal::config()->readBoolEntry(TQString::fromLatin1("TransparentMoving"),true);
 }
 
 //static
 KToolBar::IconText KToolBar::iconTextSetting()
 {
-    QString grpToolbar(QString::fromLatin1("Toolbar style"));
+    TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
     KConfigGroupSaver saver(KGlobal::config(), grpToolbar);
-    QString icontext = KGlobal::config()->readEntry(QString::fromLatin1("IconText"),QString::fromLatin1("IconOnly"));
+    TQString icontext = KGlobal::config()->readEntry(TQString::fromLatin1("IconText"),TQString::fromLatin1("IconOnly"));
     if ( icontext == "IconTextRight" )
         return IconTextRight;
     else if ( icontext == "IconTextBottom" )
@@ -1510,9 +1510,9 @@ KToolBar::IconText KToolBar::iconTextSetting()
         return IconOnly;
 }
 
-void KToolBar::applyAppearanceSettings(KConfig *config, const QString &_configGroup, bool forceGlobal)
+void KToolBar::applyAppearanceSettings(KConfig *config, const TQString &_configGroup, bool forceGlobal)
 {
-    QString configGroup = _configGroup.isEmpty() ? settingsGroup() : _configGroup;
+    TQString configGroup = _configGroup.isEmpty() ? settingsGroup() : _configGroup;
     //kdDebug(220) << name() << " applyAppearanceSettings: configGroup=" << configGroup << " forceGlobal=" << forceGlobal << endl;
 
     // If we have application-specific settings in the XML file,
@@ -1524,10 +1524,10 @@ void KToolBar::applyAppearanceSettings(KConfig *config, const QString &_configGr
 
     KConfig *gconfig = KGlobal::config();
 
-    static const QString &attrIconText  = KGlobal::staticQString("IconText");
-    static const QString &attrHighlight = KGlobal::staticQString("Highlighting");
-    static const QString &attrTrans     = KGlobal::staticQString("TransparentMoving");
-    static const QString &attrIconSize  = KGlobal::staticQString("IconSize");
+    static const TQString &attrIconText  = KGlobal::staticQString("IconText");
+    static const TQString &attrHighlight = KGlobal::staticQString("Highlighting");
+    static const TQString &attrTrans     = KGlobal::staticQString("TransparentMoving");
+    static const TQString &attrIconSize  = KGlobal::staticQString("IconSize");
 
     // we actually do this in two steps.
     // First, we read in the global styles [Toolbar style] (from the KControl module).
@@ -1538,10 +1538,10 @@ void KToolBar::applyAppearanceSettings(KConfig *config, const QString &_configGr
     bool applyIconSize = !xmlgui;
 
     int iconSize = d->IconSizeDefault;
-    QString iconText = d->IconTextDefault;
+    TQString iconText = d->IconTextDefault;
 
     // this is the first iteration
-    QString grpToolbar(QString::fromLatin1("Toolbar style"));
+    TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
     { // start block for KConfigGroupSaver
         KConfigGroupSaver saver(gconfig, grpToolbar);
 
@@ -1612,7 +1612,7 @@ void KToolBar::applyAppearanceSettings(KConfig *config, const QString &_configGr
         doUpdate = true;
     }
 
-    QMainWindow *mw = mainWindow();
+    TQMainWindow *mw = mainWindow();
 
     // ...and if we should highlight
     if ( highlight != d->m_highlight ) {
@@ -1632,16 +1632,16 @@ void KToolBar::applyAppearanceSettings(KConfig *config, const QString &_configGr
         updateGeometry();
 }
 
-void KToolBar::applySettings(KConfig *config, const QString &_configGroup)
+void KToolBar::applySettings(KConfig *config, const TQString &_configGroup)
 {
     return applySettings(config,_configGroup,false);
 }
 
-void KToolBar::applySettings(KConfig *config, const QString &_configGroup, bool force)
+void KToolBar::applySettings(KConfig *config, const TQString &_configGroup, bool force)
 {
     //kdDebug(220) << name() << " applySettings group=" << _configGroup << endl;
 
-    QString configGroup = _configGroup.isEmpty() ? settingsGroup() : _configGroup;
+    TQString configGroup = _configGroup.isEmpty() ? settingsGroup() : _configGroup;
 
     /*
       Let's explain this a bit more in details.
@@ -1665,13 +1665,13 @@ void KToolBar::applySettings(KConfig *config, const QString &_configGroup, bool 
     {
         KConfigGroupSaver cgs(config, configGroup);
 
-        static const QString &attrPosition  = KGlobal::staticQString("Position");
-        static const QString &attrIndex  = KGlobal::staticQString("Index");
-        static const QString &attrOffset  = KGlobal::staticQString("Offset");
-        static const QString &attrNewLine  = KGlobal::staticQString("NewLine");
-        static const QString &attrHidden  = KGlobal::staticQString("Hidden");
+        static const TQString &attrPosition  = KGlobal::staticQString("Position");
+        static const TQString &attrIndex  = KGlobal::staticQString("Index");
+        static const TQString &attrOffset  = KGlobal::staticQString("Offset");
+        static const TQString &attrNewLine  = KGlobal::staticQString("NewLine");
+        static const TQString &attrHidden  = KGlobal::staticQString("Hidden");
 
-        QString position = config->readEntry(attrPosition, d->PositionDefault);
+        TQString position = config->readEntry(attrPosition, d->PositionDefault);
         int index = config->readNumEntry(attrIndex, -1);
         int offset = config->readNumEntry(attrOffset, d->OffsetDefault);
         bool newLine = config->readBoolEntry(attrNewLine, d->NewLineDefault);
@@ -1708,21 +1708,21 @@ void KToolBar::applySettings(KConfig *config, const QString &_configGroup, bool 
     }
 }
 
-bool KToolBar::event( QEvent *e )
+bool KToolBar::event( TQEvent *e )
 {
-    if ( (e->type() == QEvent::LayoutHint) && isUpdatesEnabled() )
+    if ( (e->type() == TQEvent::LayoutHint) && isUpdatesEnabled() )
        d->repaintTimer.start( 100, true );
 
-    if (e->type() == QEvent::ChildInserted )
+    if (e->type() == TQEvent::ChildInserted )
     {
-       // Bypass QToolBar::event,
+       // Bypass TQToolBar::event,
        // it will show() the inserted child and we don't want to
        // do that until we have rebuilt the layout.
-       childEvent((QChildEvent *)e);
+       childEvent((TQChildEvent *)e);
        return true;
     }
 
-    return QToolBar::event( e );
+    return TQToolBar::event( e );
 }
 
 void KToolBar::slotRepaint()
@@ -1731,26 +1731,26 @@ void KToolBar::slotRepaint()
     // Send a resizeEvent to update the "toolbar extension arrow"
     // (The button you get when your toolbar-items don't fit in
     // the available space)
-    QResizeEvent ev(size(), size());
+    TQResizeEvent ev(size(), size());
     resizeEvent(&ev);
-    QApplication::sendPostedEvents( this, QEvent::LayoutHint );
+    TQApplication::sendPostedEvents( this, TQEvent::LayoutHint );
     setUpdatesEnabled( true );
     repaint( true );
 }
 
-void KToolBar::toolBarPosChanged( QToolBar *tb )
+void KToolBar::toolBarPosChanged( TQToolBar *tb )
 {
     if ( tb != this )
         return;
     if ( d->oldPos == DockMinimized )
         rebuildLayout();
-    d->oldPos = (QMainWindow::ToolBarDock)barPos();
+    d->oldPos = (TQMainWindow::ToolBarDock)barPos();
     KMainWindow *kmw = dynamic_cast<KMainWindow *>(mainWindow());
     if ( kmw )
         kmw->setSettingsDirty();
 }
 
-static KToolBar::Dock stringToDock( const QString& attrPosition )
+static KToolBar::Dock stringToDock( const TQString& attrPosition )
 {
     KToolBar::Dock dock = KToolBar::DockTop;
     if ( !attrPosition.isEmpty() ) {
@@ -1771,15 +1771,15 @@ static KToolBar::Dock stringToDock( const QString& attrPosition )
 }
 
 
-void KToolBar::loadState( const QDomElement &element )
+void KToolBar::loadState( const TQDomElement &element )
 {
-    QMainWindow *mw = mainWindow();
+    TQMainWindow *mw = mainWindow();
 
     if ( !mw )
         return;
 
     {
-        QCString text = element.namedItem( "text" ).toElement().text().utf8();
+        TQCString text = element.namedItem( "text" ).toElement().text().utf8();
         if ( text.isEmpty() )
             text = element.namedItem( "Text" ).toElement().text().utf8();
         if ( !text.isEmpty() )
@@ -1787,7 +1787,7 @@ void KToolBar::loadState( const QDomElement &element )
     }
 
     {
-        QCString attrFullWidth = element.attribute( "fullWidth" ).lower().latin1();
+        TQCString attrFullWidth = element.attribute( "fullWidth" ).lower().latin1();
         if ( !attrFullWidth.isEmpty() )
             setFullSize( attrFullWidth == "true" );
     }
@@ -1825,7 +1825,7 @@ void KToolBar::loadState( const QDomElement &element )
     Dock dock = stringToDock( element.attribute( "position" ).lower() );
 
     {
-        QCString attrIconText = element.attribute( "iconText" ).lower().latin1();
+        TQCString attrIconText = element.attribute( "iconText" ).lower().latin1();
         if ( !attrIconText.isEmpty() ) {
             //kdDebug(220) << name() << " loadState attrIconText=" << attrIconText << endl;
             if ( attrIconText == "icontextright" )
@@ -1847,7 +1847,7 @@ void KToolBar::loadState( const QDomElement &element )
 	}
     }
 
-    QString attrIconSize = element.attribute( "iconSize" ).lower();
+    TQString attrIconSize = element.attribute( "iconSize" ).lower();
     int iconSize = d->IconSizeDefault;
     if ( !attrIconSize.isEmpty() )
         iconSize = attrIconSize.toInt();
@@ -1856,7 +1856,7 @@ void KToolBar::loadState( const QDomElement &element )
     int index = -1; // append by default. This is very important, otherwise
     // with all 0 indexes, we keep reversing the toolbars.
     {
-        QString attrIndex = element.attribute( "index" ).lower();
+        TQString attrIndex = element.attribute( "index" ).lower();
         if ( !attrIndex.isEmpty() )
             index = attrIndex.toInt();
     }
@@ -1866,19 +1866,19 @@ void KToolBar::loadState( const QDomElement &element )
     bool hidden = d->HiddenDefault;
 
     {
-        QString attrOffset = element.attribute( "offset" );
+        TQString attrOffset = element.attribute( "offset" );
         if ( !attrOffset.isEmpty() )
             offset = attrOffset.toInt();
     }
 
     {
-        QString attrNewLine = element.attribute( "newline" ).lower();
+        TQString attrNewLine = element.attribute( "newline" ).lower();
         if ( !attrNewLine.isEmpty() )
             newLine = attrNewLine == "true";
     }
 
     {
-        QString attrHidden = element.attribute( "hidden" ).lower();
+        TQString attrHidden = element.attribute( "hidden" ).lower();
         if ( !attrHidden.isEmpty() ) {
             hidden = attrHidden  == "true";
         }
@@ -1919,7 +1919,7 @@ int KToolBar::dockWindowIndex()
     int index = 0;
     Q_ASSERT( mainWindow() );
     if ( mainWindow() ) {
-        QMainWindow::ToolBarDock dock;
+        TQMainWindow::ToolBarDock dock;
         bool newLine;
         int offset;
         mainWindow()->getLocation( this, dock, index, newLine, offset );
@@ -1927,7 +1927,7 @@ int KToolBar::dockWindowIndex()
     return index;
 }
 
-void KToolBar::getAttributes( QString &position, QString &icontext, int &index )
+void KToolBar::getAttributes( TQString &position, TQString &icontext, int &index )
 {
     // get all of the stuff to save
     switch ( barPos() ) {
@@ -1972,10 +1972,10 @@ void KToolBar::getAttributes( QString &position, QString &icontext, int &index )
     //kdDebug(220) << name() << " getAttributes: icontext=" << icontext << endl;
 }
 
-void KToolBar::saveState( QDomElement &current )
+void KToolBar::saveState( TQDomElement &current )
 {
     Q_ASSERT( !current.isNull() );
-    QString position, icontext;
+    TQString position, icontext;
     int index = -1;
     getAttributes( position, icontext, index );
 
@@ -2035,7 +2035,7 @@ KPopupMenu *KToolBar::contextMenu()
   if ( context )
     return context;
   // Construct our context popup menu. Name it qt_dockwidget_internal so it
-  // won't be deleted by QToolBar::clear().
+  // won't be deleted by TQToolBar::clear().
   context = new KPopupMenu( this, "qt_dockwidget_internal" );
   context->insertTitle(i18n("Toolbar Menu"));
 
@@ -2058,10 +2058,10 @@ KPopupMenu *KToolBar::contextMenu()
   size->insertItem( i18n("Default"), CONTEXT_ICONSIZES );
   // Query the current theme for available sizes
   KIconTheme *theme = KGlobal::instance()->iconLoader()->theme();
-  QValueList<int> avSizes;
+  TQValueList<int> avSizes;
   if (theme)
   {
-      if (!::qstrcmp(QObject::name(), "mainToolBar"))
+      if (!::qstrcmp(TQObject::name(), "mainToolBar"))
           avSizes = theme->querySizes( KIcon::MainToolbar);
       else
           avSizes = theme->querySizes( KIcon::Toolbar);
@@ -2070,12 +2070,12 @@ KPopupMenu *KToolBar::contextMenu()
   d->iconSizes = avSizes;
   qHeapSort(avSizes);
 
-  QValueList<int>::Iterator it;
+  TQValueList<int>::Iterator it;
   if (avSizes.count() < 10) {
       // Fixed or threshold type icons
-	  QValueList<int>::Iterator end(avSizes.end());
+	  TQValueList<int>::Iterator end(avSizes.end());
       for (it=avSizes.begin(); it!=end; ++it) {
-          QString text;
+          TQString text;
           if ( *it < 19 )
               text = i18n("Small (%1x%2)").arg(*it).arg(*it);
           else if (*it < 25)
@@ -2096,7 +2096,7 @@ KPopupMenu *KToolBar::contextMenu()
       for (uint i = 0; i < 9; i++) {
           while (it++ != avSizes.end()) {
               if (*it >= progression[i]) {
-                  QString text;
+                  TQString text;
                   if ( *it < 19 )
                       text = i18n("Small (%1x%2)").arg(*it).arg(*it);
                   else if (*it < 25)
@@ -2119,10 +2119,10 @@ KPopupMenu *KToolBar::contextMenu()
   context->setItemChecked(CONTEXT_ICONS, true);
   context->insertItem( i18n("Icon Size"), size );
 
-  connect( context, SIGNAL( aboutToShow() ), this, SLOT( slotContextAboutToShow() ) );
+  connect( context, TQT_SIGNAL( aboutToShow() ), this, TQT_SLOT( slotContextAboutToShow() ) );
   // Unplugging a submenu from abouttohide leads to the popupmenu floating around
   // So better simply call that code from after exec() returns (DF)
-  //connect( context, SIGNAL( aboutToHide() ), this, SLOT( slotContextAboutToHide() ) );
+  //connect( context, TQT_SIGNAL( aboutToHide() ), this, TQT_SLOT( slotContextAboutToHide() ) );
   return context;
 }
 
@@ -2151,7 +2151,7 @@ void KToolBar::slotContextAboutToShow()
     configureAction = kmw->actionCollection()->action(actionName);
   if ( configureAction )
     configureAction->plug(context);
-  KEditToolbar::setDefaultToolbar(QObject::name());
+  KEditToolbar::setDefaultToolbar(TQObject::name());
 
   for(int i = CONTEXT_ICONS; i <= CONTEXT_TEXTUNDER; ++i)
     context->setItemChecked(i, false);
@@ -2173,8 +2173,8 @@ void KToolBar::slotContextAboutToShow()
             break;
   }
 
-  QValueList<int>::ConstIterator iIt = d->iconSizes.begin();
-  QValueList<int>::ConstIterator iEnd = d->iconSizes.end();
+  TQValueList<int>::ConstIterator iIt = d->iconSizes.begin();
+  TQValueList<int>::ConstIterator iEnd = d->iconSizes.end();
   for (; iIt != iEnd; ++iIt )
       context->setItemChecked( CONTEXT_ICONSIZES + *iIt, false );
 
@@ -2228,24 +2228,24 @@ void KToolBar::slotContextAboutToHide()
   if ( configureAction )
     configureAction->unplug(context);
 
-  QPtrListIterator<QWidget> it( widgets );
-  QWidget *wdg;
+  TQPtrListIterator<TQWidget> it( widgets );
+  TQWidget *wdg;
   while ( ( wdg = it.current() ) != 0 ) {
-    if ( wdg->inherits( "QToolButton" ) )
-      static_cast<QToolButton*>( wdg )->setDown( false );
+    if ( wdg->inherits( "TQToolButton" ) )
+      static_cast<TQToolButton*>( wdg )->setDown( false );
     ++it;
   }
 }
 
 void KToolBar::widgetDestroyed()
 {
-    removeWidgetInternal( (QWidget*)sender() );
+    removeWidgetInternal( (TQWidget*)sender() );
 }
 
-void KToolBar::removeWidgetInternal( QWidget * w )
+void KToolBar::removeWidgetInternal( TQWidget * w )
 {
     widgets.removeRef( w );
-    QMap< QWidget*, int >::Iterator it = widget2id.find( w );
+    TQMap< TQWidget*, int >::Iterator it = widget2id.find( w );
     if ( it == widget2id.end() )
         return;
     id2widget.remove( *it );

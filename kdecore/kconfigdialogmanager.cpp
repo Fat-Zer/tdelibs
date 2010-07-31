@@ -21,14 +21,14 @@
 
 #include "kconfigdialogmanager.h"
 
-#include <qbuttongroup.h>
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qmetaobject.h>
-#include <qobjectlist.h>
-#include <qsqlpropertymap.h>
-#include <qtimer.h>
-#include <qwhatsthis.h>
+#include <tqbuttongroup.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqmetaobject.h>
+#include <tqobjectlist.h>
+#include <tqsqlpropertymap.h>
+#include <tqtimer.h>
+#include <tqwhatsthis.h>
 
 #include <kapplication.h>
 #include <kconfigskeleton.h>
@@ -43,18 +43,18 @@ public:
   Private() : insideGroupBox(false) { }
 
 public:
-  QDict<QWidget> knownWidget;
-  QDict<QWidget> buddyWidget;
+  TQDict<TQWidget> knownWidget;
+  TQDict<TQWidget> buddyWidget;
   bool insideGroupBox;
 };
 
-KConfigDialogManager::KConfigDialogManager(QWidget *parent, KConfigSkeleton *conf, const char *name)
- : QObject(parent, name), m_conf(conf), m_dialog(parent)
+KConfigDialogManager::KConfigDialogManager(TQWidget *parent, KConfigSkeleton *conf, const char *name)
+ : TQObject(parent, name), m_conf(conf), m_dialog(parent)
 {
   d = new Private();
 
   kapp->installKDEPropertyMap();
-  propertyMap = QSqlPropertyMap::defaultMap();
+  propertyMap = TQSqlPropertyMap::defaultMap();
 
   init(true);
 }
@@ -69,102 +69,102 @@ void KConfigDialogManager::init(bool trackChanges)
   if(trackChanges)
   {
     // QT
-    changedMap.insert("QButton", SIGNAL(stateChanged(int)));
-    changedMap.insert("QCheckBox", SIGNAL(stateChanged(int)));
-    changedMap.insert("QPushButton", SIGNAL(stateChanged(int)));
-    changedMap.insert("QRadioButton", SIGNAL(stateChanged(int)));
+    changedMap.insert("TQButton", TQT_SIGNAL(stateChanged(int)));
+    changedMap.insert("TQCheckBox", TQT_SIGNAL(stateChanged(int)));
+    changedMap.insert("TQPushButton", TQT_SIGNAL(stateChanged(int)));
+    changedMap.insert("TQRadioButton", TQT_SIGNAL(stateChanged(int)));
     // We can only store one thing, so you can't have
     // a ButtonGroup that is checkable.
-    changedMap.insert("QButtonGroup", SIGNAL(clicked(int)));
-    changedMap.insert("QGroupBox", SIGNAL(toggled(bool)));
-    changedMap.insert("QComboBox", SIGNAL(activated (int)));
+    changedMap.insert("TQButtonGroup", TQT_SIGNAL(clicked(int)));
+    changedMap.insert("TQGroupBox", TQT_SIGNAL(toggled(bool)));
+    changedMap.insert("TQComboBox", TQT_SIGNAL(activated (int)));
     //qsqlproperty map doesn't store the text, but the value!
-    //changedMap.insert("QComboBox", SIGNAL(textChanged(const QString &)));
-    changedMap.insert("QDateEdit", SIGNAL(valueChanged(const QDate &)));
-    changedMap.insert("QDateTimeEdit", SIGNAL(valueChanged(const QDateTime &)));
-    changedMap.insert("QDial", SIGNAL(valueChanged (int)));
-    changedMap.insert("QLineEdit", SIGNAL(textChanged(const QString &)));
-    changedMap.insert("QSlider", SIGNAL(valueChanged(int)));
-    changedMap.insert("QSpinBox", SIGNAL(valueChanged(int)));
-    changedMap.insert("QTimeEdit", SIGNAL(valueChanged(const QTime &)));
-    changedMap.insert("QTextEdit", SIGNAL(textChanged()));
-    changedMap.insert("QTextBrowser", SIGNAL(sourceChanged(const QString &)));
-    changedMap.insert("QMultiLineEdit", SIGNAL(textChanged()));
-    changedMap.insert("QListBox", SIGNAL(selectionChanged()));
-    changedMap.insert("QTabWidget", SIGNAL(currentChanged(QWidget *)));
+    //changedMap.insert("TQComboBox", TQT_SIGNAL(textChanged(const TQString &)));
+    changedMap.insert("QDateEdit", TQT_SIGNAL(valueChanged(const TQDate &)));
+    changedMap.insert("QDateTimeEdit", TQT_SIGNAL(valueChanged(const TQDateTime &)));
+    changedMap.insert("TQDial", TQT_SIGNAL(valueChanged (int)));
+    changedMap.insert("TQLineEdit", TQT_SIGNAL(textChanged(const TQString &)));
+    changedMap.insert("TQSlider", TQT_SIGNAL(valueChanged(int)));
+    changedMap.insert("TQSpinBox", TQT_SIGNAL(valueChanged(int)));
+    changedMap.insert("QTimeEdit", TQT_SIGNAL(valueChanged(const TQTime &)));
+    changedMap.insert("TQTextEdit", TQT_SIGNAL(textChanged()));
+    changedMap.insert("TQTextBrowser", TQT_SIGNAL(sourceChanged(const TQString &)));
+    changedMap.insert("TQMultiLineEdit", TQT_SIGNAL(textChanged()));
+    changedMap.insert("TQListBox", TQT_SIGNAL(selectionChanged()));
+    changedMap.insert("TQTabWidget", TQT_SIGNAL(currentChanged(TQWidget *)));
 
     // KDE
-    changedMap.insert( "KComboBox", SIGNAL(activated (int)));
-    changedMap.insert( "KFontCombo", SIGNAL(activated (int)));
-    changedMap.insert( "KFontRequester", SIGNAL(fontSelected(const QFont &)));
-    changedMap.insert( "KFontChooser",  SIGNAL(fontSelected(const QFont &)));
-    changedMap.insert( "KHistoryCombo", SIGNAL(activated (int)));
+    changedMap.insert( "KComboBox", TQT_SIGNAL(activated (int)));
+    changedMap.insert( "KFontCombo", TQT_SIGNAL(activated (int)));
+    changedMap.insert( "KFontRequester", TQT_SIGNAL(fontSelected(const TQFont &)));
+    changedMap.insert( "KFontChooser",  TQT_SIGNAL(fontSelected(const TQFont &)));
+    changedMap.insert( "KHistoryCombo", TQT_SIGNAL(activated (int)));
 
-    changedMap.insert( "KColorButton", SIGNAL(changed(const QColor &)));
-    changedMap.insert( "KDatePicker", SIGNAL(dateSelected (QDate)));
-    changedMap.insert( "KDateWidget", SIGNAL(changed (QDate)));
-    changedMap.insert( "KDateTimeWidget", SIGNAL(valueChanged (const QDateTime &)));
-    changedMap.insert( "KEditListBox", SIGNAL(changed()));
-    changedMap.insert( "KListBox", SIGNAL(selectionChanged()));
-    changedMap.insert( "KLineEdit", SIGNAL(textChanged(const QString &)));
-    changedMap.insert( "KPasswordEdit", SIGNAL(textChanged(const QString &)));
-    changedMap.insert( "KRestrictedLine", SIGNAL(textChanged(const QString &)));
-    changedMap.insert( "KTextBrowser", SIGNAL(sourceChanged(const QString &)));
-    changedMap.insert( "KTextEdit", SIGNAL(textChanged()));
-    changedMap.insert( "KURLRequester",  SIGNAL(textChanged (const QString& )));
-    changedMap.insert( "KIntNumInput", SIGNAL(valueChanged (int)));
-    changedMap.insert( "KIntSpinBox", SIGNAL(valueChanged (int)));
-    changedMap.insert( "KDoubleNumInput", SIGNAL(valueChanged (double)));
+    changedMap.insert( "KColorButton", TQT_SIGNAL(changed(const TQColor &)));
+    changedMap.insert( "KDatePicker", TQT_SIGNAL(dateSelected (TQDate)));
+    changedMap.insert( "KDateWidget", TQT_SIGNAL(changed (TQDate)));
+    changedMap.insert( "KDateTimeWidget", TQT_SIGNAL(valueChanged (const TQDateTime &)));
+    changedMap.insert( "KEditListBox", TQT_SIGNAL(changed()));
+    changedMap.insert( "KListBox", TQT_SIGNAL(selectionChanged()));
+    changedMap.insert( "KLineEdit", TQT_SIGNAL(textChanged(const TQString &)));
+    changedMap.insert( "KPasswordEdit", TQT_SIGNAL(textChanged(const TQString &)));
+    changedMap.insert( "KRestrictedLine", TQT_SIGNAL(textChanged(const TQString &)));
+    changedMap.insert( "KTextBrowser", TQT_SIGNAL(sourceChanged(const TQString &)));
+    changedMap.insert( "KTextEdit", TQT_SIGNAL(textChanged()));
+    changedMap.insert( "KURLRequester",  TQT_SIGNAL(textChanged (const TQString& )));
+    changedMap.insert( "KIntNumInput", TQT_SIGNAL(valueChanged (int)));
+    changedMap.insert( "KIntSpinBox", TQT_SIGNAL(valueChanged (int)));
+    changedMap.insert( "KDoubleNumInput", TQT_SIGNAL(valueChanged (double)));
   }
 
   // Go through all of the children of the widgets and find all known widgets
   (void) parseChildren(m_dialog, trackChanges);
 }
 
-void KConfigDialogManager::addWidget(QWidget *widget)
+void KConfigDialogManager::addWidget(TQWidget *widget)
 {
   (void) parseChildren(widget, true);
 }
 
-void KConfigDialogManager::setupWidget(QWidget *widget, KConfigSkeletonItem *item)
+void KConfigDialogManager::setupWidget(TQWidget *widget, KConfigSkeletonItem *item)
 {
-  QVariant minValue = item->minValue();
+  TQVariant minValue = item->minValue();
   if (minValue.isValid())
   {
     if (widget->metaObject()->findProperty("minValue", true) != -1)
        widget->setProperty("minValue", minValue);
   }
-  QVariant maxValue = item->maxValue();
+  TQVariant maxValue = item->maxValue();
   if (maxValue.isValid())
   {
     if (widget->metaObject()->findProperty("maxValue", true) != -1)
        widget->setProperty("maxValue", maxValue);
   }
-  if (QWhatsThis::textFor( widget ).isEmpty())
+  if (TQWhatsThis::textFor( widget ).isEmpty())
   {
-    QString whatsThis = item->whatsThis();
+    TQString whatsThis = item->whatsThis();
     if ( !whatsThis.isEmpty() )
     {
-      QWhatsThis::add( widget, whatsThis );
+      TQWhatsThis::add( widget, whatsThis );
     }
   }
 }
 
-bool KConfigDialogManager::parseChildren(const QWidget *widget, bool trackChanges)
+bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChanges)
 {
   bool valueChanged = false;
-  const QObjectList *listOfChildren = widget->children();
+  const TQObjectList *listOfChildren = widget->children();
   if(!listOfChildren)
     return valueChanged;
 
-  QObject *object;
-  for( QPtrListIterator<QObject> it( *listOfChildren );
+  TQObject *object;
+  for( TQPtrListIterator<TQObject> it( *listOfChildren );
        (object = it.current()); ++it )
   {
     if(!object->isWidgetType())
       continue; // Skip non-widgets
 
-    QWidget *childWidget = (QWidget *)object;
+    TQWidget *childWidget = (TQWidget *)object;
 
     const char *widgetName = childWidget->name(0);
     bool bParseChildren = true;
@@ -173,7 +173,7 @@ bool KConfigDialogManager::parseChildren(const QWidget *widget, bool trackChange
     if (widgetName && (strncmp(widgetName, "kcfg_", 5) == 0))
     {
       // This is one of our widgets!
-      QString configId = widgetName+5;
+      TQString configId = widgetName+5;
       KConfigSkeletonItem *item = m_conf->findItem(configId);
       if (item)
       {
@@ -181,7 +181,7 @@ bool KConfigDialogManager::parseChildren(const QWidget *widget, bool trackChange
 
         setupWidget(childWidget, item);
 
-        QMap<QString, QCString>::const_iterator changedIt = changedMap.find(childWidget->className());
+        TQMap<TQString, TQCString>::const_iterator changedIt = changedMap.find(childWidget->className());
 
         if (changedIt == changedMap.end())
         {
@@ -199,18 +199,18 @@ bool KConfigDialogManager::parseChildren(const QWidget *widget, bool trackChange
         else
         {
           connect(childWidget, *changedIt,
-                  this, SIGNAL(widgetModified()));
+                  this, TQT_SIGNAL(widgetModified()));
 
-          QGroupBox *gb = dynamic_cast<QGroupBox *>(childWidget);
+          TQGroupBox *gb = dynamic_cast<TQGroupBox *>(childWidget);
           if (!gb)
             bParseChildren = false;
           else
             d->insideGroupBox = true;
 
-          QComboBox *cb = dynamic_cast<QComboBox *>(childWidget);
+          TQComboBox *cb = dynamic_cast<TQComboBox *>(childWidget);
           if (cb && cb->editable())
-            connect(cb, SIGNAL(textChanged(const QString &)),
-                    this, SIGNAL(widgetModified()));
+            connect(cb, TQT_SIGNAL(textChanged(const TQString &)),
+                    this, TQT_SIGNAL(widgetModified()));
         }
       }
       else
@@ -219,28 +219,28 @@ bool KConfigDialogManager::parseChildren(const QWidget *widget, bool trackChange
         assert(false);
       }
     }
-    else if (childWidget->inherits("QLabel"))
+    else if (childWidget->inherits("TQLabel"))
     {
-      QLabel *label = static_cast<QLabel *>(childWidget);
-      QWidget *buddy = label->buddy();
+      TQLabel *label = static_cast<TQLabel *>(childWidget);
+      TQWidget *buddy = label->buddy();
       if (!buddy)
         continue;
       const char *buddyName = buddy->name(0);
       if (buddyName && (strncmp(buddyName, "kcfg_", 5) == 0))
       {
         // This is one of our widgets!
-        QString configId = buddyName+5;
+        TQString configId = buddyName+5;
         d->buddyWidget.insert(configId, childWidget);
       }
     }
 #ifndef NDEBUG
     else if (widgetName)
     {
-      QMap<QString, QCString>::const_iterator changedIt = changedMap.find(childWidget->className());
+      TQMap<TQString, TQCString>::const_iterator changedIt = changedMap.find(childWidget->className());
       if (changedIt != changedMap.end())
       {
-        if ((!d->insideGroupBox || !childWidget->inherits("QRadioButton")) && 
-            !childWidget->inherits("QGroupBox"))
+        if ((!d->insideGroupBox || !childWidget->inherits("TQRadioButton")) && 
+            !childWidget->inherits("TQGroupBox"))
           kdDebug(178) << "Widget '" << widgetName << "' (" << childWidget->className() << ") remains unmanaged." << endl;
       }        
     }
@@ -263,8 +263,8 @@ void KConfigDialogManager::updateWidgets()
   bool bSignalsBlocked = signalsBlocked();
   blockSignals(true);
 
-  QWidget *widget;
-  for( QDictIterator<QWidget> it( d->knownWidget );
+  TQWidget *widget;
+  for( TQDictIterator<TQWidget> it( d->knownWidget );
        (widget = it.current()); ++it )
   {
      KConfigSkeletonItem *item = m_conf->findItem(it.currentKey());
@@ -274,7 +274,7 @@ void KConfigDialogManager::updateWidgets()
         continue;
      }
 
-     QVariant p = item->property();
+     TQVariant p = item->property();
      if (p != property(widget))
      {
         setProperty(widget, p);
@@ -284,7 +284,7 @@ void KConfigDialogManager::updateWidgets()
      if (item->isImmutable())
      {
         widget->setEnabled(false);
-        QWidget *buddy = d->buddyWidget.find(it.currentKey());
+        TQWidget *buddy = d->buddyWidget.find(it.currentKey());
         if (buddy)
            buddy->setEnabled(false);
      }
@@ -292,7 +292,7 @@ void KConfigDialogManager::updateWidgets()
   blockSignals(bSignalsBlocked);
 
   if (changed)
-    QTimer::singleShot(0, this, SIGNAL(widgetModified()));
+    TQTimer::singleShot(0, this, TQT_SIGNAL(widgetModified()));
 }
 
 void KConfigDialogManager::updateWidgetsDefault()
@@ -306,8 +306,8 @@ void KConfigDialogManager::updateSettings()
 {
   bool changed = false;
 
-  QWidget *widget;
-  for( QDictIterator<QWidget> it( d->knownWidget );
+  TQWidget *widget;
+  for( TQDictIterator<TQWidget> it( d->knownWidget );
        (widget = it.current()); ++it )
   {
      KConfigSkeletonItem *item = m_conf->findItem(it.currentKey());
@@ -317,7 +317,7 @@ void KConfigDialogManager::updateSettings()
         continue;
      }
 
-     QVariant p = property(widget);
+     TQVariant p = property(widget);
      if (p != item->property())
      {
         item->setProperty(p);
@@ -331,16 +331,16 @@ void KConfigDialogManager::updateSettings()
   }
 }
 
-void KConfigDialogManager::setProperty(QWidget *w, const QVariant &v)
+void KConfigDialogManager::setProperty(TQWidget *w, const TQVariant &v)
 {
-  QButtonGroup *bg = dynamic_cast<QButtonGroup *>(w);
+  TQButtonGroup *bg = dynamic_cast<TQButtonGroup *>(w);
   if (bg)
   {
     bg->setButton(v.toInt());
     return;
   }
 
-  QComboBox *cb = dynamic_cast<QComboBox *>(w);
+  TQComboBox *cb = dynamic_cast<TQComboBox *>(w);
   if (cb && cb->editable())
   {
     cb->setCurrentText(v.toString());
@@ -350,15 +350,15 @@ void KConfigDialogManager::setProperty(QWidget *w, const QVariant &v)
   propertyMap->setProperty(w, v);
 }
 
-QVariant KConfigDialogManager::property(QWidget *w)
+TQVariant KConfigDialogManager::property(TQWidget *w)
 {
-  QButtonGroup *bg = dynamic_cast<QButtonGroup *>(w);
+  TQButtonGroup *bg = dynamic_cast<TQButtonGroup *>(w);
   if (bg)
-    return QVariant(bg->selectedId());
+    return TQVariant(bg->selectedId());
 
-  QComboBox *cb = dynamic_cast<QComboBox *>(w);
+  TQComboBox *cb = dynamic_cast<TQComboBox *>(w);
   if (cb && cb->editable())
-      return QVariant(cb->currentText());
+      return TQVariant(cb->currentText());
 
   return propertyMap->property(w);
 }
@@ -366,8 +366,8 @@ QVariant KConfigDialogManager::property(QWidget *w)
 bool KConfigDialogManager::hasChanged()
 {
 
-  QWidget *widget;
-  for( QDictIterator<QWidget> it( d->knownWidget );
+  TQWidget *widget;
+  for( TQDictIterator<TQWidget> it( d->knownWidget );
        (widget = it.current()); ++it )
   {
      KConfigSkeletonItem *item = m_conf->findItem(it.currentKey());
@@ -377,7 +377,7 @@ bool KConfigDialogManager::hasChanged()
         continue;
      }
 
-     QVariant p = property(widget);
+     TQVariant p = property(widget);
      if (p != item->property())
      {
 //        kdDebug(178) << "Widget for '" << it.currentKey() << "' has changed." << endl;

@@ -22,23 +22,23 @@
 #include "driver.h"
 #include "kprinter.h"
 
-#include <qbuttongroup.h>
-#include <qgroupbox.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qradiobutton.h>
-#include <qwhatsthis.h>
+#include <tqbuttongroup.h>
+#include <tqgroupbox.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqradiobutton.h>
+#include <tqwhatsthis.h>
 #include <knuminput.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kseparator.h>
 #include <kdebug.h>
 
-KPTextPage::KPTextPage(DrMain *driver, QWidget *parent, const char *name)
+KPTextPage::KPTextPage(DrMain *driver, TQWidget *parent, const char *name)
 : KPrintDialogPage(0, driver, parent, name)
 {
 	//WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThisCPITextPage = i18n( " <qt> "
+	TQString whatsThisCPITextPage = i18n( " <qt> "
 			" <p><b>Characters Per Inch</b></p> "
 			" <p>This setting controls the horizontal size of characters when printing a text file. </p>"
 			" <p>The default value is 10, meaning that the font is scaled in a way that 10 characters "
@@ -52,7 +52,7 @@ KPTextPage::KPTextPage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisLPITextPage = i18n( " <qt> "
+	TQString whatsThisLPITextPage = i18n( " <qt> "
 			" <p><b>Lines Per Inch</b></p> "
 			" <p>This setting controls the vertical size of characters when printing a text file. </p>"
 			" <p>The default value is 6, meaning that the font is scaled in a way that 6 lines "
@@ -66,7 +66,7 @@ KPTextPage::KPTextPage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisColumnsTextPage = i18n( " <qt> "
+	TQString whatsThisColumnsTextPage = i18n( " <qt> "
 			" <p><b>Columns</b></p> "
 			" <p>This setting controls how many columns of text will be printed on each page when."
 			" printing text files. </p> "
@@ -81,10 +81,10 @@ KPTextPage::KPTextPage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisPrettyprintPreviewIconTextPage = i18n( " <qt> "
+	TQString whatsThisPrettyprintPreviewIconTextPage = i18n( " <qt> "
 			" Preview icon changes when you turn on or off prettyprint. "
 			" </qt>" );
-	QString whatsThisFormatTextPage = i18n( " <qt> "
+	TQString whatsThisFormatTextPage = i18n( " <qt> "
 			" <p><b>Text Formats</b></p> "
 			" <p>These settings control the appearance of text on printouts. They are only valid for "
 			" printing text files or input directly through kprinter. </p> "
@@ -105,7 +105,7 @@ KPTextPage::KPTextPage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisMarginsTextPage = i18n( " <qt> "
+	TQString whatsThisMarginsTextPage = i18n( " <qt> "
 			" <p><b>Margins</b></p> "
 			" <p>These settings control the margins of printouts on the paper. They are not valid for "
 			" jobs originating from applications which define their own page layout internally and "
@@ -131,7 +131,7 @@ KPTextPage::KPTextPage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisPrettyprintButtonOnTextPage = i18n( " <qt> "
+	TQString whatsThisPrettyprintButtonOnTextPage = i18n( " <qt> "
 			" <p><b>Turn Text Printing with Syntax Highlighting (Prettyprint) On!</b></p> "
 			" <p>ASCII text file printouts can be 'prettyfied' by enabling this option. If you do so, "
 			" a header is printed at the top of each page. The header contains "
@@ -150,7 +150,7 @@ KPTextPage::KPTextPage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisPrettyprintButtonOffTextPage = i18n( " <qt> "
+	TQString whatsThisPrettyprintButtonOffTextPage = i18n( " <qt> "
 			" <p><b>Turn Text Printing with Syntax Highlighting (Prettyprint) Off! </b></p> "
 			" <p>ASCII text file printing with this option turned off are appearing without a page "
 			" header and without syntax highlighting. (You can still set the page margins, though.) </p> "
@@ -164,7 +164,7 @@ KPTextPage::KPTextPage(DrMain *driver, QWidget *parent, const char *name)
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisPrettyprintFrameTextPage = i18n( " <qt> "
+	TQString whatsThisPrettyprintFrameTextPage = i18n( " <qt> "
 			" <p><b>Print Text with Syntax Highlighting (Prettyprint)</b></p> "
 			" <p>ASCII file printouts can be 'prettyfied' by enabling this option. If you do so, "
 			" a header is printed at the top of each page. The header contains "
@@ -188,61 +188,61 @@ KPTextPage::KPTextPage(DrMain *driver, QWidget *parent, const char *name)
 	setTitle(i18n("Text"));
 	m_block = false;
 
-	QGroupBox	*formatbox = new QGroupBox(0, Qt::Vertical, i18n("Text Format"), this);
-	  QWhatsThis::add(formatbox, whatsThisFormatTextPage);
-	QGroupBox	*prettybox = new QGroupBox(0, Qt::Vertical, i18n("Syntax Highlighting"), this);
-	  QWhatsThis::add(prettybox, whatsThisPrettyprintFrameTextPage);
-	QGroupBox	*marginbox = new QGroupBox(0, Qt::Vertical, i18n("Margins"), this);
-	  QWhatsThis::add(marginbox, whatsThisMarginsTextPage);
+	QGroupBox	*formatbox = new TQGroupBox(0, Qt::Vertical, i18n("Text Format"), this);
+	  TQWhatsThis::add(formatbox, whatsThisFormatTextPage);
+	QGroupBox	*prettybox = new TQGroupBox(0, Qt::Vertical, i18n("Syntax Highlighting"), this);
+	  TQWhatsThis::add(prettybox, whatsThisPrettyprintFrameTextPage);
+	QGroupBox	*marginbox = new TQGroupBox(0, Qt::Vertical, i18n("Margins"), this);
+	  TQWhatsThis::add(marginbox, whatsThisMarginsTextPage);
 
 	m_cpi = new KIntNumInput(10, formatbox);
-	  QWhatsThis::add(m_cpi, whatsThisCPITextPage);
+	  TQWhatsThis::add(m_cpi, whatsThisCPITextPage);
 	m_cpi->setLabel(i18n("&Chars per inch:"), Qt::AlignLeft|Qt::AlignVCenter);
 	m_cpi->setRange(1, 999, 1, false);
 	m_lpi = new KIntNumInput(m_cpi, 6, formatbox);
-	  QWhatsThis::add(m_lpi, whatsThisLPITextPage);
+	  TQWhatsThis::add(m_lpi, whatsThisLPITextPage);
 	m_lpi->setLabel(i18n("&Lines per inch:"), Qt::AlignLeft|Qt::AlignVCenter);
 	m_lpi->setRange(1, 999, 1, false);
 	m_columns = new KIntNumInput(m_lpi, 1, formatbox);
-	  QWhatsThis::add(m_columns, whatsThisColumnsTextPage);
+	  TQWhatsThis::add(m_columns, whatsThisColumnsTextPage);
 	m_columns->setLabel(i18n("C&olumns:"), Qt::AlignLeft|Qt::AlignVCenter);
 	m_columns->setRange(1, 10, 1, false);
 	KSeparator	*sep = new KSeparator(Qt::Horizontal, formatbox);
-	connect(m_columns, SIGNAL(valueChanged(int)), SLOT(slotColumnsChanged(int)));
+	connect(m_columns, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotColumnsChanged(int)));
 
-	m_prettypix = new QLabel(prettybox);
-	  QWhatsThis::add(m_prettypix, whatsThisPrettyprintPreviewIconTextPage);
+	m_prettypix = new TQLabel(prettybox);
+	  TQWhatsThis::add(m_prettypix, whatsThisPrettyprintPreviewIconTextPage);
 	m_prettypix->setAlignment(Qt::AlignCenter);
-	QRadioButton	*off = new QRadioButton(i18n("&Disabled"), prettybox);
-	  QWhatsThis::add(off, whatsThisPrettyprintButtonOffTextPage);
-	QRadioButton	*on = new QRadioButton(i18n("&Enabled"), prettybox);
-	  QWhatsThis::add(on, whatsThisPrettyprintButtonOnTextPage);
-	m_prettyprint = new QButtonGroup(prettybox);
+	QRadioButton	*off = new TQRadioButton(i18n("&Disabled"), prettybox);
+	  TQWhatsThis::add(off, whatsThisPrettyprintButtonOffTextPage);
+	QRadioButton	*on = new TQRadioButton(i18n("&Enabled"), prettybox);
+	  TQWhatsThis::add(on, whatsThisPrettyprintButtonOnTextPage);
+	m_prettyprint = new TQButtonGroup(prettybox);
 	m_prettyprint->hide();
 	m_prettyprint->insert(off, 0);
 	m_prettyprint->insert(on, 1);
 	m_prettyprint->setButton(0);
-	connect(m_prettyprint, SIGNAL(clicked(int)), SLOT(slotPrettyChanged(int)));
+	connect(m_prettyprint, TQT_SIGNAL(clicked(int)), TQT_SLOT(slotPrettyChanged(int)));
 	slotPrettyChanged(0);
 
 	m_margin = new MarginWidget(marginbox);
-	  QWhatsThis::add(m_margin, whatsThisMarginsTextPage);
+	  TQWhatsThis::add(m_margin, whatsThisMarginsTextPage);
 	m_margin->setPageSize(595, 842);
 
-	QGridLayout	*l0 = new QGridLayout(this, 2, 2, 0, 10);
+	QGridLayout	*l0 = new TQGridLayout(this, 2, 2, 0, 10);
 	l0->addWidget(formatbox, 0, 0);
 	l0->addWidget(prettybox, 0, 1);
 	l0->addMultiCellWidget(marginbox, 1, 1, 0, 1);
-	QVBoxLayout	*l1 = new QVBoxLayout(formatbox->layout(), 5);
+	QVBoxLayout	*l1 = new TQVBoxLayout(formatbox->layout(), 5);
 	l1->addWidget(m_cpi);
 	l1->addWidget(m_lpi);
 	l1->addWidget(sep);
 	l1->addWidget(m_columns);
-	QGridLayout	*l2 = new QGridLayout(prettybox->layout(), 2, 2, 10);
+	QGridLayout	*l2 = new TQGridLayout(prettybox->layout(), 2, 2, 10);
 	l2->addWidget(off, 0, 0);
 	l2->addWidget(on, 1, 0);
 	l2->addMultiCellWidget(m_prettypix, 0, 1, 1, 1);
-	QVBoxLayout	*l3 = new QVBoxLayout(marginbox->layout(), 10);
+	QVBoxLayout	*l3 = new TQVBoxLayout(marginbox->layout(), 10);
 	l3->addWidget(m_margin);
 }
 
@@ -250,7 +250,7 @@ KPTextPage::~KPTextPage()
 {
 }
 
-void KPTextPage::setOptions(const QMap<QString,QString>& opts)
+void KPTextPage::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	QString	value;
 
@@ -296,22 +296,22 @@ void KPTextPage::setOptions(const QMap<QString,QString>& opts)
 	m_margin->setCustomEnabled(marginset);
 }
 
-void KPTextPage::getOptions(QMap<QString,QString>& opts, bool incldef)
+void KPTextPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	if (incldef || m_cpi->value() != 10)
-		opts["cpi"] = QString::number(m_cpi->value());
+		opts["cpi"] = TQString::number(m_cpi->value());
 	if (incldef || m_lpi->value() != 6)
-		opts["lpi"] = QString::number(m_lpi->value());
+		opts["lpi"] = TQString::number(m_lpi->value());
 	if (incldef || m_columns->value() != 1)
-		opts["columns"] = QString::number(m_columns->value());
+		opts["columns"] = TQString::number(m_columns->value());
 
 	//if (m_margin->isCustomEnabled() || incldef)
 	if (m_margin->isCustomEnabled())
 	{
-		opts["page-top"] = QString::number(( int )( m_margin->top()+0.5 ));
-		opts["page-bottom"] = QString::number(( int )( m_margin->bottom()+0.5 ));
-		opts["page-left"] = QString::number(( int )( m_margin->left()+0.5 ));
-		opts["page-right"] = QString::number(( int )( m_margin->right()+0.5 ));
+		opts["page-top"] = TQString::number(( int )( m_margin->top()+0.5 ));
+		opts["page-bottom"] = TQString::number(( int )( m_margin->bottom()+0.5 ));
+		opts["page-left"] = TQString::number(( int )( m_margin->left()+0.5 ));
+		opts["page-right"] = TQString::number(( int )( m_margin->right()+0.5 ));
 	}
 	else
 	{

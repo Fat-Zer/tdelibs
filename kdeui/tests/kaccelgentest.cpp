@@ -1,13 +1,13 @@
 #include "kaccelgen.h"
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include <iostream>
 
 using std::cout;
 using std::endl;
 
-void check( const QString &what, const QStringList &expected, const QStringList &received )
+void check( const TQString &what, const TQStringList &expected, const TQStringList &received )
 {
     cout << "Testing " << what.latin1() << ": ";
     if ( expected == received ) {
@@ -21,20 +21,20 @@ void check( const QString &what, const QStringList &expected, const QStringList 
 
 int main()
 {
-    QStringList input;
+    TQStringList input;
     input << "foo" << "bar item" << "&baz" << "bif" << "boz" << "boz 2"
 	      << "yoyo && dyne";
 
-    QStringList expected;
+    TQStringList expected;
     expected << "&foo" << "bar &item" << "&baz" << "bif" << "b&oz" << "boz &2"
 	         << "&yoyo && dyne";
 
-    QStringList output;
+    TQStringList output;
     KAccelGen::generate( input, output );
-    check( "QStringList value generation", expected, output );
+    check( "TQStringList value generation", expected, output );
 
-    QMap<QString,QString> map;
-    for (QStringList::ConstIterator it = input.begin(); it != input.end(); ++it) {
+    TQMap<TQString,TQString> map;
+    for (TQStringList::ConstIterator it = input.begin(); it != input.end(); ++it) {
         map.insert(*it, *it);
     }
     input.sort();

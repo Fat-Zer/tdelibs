@@ -10,8 +10,8 @@
 
 #include "hdr.h"
 
-#include <qimage.h>
-#include <qdatastream.h>
+#include <tqimage.h>
+#include <tqdatastream.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -33,7 +33,7 @@ namespace {	// Private.
 
 	// read an old style line from the hdr image file
 	// if 'first' is true the first byte is already read
-	static bool Read_Old_Line (uchar * image, int width, QDataStream & s)
+	static bool Read_Old_Line (uchar * image, int width, TQDataStream & s)
 	{
 		int  rshift = 0;
 		int  i;
@@ -94,7 +94,7 @@ namespace {	// Private.
 	}
 
 	// Load the HDR image.
-	static bool LoadHDR( QDataStream & s, const int width, const int height, QImage & img )
+	static bool LoadHDR( TQDataStream & s, const int width, const int height, TQImage & img )
 	{
 		uchar val, code;
 
@@ -104,7 +104,7 @@ namespace {	// Private.
 			return false;
 		}
 
-  		QMemArray<uchar> image( width * 4 );
+  		TQMemArray<uchar> image( width * 4 );
 	
 		for (int cline = 0; cline < height; cline++)
 		{
@@ -199,7 +199,7 @@ namespace {	// Private.
 } // namespace
 
 
-KDE_EXPORT void kimgio_hdr_read( QImageIO * io )
+KDE_EXPORT void kimgio_hdr_read( TQImageIO * io )
 {
 	int len;
 	char line[MAXLINE];
@@ -242,9 +242,9 @@ KDE_EXPORT void kimgio_hdr_read( QImageIO * io )
 		return;
 	}
 	
-	QDataStream s( io->ioDevice() );
+	TQDataStream s( io->ioDevice() );
 
-	QImage img;
+	TQImage img;
 	if( !LoadHDR(s, width, height, img) ) 
 	{
 		kdDebug(399) << "Error loading HDR file." << endl;
@@ -258,7 +258,7 @@ KDE_EXPORT void kimgio_hdr_read( QImageIO * io )
 }
 
 
-KDE_EXPORT void kimgio_hdr_write( QImageIO * )
+KDE_EXPORT void kimgio_hdr_write( TQImageIO * )
 {
 	// intentionally not implemented (since writing low dynamic range data to a HDR file is nonsense.)
 }

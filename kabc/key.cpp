@@ -25,7 +25,7 @@
 
 using namespace KABC;
 
-Key::Key( const QString &text, int type )
+Key::Key( const TQString &text, int type )
   : mTextData( text ), mIsBinary( false ), mType( type )
 {
   mId = KApplication::randomString(8);
@@ -53,34 +53,34 @@ bool Key::operator!=( const Key &k ) const
   return !( k == *this );
 }
 
-void Key::setId( const QString &id )
+void Key::setId( const TQString &id )
 {
   mId = id;
 }
 
-QString Key::id() const
+TQString Key::id() const
 {
   return mId;
 }
 
-void Key::setBinaryData( const QByteArray &binary )
+void Key::setBinaryData( const TQByteArray &binary )
 {
   mBinaryData = binary;
   mIsBinary = true;
 }
 
-QByteArray Key::binaryData() const
+TQByteArray Key::binaryData() const
 {
   return mBinaryData;
 }
 
-void Key::setTextData( const QString &text )
+void Key::setTextData( const TQString &text )
 {
   mTextData = text;
   mIsBinary = false;
 }
 
-QString Key::textData() const
+TQString Key::textData() const
 {
   return mTextData;
 }
@@ -95,7 +95,7 @@ void Key::setType( int type )
   mType = type;
 }
 
-void Key::setCustomTypeString( const QString &custom )
+void Key::setCustomTypeString( const TQString &custom )
 {
   mCustomTypeString = custom;
 }
@@ -105,7 +105,7 @@ int Key::type() const
   return mType;
 }
 
-QString Key::customTypeString() const
+TQString Key::customTypeString() const
 {
   return mCustomTypeString;
 }
@@ -120,7 +120,7 @@ Key::TypeList Key::typeList()
   return list;
 }
   
-QString Key::typeLabel( int type )
+TQString Key::typeLabel( int type )
 {
   switch ( type ) {
     case X509:
@@ -138,13 +138,13 @@ QString Key::typeLabel( int type )
   }
 }
 
-QDataStream &KABC::operator<<( QDataStream &s, const Key &key )
+TQDataStream &KABC::operator<<( TQDataStream &s, const Key &key )
 {
     return s << key.mId << key.mIsBinary << key.mTextData << key.mBinaryData <<
              key.mCustomTypeString << key.mType;
 }
 
-QDataStream &KABC::operator>>( QDataStream &s, Key &key )
+TQDataStream &KABC::operator>>( TQDataStream &s, Key &key )
 {
     s >> key.mId >> key.mIsBinary >> key.mTextData >> key.mBinaryData >>
     key.mCustomTypeString >> key.mType;

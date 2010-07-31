@@ -35,7 +35,7 @@
   this class is to keep the implementation from being dependant on a
   separate framework/library.
 
-  NETPoint is only used by the NET API. Usually QPoint is the 
+  NETPoint is only used by the NET API. Usually TQPoint is the 
   appropriate class for representing a point.
 
   @author Bradley T. Hughes <bhughes@trolltech.com>
@@ -62,7 +62,7 @@ struct NETPoint {
   existence of this class is to keep the implementation from being dependant
   on a separate framework/library.
 
-  NETSize is only used by the NET API. Usually QSize is the 
+  NETSize is only used by the NET API. Usually TQSize is the 
   appropriate class for representing a size.
 
   @author Bradley T. Hughes <bhughes@trolltech.com>
@@ -88,7 +88,7 @@ struct NETSize {
    size width by height.  The existence of this class is to keep the implementation
    from being dependant on a separate framework/library;
 
-   NETRect is only used by the NET API. Usually QRect is the 
+   NETRect is only used by the NET API. Usually TQRect is the 
    appropriate class for representing a rectangle.
 **/
 struct NETRect {

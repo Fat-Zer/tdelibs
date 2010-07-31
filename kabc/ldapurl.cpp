@@ -19,8 +19,8 @@
 */
 
 #include <kdebug.h>
-#include <qstringlist.h>
-#include <qdir.h>
+#include <tqstringlist.h>
+#include <tqdir.h>
 
 #include "ldapurl.h"
 
@@ -35,7 +35,7 @@ LDAPUrl::LDAPUrl(const KURL &_url)
   : KURL(_url), m_extensions()
 {
   m_dn = path();
-  if ( !QDir::isRelativePath(m_dn) )
+  if ( !TQDir::isRelativePath(m_dn) )
 #ifdef Q_WS_WIN
     m_dn.remove(0,3); // e.g. "c:/"
 #else
@@ -44,10 +44,10 @@ LDAPUrl::LDAPUrl(const KURL &_url)
   parseQuery();
 }
 
-void LDAPUrl::setDn( const QString &dn)
+void LDAPUrl::setDn( const TQString &dn)
 {
   m_dn = dn;
-  if ( !QDir::isRelativePath(m_dn) )
+  if ( !TQDir::isRelativePath(m_dn) )
 #ifdef Q_WS_WIN
     m_dn.remove(0,3); // e.g. "c:/"
 #else
@@ -56,14 +56,14 @@ void LDAPUrl::setDn( const QString &dn)
   setPath(m_dn);
 }
 
-bool LDAPUrl::hasExtension( const QString &key ) const
+bool LDAPUrl::hasExtension( const TQString &key ) const
 {
   return m_extensions.contains( key );
 }
 
-LDAPUrl::Extension LDAPUrl::extension( const QString &key ) const
+LDAPUrl::Extension LDAPUrl::extension( const TQString &key ) const
 {
-  QMap<QString, Extension>::const_iterator it;
+  TQMap<TQString, Extension>::const_iterator it;
 
   it = m_extensions.find( key );
   if ( it != m_extensions.constEnd() )
@@ -76,7 +76,7 @@ LDAPUrl::Extension LDAPUrl::extension( const QString &key ) const
   }
 }
 
-QString LDAPUrl::extension( const QString &key, bool &critical ) const
+TQString LDAPUrl::extension( const TQString &key, bool &critical ) const
 {
   Extension ext;
 
@@ -85,13 +85,13 @@ QString LDAPUrl::extension( const QString &key, bool &critical ) const
   return ext.value;
 }
 
-void LDAPUrl::setExtension( const QString &key, const LDAPUrl::Extension &ext )
+void LDAPUrl::setExtension( const TQString &key, const LDAPUrl::Extension &ext )
 {
   m_extensions[ key ] = ext;
   updateQuery();
 }
 
-void LDAPUrl::setExtension( const QString &key, const QString &value, bool critical )
+void LDAPUrl::setExtension( const TQString &key, const TQString &value, bool critical )
 {
   Extension ext;
   ext.value = value;
@@ -99,7 +99,7 @@ void LDAPUrl::setExtension( const QString &key, const QString &value, bool criti
   setExtension( key, ext );
 }
 
-void LDAPUrl::removeExtension( const QString &key )
+void LDAPUrl::removeExtension( const TQString &key )
 {
   m_extensions.remove( key );
   updateQuery();
@@ -108,8 +108,8 @@ void LDAPUrl::removeExtension( const QString &key )
 void LDAPUrl::updateQuery()
 {
   Extension ext;
-  QMap<QString, Extension>::iterator it;
-  QString q = "?";
+  TQMap<TQString, Extension>::iterator it;
+  TQString q = "?";
 
   // set the attributes to query
   if ( m_attributes.count() > 0 ) q += m_attributes.join(",");
@@ -152,14 +152,14 @@ void LDAPUrl::updateQuery()
 void LDAPUrl::parseQuery()
 {
   Extension ext;
-  QStringList extensions;
-  QString q = query();
+  TQStringList extensions;
+  TQString q = query();
   // remove first ?
   if (q.startsWith("?"))
     q.remove(0,1);
 
   // split into a list
-  QStringList url_items = QStringList::split("?", q, true);
+  TQStringList url_items = TQStringList::split("?", q, true);
 
   m_attributes.clear();
   m_scope = Base;
@@ -167,10 +167,10 @@ void LDAPUrl::parseQuery()
   m_extensions.clear();
 
   int i = 0;
-  for ( QStringList::Iterator it = url_items.begin(); it != url_items.end(); ++it, i++ ) {
+  for ( TQStringList::Iterator it = url_items.begin(); it != url_items.end(); ++it, i++ ) {
     switch (i) {
       case 0:
-        m_attributes = QStringList::split(",", (*it), false);
+        m_attributes = TQStringList::split(",", (*it), false);
         break;
       case 1:
         if ( (*it) == "sub" ) m_scope = Sub; else
@@ -180,13 +180,13 @@ void LDAPUrl::parseQuery()
         m_filter = decode_string( *it );
         break;
       case 3:
-        extensions = QStringList::split(",", (*it), false);
+        extensions = TQStringList::split(",", (*it), false);
         break;
     }
   }
 
-  QString name,value;
-  for ( QStringList::Iterator it = extensions.begin(); it != extensions.end(); ++it ) {
+  TQString name,value;
+  for ( TQStringList::Iterator it = extensions.begin(); it != extensions.end(); ++it ) {
     ext.critical = false;
     name = decode_string( (*it).section('=',0,0) ).lower();
     value = decode_string( (*it).section('=',1) );

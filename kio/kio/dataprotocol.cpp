@@ -23,10 +23,10 @@
 #include <kurl.h>
 #include <kio/global.h>
 
-#include <qcstring.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qtextcodec.h>
+#include <tqcstring.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqtextcodec.h>
 
 #ifdef DATAKIOSLAVE
 #  include <kinstance.h>
@@ -67,22 +67,22 @@ extern "C" {
 
 /** structure containing header information */
 struct DataHeader {
-  QString mime_type;		// mime type of content (lowercase)
+  TQString mime_type;		// mime type of content (lowercase)
   MetaData attributes;		// attribute/value pairs (attribute lowercase,
   				// 	value unchanged)
   bool is_base64;		// true if data is base64 encoded
-  QString url;			// reference to decoded url
+  TQString url;			// reference to decoded url
   int data_offset;		// zero-indexed position within url
   				// where the real data begins. May point beyond
       				// the end to indicate that there is no data
-  QString *charset;		// shortcut to charset (it always exists)
+  TQString *charset;		// shortcut to charset (it always exists)
 };
 
 // constant string data
-const QChar text_plain_str[] = { 't','e','x','t','/','p','l','a','i','n' };
-const QChar charset_str[] = { 'c','h','a','r','s','e','t' };
-const QChar us_ascii_str[] = { 'u','s','-','a','s','c','i','i' };
-const QChar base64_str[] = { 'b','a','s','e','6','4' };
+const TQChar text_plain_str[] = { 't','e','x','t','/','p','l','a','i','n' };
+const TQChar charset_str[] = { 'c','h','a','r','s','e','t' };
+const TQChar us_ascii_str[] = { 'u','s','-','a','s','c','i','i' };
+const TQChar base64_str[] = { 'b','a','s','e','6','4' };
 
 /** returns the position of the first occurrence of any of the given characters
   * @p c1 to @p c3 or buf.length() if none is contained.
@@ -92,12 +92,12 @@ const QChar base64_str[] = { 'b','a','s','e','6','4' };
   * @param c2 alternative character to find or '\0' to ignore
   * @param c3 alternative character to find or '\0' to ignore
   */
-static int find(const QString &buf, int begin, QChar c1, QChar c2 = '\0',
-		QChar c3 = '\0') {
+static int find(const TQString &buf, int begin, TQChar c1, TQChar c2 = '\0',
+		TQChar c3 = '\0') {
   int pos = begin;
   int size = (int)buf.length();
   while (pos < size) {
-    QChar ch = buf[pos];
+    TQChar ch = buf[pos];
     if (ch == c1
     	|| (c2 != '\0' && ch == c2)
 	|| (c3 != '\0' && ch == c3))
@@ -117,11 +117,11 @@ static int find(const QString &buf, int begin, QChar c1, QChar c2 = '\0',
  * @param c2 alternative character to find or 0 to ignore
  * @param c3 alternative character to find or 0 to ignore
  */
-inline QString extract(const QString &buf, int &pos, QChar c1,
-		QChar c2 = '\0', QChar c3 = '\0') {
+inline TQString extract(const TQString &buf, int &pos, TQChar c1,
+		TQChar c2 = '\0', TQChar c3 = '\0') {
   int oldpos = pos;
   pos = find(buf,oldpos,c1,c2,c3);
-  return QString(buf.unicode() + oldpos, pos - oldpos);
+  return TQString(buf.unicode() + oldpos, pos - oldpos);
 }
 
 /** ignores all whitespaces
@@ -130,9 +130,9 @@ inline QString extract(const QString &buf, int &pos, QChar c1,
  *	Upon return @p pos will either point to the first non-whitespace
  *	character or to the end of the buffer.
  */
-inline void ignoreWS(const QString &buf, int &pos) {
+inline void ignoreWS(const TQString &buf, int &pos) {
   int size = (int)buf.length();
-  QChar ch = buf[pos];
+  TQChar ch = buf[pos];
   while (pos < size && (ch == ' ' || ch == '\t' || ch == '\n'
   	|| ch == '\r'))
     ch = buf[++pos];
@@ -146,14 +146,14 @@ inline void ignoreWS(const QString &buf, int &pos) {
  * @return the extracted string. @p pos will be updated to point to the
  * 	character following the trailing quote.
  */
-static QString parseQuotedString(const QString &buf, int &pos) {
+static TQString parseQuotedString(const TQString &buf, int &pos) {
   int size = (int)buf.length();
-  QString res;
+  TQString res;
   pos++;		// jump over leading quote
   bool escaped = false;	// if true means next character is literal
   bool parsing = true;	// true as long as end quote not found
   while (parsing && pos < size) {
-    QChar ch = buf[pos++];
+    TQChar ch = buf[pos++];
     if (escaped) {
       res += ch;
       escaped = false;
@@ -174,10 +174,10 @@ static QString parseQuotedString(const QString &buf, int &pos) {
  *		information
  */
 static void parseDataHeader(const KURL &url, DataHeader &header_info) {
-  QConstString text_plain(text_plain_str,sizeof text_plain_str/sizeof text_plain_str[0]);
-  QConstString charset(charset_str,sizeof charset_str/sizeof charset_str[0]);
-  QConstString us_ascii(us_ascii_str,sizeof us_ascii_str/sizeof us_ascii_str[0]);
-  QConstString base64(base64_str,sizeof base64_str/sizeof base64_str[0]);
+  TQConstString text_plain(text_plain_str,sizeof text_plain_str/sizeof text_plain_str[0]);
+  TQConstString charset(charset_str,sizeof charset_str/sizeof charset_str[0]);
+  TQConstString us_ascii(us_ascii_str,sizeof us_ascii_str/sizeof us_ascii_str[0]);
+  TQConstString base64(base64_str,sizeof base64_str/sizeof base64_str[0]);
   // initialize header info members
   header_info.mime_type = text_plain.string();
   header_info.charset = &header_info.attributes.insert(
@@ -186,7 +186,7 @@ static void parseDataHeader(const KURL &url, DataHeader &header_info) {
   header_info.is_base64 = false;
 
   // decode url and save it
-  QString &raw_url = header_info.url = QString::fromLatin1("data:") + url.path();
+  TQString &raw_url = header_info.url = TQString::fromLatin1("data:") + url.path();
   int raw_url_len = (int)raw_url.length();
 
   // jump over scheme part (must be "data:", we don't even check that)
@@ -195,7 +195,7 @@ static void parseDataHeader(const KURL &url, DataHeader &header_info) {
 
   // read mime type
   if (header_info.data_offset >= raw_url_len) return;
-  QString mime_type = extract(raw_url,header_info.data_offset,';',',')
+  TQString mime_type = extract(raw_url,header_info.data_offset,';',',')
   			.stripWhiteSpace();
   if (!mime_type.isEmpty()) header_info.mime_type = mime_type;
 
@@ -207,7 +207,7 @@ static void parseDataHeader(const KURL &url, DataHeader &header_info) {
   bool data_begin_reached = false;
   while (!data_begin_reached && header_info.data_offset < raw_url_len) {
     // read attribute
-    QString attribute = extract(raw_url,header_info.data_offset,'=',';',',')
+    TQString attribute = extract(raw_url,header_info.data_offset,'=',';',',')
     			.stripWhiteSpace();
     if (header_info.data_offset >= raw_url_len
     	|| raw_url[header_info.data_offset] != '=') {
@@ -221,7 +221,7 @@ static void parseDataHeader(const KURL &url, DataHeader &header_info) {
       ignoreWS(raw_url,header_info.data_offset);
       if (header_info.data_offset >= raw_url_len) return;
 
-      QString value;
+      TQString value;
       if (raw_url[header_info.data_offset] == '"') {
         value = parseQuotedString(raw_url,header_info.data_offset);
         ignoreWS(raw_url,header_info.data_offset);
@@ -241,7 +241,7 @@ static void parseDataHeader(const KURL &url, DataHeader &header_info) {
 }
 
 #ifdef DATAKIOSLAVE
-DataProtocol::DataProtocol(const QCString &pool_socket, const QCString &app_socket)
+DataProtocol::DataProtocol(const TQCString &pool_socket, const TQCString &app_socket)
 	: SlaveBase("kio_data", pool_socket, app_socket) {
 #else
 DataProtocol::DataProtocol() {
@@ -268,8 +268,8 @@ void DataProtocol::get(const KURL& url) {
   int size = (int)hdr.url.length();
   int data_ofs = QMIN(hdr.data_offset,size);
   // FIXME: string is copied, would be nice if we could have a reference only
-  QString url_data = hdr.url.mid(data_ofs);
-  QCString outData;
+  TQString url_data = hdr.url.mid(data_ofs);
+  TQCString outData;
 
 #ifdef TESTKIO
 //  cout << "current charset: \"" << *hdr.charset << "\"" << endl;
@@ -281,7 +281,7 @@ void DataProtocol::get(const KURL& url) {
   } else {
     // FIXME: This is all flawed, must be reworked thoroughly
     // non encoded data must be converted to the given charset
-    QTextCodec *codec = QTextCodec::codecForName(hdr.charset->latin1());
+    TQTextCodec *codec = TQTextCodec::codecForName(hdr.charset->latin1());
     if (codec != 0) {
       outData = codec->fromUnicode(url_data);
     } else {
@@ -317,7 +317,7 @@ void DataProtocol::get(const KURL& url) {
   // empiric studies have shown that this shouldn't be queued & dispatched
   /*DISPATCH*/(data(outData));
 //   kdDebug() << "(2) queue size " << dispatchQueue.size() << endl;
-  DISPATCH(data(QByteArray()));
+  DISPATCH(data(TQByteArray()));
 //   kdDebug() << "(3) queue size " << dispatchQueue.size() << endl;
   DISPATCH(finished());
 //   kdDebug() << "(4) queue size " << dispatchQueue.size() << endl;

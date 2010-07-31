@@ -22,7 +22,7 @@
 #include "viewstatusmsgdcopinterface.h" 
 #include "view.h"
 
-#include <qstring.h>
+#include <tqstring.h>
 
 namespace KTextEditor
 {
@@ -47,7 +47,7 @@ ViewStatusMsgInterface::ViewStatusMsgInterface()
   myViewStatusMsgInterfaceNumber = globalViewStatusMsgInterfaceNumber++;
 
   d = new PrivateViewStatusMsgInterface();
-  ::QString name = "ViewStatusMsgInterface#" + ::QString::number(myViewStatusMsgInterfaceNumber);
+  ::TQString name = "ViewStatusMsgInterface#" + ::TQString::number(myViewStatusMsgInterfaceNumber);
   d->interface = new ViewStatusMsgDCOPInterface(this, name.latin1());
 }
 
@@ -62,7 +62,7 @@ unsigned int ViewStatusMsgInterface::viewStatusMsgInterfaceNumber () const
   return myViewStatusMsgInterfaceNumber;
 }
 
-void ViewStatusMsgInterface::setViewStatusMsgInterfaceDCOPSuffix (const QCString &suffix)
+void ViewStatusMsgInterface::setViewStatusMsgInterfaceDCOPSuffix (const TQCString &suffix)
 {
   d->interface->setObjId ("ViewStatusMsgInterface#"+suffix);
 }

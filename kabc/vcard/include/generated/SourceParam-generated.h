@@ -3,13 +3,13 @@
 public:
 SourceParam();
 SourceParam(const SourceParam&);
-SourceParam(const QCString&);
+SourceParam(const TQCString&);
 SourceParam & operator = (SourceParam&);
-SourceParam & operator = (const QCString&);
+SourceParam & operator = (const TQCString&);
 bool operator ==(SourceParam&);
 bool operator !=(SourceParam& x) {return !(*this==x);}
-bool operator ==(const QCString& s) {SourceParam a(s);return(*this==a);} 
-bool operator != (const QCString& s) {return !(*this == s);}
+bool operator ==(const TQCString& s) {SourceParam a(s);return(*this==a);} 
+bool operator != (const TQCString& s) {return !(*this == s);}
 
 virtual ~SourceParam();
 void parse() {if(!parsed_) _parse();parsed_=true;assembled_=false;}

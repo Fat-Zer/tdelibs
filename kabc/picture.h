@@ -21,7 +21,7 @@
 #ifndef KABC_PICTURE_H
 #define KABC_PICTURE_H
 
-#include <qimage.h>
+#include <tqimage.h>
 
 #include <kdelibs_export.h>
 
@@ -29,8 +29,8 @@ namespace KABC {
 
 class KABC_EXPORT Picture
 {
-  friend KABC_EXPORT QDataStream &operator<<( QDataStream &, const Picture & );
-  friend KABC_EXPORT QDataStream &operator>>( QDataStream &, Picture & );
+  friend KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const Picture & );
+  friend KABC_EXPORT TQDataStream &operator>>( TQDataStream &, Picture & );
 
 public:
 
@@ -44,14 +44,14 @@ public:
    *
    * @param url  A URL that describes the position of the picture file.
    */
-  Picture( const QString &url );
+  Picture( const TQString &url );
 
   /**
    * Consturctor.
    *
    * @param data  The raw data of the picture.
    */
-  Picture( const QImage &data );
+  Picture( const TQImage &data );
 
   /**
    * Destructor.
@@ -69,7 +69,7 @@ public:
    *
    * @param url  The location URL of the picture file.
    */
-  void setUrl( const QString &url );
+  void setUrl( const TQString &url );
 
   /**
    * Sets the raw data of the picture. When using this function,
@@ -77,12 +77,12 @@ public:
    *
    * @param data  The raw data of the picture.
    */
-  void setData( const QImage &data );
+  void setData( const TQImage &data );
 
   /**
    * Sets the type of the picture.
    */
-  void setType( const QString &type );
+  void setType( const TQString &type );
 
   /**
    * Returns whether the picture is described by a URL (extern) or
@@ -96,33 +96,33 @@ public:
   /**
    * Returns the location URL of this picture.
    */
-  QString url() const;
+  TQString url() const;
 
   /**
    * Returns the raw data of this picture.
    */
-  QImage data() const;
+  TQImage data() const;
 
   /**
    * Returns the type of this picture.
    */
-  QString type() const;
+  TQString type() const;
 
   /**
    * Returns string representation of the picture.
    */
-  QString asString() const;
+  TQString asString() const;
 
 private:
-  QString mUrl;
-  QString mType;
-  QImage mData;
+  TQString mUrl;
+  TQString mType;
+  TQImage mData;
 
   int mIntern;
 };
 
-KABC_EXPORT QDataStream &operator<<( QDataStream &, const Picture & );
-KABC_EXPORT QDataStream &operator>>( QDataStream &, Picture & );
+KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const Picture & );
+KABC_EXPORT TQDataStream &operator>>( TQDataStream &, Picture & );
 
 }
 #endif

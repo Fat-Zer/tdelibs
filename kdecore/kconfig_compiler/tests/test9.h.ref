@@ -6,27 +6,27 @@
 #include <kconfigskeleton.h>
 #include <kdebug.h>
 
-#include <qdir.h>
+#include <tqdir.h>
 class Test9 : public KConfigSkeleton
 {
   public:
 
-    Test9( const QString & transport, const QString & folder );
+    Test9( const TQString & transport, const TQString & folder );
     ~Test9();
 
     /**
       Set MyStringList
     */
-    void setMyStringList( const QStringList & v )
+    void setMyStringList( const TQStringList & v )
     {
-      if (!isImmutable( QString::fromLatin1( "MyStringList" ) ))
+      if (!isImmutable( TQString::fromLatin1( "MyStringList" ) ))
         mMyStringList = v;
     }
 
     /**
       Get MyStringList
     */
-    QStringList myStringList() const
+    TQStringList myStringList() const
     {
       return mMyStringList;
     }
@@ -34,16 +34,16 @@ class Test9 : public KConfigSkeleton
     /**
       Set This is a list of paths
     */
-    void setMyPathList( const QStringList & v )
+    void setMyPathList( const TQStringList & v )
     {
-      if (!isImmutable( QString::fromLatin1( "MyPathList" ) ))
+      if (!isImmutable( TQString::fromLatin1( "MyPathList" ) ))
         mMyPathList = v;
     }
 
     /**
       Get This is a list of paths
     */
-    QStringList myPathList() const
+    TQStringList myPathList() const
     {
       return mMyPathList;
     }
@@ -51,29 +51,29 @@ class Test9 : public KConfigSkeleton
     /**
       Set This is an additional test for PathList
     */
-    void setMyPathsList2( const QStringList & v )
+    void setMyPathsList2( const TQStringList & v )
     {
-      if (!isImmutable( QString::fromLatin1( "MyPathsList2" ) ))
+      if (!isImmutable( TQString::fromLatin1( "MyPathsList2" ) ))
         mMyPathsList2 = v;
     }
 
     /**
       Get This is an additional test for PathList
     */
-    QStringList myPathsList2() const
+    TQStringList myPathsList2() const
     {
       return mMyPathsList2;
     }
 
   protected:
   public:
-    QString mParamtransport;
-    QString mParamfolder;
+    TQString mParamtransport;
+    TQString mParamfolder;
 
     // MyOptionsXX
-    QStringList mMyStringList;
-    QStringList mMyPathList;
-    QStringList mMyPathsList2;
+    TQStringList mMyStringList;
+    TQStringList mMyPathList;
+    TQStringList mMyPathsList2;
 
   private:
 };

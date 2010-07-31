@@ -21,9 +21,9 @@
 #ifndef DNSSDRESPONDER_H
 #define DNSSDRESPONDER_H
 
-#include <qobject.h>
-#include <qsocketnotifier.h>
-#include <qsignal.h>
+#include <tqobject.h>
+#include <tqsocketnotifier.h>
+#include <tqsignal.h>
 #include <config.h>
 #ifdef HAVE_DNSSD
 #include <avahi-client/client.h>
@@ -71,10 +71,10 @@ private:
 
 /* Utils functions */
 
-bool domainIsLocal(const QString& domain);
+bool domainIsLocal(const TQString& domain);
 // Encodes domain name using utf8() or IDN
-QCString domainToDNS(const QString &domain);
-QString DNSToDomain(const char* domain);
+TQCString domainToDNS(const TQString &domain);
+TQString DNSToDomain(const char* domain);
 
 
 }

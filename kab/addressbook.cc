@@ -18,8 +18,8 @@
 #include "addressbook.h"
 #include "qconfigDB.h"
 
-#include <qfileinfo.h>
-#include <qstringlist.h>
+#include <tqfileinfo.h>
+#include <tqstringlist.h>
 
 #include <kapplication.h>
 #include <kglobal.h>
@@ -100,23 +100,23 @@ const int AddressBook::Entry::NoOfFields
 =sizeof(AddressBook::Entry::Fields)/sizeof(AddressBook::Entry::Fields[0]);
 
 struct QStringLess
-  : public binary_function<const QString&, const QString&, bool>
+  : public binary_function<const TQString&, const TQString&, bool>
 {
   /** The function operator, inline. */
-  bool operator()(const QString& x, const QString& y) const
+  bool operator()(const TQString& x, const TQString& y) const
   {
     return x < y; // make one Qt operator fit exactly
   }
 };
 
 // ----- the derived map class:
-class StringKabKeyMap : public map<QString, KabKey, QStringLess>
+class StringKabKeyMap : public map<TQString, KabKey, QStringLess>
 { /* Same as map, but a class for compilation reasons. This way we do not need
    * to include the QStringLess class into the addressbook header file. */
 };
 
 // ----- another derived map class:
-class KeyNameMap : public map<const char*, QString, less<const char*> >
+class KeyNameMap : public map<const char*, TQString, less<const char*> >
 { // same thing
 };
 
@@ -132,7 +132,7 @@ KabKey::operator == (const KabKey& key) const
 }
 
 void
-KabKey::setKey(const QCString& text)
+KabKey::setKey(const TQCString& text)
 {
   // ###########################################################################
   key=text;
@@ -153,7 +153,7 @@ AddressBook::Entry::Address::Address()
 {
 }
 
-bool AddressBook::Entry::Address::nameOfField(const char* key, QString& value)
+bool AddressBook::Entry::Address::nameOfField(const char* key, TQString& value)
 {
   KeyNameMap::iterator pos;
   // -----
@@ -164,47 +164,47 @@ bool AddressBook::Entry::Address::nameOfField(const char* key, QString& value)
       fields=new KeyNameMap;
       Q_CHECK_PTR(fields);
       if(!fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("Headline"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	 (Fields[counter++], i18n("Position"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	 (Fields[counter++], i18n("Organization"))).second 
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	 (Fields[counter++], i18n("Department"))).second 
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	 (Fields[counter++], i18n("Sub-Department"))).second 
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	 (Fields[counter++], i18n("Delivery Label"))).second 
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	 (Fields[counter++], i18n("street/postal","Address"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("Zipcode"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("City"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("Country"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("As in addresses", "State"))).second)
 	{
 	  kdDebug(KAB_KDEBUG_AREA) 
@@ -217,7 +217,7 @@ bool AddressBook::Entry::Address::nameOfField(const char* key, QString& value)
 	    << "inserted field names." << endl;
 	}
 #if ! defined NDEBUG
-      QString name;
+      TQString name;
       kdDebug(KAB_KDEBUG_AREA) 
 	<< "AddressBook::Entry::Address::nameOfField:" << endl
 	<< "Created key-fieldname-map. Defined fields are:" 
@@ -248,7 +248,7 @@ bool AddressBook::Entry::Address::nameOfField(const char* key, QString& value)
     }
 }
 
-bool AddressBook::Entry::nameOfField(const char* key, QString& value)
+bool AddressBook::Entry::nameOfField(const char* key, TQString& value)
 {
   KeyNameMap::iterator pos;
   // -----
@@ -259,83 +259,83 @@ bool AddressBook::Entry::nameOfField(const char* key, QString& value)
       fields=new KeyNameMap;
       Q_CHECK_PTR(fields);
       if(!fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("person","Title"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	 (Fields[counter++], i18n("Rank"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	 (Fields[counter++], i18n("Formatted Name"))).second 
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	 (Fields[counter++], i18n("Name Prefix"))).second 
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	 (Fields[counter++], i18n("First Name"))).second 
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	 (Fields[counter++], i18n("Middle Name"))).second 
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	 (Fields[counter++], i18n("Last Name"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("Birthday"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("Comment"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("Talk Addresses"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("Email Addresses"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("Keywords"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("Telephone Number"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("URLs"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("User Field 1"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("User Field 2"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("User Field 3"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("User Field 4"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("Custom"))).second
 	 ||
 	 !fields->insert
-	 (map<const char*, QString, less<const char*> >::value_type
+	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("Categories"))).second)
 	{
 	  kdDebug(KAB_KDEBUG_AREA) 
@@ -347,7 +347,7 @@ bool AddressBook::Entry::nameOfField(const char* key, QString& value)
 	    << "inserted field names." << endl;
 	}
 #if ! defined NDEBUG
-      QString name;
+      TQString name;
       kdDebug(KAB_KDEBUG_AREA) 
 	<< "AddressBook::Entry::nameOfField:" << endl
 	<< "Created key-fieldname-map. Defined fields are:" << endl; 
@@ -400,8 +400,8 @@ int AddressBook::Entry::noOfAddresses() const
   return addresses.size();
 }
 
-AddressBook::AddressBook(QWidget* parent, const char* name, bool loadit)
-  : QFrame(parent, name),
+AddressBook::AddressBook(TQWidget* parent, const char* name, bool loadit)
+  : TQFrame(parent, name),
     config(new QConfigDB(this)),
     data(new QConfigDB(this)),
     entries(new StringKabKeyMap),
@@ -409,7 +409,7 @@ AddressBook::AddressBook(QWidget* parent, const char* name, bool loadit)
 {
   register bool GUARD; GUARD=true;
   // ###########################################################################
-  QString dir, filename;
+  TQString dir, filename;
   bool createBackup=true;
   KeyValueMap *keys;
   // ----- do memory checks (do not rely on exception handling):
@@ -420,10 +420,10 @@ AddressBook::AddressBook(QWidget* parent, const char* name, bool loadit)
 	 i18n("Out of Memory"));
       kapp->quit(); // It is critical, but will possibly never happen.
     }
-  connect(data, SIGNAL(fileChanged()), SLOT(dataFileChanged()));
-  connect(data, SIGNAL(changed(QConfigDB*)),
-	  SLOT(reloaded(QConfigDB*)));
-  connect(config, SIGNAL(fileChanged()), SLOT(configFileChanged()));
+  connect(data, TQT_SIGNAL(fileChanged()), TQT_SLOT(dataFileChanged()));
+  connect(data, TQT_SIGNAL(changed(QConfigDB*)),
+	  TQT_SLOT(reloaded(QConfigDB*)));
+  connect(config, TQT_SIGNAL(fileChanged()), TQT_SLOT(configFileChanged()));
   // ----- set style:
 
   filename = locate( "data", STD_CONFIGFILENAME);
@@ -482,7 +482,7 @@ AddressBook::AddressBook(QWidget* parent, const char* name, bool loadit)
 	  if(createBackup)
 	    {
 	      // ----- create the backup file:
-	      QString temp=data->fileName();
+	      TQString temp=data->fileName();
 	      if(data->setFileName(temp+".backup", false, false))
 		{
 		  if(!data->save())
@@ -543,14 +543,14 @@ AddressBook::ErrorCode AddressBook::getState()
   // ###########################################################################
 }
 
-AddressBook::ErrorCode AddressBook::load(const QString& filename)
+AddressBook::ErrorCode AddressBook::load(const TQString& filename)
 {
   // ----- Remark: Close the file if it could not be loaded!
   // ###########################################################################
   ErrorCode rc=NoError;
-  QFileInfo newfile, oldfile;
+  TQFileInfo newfile, oldfile;
   // -----
-  QString fname = (filename.isEmpty()) ? data->fileName() : filename ;
+  TQString fname = (filename.isEmpty()) ? data->fileName() : filename ;
   if(fname.isEmpty()) // there was never a filename set:
     {
       state=NoFile;
@@ -645,13 +645,13 @@ AddressBook::ErrorCode AddressBook::load(const QString& filename)
 }
 
 AddressBook::ErrorCode
-AddressBook::getListOfNames(QStringList* strings, bool reverse, bool initials)
+AddressBook::getListOfNames(TQStringList* strings, bool reverse, bool initials)
 {
   register bool GUARD; GUARD=false;
   // ###########################################################################
   kdDebug(GUARD, KAB_KDEBUG_AREA) << "AddressBook::getListOfNames: called.\n";
   StringKabKeyMap::iterator pos;
-  QString desc;
+  TQString desc;
   ErrorCode rc=NoError;
   ErrorCode temp;
   // ----- erase the list contents:
@@ -683,7 +683,7 @@ AddressBook::getListOfNames(QStringList* strings, bool reverse, bool initials)
 }
 
 AddressBook::ErrorCode
-AddressBook::literalName(const KabKey& key, QString& text, bool rev, bool init)
+AddressBook::literalName(const KabKey& key, TQString& text, bool rev, bool init)
 {
   // ###########################################################################
   Entry entry;
@@ -700,12 +700,12 @@ AddressBook::literalName(const KabKey& key, QString& text, bool rev, bool init)
 }
 
 AddressBook::ErrorCode
-AddressBook::literalName(const Entry& entry, QString& text, bool rev, bool init)
+AddressBook::literalName(const Entry& entry, TQString& text, bool rev, bool init)
 {
   register bool GUARD; GUARD=false;
   // ###########################################################################
   kdDebug(GUARD, KAB_KDEBUG_AREA) << "AddressBook::literalName: called.\n";
-  QString firstname, middlename, lastname, nameprefix;
+  TQString firstname, middlename, lastname, nameprefix;
   // ----- is the formatted name set?
   if(!entry.fn.isEmpty())
     {
@@ -848,7 +848,7 @@ AddressBook::reloaded(QConfigDB* db)
 }
 
 AddressBook::ErrorCode
-AddressBook::save(const QString& filename, bool force)
+AddressBook::save(const TQString& filename, bool force)
 {
   // ###########################################################################
   if(filename.isEmpty())
@@ -878,10 +878,10 @@ AddressBook::save(const QString& filename, bool force)
 }
 
 bool
-AddressBook::isSameFile(const QString& a, const QString& b)
+AddressBook::isSameFile(const TQString& a, const TQString& b)
 {
   // ###########################################################################
-  QFileInfo filea(a), fileb(b);
+  TQFileInfo filea(a), fileb(b);
   // -----
   return filea.absFilePath()==fileb.absFilePath();
   // ###########################################################################
@@ -945,7 +945,7 @@ AddressBook::getEntry(const KabKey& key, Section*& section)
 	    "AddressBook::getEntry: no such entry.\n";
       return NoSuchEntry;
     } else {
-      if(data->get((QCString)ENTRY_SECTION+'/'+key.getKey(), section))
+      if(data->get((TQCString)ENTRY_SECTION+'/'+key.getKey(), section))
 	{
 	    kdDebug(GUARD, KAB_KDEBUG_AREA) <<
 		"AddressBook::getEntry: done." << endl;
@@ -1251,7 +1251,7 @@ AddressBook::nextAvailEntryKey()
   Section::StringSectionMap::iterator pos;
   Section *section=entrySection();
   KabKey key;
-  QCString dummy;
+  TQCString dummy;
   bool good=true;
   // -----
   if(section!=0)
@@ -1287,7 +1287,7 @@ AddressBook::updateMirrorMap()
   // ###########################################################################
   kdDebug(GUARD, KAB_KDEBUG_AREA) 
     << "AddressBook::updateMirrorMap: updating mirror map.\n";
-  QString key;
+  TQString key;
   Entry entry;
   ErrorCode ec;
   KabKey kk;
@@ -1337,7 +1337,7 @@ AddressBook::makeEntryFromSection(Section* section, Entry& entry)
   Entry::Address addressDummy;
   int count;
   // ----- create the aggregats:
-  const QCString StringKeys[]= {
+  const TQCString StringKeys[]= {
     "title",
     "rank",
     "fn",
@@ -1351,7 +1351,7 @@ AddressBook::makeEntryFromSection(Section* section, Entry& entry)
     "user3",
     "user4"
   };
-  QString* StringValues[]= {
+  TQString* StringValues[]= {
     &temp.title,
     &temp.rank,
     &temp.fn,
@@ -1366,7 +1366,7 @@ AddressBook::makeEntryFromSection(Section* section, Entry& entry)
     &temp.user4
   };
   const int StringKeySize=sizeof(StringKeys)/sizeof(StringKeys[0]);
-  const QCString StringListKeys[]= {
+  const TQCString StringListKeys[]= {
     "talk",
     "emails",
     "keywords",
@@ -1375,7 +1375,7 @@ AddressBook::makeEntryFromSection(Section* section, Entry& entry)
     "custom",
     "categories"
   };
-  QStringList* StringListValues[]= {
+  TQStringList* StringListValues[]= {
     &temp.talk,
     &temp.emails,
     &temp.keywords,
@@ -1446,7 +1446,7 @@ AddressBook::ErrorCode
 AddressBook::makeAddressFromMap(KeyValueMap* keys, Entry::Address& address)
 {
   // ###########################################################################
-  const QCString Keys[]= {
+  const TQCString Keys[]= {
     "headline",
     "position",
     "org",
@@ -1460,7 +1460,7 @@ AddressBook::makeAddressFromMap(KeyValueMap* keys, Entry::Address& address)
     "country",
     "state"
   };
-  QString* strings[]= {
+  TQString* strings[]= {
     &address.headline,
     &address.position,
     &address.org,
@@ -1492,7 +1492,7 @@ AddressBook::makeSectionFromEntry(const Entry& entry, Section& section)
   list<Entry::Address>::const_iterator addPos;
   Section *addresses=0;
   Section *address=0;
-  QCString key; // used for creating address subsection keys
+  TQCString key; // used for creating address subsection keys
   int count=0; // counts the addresses
   KeyValueMap *keys;
   // ----- prepare the section object:
@@ -1583,10 +1583,10 @@ AddressBook::makeSectionFromEntry(const Entry& entry, Section& section)
 }
 
 AddressBook::ErrorCode
-AddressBook::createNew(const QString& filename)
+AddressBook::createNew(const TQString& filename)
 {
   // ###########################################################################
-  const QString KabTemplateFile=locate("data", "kab/template.kab");
+  const TQString KabTemplateFile=locate("data", "kab/template.kab");
   kdDebug(KAB_KDEBUG_AREA) 
     << "AddressBook::createNew: template file is \"" 
     << (const char*)KabTemplateFile.utf8() << "\"." << endl;
@@ -1637,11 +1637,11 @@ AddressBook::ErrorCode
 AddressBook::createConfigFile()
 {
   // ###########################################################################
-  const QString ConfigTemplateFile=locate("data", "kab/template.config");
+  const TQString ConfigTemplateFile=locate("data", "kab/template.config");
   kdDebug(KAB_KDEBUG_AREA) 
     << "AddressBook::createConfigFile: config template file is \"" 
     << (const char*)ConfigTemplateFile.utf8() << "\"." << endl;
-  const QString filename= locateLocal( "data", STD_CONFIGFILENAME);
+  const TQString filename= locateLocal( "data", STD_CONFIGFILENAME);
   QConfigDB db;
   // -----
   if(ConfigTemplateFile.isEmpty()
@@ -1689,7 +1689,7 @@ AddressBook::ErrorCode
 AddressBook::loadConfigFile()
 {
   // ###########################################################################
-  QString file = locateLocal( "data", STD_CONFIGFILENAME);
+  TQString file = locateLocal( "data", STD_CONFIGFILENAME);
   if(config->setFileName(file, true, true))
     {
       if(config->load())
@@ -1714,7 +1714,7 @@ AddressBook::loadConfigFile()
 }
 
 AddressBook::ErrorCode
-AddressBook::makeVCardFromEntry(const Entry&, const QString&)
+AddressBook::makeVCardFromEntry(const Entry&, const TQString&)
 {
   // ###########################################################################
   return NotImplemented;
@@ -1722,7 +1722,7 @@ AddressBook::makeVCardFromEntry(const Entry&, const QString&)
 }
 
 AddressBook::ErrorCode
-AddressBook::makeEntryFromVCard(const QString&, Entry&)
+AddressBook::makeEntryFromVCard(const TQString&, Entry&)
 {
   // ###########################################################################
   return NotImplemented;
@@ -1737,7 +1737,7 @@ AddressBook::getStandardFileName()
   // ###########################################################################
 }
 
-QString AddressBook::phoneType(AddressBook::Telephone phone)
+TQString AddressBook::phoneType(AddressBook::Telephone phone)
 {
   switch(phone)
     {
@@ -1770,7 +1770,7 @@ Section* AddressBook::configurationSection()
     }
 }
 
-AddressBook::ErrorCode AddressBook::Entry::get(const char* fieldname, QVariant& field)
+AddressBook::ErrorCode AddressBook::Entry::get(const char* fieldname, TQVariant& field)
 {
   // "title", "rank", "fn", "nameprefix", "firstname", "middlename", "lastname",
   // "birthday", "comment", "talk", "emails", "keywords", "telephone",
@@ -1877,7 +1877,7 @@ AddressBook::ErrorCode AddressBook::Entry::get(const char* fieldname, QVariant& 
 }
 
 AddressBook::ErrorCode AddressBook::Entry::Address::get(const char* fieldname, 
-						       QVariant& field)
+						       TQVariant& field)
 {
   // "headline", "position", 
   // "org", "orgunit", "orgsubunit",
@@ -1945,7 +1945,7 @@ AddressBook::ErrorCode AddressBook::Entry::Address::get(const char* fieldname,
 
 Section* AddressBook::categoriesSection()
 {
-  const QString Predefines[]= {
+  const TQString Predefines[]= {
     i18n("Business"),
     i18n("Private"),
     i18n("Dates") };
@@ -1975,9 +1975,9 @@ Section* AddressBook::categoriesSection()
       keys=categories->getKeys(); 
       for(size_t count=0; count<Size; ++count)
 	{
-	  QStringList values; 
+	  TQStringList values; 
 	  values.append(Predefines[count]);
-	  keys->insert(QCString().setNum(count), values);
+	  keys->insert(TQCString().setNum(count), values);
 	}
       section->add(KAB_CATEGORY_KEY, categories);
       keys=section->getKeys(); 
@@ -1999,7 +1999,7 @@ AddressBook::ErrorCode AddressBook::categories(CategoriesMap& cat)
   KeyValueMap* keys;
   int key;
   bool rc;
-  QStringList values;
+  TQStringList values;
   StringStringMap::iterator pos;
   // ----- query categories section:
   section=categoriesSection();

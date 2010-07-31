@@ -25,7 +25,7 @@
 #include <kstandarddirs.h>
 #include <ktimezones.h>
 #include <ktimezonewidget.h>
-#include <qpixmap.h>
+#include <tqpixmap.h>
 #include <time.h>
 
 #define COLUMN_CITY 0
@@ -33,7 +33,7 @@
 #define COLUMN_COMMENT 2
 #define COLUMN_ZONE 3
 
-KTimezoneWidget::KTimezoneWidget(QWidget *parent, const char *name, KTimezones *db) :
+KTimezoneWidget::KTimezoneWidget(TQWidget *parent, const char *name, KTimezones *db) :
     KListView(parent, name),
     d(0)
 {
@@ -50,8 +50,8 @@ KTimezoneWidget::KTimezoneWidget(QWidget *parent, const char *name, KTimezones *
     for (KTimezones::ZoneMap::ConstIterator it = zones.begin(); it != zones.end(); ++it)
     {
         const KTimezone *zone = it.data();
-        QString tzName = zone->name();
-        QString comment = zone->comment();
+        TQString tzName = zone->name();
+        TQString comment = zone->comment();
         if (!comment.isEmpty())
             comment = i18n(comment.utf8());
 
@@ -59,17 +59,17 @@ KTimezoneWidget::KTimezoneWidget(QWidget *parent, const char *name, KTimezones *
         //
         //  "Europe/London", "GB" -> "London", "Europe/GB".
         //  "UTC",           ""   -> "UTC",    "".
-        QStringList continentCity = QStringList::split("/", displayName(zone));
-        QListViewItem *listItem = new QListViewItem(this, continentCity[continentCity.count() - 1]);
+        TQStringList continentCity = TQStringList::split("/", displayName(zone));
+        TQListViewItem *listItem = new TQListViewItem(this, continentCity[continentCity.count() - 1]);
         continentCity[continentCity.count() - 1] = zone->countryCode();
         listItem->setText(COLUMN_REGION, continentCity.join("/"));
         listItem->setText(COLUMN_COMMENT, comment);
         listItem->setText(COLUMN_ZONE, tzName); /* store complete path in ListView */
 
         // Locate the flag from /l10n/%1/flag.png.
-        QString flag = locate("locale", QString("l10n/%1/flag.png").arg(zone->countryCode().lower()));
-        if (QFile::exists(flag))
-            listItem->setPixmap(COLUMN_REGION, QPixmap(flag));
+        TQString flag = locate("locale", TQString("l10n/%1/flag.png").arg(zone->countryCode().lower()));
+        if (TQFile::exists(flag))
+            listItem->setPixmap(COLUMN_REGION, TQPixmap(flag));
     }
 
     if (!userDb)
@@ -83,17 +83,17 @@ KTimezoneWidget::~KTimezoneWidget()
     // delete d;
 }
 
-QString KTimezoneWidget::displayName(const KTimezone *zone)
+TQString KTimezoneWidget::displayName(const KTimezone *zone)
 {
     return i18n(zone->name().utf8()).replace("_", " ");
 }
 
-QStringList KTimezoneWidget::selection() const
+TQStringList KTimezoneWidget::selection() const
 {
-    QStringList selection;
+    TQStringList selection;
 
     // Loop through all entries.
-    QListViewItem *listItem = firstChild();
+    TQListViewItem *listItem = firstChild();
     while (listItem)
     {
         if (listItem->isSelected())
@@ -105,12 +105,12 @@ QStringList KTimezoneWidget::selection() const
     return selection;
 }
 
-void KTimezoneWidget::setSelected(const QString &zone, bool selected)
+void KTimezoneWidget::setSelected(const TQString &zone, bool selected)
 {
     bool found = false;
 
     // Loop through all entries.
-    QListViewItem *listItem = firstChild();
+    TQListViewItem *listItem = firstChild();
     while (listItem)
     {
         if (listItem->text(COLUMN_ZONE) == zone)

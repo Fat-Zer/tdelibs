@@ -24,7 +24,7 @@ class KMDI_EXPORT KMdiDocumentViewTabWidget:
 {
 	Q_OBJECT
 public:
-	KMdiDocumentViewTabWidget( QWidget* parent, const char* name = 0 );
+	KMdiDocumentViewTabWidget( TQWidget* parent, const char* name = 0 );
 	~KMdiDocumentViewTabWidget();
 
 	/**
@@ -32,49 +32,49 @@ public:
 	 * \sa QTabWidget
 	 * \sa KTabWidget
 	 */
-	virtual void addTab ( QWidget * child, const QString & label );
+	virtual void addTab ( TQWidget * child, const TQString & label );
 
 	/**
 	 * Add a tab into the tabwidget
 	 * \sa QTabWidget
 	 * \sa KTabWidget
 	 */
-	virtual void addTab ( QWidget * child, const QIconSet & iconset, const QString & label );
+	virtual void addTab ( TQWidget * child, const TQIconSet & iconset, const TQString & label );
 
 	/**
 	 * Add a tab into the tabwidget
 	 * \sa QTabWidget
 	 * \sa KTabWidget
 	 */
-	virtual void addTab ( QWidget * child, QTab * tab );
+	virtual void addTab ( TQWidget * child, TQTab * tab );
 
 	/**
 	 * Insert a tab into the tabwidget with a label
 	 * \sa QTabWidget
 	 * \sa KTabWidget
 	 */
-	virtual void insertTab ( QWidget * child, const QString & label, int index = -1 );
+	virtual void insertTab ( TQWidget * child, const TQString & label, int index = -1 );
 
 	/**
 	 * Inserts a tab into the tabwidget with an icon and label
 	 * \sa QTabWidget
 	 * \sa KTabWidget
 	 */
-	virtual void insertTab ( QWidget * child, const QIconSet & iconset, const QString & label, int index = -1 );
+	virtual void insertTab ( TQWidget * child, const TQIconSet & iconset, const TQString & label, int index = -1 );
 
 	/**
 	 * Inserts a tab into the tabwidget
 	 * \sa QTabWidget
 	 * \sa KTabWidget
 	 */
-	virtual void insertTab ( QWidget * child, QTab * tab, int index = -1 );
+	virtual void insertTab ( TQWidget * child, TQTab * tab, int index = -1 );
 
 	/**
 	 * Removes the tab from the tabwidget
 	 * \sa QTabWidget
 	 * \sa KTabWidget
 	 */
-	virtual void removePage ( QWidget * w );
+	virtual void removePage ( TQWidget * w );
 
 	/**
 	 * Set the tab widget's visibility and then make the change
@@ -88,7 +88,7 @@ public:
 private slots:
 
 	/** Close the tab specified by w */
-	void closeTab( QWidget* w );
+	void closeTab( TQWidget* w );
 	
 	/** Moves a tab. Reimplemented for internal reasons. */
 	void moveTab( int from, int to );
@@ -96,10 +96,10 @@ private slots:
 public slots:
 
 	/** Change the icon for the tab */
-	void updateIconInView( QWidget*, QPixmap );
+	void updateIconInView( TQWidget*, TQPixmap );
 
 	/** Change the caption for the tab */
-	void updateCaptionInView( QWidget*, const QString& );
+	void updateCaptionInView( TQWidget*, const TQString& );
 
 private slots:
 

@@ -18,12 +18,12 @@
 */
 
 #include "kfilesharedlg.h"
-#include <qvbox.h>
-#include <qlabel.h>
-#include <qdir.h>
-#include <qradiobutton.h>
-#include <qbuttongroup.h>
-#include <qlayout.h>
+#include <tqvbox.h>
+#include <tqlabel.h>
+#include <tqdir.h>
+#include <tqradiobutton.h>
+#include <tqbuttongroup.h>
+#include <tqlayout.h>
 #include <kprocess.h>
 #include <kprocio.h>
 #include <klocale.h>
@@ -35,7 +35,7 @@
 #include <errno.h>
 #include <kio/kfileshare.h>
 #include <kseparator.h>
-#include <qpushbutton.h>
+#include <tqpushbutton.h>
 #include <kapplication.h>
 #include <ksimpleconfig.h>
 #include <kmessagebox.h>
@@ -43,7 +43,7 @@
 class KFileSharePropsPlugin::Private
 {
 public:
-    QVBox *m_vBox;
+    TQVBox *m_vBox;
     KProcess *m_configProc;
     bool m_bAllShared;
     bool m_bAllUnshared;
@@ -98,14 +98,14 @@ void KFileSharePropsPlugin::init()
     delete m_widget;
     m_rbShare = 0L;
     m_rbUnShare = 0L;
-    m_widget = new QWidget( d->m_vBox );
-    QVBoxLayout * vbox = new QVBoxLayout( m_widget );
+    m_widget = new TQWidget( d->m_vBox );
+    TQVBoxLayout * vbox = new TQVBoxLayout( m_widget );
 
     switch ( KFileShare::authorization() ) {
     case KFileShare::Authorized:
     {
         // Check if all selected dirs are in $HOME
-        QString home = QDir::homeDirPath();
+        TQString home = TQDir::homeDirPath();
         if ( home[home.length()-1] != '/' )
             home += '/';
         bool ok = true;
@@ -115,7 +115,7 @@ void KFileSharePropsPlugin::init()
         d->m_bAllUnshared = true;
         KFileItemListIterator it( items );
         for ( ; it.current() && ok; ++it ) {
-            QString path = (*it)->url().path();
+            TQString path = (*it)->url().path();
             if ( !path.startsWith( home ) )
                 ok = false;
             if ( KFileShare::isDirectoryShared( path ) )
@@ -125,7 +125,7 @@ void KFileSharePropsPlugin::init()
         }
         if ( !ok )
         {
-            vbox->addWidget( new QLabel( i18n( "Only folders in your home folder can be shared."),
+            vbox->addWidget( new TQLabel( i18n( "Only folders in your home folder can be shared."),
                                          m_widget ), 0 );
         }
         else
@@ -134,15 +134,15 @@ void KFileSharePropsPlugin::init()
             vbox->setSpacing( KDialog::spacingHint() );
             vbox->setMargin( KDialog::marginHint() );
 
-            QButtonGroup *rbGroup = new QButtonGroup( m_widget );
+            TQButtonGroup *rbGroup = new TQButtonGroup( m_widget );
             rbGroup->hide();
-            m_rbUnShare = new QRadioButton( i18n("Not shared"), m_widget );
-            connect( m_rbUnShare, SIGNAL( toggled(bool) ), SIGNAL( changed() ) );
+            m_rbUnShare = new TQRadioButton( i18n("Not shared"), m_widget );
+            connect( m_rbUnShare, TQT_SIGNAL( toggled(bool) ), TQT_SIGNAL( changed() ) );
             vbox->addWidget( m_rbUnShare, 0 );
             rbGroup->insert( m_rbUnShare );
 
-            m_rbShare = new QRadioButton( i18n("Shared"), m_widget );
-            connect( m_rbShare, SIGNAL( toggled(bool) ), SIGNAL( changed() ) );
+            m_rbShare = new TQRadioButton( i18n("Shared"), m_widget );
+            connect( m_rbShare, TQT_SIGNAL( toggled(bool) ), TQT_SIGNAL( changed() ) );
             vbox->addWidget( m_rbShare, 0 );
             rbGroup->insert( m_rbShare );
 
@@ -153,17 +153,17 @@ void KFileSharePropsPlugin::init()
                 m_rbUnShare->setChecked(true);
 
             // Some help text
-            QLabel *label = new QLabel( i18n("Sharing this folder makes it available under Linux/UNIX (NFS) and Windows (Samba).") , m_widget );
+            TQLabel *label = new TQLabel( i18n("Sharing this folder makes it available under Linux/UNIX (NFS) and Windows (Samba).") , m_widget );
             label->setAlignment( Qt::AlignAuto | Qt::AlignVCenter | Qt::WordBreak );
             vbox->addWidget( label, 0 );
 
 	    KSeparator* sep=new KSeparator(m_widget);
 	    vbox->addWidget( sep, 0 );
-	    label = new QLabel( i18n("You can also reconfigure file sharing authorization.") , m_widget );
+	    label = new TQLabel( i18n("You can also reconfigure file sharing authorization.") , m_widget );
             label->setAlignment( Qt::AlignAuto | Qt::AlignVCenter | Qt::WordBreak );
 	    vbox->addWidget( label, 0 );
-	    m_pbConfig = new QPushButton( i18n("Configure File Sharing..."), m_widget );
-	    connect( m_pbConfig, SIGNAL( clicked() ), SLOT( slotConfigureFileSharing() ) );
+	    m_pbConfig = new TQPushButton( i18n("Configure File Sharing..."), m_widget );
+	    connect( m_pbConfig, TQT_SIGNAL( clicked() ), TQT_SLOT( slotConfigureFileSharing() ) );
 	    vbox->addWidget( m_pbConfig, 0, Qt::AlignHCenter );
 
             vbox->addStretch( 10 );
@@ -171,23 +171,23 @@ void KFileSharePropsPlugin::init()
     }
     break;
     case KFileShare::ErrorNotFound:
-        vbox->addWidget( new QLabel( i18n("Error running 'filesharelist'. Check if installed and in $PATH or /usr/sbin."),
+        vbox->addWidget( new TQLabel( i18n("Error running 'filesharelist'. Check if installed and in $PATH or /usr/sbin."),
                     m_widget ), 0 );
         break;
     case KFileShare::UserNotAllowed:
     {
         vbox->setSpacing( 10 );
         if (KFileShare::sharingEnabled()) {
-          vbox->addWidget( new QLabel( i18n("You need to be authorized to share folders."),
+          vbox->addWidget( new TQLabel( i18n("You need to be authorized to share folders."),
                     m_widget ), 0 );
         } else {
-          vbox->addWidget( new QLabel( i18n("File sharing is disabled."),
+          vbox->addWidget( new TQLabel( i18n("File sharing is disabled."),
                     m_widget ), 0 );
         }
-        QHBoxLayout* hBox = new QHBoxLayout( (QWidget *)0L );
+        TQHBoxLayout* hBox = new TQHBoxLayout( (TQWidget *)0L );
         vbox->addLayout( hBox, 0 );
-        m_pbConfig = new QPushButton( i18n("Configure File Sharing..."), m_widget );
-        connect( m_pbConfig, SIGNAL( clicked() ), SLOT( slotConfigureFileSharing() ) );
+        m_pbConfig = new TQPushButton( i18n("Configure File Sharing..."), m_widget );
+        connect( m_pbConfig, TQT_SIGNAL( clicked() ), TQT_SLOT( slotConfigureFileSharing() ) );
         hBox->addWidget( m_pbConfig, 0, Qt::AlignHCenter );
         vbox->addStretch( 10 ); // align items on top
         break;
@@ -211,8 +211,8 @@ void KFileSharePropsPlugin::slotConfigureFileSharing()
        d->m_configProc = 0;
        return;
     }
-    connect(d->m_configProc, SIGNAL(processExited(KProcess *)),
-            this, SLOT(slotConfigureFileSharingDone()));
+    connect(d->m_configProc, TQT_SIGNAL(processExited(KProcess *)),
+            this, TQT_SLOT(slotConfigureFileSharingDone()));
     m_pbConfig->setEnabled(false);
 }
 
@@ -241,7 +241,7 @@ void KFileSharePropsPlugin::applyChanges()
         KFileItemListIterator it( items );
         bool ok = true;
         for ( ; it.current() && ok; ++it ) {
-             QString path = (*it)->url().path();
+             TQString path = (*it)->url().path();
              ok = setShared( path, share );
              if (!ok) {
                 if (share)
@@ -267,13 +267,13 @@ void KFileSharePropsPlugin::applyChanges()
     }
 }
 
-bool KFileSharePropsPlugin::setShared( const QString& path, bool shared )
+bool KFileSharePropsPlugin::setShared( const TQString& path, bool shared )
 {
     kdDebug() << "KFileSharePropsPlugin::setShared " << path << "," << shared << endl;
     return KFileShare::setShared( path, shared );
 }
 
-QWidget* KFileSharePropsPlugin::page() const
+TQWidget* KFileSharePropsPlugin::page() const
 {
     return d->m_vBox;
 }

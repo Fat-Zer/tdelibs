@@ -28,7 +28,7 @@ class QCheckBox;
 class KMConfigCupsDir : public KMConfigPage
 {
 public:
-	KMConfigCupsDir(QWidget *parent = 0);
+	KMConfigCupsDir(TQWidget *parent = 0);
 
 	void loadConfig(KConfig*);
 	void saveConfig(KConfig*);

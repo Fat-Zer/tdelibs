@@ -22,8 +22,8 @@
 #ifndef kfile_tree_branch_h
 #define kfile_tree_branch_h
 
-#include <qdict.h>
-#include <qlistview.h>
+#include <tqdict.h>
+#include <tqlistview.h>
 
 #include <kfileitem.h>
 #include <kio/global.h>
@@ -59,8 +59,8 @@ public:
     *        branch, with the default 0 meaning to let KFileTreeBranch create
     *        it for you.
     */
-   KFileTreeBranch( KFileTreeView*, const KURL& url, const QString& name,
-                    const QPixmap& pix, bool showHidden = false,
+   KFileTreeBranch( KFileTreeView*, const KURL& url, const TQString& name,
+                    const TQPixmap& pix, bool showHidden = false,
 		    KFileTreeViewItem *branchRoot = 0 );
 
    /**
@@ -84,19 +84,19 @@ public:
    /**
     * @returns the name of the branch.
     */
-   QString      name() const { return( m_name ); }
+   TQString      name() const { return( m_name ); }
 
    /**
     * sets the name of the branch.
     */
-   virtual void         setName( const QString n ) { m_name = n; };
+   virtual void         setName( const TQString n ) { m_name = n; };
 
    /*
     * returns the current root item pixmap set in the constructor. The root
     * item pixmap defaults to the icon for directories.
     * @see openPixmap()
     */
-   const QPixmap& pixmap(){ return(m_rootIcon); }
+   const TQPixmap& pixmap(){ return(m_rootIcon); }
 
    /*
     * returns the current root item pixmap set by setOpenPixmap()
@@ -106,7 +106,7 @@ public:
     * Note that it depends on KFileTreeView::showFolderOpenPximap weather
     * open pixmap are displayed or not.
     */
-   const QPixmap& openPixmap() { return(m_openRootIcon); }
+   const TQPixmap& openPixmap() { return(m_openRootIcon); }
 
    /**
     * @returns whether the items in the branch show their file extensions in the
@@ -154,7 +154,7 @@ public slots:
     */
    virtual void setShowExtensions( bool visible = true );
 
-   void setOpenPixmap( const QPixmap& pix );
+   void setOpenPixmap( const TQPixmap& pix );
 
 protected:
    /**
@@ -201,13 +201,13 @@ private slots:
 
 private:
    KFileTreeViewItem    *parentKFTVItem( KFileItem *item );
-   static void           deleteChildrenOf( QListViewItem *parent );
+   static void           deleteChildrenOf( TQListViewItem *parent );
 
    KFileTreeViewItem 	*m_root;
    KURL 		m_startURL;
-   QString 		m_name;
-   QPixmap 		m_rootIcon;
-   QPixmap              m_openRootIcon;
+   TQString 		m_name;
+   TQPixmap 		m_rootIcon;
+   TQPixmap              m_openRootIcon;
 
    /* this list holds the url's which children are opened. */
    KURL::List           m_openChildrenURLs;
@@ -231,12 +231,12 @@ private:
 /**
  * List of KFileTreeBranches
  */
-typedef QPtrList<KFileTreeBranch> KFileTreeBranchList;
+typedef TQPtrList<KFileTreeBranch> KFileTreeBranchList;
 
 /**
  * Iterator for KFileTreeBranchLists
  */
-typedef QPtrListIterator<KFileTreeBranch> KFileTreeBranchIterator;
+typedef TQPtrListIterator<KFileTreeBranch> KFileTreeBranchIterator;
 
 #endif
 

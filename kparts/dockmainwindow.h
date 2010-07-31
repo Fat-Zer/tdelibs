@@ -21,7 +21,7 @@
 #ifndef __DOCKMAINWINDOW_H
 #define __DOCKMAINWINDOW_H
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <kaction.h>
 
 #include <kdockwidget.h>
@@ -51,7 +51,7 @@ class KPARTS_EXPORT DockMainWindow : public KDockMainWindow, virtual public Part
   /**
    * Constructor, same signature as KDockMainWindow.
    */
-  DockMainWindow( QWidget* parent = 0L, const char *name = 0L, WFlags f = WDestructiveClose );
+  DockMainWindow( TQWidget* parent = 0L, const char *name = 0L, WFlags f = WDestructiveClose );
   /**
    * Destructor.
    */
@@ -74,7 +74,7 @@ protected slots:
    * Reimplement if your dock-mainwindow has a complex statusbar
    * (with several items)
    */
-  virtual void slotSetStatusBarText( const QString & );
+  virtual void slotSetStatusBarText( const TQString & );
 
 protected:
     virtual void createShellGUI( bool create = true );

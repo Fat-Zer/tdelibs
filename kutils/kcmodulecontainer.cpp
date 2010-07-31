@@ -17,12 +17,12 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qstringlist.h>
-#include <qtabwidget.h>
-#include <qtooltip.h>
-#include <qvaluelist.h>
+#include <tqlayout.h>
+#include <tqpixmap.h>
+#include <tqstringlist.h>
+#include <tqtabwidget.h>
+#include <tqtooltip.h>
+#include <tqvaluelist.h>
 
 #include <kcmodule.h>
 #include <kcmoduleinfo.h>
@@ -43,7 +43,7 @@
 class KCModuleContainer::KCModuleContainerPrivate
 {
 	public:
-		KCModuleContainerPrivate( const QStringList& mods )
+		KCModuleContainerPrivate( const TQStringList& mods )
 			: modules( mods )
 			, tabWidget( 0 )
 			, buttons( 0 )
@@ -53,13 +53,13 @@ class KCModuleContainer::KCModuleContainerPrivate
 			, topLayout( 0 )
 			{}
 
-		QStringList modules;
-		QTabWidget *tabWidget;
+		TQStringList modules;
+		TQTabWidget *tabWidget;
 		int buttons;
 		bool hasRootKCM: 1;
 		KPushButton *btnRootMode;
-		QHBoxLayout *btnLayout;
-		QVBoxLayout *topLayout;
+		TQHBoxLayout *btnLayout;
+		TQVBoxLayout *topLayout;
 
 
 };
@@ -70,16 +70,16 @@ class KCModuleContainer::KCModuleContainerPrivate
 
 
 /***********************************************************************/
-KCModuleContainer::KCModuleContainer( QWidget* parent, const char* name, 
-	const QString& mods )
+KCModuleContainer::KCModuleContainer( TQWidget* parent, const char* name, 
+	const TQString& mods )
 	: KCModule( parent, name )
 {
-	d = new KCModuleContainerPrivate( QStringList::split( ",", QString(mods).remove( " " )) );
+	d = new KCModuleContainerPrivate( TQStringList::split( ",", TQString(mods).remove( " " )) );
 	init();
 }
 
-KCModuleContainer::KCModuleContainer( QWidget* parent, const char* name, 
-	const QStringList& mods )
+KCModuleContainer::KCModuleContainer( TQWidget* parent, const char* name, 
+	const TQStringList& mods )
 	: KCModule( parent, name ), d( new KCModuleContainerPrivate( mods ) )
 {
 	init();
@@ -87,16 +87,16 @@ KCModuleContainer::KCModuleContainer( QWidget* parent, const char* name,
 
 void KCModuleContainer::init()
 {
-	d->topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint(), "topLayout" );
-	d->tabWidget = new QTabWidget(this, "tabWidget");
+	d->topLayout = new TQVBoxLayout( this, 0, KDialog::spacingHint(), "topLayout" );
+	d->tabWidget = new TQTabWidget(this, "tabWidget");
 	d->tabWidget->setMargin(KDialog::marginHint());
-	connect( d->tabWidget, SIGNAL( currentChanged( QWidget* ) ), SLOT( tabSwitched( QWidget* ) ));
+	connect( d->tabWidget, TQT_SIGNAL( currentChanged( TQWidget* ) ), TQT_SLOT( tabSwitched( TQWidget* ) ));
 	d->topLayout->addWidget( d->tabWidget );
 
 	if ( !d->modules.isEmpty() )
 	{
 		/* Add our modules */
-		for ( QStringList::Iterator it = d->modules.begin(); it != d->modules.end(); ++it )
+		for ( TQStringList::Iterator it = d->modules.begin(); it != d->modules.end(); ++it )
 			addModule( (*it) );
 
 		finalize();
@@ -111,7 +111,7 @@ void KCModuleContainer::finalize()
 	{
 		if(!d->btnLayout) /* It could already be added */
 		{
-			d->btnLayout = new QHBoxLayout(this, 0, 0, "btnLayout");
+			d->btnLayout = new TQHBoxLayout(this, 0, 0, "btnLayout");
 			d->btnRootMode = new KPushButton(KStdGuiItem::adminMode(), this, "btnRootMode");
 					
 			d->btnLayout->addWidget( d->btnRootMode );
@@ -121,7 +121,7 @@ void KCModuleContainer::finalize()
 	}
 }
 
-void KCModuleContainer::addModule( const QString& module )
+void KCModuleContainer::addModule( const TQString& module )
 {
 	/* In case it doesn't exist we just silently drop it.
 	 * This allows people to easily extend containers.
@@ -140,14 +140,14 @@ void KCModuleContainer::addModule( const QString& module )
 	KCModuleProxy* proxy = new KCModuleProxy( module, false, d->tabWidget, module.latin1());
 	allModules.append( proxy );
 
-	d->tabWidget->addTab( proxy, QIconSet(KGlobal::iconLoader()->loadIcon(
+	d->tabWidget->addTab( proxy, TQIconSet(KGlobal::iconLoader()->loadIcon(
 					proxy->moduleInfo().icon(), KIcon::Desktop)),
 			/* QT eats ampersands for dinner. But not this time. */
 			proxy->moduleInfo().moduleName().replace( "&", "&&" ));
 
 	d->tabWidget->setTabToolTip( proxy, proxy->moduleInfo().comment() );
 
-	connect( proxy, SIGNAL(changed(KCModuleProxy *)), SLOT(moduleChanged(KCModuleProxy *)));
+	connect( proxy, TQT_SIGNAL(changed(KCModuleProxy *)), TQT_SLOT(moduleChanged(KCModuleProxy *)));
 
 	/* Collect our buttons - we go for the common deliminator */
 	d->buttons = d->buttons | proxy->realModule()->buttons();
@@ -159,7 +159,7 @@ void KCModuleContainer::addModule( const QString& module )
 
 }
 
-void KCModuleContainer::tabSwitched( QWidget * module )
+void KCModuleContainer::tabSwitched( TQWidget * module )
 {
 	if ( !d->hasRootKCM )
 		return;
@@ -173,10 +173,10 @@ void KCModuleContainer::tabSwitched( QWidget * module )
 	if ( mod->moduleInfo().needsRootPrivileges() && !mod->rootMode() )
 	{
 		d->btnRootMode->setEnabled( true );
-		connect( d->btnRootMode, SIGNAL( clicked() ), 
-				SLOT( runAsRoot() ));
-		connect( mod, SIGNAL( childClosed() ), 
-				SLOT ( rootExited() ));
+		connect( d->btnRootMode, TQT_SIGNAL( clicked() ), 
+				TQT_SLOT( runAsRoot() ));
+		connect( mod, TQT_SIGNAL( childClosed() ), 
+				TQT_SLOT ( rootExited() ));
 	}
 	else
 		d->btnRootMode->setEnabled( false );
@@ -195,7 +195,7 @@ void KCModuleContainer::runAsRoot()
 
 void KCModuleContainer::rootExited()
 {
-	connect( d->btnRootMode, SIGNAL( clicked() ), SLOT( runAsRoot() ));
+	connect( d->btnRootMode, TQT_SIGNAL( clicked() ), TQT_SLOT( runAsRoot() ));
 	d->btnRootMode->setEnabled( true );
 }
 

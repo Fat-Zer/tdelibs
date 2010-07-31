@@ -26,9 +26,9 @@
 #include <soundserver.h>
 #include <stdsynthmodule.h>
 
-#include <qobject.h>
+#include <tqobject.h>
 
-class KByteSoundReceiver : public QObject,
+class KByteSoundReceiver : public TQObject,
                            public Arts::ByteSoundReceiver_skel,
                            public Arts::StdSynthModule
 {

@@ -35,7 +35,7 @@
 #define SPEED_DEBUG 0
 
 #ifdef SPEED_DEBUG
-#include <qdatetime.h>
+#include <tqdatetime.h>
 #endif
 
 
@@ -181,7 +181,7 @@ private:
     int inStrayTableContent;
 
 #if SPEED_DEBUG > 0
-    QTime qt;
+    TQTime qt;
 #endif
 };
 

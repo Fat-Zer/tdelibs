@@ -21,7 +21,7 @@
 
 #include "katefont.h"
 
-#include <qcolor.h>
+#include <tqcolor.h>
 
 /**
  * The Attribute class incorporates all text decorations supported by Kate.
@@ -49,13 +49,13 @@ public:
   KateAttribute();
   virtual ~KateAttribute();
 
-  QFont font(const QFont& ref);
+  TQFont font(const TQFont& ref);
 
-  inline int width(KateFontStruct& fs, const QString& text, int col, int tabWidth) const
+  inline int width(KateFontStruct& fs, const TQString& text, int col, int tabWidth) const
   { return fs.width(text, col, bold(), italic(), tabWidth); };
 
   // Non-preferred function when you have a string and you want one char's width!!
-  inline int width(KateFontStruct& fs, const QChar& c, int tabWidth) const
+  inline int width(KateFontStruct& fs, const TQChar& c, int tabWidth) const
   { return fs.width(c, bold(), italic(), tabWidth); };
 
   inline bool itemSet(int item) const
@@ -76,7 +76,7 @@ public:
   void setWeight(int weight);
 
   inline bool bold() const
-  { return weight() >= QFont::Bold; };
+  { return weight() >= TQFont::Bold; };
   
   void setBold(bool enable = true);
 
@@ -100,30 +100,30 @@ public:
 
   void setStrikeOut(bool enable = true);
 
-  inline const QColor& outline() const
+  inline const TQColor& outline() const
   { return m_outline; };
   
-  void setOutline(const QColor& color);
+  void setOutline(const TQColor& color);
 
-  inline const QColor& textColor() const
+  inline const TQColor& textColor() const
   { return m_textColor; };
   
-  void setTextColor(const QColor& color);
+  void setTextColor(const TQColor& color);
 
-  inline const QColor& selectedTextColor() const
+  inline const TQColor& selectedTextColor() const
   { return m_selectedTextColor; };
 
-  void setSelectedTextColor(const QColor& color);
+  void setSelectedTextColor(const TQColor& color);
 
-  inline const QColor& bgColor() const
+  inline const TQColor& bgColor() const
   { return m_bgColor; };
   
-  void setBGColor(const QColor& color);
+  void setBGColor(const TQColor& color);
 
-  inline const QColor& selectedBGColor() const
+  inline const TQColor& selectedBGColor() const
   { return m_selectedBGColor; };
   
-  void setSelectedBGColor(const QColor& color);
+  void setSelectedBGColor(const TQColor& color);
 
   KateAttribute& operator+=(const KateAttribute& a);
 
@@ -138,7 +138,7 @@ public:
 private:
   int m_weight;
   bool m_italic, m_underline, m_overline,m_strikeout, m_changed;
-  QColor m_outline, m_textColor, m_selectedTextColor, m_bgColor, m_selectedBGColor;
+  TQColor m_outline, m_textColor, m_selectedTextColor, m_bgColor, m_selectedBGColor;
   int m_itemsSet;
 };
 

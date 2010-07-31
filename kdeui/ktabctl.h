@@ -23,17 +23,17 @@
 #ifndef KTABCTL_H
 #define KTABCTL_H
 
-#include <qwidget.h>
-#include <qtabbar.h>
-#include <qmemarray.h>
+#include <tqwidget.h>
+#include <tqtabbar.h>
+#include <tqmemarray.h>
 
 #include <kdelibs_export.h>
 
 /**
  * Tabbed dialog with extended features.
- * KTabCtl is very similar to QTabDialog, with the following differences:
+ * KTabCtl is very similar to TQTabDialog, with the following differences:
  * 
- * @li To avoid confusion, the API is almost identical with QTabDialog.
+ * @li To avoid confusion, the API is almost identical with TQTabDialog.
  * @li Does not create any buttons, therefore KTabCtl is not limited
  * to dialog boxes. You can use it whereever you want.
  * @li emits the signal tabSelected(int pagenumber) when the user
@@ -50,23 +50,23 @@ class KDEUI_EXPORT KTabCtl : public QWidget
     Q_OBJECT
 
 public:
-    KTabCtl(QWidget *parent = 0, const char *name = 0);
+    KTabCtl(TQWidget *parent = 0, const char *name = 0);
    ~KTabCtl();
 
     void show();
-    void setFont(const QFont & font);
-    void setTabFont( const QFont &font );
+    void setFont(const TQFont & font);
+    void setTabFont( const TQFont &font );
 
-    void addTab(QWidget *, const QString&);
-    bool isTabEnabled(const QString& );
-    void setTabEnabled(const QString&, bool);
+    void addTab(TQWidget *, const TQString&);
+    bool isTabEnabled(const TQString& );
+    void setTabEnabled(const TQString&, bool);
     void setBorder(bool);
-    void setShape( QTabBar::Shape shape );
-    virtual QSize sizeHint() const;
+    void setShape( TQTabBar::Shape shape );
+    virtual TQSize sizeHint() const;
 
 protected:
-    void paintEvent(QPaintEvent *);
-    void resizeEvent(QResizeEvent *);
+    void paintEvent(TQPaintEvent *);
+    void resizeEvent(TQResizeEvent *);
 
 signals:
     void tabSelected(int);
@@ -76,10 +76,10 @@ protected slots:
 
 protected:
     void setSizes();
-    QRect getChildRect() const;
+    TQRect getChildRect() const;
 
-    QTabBar * tabs;
-    QMemArray<QWidget *> pages;
+    TQTabBar * tabs;
+    TQMemArray<TQWidget *> pages;
     int bh;
     bool blBorder;
 protected:

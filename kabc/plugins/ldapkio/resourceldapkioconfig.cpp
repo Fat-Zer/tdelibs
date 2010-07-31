@@ -17,17 +17,17 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#include <qapplication.h>
+#include <tqapplication.h>
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
-#include <qvbox.h>
-#include <qvgroupbox.h>
-#include <qhbuttongroup.h>
-#include <qradiobutton.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqspinbox.h>
+#include <tqvbox.h>
+#include <tqvgroupbox.h>
+#include <tqhbuttongroup.h>
+#include <tqradiobutton.h>
 
 #include <kaccelmanager.h>
 #include <kcombobox.h>
@@ -45,21 +45,21 @@
 
 using namespace KABC;
 
-ResourceLDAPKIOConfig::ResourceLDAPKIOConfig( QWidget* parent,  const char* name )
+ResourceLDAPKIOConfig::ResourceLDAPKIOConfig( TQWidget* parent,  const char* name )
   : KRES::ConfigWidget( parent, name )
 {
-  QBoxLayout *mainLayout = new QVBoxLayout( this );
+  TQBoxLayout *mainLayout = new TQVBoxLayout( this );
   mainLayout->setAutoAdd( true );
   cfg = new LdapConfigWidget( LdapConfigWidget::W_ALL, this );
 
-  mSubTree = new QCheckBox( i18n( "Sub-tree query" ), this );
-  QHBox *box = new QHBox( this );
+  mSubTree = new TQCheckBox( i18n( "Sub-tree query" ), this );
+  TQHBox *box = new TQHBox( this );
   box->setSpacing( KDialog::spacingHint() );
-  mEditButton = new QPushButton( i18n( "Edit Attributes..." ), box );
-  mCacheButton = new QPushButton( i18n( "Offline Use..." ), box );
+  mEditButton = new TQPushButton( i18n( "Edit Attributes..." ), box );
+  mCacheButton = new TQPushButton( i18n( "Offline Use..." ), box );
 
-  connect( mEditButton, SIGNAL( clicked() ), SLOT( editAttributes() ) );
-  connect( mCacheButton, SIGNAL( clicked() ), SLOT( editCache() ) );
+  connect( mEditButton, TQT_SIGNAL( clicked() ), TQT_SLOT( editAttributes() ) );
+  connect( mCacheButton, TQT_SIGNAL( clicked() ), TQT_SLOT( editCache() ) );
 }
 
 void ResourceLDAPKIOConfig::loadSettings( KRES::Resource *res )
@@ -143,13 +143,13 @@ void ResourceLDAPKIOConfig::editAttributes()
 void ResourceLDAPKIOConfig::editCache()
 {
   LDAPUrl src;
-  QStringList attr;
+  TQStringList attr;
   
   src = cfg->url();
   src.setScope( mSubTree->isChecked() ? LDAPUrl::Sub : LDAPUrl::One );
   if (!mAttributes.empty()) {
-    QMap<QString,QString>::Iterator it;
-    QStringList attr;
+    TQMap<TQString,TQString>::Iterator it;
+    TQStringList attr;
     for ( it = mAttributes.begin(); it != mAttributes.end(); ++it ) {
       if ( !it.data().isEmpty() && it.key() != "objectClass" ) 
         attr.append( it.data() );
@@ -165,34 +165,34 @@ void ResourceLDAPKIOConfig::editCache()
   
 }
 
-AttributesDialog::AttributesDialog( const QMap<QString, QString> &attributes,
+AttributesDialog::AttributesDialog( const TQMap<TQString, TQString> &attributes,
                                     int rdnprefix,                                    
-                                    QWidget *parent, const char *name )
+                                    TQWidget *parent, const char *name )
   : KDialogBase( Plain, i18n( "Attributes Configuration" ), Ok | Cancel,
                  Ok, parent, name, true, true )
 {
   mNameDict.setAutoDelete( true );
-  mNameDict.insert( "objectClass", new QString( i18n( "Object classes" ) ) );
-  mNameDict.insert( "commonName", new QString( i18n( "Common name" ) ) );
-  mNameDict.insert( "formattedName", new QString( i18n( "Formatted name" ) ) );
-  mNameDict.insert( "familyName", new QString( i18n( "Family name" ) ) );
-  mNameDict.insert( "givenName", new QString( i18n( "Given name" ) ) );
-  mNameDict.insert( "organization", new QString( i18n( "Organization" ) ) );
-  mNameDict.insert( "title", new QString( i18n( "Title" ) ) );
-  mNameDict.insert( "street", new QString( i18n( "Street" ) ) );
-  mNameDict.insert( "state", new QString( i18n( "State" ) ) );
-  mNameDict.insert( "city", new QString( i18n( "City" ) ) );
-  mNameDict.insert( "postalcode", new QString( i18n( "Postal code" ) ) );
-  mNameDict.insert( "mail", new QString( i18n( "Email" ) ) );
-  mNameDict.insert( "mailAlias", new QString( i18n( "Email alias" ) ) );
-  mNameDict.insert( "phoneNumber", new QString( i18n( "Telephone number" ) ) );
-  mNameDict.insert( "telephoneNumber", new QString( i18n( "Work telephone number" ) ) );
-  mNameDict.insert( "facsimileTelephoneNumber", new QString( i18n( "Fax number" ) ) );
-  mNameDict.insert( "mobile", new QString( i18n( "Cell phone number" ) ) );
-  mNameDict.insert( "pager", new QString( i18n( "Pager" ) ) );
-  mNameDict.insert( "description", new QString( i18n( "Note" ) ) );
-  mNameDict.insert( "uid", new QString( i18n( "UID" ) ) );
-  mNameDict.insert( "jpegPhoto", new QString( i18n( "Photo" ) ) );
+  mNameDict.insert( "objectClass", new TQString( i18n( "Object classes" ) ) );
+  mNameDict.insert( "commonName", new TQString( i18n( "Common name" ) ) );
+  mNameDict.insert( "formattedName", new TQString( i18n( "Formatted name" ) ) );
+  mNameDict.insert( "familyName", new TQString( i18n( "Family name" ) ) );
+  mNameDict.insert( "givenName", new TQString( i18n( "Given name" ) ) );
+  mNameDict.insert( "organization", new TQString( i18n( "Organization" ) ) );
+  mNameDict.insert( "title", new TQString( i18n( "Title" ) ) );
+  mNameDict.insert( "street", new TQString( i18n( "Street" ) ) );
+  mNameDict.insert( "state", new TQString( i18n( "State" ) ) );
+  mNameDict.insert( "city", new TQString( i18n( "City" ) ) );
+  mNameDict.insert( "postalcode", new TQString( i18n( "Postal code" ) ) );
+  mNameDict.insert( "mail", new TQString( i18n( "Email" ) ) );
+  mNameDict.insert( "mailAlias", new TQString( i18n( "Email alias" ) ) );
+  mNameDict.insert( "phoneNumber", new TQString( i18n( "Telephone number" ) ) );
+  mNameDict.insert( "telephoneNumber", new TQString( i18n( "Work telephone number" ) ) );
+  mNameDict.insert( "facsimileTelephoneNumber", new TQString( i18n( "Fax number" ) ) );
+  mNameDict.insert( "mobile", new TQString( i18n( "Cell phone number" ) ) );
+  mNameDict.insert( "pager", new TQString( i18n( "Pager" ) ) );
+  mNameDict.insert( "description", new TQString( i18n( "Note" ) ) );
+  mNameDict.insert( "uid", new TQString( i18n( "UID" ) ) );
+  mNameDict.insert( "jpegPhoto", new TQString( i18n( "Photo" ) ) );
 
   // default map
   mDefaultMap.insert( "objectClass", "inetOrgPerson" );
@@ -218,7 +218,7 @@ AttributesDialog::AttributesDialog( const QMap<QString, QString> &attributes,
   mDefaultMap.insert( "jpegPhoto", "jpegPhoto" );
   
   // overwrite the default values here
-  QMap<QString, QString> kolabMap, netscapeMap, evolutionMap, outlookMap;
+  TQMap<TQString, TQString> kolabMap, netscapeMap, evolutionMap, outlookMap;
 
   // kolab
   kolabMap.insert( "formattedName", "display-name" );
@@ -233,11 +233,11 @@ AttributesDialog::AttributesDialog( const QMap<QString, QString> &attributes,
   mMapList.append( evolutionMap );
   mMapList.append( outlookMap );
 
-  QFrame *page = plainPage();
-  QGridLayout *layout = new QGridLayout( page, 4, ( attributes.count() + 4 ) >> 1,
+  TQFrame *page = plainPage();
+  TQGridLayout *layout = new TQGridLayout( page, 4, ( attributes.count() + 4 ) >> 1,
                                          0, spacingHint() );
 
-  QLabel *label = new QLabel( i18n( "Template:" ), page );
+  TQLabel *label = new TQLabel( i18n( "Template:" ), page );
   layout->addWidget( label, 0, 0 );
   mMapCombo = new KComboBox( page );
   layout->addWidget( mMapCombo, 0, 1 );
@@ -247,9 +247,9 @@ AttributesDialog::AttributesDialog( const QMap<QString, QString> &attributes,
   mMapCombo->insertItem( i18n( "Netscape" ) );
   mMapCombo->insertItem( i18n( "Evolution" ) );
   mMapCombo->insertItem( i18n( "Outlook" ) );
-  connect( mMapCombo, SIGNAL( activated( int ) ), SLOT( mapChanged( int ) ) );
+  connect( mMapCombo, TQT_SIGNAL( activated( int ) ), TQT_SLOT( mapChanged( int ) ) );
 
-  label = new QLabel( i18n( "RDN prefix attribute:" ), page );
+  label = new TQLabel( i18n( "RDN prefix attribute:" ), page );
   layout->addWidget( label, 1, 0 );
   mRDNCombo = new KComboBox( page );
   layout->addWidget( mRDNCombo, 1, 1 );
@@ -257,7 +257,7 @@ AttributesDialog::AttributesDialog( const QMap<QString, QString> &attributes,
   mRDNCombo->insertItem( i18n( "UID" ) );
   mRDNCombo->setCurrentItem( rdnprefix );
 
-  QMap<QString, QString>::ConstIterator it;
+  TQMap<TQString, TQString>::ConstIterator it;
   int i, j = 0;
   for ( i = 2, it = attributes.begin(); it != attributes.end(); ++it, ++i ) {
     if ( mNameDict[ it.key() ] == 0 ) {
@@ -269,7 +269,7 @@ AttributesDialog::AttributesDialog( const QMap<QString, QString> &attributes,
       j = 2;
     }
     kdDebug(7125) << "itkey: " << it.key() << " i: " << i << endl;
-    label = new QLabel( *mNameDict[ it.key() ] + ":", page );
+    label = new TQLabel( *mNameDict[ it.key() ] + ":", page );
     KLineEdit *lineedit = new KLineEdit( page );
     mLineEditDict.insert( it.key(), lineedit );
     lineedit->setText( it.data() );
@@ -279,7 +279,7 @@ AttributesDialog::AttributesDialog( const QMap<QString, QString> &attributes,
   }
   
   for ( i = 1; i < mMapCombo->count(); i++ ) {
-    QDictIterator<KLineEdit> it2( mLineEditDict );
+    TQDictIterator<KLineEdit> it2( mLineEditDict );
     for ( ; it2.current(); ++it2 ) {
       if ( mMapList[ i ].contains( it2.currentKey() ) ) {
         if ( mMapList[ i ][ it2.currentKey() ] != it2.current()->text() ) break;
@@ -300,11 +300,11 @@ AttributesDialog::~AttributesDialog()
 {
 }
 
-QMap<QString, QString> AttributesDialog::attributes() const
+TQMap<TQString, TQString> AttributesDialog::attributes() const
 {
-  QMap<QString, QString> map;
+  TQMap<TQString, TQString> map;
 
-  QDictIterator<KLineEdit> it( mLineEditDict );
+  TQDictIterator<KLineEdit> it( mLineEditDict );
   for ( ; it.current(); ++it )
     map.insert( it.currentKey(), it.current()->text() );
 
@@ -320,7 +320,7 @@ void AttributesDialog::mapChanged( int pos )
 {
 
   // apply first the default and than the spezific changes
-  QMap<QString, QString>::Iterator it;
+  TQMap<TQString, TQString>::Iterator it;
   for ( it = mDefaultMap.begin(); it != mDefaultMap.end(); ++it )
     mLineEditDict[ it.key() ]->setText( it.data() );
 
@@ -333,33 +333,33 @@ void AttributesDialog::mapChanged( int pos )
 }
 
 OfflineDialog::OfflineDialog( bool autoCache, int cachePolicy, const KURL &src, 
-  const QString &dst, QWidget *parent, const char *name )
+  const TQString &dst, TQWidget *parent, const char *name )
   : KDialogBase( Plain, i18n( "Offline Configuration" ), Ok | Cancel,
                  Ok, parent, name, true, true )
 {
-  QFrame *page = plainPage();
-  QVBoxLayout *layout = new QVBoxLayout( page );
+  TQFrame *page = plainPage();
+  TQVBoxLayout *layout = new TQVBoxLayout( page );
   layout->setAutoAdd( true );
 
   mSrc = src; mDst = dst;
-  mCacheGroup = new QButtonGroup( 1, Qt::Horizontal, 
+  mCacheGroup = new TQButtonGroup( 1, Qt::Horizontal, 
     i18n("Offline Cache Policy"), page );
     
-  QRadioButton *bt;
-  new QRadioButton( i18n("Do not use offline cache"), mCacheGroup );
-  bt = new QRadioButton( i18n("Use local copy if no connection"), mCacheGroup );
-  new QRadioButton( i18n("Always use local copy"), mCacheGroup );
+  TQRadioButton *bt;
+  new TQRadioButton( i18n("Do not use offline cache"), mCacheGroup );
+  bt = new TQRadioButton( i18n("Use local copy if no connection"), mCacheGroup );
+  new TQRadioButton( i18n("Always use local copy"), mCacheGroup );
   mCacheGroup->setButton( cachePolicy );  
 
-  mAutoCache = new QCheckBox( i18n("Refresh offline cache automatically"),
+  mAutoCache = new TQCheckBox( i18n("Refresh offline cache automatically"),
     page );
   mAutoCache->setChecked( autoCache );
   mAutoCache->setEnabled( bt->isChecked() );
 
-  connect( bt, SIGNAL(toggled(bool)), mAutoCache, SLOT(setEnabled(bool)) );
+  connect( bt, TQT_SIGNAL(toggled(bool)), mAutoCache, TQT_SLOT(setEnabled(bool)) );
   
-  QPushButton *lcache = new QPushButton( i18n("Load into Cache"), page );
-  connect( lcache, SIGNAL( clicked() ), SLOT( loadCache() ) );
+  TQPushButton *lcache = new TQPushButton( i18n("Load into Cache"), page );
+  connect( lcache, TQT_SIGNAL( clicked() ), TQT_SLOT( loadCache() ) );
 }
 
 OfflineDialog::~OfflineDialog()

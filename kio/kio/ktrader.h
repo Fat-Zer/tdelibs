@@ -18,8 +18,8 @@
 #ifndef __ktrader_h__
 #define __ktrader_h__
 
-#include <qstring.h>
-#include <qobject.h>
+#include <tqstring.h>
+#include <tqobject.h>
 #include <kservice.h>
 
 /**
@@ -89,8 +89,8 @@ public:
     /**
      * A list of services.
      */
-    typedef QValueList<KService::Ptr> OfferList;
-    typedef QValueListIterator<KService::Ptr> OfferListIterator;
+    typedef TQValueList<KService::Ptr> OfferList;
+    typedef TQValueListIterator<KService::Ptr> OfferListIterator;
 
     /**
      * Standard destructor
@@ -117,18 +117,18 @@ public:
      * fields found in the .desktop files.
      *
      * @param servicetype A service type like 'text/plain', 'text/html', or 'KOfficePlugin'.
-     * @param constraint  A constraint to limit the choices returned, QString::null to
+     * @param constraint  A constraint to limit the choices returned, TQString::null to
      *                    get all services of the given @p servicetype
-     * @param preferences Indicates a particular preference to return, QString::null to ignore.
+     * @param preferences Indicates a particular preference to return, TQString::null to ignore.
      *                    Uses an expression in the constraint language that must return
      *                    a number
      *
      * @return A list of services that satisfy the query
      * @see http://developer.kde.org/documentation/library/3.5-api/kdelibs-apidocs/kio/kio/html/tradersyntax.html
      */
-    virtual OfferList query( const QString& servicetype,
-			     const QString& constraint = QString::null,
-			     const QString& preferences = QString::null) const;
+    virtual OfferList query( const TQString& servicetype,
+			     const TQString& constraint = TQString::null,
+			     const TQString& preferences = TQString::null) const;
 
     /**
      * A variant of query(), that takes two service types as an input.
@@ -144,18 +144,18 @@ public:
      *
      * @param servicetype A service type like 'text/plain', 'text/html', or 'KOfficePlugin'.
      * @param genericServiceType a basic service type, like 'KParts/ReadOnlyPart' or 'Application'
-     * @param constraint  A constraint to limit the choices returned, QString::null to
+     * @param constraint  A constraint to limit the choices returned, TQString::null to
      *                    get all services of the given @p servicetype
-     * @param preferences Indicates a particular preference to return, QString::null to ignore.
+     * @param preferences Indicates a particular preference to return, TQString::null to ignore.
      *                    Uses an expression in the constraint language that must return
      *                    a number
      *
      * @return A list of services that satisfy the query
      * @see http://developer.kde.org/documentation/library/kdeqt/tradersyntax.html
      */
-    OfferList query( const QString& servicetype, const QString& genericServiceType,
-                     const QString& constraint /*= QString::null*/,
-                     const QString& preferences /*= QString::null*/) const;
+    OfferList query( const TQString& servicetype, const TQString& genericServiceType,
+                     const TQString& constraint /*= TQString::null*/,
+                     const TQString& preferences /*= TQString::null*/) const;
 
     /**
      * This is a static pointer to a KTrader instance.

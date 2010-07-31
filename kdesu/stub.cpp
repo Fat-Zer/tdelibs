@@ -16,8 +16,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <qglobal.h>
-#include <qcstring.h>
+#include <tqglobal.h>
+#include <tqcstring.h>
 #include <kdatastream.h>
 
 #include <kapplication.h>
@@ -56,13 +56,13 @@ void StubProcess::setPriority(int prio)
 }
 
 
-QCString StubProcess::commaSeparatedList(QCStringList lst)
+TQCString StubProcess::commaSeparatedList(QCStringList lst)
 {
     if (lst.count() == 0)
-	return QCString("");
+	return TQCString("");
 
     QCStringList::Iterator it = lst.begin();
-    QCString str = *it;
+    TQCString str = *it;
     for (it++; it!=lst.end(); it++) 
     {
 	str += ',';
@@ -79,7 +79,7 @@ QCString StubProcess::commaSeparatedList(QCStringList lst)
 
 int StubProcess::ConverseStub(int check)
 {
-    QCString line, tmp;
+    TQCString line, tmp;
     while (1) 
     {
 	line = readLine();
@@ -118,7 +118,7 @@ int StubProcess::ConverseStub(int check)
 	} else if (line == "command") {
 	    writeLine(m_Command);
 	} else if (line == "path") {
-	    QCString path = getenv("PATH");
+	    TQCString path = getenv("PATH");
             if (!path.isEmpty() && path[0] == ':')
                 path = path.mid(1);
 	    if (m_User == "root") 
@@ -140,7 +140,7 @@ int StubProcess::ConverseStub(int check)
 	    else writeLine("yes");
 	} else if (line == "app_startup_id") {
 	    QCStringList env = environment();
-	    QCString tmp;
+	    TQCString tmp;
 	    for( QCStringList::ConstIterator it = env.begin();
 		 it != env.end();
 		 ++it )
@@ -175,7 +175,7 @@ int StubProcess::ConverseStub(int check)
 }
 
 
-void StubProcess::notifyTaskbar(const QString &)
+void StubProcess::notifyTaskbar(const TQString &)
 {
     kdWarning(900) << "Obsolete StubProcess::notifyTaskbar() called!" << endl;
 }

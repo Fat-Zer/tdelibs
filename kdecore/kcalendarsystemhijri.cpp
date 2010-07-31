@@ -20,8 +20,8 @@
 
 // Derived hijri kde calendar class
 
-#include <qdatetime.h>
-#include <qstring.h>
+#include <tqdatetime.h>
+#include <tqstring.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -162,7 +162,7 @@ public:
 
 };
 
-static void gregorianToHijri(const QDate & date, int * pYear, int * pMonth,
+static void gregorianToHijri(const TQDate & date, int * pYear, int * pMonth,
    int * pDay)
 {
   GregorianDate gregorian(date.month(),date.day(),date.year());
@@ -187,28 +187,28 @@ KCalendarSystemHijri::~KCalendarSystemHijri()
 {
 }
 
-int KCalendarSystemHijri::year(const QDate& date) const
+int KCalendarSystemHijri::year(const TQDate& date) const
 {
   int y;
   gregorianToHijri(date, &y, 0, 0);
   return y;
 }
 
-int KCalendarSystemHijri::month(const QDate& date) const
+int KCalendarSystemHijri::month(const TQDate& date) const
 {
   int m;
   gregorianToHijri(date, 0, &m, 0);
   return m;
 }
 
-int KCalendarSystemHijri::day(const QDate& date) const
+int KCalendarSystemHijri::day(const TQDate& date) const
 {
   int d;
   gregorianToHijri(date, 0, 0, &d);
   return d;
 }
 
-int KCalendarSystemHijri::monthsInYear( const QDate & date ) const
+int KCalendarSystemHijri::monthsInYear( const TQDate & date ) const
 {
   Q_UNUSED( date )
 
@@ -217,7 +217,7 @@ int KCalendarSystemHijri::monthsInYear( const QDate & date ) const
 
 int KCalendarSystemHijri::weeksInYear(int year) const
 {
-  QDate temp;
+  TQDate temp;
   setYMD(temp, year, 12, lastDayOfIslamicMonth(12, year));
 
   // If the last day of the year is in the first week, we have to check the
@@ -228,9 +228,9 @@ int KCalendarSystemHijri::weeksInYear(int year) const
   return weekNumber(temp);
 }
 
-int KCalendarSystemHijri::weekNumber(const QDate& date, int * yearNum) const
+int KCalendarSystemHijri::weekNumber(const TQDate& date, int * yearNum) const
 {
-  QDate firstDayWeek1, lastDayOfYear;
+  TQDate firstDayWeek1, lastDayOfYear;
   int y = year(date);
   int week;
   int weekDay1, dayOfWeek1InYear;
@@ -274,19 +274,19 @@ int KCalendarSystemHijri::weekNumber(const QDate& date, int * yearNum) const
   return week;
 }
 
-QString KCalendarSystemHijri::monthName(const QDate& date,
+TQString KCalendarSystemHijri::monthName(const TQDate& date,
                                         bool shortName) const
 {
   return monthName(month(date), year(date), shortName);
 }
 
-QString KCalendarSystemHijri::monthNamePossessive(const QDate& date,
+TQString KCalendarSystemHijri::monthNamePossessive(const TQDate& date,
                                                   bool shortName) const
 {
   return monthNamePossessive(month(date), year(date), shortName);
 }
 
-QString KCalendarSystemHijri::monthName(int month, int year, bool shortName)
+TQString KCalendarSystemHijri::monthName(int month, int year, bool shortName)
   const {
 
   Q_UNUSED(year);
@@ -348,10 +348,10 @@ QString KCalendarSystemHijri::monthName(int month, int year, bool shortName)
         return locale()->translate("Thu al-Hijjah");
       }
 
-  return QString::null;
+  return TQString::null;
 }
 
-QString KCalendarSystemHijri::monthNamePossessive(int month, int year,
+TQString KCalendarSystemHijri::monthNamePossessive(int month, int year,
                                                   bool shortName) const
 {
   Q_UNUSED(year);
@@ -413,10 +413,10 @@ QString KCalendarSystemHijri::monthNamePossessive(int month, int year,
         return locale()->translate("of Thu al-Hijjah");
       }
 
-  return QString::null;
+  return TQString::null;
 }
 
-bool KCalendarSystemHijri::setYMD(QDate & date, int y, int m, int d) const
+bool KCalendarSystemHijri::setYMD(TQDate & date, int y, int m, int d) const
 {
   // range checks
   if ( y < minValidYear() || y > maxValidYear() )
@@ -436,7 +436,7 @@ bool KCalendarSystemHijri::setYMD(QDate & date, int y, int m, int d) const
     gregorian.getDay());
 }
 
-QString KCalendarSystemHijri::weekDayName(int day, bool shortName) const
+TQString KCalendarSystemHijri::weekDayName(int day, bool shortName) const
 {
   if ( shortName )
     switch (day)
@@ -475,23 +475,23 @@ QString KCalendarSystemHijri::weekDayName(int day, bool shortName) const
         return locale()->translate("Yaum al-Ahad");
       }
 
-  return QString::null;
+  return TQString::null;
 }
 
-QString KCalendarSystemHijri::weekDayName(const QDate& date,
+TQString KCalendarSystemHijri::weekDayName(const TQDate& date,
                                           bool shortName) const
 {
   return weekDayName(dayOfWeek(date), shortName);
 }
 
-int KCalendarSystemHijri::dayOfWeek(const QDate& date) const
+int KCalendarSystemHijri::dayOfWeek(const TQDate& date) const
 {
   return date.dayOfWeek(); // same as gregorian
 }
 
-int KCalendarSystemHijri::dayOfYear(const QDate & date) const
+int KCalendarSystemHijri::dayOfYear(const TQDate & date) const
 {
-  QDate first;
+  TQDate first;
   setYMD(first, year(date), 1, 1);
 
   return first.daysTo(date) + 1;
@@ -499,7 +499,7 @@ int KCalendarSystemHijri::dayOfYear(const QDate & date) const
   return 100;
 }
 
-int KCalendarSystemHijri::daysInMonth(const QDate& date) const
+int KCalendarSystemHijri::daysInMonth(const TQDate& date) const
 {
   int y, m;
   gregorianToHijri(date, &y, &m, 0);
@@ -510,7 +510,7 @@ int KCalendarSystemHijri::daysInMonth(const QDate& date) const
 // Min valid year that may be converted to QDate
 int KCalendarSystemHijri::minValidYear() const
 {
-  QDate date(1753, 1, 1);
+  TQDate date(1753, 1, 1);
 
   return year(date);
 }
@@ -518,14 +518,14 @@ int KCalendarSystemHijri::minValidYear() const
 // Max valid year that may be converted to QDate
 int KCalendarSystemHijri::maxValidYear() const
 {
-  QDate date(8000, 1, 1);
+  TQDate date(8000, 1, 1);
 
   return year(date);
 }
 
-int KCalendarSystemHijri::daysInYear(const QDate & date) const
+int KCalendarSystemHijri::daysInYear(const TQDate & date) const
 {
-  QDate first, last;
+  TQDate first, last;
   setYMD(first, year(date), 1, 1);
   setYMD(last, year(date) + 1, 1, 1);
 
@@ -537,14 +537,14 @@ int KCalendarSystemHijri::weekDayOfPray() const
   return 5; // friday
 }
 
-QDate KCalendarSystemHijri::addDays( const QDate & date, int ndays ) const
+TQDate KCalendarSystemHijri::addDays( const TQDate & date, int ndays ) const
 {
   return date.addDays( ndays );
 }
 
-QDate KCalendarSystemHijri::addMonths( const QDate & date, int nmonths ) const
+TQDate KCalendarSystemHijri::addMonths( const TQDate & date, int nmonths ) const
 {
-  QDate result = date;
+  TQDate result = date;
   int m = month(date);
   int y = year(date);
 
@@ -565,9 +565,9 @@ QDate KCalendarSystemHijri::addMonths( const QDate & date, int nmonths ) const
   return result;
 }
 
-QDate KCalendarSystemHijri::addYears( const QDate & date, int nyears ) const
+TQDate KCalendarSystemHijri::addYears( const TQDate & date, int nyears ) const
 {
-  QDate result = date;
+  TQDate result = date;
   int y = year(date) + nyears;
 
   setYMD( result, y, month(date), day(date) );
@@ -575,9 +575,9 @@ QDate KCalendarSystemHijri::addYears( const QDate & date, int nyears ) const
   return result;
 }
 
-QString KCalendarSystemHijri::calendarName() const
+TQString KCalendarSystemHijri::calendarName() const
 {
-  return QString::fromLatin1("hijri");
+  return TQString::fromLatin1("hijri");
 }
 
 bool KCalendarSystemHijri::isLunar() const

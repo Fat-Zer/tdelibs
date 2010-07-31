@@ -21,8 +21,8 @@
 #ifndef KCALENDARSYSTEMFACTORY_H
 #define KCALENDARSYSTEMFACTORY_H
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 #include "kdelibs_export.h"
 
 class KCalendarSystem;
@@ -49,15 +49,15 @@ public:
    * 0 is specified.
    * @return a KCalendarSystem object
    */
-  static KCalendarSystem *create (const QString & calType = QString::fromLatin1("gregorian"),
+  static KCalendarSystem *create (const TQString & calType = TQString::fromLatin1("gregorian"),
                                   const KLocale * locale = 0);
 
   /**
    * Gets list of names of supported calendar systems
    *
-   * @return A QStringList object
+   * @return A TQStringList object
    */
-  static QStringList calendarSystems();
+  static TQStringList calendarSystems();
 
 private:
 };

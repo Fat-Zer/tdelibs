@@ -18,7 +18,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qdatastream.h>
+#include <tqdatastream.h>
 
 #include "geo.h"
 
@@ -88,17 +88,17 @@ bool Geo::operator!=( const Geo &g ) const
   return true;
 }
 
-QString Geo::asString() const
+TQString Geo::asString() const
 {
-  return "(" + QString::number(mLatitude) + "," + QString::number(mLongitude) + ")";
+  return "(" + TQString::number(mLatitude) + "," + TQString::number(mLongitude) + ")";
 }
 
-QDataStream &KABC::operator<<( QDataStream &s, const Geo &geo )
+TQDataStream &KABC::operator<<( TQDataStream &s, const Geo &geo )
 {
     return s << (float)geo.mLatitude << (float)geo.mLongitude;
 }
 
-QDataStream &KABC::operator>>( QDataStream &s, Geo &geo )
+TQDataStream &KABC::operator>>( TQDataStream &s, Geo &geo )
 {
     s >> geo.mLatitude >> geo.mLongitude;
 

@@ -20,7 +20,7 @@
 #ifndef KMWIZARDPAGE_H
 #define KMWIZARDPAGE_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kdelibs_export.h>
 
@@ -30,14 +30,14 @@ class KDEPRINT_EXPORT KMWizardPage : public QWidget
 {
 	Q_OBJECT
 public:
-	KMWizardPage(QWidget *parent = 0, const char *name = 0);
+	KMWizardPage(TQWidget *parent = 0, const char *name = 0);
 	virtual ~KMWizardPage();
 
 	int id() const 			{ return m_ID; }
-	const QString& title() const 	{ return m_title; }
+	const TQString& title() const 	{ return m_title; }
 	int nextPage() const 		{ return m_nextpage; }
 	void setNextPage(int p)		{ m_nextpage = p; }
-	virtual bool isValid(QString&);
+	virtual bool isValid(TQString&);
 	virtual void initPrinter(KMPrinter*);
 	virtual void updatePrinter(KMPrinter*);
         bool needsInitOnBack()          { return m_needsinitonback; }

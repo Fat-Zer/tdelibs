@@ -40,12 +40,12 @@
 #include "css/csshelper.h"
 #include "xml/dom2_eventsimpl.h"
 
-#include <qstring.h>
-#include <qpoint.h>
-#include <qregion.h>
-#include <qptrstack.h>
-#include <qimage.h>
-#include <qpointarray.h>
+#include <tqstring.h>
+#include <tqpoint.h>
+#include <tqregion.h>
+#include <tqptrstack.h>
+#include <tqimage.h>
+#include <tqpointarray.h>
 
 using namespace DOM;
 using namespace khtml;
@@ -147,7 +147,7 @@ void HTMLImageElementImpl::parseAttribute(AttributeImpl *attr)
         if ( attr->value()[0] == '#' )
             usemap = attr->value().lower();
         else {
-            QString url = getDocument()->completeURL( khtml::parseURL( attr->value() ).string() );
+            TQString url = getDocument()->completeURL( khtml::parseURL( attr->value() ).string() );
             // ### we remove the part before the anchor and hope
             // the map is on the same html page....
             usemap = url;
@@ -212,7 +212,7 @@ DOMString HTMLImageElementImpl::altText() const
         alt = getAttribute( ATTR_TITLE );
 #if 0
     if ( alt.isNull() ) {
-        QString p = KURL( getDocument()->completeURL( getAttribute(ATTR_SRC).string() ) ).prettyURL();
+        TQString p = KURL( getDocument()->completeURL( getAttribute(ATTR_SRC).string() ) ).prettyURL();
         int pos;
         if ( ( pos = p.findRev( '.' ) ) > 0 )
             p.truncate( pos );
@@ -257,13 +257,13 @@ void HTMLImageElementImpl::insertedIntoDocument()
     HTMLElementImpl::insertedIntoDocument();
 }
 
-void HTMLImageElementImpl::removeId(const QString& id)
+void HTMLImageElementImpl::removeId(const TQString& id)
 {
     getDocument()->underDocNamedCache().remove(id, this);
     HTMLElementImpl::removeId(id);
 }
 
-void HTMLImageElementImpl::addId   (const QString& id)
+void HTMLImageElementImpl::addId   (const TQString& id)
 {
     getDocument()->underDocNamedCache().add(id, this);
     HTMLElementImpl::addId(id);
@@ -316,24 +316,24 @@ long HTMLImageElementImpl::height() const
                       getAttribute(ATTR_HEIGHT).toInt();
 }
 
-QImage HTMLImageElementImpl::currentImage() const
+TQImage HTMLImageElementImpl::currentImage() const
 {
     RenderImage *r = static_cast<RenderImage*>(renderer());
 
     if(r)
         return r->pixmap().convertToImage();
 
-    return QImage();
+    return TQImage();
 }
 
-QPixmap HTMLImageElementImpl::currentPixmap() const
+TQPixmap HTMLImageElementImpl::currentPixmap() const
 {
     RenderImage *r = static_cast<RenderImage*>(renderer());
 
     if(r)
         return r->pixmap();
 
-    return QPixmap();
+    return TQPixmap();
 }
 
 bool HTMLImageElementImpl::complete() const
@@ -365,7 +365,7 @@ HTMLMapElementImpl::mapMouseEvent(int x_, int y_, int width_, int height_,
 {
     //cout << "map:mapMouseEvent " << endl;
     //cout << x_ << " " << y_ <<" "<< width_ <<" "<< height_ << endl;
-    QPtrStack<NodeImpl> nodeStack;
+    TQPtrStack<NodeImpl> nodeStack;
 
     NodeImpl *current = firstChild();
     while(1)
@@ -410,7 +410,7 @@ void HTMLMapElementImpl::parseAttribute(AttributeImpl *attr)
         } 
         else {
             // add name with full url:
-            QString url = getDocument()->completeURL( khtml::parseURL( attr->value() ).string() );
+            TQString url = getDocument()->completeURL( khtml::parseURL( attr->value() ).string() );
             if(getDocument()->isHTMLDocument())
                 static_cast<HTMLDocumentImpl*>(getDocument())->mapMap[url] = this;
         }
@@ -419,7 +419,7 @@ void HTMLMapElementImpl::parseAttribute(AttributeImpl *attr)
     {
         DOMString s = attr->value();
         if(*s.unicode() == '#')
-            name = QString(s.unicode()+1, s.length()-1).lower();
+            name = TQString(s.unicode()+1, s.length()-1).lower();
         else
             name = s.string().lower();
 	// ### make this work for XML documents, e.g. in case of <html:map...>
@@ -497,7 +497,7 @@ bool HTMLAreaElementImpl::mapMouseEvent(int x_, int y_, int width_, int height_,
         region=getRegion(width_, height_);
         lastw=width_; lasth=height_;
     }
-    if (region.contains(QPoint(x_,y_)))
+    if (region.contains(TQPoint(x_,y_)))
     {
         inside = true;
         info.setInnerNode(this);
@@ -507,21 +507,21 @@ bool HTMLAreaElementImpl::mapMouseEvent(int x_, int y_, int width_, int height_,
     return inside;
 }
 
-QRect HTMLAreaElementImpl::getRect() const
+TQRect HTMLAreaElementImpl::getRect() const
 {
     if (parentNode()->renderer()==0)
-        return QRect();
+        return TQRect();
     int dx, dy;
     if (!parentNode()->renderer()->absolutePosition(dx, dy))
-        return QRect();
-    QRegion region = getRegion(lastw,lasth);
+        return TQRect();
+    TQRegion region = getRegion(lastw,lasth);
     region.translate(dx, dy);
     return region.boundingRect();
 }
 
-QRegion HTMLAreaElementImpl::getRegion(int width_, int height_) const
+TQRegion HTMLAreaElementImpl::getRegion(int width_, int height_) const
 {
-    QRegion region;
+    TQRegion region;
     if (!m_coords)
         return region;
 
@@ -533,26 +533,26 @@ QRegion HTMLAreaElementImpl::getRegion(int width_, int height_) const
     if ((shape==Poly || shape==Unknown) && m_coordsLen > 5) {
         // make sure its even
         int len = m_coordsLen >> 1;
-        QPointArray points(len);
+        TQPointArray points(len);
         for (int i = 0; i < len; ++i)
             points.setPoint(i, m_coords[(i<<1)].minWidth(width_),
                             m_coords[(i<<1)+1].minWidth(height_));
-        region = QRegion(points);
+        region = TQRegion(points);
     }
     else if (shape==Circle && m_coordsLen>=3 || shape==Unknown && m_coordsLen == 3) {
         int r = kMin(m_coords[2].minWidth(width_), m_coords[2].minWidth(height_));
-        region = QRegion(m_coords[0].minWidth(width_)-r,
-                         m_coords[1].minWidth(height_)-r, 2*r, 2*r,QRegion::Ellipse);
+        region = TQRegion(m_coords[0].minWidth(width_)-r,
+                         m_coords[1].minWidth(height_)-r, 2*r, 2*r,TQRegion::Ellipse);
     }
     else if (shape==Rect && m_coordsLen>=4 || shape==Unknown && m_coordsLen == 4) {
         int x0 = m_coords[0].minWidth(width_);
         int y0 = m_coords[1].minWidth(height_);
         int x1 = m_coords[2].minWidth(width_);
         int y1 = m_coords[3].minWidth(height_);
-        region = QRegion(x0,y0,x1-x0,y1-y0);
+        region = TQRegion(x0,y0,x1-x0,y1-y0);
     }
     else if (shape==Default)
-        region = QRegion(0,0,width_,height_);
+        region = TQRegion(0,0,width_,height_);
     // else
        // return null region
 

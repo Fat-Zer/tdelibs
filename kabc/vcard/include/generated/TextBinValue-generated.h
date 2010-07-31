@@ -3,13 +3,13 @@
 public:
 TextBinValue();
 TextBinValue(const TextBinValue&);
-TextBinValue(const QCString&);
+TextBinValue(const TQCString&);
 TextBinValue & operator = (TextBinValue&);
-TextBinValue & operator = (const QCString&);
+TextBinValue & operator = (const TQCString&);
 bool operator ==(TextBinValue&);
 bool operator !=(TextBinValue& x) {return !(*this==x);}
-bool operator ==(const QCString& s) {TextBinValue a(s);return(*this==a);} 
-bool operator != (const QCString& s) {return !(*this == s);}
+bool operator ==(const TQCString& s) {TextBinValue a(s);return(*this==a);} 
+bool operator != (const TQCString& s) {return !(*this == s);}
 
 virtual ~TextBinValue();
 void parse() {if(!parsed_) _parse();parsed_=true;assembled_=false;}

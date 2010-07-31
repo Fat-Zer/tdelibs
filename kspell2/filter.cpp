@@ -27,7 +27,7 @@
 #include <kstaticdeleter.h>
 #include <kdebug.h>
 
-#include <qstring.h>
+#include <tqstring.h>
 
 namespace KSpell2
 {
@@ -84,13 +84,13 @@ void Filter::restart()
     m_currentPosition = 0;
 }
 
-void Filter::setBuffer( const QString& buffer )
+void Filter::setBuffer( const TQString& buffer )
 {
     m_buffer          = buffer;
     m_currentPosition = 0;
 }
 
-QString Filter::buffer() const
+TQString Filter::buffer() const
 {
     return m_buffer;
 }
@@ -105,25 +105,25 @@ bool Filter::atEnd() const
 
 Word Filter::nextWord() const
 {
-    QChar currentChar = skipToLetter( m_currentPosition );
+    TQChar currentChar = skipToLetter( m_currentPosition );
 
     if ( m_currentPosition >= m_buffer.length() ) {
         return Filter::end();
     }
 
-    bool allUppercase = currentChar.category() & QChar::Letter_Uppercase;
+    bool allUppercase = currentChar.category() & TQChar::Letter_Uppercase;
     bool runTogether = false;
 
-    QString foundWord;
+    TQString foundWord;
     int start = m_currentPosition;
     while ( currentChar.isLetter() ) {
-        if ( currentChar.category() & QChar::Letter_Lowercase )
+        if ( currentChar.category() & TQChar::Letter_Lowercase )
             allUppercase = false;
 
 	/* FIXME: this does not work for Hebrew for example
         //we consider run-together words as mixed-case words
         if ( !allUppercase &&
-             currentChar.category() & QChar::Letter_Uppercase )
+             currentChar.category() & TQChar::Letter_Uppercase )
             runTogether = true;
 	*/
 
@@ -149,7 +149,7 @@ Word Filter::previousWord() const
         return Filter::end();
     }
 
-    QString foundWord;
+    TQString foundWord;
     int start = m_currentPosition;
     while ( m_buffer[ start ].isLetter() ) {
         foundWord.prepend( m_buffer[ m_currentPosition ] );
@@ -165,7 +165,7 @@ Word Filter::wordAtPosition( unsigned int pos ) const
         return Filter::end();
 
     int currentPosition = pos - 1;
-    QString foundWord;
+    TQString foundWord;
     while ( currentPosition >= 0 &&
             m_buffer[ currentPosition ].isLetter() ) {
         foundWord.prepend( m_buffer[ currentPosition ] );
@@ -202,7 +202,7 @@ int Filter::currentPosition() const
     return m_currentPosition;
 }
 
-void Filter::replace( const Word& w, const QString& newWord)
+void Filter::replace( const Word& w, const TQString& newWord)
 {
     int oldLen = w.word.length();
     int newLen = newWord.length();
@@ -216,7 +216,7 @@ void Filter::replace( const Word& w, const QString& newWord)
     m_buffer = m_buffer.replace( w.start, oldLen, newWord );
 }
 
-QString Filter::context() const
+TQString Filter::context() const
 {
     int len = 60;
     //we don't want the expression underneath casted to an unsigned int
@@ -225,17 +225,17 @@ QString Filter::context() const
     bool begin = ( (signedPosition - len/2)<=0 ) ? true : false;
 
 
-    QString buffer = m_buffer;
+    TQString buffer = m_buffer;
     Word word = wordAtPosition( m_currentPosition );
     buffer = buffer.replace( word.start, word.word.length(),
-                             QString( "<b>%1</b>" ).arg( word.word ) );
+                             TQString( "<b>%1</b>" ).arg( word.word ) );
 
-    QString context;
+    TQString context;
     if ( begin )
-        context = QString( "%1...")
+        context = TQString( "%1...")
                   .arg( buffer.mid(  0, len ) );
     else
-        context = QString( "...%1..." )
+        context = TQString( "...%1..." )
                   .arg( buffer.mid(  m_currentPosition - 20, len ) );
 
     context = context.replace( '\n', ' ' );
@@ -245,7 +245,7 @@ QString Filter::context() const
 
 bool Filter::trySkipLinks() const
 {
-    QChar currentChar = m_buffer[ m_currentPosition ];
+    TQChar currentChar = m_buffer[ m_currentPosition ];
 
     uint length = m_buffer.length();
     //URL - if so skip
@@ -267,7 +267,7 @@ bool Filter::trySkipLinks() const
     return false;
 }
 
-bool Filter::ignore( const QString& word ) const
+bool Filter::ignore( const TQString& word ) const
 {
     if ( d->settings ) {
         return d->settings->ignore( word );
@@ -275,10 +275,10 @@ bool Filter::ignore( const QString& word ) const
     return false;
 }
 
-QChar Filter::skipToLetter( uint &fromPosition ) const
+TQChar Filter::skipToLetter( uint &fromPosition ) const
 {
 
-    QChar currentChar = m_buffer[ fromPosition ];
+    TQChar currentChar = m_buffer[ fromPosition ];
     while ( !currentChar.isLetter() &&
             ++fromPosition < m_buffer.length() ) {
         currentChar = m_buffer[ fromPosition ];
@@ -287,7 +287,7 @@ QChar Filter::skipToLetter( uint &fromPosition ) const
 }
 
 bool Filter::shouldBeSkipped( bool wordWasUppercase, bool wordWasRunTogether,
-                             const QString& foundWord ) const
+                             const TQString& foundWord ) const
 {
     bool checkUpper = ( d->settings ) ?
                       d->settings->checkUppercase () : true;

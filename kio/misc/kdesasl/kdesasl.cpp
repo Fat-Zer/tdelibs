@@ -22,7 +22,7 @@
 #include <kmdcodec.h>
 #include <kurl.h>
 
-#include <qstrlist.h>
+#include <tqstrlist.h>
 
 #include <stdlib.h>
 #include <string.h>
@@ -35,8 +35,8 @@ KDESasl::KDESasl(const KURL &aUrl)
   mFirst = true;
 }
 
-KDESasl::KDESasl(const QString &aUser, const QString &aPass,
-  const QString &aProtocol)
+KDESasl::KDESasl(const TQString &aUser, const TQString &aPass,
+  const TQString &aProtocol)
 {
   mProtocol = aProtocol;
   mUser = aUser;
@@ -47,29 +47,29 @@ KDESasl::KDESasl(const QString &aUser, const QString &aPass,
 KDESasl::~KDESasl() {
 }
 
-QCString KDESasl::chooseMethod(const QStrIList aMethods)
+TQCString KDESasl::chooseMethod(const TQStrIList aMethods)
 {
   if (aMethods.contains("DIGEST-MD5")) mMethod = "DIGEST-MD5";
   else if (aMethods.contains("CRAM-MD5")) mMethod = "CRAM-MD5";
   else if (aMethods.contains("PLAIN")) mMethod = "PLAIN";
   else if (aMethods.contains("LOGIN")) mMethod = "LOGIN";
-  else mMethod = QCString();
+  else mMethod = TQCString();
   return mMethod;
 }
 
-void KDESasl::setMethod(const QCString &aMethod)
+void KDESasl::setMethod(const TQCString &aMethod)
 {
   mMethod = aMethod.upper();
 }
 
-QByteArray KDESasl::getPlainResponse()
+TQByteArray KDESasl::getPlainResponse()
 {
-  QCString user = mUser.utf8();
-  QCString pass = mPass.utf8();
+  TQCString user = mUser.utf8();
+  TQCString pass = mPass.utf8();
   int userlen = user.length();
   int passlen = pass.length();
   // result = $user\0$user\0$pass (no trailing \0)
-  QByteArray result(2 * userlen + passlen + 2);
+  TQByteArray result(2 * userlen + passlen + 2);
   if ( userlen ) {
     memcpy( result.data(), user.data(), userlen );
     memcpy( result.data() + userlen + 1, user.data(), userlen );
@@ -80,18 +80,18 @@ QByteArray KDESasl::getPlainResponse()
   return result;
 }
 
-QByteArray KDESasl::getLoginResponse()
+TQByteArray KDESasl::getLoginResponse()
 {
-  QByteArray result = (mFirst) ? mUser.utf8() : mPass.utf8();
+  TQByteArray result = (mFirst) ? mUser.utf8() : mPass.utf8();
   mFirst = !mFirst;
   if (result.size()) result.resize(result.size() - 1);
   return result;
 }
 
-QByteArray KDESasl::getCramMd5Response(const QByteArray &aChallenge)
+TQByteArray KDESasl::getCramMd5Response(const TQByteArray &aChallenge)
 {
   uint i;
-  QByteArray secret = mPass.utf8();
+  TQByteArray secret = mPass.utf8();
   int len = mPass.utf8().length();
   secret.resize(len);
   if (secret.size() > 64)
@@ -102,9 +102,9 @@ QByteArray KDESasl::getCramMd5Response(const QByteArray &aChallenge)
   }
   secret.resize(64);
   for (i = len; i < 64; i++) secret[i] = 0;
-  QByteArray XorOpad(64);
+  TQByteArray XorOpad(64);
   for (i = 0; i < 64; i++) XorOpad[i] = secret[i] ^ 0x5C;
-  QByteArray XorIpad(64);
+  TQByteArray XorIpad(64);
   for (i = 0; i < 64; i++) XorIpad[i] = secret[i] ^ 0x36;
   KMD5 md5;
   md5.update(XorIpad);
@@ -112,21 +112,21 @@ QByteArray KDESasl::getCramMd5Response(const QByteArray &aChallenge)
   KMD5 md5a;
   md5a.update(XorOpad);
   md5a.update(md5.rawDigest(), 16);
-  QByteArray result = mUser.utf8();
+  TQByteArray result = mUser.utf8();
   len = mUser.utf8().length();
   result.resize(len + 33);
   result[len] = ' ';
-  QCString ch = md5a.hexDigest();
+  TQCString ch = md5a.hexDigest();
   for (i = 0; i < 32; i++) result[i+len+1] = *(ch.data() + i);
   return result;
 }
 
-QByteArray KDESasl::getDigestMd5Response(const QByteArray &aChallenge)
+TQByteArray KDESasl::getDigestMd5Response(const TQByteArray &aChallenge)
 {
   mFirst = !mFirst;
-  if (mFirst) return QByteArray();
-  QCString str, realm, nonce, qop, algorithm, charset;
-  QCString nc = "00000001";
+  if (mFirst) return TQByteArray();
+  TQCString str, realm, nonce, qop, algorithm, charset;
+  TQCString nc = "00000001";
   unsigned int a, b, c, d;
   a = 0;
   while (a < aChallenge.size())
@@ -143,7 +143,7 @@ QByteArray KDESasl::getDigestMd5Response(const QByteArray &aChallenge)
       d = c;
       while (d < aChallenge.size() && aChallenge[d] != ',') d++;
     }
-    str = QCString(aChallenge.data() + c, d - c + 1);
+    str = TQCString(aChallenge.data() + c, d - c + 1);
     if (qstrnicmp(aChallenge.data() + a, "realm=", 6) == 0) realm = str;
     else if (qstrnicmp(aChallenge.data() + a, "nonce=", 6) == 0) nonce = str;
     else if (qstrnicmp(aChallenge.data() + a, "qop=", 4) == 0) qop = str;
@@ -156,7 +156,7 @@ QByteArray KDESasl::getDigestMd5Response(const QByteArray &aChallenge)
   if (qop.isEmpty()) qop = "auth";
   qop = "auth";
   bool utf8 = qstricmp(charset, "utf-8") == 0;
-  QCString digestUri = QCString(mProtocol.latin1()) + "/" + realm;
+  TQCString digestUri = TQCString(mProtocol.latin1()) + "/" + realm;
 
   /* Calculate the response */
   /* Code based on code from the http io-slave
@@ -164,17 +164,17 @@ QByteArray KDESasl::getDigestMd5Response(const QByteArray &aChallenge)
      Copyright (C) 2000,2001 Waldo Bastian <bastian@kde.org>
      Copyright (C) 2000,2001 George Staikos <staikos@kde.org> */
   KMD5 md, md2;
-  QCString HA1, HA2;
-  QCString cnonce;
+  TQCString HA1, HA2;
+  TQCString cnonce;
   cnonce.setNum((1 + static_cast<int>(100000.0*rand()/(RAND_MAX+1.0))));
   cnonce = KCodecs::base64Encode( cnonce );
 
   // Calculate H(A1)
-  QCString authStr = (utf8) ? mUser.utf8() : QCString(mUser.latin1());
+  TQCString authStr = (utf8) ? mUser.utf8() : TQCString(mUser.latin1());
   authStr += ':';
   authStr += realm;
   authStr += ':';
-  authStr += (utf8) ? mPass.utf8() : QCString(mPass.latin1());
+  authStr += (utf8) ? mPass.utf8() : TQCString(mPass.latin1());
 
   md.update( authStr );
   authStr = "";
@@ -220,30 +220,30 @@ QByteArray KDESasl::getDigestMd5Response(const QByteArray &aChallenge)
   authStr += HA2;
   md.reset();
   md.update( authStr );
-  QCString response = md.hexDigest();
+  TQCString response = md.hexDigest();
   /* End of response calculation */
 
-  QCString result;
+  TQCString result;
   if (utf8)
   {
     result = "charset=utf-8,username=\"" + mUser.utf8();
   } else {
-    result = "charset=iso-8859-1,username=\"" + QCString(mUser.latin1());
+    result = "charset=iso-8859-1,username=\"" + TQCString(mUser.latin1());
   }
   result += "\",realm=\"" + realm + "\",nonce=\"" + nonce;
   result += "\",nc=" + nc + ",cnonce=\"" + cnonce;
   result += "\",digest-uri=\"" + digestUri;
   result += "\",response=" + response + ",qop=" + qop;
-  QByteArray ba;
+  TQByteArray ba;
   ba.duplicate(result.data(), result.length());
   return ba;
 }
 
-QByteArray KDESasl::getBinaryResponse(const QByteArray &aChallenge, bool aBase64)
+TQByteArray KDESasl::getBinaryResponse(const TQByteArray &aChallenge, bool aBase64)
 {
   if (aBase64)
   {
-    QByteArray ba;
+    TQByteArray ba;
     KCodecs::base64Decode(aChallenge, ba);
     KCodecs::base64Encode(getBinaryResponse(ba, false), ba);
     return ba;
@@ -254,17 +254,17 @@ QByteArray KDESasl::getBinaryResponse(const QByteArray &aChallenge, bool aBase64
     return getCramMd5Response(aChallenge);
   if (qstricmp(mMethod, "DIGEST-MD5") == 0)
     return getDigestMd5Response(aChallenge);
-//    return getDigestMd5Response(QCString("realm=\"elwood.innosoft.com\",nonce=\"OA6MG9tEQGm2hh\",qop=\"auth\",algorithm=md5-sess,charset=utf-8"));
-  return QByteArray();
+//    return getDigestMd5Response(TQCString("realm=\"elwood.innosoft.com\",nonce=\"OA6MG9tEQGm2hh\",qop=\"auth\",algorithm=md5-sess,charset=utf-8"));
+  return TQByteArray();
 }
 
-QCString KDESasl::getResponse(const QByteArray &aChallenge, bool aBase64)
+TQCString KDESasl::getResponse(const TQByteArray &aChallenge, bool aBase64)
 {
-  QByteArray ba = getBinaryResponse(aChallenge, aBase64);
-  return QCString(ba.data(), ba.size() + 1);
+  TQByteArray ba = getBinaryResponse(aChallenge, aBase64);
+  return TQCString(ba.data(), ba.size() + 1);
 }
 
-QCString KDESasl::method() const {
+TQCString KDESasl::method() const {
   return mMethod;
 }
 

@@ -20,26 +20,26 @@
 #include <kapplication.h>
 #include <kdebug.h>
 
-#include <qstring.h>
-#include <qlabel.h>
-#include <qtextcodec.h>
+#include <tqstring.h>
+#include <tqlabel.h>
+#include <tqtextcodec.h>
 
 int main(int argc, char **argv)
 {
     KApplication *app = new KApplication(argc, argv, "KSpellTest");
 
     // test ASCII
-    //QString text( "I have noo idee of how to wride englisch or englisch" );
+    //TQString text( "I have noo idee of how to wride englisch or englisch" );
 
     // test Latin-3 (need dictionary "esperanto" and "Latin3" in config)
-    //QCString ctext( "sed jen: e¶oþanø' æiu¼aýde; e¶uþunøo øiun fendredon - kaj dimanøon...");
-    //QTextCodec *codec = QTextCodec::codecForName("ISO 8859-3");
+    //TQCString ctext( "sed jen: e¶oþanø' æiu¼aýde; e¶uþunøo øiun fendredon - kaj dimanøon...");
+    //TQTextCodec *codec = TQTextCodec::codecForName("ISO 8859-3");
 
     // test UTF-8 (need dictionary "esperanto" and "UTF-8" in config)  
-   QCString ctext( "sed jen: e\304\245oÅanÄo Ä‰iuÄµaÅ­de e\304\245uÅunÄo Äiun fendredon kaj dimanÄon");
-   QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+   TQCString ctext( "sed jen: e\304\245oÅanÄo Ä‰iuÄµaÅ­de e\304\245uÅunÄo Äiun fendredon kaj dimanÄon");
+   TQTextCodec *codec = TQTextCodec::codecForName("UTF-8");
     
-    QString text = codec->toUnicode(ctext.data());
+    TQString text = codec->toUnicode(ctext.data());
 
     KSpell::modalCheck( text );
 

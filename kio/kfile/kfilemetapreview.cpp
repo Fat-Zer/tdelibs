@@ -8,7 +8,7 @@
 
 #include "kfilemetapreview.h"
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <kio/previewjob.h>
 #include <klibloader.h>
@@ -17,12 +17,12 @@
 
 bool KFileMetaPreview::s_tryAudioPreview = true;
 
-KFileMetaPreview::KFileMetaPreview( QWidget *parent, const char *name )
+KFileMetaPreview::KFileMetaPreview( TQWidget *parent, const char *name )
     : KPreviewWidgetBase( parent, name ),
       haveAudioPreview( false )
 {
-    QHBoxLayout *layout = new QHBoxLayout( this, 0, 0 );
-    m_stack = new QWidgetStack( this );
+    TQHBoxLayout *layout = new TQHBoxLayout( this, 0, 0 );
+    m_stack = new TQWidgetStack( this );
     layout->addWidget( m_stack );
 
     // ###
@@ -45,8 +45,8 @@ void KFileMetaPreview::initPreviewProviders()
     m_stack->raiseWidget( imagePreview );
     resize( imagePreview->sizeHint() );
 
-    QStringList mimeTypes = imagePreview->supportedMimeTypes();
-    QStringList::ConstIterator it = mimeTypes.begin();
+    TQStringList mimeTypes = imagePreview->supportedMimeTypes();
+    TQStringList::ConstIterator it = mimeTypes.begin();
     for ( ; it != mimeTypes.end(); ++it )
     {
 //         qDebug(".... %s", (*it).latin1());
@@ -54,7 +54,7 @@ void KFileMetaPreview::initPreviewProviders()
     }
 }
 
-KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const QString& mimeType )
+KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const TQString& mimeType )
 {
 //     qDebug("### looking for: %s", mimeType.latin1());
     // often the first highlighted item, where we can be sure, there is no plugin
@@ -78,8 +78,8 @@ KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const QString& mimeTy
             {
                 haveAudioPreview = true;
                 (void) m_stack->addWidget( audioPreview );
-                QStringList mimeTypes = audioPreview->supportedMimeTypes();
-                QStringList::ConstIterator it = mimeTypes.begin();
+                TQStringList mimeTypes = audioPreview->supportedMimeTypes();
+                TQStringList::ConstIterator it = mimeTypes.begin();
                 for ( ; it != mimeTypes.end(); ++it )
                     m_previewProviders.insert( *it, audioPreview );
             }
@@ -104,7 +104,7 @@ KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const QString& mimeTy
     if ( mimeInfo )
     {
         // check mime type inheritance
-        QString parentMimeType = mimeInfo->parentMimeType();
+        TQString parentMimeType = mimeInfo->parentMimeType();
         while ( !parentMimeType.isEmpty() )
         {
             provider = m_previewProviders.find( parentMimeType );
@@ -118,8 +118,8 @@ KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const QString& mimeTy
         }
 
         // check X-KDE-Text property
-        QVariant textProperty = mimeInfo->property( "X-KDE-text" );
-        if ( textProperty.isValid() && textProperty.type() == QVariant::Bool )
+        TQVariant textProperty = mimeInfo->property( "X-KDE-text" );
+        if ( textProperty.isValid() && textProperty.type() == TQVariant::Bool )
         {
             if ( textProperty.toBool() )
             {
@@ -163,7 +163,7 @@ void KFileMetaPreview::clearPreview()
         static_cast<KPreviewWidgetBase*>( m_stack->visibleWidget() )->clearPreview();
 }
 
-void KFileMetaPreview::addPreviewProvider( const QString& mimeType,
+void KFileMetaPreview::addPreviewProvider( const TQString& mimeType,
                                            KPreviewWidgetBase *provider )
 {
     m_previewProviders.insert( mimeType, provider );
@@ -171,7 +171,7 @@ void KFileMetaPreview::addPreviewProvider( const QString& mimeType,
 
 void KFileMetaPreview::clearPreviewProviders()
 {
-    QDictIterator<KPreviewWidgetBase> it( m_previewProviders );
+    TQDictIterator<KPreviewWidgetBase> it( m_previewProviders );
     for ( ; it.current(); ++it )
         m_stack->removeWidget( it.current() );
 
@@ -179,7 +179,7 @@ void KFileMetaPreview::clearPreviewProviders()
 }
 
 // static
-KPreviewWidgetBase * KFileMetaPreview::createAudioPreview( QWidget *parent )
+KPreviewWidgetBase * KFileMetaPreview::createAudioPreview( TQWidget *parent )
 {
     KLibFactory *factory = KLibLoader::self()->factory( "kfileaudiopreview" );
     if ( !factory )

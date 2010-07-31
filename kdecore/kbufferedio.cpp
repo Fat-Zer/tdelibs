@@ -22,8 +22,8 @@
 
 #include <string.h>
 
-#include <qptrlist.h>
-#include <qcstring.h>
+#include <tqptrlist.h>
+#include <tqcstring.h>
 #include "kbufferedio.h"
 
 /**
@@ -39,7 +39,7 @@
  * simply QByteArrays. The idea is that, instead of having one large, contiguous
  * buffer area, we have several small ones. Even though this could be seen as
  * a waste of memory, it makes our life easier, because we can just append a new
- * QByteArray to the list and not have to worry with copying the rest of the
+ * TQByteArray to the list and not have to worry with copying the rest of the
  * buffer, should we need to expand.
  *
  * This way, we have the capability of unlimited buffering, which can grow to
@@ -47,7 +47,7 @@
  *
  * For each buffer, we provide three kinds of functions, available as protected
  * members: consume, feed and size. The size functions calculate the current
- * size of the buffer, by adding each individual QByteArray size. The feed
+ * size of the buffer, by adding each individual TQByteArray size. The feed
  * functions are used by the I/O functions that receive data from somewhere,
  * i.e., from the system, in the case of the input buffer, and from the user,
  * in the case of the output buffer. These two functions are used to give
@@ -73,11 +73,11 @@
  *
  * Both buffers work in the same way: they're an "array" of buffers, each
  * concatenated to the other. All data in all buffers is valid data, except
- * for the first QByteArray, whose valid data starts at inBufIndex/outBufIndex
- * bytes from the start. That is, the data starts in the first QByteArray buffer
+ * for the first TQByteArray, whose valid data starts at inBufIndex/outBufIndex
+ * bytes from the start. That is, the data starts in the first TQByteArray buffer
  * that many bytes from the start and goes on contiguously until the last
- * QByteArray. This has been decided like that because we didn't want to
- * create a new QByteArray of the remaining bytes in the first buffer, after
+ * TQByteArray. This has been decided like that because we didn't want to
+ * create a new TQByteArray of the remaining bytes in the first buffer, after
  * a consume operation, because that could take some time. It is faster
  * this way, although not really easy.
  *
@@ -127,10 +127,10 @@ bool KBufferedIO::canReadLine() const
   if (bytesAvailable() == 0)
     return false;		// no new line in here
 
-  QByteArray* buf;
+  TQByteArray* buf;
 
-  // scan each QByteArray for the occurrence of '\n'
-  QPtrList<QByteArray> &buflist = ((KBufferedIO*)this)->inBuf;
+  // scan each TQByteArray for the occurrence of '\n'
+  TQPtrList<TQByteArray> &buflist = ((KBufferedIO*)this)->inBuf;
   buf = buflist.first();
   char *p = buf->data() + inBufIndex;
   int n = buf->size() - inBufIndex;
@@ -169,7 +169,7 @@ unsigned KBufferedIO::consumeReadBuffer(unsigned nbytes, char *destbuffer, bool 
       nbytes = u;		// we can't consume more than there is
   }
 
-  QByteArray *buf;
+  TQByteArray *buf;
   unsigned copied = 0;
   unsigned index = inBufIndex;
 
@@ -213,7 +213,7 @@ unsigned KBufferedIO::consumeReadBuffer(unsigned nbytes, char *destbuffer, bool 
 
 void KBufferedIO::consumeWriteBuffer(unsigned nbytes)
 {
-  QByteArray *buf = outBuf.first();
+  TQByteArray *buf = outBuf.first();
   if (buf == NULL)
     return;			// nothing to consume
 
@@ -245,7 +245,7 @@ unsigned KBufferedIO::feedReadBuffer(unsigned nbytes, const char *buffer, bool a
   if (nbytes == 0)
     return 0;
 
-  QByteArray *a = new QByteArray(nbytes);
+  TQByteArray *a = new TQByteArray(nbytes);
   a->duplicate(buffer, nbytes);
 
   if (atBeginning)
@@ -261,7 +261,7 @@ unsigned KBufferedIO::feedWriteBuffer(unsigned nbytes, const char *buffer)
   if (nbytes == 0)
     return 0;
 
-  QByteArray *a = new QByteArray(nbytes);
+  TQByteArray *a = new TQByteArray(nbytes);
   a->duplicate(buffer, nbytes);
   outBuf.append(a);
   return nbytes;
@@ -270,7 +270,7 @@ unsigned KBufferedIO::feedWriteBuffer(unsigned nbytes, const char *buffer)
 unsigned KBufferedIO::readBufferSize() const
 {
   unsigned count = 0;
-  QByteArray *buf = ((KBufferedIO*)this)->inBuf.first();
+  TQByteArray *buf = ((KBufferedIO*)this)->inBuf.first();
   while (buf != NULL)
     {
       count += buf->size();
@@ -283,7 +283,7 @@ unsigned KBufferedIO::readBufferSize() const
 unsigned KBufferedIO::writeBufferSize() const
 {
   unsigned count = 0;
-  QByteArray *buf = ((KBufferedIO*)this)->outBuf.first();
+  TQByteArray *buf = ((KBufferedIO*)this)->outBuf.first();
   while (buf != NULL)
     {
       count += buf->size();

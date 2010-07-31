@@ -24,19 +24,19 @@
 
 #ifdef USE_POSIX_ACL
 
-#include <qpainter.h>
-#include <qptrlist.h>
-#include <qvbox.h>
-#include <qhbox.h>
-#include <qpushbutton.h>
-#include <qvbuttongroup.h>
-#include <qradiobutton.h>
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qwidgetstack.h>
-#include <qheader.h>
+#include <tqpainter.h>
+#include <tqptrlist.h>
+#include <tqvbox.h>
+#include <tqhbox.h>
+#include <tqpushbutton.h>
+#include <tqvbuttongroup.h>
+#include <tqradiobutton.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqwidgetstack.h>
+#include <tqheader.h>
 
 #include <klocale.h>
 #include <kfileitem.h>
@@ -58,7 +58,7 @@ extern "C" {
 static struct {
     const char* label;
     const char* pixmapName;
-    QPixmap* pixmap;
+    TQPixmap* pixmap;
 } s_itemAttributes[] = {
     { I18N_NOOP( "Owner" ), "user-grey", 0 },
     { I18N_NOOP( "Owning Group" ), "group-grey", 0 },
@@ -68,24 +68,24 @@ static struct {
     { I18N_NOOP( "Named Group" ), "group", 0 },
 };
 
-KACLEditWidget::KACLEditWidget( QWidget *parent, const char *name )
-   :QWidget( parent, name )
+KACLEditWidget::KACLEditWidget( TQWidget *parent, const char *name )
+   :TQWidget( parent, name )
 {
-    QHBox *hbox = new QHBox( parent );
+    TQHBox *hbox = new TQHBox( parent );
     hbox->setSpacing(  KDialog::spacingHint() );
     m_listView = new KACLListView( hbox, "acl_listview" );
-    connect( m_listView, SIGNAL( selectionChanged() ),
-            this, SLOT( slotUpdateButtons() ) );
-    QVBox *vbox = new QVBox( hbox );
+    connect( m_listView, TQT_SIGNAL( selectionChanged() ),
+            this, TQT_SLOT( slotUpdateButtons() ) );
+    TQVBox *vbox = new TQVBox( hbox );
     vbox->setSpacing(  KDialog::spacingHint() );
-    m_AddBtn = new QPushButton( i18n( "Add Entry..." ), vbox, "add_entry_button" );
-    connect( m_AddBtn, SIGNAL( clicked() ), m_listView, SLOT( slotAddEntry() ) );
-    m_EditBtn = new QPushButton( i18n( "Edit Entry..." ), vbox, "edit_entry_button" );
-    connect( m_EditBtn, SIGNAL( clicked() ), m_listView, SLOT( slotEditEntry() ) );
-    m_DelBtn = new QPushButton( i18n( "Delete Entry" ), vbox, "delete_entry_button" );
-    connect( m_DelBtn, SIGNAL( clicked() ), m_listView, SLOT( slotRemoveEntry() ) );
-    QWidget *spacer = new QWidget( vbox );
-    spacer->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );
+    m_AddBtn = new TQPushButton( i18n( "Add Entry..." ), vbox, "add_entry_button" );
+    connect( m_AddBtn, TQT_SIGNAL( clicked() ), m_listView, TQT_SLOT( slotAddEntry() ) );
+    m_EditBtn = new TQPushButton( i18n( "Edit Entry..." ), vbox, "edit_entry_button" );
+    connect( m_EditBtn, TQT_SIGNAL( clicked() ), m_listView, TQT_SLOT( slotEditEntry() ) );
+    m_DelBtn = new TQPushButton( i18n( "Delete Entry" ), vbox, "delete_entry_button" );
+    connect( m_DelBtn, TQT_SIGNAL( clicked() ), m_listView, TQT_SLOT( slotRemoveEntry() ) );
+    TQWidget *spacer = new TQWidget( vbox );
+    spacer->setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Expanding );
     slotUpdateButtons();
 }
 
@@ -94,7 +94,7 @@ void KACLEditWidget::slotUpdateButtons()
     bool atLeastOneIsNotDeletable = false;
     bool atLeastOneIsNotAllowedToChangeType = false;
     int selectedCount = 0;
-    QListViewItemIterator it( m_listView, QListViewItemIterator::Selected );
+    TQListViewItemIterator it( m_listView, TQListViewItemIterator::Selected );
     while ( KACLListViewItem *item = dynamic_cast<KACLListViewItem*>( it.current() ) ) {
         ++it; ++selectedCount;
         if ( !item->isDeletable() )
@@ -139,10 +139,10 @@ void KACLEditWidget::setReadOnly( bool on )
       slotUpdateButtons();
 }
 
-KACLListViewItem::KACLListViewItem( QListView* parent,
+KACLListViewItem::KACLListViewItem( TQListView* parent,
                                     KACLListView::EntryType _type,
                                     unsigned short _value, bool defaults,
-                                    const QString& _qualifier )
+                                    const TQString& _qualifier )
  : KListViewItem( parent, parent->lastItem() ), // we want to append
    type( _type ), value( _value ), isDefault( defaults ),
    qualifier( _qualifier ), isPartial( false )
@@ -157,9 +157,9 @@ KACLListViewItem::~ KACLListViewItem()
 
 }
 
-QString KACLListViewItem::key( int, bool ) const
+TQString KACLListViewItem::key( int, bool ) const
 {
-    QString key;
+    TQString key;
     if ( !isDefault )
         key = "A";
     else
@@ -191,17 +191,17 @@ QString KACLListViewItem::key( int, bool ) const
     return key;
 }
 
-void KACLListViewItem::paintCell( QPainter* p, const QColorGroup &cg,
+void KACLListViewItem::paintCell( TQPainter* p, const TQColorGroup &cg,
                                   int column, int width, int alignment )
 {
-    QColorGroup mycg = cg;
+    TQColorGroup mycg = cg;
     if ( isDefault ) {
-        mycg.setColor( QColorGroup::Text, QColor( 0, 0, 255 ) );
+        mycg.setColor( TQColorGroup::Text, TQColor( 0, 0, 255 ) );
     }
     if ( isPartial ) {
-        QFont font = p->font();
+        TQFont font = p->font();
         font.setItalic( true );
-        mycg.setColor( QColorGroup::Text, QColor( 100, 100, 100 ) );
+        mycg.setColor( TQColorGroup::Text, TQColor( 100, 100, 100 ) );
         p->setFont( font );
     }
     KListViewItem::paintCell( p, mycg, column, width, alignment );
@@ -213,7 +213,7 @@ void KACLListViewItem::paintCell( QPainter* p, const QColorGroup &cg,
     const bool lastNonDefault = !isDefault && below && below->isDefault;
     if ( type == KACLListView::Mask || lastUser || lastNonDefault )
     {
-        p->setPen( QPen( Qt::gray, 0, QPen::DotLine ) );
+        p->setPen( TQPen( Qt::gray, 0, TQPen::DotLine ) );
         if ( type == KACLListView::Mask )
             p->drawLine( 0, 0, width - 1, 0 );
         p->drawLine( 0, height() - 1, width - 1, height() - 1 );
@@ -230,21 +230,21 @@ void KACLListViewItem::updatePermPixmaps()
     else if ( partialPerms & ACL_READ )
         setPixmap( 2, m_pACLListView->getYesPartialPixmap() );
     else
-        setPixmap( 2, QPixmap() );
+        setPixmap( 2, TQPixmap() );
 
     if ( value & ACL_WRITE )
         setPixmap( 3, m_pACLListView->getYesPixmap() );
     else if ( partialPerms & ACL_WRITE )
         setPixmap( 3, m_pACLListView->getYesPartialPixmap() );
     else
-        setPixmap( 3, QPixmap() );
+        setPixmap( 3, TQPixmap() );
 
     if ( value & ACL_EXECUTE )
         setPixmap( 4, m_pACLListView->getYesPixmap() );
     else if ( partialPerms & ACL_EXECUTE )
         setPixmap( 4, m_pACLListView->getYesPartialPixmap() );
     else
-        setPixmap( 4, QPixmap() );
+        setPixmap( 4, TQPixmap() );
 }
 
 void KACLListViewItem::repaint()
@@ -285,7 +285,7 @@ void KACLListViewItem::repaint()
 
 void KACLListViewItem::calcEffectiveRights()
 {
-    QString strEffective = QString( "---" );
+    TQString strEffective = TQString( "---" );
 
     // Do we need to worry about the mask entry? It applies to named users,
     // owning group, and named groups
@@ -387,10 +387,10 @@ void KACLListViewItem::togglePerm( acl_perm_t perm )
 
 
 EditACLEntryDialog::EditACLEntryDialog( KACLListView *listView, KACLListViewItem *item,
-                                        const QStringList &users,
-                                        const QStringList &groups,
-                                        const QStringList &defaultUsers,
-                                        const QStringList &defaultGroups,
+                                        const TQStringList &users,
+                                        const TQStringList &groups,
+                                        const TQStringList &defaultUsers,
+                                        const TQStringList &defaultGroups,
                                         int allowedTypes, int allowedDefaultTypes,
                                         bool allowDefaults )
       : KDialogBase( listView, "edit_entry_dialog", true,
@@ -401,54 +401,54 @@ EditACLEntryDialog::EditACLEntryDialog( KACLListView *listView, KACLListViewItem
         m_allowedTypes( allowedTypes ), m_allowedDefaultTypes( allowedDefaultTypes ),
         m_defaultCB( 0 )
 {
-    QWidget *page = new QWidget(  this );
+    TQWidget *page = new TQWidget(  this );
     setMainWidget( page );
-    QVBoxLayout *mainLayout = new QVBoxLayout( page, 0, spacingHint(), "mainLayout" );
-    m_buttonGroup = new QVButtonGroup( i18n("Entry Type"), page, "bg" );
+    TQVBoxLayout *mainLayout = new TQVBoxLayout( page, 0, spacingHint(), "mainLayout" );
+    m_buttonGroup = new TQVButtonGroup( i18n("Entry Type"), page, "bg" );
 
     if ( allowDefaults ) {
-        m_defaultCB = new QCheckBox( i18n("Default for new files in this folder"), page, "defaultCB" );
+        m_defaultCB = new TQCheckBox( i18n("Default for new files in this folder"), page, "defaultCB" );
         mainLayout->addWidget( m_defaultCB );
-        connect( m_defaultCB, SIGNAL( toggled( bool ) ),
-                 this, SLOT( slotUpdateAllowedUsersAndGroups() ) );
-        connect( m_defaultCB, SIGNAL( toggled( bool ) ),
-                 this, SLOT( slotUpdateAllowedTypes() ) );
+        connect( m_defaultCB, TQT_SIGNAL( toggled( bool ) ),
+                 this, TQT_SLOT( slotUpdateAllowedUsersAndGroups() ) );
+        connect( m_defaultCB, TQT_SIGNAL( toggled( bool ) ),
+                 this, TQT_SLOT( slotUpdateAllowedTypes() ) );
 
     }
 
     mainLayout->addWidget( m_buttonGroup );
 
-    QRadioButton *ownerType = new QRadioButton( i18n("Owner"), m_buttonGroup, "ownerType" );
+    TQRadioButton *ownerType = new TQRadioButton( i18n("Owner"), m_buttonGroup, "ownerType" );
     m_buttonGroup->insert( ownerType, KACLListView::User );
-    QRadioButton *owningGroupType = new QRadioButton( i18n("Owning Group"), m_buttonGroup, "owningGroupType" );
+    TQRadioButton *owningGroupType = new TQRadioButton( i18n("Owning Group"), m_buttonGroup, "owningGroupType" );
     m_buttonGroup->insert( owningGroupType, KACLListView::Group );
-    QRadioButton *othersType = new QRadioButton( i18n("Others"), m_buttonGroup, "othersType" );
+    TQRadioButton *othersType = new TQRadioButton( i18n("Others"), m_buttonGroup, "othersType" );
     m_buttonGroup->insert( othersType, KACLListView::Others );
-    QRadioButton *maskType = new QRadioButton( i18n("Mask"), m_buttonGroup, "maskType" );
+    TQRadioButton *maskType = new TQRadioButton( i18n("Mask"), m_buttonGroup, "maskType" );
     m_buttonGroup->insert( maskType, KACLListView::Mask );
-    QRadioButton *namedUserType = new QRadioButton( i18n("Named User"), m_buttonGroup, "namesUserType" );
+    TQRadioButton *namedUserType = new TQRadioButton( i18n("Named User"), m_buttonGroup, "namesUserType" );
     m_buttonGroup->insert( namedUserType, KACLListView::NamedUser );
-    QRadioButton *namedGroupType = new QRadioButton( i18n("Named Group"), m_buttonGroup, "namedGroupType" );
+    TQRadioButton *namedGroupType = new TQRadioButton( i18n("Named Group"), m_buttonGroup, "namedGroupType" );
     m_buttonGroup->insert( namedGroupType, KACLListView::NamedGroup );
 
-    connect( m_buttonGroup, SIGNAL( clicked( int ) ),
-             this, SLOT( slotSelectionChanged( int ) ) );
+    connect( m_buttonGroup, TQT_SIGNAL( clicked( int ) ),
+             this, TQT_SLOT( slotSelectionChanged( int ) ) );
 
-    m_widgetStack = new QWidgetStack( page );
+    m_widgetStack = new TQWidgetStack( page );
     mainLayout->addWidget( m_widgetStack );
 
-    QHBox *usersBox = new QHBox( m_widgetStack );
+    TQHBox *usersBox = new TQHBox( m_widgetStack );
     m_widgetStack->addWidget( usersBox, KACLListView::NamedUser );
 
-    QHBox *groupsBox = new QHBox( m_widgetStack );
+    TQHBox *groupsBox = new TQHBox( m_widgetStack );
     m_widgetStack->addWidget( groupsBox, KACLListView::NamedGroup );
 
-    QLabel *usersLabel = new QLabel( i18n( "User: " ), usersBox );
-    m_usersCombo = new QComboBox( false, usersBox, "users" );
+    TQLabel *usersLabel = new TQLabel( i18n( "User: " ), usersBox );
+    m_usersCombo = new TQComboBox( false, usersBox, "users" );
     usersLabel->setBuddy( m_usersCombo );
 
-    QLabel *groupsLabel = new QLabel( i18n( "Group: " ), groupsBox );
-    m_groupsCombo = new QComboBox( false, groupsBox, "groups" );
+    TQLabel *groupsLabel = new TQLabel( i18n( "Group: " ), groupsBox );
+    m_groupsCombo = new TQComboBox( false, groupsBox, "groups" );
     groupsLabel->setBuddy( m_groupsCombo );
 
     if ( m_item ) {
@@ -470,7 +470,7 @@ EditACLEntryDialog::EditACLEntryDialog( KACLListView *listView, KACLListViewItem
         slotSelectionChanged( KACLListView::NamedUser );
         slotUpdateAllowedUsersAndGroups();
     }
-    incInitialSize(  QSize( 100, 0 ) );
+    incInitialSize(  TQSize( 100, 0 ) );
 }
 
 void EditACLEntryDialog::slotUpdateAllowedTypes()
@@ -489,8 +489,8 @@ void EditACLEntryDialog::slotUpdateAllowedTypes()
 
 void EditACLEntryDialog::slotUpdateAllowedUsersAndGroups()
 {
-    const QString oldUser = m_usersCombo->currentText();
-    const QString oldGroup = m_groupsCombo->currentText();
+    const TQString oldUser = m_usersCombo->currentText();
+    const TQString oldGroup = m_groupsCombo->currentText();
     m_usersCombo->clear();
     m_groupsCombo->clear();
     if ( m_defaultCB && m_defaultCB->isChecked() ) {
@@ -513,7 +513,7 @@ void EditACLEntryDialog::slotOk()
 {
     KACLListView::EntryType type = static_cast<KACLListView::EntryType>( m_buttonGroup->selectedId() );
 
-    QString qualifier;
+    TQString qualifier;
     if ( type == KACLListView::NamedUser )
       qualifier = m_usersCombo->currentText();
     if ( type == KACLListView::NamedGroup )
@@ -555,7 +555,7 @@ void EditACLEntryDialog::slotSelectionChanged( int id )
 }
 
 
-KACLListView::KACLListView( QWidget* parent, const char* name )
+KACLListView::KACLListView( TQWidget* parent, const char* name )
  : KListView( parent, name ),
    m_hasMask( false ), m_allowDefaults( false )
 {
@@ -571,25 +571,25 @@ KACLListView::KACLListView( QWidget* parent, const char* name )
 
     // Load the avatars
     for ( int i=0; i < LAST_IDX; ++i ) {
-        s_itemAttributes[i].pixmap = new QPixmap( qembed_findImage( s_itemAttributes[i].pixmapName ) );
+        s_itemAttributes[i].pixmap = new TQPixmap( qembed_findImage( s_itemAttributes[i].pixmapName ) );
     }
-    m_yesPixmap = new QPixmap( qembed_findImage( "yes" ) );
-    m_yesPartialPixmap = new QPixmap( qembed_findImage( "yespartial" ) );
+    m_yesPixmap = new TQPixmap( qembed_findImage( "yes" ) );
+    m_yesPartialPixmap = new TQPixmap( qembed_findImage( "yespartial" ) );
 
-    setSelectionMode( QListView::Extended );
+    setSelectionMode( TQListView::Extended );
 
     // fill the lists of all legal users and groups
     struct passwd *user = 0;
     setpwent();
     while ( ( user = getpwent() ) != 0 ) {
-       m_allUsers << QString::fromLatin1( user->pw_name );
+       m_allUsers << TQString::fromLatin1( user->pw_name );
     }
     endpwent();
 
     struct group *gr = 0;
     setgrent();
     while ( ( gr = getgrent() ) != 0 ) {
-       m_allGroups << QString::fromLatin1( gr->gr_name );
+       m_allGroups << TQString::fromLatin1( gr->gr_name );
     }
     endgrent();
     m_allUsers.sort();
@@ -606,10 +606,10 @@ KACLListView::~KACLListView()
     delete m_yesPartialPixmap;
 }
 
-QStringList KACLListView::allowedUsers( bool defaults, KACLListViewItem *allowedItem )
+TQStringList KACLListView::allowedUsers( bool defaults, KACLListViewItem *allowedItem )
 {
-    QStringList allowedUsers = m_allUsers;
-    QListViewItemIterator it( this );
+    TQStringList allowedUsers = m_allUsers;
+    TQListViewItemIterator it( this );
     while ( it.current() ) {
         const KACLListViewItem *item = static_cast<const KACLListViewItem*>( *it );
         ++it;
@@ -620,10 +620,10 @@ QStringList KACLListView::allowedUsers( bool defaults, KACLListViewItem *allowed
     return allowedUsers;
 }
 
-QStringList KACLListView::allowedGroups( bool defaults, KACLListViewItem *allowedItem )
+TQStringList KACLListView::allowedGroups( bool defaults, KACLListViewItem *allowedItem )
 {
-    QStringList allowedGroups = m_allGroups;
-    QListViewItemIterator it( this );
+    TQStringList allowedGroups = m_allGroups;
+    TQListViewItemIterator it( this );
     while ( it.current() ) {
         const KACLListViewItem *item = static_cast<const KACLListViewItem*>( *it );
         ++it;
@@ -637,7 +637,7 @@ QStringList KACLListView::allowedGroups( bool defaults, KACLListViewItem *allowe
 void KACLListView::fillItemsFromACL( const KACL &pACL, bool defaults )
 {
     // clear out old entries of that ilk
-    QListViewItemIterator it( this );
+    TQListViewItemIterator it( this );
     while ( KACLListViewItem *item = static_cast<KACLListViewItem*>( it.current() ) ) {
         ++it;
         if ( item->isDefault == defaults )
@@ -698,8 +698,8 @@ KACL KACLListView::itemsToACL( bool defaults ) const
     bool atLeastOneEntry = false;
     ACLUserPermissionsList users;
     ACLGroupPermissionsList groups;
-    QListViewItemIterator it( const_cast<KACLListView*>( this ) );
-    while ( QListViewItem* qlvi = it.current() ) {
+    TQListViewItemIterator it( const_cast<KACLListView*>( this ) );
+    while ( TQListViewItem* qlvi = it.current() ) {
         ++it;
         const KACLListViewItem* item = static_cast<KACLListViewItem*>( qlvi );
         if ( item->isDefault != defaults ) continue;
@@ -747,9 +747,9 @@ KACL KACLListView::getDefaultACL()
     return itemsToACL( true );
 }
 
-void KACLListView::contentsMousePressEvent( QMouseEvent * e )
+void KACLListView::contentsMousePressEvent( TQMouseEvent * e )
 {
-    QListViewItem *clickedItem = itemAt( contentsToViewport(  e->pos() ) );
+    TQListViewItem *clickedItem = itemAt( contentsToViewport(  e->pos() ) );
     if ( !clickedItem ) return;
     // if the click is on an as yet unselected item, select it first
     if ( !clickedItem->isSelected() )
@@ -774,7 +774,7 @@ void KACLListView::contentsMousePressEvent( QMouseEvent * e )
     }
     KACLListViewItem* referenceItem = static_cast<KACLListViewItem*>( clickedItem );
     unsigned short referenceHadItSet = referenceItem->value & perm;
-    QListViewItemIterator it( this );
+    TQListViewItemIterator it( this );
     while ( KACLListViewItem* item = static_cast<KACLListViewItem*>( it.current() ) ) {
         ++it;
         if ( !item->isSelected() ) continue;
@@ -784,11 +784,11 @@ void KACLListView::contentsMousePressEvent( QMouseEvent * e )
     }
 }
 
-void KACLListView::entryClicked( QListViewItem* pItem, const QPoint& /*pt*/, int col )
+void KACLListView::entryClicked( TQListViewItem* pItem, const TQPoint& /*pt*/, int col )
 {
     if ( !pItem ) return;
 
-    QListViewItemIterator it( this );
+    TQListViewItemIterator it( this );
     while ( KACLListViewItem* item = static_cast<KACLListViewItem*>( it.current() ) ) {
         ++it;
         if ( !item->isSelected() ) continue;
@@ -835,7 +835,7 @@ void KACLListView::entryClicked( QListViewItem* pItem, const QPoint& /*pt*/, int
 
 void KACLListView::calculateEffectiveRights()
 {
-    QListViewItemIterator it( this );
+    TQListViewItemIterator it( this );
     KACLListViewItem* pItem;
     while ( ( pItem = dynamic_cast<KACLListViewItem*>( it.current() ) ) != 0 )
     {
@@ -873,7 +873,7 @@ void KACLListView::setMaskPartialPermissions( acl_perm_t /*maskPartialPerms*/ )
 
 bool KACLListView::hasDefaultEntries() const
 {
-    QListViewItemIterator it( const_cast<KACLListView*>( this ) );
+    TQListViewItemIterator it( const_cast<KACLListView*>( this ) );
     while ( it.current() ) {
         const KACLListViewItem *item = static_cast<const KACLListViewItem*>( it.current() );
         ++it;
@@ -889,7 +889,7 @@ const KACLListViewItem* KACLListView::findDefaultItemByType( EntryType type ) co
 
 const KACLListViewItem* KACLListView::findItemByType( EntryType type, bool defaults ) const
 {
-    QListViewItemIterator it( const_cast<KACLListView*>( this ) );
+    TQListViewItemIterator it( const_cast<KACLListView*>( this ) );
     while ( it.current() ) {
         const KACLListViewItem *item = static_cast<const KACLListViewItem*>( it.current() );
         ++it;
@@ -962,7 +962,7 @@ void KACLListView::slotAddEntry()
     calculateEffectiveRights();
     sort();
     setCurrentItem( item );
-    // QListView doesn't seem to emit, in this case, and we need to update 
+    // TQListView doesn't seem to emit, in this case, and we need to update 
     // the buttons...
     if ( childCount() == 1 ) 
         emit currentChanged( item );
@@ -970,7 +970,7 @@ void KACLListView::slotAddEntry()
 
 void KACLListView::slotEditEntry()
 {
-    QListViewItem * current = currentItem();
+    TQListViewItem * current = currentItem();
     if ( !current ) return;
     KACLListViewItem *item = static_cast<KACLListViewItem*>( current );
     int allowedTypes = item->type | NamedUser | NamedGroup;
@@ -1002,7 +1002,7 @@ void KACLListView::slotEditEntry()
 
 void KACLListView::slotRemoveEntry()
 {
-    QListViewItemIterator it( this, QListViewItemIterator::Selected );
+    TQListViewItemIterator it( this, TQListViewItemIterator::Selected );
     while ( it.current() ) {
         KACLListViewItem *item = static_cast<KACLListViewItem*>( it.current() );
         ++it;

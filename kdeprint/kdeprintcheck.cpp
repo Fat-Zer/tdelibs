@@ -41,7 +41,7 @@
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <kextsock.h>
-#include <qfile.h>
+#include <tqfile.h>
 #include <unistd.h>
 
 static const char* const config_stddirs[] = {
@@ -53,7 +53,7 @@ static const char* const config_stddirs[] = {
 	0
 };
 
-bool KdeprintChecker::check(KConfig *conf, const QString& group)
+bool KdeprintChecker::check(KConfig *conf, const TQString& group)
 {
 	if (!group.isEmpty())
 		conf->setGroup(group);
@@ -61,10 +61,10 @@ bool KdeprintChecker::check(KConfig *conf, const QString& group)
 	return check(uris);
 }
 
-bool KdeprintChecker::check(const QStringList& uris)
+bool KdeprintChecker::check(const TQStringList& uris)
 {
 	bool	state(true);
-	for (QStringList::ConstIterator it=uris.begin(); it!=uris.end() && state; ++it)
+	for (TQStringList::ConstIterator it=uris.begin(); it!=uris.end() && state; ++it)
 	{
 		state = (state && checkURL(KURL(*it)));
 		// kdDebug( 500 ) << "auto-detection uri=" << *it << ", state=" << state << endl;
@@ -101,8 +101,8 @@ bool KdeprintChecker::checkConfig(const KURL& url)
 		const char* const *p = config_stddirs;
 		while (*p)
 		{
-			// kdDebug( 500 ) << "checkConfig() with " << QString::fromLatin1( *p ) + f << endl;
-			if ( QFile::exists( QString::fromLatin1( *p ) + f ) )
+			// kdDebug( 500 ) << "checkConfig() with " << TQString::fromLatin1( *p ) + f << endl;
+			if ( TQFile::exists( TQString::fromLatin1( *p ) + f ) )
 			{
 				state = true;
 				break;

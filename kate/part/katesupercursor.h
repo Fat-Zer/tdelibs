@@ -42,7 +42,7 @@ class KateView;
  *
  * @author Hamish Rodda
  **/
-class KateSuperCursor : public QObject, public KateDocCursor, public Kate::Cursor
+class KateSuperCursor : public TQObject, public KateDocCursor, public Kate::Cursor
 {
   Q_OBJECT
 
@@ -52,8 +52,8 @@ public:
      * all internally only used SuperCursors should be private or people could modify them from the
      * outside breaking kate's internals
      */
-    KateSuperCursor(KateDocument* doc, bool privateC, const KateTextCursor& cursor, QObject* parent = 0L, const char* name = 0L);
-    KateSuperCursor(KateDocument* doc, bool privateC, int lineNum = 0, int col = 0, QObject* parent = 0L, const char* name = 0L);
+    KateSuperCursor(KateDocument* doc, bool privateC, const KateTextCursor& cursor, TQObject* parent = 0L, const char* name = 0L);
+    KateSuperCursor(KateDocument* doc, bool privateC, int lineNum = 0, int col = 0, TQObject* parent = 0L, const char* name = 0L);
 
     ~KateSuperCursor ();
 
@@ -61,9 +61,9 @@ public:
     // KTextEditor::Cursor interface
     void position(uint *line, uint *col) const;
     bool setPosition(uint line, uint col);
-    bool insertText(const QString& text);
+    bool insertText(const TQString& text);
     bool removeText(uint numberOfCharacters);
-    QChar currentChar() const;
+    TQChar currentChar() const;
 
     /**
     * @returns true if the cursor is situated at the start of the line, false if it isn't.
@@ -91,7 +91,7 @@ public:
     /**
     * Debug: output the position.
     */
-    operator QString();
+    operator TQString();
 
     // Reimplementations;
     virtual void setLine(int lineNum);
@@ -165,7 +165,7 @@ public:
  *
  * Also tracks its position and emits useful signals.
  */
-class KateSuperRange : public QObject, public KateRange
+class KateSuperRange : public TQObject, public KateRange
 {
 			  friend class KateSuperRangeList;
 
@@ -185,9 +185,9 @@ public:
   /**
    * Constructor.  Takes posession of @p start and @p end.
    */
-  KateSuperRange(KateSuperCursor* start, KateSuperCursor* end, QObject* parent = 0L, const char* name = 0L);
-  KateSuperRange(KateDocument* doc, const KateRange& range, QObject* parent = 0L, const char* name = 0L);
-  KateSuperRange(KateDocument* doc, const KateTextCursor& start, const KateTextCursor& end, QObject* parent = 0L, const char* name = 0L);
+  KateSuperRange(KateSuperCursor* start, KateSuperCursor* end, TQObject* parent = 0L, const char* name = 0L);
+  KateSuperRange(KateDocument* doc, const KateRange& range, TQObject* parent = 0L, const char* name = 0L);
+  KateSuperRange(KateDocument* doc, const KateTextCursor& start, const KateTextCursor& end, TQObject* parent = 0L, const char* name = 0L);
 
   virtual ~KateSuperRange();
 
@@ -330,13 +330,13 @@ private:
   bool m_allowZeroLength;
 };
 
-class KateSuperCursorList : public QPtrList<KateSuperCursor>
+class KateSuperCursorList : public TQPtrList<KateSuperCursor>
 {
 protected:
-  virtual int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2);
+  virtual int compareItems(TQPtrCollection::Item item1, TQPtrCollection::Item item2);
 };
 
-class KateSuperRangeList : public QObject, public QPtrList<KateSuperRange>
+class KateSuperRangeList : public TQObject, public TQPtrList<KateSuperRange>
 {
   Q_OBJECT
 
@@ -344,7 +344,7 @@ public:
   /**
    * @sa autoManage()
    */
-  KateSuperRangeList(bool autoManage = true, QObject* parent = 0L, const char* name = 0L);
+  KateSuperRangeList(bool autoManage = true, TQObject* parent = 0L, const char* name = 0L);
 
   /**
    * Semi-copy constructor.
@@ -355,7 +355,7 @@ public:
    * Also, does not connect signals and slots to save time, as this is mainly
    * used by the document itself while drawing (call connectAll() to re-constitute)
    */
-  KateSuperRangeList(const QPtrList<KateSuperRange>& rangeList, QObject* parent = 0L, const char* name = 0L);
+  KateSuperRangeList(const TQPtrList<KateSuperRange>& rangeList, TQObject* parent = 0L, const char* name = 0L);
 
   virtual ~KateSuperRangeList() {}
   /**
@@ -363,7 +363,7 @@ public:
    * If this object was created by the semi-copy constructor, it may not connect items
    * (unless connectAll() has already been called), call connectAll().
    */
-  void appendList(const QPtrList<KateSuperRange>& rangeList);
+  void appendList(const TQPtrList<KateSuperRange>& rangeList);
 
   /**
    * Connect items that are not connected. This only needs to be called once,
@@ -391,8 +391,8 @@ public:
    * This is just a straight-forward list so that there is no confusion about whether
    * this list should be auto-managed (ie. it shouldn't, to avoid double deletions).
    */
-  QPtrList<KateSuperRange> rangesIncluding(const KateTextCursor& cursor);
-  QPtrList<KateSuperRange> rangesIncluding(uint line);
+  TQPtrList<KateSuperRange> rangesIncluding(const KateTextCursor& cursor);
+  TQPtrList<KateSuperRange> rangesIncluding(uint line);
 
   /**
    * @retval true if one of the ranges in the list includes @p cursor
@@ -439,16 +439,16 @@ protected:
   /**
    * internal reimplementation
    */
-  virtual int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2);
+  virtual int compareItems(TQPtrCollection::Item item1, TQPtrCollection::Item item2);
 
   /**
    * internal reimplementation
    */
-  virtual QPtrCollection::Item newItem(QPtrCollection::Item d);
+  virtual TQPtrCollection::Item newItem(TQPtrCollection::Item d);
 
 private slots:
   void slotEliminated();
-  void slotDeleted(QObject* range);
+  void slotDeleted(TQObject* range);
 
 private:
   bool m_autoManage;

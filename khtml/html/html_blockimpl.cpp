@@ -127,10 +127,10 @@ void HTMLHRElementImpl::attach()
                 addCSSProperty(CSS_PROP_BORDER_TOP_WIDTH, n);
                 addCSSProperty(CSS_PROP_BORDER_LEFT_WIDTH, n);
                 addCSSProperty(CSS_PROP_BORDER_RIGHT_WIDTH, n);
-                addCSSLength(CSS_PROP_HEIGHT, DOMString(QString::number(_s-2)));
+                addCSSLength(CSS_PROP_HEIGHT, DOMString(TQString::number(_s-2)));
             }
             else if (_s >= 0) {
-                addCSSProperty(CSS_PROP_BORDER_TOP_WIDTH, DOMString(QString::number(_s)));
+                addCSSProperty(CSS_PROP_BORDER_TOP_WIDTH, DOMString(TQString::number(_s)));
                 addCSSProperty(CSS_PROP_BORDER_BOTTOM_WIDTH, DOMString("0"));
             }
         }
@@ -344,13 +344,13 @@ void HTMLLayerElementImpl::insertedIntoDocument()
     HTMLDivElementImpl::insertedIntoDocument();
 }
 
-void HTMLLayerElementImpl::removeId(const QString& id)
+void HTMLLayerElementImpl::removeId(const TQString& id)
 {
     getDocument()->underDocNamedCache().remove(id, this);
     HTMLDivElementImpl::removeId(id);
 }
 
-void HTMLLayerElementImpl::addId   (const QString& id)
+void HTMLLayerElementImpl::addId   (const TQString& id)
 {
     getDocument()->underDocNamedCache().add(id, this);
     HTMLDivElementImpl::addId(id);

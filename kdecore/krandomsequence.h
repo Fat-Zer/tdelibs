@@ -104,7 +104,7 @@ public:
    *
    * @param list the list whose order will be modified
    */
-  void randomize(QGList *list);
+  void randomize(TQGList *list);
 
   /**
    * Modulate the random sequence. 

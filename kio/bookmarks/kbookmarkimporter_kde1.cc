@@ -24,7 +24,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kcharsets.h>
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 
 #include <sys/types.h>
 #include <stddef.h>
@@ -34,19 +34,19 @@
 
 ////////////////////
 
-void KBookmarkImporter::import( const QString & path )
+void KBookmarkImporter::import( const TQString & path )
 {
-    QDomElement elem = m_pDoc->documentElement();
+    TQDomElement elem = m_pDoc->documentElement();
     Q_ASSERT(!elem.isNull());
     scanIntern( elem, path );
 }
 
-void KBookmarkImporter::scanIntern( QDomElement & parentElem, const QString & _path )
+void KBookmarkImporter::scanIntern( TQDomElement & parentElem, const TQString & _path )
 {
     kdDebug(7043) << "KBookmarkImporter::scanIntern " << _path << endl;
     // Substitute all symbolic links in the path
-    QDir dir( _path );
-    QString canonical = dir.canonicalPath();
+    TQDir dir( _path );
+    TQString canonical = dir.canonicalPath();
 
     if ( m_lstParsedDirs.contains(canonical) )
     {
@@ -58,7 +58,7 @@ void KBookmarkImporter::scanIntern( QDomElement & parentElem, const QString & _p
 
     DIR *dp;
     struct dirent *ep;
-    dp = opendir( QFile::encodeName(_path) );
+    dp = opendir( TQFile::encodeName(_path) );
     if ( dp == 0L )
         return;
 
@@ -68,7 +68,7 @@ void KBookmarkImporter::scanIntern( QDomElement & parentElem, const QString & _p
         if ( strcmp( ep->d_name, "." ) != 0 && strcmp( ep->d_name, ".." ) != 0 )
         {
             KURL file;
-            file.setPath( QString( _path ) + '/' + QFile::decodeName(ep->d_name) );
+            file.setPath( TQString( _path ) + '/' + TQFile::decodeName(ep->d_name) );
 
             KMimeType::Ptr res = KMimeType::findByURL( file, 0, true );
             //kdDebug(7043) << " - " << file.url() << "  ->  " << res->name() << endl;
@@ -77,9 +77,9 @@ void KBookmarkImporter::scanIntern( QDomElement & parentElem, const QString & _p
             {
                 // We could use KBookmarkGroup::createNewFolder, but then it
                 // would notify about the change, so we'd need a flag, etc.
-                QDomElement groupElem = m_pDoc->createElement( "folder" );
+                TQDomElement groupElem = m_pDoc->createElement( "folder" );
                 parentElem.appendChild( groupElem );
-                QDomElement textElem = m_pDoc->createElement( "title" );
+                TQDomElement textElem = m_pDoc->createElement( "title" );
                 groupElem.appendChild( textElem );
                 textElem.appendChild( m_pDoc->createTextNode( KIO::decodeFileName( ep->d_name ) ) );
                 if ( KIO::decodeFileName( ep->d_name ) == "Toolbar" )
@@ -90,7 +90,7 @@ void KBookmarkImporter::scanIntern( QDomElement & parentElem, const QString & _p
             {
                 KSimpleConfig cfg( file.path(), true );
                 cfg.setDesktopGroup();
-                QString type = cfg.readEntry( "Type" );
+                TQString type = cfg.readEntry( "Type" );
                 // Is it really a bookmark file ?
                 if ( type == "Link" )
                     parseBookmark( parentElem, ep->d_name, cfg, 0 /* desktop group */ );
@@ -101,12 +101,12 @@ void KBookmarkImporter::scanIntern( QDomElement & parentElem, const QString & _p
             {
                 // maybe its an IE Favourite..
                 KSimpleConfig cfg( file.path(), true );
-                QStringList grp = cfg.groupList().grep( "internetshortcut", false );
+                TQStringList grp = cfg.groupList().grep( "internetshortcut", false );
                 if ( grp.count() == 0 )
                     continue;
                 cfg.setGroup( *grp.begin() );
 
-                QString url = cfg.readPathEntry("URL");
+                TQString url = cfg.readPathEntry("URL");
                 if (!url.isEmpty() )
                     parseBookmark( parentElem, ep->d_name, cfg, *grp.begin() );
             } else
@@ -117,33 +117,33 @@ void KBookmarkImporter::scanIntern( QDomElement & parentElem, const QString & _p
     closedir( dp );
 }
 
-void KBookmarkImporter::parseBookmark( QDomElement & parentElem, QCString _text,
-                                       KSimpleConfig& _cfg, const QString &_group )
+void KBookmarkImporter::parseBookmark( TQDomElement & parentElem, TQCString _text,
+                                       KSimpleConfig& _cfg, const TQString &_group )
 {
     if ( !_group.isEmpty() )
         _cfg.setGroup( _group );
     else
         _cfg.setDesktopGroup();
 
-    QString url = _cfg.readPathEntry( "URL" );
-    QString icon = _cfg.readEntry( "Icon" );
+    TQString url = _cfg.readPathEntry( "URL" );
+    TQString icon = _cfg.readEntry( "Icon" );
     if (icon.right( 4 ) == ".xpm" ) // prevent warnings
         icon.truncate( icon.length() - 4 );
 
-    QString text = KIO::decodeFileName( QString::fromLocal8Bit(_text) );
+    TQString text = KIO::decodeFileName( TQString::fromLocal8Bit(_text) );
     if ( text.length() > 8 && text.right( 8 ) == ".desktop" )
         text.truncate( text.length() - 8 );
     if ( text.length() > 7 && text.right( 7 ) == ".kdelnk" )
         text.truncate( text.length() - 7 );
 
-    QDomElement elem = m_pDoc->createElement( "bookmark" );
+    TQDomElement elem = m_pDoc->createElement( "bookmark" );
     parentElem.appendChild( elem );
     elem.setAttribute( "href", url );
     //if ( icon != "www" ) // No need to save the default
     // Hmm, after all, it makes KBookmark::pixmapFile faster,
     // and it shows a nice feature to those reading the file
     elem.setAttribute( "icon", icon );
-    QDomElement textElem = m_pDoc->createElement( "title" );
+    TQDomElement textElem = m_pDoc->createElement( "title" );
     elem.appendChild( textElem );
     textElem.appendChild( m_pDoc->createTextNode( text ) );
     kdDebug(7043) << "KBookmarkImporter::parseBookmark text=" << text << endl;

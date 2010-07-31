@@ -24,15 +24,15 @@
 
 #include <kcursor.h>
 
-#include <qbitmap.h>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qtimer.h>
-#include <qwidget.h>
+#include <tqbitmap.h>
+#include <tqcursor.h>
+#include <tqevent.h>
+#include <tqtimer.h>
+#include <tqwidget.h>
 
 #include <kglobal.h>
 #include <kconfig.h>
-#include <qscrollview.h>
+#include <tqscrollview.h>
 
 #include "kcursor_private.h"
 
@@ -40,9 +40,9 @@ KCursor::KCursor()
 {
 }
 
-QCursor KCursor::handCursor()
+TQCursor KCursor::handCursor()
 {
-        static QCursor *hand_cursor = 0;
+        static TQCursor *hand_cursor = 0;
 
         if (!hand_cursor)
         {
@@ -66,16 +66,16 @@ QCursor KCursor::handCursor()
                                 0xf8, 0xff, 0x07, 0xf8, 0xff, 0x07, 0xf8, 0xff, 0x07, 0xf8, 0xff,
                                 0x07, 0xf8, 0xff, 0x07, 0xf0, 0xff, 0x07, 0xf0, 0xff, 0x07, 0xe0,
                                 0xff, 0x03, 0xc0, 0xff, 0x03, 0xc0, 0xff, 0x01, 0xc0, 0xff, 0x01};
-                        QBitmap hand_bitmap(22, 22, HAND_BITS, true);
-                        QBitmap hand_mask(22, 22, HAND_MASK_BITS, true);
-                        hand_cursor = new QCursor(hand_bitmap, hand_mask, 7, 0);
-                        // Hack to force QCursor to call XCreatePixmapCursor() immediately
+                        TQBitmap hand_bitmap(22, 22, HAND_BITS, true);
+                        TQBitmap hand_mask(22, 22, HAND_MASK_BITS, true);
+                        hand_cursor = new TQCursor(hand_bitmap, hand_mask, 7, 0);
+                        // Hack to force TQCursor to call XCreatePixmapCursor() immediately
                         // so the bitmaps don't get pushed out of the Xcursor LRU cache.
                         hand_cursor->handle();
                 }
                 else
 #endif //! Q_WS_WIN
-                        hand_cursor = new QCursor(PointingHandCursor);
+                        hand_cursor = new TQCursor(PointingHandCursor);
         }
 
         Q_CHECK_PTR(hand_cursor);
@@ -122,15 +122,15 @@ static const char * const working_cursor_xpm[]={
 "################################"};
 
 
-QCursor KCursor::workingCursor()
+TQCursor KCursor::workingCursor()
 {
-        static QCursor *working_cursor = 0;
+        static TQCursor *working_cursor = 0;
 
         if (!working_cursor)
         {
-            QPixmap pm( const_cast< const char** >( working_cursor_xpm ));
-            working_cursor = new QCursor( pm, 1, 1 );
-            // Hack to force QCursor to call XCreatePixmapCursor() immediately
+            TQPixmap pm( const_cast< const char** >( working_cursor_xpm ));
+            working_cursor = new TQCursor( pm, 1, 1 );
+            // Hack to force TQCursor to call XCreatePixmapCursor() immediately
             // so the bitmaps don't get pushed out of the Xcursor LRU cache.
             working_cursor->handle();
         }
@@ -143,90 +143,90 @@ QCursor KCursor::workingCursor()
  * All of the follow functions will return the Qt default for now regardless
  * of the style.  This will change at some later date
  */
-QCursor KCursor::arrowCursor()
+TQCursor KCursor::arrowCursor()
 {
     return Qt::arrowCursor;
 }
 
 
-QCursor KCursor::upArrowCursor()
+TQCursor KCursor::upArrowCursor()
 {
     return Qt::upArrowCursor;
 }
 
 
-QCursor KCursor::crossCursor()
+TQCursor KCursor::crossCursor()
 {
     return Qt::crossCursor;
 }
 
 
-QCursor KCursor::waitCursor()
+TQCursor KCursor::waitCursor()
 {
     return Qt::waitCursor;
 }
 
 
-QCursor KCursor::ibeamCursor()
+TQCursor KCursor::ibeamCursor()
 {
     return Qt::ibeamCursor;
 }
 
 
-QCursor KCursor::sizeVerCursor()
+TQCursor KCursor::sizeVerCursor()
 {
     return Qt::sizeVerCursor;
 }
 
 
-QCursor KCursor::sizeHorCursor()
+TQCursor KCursor::sizeHorCursor()
 {
     return Qt::sizeHorCursor;
 }
 
 
-QCursor KCursor::sizeBDiagCursor()
+TQCursor KCursor::sizeBDiagCursor()
 {
     return Qt::sizeBDiagCursor;
 }
 
 
-QCursor KCursor::sizeFDiagCursor()
+TQCursor KCursor::sizeFDiagCursor()
 {
     return Qt::sizeFDiagCursor;
 }
 
 
-QCursor KCursor::sizeAllCursor()
+TQCursor KCursor::sizeAllCursor()
 {
     return Qt::sizeAllCursor;
 }
 
 
-QCursor KCursor::blankCursor()
+TQCursor KCursor::blankCursor()
 {
     return Qt::blankCursor;
 }
 
-QCursor KCursor::whatsThisCursor()
+TQCursor KCursor::whatsThisCursor()
 {
     return Qt::whatsThisCursor;
 }
 
 // auto-hide cursor stuff
 
-void KCursor::setAutoHideCursor( QWidget *w, bool enable )
+void KCursor::setAutoHideCursor( TQWidget *w, bool enable )
 {
     setAutoHideCursor( w, enable, false );
 }
 
-void KCursor::setAutoHideCursor( QWidget *w, bool enable,
+void KCursor::setAutoHideCursor( TQWidget *w, bool enable,
 				 bool customEventFilter )
 {
     KCursorPrivate::self()->setAutoHideCursor( w, enable, customEventFilter );
 }
 
-void KCursor::autoHideEventFilter( QObject *o, QEvent *e )
+void KCursor::autoHideEventFilter( TQObject *o, TQEvent *e )
 {
     KCursorPrivate::self()->eventFilter( o, e );
 }
@@ -243,15 +243,15 @@ int KCursor::hideCursorDelay()
 
 // **************************************************************************
 
-KCursorPrivateAutoHideEventFilter::KCursorPrivateAutoHideEventFilter( QWidget* widget )
+KCursorPrivateAutoHideEventFilter::KCursorPrivateAutoHideEventFilter( TQWidget* widget )
     : m_widget( widget )
     , m_wasMouseTracking( m_widget->hasMouseTracking() )
     , m_isCursorHidden( false )
     , m_isOwnCursor( false )
 {
     m_widget->setMouseTracking( true );
-    connect( &m_autoHideTimer, SIGNAL( timeout() ),
-             this, SLOT( hideCursor() ) );
+    connect( &m_autoHideTimer, TQT_SIGNAL( timeout() ),
+             this, TQT_SLOT( hideCursor() ) );
 }
 
 KCursorPrivateAutoHideEventFilter::~KCursorPrivateAutoHideEventFilter()
@@ -274,7 +274,7 @@ void KCursorPrivateAutoHideEventFilter::hideCursor()
 
     m_isCursorHidden = true;
 
-    QWidget* w = actualWidget();
+    TQWidget* w = actualWidget();
 
     m_isOwnCursor = w->ownCursor();
     if ( m_isOwnCursor )
@@ -292,7 +292,7 @@ void KCursorPrivateAutoHideEventFilter::unhideCursor()
 
     m_isCursorHidden = false;
 
-    QWidget* w = actualWidget();
+    TQWidget* w = actualWidget();
 
     if ( w->cursor().shape() != Qt::BlankCursor ) // someone messed with the cursor already
 	return;
@@ -303,46 +303,46 @@ void KCursorPrivateAutoHideEventFilter::unhideCursor()
         w->unsetCursor();
 }
 
-QWidget* KCursorPrivateAutoHideEventFilter::actualWidget() const
+TQWidget* KCursorPrivateAutoHideEventFilter::actualWidget() const
 {
-    QWidget* w = m_widget;
+    TQWidget* w = m_widget;
 
     // Is w a scrollview ? Call setCursor on the viewport in that case.
-    QScrollView * sv = dynamic_cast<QScrollView *>( w );
+    TQScrollView * sv = dynamic_cast<TQScrollView *>( w );
     if ( sv )
         w = sv->viewport();
 
     return w;
 }
 
-bool KCursorPrivateAutoHideEventFilter::eventFilter( QObject *o, QEvent *e )
+bool KCursorPrivateAutoHideEventFilter::eventFilter( TQObject *o, TQEvent *e )
 {
     Q_ASSERT( o == m_widget );
 
     switch ( e->type() )
     {
-    case QEvent::Create:
+    case TQEvent::Create:
         // Qt steals mouseTracking on create()
         m_widget->setMouseTracking( true );
         break;
-    case QEvent::Leave:
-    case QEvent::FocusOut:
-    case QEvent::WindowDeactivate:
+    case TQEvent::Leave:
+    case TQEvent::FocusOut:
+    case TQEvent::WindowDeactivate:
         unhideCursor();
         break;
-    case QEvent::KeyPress:
-    case QEvent::AccelOverride:
+    case TQEvent::KeyPress:
+    case TQEvent::AccelOverride:
         hideCursor();
         break;
-    case QEvent::Enter:
-    case QEvent::FocusIn:
-    case QEvent::MouseButtonPress:
-    case QEvent::MouseButtonRelease:
-    case QEvent::MouseButtonDblClick:
-    case QEvent::MouseMove:
-    case QEvent::Show:
-    case QEvent::Hide:
-    case QEvent::Wheel:
+    case TQEvent::Enter:
+    case TQEvent::FocusIn:
+    case TQEvent::MouseButtonPress:
+    case TQEvent::MouseButtonRelease:
+    case TQEvent::MouseButtonDblClick:
+    case TQEvent::MouseMove:
+    case TQEvent::Show:
+    case TQEvent::Hide:
+    case TQEvent::Wheel:
         unhideCursor();
         if ( m_widget->hasFocus() )
             m_autoHideTimer.start( KCursorPrivate::self()->hideCursorDelay, true );
@@ -370,16 +370,16 @@ KCursorPrivate::KCursorPrivate()
     hideCursorDelay = 5000; // 5s default value
 
     KConfig *kc = KGlobal::config();
-    KConfigGroupSaver ks( kc, QString::fromLatin1("KDE") );
+    KConfigGroupSaver ks( kc, TQString::fromLatin1("KDE") );
     enabled = kc->readBoolEntry(
-		  QString::fromLatin1("Autohiding cursor enabled"), true );
+		  TQString::fromLatin1("Autohiding cursor enabled"), true );
 }
 
 KCursorPrivate::~KCursorPrivate()
 {
 }
 
-void KCursorPrivate::setAutoHideCursor( QWidget *w, bool enable, bool customEventFilter )
+void KCursorPrivate::setAutoHideCursor( TQWidget *w, bool enable, bool customEventFilter )
 {
     if ( !w || !enabled )
         return;
@@ -392,8 +392,8 @@ void KCursorPrivate::setAutoHideCursor( QWidget *w, bool enable, bool customEven
         m_eventFilters.insert( w, filter );
         if ( !customEventFilter )
             w->installEventFilter( filter );
-        connect( w, SIGNAL( destroyed(QObject*) ),
-                 this, SLOT( slotWidgetDestroyed(QObject*) ) );
+        connect( w, TQT_SIGNAL( destroyed(TQObject*) ),
+                 this, TQT_SLOT( slotWidgetDestroyed(TQObject*) ) );
     }
     else
     {
@@ -402,12 +402,12 @@ void KCursorPrivate::setAutoHideCursor( QWidget *w, bool enable, bool customEven
             return;
         w->removeEventFilter( filter );
         delete filter;
-        disconnect( w, SIGNAL( destroyed(QObject*) ),
-                    this, SLOT( slotWidgetDestroyed(QObject*) ) );
+        disconnect( w, TQT_SIGNAL( destroyed(TQObject*) ),
+                    this, TQT_SLOT( slotWidgetDestroyed(TQObject*) ) );
     }
 }
 
-bool KCursorPrivate::eventFilter( QObject *o, QEvent *e )
+bool KCursorPrivate::eventFilter( TQObject *o, TQEvent *e )
 {
     if ( !enabled )
         return false;
@@ -421,7 +421,7 @@ bool KCursorPrivate::eventFilter( QObject *o, QEvent *e )
     return filter->eventFilter( o, e );
 }
 
-void KCursorPrivate::slotWidgetDestroyed( QObject* o )
+void KCursorPrivate::slotWidgetDestroyed( TQObject* o )
 {
     KCursorPrivateAutoHideEventFilter* filter = m_eventFilters.take( o );
 

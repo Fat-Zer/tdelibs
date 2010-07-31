@@ -28,7 +28,7 @@ class KToggleAction;
 class KToggleToolBarAction;
 class KToggleFullScreenAction;
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -50,15 +50,15 @@ class KToggleFullScreenAction;
  * for regular actions.  For example, if you previously had:
  *
  * \code
- * KAction *newAct = new KAction(i18n("&New"), QIconSet(BarIcon("filenew")),
+ * KAction *newAct = new KAction(i18n("&New"), TQIconSet(BarIcon("filenew")),
  *                               KStdAccel::shortcut(KStdAccel::New), this,
- *                               SLOT(fileNew()), actionCollection());
+ *                               TQT_SLOT(fileNew()), actionCollection());
  * \endcode
  *
  * You could drop that and replace it with:
  *
  * \code
- * KAction *newAct = KStdAction::openNew(this, SLOT(fileNew()),
+ * KAction *newAct = KStdAction::openNew(this, TQT_SLOT(fileNew()),
  *                                       actionCollection());
  * \endcode
  *
@@ -84,7 +84,7 @@ class KToggleFullScreenAction;
  * do something like:
  *
  * \code
- * (void)KStdAction::cut(this, SLOT(editCut()), actionCollection(), "my_cut");
+ * (void)KStdAction::cut(this, TQT_SLOT(editCut()), actionCollection(), "my_cut");
  * \endcode
  *
  * Now, in your local XML resource file (e.g., yourappui.rc), simply
@@ -108,8 +108,8 @@ class KToggleFullScreenAction;
  * here's how:
  *
  * \code
- * (void)KStdAction::action(KStdAction::New, this, SLOT(fileNew()), actionCollection());
- * (void)KStdAction::action(KStdAction::Cut, this, SLOT(editCut()), actionCollection());
+ * (void)KStdAction::action(KStdAction::New, this, TQT_SLOT(fileNew()), actionCollection());
+ * (void)KStdAction::action(KStdAction::Cut, this, TQT_SLOT(editCut()), actionCollection());
  * \endcode
  *
  * @author Kurt Granroth <granroth@kde.org>
@@ -166,11 +166,11 @@ namespace KStdAction
 	 * KStdAction::StdAction enum.
 	 */
 	KDEUI_EXPORT KAction* create( StdAction id, const char *name,
-		const QObject *recvr, const char *slot,
+		const TQObject *recvr, const char *slot,
 		KActionCollection* parent );
 
 	inline KAction* create( StdAction id,
-		const QObject *recvr, const char *slot,
+		const TQObject *recvr, const char *slot,
 		KActionCollection* parent )
 		{ return KStdAction::create( id, 0, recvr, slot, parent ); }
 
@@ -179,7 +179,7 @@ namespace KStdAction
 	* KStdAction::StdAction enum.
 	*/
 	inline KAction *action(StdAction act_enum,
-		const QObject *recvr, const char *slot,
+		const TQObject *recvr, const char *slot,
 		KActionCollection *parent, const char *name = 0L )
 		{ return KStdAction::create( act_enum, name, recvr, slot, parent ); }
 
@@ -196,107 +196,107 @@ namespace KStdAction
          * to give those heigher weight.
 	 * @since 3.1
         */
-        KDEUI_EXPORT QStringList stdNames();
+        KDEUI_EXPORT TQStringList stdNames();
 
 	/**
 	 * Create a new document or window.
 	 */
-	KDEUI_EXPORT KAction *openNew(const QObject *recvr, const char *slot, KActionCollection* parent, const char *name = 0 );
+	KDEUI_EXPORT KAction *openNew(const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name = 0 );
 
 	/**
 	 * Open an existing file.
 	 */
-	KDEUI_EXPORT KAction *open(const QObject *recvr, const char *slot, KActionCollection* parent, const char *name = 0 );
+	KDEUI_EXPORT KAction *open(const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name = 0 );
 
 	/**
 	 * Open a recently used document. The signature of the slot being called
 	 * is of the form slotURLSelected( const KURL & ).
 	 * @param recvr object to receive slot
-	 * @param slot The SLOT to invoke when a URL is selected. The slot's
+	 * @param slot The TQT_SLOT to invoke when a URL is selected. The slot's
 	 * signature is slotURLSelected( const KURL & ).
 	 * @param parent parent widget
 	 * @param name name of widget
 	 */
-	KDEUI_EXPORT KRecentFilesAction *openRecent(const QObject *recvr, const char *slot, KActionCollection* parent, const char *name = 0 );
+	KDEUI_EXPORT KRecentFilesAction *openRecent(const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name = 0 );
 
 	/**
 	 * Save the current document.
 	 */
-	KDEUI_EXPORT KAction *save(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *save(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Save the current document under a different name.
 	*/
-	KDEUI_EXPORT KAction *saveAs(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *saveAs(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Revert the current document to the last saved version
 	* (essentially will undo all changes).
 	*/
-	KDEUI_EXPORT KAction *revert(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *revert(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Close the current document.
 	*/
-	KDEUI_EXPORT KAction *close(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *close(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Print the current document.
 	*/
-	KDEUI_EXPORT KAction *print(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *print(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Show a print preview of the current document.
 	*/
-	KDEUI_EXPORT KAction *printPreview(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *printPreview(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Mail this document.
 	*/
-	KDEUI_EXPORT KAction *mail(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *mail(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Quit the program.
 	*/
-	KDEUI_EXPORT KAction *quit(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *quit(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Undo the last operation.
 	*/
-	KDEUI_EXPORT KAction *undo(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *undo(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Redo the last operation.
 	*/
-	KDEUI_EXPORT KAction *redo(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *redo(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Cut selected area and store it in the clipboard.
 	*/
-	KDEUI_EXPORT KAction *cut(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *cut(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Copy the selected area into the clipboard.
 	*/
-	KDEUI_EXPORT KAction *copy(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *copy(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Paste the contents of clipboard at the current mouse or cursor
 	* position.
 	*/
-	KDEUI_EXPORT KAction *paste(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *paste(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
@@ -305,190 +305,190 @@ namespace KStdAction
 	* menu if Klipper is running.
 	* @since 3.2
 	*/
-	KDEUI_EXPORT KAction *pasteText(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *pasteText(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Clear the content of the focus widget
 	* @since 3.2
 	*/
-	KDEUI_EXPORT KAction *clear(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *clear(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Select all elements in the current document.
 	*/
-	KDEUI_EXPORT KAction *selectAll(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *selectAll(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Deselect any selected elements in the current document.
 	*/
-	KDEUI_EXPORT KAction *deselect(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *deselect(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Initiate a 'find' request in the current document.
 	*/
-	KDEUI_EXPORT KAction *find(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *find(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Find the next instance of a stored 'find'.
 	*/
-	KDEUI_EXPORT KAction *findNext(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *findNext(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Find a previous instance of a stored 'find'.
 	*/
-	KDEUI_EXPORT KAction *findPrev(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *findPrev(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Find and replace matches.
 	*/
-	KDEUI_EXPORT KAction *replace(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *replace(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* View the document at its actual size.
 	*/
-	KDEUI_EXPORT KAction *actualSize(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *actualSize(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Fit the document view to the size of the current window.
 	*/
-	KDEUI_EXPORT KAction *fitToPage(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *fitToPage(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Fit the document view to the width of the current window.
 	*/
-	KDEUI_EXPORT KAction *fitToWidth(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *fitToWidth(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Fit the document view to the height of the current window.
 	*/
-	KDEUI_EXPORT KAction *fitToHeight(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *fitToHeight(const TQObject *recvr, const char *slot,
 					KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Zoom in.
 	*/
-	KDEUI_EXPORT KAction *zoomIn(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *zoomIn(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Zoom out.
 	*/
-	KDEUI_EXPORT KAction *zoomOut(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *zoomOut(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Popup a zoom dialog.
 	*/
-	KDEUI_EXPORT KAction *zoom(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *zoom(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Redisplay or redraw the document.
 	*/
-	KDEUI_EXPORT KAction *redisplay(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *redisplay(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Move up (web style menu).
 	*/
-	KDEUI_EXPORT KAction *up(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *up(const TQObject *recvr, const char *slot,
 			KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Move back (web style menu).
 	*/
-	KDEUI_EXPORT KAction *back(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *back(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Move forward (web style menu).
 	*/
-	KDEUI_EXPORT KAction *forward(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *forward(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Go to the "Home" position or document.
 	*/
-	KDEUI_EXPORT KAction *home(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *home(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Scroll up one page.
 	*/
-	KDEUI_EXPORT KAction *prior(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *prior(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Scroll down one page.
 	*/
-	KDEUI_EXPORT KAction *next(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *next(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Go to somewhere in general.
 	*/
-	KDEUI_EXPORT KAction *goTo(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *goTo(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 
 	/**
 	* Go to a specific page (dialog).
 	*/
-	KDEUI_EXPORT KAction *gotoPage(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *gotoPage(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Go to a specific line (dialog).
 	*/
-	KDEUI_EXPORT KAction *gotoLine(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *gotoLine(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Jump to the first page.
 	*/
-	KDEUI_EXPORT KAction *firstPage(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *firstPage(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Jump to the last page.
 	*/
-	KDEUI_EXPORT KAction *lastPage(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *lastPage(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Add the current page to the bookmarks tree.
 	*/
-	KDEUI_EXPORT KAction *addBookmark(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *addBookmark(const TQObject *recvr, const char *slot,
 					KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Edit the application bookmarks.
 	*/
-	KDEUI_EXPORT KAction *editBookmarks(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *editBookmarks(const TQObject *recvr, const char *slot,
 					KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Pop up the spell checker.
 	*/
-	KDEUI_EXPORT KAction *spelling(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *spelling(const TQObject *recvr, const char *slot,
 					KActionCollection* parent, const char *name = 0 );
 
 
 	/**
 	* Show/Hide the menubar.
 	*/
-	KDEUI_EXPORT KToggleAction *showMenubar(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KToggleAction *showMenubar(const TQObject *recvr, const char *slot,
 					KActionCollection* parent, const char *name = 0 );
 
 	/**
@@ -498,7 +498,7 @@ namespace KStdAction
 	* Show/Hide the primary toolbar.
 	* @since 3.1
 	*/
-	KDEUI_EXPORT KToggleAction *showToolbar(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KToggleAction *showToolbar(const TQObject *recvr, const char *slot,
 					KActionCollection* parent, const char *name = 0 ) KDE_DEPRECATED;
 	/**
 	* @obsolete. toolbar actions are created automatically now in the
@@ -512,41 +512,41 @@ namespace KStdAction
 	/**
 	* Show/Hide the statusbar.
 	*/
-	KDEUI_EXPORT KToggleAction *showStatusbar(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KToggleAction *showStatusbar(const TQObject *recvr, const char *slot,
 					KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Switch to/from full screen mode
 	* @since 3.2
 	*/
-	KDEUI_EXPORT KToggleFullScreenAction *fullScreen(const QObject *recvr, const char *slot,
-					KActionCollection* parent, QWidget* window, const char *name = 0 );
+	KDEUI_EXPORT KToggleFullScreenAction *fullScreen(const TQObject *recvr, const char *slot,
+					KActionCollection* parent, TQWidget* window, const char *name = 0 );
 
 	/**
 	* Display the save options dialog.
 	*/
-	KDEUI_EXPORT KAction *saveOptions(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *saveOptions(const TQObject *recvr, const char *slot,
 					KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display the configure key bindings dialog.
 	*
 	*  Note that you might be able to use the pre-built KXMLGUIFactory's fuction:
-	*  KStdAction::keyBindings(guiFactory(), SLOT(configureShortcuts()), actionCollection());
+	*  KStdAction::keyBindings(guiFactory(), TQT_SLOT(configureShortcuts()), actionCollection());
         */
-	KDEUI_EXPORT KAction *keyBindings(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *keyBindings(const TQObject *recvr, const char *slot,
 					KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display the preferences/options dialog.
 	*/
-	KDEUI_EXPORT KAction *preferences(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *preferences(const TQObject *recvr, const char *slot,
 					KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* The Customize Toolbar dialog.
 	*/
-	KDEUI_EXPORT KAction *configureToolbars(const QObject *recvr,
+	KDEUI_EXPORT KAction *configureToolbars(const TQObject *recvr,
 					const char *slot,
 					KActionCollection* parent,
 					const char *name = 0 );
@@ -555,7 +555,7 @@ namespace KStdAction
 	* The Configure Notifications dialog.
 	* @since 3.1
 	*/
-	KDEUI_EXPORT KAction *configureNotifications(const QObject *recvr,
+	KDEUI_EXPORT KAction *configureNotifications(const TQObject *recvr,
 					const char *slot,
 					KActionCollection *parent,
 					const char *name = 0);
@@ -563,51 +563,51 @@ namespace KStdAction
 	/**
 	* Display the help.
 	*/
-	KDEUI_EXPORT KAction *help(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *help(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display the help contents.
 	*/
-	KDEUI_EXPORT KAction *helpContents(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *helpContents(const TQObject *recvr, const char *slot,
 					KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Trigger the What's This cursor.
 	*/
-	KDEUI_EXPORT KAction *whatsThis(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *whatsThis(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display "Tip of the Day"
 	* @since 3.1
 	*/
-	KDEUI_EXPORT KAction *tipOfDay(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *tipOfDay(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Open up the Report Bug dialog.
 	*/
-	KDEUI_EXPORT KAction *reportBug(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *reportBug(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display the application's About box.
 	*/
-	KDEUI_EXPORT KAction *aboutApp(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *aboutApp(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display the About KDE dialog.
 	*/
-	KDEUI_EXPORT KAction *aboutKDE(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *aboutKDE(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display "Switch application language" dialog.
 	* @since 3.5.8
 	*/
-	KDEUI_EXPORT KAction *switchApplicationLanguage(const QObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *switchApplicationLanguage(const TQObject *recvr, const char *slot,
 				KActionCollection* parent, const char *name = 0 );
 }
 

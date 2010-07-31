@@ -17,20 +17,20 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qapplication.h>
-#include <qcursor.h>
-#include <qdatastream.h>
-#include <qevent.h>
-#include <qfileinfo.h>
-#include <qframe.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpoint.h>
-#include <qscrollview.h>
-#include <qtextstream.h>
-#include <qvbox.h>
-#include <qwhatsthis.h>
-#include <qwidget.h>
+#include <tqapplication.h>
+#include <tqcursor.h>
+#include <tqdatastream.h>
+#include <tqevent.h>
+#include <tqfileinfo.h>
+#include <tqframe.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpoint.h>
+#include <tqscrollview.h>
+#include <tqtextstream.h>
+#include <tqvbox.h>
+#include <tqwhatsthis.h>
+#include <tqwidget.h>
 
 #include <dcopclient.h>
 #include <qxembed.h>
@@ -97,7 +97,7 @@ class KCModuleProxy::KCModuleProxyPrivate
 		QVBox								*embedFrame;
 		KCModuleProxyIfaceImpl  			*dcopObject;
 		DCOPClient							*dcopClient;
-		QVBoxLayout							*topLayout; /* Contains QScrollView view, and root stuff */
+		QVBoxLayout							*topLayout; /* Contains TQScrollView view, and root stuff */
 		KCModuleProxyRootCommunicatorImpl	*rootCommunicator;
 		QLabel								*rootInfo;
 		QCString							dcopName;
@@ -155,14 +155,14 @@ KCModule * KCModuleProxy::realModule() const
 	if( d->rootMode )
 		return 0;
 
-	QApplication::setOverrideCursor( Qt::WaitCursor );
+	TQApplication::setOverrideCursor( Qt::WaitCursor );
 	
 	KCModuleProxy * that = const_cast<KCModuleProxy*>( this );
 
 	if( !d->isInitialized )
 	{
   		d->dcopName = moduleInfo().handle().prepend("KCModuleProxy-").utf8();
-		d->topLayout = new QVBoxLayout( that, 0, 0, "topLayout" );
+		d->topLayout = new TQVBoxLayout( that, 0, 0, "topLayout" );
 
 		d->isInitialized = true;
 	}
@@ -185,13 +185,13 @@ KCModule * KCModuleProxy::realModule() const
 		d->kcm = KCModuleLoader::loadModule( moduleInfo(), KCModuleLoader::Inline, d->withFallback,
 			that, name(), d->args );
 
-		connect( d->kcm, SIGNAL( changed( bool ) ),
-				SLOT(moduleChanged(bool)) );
-		connect( d->kcm, SIGNAL( destroyed() ),
-				SLOT( moduleDestroyed() ) );
-		connect( d->kcm, SIGNAL(quickHelpChanged()), 
-				SIGNAL(quickHelpChanged()));
-		QWhatsThis::add( that, d->kcm->quickHelp() );
+		connect( d->kcm, TQT_SIGNAL( changed( bool ) ),
+				TQT_SLOT(moduleChanged(bool)) );
+		connect( d->kcm, TQT_SIGNAL( destroyed() ),
+				TQT_SLOT( moduleDestroyed() ) );
+		connect( d->kcm, TQT_SIGNAL(quickHelpChanged()), 
+				TQT_SIGNAL(quickHelpChanged()));
+		TQWhatsThis::add( that, d->kcm->quickHelp() );
 
 		d->topLayout->addWidget( d->kcm );
 
@@ -200,13 +200,13 @@ KCModule * KCModuleProxy::realModule() const
 				!KUser().isSuperUser() ) /* Not necessary if we're root */
 		{
 
-			d->rootInfo = new QLabel( that, "rootInfo" );
+			d->rootInfo = new TQLabel( that, "rootInfo" );
 			d->topLayout->insertWidget( 0, d->rootInfo );
 
-			d->rootInfo->setFrameShape(QFrame::Box);
-			d->rootInfo->setFrameShadow(QFrame::Raised);
+			d->rootInfo->setFrameShape(TQFrame::Box);
+			d->rootInfo->setFrameShadow(TQFrame::Raised);
 
-			const QString msg = d->kcm->rootOnlyMsg();
+			const TQString msg = d->kcm->rootOnlyMsg();
 			if( msg.isEmpty() )
 				d->rootInfo->setText(i18n(
    					  "<b>Changes in this section requires root access.</b><br />"
@@ -215,7 +215,7 @@ KCModule * KCModuleProxy::realModule() const
 			else
 				d->rootInfo->setText(msg);
 
-			QWhatsThis::add( d->rootInfo, i18n(
+			TQWhatsThis::add( d->rootInfo, i18n(
 				  "This section requires special permissions, probably "
 				  "for system-wide changes; therefore, it is "
 				  "required that you provide the root password to be "
@@ -233,14 +233,14 @@ KCModule * KCModuleProxy::realModule() const
 		d->dcopClient->attach();
 
 		d->dcopClient->setNotifications( true );
-		connect( d->dcopClient, SIGNAL( applicationRemoved( const QCString& )),
-			SLOT( applicationRemoved( const QCString& )));
+		connect( d->dcopClient, TQT_SIGNAL( applicationRemoved( const TQCString& )),
+			TQT_SLOT( applicationRemoved( const TQCString& )));
 
 		/* Figure out the name of where the module is already loaded */
-		QByteArray replyData, data;
-		QCString replyType;
-		QString result;
-		QDataStream arg, stream( replyData, IO_ReadOnly );
+		TQByteArray replyData, data;
+		TQCString replyType;
+		TQString result;
+		TQDataStream arg, stream( replyData, IO_ReadOnly );
 
 		if( d->dcopClient->call( d->dcopName, d->dcopName, "applicationName()", 
 					data, replyType, replyData ))
@@ -257,17 +257,17 @@ KCModule * KCModuleProxy::realModule() const
 		{
 			kdDebug(711) << "Calling KCModuleProxy's DCOP interface for fetching the name failed." << endl;
 			d->bogusOccupier = true;
-			QApplication::restoreOverrideCursor();
+			TQApplication::restoreOverrideCursor();
 			return realModule();
 		}
 	}
 
-	QApplication::restoreOverrideCursor();
+	TQApplication::restoreOverrideCursor();
 
 	return d->kcm;
 }
 
-void KCModuleProxy::applicationRemoved( const QCString& app )
+void KCModuleProxy::applicationRemoved( const TQCString& app )
 {
 	if( app == d->dcopName )
 	{
@@ -281,7 +281,7 @@ void KCModuleProxy::applicationRemoved( const QCString& app )
 	}
 }
 
-void KCModuleProxy::showEvent( QShowEvent * ev )
+void KCModuleProxy::showEvent( TQShowEvent * ev )
 {
 
 	kdDebug(711) << k_funcinfo << endl;
@@ -291,7 +291,7 @@ void KCModuleProxy::showEvent( QShowEvent * ev )
 	if( d->kcm )
 		d->kcm->show();
 
-	QWidget::showEvent( ev );
+	TQWidget::showEvent( ev );
 
 }
 
@@ -300,17 +300,17 @@ void KCModuleProxy::runAsRoot()
 	if ( !moduleInfo().needsRootPrivileges() )
 		return;
 
-	QApplication::setOverrideCursor( Qt::WaitCursor );
+	TQApplication::setOverrideCursor( Qt::WaitCursor );
 
 	delete d->rootProcess;
 	delete d->embedWidget;
 	delete d->embedFrame;
 
-	d->embedFrame = new QVBox( this, "embedFrame" );
-	d->embedFrame->setFrameStyle( QFrame::Box | QFrame::Raised );
+	d->embedFrame = new TQVBox( this, "embedFrame" );
+	d->embedFrame->setFrameStyle( TQFrame::Box | TQFrame::Raised );
 
-	QPalette pal( red );
-	pal.setColor( QColorGroup::Background, 
+	TQPalette pal( red );
+	pal.setColor( TQColorGroup::Background, 
 		colorGroup().background() );
 	d->embedFrame->setPalette( pal );
 	d->embedFrame->setLineWidth( 2 );
@@ -321,7 +321,7 @@ void KCModuleProxy::runAsRoot()
 
 	d->embedFrame->show();
 
-	QLabel *lblBusy = new QLabel(i18n("<big>Loading...</big>"), d->embedWidget, "lblBusy" );
+	TQLabel *lblBusy = new TQLabel(i18n("<big>Loading...</big>"), d->embedWidget, "lblBusy" );
 	lblBusy->setTextFormat(RichText);
 	lblBusy->setAlignment(AlignCenter);
 	lblBusy->setGeometry(0,0, d->kcm->width(), d->kcm->height());
@@ -340,7 +340,7 @@ void KCModuleProxy::runAsRoot()
 	 */
 
 	/* Prepare the process to run the kcmshell */
-	QString cmd = moduleInfo().service()->exec().stripWhiteSpace();
+	TQString cmd = moduleInfo().service()->exec().stripWhiteSpace();
 	if (cmd.left(5) == "kdesu")
 	{
 		cmd = cmd.remove(0,5).stripWhiteSpace();
@@ -354,19 +354,19 @@ void KCModuleProxy::runAsRoot()
 		cmd = cmd.remove(0,8).stripWhiteSpace();
 
 	/* Run the process */
-	QString kdesu = KStandardDirs::findExe("kdesu");
+	TQString kdesu = KStandardDirs::findExe("kdesu");
 	if (!kdesu.isEmpty())
 	{
 
 		d->rootProcess = new KProcess;
 
 		*d->rootProcess << kdesu;
-		*d->rootProcess << "--nonewdcop" << "-n" << "-d" << QString( "-i%1" ).arg(moduleInfo().icon());
+		*d->rootProcess << "--nonewdcop" << "-n" << "-d" << TQString( "-i%1" ).arg(moduleInfo().icon());
 
-		*d->rootProcess << QString("%1 %2 --embed-proxy %3 --lang %4").arg(locate("exe", "kcmshell"))
+		*d->rootProcess << TQString("%1 %2 --embed-proxy %3 --lang %4").arg(locate("exe", "kcmshell"))
 			.arg(cmd).arg(d->embedWidget->winId()).arg(KGlobal::locale()->language());
 
-		connect(d->rootProcess, SIGNAL(processExited(KProcess*)), SLOT(rootExited()));
+		connect(d->rootProcess, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(rootExited()));
 
 		if ( !d->rootProcess->start( KProcess::NotifyOnExit ))
 		{
@@ -381,7 +381,7 @@ void KCModuleProxy::runAsRoot()
 		}
 
 		delete lblBusy;
-		QApplication::restoreOverrideCursor();
+		TQApplication::restoreOverrideCursor();
 		return;
 	}
 
@@ -391,7 +391,7 @@ void KCModuleProxy::runAsRoot()
 	delete d->embedFrame;
 	d->embedFrame = 0;
 
-	QApplication::restoreOverrideCursor();
+	TQApplication::restoreOverrideCursor();
 }
 
 void KCModuleProxy::rootExited()
@@ -418,7 +418,7 @@ void KCModuleProxy::rootExited()
 
 	d->topLayout->invalidate();
 
-	QShowEvent ev;
+	TQShowEvent ev;
 	showEvent( &ev ); 
 
 	moduleChanged( false );
@@ -471,8 +471,8 @@ void KCModuleProxy::moduleDestroyed()
 }
 
 KCModuleProxy::KCModuleProxy( const KService::Ptr & service, bool withFallback, 
-		QWidget  * parent, const char * name, const QStringList & args)
-	: QWidget( parent, name )
+		TQWidget  * parent, const char * name, const TQStringList & args)
+	: TQWidget( parent, name )
 {
 	init( KCModuleInfo( service ));
 	d->args = args;
@@ -480,18 +480,18 @@ KCModuleProxy::KCModuleProxy( const KService::Ptr & service, bool withFallback,
 }
 
 KCModuleProxy::KCModuleProxy( const KCModuleInfo & info, bool withFallback,
-		QWidget * parent, const char * name, const QStringList & args )
-	: QWidget( parent, name )
+		TQWidget * parent, const char * name, const TQStringList & args )
+	: TQWidget( parent, name )
 {
 	init( info );
 	d->args = args;
 	d->withFallback = withFallback;
 }
 
-KCModuleProxy::KCModuleProxy( const QString& serviceName, bool withFallback, 
-		QWidget * parent, const char * name, 
-		const QStringList & args)
-	: QWidget( parent, name )
+KCModuleProxy::KCModuleProxy( const TQString& serviceName, bool withFallback, 
+		TQWidget * parent, const char * name, 
+		const TQStringList & args)
+	: TQWidget( parent, name )
 {
 	init( KCModuleInfo( serviceName ));
 	d->args = args;
@@ -535,10 +535,10 @@ void KCModuleProxy::save()
 	}
 }
 
-void KCModuleProxy::callRootModule( const QCString& function )
+void KCModuleProxy::callRootModule( const TQCString& function )
 {
-	QByteArray sendData, replyData;
-	QCString replyType;
+	TQByteArray sendData, replyData;
+	TQCString replyType;
 
 	/* Note, we don't use d->dcopClient here, because it's used for 
 	 * the loaded module(and it's not "us" when this function is called) */
@@ -556,32 +556,32 @@ void KCModuleProxy::defaults()
 		d->kcm->defaults();
 }
 
-QString KCModuleProxy::quickHelp() const
+TQString KCModuleProxy::quickHelp() const
 {
 
 	if( !d->rootMode )
-		return realModule() ? realModule()->quickHelp() : QString::null;
+		return realModule() ? realModule()->quickHelp() : TQString::null;
 	else
 	{
-		QByteArray data, replyData;
-		QCString replyType;
+		TQByteArray data, replyData;
+		TQCString replyType;
 
 		if (kapp->dcopClient()->call(d->dcopName, d->dcopName, "quickHelp()",
 				  data, replyType, replyData))
 			kdDebug(711) << "Calling DCOP function bool changed() failed." << endl;
 		else
 		{
-			QDataStream reply(replyData, IO_ReadOnly);
-			if (replyType == "QString")
+			TQDataStream reply(replyData, IO_ReadOnly);
+			if (replyType == "TQString")
 			{
-				QString result;
+				TQString result;
 				reply >> result;
 				return result;
 			}
 			else
 				kdDebug(711) << "DCOP function changed() returned mumbo jumbo." << endl;
 		}
-		return QString::null;
+		return TQString::null;
 	}
 }
 
@@ -603,9 +603,9 @@ int KCModuleProxy::buttons() const
 		KCModule::Help | KCModule::Default | KCModule::Apply ;
 }
 
-QString KCModuleProxy::rootOnlyMsg() const
+TQString KCModuleProxy::rootOnlyMsg() const
 {
-	return realModule() ? realModule()->rootOnlyMsg() : QString::null;
+	return realModule() ? realModule()->rootOnlyMsg() : TQString::null;
 }
 
 bool KCModuleProxy::useRootOnlyMsg() const
@@ -633,7 +633,7 @@ bool KCModuleProxy::rootMode() const
 	return d->rootMode;
 }
 
-QCString KCModuleProxy::dcopName() const
+TQCString KCModuleProxy::dcopName() const
 {
 	return d->dcopName;
 }

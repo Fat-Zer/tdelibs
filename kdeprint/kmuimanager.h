@@ -20,8 +20,8 @@
 #ifndef KMUIMANAGER_H
 #define KMUIMANAGER_H
 
-#include <qobject.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
 
 #include "kprinter.h"
 
@@ -59,7 +59,7 @@ public:
 		NoAutoCollate = 0x100
 	};
 
-	KMUiManager(QObject *parent = 0, const char *name = 0);
+	KMUiManager(TQObject *parent = 0, const char *name = 0);
 	virtual ~KMUiManager();
 
 	// print management
@@ -72,7 +72,7 @@ public:
 	int copyFlags(KPrinter *pr = 0, bool usePlugin = true);
 	int dialogFlags();
 	void setupPrintDialog(KPrintDialog*);
-	virtual void setupPrintDialogPages(QPtrList<KPrintDialogPage>*);
+	virtual void setupPrintDialogPages(TQPtrList<KPrintDialogPage>*);
 
 	// printer property dialog
 	void setupPropertyDialog(KPrinterPropertyDialog*);
@@ -84,11 +84,11 @@ public:
 	int pageCap();
 
 	// job management
-	virtual void setupJobViewer(QListView*);
+	virtual void setupJobViewer(TQListView*);
 
 protected:
 	int			m_printdialogflags;
-	QPtrList<KPrintDialogPage>	m_printdialogpages;
+	TQPtrList<KPrintDialogPage>	m_printdialogpages;
 };
 
 #endif

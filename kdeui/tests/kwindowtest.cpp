@@ -1,10 +1,10 @@
-#include <qmessagebox.h>
-#include <qpopupmenu.h>
-#include <qpixmap.h>
-#include <qkeycode.h>
-#include <qwidget.h>
-#include <qstring.h>
-#include <qcursor.h>
+#include <tqmessagebox.h>
+#include <tqpopupmenu.h>
+#include <tqpixmap.h>
+#include <tqkeycode.h>
+#include <tqwidget.h>
+#include <tqstring.h>
+#include <tqcursor.h>
 
 #include <stdlib.h>
 
@@ -17,7 +17,7 @@
 #include <ktoolbarradiogroup.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
-#include <qmultilineedit.h>
+#include <tqmultilineedit.h>
 #include "kwindowtest.h"
 
 #include <kglobal.h>
@@ -37,7 +37,7 @@
 
 static int itemId = 0;
 
-testWindow::testWindow (QWidget *parent, const char *name)
+testWindow::testWindow (TQWidget *parent, const char *name)
     : KMainWindow (parent,name)
 {
     ena=false;
@@ -56,13 +56,13 @@ setAutoSaveSettings();
     // We insert item "Exit" with accelerator ALT-Q, and connect
     // it to application's exit-slot.
     fileMenu->insertItem ("&Exit", KApplication::kApplication(),
-                          SLOT( quit() ), ALT + Key_Q );
+                          TQT_SLOT( quit() ), ALT + Key_Q );
 
     // Another popup...
     toolBarMenu = new QPopupMenu;
     menuBar->insertItem ("&Toolbars", toolBarMenu);
-    toolBarMenu->insertItem ("(Un)Hide tollbar 1", this, SLOT(slotHide1()));
-    toolBarMenu->insertItem ("(Un)Hide tollbar 2", this, SLOT(slotHide2()));
+    toolBarMenu->insertItem ("(Un)Hide tollbar 1", this, TQT_SLOT(slotHide1()));
+    toolBarMenu->insertItem ("(Un)Hide tollbar 2", this, TQT_SLOT(slotHide2()));
 
     itemsMenu = new QPopupMenu;
     menuBar->insertItem ("&Items", itemsMenu);
@@ -71,15 +71,15 @@ setAutoSaveSettings();
     lineL = true;   // Lined is enabled
     greenF = false;  // Frame not inserted
     
-    itemsMenu->insertItem ("delete/insert exit button", this, SLOT(slotExit()));
-    itemsMenu->insertItem ("insert/delete green frame!", this, SLOT(slotFrame()));
-    itemsMenu->insertItem ("enable/disable Lined", this, SLOT(slotLined()));
-    itemsMenu->insertItem ("Toggle fileNew", this, SLOT(slotNew()));
-    itemsMenu->insertItem ("Clear comboBox", this, SLOT(slotClearCombo()));
-    itemsMenu->insertItem ("Insert List in Combo", this, SLOT(slotInsertListInCombo()));
-    itemsMenu->insertItem ("Make item 3 curent", this, SLOT(slotMakeItem3Current()));
-    //itemsMenu->insertItem ("Insert clock!", this, SLOT(slotInsertClock()));
-    itemsMenu->insertItem ("Important!", this, SLOT(slotImportant()));
+    itemsMenu->insertItem ("delete/insert exit button", this, TQT_SLOT(slotExit()));
+    itemsMenu->insertItem ("insert/delete green frame!", this, TQT_SLOT(slotFrame()));
+    itemsMenu->insertItem ("enable/disable Lined", this, TQT_SLOT(slotLined()));
+    itemsMenu->insertItem ("Toggle fileNew", this, TQT_SLOT(slotNew()));
+    itemsMenu->insertItem ("Clear comboBox", this, TQT_SLOT(slotClearCombo()));
+    itemsMenu->insertItem ("Insert List in Combo", this, TQT_SLOT(slotInsertListInCombo()));
+    itemsMenu->insertItem ("Make item 3 curent", this, TQT_SLOT(slotMakeItem3Current()));
+    //itemsMenu->insertItem ("Insert clock!", this, TQT_SLOT(slotInsertClock()));
+    itemsMenu->insertItem ("Important!", this, TQT_SLOT(slotImportant()));
 
     menuBar->insertSeparator();
     helpMenu = new KHelpMenu(this, "KWindowTest was programmed by Sven Radej");
@@ -93,7 +93,7 @@ setAutoSaveSettings();
     statusBar->insertItem("Look for tooltips to see functions", 1);
 
     //DigitalClock *clk = new DigitalClock (statusBar);
-    //clk->setFrameStyle(QFrame::NoFrame);
+    //clk->setFrameStyle(TQFrame::NoFrame);
     //statusBar->insertWidget(clk, 70, 2);
 
     /***********************/
@@ -101,7 +101,7 @@ setAutoSaveSettings();
     /***********************/
 
     // pixmap which we will use
-    QPixmap pix;
+    TQPixmap pix;
 
     // Create toolbar...
     tb = toolBar();
@@ -113,30 +113,30 @@ setAutoSaveSettings();
     
     // First four  buttons
     pix = BarIcon("filenew");
-    itemId = tb->insertButton(pix, 0, SIGNAL(clicked()), this, SLOT(slotNew()),
+    itemId = tb->insertButton(pix, 0, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotNew()),
                          true, "Create.. (toggles upper button)", 50);
     pix = BarIcon("fileopen");
-    tb->insertButton(pix, 1, SIGNAL(clicked()), this, SLOT(slotOpen()),
+    tb->insertButton(pix, 1, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotOpen()),
                          false, "Open");
     pix = BarIcon("filefloppy");
-    tb->insertButton(pix, 2, SIGNAL(clicked()), this, SLOT(slotSave()),
+    tb->insertButton(pix, 2, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotSave()),
                           true, "Save (beep or delayed popup)");
     tb->setDelayedPopup(2, itemsMenu);
     pix = BarIcon("fileprint");
-    tb->insertButton(pix, 3, SIGNAL(clicked()), this, SLOT(slotPrint()),
+    tb->insertButton(pix, 3, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotPrint()),
                          true, "Print (enables/disables open)");
 
     // And a combobox
     // arguments: text (or strList), ID, writable, signal, object, slot, enabled,
     //            tooltiptext, size
-    tb->insertCombo (QString("one"), 4, true, SIGNAL(activated(const QString&)), this,
-                          SLOT(slotList(const QString&)), true, "ComboBox", 150);
+    tb->insertCombo (TQString("one"), 4, true, TQT_SIGNAL(activated(const TQString&)), this,
+                          TQT_SLOT(slotList(const TQString&)), true, "ComboBox", 150);
 
 
     // Then one line editor
     // arguments: text, id, signal, object (this), slot, enabled, tooltiptext, size
-    tb->insertLined ("ftp://ftp.kde.org/pub/kde", 5, SIGNAL(returnPressed()), this,
-                          SLOT(slotReturn()), true, "Location", 200);
+    tb->insertLined ("ftp://ftp.kde.org/pub/kde", 5, TQT_SIGNAL(returnPressed()), this,
+                          TQT_SLOT(slotReturn()), true, "Location", 200);
 
     // Set this Lined to auto size itself. Note that only one item (Lined or Combo)
     // Can be set to autosize; If you specify more of them only last (according to
@@ -148,27 +148,27 @@ setAutoSaveSettings();
 
     // Now add another button and align it right
     pix = BarIcon("exit");
-    tb->insertButton(pix, 6, SIGNAL(clicked()), KApplication::kApplication(),
-                          SLOT( quit() ), true, "Exit");
+    tb->insertButton(pix, 6, TQT_SIGNAL(clicked()), KApplication::kApplication(),
+                          TQT_SLOT( quit() ), true, "Exit");
     tb->alignItemRight (6);
 
     // Another toolbar
-    tb1 = new KToolBar(this, QMainWindow::DockTop); // this one is normal and has separators
+    tb1 = new KToolBar(this, TQMainWindow::DockTop); // this one is normal and has separators
 
 
     pix = BarIcon("filenew");
     tb1->insertButton(pix, 0, true, "Create new file2 (Toggle)");
     tb1->setToggle(0);
-    tb1->addConnection (0, SIGNAL(toggled(bool)), this, SLOT(slotToggle(bool)));
+    tb1->addConnection (0, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotToggle(bool)));
 
     pix = BarIcon("fileopen");
-    tb1->insertButton(pix, 1, SIGNAL(clicked()), this, SLOT(slotOpen()),
+    tb1->insertButton(pix, 1, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotOpen()),
                           true, "Open (starts progres in sb)");
 
     tb1->insertSeparator ();
     
     pix = BarIcon("filefloppy");
-    tb1->insertButton(pix, 2, SIGNAL(clicked()), this, SLOT(slotSave()),
+    tb1->insertButton(pix, 2, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotSave()),
                       true, "Save file2 (autorepeat)");
     tb1->setAutoRepeat(2);
     
@@ -201,14 +201,14 @@ setAutoSaveSettings();
     rg->addButton(6);
     rg->addButton(7);
 
-    connect (tb1, SIGNAL(toggled(int)), this, SLOT(slotToggled(int)));
+    connect (tb1, TQT_SIGNAL(toggled(int)), this, TQT_SLOT(slotToggled(int)));
     
     // Set caption for floating toolbars
     tb->setTitle ("Toolbar 1");
     tb1->setTitle ("Toolbar 2");
 
     // Set main widget. In this example it is Qt's multiline editor.
-    widget = new QMultiLineEdit (this);
+    widget = new TQMultiLineEdit (this);
 
     // Setup is now complete
 
@@ -216,8 +216,8 @@ setAutoSaveSettings();
     //addToolBar (tb1);
     //addToolBar (tb);
 
-    connect (tb, SIGNAL(highlighted(int,bool)), this, SLOT(slotMessage(int, bool)));
-    connect (tb1, SIGNAL(highlighted(int, bool)), this, SLOT(slotMessage(int, bool)));
+    connect (tb, TQT_SIGNAL(highlighted(int,bool)), this, TQT_SLOT(slotMessage(int, bool)));
+    connect (tb1, TQT_SIGNAL(highlighted(int, bool)), this, TQT_SLOT(slotMessage(int, bool)));
 
     // Floating is enabled by default, so you don't need this.
     // tb->enableFloating(true);
@@ -243,7 +243,7 @@ setAutoSaveSettings();
     completions->insertItem("/home/");
     completions->insertItem("/vmlinuz :-)");
 
-    connect (completions, SIGNAL(activated(int)), this, SLOT(slotCompletionsMenu(int)));
+    connect (completions, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotCompletionsMenu(int)));
     pr = 0;
 }
 /***********************************/
@@ -257,7 +257,7 @@ void testWindow::slotToggled(int)
 void testWindow::slotInsertClock()
 {
   //DigitalClock *clock = new DigitalClock(tb1);
-  //clock->setFrameStyle(QFrame::NoFrame);
+  //clock->setFrameStyle(TQFrame::NoFrame);
   //tb1->insertWidget(8, 70, clock);
 }
 
@@ -269,11 +269,11 @@ void testWindow::slotNew()
 void testWindow::slotOpen()
 {
   if (pr == 0)
-    pr = new QProgressBar (statusBar);
+    pr = new TQProgressBar (statusBar);
 //  statusBar->message(pr);
-  timer = new QTimer (pr);
+  timer = new TQTimer (pr);
 
-  connect (timer, SIGNAL(timeout()), this, SLOT(slotGoGoGoo()));
+  connect (timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotGoGoGoo()));
   timer->start(100);
 }
 
@@ -303,14 +303,14 @@ void testWindow::slotPrint()
 }
 void testWindow::slotReturn()
 {
-    QString s = "You entered ";
+    TQString s = "You entered ";
     s = s + tb->getLinedText(5);
     statusBar->changeItem(s, 0);
 
 }
-void testWindow::slotList(const QString &str)
+void testWindow::slotList(const TQString &str)
 {
-    QString s = "You chose ";
+    TQString s = "You chose ";
     s = s + str;
     statusBar->changeItem(s, 0);
 }
@@ -319,13 +319,13 @@ void testWindow::slotCompletion()
 {
   // Now do a completion
   // Call your completing function and set that text in klined
-  // QString s = tb->getLinedText(/* ID */ 4)
-  // QString completed = complete (s);
+  // TQString s = tb->getLinedText(/* ID */ 4)
+  // TQString completed = complete (s);
   // tb->setLinedText(/* ID */ 4, completed.data())
 
   // for now this:
 
-  completions->popup(QCursor::pos()); // This popup should understunf keys up and down
+  completions->popup(TQCursor::pos()); // This popup should understunf keys up and down
 
   /* This is just an example. KLined automatically sets cursor at end of string
    when ctrl-d or ctrl-s is pressed. KToolBar will also put cursor at end of text in Lined
@@ -340,7 +340,7 @@ void testWindow::slotListCompletion()
      Combo is not behaving good and it is ugly. I will see how it behaves in Qt-1.3,
      and then decide should I make a new combobox.
      */
-  QString s(tb->getComboItem(4));  // get text in combo
+  TQString s(tb->getComboItem(4));  // get text in combo
   s+= "(completing)";
   //tb->getCombo(4)->changeItem(s.data());   // setTextIncombo
 
@@ -349,7 +349,7 @@ void testWindow::slotListCompletion()
 void testWindow::slotCompletionsMenu(int id)
 {
   // Now set text in lined
-  QString s =completions->text(id);
+  TQString s =completions->text(id);
   tb->setLinedText(5, s);  // Cursor is automatically at the end of string after this
 }
 
@@ -406,10 +406,10 @@ void testWindow::slotExit ()
    }
   else
    {
-     QPixmap pix;
+     TQPixmap pix;
      pix = BarIcon("exit");
-     tb->insertButton(pix, 6, SIGNAL(clicked()), KApplication::kApplication(),
-                           SLOT( quit() ), true, "Exit");
+     tb->insertButton(pix, 6, TQT_SIGNAL(clicked()), KApplication::kApplication(),
+                           TQT_SLOT( quit() ), true, "Exit");
      tb->alignItemRight (6);
      exitB = true;
    }
@@ -437,7 +437,7 @@ void testWindow::slotFrame()
      tb1->insertFrame(10, 100);
      tb1->alignItemRight (10); // this is pointless 'cause tb1 is not fullwidth
 
-     QFrame *myFrame = tb1->getFrame(10); // get frame pointer
+     TQFrame *myFrame = tb1->getFrame(10); // get frame pointer
 
      if (myFrame == 0)
       {
@@ -450,7 +450,7 @@ void testWindow::slotFrame()
      // And don't move it
      // If you want to have something right from your toolbar you can reduce its
      // max_width with setMaxWidth()
-     myFrame->setBackgroundColor (QColor("green"));
+     myFrame->setBackgroundColor (TQColor("green"));
 
      greenF = true;
    }
@@ -478,7 +478,7 @@ void testWindow::slotClearCombo()
 
 void testWindow::slotInsertListInCombo()
 {
-  QStringList list;
+  TQStringList list;
   list.append("ListOne");
   list.append("ListTwo");
   list.append("ListThree");
@@ -509,7 +509,7 @@ int main( int argc, char *argv[] )
 
     myApp->setMainWidget(test);
 
-    i = QMessageBox::information(0, "Select", "Select type of mainwidget",
+    i = TQMessageBox::information(0, "Select", "Select type of mainwidget",
                              "Fixed", "Y-fixed", "Resizable");
     if (i == 0)
         test->beFixed();

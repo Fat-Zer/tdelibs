@@ -31,7 +31,7 @@ class KMConfigFonts : public KMConfigPage
 {
 	Q_OBJECT
 public:
-	KMConfigFonts(QWidget *parent = 0, const char *name = 0);
+	KMConfigFonts(TQWidget *parent = 0, const char *name = 0);
 
 	void loadConfig(KConfig*);
 	void saveConfig(KConfig*);
@@ -42,7 +42,7 @@ protected slots:
 	void slotRemove();
 	void slotAdd();
 	void slotSelected();
-	void slotTextChanged(const QString&);
+	void slotTextChanged(const TQString&);
 
 private:
 	QCheckBox	*m_embedfonts;

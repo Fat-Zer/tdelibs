@@ -20,14 +20,14 @@
 #ifndef _KTEXT_BROWSER_H_
 #define _KTEXT_BROWSER_H_
 
-#include <qtextbrowser.h>
+#include <tqtextbrowser.h>
 
 #include <kdelibs_export.h>
 
 /**
- * @short Extended QTextBrowser.
+ * @short Extended TQTextBrowser.
  *
- * An extended QTextBrowser.
+ * An extended TQTextBrowser.
  *
  * By default it will
  * invoke the system mailer or the system browser when a link is
@@ -52,7 +52,7 @@ class KDEUI_EXPORT KTextBrowser : public QTextBrowser
      * @param name Widget name.
      * @param notifyClick @p true causes signals to be emitted.
      */
-    KTextBrowser( QWidget *parent=0, const char *name=0,
+    KTextBrowser( TQWidget *parent=0, const char *name=0,
 		  bool notifyClick=false );
 
     /**
@@ -78,39 +78,39 @@ class KDEUI_EXPORT KTextBrowser : public QTextBrowser
        Reimplemented to NOT set the source but to do the special handling.
        Do not call.
      */
-    void setSource(const QString& name);
+    void setSource(const TQString& name);
 
     /**
      * Makes sure Key_Escape is ignored
      */
-    virtual void keyPressEvent(QKeyEvent *e);
+    virtual void keyPressEvent(TQKeyEvent *e);
 
     /**
      * Make sure we use our own hand cursor
      */
-    virtual void viewportMouseMoveEvent( QMouseEvent* e);
+    virtual void viewportMouseMoveEvent( TQMouseEvent* e);
 
     /**
      * Reimplemented to support Qt2 behavior (Ctrl-Wheel = fast scroll)
      */
-    virtual void contentsWheelEvent( QWheelEvent *e );
+    virtual void contentsWheelEvent( TQWheelEvent *e );
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
-    * See QLineEdit::createPopupMenu().
+    * See TQLineEdit::createPopupMenu().
     */
-    virtual QPopupMenu *createPopupMenu( const QPoint &pos );
+    virtual TQPopupMenu *createPopupMenu( const TQPoint &pos );
 
   signals:
     /**
      * Emitted when a mail link has been activated and the widget has
      * been configured to emit the signal.
      *
-     * @param name The destination name. It is QString::null at the moment.
+     * @param name The destination name. It is TQString::null at the moment.
      * @param address The destination address.
      */
-    void mailClick( const QString &name, const QString &address );
+    void mailClick( const TQString &name, const TQString &address );
 
     /**
      * Emitted if mailClick() is not emitted and the widget has been
@@ -118,7 +118,7 @@ class KDEUI_EXPORT KTextBrowser : public QTextBrowser
      *
      * @param url The destination address.
      */
-    void urlClick( const QString &url );
+    void urlClick( const TQString &url );
 
   private:
     bool    mNotifyClick;

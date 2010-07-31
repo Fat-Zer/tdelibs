@@ -23,18 +23,18 @@
 
 #include "dictionary.h"
 
-#include <qobject.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
 
 namespace KSpell2
 {
     class Broker;
-    class DefaultDictionary : public QObject,
+    class DefaultDictionary : public TQObject,
                               public Dictionary
     {
         Q_OBJECT
     public:
-        DefaultDictionary( const QString& lang, Broker *broker );
+        DefaultDictionary( const TQString& lang, Broker *broker );
         ~DefaultDictionary();
     public:
         /**
@@ -46,14 +46,14 @@ namespace KSpell2
         bool isValid() const;
 
         //Dictionary interface
-        virtual bool check( const QString& word );
-        virtual QStringList suggest( const QString& word );
-        virtual bool checkAndSuggest( const QString& word,
-                                      QStringList& suggestions );
-        virtual bool storeReplacement( const QString& bad,
-                                       const QString& good );
-        virtual bool addToPersonal( const QString& word );
-        virtual bool addToSession( const QString& word );
+        virtual bool check( const TQString& word );
+        virtual TQStringList suggest( const TQString& word );
+        virtual bool checkAndSuggest( const TQString& word,
+                                      TQStringList& suggestions );
+        virtual bool storeReplacement( const TQString& bad,
+                                       const TQString& good );
+        virtual bool addToPersonal( const TQString& word );
+        virtual bool addToSession( const TQString& word );
         //end of Dictionary interfaces
 
     signals:

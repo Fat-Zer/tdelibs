@@ -22,8 +22,8 @@
 
 #ifndef QT_NO_DRAGANDDROP
 
-#include <qdragobject.h>
-#include <qvaluelist.h>
+#include <tqdragobject.h>
+#include <tqvaluelist.h>
 #include "kdelibs_export.h"
 
 class KMultipleDragPrivate;
@@ -34,14 +34,14 @@ class KMultipleDragPrivate;
  *
  * Instead of creating a specific class for each case (as would otherwise
  * be necessary), you can simply create independent drag objects (e.g.
- * a QImageDrag object and a KURLDrag object), and bundle them together
+ * a TQImageDrag object and a KURLDrag object), and bundle them together
  * using KMultipleDrag.
  *
  * Sample code for this:
  *
  * \code
  * KMultipleDrag *drag = new KMultipleDrag( parentWidget );
- * drag->addDragObject( new QImageDrag( someQImage, 0 ) );
+ * drag->addDragObject( new TQImageDrag( someQImage, 0 ) );
  * drag->addDragObject( new KURLDrag( someKURL, 0 ) );
  * drag->drag();
  * \endcode
@@ -62,7 +62,7 @@ public:
      *                   0 for a parent-less object
      * @param name the name of the object, can be 0
      */
-    KMultipleDrag( QWidget *dragSource = 0, const char *name = 0 );
+    KMultipleDrag( TQWidget *dragSource = 0, const char *name = 0 );
 
     /**
      * Call this to add each underlying drag object to the multiple drag object.
@@ -71,7 +71,7 @@ public:
      *
      * @param dragObject the drag object to add. Should have no parent object.
      */
-    void addDragObject( QDragObject *dragObject );
+    void addDragObject( TQDragObject *dragObject );
 
     /**
      * Returns the data of a drag object with that supports the given
@@ -80,7 +80,7 @@ public:
      * @return the data, or a null byte array if not found
      * @reimp
      */
-    virtual QByteArray encodedData( const char *mime ) const;
+    virtual TQByteArray encodedData( const char *mime ) const;
 
     /**
      * Returns the @p i'th supported format, or 0.
@@ -92,8 +92,8 @@ public:
 
 protected:
 // KDE4: make private
-    QPtrList<QDragObject> m_dragObjects;
-    QValueList<int> m_numberFormats;
+    TQPtrList<TQDragObject> m_dragObjects;
+    TQValueList<int> m_numberFormats;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:

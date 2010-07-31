@@ -16,7 +16,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qguardedptr.h>
+#include <tqguardedptr.h>
 
 #include <kapplication.h>
 #include <kmainwindow.h>
@@ -26,7 +26,7 @@
 #include <ktoolbarlabelaction.h>
 #include <ksqueezedtextlabel.h> 
 #include <kdebug.h>
-#include <qvbox.h>
+#include <tqvbox.h>
 
 #include <assert.h>
 
@@ -35,7 +35,7 @@ class MainWindow : public KMainWindow
 public:
   MainWindow()
   {
-    QVBox* main = new QVBox(this);
+    TQVBox* main = new TQVBox(this);
     setCentralWidget(main);
 
     KSqueezedTextLabel* accel = new KSqueezedTextLabel
@@ -65,7 +65,7 @@ public:
     accel->setBuddy(lineEdit);
 
      // third constructor
-    QLabel* customLabel =  new KSqueezedTextLabel
+    TQLabel* customLabel =  new KSqueezedTextLabel
       ("&Really long, long, long and boring text goes here", this, 
         "kde toolbar widget");
 

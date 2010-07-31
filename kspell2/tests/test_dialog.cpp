@@ -30,23 +30,23 @@
 using namespace KSpell2;
 
 TestDialog::TestDialog()
-    : QObject( 0, "testdialog" )
+    : TQObject( 0, "testdialog" )
 {
 
 }
 
-void TestDialog::check( const QString& buffer )
+void TestDialog::check( const TQString& buffer )
 {
     KSpell2::Dialog *dlg = new KSpell2::Dialog(
         new BackgroundChecker( Broker::openBroker(), this, "checker" ),
         0, "my dialog" );
-    connect( dlg, SIGNAL(done(const QString&)),
-             SLOT(doneChecking(const QString&)) );
+    connect( dlg, TQT_SIGNAL(done(const TQString&)),
+             TQT_SLOT(doneChecking(const TQString&)) );
     dlg->setBuffer( buffer );
     dlg->show();
 }
 
-void TestDialog::doneChecking( const QString& buf )
+void TestDialog::doneChecking( const TQString& buf )
 {
     kdDebug()<<"Done with :"<<buf<<endl;
     qApp->quit();

@@ -4,7 +4,7 @@
  * KStyle
  * Copyright (C) 2001-2002 Karol Szwed <gallium@kde.org>
  * 
- * QWindowsStyle CC_ListView and style images were kindly donated by TrollTech,
+ * TQWindowsStyle CC_ListView and style images were kindly donated by TrollTech,
  * Copyright (C) 1998-2000 TrollTech AS.
  * 
  * Many thanks to Bradley T. Hughes for the 3 button scrollbar code.
@@ -32,7 +32,7 @@
 // This API is still subject to change.
 // I will remove this warning when I feel the API is sufficiently flexible.
 
-#include <qcommonstyle.h>
+#include <tqcommonstyle.h>
 
 #include <kdelibs_export.h>
 
@@ -40,17 +40,17 @@ class KPixmap;
 
 struct KStylePrivate;
 /** 
- * Simplifies and extends the QStyle API to make style coding easier.
+ * Simplifies and extends the TQStyle API to make style coding easier.
  *  
  * The KStyle class provides a simple internal menu transparency engine
  * which attempts to use XRender for accelerated blending where requested,
  * or falls back to fast internal software tinting/blending routines.
- * It also simplifies more complex portions of the QStyle API, such as
+ * It also simplifies more complex portions of the TQStyle API, such as
  * the PopupMenuItems, ScrollBars and Sliders by providing extra "primitive
  * elements" which are simple to implement by the style writer.
  *
- * @see QStyle::QStyle
- * @see QCommonStyle::QCommonStyle
+ * @see TQStyle::QStyle
+ * @see TQCommonStyle::QCommonStyle
  * @author Karol Szwed (gallium@kde.org)
  * @version $Id$
  */
@@ -71,7 +71,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 		 * 
 		 * @li FilledFrameWorkaround - Enable this flag to facilitate 
 		 * proper repaints of QMenuBars and QToolBars when the style chooses 
-		 * to paint the interior of a QFrame. The style primitives in question 
+		 * to paint the interior of a TQFrame. The style primitives in question 
 		 * are PE_PanelMenuBar and PE_PanelDockWindow. The HighColor style uses
 		 * this workaround to enable painting of gradients in menubars and 
 		 * toolbars.
@@ -118,9 +118,9 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 		 *
 		 * Select the appropriate KStyle flags and scrollbar type
 		 * for your style. The user's style preferences selected in KControl
-		 * are read by using QSettings and are automatically applied to the style.
+		 * are read by using TQSettings and are automatically applied to the style.
 		 * As a fallback, KStyle paints progressbars and tabbars. It inherits from
-		 * QCommonStyle for speed, so don't expect much to be implemented. 
+		 * TQCommonStyle for speed, so don't expect much to be implemented. 
 		 *
 		 * It is advisable to use a currently implemented style such as the HighColor
 		 * style as a foundation for any new KStyle, so the limited number of
@@ -143,7 +143,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 		/**
 		 * Returns the default widget style depending on color depth.
 		 */
-		static QString defaultStyle();
+		static TQString defaultStyle();
 
 		/**
 		 * Modifies the scrollbar type used by the style.
@@ -178,14 +178,14 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 		 * This virtual is never called if XRender/Software blending is disabled by
 		 * the user in KDE's style control module.
 		 */
-		virtual void renderMenuBlendPixmap( KPixmap& pix, const QColorGroup& cg, 
-						    const QPopupMenu* popup ) const;
+		virtual void renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup& cg, 
+						    const TQPopupMenu* popup ) const;
 
 		/**
 		 * KStyle Primitive Elements:
 		 *
 		 * The KStyle class extends the Qt's Style API by providing certain 
-		 * simplifications for parts of QStyle. To do this, the KStylePrimitive
+		 * simplifications for parts of TQStyle. To do this, the KStylePrimitive
 		 * elements were defined, which are very similar to Qt's PrimitiveElement.
 		 * 
 		 * The first three Handle primitives simplify and extend PE_DockWindowHandle, 
@@ -202,10 +202,10 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 		 *
 		 * @li KPE_ToolBarHandle - This primitive must be reimplemented. It currently
 		 * only paints a filled rectangle as default behavior. This primitive is used
-		 * to render QToolBar handles.
+		 * to render TQToolBar handles.
 		 *
 		 * @li KPE_GeneralHandle - This primitive must be reimplemented. It is used
-		 * to render general handles that are not part of a QToolBar or QDockWindow, such
+		 * to render general handles that are not part of a TQToolBar or TQDockWindow, such
 		 * as the applet handles used in Kicker. The default implementation paints a filled
 		 * rect of arbitrary color.
 		 *
@@ -237,21 +237,21 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 		};
 
 		/**
-		 * This function is identical to Qt's QStyle::drawPrimitive(), except that 
+		 * This function is identical to Qt's TQStyle::drawPrimitive(), except that 
 		 * it adds one further parameter, 'widget', that can be used to determine 
 		 * the widget state of the KStylePrimitive in question.
 		 *
 		 * @see KStyle::KStylePrimitive
-		 * @see QStyle::drawPrimitive
-		 * @see QStyle::drawComplexControl
+		 * @see TQStyle::drawPrimitive
+		 * @see TQStyle::drawComplexControl
 		 */
 		virtual void drawKStylePrimitive( KStylePrimitive kpe,
-					QPainter* p,
-					const QWidget* widget,
-					const QRect &r,
-					const QColorGroup &cg,
+					TQPainter* p,
+					const TQWidget* widget,
+					const TQRect &r,
+					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 
 		enum KStylePixelMetric {
@@ -266,66 +266,66 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 			KPM_ListViewBranchThickness		= 0x00000100
 		};
 
-		int kPixelMetric( KStylePixelMetric kpm, const QWidget* widget = 0 ) const;
+		int kPixelMetric( KStylePixelMetric kpm, const TQWidget* widget = 0 ) const;
 
 		// ---------------------------------------------------------------------------
 
-		void polish( QWidget* widget );
-		void unPolish( QWidget* widget );
-		void polishPopupMenu( QPopupMenu* );
+		void polish( TQWidget* widget );
+		void unPolish( TQWidget* widget );
+		void polishPopupMenu( TQPopupMenu* );
 
 		void drawPrimitive( PrimitiveElement pe,
-					QPainter* p,
-					const QRect &r,
-					const QColorGroup &cg,
+					TQPainter* p,
+					const TQRect &r,
+					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 		void drawControl( ControlElement element,
-					QPainter* p,
-					const QWidget* widget,
-					const QRect &r,
-					const QColorGroup &cg,
+					TQPainter* p,
+					const TQWidget* widget,
+					const TQRect &r,
+					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 		void drawComplexControl( ComplexControl control,
-					QPainter *p,
-					const QWidget* widget,
-					const QRect &r,
-					const QColorGroup &cg,
+					TQPainter *p,
+					const TQWidget* widget,
+					const TQRect &r,
+					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
 					SCFlags controls = SC_All,
 					SCFlags active = SC_None,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 		SubControl querySubControl( ComplexControl control,
-					const QWidget* widget,
-					const QPoint &pos,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQWidget* widget,
+					const TQPoint &pos,
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		QRect querySubControlMetrics( ComplexControl control,
-					const QWidget* widget,
+		TQRect querySubControlMetrics( ComplexControl control,
+					const TQWidget* widget,
 					SubControl sc,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 		int pixelMetric( PixelMetric m, 
-					const QWidget* widget = 0 ) const;
+					const TQWidget* widget = 0 ) const;
 
-		QRect subRect( SubRect r, 
-					const QWidget* widget ) const;
+		TQRect subRect( SubRect r, 
+					const TQWidget* widget ) const;
 
-		QPixmap stylePixmap( StylePixmap stylepixmap,
-					const QWidget* widget = 0,
-					const QStyleOption& = QStyleOption::Default ) const;
+		TQPixmap stylePixmap( StylePixmap stylepixmap,
+					const TQWidget* widget = 0,
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 		int styleHint( StyleHint sh, 
-					const QWidget* w = 0,
-					const QStyleOption &opt = QStyleOption::Default,
+					const TQWidget* w = 0,
+					const TQStyleOption &opt = TQStyleOption::Default,
 					QStyleHintReturn* shr = 0 ) const;
 
 	protected:
-		bool eventFilter( QObject* object, QEvent* event );
+		bool eventFilter( TQObject* object, TQEvent* event );
 
 	private:
 		// Disable copy constructor and = operator

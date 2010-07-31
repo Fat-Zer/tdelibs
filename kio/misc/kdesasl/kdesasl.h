@@ -20,7 +20,7 @@
 #ifndef KDESASL_H
 #define KDESASL_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -59,7 +59,7 @@ class QStrIList;
  *   mySendAuthCommand( sasl.method() );
  * }
  * for ( ; !sasl.dialogComplete( numResponses ) ; ++numResponses ) {
- *   QByteArray challenge = myRecvChallenge();
+ *   TQByteArray challenge = myRecvChallenge();
  *   mySendResponse( sasl.getResponse( challenge ) );
  * }
  * return myCheckSuccess();
@@ -82,7 +82,7 @@ public:
    * This is a conveniece function and differs from the above function only by
    * what arguments it accepts.
    */
-  KDESasl(const QString &aUser, const QString &aPass, const QString &aProtocol);
+  KDESasl(const TQString &aUser, const TQString &aPass, const TQString &aProtocol);
   /*
    * You need to have a virtual destructor!
    */
@@ -91,16 +91,16 @@ public:
    * @returns the most secure method from the given methods and use it for
    * further operations.
    */
-  virtual QCString chooseMethod(const QStrIList aMethods);
+  virtual TQCString chooseMethod(const TQStrIList aMethods);
   /**
    * Explicitely set the SASL method used.
    */
-  virtual void setMethod(const QCString &aMethod);
+  virtual void setMethod(const TQCString &aMethod);
   /**
    * @return the SASL method used.
    * @since 3.2
    */
-  QCString method() const;
+  TQCString method() const;
   /**
    * @param numCalls number of times getResponse() has been called.
    * @return whether the challenge/response dialog has completed
@@ -126,11 +126,11 @@ public:
    * encoding. The challenge is decoded from base64 and the response is
    * encoded base64 if set to true.
    */
-   QCString getResponse(const QByteArray &aChallenge=QByteArray(), bool aBase64 = true);
+   TQCString getResponse(const TQByteArray &aChallenge=TQByteArray(), bool aBase64 = true);
   /**
    * Create a response as above but place it in a QByteArray
    */
-  QByteArray getBinaryResponse(const QByteArray &aChallenge=QByteArray(), bool aBase64=true); 
+  TQByteArray getBinaryResponse(const TQByteArray &aChallenge=TQByteArray(), bool aBase64=true); 
   /**
    * Returns true if the client is supposed to initiate the
    * challenge-respinse dialog with an initial response (which most
@@ -146,23 +146,23 @@ protected:
   /**
    * PLAIN authentication as described in RFC 2595
    */
-  virtual QByteArray getPlainResponse();
+  virtual TQByteArray getPlainResponse();
   /**
    * LOGIN authentication
    */
-  virtual QByteArray getLoginResponse();
+  virtual TQByteArray getLoginResponse();
   /**
    * CRAM-MD5 authentication as described in RFC 2195
    */
-  virtual QByteArray getCramMd5Response(const QByteArray &aChallenge);
+  virtual TQByteArray getCramMd5Response(const TQByteArray &aChallenge);
   /**
    * DIGEST-MD5 authentication as described in RFC 2831
    */
-  virtual QByteArray getDigestMd5Response(const QByteArray &aChallenge);
+  virtual TQByteArray getDigestMd5Response(const TQByteArray &aChallenge);
 
 private:
-  QString mProtocol, mUser, mPass;
-  QCString mMethod;
+  TQString mProtocol, mUser, mPass;
+  TQCString mMethod;
   bool mFirst;
 };
 

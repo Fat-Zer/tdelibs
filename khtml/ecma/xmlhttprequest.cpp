@@ -35,7 +35,7 @@
 
 #include <kio/scheduler.h>
 #include <kio/job.h>
-#include <qobject.h>
+#include <tqobject.h>
 #include <kdebug.h>
 
 #ifdef APPLE_CHANGES
@@ -86,7 +86,7 @@ void XMLHttpRequestQObject::slotData( KIO::Job* job, const char *data, int size 
   jsObject->slotData(job, data, size);
 }
 #else
-void XMLHttpRequestQObject::slotData( KIO::Job* job, const QByteArray &data )
+void XMLHttpRequestQObject::slotData( KIO::Job* job, const TQByteArray &data )
 {
   jsObject->slotData(job, data);
 }
@@ -149,14 +149,14 @@ Value XMLHttpRequest::getValueProperty(ExecState *exec, int token) const
       return Null();
     }
     if (!createdDocument) {
-      QString mimeType = "text/xml";
+      TQString mimeType = "text/xml";
 
       if (!m_mimeTypeOverride.isEmpty()) {
         mimeType = m_mimeTypeOverride;
       } else {
 	  Value header = getResponseHeader("Content-Type");
           if (header.type() != UndefinedType) {
-            mimeType = QStringList::split(";", header.toString(exec).qstring())[0].stripWhiteSpace();
+            mimeType = TQStringList::split(";", header.toString(exec).qstring())[0].stripWhiteSpace();
 	  }
       }
 
@@ -239,7 +239,7 @@ XMLHttpRequest::XMLHttpRequest(ExecState *exec, const DOM::Document &d)
     qObject(new XMLHttpRequestQObject(this)),
     doc(static_cast<DOM::DocumentImpl*>(d.handle())),
     async(true),
-    contentType(QString::null),
+    contentType(TQString::null),
     job(0),
     state(Uninitialized),
     onReadyStateChangeListener(0),
@@ -308,15 +308,15 @@ bool XMLHttpRequest::urlMatchesDocumentDomain(const KURL& _url) const
   return false;
 }
 
-void XMLHttpRequest::open(const QString& _method, const KURL& _url, bool _async)
+void XMLHttpRequest::open(const TQString& _method, const KURL& _url, bool _async)
 {
   abort();
   aborted = false;
 
   // clear stuff from possible previous load
   requestHeaders.clear();
-  responseHeaders = QString();
-  response = QString();
+  responseHeaders = TQString();
+  response = TQString();
   createdDocument = false;
   responseXML = DOM::Document();
 
@@ -338,12 +338,12 @@ void XMLHttpRequest::open(const QString& _method, const KURL& _url, bool _async)
   changeState(Loading);
 }
 
-void XMLHttpRequest::send(const QString& _body)
+void XMLHttpRequest::send(const TQString& _body)
 {
   aborted = false;
 
   if (method == "post") {
-    QString protocol = url.protocol().lower();
+    TQString protocol = url.protocol().lower();
 
     // Abondon the request when the protocol is other than "http",
     // instead of blindly changing it to a "get" request.
@@ -355,8 +355,8 @@ void XMLHttpRequest::send(const QString& _body)
 
     // FIXME: determine post encoding correctly by looking in headers
     // for charset.
-    QByteArray buf;
-    QCString str = _body.utf8();
+    TQByteArray buf;
+    TQCString str = _body.utf8();
     buf.duplicate(str.data(), str.size() - 1);
 
     job = KIO::http_post( url, buf, false );
@@ -370,12 +370,12 @@ void XMLHttpRequest::send(const QString& _body)
   }
 
   if (!requestHeaders.isEmpty()) {
-    QString rh;
-    QMap<QString, QString>::ConstIterator begin = requestHeaders.begin();
-    QMap<QString, QString>::ConstIterator end = requestHeaders.end();
-    for (QMap<QString, QString>::ConstIterator i = begin; i != end; ++i) {
-      QString key = i.key();
-      QString value = i.data();
+    TQString rh;
+    TQMap<TQString, TQString>::ConstIterator begin = requestHeaders.begin();
+    TQMap<TQString, TQString>::ConstIterator end = requestHeaders.end();
+    for (TQMap<TQString, TQString>::ConstIterator i = begin; i != end; ++i) {
+      TQString key = i.key();
+      TQString value = i.data();
       if (key == "accept") {
         // The HTTP KIO slave supports an override this way
         job->addMetaData("accept", value);
@@ -397,21 +397,21 @@ void XMLHttpRequest::send(const QString& _body)
   // ### does find() ever succeed? the headers are stored in lower case!
   if (requestHeaders.find("Referer") == requestHeaders.end()) {
     KURL documentURL(doc->URL());
-    documentURL.setPass(QString::null);
-    documentURL.setUser(QString::null);
+    documentURL.setPass(TQString::null);
+    documentURL.setUser(TQString::null);
     job->addMetaData("referrer", documentURL.url());
     // kdDebug() << "Adding referrer: " << documentURL << endl;
   }
 
   if (!async) {
-    QByteArray data;
+    TQByteArray data;
     KURL finalURL;
-    QString headers;
+    TQString headers;
 
 #ifdef APPLE_CHANGES
     data = KWQServeSynchronousRequest(khtml::Cache::loader(), doc->docLoader(), job, finalURL, headers);
 #else
-    QMap<QString, QString> metaData;
+    TQMap<TQString, TQString> metaData;
     if ( NetAccess::synchronousRun( job, 0, &data, &finalURL, &metaData ) ) {
       headers = metaData[ "HTTP-Headers" ];
     }
@@ -421,17 +421,17 @@ void XMLHttpRequest::send(const QString& _body)
     return;
   }
 
-  qObject->connect( job, SIGNAL( result( KIO::Job* ) ),
-		    SLOT( slotFinished( KIO::Job* ) ) );
+  qObject->connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
+		    TQT_SLOT( slotFinished( KIO::Job* ) ) );
 #ifdef APPLE_CHANGES
-  qObject->connect( job, SIGNAL( data( KIO::Job*, const char*, int ) ),
-		    SLOT( slotData( KIO::Job*, const char*, int ) ) );
+  qObject->connect( job, TQT_SIGNAL( data( KIO::Job*, const char*, int ) ),
+		    TQT_SLOT( slotData( KIO::Job*, const char*, int ) ) );
 #else
-  qObject->connect( job, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
-		    SLOT( slotData( KIO::Job*, const QByteArray& ) ) );
+  qObject->connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
+		    TQT_SLOT( slotData( KIO::Job*, const TQByteArray& ) ) );
 #endif
-  qObject->connect( job, SIGNAL(redirection(KIO::Job*, const KURL& ) ),
-		    SLOT( slotRedirection(KIO::Job*, const KURL&) ) );
+  qObject->connect( job, TQT_SIGNAL(redirection(KIO::Job*, const KURL& ) ),
+		    TQT_SLOT( slotRedirection(KIO::Job*, const KURL&) ) );
 
 #ifdef APPLE_CHANGES
   KWQServeRequest(khtml::Cache::loader(), doc->docLoader(), job);
@@ -451,14 +451,14 @@ void XMLHttpRequest::abort()
   aborted = true;
 }
 
-void XMLHttpRequest::overrideMIMEType(const QString& override)
+void XMLHttpRequest::overrideMIMEType(const TQString& override)
 {
     m_mimeTypeOverride = override;
 }
 
-void XMLHttpRequest::setRequestHeader(const QString& _name, const QString &value)
+void XMLHttpRequest::setRequestHeader(const TQString& _name, const TQString &value)
 {
-  QString name = _name.lower().stripWhiteSpace();
+  TQString name = _name.lower().stripWhiteSpace();
 
   // Content-type needs to be set seperately from the other headers
   if(name == "content-type") {
@@ -486,8 +486,8 @@ void XMLHttpRequest::setRequestHeader(const QString& _name, const QString &value
 
   // Reject all banned headers. See BANNED_HTTP_HEADERS above.
   // kdDebug() << "Banned HTTP Headers: " << BANNED_HTTP_HEADERS << endl;
-  QStringList bannedHeaders = QStringList::split(',',
-                                  QString::fromLatin1(BANNED_HTTP_HEADERS));
+  TQStringList bannedHeaders = TQStringList::split(',',
+                                  TQString::fromLatin1(BANNED_HTTP_HEADERS));
 
   if (bannedHeaders.contains(name))
     return;   // Denied
@@ -510,13 +510,13 @@ Value XMLHttpRequest::getAllResponseHeaders() const
   return String(responseHeaders.mid(endOfLine + 1) + "\n");
 }
 
-Value XMLHttpRequest::getResponseHeader(const QString& name) const
+Value XMLHttpRequest::getResponseHeader(const TQString& name) const
 {
   if (responseHeaders.isEmpty()) {
     return Undefined();
   }
 
-  QRegExp headerLinePattern(name + ":", false);
+  TQRegExp headerLinePattern(name + ":", false);
 
   int matchLength;
   int headerLinePos = headerLinePattern.search(responseHeaders, 0);
@@ -540,14 +540,14 @@ Value XMLHttpRequest::getResponseHeader(const QString& name) const
   return String(responseHeaders.mid(headerLinePos + matchLength, endOfLine - (headerLinePos + matchLength)).stripWhiteSpace());
 }
 
-static Value httpStatus(const QString& response, bool textStatus = false)
+static Value httpStatus(const TQString& response, bool textStatus = false)
 {
   if (response.isEmpty()) {
     return Undefined();
   }
 
   int endOfLine = response.find("\n");
-  QString firstLine = (endOfLine == -1) ? response : response.left(endOfLine);
+  TQString firstLine = (endOfLine == -1) ? response : response.left(endOfLine);
   int codeStart = firstLine.find(" ");
   int codeEnd = firstLine.find(" ", codeStart + 1);
 
@@ -556,11 +556,11 @@ static Value httpStatus(const QString& response, bool textStatus = false)
   }
 
   if (textStatus) {
-    QString statusText = firstLine.mid(codeEnd + 1, endOfLine - (codeEnd + 1)).stripWhiteSpace();
+    TQString statusText = firstLine.mid(codeEnd + 1, endOfLine - (codeEnd + 1)).stripWhiteSpace();
     return String(statusText);
   }
 
-  QString number = firstLine.mid(codeStart + 1, codeEnd - (codeStart + 1));
+  TQString number = firstLine.mid(codeStart + 1, codeEnd - (codeStart + 1));
 
   bool ok = false;
   int code = number.toInt(&ok);
@@ -581,7 +581,7 @@ Value XMLHttpRequest::getStatusText() const
   return httpStatus(responseHeaders, true);
 }
 
-void XMLHttpRequest::processSyncLoadResults(const QByteArray &data, const KURL &finalURL, const QString &headers)
+void XMLHttpRequest::processSyncLoadResults(const TQByteArray &data, const KURL &finalURL, const TQString &headers)
 {
   if (!urlMatchesDocumentDomain(finalURL)) {
     abort();
@@ -635,7 +635,7 @@ void XMLHttpRequest::slotRedirection(KIO::Job*, const KURL& url)
 #ifdef APPLE_CHANGES
 void XMLHttpRequest::slotData( KIO::Job*, const char *data, int len )
 #else
-void XMLHttpRequest::slotData(KIO::Job*, const QByteArray &_data)
+void XMLHttpRequest::slotData(KIO::Job*, const TQByteArray &_data)
 #endif
 {
   if (state < Loaded ) {
@@ -664,10 +664,10 @@ void XMLHttpRequest::slotData(KIO::Job*, const QByteArray &_data)
     if ( pos > -1 ) {
       pos += 13;
       int index = responseHeaders.find('\n', pos);
-      QString type = responseHeaders.mid(pos, (index-pos));
+      TQString type = responseHeaders.mid(pos, (index-pos));
       index = type.find (';');
       if (index > -1)
-        encoding = type.mid( index+1 ).remove(QRegExp("charset[ ]*=[ ]*", false)).stripWhiteSpace();
+        encoding = type.mid( index+1 ).remove(TQRegExp("charset[ ]*=[ ]*", false)).stripWhiteSpace();
     }
 
     decoder = new Decoder;
@@ -684,7 +684,7 @@ void XMLHttpRequest::slotData(KIO::Job*, const QByteArray &_data)
   if (len == -1)
     len = strlen(data);
 
-  QString decoded = decoder->decode(data, len);
+  TQString decoded = decoder->decode(data, len);
 
   response += decoded;
 
@@ -724,7 +724,7 @@ Value XMLHttpRequestProtoFunc::tryCall(ExecState *exec, Object &thisObj, const L
         return Undefined();
       }
 
-      QString method = args[0].toString(exec).qstring();
+      TQString method = args[0].toString(exec).qstring();
       KHTMLPart *part = ::qt_cast<KHTMLPart *>(Window::retrieveActive(exec)->part());
       if (!part)
         return Undefined();
@@ -757,7 +757,7 @@ Value XMLHttpRequestProtoFunc::tryCall(ExecState *exec, Object &thisObj, const L
 	return Undefined();
       }
 
-      QString body;
+      TQString body;
       if (args.size() >= 1) {
         Object obj = Object::dynamicCast(args[0]);
         if (obj.isValid() && obj.inherits(&DOMDocument::info)) {

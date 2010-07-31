@@ -19,7 +19,7 @@
 #ifndef ksambashare_h
 #define ksambashare_h
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kdelibs_export.h>
 
@@ -31,7 +31,7 @@ class KSambaSharePrivate;
  * any suid script.
  * Singleton class, call instance() to get an instance.
  */
-class KIO_EXPORT KSambaShare : public QObject 
+class KIO_EXPORT KSambaShare : public TQObject 
 {
 Q_OBJECT
 public:
@@ -45,14 +45,14 @@ public:
    * @param path the path to check if it is shared by Samba.
    * @return whether the given path is shared by Samba.
    */
-  bool isDirectoryShared( const QString & path ) const;
+  bool isDirectoryShared( const TQString & path ) const;
   
   /**
    * Returns a list of all directories shared by Samba.
    * The resulting list is not sorted.
    * @return a list of all directories shared by Samba.
    */
-  QStringList sharedDirectories() const;
+  TQStringList sharedDirectories() const;
   
   /**
    * KSambaShare destructor. 
@@ -65,7 +65,7 @@ public:
    * Returns the path to the used smb.conf file
    * or null if no file was found
    */
-  QString smbConfPath() const;
+  TQString smbConfPath() const;
   
 signals:
   /**
@@ -79,7 +79,7 @@ private:
   KSambaSharePrivate* d;
   
 private slots:
-  void slotFileChange(const QString&);  
+  void slotFileChange(const TQString&);  
 };
 
 #endif

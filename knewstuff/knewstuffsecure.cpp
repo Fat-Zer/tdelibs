@@ -13,7 +13,7 @@
  *                                                                         *
  ***************************************************************************/
 //qt includes
-#include <qfileinfo.h>
+#include <tqfileinfo.h>
 
 //kde includes
 #include <kconfig.h>
@@ -33,11 +33,11 @@
 
 using namespace KNS;
 
-KNewStuffSecure::KNewStuffSecure(const QString &type,  QWidget *parentWidget)
+KNewStuffSecure::KNewStuffSecure(const TQString &type,  TQWidget *parentWidget)
  : KNewStuff(type, parentWidget)
 {
   m_tempDir = 0L;
-  connect(engine(), SIGNAL(uploadFinished(bool)), SLOT(slotUploadFinished(bool)));
+  connect(engine(), TQT_SIGNAL(uploadFinished(bool)), TQT_SLOT(slotUploadFinished(bool)));
 }
 
 
@@ -46,7 +46,7 @@ KNewStuffSecure::~KNewStuffSecure()
   removeTempDirectory();
 }
 
-bool KNewStuffSecure::install(const QString &fileName)
+bool KNewStuffSecure::install(const TQString &fileName)
 {
   bool ok = true;
 
@@ -59,8 +59,8 @@ bool KNewStuffSecure::install(const QString &fileName)
       const KArchiveDirectory *directory = tar.directory();
       directory->copyTo(m_tempDir->name(), true);
       m_tarName = "";
-      QStringList entries = directory->entries();
-      for (QStringList::Iterator it = entries.begin(); it != entries.end(); ++it)
+      TQStringList entries = directory->entries();
+      for (TQStringList::Iterator it = entries.begin(); it != entries.end(); ++it)
       {
         if (*it != "signature" && *it != "md5sum")
         {
@@ -74,7 +74,7 @@ bool KNewStuffSecure::install(const QString &fileName)
       else
       {
          m_tarName.prepend(m_tempDir->name());
-         connect(Security::ref(), SIGNAL(validityResult(int)), this, SLOT(slotValidated(int)));
+         connect(Security::ref(), TQT_SIGNAL(validityResult(int)), this, TQT_SLOT(slotValidated(int)));
          Security::ref()->checkValidity(m_tarName);
       }
   } else
@@ -86,8 +86,8 @@ bool KNewStuffSecure::install(const QString &fileName)
 
 void KNewStuffSecure::slotValidated(int result)
 {
-   QString errorString;
-   QString signatureStr;
+   TQString errorString;
+   TQString signatureStr;
    bool valid = true;
    if (result == -1)
    {
@@ -147,14 +147,14 @@ void KNewStuffSecure::slotValidated(int result)
     KConfig *cfg = KGlobal::config();
     cfg->deleteGroup("KNewStuffStatus");
     cfg->setGroup("KNewStuffStatus");
-    for (QMap<QString, QString>::ConstIterator it = m_installedResources.constBegin(); it != m_installedResources.constEnd(); ++it)
+    for (TQMap<TQString, TQString>::ConstIterator it = m_installedResources.constBegin(); it != m_installedResources.constEnd(); ++it)
     {
       cfg->writeEntry(it.key(), it.data());
     }
     cfg->sync();
   }
   removeTempDirectory();
-  disconnect(Security::ref(), SIGNAL(validityResult(int)), this, SLOT(slotValidated(int)));
+  disconnect(Security::ref(), TQT_SIGNAL(validityResult(int)), this, TQT_SLOT(slotValidated(int)));
 }
 
 void KNewStuffSecure::downloadResource()
@@ -165,19 +165,19 @@ void KNewStuffSecure::downloadResource()
   KNewStuff::download();
 }
 
-bool KNewStuffSecure::createUploadFile(const QString &fileName)
+bool KNewStuffSecure::createUploadFile(const TQString &fileName)
 {
   Q_UNUSED(fileName);
   return true; 
 }
 
-void KNewStuffSecure::uploadResource(const QString& fileName)
+void KNewStuffSecure::uploadResource(const TQString& fileName)
 {
-  connect(Security::ref(), SIGNAL(fileSigned(int)), this, SLOT(slotFileSigned(int)));
+  connect(Security::ref(), TQT_SIGNAL(fileSigned(int)), this, TQT_SLOT(slotFileSigned(int)));
   removeTempDirectory();
   m_tempDir = new KTempDir();
   m_tempDir->setAutoDelete(true);
-  QFileInfo f(fileName);
+  TQFileInfo f(fileName);
   m_signedFileName = m_tempDir->name() + "/" + f.fileName();
   KIO::NetAccess::file_copy(KURL::fromPathOrURL(fileName), KURL::fromPathOrURL(m_signedFileName), -1, true);
   Security::ref()->signFile(m_signedFileName);
@@ -194,30 +194,30 @@ void KNewStuffSecure::slotFileSigned(int result)
     {
       if (KMessageBox::warningContinueCancel(parentWidget(), i18n("There are no keys usable for signing or you did not entered the correct passphrase.\nProceed without signing the resource?")) == KMessageBox::Cancel)
       {
-        disconnect(Security::ref(), SIGNAL(fileSigned(int)), this, SLOT(slotFileSigned(int)));
+        disconnect(Security::ref(), TQT_SIGNAL(fileSigned(int)), this, TQT_SLOT(slotFileSigned(int)));
         removeTempDirectory();
         return;    
       }
     } 
     KTar tar(m_signedFileName + ".signed", "application/x-gzip");
     tar.open(IO_WriteOnly);
-    QStringList files;
+    TQStringList files;
     files << m_signedFileName;
     files << m_tempDir->name() + "/md5sum";
     files << m_tempDir->name() + "/signature";
   
-    for (QStringList::Iterator it_f = files.begin(); it_f != files.end(); ++it_f)
+    for (TQStringList::Iterator it_f = files.begin(); it_f != files.end(); ++it_f)
     {
-      QFile file(*it_f);
+      TQFile file(*it_f);
       file.open(IO_ReadOnly);
-      QByteArray bArray = file.readAll();
-      tar.writeFile(QFileInfo(file).fileName(), "user", "group", bArray.size(), bArray.data());
+      TQByteArray bArray = file.readAll();
+      tar.writeFile(TQFileInfo(file).fileName(), "user", "group", bArray.size(), bArray.data());
       file.close();
     }
     tar.close();
     KIO::NetAccess::file_move(KURL::fromPathOrURL(m_signedFileName + ".signed"), KURL::fromPathOrURL(m_signedFileName), -1, true);
-    KNewStuff::upload(m_signedFileName, QString::null);
-    disconnect(Security::ref(), SIGNAL(fileSigned(int)), this, SLOT(slotFileSigned(int)));
+    KNewStuff::upload(m_signedFileName, TQString::null);
+    disconnect(Security::ref(), TQT_SIGNAL(fileSigned(int)), this, TQT_SLOT(slotFileSigned(int)));
   }
 }
 

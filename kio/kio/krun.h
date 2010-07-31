@@ -24,9 +24,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include <qobject.h>
-#include <qtimer.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqtimer.h>
+#include <tqstring.h>
 #include <kurl.h>
 #include <kstartupinfo.h>
 
@@ -109,9 +109,9 @@ public:
    *        a very slow FTP server...
    *        It is always better to provide progress info in such cases.
    */
-  KRun( const KURL& url, QWidget* window, mode_t mode = 0,
+  KRun( const KURL& url, TQWidget* window, mode_t mode = 0,
 	bool isLocalFile = false, bool showProgressInfo = true );
-  KRun( const KURL& url, QWidget* window, const QCString& asn, mode_t mode = 0,
+  KRun( const KURL& url, TQWidget* window, const TQCString& asn, mode_t mode = 0,
 	bool isLocalFile = false, bool showProgressInfo = true );
 
   /**
@@ -169,7 +169,7 @@ public:
    * the recent documents list.
    * @param desktopEntryName the desktopEntryName of the service, e.g. "kate".
    */
-  void setPreferredService( const QString& desktopEntryName );
+  void setPreferredService( const TQString& desktopEntryName );
 
   /**
    * Sets whether executables, .desktop files or shell scripts should
@@ -197,7 +197,7 @@ public:
    * file name.
    * @since 3.5.3
    */
-  void setSuggestedFileName( const QString& fileName );
+  void setSuggestedFileName( const TQString& fileName );
 
   /**
    * Open a list of URLs with a certain service (application).
@@ -211,9 +211,9 @@ public:
    * @return the process id, or 0 on error
    * @since 3.5.2
    */
-  static pid_t run( const KService& _service, const KURL::List& _urls, QWidget* window, bool tempFiles = false );
-  static pid_t run( const KService& _service, const KURL::List& _urls, QWidget* window,
-      const QCString& asn, bool tempFiles = false );
+  static pid_t run( const KService& _service, const KURL::List& _urls, TQWidget* window, bool tempFiles = false );
+  static pid_t run( const KService& _service, const KURL::List& _urls, TQWidget* window,
+      const TQCString& asn, bool tempFiles = false );
   /**
    * Open a list of URLs with a certain service (application).
    *
@@ -229,9 +229,9 @@ public:
   static pid_t run( const KService& _service, const KURL::List& _urls );
   /// @since 3.5.3
   /// @internal
-  static pid_t run( const KService& _service, const KURL::List& _urls, QWidget* window, bool tempFiles, const QString& suggestedFileName );
-  static pid_t run( const KService& _service, const KURL::List& _urls, QWidget* window,
-      const QCString& asn, bool tempFiles, const QString& suggestedFileName );
+  static pid_t run( const KService& _service, const KURL::List& _urls, TQWidget* window, bool tempFiles, const TQString& suggestedFileName );
+  static pid_t run( const KService& _service, const KURL::List& _urls, TQWidget* window,
+      const TQCString& asn, bool tempFiles, const TQString& suggestedFileName );
 
   /**
    * Open a list of URLs with.
@@ -246,11 +246,11 @@ public:
    * @param _obsolete2 Do not use!
    * @return the process id, or 0 on error
    */
-  static pid_t run( const QString& _exec, const KURL::List& _urls,
-		   const QString& _name = QString::null,
-		   const QString& _icon = QString::null,
-		   const QString& _obsolete1 = QString::null,
-		   const QString& _obsolete2 = QString::null );
+  static pid_t run( const TQString& _exec, const KURL::List& _urls,
+		   const TQString& _name = TQString::null,
+		   const TQString& _icon = TQString::null,
+		   const TQString& _obsolete1 = TQString::null,
+		   const TQString& _obsolete2 = TQString::null );
 
   /**
    * Open the given URL.
@@ -270,13 +270,13 @@ public:
   // BIC Merge second overload with first one using runExecutables=true, and
   // merge third overload with first one as well using tempFiles=false and
   // runExecutables=true
-  static pid_t runURL( const KURL& _url, const QString& _mimetype, bool tempFile, bool runExecutables);
-  static pid_t runURL( const KURL& _url, const QString& _mimetype, bool tempFile);
-  static pid_t runURL( const KURL& _url, const QString& _mimetype );
+  static pid_t runURL( const KURL& _url, const TQString& _mimetype, bool tempFile, bool runExecutables);
+  static pid_t runURL( const KURL& _url, const TQString& _mimetype, bool tempFile);
+  static pid_t runURL( const KURL& _url, const TQString& _mimetype );
   /// @since 3.5.3
   /// @internal
-  static pid_t runURL( const KURL& _url, const QString& _mimetype, QWidget* window, const QCString& asn, bool tempFile, bool runExecutables, const QString& suggestedFileName );
-  static pid_t runURL( const KURL& _url, const QString& _mimetype, bool tempFile, bool runExecutables, const QString& suggestedFileName );
+  static pid_t runURL( const KURL& _url, const TQString& _mimetype, TQWidget* window, const TQCString& asn, bool tempFile, bool runExecutables, const TQString& suggestedFileName );
+  static pid_t runURL( const KURL& _url, const TQString& _mimetype, bool tempFile, bool runExecutables, const TQString& suggestedFileName );
 
   /**
    * Run the given shell command and notifies kicker of the starting
@@ -292,7 +292,7 @@ public:
    * @return PID of running command, 0 if it could not be started, 0 - (PID
    * of running command) if command was unsafe for map notification.
    */
-  static pid_t runCommand( QString cmd );
+  static pid_t runCommand( TQString cmd );
 
   /**
    * Same as the other runCommand(), but it also takes the name of the
@@ -305,9 +305,9 @@ public:
    * @return PID of running command, 0 if it could not be started, 0 - (PID
    * of running command) if command was unsafe for map notification.
    */
-  static pid_t runCommand( const QString& cmd, const QString & execName, const QString & icon );
-  static pid_t runCommand( const QString& cmd, const QString & execName, const QString & icon,
-      QWidget* window, const QCString& asn );
+  static pid_t runCommand( const TQString& cmd, const TQString & execName, const TQString & icon );
+  static pid_t runCommand( const TQString& cmd, const TQString & execName, const TQString & icon,
+      TQWidget* window, const TQCString& asn );
 
   /**
    * Display the Open-With dialog for those URLs, and run the chosen application.
@@ -321,13 +321,13 @@ public:
   static bool displayOpenWithDialog( const KURL::List& lst );
   /// @since 3.5.3
   /// @internal
-  static bool displayOpenWithDialog( const KURL::List& lst, bool tempFiles, const QString& suggestedFileName );
+  static bool displayOpenWithDialog( const KURL::List& lst, bool tempFiles, const TQString& suggestedFileName );
 
   /**
    * Quotes a string for the shell.
    * @param _str the string to quote. The quoted string will be written here
    */
-  static void shellQuote( QString &_str );
+  static void shellQuote( TQString &_str );
 
   /**
    * Processes a Exec= line as found in .desktop files.
@@ -343,11 +343,11 @@ public:
    *        when the application exits.
    * @return a list of arguments suitable for either system() or exec().
    */
-  static QStringList processDesktopExec(const KService &_service, const KURL::List &_urls, bool has_shell, bool tempFiles);
-  static QStringList processDesktopExec(const KService &_service, const KURL::List &_urls, bool has_shell);
+  static TQStringList processDesktopExec(const KService &_service, const KURL::List &_urls, bool has_shell, bool tempFiles);
+  static TQStringList processDesktopExec(const KService &_service, const KURL::List &_urls, bool has_shell);
   /// @since 3.5.3
   /// @internal
-  static QStringList processDesktopExec(const KService &_service, const KURL::List &_urls, bool has_shell, bool tempFiles, const QString& suggestedFileName);
+  static TQStringList processDesktopExec(const KService &_service, const KURL::List &_urls, bool has_shell, bool tempFiles, const TQString& suggestedFileName);
 
   /**
    * Given a full command line (e.g. the Exec= line from a .desktop file),
@@ -357,14 +357,14 @@ public:
    * @return the name of the binary to run
    * @since 3.1
    */
-  static QString binaryName( const QString & execLine, bool removePath );
+  static TQString binaryName( const TQString & execLine, bool removePath );
 
   /**
    * Returns whether @p serviceType refers to an executable program instead
    * of a data file.
    * @since 3.2
    */
-  static bool isExecutable( const QString& serviceType );
+  static bool isExecutable( const TQString& serviceType );
 
   /**
    * Returns wether the @p url of @p mimetype is executable.
@@ -379,13 +379,13 @@ public:
    * to the mimetype's desktop file.
    * @since 3.3
    */
-   static bool isExecutableFile( const KURL& url, const QString &mimetype );
+   static bool isExecutableFile( const KURL& url, const TQString &mimetype );
 
    /**
     * @internal
     * @since 3.4
     */
-    static bool checkStartupNotify( const QString& binName, const KService* service, bool* silent_arg, QCString* wmclass_arg );
+    static bool checkStartupNotify( const TQString& binName, const KService* service, bool* silent_arg, TQCString* wmclass_arg );
 
 signals:
   /**
@@ -402,7 +402,7 @@ signals:
 protected slots:
   void slotTimeout();
   void slotScanFinished( KIO::Job * );
-  void slotScanMimeType( KIO::Job *, const QString &type );
+  void slotScanMimeType( KIO::Job *, const TQString &type );
   virtual void slotStatResult( KIO::Job * );
 
 protected:
@@ -415,7 +415,7 @@ protected:
    * whether the document and appends the gzip protocol to the
    * URL. Otherwise runURL is called to finish the job.
    */
-  virtual void foundMimeType( const QString& _type );
+  virtual void foundMimeType( const TQString& _type );
 
   virtual void killJob();
 
@@ -425,7 +425,7 @@ protected:
   bool m_bProgressInfo;
   bool m_bFinished;
   KIO::Job * m_job;
-  QTimer m_timer;
+  TQTimer m_timer;
 
   /**
    * Used to indicate that the next action is to scan the file.
@@ -447,7 +447,7 @@ protected:
   virtual void virtual_hook( int id, void* data );
 
 private:
-  void init (const KURL& url, QWidget* window, const QCString& asn, mode_t mode,
+  void init (const KURL& url, TQWidget* window, const TQCString& asn, mode_t mode,
              bool isLocalFile, bool showProgressInfo);
 private:
   class KRunPrivate;
@@ -481,9 +481,9 @@ class KIO_EXPORT KProcessRunner : public QObject
 
   public:
 
-    static pid_t run(KProcess *, const QString & binName);
+    static pid_t run(KProcess *, const TQString & binName);
 #ifdef Q_WS_X11 // We don't have KStartupInfo in Qt/Embedded
-    static pid_t run(KProcess *, const QString & binName, const KStartupInfoId& id );
+    static pid_t run(KProcess *, const TQString & binName, const KStartupInfoId& id );
 #endif
 
     virtual ~KProcessRunner();
@@ -496,14 +496,14 @@ class KIO_EXPORT KProcessRunner : public QObject
 
   private:
 
-    KProcessRunner(KProcess *, const QString & binName);
+    KProcessRunner(KProcess *, const TQString & binName);
 #ifdef Q_WS_X11 // We don't have KStartupInfo in Qt/Embedded
-    KProcessRunner(KProcess *, const QString & binName, const KStartupInfoId& id );
+    KProcessRunner(KProcess *, const TQString & binName, const KStartupInfoId& id );
 #endif
     KProcessRunner();
 
     KProcess * process_;
-    QString binName;
+    TQString binName;
 #ifdef Q_WS_X11 // We don't have KStartupInfo in Qt/Embedded
     KStartupInfoId id_;
 #endif

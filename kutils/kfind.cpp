@@ -24,11 +24,11 @@
 #include <kapplication.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <qlabel.h>
-#include <qregexp.h>
-#include <qstylesheet.h>
-#include <qguardedptr.h>
-#include <qptrvector.h>
+#include <tqlabel.h>
+#include <tqregexp.h>
+#include <tqstylesheet.h>
+#include <tqguardedptr.h>
+#include <tqptrvector.h>
 #include <kdebug.h>
 
 //#define DEBUG_FIND
@@ -38,11 +38,11 @@
 class KFindNextDialog : public KDialogBase
 {
 public:
-    KFindNextDialog(const QString &pattern, QWidget *parent);
+    KFindNextDialog(const TQString &pattern, TQWidget *parent);
 };
 
 // Create the dialog.
-KFindNextDialog::KFindNextDialog(const QString &pattern, QWidget *parent) :
+KFindNextDialog::KFindNextDialog(const TQString &pattern, TQWidget *parent) :
     KDialogBase(parent, 0, false,  // non-modal!
         i18n("Find Next"),
         User1 | Close,
@@ -50,7 +50,7 @@ KFindNextDialog::KFindNextDialog(const QString &pattern, QWidget *parent) :
         false,
         KStdGuiItem::find())
 {
-    setMainWidget( new QLabel( i18n("<qt>Find next occurrence of '<b>%1</b>'?</qt>").arg(pattern), this ) );
+    setMainWidget( new TQLabel( i18n("<qt>Find next occurrence of '<b>%1</b>'?</qt>").arg(pattern), this ) );
 }
 
 ////
@@ -92,39 +92,39 @@ struct KFind::Private
     struct Data
     {
         Data() : id(-1), dirty(false) { }
-        Data(int id, const QString &text, bool dirty = false) :
+        Data(int id, const TQString &text, bool dirty = false) :
           id(id),
           text(text),
           dirty(dirty)
         { }
 
         int     id;
-        QString text;
+        TQString text;
         bool    dirty;
     };
 
-    QGuardedPtr<QWidget>  findDialog;
+    TQGuardedPtr<TQWidget>  findDialog;
     bool                  patternChanged;
-    QString               matchedPattern;
-    QDict<Match>          incrementalPath;
+    TQString               matchedPattern;
+    TQDict<Match>          incrementalPath;
     Match *               emptyMatch;
-    QPtrVector<Data>      data;
+    TQPtrVector<Data>      data;
     int                   currentId;
     bool                  customIds;
 };
 
 ////
 
-KFind::KFind( const QString &pattern, long options, QWidget *parent )
-    : QObject( parent )
+KFind::KFind( const TQString &pattern, long options, TQWidget *parent )
+    : TQObject( parent )
 {
     d = new KFind::Private;
     m_options = options;
     init( pattern );
 }
 
-KFind::KFind( const QString &pattern, long options, QWidget *parent, QWidget *findDialog )
-    : QObject( parent )
+KFind::KFind( const TQString &pattern, long options, TQWidget *parent, TQWidget *findDialog )
+    : TQObject( parent )
 {
     d = new KFind::Private;
     d->findDialog = findDialog;
@@ -132,7 +132,7 @@ KFind::KFind( const QString &pattern, long options, QWidget *parent, QWidget *fi
     init( pattern );
 }
 
-void KFind::init( const QString& pattern )
+void KFind::init( const TQString& pattern )
 {
     m_matches = 0;
     m_pattern = pattern;
@@ -141,7 +141,7 @@ void KFind::init( const QString& pattern )
     m_index = INDEX_NOMATCH;
     m_lastResult = NoMatch;
     if (m_options & KFindDialog::RegularExpression)
-        m_regExp = new QRegExp(pattern, m_options & KFindDialog::CaseSensitive);
+        m_regExp = new TQRegExp(pattern, m_options & KFindDialog::CaseSensitive);
     else {
         m_regExp = 0;
     }
@@ -166,12 +166,12 @@ bool KFind::needData() const
         return m_index == INDEX_NOMATCH;
 }
 
-void KFind::setData( const QString& data, int startPos )
+void KFind::setData( const TQString& data, int startPos )
 {
     setData( -1, data, startPos );
 }
 
-void KFind::setData( int id, const QString& data, int startPos )
+void KFind::setData( int id, const TQString& data, int startPos )
 {
     // cache the data for incremental find
     if ( m_options & KFindDialog::FindIncremental )
@@ -212,8 +212,8 @@ KDialogBase* KFind::findNextDialog( bool create )
     if ( !m_dialog && create )
     {
         m_dialog = new KFindNextDialog( m_pattern, parentWidget() );
-        connect( m_dialog, SIGNAL( user1Clicked() ), this, SLOT( slotFindNext() ) );
-        connect( m_dialog, SIGNAL( finished() ), this, SLOT( slotDialogClosed() ) );
+        connect( m_dialog, TQT_SIGNAL( user1Clicked() ), this, TQT_SLOT( slotFindNext() ) );
+        connect( m_dialog, TQT_SIGNAL( finished() ), this, TQT_SLOT( slotDialogClosed() ) );
     }
     return m_dialog;
 }
@@ -244,7 +244,7 @@ KFind::Result KFind::find()
         if ( m_pattern.length() < d->matchedPattern.length() )
         {
             Private::Match *match = m_pattern.isEmpty() ? d->emptyMatch : d->incrementalPath[m_pattern];
-            QString previousPattern = d->matchedPattern;
+            TQString previousPattern = d->matchedPattern;
             d->matchedPattern = m_pattern;
             if ( match != 0 )
             {
@@ -306,7 +306,7 @@ KFind::Result KFind::find()
                 if ( m_index == INDEX_NOMATCH )
                     return NoMatch;
 
-                QString temp = m_pattern;
+                TQString temp = m_pattern;
                 m_pattern.truncate(d->matchedPattern.length() + 1);
                 d->matchedPattern = temp;
             }
@@ -409,7 +409,7 @@ KFind::Result KFind::find()
         {
             if ( m_options & KFindDialog::FindIncremental )
             {
-                QString temp = m_pattern;
+                TQString temp = m_pattern;
                 temp.truncate(temp.length() - 1);
                 m_pattern = d->matchedPattern;
                 d->matchedPattern = temp;
@@ -432,7 +432,7 @@ void KFind::startNewIncrementalSearch()
     Private::Match *match = d->emptyMatch;
     if(match == 0)
     {
-        m_text = QString::null;
+        m_text = TQString::null;
         m_index = 0;
         d->currentId = 0;
     }
@@ -447,16 +447,16 @@ void KFind::startNewIncrementalSearch()
     delete d->emptyMatch;
     d->emptyMatch = 0;
     d->matchedPattern = m_pattern;
-    m_pattern = QString::null;
+    m_pattern = TQString::null;
 }
 
 // static
-int KFind::find(const QString &text, const QString &pattern, int index, long options, int *matchedLength)
+int KFind::find(const TQString &text, const TQString &pattern, int index, long options, int *matchedLength)
 {
     // Handle regular expressions in the appropriate way.
     if (options & KFindDialog::RegularExpression)
     {
-        QRegExp regExp(pattern, options & KFindDialog::CaseSensitive);
+        TQRegExp regExp(pattern, options & KFindDialog::CaseSensitive);
 
         return find(text, regExp, index, options, matchedLength);
     }
@@ -522,7 +522,7 @@ int KFind::find(const QString &text, const QString &pattern, int index, long opt
 }
 
 // static
-int KFind::find(const QString &text, const QRegExp &pattern, int index, long options, int *matchedLength)
+int KFind::find(const TQString &text, const TQRegExp &pattern, int index, long options, int *matchedLength)
 {
     if (options & KFindDialog::WholeWordsOnly)
     {
@@ -588,12 +588,12 @@ int KFind::find(const QString &text, const QRegExp &pattern, int index, long opt
     return index;
 }
 
-bool KFind::isInWord(QChar ch)
+bool KFind::isInWord(TQChar ch)
 {
     return ch.isLetter() || ch.isDigit() || ch == '_';
 }
 
-bool KFind::isWholeWords(const QString &text, int starts, int matchedLength)
+bool KFind::isWholeWords(const TQString &text, int starts, int matchedLength)
 {
     if ((starts == 0) || (!isInWord(text[starts - 1])))
     {
@@ -618,11 +618,11 @@ void KFind::slotDialogClosed()
 
 void KFind::displayFinalDialog() const
 {
-    QString message;
+    TQString message;
     if ( numMatches() )
         message = i18n( "1 match found.", "%n matches found.", numMatches() );
     else
-        message = i18n("<qt>No matches found for '<b>%1</b>'.</qt>").arg(QStyleSheet::escape(m_pattern));
+        message = i18n("<qt>No matches found for '<b>%1</b>'.</qt>").arg(TQStyleSheet::escape(m_pattern));
     KMessageBox::information(dialogsParent(), message);
 }
 
@@ -636,13 +636,13 @@ bool KFind::shouldRestart( bool forceAsking, bool showNumMatches ) const
         displayFinalDialog();
         return false;
     }
-    QString message;
+    TQString message;
     if ( showNumMatches )
     {
         if ( numMatches() )
             message = i18n( "1 match found.", "%n matches found.", numMatches() );
         else
-            message = i18n("No matches found for '<b>%1</b>'.").arg(QStyleSheet::escape(m_pattern));
+            message = i18n("No matches found for '<b>%1</b>'.").arg(TQStyleSheet::escape(m_pattern));
     }
     else
     {
@@ -659,8 +659,8 @@ bool KFind::shouldRestart( bool forceAsking, bool showNumMatches ) const
         i18n("Continue from the end?")
         : i18n("Continue from the beginning?");
 
-    int ret = KMessageBox::questionYesNo( dialogsParent(), QString("<qt>")+message+QString("</qt>"),
-                                          QString::null, KStdGuiItem::cont(), KStdGuiItem::stop() );
+    int ret = KMessageBox::questionYesNo( dialogsParent(), TQString("<qt>")+message+TQString("</qt>"),
+                                          TQString::null, KStdGuiItem::cont(), KStdGuiItem::stop() );
     bool yes = ( ret == KMessageBox::Yes );
     if ( yes )
         const_cast<KFind*>(this)->m_options &= ~KFindDialog::FromCursor; // clear FromCursor option
@@ -673,7 +673,7 @@ void KFind::setOptions( long options )
 
     delete m_regExp;
     if (m_options & KFindDialog::RegularExpression)
-        m_regExp = new QRegExp(m_pattern, m_options & KFindDialog::CaseSensitive);
+        m_regExp = new TQRegExp(m_pattern, m_options & KFindDialog::CaseSensitive);
     else
         m_regExp = 0;
 }
@@ -690,7 +690,7 @@ int KFind::index() const
     return m_index;
 }
 
-void KFind::setPattern( const QString& pattern )
+void KFind::setPattern( const TQString& pattern )
 {
     if ( m_options & KFindDialog::FindIncremental && m_pattern != pattern )
         d->patternChanged = true;
@@ -699,12 +699,12 @@ void KFind::setPattern( const QString& pattern )
     setOptions( options() ); // rebuild m_regExp if necessary
 }
 
-QWidget* KFind::dialogsParent() const
+TQWidget* KFind::dialogsParent() const
 {
     // If the find dialog is still up, it should get the focus when closing a message box
     // Otherwise, maybe the "find next?" dialog is up
     // Otherwise, the "view" is the parent.
-    return d->findDialog ? (QWidget*)d->findDialog : ( m_dialog ? m_dialog : parentWidget() );
+    return d->findDialog ? (TQWidget*)d->findDialog : ( m_dialog ? m_dialog : parentWidget() );
 }
 
 #include "kfind.moc"

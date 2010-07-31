@@ -27,8 +27,8 @@
 
 #include <assert.h>
 
-#include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <tqtooltip.h>
+#include <tqwhatsthis.h>
 
 #include <kaccel.h>
 #include <kaccelbase.h>
@@ -50,7 +50,7 @@
 *
 * Focus Widget pointer:
 * This is the widget which is the focus for action shortcuts.
-* It is set either by passing a QWidget* to the KActionCollection constructor
+* It is set either by passing a TQWidget* to the KActionCollection constructor
 * or by calling setWidget() if the widget wasn't known when the object was
 * initially constructed (as in KXMLGUIClient and KParts::PartBase)
 *
@@ -83,10 +83,10 @@ public:
   }
 
   KAccel *m_kaccel;
-  QValueList<KAccel*> m_kaccelList;
+  TQValueList<KAccel*> m_kaccelList;
 
-  QString m_groupText;
-  QString m_group;
+  TQString m_groupText;
+  TQString m_group;
 
   KShortcut m_cut;
   KShortcut m_cutDefault;
@@ -98,48 +98,48 @@ public:
     Container() { m_container = 0; m_representative = 0; m_id = 0; }
     Container( const Container& s ) { m_container = s.m_container;
                                       m_id = s.m_id; m_representative = s.m_representative; }
-    QWidget* m_container;
+    TQWidget* m_container;
     int m_id;
-    QWidget* m_representative;
+    TQWidget* m_representative;
   };
 
-  QValueList<Container> m_containers;
+  TQValueList<Container> m_containers;
 };
 
 //---------------------------------------------------------------------
 // KAction
 //---------------------------------------------------------------------
 
-KAction::KAction( const QString& text, const KShortcut& cut,
-             const QObject* receiver, const char* slot,
+KAction::KAction( const TQString& text, const KShortcut& cut,
+             const TQObject* receiver, const char* slot,
              KActionCollection* parent, const char* name )
-: QObject( parent, name ), d(new KActionPrivate)
+: TQObject( parent, name ), d(new KActionPrivate)
 {
 	initPrivate( text, cut, receiver, slot );
 }
 
-KAction::KAction( const QString& text, const QString& sIconName, const KShortcut& cut,
-	const QObject* receiver, const char* slot,
+KAction::KAction( const TQString& text, const TQString& sIconName, const KShortcut& cut,
+	const TQObject* receiver, const char* slot,
 	KActionCollection* parent, const char* name )
-: QObject( parent, name ), d(new KActionPrivate)
+: TQObject( parent, name ), d(new KActionPrivate)
 {
 	initPrivate( text, cut, receiver, slot );
 	d->setIconName( sIconName );
 }
 
-KAction::KAction( const QString& text, const QIconSet& pix, const KShortcut& cut,
-	const QObject* receiver, const char* slot,
+KAction::KAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+	const TQObject* receiver, const char* slot,
 	KActionCollection* parent, const char* name )
-: QObject( parent, name ), d(new KActionPrivate)
+: TQObject( parent, name ), d(new KActionPrivate)
 {
 	initPrivate( text, cut, receiver, slot );
 	d->setIconSet( pix );
 }
 
 KAction::KAction( const KGuiItem& item, const KShortcut& cut,
-	const QObject* receiver, const char* slot,
+	const TQObject* receiver, const char* slot,
 	KActionCollection* parent, const char* name )
-: QObject( parent, name ), d(new KActionPrivate)
+: TQObject( parent, name ), d(new KActionPrivate)
 {
 	initPrivate( item.text(), cut, receiver, slot );
 	if( item.hasIcon() )
@@ -149,63 +149,63 @@ KAction::KAction( const KGuiItem& item, const KShortcut& cut,
 }
 
 #ifndef KDE_NO_COMPAT // KDE 4: remove
-KAction::KAction( const QString& text, const KShortcut& cut,
-                  QObject* parent, const char* name )
- : QObject( parent, name ), d(new KActionPrivate)
+KAction::KAction( const TQString& text, const KShortcut& cut,
+                  TQObject* parent, const char* name )
+ : TQObject( parent, name ), d(new KActionPrivate)
 {
     initPrivate( text, cut, 0, 0 );
 }
 
-KAction::KAction( const QString& text, const KShortcut& cut,
-                  const QObject* receiver,
-                  const char* slot, QObject* parent, const char* name )
- : QObject( parent, name ), d(new KActionPrivate)
+KAction::KAction( const TQString& text, const KShortcut& cut,
+                  const TQObject* receiver,
+                  const char* slot, TQObject* parent, const char* name )
+ : TQObject( parent, name ), d(new KActionPrivate)
 {
     initPrivate( text, cut, receiver, slot );
 }
 
-KAction::KAction( const QString& text, const QIconSet& pix,
+KAction::KAction( const TQString& text, const TQIconSet& pix,
                   const KShortcut& cut,
-                  QObject* parent, const char* name )
- : QObject( parent, name ), d(new KActionPrivate)
+                  TQObject* parent, const char* name )
+ : TQObject( parent, name ), d(new KActionPrivate)
 {
     initPrivate( text, cut, 0, 0 );
     setIconSet( pix );
 }
 
-KAction::KAction( const QString& text, const QString& pix,
+KAction::KAction( const TQString& text, const TQString& pix,
                   const KShortcut& cut,
-                  QObject* parent, const char* name )
-: QObject( parent, name ), d(new KActionPrivate)
+                  TQObject* parent, const char* name )
+: TQObject( parent, name ), d(new KActionPrivate)
 {
     initPrivate( text, cut, 0, 0 );
     d->setIconName( pix );
 }
 
-KAction::KAction( const QString& text, const QIconSet& pix,
+KAction::KAction( const TQString& text, const TQIconSet& pix,
                   const KShortcut& cut,
-                  const QObject* receiver, const char* slot, QObject* parent,
+                  const TQObject* receiver, const char* slot, TQObject* parent,
                   const char* name )
- : QObject( parent, name ), d(new KActionPrivate)
+ : TQObject( parent, name ), d(new KActionPrivate)
 {
     initPrivate( text, cut, receiver, slot );
     setIconSet( pix );
 }
 
-KAction::KAction( const QString& text, const QString& pix,
+KAction::KAction( const TQString& text, const TQString& pix,
                   const KShortcut& cut,
-                  const QObject* receiver, const char* slot, QObject* parent,
+                  const TQObject* receiver, const char* slot, TQObject* parent,
                   const char* name )
-  : QObject( parent, name ), d(new KActionPrivate)
+  : TQObject( parent, name ), d(new KActionPrivate)
 {
     initPrivate( text, cut, receiver, slot );
     d->setIconName(pix);
 }
 
-KAction::KAction( QObject* parent, const char* name )
- : QObject( parent, name ), d(new KActionPrivate)
+KAction::KAction( TQObject* parent, const char* name )
+ : TQObject( parent, name ), d(new KActionPrivate)
 {
-    initPrivate( QString::null, KShortcut(), 0, 0 );
+    initPrivate( TQString::null, KShortcut(), 0, 0 );
 }
 #endif // KDE 4: remove end
 
@@ -221,9 +221,9 @@ KAction::~KAction()
     if ( m_parentCollection ) {
         m_parentCollection->take( this );
 
-        const QValueList<KAccel*> & accelList = d->m_kaccelList;
-        QValueList<KAccel*>::const_iterator itr = accelList.constBegin();
-        const QValueList<KAccel*>::const_iterator itrEnd = accelList.constEnd();
+        const TQValueList<KAccel*> & accelList = d->m_kaccelList;
+        TQValueList<KAccel*>::const_iterator itr = accelList.constBegin();
+        const TQValueList<KAccel*>::const_iterator itrEnd = accelList.constEnd();
 
         const char * const namePtr = name();
         for (; itr != itrEnd; ++itr )
@@ -241,8 +241,8 @@ KAction::~KAction()
     delete d;
 }
 
-void KAction::initPrivate( const QString& text, const KShortcut& cut,
-                  const QObject* receiver, const char* slot )
+void KAction::initPrivate( const TQString& text, const KShortcut& cut,
+                  const TQObject* receiver, const char* slot )
 {
     d->m_cutDefault = cut;
 
@@ -252,7 +252,7 @@ void KAction::initPrivate( const QString& text, const KShortcut& cut,
         m_parentCollection->insert( this );
 
     if ( receiver && slot )
-        connect( this, SIGNAL( activated() ), receiver, slot );
+        connect( this, TQT_SIGNAL( activated() ), receiver, slot );
 
     if( !cut.isNull() && !qstrcmp( name(), "unnamed" ) )
         kdWarning(129) << "KAction::initPrivate(): trying to assign a shortcut (" << cut.toStringInternal() << ") to an unnamed action." << endl;
@@ -265,18 +265,18 @@ bool KAction::isPlugged() const
   return (!d->m_containers.empty()) || d->m_kaccel;
 }
 
-bool KAction::isPlugged( const QWidget *container ) const
+bool KAction::isPlugged( const TQWidget *container ) const
 {
   return findContainer( container ) > -1;
 }
 
-bool KAction::isPlugged( const QWidget *container, int id ) const
+bool KAction::isPlugged( const TQWidget *container, int id ) const
 {
   int i = findContainer( container );
   return ( i > -1 && itemId( i ) == id );
 }
 
-bool KAction::isPlugged( const QWidget *container, const QWidget *_representative ) const
+bool KAction::isPlugged( const TQWidget *container, const TQWidget *_representative ) const
 {
   int i = findContainer( container );
   return ( i > -1 && representative( i ) == _representative );
@@ -388,9 +388,9 @@ void KAction::plugShortcut()
   //kdDebug(129) << "KAction::plugShortcut(): this = " << this << " kaccel() = " << (m_parentCollection ? m_parentCollection->kaccel() : 0) << endl;
   if( kaccel && qstrcmp( name(), "unnamed" ) ) {
     // Check if already plugged into current KAccel object
-    const QValueList<KAccel*> & accelList = d->m_kaccelList;
-    QValueList<KAccel*>::const_iterator itr = accelList.constBegin();
-    const QValueList<KAccel*>::const_iterator itrEnd = accelList.constEnd();
+    const TQValueList<KAccel*> & accelList = d->m_kaccelList;
+    TQValueList<KAccel*>::const_iterator itr = accelList.constBegin();
+    const TQValueList<KAccel*>::const_iterator itrEnd = accelList.constEnd();
 
     for( ; itr != itrEnd; ++itr) {
       if( (*itr) == kaccel )
@@ -410,9 +410,9 @@ bool KAction::setShortcut( const KShortcut& cut )
   bool bInsertRequired = true;
   // Apply new shortcut to all existing KAccel objects
 
-  const QValueList<KAccel*> & accelList = d->m_kaccelList;
-  QValueList<KAccel*>::const_iterator itr = accelList.constBegin();
-  const QValueList<KAccel*>::const_iterator itrEnd = accelList.constEnd();
+  const TQValueList<KAccel*> & accelList = d->m_kaccelList;
+  TQValueList<KAccel*>::const_iterator itr = accelList.constBegin();
+  const TQValueList<KAccel*>::const_iterator itrEnd = accelList.constEnd();
 
   for( ; itr != itrEnd; ++itr) {
     // Check whether shortcut has already been plugged into
@@ -450,9 +450,9 @@ bool KAction::updateKAccelShortcut( KAccel* kaccel )
   if ( !kaccel->actions().actionPtr( name() ) ) {
     if(!d->m_cut.isNull() ) {
       kdDebug(129) << "Inserting " << name() << ", " << d->text() << ", " << d->plainText() << endl;
-      b = kaccel->insert( name(), d->plainText(), QString::null,
+      b = kaccel->insert( name(), d->plainText(), TQString::null,
           d->m_cut,
-          this, SLOT(slotActivated()),
+          this, TQT_SLOT(slotActivated()),
           isShortcutConfigurable(), isEnabled() );
     }
   }
@@ -468,7 +468,7 @@ void KAction::insertKAccel( KAccel* kaccel )
   if ( !kaccel->actions().actionPtr( name() ) ) {
     if( updateKAccelShortcut( kaccel ) ) {
       d->m_kaccelList.append( kaccel );
-      connect( kaccel, SIGNAL(destroyed()), this, SLOT(slotDestroyed()) );
+      connect( kaccel, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDestroyed()) );
     }
   }
   else
@@ -478,15 +478,15 @@ void KAction::insertKAccel( KAccel* kaccel )
 void KAction::removeKAccel( KAccel* kaccel )
 {
   //kdDebug(129) << "KAction::removeKAccel( " << i << " ): this = " << this << endl;
-  QValueList<KAccel*> & accelList = d->m_kaccelList;
-  QValueList<KAccel*>::iterator itr = accelList.begin();
-  const QValueList<KAccel*>::iterator itrEnd = accelList.end();
+  TQValueList<KAccel*> & accelList = d->m_kaccelList;
+  TQValueList<KAccel*>::iterator itr = accelList.begin();
+  const TQValueList<KAccel*>::iterator itrEnd = accelList.end();
 
   for( ; itr != itrEnd; ++itr) {
     if( (*itr) == kaccel ) {
       kaccel->remove( name() );
       accelList.remove( itr );
-      disconnect( kaccel, SIGNAL(destroyed()), this, SLOT(slotDestroyed()) );
+      disconnect( kaccel, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDestroyed()) );
       break;
     }
   }
@@ -504,22 +504,22 @@ void KAction::updateShortcut( int i )
 {
   int id = itemId( i );
 
-  QWidget* w = container( i );
-  if ( ::qt_cast<QPopupMenu *>( w ) ) {
-    QPopupMenu* menu = static_cast<QPopupMenu*>(w);
+  TQWidget* w = container( i );
+  if ( ::qt_cast<TQPopupMenu *>( w ) ) {
+    TQPopupMenu* menu = static_cast<TQPopupMenu*>(w);
     updateShortcut( menu, id );
   }
-  else if ( ::qt_cast<QMenuBar *>( w ) )
-    static_cast<QMenuBar*>(w)->setAccel( d->m_cut.keyCodeQt(), id );
+  else if ( ::qt_cast<TQMenuBar *>( w ) )
+    static_cast<TQMenuBar*>(w)->setAccel( d->m_cut.keyCodeQt(), id );
 }
 
-void KAction::updateShortcut( QPopupMenu* menu, int id )
+void KAction::updateShortcut( TQPopupMenu* menu, int id )
 {
   //kdDebug(129) << "KAction::updateShortcut(): this = " << this << " d->m_kaccelList.count() = " << d->m_kaccelList.count() << endl;
   // If the action has a KAccel object,
   //  show the string representation of its shortcut.
   if ( d->m_kaccel || d->m_kaccelList.count() ) {
-    QString s = menu->text( id );
+    TQString s = menu->text( id );
     int i = s.find( '\t' );
     if ( i >= 0 )
       s.replace( i+1, s.length()-i, d->m_cut.seq(0).toString() );
@@ -547,12 +547,12 @@ const KShortcut& KAction::shortcutDefault() const
   return d->m_cutDefault;
 }
 
-QString KAction::shortcutText() const
+TQString KAction::shortcutText() const
 {
   return d->m_cut.toStringInternal();
 }
 
-void KAction::setShortcutText( const QString& s )
+void KAction::setShortcutText( const TQString& s )
 {
   setShortcut( KShortcut(s) );
 }
@@ -564,7 +564,7 @@ int KAction::accel() const
 }
 #endif
 
-void KAction::setGroup( const QString& grp )
+void KAction::setGroup( const TQString& grp )
 {
   d->m_group = grp;
 
@@ -578,7 +578,7 @@ void KAction::updateGroup( int )
   // DO SOMETHING
 }
 
-QString KAction::group() const
+TQString KAction::group() const
 {
   return d->m_group;
 }
@@ -593,7 +593,7 @@ bool KAction::isShortcutConfigurable() const
   return d->m_configurable;
 }
 
-void KAction::setToolTip( const QString& tt )
+void KAction::setToolTip( const TQString& tt )
 {
   d->setToolTip( tt );
 
@@ -604,18 +604,18 @@ void KAction::setToolTip( const QString& tt )
 
 void KAction::updateToolTip( int i )
 {
-  QWidget *w = container( i );
+  TQWidget *w = container( i );
 
   if ( ::qt_cast<KToolBar *>( w ) )
-    QToolTip::add( static_cast<KToolBar*>(w)->getWidget( itemId( i ) ), d->toolTip() );
+    TQToolTip::add( static_cast<KToolBar*>(w)->getWidget( itemId( i ) ), d->toolTip() );
 }
 
-QString KAction::toolTip() const
+TQString KAction::toolTip() const
 {
   return d->toolTip();
 }
 
-int KAction::plug( QWidget *w, int index )
+int KAction::plug( TQWidget *w, int index )
 {
   //kdDebug(129) << "KAction::plug( " << w << ", " << index << " )" << endl;
   if (!w ) {
@@ -624,7 +624,7 @@ int KAction::plug( QWidget *w, int index )
   }
 
   // Ellis: print warning if there is a shortcut, but no KAccel available (often due to no widget available in the actioncollection)
-  // David: Well, it doesn't matter much, things still work (e.g. Undo in koffice) via QAccel.
+  // David: Well, it doesn't matter much, things still work (e.g. Undo in koffice) via TQAccel.
   // We should probably re-enable the warning for things that only KAccel can do, though - e.g. WIN key (mapped to Meta).
 #if 0 //ndef NDEBUG
   KAccel* kaccel = kaccelCurrent();
@@ -639,9 +639,9 @@ int KAction::plug( QWidget *w, int index )
 
   plugShortcut();
 
-  if ( ::qt_cast<QPopupMenu *>( w ) )
+  if ( ::qt_cast<TQPopupMenu *>( w ) )
   {
-    QPopupMenu* menu = static_cast<QPopupMenu*>( w );
+    TQPopupMenu* menu = static_cast<TQPopupMenu*>( w );
     int id;
     // Don't insert shortcut into menu if it's already in a KAccel object.
     int keyQt = (d->m_kaccelList.count() || d->m_kaccel) ? 0 : d->m_cut.keyCodeQt();
@@ -654,12 +654,12 @@ int KAction::plug( QWidget *w, int index )
         else
           instance = KGlobal::instance();
         id = menu->insertItem( d->iconSet( KIcon::Small, 0, instance ), d->text(), this,//dsweet
-                                 SLOT( slotPopupActivated() ), keyQt,
+                                 TQT_SLOT( slotPopupActivated() ), keyQt,
                                  -1, index );
     }
     else
         id = menu->insertItem( d->text(), this,
-                               SLOT( slotPopupActivated() ),
+                               TQT_SLOT( slotPopupActivated() ),
                                keyQt, -1, index );
 
     // If the shortcut is already in a KAccel object, then
@@ -676,7 +676,7 @@ int KAction::plug( QWidget *w, int index )
         menu->setWhatsThis( id, whatsThisWithIcon() );
 
     addContainer( menu, id );
-    connect( menu, SIGNAL( destroyed() ), this, SLOT( slotDestroyed() ) );
+    connect( menu, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( slotDestroyed() ) );
 
     if ( m_parentCollection )
       m_parentCollection->connectHighlight( menu, this );
@@ -694,34 +694,34 @@ int KAction::plug( QWidget *w, int index )
     else
       instance = KGlobal::instance();
 
-    if ( icon().isEmpty() && !iconSet().pixmap().isNull() ) // old code using QIconSet directly
+    if ( icon().isEmpty() && !iconSet().pixmap().isNull() ) // old code using TQIconSet directly
     {
-        bar->insertButton( iconSet().pixmap(), id_, SIGNAL( buttonClicked(int, Qt::ButtonState) ), this,
-                           SLOT( slotButtonClicked(int, Qt::ButtonState) ),
+        bar->insertButton( iconSet().pixmap(), id_, TQT_SIGNAL( buttonClicked(int, Qt::ButtonState) ), this,
+                           TQT_SLOT( slotButtonClicked(int, Qt::ButtonState) ),
                            d->isEnabled(), d->plainText(), index );
     }
     else
     {
-        QString icon = d->iconName();
+        TQString icon = d->iconName();
         if ( icon.isEmpty() )
             icon = "unknown";
-        bar->insertButton( icon, id_, SIGNAL( buttonClicked(int, Qt::ButtonState) ), this,
-                           SLOT( slotButtonClicked(int, Qt::ButtonState) ),
+        bar->insertButton( icon, id_, TQT_SIGNAL( buttonClicked(int, Qt::ButtonState) ), this,
+                           TQT_SLOT( slotButtonClicked(int, Qt::ButtonState) ),
                            d->isEnabled(), d->plainText(), index, instance );
     }
 
     KToolBarButton* ktb = bar->getButton(id_);
-    ktb->setName( QCString("toolbutton_")+name() );
+    ktb->setName( TQCString("toolbutton_")+name() );
 
     if ( !d->whatsThis().isEmpty() )
-        QWhatsThis::add( bar->getButton(id_), whatsThisWithIcon() );
+        TQWhatsThis::add( bar->getButton(id_), whatsThisWithIcon() );
 
     if ( !d->toolTip().isEmpty() )
-      QToolTip::add( bar->getButton(id_), d->toolTip() );
+      TQToolTip::add( bar->getButton(id_), d->toolTip() );
 
     addContainer( bar, id_ );
 
-    connect( bar, SIGNAL( destroyed() ), this, SLOT( slotDestroyed() ) );
+    connect( bar, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( slotDestroyed() ) );
 
     if ( m_parentCollection )
       m_parentCollection->connectHighlight( bar, this );
@@ -732,16 +732,16 @@ int KAction::plug( QWidget *w, int index )
   return -1;
 }
 
-void KAction::unplug( QWidget *w )
+void KAction::unplug( TQWidget *w )
 {
   int i = findContainer( w );
   if ( i == -1 )
     return;
   int id = itemId( i );
 
-  if ( ::qt_cast<QPopupMenu *>( w ) )
+  if ( ::qt_cast<TQPopupMenu *>( w ) )
   {
-    QPopupMenu *menu = static_cast<QPopupMenu *>( w );
+    TQPopupMenu *menu = static_cast<TQPopupMenu *>( w );
     menu->removeItem( id );
   }
   else if ( ::qt_cast<KToolBar *>( w ) )
@@ -749,9 +749,9 @@ void KAction::unplug( QWidget *w )
     KToolBar *bar = static_cast<KToolBar *>( w );
     bar->removeItemDelayed( id );
   }
-  else if ( ::qt_cast<QMenuBar *>( w ) )
+  else if ( ::qt_cast<TQMenuBar *>( w ) )
   {
-    QMenuBar *bar = static_cast<QMenuBar *>( w );
+    TQMenuBar *bar = static_cast<TQMenuBar *>( w );
     bar->removeItem( id );
   }
 
@@ -777,12 +777,12 @@ void KAction::plugAccel(KAccel *kacc, bool configurable)
   if ( !kacc->actions().actionPtr(name()) )
   {
     d->m_kaccel = kacc;
-    d->m_kaccel->insert(name(), d->plainText(), QString::null,
+    d->m_kaccel->insert(name(), d->plainText(), TQString::null,
         KShortcut(d->m_cut),
-        this, SLOT(slotActivated()),
+        this, TQT_SLOT(slotActivated()),
         configurable, isEnabled());
-    connect(d->m_kaccel, SIGNAL(destroyed()), this, SLOT(slotDestroyed()));
-    //connect(d->m_kaccel, SIGNAL(keycodeChanged()), this, SLOT(slotKeycodeChanged()));
+    connect(d->m_kaccel, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDestroyed()));
+    //connect(d->m_kaccel, TQT_SIGNAL(keycodeChanged()), this, TQT_SLOT(slotKeycodeChanged()));
   }
   else
     kdWarning(129) << "KAction::plugAccel( kacc = " << kacc << " ): KAccel object already contains an action name \"" << name() << "\"" << endl; // -- ellis
@@ -798,11 +798,11 @@ void KAction::unplugAccel()
   }
 }
 
-void KAction::plugMainWindowAccel( QWidget *w )
+void KAction::plugMainWindowAccel( TQWidget *w )
 {
   // Note: topLevelWidget() stops too early, we can't use it.
-  QWidget * tl = w;
-  QWidget * n;
+  TQWidget * tl = w;
+  TQWidget * n;
   while ( !tl->isDialog() && ( n = tl->parentWidget() ) ) // lookup parent and store
     tl = n;
 
@@ -825,9 +825,9 @@ void KAction::setEnabled(bool enable)
     d->m_kaccel->setEnabled(name(), enable);
 #endif  // KDE 4: remove end
 
-  const QValueList<KAccel*> & accelList = d->m_kaccelList;
-  QValueList<KAccel*>::const_iterator itr = accelList.constBegin();
-  const QValueList<KAccel*>::const_iterator itrEnd = accelList.constEnd();
+  const TQValueList<KAccel*> & accelList = d->m_kaccelList;
+  TQValueList<KAccel*>::const_iterator itr = accelList.constBegin();
+  const TQValueList<KAccel*>::const_iterator itrEnd = accelList.constEnd();
 
   const char * const namePtr = name();
 
@@ -845,12 +845,12 @@ void KAction::setEnabled(bool enable)
 
 void KAction::updateEnabled( int i )
 {
-    QWidget *w = container( i );
+    TQWidget *w = container( i );
 
-    if ( ::qt_cast<QPopupMenu *>( w ) )
-      static_cast<QPopupMenu*>(w)->setItemEnabled( itemId( i ), d->isEnabled() );
-    else if ( ::qt_cast<QMenuBar *>( w ) )
-      static_cast<QMenuBar*>(w)->setItemEnabled( itemId( i ), d->isEnabled() );
+    if ( ::qt_cast<TQPopupMenu *>( w ) )
+      static_cast<TQPopupMenu*>(w)->setItemEnabled( itemId( i ), d->isEnabled() );
+    else if ( ::qt_cast<TQMenuBar *>( w ) )
+      static_cast<TQMenuBar*>(w)->setItemEnabled( itemId( i ), d->isEnabled() );
     else if ( ::qt_cast<KToolBar *>( w ) )
       static_cast<KToolBar*>(w)->setItemEnabled( itemId( i ), d->isEnabled() );
 }
@@ -860,7 +860,7 @@ void KAction::setShortcutConfigurable( bool b )
     d->m_configurable = b;
 }
 
-void KAction::setText( const QString& text )
+void KAction::setText( const TQString& text )
 {
 #ifndef KDE_NO_COMPAT
   // KDE 4: remove
@@ -870,9 +870,9 @@ void KAction::setText( const QString& text )
       pAction->setLabel( text );
   }
 #endif  // KDE 4: remove end
-  const QValueList<KAccel*> & accelList = d->m_kaccelList;
-  QValueList<KAccel*>::const_iterator itr = accelList.constBegin();
-  const QValueList<KAccel*>::const_iterator itrEnd = accelList.constEnd();
+  const TQValueList<KAccel*> & accelList = d->m_kaccelList;
+  TQValueList<KAccel*>::const_iterator itr = accelList.constBegin();
+  const TQValueList<KAccel*>::const_iterator itrEnd = accelList.constEnd();
 
   const char * const namePtr = name();
 
@@ -891,35 +891,35 @@ void KAction::setText( const QString& text )
 
 void KAction::updateText( int i )
 {
-  QWidget *w = container( i );
+  TQWidget *w = container( i );
 
-  if ( ::qt_cast<QPopupMenu *>( w ) ) {
+  if ( ::qt_cast<TQPopupMenu *>( w ) ) {
     int id = itemId( i );
-    static_cast<QPopupMenu*>(w)->changeItem( id, d->text() );
+    static_cast<TQPopupMenu*>(w)->changeItem( id, d->text() );
     if (!d->m_cut.isNull())
-      updateShortcut( static_cast<QPopupMenu*>(w), id );
+      updateShortcut( static_cast<TQPopupMenu*>(w), id );
   }
-  else if ( ::qt_cast<QMenuBar *>( w ) )
-    static_cast<QMenuBar*>(w)->changeItem( itemId( i ), d->text() );
+  else if ( ::qt_cast<TQMenuBar *>( w ) )
+    static_cast<TQMenuBar*>(w)->changeItem( itemId( i ), d->text() );
   else if ( ::qt_cast<KToolBar *>( w ) )
   {
-    QWidget *button = static_cast<KToolBar *>(w)->getWidget( itemId( i ) );
+    TQWidget *button = static_cast<KToolBar *>(w)->getWidget( itemId( i ) );
     if ( ::qt_cast<KToolBarButton *>( button ) )
       static_cast<KToolBarButton *>(button)->setText( d->plainText() );
   }
 }
 
-QString KAction::text() const
+TQString KAction::text() const
 {
   return d->text();
 }
 
-QString KAction::plainText() const
+TQString KAction::plainText() const
 {
   return d->plainText( );
 }
 
-void KAction::setIcon( const QString &icon )
+void KAction::setIcon( const TQString &icon )
 {
   d->setIconName( icon );
 
@@ -931,26 +931,26 @@ void KAction::setIcon( const QString &icon )
 
 void KAction::updateIcon( int id )
 {
-  QWidget* w = container( id );
+  TQWidget* w = container( id );
 
-  if ( ::qt_cast<QPopupMenu *>( w ) ) {
+  if ( ::qt_cast<TQPopupMenu *>( w ) ) {
     int itemId_ = itemId( id );
-    static_cast<QPopupMenu*>(w)->changeItem( itemId_, d->iconSet( KIcon::Small ), d->text() );
+    static_cast<TQPopupMenu*>(w)->changeItem( itemId_, d->iconSet( KIcon::Small ), d->text() );
     if (!d->m_cut.isNull())
-      updateShortcut( static_cast<QPopupMenu*>(w), itemId_ );
+      updateShortcut( static_cast<TQPopupMenu*>(w), itemId_ );
   }
-  else if ( ::qt_cast<QMenuBar *>( w ) )
-    static_cast<QMenuBar*>(w)->changeItem( itemId( id ), d->iconSet( KIcon::Small ), d->text() );
+  else if ( ::qt_cast<TQMenuBar *>( w ) )
+    static_cast<TQMenuBar*>(w)->changeItem( itemId( id ), d->iconSet( KIcon::Small ), d->text() );
   else if ( ::qt_cast<KToolBar *>( w ) )
     static_cast<KToolBar *>(w)->setButtonIcon( itemId( id ), d->iconName() );
 }
 
-QString KAction::icon() const
+TQString KAction::icon() const
 {
   return d->iconName( );
 }
 
-void KAction::setIconSet( const QIconSet &iconset )
+void KAction::setIconSet( const TQIconSet &iconset )
 {
   d->setIconSet( iconset );
 
@@ -962,17 +962,17 @@ void KAction::setIconSet( const QIconSet &iconset )
 
 void KAction::updateIconSet( int id )
 {
-  QWidget *w = container( id );
+  TQWidget *w = container( id );
 
-  if ( ::qt_cast<QPopupMenu *>( w ) )
+  if ( ::qt_cast<TQPopupMenu *>( w ) )
   {
     int itemId_ = itemId( id );
-    static_cast<QPopupMenu*>(w)->changeItem( itemId_, d->iconSet(), d->text() );
+    static_cast<TQPopupMenu*>(w)->changeItem( itemId_, d->iconSet(), d->text() );
     if (!d->m_cut.isNull())
-      updateShortcut( static_cast<QPopupMenu*>(w), itemId_ );
+      updateShortcut( static_cast<TQPopupMenu*>(w), itemId_ );
   }
-  else if ( ::qt_cast<QMenuBar *>( w ) )
-    static_cast<QMenuBar*>(w)->changeItem( itemId( id ), d->iconSet(), d->text() );
+  else if ( ::qt_cast<TQMenuBar *>( w ) )
+    static_cast<TQMenuBar*>(w)->changeItem( itemId( id ), d->iconSet(), d->text() );
   else if ( ::qt_cast<KToolBar *>( w ) )
   {
     if ( icon().isEmpty() && d->hasIcon() ) // only if there is no named icon ( scales better )
@@ -982,7 +982,7 @@ void KAction::updateIconSet( int id )
   }
 }
 
-QIconSet KAction::iconSet( KIcon::Group group, int size ) const
+TQIconSet KAction::iconSet( KIcon::Group group, int size ) const
 {
     return d->iconSet( group, size );
 }
@@ -992,7 +992,7 @@ bool KAction::hasIcon() const
   return d->hasIcon();
 }
 
-void KAction::setWhatsThis( const QString& text )
+void KAction::setWhatsThis( const TQString& text )
 {
   d->setWhatsThis(  text );
 
@@ -1003,7 +1003,7 @@ void KAction::setWhatsThis( const QString& text )
 
 void KAction::updateWhatsThis( int i )
 {
-  QPopupMenu* pm = popupMenu( i );
+  TQPopupMenu* pm = popupMenu( i );
   if ( pm )
   {
     pm->setWhatsThis( itemId( i ), d->whatsThis() );
@@ -1013,27 +1013,27 @@ void KAction::updateWhatsThis( int i )
   KToolBar *tb = toolBar( i );
   if ( tb )
   {
-    QWidget *w = tb->getButton( itemId( i ) );
-    QWhatsThis::remove( w );
-    QWhatsThis::add( w, d->whatsThis() );
+    TQWidget *w = tb->getButton( itemId( i ) );
+    TQWhatsThis::remove( w );
+    TQWhatsThis::add( w, d->whatsThis() );
     return;
   }
 }
 
-QString KAction::whatsThis() const
+TQString KAction::whatsThis() const
 {
   return d->whatsThis();
 }
 
-QString KAction::whatsThisWithIcon() const
+TQString KAction::whatsThisWithIcon() const
 {
-    QString text = whatsThis();
+    TQString text = whatsThis();
     if (!d->iconName().isEmpty())
-      return QString::fromLatin1("<img source=\"small|%1\"> %2").arg(d->iconName() ).arg(text);
+      return TQString::fromLatin1("<img source=\"small|%1\"> %2").arg(d->iconName() ).arg(text);
     return text;
 }
 
-QWidget* KAction::container( int index ) const
+TQWidget* KAction::container( int index ) const
 {
   assert( index < containerCount() );
   return d->m_containers[ index ].m_container;
@@ -1044,12 +1044,12 @@ KToolBar* KAction::toolBar( int index ) const
     return dynamic_cast<KToolBar *>( d->m_containers[ index ].m_container );
 }
 
-QPopupMenu* KAction::popupMenu( int index ) const
+TQPopupMenu* KAction::popupMenu( int index ) const
 {
-    return dynamic_cast<QPopupMenu *>( d->m_containers[ index ].m_container );
+    return dynamic_cast<TQPopupMenu *>( d->m_containers[ index ].m_container );
 }
 
-QWidget* KAction::representative( int index ) const
+TQWidget* KAction::representative( int index ) const
 {
   return d->m_containers[ index ].m_representative;
 }
@@ -1069,7 +1069,7 @@ uint KAction::kaccelCount() const
   return d->m_kaccelList.count();
 }
 
-void KAction::addContainer( QWidget* c, int id )
+void KAction::addContainer( TQWidget* c, int id )
 {
   KActionPrivate::Container p;
   p.m_container = c;
@@ -1077,7 +1077,7 @@ void KAction::addContainer( QWidget* c, int id )
   d->m_containers.append( p );
 }
 
-void KAction::addContainer( QWidget* c, QWidget* w )
+void KAction::addContainer( TQWidget* c, TQWidget* w )
 {
   KActionPrivate::Container p;
   p.m_container = c;
@@ -1093,7 +1093,7 @@ void KAction::activate()
 
 void KAction::slotActivated()
 {
-  const QObject *senderObj = sender();
+  const TQObject *senderObj = sender();
   if ( senderObj )
   {
     if ( ::qt_cast<KAccelPrivate *>( senderObj ) )
@@ -1104,17 +1104,17 @@ void KAction::slotActivated()
 
 // This catches signals emitted by KActions inserted into QPopupMenu
 // We do crude things inside it, because we need to know which
-// QPopupMenu emitted the signal. We need to be sure that it is
+// TQPopupMenu emitted the signal. We need to be sure that it is
 // only called by QPopupMenus, we plugged us in.
 void KAction::slotPopupActivated()
 {
-  if( ::qt_cast<QSignal *>(sender()))
+  if( ::qt_cast<TQSignal *>(sender()))
   {
-    int id = dynamic_cast<const QSignal *>(sender())->value().toInt();
+    int id = dynamic_cast<const TQSignal *>(sender())->value().toInt();
     int pos = findContainer(id);
     if(pos != -1)
     {
-      QPopupMenu* qpm = dynamic_cast<QPopupMenu *>( container(pos) );
+      TQPopupMenu* qpm = dynamic_cast<TQPopupMenu *>( container(pos) );
       if(qpm)
       {
         KPopupMenu* kpm = dynamic_cast<KPopupMenu *>( qpm );
@@ -1151,7 +1151,7 @@ void KAction::slotButtonClicked( int, Qt::ButtonState state )
 void KAction::slotDestroyed()
 {
   kdDebug(129) << "KAction::slotDestroyed(): this = " << this << ", name = \"" << name() << "\", sender = " << sender() << endl;
-  const QObject* const o = sender();
+  const TQObject* const o = sender();
 
 #ifndef KDE_NO_COMPAT  // KDE 4: remove
   if ( o == d->m_kaccel )
@@ -1160,15 +1160,15 @@ void KAction::slotDestroyed()
     return;
   }
 #endif  // KDE 4: remove end
-  QValueList<KAccel*> & accelList = d->m_kaccelList;
-  QValueList<KAccel*>::iterator itr = accelList.begin();
-  const QValueList<KAccel*>::iterator itrEnd = accelList.end();
+  TQValueList<KAccel*> & accelList = d->m_kaccelList;
+  TQValueList<KAccel*>::iterator itr = accelList.begin();
+  const TQValueList<KAccel*>::iterator itrEnd = accelList.end();
 
   for( ; itr != itrEnd; ++itr)
   {
     if ( o == *itr )
     {
-      disconnect( *itr, SIGNAL(destroyed()), this, SLOT(slotDestroyed()) );
+      disconnect( *itr, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDestroyed()) );
       accelList.remove(itr);
       return;
     }
@@ -1177,20 +1177,20 @@ void KAction::slotDestroyed()
   int i;
   do
   {
-    i = findContainer( static_cast<const QWidget*>( o ) );
+    i = findContainer( static_cast<const TQWidget*>( o ) );
     if ( i != -1 )
       removeContainer( i );
   } while ( i != -1 );
 }
 
-int KAction::findContainer( const QWidget* widget ) const
+int KAction::findContainer( const TQWidget* widget ) const
 {
   int pos = 0;
 
-  const QValueList<KActionPrivate::Container> & containers = d->m_containers;
+  const TQValueList<KActionPrivate::Container> & containers = d->m_containers;
 
-  QValueList<KActionPrivate::Container>::ConstIterator it = containers.constBegin();
-  const QValueList<KActionPrivate::Container>::ConstIterator itEnd = containers.constEnd();
+  TQValueList<KActionPrivate::Container>::ConstIterator it = containers.constBegin();
+  const TQValueList<KActionPrivate::Container>::ConstIterator itEnd = containers.constEnd();
 
   while( it != itEnd )
   {
@@ -1207,10 +1207,10 @@ int KAction::findContainer( const int id ) const
 {
   int pos = 0;
 
-  const QValueList<KActionPrivate::Container> & containers = d->m_containers;
+  const TQValueList<KActionPrivate::Container> & containers = d->m_containers;
 
-  QValueList<KActionPrivate::Container>::ConstIterator it = containers.constBegin();
-  const QValueList<KActionPrivate::Container>::ConstIterator itEnd = containers.constEnd();
+  TQValueList<KActionPrivate::Container>::ConstIterator it = containers.constBegin();
+  const TQValueList<KActionPrivate::Container>::ConstIterator itEnd = containers.constEnd();
 
   while( it != itEnd )
   {
@@ -1227,10 +1227,10 @@ void KAction::removeContainer( int index )
 {
   int i = 0;
 
-  QValueList<KActionPrivate::Container> & containers = d->m_containers;
+  TQValueList<KActionPrivate::Container> & containers = d->m_containers;
 
-  QValueList<KActionPrivate::Container>::Iterator it = containers.begin();
-  const QValueList<KActionPrivate::Container>::Iterator itEnd = containers.end();
+  TQValueList<KActionPrivate::Container>::Iterator it = containers.begin();
+  const TQValueList<KActionPrivate::Container>::Iterator itEnd = containers.end();
 
   while( it != itEnd )
   {

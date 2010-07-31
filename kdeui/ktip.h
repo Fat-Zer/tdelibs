@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __K_TIP_H__
 #define __K_TIP_H__
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include <kdialog.h>
 
@@ -61,7 +61,7 @@ public:
      *
      * @param tipFile The absolute path to the tips file.
      */
-    KTipDatabase(const QString &tipFile = QString::null);
+    KTipDatabase(const TQString &tipFile = TQString::null);
 
     /**
      * This constructor takes a list of files that will be merged. This constructor
@@ -69,12 +69,12 @@ public:
      *
      * @param tipFiles A list of absolute paths to the tips file
      */ 
-    KTipDatabase(const QStringList &tipFiles);
+    KTipDatabase(const TQStringList &tipFiles);
 
     /**
      * Returns the current tip.
      */
-    QString tip() const;
+    TQString tip() const;
 
     /**
      * The next tip will become the current one.
@@ -87,11 +87,11 @@ public:
     void prevTip();
 
 private:
-    void loadTips(const QString &tipFile);
+    void loadTips(const TQString &tipFile);
 
-    void addTips(const QString &tipFile);
+    void addTips(const TQString &tipFile);
 
-    QStringList mTips;
+    TQStringList mTips;
 
     int mCurrent;
     class KTipDatabasePrivate;
@@ -116,7 +116,7 @@ public:
      * @param parent Parent widget of TipDialog.
      * @param name The object name.
      */
-    KTipDialog(KTipDatabase *db, QWidget *parent = 0, const char *name = 0);
+    KTipDialog(KTipDatabase *db, TQWidget *parent = 0, const char *name = 0);
     ~KTipDialog();
 
     /**
@@ -135,7 +135,7 @@ public:
      * @param force If true, the dialog is show, even when the users
      *              disabled it.
      */
-    static void showTip(QWidget *parent, const QString &tipFile = QString::null, bool force=false);
+    static void showTip(TQWidget *parent, const TQString &tipFile = TQString::null, bool force=false);
 
     /**
      * Shows a tip
@@ -148,7 +148,7 @@ public:
      * @param force If true, the dialog is show, even when the users
      *              disabled it.
      */
-    static void showMultiTip(QWidget *parent, const QStringList &tipFiles, bool force=false);
+    static void showMultiTip(TQWidget *parent, const TQStringList &tipFiles, bool force=false);
 
     /**
      * Shows a tip.
@@ -156,7 +156,7 @@ public:
      * This methods calls showTip() with the applications main window as parent.
      *
      */
-    static void showTip(const QString &tipFile = QString::null, bool force = false);
+    static void showTip(const TQString &tipFile = TQString::null, bool force = false);
 
     /**
      * Toggles the start behavior.
@@ -167,7 +167,7 @@ public:
     static void setShowOnStart(bool show);
 
 protected:
-    bool eventFilter(QObject *, QEvent *);
+    bool eventFilter(TQObject *, TQEvent *);
     virtual void virtual_hook( int id, void* data );
 
 private slots:
@@ -178,7 +178,7 @@ private slots:
 private:
     KTipDatabase *mDatabase;
 
-    QCheckBox *mTipOnStart;
+    TQCheckBox *mTipOnStart;
     KTextBrowser *mTipText;
 
     class KTipDialogPrivate;
@@ -186,7 +186,7 @@ private:
 
     static KTipDialog *mInstance;
 
-	QColor mBaseColor, mBlendedColor, mTextColor;
+	TQColor mBaseColor, mBlendedColor, mTextColor;
 };
 
 #endif

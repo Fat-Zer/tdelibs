@@ -36,11 +36,11 @@ class PasteDialog : public KDialogBase
 {
     Q_OBJECT
 public:
-    PasteDialog( const QString &caption, const QString &label,
-                 const QString &value, const QStringList& items,
-                 QWidget *parent, bool clipboard );
+    PasteDialog( const TQString &caption, const TQString &label,
+                 const TQString &value, const TQStringList& items,
+                 TQWidget *parent, bool clipboard );
 
-    QString lineEditText() const;
+    TQString lineEditText() const;
     int comboItem() const;
     bool clipboardChanged() const { return m_clipboardChanged; }
 
@@ -48,9 +48,9 @@ private slots:
     void slotClipboardDataChanged();
 
 private:
-    QLabel* m_label;
+    TQLabel* m_label;
     KLineEdit* m_lineEdit;
-    QComboBox* m_comboBox;
+    TQComboBox* m_comboBox;
     bool m_clipboardChanged;
 
     class Private;

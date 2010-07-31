@@ -24,8 +24,8 @@
 #include "kxmlguifactory.h"
 #include "kxmlguiclient.h"
 #include "kxmlguibuilder.h"
-#include <qmainwindow.h>
-#include <qmetaobject.h>
+#include <tqmainwindow.h>
+#include <tqmetaobject.h>
 #include <ktoolbar.h>
 
 class KPopupMenu;
@@ -95,7 +95,7 @@ class DCOPObject;
 
  */
 
-class KDEUI_EXPORT KMainWindow : public QMainWindow, public KXMLGUIBuilder, virtual public KXMLGUIClient
+class KDEUI_EXPORT KMainWindow : public TQMainWindow, public KXMLGUIBuilder, virtual public KXMLGUIClient
 {
     friend class KMWSessionManaged;
     Q_OBJECT
@@ -126,14 +126,14 @@ public:
      * automatically destroyed when its window is closed. Pass 0 if
      * you do not want this behavior.
      *
-     * @see http://doc.trolltech.com/3.2/qt.html#WidgetFlags-enum
+     * @see http://doc.trolltech.com/3.2/tqt.html#WidgetFlags-enum
      *
      * KMainWindows must be created on the heap with 'new', like:
      * \code
      * KMainWindow *kmw = new KMainWindow (...);
      * \endcode
      **/
-    KMainWindow( QWidget* parent = 0, const char *name = 0, WFlags f = WType_TopLevel | WDestructiveClose );
+    KMainWindow( TQWidget* parent = 0, const char *name = 0, WFlags f = WType_TopLevel | WDestructiveClose );
 
     /**
      * Flags that can be passed in an argument to the constructor to
@@ -155,7 +155,7 @@ public:
      *
      * @since 3.2
      */
-    KMainWindow( int cflags, QWidget* parent = 0, const char *name = 0, WFlags f = WType_TopLevel | WDestructiveClose );
+    KMainWindow( int cflags, TQWidget* parent = 0, const char *name = 0, WFlags f = WType_TopLevel | WDestructiveClose );
 
     /**
      * \brief Destructor.
@@ -189,7 +189,7 @@ public:
      *
      * @return A standard help menu.
      */
-    KPopupMenu* helpMenu( const QString &aboutAppText = QString::null,
+    KPopupMenu* helpMenu( const TQString &aboutAppText = TQString::null,
 			  bool showWhatsThis = true );
 
     /**
@@ -236,7 +236,7 @@ public:
      *   // create default application as usual
      * }
      * \endcode
-     * Note that QWidget::show() is called implicitly in restore.
+     * Note that TQWidget::show() is called implicitly in restore.
      *
      * With this you can easily restore all toplevel windows of your
      * application.
@@ -291,17 +291,17 @@ public:
      * This is only useful if your application uses
      * different kinds of toplevel windows.
      */
-    // KDE 4 return QCString - QObject::className() returns const char*
-    static const QString classNameOfToplevel( int number );
+    // KDE 4 return TQCString - TQObject::className() returns const char*
+    static const TQString classNameOfToplevel( int number );
 
     /**
-     * Reimplementation of QMainWindow::show()
+     * Reimplementation of TQMainWindow::show()
      */
     // KDE4 remove this method if this has been fixed in Qt
     virtual void show();
 
     /**
-     * Reimplementation of QMainWindow::hide()
+     * Reimplementation of TQMainWindow::hide()
      */
     // KDE4 remove this method if this has been fixed in Qt
     virtual void hide();
@@ -335,9 +335,9 @@ public:
      * @param xmlfile The local xmlfile (relative or absolute)
      * @param _conserveMemory Specify whether createGUI() should call
      * KXMLGUIClient::conserveMemory() to free all memory
-     *     allocated by the QDomDocument and by the KXMLGUIFactory.
+     *     allocated by the TQDomDocument and by the KXMLGUIFactory.
      */
-    void createGUI( const QString &xmlfile = QString::null, bool _conserveMemory = true );
+    void createGUI( const TQString &xmlfile = TQString::null, bool _conserveMemory = true );
 
     /**
      * Enables the build of a standard help menu when calling createGUI().
@@ -382,14 +382,14 @@ public:
     /**
      * List of members of KMainWindow class.
      */
-    static QPtrList<KMainWindow>* memberList;
+    static TQPtrList<KMainWindow>* memberList;
 
     //KDE4: replace with memberList() and make memberList member private
     /**
      * List of members of KMainWindow class.
      * @since 3.4
      */
-    static QPtrList<KMainWindow>* getMemberList();
+    static TQPtrList<KMainWindow>* getMemberList();
 
     /**
      * Returns a pointer to the toolbar with the specified name.
@@ -406,7 +406,7 @@ public:
     /**
      * @return An iterator over the list of all toolbars for this window.
      */
-    QPtrListIterator<KToolBar> toolBarIterator();
+    TQPtrListIterator<KToolBar> toolBarIterator();
 
     /**
      * @return A KAccel instance bound to this mainwindow. Used automatically
@@ -443,11 +443,11 @@ public:
      * - Put the setAutoSaveSettings ( or setupGUI() ) call after all widgets
      *   have been created and placed inside the main window (i.e. for 99% of
      *   apps setCentralWidget())
-     * - Widgets that inherit from QWidget (like game boards) should overload
-     *   "virtual QSize sizeHint() const;" to specify a default size rather
-     *   than letting QWidget::adjust use the default size of 0x0.
+     * - Widgets that inherit from TQWidget (like game boards) should overload
+     *   "virtual TQSize sizeHint() const;" to specify a default size rather
+     *   than letting TQWidget::adjust use the default size of 0x0.
      */
-    void setAutoSaveSettings( const QString & groupName = QString::fromLatin1("MainWindow"),
+    void setAutoSaveSettings( const TQString & groupName = TQString::fromLatin1("MainWindow"),
                               bool saveWindowSize = true );
 
     /**
@@ -470,7 +470,7 @@ public:
      * using KEditToolbar.
      * @since 3.1
      */
-    QString autoSaveGroup() const;
+    TQString autoSaveGroup() const;
 
     /**
      * Read settings for statusbar, menubar and toolbar from their respective
@@ -481,9 +481,9 @@ public:
      * group name is used.
      * @param force if set, even default settings are re-applied
      */
-    void applyMainWindowSettings(KConfig *config, const QString &groupName, bool force);
+    void applyMainWindowSettings(KConfig *config, const TQString &groupName, bool force);
     // KDE4 merge with force=false
-    void applyMainWindowSettings(KConfig *config, const QString &groupName = QString::null);
+    void applyMainWindowSettings(KConfig *config, const TQString &groupName = TQString::null);
 
     /**
      * Save settings for statusbar, menubar and toolbar to their respective
@@ -493,7 +493,7 @@ public:
      * @param groupName Group name to use. If not specified, the last used
      * group name is used
      */
-    void saveMainWindowSettings(KConfig *config, const QString &groupName = QString::null);
+    void saveMainWindowSettings(KConfig *config, const TQString &groupName = TQString::null);
 
     /**
      * Sets whether KMainWindow should provide a menu that allows showing/hiding
@@ -532,8 +532,8 @@ public:
      * this function) a connection needs to be made to let KMainWindow
      * know when that status (hidden/shown) of the statusbar has changed.
      * For example:
-     * connect(action, SIGNAL(activated()),
-     *         kmainwindow, SLOT(setSettingsDirty()));
+     * connect(action, TQT_SIGNAL(activated()),
+     *         kmainwindow, TQT_SLOT(setSettingsDirty()));
      * Otherwise the status (hidden/show) of the statusbar might not be saved
      * by KMainWindow.
      * @since 3.2
@@ -593,7 +593,7 @@ public:
      *
      * @since 3.3
      */
-    void setupGUI( int options = ToolBar | Keys | StatusBar | Save | Create, const QString& xmlfile = QString::null );
+    void setupGUI( int options = ToolBar | Keys | StatusBar | Save | Create, const TQString& xmlfile = TQString::null );
 
     /**
      * Configures the current windows and its actions in the typical KDE
@@ -608,7 +608,7 @@ public:
      *
      * @since 3.5
      */
-    void setupGUI( QSize defaultSize, int options = ToolBar | Keys | StatusBar | Save | Create, const QString& xmlfile = QString::null );
+    void setupGUI( TQSize defaultSize, int options = ToolBar | Keys | StatusBar | Save | Create, const TQString& xmlfile = TQString::null );
 
     /**
      * Returns a pointer to the mainwindows action responsible for the toolbars menu
@@ -659,13 +659,13 @@ public:
      *
      */
     // KDE4 to be removed
-    QSize sizeForCentralWidgetSize(QSize size) KDE_DEPRECATED;
+    TQSize sizeForCentralWidgetSize(TQSize size) KDE_DEPRECATED;
 
     /**
      * @internal
      */
     // KDE4 remove
-    virtual void setIcon( const QPixmap & );
+    virtual void setIcon( const TQPixmap & );
 
 public slots:
     /**
@@ -674,7 +674,7 @@ public slots:
      * This slot can be connected dirrectly to the action to configure shortcuts.
      * This is very simple to do that by adding a single line
      * \code
-     * KStdAction::configureToolbars( guiFactory(), SLOT( configureToolbars() ),
+     * KStdAction::configureToolbars( guiFactory(), TQT_SLOT( configureToolbars() ),
      *                                actionCollection() );
      * \endcode
      *
@@ -689,7 +689,7 @@ public slots:
      * in this string. It will be added automatically according to the KDE
      * standard.
      */
-    virtual void setCaption( const QString &caption );
+    virtual void setCaption( const TQString &caption );
     /**
      * Makes a KDE compliant caption.
      *
@@ -699,7 +699,7 @@ public slots:
      * @param modified Specify whether the document is modified. This displays
      * an additional sign in the title bar, usually "**".
      */
-    virtual void setCaption( const QString &caption, bool modified );
+    virtual void setCaption( const TQString &caption, bool modified );
 
     /**
      * Make a plain caption without any modifications.
@@ -707,7 +707,7 @@ public slots:
      * @param caption Your caption. This is the string that will be
      * displayed in the window title.
      */
-    virtual void setPlainCaption( const QString &caption );
+    virtual void setPlainCaption( const TQString &caption );
 
     /**
      * Open the help page for the application.
@@ -724,9 +724,9 @@ public slots:
      *
      * \code
      * KIconLoader &loader = *KGlobal::iconLoader();
-     * QPixmap pixmap = loader.loadIcon( "help" );
-     * toolBar(0)->insertButton( pixmap, 0, SIGNAL(clicked()),
-     *   this, SLOT(appHelpActivated()), true, i18n("Help") );
+     * TQPixmap pixmap = loader.loadIcon( "help" );
+     * toolBar(0)->insertButton( pixmap, 0, TQT_SIGNAL(clicked()),
+     *   this, TQT_SLOT(appHelpActivated()), true, i18n("Help") );
      * \endcode
      *
      */
@@ -738,7 +738,7 @@ public slots:
      * Enable and disable actions as defined in the XML rc file
      * @since 3.1
      */
-    virtual void slotStateChanged(const QString &newstate);
+    virtual void slotStateChanged(const TQString &newstate);
 
     /**
      * Apply a state change
@@ -748,7 +748,7 @@ public slots:
      * enabled, and vice-versa) if specified.
      * @since 3.1
      */
-    void slotStateChanged(const QString &newstate,
+    void slotStateChanged(const TQString &newstate,
                           KXMLGUIClient::ReverseStateChange); // KDE 4.0: remove this
 
 
@@ -759,7 +759,7 @@ public slots:
      * can "reverse" the state (disable the actions which should be
      * enabled, and vice-versa) if specified.
      */
-//     void slotStateChanged(const QString &newstate,
+//     void slotStateChanged(const TQString &newstate,
 //                           bool reverse); // KDE 4.0: enable this
 
     /**
@@ -772,9 +772,9 @@ public slots:
     void setSettingsDirty();
 
 protected:
-    void paintEvent( QPaintEvent* e );
-    void childEvent( QChildEvent* e);
-    void resizeEvent( QResizeEvent* e);
+    void paintEvent( TQPaintEvent* e );
+    void childEvent( TQChildEvent* e);
+    void resizeEvent( TQResizeEvent* e);
     /**
      * Reimplemented to call the queryClose() and queryExit() handlers.
      *
@@ -782,7 +782,7 @@ protected:
      * If you do it anyway, ensure to call the base implementation to keep
      * queryExit() running.
      */
-    virtual void closeEvent ( QCloseEvent *);
+    virtual void closeEvent ( TQCloseEvent *);
 
     // KDE4 This seems to be flawed to me. Either the app has only one
     // mainwindow, so queryClose() is enough, or if it can have more of them,
@@ -914,7 +914,7 @@ protected:
     /**
      * For inherited classes
      */
-    QString settingsGroup() const;
+    TQString settingsGroup() const;
     /**
      * For inherited classes
      * Note that the group must be set before calling
@@ -977,7 +977,7 @@ protected slots:
     * Example:
     * \code
     *
-    * void MyMainWindow::closeEvent( QCloseEvent *e )
+    * void MyMainWindow::closeEvent( TQCloseEvent *e )
     * {
     *   // Save settings if auto-save is enabled, and settings have changed
     *   if ( settingsDirty() && autoSaveSettings() )
@@ -999,7 +999,7 @@ private:
     KStatusBar *internalStatusBar();
     KHelpMenu *mHelpMenu, *helpMenu2;
     KXMLGUIFactory *factory_;
-    QPtrList<KToolBar> toolbarList;
+    TQPtrList<KToolBar> toolbarList;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
@@ -1027,8 +1027,8 @@ private:
 template <typename T>
 inline void kRestoreMainWindows() {
   for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
-    const QString className = KMainWindow::classNameOfToplevel( n );
-    if ( className == QString::fromLatin1( T::staticMetaObject()->className() ) )
+    const TQString className = KMainWindow::classNameOfToplevel( n );
+    if ( className == TQString::fromLatin1( T::staticMetaObject()->className() ) )
       (new T)->restore( n );
   }
 }
@@ -1039,10 +1039,10 @@ inline void kRestoreMainWindows() {
   classNames[0] = T0::staticMetaObject()->className();
   classNames[1] = T1::staticMetaObject()->className();
   for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
-    const QString className = KMainWindow::classNameOfToplevel( n );
-    if ( className == QString::fromLatin1( classNames[0] ) )
+    const TQString className = KMainWindow::classNameOfToplevel( n );
+    if ( className == TQString::fromLatin1( classNames[0] ) )
       (new T0)->restore( n );
-    else if ( className == QString::fromLatin1( classNames[1] ) )
+    else if ( className == TQString::fromLatin1( classNames[1] ) )
       (new T1)->restore( n );
   }
 }
@@ -1054,12 +1054,12 @@ inline void kRestoreMainWindows() {
   classNames[1] = T1::staticMetaObject()->className();
   classNames[2] = T2::staticMetaObject()->className();
   for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
-    const QString className = KMainWindow::classNameOfToplevel( n );
-    if ( className == QString::fromLatin1( classNames[0] ) )
+    const TQString className = KMainWindow::classNameOfToplevel( n );
+    if ( className == TQString::fromLatin1( classNames[0] ) )
       (new T0)->restore( n );
-    else if ( className == QString::fromLatin1( classNames[1] ) )
+    else if ( className == TQString::fromLatin1( classNames[1] ) )
       (new T1)->restore( n );
-    else if ( className == QString::fromLatin1( classNames[2] ) )
+    else if ( className == TQString::fromLatin1( classNames[2] ) )
       (new T2)->restore( n );
   }
 }

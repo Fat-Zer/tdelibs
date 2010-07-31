@@ -30,12 +30,12 @@ struct CupsdConf;
 class PortDialog : public KDialogBase
 {
 public:
-	PortDialog(QWidget *parent = 0, const char *name = 0);
+	PortDialog(TQWidget *parent = 0, const char *name = 0);
 
-	QString listenString();
+	TQString listenString();
 	void setInfos(CupsdConf*);
-	static QString newListen(QWidget *parent = 0, CupsdConf *conf = 0);
-	static QString editListen(const QString& s, QWidget *parent = 0, CupsdConf *conf = 0);
+	static TQString newListen(TQWidget *parent = 0, CupsdConf *conf = 0);
+	static TQString editListen(const TQString& s, TQWidget *parent = 0, CupsdConf *conf = 0);
 
 private:
 	QLineEdit	*address_;

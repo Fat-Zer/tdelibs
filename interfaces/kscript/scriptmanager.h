@@ -19,11 +19,11 @@
 #ifndef __scriptmanager_h__
 #define __scriptmanager_h__
 
-#include <qvariant.h>
+#include <tqvariant.h>
 #include <scriptclientinterface.h>
 #include <scriptinterface.h>
-#include <qdict.h>
-#include <qobject.h>
+#include <tqdict.h>
+#include <tqobject.h>
 
 #include <kdelibs_export.h>
 
@@ -36,7 +36,7 @@ class ScriptInfo;
 	*	@author Ian Reinhart Geiser <geiseri@kde.org>
 	*
 	**/
-	class KDE_EXPORT KScriptManager : public QObject, public KScriptClientInterface
+	class KDE_EXPORT KScriptManager : public TQObject, public KScriptClientInterface
 	{
 	Q_OBJECT
 	friend class KScriptInterface;
@@ -44,7 +44,7 @@ class ScriptInfo;
 		/**
 		*	Create a new instance of the script engine.
 		*/
-		KScriptManager(QObject *parent, const char *name);
+		KScriptManager(TQObject *parent, const char *name);
 		/**
 		*	Destroy the current script engine.
 		*/
@@ -54,17 +54,17 @@ class ScriptInfo;
 		*	This should be the full name and path to the desktop
 		*	file.
 		*/
-		bool addScript( const QString &scriptDesktopFile);
+		bool addScript( const TQString &scriptDesktopFile);
 		/**
 		*	Remove a script instance from the script engine.
 		*	@returns the success of the operation.
 		*/
-		bool removeScript( const QString &scriptName );
+		bool removeScript( const TQString &scriptName );
 		/**
 		*	Access the names of script instances from the script engine.
-		*	@returns a QStringList of the current scripts.
+		*	@returns a TQStringList of the current scripts.
 		*/
-		QStringList scripts();
+		TQStringList scripts();
 		/**
 		*	Clear all script intstances in memory
 		*/
@@ -73,17 +73,17 @@ class ScriptInfo;
 		*	This function will allow the main application of any errors
 		*	that have occurred during processing of the script.
 		*/
-		void error( const QString &msg ) {emit scriptError(msg);}
+		void error( const TQString &msg ) {emit scriptError(msg);}
 		/**
 		*	This function will allow the main application of any warnings
 		*	that have occurred during the processing of the script.
 		*/
-		void warning( const QString &msg ) {emit scriptWarning(msg);}
+		void warning( const TQString &msg ) {emit scriptWarning(msg);}
 		/**
 		*	This function will allow the main application of any normal
 		*	output that has occurred during the processing of the script.
 		*/
-		void output( const QString &msg ) {emit scriptOutput(msg);}
+		void output( const TQString &msg ) {emit scriptOutput(msg);}
 		/**
 		*	This function will allow feedback to any progress bars in the main
 		*	application as to how far along the script is.  This is very useful when
@@ -96,29 +96,29 @@ class ScriptInfo;
 		*	It turns the result as a KScriptInteface::Result, and a return
 		*	value as a QVariant
 		*/
-		void done( KScriptClientInterface::Result result, const QVariant &returned )  {emit scriptDone(result, returned);}
+		void done( KScriptClientInterface::Result result, const TQVariant &returned )  {emit scriptDone(result, returned);}
 
 	public slots:
 		/**
 		*	Run the selected script
 		*/
-		void runScript( const QString &scriptName, QObject *context = 0, const QVariant &arg = 0 );
+		void runScript( const TQString &scriptName, TQObject *context = 0, const TQVariant &arg = 0 );
 	signals:
 		/**
 		*	Send out a signal of the error message from the current running
 		*	script.
 		*/
-		void scriptError( const QString &msg );
+		void scriptError( const TQString &msg );
 		/**
 		*	Send out a signal of the warning message from the current running
 		*	script.
 		*/
-		void scriptWarning( const QString &msg );
+		void scriptWarning( const TQString &msg );
 		/**
 		*	Send out a signal of the output message from the current running
 		*	script.
 		*/
-		void scriptOutput( const QString &msg );
+		void scriptOutput( const TQString &msg );
 		/**
 		*	Send out a signal of the progress of the current running
 		*	script.
@@ -128,12 +128,12 @@ class ScriptInfo;
 		*	Send out a signal of the exit status of the script
 		*
 		*/
-		void scriptDone( KScriptClientInterface::Result result, const QVariant &returned);
+		void scriptDone( KScriptClientInterface::Result result, const TQVariant &returned);
 	protected:
-		QDict<ScriptInfo> m_scripts;
-		QDict<KScriptInterface> m_scriptCache;
-		//QStringList m_scriptNames;
-		QString m_currentScript;
+		TQDict<ScriptInfo> m_scripts;
+		TQDict<KScriptInterface> m_scriptCache;
+		//TQStringList m_scriptNames;
+		TQString m_currentScript;
 	};
 //};
 #endif

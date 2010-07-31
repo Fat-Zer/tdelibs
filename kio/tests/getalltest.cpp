@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
    kdDebug() << "All services" << endl;
    KService::List services = KService::allServices();
    kdDebug() << "got " << services.count() << " services" << endl;
-   QValueListIterator<KService::Ptr> s = services.begin();
+   TQValueListIterator<KService::Ptr> s = services.begin();
    for ( ; s != services.end() ; ++s )
    {
      kdDebug() << (*s)->name() << " " << (*s)->desktopEntryPath() << endl;
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
    kdDebug() << "All mimeTypes" << endl;
    KMimeType::List mimeTypes = KMimeType::allMimeTypes();
    kdDebug() << "got " << mimeTypes.count() << " mimeTypes" << endl;
-   QValueListIterator<KMimeType::Ptr> m = mimeTypes.begin();
+   TQValueListIterator<KMimeType::Ptr> m = mimeTypes.begin();
    for ( ; m != mimeTypes.end() ; ++m )
    {
      kdDebug() << (*m)->name() << endl;
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
    kdDebug() << "All service types" << endl;
    KServiceType::List list = KServiceType::allServiceTypes();
    kdDebug() << "got " << list.count() << " service types" << endl;
-   QValueListIterator<KServiceType::Ptr> st = list.begin();
+   TQValueListIterator<KServiceType::Ptr> st = list.begin();
    for ( ; st != list.end() ; ++st )
    {
      kdDebug() << (*st)->name() << endl;

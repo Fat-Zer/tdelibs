@@ -29,8 +29,8 @@
 # include <kapplication.h>
  KApplication* theApp;
 #else
-# include <qapplication.h>
- QApplication* theApp;
+# include <tqapplication.h>
+ TQApplication* theApp;
 #endif
 
 //#include <iostream.h>
@@ -44,7 +44,7 @@ int main( int argc, char **argv )
 #ifndef NO_KDE
    KApplication a(argc,argv,"KFourChildren");
 #else
-   QApplication a(argc,argv);
+   TQApplication a(argc,argv);
 #endif
    theApp = &a;
 
@@ -59,7 +59,7 @@ int main( int argc, char **argv )
 //   SHOW(h1->caption());
 //   SHOW(h1->tabCaption());
 
-   QWidget* w = new QWidget(mainWdg);
+   TQWidget* w = new TQWidget(mainWdg);
    KMdiChildView* h2 = mainWdg->createWrapper(w, "I'm a common but wrapped QWidget!", "Hello2");
    mainWdg->addWindow( h2 );
 //   SHOW(h2->caption());
@@ -67,20 +67,20 @@ int main( int argc, char **argv )
 
    Hello* h3 = new Hello( "Hello3", "Dock me using the taskbar button context menu!", 0);
    h3->setBackgroundColor( Qt::white );
-   h3->setFont( QFont("times",20,QFont::Bold) );
+   h3->setFont( TQFont("times",20,TQFont::Bold) );
    mainWdg->addWindow( h3, KMdi::Detach );  // undock this!
    h3->setGeometry( 20, 20, 400, 100);
 
    Hello* h4 = new Hello( "Hello4", "Hello world!", mainWdg);
    h4->setMDICaption("Hello4 both changed");
-   h4->setFont( QFont("times",32,QFont::Bold) );	
+   h4->setFont( TQFont("times",32,TQFont::Bold) );	
    mainWdg->addWindow( h4);
 //   SHOW(h4->caption());
 //   SHOW(h4->tabCaption());
 
    Hello* h5 = new Hello( "Hello5", "I'm not a MDI widget :-(");
    h5->setGeometry(40, 40, 400, 100);
-   h5->setFont( QFont("times",20,QFont::Bold) );
+   h5->setFont( TQFont("times",20,TQFont::Bold) );
    h5->setCaption("MDI Test Application");
    h5->show();
 

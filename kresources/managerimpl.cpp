@@ -37,7 +37,7 @@
 
 using namespace KRES;
 
-ManagerImpl::ManagerImpl( ManagerNotifier *notifier, const QString &family )
+ManagerImpl::ManagerImpl( ManagerNotifier *notifier, const TQString &family )
   : DCOPObject( "ManagerIface_" + family.utf8() ),
     mNotifier( notifier ),
     mFamily( family ), mConfig( 0 ), mStdConfig( 0 ), mStandard( 0 ),
@@ -55,18 +55,18 @@ ManagerImpl::ManagerImpl( ManagerNotifier *notifier, const QString &family )
 
   kdDebug(5650) << "Connecting DCOP signals..." << endl;
   if ( !connectDCOPSignal( 0, "ManagerIface_" + family.utf8(),
-                           "signalKResourceAdded( QString, QString )",
-                           "dcopKResourceAdded( QString, QString )", false ) )
+                           "signalKResourceAdded( TQString, TQString )",
+                           "dcopKResourceAdded( TQString, TQString )", false ) )
     kdWarning(5650) << "Could not connect ResourceAdded signal!" << endl;
 
   if ( !connectDCOPSignal( 0, "ManagerIface_" + family.utf8(),
-                           "signalKResourceModified( QString, QString )",
-                           "dcopKResourceModified( QString, QString )", false ) )
+                           "signalKResourceModified( TQString, TQString )",
+                           "dcopKResourceModified( TQString, TQString )", false ) )
     kdWarning(5650) << "Could not connect ResourceModified signal!" << endl;
 
   if ( !connectDCOPSignal( 0, "ManagerIface_" + family.utf8(),
-                           "signalKResourceDeleted( QString, QString )",
-                           "dcopKResourceDeleted( QString, QString )", false ) )
+                           "signalKResourceDeleted( TQString, TQString )",
+                           "dcopKResourceDeleted( TQString, TQString )", false ) )
     kdWarning(5650) << "Could not connect ResourceDeleted signal!" << endl;
 
   kapp->dcopClient()->setNotifications( true );
@@ -87,7 +87,7 @@ ManagerImpl::~ManagerImpl()
 void ManagerImpl::createStandardConfig()
 {
   if ( !mStdConfig ) {
-    QString file = defaultConfigFile( mFamily );
+    TQString file = defaultConfigFile( mFamily );
     mStdConfig = new KConfig( file );
   }
   
@@ -111,12 +111,12 @@ void ManagerImpl::readConfig( KConfig *cfg )
 
   mConfig->setGroup( "General" );
 
-  QStringList keys = mConfig->readListEntry( "ResourceKeys" );
+  TQStringList keys = mConfig->readListEntry( "ResourceKeys" );
   keys += mConfig->readListEntry( "PassiveResourceKeys" );
 
-  QString standardKey = mConfig->readEntry( "Standard" );
+  TQString standardKey = mConfig->readEntry( "Standard" );
 
-  for ( QStringList::Iterator it = keys.begin(); it != keys.end(); ++it ) {
+  for ( TQStringList::Iterator it = keys.begin(); it != keys.end(); ++it ) {
     readResourceConfig( *it, false );
   }
 
@@ -133,15 +133,15 @@ void ManagerImpl::writeConfig( KConfig *cfg )
     mConfig = cfg;
   }
 
-  QStringList activeKeys;
-  QStringList passiveKeys;
+  TQStringList activeKeys;
+  TQStringList passiveKeys;
 
   // First write all keys, collect active and passive keys on the way
   Resource::List::Iterator it;
   for ( it = mResources.begin(); it != mResources.end(); ++it ) {
     writeResourceConfig( *it, false );
 
-    QString key = (*it)->identifier();
+    TQString key = (*it)->identifier();
     if( (*it)->isActive() )
       activeKeys.append( key );
     else
@@ -219,7 +219,7 @@ void ManagerImpl::setStandardResource( Resource *resource )
 
 // DCOP asynchronous functions
 
-void ManagerImpl::dcopKResourceAdded( QString managerId, QString resourceId )
+void ManagerImpl::dcopKResourceAdded( TQString managerId, TQString resourceId )
 {
   if ( managerId == mId ) {
     kdDebug(5650) << "Ignore DCOP notification to myself" << endl;
@@ -243,7 +243,7 @@ void ManagerImpl::dcopKResourceAdded( QString managerId, QString resourceId )
               << resourceId << endl;
 }
 
-void ManagerImpl::dcopKResourceModified( QString managerId, QString resourceId )
+void ManagerImpl::dcopKResourceModified( TQString managerId, TQString resourceId )
 {
   if ( managerId == mId ) {
     kdDebug(5650) << "Ignore DCOP notification to myself" << endl;
@@ -259,7 +259,7 @@ void ManagerImpl::dcopKResourceModified( QString managerId, QString resourceId )
               << resourceId << endl;
 }
 
-void ManagerImpl::dcopKResourceDeleted( QString managerId, QString resourceId )
+void ManagerImpl::dcopKResourceDeleted( TQString managerId, TQString resourceId )
 {
   if ( managerId == mId ) {
     kdDebug(5650) << "Ignore DCOP notification to myself" << endl;
@@ -281,9 +281,9 @@ void ManagerImpl::dcopKResourceDeleted( QString managerId, QString resourceId )
               << resourceId << endl;
 }
 
-QStringList ManagerImpl::resourceNames()
+TQStringList ManagerImpl::resourceNames()
 {
-  QStringList result;
+  TQStringList result;
 
   Resource::List::ConstIterator it;
   for ( it = mResources.begin(); it != mResources.end(); ++it ) {
@@ -297,9 +297,9 @@ Resource::List *ManagerImpl::resourceList()
   return &mResources;
 }
 
-QPtrList<Resource> ManagerImpl::resources()
+TQPtrList<Resource> ManagerImpl::resources()
 {
-  QPtrList<Resource> result;
+  TQPtrList<Resource> result;
 
   Resource::List::ConstIterator it;
   for ( it = mResources.begin(); it != mResources.end(); ++it ) {
@@ -308,9 +308,9 @@ QPtrList<Resource> ManagerImpl::resources()
   return result;
 }
 
-QPtrList<Resource> ManagerImpl::resources( bool active )
+TQPtrList<Resource> ManagerImpl::resources( bool active )
 {
-  QPtrList<Resource> result;
+  TQPtrList<Resource> result;
 
   Resource::List::ConstIterator it;
   for ( it = mResources.begin(); it != mResources.end(); ++it ) {
@@ -321,7 +321,7 @@ QPtrList<Resource> ManagerImpl::resources( bool active )
   return result;
 }
 
-Resource *ManagerImpl::readResourceConfig( const QString &identifier,
+Resource *ManagerImpl::readResourceConfig( const TQString &identifier,
                                            bool checkActive )
 {
   kdDebug(5650) << "ManagerImpl::readResourceConfig() " << identifier << endl;
@@ -333,8 +333,8 @@ Resource *ManagerImpl::readResourceConfig( const QString &identifier,
 
   mConfig->setGroup( "Resource_" + identifier );
 
-  QString type = mConfig->readEntry( "ResourceType" );
-  QString name = mConfig->readEntry( "ResourceName" );
+  TQString type = mConfig->readEntry( "ResourceType" );
+  TQString name = mConfig->readEntry( "ResourceName" );
   Resource *resource = mFactory->resource( type, mConfig );
   if ( !resource ) {
     kdDebug(5650) << "Failed to create resource with id " << identifier << endl;
@@ -346,13 +346,13 @@ Resource *ManagerImpl::readResourceConfig( const QString &identifier,
 
   mConfig->setGroup( "General" );
 
-  QString standardKey = mConfig->readEntry( "Standard" );
+  TQString standardKey = mConfig->readEntry( "Standard" );
   if ( standardKey == identifier ) {
     mStandard = resource;
   }
 
   if ( checkActive ) {
-    QStringList activeKeys = mConfig->readListEntry( "ResourceKeys" );
+    TQStringList activeKeys = mConfig->readListEntry( "ResourceKeys" );
     resource->setActive( activeKeys.contains( identifier ) );
   }
   mResources.append( resource );
@@ -362,7 +362,7 @@ Resource *ManagerImpl::readResourceConfig( const QString &identifier,
 
 void ManagerImpl::writeResourceConfig( Resource *resource, bool checkActive )
 {
-  QString key = resource->identifier();
+  TQString key = resource->identifier();
 
   kdDebug(5650) << "Saving resource " << key << endl;
 
@@ -372,7 +372,7 @@ void ManagerImpl::writeResourceConfig( Resource *resource, bool checkActive )
   resource->writeConfig( mConfig );
 
   mConfig->setGroup( "General" );
-  QString standardKey = mConfig->readEntry( "Standard" );
+  TQString standardKey = mConfig->readEntry( "Standard" );
 
   if ( resource == mStandard  && standardKey != key )
     mConfig->writeEntry( "Standard", resource->identifier() );
@@ -380,8 +380,8 @@ void ManagerImpl::writeResourceConfig( Resource *resource, bool checkActive )
     mConfig->writeEntry( "Standard", "" );
   
   if ( checkActive ) {
-    QStringList activeKeys = mConfig->readListEntry( "ResourceKeys" );
-    QStringList passiveKeys = mConfig->readListEntry( "PassiveResourceKeys" );
+    TQStringList activeKeys = mConfig->readListEntry( "ResourceKeys" );
+    TQStringList passiveKeys = mConfig->readListEntry( "PassiveResourceKeys" );
     if ( resource->isActive() ) {
       if ( passiveKeys.contains( key ) ) { // remove it from passive list
         passiveKeys.remove( key );
@@ -408,22 +408,22 @@ void ManagerImpl::writeResourceConfig( Resource *resource, bool checkActive )
 
 void ManagerImpl::removeResource( Resource *resource )
 {
-  QString key = resource->identifier();
+  TQString key = resource->identifier();
 
   if ( !mConfig ) createStandardConfig();
   
   mConfig->setGroup( "General" );
-  QStringList activeKeys = mConfig->readListEntry( "ResourceKeys" );
+  TQStringList activeKeys = mConfig->readListEntry( "ResourceKeys" );
   if ( activeKeys.contains( key ) ) {
     activeKeys.remove( key );
     mConfig->writeEntry( "ResourceKeys", activeKeys );
   } else {
-    QStringList passiveKeys = mConfig->readListEntry( "PassiveResourceKeys" );
+    TQStringList passiveKeys = mConfig->readListEntry( "PassiveResourceKeys" );
     passiveKeys.remove( key );
     mConfig->writeEntry( "PassiveResourceKeys", passiveKeys );
   }
 
-  QString standardKey = mConfig->readEntry( "Standard" );
+  TQString standardKey = mConfig->readEntry( "Standard" );
   if ( standardKey == key ) {
     mConfig->writeEntry( "Standard", "" );
   }
@@ -432,7 +432,7 @@ void ManagerImpl::removeResource( Resource *resource )
   mConfig->sync();
 }
 
-Resource *ManagerImpl::getResource( const QString &identifier )
+Resource *ManagerImpl::getResource( const TQString &identifier )
 {
   Resource::List::ConstIterator it;
   for ( it = mResources.begin(); it != mResources.end(); ++it ) {
@@ -442,7 +442,7 @@ Resource *ManagerImpl::getResource( const QString &identifier )
   return 0;
 }
 
-QString ManagerImpl::defaultConfigFile( const QString &family )
+TQString ManagerImpl::defaultConfigFile( const TQString &family )
 {
-  return QString( "kresources/%1/stdrc" ).arg( family );
+  return TQString( "kresources/%1/stdrc" ).arg( family );
 }

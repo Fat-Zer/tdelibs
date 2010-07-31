@@ -20,8 +20,8 @@
 
 #include <config.h>
 
-#include <qeventloop.h>
-#include <qapplication.h>
+#include <tqeventloop.h>
+#include <tqapplication.h>
 #include <kurl.h>
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
@@ -72,12 +72,12 @@ public:
 #endif
 };
 
-RemoteService::RemoteService(const QString& label)
+RemoteService::RemoteService(const TQString& label)
 {
 	decode(label);
 	d =  new RemoteServicePrivate();
 }
-RemoteService::RemoteService(const QString& name,const QString& type,const QString& domain)
+RemoteService::RemoteService(const TQString& name,const TQString& type,const TQString& domain)
 		: ServiceBase(name, type, domain)
 {
 	d = new RemoteServicePrivate();
@@ -139,16 +139,16 @@ bool RemoteService::isResolved() const
 	return d->m_resolved;
 }
 
-void RemoteService::customEvent(QCustomEvent* event)
+void RemoteService::customEvent(TQCustomEvent* event)
 {
-	if (event->type() == QEvent::User+SD_ERROR) {
+	if (event->type() == TQEvent::User+SD_ERROR) {
 #ifdef HAVE_DNSSD
 		d->stop();
 #endif
 		d->m_resolved=false;
 		emit resolved(false);
 	}
-	if (event->type() == QEvent::User+SD_RESOLVE) {
+	if (event->type() == TQEvent::User+SD_RESOLVE) {
 		ResolveEvent* rev = static_cast<ResolveEvent*>(event);
 		m_hostName = rev->m_hostname;
 		m_port = rev->m_port;
@@ -163,7 +163,7 @@ void RemoteService::virtual_hook(int, void*)
 	// BASE::virtual_hook(int, void*);
 }
 
-QDataStream & operator<< (QDataStream & s, const RemoteService & a)
+TQDataStream & operator<< (TQDataStream & s, const RemoteService & a)
 {
 	s << (static_cast<ServiceBase>(a));
 	Q_INT8 resolved = a.d->m_resolved ? 1:0;
@@ -171,7 +171,7 @@ QDataStream & operator<< (QDataStream & s, const RemoteService & a)
 	return s;
 }
 
-QDataStream & operator>> (QDataStream & s, RemoteService & a)
+TQDataStream & operator>> (TQDataStream & s, RemoteService & a)
 {
 	// stop any possible resolve going on
 #ifdef HAVE_DNSSD
@@ -195,22 +195,22 @@ void resolve_callback(AvahiServiceResolver*, AvahiIfIndex, AvahiProtocol, AvahiR
     uint16_t port, AvahiStringList* txt, void* context)
 #endif
 {
-	QObject *obj = reinterpret_cast<QObject*>(context);
+	TQObject *obj = reinterpret_cast<TQObject*>(context);
 	if (e != AVAHI_RESOLVER_FOUND) {
 		ErrorEvent err;
-		QApplication::sendEvent(obj, &err);
+		TQApplication::sendEvent(obj, &err);
 		return;
 	}
-	QMap<QString,QString> map;
+	TQMap<TQString,TQString> map;
 	while (txt) {
 	    char *key, *value;
 	    size_t size;
 	    if (avahi_string_list_get_pair(txt,&key,&value,&size)) break;
-	    map[QString::fromUtf8(key)]=(value) ? QString::fromUtf8(value) : QString::null;
+	    map[TQString::fromUtf8(key)]=(value) ? TQString::fromUtf8(value) : TQString::null;
 	    txt = txt->next;
 	}
 	ResolveEvent rev(DNSToDomain(hostname),port,map);
-	QApplication::sendEvent(obj, &rev);
+	TQApplication::sendEvent(obj, &rev);
 }
 #endif
 

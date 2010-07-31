@@ -29,7 +29,7 @@ class DCOPStubPrivate;
 
 #include <stdlib.h>
 
-#include <qstring.h>
+#include <tqstring.h>
 #include "kdelibs_export.h"
 
 /**
@@ -46,7 +46,7 @@ public:
        @param app the application id
        @param obj the object id
      */
-    DCOPStub( const QCString& app, const QCString& obj );
+    DCOPStub( const TQCString& app, const TQCString& obj );
 
     /** 
       Creates a DCOPStub for application @p app and object @p obj
@@ -55,7 +55,7 @@ public:
        @param app the application id
        @param obj the object id
      */
-    DCOPStub( DCOPClient* client, const QCString& app, const QCString& obj );
+    DCOPStub( DCOPClient* client, const TQCString& app, const TQCString& obj );
     
     /**
        Creates a DCOPStub for application ref.app() and object ref.obj()
@@ -68,12 +68,12 @@ public:
        Return the application id.
        @return the application id
      */
-    QCString app() const;
+    TQCString app() const;
     /**
        Return the object  id.
        @return the object id
      */
-    QCString obj() const;
+    TQCString obj() const;
 
     enum Status{ CallSucceeded, CallFailed };
     /**
@@ -132,8 +132,8 @@ protected:
     DCOPStub( never_use_t ) { abort(); }
     
 private:
-    QCString m_app;
-    QCString m_obj;
+    TQCString m_app;
+    TQCString m_obj;
     Status m_status;
 
 protected:

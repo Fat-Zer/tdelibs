@@ -23,12 +23,12 @@
 
 #include <kssl.h>
 
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <kpushbutton.h>
-#include <qframe.h>
-#include <qlabel.h>
-#include <qscrollview.h>
-#include <qfile.h>
+#include <tqframe.h>
+#include <tqlabel.h>
+#include <tqscrollview.h>
+#include <tqfile.h>
 
 #include <kapplication.h>
 #include <kglobal.h>
@@ -51,39 +51,39 @@ class KSSLInfoDlg::KSSLInfoDlgPrivate {
     private:
         friend class KSSLInfoDlg;
         bool m_secCon;
-        QGridLayout *m_layout;
+        TQGridLayout *m_layout;
         KComboBox *_chain;
         KSSLCertificate *_cert;
         KSSLCertificate::KSSLValidationList _cert_ksvl;
 
         bool inQuestion;
 
-        QLabel *_serialNum;
-        QLabel *_csl;
-        QLabel *_validFrom;
-        QLabel *_validUntil;
-        QLabel *_digest;
+        TQLabel *_serialNum;
+        TQLabel *_csl;
+        TQLabel *_validFrom;
+        TQLabel *_validUntil;
+        TQLabel *_digest;
 
-        QLabel *pixmap;
-        QLabel *info;
+        TQLabel *pixmap;
+        TQLabel *info;
 
         KSSLCertBox *_subject, *_issuer;
 };
 
 
 
-KSSLInfoDlg::KSSLInfoDlg(bool secureConnection, QWidget *parent, const char *name, bool modal)
+KSSLInfoDlg::KSSLInfoDlg(bool secureConnection, TQWidget *parent, const char *name, bool modal)
     : KDialog(parent, name, modal, Qt::WDestructiveClose), d(new KSSLInfoDlgPrivate) {
-        QVBoxLayout *topLayout = new QVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
+        TQVBoxLayout *topLayout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
         d->m_secCon = secureConnection;
-        d->m_layout = new QGridLayout(topLayout, 3, 3, KDialog::spacingHint());
+        d->m_layout = new TQGridLayout(topLayout, 3, 3, KDialog::spacingHint());
         d->m_layout->setColStretch(1, 1);
         d->m_layout->setColStretch(2, 1);
 
-        d->pixmap = new QLabel(this);
+        d->pixmap = new TQLabel(this);
         d->m_layout->addWidget(d->pixmap, 0, 0);
 
-        d->info = new QLabel(this);
+        d->info = new TQLabel(this);
         d->m_layout->addWidget(d->info, 0, 1);
 
         if (KSSL::doesSSLWork()) {
@@ -100,19 +100,19 @@ KSSLInfoDlg::KSSLInfoDlg(bool secureConnection, QWidget *parent, const char *nam
         }
         d->m_layout->addRowSpacing( 0, 50 ); // give minimum height to look better
 
-        QHBoxLayout *buttonLayout = new QHBoxLayout(topLayout, KDialog::spacingHint());
+        TQHBoxLayout *buttonLayout = new TQHBoxLayout(topLayout, KDialog::spacingHint());
         buttonLayout->addStretch( 1 );
 
         KPushButton *button;
 
         if (KSSL::doesSSLWork()) {
             button = new KPushButton(KGuiItem(i18n("C&ryptography Configuration..."),"configure"), this);
-            connect(button, SIGNAL(clicked()), SLOT(launchConfig()));
+            connect(button, TQT_SIGNAL(clicked()), TQT_SLOT(launchConfig()));
             buttonLayout->addWidget( button );
         }
 
         button = new KPushButton(KStdGuiItem::close(), this);
-        connect(button, SIGNAL(clicked()), SLOT(close()));
+        connect(button, TQT_SIGNAL(clicked()), TQT_SLOT(close()));
         buttonLayout->addWidget( button );
 
         button->setFocus();
@@ -155,7 +155,7 @@ void KSSLInfoDlg::setSecurityInQuestion(bool isIt) {
 }
 
 
-void KSSLInfoDlg::setup( KSSL & ssl, const QString & ip, const QString & url )
+void KSSLInfoDlg::setup( KSSL & ssl, const TQString & ip, const TQString & url )
 {
     setup(
             &ssl.peerInfo().getPeerCertificate(),
@@ -171,20 +171,20 @@ void KSSLInfoDlg::setup( KSSL & ssl, const QString & ip, const QString & url )
 }
 
 void KSSLInfoDlg::setup(KSSLCertificate *cert,
-        const QString& ip, const QString& url,
-        const QString& cipher, const QString& cipherdesc,
-        const QString& sslversion, int usedbits, int bits,
+        const TQString& ip, const TQString& url,
+        const TQString& cipher, const TQString& cipherdesc,
+        const TQString& sslversion, int usedbits, int bits,
         KSSLCertificate::KSSLValidation /*certState*/) {
     // Needed to put the GUI stuff here to get the layouting right
 
     d->_cert = cert;
 
-    QGridLayout *layout = new QGridLayout(4, 2, KDialog::spacingHint());
+    TQGridLayout *layout = new TQGridLayout(4, 2, KDialog::spacingHint());
 
-    layout->addWidget(new QLabel(i18n("Chain:"), this), 0, 0);
+    layout->addWidget(new TQLabel(i18n("Chain:"), this), 0, 0);
     d->_chain = new KComboBox(this);
     layout->addMultiCellWidget(d->_chain, 1, 1, 0, 1);
-    connect(d->_chain, SIGNAL(activated(int)), this, SLOT(slotChain(int)));
+    connect(d->_chain, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotChain(int)));
 
     d->_chain->clear();
 
@@ -192,75 +192,75 @@ void KSSLInfoDlg::setup(KSSLCertificate *cert,
         d->_chain->setEnabled(true);
         d->_chain->insertItem(i18n("0 - Site Certificate"));
         int cnt = 0;
-        QPtrList<KSSLCertificate> cl = cert->chain().getChain();
+        TQPtrList<KSSLCertificate> cl = cert->chain().getChain();
         cl.setAutoDelete(true);
         for (KSSLCertificate *c = cl.first(); c != 0; c = cl.next()) {
             KSSLX509Map map(c->getSubject());
-            QString id;
+            TQString id;
             id = map.getValue("CN");
             if (id.length() == 0)
                 id = map.getValue("O");
             if (id.length() == 0)
                 id = map.getValue("OU");
-            d->_chain->insertItem(QString::number(++cnt)+" - "+id);
+            d->_chain->insertItem(TQString::number(++cnt)+" - "+id);
         }
         d->_chain->setCurrentItem(0);
     } else d->_chain->setEnabled(false);
 
-    layout->addWidget(new QLabel(i18n("Peer certificate:"), this), 2, 0);
+    layout->addWidget(new TQLabel(i18n("Peer certificate:"), this), 2, 0);
     layout->addWidget(d->_subject = static_cast<KSSLCertBox*>(buildCertInfo(cert->getSubject())), 3, 0);
-    layout->addWidget(new QLabel(i18n("Issuer:"), this), 2, 1);
+    layout->addWidget(new TQLabel(i18n("Issuer:"), this), 2, 1);
     layout->addWidget(d->_issuer = static_cast<KSSLCertBox*>(buildCertInfo(cert->getIssuer())), 3, 1);
     d->m_layout->addMultiCell(layout, 1, 1, 0, 2);
 
-    layout = new QGridLayout(11, 2, KDialog::spacingHint());
+    layout = new TQGridLayout(11, 2, KDialog::spacingHint());
     layout->setColStretch(1, 1);
-    QLabel *ipl = new QLabel(i18n("IP address:"), this);
+    TQLabel *ipl = new TQLabel(i18n("IP address:"), this);
     layout->addWidget(ipl, 0, 0);
     if (ip.isEmpty()) {
         ipl->hide();
     }
-    layout->addWidget(ipl = new QLabel(ip, this), 0, 1);
+    layout->addWidget(ipl = new TQLabel(ip, this), 0, 1);
     if (ip.isEmpty()) {
         ipl->hide();
     }
-    layout->addWidget(new QLabel(i18n("URL:"), this), 1, 0);
+    layout->addWidget(new TQLabel(i18n("URL:"), this), 1, 0);
     KSqueezedTextLabel *urlLabel = new KSqueezedTextLabel(url, this);
     layout->addWidget(urlLabel, 1, 1);
-    layout->addWidget(new QLabel(i18n("Certificate state:"), this), 2, 0);
+    layout->addWidget(new TQLabel(i18n("Certificate state:"), this), 2, 0);
 
-    layout->addWidget(d->_csl = new QLabel("", this), 2, 1);
+    layout->addWidget(d->_csl = new TQLabel("", this), 2, 1);
 
     update();
 
-    layout->addWidget(new QLabel(i18n("Valid from:"), this), 3, 0);
-    layout->addWidget(d->_validFrom = new QLabel("", this), 3, 1);
-    layout->addWidget(new QLabel(i18n("Valid until:"), this), 4, 0);
-    layout->addWidget(d->_validUntil = new QLabel("", this), 4, 1);
+    layout->addWidget(new TQLabel(i18n("Valid from:"), this), 3, 0);
+    layout->addWidget(d->_validFrom = new TQLabel("", this), 3, 1);
+    layout->addWidget(new TQLabel(i18n("Valid until:"), this), 4, 0);
+    layout->addWidget(d->_validUntil = new TQLabel("", this), 4, 1);
 
-    layout->addWidget(new QLabel(i18n("Serial number:"), this), 5, 0);
-    layout->addWidget(d->_serialNum = new QLabel("", this), 5, 1);
-    layout->addWidget(new QLabel(i18n("MD5 digest:"), this), 6, 0);
-    layout->addWidget(d->_digest = new QLabel("", this), 6, 1);
+    layout->addWidget(new TQLabel(i18n("Serial number:"), this), 5, 0);
+    layout->addWidget(d->_serialNum = new TQLabel("", this), 5, 1);
+    layout->addWidget(new TQLabel(i18n("MD5 digest:"), this), 6, 0);
+    layout->addWidget(d->_digest = new TQLabel("", this), 6, 1);
 
-    layout->addWidget(new QLabel(i18n("Cipher in use:"), this), 7, 0);
-    layout->addWidget(new QLabel(cipher, this), 7, 1);
-    layout->addWidget(new QLabel(i18n("Details:"), this), 8, 0);
-    layout->addWidget(new QLabel(cipherdesc.simplifyWhiteSpace(), this), 8, 1);
-    layout->addWidget(new QLabel(i18n("SSL version:"), this), 9, 0);
-    layout->addWidget(new QLabel(sslversion, this), 9, 1);
-    layout->addWidget(new QLabel(i18n("Cipher strength:"), this), 10, 0);
-    layout->addWidget(new QLabel(i18n("%1 bits used of a %2 bit cipher").arg(usedbits).arg(bits), this), 10, 1);
+    layout->addWidget(new TQLabel(i18n("Cipher in use:"), this), 7, 0);
+    layout->addWidget(new TQLabel(cipher, this), 7, 1);
+    layout->addWidget(new TQLabel(i18n("Details:"), this), 8, 0);
+    layout->addWidget(new TQLabel(cipherdesc.simplifyWhiteSpace(), this), 8, 1);
+    layout->addWidget(new TQLabel(i18n("SSL version:"), this), 9, 0);
+    layout->addWidget(new TQLabel(sslversion, this), 9, 1);
+    layout->addWidget(new TQLabel(i18n("Cipher strength:"), this), 10, 0);
+    layout->addWidget(new TQLabel(i18n("%1 bits used of a %2 bit cipher").arg(usedbits).arg(bits), this), 10, 1);
     d->m_layout->addMultiCell(layout, 2, 2, 0, 2);
 
     displayCert(cert);
 }
 
-void KSSLInfoDlg::setCertState(const QString &errorNrs)
+void KSSLInfoDlg::setCertState(const TQString &errorNrs)
 {
     d->_cert_ksvl.clear();
-    QStringList errors = QStringList::split(':', errorNrs);
-    for(QStringList::ConstIterator it = errors.begin();
+    TQStringList errors = TQStringList::split(':', errorNrs);
+    for(TQStringList::ConstIterator it = errors.begin();
             it != errors.end(); ++it)
     {
         d->_cert_ksvl << (KSSLCertificate::KSSLValidation) (*it).toInt();
@@ -268,21 +268,21 @@ void KSSLInfoDlg::setCertState(const QString &errorNrs)
 }
 
 void KSSLInfoDlg::displayCert(KSSLCertificate *x) {
-    QPalette cspl;
+    TQPalette cspl;
 
     d->_serialNum->setText(x->getSerialNumber());
 
     cspl = d->_validFrom->palette();
-    if (x->getQDTNotBefore() > QDateTime::currentDateTime(Qt::UTC))
-        cspl.setColor(QColorGroup::Foreground, QColor(196,33,21));
-    else cspl.setColor(QColorGroup::Foreground, QColor(42,153,59));
+    if (x->getQDTNotBefore() > TQDateTime::currentDateTime(Qt::UTC))
+        cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
+    else cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
     d->_validFrom->setPalette(cspl);
     d->_validFrom->setText(x->getNotBefore());
 
     cspl = d->_validUntil->palette();
-    if (x->getQDTNotAfter() < QDateTime::currentDateTime(Qt::UTC))
-        cspl.setColor(QColorGroup::Foreground, QColor(196,33,21));
-    else cspl.setColor(QColorGroup::Foreground, QColor(42,153,59));
+    if (x->getQDTNotAfter() < TQDateTime::currentDateTime(Qt::UTC))
+        cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
+    else cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
     d->_validUntil->setPalette(cspl);
     d->_validUntil->setText(x->getNotAfter());
 
@@ -305,8 +305,8 @@ void KSSLInfoDlg::displayCert(KSSLCertificate *x) {
         ksv = ksvl.first();
 
         if (ksv == KSSLCertificate::SelfSigned) {
-            if (x->getQDTNotAfter() > QDateTime::currentDateTime(Qt::UTC) &&
-                    x->getQDTNotBefore() < QDateTime::currentDateTime(Qt::UTC)) {
+            if (x->getQDTNotAfter() > TQDateTime::currentDateTime(Qt::UTC) &&
+                    x->getQDTNotBefore() < TQDateTime::currentDateTime(Qt::UTC)) {
                 if (KSSLSigners().useForSSL(*x))
                     ksv = KSSLCertificate::Ok;
             } else {
@@ -316,13 +316,13 @@ void KSSLInfoDlg::displayCert(KSSLCertificate *x) {
     }
 
     if (ksv == KSSLCertificate::Ok) {
-        cspl.setColor(QColorGroup::Foreground, QColor(42,153,59));
+        cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
     } else if (ksv != KSSLCertificate::Irrelevant) {
-        cspl.setColor(QColorGroup::Foreground, QColor(196,33,21));
+        cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
     }
     d->_csl->setPalette(cspl);
 
-    QString errorStr;
+    TQString errorStr;
     for(KSSLCertificate::KSSLValidationList::ConstIterator it = ksvl.begin();
             it != ksvl.end(); ++it) {
         if (!errorStr.isEmpty())
@@ -344,7 +344,7 @@ void KSSLInfoDlg::slotChain(int x) {
     if (x == 0) {
         displayCert(d->_cert);
     } else {
-        QPtrList<KSSLCertificate> cl = d->_cert->chain().getChain();
+        TQPtrList<KSSLCertificate> cl = d->_cert->chain().getChain();
         cl.setAutoDelete(true);
         for (int i = 0; i < x-1; i++)
             cl.remove((unsigned int)0);
@@ -356,7 +356,7 @@ void KSSLInfoDlg::slotChain(int x) {
 }
 
 
-KSSLCertBox *KSSLInfoDlg::certInfoWidget(QWidget *parent, const QString &certName, QWidget *mailCatcher) {
+KSSLCertBox *KSSLInfoDlg::certInfoWidget(TQWidget *parent, const TQString &certName, TQWidget *mailCatcher) {
     KSSLCertBox *result = new KSSLCertBox(parent);
     if (!certName.isEmpty()) {
         result->setValues(certName, mailCatcher);
@@ -365,23 +365,23 @@ KSSLCertBox *KSSLInfoDlg::certInfoWidget(QWidget *parent, const QString &certNam
 }
 
 
-KSSLCertBox::KSSLCertBox(QWidget *parent, const char *name, WFlags f)
-: QScrollView(parent, name, f)
+KSSLCertBox::KSSLCertBox(TQWidget *parent, const char *name, WFlags f)
+: TQScrollView(parent, name, f)
 {
     _frame = 0L;
-    setBackgroundMode(QWidget::PaletteButton);
-    setValues(QString::null, 0L);
+    setBackgroundMode(TQWidget::PaletteButton);
+    setValues(TQString::null, 0L);
 }
 
 
-void KSSLCertBox::setValues(QString certName, QWidget *mailCatcher) {
+void KSSLCertBox::setValues(TQString certName, TQWidget *mailCatcher) {
     if (_frame) {
         removeChild(_frame);
         delete _frame;
     }
 
     if (certName.isEmpty()) {
-        _frame = new QFrame(this);
+        _frame = new TQFrame(this);
         addChild(_frame);
         viewport()->setBackgroundMode(_frame->backgroundMode());
         _frame->show();
@@ -391,50 +391,50 @@ void KSSLCertBox::setValues(QString certName, QWidget *mailCatcher) {
     }
 
     KSSLX509Map cert(certName);
-    QString tmp;
-    viewport()->setBackgroundMode(QWidget::PaletteButton);
-    _frame = new QFrame(this);
-    QGridLayout *grid = new QGridLayout(_frame, 1, 2, KDialog::marginHint(), KDialog::spacingHint());
+    TQString tmp;
+    viewport()->setBackgroundMode(TQWidget::PaletteButton);
+    _frame = new TQFrame(this);
+    TQGridLayout *grid = new TQGridLayout(_frame, 1, 2, KDialog::marginHint(), KDialog::spacingHint());
     grid->setAutoAdd(true);
-    QLabel *label = 0L;
+    TQLabel *label = 0L;
     if (!(tmp = cert.getValue("O")).isEmpty()) {
-        label = new QLabel(i18n("Organization:"), _frame);
+        label = new TQLabel(i18n("Organization:"), _frame);
         label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-        new QLabel(tmp, _frame);
+        new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("OU")).isEmpty()) {
-        label = new QLabel(i18n("Organizational unit:"), _frame);
+        label = new TQLabel(i18n("Organizational unit:"), _frame);
         label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-        new QLabel(tmp, _frame);
+        new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("L")).isEmpty()) {
-        label = new QLabel(i18n("Locality:"), _frame);
+        label = new TQLabel(i18n("Locality:"), _frame);
         label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-        new QLabel(tmp, _frame);
+        new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("ST")).isEmpty()) {
-        label = new QLabel(i18n("Federal State","State:"), _frame);
+        label = new TQLabel(i18n("Federal State","State:"), _frame);
         label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-        new QLabel(tmp, _frame);
+        new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("C")).isEmpty()) {
-        label = new QLabel(i18n("Country:"), _frame);
+        label = new TQLabel(i18n("Country:"), _frame);
         label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-        new QLabel(tmp, _frame);
+        new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("CN")).isEmpty()) {
-        label = new QLabel(i18n("Common name:"), _frame);
+        label = new TQLabel(i18n("Common name:"), _frame);
         label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-        new QLabel(tmp, _frame);
+        new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("Email")).isEmpty()) {
-        label = new QLabel(i18n("Email:"), _frame);
+        label = new TQLabel(i18n("Email:"), _frame);
         label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         if (mailCatcher) {
             KURLLabel *mail = new KURLLabel(tmp, tmp, _frame);
-            connect(mail, SIGNAL(leftClickedURL(const QString &)), mailCatcher, SLOT(mailClicked(const QString &)));
+            connect(mail, TQT_SIGNAL(leftClickedURL(const TQString &)), mailCatcher, TQT_SLOT(mailClicked(const TQString &)));
         } else {
-            label = new QLabel(tmp, _frame);
+            label = new TQLabel(tmp, _frame);
         }
     }
     if (label && viewport()) {
@@ -447,16 +447,16 @@ void KSSLCertBox::setValues(QString certName, QWidget *mailCatcher) {
 }
 
 
-QScrollView *KSSLInfoDlg::buildCertInfo(const QString &certName) {
+TQScrollView *KSSLInfoDlg::buildCertInfo(const TQString &certName) {
     return KSSLInfoDlg::certInfoWidget(this, certName, this);
 }
 
-void KSSLInfoDlg::urlClicked(const QString &url) {
+void KSSLInfoDlg::urlClicked(const TQString &url) {
     kapp->invokeBrowser(url);
 }
 
-void KSSLInfoDlg::mailClicked(const QString &url) {
-    kapp->invokeMailer(url, QString::null);
+void KSSLInfoDlg::mailClicked(const TQString &url) {
+    kapp->invokeMailer(url, TQString::null);
 }
 
 #include "ksslinfodlg.moc"

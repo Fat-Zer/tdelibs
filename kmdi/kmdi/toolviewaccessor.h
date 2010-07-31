@@ -20,11 +20,11 @@
 #ifndef _KMDI_TOOLVIEWACCESSOR_H_
 #define _KMDI_TOOLVIEWACCESSOR_H_
 
-#include <qwidget.h>
-#include <qpixmap.h>
-#include <qrect.h>
-#include <qapplication.h>
-#include <qdatetime.h>
+#include <tqwidget.h>
+#include <tqpixmap.h>
+#include <tqrect.h>
+#include <tqapplication.h>
+#include <tqdatetime.h>
 
 #include <kdockwidget.h>
 
@@ -61,24 +61,24 @@ private:
    bool m_bFocusInEventIsPending;
 
 private:
-  ToolViewAccessor( KMDI::MainWindow *parent , QWidget *widgetToWrap, const QString& tabToolTip = 0, const QString& tabCaption = 0);
+  ToolViewAccessor( KMDI::MainWindow *parent , TQWidget *widgetToWrap, const TQString& tabToolTip = 0, const TQString& tabCaption = 0);
   ToolViewAccessor( KMDI::MainWindow *parent);
 public:
   ~ToolViewAccessor();
-  QWidget *wrapperWidget();
-  QWidget *wrappedWidget();
-  void place(KDockWidget::DockPosition pos = KDockWidget::DockNone, QWidget* pTargetWnd = 0L,int percent = 50);
-  void placeAndShow(KDockWidget::DockPosition pos = KDockWidget::DockNone, QWidget* pTargetWnd = 0L,int percent = 50);
+  TQWidget *wrapperWidget();
+  TQWidget *wrappedWidget();
+  void place(KDockWidget::DockPosition pos = KDockWidget::DockNone, TQWidget* pTargetWnd = 0L,int percent = 50);
+  void placeAndShow(KDockWidget::DockPosition pos = KDockWidget::DockNone, TQWidget* pTargetWnd = 0L,int percent = 50);
   void show();
 public slots:
-  void setWidgetToWrap(QWidget* widgetToWrap, const QString& tabToolTip = 0, const QString& tabCaption = 0);
+  void setWidgetToWrap(TQWidget* widgetToWrap, const TQString& tabToolTip = 0, const TQString& tabCaption = 0);
   void hide();
 private:
    KMDIPrivate::ToolViewAccessorPrivate *d;
    KMDI::MainWindow *mdiMainFrm;
 
 protected:
-  bool eventFilter(QObject *o, QEvent *e);
+  bool eventFilter(TQObject *o, TQEvent *e);
 };
 
 }

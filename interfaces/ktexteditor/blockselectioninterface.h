@@ -42,7 +42,7 @@ class KTEXTEDITOR_EXPORT BlockSelectionInterface
     unsigned int blockSelectionInterfaceNumber () const;
     
   protected:  
-    void setBlockSelectionInterfaceDCOPSuffix (const QCString &suffix);  
+    void setBlockSelectionInterfaceDCOPSuffix (const TQCString &suffix);  
 
   /**
   *  slots !!!

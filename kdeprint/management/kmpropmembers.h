@@ -27,7 +27,7 @@ class QTextView;
 class KDEPRINT_EXPORT KMPropMembers : public KMPropWidget
 {
 public:
-	KMPropMembers(QWidget *parent = 0, const char *name = 0);
+	KMPropMembers(TQWidget *parent = 0, const char *name = 0);
 	~KMPropMembers();
 
 	void setPrinter(KMPrinter*);

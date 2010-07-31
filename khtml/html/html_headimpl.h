@@ -92,7 +92,7 @@ public:
 
     // from CachedObjectClient
     virtual void setStyleSheet(const DOM::DOMString &url, const DOM::DOMString &sheet, const DOM::DOMString &charset);
-    virtual void error(int err, const QString &text);
+    virtual void error(int err, const TQString &text);
     bool isLoading() const;
     void sheetLoaded();
 
@@ -107,7 +107,7 @@ protected:
     khtml::CachedCSSStyleSheet *m_cachedSheet;
     CSSStyleSheetImpl *m_sheet;
     DOMString m_url;
-    QString m_media;
+    TQString m_media;
     bool m_isDisabled : 1;
     bool m_loading    : 1;
     bool m_alternate  : 1;
@@ -151,7 +151,7 @@ public:
 
     void setCreatedByParser(bool createdByParser) { m_createdByParser = createdByParser; }
 
-    void evaluateScript(const QString &, const DOMString &);
+    void evaluateScript(const TQString &, const DOMString &);
 
     DOMString text() const;
     void setText( const DOMString& str );
@@ -205,7 +205,7 @@ public:
 protected:
     CSSStyleSheetImpl *m_sheet;
     DOMString m_type;
-    QString m_media;
+    TQString m_media;
     bool m_loading;
 };
 

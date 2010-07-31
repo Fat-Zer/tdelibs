@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __kpanelextension_h__
 #define __kpanelextension_h__
 
-#include <qframe.h>
+#include <tqframe.h>
 #include <kdelibs_export.h>
 
 class QPopupMenu;
@@ -78,7 +78,7 @@ class KPanelExtensionPrivate;
  *
  * extern "C"
  * {
- *     KPanelExtension* init(QWidget *parent, const QString& configFile)
+ *     KPanelExtension* init(TQWidget *parent, const TQString& configFile)
  *     {
  *         KGlobal::locale()->insertCatalogue("exampleextension");
  *         return new ExampleExtension(configFile, KPanelExtension::Normal,
@@ -119,8 +119,8 @@ public:
      * @param parent The pointer to the parent widget handed over in the factory function.
      * @param name A Qt object name for your extension.
      **/
-    KPanelExtension(const QString& configFile, Type t = Normal,
-		 int actions = 0, QWidget *parent = 0, const char *name = 0);
+    KPanelExtension(const TQString& configFile, Type t = Normal,
+		 int actions = 0, TQWidget *parent = 0, const char *name = 0);
 
     /**
      * Destructor.
@@ -136,7 +136,7 @@ public:
      * location in the Window Manager Dock. Please note that the size can not be larger than the
      * maxsize given by the handler.
      **/
-    virtual QSize sizeHint(Position /*p*/, QSize maxsize) const { return maxsize; }
+    virtual TQSize sizeHint(Position /*p*/, TQSize maxsize) const { return maxsize; }
 
     /**
      * Always use this KConfig object to save/load your extensions configuration.
@@ -210,10 +210,10 @@ public:
 
     /**
      * @return the extension's custom menu, usually the same as the context menu, or 0 if none
-     * @see setCustomMenu(QPopupMenu*)
+     * @see setCustomMenu(TQPopupMenu*)
      * @since 3.4
      */
-    QPopupMenu* customMenu() const;
+    TQPopupMenu* customMenu() const;
 
     /**
      * @return whether or not to set a desktop geometry claiming strut for this panel
@@ -321,7 +321,7 @@ protected:
      * with the new menu (or 0) to avoid crashes
      * @since 3.4
      */
-    void setCustomMenu(QPopupMenu*);
+    void setCustomMenu(TQPopupMenu*);
 
     /**
      * Use this method to set the return value for reserveStrut

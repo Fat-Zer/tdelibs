@@ -31,7 +31,7 @@ PhoneNumber::PhoneNumber() :
   init();
 }
 
-PhoneNumber::PhoneNumber( const QString &number, int type ) :
+PhoneNumber::PhoneNumber( const TQString &number, int type ) :
   mType( type )
 {
   init();
@@ -48,7 +48,7 @@ void PhoneNumber::init()
   mId = KApplication::randomString( 8 );
 }
 
-void PhoneNumber::validateNumber( const QString &number )
+void PhoneNumber::validateNumber( const TQString &number )
 {
   mNumber = number;
 
@@ -70,22 +70,22 @@ bool PhoneNumber::operator!=( const PhoneNumber &p ) const
   return !( p == *this );
 }
 
-void PhoneNumber::setId( const QString &id )
+void PhoneNumber::setId( const TQString &id )
 {
   mId = id;
 }
 
-QString PhoneNumber::id() const
+TQString PhoneNumber::id() const
 {
   return mId;
 }
 
-void PhoneNumber::setNumber( const QString &number )
+void PhoneNumber::setNumber( const TQString &number )
 {
   validateNumber( number );
 }
 
-QString PhoneNumber::number() const
+TQString PhoneNumber::number() const
 {
   return mNumber;
 }
@@ -100,9 +100,9 @@ int PhoneNumber::type() const
   return mType;
 }
 
-QString PhoneNumber::typeLabel() const
+TQString PhoneNumber::typeLabel() const
 {
-  QString label;
+  TQString label;
   bool first = true;
 
   const TypeList list = typeList();
@@ -119,7 +119,7 @@ QString PhoneNumber::typeLabel() const
   return label;
 }
 
-QString PhoneNumber::label() const
+TQString PhoneNumber::label() const
 {
   return typeLabel( type() );
 }
@@ -136,12 +136,12 @@ PhoneNumber::TypeList PhoneNumber::typeList()
   return list;
 }
 
-QString PhoneNumber::label( int type )
+TQString PhoneNumber::label( int type )
 {
   return typeLabel( type );
 }
 
-QString PhoneNumber::typeLabel( int type )
+TQString PhoneNumber::typeLabel( int type )
 {
   if ( type & Pref )
     return i18n( "Preferred phone", "Preferred" );
@@ -200,12 +200,12 @@ QString PhoneNumber::typeLabel( int type )
   }
 }
 
-QDataStream &KABC::operator<<( QDataStream &s, const PhoneNumber &phone )
+TQDataStream &KABC::operator<<( TQDataStream &s, const PhoneNumber &phone )
 {
     return s << phone.mId << phone.mType << phone.mNumber;
 }
 
-QDataStream &KABC::operator>>( QDataStream &s, PhoneNumber &phone )
+TQDataStream &KABC::operator>>( TQDataStream &s, PhoneNumber &phone )
 {
     s >> phone.mId >> phone.mType >> phone.mNumber;
 

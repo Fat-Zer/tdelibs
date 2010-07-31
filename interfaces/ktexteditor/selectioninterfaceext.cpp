@@ -43,7 +43,7 @@ SelectionInterfaceExt::SelectionInterfaceExt()
 {
   globalSelectionInterfaceExtNumber++;
   mySelectionInterfaceExtNumber = globalSelectionInterfaceExtNumber;
-  QString name = "SelectionInterfaceExt#" + QString::number(mySelectionInterfaceExtNumber);
+  TQString name = "SelectionInterfaceExt#" + TQString::number(mySelectionInterfaceExtNumber);
   d->interface = new SelectionExtDCOPInterface(this, name.latin1());
 }
 
@@ -58,7 +58,7 @@ unsigned int SelectionInterfaceExt::selectionInterfaceExtNumber () const
   return mySelectionInterfaceExtNumber;
 }
 
-void SelectionInterfaceExt::setSelectionInterfaceExtDCOPSuffix (const QCString &suffix)
+void SelectionInterfaceExt::setSelectionInterfaceExtDCOPSuffix (const TQCString &suffix)
 {
   d->interface->setObjId ("SelectionInterfaceExt#"+suffix);
 }

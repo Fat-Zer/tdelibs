@@ -19,7 +19,7 @@
 
 #include "kpreviewprops.h"
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
 #include <kfilemetapreview.h>
 #include <kglobalsettings.h>
@@ -46,15 +46,15 @@ KPreviewPropsPlugin::KPreviewPropsPlugin(KPropertiesDialog* props)
 void KPreviewPropsPlugin::createLayout()
 {
     // let the dialog create the page frame
-    QFrame* topframe = properties->addPage(i18n("P&review"));
-    topframe->setFrameStyle(QFrame::NoFrame);
+    TQFrame* topframe = properties->addPage(i18n("P&review"));
+    topframe->setFrameStyle(TQFrame::NoFrame);
 
-    QVBoxLayout* tmp = new QVBoxLayout(topframe, 0, 0);
+    TQVBoxLayout* tmp = new TQVBoxLayout(topframe, 0, 0);
 
     preview = new KFileMetaPreview(topframe);
 
     tmp->addWidget(preview) ;
-    connect( properties, SIGNAL( aboutToShowPage( QWidget * ) ), SLOT( aboutToShowPage( QWidget* ) ) );
+    connect( properties, TQT_SIGNAL( aboutToShowPage( TQWidget * ) ), TQT_SLOT( aboutToShowPage( TQWidget* ) ) );
 }
 
 KPreviewPropsPlugin::~KPreviewPropsPlugin()
@@ -77,12 +77,12 @@ bool KPreviewPropsPlugin::supports( KFileItemList _items )
     return true;
 }
 
-void KPreviewPropsPlugin::aboutToShowPage( QWidget* widget )
+void KPreviewPropsPlugin::aboutToShowPage( TQWidget* widget )
 {
     if ( widget != preview->parent() )
         return;
 
-    disconnect( properties, SIGNAL( aboutToShowPage( QWidget * ) ), this, SLOT( aboutToShowPage( QWidget* ) ) );
+    disconnect( properties, TQT_SIGNAL( aboutToShowPage( TQWidget * ) ), this, TQT_SLOT( aboutToShowPage( TQWidget* ) ) );
     preview->showPreview(properties->item()->url());
 }
 

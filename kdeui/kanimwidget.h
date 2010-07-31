@@ -18,7 +18,7 @@
 #ifndef _KANIMWIDGET_H
 #define _KANIMWIDGET_H
 
-#include <qframe.h>
+#include <tqframe.h>
 
 #include <kdelibs_export.h>
 
@@ -56,7 +56,7 @@ class KDEUI_EXPORT KAnimWidget : public QFrame
 {
   Q_OBJECT
   Q_PROPERTY( int size READ size WRITE setSize )
-  Q_PROPERTY( QString icons READ icons WRITE setIcons )
+  Q_PROPERTY( TQString icons READ icons WRITE setIcons )
 
 public:
   /**
@@ -73,8 +73,8 @@ public:
    * @param parent The standard parent
    * @param name   The standard internal name
    */
-  KAnimWidget( const QString& icons, int size = 0,
-               QWidget *parent = 0L, const char *name = 0L );
+  KAnimWidget( const TQString& icons, int size = 0,
+               TQWidget *parent = 0L, const char *name = 0L );
 
   /**
    * Destructor
@@ -98,7 +98,7 @@ public:
   * Returns the current icons
   * since 3.4
   */
-  QString icons() const;
+  TQString icons() const;
 
   /**
    * Sets the name of the animated icons to load.  This will use the
@@ -106,7 +106,7 @@ public:
    *
    * @param icons The name of the icons to use for the animation
    */
-  void setIcons( const QString& icons );
+  void setIcons( const TQString& icons );
 
 public slots:
   /**
@@ -123,13 +123,13 @@ signals:
   void clicked();
 
 protected:
-  virtual void drawContents( QPainter *p );
-  virtual void leaveEvent( QEvent *e );
-  virtual void enterEvent( QEvent *e );
-  virtual void hideEvent( QHideEvent *e);
-  virtual void showEvent( QShowEvent *e);
-  virtual void mousePressEvent( QMouseEvent *e );
-  virtual void mouseReleaseEvent( QMouseEvent *e );
+  virtual void drawContents( TQPainter *p );
+  virtual void leaveEvent( TQEvent *e );
+  virtual void enterEvent( TQEvent *e );
+  virtual void hideEvent( TQHideEvent *e);
+  virtual void showEvent( TQShowEvent *e);
+  virtual void mousePressEvent( TQMouseEvent *e );
+  virtual void mouseReleaseEvent( TQMouseEvent *e );
 
 protected slots:
   void slotTimerUpdate();

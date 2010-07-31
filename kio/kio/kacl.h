@@ -23,15 +23,15 @@
 #include <sys/types.h>
 #include <kio/global.h>
 
-typedef QPair<QString, unsigned short> ACLUserPermissions;
-typedef QValueList<ACLUserPermissions> ACLUserPermissionsList;
-typedef QValueListIterator<ACLUserPermissions> ACLUserPermissionsIterator;
-typedef QValueListConstIterator<ACLUserPermissions> ACLUserPermissionsConstIterator;
+typedef QPair<TQString, unsigned short> ACLUserPermissions;
+typedef TQValueList<ACLUserPermissions> ACLUserPermissionsList;
+typedef TQValueListIterator<ACLUserPermissions> ACLUserPermissionsIterator;
+typedef TQValueListConstIterator<ACLUserPermissions> ACLUserPermissionsConstIterator;
 
-typedef QPair<QString, unsigned short> ACLGroupPermissions;
-typedef QValueList<ACLGroupPermissions> ACLGroupPermissionsList;
-typedef QValueListIterator<ACLGroupPermissions> ACLGroupPermissionsIterator;
-typedef QValueListConstIterator<ACLGroupPermissions> ACLGroupPermissionsConstIterator;
+typedef QPair<TQString, unsigned short> ACLGroupPermissions;
+typedef TQValueList<ACLGroupPermissions> ACLGroupPermissionsList;
+typedef TQValueListIterator<ACLGroupPermissions> ACLGroupPermissionsIterator;
+typedef TQValueListConstIterator<ACLGroupPermissions> ACLGroupPermissionsConstIterator;
 
 /**
  * The KCAL class encapsulates a POSIX Access Control List. It follows the 
@@ -46,7 +46,7 @@ public:
    * Creates a new KACL from @p aclString. If the string is a valid acl
    * string, isValid() will afterwards return true.
    */
-  KACL( const QString & aclString );
+  KACL( const TQString & aclString );
 
   /** Copy ctor */
   KACL( const KACL& rhs );
@@ -137,13 +137,13 @@ public:
    * exists. @p exists is set to true if a matching entry exists and
    * to false otherwise.
    * @return the permissions for a user entry with the name in @p name */
-  unsigned short namedUserPermissions( const QString& name, bool *exists ) const;
+  unsigned short namedUserPermissions( const TQString& name, bool *exists ) const;
 
 
   /** Set the permissions for a user with the name @p name. Will fail
    * if the user doesn't exist, in which case the ACL will be unchanged.
    * @return success or failure. */
-  bool setNamedUserPermissions( const QString& name, unsigned short );
+  bool setNamedUserPermissions( const TQString& name, unsigned short );
 
   /** Returns the list of all group permission entries. Each entry consists
    * of a name/permissions pair. This is a QPair, therefore access is provided 
@@ -162,12 +162,12 @@ public:
    * exists. @p exists is set to true if a matching entry exists and
    * to false otherwise.
    * @return the permissions for a group with the name in @p name */
-  unsigned short namedGroupPermissions( const QString& name, bool *exists ) const;
+  unsigned short namedGroupPermissions( const TQString& name, bool *exists ) const;
 
   /** Set the permissions for a group with the name @p name. Will fail
    * if the group doesn't exist, in which case the ACL be unchanged.
    * @return success or failure. */
-  bool setNamedGroupPermissions( const QString& name, unsigned short );
+  bool setNamedGroupPermissions( const TQString& name, unsigned short );
 
   /** Returns the list of all group permission entries. Each entry consists
    * of a name/permissions pair. This is a QPair, therefor access is provided 
@@ -184,24 +184,24 @@ public:
   /** Sets the whole list from a string. If the string in @p aclStr represents 
    * a valid ACL, it will be set, otherwise the ACL remains unchanged.
    * @return whether setting the ACL was successful. */
-  bool setACL( const QString &aclStr );
+  bool setACL( const TQString &aclStr );
 
   /** Return a string representation of the ACL.
    * @return a string version of the ACL in the format compatible with libacl and
    * POSIX 1003.1e. Implementations conforming to that standard should be able
    * to take such strings as input. */
-  QString asString() const;
+  TQString asString() const;
 
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
   class KACLPrivate;
   KACLPrivate * d;
-  KIO_EXPORT friend QDataStream & operator<< ( QDataStream & s, const KACL & a );
-  KIO_EXPORT friend QDataStream & operator>> ( QDataStream & s, KACL & a );
+  KIO_EXPORT friend TQDataStream & operator<< ( TQDataStream & s, const KACL & a );
+  KIO_EXPORT friend TQDataStream & operator>> ( TQDataStream & s, KACL & a );
 };
 
-KIO_EXPORT QDataStream & operator<< ( QDataStream & s, const KACL & a );
-KIO_EXPORT QDataStream & operator>> ( QDataStream & s, KACL & a );
+KIO_EXPORT TQDataStream & operator<< ( TQDataStream & s, const KACL & a );
+KIO_EXPORT TQDataStream & operator>> ( TQDataStream & s, KACL & a );
 
 #endif

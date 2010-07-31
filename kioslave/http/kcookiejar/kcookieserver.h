@@ -25,7 +25,7 @@
 #ifndef KCOOKIESERVER_H
 #define KCOOKIESERVER_H
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <kded/kdedmodule.h>
 
 class KHttpCookieList;
@@ -41,37 +41,37 @@ class KCookieServer : public KDEDModule
   Q_OBJECT
   K_DCOP
 public:
-  KCookieServer(const QCString &);
+  KCookieServer(const TQCString &);
   ~KCookieServer();
 
 k_dcop:
-  QString findCookies(QString);
-  QString findCookies(QString, long);
-  QStringList findDomains();
-  QStringList findCookies(QValueList<int>,QString,QString,QString,QString);
-  QString findDOMCookies(QString);
-  QString findDOMCookies(QString, long);
-  void addCookies(QString, QCString, long);
-  void deleteCookie(QString, QString, QString, QString);
-  void deleteCookiesFromDomain(QString);
+  TQString findCookies(TQString);
+  TQString findCookies(TQString, long);
+  TQStringList findDomains();
+  TQStringList findCookies(TQValueList<int>,TQString,TQString,TQString,TQString);
+  TQString findDOMCookies(TQString);
+  TQString findDOMCookies(TQString, long);
+  void addCookies(TQString, TQCString, long);
+  void deleteCookie(TQString, TQString, TQString, TQString);
+  void deleteCookiesFromDomain(TQString);
   void deleteSessionCookies(long);
-  void deleteSessionCookiesFor(QString, long);
+  void deleteSessionCookiesFor(TQString, long);
   void deleteAllCookies();
-  void addDOMCookies(QString, QCString, long);
+  void addDOMCookies(TQString, TQCString, long);
   /**
    * Sets the cookie policy for the domain associated with the specified URL.
    */
-  void setDomainAdvice(QString url, QString advice);
+  void setDomainAdvice(TQString url, TQString advice);
   /** 
    * Returns the cookie policy in effect for the specified URL.
    */
-  QString getDomainAdvice(QString url);
+  TQString getDomainAdvice(TQString url);
   void reloadPolicy();
   void shutdown();
 
 public:
-  bool cookiesPending(const QString &url, KHttpCookieList *cookieList=0);
-  void addCookies(const QString &url, const QCString &cookieHeader,
+  bool cookiesPending(const TQString &url, KHttpCookieList *cookieList=0);
+  void addCookies(const TQString &url, const TQCString &cookieHeader,
                   long windowId, bool useDOMFormat);
   void checkCookies(KHttpCookieList *cookieList);
 
@@ -83,15 +83,15 @@ protected:
   KCookieJar *mCookieJar;
   KHttpCookieList *mPendingCookies;
   RequestList *mRequestList;
-  QTimer *mTimer;
+  TQTimer *mTimer;
   bool mAdvicePending;
   DCOPClient *mOldCookieServer;
   KConfig *mConfig;
 
 private:
-  virtual int newInstance(QValueList<QCString>) { return 0; }
-  bool cookieMatches(KHttpCookie*, QString, QString, QString, QString);
-  void putCookie(QStringList&, KHttpCookie*, const QValueList<int>&);
+  virtual int newInstance(TQValueList<TQCString>) { return 0; }
+  bool cookieMatches(KHttpCookie*, TQString, TQString, TQString, TQString);
+  void putCookie(TQStringList&, KHttpCookie*, const TQValueList<int>&);
   void saveCookieJar();
 };
 

@@ -22,9 +22,9 @@
 * Generated:	Sat May  1 02:08:43 EST 1999
 */
 
-#include <qglobal.h>
-#include <qdict.h>
-#include <qptrlist.h>
+#include <tqglobal.h>
+#include <tqdict.h>
+#include <tqptrlist.h>
 #include "kglobal.h"
 
 #include <kapplication.h>
@@ -38,7 +38,7 @@
 #include <kinstance.h>
 #include "kstaticdeleter.h"
 
-#include <qfont.h>
+#include <tqfont.h>
 
 #ifndef NDEBUG
 #define MYASSERT(x) if (!x) \
@@ -115,51 +115,51 @@ void KGlobal::setActiveInstance(KInstance *i)
 {
     _activeInstance = i;
     if (i && _locale)
-	_locale->setActiveCatalogue(QString::fromUtf8(i->instanceName()));
+	_locale->setActiveCatalogue(TQString::fromUtf8(i->instanceName()));
 }
 
 /**
  * Create a static QString
  *
  * To be used inside functions(!) like:
- * static const QString &myString = KGlobal::staticQString("myText");
+ * static const TQString &myString = KGlobal::staticQString("myText");
  */
-const QString &
+const TQString &
 KGlobal::staticQString(const char *str)
 {
-   return staticQString(QString::fromLatin1(str));
+   return staticQString(TQString::fromLatin1(str));
 }
 
-class KStringDict : public QDict<QString>
+class KStringDict : public TQDict<TQString>
 {
 public:
-   KStringDict() : QDict<QString>(139) { }
+   KStringDict() : TQDict<TQString>(139) { }
 };
 
 /**
  * Create a static QString
  *
  * To be used inside functions(!) like:
- * static const QString &myString = KGlobal::staticQString(i18n("My Text"));
+ * static const TQString &myString = KGlobal::staticQString(i18n("My Text"));
  */
-const QString &
-KGlobal::staticQString(const QString &str)
+const TQString &
+KGlobal::staticQString(const TQString &str)
 {
     if (!_stringDict) {
       _stringDict = new KStringDict;
       _stringDict->setAutoDelete( true );
       kglobal_init();
     }
-   QString *result = _stringDict->find(str);
+   TQString *result = _stringDict->find(str);
    if (!result)
    {
-      result = new QString(str);
+      result = new TQString(str);
       _stringDict->insert(str, result);
    }
    return *result;
 }
 
-class KStaticDeleterList: public QPtrList<KStaticDeleterBase>
+class KStaticDeleterList: public TQPtrList<KStaticDeleterBase>
 {
 public:
    KStaticDeleterList() { }

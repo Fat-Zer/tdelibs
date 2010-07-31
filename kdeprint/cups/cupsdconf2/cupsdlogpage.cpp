@@ -22,15 +22,15 @@
 #include "qdirlineedit.h"
 #include "sizewidget.h"
 
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <klocale.h>
 #include <kfiledialog.h>
 
-CupsdLogPage::CupsdLogPage(QWidget *parent, const char *name)
+CupsdLogPage::CupsdLogPage(TQWidget *parent, const char *name)
 	: CupsdPage(parent, name)
 {
 	setPageLabel(i18n("Log"));
@@ -41,7 +41,7 @@ CupsdLogPage::CupsdLogPage(QWidget *parent, const char *name)
 	errorlog_ = new QDirLineEdit(true, this);
 	pagelog_ = new QDirLineEdit(true, this);
 	maxlogsize_ = new SizeWidget(this);
-	loglevel_ = new QComboBox(this);
+	loglevel_ = new TQComboBox(this);
 
 	loglevel_->insertItem(i18n("Detailed Debugging"));
 	loglevel_->insertItem(i18n("Debug Information"));
@@ -55,15 +55,15 @@ CupsdLogPage::CupsdLogPage(QWidget *parent, const char *name)
 	maxlogsize_->setSpecialValueText(i18n("Unlimited"));
 	maxlogsize_->setSuffix(i18n("MB"));*/
 
-	QLabel *l1 = new QLabel(i18n("Access log:"), this);
-	QLabel *l2 = new QLabel(i18n("Error log:"), this);
-	QLabel *l3 = new QLabel(i18n("Page log:"), this);
-	QLabel *l4 = new QLabel(i18n("Max log size:"), this);
-	QLabel *l5 = new QLabel(i18n("Log level:"), this);
+	TQLabel *l1 = new TQLabel(i18n("Access log:"), this);
+	TQLabel *l2 = new TQLabel(i18n("Error log:"), this);
+	TQLabel *l3 = new TQLabel(i18n("Page log:"), this);
+	TQLabel *l4 = new TQLabel(i18n("Max log size:"), this);
+	TQLabel *l5 = new TQLabel(i18n("Log level:"), this);
 
 	loglevel_->setCurrentItem(2);
 
-	QGridLayout	*m1 = new QGridLayout(this, 6, 2, 10, 7);
+	QGridLayout	*m1 = new TQGridLayout(this, 6, 2, 10, 7);
 	m1->setRowStretch(5, 1);
 	m1->setColStretch(1, 1);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);
@@ -78,7 +78,7 @@ CupsdLogPage::CupsdLogPage(QWidget *parent, const char *name)
 	m1->addWidget(loglevel_, 4, 1);
 }
 
-bool CupsdLogPage::loadConfig(CupsdConf *conf, QString&)
+bool CupsdLogPage::loadConfig(CupsdConf *conf, TQString&)
 {
 	conf_ = conf;
 	accesslog_->setURL(conf_->accesslog_);
@@ -90,7 +90,7 @@ bool CupsdLogPage::loadConfig(CupsdConf *conf, QString&)
 	return true;
 }
 
-bool CupsdLogPage::saveConfig(CupsdConf *conf, QString&)
+bool CupsdLogPage::saveConfig(CupsdConf *conf, TQString&)
 {
 	conf->accesslog_ = accesslog_->url();
 	conf->errorlog_ = errorlog_->url();
@@ -103,9 +103,9 @@ bool CupsdLogPage::saveConfig(CupsdConf *conf, QString&)
 
 void CupsdLogPage::setInfos(CupsdConf *conf)
 {
-	QWhatsThis::add(accesslog_, conf->comments_.toolTip("accesslog"));
-	QWhatsThis::add(errorlog_, conf->comments_.toolTip("errorlog"));
-	QWhatsThis::add(pagelog_, conf->comments_.toolTip("pagelog"));
-	QWhatsThis::add(maxlogsize_, conf->comments_.toolTip("maxlogsize"));
-	QWhatsThis::add(loglevel_, conf->comments_.toolTip("loglevel"));
+	TQWhatsThis::add(accesslog_, conf->comments_.toolTip("accesslog"));
+	TQWhatsThis::add(errorlog_, conf->comments_.toolTip("errorlog"));
+	TQWhatsThis::add(pagelog_, conf->comments_.toolTip("pagelog"));
+	TQWhatsThis::add(maxlogsize_, conf->comments_.toolTip("maxlogsize"));
+	TQWhatsThis::add(loglevel_, conf->comments_.toolTip("loglevel"));
 }

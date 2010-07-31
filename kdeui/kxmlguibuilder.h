@@ -20,8 +20,8 @@
 #ifndef __kxmlguibuilder_h__
 #define __kxmlguibuilder_h__
 
-#include <qdom.h>
-#include <qstringlist.h>
+#include <tqdom.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -40,7 +40,7 @@ class KDEUI_EXPORT KXMLGUIBuilder
 {
  public:
 
-  KXMLGUIBuilder( QWidget *widget );
+  KXMLGUIBuilder( TQWidget *widget );
   virtual ~KXMLGUIBuilder();
 
   /* @internal */
@@ -52,9 +52,9 @@ class KDEUI_EXPORT KXMLGUIBuilder
   /* @internal */
   void setBuilderInstance( KInstance *instance );
   /* @internal */
-  QWidget *widget();
+  TQWidget *widget();
 
-  virtual QStringList containerTags() const;
+  virtual TQStringList containerTags() const;
 
   /**
    * Creates a container (menubar/menu/toolbar/statusbar/separator/...)
@@ -68,22 +68,22 @@ class KDEUI_EXPORT KXMLGUIBuilder
    *                attributes or child elements)
    * @param id The id to be used for this container
    */
-  virtual QWidget *createContainer( QWidget *parent, int index,
-          const QDomElement &element, int &id );
+  virtual TQWidget *createContainer( TQWidget *parent, int index,
+          const TQDomElement &element, int &id );
 
   /**
    * Removes the given (and previously via createContainer )
    * created container.
    *
    */
-  virtual void removeContainer( QWidget *container, QWidget *parent,
-				QDomElement &element, int id );
+  virtual void removeContainer( TQWidget *container, TQWidget *parent,
+				TQDomElement &element, int id );
 
-  virtual QStringList customTags() const;
+  virtual TQStringList customTags() const;
 
-  virtual int createCustomElement( QWidget *parent, int index, const QDomElement &element );
+  virtual int createCustomElement( TQWidget *parent, int index, const TQDomElement &element );
 
-  virtual void removeCustomElement( QWidget *parent, int id );
+  virtual void removeCustomElement( TQWidget *parent, int id );
 
   virtual void finalizeGUI( KXMLGUIClient *client );
 

@@ -19,10 +19,10 @@
 
 #include "imageposition.h"
 
-#include <qpainter.h>
+#include <tqpainter.h>
 #include <kstandarddirs.h>
 
-static void draw3DPage(QPainter *p, QRect r)
+static void draw3DPage(TQPainter *p, TQRect r)
 {
 	// draw white page
 	p->fillRect(r,Qt::white);
@@ -40,12 +40,12 @@ static void draw3DPage(QPainter *p, QRect r)
 	p->lineTo(r.right()-1,r.top()+1);
 }
 
-ImagePosition::ImagePosition(QWidget *parent, const char *name)
-	: QWidget(parent,name)
+ImagePosition::ImagePosition(TQWidget *parent, const char *name)
+	: TQWidget(parent,name)
 {
 	position_ = Center;
 	setMinimumSize(sizeHint());
-	setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
+	setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
 	pix_.load(locate("data", "kdeprint/preview-mini.png"));
 }
 
@@ -82,7 +82,7 @@ void ImagePosition::setPosition(int horiz, int vert)
 	setPosition((PositionType)type);
 }
 
-QString ImagePosition::positionString() const
+TQString ImagePosition::positionString() const
 {
 	switch (position_) {
 	   case TopLeft: return "top-left";
@@ -98,7 +98,7 @@ QString ImagePosition::positionString() const
 	return "center";
 }
 
-void ImagePosition::paintEvent(QPaintEvent*)
+void ImagePosition::paintEvent(TQPaintEvent*)
 {
 	int	horiz, vert, x, y;
 	int	margin = 5;
@@ -131,7 +131,7 @@ void ImagePosition::paintEvent(QPaintEvent*)
 	   case 1: y = (page.top()+page.bottom()-img.height())/2; break;
 	   case 2: y = page.bottom()-margin-img.height(); break;
 	}
-	img.moveTopLeft(QPoint(x,y));
+	img.moveTopLeft(TQPoint(x,y));
 
 	// draw page
 	QPainter	p(this);
@@ -147,7 +147,7 @@ void ImagePosition::paintEvent(QPaintEvent*)
 	p.end();
 }
 
-QSize ImagePosition::sizeHint() const
+TQSize ImagePosition::sizeHint() const
 {
-	return QSize(60, 80);
+	return TQSize(60, 80);
 }

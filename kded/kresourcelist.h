@@ -18,24 +18,24 @@
 #ifndef __kresourcelist_h__
 #define __kresourcelist_h__ 
 
-#include <qvaluelist.h>
-#include <qstring.h>
-#include <qregexp.h>
+#include <tqvaluelist.h>
+#include <tqstring.h>
+#include <tqregexp.h>
 
 class QDataStream;
 class KSycocaEntry;
 
 struct KSycocaResource
 {
-   QString resource;
-   QString extension; 
+   TQString resource;
+   TQString extension; 
 };
 
-class KSycocaResourceList : public QValueList<KSycocaResource>
+class KSycocaResourceList : public TQValueList<KSycocaResource>
 {
 public:
    KSycocaResourceList() { };
-   void add(const QString &resource, const QString &filter)
+   void add(const TQString &resource, const TQString &filter)
    { 
      KSycocaResource res;
      res.resource = resource;

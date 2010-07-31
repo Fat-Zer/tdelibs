@@ -19,7 +19,7 @@
 #ifndef __ktexteditor_view_h__
 #define __ktexteditor_view_h__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kxmlguiclient.h>
 
 namespace KTextEditor
@@ -29,7 +29,7 @@ namespace KTextEditor
  * The View class represents a single view of a Document .
  */
 
-class KTEXTEDITOR_EXPORT View : public QWidget, public KXMLGUIClient
+class KTEXTEDITOR_EXPORT View : public TQWidget, public KXMLGUIClient
 {
   friend class PrivateView;
 
@@ -39,7 +39,7 @@ class KTEXTEDITOR_EXPORT View : public QWidget, public KXMLGUIClient
     /**
     * Create a new view to the given document. The document must be non-null.
     */
-    View ( class Document *, QWidget *parent, const char *name = 0 );
+    View ( class Document *, TQWidget *parent, const char *name = 0 );
     virtual ~View ();
 
     /**
@@ -50,7 +50,7 @@ class KTEXTEDITOR_EXPORT View : public QWidget, public KXMLGUIClient
     /**
      * Returns the DCOP suffix to allow identification of this view's DCOP interface.
      */
-    QCString viewDCOPSuffix () const;
+    TQCString viewDCOPSuffix () const;
 
     /**
     * Acess the parent Document.

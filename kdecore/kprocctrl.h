@@ -20,7 +20,7 @@
 #ifndef __KPROCCTRL_H__
 #define __KPROCCTRL_H__
 
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 #include "kprocess.h"
 
@@ -124,9 +124,9 @@ private:
 
   int fd[2];
   bool needcheck;
-  QSocketNotifier *notifier;
-  QValueList<KProcess*> kProcessList;
-  QValueList<int> unixProcessList;
+  TQSocketNotifier *notifier;
+  TQValueList<KProcess*> kProcessList;
+  TQValueList<int> unixProcessList;
 
   static void setupHandlers();
   static void resetHandlers();

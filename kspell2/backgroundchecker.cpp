@@ -34,22 +34,22 @@ class BackgroundChecker::Private
 public:
     //BackgroundThread thread;
     BackgroundEngine *engine;
-    QString currentText;
+    TQString currentText;
 };
 
-BackgroundChecker::BackgroundChecker( const Broker::Ptr& broker, QObject* parent,
+BackgroundChecker::BackgroundChecker( const Broker::Ptr& broker, TQObject* parent,
                                       const char *name )
-    : QObject( parent, name )
+    : TQObject( parent, name )
 {
     d = new Private;
     //d->thread.setReceiver( this );
     //d->thread.setBroker( broker );
     d->engine = new BackgroundEngine( this );
     d->engine->setBroker( broker );
-    connect( d->engine, SIGNAL(misspelling( const QString&, int )),
-             SIGNAL(misspelling( const QString&, int )) );
-    connect( d->engine, SIGNAL(done()),
-             SLOT(slotEngineDone()) );
+    connect( d->engine, TQT_SIGNAL(misspelling( const TQString&, int )),
+             TQT_SIGNAL(misspelling( const TQString&, int )) );
+    connect( d->engine, TQT_SIGNAL(done()),
+             TQT_SLOT(slotEngineDone()) );
 }
 
 BackgroundChecker::~BackgroundChecker()
@@ -57,7 +57,7 @@ BackgroundChecker::~BackgroundChecker()
     delete d;
 }
 
-void BackgroundChecker::checkText( const QString& text )
+void BackgroundChecker::checkText( const TQString& text )
 {
     d->currentText = text;
     //d->thread.setText( text );
@@ -81,9 +81,9 @@ void BackgroundChecker::stop()
     d->engine->stop();
 }
 
-QString BackgroundChecker::getMoreText()
+TQString BackgroundChecker::getMoreText()
 {
-    return QString::null;
+    return TQString::null;
 }
 
 void BackgroundChecker::finishedCurrentFeed()
@@ -108,24 +108,24 @@ Broker *BackgroundChecker::broker() const
     return d->engine->broker();
 }
 
-bool BackgroundChecker::checkWord( const QString& word )
+bool BackgroundChecker::checkWord( const TQString& word )
 {
     //kdDebug()<<"checking word \""<<word<< "\""<<endl;
     return d->engine->checkWord( word );
 }
 
-bool BackgroundChecker::addWord( const QString& word )
+bool BackgroundChecker::addWord( const TQString& word )
 {
     return d->engine->addWord( word );
 }
 
-QStringList BackgroundChecker::suggest( const QString& word ) const
+TQStringList BackgroundChecker::suggest( const TQString& word ) const
 {
     //return d->thread.suggest( word );
     return d->engine->suggest( word );
 }
 
-void BackgroundChecker::changeLanguage( const QString& lang )
+void BackgroundChecker::changeLanguage( const TQString& lang )
 {
     //d->thread.changeLanguage( lang );
     d->engine->changeLanguage( lang );
@@ -152,12 +152,12 @@ void BackgroundChecker::slotEngineDone()
 
 //////////////////////////////////////////////////////////////////
 #if 0
-void BackgroundChecker::customEvent( QCustomEvent *event )
+void BackgroundChecker::customEvent( TQCustomEvent *event )
 {
     if ( (int)event->type() == FoundMisspelling ) {
         MisspellingEvent *me = static_cast<MisspellingEvent*>( event );
         kdDebug()<<"Found misspelling of \"" << me->word() << "\"" <<endl;
-        QString currentWord = d->currentText.mid( me->position(), me->word().length() );
+        TQString currentWord = d->currentText.mid( me->position(), me->word().length() );
         if ( currentWord == me->word() )
             emit misspelling( me->word(), me->position() );
         else {
@@ -171,7 +171,7 @@ void BackgroundChecker::customEvent( QCustomEvent *event )
         else
             d->thread.setText( d->currentText );
     } else {
-        QObject::customEvent( event );
+        TQObject::customEvent( event );
     }
 }
 #endif

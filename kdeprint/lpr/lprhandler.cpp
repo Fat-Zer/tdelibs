@@ -24,14 +24,14 @@
 #include "lprsettings.h"
 #include "driver.h"
 
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qvaluestack.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqvaluestack.h>
 #include <klocale.h>
 
 #include <unistd.h>
 
-LprHandler::LprHandler(const QString& name, KMManager *mgr)
+LprHandler::LprHandler(const TQString& name, KMManager *mgr)
 : m_name(name), m_manager(mgr)
 {
 }
@@ -57,7 +57,7 @@ KMPrinter* LprHandler::createPrinter(PrintcapEntry *entry)
 bool LprHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool)
 {
 	prt->setDescription(i18n("Unknown (unrecognized entry)"));
-	QString val = entry->field("lp");
+	TQString val = entry->field("lp");
 	KURL uri;
 	if (!val.isEmpty() && val != "/dev/null")
 	{
@@ -85,7 +85,7 @@ bool LprHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool)
 	}
 	else if (!(val = entry->field("rp")).isEmpty())
 	{
-		QString rm = entry->has("rm") ?
+		TQString rm = entry->has("rm") ?
 				entry->field("rm") :
 				LprSettings::self()->defaultRemoteHost();
 		prt->setLocation(i18n("Remote queue (%1) on %2").arg(val).arg(rm));
@@ -111,7 +111,7 @@ bool LprHandler::savePrinterDriver(KMPrinter*, PrintcapEntry*, DrMain*, bool*)
 	return false;
 }
 
-DrMain* LprHandler::loadDbDriver(const QString&)
+DrMain* LprHandler::loadDbDriver(const TQString&)
 {
 	manager()->setErrorMsg(i18n("Unrecognized entry."));
 	return NULL;
@@ -138,15 +138,15 @@ PrintcapEntry* LprHandler::createEntry(KMPrinter *prt)
 		entry->addField("rp", Field::String, rp);
 		// force this entry to null (otherwise it seems it's redirected
 		// to /dev/lp0 by default)
-		entry->addField("lp", Field::String, QString::null);
+		entry->addField("lp", Field::String, TQString::null);
 	}
 	else if ( prot == "socket" )
 	{
-		QString lp = uri.host();
+		TQString lp = uri.host();
 		if ( uri.port() == 0 )
 			lp.append( "%9100" );
 		else
-			lp.append( "%" ).append( QString::number( uri.port() ) );
+			lp.append( "%" ).append( TQString::number( uri.port() ) );
 		entry->addField("lp", Field::String, lp);
 	}
 	else
@@ -161,22 +161,22 @@ bool LprHandler::removePrinter(KMPrinter*, PrintcapEntry*)
 	return true;
 }
 
-QString LprHandler::printOptions(KPrinter*)
+TQString LprHandler::printOptions(KPrinter*)
 {
-	return QString::null;
+	return TQString::null;
 }
 
 void LprHandler::reset()
 {
 }
 
-DrMain* LprHandler::loadToolDriver(const QString& filename)
+DrMain* LprHandler::loadToolDriver(const TQString& filename)
 {
 	QFile	f(filename);
 	if (f.open(IO_ReadOnly))
 	{
 		DrMain	*driver = new DrMain;
-		QValueStack<DrGroup*>	groups;
+		TQValueStack<DrGroup*>	groups;
 		QTextStream	t(&f);
 		QStringList	l;
 		DrListOption	*lopt(0);
@@ -186,7 +186,7 @@ DrMain* LprHandler::loadToolDriver(const QString& filename)
 		driver->set("text", "Tool Driver");
 		while (!t.atEnd())
 		{
-			l = QStringList::split('|', t.readLine().stripWhiteSpace(), false);
+			l = TQStringList::split('|', t.readLine().stripWhiteSpace(), false);
 			if (l.count() == 0)
 				continue;
 			if (l[0] == "GROUP")
@@ -245,26 +245,26 @@ DrMain* LprHandler::loadToolDriver(const QString& filename)
 	return NULL;
 }
 
-QString LprHandler::driverDirectory()
+TQString LprHandler::driverDirectory()
 {
 	if (m_cacheddriverdir.isEmpty())
 		m_cacheddriverdir = driverDirInternal();
 	return m_cacheddriverdir;
 }
 
-QString LprHandler::driverDirInternal()
+TQString LprHandler::driverDirInternal()
 {
-	return QString::null;
+	return TQString::null;
 }
 
-QString LprHandler::locateDir(const QString& dirname, const QString& paths)
+TQString LprHandler::locateDir(const TQString& dirname, const TQString& paths)
 {
-	QStringList	pathlist = QStringList::split(':', paths, false);
-	for (QStringList::ConstIterator it=pathlist.begin(); it!=pathlist.end(); ++it)
+	QStringList	pathlist = TQStringList::split(':', paths, false);
+	for (TQStringList::ConstIterator it=pathlist.begin(); it!=pathlist.end(); ++it)
 	{
 		QString	testpath = *it + "/" + dirname;
-		if (::access(QFile::encodeName(testpath), F_OK) == 0)
+		if (::access(TQFile::encodeName(testpath), F_OK) == 0)
 			return testpath;
 	}
-	return QString::null;
+	return TQString::null;
 }

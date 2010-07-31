@@ -21,7 +21,7 @@
 
 #include <klocale.h>
 #include <kdebug.h>
-#include <qpainter.h>
+#include <tqpainter.h>
 #include <kcursor.h>
 
 #define	A4_WIDTH	595
@@ -34,7 +34,7 @@
 #define	SCALE(d,z)	((int)(float(d)*z+0.5))
 #define	UNSCALE(d,z)	((int)(float(d)/z+0.5))
 
-static void draw3DPage(QPainter *p, QRect r)
+static void draw3DPage(TQPainter *p, TQRect r)
 {
 	// draw white page
 	p->fillRect(r,Qt::white);
@@ -52,8 +52,8 @@ static void draw3DPage(QPainter *p, QRect r)
 	p->lineTo(r.right()-1,r.top()+1);
 }
 
-MarginPreview::MarginPreview(QWidget *parent, const char *name)
-	: QWidget(parent,name)
+MarginPreview::MarginPreview(TQWidget *parent, const char *name)
+	: TQWidget(parent,name)
 {
 	width_ = A4_WIDTH;
 	height_ = A4_HEIGHT;
@@ -102,7 +102,7 @@ void MarginPreview::setSymetric(bool on)
 	symetric_ = on;
 }
 
-void MarginPreview::resizeEvent(QResizeEvent *)
+void MarginPreview::resizeEvent(TQResizeEvent *)
 {
 	if (width_/height_ > float(width())/height())
 	{
@@ -124,11 +124,11 @@ void MarginPreview::resizeEvent(QResizeEvent *)
 	}
 }
 
-void MarginPreview::paintEvent(QPaintEvent *)
+void MarginPreview::paintEvent(TQPaintEvent *)
 {
 	QPainter	p(this);
 
-	QRect	pagebox(QPoint(box_.left()-1,box_.top()-1),QPoint(box_.right()+2,box_.bottom()+2));
+	QRect	pagebox(TQPoint(box_.left()-1,box_.top()-1),TQPoint(box_.right()+2,box_.bottom()+2));
 
 	if (nopreview_)
 	{
@@ -154,7 +154,7 @@ void MarginPreview::paintEvent(QPaintEvent *)
 		p.drawLine(box_.left(),m,box_.right(),m);
 
 		// fill useful area
-		p.fillRect(margbox_,QColor(220,220,220));
+		p.fillRect(margbox_,TQColor(220,220,220));
 	}
 }
 
@@ -169,7 +169,7 @@ void MarginPreview::setNoPreview(bool on)
 // 2: bottom
 // 3: left
 // 4: right
-int MarginPreview::locateMouse(const QPoint& p)
+int MarginPreview::locateMouse(const TQPoint& p)
 {
 	int	tol = 2;
 	if (p.x() <= margbox_.left()+tol && p.x() >= margbox_.left()-tol)
@@ -184,7 +184,7 @@ int MarginPreview::locateMouse(const QPoint& p)
 		return 0;
 }
 
-void MarginPreview::mouseMoveEvent(QMouseEvent *e)
+void MarginPreview::mouseMoveEvent(TQMouseEvent *e)
 {
 	if (nopreview_ || state_ == Fixed)
 		return;
@@ -238,7 +238,7 @@ void MarginPreview::mouseMoveEvent(QMouseEvent *e)
 	}
 }
 
-void MarginPreview::drawTempLine(QPainter *p)
+void MarginPreview::drawTempLine(TQPainter *p)
 {
 	if (state_ >= LMoving)
 	{
@@ -260,7 +260,7 @@ void MarginPreview::drawTempLine(QPainter *p)
 	}
 }
 
-void MarginPreview::mousePressEvent(QMouseEvent *e)
+void MarginPreview::mousePressEvent(TQMouseEvent *e)
 {
 	if (e->button() != Qt::LeftButton || state_ != None)
 		return;
@@ -271,7 +271,7 @@ void MarginPreview::mousePressEvent(QMouseEvent *e)
 	}
 }
 
-void MarginPreview::mouseReleaseEvent(QMouseEvent *e)
+void MarginPreview::mouseReleaseEvent(TQMouseEvent *e)
 {
 	if (state_ > None)
 	{

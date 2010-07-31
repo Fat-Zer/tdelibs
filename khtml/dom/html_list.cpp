@@ -169,7 +169,7 @@ long HTMLLIElement::value() const
 void HTMLLIElement::setValue( long _value )
 {
     if(impl) {
-	DOMString value(QString::number(_value));
+	DOMString value(TQString::number(_value));
         ((ElementImpl *)impl)->setAttribute(ATTR_VALUE,value);
     }
 }
@@ -278,7 +278,7 @@ void HTMLOListElement::setStart( long _start )
 {
 
     if(impl) {
-	DOMString value(QString::number(_start));
+	DOMString value(TQString::number(_start));
         ((ElementImpl *)impl)->setAttribute(ATTR_START,value);
     }
 }

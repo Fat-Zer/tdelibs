@@ -22,8 +22,8 @@
 #ifndef _KSSLKEYGEN_H
 #define _KSSLKEYGEN_H
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 #include <kwizard.h>
 
 
@@ -50,7 +50,7 @@ public:
 	 *  @param name the internal name of this instance
 	 *  @param modal true if the dialog should be modal
 	 */
-	KSSLKeyGen(QWidget *parent=0L, const char *name=0L, bool modal=false);
+	KSSLKeyGen(TQWidget *parent=0L, const char *name=0L, bool modal=false);
 
 	/**
 	 *  Destroy this dialog.
@@ -61,7 +61,7 @@ public:
 	 *  List the supported key sizes.
 	 *  @return the supported key sizes
 	 */
-	static QStringList supportedKeySizes();
+	static TQStringList supportedKeySizes();
 
 	/**
 	 *  Generate the certificate signing request.
@@ -71,7 +71,7 @@ public:
 	 *  @param e the value of the "e" parameter in RSA
 	 *  @return 0 on success, non-zero on error
 	 */
-	int generateCSR(const QString& name, const QString& pass, int bits, int e = 0x10001);
+	int generateCSR(const TQString& name, const TQString& pass, int bits, int e = 0x10001);
 
 	/**
 	 *  Set the key size.

@@ -106,7 +106,7 @@ unsigned int Plugin::globalPluginNumber = 0;
 unsigned int PluginViewInterface::globalPluginViewInterfaceNumber = 0;
 unsigned int Editor::globalEditorNumber = 0;
 
-Document::Document( QObject *parent, const char *name ) : KTextEditor::Editor (parent, name )
+Document::Document( TQObject *parent, const char *name ) : KTextEditor::Editor (parent, name )
 {
   globalDocumentNumber++;
   myDocumentNumber = globalDocumentNumber;
@@ -121,15 +121,15 @@ unsigned int Document::documentNumber () const
   return myDocumentNumber;
 }
 
-QCString Document::documentDCOPSuffix () const
+TQCString Document::documentDCOPSuffix () const
 {
-  QCString num;
+  TQCString num;
   num.setNum (documentNumber());
   
   return num;
 }
 
-View::View( Document *, QWidget *parent, const char *name ) : QWidget( parent, name )
+View::View( Document *, TQWidget *parent, const char *name ) : TQWidget( parent, name )
 {
   globalViewNumber++;
   myViewNumber = globalViewNumber;
@@ -144,16 +144,16 @@ unsigned int View::viewNumber () const
   return myViewNumber;
 }
 
-QCString View::viewDCOPSuffix () const
+TQCString View::viewDCOPSuffix () const
 {
-  QCString num1, num2;
+  TQCString num1, num2;
   num1.setNum (viewNumber());
   num2.setNum (document()->documentNumber());
   
   return num2 + "-" + num1;
 }
 
-Plugin::Plugin( Document *document, const char *name ) : QObject (document, name )
+Plugin::Plugin( Document *document, const char *name ) : TQObject (document, name )
 {
   globalPluginNumber++;
   myPluginNumber = globalPluginNumber; 
@@ -191,7 +191,7 @@ unsigned int PluginViewInterface::pluginViewInterfaceNumber () const
   return myPluginViewInterfaceNumber;
 }
 
-Editor::Editor( QObject *parent, const char *name ) : KParts::ReadWritePart( parent, name )
+Editor::Editor( TQObject *parent, const char *name ) : KParts::ReadWritePart( parent, name )
 {
   globalEditorNumber++;
   myEditorNumber = globalEditorNumber;
@@ -206,12 +206,12 @@ unsigned int Editor::editorNumber () const
   return myEditorNumber;
 }                         
 
-Editor *KTextEditor::createEditor ( const char* libname, QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name )
+Editor *KTextEditor::createEditor ( const char* libname, TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name )
 {
   return KParts::ComponentFactory::createPartInstanceFromLibrary<Editor>( libname, parentWidget, widgetName, parent, name );
 }
 
-Document *KTextEditor::createDocument ( const char* libname, QObject *parent, const char *name )
+Document *KTextEditor::createDocument ( const char* libname, TQObject *parent, const char *name )
 {
   return KParts::ComponentFactory::createPartInstanceFromLibrary<Document>( libname, 0, 0, parent, name );
 }     

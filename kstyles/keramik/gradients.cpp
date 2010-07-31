@@ -19,28 +19,28 @@
 */
 // $Id$
 
-#include <qpainter.h>
-#include <qrect.h>
-#include <qcolor.h>
+#include <tqpainter.h>
+#include <tqrect.h>
+#include <tqcolor.h>
 
 #include "gradients.h"
 #include "colorutil.h"
 
-#include <qimage.h>
-#include <qintcache.h>
+#include <tqimage.h>
+#include <tqintcache.h>
 #include <kimageeffect.h>
 
 namespace
 {
 	struct GradientCacheEntry
 	{
-		QPixmap* m_pixmap;
+		TQPixmap* m_pixmap;
 		QRgb     m_color;
 		bool     m_menu;
 		int      m_width;
 		int      m_height;
 		
-		GradientCacheEntry(int width, int height, const QColor& color, bool menu):
+		GradientCacheEntry(int width, int height, const TQColor& color, bool menu):
 			m_pixmap(0), m_color(color.rgb()), m_menu(menu), m_width(width), m_height(height)
 		{}
 		
@@ -65,7 +65,7 @@ namespace
 	};
 	
 	
-	QIntCache<GradientCacheEntry> cache(65636, 17);
+	TQIntCache<GradientCacheEntry> cache(65636, 17);
 	
 }
 
@@ -76,7 +76,7 @@ void GradientPainter::releaseCache()
 	cache.clear();
 }
 
-void GradientPainter::renderGradient( QPainter* p, const QRect& r, QColor c,
+void GradientPainter::renderGradient( TQPainter* p, const TQRect& r, TQColor c,
 										bool horizontal, bool menu, int px, int py,
 										int pwidth, int pheight)
 {
@@ -100,7 +100,7 @@ void GradientPainter::renderGradient( QPainter* p, const QRect& r, QColor c,
 	{
 		if (entry == *cacheEntry)
 		{
-			p->drawTiledPixmap(r, *cacheEntry->m_pixmap, horizontal? QPoint(0,py): QPoint(px,0));
+			p->drawTiledPixmap(r, *cacheEntry->m_pixmap, horizontal? TQPoint(0,py): TQPoint(px,0));
 			return;
 		}
 		else
@@ -111,13 +111,13 @@ void GradientPainter::renderGradient( QPainter* p, const QRect& r, QColor c,
 	
 	if (horizontal)
 	{
-		QPixmap* pix = new QPixmap(18, height);
+		TQPixmap* pix = new TQPixmap(18, height);
 		
 		if (menu)
 		{
-			QImage gr = KImageEffect::gradient(QSize(4,height), c.light(93), ColorUtil::lighten(c,109), KImageEffect::VerticalGradient );
-			QPixmap grT(gr);
-			QPainter p2(pix);
+			TQImage gr = KImageEffect::gradient(TQSize(4,height), c.light(93), ColorUtil::lighten(c,109), KImageEffect::VerticalGradient );
+			TQPixmap grT(gr);
+			TQPainter p2(pix);
 			p2.drawTiledPixmap(0,0, 18, height, grT);
 			p2.end();
 		}
@@ -126,13 +126,13 @@ void GradientPainter::renderGradient( QPainter* p, const QRect& r, QColor c,
 			int h1 = 3 * height/4;
 			int h2 = height - h1;
 
-			QImage top = KImageEffect::gradient(QSize(4,h1),  ColorUtil::lighten(c,110), c.light(94), KImageEffect::VerticalGradient );
-			QImage bot = KImageEffect::gradient(QSize(4,h2), c.light(94), ColorUtil::lighten(c,109), KImageEffect::VerticalGradient );
+			TQImage top = KImageEffect::gradient(TQSize(4,h1),  ColorUtil::lighten(c,110), c.light(94), KImageEffect::VerticalGradient );
+			TQImage bot = KImageEffect::gradient(TQSize(4,h2), c.light(94), ColorUtil::lighten(c,109), KImageEffect::VerticalGradient );
 			
-			QPixmap topT(top);
-			QPixmap botT(bot);
+			TQPixmap topT(top);
+			TQPixmap botT(bot);
 			
-			QPainter p2(pix);
+			TQPainter p2(pix);
 			p2.drawTiledPixmap(0, 0, 18, h1, topT);
 			p2.drawTiledPixmap(0, h1, 18, h2, botT);
 			p2.end();
@@ -142,18 +142,18 @@ void GradientPainter::renderGradient( QPainter* p, const QRect& r, QColor c,
 	}
 	else
 	{
-		QPixmap* pix = new QPixmap(width, 18);
+		TQPixmap* pix = new TQPixmap(width, 18);
 		
 		int h1 = 3 * width/4;
 		int h2 = width - h1;
 		
-		QImage top = KImageEffect::gradient(QSize(h1,4), ColorUtil::lighten(c,110), c.light(94), KImageEffect::HorizontalGradient );
-		QImage bot = KImageEffect::gradient(QSize(h2,4), c.light(94), ColorUtil::lighten(c,109), KImageEffect::HorizontalGradient );
+		TQImage top = KImageEffect::gradient(TQSize(h1,4), ColorUtil::lighten(c,110), c.light(94), KImageEffect::HorizontalGradient );
+		TQImage bot = KImageEffect::gradient(TQSize(h2,4), c.light(94), ColorUtil::lighten(c,109), KImageEffect::HorizontalGradient );
 		
-		QPixmap topT(top);
-		QPixmap botT(bot);
+		TQPixmap topT(top);
+		TQPixmap botT(bot);
 
-		QPainter p2(pix);
+		TQPainter p2(pix);
 		p2.drawTiledPixmap(0,  0, h1, 18, topT);
 		p2.drawTiledPixmap(h1, 0, h2, 18, botT);
 		p2.end();
@@ -168,7 +168,7 @@ void GradientPainter::renderGradient( QPainter* p, const QRect& r, QColor c,
 		imgToAdd->m_pixmap->width() * imgToAdd->m_pixmap->height()*
 		imgToAdd->m_pixmap->depth()/8);
 		
-	p->drawTiledPixmap(r, *imgToAdd->m_pixmap, horizontal? QPoint(0,py): QPoint(px,0));
+	p->drawTiledPixmap(r, *imgToAdd->m_pixmap, horizontal? TQPoint(0,py): TQPoint(px,0));
 	
 	if (!cacheOK)
 		delete imgToAdd;

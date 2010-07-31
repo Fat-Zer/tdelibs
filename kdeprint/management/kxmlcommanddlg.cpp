@@ -21,21 +21,21 @@
 #include "driver.h"
 #include "kxmlcommand.h"
 
-#include <qlayout.h>
-#include <qheader.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qcombobox.h>
-#include <qgroupbox.h>
-#include <qwidgetstack.h>
-#include <qtoolbutton.h>
+#include <tqlayout.h>
+#include <tqheader.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqcombobox.h>
+#include <tqgroupbox.h>
+#include <tqwidgetstack.h>
+#include <tqtoolbutton.h>
 #include <kpushbutton.h>
-#include <qtooltip.h>
-#include <qcheckbox.h>
+#include <tqtooltip.h>
+#include <tqcheckbox.h>
 #include <ktextedit.h>
-#include <qregexp.h>
-#include <qwhatsthis.h>
-#include <qapplication.h>
+#include <tqregexp.h>
+#include <tqwhatsthis.h>
+#include <tqapplication.h>
 
 #include <klistview.h>
 #include <klocale.h>
@@ -49,14 +49,14 @@
 #include <kdebug.h>
 #include <kguiitem.h>
 
-QString generateId(const QMap<QString, DrBase*>& map)
+TQString generateId(const TQMap<TQString, DrBase*>& map)
 {
 	int	index(-1);
-	while (map.contains(QString::fromLatin1("item%1").arg(++index))) ;
-	return QString::fromLatin1("item%1").arg(index);
+	while (map.contains(TQString::fromLatin1("item%1").arg(++index))) ;
+	return TQString::fromLatin1("item%1").arg(index);
 }
 
-QListViewItem* findPrev(QListViewItem *item)
+TQListViewItem* findPrev(TQListViewItem *item)
 {
 	QListViewItem	*prev = item->itemAbove();
 	while (prev && prev->depth() > item->depth())
@@ -67,7 +67,7 @@ QListViewItem* findPrev(QListViewItem *item)
 		return 0;
 }
 
-QListViewItem* findNext(QListViewItem *item)
+TQListViewItem* findNext(TQListViewItem *item)
 {
 	QListViewItem	*next = item->itemBelow();
 	while (next && next->depth() > item->depth())
@@ -78,63 +78,63 @@ QListViewItem* findNext(QListViewItem *item)
 		return 0;
 }
 
-KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(QWidget *parent, const char *name)
-: QWidget(parent, name)
+KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *name)
+: TQWidget(parent, name)
 {
 	m_xmlcmd = 0;
 
-	m_command = new QLineEdit(this);
+	m_command = new TQLineEdit(this);
 	m_view = new KListView(this);
 	m_view->addColumn("");
 	m_view->header()->hide();
 	m_view->setSorting(-1);
-	m_apply = new QToolButton(this);
-	m_apply->setIconSet( QApplication::reverseLayout()? SmallIconSet( "forward" ) : SmallIconSet("back"));
-	m_addgrp = new QToolButton(this);
+	m_apply = new TQToolButton(this);
+	m_apply->setIconSet( TQApplication::reverseLayout()? SmallIconSet( "forward" ) : SmallIconSet("back"));
+	m_addgrp = new TQToolButton(this);
 	m_addgrp->setIconSet(SmallIconSet("folder"));
-	m_addopt = new QToolButton(this);
+	m_addopt = new TQToolButton(this);
 	m_addopt->setIconSet(SmallIconSet("document"));
-	m_delopt = new QToolButton(this);
+	m_delopt = new TQToolButton(this);
 	m_delopt->setIconSet(SmallIconSet("editdelete"));
-	m_up = new QToolButton(this);
+	m_up = new TQToolButton(this);
 	m_up->setIconSet(SmallIconSet("up"));
-	m_down = new QToolButton(this);
+	m_down = new TQToolButton(this);
 	m_down->setIconSet(SmallIconSet("down"));
-	m_dummy = new QWidget(this);
-	m_desc = new QLineEdit(m_dummy);
-	m_name = new QLineEdit(m_dummy);
-	m_type = new QComboBox(m_dummy);
+	m_dummy = new TQWidget(this);
+	m_desc = new TQLineEdit(m_dummy);
+	m_name = new TQLineEdit(m_dummy);
+	m_type = new TQComboBox(m_dummy);
 	m_type->insertItem(i18n("String"));
 	m_type->insertItem(i18n("Integer"));
 	m_type->insertItem(i18n("Float"));
 	m_type->insertItem(i18n("List"));
 	m_type->insertItem(i18n("Boolean"));
-	m_format = new QLineEdit(m_dummy);
-	m_default = new QLineEdit(m_dummy);
-	QLabel	*m_namelab = new QLabel(i18n("&Name:"), m_dummy);
-	QLabel	*m_desclab = new QLabel(i18n("&Description:"), m_dummy);
-	QLabel	*m_formatlab = new QLabel(i18n("&Format:"), m_dummy);
-	QLabel	*m_typelab = new QLabel(i18n("&Type:"), m_dummy);
-	QLabel	*m_defaultlab = new QLabel(i18n("Default &value:"), m_dummy);
-	QLabel	*m_commandlab = new QLabel(i18n("Co&mmand:"), this);
+	m_format = new TQLineEdit(m_dummy);
+	m_default = new TQLineEdit(m_dummy);
+	QLabel	*m_namelab = new TQLabel(i18n("&Name:"), m_dummy);
+	QLabel	*m_desclab = new TQLabel(i18n("&Description:"), m_dummy);
+	QLabel	*m_formatlab = new TQLabel(i18n("&Format:"), m_dummy);
+	QLabel	*m_typelab = new TQLabel(i18n("&Type:"), m_dummy);
+	QLabel	*m_defaultlab = new TQLabel(i18n("Default &value:"), m_dummy);
+	QLabel	*m_commandlab = new TQLabel(i18n("Co&mmand:"), this);
 	m_namelab->setBuddy(m_name);
 	m_desclab->setBuddy(m_desc);
 	m_formatlab->setBuddy(m_format);
 	m_typelab->setBuddy(m_type);
 	m_defaultlab->setBuddy(m_default);
 	m_commandlab->setBuddy(m_command);
-	m_persistent = new QCheckBox( i18n( "&Persistent option" ), m_dummy );
+	m_persistent = new TQCheckBox( i18n( "&Persistent option" ), m_dummy );
 
-	QGroupBox	*gb = new QGroupBox(0, Qt::Horizontal, i18n("Va&lues"), m_dummy);
-	m_stack = new QWidgetStack(gb);
-	QWidget	*w1 = new QWidget(m_stack), *w2 = new QWidget(m_stack), *w3 = new QWidget(m_stack);
+	QGroupBox	*gb = new TQGroupBox(0, Qt::Horizontal, i18n("Va&lues"), m_dummy);
+	m_stack = new TQWidgetStack(gb);
+	QWidget	*w1 = new TQWidget(m_stack), *w2 = new TQWidget(m_stack), *w3 = new TQWidget(m_stack);
 	m_stack->addWidget(w1, 1);
 	m_stack->addWidget(w2, 2);
 	m_stack->addWidget(w3, 3);
-	m_edit1 = new QLineEdit(w1);
-	m_edit2 = new QLineEdit(w1);
-	QLabel	*m_editlab1 = new QLabel(i18n("Minimum v&alue:"), w1);
-	QLabel	*m_editlab2 = new QLabel(i18n("Ma&ximum value:"), w1);
+	m_edit1 = new TQLineEdit(w1);
+	m_edit2 = new TQLineEdit(w1);
+	QLabel	*m_editlab1 = new TQLabel(i18n("Minimum v&alue:"), w1);
+	QLabel	*m_editlab2 = new TQLabel(i18n("Ma&ximum value:"), w1);
 	m_editlab1->setBuddy(m_edit1);
 	m_editlab2->setBuddy(m_edit2);
 	m_values = new KListView(w2);
@@ -143,46 +143,46 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(QWidget *parent, const char *name
 	m_values->setAllColumnsShowFocus(true);
 	m_values->setSorting(-1);
 	m_values->setMaximumHeight(110);
-	m_addval = new QToolButton(w2);
+	m_addval = new TQToolButton(w2);
 	m_addval->setIconSet(SmallIconSet("editcopy"));
-	m_delval = new QToolButton(w2);
+	m_delval = new TQToolButton(w2);
 	m_delval->setIconSet(SmallIconSet("editdelete"));
-	QToolTip::add(m_addval, i18n("Add value"));
-	QToolTip::add(m_delval, i18n("Delete value"));
+	TQToolTip::add(m_addval, i18n("Add value"));
+	TQToolTip::add(m_delval, i18n("Delete value"));
 
-	QToolTip::add(m_apply, i18n("Apply changes"));
-	QToolTip::add(m_addgrp, i18n("Add group"));
-	QToolTip::add(m_addopt, i18n("Add option"));
-	QToolTip::add(m_delopt, i18n("Delete item"));
-	QToolTip::add(m_up, i18n("Move up"));
-	QToolTip::add(m_down, i18n("Move down"));
+	TQToolTip::add(m_apply, i18n("Apply changes"));
+	TQToolTip::add(m_addgrp, i18n("Add group"));
+	TQToolTip::add(m_addopt, i18n("Add option"));
+	TQToolTip::add(m_delopt, i18n("Delete item"));
+	TQToolTip::add(m_up, i18n("Move up"));
+	TQToolTip::add(m_down, i18n("Move down"));
 
 	KSeparator	*sep1 = new KSeparator(KSeparator::HLine, m_dummy);
 
-	QGroupBox	*gb_input = new QGroupBox(0, Qt::Horizontal, i18n("&Input From"), this);
-	QGroupBox	*gb_output = new QGroupBox(0, Qt::Horizontal, i18n("O&utput To"), this);
-	QLabel	*m_inputfilelab = new QLabel(i18n("File:"), gb_input);
-	QLabel	*m_inputpipelab = new QLabel(i18n("Pipe:"), gb_input);
-	QLabel	*m_outputfilelab = new QLabel(i18n("File:"), gb_output);
-	QLabel	*m_outputpipelab = new QLabel(i18n("Pipe:"), gb_output);
-	m_inputfile = new QLineEdit(gb_input);
-	m_inputpipe = new QLineEdit(gb_input);
-	m_outputfile = new QLineEdit(gb_output);
-	m_outputpipe = new QLineEdit(gb_output);
+	QGroupBox	*gb_input = new TQGroupBox(0, Qt::Horizontal, i18n("&Input From"), this);
+	QGroupBox	*gb_output = new TQGroupBox(0, Qt::Horizontal, i18n("O&utput To"), this);
+	QLabel	*m_inputfilelab = new TQLabel(i18n("File:"), gb_input);
+	QLabel	*m_inputpipelab = new TQLabel(i18n("Pipe:"), gb_input);
+	QLabel	*m_outputfilelab = new TQLabel(i18n("File:"), gb_output);
+	QLabel	*m_outputpipelab = new TQLabel(i18n("Pipe:"), gb_output);
+	m_inputfile = new TQLineEdit(gb_input);
+	m_inputpipe = new TQLineEdit(gb_input);
+	m_outputfile = new TQLineEdit(gb_output);
+	m_outputpipe = new TQLineEdit(gb_output);
 
 	m_comment = new KTextEdit( this );
 	m_comment->setTextFormat(Qt::RichText );
 	m_comment->setReadOnly(true);
-	QLabel *m_commentlab = new QLabel( i18n( "Comment:" ), this );
+	TQLabel *m_commentlab = new TQLabel( i18n( "Comment:" ), this );
 
-	QVBoxLayout	*l2 = new QVBoxLayout(this, 0, KDialog::spacingHint());
-	QHBoxLayout	*l3 = new QHBoxLayout(0, 0, KDialog::spacingHint());
-	QVBoxLayout	*l7 = new QVBoxLayout(0, 0, 0);
+	QVBoxLayout	*l2 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+	QHBoxLayout	*l3 = new TQHBoxLayout(0, 0, KDialog::spacingHint());
+	QVBoxLayout	*l7 = new TQVBoxLayout(0, 0, 0);
 	l2->addLayout(l3, 0);
 	l3->addWidget(m_commandlab);
 	l3->addWidget(m_command);
-	QHBoxLayout	*l0 = new QHBoxLayout(0, 0, KDialog::spacingHint());
-	QGridLayout	*l10 = new QGridLayout(0, 2, 2, 0, KDialog::spacingHint());
+	QHBoxLayout	*l0 = new TQHBoxLayout(0, 0, KDialog::spacingHint());
+	QGridLayout	*l10 = new TQGridLayout(0, 2, 2, 0, KDialog::spacingHint());
 	l2->addLayout(l0, 1);
 	l0->addLayout(l10);
 	l10->addMultiCellWidget(m_view, 0, 0, 0, 1);
@@ -200,7 +200,7 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(QWidget *parent, const char *name
 	l7->addWidget(m_down);
 	l7->addStretch(1);
 	l0->addWidget(m_dummy, 1);
-	QGridLayout	*l1 = new QGridLayout(m_dummy, 9, 2, 0, KDialog::spacingHint());
+	QGridLayout	*l1 = new TQGridLayout(m_dummy, 9, 2, 0, KDialog::spacingHint());
 	l1->addWidget(m_desclab, 0, 0, Qt::AlignRight|Qt::AlignVCenter);
 	l1->addWidget(m_desc, 0, 1);
 	l1->addMultiCellWidget(sep1, 1, 1, 0, 1);
@@ -216,23 +216,23 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(QWidget *parent, const char *name
 	l1->addMultiCellWidget(gb, 7, 7, 0, 1);
 	l1->setRowStretch(8, 1);
 
-	QHBoxLayout	*l4 = new QHBoxLayout(w2, 0, KDialog::spacingHint());
+	QHBoxLayout	*l4 = new TQHBoxLayout(w2, 0, KDialog::spacingHint());
 	l4->addWidget(m_values);
-	QVBoxLayout	*l6 = new QVBoxLayout(0, 0, 0);
+	QVBoxLayout	*l6 = new TQVBoxLayout(0, 0, 0);
 	l4->addLayout(l6);
 	l6->addWidget(m_addval);
 	l6->addWidget(m_delval);
 	l6->addStretch(1);
-	QGridLayout	*l5 = new QGridLayout(w1, 3, 2, 0, KDialog::spacingHint());
+	QGridLayout	*l5 = new TQGridLayout(w1, 3, 2, 0, KDialog::spacingHint());
 	l5->setRowStretch(2, 1);
 	l5->addWidget(m_editlab1, 0, 0, Qt::AlignRight|Qt::AlignVCenter);
 	l5->addWidget(m_editlab2, 1, 0, Qt::AlignRight|Qt::AlignVCenter);
 	l5->addWidget(m_edit1, 0, 1);
 	l5->addWidget(m_edit2, 1, 1);
 
-	QGridLayout	*l8 = new QGridLayout(gb_input->layout(), 2, 2,
+	QGridLayout	*l8 = new TQGridLayout(gb_input->layout(), 2, 2,
 		KDialog::spacingHint());
-	QGridLayout	*l9 = new QGridLayout(gb_output->layout(), 2, 2,
+	QGridLayout	*l9 = new TQGridLayout(gb_output->layout(), 2, 2,
 		KDialog::spacingHint());
 	l8->addWidget(m_inputfilelab, 0, 0);
 	l8->addWidget(m_inputpipelab, 1, 0);
@@ -243,73 +243,73 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(QWidget *parent, const char *name
 	l9->addWidget(m_outputfile, 0, 1);
 	l9->addWidget(m_outputpipe, 1, 1);
 
-	QVBoxLayout	*l11 = new QVBoxLayout(gb->layout());
+	QVBoxLayout	*l11 = new TQVBoxLayout(gb->layout());
 	l11->addWidget(m_stack);
 
-	QVBoxLayout *l12 = new QVBoxLayout( 0, 0, 0 );
+	TQVBoxLayout *l12 = new TQVBoxLayout( 0, 0, 0 );
 	l2->addSpacing( 10 );
 	l2->addLayout( l12 );
 	l12->addWidget( m_commentlab );
 	l12->addWidget( m_comment );
 
-	connect(m_view, SIGNAL(selectionChanged(QListViewItem*)), SLOT(slotSelectionChanged(QListViewItem*)));
-	connect(m_values, SIGNAL(selectionChanged(QListViewItem*)), SLOT(slotValueSelected(QListViewItem*)));
-	connect(m_type, SIGNAL(activated(int)), SLOT(slotTypeChanged(int)));
-	connect(m_addval, SIGNAL(clicked()), SLOT(slotAddValue()));
-	connect(m_delval, SIGNAL(clicked()), SLOT(slotRemoveValue()));
-	connect(m_apply, SIGNAL(clicked()), SLOT(slotApplyChanges()));
-	connect(m_addgrp, SIGNAL(clicked()), SLOT(slotAddGroup()));
-	connect(m_addopt, SIGNAL(clicked()), SLOT(slotAddOption()));
-	connect(m_delopt, SIGNAL(clicked()), SLOT(slotRemoveItem()));
-	connect(m_up, SIGNAL(clicked()), SLOT(slotMoveUp()));
-	connect(m_down, SIGNAL(clicked()), SLOT(slotMoveDown()));
-	connect(m_command, SIGNAL(textChanged(const QString&)), SLOT(slotCommandChanged(const QString&)));
-	connect(m_view, SIGNAL(itemRenamed(QListViewItem*,int)), SLOT(slotOptionRenamed(QListViewItem*,int)));
-	connect(m_desc, SIGNAL(textChanged(const QString&)), SLOT(slotChanged()));
-	connect(m_name, SIGNAL(textChanged(const QString&)), SLOT(slotChanged()));
-	connect(m_format, SIGNAL(textChanged(const QString&)), SLOT(slotChanged()));
-	connect(m_default, SIGNAL(textChanged(const QString&)), SLOT(slotChanged()));
-	connect(m_edit1, SIGNAL(textChanged(const QString&)), SLOT(slotChanged()));
-	connect(m_edit2, SIGNAL(textChanged(const QString&)), SLOT(slotChanged()));
-	connect(m_type, SIGNAL(activated(int)), SLOT(slotChanged()));
-	connect(m_addval, SIGNAL(clicked()), SLOT(slotChanged()));
-	connect(m_delval, SIGNAL(clicked()), SLOT(slotChanged()));
-	connect( m_persistent, SIGNAL( toggled(bool) ), SLOT( slotChanged() ) );
+	connect(m_view, TQT_SIGNAL(selectionChanged(TQListViewItem*)), TQT_SLOT(slotSelectionChanged(TQListViewItem*)));
+	connect(m_values, TQT_SIGNAL(selectionChanged(TQListViewItem*)), TQT_SLOT(slotValueSelected(TQListViewItem*)));
+	connect(m_type, TQT_SIGNAL(activated(int)), TQT_SLOT(slotTypeChanged(int)));
+	connect(m_addval, TQT_SIGNAL(clicked()), TQT_SLOT(slotAddValue()));
+	connect(m_delval, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemoveValue()));
+	connect(m_apply, TQT_SIGNAL(clicked()), TQT_SLOT(slotApplyChanges()));
+	connect(m_addgrp, TQT_SIGNAL(clicked()), TQT_SLOT(slotAddGroup()));
+	connect(m_addopt, TQT_SIGNAL(clicked()), TQT_SLOT(slotAddOption()));
+	connect(m_delopt, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemoveItem()));
+	connect(m_up, TQT_SIGNAL(clicked()), TQT_SLOT(slotMoveUp()));
+	connect(m_down, TQT_SIGNAL(clicked()), TQT_SLOT(slotMoveDown()));
+	connect(m_command, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(slotCommandChanged(const TQString&)));
+	connect(m_view, TQT_SIGNAL(itemRenamed(TQListViewItem*,int)), TQT_SLOT(slotOptionRenamed(TQListViewItem*,int)));
+	connect(m_desc, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(slotChanged()));
+	connect(m_name, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(slotChanged()));
+	connect(m_format, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(slotChanged()));
+	connect(m_default, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(slotChanged()));
+	connect(m_edit1, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(slotChanged()));
+	connect(m_edit2, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(slotChanged()));
+	connect(m_type, TQT_SIGNAL(activated(int)), TQT_SLOT(slotChanged()));
+	connect(m_addval, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
+	connect(m_delval, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
+	connect( m_persistent, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( slotChanged() ) );
 	m_dummy->setEnabled(false);
 	viewItem(0);
 
 	/**
 	 * Add some short help for the normal (non expert) user
 	 */
-	QWhatsThis::add( m_name, i18n(
+	TQWhatsThis::add( m_name, i18n(
 				"An identification string. Use only alphanumeric characters except spaces. "
 				"The string <b>__root__</b> is reserved for internal use." ) );
-	QWhatsThis::add( m_namelab, QWhatsThis::textFor( m_name ) );
-	QWhatsThis::add( m_desc, i18n(
+	TQWhatsThis::add( m_namelab, TQWhatsThis::textFor( m_name ) );
+	TQWhatsThis::add( m_desc, i18n(
 				"A description string. This string is shown in the interface, and should "
 				"be explicit enough about the role of the corresponding option." ) );
-	QWhatsThis::add( m_desclab, QWhatsThis::textFor( m_desc ) );
-	QWhatsThis::add( m_type, i18n(
+	TQWhatsThis::add( m_desclab, TQWhatsThis::textFor( m_desc ) );
+	TQWhatsThis::add( m_type, i18n(
 				"The type of the option. This determines how the option is presented "
 				"graphically to the user." ) );
-	QWhatsThis::add( m_typelab, QWhatsThis::textFor( m_type ) );
-	QWhatsThis::add( m_format, i18n(
+	TQWhatsThis::add( m_typelab, TQWhatsThis::textFor( m_type ) );
+	TQWhatsThis::add( m_format, i18n(
 				"The format of the option. This determines how the option is formatted "
 				"for inclusion in the global command line. The tag <b>%value</b> can be used "
 				"to represent the user selection. This tag will be replaced at run-time by a "
 				"string representation of the option value." ) );
-	QWhatsThis::add( m_formatlab, QWhatsThis::textFor( m_format ) );
-	QWhatsThis::add( m_default, i18n(
+	TQWhatsThis::add( m_formatlab, TQWhatsThis::textFor( m_format ) );
+	TQWhatsThis::add( m_default, i18n(
 				"The default value of the option. For non persistent options, nothing is "
 				"added to the command line if the option has that default value. If this "
 				"value does not correspond to the actual default value of the underlying "
 				"utility, make the option persistent to avoid unwanted effects." ) );
-	QWhatsThis::add( m_defaultlab, QWhatsThis::textFor( m_default ) );
-	QWhatsThis::add( m_persistent, i18n(
+	TQWhatsThis::add( m_defaultlab, TQWhatsThis::textFor( m_default ) );
+	TQWhatsThis::add( m_persistent, i18n(
 				"Make the option persistent. A persistent option is always written to the "
 				"command line, whatever its value. This is useful when the chosen default "
 				"value does not match with the actual default value of the underlying utility." ) );
-	QWhatsThis::add( m_command, i18n(
+	TQWhatsThis::add( m_command, i18n(
 				"The full command line to execute the associated underlying utility. This "
 				"command line is based on a mechanism of tags that are replaced at run-time. "
 				"The supported tags are:<ul>"
@@ -318,28 +318,28 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(QWidget *parent, const char *name
 				"<li><b>%filteroutput</b>: output specification</li>"
 				"<li><b>%psu</b>: the page size in upper case</li>"
 				"<li><b>%psl</b>: the page size in lower case</li></ul>" ) );
-	QWhatsThis::add( m_commandlab, QWhatsThis::textFor( m_command ) );
-	QWhatsThis::add( m_inputfile, i18n(
+	TQWhatsThis::add( m_commandlab, TQWhatsThis::textFor( m_command ) );
+	TQWhatsThis::add( m_inputfile, i18n(
 				"Input specification when the underlying utility reads input data from a file. Use "
 				"the tag <b>%in</b> to represent the input filename." ) );
-	QWhatsThis::add( m_inputfilelab, QWhatsThis::textFor( m_inputfile ) );
-	QWhatsThis::add( m_outputfile, i18n(
+	TQWhatsThis::add( m_inputfilelab, TQWhatsThis::textFor( m_inputfile ) );
+	TQWhatsThis::add( m_outputfile, i18n(
 				"Output specification when the underlying utility writes output data to a file. Use "
 				"the tag <b>%out</b> to represent the output filename." ) );
-	QWhatsThis::add( m_outputfilelab, QWhatsThis::textFor( m_outputfile ) );
-	QWhatsThis::add( m_inputpipe, i18n(
+	TQWhatsThis::add( m_outputfilelab, TQWhatsThis::textFor( m_outputfile ) );
+	TQWhatsThis::add( m_inputpipe, i18n(
 				"Input specification when the underlying utility reads input data from its "
 				"standard input." ) );
-	QWhatsThis::add( m_inputpipelab, QWhatsThis::textFor( m_inputpipe ) );
-	QWhatsThis::add( m_outputpipe, i18n(
+	TQWhatsThis::add( m_inputpipelab, TQWhatsThis::textFor( m_inputpipe ) );
+	TQWhatsThis::add( m_outputpipe, i18n(
 				"Output specification when the underlying utility writes output data to its "
 				"standard output." ) );
-	QWhatsThis::add( m_outputpipelab, QWhatsThis::textFor( m_outputpipe ) );
-	QWhatsThis::add( m_comment, i18n(
+	TQWhatsThis::add( m_outputpipelab, TQWhatsThis::textFor( m_outputpipe ) );
+	TQWhatsThis::add( m_comment, i18n(
 				"A comment about the underlying utility, which can be viewed by the user "
 				"from the interface. This comment string supports basic HTML tags like "
 				"&lt;a&gt;, &lt;b&gt; or &lt;i&gt;." ) );
-	QWhatsThis::add( m_commentlab, QWhatsThis::textFor( m_comment ) );
+	TQWhatsThis::add( m_commentlab, TQWhatsThis::textFor( m_comment ) );
 
 	resize(660, 200);
 }
@@ -349,7 +349,7 @@ KXmlCommandAdvancedDlg::~KXmlCommandAdvancedDlg()
 	if (m_opts.count() > 0)
 	{
 		kdDebug() << "KXmlCommandAdvancedDlg: " << m_opts.count() << " items remaining" << endl;
-		for (QMap<QString,DrBase*>::ConstIterator it=m_opts.begin(); it!=m_opts.end(); ++it)
+		for (TQMap<TQString,DrBase*>::ConstIterator it=m_opts.begin(); it!=m_opts.end(); ++it)
 		{
 			//kdDebug() << "Item: name=" << (*it)->name() << endl;
 			delete (*it);
@@ -367,7 +367,7 @@ void KXmlCommandAdvancedDlg::setCommand(KXmlCommand *xmlcmd)
 void KXmlCommandAdvancedDlg::parseXmlCommand(KXmlCommand *xmlcmd)
 {
 	m_view->clear();
-	QListViewItem	*root = new QListViewItem(m_view, xmlcmd->name(), xmlcmd->name());
+	QListViewItem	*root = new TQListViewItem(m_view, xmlcmd->name(), xmlcmd->name());
 	DrMain	*driver = xmlcmd->driver();
 
 	root->setPixmap(0, SmallIcon("fileprint"));
@@ -393,11 +393,11 @@ void KXmlCommandAdvancedDlg::parseXmlCommand(KXmlCommand *xmlcmd)
 	viewItem(0);
 }
 
-void KXmlCommandAdvancedDlg::parseGroupItem(DrGroup *grp, QListViewItem *parent)
+void KXmlCommandAdvancedDlg::parseGroupItem(DrGroup *grp, TQListViewItem *parent)
 {
 	QListViewItem	*item(0);
 
-	QPtrListIterator<DrGroup>	git(grp->groups());
+	TQPtrListIterator<DrGroup>	git(grp->groups());
 	for (; git.current(); ++git)
 	{
 		QString	namestr = git.current()->name();
@@ -406,7 +406,7 @@ void KXmlCommandAdvancedDlg::parseGroupItem(DrGroup *grp, QListViewItem *parent)
 			namestr = "group_"+kapp->randomString(4);
 		}
 		git.current()->setName(namestr);
-		item = new QListViewItem(parent, item, git.current()->get("text"), git.current()->name());
+		item = new TQListViewItem(parent, item, git.current()->get("text"), git.current()->name());
 		item->setPixmap(0, SmallIcon("folder"));
 		item->setOpen(true);
 		item->setRenameEnabled(0, true);
@@ -414,7 +414,7 @@ void KXmlCommandAdvancedDlg::parseGroupItem(DrGroup *grp, QListViewItem *parent)
 		m_opts[namestr] = git.current();
 	}
 
-	QPtrListIterator<DrBase>	oit(grp->options());
+	TQPtrListIterator<DrBase>	oit(grp->options());
 	for (; oit.current(); ++oit)
 	{
 		QString	namestr = oit.current()->name().mid(m_xmlcmd->name().length()+6);
@@ -423,21 +423,21 @@ void KXmlCommandAdvancedDlg::parseGroupItem(DrGroup *grp, QListViewItem *parent)
 			namestr = "option_"+kapp->randomString(4);
 		}
 		oit.current()->setName(namestr);
-		item = new QListViewItem(parent, item, oit.current()->get("text"), namestr);
+		item = new TQListViewItem(parent, item, oit.current()->get("text"), namestr);
 		item->setPixmap(0, SmallIcon("document"));
 		item->setRenameEnabled(0, true);
 		m_opts[namestr] = oit.current();
 	}
 }
 
-void KXmlCommandAdvancedDlg::slotSelectionChanged(QListViewItem *item)
+void KXmlCommandAdvancedDlg::slotSelectionChanged(TQListViewItem *item)
 {
 	if (item && item->depth() == 0)
 		item = 0;
 	viewItem(item);
 }
 
-void KXmlCommandAdvancedDlg::viewItem(QListViewItem *item)
+void KXmlCommandAdvancedDlg::viewItem(TQListViewItem *item)
 {
 	m_dummy->setEnabled((item != 0));
 	m_name->setText("");
@@ -480,11 +480,11 @@ void KXmlCommandAdvancedDlg::viewItem(QListViewItem *item)
 				case DrBase::Boolean:
 				case DrBase::List:
 					{
-						QPtrListIterator<DrBase>	it(*(static_cast<DrListOption*>(opt)->choices()));
+						TQPtrListIterator<DrBase>	it(*(static_cast<DrListOption*>(opt)->choices()));
 						QListViewItem	*item(0);
 						for (; it.current(); ++it)
 						{
-							item = new QListViewItem(m_values, item, it.current()->name(), it.current()->get("text"));
+							item = new TQListViewItem(m_values, item, it.current()->name(), it.current()->get("text"));
 							item->setRenameEnabled(0, true);
 							item->setRenameEnabled(1, true);
 						}
@@ -542,7 +542,7 @@ void KXmlCommandAdvancedDlg::slotTypeChanged(int ID)
 
 void KXmlCommandAdvancedDlg::slotAddValue()
 {
-	QListViewItem	*item = new QListViewItem(m_values, m_values->lastItem(), i18n("Name"), i18n("Description"));
+	QListViewItem	*item = new TQListViewItem(m_values, m_values->lastItem(), i18n("Name"), i18n("Description"));
 	item->setRenameEnabled(0, true);
 	item->setRenameEnabled(1, true);
 	m_values->ensureItemVisible(item);
@@ -649,7 +649,7 @@ void KXmlCommandAdvancedDlg::slotAddGroup()
 		grp->set("text", i18n("New Group"));
 		m_opts[ID] = grp;
 
-		QListViewItem	*item = new QListViewItem(m_view->currentItem(), i18n("New Group"), ID);
+		QListViewItem	*item = new TQListViewItem(m_view->currentItem(), i18n("New Group"), ID);
 		item->setRenameEnabled(0, true);
 		item->setPixmap(0, SmallIcon("folder"));
 		m_view->ensureItemVisible(item);
@@ -668,7 +668,7 @@ void KXmlCommandAdvancedDlg::slotAddOption()
 		opt->set("text", i18n("New Option"));
 		m_opts[ID] = opt;
 
-		QListViewItem	*item = new QListViewItem(m_view->currentItem(), i18n("New Option"), ID);
+		QListViewItem	*item = new TQListViewItem(m_view->currentItem(), i18n("New Option"), ID);
 		item->setRenameEnabled(0, true);
 		item->setPixmap(0, SmallIcon("document"));
 		m_view->ensureItemVisible(item);
@@ -690,7 +690,7 @@ void KXmlCommandAdvancedDlg::slotRemoveItem()
 	}
 }
 
-void KXmlCommandAdvancedDlg::removeItem(QListViewItem *item)
+void KXmlCommandAdvancedDlg::removeItem(TQListViewItem *item)
 {
 	delete m_opts[item->text(1)];
 	m_opts.remove(item->text(1));
@@ -733,7 +733,7 @@ void KXmlCommandAdvancedDlg::slotMoveDown()
 	}
 }
 
-void KXmlCommandAdvancedDlg::slotCommandChanged(const QString& cmd)
+void KXmlCommandAdvancedDlg::slotCommandChanged(const TQString& cmd)
 {
 	m_inputfile->parentWidget()->setEnabled(cmd.find("%filterinput") != -1);
 	m_outputfile->parentWidget()->setEnabled(cmd.find("%filteroutput") != -1);
@@ -743,13 +743,13 @@ void KXmlCommandAdvancedDlg::slotCommandChanged(const QString& cmd)
 	m_view->setOpen(m_view->firstChild(), m_view->isEnabled());
 }
 
-void KXmlCommandAdvancedDlg::slotValueSelected(QListViewItem *item)
+void KXmlCommandAdvancedDlg::slotValueSelected(TQListViewItem *item)
 {
 	m_addval->setEnabled(m_type->currentItem() != 4 || m_values->childCount() < 2);
 	m_delval->setEnabled(item != 0);
 }
 
-void KXmlCommandAdvancedDlg::slotOptionRenamed(QListViewItem *item, int)
+void KXmlCommandAdvancedDlg::slotOptionRenamed(TQListViewItem *item, int)
 {
 	if (item && m_opts.contains(item->text(1)))
 	{
@@ -759,7 +759,7 @@ void KXmlCommandAdvancedDlg::slotOptionRenamed(QListViewItem *item, int)
 	}
 }
 
-void KXmlCommandAdvancedDlg::recreateGroup(QListViewItem *item, DrGroup *grp)
+void KXmlCommandAdvancedDlg::recreateGroup(TQListViewItem *item, DrGroup *grp)
 {
 	if (!item)
 		return;
@@ -787,7 +787,7 @@ void KXmlCommandAdvancedDlg::recreateGroup(QListViewItem *item, DrGroup *grp)
 	}
 }
 
-bool KXmlCommandAdvancedDlg::editCommand(KXmlCommand *xmlcmd, QWidget *parent)
+bool KXmlCommandAdvancedDlg::editCommand(KXmlCommand *xmlcmd, TQWidget *parent)
 {
 	if (!xmlcmd)
 		return false;
@@ -804,7 +804,7 @@ bool KXmlCommandAdvancedDlg::editCommand(KXmlCommand *xmlcmd, QWidget *parent)
 		xmlcmd->setIo(xmldlg->m_inputpipe->text(), true, true);
 		xmlcmd->setIo(xmldlg->m_outputfile->text(), false, false);
 		xmlcmd->setIo(xmldlg->m_outputpipe->text(), false, true);
-		xmlcmd->setComment( xmldlg->m_comment->text().replace( QRegExp( "\n" ), " " ) );
+		xmlcmd->setComment( xmldlg->m_comment->text().replace( TQRegExp( "\n" ), " " ) );
 
 		// need to recreate the driver tree structure
 		DrMain	*driver = (xmldlg->m_opts.contains("__root__") ? static_cast<DrMain*>(xmldlg->m_opts["__root__"]) : 0);
@@ -827,35 +827,35 @@ bool KXmlCommandAdvancedDlg::editCommand(KXmlCommand *xmlcmd, QWidget *parent)
 
 //-----------------------------------------------------------------------------------------------------
 
-KXmlCommandDlg::KXmlCommandDlg(QWidget *parent, const char *name)
-: KDialogBase(parent, name, true, QString::null, Ok|Cancel|Details, Ok, true)
+KXmlCommandDlg::KXmlCommandDlg(TQWidget *parent, const char *name)
+: KDialogBase(parent, name, true, TQString::null, Ok|Cancel|Details, Ok, true)
 {
 	setButtonText(Details, i18n("&Mime Type Settings"));
 	m_cmd = 0;
 
-	QWidget	*dummy = new QWidget(this, "TopDetail");
-	QWidget	*topmain = new QWidget(this, "TopMain");
+	QWidget	*dummy = new TQWidget(this, "TopDetail");
+	QWidget	*topmain = new TQWidget(this, "TopMain");
 
-	QGroupBox	*m_gb1 = new QGroupBox(0, Qt::Horizontal, i18n("Supported &Input Formats"), dummy);
-	QGroupBox	*m_gb2 = new QGroupBox(0, Qt::Horizontal, i18n("Requirements"), topmain);
+	QGroupBox	*m_gb1 = new TQGroupBox(0, Qt::Horizontal, i18n("Supported &Input Formats"), dummy);
+	QGroupBox	*m_gb2 = new TQGroupBox(0, Qt::Horizontal, i18n("Requirements"), topmain);
 
-	m_description = new QLineEdit(topmain);
-	m_idname = new QLabel(topmain);
+	m_description = new TQLineEdit(topmain);
+	m_idname = new TQLabel(topmain);
 	m_requirements = new KListView(m_gb2);
 	m_requirements->addColumn("");
 	m_requirements->header()->hide();
-	m_addreq = new QToolButton(m_gb2);
+	m_addreq = new TQToolButton(m_gb2);
 	m_addreq->setIconSet(SmallIconSet("filenew"));
-	m_removereq = new QToolButton(m_gb2);
+	m_removereq = new TQToolButton(m_gb2);
 	m_removereq->setIconSet(SmallIconSet("editdelete"));
 	QPushButton	*m_edit = new KPushButton(KGuiItem(i18n("&Edit Command..."), "edit"), topmain);
-	m_mimetype = new QComboBox(dummy);
+	m_mimetype = new TQComboBox(dummy);
 	m_availablemime = new KListBox(m_gb1);
 	m_selectedmime = new KListBox(m_gb1);
-	m_addmime = new QToolButton(m_gb1);
-	m_addmime->setIconSet(QApplication::reverseLayout()? SmallIconSet("forward") : SmallIconSet("back"));
-	m_removemime = new QToolButton(m_gb1);
-	m_removemime->setIconSet(QApplication::reverseLayout()? SmallIconSet("back" ) : SmallIconSet("forward"));
+	m_addmime = new TQToolButton(m_gb1);
+	m_addmime->setIconSet(TQApplication::reverseLayout()? SmallIconSet("forward") : SmallIconSet("back"));
+	m_removemime = new TQToolButton(m_gb1);
+	m_removemime->setIconSet(TQApplication::reverseLayout()? SmallIconSet("back" ) : SmallIconSet("forward"));
 	m_gb2->setMinimumWidth(380);
 	m_gb1->setMinimumHeight(180);
 	m_requirements->setMaximumHeight(80);
@@ -863,64 +863,64 @@ KXmlCommandDlg::KXmlCommandDlg(QWidget *parent, const char *name)
 	m_addmime->setEnabled(false);
 	m_removemime->setEnabled(false);
 
-	QLabel	*m_desclab = new QLabel(i18n("&Description:"), topmain);
+	QLabel	*m_desclab = new TQLabel(i18n("&Description:"), topmain);
 	m_desclab->setBuddy(m_description);
-	QLabel	*m_mimetypelab = new QLabel(i18n("Output &format:"), dummy);
+	QLabel	*m_mimetypelab = new TQLabel(i18n("Output &format:"), dummy);
 	m_mimetypelab->setBuddy(m_mimetype);
-	QLabel	*m_idnamelab = new QLabel(i18n("ID name:"), topmain);
+	QLabel	*m_idnamelab = new TQLabel(i18n("ID name:"), topmain);
 
 	QFont	f(m_idname->font());
 	f.setBold(true);
 	m_idname->setFont(f);
 
-	KSeparator	*sep1 = new KSeparator(QFrame::HLine, dummy);
+	KSeparator	*sep1 = new KSeparator(TQFrame::HLine, dummy);
 
-	QVBoxLayout	*l0 = new QVBoxLayout(topmain, 0, 10);
-	QGridLayout	*l5 = new QGridLayout(0, 2, 2, 0, 5);
+	QVBoxLayout	*l0 = new TQVBoxLayout(topmain, 0, 10);
+	QGridLayout	*l5 = new TQGridLayout(0, 2, 2, 0, 5);
 	l0->addLayout(l5);
 	l5->addWidget(m_idnamelab, 0, 0);
 	l5->addWidget(m_idname, 0, 1);
 	l5->addWidget(m_desclab, 1, 0);
 	l5->addWidget(m_description, 1, 1);
 	l0->addWidget(m_gb2);
-	QHBoxLayout	*l3 = new QHBoxLayout(0, 0, 0);
+	QHBoxLayout	*l3 = new TQHBoxLayout(0, 0, 0);
 	l0->addLayout(l3);
 	l3->addWidget(m_edit);
 	l3->addStretch(1);
 
-	QVBoxLayout	*l7 = new QVBoxLayout(dummy, 0, 10);
-	QHBoxLayout	*l6 = new QHBoxLayout(0, 0, 5);
+	QVBoxLayout	*l7 = new TQVBoxLayout(dummy, 0, 10);
+	QHBoxLayout	*l6 = new TQHBoxLayout(0, 0, 5);
 	l7->addWidget(sep1);
 	l7->addLayout(l6);
 	l6->addWidget(m_mimetypelab, 0);
 	l6->addWidget(m_mimetype, 1);
 	l7->addWidget(m_gb1);
-	QGridLayout	*l2 = new QGridLayout(m_gb1->layout(), 4, 3, 10);
+	QGridLayout	*l2 = new TQGridLayout(m_gb1->layout(), 4, 3, 10);
 	l2->addMultiCellWidget(m_availablemime, 0, 3, 2, 2);
 	l2->addMultiCellWidget(m_selectedmime, 0, 3, 0, 0);
 	l2->addWidget(m_addmime, 1, 1);
 	l2->addWidget(m_removemime, 2, 1);
 	l2->setRowStretch(0, 1);
 	l2->setRowStretch(3, 1);
-	QHBoxLayout	*l4 = new QHBoxLayout(m_gb2->layout(), 10);
+	QHBoxLayout	*l4 = new TQHBoxLayout(m_gb2->layout(), 10);
 	l4->addWidget(m_requirements);
-	QVBoxLayout	*l8 = new QVBoxLayout(0, 0, 0);
+	QVBoxLayout	*l8 = new TQVBoxLayout(0, 0, 0);
 	l4->addLayout(l8);
 	l8->addWidget(m_addreq);
 	l8->addWidget(m_removereq);
 	l8->addStretch(1);
 
-	connect(m_addmime, SIGNAL(clicked()), SLOT(slotAddMime()));
-	connect(m_removemime, SIGNAL(clicked()), SLOT(slotRemoveMime()));
-	connect(m_edit, SIGNAL(clicked()), SLOT(slotEditCommand()));
-	connect(m_requirements, SIGNAL(selectionChanged(QListViewItem*)), SLOT(slotReqSelected(QListViewItem*)));
-	connect(m_availablemime, SIGNAL(selectionChanged(QListBoxItem*)), SLOT(slotAvailableSelected(QListBoxItem*)));
-	connect(m_selectedmime, SIGNAL(selectionChanged(QListBoxItem*)), SLOT(slotSelectedSelected(QListBoxItem*)));
-	connect(m_addreq, SIGNAL(clicked()), SLOT(slotAddReq()));
-	connect(m_removereq, SIGNAL(clicked()), SLOT(slotRemoveReq()));
+	connect(m_addmime, TQT_SIGNAL(clicked()), TQT_SLOT(slotAddMime()));
+	connect(m_removemime, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemoveMime()));
+	connect(m_edit, TQT_SIGNAL(clicked()), TQT_SLOT(slotEditCommand()));
+	connect(m_requirements, TQT_SIGNAL(selectionChanged(TQListViewItem*)), TQT_SLOT(slotReqSelected(TQListViewItem*)));
+	connect(m_availablemime, TQT_SIGNAL(selectionChanged(TQListBoxItem*)), TQT_SLOT(slotAvailableSelected(TQListBoxItem*)));
+	connect(m_selectedmime, TQT_SIGNAL(selectionChanged(TQListBoxItem*)), TQT_SLOT(slotSelectedSelected(TQListBoxItem*)));
+	connect(m_addreq, TQT_SIGNAL(clicked()), TQT_SLOT(slotAddReq()));
+	connect(m_removereq, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemoveReq()));
 
 	KMimeType::List	list = KMimeType::allMimeTypes();
-	for (QValueList<KMimeType::Ptr>::ConstIterator it=list.begin(); it!=list.end(); ++it)
+	for (TQValueList<KMimeType::Ptr>::ConstIterator it=list.begin(); it!=list.end(); ++it)
 	{
 		QString	mimetype = (*it)->name();
 		m_mimelist << mimetype;
@@ -945,9 +945,9 @@ void KXmlCommandDlg::setCommand(KXmlCommand *xmlCmd)
 	m_requirements->clear();
 	QStringList	list = xmlCmd->requirements();
 	QListViewItem	*item(0);
-	for (QStringList::ConstIterator it=list.begin(); it!=list.end(); ++it)
+	for (TQStringList::ConstIterator it=list.begin(); it!=list.end(); ++it)
 	{
-		item = new QListViewItem(m_requirements, item, *it);
+		item = new TQListViewItem(m_requirements, item, *it);
 		item->setRenameEnabled(0, true);
 	}
 
@@ -961,7 +961,7 @@ void KXmlCommandDlg::setCommand(KXmlCommand *xmlCmd)
 	m_selectedmime->clear();
 	m_availablemime->clear();
 	m_availablemime->insertStringList(m_mimelist);
-	for (QStringList::ConstIterator it=list.begin(); it!=list.end(); ++it)
+	for (TQStringList::ConstIterator it=list.begin(); it!=list.end(); ++it)
 	{
 		m_selectedmime->insertItem(*it);
 		delete m_availablemime->findItem(*it, Qt::ExactMatch);
@@ -972,7 +972,7 @@ void KXmlCommandDlg::slotOk()
 {
 	if (m_cmd)
 	{
-		m_cmd->setMimeType((m_mimetype->currentText() == "all/all" ? QString::null : m_mimetype->currentText()));
+		m_cmd->setMimeType((m_mimetype->currentText() == "all/all" ? TQString::null : m_mimetype->currentText()));
 		m_cmd->setDescription(m_description->text());
 		QStringList	l;
 		QListViewItem	*item = m_requirements->firstChild();
@@ -990,7 +990,7 @@ void KXmlCommandDlg::slotOk()
 	KDialogBase::slotOk();
 }
 
-bool KXmlCommandDlg::editCommand(KXmlCommand *xmlCmd, QWidget *parent)
+bool KXmlCommandDlg::editCommand(KXmlCommand *xmlCmd, TQWidget *parent)
 {
 	if (!xmlCmd)
 		return false;
@@ -1030,7 +1030,7 @@ void KXmlCommandDlg::slotEditCommand()
 
 void KXmlCommandDlg::slotAddReq()
 {
-	QListViewItem	*item = new QListViewItem(m_requirements, m_requirements->lastItem(), i18n("exec:/"));
+	QListViewItem	*item = new TQListViewItem(m_requirements, m_requirements->lastItem(), i18n("exec:/"));
 	item->setRenameEnabled(0, true);
 	m_requirements->ensureItemVisible(item);
 	item->startRename(0);
@@ -1041,17 +1041,17 @@ void KXmlCommandDlg::slotRemoveReq()
 	delete m_requirements->currentItem();
 }
 
-void KXmlCommandDlg::slotReqSelected(QListViewItem *item)
+void KXmlCommandDlg::slotReqSelected(TQListViewItem *item)
 {
 	m_removereq->setEnabled(item);
 }
 
-void KXmlCommandDlg::slotAvailableSelected(QListBoxItem *item)
+void KXmlCommandDlg::slotAvailableSelected(TQListBoxItem *item)
 {
 	m_addmime->setEnabled(item);
 }
 
-void KXmlCommandDlg::slotSelectedSelected(QListBoxItem *item)
+void KXmlCommandDlg::slotSelectedSelected(TQListBoxItem *item)
 {
 	m_removemime->setEnabled(item);
 }

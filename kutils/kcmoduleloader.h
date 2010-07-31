@@ -61,8 +61,8 @@ class KUTILS_EXPORT KCModuleLoader
      * method
      */
     static KCModule *loadModule(const KCModuleInfo &module, bool withFallback=true, 
-        QWidget * parent = 0, const char * name = 0,
-        const QStringList & args = QStringList() ) KDE_DEPRECATED;
+        TQWidget * parent = 0, const char * name = 0,
+        const TQStringList & args = TQStringList() ) KDE_DEPRECATED;
 
     /**
      * Loads a @ref KCModule. If loading fails a zero pointer is returned.
@@ -75,8 +75,8 @@ class KUTILS_EXPORT KCModuleLoader
      * @deprecated use the function which explicitly states the error reporting
      * method
      */
-    static KCModule *loadModule(const QString &module, QWidget *parent = 0,
-        const char *name = 0, const QStringList & args = QStringList()) KDE_DEPRECATED;
+    static KCModule *loadModule(const TQString &module, TQWidget *parent = 0,
+        const char *name = 0, const TQStringList & args = TQStringList()) KDE_DEPRECATED;
 
     /**
      * Determines the way errors are reported
@@ -115,8 +115,8 @@ class KUTILS_EXPORT KCModuleLoader
      * @since 3.4
      */
     static KCModule *loadModule(const KCModuleInfo &module, ErrorReporting
-        report, bool withFallback=true, QWidget * parent = 0,
-        const char * name = 0, const QStringList & args = QStringList() );
+        report, bool withFallback=true, TQWidget * parent = 0,
+        const char * name = 0, const TQStringList & args = TQStringList() );
 
     /**
      * Loads a @ref KCModule. If loading fails a zero pointer is returned.
@@ -130,9 +130,9 @@ class KUTILS_EXPORT KCModuleLoader
      * @return a pointer to the loaded @ref KCModule
      * @since 3.4
      */
-    static KCModule *loadModule(const QString &module, ErrorReporting
-        report, QWidget *parent = 0, const char *name = 0,
-        const QStringList & args = QStringList());
+    static KCModule *loadModule(const TQString &module, ErrorReporting
+        report, TQWidget *parent = 0, const char *name = 0,
+        const TQStringList & args = TQStringList());
 
     /**
      * Unloads the module's library
@@ -147,7 +147,7 @@ class KUTILS_EXPORT KCModuleLoader
      * @deprecated Use a constructor with ErrorReporting set to Dialog to show a
      * message box like this function did.
      */
-    static void showLastLoaderError(QWidget *parent) KDE_DEPRECATED;
+    static void showLastLoaderError(TQWidget *parent) KDE_DEPRECATED;
 
 
     /**
@@ -178,7 +178,7 @@ class KUTILS_EXPORT KCModuleLoader
      * @returns true if the module should be loaded
      * @since 3.4
      */
-    static bool testModule( const QString& module );
+    static bool testModule( const TQString& module );
 
     /**
      * Convenience function, essentially the same as above.
@@ -200,8 +200,8 @@ class KUTILS_EXPORT KCModuleLoader
      * @since 3.4
      * @internal
      */
-    static KCModule* reportError( ErrorReporting report, const QString & text,
-        QString details, QWidget * parent );
+    static KCModule* reportError( ErrorReporting report, const TQString & text,
+        TQString details, TQWidget * parent );
 
   private:
 
@@ -209,9 +209,9 @@ class KUTILS_EXPORT KCModuleLoader
      * Internal loader called by the public loaders.
      * @internal
      */
-    static KCModule* load(const KCModuleInfo &mod, const QString &libname, 
-        KLibLoader *loader, ErrorReporting report, QWidget * parent = 0,
-        const char * name = 0, const QStringList & args = QStringList() );
+    static KCModule* load(const KCModuleInfo &mod, const TQString &libname, 
+        KLibLoader *loader, ErrorReporting report, TQWidget * parent = 0,
+        const char * name = 0, const TQStringList & args = TQStringList() );
 
 };
 

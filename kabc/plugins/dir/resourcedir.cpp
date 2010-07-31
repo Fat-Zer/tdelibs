@@ -24,9 +24,9 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include <qregexp.h>
-#include <qtimer.h>
-#include <qwidget.h>
+#include <tqregexp.h>
+#include <tqtimer.h>
+#include <tqwidget.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -67,13 +67,13 @@ ResourceDir::ResourceDir( const KConfig *config )
   }
 }
 
-ResourceDir::ResourceDir( const QString &path, const QString &format )
+ResourceDir::ResourceDir( const TQString &path, const TQString &format )
   : Resource( 0 ), mAsynchronous( false )
 {
   init( path, format );
 }
 
-void ResourceDir::init( const QString &path, const QString &format )
+void ResourceDir::init( const TQString &path, const TQString &format )
 {
   mFormatName = format;
 
@@ -87,9 +87,9 @@ void ResourceDir::init( const QString &path, const QString &format )
 
   mLock = 0;
 
-  connect( &mDirWatch, SIGNAL( dirty(const QString&) ), SLOT( pathChanged() ) );
-  connect( &mDirWatch, SIGNAL( created(const QString&) ), SLOT( pathChanged() ) );
-  connect( &mDirWatch, SIGNAL( deleted(const QString&) ), SLOT( pathChanged() ) );
+  connect( &mDirWatch, TQT_SIGNAL( dirty(const TQString&) ), TQT_SLOT( pathChanged() ) );
+  connect( &mDirWatch, TQT_SIGNAL( created(const TQString&) ), TQT_SLOT( pathChanged() ) );
+  connect( &mDirWatch, TQT_SIGNAL( deleted(const TQString&) ), TQT_SLOT( pathChanged() ) );
 
   setPath( path );
 }
@@ -143,15 +143,15 @@ void ResourceDir::releaseSaveTicket( Ticket *ticket )
 
 bool ResourceDir::doOpen()
 {
-  QDir dir( mPath );
+  TQDir dir( mPath );
   if ( !dir.exists() ) { // no directory available
     return dir.mkdir( dir.path() );
   } else {
-    QString testName = dir.entryList( QDir::Files )[0];
+    TQString testName = dir.entryList( TQDir::Files )[0];
     if ( testName.isNull() || testName.isEmpty() ) // no file in directory
       return true;
 
-    QFile file( mPath + "/" + testName );
+    TQFile file( mPath + "/" + testName );
     if ( file.open( IO_ReadOnly ) )
       return true;
 
@@ -174,13 +174,13 @@ bool ResourceDir::load()
 
   mAsynchronous = false;
 
-  QDir dir( mPath );
-  QStringList files = dir.entryList( QDir::Files );
+  TQDir dir( mPath );
+  TQStringList files = dir.entryList( TQDir::Files );
 
-  QStringList::Iterator it;
+  TQStringList::Iterator it;
   bool ok = true;
   for ( it = files.begin(); it != files.end(); ++it ) {
-    QFile file( mPath + "/" + (*it) );
+    TQFile file( mPath + "/" + (*it) );
 
     if ( !file.open( IO_ReadOnly ) ) {
       addressBook()->error( i18n( "Unable to open file '%1' for reading" ).arg( file.name() ) );
@@ -224,7 +224,7 @@ bool ResourceDir::save( Ticket * )
     if ( !it.data().changed() )
       continue;
 
-    QFile file( mPath + "/" + (*it).uid() );
+    TQFile file( mPath + "/" + (*it).uid() );
     if ( !file.open( IO_WriteOnly ) ) {
       addressBook()->error( i18n( "Unable to open file '%1' for writing" ).arg( file.name() ) );
       continue;
@@ -255,7 +255,7 @@ bool ResourceDir::asyncSave( Ticket *ticket )
   return ok;
 }
 
-void ResourceDir::setPath( const QString &path )
+void ResourceDir::setPath( const TQString &path )
 {
   mDirWatch.stopScan();
   if ( mDirWatch.contains( mPath ) )
@@ -266,12 +266,12 @@ void ResourceDir::setPath( const QString &path )
   mDirWatch.startScan();
 }
 
-QString ResourceDir::path() const
+TQString ResourceDir::path() const
 {
   return mPath;
 }
 
-void ResourceDir::setFormat( const QString &format )
+void ResourceDir::setFormat( const TQString &format )
 {
   mFormatName = format;
 
@@ -282,7 +282,7 @@ void ResourceDir::setFormat( const QString &format )
   mFormat = factory->format( mFormatName );
 }
 
-QString ResourceDir::format() const
+TQString ResourceDir::format() const
 {
   return mFormatName;
 }
@@ -303,7 +303,7 @@ void ResourceDir::pathChanged()
 
 void ResourceDir::removeAddressee( const Addressee& addr )
 {
-  QFile::remove( mPath + "/" + addr.uid() );
+  TQFile::remove( mPath + "/" + addr.uid() );
   mAddrMap.erase( addr.uid() );
 }
 

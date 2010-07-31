@@ -17,38 +17,38 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qpainter.h>
+#include <tqpainter.h>
 #include "kcolordrag.h"
 
 static const char * const color_mime_string = "application/x-color";
 static const char * const text_mime_string = "text/plain";
 
-KColorDrag::KColorDrag( const QColor &color, QWidget *dragsource,
+KColorDrag::KColorDrag( const TQColor &color, TQWidget *dragsource,
 			const char *name)
-     : QStoredDrag( color_mime_string, dragsource, name)
+     : TQStoredDrag( color_mime_string, dragsource, name)
 {
      setColor( color);
 }
 
-KColorDrag::KColorDrag( QWidget *dragsource, const char *name)
-     : QStoredDrag( color_mime_string, dragsource, name)
+KColorDrag::KColorDrag( TQWidget *dragsource, const char *name)
+     : TQStoredDrag( color_mime_string, dragsource, name)
 {
      setColor( white );
 }
 
 void
-KColorDrag::setColor( const QColor &color)
+KColorDrag::setColor( const TQColor &color)
 {
-     QColorDrag tmp(color, 0, 0);
+     TQColorDrag tmp(color, 0, 0);
      setEncodedData(tmp.encodedData(color_mime_string));
 
-     QPixmap colorpix( 25, 20);
+     TQPixmap colorpix( 25, 20);
      colorpix.fill( color);
-     QPainter p( &colorpix );
+     TQPainter p( &colorpix );
      p.setPen( black );
      p.drawRect(0,0,25,20);
      p.end();
-     setPixmap(colorpix, QPoint(-5,-7));
+     setPixmap(colorpix, TQPoint(-5,-7));
 }
 
 const char *KColorDrag::format(int i) const
@@ -56,43 +56,43 @@ const char *KColorDrag::format(int i) const
      if (i==1)
         return text_mime_string;
      else
-        return QStoredDrag::format(i);
+        return TQStoredDrag::format(i);
 }
 
-QByteArray KColorDrag::encodedData ( const char * m ) const
+TQByteArray KColorDrag::encodedData ( const char * m ) const
 {
      if (!qstrcmp(m, text_mime_string) )
      {
-        QColor color;
-        QColorDrag::decode(const_cast<KColorDrag *>(this), color);
-        QCString result = color.name().latin1();
-        ((QByteArray&)result).resize(result.length());
+        TQColor color;
+        TQColorDrag::decode(const_cast<KColorDrag *>(this), color);
+        TQCString result = color.name().latin1();
+        ((TQByteArray&)result).resize(result.length());
         return result;
      }
-     return QStoredDrag::encodedData(m);
+     return TQStoredDrag::encodedData(m);
 }
 
 bool
-KColorDrag::canDecode( QMimeSource *e)
+KColorDrag::canDecode( TQMimeSource *e)
 {
      if (e->provides(color_mime_string))
         return true;
      if (e->provides(text_mime_string))
      {
-        QColor dummy;
+        TQColor dummy;
         return decode(e, dummy);
      }
      return false;
 }
 
 bool
-KColorDrag::decode( QMimeSource *e, QColor &color)
+KColorDrag::decode( TQMimeSource *e, TQColor &color)
 {
-     if (QColorDrag::decode(e, color))
+     if (TQColorDrag::decode(e, color))
         return true;
 
-     QByteArray data = e->encodedData( text_mime_string);
-     QString colorName = QString::fromLatin1(data.data(), data.size());
+     TQByteArray data = e->encodedData( text_mime_string);
+     TQString colorName = TQString::fromLatin1(data.data(), data.size());
      if ((colorName.length() < 4) || (colorName[0] != '#'))
         return false;
      color.setNamedColor(colorName);
@@ -101,7 +101,7 @@ KColorDrag::decode( QMimeSource *e, QColor &color)
 
 
 KColorDrag*
-KColorDrag::makeDrag( const QColor &color,QWidget *dragsource)
+KColorDrag::makeDrag( const TQColor &color,TQWidget *dragsource)
 {
      return new KColorDrag( color, dragsource);
 }

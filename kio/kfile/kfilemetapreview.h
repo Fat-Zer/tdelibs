@@ -9,8 +9,8 @@
 #ifndef KFILEMETAPREVIEW_H
 #define KFILEMETAPREVIEW_H
 
-#include <qdict.h>
-#include <qwidgetstack.h>
+#include <tqdict.h>
+#include <tqwidgetstack.h>
 
 #include <kpreviewwidgetbase.h>
 #include <kurl.h>
@@ -20,10 +20,10 @@ class KIO_EXPORT KFileMetaPreview : public KPreviewWidgetBase
     Q_OBJECT
 
 public:
-    KFileMetaPreview(QWidget *parent, const char *name = 0);
+    KFileMetaPreview(TQWidget *parent, const char *name = 0);
     ~KFileMetaPreview();
 
-    virtual void addPreviewProvider( const QString& mimeType,
+    virtual void addPreviewProvider( const TQString& mimeType,
                                      KPreviewWidgetBase *provider );
     virtual void clearPreviewProviders();
 
@@ -32,7 +32,7 @@ public slots:
     virtual void clearPreview();
 
 protected:
-    virtual KPreviewWidgetBase *previewProviderFor( const QString& mimeType );
+    virtual KPreviewWidgetBase *previewProviderFor( const TQString& mimeType );
 
 protected:
     virtual void virtual_hook( int id, void* data );
@@ -40,12 +40,12 @@ protected:
 private:
     void initPreviewProviders();
 
-    QWidgetStack *m_stack;
-    QDict<KPreviewWidgetBase> m_previewProviders;
+    TQWidgetStack *m_stack;
+    TQDict<KPreviewWidgetBase> m_previewProviders;
     bool haveAudioPreview;
 
     // may return 0L
-    static KPreviewWidgetBase * createAudioPreview( QWidget *parent );
+    static KPreviewWidgetBase * createAudioPreview( TQWidget *parent );
     static bool s_tryAudioPreview;
 
 private:

@@ -33,7 +33,7 @@
 #ifndef _DOM_Node_h_
 #define _DOM_Node_h_
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kdelibs_export.h>
 
 class QRect;
@@ -900,7 +900,7 @@ public:
      * @internal returns the index of a node
      */
     unsigned long index() const;
-    QString toHTML() KDE_DEPRECATED;
+    TQString toHTML() KDE_DEPRECATED;
     void applyChanges();
     /**
      * @deprecated without substitution since 3.2
@@ -910,7 +910,7 @@ public:
      * not part of the DOM.
      * @returns the exact coordinates and size of this element.
      */
-    QRect getRect();
+    TQRect getRect();
 
 protected:
     NodeImpl *impl;

@@ -21,9 +21,9 @@
 #ifndef __KSTATUSBAR_H__
 #define __KSTATUSBAR_H__
 
-#include <qstatusbar.h>
-#include <qintdict.h>
-#include <qlabel.h>
+#include <tqstatusbar.h>
+#include <tqintdict.h>
+#include <tqlabel.h>
 #include <kdelibs_export.h>
 
 class KStatusBar;
@@ -39,13 +39,13 @@ class KDEUI_EXPORT KStatusBarLabel : public QLabel
 public:
 
 
-  KStatusBarLabel( const QString& text, int _id, KStatusBar* parent = 0L, const char *name=0L );
+  KStatusBarLabel( const TQString& text, int _id, KStatusBar* parent = 0L, const char *name=0L );
   ~KStatusBarLabel () {}
 
 protected:
 
-  void mousePressEvent (QMouseEvent* _event);
-  void mouseReleaseEvent (QMouseEvent* _event);
+  void mousePressEvent (TQMouseEvent* _event);
+  void mouseReleaseEvent (TQMouseEvent* _event);
 
 private:
 
@@ -68,13 +68,13 @@ signals:
  *
  *  A special type of item is a message which is a temporary text-message
  *  displayed on top of other items in full-width. Messages are visible for
- *  specified time, or until you call the slot QStatusBar::clear(). See
- *  QStatusBar::message for details.
+ *  specified time, or until you call the slot TQStatusBar::clear(). See
+ *  TQStatusBar::message for details.
  *
  *  It is useful to connect the KActionCollection signals to the
- *  QStatusBar::message slots.
+ *  TQStatusBar::message slots.
  *
- *  KStatusBar inherits QStatusBar, you can freely use all QStatusBar
+ *  KStatusBar inherits TQStatusBar, you can freely use all QStatusBar
  *  methods.
  *
  *  Empty text items are not visible. They will become visible when you change
@@ -99,7 +99,7 @@ public:
   /**
    *  Constructs a status bar. @p parent is usually KMainWindow.
    */
-  KStatusBar( QWidget* parent = 0L, const char* name = 0L );
+  KStatusBar( TQWidget* parent = 0L, const char* name = 0L );
 
   /**
    *  Destructor.
@@ -111,20 +111,20 @@ public:
   /**
    *  Inserts a text label into the status bar.
    *  Parameters @p stretch and  @p permanent are passed to
-   * QStatusBar::addWidget .
+   * TQStatusBar::addWidget .
    *
    *  If @p permanent is true, then item will be placed on the far right of
-   *  the statusbar and will never be hidden by QStatusBar::message.
+   *  the statusbar and will never be hidden by TQStatusBar::message.
    *
    *  @param text The label's text string.
    *  @param id id of item
-   *  @param stretch stretch passed to QStatusBar::addWidget
-   *  @param permanent is item permanent or not (passed to QStatusBar::addWidget )
+   *  @param stretch stretch passed to TQStatusBar::addWidget
+   *  @param permanent is item permanent or not (passed to TQStatusBar::addWidget )
    *
    *  @see QStatusbar::addWidget
    *
    */
-  void insertItem(const QString& text, int id, int stretch=0, bool permanent=false );
+  void insertItem(const TQString& text, int id, int stretch=0, bool permanent=false );
 
   /**
    *  Inserts a fixed width text label into status bar. The width will be set
@@ -133,9 +133,9 @@ public:
    *
    *  @param text The label's text string
    *  @param id id of item
-   *  @param permanent permanent flag passed to QStatusBar::addWidget
+   *  @param permanent permanent flag passed to TQStatusBar::addWidget
    */
-  inline void insertFixedItem(const QString& text, int id, bool permanent=false)
+  inline void insertFixedItem(const TQString& text, int id, bool permanent=false)
                { insertItem(text, id, 0, permanent); setItemFixed(id); }
 
   /**
@@ -164,11 +164,11 @@ public:
    * @param text The label's text string
    * @param id The id of item.
    */
-  void changeItem( const QString& text, int id );
+  void changeItem( const TQString& text, int id );
 
   /**
    * Sets the alignment of item @p id. By default all fields are aligned
-   * @p AlignHCenter | @p AlignVCenter. See QLabel::setAlignment for details.
+   * @p AlignHCenter | @p AlignVCenter. See TQLabel::setAlignment for details.
    *
   */
   void setItemAlignment(int id, int align);
@@ -200,7 +200,7 @@ signals:
   void released( int );
 
 private:
-  QIntDict<KStatusBarLabel> items;
+  TQIntDict<KStatusBarLabel> items;
   class KStatusBarPrivate* d;
 };
 

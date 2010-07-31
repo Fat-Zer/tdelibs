@@ -3,13 +3,13 @@
 public:
 Group();
 Group(const Group&);
-Group(const QCString&);
+Group(const TQCString&);
 Group & operator = (Group&);
-Group & operator = (const QCString&);
+Group & operator = (const TQCString&);
 bool operator ==(Group&);
 bool operator !=(Group& x) {return !(*this==x);}
-bool operator ==(const QCString& s) {Group a(s);return(*this==a);} 
-bool operator != (const QCString& s) {return !(*this == s);}
+bool operator ==(const TQCString& s) {Group a(s);return(*this==a);} 
+bool operator != (const TQCString& s) {return !(*this == s);}
 
 virtual ~Group();
 void parse() {if(!parsed_) _parse();parsed_=true;assembled_=false;}

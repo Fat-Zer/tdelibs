@@ -48,7 +48,7 @@ class KABC_EXPORT ResourceNet : public Resource
 
   public:
     ResourceNet( const KConfig* );
-    ResourceNet( const KURL &url, const QString &format );
+    ResourceNet( const KURL &url, const TQString &format );
     ~ResourceNet();
 
     virtual void writeConfig( KConfig* );
@@ -77,15 +77,15 @@ class KABC_EXPORT ResourceNet : public Resource
     /**
       Sets a new format by name.
      */
-    void setFormat( const QString &name );
+    void setFormat( const TQString &name );
 
     /**
       Returns the format name.
      */
-    QString format() const;
+    TQString format() const;
 
   protected:
-    void init( const KURL &url, const QString &format );
+    void init( const KURL &url, const TQString &format );
 
   private slots:
     void downloadFinished( KIO::Job* );
@@ -93,8 +93,8 @@ class KABC_EXPORT ResourceNet : public Resource
     void signalError();
 
   private:
-    bool clearAndLoad( QFile *file );
-    void saveToFile( QFile *file );
+    bool clearAndLoad( TQFile *file );
+    void saveToFile( TQFile *file );
     bool hasTempFile() const { return mTempFile != 0; }
     void abortAsyncLoading();
     void abortAsyncSaving();
@@ -103,7 +103,7 @@ class KABC_EXPORT ResourceNet : public Resource
     void deleteStaleTempFile();
 
     FormatPlugin *mFormat;
-    QString mFormatName;
+    TQString mFormatName;
 
     KURL mUrl;
     KTempFile *mTempFile;

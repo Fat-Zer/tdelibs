@@ -19,8 +19,8 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-#include <qregexp.h>
-#include <qfile.h>
+#include <tqregexp.h>
+#include <tqfile.h>
 
 #include <kbookmarkbar.h>
 #include <kbookmarkdrag.h>
@@ -40,19 +40,19 @@
 
 #include "dptrtemplate.h"
 
-#include <qapplication.h>
+#include <tqapplication.h>
 
 class KBookmarkBarPrivate : public dPtrTemplate<KBookmarkBar, KBookmarkBarPrivate>
 {
 public:
-    QPtrList<KAction> m_actions;
+    TQPtrList<KAction> m_actions;
     bool m_readOnly;
     KBookmarkManager* m_filteredMgr;
     KToolBar* m_sepToolBar;
     int m_sepIndex;
     bool m_atFirst;
-    QString m_dropAddress;
-    QString m_highlightedAddress;
+    TQString m_dropAddress;
+    TQString m_highlightedAddress;
 public:
     KBookmarkBarPrivate() {
         m_readOnly = false;
@@ -62,7 +62,7 @@ public:
         m_atFirst = false;
     }
 };
-template<> QPtrDict<KBookmarkBarPrivate>* dPtrTemplate<KBookmarkBar, KBookmarkBarPrivate>::d_ptr = 0;
+template<> TQPtrDict<KBookmarkBarPrivate>* dPtrTemplate<KBookmarkBar, KBookmarkBarPrivate>::d_ptr = 0;
 
 KBookmarkBarPrivate* KBookmarkBar::dptr() const
 {
@@ -87,8 +87,8 @@ private:
 KBookmarkBar::KBookmarkBar( KBookmarkManager* mgr,
                             KBookmarkOwner *_owner, KToolBar *_toolBar,
                             KActionCollection *coll,
-                            QObject *parent, const char *name )
-    : QObject( parent, name ), m_pOwner(_owner), m_toolBar(_toolBar),
+                            TQObject *parent, const char *name )
+    : TQObject( parent, name ), m_pOwner(_owner), m_toolBar(_toolBar),
       m_actionCollection( coll ), m_pManager(mgr)
 {
     m_lstSubMenus.setAutoDelete( true );
@@ -98,16 +98,16 @@ KBookmarkBar::KBookmarkBar( KBookmarkManager* mgr,
 
     dptr()->m_actions.setAutoDelete( true );
 
-    connect( mgr, SIGNAL( changed(const QString &, const QString &) ),
-             SLOT( slotBookmarksChanged(const QString &) ) );
+    connect( mgr, TQT_SIGNAL( changed(const TQString &, const TQString &) ),
+             TQT_SLOT( slotBookmarksChanged(const TQString &) ) );
 
     KBookmarkGroup toolbar = getToolbar();
     fillBookmarkBar( toolbar );
 }
 
-QString KBookmarkBar::parentAddress()
+TQString KBookmarkBar::parentAddress()
 {
-    return dptr()->m_filteredMgr ? QString::null : m_pManager->toolbar().address();
+    return dptr()->m_filteredMgr ? TQString::null : m_pManager->toolbar().address();
 }
 
 #define CURRENT_TOOLBAR() ( \
@@ -126,10 +126,10 @@ KBookmarkGroup KBookmarkBar::getToolbar()
             dptr()->m_filteredMgr = KBookmarkManager::createTempManager();
         } else {
             KBookmarkGroup bkRoot = dptr()->m_filteredMgr->root();
-            QValueList<KBookmark> bks;
+            TQValueList<KBookmark> bks;
             for (KBookmark bm = bkRoot.first(); !bm.isNull(); bm = bkRoot.next(bm))
                 bks << bm;
-            for ( QValueListConstIterator<KBookmark> it = bks.begin(); it != bks.end(); ++it )
+            for ( TQValueListConstIterator<KBookmark> it = bks.begin(); it != bks.end(); ++it )
                 bkRoot.deleteBookmark( (*it) );
         }
         ToolbarFilter filter;
@@ -150,7 +150,7 @@ KBookmarkBar::~KBookmarkBar()
 
 void KBookmarkBar::clear()
 {
-    QPtrListIterator<KAction> it( dptr()->m_actions );
+    TQPtrListIterator<KAction> it( dptr()->m_actions );
     m_toolBar->clear();
     for (; it.current(); ++it ) {
         (*it)->unplugAll();
@@ -159,7 +159,7 @@ void KBookmarkBar::clear()
     m_lstSubMenus.clear();
 }
 
-void KBookmarkBar::slotBookmarksChanged( const QString & group )
+void KBookmarkBar::slotBookmarksChanged( const TQString & group )
 {
     KBookmarkGroup tb = getToolbar(); // heavy for non cached toolbar version
     kdDebug(7043) << "slotBookmarksChanged( " << group << " )" << endl;
@@ -176,7 +176,7 @@ void KBookmarkBar::slotBookmarksChanged( const QString & group )
     else
     {
         // Iterate recursively into child menus
-        QPtrListIterator<KBookmarkMenu> it( m_lstSubMenus );
+        TQPtrListIterator<KBookmarkMenu> it( m_lstSubMenus );
         for (; it.current(); ++it )
         {
             it.current()->slotBookmarksChanged( group );
@@ -191,7 +191,7 @@ void KBookmarkBar::fillBookmarkBar(KBookmarkGroup & parent)
 
     for (KBookmark bm = parent.first(); !bm.isNull(); bm = parent.next(bm))
     {
-        QString text = bm.text();
+        TQString text = bm.text();
         text.replace( '&', "&&" );
         if (!bm.isGroup())
         {
@@ -200,8 +200,8 @@ void KBookmarkBar::fillBookmarkBar(KBookmarkGroup & parent)
             else
             {
                 KAction *action = new KBookmarkAction( text, bm.icon(), 0, m_actionCollection, 0 );
-                connect(action, SIGNAL( activated ( KAction::ActivationReason, Qt::ButtonState )),
-                        this, SLOT( slotBookmarkSelected( KAction::ActivationReason, Qt::ButtonState ) ));
+                connect(action, TQT_SIGNAL( activated ( KAction::ActivationReason, Qt::ButtonState )),
+                        this, TQT_SLOT( slotBookmarkSelected( KAction::ActivationReason, Qt::ButtonState ) ));
 
                 action->setProperty( "url", bm.url().url() );
                 action->setProperty( "address", bm.address() );
@@ -229,10 +229,10 @@ void KBookmarkBar::fillBookmarkBar(KBookmarkGroup & parent)
             KBookmarkMenu *menu = new KBookmarkMenu(CURRENT_MANAGER(), m_pOwner, action->popupMenu(),
                                                     m_actionCollection, false, addEntriesBookmarkBar,
                                                     bm.address());
-            connect(menu, SIGNAL( aboutToShowContextMenu(const KBookmark &, QPopupMenu * ) ),
-                    this, SIGNAL( aboutToShowContextMenu(const KBookmark &, QPopupMenu * ) ));
-            connect(menu, SIGNAL( openBookmark( const QString &, Qt::ButtonState) ),
-                    this, SIGNAL( openBookmark( const QString &, Qt::ButtonState) ));
+            connect(menu, TQT_SIGNAL( aboutToShowContextMenu(const KBookmark &, TQPopupMenu * ) ),
+                    this, TQT_SIGNAL( aboutToShowContextMenu(const KBookmark &, TQPopupMenu * ) ));
+            connect(menu, TQT_SIGNAL( openBookmark( const TQString &, Qt::ButtonState) ),
+                    this, TQT_SIGNAL( openBookmark( const TQString &, Qt::ButtonState) ));
             menu->fillBookmarkMenu();
             action->plug(m_toolBar);
             m_lstSubMenus.append( menu );
@@ -259,7 +259,7 @@ void KBookmarkBar::slotBookmarkSelected( KAction::ActivationReason /*reason*/, Q
     const KAction* action = dynamic_cast<const KAction *>(sender());
     if(action)
     {
-        const QString & url = sender()->property("url").toString();
+        const TQString & url = sender()->property("url").toString();
         m_pOwner->openBookmarkURL(url);
         emit openBookmark( url, state );
     }
@@ -282,9 +282,9 @@ static void removeTempSep(KBookmarkBarPrivate* p)
     }
 }
 
-static KAction* findPluggedAction(QPtrList<KAction> actions, KToolBar *tb, int id)
+static KAction* findPluggedAction(TQPtrList<KAction> actions, KToolBar *tb, int id)
 {
-    QPtrListIterator<KAction> it( actions );
+    TQPtrListIterator<KAction> it( actions );
     for (; (*it); ++it )
         if ((*it)->isPlugged(tb, id))
             return (*it);
@@ -292,17 +292,17 @@ static KAction* findPluggedAction(QPtrList<KAction> actions, KToolBar *tb, int i
 }
 
 /**
- * Handle a QDragMoveEvent event on a toolbar drop
+ * Handle a TQDragMoveEvent event on a toolbar drop
  * @return the address of the bookmark to be dropped after/before
- *         else a QString::null if event should be ignored
- * @param pos the current QDragMoveEvent position
+ *         else a TQString::null if event should be ignored
+ * @param pos the current TQDragMoveEvent position
  * @param the toolbar
  * @param actions the list of actions plugged into the bar
  * @param atFirst bool reference, when true the position before the
  *        returned action was dropped on
  */
-static QString handleToolbarDragMoveEvent(
-    KBookmarkBarPrivate *p, KToolBar *tb, QPoint pos, QPtrList<KAction> actions,
+static TQString handleToolbarDragMoveEvent(
+    KBookmarkBarPrivate *p, KToolBar *tb, TQPoint pos, TQPtrList<KAction> actions,
     bool &atFirst, KBookmarkManager *mgr
 ) {
     Q_UNUSED( mgr );
@@ -315,13 +315,13 @@ static QString handleToolbarDragMoveEvent(
 
     b = dynamic_cast<KToolBarButton*>(tb->childAt(pos));
     KAction *a = 0;
-    QString address;
+    TQString address;
     atFirst = false;
 
     if (b)
     {
         index = tb->itemIndex(b->id());
-        QRect r = b->geometry();
+        TQRect r = b->geometry();
         if (pos.x() < ((r.left() + r.right())/2))
         {
             // if in first half of button then
@@ -356,7 +356,7 @@ static QString handleToolbarDragMoveEvent(
     }
 
     if ( !b )
-        return QString::null; // TODO Make it works for that case
+        return TQString::null; // TODO Make it works for that case
 
     a = findPluggedAction(actions, tb, b->id());
     Q_ASSERT(a);
@@ -382,8 +382,8 @@ skipact:
 }
 
 // TODO - document!!!!
-static KAction* handleToolbarMouseButton(QPoint pos, QPtrList<KAction> actions,
-	                                     KBookmarkManager * /*mgr*/, QPoint & pt)
+static KAction* handleToolbarMouseButton(TQPoint pos, TQPtrList<KAction> actions,
+	                                     KBookmarkManager * /*mgr*/, TQPoint & pt)
 {
     KAction *act = actions.first();
     if (!act) {
@@ -413,7 +413,7 @@ static KAction* handleToolbarMouseButton(QPoint pos, QPtrList<KAction> actions,
 // don't *ever* show the rmb on press, always relase, possible???
 
 class KBookmarkBarRMBAssoc : public dPtrTemplate<KBookmarkBar, RMB> { };
-template<> QPtrDict<RMB>* dPtrTemplate<KBookmarkBar, RMB>::d_ptr = 0;
+template<> TQPtrDict<RMB>* dPtrTemplate<KBookmarkBar, RMB>::d_ptr = 0;
 
 static RMB* rmbSelf(KBookmarkBar *m) { return KBookmarkBarRMBAssoc::d(m); }
 
@@ -443,17 +443,17 @@ void KBookmarkBar::slotRMBActionRemove( int val )
 void KBookmarkBar::slotRMBActionCopyLocation( int val )
 { RMB::begin_rmb_action(this); rmbSelf(this)->slotRMBActionCopyLocation( val ); }
 
-bool KBookmarkBar::eventFilter( QObject *o, QEvent *e )
+bool KBookmarkBar::eventFilter( TQObject *o, TQEvent *e )
 {
     if (dptr()->m_readOnly || dptr()->m_filteredMgr) // note, we assume m_pManager in various places,
                                                      // this shouldn't really be the case
         return false; // todo: make this limit the actions
 
-    if ( (e->type() == QEvent::MouseButtonRelease) || (e->type() == QEvent::MouseButtonPress) ) // FIXME, which one?
+    if ( (e->type() == TQEvent::MouseButtonRelease) || (e->type() == TQEvent::MouseButtonPress) ) // FIXME, which one?
     {
-        QMouseEvent *mev = (QMouseEvent*)e;
+        TQMouseEvent *mev = (TQMouseEvent*)e;
 
-        QPoint pt;
+        TQPoint pt;
         KAction *_a;
 
         // FIXME, see how this holds up on an empty toolbar
@@ -473,18 +473,18 @@ bool KBookmarkBar::eventFilter( QObject *o, QEvent *e )
 
         return !!_a; // ignore the event if we didn't find the button
     }
-    else if ( e->type() == QEvent::DragLeave )
+    else if ( e->type() == TQEvent::DragLeave )
     {
         removeTempSep(dptr());
-        dptr()->m_dropAddress = QString::null;
+        dptr()->m_dropAddress = TQString::null;
     }
-    else if ( e->type() == QEvent::Drop )
+    else if ( e->type() == TQEvent::Drop )
     {
         removeTempSep(dptr());
-        QDropEvent *dev = (QDropEvent*)e;
+        TQDropEvent *dev = (TQDropEvent*)e;
         if ( !KBookmarkDrag::canDecode( dev ) )
             return false;
-        QValueList<KBookmark> list = KBookmarkDrag::decode( dev );
+        TQValueList<KBookmark> list = KBookmarkDrag::decode( dev );
         if (list.count() > 1)
             kdWarning(7043) << "Sorry, currently you can only drop one address "
                 "onto the bookmark bar!" << endl;
@@ -492,7 +492,7 @@ bool KBookmarkBar::eventFilter( QObject *o, QEvent *e )
         KBookmark bookmark = m_pManager->findByAddress( dptr()->m_dropAddress );
         Q_ASSERT(!bookmark.isNull());
         kdDebug(7043) << "inserting "
-            << QString(dptr()->m_atFirst ? "before" : "after")
+            << TQString(dptr()->m_atFirst ? "before" : "after")
             << " dptr()->m_dropAddress == " << dptr()->m_dropAddress << endl;
         KBookmarkGroup parentBookmark = bookmark.parentGroup();
         Q_ASSERT(!parentBookmark.isNull());
@@ -503,13 +503,13 @@ bool KBookmarkBar::eventFilter( QObject *o, QEvent *e )
         m_pManager->emitChanged( parentBookmark );
         return true;
     }
-    else if ( e->type() == QEvent::DragMove )
+    else if ( e->type() == TQEvent::DragMove )
     {
-        QDragMoveEvent *dme = (QDragMoveEvent*)e;
+        TQDragMoveEvent *dme = (TQDragMoveEvent*)e;
         if (!KBookmarkDrag::canDecode( dme ))
             return false;
         bool _atFirst;
-        QString dropAddress;
+        TQString dropAddress;
         KToolBar *tb = (KToolBar*)o;
         dropAddress = handleToolbarDragMoveEvent(dptr(), tb, dme->pos(), dptr()->m_actions, _atFirst, m_pManager);
         if (!dropAddress.isNull())

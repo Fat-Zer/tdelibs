@@ -31,15 +31,15 @@
 #include <ktempfile.h> 
 #include <netaccess.h>
 
-#include <qbuttongroup.h>
-#include <qdir.h>
-#include <qiodevice.h>
-#include <qfile.h>
-#include <qlabel.h>
-#include <qlayout.h> 
-#include <qmap.h>
-#include <qstringlist.h>
-#include <qtextstream.h>
+#include <tqbuttongroup.h>
+#include <tqdir.h>
+#include <tqiodevice.h>
+#include <tqfile.h>
+#include <tqlabel.h>
+#include <tqlayout.h> 
+#include <tqmap.h>
+#include <tqstringlist.h>
+#include <tqtextstream.h>
 
 #include <sys/utsname.h>
 
@@ -53,8 +53,8 @@ class PluginListItem : public QListViewItem
 {
 
 public:
-    PluginListItem(KNSPluginInfo pluginInfo, QListView *parent)
-    : QListViewItem(parent, pluginInfo.pluginName())
+    PluginListItem(KNSPluginInfo pluginInfo, TQListView *parent)
+    : TQListViewItem(parent, pluginInfo.pluginName())
     , m_pluginInfo(pluginInfo) {}
     KNSPluginInfo pluginInfo() const { return m_pluginInfo; }
 
@@ -66,7 +66,7 @@ private:
 
 // public methods 
 
-KNSPluginInstallEngine::KNSPluginInstallEngine(KMimeType::Ptr mime) : QObject()
+KNSPluginInstallEngine::KNSPluginInstallEngine(KMimeType::Ptr mime) : TQObject()
 {
     m_mime = mime;
 
@@ -101,14 +101,14 @@ bool KNSPluginInstallEngine::pluginAvailable()
 bool KNSPluginInstallEngine::isActive() 
 {
     // check if we have a configuration key in the kde registry
-    QString pluginsListFile;
+    TQString pluginsListFile;
     KConfig cfg("kcmnspluginrc", true);
     cfg.setGroup("Misc");
     pluginsListFile = cfg.readPathEntry("PluginsListFile");
     return !pluginsListFile.isEmpty();
 }
 
-const QValueList<KNSPluginInfo>& KNSPluginInstallEngine::pluginList() const
+const TQValueList<KNSPluginInfo>& KNSPluginInstallEngine::pluginList() const
 {
     return m_pluginList;
 }
@@ -116,7 +116,7 @@ const QValueList<KNSPluginInfo>& KNSPluginInstallEngine::pluginList() const
 // private methods 
 bool KNSPluginInstallEngine::loadConfig()
 {
-    QString pluginsListFile;
+    TQString pluginsListFile;
     KConfig cfg("kcmnspluginrc", true);
     cfg.setGroup("Misc");
     pluginsListFile = cfg.readPathEntry("PluginsListFile");
@@ -135,13 +135,13 @@ bool KNSPluginInstallEngine::loadXmlConfig()
     // load the Xml configuration file 
     if(m_pluginsXmlConfig.isEmpty())
     {
-        QString tmpFile;
+        TQString tmpFile;
         if(KIO::NetAccess::download(m_pluginsListFileURL, tmpFile, NULL)) {
-            QFile f(tmpFile);
+            TQFile f(tmpFile);
             if(!f.open(IO_ReadOnly))
                 return false;
-            QTextStream stream(&f);
-            stream.setEncoding(QTextStream::UnicodeUTF8);
+            TQTextStream stream(&f);
+            stream.setEncoding(TQTextStream::UnicodeUTF8);
             m_pluginsXmlConfig = stream.read();
             f.close();
             KIO::NetAccess::removeTempFile(tmpFile);
@@ -160,16 +160,16 @@ bool KNSPluginInstallEngine::findPlugin()
     utsname sysinfo;
     if(uname(&sysinfo))
         return false;
-    QString sysname(sysinfo.sysname);
-    QString machine(sysinfo.machine);
-    QString arch = m_archMap[machine]; 
+    TQString sysname(sysinfo.sysname);
+    TQString machine(sysinfo.machine);
+    TQString arch = m_archMap[machine]; 
     
     // Parse the document
-    QDomDocument doc("xmlConfig");
+    TQDomDocument doc("xmlConfig");
     doc.setContent(m_pluginsXmlConfig);
-    QDomNodeList archList = doc.elementsByTagName(QString("arch"));
-    QDomNode archNode, osNode , pluginNode, node;
-    QDomElement e;
+    TQDomNodeList archList = doc.elementsByTagName(TQString("arch"));
+    TQDomNode archNode, osNode , pluginNode, node;
+    TQDomElement e;
 
     // look for the correct architecture
     bool found = false;
@@ -227,15 +227,15 @@ void KNSPluginInstallEngine::startInstall(KNSPluginInfo info)
 {
     m_toInstallPluginInfo = info;
     // create a temporary dowload file 
-    KTempFile tempFile(locateLocal("tmp", "plugin") , QString(".tar.gz"));
+    KTempFile tempFile(locateLocal("tmp", "plugin") , TQString(".tar.gz"));
     m_tmpPluginFileName = tempFile.name();
     tempFile.unlink();
     tempFile.close();
     // start the download job
     m_downloadJob  = KIO::copy(info.pluginURL(), "file://"+m_tmpPluginFileName, false );
     // connect signals 
-    connect(m_downloadJob, SIGNAL(percent (KIO::Job *, unsigned long)), this , SLOT(slotDownLoadProgress(KIO::Job *, unsigned long)));
-    connect(m_downloadJob, SIGNAL(result(KIO::Job *)), this, SLOT(slotDownloadResult(KIO::Job *)) );
+    connect(m_downloadJob, TQT_SIGNAL(percent (KIO::Job *, unsigned long)), this , TQT_SLOT(slotDownLoadProgress(KIO::Job *, unsigned long)));
+    connect(m_downloadJob, TQT_SIGNAL(result(KIO::Job *)), this, TQT_SLOT(slotDownloadResult(KIO::Job *)) );
     kdDebug(DEBUG_NUMBER) << "download plugin " << m_tmpPluginFileName << endl;
 } 
 
@@ -257,7 +257,7 @@ void KNSPluginInstallEngine::slotDownloadResult(KIO::Job *job)
         // the download succeed copy the plugins files 
         
        // test the existance of the homedir
-       QDir dir(QDir::homeDirPath());
+       TQDir dir(TQDir::homeDirPath());
        if(!dir.exists()) {
            emit installFailed();
            return;
@@ -269,19 +269,19 @@ void KNSPluginInstallEngine::slotDownloadResult(KIO::Job *job)
        if(!dir.exists(".mozilla/plugins"))
            dir.mkdir(".mozilla/plugins");
        // destination kurl
-       KURL destURL("file://"+QDir::homeDirPath()+"/.mozilla/plugins");
+       KURL destURL("file://"+TQDir::homeDirPath()+"/.mozilla/plugins");
 
        // construct the source kurlList
        KURL::List urlList;
-       QStringList pluginFileList = m_toInstallPluginInfo.pluginFileList();
+       TQStringList pluginFileList = m_toInstallPluginInfo.pluginFileList();
 
-       QStringList::iterator it;
+       TQStringList::iterator it;
        for( it = pluginFileList.begin(); it != pluginFileList.end(); ++it ) {
            urlList.append( KURL("tar://"+m_tmpPluginFileName+"/"+(*it)) );
         }
        m_installFileJob  = KIO::copy(urlList , destURL, false );
-       connect(m_installFileJob, SIGNAL(percent (KIO::Job *, unsigned long)), this , SLOT(slotCopyProgress(KIO::Job *, unsigned long)));
-       connect(m_installFileJob, SIGNAL(result(KIO::Job *)), this, SLOT(slotCopyResult(KIO::Job *)) );
+       connect(m_installFileJob, TQT_SIGNAL(percent (KIO::Job *, unsigned long)), this , TQT_SLOT(slotCopyProgress(KIO::Job *, unsigned long)));
+       connect(m_installFileJob, TQT_SIGNAL(result(KIO::Job *)), this, TQT_SLOT(slotCopyResult(KIO::Job *)) );
     }
     kdDebug(DEBUG_NUMBER) << "COPY FILE " << m_tmpPluginFileName << endl;
 
@@ -304,14 +304,14 @@ void KNSPluginInstallEngine::slotCopyResult(KIO::Job *job)
     }
     else {
        // start the plugins scan
-       m_scanProc = new QProcess( this );
+       m_scanProc = new TQProcess( this );
        m_scanProc->addArgument( "nspluginscan" );
        m_scanProc->addArgument( "--verbose" );
 
-       connect( m_scanProc, SIGNAL(readyReadStdout()),
-               this, SLOT(readScanProcFromStdout()) );
-       connect( m_scanProc, SIGNAL(processExited()),
-               this, SLOT(endScanProc()) );
+       connect( m_scanProc, TQT_SIGNAL(readyReadStdout()),
+               this, TQT_SLOT(readScanProcFromStdout()) );
+       connect( m_scanProc, TQT_SIGNAL(processExited()),
+               this, TQT_SLOT(endScanProc()) );
        if ( !m_scanProc->start() ) {
             emit installFailed();
        }
@@ -321,7 +321,7 @@ void KNSPluginInstallEngine::slotCopyResult(KIO::Job *job)
 void KNSPluginInstallEngine::readScanProcFromStdout()
 {
     // Monitor the scan progress
-    QString progress = m_scanProc->readLineStdout();
+    TQString progress = m_scanProc->readLineStdout();
     int percent;
     bool ok;
     percent = progress.toInt(&ok);
@@ -341,7 +341,7 @@ void KNSPluginInstallEngine::endScanProc()
         emit installFailed();
 }
 
-KNSPluginWizard::KNSPluginWizard(QWidget *parent, const char *name, KMimeType::Ptr mime)
+KNSPluginWizard::KNSPluginWizard(TQWidget *parent, const char *name, KMimeType::Ptr mime)
 : KWizard(parent, name, true)
 , m_installEngine(mime)
 {
@@ -374,19 +374,19 @@ KNSPluginWizard::~KNSPluginWizard()
 void KNSPluginWizard::initConfirmationPage() 
 {
 
-        m_confirmationVBox = new QVBox(this);
-        new QLabel(i18n("The following plugins are available."), m_confirmationVBox);
+        m_confirmationVBox = new TQVBox(this);
+        new TQLabel(i18n("The following plugins are available."), m_confirmationVBox);
         m_pluginListView = new KListView(m_confirmationVBox);        
         m_pluginListView->addColumn(i18n("Name"));
-        m_pluginListView->setSelectionMode(QListView::Single);
-        new QLabel(i18n("Click on next to install the selected plugin."), m_confirmationVBox);
+        m_pluginListView->setSelectionMode(TQListView::Single);
+        new TQLabel(i18n("Click on next to install the selected plugin."), m_confirmationVBox);
         addPage (m_confirmationVBox, i18n("Plugin installation confirmation"));
         
         bool selected = false;
   
         // Fill the plugin list
-        QValueList<KNSPluginInfo>::iterator it;
-        QValueList<KNSPluginInfo> pluginList = m_installEngine.pluginList();
+        TQValueList<KNSPluginInfo>::iterator it;
+        TQValueList<KNSPluginInfo> pluginList = m_installEngine.pluginList();
         for( it = pluginList.begin(); it != pluginList.end(); ++it ) {
             PluginListItem *item = new PluginListItem((*it) , m_pluginListView);
             if(!selected) {
@@ -400,20 +400,20 @@ void KNSPluginWizard::initConfirmationPage()
 
 void KNSPluginWizard::initLicencePage()
 {
-    m_licenceVBox = new QVBox(this);
-    m_licencePageLabel = new QLabel(m_licenceVBox);
+    m_licenceVBox = new TQVBox(this);
+    m_licencePageLabel = new TQLabel(m_licenceVBox);
     m_licencePageText = new KTextEdit(m_licenceVBox);
     m_licencePageText->setReadOnly(true);
     
     // invisible buttonGroup
-    QButtonGroup *buttonGroup = new QButtonGroup(this);
+    TQButtonGroup *buttonGroup = new TQButtonGroup(this);
     m_agreementButtonGroup = buttonGroup;
     buttonGroup->hide();
     buttonGroup->setExclusive(true);
     
-    m_licencePageAgree = new QRadioButton ( i18n("I agree."), m_licenceVBox);
+    m_licencePageAgree = new TQRadioButton ( i18n("I agree."), m_licenceVBox);
     
-    m_licencePageDisagree = new QRadioButton ( i18n("I do not agree (plugin will not be installed)."), m_licenceVBox);
+    m_licencePageDisagree = new TQRadioButton ( i18n("I do not agree (plugin will not be installed)."), m_licenceVBox);
 
     buttonGroup->insert(m_licencePageAgree);
     buttonGroup->insert(m_licencePageDisagree);
@@ -422,15 +422,15 @@ void KNSPluginWizard::initLicencePage()
     addPage (m_licenceVBox, i18n("Plugin licence"));
 
 
-    connect(buttonGroup, SIGNAL(clicked(int)), this, SLOT(slotAgreementClicked(int)));
+    connect(buttonGroup, TQT_SIGNAL(clicked(int)), this, TQT_SLOT(slotAgreementClicked(int)));
 }
 
 void KNSPluginWizard::initInstallationProgressPage() {
 
-    m_installationProgressWidget = new QWidget(this);
-    QVBoxLayout *layout = new QVBoxLayout(m_installationProgressWidget);
-    layout->addWidget(new QLabel(i18n("Installation in progress."), m_installationProgressWidget));
-    layout->addItem(new QSpacerItem(40,20,QSizePolicy::Expanding,QSizePolicy::Expanding ));
+    m_installationProgressWidget = new TQWidget(this);
+    TQVBoxLayout *layout = new TQVBoxLayout(m_installationProgressWidget);
+    layout->addWidget(new TQLabel(i18n("Installation in progress."), m_installationProgressWidget));
+    layout->addItem(new TQSpacerItem(40,20,TQSizePolicy::Expanding,TQSizePolicy::Expanding ));
     m_installationProgressBar = new KProgress(m_installationProgressWidget);
     m_installationProgressBar->setTotalSteps(100);
     layout->addWidget(m_installationProgressBar);
@@ -441,12 +441,12 @@ void KNSPluginWizard::initInstallationProgressPage() {
 
 void KNSPluginWizard::initFinishPage()
 {
-    m_finishWidget = new QWidget(this);
-    QVBoxLayout *layout = new QVBoxLayout(m_finishWidget);
-    layout->addItem(new QSpacerItem(40,20,QSizePolicy::Expanding,QSizePolicy::Expanding ));
-    m_finishLabel = new QLabel(m_finishWidget);
+    m_finishWidget = new TQWidget(this);
+    TQVBoxLayout *layout = new TQVBoxLayout(m_finishWidget);
+    layout->addItem(new TQSpacerItem(40,20,TQSizePolicy::Expanding,TQSizePolicy::Expanding ));
+    m_finishLabel = new TQLabel(m_finishWidget);
     layout->addWidget(m_finishLabel);
-    layout->addItem(new QSpacerItem(40,20,QSizePolicy::Expanding,QSizePolicy::Expanding ));
+    layout->addItem(new TQSpacerItem(40,20,TQSizePolicy::Expanding,TQSizePolicy::Expanding ));
     
     addPage(m_finishWidget, i18n("Installation status"));
     
@@ -482,30 +482,30 @@ void KNSPluginWizard::initPagesButtonStates()
 
 
 void KNSPluginWizard::connectSignals() {
-    connect(&m_installEngine, SIGNAL(installProgress(int)), m_installationProgressBar, SLOT(setProgress(int)) );
-    connect(&m_installEngine, SIGNAL(installCompleted()), this, SLOT(slotInstallationCompleted()) );
-     connect(&m_installEngine, SIGNAL(installFailed()), this, SLOT(slotInstallationFailed()) );
+    connect(&m_installEngine, TQT_SIGNAL(installProgress(int)), m_installationProgressBar, TQT_SLOT(setProgress(int)) );
+    connect(&m_installEngine, TQT_SIGNAL(installCompleted()), this, TQT_SLOT(slotInstallationCompleted()) );
+     connect(&m_installEngine, TQT_SIGNAL(installFailed()), this, TQT_SLOT(slotInstallationFailed()) );
      
 
 }
 
-void KNSPluginWizard::showPage(QWidget *page)
+void KNSPluginWizard::showPage(TQWidget *page)
 {
 
     // if the licence page is shown set the label and the licence content
     if(page == m_licenceVBox && m_licencePageLabel->text().isEmpty()) {
         KNSPluginInfo info =  static_cast<PluginListItem *>(m_pluginListView->selectedItem())->pluginInfo();
         m_licencePageLabel->setText(i18n("To install ")+info.pluginName()+i18n(" you need to agree to the following"));
-        QString licence;
+        TQString licence;
         licence = info.licence();
-        QString tmpFile;
+        TQString tmpFile;
         if(info.licenceURL().isValid()) 
             // retrieve the licence if we have an url
             if(KIO::NetAccess::download(info.licenceURL(), tmpFile, NULL)) {
-                    QFile f(tmpFile);
+                    TQFile f(tmpFile);
                     if(f.open(IO_ReadOnly)) {
-                        QTextStream stream(&f);
-                        stream.setEncoding(QTextStream::UnicodeUTF8);
+                        TQTextStream stream(&f);
+                        stream.setEncoding(TQTextStream::UnicodeUTF8);
                         licence  = stream.read();
                         f.close();
                         KIO::NetAccess::removeTempFile(tmpFile);
@@ -540,7 +540,7 @@ void KNSPluginWizard::showPage(QWidget *page)
 int KNSPluginWizard::exec()
 {
     if(!m_installEngine.pluginList().count())
-        return QDialog::Rejected;
+        return TQDialog::Rejected;
 
     return KWizard::exec();
 }
@@ -584,10 +584,10 @@ KNSPluginInfo::KNSPluginInfo()
 }
 
 // KNSPlugin info constructor par an xml dom fragment
-KNSPluginInfo::KNSPluginInfo(QDomNode pluginNode)
+KNSPluginInfo::KNSPluginInfo(TQDomNode pluginNode)
 {
-    QDomElement e;
-    QDomNode node;
+    TQDomElement e;
+    TQDomNode node;
 
     // Read plugin informations
     node = pluginNode.firstChild();
@@ -645,12 +645,12 @@ bool KNSPluginInfo::isValid() const
 }
 
 // Accesors
-QString KNSPluginInfo::pluginName() const
+TQString KNSPluginInfo::pluginName() const
 {
     return m_pluginName;
 }
 
-QString KNSPluginInfo::licence() const
+TQString KNSPluginInfo::licence() const
 {
     return m_licence;
 }
@@ -665,7 +665,7 @@ KURL KNSPluginInfo::pluginURL() const
     return m_pluginURL;
 }
 
-const QStringList& KNSPluginInfo::pluginFileList() const
+const TQStringList& KNSPluginInfo::pluginFileList() const
 {
     return m_pluginFileList;
 }

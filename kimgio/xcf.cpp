@@ -20,10 +20,10 @@
  */
 
 #include <stdlib.h>
-#include <qimage.h>
-#include <qiodevice.h>
-#include <qvaluestack.h>
-#include <qvaluevector.h>
+#include <tqimage.h>
+#include <tqiodevice.h>
+#include <tqvaluestack.h>
+#include <tqvaluevector.h>
 
 #include <kdebug.h>
 #include "xcf.h"
@@ -32,14 +32,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
-KDE_EXPORT void kimgio_xcf_read(QImageIO *io)
+KDE_EXPORT void kimgio_xcf_read(TQImageIO *io)
 {
 	XCFImageFormat xcfif;
 	xcfif.readXCF(io);
 }
 
 
-KDE_EXPORT void kimgio_xcf_write(QImageIO *io)
+KDE_EXPORT void kimgio_xcf_write(TQImageIO *io)
 {
 	kdDebug(399) << "XCF: write support not implemented" << endl;
 	io->setStatus(-1);
@@ -119,10 +119,10 @@ int XCFImageFormat::add_lut( int a, int b ) {
 	return QMIN( a + b, 255 );
 }
 
-void XCFImageFormat::readXCF(QImageIO *io)
+void XCFImageFormat::readXCF(TQImageIO *io)
 {
 	XCFImage xcf_image;
-	QDataStream xcf_io(io->ioDevice());
+	TQDataStream xcf_io(io->ioDevice());
 
 	char tag[14];
 	xcf_io.readRawBytes(tag, sizeof(tag));
@@ -149,7 +149,7 @@ kdDebug() << tag << " " << xcf_image.width << " " << xcf_image.height << " " << 
 	// all the data of all layers before beginning to construct the
 	// merged image).
 
-	QValueStack<Q_INT32> layer_offsets;
+	TQValueStack<Q_INT32> layer_offsets;
 
 	while (true) {
 		Q_INT32 layer_offset;
@@ -201,18 +201,18 @@ kdDebug() << tag << " " << xcf_image.width << " " << xcf_image.height << " " << 
  * \param xcf_image XCF image data.
  * \return true if there were no I/O errors.
  */
-bool XCFImageFormat::loadImageProperties(QDataStream& xcf_io, XCFImage& xcf_image)
+bool XCFImageFormat::loadImageProperties(TQDataStream& xcf_io, XCFImage& xcf_image)
 {
 	while (true) {
 		PropType type;
-		QByteArray bytes;
+		TQByteArray bytes;
 
 		if (!loadProperty(xcf_io, type, bytes)) {
 			kdDebug(399) << "XCF: error loading global image properties" << endl;
 			return false;
 		}
 
-		QDataStream property(bytes, IO_ReadOnly);
+		TQDataStream property(bytes, IO_ReadOnly);
 
 		switch (type) {
 			case PROP_END:
@@ -288,7 +288,7 @@ bool XCFImageFormat::loadImageProperties(QDataStream& xcf_io, XCFImage& xcf_imag
  * \param type returns with the property type.
  * \param bytes returns with the property data.
  * \return true if there were no IO errors.  */
-bool XCFImageFormat::loadProperty(QDataStream& xcf_io, PropType& type, QByteArray& bytes)
+bool XCFImageFormat::loadProperty(TQDataStream& xcf_io, PropType& type, TQByteArray& bytes)
 {
 	Q_UINT32 foo;
 	xcf_io >> foo;
@@ -375,7 +375,7 @@ bool XCFImageFormat::loadProperty(QDataStream& xcf_io, PropType& type, QByteArra
  * (if the image is indexed).
  * \return true if there were no I/O errors.
  */
-bool XCFImageFormat::loadLayer(QDataStream& xcf_io, XCFImage& xcf_image)
+bool XCFImageFormat::loadLayer(TQDataStream& xcf_io, XCFImage& xcf_image)
 {
 	Layer& layer(xcf_image.layer);
 	delete[] layer.name;
@@ -402,7 +402,7 @@ bool XCFImageFormat::loadLayer(QDataStream& xcf_io, XCFImage& xcf_image)
 	if (layer.visible == 0)
 		return true;
 
-	// If there are any more layers, merge them into the final QImage.
+	// If there are any more layers, merge them into the final TQImage.
 
 	xcf_io >> layer.hierarchy_offset >> layer.mask_offset;
 	if (xcf_io.device()->status() != IO_Ok) {
@@ -434,8 +434,8 @@ bool XCFImageFormat::loadLayer(QDataStream& xcf_io, XCFImage& xcf_image)
 	}
 
 	// Now we should have enough information to initialize the final
-	// QImage. The first visible layer determines the attributes
-	// of the QImage.
+	// TQImage. The first visible layer determines the attributes
+	// of the TQImage.
 
 	if (!xcf_image.initialized) {
 		if( !initializeImage(xcf_image))
@@ -456,18 +456,18 @@ bool XCFImageFormat::loadLayer(QDataStream& xcf_io, XCFImage& xcf_image)
  * \param layer layer to collect the properties.
  * \return true if there were no I/O errors.
  */
-bool XCFImageFormat::loadLayerProperties(QDataStream& xcf_io, Layer& layer)
+bool XCFImageFormat::loadLayerProperties(TQDataStream& xcf_io, Layer& layer)
 {
 	while (true) {
 		PropType type;
-		QByteArray bytes;
+		TQByteArray bytes;
 
 		if (!loadProperty(xcf_io, type, bytes)) {
 			kdDebug(399) << "XCF: error loading layer properties" << endl;
 			return false;
 		}
 
-		QDataStream property(bytes, IO_ReadOnly);
+		TQDataStream property(bytes, IO_ReadOnly);
 
 		switch (type) {
 			case PROP_END:
@@ -527,7 +527,7 @@ bool XCFImageFormat::loadLayerProperties(QDataStream& xcf_io, Layer& layer)
 
 /*!
  * Compute the number of tiles in the current layer and allocate
- * QImage structures for each of them.
+ * TQImage structures for each of them.
  * \param xcf_image contains the current layer.
  */
 bool XCFImageFormat::composeTiles(XCFImage& xcf_image)
@@ -564,45 +564,45 @@ bool XCFImageFormat::composeTiles(XCFImage& xcf_image)
 			uint tile_height = (j + 1) * TILE_HEIGHT <= layer.height
 					? TILE_HEIGHT : layer.height - j * TILE_HEIGHT;
 
-			// Try to create the most appropriate QImage (each GIMP layer
+			// Try to create the most appropriate TQImage (each GIMP layer
 			// type is treated slightly differently)
 
 			switch (layer.type) {
 				case RGB_GIMAGE:
-					layer.image_tiles[j][i] = QImage(tile_width, tile_height, 32, 0);
+					layer.image_tiles[j][i] = TQImage(tile_width, tile_height, 32, 0);
 					if( layer.image_tiles[j][i].isNull())
 						return false;
 					layer.image_tiles[j][i].setAlphaBuffer(false);
 					break;
 
 				case RGBA_GIMAGE:
-					layer.image_tiles[j][i] = QImage(tile_width, tile_height, 32, 0);
+					layer.image_tiles[j][i] = TQImage(tile_width, tile_height, 32, 0);
 					if( layer.image_tiles[j][i].isNull())
 						return false;
 					layer.image_tiles[j][i].setAlphaBuffer(true);
 					break;
 
 				case GRAY_GIMAGE:
-					layer.image_tiles[j][i] = QImage(tile_width, tile_height, 8, 256);
+					layer.image_tiles[j][i] = TQImage(tile_width, tile_height, 8, 256);
 					if( layer.image_tiles[j][i].isNull())
 						return false;
 					setGrayPalette(layer.image_tiles[j][i]);
 					break;
 
 				case GRAYA_GIMAGE:
-					layer.image_tiles[j][i] = QImage(tile_width, tile_height, 8, 256);
+					layer.image_tiles[j][i] = TQImage(tile_width, tile_height, 8, 256);
 					if( layer.image_tiles[j][i].isNull())
 						return false;
 					setGrayPalette(layer.image_tiles[j][i]);
 
-					layer.alpha_tiles[j][i] = QImage( tile_width, tile_height, 8, 256);
+					layer.alpha_tiles[j][i] = TQImage( tile_width, tile_height, 8, 256);
 					if( layer.alpha_tiles[j][i].isNull())
 						return false;
 					setGrayPalette(layer.alpha_tiles[j][i]);
 					break;
 
 				case INDEXED_GIMAGE:
-					layer.image_tiles[j][i] = QImage(tile_width, tile_height, 8,
+					layer.image_tiles[j][i] = TQImage(tile_width, tile_height, 8,
 							xcf_image.num_colors);
 					if( layer.image_tiles[j][i].isNull())
 						return false;
@@ -610,20 +610,20 @@ bool XCFImageFormat::composeTiles(XCFImage& xcf_image)
 					break;
 
 				case INDEXEDA_GIMAGE:
-					layer.image_tiles[j][i] = QImage(tile_width, tile_height,8,
+					layer.image_tiles[j][i] = TQImage(tile_width, tile_height,8,
 							xcf_image.num_colors);
 					if( layer.image_tiles[j][i].isNull())
 						return false;
 					setPalette(xcf_image, layer.image_tiles[j][i]);
 
-					layer.alpha_tiles[j][i] = QImage(tile_width, tile_height, 8, 256);
+					layer.alpha_tiles[j][i] = TQImage(tile_width, tile_height, 8, 256);
 					if( layer.alpha_tiles[j][i].isNull())
 						return false;
 					setGrayPalette(layer.alpha_tiles[j][i]);
 			}
 
 			if (layer.mask_offset != 0) {
-				layer.mask_tiles[j][i] = QImage(tile_width, tile_height, 8, 256);
+				layer.mask_tiles[j][i] = TQImage(tile_width, tile_height, 8, 256);
 				if( layer.mask_tiles[j][i].isNull())
 					return false;
 				setGrayPalette(layer.mask_tiles[j][i]);
@@ -635,12 +635,12 @@ bool XCFImageFormat::composeTiles(XCFImage& xcf_image)
 
 
 /*!
- * Apply a grayscale palette to the QImage. Note that Qt does not distinguish
+ * Apply a grayscale palette to the TQImage. Note that Qt does not distinguish
  * between grayscale and indexed images. A grayscale image is just
  * an indexed image with a 256-color, grayscale palette.
  * \param image image to set to a grayscale palette.
  */
-void XCFImageFormat::setGrayPalette(QImage& image)
+void XCFImageFormat::setGrayPalette(TQImage& image)
 {
 	for (int i = 0; i < 256; i++)
 		image.setColor(i, qRgb(i, i, i));
@@ -648,11 +648,11 @@ void XCFImageFormat::setGrayPalette(QImage& image)
 
 
 /*!
- * Copy the indexed palette from the XCF image into the QImage.
+ * Copy the indexed palette from the XCF image into the TQImage.
  * \param xcf_image XCF image containing the palette read from the data stream.
  * \param image image to apply the palette to.
  */
-void XCFImageFormat::setPalette(XCFImage& xcf_image, QImage& image)
+void XCFImageFormat::setPalette(XCFImage& xcf_image, TQImage& image)
 {
 	for (int i = 0; i < xcf_image.num_colors; i++)
 		image.setColor(i, xcf_image.palette[i]);
@@ -660,7 +660,7 @@ void XCFImageFormat::setPalette(XCFImage& xcf_image, QImage& image)
 
 
 /*!
- * Copy the bytes from the tile buffer into the image tile QImage, taking into
+ * Copy the bytes from the tile buffer into the image tile TQImage, taking into
  * account all the myriad different modes.
  * \param layer layer containing the tile buffer and the image tile matrix.
  * \param i column index of current tile.
@@ -730,7 +730,7 @@ void XCFImageFormat::assignImageBytes(Layer& layer, uint i, uint j)
  * \param layer the layer to collect the image.
  * \return true if there were no I/O errors.
  */
-bool XCFImageFormat::loadHierarchy(QDataStream& xcf_io, Layer& layer)
+bool XCFImageFormat::loadHierarchy(TQDataStream& xcf_io, Layer& layer)
 {
 	Q_INT32 width;
 	Q_INT32 height;
@@ -758,7 +758,7 @@ bool XCFImageFormat::loadHierarchy(QDataStream& xcf_io, Layer& layer)
 		}
 	} while (junk != 0);
 
-	QIODevice::Offset saved_pos = xcf_io.device()->at();
+	TQIODevice::Offset saved_pos = xcf_io.device()->at();
 
 	xcf_io.device()->at(offset);
 	if (!loadLevel(xcf_io, layer, bpp))
@@ -777,7 +777,7 @@ bool XCFImageFormat::loadHierarchy(QDataStream& xcf_io, Layer& layer)
  * \return true if there were no I/O errors.
  * \sa loadTileRLE().
  */
-bool XCFImageFormat::loadLevel(QDataStream& xcf_io, Layer& layer, Q_INT32 bpp)
+bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, Q_INT32 bpp)
 {
 	Q_INT32 width;
 	Q_INT32 height;
@@ -801,7 +801,7 @@ bool XCFImageFormat::loadLevel(QDataStream& xcf_io, Layer& layer, Q_INT32 bpp)
 				return false;
 			}
 
-			QIODevice::Offset saved_pos = xcf_io.device()->at();
+			TQIODevice::Offset saved_pos = xcf_io.device()->at();
 			Q_UINT32 offset2;
 			xcf_io >> offset2;
 
@@ -822,7 +822,7 @@ bool XCFImageFormat::loadLevel(QDataStream& xcf_io, Layer& layer, Q_INT32 bpp)
 				return false;
 
 			// The bytes in the layer tile are juggled differently depending on
-			// the target QImage. The caller has set layer.assignBytes to the
+			// the target TQImage. The caller has set layer.assignBytes to the
 			// appropriate routine.
 
 			layer.assignBytes(layer, i, j);
@@ -847,7 +847,7 @@ bool XCFImageFormat::loadLevel(QDataStream& xcf_io, Layer& layer, Q_INT32 bpp)
  * \param layer the layer to collect the mask image.
  * \return true if there were no I/O errors.
  */
-bool XCFImageFormat::loadMask(QDataStream& xcf_io, Layer& layer)
+bool XCFImageFormat::loadMask(TQDataStream& xcf_io, Layer& layer)
 {
 	Q_INT32 width;
 	Q_INT32 height;
@@ -906,7 +906,7 @@ bool XCFImageFormat::loadMask(QDataStream& xcf_io, Layer& layer)
  * \return true if there were no I/O errors and no obvious corruption of
  * the RLE data.
  */
-bool XCFImageFormat::loadTileRLE(QDataStream& xcf_io, uchar* tile, int image_size,
+bool XCFImageFormat::loadTileRLE(TQDataStream& xcf_io, uchar* tile, int image_size,
 		int data_length, Q_INT32 bpp)
 {
 	uchar* data;
@@ -1012,18 +1012,18 @@ bogus_rle:
  * \param layer layer containing the mask channel to collect the properties.
  * \return true if there were no I/O errors.
  */
-bool XCFImageFormat::loadChannelProperties(QDataStream& xcf_io, Layer& layer)
+bool XCFImageFormat::loadChannelProperties(TQDataStream& xcf_io, Layer& layer)
 {
 	while (true) {
 		PropType type;
-		QByteArray bytes;
+		TQByteArray bytes;
 
 		if (!loadProperty(xcf_io, type, bytes)) {
 			kdDebug(399) << "XCF: error loading channel properties" << endl;
 			return false;
 		}
 
-		QDataStream property(bytes, IO_ReadOnly);
+		TQDataStream property(bytes, IO_ReadOnly);
 
 		switch (type) {
 			case PROP_END:
@@ -1059,7 +1059,7 @@ bool XCFImageFormat::loadChannelProperties(QDataStream& xcf_io, Layer& layer)
 
 
 /*!
- * Copy the bytes from the tile buffer into the mask tile QImage.
+ * Copy the bytes from the tile buffer into the mask tile TQImage.
  * \param layer layer containing the tile buffer and the mask tile matrix.
  * \param i column index of current tile.
  * \param j row index of current tile.
@@ -1078,10 +1078,10 @@ void XCFImageFormat::assignMaskBytes(Layer& layer, uint i, uint j)
 
 
 /*!
- * Construct the QImage which will eventually be returned to the QImage
+ * Construct the TQImage which will eventually be returned to the QImage
  * loader.
  *
- * There are a couple of situations which require that the QImage is not
+ * There are a couple of situations which require that the TQImage is not
  * exactly the same as The GIMP's representation. The full table is:
  * \verbatim
  *  Grayscale  opaque      :  8 bpp indexed
@@ -1095,7 +1095,7 @@ void XCFImageFormat::assignMaskBytes(Layer& layer, uint i, uint j)
  * \endverbatim
  * Whether the image is translucent or not is determined by the bottom layer's
  * alpha channel. However, even if the bottom layer lacks an alpha channel,
- * it can still have an opacity < 1. In this case, the QImage is promoted
+ * it can still have an opacity < 1. In this case, the TQImage is promoted
  * to 32-bit. (Note this is different from the output from the GIMP image
  * exporter, which seems to ignore this attribute.)
  *
@@ -1109,7 +1109,7 @@ bool XCFImageFormat::initializeImage(XCFImage& xcf_image)
 {
 	// (Aliases to make the code look a little better.)
 	Layer& layer(xcf_image.layer);
-	QImage& image(xcf_image.image);
+	TQImage& image(xcf_image.image);
 
 	switch (layer.type) {
 		case RGB_GIMAGE:
@@ -1165,7 +1165,7 @@ bool XCFImageFormat::initializeImage(XCFImage& xcf_image)
 			if (xcf_image.num_colors <= 2) {
 				image.create(xcf_image.width, xcf_image.height,
 						1, xcf_image.num_colors,
-						QImage::LittleEndian);
+						TQImage::LittleEndian);
 				if( image.isNull())
 					return false;
 				image.fill(0);
@@ -1173,7 +1173,7 @@ bool XCFImageFormat::initializeImage(XCFImage& xcf_image)
 			} else if (xcf_image.num_colors <= 256) {
 				image.create(xcf_image.width, xcf_image.height,
 				8, xcf_image.num_colors,
-				QImage::LittleEndian);
+				TQImage::LittleEndian);
 				if( image.isNull())
 					return false;
 				image.fill(0);
@@ -1191,7 +1191,7 @@ bool XCFImageFormat::initializeImage(XCFImage& xcf_image)
 
 				image.create(xcf_image.width, xcf_image.height,
 						1, xcf_image.num_colors,
-						QImage::LittleEndian);
+						TQImage::LittleEndian);
 				if( image.isNull())
 					return false;
 				image.fill(0);
@@ -1239,7 +1239,7 @@ bool XCFImageFormat::initializeImage(XCFImage& xcf_image)
 void XCFImageFormat::copyLayerToImage(XCFImage& xcf_image)
 {
 	Layer& layer(xcf_image.layer);
-	QImage& image(xcf_image.image);
+	TQImage& image(xcf_image.image);
 	PixelCopyOperation copy = 0;
 
 	switch (layer.type) {
@@ -1318,7 +1318,7 @@ void XCFImageFormat::copyLayerToImage(XCFImage& xcf_image)
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::copyRGBToRGB(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	QRgb src = layer.image_tiles[j][i].pixel(k, l);
 	uchar src_a = layer.opacity;
@@ -1348,7 +1348,7 @@ void XCFImageFormat::copyRGBToRGB(Layer& layer, uint i, uint j, int k, int l,
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::copyGrayToGray(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	int src = layer.image_tiles[j][i].pixelIndex(k, l);
 	image.setPixel(m, n, src);
@@ -1369,7 +1369,7 @@ void XCFImageFormat::copyGrayToGray(Layer& layer, uint i, uint j, int k, int l,
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::copyGrayToRGB(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	QRgb src = layer.image_tiles[j][i].pixel(k, l);
 	uchar src_a = layer.opacity;
@@ -1391,7 +1391,7 @@ void XCFImageFormat::copyGrayToRGB(Layer& layer, uint i, uint j, int k, int l,
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::copyGrayAToRGB(Layer& layer, uint i, uint j, int k, int l,
-				      QImage& image, int m, int n)
+				      TQImage& image, int m, int n)
 {
 	QRgb src = layer.image_tiles[j][i].pixel(k, l);
 	uchar src_a = layer.alpha_tiles[j][i].pixelIndex(k, l);
@@ -1419,7 +1419,7 @@ void XCFImageFormat::copyGrayAToRGB(Layer& layer, uint i, uint j, int k, int l,
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::copyIndexedToIndexed(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	int src = layer.image_tiles[j][i].pixelIndex(k, l);
 	image.setPixel(m, n, src);
@@ -1438,7 +1438,7 @@ void XCFImageFormat::copyIndexedToIndexed(Layer& layer, uint i, uint j, int k, i
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::copyIndexedAToIndexed(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	uchar src = layer.image_tiles[j][i].pixelIndex(k, l);
 	uchar src_a = layer.alpha_tiles[j][i].pixelIndex(k, l);
@@ -1472,7 +1472,7 @@ image.setPixel(m, n, src);
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::copyIndexedAToRGB(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	QRgb src = layer.image_tiles[j][i].pixel(k, l);
 	uchar src_a = layer.alpha_tiles[j][i].pixelIndex(k, l);
@@ -1500,7 +1500,7 @@ void XCFImageFormat::copyIndexedAToRGB(Layer& layer, uint i, uint j, int k, int 
 void XCFImageFormat::mergeLayerIntoImage(XCFImage& xcf_image)
 {
 	Layer& layer(xcf_image.layer);
-	QImage& image(xcf_image.image);
+	TQImage& image(xcf_image.image);
 
 	PixelMergeOperation merge = 0;
 
@@ -1581,7 +1581,7 @@ void XCFImageFormat::mergeLayerIntoImage(XCFImage& xcf_image)
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::mergeRGBToRGB(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	QRgb src = layer.image_tiles[j][i].pixel(k, l);
 	QRgb dst = image.pixel(m, n);
@@ -1772,7 +1772,7 @@ void XCFImageFormat::mergeRGBToRGB(Layer& layer, uint i, uint j, int k, int l,
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::mergeGrayToGray(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	int src = layer.image_tiles[j][i].pixelIndex(k, l);
 	image.setPixel(m, n, src);
@@ -1791,7 +1791,7 @@ void XCFImageFormat::mergeGrayToGray(Layer& layer, uint i, uint j, int k, int l,
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::mergeGrayAToGray(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	int src = qGray(layer.image_tiles[j][i].pixel(k, l));
 	int dst = image.pixelIndex(m, n);
@@ -1870,7 +1870,7 @@ void XCFImageFormat::mergeGrayAToGray(Layer& layer, uint i, uint j, int k, int l
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::mergeGrayToRGB(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	QRgb src = layer.image_tiles[j][i].pixel(k, l);
 	uchar src_a = layer.opacity;
@@ -1892,7 +1892,7 @@ void XCFImageFormat::mergeGrayToRGB(Layer& layer, uint i, uint j, int k, int l,
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::mergeGrayAToRGB(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	int src = qGray(layer.image_tiles[j][i].pixel(k, l));
 	int dst = qGray(image.pixel(m, n));
@@ -1981,7 +1981,7 @@ void XCFImageFormat::mergeGrayAToRGB(Layer& layer, uint i, uint j, int k, int l,
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::mergeIndexedToIndexed(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	int src = layer.image_tiles[j][i].pixelIndex(k, l);
 	image.setPixel(m, n, src);
@@ -2000,7 +2000,7 @@ void XCFImageFormat::mergeIndexedToIndexed(Layer& layer, uint i, uint j, int k, 
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::mergeIndexedAToIndexed(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	uchar src = layer.image_tiles[j][i].pixelIndex(k, l);
 	uchar src_a = layer.alpha_tiles[j][i].pixelIndex(k, l);
@@ -2032,7 +2032,7 @@ void XCFImageFormat::mergeIndexedAToIndexed(Layer& layer, uint i, uint j, int k,
  * \param n y pixel of destination image.
  */
 void XCFImageFormat::mergeIndexedAToRGB(Layer& layer, uint i, uint j, int k, int l,
-		QImage& image, int m, int n)
+		TQImage& image, int m, int n)
 {
 	QRgb src = layer.image_tiles[j][i].pixel(k, l);
 	uchar src_a = layer.alpha_tiles[j][i].pixelIndex(k, l);
@@ -2060,7 +2060,7 @@ void XCFImageFormat::mergeIndexedAToRGB(Layer& layer, uint i, uint j, int k, int
  * \param x the global x position of the tile.
  * \param y the global y position of the tile.
  */
-void XCFImageFormat::dissolveRGBPixels ( QImage& image, int x, int y )
+void XCFImageFormat::dissolveRGBPixels ( TQImage& image, int x, int y )
 {
 	// The apparently spurious rand() calls are to wind the random
 	// numbers up to the same point for each tile.
@@ -2092,7 +2092,7 @@ void XCFImageFormat::dissolveRGBPixels ( QImage& image, int x, int y )
  * \param x the global x position of the tile.
  * \param y the global y position of the tile.
  */
-void XCFImageFormat::dissolveAlphaPixels ( QImage& image, int x, int y )
+void XCFImageFormat::dissolveAlphaPixels ( TQImage& image, int x, int y )
 {
 	// The apparently spurious rand() calls are to wind the random
 	// numbers up to the same point for each tile.

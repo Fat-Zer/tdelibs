@@ -19,6 +19,6 @@
 #ifndef __MISC_H
 #define __MISC_H
 
-QColor alphaBlendColors(const QColor &backgroundColor, const QColor &foregroundColor, const int alpha);
+TQColor alphaBlendColors(const TQColor &backgroundColor, const TQColor &foregroundColor, const int alpha);
 
 #endif // __MISC_H

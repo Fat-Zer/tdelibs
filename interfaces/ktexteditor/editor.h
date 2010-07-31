@@ -46,7 +46,7 @@ class KTEXTEDITOR_EXPORT Editor : public KParts::ReadWritePart
     /**
     * Create a new editor widget.
     */
-    Editor ( QObject *parent = 0, const char *name = 0  );
+    Editor ( TQObject *parent = 0, const char *name = 0  );
     virtual ~Editor ();
     
     unsigned int editorNumber () const;
@@ -57,7 +57,7 @@ class KTEXTEDITOR_EXPORT Editor : public KParts::ReadWritePart
     unsigned int myEditorNumber;
 };     
 
-KTEXTEDITOR_EXPORT Editor *createEditor ( const char* libname, QWidget *parentWidget = 0, const char *widgetName = 0, QObject *parent = 0, const char *name = 0 );
+KTEXTEDITOR_EXPORT Editor *createEditor ( const char* libname, TQWidget *parentWidget = 0, const char *widgetName = 0, TQObject *parent = 0, const char *name = 0 );
 
 }
 

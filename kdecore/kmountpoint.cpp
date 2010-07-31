@@ -23,7 +23,7 @@
 #include <config.h>
 #include <stdlib.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include "kstandarddirs.h"
 
@@ -139,17 +139,17 @@ KMountPoint::List KMountPoint::possibleMountPoints(int infoNeeded)
    while (GETMNTENT(fstab, fe))
    {
       KMountPoint *mp = new KMountPoint();
-      mp->m_mountedFrom = QFile::decodeName(FSNAME(fe));
+      mp->m_mountedFrom = TQFile::decodeName(FSNAME(fe));
          
-      mp->m_mountPoint = QFile::decodeName(MOUNTPOINT(fe));
-      mp->m_mountType = QFile::decodeName(MOUNTTYPE(fe));
+      mp->m_mountPoint = TQFile::decodeName(MOUNTPOINT(fe));
+      mp->m_mountType = TQFile::decodeName(MOUNTTYPE(fe));
 
       //Devices using supermount have their device names in the mount options
       //instead of the device field. That's why we need to read the mount options
       if (infoNeeded & NeedMountOptions || (mp->m_mountType == "supermount"))
       {
-         QString options = QFile::decodeName(MOUNTOPTIONS(fe));
-         mp->m_mountOptions = QStringList::split(',', options);
+         TQString options = TQFile::decodeName(MOUNTOPTIONS(fe));
+         mp->m_mountOptions = TQStringList::split(',', options);
       }
 
       if(mp->m_mountType == "supermount")
@@ -165,12 +165,12 @@ KMountPoint::List KMountPoint::possibleMountPoints(int infoNeeded)
    }
    ENDMNTENT(fstab);
 #else
-   QFile f(FSTAB);
+   TQFile f(FSTAB);
    if ( !f.open(IO_ReadOnly) )
       return result;
      
-   QTextStream t (&f);
-   QString s;
+   TQTextStream t (&f);
+   TQString s;
 
    while (! t.eof()) 
    {
@@ -179,7 +179,7 @@ KMountPoint::List KMountPoint::possibleMountPoints(int infoNeeded)
           continue;
 
       // not empty or commented out by '#'
-      QStringList item = QStringList::split(' ', s);
+      TQStringList item = TQStringList::split(' ', s);
         
 #ifdef _OS_SOLARIS_
       if (item.count() < 5)
@@ -199,11 +199,11 @@ KMountPoint::List KMountPoint::possibleMountPoints(int infoNeeded)
 #endif
       mp->m_mountPoint = item[i++];
       mp->m_mountType = item[i++];
-      QString options = item[i++];
+      TQString options = item[i++];
 
       if (infoNeeded & NeedMountOptions)
       {
-         mp->m_mountOptions = QStringList::split(',', options);
+         mp->m_mountOptions = TQStringList::split(',', options);
       }
 
       if (infoNeeded & NeedRealDeviceName)
@@ -237,20 +237,20 @@ KMountPoint::List KMountPoint::currentMountPoints(int infoNeeded)
     for (int i=0;i<num_fs;i++) 
     {
       KMountPoint *mp = new KMountPoint();
-      mp->m_mountedFrom = QFile::decodeName(mounted[i].f_mntfromname);
-      mp->m_mountPoint = QFile::decodeName(mounted[i].f_mntonname);
+      mp->m_mountedFrom = TQFile::decodeName(mounted[i].f_mntfromname);
+      mp->m_mountPoint = TQFile::decodeName(mounted[i].f_mntonname);
 
 #ifdef __osf__
-      mp->m_mountType = QFile::decodeName(mnt_names[mounted[i].f_type]);
+      mp->m_mountType = TQFile::decodeName(mnt_names[mounted[i].f_type]);
 #else
-      mp->m_mountType = QFile::decodeName(mounted[i].f_fstypename);
+      mp->m_mountType = TQFile::decodeName(mounted[i].f_fstypename);
 #endif      
 
       if (infoNeeded & NeedMountOptions)
       {
          struct fstab *ft = getfsfile(mounted[i].f_mntonname);
-         QString options = QFile::decodeName(ft->fs_mntops);
-         mp->m_mountOptions = QStringList::split(',', options);
+         TQString options = TQFile::decodeName(ft->fs_mntops);
+         mp->m_mountOptions = TQStringList::split(',', options);
       }
 
       if (infoNeeded & NeedRealDeviceName)
@@ -305,9 +305,9 @@ KMountPoint::List KMountPoint::currentMountPoints(int infoNeeded)
             struct vfs_ent* ent = getvfsbytype(vm->vmt_gfstype);
 
             KMountPoint *mp = new KMountPoint();
-            mp->m_mountedFrom = QFile::decodeName(mountedfrom);
-            mp->m_mountPoint = QFile::decodeName(mountedto);
-            mp->m_mountType = QFile::decodeName(ent->vfsent_name);
+            mp->m_mountedFrom = TQFile::decodeName(mountedfrom);
+            mp->m_mountPoint = TQFile::decodeName(mountedto);
+            mp->m_mountType = TQFile::decodeName(ent->vfsent_name);
 
             free(mountedfrom);
             free(mountedto);
@@ -344,17 +344,17 @@ KMountPoint::List KMountPoint::currentMountPoints(int infoNeeded)
    while (GETMNTENT(mnttab, fe))
    {
       KMountPoint *mp = new KMountPoint();
-      mp->m_mountedFrom = QFile::decodeName(FSNAME(fe));
+      mp->m_mountedFrom = TQFile::decodeName(FSNAME(fe));
          
-      mp->m_mountPoint = QFile::decodeName(MOUNTPOINT(fe));
-      mp->m_mountType = QFile::decodeName(MOUNTTYPE(fe));
+      mp->m_mountPoint = TQFile::decodeName(MOUNTPOINT(fe));
+      mp->m_mountType = TQFile::decodeName(MOUNTTYPE(fe));
       
       //Devices using supermount have their device names in the mount options
       //instead of the device field. That's why we need to read the mount options 
       if (infoNeeded & NeedMountOptions || (mp->m_mountType == "supermount"))
       {
-         QString options = QFile::decodeName(MOUNTOPTIONS(fe));
-         mp->m_mountOptions = QStringList::split(',', options);
+         TQString options = TQFile::decodeName(MOUNTOPTIONS(fe));
+         mp->m_mountOptions = TQStringList::split(',', options);
       }
 
       if (mp->m_mountType == "supermount")
@@ -373,13 +373,13 @@ KMountPoint::List KMountPoint::currentMountPoints(int infoNeeded)
    return result;
 }
 
-QString KMountPoint::devNameFromOptions(const QStringList &options)
+TQString KMountPoint::devNameFromOptions(const TQStringList &options)
 {
    // Search options to find the device name
-   for ( QStringList::ConstIterator it = options.begin(); it != options.end(); ++it)
+   for ( TQStringList::ConstIterator it = options.begin(); it != options.end(); ++it)
    {
       if( (*it).startsWith("dev="))
-         return QString(*it).remove("dev=");
+         return TQString(*it).remove("dev=");
    } 
-   return QString("none");
+   return TQString("none");
 }

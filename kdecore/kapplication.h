@@ -35,8 +35,8 @@ typedef unsigned long Atom;
 typedef void Display;
 #endif
 
-#include <qapplication.h>
-#include <qpixmap.h>
+#include <tqapplication.h>
+#include <tqpixmap.h>
 #include <kinstance.h>
 
 struct _IceConn;
@@ -59,7 +59,7 @@ class KApplicationPrivate;
 *
 * This class provides the following services to all KDE applications.
 *
-* @li It controls the event queue (see QApplication ).
+* @li It controls the event queue (see TQApplication ).
 * @li It provides the application with KDE resources such as
 * accelerators, common menu entries, a KConfig object. session
 * management events, help invocation etc.
@@ -91,7 +91,7 @@ class KApplicationPrivate;
 * @short Controls and provides information to all KDE applications.
 * @author Matthias Kalle Dalheimer <kalle@kde.org>
 */
-class KDECORE_EXPORT KApplication : public QApplication, public KInstance
+class KDECORE_EXPORT KApplication : public TQApplication, public KInstance
 {
 
   Q_OBJECT
@@ -173,7 +173,7 @@ public:
    * @param GUIenabled Set to false to disable all GUI stuff. This implies
    * no styles either.
    */
-  KApplication(Display *display, int& argc, char** argv, const QCString& rAppName,
+  KApplication(Display *display, int& argc, char** argv, const TQCString& rAppName,
                bool allowStyles=true, bool GUIenabled=true);
 #endif
 
@@ -202,7 +202,7 @@ public:
   // REMOVE FOR KDE 4.0 - using it only gives crashing applications because
   // KCmdLineArgs::init isn't called
  KApplication(int& argc, char** argv,
-              const QCString& rAppName, bool allowStyles=true, bool GUIenabled=true) KDE_DEPRECATED;
+              const TQCString& rAppName, bool allowStyles=true, bool GUIenabled=true) KDE_DEPRECATED;
 
   /**
     * Add Qt and KDE command line options to KCmdLineArgs.
@@ -214,7 +214,7 @@ public:
   /**
    * Returns the current application object.
    *
-   * This is similar to the global QApplication pointer qApp. It
+   * This is similar to the global TQApplication pointer qApp. It
    * allows access to the single global KApplication object, since
    * more than one cannot be created in the same application. It
    * saves you the trouble of having to pass the pointer explicitly
@@ -240,7 +240,7 @@ public:
    * sessionConfig() contains data saved by a session closedown.
    * @see sessionConfig()
    */
-  bool isRestored() const { return QApplication::isSessionRestored(); }
+  bool isRestored() const { return TQApplication::isSessionRestored(); }
 
   /**
    * Disables session management for this application.
@@ -399,28 +399,28 @@ public:
   static void disableAutoDcopRegistration();
 
   /**
-   * Returns a QPixmap with the application icon.
+   * Returns a TQPixmap with the application icon.
    * @return the application icon
    */
-  QPixmap icon() const;
+  TQPixmap icon() const;
 
   /**
    * Returns the name of the application icon.
    * @return the icon's name
    */
-  QString iconName() const;
+  TQString iconName() const;
 
   /**
-   * Returns the mini-icon for the application as a QPixmap.
+   * Returns the mini-icon for the application as a TQPixmap.
    * @return the application's mini icon
    */
-  QPixmap miniIcon() const;
+  TQPixmap miniIcon() const;
 
   /**
    * Returns the name of the mini-icon for the application.
    * @return the mini icon's name
    */
-  QString miniIconName() const;
+  TQString miniIconName() const;
 
   /**
    *  Sets the top widget of the application.
@@ -432,7 +432,7 @@ public:
    *
    *  @see icon(), caption()
    **/
-  void setTopWidget( QWidget *topWidget );
+  void setTopWidget( TQWidget *topWidget );
 
   /**
    * Invokes the KHelpCenter HTML help viewer from docbook sources.
@@ -446,13 +446,13 @@ public:
    * @param startup_id for app startup notification, "0" for none,
    *           "" ( empty string ) is the default
    */
-  void invokeHelp( const QString& anchor,
-                   const QString& appname,
-                   const QCString& startup_id ) const;
+  void invokeHelp( const TQString& anchor,
+                   const TQString& appname,
+                   const TQCString& startup_id ) const;
 
   // KDE4 merge with above with startup_id = ""
-  void invokeHelp( const QString& anchor = QString::null,
-                   const QString& appname = QString::null ) const;
+  void invokeHelp( const TQString& anchor = TQString::null,
+                   const TQString& appname = TQString::null ) const;
 
   /**
    * @deprecated
@@ -468,19 +468,19 @@ public:
    *                   value will be appended to the filename,
    *                   prefixed with a "#" (hash) character.
    */
-  void invokeHTMLHelp( const QString& aFilename, const QString& aTopic = QString::null ) const KDE_DEPRECATED;
+  void invokeHTMLHelp( const TQString& aFilename, const TQString& aTopic = TQString::null ) const KDE_DEPRECATED;
 
   /**
    * Convenience method; invokes the standard email application.
    *
    * @param address The destination address
-   * @param subject Subject string. Can be QString::null.
+   * @param subject Subject string. Can be TQString::null.
    * @param startup_id for app startup notification, "0" for none,
    *           "" ( empty string ) is the default
    */
-  void invokeMailer( const QString &address, const QString &subject, const QCString& startup_id );
+  void invokeMailer( const TQString &address, const TQString &subject, const TQCString& startup_id );
   // KDE4 merge with above with startup_id = ""
-  void invokeMailer( const QString &address, const QString &subject );
+  void invokeMailer( const TQString &address, const TQString &subject );
 
   /**
    * Invokes the standard email application.
@@ -491,9 +491,9 @@ public:
    * @param allowAttachments whether attachments specified in mailtoURL should be honoured.
                The default is false; do not honour requests for attachments.
    */
-  void invokeMailer( const KURL &mailtoURL, const QCString& startup_id, bool allowAttachments );
+  void invokeMailer( const KURL &mailtoURL, const TQCString& startup_id, bool allowAttachments );
   // KDE4 merge with above with allowAttachments = false
-  void invokeMailer( const KURL &mailtoURL, const QCString& startup_id );
+  void invokeMailer( const KURL &mailtoURL, const TQCString& startup_id );
   // KDE4 merge with above with startup_id = ""
   void invokeMailer( const KURL &mailtoURL );
 
@@ -512,14 +512,14 @@ public:
    * @param startup_id for app startup notification, "0" for none,
    *           "" ( empty string ) is the default
    */
-  void invokeMailer(const QString &to, const QString &cc, const QString &bcc,
-                    const QString &subject, const QString &body,
-                    const QString &messageFile, const QStringList &attachURLs,
-                    const QCString& startup_id );
+  void invokeMailer(const TQString &to, const TQString &cc, const TQString &bcc,
+                    const TQString &subject, const TQString &body,
+                    const TQString &messageFile, const TQStringList &attachURLs,
+                    const TQCString& startup_id );
   // KDE4 merge with above with startup_id = ""
-  void invokeMailer(const QString &to, const QString &cc, const QString &bcc,
-                    const QString &subject, const QString &body,
-                    const QString &messageFile = QString::null, const QStringList &attachURLs = QStringList());
+  void invokeMailer(const TQString &to, const TQString &cc, const TQString &bcc,
+                    const TQString &subject, const TQString &body,
+                    const TQString &messageFile = TQString::null, const TQStringList &attachURLs = TQStringList());
 
 public slots:
   /**
@@ -532,19 +532,19 @@ public slots:
    * @param startup_id for app startup notification, "0" for none,
    *           "" ( empty string ) is the default
    */
-  void invokeBrowser( const QString &url, const QCString& startup_id );
+  void invokeBrowser( const TQString &url, const TQCString& startup_id );
   // KDE4 merge with above with startup_id = ""
   /**
   * Invoke the standard browser. Uses a @p startup_id of "" (empty)
   * and is otherwise the same as the above function.
   */
-  void invokeBrowser( const QString &url );
+  void invokeBrowser( const TQString &url );
 
   /**
    * If the widget with focus provides a cut() slot, call that slot.  Thus for a
    * simple application cut can be implemented as:
    * \code
-   * KStdAction::cut( kapp, SLOT( cut() ), actionCollection() );
+   * KStdAction::cut( kapp, TQT_SLOT( cut() ), actionCollection() );
    * \endcode
    */
   void cut();
@@ -553,7 +553,7 @@ public slots:
    * If the widget with focus provides a copy() slot, call that slot.  Thus for a
    * simple application copy can be implemented as:
    * \code
-   * KStdAction::copy( kapp, SLOT( copy() ), actionCollection() );
+   * KStdAction::copy( kapp, TQT_SLOT( copy() ), actionCollection() );
    * \endcode
    */
   void copy();
@@ -562,7 +562,7 @@ public slots:
    * If the widget with focus provides a paste() slot, call that slot.  Thus for a
    * simple application copy can be implemented as:
    * \code
-   * KStdAction::paste( kapp, SLOT( paste() ), actionCollection() );
+   * KStdAction::paste( kapp, TQT_SLOT( paste() ), actionCollection() );
    * \endcode
    */
   void paste();
@@ -571,7 +571,7 @@ public slots:
    * If the widget with focus provides a clear() slot, call that slot.  Thus for a
    * simple application clear() can be implemented as:
    * \code
-   * new KAction( i18n( "Clear" ), "editclear", 0, kapp, SLOT( clear() ), actionCollection(), "clear" );
+   * new KAction( i18n( "Clear" ), "editclear", 0, kapp, TQT_SLOT( clear() ), actionCollection(), "clear" );
    * \endcode
    *
    * Note that for some widgets, this may not provide the intended bahavior.  For
@@ -585,7 +585,7 @@ public slots:
    * class MyListView : public KListView {
    *   Q_OBJECT
    * public:
-   *   MyListView( QWidget * parent = 0, const char * name = 0, WFlags f = 0 ) : KListView( parent, name, f ) {}
+   *   MyListView( TQWidget * parent = 0, const char * name = 0, WFlags f = 0 ) : KListView( parent, name, f ) {}
    *   virtual ~MyListView() {}
    * public slots:
    *   virtual void clear() {}
@@ -598,7 +598,7 @@ public slots:
    * If the widget with focus provides a selectAll() slot, call that slot.  Thus for a
    * simple application select all can be implemented as:
    * \code
-   * KStdAction::selectAll( kapp, SLOT( selectAll() ), actionCollection() );
+   * KStdAction::selectAll( kapp, TQT_SLOT( selectAll() ), actionCollection() );
    * \endcode
    */
   void selectAll();
@@ -617,7 +617,7 @@ public:
    * klaucher_$host_$uid.
    * @return the name of the service launcher
    */
-  static QCString launcher();
+  static TQCString launcher();
 
   /**
    * Starts a service based on the (translated) name of the service.
@@ -639,8 +639,8 @@ public:
    * @param noWait if set, the function does not wait till the service is running.
    * @return an error code indicating success (== 0) or failure (> 0).
    */
-  static int startServiceByName( const QString& _name, const QString &URL,
-                QString *error=0, QCString *dcopService=0, int *pid=0, const QCString &startup_id = "", bool noWait = false );
+  static int startServiceByName( const TQString& _name, const TQString &URL,
+                TQString *error=0, TQCString *dcopService=0, int *pid=0, const TQCString &startup_id = "", bool noWait = false );
 
   /**
    * Starts a service based on the (translated) name of the service.
@@ -662,8 +662,8 @@ public:
    * @param noWait if set, the function does not wait till the service is running.
    * @return an error code indicating success (== 0) or failure (> 0).
    */
-  static int startServiceByName( const QString& _name, const QStringList &URLs=QStringList(),
-                QString *error=0, QCString *dcopService=0, int *pid=0, const QCString &startup_id = "", bool noWait = false );
+  static int startServiceByName( const TQString& _name, const TQStringList &URLs=TQStringList(),
+                TQString *error=0, TQCString *dcopService=0, int *pid=0, const TQCString &startup_id = "", bool noWait = false );
 
   /**
    * Starts a service based on the desktop path of the service.
@@ -685,8 +685,8 @@ public:
    * @param noWait if set, the function does not wait till the service is running.
    * @return an error code indicating success (== 0) or failure (> 0).
    */
-  static int startServiceByDesktopPath( const QString& _name, const QString &URL,
-                QString *error=0, QCString *dcopService=0, int *pid = 0, const QCString &startup_id = "", bool noWait = false );
+  static int startServiceByDesktopPath( const TQString& _name, const TQString &URL,
+                TQString *error=0, TQCString *dcopService=0, int *pid = 0, const TQCString &startup_id = "", bool noWait = false );
 
   /**
    * Starts a service based on the desktop path of the service.
@@ -708,8 +708,8 @@ public:
    * @param noWait if set, the function does not wait till the service is running.
    * @return an error code indicating success (== 0) or failure (> 0).
    */
-  static int startServiceByDesktopPath( const QString& _name, const QStringList &URLs=QStringList(),
-                QString *error=0, QCString *dcopService=0, int *pid = 0, const QCString &startup_id = "", bool noWait = false );
+  static int startServiceByDesktopPath( const TQString& _name, const TQStringList &URLs=TQStringList(),
+                TQString *error=0, TQCString *dcopService=0, int *pid = 0, const TQCString &startup_id = "", bool noWait = false );
 
   /**
    * Starts a service based on the desktop name of the service.
@@ -731,8 +731,8 @@ public:
    * @param noWait if set, the function does not wait till the service is running.
    * @return an error code indicating success (== 0) or failure (> 0).
    */
-  static int startServiceByDesktopName( const QString& _name, const QString &URL,
-                QString *error=0, QCString *dcopService=0, int *pid = 0, const QCString &startup_id = "", bool noWait = false );
+  static int startServiceByDesktopName( const TQString& _name, const TQString &URL,
+                TQString *error=0, TQCString *dcopService=0, int *pid = 0, const TQCString &startup_id = "", bool noWait = false );
 
   /**
    * Starts a service based on the desktop name of the service.
@@ -754,8 +754,8 @@ public:
    * @param noWait if set, the function does not wait till the service is running.
    * @return an error code indicating success (== 0) or failure (> 0).
    */
-  static int startServiceByDesktopName( const QString& _name, const QStringList &URLs=QStringList(),
-                QString *error=0, QCString *dcopService=0, int *pid = 0, const QCString &startup_id = "", bool noWait = false );
+  static int startServiceByDesktopName( const TQString& _name, const TQStringList &URLs=TQStringList(),
+                TQString *error=0, TQCString *dcopService=0, int *pid = 0, const TQCString &startup_id = "", bool noWait = false );
 
   /**
    * Starts a program via kdeinit.
@@ -774,11 +774,11 @@ public:
    *           "" ( empty string ) is the default
    * @return an error code indicating success (== 0) or failure (> 0).
    */
-  static int kdeinitExec( const QString& name, const QStringList &args,
-                QString *error, int *pid, const QCString& startup_id );
+  static int kdeinitExec( const TQString& name, const TQStringList &args,
+                TQString *error, int *pid, const TQCString& startup_id );
   // KDE4 merge with above with startup_id = ""
-  static int kdeinitExec( const QString& name, const QStringList &args=QStringList(),
-                QString *error=0, int *pid = 0 );
+  static int kdeinitExec( const TQString& name, const TQStringList &args=TQStringList(),
+                TQString *error=0, int *pid = 0 );
 
   /**
    * Starts a program via kdeinit and wait for it to finish.
@@ -797,11 +797,11 @@ public:
    *           "" ( empty string ) is the default
    * @return an error code indicating success (== 0) or failure (> 0).
    */
-  static int kdeinitExecWait( const QString& name, const QStringList &args,
-                QString *error, int *pid, const QCString& startup_id );
+  static int kdeinitExecWait( const TQString& name, const TQStringList &args,
+                TQString *error, int *pid, const TQCString& startup_id );
   // KDE4 merge with above with startup_id = ""
-  static int kdeinitExecWait( const QString& name, const QStringList &args=QStringList(),
-                QString *error=0, int *pid = 0 );
+  static int kdeinitExecWait( const TQString& name, const TQStringList &args=TQStringList(),
+                TQString *error=0, int *pid = 0 );
 
   /**
    * Returns a text for the window caption.
@@ -811,7 +811,7 @@ public:
    * executable.
    * @return the text for the window caption
    */
-  QString caption() const;
+  TQString caption() const;
 
   /**
    * @deprecated
@@ -835,7 +835,7 @@ public:
    * modified, i.e., it contains data that has not been saved.
    * @return the created caption
    */
-  QString makeStdCaption( const QString &userCaption,
+  TQString makeStdCaption( const TQString &userCaption,
                           bool withAppName=true, bool modified=false ) const;
 
   /**
@@ -845,7 +845,7 @@ public:
    * document.
    * @return A new filename for auto-saving.
    */
-  QString tempSaveName( const QString& pFilename ) const;
+  TQString tempSaveName( const TQString& pFilename ) const;
 
   /**
    * Check whether  an auto-save file exists for the document you want to
@@ -856,7 +856,7 @@ public:
    * file.
    * @return The full path of the file to open.
    */
-  QString checkRecoverFile( const QString& pFilename, bool& bRecover ) const;
+  TQString checkRecoverFile( const TQString& pFilename, bool& bRecover ) const;
 
 #ifdef Q_WS_X11
   /**
@@ -888,18 +888,18 @@ public:
    *  Installs widget filter as global X11 event filter.
    *
    * The widget
-   *  filter receives XEvents in its standard QWidget::x11Event() function.
+   *  filter receives XEvents in its standard TQWidget::x11Event() function.
    *
    *  Warning: Only do this when absolutely necessary. An installed X11 filter
    *  can slow things down.
    **/
-  void installX11EventFilter( QWidget* filter );
+  void installX11EventFilter( TQWidget* filter );
 
   /**
    * Removes global X11 event filter previously installed by
    * installX11EventFilter().
    */
-  void removeX11EventFilter( const QWidget* filter );
+  void removeX11EventFilter( const TQWidget* filter );
 
   /**
    * Generates a uniform random number.
@@ -912,7 +912,7 @@ public:
    * @param length Generate a string of this length.
    * @return the random string
    */
-  static QString randomString(int length);
+  static TQString randomString(int length);
 
   /**
    * Adds a message type to the KIPC event mask. You can only add "system
@@ -940,7 +940,7 @@ public:
    * application.
    * @return the startup notification identifier
    */
-  QCString startupId() const;
+  TQCString startupId() const;
 
   /**
    * @internal
@@ -949,7 +949,7 @@ public:
    * @param startup_id the startup notification identifier
    * @see KStartupInfo::setNewStartupId
    */
-  void setStartupId( const QCString& startup_id );
+  void setStartupId( const TQCString& startup_id );
 
   /**
    * Updates the last user action timestamp to the given time, or to the current time,
@@ -974,18 +974,18 @@ public:
    * Consult focus stealing prevention section in kdebase/kwin/README.
    * @since 3.3
    */
-  void updateRemoteUserTimestamp( const QCString& dcopId, unsigned long time = 0 );
+  void updateRemoteUserTimestamp( const TQCString& dcopId, unsigned long time = 0 );
   
     /**
     * Returns the argument to --geometry if any, so the geometry can be set
     * wherever necessary
-    * @return the geometry argument, or QString::null if there is none
+    * @return the geometry argument, or TQString::null if there is none
     */
-  QString geometryArgument() const;
+  TQString geometryArgument() const;
 
   /**
    * Install a Qt SQL property map with entries for all KDE widgets
-   * Call this in any application using KDE widgets in QSqlForm or QDataView.
+   * Call this in any application using KDE widgets in TQSqlForm or TQDataView.
    */
   void installKDEPropertyMap();
 
@@ -994,7 +994,7 @@ public:
    * @param genericAction The name of a generic  action
    * @return true if the action is authorized
    */
-  bool authorize(const QString &genericAction);
+  bool authorize(const TQString &genericAction);
 
   /**
    * Returns whether a certain KAction is authorized.
@@ -1018,7 +1018,7 @@ public:
    * @return true when the action is authorized, false otherwise.
    * @since 3.1
    */
-  bool authorizeURLAction(const QString &action, const KURL &baseURL, const KURL &destURL);
+  bool authorizeURLAction(const TQString &action, const KURL &baseURL, const KURL &destURL);
 
   /**
    * Allow a certain URL action. This can be useful if your application
@@ -1029,7 +1029,7 @@ public:
    * @param _destURL The object of the action
    * @since 3.2
    */
-  void allowURLAction(const QString &action, const KURL &_baseURL, const KURL &_destURL);
+  void allowURLAction(const TQString &action, const KURL &_baseURL, const KURL &_destURL);
 
   /**
    * Returns whether access to a certain control module is authorized.
@@ -1038,7 +1038,7 @@ public:
    * @return true if access to the module is authorized, false otherwise.
    * @since 3.2
    */
-  bool authorizeControlModule(const QString &menuId);
+  bool authorizeControlModule(const TQString &menuId);
   
   /**
    * Returns whether access to a certain control modules is authorized.
@@ -1048,12 +1048,12 @@ public:
    * @return Those control modules for which access has been authorized.
    * @since 3.2
    */
-  QStringList authorizeControlModules(const QStringList &menuIds);
+  TQStringList authorizeControlModules(const TQStringList &menuIds);
 
   /**
    * Returns the state of the currently pressed keyboard modifiers (e.g. shift, control, etc.)
-   * and mouse buttons, similarly to QKeyEvent::state() and QMouseEvent::state().
-   * You usually should simply use the information provided by QKeyEvent and QMouseEvent,
+   * and mouse buttons, similarly to TQKeyEvent::state() and TQMouseEvent::state().
+   * You usually should simply use the information provided by TQKeyEvent and TQMouseEvent,
    * but it can be useful to query for the status of the modifiers at another moment
    * (e.g. some KDE apps do that upon a drop event).
    * @return the keyboard modifiers and mouse buttons state
@@ -1135,7 +1135,7 @@ protected:
    * This method is used internally to determine which edit slots are implemented
    * by the widget that has the focus, and to invoke those slots if available.
    *
-   * @param slot is the slot as returned using the SLOT() macro, for example SLOT( cut() )
+   * @param slot is the slot as returned using the TQT_SLOT() macro, for example TQT_SLOT( cut() )
    *
    * This method can be used in KApplication subclasses to implement application wide
    * edit actions not supported by the KApplication class.  For example (in your subclass):
@@ -1143,7 +1143,7 @@ protected:
    * \code
    * void MyApplication::deselect()
    * {
-   *   invokeEditSlot( SLOT( deselect() ) );
+   *   invokeEditSlot( TQT_SLOT( deselect() ) );
    * }
    * \endcode
    *
@@ -1151,7 +1151,7 @@ protected:
    * focused widget if it provides this slot.  You can combine this with KAction with:
    *
    * \code
-   * KStdAction::deselect( static_cast<MyApplication *>( kapp ), SLOT( cut() ), actionCollection() );
+   * KStdAction::deselect( static_cast<MyApplication *>( kapp ), TQT_SLOT( cut() ), actionCollection() );
    * \endcode
    *
    * @see cut()
@@ -1165,29 +1165,29 @@ protected:
   void invokeEditSlot( const char *slot );
 
 private slots:
-  void dcopFailure(const QString &);
+  void dcopFailure(const TQString &);
   void dcopBlockUserInput( bool );
   void x11FilterDestroyed();
   void checkAppStartedSlot();
 
 private:
-  QString sessionConfigName() const;
+  TQString sessionConfigName() const;
   KConfig* pSessionConfig; //instance specific application config object
   static DCOPClient *s_DCOPClient; // app specific application communication client
   static bool s_dcopClientNeedsPostInit;
-  QString aCaption; // the name for the window title
+  TQString aCaption; // the name for the window title
   bool bSessionManagement;
-  struct oldPixmapType { QPixmap a, b; };
+  struct oldPixmapType { TQPixmap a, b; };
   mutable union {
     struct {
-      QPixmap *icon, *miniIcon;
+      TQPixmap *icon, *miniIcon;
     } pm;
     char unused[sizeof(oldPixmapType)];
   } aIconPixmap; // KDE4: remove me
-  QString aIconName;
-  QString aMiniIconName;
+  TQString aIconName;
+  TQString aMiniIconName;
   bool useStyles;
-  QWidget *smw;
+  TQWidget *smw;
 
   void init( bool GUIenabled );
 
@@ -1203,7 +1203,7 @@ public:
   /**
    * @internal
    */
-  bool notify(QObject *receiver, QEvent *event);
+  bool notify(TQObject *receiver, TQEvent *event);
 
   /**
       @internal
@@ -1237,20 +1237,20 @@ public:
          SETTINGS_POPUPMENU, SETTINGS_QT, SETTINGS_SHORTCUTS };
 
   /**
-   * Used to obtain the QPalette that will be used to set the application palette.
+   * Used to obtain the TQPalette that will be used to set the application palette.
    *
    * This is only useful for configuration modules such as krdb and should not be
    * used in normal circumstances.
    * @return the QPalette
    * @since 3.1
    */
-  static QPalette createApplicationPalette();
+  static TQPalette createApplicationPalette();
 
   /**
    * @internal
    * Raw access for use by KDM.
    */
-  static QPalette createApplicationPalette( KConfig *config, int contrast );
+  static TQPalette createApplicationPalette( KConfig *config, int contrast );
 
   /**
    * Installs a handler for the SIGPIPE signal. It is thrown when you write to
@@ -1295,7 +1295,7 @@ signals:
    * using explicit fonts.
    *
    * Note: If you derive from a QWidget-based class, a faster method is to
-   *       reimplement QWidget::fontChange(). This is the preferred way
+   *       reimplement TQWidget::fontChange(). This is the preferred way
    *       to get informed about font updates.
    */
   void kdisplayFontChanged();
@@ -1432,7 +1432,7 @@ private:
  * @param mode     The access mode, as in the access() system call.
  * @return Whether the access is allowed, true = Access allowed
  */
-KDECORE_EXPORT bool checkAccess(const QString& pathname, int mode);
+KDECORE_EXPORT bool checkAccess(const TQString& pathname, int mode);
 
 class KSessionManagedPrivate;
 
@@ -1441,7 +1441,7 @@ class KSessionManagedPrivate;
    base.
 
    KSessionManaged makes it possible to provide implementations for
- QApplication::commitData() and QApplication::saveState(), without
+ TQApplication::commitData() and TQApplication::saveState(), without
    subclassing KApplication. KMainWindow internally makes use of this.
 
    You don't need to do anything with this class when using
@@ -1459,7 +1459,7 @@ public:
   virtual ~KSessionManaged();
 
     /**
-       See QApplication::saveState() for documentation.
+       See TQApplication::saveState() for documentation.
 
        This function is just a convenience version to avoid subclassing KApplication.
 
@@ -1469,7 +1469,7 @@ public:
      */
   virtual bool saveState( QSessionManager& sm );
     /**
-       See QApplication::commitData() for documentation.
+       See TQApplication::commitData() for documentation.
 
        This function is just a convenience version to avoid subclassing KApplication.
 

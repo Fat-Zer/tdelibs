@@ -27,7 +27,7 @@
 #include "kprocio.h"
 
 #include <kdebug.h>
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 
 class KProcIOPrivate {
 public:
@@ -35,7 +35,7 @@ public:
   KProcess::Communication comm;
 };
 
-KProcIO::KProcIO ( QTextCodec *_codec)
+KProcIO::KProcIO ( TQTextCodec *_codec)
   : codec(_codec), d(new KProcIOPrivate)
 {
   rbi=0;
@@ -44,7 +44,7 @@ KProcIO::KProcIO ( QTextCodec *_codec)
 
   if (!codec)
   {
-     codec = QTextCodec::codecForName("ISO 8859-1");
+     codec = TQTextCodec::codecForName("ISO 8859-1");
      if (!codec)
      {
         kdError(174) << "Can't create ISO 8859-1 codec!" << endl;
@@ -67,14 +67,14 @@ KProcIO::resetAll ()
   rbi=0;
   readsignalon=writeready=true;
 
-  disconnect (this, SIGNAL (receivedStdout (KProcess *, char *, int)),
-	   this, SLOT (received (KProcess *, char *, int)));
+  disconnect (this, TQT_SIGNAL (receivedStdout (KProcess *, char *, int)),
+	   this, TQT_SLOT (received (KProcess *, char *, int)));
 
-  disconnect (this, SIGNAL (receivedStderr (KProcess *, char *, int)),
-	   this, SLOT (received (KProcess *, char *, int)));
+  disconnect (this, TQT_SIGNAL (receivedStderr (KProcess *, char *, int)),
+	   this, TQT_SLOT (received (KProcess *, char *, int)));
 
-  disconnect (this, SIGNAL (wroteStdin(KProcess *)),
-	   this, SLOT (sent (KProcess *)));
+  disconnect (this, TQT_SIGNAL (wroteStdin(KProcess *)),
+	   this, TQT_SLOT (sent (KProcess *)));
 
   outbuffer.clear();
 
@@ -87,29 +87,29 @@ void KProcIO::setComm (Communication comm)
 
 bool KProcIO::start (RunMode runmode, bool includeStderr)
 {
-  connect (this, SIGNAL (receivedStdout (KProcess *, char *, int)),
-	   this, SLOT (received (KProcess *, char *, int)));
+  connect (this, TQT_SIGNAL (receivedStdout (KProcess *, char *, int)),
+	   this, TQT_SLOT (received (KProcess *, char *, int)));
   
   if (includeStderr)
   {
-     connect (this, SIGNAL (receivedStderr (KProcess *, char *, int)),
-              this, SLOT (received (KProcess *, char *, int)));
+     connect (this, TQT_SIGNAL (receivedStderr (KProcess *, char *, int)),
+              this, TQT_SLOT (received (KProcess *, char *, int)));
   }
 
-  connect (this, SIGNAL (wroteStdin(KProcess *)),
-	   this, SLOT (sent (KProcess *)));
+  connect (this, TQT_SIGNAL (wroteStdin(KProcess *)),
+	   this, TQT_SLOT (sent (KProcess *)));
            
   return KProcess::start (runmode, d->comm);
 }
 
-bool KProcIO::writeStdin (const QString &line, bool appendnewline)
+bool KProcIO::writeStdin (const TQString &line, bool appendnewline)
 {
   return writeStdin(codec->fromUnicode(line), appendnewline);
 }
 
-bool KProcIO::writeStdin (const QCString &line, bool appendnewline)
+bool KProcIO::writeStdin (const TQCString &line, bool appendnewline)
 {
-  QCString *qs = new QCString(line);
+  TQCString *qs = new TQCString(line);
   
   if (appendnewline)
   {
@@ -123,7 +123,7 @@ bool KProcIO::writeStdin (const QCString &line, bool appendnewline)
      return true;
   }
 
-  QByteArray *b = (QByteArray *) qs;
+  TQByteArray *b = (TQByteArray *) qs;
   b->truncate(l); // Strip trailing null
   
   outbuffer.append(b);
@@ -136,11 +136,11 @@ bool KProcIO::writeStdin (const QCString &line, bool appendnewline)
   return true;
 }
 
-bool KProcIO::writeStdin(const QByteArray &data)
+bool KProcIO::writeStdin(const TQByteArray &data)
 {
   if (!data.size())
      return true;
-  QByteArray *b = new QByteArray(data);
+  TQByteArray *b = new TQByteArray(data);
   outbuffer.append(b);
   
   if (writeready)
@@ -173,7 +173,7 @@ void KProcIO::sent(KProcess *)
   }
   else
   {
-     QByteArray *b = outbuffer.first();
+     TQByteArray *b = outbuffer.first();
      if (!b)
      {
         closeStdin();
@@ -188,7 +188,7 @@ void KProcIO::sent(KProcess *)
 
 void KProcIO::received (KProcess *, char *buffer, int buflen)
 {
-  recvbuffer += QCString(buffer, buflen+1);
+  recvbuffer += TQCString(buffer, buflen+1);
 
   controlledEmission();
 }
@@ -222,7 +222,7 @@ void KProcIO::enableReadSignals (bool enable)
      emit readReady (this);
 }
 
-int KProcIO::readln (QString &line, bool autoAck, bool *partial)
+int KProcIO::readln (TQString &line, bool autoAck, bool *partial)
 {
   int len;
 

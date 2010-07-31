@@ -27,9 +27,9 @@ class KURLRequester;
 class KMWFile : public KMWizardPage
 {
 public:
-	KMWFile(QWidget *parent = 0, const char *name = 0);
+	KMWFile(TQWidget *parent = 0, const char *name = 0);
 
-	bool isValid(QString&);
+	bool isValid(TQString&);
 	void updatePrinter(KMPrinter*);
 
 private:

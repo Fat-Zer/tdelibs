@@ -1,10 +1,10 @@
 #ifndef _main_h
 #define _main_h
 
-#include <qobject.h>
-#include <qstring.h>
-#include <qstrlist.h>
-#include <qtimer.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqstrlist.h>
+#include <tqtimer.h>
 
 namespace KIO { class Job; }
 
@@ -20,16 +20,16 @@ public slots:
 
 protected:
     bool tempfiles;
-    QString suggestedFileName;
+    TQString suggestedFileName;
     int counter;
     int expectedCounter;
-    QString command;
+    TQString command;
     struct fileInfo {
-       QString path;
+       TQString path;
        KURL url;
        int time;
     };
-    QValueList<fileInfo> fileList;
+    TQValueList<fileInfo> fileList;
 };
 
 #endif

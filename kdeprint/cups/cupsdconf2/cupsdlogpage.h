@@ -29,10 +29,10 @@ class QComboBox;
 class CupsdLogPage : public CupsdPage
 {
 public:
-	CupsdLogPage(QWidget *parent = 0, const char *name = 0);
+	CupsdLogPage(TQWidget *parent = 0, const char *name = 0);
 
-	bool loadConfig(CupsdConf*, QString&);
-	bool saveConfig(CupsdConf*, QString&);
+	bool loadConfig(CupsdConf*, TQString&);
+	bool saveConfig(CupsdConf*, TQString&);
 	void setInfos(CupsdConf*);
 
 private:

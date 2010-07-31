@@ -21,9 +21,9 @@
 #ifndef KCURSOR_PRIVATE_H
 #define KCURSOR_PRIVATE_H
 
-#include <qcursor.h>
-#include <qobject.h>
-#include <qptrdict.h>
+#include <tqcursor.h>
+#include <tqobject.h>
+#include <tqptrdict.h>
 
 class QPoint;
 class QTimer;
@@ -41,10 +41,10 @@ class KCursorPrivateAutoHideEventFilter : public QObject
     Q_OBJECT
 
 public:
-    KCursorPrivateAutoHideEventFilter( QWidget* widget );
+    KCursorPrivateAutoHideEventFilter( TQWidget* widget );
     ~KCursorPrivateAutoHideEventFilter();
 
-    virtual bool eventFilter( QObject *o, QEvent *e );
+    virtual bool eventFilter( TQObject *o, TQEvent *e );
     
     void resetWidget();
 
@@ -53,14 +53,14 @@ private slots:
     void unhideCursor();
 
 private:
-    QWidget* actualWidget() const;
+    TQWidget* actualWidget() const;
 
-    QTimer m_autoHideTimer;
-    QWidget* m_widget;
+    TQTimer m_autoHideTimer;
+    TQWidget* m_widget;
     bool m_wasMouseTracking;
     bool m_isCursorHidden;
     bool m_isOwnCursor;
-    QCursor m_oldCursor;
+    TQCursor m_oldCursor;
 };
 
 /**
@@ -76,13 +76,13 @@ class KCursorPrivate : public QObject
 public:
     static KCursorPrivate *self();
 
-    void setAutoHideCursor( QWidget *w, bool enable, bool customEventFilter );
-    virtual bool eventFilter( QObject *o, QEvent *e );
+    void setAutoHideCursor( TQWidget *w, bool enable, bool customEventFilter );
+    virtual bool eventFilter( TQObject *o, TQEvent *e );
 
     int hideCursorDelay;
 
 private slots:
-    void slotWidgetDestroyed( QObject* );
+    void slotWidgetDestroyed( TQObject* );
 
 private:
     KCursorPrivate();
@@ -91,7 +91,7 @@ private:
     bool enabled;
     static KCursorPrivate *s_self;
 
-    QPtrDict<KCursorPrivateAutoHideEventFilter> m_eventFilters;
+    TQPtrDict<KCursorPrivateAutoHideEventFilter> m_eventFilters;
 };
 
 

@@ -23,16 +23,16 @@
 #include "kmprinter.h"
 
 #include <klistview.h>
-#include <qheader.h>
-#include <qlineedit.h>
-#include <qlabel.h>
+#include <tqheader.h>
+#include <tqlineedit.h>
+#include <tqlabel.h>
 #include <kmessagebox.h>
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kseparator.h>
 
-KMWSocket::KMWSocket(QWidget *parent, const char *name)
+KMWSocket::KMWSocket(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_title = i18n("Network Printer Information");
@@ -42,15 +42,15 @@ KMWSocket::KMWSocket(QWidget *parent, const char *name)
 	m_list = new KListView(this);
 	m_list->addColumn("");
 	m_list->header()->hide();
-	m_list->setFrameStyle(QFrame::WinPanel|QFrame::Sunken);
+	m_list->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	m_list->setLineWidth(1);
 
-	QLabel	*l1 = new QLabel(i18n("&Printer address:"),this);
-	QLabel	*l2 = new QLabel(i18n("P&ort:"),this);
+	QLabel	*l1 = new TQLabel(i18n("&Printer address:"),this);
+	QLabel	*l2 = new TQLabel(i18n("P&ort:"),this);
 
-	m_printer = new QLineEdit(this);
-	m_port = new QLineEdit(this);
-	m_port->setText(QString("9100"));
+	m_printer = new TQLineEdit(this);
+	m_port = new TQLineEdit(this);
+	m_port->setText(TQString("9100"));
 
 	l1->setBuddy(m_printer);
 	l2->setBuddy(m_port);
@@ -60,15 +60,15 @@ KMWSocket::KMWSocket(QWidget *parent, const char *name)
 	KSeparator* sep = new KSeparator( KSeparator::HLine, this);
 	sep->setFixedHeight(40);
 
-	connect(m_list,SIGNAL(selectionChanged(QListViewItem*)),SLOT(slotPrinterSelected(QListViewItem*)));
-	connect( m_scanner, SIGNAL( scanStarted() ), SLOT( slotScanStarted() ) );
-	connect( m_scanner, SIGNAL( scanFinished() ), SLOT( slotScanFinished() ) );
-	connect( m_scanner, SIGNAL( scanStarted() ), parent, SLOT( disableWizard() ) );
-	connect( m_scanner, SIGNAL( scanFinished() ), parent, SLOT( enableWizard() ) );
+	connect(m_list,TQT_SIGNAL(selectionChanged(TQListViewItem*)),TQT_SLOT(slotPrinterSelected(TQListViewItem*)));
+	connect( m_scanner, TQT_SIGNAL( scanStarted() ), TQT_SLOT( slotScanStarted() ) );
+	connect( m_scanner, TQT_SIGNAL( scanFinished() ), TQT_SLOT( slotScanFinished() ) );
+	connect( m_scanner, TQT_SIGNAL( scanStarted() ), parent, TQT_SLOT( disableWizard() ) );
+	connect( m_scanner, TQT_SIGNAL( scanFinished() ), parent, TQT_SLOT( enableWizard() ) );
 
 	// layout
-	QHBoxLayout	*lay3 = new QHBoxLayout(this, 0, 10);
-	QVBoxLayout	*lay2 = new QVBoxLayout(0, 0, 0);
+	QHBoxLayout	*lay3 = new TQHBoxLayout(this, 0, 10);
+	QVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 0);
 
 	lay3->addWidget(m_list,1);
 	lay3->addLayout(lay2,1);
@@ -88,11 +88,11 @@ KMWSocket::~KMWSocket()
 
 void KMWSocket::updatePrinter(KMPrinter *p)
 {
-	QString	dev = QString::fromLatin1("socket://%1:%2").arg(m_printer->text()).arg(m_port->text());
+	QString	dev = TQString::fromLatin1("socket://%1:%2").arg(m_printer->text()).arg(m_port->text());
 	p->setDevice(dev);
 }
 
-bool KMWSocket::isValid(QString& msg)
+bool KMWSocket::isValid(TQString& msg)
 {
 	if (m_printer->text().isEmpty())
 	{
@@ -127,8 +127,8 @@ void KMWSocket::slotScanStarted()
 
 void KMWSocket::slotScanFinished()
 {
-	const QPtrList<NetworkScanner::SocketInfo>	*list = m_scanner->printerList();
-	QPtrListIterator<NetworkScanner::SocketInfo>	it(*list);
+	const TQPtrList<NetworkScanner::SocketInfo>	*list = m_scanner->printerList();
+	TQPtrListIterator<NetworkScanner::SocketInfo>	it(*list);
 	for (;it.current();++it)
 	{
 		QString	name;
@@ -136,12 +136,12 @@ void KMWSocket::slotScanFinished()
 			name = i18n("Unknown host - 1 is the IP", "<Unknown> (%1)").arg(it.current()->IP);
 		else
 			name = it.current()->Name;
-		QListViewItem	*item = new QListViewItem(m_list,name,it.current()->IP,QString::number(it.current()->Port));
+		QListViewItem	*item = new TQListViewItem(m_list,name,it.current()->IP,TQString::number(it.current()->Port));
 		item->setPixmap(0,SmallIcon("kdeprint_printer"));
 	}
 }
 
-void KMWSocket::slotPrinterSelected(QListViewItem *item)
+void KMWSocket::slotPrinterSelected(TQListViewItem *item)
 {
 	if (!item) return;
 	m_printer->setText(item->text(1));

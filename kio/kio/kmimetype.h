@@ -23,9 +23,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <qstringlist.h>
-#include <qvaluelist.h>
-#include <qpixmap.h>
+#include <tqstringlist.h>
+#include <tqvaluelist.h>
+#include <tqpixmap.h>
 
 #include <kicontheme.h>
 #include <kurl.h>
@@ -50,7 +50,7 @@ class KIO_EXPORT KMimeType : public KServiceType
 
 public:
   typedef KSharedPtr<KMimeType> Ptr;
-  typedef QValueList<Ptr> List;
+  typedef TQValueList<Ptr> List;
 public:
   /**
    * Constructor.
@@ -65,14 +65,14 @@ public:
    * @param _patterns a list of file globs that describes the names (or
    *                  extensions) of the files with this mime type
    */
-  KMimeType( const QString & _fullpath, const QString& _type, const QString& _icon,
-	     const QString& _comment, const QStringList& _patterns );
+  KMimeType( const TQString & _fullpath, const TQString& _type, const TQString& _icon,
+	     const TQString& _comment, const TQStringList& _patterns );
 
   /**
    * Construct a mimetype and take all information from a config file.
    * @param _fullpath the path to the configuration file (.desktop)
    */
-  KMimeType( const QString & _fullpath );
+  KMimeType( const TQString & _fullpath );
 
   /**
    * Construct a mimetype and take all information from a desktop file.
@@ -85,7 +85,7 @@ public:
    *
    * The stream must already be positionned at the correct offset
    */
-  KMimeType( QDataStream& _str, int offset );
+  KMimeType( TQDataStream& _str, int offset );
 
   virtual ~KMimeType();
 
@@ -97,7 +97,7 @@ public:
    *
    * @return The path to the icon associated with this MIME type.
    */
-  virtual QString icon( const QString& , bool ) const { return m_strIcon; }
+  virtual TQString icon( const TQString& , bool ) const { return m_strIcon; }
 
   /**
    * Return the filename of the icon associated with the mimetype.
@@ -107,7 +107,7 @@ public:
    *
    * @return The path to the icon associated with this MIME type.
    */
-  virtual QString icon( const KURL& , bool ) const { return m_strIcon; }
+  virtual TQString icon( const KURL& , bool ) const { return m_strIcon; }
 
   /**
    * Use this function only if you don't have a special URL
@@ -126,8 +126,8 @@ public:
    *              Ignored if 0
    * @return the pixmap of the mime type, can be a default icon if not found
    */
-  virtual QPixmap pixmap( KIcon::Group group, int force_size = 0, int state = 0,
-                          QString * path = 0L ) const;
+  virtual TQPixmap pixmap( KIcon::Group group, int force_size = 0, int state = 0,
+                          TQString * path = 0L ) const;
 
   /**
    * Find the pixmap for a given file of this mimetype.
@@ -145,8 +145,8 @@ public:
    *              Ignored if 0
    * @return the pixmap of the URL, can be a default icon if not found
    */
-  virtual QPixmap pixmap( const KURL& _url, KIcon::Group _group, int _force_size = 0,
-	    int _state = 0, QString * _path = 0L ) const;
+  virtual TQPixmap pixmap( const KURL& _url, KIcon::Group _group, int _force_size = 0,
+	    int _state = 0, TQString * _path = 0L ) const;
 
   /**
    * Convenience method to find the pixmap for a URL.
@@ -166,8 +166,8 @@ public:
    *              Ignored if 0
    * @return the pixmap of the URL, can be a default icon if not found
    */
-  static QPixmap pixmapForURL( const KURL & _url, mode_t _mode = 0, KIcon::Group _group = KIcon::Desktop,
-                               int _force_size = 0, int _state = 0, QString * _path = 0L );
+  static TQPixmap pixmapForURL( const KURL & _url, mode_t _mode = 0, KIcon::Group _group = KIcon::Desktop,
+                               int _force_size = 0, int _state = 0, TQString * _path = 0L );
 
 
   /**
@@ -182,24 +182,24 @@ public:
    * @return the name of the icon. The name of a default icon if there is no icon
    *         for the mime type
    */
-  static QString iconForURL( const KURL & _url, mode_t _mode = 0 );
+  static TQString iconForURL( const KURL & _url, mode_t _mode = 0 );
 
   /**
    * Return the "favicon" (see http://www.favicon.com) for the given @p url,
    * if available. Does NOT attempt to download the favicon, it only returns
    * one that is already available.
    *
-   * If unavailable, returns QString::null.
+   * If unavailable, returns TQString::null.
    * @param url the URL of the favicon
-   * @return the name of the favicon, or QString::null
+   * @return the name of the favicon, or TQString::null
    */
-  static QString favIconForURL( const KURL& url );
+  static TQString favIconForURL( const KURL& url );
 
   /**
    * Returns the descriptive comment associated with the MIME type.
    * @return the descriptive comment associated with the MIME type
    */
-  QString comment() const { return m_strComment; }
+  TQString comment() const { return m_strComment; }
 
   /**
    * Returns the descriptive comment associated with the MIME type.
@@ -208,7 +208,7 @@ public:
    *
    * @return The descriptive comment associated with the MIME type, if any.
    */
-  virtual QString comment( const QString&, bool ) const { return m_strComment; }
+  virtual TQString comment( const TQString&, bool ) const { return m_strComment; }
 
   /**
    * Returns the descriptive comment associated with the MIME type.
@@ -217,26 +217,26 @@ public:
    *
    * @return The descriptive comment associated with the MIME type, if any.
    */
-  virtual QString comment( const KURL&, bool ) const { return m_strComment; }
+  virtual TQString comment( const KURL&, bool ) const { return m_strComment; }
 
   /**
    * Retrieve the list of patterns associated with the MIME Type.
    * @return a list of file globs that describe the file names
    *         (or, usually, the extensions) of files with this mime type
    */
-  const QStringList& patterns() const { return m_lstPatterns; }
+  const TQStringList& patterns() const { return m_lstPatterns; }
 
   /**
    * Load the mimetype from a stream.
    * @param qs the stream to load from
    */
-  virtual void load( QDataStream &qs );
+  virtual void load( TQDataStream &qs );
 
   /**
    * Save the mimetype to a stream.
    * @param qs the stream to save to
    */
-  virtual void save( QDataStream &qs );
+  virtual void save( TQDataStream &qs );
 
   /**
    * Returns the property with the given @p _name.
@@ -244,7 +244,7 @@ public:
    * @return the value of the property
    * @see propertyNames()
    */
-  virtual QVariant property( const QString& _name ) const;
+  virtual TQVariant property( const TQString& _name ) const;
 
   /**
    * Retrieves a list of all properties associated with this
@@ -252,7 +252,7 @@ public:
    * @return a list of all property names
    * @see property()
    */
-  virtual QStringList propertyNames() const;
+  virtual TQStringList propertyNames() const;
 
   /**
    * Retrieve a pointer to the mime type @p _name or a pointer to the default
@@ -268,7 +268,7 @@ public:
    *         not found
    * @see KServiceType::serviceType
    */
-  static Ptr mimeType( const QString& _name );
+  static Ptr mimeType( const TQString& _name );
 
   /**
    * Finds a KMimeType with the given @p _url.
@@ -330,7 +330,7 @@ public:
    *        it is @em fast.
    * @return A pointer to the matching mimetype. 0L is never returned.
    */
-  static Ptr findByPath( const QString& path, mode_t mode = 0, bool fast_mode = false );
+  static Ptr findByPath( const TQString& path, mode_t mode = 0, bool fast_mode = false );
 
   /**
    * Tries to find out the MIME type of a data chunk by looking for
@@ -342,7 +342,7 @@ public:
    * @return a pointer to the KMimeType. application/octet-stream's KMimeType of the
    *         type can not be found this way.
    */
-  static Ptr findByContent( const QByteArray &data, int *accuracy=0 );
+  static Ptr findByContent( const TQByteArray &data, int *accuracy=0 );
 
   /**
    * Tries to find out the MIME type of a file by looking for
@@ -357,7 +357,7 @@ public:
    * @return a pointer to the KMimeType. application/octet-stream's KMimeType of the
    *         type can not be found this way.
    */
-  static Ptr findByFileContent( const QString &fileName, int *accuracy=0 );
+  static Ptr findByFileContent( const TQString &fileName, int *accuracy=0 );
 
   struct Format{
      bool text : 1;
@@ -370,7 +370,7 @@ public:
    * or that would be human readable after decompression.
    * @since 3.2
    */
-  static Format findFormatByFileContent( const QString &fileName );
+  static Format findFormatByFileContent( const TQString &fileName );
 
   /**
    * Get all the mimetypes.
@@ -390,7 +390,7 @@ public:
    * @return the name of the default mime type, always
    *         "application/octet-stream"
    */
-  static const QString & defaultMimeType();
+  static const TQString & defaultMimeType();
 
   /**
    * Returns the default mimetype.
@@ -414,10 +414,10 @@ public:
    * since an application that handles the specific type doesn't necessarily handle
    * the base type. The opposite is true though.
    *
-   * @return the parent mime type, or QString::null if not set
+   * @return the parent mime type, or TQString::null if not set
    * @since 3.2
    */
-  QString parentMimeType() const;
+  TQString parentMimeType() const;
 
   /**
    * Do not use name()=="somename" anymore, to check for a given mimetype.
@@ -425,24 +425,24 @@ public:
    * Warning, do not use inherits(), that's the servicetype inheritance concept!
    * @since 3.2
    */
-  bool is( const QString& mimeTypeName ) const;
+  bool is( const TQString& mimeTypeName ) const;
 
   /**
    * @internal
    * Determines the mimetype of file based on it's name and returns the
    * matching pattern if any.
    */
-  static KMimeType::Ptr diagnoseFileName(const QString &file, QString &pattern);
+  static KMimeType::Ptr diagnoseFileName(const TQString &file, TQString &pattern);
 
 protected:
-  void loadInternal( QDataStream& );
+  void loadInternal( TQDataStream& );
   void init( KDesktopFile * );
 
   /**
    * Signal a missing mime type.
    * @param _type the missinf mime type
    */
-  static void errorMissingMimeType( const QString& _type );
+  static void errorMissingMimeType( const TQString& _type );
 
   /**
    * This function makes sure that the default mime type exists.
@@ -458,7 +458,7 @@ protected:
    */
   static bool s_bChecked;
 
-  QStringList m_lstPatterns;
+  TQStringList m_lstPatterns;
 
   static Ptr s_pDefaultType;
 
@@ -479,21 +479,21 @@ class KIO_EXPORT KFolderType : public KMimeType
   K_SYCOCATYPE( KST_KFolderType, KMimeType )
 
 public:
-//  KFolderType( const QString & _fullpath, const QString& _type, const QString& _icon, const QString& _comment,
-//  	       const QStringList& _patterns );
-//  KFolderType( const QString & _fullpath ) : KMimeType( _fullpath ) { }
+//  KFolderType( const TQString & _fullpath, const TQString& _type, const TQString& _icon, const TQString& _comment,
+//  	       const TQStringList& _patterns );
+//  KFolderType( const TQString & _fullpath ) : KMimeType( _fullpath ) { }
   /**
    * Construct a folder mimetype and take all information from a desktop file.
    * @param config the desktop configuration file that describes the mime type
    */
   KFolderType( KDesktopFile *config) : KMimeType( config ) { }
   /** \internal */
-  KFolderType( QDataStream& _str, int offset ) : KMimeType( _str, offset ) { }
+  KFolderType( TQDataStream& _str, int offset ) : KMimeType( _str, offset ) { }
 
-  virtual QString icon( const QString& _url, bool _is_local ) const;
-  virtual QString icon( const KURL& _url, bool _is_local ) const;
-  virtual QString comment( const QString& _url, bool _is_local ) const;
-  virtual QString comment( const KURL& _url, bool _is_local ) const;
+  virtual TQString icon( const TQString& _url, bool _is_local ) const;
+  virtual TQString icon( const KURL& _url, bool _is_local ) const;
+  virtual TQString comment( const TQString& _url, bool _is_local ) const;
+  virtual TQString comment( const KURL& _url, bool _is_local ) const;
 protected:
   virtual void virtual_hook( int id, void* data );
 };
@@ -518,36 +518,36 @@ public:
   {
     Service() { m_display = true; }
     bool isEmpty() const { return m_strName.isEmpty(); }
-    QString m_strName;
-    QString m_strIcon;
-    QString m_strExec;
+    TQString m_strName;
+    TQString m_strIcon;
+    TQString m_strExec;
     ServiceType m_type;
     bool m_display;
   };
-  // KDEDesktopMimeType( const QString & _fullpath, const QString& _type, const QString& _icon,
-  //                     const QString& _comment, const QStringList& _patterns );
-  // KDEDesktopMimeType( const QString & _fullpath ) : KMimeType( _fullpath ) { }
+  // KDEDesktopMimeType( const TQString & _fullpath, const TQString& _type, const TQString& _icon,
+  //                     const TQString& _comment, const TQStringList& _patterns );
+  // KDEDesktopMimeType( const TQString & _fullpath ) : KMimeType( _fullpath ) { }
   /**
    * Construct a desktop mimetype and take all information from a desktop file.
    * @param config the desktop configuration file that describes the mime type
    */
   KDEDesktopMimeType( KDesktopFile *config) : KMimeType( config ) { }
   /** \internal */
-  KDEDesktopMimeType( QDataStream& _str, int offset ) : KMimeType( _str, offset ) { }
+  KDEDesktopMimeType( TQDataStream& _str, int offset ) : KMimeType( _str, offset ) { }
 
-  virtual QString icon( const QString& _url, bool _is_local ) const;
-  virtual QString icon( const KURL& _url, bool _is_local ) const;
-  virtual QPixmap pixmap( const KURL& _url, KIcon::Group _group, int _force_size = 0,
-                          int _state = 0, QString * _path = 0L ) const;
-  virtual QString comment( const QString& _url, bool _is_local ) const;
-  virtual QString comment( const KURL& _url, bool _is_local ) const;
+  virtual TQString icon( const TQString& _url, bool _is_local ) const;
+  virtual TQString icon( const KURL& _url, bool _is_local ) const;
+  virtual TQPixmap pixmap( const KURL& _url, KIcon::Group _group, int _force_size = 0,
+                          int _state = 0, TQString * _path = 0L ) const;
+  virtual TQString comment( const TQString& _url, bool _is_local ) const;
+  virtual TQString comment( const KURL& _url, bool _is_local ) const;
 
   /**
    * Returns a list of services for the given .desktop file that are handled
    * by kio itself. Namely mount/unmount for FSDevice files.
    * @return the list of services
    */
-  static QValueList<Service> builtinServices( const KURL& _url );
+  static TQValueList<Service> builtinServices( const KURL& _url );
   /**
    * Returns a list of services defined by the user as possible actions
    * on the given .desktop file. May include empty actions which represent where
@@ -558,14 +558,14 @@ public:
    * (if false, services that don't have %u or %U in the Exec line won't be taken into account).
    * @return the list of user deviced actions
    */
-  static QValueList<Service> userDefinedServices( const QString& path, bool bLocalFiles );
+  static TQValueList<Service> userDefinedServices( const TQString& path, bool bLocalFiles );
 
   /**
    * Overload of userDefinedServices for speed purposes: it takes a KConfig* so that
    * the caller can check things in the file without having it parsed twice.
    * @since 3.4
    */
-  static QValueList<Service> userDefinedServices( const QString& path, KConfig& config, bool bLocalFiles );
+  static TQValueList<Service> userDefinedServices( const TQString& path, KConfig& config, bool bLocalFiles );
 
   /**
    * Overload of userDefinedServices but also allows you to pass a list of urls for this file.
@@ -573,14 +573,14 @@ public:
    * the X-KDE-GetActionMenu extension.
    * @since 3.5
    */
-  static QValueList<Service> userDefinedServices( const QString& path, KConfig& config, bool bLocalFiles,  const KURL::List & file_list);
+  static TQValueList<Service> userDefinedServices( const TQString& path, KConfig& config, bool bLocalFiles,  const KURL::List & file_list);
 
   /**
    * @param path is the path of the desktop entry.
    * @param service the service to execute
    * @deprecated, see the other executeService
    */
-  static void executeService( const QString& path, KDEDesktopMimeType::Service& service ) KDE_DEPRECATED;
+  static void executeService( const TQString& path, KDEDesktopMimeType::Service& service ) KDE_DEPRECATED;
 
   /**
    * Execute @p service on the list of @p urls.
@@ -603,12 +603,12 @@ public:
   static pid_t run( const KURL& _url, bool _is_local );
 
 protected:
-  virtual QPixmap pixmap( KIcon::Group group, int force_size = 0, int state = 0,
-                          QString * path = 0L ) const
+  virtual TQPixmap pixmap( KIcon::Group group, int force_size = 0, int state = 0,
+                          TQString * path = 0L ) const
      { return KMimeType::pixmap( group, force_size, state, path ); }
 
   static pid_t runFSDevice( const KURL& _url, const KSimpleConfig &cfg );
-  static pid_t runApplication( const KURL& _url, const QString & _serviceFile );
+  static pid_t runApplication( const KURL& _url, const TQString & _serviceFile );
   static pid_t runLink( const KURL& _url, const KSimpleConfig &cfg );
   static pid_t runMimeType( const KURL& _url, const KSimpleConfig &cfg );
 protected:
@@ -624,16 +624,16 @@ class KIO_EXPORT KExecMimeType : public KMimeType
   K_SYCOCATYPE( KST_KExecMimeType, KMimeType )
 
 public:
-  // KExecMimeType( const QString & _fullpath, const QString& _type, const QString& _icon,
-  //                 const QString& _comment, const QStringList& _patterns );
-  // KExecMimeType( const QString & _fullpath ) : KMimeType( _fullpath ) { }
+  // KExecMimeType( const TQString & _fullpath, const TQString& _type, const TQString& _icon,
+  //                 const TQString& _comment, const TQStringList& _patterns );
+  // KExecMimeType( const TQString & _fullpath ) : KMimeType( _fullpath ) { }
   /**
    * Construct a executable mimetype and take all information from a desktop file.
    * @param config the desktop configuration file that describes the mime type
    */
   KExecMimeType( KDesktopFile *config) : KMimeType( config ) { }
   /** \internal */
-  KExecMimeType( QDataStream& _str, int offset ) : KMimeType( _str, offset ) { }
+  KExecMimeType( TQDataStream& _str, int offset ) : KMimeType( _str, offset ) { }
 protected:
   virtual void virtual_hook( int id, void* data );
 };

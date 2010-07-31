@@ -19,12 +19,12 @@
  *
  */
 
-#include <qhbox.h>
-#include <qlayout.h>
-#include <qvbox.h>
-#include <qtimer.h>
-#include <qprogressbar.h>
-#include <qlabel.h>
+#include <tqhbox.h>
+#include <tqlayout.h>
+#include <tqvbox.h>
+#include <tqtimer.h>
+#include <tqprogressbar.h>
+#include <tqlabel.h>
 
 #include <kwin.h>
 #include <kiconloader.h>
@@ -35,9 +35,9 @@
 #include "ktimerdialog.h"
 #include "ktimerdialog.moc"
 
-KTimerDialog::KTimerDialog( int msec, TimerStyle style, QWidget *parent,
+KTimerDialog::KTimerDialog( int msec, TimerStyle style, TQWidget *parent,
                  const char *name, bool modal,
-                 const QString &caption,
+                 const TQString &caption,
                  int buttonMask, ButtonCode defaultButton,
                  bool separator,
                  const KGuiItem &user1,
@@ -46,8 +46,8 @@ KTimerDialog::KTimerDialog( int msec, TimerStyle style, QWidget *parent,
     : KDialogBase(parent, name, modal, caption, buttonMask, defaultButton,
                  separator, user1, user2, user3 )
 {
-    totalTimer = new QTimer( this );
-    updateTimer = new QTimer( this );
+    totalTimer = new TQTimer( this );
+    updateTimer = new TQTimer( this );
     msecTotal = msecRemaining = msec;
     updateInterval = 1000;
     tStyle = style;
@@ -56,14 +56,14 @@ KTimerDialog::KTimerDialog( int msec, TimerStyle style, QWidget *parent,
     if ( buttonMask & Cancel )
         buttonOnTimeout = Cancel;
 
-    connect( totalTimer, SIGNAL( timeout() ), SLOT( slotInternalTimeout() ) );
-    connect( updateTimer, SIGNAL( timeout() ), SLOT( slotUpdateTime() ) );
+    connect( totalTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( slotInternalTimeout() ) );
+    connect( updateTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( slotUpdateTime() ) );
 
     // create the widgets
-    mainWidget = new QVBox( this, "mainWidget" );
-    timerWidget = new QHBox( mainWidget, "timerWidget" );
-    timerLabel = new QLabel( timerWidget );
-    timerProgress = new QProgressBar( timerWidget );
+    mainWidget = new TQVBox( this, "mainWidget" );
+    timerWidget = new TQHBox( mainWidget, "timerWidget" );
+    timerLabel = new TQLabel( timerWidget );
+    timerProgress = new TQProgressBar( timerWidget );
     timerProgress->setTotalSteps( msecTotal );
     timerProgress->setPercentageVisible( false );
 
@@ -90,18 +90,18 @@ int KTimerDialog::exec()
     return KDialogBase::exec();
 }
 
-void KTimerDialog::setMainWidget( QWidget *widget )
+void KTimerDialog::setMainWidget( TQWidget *widget )
 {
     // yuck, here goes.
-    QVBox *newWidget = new QVBox( this );
+    TQVBox *newWidget = new TQVBox( this );
 
     if ( widget->parentWidget() != mainWidget ) {
-        widget->reparent( newWidget, 0, QPoint(0,0) );
+        widget->reparent( newWidget, 0, TQPoint(0,0) );
     } else {
         newWidget->insertChild( widget );
     }
 
-    timerWidget->reparent( newWidget, 0, QPoint(0, 0) );
+    timerWidget->reparent( newWidget, 0, TQPoint(0, 0) );
 
     delete mainWidget;
     mainWidget = newWidget;

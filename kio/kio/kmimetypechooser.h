@@ -19,7 +19,7 @@
 #ifndef _KMIMETYPE_CHOOSER_H_
 #define _KMIMETYPE_CHOOSER_H_
 
-#include <qvbox.h>
+#include <tqvbox.h>
 #include <kdialogbase.h>
 
 
@@ -59,22 +59,22 @@ class KIO_EXPORT KMimeTypeChooser : public QVBox
      * @param parent The parent widget to use
      * @param name The internal name of this object
      */
-    KMimeTypeChooser( const QString& text=QString::null,
-                      const QStringList &selectedMimeTypes=0,
-                      const QString &defaultGroup=QString::null,
-                      const QStringList &groupsToShow=QStringList(),
+    KMimeTypeChooser( const TQString& text=TQString::null,
+                      const TQStringList &selectedMimeTypes=0,
+                      const TQString &defaultGroup=TQString::null,
+                      const TQStringList &groupsToShow=TQStringList(),
                       int visuals=Comments|Patterns|EditButton,
-                      QWidget *parent=0, const char *name=0 );
+                      TQWidget *parent=0, const char *name=0 );
     ~KMimeTypeChooser();
 
     /**
      * @return a list of all selected selected mimetypes represented by their name.
      */
-    QStringList mimeTypes() const;
+    TQStringList mimeTypes() const;
     /**
      * @return a list of the fileame patterns associated with all selected mimetypes.
      */
-    QStringList patterns() const;
+    TQStringList patterns() const;
 
   public slots:
     /**
@@ -88,7 +88,7 @@ class KIO_EXPORT KMimeTypeChooser : public QVBox
     /**
      * @internal disables the "edit" button for groups
      */
-    void slotCurrentChanged(QListViewItem* i);
+    void slotCurrentChanged(TQListViewItem* i);
 
     /**
      *  @internal called when the sycoca database has changed after
@@ -102,7 +102,7 @@ class KIO_EXPORT KMimeTypeChooser : public QVBox
      * If @p selected is empty, selectedMimeTypesStringList() is called
      * to fill it in.
      */
-    void loadMimeTypes( const QStringList &selected=QStringList() );
+    void loadMimeTypes( const TQStringList &selected=TQStringList() );
 
     class KMimeTypeChooserPrivate *d;
 };
@@ -116,8 +116,8 @@ class KIO_EXPORT KMimeTypeChooser : public QVBox
   * Here is an example, using the dialog to set the text of two lineedits:
   *
   * @code
-  *    QString text = i18n("Select the MimeTypes you want for this file type.");
-  *    QStringList list = QStringList::split( QRegExp("\\s*;\\s*"), leMimetypes->text() );
+  *    TQString text = i18n("Select the MimeTypes you want for this file type.");
+  *    TQStringList list = TQStringList::split( TQRegExp("\\s*;\\s*"), leMimetypes->text() );
   *    KMimeTypeChooserDialog *d = new KMimeTypeChooserDialog( this, 0,
   *                  i18n("Select Mime Types"), text, list, "text" );
   *    if ( d->exec() == KDialogBase::Accepted ) {
@@ -149,22 +149,22 @@ class KIO_EXPORT KMimeTypeChooserDialog : public KDialogBase
      * @param parent The parent widget to use
      * @param name The internal name of this object
      */
-    KMimeTypeChooserDialog( const QString &caption=QString::null,
-                         const QString& text=QString::null,
-                         const QStringList &selectedMimeTypes=QStringList(),
-                         const QString &defaultGroup=QString::null,
-                         const QStringList &groupsToShow=QStringList(),
+    KMimeTypeChooserDialog( const TQString &caption=TQString::null,
+                         const TQString& text=TQString::null,
+                         const TQStringList &selectedMimeTypes=TQStringList(),
+                         const TQString &defaultGroup=TQString::null,
+                         const TQStringList &groupsToShow=TQStringList(),
                          int visuals=KMimeTypeChooser::Comments|KMimeTypeChooser::Patterns|KMimeTypeChooser::EditButton,
-                         QWidget *parent=0, const char *name=0 );
+                         TQWidget *parent=0, const char *name=0 );
 
     /**
      * @overload
      */
-    KMimeTypeChooserDialog( const QString &caption,
-                         const QString& text,
-                         const QStringList &selectedMimeTypes,
-                         const QString &defaultGroup,
-                         QWidget *parent=0, const char *name=0 );
+    KMimeTypeChooserDialog( const TQString &caption,
+                         const TQString& text,
+                         const TQStringList &selectedMimeTypes,
+                         const TQString &defaultGroup,
+                         TQWidget *parent=0, const char *name=0 );
 
     ~KMimeTypeChooserDialog();
 

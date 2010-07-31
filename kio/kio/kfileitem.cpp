@@ -29,10 +29,10 @@
 
 #include "kfileitem.h"
 
-#include <qdir.h>
-#include <qfile.h>
-#include <qmap.h>
-#include <qstylesheet.h>
+#include <tqdir.h>
+#include <tqfile.h>
+#include <tqmap.h>
+#include <tqstylesheet.h>
 
 #include <kdebug.h>
 #include <kfilemetainfo.h>
@@ -48,7 +48,7 @@
 
 class KFileItem::KFileItemPrivate {
 	public:
-		QString iconName;
+		TQString iconName;
 };
 
 KFileItem::KFileItem( const KIO::UDSEntry& _entry, const KURL& _url,
@@ -87,7 +87,7 @@ KFileItem::KFileItem( mode_t _mode, mode_t _permissions, const KURL& _url, bool 
   init( _determineMimeTypeOnDemand );
 }
 
-KFileItem::KFileItem( const KURL &url, const QString &mimeType, mode_t mode )
+KFileItem::KFileItem( const KURL &url, const TQString &mimeType, mode_t mode )
 :  m_url( url ),
   m_strName( url.fileName() ),
   m_strText( KIO::decodeFileName( m_strName ) ),
@@ -126,7 +126,7 @@ KFileItem::~KFileItem()
 
 void KFileItem::init( bool _determineMimeTypeOnDemand )
 {
-  m_access = QString::null;
+  m_access = TQString::null;
   m_size = (KIO::filesize_t) -1;
   //  metaInfo = KFileMetaInfo();
   for ( int i = 0; i < NumFlags; i++ )
@@ -146,7 +146,7 @@ void KFileItem::init( bool _determineMimeTypeOnDemand )
        * This is the reason for the -1
        */
       KDE_struct_stat buf;
-      QCString path = QFile::encodeName(m_url.path( -1 ));
+      TQCString path = TQFile::encodeName(m_url.path( -1 ));
       if ( KDE_lstat( path.data(), &buf ) == 0 )
       {
         mode = buf.st_mode;
@@ -254,7 +254,7 @@ void KFileItem::readUDSEntry( bool _urlIsDirectory )
   }
 
   // avoid creating these QStrings again and again
-  static const QString& dot = KGlobal::staticQString(".");
+  static const TQString& dot = KGlobal::staticQString(".");
   if ( _urlIsDirectory && !UDS_URL_seen && !m_strName.isEmpty() && m_strName != dot )
     m_url.addPath( m_strName );
 }
@@ -264,8 +264,8 @@ void KFileItem::refresh()
   m_fileMode = KFileItem::Unknown;
   m_permissions = KFileItem::Unknown;
   m_pMimeType = 0L;
-  m_user = QString::null;
-  m_group = QString::null;
+  m_user = TQString::null;
+  m_group = TQString::null;
   m_metaInfo = KFileMetaInfo();
   m_hidden = Auto;
 
@@ -289,15 +289,15 @@ void KFileItem::setURL( const KURL &url )
   setName( url.fileName() );
 }
 
-void KFileItem::setName( const QString& name )
+void KFileItem::setName( const TQString& name )
 {
   m_strName = name;
   m_strText = KIO::decodeFileName( m_strName );
 }
 
-QString KFileItem::linkDest() const
+TQString KFileItem::linkDest() const
 {
-  if (&m_entry == NULL) return QString::null;
+  if (&m_entry == NULL) return TQString::null;
 
   // Extract it from the KIO::UDSEntry
   KIO::UDSEntry::ConstIterator it = m_entry.begin();
@@ -308,17 +308,17 @@ QString KFileItem::linkDest() const
   if ( m_bIsLocalURL )
   {
     char buf[1000];
-    int n = readlink( QFile::encodeName(m_url.path( -1 )), buf, sizeof(buf)-1 );
+    int n = readlink( TQFile::encodeName(m_url.path( -1 )), buf, sizeof(buf)-1 );
     if ( n != -1 )
     {
       buf[ n ] = 0;
-      return QFile::decodeName( buf );
+      return TQFile::decodeName( buf );
     }
   }
-  return QString::null;
+  return TQString::null;
 }
 
-QString KFileItem::localPath() const
+TQString KFileItem::localPath() const
 {
   if ( m_bIsLocalURL )
   {
@@ -326,7 +326,7 @@ QString KFileItem::localPath() const
   }
   else
   {
-    if (&m_entry == NULL) return QString::null;
+    if (&m_entry == NULL) return TQString::null;
 
     // Extract the local path from the KIO::UDSEntry
     KIO::UDSEntry::ConstIterator it = m_entry.begin();
@@ -336,7 +336,7 @@ QString KFileItem::localPath() const
         return (*it).m_str;
   }
 
-  return QString::null;
+  return TQString::null;
 }
 
 KIO::filesize_t KFileItem::size(bool &exists) const
@@ -358,7 +358,7 @@ KIO::filesize_t KFileItem::size(bool &exists) const
   if ( m_bIsLocalURL )
   {
     KDE_struct_stat buf;
-    if ( KDE_stat( QFile::encodeName(m_url.path( -1 )), &buf ) == 0 )
+    if ( KDE_stat( TQFile::encodeName(m_url.path( -1 )), &buf ) == 0 )
         return buf.st_size;
   }
   exists = false;
@@ -448,7 +448,7 @@ time_t KFileItem::time( unsigned int which, bool &hasTime ) const
   if ( m_bIsLocalURL )
   {
     KDE_struct_stat buf;
-    if ( KDE_stat( QFile::encodeName(m_url.path(-1)), &buf ) == 0 )
+    if ( KDE_stat( TQFile::encodeName(m_url.path(-1)), &buf ) == 0 )
     {
 	if(which == KIO::UDS_CREATION_TIME) {
 	    // We can't determine creation time for local files
@@ -468,32 +468,32 @@ time_t KFileItem::time( unsigned int which, bool &hasTime ) const
 }
 
 
-QString KFileItem::user() const
+TQString KFileItem::user() const
 {
   if ( m_user.isEmpty() && m_bIsLocalURL )
   {
     KDE_struct_stat buff;
-    if ( KDE_lstat( QFile::encodeName(m_url.path( -1 )), &buff ) == 0) // get uid/gid of the link, if it's a link
+    if ( KDE_lstat( TQFile::encodeName(m_url.path( -1 )), &buff ) == 0) // get uid/gid of the link, if it's a link
     {
       struct passwd *user = getpwuid( buff.st_uid );
       if ( user != 0L )
-        m_user = QString::fromLocal8Bit(user->pw_name);
+        m_user = TQString::fromLocal8Bit(user->pw_name);
     }
   }
   return m_user;
 }
 
-QString KFileItem::group() const
+TQString KFileItem::group() const
 {
 #ifdef Q_OS_UNIX
   if (m_group.isEmpty() && m_bIsLocalURL )
   {
     KDE_struct_stat buff;
-    if ( KDE_lstat( QFile::encodeName(m_url.path( -1 )), &buff ) == 0) // get uid/gid of the link, if it's a link
+    if ( KDE_lstat( TQFile::encodeName(m_url.path( -1 )), &buff ) == 0) // get uid/gid of the link, if it's a link
     {
       struct group *ge = getgrgid( buff.st_gid );
       if ( ge != 0L ) {
-        m_group = QString::fromLocal8Bit(ge->gr_name);
+        m_group = TQString::fromLocal8Bit(ge->gr_name);
         if (m_group.isEmpty())
           m_group.sprintf("%d",ge->gr_gid);
       } else
@@ -504,7 +504,7 @@ QString KFileItem::group() const
   return m_group;
 }
 
-QString KFileItem::mimetype() const
+TQString KFileItem::mimetype() const
 {
   KFileItem * that = const_cast<KFileItem *>(this);
   return that->determineMimeType()->name();
@@ -533,14 +533,14 @@ bool KFileItem::isMimeTypeKnown() const
   return m_bMimeTypeKnown && m_guessedMimeType.isEmpty();
 }
 
-QString KFileItem::mimeComment()
+TQString KFileItem::mimeComment()
 {
  KMimeType::Ptr mType = determineMimeType();
 
  bool isLocalURL;
  KURL url = mostLocalURL(isLocalURL);
 
- QString comment = mType->comment( url, isLocalURL );
+ TQString comment = mType->comment( url, isLocalURL );
  //kdDebug() << "finding comment for " << url.url() << " : " << m_pMimeType->name() << endl;
   if (!comment.isEmpty())
     return comment;
@@ -548,7 +548,7 @@ QString KFileItem::mimeComment()
     return mType->name();
 }
 
-QString KFileItem::iconName()
+TQString KFileItem::iconName()
 {
   if (d && (!d->iconName.isEmpty())) return d->iconName;
 
@@ -587,14 +587,14 @@ int KFileItem::overlays() const
   return _state;
 }
 
-QPixmap KFileItem::pixmap( int _size, int _state ) const
+TQPixmap KFileItem::pixmap( int _size, int _state ) const
 {
   if (d && (!d->iconName.isEmpty()))
      return DesktopIcon(d->iconName,_size,_state);
 
   if ( !m_pMimeType )
   {
-    static const QString & defaultFolderIcon =
+    static const TQString & defaultFolderIcon =
        KGlobal::staticQString(KMimeType::mimeType( "inode/directory" )->KServiceType::icon());
 
     if ( S_ISDIR( m_fileMode ) )
@@ -625,7 +625,7 @@ QPixmap KFileItem::pixmap( int _size, int _state ) const
   bool isLocalURL;
   KURL url = mostLocalURL(isLocalURL);
 
-  QPixmap p = mime->pixmap( url, KIcon::Desktop, _size, _state );
+  TQPixmap p = mime->pixmap( url, KIcon::Desktop, _size, _state );
   //kdDebug() << "finding pixmap for " << url.url() << " : " << mime->name() << endl;
   if (p.isNull())
       kdWarning() << "Pixmap not found for mimetype " << m_pMimeType->name() << endl;
@@ -637,9 +637,9 @@ bool KFileItem::isReadable() const
 {
   /*
   struct passwd * user = getpwuid( geteuid() );
-  bool isMyFile = (QString::fromLocal8Bit(user->pw_name) == m_user);
+  bool isMyFile = (TQString::fromLocal8Bit(user->pw_name) == m_user);
   // This gets ugly for the group....
-  // Maybe we want a static QString for the user and a static QStringList
+  // Maybe we want a static TQString for the user and a static QStringList
   // for the groups... then we need to handle the deletion properly...
   */
 
@@ -654,7 +654,7 @@ bool KFileItem::isReadable() const
   }
 
   // Or if we can't read it [using ::access()] - not network transparent
-  if ( m_bIsLocalURL && ::access( QFile::encodeName(m_url.path()), R_OK ) == -1 )
+  if ( m_bIsLocalURL && ::access( TQFile::encodeName(m_url.path()), R_OK ) == -1 )
       return false;
 
   return true;
@@ -664,9 +664,9 @@ bool KFileItem::isWritable() const
 {
   /*
   struct passwd * user = getpwuid( geteuid() );
-  bool isMyFile = (QString::fromLocal8Bit(user->pw_name) == m_user);
+  bool isMyFile = (TQString::fromLocal8Bit(user->pw_name) == m_user);
   // This gets ugly for the group....
-  // Maybe we want a static QString for the user and a static QStringList
+  // Maybe we want a static TQString for the user and a static QStringList
   // for the groups... then we need to handle the deletion properly...
   */
 
@@ -677,7 +677,7 @@ bool KFileItem::isWritable() const
   }
 
   // Or if we can't read it [using ::access()] - not network transparent
- if ( m_bIsLocalURL && ::access( QFile::encodeName(m_url.path()), W_OK ) == -1 )
+ if ( m_bIsLocalURL && ::access( TQFile::encodeName(m_url.path()), W_OK ) == -1 )
       return false;
 
   return true;
@@ -727,20 +727,20 @@ bool KFileItem::acceptsDrops()
     return true;
 
   // Executable, shell script ... ?
-  if ( ::access( QFile::encodeName(m_url.path()), X_OK ) == 0 )
+  if ( ::access( TQFile::encodeName(m_url.path()), X_OK ) == 0 )
     return true;
 
   return false;
 }
 
-QString KFileItem::getStatusBarInfo()
+TQString KFileItem::getStatusBarInfo()
 {
-  QString text = m_strText;
+  TQString text = m_strText;
 
   if ( m_bLink )
   {
-      QString comment = determineMimeType()->comment( m_url, m_bIsLocalURL );
-      QString tmp;
+      TQString comment = determineMimeType()->comment( m_url, m_bIsLocalURL );
+      TQString tmp;
       if ( comment.isEmpty() )
         tmp = i18n ( "Symbolic Link" );
       else
@@ -755,7 +755,7 @@ QString KFileItem::getStatusBarInfo()
       bool hasSize;
       KIO::filesize_t sizeValue = size(hasSize);
       if(hasSize)
-        text += QString(" (%1)  ").arg( KIO::convertSize( sizeValue ) );
+        text += TQString(" (%1)  ").arg( KIO::convertSize( sizeValue ) );
       text += mimeComment();
   }
   else if ( S_ISDIR ( m_fileMode ) )
@@ -772,10 +772,10 @@ QString KFileItem::getStatusBarInfo()
   return text;
 }
 
-QString KFileItem::getToolTipText(int maxcount)
+TQString KFileItem::getToolTipText(int maxcount)
 {
-  // we can return QString::null if no tool tip should be shown
-  QString tip;
+  // we can return TQString::null if no tool tip should be shown
+  TQString tip;
   KFileMetaInfo info = metaInfo();
 
   // the font tags are a workaround for the fact that the tool tip gets
@@ -789,7 +789,7 @@ QString KFileItem::getToolTipText(int maxcount)
   tip += start + i18n("Name:") + mid + text() + end;
   tip += start + i18n("Type:") + mid;
 
-  QString type = QStyleSheet::escape(mimeComment());
+  TQString type = TQStyleSheet::escape(mimeComment());
   if ( m_bLink ) {
    tip += i18n("Link to %1 (%2)").arg(linkDest(), type) + end;
   } else
@@ -802,13 +802,13 @@ QString KFileItem::getToolTipText(int maxcount)
       tip += start + i18n("Size:") + mid +
              KIO::convertSizeWithBytes(sizeValue) + end;
   }
-  QString timeStr = timeString( KIO::UDS_MODIFICATION_TIME);
+  TQString timeStr = timeString( KIO::UDS_MODIFICATION_TIME);
   if(!timeStr.isEmpty())
     tip += start + i18n("Modified:") + mid +
            timeStr + end;
 #ifndef Q_WS_WIN //TODO: show win32-specific permissions
-  QString userStr = user();
-  QString groupStr = group();
+  TQString userStr = user();
+  TQString groupStr = group();
   if(!userStr.isEmpty() || !groupStr.isEmpty())
     tip += start + i18n("Owner:") + mid + userStr + " - " + groupStr + end +
            start + i18n("Permissions:") + mid +
@@ -818,16 +818,16 @@ QString KFileItem::getToolTipText(int maxcount)
   if (info.isValid() && !info.isEmpty() )
   {
     tip += "<tr><td colspan=2><center><s>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</s></center></td></tr>";
-    QStringList keys = info.preferredKeys();
+    TQStringList keys = info.preferredKeys();
 
     // now the rest
-    QStringList::Iterator it = keys.begin();
+    TQStringList::Iterator it = keys.begin();
     for (int count = 0; count<maxcount && it!=keys.end() ; ++it)
     {
       KFileMetaInfoItem item = info.item( *it );
       if ( item.isValid() )
       {
-        QString s = item.string();
+        TQString s = item.string();
         if ( ( item.attributes() & KFileMimeTypeInfo::SqueezeText )
              && s.length() > 50) {
             s.truncate(47);
@@ -837,9 +837,9 @@ QString KFileItem::getToolTipText(int maxcount)
         {
           count++;
           tip += start +
-                   QStyleSheet::escape( item.translatedKey() ) + ":" +
+                   TQStyleSheet::escape( item.translatedKey() ) + ":" +
                  mid +
-                   QStyleSheet::escape( s ) +
+                   TQStyleSheet::escape( s ) +
                  end;
         }
 
@@ -929,11 +929,11 @@ void KFileItem::setUDSEntry( const KIO::UDSEntry& _entry, const KURL& _url,
 {
   m_entry = _entry;
   m_url = _url;
-  m_strName = QString::null;
-  m_strText = QString::null;
-  m_user = QString::null;
-  m_group = QString::null;
-  m_strLowerCaseName = QString::null;
+  m_strName = TQString::null;
+  m_strText = TQString::null;
+  m_user = TQString::null;
+  m_group = TQString::null;
+  m_strLowerCaseName = TQString::null;
   m_pMimeType = 0;
   m_fileMode = KFileItem::Unknown;
   m_permissions = KFileItem::Unknown;
@@ -942,11 +942,11 @@ void KFileItem::setUDSEntry( const KIO::UDSEntry& _entry, const KURL& _url,
   m_bIsLocalURL = _url.isLocalFile();
   m_bMimeTypeKnown = false;
   m_hidden = Auto;
-  m_guessedMimeType = QString::null;
+  m_guessedMimeType = TQString::null;
   m_metaInfo = KFileMetaInfo();
 
   if ( d )
-    d->iconName = QString::null;
+    d->iconName = TQString::null;
 
   readUDSEntry( _urlIsDirectory );
   init( _determineMimeTypeOnDemand );
@@ -957,7 +957,7 @@ void KFileItem::setFileMode( mode_t m )
   m_fileMode = m;
 }
 
-void KFileItem::setMimeType( const QString& mimetype )
+void KFileItem::setMimeType( const TQString& mimetype )
 {
     m_pMimeType = KMimeType::mimeType( mimetype );
 }
@@ -972,7 +972,7 @@ void KFileItem::setExtraData( const void *key, void *value )
 
 const void * KFileItem::extraData( const void *key ) const
 {
-    QMapConstIterator<const void*,void*> it = m_extra.find( key );
+    TQMapConstIterator<const void*,void*> it = m_extra.find( key );
     if ( it != m_extra.end() )
         return it.data();
     return 0L;
@@ -980,7 +980,7 @@ const void * KFileItem::extraData( const void *key ) const
 
 void * KFileItem::extraData( const void *key )
 {
-    QMapIterator<const void*,void*> it = m_extra.find( key );
+    TQMapIterator<const void*,void*> it = m_extra.find( key );
     if ( it != m_extra.end() )
         return it.data();
     return 0L;
@@ -991,7 +991,7 @@ void KFileItem::removeExtraData( const void *key )
     m_extra.remove( key );
 }
 
-QString KFileItem::permissionsString() const
+TQString KFileItem::permissionsString() const
 {
     if (m_access.isNull())
       m_access = parsePermissions( m_permissions );
@@ -999,7 +999,7 @@ QString KFileItem::permissionsString() const
     return m_access;
 }
 
-QString KFileItem::parsePermissions(mode_t perm) const
+TQString KFileItem::parsePermissions(mode_t perm) const
 {
     char p[] = "---------- ";
 
@@ -1008,44 +1008,44 @@ QString KFileItem::parsePermissions(mode_t perm) const
     else if (isLink())
 	p[0]='l';
 
-    if (perm & QFileInfo::ReadUser)
+    if (perm & TQFileInfo::ReadUser)
 	p[1]='r';
-    if (perm & QFileInfo::WriteUser)
+    if (perm & TQFileInfo::WriteUser)
         p[2]='w';
-    if ((perm & QFileInfo::ExeUser) && !(perm & S_ISUID)) p[3]='x';
-    else if ((perm & QFileInfo::ExeUser) && (perm & S_ISUID)) p[3]='s';
-    else if (!(perm & QFileInfo::ExeUser) && (perm & S_ISUID)) p[3]='S';
+    if ((perm & TQFileInfo::ExeUser) && !(perm & S_ISUID)) p[3]='x';
+    else if ((perm & TQFileInfo::ExeUser) && (perm & S_ISUID)) p[3]='s';
+    else if (!(perm & TQFileInfo::ExeUser) && (perm & S_ISUID)) p[3]='S';
 
-    if (perm & QFileInfo::ReadGroup)
+    if (perm & TQFileInfo::ReadGroup)
 	p[4]='r';
-    if (perm & QFileInfo::WriteGroup)
+    if (perm & TQFileInfo::WriteGroup)
         p[5]='w';
-    if ((perm & QFileInfo::ExeGroup) && !(perm & S_ISGID)) p[6]='x';
-    else if ((perm & QFileInfo::ExeGroup) && (perm & S_ISGID)) p[6]='s';
-    else if (!(perm & QFileInfo::ExeGroup) && (perm & S_ISGID)) p[6]='S';
+    if ((perm & TQFileInfo::ExeGroup) && !(perm & S_ISGID)) p[6]='x';
+    else if ((perm & TQFileInfo::ExeGroup) && (perm & S_ISGID)) p[6]='s';
+    else if (!(perm & TQFileInfo::ExeGroup) && (perm & S_ISGID)) p[6]='S';
 
-    if (perm & QFileInfo::ReadOther)
+    if (perm & TQFileInfo::ReadOther)
 	p[7]='r';
-    if (perm & QFileInfo::WriteOther)
+    if (perm & TQFileInfo::WriteOther)
         p[8]='w';
-    if ((perm & QFileInfo::ExeOther) && !(perm & S_ISVTX)) p[9]='x';
-    else if ((perm & QFileInfo::ExeOther) && (perm & S_ISVTX)) p[9]='t';
-    else if (!(perm & QFileInfo::ExeOther) && (perm & S_ISVTX)) p[9]='T';
+    if ((perm & TQFileInfo::ExeOther) && !(perm & S_ISVTX)) p[9]='x';
+    else if ((perm & TQFileInfo::ExeOther) && (perm & S_ISVTX)) p[9]='t';
+    else if (!(perm & TQFileInfo::ExeOther) && (perm & S_ISVTX)) p[9]='T';
 
     if (hasExtendedACL())
         p[10]='+';
 
-    return QString::fromLatin1(p);
+    return TQString::fromLatin1(p);
 }
 
 // check if we need to cache this
-QString KFileItem::timeString( unsigned int which ) const
+TQString KFileItem::timeString( unsigned int which ) const
 {
     bool hasTime;
     time_t time_ = time(which, hasTime);
-    if(!hasTime) return QString::null;
+    if(!hasTime) return TQString::null;
 
-    QDateTime t;
+    TQDateTime t;
     t.setTime_t( time_);
     return KGlobal::locale()->formatDateTime( t );
 }
@@ -1071,7 +1071,7 @@ const KFileMetaInfo & KFileItem::metaInfo(bool autoget, int) const
 
 KURL KFileItem::mostLocalURL(bool &local) const
 {
-    QString local_path = localPath();
+    TQString local_path = localPath();
 
     if ( !local_path.isEmpty() )
     {
@@ -1090,7 +1090,7 @@ KURL KFileItem::mostLocalURL(bool &local) const
 void KFileItem::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-QDataStream & operator<< ( QDataStream & s, const KFileItem & a )
+TQDataStream & operator<< ( TQDataStream & s, const KFileItem & a )
 {
     // We don't need to save/restore anything that refresh() invalidates,
     // since that means we can re-determine those by ourselves.
@@ -1100,7 +1100,7 @@ QDataStream & operator<< ( QDataStream & s, const KFileItem & a )
     return s;
 }
 
-QDataStream & operator>> ( QDataStream & s, KFileItem & a )
+TQDataStream & operator>> ( TQDataStream & s, KFileItem & a )
 {
     s >> a.m_url;
     s >> a.m_strName;

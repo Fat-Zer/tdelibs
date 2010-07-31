@@ -31,7 +31,7 @@ namespace KSpell2
         Q_OBJECT
     public:
         ConfigDialog( Broker *broker,
-                      QWidget *parent );
+                      TQWidget *parent );
         ~ConfigDialog();
 
     protected slots:

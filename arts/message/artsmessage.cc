@@ -29,7 +29,7 @@ Gnome, etc. and used instead.
 
 */
 
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include <klocale.h>
 #include <kglobal.h>
@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
 	KApplication app;
 	
 	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-	QString msg;
+	TQString msg;
 
 	// must be at least one argument
 	if (args->count() == 0) {
@@ -75,15 +75,15 @@ int main(int argc, char **argv) {
 		if (i == 0)
 			msg = args->arg(i);
 		else
-			msg += QString(" ") + args->arg(i);
+			msg += TQString(" ") + args->arg(i);
 	}
 
 	const int notifyOptions = 0; // never activate KNotify
 	if (args->isSet("w")) {
 		KMessageBox::sorry(0, msg, i18n("Warning"), notifyOptions);
 	} else if (args->isSet("i")) {
-		QString id = msg;
-		id.replace(QRegExp("[\\[\\]\\s=]"), "_");
+		TQString id = msg;
+		id.replace(TQRegExp("[\\[\\]\\s=]"), "_");
 		KMessageBox::information(0, msg, i18n("Informational"), id, notifyOptions);
 	} else {
 		KMessageBox::error(0, msg, i18n("Error"), notifyOptions);

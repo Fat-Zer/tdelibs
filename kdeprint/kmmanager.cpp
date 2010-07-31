@@ -27,7 +27,7 @@
 #include "kprinter.h"
 
 #include <zlib.h>
-#include <qfile.h>
+#include <tqfile.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <klocale.h>
@@ -36,8 +36,8 @@
 #include <klibloader.h>
 #include <unistd.h>
 
-KMManager::KMManager(QObject *parent, const char *name)
-: QObject(parent,name)
+KMManager::KMManager(TQObject *parent, const char *name)
+: TQObject(parent,name)
 {
 	m_printers.setAutoDelete(true);
 	m_fprinters.setAutoDelete(false);
@@ -96,7 +96,7 @@ bool KMManager::removePrinter(KMPrinter*)
 	return notImplemented();
 }
 
-bool KMManager::removePrinter(const QString& name)
+bool KMManager::removePrinter(const TQString& name)
 {
 	KMPrinter	*p = findPrinter(name);
 	return (p ? removePrinter(p) : false);
@@ -107,7 +107,7 @@ bool KMManager::enablePrinter(KMPrinter*, bool)
 	return notImplemented();
 }
 
-bool KMManager::enablePrinter(const QString& name, bool state)
+bool KMManager::enablePrinter(const TQString& name, bool state)
 {
 	KMPrinter	*p = findPrinter(name);
 	return (p ? enablePrinter(p, state) : false);
@@ -118,7 +118,7 @@ bool KMManager::startPrinter(KMPrinter*, bool)
 	return notImplemented();
 }
 
-bool KMManager::startPrinter(const QString& name, bool state)
+bool KMManager::startPrinter(const TQString& name, bool state)
 {
 	KMPrinter	*p = findPrinter(name);
 	return (p ? startPrinter(p, state) : false);
@@ -143,7 +143,7 @@ bool KMManager::completePrinterShort(KMPrinter *p)
 	return completePrinter(p);
 }
 
-bool KMManager::completePrinter(const QString& name)
+bool KMManager::completePrinter(const TQString& name)
 {
 	KMPrinter	*p = findPrinter(name);
 	return (p ? completePrinter(p) : false);
@@ -154,7 +154,7 @@ bool KMManager::setDefaultPrinter(KMPrinter*)
 	return notImplemented();
 }
 
-bool KMManager::setDefaultPrinter(const QString& name)
+bool KMManager::setDefaultPrinter(const TQString& name)
 {
 	KMPrinter	*p = findPrinter(name);
 	return (p ? setDefaultPrinter(p) : false);
@@ -186,9 +186,9 @@ bool KMManager::testPrinter(KMPrinter *prt)
 	// return notImplemented();
 }
 
-KMPrinter* KMManager::findPrinter(const QString& name)
+KMPrinter* KMManager::findPrinter(const TQString& name)
 {
-	QPtrListIterator<KMPrinter>	it(m_printers);
+	TQPtrListIterator<KMPrinter>	it(m_printers);
 	for (;it.current();++it)
 		if (it.current()->name() == name) return it.current();
 	//setErrorMsg(i18n("%1: printer not found.").arg(name));
@@ -197,7 +197,7 @@ KMPrinter* KMManager::findPrinter(const QString& name)
 
 KMPrinter* KMManager::softDefault() const
 {
-	QPtrListIterator<KMPrinter>	it(m_printers);
+	TQPtrListIterator<KMPrinter>	it(m_printers);
 	for (;it.current();++it)
 		if (it.current()->isSoftDefault()) return it.current();
 	return 0;
@@ -205,7 +205,7 @@ KMPrinter* KMManager::softDefault() const
 
 KMPrinter* KMManager::hardDefault() const
 {
-	QPtrListIterator<KMPrinter>	it(m_printers);
+	TQPtrListIterator<KMPrinter>	it(m_printers);
 	for (; it.current();++it)
 		if (it.current()->isHardDefault())
 			return it.current();
@@ -221,9 +221,9 @@ KMPrinter* KMManager::defaultPrinter()
 	return prt;
 }
 
-QPtrList<KMPrinter>* KMManager::printerList(bool reload)
+TQPtrList<KMPrinter>* KMManager::printerList(bool reload)
 {
-	setErrorMsg(QString::null);
+	setErrorMsg(TQString::null);
 	//kdDebug(500) << "Getting printer list: " << reload << endl;
 
 	if (reload || m_printers.count() == 0)
@@ -268,7 +268,7 @@ QPtrList<KMPrinter>* KMManager::printerList(bool reload)
 		//   - use the PRINTER variable
 		if (!softDefault())
 		{
-			KMPrinter	*defprinter = findPrinter(QString::fromLatin1(getenv("PRINTER")));
+			KMPrinter	*defprinter = findPrinter(TQString::fromLatin1(getenv("PRINTER")));
 			if (defprinter)
 				setSoftDefault(defprinter);
 		}
@@ -277,7 +277,7 @@ QPtrList<KMPrinter>* KMManager::printerList(bool reload)
 	return &m_fprinters;
 }
 
-QPtrList<KMPrinter>* KMManager::printerListComplete(bool reload)
+TQPtrList<KMPrinter>* KMManager::printerListComplete(bool reload)
 {
 	printerList(reload);
 	return &m_printers;
@@ -312,14 +312,14 @@ void KMManager::addPrinter(KMPrinter *p)
 	}
 }
 
-QString KMManager::driverDbCreationProgram()
+TQString KMManager::driverDbCreationProgram()
 {
-	return QString::null;
+	return TQString::null;
 }
 
-QString KMManager::driverDirectory()
+TQString KMManager::driverDirectory()
 {
-	return QString::null;
+	return TQString::null;
 }
 
 DrMain* KMManager::loadPrinterDriver(KMPrinter*, bool)
@@ -332,7 +332,7 @@ DrMain* KMManager::loadDbDriver(KMDBEntry *entry)
 	return loadFileDriver(entry->file);
 }
 
-DrMain* KMManager::loadFileDriver(const QString&)
+DrMain* KMManager::loadFileDriver(const TQString&)
 {
 	return NULL;
 }
@@ -350,11 +350,11 @@ bool KMManager::savePrinterDriver(KMPrinter*,DrMain*)
 	return notImplemented();
 }
 
-bool KMManager::uncompressFile(const QString& filename, QString& destname)
+bool KMManager::uncompressFile(const TQString& filename, TQString& destname)
 {
 	QFile	f(filename);
 	bool	result(true);
-	destname = QString::null;
+	destname = TQString::null;
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
 		char	buf[1024] = {0};
@@ -383,7 +383,7 @@ bool KMManager::uncompressFile(const QString& filename, QString& destname)
 
 void KMManager::setHardDefault(KMPrinter *p)
 {
-	QPtrListIterator<KMPrinter>	it(m_printers);
+	TQPtrListIterator<KMPrinter>	it(m_printers);
 	for (;it.current();++it)
 		it.current()->setHardDefault(false);
 	if (p) p->setHardDefault(true);
@@ -391,7 +391,7 @@ void KMManager::setHardDefault(KMPrinter *p)
 
 void KMManager::setSoftDefault(KMPrinter *p)
 {
-	QPtrListIterator<KMPrinter>	it(m_printers);
+	TQPtrListIterator<KMPrinter>	it(m_printers);
 	for (;it.current();++it)
         {
 		it.current()->setSoftDefault(false);
@@ -411,12 +411,12 @@ bool KMManager::restartServer()
 	return notImplemented();
 }
 
-bool KMManager::configureServer(QWidget*)
+bool KMManager::configureServer(TQWidget*)
 {
 	return notImplemented();
 }
 
-QString KMManager::testPage()
+TQString KMManager::testPage()
 {
 	KConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("General");
@@ -428,7 +428,7 @@ QString KMManager::testPage()
 
 void KMManager::discardAllPrinters(bool on)
 {
-	QPtrListIterator<KMPrinter>	it(m_printers);
+	TQPtrListIterator<KMPrinter>	it(m_printers);
 	for (;it.current();++it)
 		if (!on || !it.current()->isSpecial())
 			it.current()->setDiscarded(on);
@@ -471,22 +471,22 @@ bool KMManager::removeSpecialPrinter(KMPrinter *p)
 
   Defaults to 3 parallel printers
 */
-QStringList KMManager::detectLocalPrinters()
+TQStringList KMManager::detectLocalPrinters()
 {
 	QStringList	list;
 	for (int i=0; i<3; i++)
-		list << QString::null << QString::fromLatin1("parallel:/dev/lp%1").arg(i) << i18n("Parallel Port #%1").arg(i+1) << QString::null;
+		list << TQString::null << TQString::fromLatin1("parallel:/dev/lp%1").arg(i) << i18n("Parallel Port #%1").arg(i+1) << TQString::null;
 	return list;
 }
 
-int KMManager::addPrinterWizard(QWidget *parent)
+int KMManager::addPrinterWizard(TQWidget *parent)
 {
 	KLibrary	*lib = KLibLoader::self()->library("libkdeprint_management_module");
 	if (!lib)
 		setErrorMsg(i18n("Unable to load KDE print management library: %1").arg(KLibLoader::self()->lastErrorMessage()));
 	else
 	{
-		int (*func)(QWidget*) = (int(*)(QWidget*))lib->symbol("add_printer_wizard");
+		int (*func)(TQWidget*) = (int(*)(TQWidget*))lib->symbol("add_printer_wizard");
 		if (!func)
 			setErrorMsg(i18n("Unable to find wizard object in management library."));
 		else
@@ -495,14 +495,14 @@ int KMManager::addPrinterWizard(QWidget *parent)
 	return (-1);
 }
 
-bool KMManager::invokeOptionsDialog(QWidget *parent)
+bool KMManager::invokeOptionsDialog(TQWidget *parent)
 {
 	KLibrary	*lib = KLibLoader::self()->library("libkdeprint_management_module");
 	if (!lib)
 		setErrorMsg(i18n("Unable to load KDE print management library: %1").arg(KLibLoader::self()->lastErrorMessage()));
 	else
 	{
-		bool (*func)(QWidget*) = (bool(*)(QWidget*))lib->symbol("config_dialog");
+		bool (*func)(TQWidget*) = (bool(*)(TQWidget*))lib->symbol("config_dialog");
 		if (!func)
 			setErrorMsg(i18n("Unable to find options dialog in management library."));
 		else
@@ -529,7 +529,7 @@ bool KMManager::isFilterEnabled() const
 	return m_printerfilter->isEnabled();
 }
 
-QString KMManager::stateInformation()
+TQString KMManager::stateInformation()
 {
 	return i18n("No plugin information available");
 }

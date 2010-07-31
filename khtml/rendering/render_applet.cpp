@@ -30,7 +30,7 @@
 #include "khtmlview.h"
 #include "khtml_part.h"
 
-#include <qlabel.h>
+#include <tqlabel.h>
 
 #ifndef Q_WS_QWS // We don't have Java in Qt Embedded
 
@@ -41,7 +41,7 @@
 using namespace khtml;
 using namespace DOM;
 
-RenderApplet::RenderApplet(HTMLElementImpl *applet, const QMap<QString, QString> &args )
+RenderApplet::RenderApplet(HTMLElementImpl *applet, const TQMap<TQString, TQString> &args )
     : RenderWidget(applet)
 {
     // init RenderObject attributes
@@ -55,7 +55,7 @@ RenderApplet::RenderApplet(HTMLElementImpl *applet, const QMap<QString, QString>
     }
 
     if ( context ) {
-        //kdDebug(6100) << "RenderApplet::RenderApplet, setting QWidget" << endl;
+        //kdDebug(6100) << "RenderApplet::RenderApplet, setting TQWidget" << endl;
         setQWidget( new KJavaAppletWidget(context, _view->viewport()) );
         processArguments(args);
     }
@@ -117,28 +117,28 @@ void RenderApplet::layout()
     setNeedsLayout(false);
 }
 
-void RenderApplet::processArguments(const QMap<QString, QString> &args)
+void RenderApplet::processArguments(const TQMap<TQString, TQString> &args)
 {
     KJavaAppletWidget *w = static_cast<KJavaAppletWidget*>(m_widget);
     KJavaApplet* applet = w ? w->applet() : 0;
 
     if ( applet ) {
-        applet->setBaseURL( args[QString::fromLatin1("baseURL") ] );
-        applet->setAppletClass( args[QString::fromLatin1("code") ] );
+        applet->setBaseURL( args[TQString::fromLatin1("baseURL") ] );
+        applet->setAppletClass( args[TQString::fromLatin1("code") ] );
 
-	QString str = args[QString::fromLatin1("codeBase") ];
+	TQString str = args[TQString::fromLatin1("codeBase") ];
         if( !str.isEmpty() )
             applet->setCodeBase( str );
 
-	str = args[QString::fromLatin1("name") ];
+	str = args[TQString::fromLatin1("name") ];
         if( !str.isNull() )
             applet->setAppletName( str );
         else
-            applet->setAppletName( args[QString::fromLatin1("code") ] );
+            applet->setAppletName( args[TQString::fromLatin1("code") ] );
 
-	str = args[QString::fromLatin1("archive") ];
+	str = args[TQString::fromLatin1("archive") ];
         if( !str.isEmpty() )
-            applet->setArchives( args[QString::fromLatin1("archive") ] );
+            applet->setArchives( args[TQString::fromLatin1("archive") ] );
     }
 }
 

@@ -27,7 +27,7 @@ class KMCupsConfigWidget;
 class KMConfigCups : public KMConfigPage
 {
 public:
-	KMConfigCups(QWidget *parent = 0);
+	KMConfigCups(TQWidget *parent = 0);
 
 	void loadConfig(KConfig*);
 	void saveConfig(KConfig*);

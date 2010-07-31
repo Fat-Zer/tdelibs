@@ -19,8 +19,8 @@
 #ifndef __KDATETIMEWIDGET__
 #define __KDATETIMEWIDGET__
 
-#include <qwidget.h>
-#include <qdatetime.h>
+#include <tqwidget.h>
+#include <tqdatetime.h>
 
 #include <kdelibs_export.h>
 
@@ -40,20 +40,20 @@
 class KDEUI_EXPORT KDateTimeWidget : public QWidget
 {
   Q_OBJECT
-  Q_PROPERTY( QDateTime dateTime READ dateTime WRITE setDateTime )
+  Q_PROPERTY( TQDateTime dateTime READ dateTime WRITE setDateTime )
 
 public:
   /**
    * Constructs a date and time selection widget.
    */
-  KDateTimeWidget(QWidget * parent = 0, const char * name = 0);
+  KDateTimeWidget(TQWidget * parent = 0, const char * name = 0);
 
   /**
    * Constructs a date and time selection widget with the initial date and
    * time set to @p datetime.
    */
-  KDateTimeWidget(const QDateTime & datetime,
-                  QWidget * parent = 0, const char * name = 0 );
+  KDateTimeWidget(const TQDateTime & datetime,
+                  TQWidget * parent = 0, const char * name = 0 );
 
   /**
    * Destructs the date and time selection widget.
@@ -63,20 +63,20 @@ public:
   /**
    * Returns the currently selected date and time.
    */
-  QDateTime dateTime() const;
+  TQDateTime dateTime() const;
 
 public slots:
   /**
    * Changes the selected date and time to @p datetime.
    */
-  void setDateTime(const QDateTime & datetime);
+  void setDateTime(const TQDateTime & datetime);
 
 signals:
   /**
    * Emitted whenever the date or time of the widget
    * is changed, either with setDateTime() or via user selection.
    */
-  void valueChanged(const QDateTime & datetime);
+  void valueChanged(const TQDateTime & datetime);
 
 private:
   void init();

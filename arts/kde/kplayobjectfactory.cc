@@ -29,7 +29,7 @@
 #include "kartsdispatcher.h"
 #include "kartsserver.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <kdebug.h>
 #include "kaudiomanagerplay.h"
 #include <flowsystem.h>
@@ -62,7 +62,7 @@ KPlayObject *KPlayObjectFactory::createPlayObject(const KURL& url, bool createBU
 }
 
 
-KPlayObject *KPlayObjectFactory::createPlayObject(const KURL& _url, const QString &mimetype, bool createBUS)
+KPlayObject *KPlayObjectFactory::createPlayObject(const KURL& _url, const TQString &mimetype, bool createBUS)
 {
 	// WHY DOES BROKEN KIO_MEDIA GIVE WRONG URLS?
 	// I hate it
@@ -84,7 +84,7 @@ KPlayObject *KPlayObjectFactory::createPlayObject(const KURL& _url, const QStrin
 			return new KPlayObject(m_server.createPlayObjectForStream(instream, string("audio/x-mp3"), createBUS), true);
 		}
 		else
-			return new KPlayObject(m_server.createPlayObjectForURL(string(QFile::encodeName(url.path())), string(mimetype.latin1()), createBUS), false);
+			return new KPlayObject(m_server.createPlayObjectForURL(string(TQFile::encodeName(url.path())), string(mimetype.latin1()), createBUS), false);
 	}
 	else
 		return new KPlayObject();
@@ -133,7 +133,7 @@ KDE::PlayObject *KDE::PlayObjectFactory::createPlayObject(const KURL& url, bool 
 	return createPlayObject(url, mimetype->name(), createBUS);
 }
 
-KDE::PlayObject *KDE::PlayObjectFactory::createPlayObject(const KURL& _url, const QString &mimetype, bool createBUS)
+KDE::PlayObject *KDE::PlayObjectFactory::createPlayObject(const KURL& _url, const TQString &mimetype, bool createBUS)
 {
 	// WHY DOES BROKEN KIO_MEDIA GIVE WRONG URLS?
 	// I hate it
@@ -158,7 +158,7 @@ KDE::PlayObject *KDE::PlayObjectFactory::createPlayObject(const KURL& _url, cons
 	if ( url.isLocalFile() || !d->allowStreaming || (url.protocol() == "audiocd" && mimetype == "application/x-cda" && mimeTypes().contains( "application/x-cda" ) ) )
 	{
 		// we rely on the delivered mimetype if it's a local file
-		d->playObj = new KDE::PlayObject( d->server.createPlayObjectForURL( string( QFile::encodeName( url.path() ) ), string( mimetype.latin1() ), createBUS ), false );
+		d->playObj = new KDE::PlayObject( d->server.createPlayObjectForURL( string( TQFile::encodeName( url.path() ) ), string( mimetype.latin1() ), createBUS ), false );
 	}
 	else
 	{
@@ -179,7 +179,7 @@ KDE::PlayObject *KDE::PlayObjectFactory::createPlayObject(const KURL& _url, cons
 		d->helper->po = d->playObj;
 		d->helper->ap = d->amanPlay;
 		if( d->playObj->object().isNull() && d->amanPlay )
-			QObject::connect( d->playObj, SIGNAL( playObjectCreated() ), d->helper, SLOT( connectAmanPlay() ) );
+			TQObject::connect( d->playObj, TQT_SIGNAL( playObjectCreated() ), d->helper, TQT_SLOT( connectAmanPlay() ) );
 		else
 			d->helper->connectAmanPlay();
 	}
@@ -187,13 +187,13 @@ KDE::PlayObject *KDE::PlayObjectFactory::createPlayObject(const KURL& _url, cons
 	return d->playObj;
 }
 
-QStringList KDE::PlayObjectFactory::mimeTypes(void)
+TQStringList KDE::PlayObjectFactory::mimeTypes(void)
 {
 	KArtsDispatcher dispatcher; // we need such a thing, otherwise we crash
 	Arts::TraderQuery query;
 	vector<Arts::TraderOffer> *offers = query.query();
 
-	QStringList results;
+	TQStringList results;
 	for(vector<Arts::TraderOffer>::iterator offer = offers->begin();
 	    offer != offers->end(); ++offer)
 	{
@@ -202,7 +202,7 @@ QStringList KDE::PlayObjectFactory::mimeTypes(void)
 		for(vector<string>::iterator mimetype = mimetypes->begin();
 		    mimetype != mimetypes->end(); ++mimetype)
 		{
-			QString name = QString::fromLocal8Bit((*mimetype).c_str()).stripWhiteSpace();
+			TQString name = TQString::fromLocal8Bit((*mimetype).c_str()).stripWhiteSpace();
 			if(KMimeType::mimeType(name))
 				results.append(name);
 		}
@@ -213,9 +213,9 @@ QStringList KDE::PlayObjectFactory::mimeTypes(void)
 
 	// clean out duplicates
 	results.sort();
-	for(QStringList::iterator result = results.begin(); result != results.end(); )
+	for(TQStringList::iterator result = results.begin(); result != results.end(); )
 	{
-		QStringList::iterator previous = result;
+		TQStringList::iterator previous = result;
 		++result;
 		if(result != results.end() && *result == *previous)
 		{

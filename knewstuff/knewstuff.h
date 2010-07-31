@@ -20,7 +20,7 @@
 #ifndef KNEWSTUFF_H
 #define KNEWSTUFF_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdemacros.h>
 
@@ -33,8 +33,8 @@ namespace KNS {
 class Engine;
 class Entry;
 
-KDE_EXPORT KAction* standardAction(const QString& what,
-                        const QObject *recvr,
+KDE_EXPORT KAction* standardAction(const TQString& what,
+                        const TQObject *recvr,
                         const char *slot,
                         KActionCollection* parent,
                         const char *name = 0);
@@ -77,7 +77,7 @@ class KDE_EXPORT KNewStuff
       @param parentWidget parent widget of dialogs opened by the KNewStuff
                           engine
     */
-    KNewStuff( const QString &type, QWidget *parentWidget = 0 );
+    KNewStuff( const TQString &type, TQWidget *parentWidget = 0 );
     
     /**
       Constructor.
@@ -88,18 +88,18 @@ class KDE_EXPORT KNewStuff
       @param parentWidget parent widget of dialogs opened by the KNewStuff
                           engine
     */
-    KNewStuff( const QString &type, const QString &providerList, QWidget *parentWidget = 0 );
+    KNewStuff( const TQString &type, const TQString &providerList, TQWidget *parentWidget = 0 );
     virtual ~KNewStuff();
 
     /**
       Return type of data.
     */
-    QString type() const;
+    TQString type() const;
 
     /**
       Return parent widget.
     */
-    QWidget *parentWidget() const;
+    TQWidget *parentWidget() const;
 
     /**
       Start download process.
@@ -114,7 +114,7 @@ class KDE_EXPORT KNewStuff
     /**
       Upload with pre-defined files.
     */
-    void upload( const QString &fileName, const QString previewName );
+    void upload( const TQString &fileName, const TQString previewName );
 
     /**
       Install file to application. The given fileName points to the file
@@ -127,7 +127,7 @@ class KDE_EXPORT KNewStuff
 
       @param fileName name of downloaded file
     */
-    virtual bool install( const QString &fileName ) = 0;
+    virtual bool install( const TQString &fileName ) = 0;
     /**
       Create a file to be uploaded to a "new stuff provider" and return the
       filename. The format of the file is application specific. The only
@@ -137,14 +137,14 @@ class KDE_EXPORT KNewStuff
       @param fileName name of the file to be written
       @return @c true on success, @c false on error.
     */
-    virtual bool createUploadFile( const QString &fileName ) = 0;
+    virtual bool createUploadFile( const TQString &fileName ) = 0;
 
     /**
       Return a filename which should be used as destination for downloading the
       specified new stuff entry. Reimplement this function, if you don't want
       the new stuff to be downloaded to a temporary file.
     */
-    virtual QString downloadDestination( KNS::Entry *entry );
+    virtual TQString downloadDestination( KNS::Entry *entry );
     
     
   protected:

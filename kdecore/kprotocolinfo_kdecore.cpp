@@ -36,8 +36,8 @@
 class KProtocolInfo::KProtocolInfoPrivate
 {
 public:
-  QString docPath;
-  QString protClass;
+  TQString docPath;
+  TQString protClass;
   KProtocolInfo::ExtraFieldList extraFields;
   bool showPreviews;
   bool canRenameFromFile;
@@ -45,18 +45,18 @@ public:
   bool canDeleteRecursive;
   bool fileNameUsedForCopying; // true if using UDS_NAME, false if using KURL::fileName() [default]
   KURL::URIMode uriMode;
-  QStringList capabilities;
-  QString proxyProtocol;
+  TQStringList capabilities;
+  TQString proxyProtocol;
 };
 
 //
 // Internal functions:
 //
-KProtocolInfo::KProtocolInfo(const QString &path)
+KProtocolInfo::KProtocolInfo(const TQString &path)
  : KSycocaEntry(path)
 {
   d = new KProtocolInfoPrivate;
-  QString fullPath = locate("services", path);
+  TQString fullPath = locate("services", path);
 
   KSimpleConfig config( fullPath, true );
   config.setGroup( "Protocol" );
@@ -89,7 +89,7 @@ KProtocolInfo::KProtocolInfo(const QString &path)
   m_config = config.readEntry( "config", m_name );
   m_maxSlaves = config.readNumEntry( "maxInstances", 1);
 
-  QString tmp = config.readEntry( "input" );
+  TQString tmp = config.readEntry( "input" );
   if ( tmp == "filesystem" )
     m_inputType = KProtocolInfo::T_FILESYSTEM;
   else if ( tmp == "stream" )
@@ -110,17 +110,17 @@ KProtocolInfo::KProtocolInfo(const QString &path)
   if (d->protClass[0] != ':')
      d->protClass.prepend(':');
 
-  QStringList extraNames = config.readListEntry( "ExtraNames" );
-  QStringList extraTypes = config.readListEntry( "ExtraTypes" );
-  QStringList::Iterator it = extraNames.begin();
-  QStringList::Iterator typeit = extraTypes.begin();
+  TQStringList extraNames = config.readListEntry( "ExtraNames" );
+  TQStringList extraTypes = config.readListEntry( "ExtraTypes" );
+  TQStringList::Iterator it = extraNames.begin();
+  TQStringList::Iterator typeit = extraTypes.begin();
   for( ; it != extraNames.end() && typeit != extraTypes.end(); ++it, ++typeit ) {
       d->extraFields.append( ExtraField( *it, *typeit ) );
   }
 
   d->showPreviews = config.readBoolEntry( "ShowPreviews", d->protClass == ":local" );
 
-  tmp = config.readEntry( "URIMode", QString::null ).lower();
+  tmp = config.readEntry( "URIMode", TQString::null ).lower();
   if (tmp == "rawuri")
      d->uriMode = KURL::RawURI;
   else if (tmp == "mailto")
@@ -134,7 +134,7 @@ KProtocolInfo::KProtocolInfo(const QString &path)
   d->proxyProtocol = config.readEntry( "ProxiedBy" );
 }
 
-KProtocolInfo::KProtocolInfo( QDataStream& _str, int offset) :
+KProtocolInfo::KProtocolInfo( TQDataStream& _str, int offset) :
 	KSycocaEntry( _str, offset)
 {
    d = new KProtocolInfoPrivate;
@@ -147,7 +147,7 @@ KProtocolInfo::~KProtocolInfo()
 }
 
 void
-KProtocolInfo::load( QDataStream& _str)
+KProtocolInfo::load( TQDataStream& _str)
 {
    // You may add new fields at the end. Make sure to update the version
    // number in ksycoca.h
@@ -200,7 +200,7 @@ KProtocolInfo::load( QDataStream& _str)
 }
 
 void
-KProtocolInfo::save( QDataStream& _str)
+KProtocolInfo::save( TQDataStream& _str)
 {
    KSycocaEntry::save( _str );
 
@@ -259,12 +259,12 @@ KProtocolInfo::save( QDataStream& _str)
 // Static functions:
 //
 
-QStringList KProtocolInfo::protocols()
+TQStringList KProtocolInfo::protocols()
 {
   return KProtocolInfoFactory::self()->protocols();
 }
 
-bool KProtocolInfo::isSourceProtocol( const QString& _protocol )
+bool KProtocolInfo::isSourceProtocol( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -273,7 +273,7 @@ bool KProtocolInfo::isSourceProtocol( const QString& _protocol )
   return prot->m_isSourceProtocol;
 }
 
-bool KProtocolInfo::isFilterProtocol( const QString& _protocol )
+bool KProtocolInfo::isFilterProtocol( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -282,7 +282,7 @@ bool KProtocolInfo::isFilterProtocol( const QString& _protocol )
   return !prot->m_isSourceProtocol;
 }
 
-bool KProtocolInfo::isHelperProtocol( const QString& _protocol )
+bool KProtocolInfo::isHelperProtocol( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -291,13 +291,13 @@ bool KProtocolInfo::isHelperProtocol( const QString& _protocol )
   return prot->m_isHelperProtocol;
 }
 
-bool KProtocolInfo::isKnownProtocol( const QString& _protocol )
+bool KProtocolInfo::isKnownProtocol( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   return ( prot != 0);
 }
 
-bool KProtocolInfo::supportsListing( const QString& _protocol )
+bool KProtocolInfo::supportsListing( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -306,16 +306,16 @@ bool KProtocolInfo::supportsListing( const QString& _protocol )
   return prot->m_supportsListing;
 }
 
-QStringList KProtocolInfo::listing( const QString& _protocol )
+TQStringList KProtocolInfo::listing( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
-    return QStringList();
+    return TQStringList();
 
   return prot->m_listing;
 }
 
-bool KProtocolInfo::supportsReading( const QString& _protocol )
+bool KProtocolInfo::supportsReading( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -324,7 +324,7 @@ bool KProtocolInfo::supportsReading( const QString& _protocol )
   return prot->m_supportsReading;
 }
 
-bool KProtocolInfo::supportsWriting( const QString& _protocol )
+bool KProtocolInfo::supportsWriting( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -333,7 +333,7 @@ bool KProtocolInfo::supportsWriting( const QString& _protocol )
   return prot->m_supportsWriting;
 }
 
-bool KProtocolInfo::supportsMakeDir( const QString& _protocol )
+bool KProtocolInfo::supportsMakeDir( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -342,7 +342,7 @@ bool KProtocolInfo::supportsMakeDir( const QString& _protocol )
   return prot->m_supportsMakeDir;
 }
 
-bool KProtocolInfo::supportsDeleting( const QString& _protocol )
+bool KProtocolInfo::supportsDeleting( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -351,7 +351,7 @@ bool KProtocolInfo::supportsDeleting( const QString& _protocol )
   return prot->m_supportsDeleting;
 }
 
-bool KProtocolInfo::supportsLinking( const QString& _protocol )
+bool KProtocolInfo::supportsLinking( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -360,7 +360,7 @@ bool KProtocolInfo::supportsLinking( const QString& _protocol )
   return prot->m_supportsLinking;
 }
 
-bool KProtocolInfo::supportsMoving( const QString& _protocol )
+bool KProtocolInfo::supportsMoving( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -369,7 +369,7 @@ bool KProtocolInfo::supportsMoving( const QString& _protocol )
   return prot->m_supportsMoving;
 }
 
-bool KProtocolInfo::canCopyFromFile( const QString& _protocol )
+bool KProtocolInfo::canCopyFromFile( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -379,7 +379,7 @@ bool KProtocolInfo::canCopyFromFile( const QString& _protocol )
 }
 
 
-bool KProtocolInfo::canCopyToFile( const QString& _protocol )
+bool KProtocolInfo::canCopyToFile( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -388,25 +388,25 @@ bool KProtocolInfo::canCopyToFile( const QString& _protocol )
   return prot->m_canCopyToFile;
 }
 
-QString KProtocolInfo::icon( const QString& _protocol )
+TQString KProtocolInfo::icon( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
-    return QString::fromLatin1("unknown");
+    return TQString::fromLatin1("unknown");
 
   return prot->m_icon;
 }
 
-QString KProtocolInfo::config( const QString& _protocol )
+TQString KProtocolInfo::config( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
-    return QString::null;
+    return TQString::null;
 
-  return QString("kio_%1rc").arg(prot->m_config);
+  return TQString("kio_%1rc").arg(prot->m_config);
 }
 
-int KProtocolInfo::maxSlaves( const QString& _protocol )
+int KProtocolInfo::maxSlaves( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -415,16 +415,16 @@ int KProtocolInfo::maxSlaves( const QString& _protocol )
   return prot->m_maxSlaves;
 }
 
-QString KProtocolInfo::defaultMimetype( const QString& _protocol )
+TQString KProtocolInfo::defaultMimetype( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
-    return QString::null;
+    return TQString::null;
 
   return prot->m_defaultMimetype;
 }
 
-bool KProtocolInfo::determineMimetypeFromExtension( const QString &_protocol )
+bool KProtocolInfo::determineMimetypeFromExtension( const TQString &_protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol( _protocol );
   if ( !prot )
@@ -433,16 +433,16 @@ bool KProtocolInfo::determineMimetypeFromExtension( const QString &_protocol )
   return prot->m_determineMimetypeFromExtension;
 }
 
-QString KProtocolInfo::exec( const QString& _protocol )
+TQString KProtocolInfo::exec( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
-    return QString::null;
+    return TQString::null;
 
   return prot->m_exec;
 }
 
-KProtocolInfo::Type KProtocolInfo::inputType( const QString& _protocol )
+KProtocolInfo::Type KProtocolInfo::inputType( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -451,7 +451,7 @@ KProtocolInfo::Type KProtocolInfo::inputType( const QString& _protocol )
   return prot->m_inputType;
 }
 
-KProtocolInfo::Type KProtocolInfo::outputType( const QString& _protocol )
+KProtocolInfo::Type KProtocolInfo::outputType( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -469,25 +469,25 @@ KProtocolInfo::ExtraFieldList KProtocolInfo::extraFields( const KURL &url )
   return prot->d->extraFields;
 }
 
-QString KProtocolInfo::docPath( const QString& _protocol )
+TQString KProtocolInfo::docPath( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
-    return QString::null;
+    return TQString::null;
 
   return prot->d->docPath;
 }
 
-QString KProtocolInfo::protocolClass( const QString& _protocol )
+TQString KProtocolInfo::protocolClass( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
-    return QString::null;
+    return TQString::null;
 
   return prot->d->protClass;
 }
 
-bool KProtocolInfo::showFilePreview( const QString& _protocol )
+bool KProtocolInfo::showFilePreview( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -496,7 +496,7 @@ bool KProtocolInfo::showFilePreview( const QString& _protocol )
   return prot->d->showPreviews;
 }
 
-KURL::URIMode KProtocolInfo::uriParseMode( const QString& _protocol )
+KURL::URIMode KProtocolInfo::uriParseMode( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
@@ -505,20 +505,20 @@ KURL::URIMode KProtocolInfo::uriParseMode( const QString& _protocol )
   return prot->d->uriMode;
 }
 
-QStringList KProtocolInfo::capabilities( const QString& _protocol )
+TQStringList KProtocolInfo::capabilities( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
-    return QStringList();
+    return TQStringList();
 
   return prot->d->capabilities;
 }
 
-QString KProtocolInfo::proxiedBy( const QString& _protocol )
+TQString KProtocolInfo::proxiedBy( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
-    return QString::null;
+    return TQString::null;
 
   return prot->d->proxyProtocol;
 }
@@ -543,13 +543,13 @@ KProtocolInfo::FileNameUsedForCopying KProtocolInfo::fileNameUsedForCopying() co
   return d->fileNameUsedForCopying ? Name : FromURL;
 }
 
-QDataStream& operator>>( QDataStream& s, KProtocolInfo::ExtraField& field )  {
+TQDataStream& operator>>( TQDataStream& s, KProtocolInfo::ExtraField& field )  {
   s >> field.name;
   s >> field.type;
   return s;
 }
 
-QDataStream& operator<<( QDataStream& s, const KProtocolInfo::ExtraField& field )  {
+TQDataStream& operator<<( TQDataStream& s, const KProtocolInfo::ExtraField& field )  {
   s << field.name;
   s << field.type;
   return s;

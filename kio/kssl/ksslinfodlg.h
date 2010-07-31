@@ -27,7 +27,7 @@
 #include "ksslx509map.h"
 #include "ksslcertificate.h"
 #include "kssl.h"
-#include <qscrollview.h>
+#include <tqscrollview.h>
 
 class QWidget;
 class KSSLCertBox;
@@ -58,7 +58,7 @@ public:
 	 *  @param name the internal name of this instance
 	 *  @param modal true if the dialog should be modal
 	 */
-	KSSLInfoDlg(bool secureConnection, QWidget *parent=0L, const char *name=0L, bool modal=false);
+	KSSLInfoDlg(bool secureConnection, TQWidget *parent=0L, const char *name=0L, bool modal=false);
 
 	/**
 	 *  Destroy this dialog
@@ -87,9 +87,9 @@ public:
 	 *  @param certState the certificate state (valid, invalid, etc)
 	 */
 	void setup(KSSLCertificate *cert,
-			const QString& ip, const QString& url,
-			const QString& cipher, const QString& cipherdesc,
-			const QString& sslversion, int usedbits, int bits,
+			const TQString& ip, const TQString& url,
+			const TQString& cipher, const TQString& cipherdesc,
+			const TQString& sslversion, int usedbits, int bits,
 			KSSLCertificate::KSSLValidation certState);
 
 	/**
@@ -101,13 +101,13 @@ public:
 	 *  @param ip the ip of the remote host
 	 *  @param url the url being accessed
 	 */
-	void setup( KSSL & ssl, const QString & ip, const QString & url );
+	void setup( KSSL & ssl, const TQString & ip, const TQString & url );
 
         /**
          *  Set the errors that were encountered while validating the site 
          *  certificate.
          */
-        void setCertState(const QString &errorNrs);
+        void setCertState(const TQString &errorNrs);
 
 	/**
 	 *  Utility function to generate the widget which displays the detailed
@@ -118,10 +118,10 @@ public:
 	 *  @param mailCatcher the class which catches click events on e-mail
 	 *         addresses
 	 */
-	static KSSLCertBox *certInfoWidget(QWidget *parent, const QString &certName, QWidget *mailCatcher=0);
+	static KSSLCertBox *certInfoWidget(TQWidget *parent, const TQString &certName, TQWidget *mailCatcher=0);
 
 private:
-	QScrollView *buildCertInfo(const QString &certName);
+	TQScrollView *buildCertInfo(const TQString &certName);
 	void displayCert(KSSLCertificate *x);
 
 	class KSSLInfoDlgPrivate;
@@ -129,8 +129,8 @@ private:
 
 private slots:
 	void launchConfig();
-	void urlClicked(const QString &url);
-	void mailClicked(const QString &url);
+	void urlClicked(const TQString &url);
+	void mailClicked(const TQString &url);
 	void slotChain(int x);
 };
 
@@ -146,7 +146,7 @@ private slots:
  * @see KSSLInfoDlg
  * @short KDE SSL Certificate Box
  */
-class KIO_EXPORT KSSLCertBox : public QScrollView {
+class KIO_EXPORT KSSLCertBox : public TQScrollView {
 public:
 	/**
 	 *  Construct a certificate box
@@ -155,7 +155,7 @@ public:
 	 *  @param name the internal name of this instance
 	 *  @param f widget flags for the object
 	 */
-	KSSLCertBox(QWidget *parent=0L, const char *name=0L, WFlags f=0);
+	KSSLCertBox(TQWidget *parent=0L, const char *name=0L, WFlags f=0);
 
 	/**
 	 *  Change the contents of the widget
@@ -163,10 +163,10 @@ public:
 	 *  @param certName the name ("subject") of the certificate
 	 *  @param mailCatcher the widget which catches the url open events
 	 */
-	void setValues(QString certName, QWidget *mailCatcher=0L);
+	void setValues(TQString certName, TQWidget *mailCatcher=0L);
 
 private:
-	QFrame *_frame;
+	TQFrame *_frame;
 };
 
 #endif

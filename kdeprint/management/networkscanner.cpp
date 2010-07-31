@@ -21,15 +21,15 @@
 
 #include "networkscanner.h"
 
-#include <qprogressbar.h>
+#include <tqprogressbar.h>
 #include <kpushbutton.h>
-#include <qlayout.h>
-#include <qtimer.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qlineedit.h>
-#include <qregexp.h>
-#include <qsocket.h>
+#include <tqlayout.h>
+#include <tqtimer.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqlineedit.h>
+#include <tqregexp.h>
+#include <tqsocket.h>
 #include <klocale.h>
 #include <kextendedsocket.h>
 #include <kmessagebox.h>
@@ -41,18 +41,18 @@ class NetworkScanner::NetworkScannerPrivate
 {
 public:
 	int port;
-	QString prefixaddress;
+	TQString prefixaddress;
 	int currentaddress;
 	int timeout;
 	bool scanning;
-	QPtrList<NetworkScanner::SocketInfo> printers;
+	TQPtrList<NetworkScanner::SocketInfo> printers;
 
-	QProgressBar *bar;
+	TQProgressBar *bar;
 	KPushButton *scan, *settings;
-	QLabel *subnetlab;
-	QTimer *timer;
+	TQLabel *subnetlab;
+	TQTimer *timer;
 #ifdef USE_QSOCKET
-	QSocket *socket;
+	TQSocket *socket;
 #else
 	KExtendedSocket *socket;
 #endif
@@ -65,17 +65,17 @@ public:
 		scanning = false;
 		printers.setAutoDelete( true );
 	}
-	QString localPrefix();
-	QString scanString();
+	TQString localPrefix();
+	TQString scanString();
 };
 
-QString NetworkScanner::NetworkScannerPrivate::localPrefix()
+TQString NetworkScanner::NetworkScannerPrivate::localPrefix()
 {
 	char	buf[256];
 	buf[0] = '\0';
 	if (!gethostname(buf, sizeof(buf)))
 		buf[sizeof(buf)-1] = '\0';
-	QPtrList<KAddressInfo>	infos = KExtendedSocket::lookup(buf, QString::null);
+	TQPtrList<KAddressInfo>	infos = KExtendedSocket::lookup(buf, TQString::null);
 	infos.setAutoDelete(true);
 	if (infos.count() > 0)
 	{
@@ -84,49 +84,49 @@ QString NetworkScanner::NetworkScannerPrivate::localPrefix()
 		IPstr.truncate(p);
 		return IPstr;
 	}
-	return QString::null;
+	return TQString::null;
 }
 
-QString NetworkScanner::NetworkScannerPrivate::scanString()
+TQString NetworkScanner::NetworkScannerPrivate::scanString()
 {
-	QString s = prefixaddress + ".*";
+	TQString s = prefixaddress + ".*";
 	if ( port != -1 )
-		s.append( ":" ).append( QString::number( port ) );
+		s.append( ":" ).append( TQString::number( port ) );
 	return s;
 }
 
-NetworkScanner::NetworkScanner( int port, QWidget *parent, const char *name )
-	: QWidget( parent, name )
+NetworkScanner::NetworkScanner( int port, TQWidget *parent, const char *name )
+	: TQWidget( parent, name )
 {
 	d = new NetworkScannerPrivate( port );
-	d->bar = new QProgressBar( 256, this );
+	d->bar = new TQProgressBar( 256, this );
 	d->settings = new KPushButton( KGuiItem( i18n( "&Settings" ), "configure" ), this );
 	d->scan = new KPushButton( KGuiItem( i18n( "Sc&an" ), "viewmag" ), this );
-	d->timer = new QTimer( this );
+	d->timer = new TQTimer( this );
 #ifdef USE_QSOCKET
-	d->socket = new QSocket( this );
+	d->socket = new TQSocket( this );
 #else
 	d->socket = new KExtendedSocket();
 #endif
-	QLabel *label = new QLabel( i18n( "Network scan:" ), this );
-	d->subnetlab = new QLabel( i18n( "Subnet: %1" ).arg( d->scanString() ), this );
+	TQLabel *label = new TQLabel( i18n( "Network scan:" ), this );
+	d->subnetlab = new TQLabel( i18n( "Subnet: %1" ).arg( d->scanString() ), this );
 
-	QGridLayout *l0 = new QGridLayout( this, 4, 2, 0, 10 );
+	TQGridLayout *l0 = new TQGridLayout( this, 4, 2, 0, 10 );
 	l0->addMultiCellWidget( label, 0, 0, 0, 1 );
 	l0->addMultiCellWidget( d->bar, 1, 1, 0, 1 );
 	l0->addMultiCellWidget( d->subnetlab, 2, 2, 0, 1 );
 	l0->addWidget( d->settings, 3, 0 );
 	l0->addWidget( d->scan, 3, 1 );
 
-	connect( d->timer, SIGNAL( timeout() ), SLOT( slotTimeout() ) );
-	connect( d->settings, SIGNAL( clicked() ), SLOT( slotSettingsClicked() ) );
-	connect( d->scan, SIGNAL( clicked() ), SLOT( slotScanClicked() ) );
+	connect( d->timer, TQT_SIGNAL( timeout() ), TQT_SLOT( slotTimeout() ) );
+	connect( d->settings, TQT_SIGNAL( clicked() ), TQT_SLOT( slotSettingsClicked() ) );
+	connect( d->scan, TQT_SIGNAL( clicked() ), TQT_SLOT( slotScanClicked() ) );
 #ifdef USE_QSOCKET
-	connect( d->socket, SIGNAL( connected() ), SLOT( slotConnectionSuccess() ) );
-	connect( d->socket, SIGNAL( error( int ) ), SLOT( slotConnectionFailed( int ) ) );
+	connect( d->socket, TQT_SIGNAL( connected() ), TQT_SLOT( slotConnectionSuccess() ) );
+	connect( d->socket, TQT_SIGNAL( error( int ) ), TQT_SLOT( slotConnectionFailed( int ) ) );
 #else
-	connect( d->socket, SIGNAL( connectionSuccess() ), SLOT( slotConnectionSuccess() ) );
-	connect( d->socket, SIGNAL( connectionFailed( int ) ), SLOT( slotConnectionFailed( int ) ) );
+	connect( d->socket, TQT_SIGNAL( connectionSuccess() ), TQT_SLOT( slotConnectionSuccess() ) );
+	connect( d->socket, TQT_SIGNAL( connectionFailed( int ) ), TQT_SLOT( slotConnectionFailed( int ) ) );
 #endif
 }
 
@@ -161,7 +161,7 @@ void NetworkScanner::slotScanClicked()
 					i18n( "You are about to scan a subnet (%1.*) that does not "
 						  "correspond to the current subnet of this computer (%2.*). Do you want "
 						  "to scan the specified subnet anyway?" ).arg( d->prefixaddress ).arg( d->localPrefix() ),
-					QString::null, KGuiItem( i18n( "&Scan" ), "viewmag" ), "askForScan" ) == KMessageBox::Continue )
+					TQString::null, KGuiItem( i18n( "&Scan" ), "viewmag" ), "askForScan" ) == KMessageBox::Continue )
 			start();
 	}
 	else
@@ -200,10 +200,10 @@ void NetworkScanner::slotNext()
 
 	d->timer->stop();
 #ifdef USE_QSOCKET
-	d->socket->connectToHost( d->prefixaddress + "." + QString::number( d->currentaddress ), d->port );
+	d->socket->connectToHost( d->prefixaddress + "." + TQString::number( d->currentaddress ), d->port );
 	kdDebug() << "Address: " << d->socket->peerName() << ", Port: " << d->socket->peerPort() << endl;
 #else
-	d->socket->setAddress( d->prefixaddress + "." + QString::number( d->currentaddress ), d->port );
+	d->socket->setAddress( d->prefixaddress + "." + TQString::number( d->currentaddress ), d->port );
 	d->socket->startAsyncLookup();
 	kdDebug() << "Address: " << d->socket->host() << ", Port: " << d->socket->port() << endl;
 #endif
@@ -219,7 +219,7 @@ void NetworkScanner::next()
 	else
 	{
 		d->bar->setProgress( d->currentaddress );
-		QTimer::singleShot( 0, this, SLOT( slotNext() ) );
+		TQTimer::singleShot( 0, this, TQT_SLOT( slotNext() ) );
 	}
 }
 
@@ -245,7 +245,7 @@ void NetworkScanner::slotConnectionSuccess()
 #else
 	KSocketAddress *addr = const_cast<KSocketAddress*>( d->socket->peerAddress() );
 #endif
-	kdDebug() << "Connection success: " << ( addr ? addr->pretty() : QString( "ERROR" ) ) << endl;
+	kdDebug() << "Connection success: " << ( addr ? addr->pretty() : TQString( "ERROR" ) ) << endl;
 	kdDebug() << "Socket: " << d->socket->socket() << endl;
 	if ( addr )
 	{
@@ -256,7 +256,7 @@ void NetworkScanner::slotConnectionSuccess()
 		info->IP = d->socket->host();
 #endif
 		info->Port = d->port;
-		QString portname;
+		TQString portname;
 		KExtendedSocket::resolve( addr, info->Name, portname );
 		d->printers.append( info );
 		d->socket->close();
@@ -273,7 +273,7 @@ void NetworkScanner::slotConnectionFailed( int )
 	next();
 }
 
-const QPtrList<NetworkScanner::SocketInfo>* NetworkScanner::printerList()
+const TQPtrList<NetworkScanner::SocketInfo>* NetworkScanner::printerList()
 {
 	return &( d->printers );
 }
@@ -288,12 +288,12 @@ void NetworkScanner::setTimeout( int to )
 	d->timeout = to;
 }
 
-QString NetworkScanner::subnet() const
+TQString NetworkScanner::subnet() const
 {
 	return d->prefixaddress;
 }
 
-void NetworkScanner::setSubnet( const QString& sn )
+void NetworkScanner::setSubnet( const TQString& sn )
 {
 	d->prefixaddress = sn;
 	d->subnetlab->setText( i18n( "Subnet: %1" ).arg( d->scanString() ) );
@@ -310,10 +310,10 @@ void NetworkScanner::setPort( int p )
 	d->subnetlab->setText( i18n( "Subnet: %1" ).arg( d->scanString() ) );
 }
 
-bool NetworkScanner::checkPrinter( const QString& host, int port )
+bool NetworkScanner::checkPrinter( const TQString& host, int port )
 {
 	// try first to find it in the SocketInfo list
-	QPtrListIterator<NetworkScanner::SocketInfo> it( d->printers );
+	TQPtrListIterator<NetworkScanner::SocketInfo> it( d->printers );
 	for ( ; it.current(); ++it )
 	{
 		if ( port == it.current()->Port && ( host == it.current()->IP ||
@@ -329,26 +329,26 @@ bool NetworkScanner::checkPrinter( const QString& host, int port )
 }
 
 NetworkScannerConfig::NetworkScannerConfig(NetworkScanner *scanner, const char *name)
-	: KDialogBase(scanner, name, true, QString::null, Ok|Cancel, Ok, true)
+	: KDialogBase(scanner, name, true, TQString::null, Ok|Cancel, Ok, true)
 {
 	scanner_ = scanner;
-	QWidget	*dummy = new QWidget(this);
+	QWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
         KIntValidator *val = new KIntValidator( this );
-	QLabel	*masklabel = new QLabel(i18n("&Subnetwork:"),dummy);
-	QLabel	*portlabel = new QLabel(i18n("&Port:"),dummy);
-	QLabel	*toutlabel = new QLabel(i18n("&Timeout (ms):"),dummy);
-	QLineEdit	*mm = new QLineEdit(dummy);
-	mm->setText(QString::fromLatin1(".[0-255]"));
+	QLabel	*masklabel = new TQLabel(i18n("&Subnetwork:"),dummy);
+	QLabel	*portlabel = new TQLabel(i18n("&Port:"),dummy);
+	QLabel	*toutlabel = new TQLabel(i18n("&Timeout (ms):"),dummy);
+	QLineEdit	*mm = new TQLineEdit(dummy);
+	mm->setText(TQString::fromLatin1(".[0-255]"));
 	mm->setReadOnly(true);
 	mm->setFixedWidth(fontMetrics().width(mm->text())+10);
 
-	mask_ = new QLineEdit(dummy);
+	mask_ = new TQLineEdit(dummy);
 	mask_->setAlignment(Qt::AlignRight);
-	port_ = new QComboBox(true,dummy);
+	port_ = new TQComboBox(true,dummy);
         if ( port_->lineEdit() )
             port_->lineEdit()->setValidator( val );
-	tout_ = new QLineEdit(dummy);
+	tout_ = new TQLineEdit(dummy);
         tout_->setValidator( val );
 
 	masklabel->setBuddy(mask_);
@@ -360,11 +360,11 @@ NetworkScannerConfig::NetworkScannerConfig(NetworkScanner *scanner, const char *
 	port_->insertItem("9100");
 	port_->insertItem("9101");
 	port_->insertItem("9102");
-	port_->setEditText(QString::number(scanner_->port()));
-	tout_->setText(QString::number(scanner_->timeout()));
+	port_->setEditText(TQString::number(scanner_->port()));
+	tout_->setText(TQString::number(scanner_->timeout()));
 
-	QGridLayout	*main_ = new QGridLayout(dummy, 3, 2, 0, 10);
-	QHBoxLayout	*lay1 = new QHBoxLayout(0, 0, 5);
+	QGridLayout	*main_ = new TQGridLayout(dummy, 3, 2, 0, 10);
+	QHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 5);
 	main_->addWidget(masklabel, 0, 0);
 	main_->addWidget(portlabel, 1, 0);
 	main_->addWidget(toutlabel, 2, 0);

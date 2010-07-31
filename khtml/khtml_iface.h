@@ -141,14 +141,14 @@ k_dcop:
      * This can be different from the charset. The widget will try to reload
      * the current page in the new encoding, if url() is not empty.
      */
-    bool setEncoding( const QString &name );
+    bool setEncoding( const TQString &name );
 
     /**
      * Returns the encoding the page currently uses.
      *
      * Note that the encoding might be different from the charset.
      */
-    QString encoding() const;
+    TQString encoding() const;
 
     /**
      * Sets a user defined style sheet to be used on top of the HTML 4
@@ -157,7 +157,7 @@ k_dcop:
      * This gives a wide range of possibilities to
      * change the layout of the page.
      */
-    void setUserStyleSheet(const QString &styleSheet);
+    void setUserStyleSheet(const TQString &styleSheet);
 
     /**
      * Sets the fixed font style.
@@ -165,7 +165,7 @@ k_dcop:
      * @param name The font name to use for fixed text, e.g.
      * the <tt>&lt;pre&gt;</tt> tag.
      */
-    void setFixedFont( const QString &name );
+    void setFixedFont( const TQString &name );
 
     /**
      * Finds the anchor named @p name.
@@ -174,7 +174,7 @@ k_dcop:
      * scrolls to the closest position. Returns @p true if the anchor has
      * been found.
      */
-    bool gotoAnchor( const QString &name );
+    bool gotoAnchor( const TQString &name );
 
     /**
      * Go to next Anchor.
@@ -199,7 +199,7 @@ k_dcop:
     /**
      * Returns the text the user has marked.
      */
-    QString selectedText() const;
+    TQString selectedText() const;
 
     /**
      * Marks all text in the document as selected.
@@ -209,7 +209,7 @@ k_dcop:
     /**
      * Last-modified date (in raw string format), if received in the [HTTP] headers.
      */
-    QString lastModified() const;
+    TQString lastModified() const;
 
     /**
      * Print the contents of the current html view.
@@ -221,13 +221,13 @@ k_dcop:
     void debugDOMTree();
     void viewDocumentSource();
     void viewFrameSource();
-    void saveBackground(const QString &url);
-    void saveDocument(const QString &url);
+    void saveBackground(const TQString &url);
+    void saveDocument(const TQString &url);
 
     /**
      * Evaluate a given piece of Javascript code
      */
-    QString evalJS(const QString &script);
+    TQString evalJS(const TQString &script);
 
     /**
      * Stops display of animated images 

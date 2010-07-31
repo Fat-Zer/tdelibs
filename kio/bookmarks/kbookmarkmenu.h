@@ -24,10 +24,10 @@
 
 #include <sys/types.h>
 
-#include <qptrlist.h>
-#include <qptrstack.h>
-#include <qobject.h>
-#include <qlistview.h>
+#include <tqptrlist.h>
+#include <tqptrstack.h>
+#include <tqobject.h>
+#include <tqlistview.h>
 
 #include <kdialogbase.h>
 #include <klocale.h>
@@ -104,7 +104,7 @@ public:
   KBookmarkMenu( KBookmarkManager* mgr,
                  KBookmarkOwner * owner, KPopupMenu * parentMenu,
                  KActionCollection * collec, bool root, bool add = true,
-                 const QString & parentAddress = "" );
+                 const TQString & parentAddress = "" );
 
   ~KBookmarkMenu();
 
@@ -129,9 +129,9 @@ public:
   // TODO - transform into class
   struct DynMenuInfo {
      bool show;
-     QString location;
-     QString type;
-     QString name;
+     TQString location;
+     TQString type;
+     TQString name;
      class DynMenuInfoPrivate *d;
   };
 
@@ -139,7 +139,7 @@ public:
    * @return dynmenu info block for the given dynmenu name
    * @since 3.2
    */
-  static DynMenuInfo showDynamicBookmarks( const QString &id );
+  static DynMenuInfo showDynamicBookmarks( const TQString &id );
 
   /**
    * Shows an extra menu for the given bookmarks file and type. 
@@ -149,27 +149,27 @@ public:
    * @param info a DynMenuInfo struct containing the to be added/modified data
    * @since 3.2
    */
-  static void setDynamicBookmarks( const QString &id, const DynMenuInfo &info );
+  static void setDynamicBookmarks( const TQString &id, const DynMenuInfo &info );
 
   /**
    * @return list of dynamic menu ids
    * @since 3.2
    */
-  static QStringList dynamicBookmarksList();
+  static TQStringList dynamicBookmarksList();
 
 signals:
-  void aboutToShowContextMenu( const KBookmark &, QPopupMenu * );
+  void aboutToShowContextMenu( const KBookmark &, TQPopupMenu * );
   /**
    * @since 3.4
    */
-  void openBookmark( const QString& url, Qt::ButtonState state );
+  void openBookmark( const TQString& url, Qt::ButtonState state );
 
 public slots: // public for bookmark bar
-  void slotBookmarksChanged( const QString & );
+  void slotBookmarksChanged( const TQString & );
 
 protected slots:
   void slotAboutToShow();
-  void slotAboutToShowContextMenu( KPopupMenu *, int, QPopupMenu * );
+  void slotAboutToShowContextMenu( KPopupMenu *, int, TQPopupMenu * );
   void slotActionHighlighted( KAction * );
 
   void slotRMBActionRemove( int );
@@ -200,7 +200,7 @@ protected:
   void addEditBookmarks();
   void addNewFolder();
 
-  void fillContextMenu( QPopupMenu *, const QString &, int );
+  void fillContextMenu( TQPopupMenu *, const TQString &, int );
 
   bool m_bIsRoot:1;
   bool m_bAddBookmark:1;
@@ -218,21 +218,21 @@ protected:
   /**
    * List of our sub menus
    */
-  QPtrList<KBookmarkMenu> m_lstSubMenus;
+  TQPtrList<KBookmarkMenu> m_lstSubMenus;
   KActionCollection * m_actionCollection;
   /**
    * List of our actions.
    */
-  QPtrList<KAction> m_actions;
+  TQPtrList<KAction> m_actions;
   /**
    * Parent bookmark for this menu.
    */
-  QString m_parentAddress;
+  TQString m_parentAddress;
 
   // TODO make non static!
-  static QString s_highlightedAddress;
-  static QString s_highlightedImportLocation;
-  static QString s_highlightedImportType;
+  static TQString s_highlightedAddress;
+  static TQString s_highlightedImportLocation;
+  static TQString s_highlightedImportType;
 };
 
 /**
@@ -246,17 +246,17 @@ public:
      m_menu(menu), m_actionCollection(act), m_pManager(mgr) {}
 
   void openNSBookmarks();
-  void openBookmarks( const QString &location, const QString &type );
-  void connectToImporter( const QObject &importer );
+  void openBookmarks( const TQString &location, const TQString &type );
+  void connectToImporter( const TQObject &importer );
 
 protected slots:
-  void newBookmark( const QString & text, const QCString & url, const QString & );
-  void newFolder( const QString & text, bool, const QString & );
+  void newBookmark( const TQString & text, const TQCString & url, const TQString & );
+  void newFolder( const TQString & text, bool, const TQString & );
   void newSeparator();
   void endFolder();
 
 protected:
-  QPtrStack<KBookmarkMenu> mstack;
+  TQPtrStack<KBookmarkMenu> mstack;
   KBookmarkMenu * m_menu;
   KActionCollection * m_actionCollection;
   KBookmarkManager* m_pManager;

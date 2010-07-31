@@ -1,5 +1,5 @@
 /**
-* QImageIO Routines to read (and perhaps in the future, write) images
+* TQImageIO Routines to read (and perhaps in the future, write) images
 * in the high definition EXR format.
 *
 * Copyright (c) 2003, Brad Hards <bradh@frogmouth.net>
@@ -14,8 +14,8 @@
 class QImageIO;
 
 extern "C" {
-  void kimgio_exr_read (QImageIO *io);
-  void kimgio_exr_write (QImageIO *io);
+  void kimgio_exr_read (TQImageIO *io);
+  void kimgio_exr_write (TQImageIO *io);
 }
 
 #endif

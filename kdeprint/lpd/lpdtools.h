@@ -19,10 +19,10 @@
 #ifndef LPDTOOLS_H
 #define LPDTOOLS_H
 
-#include <qstring.h>
-#include <qmap.h>
-#include <qptrlist.h>
-#include <qtextstream.h>
+#include <tqstring.h>
+#include <tqmap.h>
+#include <tqptrlist.h>
+#include <tqtextstream.h>
 
 class KMLpdManager;
 class DrMain;
@@ -32,15 +32,15 @@ class PrintcapEntry
 {
 friend class KMLpdManager;
 public:
-	bool readLine(const QString& line);
-	void writeEntry(QTextStream&);
+	bool readLine(const TQString& line);
+	void writeEntry(TQTextStream&);
 	KMPrinter* createPrinter();
-	QString arg(const QString& key) const 	{ return m_args[key]; }
-	QString comment(int i);
+	TQString arg(const TQString& key) const 	{ return m_args[key]; }
+	TQString comment(int i);
 private:
 	QString			m_name;
 	QString			m_comment;
-	QMap<QString,QString>	m_args;
+	TQMap<TQString,TQString>	m_args;
 };
 
 //*****************************************************************************************************
@@ -61,16 +61,16 @@ class PrinttoolEntry
 {
 friend class KMLpdManager;
 public:
-	bool readEntry(QTextStream& t);
+	bool readEntry(TQTextStream& t);
 	DrMain* createDriver();
 private:
 	QString			m_name, m_gsdriver, m_description, m_about;
-	QPtrList<Resolution>	m_resolutions;
-	QPtrList<BitsPerPixel>	m_depths;
+	TQPtrList<Resolution>	m_resolutions;
+	TQPtrList<BitsPerPixel>	m_depths;
 };
 
 //*****************************************************************************************************
 
-QString getPrintcapLine(QTextStream& t, QString *lastcomment = NULL);
+TQString getPrintcapLine(TQTextStream& t, TQString *lastcomment = NULL);
 
 #endif // LPDTOOLS_H

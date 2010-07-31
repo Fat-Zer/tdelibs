@@ -25,7 +25,7 @@
 class KMLpdUnixUiManager : public KMUiManager
 {
 public:
-	KMLpdUnixUiManager(QObject *parent, const char *name, const QStringList & /*args*/);
+	KMLpdUnixUiManager(TQObject *parent, const char *name, const TQStringList & /*args*/);
 	~KMLpdUnixUiManager();
 
 	int pluginPageCap();

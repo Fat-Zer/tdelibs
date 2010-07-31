@@ -33,7 +33,7 @@ private:
   KParts::Part *m_part2;
   KParts::ReadWritePart *m_editorpart;
   KParts::PartManager *m_manager;
-  QWidget *m_splitter;
+  TQWidget *m_splitter;
 };
 
 #endif

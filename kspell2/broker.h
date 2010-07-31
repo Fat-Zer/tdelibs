@@ -24,9 +24,9 @@
 
 #include <ksharedptr.h>
 
-#include <qobject.h>
-#include <qstringlist.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
+#include <tqstring.h>
 
 class KSharedConfig;
 template <typename T>
@@ -45,7 +45,7 @@ namespace KSpell2
      * KSpell2 class, you can think of it as the kernel or manager
      * of the KSpell2 architecture.
      */
-    class KDE_EXPORT Broker : public QObject,
+    class KDE_EXPORT Broker : public TQObject,
                    public KShared
     {
         Q_OBJECT
@@ -94,18 +94,18 @@ namespace KSpell2
          *
          */
         Dictionary *dictionary(
-            const QString& language = QString::null,
-            const QString& client = QString::null ) const;
+            const TQString& language = TQString::null,
+            const TQString& client = TQString::null ) const;
 
         /**
          * Returns names of all supported clients (e.g. ISpell, ASpell)
          */
-        QStringList clients() const;
+        TQStringList clients() const;
 
         /**
          * Returns a list of supported languages.
          */
-        QStringList languages() const;
+        TQStringList languages() const;
 
         /**
          * Returns the Settings object used by the broker.
@@ -124,12 +124,12 @@ namespace KSpell2
     private:
         Broker( KSharedConfig *config );
         void loadPlugins();
-        void loadPlugin( const QString& );
+        void loadPlugin( const TQString& );
     private:
         class Private;
         Private *d;
     private:
-        static QPtrDict<Broker> *s_brokers;
+        static TQPtrDict<Broker> *s_brokers;
     };
 }
 

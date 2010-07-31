@@ -23,7 +23,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kcharsets.h>
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 
 #include <sys/types.h>
 #include <stddef.h>
@@ -70,19 +70,19 @@ void KXBELBookmarkImporterImpl::visitLeave(const KBookmarkGroup &)
   emit endFolder();
 }
 
-void KBookmarkImporterBase::setupSignalForwards(QObject *src, QObject *dst)
+void KBookmarkImporterBase::setupSignalForwards(TQObject *src, TQObject *dst)
 {
-  connect(src, SIGNAL( newBookmark( const QString &, const QCString &, const QString & ) ),
-          dst, SIGNAL( newBookmark( const QString &, const QCString &, const QString & ) ));
-  connect(src, SIGNAL( newFolder( const QString &, bool, const QString & ) ),
-          dst, SIGNAL( newFolder( const QString &, bool, const QString & ) ));
-  connect(src, SIGNAL( newSeparator() ),
-          dst, SIGNAL( newSeparator() ) );
-  connect(src, SIGNAL( endFolder() ),
-          dst, SIGNAL( endFolder() ) );
+  connect(src, TQT_SIGNAL( newBookmark( const TQString &, const TQCString &, const TQString & ) ),
+          dst, TQT_SIGNAL( newBookmark( const TQString &, const TQCString &, const TQString & ) ));
+  connect(src, TQT_SIGNAL( newFolder( const TQString &, bool, const TQString & ) ),
+          dst, TQT_SIGNAL( newFolder( const TQString &, bool, const TQString & ) ));
+  connect(src, TQT_SIGNAL( newSeparator() ),
+          dst, TQT_SIGNAL( newSeparator() ) );
+  connect(src, TQT_SIGNAL( endFolder() ),
+          dst, TQT_SIGNAL( endFolder() ) );
 }
 
-KBookmarkImporterBase* KBookmarkImporterBase::factory( const QString &type )
+KBookmarkImporterBase* KBookmarkImporterBase::factory( const TQString &type )
 {
   if (type == "netscape")
     return new KNSBookmarkImporterImpl;

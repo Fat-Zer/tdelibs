@@ -21,7 +21,7 @@
   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include <kdebug.h>
 
@@ -65,7 +65,7 @@ DateValue::DateValue(
 	assembled_ = false;
 }
 
-DateValue::DateValue(const QDate & d)
+DateValue::DateValue(const TQDate & d)
 	:	Value		(),
 		year_		(d.year()),
 		month_		(d.month()),
@@ -76,7 +76,7 @@ DateValue::DateValue(const QDate & d)
 	assembled_ = false;
 }
 
-DateValue::DateValue(const QDateTime & d)
+DateValue::DateValue(const TQDateTime & d)
 	:	Value		(),
 		year_		(d.date().year()),
 		month_		(d.date().month()),
@@ -105,7 +105,7 @@ DateValue::DateValue(const DateValue & x)
 	hasTime_ = x.hasTime_;
 }
 
-DateValue::DateValue(const QCString & s)
+DateValue::DateValue(const TQCString & s)
 	:	Value(s)
 {
 }
@@ -120,7 +120,7 @@ DateValue::operator = (DateValue & x)
 }
 
 	DateValue &
-DateValue::operator = (const QCString & s)
+DateValue::operator = (const TQCString & s)
 {
 	Value::operator = (s);
 	return *this;
@@ -154,8 +154,8 @@ DateValue::_parse()
 	
 	int timeSep = strRep_.find('T');
 	
-	QCString dateStr;
-	QCString timeStr;
+	TQCString dateStr;
+	TQCString timeStr;
 	
 	if (timeSep == -1) {
 		
@@ -173,7 +173,7 @@ DateValue::_parse()
 	
 	/////////////////////////////////////////////////////////////// DATE
 	
-	dateStr.replace(QRegExp("-"), "");
+	dateStr.replace(TQRegExp("-"), "");
 
 	kdDebug(5710) << "dateStr: " << dateStr << endl;
 
@@ -196,7 +196,7 @@ DateValue::_parse()
 	
 	if (zoneSep != -1 && timeStr.length() - zoneSep > 3) {
 		
-		QCString zoneStr(timeStr.mid(zoneSep + 1));
+		TQCString zoneStr(timeStr.mid(zoneSep + 1));
 		vDebug("zoneStr == " + zoneStr);
 
 		zonePositive_	= (zoneStr[0] == '+');
@@ -211,13 +211,13 @@ DateValue::_parse()
 	int secFracSep = timeStr.findRev(',');
 	
 	if (secFracSep != -1 && zoneSep != -1) { // zoneSep checked to avoid errors.
-		QCString quirkafleeg = "0." + timeStr.mid(secFracSep + 1, zoneSep);
+		TQCString quirkafleeg = "0." + timeStr.mid(secFracSep + 1, zoneSep);
 		secFrac_ = quirkafleeg.toDouble();
 	}
 	
 	/////////////////////////////////////////////////////////////// HMS
 
-	timeStr.replace(QRegExp(":"), "");
+	timeStr.replace(TQRegExp(":"), "");
 	
 	hour_	= timeStr.left(2).toInt();
 	minute_	= timeStr.mid(2, 2).toInt();
@@ -229,9 +229,9 @@ DateValue::_assemble()
 {
 	vDebug("DateValue::_assemble");
 
-	QCString year;
-	QCString month;
-	QCString day;
+	TQCString year;
+	TQCString month;
+	TQCString day;
 	
 	year.setNum( year_ );
 	month.setNum( month_ );
@@ -243,9 +243,9 @@ DateValue::_assemble()
 	strRep_ = year + '-' + month + '-' + day;
 
 	if ( hasTime_ ) {
-	    QCString hour;
-	    QCString minute;
-	    QCString second;
+	    TQCString hour;
+	    TQCString minute;
+	    TQCString second;
 
 	    hour.setNum( hour_ );
 	    minute.setNum( minute_ );
@@ -402,7 +402,7 @@ DateValue::setZoneMinute(unsigned int i)
 DateValue::qdate()
 {
 	parse();
-	QDate d(year_, month_, day_);
+	TQDate d(year_, month_, day_);
 	return d;
 }
 
@@ -410,7 +410,7 @@ DateValue::qdate()
 DateValue::qtime()
 {
 	parse();
-	QTime t(hour_, minute_, second_);
+	TQTime t(hour_, minute_, second_);
 //	t.setMs(1 / secFrac_);
 	return t;
 }
@@ -419,7 +419,7 @@ DateValue::qtime()
 DateValue::qdt()
 {
 	parse();
-	QDateTime dt;
+	TQDateTime dt;
 	dt.setDate(qdate());
 	dt.setTime(qtime());
 	return dt;

@@ -21,7 +21,7 @@
 #define KMWINFOBASE_H
 
 #include "kmwizardpage.h"
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 class QLabel;
 class QLineEdit;
@@ -29,21 +29,21 @@ class QLineEdit;
 class KDEPRINT_EXPORT KMWInfoBase : public KMWizardPage
 {
 public:
-	KMWInfoBase(int n = 1, QWidget *parent = 0, const char *name = 0);
+	KMWInfoBase(int n = 1, TQWidget *parent = 0, const char *name = 0);
 
-	void setInfo(const QString&);
-	void setLabel(int, const QString&);
-	void setText(int, const QString&);
+	void setInfo(const TQString&);
+	void setLabel(int, const TQString&);
+	void setText(int, const TQString&);
 	void setCurrent(int);
 
-	QString text(int);
+	TQString text(int);
 
 protected:
-	QLineEdit* lineEdit( int );
+	TQLineEdit* lineEdit( int );
 
 private:
-	QPtrList<QLabel>		m_labels;
-	QPtrList<QLineEdit>	m_edits;
+	TQPtrList<TQLabel>		m_labels;
+	TQPtrList<TQLineEdit>	m_edits;
 	QLabel			*m_info;
 	int			m_nlines;
 };

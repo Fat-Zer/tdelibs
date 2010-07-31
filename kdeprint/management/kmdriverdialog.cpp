@@ -23,7 +23,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-KMDriverDialog::KMDriverDialog(QWidget *parent, const char *name)
+KMDriverDialog::KMDriverDialog(TQWidget *parent, const char *name)
 : KDialogBase(KDialogBase::Swallow,i18n("Configure"),KDialogBase::Ok|KDialogBase::Cancel,KDialogBase::Ok,parent,name,true,false)
 {
 	m_view = new DriverView(0);

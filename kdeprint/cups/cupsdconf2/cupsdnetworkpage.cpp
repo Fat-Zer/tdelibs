@@ -23,28 +23,28 @@
 #include "portdialog.h"
 #include "sizewidget.h"
 
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
+#include <tqlabel.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
 
 #include <klocale.h>
 #include <knuminput.h>
 
-CupsdNetworkPage::CupsdNetworkPage(QWidget *parent, const char *name)
+CupsdNetworkPage::CupsdNetworkPage(TQWidget *parent, const char *name)
 	: CupsdPage(parent, name)
 {
 	setPageLabel(i18n("Network"));
 	setHeader(i18n("Network Settings"));
 	setPixmap("network");
 
-	keepalive_ = new QCheckBox(i18n("Keep alive"), this);
+	keepalive_ = new TQCheckBox(i18n("Keep alive"), this);
 	keepalivetimeout_ = new KIntNumInput(this);
 	maxclients_ = new KIntNumInput(this);
 	maxrequestsize_ = new SizeWidget(this);
 	clienttimeout_ = new KIntNumInput(this);
-	hostnamelookup_ = new QComboBox(this);
+	hostnamelookup_ = new TQComboBox(this);
 	listen_ = new EditList(this);
 
 	keepalivetimeout_->setRange(0, 10000, 1, true);
@@ -64,14 +64,14 @@ CupsdNetworkPage::CupsdNetworkPage(QWidget *parent, const char *name)
 	hostnamelookup_->insertItem(i18n("On"));
 	hostnamelookup_->insertItem(i18n("Double"));
 
-	QLabel *l1 = new QLabel(i18n("Hostname lookups:"), this);
-	QLabel *l2 = new QLabel(i18n("Keep-alive timeout:"), this);
-	QLabel *l3 = new QLabel(i18n("Max clients:"), this);
-	QLabel *l4 = new QLabel(i18n("Max request size:"), this);
-	QLabel *l5 = new QLabel(i18n("Client timeout:"), this);
-	QLabel *l6 = new QLabel(i18n("Listen to:"), this);
+	TQLabel *l1 = new TQLabel(i18n("Hostname lookups:"), this);
+	TQLabel *l2 = new TQLabel(i18n("Keep-alive timeout:"), this);
+	TQLabel *l3 = new TQLabel(i18n("Max clients:"), this);
+	TQLabel *l4 = new TQLabel(i18n("Max request size:"), this);
+	TQLabel *l5 = new TQLabel(i18n("Client timeout:"), this);
+	TQLabel *l6 = new TQLabel(i18n("Listen to:"), this);
 
-	QGridLayout	*m1 = new QGridLayout(this, 8, 2, 10, 7);
+	QGridLayout	*m1 = new TQGridLayout(this, 8, 2, 10, 7);
 	m1->setRowStretch(7, 1);
 	m1->setColStretch(1, 1);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);
@@ -88,14 +88,14 @@ CupsdNetworkPage::CupsdNetworkPage(QWidget *parent, const char *name)
 	m1->addWidget(clienttimeout_, 5, 1);
 	m1->addWidget(listen_, 6, 1);
 
-	connect(listen_, SIGNAL(add()), SLOT(slotAdd()));
-	connect(listen_, SIGNAL(edit(int)), SLOT(slotEdit(int)));
-	connect(listen_, SIGNAL(defaultList()), SLOT(slotDefaultList()));
-	connect(keepalive_, SIGNAL(toggled(bool)), keepalivetimeout_, SLOT(setEnabled(bool)));
+	connect(listen_, TQT_SIGNAL(add()), TQT_SLOT(slotAdd()));
+	connect(listen_, TQT_SIGNAL(edit(int)), TQT_SLOT(slotEdit(int)));
+	connect(listen_, TQT_SIGNAL(defaultList()), TQT_SLOT(slotDefaultList()));
+	connect(keepalive_, TQT_SIGNAL(toggled(bool)), keepalivetimeout_, TQT_SLOT(setEnabled(bool)));
 	keepalive_->setChecked(true);
 }
 
-bool CupsdNetworkPage::loadConfig(CupsdConf *conf, QString&)
+bool CupsdNetworkPage::loadConfig(CupsdConf *conf, TQString&)
 {
 	conf_ = conf;
 	hostnamelookup_->setCurrentItem(conf_->hostnamelookup_);
@@ -109,7 +109,7 @@ bool CupsdNetworkPage::loadConfig(CupsdConf *conf, QString&)
 	return true;
 }
 
-bool CupsdNetworkPage::saveConfig(CupsdConf *conf, QString&)
+bool CupsdNetworkPage::saveConfig(CupsdConf *conf, TQString&)
 {
 	conf->hostnamelookup_ = hostnamelookup_->currentItem();
 	conf->keepalive_ = keepalive_->isChecked();
@@ -124,13 +124,13 @@ bool CupsdNetworkPage::saveConfig(CupsdConf *conf, QString&)
 
 void CupsdNetworkPage::setInfos(CupsdConf *conf)
 {
-	QWhatsThis::add(hostnamelookup_, conf->comments_.toolTip("hostnamelookups"));
-	QWhatsThis::add(keepalive_, conf->comments_.toolTip("keepalive"));
-	QWhatsThis::add(keepalivetimeout_, conf->comments_.toolTip("keepalivetimeout"));
-	QWhatsThis::add(maxclients_, conf->comments_.toolTip("maxclients"));
-	QWhatsThis::add(maxrequestsize_, conf->comments_.toolTip("maxrequestsize"));
-	QWhatsThis::add(clienttimeout_, conf->comments_.toolTip("timeout"));
-	QWhatsThis::add(listen_, conf->comments_.toolTip("listen"));
+	TQWhatsThis::add(hostnamelookup_, conf->comments_.toolTip("hostnamelookups"));
+	TQWhatsThis::add(keepalive_, conf->comments_.toolTip("keepalive"));
+	TQWhatsThis::add(keepalivetimeout_, conf->comments_.toolTip("keepalivetimeout"));
+	TQWhatsThis::add(maxclients_, conf->comments_.toolTip("maxclients"));
+	TQWhatsThis::add(maxrequestsize_, conf->comments_.toolTip("maxrequestsize"));
+	TQWhatsThis::add(clienttimeout_, conf->comments_.toolTip("timeout"));
+	TQWhatsThis::add(listen_, conf->comments_.toolTip("listen"));
 }
 
 void CupsdNetworkPage::slotAdd()
@@ -142,7 +142,7 @@ void CupsdNetworkPage::slotAdd()
 
 void CupsdNetworkPage::slotEdit(int index)
 {
-	QString s = listen_->text(index);
+	TQString s = listen_->text(index);
 	s = PortDialog::editListen(s, this, conf_);
 	if (!s.isEmpty())
 		listen_->setText(index, s);

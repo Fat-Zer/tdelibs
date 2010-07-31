@@ -34,10 +34,10 @@
 #include <signal.h>
 #include <setjmp.h>
 
-#include <qdir.h>
-#include <qfileinfo.h>
-#include <qtextcodec.h>
-#include <qtextstream.h>
+#include <tqdir.h>
+#include <tqfileinfo.h>
+#include <tqtextcodec.h>
+#include <tqtextstream.h>
 
 #include "kconfigbackend.h"
 #include "kconfigbase.h"
@@ -50,9 +50,9 @@
 #include <kurl.h>
 #include <kde_file.h>
 
-extern bool checkAccess(const QString& pathname, int mode);
+extern bool checkAccess(const TQString& pathname, int mode);
 /* translate escaped escape sequences to their actual values. */
-static QCString printableToString(const char *str, int l)
+static TQCString printableToString(const char *str, int l)
 {
   // Strip leading white-space.
   while((l>0) &&
@@ -68,7 +68,7 @@ static QCString printableToString(const char *str, int l)
      l--;
   }
 
-  QCString result(l + 1);
+  TQCString result(l + 1);
   char *r = result.data();
 
   for(int i = 0; i < l;i++, str++)
@@ -112,12 +112,12 @@ static QCString printableToString(const char *str, int l)
   return result;
 }
 
-static QCString stringToPrintable(const QCString& str){
-  QCString result(str.length()*2); // Maximum 2x as long as source string
+static TQCString stringToPrintable(const TQCString& str){
+  TQCString result(str.length()*2); // Maximum 2x as long as source string
   register char *r = result.data();
   register char *s = str.data();
 
-  if (!s) return QCString("");
+  if (!s) return TQCString("");
 
   // Escape leading space
   if (*s == ' ')
@@ -163,9 +163,9 @@ static QCString stringToPrintable(const QCString& str){
   return result;
 }
 
-static QCString decodeGroup(const char*s, int l)
+static TQCString decodeGroup(const char*s, int l)
 {
-  QCString result(l);
+  TQCString result(l);
   register char *r = result.data();
 
   l--; // Correct for trailing \0
@@ -194,10 +194,10 @@ static QCString decodeGroup(const char*s, int l)
   return result;
 }
 
-static QCString encodeGroup(const QCString &str)
+static TQCString encodeGroup(const TQCString &str)
 {
   int l = str.length();
-  QCString result(l*2+1);
+  TQCString result(l*2+1);
   register char *r = result.data();
   register char *s = str.data();
   while(l)
@@ -211,9 +211,9 @@ static QCString encodeGroup(const QCString &str)
   return result;
 }
 
-static QCString encodeKey(const char* key)
+static TQCString encodeKey(const char* key)
 {
-    QCString newKey(key);
+    TQCString newKey(key);
 
     newKey.replace('[', "%5b");
     newKey.replace(']', "%5d");
@@ -221,9 +221,9 @@ static QCString encodeKey(const char* key)
     return newKey;
 }
 
-static QCString decodeKey(const char* key)
+static TQCString decodeKey(const char* key)
 {
-    QCString newKey(key);
+    TQCString newKey(key);
 
     newKey.replace("%5b", "[");
     newKey.replace("%5d", "]");
@@ -234,13 +234,13 @@ static QCString decodeKey(const char* key)
 class KConfigBackEnd::KConfigBackEndPrivate
 {
 public:
-   QDateTime localLastModified;
+   TQDateTime localLastModified;
    uint      localLastSize;
    KLockFile::Ptr localLockFile;
    KLockFile::Ptr globalLockFile;
 };
 
-void KConfigBackEnd::changeFileName(const QString &_fileName,
+void KConfigBackEnd::changeFileName(const TQString &_fileName,
                                     const char * _resType,
                                     bool _useKDEGlobals)
 {
@@ -248,19 +248,19 @@ void KConfigBackEnd::changeFileName(const QString &_fileName,
    resType = _resType;
    useKDEGlobals = _useKDEGlobals;
    if (mfileName.isEmpty())
-      mLocalFileName = QString::null;
-   else if (!QDir::isRelativePath(mfileName))
+      mLocalFileName = TQString::null;
+   else if (!TQDir::isRelativePath(mfileName))
       mLocalFileName = mfileName;
    else
       mLocalFileName = KGlobal::dirs()->saveLocation(resType) + mfileName;
 
    if (useKDEGlobals)
       mGlobalFileName = KGlobal::dirs()->saveLocation("config") +
-	      QString::fromLatin1("kdeglobals");
+	      TQString::fromLatin1("kdeglobals");
    else
-      mGlobalFileName = QString::null;
+      mGlobalFileName = TQString::null;
 
-   d->localLastModified = QDateTime();
+   d->localLastModified = TQDateTime();
    d->localLastSize = 0;
    d->localLockFile = 0;
    d->globalLockFile = 0;
@@ -294,7 +294,7 @@ KLockFile::Ptr KConfigBackEnd::lockFile(bool bGlobal)
 }
 
 KConfigBackEnd::KConfigBackEnd(KConfigBase *_config,
-			       const QString &_fileName,
+			       const TQString &_fileName,
 			       const char * _resType,
 			       bool _useKDEGlobals)
   : pConfig(_config), bFileImmutable(false), mConfigState(KConfigBase::NoAccess), mFileMode(-1)
@@ -328,7 +328,7 @@ bool KConfigINIBackEnd::parseConfigFiles()
         // Create the containing dir, maybe it wasn't there
         KURL path;
         path.setPath(mLocalFileName);
-        QString dir=path.directory();
+        TQString dir=path.directory();
         KStandardDirs::makeDir(dir);
 
         if (checkAccess(mLocalFileName, W_OK))
@@ -336,7 +336,7 @@ bool KConfigINIBackEnd::parseConfigFiles()
            mConfigState = KConfigBase::ReadWrite;
         }
      }
-     QFileInfo info(mLocalFileName);
+     TQFileInfo info(mLocalFileName);
      d->localLastModified = info.lastModified();
      d->localLastSize = info.size();
   }
@@ -346,26 +346,26 @@ bool KConfigINIBackEnd::parseConfigFiles()
 
   // Parse the general config files
   if (useKDEGlobals) {
-    QStringList kdercs = KGlobal::dirs()->
-      findAllResources("config", QString::fromLatin1("kdeglobals"));
+    TQStringList kdercs = KGlobal::dirs()->
+      findAllResources("config", TQString::fromLatin1("kdeglobals"));
 
 #ifdef Q_WS_WIN
-    QString etc_kderc = QFile::decodeName( QCString(getenv("WINDIR")) + "\\kderc" );
+    TQString etc_kderc = TQFile::decodeName( TQCString(getenv("WINDIR")) + "\\kderc" );
 #else
-    QString etc_kderc = QString::fromLatin1("/etc/kderc");
+    TQString etc_kderc = TQString::fromLatin1("/etc/kderc");
 #endif
 
     if (checkAccess(etc_kderc, R_OK))
       kdercs += etc_kderc;
 
     kdercs += KGlobal::dirs()->
-      findAllResources("config", QString::fromLatin1("system.kdeglobals"));
+      findAllResources("config", TQString::fromLatin1("system.kdeglobals"));
 
-    QStringList::ConstIterator it;
+    TQStringList::ConstIterator it;
 
     for (it = kdercs.fromLast(); it != kdercs.end(); --it) {
 
-      QFile aConfigFile( *it );
+      TQFile aConfigFile( *it );
       if (!aConfigFile.open( IO_ReadOnly ))
 	   continue;
       parseSingleConfigFile( aConfigFile, 0L, true, (*it != mGlobalFileName) );
@@ -378,7 +378,7 @@ bool KConfigINIBackEnd::parseConfigFiles()
   bool bReadFile = !mfileName.isEmpty();
   while(bReadFile) {
     bReadFile = false;
-    QString bootLanguage;
+    TQString bootLanguage;
     if (useKDEGlobals && localeString.isEmpty() && !KGlobal::_locale) {
        // Boot strap language
        bootLanguage = KLocale::_initLanguage(pConfig);
@@ -386,17 +386,17 @@ bool KConfigINIBackEnd::parseConfigFiles()
     }
 
     bFileImmutable = false;
-    QStringList list;
-    if ( !QDir::isRelativePath(mfileName) )
+    TQStringList list;
+    if ( !TQDir::isRelativePath(mfileName) )
        list << mfileName;
     else
        list = KGlobal::dirs()->findAllResources(resType, mfileName);
 
-    QStringList::ConstIterator it;
+    TQStringList::ConstIterator it;
 
     for (it = list.fromLast(); it != list.end(); --it) {
 
-      QFile aConfigFile( *it );
+      TQFile aConfigFile( *it );
       // we can already be sure that this file exists
       bool bIsLocal = (*it == mLocalFileName);
       if (aConfigFile.open( IO_ReadOnly )) {
@@ -408,7 +408,7 @@ bool KConfigINIBackEnd::parseConfigFiles()
     }
     if (KGlobal::dirs()->isRestrictedResource(resType, mfileName))
        bFileImmutable = true;
-    QString currentLanguage;
+    TQString currentLanguage;
     if (!bootLanguage.isEmpty())
     {
        currentLanguage = KLocale::_initLanguage(pConfig);
@@ -443,13 +443,13 @@ extern "C" {
 
 extern bool kde_kiosk_exception;
 
-void KConfigINIBackEnd::parseSingleConfigFile(QFile &rFile,
+void KConfigINIBackEnd::parseSingleConfigFile(TQFile &rFile,
 					      KEntryMap *pWriteBackMap,
 					      bool bGlobal, bool bDefault)
 {
    const char *s; // May get clobbered by sigsetjump, but we don't use them afterwards.
    const char *eof; // May get clobbered by sigsetjump, but we don't use them afterwards.
-   QByteArray data;
+   TQByteArray data;
 
    if (!rFile.isOpen()) // come back, if you have real work for us ;->
       return;
@@ -459,7 +459,7 @@ void KConfigINIBackEnd::parseSingleConfigFile(QFile &rFile,
    //qWarning("Parsing %s, global = %s default = %s",
    //           rFile.name().latin1(), bGlobal ? "true" : "false", bDefault ? "true" : "false");
 
-   QCString aCurrentGroup("<default>");
+   TQCString aCurrentGroup("<default>");
 
    static unsigned int ll = localeString.length();
 
@@ -506,7 +506,7 @@ qWarning("SIGBUS while reading %s", rFile.name().latin1());
    bool groupOptionImmutable = false;
    bool groupSkip = false;
    bool foundGettextDomain = false;
-   QCString gettextDomain;
+   TQCString gettextDomain;
 
    int line = 0;
    for(; s < eof; s++)
@@ -682,7 +682,7 @@ qWarning("SIGBUS while reading %s", rFile.name().latin1());
           {
               // backward compatibility. C == en_US
               if ( cl != 1 || ll != 5 || *locale != 'C' || memcmp(localeString.data(), "en_US", 5)) {
-                  //cout<<"mismatched locale '"<<QCString(locale, elocale-locale +1)<<"'"<<endl;
+                  //cout<<"mismatched locale '"<<TQCString(locale, elocale-locale +1)<<"'"<<endl;
                   // We can ignore this one
                   if (!pWriteBackMap)
                       continue; // We just ignore it
@@ -694,11 +694,11 @@ qWarning("SIGBUS while reading %s", rFile.name().latin1());
       }
 
       // insert the key/value line
-      QCString key(startLine, endOfKey - startLine + 2);
-      QCString val = printableToString(st, s - st);
+      TQCString key(startLine, endOfKey - startLine + 2);
+      TQCString val = printableToString(st, s - st);
       //qDebug("found key '%s' with value '%s'", key.data(), val.data());
 
-      if (QString(key.data()) == "X-Ubuntu-Gettext-Domain") {
+      if (TQString(key.data()) == "X-Ubuntu-Gettext-Domain") {
 	gettextDomain = val.data();
 	foundGettextDomain = true;
       }
@@ -734,22 +734,22 @@ qWarning("SIGBUS while reading %s", rFile.name().latin1());
    // Ideas: only translate most important fields, only translate "Desktop Entry" files,
    //        do translation per KConfig not per single file
    if (!pWriteBackMap) {
-     QFile file("file.txt");
+     TQFile file("file.txt");
      if (foundGettextDomain) {
 
        KLocale locale(gettextDomain);
 
-       QString language = locale.language();
-       translateKey(locale, aCurrentGroup, QCString("Name"));
-       translateKey(locale, aCurrentGroup, QCString("Comment"));
-       translateKey(locale, aCurrentGroup, QCString("Language"));
-       translateKey(locale, aCurrentGroup, QCString("Keywords"));
-       translateKey(locale, aCurrentGroup, QCString("About"));
-       translateKey(locale, aCurrentGroup, QCString("Description"));
-       translateKey(locale, aCurrentGroup, QCString("GenericName"));
-       translateKey(locale, aCurrentGroup, QCString("Query"));
-       translateKey(locale, aCurrentGroup, QCString("ExtraNames"));
-       translateKey(locale, aCurrentGroup, QCString("X-KDE-Submenu"));
+       TQString language = locale.language();
+       translateKey(locale, aCurrentGroup, TQCString("Name"));
+       translateKey(locale, aCurrentGroup, TQCString("Comment"));
+       translateKey(locale, aCurrentGroup, TQCString("Language"));
+       translateKey(locale, aCurrentGroup, TQCString("Keywords"));
+       translateKey(locale, aCurrentGroup, TQCString("About"));
+       translateKey(locale, aCurrentGroup, TQCString("Description"));
+       translateKey(locale, aCurrentGroup, TQCString("GenericName"));
+       translateKey(locale, aCurrentGroup, TQCString("Query"));
+       translateKey(locale, aCurrentGroup, TQCString("ExtraNames"));
+       translateKey(locale, aCurrentGroup, TQCString("X-KDE-Submenu"));
      }
    }
 
@@ -768,13 +768,13 @@ qWarning("SIGBUS while reading %s", rFile.name().latin1());
 #endif
 }
 
-void KConfigINIBackEnd::translateKey(KLocale& locale, QCString currentGroup, QCString key) {
+void KConfigINIBackEnd::translateKey(KLocale& locale, TQCString currentGroup, TQCString key) {
   KEntryKey entryKey = KEntryKey(currentGroup, key);
   KEntry entry = pConfig->lookupData(entryKey);
-  if (QString(entry.mValue) != "") {
-    QString orig = key + "=" + entry.mValue;
-    QString translate = locale.translate(key + "=" + entry.mValue);
-    if (QString::compare(orig, translate) != 0) {
+  if (TQString(entry.mValue) != "") {
+    TQString orig = key + "=" + entry.mValue;
+    TQString translate = locale.translate(key + "=" + entry.mValue);
+    if (TQString::compare(orig, translate) != 0) {
       translate = translate.mid(key.length() + 1);
       entry.mValue = translate.utf8();
       entryKey.bLocal = true;
@@ -797,11 +797,11 @@ void KConfigINIBackEnd::sync(bool bMerge)
 
   if (!mfileName.isEmpty()) {
     // Create the containing dir if needed
-    if ((resType!="config") && !QDir::isRelativePath(mLocalFileName))
+    if ((resType!="config") && !TQDir::isRelativePath(mLocalFileName))
     {
        KURL path;
        path.setPath(mLocalFileName);
-       QString dir=path.directory();
+       TQString dir=path.directory();
        KStandardDirs::makeDir(dir);
     }
 
@@ -827,7 +827,7 @@ void KConfigINIBackEnd::sync(bool bMerge)
             // But what if the locking failed? Ignore it for now...
          }
          
-         QFileInfo info(mLocalFileName);
+         TQFileInfo info(mLocalFileName);
          if ((d->localLastSize == info.size()) &&
              (d->localLastModified == info.lastModified()))
          {
@@ -837,7 +837,7 @@ void KConfigINIBackEnd::sync(bool bMerge)
          else
          {
             // Changed...
-            d->localLastModified = QDateTime();
+            d->localLastModified = TQDateTime();
             d->localLastSize = 0;
          }
       }
@@ -854,7 +854,7 @@ void KConfigINIBackEnd::sync(bool bMerge)
       // For KDE 4.0 we may wish to reconsider that.
       if (!mergeLocalFile)
       {
-         QFileInfo info(mLocalFileName);
+         TQFileInfo info(mLocalFileName);
          d->localLastModified = info.lastModified();
          d->localLastSize = info.size();
       }
@@ -885,10 +885,10 @@ void KConfigINIBackEnd::sync(bool bMerge)
 
 }
 
-static void writeEntries(FILE *pStream, const KEntryMap& entryMap, bool defaultGroup, bool &firstEntry, const QCString &localeString)
+static void writeEntries(FILE *pStream, const KEntryMap& entryMap, bool defaultGroup, bool &firstEntry, const TQCString &localeString)
 {
   // now write out all other groups.
-  QCString currentGroup;
+  TQCString currentGroup;
   for (KEntryMapConstIterator aIt = entryMap.begin();
        aIt != entryMap.end(); ++aIt)
   {
@@ -975,7 +975,7 @@ static void writeEntries(FILE *pStream, const KEntryMap& entryMap, bool defaultG
 }
 
 bool KConfigINIBackEnd::getEntryMap(KEntryMap &aTempMap, bool bGlobal,
-                                    QFile *mergeFile)
+                                    TQFile *mergeFile)
 {
   bool bEntriesLeft = false;
   bFileImmutable = false;
@@ -1027,8 +1027,8 @@ bool KConfigINIBackEnd::getEntryMap(KEntryMap &aTempMap, bool bGlobal,
   return bEntriesLeft;
 }
 
-/* antlarr: KDE 4.0:  make the first parameter "const QString &" */
-bool KConfigINIBackEnd::writeConfigFile(QString filename, bool bGlobal,
+/* antlarr: KDE 4.0:  make the first parameter "const TQString &" */
+bool KConfigINIBackEnd::writeConfigFile(TQString filename, bool bGlobal,
 					bool bMerge)
 {
   // is the config object read-only?
@@ -1036,7 +1036,7 @@ bool KConfigINIBackEnd::writeConfigFile(QString filename, bool bGlobal,
     return true; // pretend we wrote it
 
   KEntryMap aTempMap;
-  QFile *mergeFile = (bMerge ? new QFile(filename) : 0);
+  TQFile *mergeFile = (bMerge ? new TQFile(filename) : 0);
   bool bEntriesLeft = getEntryMap(aTempMap, bGlobal, mergeFile);
   delete mergeFile;
   if (bFileImmutable)
@@ -1050,7 +1050,7 @@ bool KConfigINIBackEnd::writeConfigFile(QString filename, bool bGlobal,
   bool createNew = true;
 
   KDE_struct_stat buf;
-  if (KDE_stat(QFile::encodeName(filename), &buf) == 0)
+  if (KDE_stat(TQFile::encodeName(filename), &buf) == 0)
   {
      if (buf.st_uid == getuid())
      {
@@ -1092,7 +1092,7 @@ bool KConfigINIBackEnd::writeConfigFile(QString filename, bool bGlobal,
   {
      // Open existing file.
      // We use open() to ensure that we call without O_CREAT.
-     int fd = KDE_open( QFile::encodeName(filename), O_WRONLY | O_TRUNC );
+     int fd = KDE_open( TQFile::encodeName(filename), O_WRONLY | O_TRUNC );
      if (fd < 0)
      {
         return bEntriesLeft;
@@ -1113,7 +1113,7 @@ bool KConfigINIBackEnd::writeConfigFile(QString filename, bool bGlobal,
      if ( bEmptyFile && ((fileMode == -1) || (fileMode == 0600)) )
      {
         // File is empty and doesn't have special permissions: delete it.
-        ::unlink(QFile::encodeName(filename));
+        ::unlink(TQFile::encodeName(filename));
         pConfigFile->abort();
      }
      else
@@ -1152,7 +1152,7 @@ bool KConfigBackEnd::checkConfigFilesWritable(bool warnUser)
 {
   // WARNING: Do NOT use the event loop as it may not exist at this time.
   bool allWritable = true;
-  QString errorMsg;
+  TQString errorMsg;
   if ( !mLocalFileName.isEmpty() && !bFileImmutable && !checkAccess(mLocalFileName,W_OK) )
   {
     errorMsg = i18n("Will not save configuration.\n");
@@ -1173,7 +1173,7 @@ bool KConfigBackEnd::checkConfigFilesWritable(bool warnUser)
   {
     // Note: We don't ask the user if we should not ask this question again because we can't save the answer.
     errorMsg += i18n("Please contact your system administrator.");
-    QString cmdToExec = KStandardDirs::findExe(QString("kdialog"));
+    TQString cmdToExec = KStandardDirs::findExe(TQString("kdialog"));
     KApplication *app = kapp;
     if (!cmdToExec.isEmpty() && app)
     {

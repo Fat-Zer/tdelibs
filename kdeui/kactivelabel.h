@@ -19,7 +19,7 @@
 #ifndef _KACTIVELABEL_H_
 #define _KACTIVELABEL_H_
 
-#include <qtextbrowser.h>
+#include <tqtextbrowser.h>
 
 #include <kdelibs_export.h>
 
@@ -41,23 +41,23 @@ public:
     /**
      * Constructor.
      *
-     * It connects the "linkClicked(const QString &)" signal to the
-     * "openLink(const QString &)" slot. You will need to disconnect
+     * It connects the "linkClicked(const TQString &)" signal to the
+     * "openLink(const TQString &)" slot. You will need to disconnect
      * this if you want to process linkClicked() yourself.
      */
-    KActiveLabel(QWidget * parent, const char * name = 0);
+    KActiveLabel(TQWidget * parent, const char * name = 0);
 
     /**
      * Constructor.
      *
-     * It connects the "linkClicked(const QString &)" signal to the
-     * "openLink(const QString &)" slot. You will need to disconnect
+     * It connects the "linkClicked(const TQString &)" signal to the
+     * "openLink(const TQString &)" slot. You will need to disconnect
      * this if you want to process linkClicked() yourself.
      */
-    KActiveLabel(const QString & text, QWidget * parent, const char * name = 0);
+    KActiveLabel(const TQString & text, TQWidget * parent, const char * name = 0);
 
-    QSize minimumSizeHint() const;
-    QSize sizeHint() const;
+    TQSize minimumSizeHint() const;
+    TQSize sizeHint() const;
 
 public slots:
     /**
@@ -67,19 +67,19 @@ public slots:
      * box will appear and then display the rest of the text. The WhatsThis
      * functionality is available since KDE 3.2.
      */
-    virtual void openLink(const QString & link);
+    virtual void openLink(const TQString & link);
 
 private slots:
     void paletteChanged();
-    void setSource( const QString &) { }
+    void setSource( const TQString &) { }
 
 private:
     void init();
 protected:
     virtual void virtual_hook( int id, void* data );
-    virtual void focusInEvent( QFocusEvent* fe );
-    virtual void focusOutEvent( QFocusEvent* fe );
-    virtual void keyPressEvent ( QKeyEvent * e );
+    virtual void focusInEvent( TQFocusEvent* fe );
+    virtual void focusOutEvent( TQFocusEvent* fe );
+    virtual void keyPressEvent ( TQKeyEvent * e );
 private:
     KActiveLabelPrivate *d;
 };

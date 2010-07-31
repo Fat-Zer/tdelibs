@@ -24,7 +24,7 @@
 #ifndef  ADRVALUE_H
 #define  ADRVALUE_H
 
-#include <qstrlist.h>
+#include <tqstrlist.h>
 #include <VCardValue.h>
 
 namespace VCARD
@@ -37,44 +37,44 @@ class KVCARD_EXPORT AdrValue : public Value
 	
 	AdrValue *clone();
 	
-	void setPOBox(const QCString & s)
+	void setPOBox(const TQCString & s)
 	{ poBox_ = s; assembled_ = false; }
 	
-	void setExtAddress(const QCString & s)
+	void setExtAddress(const TQCString & s)
 	{ extAddress_ = s; assembled_ = false; }
 
-	void setStreet(const QCString & s)
+	void setStreet(const TQCString & s)
 	{ street_ = s; assembled_ = false; }
 
-	void setLocality(const QCString & s)
+	void setLocality(const TQCString & s)
 	{ locality_ = s; assembled_ = false; }
 
-	void setRegion(const QCString & s)
+	void setRegion(const TQCString & s)
 	{ region_ = s; assembled_ = false; }
 
-	void setPostCode(const QCString & s)
+	void setPostCode(const TQCString & s)
 	{ postCode_ = s; assembled_ = false; }
 	
-	void setCountryName(const QCString & s)
+	void setCountryName(const TQCString & s)
 	{ countryName_ = s; assembled_ = false; }
 	
-	QCString poBox()	{ parse(); return poBox_;	}
-	QCString extAddress()	{ parse(); return extAddress_;	}
-	QCString street()	{ parse(); return street_;	}
-	QCString locality()	{ parse(); return locality_;	}
-	QCString region()	{ parse(); return region_;	}
-	QCString postCode()	{ parse(); return postCode_;	}
-	QCString countryName()	{ parse(); return countryName_;	}
+	TQCString poBox()	{ parse(); return poBox_;	}
+	TQCString extAddress()	{ parse(); return extAddress_;	}
+	TQCString street()	{ parse(); return street_;	}
+	TQCString locality()	{ parse(); return locality_;	}
+	TQCString region()	{ parse(); return region_;	}
+	TQCString postCode()	{ parse(); return postCode_;	}
+	TQCString countryName()	{ parse(); return countryName_;	}
 	
 	private:
 		
-		QCString poBox_;
-		QCString extAddress_;
-		QCString street_;
-		QCString locality_;
-		QCString region_;
-		QCString postCode_;
-		QCString countryName_;
+		TQCString poBox_;
+		TQCString extAddress_;
+		TQCString street_;
+		TQCString locality_;
+		TQCString region_;
+		TQCString postCode_;
+		TQCString countryName_;
 };
 
 }

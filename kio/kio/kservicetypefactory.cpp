@@ -28,7 +28,7 @@
 #include <kdebug.h>
 #include <assert.h>
 #include <kstringhandler.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 KServiceTypeFactory::KServiceTypeFactory()
  : KSycocaFactory( KST_KServiceTypeFactory )
@@ -52,7 +52,7 @@ KServiceTypeFactory::KServiceTypeFactory()
       }
       else
       {
-         QString str;
+         TQString str;
          for(;n;n--)
          {
             KSycocaEntry::read(*m_str, str);
@@ -77,7 +77,7 @@ KServiceTypeFactory * KServiceTypeFactory::self()
   return _self;
 }
 
-KServiceType * KServiceTypeFactory::findServiceTypeByName(const QString &_name)
+KServiceType * KServiceTypeFactory::findServiceTypeByName(const TQString &_name)
 {
    if (!m_sycocaDict) return 0L; // Error!
    assert (!KSycoca::self()->isBuilding());
@@ -95,28 +95,28 @@ KServiceType * KServiceTypeFactory::findServiceTypeByName(const QString &_name)
    return newServiceType;
 }
 
-QVariant::Type KServiceTypeFactory::findPropertyTypeByName(const QString &_name)
+TQVariant::Type KServiceTypeFactory::findPropertyTypeByName(const TQString &_name)
 {
    if (!m_sycocaDict)
-      return QVariant::Invalid; // Error!
+      return TQVariant::Invalid; // Error!
 
    assert (!KSycoca::self()->isBuilding());
 
-   QMapConstIterator<QString,int> it = m_propertyTypeDict.find(_name);
+   TQMapConstIterator<TQString,int> it = m_propertyTypeDict.find(_name);
    if (it != m_propertyTypeDict.end()) {
-     return (QVariant::Type)it.data();
+     return (TQVariant::Type)it.data();
    }
 
-   return QVariant::Invalid;
+   return TQVariant::Invalid;
 }
 
-KMimeType * KServiceTypeFactory::findFromPattern(const QString &_filename, QString *match)
+KMimeType * KServiceTypeFactory::findFromPattern(const TQString &_filename, TQString *match)
 {
    // Assume we're NOT building a database
    if (!m_str) return 0;
 
    // Get stream to the header
-   QDataStream *str = m_str;
+   TQDataStream *str = m_str;
 
    str->device()->at( m_fastPatternOffset );
 
@@ -138,10 +138,10 @@ KMimeType * KServiceTypeFactory::findFromPattern(const QString &_filename, QStri
    int ext_len = _filename.length() - lastDot - 1;
    if (lastDot != -1 && ext_len <= 4) // if no '.', skip the extension lookup
    {
-      QString extension = _filename.right( ext_len );
+      TQString extension = _filename.right( ext_len );
       extension = extension.leftJustify(4);
 
-      QString pattern;
+      TQString pattern;
       while (left <= right) {
          middle = (left + right) / 2;
          // read pattern at position "middle"
@@ -168,7 +168,7 @@ KMimeType * KServiceTypeFactory::findFromPattern(const QString &_filename, QStri
    if ( m_patterns.isEmpty() ) {
       str->device()->at( m_otherPatternOffset );
 
-      QString pattern;
+      TQString pattern;
       Q_INT32 mimetypeOffset;
 
       while (true)
@@ -184,9 +184,9 @@ KMimeType * KServiceTypeFactory::findFromPattern(const QString &_filename, QStri
 
    assert( m_patterns.size() == m_pattern_offsets.size() );
 
-   QStringList::const_iterator it = m_patterns.begin();
-   QStringList::const_iterator end = m_patterns.end();
-   QValueVector<Q_INT32>::const_iterator it_offset = m_pattern_offsets.begin();
+   TQStringList::const_iterator it = m_patterns.begin();
+   TQStringList::const_iterator end = m_patterns.end();
+   TQValueVector<Q_INT32>::const_iterator it_offset = m_pattern_offsets.begin();
 
   for ( ; it != end; ++it, ++it_offset )
    {
@@ -247,7 +247,7 @@ KServiceType::List KServiceTypeFactory::allServiceTypes()
 
 bool KServiceTypeFactory::checkMimeTypes()
 {
-   QDataStream *str = KSycoca::self()->findFactory( factoryId() );
+   TQDataStream *str = KSycoca::self()->findFactory( factoryId() );
    if (!str) return false;
 
    // check if there are mimetypes/servicetypes
@@ -258,7 +258,7 @@ KServiceType * KServiceTypeFactory::createEntry(int offset)
 {
    KServiceType *newEntry = 0;
    KSycocaType type;
-   QDataStream *str = KSycoca::self()->findEntry(offset, type);
+   TQDataStream *str = KSycoca::self()->findEntry(offset, type);
    if (!str) return 0;
 
    switch(type)
@@ -280,7 +280,7 @@ KServiceType * KServiceTypeFactory::createEntry(int offset)
         break;
 
      default:
-        kdError(7011) << QString("KServiceTypeFactory: unexpected object entry in KSycoca database (type = %1)").arg((int)type) << endl;
+        kdError(7011) << TQString("KServiceTypeFactory: unexpected object entry in KSycoca database (type = %1)").arg((int)type) << endl;
         break;
    }
    if (newEntry && !newEntry->isValid())

@@ -35,19 +35,19 @@ public:
 	KMPrinter* createPrinter(PrintcapEntry*);
 	bool completePrinter(KMPrinter*, PrintcapEntry*, bool = true);
 	DrMain* loadDriver(KMPrinter*, PrintcapEntry*, bool = false);
-	DrMain* loadDbDriver(const QString&);
+	DrMain* loadDbDriver(const TQString&);
 	bool savePrinterDriver(KMPrinter*, PrintcapEntry*, DrMain*, bool* = 0);
 	PrintcapEntry* createEntry(KMPrinter*);
 	bool removePrinter(KMPrinter*, PrintcapEntry*);
-	QString printOptions(KPrinter*);
+	TQString printOptions(KPrinter*);
 
 protected:
-	QString driverDirInternal();
+	TQString driverDirInternal();
 
 private:
-	QString parsePostpipe(const QString&);
-	QString createPostpipe(const QString&);
-	bool savePpdFile(DrMain*, const QString&);
+	TQString parsePostpipe(const TQString&);
+	TQString createPostpipe(const TQString&);
+	bool savePpdFile(DrMain*, const TQString&);
 
 private:
 	QString	m_exematicpath;

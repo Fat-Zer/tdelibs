@@ -2,25 +2,25 @@
 #include <kapplication.h>
 #include <kpixmapeffect.h>
 #include <kimageeffect.h>
-#include <qpainter.h>
-#include <qdatetime.h>
-#include <qstring.h>
-#include <qimage.h>
+#include <tqpainter.h>
+#include <tqdatetime.h>
+#include <tqstring.h>
+#include <tqimage.h>
 
 int cols = 3, rows = 3; // how many
 
-void KHashWidget::paintEvent(QPaintEvent * /*ev*/)
+void KHashWidget::paintEvent(TQPaintEvent * /*ev*/)
 {
-    QTime time;
+    TQTime time;
     int it, ft;
-    QString say;
+    TQString say;
 
-    QColor cb = QColor(0,70,70), ca = QColor(80,200,200);
+    TQColor cb = TQColor(0,70,70), ca = TQColor(80,200,200);
 
     int x = 0, y = 0;
 
     pix.resize(width()/cols, height()/rows);
-    QPainter p(this);
+    TQPainter p(this);
     p.setPen(Qt::white);
 
     // draw once, so that the benchmarking be fair :-)
@@ -77,7 +77,7 @@ void KHashWidget::paintEvent(QPaintEvent * /*ev*/)
     p.drawText(5+(x++)*width()/cols, 15+y*height()/rows, say);
 
 
-    QImage image = QImage("testimage.png");
+    TQImage image = TQImage("testimage.png");
     it = time.elapsed();
     KImageEffect::hash(image, KImageEffect::WestLite, 2);
     ft = time.elapsed();

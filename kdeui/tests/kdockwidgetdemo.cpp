@@ -1,23 +1,23 @@
 #include "kdockwidgetdemo.h"
 
-#include <qheader.h>
-#include <qtoolbutton.h>
-#include <qtooltip.h>
-#include <qtextview.h>
-#include <qfileinfo.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qmultilineedit.h>
-#include <qevent.h>
-#include <qpopupmenu.h>
-#include <qpushbutton.h>
-#include <qpoint.h>
-#include <qmessagebox.h>
-#include <qmime.h>
-#include <qstrlist.h>
-#include <qpainter.h>
+#include <tqheader.h>
+#include <tqtoolbutton.h>
+#include <tqtooltip.h>
+#include <tqtextview.h>
+#include <tqfileinfo.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
+#include <tqmultilineedit.h>
+#include <tqevent.h>
+#include <tqpopupmenu.h>
+#include <tqpushbutton.h>
+#include <tqpoint.h>
+#include <tqmessagebox.h>
+#include <tqmime.h>
+#include <tqstrlist.h>
+#include <tqpainter.h>
 
 #include <kconfig.h>
 #include <kapplication.h>
@@ -78,21 +78,21 @@ static const char *preview_xpm[] = {
 "OOOOOOOOOOOOOOOO"
 };
 
-SFileDialog::SFileDialog( QString initially, const QStringList& filter, const char* name )
-:QDialog(0L,name,true)
+SFileDialog::SFileDialog( TQString initially, const TQStringList& filter, const char* name )
+:TQDialog(0L,name,true)
 {
   KConfig* config = kapp->config();
-  config->setGroup( QString::fromLatin1("SFileDialogData:") + name );
+  config->setGroup( TQString::fromLatin1("SFileDialogData:") + name );
   if ( initially.isNull() ){
-    initially = config->readPathEntry( "InitiallyDir", QDir::currentDirPath() );
+    initially = config->readPathEntry( "InitiallyDir", TQDir::currentDirPath() );
   }
 
-  QStringList bookmark;
+  TQStringList bookmark;
   bookmark = config->readListEntry( "Bookmarks" );
 
   dockManager = new KDockManager(this);
 
-  d_dirView = new KDockWidget( dockManager, "Dock_DirView", QPixmap(dir_tree_xpm) );
+  d_dirView = new KDockWidget( dockManager, "Dock_DirView", TQPixmap(dir_tree_xpm) );
   d_dirView->setCaption("Tree");
 
   dirView = new DirectoryView( d_dirView, 0 );
@@ -103,21 +103,21 @@ SFileDialog::SFileDialog( QString initially, const QStringList& filter, const ch
   Directory* root = new Directory( dirView, "/" );
   root->setOpen(true);
 
-  d_preview = new KDockWidget( dockManager, "Dock_Preview", QPixmap(preview_xpm) );
+  d_preview = new KDockWidget( dockManager, "Dock_Preview", TQPixmap(preview_xpm) );
   d_preview->setCaption("Preview");
   preview = new Preview( d_preview );
   d_preview->setWidget( preview );
 
-  d_fd = new KDockWidget( dockManager, "Dock_QFileDialog", QPixmap(), this );
+  d_fd = new KDockWidget( dockManager, "Dock_QFileDialog", TQPixmap(), this );
   fd = new CustomFileDialog( d_fd );
   fd->setDir( initially );
   fd->setFilters( filter );
   fd->setBookmark( bookmark );
-  fd->reparent(d_fd, QPoint(0,0));
+  fd->reparent(d_fd, TQPoint(0,0));
   d_fd->setWidget( fd );
 
-  connect( dirView, SIGNAL( folderSelected( const QString & ) ), fd, SLOT( setDir2( const QString & ) ) );
-  connect( fd, SIGNAL( dirEntered( const QString & ) ), dirView, SLOT( setDir( const QString & ) ) );
+  connect( dirView, TQT_SIGNAL( folderSelected( const TQString & ) ), fd, TQT_SLOT( setDir2( const TQString & ) ) );
+  connect( fd, TQT_SIGNAL( dirEntered( const TQString & ) ), dirView, TQT_SLOT( setDir( const TQString & ) ) );
 
   d_fd->setDockSite( KDockWidget::DockTop|KDockWidget::DockLeft|KDockWidget::DockRight|KDockWidget::DockBottom );
   d_fd->setEnableDocking(KDockWidget::DockNone);
@@ -128,30 +128,30 @@ SFileDialog::SFileDialog( QString initially, const QStringList& filter, const ch
   d_dirView->manualDock( d_fd, KDockWidget::DockLeft, 20 );
   d_preview->manualDock( d_fd, KDockWidget::DockBottom, 70 );
 
-  connect(fd, SIGNAL(fileHighlighted(const QString&)), preview, SLOT(showPreview(const QString&)));
-  connect(fd, SIGNAL(signalDone(int)), this, SLOT(done(int)));
+  connect(fd, TQT_SIGNAL(fileHighlighted(const TQString&)), preview, TQT_SLOT(showPreview(const TQString&)));
+  connect(fd, TQT_SIGNAL(signalDone(int)), this, TQT_SLOT(done(int)));
 
-  connect(fd, SIGNAL(dirEntered(const QString&)), this, SLOT(changeDir(const QString&)));
-  connect(dirView, SIGNAL(folderSelected(const QString&)), this, SLOT(changeDir(const QString&)));
+  connect(fd, TQT_SIGNAL(dirEntered(const TQString&)), this, TQT_SLOT(changeDir(const TQString&)));
+  connect(dirView, TQT_SIGNAL(folderSelected(const TQString&)), this, TQT_SLOT(changeDir(const TQString&)));
 
-  b_tree = new QToolButton( fd );
-  QToolTip::add( b_tree, "Show/Hide Tree" );
-  b_tree->setPixmap( QPixmap( dir_tree_xpm ) );
-  connect( b_tree, SIGNAL(clicked()), d_dirView, SLOT(changeHideShowState()) );
+  b_tree = new TQToolButton( fd );
+  TQToolTip::add( b_tree, "Show/Hide Tree" );
+  b_tree->setPixmap( TQPixmap( dir_tree_xpm ) );
+  connect( b_tree, TQT_SIGNAL(clicked()), d_dirView, TQT_SLOT(changeHideShowState()) );
   b_tree->setToggleButton(true);
   b_tree->setOn(true);
   fd->addToolButton( b_tree, true );
 
-  b_preview = new QToolButton( fd );
-  QToolTip::add( b_preview, "Show/Hide Preview" );
-  b_preview->setPixmap( QPixmap( preview_xpm ) );
-  connect( b_preview, SIGNAL(clicked()), d_preview, SLOT(changeHideShowState()) );
+  b_preview = new TQToolButton( fd );
+  TQToolTip::add( b_preview, "Show/Hide Preview" );
+  b_preview->setPixmap( TQPixmap( preview_xpm ) );
+  connect( b_preview, TQT_SIGNAL(clicked()), d_preview, TQT_SLOT(changeHideShowState()) );
   b_preview->setToggleButton(true);
   b_preview->setOn(true);
   fd->addToolButton( b_preview );
 
-  connect( dockManager, SIGNAL(change()), this, SLOT(dockChange()));
-  connect( dockManager, SIGNAL(setDockDefaultPos(KDockWidget*)), this, SLOT(setDockDefaultPos(KDockWidget*)));
+  connect( dockManager, TQT_SIGNAL(change()), this, TQT_SLOT(dockChange()));
+  connect( dockManager, TQT_SIGNAL(setDockDefaultPos(KDockWidget*)), this, TQT_SLOT(setDockDefaultPos(KDockWidget*)));
   setCaption("Open File");
   resize(550,450);
   qDebug("read config");
@@ -167,7 +167,7 @@ void SFileDialog::dockChange()
 SFileDialog::~SFileDialog()
 {
   KConfig* config = kapp->config();
-  config->setGroup( QString("SFileDialogData:") + name() );
+  config->setGroup( TQString("SFileDialogData:") + name() );
   config->writeEntry( "Bookmarks", fd->getBookmark() );
 
   qDebug("write config");
@@ -185,103 +185,103 @@ void SFileDialog::setDockDefaultPos( KDockWidget* d )
   }
 }
 
-void SFileDialog::changeDir( const QString& f )
+void SFileDialog::changeDir( const TQString& f )
 {
   if ( !f.isEmpty() ){
     KConfig* config = kapp->config();
-    config->setGroup( QString("SFileDialogData:") + name() );
+    config->setGroup( TQString("SFileDialogData:") + name() );
     config->writePathEntry( "InitiallyDir", f );
   }
 }
 
-QString SFileDialog::getOpenFileName( QString initially,
-                                      const QStringList& filter,
-                                      const QString caption, const char* name )
+TQString SFileDialog::getOpenFileName( TQString initially,
+                                      const TQStringList& filter,
+                                      const TQString caption, const char* name )
 {
   SFileDialog* fd = new SFileDialog( initially, filter, name );
   if ( !caption.isNull() ) fd->setCaption( caption );
-  QString result = ( fd->exec() == QDialog::Accepted ) ? fd->fd->selectedFile():QString::null;
+  TQString result = ( fd->exec() == TQDialog::Accepted ) ? fd->fd->selectedFile():TQString::null;
   delete fd;
 
   return result;
 }
 
-QStringList SFileDialog::getOpenFileNames( QString initially,
-                                      const QStringList& filter,
-                                      const QString caption, const char* name )
+TQStringList SFileDialog::getOpenFileNames( TQString initially,
+                                      const TQStringList& filter,
+                                      const TQString caption, const char* name )
 {
   SFileDialog* fd = new SFileDialog( initially, filter, name );
   if ( !caption.isNull() ) fd->setCaption( caption );
 
-  fd->fd->setMode( QFileDialog::ExistingFiles );
+  fd->fd->setMode( TQFileDialog::ExistingFiles );
   fd->d_preview->undock();
   fd->b_preview->hide();
 
   fd->exec();
-  QStringList result = fd->fd->selectedFiles();
+  TQStringList result = fd->fd->selectedFiles();
   delete fd;
 
   return result;
 }
 
-void SFileDialog::showEvent( QShowEvent *e )
+void SFileDialog::showEvent( TQShowEvent *e )
 {
-  QDialog::showEvent( e );
+  TQDialog::showEvent( e );
   dirView->setDir( fd->dirPath() );
 }
 
 /******************************************************************************************************/
-PixmapView::PixmapView( QWidget *parent )
-:QScrollView( parent )
+PixmapView::PixmapView( TQWidget *parent )
+:TQScrollView( parent )
 {
 //  kimgioRegister();
   viewport()->setBackgroundMode( PaletteBase );
 }
 
-void PixmapView::setPixmap( const QPixmap &pix )
+void PixmapView::setPixmap( const TQPixmap &pix )
 {
     pixmap = pix;
     resizeContents( pixmap.size().width(), pixmap.size().height() );
     viewport()->repaint( true );
 }
 
-void PixmapView::drawContents( QPainter *p, int, int, int, int )
+void PixmapView::drawContents( TQPainter *p, int, int, int, int )
 {
     p->drawPixmap( 0, 0, pixmap );
 }
 
-Preview::Preview( QWidget *parent )
-:QWidgetStack( parent )
+Preview::Preview( TQWidget *parent )
+:TQWidgetStack( parent )
 {
-    normalText = new QMultiLineEdit( this );
+    normalText = new TQMultiLineEdit( this );
     normalText->setReadOnly( true );
-    html = new QTextView( this );
+    html = new TQTextView( this );
     pixmap = new PixmapView( this );
     raiseWidget( normalText );
 }
 
-void Preview::showPreview( const QString &str )
+void Preview::showPreview( const TQString &str )
 {
-  QUrl u(str);
+  TQUrl u(str);
   if ( u.isLocalFile() ){
-  QString path = u.path();
-  QFileInfo fi( path );
+  TQString path = u.path();
+  TQFileInfo fi( path );
 	if ( fi.isFile() && (int)fi.size() > 400 * 1024 ) {
 	    normalText->setText( tr( "The File\n%1\nis too large, so I don't show it!" ).arg( path ) );
 	    raiseWidget( normalText );
 	    return;
 	}
 	
-	QPixmap pix( path );
+	TQPixmap pix( path );
 	if ( pix.isNull() ) {
 	    if ( fi.isFile() ) {
-		QFile f( path );
+		TQFile f( path );
 		if ( f.open( IO_ReadOnly ) ) {
-		    QTextStream ts( &f );
-		    QString text = ts.read();
+		    TQTextStream ts( &f );
+		    TQString text = ts.read();
 		    f.close();
 		    if ( fi.extension().lower().contains( "htm" ) ) {
-			QString url = html->mimeSourceFactory()->makeAbsolute( path, html->context() );
+			TQString url = html->mimeSourceFactory()->makeAbsolute( path, html->context() );
 			html->setText( text, url ); 	
 			raiseWidget( html );
 			return;
@@ -292,7 +292,7 @@ void Preview::showPreview( const QString &str )
 		    }
 		}
 	    }
-	    normalText->setText( QString::null );
+	    normalText->setText( TQString::null );
 	    raiseWidget( normalText );
 	} else {
 	    pixmap->setPixmap( pix );
@@ -394,37 +394,37 @@ static const char* globalbookmark_xpm[]={
 "............",
 "............"};
 
-CustomFileDialog::CustomFileDialog( QWidget* parent )
-: QFileDialog( parent, 0, false )
+CustomFileDialog::CustomFileDialog( TQWidget* parent )
+: TQFileDialog( parent, 0, false )
 {
-  QToolButton *p = new QToolButton( this );
+  TQToolButton *p = new TQToolButton( this );
 
-  p->setPixmap( QPixmap( globalbookmark_xpm ) );
-  QToolTip::add( p, tr( "Bookmarks" ) );
+  p->setPixmap( TQPixmap( globalbookmark_xpm ) );
+  TQToolTip::add( p, tr( "Bookmarks" ) );
 
-  bookmarkMenu = new QPopupMenu( this );
-  connect( bookmarkMenu, SIGNAL( activated( int ) ), this, SLOT( bookmarkChosen( int ) ) );
+  bookmarkMenu = new TQPopupMenu( this );
+  connect( bookmarkMenu, TQT_SIGNAL( activated( int ) ), this, TQT_SLOT( bookmarkChosen( int ) ) );
   addId = bookmarkMenu->insertItem( "Add bookmark" );
-  clearId = bookmarkMenu->insertItem( QPixmap(folder_trash), "Clear bookmarks" );
+  clearId = bookmarkMenu->insertItem( TQPixmap(folder_trash), "Clear bookmarks" );
   bookmarkMenu->insertSeparator();
 
   p->setPopup( bookmarkMenu );
   p->setPopupDelay(0);
   addToolButton( p, true );
 
-  QToolButton *b = new QToolButton( this );
-  QToolTip::add( b, tr( "Go Home!" ) );
+  TQToolButton *b = new TQToolButton( this );
+  TQToolTip::add( b, tr( "Go Home!" ) );
 
-  b->setPixmap( QPixmap( homepage_xpm ) );
-  connect( b, SIGNAL( clicked() ), this, SLOT( goHome() ) );
+  b->setPixmap( TQPixmap( homepage_xpm ) );
+  connect( b, TQT_SIGNAL( clicked() ), this, TQT_SLOT( goHome() ) );
 
   addToolButton( b );
 }
 
 
-void CustomFileDialog::setBookmark( QStringList &s )
+void CustomFileDialog::setBookmark( TQStringList &s )
 {
-	QStringList::Iterator it = s.begin();
+	TQStringList::Iterator it = s.begin();
 	for ( ; it != s.end(); ++it ){
     bookmarkList << (*it);
 
@@ -449,7 +449,7 @@ void CustomFileDialog::setBookmark( QStringList &s )
     "............",
     "............",
     "............"};
-    bookmarkMenu->insertItem( QIconSet( book_pix ), (*it) );
+    bookmarkMenu->insertItem( TQIconSet( book_pix ), (*it) );
 	}
 }
 
@@ -457,7 +457,7 @@ CustomFileDialog::~CustomFileDialog()
 {
 }
 
-void CustomFileDialog::setDir2( const QString &s )
+void CustomFileDialog::setDir2( const TQString &s )
 {
   blockSignals( true );
   setDir( s );
@@ -499,7 +499,7 @@ void CustomFileDialog::bookmarkChosen( int i )
     "............",
     "............",
     "............"};
-    bookmarkMenu->insertItem( QIconSet( book_pix ), dirPath() );
+    bookmarkMenu->insertItem( TQIconSet( book_pix ), dirPath() );
     return;
   }
 
@@ -606,37 +606,37 @@ static const char* folder_locked_xpm[] = {
 "################"
 };
 
-Directory::Directory( Directory * parent, const QString& filename )
-:QListViewItem( parent ), f(filename)
+Directory::Directory( Directory * parent, const TQString& filename )
+:TQListViewItem( parent ), f(filename)
 {
   p = parent;
-  readable = QDir( fullName() ).isReadable();
+  readable = TQDir( fullName() ).isReadable();
 
   if ( !readable )
-    setPixmap( 0, QPixmap( folder_locked_xpm ) );
+    setPixmap( 0, TQPixmap( folder_locked_xpm ) );
   else
-    setPixmap( 0, QPixmap( folder_closed_xpm ) );
+    setPixmap( 0, TQPixmap( folder_closed_xpm ) );
 }
 
 
-Directory::Directory( QListView * parent, const QString& filename )
-:QListViewItem( parent ), f(filename)
+Directory::Directory( TQListView * parent, const TQString& filename )
+:TQListViewItem( parent ), f(filename)
 {
   p = 0;
-  readable = QDir( fullName() ).isReadable();
+  readable = TQDir( fullName() ).isReadable();
 }
 
 
 void Directory::setOpen( bool o )
 {
   if ( o )
-    setPixmap( 0, QPixmap( folder_open_xpm ) );
+    setPixmap( 0, TQPixmap( folder_open_xpm ) );
   else
-    setPixmap( 0, QPixmap( folder_closed_xpm ) );
+    setPixmap( 0, TQPixmap( folder_closed_xpm ) );
 
   if ( o && !childCount() ){
-    QString s( fullName() );
-    QDir thisDir( s );
+    TQString s( fullName() );
+    TQDir thisDir( s );
     if ( !thisDir.isReadable() ) {
     readable = false;
     setExpandable( false );
@@ -647,7 +647,7 @@ void Directory::setOpen( bool o )
   const QFileInfoList * files = thisDir.entryInfoList();
   if ( files ){
     QFileInfoListIterator it( *files );
-    QFileInfo * f;
+    TQFileInfo * f;
     while( (f=it.current()) != 0 ){
       ++it;
       if ( f->fileName() != "." && f->fileName() != ".." && f->isDir() )
@@ -656,20 +656,20 @@ void Directory::setOpen( bool o )
     }
     listView()->setUpdatesEnabled( true );
   }
-  QListViewItem::setOpen( o );
+  TQListViewItem::setOpen( o );
 }
 
 
 void Directory::setup()
 {
   setExpandable( true );
-  QListViewItem::setup();
+  TQListViewItem::setup();
 }
 
 
-QString Directory::fullName()
+TQString Directory::fullName()
 {
-  QString s;
+  TQString s;
   if ( p ) {
     s = p->fullName();
     s.append( f.name() );
@@ -681,7 +681,7 @@ QString Directory::fullName()
 }
 
 
-QString Directory::text( int column ) const
+TQString Directory::text( int column ) const
 {
   if ( column == 0 )
     return f.name();
@@ -692,28 +692,28 @@ QString Directory::text( int column ) const
       return "Unreadable Directory";
 }
 
-DirectoryView::DirectoryView( QWidget *parent, const char *name )
-:QListView( parent, name )
+DirectoryView::DirectoryView( TQWidget *parent, const char *name )
+:TQListView( parent, name )
 {
-  connect( this, SIGNAL( clicked( QListViewItem * ) ),
-           this, SLOT( slotFolderSelected( QListViewItem * ) ) );
-  connect( this, SIGNAL( doubleClicked( QListViewItem * ) ),
-           this, SLOT( slotFolderSelected( QListViewItem * ) ) );
-  connect( this, SIGNAL( returnPressed( QListViewItem * ) ),
-           this, SLOT( slotFolderSelected( QListViewItem * ) ) );
+  connect( this, TQT_SIGNAL( clicked( TQListViewItem * ) ),
+           this, TQT_SLOT( slotFolderSelected( TQListViewItem * ) ) );
+  connect( this, TQT_SIGNAL( doubleClicked( TQListViewItem * ) ),
+           this, TQT_SLOT( slotFolderSelected( TQListViewItem * ) ) );
+  connect( this, TQT_SIGNAL( returnPressed( TQListViewItem * ) ),
+           this, TQT_SLOT( slotFolderSelected( TQListViewItem * ) ) );
 
   setAcceptDrops( true );
   viewport()->setAcceptDrops( true );
 }
 
-void DirectoryView::setOpen( QListViewItem* i, bool b )
+void DirectoryView::setOpen( TQListViewItem* i, bool b )
 {
-  QListView::setOpen(i,b);
+  TQListView::setOpen(i,b);
   setCurrentItem(i);
   slotFolderSelected(i);
 }
 
-void DirectoryView::slotFolderSelected( QListViewItem *i )
+void DirectoryView::slotFolderSelected( TQListViewItem *i )
 {
   if ( !i )	return;
 
@@ -721,9 +721,9 @@ void DirectoryView::slotFolderSelected( QListViewItem *i )
   emit folderSelected( dir->fullName() );
 }
 
-QString DirectoryView::fullPath(QListViewItem* item)
+TQString DirectoryView::fullPath(TQListViewItem* item)
 {
-  QString fullpath = item->text(0);
+  TQString fullpath = item->text(0);
   while ( (item=item->parent()) ) {
     if ( item->parent() )
       fullpath = item->text(0) + "/" + fullpath;
@@ -733,17 +733,17 @@ QString DirectoryView::fullPath(QListViewItem* item)
   return fullpath;
 }
 
-void DirectoryView::setDir( const QString &s )
+void DirectoryView::setDir( const TQString &s )
 {
-  QListViewItemIterator it( this );
+  TQListViewItemIterator it( this );
   ++it;
   for ( ; it.current(); ++it ) {
     it.current()->setOpen( false );
   }
 
-  QStringList lst( QStringList::split( "/", s ) );
-  QListViewItem *item = firstChild();
-  QStringList::Iterator it2 = lst.begin();
+  TQStringList lst( TQStringList::split( "/", s ) );
+  TQListViewItem *item = firstChild();
+  TQStringList::Iterator it2 = lst.begin();
   for ( ; it2 != lst.end(); ++it2 ) {
     while ( item ) {
       if ( item->text( 0 ) == *it2 ) {
@@ -760,7 +760,7 @@ void DirectoryView::setDir( const QString &s )
   }
 }
 
-QString DirectoryView::selectedDir()
+TQString DirectoryView::selectedDir()
 {
   Directory *dir = (Directory*)currentItem();
   return dir->fullName();
@@ -777,14 +777,14 @@ int main(int argc, char* argv[]) {
 #endif
 
 #if 0
-  qDebug ( SFileDialog::getOpenFileName( QString::null, QString::fromLatin1("All (*)"),
-                                         QString::fromLatin1("DockWidget Demo"), "dialog1" ) );
+  qDebug ( SFileDialog::getOpenFileName( TQString::null, TQString::fromLatin1("All (*)"),
+                                         TQString::fromLatin1("DockWidget Demo"), "dialog1" ) );
 #endif
 
 #if 1
-  QStringList s = SFileDialog::getOpenFileNames( QString::null, QString::fromLatin1("All (*)"),
-                                                QString::fromLatin1("DockWidget Demo"), "dialog1" );
-  QStringList::Iterator it = s.begin();
+  TQStringList s = SFileDialog::getOpenFileNames( TQString::null, TQString::fromLatin1("All (*)"),
+                                                TQString::fromLatin1("DockWidget Demo"), "dialog1" );
+  TQStringList::Iterator it = s.begin();
   for ( ; it != s.end(); ++it ){
     qDebug( "%s", (*it).local8Bit().data() );
   }

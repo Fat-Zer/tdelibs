@@ -21,8 +21,8 @@
 #ifndef KCALENDARSYSTEMGREGORIAN_H
 #define KCALENDARSYSTEMGREGORIAN_H
 
-#include <qdatetime.h>
-#include <qstring.h>
+#include <tqdatetime.h>
+#include <tqstring.h>
 
 #include "kcalendarsystem.h"
 
@@ -47,39 +47,39 @@ public:
   KCalendarSystemGregorian (const KLocale * locale = 0);
   virtual ~KCalendarSystemGregorian ();
 
-  virtual int year (const QDate & date) const;
-  virtual int month (const QDate & date) const;
-  virtual int day (const QDate & date) const;
-  virtual int dayOfWeek (const QDate & date) const;
-  virtual int dayOfYear (const QDate & date) const;
+  virtual int year (const TQDate & date) const;
+  virtual int month (const TQDate & date) const;
+  virtual int day (const TQDate & date) const;
+  virtual int dayOfWeek (const TQDate & date) const;
+  virtual int dayOfYear (const TQDate & date) const;
 
-  virtual bool setYMD(QDate & date, int y, int m, int d) const;
+  virtual bool setYMD(TQDate & date, int y, int m, int d) const;
 
-  virtual QDate addYears(const QDate & date, int nyears) const;
-  virtual QDate addMonths(const QDate & date, int nmonths) const;
-  virtual QDate addDays(const QDate & date, int ndays) const;
+  virtual TQDate addYears(const TQDate & date, int nyears) const;
+  virtual TQDate addMonths(const TQDate & date, int nmonths) const;
+  virtual TQDate addDays(const TQDate & date, int ndays) const;
 
-  virtual int monthsInYear (const QDate & date) const;
+  virtual int monthsInYear (const TQDate & date) const;
 
-  virtual int daysInYear (const QDate & date) const;
-  virtual int daysInMonth (const QDate & date) const;
+  virtual int daysInYear (const TQDate & date) const;
+  virtual int daysInMonth (const TQDate & date) const;
   virtual int weeksInYear(int year) const;
-  virtual int weekNumber(const QDate& date, int * yearNum = 0) const;
+  virtual int weekNumber(const TQDate& date, int * yearNum = 0) const;
 
-  virtual int yearStringToInteger(const QString & sNum, int & iLength) const;
+  virtual int yearStringToInteger(const TQString & sNum, int & iLength) const;
 
-  virtual QString monthName (int month, int year, bool shortName = false) const;
-  virtual QString monthName (const QDate & date, bool shortName = false ) const;
-  virtual QString monthNamePossessive(int month, int year, bool shortName = false) const;
-  virtual QString monthNamePossessive(const QDate & date, bool shortName = false ) const;
-  virtual QString weekDayName (int weekDay, bool shortName = false) const;
-  virtual QString weekDayName (const QDate & date, bool shortName = false) const;
+  virtual TQString monthName (int month, int year, bool shortName = false) const;
+  virtual TQString monthName (const TQDate & date, bool shortName = false ) const;
+  virtual TQString monthNamePossessive(int month, int year, bool shortName = false) const;
+  virtual TQString monthNamePossessive(const TQDate & date, bool shortName = false ) const;
+  virtual TQString weekDayName (int weekDay, bool shortName = false) const;
+  virtual TQString weekDayName (const TQDate & date, bool shortName = false) const;
 
   virtual int minValidYear () const;
   virtual int maxValidYear () const;
   virtual int weekDayOfPray () const;
 
-  virtual QString calendarName() const;
+  virtual TQString calendarName() const;
 
   virtual bool isLunar() const;
   virtual bool isLunisolar() const;

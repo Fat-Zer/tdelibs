@@ -22,7 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <dcopserver.h>
 #include <dcopsignals.h>
 
-template class QPtrList<DCOPSignalConnection>;
+template class TQPtrList<DCOPSignalConnection>;
 
 DCOPSignals::DCOPSignals()
 {
@@ -35,10 +35,10 @@ DCOPSignals::DCOPSignals()
  * If "excludeSelf" is true, signal is never sent to "conn" itself.
  */
 void
-DCOPSignals::emitSignal( DCOPConnection *conn, const QCString &_fun, const QByteArray &data, bool excludeSelf)
+DCOPSignals::emitSignal( DCOPConnection *conn, const TQCString &_fun, const TQByteArray &data, bool excludeSelf)
 {
-   QCString senderObj;
-   QCString fun = _fun;
+   TQCString senderObj;
+   TQCString fun = _fun;
    int i = fun.find('#');
    if (i > -1)
    {
@@ -76,7 +76,7 @@ DCOPSignals::emitSignal( DCOPConnection *conn, const QCString &_fun, const QByte
          doSend = false;
       if (doSend)
       {
-         the_server->sendMessage(current->recvConn, conn ? conn->appId : QCString("DCOPServer"),
+         the_server->sendMessage(current->recvConn, conn ? conn->appId : TQCString("DCOPServer"),
                                  current->recvConn->appId, current->recvObj,
                                  current->slot, data);
       }
@@ -94,13 +94,13 @@ DCOPSignals::emitSignal( DCOPConnection *conn, const QCString &_fun, const QByte
  * "conn" unregisters.
  */
 bool
-DCOPSignals::connectSignal( const QCString &sender, const QCString &senderObj,
-                       const QCString &signal,
-                       DCOPConnection *conn, const QCString &receiverObj,
-                       const QCString &slot, bool Volatile)
+DCOPSignals::connectSignal( const TQCString &sender, const TQCString &senderObj,
+                       const TQCString &signal,
+                       DCOPConnection *conn, const TQCString &receiverObj,
+                       const TQCString &slot, bool Volatile)
 {
    // TODO: Check if signal and slot match
-   QCString signalArgs, slotArgs;
+   TQCString signalArgs, slotArgs;
    int i,j;
    i = signal.find('(');
    if (i < 0) return false;
@@ -166,10 +166,10 @@ DCOPSignals::connectSignal( const QCString &sender, const QCString &senderObj,
  *   are disconnected.
  */
 bool
-DCOPSignals::disconnectSignal( const QCString &sender, const QCString &senderObj,
-                       const QCString &signal,
-                       DCOPConnection *conn, const QCString &receiverObj,
-                       const QCString &slot)
+DCOPSignals::disconnectSignal( const TQCString &sender, const TQCString &senderObj,
+                       const TQCString &signal,
+                       DCOPConnection *conn, const TQCString &receiverObj,
+                       const TQCString &slot)
 {
    if (sender.isEmpty() && signal.isEmpty())
    {
@@ -228,7 +228,7 @@ DCOPSignals::disconnectSignal( const QCString &sender, const QCString &senderObj
  *   All volatile connections for which "conn"/"obj" is the sender.
  */
 void
-DCOPSignals::removeConnections(DCOPConnection *conn, const QCString &obj)
+DCOPSignals::removeConnections(DCOPConnection *conn, const TQCString &obj)
 {
    DCOPSignalConnectionList *list = conn->_signalConnectionList;
    if (!list)

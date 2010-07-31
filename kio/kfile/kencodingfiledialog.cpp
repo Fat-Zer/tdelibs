@@ -27,7 +27,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kcharsets.h>
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 #include <kdiroperator.h>
 #include <krecentdocument.h>
 
@@ -36,8 +36,8 @@ struct KEncodingFileDialogPrivate
     KComboBox *encoding;
 };
 
-KEncodingFileDialog::KEncodingFileDialog(const QString& startDir, const QString& encoding , const QString& filter,
-			 const QString& caption, KFileDialog::OperationMode type, QWidget *parent, const char* name, bool modal)
+KEncodingFileDialog::KEncodingFileDialog(const TQString& startDir, const TQString& encoding , const TQString& filter,
+			 const TQString& caption, KFileDialog::OperationMode type, TQWidget *parent, const char* name, bool modal)
    : KFileDialog(startDir,filter,parent,name,modal), d(new KEncodingFileDialogPrivate)
 {
   setCaption(caption);
@@ -46,22 +46,22 @@ KEncodingFileDialog::KEncodingFileDialog(const QString& startDir, const QString&
     
   KToolBar *tb = toolBar();
   tb->insertSeparator();
-  int index = tb->insertCombo(QStringList(), -1 /*id*/, false /*writable*/, 0 /*signal*/, 0 /*receiver*/, 0 /*slot*/ );
+  int index = tb->insertCombo(TQStringList(), -1 /*id*/, false /*writable*/, 0 /*signal*/, 0 /*receiver*/, 0 /*slot*/ );
   d->encoding = tb->getCombo( tb->idAt( index ) );
   if ( !d->encoding )
       return;
 
   d->encoding->clear ();
-  QString sEncoding = encoding;
+  TQString sEncoding = encoding;
   if (sEncoding.isEmpty())
-     sEncoding = QString::fromLatin1(KGlobal::locale()->encoding());
+     sEncoding = TQString::fromLatin1(KGlobal::locale()->encoding());
   
-  QStringList encodings (KGlobal::charsets()->availableEncodingNames());
+  TQStringList encodings (KGlobal::charsets()->availableEncodingNames());
   int insert = 0;
   for (uint i=0; i < encodings.count(); i++)
   {
     bool found = false;
-    QTextCodec *codecForEnc = KGlobal::charsets()->codecForName(encodings[i], found);
+    TQTextCodec *codecForEnc = KGlobal::charsets()->codecForName(encodings[i], found);
 
     if (found)
     {
@@ -84,19 +84,19 @@ KEncodingFileDialog::~KEncodingFileDialog()
 }
 
 
-QString KEncodingFileDialog::selectedEncoding() const
+TQString KEncodingFileDialog::selectedEncoding() const
 {
   if (d->encoding)
      return d->encoding->currentText();
   else
-    return QString::null;     
+    return TQString::null;     
 }
 
 
-KEncodingFileDialog::Result KEncodingFileDialog::getOpenFileNameAndEncoding(const QString& encoding,
- 				     const QString& startDir,
-                                     const QString& filter,
-                                     QWidget *parent, const QString& caption)
+KEncodingFileDialog::Result KEncodingFileDialog::getOpenFileNameAndEncoding(const TQString& encoding,
+ 				     const TQString& startDir,
+                                     const TQString& filter,
+                                     TQWidget *parent, const TQString& caption)
 {
     KEncodingFileDialog dlg(startDir, encoding,filter,caption.isNull() ? i18n("Open") : caption,Opening,parent, 
 	"filedialog", true);
@@ -111,11 +111,11 @@ KEncodingFileDialog::Result KEncodingFileDialog::getOpenFileNameAndEncoding(cons
     return res;
 }
 
-KEncodingFileDialog::Result KEncodingFileDialog::getOpenFileNamesAndEncoding(const QString& encoding,
-					  const QString& startDir,
-                                          const QString& filter,
-                                          QWidget *parent,
-                                          const QString& caption)
+KEncodingFileDialog::Result KEncodingFileDialog::getOpenFileNamesAndEncoding(const TQString& encoding,
+					  const TQString& startDir,
+                                          const TQString& filter,
+                                          TQWidget *parent,
+                                          const TQString& caption)
 {
     KEncodingFileDialog dlg(startDir, encoding,filter,caption.isNull() ? i18n("Open") : caption,Opening,parent, 
 	"filedialog", true);
@@ -129,8 +129,8 @@ KEncodingFileDialog::Result KEncodingFileDialog::getOpenFileNamesAndEncoding(con
     return res;
 }
 
-KEncodingFileDialog::Result KEncodingFileDialog::getOpenURLAndEncoding(const QString& encoding, const QString& startDir, 
-				const QString& filter, QWidget *parent, const QString& caption)
+KEncodingFileDialog::Result KEncodingFileDialog::getOpenURLAndEncoding(const TQString& encoding, const TQString& startDir, 
+				const TQString& filter, TQWidget *parent, const TQString& caption)
 {
     KEncodingFileDialog dlg(startDir, encoding,filter,caption.isNull() ? i18n("Open") : caption,Opening,parent, 
 		"filedialog", true);
@@ -145,10 +145,10 @@ KEncodingFileDialog::Result KEncodingFileDialog::getOpenURLAndEncoding(const QSt
     return res;
 }
 
-KEncodingFileDialog::Result KEncodingFileDialog::getOpenURLsAndEncoding(const QString& encoding, const QString& startDir,
-                                          const QString& filter,
-                                          QWidget *parent,
-                                          const QString& caption)
+KEncodingFileDialog::Result KEncodingFileDialog::getOpenURLsAndEncoding(const TQString& encoding, const TQString& startDir,
+                                          const TQString& filter,
+                                          TQWidget *parent,
+                                          const TQString& caption)
 {
     KEncodingFileDialog dlg(startDir, encoding,filter,caption.isNull() ? i18n("Open") : caption,Opening,parent, 
 	"filedialog", true);
@@ -164,21 +164,21 @@ KEncodingFileDialog::Result KEncodingFileDialog::getOpenURLsAndEncoding(const QS
 }
 
 
-KEncodingFileDialog::Result KEncodingFileDialog::getSaveFileNameAndEncoding(const QString& encoding,
-			             const QString& dir, 
-				     const QString& filter,
-                                     QWidget *parent,
-                                     const QString& caption)
+KEncodingFileDialog::Result KEncodingFileDialog::getSaveFileNameAndEncoding(const TQString& encoding,
+			             const TQString& dir, 
+				     const TQString& filter,
+                                     TQWidget *parent,
+                                     const TQString& caption)
 {
     bool specialDir = dir.at(0) == ':';
-    KEncodingFileDialog dlg(specialDir?dir:QString::null, encoding,filter,caption.isNull() ? i18n("Save As") : caption,
+    KEncodingFileDialog dlg(specialDir?dir:TQString::null, encoding,filter,caption.isNull() ? i18n("Save As") : caption,
 	Saving,parent, "filedialog", true);
 
     if ( !specialDir )
         dlg.setSelection( dir ); // may also be a filename
     dlg.exec();
 
-    QString filename = dlg.selectedFile();
+    TQString filename = dlg.selectedFile();
     if (!filename.isEmpty())
         KRecentDocument::add(filename);
 
@@ -189,12 +189,12 @@ KEncodingFileDialog::Result KEncodingFileDialog::getSaveFileNameAndEncoding(cons
 }
 
 
-KEncodingFileDialog::Result  KEncodingFileDialog::getSaveURLAndEncoding(const QString& encoding,
-			     const QString& dir, const  QString& filter,
-                             QWidget *parent, const QString& caption)
+KEncodingFileDialog::Result  KEncodingFileDialog::getSaveURLAndEncoding(const TQString& encoding,
+			     const TQString& dir, const  TQString& filter,
+                             TQWidget *parent, const TQString& caption)
 {
     bool specialDir = dir.at(0) == ':';
-    KEncodingFileDialog dlg(specialDir?dir:QString::null, encoding,filter,caption.isNull() ? i18n("Save As") : 
+    KEncodingFileDialog dlg(specialDir?dir:TQString::null, encoding,filter,caption.isNull() ? i18n("Save As") : 
 	caption, Saving,parent, "filedialog", true);
 
     if ( !specialDir )

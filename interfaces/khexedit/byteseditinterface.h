@@ -21,7 +21,7 @@
 // kde specific
 #include <kparts/componentfactory.h>
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 /**
  * @short KHE (short for KHexEdit) is KDE's namespace for all things related
@@ -64,7 +64,7 @@ namespace KHE
  * \code
  * BytesEdit->setMaxDataSize( MaxDataSize );
  * ...
- * QByteArray BA;
+ * TQByteArray BA;
  * BA.setRawData( BytesEdit->data(), BytesEdit->dataSize() );
  * \endcode
  * </ul>
@@ -173,7 +173,7 @@ inline BytesEditInterface *bytesEditInterface( T *t )
   * #include <khexedit/clipboardinterface.h>
   * ...
   *
-  * QWidget *BytesEditWidget = KHE::createBytesEditWidget( this, "BytesEditWidget" );
+  * TQWidget *BytesEditWidget = KHE::createBytesEditWidget( this, "BytesEditWidget" );
   * // is e.g. kdeutils (incl. khexedit2) installed, so a widget could be found and created?
   * if( BytesEditWidget )
   * {
@@ -205,8 +205,8 @@ inline BytesEditInterface *bytesEditInterface( T *t )
   *   KHE::ClipboardInterface *Clipboard = KHE::clipboardInterface( BytesEditWidget );
   *   if( Clipboard )
   *   {
-  *     // Yes, use BytesEditWidget, not Clipboard, because that's the QObject, indeed hacky...
-  *     connect( BytesEditWidget, SIGNAL(copyAvailable(bool)), this, SLOT(offerCopy(bool)) );
+  *     // Yes, use BytesEditWidget, not Clipboard, because that's the TQObject, indeed hacky...
+  *     connect( BytesEditWidget, TQT_SIGNAL(copyAvailable(bool)), this, TQT_SLOT(offerCopy(bool)) );
   *   }
   * }
   * \endcode
@@ -218,10 +218,10 @@ inline BytesEditInterface *bytesEditInterface( T *t )
   * @see BytesEditInterface, ValueColumnInterface, CharColumnInterface, ZoomInterface, ClipboardInterface
   * @since 3.2
   */
-inline QWidget *createBytesEditWidget( QWidget *Parent = 0, const char *Name = 0 )
+inline TQWidget *createBytesEditWidget( TQWidget *Parent = 0, const char *Name = 0 )
 {
-  return KParts::ComponentFactory::createInstanceFromQuery<QWidget>
-      ( QString::fromLatin1("KHexEdit/KBytesEdit"), QString::null, Parent, Name );
+  return KParts::ComponentFactory::createInstanceFromQuery<TQWidget>
+      ( TQString::fromLatin1("KHexEdit/KBytesEdit"), TQString::null, Parent, Name );
 }
 
 }

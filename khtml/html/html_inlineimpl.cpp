@@ -67,8 +67,8 @@ void HTMLAnchorElementImpl::defaultEventHandler(EventImpl *evt)
         if (keydown)
             k = static_cast<KeyEventBaseImpl *>( evt );
 
-        QString utarget;
-        QString url;
+        TQString utarget;
+        TQString url;
         if ( e && e->button() == 2 ) {
 	    HTMLElementImpl::defaultEventHandler(evt);
 	    return;
@@ -108,7 +108,7 @@ void HTMLAnchorElementImpl::defaultEventHandler(EventImpl *evt)
                         y += v->contentsY();
                     }
                     r->absolutePosition(absx, absy);
-                    url += QString("?%1,%2").arg( x - absx ).arg( y - absy );
+                    url += TQString("?%1,%2").arg( x - absx ).arg( y - absy );
                 }
                 else {
                     evt->setDefaultHandled();
@@ -166,7 +166,7 @@ void HTMLAnchorElementImpl::defaultEventHandler(EventImpl *evt)
 
 void HTMLAnchorElementImpl::click()
 {
-    QMouseEvent me(QEvent::MouseButtonRelease, QPoint(0,0),Qt::LeftButton, 0);
+    TQMouseEvent me(TQEvent::MouseButtonRelease, TQPoint(0,0),Qt::LeftButton, 0);
     dispatchMouseEvent(&me,EventImpl::CLICK_EVENT, 1);
 }
 
@@ -254,7 +254,7 @@ void HTMLFontElementImpl::parseAttribute(AttributeImpl *attr)
     {
         DOMStringImpl* v = attr->val();
         if(v) {
-            const QChar* s = v->s;
+            const TQChar* s = v->s;
             int num = v->toInt();
             int len = v->l;
             while( len && s->isSpace() )

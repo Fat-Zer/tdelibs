@@ -43,10 +43,10 @@
 #define _PATH_TMP "/tmp"
 #endif
 
-#include <qdatetime.h>
-#include <qfile.h>
-#include <qdatastream.h>
-#include <qtextstream.h>
+#include <tqdatetime.h>
+#include <tqfile.h>
+#include <tqdatastream.h>
+#include <tqtextstream.h>
 
 #include "kglobal.h"
 #include "kapplication.h"
@@ -56,8 +56,8 @@
 #include "kde_file.h"
 #include "kdebug.h"
 
-/* antlarr: KDE 4: make the parameters const QString & */
-KTempFile::KTempFile(QString filePrefix, QString fileExtension, int mode)
+/* antlarr: KDE 4: make the parameters const TQString & */
+KTempFile::KTempFile(TQString filePrefix, TQString fileExtension, int mode)
 {
    bAutoDelete = false;
    mFd = -1;
@@ -89,26 +89,26 @@ KTempFile::KTempFile(bool)
 }
 
 bool
-KTempFile::create(const QString &filePrefix, const QString &fileExtension,
+KTempFile::create(const TQString &filePrefix, const TQString &fileExtension,
 		  int mode)
 {
    // make sure the random seed is randomized
    (void) KApplication::random();
 
-   QCString ext = QFile::encodeName(fileExtension);
-   QCString nme = QFile::encodeName(filePrefix) + "XXXXXX" + ext;
+   TQCString ext = TQFile::encodeName(fileExtension);
+   TQCString nme = TQFile::encodeName(filePrefix) + "XXXXXX" + ext;
    if((mFd = mkstemps(nme.data(), ext.length())) < 0)
    {
        // Recreate it for the warning, mkstemps emptied it
-       QCString nme = QFile::encodeName(filePrefix) + "XXXXXX" + ext;
+       TQCString nme = TQFile::encodeName(filePrefix) + "XXXXXX" + ext;
        kdWarning() << "KTempFile: Error trying to create " << nme << ": " << strerror(errno) << endl;
        mError = errno;
-       mTmpName = QString::null;
+       mTmpName = TQString::null;
        return false;
    }
 
    // got a file descriptor. nme contains the name
-   mTmpName = QFile::decodeName(nme);
+   mTmpName = TQFile::decodeName(nme);
    mode_t tmp = 0;
    mode_t umsk = umask(tmp);
    umask(umsk);
@@ -166,35 +166,35 @@ KTempFile::fstream()
    return mStream;
 }
 
-QFile *
+TQFile *
 KTempFile::file()
 {
    if (mFile) return mFile;
    if ( !fstream() ) return 0;
 
-   mFile = new QFile();
+   mFile = new TQFile();
    mFile->setName( name() );
    mFile->open(IO_ReadWrite, mStream);
    return mFile;
 }
 
-QTextStream *
+TQTextStream *
 KTempFile::textStream()
 {
    if (mTextStream) return mTextStream;
    if ( !file() ) return 0; // Initialize mFile
 
-   mTextStream = new QTextStream( mFile );
+   mTextStream = new TQTextStream( mFile );
    return mTextStream;
 }
 
-QDataStream *
+TQDataStream *
 KTempFile::dataStream()
 {
    if (mDataStream) return mDataStream;
    if ( !file() ) return 0;  // Initialize mFile
 
-   mDataStream = new QDataStream( mFile );
+   mDataStream = new TQDataStream( mFile );
    return mDataStream;
 }
 
@@ -202,8 +202,8 @@ void
 KTempFile::unlink()
 {
    if (!mTmpName.isEmpty())
-      QFile::remove( mTmpName );
-   mTmpName = QString::null;
+      TQFile::remove( mTmpName );
+   mTmpName = TQString::null;
 }
 
 #if defined(_POSIX_SYNCHRONIZED_IO) && _POSIX_SYNCHRONIZED_IO > 0

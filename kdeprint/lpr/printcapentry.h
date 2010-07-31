@@ -24,10 +24,10 @@
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 
-#include <qstring.h>
-#include <qmap.h>
-#include <qstringlist.h>
-#include <qtextstream.h>
+#include <tqstring.h>
+#include <tqmap.h>
+#include <tqstringlist.h>
+#include <tqtextstream.h>
 
 /**
  * @internal
@@ -49,7 +49,7 @@ public:
 		value = f.value;
 		return (*this);
 	}
-	QString toString() const;
+	TQString toString() const;
 
 	Type	type;
 	QString	name;
@@ -69,13 +69,13 @@ public:
 	QString			name;
 	QStringList		aliases;
 	QString			comment;
-	QMap<QString,Field>	fields;
+	TQMap<TQString,Field>	fields;
 	QString			postcomment;
 
-	bool has(const QString& f) const	{ return fields.contains(f); }
-	QString field(const QString& f) const	{ return fields[f].value; }
-	bool writeEntry(QTextStream&);
-	void addField(const QString& name, Field::Type type = Field::Boolean, const QString& value = QString::null);
+	bool has(const TQString& f) const	{ return fields.contains(f); }
+	TQString field(const TQString& f) const	{ return fields[f].value; }
+	bool writeEntry(TQTextStream&);
+	void addField(const TQString& name, Field::Type type = Field::Boolean, const TQString& value = TQString::null);
 };
 
 #endif

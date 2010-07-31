@@ -24,7 +24,7 @@
 #ifndef KJAVAAPPLETWIDGET_H
 #define KJAVAAPPLETWIDGET_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #ifndef Q_WS_QWS //FIXME(?) I don't think this is possible with Qt Embedded
 #include "java/kjavaappletcontext.h"
 #include "java/kjavaapplet.h"
@@ -53,7 +53,7 @@
  * This widget works by using the KJavaAppletServer, which fires off a
  * Java server process with which it communicates using the
  * KDE Java Applet Server (KJAS) protocol over stdin and stdout.
- * The applet windows are swallowed and attached to the QWidget, but they are
+ * The applet windows are swallowed and attached to the TQWidget, but they are
  * actually running in a different process. This has the advantage of robustness
  * and reusability. The details of the communication are hidden from the user
  * in the KJASAppletServer class. Normally only a single server process is used for
@@ -79,7 +79,7 @@ class KJavaAppletWidget : public QXEmbed
 {
     Q_OBJECT
 public:
-    KJavaAppletWidget( QWidget* parent=0, const char* name=0 );
+    KJavaAppletWidget( TQWidget* parent=0, const char* name=0 );
 
    ~KJavaAppletWidget();
 
@@ -96,7 +96,7 @@ public:
      */
     void showApplet();
 
-    QSize sizeHint() const;
+    TQSize sizeHint() const;
     void resize( int, int );
 
 protected slots:
@@ -109,14 +109,14 @@ protected slots:
 protected:
     //The counter to generate ID's for the applets
     static int appletCount;
-    void showEvent (QShowEvent *);
+    void showEvent (TQShowEvent *);
 
 private:
     KJavaAppletWidgetPrivate* d;
 
     KJavaApplet* m_applet;
     KWinModule*  m_kwm;
-    QString      m_swallowTitle;
+    TQString      m_swallowTitle;
 
 };
 

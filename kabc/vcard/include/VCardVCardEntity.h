@@ -24,8 +24,8 @@
 #ifndef  VCARD_ENTITY_H
 #define  VCARD_ENTITY_H
 
-#include <qstring.h>
-#include <qptrlist.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
 
 #include <VCardEnum.h>
 #include <VCardVCard.h>
@@ -34,8 +34,8 @@
 namespace VCARD
 {
   
-typedef QPtrList<VCard> VCardList;
-typedef QPtrListIterator<VCard> VCardListIterator;
+typedef TQPtrList<VCard> VCardList;
+typedef TQPtrListIterator<VCard> VCardListIterator;
 
 class KVCARD_EXPORT VCardEntity : public Entity
 {

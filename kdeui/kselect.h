@@ -23,9 +23,9 @@
 #ifndef __KSELECT_H__
 #define __KSELECT_H__
 
-#include <qwidget.h>
-#include <qrangecontrol.h>
-#include <qpixmap.h>
+#include <tqwidget.h>
+#include <tqrangecontrol.h>
+#include <tqpixmap.h>
 
 #include <kdelibs_export.h>
 
@@ -51,7 +51,7 @@ public:
    * Constructs a two-dimensional selector widget which
    * has a value range of [0..100] in both directions.
    */
-  KXYSelector( QWidget *parent=0, const char *name=0 );
+  KXYSelector( TQWidget *parent=0, const char *name=0 );
   /**
    * Destructs the widget.
    */
@@ -94,7 +94,7 @@ public:
   /**
    * @return the rectangle on which subclasses should draw.
    */
-  QRect contentsRect() const;
+  TQRect contentsRect() const;
 
 signals:
   /**
@@ -110,17 +110,17 @@ protected:
    *
    * Draw within contentsRect() only.
    */
-  virtual void drawContents( QPainter * );
+  virtual void drawContents( TQPainter * );
   /**
    * Override this function to draw the cursor which
    * indicates the currently selected value pair.
    */
-  virtual void drawCursor( QPainter *p, int xp, int yp );
+  virtual void drawCursor( TQPainter *p, int xp, int yp );
 
-  virtual void paintEvent( QPaintEvent *e );
-  virtual void mousePressEvent( QMouseEvent *e );
-  virtual void mouseMoveEvent( QMouseEvent *e );
-  virtual void wheelEvent( QWheelEvent * );
+  virtual void paintEvent( TQPaintEvent *e );
+  virtual void mousePressEvent( TQMouseEvent *e );
+  virtual void mouseMoveEvent( TQMouseEvent *e );
+  virtual void wheelEvent( TQWheelEvent * );
 
   /**
    * Converts a pixel position to its corresponding values.
@@ -137,7 +137,7 @@ private:
   int maxX;
   int minY;
   int maxY;
-  QPixmap store;
+  TQPixmap store;
 
 protected:
   virtual void virtual_hook( int id, void* data );
@@ -156,7 +156,7 @@ private:
  * A custom drawing routine for the widget surface has
  * to be provided by the subclass.
  */
-class KDEUI_EXPORT KSelector : public QWidget, public QRangeControl
+class KDEUI_EXPORT KSelector : public TQWidget, public QRangeControl
 {
   Q_OBJECT
   Q_PROPERTY( int value READ value WRITE setValue )
@@ -167,12 +167,12 @@ public:
   /**
    * Constructs a horizontal one-dimensional selection widget.
    */
-  KSelector( QWidget *parent=0, const char *name=0 );
+  KSelector( TQWidget *parent=0, const char *name=0 );
   /**
    * Constructs a one-dimensional selection widget with
    * a given orientation.
    */
-  KSelector( Orientation o, QWidget *parent = 0L, const char *name = 0L );
+  KSelector( Orientation o, TQWidget *parent = 0L, const char *name = 0L );
   /*
    * Destructs the widget.
    */
@@ -187,7 +187,7 @@ public:
   /**
    * @return the rectangle on which subclasses should draw.
    */
-  QRect contentsRect() const;
+  TQRect contentsRect() const;
 
   /**
    * Sets the indent option of the widget to i.
@@ -205,37 +205,37 @@ public:
    * Sets the value.
    */
   void setValue(int value)
-  { QRangeControl::setValue(value); }
+  { TQRangeControl::setValue(value); }
 
   /**
    * @returns the value.
    */
   int value() const
-  { return QRangeControl::value(); }
+  { return TQRangeControl::value(); }
 
   /**
    * Sets the min value.
    */
   void setMinValue(int value)
-  { QRangeControl::setMinValue(value); }
+  { TQRangeControl::setMinValue(value); }
 
   /**
    * @return the min value.
    */
   int minValue() const
-  { return QRangeControl::minValue(); }
+  { return TQRangeControl::minValue(); }
 
   /**
    * Sets the max value.
    */
   void setMaxValue(int value)
-  { QRangeControl::setMaxValue(value); }
+  { TQRangeControl::setMaxValue(value); }
 
   /**
    * @return the max value.
    */
   int maxValue() const
-  { return QRangeControl::maxValue(); }
+  { return TQRangeControl::maxValue(); }
 
 signals:
   /**
@@ -251,7 +251,7 @@ protected:
    *
    * Draw only within contentsRect().
    */
-  virtual void drawContents( QPainter * );
+  virtual void drawContents( TQPainter * );
   /**
    * Override this function to draw the cursor which
    * indicates the current value. This function is
@@ -259,17 +259,17 @@ protected:
    * to clear the old cursor, once with argument show=true
    * to draw the new one.
    */
-  virtual void drawArrow( QPainter *painter, bool show, const QPoint &pos );
+  virtual void drawArrow( TQPainter *painter, bool show, const TQPoint &pos );
 
   virtual void valueChange();
-  virtual void paintEvent( QPaintEvent * );
-  virtual void mousePressEvent( QMouseEvent *e );
-  virtual void mouseMoveEvent( QMouseEvent *e );
-  virtual void wheelEvent( QWheelEvent * );
+  virtual void paintEvent( TQPaintEvent * );
+  virtual void mousePressEvent( TQMouseEvent *e );
+  virtual void mouseMoveEvent( TQMouseEvent *e );
+  virtual void wheelEvent( TQWheelEvent * );
 
 private:
-  QPoint calcArrowPos( int val );
-  void moveArrow( const QPoint &pos );
+  TQPoint calcArrowPos( int val );
+  void moveArrow( const TQPoint &pos );
 
   Orientation _orientation;
   bool _indent;
@@ -294,22 +294,22 @@ class KDEUI_EXPORT KGradientSelector : public KSelector
 {
   Q_OBJECT
 
-  Q_PROPERTY( QColor firstColor READ firstColor WRITE setFirstColor )
-  Q_PROPERTY( QColor secondColor READ secondColor WRITE setSecondColor )
-  Q_PROPERTY( QString firstText READ firstText WRITE setFirstText )
-  Q_PROPERTY( QString secondText READ secondText WRITE setSecondText )
+  Q_PROPERTY( TQColor firstColor READ firstColor WRITE setFirstColor )
+  Q_PROPERTY( TQColor secondColor READ secondColor WRITE setSecondColor )
+  Q_PROPERTY( TQString firstText READ firstText WRITE setFirstText )
+  Q_PROPERTY( TQString secondText READ secondText WRITE setSecondText )
 
 public:
   /**
    * Constructs a horizontal color selector which
    * contains a gradient between white and black.
    */
-  KGradientSelector( QWidget *parent=0, const char *name=0 );
+  KGradientSelector( TQWidget *parent=0, const char *name=0 );
   /**
    * Constructs a colors selector with orientation o which
    * contains a gradient between white and black.
    */
-  KGradientSelector( Orientation o, QWidget *parent=0, const char *name=0 );
+  KGradientSelector( Orientation o, TQWidget *parent=0, const char *name=0 );
   /**
    * Destructs the widget.
    */
@@ -317,49 +317,49 @@ public:
   /**
    * Sets the two colors which span the gradient.
    */
-  void setColors( const QColor &col1, const QColor &col2 )
+  void setColors( const TQColor &col1, const TQColor &col2 )
   {	color1 = col1; color2 = col2; update();}
-  void setText( const QString &t1, const QString &t2 )
+  void setText( const TQString &t1, const TQString &t2 )
   {	text1 = t1; text2 = t2; update(); }
 
   /**
    * Set each color on its own.
    */
-  void setFirstColor( const QColor &col )
+  void setFirstColor( const TQColor &col )
   { color1 = col; update(); }
-  void setSecondColor( const QColor &col )
+  void setSecondColor( const TQColor &col )
   { color2 = col; update(); }
 
   /**
    * Set each description on its own
    */
-  void setFirstText( const QString &t )
+  void setFirstText( const TQString &t )
   { text1 = t; update(); }
-  void setSecondText( const QString &t )
+  void setSecondText( const TQString &t )
   { text2 = t; update(); }
 
-  const QColor firstColor() const
+  const TQColor firstColor() const
   { return color1; }
-  const QColor secondColor() const
+  const TQColor secondColor() const
   { return color2; }
 
-  const QString firstText() const
+  const TQString firstText() const
   { return text1; }
-  const QString secondText() const
+  const TQString secondText() const
   { return text2; }
 
 protected:
 
-  virtual void drawContents( QPainter * );
-  virtual QSize minimumSize() const
+  virtual void drawContents( TQPainter * );
+  virtual TQSize minimumSize() const
   { return sizeHint(); }
 
 private:
   void init();
-  QColor color1;
-  QColor color2;
-  QString text1;
-  QString text2;
+  TQColor color1;
+  TQColor color2;
+  TQString text1;
+  TQString text2;
 
 protected:
   virtual void virtual_hook( int id, void* data );

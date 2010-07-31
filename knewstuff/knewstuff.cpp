@@ -30,8 +30,8 @@
 
 using namespace KNS;
 
-KAction* KNS::standardAction(const QString& what,
-                             const QObject *recvr,
+KAction* KNS::standardAction(const TQString& what,
+                             const TQObject *recvr,
                              const char *slot, KActionCollection* parent,
                              const char *name)
 {
@@ -39,22 +39,22 @@ KAction* KNS::standardAction(const QString& what,
                        0, recvr, slot, parent, name);
 }
 
-KNewStuff::KNewStuff( const QString &type, QWidget *parentWidget )
+KNewStuff::KNewStuff( const TQString &type, TQWidget *parentWidget )
 {
     mEngine = new Engine( this, type, parentWidget );
 }
 
-KNewStuff::KNewStuff( const QString &type, const QString &providerList, QWidget *parentWidget )
+KNewStuff::KNewStuff( const TQString &type, const TQString &providerList, TQWidget *parentWidget )
 {
   mEngine = new Engine( this, type, providerList, parentWidget );
 }
 
-QString KNewStuff::type() const
+TQString KNewStuff::type() const
 {
   return mEngine->type();
 }
 
-QWidget *KNewStuff::parentWidget() const
+TQWidget *KNewStuff::parentWidget() const
 {
   return mEngine->parentWidget();
 }
@@ -69,7 +69,7 @@ void KNewStuff::download()
   mEngine->download();
 }
 
-QString KNewStuff::downloadDestination( Entry * )
+TQString KNewStuff::downloadDestination( Entry * )
 {
   return KGlobal::dirs()->saveLocation( "tmp" ) +
          KApplication::randomString( 10 );
@@ -80,7 +80,7 @@ void KNewStuff::upload()
   mEngine->upload();
 }
 
-void KNewStuff::upload( const QString &fileName, const QString previewName )
+void KNewStuff::upload( const TQString &fileName, const TQString previewName )
 {
   mEngine->upload(fileName, previewName);
 }

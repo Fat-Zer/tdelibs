@@ -21,12 +21,12 @@
 #ifndef KCHECKACCELERATORS_H_
 #define KCHECKACCELERATORS_H_
 
-#include <qguardedptr.h>
-#include <qobject.h>
-#include <qkeysequence.h>
-#include <qmap.h>
-#include <qstring.h>
-#include <qtimer.h>
+#include <tqguardedptr.h>
+#include <tqobject.h>
+#include <tqkeysequence.h>
+#include <tqmap.h>
+#include <tqstring.h>
+#include <tqtimer.h>
 
 class QMenuData;
 class QTextView;
@@ -71,11 +71,11 @@ public:
      * Creates a KCheckAccelerators instance for the given object.
      * @param parent the parent to check
      */
-    KCheckAccelerators( QObject* parent );
+    KCheckAccelerators( TQObject* parent );
     /**
      * Re-implemented to filter the parent's events.
      */
-    bool eventFilter( QObject * , QEvent * e);
+    bool eventFilter( TQObject * , TQEvent * e);
 
 private:
     void checkAccelerators( bool automatic );
@@ -83,10 +83,10 @@ private:
     bool alwaysShow;
     bool autoCheck;
     bool block;
-    QTimer autoCheckTimer;
-    void createDialog(QWidget *parent, bool automatic);
-    QGuardedPtr<QDialog> drklash;
-    QTextView *drklash_view;
+    TQTimer autoCheckTimer;
+    void createDialog(TQWidget *parent, bool automatic);
+    TQGuardedPtr<TQDialog> drklash;
+    TQTextView *drklash_view;
 
 private slots:
     void autoCheckSlot();

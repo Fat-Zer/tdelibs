@@ -53,21 +53,21 @@ namespace KJS {
         struct PluginInfo;
 
         struct MimeClassInfo {
-            QString type;
-            QString desc;
-            QString suffixes;
+            TQString type;
+            TQString desc;
+            TQString suffixes;
             PluginInfo *plugin;
         };
 
         struct PluginInfo {
-            QString name;
-            QString file;
-            QString desc;
-            QPtrList<MimeClassInfo> mimes;
+            TQString name;
+            TQString file;
+            TQString desc;
+            TQPtrList<MimeClassInfo> mimes;
         };
 
-        static QPtrList<PluginInfo> *plugins;
-        static QPtrList<MimeClassInfo> *mimes;
+        static TQPtrList<PluginInfo> *plugins;
+        static TQPtrList<MimeClassInfo> *mimes;
 
     private:
         static int m_refCount;
@@ -83,7 +83,7 @@ namespace KJS {
         Value getValueProperty(ExecState *exec, int token) const;
         virtual const ClassInfo* classInfo() const { return &info; }
         static const ClassInfo info;
-        Value pluginByName( ExecState* exec, const QString& name ) const;
+        Value pluginByName( ExecState* exec, const TQString& name ) const;
         bool pluginsEnabled() const { return m_pluginsEnabled; };
     private:
         bool m_pluginsEnabled;
@@ -99,7 +99,7 @@ namespace KJS {
         virtual const ClassInfo* classInfo() const { return &info; }
         static const ClassInfo info;
         Value getValueProperty(ExecState *exec, int token) const;
-        Value mimeTypeByName( ExecState* exec, const QString& name ) const;
+        Value mimeTypeByName( ExecState* exec, const TQString& name ) const;
         bool pluginsEnabled() const { return m_pluginsEnabled; };
     private:
         bool m_pluginsEnabled;
@@ -114,7 +114,7 @@ namespace KJS {
         virtual Value get(ExecState *exec, const Identifier &propertyName) const;
         virtual const ClassInfo* classInfo() const { return &info; }
         static const ClassInfo info;
-        Value mimeByName(ExecState* exec, const QString& name ) const;
+        Value mimeByName(ExecState* exec, const TQString& name ) const;
         Value getValueProperty(ExecState *exec, int token) const;
         PluginBase::PluginInfo *pluginInfo() const { return m_info; }
     private:
@@ -138,8 +138,8 @@ namespace KJS {
 }
 
 
-QPtrList<PluginBase::PluginInfo> *KJS::PluginBase::plugins = 0;
-QPtrList<PluginBase::MimeClassInfo> *KJS::PluginBase::mimes = 0;
+TQPtrList<PluginBase::PluginInfo> *KJS::PluginBase::plugins = 0;
+TQPtrList<PluginBase::MimeClassInfo> *KJS::PluginBase::mimes = 0;
 int KJS::PluginBase::m_refCount = 0;
 
 const ClassInfo Navigator::info = { "Navigator", 0, &NavigatorTable, 0 };
@@ -179,7 +179,7 @@ Value Navigator::get(ExecState *exec, const Identifier &propertyName) const
 Value Navigator::getValueProperty(ExecState *exec, int token) const
 {
   KURL url = m_part->url();
-  QString userAgent = url.host();
+  TQString userAgent = url.host();
   if (userAgent.isEmpty())
      userAgent = "localhost";
   userAgent = KProtocolManager::userAgentForHost(userAgent);
@@ -188,14 +188,14 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
     return String("Mozilla");
   case AppName:
     // If we find "Mozilla" but not "(compatible, ...)" we are a real Netscape
-    if (userAgent.find(QString::fromLatin1("Mozilla")) >= 0 &&
-        userAgent.find(QString::fromLatin1("compatible")) == -1)
+    if (userAgent.find(TQString::fromLatin1("Mozilla")) >= 0 &&
+        userAgent.find(TQString::fromLatin1("compatible")) == -1)
     {
       //kdDebug() << "appName -> Mozilla" << endl;
       return String("Netscape");
     }
-    if (userAgent.find(QString::fromLatin1("Microsoft")) >= 0 ||
-        userAgent.find(QString::fromLatin1("MSIE")) >= 0)
+    if (userAgent.find(TQString::fromLatin1("Microsoft")) >= 0 ||
+        userAgent.find(TQString::fromLatin1("MSIE")) >= 0)
     {
       //kdDebug() << "appName -> IE" << endl;
       return String("Microsoft Internet Explorer");
@@ -207,14 +207,14 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
     return String(userAgent.mid(userAgent.find('/') + 1));
   case Product:
     // We are pretending to be Mozilla or Safari
-    if (userAgent.find(QString::fromLatin1("Mozilla")) >= 0 &&
-        userAgent.find(QString::fromLatin1("compatible")) == -1)
+    if (userAgent.find(TQString::fromLatin1("Mozilla")) >= 0 &&
+        userAgent.find(TQString::fromLatin1("compatible")) == -1)
     {
         return String("Gecko");
     }
     // When spoofing as IE, we use Undefined().
-    if (userAgent.find(QString::fromLatin1("Microsoft")) >= 0 ||
-        userAgent.find(QString::fromLatin1("MSIE")) >= 0)
+    if (userAgent.find(TQString::fromLatin1("Microsoft")) >= 0 ||
+        userAgent.find(TQString::fromLatin1("MSIE")) >= 0)
     {
         return Undefined();
     }
@@ -223,8 +223,8 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
   case ProductSub:
     {
       int ix = userAgent.find("Gecko");
-      if (ix >= 0 && userAgent.length() >= (uint)ix+14 && userAgent.unicode()[ix+5] == QChar('/') &&
-          userAgent.find(QRegExp("\\d{8}"), ix+6) == ix+6)
+      if (ix >= 0 && userAgent.length() >= (uint)ix+14 && userAgent.unicode()[ix+5] == TQChar('/') &&
+          userAgent.find(TQRegExp("\\d{8}"), ix+6) == ix+6)
       {
           // We have Gecko/<productSub> in the UA string
           return String(userAgent.mid(ix+6, 8));
@@ -245,19 +245,19 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
     return String(userAgent);
   case Platform:
     // yet another evil hack, but necessary to spoof some sites...
-    if ( (userAgent.find(QString::fromLatin1("Win"),0,false)>=0) )
-      return String(QString::fromLatin1("Win32"));
-    else if ( (userAgent.find(QString::fromLatin1("Macintosh"),0,false)>=0) ||
-              (userAgent.find(QString::fromLatin1("Mac_PowerPC"),0,false)>=0) )
-      return String(QString::fromLatin1("MacPPC"));
+    if ( (userAgent.find(TQString::fromLatin1("Win"),0,false)>=0) )
+      return String(TQString::fromLatin1("Win32"));
+    else if ( (userAgent.find(TQString::fromLatin1("Macintosh"),0,false)>=0) ||
+              (userAgent.find(TQString::fromLatin1("Mac_PowerPC"),0,false)>=0) )
+      return String(TQString::fromLatin1("MacPPC"));
     else
     {
         struct utsname name;
         int ret = uname(&name);
         if ( ret >= 0 )
-            return String(QString::fromLatin1("%1 %1 X11").arg(name.sysname).arg(name.machine));
+            return String(TQString::fromLatin1("%1 %1 X11").arg(name.sysname).arg(name.machine));
         else // can't happen
-            return String(QString::fromLatin1("Unix X11"));
+            return String(TQString::fromLatin1("Unix X11"));
     }
   case CpuClass:
   {
@@ -286,8 +286,8 @@ PluginBase::PluginBase(ExecState *exec, bool loadPluginInfo)
   : ObjectImp(exec->interpreter()->builtinObjectPrototype() )
 {
     if ( loadPluginInfo && !plugins ) {
-        plugins = new QPtrList<PluginInfo>;
-        mimes = new QPtrList<MimeClassInfo>;
+        plugins = new TQPtrList<PluginInfo>;
+        mimes = new TQPtrList<MimeClassInfo>;
         plugins->setAutoDelete( true );
         mimes->setAutoDelete( true );
 
@@ -296,11 +296,11 @@ PluginBase::PluginBase(ExecState *exec, bool loadPluginInfo)
         KTrader::OfferList::iterator it;
         for ( it = offers.begin(); it != offers.end(); ++it ) {
 
-            QVariant pluginsinfo = (**it).property( "X-KDE-BrowserView-PluginsInfo" );
+            TQVariant pluginsinfo = (**it).property( "X-KDE-BrowserView-PluginsInfo" );
             if ( !pluginsinfo.isValid() ) {
                 // <backwards compatible>
-                if ((**it).library() == QString("libnsplugin"))
-                    pluginsinfo = QVariant("nsplugins/pluginsinfo");
+                if ((**it).library() == TQString("libnsplugin"))
+                    pluginsinfo = TQVariant("nsplugins/pluginsinfo");
                 else
                 // </backwards compatible>
                     continue;
@@ -309,7 +309,7 @@ PluginBase::PluginBase(ExecState *exec, bool loadPluginInfo)
             KConfig kc( locate ("data", pluginsinfo.toString()) );
             unsigned num = (unsigned int) kc.readNumEntry("number");
             for ( unsigned n = 0; n < num; n++ ) {
-                kc.setGroup( QString::number(n) );
+                kc.setGroup( TQString::number(n) );
                 PluginInfo *plugin = new PluginInfo;
 
                 plugin->name = kc.readEntry("name");
@@ -319,17 +319,17 @@ PluginBase::PluginBase(ExecState *exec, bool loadPluginInfo)
                 plugins->append( plugin );
 
                 // get mime types from string
-                QStringList types = QStringList::split( ';', kc.readEntry("mime") );
-                QStringList::Iterator type;
+                TQStringList types = TQStringList::split( ';', kc.readEntry("mime") );
+                TQStringList::Iterator type;
                 for ( type=types.begin(); type!=types.end(); ++type ) {
 
                     // get mime information
-                    QStringList tokens = QStringList::split(':', *type, true);
+                    TQStringList tokens = TQStringList::split(':', *type, true);
                     if ( tokens.count() < 3 ) // we need 3 items
                         continue;
 
                     MimeClassInfo *mime = new MimeClassInfo;
-                    QStringList::Iterator token = tokens.begin();
+                    TQStringList::Iterator token = tokens.begin();
                     mime->type = (*token).lower();
                     //kdDebug(6070) << "mime->type=" << mime->type << endl;
                     ++token;
@@ -405,7 +405,7 @@ Value Plugins::get(ExecState *exec, const Identifier &propertyName) const
   return lookupGet<PluginsFunc,Plugins,ObjectImp>(exec,propertyName,&PluginsTable,this);
 }
 
-Value Plugins::pluginByName( ExecState* exec, const QString& name ) const
+Value Plugins::pluginByName( ExecState* exec, const TQString& name ) const
 {
   Q_ASSERT(plugins);
   for ( PluginInfo *pl = plugins->first(); pl!=0; pl = plugins->next() ) {
@@ -490,7 +490,7 @@ Value MimeTypes::get(ExecState *exec, const Identifier &propertyName) const
   return lookupGet<MimeTypesFunc,MimeTypes,ObjectImp>(exec,propertyName,&MimeTypesTable,this);
 }
 
-Value MimeTypes::mimeTypeByName( ExecState* exec, const QString& name ) const
+Value MimeTypes::mimeTypeByName( ExecState* exec, const TQString& name ) const
 {
   //kdDebug(6070) << "MimeTypes[" << name << "]" << endl;
   Q_ASSERT(mimes);
@@ -574,7 +574,7 @@ Value Plugin::get(ExecState *exec, const Identifier &propertyName) const
   return lookupGet<PluginFunc,Plugin,ObjectImp>(exec, propertyName, &PluginTable, this );
 }
 
-Value Plugin::mimeByName(ExecState* exec, const QString& name) const
+Value Plugin::mimeByName(ExecState* exec, const TQString& name) const
 {
   for ( PluginBase::MimeClassInfo *m = m_info->mimes.first();
         m != 0; m = m_info->mimes.next() ) {

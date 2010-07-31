@@ -30,7 +30,7 @@
 #ifndef KMIMEMAGIC_H
 #define KMIMEMAGIC_H
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <kdelibs_export.h>
 
 class KMimeMagic; // see below (read this one first)
@@ -52,7 +52,7 @@ public:
   /**
    * Retrieve the mimetype (e.g. "text/html") of the file or buffer parsed.
    */
-  QString mimeType() const { return m_strMimeType; }
+  TQString mimeType() const { return m_strMimeType; }
   /**
    * Retrieve the accuracy of the matching.
    */
@@ -65,12 +65,12 @@ public:
   /////////////////
   // Internal functions only
   /////////////////
-  void setMimeType( const QString& _mime ) { m_strMimeType = _mime; }
+  void setMimeType( const TQString& _mime ) { m_strMimeType = _mime; }
   void setAccuracy( int _accuracy ) { m_iAccuracy = _accuracy; }
-  void setInvalid() { m_strMimeType = QString::null; }
+  void setInvalid() { m_strMimeType = TQString::null; }
 
 protected:
-  QString m_strMimeType;
+  TQString m_strMimeType;
   int m_iAccuracy;
 };
 
@@ -111,7 +111,7 @@ public:
   /**
    * Create a parser and initialize it with the given config file.
    */
-  KMimeMagic( const QString & configFile );
+  KMimeMagic( const TQString & configFile );
 
   /**
    * Destroy the parser.
@@ -124,7 +124,7 @@ public:
    *
    * @return @p true on success.
    */
-  bool mergeConfig( const QString & configFile );
+  bool mergeConfig( const TQString & configFile );
 
   /**
    * Merge an existing parse table with the data from the
@@ -153,7 +153,7 @@ public:
    *         the returned result object changes its value
    *         since it is reused by KMimeMagic.
    */
-  KMimeMagicResult* findFileType( const QString & _filename );
+  KMimeMagicResult* findFileType( const TQString & _filename );
 
   /**
    * Same functionality as above, except data is not
@@ -167,7 +167,7 @@ public:
    *         the returned result object changes its value
    *         since it is reused by KMimeMagic.
    */
-  KMimeMagicResult* findBufferType( const QByteArray &p );
+  KMimeMagicResult* findBufferType( const TQByteArray &p );
 
   /**
    * Same functionality as findBufferType() but with
@@ -183,7 +183,7 @@ public:
    *         the returned result object changes its value
    *         since it is reused by KMimeMagic.
    */
-  KMimeMagicResult * findBufferFileType( const QByteArray &, const QString & filename );
+  KMimeMagicResult * findBufferFileType( const TQByteArray &, const TQString & filename );
 
   /**
    * Returns a pointer to the unique KMimeMagic instance in this process.
@@ -200,15 +200,15 @@ protected:
   static KMimeMagic* s_pSelf;
 
 private:
-  void init( const QString& configFile );
+  void init( const TQString& configFile );
 
   bool bunused;
-  QString sunused;
+  TQString sunused;
 
   int parse_line(char *line, int *rule, int lineno);
   int parse(char *, int);
   int buff_apprentice(char*buff);
-  int apprentice(const QString &configFile);
+  int apprentice(const TQString &configFile);
 
   struct config_rec *conf; // this is also our "d pointer"
   int iunused;

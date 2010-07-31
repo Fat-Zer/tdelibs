@@ -23,10 +23,10 @@
 
 #include <kdebug.h>
 
-#include <qobjectlist.h>
+#include <tqobjectlist.h>
 
-KateSuperCursor::KateSuperCursor(KateDocument* doc, bool privateC, const KateTextCursor& cursor, QObject* parent, const char* name)
-  : QObject(parent, name)
+KateSuperCursor::KateSuperCursor(KateDocument* doc, bool privateC, const KateTextCursor& cursor, TQObject* parent, const char* name)
+  : TQObject(parent, name)
   , KateDocCursor(cursor.line(), cursor.col(), doc)
   , Kate::Cursor ()
   , m_doc (doc)
@@ -38,8 +38,8 @@ KateSuperCursor::KateSuperCursor(KateDocument* doc, bool privateC, const KateTex
   m_doc->addSuperCursor (this, privateC);
 }
 
-KateSuperCursor::KateSuperCursor(KateDocument* doc, bool privateC, int lineNum, int col, QObject* parent, const char* name)
-  : QObject(parent, name)
+KateSuperCursor::KateSuperCursor(KateDocument* doc, bool privateC, int lineNum, int col, TQObject* parent, const char* name)
+  : TQObject(parent, name)
   , KateDocCursor(lineNum, col, doc)
   , Kate::Cursor ()
   , m_doc (doc)
@@ -67,7 +67,7 @@ bool KateSuperCursor::setPosition(uint line, uint col)
   return KateDocCursor::setPosition(line, col);
 }
 
-bool KateSuperCursor::insertText(const QString& s)
+bool KateSuperCursor::insertText(const TQString& s)
 {
   return KateDocCursor::insertText(s);
 }
@@ -77,7 +77,7 @@ bool KateSuperCursor::removeText(uint nbChar)
   return KateDocCursor::removeText(nbChar);
 }
 
-QChar KateSuperCursor::currentChar() const
+TQChar KateSuperCursor::currentChar() const
 {
   return KateDocCursor::currentChar();
 }
@@ -272,13 +272,13 @@ void KateSuperCursor::editLineRemoved(uint line)
   emit positionUnChanged();
 }
 
-KateSuperCursor::operator QString()
+KateSuperCursor::operator TQString()
 {
-  return QString("[%1,%1]").arg(line()).arg(col());
+  return TQString("[%1,%1]").arg(line()).arg(col());
 }
 
-KateSuperRange::KateSuperRange(KateSuperCursor* start, KateSuperCursor* end, QObject* parent, const char* name)
-  : QObject(parent, name)
+KateSuperRange::KateSuperRange(KateSuperCursor* start, KateSuperCursor* end, TQObject* parent, const char* name)
+  : TQObject(parent, name)
   , m_start(start)
   , m_end(end)
   , m_evaluate(false)
@@ -290,8 +290,8 @@ KateSuperRange::KateSuperRange(KateSuperCursor* start, KateSuperCursor* end, QOb
   init();
 }
 
-KateSuperRange::KateSuperRange(KateDocument* doc, const KateRange& range, QObject* parent, const char* name)
-  : QObject(parent, name)
+KateSuperRange::KateSuperRange(KateDocument* doc, const KateRange& range, TQObject* parent, const char* name)
+  : TQObject(parent, name)
   , m_start(new KateSuperCursor(doc, true, range.start()))
   , m_end(new KateSuperCursor(doc, true, range.end()))
   , m_evaluate(false)
@@ -303,8 +303,8 @@ KateSuperRange::KateSuperRange(KateDocument* doc, const KateRange& range, QObjec
   init();
 }
 
-KateSuperRange::KateSuperRange(KateDocument* doc, const KateTextCursor& start, const KateTextCursor& end, QObject* parent, const char* name)
-  : QObject(parent, name)
+KateSuperRange::KateSuperRange(KateDocument* doc, const KateTextCursor& start, const KateTextCursor& end, TQObject* parent, const char* name)
+  : TQObject(parent, name)
   , m_start(new KateSuperCursor(doc, true, start))
   , m_end(new KateSuperCursor(doc, true, end))
   , m_evaluate(false)
@@ -328,15 +328,15 @@ void KateSuperRange::init()
   setBehaviour(DoNotExpand);
 
   // Not necessarily the best implementation
-  connect(m_start, SIGNAL(positionDirectlyChanged()),  SIGNAL(contentsChanged()));
-  connect(m_end, SIGNAL(positionDirectlyChanged()),  SIGNAL(contentsChanged()));
+  connect(m_start, TQT_SIGNAL(positionDirectlyChanged()),  TQT_SIGNAL(contentsChanged()));
+  connect(m_end, TQT_SIGNAL(positionDirectlyChanged()),  TQT_SIGNAL(contentsChanged()));
 
-  connect(m_start, SIGNAL(positionChanged()),  SLOT(slotEvaluateChanged()));
-  connect(m_end, SIGNAL(positionChanged()),  SLOT(slotEvaluateChanged()));
-  connect(m_start, SIGNAL(positionUnChanged()), SLOT(slotEvaluateUnChanged()));
-  connect(m_end, SIGNAL(positionUnChanged()), SLOT(slotEvaluateUnChanged()));
-  connect(m_start, SIGNAL(positionDeleted()), SIGNAL(boundaryDeleted()));
-  connect(m_end, SIGNAL(positionDeleted()), SIGNAL(boundaryDeleted()));
+  connect(m_start, TQT_SIGNAL(positionChanged()),  TQT_SLOT(slotEvaluateChanged()));
+  connect(m_end, TQT_SIGNAL(positionChanged()),  TQT_SLOT(slotEvaluateChanged()));
+  connect(m_start, TQT_SIGNAL(positionUnChanged()), TQT_SLOT(slotEvaluateUnChanged()));
+  connect(m_end, TQT_SIGNAL(positionUnChanged()), TQT_SLOT(slotEvaluateUnChanged()));
+  connect(m_start, TQT_SIGNAL(positionDeleted()), TQT_SIGNAL(boundaryDeleted()));
+  connect(m_end, TQT_SIGNAL(positionDeleted()), TQT_SIGNAL(boundaryDeleted()));
 }
 
 KateSuperRange::~KateSuperRange()
@@ -411,7 +411,7 @@ bool KateSuperRange::owns(const KateTextCursor& cursor) const
   if (!includes(cursor)) return false;
 
   if (children())
-    for (QObjectListIt it(*children()); *it; ++it)
+    for (TQObjectListIt it(*children()); *it; ++it)
       if ((*it)->inherits("KateSuperRange"))
         if (static_cast<KateSuperRange*>(*it)->owns(cursor))
           return false;
@@ -446,7 +446,7 @@ bool KateSuperRange::boundaryOn(uint lineNum) const
 
 void KateSuperRange::slotEvaluateChanged()
 {
-  if (sender() == static_cast<QObject*>(m_start)) {
+  if (sender() == static_cast<TQObject*>(m_start)) {
     if (m_evaluate) {
       if (!m_endChanged) {
         // Only one was changed
@@ -484,7 +484,7 @@ void KateSuperRange::slotEvaluateChanged()
 
 void KateSuperRange::slotEvaluateUnChanged()
 {
-  if (sender() == static_cast<QObject*>(m_start)) {
+  if (sender() == static_cast<TQObject*>(m_start)) {
     if (m_evaluate) {
       if (m_endChanged) {
         // Only one changed
@@ -536,7 +536,7 @@ void KateSuperRange::evaluatePositionChanged()
     emit positionChanged();
 }
 
-int KateSuperCursorList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
+int KateSuperCursorList::compareItems(TQPtrCollection::Item item1, TQPtrCollection::Item item2)
 {
   if (*(static_cast<KateSuperCursor*>(item1)) == *(static_cast<KateSuperCursor*>(item2)))
     return 0;
@@ -544,8 +544,8 @@ int KateSuperCursorList::compareItems(QPtrCollection::Item item1, QPtrCollection
   return *(static_cast<KateSuperCursor*>(item1)) < *(static_cast<KateSuperCursor*>(item2)) ? -1 : 1;
 }
 
-KateSuperRangeList::KateSuperRangeList(bool autoManage, QObject* parent, const char* name)
-  : QObject(parent, name)
+KateSuperRangeList::KateSuperRangeList(bool autoManage, TQObject* parent, const char* name)
+  : TQObject(parent, name)
   , m_autoManage(autoManage)
   , m_connect(true)
   , m_trackingBoundaries(false)
@@ -553,8 +553,8 @@ KateSuperRangeList::KateSuperRangeList(bool autoManage, QObject* parent, const c
   setAutoManage(autoManage);
 }
 
-KateSuperRangeList::KateSuperRangeList(const QPtrList<KateSuperRange>& rangeList, QObject* parent, const char* name)
-  : QObject(parent, name)
+KateSuperRangeList::KateSuperRangeList(const TQPtrList<KateSuperRange>& rangeList, TQObject* parent, const char* name)
+  : TQObject(parent, name)
   , m_autoManage(false)
   , m_connect(false)
   , m_trackingBoundaries(false)
@@ -562,9 +562,9 @@ KateSuperRangeList::KateSuperRangeList(const QPtrList<KateSuperRange>& rangeList
   appendList(rangeList);
 }
 
-void KateSuperRangeList::appendList(const QPtrList<KateSuperRange>& rangeList)
+void KateSuperRangeList::appendList(const TQPtrList<KateSuperRange>& rangeList)
 {
-  for (QPtrListIterator<KateSuperRange> it = rangeList; *it; ++it)
+  for (TQPtrListIterator<KateSuperRange> it = rangeList; *it; ++it)
     append(*it);
 }
 
@@ -573,7 +573,7 @@ void KateSuperRangeList::clear()
   for (KateSuperRange* range = first(); range; range = next())
     emit rangeEliminated(range);
 
-  QPtrList<KateSuperRange>::clear();
+  TQPtrList<KateSuperRange>::clear();
 }
 
 void KateSuperRangeList::connectAll()
@@ -581,8 +581,8 @@ void KateSuperRangeList::connectAll()
   if (!m_connect) {
     m_connect = true;
     for (KateSuperRange* range = first(); range; range = next()) {
-      connect(range, SIGNAL(destroyed(QObject*)), SLOT(slotDeleted(QObject*)));
-      connect(range, SIGNAL(eliminated()), SLOT(slotEliminated()));
+      connect(range, TQT_SIGNAL(destroyed(TQObject*)), TQT_SLOT(slotDeleted(TQObject*)));
+      connect(range, TQT_SIGNAL(eliminated()), TQT_SLOT(slotEliminated()));
     }
   }
 }
@@ -598,11 +598,11 @@ void KateSuperRangeList::setAutoManage(bool autoManage)
   setAutoDelete(m_autoManage);
 }
 
-QPtrList<KateSuperRange> KateSuperRangeList::rangesIncluding(const KateTextCursor& cursor)
+TQPtrList<KateSuperRange> KateSuperRangeList::rangesIncluding(const KateTextCursor& cursor)
 {
   sort();
 
-  QPtrList<KateSuperRange> ret;
+  TQPtrList<KateSuperRange> ret;
 
   for (KateSuperRange* r = first(); r; r = next())
     if (r->includes(cursor))
@@ -611,11 +611,11 @@ QPtrList<KateSuperRange> KateSuperRangeList::rangesIncluding(const KateTextCurso
   return ret;
 }
 
-QPtrList<KateSuperRange> KateSuperRangeList::rangesIncluding(uint line)
+TQPtrList<KateSuperRange> KateSuperRangeList::rangesIncluding(uint line)
 {
   sort();
 
-  QPtrList<KateSuperRange> ret;
+  TQPtrList<KateSuperRange> ret;
 
   for (KateSuperRange* r = first(); r; r = next())
     if (r->includes(line))
@@ -636,7 +636,7 @@ bool KateSuperRangeList::rangesInclude(const KateTextCursor& cursor)
 void KateSuperRangeList::slotEliminated()
 {
   if (sender()) {
-    KateSuperRange* range = static_cast<KateSuperRange*>(const_cast<QObject*>(sender()));
+    KateSuperRange* range = static_cast<KateSuperRange*>(const_cast<TQObject*>(sender()));
     emit rangeEliminated(range);
 
     if (m_trackingBoundaries) {
@@ -652,7 +652,7 @@ void KateSuperRangeList::slotEliminated()
   }
 }
 
-void KateSuperRangeList::slotDeleted(QObject* range)
+void KateSuperRangeList::slotDeleted(TQObject* range)
 {
   //kdDebug(13020)<<"KateSuperRangeList::slotDeleted"<<endl;
   KateSuperRange* r = static_cast<KateSuperRange*>(range);
@@ -685,7 +685,7 @@ KateSuperCursor* KateSuperRangeList::firstBoundary(const KateTextCursor* start)
   m_columnBoundaries.sort();
 
   if (start)
-    // OPTIMISE: QMap with QPtrList for each line? (==> sorting issues :( )
+    // OPTIMISE: TQMap with TQPtrList for each line? (==> sorting issues :( )
     for (KateSuperCursor* c = m_columnBoundaries.first(); c; c = m_columnBoundaries.next())
       if (*start <= *c)
         break;
@@ -711,7 +711,7 @@ KateSuperCursor* KateSuperRangeList::currentBoundary()
   return m_columnBoundaries.current();
 }
 
-int KateSuperRangeList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
+int KateSuperRangeList::compareItems(TQPtrCollection::Item item1, TQPtrCollection::Item item2)
 {
   if (static_cast<KateSuperRange*>(item1)->superStart() == static_cast<KateSuperRange*>(item2)->superStart()) {
     if (static_cast<KateSuperRange*>(item1)->superEnd() == static_cast<KateSuperRange*>(item2)->superEnd()) {
@@ -724,12 +724,12 @@ int KateSuperRangeList::compareItems(QPtrCollection::Item item1, QPtrCollection:
   return static_cast<KateSuperRange*>(item1)->superStart() < static_cast<KateSuperRange*>(item2)->superStart() ? -1 : 1;
 }
 
-QPtrCollection::Item KateSuperRangeList::newItem(QPtrCollection::Item d)
+TQPtrCollection::Item KateSuperRangeList::newItem(TQPtrCollection::Item d)
 {
   if (m_connect) {
-    connect(static_cast<KateSuperRange*>(d), SIGNAL(destroyed(QObject*)), SLOT(slotDeleted(QObject*)));
-    connect(static_cast<KateSuperRange*>(d), SIGNAL(eliminated()), SLOT(slotEliminated()));
-    connect(static_cast<KateSuperRange*>(d), SIGNAL(tagRange(KateSuperRange*)), SIGNAL(tagRange(KateSuperRange*)));
+    connect(static_cast<KateSuperRange*>(d), TQT_SIGNAL(destroyed(TQObject*)), TQT_SLOT(slotDeleted(TQObject*)));
+    connect(static_cast<KateSuperRange*>(d), TQT_SIGNAL(eliminated()), TQT_SLOT(slotEliminated()));
+    connect(static_cast<KateSuperRange*>(d), TQT_SIGNAL(tagRange(KateSuperRange*)), TQT_SIGNAL(tagRange(KateSuperRange*)));
 
     // HACK HACK
     static_cast<KateSuperRange*>(d)->slotTagRange();
@@ -740,7 +740,7 @@ QPtrCollection::Item KateSuperRangeList::newItem(QPtrCollection::Item d)
     m_columnBoundaries.append(&(static_cast<KateSuperRange*>(d)->superEnd()));
   }
 
-  return QPtrList<KateSuperRange>::newItem(d);
+  return TQPtrList<KateSuperRange>::newItem(d);
 }
 
 // kate: space-indent on; indent-width 2; replace-tabs on;

@@ -19,16 +19,16 @@
 #ifndef KSTRINGHANDLER_H
 #define KSTRINGHANDLER_H
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qregexp.h>            // for the word ranges
-#include <qfontmetrics.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqregexp.h>            // for the word ranges
+#include <tqfontmetrics.h>
 #include "kdelibs_export.h"
 
 /**
  * This class contains utility functions for handling strings.
  *
- * This class is @em not a substitute for the QString class. What
+ * This class is @em not a substitute for the TQString class. What
  * I tried to do with this class is provide an easy way to
  * cut/slice/splice words inside sentences in whatever order desired.
  * While the main focus of this class are words (ie characters
@@ -43,7 +43,7 @@
  *
  * The ranges are a fairly powerful way of getting/stripping words from
  * a string. These ranges function, for the large part, as they would in
- * python. See the word(const QString&, const char *) and remword(const QString&, uint) functions for more detail.
+ * python. See the word(const TQString&, const char *) and remword(const TQString&, uint) functions for more detail.
  *
  * This class contains no data members of its own. All strings are cut
  * on the fly and returned as new qstrings/qstringlists.
@@ -52,7 +52,7 @@
  *
  * \code
  * KStringHandler kstr;
- * QString line = "This is a test of the strings";
+ * TQString line = "This is a test of the strings";
  *
  * cout << "1> " << kstr.word( line , "4:" ) << "\n";
  * cout << "2> " << kstr.remrange( line , "2:5" ) << "\n";
@@ -75,9 +75,9 @@ public:
       * @param text the string to search for the words
       * @param pos the position of the word to search
       * @return the word, or an empty string if not found
-      * @deprecated use QString::section instead
+      * @deprecated use TQString::section instead
       */
-    static QString        word( const QString &text , uint pos ) KDE_DEPRECATED;
+    static TQString        word( const TQString &text , uint pos ) KDE_DEPRECATED;
 
     /** Returns a range of words from that string.
       * Ie:
@@ -91,7 +91,7 @@ public:
       * @param range the words to return (see description)
       * @return the words, or an empty string if not found
       */
-    static QString        word( const QString &text , const char *range );
+    static TQString        word( const TQString &text , const char *range );
 
     /** Inserts a word into the string, and returns
       * a new string with the word included. the first
@@ -102,7 +102,7 @@ public:
       * @param pos the position (in words) for the new word
       * @return the resulting string
       */
-    static QString        insword( const QString &text , const QString &word , uint pos );
+    static TQString        insword( const TQString &text , const TQString &word , uint pos );
 
     /** Replaces a word in the string, and returns
       * a new string with the word included. the first
@@ -113,7 +113,7 @@ public:
       * @param pos the position (in words) for the new word
       * @return the resulting string
       */
-    static QString        setword( const QString &text , const QString &word , uint pos );
+    static TQString        setword( const TQString &text , const TQString &word , uint pos );
 
     /** Removes a word or ranges of words from the string,
       * and returns a new string. The ranges definitions
@@ -127,7 +127,7 @@ public:
       * @param range the words to remove (see description)
       * @return the resulting string
       */
-    static QString        remrange( const QString &text , const char *range );
+    static TQString        remrange( const TQString &text , const char *range );
 
 
     /** Removes a word at the given index, and returns a
@@ -136,7 +136,7 @@ public:
       * @param pos the position (in words) of thw word to delete
       * @return the resulting string
       */
-    static QString        remword( const QString &text , uint pos );
+    static TQString        remword( const TQString &text , uint pos );
 
     /** Removes a matching word from the string, and returns
       * a new string. Note that only ONE match is removed.
@@ -144,35 +144,35 @@ public:
       * @param word the word to remove
       * @return the resulting string
       */
-    static QString        remword( const QString &text , const QString &word );
+    static TQString        remword( const TQString &text , const TQString &word );
 
     /** Capitalizes each word in the string
       * "hello there" becomes "Hello There"        (string)
       * @param text the text to capitalize
       * @return the resulting string
       */
-    static QString        capwords( const QString &text );
+    static TQString        capwords( const TQString &text );
 
     /** Capitalizes each word in the list
       * [hello, there] becomes [Hello, There]    (list)
       * @param list the list to capitalize
       * @return the resulting list
       */
-    static QStringList    capwords( const QStringList &list );
+    static TQStringList    capwords( const TQStringList &list );
 
     /** Reverses the order of the words in a string
       * "hello there" becomes "there hello"        (string)
       * @param text the text to reverse
       * @return the resulting string
       */
-    static QString        reverse( const QString &text );
+    static TQString        reverse( const TQString &text );
 
     /** Reverses the order of the words in a list
       * [hello, there] becomes [there, hello]    (list)
       * @param list the list to reverse
       * @return the resulting list
       */
-    static QStringList    reverse( const QStringList &list );
+    static TQStringList    reverse( const TQStringList &list );
 
     /** Left-justifies a string and returns a string at least 'width' characters
       * wide.
@@ -181,9 +181,9 @@ public:
       * @param text the text to justify
       * @param width the desired width of the new string
       * @return the resulting string
-      * @deprecated use QString::leftJustify instead
+      * @deprecated use TQString::leftJustify instead
       */
-    static QString        ljust( const QString &text , uint width ) KDE_DEPRECATED;
+    static TQString        ljust( const TQString &text , uint width ) KDE_DEPRECATED;
 
     /** Right-justifies a string and returns a string at least 'width' characters
       * wide.
@@ -192,9 +192,9 @@ public:
       * @param text the text to justify
       * @param width the desired width of the new string
       * @return the resulting string
-      * @deprecated use QString::rightJustify instead
+      * @deprecated use TQString::rightJustify instead
       */
-    static QString        rjust( const QString &text , uint width ) KDE_DEPRECATED;
+    static TQString        rjust( const TQString &text , uint width ) KDE_DEPRECATED;
 
     /** Centers a string and returns a string at least 'width' characters
       * wide.
@@ -204,7 +204,7 @@ public:
       * @param width the desired width of the new string
       * @return the resulting string
       */
-    static QString        center( const QString &text , uint width );
+    static TQString        center( const TQString &text , uint width );
 
     /** Substitute characters at the beginning of a string by "...".
      * @param str is the string to modify
@@ -212,7 +212,7 @@ public:
      * If the original string is shorter than "maxlen", it is returned verbatim
      * @return the modified string
      */
-    static QString        lsqueeze( const QString & str, uint maxlen = 40 );
+    static TQString        lsqueeze( const TQString & str, uint maxlen = 40 );
 
     /** Substitute characters at the beginning of a string by "...". Similar to
      * method above, except that it truncates based on pixel width rather than
@@ -224,8 +224,8 @@ public:
      * @return the modified string
      * @since 3.2
      */
-    static QString lEmSqueeze( const QString & name,
-                               const QFontMetrics& fontMetrics,
+    static TQString lEmSqueeze( const TQString & name,
+                               const TQFontMetrics& fontMetrics,
                                uint maxlen = 30 );
 
     /** Substitute characters at the beginning of a string by "...". Similar to
@@ -237,8 +237,8 @@ public:
      * @return the modified string
      * @since 3.2
      */
-    static QString lPixelSqueeze( const QString & name,
-                                  const QFontMetrics& fontMetrics,
+    static TQString lPixelSqueeze( const TQString & name,
+                                  const TQFontMetrics& fontMetrics,
                                   uint maxPixels );
 
     /** Substitute characters at the middle of a string by "...".
@@ -247,7 +247,7 @@ public:
      * If the original string is shorter than "maxlen", it is returned verbatim
      * @return the modified string
      */
-    static QString        csqueeze( const QString & str, uint maxlen = 40 );
+    static TQString        csqueeze( const TQString & str, uint maxlen = 40 );
 
     /** Substitute characters in the middle of a string by "...". Similar to
      * method above, except that it truncates based on pixel width rather than
@@ -259,8 +259,8 @@ public:
      * @return the modified string
      * @since 3.2
      */
-    static QString cEmSqueeze( const QString & name,
-                               const QFontMetrics& fontMetrics,
+    static TQString cEmSqueeze( const TQString & name,
+                               const TQFontMetrics& fontMetrics,
                                uint maxlen = 30 );
 
     /** Substitute characters in the middle of a string by "...". Similar to
@@ -272,8 +272,8 @@ public:
      * @return the modified string
      * @since 3.2
      */
-    static QString cPixelSqueeze( const QString & name,
-                                  const QFontMetrics& fontMetrics,
+    static TQString cPixelSqueeze( const TQString & name,
+                                  const TQFontMetrics& fontMetrics,
                                   uint maxPixels );
 
     /** Substitute characters at the end of a string by "...".
@@ -282,7 +282,7 @@ public:
      * If the original string is shorter than "maxlen", it is returned verbatim
      * @return the modified string
      */
-    static QString        rsqueeze( const QString & str, uint maxlen = 40 );
+    static TQString        rsqueeze( const TQString & str, uint maxlen = 40 );
 
     /** Substitute characters at the end of a string by "...". Similar to
      * method above, except that it truncates based on pixel width rather than
@@ -294,8 +294,8 @@ public:
      * @return the modified string
      * @since 3.2
      */
-    static QString rEmSqueeze( const QString & name,
-                               const QFontMetrics& fontMetrics,
+    static TQString rEmSqueeze( const TQString & name,
+                               const TQFontMetrics& fontMetrics,
                                uint maxlen = 30 );
 
     /** Substitute characters at the end of a string by "...". Similar to
@@ -307,8 +307,8 @@ public:
      * @return the modified string
      * @since 3.2
      */
-    static QString rPixelSqueeze( const QString & name,
-                                  const QFontMetrics& fontMetrics,
+    static TQString rPixelSqueeze( const TQString & name,
+                                  const TQFontMetrics& fontMetrics,
                                   uint maxPixels );
 
     /**
@@ -319,68 +319,68 @@ public:
      * Patterns with two asterisks like "*.*pk" are not supported.
      * @return true if the given filename matches the given pattern
      */
-    static bool matchFileName( const QString& filename, const QString& pattern );
+    static bool matchFileName( const TQString& filename, const TQString& pattern );
     // KDE4: move to KShell
 
     /**
-     * Split a QString into a QStringList in a similar fashion to the static
-     * QStringList function in Qt, except you can specify a maximum number
+     * Split a TQString into a TQStringList in a similar fashion to the static
+     * TQStringList function in Qt, except you can specify a maximum number
      * of tokens. If max is specified (!= 0) then only that number of tokens
      * will be extracted. The final token will be the remainder of the string.
      *
      * Example:
      * \code
      * perlSplit("__", "some__string__for__you__here", 4)
-     * QStringList contains: "some", "string", "for", "you__here"
+     * TQStringList contains: "some", "string", "for", "you__here"
      * \endcode
      *
      * @param sep is the string to use to delimit s.
      * @param s is the input string
      * @param max is the maximum number of extractions to perform, or 0.
-     * @return A QStringList containing tokens extracted from s.
+     * @return A TQStringList containing tokens extracted from s.
      */
-    static QStringList perlSplit
-      (const QString & sep, const QString & s, uint max = 0);
+    static TQStringList perlSplit
+      (const TQString & sep, const TQString & s, uint max = 0);
 
     /**
-     * Split a QString into a QStringList in a similar fashion to the static
-     * QStringList function in Qt, except you can specify a maximum number
+     * Split a TQString into a TQStringList in a similar fashion to the static
+     * TQStringList function in Qt, except you can specify a maximum number
      * of tokens. If max is specified (!= 0) then only that number of tokens
      * will be extracted. The final token will be the remainder of the string.
      *
      * Example:
      * \code
      * perlSplit(' ', "kparts reaches the parts other parts can't", 3)
-     * QStringList contains: "kparts", "reaches", "the parts other parts can't"
+     * TQStringList contains: "kparts", "reaches", "the parts other parts can't"
      * \endcode
      *
      * @param sep is the character to use to delimit s.
      * @param s is the input string
      * @param max is the maximum number of extractions to perform, or 0.
-     * @return A QStringList containing tokens extracted from s.
+     * @return A TQStringList containing tokens extracted from s.
      */
-    static QStringList perlSplit
-      (const QChar & sep, const QString & s, uint max = 0);
+    static TQStringList perlSplit
+      (const TQChar & sep, const TQString & s, uint max = 0);
 
     /**
-     * Split a QString into a QStringList in a similar fashion to the static
-     * QStringList function in Qt, except you can specify a maximum number
+     * Split a TQString into a TQStringList in a similar fashion to the static
+     * TQStringList function in Qt, except you can specify a maximum number
      * of tokens. If max is specified (!= 0) then only that number of tokens
      * will be extracted. The final token will be the remainder of the string.
      *
      * Example:
      * \code
-     * perlSplit(QRegExp("[! ]", "Split me up ! I'm bored ! OK ?", 3)
-     * QStringList contains: "Split", "me", "up ! I'm bored, OK ?"
+     * perlSplit(TQRegExp("[! ]", "Split me up ! I'm bored ! OK ?", 3)
+     * TQStringList contains: "Split", "me", "up ! I'm bored, OK ?"
      * \endcode
      *
      * @param sep is the regular expression to use to delimit s.
      * @param s is the input string
      * @param max is the maximum number of extractions to perform, or 0.
-     * @return A QStringList containing tokens extracted from s.
+     * @return A TQStringList containing tokens extracted from s.
      */
-    static QStringList perlSplit
-      (const QRegExp & sep, const QString & s, uint max = 0);
+    static TQStringList perlSplit
+      (const TQRegExp & sep, const TQString & s, uint max = 0);
 
     /**
      * This method auto-detects URLs in strings, and adds HTML markup to them
@@ -390,7 +390,7 @@ public:
      * @return the resulting text
      * @since 3.1
      */
-    static QString tagURLs( const QString& text );
+    static TQString tagURLs( const TQString& text );
 
     /**
       Obscure string by using a simple symmetric encryption. Applying the
@@ -405,7 +405,7 @@ public:
       @return obscured string
       @since 3.2
     */
-    static QString obscure( const QString &str );
+    static TQString obscure( const TQString &str );
 
     /**
       Guess whether a string is UTF8 encoded.
@@ -417,14 +417,14 @@ public:
     static bool isUtf8( const char *str );
 
     /**
-      Construct QString from a c string, guessing whether it is UTF8- or
+      Construct TQString from a c string, guessing whether it is UTF8- or
       Local8Bit-encoded.
 
       @param str the input string
-      @return the (hopefully correctly guessed) QString representation of @p str
+      @return the (hopefully correctly guessed) TQString representation of @p str
       @since 3.2
      */
-    static QString from8Bit( const char *str );
+    static TQString from8Bit( const char *str );
 
 #ifdef KDE_NO_COMPAT
 private:
@@ -432,7 +432,7 @@ private:
     /**
      * @deprecated Use matchFileName () instead.
      */
-    static KDE_DEPRECATED bool matchFilename( const QString& filename, const QString& pattern )
+    static KDE_DEPRECATED bool matchFilename( const TQString& filename, const TQString& pattern )
     {
         return matchFileName (filename, pattern);
     }

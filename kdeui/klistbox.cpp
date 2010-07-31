@@ -17,7 +17,7 @@
 */
 #include "config.h"
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <kglobalsettings.h>
 #include <kcursor.h>
@@ -27,28 +27,28 @@
 
 #include "klistbox.h"
 
-KListBox::KListBox( QWidget *parent, const char *name, WFlags f )
-    : QListBox( parent, name, f ), d(0)
+KListBox::KListBox( TQWidget *parent, const char *name, WFlags f )
+    : TQListBox( parent, name, f ), d(0)
 {
-    connect( this, SIGNAL( onViewport() ),
-	     this, SLOT( slotOnViewport() ) );
-    connect( this, SIGNAL( onItem( QListBoxItem * ) ),
-	     this, SLOT( slotOnItem( QListBoxItem * ) ) );
+    connect( this, TQT_SIGNAL( onViewport() ),
+	     this, TQT_SLOT( slotOnViewport() ) );
+    connect( this, TQT_SIGNAL( onItem( TQListBoxItem * ) ),
+	     this, TQT_SLOT( slotOnItem( TQListBoxItem * ) ) );
     slotSettingsChanged(KApplication::SETTINGS_MOUSE);
     if (kapp)
     {
-        connect( kapp, SIGNAL( settingsChanged(int) ), SLOT( slotSettingsChanged(int) ) );
+        connect( kapp, TQT_SIGNAL( settingsChanged(int) ), TQT_SLOT( slotSettingsChanged(int) ) );
         kapp->addKipcEventMask( KIPC::SettingsChanged );
     }
 
     m_pCurrentItem = 0L;
 
-    m_pAutoSelect = new QTimer( this );
-    connect( m_pAutoSelect, SIGNAL( timeout() ),
-    	     this, SLOT( slotAutoSelect() ) );
+    m_pAutoSelect = new TQTimer( this );
+    connect( m_pAutoSelect, TQT_SIGNAL( timeout() ),
+    	     this, TQT_SLOT( slotAutoSelect() ) );
 }
 
-void KListBox::slotOnItem( QListBoxItem *item )
+void KListBox::slotOnItem( TQListBoxItem *item )
 {
     if ( item && m_bChangeCursorOverItem && m_bUseSingle )
         viewport()->setCursor( KCursor().handCursor() );
@@ -75,28 +75,28 @@ void KListBox::slotSettingsChanged(int category)
         return;
     m_bUseSingle = KGlobalSettings::singleClick();
 
-    disconnect( this, SIGNAL( mouseButtonClicked( int, QListBoxItem *,
-						  const QPoint & ) ),
-		this, SLOT( slotMouseButtonClicked( int, QListBoxItem *,
-						    const QPoint & ) ) );
-//         disconnect( this, SIGNAL( doubleClicked( QListBoxItem *, 
-// 						 const QPoint & ) ),
-// 		    this, SLOT( slotExecute( QListBoxItem *, 
-// 					     const QPoint & ) ) );
+    disconnect( this, TQT_SIGNAL( mouseButtonClicked( int, TQListBoxItem *,
+						  const TQPoint & ) ),
+		this, TQT_SLOT( slotMouseButtonClicked( int, TQListBoxItem *,
+						    const TQPoint & ) ) );
+//         disconnect( this, TQT_SIGNAL( doubleClicked( TQListBoxItem *, 
+// 						 const TQPoint & ) ),
+// 		    this, TQT_SLOT( slotExecute( TQListBoxItem *, 
+// 					     const TQPoint & ) ) );
 
     if( m_bUseSingle )
     {
-      connect( this, SIGNAL( mouseButtonClicked( int, QListBoxItem *, 
-						 const QPoint & ) ),
-	       this, SLOT( slotMouseButtonClicked( int, QListBoxItem *,
-						   const QPoint & ) ) );
+      connect( this, TQT_SIGNAL( mouseButtonClicked( int, TQListBoxItem *, 
+						 const TQPoint & ) ),
+	       this, TQT_SLOT( slotMouseButtonClicked( int, TQListBoxItem *,
+						   const TQPoint & ) ) );
     }
     else
     {
-//         connect( this, SIGNAL( doubleClicked( QListBoxItem *, 
-// 					      const QPoint & ) ),
-//                  this, SLOT( slotExecute( QListBoxItem *, 
-// 					  const QPoint & ) ) );
+//         connect( this, TQT_SIGNAL( doubleClicked( TQListBoxItem *, 
+// 					      const TQPoint & ) ),
+//                  this, TQT_SLOT( slotExecute( TQListBoxItem *, 
+// 					  const TQPoint & ) ) );
     }
 
     m_bChangeCursorOverItem = KGlobalSettings::changeCursorOverIcon();
@@ -118,7 +118,7 @@ void KListBox::slotAutoSelect()
 
   ButtonState keybstate = KApplication::keyboardMouseState();
 
-  QListBoxItem* previousItem = item( currentItem() ); 
+  TQListBoxItem* previousItem = item( currentItem() ); 
   setCurrentItem( m_pCurrentItem );
 
   if( m_pCurrentItem ) {
@@ -136,7 +136,7 @@ void KListBox::slotAutoSelect()
       viewport()->setUpdatesEnabled( false );
 
       bool down = index( previousItem ) < index( m_pCurrentItem );
-      QListBoxItem* it = down ? previousItem : m_pCurrentItem;
+      TQListBoxItem* it = down ? previousItem : m_pCurrentItem;
       for (;it ; it = it->next() ) {
 	if ( down && it == m_pCurrentItem ) {
 	  setSelected( m_pCurrentItem, select );
@@ -155,7 +155,7 @@ void KListBox::slotAutoSelect()
 
       emit selectionChanged();
 
-      if( selectionMode() == QListBox::Single )
+      if( selectionMode() == TQListBox::Single )
 	emit selectionChanged( m_pCurrentItem );
     }
     else if( (keybstate & ControlButton) )
@@ -176,7 +176,7 @@ void KListBox::slotAutoSelect()
     kdDebug() << "That´s not supposed to happen!!!!" << endl;
 }
 
-void KListBox::emitExecute( QListBoxItem *item, const QPoint &pos )
+void KListBox::emitExecute( TQListBoxItem *item, const TQPoint &pos )
 {
   ButtonState keybstate = KApplication::keyboardMouseState();
     
@@ -194,9 +194,9 @@ void KListBox::emitExecute( QListBoxItem *item, const QPoint &pos )
 // This widget is used in dialogs. It should ignore
 // F1 (and combinations) and Escape since these are used
 // to start help or close the dialog. This functionality
-// should be done in QListView but it is not (at least now)
+// should be done in TQListView but it is not (at least now)
 //
-void KListBox::keyPressEvent(QKeyEvent *e)
+void KListBox::keyPressEvent(TQKeyEvent *e)
 {
   if( e->key() == Key_Escape )
   {
@@ -208,25 +208,25 @@ void KListBox::keyPressEvent(QKeyEvent *e)
   }
   else
   {
-    QListBox::keyPressEvent(e);
+    TQListBox::keyPressEvent(e);
   }
 }
 
-void KListBox::focusOutEvent( QFocusEvent *fe )
+void KListBox::focusOutEvent( TQFocusEvent *fe )
 {
   m_pAutoSelect->stop();
 
-  QListBox::focusOutEvent( fe );
+  TQListBox::focusOutEvent( fe );
 }
 
-void KListBox::leaveEvent( QEvent *e ) 
+void KListBox::leaveEvent( TQEvent *e ) 
 {
   m_pAutoSelect->stop();
 
-  QListBox::leaveEvent( e );
+  TQListBox::leaveEvent( e );
 }
 
-void KListBox::contentsMousePressEvent( QMouseEvent *e )
+void KListBox::contentsMousePressEvent( TQMouseEvent *e )
 {
   if( (selectionMode() == Extended) && (e->state() & ShiftButton) && !(e->state() & ControlButton) ) {
     bool block = signalsBlocked();
@@ -237,14 +237,14 @@ void KListBox::contentsMousePressEvent( QMouseEvent *e )
     blockSignals( block );
   }
 
-  QListBox::contentsMousePressEvent( e );
+  TQListBox::contentsMousePressEvent( e );
 }
 
-void KListBox::contentsMouseDoubleClickEvent ( QMouseEvent * e )
+void KListBox::contentsMouseDoubleClickEvent ( TQMouseEvent * e )
 {
-  QListBox::contentsMouseDoubleClickEvent( e );
+  TQListBox::contentsMouseDoubleClickEvent( e );
 
-  QListBoxItem* item = itemAt( contentsToViewport( e->pos() ) );
+  TQListBoxItem* item = itemAt( contentsToViewport( e->pos() ) );
 
   if( item ) {
     emit doubleClicked( item, e->globalPos() );
@@ -254,7 +254,7 @@ void KListBox::contentsMouseDoubleClickEvent ( QMouseEvent * e )
   }
 }
 
-void KListBox::slotMouseButtonClicked( int btn, QListBoxItem *item, const QPoint &pos )
+void KListBox::slotMouseButtonClicked( int btn, TQListBoxItem *item, const TQPoint &pos )
 {
   if( (btn == LeftButton) && item )
     emitExecute( item, pos );

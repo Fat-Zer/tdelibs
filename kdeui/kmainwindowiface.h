@@ -21,8 +21,8 @@
 #define KWINDOW_INTERFACE_H
 
 #include <dcopobject.h>
-#include <qstringlist.h>
-#include <qcstring.h>
+#include <tqstringlist.h>
+#include <tqcstring.h>
 #include <dcopref.h>
 
 class KDCOPActionProxy;
@@ -55,7 +55,7 @@ public:
 	~KMainWindowInterface();
 
 	QCStringList functionsDynamic();
-	bool processDynamic(const QCString &fun, const QByteArray &data, QCString& replyType, QByteArray &replyData);
+	bool processDynamic(const TQCString &fun, const TQByteArray &data, TQCString& replyType, TQByteArray &replyData);
 
 
 k_dcop:
@@ -71,7 +71,7 @@ k_dcop:
 	actions can be found by calling actions().
 	@return The success of the operation.
 	*/
-	bool activateAction( QCString action);
+	bool activateAction( TQCString action);
 
 	/**
 	Disables the requested action.
@@ -79,7 +79,7 @@ k_dcop:
 	actions can be found by calling actions().
 	@return The success of the operation.
 	*/
-	bool disableAction( QCString action);
+	bool disableAction( TQCString action);
 
 	/**
 	Enables the requested action.
@@ -87,7 +87,7 @@ k_dcop:
 	actions can be found by calling actions().
 	@return The success of the operation.
 	*/
-	bool enableAction( QCString action);
+	bool enableAction( TQCString action);
 
 	/**
 	Returns the status of the requested action.
@@ -95,15 +95,15 @@ k_dcop:
 	actions can be found by calling actions().
 	@returns The state of the action, true - enabled, false - disabled.
 	*/
-	bool actionIsEnabled( QCString action);
+	bool actionIsEnabled( TQCString action);
 
 	/**
 	Returns the tool tip text of the requested action.
 	@param action The name of the action to activate.  The names of valid
 	actions can be found by calling actions().
-	@return A QCString containing the text of the action's tool tip.
+	@return A TQCString containing the text of the action's tool tip.
 	*/
-	QCString actionToolTip( QCString action);
+	TQCString actionToolTip( TQCString action);
 
 	/**
 	Returns a dcop reference to the selected KAction
@@ -111,12 +111,12 @@ k_dcop:
 	actions can be found by calling actions().
 	@return A DCOPRef for the kaction.
 	**/
-	DCOPRef action( const QCString &name );
+	DCOPRef action( const TQCString &name );
 
 	/**
 	Returns and action map
 	**/
-    	QMap<QCString,DCOPRef> actionMap();
+    	TQMap<TQCString,DCOPRef> actionMap();
 	/**
 	Returns the ID of the current main window.
 	This is useful for automated screen captures or other evil

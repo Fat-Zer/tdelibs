@@ -24,10 +24,10 @@
 
 #include <config.h>
 
-#include <qsocketnotifier.h>
-#include <qdatetime.h>
-#include <qtimer.h>
-#include <qguardedptr.h>
+#include <tqsocketnotifier.h>
+#include <tqdatetime.h>
+#include <tqtimer.h>
+#include <tqguardedptr.h>
 
 #include "ksocketaddress.h"
 #include "kresolver.h"
@@ -40,8 +40,8 @@ class KNetwork::KStreamSocketPrivate
 {
 public:
   KResolverResults::ConstIterator local, peer;
-  QTime startTime;
-  QTimer timer;
+  TQTime startTime;
+  TQTimer timer;
 
   int timeout;
 
@@ -50,8 +50,8 @@ public:
   { }
 };
 
-KStreamSocket::KStreamSocket(const QString& node, const QString& service,
-			     QObject* parent, const char *name)
+KStreamSocket::KStreamSocket(const TQString& node, const TQString& service,
+			     TQObject* parent, const char *name)
   : KClientSocketBase(parent, name), d(new KStreamSocketPrivate)
 {
   peerResolver().setNodeName(node);
@@ -61,7 +61,7 @@ KStreamSocket::KStreamSocket(const QString& node, const QString& service,
 
   setSocketOptions(socketOptions() & ~Blocking);
 
-  QObject::connect(&d->timer, SIGNAL(timeout()), this, SLOT(timeoutSlot()));
+  TQObject::connect(&d->timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(timeoutSlot()));
 }
 
 KStreamSocket::~KStreamSocket()
@@ -93,7 +93,7 @@ void KStreamSocket::setTimeout(int msecs)
     d->timer.changeInterval(msecs);
 }
 
-bool KStreamSocket::bind(const QString& node, const QString& service)
+bool KStreamSocket::bind(const TQString& node, const TQString& service)
 {
   if (state() != Idle)
     return false;
@@ -105,7 +105,7 @@ bool KStreamSocket::bind(const QString& node, const QString& service)
   return true;
 }
 
-bool KStreamSocket::connect(const QString& node, const QString& service)
+bool KStreamSocket::connect(const TQString& node, const TQString& service)
 {
   if (state() == Connected)
     return true;		// already connected
@@ -130,7 +130,7 @@ bool KStreamSocket::connect(const QString& node, const QString& service)
       // connection hasn't started yet
       if (!blocking())
 	{
-	  QObject::connect(this, SIGNAL(hostFound()), SLOT(hostFoundSlot()));
+	  TQObject::connect(this, TQT_SIGNAL(hostFound()), TQT_SLOT(hostFoundSlot()));
 	  return lookup();
 	}
 
@@ -196,10 +196,10 @@ bool KStreamSocket::connect(const KResolverEntry& entry)
 
 void KStreamSocket::hostFoundSlot()
 {
-  QObject::disconnect(this, SLOT(hostFoundSlot()));
+  TQObject::disconnect(this, TQT_SLOT(hostFoundSlot()));
   if (timeout() > 0)
     d->timer.start(timeout(), true);
-  QTimer::singleShot(0, this, SLOT(connectionEvent()));
+  TQTimer::singleShot(0, this, TQT_SLOT(connectionEvent()));
 }
 
 void KStreamSocket::connectionEvent()
@@ -266,14 +266,14 @@ void KStreamSocket::connectionEvent()
 	  // socket is attempting to connect
 	  if (socketDevice()->error() == InProgress)
 	    {
-	      QSocketNotifier *n = socketDevice()->readNotifier();
-	      QObject::connect(n, SIGNAL(activated(int)),
-			       this, SLOT(connectionEvent()));
+	      TQSocketNotifier *n = socketDevice()->readNotifier();
+	      TQObject::connect(n, TQT_SIGNAL(activated(int)),
+			       this, TQT_SLOT(connectionEvent()));
 	      n->setEnabled(true);
 
 	      n = socketDevice()->writeNotifier();
-	      QObject::connect(n, SIGNAL(activated(int)),
-			       this, SLOT(connectionEvent()));
+	      TQObject::connect(n, TQT_SIGNAL(activated(int)),
+			       this, TQT_SLOT(connectionEvent()));
 	      n->setEnabled(true);
 
 	      return;		// wait for activity
@@ -311,7 +311,7 @@ void KStreamSocket::timeoutSlot()
   setState(HostFound);
   emit stateChanged(HostFound);
 
-  QGuardedPtr<KStreamSocket> that = this;
+  TQGuardedPtr<KStreamSocket> that = this;
   emit gotError(Timeout);
   if (!that.isNull())
     emit timedOut();
@@ -350,8 +350,8 @@ bool KStreamSocket::bindLocallyFor(const KResolverEntry& peer)
 
 void KStreamSocket::connectionSucceeded(const KResolverEntry& peer)
 {
-  QObject::disconnect(socketDevice()->readNotifier(), 0, this, SLOT(connectionEvent()));
-  QObject::disconnect(socketDevice()->writeNotifier(), 0, this, SLOT(connectionEvent()));
+  TQObject::disconnect(socketDevice()->readNotifier(), 0, this, TQT_SLOT(connectionEvent()));
+  TQObject::disconnect(socketDevice()->writeNotifier(), 0, this, TQT_SLOT(connectionEvent()));
 
   resetError();
   setFlags(IO_Sequential | IO_Raw | IO_ReadWrite | IO_Open | IO_Async);

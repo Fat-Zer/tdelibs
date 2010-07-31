@@ -28,20 +28,20 @@
 class ASpellDict : public KSpell2::Dictionary
 {
 public:
-    ASpellDict( const QString& lang );
+    ASpellDict( const TQString& lang );
     ~ASpellDict();
-    virtual bool check( const QString& word );
+    virtual bool check( const TQString& word );
 
-    virtual QStringList suggest( const QString& word );
+    virtual TQStringList suggest( const TQString& word );
 
-    virtual bool checkAndSuggest( const QString& word,
-                                  QStringList& suggestions ) ;
+    virtual bool checkAndSuggest( const TQString& word,
+                                  TQStringList& suggestions ) ;
 
-    virtual bool storeReplacement( const QString& bad,
-                                   const QString& good );
+    virtual bool storeReplacement( const TQString& bad,
+                                   const TQString& good );
 
-    virtual bool addToPersonal( const QString& word );
-    virtual bool addToSession( const QString& word );
+    virtual bool addToPersonal( const TQString& word );
+    virtual bool addToSession( const TQString& word );
 private:
     AspellConfig  *m_config;
     AspellSpeller *m_speller;

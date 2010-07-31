@@ -18,10 +18,10 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qgroupbox.h>
-#include <qregexp.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqgroupbox.h>
+#include <tqregexp.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -33,19 +33,19 @@
 
 using namespace KABC;
 
-AddresseeItem::AddresseeItem( QListView *parent, const Addressee &addressee ) :
-  QListViewItem( parent ),
+AddresseeItem::AddresseeItem( TQListView *parent, const Addressee &addressee ) :
+  TQListViewItem( parent ),
   mAddressee( addressee )
 {
   setText( Name, addressee.realName() );
   setText( Email, addressee.preferredEmail() );
 }
 
-QString AddresseeItem::key( int column, bool ) const
+TQString AddresseeItem::key( int column, bool ) const
 {
   if (column == Email) {
-    QString value = text(Email);
-    QRegExp emailRe("<\\S*>");
+    TQString value = text(Email);
+    TQRegExp emailRe("<\\S*>");
     int match = emailRe.search(value);
     if (match > -1)
       value = value.mid(match + 1, emailRe.matchedLength() - 2);
@@ -56,14 +56,14 @@ QString AddresseeItem::key( int column, bool ) const
   return text(column).lower();
 }
 
-AddresseeDialog::AddresseeDialog( QWidget *parent, bool multiple ) :
+AddresseeDialog::AddresseeDialog( TQWidget *parent, bool multiple ) :
   KDialogBase( KDialogBase::Plain, i18n("Select Addressee"),
                Ok|Cancel, Ok, parent ), mMultiple( multiple )
 {
-  QWidget *topWidget = plainPage();
+  TQWidget *topWidget = plainPage();
 
-  QBoxLayout *topLayout = new QHBoxLayout( topWidget );
-  QBoxLayout *listLayout = new QVBoxLayout;
+  TQBoxLayout *topLayout = new TQHBoxLayout( topWidget );
+  TQBoxLayout *listLayout = new QVBoxLayout;
   topLayout->addLayout( listLayout );
 
   mAddresseeList = new KListView( topWidget );
@@ -72,27 +72,27 @@ AddresseeDialog::AddresseeDialog( QWidget *parent, bool multiple ) :
   mAddresseeList->setAllColumnsShowFocus( true );
   mAddresseeList->setFullWidth( true );
   listLayout->addWidget( mAddresseeList );
-  connect( mAddresseeList, SIGNAL( doubleClicked( QListViewItem * ) ),
-           SLOT( slotOk() ) );
-  connect( mAddresseeList, SIGNAL( selectionChanged( QListViewItem * ) ),
-           SLOT( updateEdit( QListViewItem * ) ) );
+  connect( mAddresseeList, TQT_SIGNAL( doubleClicked( TQListViewItem * ) ),
+           TQT_SLOT( slotOk() ) );
+  connect( mAddresseeList, TQT_SIGNAL( selectionChanged( TQListViewItem * ) ),
+           TQT_SLOT( updateEdit( TQListViewItem * ) ) );
 
   mAddresseeEdit = new KLineEdit( topWidget );
   mAddresseeEdit->setCompletionMode( KGlobalSettings::CompletionAuto );
-  connect( mAddresseeEdit->completionObject(), SIGNAL( match( const QString & ) ),
-           SLOT( selectItem( const QString & ) ) );
+  connect( mAddresseeEdit->completionObject(), TQT_SIGNAL( match( const TQString & ) ),
+           TQT_SLOT( selectItem( const TQString & ) ) );
   mAddresseeEdit->setFocus();
   mAddresseeEdit->completionObject()->setIgnoreCase( true );
   listLayout->addWidget( mAddresseeEdit );
 
-  setInitialSize( QSize( 450, 300 ) );
+  setInitialSize( TQSize( 450, 300 ) );
 
   if ( mMultiple ) {
-    QBoxLayout *selectedLayout = new QVBoxLayout;
+    TQBoxLayout *selectedLayout = new QVBoxLayout;
     topLayout->addLayout( selectedLayout );
     topLayout->setSpacing( spacingHint() );
 
-    QGroupBox *selectedGroup = new QGroupBox( 1, Horizontal, i18n("Selected"),
+    TQGroupBox *selectedGroup = new TQGroupBox( 1, Horizontal, i18n("Selected"),
                                               topWidget );
     selectedLayout->addWidget( selectedGroup );
 
@@ -101,23 +101,23 @@ AddresseeDialog::AddresseeDialog( QWidget *parent, bool multiple ) :
     mSelectedList->addColumn( i18n("Email") );
     mSelectedList->setAllColumnsShowFocus( true );
     mSelectedList->setFullWidth( true );
-    connect( mSelectedList, SIGNAL( doubleClicked( QListViewItem * ) ),
-             SLOT( removeSelected() ) );
+    connect( mSelectedList, TQT_SIGNAL( doubleClicked( TQListViewItem * ) ),
+             TQT_SLOT( removeSelected() ) );
 
-    QPushButton *unselectButton = new QPushButton( i18n("Unselect"), selectedGroup );
-    connect ( unselectButton, SIGNAL( clicked() ), SLOT( removeSelected() ) );
+    TQPushButton *unselectButton = new TQPushButton( i18n("Unselect"), selectedGroup );
+    connect ( unselectButton, TQT_SIGNAL( clicked() ), TQT_SLOT( removeSelected() ) );
 
-    connect( mAddresseeList, SIGNAL( clicked( QListViewItem * ) ),
-             SLOT( addSelected( QListViewItem * ) ) );
+    connect( mAddresseeList, TQT_SIGNAL( clicked( TQListViewItem * ) ),
+             TQT_SLOT( addSelected( TQListViewItem * ) ) );
 
-    setInitialSize( QSize( 650, 350 ) );
+    setInitialSize( TQSize( 650, 350 ) );
   }
 
   mAddressBook = StdAddressBook::self( true );
-  connect( mAddressBook, SIGNAL( addressBookChanged( AddressBook* ) ),
-           SLOT( addressBookChanged() ) );
-  connect( mAddressBook, SIGNAL( loadingFinished( Resource* ) ),
-           SLOT( addressBookChanged() ) );
+  connect( mAddressBook, TQT_SIGNAL( addressBookChanged( AddressBook* ) ),
+           TQT_SLOT( addressBookChanged() ) );
+  connect( mAddressBook, TQT_SIGNAL( loadingFinished( Resource* ) ),
+           TQT_SLOT( addressBookChanged() ) );
 
   loadAddressBook();
 }
@@ -140,7 +140,7 @@ void AddresseeDialog::loadAddressBook()
   }
 }
 
-void AddresseeDialog::addCompletionItem( const QString &str, QListViewItem *item )
+void AddresseeDialog::addCompletionItem( const TQString &str, TQListViewItem *item )
 {
   if ( str.isEmpty() ) return;
 
@@ -148,11 +148,11 @@ void AddresseeDialog::addCompletionItem( const QString &str, QListViewItem *item
   mAddresseeEdit->completionObject()->addItem( str );
 }
 
-void AddresseeDialog::selectItem( const QString &str )
+void AddresseeDialog::selectItem( const TQString &str )
 {
   if ( str.isEmpty() ) return;
 
-  QListViewItem *item = mItemDict.find( str );
+  TQListViewItem *item = mItemDict.find( str );
   if ( item ) {
     mAddresseeList->blockSignals( true );
     mAddresseeList->setSelected( item, true );
@@ -161,20 +161,20 @@ void AddresseeDialog::selectItem( const QString &str )
   }
 }
 
-void AddresseeDialog::updateEdit( QListViewItem *item )
+void AddresseeDialog::updateEdit( TQListViewItem *item )
 {
   mAddresseeEdit->setText( item->text( 0 ) );
   mAddresseeEdit->setSelection( 0, item->text( 0 ).length() );
 }
 
-void AddresseeDialog::addSelected( QListViewItem *item )
+void AddresseeDialog::addSelected( TQListViewItem *item )
 {
   AddresseeItem *addrItem = dynamic_cast<AddresseeItem *>( item );
   if ( !addrItem ) return;
 
   Addressee a = addrItem->addressee();
 
-  QListViewItem *selectedItem = mSelectedDict.find( a.uid() );
+  TQListViewItem *selectedItem = mSelectedDict.find( a.uid() );
   if ( !selectedItem ) {
     selectedItem = new AddresseeItem( mSelectedList, a );
     mSelectedDict.insert( a.uid(), selectedItem );
@@ -183,7 +183,7 @@ void AddresseeDialog::addSelected( QListViewItem *item )
 
 void AddresseeDialog::removeSelected()
 {
-  QListViewItem *item = mSelectedList->selectedItem();
+  TQListViewItem *item = mSelectedList->selectedItem();
   AddresseeItem *addrItem = dynamic_cast<AddresseeItem *>( item );
   if ( !addrItem ) return;
 
@@ -210,7 +210,7 @@ Addressee::List AddresseeDialog::addressees()
   AddresseeItem *aItem = 0;
 
   if ( mMultiple ) {
-    QListViewItem *item = mSelectedList->firstChild();
+    TQListViewItem *item = mSelectedList->firstChild();
     while( item ) {
       aItem = dynamic_cast<AddresseeItem *>( item );
       if ( aItem ) al.append( aItem->addressee() );
@@ -226,13 +226,13 @@ Addressee::List AddresseeDialog::addressees()
   return al;
 }
 
-Addressee AddresseeDialog::getAddressee( QWidget *parent )
+Addressee AddresseeDialog::getAddressee( TQWidget *parent )
 {
   AddresseeDialog *dlg = new AddresseeDialog( parent );
   Addressee addressee;
   int result = dlg->exec();
 
-  if ( result == QDialog::Accepted ) {
+  if ( result == TQDialog::Accepted ) {
     addressee =  dlg->addressee();
   }
 
@@ -240,12 +240,12 @@ Addressee AddresseeDialog::getAddressee( QWidget *parent )
   return addressee;
 }
 
-Addressee::List AddresseeDialog::getAddressees( QWidget *parent )
+Addressee::List AddresseeDialog::getAddressees( TQWidget *parent )
 {
   AddresseeDialog *dlg = new AddresseeDialog( parent, true );
   Addressee::List addressees;
   int result = dlg->exec();
-  if ( result == QDialog::Accepted ) {
+  if ( result == TQDialog::Accepted ) {
     addressees =  dlg->addressees();
   }
 

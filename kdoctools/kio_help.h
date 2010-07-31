@@ -10,9 +10,9 @@
 #include <unistd.h>
 
 
-#include <qintdict.h>
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqintdict.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 
 
 #include <kio/global.h>
@@ -22,7 +22,7 @@ class HelpProtocol : public KIO::SlaveBase
 {
 public:
 
-    HelpProtocol( bool ghelp, const QCString &pool, const QCString &app);
+    HelpProtocol( bool ghelp, const TQCString &pool, const TQCString &app);
     virtual ~HelpProtocol() { }
 
     virtual void get( const KURL& url );
@@ -31,15 +31,15 @@ public:
 
 private:
 
-    QString langLookup(const QString& fname);
+    TQString langLookup(const TQString& fname);
     void emitFile( const KURL &url );
     void get_file( const KURL& url );
-    QString lookupFile(const QString &fname, const QString &query,
+    TQString lookupFile(const TQString &fname, const TQString &query,
                        bool &redirect);
 
-    void unicodeError( const QString &t );
+    void unicodeError( const TQString &t );
 
-    QString mParsed;
+    TQString mParsed;
     bool mGhelp;
 };
 

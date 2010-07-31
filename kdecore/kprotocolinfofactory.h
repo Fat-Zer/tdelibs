@@ -22,9 +22,9 @@
 
 #include "../kio/kio/kprotocolinfo.h"
 
-#include <qmap.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqmap.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 #include <kurl.h>
 #include <ksycocafactory.h>
 
@@ -58,19 +58,19 @@ public:
    * @param protocol the protocol to search for
    * @return the pointer to the KProtocolInfo, or 0 if not found
    */
-  KProtocolInfo *findProtocol(const QString &protocol);
+  KProtocolInfo *findProtocol(const TQString &protocol);
 
   /**
    * Returns list of all known protocols.
    * @return a list of all protocols
    */
-  QStringList protocols();
+  TQStringList protocols();
 protected:
 
   /**
    * @internal Not used.
    */
-  virtual KSycocaEntry *createEntry(const QString &, const char *)
+  virtual KSycocaEntry *createEntry(const TQString &, const char *)
     { return 0; }                                                    
 
   /**
@@ -81,7 +81,7 @@ protected:
 protected:
   static KProtocolInfoFactory *_self;
   
-  QMap<QString,KProtocolInfo::Ptr> m_cache;
+  TQMap<TQString,KProtocolInfo::Ptr> m_cache;
 protected:
   virtual void virtual_hook( int id, void* data );
 private:

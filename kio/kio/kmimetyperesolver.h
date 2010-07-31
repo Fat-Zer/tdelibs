@@ -21,9 +21,9 @@
 #ifndef __kmimetyperesolver_h
 #define __kmimetyperesolver_h
 
-#include <qscrollview.h>
-#include <qptrlist.h>
-#include <qtimer.h>
+#include <tqscrollview.h>
+#include <tqptrlist.h>
+#include <tqtimer.h>
 #include <kdebug.h>
 
 /**
@@ -52,16 +52,16 @@ class KIO_EXPORT KMimeTypeResolverHelper : public QObject
 
 public:
     KMimeTypeResolverHelper( KMimeTypeResolverBase *resolver,
-                             QScrollView *view )
+                             TQScrollView *view )
         : m_resolver( resolver ),
-          m_timer( new QTimer( this ) )
+          m_timer( new TQTimer( this ) )
     {
-        connect( m_timer, SIGNAL( timeout() ), SLOT( slotProcessMimeIcons() ));
+        connect( m_timer, TQT_SIGNAL( timeout() ), TQT_SLOT( slotProcessMimeIcons() ));
 
-        connect( view->horizontalScrollBar(), SIGNAL( sliderMoved(int) ),
-                 SLOT( slotAdjust() ) );
-        connect( view->verticalScrollBar(), SIGNAL( sliderMoved(int) ),
-                 SLOT( slotAdjust() ) );
+        connect( view->horizontalScrollBar(), TQT_SIGNAL( sliderMoved(int) ),
+                 TQT_SLOT( slotAdjust() ) );
+        connect( view->verticalScrollBar(), TQT_SIGNAL( sliderMoved(int) ),
+                 TQT_SLOT( slotAdjust() ) );
 
         view->viewport()->installEventFilter( this );
     }
@@ -72,11 +72,11 @@ public:
     }
 
 protected:
-    virtual bool eventFilter( QObject *o, QEvent *e )
+    virtual bool eventFilter( TQObject *o, TQEvent *e )
     {
-        bool ret = QObject::eventFilter( o, e );
+        bool ret = TQObject::eventFilter( o, e );
 
-        if ( e->type() == QEvent::Resize )
+        if ( e->type() == TQEvent::Resize )
             m_resolver->slotViewportAdjusted();
 
         return ret;
@@ -95,7 +95,7 @@ private slots:
 
 private:
     KMimeTypeResolverBase *m_resolver;
-    QTimer *m_timer;
+    TQTimer *m_timer;
 };
 
 /**
@@ -106,16 +106,16 @@ private:
  * preferrence to the visible icons.
  *
  * It is implemented as a template, so that it can work with both QPtrListViewItem
- * and QIconViewItem, without requiring hacks such as void * or QPtrDict lookups.
+ * and TQIconViewItem, without requiring hacks such as void * or TQPtrDict lookups.
  *
  * Here's what the parent must implement :
  * @li void mimeTypeDeterminationFinished();
- * @li QScrollView * scrollWidget();
+ * @li TQScrollView * scrollWidget();
  * @li void determineIcon( IconItem * item ), which should call
  * @li KFileItem::determineMimeType on the fileItem, and update the icon, etc.
 */
 template<class IconItem, class Parent>
-class KMimeTypeResolver : public KMimeTypeResolverBase // if only this could be a QObject....
+class KMimeTypeResolver : public KMimeTypeResolverBase // if only this could be a TQObject....
 {
 public:
   /**
@@ -149,7 +149,7 @@ public:
      * clear it, insert new items into it, remove items, etc.
      * @return the list of items to process
      */
-    QPtrList<IconItem> m_lstPendingMimeIconItems;
+    TQPtrList<IconItem> m_lstPendingMimeIconItems;
 
     /**
      * "Connected" to the viewportAdjusted signal of the scrollview
@@ -231,17 +231,17 @@ inline IconItem * KMimeTypeResolver<IconItem, Parent>::findVisibleIcon()
 {
     // Find an icon that's visible and whose mimetype we don't know.
 
-    QPtrListIterator<IconItem> it(m_lstPendingMimeIconItems);
+    TQPtrListIterator<IconItem> it(m_lstPendingMimeIconItems);
     if ( m_lstPendingMimeIconItems.count()<20) // for few items, it's faster to not bother
         return m_lstPendingMimeIconItems.first();
 
-    QScrollView * view = m_parent->scrollWidget();
-    QRect visibleContentsRect
+    TQScrollView * view = m_parent->scrollWidget();
+    TQRect visibleContentsRect
         (
-            view->viewportToContents(QPoint(0, 0)),
+            view->viewportToContents(TQPoint(0, 0)),
             view->viewportToContents
             (
-                QPoint(view->visibleWidth(), view->visibleHeight())
+                TQPoint(view->visibleWidth(), view->visibleHeight())
                 )
             );
 

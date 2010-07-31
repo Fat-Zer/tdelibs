@@ -36,7 +36,7 @@ GeoValue::GeoValue(const GeoValue & x)
 {
 }
 
-GeoValue::GeoValue(const QCString & s)
+GeoValue::GeoValue(const TQCString & s)
 	:	Value(s)
 {
 }
@@ -54,7 +54,7 @@ GeoValue::operator = (GeoValue & x)
 }
 
 	GeoValue &
-GeoValue::operator = (const QCString & s)
+GeoValue::operator = (const TQCString & s)
 {
 	Value::operator = (s);
 	return *this;

@@ -2,7 +2,7 @@
 #define test_kstatusbar_h
 
 #include <kmenubar.h>
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 #include <kstatusbar.h>
 #include <kmainwindow.h>
 
@@ -13,7 +13,7 @@ class testWindow  : public KMainWindow
     Q_OBJECT
 
 public:
-    testWindow (QWidget *parent=0, const char *name=0);
+    testWindow (TQWidget *parent=0, const char *name=0);
     ~testWindow ();
     
 public slots:
@@ -22,12 +22,12 @@ public slots:
     void slotMenu(int i);
     
 protected:
-    QPopupMenu *fileMenu;
-    QPopupMenu *smenu;
+    TQPopupMenu *fileMenu;
+    TQPopupMenu *smenu;
     KMenuBar *menuBar;
     KStatusBar *statusbar;
     bool insert;
-    QMultiLineEdit *widget;
+    TQMultiLineEdit *widget;
 };
 #endif
 

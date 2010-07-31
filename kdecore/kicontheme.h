@@ -13,9 +13,9 @@
 #ifndef __KIconTheme_h_Included__
 #define __KIconTheme_h_Included__
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qptrlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqptrlist.h>
 #include "kdelibs_export.h"
 
 class KConfig;
@@ -169,7 +169,7 @@ public:
     /**
      * The full path of the icon.
      */
-    QString path;
+    TQString path;
 
 private:
     KIconPrivate *d;
@@ -192,71 +192,71 @@ public:
      * @param appName the name of the application. Can be null. This argument
      *        allows applications to have themed application icons.
      */
-    KIconTheme(const QString& name, const QString& appName=QString::null);
+    KIconTheme(const TQString& name, const TQString& appName=TQString::null);
     ~KIconTheme();
 
     /**
      * The stylized name of the icon theme.
      * @return the (human-readable) name of the theme
      */
-    QString name() const { return mName; }
+    TQString name() const { return mName; }
 
     /**
      * A description for the icon theme.
-     * @return a human-readable description of the theme, QString::null
+     * @return a human-readable description of the theme, TQString::null
      *         if there is none
      */
-    QString description() const { return mDesc; }
+    TQString description() const { return mDesc; }
 
     /**
      * Return the name of the "example" icon. This can be used to
      * present the theme to the user.
-     * @return the name of the example icon, QString::null if there is none
+     * @return the name of the example icon, TQString::null if there is none
      */
-    QString example() const;
+    TQString example() const;
 
     /**
      * Return the name of the screenshot.
-     * @return the name of the screenshot, QString::null if there is none
+     * @return the name of the screenshot, TQString::null if there is none
      */
-    QString screenshot() const;
+    TQString screenshot() const;
 
     /**
      * Returns the name of this theme's link overlay.
      * @return the name of the link overlay
      */
-    QString linkOverlay() const;
+    TQString linkOverlay() const;
 
     /**
      * Returns the name of this theme's zip overlay.
      * @return the name of the zip overlay
      */
-    QString zipOverlay() const;
+    TQString zipOverlay() const;
 
     /**
      * Returns the name of this theme's lock overlay.
      * @return the name of the lock overlay
      */
-    QString lockOverlay() const;
+    TQString lockOverlay() const;
 
     /**
      * Returns the name of this theme's share overlay.
      * @return the name of the share overlay
      * @since 3.1
      */
-    QString shareOverlay () const;
+    TQString shareOverlay () const;
 
     /**
      * Returns the toplevel theme directory.
      * @return the directory of the theme
      */
-    QString dir() const { return mDir; }
+    TQString dir() const { return mDir; }
 
     /**
      * The themes this icon theme falls back on.
      * @return a list of icon themes that are used as fall-backs
      */
-    QStringList inherits() const { return mInherits; }
+    TQStringList inherits() const { return mInherits; }
 
     /**
      * The icon theme exists?
@@ -290,7 +290,7 @@ public:
      * @param group The icon group. See KIcon::Group.
      * @return a list of available sized for the given group
      */
-    QValueList<int> querySizes(KIcon::Group group) const;
+    TQValueList<int> querySizes(KIcon::Group group) const;
 
     /**
      * Query available icons for a size and context.
@@ -298,7 +298,7 @@ public:
      * @param context the context of the icons
      * @return the list of icon names
      */
-    QStringList queryIcons(int size, KIcon::Context context = KIcon::Any) const;
+    TQStringList queryIcons(int size, KIcon::Context context = KIcon::Any) const;
 
     /**
      * Query available icons for a context and preferred size.
@@ -306,7 +306,7 @@ public:
      * @param context the context of the icons
      * @return the list of icon names
      */
-    QStringList queryIconsByContext(int size, KIcon::Context context = KIcon::Any) const;
+    TQStringList queryIconsByContext(int size, KIcon::Context context = KIcon::Any) const;
 
 
     /**
@@ -319,7 +319,7 @@ public:
      * @return A KIcon class that describes the icon. If an icon is found,
      * @see KIcon::isValid will return true, and false otherwise.
      */
-    KIcon iconPath(const QString& name, int size, KIcon::MatchType match) const;
+    KIcon iconPath(const TQString& name, int size, KIcon::MatchType match) const;
     
     /**
      * Returns true if the theme has any icons for the given context.
@@ -331,13 +331,13 @@ public:
      * List all icon themes installed on the system, global and local.
      * @return the list of all icon themes
      */
-    static QStringList list();
+    static TQStringList list();
 
     /**
      * Returns the current icon theme.
      * @return the name of the current theme
      */
-    static QString current();
+    static TQString current();
 
     /**
      * Reconfigure the theme.
@@ -349,20 +349,20 @@ public:
      * @return the name of the default theme name
      * @since 3.1
      */
-    static QString defaultThemeName();
+    static TQString defaultThemeName();
 
 private:
     int mDefSize[8];
-    QValueList<int> mSizes[8];
+    TQValueList<int> mSizes[8];
 
     int mDepth;
-    QString mDir, mName, mDesc;
-    QStringList mInherits;
-    QPtrList<KIconThemeDir> mDirs;
+    TQString mDir, mName, mDesc;
+    TQStringList mInherits;
+    TQPtrList<KIconThemeDir> mDirs;
     KIconThemePrivate *d;
 
-    static QString *_theme;
-    static QStringList *_theme_list;
+    static TQString *_theme;
+    static TQStringList *_theme_list;
 };
 
 #endif

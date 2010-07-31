@@ -23,7 +23,7 @@
  */
 
 #include <config.h>
-#include <qmutex.h>
+#include <tqmutex.h>
 #include "klocale.h"
 
 #include "ksocketbase.h"
@@ -40,7 +40,7 @@ public:
 
   mutable KSocketDevice* device;
 
-  QMutex mutex;
+  TQMutex mutex;
 
   KSocketBasePrivate()
     : mutex(true)		// create recursive
@@ -119,7 +119,7 @@ KSocketDevice* KSocketBase::socketDevice() const
     return d->device;
 
   // it doesn't exist, so create it
-  QMutexLocker locker(mutex());
+  TQMutexLocker locker(mutex());
   if (d->device)
     return d->device;
 
@@ -135,7 +135,7 @@ KSocketDevice* KSocketBase::socketDevice() const
 
 void KSocketBase::setSocketDevice(KSocketDevice* device)
 {
-  QMutexLocker locker(mutex());
+  TQMutexLocker locker(mutex());
   if (d->device == 0L)
     d->device = device;
 }
@@ -163,9 +163,9 @@ KSocketBase::SocketError KSocketBase::error() const
 }
 
 // static
-QString KSocketBase::errorString(KSocketBase::SocketError code)
+TQString KSocketBase::errorString(KSocketBase::SocketError code)
 {
-  QString reason;
+  TQString reason;
   switch (code)
     {
     case NoError:
@@ -248,7 +248,7 @@ QString KSocketBase::errorString(KSocketBase::SocketError code)
       break;
 
     default:
-      reason = QString::null;
+      reason = TQString::null;
       break;
     }
 
@@ -275,7 +275,7 @@ void KSocketBase::unsetSocketDevice()
   d->device = 0L;
 }
 
-QMutex* KSocketBase::mutex() const
+TQMutex* KSocketBase::mutex() const
 {
   return &d->mutex;
 }

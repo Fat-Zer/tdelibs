@@ -18,7 +18,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include "domainbrowser.h"
 #include "settings.h"
 #include "sdevent.h"
@@ -58,8 +58,8 @@ public:
 #ifdef HAVE_DNSSD
 	~DomainBrowserPrivate() { if (m_browser) avahi_domain_browser_free(m_browser); }
 #endif
-	QStringList m_domains;
-	virtual void customEvent(QCustomEvent* event);
+	TQStringList m_domains;
+	virtual void customEvent(TQCustomEvent* event);
 	bool m_browseLAN;
 	bool m_started;
 #ifdef HAVE_DNSSD
@@ -68,9 +68,9 @@ public:
 	DomainBrowser* m_owner;
 };
 
-void DomainBrowserPrivate::customEvent(QCustomEvent* event)
+void DomainBrowserPrivate::customEvent(TQCustomEvent* event)
 {
-	if (event->type()==QEvent::User+SD_ADDREMOVE) {
+	if (event->type()==TQEvent::User+SD_ADDREMOVE) {
 		AddRemoveEvent *aev = static_cast<AddRemoveEvent*>(event);
 		if (aev->m_op==AddRemoveEvent::Add) m_owner->gotNewDomain(aev->m_domain);
 			else m_owner->gotRemoveDomain(aev->m_domain);
@@ -78,7 +78,7 @@ void DomainBrowserPrivate::customEvent(QCustomEvent* event)
 }
 
 
-DomainBrowser::DomainBrowser(QObject *parent) : QObject(parent)
+DomainBrowser::DomainBrowser(TQObject *parent) : TQObject(parent)
 {
 	d = new DomainBrowserPrivate(this);
  	d->m_domains = Configuration::domainList();
@@ -86,11 +86,11 @@ DomainBrowser::DomainBrowser(QObject *parent) : QObject(parent)
 		d->m_domains+="local.";
 		d->m_browseLAN=true;
 	}
- 	connect(KApplication::kApplication(),SIGNAL(kipcMessage(int,int)),this,
- 	        SLOT(domainListChanged(int,int)));
+ 	connect(KApplication::kApplication(),TQT_SIGNAL(kipcMessage(int,int)),this,
+ 	        TQT_SLOT(domainListChanged(int,int)));
 }
 
-DomainBrowser::DomainBrowser(const QStringList& domains, bool recursive, QObject *parent) : QObject(parent)
+DomainBrowser::DomainBrowser(const TQStringList& domains, bool recursive, TQObject *parent) : TQObject(parent)
 {
 	d = new DomainBrowserPrivate(this);
 	d->m_browseLAN = recursive;
@@ -109,8 +109,8 @@ void DomainBrowser::startBrowse()
 	if (d->m_started) return;
 	d->m_started=true;
 	if (ServiceBrowser::isAvailable()!=ServiceBrowser::Working) return;
- 	QStringList::const_iterator itEnd = d->m_domains.end();
-	for (QStringList::const_iterator it=d->m_domains.begin(); it!=itEnd; ++it ) emit domainAdded(*it);
+ 	TQStringList::const_iterator itEnd = d->m_domains.end();
+	for (TQStringList::const_iterator it=d->m_domains.begin(); it!=itEnd; ++it ) emit domainAdded(*it);
 #ifdef HAVE_DNSSD
 	if (d->m_browseLAN)
 #ifdef AVAHI_API_0_6
@@ -123,14 +123,14 @@ void DomainBrowser::startBrowse()
 #endif
 }
 
-void DomainBrowser::gotNewDomain(const QString& domain)
+void DomainBrowser::gotNewDomain(const TQString& domain)
 {
 	if (d->m_domains.contains(domain)) return;
 	d->m_domains.append(domain);
 	emit domainAdded(domain);
 }
 
-void DomainBrowser::gotRemoveDomain(const QString& domain)
+void DomainBrowser::gotRemoveDomain(const TQString& domain)
 {
 	d->m_domains.remove(domain);
 	emit domainRemoved(domain);
@@ -151,8 +151,8 @@ void DomainBrowser::domainListChanged(int message,int)
 
 	// remove all domains and resolvers
 	if (was_started) {
-		QStringList::const_iterator itEnd = d->m_domains.end();
-		for (QStringList::const_iterator it=d->m_domains.begin(); it!=itEnd; ++it )
+		TQStringList::const_iterator itEnd = d->m_domains.end();
+		for (TQStringList::const_iterator it=d->m_domains.begin(); it!=itEnd; ++it )
 			emit domainRemoved(*it);
 	}
 	d->m_domains.clear();
@@ -165,7 +165,7 @@ void DomainBrowser::domainListChanged(int message,int)
 	if (was_started) startBrowse();
 }
 
-const QStringList& DomainBrowser::domains() const
+const TQStringList& DomainBrowser::domains() const
 {
 	return d->m_domains;
 }
@@ -187,11 +187,11 @@ void domains_callback(AvahiDomainBrowser*,  AvahiIfIndex, AvahiProtocol, AvahiBr
      void* context)
 #endif
 {
-	QObject *obj = reinterpret_cast<QObject*>(context);
+	TQObject *obj = reinterpret_cast<TQObject*>(context);
 	AddRemoveEvent* arev=new AddRemoveEvent((event==AVAHI_BROWSER_NEW) ? AddRemoveEvent::Add :
-			AddRemoveEvent::Remove, QString::null, QString::null,
+			AddRemoveEvent::Remove, TQString::null, TQString::null,
 			DNSToDomain(replyDomain));
-		QApplication::postEvent(obj, arev);
+		TQApplication::postEvent(obj, arev);
 }
 #endif
 

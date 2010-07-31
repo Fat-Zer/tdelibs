@@ -18,12 +18,12 @@
 #ifndef __kio_global_h__
 #define __kio_global_h__
 
-#include <qstring.h>
-#include <qvaluelist.h>
-#include <qptrlist.h>
-#include <qdatastream.h>
-#include <qdatetime.h>
-#include <qmap.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
+#include <tqptrlist.h>
+#include <tqdatastream.h>
+#include <tqdatetime.h>
+#include <tqmap.h>
 
 #include <kurl.h>
 
@@ -44,7 +44,7 @@ namespace KIO
    * @param  size  size in bytes
    * @return converted size as a string - e.g. 123.4 kB , 12.0 MB
    */
-  KIO_EXPORT QString convertSize( KIO::filesize_t size );
+  KIO_EXPORT TQString convertSize( KIO::filesize_t size );
 
   /**
    * Converts @p size from bytes to a string representation with includes
@@ -53,15 +53,15 @@ namespace KIO
    * @param  size  size in bytes
    * @return converted size as a string - e.g. 1.4 KB (1495 B), 45 B
    */
-  KIO_EXPORT QString convertSizeWithBytes( KIO::filesize_t size );
+  KIO_EXPORT TQString convertSizeWithBytes( KIO::filesize_t size );
   /**
    * Converts a size to a string representation
-   * Not unlike QString::number(...)
+   * Not unlike TQString::number(...)
    *
    * @param size size in bytes
    * @return  converted size as a string - e.g. 123456789
    */
-  KIO_EXPORT QString number( KIO::filesize_t size );
+  KIO_EXPORT TQString number( KIO::filesize_t size );
 
   /**
    * Converts size from kilo-bytes to the string representation.
@@ -69,7 +69,7 @@ namespace KIO
    * @param  kbSize  size in kilo-bytes
    * @return converted size as a string - e.g. 123.4 kB , 12.0 MB
    */
-   KIO_EXPORT QString convertSizeFromKB( KIO::filesize_t kbSize );
+   KIO_EXPORT TQString convertSizeFromKB( KIO::filesize_t kbSize );
 
   /**
    * Calculates remaining time in seconds from total size, processed size and speed.
@@ -92,18 +92,18 @@ namespace KIO
    *
    * @since 3.4
    */
-  KIO_EXPORT QString convertSeconds( unsigned int seconds );
+  KIO_EXPORT TQString convertSeconds( unsigned int seconds );
 
   /**
    * Calculates remaining time from total size, processed size and speed.
-   * Warning: As QTime is limited to 23:59:59, use calculateRemainingSeconds() instead
+   * Warning: As TQTime is limited to 23:59:59, use calculateRemainingSeconds() instead
    *
    * @param  totalSize      total size in bytes
    * @param  processedSize  processed size in bytes
    * @param  speed          speed in bytes per second
    * @return calculated remaining time
    */
-  KIO_EXPORT QTime calculateRemaining( KIO::filesize_t totalSize, KIO::filesize_t processedSize, KIO::filesize_t speed ) KDE_DEPRECATED;
+  KIO_EXPORT TQTime calculateRemaining( KIO::filesize_t totalSize, KIO::filesize_t processedSize, KIO::filesize_t speed ) KDE_DEPRECATED;
 
   /**
    * Helper for showing information about a set of files and directories
@@ -114,7 +114,7 @@ namespace KIO
    * @param showSize whether to show the size in the result
    * @return the summary string
    */
-  KIO_EXPORT QString itemsSummaryString(uint items, uint files, uint dirs, KIO::filesize_t size, bool showSize);
+  KIO_EXPORT TQString itemsSummaryString(uint items, uint files, uint dirs, KIO::filesize_t size, bool showSize);
 
   /**
    * Encodes (from the text displayed to the real filename)
@@ -123,14 +123,14 @@ namespace KIO
    * @param str the file name to encode
    * @return the encoded file name
    */
-  KIO_EXPORT QString encodeFileName( const QString & str );
+  KIO_EXPORT TQString encodeFileName( const TQString & str );
   /**
    * Decodes (from the filename to the text displayed)
    * This translates %2[fF] into / and %% into %
    * @param str the file name to decode
    * @return the decoded file name
    */
-  KIO_EXPORT QString decodeFileName( const QString & str );
+  KIO_EXPORT TQString decodeFileName( const TQString & str );
 
   /**
    * Commands that can be invoked by a job.
@@ -255,7 +255,7 @@ namespace KIO
    * @param errorText the additional error text
    * @return the created error string
    */
-  KIO_EXPORT QString buildErrorString(int errorCode, const QString &errorText);
+  KIO_EXPORT TQString buildErrorString(int errorCode, const TQString &errorText);
 
   /**
    * Returns a translated html error message for @p errorCode using the
@@ -267,7 +267,7 @@ namespace KIO
    * @param method the ioslave method
    * @return the created error string
    */
-  KIO_EXPORT QString buildHTMLErrorString(int errorCode, const QString &errorText,
+  KIO_EXPORT TQString buildHTMLErrorString(int errorCode, const TQString &errorText,
                                 const KURL *reqUrl = 0L, int method = -1 );
 
   /**
@@ -280,13 +280,13 @@ namespace KIO
    * @param reqUrl the request URL
    * @param method the ioslave method
    * @return the following data:
-   * @li QString errorName - the name of the error
-   * @li QString techName - if not null, the more technical name of the error
-   * @li QString description - a description of the error
-   * @li QStringList causes - a list of possible causes of the error
-   * @li QStringList solutions - a liso of solutions for the error
+   * @li TQString errorName - the name of the error
+   * @li TQString techName - if not null, the more technical name of the error
+   * @li TQString description - a description of the error
+   * @li TQStringList causes - a list of possible causes of the error
+   * @li TQStringList solutions - a liso of solutions for the error
    */
-  KIO_EXPORT QByteArray rawErrorDetail(int errorCode, const QString &errorText,
+  KIO_EXPORT TQByteArray rawErrorDetail(int errorCode, const TQString &errorText,
                                 const KURL *reqUrl = 0L, int method = -1 );
 
   /**
@@ -297,7 +297,7 @@ namespace KIO
    * @see enum Command
    * @since 3.2
    */
-  KIO_EXPORT QString unsupportedActionErrorString(const QString &protocol, int cmd);
+  KIO_EXPORT TQString unsupportedActionErrorString(const TQString &protocol, int cmd);
 
   /**
    * Constants used to specify the type of a KUDSAtom.
@@ -398,7 +398,7 @@ namespace KIO
    * @return the cache control value
    * @see getCacheControlString()
    */
-  KIO_EXPORT KIO::CacheControl parseCacheControl(const QString &cacheControl);
+  KIO_EXPORT KIO::CacheControl parseCacheControl(const TQString &cacheControl);
 
   /**
    * Returns a string representation of the given cache control method.
@@ -407,14 +407,14 @@ namespace KIO
    * @return the string representation
    * @see parseCacheControl()
    */
-  KIO_EXPORT QString getCacheControlString(KIO::CacheControl cacheControl);
+  KIO_EXPORT TQString getCacheControlString(KIO::CacheControl cacheControl);
 
   /**
    * Returns the mount point where @p device is mounted
    * right now. This means, it has to be mounted, not just
    * defined in fstab.
    */
-  KIO_EXPORT QString findDeviceMountPoint( const QString& device );
+  KIO_EXPORT TQString findDeviceMountPoint( const TQString& device );
 
   /**
    * Returns the mount point on which resides @p filename.
@@ -423,7 +423,7 @@ namespace KIO
    * @param filename the file name to check
    * @return the mount point of the given @p filename
    */
-  KIO_EXPORT QString findPathMountPoint( const QString & filename );
+  KIO_EXPORT TQString findPathMountPoint( const TQString & filename );
 
   /**
    * Checks if the path belongs to a filesystem that is probably
@@ -432,7 +432,7 @@ namespace KIO
    * @param filename the file name to check
    * @return true if the filesystem is probably slow
    */
-  KIO_EXPORT bool probably_slow_mounted(const QString& filename);
+  KIO_EXPORT bool probably_slow_mounted(const TQString& filename);
 
   /**
    * Checks if the path belongs to a filesystem that is manually
@@ -440,7 +440,7 @@ namespace KIO
    * @param filename the file name to check
    * @return true if the filesystem is manually mounted
    */
-  KIO_EXPORT bool manually_mounted(const QString& filename);
+  KIO_EXPORT bool manually_mounted(const TQString& filename);
 
   enum FileSystemFlag { SupportsChmod, SupportsChown, SupportsUTime,
                         SupportsSymlinks, CaseInsensitive };
@@ -464,7 +464,7 @@ namespace KIO
    * "foo" and "FOO" as being the same file (true for msdos systems)
    *
    */
-  KIO_EXPORT bool testFileSystemFlag(const QString& filename, FileSystemFlag flag);
+  KIO_EXPORT bool testFileSystemFlag(const TQString& filename, FileSystemFlag flag);
 
 
 /************
@@ -486,7 +486,7 @@ public:
   /**
    * Whether 'm_str' or 'm_long' is used depends on the value of 'm_uds'.
    */
-  QString m_str;
+  TQString m_str;
   /**
    * Whether 'm_str' or 'm_long' is used depends on the value of 'm_uds'.
    */
@@ -501,35 +501,35 @@ public:
 /**
  * An entry is the list of atoms containing all the informations for a file or URL
  */
-typedef QValueList<UDSAtom> UDSEntry;
-typedef QValueList<UDSEntry> UDSEntryList;
-typedef QValueListIterator<UDSEntry> UDSEntryListIterator;
-typedef QValueListConstIterator<UDSEntry> UDSEntryListConstIterator;
+typedef TQValueList<UDSAtom> UDSEntry;
+typedef TQValueList<UDSEntry> UDSEntryList;
+typedef TQValueListIterator<UDSEntry> UDSEntryListIterator;
+typedef TQValueListConstIterator<UDSEntry> UDSEntryListConstIterator;
 
 /**
  * MetaData is a simple map of key/value strings.
  */
-class KIO_EXPORT MetaData : public QMap<QString, QString>
+class KIO_EXPORT MetaData : public TQMap<TQString, TQString>
 {
 public:
   /**
    * Creates an empty meta data map.
    */
-   MetaData() : QMap<QString, QString>() { };
+   MetaData() : TQMap<TQString, TQString>() { };
   /**
    * Copy constructor.
    */
-   MetaData(const QMap<QString, QString>&metaData) :
-     QMap<QString, QString>(metaData) { };
+   MetaData(const TQMap<TQString, TQString>&metaData) :
+     TQMap<TQString, TQString>(metaData) { };
 
    /**
     * Adds the given meta data map to this map.
     * @param metaData the map to add
     * @return this map
     */
-   MetaData & operator+= ( const QMap<QString,QString> &metaData )
+   MetaData & operator+= ( const TQMap<TQString,TQString> &metaData )
    {
-      QMap<QString,QString>::ConstIterator it;
+      TQMap<TQString,TQString>::ConstIterator it;
       for( it = metaData.begin();
            it !=  metaData.end();
            ++it)

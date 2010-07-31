@@ -21,18 +21,18 @@
 #define KMINSTANCEPAGE_H
 
 #include "kmprinterpage.h"
-#include <qvaluelist.h>
-#include <qwidget.h>
+#include <tqvaluelist.h>
+#include <tqwidget.h>
 
 class KListBox;
 class KMPrinter;
 class QButton;
 
-class KMInstancePage : public QWidget, public KMPrinterPage
+class KMInstancePage : public TQWidget, public KMPrinterPage
 {
 	Q_OBJECT
 public:
-	KMInstancePage(QWidget *parent = 0, const char *name = 0);
+	KMInstancePage(TQWidget *parent = 0, const char *name = 0);
 	~KMInstancePage();
 
 	void setPrinter(KMPrinter*);
@@ -47,11 +47,11 @@ protected slots:
 
 protected:
 	void initActions();
-	void addButton(const QString& text, const QString& pixmap, const char *receiver);
+	void addButton(const TQString& text, const TQString& pixmap, const char *receiver);
 
 private:
 	KListBox		*m_view;
-	QValueList<QButton*>	m_buttons;
+	TQValueList<TQButton*>	m_buttons;
 	KMPrinter		*m_printer;
 };
 

@@ -21,16 +21,16 @@
 #include "kdockwidget_p.h"
 #include "kdockwidget_private.h"
 
-#include <qpainter.h>
-#include <qcursor.h>
+#include <tqpainter.h>
+#include <tqcursor.h>
 #include <kdebug.h>
-#include <qtimer.h>
-#include <qapplication.h>
+#include <tqtimer.h>
+#include <tqapplication.h>
 
 #include <math.h> // need ceil
 
-KDockSplitter::KDockSplitter(QWidget *parent, const char *name, Orientation orient, int pos)
-: QWidget(parent, name)
+KDockSplitter::KDockSplitter(TQWidget *parent, const char *name, Orientation orient, int pos)
+: TQWidget(parent, name)
 {
   m_dontRecalc=false;
   divider = 0L;
@@ -48,7 +48,7 @@ KDockSplitter::KDockSplitter(QWidget *parent, const char *name, Orientation orie
   initialised = false;
 }
 
-void KDockSplitter::activate(QWidget *c0, QWidget *c1)
+void KDockSplitter::activate(TQWidget *c0, TQWidget *c1)
 {
   if ( c0 ) child0 = c0;
   if ( c1 ) child1 = c1;
@@ -56,15 +56,15 @@ void KDockSplitter::activate(QWidget *c0, QWidget *c1)
   setupMinMaxSize();
 
   if (divider) delete divider;
-  divider = new QFrame(this, "pannerdivider");
-  divider->setFrameStyle(QFrame::Panel | QFrame::Raised);
+  divider = new TQFrame(this, "pannerdivider");
+  divider->setFrameStyle(TQFrame::Panel | TQFrame::Raised);
   divider->setLineWidth(1);
   divider->raise();
 
   if (m_orientation == Horizontal)
-    divider->setCursor(QCursor(sizeVerCursor));
+    divider->setCursor(TQCursor(sizeVerCursor));
   else
-    divider->setCursor(QCursor(sizeHorCursor));
+    divider->setCursor(TQCursor(sizeHorCursor));
   divider->installEventFilter(this);
 
   initialised= true;
@@ -236,7 +236,7 @@ int KDockSplitter::separatorPos() const
   return xpos;
 }
 
-void KDockSplitter::resizeEvent(QResizeEvent *ev)
+void KDockSplitter::resizeEvent(TQResizeEvent *ev)
 {
   //
   // As already stated in the .h file we always have to differentiate
@@ -439,7 +439,7 @@ void KDockSplitter::resizeEvent(QResizeEvent *ev)
   }
 }
 
-int KDockSplitter::checkValueOverlapped(int position, QWidget *overlappingWidget) const
+int KDockSplitter::checkValueOverlapped(int position, TQWidget *overlappingWidget) const
 {
   if (initialised) {
     if (m_orientation == Vertical) {
@@ -489,14 +489,14 @@ int KDockSplitter::checkValue( int position ) const
   return position;
 }
 
-bool KDockSplitter::eventFilter(QObject *o, QEvent *e)
+bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
 {
-  QMouseEvent *mev;
+  TQMouseEvent *mev;
   bool handled = false;
 
   switch (e->type()) {
-    case QEvent::MouseMove:
-      mev= (QMouseEvent*)e;
+    case TQEvent::MouseMove:
+      mev= (TQMouseEvent*)e;
       child0->setUpdatesEnabled(mOpaqueResize);
       child1->setUpdatesEnabled(mOpaqueResize);
       if (m_orientation == Horizontal) {
@@ -522,7 +522,7 @@ bool KDockSplitter::eventFilter(QObject *o, QEvent *e)
           handled=true; break;
         }
         if (!mOpaqueResize) {
-          int position = checkValue( mapFromGlobal(QCursor::pos()).x() );
+          int position = checkValue( mapFromGlobal(TQCursor::pos()).x() );
           divider->move( position, 0 );
         } else {
           int tmp_xpos = factor * checkValue( mapFromGlobal( mev->globalPos()).x() ) / width();
@@ -535,10 +535,10 @@ bool KDockSplitter::eventFilter(QObject *o, QEvent *e)
       }
       handled= true;
       break;
-    case QEvent::MouseButtonRelease:
+    case TQEvent::MouseButtonRelease:
       child0->setUpdatesEnabled(true);
       child1->setUpdatesEnabled(true);
-      mev= (QMouseEvent*)e;
+      mev= (TQMouseEvent*)e;
       if (m_orientation == Horizontal){
         if ((fixedHeight0!=-1) || (fixedHeight1!=-1))
         {
@@ -561,21 +561,21 @@ bool KDockSplitter::eventFilter(QObject *o, QEvent *e)
     default:
       break;
   }
-  return (handled) ? true : QWidget::eventFilter( o, e );
+  return (handled) ? true : TQWidget::eventFilter( o, e );
 }
 
-bool KDockSplitter::event( QEvent* e )
+bool KDockSplitter::event( TQEvent* e )
 {
-  if ( e->type() == QEvent::LayoutHint ){
+  if ( e->type() == TQEvent::LayoutHint ){
     // change children min/max size. This is needed, otherwise
     // it is possible the divider get's out of bounds.
     setupMinMaxSize();
     resizeEvent(0);
   }
-  return QWidget::event(e);
+  return TQWidget::event(e);
 }
 
-QWidget* KDockSplitter::getAnother( QWidget* w ) const
+TQWidget* KDockSplitter::getAnother( TQWidget* w ) const
 {
   return ( w == child0 ) ? child1 : child0;
 }
@@ -584,7 +584,7 @@ void KDockSplitter::updateName()
 {
   if ( !initialised ) return;
 
-  QString new_name = QString( child0->name() ) + "," + child1->name();
+  TQString new_name = TQString( child0->name() ) + "," + child1->name();
   parentWidget()->setName( new_name.latin1() );
   parentWidget()->setCaption( child0->caption() + "," + child1->caption() );
   parentWidget()->repaint( false );
@@ -593,7 +593,7 @@ void KDockSplitter::updateName()
   ((KDockWidget*)parentWidget())->lastName = child1->name();
   ((KDockWidget*)parentWidget())->splitterOrientation = m_orientation;
 
-  QWidget* p = parentWidget()->parentWidget();
+  TQWidget* p = parentWidget()->parentWidget();
   if ( p && p->inherits("KDockSplitter" ) )
     ((KDockSplitter*)p)->updateName();
 }
@@ -621,8 +621,8 @@ bool KDockSplitter::keepSize() const
 
 
 /*************************************************************************/
-KDockButton_Private::KDockButton_Private( QWidget *parent, const char * name )
-:QPushButton( parent, name )
+KDockButton_Private::KDockButton_Private( TQWidget *parent, const char * name )
+:TQPushButton( parent, name )
 {
   moveMouse = false;
   setFocusPolicy( NoFocus );
@@ -632,9 +632,9 @@ KDockButton_Private::~KDockButton_Private()
 {
 }
 
-void KDockButton_Private::drawButton( QPainter* p )
+void KDockButton_Private::drawButton( TQPainter* p )
 {
-  p->fillRect( 0,0, width(), height(), QBrush(colorGroup().brush(QColorGroup::Background)) );
+  p->fillRect( 0,0, width(), height(), TQBrush(colorGroup().brush(TQColorGroup::Background)) );
   p->drawPixmap( (width() - pixmap()->width()) / 2, (height() - pixmap()->height()) / 2, *pixmap() );
   if ( moveMouse && !isDown() ){
     p->setPen( white );
@@ -658,13 +658,13 @@ void KDockButton_Private::drawButton( QPainter* p )
   }
 }
 
-void KDockButton_Private::enterEvent( QEvent * )
+void KDockButton_Private::enterEvent( TQEvent * )
 {
   moveMouse = true;
   repaint();
 }
 
-void KDockButton_Private::leaveEvent( QEvent * )
+void KDockButton_Private::leaveEvent( TQEvent * )
 {
   moveMouse = false;
   repaint();
@@ -672,7 +672,7 @@ void KDockButton_Private::leaveEvent( QEvent * )
 
 /*************************************************************************/
 KDockWidgetPrivate::KDockWidgetPrivate()
-  : QObject()
+  : TQObject()
   ,index(-1)
   ,splitPosInPercent(50)
   ,pendingFocusInEvent(false)
@@ -697,11 +697,11 @@ KDockWidgetPrivate::~KDockWidgetPrivate()
 {
 }
 
-void KDockWidgetPrivate::slotFocusEmbeddedWidget(QWidget* w)
+void KDockWidgetPrivate::slotFocusEmbeddedWidget(TQWidget* w)
 {
    if (w) {
-      QWidget* embeddedWdg = ((KDockWidget*)w)->getWidget();
-      if (embeddedWdg && ((embeddedWdg->focusPolicy() == QWidget::ClickFocus) || (embeddedWdg->focusPolicy() == QWidget::StrongFocus))) {
+      TQWidget* embeddedWdg = ((KDockWidget*)w)->getWidget();
+      if (embeddedWdg && ((embeddedWdg->focusPolicy() == TQWidget::ClickFocus) || (embeddedWdg->focusPolicy() == TQWidget::StrongFocus))) {
          embeddedWdg->setFocus();
       }
    }

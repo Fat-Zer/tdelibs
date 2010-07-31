@@ -19,30 +19,30 @@
 
 #include "messagewindow.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtimer.h>
-#include <qpixmap.h>
-#include <qhbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqtimer.h>
+#include <tqpixmap.h>
+#include <tqhbox.h>
 #include <kiconloader.h>
 #include <kapplication.h>
 #include <kdebug.h>
 
-QPtrDict<MessageWindow> MessageWindow::m_windows;
+TQPtrDict<MessageWindow> MessageWindow::m_windows;
 
-MessageWindow::MessageWindow( const QString& txt, int delay, QWidget *parent, const char *name )
-	: QWidget( parent, name, WStyle_Customize|WStyle_NoBorder|WShowModal|WType_Dialog|WDestructiveClose )
+MessageWindow::MessageWindow( const TQString& txt, int delay, TQWidget *parent, const char *name )
+	: TQWidget( parent, name, WStyle_Customize|WStyle_NoBorder|WShowModal|WType_Dialog|WDestructiveClose )
 {
-	QHBox *box = new QHBox( this );
-	box->setFrameStyle( QFrame::Panel|QFrame::Raised );
+	TQHBox *box = new TQHBox( this );
+	box->setFrameStyle( TQFrame::Panel|TQFrame::Raised );
 	box->setLineWidth( 1 );
 	box->setSpacing( 10 );
 	box->setMargin( 5 );
-	QLabel *pix = new QLabel( box );
+	TQLabel *pix = new TQLabel( box );
 	pix->setPixmap( DesktopIcon( "kdeprint_printer" ) );
-	m_text = new QLabel( txt, box );
+	m_text = new TQLabel( txt, box );
 
-	QHBoxLayout *l0 = new QHBoxLayout( this, 0, 0 );
+	TQHBoxLayout *l0 = new TQHBoxLayout( this, 0, 0 );
 	l0->addWidget( box );
 
 	m_windows.insert( parent, this );
@@ -50,7 +50,7 @@ MessageWindow::MessageWindow( const QString& txt, int delay, QWidget *parent, co
 	if ( delay == 0 )
 		slotTimer();
 	else
-		QTimer::singleShot( delay, this, SLOT( slotTimer() ) );
+		TQTimer::singleShot( delay, this, TQT_SLOT( slotTimer() ) );
 }
 
 MessageWindow::~MessageWindow()
@@ -60,8 +60,8 @@ MessageWindow::~MessageWindow()
 
 void MessageWindow::slotTimer()
 {
-	QSize psz = parentWidget()->size(), sz = sizeHint();
-	move( parentWidget()->mapToGlobal( QPoint( (psz.width()-sz.width())/2, (psz.height()-sz.height())/2 ) ) );
+	TQSize psz = parentWidget()->size(), sz = sizeHint();
+	move( parentWidget()->mapToGlobal( TQPoint( (psz.width()-sz.width())/2, (psz.height()-sz.height())/2 ) ) );
 	if ( !isVisible() )
 	{
 		show();
@@ -69,17 +69,17 @@ void MessageWindow::slotTimer()
 	}
 }
 
-QString MessageWindow::text() const
+TQString MessageWindow::text() const
 {
 	return m_text->text();
 }
 
-void MessageWindow::setText( const QString& txt )
+void MessageWindow::setText( const TQString& txt )
 {
 	m_text->setText( txt );
 }
 
-void MessageWindow::add( QWidget *parent, const QString& txt, int delay )
+void MessageWindow::add( TQWidget *parent, const TQString& txt, int delay )
 {
 	if ( !parent )
 		kdWarning( 500 ) << "Cannot add a message window to a null parent" << endl;
@@ -93,13 +93,13 @@ void MessageWindow::add( QWidget *parent, const QString& txt, int delay )
 	}
 }
 
-void MessageWindow::remove( QWidget *parent )
+void MessageWindow::remove( TQWidget *parent )
 {
 	if ( parent )
 		delete m_windows.find( parent );
 }
 
-void MessageWindow::change( QWidget *parent, const QString& txt )
+void MessageWindow::change( TQWidget *parent, const TQString& txt )
 {
 	if ( parent )
 	{
@@ -113,7 +113,7 @@ void MessageWindow::change( QWidget *parent, const QString& txt )
 
 void MessageWindow::removeAll()
 {
-	QPtrDictIterator<MessageWindow> it( m_windows );
+	TQPtrDictIterator<MessageWindow> it( m_windows );
 	while ( it.current() )
 		delete it.current();
 }

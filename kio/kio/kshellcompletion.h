@@ -20,8 +20,8 @@
 #ifndef KSHELLCOMPLETION_H
 #define KSHELLCOMPLETION_H
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include "kurlcompletion.h"
 
@@ -51,30 +51,30 @@ public:
 	 * Finds completions to the given text.
 	 * The first match is returned and emitted in the signal match().
 	 * @param text the text to complete
-	 * @return the first match, or QString::null if not found
+	 * @return the first match, or TQString::null if not found
 	 */
-	QString makeCompletion(const QString &text);
+	TQString makeCompletion(const TQString &text);
 
 protected:
 	// Called by KCompletion
-	void postProcessMatch( QString *match ) const;
-	void postProcessMatches( QStringList *matches ) const;
+	void postProcessMatch( TQString *match ) const;
+	void postProcessMatches( TQStringList *matches ) const;
         void postProcessMatches( KCompletionMatches *matches ) const;
 
 private:
 	// Find the part of text that should be completed
-	void splitText(const QString &text, QString &text_start, QString &text_compl) const;
+	void splitText(const TQString &text, TQString &text_start, TQString &text_compl) const;
 	// Insert quotes and neseccary escapes
-	bool quoteText(QString *text, bool force, bool skip_last) const;
-	QString unquote(const QString &text) const;
+	bool quoteText(TQString *text, bool force, bool skip_last) const;
+	TQString unquote(const TQString &text) const;
 		                                                                        
-	QString m_text_start; // part of the text that was not completed
-	QString m_text_compl; // part of the text that was completed (unchanged)
+	TQString m_text_start; // part of the text that was not completed
+	TQString m_text_compl; // part of the text that was completed (unchanged)
 
-    QChar m_word_break_char;
-	QChar m_quote_char1;
-	QChar m_quote_char2;
-	QChar m_escape_char;  
+    TQChar m_word_break_char;
+	TQChar m_quote_char1;
+	TQChar m_quote_char2;
+	TQChar m_escape_char;  
 				
 protected:
 	virtual void virtual_hook( int id, void* data );

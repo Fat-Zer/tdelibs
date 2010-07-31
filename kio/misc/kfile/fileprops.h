@@ -19,55 +19,55 @@
 #ifndef KFILEPROPS_H
 #define KFILEPROPS_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kfilemetainfo.h>
 
 class FileProps
 {
 public:
-    FileProps( const QString& path, const QStringList& suppliedGroups );
+    FileProps( const TQString& path, const TQStringList& suppliedGroups );
     virtual ~FileProps();
 
     bool isValid() const;
 
-    QString fileName() const { return m_info->path(); }
+    TQString fileName() const { return m_info->path(); }
     
-    QStringList supportedGroups() const;
-    QStringList availableGroups() const;
-    QStringList translatedGroups();
+    TQStringList supportedGroups() const;
+    TQStringList availableGroups() const;
+    TQStringList translatedGroups();
 
-    const QStringList& groupsToUse() const { return m_groupsToUse; }
+    const TQStringList& groupsToUse() const { return m_groupsToUse; }
     bool userSuppliedGroups() const { return m_userSuppliedGroups; }
 
-    QStringList supportedKeys( const QString& group ) const;
-    QStringList availableKeys( const QString& group ) const;
-    QStringList preferredKeys( const QString& group ) const;
+    TQStringList supportedKeys( const TQString& group ) const;
+    TQStringList availableKeys( const TQString& group ) const;
+    TQStringList preferredKeys( const TQString& group ) const;
 
-    QStringList supportedKeys() const { return m_info->supportedKeys(); }
-    QStringList preferredKeys() const { return m_info->preferredKeys(); }
+    TQStringList supportedKeys() const { return m_info->supportedKeys(); }
+    TQStringList preferredKeys() const { return m_info->preferredKeys(); }
 
-    QString getValue( const QString& group, const QString& key ) const;
-    bool setValue( const QString& group,
-                   const QString& key, const QString &value );
+    TQString getValue( const TQString& group, const TQString& key ) const;
+    bool setValue( const TQString& group,
+                   const TQString& key, const TQString &value );
 
-    QStringList allValues( const QString& group ) const;
-    QStringList preferredValues( const QString& group ) const;
+    TQStringList allValues( const TQString& group ) const;
+    TQStringList preferredValues( const TQString& group ) const;
 
-    bool isReadOnly( const QString& group, const QString& key );
+    bool isReadOnly( const TQString& group, const TQString& key );
 
 private:
-    static QString createKeyValue( const KFileMetaInfoGroup& g,
-                                   const QString& key );
-    static QStringList createKeyValueList( const KFileMetaInfoGroup&,
-                                           const QStringList& );
+    static TQString createKeyValue( const KFileMetaInfoGroup& g,
+                                   const TQString& key );
+    static TQStringList createKeyValueList( const KFileMetaInfoGroup&,
+                                           const TQStringList& );
     bool sync();
 
     KFileMetaInfo *m_info;
     bool m_dirty;
     bool m_userSuppliedGroups;
 
-    QStringList m_groupsToUse;
+    TQStringList m_groupsToUse;
 
 };
 

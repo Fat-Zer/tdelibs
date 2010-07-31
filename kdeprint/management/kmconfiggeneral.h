@@ -30,14 +30,14 @@ class KMConfigGeneral : public KMConfigPage
 {
 	Q_OBJECT
 public:
-	KMConfigGeneral(QWidget *parent = 0);
+	KMConfigGeneral(TQWidget *parent = 0);
 
 	void loadConfig(KConfig*);
 	void saveConfig(KConfig*);
 
 protected slots:
 	void slotTestPagePreview();
-        void testPageChanged(const QString & );
+        void testPageChanged(const TQString & );
 	void setEnabledPreviewButton(bool b);
 private:
 	KIntNumInput	*m_timer;

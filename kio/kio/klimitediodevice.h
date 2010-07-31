@@ -20,7 +20,7 @@
 #define klimitediodevice_h
 
 #include <kdebug.h>
-#include <qiodevice.h>
+#include <tqiodevice.h>
 /**
  * A readonly device that reads from an underlying device
  * from a given point to another (e.g. to give access to a single
@@ -38,7 +38,7 @@ public:
      * @param start where to start reading (position in bytes)
      * @param length the length of the data to read (in bytes)
      */
-    KLimitedIODevice( QIODevice *dev, int start, int length )
+    KLimitedIODevice( TQIODevice *dev, int start, int length )
         : m_dev( dev ), m_start( start ), m_length( length )
     {
         //kdDebug(7005) << "KLimitedIODevice::KLimitedIODevice start=" << start << " length=" << length << endl;
@@ -93,7 +93,7 @@ public:
     }
     virtual bool atEnd() const { return m_dev->atEnd() || m_dev->at() >= m_start + m_length; }
 private:
-    QIODevice* m_dev;
+    TQIODevice* m_dev;
     Q_ULONG m_start;
     Q_ULONG m_length;
 };

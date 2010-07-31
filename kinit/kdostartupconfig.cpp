@@ -26,20 +26,20 @@ DEALINGS IN THE SOFTWARE.
 
 // See description in kstartupconfig.cpp .
 
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 #include <kinstance.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <kdebug.h>
 
-QString get_entry( QString* ll )
+TQString get_entry( TQString* ll )
     {
-    QString& l = *ll;
+    TQString& l = *ll;
     l = l.stripWhiteSpace();
     if( l.isEmpty())
-        return QString::null;
-    QString ret;
+        return TQString::null;
+    TQString ret;
     if( l[ 0 ] == '\'' )
         {
         unsigned int pos = 1;
@@ -47,8 +47,8 @@ QString get_entry( QString* ll )
             ret += l[ pos++ ];
         if( pos >= l.length())
             {
-            *ll = QString::null;
-            return QString::null;
+            *ll = TQString::null;
+            return TQString::null;
             }
         *ll = l.mid( pos + 1 );
         return ret;
@@ -64,29 +64,29 @@ int main()
     {
     KInstance inst( "kdostartupconfig" );
     kdDebug() << "Running kdostartupconfig." << endl;
-    QString keysname = locateLocal( "config", "startupconfigkeys" );
-    QFile keys( keysname );
+    TQString keysname = locateLocal( "config", "startupconfigkeys" );
+    TQFile keys( keysname );
     if( !keys.open( IO_ReadOnly ))
         return 3;
-    QFile f1( locateLocal( "config", "startupconfig" ));
+    TQFile f1( locateLocal( "config", "startupconfig" ));
     if( !f1.open( IO_WriteOnly ))
         return 4;
-    QFile f2( locateLocal( "config", "startupconfigfiles" ));
+    TQFile f2( locateLocal( "config", "startupconfigfiles" ));
     if( !f2.open( IO_WriteOnly ))
         return 5;
-    QTextStream startupconfig( &f1 );
-    QTextStream startupconfigfiles( &f2 );
+    TQTextStream startupconfig( &f1 );
+    TQTextStream startupconfigfiles( &f2 );
     startupconfig << "#! /bin/sh\n";
     for(;;)
         {
-        QString line;
+        TQString line;
         if( keys.readLine( line, 1024 ) < 0 )
             break;
         line = line.stripWhiteSpace();
         if( line.isEmpty())
             break;
-        QString tmp = line;
-        QString file, group, key, def;
+        TQString tmp = line;
+        TQString file, group, key, def;
         file = get_entry( &tmp );
         group = get_entry( &tmp );
         key = get_entry( &tmp );
@@ -97,14 +97,14 @@ int main()
             { // whole config group
             KConfig cfg( file );
             group = group.mid( 1, group.length() - 2 );
-            QMap< QString, QString > entries = cfg.entryMap( group );
+            TQMap< TQString, TQString > entries = cfg.entryMap( group );
             startupconfig << "# " << line << "\n";
-            for( QMap< QString, QString >::ConstIterator it = entries.begin();
+            for( TQMap< TQString, TQString >::ConstIterator it = entries.begin();
                  it != entries.end();
                  ++it )
                 {
-                QString key = it.key();
-                QString value = *it;
+                TQString key = it.key();
+                TQString value = *it;
                 startupconfig << file.replace( ' ', '_' ).lower()
                     << "_" << group.replace( ' ', '_' ).lower()
                     << "_" << key.replace( ' ', '_' ).lower()
@@ -117,7 +117,7 @@ int main()
                 return 7;
             KConfig cfg( file );
             cfg.setGroup( group );
-            QString value = cfg.readEntry( key, def );
+            TQString value = cfg.readEntry( key, def );
             startupconfig << "# " << line << "\n";
             startupconfig << file.replace( ' ', '_' ).lower()
                 << "_" << group.replace( ' ', '_' ).lower()
@@ -126,12 +126,12 @@ int main()
             }
         startupconfigfiles << line << endl;
         // use even currently non-existing paths in $KDEDIRS
-        QStringList dirs = QStringList::split( KPATH_SEPARATOR, KGlobal::dirs()->kfsstnd_prefixes());
-        for( QStringList::ConstIterator it = dirs.begin();
+        TQStringList dirs = TQStringList::split( KPATH_SEPARATOR, KGlobal::dirs()->kfsstnd_prefixes());
+        for( TQStringList::ConstIterator it = dirs.begin();
              it != dirs.end();
              ++it )
             {
-            QString cfg = *it + "share/config/" + file;
+            TQString cfg = *it + "share/config/" + file;
             if( KStandardDirs::exists( cfg ))
                 startupconfigfiles << cfg << "\n";
             else

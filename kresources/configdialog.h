@@ -37,7 +37,7 @@ class KRESOURCES_EXPORT ConfigDialog : public KDialogBase
     Q_OBJECT
   public:
     // Resource=0: create new resource
-    ConfigDialog( QWidget *parent, const QString& resourceFamily,
+    ConfigDialog( TQWidget *parent, const TQString& resourceFamily,
 	          Resource* resource, const char *name = 0);
 
     void setInEditMode( bool value );
@@ -45,14 +45,14 @@ class KRESOURCES_EXPORT ConfigDialog : public KDialogBase
   protected slots:
     void accept();
     void setReadOnly( bool value );
-    void slotNameChanged( const QString &text);
+    void slotNameChanged( const TQString &text);
 
   private:
     ConfigWidget *mConfigWidget;
     Resource* mResource;
 
     KLineEdit *mName;
-    QCheckBox *mReadOnly;
+    TQCheckBox *mReadOnly;
 };
 
 }

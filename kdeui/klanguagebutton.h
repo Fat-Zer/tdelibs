@@ -27,7 +27,7 @@
 #ifndef __KLANGBUTTON_H__
 #define __KLANGBUTTON_H__
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kdelibs_export.h>
 
@@ -55,7 +55,7 @@ public:
    * @param parent The parent of the combo box
    * @param name The name of the combo box
    */
-  KLanguageButton(QWidget * parent = 0, const char * name = 0);
+  KLanguageButton(TQWidget * parent = 0, const char * name = 0);
   
   /**
    * Constructs a version with static text. The parent parent is called name.
@@ -64,7 +64,7 @@ public:
    * @param parent The parent of the button
    * @param name The name of the button
    */
-  KLanguageButton(const QString & text, QWidget * parent = 0, const char * name = 0);
+  KLanguageButton(const TQString & text, TQWidget * parent = 0, const char * name = 0);
   
   /**
    * Deconstructor
@@ -80,8 +80,8 @@ public:
    * @param submenu The place where the item should be placed.
    * @param index The visual position in the submenu.
    */
-  void insertItem( const QIconSet& icon, const QString &text,
-                   const QString & id, const QString &submenu = QString::null,
+  void insertItem( const TQIconSet& icon, const TQString &text,
+                   const TQString & id, const TQString &submenu = TQString::null,
                    int index = -1 );
   /**
    * Inserts an item into the combo box. A negative index will append the item.
@@ -91,15 +91,15 @@ public:
    * @param submenu The place where the item should be placed.
    * @param index The visual position in the submenu.
    */
-  void insertItem( const QString &text, const QString & id,
-                   const QString &submenu = QString::null, int index = -1 );
+  void insertItem( const TQString &text, const TQString & id,
+                   const TQString &submenu = TQString::null, int index = -1 );
   /**
    * Inserts a seperator item into the combo box. A negative index will append the item.
    *
    * @param submenu The place where the item should be placed.
    * @param index The visual position in the submenu.
    */
-  void insertSeparator( const QString &submenu = QString::null,
+  void insertSeparator( const TQString &submenu = TQString::null,
                         int index = -1 );
   /**
    * Inserts a submenu into the combo box. A negative index will append the item.
@@ -110,8 +110,8 @@ public:
    * @param submenu The place where the item should be placed.
    * @param index The visual position in the submenu.
    */
-  void insertSubmenu( const QIconSet & icon, const QString &text,
-                      const QString & id, const QString &submenu = QString::null,
+  void insertSubmenu( const TQIconSet & icon, const TQString &text,
+                      const TQString & id, const TQString &submenu = TQString::null,
                       int index = -1);
   /**
    * Inserts a submenu into the combo box. A negative index will append the item.
@@ -121,13 +121,13 @@ public:
    * @param submenu The place where the item should be placed.
    * @param index The visual position in the submenu.
    */
-  void insertSubmenu( const QString &text, const QString & id,
-                      const QString &submenu = QString::null, int index = -1);
+  void insertSubmenu( const TQString &text, const TQString & id,
+                      const TQString &submenu = TQString::null, int index = -1);
 
 
-  void insertLanguage( const QString& path, const QString& name,
-                       const QString& sub = QString::null,
-                       const QString &submenu = QString::null, int index = -1);
+  void insertLanguage( const TQString& path, const TQString& name,
+                       const TQString& sub = TQString::null,
+                       const TQString &submenu = TQString::null, int index = -1);
 
 
   int count() const;
@@ -138,29 +138,29 @@ public:
   /**
    * Changes the current text item of the combobox, and makes the text static.
    */
-  void setText(const QString & text);
+  void setText(const TQString & text);
   /**
    * Returns the id of the combobox's current item.
    */
-  QString current() const;
+  TQString current() const;
   /**
    * Returns TRUE if the combobox contains id.
    */
-  bool contains( const QString & id ) const;
+  bool contains( const TQString & id ) const;
   /**
    * Sets id as current item.
    */
-  void setCurrentItem( const QString & id );
+  void setCurrentItem( const TQString & id );
 
-    QString id( int i ) const;
+    TQString id( int i ) const;
 
 signals:
   /**
    * This signal is emitted when a new item is activated. The id is
    * the identificator of the selected item.
    */
-  void activated( const QString & id );
-  void highlighted( const QString & id );
+  void activated( const TQString & id );
+  void highlighted( const TQString & id );
 
 private slots:
   void slotActivated( int );
@@ -172,8 +172,8 @@ private:
   void init(const char * name);
 
   // work space for the new class
-  QStringList *m_ids;
-  QPopupMenu *m_popup, *m_oldPopup;
+  TQStringList *m_ids;
+  TQPopupMenu *m_popup, *m_oldPopup;
   int m_current;
 
   KLanguageButtonPrivate * d;

@@ -2,8 +2,8 @@
 #define TESTKHTML_H
 
 #include <kdebug.h>
-#include <qvaluelist.h>
-#include <qdatetime.h>
+#include <tqvaluelist.h>
+#include <tqdatetime.h>
 
 /**
  * @internal
@@ -12,7 +12,7 @@ class Dummy : public QObject
 {
   Q_OBJECT
 public:
-  Dummy( KHTMLPart *part ) : QObject( part ) { m_part = part; };
+  Dummy( KHTMLPart *part ) : TQObject( part ) { m_part = part; };
 
 private slots:
   void slotOpenURL( const KURL &url, const KParts::URLArgs &args )
@@ -44,10 +44,10 @@ private slots:
 
 private:
   KHTMLPart *m_part;
-  QValueList<QString> filesToBenchmark;
-  QMap<QString, QValueList<int> > results;
+  TQValueList<TQString> filesToBenchmark;
+  TQMap<TQString, TQValueList<int> > results;
   int                 benchmarkRun;
-  QTime               loadTimer;
+  TQTime               loadTimer;
 
   void nextRun();
 };

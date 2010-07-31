@@ -23,7 +23,7 @@
 
 #include <klocale.h>
 
-KMLpdUnixUiManager::KMLpdUnixUiManager(QObject *parent, const char *name, const QStringList & /*args*/)
+KMLpdUnixUiManager::KMLpdUnixUiManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMUiManager(parent,name)
 {
 	m_printdialogflags |= KMUiManager::PrintCommand;

@@ -26,7 +26,7 @@
 #include <iostream>
 using namespace std;
 
-#include <qmetaobject.h>
+#include <tqmetaobject.h>
 
 #include "tester.h"
 
@@ -38,23 +38,23 @@ namespace KUnitTest
         m_total = m_results;
     }
 
-    void SlotTester::invokeMember(const QString &str)
+    void SlotTester::invokeMember(const TQString &str)
     {
-        QString slotname = QString::number(QSLOT_CODE) + str;
-        connect(this, SIGNAL(invoke()), this, slotname.ascii());
+        TQString slotname = TQString::number(QSLOT_CODE) + str;
+        connect(this, TQT_SIGNAL(invoke()), this, slotname.ascii());
         emit invoke();
-        disconnect(this, SIGNAL(invoke()), this, slotname.ascii());
+        disconnect(this, TQT_SIGNAL(invoke()), this, slotname.ascii());
     }
     
     void SlotTester::allTests()
     {
-        QStrList allSlots = metaObject()->slotNames();
+        TQStrList allSlots = metaObject()->slotNames();
         
         if ( allSlots.contains("setUp()") > 0 ) invokeMember("setUp()");
 
         for ( char *sl = allSlots.first(); sl; sl = allSlots.next() ) 
         {
-            QString str = sl;
+            TQString str = sl;
            
             if ( str.startsWith("test") )
             {
@@ -80,17 +80,17 @@ namespace KUnitTest
     }
 }
 
-QTextStream& operator<<( QTextStream& str, const QRect& r ) {
+TQTextStream& operator<<( TQTextStream& str, const TQRect& r ) {
     str << "[" << r.x() << "," << r.y() << " - " << r.width() << "x" << r.height() << "]";
     return str;
 }
 
-QTextStream& operator<<( QTextStream& str, const QPoint& r ) {
+TQTextStream& operator<<( TQTextStream& str, const TQPoint& r ) {
     str << "(" << r.x() << "," << r.y() << ")";
     return str;
 }
 
-QTextStream& operator<<( QTextStream& str, const QSize& r ) {
+TQTextStream& operator<<( TQTextStream& str, const TQSize& r ) {
     str << "[" << r.width() << "x" << r.height() << "]";
     return str;
 }

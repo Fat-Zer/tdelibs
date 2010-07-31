@@ -22,8 +22,8 @@
 
 #include <assert.h>
 
-#include <qstringlist.h>
-#include <qvaluevector.h>
+#include <tqstringlist.h>
+#include <tqvaluevector.h>
 
 #include "ksycocafactory.h"
 #include "kmimetype.h"
@@ -56,26 +56,26 @@ public:
   /**
    * Not meant to be called at this level
    */
-  virtual KSycocaEntry *createEntry(const QString &, const char *)
+  virtual KSycocaEntry *createEntry(const TQString &, const char *)
     { assert(0); return 0; }
 
   /**
    * Find a service type in the database file (allocates it)
    * Overloaded by KBuildServiceTypeFactory to return a memory one.
    */
-  virtual KServiceType * findServiceTypeByName(const QString &_name);
+  virtual KServiceType * findServiceTypeByName(const TQString &_name);
 
   /**
    * Find a the property type of a named property.
    */
-  QVariant::Type findPropertyTypeByName(const QString &_name);
+  TQVariant::Type findPropertyTypeByName(const TQString &_name);
 
   /**
    * Find a mimetype from a filename (using the pattern list)
    * @param _filename filename to check.
    * @param match if provided, returns the pattern that matched.
    */
-  KMimeType * findFromPattern(const QString &_filename, QString *match = 0);
+  KMimeType * findFromPattern(const TQString &_filename, TQString *match = 0);
 
   /**
    * @return all mimetypes
@@ -109,11 +109,11 @@ private:
 protected:
   int m_fastPatternOffset;
   int m_otherPatternOffset;
-  QMap<QString,int> m_propertyTypeDict;
+  TQMap<TQString,int> m_propertyTypeDict;
 
 private:
-  QStringList m_patterns;
-  QValueVector<Q_INT32> m_pattern_offsets;
+  TQStringList m_patterns;
+  TQValueVector<Q_INT32> m_pattern_offsets;
 protected:
   virtual void virtual_hook( int id, void* data );
 private:

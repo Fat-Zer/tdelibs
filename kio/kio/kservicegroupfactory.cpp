@@ -22,7 +22,7 @@
 #include "ksycocadict.h"
 #include "kservice.h"
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -66,7 +66,7 @@ KServiceGroupFactory * KServiceGroupFactory::self()
   return _self;
 }
 
-KServiceGroup * KServiceGroupFactory::findGroupByDesktopPath(const QString &_name, bool deep)
+KServiceGroup * KServiceGroupFactory::findGroupByDesktopPath(const TQString &_name, bool deep)
 {
    if (!m_sycocaDict) return 0; // Error!
 
@@ -89,7 +89,7 @@ KServiceGroup * KServiceGroupFactory::findGroupByDesktopPath(const QString &_nam
    return newGroup;
 }
 
-KServiceGroup * KServiceGroupFactory::findBaseGroup(const QString &_baseGroupName, bool deep)
+KServiceGroup * KServiceGroupFactory::findBaseGroup(const TQString &_baseGroupName, bool deep)
 {
    if (!m_baseGroupDict) return 0; // Error!
 
@@ -116,7 +116,7 @@ KServiceGroup* KServiceGroupFactory::createGroup(int offset, bool deep)
 {
    KServiceGroup * newEntry = 0L;
    KSycocaType type;
-   QDataStream *str = KSycoca::self()->findEntry(offset, type);
+   TQDataStream *str = KSycoca::self()->findEntry(offset, type);
    switch(type)
    {
      case KST_KServiceGroup:
@@ -124,7 +124,7 @@ KServiceGroup* KServiceGroupFactory::createGroup(int offset, bool deep)
         break;
 
      default:
-        kdError(7011) << QString("KServiceGroupFactory: unexpected object entry in KSycoca database (type = %1)").arg((int)type) << endl;
+        kdError(7011) << TQString("KServiceGroupFactory: unexpected object entry in KSycoca database (type = %1)").arg((int)type) << endl;
         return 0;
    }
    if (!newEntry->isValid())

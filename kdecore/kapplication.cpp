@@ -21,28 +21,28 @@
 #include "config.h"
 
 #undef QT_NO_TRANSLATION
-#include <qtranslator.h>
+#include <tqtranslator.h>
 #define QT_NO_TRANSLATION
-#include <qdir.h>
-#include <qptrcollection.h>
-#include <qwidgetlist.h>
-#include <qstrlist.h>
-#include <qfile.h>
-#include <qmessagebox.h>
-#include <qtextstream.h>
-#include <qregexp.h>
-#include <qlineedit.h>
-#include <qtextedit.h>
-#include <qsessionmanager.h>
-#include <qptrlist.h>
-#include <qtimer.h>
-#include <qstylesheet.h>
-#include <qpixmapcache.h>
-#include <qtooltip.h>
-#include <qstylefactory.h>
-#include <qmetaobject.h>
+#include <tqdir.h>
+#include <tqptrcollection.h>
+#include <tqwidgetlist.h>
+#include <tqstrlist.h>
+#include <tqfile.h>
+#include <tqmessagebox.h>
+#include <tqtextstream.h>
+#include <tqregexp.h>
+#include <tqlineedit.h>
+#include <tqtextedit.h>
+#include <tqsessionmanager.h>
+#include <tqptrlist.h>
+#include <tqtimer.h>
+#include <tqstylesheet.h>
+#include <tqpixmapcache.h>
+#include <tqtooltip.h>
+#include <tqstylefactory.h>
+#include <tqmetaobject.h>
 #ifndef QT_NO_SQL
-#include <qsqlpropertymap.h>
+#include <tqsqlpropertymap.h>
 #endif
 
 #undef QT_NO_TRANSLATION
@@ -67,7 +67,7 @@
 #include <kstdaccel.h>
 #include <kaccel.h>
 #include "kcheckaccelerators.h"
-#include <qptrdict.h>
+#include <tqptrdict.h>
 #include <kmacroexpander.h>
 #include <kshell.h>
 #include <kprotocolinfo.h>
@@ -143,7 +143,7 @@ typedef void* IceIOErrorHandler;
 
 #ifdef Q_WS_MACX
 #include <Carbon/Carbon.h>
-#include <qimage.h>
+#include <tqimage.h>
 #endif
 
 #include "kappdcopiface.h"
@@ -170,7 +170,7 @@ static Atom kde_xdnd_drop;
 // replaced by unpatched one
 KDECORE_EXPORT bool qt_qclipboard_bailout_hack = false;
 
-template class QPtrList<KSessionManaged>;
+template class TQPtrList<KSessionManaged>;
 
 #ifdef Q_WS_X11
 extern "C" {
@@ -213,7 +213,7 @@ public:
 	refCount( 1 ),
 	oldIceIOErrorHandler( 0 ),
 	checkAccelerators( 0 ),
-	overrideStyle( QString::null ),
+	overrideStyle( TQString::null ),
 	startup_id( "0" ),
 	app_started_timer( NULL ),
 	m_KAppDCOPInterface( 0L ),
@@ -246,10 +246,10 @@ public:
   int refCount;
   IceIOErrorHandler oldIceIOErrorHandler;
   KCheckAccelerators* checkAccelerators;
-  QString overrideStyle;
-  QString geometry_arg;
-  QCString startup_id;
-  QTimer* app_started_timer;
+  TQString overrideStyle;
+  TQString geometry_arg;
+  TQCString startup_id;
+  TQTimer* app_started_timer;
   KAppDCOPInterface *m_KAppDCOPInterface;
   bool session_save;
 #ifdef Q_WS_X11
@@ -275,9 +275,9 @@ public:
 #define checkEqual(s, b) \
         b = (s == "=");
 
-     URLActionRule(const QString &act,
-                   const QString &bProt, const QString &bHost, const QString &bPath,
-                   const QString &dProt, const QString &dHost, const QString &dPath,
+     URLActionRule(const TQString &act,
+                   const TQString &bProt, const TQString &bHost, const TQString &bPath,
+                   const TQString &dProt, const TQString &dHost, const TQString &dPath,
                    bool perm)
                    : action(act),
                      baseProt(bProt), baseHost(bHost), basePath(bPath),
@@ -294,7 +294,7 @@ public:
                       checkEqual(destHost, destHostEqual);
                    }
 
-     bool baseMatch(const KURL &url, const QString &protClass)
+     bool baseMatch(const KURL &url, const TQString &protClass)
      {
         if (baseProtWildCard)
         {
@@ -331,7 +331,7 @@ public:
         return true;
      }
 
-     bool destMatch(const KURL &url, const QString &protClass, const KURL &base, const QString &baseClass)
+     bool destMatch(const KURL &url, const TQString &protClass, const KURL &base, const TQString &baseClass)
      {
         if (destProtEqual)
         {
@@ -379,13 +379,13 @@ public:
         return true;
      }
 
-     QString action;
-     QString baseProt;
-     QString baseHost;
-     QString basePath;
-     QString destProt;
-     QString destHost;
-     QString destPath;
+     TQString action;
+     TQString baseProt;
+     TQString baseHost;
+     TQString basePath;
+     TQString destProt;
+     TQString destHost;
+     TQString destPath;
      bool baseProtWildCard : 1;
      bool baseHostWildCard : 1;
      bool basePathWildCard : 1;
@@ -396,32 +396,32 @@ public:
      bool destHostEqual    : 1;
      bool permission;
   };
-  QPtrList<URLActionRule> urlActionRestrictions;
+  TQPtrList<URLActionRule> urlActionRestrictions;
 
-    QString sessionKey;
-    QString pSessionConfigFile;
+    TQString sessionKey;
+    TQString pSessionConfigFile;
 };
 
 
-static QPtrList<QWidget>*x11Filter = 0;
+static TQPtrList<TQWidget>*x11Filter = 0;
 static bool autoDcopRegistration = true;
 
-void KApplication::installX11EventFilter( QWidget* filter )
+void KApplication::installX11EventFilter( TQWidget* filter )
 {
     if ( !filter )
         return;
     if (!x11Filter)
-        x11Filter = new QPtrList<QWidget>;
-    connect ( filter, SIGNAL( destroyed() ), this, SLOT( x11FilterDestroyed() ) );
+        x11Filter = new TQPtrList<TQWidget>;
+    connect ( filter, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( x11FilterDestroyed() ) );
     x11Filter->append( filter );
 }
 
 void KApplication::x11FilterDestroyed()
 {
-    removeX11EventFilter( static_cast< const QWidget* >( sender()));
+    removeX11EventFilter( static_cast< const TQWidget* >( sender()));
 }
 
-void KApplication::removeX11EventFilter( const QWidget* filter )
+void KApplication::removeX11EventFilter( const TQWidget* filter )
 {
     if ( !x11Filter || !filter )
         return;
@@ -438,34 +438,34 @@ void KApplication::removeX11EventFilter( const QWidget* filter )
 // in KAccelEventHandler so that the AccelOverride isn't sent twice. -- ellis, 19/10/02
 extern bool kde_g_bKillAccelOverride;
 
-bool KApplication::notify(QObject *receiver, QEvent *event)
+bool KApplication::notify(TQObject *receiver, TQEvent *event)
 {
-    QEvent::Type t = event->type();
+    TQEvent::Type t = event->type();
     if (kde_g_bKillAccelOverride)
     {
        kde_g_bKillAccelOverride = false;
        // Indicate that the accelerator has been overridden.
-       if (t == QEvent::AccelOverride)
+       if (t == TQEvent::AccelOverride)
        {
-          static_cast<QKeyEvent *>(event)->accept();
+          static_cast<TQKeyEvent *>(event)->accept();
           return true;
        }
        else
           kdWarning(125) << "kde_g_bKillAccelOverride set, but received an event other than AccelOverride." << endl;
     }
 
-    if ((t == QEvent::AccelOverride) || (t == QEvent::KeyPress))
+    if ((t == TQEvent::AccelOverride) || (t == TQEvent::KeyPress))
     {
        static const KShortcut& _selectAll = KStdAccel::selectAll();
-       QLineEdit *edit = ::qt_cast<QLineEdit *>(receiver);
+       TQLineEdit *edit = ::qt_cast<TQLineEdit *>(receiver);
        if (edit)
        {
           // We have a keypress for a lineedit...
-          QKeyEvent *kevent = static_cast<QKeyEvent *>(event);
+          TQKeyEvent *kevent = static_cast<TQKeyEvent *>(event);
           KKey key(kevent);
           if (_selectAll.contains(key))
           {
-             if (t == QEvent::KeyPress)
+             if (t == TQEvent::KeyPress)
              {
                 edit->selectAll();
                 return true;
@@ -478,11 +478,11 @@ bool KApplication::notify(QObject *receiver, QEvent *event)
           // Ctrl-U deletes from start of line.
           if (key == KKey(Qt::CTRL + Qt::Key_U))
           {
-             if (t == QEvent::KeyPress)
+             if (t == TQEvent::KeyPress)
              {
                 if (!edit->isReadOnly())
                 {
-                   QString t(edit->text());
+                   TQString t(edit->text());
                    t = t.mid(edit->cursorPosition());
                    edit->validateAndSet(t, 0, 0, 0);
                 }
@@ -495,14 +495,14 @@ bool KApplication::notify(QObject *receiver, QEvent *event)
 
           }
        }
-       QTextEdit *medit = ::qt_cast<QTextEdit *>(receiver);
+       TQTextEdit *medit = ::qt_cast<TQTextEdit *>(receiver);
        if (medit)
        {
           // We have a keypress for a multilineedit...
-          QKeyEvent *kevent = static_cast<QKeyEvent *>(event);
+          TQKeyEvent *kevent = static_cast<TQKeyEvent *>(event);
           if (_selectAll.contains(KKey(kevent)))
           {
-             if (t == QEvent::KeyPress)
+             if (t == TQEvent::KeyPress)
              {
                 medit->selectAll();
                 return true;
@@ -514,19 +514,19 @@ bool KApplication::notify(QObject *receiver, QEvent *event)
           }
        }
     }
-    if( t == QEvent::Show && receiver->isWidgetType())
+    if( t == TQEvent::Show && receiver->isWidgetType())
     {
-        QWidget* w = static_cast< QWidget* >( receiver );
+        TQWidget* w = static_cast< TQWidget* >( receiver );
 #if defined Q_WS_X11
-        if( w->isTopLevel() && !startupId().isEmpty() && !static_cast<QShowEvent*>(event)->spontaneous()) // TODO better done using window group leader?
+        if( w->isTopLevel() && !startupId().isEmpty() && !static_cast<TQShowEvent*>(event)->spontaneous()) // TODO better done using window group leader?
             KStartupInfo::setWindowStartupId( w->winId(), startupId());
 #endif
         if( w->isTopLevel() && !w->testWFlags( WX11BypassWM ) && !w->isPopup() && !event->spontaneous())
         {
             if( d->app_started_timer == NULL )
             {
-                d->app_started_timer = new QTimer( this, "app_started_timer" );
-                connect( d->app_started_timer, SIGNAL( timeout()), SLOT( checkAppStartedSlot()));
+                d->app_started_timer = new TQTimer( this, "app_started_timer" );
+                connect( d->app_started_timer, TQT_SIGNAL( timeout()), TQT_SLOT( checkAppStartedSlot()));
             }
             if( !d->app_started_timer->isActive())
                 d->app_started_timer->start( 0, true );
@@ -534,9 +534,9 @@ bool KApplication::notify(QObject *receiver, QEvent *event)
         if( w->isTopLevel() && ( w->icon() == NULL || w->icon()->isNull()))
         {
             // icon() cannot be null pixmap, it'll be the "unknown" icon - so check if there is this application icon
-            static QPixmap* ic = NULL;
+            static TQPixmap* ic = NULL;
             if( ic == NULL )
-                ic = new QPixmap( KGlobal::iconLoader()->loadIcon( iconName(),
+                ic = new TQPixmap( KGlobal::iconLoader()->loadIcon( iconName(),
                     KIcon::NoGroup, 0, KIcon::DefaultState, NULL, true ));
             if( !ic->isNull())
             {
@@ -547,7 +547,7 @@ bool KApplication::notify(QObject *receiver, QEvent *event)
             }
         }
     }
-    return QApplication::notify(receiver, event);
+    return TQApplication::notify(receiver, event);
 }
 
 void KApplication::checkAppStartedSlot()
@@ -558,11 +558,11 @@ void KApplication::checkAppStartedSlot()
 }
 
 // the help class for session management communication
-static QPtrList<KSessionManaged>* sessionClients()
+static TQPtrList<KSessionManaged>* sessionClients()
 {
-    static QPtrList<KSessionManaged>* session_clients = 0L;
+    static TQPtrList<KSessionManaged>* session_clients = 0L;
     if ( !session_clients )
-        session_clients = new QPtrList<KSessionManaged>;
+        session_clients = new TQPtrList<KSessionManaged>;
     return session_clients;
 }
 
@@ -571,12 +571,12 @@ static QPtrList<KSessionManaged>* sessionClients()
   instance specific config object.
   Syntax:  "session/<appname>_<sessionId>"
  */
-QString KApplication::sessionConfigName() const
+TQString KApplication::sessionConfigName() const
 {
-    QString sessKey = sessionKey();
+    TQString sessKey = sessionKey();
     if ( sessKey.isEmpty() && !d->sessionKey.isEmpty() )
         sessKey = d->sessionKey;
-    return QString("session/%1_%2_%3").arg(name()).arg(sessionId()).arg(sessKey);
+    return TQString("session/%1_%2_%3").arg(name()).arg(sessionId()).arg(sessKey);
 }
 
 #ifdef Q_WS_X11
@@ -586,11 +586,11 @@ static SmcConn tmpSmcConnection = 0;
 // FIXME(E): Implement for Qt Embedded
 // Possibly "steal" XFree86's libSM?
 #endif
-static QTime* smModificationTime = 0;
+static TQTime* smModificationTime = 0;
 
-KApplication::KApplication( int& argc, char** argv, const QCString& rAppName,
+KApplication::KApplication( int& argc, char** argv, const TQCString& rAppName,
                             bool allowStyles, bool GUIenabled ) :
-  QApplication( argc, argv, GUIenabled ), KInstance(rAppName),
+  TQApplication( argc, argv, GUIenabled ), KInstance(rAppName),
 #ifdef Q_WS_X11
   display(0L),
 #endif
@@ -613,7 +613,7 @@ KApplication::KApplication( int& argc, char** argv, const QCString& rAppName,
 }
 
 KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
-  QApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
+  TQApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
                 GUIenabled ),
   KInstance( KCmdLineArgs::about),
 #ifdef Q_WS_X11
@@ -638,7 +638,7 @@ KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
 #ifdef Q_WS_X11
 KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
 		            bool allowStyles ) :
-  QApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
+  TQApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
                 visual, colormap ),
   KInstance( KCmdLineArgs::about), display(0L), d (new KApplicationPrivate)
 {
@@ -655,7 +655,7 @@ KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap
 
 KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
 		            bool allowStyles, KInstance * _instance ) :
-  QApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
+  TQApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
                 visual, colormap ),
   KInstance( _instance ), display(0L), d (new KApplicationPrivate)
 {
@@ -672,7 +672,7 @@ KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap
 #endif
 
 KApplication::KApplication( bool allowStyles, bool GUIenabled, KInstance* _instance ) :
-  QApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
+  TQApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
                 GUIenabled ),
   KInstance( _instance ),
 #ifdef Q_WS_X11
@@ -695,9 +695,9 @@ KApplication::KApplication( bool allowStyles, bool GUIenabled, KInstance* _insta
 }
 
 #ifdef Q_WS_X11
-KApplication::KApplication(Display *display, int& argc, char** argv, const QCString& rAppName,
+KApplication::KApplication(Display *display, int& argc, char** argv, const TQCString& rAppName,
                            bool allowStyles, bool GUIenabled ) :
-  QApplication( display ), KInstance(rAppName),
+  TQApplication( display ), KInstance(rAppName),
   display(0L),
   d (new KApplicationPrivate())
 {
@@ -761,7 +761,7 @@ void KApplication::iceIOErrorHandler( _IceConn *conn )
 class KDETranslator : public QTranslator
 {
 public:
-  KDETranslator(QObject *parent) : QTranslator(parent, "kdetranslator") {}
+  KDETranslator(TQObject *parent) : QTranslator(parent, "kdetranslator") {}
   virtual QTranslatorMessage findMessage(const char* context,
 					 const char *sourceText,
 					 const char* message) const
@@ -786,7 +786,7 @@ void KApplication::init(bool GUIenabled)
 
   (void) KClipboardSynchronizer::self();
 
-  QApplication::setDesktopSettingsAware( false );
+  TQApplication::setDesktopSettingsAware( false );
 
   KApp = this;
 
@@ -841,7 +841,7 @@ void KApplication::init(bool GUIenabled)
   // * We use kdialog to warn the user, so we better not generate warnings from
   //   kdialog itself.
   // * Don't warn if we run with a read-only $HOME
-  QCString readOnly = getenv("KDE_HOME_READONLY");
+  TQCString readOnly = getenv("KDE_HOME_READONLY");
   if (readOnly.isEmpty() && (qstrcmp(name(), "kdialog") != 0))
   {
     KConfigGroupSaver saver(config, "KDE Action Restrictions");
@@ -859,15 +859,15 @@ void KApplication::init(bool GUIenabled)
     d->oldXIOErrorHandler = XSetIOErrorHandler( kde_xio_errhandler );
 #endif
 
-    connect( this, SIGNAL( aboutToQuit() ), this, SIGNAL( shutDown() ) );
+    connect( this, TQT_SIGNAL( aboutToQuit() ), this, TQT_SIGNAL( shutDown() ) );
 
 #ifdef Q_WS_X11 //FIXME(E)
     display = desktop()->x11Display();
 #endif
 
     {
-        QStringList plugins = KGlobal::dirs()->resourceDirs( "qtplugins" );
-        QStringList::Iterator it = plugins.begin();
+        TQStringList plugins = KGlobal::dirs()->resourceDirs( "qtplugins" );
+        TQStringList::Iterator it = plugins.begin();
         while (it != plugins.end()) {
             addLibraryPath( *it );
             ++it;
@@ -883,14 +883,14 @@ void KApplication::init(bool GUIenabled)
     // XXX: This is a hack. Make our factory the default factory, but add the
     // previous default factory to the list of factories. Why? When the default
     // factory can't resolve something, it iterates in the list of factories.
-    // But it QWhatsThis only uses the default factory. So if there was already
+    // But it TQWhatsThis only uses the default factory. So if there was already
     // a default factory (which happens when using an image library using uic),
     // we prefer KDE's factory and so we put that old default factory in the
     // list and use KDE as the default. This may speed up things as well.
-    QMimeSourceFactory* oldDefaultFactory = QMimeSourceFactory::takeDefaultFactory();
-    QMimeSourceFactory::setDefaultFactory( mimeSourceFactory() );
+    TQMimeSourceFactory* oldDefaultFactory = TQMimeSourceFactory::takeDefaultFactory();
+    TQMimeSourceFactory::setDefaultFactory( mimeSourceFactory() );
     if ( oldDefaultFactory ) {
-        QMimeSourceFactory::addFactory( oldDefaultFactory );
+        TQMimeSourceFactory::addFactory( oldDefaultFactory );
     }
 
     d->checkAccelerators = new KCheckAccelerators( this );
@@ -898,10 +898,10 @@ void KApplication::init(bool GUIenabled)
 
 #ifdef Q_WS_MACX
   if (GUIenabled) {
-      QPixmap pixmap = KGlobal::iconLoader()->loadIcon( KCmdLineArgs::appName(),
+      TQPixmap pixmap = KGlobal::iconLoader()->loadIcon( KCmdLineArgs::appName(),
               KIcon::NoGroup, KIcon::SizeLarge, KIcon::DefaultState, 0L, false );
       if (!pixmap.isNull()) {
-          QImage i = pixmap.convertToImage().convertDepth(32).smoothScale(40, 40);
+          TQImage i = pixmap.convertToImage().convertDepth(32).smoothScale(40, 40);
           for(int y = 0; y < i.height(); y++) {
               uchar *l = i.scanLine(y);
               for(int x = 0; x < i.width(); x+=4)
@@ -935,7 +935,7 @@ void KApplication::init(bool GUIenabled)
 
   // install appdata resource type
   KGlobal::dirs()->addResourceType("appdata", KStandardDirs::kde_default("data")
-                                   + QString::fromLatin1(name()) + '/');
+                                   + TQString::fromLatin1(name()) + '/');
   pSessionConfig = 0L;
   bSessionManagement = true;
 
@@ -943,7 +943,7 @@ void KApplication::init(bool GUIenabled)
   // register a communication window for desktop changes (Matthias)
   if (GUIenabled && kde_have_kipc )
   {
-    smw = new QWidget(0,0);
+    smw = new TQWidget(0,0);
     long data = 1;
     XChangeProperty(qt_xdisplay(), smw->winId(),
 		    atom_DesktopWindow, atom_DesktopWindow,
@@ -990,10 +990,10 @@ DCOPClient *KApplication::dcopClient()
     s_DCOPClient->setServerAddress( args->getOption("dcopserver"));
   }
   if( kapp ) {
-    connect(s_DCOPClient, SIGNAL(attachFailed(const QString &)),
-            kapp, SLOT(dcopFailure(const QString &)));
-    connect(s_DCOPClient, SIGNAL(blockUserInput(bool) ),
-            kapp, SLOT(dcopBlockUserInput(bool)) );
+    connect(s_DCOPClient, TQT_SIGNAL(attachFailed(const TQString &)),
+            kapp, TQT_SLOT(dcopFailure(const TQString &)));
+    connect(s_DCOPClient, TQT_SIGNAL(blockUserInput(bool) ),
+            kapp, TQT_SLOT(dcopBlockUserInput(bool)) );
   }
   else
     s_dcopClientNeedsPostInit = true;
@@ -1007,8 +1007,8 @@ void KApplication::dcopClientPostInit()
   if( s_dcopClientNeedsPostInit )
     {
     s_dcopClientNeedsPostInit = false;
-    connect(s_DCOPClient, SIGNAL(blockUserInput(bool) ),
-            SLOT(dcopBlockUserInput(bool)) );
+    connect(s_DCOPClient, TQT_SIGNAL(blockUserInput(bool) ),
+            TQT_SLOT(dcopBlockUserInput(bool)) );
     s_DCOPClient->bindToApp(); // Make sure we get events from the DCOPClient.
     }
 }
@@ -1106,14 +1106,14 @@ bool KApplication::requestShutDown(
     ShutdownConfirm confirm, ShutdownType sdtype, ShutdownMode sdmode )
 {
 #ifdef Q_WS_X11
-    QApplication::syncX();
+    TQApplication::syncX();
     /*  use ksmserver's dcop interface if necessary  */
     if ( confirm == ShutdownConfirmYes ||
          sdtype != ShutdownTypeDefault ||
          sdmode != ShutdownModeDefault )
     {
-        QByteArray data;
-        QDataStream arg(data, IO_WriteOnly);
+        TQByteArray data;
+        TQDataStream arg(data, IO_WriteOnly);
         arg << (int)confirm << (int)sdtype << (int)sdmode;
 	return dcopClient()->send( "ksmserver", "ksmserver",
                                    "logout(int,int,int)", data );
@@ -1133,7 +1133,7 @@ bool KApplication::requestShutDown(
     // open a temporary connection, if possible
 
     propagateSessionManager();
-    QCString smEnv = ::getenv("SESSION_MANAGER");
+    TQCString smEnv = ::getenv("SESSION_MANAGER");
     if (smEnv.isEmpty())
         return false;
 
@@ -1168,32 +1168,32 @@ bool KApplication::requestShutDown(
 void KApplication::propagateSessionManager()
 {
 #ifdef Q_WS_X11
-    QCString fName = QFile::encodeName(locateLocal("socket", "KSMserver"));
-    QCString display = ::getenv(DISPLAY);
+    TQCString fName = TQFile::encodeName(locateLocal("socket", "KSMserver"));
+    TQCString display = ::getenv(DISPLAY);
     // strip the screen number from the display
-    display.replace(QRegExp("\\.[0-9]+$"), "");
+    display.replace(TQRegExp("\\.[0-9]+$"), "");
     int i;
     while( (i = display.find(':')) >= 0)
        display[i] = '_';
 
     fName += "_"+display;
-    QCString smEnv = ::getenv("SESSION_MANAGER");
+    TQCString smEnv = ::getenv("SESSION_MANAGER");
     bool check = smEnv.isEmpty();
     if ( !check && smModificationTime ) {
-         QFileInfo info( fName );
-         QTime current = info.lastModified().time();
+         TQFileInfo info( fName );
+         TQTime current = info.lastModified().time();
          check = current > *smModificationTime;
     }
     if ( check ) {
         delete smModificationTime;
-        QFile f( fName );
+        TQFile f( fName );
         if ( !f.open( IO_ReadOnly ) )
             return;
-        QFileInfo info ( f );
-        smModificationTime = new QTime( info.lastModified().time() );
-        QTextStream t(&f);
-        t.setEncoding( QTextStream::Latin1 );
-        QString s = t.readLine();
+        TQFileInfo info ( f );
+        smModificationTime = new TQTime( info.lastModified().time() );
+        TQTextStream t(&f);
+        t.setEncoding( TQTextStream::Latin1 );
+        TQString s = t.readLine();
         f.close();
         ::setenv( "SESSION_MANAGER", s.latin1(), true  );
     }
@@ -1213,19 +1213,19 @@ void KApplication::commitData( QSessionManager& sm )
         sm.cancel();
 
     if ( sm.allowsInteraction() ) {
-        QWidgetList done;
-        QWidgetList *list = QApplication::topLevelWidgets();
+        TQWidgetList done;
+        TQWidgetList *list = TQApplication::topLevelWidgets();
         bool canceled = false;
-        QWidget* w = list->first();
+        TQWidget* w = list->first();
         while ( !canceled && w ) {
             if ( !w->testWState( WState_ForceHide ) && !w->inherits("KMainWindow") ) {
-                QCloseEvent e;
+                TQCloseEvent e;
                 sendEvent( w, &e );
                 canceled = !e.isAccepted();
                 if ( !canceled )
                     done.append( w );
                 delete list; // one never knows...
-                list = QApplication::topLevelWidgets();
+                list = TQApplication::topLevelWidgets();
                 w = list->first();
             } else {
                 w = list->next();
@@ -1267,8 +1267,8 @@ static void checkRestartVersion( QSessionManager& sm )
             }
         }
     }
-    QString wrapper = KStandardDirs::findExe( "kde3" );
-    QStringList restartCommand = sm.restartCommand();
+    TQString wrapper = KStandardDirs::findExe( "kde3" );
+    TQStringList restartCommand = sm.restartCommand();
     restartCommand.prepend( wrapper );
     sm.setRestartCommand( restartCommand );
 }
@@ -1306,9 +1306,9 @@ void KApplication::saveState( QSessionManager& sm )
     }
 
     // tell the session manager about our new lifecycle
-    QStringList restartCommand = sm.restartCommand();
+    TQStringList restartCommand = sm.restartCommand();
 
-    QCString multiHead = getenv("KDE_MULTIHEAD");
+    TQCString multiHead = getenv("KDE_MULTIHEAD");
     if (multiHead.lower() == "true") {
         // if multihead is enabled, we save our -display argument so that
         // we are restored onto the correct head... one problem with this
@@ -1316,7 +1316,7 @@ void KApplication::saveState( QSessionManager& sm )
         // to a different display (ie. if we are in a university lab and try,
         // try to restore a multihead session, our apps could be started on
         // someone else's display instead of our own)
-        QCString displayname = getenv(DISPLAY);
+        TQCString displayname = getenv(DISPLAY);
         if (! displayname.isNull()) {
             // only store the command if we actually have a DISPLAY
             // environment variable
@@ -1340,7 +1340,7 @@ void KApplication::saveState( QSessionManager& sm )
     // if we created a new session config object, register a proper discard command
     if ( pSessionConfig ) {
         pSessionConfig->sync();
-        QStringList discard;
+        TQStringList discard;
         discard  << "rm" << locateLocal("config", sessionConfigName());
         sm.setDiscardCommand( discard );
     } else {
@@ -1372,20 +1372,20 @@ void KApplication::startKdeinit()
          return; // whoever held the lock has already started dcopserver
   }
   // Try to launch kdeinit.
-  QString srv = KStandardDirs::findExe(QString::fromLatin1("kdeinit"));
+  TQString srv = KStandardDirs::findExe(TQString::fromLatin1("kdeinit"));
   if (srv.isEmpty())
-     srv = KStandardDirs::findExe(QString::fromLatin1("kdeinit"), KGlobal::dirs()->kfsstnd_defaultbindir());
+     srv = KStandardDirs::findExe(TQString::fromLatin1("kdeinit"), KGlobal::dirs()->kfsstnd_defaultbindir());
   if (srv.isEmpty())
      return;
   if (kapp && (Tty != kapp->type()))
     setOverrideCursor( Qt::waitCursor );
-  my_system(QFile::encodeName(srv)+" --suicide"+" --new-startup");
+  my_system(TQFile::encodeName(srv)+" --suicide"+" --new-startup");
   if (kapp && (Tty != kapp->type()))
     restoreOverrideCursor();
 #endif
 }
 
-void KApplication::dcopFailure(const QString &msg)
+void KApplication::dcopFailure(const TQString &msg)
 {
   static int failureCount = 0;
   failureCount++;
@@ -1401,7 +1401,7 @@ void KApplication::dcopFailure(const QString &msg)
      if (KGlobal::config()->readBoolEntry("ignoreDCOPFailures", false))
          return;
 #endif
-     QString msgStr(i18n("There was an error setting up inter-process "
+     TQString msgStr(i18n("There was an error setting up inter-process "
                       "communications for KDE. The message returned "
                       "by the system was:\n\n"));
      msgStr += msg;
@@ -1409,7 +1409,7 @@ void KApplication::dcopFailure(const QString &msg)
 
      if (Tty != kapp->type())
      {
-       QMessageBox::critical
+       TQMessageBox::critical
          (
            kapp->mainWidget(),
            i18n("DCOP communications error (%1)").arg(kapp->caption()),
@@ -1436,7 +1436,7 @@ static const KCmdLineOptions qt_options[] =
 #endif
    { "session <sessionId>", I18N_NOOP("Restore the application for the given 'sessionId'"), 0},
    { "cmap", I18N_NOOP("Causes the application to install a private color\nmap on an 8-bit display"), 0},
-   { "ncols <count>", I18N_NOOP("Limits the number of colors allocated in the color\ncube on an 8-bit display, if the application is\nusing the QApplication::ManyColor color\nspecification"), 0},
+   { "ncols <count>", I18N_NOOP("Limits the number of colors allocated in the color\ncube on an 8-bit display, if the application is\nusing the TQApplication::ManyColor color\nspecification"), 0},
    { "nograb", I18N_NOOP("tells Qt to never grab the mouse or the keyboard"), 0},
    { "dograb", I18N_NOOP("running under a debugger can cause an implicit\n-nograb, use -dograb to override"), 0},
    { "sync", I18N_NOOP("switches to synchronous mode for debugging"), 0},
@@ -1495,17 +1495,17 @@ void KApplication::parseCommandLine( )
 
     if (args->isSet("config"))
     {
-        QString config = QString::fromLocal8Bit(args->getOption("config"));
+        TQString config = TQString::fromLocal8Bit(args->getOption("config"));
         setConfigName(config);
     }
 
     if (args->isSet("style"))
     {
 
-       QStringList styles = QStyleFactory::keys();
-       QString reqStyle(args->getOption("style").lower());
+       TQStringList styles = TQStyleFactory::keys();
+       TQString reqStyle(args->getOption("style").lower());
 
-	   for (QStringList::ConstIterator it = styles.begin(); it != styles.end(); ++it)
+	   for (TQStringList::ConstIterator it = styles.begin(); it != styles.end(); ++it)
 		   if ((*it).lower() == reqStyle)
 		   {
 			   d->overrideStyle = *it;
@@ -1518,7 +1518,7 @@ void KApplication::parseCommandLine( )
 
     if (args->isSet("caption"))
     {
-       aCaption = QString::fromLocal8Bit(args->getOption("caption"));
+       aCaption = TQString::fromLocal8Bit(args->getOption("caption"));
     }
 
     if (args->isSet("miniicon"))
@@ -1556,7 +1556,7 @@ void KApplication::parseCommandLine( )
         KCrash::setCrashHandler(KCrash::defaultCrashHandler);
         KCrash::setEmergencySaveFunction(NULL);
 
-        KCrash::setApplicationName(QString(args->appName()));
+        KCrash::setApplicationName(TQString(args->appName()));
     }
 
 #ifdef Q_WS_X11
@@ -1593,12 +1593,12 @@ void KApplication::parseCommandLine( )
 
 }
 
-QString KApplication::geometryArgument() const
+TQString KApplication::geometryArgument() const
 {
     return d->geometry_arg;
 }
 
-QPixmap KApplication::icon() const
+TQPixmap KApplication::icon() const
 {
   if( !aIconPixmap.pm.icon) {
       aIconPixmap.pm.icon = new QPixmap;
@@ -1609,12 +1609,12 @@ QPixmap KApplication::icon() const
   return *aIconPixmap.pm.icon;
 }
 
-QString KApplication::iconName() const
+TQString KApplication::iconName() const
 {
-  return aIconName.isNull() ? (QString)instanceName() : aIconName;
+  return aIconName.isNull() ? (TQString)instanceName() : aIconName;
 }
 
-QPixmap KApplication::miniIcon() const
+TQPixmap KApplication::miniIcon() const
 {
   if (!aIconPixmap.pm.miniIcon) {
       aIconPixmap.pm.miniIcon = new QPixmap;
@@ -1625,9 +1625,9 @@ QPixmap KApplication::miniIcon() const
   return *aIconPixmap.pm.miniIcon;
 }
 
-QString KApplication::miniIconName() const
+TQString KApplication::miniIconName() const
 {
-  return aMiniIconName.isNull() ? (QString)instanceName() : aMiniIconName;
+  return aMiniIconName.isNull() ? (TQString)instanceName() : aMiniIconName;
 }
 
 extern void kDebugCleanup();
@@ -1755,7 +1755,7 @@ bool KApplication::x11EventFilter( XEvent *_event )
     }
 
     if (x11Filter) {
-        for (QWidget *w=x11Filter->first(); w; w=x11Filter->next()) {
+        for (TQWidget *w=x11Filter->first(); w; w=x11Filter->next()) {
             if (((KAppX11HackWidget*) w)->publicx11Event(_event))
                 return true;
         }
@@ -1808,7 +1808,7 @@ bool KApplication::x11EventFilter( XEvent *_event )
                 break;
 
             case KIPC::IconChanged:
-                QPixmapCache::clear();
+                TQPixmapCache::clear();
                 KGlobal::config()->reparseConfiguration();
                 KGlobal::instance()->newIconLoader();
                 emit updateIconLoaders();
@@ -1864,7 +1864,7 @@ unsigned long KApplication::userTimestamp() const
 #endif
 }
 
-void KApplication::updateRemoteUserTimestamp( const QCString& dcopId, unsigned long time )
+void KApplication::updateRemoteUserTimestamp( const TQCString& dcopId, unsigned long time )
 {
 #if defined Q_WS_X11
     if( time == 0 )
@@ -1875,11 +1875,11 @@ void KApplication::updateRemoteUserTimestamp( const QCString& dcopId, unsigned l
 
 void KApplication::invokeEditSlot( const char *slot )
 {
-  QObject *object = focusWidget();
+  TQObject *object = focusWidget();
   if( !object )
     return;
 
-  QMetaObject *meta = object->metaObject();
+  TQMetaObject *meta = object->metaObject();
 
   int idx = meta->findSlot( slot + 1, true );
   if( idx < 0 )
@@ -1927,20 +1927,20 @@ void KApplication::applyGUIStyle()
     if ( !useStyles ) return;
 
     KConfigGroup pConfig (KGlobal::config(), "General");
-    QString defaultStyle = KStyle::defaultStyle();
-    QString styleStr = pConfig.readEntry("widgetStyle", defaultStyle);
+    TQString defaultStyle = KStyle::defaultStyle();
+    TQString styleStr = pConfig.readEntry("widgetStyle", defaultStyle);
 
     if (d->overrideStyle.isEmpty()) {
       // ### add check whether we already use the correct style to return then
       // (workaround for Qt misbehavior to avoid double style initialization)
 
-      QStyle* sp = QStyleFactory::create( styleStr );
+      TQStyle* sp = TQStyleFactory::create( styleStr );
 
       // If there is no default style available, try falling back any available style
       if ( !sp && styleStr != defaultStyle)
-          sp = QStyleFactory::create( defaultStyle );
+          sp = TQStyleFactory::create( defaultStyle );
       if ( !sp )
-          sp = QStyleFactory::create( *(QStyleFactory::keys().begin()) );
+          sp = TQStyleFactory::create( *(TQStyleFactory::keys().begin()) );
       setStyle(sp);
     }
     else
@@ -1949,7 +1949,7 @@ void KApplication::applyGUIStyle()
     kdisplaySetPalette();
 }
 
-QString KApplication::caption() const
+TQString KApplication::caption() const
 {
   // Caption set from command line ?
   if( !aCaption.isNull() )
@@ -1968,62 +1968,62 @@ QString KApplication::caption() const
 // 1999-09-20: Espen Sand
 // An attempt to simplify consistent captions.
 //
-QString KApplication::makeStdCaption( const QString &userCaption,
+TQString KApplication::makeStdCaption( const TQString &userCaption,
                                       bool withAppName, bool modified ) const
 {
-  QString s = userCaption.isEmpty() ? caption() : userCaption;
+  TQString s = userCaption.isEmpty() ? caption() : userCaption;
 
   // If the document is modified, add '[modified]'.
   if (modified)
-      s += QString::fromUtf8(" [") + i18n("modified") + QString::fromUtf8("]");
+      s += TQString::fromUtf8(" [") + i18n("modified") + TQString::fromUtf8("]");
 
   if ( !userCaption.isEmpty() ) {
       // Add the application name if:
       // User asked for it, it's not a duplication  and the app name (caption()) is not empty
       if ( withAppName && !caption().isNull() && !userCaption.endsWith(caption())  )
-	  s += QString::fromUtf8(" - ") + caption();
+	  s += TQString::fromUtf8(" - ") + caption();
   }
 
   return s;
 }
 
-QPalette KApplication::createApplicationPalette()
+TQPalette KApplication::createApplicationPalette()
 {
     KConfig *config = KGlobal::config();
     KConfigGroupSaver saver( config, "General" );
     return createApplicationPalette( config, KGlobalSettings::contrast() );
 }
 
-QPalette KApplication::createApplicationPalette( KConfig *config, int contrast_ )
+TQPalette KApplication::createApplicationPalette( KConfig *config, int contrast_ )
 {
-    QColor kde34Background( 239, 239, 239 );
-    QColor kde34Blue( 103,141,178 );
+    TQColor kde34Background( 239, 239, 239 );
+    TQColor kde34Blue( 103,141,178 );
 
-    QColor kde34Button;
-    if ( QPixmap::defaultDepth() > 8 )
+    TQColor kde34Button;
+    if ( TQPixmap::defaultDepth() > 8 )
       kde34Button.setRgb( 221, 223, 228 );
     else
       kde34Button.setRgb( 220, 220, 220 );
 
-    QColor kde34Link( 0, 0, 238 );
-    QColor kde34VisitedLink( 82, 24, 139 );
+    TQColor kde34Link( 0, 0, 238 );
+    TQColor kde34VisitedLink( 82, 24, 139 );
 
-    QColor background = config->readColorEntry( "background", &kde34Background );
-    QColor foreground = config->readColorEntry( "foreground", &black );
-    QColor button = config->readColorEntry( "buttonBackground", &kde34Button );
-    QColor buttonText = config->readColorEntry( "buttonForeground", &black );
-    QColor highlight = config->readColorEntry( "selectBackground", &kde34Blue );
-    QColor highlightedText = config->readColorEntry( "selectForeground", &white );
-    QColor base = config->readColorEntry( "windowBackground", &white );
-    QColor baseText = config->readColorEntry( "windowForeground", &black );
-    QColor link = config->readColorEntry( "linkColor", &kde34Link );
-    QColor visitedLink = config->readColorEntry( "visitedLinkColor", &kde34VisitedLink );
+    TQColor background = config->readColorEntry( "background", &kde34Background );
+    TQColor foreground = config->readColorEntry( "foreground", &black );
+    TQColor button = config->readColorEntry( "buttonBackground", &kde34Button );
+    TQColor buttonText = config->readColorEntry( "buttonForeground", &black );
+    TQColor highlight = config->readColorEntry( "selectBackground", &kde34Blue );
+    TQColor highlightedText = config->readColorEntry( "selectForeground", &white );
+    TQColor base = config->readColorEntry( "windowBackground", &white );
+    TQColor baseText = config->readColorEntry( "windowForeground", &black );
+    TQColor link = config->readColorEntry( "linkColor", &kde34Link );
+    TQColor visitedLink = config->readColorEntry( "visitedLinkColor", &kde34VisitedLink );
 
     int highlightVal, lowlightVal;
     highlightVal = 100 + (2*contrast_+4)*16/10;
     lowlightVal = 100 + (2*contrast_+4)*10;
 
-    QColor disfg = foreground;
+    TQColor disfg = foreground;
 
     int h, s, v;
     disfg.hsv( &h, &s, &v );
@@ -2038,13 +2038,13 @@ QPalette KApplication::createApplicationPalette( KConfig *config, int contrast_ 
 	disfg = Qt::darkGray;
 
 
-    QColorGroup disabledgrp(disfg, background,
+    TQColorGroup disabledgrp(disfg, background,
                             background.light(highlightVal),
                             background.dark(lowlightVal),
                             background.dark(120),
                             background.dark(120), base);
 
-    QColorGroup colgrp(foreground, background, background.light(highlightVal),
+    TQColorGroup colgrp(foreground, background, background.light(highlightVal),
                        background.dark(lowlightVal),
                        background.dark(120),
                        baseText, base);
@@ -2053,17 +2053,17 @@ QPalette KApplication::createApplicationPalette( KConfig *config, int contrast_ 
     if(inlowlightVal < 120)
         inlowlightVal = 120;
 
-    colgrp.setColor(QColorGroup::Highlight, highlight);
-    colgrp.setColor(QColorGroup::HighlightedText, highlightedText);
-    colgrp.setColor(QColorGroup::Button, button);
-    colgrp.setColor(QColorGroup::ButtonText, buttonText);
-    colgrp.setColor(QColorGroup::Midlight, background.light(110));
-    colgrp.setColor(QColorGroup::Link, link);
-    colgrp.setColor(QColorGroup::LinkVisited, visitedLink);
+    colgrp.setColor(TQColorGroup::Highlight, highlight);
+    colgrp.setColor(TQColorGroup::HighlightedText, highlightedText);
+    colgrp.setColor(TQColorGroup::Button, button);
+    colgrp.setColor(TQColorGroup::ButtonText, buttonText);
+    colgrp.setColor(TQColorGroup::Midlight, background.light(110));
+    colgrp.setColor(TQColorGroup::Link, link);
+    colgrp.setColor(TQColorGroup::LinkVisited, visitedLink);
 
-    disabledgrp.setColor(QColorGroup::Button, button);
+    disabledgrp.setColor(TQColorGroup::Button, button);
 
-    QColor disbtntext = buttonText;
+    TQColor disbtntext = buttonText;
     disbtntext.hsv( &h, &s, &v );
     if (v > 128)
 	// dark button, light buttonText - need a darker disabled buttonText
@@ -2075,13 +2075,13 @@ QPalette KApplication::createApplicationPalette( KConfig *config, int contrast_ 
 	// black button - use darkgray disabled buttonText
 	disbtntext = Qt::darkGray;
 
-    disabledgrp.setColor(QColorGroup::ButtonText, disbtntext);
-    disabledgrp.setColor(QColorGroup::Midlight, background.light(110));
-    disabledgrp.setColor(QColorGroup::Highlight, highlight.dark(120));
-    disabledgrp.setColor(QColorGroup::Link, link);
-    disabledgrp.setColor(QColorGroup::LinkVisited, visitedLink);
+    disabledgrp.setColor(TQColorGroup::ButtonText, disbtntext);
+    disabledgrp.setColor(TQColorGroup::Midlight, background.light(110));
+    disabledgrp.setColor(TQColorGroup::Highlight, highlight.dark(120));
+    disabledgrp.setColor(TQColorGroup::Link, link);
+    disabledgrp.setColor(TQColorGroup::LinkVisited, visitedLink);
 
-    return QPalette(colgrp, disabledgrp, colgrp);
+    return TQPalette(colgrp, disabledgrp, colgrp);
 }
 
 
@@ -2097,7 +2097,7 @@ void KApplication::kdisplaySetPalette()
             return;
     }
 #endif
-    QApplication::setPalette( createApplicationPalette(), true);
+    TQApplication::setPalette( createApplicationPalette(), true);
     emit kdisplayPaletteChanged();
     emit appearanceChanged();
 }
@@ -2105,13 +2105,13 @@ void KApplication::kdisplaySetPalette()
 
 void KApplication::kdisplaySetFont()
 {
-    QApplication::setFont(KGlobalSettings::generalFont(), true);
-    QApplication::setFont(KGlobalSettings::menuFont(), true, "QMenuBar");
-    QApplication::setFont(KGlobalSettings::menuFont(), true, "QPopupMenu");
-    QApplication::setFont(KGlobalSettings::menuFont(), true, "KPopupTitle");
+    TQApplication::setFont(KGlobalSettings::generalFont(), true);
+    TQApplication::setFont(KGlobalSettings::menuFont(), true, "TQMenuBar");
+    TQApplication::setFont(KGlobalSettings::menuFont(), true, "TQPopupMenu");
+    TQApplication::setFont(KGlobalSettings::menuFont(), true, "KPopupTitle");
 
-    // "patch" standard QStyleSheet to follow our fonts
-    QStyleSheet* sheet = QStyleSheet::defaultSheet();
+    // "patch" standard TQStyleSheet to follow our fonts
+    TQStyleSheet* sheet = TQStyleSheet::defaultSheet();
     sheet->item ("pre")->setFontFamily (KGlobalSettings::fixedFont().family());
     sheet->item ("code")->setFontFamily (KGlobalSettings::fixedFont().family());
     sheet->item ("tt")->setFontFamily (KGlobalSettings::fixedFont().family());
@@ -2137,33 +2137,33 @@ void KApplication::propagateSettings(SettingsCategory arg)
     KConfigBase* config = KGlobal::config();
     KConfigGroupSaver saver( config, "KDE" );
 
-    int num = config->readNumEntry("CursorBlinkRate", QApplication::cursorFlashTime());
+    int num = config->readNumEntry("CursorBlinkRate", TQApplication::cursorFlashTime());
     if ((num != 0) && (num < 200))
         num = 200;
     if (num > 2000)
         num = 2000;
-    QApplication::setCursorFlashTime(num);
-    num = config->readNumEntry("DoubleClickInterval", QApplication::doubleClickInterval());
-    QApplication::setDoubleClickInterval(num);
-    num = config->readNumEntry("StartDragTime", QApplication::startDragTime());
-    QApplication::setStartDragTime(num);
-    num = config->readNumEntry("StartDragDist", QApplication::startDragDistance());
-    QApplication::setStartDragDistance(num);
-    num = config->readNumEntry("WheelScrollLines", QApplication::wheelScrollLines());
-    QApplication::setWheelScrollLines(num);
+    TQApplication::setCursorFlashTime(num);
+    num = config->readNumEntry("DoubleClickInterval", TQApplication::doubleClickInterval());
+    TQApplication::setDoubleClickInterval(num);
+    num = config->readNumEntry("StartDragTime", TQApplication::startDragTime());
+    TQApplication::setStartDragTime(num);
+    num = config->readNumEntry("StartDragDist", TQApplication::startDragDistance());
+    TQApplication::setStartDragDistance(num);
+    num = config->readNumEntry("WheelScrollLines", TQApplication::wheelScrollLines());
+    TQApplication::setWheelScrollLines(num);
 
     bool b = config->readBoolEntry("EffectAnimateMenu", false);
-    QApplication::setEffectEnabled( Qt::UI_AnimateMenu, b);
+    TQApplication::setEffectEnabled( Qt::UI_AnimateMenu, b);
     b = config->readBoolEntry("EffectFadeMenu", false);
-    QApplication::setEffectEnabled( Qt::UI_FadeMenu, b);
+    TQApplication::setEffectEnabled( Qt::UI_FadeMenu, b);
     b = config->readBoolEntry("EffectAnimateCombo", false);
-    QApplication::setEffectEnabled( Qt::UI_AnimateCombo, b);
+    TQApplication::setEffectEnabled( Qt::UI_AnimateCombo, b);
     b = config->readBoolEntry("EffectAnimateTooltip", false);
-    QApplication::setEffectEnabled( Qt::UI_AnimateTooltip, b);
+    TQApplication::setEffectEnabled( Qt::UI_AnimateTooltip, b);
     b = config->readBoolEntry("EffectFadeTooltip", false);
-    QApplication::setEffectEnabled( Qt::UI_FadeTooltip, b);
+    TQApplication::setEffectEnabled( Qt::UI_FadeTooltip, b);
     b = !config->readBoolEntry("EffectNoTooltip", false);
-    QToolTip::setGloballyEnabled( b );
+    TQToolTip::setGloballyEnabled( b );
 
     emit settingsChanged(arg);
 }
@@ -2180,8 +2180,8 @@ void KApplication::installKDEPropertyMap()
      * function.
      * Thanks.
      */
-    // QSqlPropertyMap takes ownership of the new default map.
-    QSqlPropertyMap *kdeMap = new QSqlPropertyMap;
+    // TQSqlPropertyMap takes ownership of the new default map.
+    TQSqlPropertyMap *kdeMap = new QSqlPropertyMap;
     kdeMap->insert( "KColorButton", "color" );
     kdeMap->insert( "KComboBox", "currentItem" );
     kdeMap->insert( "KDatePicker", "date" );
@@ -2204,14 +2204,14 @@ void KApplication::installKDEPropertyMap()
     kdeMap->insert( "KIntSpinBox", "value" );
     kdeMap->insert( "KDoubleNumInput", "value" );
     // Temp til fixed in QT then enable ifdef with the correct version num
-    kdeMap->insert( "QGroupBox", "checked" );
-    kdeMap->insert( "QTabWidget", "currentPage" );
-    QSqlPropertyMap::installDefaultMap( kdeMap );
+    kdeMap->insert( "TQGroupBox", "checked" );
+    kdeMap->insert( "TQTabWidget", "currentPage" );
+    TQSqlPropertyMap::installDefaultMap( kdeMap );
 #endif
 }
 
-void KApplication::invokeHelp( const QString& anchor,
-                               const QString& _appname) const
+void KApplication::invokeHelp( const TQString& anchor,
+                               const TQString& _appname) const
 {
     return invokeHelp( anchor, _appname, "" );
 }
@@ -2219,29 +2219,29 @@ void KApplication::invokeHelp( const QString& anchor,
 #ifndef Q_WS_WIN
 // for win32 we're using simple help tools like Qt Assistant,
 // see kapplication_win.cpp
-void KApplication::invokeHelp( const QString& anchor,
-                               const QString& _appname,
-                               const QCString& startup_id ) const
+void KApplication::invokeHelp( const TQString& anchor,
+                               const TQString& _appname,
+                               const TQCString& startup_id ) const
 {
-   QString url;
-   QString appname;
+   TQString url;
+   TQString appname;
    if (_appname.isEmpty())
      appname = name();
    else
      appname = _appname;
 
    if (!anchor.isEmpty())
-     url = QString("help:/%1?anchor=%2").arg(appname).arg(anchor);
+     url = TQString("help:/%1?anchor=%2").arg(appname).arg(anchor);
    else
-     url = QString("help:/%1/index.html").arg(appname);
+     url = TQString("help:/%1/index.html").arg(appname);
 
-   QString error;
+   TQString error;
    if ( !dcopClient()->isApplicationRegistered("khelpcenter") )
    {
        if (startServiceByDesktopName("khelpcenter", url, &error, 0, 0, startup_id, false))
        {
            if (Tty != kapp->type())
-               QMessageBox::critical(kapp->mainWidget(), i18n("Could not Launch Help Center"),
+               TQMessageBox::critical(kapp->mainWidget(), i18n("Could not Launch Help Center"),
                i18n("Could not launch the KDE Help Center:\n\n%1").arg(error), i18n("&OK"));
            else
                kdWarning() << "Could not launch help:\n" << error << endl;
@@ -2253,30 +2253,30 @@ void KApplication::invokeHelp( const QString& anchor,
 }
 #endif
 
-void KApplication::invokeHTMLHelp( const QString& _filename, const QString& topic ) const
+void KApplication::invokeHTMLHelp( const TQString& _filename, const TQString& topic ) const
 {
    kdWarning() << "invoking HTML help is deprecated! use docbook and invokeHelp!\n";
 
-   QString filename;
+   TQString filename;
 
    if( _filename.isEmpty() )
-     filename = QString(name()) + "/index.html";
+     filename = TQString(name()) + "/index.html";
    else
      filename = _filename;
 
-   QString url;
+   TQString url;
    if (!topic.isEmpty())
-     url = QString("help:/%1#%2").arg(filename).arg(topic);
+     url = TQString("help:/%1#%2").arg(filename).arg(topic);
    else
-     url = QString("help:/%1").arg(filename);
+     url = TQString("help:/%1").arg(filename);
 
-   QString error;
+   TQString error;
    if ( !dcopClient()->isApplicationRegistered("khelpcenter") )
    {
        if (startServiceByDesktopName("khelpcenter", url, &error, 0, 0, "", false))
        {
            if (Tty != kapp->type())
-               QMessageBox::critical(kapp->mainWidget(), i18n("Could not Launch Help Center"),
+               TQMessageBox::critical(kapp->mainWidget(), i18n("Could not Launch Help Center"),
                i18n("Could not launch the KDE Help Center:\n\n%1").arg(error), i18n("&OK"));
            else
                kdWarning() << "Could not launch help:\n" << error << endl;
@@ -2288,15 +2288,15 @@ void KApplication::invokeHTMLHelp( const QString& _filename, const QString& topi
 }
 
 
-void KApplication::invokeMailer(const QString &address, const QString &subject)
+void KApplication::invokeMailer(const TQString &address, const TQString &subject)
 {
     return invokeMailer(address,subject,"");
 }
 
-void KApplication::invokeMailer(const QString &address, const QString &subject, const QCString& startup_id)
+void KApplication::invokeMailer(const TQString &address, const TQString &subject, const TQCString& startup_id)
 {
-   invokeMailer(address, QString::null, QString::null, subject, QString::null, QString::null,
-       QStringList(), startup_id );
+   invokeMailer(address, TQString::null, TQString::null, subject, TQString::null, TQString::null,
+       TQStringList(), startup_id );
 }
 
 void KApplication::invokeMailer(const KURL &mailtoURL)
@@ -2304,19 +2304,19 @@ void KApplication::invokeMailer(const KURL &mailtoURL)
     return invokeMailer( mailtoURL, "" );
 }
 
-void KApplication::invokeMailer(const KURL &mailtoURL, const QCString& startup_id )
+void KApplication::invokeMailer(const KURL &mailtoURL, const TQCString& startup_id )
 {
     return invokeMailer( mailtoURL, startup_id, false);
 }
 
-void KApplication::invokeMailer(const KURL &mailtoURL, const QCString& startup_id, bool allowAttachments )
+void KApplication::invokeMailer(const KURL &mailtoURL, const TQCString& startup_id, bool allowAttachments )
 {
-   QString address = KURL::decode_string(mailtoURL.path()), subject, cc, bcc, body;
-   QStringList queries = QStringList::split('&', mailtoURL.query().mid(1));
-   QStringList attachURLs;
-   for (QStringList::Iterator it = queries.begin(); it != queries.end(); ++it)
+   TQString address = KURL::decode_string(mailtoURL.path()), subject, cc, bcc, body;
+   TQStringList queries = TQStringList::split('&', mailtoURL.query().mid(1));
+   TQStringList attachURLs;
+   for (TQStringList::Iterator it = queries.begin(); it != queries.end(); ++it)
    {
-     QString q = (*it).lower();
+     TQString q = (*it).lower();
      if (q.startsWith("subject="))
        subject = KURL::decode_string((*it).mid(8));
      else
@@ -2339,12 +2339,12 @@ void KApplication::invokeMailer(const KURL &mailtoURL, const QCString& startup_i
        address = address.isEmpty()? KURL::decode_string((*it).mid(3)): address + ',' + KURL::decode_string((*it).mid(3));
    }
 
-   invokeMailer( address, cc, bcc, subject, body, QString::null, attachURLs, startup_id );
+   invokeMailer( address, cc, bcc, subject, body, TQString::null, attachURLs, startup_id );
 }
 
-void KApplication::invokeMailer(const QString &to, const QString &cc, const QString &bcc,
-                                const QString &subject, const QString &body,
-                                const QString & messageFile, const QStringList &attachURLs)
+void KApplication::invokeMailer(const TQString &to, const TQString &cc, const TQString &bcc,
+                                const TQString &subject, const TQString &body,
+                                const TQString & messageFile, const TQStringList &attachURLs)
 {
     return invokeMailer(to,cc,bcc,subject,body,messageFile,attachURLs,"");
 }
@@ -2353,7 +2353,7 @@ void KApplication::invokeMailer(const QString &to, const QString &cc, const QStr
 // on win32, for invoking browser we're using win32 API
 // see kapplication_win.cpp
 
-static QStringList splitEmailAddressList( const QString & aStr )
+static TQStringList splitEmailAddressList( const TQString & aStr )
 {
   // This is a copy of KPIM::splitEmailAddrList().
   // Features:
@@ -2364,12 +2364,12 @@ static QStringList splitEmailAddressList( const QString & aStr )
   // - ignores everything (including double quotes and commas)
   //   inside comments
 
-  QStringList list;
+  TQStringList list;
 
   if (aStr.isEmpty())
     return list;
 
-  QString addr;
+  TQString addr;
   uint addrstart = 0;
   int commentlevel = 0;
   bool insidequote = false;
@@ -2424,36 +2424,36 @@ static QStringList splitEmailAddressList( const QString & aStr )
   return list;
 }
 
-void KApplication::invokeMailer(const QString &_to, const QString &_cc, const QString &_bcc,
-                                const QString &subject, const QString &body,
-                                const QString & /*messageFile TODO*/, const QStringList &attachURLs,
-                                const QCString& startup_id )
+void KApplication::invokeMailer(const TQString &_to, const TQString &_cc, const TQString &_bcc,
+                                const TQString &subject, const TQString &body,
+                                const TQString & /*messageFile TODO*/, const TQStringList &attachURLs,
+                                const TQCString& startup_id )
 {
    KConfig config("emaildefaults");
 
    config.setGroup("Defaults");
-   QString group = config.readEntry("Profile","Default");
+   TQString group = config.readEntry("Profile","Default");
 
-   config.setGroup( QString("PROFILE_%1").arg(group) );
-   QString command = config.readPathEntry("EmailClient");
+   config.setGroup( TQString("PROFILE_%1").arg(group) );
+   TQString command = config.readPathEntry("EmailClient");
 
-   QString to, cc, bcc;
-   if (command.isEmpty() || command == QString::fromLatin1("kmail")
+   TQString to, cc, bcc;
+   if (command.isEmpty() || command == TQString::fromLatin1("kmail")
        || command.endsWith("/kmail"))
    {
-     command = QString::fromLatin1("kmail --composer -s %s -c %c -b %b --body %B --attach %A -- %t");
+     command = TQString::fromLatin1("kmail --composer -s %s -c %c -b %b --body %B --attach %A -- %t");
      if ( !_to.isEmpty() )
      {
        // put the whole address lists into RFC2047 encoded blobs; technically
        // this isn't correct, but KMail understands it nonetheless
-       to = QString( "=?utf8?b?%1?=" )
+       to = TQString( "=?utf8?b?%1?=" )
             .arg( KCodecs::base64Encode( _to.utf8(), false ) );
      }
      if ( !_cc.isEmpty() )
-       cc = QString( "=?utf8?b?%1?=" )
+       cc = TQString( "=?utf8?b?%1?=" )
             .arg( KCodecs::base64Encode( _cc.utf8(), false ) );
      if ( !_bcc.isEmpty() )
-       bcc = QString( "=?utf8?b?%1?=" )
+       bcc = TQString( "=?utf8?b?%1?=" )
              .arg( KCodecs::base64Encode( _bcc.utf8(), false ) );
    } else {
      to = _to;
@@ -2466,31 +2466,31 @@ void KApplication::invokeMailer(const QString &_to, const QString &_cc, const QS
    if (config.readBoolEntry("TerminalClient", false))
    {
      KConfigGroup confGroup( KGlobal::config(), "General" );
-     QString preferredTerminal = confGroup.readPathEntry("TerminalApplication", "konsole");
+     TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", "konsole");
      command = preferredTerminal + " -e " + command;
    }
 
-   QStringList cmdTokens = KShell::splitArgs(command);
-   QString cmd = cmdTokens[0];
+   TQStringList cmdTokens = KShell::splitArgs(command);
+   TQString cmd = cmdTokens[0];
    cmdTokens.remove(cmdTokens.begin());
 
    KURL url;
-   QStringList qry;
+   TQStringList qry;
    if (!to.isEmpty())
    {
-     QStringList tos = splitEmailAddressList( to );
+     TQStringList tos = splitEmailAddressList( to );
      url.setPath( tos.first() );
      tos.remove( tos.begin() );
-     for (QStringList::ConstIterator it = tos.begin(); it != tos.end(); ++it)
+     for (TQStringList::ConstIterator it = tos.begin(); it != tos.end(); ++it)
        qry.append( "to=" + KURL::encode_string( *it ) );
    }
-   const QStringList ccs = splitEmailAddressList( cc );
-   for (QStringList::ConstIterator it = ccs.begin(); it != ccs.end(); ++it)
+   const TQStringList ccs = splitEmailAddressList( cc );
+   for (TQStringList::ConstIterator it = ccs.begin(); it != ccs.end(); ++it)
       qry.append( "cc=" + KURL::encode_string( *it ) );
-   const QStringList bccs = splitEmailAddressList( bcc );
-   for (QStringList::ConstIterator it = bccs.begin(); it != bccs.end(); ++it)
+   const TQStringList bccs = splitEmailAddressList( bcc );
+   for (TQStringList::ConstIterator it = bccs.begin(); it != bccs.end(); ++it)
       qry.append( "bcc=" + KURL::encode_string( *it ) );
-   for (QStringList::ConstIterator it = attachURLs.begin(); it != attachURLs.end(); ++it)
+   for (TQStringList::ConstIterator it = attachURLs.begin(); it != attachURLs.end(); ++it)
       qry.append( "attach=" + KURL::encode_string( *it ) );
    if (!subject.isEmpty())
       qry.append( "subject=" + KURL::encode_string( subject ) );
@@ -2500,7 +2500,7 @@ void KApplication::invokeMailer(const QString &_to, const QString &_cc, const QS
    if ( ! (to.isEmpty() && qry.isEmpty()) )
       url.setProtocol("mailto");
 
-   QMap<QChar, QString> keyMap;
+   TQMap<TQChar, TQString> keyMap;
    keyMap.insert('t', to);
    keyMap.insert('s', subject);
    keyMap.insert('c', cc);
@@ -2508,22 +2508,22 @@ void KApplication::invokeMailer(const QString &_to, const QString &_cc, const QS
    keyMap.insert('B', body);
    keyMap.insert('u', url.url());
 
-   QString attachlist = attachURLs.join(",");
+   TQString attachlist = attachURLs.join(",");
    attachlist.prepend('\'');
    attachlist.append('\'');
    keyMap.insert('A', attachlist);
 
-   for (QStringList::Iterator it = cmdTokens.begin(); it != cmdTokens.end(); )
+   for (TQStringList::Iterator it = cmdTokens.begin(); it != cmdTokens.end(); )
    {
      if (*it == "%A")
      {
          if (it == cmdTokens.begin()) // better safe than sorry ...
              continue;
-         QStringList::ConstIterator urlit = attachURLs.begin();
-         QStringList::ConstIterator urlend = attachURLs.end();
+         TQStringList::ConstIterator urlit = attachURLs.begin();
+         TQStringList::ConstIterator urlend = attachURLs.end();
          if ( urlit != urlend )
          {
-             QStringList::Iterator previt = it;
+             TQStringList::Iterator previt = it;
              --previt;
              *it = *urlit;
              ++it;
@@ -2542,19 +2542,19 @@ void KApplication::invokeMailer(const QString &_to, const QString &_cc, const QS
      }
    }
 
-   QString error;
+   TQString error;
    // TODO this should check if cmd has a .desktop file, and use data from it, together
    // with sending more ASN data
    if (kdeinitExec(cmd, cmdTokens, &error, NULL, startup_id ))
      if (Tty != kapp->type())
-       QMessageBox::critical(kapp->mainWidget(), i18n("Could not Launch Mail Client"),
+       TQMessageBox::critical(kapp->mainWidget(), i18n("Could not Launch Mail Client"),
              i18n("Could not launch the mail client:\n\n%1").arg(error), i18n("&OK"));
      else
        kdWarning() << "Could not launch mail client:\n" << error << endl;
 }
 #endif
 
-void KApplication::invokeBrowser( const QString &url )
+void KApplication::invokeBrowser( const TQString &url )
 {
     return invokeBrowser( url, "" );
 }
@@ -2562,14 +2562,14 @@ void KApplication::invokeBrowser( const QString &url )
 #ifndef Q_WS_WIN
 // on win32, for invoking browser we're using win32 API
 // see kapplication_win.cpp
-void KApplication::invokeBrowser( const QString &url, const QCString& startup_id )
+void KApplication::invokeBrowser( const TQString &url, const TQCString& startup_id )
 {
-   QString error;
+   TQString error;
 
    if (startServiceByDesktopName("kfmclient", url, &error, 0, 0, startup_id, false))
    {
       if (Tty != kapp->type())
-          QMessageBox::critical(kapp->mainWidget(), i18n("Could not Launch Browser"),
+          TQMessageBox::critical(kapp->mainWidget(), i18n("Could not Launch Browser"),
                i18n("Could not launch the browser:\n\n%1").arg(error), i18n("&OK"));
       else
           kdWarning() << "Could not launch browser:\n" << error << endl;
@@ -2580,27 +2580,27 @@ void KApplication::invokeBrowser( const QString &url, const QCString& startup_id
 
 void KApplication::cut()
 {
-  invokeEditSlot( SLOT( cut() ) );
+  invokeEditSlot( TQT_SLOT( cut() ) );
 }
 
 void KApplication::copy()
 {
-  invokeEditSlot( SLOT( copy() ) );
+  invokeEditSlot( TQT_SLOT( copy() ) );
 }
 
 void KApplication::paste()
 {
-  invokeEditSlot( SLOT( paste() ) );
+  invokeEditSlot( TQT_SLOT( paste() ) );
 }
 
 void KApplication::clear()
 {
-  invokeEditSlot( SLOT( clear() ) );
+  invokeEditSlot( TQT_SLOT( clear() ) );
 }
 
 void KApplication::selectAll()
 {
-  invokeEditSlot( SLOT( selectAll() ) );
+  invokeEditSlot( TQT_SLOT( selectAll() ) );
 }
 
 void KApplication::broadcastKeyCode(unsigned int keyCode)
@@ -2615,15 +2615,15 @@ KApplication::launcher()
 }
 
 static int
-startServiceInternal( const QCString &function,
-              const QString& _name, const QStringList &URLs,
-              QString *error, QCString *dcopService, int *pid, const QCString& startup_id, bool noWait )
+startServiceInternal( const TQCString &function,
+              const TQString& _name, const TQStringList &URLs,
+              TQString *error, TQCString *dcopService, int *pid, const TQCString& startup_id, bool noWait )
 {
    struct serviceResult
    {
       int result;
-      QCString dcopName;
-      QString error;
+      TQCString dcopName;
+      TQString error;
       pid_t pid;
    };
 
@@ -2646,20 +2646,20 @@ startServiceInternal( const QCString &function,
          return -1;
       }
    }
-   QByteArray params;
-   QDataStream stream(params, IO_WriteOnly);
+   TQByteArray params;
+   TQDataStream stream(params, IO_WriteOnly);
    stream << _name << URLs;
-   QCString replyType;
-   QByteArray replyData;
-   QCString _launcher = KApplication::launcher();
-   QValueList<QCString> envs;
+   TQCString replyType;
+   TQByteArray replyData;
+   TQCString _launcher = KApplication::launcher();
+   TQValueList<TQCString> envs;
 #ifdef Q_WS_X11
    if (qt_xdisplay()) {
-       QCString dpystring(XDisplayString(qt_xdisplay()));
-       envs.append( QCString("DISPLAY=") + dpystring );
+       TQCString dpystring(XDisplayString(qt_xdisplay()));
+       envs.append( TQCString("DISPLAY=") + dpystring );
    } else if( getenv( "DISPLAY" )) {
-       QCString dpystring( getenv( "DISPLAY" ));
-       envs.append( QCString("DISPLAY=") + dpystring );
+       TQCString dpystring( getenv( "DISPLAY" ));
+       envs.append( TQCString("DISPLAY=") + dpystring );
    }
 #endif
    stream << envs;
@@ -2685,7 +2685,7 @@ startServiceInternal( const QCString &function,
    if (noWait)
       return 0;
 
-   QDataStream stream2(replyData, IO_ReadOnly);
+   TQDataStream stream2(replyData, IO_ReadOnly);
    serviceResult result;
    stream2 >> result.result >> result.dcopName >> result.error >> result.pid;
    if (dcopService)
@@ -2698,111 +2698,111 @@ startServiceInternal( const QCString &function,
 }
 
 int
-KApplication::startServiceByName( const QString& _name, const QString &URL,
-                  QString *error, QCString *dcopService, int *pid, const QCString& startup_id, bool noWait )
+KApplication::startServiceByName( const TQString& _name, const TQString &URL,
+                  TQString *error, TQCString *dcopService, int *pid, const TQCString& startup_id, bool noWait )
 {
-   QStringList URLs;
+   TQStringList URLs;
    if (!URL.isEmpty())
       URLs.append(URL);
    return startServiceInternal(
-                      "start_service_by_name(QString,QStringList,QValueList<QCString>,QCString,bool)",
+                      "start_service_by_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)",
                       _name, URLs, error, dcopService, pid, startup_id, noWait);
 }
 
 int
-KApplication::startServiceByName( const QString& _name, const QStringList &URLs,
-                  QString *error, QCString *dcopService, int *pid, const QCString& startup_id, bool noWait )
+KApplication::startServiceByName( const TQString& _name, const TQStringList &URLs,
+                  TQString *error, TQCString *dcopService, int *pid, const TQCString& startup_id, bool noWait )
 {
    return startServiceInternal(
-                      "start_service_by_name(QString,QStringList,QValueList<QCString>,QCString,bool)",
+                      "start_service_by_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)",
                       _name, URLs, error, dcopService, pid, startup_id, noWait);
 }
 
 int
-KApplication::startServiceByDesktopPath( const QString& _name, const QString &URL,
-                  QString *error, QCString *dcopService, int *pid, const QCString& startup_id, bool noWait )
+KApplication::startServiceByDesktopPath( const TQString& _name, const TQString &URL,
+                  TQString *error, TQCString *dcopService, int *pid, const TQCString& startup_id, bool noWait )
 {
-   QStringList URLs;
+   TQStringList URLs;
    if (!URL.isEmpty())
       URLs.append(URL);
    return startServiceInternal(
-                      "start_service_by_desktop_path(QString,QStringList,QValueList<QCString>,QCString,bool)",
+                      "start_service_by_desktop_path(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)",
                       _name, URLs, error, dcopService, pid, startup_id, noWait);
 }
 
 int
-KApplication::startServiceByDesktopPath( const QString& _name, const QStringList &URLs,
-                  QString *error, QCString *dcopService, int *pid, const QCString& startup_id, bool noWait )
+KApplication::startServiceByDesktopPath( const TQString& _name, const TQStringList &URLs,
+                  TQString *error, TQCString *dcopService, int *pid, const TQCString& startup_id, bool noWait )
 {
    return startServiceInternal(
-                      "start_service_by_desktop_path(QString,QStringList,QValueList<QCString>,QCString,bool)",
+                      "start_service_by_desktop_path(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)",
                       _name, URLs, error, dcopService, pid, startup_id, noWait);
 }
 
 int
-KApplication::startServiceByDesktopName( const QString& _name, const QString &URL,
-                  QString *error, QCString *dcopService, int *pid, const QCString& startup_id, bool noWait )
+KApplication::startServiceByDesktopName( const TQString& _name, const TQString &URL,
+                  TQString *error, TQCString *dcopService, int *pid, const TQCString& startup_id, bool noWait )
 {
-   QStringList URLs;
+   TQStringList URLs;
    if (!URL.isEmpty())
       URLs.append(URL);
    return startServiceInternal(
-                      "start_service_by_desktop_name(QString,QStringList,QValueList<QCString>,QCString,bool)",
+                      "start_service_by_desktop_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)",
                       _name, URLs, error, dcopService, pid, startup_id, noWait);
 }
 
 int
-KApplication::startServiceByDesktopName( const QString& _name, const QStringList &URLs,
-                  QString *error, QCString *dcopService, int *pid, const QCString& startup_id, bool noWait )
+KApplication::startServiceByDesktopName( const TQString& _name, const TQStringList &URLs,
+                  TQString *error, TQCString *dcopService, int *pid, const TQCString& startup_id, bool noWait )
 {
    return startServiceInternal(
-                      "start_service_by_desktop_name(QString,QStringList,QValueList<QCString>,QCString,bool)",
+                      "start_service_by_desktop_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)",
                       _name, URLs, error, dcopService, pid, startup_id, noWait);
 }
 
 int
-KApplication::kdeinitExec( const QString& name, const QStringList &args,
-                           QString *error, int *pid )
+KApplication::kdeinitExec( const TQString& name, const TQStringList &args,
+                           TQString *error, int *pid )
 {
     return kdeinitExec( name, args, error, pid, "" );
 }
 
 int
-KApplication::kdeinitExec( const QString& name, const QStringList &args,
-                           QString *error, int *pid, const QCString& startup_id )
+KApplication::kdeinitExec( const TQString& name, const TQStringList &args,
+                           TQString *error, int *pid, const TQCString& startup_id )
 {
-   return startServiceInternal("kdeinit_exec(QString,QStringList,QValueList<QCString>,QCString)",
+   return startServiceInternal("kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)",
         name, args, error, 0, pid, startup_id, false);
 }
 
 int
-KApplication::kdeinitExecWait( const QString& name, const QStringList &args,
-                           QString *error, int *pid )
+KApplication::kdeinitExecWait( const TQString& name, const TQStringList &args,
+                           TQString *error, int *pid )
 {
     return kdeinitExecWait( name, args, error, pid, "" );
 }
 
 int
-KApplication::kdeinitExecWait( const QString& name, const QStringList &args,
-                           QString *error, int *pid, const QCString& startup_id )
+KApplication::kdeinitExecWait( const TQString& name, const TQStringList &args,
+                           TQString *error, int *pid, const TQCString& startup_id )
 {
-   return startServiceInternal("kdeinit_exec_wait(QString,QStringList,QValueList<QCString>,QCString)",
+   return startServiceInternal("kdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>,TQCString)",
         name, args, error, 0, pid, startup_id, false);
 }
 
-QString KApplication::tempSaveName( const QString& pFilename ) const
+TQString KApplication::tempSaveName( const TQString& pFilename ) const
 {
-  QString aFilename;
+  TQString aFilename;
 
-  if( QDir::isRelativePath(pFilename) )
+  if( TQDir::isRelativePath(pFilename) )
     {
       kdWarning(101) << "Relative filename passed to KApplication::tempSaveName" << endl;
-      aFilename = QFileInfo( QDir( "." ), pFilename ).absFilePath();
+      aFilename = TQFileInfo( TQDir( "." ), pFilename ).absFilePath();
     }
   else
     aFilename = pFilename;
 
-  QDir aAutosaveDir( QDir::homeDirPath() + "/autosave/" );
+  TQDir aAutosaveDir( TQDir::homeDirPath() + "/autosave/" );
   if( !aAutosaveDir.exists() )
     {
       if( !aAutosaveDir.mkdir( aAutosaveDir.absPath() ) )
@@ -2818,20 +2818,20 @@ QString KApplication::tempSaveName( const QString& pFilename ) const
 }
 
 
-QString KApplication::checkRecoverFile( const QString& pFilename,
+TQString KApplication::checkRecoverFile( const TQString& pFilename,
         bool& bRecover ) const
 {
-  QString aFilename;
+  TQString aFilename;
 
-  if( QDir::isRelativePath(pFilename) )
+  if( TQDir::isRelativePath(pFilename) )
     {
       kdWarning(101) << "Relative filename passed to KApplication::tempSaveName" << endl;
-      aFilename = QFileInfo( QDir( "." ), pFilename ).absFilePath();
+      aFilename = TQFileInfo( TQDir( "." ), pFilename ).absFilePath();
     }
   else
     aFilename = pFilename;
 
-  QDir aAutosaveDir( QDir::homeDirPath() + "/autosave/" );
+  TQDir aAutosaveDir( TQDir::homeDirPath() + "/autosave/" );
   if( !aAutosaveDir.exists() )
     {
       if( !aAutosaveDir.mkdir( aAutosaveDir.absPath() ) )
@@ -2843,7 +2843,7 @@ QString KApplication::checkRecoverFile( const QString& pFilename,
 
   aFilename.replace( "/", "\\!" ).prepend( "#" ).append( "#" ).prepend( "/" ).prepend( aAutosaveDir.absPath() );
 
-  if( QFile( aFilename ).exists() )
+  if( TQFile( aFilename ).exists() )
     {
       bRecover = true;
       return aFilename;
@@ -2856,9 +2856,9 @@ QString KApplication::checkRecoverFile( const QString& pFilename,
 }
 
 
-bool checkAccess(const QString& pathname, int mode)
+bool checkAccess(const TQString& pathname, int mode)
 {
-  int accessOK = access( QFile::encodeName(pathname), mode );
+  int accessOK = access( TQFile::encodeName(pathname), mode );
   if ( accessOK == 0 )
     return true;  // OK, I can really access the file
 
@@ -2869,11 +2869,11 @@ bool checkAccess(const QString& pathname, int mode)
     return false;   // Check for write access is not part of mode => bail out
 
 
-  if (!access( QFile::encodeName(pathname), F_OK)) // if it already exists
+  if (!access( TQFile::encodeName(pathname), F_OK)) // if it already exists
       return false;
 
   //strip the filename (everything until '/' from the end
-  QString dirName(pathname);
+  TQString dirName(pathname);
   int pos = dirName.findRev('/');
   if ( pos == -1 )
     return false;   // No path in argument. This is evil, we won't allow this
@@ -2882,7 +2882,7 @@ bool checkAccess(const QString& pathname, int mode)
 
   dirName.truncate(pos); // strip everything starting from the last '/'
 
-  accessOK = access( QFile::encodeName(dirName), W_OK );
+  accessOK = access( TQFile::encodeName(dirName), W_OK );
   // -?- Can I write to the accessed diretory
   if ( accessOK == 0 )
     return true;  // Yes
@@ -2890,7 +2890,7 @@ bool checkAccess(const QString& pathname, int mode)
     return false; // No
 }
 
-void KApplication::setTopWidget( QWidget *topWidget )
+void KApplication::setTopWidget( TQWidget *topWidget )
 {
   if( !topWidget )
       return;
@@ -2911,12 +2911,12 @@ void KApplication::setTopWidget( QWidget *topWidget )
 #endif
 }
 
-QCString KApplication::startupId() const
+TQCString KApplication::startupId() const
 {
     return d->startup_id;
 }
 
-void KApplication::setStartupId( const QCString& startup_id )
+void KApplication::setStartupId( const TQCString& startup_id )
 {
     if( startup_id == d->startup_id )
         return;
@@ -2969,11 +2969,11 @@ int KApplication::random()
    return rand();
 }
 
-QString KApplication::randomString(int length)
+TQString KApplication::randomString(int length)
 {
-   if (length <=0 ) return QString::null;
+   if (length <=0 ) return TQString::null;
 
-   QString str; str.setLength( length );
+   TQString str; str.setLength( length );
    int i = 0;
    while (length--)
    {
@@ -2987,7 +2987,7 @@ QString KApplication::randomString(int length)
    return str;
 }
 
-bool KApplication::authorize(const QString &genericAction)
+bool KApplication::authorize(const TQString &genericAction)
 {
    if (!d->actionRestrictions)
       return true;
@@ -3002,12 +3002,12 @@ bool KApplication::authorizeKAction(const char *action)
    if (!d->actionRestrictions || !action)
       return true;
 
-   static const QString &action_prefix = KGlobal::staticQString( "action/" );
+   static const TQString &action_prefix = KGlobal::staticQString( "action/" );
 
    return authorize(action_prefix + action);
 }
 
-bool KApplication::authorizeControlModule(const QString &menuId)
+bool KApplication::authorizeControlModule(const TQString &menuId)
 {
    if (menuId.isEmpty() || kde_kiosk_exception)
       return true;
@@ -3016,12 +3016,12 @@ bool KApplication::authorizeControlModule(const QString &menuId)
    return config->readBoolEntry(menuId, true);
 }
 
-QStringList KApplication::authorizeControlModules(const QStringList &menuIds)
+TQStringList KApplication::authorizeControlModules(const TQStringList &menuIds)
 {
    KConfig *config = KGlobal::config();
    KConfigGroupSaver saver( config, "KDE Control Module Restrictions" );
-   QStringList result;
-   for(QStringList::ConstIterator it = menuIds.begin();
+   TQStringList result;
+   for(TQStringList::ConstIterator it = menuIds.begin();
        it != menuIds.end(); ++it)
    {
       if (config->readBoolEntry(*it, true))
@@ -3035,67 +3035,67 @@ void KApplication::initUrlActionRestrictions()
   d->urlActionRestrictions.setAutoDelete(true);
   d->urlActionRestrictions.clear();
   d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
-  ("open", QString::null, QString::null, QString::null, QString::null, QString::null, QString::null, true));
+  ("open", TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, true));
   d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
-  ("list", QString::null, QString::null, QString::null, QString::null, QString::null, QString::null, true));
+  ("list", TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, true));
 // TEST:
 //  d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
-//  ("list", QString::null, QString::null, QString::null, QString::null, QString::null, QString::null, false));
+//  ("list", TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, false));
 //  d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
-//  ("list", QString::null, QString::null, QString::null, "file", QString::null, QDir::homeDirPath(), true));
+//  ("list", TQString::null, TQString::null, TQString::null, "file", TQString::null, TQDir::homeDirPath(), true));
   d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
-  ("link", QString::null, QString::null, QString::null, ":internet", QString::null, QString::null, true));
+  ("link", TQString::null, TQString::null, TQString::null, ":internet", TQString::null, TQString::null, true));
   d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
-  ("redirect", QString::null, QString::null, QString::null, ":internet", QString::null, QString::null, true));
+  ("redirect", TQString::null, TQString::null, TQString::null, ":internet", TQString::null, TQString::null, true));
 
   // We allow redirections to file: but not from internet protocols, redirecting to file:
   // is very popular among io-slaves and we don't want to break them
   d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
-  ("redirect", QString::null, QString::null, QString::null, "file", QString::null, QString::null, true));
+  ("redirect", TQString::null, TQString::null, TQString::null, "file", TQString::null, TQString::null, true));
   d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
-  ("redirect", ":internet", QString::null, QString::null, "file", QString::null, QString::null, false));
+  ("redirect", ":internet", TQString::null, TQString::null, "file", TQString::null, TQString::null, false));
 
   // local protocols may redirect everywhere
   d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
-  ("redirect", ":local", QString::null, QString::null, QString::null, QString::null, QString::null, true));
+  ("redirect", ":local", TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, true));
 
   // Anyone may redirect to about:
   d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
-  ("redirect", QString::null, QString::null, QString::null, "about", QString::null, QString::null, true));
+  ("redirect", TQString::null, TQString::null, TQString::null, "about", TQString::null, TQString::null, true));
 
   // Anyone may redirect to itself, cq. within it's own group
   d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
-  ("redirect", QString::null, QString::null, QString::null, "=", QString::null, QString::null, true));
+  ("redirect", TQString::null, TQString::null, TQString::null, "=", TQString::null, TQString::null, true));
 
   KConfig *config = KGlobal::config();
   KConfigGroupSaver saver( config, "KDE URL Restrictions" );
   int count = config->readNumEntry("rule_count");
-  QString keyFormat = QString("rule_%1");
+  TQString keyFormat = TQString("rule_%1");
   for(int i = 1; i <= count; i++)
   {
-    QString key = keyFormat.arg(i);
-    QStringList rule = config->readListEntry(key);
+    TQString key = keyFormat.arg(i);
+    TQStringList rule = config->readListEntry(key);
     if (rule.count() != 8)
       continue;
-    QString action = rule[0];
-    QString refProt = rule[1];
-    QString refHost = rule[2];
-    QString refPath = rule[3];
-    QString urlProt = rule[4];
-    QString urlHost = rule[5];
-    QString urlPath = rule[6];
-    QString strEnabled = rule[7].lower();
+    TQString action = rule[0];
+    TQString refProt = rule[1];
+    TQString refHost = rule[2];
+    TQString refPath = rule[3];
+    TQString urlProt = rule[4];
+    TQString urlHost = rule[5];
+    TQString urlPath = rule[6];
+    TQString strEnabled = rule[7].lower();
 
     bool bEnabled = (strEnabled == "true");
 
     if (refPath.startsWith("$HOME"))
-       refPath.replace(0, 5, QDir::homeDirPath());
+       refPath.replace(0, 5, TQDir::homeDirPath());
     else if (refPath.startsWith("~"))
-       refPath.replace(0, 1, QDir::homeDirPath());
+       refPath.replace(0, 1, TQDir::homeDirPath());
     if (urlPath.startsWith("$HOME"))
-       urlPath.replace(0, 5, QDir::homeDirPath());
+       urlPath.replace(0, 5, TQDir::homeDirPath());
     else if (urlPath.startsWith("~"))
-       urlPath.replace(0, 1, QDir::homeDirPath());
+       urlPath.replace(0, 1, TQDir::homeDirPath());
 
     if (refPath.startsWith("$TMP"))
        refPath.replace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
@@ -3107,7 +3107,7 @@ void KApplication::initUrlActionRestrictions()
   }
 }
 
-void KApplication::allowURLAction(const QString &action, const KURL &_baseURL, const KURL &_destURL)
+void KApplication::allowURLAction(const TQString &action, const KURL &_baseURL, const KURL &_destURL)
 {
   if (authorizeURLAction(action, _baseURL, _destURL))
      return;
@@ -3117,7 +3117,7 @@ void KApplication::allowURLAction(const QString &action, const KURL &_baseURL, c
                   _destURL.protocol(), _destURL.host(), _destURL.path(-1), true));
 }
 
-bool KApplication::authorizeURLAction(const QString &action, const KURL &_baseURL, const KURL &_destURL)
+bool KApplication::authorizeURLAction(const TQString &action, const KURL &_baseURL, const KURL &_destURL)
 {
   if (_destURL.isEmpty())
      return true;
@@ -3127,11 +3127,11 @@ bool KApplication::authorizeURLAction(const QString &action, const KURL &_baseUR
      initUrlActionRestrictions();
 
   KURL baseURL(_baseURL);
-  baseURL.setPath(QDir::cleanDirPath(baseURL.path()));
-  QString baseClass = KProtocolInfo::protocolClass(baseURL.protocol());
+  baseURL.setPath(TQDir::cleanDirPath(baseURL.path()));
+  TQString baseClass = KProtocolInfo::protocolClass(baseURL.protocol());
   KURL destURL(_destURL);
-  destURL.setPath(QDir::cleanDirPath(destURL.path()));
-  QString destClass = KProtocolInfo::protocolClass(destURL.protocol());
+  destURL.setPath(TQDir::cleanDirPath(destURL.path()));
+  TQString destClass = KProtocolInfo::protocolClass(destURL.protocol());
 
   for(KApplicationPrivate::URLActionRule *rule = d->urlActionRestrictions.first();
       rule; rule = d->urlActionRestrictions.next())

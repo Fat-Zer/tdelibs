@@ -26,8 +26,8 @@
 #include "rendering/render_image.h"
 #include "misc/loader.h"
 
-#include <qvbox.h>
-#include <qtimer.h>
+#include <tqvbox.h>
+#include <tqtimer.h>
 
 #include <kio/job.h>
 #include <kinstance.h>
@@ -48,9 +48,9 @@ KHTMLImageFactory::~KHTMLImageFactory()
     delete s_instance;
 }
 
-KParts::Part *KHTMLImageFactory::createPartObject( QWidget *parentWidget, const char *widgetName,
-                                                   QObject *parent, const char *name,
-                                                   const char *className, const QStringList & )
+KParts::Part *KHTMLImageFactory::createPartObject( TQWidget *parentWidget, const char *widgetName,
+                                                   TQObject *parent, const char *name,
+                                                   const char *className, const TQStringList & )
 {
   KHTMLPart::GUIProfile prof = KHTMLPart::DefaultGUI;
   if ( strcmp( className, "Browser/View" ) == 0 )
@@ -58,19 +58,19 @@ KParts::Part *KHTMLImageFactory::createPartObject( QWidget *parentWidget, const 
   return new KHTMLImage( parentWidget, widgetName, parent, name, prof );
 }
 
-KHTMLImage::KHTMLImage( QWidget *parentWidget, const char *widgetName,
-                        QObject *parent, const char *name, KHTMLPart::GUIProfile prof )
+KHTMLImage::KHTMLImage( TQWidget *parentWidget, const char *widgetName,
+                        TQObject *parent, const char *name, KHTMLPart::GUIProfile prof )
     : KParts::ReadOnlyPart( parent, name ), m_image( 0 )
 {
     KHTMLPart* parentPart = ::qt_cast<KHTMLPart *>( parent );
     setInstance( KHTMLImageFactory::instance(), prof == KHTMLPart::BrowserViewGUI && !parentPart );
 
-    QVBox *box = new QVBox( parentWidget, widgetName );
+    TQVBox *box = new TQVBox( parentWidget, widgetName );
 
     m_khtml = new KHTMLPart( box, widgetName, this, "htmlimagepart", prof );
     m_khtml->setAutoloadImages( true );
     m_khtml->widget()->installEventFilter(this);
-    connect( m_khtml->view(), SIGNAL( finishedLayout() ), this, SLOT( restoreScrollPosition() ) );
+    connect( m_khtml->view(), TQT_SIGNAL( finishedLayout() ), this, TQT_SLOT( restoreScrollPosition() ) );
 
     setWidget( box );
 
@@ -105,15 +105,15 @@ KHTMLImage::KHTMLImage( QWidget *parentWidget, const char *widgetName,
     // forward opening requests to parent frame (if existing)
     KHTMLPart *p = ::qt_cast<KHTMLPart *>(parent);
     KParts::BrowserExtension *be = p ? p->browserExtension() : m_ext;
-    connect(m_khtml->browserExtension(), SIGNAL(openURLRequestDelayed(const KURL &, const KParts::URLArgs &)),
-    		be, SIGNAL(openURLRequestDelayed(const KURL &, const KParts::URLArgs &)));
+    connect(m_khtml->browserExtension(), TQT_SIGNAL(openURLRequestDelayed(const KURL &, const KParts::URLArgs &)),
+    		be, TQT_SIGNAL(openURLRequestDelayed(const KURL &, const KParts::URLArgs &)));
 
-    connect( m_khtml->browserExtension(), SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KURL &,
-             const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags, mode_t) ), m_ext, SIGNAL( popupMenu( KXMLGUIClient *, const QPoint &, const KURL &,
+    connect( m_khtml->browserExtension(), TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KURL &,
+             const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags, mode_t) ), m_ext, TQT_SIGNAL( popupMenu( KXMLGUIClient *, const TQPoint &, const KURL &,
              const KParts::URLArgs &, KParts::BrowserExtension::PopupFlags, mode_t) ) );
 
-    connect( m_khtml->browserExtension(), SIGNAL( enableAction( const char *, bool ) ),
-             m_ext, SIGNAL( enableAction( const char *, bool ) ) );
+    connect( m_khtml->browserExtension(), TQT_SIGNAL( enableAction( const char *, bool ) ),
+             m_ext, TQT_SIGNAL( enableAction( const char *, bool ) ) );
 
     m_ext->setURLDropHandlingEnabled( true );
 }
@@ -135,7 +135,7 @@ KHTMLImage::~KHTMLImage()
 
 bool KHTMLImage::openURL( const KURL &url )
 {
-    static const QString &html = KGlobal::staticQString( "<html><body><img src=\"%1\"></body></html>" );
+    static const TQString &html = KGlobal::staticQString( "<html><body><img src=\"%1\"></body></html>" );
 
     disposeImage();
 
@@ -169,8 +169,8 @@ bool KHTMLImage::openURL( const KURL &url )
     m_khtml->end();
 
     /*
-    connect( khtml::Cache::loader(), SIGNAL( requestDone( khtml::DocLoader*, khtml::CachedObject *) ),
-            this, SLOT( updateWindowCaption() ) );
+    connect( khtml::Cache::loader(), TQT_SIGNAL( requestDone( khtml::DocLoader*, khtml::CachedObject *) ),
+            this, TQT_SLOT( updateWindowCaption() ) );
             */
     return true;
 }
@@ -187,8 +187,8 @@ void KHTMLImage::notifyFinished( khtml::CachedObject *o )
     if ( !m_image || o != m_image )
         return;
 
-    const QPixmap &pix = m_image->pixmap();
-    QString caption;
+    const TQPixmap &pix = m_image->pixmap();
+    TQString caption;
 
     KMimeType::Ptr mimeType;
     if ( !m_mimeType.isEmpty() )
@@ -242,7 +242,7 @@ void KHTMLImage::slotImageJobFinished( KIO::Job *job )
     else
     {
         emit completed();
-        QTimer::singleShot( 0, this, SLOT( updateWindowCaption() ) );
+        TQTimer::singleShot( 0, this, TQT_SLOT( updateWindowCaption() ) );
     }
 }
 
@@ -267,9 +267,9 @@ void KHTMLImage::updateWindowCaption()
     if ( !renderImage )
         return;
 
-    QPixmap pix = renderImage->pixmap();
+    TQPixmap pix = renderImage->pixmap();
 
-    QString caption;
+    TQString caption;
 
     KMimeType::Ptr mimeType;
     if ( !m_mimeType.isEmpty() )
@@ -296,20 +296,20 @@ void KHTMLImage::disposeImage()
     m_image = 0;
 }
 
-bool KHTMLImage::eventFilter(QObject *, QEvent *e) {
+bool KHTMLImage::eventFilter(TQObject *, TQEvent *e) {
     switch (e->type()) {
-      case QEvent::DragEnter:
-      case QEvent::DragMove:
-      case QEvent::DragLeave:
-      case QEvent::Drop: {
+      case TQEvent::DragEnter:
+      case TQEvent::DragMove:
+      case TQEvent::DragLeave:
+      case TQEvent::Drop: {
         // find out if this part is embedded in a frame, and send the
 	// event to its outside widget
 	KHTMLPart *p = ::qt_cast<KHTMLPart *>(parent());
 	if (p)
-	    return QApplication::sendEvent(p->widget(), e);
+	    return TQApplication::sendEvent(p->widget(), e);
         // otherwise simply forward all dnd events to the part widget,
 	// konqueror will handle them properly there
-        return QApplication::sendEvent(widget(), e);
+        return TQApplication::sendEvent(widget(), e);
       }
       default: ;
     }

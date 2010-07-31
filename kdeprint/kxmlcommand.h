@@ -20,9 +20,9 @@
 #ifndef KXMLCOMMAND_H
 #define KXMLCOMMAND_H
 
-#include <qdom.h>
-#include <qmap.h>
-#include <qobject.h>
+#include <tqdom.h>
+#include <tqmap.h>
+#include <tqobject.h>
 
 #include <kdelibs_export.h>
 
@@ -37,31 +37,31 @@ class KDEPRINT_EXPORT KXmlCommand : public QObject
 public:
 	~KXmlCommand();
 
-	QString name() const;
-	void setName(const QString&);
-	QString command();
-	void setCommand(const QString&);
+	TQString name() const;
+	void setName(const TQString&);
+	TQString command();
+	void setCommand(const TQString&);
 	DrMain* driver();
 	DrMain* takeDriver();
 	void setDriver(DrMain*);
-	QString io(bool io_input = true, bool io_pipe = false);
-	void setIo(const QString&, bool io_input = true, bool io_pipe = false);
-	QString description();
-	void setDescription(const QString&);
-	QString mimeType();
-	void setMimeType(const QString&);
-	bool acceptMimeType(const QString&);
-	QStringList inputMimeTypes();
-	void setInputMimeTypes(const QStringList&);
-	QStringList requirements();
-	void setRequirements(const QStringList&);
-	QString comment();
-	void setComment( const QString& );
+	TQString io(bool io_input = true, bool io_pipe = false);
+	void setIo(const TQString&, bool io_input = true, bool io_pipe = false);
+	TQString description();
+	void setDescription(const TQString&);
+	TQString mimeType();
+	void setMimeType(const TQString&);
+	bool acceptMimeType(const TQString&);
+	TQStringList inputMimeTypes();
+	void setInputMimeTypes(const TQStringList&);
+	TQStringList requirements();
+	void setRequirements(const TQStringList&);
+	TQString comment();
+	void setComment( const TQString& );
 	bool isValid();
 
-	QString buildCommand(const QMap<QString,QString>& opts, bool pipein = true, bool pipeout = true);
-	void setOptions(const QMap<QString,QString>& opts);
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
+	TQString buildCommand(const TQMap<TQString,TQString>& opts, bool pipein = true, bool pipeout = true);
+	void setOptions(const TQMap<TQString,TQString>& opts);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
 
 protected:
 	void init();
@@ -70,16 +70,16 @@ protected:
 	void loadDesktop();
 	void saveDesktop();
 	void check(bool use_xml = false);
-	DrGroup* parseGroup(const QDomElement& e, DrGroup *grp = 0);
-	DrBase* parseArgument(const QDomElement& e);
-	void parseIO(const QDomElement& e, int n);
-	QDomElement createIO(QDomDocument&, int, const QString&);
-	QDomElement createGroup(QDomDocument&, DrGroup*);
-	QDomElement createElement(QDomDocument&, DrBase*);
+	DrGroup* parseGroup(const TQDomElement& e, DrGroup *grp = 0);
+	DrBase* parseArgument(const TQDomElement& e);
+	void parseIO(const TQDomElement& e, int n);
+	TQDomElement createIO(TQDomDocument&, int, const TQString&);
+	TQDomElement createGroup(TQDomDocument&, DrGroup*);
+	TQDomElement createElement(TQDomDocument&, DrBase*);
 
 	// use protected constructor to only allow the manager to
 	// create KXmlCommand object.
-	KXmlCommand(const QString& xmlId = QString::null);
+	KXmlCommand(const TQString& xmlId = TQString::null);
 
 private:
 	class KXmlCommandPrivate;
@@ -94,23 +94,23 @@ public:
 	KXmlCommandManager();
 	~KXmlCommandManager();
 
-	KXmlCommand* loadCommand(const QString& xmlId, bool check = false);
+	KXmlCommand* loadCommand(const TQString& xmlId, bool check = false);
 	void saveCommand(KXmlCommand *xmlCmd);
-	QStringList commandList();
-	QStringList commandListWithDescription();
-	QString selectCommand(QWidget *parent = 0);
+	TQStringList commandList();
+	TQStringList commandListWithDescription();
+	TQString selectCommand(TQWidget *parent = 0);
 
-	QStringList autoConvert(const QString& mimesrc, const QString& mimedest);
-	int insertCommand(QStringList& list, const QString& filtername, bool defaultToStart = true);
-	bool checkCommand(const QString&, int inputCheck = Advanced, int outputCheck = Advanced, QString *msg = 0);
-	bool configure(KXmlCommand*, QWidget *parent = 0);
+	TQStringList autoConvert(const TQString& mimesrc, const TQString& mimedest);
+	int insertCommand(TQStringList& list, const TQString& filtername, bool defaultToStart = true);
+	bool checkCommand(const TQString&, int inputCheck = Advanced, int outputCheck = Advanced, TQString *msg = 0);
+	bool configure(KXmlCommand*, TQWidget *parent = 0);
 	void cleanUp();
 
 	static KXmlCommandManager* self();
 
 protected:
 	void preload();
-	KXmlCommand* command(const QString&) const;
+	KXmlCommand* command(const TQString&) const;
 
 private:
 	class KXmlCommandManagerPrivate;

@@ -20,8 +20,8 @@
 #ifndef KMTHREADJOB_H
 #define KMTHREADJOB_H
 
-#include <qintdict.h>
-#include <qobject.h>
+#include <tqintdict.h>
+#include <tqobject.h>
 
 class KMJob;
 class KMJobManager;
@@ -29,25 +29,25 @@ class KMJobManager;
 class KMThreadJob : public QObject
 {
 public:
-	KMThreadJob(QObject *parent = 0, const char *name = 0);
+	KMThreadJob(TQObject *parent = 0, const char *name = 0);
 	~KMThreadJob();
 
 	KMJob* findJob(int ID);
-	KMJob* findJob(const QString& uri);
+	KMJob* findJob(const TQString& uri);
 	bool removeJob(int ID);
 	void createJob(KMJob*);
 	void updateManager(KMJobManager*);
 
-	static void createJob(int ID, const QString& printer, const QString& name = QString::null, const QString& owner = QString::null, int size = 0);
+	static void createJob(int ID, const TQString& printer, const TQString& name = TQString::null, const TQString& owner = TQString::null, int size = 0);
 
 protected:
-	QString jobFile();
+	TQString jobFile();
 	bool loadJobs();
 	bool saveJobs();
 	bool checkJob(int ID);
 
 private:
-	QIntDict<KMJob>	m_jobs;
+	TQIntDict<KMJob>	m_jobs;
 };
 
 #endif

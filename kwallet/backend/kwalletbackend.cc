@@ -29,9 +29,9 @@
 #include <ksavefile.h>
 #include <kstandarddirs.h>
 
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqregexp.h>
 
 #include "blowfish.h"
 #include "sha1.h"
@@ -59,7 +59,7 @@ static void initKWalletDir()
     KGlobal::dirs()->addResourceType("kwallet", "share/apps/kwallet");
 }
 
-Backend::Backend(const QString& name, bool isPath) : _name(name), _ref(0) {
+Backend::Backend(const TQString& name, bool isPath) : _name(name), _ref(0) {
 	initKWalletDir();
 	if (isPath) {
 		_path = name;
@@ -90,10 +90,10 @@ return 0;
 }
 
 
-static int getRandomBlock(QByteArray& randBlock) {
+static int getRandomBlock(TQByteArray& randBlock) {
 	// First try /dev/urandom
-	if (QFile::exists("/dev/urandom")) {
-		QFile devrand("/dev/urandom");
+	if (TQFile::exists("/dev/urandom")) {
+		TQFile devrand("/dev/urandom");
 		if (devrand.open(IO_ReadOnly)) {
 			unsigned int rc = devrand.readBlock(randBlock.data(), randBlock.size());
 
@@ -107,8 +107,8 @@ static int getRandomBlock(QByteArray& randBlock) {
 
 	// If that failed, try /dev/random
 	// FIXME: open in noblocking mode!
-	if (QFile::exists("/dev/random")) {
-		QFile devrand("/dev/random");
+	if (TQFile::exists("/dev/random")) {
+		TQFile devrand("/dev/random");
 		if (devrand.open(IO_ReadOnly)) {
 		unsigned int rc = 0;
 		unsigned int cnt = 0;
@@ -134,8 +134,8 @@ static int getRandomBlock(QByteArray& randBlock) {
 	// EGD method
 	char *randFilename;
 	if ((randFilename = getenv("RANDFILE"))) {
-		if (QFile::exists(randFilename)) {
-			QFile devrand(randFilename);
+		if (TQFile::exists(randFilename)) {
+			TQFile devrand(randFilename);
 			if (devrand.open(IO_ReadOnly)) {
 				unsigned int rc = devrand.readBlock(randBlock.data(), randBlock.size());
 				if (rc != randBlock.size()) {
@@ -153,13 +153,13 @@ static int getRandomBlock(QByteArray& randBlock) {
 
 
 // this should be SHA-512 for release probably
-static int password2hash(const QByteArray& password, QByteArray& hash) {
+static int password2hash(const TQByteArray& password, TQByteArray& hash) {
 	SHA1 sha;
 	int shasz = sha.size() / 8;
 
 	assert(shasz >= 20);
 
-	QByteArray block1(shasz);
+	TQByteArray block1(shasz);
 
 	sha.process(password.data(), QMIN(password.size(), 16));
 
@@ -174,7 +174,7 @@ static int password2hash(const QByteArray& password, QByteArray& hash) {
 
 	if (password.size() > 16) {
 		sha.process(password.data() + 16, QMIN(password.size() - 16, 16));
-		QByteArray block2(shasz);
+		TQByteArray block2(shasz);
 		// To make brute force take longer
 		for (int i = 0; i < 2000; i++) {
 			memcpy(block2.data(), sha.hash(), shasz);
@@ -187,7 +187,7 @@ static int password2hash(const QByteArray& password, QByteArray& hash) {
 		if (password.size() > 32) {
 			sha.process(password.data() + 32, QMIN(password.size() - 32, 16));
 
-			QByteArray block3(shasz);
+			TQByteArray block3(shasz);
 			// To make brute force take longer
 			for (int i = 0; i < 2000; i++) {
 				memcpy(block3.data(), sha.hash(), shasz);
@@ -200,7 +200,7 @@ static int password2hash(const QByteArray& password, QByteArray& hash) {
 			if (password.size() > 48) {
 				sha.process(password.data() + 48, password.size() - 48);
 
-				QByteArray block4(shasz);
+				TQByteArray block4(shasz);
 				// To make brute force take longer
 				for (int i = 0; i < 2000; i++) {
 					memcpy(block4.data(), sha.hash(), shasz);
@@ -243,16 +243,16 @@ static int password2hash(const QByteArray& password, QByteArray& hash) {
 }
 
 
-bool Backend::exists(const QString& wallet) {
+bool Backend::exists(const TQString& wallet) {
 	initKWalletDir();
-	QString path = KGlobal::dirs()->saveLocation("kwallet") + "/" + wallet + ".kwl";
+	TQString path = KGlobal::dirs()->saveLocation("kwallet") + "/" + wallet + ".kwl";
 	// Note: 60 bytes is presently the minimum size of a wallet file.
 	//       Anything smaller is junk.
-return QFile::exists(path) && QFileInfo(path).size() >= 60;
+return TQFile::exists(path) && TQFileInfo(path).size() >= 60;
 }
 
 
-QString Backend::openRCToString(int rc) {
+TQString Backend::openRCToString(int rc) {
 	switch (rc) {
 		case -255:
 			return i18n("Already open.");
@@ -275,24 +275,24 @@ QString Backend::openRCToString(int rc) {
 		case -6:
 			return i18n("Decryption error.");
 		default:
-			return QString::null;
+			return TQString::null;
 	}
 }
 
 
-int Backend::open(const QByteArray& password) {
+int Backend::open(const TQByteArray& password) {
 
 	if (_open) {
 		return -255;  // already open
 	}
 
-	QByteArray passhash;
+	TQByteArray passhash;
 
 	// No wallet existed.  Let's create it.
 	// Note: 60 bytes is presently the minimum size of a wallet file.
 	//       Anything smaller is junk and should be deleted.
-	if (!QFile::exists(_path) || QFileInfo(_path).size() < 60) {
-		QFile newfile(_path);
+	if (!TQFile::exists(_path) || TQFileInfo(_path).size() < 60) {
+		TQFile newfile(_path);
 		if (!newfile.open(IO_ReadWrite)) {
 			return -2;   // error opening file
 		}
@@ -302,7 +302,7 @@ int Backend::open(const QByteArray& password) {
 		return 1;          // new file opened, but OK
 	}
 
-	QFile db(_path);
+	TQFile db(_path);
 
 	if (!db.open(IO_ReadOnly)) {
 		return -2;         // error opening file
@@ -335,7 +335,7 @@ int Backend::open(const QByteArray& password) {
 
 	_hashes.clear();
 	// Read in the hashes
-	QDataStream hds(&db);
+	TQDataStream hds(&db);
 	Q_UINT32 n;
 	hds >> n;
 	if (n > 0xffff) { // sanity check
@@ -345,13 +345,13 @@ int Backend::open(const QByteArray& password) {
 	for (size_t i = 0; i < n; ++i) {
 		KMD5::Digest d, d2; // judgment day
 		MD5Digest ba;
-		QMap<MD5Digest,QValueList<MD5Digest> >::iterator it;
+		TQMap<MD5Digest,TQValueList<MD5Digest> >::iterator it;
 		Q_UINT32 fsz;
 		if (hds.atEnd()) return -43;
 		hds.readRawBytes(reinterpret_cast<char *>(d), 16);
 		hds >> fsz;
 		ba.duplicate(reinterpret_cast<char *>(d), 16);
-		it = _hashes.insert(ba, QValueList<MD5Digest>());
+		it = _hashes.insert(ba, TQValueList<MD5Digest>());
 		for (size_t j = 0; j < fsz; ++j) {
 			hds.readRawBytes(reinterpret_cast<char *>(d2), 16);
 			ba.duplicate(reinterpret_cast<char *>(d2), 16);
@@ -360,7 +360,7 @@ int Backend::open(const QByteArray& password) {
 	}
 
 	// Read in the rest of the file.
-	QByteArray encrypted = db.readAll();
+	TQByteArray encrypted = db.readAll();
 	assert(encrypted.size() < db.size());
 
 	BlowFish _bf;
@@ -432,17 +432,17 @@ int Backend::open(const QByteArray& password) {
 	sha.reset();
 
 	// chop off the leading blksz+4 bytes
-	QByteArray tmpenc;
+	TQByteArray tmpenc;
 	tmpenc.duplicate(encrypted.data()+blksz+4, fsize);
 	encrypted.fill(0);
 	encrypted.duplicate(tmpenc.data(), tmpenc.size());
 	tmpenc.fill(0);
 
 	// Load the data structures up
-	QDataStream eStream(encrypted, IO_ReadOnly);
+	TQDataStream eStream(encrypted, IO_ReadOnly);
 
 	while (!eStream.atEnd()) {
-		QString folder;
+		TQString folder;
 		Q_UINT32 n;
 
 		eStream >> folder;
@@ -452,7 +452,7 @@ int Backend::open(const QByteArray& password) {
 		_entries[folder].clear();
 
 		for (size_t i = 0; i < n; i++) {
-			QString key;
+			TQString key;
 			KWallet::Wallet::EntryType et = KWallet::Wallet::Unknown;
 			Entry *e = new Entry;
 			eStream >> key;
@@ -470,7 +470,7 @@ int Backend::open(const QByteArray& password) {
 				continue;
 			}
 
-			QByteArray a;
+			TQByteArray a;
 		 	eStream >> a;
 			e->setValue(a);
 			e->setType(et);
@@ -484,13 +484,13 @@ int Backend::open(const QByteArray& password) {
 }
 
 
-int Backend::sync(const QByteArray& password) {
+int Backend::sync(const TQByteArray& password) {
 	if (!_open) {
 		return -255;  // not open yet
 	}
 
 	KSaveFile sf(_path, 0600);
-	QFile *qf = sf.file();
+	TQFile *qf = sf.file();
 
 	if (!qf) {
 		sf.abort();
@@ -500,7 +500,7 @@ int Backend::sync(const QByteArray& password) {
 	qf->writeBlock(KWMAGIC, KWMAGIC_LEN);
 
 	// Write the version number
-	QByteArray version(4);
+	TQByteArray version(4);
 	version[0] = KWALLET_VERSION_MAJOR;
 	version[1] = KWALLET_VERSION_MINOR;
 	version[2] = KWALLET_CIPHER_BLOWFISH_CBC;
@@ -508,20 +508,20 @@ int Backend::sync(const QByteArray& password) {
 	qf->writeBlock(version, 4);
 
 	// Holds the hashes we write out
-	QByteArray hashes;
-	QDataStream hashStream(hashes, IO_WriteOnly);
+	TQByteArray hashes;
+	TQDataStream hashStream(hashes, IO_WriteOnly);
 	KMD5 md5;
 	hashStream << static_cast<Q_UINT32>(_entries.count());
 
 	// Holds decrypted data prior to encryption
-	QByteArray decrypted;
+	TQByteArray decrypted;
 
 	// FIXME: we should estimate the amount of data we will write in each
 	// buffer and resize them approximately in order to avoid extra
 	// resizes.
 
 	// populate decrypted
-	QDataStream dStream(decrypted, IO_WriteOnly);
+	TQDataStream dStream(decrypted, IO_WriteOnly);
 	for (FolderMap::ConstIterator i = _entries.begin(); i != _entries.end(); ++i) {
 		dStream << i.key();
 		dStream << static_cast<Q_UINT32>(i.data().count());
@@ -552,7 +552,7 @@ int Backend::sync(const QByteArray& password) {
 	sha.process(decrypted.data(), decrypted.size());
 
 	// prepend and append the random data
-	QByteArray wholeFile;
+	TQByteArray wholeFile;
 	long blksz = bf.blockSize();
 	long newsize = decrypted.size() +
 		       blksz            +    // encrypted block
@@ -563,7 +563,7 @@ int Backend::sync(const QByteArray& password) {
 	newsize += delta;
 	wholeFile.resize(newsize);
 
-	QByteArray randBlock;
+	TQByteArray randBlock;
 	randBlock.resize(blksz+delta);
 	if (getRandomBlock(randBlock) < 0) {
 		sha.reset();
@@ -597,7 +597,7 @@ int Backend::sync(const QByteArray& password) {
 	decrypted.fill(0);
 
 	// hash the passphrase
-	QByteArray passhash;
+	TQByteArray passhash;
 	password2hash(password, passhash);
 
 	// encrypt the data
@@ -632,7 +632,7 @@ return 0;
 }
 
 
-int Backend::close(const QByteArray& password) {
+int Backend::close(const TQByteArray& password) {
 	int rc = sync(password);
 	_open = false;
 	if (rc != 0) {
@@ -642,7 +642,7 @@ int Backend::close(const QByteArray& password) {
 }
 
 
-const QString& Backend::walletName() const {
+const TQString& Backend::walletName() const {
 	return _name;
 }
 
@@ -652,17 +652,17 @@ bool Backend::isOpen() const {
 }
 
 
-QStringList Backend::folderList() const {
+TQStringList Backend::folderList() const {
 	return _entries.keys();
 }
 
 
-QStringList Backend::entryList() const {
+TQStringList Backend::entryList() const {
 	return _entries[_folder].keys();
 }
 
 
-Entry *Backend::readEntry(const QString& key) {
+Entry *Backend::readEntry(const TQString& key) {
 Entry *rc = 0L;
 
 	if (_open && hasEntry(key)) {
@@ -673,14 +673,14 @@ return rc;
 }
 
 
-QPtrList<Entry> Backend::readEntryList(const QString& key) {
-	QPtrList<Entry> rc;
+TQPtrList<Entry> Backend::readEntryList(const TQString& key) {
+	TQPtrList<Entry> rc;
 
 	if (!_open) {
 		return rc;
 	}
 
-	QRegExp re(key, true, true);
+	TQRegExp re(key, true, true);
 
 	const EntryMap& map = _entries[_folder];
 	for (EntryMap::ConstIterator i = map.begin(); i != map.end(); ++i) {
@@ -692,7 +692,7 @@ QPtrList<Entry> Backend::readEntryList(const QString& key) {
 }
 
 
-bool Backend::createFolder(const QString& f) {
+bool Backend::createFolder(const TQString& f) {
 	if (_entries.contains(f)) {
 		return false;
 	}
@@ -701,13 +701,13 @@ bool Backend::createFolder(const QString& f) {
 
 	KMD5 folderMd5;
 	folderMd5.update(f.utf8());
-	_hashes.insert(MD5Digest(folderMd5.rawDigest()), QValueList<MD5Digest>());
+	_hashes.insert(MD5Digest(folderMd5.rawDigest()), TQValueList<MD5Digest>());
 
 return true;
 }
 
 
-int Backend::renameEntry(const QString& oldName, const QString& newName) {
+int Backend::renameEntry(const TQString& oldName, const TQString& newName) {
 EntryMap& emap = _entries[_folder];
 EntryMap::Iterator oi = emap.find(oldName);
 EntryMap::Iterator ni = emap.find(newName);
@@ -756,12 +756,12 @@ void Backend::writeEntry(Entry *e) {
 }
 
 
-bool Backend::hasEntry(const QString& key) const {
+bool Backend::hasEntry(const TQString& key) const {
 	return _entries.contains(_folder) && _entries[_folder].contains(key);
 }
 
 
-bool Backend::removeEntry(const QString& key) {
+bool Backend::removeEntry(const TQString& key) {
 	if (!_open) {
 		return false;
 	}
@@ -788,7 +788,7 @@ return false;
 }
 
 
-bool Backend::removeFolder(const QString& f) {
+bool Backend::removeFolder(const TQString& f) {
 	if (!_open) {
 		return false;
 	}
@@ -797,7 +797,7 @@ bool Backend::removeFolder(const QString& f) {
 
 	if (fi != _entries.end()) {
 		if (_folder == f) {
-			_folder = QString::null;
+			_folder = TQString::null;
 		}
 
 		for (EntryMap::Iterator ei = fi.data().begin(); ei != fi.data().end(); ++ei) {
@@ -816,14 +816,14 @@ return false;
 }
 
 
-bool Backend::folderDoesNotExist(const QString& folder) const {
+bool Backend::folderDoesNotExist(const TQString& folder) const {
 	KMD5 md5;
 	md5.update(folder.utf8());
 	return !_hashes.contains(MD5Digest(md5.rawDigest()));
 }
 
 
-bool Backend::entryDoesNotExist(const QString& folder, const QString& entry) const {
+bool Backend::entryDoesNotExist(const TQString& folder, const TQString& entry) const {
 	KMD5 md5;
 	md5.update(folder.utf8());
 	HashMap::const_iterator i = _hashes.find(MD5Digest(md5.rawDigest()));

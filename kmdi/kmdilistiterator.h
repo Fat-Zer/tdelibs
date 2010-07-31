@@ -38,9 +38,9 @@ template <class Item>
 class KMdiListIterator : public KMdiIterator<Item*>
 {
 public:
-	KMdiListIterator( QPtrList<Item>& list )
+	KMdiListIterator( TQPtrList<Item>& list )
 	{
-		m_iterator = new QPtrListIterator<Item>( list );
+		m_iterator = new TQPtrListIterator<Item>( list );
 	}
 
 	virtual void first() { m_iterator->toFirst(); }
@@ -53,7 +53,7 @@ public:
 	virtual ~KMdiListIterator() { delete m_iterator; }
 
 private:
-	QPtrListIterator<Item> *m_iterator;
+	TQPtrListIterator<Item> *m_iterator;
 };
 
 #endif // _KMDILISTITERATOR_H_ 

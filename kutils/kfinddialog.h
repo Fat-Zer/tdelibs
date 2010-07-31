@@ -49,7 +49,7 @@ class QCheckBox;
  *
  * \code
  *  KFindDialog dlg(....)
- *  if ( dlg.exec() != QDialog::Accepted )
+ *  if ( dlg.exec() != TQDialog::Accepted )
  *      return;
  *
  *  // proceed with KFind from here
@@ -62,7 +62,7 @@ class QCheckBox;
  *   else
  *   {
  *     m_findDia = new KFindDialog(false,...);
- *     connect( m_findDia, SIGNAL(okClicked()), this, SLOT(findTextNext()) );
+ *     connect( m_findDia, TQT_SIGNAL(okClicked()), this, TQT_SLOT(findTextNext()) );
  *   }
  * \endcode
  * Don't forget to delete and reset m_findDia when closed.
@@ -107,8 +107,8 @@ public:
      * @param findStrings The find history, see findHistory()
      * @param hasSelection Whether a selection exists
      */
-    KFindDialog( QWidget *parent = 0, const char *name = 0, long options = 0,
-                 const QStringList &findStrings = QStringList(), bool hasSelection = false );
+    KFindDialog( TQWidget *parent = 0, const char *name = 0, long options = 0,
+                 const TQStringList &findStrings = TQStringList(), bool hasSelection = false );
     // KDE4: fix ambiguity with private constructor
     // Maybe remove options (there's setOptions) and findStrings (setFindHistory) and hasSelection (setHasSelection)
 
@@ -122,8 +122,8 @@ public:
      * @param findStrings The find history, see findHistory()
      * @param hasSelection Whether a selection exists
      */
-    KFindDialog( bool modal, QWidget *parent = 0, const char *name = 0, long options = 0,
-                 const QStringList &findStrings = QStringList(), bool hasSelection = false );
+    KFindDialog( bool modal, TQWidget *parent = 0, const char *name = 0, long options = 0,
+                 const TQStringList &findStrings = TQStringList(), bool hasSelection = false );
     // KDE4: consider simplifying
 
     /**
@@ -139,7 +139,7 @@ public:
      * @param history The find history.
      * @see findHistory
      */
-    void setFindHistory( const QStringList &history );
+    void setFindHistory( const TQStringList &history );
 
     /**
      * Returns the list of history items.
@@ -147,7 +147,7 @@ public:
      * @return The find history.
      * @see setFindHistory
      */
-    QStringList findHistory() const;
+    TQStringList findHistory() const;
 
     /**
      * Enable/disable the 'search in selection' option, depending
@@ -227,22 +227,22 @@ public:
      * Returns the pattern to find.
      * @return The search text.
      */
-    QString pattern() const;
+    TQString pattern() const;
 
     /**
      * Sets the pattern to find.
      * @param pattern The new search pattern.
      */
-    void setPattern ( const QString &pattern );
+    void setPattern ( const TQString &pattern );
 
     /**
      * Returns an empty widget which the user may fill with additional UI
      * elements as required. The widget occupies the width of the dialog,
      * and is positioned immediately below the regular expression support
      * widgets for the pattern string.
-     * @return An extensible QWidget.
+     * @return An extensible TQWidget.
      */
-    QWidget *findExtension();
+    TQWidget *findExtension();
 
 protected slots:
 
@@ -250,10 +250,10 @@ protected slots:
     void slotSelectedTextToggled(bool);
     void showPatterns();
     void showPlaceholders();
-    void textSearchChanged( const QString &);
+    void textSearchChanged( const TQString &);
 
 protected:
-    virtual void showEvent ( QShowEvent * );
+    virtual void showEvent ( TQShowEvent * );
 
 private slots:
     /**
@@ -264,22 +264,22 @@ private slots:
 
 private:
 
-    QGroupBox *m_findGrp;
-    QLabel *m_findLabel;
+    TQGroupBox *m_findGrp;
+    TQLabel *m_findLabel;
     KHistoryCombo *m_find;
-    QCheckBox *m_regExp;
-    QPushButton *m_regExpItem;
-    QGridLayout *m_findLayout;
-    QWidget *m_findExtension;
+    TQCheckBox *m_regExp;
+    TQPushButton *m_regExpItem;
+    TQGridLayout *m_findLayout;
+    TQWidget *m_findExtension;
 
-    QGroupBox *m_optionGrp;
-    QCheckBox *m_wholeWordsOnly;
-    QCheckBox *m_fromCursor;
-    QCheckBox *m_selectedText;
-    QCheckBox *m_caseSensitive;
-    QCheckBox *m_findBackwards;
+    TQGroupBox *m_optionGrp;
+    TQCheckBox *m_wholeWordsOnly;
+    TQCheckBox *m_fromCursor;
+    TQCheckBox *m_selectedText;
+    TQCheckBox *m_caseSensitive;
+    TQCheckBox *m_findBackwards;
 
-    QPopupMenu *m_patterns;
+    TQPopupMenu *m_patterns;
 
     // Our dirty little secret is that we also implement the "replace" dialog. But we
     // keep that fact hidden from all but our friends.
@@ -292,20 +292,20 @@ private:
      *
      * @param forReplace Is this a replace dialog?
      */
-    KFindDialog( QWidget *parent, const char *name, bool forReplace );
-    void init( bool forReplace, const QStringList &findStrings, bool hasSelection );
+    KFindDialog( TQWidget *parent, const char *name, bool forReplace );
+    void init( bool forReplace, const TQStringList &findStrings, bool hasSelection );
 
-    QGroupBox *m_replaceGrp;
-    QLabel *m_replaceLabel;
+    TQGroupBox *m_replaceGrp;
+    TQLabel *m_replaceLabel;
     KHistoryCombo *m_replace;
-    QCheckBox* m_backRef;
-    QPushButton* m_backRefItem;
-    QGridLayout *m_replaceLayout;
-    QWidget *m_replaceExtension;
+    TQCheckBox* m_backRef;
+    TQPushButton* m_backRefItem;
+    TQGridLayout *m_replaceLayout;
+    TQWidget *m_replaceExtension;
 
-    QCheckBox* m_promptOnReplace;
+    TQCheckBox* m_promptOnReplace;
 
-    QPopupMenu *m_placeholders;
+    TQPopupMenu *m_placeholders;
 
     // Binary compatible extensibility.
     class KFindDialogPrivate;

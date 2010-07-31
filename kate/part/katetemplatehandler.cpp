@@ -21,16 +21,16 @@
 #include "katesupercursor.h"
 #include "katearbitraryhighlight.h"
 #include "kateview.h"
-#include <qregexp.h>
+#include <tqregexp.h>
 #include <kdebug.h>
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 KateTemplateHandler::KateTemplateHandler(
   KateDocument *doc,
   uint line, uint column,
-  const QString &templateString,
-  const QMap<QString, QString> &initialValues )
-    : QObject( doc )
+  const TQString &templateString,
+  const TQMap<TQString, TQString> &initialValues )
+    : TQObject( doc )
     , KateKeyInterceptorFunctor()
     , m_doc( doc )
     , m_currentTabStop( -1 )
@@ -38,7 +38,7 @@ KateTemplateHandler::KateTemplateHandler(
     , m_initOk( false )
     , m_recursion( false )
 {
-  connect( m_doc, SIGNAL( destroyed() ), this, SLOT( slotDocumentDestroyed() ) );
+  connect( m_doc, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( slotDocumentDestroyed() ) );
   m_ranges = new KateSuperRangeList( false, this ); //false/*,this*/);
 
   if ( !m_doc->setTabInterceptor( this ) )
@@ -53,12 +53,12 @@ KateTemplateHandler::KateTemplateHandler(
   hlr->setUnderline(true);
   hlr->setOverline(true);
   l->append(hlr);*/
-  QValueList<KateTemplateHandlerPlaceHolderInfo> buildList;
-  QRegExp rx( "([$%])\\{([^}\\s]+)\\}" );
+  TQValueList<KateTemplateHandlerPlaceHolderInfo> buildList;
+  TQRegExp rx( "([$%])\\{([^}\\s]+)\\}" );
   rx.setMinimal( true );
   int pos = 0;
   int opos = 0;
-  QString insertString = templateString;
+  TQString insertString = templateString;
 
   while ( pos >= 0 )
   {
@@ -76,8 +76,8 @@ KateTemplateHandler::KateTemplateHandler(
         }
       }
 
-      QString placeholder = rx.cap( 2 );
-      QString value = initialValues[ placeholder ];
+      TQString placeholder = rx.cap( 2 );
+      TQString value = initialValues[ placeholder ];
 
       // don't add %{MACRO} to the tab navigation, unless there was not value
       if ( rx.cap( 1 ) != "%" || placeholder == value )
@@ -116,13 +116,13 @@ KateTemplateHandler::KateTemplateHandler(
     m_doc->tagLines( ( *it ) ->start().line(), ( *it ) ->end().line() );
   }
 
-  /* connect(doc,SIGNAL(charactersInteractivelyInserted(int ,int ,const QString&)),this,
-   SLOT(slotCharactersInteractivlyInserted(int,int,const QString&)));
-   connect(doc,SIGNAL(charactersSemiInteractivelyInserted(int ,int ,const QString&)),this,
-   SLOT(slotCharactersInteractivlyInserted(int,int,const QString&)));*/
-  connect( doc, SIGNAL( textInserted( int, int ) ), this, SLOT( slotTextInserted( int, int ) ) );
-  connect( doc, SIGNAL( aboutToRemoveText( const KateTextRange& ) ), this, SLOT( slotAboutToRemoveText( const KateTextRange& ) ) );
-  connect( doc, SIGNAL( textRemoved() ), this, SLOT( slotTextRemoved() ) );
+  /* connect(doc,TQT_SIGNAL(charactersInteractivelyInserted(int ,int ,const TQString&)),this,
+   TQT_SLOT(slotCharactersInteractivlyInserted(int,int,const TQString&)));
+   connect(doc,TQT_SIGNAL(charactersSemiInteractivelyInserted(int ,int ,const TQString&)),this,
+   TQT_SLOT(slotCharactersInteractivlyInserted(int,int,const TQString&)));*/
+  connect( doc, TQT_SIGNAL( textInserted( int, int ) ), this, TQT_SLOT( slotTextInserted( int, int ) ) );
+  connect( doc, TQT_SIGNAL( aboutToRemoveText( const KateTextRange& ) ), this, TQT_SLOT( slotAboutToRemoveText( const KateTextRange& ) ) );
+  connect( doc, TQT_SIGNAL( textRemoved() ), this, TQT_SLOT( slotTextRemoved() ) );
 
   ( *this ) ( Qt::Key_Tab );
 }
@@ -146,13 +146,13 @@ KateTemplateHandler::~KateTemplateHandler()
 
 void KateTemplateHandler::slotDocumentDestroyed() {m_doc = 0;}
 
-void KateTemplateHandler::generateRangeTable( uint insertLine, uint insertCol, const QString& insertString, const QValueList<KateTemplateHandlerPlaceHolderInfo> &buildList )
+void KateTemplateHandler::generateRangeTable( uint insertLine, uint insertCol, const TQString& insertString, const TQValueList<KateTemplateHandlerPlaceHolderInfo> &buildList )
 {
   uint line = insertLine;
   uint col = insertCol;
   uint colInText = 0;
 
-  for ( QValueList<KateTemplateHandlerPlaceHolderInfo>::const_iterator it = buildList.begin();it != buildList.end();++it )
+  for ( TQValueList<KateTemplateHandlerPlaceHolderInfo>::const_iterator it = buildList.begin();it != buildList.end();++it )
   {
     KateTemplatePlaceHolder *ph = m_dict[ ( *it ).placeholder ];
 
@@ -218,7 +218,7 @@ void KateTemplateHandler::slotTextInserted( int line, int col )
 
   KateTemplatePlaceHolder *ph = m_tabOrder.at( m_currentTabStop );
 
-  QString sourceText = m_doc->text ( m_currentRange->start().line(), m_currentRange->start().col(),
+  TQString sourceText = m_doc->text ( m_currentRange->start().line(), m_currentRange->start().col(),
                                      m_currentRange->end().line(), m_currentRange->end().col(), false );
 
   ph->isInitialValue = false;
@@ -324,9 +324,9 @@ void KateTemplateHandler::slotAboutToRemoveText( const KateTextRange &range )
 
   if ( m_doc )
   {
-    disconnect( m_doc, SIGNAL( textInserted( int, int ) ), this, SLOT( slotTextInserted( int, int ) ) );
-    disconnect( m_doc, SIGNAL( aboutToRemoveText( const KateTextRange& ) ), this, SLOT( slotAboutToRemoveText( const KateTextRange& ) ) );
-    disconnect( m_doc, SIGNAL( textRemoved() ), this, SLOT( slotTextRemoved() ) );
+    disconnect( m_doc, TQT_SIGNAL( textInserted( int, int ) ), this, TQT_SLOT( slotTextInserted( int, int ) ) );
+    disconnect( m_doc, TQT_SIGNAL( aboutToRemoveText( const KateTextRange& ) ), this, TQT_SLOT( slotAboutToRemoveText( const KateTextRange& ) ) );
+    disconnect( m_doc, TQT_SIGNAL( textRemoved() ), this, TQT_SLOT( slotTextRemoved() ) );
   }
 
   deleteLater();

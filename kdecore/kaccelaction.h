@@ -20,10 +20,10 @@
 #ifndef _KACCELACTION_H
 #define _KACCELACTION_H
 
-#include <qmap.h>
-#include <qptrvector.h>
-#include <qstring.h>
-#include <qvaluevector.h>
+#include <tqmap.h>
+#include <tqptrvector.h>
+#include <tqstring.h>
+#include <tqvaluevector.h>
 
 #include <kshortcut.h>
 
@@ -97,9 +97,9 @@ class KDECORE_EXPORT KAccelAction
 	 * @param bConfigurable if true the user can configure the shortcut
 	 * @param bEnabled true if the accelerator should be enabled
 	 */
-	KAccelAction( const QString& sName, const QString& sLabel, const QString& sWhatsThis,
+	KAccelAction( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
 			const KShortcut& cutDef3, const KShortcut& cutDef4,
-			const QObject* pObjSlot, const char* psMethodSlot,
+			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled );
 	~KAccelAction();
 
@@ -123,9 +123,9 @@ class KDECORE_EXPORT KAccelAction
 	 * @param bEnabled true if the accelerator should be enabled
 	 * @return true if successful, false otherwise
 	 */
-	bool init( const QString& sName, const QString& sLabel, const QString& sWhatsThis,
+	bool init( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
 			const KShortcut& cutDef3, const KShortcut& cutDef4,
-			const QObject* pObjSlot, const char* psMethodSlot,
+			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled );
 
 	/**
@@ -138,21 +138,21 @@ class KDECORE_EXPORT KAccelAction
 	 * @return the name of the accelerator action, can be null if not 
 	 *         set
 	 */
-	const QString& name() const                { return m_sName; }
+	const TQString& name() const                { return m_sName; }
 
 	/**
 	 * Returns the label of the accelerator action.
 	 * @return the label of the accelerator action, can be null if
 	 *         not set
 	 */
-	const QString& label() const               { return m_sLabel; }
+	const TQString& label() const               { return m_sLabel; }
 
 	/**
 	 * Returns the What's This text of the accelerator action.
 	 * @return the What's This text of the accelerator action, can be
 	 *         null if not set
 	 */
-	const QString& whatsThis() const           { return m_sWhatsThis; }
+	const TQString& whatsThis() const           { return m_sWhatsThis; }
 	
 	/**
 	 * The shortcut that is actually used (may be used configured).
@@ -194,7 +194,7 @@ class KDECORE_EXPORT KAccelAction
 	 * Returns the receiver of signals.
 	 * @return the receiver of signals (can be 0 if not set)
 	 */
-	const QObject* objSlotPtr() const          { return m_pObjSlot; }
+	const TQObject* objSlotPtr() const          { return m_pObjSlot; }
 
 	/**
 	 * Returns the slot for the signal.
@@ -218,19 +218,19 @@ class KDECORE_EXPORT KAccelAction
 	 * Sets the name of the accelerator action.
 	 * @param name the new name
 	 */
-	void setName( const QString& name );
+	void setName( const TQString& name );
 
 	/**
 	 * Sets the user-readable label of the accelerator action.
 	 * @param label the new label (i18n!)
 	 */
-	void setLabel( const QString& label );
+	void setLabel( const TQString& label );
 
 	/**
 	 * Sets the What's This text for the accelerator action.
 	 * @param whatsThis the new What's This text (i18n!)
 	 */
-	void setWhatsThis( const QString& whatsThis );
+	void setWhatsThis( const TQString& whatsThis );
 
 	/**
 	 * Sets the new shortcut of the accelerator action.
@@ -244,7 +244,7 @@ class KDECORE_EXPORT KAccelAction
 	 * @param pObjSlot the receiver object of the signal
 	 * @param psMethodSlot the slot for the signal
 	 */
-	void setSlot( const QObject* pObjSlot, const char* psMethodSlot );
+	void setSlot( const TQObject* pObjSlot, const char* psMethodSlot );
 
 	/**
 	 * Enables or disabled configuring the action.
@@ -308,12 +308,12 @@ class KDECORE_EXPORT KAccelAction
 	 * @return the string representation of the action's shortcut.
 	 * @see KShortcut::toString()
 	 */
-	QString toString() const;
+	TQString toString() const;
 
 	/**
 	 * @internal
 	 */
-	QString toStringInternal() const;
+	TQString toStringInternal() const;
 
 	/**
 	 * Returns true if four modifier keys will be used.
@@ -329,13 +329,13 @@ class KDECORE_EXPORT KAccelAction
 	static void useFourModifierKeys( bool use );
 
  protected:
-	QString m_sName /**< Name of accel. @sa setName() */,
+	TQString m_sName /**< Name of accel. @sa setName() */,
 	        m_sLabel /**< Label of accel. User-visible. */,
 	        m_sWhatsThis /**< WhatsThis help for accel. User-visible. */;
 	KShortcut m_cut /**< Shortcut actually assigned. */;
 	KShortcut m_cutDefault3 /**< Default shortcut in 3-modifier layout */, 
 		  m_cutDefault4 /**< Default shortcur in 4-modifier layout */;
-	const QObject* m_pObjSlot /**< Object we will send signals to. */;
+	const TQObject* m_pObjSlot /**< Object we will send signals to. */;
 	const char* m_psMethodSlot /**< Slot we send signals to, in m_pObjSlot */;
 	bool m_bConfigurable /**< Can this accel be configured by the user? */,
 	     m_bEnabled /**< Is this accel enabled? */;
@@ -400,7 +400,7 @@ class KDECORE_EXPORT KAccelActions
 	 * @param sGroup the group in the configuration file
 	 * @return true if successful, false otherwise
 	 */
-	bool init( KConfigBase& config, const QString& sGroup );
+	bool init( KConfigBase& config, const TQString& sGroup );
 
 	/**
 	 * Updates the shortcuts of all actions in this object
@@ -415,7 +415,7 @@ class KDECORE_EXPORT KAccelActions
 	 * @param sAction the action to search
 	 * @return the index of the action, or -1 if not found
 	 */
-	int actionIndex( const QString& sAction ) const;
+	int actionIndex( const TQString& sAction ) const;
 
 	/**
 	 * Returns the action with the given @p index.
@@ -441,7 +441,7 @@ class KDECORE_EXPORT KAccelActions
 	 * @return the KAccelAction with the given name, or 0
 	 *          if not found
 	 */
-	KAccelAction* actionPtr( const QString& sAction );
+	KAccelAction* actionPtr( const TQString& sAction );
 
 	/**
 	 * Returns the action with the given name.
@@ -449,7 +449,7 @@ class KDECORE_EXPORT KAccelActions
 	 * @return the KAccelAction with the given name, or 0
 	 *          if not found
 	 */
-	const KAccelAction* actionPtr( const QString& sAction ) const;
+	const KAccelAction* actionPtr( const TQString& sAction ) const;
 
 	/**
 	 * Returns the action with the given key sequence.
@@ -494,9 +494,9 @@ class KDECORE_EXPORT KAccelActions
 	 * @param bEnabled       if true the accelerator should be enabled
 	 * @return the new action
 	 */
-	KAccelAction* insert( const QString& sAction, const QString& sLabel, const QString& sWhatsThis,
+	KAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
 			const KShortcut& rgCutDefaults3, const KShortcut& rgCutDefaults4,
-			const QObject* pObjSlot = 0, const char* psMethodSlot = 0,
+			const TQObject* pObjSlot = 0, const char* psMethodSlot = 0,
 			bool bConfigurable = true, bool bEnabled = true );
 
 	/**
@@ -505,14 +505,14 @@ class KDECORE_EXPORT KAccelActions
 	 * @param sLabel the label of the accelerator (i18n!)
 	 * @return the new action
 	 */
-	KAccelAction* insert( const QString& sName, const QString& sLabel );
+	KAccelAction* insert( const TQString& sName, const TQString& sLabel );
 
 	/**
 	 * Removes the given action.
 	 * @param sAction the name of the action.
 	 * @return true if successful, false otherwise
 	 */
-	bool remove( const QString& sAction );
+	bool remove( const TQString& sAction );
 
 	/**
 	 * Loads the actions from the given configuration file.
@@ -521,7 +521,7 @@ class KDECORE_EXPORT KAccelActions
 	 * @param pConfig the configuration file to load from
 	 * @return true if successful, false otherwise
 	 */
-	bool readActions( const QString& sConfigGroup = "Shortcuts", KConfigBase* pConfig = 0 );
+	bool readActions( const TQString& sConfigGroup = "Shortcuts", KConfigBase* pConfig = 0 );
 
 	/**
 	 * Writes the actions to the given configuration file.
@@ -532,7 +532,7 @@ class KDECORE_EXPORT KAccelActions
 	 * @param bGlobal true to write to the global configuration file
 	 * @return true if successful, false otherwise
 	 */
-	bool writeActions( const QString& sConfigGroup = "Shortcuts", KConfigBase* pConfig = 0,
+	bool writeActions( const TQString& sConfigGroup = "Shortcuts", KConfigBase* pConfig = 0,
 			bool bWriteAll = false, bool bGlobal = false ) const;
 
 	/**

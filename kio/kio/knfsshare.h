@@ -19,7 +19,7 @@
 #ifndef knfsshare_h
 #define knfsshare_h
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kdelibs_export.h>
 
@@ -32,7 +32,7 @@ class KNFSSharePrivate;
  * It parses the /etc/exports file to get its information.
  * Singleton class, call instance() to get an instance.
  */
-class KIO_EXPORT KNFSShare : public QObject 
+class KIO_EXPORT KNFSShare : public TQObject 
 {
 Q_OBJECT
 public:
@@ -46,14 +46,14 @@ public:
    * @param path the path to check if it is shared by NFS.
    * @return wether the given path is shared by NFS.
    */
-  bool isDirectoryShared( const QString & path ) const;
+  bool isDirectoryShared( const TQString & path ) const;
   
   /**
    * Returns a list of all directories shared by NFS.
    * The resulting list is not sorted.
    * @return a list of all directories shared by NFS.
    */
-  QStringList sharedDirectories() const;
+  TQStringList sharedDirectories() const;
   
   /**
    * KNFSShare destructor. 
@@ -66,7 +66,7 @@ public:
    * Returns the path to the used exports file,
    * or null if no exports file was found
    */
-  QString exportsPath() const;
+  TQString exportsPath() const;
   
 signals:
   /**
@@ -80,7 +80,7 @@ private:
   KNFSSharePrivate* d;
   
 private slots:
-  void slotFileChange(const QString&);  
+  void slotFileChange(const TQString&);  
 };
 
 #endif

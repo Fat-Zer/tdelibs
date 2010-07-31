@@ -20,8 +20,8 @@
 #ifndef KPLUGINSELECTOR_H
 #define KPLUGINSELECTOR_H
 
-#include <qwidget.h>
-#include <qstring.h>
+#include <tqwidget.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -66,7 +66,7 @@ class KUTILS_EXPORT KPluginSelector : public QWidget
         /**
          * Create a new KPluginSelector.
          */
-        KPluginSelector( QWidget * parent, const char * name = 0 );
+        KPluginSelector( TQWidget * parent, const char * name = 0 );
         ~KPluginSelector();
 
         /**
@@ -98,9 +98,9 @@ class KUTILS_EXPORT KPluginSelector : public QWidget
          *                     For example KViewCanvas passes KSimpleConfig(
          *                     "kviewcanvas" ).
          */
-        void addPlugins( const QString & instanceName,
-                const QString & catname = QString::null,
-                const QString & category = QString::null,
+        void addPlugins( const TQString & instanceName,
+                const TQString & catname = TQString::null,
+                const TQString & category = TQString::null,
                 KConfig * config = 0 );
 
         /**
@@ -108,8 +108,8 @@ class KUTILS_EXPORT KPluginSelector : public QWidget
          * If not set explicitely, @p config is set to instance->config().
          */
         void addPlugins( const KInstance * instance,
-                const QString & catname = QString::null,
-                const QString & category = QString::null,
+                const TQString & catname = TQString::null,
+                const TQString & category = TQString::null,
                 KConfig * config = 0 );
 
         /**
@@ -137,9 +137,9 @@ class KUTILS_EXPORT KPluginSelector : public QWidget
          *                     For example KViewCanvas passes KSimpleConfig(
          *                     "kviewcanvas" ).
          */
-        void addPlugins( const QValueList<KPluginInfo*> & plugininfos,
-                const QString & catname = QString::null,
-                const QString & category = QString::null,
+        void addPlugins( const TQValueList<KPluginInfo*> & plugininfos,
+                const TQString & catname = TQString::null,
+                const TQString & category = TQString::null,
                 KConfig * config = 0 );
 
         /**
@@ -181,7 +181,7 @@ class KUTILS_EXPORT KPluginSelector : public QWidget
          * argument is the name of the parent component that needs to reload
          * its config
          */
-        void configCommitted( const QCString & instanceName );
+        void configCommitted( const TQCString & instanceName );
 
     private:
         /**
@@ -189,7 +189,7 @@ class KUTILS_EXPORT KPluginSelector : public QWidget
          *
          * @internal
          */
-        QWidgetStack * widgetStack();
+        TQWidgetStack * widgetStack();
 
         /**
          * Show an info page in the widgetstack.
@@ -206,8 +206,8 @@ class KUTILS_EXPORT KPluginSelector : public QWidget
         /**
          * @internal
          */
-	void addPluginsInternal( const QValueList<KPluginInfo*> plugininfos,
-                                 const QString & catname, const QString & category,
+	void addPluginsInternal( const TQValueList<KPluginInfo*> plugininfos,
+                                 const TQString & catname, const TQString & category,
                                  KConfigGroup* cfgGroup );
 
 	class KPluginSelectorPrivate;

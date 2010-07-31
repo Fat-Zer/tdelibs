@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qapplication.h>
+#include <tqapplication.h>
 
 #include <kconfig.h>
 #include <klocale.h>
@@ -38,7 +38,7 @@ AddresseeHelper *AddresseeHelper::self()
 }
 
 AddresseeHelper::AddresseeHelper()
-  : QObject( qApp ),
+  : TQObject( qApp ),
     DCOPObject( "KABC::AddresseeHelper" )
 {
   initSettings();
@@ -48,10 +48,10 @@ AddresseeHelper::AddresseeHelper()
 }
 
 // static
-void AddresseeHelper::addToSet( const QStringList& list,
-                                std::set<QString>& container )
+void AddresseeHelper::addToSet( const TQStringList& list,
+                                std::set<TQString>& container )
 {
-  QStringList::ConstIterator it;
+  TQStringList::ConstIterator it;
   for ( it = list.begin(); it != list.end(); ++it ) {
     if ( !(*it).isEmpty() )
       container.insert( *it );
@@ -90,17 +90,17 @@ void AddresseeHelper::initSettings()
   mTradeAsFamilyName = config.readBoolEntry( "TradeAsFamilyName", true );
 }
 
-bool AddresseeHelper::containsTitle( const QString& title ) const
+bool AddresseeHelper::containsTitle( const TQString& title ) const
 {
   return mTitles.find( title ) != mTitles.end();
 }
 
-bool AddresseeHelper::containsPrefix( const QString& prefix ) const
+bool AddresseeHelper::containsPrefix( const TQString& prefix ) const
 {
   return mPrefixes.find( prefix ) != mPrefixes.end();
 }
 
-bool AddresseeHelper::containsSuffix( const QString& suffix ) const
+bool AddresseeHelper::containsSuffix( const TQString& suffix ) const
 {
   return mSuffixes.find( suffix ) != mSuffixes.end();
 }

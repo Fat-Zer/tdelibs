@@ -37,46 +37,46 @@ using namespace KABC;
 bool SortingTraits::Uid::eq( const Addressee &a1, const Addressee &a2 )
 {
   // locale awareness doesn't make sense sorting ids
-  return ( QString::compare( a1.uid(), a2.uid() ) == 0 );
+  return ( TQString::compare( a1.uid(), a2.uid() ) == 0 );
 }
 
 bool SortingTraits::Uid::lt( const Addressee &a1, const Addressee &a2 )
 {
   // locale awareness doesn't make sense sorting ids
-  return ( QString::compare( a1.uid(), a2.uid() ) < 0 );
+  return ( TQString::compare( a1.uid(), a2.uid() ) < 0 );
 }
 
 bool SortingTraits::Name::eq( const Addressee &a1, const Addressee &a2 )
 {
-  return ( QString::localeAwareCompare( a1.name(), a2.name() ) == 0 );
+  return ( TQString::localeAwareCompare( a1.name(), a2.name() ) == 0 );
 }
 
 bool SortingTraits::Name::lt( const Addressee &a1, const Addressee &a2 )
 {
-  return ( QString::localeAwareCompare( a1.name(), a2.name() ) < 0 );
+  return ( TQString::localeAwareCompare( a1.name(), a2.name() ) < 0 );
 }
 
 bool SortingTraits::FormattedName::eq( const Addressee &a1, const Addressee &a2 )
 {
-  return ( QString::localeAwareCompare( a1.formattedName(), a2.formattedName() ) == 0 );
+  return ( TQString::localeAwareCompare( a1.formattedName(), a2.formattedName() ) == 0 );
 }
 
 bool SortingTraits::FormattedName::lt( const Addressee &a1, const Addressee &a2 )
 {
-  return ( QString::localeAwareCompare( a1.formattedName(), a2.formattedName() ) < 0 );
+  return ( TQString::localeAwareCompare( a1.formattedName(), a2.formattedName() ) < 0 );
 }
 
 bool SortingTraits::FamilyName::eq( const Addressee &a1, const Addressee &a2 )
 {
-  return ( QString::localeAwareCompare( a1.familyName(), a2.familyName() ) == 0
-           && QString::localeAwareCompare( a1.givenName(), a2.givenName() ) == 0 );
+  return ( TQString::localeAwareCompare( a1.familyName(), a2.familyName() ) == 0
+           && TQString::localeAwareCompare( a1.givenName(), a2.givenName() ) == 0 );
 }
 
 bool SortingTraits::FamilyName::lt( const Addressee &a1, const Addressee &a2 )
 {
-  int family = QString::localeAwareCompare( a1.familyName(), a2.familyName() );
+  int family = TQString::localeAwareCompare( a1.familyName(), a2.familyName() );
   if ( 0 == family ) {
-    return ( QString::localeAwareCompare( a1.givenName(), a2.givenName() ) < 0 );
+    return ( TQString::localeAwareCompare( a1.givenName(), a2.givenName() ) < 0 );
   } else {
     return family < 0;
   }
@@ -84,15 +84,15 @@ bool SortingTraits::FamilyName::lt( const Addressee &a1, const Addressee &a2 )
 
 bool SortingTraits::GivenName::eq( const Addressee &a1, const Addressee &a2 )
 {
-  return ( QString::localeAwareCompare( a1.givenName(), a2.givenName() ) == 0
-           && QString::localeAwareCompare( a1.familyName(), a2.familyName() ) == 0 );
+  return ( TQString::localeAwareCompare( a1.givenName(), a2.givenName() ) == 0
+           && TQString::localeAwareCompare( a1.familyName(), a2.familyName() ) == 0 );
 }
 
 bool SortingTraits::GivenName::lt( const Addressee &a1, const Addressee &a2 )
 {
-  int given = QString::localeAwareCompare( a1.givenName(), a2.givenName() );
+  int given = TQString::localeAwareCompare( a1.givenName(), a2.givenName() );
   if ( 0 == given ) {
-    return ( QString::localeAwareCompare( a1.familyName(), a2.familyName() ) < 0 );
+    return ( TQString::localeAwareCompare( a1.familyName(), a2.familyName() ) < 0 );
   } else {
     return given < 0;
   }
@@ -107,7 +107,7 @@ bool SortingTraits::GivenName::lt( const Addressee &a1, const Addressee &a2 )
 static Field *sActiveField=0;
 
 AddresseeList::AddresseeList()
-  : QValueList<Addressee>()
+  : TQValueList<Addressee>()
 {
   mReverseSorting = false;
   mActiveSortingCriterion = FormattedName;
@@ -118,14 +118,14 @@ AddresseeList::~AddresseeList()
 }
 
 AddresseeList::AddresseeList( const AddresseeList &l )
-  : QValueList<Addressee>( l )
+  : TQValueList<Addressee>( l )
 {
   mReverseSorting = l.reverseSorting();
   mActiveSortingCriterion = l.sortingCriterion();
 }
 
-AddresseeList::AddresseeList( const QValueList<Addressee> &l )
-  : QValueList<Addressee>( l )
+AddresseeList::AddresseeList( const TQValueList<Addressee> &l )
+  : TQValueList<Addressee>( l )
 {
   mReverseSorting = false;
 }
@@ -135,7 +135,7 @@ void AddresseeList::dump() const
   kdDebug(5700) << "AddresseeList {" << endl;
   kdDebug(5700) << "reverse order: " << ( mReverseSorting ? "true" : "false" ) << endl;
 
-  QString crit;
+  TQString crit;
   if ( Uid == mActiveSortingCriterion ) {
     crit = "Uid";
   } else if ( Name == mActiveSortingCriterion ) {

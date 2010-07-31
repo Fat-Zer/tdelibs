@@ -3,13 +3,13 @@
 public:
 TextParam();
 TextParam(const TextParam&);
-TextParam(const QCString&);
+TextParam(const TQCString&);
 TextParam & operator = (TextParam&);
-TextParam & operator = (const QCString&);
+TextParam & operator = (const TQCString&);
 bool operator ==(TextParam&);
 bool operator !=(TextParam& x) {return !(*this==x);}
-bool operator ==(const QCString& s) {TextParam a(s);return(*this==a);} 
-bool operator != (const QCString& s) {return !(*this == s);}
+bool operator ==(const TQCString& s) {TextParam a(s);return(*this==a);} 
+bool operator != (const TQCString& s) {return !(*this == s);}
 
 virtual ~TextParam();
 void parse() {if(!parsed_) _parse();parsed_=true;assembled_=false;}

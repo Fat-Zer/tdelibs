@@ -18,7 +18,7 @@
 #ifndef CHARCOLUMNINTERFACE_H
 #define CHARCOLUMNINTERFACE_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 namespace KHE
 {
@@ -59,7 +59,7 @@ class CharColumnInterface
       * @param SC new character
       * @see substituteChar()
       */
-    virtual void setSubstituteChar( QChar SC ) = 0;
+    virtual void setSubstituteChar( TQChar SC ) = 0;
     /** sets the encoding of the text column.
       * If the encoding is not available the format will not be changed.
       * Default is @c LocalEncoding.
@@ -78,7 +78,7 @@ class CharColumnInterface
     /** @return the currently used substitute character for "unprintable" chars.
       * @see setSubstituteChar()
       */
-    virtual QChar substituteChar() const = 0;
+    virtual TQChar substituteChar() const = 0;
     /** @return the currently used encoding
       * @see setEncoding()
       */

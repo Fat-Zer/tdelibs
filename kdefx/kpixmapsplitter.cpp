@@ -33,13 +33,13 @@ KPixmapSplitter::~KPixmapSplitter()
 {
 }
 
-void KPixmapSplitter::setPixmap( const QPixmap& pixmap )
+void KPixmapSplitter::setPixmap( const TQPixmap& pixmap )
 {
     m_pixmap = pixmap;
     m_dirty = true;
 }
 
-void KPixmapSplitter::setItemSize( const QSize& size )
+void KPixmapSplitter::setItemSize( const TQSize& size )
 {
     if ( size != m_itemSize ) {
 	m_itemSize = size;
@@ -64,10 +64,10 @@ void KPixmapSplitter::setHSpacing( int spacing )
 }
 
 
-QRect KPixmapSplitter::coordinates( int pos )
+TQRect KPixmapSplitter::coordinates( int pos )
 {
     if ( pos < 0 || m_pixmap.isNull() )
-	return QRect();
+	return TQRect();
 
     if ( m_dirty ) {
 	m_numCols = m_pixmap.width() / ( m_itemSize.width() + m_hSpacing );
@@ -77,18 +77,18 @@ QRect KPixmapSplitter::coordinates( int pos )
     }
 
     if ( m_numCols == 0 || m_numRows == 0 )
-	return QRect();
+	return TQRect();
 
     int row = pos / m_numCols;
     int col = pos - (row * m_numCols);
 
-    return QRect( col * (m_itemSize.width() + m_hSpacing),
+    return TQRect( col * (m_itemSize.width() + m_hSpacing),
 		  row * (m_itemSize.height() + m_vSpacing),
 		  m_itemSize.width(),
 		  m_itemSize.height() );
 }
 
-QRect KPixmapSplitter::coordinates( const QChar& ch )
+TQRect KPixmapSplitter::coordinates( const TQChar& ch )
 {
     return coordinates( (unsigned char) ch.latin1() );
 }

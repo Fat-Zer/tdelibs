@@ -21,8 +21,8 @@
 #ifndef KBUFFEREDIO_H
 #define KBUFFEREDIO_H
 
-#include <qcstring.h>
-#include <qptrlist.h>
+#include <tqcstring.h>
+#include <tqptrlist.h>
 #include "kasyncio.h"
 
 class KBufferedIOPrivate;
@@ -34,7 +34,7 @@ class KBufferedIOPrivate;
  * available for reading, how many are still unsent and you can peek at
  * the buffered data.
  *
- * This class was intentionally written to resemble QSocket, because
+ * This class was intentionally written to resemble TQSocket, because
  * KExtendedSocket is a subclass of this one. This is so that applications
  * written using QSocket's buffering characteristics will be more easily
  * ported to the more powerful KExtendedSocket class.
@@ -42,7 +42,7 @@ class KBufferedIOPrivate;
  * KBufferedIO already provides a powerful internal buffering algorithm. However,
  * this does not include the I/O itself, which must be implemented in
  * derived classes. Thus, to implement a class that does some I/O, you must
- * override, in addition to the pure virtual QIODevice methods, these two:
+ * override, in addition to the pure virtual TQIODevice methods, these two:
  * @li closeNow()
  * @li waitForMore()
  *
@@ -84,8 +84,8 @@ public:
    * Closes the stream now, discarding the contents of the
    * write buffer. That is, we won't try to flush that
    * buffer before closing. If you want that buffer to be
-   * flushed, you can call QIODevice::flush(), which is blocking, and
-   * then closeNow, or you can call QIODevice::close() for a delayed
+   * flushed, you can call TQIODevice::flush(), which is blocking, and
+   * then closeNow, or you can call TQIODevice::close() for a delayed
    * close.
    */
   virtual void closeNow() = 0;
@@ -209,13 +209,13 @@ protected:
    * For an explanation on how this buffer work, please refer to the comments
    * at the top of kbufferedio.cpp, @ref impldetails .
    */
-  QPtrList<QByteArray> inBuf;
+  TQPtrList<TQByteArray> inBuf;
 
   /**
    * For an explanation on how this buffer work, please refer to the comments
    * at the top of kbufferedio.cpp, @ref impldetails .
    */
-  QPtrList<QByteArray> outBuf;
+  TQPtrList<TQByteArray> outBuf;
 
   unsigned inBufIndex /** Offset into first input buffer. */, 
     outBufIndex /** Offset into first output buffer. */ ;

@@ -32,7 +32,7 @@ private:
   KParts::ReadOnlyPart *m_part1;
   KParts::Part *m_part2;
   KParts::ReadWritePart *m_editorpart;
-  QWidget *m_splitter;
+  TQWidget *m_splitter;
 };
 
 #endif

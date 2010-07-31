@@ -28,8 +28,8 @@
 #ifndef _KEMAILSETTINGS_H
 #define _KEMAILSETTINGS_H
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -98,47 +98,47 @@ public:
 	  * List of profiles available.
 	  * @return the list of profiles
 	  **/
-	QStringList profiles() const;
+	TQStringList profiles() const;
 
 	/**
 	 * Returns the name of the current profile.
 	  * @returns what profile we're currently using
 	  **/
-	QString currentProfileName() const;
+	TQString currentProfileName() const;
 
 	/**
 	  * Change the current profile.
 	  * @param s the name of the new profile
 	  **/
-	void setProfile (const QString &s);
+	void setProfile (const TQString &s);
 
 	/**
 	 * Returns the name of the default profile.
-	 * @returns the name of the one that's currently default QString::null if none
+	 * @returns the name of the one that's currently default TQString::null if none
 	 **/
-	QString defaultProfileName() const;
+	TQString defaultProfileName() const;
 
 	/**
 	  * Sets a new default.
 	  * @param def the new default
 	  **/
-	void setDefault(const QString &def);
+	void setDefault(const TQString &def);
 
 	/**
 	  * Get one of the predefined "basic" settings.
 	  * @param s the setting to get
-	  * @return the value of the setting, or QString::null if not 
+	  * @return the value of the setting, or TQString::null if not 
 	  *         set
 	  **/
-	QString getSetting(KEMailSettings::Setting s);
+	TQString getSetting(KEMailSettings::Setting s);
 
 	/**
 	  * Set one of the predefined "basic" settings.
 	  * @param s the setting to set
-	  * @param v the new value of the setting, or QString::null to 
+	  * @param v the new value of the setting, or TQString::null to 
 	  *         unset
 	  **/
-	void setSetting(KEMailSettings::Setting s, const QString &v);
+	void setSetting(KEMailSettings::Setting s, const TQString &v);
 
 private:
 	KEMailSettingsPrivate *p;

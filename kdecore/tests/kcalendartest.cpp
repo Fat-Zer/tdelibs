@@ -5,7 +5,7 @@
 #include "kcalendarsystemfactory.h"
 #include "kcalendarsystem.h"
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include <kapplication.h>
 #include <kaboutdata.h>
@@ -16,7 +16,7 @@
 
 class KLocale;
 
-void test(QDate & date);
+void test(TQDate & date);
 
 static const char description[] = "KCalendarTest";
 
@@ -29,8 +29,8 @@ static KCmdLineOptions options[] =
 
 int main(int argc, char **argv) {
 
-	QDate date;
-	QString calType, option;
+	TQDate date;
+	TQString calType, option;
 	
         KAboutData aboutData( "kcalendartest", "KCalendarTest" ,
                         "0.1", description, KAboutData::License_GPL,
@@ -46,9 +46,9 @@ int main(int argc, char **argv) {
 
 	KApplication app(false, false);
 
-        QStringList lst = KCalendarSystemFactory::calendarSystems();
+        TQStringList lst = KCalendarSystemFactory::calendarSystems();
 	kdDebug() << "Supported calendar types: " << endl;
-	for (QStringList::Iterator it = lst.begin(); it != lst.end(); ++it)
+	for (TQStringList::Iterator it = lst.begin(); it != lst.end(); ++it)
             kdDebug() << *it << endl;
         kdDebug() << endl;
 
@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
     		option = args->getOption("date");
                 date = KGlobal::locale()->readDate(option);
   	} else 
-    		date = QDate::currentDate();
+    		date = TQDate::currentDate();
 
 	args->clear(); // Free up some memory.
 	
@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
 
 }
 
-void test(QDate & date) {
+void test(TQDate & date) {
 
         kdDebug() << "(KLocale) readDate" << endl;
 

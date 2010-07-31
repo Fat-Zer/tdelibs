@@ -44,11 +44,11 @@ KUNITTEST_MODULE_REGISTER_TESTER( KConfigTest )
 #define STRINGENTRY5 " "
 #define STRINGENTRY6 ""
 #define LOCAL8BITENTRY "Hello הצü"
-#define POINTENTRY QPoint( 4351, 1235 )
-#define SIZEENTRY QSize( 10, 20 )
-#define RECTENTRY QRect( 10, 23, 5321, 13 )
-#define DATETIMEENTRY QDateTime( QDate( 2002, 06, 23 ), QTime( 12, 55, 40 ) )
-#define STRINGLISTENTRY QStringList( "Hello," )
+#define POINTENTRY TQPoint( 4351, 1235 )
+#define SIZEENTRY TQSize( 10, 20 )
+#define RECTENTRY TQRect( 10, 23, 5321, 13 )
+#define DATETIMEENTRY TQDateTime( TQDate( 2002, 06, 23 ), TQTime( 12, 55, 40 ) )
+#define STRINGLISTENTRY TQStringList( "Hello," )
 
 void KConfigTest::writeConfigFile()
 {
@@ -62,7 +62,7 @@ void KConfigTest::writeConfigFile()
   sc.writeEntry( "boolEntry1", BOOLENTRY1 );
   sc.writeEntry( "boolEntry2", BOOLENTRY2 );
 
-  sc.writeEntry( "Test", QString::fromLocal8Bit( LOCAL8BITENTRY ) );
+  sc.writeEntry( "Test", TQString::fromLocal8Bit( LOCAL8BITENTRY ) );
   sc.writeEntry( "Test2", "");
   sc.writeEntry( "stringEntry1", STRINGENTRY1 );
   sc.writeEntry( "stringEntry2", STRINGENTRY2 );
@@ -119,29 +119,29 @@ void KConfigTest::allTests()
 
   sc2.setGroup("AAA");
   CHECK( sc2.hasKey( "stringEntry1" ), true );
-  CHECK( sc2.readEntry( "stringEntry1" ), QString( STRINGENTRY1 ) );
+  CHECK( sc2.readEntry( "stringEntry1" ), TQString( STRINGENTRY1 ) );
   CHECK( sc2.entryIsImmutable("stringEntry1"), bImmutable );
   CHECK( sc2.hasKey( "stringEntry2" ), false );
-  CHECK( sc2.readEntry( "stringEntry2", "bla" ), QString( "bla" ) );
+  CHECK( sc2.readEntry( "stringEntry2", "bla" ), TQString( "bla" ) );
 
   CHECK( sc2.hasDefault( "stringEntry1" ), false );
 
   sc2.setGroup("Hello");
-  CHECK( sc2.readEntry( "Test" ), QString::fromLocal8Bit( LOCAL8BITENTRY ) );
+  CHECK( sc2.readEntry( "Test" ), TQString::fromLocal8Bit( LOCAL8BITENTRY ) );
   CHECK( sc2.readEntry("Test2", "Fietsbel").isEmpty(), true );
-  CHECK( sc2.readEntry( "stringEntry1" ), QString( STRINGENTRY1 ) );
-  CHECK( sc2.readEntry( "stringEntry2" ), QString( STRINGENTRY2 ) );
-  CHECK( sc2.readEntry( "stringEntry3" ), QString( STRINGENTRY3 ) );
-  CHECK( sc2.readEntry( "stringEntry4" ), QString( STRINGENTRY4 ) );
+  CHECK( sc2.readEntry( "stringEntry1" ), TQString( STRINGENTRY1 ) );
+  CHECK( sc2.readEntry( "stringEntry2" ), TQString( STRINGENTRY2 ) );
+  CHECK( sc2.readEntry( "stringEntry3" ), TQString( STRINGENTRY3 ) );
+  CHECK( sc2.readEntry( "stringEntry4" ), TQString( STRINGENTRY4 ) );
   CHECK( sc2.hasKey( "stringEntry5" ), false);
-  CHECK( sc2.readEntry( "stringEntry5", "test" ), QString( "test" ) );
+  CHECK( sc2.readEntry( "stringEntry5", "test" ), TQString( "test" ) );
   CHECK( sc2.hasKey( "stringEntry6" ), false);
-  CHECK( sc2.readEntry( "stringEntry6", "foo" ), QString( "foo" ) );
+  CHECK( sc2.readEntry( "stringEntry6", "foo" ), TQString( "foo" ) );
   CHECK( sc2.readBoolEntry( "boolEntry1" ), BOOLENTRY1 );
   CHECK( sc2.readBoolEntry( "boolEntry2" ), BOOLENTRY2 );
 
 #if 0
-  QString s;
+  TQString s;
   s = sc2.readEntry( "keywith=equalsign" );
   fprintf(stderr, "comparing keywith=equalsign %s with %s -> ", STRINGENTRY1, s.latin1());
   if (s == STRINGENTRY1)

@@ -135,7 +135,7 @@ static void initialize( StdAccel id )
 	}
 
 	if( saver.config()->hasKey( pInfo->psName ) ) {
-		QString s = saver.config()->readEntry( pInfo->psName );
+		TQString s = saver.config()->readEntry( pInfo->psName );
 		if( s != "none" )
 			pInfo->cut.init( s );
 		else
@@ -145,30 +145,30 @@ static void initialize( StdAccel id )
 	pInfo->bInitialized = true;
 }
 
-QString name( StdAccel id )
+TQString name( StdAccel id )
 {
 	KStdAccelInfo* pInfo = infoPtr( id );
 	if( !pInfo )
-		return QString::null;
+		return TQString::null;
 	return pInfo->psName;
 }
 
-QString label( StdAccel id )
+TQString label( StdAccel id )
 {
 	KStdAccelInfo* pInfo = infoPtr( id );
 	if( !pInfo )
-		return QString::null;
+		return TQString::null;
 	return i18n((pInfo->psDesc) ? pInfo->psDesc : pInfo->psName);
 }
 
 // TODO: Add psWhatsThis entry to KStdAccelInfo
-QString whatsThis( StdAccel /*id*/ )
+TQString whatsThis( StdAccel /*id*/ )
 {
 //	KStdAccelInfo* pInfo = infoPtr( id );
 //	if( pInfo && pInfo->psWhatsThis )
 //		return i18n(pInfo->psWhatsThis);
 //	else
-		return QString::null;
+		return TQString::null;
 }
 
 const KShortcut& shortcut( StdAccel id )
@@ -232,12 +232,12 @@ KShortcut shortcutDefault4( StdAccel id )
 		KKeySequence key2;
 
 		cut.init( (info.cutDefault4) ?
-			QKeySequence(info.cutDefault) : QKeySequence(info.cutDefault4) );
+			TQKeySequence(info.cutDefault) : TQKeySequence(info.cutDefault4) );
 
 		if( info.cutDefault4B )
-			key2.init( QKeySequence(info.cutDefault4B) );
+			key2.init( TQKeySequence(info.cutDefault4B) );
 		else if( info.cutDefault3B )
-			key2.init( QKeySequence(info.cutDefault3B) );
+			key2.init( TQKeySequence(info.cutDefault3B) );
 
 		if( key2.count() )
 			cut.append( key2 );
@@ -258,7 +258,7 @@ void createAccelActions( KAccelActions& actions )
 		if( id != AccelNone ) {
 			actions.insert( pInfo->psName,
 				i18n((pInfo->psDesc) ? pInfo->psDesc : pInfo->psName),
-				QString::null, // pInfo->psWhatsThis,
+				TQString::null, // pInfo->psWhatsThis,
 				shortcutDefault3(id),
 				shortcutDefault4(id) );
 		} else
@@ -336,14 +336,14 @@ uint ShortcutList::count() const
 	return g_nAccels;
 }
 
-QString ShortcutList::name( uint i ) const
+TQString ShortcutList::name( uint i ) const
 	{ return g_infoStdAccel[i].psName; }
 
-QString ShortcutList::label( uint i ) const
+TQString ShortcutList::label( uint i ) const
 	{ return i18n((g_infoStdAccel[i].psDesc) ? g_infoStdAccel[i].psDesc : g_infoStdAccel[i].psName); }
 
-QString ShortcutList::whatsThis( uint ) const
-	{ return QString::null; }
+TQString ShortcutList::whatsThis( uint ) const
+	{ return TQString::null; }
 
 const KShortcut& ShortcutList::shortcut( uint i ) const
 {
@@ -365,27 +365,27 @@ bool ShortcutList::isConfigurable( uint i ) const
 bool ShortcutList::setShortcut( uint i, const KShortcut& cut )
 	{ g_infoStdAccel[i].cut = cut; return true; }
 
-QVariant ShortcutList::getOther( Other, uint ) const
-	{ return QVariant(); }
+TQVariant ShortcutList::getOther( Other, uint ) const
+	{ return TQVariant(); }
 
-bool ShortcutList::setOther( Other, uint, QVariant )
+bool ShortcutList::setOther( Other, uint, TQVariant )
 	{ return false; }
 
 bool ShortcutList::save() const
 {
-	return writeSettings( QString::null, 0, false, true );
+	return writeSettings( TQString::null, 0, false, true );
 }
 
-KDECORE_EXPORT QString action(StdAccel id)
+KDECORE_EXPORT TQString action(StdAccel id)
 	{ return name(id); }
-KDECORE_EXPORT QString description(StdAccel id)
+KDECORE_EXPORT TQString description(StdAccel id)
 	{ return label(id); }
 KDECORE_EXPORT int key(StdAccel id)
 	{ return shortcut(id).keyCodeQt(); }
 KDECORE_EXPORT int defaultKey(StdAccel id)
 	{ return shortcutDefault(id).keyCodeQt(); }
 
-KDECORE_EXPORT bool isEqual(const QKeyEvent* ev, int keyQt)
+KDECORE_EXPORT bool isEqual(const TQKeyEvent* ev, int keyQt)
 {
 	KKey key1( ev ), key2( keyQt );
 	return key1 == key2;

@@ -151,24 +151,24 @@ static int rikFindChar(register const char * _s, const char c)
   return s - _s;
 }
 
-QCString KCodecs::quotedPrintableEncode(const QByteArray& in, bool useCRLF)
+TQCString KCodecs::quotedPrintableEncode(const TQByteArray& in, bool useCRLF)
 {
-  QByteArray out;
+  TQByteArray out;
   quotedPrintableEncode (in, out, useCRLF);
-  return QCString (out.data(), out.size()+1);
+  return TQCString (out.data(), out.size()+1);
 }
 
-QCString KCodecs::quotedPrintableEncode(const QCString& str, bool useCRLF)
+TQCString KCodecs::quotedPrintableEncode(const TQCString& str, bool useCRLF)
 {
   if (str.isEmpty())
     return "";
 
-  QByteArray in (str.length());
+  TQByteArray in (str.length());
   memcpy (in.data(), str.data(), str.length());
   return quotedPrintableEncode(in, useCRLF);
 }
 
-void KCodecs::quotedPrintableEncode(const QByteArray& in, QByteArray& out, bool useCRLF)
+void KCodecs::quotedPrintableEncode(const TQByteArray& in, TQByteArray& out, bool useCRLF)
 {
   out.resize (0);
   if (in.isEmpty())
@@ -284,24 +284,24 @@ void KCodecs::quotedPrintableEncode(const QByteArray& in, QByteArray& out, bool 
   out.truncate(cursor - out.data());
 }
 
-QCString KCodecs::quotedPrintableDecode(const QByteArray & in)
+TQCString KCodecs::quotedPrintableDecode(const TQByteArray & in)
 {
-  QByteArray out;
+  TQByteArray out;
   quotedPrintableDecode (in, out);
-  return QCString (out.data(), out.size()+1);
+  return TQCString (out.data(), out.size()+1);
 }
 
-QCString KCodecs::quotedPrintableDecode(const QCString & str)
+TQCString KCodecs::quotedPrintableDecode(const TQCString & str)
 {
   if (str.isEmpty())
     return "";
 
-  QByteArray in (str.length());
+  TQByteArray in (str.length());
   memcpy (in.data(), str.data(), str.length());
   return quotedPrintableDecode (in);
 }
 
-void KCodecs::quotedPrintableDecode(const QByteArray& in, QByteArray& out)
+void KCodecs::quotedPrintableDecode(const TQByteArray& in, TQByteArray& out)
 {
   // clear out the output buffer
   out.resize (0);
@@ -359,24 +359,24 @@ void KCodecs::quotedPrintableDecode(const QByteArray& in, QByteArray& out)
   out.truncate(cursor - out.data());
 }
 
-QCString KCodecs::base64Encode( const QCString& str, bool insertLFs )
+TQCString KCodecs::base64Encode( const TQCString& str, bool insertLFs )
 {
     if ( str.isEmpty() )
         return "";
 
-    QByteArray in (str.length());
+    TQByteArray in (str.length());
     memcpy( in.data(), str.data(), str.length() );
     return base64Encode( in, insertLFs );
 }
 
-QCString KCodecs::base64Encode( const QByteArray& in, bool insertLFs )
+TQCString KCodecs::base64Encode( const TQByteArray& in, bool insertLFs )
 {
-    QByteArray out;
+    TQByteArray out;
     base64Encode( in, out, insertLFs );
-    return QCString( out.data(), out.size()+1 );
+    return TQCString( out.data(), out.size()+1 );
 }
 
-void KCodecs::base64Encode( const QByteArray& in, QByteArray& out,
+void KCodecs::base64Encode( const TQByteArray& in, TQByteArray& out,
                             bool insertLFs )
 {
     // clear out the output buffer
@@ -448,24 +448,24 @@ void KCodecs::base64Encode( const QByteArray& in, QByteArray& out,
     }
 }
 
-QCString KCodecs::base64Decode( const QCString& str )
+TQCString KCodecs::base64Decode( const TQCString& str )
 {
     if ( str.isEmpty() )
         return "";
 
-    QByteArray in( str.length() );
+    TQByteArray in( str.length() );
     memcpy( in.data(), str.data(), str.length() );
     return base64Decode( in );
 }
 
-QCString KCodecs::base64Decode( const QByteArray& in )
+TQCString KCodecs::base64Decode( const TQByteArray& in )
 {
-    QByteArray out;
+    TQByteArray out;
     base64Decode( in, out );
-    return QCString( out.data(), out.size()+1 );
+    return TQCString( out.data(), out.size()+1 );
 }
 
-void KCodecs::base64Decode( const QByteArray& in, QByteArray& out )
+void KCodecs::base64Decode( const TQByteArray& in, TQByteArray& out )
 {
     out.resize(0);
     if ( in.isEmpty() )
@@ -549,25 +549,25 @@ void KCodecs::base64Decode( const QByteArray& in, QByteArray& out )
       out.resize(len);
 }
 
-QCString KCodecs::uuencode( const QCString& str )
+TQCString KCodecs::uuencode( const TQCString& str )
 {
     if ( str.isEmpty() )
         return "";
 
-    QByteArray in;
+    TQByteArray in;
     in.resize( str.length() );
     memcpy( in.data(), str.data(), str.length() );
     return uuencode( in );
 }
 
-QCString KCodecs::uuencode( const QByteArray& in )
+TQCString KCodecs::uuencode( const TQByteArray& in )
 {
-    QByteArray out;
+    TQByteArray out;
     uuencode( in, out );
-    return QCString( out.data(), out.size()+1 );
+    return TQCString( out.data(), out.size()+1 );
 }
 
-void KCodecs::uuencode( const QByteArray& in, QByteArray& out )
+void KCodecs::uuencode( const TQByteArray& in, TQByteArray& out )
 {
     out.resize( 0 );
     if( in.isEmpty() )
@@ -646,25 +646,25 @@ void KCodecs::uuencode( const QByteArray& in, QByteArray& out )
         out.resize( 0 );
 }
 
-QCString KCodecs::uudecode( const QCString& str )
+TQCString KCodecs::uudecode( const TQCString& str )
 {
     if ( str.isEmpty() )
         return "";
 
-    QByteArray in;
+    TQByteArray in;
     in.resize( str.length() );
     memcpy( in.data(), str.data(), str.length() );
     return uudecode( in );
 }
 
-QCString KCodecs::uudecode( const QByteArray& in )
+TQCString KCodecs::uudecode( const TQByteArray& in )
 {
-    QByteArray out;
+    TQByteArray out;
     uudecode( in, out );
-    return QCString( out.data(), out.size()+1 );
+    return TQCString( out.data(), out.size()+1 );
 }
 
-void KCodecs::uudecode( const QByteArray& in, QByteArray& out )
+void KCodecs::uudecode( const TQByteArray& in, TQByteArray& out )
 {
     out.resize( 0 );
     if( in.isEmpty() )
@@ -762,24 +762,24 @@ KMD5::KMD5(const char *in, int len)
     update(in, len);
 }
 
-KMD5::KMD5(const QByteArray& in)
+KMD5::KMD5(const TQByteArray& in)
 {
     init();
     update( in );
 }
 
-KMD5::KMD5(const QCString& in)
+KMD5::KMD5(const TQCString& in)
 {
     init();
     update( in );
 }
 
-void KMD5::update(const QByteArray& in)
+void KMD5::update(const TQByteArray& in)
 {
     update(in.data(), int(in.size()));
 }
 
-void KMD5::update(const QCString& in)
+void KMD5::update(const TQCString& in)
 {
     update(in.data(), int(in.length()));
 }
@@ -827,7 +827,7 @@ void KMD5::update(const unsigned char* in, int len)
     memcpy(m_buffer+buffer_index, in+in_index, in_length-in_index);
 }
 
-bool KMD5::update(QIODevice& file)
+bool KMD5::update(TQIODevice& file)
 {
     char buffer[1024];
     int len;
@@ -880,7 +880,7 @@ bool KMD5::verify( const KMD5::Digest& digest)
     return (0 == memcmp(rawDigest(), digest, sizeof(KMD5::Digest)));
 }
 
-bool KMD5::verify( const QCString& hexdigest)
+bool KMD5::verify( const TQCString& hexdigest)
 {
     finalize();
     return (0 == strcmp(hexDigest().data(), hexdigest));
@@ -899,9 +899,9 @@ void KMD5::rawDigest( KMD5::Digest& bin )
 }
 
 
-QCString KMD5::hexDigest()
+TQCString KMD5::hexDigest()
 {
-    QCString s(33);
+    TQCString s(33);
 
     finalize();
     sprintf(s.data(), "%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
@@ -912,7 +912,7 @@ QCString KMD5::hexDigest()
     return s;
 }
 
-void KMD5::hexDigest(QCString& s)
+void KMD5::hexDigest(TQCString& s)
 {
     finalize();
     s.resize(33);
@@ -922,9 +922,9 @@ void KMD5::hexDigest(QCString& s)
             m_digest[12], m_digest[13], m_digest[14], m_digest[15]);
 }
 
-QCString KMD5::base64Digest()
+TQCString KMD5::base64Digest()
 {
-    QByteArray ba(16);
+    TQByteArray ba(16);
 
     finalize();
     memcpy(ba.data(), m_digest, 16);
@@ -1151,24 +1151,24 @@ KMD4::KMD4(const char *in, int len)
     update(in, len);
 }
 
-KMD4::KMD4(const QByteArray& in)
+KMD4::KMD4(const TQByteArray& in)
 {
     init();
     update( in );
 }
 
-KMD4::KMD4(const QCString& in)
+KMD4::KMD4(const TQCString& in)
 {
     init();
     update( in );
 }
 
-void KMD4::update(const QByteArray& in)
+void KMD4::update(const TQByteArray& in)
 {
     update(in.data(), int(in.size()));
 }
 
-void KMD4::update(const QCString& in)
+void KMD4::update(const TQCString& in)
 {
     update(in.data(), int(in.length()));
 }
@@ -1235,7 +1235,7 @@ void KMD4::update(const unsigned char *in, int len)
   memcpy (m_buffer, in, len);
 }
 
-bool KMD4::update(QIODevice& file)
+bool KMD4::update(TQIODevice& file)
 {
     char buffer[1024];
     int len;
@@ -1303,7 +1303,7 @@ bool KMD4::verify( const KMD4::Digest& digest)
     return (0 == memcmp(rawDigest(), digest, sizeof(KMD4::Digest)));
 }
 
-bool KMD4::verify( const QCString& hexdigest)
+bool KMD4::verify( const TQCString& hexdigest)
 {
     finalize();
     return (0 == strcmp(hexDigest().data(), hexdigest));
@@ -1321,9 +1321,9 @@ void KMD4::rawDigest( KMD4::Digest& bin )
     memcpy( bin, m_digest, 16 );
 }
 
-QCString KMD4::hexDigest()
+TQCString KMD4::hexDigest()
 {
-    QCString s(33);
+    TQCString s(33);
 
     finalize();
     sprintf(s.data(), "%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
@@ -1334,7 +1334,7 @@ QCString KMD4::hexDigest()
     return s;
 }
 
-void KMD4::hexDigest(QCString& s)
+void KMD4::hexDigest(TQCString& s)
 {
     finalize();
     s.resize(33);
@@ -1344,9 +1344,9 @@ void KMD4::hexDigest(QCString& s)
             m_digest[12], m_digest[13], m_digest[14], m_digest[15]);
 }
 
-QCString KMD4::base64Digest()
+TQCString KMD4::base64Digest()
 {
-    QByteArray ba(16);
+    TQByteArray ba(16);
 
     finalize();
     memcpy(ba.data(), m_digest, 16);

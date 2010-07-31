@@ -20,19 +20,19 @@
 #ifndef PLUGINCOMBOBOX_H
 #define PLUGINCOMBOBOX_H
 
-#include <qwidget.h>
-#include <qstringlist.h>
+#include <tqwidget.h>
+#include <tqstringlist.h>
 
 #include "kpreloadobject.h"
 
 class QComboBox;
 class QLabel;
 
-class KDEPRINT_EXPORT PluginComboBox : public QWidget, public KPReloadObject
+class KDEPRINT_EXPORT PluginComboBox : public TQWidget, public KPReloadObject
 {
 	Q_OBJECT
 public:
-	PluginComboBox(QWidget *parent = 0, const char *name = 0);
+	PluginComboBox(TQWidget *parent = 0, const char *name = 0);
 
 protected slots:
 	void slotActivated(int);

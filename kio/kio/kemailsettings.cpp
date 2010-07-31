@@ -37,25 +37,25 @@ public:
     KEMailSettingsPrivate() : m_pConfig( 0 ) {}
     ~KEMailSettingsPrivate() { delete m_pConfig; }
 	KConfig *m_pConfig;
-	QStringList profiles;
-	QString m_sDefaultProfile, m_sCurrentProfile;
+	TQStringList profiles;
+	TQString m_sDefaultProfile, m_sCurrentProfile;
 };
 
-QString KEMailSettings::defaultProfileName() const
+TQString KEMailSettings::defaultProfileName() const
 {
 	return p->m_sDefaultProfile;
 }
 
-QString KEMailSettings::getSetting(KEMailSettings::Setting s)
+TQString KEMailSettings::getSetting(KEMailSettings::Setting s)
 {
-	p->m_pConfig->setGroup(QString("PROFILE_")+p->m_sCurrentProfile);
+	p->m_pConfig->setGroup(TQString("PROFILE_")+p->m_sCurrentProfile);
 	switch (s) {
 		case ClientProgram: {
 			return p->m_pConfig->readEntry("EmailClient");
 			break;
 		}
 		case ClientTerminal: {
-			return ((p->m_pConfig->readBoolEntry("TerminalClient")) ? QString("true") : QString("false") );
+			return ((p->m_pConfig->readBoolEntry("TerminalClient")) ? TQString("true") : TQString("false") );
 			break;
 		}
 		case RealName: {
@@ -95,7 +95,7 @@ QString KEMailSettings::getSetting(KEMailSettings::Setting s)
 			break;
 		}
 		case OutServerTLS: {
-			return ((p->m_pConfig->readBoolEntry("OutgoingServerTLS")) ? QString("true") : QString("false") );
+			return ((p->m_pConfig->readBoolEntry("OutgoingServerTLS")) ? TQString("true") : TQString("false") );
 			break;
 		}
 		case InServer: {
@@ -119,15 +119,15 @@ QString KEMailSettings::getSetting(KEMailSettings::Setting s)
 			break;
 		}
 		case InServerTLS: {
-			return ((p->m_pConfig->readBoolEntry("IncomingServerTLS")) ? QString("true") : QString("false") );
+			return ((p->m_pConfig->readBoolEntry("IncomingServerTLS")) ? TQString("true") : TQString("false") );
 			break;
 		}
 	};
-	return QString::null;
+	return TQString::null;
 }
-void KEMailSettings::setSetting(KEMailSettings::Setting s, const QString  &v)
+void KEMailSettings::setSetting(KEMailSettings::Setting s, const TQString  &v)
 {
-	p->m_pConfig->setGroup(QString("PROFILE_")+p->m_sCurrentProfile);
+	p->m_pConfig->setGroup(TQString("PROFILE_")+p->m_sCurrentProfile);
 	switch (s) {
 		case ClientProgram: {
 			p->m_pConfig->writePathEntry("EmailClient", v);
@@ -205,7 +205,7 @@ void KEMailSettings::setSetting(KEMailSettings::Setting s, const QString  &v)
 	p->m_pConfig->sync();
 }
 
-void KEMailSettings::setDefault(const QString &s)
+void KEMailSettings::setDefault(const TQString &s)
 {
 	p->m_pConfig->setGroup("Defaults");
 	p->m_pConfig->writeEntry("Profile", s);
@@ -214,25 +214,25 @@ void KEMailSettings::setDefault(const QString &s)
 
 }
 
-void KEMailSettings::setProfile (const QString &s)
+void KEMailSettings::setProfile (const TQString &s)
 {
-	QString groupname="PROFILE_";
+	TQString groupname="PROFILE_";
 	groupname.append(s);
 	p->m_sCurrentProfile=s;
 	if (!p->m_pConfig->hasGroup(groupname)) { // Create a group if it doesn't exist
 		p->m_pConfig->setGroup(groupname);
-		p->m_pConfig->writeEntry("ServerType", QString::null);
+		p->m_pConfig->writeEntry("ServerType", TQString::null);
 		p->m_pConfig->sync();
 		p->profiles+=s;
 	}
 }
 
-QString KEMailSettings::currentProfileName() const
+TQString KEMailSettings::currentProfileName() const
 {
 	return p->m_sCurrentProfile;
 }
 
-QStringList KEMailSettings::profiles() const
+TQStringList KEMailSettings::profiles() const
 {
 	return p->profiles;
 }
@@ -240,12 +240,12 @@ QStringList KEMailSettings::profiles() const
 KEMailSettings::KEMailSettings()
 {
 	p = new KEMailSettingsPrivate();
-	p->m_sCurrentProfile=QString::null;
+	p->m_sCurrentProfile=TQString::null;
 
 	p->m_pConfig = new KConfig("emaildefaults");
 
-	QStringList groups = p->m_pConfig->groupList();
-	for (QStringList::Iterator it = groups.begin(); it != groups.end(); ++it) {
+	TQStringList groups = p->m_pConfig->groupList();
+	for (TQStringList::Iterator it = groups.begin(); it != groups.end(); ++it) {
 		if ( (*it).left(8) == "PROFILE_" )
 			p->profiles+= (*it).mid(8, (*it).length());
 	}
@@ -253,7 +253,7 @@ KEMailSettings::KEMailSettings()
 	p->m_pConfig->setGroup("Defaults");
 	p->m_sDefaultProfile=p->m_pConfig->readEntry("Profile", i18n("Default"));
 	if (!p->m_sDefaultProfile.isNull()) {
-		if (!p->m_pConfig->hasGroup(QString("PROFILE_")+p->m_sDefaultProfile))
+		if (!p->m_pConfig->hasGroup(TQString("PROFILE_")+p->m_sDefaultProfile))
 			setDefault(i18n("Default"));
 		else
 			setDefault(p->m_sDefaultProfile);

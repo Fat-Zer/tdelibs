@@ -24,7 +24,7 @@
 #ifndef  SOUNDVALUE_H
 #define  SOUNDVALUE_H
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <VCardValue.h>
 

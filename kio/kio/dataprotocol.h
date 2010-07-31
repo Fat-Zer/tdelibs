@@ -53,7 +53,7 @@ class DataProtocol : public DataSlave {
 
 public:
 #if defined(DATAKIOSLAVE)
-  DataProtocol(const QCString &pool_socket, const QCString &app_socket);
+  DataProtocol(const TQCString &pool_socket, const TQCString &app_socket);
 #else
   DataProtocol();
 #endif

@@ -19,19 +19,19 @@
 
 
 #include <kapplication.h>
-#include <qlayout.h>
-#include <qwidget.h>
+#include <tqlayout.h>
+#include <tqwidget.h>
 
 #include "kseparator.h"
 
 
 int main(int argc, char **argv)
 {
-   QApplication app(argc, argv);
+   TQApplication app(argc, argv);
    
-   QWidget *toplevel = new QWidget();
+   TQWidget *toplevel = new TQWidget();
    
-   QBoxLayout *mainbox = new QBoxLayout(toplevel, QBoxLayout::TopToBottom, 10);
+   TQBoxLayout *mainbox = new TQBoxLayout(toplevel, TQBoxLayout::TopToBottom, 10);
    
    KSeparator *sep1 = new KSeparator( KSeparator::VLine, toplevel );
    mainbox->addWidget(sep1);

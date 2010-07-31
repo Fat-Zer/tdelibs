@@ -22,10 +22,10 @@
 #ifndef html_helper_h
 #define html_helper_h
 
-#include <qcolor.h>
+#include <tqcolor.h>
 class QPainter;
-#include <qfontmetrics.h>
-#include <qfont.h>
+#include <tqfontmetrics.h>
+#include <tqfont.h>
 
 
 
@@ -35,11 +35,11 @@ namespace khtml
      const QRgb transparentColor = 0x00000000;
      const QRgb invertedColor    = 0x00000002;
 
-    extern QPainter *printpainter;
-    void setPrintPainter( QPainter *printer );
+    extern TQPainter *printpainter;
+    void setPrintPainter( TQPainter *printer );
     
-    bool hasSufficientContrast(const QColor &c1, const QColor &c2);
-    QColor retrieveBackgroundColor(const RenderObject *obj);
+    bool hasSufficientContrast(const TQColor &c1, const TQColor &c2);
+    TQColor retrieveBackgroundColor(const RenderObject *obj);
     QRgb qRgbaFromHsla(double h, double s, double l, double a);
 
     //enumerator for findSelectionNode

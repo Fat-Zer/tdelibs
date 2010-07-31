@@ -64,7 +64,7 @@ class KATEPARTINTERFACES_EXPORT ConfigPage : public KTextEditor::ConfigPage
   Q_OBJECT
 
   public:
-    ConfigPage ( QWidget *parent=0, const char *name=0 ) : KTextEditor::ConfigPage (parent, name) { ; };
+    ConfigPage ( TQWidget *parent=0, const char *name=0 ) : KTextEditor::ConfigPage (parent, name) { ; };
     virtual ~ConfigPage () { ; };
 
   public slots:
@@ -82,7 +82,7 @@ class KATEPARTINTERFACES_EXPORT ActionMenu : public KActionMenu
   Q_OBJECT
 
   public:
-    ActionMenu ( const QString& text, QObject* parent = 0, const char* name = 0 )
+    ActionMenu ( const TQString& text, TQObject* parent = 0, const char* name = 0 )
       : KActionMenu(text, parent, name) { ; };
     virtual ~ActionMenu () { ; };
 
@@ -104,19 +104,19 @@ class KATEPARTINTERFACES_EXPORT Command
      * Pure text start part of the commands which can be handled by this object
      * which means i.e. for s/sdl/sdf/g => s or for char:1212 => char
      */
-    virtual QStringList cmds () = 0;
+    virtual TQStringList cmds () = 0;
 
     /**
      * Execute this command for the given view and cmd string, return a bool
      * about success, msg for status
      */
-    virtual bool exec (View *view, const QString &cmd, QString &msg) = 0;
+    virtual bool exec (View *view, const TQString &cmd, TQString &msg) = 0;
 
     /**
      * Shows help for the given view and cmd string, return a bool
      * about success, msg for status
      */
-    virtual bool help (View *view, const QString &cmd, QString &msg) = 0;
+    virtual bool help (View *view, const TQString &cmd, TQString &msg) = 0;
 };
 
 /**
@@ -143,7 +143,7 @@ class CommandExtension
      * are displayed, existing flags are left out.
      *
      */ //### this is yet to be tried
-    virtual void flagCompletions( QStringList& /*list*/ ) {;}
+    virtual void flagCompletions( TQStringList& /*list*/ ) {;}
 
     /**
      * @return a KCompletion object that will substitute the command line default
@@ -154,7 +154,7 @@ class CommandExtension
      *
      * @param cmdname The command name associated with this request.
      */
-    virtual KCompletion *completionObject( const QString & cmdname, Kate::View * /*view*/ ) { Q_UNUSED(cmdname); return 0L; }
+    virtual KCompletion *completionObject( const TQString & cmdname, Kate::View * /*view*/ ) { Q_UNUSED(cmdname); return 0L; }
 
     /**
      * @return whether this command wants to process text interactively given the @p cmdname.
@@ -166,7 +166,7 @@ class CommandExtension
      *
      * @param cmdname the command name associated with this query.
      */
-    virtual bool wantsToProcessText( const QString &cmdname ) { Q_UNUSED(cmdname); return false; }
+    virtual bool wantsToProcessText( const TQString &cmdname ) { Q_UNUSED(cmdname); return false; }
 
     /**
      * This is called by the commandline each time the argument text for the
@@ -174,7 +174,7 @@ class CommandExtension
      * @param view The current view
      * @param text The current command text typed by the user.
      */ // ### yet to be tested. The obvious candidate is isearch.
-    virtual void processText( Kate::View *view, const QString &text ) { Q_UNUSED(view); Q_UNUSED(text); }
+    virtual void processText( Kate::View *view, const TQString &text ) { Q_UNUSED(view); Q_UNUSED(text); }
 };
 
 /** This interface provides access to the Kate Document class.
@@ -192,7 +192,7 @@ class KATEPARTINTERFACES_EXPORT Document : public KTextEditor::Document, public 
 
   public:
     Document ();
-    Document ( QObject* parent, const char* name );
+    Document ( TQObject* parent, const char* name );
     virtual ~Document ();
 
   /**
@@ -201,7 +201,7 @@ class KATEPARTINTERFACES_EXPORT Document : public KTextEditor::Document, public 
   public:
     static bool registerCommand (Command *cmd);
     static bool unregisterCommand (Command *cmd);
-    static Command *queryCommand (const QString &cmd);
+    static Command *queryCommand (const TQString &cmd);
 
   public:
     /**
@@ -214,7 +214,7 @@ class KATEPARTINTERFACES_EXPORT Document : public KTextEditor::Document, public 
     /**
      * Returns the document name.
      */
-    virtual QString docName () { return 0L; };
+    virtual TQString docName () { return 0L; };
 
     /**
      * Sets the document name.
@@ -222,10 +222,10 @@ class KATEPARTINTERFACES_EXPORT Document : public KTextEditor::Document, public 
      * but changes nothing beside triggers signal
      * @deprecated
      */
-    virtual void setDocName (QString ) { ; };
+    virtual void setDocName (TQString ) { ; };
 
-    virtual ActionMenu *hlActionMenu (const QString& , QObject* =0, const char* = 0) = 0;
-    virtual ActionMenu *exportActionMenu (const QString& , QObject* =0, const char* = 0) = 0;
+    virtual ActionMenu *hlActionMenu (const TQString& , TQObject* =0, const char* = 0) = 0;
+    virtual ActionMenu *exportActionMenu (const TQString& , TQObject* =0, const char* = 0) = 0;
 
   public slots:
     // clear buffer/filename - update the views
@@ -241,7 +241,7 @@ class KATEPARTINTERFACES_EXPORT Document : public KTextEditor::Document, public 
      */
     virtual void spellcheck() {};
 
-    virtual void exportAs(const QString &) = 0;
+    virtual void exportAs(const TQString &) = 0;
 
     virtual void applyWordWrap () = 0;
 
@@ -254,28 +254,28 @@ class KATEPARTINTERFACES_EXPORT Document : public KTextEditor::Document, public 
     virtual uint wordWrapAt () = 0;
 
 
-    virtual void setEncoding (const QString &e) = 0;
-    virtual QString encoding() const = 0;
+    virtual void setEncoding (const TQString &e) = 0;
+    virtual TQString encoding() const = 0;
 
   /** @deprecated */
   // FIXME: Remove when BIC allowed.
   public:
     /** @deprecated */
-    virtual ConfigPage *colorConfigPage (QWidget *) = 0;
+    virtual ConfigPage *colorConfigPage (TQWidget *) = 0;
     /** @deprecated */
-    virtual ConfigPage *fontConfigPage (QWidget *) = 0;
+    virtual ConfigPage *fontConfigPage (TQWidget *) = 0;
     /** @deprecated */
-    virtual ConfigPage *indentConfigPage (QWidget *) = 0;
+    virtual ConfigPage *indentConfigPage (TQWidget *) = 0;
     /** @deprecated */
-    virtual ConfigPage *selectConfigPage (QWidget *) = 0;
+    virtual ConfigPage *selectConfigPage (TQWidget *) = 0;
     /** @deprecated */
-    virtual ConfigPage *editConfigPage (QWidget *) = 0;
+    virtual ConfigPage *editConfigPage (TQWidget *) = 0;
     /** @deprecated */
-    virtual ConfigPage *keysConfigPage (QWidget *) = 0;
+    virtual ConfigPage *keysConfigPage (TQWidget *) = 0;
     /** @deprecated */
-    virtual ConfigPage *kSpellConfigPage (QWidget *) { return 0L; }
+    virtual ConfigPage *kSpellConfigPage (TQWidget *) { return 0L; }
     /** @deprecated */
-    virtual ConfigPage *hlConfigPage (QWidget *) = 0;
+    virtual ConfigPage *hlConfigPage (TQWidget *) = 0;
 
   public:
     virtual uint configFlags () = 0;
@@ -331,13 +331,13 @@ class KATEPARTINTERFACES_EXPORT Document : public KTextEditor::Document, public 
     // default false
     static void setFileChangedDialogsActivated (bool on);
 
-    static const QString &defaultEncoding ();
+    static const TQString &defaultEncoding ();
 
   protected:
     static bool s_openErrorDialogsActivated;
     static bool s_fileChangedDialogsActivated;
 
-    static QString s_defaultEncoding;
+    static TQString s_defaultEncoding;
 };
 
 /**
@@ -400,7 +400,7 @@ KATEPARTINTERFACES_EXPORT DocumentExt *documentExt (KTextEditor::Document *doc);
 /**
  * Creates a new Kate::Document object
  */
-KATEPARTINTERFACES_EXPORT Document *createDocument ( QObject *parent = 0, const char *name = 0 );
+KATEPARTINTERFACES_EXPORT Document *createDocument ( TQObject *parent = 0, const char *name = 0 );
 
 }
 

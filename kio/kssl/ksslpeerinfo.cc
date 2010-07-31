@@ -22,7 +22,7 @@
 #include <config.h>
 #endif
 
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include "ksslpeerinfo.h"
 #include <kdebug.h>
@@ -40,7 +40,7 @@ class KSSLPeerInfoPrivate {
 public:
 	KSSLPeerInfoPrivate() {}
 	~KSSLPeerInfoPrivate() { }
-	QString peerHost;
+	TQString peerHost;
 };
 
 
@@ -57,7 +57,7 @@ KSSLCertificate& KSSLPeerInfo::getPeerCertificate() {
 	return m_cert;
 }
 
-void KSSLPeerInfo::setPeerHost(QString realHost) {
+void KSSLPeerInfo::setPeerHost(TQString realHost) {
 	d->peerHost = realHost.stripWhiteSpace();
 	while(d->peerHost.endsWith("."))
 		d->peerHost.truncate(d->peerHost.length()-1);
@@ -65,17 +65,17 @@ void KSSLPeerInfo::setPeerHost(QString realHost) {
 #ifdef Q_WS_WIN //TODO kresolver not ported
 	d->peerHost = d->peerHost.lower();
 #else	
-	d->peerHost = QString::fromLatin1(KNetwork::KResolver::domainToAscii(d->peerHost));
+	d->peerHost = TQString::fromLatin1(KNetwork::KResolver::domainToAscii(d->peerHost));
 #endif	
 }
 
 bool KSSLPeerInfo::certMatchesAddress() {
 #ifdef KSSL_HAVE_SSL
 	KSSLX509Map certinfo(m_cert.getSubject());
-	QStringList cns = QStringList::split(QRegExp("[ \n\r]"), certinfo.getValue("CN"));
+	TQStringList cns = TQStringList::split(TQRegExp("[ \n\r]"), certinfo.getValue("CN"));
 	cns += m_cert.subjAltNames();
 
-	for (QStringList::Iterator cn = cns.begin(); cn != cns.end(); ++cn) {
+	for (TQStringList::Iterator cn = cns.begin(); cn != cns.end(); ++cn) {
 		if (cnMatchesAddress((*cn).stripWhiteSpace().lower()))
 			return true;
 	}
@@ -86,15 +86,15 @@ bool KSSLPeerInfo::certMatchesAddress() {
 }
 
 
-bool KSSLPeerInfo::cnMatchesAddress(QString cn) {
+bool KSSLPeerInfo::cnMatchesAddress(TQString cn) {
 #ifdef KSSL_HAVE_SSL
-	QRegExp rx;
+	TQRegExp rx;
 
 	kdDebug(7029) << "Matching CN=[" << cn << "] to ["
 		      << d->peerHost << "]" << endl;
 
 	// Check for invalid characters
-	if (QRegExp("[^a-zA-Z0-9\\.\\*\\-]").search(cn) >= 0) {
+	if (TQRegExp("[^a-zA-Z0-9\\.\\*\\-]").search(cn) >= 0) {
 		kdDebug(7029) << "CN contains invalid characters!  Failing." << endl;
 		return false;
 	}
@@ -120,7 +120,7 @@ bool KSSLPeerInfo::cnMatchesAddress(QString cn) {
 	if (cn.contains('*')) {
 		// First make sure that there are at least two valid parts
 		// after the wildcard (*).
-		QStringList parts = QStringList::split('.', cn, false);
+		TQStringList parts = TQStringList::split('.', cn, false);
 
 		while (parts.count() > 2)
 			parts.remove(parts.begin());
@@ -136,14 +136,14 @@ bool KSSLPeerInfo::cnMatchesAddress(QString cn) {
 		// RFC2818 says that *.example.com should match against
 		// foo.example.com but not bar.foo.example.com
 		// (ie. they must have the same number of parts)
-		if (QRegExp(cn, false, true).exactMatch(d->peerHost) &&
-		    QStringList::split('.', cn, false).count() ==
-		    QStringList::split('.', d->peerHost, false).count())
+		if (TQRegExp(cn, false, true).exactMatch(d->peerHost) &&
+		    TQStringList::split('.', cn, false).count() ==
+		    TQStringList::split('.', d->peerHost, false).count())
 			return true;
 
 		// *.example.com must match example.com also.  Sigh..
 		if (cn.startsWith("*.")) {
-			QString chopped = cn.mid(2);
+			TQString chopped = cn.mid(2);
 			if (chopped == d->peerHost) {
 				return true;
 			}
@@ -161,11 +161,11 @@ bool KSSLPeerInfo::cnMatchesAddress(QString cn) {
 
 
 void KSSLPeerInfo::reset() {
-	d->peerHost = QString::null;
+	d->peerHost = TQString::null;
 }
 
 
-const QString& KSSLPeerInfo::peerHost() const {
+const TQString& KSSLPeerInfo::peerHost() const {
 	return d->peerHost;
 }
 

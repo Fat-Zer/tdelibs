@@ -21,13 +21,13 @@
 
 #include <kshell.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <stdlib.h>
 #include <pwd.h>
 #include <sys/types.h>
 
-static int fromHex( QChar c )
+static int fromHex( TQChar c )
 {
     if (c >= '0' && c <= '9')
         return c - '0';
@@ -62,19 +62,19 @@ inline static bool isMeta( uint c )
     return (c < sizeof(iqm) * 8) && (iqm[c / 8] & (1 << (c & 7)));
 }
 
-QStringList KShell::splitArgs( const QString &args, int flags, int *err )
+TQStringList KShell::splitArgs( const TQString &args, int flags, int *err )
 {
-    QStringList ret;
+    TQStringList ret;
     bool firstword = flags & AbortOnMeta;
 
     for (uint pos = 0; ; ) {
-        QChar c;
+        TQChar c;
         do {
             if (pos >= args.length())
                 goto okret;
             c = args.unicode()[pos++];
         } while (c.isSpace());
-        QString cret;
+        TQString cret;
         if ((flags & TildeExpand) && c == '~') {
             uint opos = pos;
             for (; ; pos++) {
@@ -91,7 +91,7 @@ QStringList KShell::splitArgs( const QString &args, int flags, int *err )
                 if ((flags & AbortOnMeta) && isMeta( c ))
                     goto metaerr;
             }
-            QString ccret = homeDir( QConstString( args.unicode() + opos, pos - opos ).string() );
+            TQString ccret = homeDir( TQConstString( args.unicode() + opos, pos - opos ).string() );
             if (ccret.isEmpty()) {
                 pos = opos;
                 c = '~';
@@ -113,7 +113,7 @@ QStringList KShell::splitArgs( const QString &args, int flags, int *err )
         if (firstword) {
             if (c == '_' || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
                 uint pos2 = pos;
-                QChar cc;
+                TQChar cc;
                 do
                   cc = args[pos2++];
                 while (cc == '_' || (cc >= 'A' && cc <= 'Z') ||
@@ -131,7 +131,7 @@ QStringList KShell::splitArgs( const QString &args, int flags, int *err )
                         goto quoteerr;
                     c = args.unicode()[pos++];
                 } while (c != '\'');
-                cret += QConstString( args.unicode() + spos, pos - spos - 1 ).string();
+                cret += TQConstString( args.unicode() + spos, pos - spos - 1 ).string();
             } else if (c == '"') {
                 for (;;) {
                     if (pos >= args.length())
@@ -184,7 +184,7 @@ QStringList KShell::splitArgs( const QString &args, int flags, int *err )
                                     hv = hv * 16 + hhv;
                                     pos++;
                                 }
-                                cret += QChar( hv );
+                                cret += TQChar( hv );
                             }
                             break;
                           }
@@ -198,7 +198,7 @@ QStringList KShell::splitArgs( const QString &args, int flags, int *err )
                                     hv = hv * 8 + (c - '0');
                                     pos++;
                                 }
-                                cret += QChar( hv );
+                                cret += TQChar( hv );
                             } else {
                                 cret += '\\';
                                 cret += c;
@@ -236,12 +236,12 @@ QStringList KShell::splitArgs( const QString &args, int flags, int *err )
   quoteerr:
    if (err)
        *err = BadQuoting;
-   return QStringList();
+   return TQStringList();
 
   metaerr:
    if (err)
        *err = FoundMeta;
-   return QStringList();
+   return TQStringList();
 }
 
 inline static bool isSpecial( uint c )
@@ -254,11 +254,11 @@ inline static bool isSpecial( uint c )
     return (c < sizeof(iqm) * 8) && (iqm[c / 8] & (1 << (c & 7)));
 }
 
-QString KShell::joinArgs( const QStringList &args )
+TQString KShell::joinArgs( const TQStringList &args )
 {
-    QChar q( '\'' );
-    QString ret;
-    for (QStringList::ConstIterator it = args.begin(); it != args.end(); ++it) {
+    TQChar q( '\'' );
+    TQString ret;
+    for (TQStringList::ConstIterator it = args.begin(); it != args.end(); ++it) {
         if (!ret.isEmpty())
             ret += ' ';
         if (!(*it).length())
@@ -266,7 +266,7 @@ QString KShell::joinArgs( const QStringList &args )
         else {
             for (uint i = 0; i < (*it).length(); i++)
                 if (isSpecial((*it).unicode()[i])) {
-                    QString tmp(*it);
+                    TQString tmp(*it);
                     tmp.replace( q, "'\\''" );
                     ret += q;
                     tmp += q;
@@ -280,19 +280,19 @@ QString KShell::joinArgs( const QStringList &args )
     return ret;
 }
 
-QString KShell::joinArgs( const char * const *args, int nargs )
+TQString KShell::joinArgs( const char * const *args, int nargs )
 {
     if (!args)
-        return QString::null; // well, QString::empty, in fact. qt sucks ;)
-    QChar q( '\'' );
-    QString ret;
+        return TQString::null; // well, TQString::empty, in fact. qt sucks ;)
+    TQChar q( '\'' );
+    TQString ret;
     for (const char * const *argp = args; nargs && *argp; argp++, nargs--) {
         if (!ret.isEmpty())
             ret += ' ';
         if (!**argp)
             ret.append( q ).append( q );
         else {
-            QString tmp( QFile::decodeName( *argp ) );
+            TQString tmp( TQFile::decodeName( *argp ) );
             for (uint i = 0; i < tmp.length(); i++)
                 if (isSpecial(tmp.unicode()[i])) {
                     tmp.replace( q, "'\\''" );
@@ -308,11 +308,11 @@ QString KShell::joinArgs( const char * const *args, int nargs )
     return ret;
 }
 
-QString KShell::joinArgsDQ( const QStringList &args )
+TQString KShell::joinArgsDQ( const TQStringList &args )
 {
-    QChar q( '\'' ), sp( ' ' ), bs( '\\' );
-    QString ret;
-    for (QStringList::ConstIterator it = args.begin(); it != args.end(); ++it) {
+    TQChar q( '\'' ), sp( ' ' ), bs( '\\' );
+    TQString ret;
+    for (TQStringList::ConstIterator it = args.begin(); it != args.end(); ++it) {
         if (!ret.isEmpty())
             ret += sp;
         if (!(*it).length())
@@ -352,26 +352,26 @@ QString KShell::joinArgsDQ( const QStringList &args )
     return ret;
 }
 
-QString KShell::tildeExpand( const QString &fname )
+TQString KShell::tildeExpand( const TQString &fname )
 {
     if (fname[0] == '~') {
         int pos = fname.find( '/' );
         if (pos < 0)
-            return homeDir( QConstString( fname.unicode() + 1, fname.length() - 1 ).string() );
-        QString ret = homeDir( QConstString( fname.unicode() + 1, pos - 1 ).string() );
+            return homeDir( TQConstString( fname.unicode() + 1, fname.length() - 1 ).string() );
+        TQString ret = homeDir( TQConstString( fname.unicode() + 1, pos - 1 ).string() );
         if (!ret.isNull())
-            ret += QConstString( fname.unicode() + pos, fname.length() - pos ).string();
+            ret += TQConstString( fname.unicode() + pos, fname.length() - pos ).string();
         return ret;
     }
     return fname;
 }
 
-QString KShell::homeDir( const QString &user )
+TQString KShell::homeDir( const TQString &user )
 {
     if (user.isEmpty())
-        return QFile::decodeName( getenv( "HOME" ) );
-    struct passwd *pw = getpwnam( QFile::encodeName( user ).data() );
+        return TQFile::decodeName( getenv( "HOME" ) );
+    struct passwd *pw = getpwnam( TQFile::encodeName( user ).data() );
     if (!pw)
-        return QString::null;
-    return QFile::decodeName( pw->pw_dir );
+        return TQString::null;
+    return TQFile::decodeName( pw->pw_dir );
 }

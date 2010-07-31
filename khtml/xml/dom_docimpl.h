@@ -34,13 +34,13 @@
 #include "misc/loader.h"
 #include "misc/seed.h"
 
-#include <qstringlist.h>
-#include <qptrlist.h>
-#include <qobject.h>
-#include <qintcache.h>
-#include <qintdict.h>
-#include <qdict.h>
-#include <qmap.h>
+#include <tqstringlist.h>
+#include <tqptrlist.h>
+#include <tqobject.h>
+#include <tqintcache.h>
+#include <tqintdict.h>
+#include <tqdict.h>
+#include <tqmap.h>
 
 #include <kurl.h>
 
@@ -151,36 +151,36 @@ public:
     /**
      Add a pointer as just one of candidates, not neccesserily the proper one
     */
-    void add(const QString& id, ElementImpl* nd);
+    void add(const TQString& id, ElementImpl* nd);
 
     /**
      Set the pointer as the definite mapping; it must have already been added
     */
-    void set(const QString& id, ElementImpl* nd);
+    void set(const TQString& id, ElementImpl* nd);
 
     /**
      Remove the item; it must have already been added.
     */
-    void remove(const QString& id, ElementImpl* nd);
+    void remove(const TQString& id, ElementImpl* nd);
 
     /**
      Returns true if the item exists
     */
-    bool contains(const QString& id);
+    bool contains(const TQString& id);
 
     /**
      Returns the information for the given ID
     */
-    ItemInfo* get(const QString& id);
+    ItemInfo* get(const TQString& id);
 private:
-    QDict<ItemInfo> m_dict;
+    TQDict<ItemInfo> m_dict;
 };
 
 
 /**
  * @internal
  */
-class DocumentImpl : public QObject, private khtml::CachedObjectClient, public NodeBaseImpl
+class DocumentImpl : public TQObject, private khtml::CachedObjectClient, public NodeBaseImpl
 {
     Q_OBJECT
 public:
@@ -197,7 +197,7 @@ public:
     virtual AttrImpl *createAttribute( const DOMString &tagName, int* pExceptioncode = 0 );
     DocumentFragmentImpl *createDocumentFragment ();
     TextImpl *createTextNode ( DOMStringImpl* data ) { return new TextImpl( docPtr(), data); }
-    TextImpl *createTextNode ( const QString& data )
+    TextImpl *createTextNode ( const TQString& data )
         { return createTextNode(new DOMStringImpl(data.unicode(), data.length())); }
     CommentImpl *createComment ( DOMStringImpl* data );
     CDATASectionImpl *createCDATASection ( DOMStringImpl* data );
@@ -270,16 +270,16 @@ public:
     void recalcStyleSelector();
     void rebuildStyleSelector();
 
-    QString nextState();
+    TQString nextState();
 
     // Query all registered elements for their state
-    QStringList docState();
+    TQStringList docState();
     bool unsubmittedFormChanges();
     void registerMaintainsState(NodeImpl* e) { m_maintainsState.append(e); }
     void deregisterMaintainsState(NodeImpl* e) { m_maintainsState.removeRef(e); }
 
     // Set the state the document should restore to
-    void setRestoreState( const QStringList &s) { m_state = s; }
+    void setRestoreState( const TQStringList &s) { m_state = s; }
 
     KHTMLView *view() const { return m_view; }
     KHTMLPart* part() const;
@@ -293,7 +293,7 @@ public:
                             bool entityReferenceExpansion, int &exceptioncode);
 
     virtual void recalcStyle( StyleChange = NoChange );
-    static QPtrList<DocumentImpl> * changedDocuments;
+    static TQPtrList<DocumentImpl> * changedDocuments;
     virtual void updateRendering();
     void updateLayout();
     static void updateDocumentsRendering();
@@ -307,7 +307,7 @@ public:
     // to get visually ordered hebrew and arabic pages right
     void setVisuallyOrdered();
     // to get URL decoding right
-    void setDecoderCodec(const QTextCodec *codec);
+    void setDecoderCodec(const TQTextCodec *codec);
 
     void setSelection(NodeImpl* s, int sp, NodeImpl* e, int ep);
     void clearSelection();
@@ -315,34 +315,34 @@ public:
     void open ( bool clearEventListeners = true );
     virtual void close (  );
     void write ( const DOMString &text );
-    void write ( const QString &text );
+    void write ( const TQString &text );
     void writeln ( const DOMString &text );
     void finishParsing (  );
 
     KURL URL() const { return m_url; }
-    void setURL(const QString& url) { m_url = url; }
+    void setURL(const TQString& url) { m_url = url; }
 
     KURL baseURL() const { return m_baseURL.isEmpty() ? m_url : m_baseURL; }
     void setBaseURL(const KURL& baseURL) { m_baseURL = baseURL; }
 
-    QString baseTarget() const { return m_baseTarget; }
-    void setBaseTarget(const QString& baseTarget) { m_baseTarget = baseTarget; }
+    TQString baseTarget() const { return m_baseTarget; }
+    void setBaseTarget(const TQString& baseTarget) { m_baseTarget = baseTarget; }
 
-    QString completeURL(const QString& url) const { return KURL(baseURL(),url,m_decoderMibEnum).url(); };
+    TQString completeURL(const TQString& url) const { return KURL(baseURL(),url,m_decoderMibEnum).url(); };
     DOMString canonURL(const DOMString& url) const { return url.isEmpty() ? url : completeURL(url.string()); }
 
-    void setUserStyleSheet(const QString& sheet);
-    QString userStyleSheet() const { return m_usersheet; }
-    void setPrintStyleSheet(const QString& sheet) { m_printSheet = sheet; }
-    QString printStyleSheet() const { return m_printSheet; }
+    void setUserStyleSheet(const TQString& sheet);
+    TQString userStyleSheet() const { return m_usersheet; }
+    void setPrintStyleSheet(const TQString& sheet) { m_printSheet = sheet; }
+    TQString printStyleSheet() const { return m_printSheet; }
 
     CSSStyleSheetImpl* elementSheet();
     virtual khtml::Tokenizer *createTokenizer();
     khtml::Tokenizer *tokenizer() { return m_tokenizer; }
 
-    QPaintDeviceMetrics *paintDeviceMetrics() { return m_paintDeviceMetrics; }
-    QPaintDevice *paintDevice() const { return m_paintDevice; }
-    void setPaintDevice( QPaintDevice *dev );
+    TQPaintDeviceMetrics *paintDeviceMetrics() { return m_paintDeviceMetrics; }
+    TQPaintDevice *paintDevice() const { return m_paintDevice; }
+    void setPaintDevice( TQPaintDevice *dev );
 
     enum HTMLMode {
         Html3 = 0,
@@ -356,7 +356,7 @@ public:
         Transitional,
         Strict
     };
-    virtual void determineParseMode( const QString &str );
+    virtual void determineParseMode( const TQString &str );
     void setParseMode( ParseMode m ) { pMode = m; }
     ParseMode parseMode() const { return pMode; }
 
@@ -370,8 +370,8 @@ public:
     void setParsing(bool b) { m_bParsing = b; }
     bool parsing() const { return m_bParsing; }
 
-    void setTextColor( QColor color ) { m_textColor = color; }
-    QColor textColor() const { return m_textColor; }
+    void setTextColor( TQColor color ) { m_textColor = color; }
+    TQColor textColor() const { return m_textColor; }
 
     void setDesignMode(bool b);
     bool designMode() const;
@@ -398,7 +398,7 @@ public:
     void addStyleSheet(StyleSheetImpl *, int *exceptioncode = 0);
     void removeStyleSheet(StyleSheetImpl *, int *exceptioncode = 0);
 
-    QStringList availableStyleSheets() const { return m_availableSheets; }
+    TQStringList availableStyleSheets() const { return m_availableSheets; }
 
     NodeImpl* hoverNode() const { return m_hoverNode; }
     void setHoverNode(NodeImpl *newHoverNode);
@@ -443,21 +443,21 @@ public:
     void loadXML(const DOMString &source);
     // from cachedObjectClient
     void setStyleSheet(const DOM::DOMString &url, const DOM::DOMString &sheet, const DOM::DOMString &charset);
-    void error(int err, const QString &text);
+    void error(int err, const TQString &text);
 
-    typedef QMap<QString, ProcessingInstructionImpl*> LocalStyleRefs;
+    typedef TQMap<TQString, ProcessingInstructionImpl*> LocalStyleRefs;
     LocalStyleRefs* localStyleRefs() { return &m_localStyleRefs; }
 
     virtual void defaultEventHandler(EventImpl *evt);
     virtual void setHTMLWindowEventListener(int id, EventListener *listener);
     EventListener *getHTMLWindowEventListener(int id);
-    EventListener *createHTMLEventListener(const QString& code, const QString& name, NodeImpl* node);
+    EventListener *createHTMLEventListener(const TQString& code, const TQString& name, NodeImpl* node);
 
     void addWindowEventListener(int id, EventListener *listener, const bool useCapture);
     void removeWindowEventListener(int id, EventListener *listener, bool useCapture);
     bool hasWindowEventListener(int id);
 
-    EventListener *createHTMLEventListener(QString code);
+    EventListener *createHTMLEventListener(TQString code);
 
     /**
      * Searches through the document, starting from fromNode, for the next selectable element that comes after fromNode.
@@ -485,7 +485,7 @@ public:
      */
     NodeImpl *previousFocusNode(NodeImpl *fromNode);
 
-    ElementImpl* findAccessKeyElement(QChar c);
+    ElementImpl* findAccessKeyElement(TQChar c);
 
     int nodeAbsIndex(NodeImpl *node);
     NodeImpl *nodeWithAbsIndex(int absIndex);
@@ -504,7 +504,7 @@ public:
     void dispatchImageLoadEventSoon(HTMLImageElementImpl *);
     void dispatchImageLoadEventsNow();
     void removeImage(HTMLImageElementImpl *);
-    virtual void timerEvent(QTimerEvent *);
+    virtual void timerEvent(TQTimerEvent *);
 
     // Returns the owning element in the parent document.
     // Returns 0 if this is the top level document.
@@ -513,7 +513,7 @@ public:
     DOMString domain() const;
     void setDomain( const DOMString &newDomain ); // not part of the DOM
 
-    bool isURLAllowed(const QString& url) const;
+    bool isURLAllowed(const TQString& url) const;
 
     HTMLElementImpl* body();
 
@@ -522,8 +522,8 @@ public:
     void incDOMTreeVersion() { ++m_domtree_version; }
     unsigned int domTreeVersion() const { return m_domtree_version; }
 
-    QDict<khtml::CounterNode>* counters(const khtml::RenderObject* o) { return m_counterDict[(void*)o]; }
-    void setCounters(const khtml::RenderObject* o, QDict<khtml::CounterNode> *dict) { m_counterDict.insert((void*)o, dict);}
+    TQDict<khtml::CounterNode>* counters(const khtml::RenderObject* o) { return m_counterDict[(void*)o]; }
+    void setCounters(const khtml::RenderObject* o, TQDict<khtml::CounterNode> *dict) { m_counterDict.insert((void*)o, dict);}
     void removeCounters(const khtml::RenderObject* o) { m_counterDict.remove((void*)o); }
 
 
@@ -539,8 +539,8 @@ public:
         return m_getElementByIdCache;
     }
 
-    QString contentLanguage() const { return m_contentLanguage; }
-    void setContentLanguage(const QString& cl) { m_contentLanguage = cl; }
+    TQString contentLanguage() const { return m_contentLanguage; }
+    void setContentLanguage(const TQString& cl) { m_contentLanguage = cl; }
 
     khtml::DynamicDomRestyler& dynamicDomRestyler() { return *m_dynamicDomRestyler; }
     const khtml::DynamicDomRestyler& dynamicDomRestyler() const { return *m_dynamicDomRestyler; }
@@ -551,22 +551,22 @@ signals:
 protected:
     khtml::CSSStyleSelector *m_styleSelector;
     KHTMLView *m_view;
-    QStringList m_state;
+    TQStringList m_state;
 
     khtml::DocLoader *m_docLoader;
     khtml::Tokenizer *m_tokenizer;
     KURL m_url;
     KURL m_baseURL;
-    QString m_baseTarget;
+    TQString m_baseTarget;
 
     DocumentTypeImpl *m_doctype;
     DOMImplementationImpl *m_implementation;
 
-    QString m_usersheet;
-    QString m_printSheet;
-    QStringList m_availableSheets;
+    TQString m_usersheet;
+    TQString m_printSheet;
+    TQStringList m_availableSheets;
 
-    QString m_contentLanguage;
+    TQString m_contentLanguage;
 
     // Track the number of currently loading top-level stylesheets.  Sheets
     // loaded using the @import directive are not included in this count.
@@ -577,12 +577,12 @@ protected:
 
     CSSStyleSheetImpl *m_elemSheet;
 
-    QPaintDevice *m_paintDevice;
-    QPaintDeviceMetrics *m_paintDeviceMetrics;
+    TQPaintDevice *m_paintDevice;
+    TQPaintDeviceMetrics *m_paintDeviceMetrics;
     ParseMode pMode;
     HTMLMode hMode;
 
-    QColor m_textColor;
+    TQColor m_textColor;
     NodeImpl *m_hoverNode;
     NodeImpl *m_focusNode;
     NodeImpl *m_activeNode;
@@ -594,14 +594,14 @@ protected:
         IdNameMapping(unsigned short _start)
             : idStart(_start), count(0) {}
         ~IdNameMapping() {
-            QIntDictIterator<DOM::DOMStringImpl> it(names);
+            TQIntDictIterator<DOM::DOMStringImpl> it(names);
             for (; it.current() ; ++it)
                 it.current()->deref();
         }
         unsigned short idStart;
         unsigned short count;
-        QIntDict<DOM::DOMStringImpl> names;
-        QDict<void> ids;
+        TQIntDict<DOM::DOMStringImpl> names;
+        TQDict<void> ids;
 
         void expandIfNeeded() {
             if (ids.size() <= ids.count() && ids.size() != khtml_MaxSeed)
@@ -612,10 +612,10 @@ protected:
 
         void addAlias(DOMStringImpl* _prefix, DOMStringImpl* _name, bool cs, NodeImpl::Id id) {
             if(_prefix && _prefix->l) {
-                QConstString n(_name->s, _name->l);
-                QConstString px( _prefix->s, _prefix->l );
-                QString name = cs ? n.string() : n.string().upper();
-                QString qn("aliases: " + (cs ? px.string() : px.string().upper()) + ":" + name);
+                TQConstString n(_name->s, _name->l);
+                TQConstString px( _prefix->s, _prefix->l );
+                TQString name = cs ? n.string() : n.string().upper();
+                TQString qn("aliases: " + (cs ? px.string() : px.string().upper()) + ":" + name);
                 if (!ids.find( qn )) {
                     ids.insert( qn, (void*)id );
                 }
@@ -629,7 +629,7 @@ protected:
     IdNameMapping *m_elementMap;
     IdNameMapping *m_namespaceMap;
 
-    QPtrList<NodeIteratorImpl> m_nodeIterators;
+    TQPtrList<NodeIteratorImpl> m_nodeIterators;
     AbstractViewImpl *m_defaultView;
 
     unsigned short m_listenerTypes;
@@ -637,10 +637,10 @@ protected:
     StyleSheetListImpl *m_addedStyleSheets; // programmatically added style sheets
     LocalStyleRefs m_localStyleRefs; // references to inlined style elements
     RegisteredListenerList m_windowEventListeners;
-    QPtrList<NodeImpl> m_maintainsState;
+    TQPtrList<NodeImpl> m_maintainsState;
 
     // ### evaluate for placement in RenderStyle
-    QPtrDict<QDict<khtml::CounterNode> > m_counterDict;
+    TQPtrDict<TQDict<khtml::CounterNode> > m_counterDict;
 
     khtml::DynamicDomRestyler *m_dynamicDomRestyler;
 
@@ -664,10 +664,10 @@ protected:
     ElementMappingCache m_underDocNamedCache;
 
     //Cache for nodelists and collections.
-    QIntDict<NodeListImpl::Cache> m_nodeListCache;
+    TQIntDict<NodeListImpl::Cache> m_nodeListCache;
 
-    QPtrList<HTMLImageElementImpl> m_imageLoadEventDispatchSoonList;
-    QPtrList<HTMLImageElementImpl> m_imageLoadEventDispatchingList;
+    TQPtrList<HTMLImageElementImpl> m_imageLoadEventDispatchSoonList;
+    TQPtrList<HTMLImageElementImpl> m_imageLoadEventDispatchingList;
     int m_imageLoadEventTimer;
 
     //Cache for getElementById

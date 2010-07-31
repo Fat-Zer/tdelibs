@@ -20,9 +20,9 @@
 
 #include <iostream>
 
-#include <qlayout.h>
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqlayout.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -37,22 +37,22 @@
 
 using namespace std;
 
-bool TestNewStuff::install( const QString &fileName )
+bool TestNewStuff::install( const TQString &fileName )
 {
   kdDebug() << "TestNewStuff::install(): " << fileName << endl;
-  QFile f( fileName );
+  TQFile f( fileName );
   if ( !f.open( IO_ReadOnly ) ) {
     kdDebug() << "Error opening file." << endl;
     return false;
   }
-  QTextStream ts( &f );
+  TQTextStream ts( &f );
   kdDebug() << "--BEGIN-NEW_STUFF--" << endl;
   cout << ts.read().utf8();
   kdDebug() << "---END-NEW_STUFF---" << endl;
   return true;
 }
 
-bool TestNewStuff::createUploadFile( const QString &fileName )
+bool TestNewStuff::createUploadFile( const TQString &fileName )
 {
   KProcess p;
   p << "touch" << fileName;
@@ -66,23 +66,23 @@ MyWidget::MyWidget()
 {
   mNewStuff = new TestNewStuff;
 
-  QBoxLayout *topLayout = new QVBoxLayout( this );
+  TQBoxLayout *topLayout = new TQVBoxLayout( this );
   topLayout->setMargin( KDialog::marginHint() );
   topLayout->setSpacing( KDialog::spacingHint() );
   
-  QPushButton *downloadButton = new QPushButton( "Download", this );
+  TQPushButton *downloadButton = new TQPushButton( "Download", this );
   topLayout->addWidget( downloadButton );
-  connect( downloadButton, SIGNAL( clicked() ), SLOT( download() ) );
+  connect( downloadButton, TQT_SIGNAL( clicked() ), TQT_SLOT( download() ) );
 
-  QPushButton *uploadButton = new QPushButton( "Upload", this );
+  TQPushButton *uploadButton = new TQPushButton( "Upload", this );
   topLayout->addWidget( uploadButton );
-  connect( uploadButton, SIGNAL( clicked() ), SLOT( upload() ) );
+  connect( uploadButton, TQT_SIGNAL( clicked() ), TQT_SLOT( upload() ) );
 
   topLayout->addSpacing( 5 );
 
-  QPushButton *closeButton = new QPushButton( "Close", this );
+  TQPushButton *closeButton = new TQPushButton( "Close", this );
   topLayout->addWidget( closeButton );
-  connect( closeButton, SIGNAL( clicked() ), kapp, SLOT( quit() ) );
+  connect( closeButton, TQT_SIGNAL( clicked() ), kapp, TQT_SLOT( quit() ) );
 }
 
 MyWidget::~MyWidget()

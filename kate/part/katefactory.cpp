@@ -38,7 +38,7 @@
 #include <kdirwatch.h>
 #include <kstaticdeleter.h>
 
-#include <qapplication.h>
+#include <tqapplication.h>
 
 /**
  * dummy wrapper factory to be sure nobody external deletes our katefactory
@@ -50,13 +50,13 @@ class KateFactoryPublic : public KParts::Factory
      * reimplemented create object method
      * @param parentWidget parent widget
      * @param widgetName widget name
-     * @param parent QObject parent
+     * @param parent TQObject parent
      * @param name object name
      * @param classname class name
      * @param args additional arguments
      * @return constructed part object
      */
-    KParts::Part *createPartObject ( QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name, const char *classname, const QStringList &args )
+    KParts::Part *createPartObject ( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *classname, const TQStringList &args )
     {
       return KateFactory::self()->createPartObject (parentWidget, widgetName, parent, name, classname, args);
     }
@@ -157,7 +157,7 @@ KateFactory::KateFactory ()
   m_cmds.push_back (new KateCommands::Date ());
   m_cmds.push_back (new SearchCommand());
 
-  for ( QValueList<Kate::Command *>::iterator it = m_cmds.begin(); it != m_cmds.end(); ++it )
+  for ( TQValueList<Kate::Command *>::iterator it = m_cmds.begin(); it != m_cmds.end(); ++it )
     KateCmd::self()->registerCommand (*it);
 }
 
@@ -186,7 +186,7 @@ KateFactory::~KateFactory()
 
   delete m_vm;
 
-  for ( QValueList<Kate::Command *>::iterator it = m_cmds.begin(); it != m_cmds.end(); ++it )
+  for ( TQValueList<Kate::Command *>::iterator it = m_cmds.begin(); it != m_cmds.end(); ++it )
     delete *it;
 
   // cu manager
@@ -206,9 +206,9 @@ KateFactory *KateFactory::self ()
   return s_self;
 }
 
-KParts::Part *KateFactory::createPartObject ( QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name, const char *_classname, const QStringList & )
+KParts::Part *KateFactory::createPartObject ( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *_classname, const TQStringList & )
 {
-  QCString classname( _classname );
+  TQCString classname( _classname );
   bool bWantSingleView = ( classname != "KTextEditor::Document" && classname != "Kate::Document" );
   bool bWantBrowserView = ( classname == "Browser/View" );
   bool bWantReadOnly = (bWantBrowserView || ( classname == "KParts::ReadOnlyPart" ));
@@ -262,7 +262,7 @@ KateJScript *KateFactory::jscript ()
 }
 
 
-KateIndentScript KateFactory::indentScript (const QString &scriptname)
+KateIndentScript KateFactory::indentScript (const TQString &scriptname)
 {
   KateIndentScript result;
   for(uint i=0;i<m_indentScriptManagers.count();i++)

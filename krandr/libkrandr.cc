@@ -24,18 +24,18 @@
 
 #include "libkrandr.h"
 
-QString KRandrSimpleAPI::getIccFileName(QString profileName, QString screenName, QString kde_confdir) {
+TQString KRandrSimpleAPI::getIccFileName(TQString profileName, TQString screenName, TQString kde_confdir) {
 	KSimpleConfig *t_config;
 	KSimpleConfig *t_systemconfig;
 	int t_numberOfProfiles;
-	QStringList t_cfgProfiles;
-	QString retval;
+	TQStringList t_cfgProfiles;
+	TQString retval;
 
 	if (profileName != NULL) {
-		t_config = new KSimpleConfig( QString::fromLatin1( "kiccconfigrc" ));
+		t_config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
 	}
 	else {
-		t_systemconfig = new KSimpleConfig( kde_confdir + QString("/kicc/kiccconfigrc") );
+		t_systemconfig = new KSimpleConfig( kde_confdir + TQString("/kicc/kiccconfigrc") );
 	}
 
 	if (profileName != NULL) {
@@ -68,7 +68,7 @@ QString KRandrSimpleAPI::getIccFileName(QString profileName, QString screenName,
 	return retval;
 }
 
-QString KRandrSimpleAPI::applyIccFile(QString screenName, QString fileName) {
+TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 	int i;
 	int j;
 	Display *randr_display;
@@ -113,13 +113,13 @@ QString KRandrSimpleAPI::applyIccFile(QString screenName, QString fileName) {
 
 		if (screenNumber >= 0) {
 			// Apply ICC settings with XCalib
-			QString icc_command;
+			TQString icc_command;
 			FILE *pipe_xcalib;
 			char xcalib_result[2048];
 			int i;
 			xcalib_result[0]=0;
 
-			icc_command = QString("xcalib %1").arg(fileName);
+			icc_command = TQString("xcalib %1").arg(fileName);
 			if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 			{
 				printf("Xcalib pipe error\n\r");
@@ -177,13 +177,13 @@ QString KRandrSimpleAPI::applyIccFile(QString screenName, QString fileName) {
 
 		if (screenNumber >= 0) {
 			// Apply ICC settings with XCalib
-			QString icc_command;
+			TQString icc_command;
 			FILE *pipe_xcalib;
 			char xcalib_result[2048];
 			int i;
 			xcalib_result[0]=0;
 
-			icc_command = QString("xcalib -c");
+			icc_command = TQString("xcalib -c");
 			if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 			{
 				printf("Xcalib pipe error\n\r");
@@ -206,7 +206,7 @@ QString KRandrSimpleAPI::applyIccFile(QString screenName, QString fileName) {
 	return "";
 }
 
-QString KRandrSimpleAPI::applyIccConfiguration(QString profileName, QString kde_confdir) {
+TQString KRandrSimpleAPI::applyIccConfiguration(TQString profileName, TQString kde_confdir) {
 	int i;
 	Display *randr_display;
 	ScreenInfo *randr_screen_info;
@@ -214,9 +214,9 @@ QString KRandrSimpleAPI::applyIccConfiguration(QString profileName, QString kde_
 	KSimpleConfig *t_config;
 
 	int screenNumber = 0;
-	QString errorstr = "";
+	TQString errorstr = "";
 
-	t_config = new KSimpleConfig( QString::fromLatin1( "kiccconfigrc" ));
+	t_config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
 
 	// Find all screens
 	if (isValid() == true) {
@@ -244,25 +244,25 @@ QString KRandrSimpleAPI::applyIccConfiguration(QString profileName, QString kde_
 	return "";
 }
 
-QString KRandrSimpleAPI::getCurrentProfile () {
-	QString profileName;
+TQString KRandrSimpleAPI::getCurrentProfile () {
+	TQString profileName;
 	KSimpleConfig *t_config;
 
-	t_config = new KSimpleConfig( QString::fromLatin1( "kiccconfigrc" ));
+	t_config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
 	profileName = t_config->readEntry("CurrentProfile");
 	delete t_config;
 	return profileName;
 }
 
-QString KRandrSimpleAPI::applySystemWideIccConfiguration(QString kde_confdir) {
+TQString KRandrSimpleAPI::applySystemWideIccConfiguration(TQString kde_confdir) {
 	// Apply ICC settings with XCalib
-	QString icc_command;
+	TQString icc_command;
 	FILE *pipe_xcalib;
 	char xcalib_result[2048];
 	int i;
 	xcalib_result[0]=0;
 
-	icc_command = QString("xcalib %1").arg(getIccFileName(NULL, "Default", kde_confdir));
+	icc_command = TQString("xcalib %1").arg(getIccFileName(NULL, "Default", kde_confdir));
 	if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 	{
 		printf("Xcalib pipe error\n\r");
@@ -283,15 +283,15 @@ QString KRandrSimpleAPI::applySystemWideIccConfiguration(QString kde_confdir) {
 	return "";
 }
 
-QString KRandrSimpleAPI::clearIccConfiguration() {
+TQString KRandrSimpleAPI::clearIccConfiguration() {
 	// Clear ICC settings with XCalib
-	QString icc_command;
+	TQString icc_command;
 	FILE *pipe_xcalib;
 	char xcalib_result[2048];
 	int i;
 	xcalib_result[0]=0;
 
-	icc_command = QString("xcalib -c");
+	icc_command = TQString("xcalib -c");
 	if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 	{
 		printf("Xcalib pipe error\n\r");

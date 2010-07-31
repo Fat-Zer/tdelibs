@@ -50,7 +50,7 @@ public:
      * @return the resulting pixmap
      * @see KIcon::StdSizes
      */
-    virtual QPixmap pixmapFor( const QString& url, int size = 0 );
+    virtual TQPixmap pixmapFor( const TQString& url, int size = 0 );
 protected:
     virtual void virtual_hook( int id, void* data );
 };

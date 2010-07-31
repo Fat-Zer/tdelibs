@@ -30,19 +30,19 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <kapplication.h>
-#include <qdialog.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qdatetime.h>
+#include <tqdialog.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqdatetime.h>
 #include <kdebug.h>
 #include <ksimpleconfig.h>
 #include <config.h>
 
 // Standard Qt widgets
 
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqpushbutton.h>
 
 // KDE includes
 #include <kconfig.h>
@@ -59,8 +59,8 @@
 // Construct the KConfigTestView with buttons
 //
 
-KConfigTestView::KConfigTestView( QWidget *parent, const char *name )
-    : QDialog( parent, name ),
+KConfigTestView::KConfigTestView( TQWidget *parent, const char *name )
+    : TQDialog( parent, name ),
       pConfig( 0L ),
       pFile( 0L ),
       pStream( 0L )
@@ -70,61 +70,61 @@ KConfigTestView::KConfigTestView( QWidget *parent, const char *name )
   setCaption( "KConfig test" );
 
   // Label and edit for the app config file
-  pAppFileLabel = new QLabel( this, "appconfiglabel" );
+  pAppFileLabel = new TQLabel( this, "appconfiglabel" );
   pAppFileLabel->setText( "Application config file:" );
   pAppFileLabel->setGeometry( 20, 20, 200, 20 );
 
-  pAppFileEdit = new QLineEdit( this, "appconfigedit" );
+  pAppFileEdit = new TQLineEdit( this, "appconfigedit" );
   pAppFileEdit->setGeometry( 240, 20, 160, 20 );
-  connect( pAppFileEdit, SIGNAL(returnPressed()),
-	   SLOT(appConfigEditReturnPressed()));
+  connect( pAppFileEdit, TQT_SIGNAL(returnPressed()),
+	   TQT_SLOT(appConfigEditReturnPressed()));
 
   // Label and edit for the group
-  pGroupLabel = new QLabel( this, "grouplabel" );
+  pGroupLabel = new TQLabel( this, "grouplabel" );
   pGroupLabel->setText( "Group:" );
   pGroupLabel->setGeometry( 20, 60, 80, 20 );
 
-  pGroupEdit = new QLineEdit( this, "groupedit" );
+  pGroupEdit = new TQLineEdit( this, "groupedit" );
   pGroupEdit->setGeometry( 120, 60, 100, 20 );
-  connect( pGroupEdit, SIGNAL(returnPressed()),
-	   SLOT(groupEditReturnPressed()));
+  connect( pGroupEdit, TQT_SIGNAL(returnPressed()),
+	   TQT_SLOT(groupEditReturnPressed()));
 
   // Edit and label for the key/value pair
-  pKeyEdit = new QLineEdit( this, "keyedit" );
+  pKeyEdit = new TQLineEdit( this, "keyedit" );
   pKeyEdit->setGeometry( 20, 100, 80, 20 );
-  connect( pKeyEdit, SIGNAL( returnPressed()),
-	   SLOT(keyEditReturnPressed()));
+  connect( pKeyEdit, TQT_SIGNAL( returnPressed()),
+	   TQT_SLOT(keyEditReturnPressed()));
 
-  pEqualsLabel = new QLabel( this, "equalslabel" );
+  pEqualsLabel = new TQLabel( this, "equalslabel" );
   pEqualsLabel->setGeometry( 105, 100, 20, 20 );
   pEqualsLabel->setText( "=" );
 
-  pValueEdit = new QLineEdit( this, "valueedit" );
+  pValueEdit = new TQLineEdit( this, "valueedit" );
   pValueEdit->setGeometry( 120, 100, 100, 20 );
   pValueEdit->setText( "---" );
 
-  pWriteButton = new QPushButton( this, "writebutton" );
+  pWriteButton = new TQPushButton( this, "writebutton" );
   pWriteButton->setGeometry( 20,140, 80, 20 );
   pWriteButton->setText( "Write entry" );
-  connect( pWriteButton, SIGNAL(clicked()), SLOT( writeButtonClicked() ) );
+  connect( pWriteButton, TQT_SIGNAL(clicked()), TQT_SLOT( writeButtonClicked() ) );
 
   // Labels for the info line
-  pInfoLabel1 = new QLabel( this, "infolabel1" );
+  pInfoLabel1 = new TQLabel( this, "infolabel1" );
   pInfoLabel1->setGeometry( 20, 200, 60, 20 );
   pInfoLabel1->setText( "Info:" );
 
-  pInfoLabel2 = new QLabel( this, "infolabel2" );
+  pInfoLabel2 = new TQLabel( this, "infolabel2" );
   pInfoLabel2->setGeometry( 100, 200, 300, 20 );
-  pInfoLabel2->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+  pInfoLabel2->setFrameStyle( TQFrame::Panel | TQFrame::Sunken );
 
   // Quit button
-  pQuitButton = new QPushButton( this, "quitbutton" );
+  pQuitButton = new TQPushButton( this, "quitbutton" );
   pQuitButton->setText( "Quit" );
   pQuitButton->setGeometry( 340, 60, 60, 60 );
-  connect( pQuitButton, SIGNAL(clicked()), qApp, SLOT(quit()) );
+  connect( pQuitButton, TQT_SIGNAL(clicked()), qApp, TQT_SLOT(quit()) );
 
   // create a default KConfig object in order to be able to start right away
-  pConfig = new KConfig( QString::null );
+  pConfig = new KConfig( TQString::null );
 }
 
 KConfigTestView::~KConfigTestView()
@@ -156,15 +156,15 @@ void KConfigTestView::groupEditReturnPressed()
   pConfig->setGroup( pGroupEdit->text() );
   // according to the Qt doc, this is begging for trouble, but for a
   // test program this will do
-  QString aText;
-  aText.sprintf( "Group set to %s", QString( pConfig->group() ).isEmpty() ?
-		 QString("<default>").ascii() : pConfig->group().ascii() );
+  TQString aText;
+  aText.sprintf( "Group set to %s", TQString( pConfig->group() ).isEmpty() ?
+		 TQString("<default>").ascii() : pConfig->group().ascii() );
   pInfoLabel2->setText( aText );
 }
 
 void KConfigTestView::keyEditReturnPressed()
 {
-  QString aValue = pConfig->readEntry( pKeyEdit->text() );
+  TQString aValue = pConfig->readEntry( pKeyEdit->text() );
   // just checking aValue.isNull() would be easier here, but this is
   // to demonstrate the HasKey()-method. Besides, it is better data
   // encapsulation because we do not make any assumption about coding
@@ -183,7 +183,7 @@ void KConfigTestView::keyEditReturnPressed()
 
 void KConfigTestView::writeButtonClicked()
 {
-  pConfig->writeEntry( pKeyEdit->text(), QString( pValueEdit->text() ) );
+  pConfig->writeEntry( pKeyEdit->text(), TQString( pValueEdit->text() ) );
   pInfoLabel2->setText( "Entry written" );
 
   kdDebug() << "Entry written: " << 27 << endl;

@@ -45,7 +45,7 @@ k_dcop:
 	 *
 	 * @returns the host's name
 	 */
-	virtual QString applicationName() = 0;
+	virtual TQString applicationName() = 0;
 
 	/**
 	 * Save settings.
@@ -65,7 +65,7 @@ k_dcop:
 	/**
 	 * Returns the module's quick help.
 	 */
-	virtual QString quickHelp() = 0;
+	virtual TQString quickHelp() = 0;
 
 	/**
 	 * @returns true if the module has unsaved 

@@ -22,8 +22,8 @@
 #include <ksimpleconfig.h>
 #include <kprocess.h>
 #include <kstandarddirs.h>
-#include <qdir.h>
-#include <qfile.h>
+#include <tqdir.h>
+#include <tqfile.h>
 #include "kartsserver.h"
 
 struct KArtsServer::Data
@@ -31,8 +31,8 @@ struct KArtsServer::Data
 	Arts::SoundServerV2 server;
 };
 
-KArtsServer::KArtsServer(QObject *parent, const char *name)
-	: QObject(parent, name)
+KArtsServer::KArtsServer(TQObject *parent, const char *name)
+	: TQObject(parent, name)
 	, d(new Data)
 {
 	d->server = Arts::SoundServerV2::null();
@@ -68,7 +68,7 @@ Arts::SoundServerV2 KArtsServer::server(void)
 	bool x11Comm = config.readBoolEntry("X11GlobalComm", false);
 
 	// put the value of x11Comm into .mcoprc
-	KSimpleConfig X11CommConfig(QDir::homeDirPath()+"/.mcoprc");
+	KSimpleConfig X11CommConfig(TQDir::homeDirPath()+"/.mcoprc");
 
 	if(x11Comm)
 		X11CommConfig.writeEntry("GlobalComm", "Arts::X11GlobalComm");
@@ -77,14 +77,14 @@ Arts::SoundServerV2 KArtsServer::server(void)
 
 	X11CommConfig.sync();
 	
-	proc << QFile::encodeName(KStandardDirs::findExe(QString::fromLatin1("kdeinit_wrapper")));
+	proc << TQFile::encodeName(KStandardDirs::findExe(TQString::fromLatin1("kdeinit_wrapper")));
 
 	if(rt)
-		proc << QFile::encodeName(KStandardDirs::findExe(QString::fromLatin1("artswrapper")));
+		proc << TQFile::encodeName(KStandardDirs::findExe(TQString::fromLatin1("artswrapper")));
 	else
-		proc << QFile::encodeName(KStandardDirs::findExe(QString::fromLatin1("artsd")));
+		proc << TQFile::encodeName(KStandardDirs::findExe(TQString::fromLatin1("artsd")));
 
-	proc << QStringList::split( " ", config.readEntry( "Arguments", "-F 10 -S 4096 -s 60 -m artsmessage -l 3 -f" ) );
+	proc << TQStringList::split( " ", config.readEntry( "Arguments", "-F 10 -S 4096 -s 60 -m artsmessage -l 3 -f" ) );
 
 	if(proc.start(KProcess::Block) && proc.normalExit())
 	{

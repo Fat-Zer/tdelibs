@@ -3,8 +3,8 @@
 #include <iostream>
 #include <dcopclient.h>
 #include <kcmdlineargs.h>
-#include <qtimer.h>
-#include <qtimer.h>
+#include <tqtimer.h>
+#include <tqtimer.h>
 
 using namespace std;
 
@@ -20,7 +20,7 @@ Driver::Driver(const char* app)
 
 }
 
-QTextStream output(  fopen( "driver.returns", "w" ) , IO_WriteOnly );	
+TQTextStream output(  fopen( "driver.returns", "w" ) , IO_WriteOnly );	
 #include <iostream>
 void Driver::test()
 {
@@ -39,7 +39,7 @@ void Driver::test()
 	}
 
 	++count;
-	QTimer::singleShot( 100, this, SLOT( test() ) );
+	TQTimer::singleShot( 100, this, TQT_SLOT( test() ) );
 }
 
 #include "driver.moc"
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
 	app.dcopClient()->attach(  );
 	app.dcopClient()->registerAs( "TestAppDriver" );
 	Driver * object = new Driver( appname );
-	QTimer::singleShot( 10, object, SLOT( test() ) );
+	TQTimer::singleShot( 10, object, TQT_SLOT( test() ) );
 	return app.exec();
 }
 	

@@ -2,23 +2,23 @@
 #define _MEIN_XSLT_H_
 
 #include <libxml/parser.h>
-#include <qvaluevector.h>
+#include <tqvaluevector.h>
 
-QString transform(const QString &file, const QString& stylesheet,
-                  const QValueVector<const char *> &params = QValueVector<const char *>());
-QString splitOut(const QString &parsed, int index);
-void fillInstance(KInstance &ins, const QString &srcdir = QString::null );
-bool saveToCache( const QString &contents, const QString &filename );
-QString lookForCache( const QString &filename );
-QCString fromUnicode( const QString &data );
-void replaceCharsetHeader( QString &output );
+TQString transform(const TQString &file, const TQString& stylesheet,
+                  const TQValueVector<const char *> &params = TQValueVector<const char *>());
+TQString splitOut(const TQString &parsed, int index);
+void fillInstance(KInstance &ins, const TQString &srcdir = TQString::null );
+bool saveToCache( const TQString &contents, const TQString &filename );
+TQString lookForCache( const TQString &filename );
+TQCString fromUnicode( const TQString &data );
+void replaceCharsetHeader( TQString &output );
 
 extern bool warnings_exist;
-extern QString *SRCDIR;
+extern TQString *SRCDIR;
 
 /**
  * Compares two files and returns true if @param newer exists and is newer than
  * @param older
  **/
-bool compareTimeStamps( const QString &older, const QString &newer );
+bool compareTimeStamps( const TQString &older, const TQString &newer );
 #endif

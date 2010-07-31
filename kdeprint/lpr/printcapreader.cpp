@@ -20,26 +20,26 @@
 #include "printcapreader.h"
 #include "printcapentry.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <kdebug.h>
 
-void PrintcapReader::setPrintcapFile(QFile *f)
+void PrintcapReader::setPrintcapFile(TQFile *f)
 {
     if (f->isOpen())
     {
         m_stream.setDevice(f);
-        m_buffer = QString::null;
+        m_buffer = TQString::null;
     }
 }
 
-bool PrintcapReader::nextLine(QString& line)
+bool PrintcapReader::nextLine(TQString& line)
 {
 	if (m_stream.atEnd() && m_buffer.isEmpty())
 		return false;
 	else if (!m_buffer.isEmpty())
 	{
 		line = m_buffer;
-		m_buffer = QString::null;
+		m_buffer = TQString::null;
 	}
 	else
 		line = m_stream.readLine().stripWhiteSpace();
@@ -49,7 +49,7 @@ bool PrintcapReader::nextLine(QString& line)
 	return true;
 }
 
-void PrintcapReader::unputLine(const QString& s)
+void PrintcapReader::unputLine(const TQString& s)
 {
     m_buffer = s;
 }
@@ -59,7 +59,7 @@ PrintcapEntry* PrintcapReader::nextEntry()
     if (!m_stream.device())
         return NULL;
 
-    QString line, comment, name, fields, buf;
+    TQString line, comment, name, fields, buf;
     // skip comments, keep last one
     while (1)
     {
@@ -114,7 +114,7 @@ PrintcapEntry* PrintcapReader::nextEntry()
     if (!name.isEmpty())
     {
         PrintcapEntry   *entry = new PrintcapEntry;
-        QStringList l = QStringList::split('|', name, false);
+        TQStringList l = TQStringList::split('|', name, false);
         entry->name = l[0];
         entry->comment = comment;
         // kdDebug() << "Printer: " << entry->name << endl;
@@ -128,8 +128,8 @@ PrintcapEntry* PrintcapReader::nextEntry()
         {
             // kdDebug() << "Fields:" << endl;
             // kdDebug() << "(" << fields << ")" << endl;
-            l = QStringList::split(':', fields, false);
-            for (QStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
+            l = TQStringList::split(':', fields, false);
+            for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
             {
                 Field f;
                 int p = (*it).find('=');

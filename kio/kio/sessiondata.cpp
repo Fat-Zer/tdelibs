@@ -18,8 +18,8 @@
    Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#include <qptrlist.h>
-#include <qtextcodec.h>
+#include <tqptrlist.h>
+#include <tqtextcodec.h>
 
 #include <kdebug.h>
 #include <kconfig.h>
@@ -46,34 +46,34 @@ struct SessionData::AuthData
 public:
   AuthData() {}
 
-  AuthData(const QCString& k, const QCString& g, bool p) {
+  AuthData(const TQCString& k, const TQCString& g, bool p) {
     key = k;
     group = g;
     persist = p;
   }
 
-  bool isKeyMatch( const QCString& val ) const {
+  bool isKeyMatch( const TQCString& val ) const {
     return (val==key);
   }
 
-  bool isGroupMatch( const QCString& val ) const {
+  bool isGroupMatch( const TQCString& val ) const {
     return (val==group);
   }
 
-  QCString key;
-  QCString group;
+  TQCString key;
+  TQCString group;
   bool persist;
 };
 
 /************************* SessionData::AuthDataList ****************************/
-class SessionData::AuthDataList : public QPtrList<SessionData::AuthData>
+class SessionData::AuthDataList : public TQPtrList<SessionData::AuthData>
 {
 public:
   AuthDataList();
   ~AuthDataList();
 
   void addData( SessionData::AuthData* );
-  void removeData( const QCString& );
+  void removeData( const TQCString& );
 
   bool pingCacheDaemon();
   void registerAuthData( SessionData::AuthData* );
@@ -105,7 +105,7 @@ SessionData::AuthDataList::~AuthDataList()
 
 void SessionData::AuthDataList::addData( SessionData::AuthData* d )
 {
-  QPtrListIterator<SessionData::AuthData> it ( *this );
+  TQPtrListIterator<SessionData::AuthData> it ( *this );
   for ( ; it.current(); ++it )
   {
     if ( it.current()->isKeyMatch( d->key ) )
@@ -115,9 +115,9 @@ void SessionData::AuthDataList::addData( SessionData::AuthData* d )
   append( d );
 }
 
-void SessionData::AuthDataList::removeData( const QCString& gkey )
+void SessionData::AuthDataList::removeData( const TQCString& gkey )
 {
-  QPtrListIterator<SessionData::AuthData> it( *this );
+  TQPtrListIterator<SessionData::AuthData> it( *this );
   for( ; it.current(); ++it )
   {
     if ( it.current()->isGroupMatch(gkey) &&  pingCacheDaemon() )
@@ -153,11 +153,11 @@ void SessionData::AuthDataList::registerAuthData( SessionData::AuthData* d )
 
 #ifdef Q_OS_UNIX
   bool ok;
-  QCString ref_key = d->key + "-refcount";
+  TQCString ref_key = d->key + "-refcount";
   int count = m_kdesuClient->getVar(ref_key).toInt( &ok );
   if( ok )
   {
-    QCString val;
+    TQCString val;
     val.setNum( count+1 );
     m_kdesuClient->setVar( ref_key, val, 0, d->group );
   }
@@ -173,7 +173,7 @@ void SessionData::AuthDataList::unregisterAuthData( SessionData::AuthData* d )
 
   bool ok;
   int count;
-  QCString ref_key = d->key + "-refcount";
+  TQCString ref_key = d->key + "-refcount";
 
 #ifdef Q_OS_UNIX
   count = m_kdesuClient->getVar( ref_key ).toInt( &ok );
@@ -181,7 +181,7 @@ void SessionData::AuthDataList::unregisterAuthData( SessionData::AuthData* d )
   {
     if ( count > 1 )
     {
-        QCString val;
+        TQCString val;
         val.setNum(count-1);
         m_kdesuClient->setVar( ref_key, val, 0, d->group );
     }
@@ -197,7 +197,7 @@ void SessionData::AuthDataList::purgeCachedData()
 {
   if ( !isEmpty() && pingCacheDaemon() )
   {
-    QPtrListIterator<SessionData::AuthData> it( *this );
+    TQPtrListIterator<SessionData::AuthData> it( *this );
     for ( ; it.current(); ++it )
         unregisterAuthData( it.current() );
   }
@@ -215,8 +215,8 @@ public:
 
   bool initDone;
   bool useCookie;
-  QString charsets;
-  QString language;
+  TQString charsets;
+  TQString language;
 };
 
 SessionData::SessionData()
@@ -233,8 +233,8 @@ SessionData::~SessionData()
   authData = 0L;
 }
 
-void SessionData::configDataFor( MetaData &configData, const QString &proto,
-                             const QString & )
+void SessionData::configDataFor( MetaData &configData, const TQString &proto,
+                             const TQString & )
 {
   if ( (proto.find("http", 0, false) == 0 ) ||
      (proto.find("webdav", 0, false) == 0) )
@@ -269,11 +269,11 @@ void SessionData::reset()
     d->useCookie = cfg->readBoolEntry( "Cookies", true );
     delete cfg;
 
-    static const QString & english = KGlobal::staticQString( "en" );
+    static const TQString & english = KGlobal::staticQString( "en" );
 
     // Get language settings...
-    QStringList languageList = KGlobal::locale()->languagesTwoAlpha();
-    QStringList::Iterator it = languageList.find( QString::fromLatin1("C") );
+    TQStringList languageList = KGlobal::locale()->languagesTwoAlpha();
+    TQStringList::Iterator it = languageList.find( TQString::fromLatin1("C") );
     if ( it != languageList.end() )
     {
         if ( languageList.contains( english ) > 0 )
@@ -286,11 +286,11 @@ void SessionData::reset()
 
     d->language = languageList.join( ", " );
 
-    d->charsets = QString::fromLatin1(QTextCodec::codecForLocale()->mimeName()).lower();
+    d->charsets = TQString::fromLatin1(TQTextCodec::codecForLocale()->mimeName()).lower();
     KProtocolManager::reparseConfiguration();
 }
 
-void SessionData::slotAuthData( const QCString& key, const QCString& gkey,
+void SessionData::slotAuthData( const TQCString& key, const TQCString& gkey,
                                  bool keep )
 {
   if (!authData)
@@ -298,7 +298,7 @@ void SessionData::slotAuthData( const QCString& key, const QCString& gkey,
   authData->addData( new SessionData::AuthData(key, gkey, keep) );
 }
 
-void SessionData::slotDelAuthData( const QCString& gkey )
+void SessionData::slotDelAuthData( const TQCString& gkey )
 {
   if (!authData)
      return;

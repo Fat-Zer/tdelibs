@@ -21,8 +21,8 @@
 #ifndef KSPELL_THREADEVENTS_H
 #define KSPELL_THREADEVENTS_H
 
-#include <qevent.h>
-#include <qstring.h>
+#include <tqevent.h>
+#include <tqstring.h>
 
 namespace KSpell2
 {
@@ -33,27 +33,27 @@ namespace KSpell2
     class MisspellingEvent : public QCustomEvent
     {
     public:
-        MisspellingEvent( const QString& word,
+        MisspellingEvent( const TQString& word,
                          int pos )
-            : QCustomEvent( FoundMisspelling ), m_word( word ),
+            : TQCustomEvent( FoundMisspelling ), m_word( word ),
               m_position( pos )
             {}
 
-        QString word() const {
+        TQString word() const {
             return m_word;
         }
         int     position() const {
             return m_position;
         }
     private:
-        QString m_word;
+        TQString m_word;
         int     m_position;
     };
     class FinishedCheckingEvent : public QCustomEvent
     {
     public:
         FinishedCheckingEvent()
-            : QCustomEvent( FinishedChecking )
+            : TQCustomEvent( FinishedChecking )
             {}
     };
 

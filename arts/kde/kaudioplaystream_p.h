@@ -23,7 +23,7 @@
 #include <soundserver.h>
 #include <stdsynthmodule.h>
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class KArtsServer;
 class KAudioManagerPlay;
@@ -36,10 +36,10 @@ namespace Arts {
 class KAudioPlayStream;
 class KByteSoundProducer;
 
-class KAudioPlayStreamPrivate : public QObject {
+class KAudioPlayStreamPrivate : public TQObject {
    Q_OBJECT
 public:
-	KAudioPlayStreamPrivate( KArtsServer*, const QString title, QObject*, const char* =0 );
+	KAudioPlayStreamPrivate( KArtsServer*, const TQString title, TQObject*, const char* =0 );
 	~KAudioPlayStreamPrivate();
 
 	KArtsServer* _server;

@@ -41,8 +41,8 @@ int main(int argc, char *argv[])
  
  p << "rev";
  
- p.connect(&p, SIGNAL(processExited(KProcess*)), &dummy, SLOT(printMessage(KProcess*)));
- p.connect(&p, SIGNAL(readReady(KProcIO*)), &dummy, SLOT(gotOutput(KProcIO*)));
+ p.connect(&p, TQT_SIGNAL(processExited(KProcess*)), &dummy, TQT_SLOT(printMessage(KProcess*)));
+ p.connect(&p, TQT_SIGNAL(readReady(KProcIO*)), &dummy, TQT_SLOT(gotOutput(KProcIO*)));
 
  bool b;
 

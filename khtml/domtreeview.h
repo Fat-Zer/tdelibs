@@ -20,15 +20,15 @@
 
 #include <klistview.h>
 #include <kdebug.h>
-#include <qlistview.h>
-#include <qptrdict.h>
+#include <tqlistview.h>
+#include <tqptrdict.h>
 #include "dom/dom_core.h"
 
 class DOMTreeView : public KListView
 {
     Q_OBJECT
     public: 
-	DOMTreeView(QWidget *parent, KHTMLPart *part, const char * name = 0);
+	DOMTreeView(TQWidget *parent, KHTMLPart *part, const char * name = 0);
 	~DOMTreeView();
 
 	void recursive(const DOM::Node &pNode, const DOM::Node &node);
@@ -40,11 +40,11 @@ class DOMTreeView : public KListView
 	void showTree(const DOM::Node &pNode);
 
     protected slots:
-	void slotItemClicked(QListViewItem *);
+	void slotItemClicked(TQListViewItem *);
 
     private:
-	QPtrDict<QListViewItem> m_itemdict;
-	QPtrDict<DOM::Node> m_nodedict;
+	TQPtrDict<TQListViewItem> m_itemdict;
+	TQPtrDict<DOM::Node> m_nodedict;
 	DOM::Node document;
 
 	KHTMLPart *part;

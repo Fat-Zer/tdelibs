@@ -144,7 +144,7 @@ struct kde_sockaddr_in6
 
 #define KAI_SYSTEM		0	/* data is all-system */
 #define KAI_LOCALUNIX		1	/* data contains a Unix addrinfo allocated by us */
-#define KAI_QDNS		2	/* data contains data derived from QDns */
+#define KAI_QDNS		2	/* data contains data derived from TQDns */
 
 struct addrinfo;		/* forward declaration; this could be needed */
 

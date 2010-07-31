@@ -7,24 +7,24 @@
 #ifndef __KGRADIENT_TEST_H
 #define __KGRADIENT_TEST_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kpixmap.h>
-#include <qslider.h>
-#include <qlabel.h>
-#include <qdatetime.h>
+#include <tqslider.h>
+#include <tqlabel.h>
+#include <tqdatetime.h>
 
 class KGradientWidget : public QWidget
 {
 public:
-    KGradientWidget(QWidget *parent=0, const char *name=0);
+    KGradientWidget(TQWidget *parent=0, const char *name=0);
 
     void setBalance(int a, int b) { xbalance = a; ybalance = b; }
 protected:
-    void paintEvent(QPaintEvent *ev);
+    void paintEvent(TQPaintEvent *ev);
 private:
     KPixmap pix;
     int xbalance, ybalance;
-    QTime time;
+    TQTime time;
  
 };
 
@@ -32,14 +32,14 @@ class myTopWidget: public QWidget
 {
   Q_OBJECT
 public:
-  myTopWidget(QWidget *parent=0, const char *name=0);
+  myTopWidget(TQWidget *parent=0, const char *name=0);
   
 private:
-  QLabel *bLabel;
-  QSlider *xSlider, *ySlider;
+  TQLabel *bLabel;
+  TQSlider *xSlider, *ySlider;
   KGradientWidget *grds;
 
-  QTime time;
+  TQTime time;
 
   int itime, otime;
 

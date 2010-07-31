@@ -20,14 +20,14 @@
 #include "kpfileselectpage.h"
 #include "kfilelist.h"
 
-#include <qlayout.h>
-#include <qstringlist.h>
-#include <qregexp.h>
-#include <qheader.h>
+#include <tqlayout.h>
+#include <tqstringlist.h>
+#include <tqregexp.h>
+#include <tqheader.h>
 #include <klocale.h>
 #include <kiconloader.h>
 
-KPFileSelectPage::KPFileSelectPage(QWidget *parent, const char *name)
+KPFileSelectPage::KPFileSelectPage(TQWidget *parent, const char *name)
 : KPrintDialogPage(parent, name)
 {
 	setTitle(i18n("&Files"));
@@ -35,13 +35,13 @@ KPFileSelectPage::KPFileSelectPage(QWidget *parent, const char *name)
 
 	m_files = new KFileList(this);
 
-	QHBoxLayout	*l0 = new QHBoxLayout(this, 0, 10);
+	QHBoxLayout	*l0 = new TQHBoxLayout(this, 0, 10);
 	l0->addWidget(m_files);
 
 	resize(100, 100);
 }
 
-void KPFileSelectPage::getOptions(QMap<QString,QString>& opts, bool incldef)
+void KPFileSelectPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	// (incldef == false) is a hint telling that it should be the last time
 	// and we want to do it only once
@@ -52,12 +52,12 @@ void KPFileSelectPage::getOptions(QMap<QString,QString>& opts, bool incldef)
 	}
 }
 
-void KPFileSelectPage::setOptions(const QMap<QString,QString>& opts)
+void KPFileSelectPage::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	// do it only once as files will only be selected there
 	if (m_first)
 	{
-		QStringList	l = QStringList::split("@@", opts["kde-filelist"], false);
+		QStringList	l = TQStringList::split("@@", opts["kde-filelist"], false);
 		m_files->setFileList(l);
 
 		m_first = false;

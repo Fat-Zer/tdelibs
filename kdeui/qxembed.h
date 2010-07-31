@@ -22,7 +22,7 @@
 #ifndef QXEMBED_H
 #define QXEMBED_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kdelibs_export.h>
 
 #ifdef Q_WS_X11
@@ -68,7 +68,7 @@ public:
      * The parent, name and f arguments are passed to the QFrame
      * constructor.
      */
-    QXEmbed( QWidget *parent=0, const char *name=0, WFlags f = 0 );
+    QXEmbed( TQWidget *parent=0, const char *name=0, WFlags f = 0 );
 
     /**
      * Destructor. Cleans up the focus if necessary.
@@ -140,7 +140,7 @@ public:
      *
      * @short #processClientCmdline()
      */
-    static void embedClientIntoWindow( QWidget* client, WId window );
+    static void embedClientIntoWindow( TQWidget* client, WId window );
 
     /**
      * A utility function for clients that embed theirselves. The widget
@@ -152,7 +152,7 @@ public:
      *
      * @see embedClientIntoWindow()
      */
-    static bool processClientCmdline( QWidget* client, int& argc, char ** argv );
+    static bool processClientCmdline( TQWidget* client, int& argc, char ** argv );
 
     /** 
      * Sends a WM_DELETE_WINDOW message to the embedded window.  This is what
@@ -183,13 +183,13 @@ public:
     bool autoDelete() const;
 
     /* Reimp */
-    QSize sizeHint() const;
-    QSize minimumSizeHint() const;
-    QSizePolicy sizePolicy() const;
-    bool eventFilter( QObject *, QEvent * );
+    TQSize sizeHint() const;
+    TQSize minimumSizeHint() const;
+    TQSizePolicy sizePolicy() const;
+    bool eventFilter( TQObject *, TQEvent * );
     bool customWhatsThis() const;
     void enterWhatsThisMode(); // temporary, fix in Qt (Matthias, Mon Jul 17 15:20:55 CEST 2000  )
-    virtual void reparent( QWidget * parent, WFlags f, const QPoint & p, bool showIt = false );
+    virtual void reparent( TQWidget * parent, WFlags f, const TQPoint & p, bool showIt = false );
 
 signals:
     /**
@@ -201,13 +201,13 @@ signals:
     void embeddedWindowDestroyed();
 
 protected:
-    bool event( QEvent * );
-    void keyPressEvent( QKeyEvent * );
-    void keyReleaseEvent( QKeyEvent * );
-    void focusInEvent( QFocusEvent * );
-    void focusOutEvent( QFocusEvent * );
-    void resizeEvent(QResizeEvent *);
-    void showEvent( QShowEvent * );
+    bool event( TQEvent * );
+    void keyPressEvent( TQKeyEvent * );
+    void keyReleaseEvent( TQKeyEvent * );
+    void focusInEvent( TQFocusEvent * );
+    void focusOutEvent( TQFocusEvent * );
+    void resizeEvent(TQResizeEvent *);
+    void showEvent( TQShowEvent * );
     bool x11Event( XEvent* );
 
     /**

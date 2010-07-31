@@ -1,4 +1,4 @@
-#include <qdir.h>
+#include <tqdir.h>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -22,7 +22,7 @@ class EvolutionFactory : public KRES::PluginFactoryBase
       return new ResourceEvolution( config );
     }
 
-    KRES::ConfigWidget *configWidget( QWidget * )
+    KRES::ConfigWidget *configWidget( TQWidget * )
     {
       return 0;
     }
@@ -46,11 +46,11 @@ ResourceEvolution::~ResourceEvolution() {
 }
 bool ResourceEvolution::doOpen() {
     mWrap = new DBWrapper;
-    if (!mWrap->open( QDir::homeDirPath() + "/evolution/local/Contacts/addressbook.db" ) ) {
+    if (!mWrap->open( TQDir::homeDirPath() + "/evolution/local/Contacts/addressbook.db" ) ) {
         return false;
     }
 
-    QString val;
+    TQString val;
     if (!mWrap->find( "PAS-DB-VERSION", val ) )
         return false;
 
@@ -88,7 +88,7 @@ bool ResourceEvolution::load() {
 
         qWarning( "val:%s", it.value().latin1() );
         VCardTool tool;
-        QString str = it.value().stripWhiteSpace();
+        TQString str = it.value().stripWhiteSpace();
         Addressee::List list = tool.parseVCards( str );
         if (!list.first().isEmpty() ) {
             Addressee adr = list.first();
@@ -104,7 +104,7 @@ bool ResourceEvolution::save( Ticket* ticket ) {
 
     // just delete the summary so evolution will regenerate it 
     // on next start up
-    (void)QFile::remove( QDir::homeDirPath() + "/evolution/local/Contacts/addressbook.db.summary" );
+    (void)TQFile::remove( TQDir::homeDirPath() + "/evolution/local/Contacts/addressbook.db.summary" );
 
 
     AddressBook::Iterator it;

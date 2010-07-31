@@ -19,7 +19,7 @@
 
 #ifndef kfileshare_h
 #define kfileshare_h
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kdelibs_export.h>
 
@@ -40,7 +40,7 @@ public:
   static KFileSharePrivate *self();
   static KFileSharePrivate *_self;
 protected slots: // this is why this class needs to be in the .h
- void slotFileChange(const QString &);
+ void slotFileChange(const TQString &);
 };
 
 /**
@@ -67,7 +67,7 @@ public:
     /**
      * Call this to know if a directory is currently shared
      */
-    static bool isDirectoryShared( const QString& path );
+    static bool isDirectoryShared( const TQString& path );
 
     enum Authorization { NotInitialized, ErrorNotFound, Authorized, UserNotAllowed };
     /**
@@ -75,7 +75,7 @@ public:
      */
     static Authorization authorization();
 
-    static QString findExe( const char* exeName );
+    static TQString findExe( const char* exeName );
 
     /**
      * Uses a suid perl script to share the given path 
@@ -84,7 +84,7 @@ public:
      * @param shared whether the path should be shared or not
      * @returns whether the perl script was successful
      */
-    static bool setShared( const QString& path, bool shared );
+    static bool setShared( const TQString& path, bool shared );
     
     /**
      * The used share mode.
@@ -115,7 +115,7 @@ public:
      * That is, all users in that group are allowed to
      * share files if file sharing is restricted.
      */
-    static QString fileShareGroup();
+    static TQString fileShareGroup();
     
     /**
      * Returns the configured share mode
@@ -134,12 +134,12 @@ public:
 
 private:
     static Authorization s_authorization;
-    static QStringList* s_shareList;
+    static TQStringList* s_shareList;
     static ShareMode s_shareMode;
     static bool s_sambaEnabled;
     static bool s_nfsEnabled;
     static bool s_restricted;
-    static QString s_fileShareGroup;
+    static TQString s_fileShareGroup;
     static bool s_sharingEnabled;
     
 };

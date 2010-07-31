@@ -23,8 +23,8 @@
 #ifndef KWINMODULE_H
 #define KWINMODULE_H
 
-#include <qobject.h>
-#include <qvaluelist.h>
+#include <tqobject.h>
+#include <tqvaluelist.h>
 #include "kdelibs_export.h"
 
 #ifdef Q_OS_UNIX
@@ -83,15 +83,15 @@ public:
      *                  systemTrayWindowRemoved,
      *                  windowChanged,
      *                  strutChanged,
-     *                  workArea(const QValueList<WId> &excludes, int desktop)
+     *                  workArea(const TQValueList<WId> &excludes, int desktop)
      **/
-    KWinModule( QObject* parent, int what );
+    KWinModule( TQObject* parent, int what );
     /**
      * Creates a KWinModule object and connects to the window
      * manager.
      * @param parent the parent for the QObject
      **/
-    KWinModule( QObject* parent = 0 );
+    KWinModule( TQObject* parent = 0 );
 
     /**
      * Destructor. Internal cleanup, nothing fancy.
@@ -108,7 +108,7 @@ public:
      *
      * Iteration over this list can be done easily with
      * \code
-     *  QValueList<WId>::ConstIterator it;
+     *  TQValueList<WId>::ConstIterator it;
      *  for ( it = module->windows().begin();
      *        it != modules->windows().end(); ++it ) {
      *     ... do something here,  (*it) is the current WId.
@@ -116,7 +116,7 @@ public:
      * \endcode
      * @return the list of all toplevel windows
      */
-    const QValueList<WId>& windows() const;
+    const TQValueList<WId>& windows() const;
 
     /**
      * Returns the list of all toplevel windows currently managed by the
@@ -124,7 +124,7 @@ public:
      * higher). May be useful for pagers.
      * @return the list of all toplevel windows in stacking order
      */
-    const QValueList<WId>& stackingOrder() const;
+    const TQValueList<WId>& stackingOrder() const;
 
     /**
      * Test to see if @p id still managed at present.
@@ -137,7 +137,7 @@ public:
      * Returns a list of the system tray windows.
      * @return a list of all system tray windows
      **/
-    const QValueList<WId>& systemTrayWindows() const;
+    const TQValueList<WId>& systemTrayWindows() const;
 
     /**
      * Returns the current virtual desktop.
@@ -157,14 +157,14 @@ public:
      * @return the number of virtual desktops
      * @since 3.5.5
      **/
-    QSize numberOfViewports(int desktop) const;
+    TQSize numberOfViewports(int desktop) const;
 
     /**
      * Returns the current viewport on the given virtual desktop
      * @return the number of virtual desktops
      * @since 3.5.5
      **/
-    QPoint currentViewport(int desktop) const;
+    TQPoint currentViewport(int desktop) const;
 
     /**
      * Returns the currently active window, or 0 if no window is active.
@@ -180,7 +180,7 @@ public:
      *        current desktop
      * @return the size and position of the desktop
      **/
-    QRect workArea( int desktop = - 1 ) const;
+    TQRect workArea( int desktop = - 1 ) const;
 
 
     /**
@@ -193,21 +193,21 @@ public:
      *        current desktop
      * @return the size and position of the desktop
      **/
-    QRect workArea( const QValueList<WId> &excludes, int desktop = -1) const;
+    TQRect workArea( const TQValueList<WId> &excludes, int desktop = -1) const;
 
     /**
      * Returns the name of the specified desktop.
      * @param desktop the number of the desktop
      * @return the name of the desktop
      **/
-    QString desktopName( int desktop ) const;
+    TQString desktopName( int desktop ) const;
 
     /**
      * Sets the name of the specified desktop.
      * @param desktop the number of the desktop
      * @param name the new name for the desktop
      **/
-    void setDesktopName( int desktop, const QString& name );
+    void setDesktopName( int desktop, const TQString& name );
 
     /**
      * Returns the state of showing the desktop.
@@ -224,7 +224,7 @@ public:
      *
      * @param title the title of the window
      */
-    void doNotManage( const QString& title );
+    void doNotManage( const TQString& title );
 
 
 signals:
@@ -340,7 +340,7 @@ signals:
      * The viewport position has changed
      * @since 3.5
      */
-    void currentDesktopViewportChanged(int desktop, const QPoint& viewport);
+    void currentDesktopViewportChanged(int desktop, const TQPoint& viewport);
 
 protected:
     virtual void connectNotify( const char* signal );

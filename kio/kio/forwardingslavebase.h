@@ -23,7 +23,7 @@
 #include <kio/slavebase.h>
 #include <kio/jobclasses.h>
 
-#include <qobject.h>
+#include <tqobject.h>
 
 namespace KIO
 {
@@ -85,13 +85,13 @@ class ForwardingSlaveBasePrivate;
  * @since 3.4
  * @author Kevin Ottens <ervin@ipsquad.net>
  */
-class KIO_EXPORT ForwardingSlaveBase : public QObject, public SlaveBase
+class KIO_EXPORT ForwardingSlaveBase : public TQObject, public SlaveBase
 {
 Q_OBJECT
 public:
-    ForwardingSlaveBase(const QCString &protocol,
-                        const QCString &poolSocket,
-                        const QCString &appSocket);
+    ForwardingSlaveBase(const TQCString &protocol,
+                        const TQCString &poolSocket,
+                        const TQCString &appSocket);
     virtual ~ForwardingSlaveBase();
 
     virtual void get(const KURL &url);
@@ -109,7 +109,7 @@ public:
 
     virtual void rename(const KURL &src, const KURL &dest, bool overwrite);
 
-    virtual void symlink(const QString &target, const KURL &dest,
+    virtual void symlink(const TQString &target, const KURL &dest,
                          bool overwrite);
 
     virtual void chmod(const KURL &url, int permissions);
@@ -174,8 +174,8 @@ private:
 private slots:
     // KIO::Job
     void slotResult(KIO::Job *job);
-    void slotWarning(KIO::Job *job, const QString &msg);
-    void slotInfoMessage(KIO::Job *job, const QString &msg);
+    void slotWarning(KIO::Job *job, const TQString &msg);
+    void slotInfoMessage(KIO::Job *job, const TQString &msg);
     void slotTotalSize(KIO::Job *job, KIO::filesize_t size);
     void slotProcessedSize(KIO::Job *job, KIO::filesize_t size);
     void slotSpeed(KIO::Job *job, unsigned long bytesPerSecond);
@@ -187,9 +187,9 @@ private slots:
     void slotEntries(KIO::Job *job, const KIO::UDSEntryList &entries);
 
     // KIO::TransferJob
-    void slotData(KIO::Job *job, const QByteArray &data);
-    void slotDataReq(KIO::Job *job, QByteArray &data);
-    void slotMimetype (KIO::Job *job, const QString &type);
+    void slotData(KIO::Job *job, const TQByteArray &data);
+    void slotDataReq(KIO::Job *job, TQByteArray &data);
+    void slotMimetype (KIO::Job *job, const TQString &type);
     void slotCanResume (KIO::Job *job, KIO::filesize_t offset);
 };
 

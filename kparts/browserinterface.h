@@ -1,8 +1,8 @@
 #ifndef __browserinterface_h__
 #define __browserinterface_h__
 
-#include <qobject.h>
-#include <qvariant.h>
+#include <tqobject.h>
+#include <tqvariant.h>
 
 #include <kdelibs_export.h>
 
@@ -39,14 +39,14 @@ class KPARTS_EXPORT BrowserInterface : public QObject
 {
     Q_OBJECT
 public:
-    BrowserInterface( QObject *parent, const char *name = 0 );
+    BrowserInterface( TQObject *parent, const char *name = 0 );
     virtual ~BrowserInterface();
 
     /**
      * Perform a dynamic invocation of a method in the BrowserInterface
      * implementation. Methods are to be implemented as simple Qt slots.
      */
-    void callMethod( const char *name, const QVariant &argument );
+    void callMethod( const char *name, const TQVariant &argument );
 };
 
 }

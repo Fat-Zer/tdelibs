@@ -142,14 +142,14 @@ protected:
     virtual void paintBoxDecorations(PaintInfo& paintInfo, int _tx, int _ty);
     void paintRootBoxDecorations( PaintInfo& paintInfo, int _tx, int _ty);
 
-    void paintBackgrounds(QPainter *p, const QColor& c, const BackgroundLayer* bgLayer, int clipy, int cliph, int _tx, int _ty, int w, int h);
-    void paintBackground(QPainter *p, const QColor& c, const BackgroundLayer* bgLayer, int clipy, int cliph, int _tx, int _ty, int w, int h);
+    void paintBackgrounds(TQPainter *p, const TQColor& c, const BackgroundLayer* bgLayer, int clipy, int cliph, int _tx, int _ty, int w, int h);
+    void paintBackground(TQPainter *p, const TQColor& c, const BackgroundLayer* bgLayer, int clipy, int cliph, int _tx, int _ty, int w, int h);
 
-    virtual void paintBackgroundExtended(QPainter* /*p*/, const QColor& /*c*/, const BackgroundLayer* /*bgLayer*/,
+    virtual void paintBackgroundExtended(TQPainter* /*p*/, const TQColor& /*c*/, const BackgroundLayer* /*bgLayer*/,
                                          int /*clipy*/, int /*cliph*/, int /*_tx*/, int /*_ty*/,
                                          int /*w*/, int /*height*/, int /*bleft*/, int /*bright*/, int /*pleft*/, int /*pright*/ );
 
-    void outlineBox(QPainter *p, int _tx, int _ty, const char *color = "red");
+    void outlineBox(TQPainter *p, int _tx, int _ty, const char *color = "red");
 
     void calcAbsoluteHorizontal();
     void calcAbsoluteVertical();
@@ -165,8 +165,8 @@ protected:
     void calcAbsoluteVerticalReplaced();
     void calcAbsoluteHorizontalReplaced();
 
-    QRect getOverflowClipRect(int tx, int ty);
-    QRect getClipRect(int tx, int ty);
+    TQRect getOverflowClipRect(int tx, int ty);
+    TQRect getClipRect(int tx, int ty);
 
     void restructureParentFlow();
 

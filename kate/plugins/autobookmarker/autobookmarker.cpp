@@ -42,16 +42,16 @@
 #include <kstaticdeleter.h>
 #include <kurl.h>
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qlistview.h>
-#include <qpopupmenu.h>
-#include <qpushbutton.h>
-#include <qtoolbutton.h>
-#include <qwhatsthis.h>
-#include <qregexp.h>
+#include <tqcheckbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqlistview.h>
+#include <tqpopupmenu.h>
+#include <tqpushbutton.h>
+#include <tqtoolbutton.h>
+#include <tqwhatsthis.h>
+#include <tqregexp.h>
 
 //#include <kdebug.h>
 //END includes
@@ -59,14 +59,14 @@
 //BEGIN AutoBookmarker
 K_EXPORT_COMPONENT_FACTORY( ktexteditor_autobookmarker, KGenericFactory<AutoBookmarker>( "ktexteditor_autobookmarker" ) )
 
-AutoBookmarker::AutoBookmarker( QObject *parent,
+AutoBookmarker::AutoBookmarker( TQObject *parent,
                             const char* name,
-                            const QStringList& /*args*/ )
+                            const TQStringList& /*args*/ )
         : KTextEditor::Plugin ( (KTextEditor::Document*) parent, name ),
           KTextEditor::ConfigInterfaceExtension()
 {
   if ( parent )
-    connect( parent, SIGNAL( completed() ), this, SLOT( slotCompleted() ) );
+    connect( parent, TQT_SIGNAL( completed() ), this, TQT_SLOT( slotCompleted() ) );
 }
 
 void AutoBookmarker::addView(KTextEditor::View */*view*/)
@@ -77,12 +77,12 @@ void AutoBookmarker::removeView(KTextEditor::View */*view*/)
 {
 }
 
-KTextEditor::ConfigPage * AutoBookmarker::configPage( uint /*number*/, QWidget *parent, const char *name )
+KTextEditor::ConfigPage * AutoBookmarker::configPage( uint /*number*/, TQWidget *parent, const char *name )
 {
   return new AutoBookmarkerConfigPage( parent, name );
 }
 
-QString AutoBookmarker::configPageName( uint /*p*/ ) const
+TQString AutoBookmarker::configPageName( uint /*p*/ ) const
 {
 //   switch (p)
 //   {
@@ -93,7 +93,7 @@ QString AutoBookmarker::configPageName( uint /*p*/ ) const
 //   }
 }
 
-QString AutoBookmarker::configPageFullName( uint /*p*/ ) const
+TQString AutoBookmarker::configPageFullName( uint /*p*/ ) const
 {
 //   switch (p)
 //   {
@@ -104,7 +104,7 @@ QString AutoBookmarker::configPageFullName( uint /*p*/ ) const
 //   }
 }
 
-QPixmap AutoBookmarker::configPagePixmap( uint /*p*/, int size ) const
+TQPixmap AutoBookmarker::configPagePixmap( uint /*p*/, int size ) const
 {
   return UserIcon("kte_bookmark", size);
 }
@@ -115,11 +115,11 @@ void AutoBookmarker::slotCompleted()
   KTextEditor::DocumentInfoInterface *di =
       static_cast<KTextEditor::DocumentInfoInterface*>(document()->
           qt_cast("KTextEditor::DocumentInfoInterface"));
-  QString mt;
+  TQString mt;
   if ( di ) // we can still try match the URL otherwise
     mt = di->mimeType();
 
-  QString fileName;
+  TQString fileName;
   if ( document()->url().isValid() )
     fileName = document()->url().fileName();
 
@@ -136,9 +136,9 @@ void AutoBookmarker::slotCompleted()
     if ( ! found )
       found = ( ! mt.isEmpty() && e->mimemask.contains( mt ) );
     if ( ! found )
-      for( QStringList::Iterator it1 = e->filemask.begin(); it1 != e->filemask.end(); ++it1 )
+      for( TQStringList::Iterator it1 = e->filemask.begin(); it1 != e->filemask.end(); ++it1 )
       {
-        QRegExp re(*it1, true, true);
+        TQRegExp re(*it1, true, true);
         if ( ( found = ( ( re.search( fileName ) > -1 ) && ( re.matchedLength() == (int)fileName.length() ) ) ) )
          break;
       }
@@ -160,7 +160,7 @@ void AutoBookmarker::applyEntity( AutoBookmarkEnt *e )
 
   if ( ! ( ei && mi ) ) return;
 
-  QRegExp re( e->pattern, e->flags & AutoBookmarkEnt::CaseSensitive );
+  TQRegExp re( e->pattern, e->flags & AutoBookmarkEnt::CaseSensitive );
   re.setMinimal( e->flags & AutoBookmarkEnt::MinimalMatching );
 
   for ( uint l( 0 ); l < ei->numLines(); l++ )
@@ -203,11 +203,11 @@ void ABGlobal::readConfig()
   KConfig *config = new KConfig("ktexteditor_autobookmarkerrc");
 
   uint n( 0 );
-  while ( config->hasGroup( QString("autobookmark%1").arg( n ) ) )
+  while ( config->hasGroup( TQString("autobookmark%1").arg( n ) ) )
   {
-    config->setGroup( QString("autobookmark%1").arg( n ) );
-    QStringList filemask = config->readListEntry( "filemask", ';' );
-    QStringList mimemask = config->readListEntry( "mimemask", ';' );
+    config->setGroup( TQString("autobookmark%1").arg( n ) );
+    TQStringList filemask = config->readListEntry( "filemask", ';' );
+    TQStringList mimemask = config->readListEntry( "mimemask", ';' );
     int flags = config->readNumEntry( "flags", 1 );
     AutoBookmarkEnt *e = new AutoBookmarkEnt(
         config->readEntry( "pattern", "" ),
@@ -229,15 +229,15 @@ void ABGlobal::writeConfig()
   KConfig *config = new KConfig("ktexteditor_autobookmarkerrc");
 
   // clean the config object
-  QStringList l = config->groupList();
-  for ( QStringList::Iterator it = l.begin(); it != l.end(); ++it )
+  TQStringList l = config->groupList();
+  for ( TQStringList::Iterator it = l.begin(); it != l.end(); ++it )
     config->deleteGroup( *it );
 
   // fill in the current list
   for ( uint i = 0; i < m_ents->count(); i++ )
   {
     AutoBookmarkEnt *e = m_ents->at( i );
-    config->setGroup( QString("autobookmark%1").arg( i ) );
+    config->setGroup( TQString("autobookmark%1").arg( i ) );
     config->writeEntry( "pattern", e->pattern );
     config->writeEntry( "filemask", e->filemask, ';' );
     config->writeEntry( "mimemask", e->mimemask, ';' );
@@ -255,7 +255,7 @@ class AutoBookmarkEntItem : public QListViewItem
 {
   public:
     AutoBookmarkEntItem( KListView *lv, AutoBookmarkEnt *e )
-        : QListViewItem( lv ),
+        : TQListViewItem( lv ),
         ent( e )
       {
         redo();
@@ -275,75 +275,75 @@ class AutoBookmarkEntItem : public QListViewItem
 // Dialog for editing a single autobookmark entity
 // * edit the pattern
 // * set the file/mime type masks
-AutoBookmarkerEntEditor::AutoBookmarkerEntEditor( QWidget *parent, AutoBookmarkEnt *e )
+AutoBookmarkerEntEditor::AutoBookmarkerEntEditor( TQWidget *parent, AutoBookmarkEnt *e )
         : KDialogBase( parent, "autobookmark_ent_editor",
                        true, i18n("Edit Entry"),
                        KDialogBase::Ok|KDialogBase::Cancel ),
           e( e )
 {
-  QFrame *w = makeMainWidget();
-  QGridLayout * lo = new QGridLayout( w, 5, 3 );
+  TQFrame *w = makeMainWidget();
+  TQGridLayout * lo = new TQGridLayout( w, 5, 3 );
   lo->setSpacing( KDialogBase::spacingHint() );
 
-  QLabel *l = new QLabel( i18n("&Pattern:"), w );
-  lePattern = new QLineEdit( e->pattern, w );
+  TQLabel *l = new TQLabel( i18n("&Pattern:"), w );
+  lePattern = new TQLineEdit( e->pattern, w );
   l->setBuddy( lePattern );
   lo->addWidget( l, 0, 0 );
   lo->addMultiCellWidget(  lePattern, 0, 0, 1, 2 );
-  QWhatsThis::add( lePattern, i18n(
+  TQWhatsThis::add( lePattern, i18n(
       "<p>A regular expression. Matching lines will be bookmarked.</p>" ) );
 
-  connect( lePattern, SIGNAL(textChanged ( const QString & ) ),this, SLOT( slotPatternChanged( const QString& ) ) );
+  connect( lePattern, TQT_SIGNAL(textChanged ( const TQString & ) ),this, TQT_SLOT( slotPatternChanged( const TQString& ) ) );
 
-  cbCS = new QCheckBox( i18n("Case &sensitive"), w );
+  cbCS = new TQCheckBox( i18n("Case &sensitive"), w );
   lo->addMultiCellWidget( cbCS, 1, 1, 0, 2 );
   cbCS->setChecked( e->flags & AutoBookmarkEnt::CaseSensitive );
-  QWhatsThis::add( cbCS, i18n(
+  TQWhatsThis::add( cbCS, i18n(
       "<p>If enabled, the pattern matching will be case sensitive, otherwise "
       "not.</p>") );
 
-  cbMM = new QCheckBox( i18n("&Minimal matching"), w );
+  cbMM = new TQCheckBox( i18n("&Minimal matching"), w );
   lo->addMultiCellWidget( cbMM, 2, 2, 0 ,2 );
   cbMM->setChecked( e->flags & AutoBookmarkEnt::MinimalMatching );
-  QWhatsThis::add( cbMM, i18n(
+  TQWhatsThis::add( cbMM, i18n(
       "<p>If enabled, the pattern matching will use minimal matching; if you "
       "do not know what that is, please read the appendix on regular expressions "
       "in the kate manual.</p>") );
 
-  l = new QLabel( i18n("&File mask:"), w );
-  leFileMask = new QLineEdit( e->filemask.join( "; " ), w );
+  l = new TQLabel( i18n("&File mask:"), w );
+  leFileMask = new TQLineEdit( e->filemask.join( "; " ), w );
   l->setBuddy( leFileMask );
   lo->addWidget( l, 3, 0 );
   lo->addMultiCellWidget( leFileMask, 3, 3, 1, 2 );
-  QWhatsThis::add( leFileMask, i18n(
+  TQWhatsThis::add( leFileMask, i18n(
       "<p>A list of filename masks, separated by semicolons. This can be used "
       "to limit the usage of this entity to files with matching names.</p>"
       "<p>Use the wizard button to the right of the mimetype entry below to "
       "easily fill out both lists.</p>" ) );
 
-  l = new QLabel( i18n("MIME &types:"), w );
-  leMimeTypes = new QLineEdit( e->mimemask.join( "; " ), w );
+  l = new TQLabel( i18n("MIME &types:"), w );
+  leMimeTypes = new TQLineEdit( e->mimemask.join( "; " ), w );
   l->setBuddy( leMimeTypes );
   lo->addWidget( l, 4, 0 );
   lo->addWidget( leMimeTypes, 4, 1 );
-  QWhatsThis::add( leMimeTypes, i18n(
+  TQWhatsThis::add( leMimeTypes, i18n(
       "<p>A list of mime types, separated by semicolon. This can be used to "
       "limit the usage of this entity to files with matching mime types.</p>"
       "<p>Use the wizard button on the right to get a list of existing file "
       "types to choose from, using it will fill in the file masks as well.</p>" ) );
 
-  QToolButton *btnMTW = new QToolButton(w);
+  TQToolButton *btnMTW = new TQToolButton(w);
   lo->addWidget( btnMTW, 4, 2 );
-  btnMTW->setIconSet(QIconSet(SmallIcon("wizard")));
-  connect(btnMTW, SIGNAL(clicked()), this, SLOT(showMTDlg()));
-  QWhatsThis::add( btnMTW, i18n(
+  btnMTW->setIconSet(TQIconSet(SmallIcon("wizard")));
+  connect(btnMTW, TQT_SIGNAL(clicked()), this, TQT_SLOT(showMTDlg()));
+  TQWhatsThis::add( btnMTW, i18n(
       "<p>Click this button to display a checkable list of mimetypes available "
       "on your system. When used, the file masks entry above will be filled in "
       "with the corresponding masks.</p>") );
   slotPatternChanged( lePattern->text() );
 }
 
-void AutoBookmarkerEntEditor::slotPatternChanged( const QString&_pattern )
+void AutoBookmarkerEntEditor::slotPatternChanged( const TQString&_pattern )
 {
     enableButtonOK( !_pattern.isEmpty() );
 }
@@ -353,8 +353,8 @@ void AutoBookmarkerEntEditor::apply()
   if ( lePattern->text().isEmpty() ) return;
 
   e->pattern = lePattern->text();
-  e->filemask = QStringList::split( QRegExp("\\s*;\\s*"), leFileMask->text() );
-  e->mimemask = QStringList::split( QRegExp("\\s*;\\s*"), leMimeTypes->text() );
+  e->filemask = TQStringList::split( TQRegExp("\\s*;\\s*"), leFileMask->text() );
+  e->mimemask = TQStringList::split( TQRegExp("\\s*;\\s*"), leMimeTypes->text() );
   e->flags = 0;
   if ( cbCS->isOn() ) e->flags |= AutoBookmarkEnt::CaseSensitive;
   if ( cbMM->isOn() ) e->flags |= AutoBookmarkEnt::MinimalMatching;
@@ -362,8 +362,8 @@ void AutoBookmarkerEntEditor::apply()
 
 void AutoBookmarkerEntEditor::showMTDlg()
 {
-  QString text = i18n("Select the MimeTypes for this pattern.\nPlease note that this will automatically edit the associated file extensions as well.");
-  QStringList list = QStringList::split( QRegExp("\\s*;\\s*"), leMimeTypes->text() );
+  TQString text = i18n("Select the MimeTypes for this pattern.\nPlease note that this will automatically edit the associated file extensions as well.");
+  TQStringList list = TQStringList::split( TQRegExp("\\s*;\\s*"), leMimeTypes->text() );
   KMimeTypeChooserDialog d( i18n("Select Mime Types"), text, list, "text", this );
   if ( d.exec() == KDialogBase::Accepted ) {
     // do some checking, warn user if mime types or patterns are removed.
@@ -376,13 +376,13 @@ void AutoBookmarkerEntEditor::showMTDlg()
 
 //BEGIN AutoBookmarkerConfigPage
 // TODO allow custom mark types with icons
-AutoBookmarkerConfigPage::AutoBookmarkerConfigPage( QWidget *parent, const char *name )
+AutoBookmarkerConfigPage::AutoBookmarkerConfigPage( TQWidget *parent, const char *name )
   : KTextEditor::ConfigPage( parent, name )
 {
-  QVBoxLayout *lo = new QVBoxLayout( this );
+  TQVBoxLayout *lo = new TQVBoxLayout( this );
   lo->setSpacing( KDialogBase::spacingHint() );
 
-  QLabel *l = new QLabel( i18n("&Patterns"), this );
+  TQLabel *l = new TQLabel( i18n("&Patterns"), this );
   lo->addWidget( l );
   lvPatterns = new KListView( this );
   lvPatterns->addColumn( i18n("Pattern") );
@@ -390,7 +390,7 @@ AutoBookmarkerConfigPage::AutoBookmarkerConfigPage( QWidget *parent, const char 
   lvPatterns->addColumn( i18n("File Masks") );
   lo->addWidget( lvPatterns );
   l->setBuddy( lvPatterns );
-  QWhatsThis::add( lvPatterns, i18n(
+  TQWhatsThis::add( lvPatterns, i18n(
       "<p>This list shows your configured autobookmark entities. When a document "
       "is opened, each entity is used in the following way: "
       "<ol>"
@@ -400,30 +400,30 @@ AutoBookmarkerConfigPage::AutoBookmarkerConfigPage( QWidget *parent, const char 
       "and a bookmark is set on matching lines.</li></ul>"
       "<p>Use the buttons below to manage your collection of entities.</p>") );
 
-  QHBoxLayout *lo1 = new QHBoxLayout ( lo );
+  TQHBoxLayout *lo1 = new TQHBoxLayout ( lo );
   lo1->setSpacing( KDialogBase::spacingHint() );
 
-  btnNew = new QPushButton( i18n("&New..."), this );
+  btnNew = new TQPushButton( i18n("&New..."), this );
   lo1->addWidget( btnNew );
-  QWhatsThis::add( btnNew, i18n(
+  TQWhatsThis::add( btnNew, i18n(
       "Press this button to create a new autobookmark entity.") );
 
-  btnDel = new QPushButton( i18n("&Delete"), this );
+  btnDel = new TQPushButton( i18n("&Delete"), this );
   lo1->addWidget( btnDel );
-  QWhatsThis::add( btnDel, i18n(
+  TQWhatsThis::add( btnDel, i18n(
       "Press this button to delete the currently selected entity.") );
 
-  btnEdit = new QPushButton( i18n("&Edit..."), this );
+  btnEdit = new TQPushButton( i18n("&Edit..."), this );
   lo1->addWidget( btnEdit );
-  QWhatsThis::add( btnEdit, i18n(
+  TQWhatsThis::add( btnEdit, i18n(
       "Press this button to edit the currently selected entity.") );
 
   lo1->addStretch( 1 );
 
-  connect( btnNew, SIGNAL(clicked()), this, SLOT(slotNew()) );
-  connect( btnDel, SIGNAL(clicked()), this, SLOT(slotDel()) );
-  connect( btnEdit, SIGNAL(clicked()), this, SLOT(slotEdit()) );
-  connect( lvPatterns, SIGNAL(doubleClicked(QListViewItem *)), this, SLOT(slotEdit()) );
+  connect( btnNew, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotNew()) );
+  connect( btnDel, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotDel()) );
+  connect( btnEdit, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotEdit()) );
+  connect( lvPatterns, TQT_SIGNAL(doubleClicked(TQListViewItem *)), this, TQT_SLOT(slotEdit()) );
 
   m_ents = new ABEntityList();
   m_ents->setAutoDelete( true );
@@ -509,7 +509,7 @@ void AutoBookmarkerConfigPage::slotEdit()
 //END AutoBookmarkerConfigPage
 
 //BEGIN AutoBookmarkEnt
-AutoBookmarkEnt::AutoBookmarkEnt( const QString &p, const QStringList &f, const QStringList &m, int fl )
+AutoBookmarkEnt::AutoBookmarkEnt( const TQString &p, const TQStringList &f, const TQStringList &m, int fl )
   : pattern( p ),
     filemask( f ),
     mimemask( m ),

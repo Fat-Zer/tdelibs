@@ -21,9 +21,9 @@
 #ifndef DRIVERVIEW_H
 #define DRIVERVIEW_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <klistview.h>
-#include <qmap.h>
+#include <tqmap.h>
 
 #include <kdelibs_export.h>
 
@@ -33,19 +33,19 @@ class DrMain;
 class KDEPRINT_EXPORT DrListView : public KListView
 {
 public:
-	DrListView(QWidget *parent = 0, const char *name = 0);
+	DrListView(TQWidget *parent = 0, const char *name = 0);
 };
 
 class KDEPRINT_EXPORT DriverView : public QWidget
 {
 	Q_OBJECT
 public:
-	DriverView(QWidget *parent = 0, const char *name = 0);
+	DriverView(TQWidget *parent = 0, const char *name = 0);
 	~DriverView();
 
 	void setDriver(DrMain*);
-	void setOptions(const QMap<QString,QString>& opts);
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
+	void setOptions(const TQMap<TQString,TQString>& opts);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
 	void setAllowFixed(bool on);
 	bool hasConflict() const 	{ return (m_conflict != 0); }
 

@@ -22,7 +22,7 @@
 #ifndef _KCOMBIVIEW_H
 #define _KCOMBIVIEW_H
 
-#include <qsplitter.h>
+#include <tqsplitter.h>
 #include <klocale.h>
 
 #include <kfile.h>
@@ -51,16 +51,16 @@ class QIconViewItem;
  * @see KFileDetailView
  * @see KDirOperator
  */
-class KIO_EXPORT KCombiView : public QSplitter,
+class KIO_EXPORT KCombiView : public TQSplitter,
 		   public KFileView
 {
     Q_OBJECT
 
 public:
-    KCombiView( QWidget *parent, const char *name);
+    KCombiView( TQWidget *parent, const char *name);
     virtual ~KCombiView();
 
-    virtual QWidget *widget() { return this; }
+    virtual TQWidget *widget() { return this; }
     virtual void clearView();
 
     virtual void updateView( bool );
@@ -91,10 +91,10 @@ public:
     virtual void insertItem( KFileItem *i );
     virtual void clear();
 
-    virtual void setSorting( QDir::SortSpec sort );
+    virtual void setSorting( TQDir::SortSpec sort );
 
-    virtual void readConfig( KConfig *, const QString& group = QString::null );
-    virtual void writeConfig( KConfig *, const QString& group = QString::null);
+    virtual void readConfig( KConfig *, const TQString& group = TQString::null );
+    virtual void writeConfig( KConfig *, const TQString& group = TQString::null);
 
     void ensureItemVisible( const KFileItem * );
 
@@ -107,7 +107,7 @@ protected:
     KFileView *right;
 
 protected slots:
-    void slotSortingChanged( QDir::SortSpec );
+    void slotSortingChanged( TQDir::SortSpec );
 
 private:
     KFileView *focusView( KFileView *preferred ) const;
@@ -120,7 +120,7 @@ private:
     mutable KFileView *m_lastViewForPrevItem;
 
 protected:
-    virtual bool eventFilter( QObject *o, QEvent *e );
+    virtual bool eventFilter( TQObject *o, TQEvent *e );
     void setDropOptions_impl(int options);
 
     virtual void virtual_hook( int id, void* data );

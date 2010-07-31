@@ -17,7 +17,7 @@
  *
  */
 
-#include <qstyle.h>
+#include <tqstyle.h>
 
 #include <kdebug.h>
 #include <kapplication.h>
@@ -25,8 +25,8 @@
 #include "kseparator.moc"
 
 
-KSeparator::KSeparator(QWidget* parent, const char* name, WFlags f)
-   : QFrame(parent, name, f)
+KSeparator::KSeparator(TQWidget* parent, const char* name, WFlags f)
+   : TQFrame(parent, name, f)
 {
    setLineWidth(1);
    setMidLineWidth(0);
@@ -35,8 +35,8 @@ KSeparator::KSeparator(QWidget* parent, const char* name, WFlags f)
 
 
 
-KSeparator::KSeparator(int orientation, QWidget* parent, const char* name, WFlags f)
-   : QFrame(parent, name, f)
+KSeparator::KSeparator(int orientation, TQWidget* parent, const char* name, WFlags f)
+   : TQFrame(parent, name, f)
 {
    setLineWidth(1);
    setMidLineWidth(0);
@@ -51,7 +51,7 @@ void KSeparator::setOrientation(int orientation)
    {
       case Vertical:
       case VLine:
-         setFrameStyle( QFrame::VLine | QFrame::Sunken );
+         setFrameStyle( TQFrame::VLine | TQFrame::Sunken );
          setMinimumSize(2, 0);
          break;
       
@@ -60,7 +60,7 @@ void KSeparator::setOrientation(int orientation)
          
       case Horizontal:
       case HLine:
-         setFrameStyle( QFrame::HLine | QFrame::Sunken );
+         setFrameStyle( TQFrame::HLine | TQFrame::Sunken );
          setMinimumSize(0, 2);
          break;
    }
@@ -79,36 +79,36 @@ int KSeparator::orientation() const
    return 0;
 }
 
-void KSeparator::drawFrame(QPainter *p)
+void KSeparator::drawFrame(TQPainter *p)
 {
    QPoint	p1, p2;
    QRect	r     = frameRect();
-   const QColorGroup & g = colorGroup();
+   const TQColorGroup & g = colorGroup();
 
    if ( frameStyle() & HLine ) {
-      p1 = QPoint( r.x(), r.height()/2 );
-      p2 = QPoint( r.x()+r.width(), p1.y() );
+      p1 = TQPoint( r.x(), r.height()/2 );
+      p2 = TQPoint( r.x()+r.width(), p1.y() );
    }
    else {
-      p1 = QPoint( r.x()+r.width()/2, 0 );
-      p2 = QPoint( p1.x(), r.height() );
+      p1 = TQPoint( r.x()+r.width()/2, 0 );
+      p2 = TQPoint( p1.x(), r.height() );
    }
 
-   QStyleOption opt( lineWidth(), midLineWidth() );
-   style().drawPrimitive( QStyle::PE_Separator, p, QRect( p1, p2 ), g,
-		          QStyle::Style_Sunken, opt );
+   TQStyleOption opt( lineWidth(), midLineWidth() );
+   style().drawPrimitive( TQStyle::PE_Separator, p, TQRect( p1, p2 ), g,
+		          TQStyle::Style_Sunken, opt );
 }
 
 
-QSize KSeparator::sizeHint() const
+TQSize KSeparator::sizeHint() const
 {
    if ( frameStyle() & VLine )
-      return QSize(2, 0);
+      return TQSize(2, 0);
    
    if ( frameStyle() & HLine )
-      return QSize(0, 2);
+      return TQSize(0, 2);
    
-   return QSize(-1, -1);
+   return TQSize(-1, -1);
 }
 
 void KSeparator::virtual_hook( int, void* )

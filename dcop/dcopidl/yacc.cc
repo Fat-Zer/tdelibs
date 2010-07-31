@@ -226,21 +226,21 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdio.h>
 #include <assert.h>
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #define AMP_ENTITY "&amp;"
 #define YYERROR_VERBOSE
 
 extern int yylex();
 
-// extern QString idl_lexFile;
+// extern TQString idl_lexFile;
 extern int idl_line_no;
 extern int function_mode;
 
 static int dcop_area = 0;
 static int dcop_signal_area = 0;
 
-static QString in_namespace( "" );
+static TQString in_namespace( "" );
 
 void dcopidlInitFlex( const char *_code );
 
@@ -270,7 +270,7 @@ void yyerror( const char *s )
 #line 67 "yacc.yy"
 typedef union YYSTYPE {
   long   _int;
-  QString        *_str;
+  TQString        *_str;
   unsigned short          _char;
   double _float;
 } YYSTYPE;
@@ -1757,7 +1757,7 @@ yyreduce:
   case 41:
 #line 308 "yacc.yy"
     {
-	   QString* tmp = new QString( "%1::%2" );
+	   TQString* tmp = new TQString( "%1::%2" );
            *tmp = tmp->arg(*(yyvsp[-2]._str)).arg(*(yyvsp[0]._str));
            yyval._str = tmp;
 	;}
@@ -1766,7 +1766,7 @@ yyreduce:
   case 42:
 #line 317 "yacc.yy"
     {
-		QString* tmp = new QString( "    <SUPER>%1</SUPER>\n" );
+		TQString* tmp = new TQString( "    <SUPER>%1</SUPER>\n" );
 		*tmp = tmp->arg( *(yyvsp[0]._str) );
 		yyval._str = tmp;
 	  ;}
@@ -1775,7 +1775,7 @@ yyreduce:
   case 43:
 #line 323 "yacc.yy"
     {
-		QString* tmp = new QString( "    <SUPER>%1</SUPER>\n" );
+		TQString* tmp = new TQString( "    <SUPER>%1</SUPER>\n" );
 		*tmp = tmp->arg( *(yyvsp[-3]._str) + "&lt;" + *(yyvsp[-1]._str) + "&gt;" );
 		yyval._str = tmp;
 	  ;}
@@ -1806,7 +1806,7 @@ yyreduce:
 #line 347 "yacc.yy"
     {
 		/* $$ = $1; */
-		yyval._str = new QString( *(yyvsp[-2]._str) + *(yyvsp[0]._str) );
+		yyval._str = new TQString( *(yyvsp[-2]._str) + *(yyvsp[0]._str) );
 	  ;}
     break;
 
@@ -1820,7 +1820,7 @@ yyreduce:
   case 49:
 #line 359 "yacc.yy"
     {
-		yyval._str = new QString( "" );
+		yyval._str = new TQString( "" );
 	  ;}
     break;
 
@@ -1833,28 +1833,28 @@ yyreduce:
   case 52:
 #line 373 "yacc.yy"
     {
-		yyval._str = new QString( "" );
+		yyval._str = new TQString( "" );
 	  ;}
     break;
 
   case 53:
 #line 377 "yacc.yy"
     {
-		yyval._str = new QString( *(yyvsp[-1]._str) + *(yyvsp[0]._str) );
+		yyval._str = new TQString( *(yyvsp[-1]._str) + *(yyvsp[0]._str) );
 	  ;}
     break;
 
   case 54:
 #line 381 "yacc.yy"
     {
-		yyval._str = new QString( *(yyvsp[-1]._str) + *(yyvsp[0]._str) );
+		yyval._str = new TQString( *(yyvsp[-1]._str) + *(yyvsp[0]._str) );
 	  ;}
     break;
 
   case 55:
 #line 385 "yacc.yy"
     {
-		yyval._str = new QString( *(yyvsp[-1]._str) + *(yyvsp[0]._str) );
+		yyval._str = new TQString( *(yyvsp[-1]._str) + *(yyvsp[0]._str) );
 	  ;}
     break;
 
@@ -2003,11 +2003,11 @@ yyreduce:
 #line 475 "yacc.yy"
     {
 		if (dcop_area) {
- 		  QString* tmp = new QString("<TYPEDEF name=\"%1\" template=\"%2\"><PARAM %3</TYPEDEF>\n");
+ 		  TQString* tmp = new TQString("<TYPEDEF name=\"%1\" template=\"%2\"><PARAM %3</TYPEDEF>\n");
 		  *tmp = tmp->arg( *(yyvsp[-1]._str) ).arg( *(yyvsp[-5]._str) ).arg( *(yyvsp[-3]._str) );
 		  yyval._str = tmp;
 		} else {
-		  yyval._str = new QString("");
+		  yyval._str = new TQString("");
 		}
 	  ;}
     break;
@@ -2036,115 +2036,115 @@ yyreduce:
 
   case 89:
 #line 503 "yacc.yy"
-    { yyval._str = new QString("signed int"); ;}
+    { yyval._str = new TQString("signed int"); ;}
     break;
 
   case 90:
 #line 504 "yacc.yy"
-    { yyval._str = new QString("signed int"); ;}
+    { yyval._str = new TQString("signed int"); ;}
     break;
 
   case 91:
 #line 505 "yacc.yy"
-    { yyval._str = new QString("unsigned int"); ;}
+    { yyval._str = new TQString("unsigned int"); ;}
     break;
 
   case 92:
 #line 506 "yacc.yy"
-    { yyval._str = new QString("unsigned int"); ;}
+    { yyval._str = new TQString("unsigned int"); ;}
     break;
 
   case 93:
 #line 507 "yacc.yy"
-    { yyval._str = new QString("signed short int"); ;}
+    { yyval._str = new TQString("signed short int"); ;}
     break;
 
   case 94:
 #line 508 "yacc.yy"
-    { yyval._str = new QString("signed short int"); ;}
+    { yyval._str = new TQString("signed short int"); ;}
     break;
 
   case 95:
 #line 509 "yacc.yy"
-    { yyval._str = new QString("signed long int"); ;}
+    { yyval._str = new TQString("signed long int"); ;}
     break;
 
   case 96:
 #line 510 "yacc.yy"
-    { yyval._str = new QString("signed long int"); ;}
+    { yyval._str = new TQString("signed long int"); ;}
     break;
 
   case 97:
 #line 511 "yacc.yy"
-    { yyval._str = new QString("unsigned short int"); ;}
+    { yyval._str = new TQString("unsigned short int"); ;}
     break;
 
   case 98:
 #line 512 "yacc.yy"
-    { yyval._str = new QString("unsigned short int"); ;}
+    { yyval._str = new TQString("unsigned short int"); ;}
     break;
 
   case 99:
 #line 513 "yacc.yy"
-    { yyval._str = new QString("unsigned long int"); ;}
+    { yyval._str = new TQString("unsigned long int"); ;}
     break;
 
   case 100:
 #line 514 "yacc.yy"
-    { yyval._str = new QString("unsigned long int"); ;}
+    { yyval._str = new TQString("unsigned long int"); ;}
     break;
 
   case 101:
 #line 515 "yacc.yy"
-    { yyval._str = new QString("int"); ;}
+    { yyval._str = new TQString("int"); ;}
     break;
 
   case 102:
 #line 516 "yacc.yy"
-    { yyval._str = new QString("long int"); ;}
+    { yyval._str = new TQString("long int"); ;}
     break;
 
   case 103:
 #line 517 "yacc.yy"
-    { yyval._str = new QString("long int"); ;}
+    { yyval._str = new TQString("long int"); ;}
     break;
 
   case 104:
 #line 518 "yacc.yy"
-    { yyval._str = new QString("short int"); ;}
+    { yyval._str = new TQString("short int"); ;}
     break;
 
   case 105:
 #line 519 "yacc.yy"
-    { yyval._str = new QString("short int"); ;}
+    { yyval._str = new TQString("short int"); ;}
     break;
 
   case 106:
 #line 520 "yacc.yy"
-    { yyval._str = new QString("char"); ;}
+    { yyval._str = new TQString("char"); ;}
     break;
 
   case 107:
 #line 521 "yacc.yy"
-    { yyval._str = new QString("signed char"); ;}
+    { yyval._str = new TQString("signed char"); ;}
     break;
 
   case 108:
 #line 522 "yacc.yy"
-    { yyval._str = new QString("unsigned char"); ;}
+    { yyval._str = new TQString("unsigned char"); ;}
     break;
 
   case 111:
 #line 532 "yacc.yy"
     {
-		yyval._str = new QString( "" );
+		yyval._str = new TQString( "" );
 	  ;}
     break;
 
   case 113:
 #line 537 "yacc.yy"
     {
-		yyval._str = new QString( *(yyvsp[-2]._str) + *(yyvsp[0]._str) );
+		yyval._str = new TQString( *(yyvsp[-2]._str) + *(yyvsp[0]._str) );
 	  ;}
     break;
 
@@ -2166,7 +2166,7 @@ yyreduce:
   case 118:
 #line 548 "yacc.yy"
     {
-		QString *tmp = new QString("%1&lt;%2&gt;");
+		TQString *tmp = new TQString("%1&lt;%2&gt;");
 		*tmp = tmp->arg(*(yyvsp[-3]._str));
 		*tmp = tmp->arg(*(yyvsp[-1]._str));
 		yyval._str = tmp;
@@ -2176,7 +2176,7 @@ yyreduce:
   case 119:
 #line 554 "yacc.yy"
     {
-		QString *tmp = new QString("%1&lt;%2&gt;::%3");
+		TQString *tmp = new TQString("%1&lt;%2&gt;::%3");
 		*tmp = tmp->arg(*(yyvsp[-5]._str));
 		*tmp = tmp->arg(*(yyvsp[-3]._str));
 		*tmp = tmp->arg(*(yyvsp[0]._str));
@@ -2187,7 +2187,7 @@ yyreduce:
   case 120:
 #line 566 "yacc.yy"
     {
-	    yyval._str = new QString(*(yyvsp[-2]._str) + "," + *(yyvsp[0]._str));
+	    yyval._str = new TQString(*(yyvsp[-2]._str) + "," + *(yyvsp[0]._str));
 	  ;}
     break;
 
@@ -2225,7 +2225,7 @@ yyreduce:
 #line 596 "yacc.yy"
     {
 	     if (dcop_area) {
-	  	QString* tmp = new QString("<TYPE  qleft=\"const\" qright=\"" AMP_ENTITY "\">%1</TYPE>");
+	  	TQString* tmp = new TQString("<TYPE  qleft=\"const\" qright=\"" AMP_ENTITY "\">%1</TYPE>");
 		*tmp = tmp->arg( *(yyvsp[-1]._str) );
 		yyval._str = tmp;
 	     }
@@ -2235,7 +2235,7 @@ yyreduce:
   case 126:
 #line 603 "yacc.yy"
     {
-		QString* tmp = new QString("<TYPE>%1</TYPE>");
+		TQString* tmp = new TQString("<TYPE>%1</TYPE>");
 		*tmp = tmp->arg( *(yyvsp[0]._str) );
 		yyval._str = tmp;
 	;}
@@ -2244,7 +2244,7 @@ yyreduce:
   case 127:
 #line 608 "yacc.yy"
     {
-        QString* tmp = new QString("<TYPE>%1</TYPE>");
+        TQString* tmp = new TQString("<TYPE>%1</TYPE>");
         *tmp = tmp->arg( *(yyvsp[-1]._str) );
         yyval._str = tmp;
     ;}
@@ -2254,7 +2254,7 @@ yyreduce:
 #line 613 "yacc.yy"
     { 
         if (dcop_area) { 
-           QString* tmp = new QString("<TYPE  qleft=\"const\" qright=\"" AMP_ENTITY "\">%1</TYPE>"); 
+           TQString* tmp = new TQString("<TYPE  qleft=\"const\" qright=\"" AMP_ENTITY "\">%1</TYPE>"); 
            *tmp = tmp->arg( *(yyvsp[-2]._str) ); 
            yyval._str = tmp; 
         } 
@@ -2272,7 +2272,7 @@ yyreduce:
   case 130:
 #line 625 "yacc.yy"
     {
-		QString* tmp = new QString("<TYPE>%1</TYPE>");
+		TQString* tmp = new TQString("<TYPE>%1</TYPE>");
 		*tmp = tmp->arg( *(yyvsp[0]._str) );
 		yyval._str = tmp;
 	;}
@@ -2289,7 +2289,7 @@ yyreduce:
   case 132:
 #line 639 "yacc.yy"
     {
-	    yyval._str = new QString(*(yyvsp[-2]._str) + "," + *(yyvsp[0]._str));
+	    yyval._str = new TQString(*(yyvsp[-2]._str) + "," + *(yyvsp[0]._str));
 	  ;}
     break;
 
@@ -2304,11 +2304,11 @@ yyreduce:
 #line 650 "yacc.yy"
     {
 		if (dcop_area) {
-		   QString* tmp = new QString("\n        <ARG>%1<NAME>%2</NAME></ARG>");
+		   TQString* tmp = new TQString("\n        <ARG>%1<NAME>%2</NAME></ARG>");
   		   *tmp = tmp->arg( *(yyvsp[-2]._str) );
   		   *tmp = tmp->arg( *(yyvsp[-1]._str) );
 		   yyval._str = tmp;		
-		} else yyval._str = new QString();
+		} else yyval._str = new TQString();
 	  ;}
     break;
 
@@ -2316,10 +2316,10 @@ yyreduce:
 #line 659 "yacc.yy"
     {
 		if (dcop_area) {
-		   QString* tmp = new QString("\n        <ARG>%1</ARG>");
+		   TQString* tmp = new TQString("\n        <ARG>%1</ARG>");
   		   *tmp = tmp->arg( *(yyvsp[-1]._str) );
 		   yyval._str = tmp;		
-		} else yyval._str = new QString();
+		} else yyval._str = new TQString();
 	  ;}
     break;
 
@@ -2328,7 +2328,7 @@ yyreduce:
     {
 		if (dcop_area)
 			yyerror("variable arguments not supported in dcop area.");
-		yyval._str = new QString("");
+		yyval._str = new TQString("");
 	  ;}
     break;
 
@@ -2394,8 +2394,8 @@ yyreduce:
 #line 716 "yacc.yy"
     {
 	     if (dcop_area || dcop_signal_area) {
-		QString* tmp = 0;
-                tmp = new QString(
+		TQString* tmp = 0;
+                tmp = new TQString(
                         "    <%4>\n"
                         "        %2\n"
                         "        <NAME>%1</NAME>"
@@ -2405,13 +2405,13 @@ yyreduce:
 		*tmp = tmp->arg( *(yyvsp[-5]._str) );
                 *tmp = tmp->arg( *(yyvsp[-2]._str) );
                 
-                QString tagname = (dcop_signal_area) ? "SIGNAL" : "FUNC";
-                QString attr = (yyvsp[0]._int) ? " qual=\"const\"" : "";
-                *tmp = tmp->arg( QString("%1%2").arg(tagname).arg(attr) );
-                *tmp = tmp->arg( QString("%1").arg(tagname) );
+                TQString tagname = (dcop_signal_area) ? "SIGNAL" : "FUNC";
+                TQString attr = (yyvsp[0]._int) ? " qual=\"const\"" : "";
+                *tmp = tmp->arg( TQString("%1%2").arg(tagname).arg(attr) );
+                *tmp = tmp->arg( TQString("%1").arg(tagname) );
 		yyval._str = tmp;
    	     } else
-	        yyval._str = new QString("");
+	        yyval._str = new TQString("");
 	  ;}
     break;
 
@@ -2420,7 +2420,7 @@ yyreduce:
     {
 	     if (dcop_area)
 		yyerror("operators aren't allowed in dcop areas!");
-	     yyval._str = new QString("");
+	     yyval._str = new TQString("");
 	  ;}
     break;
 
@@ -2480,7 +2480,7 @@ yyreduce:
     {
 	      /* The constructor */
 	      assert(!dcop_area);
-              yyval._str = new QString("");
+              yyval._str = new TQString("");
 	  ;}
     break;
 
@@ -2489,7 +2489,7 @@ yyreduce:
     {
 	      /* The constructor */
 	      assert(!dcop_area);
-              yyval._str = new QString("");
+              yyval._str = new TQString("");
 	  ;}
     break;
 
@@ -2498,7 +2498,7 @@ yyreduce:
     {
 	      /* The destructor */
   	      assert(!dcop_area);
-              yyval._str = new QString("");
+              yyval._str = new TQString("");
 	  ;}
     break;
 
@@ -2511,7 +2511,7 @@ yyreduce:
                  else
                      yyerror("DCOP functions cannot be static");
               } else {
-                 yyval._str = new QString();
+                 yyval._str = new TQString();
               }  
 	  ;}
     break;

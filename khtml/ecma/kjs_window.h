@@ -22,11 +22,11 @@
 #ifndef _KJS_WINDOW_H_
 #define _KJS_WINDOW_H_
 
-#include <qobject.h>
-#include <qguardedptr.h>
-#include <qmap.h>
-#include <qptrlist.h>
-#include <qdatetime.h>
+#include <tqobject.h>
+#include <tqguardedptr.h>
+#include <tqmap.h>
+#include <tqptrlist.h>
+#include <tqdatetime.h>
 
 #include "kjs_binding.h"
 #include "kjs_views.h"
@@ -70,7 +70,7 @@ namespace KJS {
   };
 
   class KDE_EXPORT Window : public ObjectImp {
-    friend QGuardedPtr<KHTMLPart> getInstance();
+    friend TQGuardedPtr<KHTMLPart> getInstance();
     friend class Location;
     friend class WindowFunc;
     friend class WindowQObject;
@@ -105,10 +105,10 @@ namespace KJS {
     void closeNow();
     void delayedGoHistory(int steps);
     void goHistory(int steps);
-    void goURL(ExecState* exec, const QString& url, bool lockHistory);
+    void goURL(ExecState* exec, const TQString& url, bool lockHistory);
     Value openWindow(ExecState *exec, const List &args);
-    Value executeOpenWindow(ExecState *exec, const KURL& url, const QString& frameName, const QString& features);
-    void resizeTo(QWidget* tl, int width, int height);
+    Value executeOpenWindow(ExecState *exec, const KURL& url, const TQString& frameName, const TQString& features);
+    void resizeTo(TQWidget* tl, int width, int height);
     void afterScriptExecution();
     bool isSafeScript(ExecState *exec) const {
         KParts::ReadOnlyPart *activePart = static_cast<KJS::ScriptInterpreter *>(  exec->interpreter() )->part();
@@ -118,14 +118,14 @@ namespace KJS {
     Location *location() const;
     ObjectImp* frames( ExecState* exec ) const;
     JSEventListener *getJSEventListener(const Value &val, bool html = false);
-    JSLazyEventListener *getJSLazyEventListener(const QString &code, const QString &name, DOM::NodeImpl* node);
+    JSLazyEventListener *getJSLazyEventListener(const TQString &code, const TQString &name, DOM::NodeImpl* node);
     void clear( ExecState *exec );
     virtual UString toString(ExecState *exec) const;
 
     // Set the current "event" object
     void setCurrentEvent( DOM::Event *evt );
 
-    QPtrDict<JSEventListener> jsEventListeners;
+    TQPtrDict<JSEventListener> jsEventListeners;
     virtual const ClassInfo* classInfo() const { return &info; }
     static const ClassInfo info;
     enum { Closed, Crypto, DefaultStatus, Status, Document, Node, EventCtor, Range,
@@ -178,7 +178,7 @@ namespace KJS {
 
     bool checkIsSafeScript( KParts::ReadOnlyPart* activePart ) const;
 
-    QGuardedPtr<khtml::ChildFrame> m_frame;
+    TQGuardedPtr<khtml::ChildFrame> m_frame;
     Screen *screen;
     History *history;
     External *external;
@@ -188,29 +188,29 @@ namespace KJS {
 
     struct DelayedAction {
       DelayedAction() : actionId(NullAction) {} // for QValueList
-      DelayedAction( DelayedActionId id, QVariant p = QVariant() ) : actionId(id), param(p) {}
+      DelayedAction( DelayedActionId id, TQVariant p = TQVariant() ) : actionId(id), param(p) {}
       DelayedActionId actionId;
-      QVariant param; // just in case
+      TQVariant param; // just in case
     };
-    QValueList<DelayedAction> m_delayed;
+    TQValueList<DelayedAction> m_delayed;
 
     struct SuppressedWindowInfo {
       SuppressedWindowInfo() {}  // for QValueList
-      SuppressedWindowInfo( KURL u, QString fr, QString fe ) : url(u), frameName(fr), features(fe) {}
+      SuppressedWindowInfo( KURL u, TQString fr, TQString fe ) : url(u), frameName(fr), features(fe) {}
       KURL url;
-      QString frameName;
-      QString features;
+      TQString frameName;
+      TQString features;
     };
-    QValueList<SuppressedWindowInfo> m_suppressedWindowInfo;
+    TQValueList<SuppressedWindowInfo> m_suppressedWindowInfo;
   };
 
   /**
-   * like QDateTime, but properly handles milliseconds
+   * like TQDateTime, but properly handles milliseconds
    */
   class DateTimeMS
   {
-  	QDate mDate;
-  	QTime mTime;
+  	TQDate mDate;
+  	TQTime mTime;
   public:
     DateTimeMS addMSecs(int s) const;
     bool operator >(const DateTimeMS &other) const;
@@ -229,14 +229,14 @@ namespace KJS {
   class ScheduledAction {
   public:
     ScheduledAction(Object _func, List _args, DateTimeMS _nextTime, int _interval, bool _singleShot, int _timerId);
-    ScheduledAction(QString _code, DateTimeMS _nextTime, int _interval, bool _singleShot, int _timerId);
+    ScheduledAction(TQString _code, DateTimeMS _nextTime, int _interval, bool _singleShot, int _timerId);
     ~ScheduledAction();
     bool execute(Window *window);
     void mark();
 
     ObjectImp *func;
     List args;
-    QString code;
+    TQString code;
     bool isFunction;
     bool singleShot;
 
@@ -246,7 +246,7 @@ namespace KJS {
     int timerId;
   };
 
-  class KDE_EXPORT WindowQObject : public QObject {
+  class KDE_EXPORT WindowQObject : public TQObject {
     Q_OBJECT
   public:
     WindowQObject(Window *w);
@@ -261,11 +261,11 @@ namespace KJS {
   protected slots:
     void parentDestroyed();
   protected:
-    void timerEvent(QTimerEvent *e);
+    void timerEvent(TQTimerEvent *e);
     void setNextTimer();
   private:
     Window *parent;
-    QPtrList<ScheduledAction> scheduledActions;
+    TQPtrList<ScheduledAction> scheduledActions;
     int pausedTime;
     int lastTimerId;
     bool currentlyDispatching;
@@ -286,7 +286,7 @@ namespace KJS {
   private:
     friend class Window;
     Location(khtml::ChildFrame *f);
-    QGuardedPtr<khtml::ChildFrame> m_frame;
+    TQGuardedPtr<khtml::ChildFrame> m_frame;
   };
 
 #ifdef Q_WS_QWS

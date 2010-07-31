@@ -33,8 +33,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
 #include <kde_file.h>
 #include <kapplication.h>
@@ -47,22 +47,22 @@
 
 class KLockFile::KLockFilePrivate {
 public:
-   QString file;
+   TQString file;
    int staleTime;
    bool isLocked;
    bool recoverLock;
    bool linkCountSupport;
-   QTime staleTimer;
+   TQTime staleTimer;
    KDE_struct_stat statBuf;
    int pid;
-   QString hostname;
-   QString instance;
-   QString lockRecoverFile;
+   TQString hostname;
+   TQString instance;
+   TQString lockRecoverFile;
 };
 
 
 // 30 seconds
-KLockFile::KLockFile(const QString &file)
+KLockFile::KLockFile(const TQString &file)
 {
   d = new KLockFilePrivate();
   d->file = file;
@@ -99,7 +99,7 @@ static bool statResultIsEqual(KDE_struct_stat &st_buf1, KDE_struct_stat &st_buf2
 #undef FIELD_EQ
 }
 
-static bool testLinkCountSupport(const QCString &fileName)
+static bool testLinkCountSupport(const TQCString &fileName)
 {
    KDE_struct_stat st_buf;
    // Check if hardlinks raise the link count at all?
@@ -109,14 +109,14 @@ static bool testLinkCountSupport(const QCString &fileName)
    return ((result == 0) && (st_buf.st_nlink == 2));
 }
 
-static KLockFile::LockResult lockFile(const QString &lockFile, KDE_struct_stat &st_buf, bool &linkCountSupport)
+static KLockFile::LockResult lockFile(const TQString &lockFile, KDE_struct_stat &st_buf, bool &linkCountSupport)
 {
-  QCString lockFileName = QFile::encodeName( lockFile );
+  TQCString lockFileName = TQFile::encodeName( lockFile );
   int result = KDE_lstat( lockFileName, &st_buf );
   if (result == 0)
      return KLockFile::LockFail;
   
-  KTempFile uniqueFile(lockFile, QString::null, 0644);
+  KTempFile uniqueFile(lockFile, TQString::null, 0644);
   uniqueFile.setAutoDelete(true);
   if (uniqueFile.status() != 0)
      return KLockFile::LockError;
@@ -125,14 +125,14 @@ static KLockFile::LockResult lockFile(const QString &lockFile, KDE_struct_stat &
   hostname[0] = 0;
   gethostname(hostname, 255);
   hostname[255] = 0;
-  QCString instanceName = KCmdLineArgs::appName();
+  TQCString instanceName = KCmdLineArgs::appName();
 
-  (*(uniqueFile.textStream())) << QString::number(getpid()) << endl
+  (*(uniqueFile.textStream())) << TQString::number(getpid()) << endl
       << instanceName << endl
       << hostname << endl;
   uniqueFile.close();
   
-  QCString uniqueName = QFile::encodeName( uniqueFile.name() );
+  TQCString uniqueName = TQFile::encodeName( uniqueFile.name() );
       
 #ifdef Q_OS_UNIX
   // Create lock file
@@ -171,7 +171,7 @@ static KLockFile::LockResult lockFile(const QString &lockFile, KDE_struct_stat &
   return KLockFile::LockOK;
 }
 
-static KLockFile::LockResult deleteStaleLock(const QString &lockFile, KDE_struct_stat &st_buf, bool &linkCountSupport)
+static KLockFile::LockResult deleteStaleLock(const TQString &lockFile, KDE_struct_stat &st_buf, bool &linkCountSupport)
 {
    // This is dangerous, we could be deleting a new lock instead of
    // the old stale one, let's be very careful
@@ -181,8 +181,8 @@ static KLockFile::LockResult deleteStaleLock(const QString &lockFile, KDE_struct
    if (ktmpFile.status() != 0)
       return KLockFile::LockError;
               
-   QCString lckFile = QFile::encodeName(lockFile);
-   QCString tmpFile = QFile::encodeName(ktmpFile.name());
+   TQCString lckFile = TQFile::encodeName(lockFile);
+   TQCString tmpFile = TQFile::encodeName(ktmpFile.name());
    ktmpFile.close();
    ktmpFile.unlink();
               
@@ -251,12 +251,12 @@ KLockFile::LockResult KLockFile::lock(int options)
      result = lockFile(d->file, st_buf, d->linkCountSupport);
      if (result == KLockFile::LockOK)
      {
-        d->staleTimer = QTime();
+        d->staleTimer = TQTime();
         break;
      }
      else if (result == KLockFile::LockError)
      {
-        d->staleTimer = QTime();
+        d->staleTimer = TQTime();
         if (--hardErrors == 0)
         {
            break;
@@ -265,7 +265,7 @@ KLockFile::LockResult KLockFile::lock(int options)
      else // KLockFile::Fail
      {
         if (!d->staleTimer.isNull() && !statResultIsEqual(d->statBuf, st_buf))
-           d->staleTimer = QTime();
+           d->staleTimer = TQTime();
            
         if (!d->staleTimer.isNull())
         {
@@ -299,7 +299,7 @@ KLockFile::LockResult KLockFile::lock(int options)
               if (result == KLockFile::LockOK)
               {
                  // Lock deletion successful
-                 d->staleTimer = QTime();
+                 d->staleTimer = TQTime();
                  continue; // Now try to get the new lock
               }
               else if (result != KLockFile::LockFail)
@@ -314,13 +314,13 @@ KLockFile::LockResult KLockFile::lock(int options)
            d->staleTimer.start();
            
            d->pid = -1;
-           d->hostname = QString::null;
-           d->instance = QString::null;
+           d->hostname = TQString::null;
+           d->instance = TQString::null;
         
-           QFile file(d->file);
+           TQFile file(d->file);
            if (file.open(IO_ReadOnly))
            {
-              QTextStream ts(&file);
+              TQTextStream ts(&file);
               if (!ts.atEnd())
                  d->pid = ts.readLine().toInt();
               if (!ts.atEnd())
@@ -360,12 +360,12 @@ void KLockFile::unlock()
 {
   if (d->isLocked)
   {
-     ::unlink(QFile::encodeName(d->file));
+     ::unlink(TQFile::encodeName(d->file));
      d->isLocked = false;
   }
 }
 
-bool KLockFile::getLockInfo(int &pid, QString &hostname, QString &appname)
+bool KLockFile::getLockInfo(int &pid, TQString &hostname, TQString &appname)
 {
   if (d->pid == -1)
      return false;

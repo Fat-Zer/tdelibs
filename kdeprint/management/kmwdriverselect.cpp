@@ -23,14 +23,14 @@
 #include "kmdbentry.h"
 #include "kmdriverdb.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 #include <kpushbutton.h>
 #include <klistbox.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 
-KMWDriverSelect::KMWDriverSelect(QWidget *parent, const char *name)
+KMWDriverSelect::KMWDriverSelect(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_ID = KMWizard::DriverSelect;
@@ -39,23 +39,23 @@ KMWDriverSelect::KMWDriverSelect(QWidget *parent, const char *name)
 	m_entries = NULL;
 
 	m_list = new KListBox(this);
-	QLabel	*l1 = new QLabel(this);
+	QLabel	*l1 = new TQLabel(this);
 	l1->setText(i18n("<p>Several drivers have been detected for this model. Select the driver "
 			 "you want to use. You will have the opportunity to test it as well as to "
 			 "change it if necessary.</p>"));
 	m_drivercomment = new KPushButton(i18n("Driver Information"), this);
-	connect(m_drivercomment, SIGNAL(clicked()), SLOT(slotDriverComment()));
+	connect(m_drivercomment, TQT_SIGNAL(clicked()), TQT_SLOT(slotDriverComment()));
 
-	QVBoxLayout	*main_ = new QVBoxLayout(this, 0, 10);
+	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
 	main_->addWidget(l1,0);
 	main_->addWidget(m_list,1);
-	QHBoxLayout	*lay0 = new QHBoxLayout(0, 0, 0);
+	QHBoxLayout	*lay0 = new TQHBoxLayout(0, 0, 0);
 	main_->addLayout(lay0,0);
 	lay0->addStretch(1);
 	lay0->addWidget(m_drivercomment);
 }
 
-bool KMWDriverSelect::isValid(QString& msg)
+bool KMWDriverSelect::isValid(TQString& msg)
 {
 	if (m_list->currentItem() == -1)
 	{
@@ -100,7 +100,7 @@ void KMWDriverSelect::updatePrinter(KMPrinter *p)
 	else
 	{
 		p->setDbEntry(0);
-		p->setDriverInfo(QString::null);
+		p->setDriverInfo(TQString::null);
 	}
 }
 
@@ -108,7 +108,7 @@ void KMWDriverSelect::slotDriverComment()
 {
 	int	index = m_list->currentItem();
 	if (m_entries && index >=0 && index < (int)(m_entries->count()) && !m_entries->at(index)->drivercomment.isEmpty())
-		KMessageBox::information(this, m_entries->at(index)->drivercomment, QString::null, QString::null, KMessageBox::AllowLink);
+		KMessageBox::information(this, m_entries->at(index)->drivercomment, TQString::null, TQString::null, KMessageBox::AllowLink);
 	else
 		KMessageBox::error(this, i18n("No information about the selected driver."));
 }

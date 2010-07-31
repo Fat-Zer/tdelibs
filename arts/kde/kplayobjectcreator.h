@@ -23,7 +23,7 @@
 #define KPLAYOBJECTCREATOR_H
 
 #include <kurl.h>
-#include <qobject.h>
+#include <tqobject.h>
 #include "soundserver.h"
 #include "kioinputstream_impl.h"
 
@@ -36,13 +36,13 @@ public:
 	PlayObjectCreator(Arts::SoundServerV2 server);
 	~PlayObjectCreator();
 
-	bool create(const KURL& url, bool createBUS, const QObject* receiver, const char* slot);
+	bool create(const KURL& url, bool createBUS, const TQObject* receiver, const char* slot);
 
 signals:
 	void playObjectCreated(Arts::PlayObject playObject);
 
 private slots:
-	void slotMimeType(const QString &mimetype);
+	void slotMimeType(const TQString &mimetype);
 
 private:
 	Arts::SoundServerV2 m_server;

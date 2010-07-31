@@ -19,8 +19,8 @@
 #ifndef _KMESSAGEBOX_H_
 #define _KMESSAGEBOX_H_
 
-#include <qstring.h>
-#include <qmessagebox.h>
+#include <tqstring.h>
+#include <tqmessagebox.h>
 
 #include <kguiitem.h>
 #include <kstdguiitem.h>
@@ -112,24 +112,24 @@ public:
   * The default button is "Yes". Pressing "Esc" selects "No".
   */
 
- static int questionYesNo(QWidget *parent,
-                          const QString &text,
-                          const QString &caption = QString::null,
+ static int questionYesNo(TQWidget *parent,
+                          const TQString &text,
+                          const TQString &caption = TQString::null,
                           const KGuiItem &buttonYes = KStdGuiItem::yes(),
                           const KGuiItem &buttonNo =  KStdGuiItem::no(),
-                          const QString &dontAskAgainName = QString::null,
+                          const TQString &dontAskAgainName = TQString::null,
                           int options = Notify);
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
  static int questionYesNoWId(WId parent_id,
-                          const QString &text,
-                          const QString &caption = QString::null,
+                          const TQString &text,
+                          const TQString &caption = TQString::null,
                           const KGuiItem &buttonYes = KStdGuiItem::yes(),
                           const KGuiItem &buttonNo =  KStdGuiItem::no(),
-                          const QString &dontAskAgainName = QString::null,
+                          const TQString &dontAskAgainName = TQString::null,
                           int options = Notify);
  /**
   * Display a simple "question" dialog.
@@ -163,25 +163,25 @@ public:
   * NOTE: The cancel button will always have the i18n'ed text '&Cancel'.
   */
 
-  static int questionYesNoCancel(QWidget *parent,
-                          const QString &text,
-                          const QString &caption = QString::null,
+  static int questionYesNoCancel(TQWidget *parent,
+                          const TQString &text,
+                          const TQString &caption = TQString::null,
                           const KGuiItem &buttonYes = KStdGuiItem::yes(),
                           const KGuiItem &buttonNo  = KStdGuiItem::no(),
-                          const QString &dontAskAgainName = QString::null,
+                          const TQString &dontAskAgainName = TQString::null,
                           int options = Notify);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
   static int questionYesNoCancelWId(WId parent_id,
-                          const QString &text,
-                          const QString &caption = QString::null,
+                          const TQString &text,
+                          const TQString &caption = TQString::null,
                           const KGuiItem &buttonYes = KStdGuiItem::yes(),
                           const KGuiItem &buttonNo  = KStdGuiItem::no(),
-                          const QString &dontAskAgainName = QString::null,
+                          const TQString &dontAskAgainName = TQString::null,
                           int options = Notify);
 
  /**
@@ -218,27 +218,27 @@ public:
   * The default button is "Yes". Pressing "Esc" selects "No".
   */
 
- static int questionYesNoList(QWidget *parent,
-                          const QString &text,
-                          const QStringList &strlist,
-                          const QString &caption = QString::null,
+ static int questionYesNoList(TQWidget *parent,
+                          const TQString &text,
+                          const TQStringList &strlist,
+                          const TQString &caption = TQString::null,
                           const KGuiItem &buttonYes = KStdGuiItem::yes(),
                           const KGuiItem &buttonNo = KStdGuiItem::no(),
-                          const QString &dontAskAgainName = QString::null,
+                          const TQString &dontAskAgainName = TQString::null,
                           int options = Notify);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
  static int questionYesNoListWId(WId parent_id,
-                          const QString &text,
-                          const QStringList &strlist,
-                          const QString &caption = QString::null,
+                          const TQString &text,
+                          const TQStringList &strlist,
+                          const TQString &caption = TQString::null,
                           const KGuiItem &buttonYes = KStdGuiItem::yes(),
                           const KGuiItem &buttonNo = KStdGuiItem::no(),
-                          const QString &dontAskAgainName = QString::null,
+                          const TQString &dontAskAgainName = TQString::null,
                           int options = Notify);
 
  /**
@@ -271,25 +271,25 @@ public:
   *
   * The default button is "No". Pressing "Esc" selects "No".
   */
- static int warningYesNo(QWidget *parent,
-                         const QString &text,
-                         const QString &caption = QString::null,
+ static int warningYesNo(TQWidget *parent,
+                         const TQString &text,
+                         const TQString &caption = TQString::null,
                          const KGuiItem &buttonYes = KStdGuiItem::yes(),
                          const KGuiItem &buttonNo = KStdGuiItem::no(),
-                         const QString &dontAskAgainName = QString::null,
+                         const TQString &dontAskAgainName = TQString::null,
                          int options = Notify | Dangerous);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
  static int warningYesNoWId(WId parent_id,
-                         const QString &text,
-                         const QString &caption = QString::null,
+                         const TQString &text,
+                         const TQString &caption = TQString::null,
                          const KGuiItem &buttonYes = KStdGuiItem::yes(),
                          const KGuiItem &buttonNo = KStdGuiItem::no(),
-                         const QString &dontAskAgainName = QString::null,
+                         const TQString &dontAskAgainName = TQString::null,
                          int options = Notify | Dangerous);
 
  /**
@@ -326,27 +326,27 @@ public:
   * The default button is "No". Pressing "Esc" selects "No".
   */
 
- static int warningYesNoList(QWidget *parent,
-                            const QString &text,
-                            const QStringList &strlist,
-                            const QString &caption = QString::null,
+ static int warningYesNoList(TQWidget *parent,
+                            const TQString &text,
+                            const TQStringList &strlist,
+                            const TQString &caption = TQString::null,
                             const KGuiItem &buttonYes = KStdGuiItem::yes(),
                             const KGuiItem &buttonNo = KStdGuiItem::no(),
-                            const QString &dontAskAgainName = QString::null,
+                            const TQString &dontAskAgainName = TQString::null,
                             int options = Notify | Dangerous);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
  static int warningYesNoListWId(WId parent_id,
-                            const QString &text,
-                            const QStringList &strlist,
-                            const QString &caption = QString::null,
+                            const TQString &text,
+                            const TQStringList &strlist,
+                            const TQString &caption = TQString::null,
                             const KGuiItem &buttonYes = KStdGuiItem::yes(),
                             const KGuiItem &buttonNo = KStdGuiItem::no(),
-                            const QString &dontAskAgainName = QString::null,
+                            const TQString &dontAskAgainName = TQString::null,
                             int options = Notify | Dangerous);
 
  /**
@@ -378,23 +378,23 @@ public:
   *
   * The default button is buttonContinue. Pressing "Esc" selects "Cancel".
   */
- static int warningContinueCancel(QWidget *parent,
-                         const QString &text,
-                         const QString &caption = QString::null,
+ static int warningContinueCancel(TQWidget *parent,
+                         const TQString &text,
+                         const TQString &caption = TQString::null,
                          const KGuiItem &buttonContinue = KStdGuiItem::cont(),
-                         const QString &dontAskAgainName = QString::null,
+                         const TQString &dontAskAgainName = TQString::null,
                          int options = Notify);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
  static int warningContinueCancelWId(WId parent_id,
-                         const QString &text,
-                         const QString &caption = QString::null,
+                         const TQString &text,
+                         const TQString &caption = TQString::null,
                          const KGuiItem &buttonContinue = KStdGuiItem::cont(),
-                         const QString &dontAskAgainName = QString::null,
+                         const TQString &dontAskAgainName = TQString::null,
                          int options = Notify);
 
  /**
@@ -430,25 +430,25 @@ public:
   *
   * The default button is buttonContinue. Pressing "Esc" selects "Cancel".
   */
- static int warningContinueCancelList(QWidget *parent,
-                         const QString &text,
-                         const QStringList &strlist,
-                         const QString &caption = QString::null,
+ static int warningContinueCancelList(TQWidget *parent,
+                         const TQString &text,
+                         const TQStringList &strlist,
+                         const TQString &caption = TQString::null,
                          const KGuiItem &buttonContinue = KStdGuiItem::cont(),
-                         const QString &dontAskAgainName = QString::null,
+                         const TQString &dontAskAgainName = TQString::null,
                          int options = Notify);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
  static int warningContinueCancelListWId(WId parent_id,
-                         const QString &text,
-                         const QStringList &strlist,
-                         const QString &caption = QString::null,
+                         const TQString &text,
+                         const TQStringList &strlist,
+                         const TQString &caption = TQString::null,
                          const KGuiItem &buttonContinue = KStdGuiItem::cont(),
-                         const QString &dontAskAgainName = QString::null,
+                         const TQString &dontAskAgainName = TQString::null,
                          int options = Notify);
 
  /**
@@ -487,25 +487,25 @@ public:
   * NOTE: The cancel button will always have the i18n'ed text '&Cancel'.
   */
 
-  static int warningYesNoCancel(QWidget *parent,
-                                const QString &text,
-                                const QString &caption = QString::null,
+  static int warningYesNoCancel(TQWidget *parent,
+                                const TQString &text,
+                                const TQString &caption = TQString::null,
                                 const KGuiItem &buttonYes = KStdGuiItem::yes(),
                                 const KGuiItem &buttonNo = KStdGuiItem::no(),
-                                const QString &dontAskAgainName = QString::null,
+                                const TQString &dontAskAgainName = TQString::null,
                                 int options = Notify);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
   static int warningYesNoCancelWId(WId parent_id,
-                                const QString &text,
-                                const QString &caption = QString::null,
+                                const TQString &text,
+                                const TQString &caption = TQString::null,
                                 const KGuiItem &buttonYes = KStdGuiItem::yes(),
                                 const KGuiItem &buttonNo = KStdGuiItem::no(),
-                                const QString &dontAskAgainName = QString::null,
+                                const TQString &dontAskAgainName = TQString::null,
                                 int options = Notify);
 
  /**
@@ -549,27 +549,27 @@ public:
   *
   * @since 3.2
   */
-  static int warningYesNoCancelList(QWidget *parent,
-                                const QString &text,
-                                const QStringList &strlist,
-                                const QString &caption = QString::null,
+  static int warningYesNoCancelList(TQWidget *parent,
+                                const TQString &text,
+                                const TQStringList &strlist,
+                                const TQString &caption = TQString::null,
                                 const KGuiItem &buttonYes = KStdGuiItem::yes(),
                                 const KGuiItem &buttonNo = KStdGuiItem::no(),
-                                const QString &dontAskAgainName = QString::null,
+                                const TQString &dontAskAgainName = TQString::null,
                                 int options = Notify);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
   static int warningYesNoCancelListWId(WId parent_id,
-                                const QString &text,
-                                const QStringList &strlist,
-                                const QString &caption = QString::null,
+                                const TQString &text,
+                                const TQStringList &strlist,
+                                const TQString &caption = TQString::null,
                                 const KGuiItem &buttonYes = KStdGuiItem::yes(),
                                 const KGuiItem &buttonNo = KStdGuiItem::no(),
-                                const QString &dontAskAgainName = QString::null,
+                                const TQString &dontAskAgainName = TQString::null,
                                 int options = Notify);
 
  /**
@@ -595,20 +595,20 @@ public:
   * NOTE: The OK button will always have the i18n'ed text '&OK'.
   */
 
-  static void error(QWidget *parent,
-                    const QString &text,
-                    const QString &caption = QString::null,
+  static void error(TQWidget *parent,
+                    const TQString &text,
+                    const TQString &caption = TQString::null,
                     int options = Notify);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   *
   * @since 3.2
   */
   static void errorWId(WId parent_id,
-                    const QString &text,
-                    const QString &caption = QString::null,
+                    const TQString &text,
+                    const TQString &caption = TQString::null,
                     int options = Notify);
 
  /**
@@ -639,22 +639,22 @@ public:
   * @since 3.4
   */
 
-  static void errorList(QWidget *parent,
-                    const QString &text,
-                    const QStringList &strlist,
-                    const QString &caption = QString::null,
+  static void errorList(TQWidget *parent,
+                    const TQString &text,
+                    const TQStringList &strlist,
+                    const TQString &caption = TQString::null,
                     int options = Notify);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.4
   */
 
   static void errorListWId(WId parent_id,
-                    const QString &text,
-                    const QStringList &strlist,
-                    const QString &caption = QString::null,
+                    const TQString &text,
+                    const TQStringList &strlist,
+                    const TQString &caption = TQString::null,
                     int options = Notify);
 
  /**
@@ -683,21 +683,21 @@ public:
   *
   * NOTE: The OK button will always have the i18n'ed text '&OK'.
   */
-  static void detailedError(QWidget *parent,
-                    const QString &text,
-                    const QString &details,
-                    const QString &caption = QString::null,
+  static void detailedError(TQWidget *parent,
+                    const TQString &text,
+                    const TQString &details,
+                    const TQString &caption = TQString::null,
                     int options = Notify);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
   static void detailedErrorWId(WId parent_id,
-                    const QString &text,
-                    const QString &details,
-                    const QString &caption = QString::null,
+                    const TQString &text,
+                    const TQString &details,
+                    const TQString &caption = TQString::null,
                     int options = Notify);
 
   /**
@@ -710,20 +710,20 @@ public:
    * Note that if the parent gets deleted, the messagebox will not be
    * shown.
    */
-  static void queuedDetailedError( QWidget *parent,
-                    const QString &text,
-                    const QString &details,
-                    const QString &caption = QString::null);
+  static void queuedDetailedError( TQWidget *parent,
+                    const TQString &text,
+                    const TQString &details,
+                    const TQString &caption = TQString::null);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
   static void queuedDetailedErrorWId( WId parent_id,
-                    const QString &text,
-                    const QString &details,
-                    const QString &caption = QString::null);
+                    const TQString &text,
+                    const TQString &details,
+                    const TQString &caption = TQString::null);
 
  /**
   * Display an "Sorry" dialog.
@@ -747,19 +747,19 @@ public:
   * NOTE: The ok button will always have the i18n'ed text '&OK'.
   */
 
-  static void sorry(QWidget *parent,
-                    const QString &text,
-                    const QString &caption = QString::null,
+  static void sorry(TQWidget *parent,
+                    const TQString &text,
+                    const TQString &caption = TQString::null,
                     int options = Notify);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
   static void sorryWId(WId parent_id,
-                    const QString &text,
-                    const QString &caption = QString::null,
+                    const TQString &text,
+                    const TQString &caption = TQString::null,
                     int options = Notify);
 
  /**
@@ -790,21 +790,21 @@ public:
   * NOTE: The ok button will always have the i18n'ed text '&OK'.
   */
 
-  static void detailedSorry(QWidget *parent,
-                    const QString &text,
-                    const QString &details,
-                    const QString &caption = QString::null,
+  static void detailedSorry(TQWidget *parent,
+                    const TQString &text,
+                    const TQString &details,
+                    const TQString &caption = TQString::null,
                     int options = Notify);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
   static void detailedSorryWId(WId parent_id,
-                    const QString &text,
-                    const QString &details,
-                    const QString &caption = QString::null,
+                    const TQString &text,
+                    const TQString &details,
+                    const TQString &caption = TQString::null,
                     int options = Notify);
 
  /**
@@ -833,21 +833,21 @@ public:
   *  NOTE: The OK button will always have the i18n'ed text '&OK'.
   */
 
-  static void information(QWidget *parent,
-                          const QString &text,
-                          const QString &caption = QString::null,
-                          const QString &dontShowAgainName = QString::null,
+  static void information(TQWidget *parent,
+                          const TQString &text,
+                          const TQString &caption = TQString::null,
+                          const TQString &dontShowAgainName = TQString::null,
                           int options = Notify);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
   static void informationWId(WId parent_id,
-                          const QString &text,
-                          const QString &caption = QString::null,
-                          const QString &dontShowAgainName = QString::null,
+                          const TQString &text,
+                          const TQString &caption = TQString::null,
+                          const TQString &dontShowAgainName = TQString::null,
                           int options = Notify);
 
  /**
@@ -880,23 +880,23 @@ public:
   * @since 3.1
   */
 
-  static void informationList(QWidget *parent,
-			      const QString &text,
-			      const QStringList & strlist,
-			      const QString &caption = QString::null,
-			      const QString &dontShowAgainName = QString::null,
+  static void informationList(TQWidget *parent,
+			      const TQString &text,
+			      const TQStringList & strlist,
+			      const TQString &caption = TQString::null,
+			      const TQString &dontShowAgainName = TQString::null,
 			      int options = Notify);
 
  /**
   * This function accepts the window id of the parent window, instead
-  * of QWidget*. It should be used only when necessary.
+  * of TQWidget*. It should be used only when necessary.
   * @since 3.2
   */
   static void informationListWId(WId parent_id,
-			      const QString &text,
-			      const QStringList & strlist,
-			      const QString &caption = QString::null,
-			      const QString &dontShowAgainName = QString::null,
+			      const TQString &text,
+			      const TQStringList & strlist,
+			      const TQString &caption = TQString::null,
+			      const TQString &dontShowAgainName = TQString::null,
 			      int options = Notify);
 
   /**
@@ -912,7 +912,7 @@ public:
    * @see saveDontShowAgainContinue()
    * @since 3.2
    */
-  static void enableMessage(const QString &dontShowAgainName);
+  static void enableMessage(const TQString &dontShowAgainName);
 
   /**
    * Display an "About" dialog.
@@ -933,9 +933,9 @@ public:
    *
    *  NOTE: The ok button will always have the i18n'ed text '&OK'.
    */
-  static void about(QWidget *parent,
-		    const QString& text,
-		    const QString& caption = QString::null,
+  static void about(TQWidget *parent,
+		    const TQString& text,
+		    const TQString& caption = TQString::null,
                     int options = Notify);
 
     /**
@@ -962,11 +962,11 @@ public:
      *       and for Information, none is used.
      * @return a button code, as defined in KMessageBox.
      */
-    static int messageBox( QWidget *parent, DialogType type, const QString &text,
-                    const QString &caption,
+    static int messageBox( TQWidget *parent, DialogType type, const TQString &text,
+                    const TQString &caption,
                     const KGuiItem &buttonYes,
                     const KGuiItem &buttonNo,
-                    const QString &dontShowAskAgainName,
+                    const TQString &dontShowAskAgainName,
                     int options = Notify);
 
     /**
@@ -988,22 +988,22 @@ public:
      * @return a button code, as defined in KMessageBox.
      */
     // KDE4 - merge with above?
-    static int messageBox( QWidget *parent, DialogType type, const QString &text,
-                    const QString &caption = QString::null,
+    static int messageBox( TQWidget *parent, DialogType type, const TQString &text,
+                    const TQString &caption = TQString::null,
                     const KGuiItem &buttonYes = KStdGuiItem::yes(),
                     const KGuiItem &buttonNo = KStdGuiItem::no(),
                     int options = Notify);
 
     /**
      * This function accepts the window id of the parent window, instead
-     * of QWidget*. It should be used only when necessary.
+     * of TQWidget*. It should be used only when necessary.
      * @since 3.2
      */
-    static int messageBoxWId( WId parent_id, DialogType type, const QString &text,
-                    const QString &caption = QString::null,
+    static int messageBoxWId( WId parent_id, DialogType type, const TQString &text,
+                    const TQString &caption = TQString::null,
                     const KGuiItem &buttonYes = KStdGuiItem::yes(),
                     const KGuiItem &buttonNo = KStdGuiItem::no(),
-                    const QString &dontShowAskAgainName = QString::null,
+                    const TQString &dontShowAskAgainName = TQString::null,
                     int options = Notify);
 
     /**
@@ -1018,19 +1018,19 @@ public:
      * Note that if the parent gets deleted, the messagebox will not be
      * shown.
      */
-    static void queuedMessageBox( QWidget *parent,
-                    DialogType type, const QString &text,
-                    const QString &caption,
+    static void queuedMessageBox( TQWidget *parent,
+                    DialogType type, const TQString &text,
+                    const TQString &caption,
                     int options );
 
     /**
      * This function accepts the window id of the parent window, instead
-     * of QWidget*. It should be used only when necessary.
+     * of TQWidget*. It should be used only when necessary.
      * @since 3.2
      */
     static void queuedMessageBoxWId( WId parent_id,
-                    DialogType type, const QString &text,
-                    const QString &caption,
+                    DialogType type, const TQString &text,
+                    const TQString &caption,
                     int options );
 
     /**
@@ -1039,18 +1039,18 @@ public:
      * This is an overloaded member function, provided for convenience.
      * It behaves essentially like the above function.
      */
-    static void queuedMessageBox( QWidget *parent,
-                    DialogType type, const QString &text,
-                    const QString &caption = QString::null );
+    static void queuedMessageBox( TQWidget *parent,
+                    DialogType type, const TQString &text,
+                    const TQString &caption = TQString::null );
 
     /**
      * This function accepts the window id of the parent window, instead
-     * of QWidget*. It should be used only when necessary.
+     * of TQWidget*. It should be used only when necessary.
      * @since 3.2
      */
     static void queuedMessageBoxWId( WId parent_id,
-                    DialogType type, const QString &text,
-                    const QString &caption = QString::null );
+                    DialogType type, const TQString &text,
+                    const TQString &caption = TQString::null );
 
     /**
      * @return true if the corresponding yes/no message box should be shown.
@@ -1061,7 +1061,7 @@ public:
      * should not be shown.
      * @since 3.2
      */
-    static bool shouldBeShownYesNo(const QString &dontShowAgainName,
+    static bool shouldBeShownYesNo(const TQString &dontShowAgainName,
                                    ButtonCode &result);
     /**
      * @return true if the corresponding continue/cancel message box should be
@@ -1070,7 +1070,7 @@ public:
      * empty, true is always returned.
      * @since 3.2
      */
-    static bool shouldBeShownContinue(const QString &dontShowAgainName);
+    static bool shouldBeShownContinue(const TQString &dontShowAgainName);
 
     /**
      * Save the fact that the yes/no message box should not be shown again.
@@ -1080,7 +1080,7 @@ public:
      * for the message box.
      * @since 3.2
      */
-    static void saveDontShowAgainYesNo(const QString &dontShowAgainName,
+    static void saveDontShowAgainYesNo(const TQString &dontShowAgainName,
                                        ButtonCode result);
 
     /**
@@ -1090,7 +1090,7 @@ public:
      * empty, this method does nothing.
      * @since 3.2
      */
-    static void saveDontShowAgainContinue(const QString &dontShowAgainName);
+    static void saveDontShowAgainContinue(const TQString &dontShowAgainName);
 
     /**
      * Use @p cfg for all settings related to the dontShowAgainName feature.
@@ -1122,16 +1122,16 @@ public:
      * @note   The @p dialog that is passed in is deleted by this
      *         function. Do not delete it yourself.
      */
-    static int createKMessageBox(KDialogBase *dialog, QMessageBox::Icon icon,
-                             const QString &text, const QStringList &strlist,
-                             const QString &ask, bool *checkboxReturn,
-                             int options, const QString &details=QString::null);
+    static int createKMessageBox(KDialogBase *dialog, TQMessageBox::Icon icon,
+                             const TQString &text, const TQStringList &strlist,
+                             const TQString &ask, bool *checkboxReturn,
+                             int options, const TQString &details=TQString::null);
 
     /**
      * Create content and layout of a standard dialog
      *
      * @param dialog  The parent dialog base
-     * @param icon    A QPixmap containing the icon to be displayed in the
+     * @param icon    A TQPixmap containing the icon to be displayed in the
      *                dialog next to the text.
      * @param text    Message string.
      * @param strlist List of strings to be written in the listbox.
@@ -1153,11 +1153,11 @@ public:
      * @note   The @p dialog that is passed in is deleted by this
      *         function. Do not delete it yourself.
      */
-    static int createKMessageBox(KDialogBase *dialog, QPixmap icon,
-                             const QString &text, const QStringList &strlist,
-                             const QString &ask, bool *checkboxReturn,
-                             int options, const QString &details=QString::null,
-                             QMessageBox::Icon notifyType=QMessageBox::Information);
+    static int createKMessageBox(KDialogBase *dialog, TQPixmap icon,
+                             const TQString &text, const TQStringList &strlist,
+                             const TQString &ask, bool *checkboxReturn,
+                             int options, const TQString &details=TQString::null,
+                             TQMessageBox::Icon notifyType=TQMessageBox::Information);
 
 private:
     static KConfig* againConfig;

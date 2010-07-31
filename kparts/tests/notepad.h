@@ -17,9 +17,9 @@ class NotepadPart : public KParts::ReadWritePart
 {
   Q_OBJECT
 public:
-  NotepadPart( QWidget*, const char* widgetName,
-               QObject* parent, const char* name,
-               const QStringList& args = QStringList() );
+  NotepadPart( TQWidget*, const char* widgetName,
+               TQObject* parent, const char* name,
+               const TQStringList& args = TQStringList() );
   virtual ~NotepadPart();
 
   virtual void setReadWrite( bool rw );
@@ -34,7 +34,7 @@ protected slots:
   void slotSearchReplace();
 
 protected:
-  QMultiLineEdit * m_edit;
+  TQMultiLineEdit * m_edit;
 };
 
 typedef KParts::GenericFactory<NotepadPart> NotepadFactory;

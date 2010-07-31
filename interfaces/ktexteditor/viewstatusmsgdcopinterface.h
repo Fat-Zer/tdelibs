@@ -3,8 +3,8 @@
 
 #include <dcopobject.h>
 #include <dcopref.h>
-#include <qstringlist.h>
-#include <qcstring.h>
+#include <tqstringlist.h>
+#include <tqcstring.h>
 //#include "editdcopinterface.moc"
 namespace KTextEditor
 {
@@ -34,7 +34,7 @@ namespace KTextEditor
 		virtual ~ViewStatusMsgDCOPInterface();
 	k_dcop:
 		uint viewStatusMsgInterfaceNumber ();
-		void viewStatusMsg (class QString msg) ;
+		void viewStatusMsg (class TQString msg) ;
 	
 	private:
 		ViewStatusMsgInterface *m_parent;

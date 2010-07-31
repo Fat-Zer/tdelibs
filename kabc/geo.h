@@ -21,7 +21,7 @@
 #ifndef KABC_GEO_H
 #define KABC_GEO_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -34,8 +34,8 @@ namespace KABC {
 */
 class KABC_EXPORT Geo
 {
-    friend KABC_EXPORT QDataStream &operator<<( QDataStream &, const Geo & );
-    friend KABC_EXPORT QDataStream &operator>>( QDataStream &, Geo & );
+    friend KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const Geo & );
+    friend KABC_EXPORT TQDataStream &operator>>( TQDataStream &, Geo & );
 
   public:
     /**
@@ -82,7 +82,7 @@ class KABC_EXPORT Geo
     /**
       Returns string representation of geographical position.
     */
-    QString asString() const;
+    TQString asString() const;
       
   private:
     float mLatitude;
@@ -93,8 +93,8 @@ class KABC_EXPORT Geo
     bool mValidLong;
 };
 
-KABC_EXPORT QDataStream &operator<<( QDataStream &, const Geo & );
-KABC_EXPORT QDataStream &operator>>( QDataStream &, Geo & );
+KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const Geo & );
+KABC_EXPORT TQDataStream &operator>>( TQDataStream &, Geo & );
 
 }
 

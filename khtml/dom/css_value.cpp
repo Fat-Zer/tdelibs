@@ -125,7 +125,7 @@ void CSSStyleDeclaration::setProperty( const DOMString &propName, const DOMStrin
     int id = getPropertyID(propName.string().lower().ascii(), propName.length());
     if (!id) return;
     bool important = false;
-    QString str = priority.string();
+    TQString str = priority.string();
     if (str.find("important", 0, false) != -1)
         important = true;
 

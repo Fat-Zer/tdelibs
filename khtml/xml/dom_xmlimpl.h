@@ -26,7 +26,7 @@
 #include "xml/dom_nodeimpl.h"
 #include "misc/loader_client.h"
 
-#include <qxml.h>
+#include <tqxml.h>
 
 namespace khtml {
 class CachedCSSStyleSheet;
@@ -166,14 +166,14 @@ protected:
 class XMLAttributeReader : public QXmlDefaultHandler
 {
 public:
-    XMLAttributeReader(const QString& _attrString);
+    XMLAttributeReader(const TQString& _attrString);
     virtual ~XMLAttributeReader();
-    QXmlAttributes readAttrs(bool &ok);
-    bool startElement(const QString& namespaceURI, const QString& localName, const QString& qName, const QXmlAttributes& atts);
+    TQXmlAttributes readAttrs(bool &ok);
+    bool startElement(const TQString& namespaceURI, const TQString& localName, const TQString& qName, const TQXmlAttributes& atts);
 
 protected:
-    QXmlAttributes attrs;
-    QString m_attrString;
+    TQXmlAttributes attrs;
+    TQString m_attrString;
 };
 
 } //namespace

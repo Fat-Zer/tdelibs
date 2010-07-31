@@ -22,9 +22,9 @@
 #ifndef KIMIFACE_H
 #define KIMIFACE_H
 
-#include <qpixmap.h>
+#include <tqpixmap.h>
 #include <dcopobject.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 #include <kurl.h>
 
 /**
@@ -57,16 +57,16 @@
  * @endcode
  * and the class implementing KIMIface must pass "KIMIface" to the DCOPObject constructor:
  * @code
- * // just need QObject inheritance and Q_OBJECT if you want signals and slots
+ * // just need TQObject inheritance and Q_OBJECT if you want signals and slots
  * // no need to use K_DCOP macro again
  *
- * class MyIMIface : public QObject, public KIMIface
+ * class MyIMIface : public TQObject, public KIMIface
  * {
  *     Q_OBJECT
  * public:
- *    MyIMIface(QObject* parent = 0, const char* name) :
+ *    MyIMIface(TQObject* parent = 0, const char* name) :
  *        DCOPObject("KIMIface"), // <-- passing the interface name as required
- *        QObject(parent, name) {}
+ *        TQObject(parent, name) {}
  * };
  * @endcode
  *
@@ -102,7 +102,7 @@ k_dcop:
 	 * @see isPresent()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual QStringList allContacts() = 0;
+	virtual TQStringList allContacts() = 0;
 
 	/**
 	 * @brief Obtain a list of IM-contacts that are currently reachable
@@ -122,7 +122,7 @@ k_dcop:
 	 * @see messageContact()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual QStringList reachableContacts() = 0;
+	virtual TQStringList reachableContacts() = 0;
 
 	/**
 	 * @brief Obtain a list of IM-contacts that are currently online
@@ -140,7 +140,7 @@ k_dcop:
 	 * @see chatWithContact()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual QStringList onlineContacts() = 0;
+	virtual TQStringList onlineContacts() = 0;
 
 	/**
 	 * @brief Obtain a list of IM-contacts who may receive file transfers
@@ -165,7 +165,7 @@ k_dcop:
 	 * @see sendFile()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual QStringList fileTransferContacts() = 0;
+	virtual TQStringList fileTransferContacts() = 0;
 
 // individual
 	/**
@@ -182,7 +182,7 @@ k_dcop:
 	 * @see presenceStatus()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual bool isPresent( const QString & uid ) = 0;
+	virtual bool isPresent( const TQString & uid ) = 0;
 
 	/**
 	 * @brief Obtain the IM app's idea of the contact's display name
@@ -192,7 +192,7 @@ k_dcop:
 	 * a nick name, a user configured name string, etc.
 	 *
 	 * @param uid the KABC UID you are interested in
-	 * @return the corresponding display name or QString:null if the
+	 * @return the corresponding display name or TQString:null if the
 	 *         UID is unknown
 	 *
 	 * @see isPresent()
@@ -200,7 +200,7 @@ k_dcop:
 	 * @see presenceStatus()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual QString displayName( const QString & uid ) = 0;
+	virtual TQString displayName( const TQString & uid ) = 0;
 
 	/**
 	 * @brief Obtain the IM presence as a i18ned string for the specified
@@ -211,13 +211,13 @@ k_dcop:
 	 *
 	 * @param uid the KABC UID you want the presence for
 	 * @return the i18ned string describing the contact's presence or
-	 *         QString::null if the UID is unknown
+	 *         TQString::null if the UID is unknown
 	 *
 	 * @see isPresent()
 	 * @see presenceStatus()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual QString presenceString( const QString & uid ) = 0;
+	virtual TQString presenceString( const TQString & uid ) = 0;
 
 	/**
 	 * @brief Obtain the IM presence as a number for the specified contact
@@ -247,7 +247,7 @@ k_dcop:
 	 * @see presenceString()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual int presenceStatus( const QString & uid ) = 0;
+	virtual int presenceStatus( const TQString & uid ) = 0;
 
 	/**
 	 * @brief Indicate if a given contact can receive files
@@ -258,7 +258,7 @@ k_dcop:
 	 * @see fileTransferContacts()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual bool canReceiveFiles( const QString & uid ) = 0;
+	virtual bool canReceiveFiles( const TQString & uid ) = 0;
 
 	/**
 	 * @brief Indicate if a given contact will be able to respond
@@ -276,7 +276,7 @@ k_dcop:
 	 * @see isPresent()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual bool canRespond( const QString & uid ) = 0;
+	virtual bool canRespond( const TQString & uid ) = 0;
 
 	/**
 	 * @brief Obtain the KABC UID corresponding to the given IM address
@@ -284,7 +284,7 @@ k_dcop:
 	 * @param contactId the protocol specific identifier for the contact,
 	 *        e.g. UIN for ICQ, screenname for AIM, nick for IRC
 	 * @param protocol the IM protocol/service to check. See protocols()
-	 * @return the KABC UID for the given contact or @c QString::null if not
+	 * @return the KABC UID for the given contact or @c TQString::null if not
 	 *         found or either input stream was empty or the protocol is not
 	 *         supported
 	 *
@@ -293,7 +293,7 @@ k_dcop:
 	 * @see isPresent()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual QString locate( const QString & contactId, const QString & protocol ) = 0;
+	virtual TQString locate( const TQString & contactId, const TQString & protocol ) = 0;
 
 // metadata
 	/**
@@ -305,29 +305,29 @@ k_dcop:
 	 *
 	 * @param uid the KABC UID you want the presence icon for
 	 * @return a pixmap representing the contact's presence or a null pixmap
-	 *         if the contact is unknown. See QPixmap::isNull()
+	 *         if the contact is unknown. See TQPixmap::isNull()
 	 *
 	 * @see isPresent()
 	 * @see presenceString()
 	 * @see presenceStatus()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual QPixmap icon( const QString & uid ) = 0;
+	virtual TQPixmap icon( const TQString & uid ) = 0;
 
 	/**
 	 * @brief Obtain the given contact's current context (home, work, or any)
 	 *
 	 * Not all IM services/protocols support the concept of contexts. If the
-	 * given UID maps to such a service, just return @c QString::null
+	 * given UID maps to such a service, just return @c TQString::null
 	 *
 	 * @param uid the KABC UID you want the context for
-	 * @return a string describing the context, or @c QString::null if not
+	 * @return a string describing the context, or @c TQString::null if not
 	 *         supported or if the contact is unknown
 	 *
 	 * @see isPresent()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual QString context( const QString & uid ) = 0;
+	virtual TQString context( const TQString & uid ) = 0;
 
 // App capabilities
 	/**
@@ -349,7 +349,7 @@ k_dcop:
 	 * @see addContact()
 	 * @see messageNewContact
 	 */
-	virtual QStringList protocols() = 0;
+	virtual TQStringList protocols() = 0;
 
 // ACTORS
 	/**
@@ -374,7 +374,7 @@ k_dcop:
 	 * @see reachableContacts()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual void messageContact( const QString &uid, const QString& message ) = 0;
+	virtual void messageContact( const TQString &uid, const TQString& message ) = 0;
 
 	/**
 	 * @brief Send a single message to a contact given only its protocol
@@ -394,7 +394,7 @@ k_dcop:
 	 * @see protocols()
 	 * @see addContact()
 	 */
-	virtual void messageNewContact( const QString &contactId, const QString &protocol ) = 0;
+	virtual void messageNewContact( const TQString &contactId, const TQString &protocol ) = 0;
 
 	/**
 	 * @brief Start a chat session with the specified contact
@@ -412,7 +412,7 @@ k_dcop:
 	 * @see reachableContacts()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual void chatWithContact( const QString &uid ) = 0;
+	virtual void chatWithContact( const TQString &uid ) = 0;
 
 	/**
 	 * @brief Send a file to the contact
@@ -438,8 +438,8 @@ k_dcop:
 	 * @see fileTransferContacts()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual void sendFile(const QString &uid, const KURL &sourceURL,
-		const QString &altFileName = QString::null, uint fileSize = 0) = 0;
+	virtual void sendFile(const TQString &uid, const KURL &sourceURL,
+		const TQString &altFileName = TQString::null, uint fileSize = 0) = 0;
 
 // MUTATORS
 // Contact list
@@ -460,7 +460,7 @@ k_dcop:
 	 * @see protocols()
 	 * @see messageNewContact()
 	 */
-	virtual bool addContact( const QString &contactId, const QString &protocol ) = 0;
+	virtual bool addContact( const TQString &contactId, const TQString &protocol ) = 0;
 
 // SIGNALS
 k_dcop_signals:
@@ -482,7 +482,7 @@ k_dcop_signals:
 	 * @see KABC::Addressee::uid()
 	 * @see DCOPClient::appId()
 	 */
-	void contactPresenceChanged( QString uid, QCString appId, int presence );
+	void contactPresenceChanged( TQString uid, TQCString appId, int presence );
 };
 
 #endif

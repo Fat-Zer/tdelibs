@@ -19,7 +19,7 @@
 #include "domtreeview.moc"
 #include "xml/dom_nodeimpl.h"
 
-DOMTreeView::DOMTreeView(QWidget *parent, KHTMLPart *currentpart, const char * name) : KListView(parent, name)
+DOMTreeView::DOMTreeView(TQWidget *parent, KHTMLPart *currentpart, const char * name) : KListView(parent, name)
 {
     setCaption(name);
     setRootIsDecorated(true);
@@ -28,8 +28,8 @@ DOMTreeView::DOMTreeView(QWidget *parent, KHTMLPart *currentpart, const char * n
     addColumn("Renderer");
     setSorting(-1);
     part = currentpart;
-    connect(part, SIGNAL(nodeActivated(const DOM::Node &)), this, SLOT(showTree(const DOM::Node &)));
-    connect(this, SIGNAL(clicked(QListViewItem *)), this, SLOT(slotItemClicked(QListViewItem *)));
+    connect(part, TQT_SIGNAL(nodeActivated(const DOM::Node &)), this, TQT_SLOT(showTree(const DOM::Node &)));
+    connect(this, TQT_SIGNAL(clicked(TQListViewItem *)), this, TQT_SLOT(slotItemClicked(TQListViewItem *)));
     m_nodedict.setAutoDelete(true);
 }
 
@@ -58,20 +58,20 @@ void DOMTreeView::showTree(const DOM::Node &pNode)
 
 void DOMTreeView::recursive(const DOM::Node &pNode, const DOM::Node &node)
 {
-    QListViewItem *cur_item;
+    TQListViewItem *cur_item;
     if(pNode.ownerDocument() != document)
     {
-	QString val = node.nodeValue().string();
+	TQString val = node.nodeValue().string();
 	if ( val.length() > 20 )
 	    val.truncate( 20 );
-	cur_item = new QListViewItem(static_cast<QListView *>(this), node.nodeName().string(), val );
+	cur_item = new TQListViewItem(static_cast<TQListView *>(this), node.nodeName().string(), val );
 	document = pNode.ownerDocument();
     }
     else {
-	QString val = node.nodeValue().string();
+	TQString val = node.nodeValue().string();
 	if ( val.length() > 20 )
 	    val.truncate( 20 );
-	cur_item = new QListViewItem(m_itemdict[pNode.handle()], node.nodeName().string(), val);
+	cur_item = new TQListViewItem(m_itemdict[pNode.handle()], node.nodeName().string(), val);
     }
 
     if(node.handle())
@@ -88,7 +88,7 @@ void DOMTreeView::recursive(const DOM::Node &pNode, const DOM::Node &node)
     }
 }
 
-void DOMTreeView::slotItemClicked(QListViewItem *cur_item)
+void DOMTreeView::slotItemClicked(TQListViewItem *cur_item)
 {
     DOM::Node *handle = m_nodedict[cur_item];
     if(handle) {

@@ -24,7 +24,7 @@
 #ifndef  SOURCEPARAM_H
 #define  SOURCEPARAM_H
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <VCardParam.h>
 
@@ -39,18 +39,18 @@ class KVCARD_EXPORT SourceParam : public Param
 	enum SourceParamType { TypeUnknown, TypeValue, TypeContext, TypeX };
 	
 		SourceParamType type()	{ parse(); return type_;}
-		QCString par()			{ parse(); return par_; }
-		QCString val()			{ parse(); return val_; }
+		TQCString par()			{ parse(); return par_; }
+		TQCString val()			{ parse(); return val_; }
 		
 		void setType(SourceParamType t) { type_	= t; assembled_ = false; }
-		void setPar(const QCString & s) { par_	= s; assembled_ = false; }
-		void setVal(const QCString & s) { val_	= s; assembled_ = false; }
+		void setPar(const TQCString & s) { par_	= s; assembled_ = false; }
+		void setVal(const TQCString & s) { val_	= s; assembled_ = false; }
 	
 	private:
 		
 		SourceParamType type_;
 		// May be "VALUE = uri" or "CONTEXT = word" or "x-name = *SAFE-CHAR"
-		QCString par_, val_; // Sub-parameter, value
+		TQCString par_, val_; // Sub-parameter, value
 };
 
 }

@@ -30,7 +30,7 @@ KCommand::~KCommand()
 {
 }
 
-KMacroCommand::KMacroCommand( const QString & name ) : KNamedCommand(name)
+KMacroCommand::KMacroCommand( const TQString & name ) : KNamedCommand(name)
 {
     m_commands.setAutoDelete(true);
 }
@@ -42,14 +42,14 @@ void KMacroCommand::addCommand(KCommand *command)
 
 void KMacroCommand::execute()
 {
-    QPtrListIterator<KCommand> it(m_commands);
+    TQPtrListIterator<KCommand> it(m_commands);
     for ( ; it.current() ; ++it )
         it.current()->execute();
 }
 
 void KMacroCommand::unexecute()
 {
-    QPtrListIterator<KCommand> it(m_commands);
+    TQPtrListIterator<KCommand> it(m_commands);
     it.toLast();
     for ( ; it.current() ; --it )
         it.current()->unexecute();
@@ -84,25 +84,25 @@ KCommandHistory::KCommandHistory(KActionCollection * actionCollection, bool with
     if (withMenus)
     {
         KToolBarPopupAction * undo = new KToolBarPopupAction( i18n("&Undo"), "undo",
-                                          KStdAccel::shortcut(KStdAccel::Undo), this, SLOT( undo() ),
+                                          KStdAccel::shortcut(KStdAccel::Undo), this, TQT_SLOT( undo() ),
                                           actionCollection, KStdAction::stdName( KStdAction::Undo ) );
-        connect( undo->popupMenu(), SIGNAL( aboutToShow() ), this, SLOT( slotUndoAboutToShow() ) );
-        connect( undo->popupMenu(), SIGNAL( activated( int ) ), this, SLOT( slotUndoActivated( int ) ) );
+        connect( undo->popupMenu(), TQT_SIGNAL( aboutToShow() ), this, TQT_SLOT( slotUndoAboutToShow() ) );
+        connect( undo->popupMenu(), TQT_SIGNAL( activated( int ) ), this, TQT_SLOT( slotUndoActivated( int ) ) );
         m_undo = undo;
         m_undoPopup = undo->popupMenu();
 
         KToolBarPopupAction * redo = new KToolBarPopupAction( i18n("&Redo"), "redo",
-                                          KStdAccel::shortcut(KStdAccel::Redo), this, SLOT( redo() ),
+                                          KStdAccel::shortcut(KStdAccel::Redo), this, TQT_SLOT( redo() ),
                                           actionCollection, KStdAction::stdName( KStdAction::Redo ) );
-        connect( redo->popupMenu(), SIGNAL( aboutToShow() ), this, SLOT( slotRedoAboutToShow() ) );
-        connect( redo->popupMenu(), SIGNAL( activated( int ) ), this, SLOT( slotRedoActivated( int ) ) );
+        connect( redo->popupMenu(), TQT_SIGNAL( aboutToShow() ), this, TQT_SLOT( slotRedoAboutToShow() ) );
+        connect( redo->popupMenu(), TQT_SIGNAL( activated( int ) ), this, TQT_SLOT( slotRedoActivated( int ) ) );
         m_redo = redo;
         m_redoPopup = redo->popupMenu();
     }
     else
     {
-        m_undo = KStdAction::undo( this, SLOT( undo() ), actionCollection );
-        m_redo = KStdAction::redo( this, SLOT( redo() ), actionCollection );
+        m_undo = KStdAction::undo( this, TQT_SLOT( undo() ), actionCollection );
+        m_redo = KStdAction::redo( this, TQT_SLOT( redo() ), actionCollection );
         m_undoPopup = 0L;
         m_redoPopup = 0L;
     }

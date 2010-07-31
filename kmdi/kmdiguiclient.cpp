@@ -20,14 +20,14 @@
 #include "kmdiguiclient.h"
 #include "kmdiguiclient.moc"
 
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <ktoolbar.h>
 #include <kmainwindow.h>
 #include <klocale.h>
 #include <kaction.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <assert.h>
 #include <kdebug.h>
 #include <kdockwidget.h>
@@ -57,15 +57,15 @@ using namespace KMDIPrivate;
 
 
 
-ToggleToolViewAction::ToggleToolViewAction( const QString& text, const KShortcut& cut, KDockWidget *dw, KMdiMainFrm *mdiMainFrm,
-        QObject* parent, const char* name )
+ToggleToolViewAction::ToggleToolViewAction( const TQString& text, const KShortcut& cut, KDockWidget *dw, KMdiMainFrm *mdiMainFrm,
+        TQObject* parent, const char* name )
 		: KToggleAction( text, cut, parent, name ), m_dw( dw ), m_mdiMainFrm( mdiMainFrm )
 {
 	if ( m_dw )
 	{
-		connect( this, SIGNAL( toggled( bool ) ), this, SLOT( slotToggled( bool ) ) );
-		connect( m_dw->dockManager(), SIGNAL( change() ), this, SLOT( anDWChanged() ) );
-		connect( m_dw, SIGNAL( destroyed() ), this, SLOT( slotWidgetDestroyed() ) );
+		connect( this, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotToggled( bool ) ) );
+		connect( m_dw->dockManager(), TQT_SIGNAL( change() ), this, TQT_SLOT( anDWChanged() ) );
+		connect( m_dw, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( slotWidgetDestroyed() ) );
 		setChecked( m_dw->mayBeHide() );
 	}
 }
@@ -104,20 +104,20 @@ void ToggleToolViewAction::slotToggled( bool t )
 
 void ToggleToolViewAction::slotWidgetDestroyed()
 {
-	disconnect( m_dw->dockManager(), SIGNAL( change() ), this, SLOT( anDWChanged() ) );
-	disconnect( this, SIGNAL( toggled( bool ) ), 0, 0 );
+	disconnect( m_dw->dockManager(), TQT_SIGNAL( change() ), this, TQT_SLOT( anDWChanged() ) );
+	disconnect( this, TQT_SIGNAL( toggled( bool ) ), 0, 0 );
 	unplugAll();
 	deleteLater();
 }
 
 
-KMDIGUIClient::KMDIGUIClient( KMdiMainFrm* mdiMainFrm, bool showMDIModeAction, const char* name ) : QObject( mdiMainFrm, name ),
+KMDIGUIClient::KMDIGUIClient( KMdiMainFrm* mdiMainFrm, bool showMDIModeAction, const char* name ) : TQObject( mdiMainFrm, name ),
 		KXMLGUIClient( mdiMainFrm )
 {
 	m_mdiMode = KMdi::ChildframeMode;
 	m_mdiMainFrm = mdiMainFrm;
-	connect( mdiMainFrm->guiFactory(), SIGNAL( clientAdded( KXMLGUIClient * ) ),
-	         this, SLOT( clientAdded( KXMLGUIClient * ) ) );
+	connect( mdiMainFrm->guiFactory(), TQT_SIGNAL( clientAdded( KXMLGUIClient * ) ),
+	         this, TQT_SLOT( clientAdded( KXMLGUIClient * ) ) );
 
 	/* re-use an existing resource file if it exists. can happen if the user launches the
 	 * toolbar editor */
@@ -128,7 +128,7 @@ KMDIGUIClient::KMDIGUIClient( KMdiMainFrm* mdiMainFrm, bool showMDIModeAction, c
 	if ( domDocument().documentElement().isNull() )
 	{
 
-		QString completeDescription = QString::fromLatin1( guiDescription )
+		TQString completeDescription = TQString::fromLatin1( guiDescription )
 		                              .arg( actionListName );
 
 		setXML( completeDescription, false /*merge*/ );
@@ -140,30 +140,30 @@ KMDIGUIClient::KMDIGUIClient( KMdiMainFrm* mdiMainFrm, bool showMDIModeAction, c
 	if ( showMDIModeAction )
 	{
 		m_mdiModeAction = new KSelectAction( i18n( "MDI Mode" ), 0, actionCollection() );
-		QStringList modes;
+		TQStringList modes;
 		modes << i18n( "&Toplevel Mode" ) << i18n( "C&hildframe Mode" ) << i18n( "Ta&b Page Mode" ) << i18n( "I&DEAl Mode" );
 		m_mdiModeAction->setItems( modes );
-		connect( m_mdiModeAction, SIGNAL( activated( int ) ), this, SLOT( changeViewMode( int ) ) );
+		connect( m_mdiModeAction, TQT_SIGNAL( activated( int ) ), this, TQT_SLOT( changeViewMode( int ) ) );
 	}
 	else
 		m_mdiModeAction = 0;
 
-	connect( m_mdiMainFrm, SIGNAL( mdiModeHasBeenChangedTo( KMdi::MdiMode ) ),
-	         this, SLOT( mdiModeHasBeenChangedTo( KMdi::MdiMode ) ) );
+	connect( m_mdiMainFrm, TQT_SIGNAL( mdiModeHasBeenChangedTo( KMdi::MdiMode ) ),
+	         this, TQT_SLOT( mdiModeHasBeenChangedTo( KMdi::MdiMode ) ) );
 
 	m_gotoToolDockMenu = new KActionMenu( i18n( "Tool &Docks" ), actionCollection(), "kmdi_tooldock_menu" );
-	m_gotoToolDockMenu->insert( new KAction( i18n( "Switch Top Dock" ), ALT + CTRL + SHIFT + Key_T, this, SIGNAL( toggleTop() ),
+	m_gotoToolDockMenu->insert( new KAction( i18n( "Switch Top Dock" ), ALT + CTRL + SHIFT + Key_T, this, TQT_SIGNAL( toggleTop() ),
 	                            actionCollection(), "kmdi_activate_top" ) );
-	m_gotoToolDockMenu->insert( new KAction( i18n( "Switch Left Dock" ), ALT + CTRL + SHIFT + Key_L, this, SIGNAL( toggleLeft() ),
+	m_gotoToolDockMenu->insert( new KAction( i18n( "Switch Left Dock" ), ALT + CTRL + SHIFT + Key_L, this, TQT_SIGNAL( toggleLeft() ),
 	                            actionCollection(), "kmdi_activate_left" ) );
-	m_gotoToolDockMenu->insert( new KAction( i18n( "Switch Right Dock" ), ALT + CTRL + SHIFT + Key_R, this, SIGNAL( toggleRight() ),
+	m_gotoToolDockMenu->insert( new KAction( i18n( "Switch Right Dock" ), ALT + CTRL + SHIFT + Key_R, this, TQT_SIGNAL( toggleRight() ),
 	                            actionCollection(), "kmdi_activate_right" ) );
-	m_gotoToolDockMenu->insert( new KAction( i18n( "Switch Bottom Dock" ), ALT + CTRL + SHIFT + Key_B, this, SIGNAL( toggleBottom() ),
+	m_gotoToolDockMenu->insert( new KAction( i18n( "Switch Bottom Dock" ), ALT + CTRL + SHIFT + Key_B, this, TQT_SIGNAL( toggleBottom() ),
 	                            actionCollection(), "kmdi_activate_bottom" ) );
 	m_gotoToolDockMenu->insert( new KActionSeparator( actionCollection(), "kmdi_goto_menu_separator" ) );
-	m_gotoToolDockMenu->insert( new KAction( i18n( "Previous Tool View" ), ALT + CTRL + Key_Left, m_mdiMainFrm, SLOT( prevToolViewInDock() ),
+	m_gotoToolDockMenu->insert( new KAction( i18n( "Previous Tool View" ), ALT + CTRL + Key_Left, m_mdiMainFrm, TQT_SLOT( prevToolViewInDock() ),
 	                            actionCollection(), "kmdi_prev_toolview" ) );
-	m_gotoToolDockMenu->insert( new KAction( i18n( "Next Tool View" ), ALT + CTRL + Key_Right, m_mdiMainFrm, SLOT( nextToolViewInDock() ),
+	m_gotoToolDockMenu->insert( new KAction( i18n( "Next Tool View" ), ALT + CTRL + Key_Right, m_mdiMainFrm, TQT_SLOT( nextToolViewInDock() ),
 	                            actionCollection(), "kmdi_next_toolview" ) );
 
 	actionCollection() ->readShortcutSettings( "Shortcuts", kapp->config() );
@@ -224,10 +224,10 @@ void KMDIGUIClient::setupActions()
 
 	//    m_toolBars = builder.toolBars();
 
-	//    m_toolViewActions.append(new KAction( "TESTKMDIGUICLIENT", QString::null, 0,
-	//             this, SLOT(blah()),actionCollection(),"nothing"));
+	//    m_toolViewActions.append(new KAction( "TESTKMDIGUICLIENT", TQString::null, 0,
+	//             this, TQT_SLOT(blah()),actionCollection(),"nothing"));
 
-	QPtrList<KAction> addList;
+	TQPtrList<KAction> addList;
 	if ( m_toolViewActions.count() < 3 )
 		for ( uint i = 0;i < m_toolViewActions.count();i++ )
 			addList.append( m_toolViewActions.at( i ) );
@@ -247,25 +247,25 @@ void KMDIGUIClient::addToolView( KMdiToolViewAccessor* mtva )
 {
 	kdDebug( 760 ) << "*****void KMDIGUIClient::addToolView(KMdiToolViewAccessor* mtva)*****" << endl;
 	//	kdDebug()<<"name: "<<mtva->wrappedWidget()->name()<<endl;
-	QString aname = QString( "kmdi_toolview_" ) + mtva->wrappedWidget() ->name();
+	TQString aname = TQString( "kmdi_toolview_" ) + mtva->wrappedWidget() ->name();
 
 	// try to read the action shortcut
 	KShortcut sc;
 	KConfig *cfg = kapp->config();
-	QString _grp = cfg->group();
+	TQString _grp = cfg->group();
 	cfg->setGroup( "Shortcuts" );
 	// 	if ( cfg->hasKey( aname ) )
 	sc = KShortcut( cfg->readEntry( aname, "" ) );
 	cfg->setGroup( _grp );
 	KAction *a = new ToggleToolViewAction( i18n( "Show %1" ).arg( mtva->wrappedWidget() ->caption() ),
-	                                       /*QString::null*/sc, dynamic_cast<KDockWidget*>( mtva->wrapperWidget() ),
+	                                       /*TQString::null*/sc, dynamic_cast<KDockWidget*>( mtva->wrapperWidget() ),
 	                                       m_mdiMainFrm, actionCollection(), aname.latin1() );
 #if KDE_IS_VERSION(3,2,90)
 
 	( ( ToggleToolViewAction* ) a ) ->setCheckedState( i18n( "Hide %1" ).arg( mtva->wrappedWidget() ->caption() ) );
 #endif
 
-	connect( a, SIGNAL( destroyed( QObject* ) ), this, SLOT( actionDeleted( QObject* ) ) );
+	connect( a, TQT_SIGNAL( destroyed( TQObject* ) ), this, TQT_SLOT( actionDeleted( TQObject* ) ) );
 	m_toolViewActions.append( a );
 	m_toolMenu->insert( a );
 	mtva->d->action = a;
@@ -273,7 +273,7 @@ void KMDIGUIClient::addToolView( KMdiToolViewAccessor* mtva )
 	setupActions();
 }
 
-void KMDIGUIClient::actionDeleted( QObject* a )
+void KMDIGUIClient::actionDeleted( TQObject* a )
 {
 	m_toolViewActions.remove( static_cast<KAction*>( a ) );
 	/*	if (!m_toolMenu.isNull()) m_toolMenu->remove(static_cast<KAction*>(a));*/

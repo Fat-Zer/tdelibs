@@ -28,7 +28,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#include <qglobal.h>
+#include <tqglobal.h>
 
 // This is so that, if addrinfo is defined, it doesn't clobber our definition
 // It might be defined in the few cases in which we are replacing the system's

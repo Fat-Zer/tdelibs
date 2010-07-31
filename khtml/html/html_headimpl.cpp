@@ -80,7 +80,7 @@ void HTMLBaseElementImpl::removedFromDocument()
     // Since the document doesn't have a base element...
     // (This will break in the case of multiple base elements, but that's not valid anyway (?))
     getDocument()->setBaseURL( KURL() );
-    getDocument()->setBaseTarget( QString::null );
+    getDocument()->setBaseTarget( TQString::null );
 }
 
 void HTMLBaseElementImpl::process()
@@ -146,8 +146,8 @@ void HTMLLinkElementImpl::parseAttribute(AttributeImpl *attr)
                 m_alternate = false;
             } else if (!m_alternate) {
                 // disabling: recheck alternate status
-                QString rel =  getAttribute(ATTR_REL).string().lower();
-                QString type = getAttribute(ATTR_TYPE).string().lower();
+                TQString rel =  getAttribute(ATTR_REL).string().lower();
+                TQString type = getAttribute(ATTR_TYPE).string().lower();
                 m_alternate = (type.contains("text/css") || rel.contains("stylesheet")) && rel.contains("alternate");
             }
             if (isLoading())
@@ -172,8 +172,8 @@ void HTMLLinkElementImpl::process()
     if (!inDocument())
         return;
 
-    QString type = getAttribute(ATTR_TYPE).string().lower();
-    QString rel = getAttribute(ATTR_REL).string().lower();
+    TQString type = getAttribute(ATTR_TYPE).string().lower();
+    TQString rel = getAttribute(ATTR_REL).string().lower();
 
     KHTMLPart* part = getDocument()->view() ? getDocument()->view()->part() : 0;
 
@@ -195,7 +195,7 @@ void HTMLLinkElementImpl::process()
             if (!isAlternate())
                 getDocument()->addPendingSheet();
 
-            QString chset = getAttribute( ATTR_CHARSET ).string();
+            TQString chset = getAttribute( ATTR_CHARSET ).string();
             // set chset to charset of referring document when attribute CHARSET is absent.
             // http://www.w3.org/TR/CSS21/syndata.html(4.4)
             if (chset.isEmpty() && part) chset = part->encoding();
@@ -263,7 +263,7 @@ void HTMLLinkElementImpl::finished()
         getDocument()->updateStyleSelector();
 }
 
-void HTMLLinkElementImpl::error( int, const QString& )
+void HTMLLinkElementImpl::error( int, const TQString& )
 {
     finished();
 }
@@ -362,9 +362,9 @@ void HTMLScriptElementImpl::insertedIntoDocument()
     if (m_createdByParser)
         return;
 
-    QString url = getAttribute(ATTR_SRC).string();
+    TQString url = getAttribute(ATTR_SRC).string();
     if (!url.isEmpty()) {
-        QString charset = getAttribute(ATTR_CHARSET).string();
+        TQString charset = getAttribute(ATTR_CHARSET).string();
         m_cachedScript = getDocument()->docLoader()->requestScript(DOMString(url), charset);
         if (m_cachedScript)
             m_cachedScript->ref(this);
@@ -395,7 +395,7 @@ void HTMLScriptElementImpl::notifyFinished(CachedObject* o)
 
     assert(cs == m_cachedScript);
 
-    QString   URL    = cs->url().string();
+    TQString   URL    = cs->url().string();
     DOMString script = cs->script();
     cs->deref(this);
     m_cachedScript = 0;
@@ -403,7 +403,7 @@ void HTMLScriptElementImpl::notifyFinished(CachedObject* o)
     evaluateScript(URL, script);
 }
 
-void HTMLScriptElementImpl::evaluateScript(const QString &URL, const DOMString &script)
+void HTMLScriptElementImpl::evaluateScript(const TQString &URL, const DOMString &script)
 {
     if (m_evaluated)
         return;

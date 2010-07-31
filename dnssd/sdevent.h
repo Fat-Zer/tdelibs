@@ -21,9 +21,9 @@
 #ifndef DNSSDSDEVENT_H
 #define DNSSDSDEVENT_H
 
-#include <qevent.h>
-#include <qstring.h>
-#include <qmap.h>
+#include <tqevent.h>
+#include <tqstring.h>
+#include <tqmap.h>
 
 namespace DNSSD
 {
@@ -33,28 +33,28 @@ enum Operation { SD_ERROR = 101,SD_ADDREMOVE, SD_PUBLISH, SD_RESOLVE};
 class ErrorEvent : public QCustomEvent
 {
 public:
-	ErrorEvent() : QCustomEvent(QEvent::User+SD_ERROR) 
+	ErrorEvent() : TQCustomEvent(TQEvent::User+SD_ERROR) 
 	{}
 };
 class AddRemoveEvent : public QCustomEvent
 {
 public:
 	enum Operation { Add, Remove };
-	AddRemoveEvent(Operation op,const QString& name,const QString& type,
-		const QString& domain) : QCustomEvent(QEvent::User+SD_ADDREMOVE),
+	AddRemoveEvent(Operation op,const TQString& name,const TQString& type,
+		const TQString& domain) : TQCustomEvent(TQEvent::User+SD_ADDREMOVE),
 	m_op(op), m_name(name), m_type(type), m_domain(domain) 
 	{}
 
 	const Operation m_op;
-	const QString m_name;
-	const QString m_type;
-	const QString m_domain;
+	const TQString m_name;
+	const TQString m_type;
+	const TQString m_domain;
 };
 
 class PublishEvent : public QCustomEvent
 {
 public:
-	PublishEvent(bool ok) : QCustomEvent(QEvent::User+SD_PUBLISH), m_ok(ok)
+	PublishEvent(bool ok) : TQCustomEvent(TQEvent::User+SD_PUBLISH), m_ok(ok)
 	{}
 
 	bool m_ok;
@@ -63,15 +63,15 @@ public:
 class ResolveEvent : public QCustomEvent
 {
 public:
-	ResolveEvent(const QString& hostname, unsigned short port,
-		     const QMap<QString,QString>& txtdata) 
-		: QCustomEvent(QEvent::User+SD_RESOLVE), m_hostname(hostname),
+	ResolveEvent(const TQString& hostname, unsigned short port,
+		     const TQMap<TQString,TQString>& txtdata) 
+		: TQCustomEvent(TQEvent::User+SD_RESOLVE), m_hostname(hostname),
 		  m_port(port), m_txtdata(txtdata)
 	{}
 
-	const QString m_hostname;
+	const TQString m_hostname;
 	const unsigned short m_port;
-	const QMap<QString,QString> m_txtdata;
+	const TQMap<TQString,TQString> m_txtdata;
 };
 
 

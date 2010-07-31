@@ -22,31 +22,31 @@
 #include "kmwizard.h"
 #include "util.h"
 
-#include <qtextview.h>
+#include <tqtextview.h>
 #include <klocale.h>
-#include <qlayout.h>
+#include <tqlayout.h>
 
-KMWEnd::KMWEnd(QWidget *parent, const char *name)
+KMWEnd::KMWEnd(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_ID = KMWizard::End;
 	m_title = i18n("Confirmation");
 	m_nextpage = KMWizard::Error;
 
-	m_view = new QTextView(this);
+	m_view = new TQTextView(this);
 
-	QVBoxLayout	*lay = new QVBoxLayout(this, 0, 0);
+	QVBoxLayout	*lay = new TQVBoxLayout(this, 0, 0);
 	lay->addWidget(m_view,1);
 }
 
 void KMWEnd::initPrinter(KMPrinter *p)
 {
 	QString	txt;
-	QString	s(QString::fromLatin1("<li><u>%1</u>: %2</li>"));
+	QString	s(TQString::fromLatin1("<li><u>%1</u>: %2</li>"));
 	int	ID = p->option("kde-backend").toInt();
 
 	// general information
-	txt.append(QString::fromLatin1("<b>%1</b><ul type=circle>").arg(i18n("General")));
+	txt.append(TQString::fromLatin1("<b>%1</b><ul type=circle>").arg(i18n("General")));
 	txt.append(s.arg(i18n("Type")).arg(p->option("kde-backend-description")));
 	txt.append(s.arg(i18n("Name")).arg(p->name()));
 	txt.append(s.arg(i18n("Location")).arg(p->location()));
@@ -56,17 +56,17 @@ void KMWEnd::initPrinter(KMPrinter *p)
 	if (ID == KMWizard::Class)
 	{
 		// class members
-		txt.append(QString::fromLatin1("<b>%1</b><ul type=circle>").arg(i18n("Members")));
+		txt.append(TQString::fromLatin1("<b>%1</b><ul type=circle>").arg(i18n("Members")));
 		QStringList	m(p->members());
-		QString		s1(QString::fromLatin1("<li>%1</li>"));
-		for (QStringList::ConstIterator it=m.begin(); it!=m.end(); ++it)
+		QString		s1(TQString::fromLatin1("<li>%1</li>"));
+		for (TQStringList::ConstIterator it=m.begin(); it!=m.end(); ++it)
 			txt.append(s1.arg(*it));
 		txt.append("</ul><br>");
 	}
 	else
 	{
 		// backend information
-		txt.append(QString::fromLatin1("<b>%1</b><ul type=circle>").arg(i18n("Backend")));
+		txt.append(TQString::fromLatin1("<b>%1</b><ul type=circle>").arg(i18n("Backend")));
 		KURL url ( p->device() );
 		switch (ID)
 		{
@@ -101,7 +101,7 @@ void KMWEnd::initPrinter(KMPrinter *p)
 		if (p->option("kde-driver") == "raw" || p->driver())
 		{
 			// driver information
-			txt.append(QString::fromLatin1("<b>%1</b><ul type=circle>").arg(i18n("Driver")));
+			txt.append(TQString::fromLatin1("<b>%1</b><ul type=circle>").arg(i18n("Driver")));
 			if (p->option("kde-driver") == "raw")
 				txt.append(s.arg(i18n("Type")).arg(i18n("Raw printer")));
 			else

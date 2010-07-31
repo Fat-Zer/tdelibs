@@ -14,20 +14,20 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <qobject.h>
+#include <tqobject.h>
 
 #include "kdirwatch.h"
 #include "kapplication.h"
 
-class myTest : public QObject 
+class myTest : public TQObject 
 {
    Q_OBJECT
 public:
    myTest() { };
 public slots:
-   void dirty(const QString &a) { printf("Dirty: %s\n", a.ascii()); };
-   void created(const QString& f) { printf("Created: %s\n", f.ascii()); }
-   void deleted(const QString& f) { printf("Deleted: %s\n", f.ascii()); }
+   void dirty(const TQString &a) { printf("Dirty: %s\n", a.ascii()); };
+   void created(const TQString& f) { printf("Created: %s\n", f.ascii()); }
+   void deleted(const TQString& f) { printf("Deleted: %s\n", f.ascii()); }
 };
 
 #endif

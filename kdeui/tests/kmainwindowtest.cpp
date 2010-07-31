@@ -1,5 +1,5 @@
-#include <qtimer.h>
-#include <qlabel.h>
+#include <tqtimer.h>
+#include <tqlabel.h>
 
 #include <kapplication.h>
 #include <kstatusbar.h>
@@ -9,9 +9,9 @@
 
 MainWindow::MainWindow()
 {
-    QTimer::singleShot( 2*1000, this, SLOT( showMessage() ) );
+    TQTimer::singleShot( 2*1000, this, TQT_SLOT( showMessage() ) );
 
-    setCentralWidget( new QLabel( "foo", this ) );
+    setCentralWidget( new TQLabel( "foo", this ) );
 
     menuBar()->insertItem( "hi" );
 }

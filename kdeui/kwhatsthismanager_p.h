@@ -19,8 +19,8 @@
 #ifndef KWHATSTHISMANAGER_P_H
 #define KWHATSTHISMANAGER_P_H
 
-#include <qwhatsthis.h>
-#include <qapplication.h>
+#include <tqwhatsthis.h>
+#include <tqapplication.h>
 
 #include <kdialogbase.h>
 
@@ -48,7 +48,7 @@ class KDEUI_EXPORT KWhatsThisManager : public QObject
     Q_OBJECT
     public:
         static void init ();
-        bool eventFilter (QObject *o, QEvent *e);
+        bool eventFilter (TQObject *o, TQEvent *e);
     protected:
         static KWhatsThisManager *s_instance;
     private:

@@ -38,17 +38,17 @@ void KSSLConnectionInfo::clean() {
 }
 
 
-const QString& KSSLConnectionInfo::getCipherVersion() const {
+const TQString& KSSLConnectionInfo::getCipherVersion() const {
   return m_cipherVersion;
 }
 
 
-const QString& KSSLConnectionInfo::getCipherDescription() const {
+const TQString& KSSLConnectionInfo::getCipherDescription() const {
   return m_cipherDescription;
 }
 
 
-const QString& KSSLConnectionInfo::getCipher() const {
+const TQString& KSSLConnectionInfo::getCipher() const {
   return m_cipherName;
 }
 

@@ -148,7 +148,7 @@ void CSSImportRuleImpl::setStyleSheet(const DOM::DOMString &url, const DOM::DOMS
     checkLoaded();
 }
 
-void CSSImportRuleImpl::error(int /*err*/, const QString &/*text*/)
+void CSSImportRuleImpl::error(int /*err*/, const TQString &/*text*/)
 {
     if ( m_styleSheet ) {
         m_styleSheet->setParent(0);

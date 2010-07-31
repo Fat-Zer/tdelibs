@@ -23,7 +23,7 @@
 #include "kaccelaction.h"
 #include "kaccelbase.h"   // for KAccelBase::slotRemoveAction() & emitSignal()
 
-#include <qkeycode.h>
+#include <tqkeycode.h>
 
 #include <kconfig.h>
 #include "kckey.h"
@@ -62,9 +62,9 @@ KAccelAction::KAccelAction( const KAccelAction& action )
 	*this = action;
 }
 
-KAccelAction::KAccelAction( const QString& sName, const QString& sLabel, const QString& sWhatsThis,
+KAccelAction::KAccelAction( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
 			const KShortcut& cutDef3, const KShortcut& cutDef4,
-			const QObject* pObjSlot, const char* psMethodSlot,
+			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled )
 {
 	//kdDebug(125) << "KAccelAction( \"" << sName << "\" ): this = " << this << endl;
@@ -92,9 +92,9 @@ void KAccelAction::clear()
 	d->m_nConnections = 0;
 }
 
-bool KAccelAction::init( const QString& sName, const QString& sLabel, const QString& sWhatsThis,
+bool KAccelAction::init( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
 			const KShortcut& rgCutDefaults3, const KShortcut& rgCutDefaults4,
-			const QObject* pObjSlot, const char* psMethodSlot,
+			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled )
 {
 	m_sName = sName;
@@ -132,11 +132,11 @@ KAccelAction& KAccelAction::operator =( const KAccelAction& action )
 	return *this;
 }
 
-void KAccelAction::setName( const QString& s )
+void KAccelAction::setName( const TQString& s )
 	{ m_sName = s; }
-void KAccelAction::setLabel( const QString& s )
+void KAccelAction::setLabel( const TQString& s )
 	{ m_sLabel = s; }
-void KAccelAction::setWhatsThis( const QString& s )
+void KAccelAction::setWhatsThis( const TQString& s )
 	{ m_sWhatsThis = s; }
 
 bool KAccelAction::setShortcut( const KShortcut& cut )
@@ -145,7 +145,7 @@ bool KAccelAction::setShortcut( const KShortcut& cut )
 	return true;
 }
 
-void KAccelAction::setSlot( const QObject* pObjSlot, const char* psMethodSlot )
+void KAccelAction::setSlot( const TQObject* pObjSlot, const char* psMethodSlot )
 {
 	m_pObjSlot = pObjSlot;
 	m_psMethodSlot = psMethodSlot;
@@ -156,10 +156,10 @@ void KAccelAction::setConfigurable( bool b )
 void KAccelAction::setEnabled( bool b )
 	{ m_bEnabled = b; }
 
-QString KAccelAction::toString() const
+TQString KAccelAction::toString() const
 	{ return m_cut.toString(); }
 
-QString KAccelAction::toStringInternal() const
+TQString KAccelAction::toStringInternal() const
 	{ return m_cut.toStringInternal( &shortcutDefault() ); }
 
 bool KAccelAction::setKeySequence( uint i, const KKeySequence& seq )
@@ -294,15 +294,15 @@ bool KAccelActions::init( const KAccelActions& actions )
 	return true;
 }
 
-bool KAccelActions::init( KConfigBase& config, const QString& sGroup )
+bool KAccelActions::init( KConfigBase& config, const TQString& sGroup )
 {
 	kdDebug(125) << "KAccelActions::init( " << sGroup << " )" << endl;
-	QMap<QString, QString> mapEntry = config.entryMap( sGroup );
+	TQMap<TQString, TQString> mapEntry = config.entryMap( sGroup );
 	resize( mapEntry.count() );
 
-	QMap<QString, QString>::Iterator it( mapEntry.begin() );
+	TQMap<TQString, TQString>::Iterator it( mapEntry.begin() );
 	for( uint i = 0; it != mapEntry.end(); ++it, i++ ) {
-		QString sShortcuts = *it;
+		TQString sShortcuts = *it;
 		KShortcut cuts;
 
 		kdDebug(125) << it.key() << " = " << sShortcuts << endl;
@@ -356,7 +356,7 @@ void KAccelActions::updateShortcuts( KAccelActions& actions2 )
 		if( pAction && pAction->m_bConfigurable ) {
 			KAccelAction* pAction2 = actions2.actionPtr( pAction->m_sName );
 			if( pAction2 ) {
-				QString sOld = pAction->m_cut.toStringInternal();
+				TQString sOld = pAction->m_cut.toStringInternal();
 				pAction->m_cut = pAction2->m_cut;
 				kdDebug(125) << "\t" << pAction->m_sName
 					<< " found: " << sOld
@@ -371,7 +371,7 @@ void KAccelActions::updateShortcuts( KAccelActions& actions2 )
 		emitKeycodeChanged();
 }
 
-int KAccelActions::actionIndex( const QString& sAction ) const
+int KAccelActions::actionIndex( const TQString& sAction ) const
 {
 	for( uint i = 0; i < m_nSize; i++ ) {
 		if( m_prgActions[i] == 0 )
@@ -392,13 +392,13 @@ const KAccelAction* KAccelActions::actionPtr( uint i ) const
 	return m_prgActions[i];
 }
 
-KAccelAction* KAccelActions::actionPtr( const QString& sAction )
+KAccelAction* KAccelActions::actionPtr( const TQString& sAction )
 {
 	int i = actionIndex( sAction );
 	return (i >= 0) ? m_prgActions[i] : 0;
 }
 
-const KAccelAction* KAccelActions::actionPtr( const QString& sAction ) const
+const KAccelAction* KAccelActions::actionPtr( const TQString& sAction ) const
 {
 	int i = actionIndex( sAction );
 	return (i >= 0) ? m_prgActions[i] : 0;
@@ -425,7 +425,7 @@ const KAccelAction& KAccelActions::operator []( uint i ) const
 	return *actionPtr( i );
 }
 
-KAccelAction* KAccelActions::insert( const QString& sName, const QString& sLabel )
+KAccelAction* KAccelActions::insert( const TQString& sName, const TQString& sLabel )
 {
 	if( actionPtr( sName ) ) {
 		kdWarning(125) << "KAccelActions::insertLabel( " << sName << ", " << sLabel << " ): action with same name already present." << endl;
@@ -442,9 +442,9 @@ KAccelAction* KAccelActions::insert( const QString& sName, const QString& sLabel
 	return pAction;
 }
 
-KAccelAction* KAccelActions::insert( const QString& sAction, const QString& sLabel, const QString& sWhatsThis,
+KAccelAction* KAccelActions::insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
 			const KShortcut& rgCutDefaults3, const KShortcut& rgCutDefaults4,
-			const QObject* pObjSlot, const char* psMethodSlot,
+			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled )
 {
 	//kdDebug(125) << "KAccelActions::insert()2 begin" << endl;
@@ -464,7 +464,7 @@ KAccelAction* KAccelActions::insert( const QString& sAction, const QString& sLab
 	return pAction;
 }
 
-bool KAccelActions::remove( const QString& sAction )
+bool KAccelActions::remove( const TQString& sAction )
 {
 	kdDebug(125) << "KAccelActions::remove( \"" << sAction << "\" ): this = " << this << " m_pKAccelBase = " << m_pKAccelBase << endl;
 
@@ -483,7 +483,7 @@ bool KAccelActions::remove( const QString& sAction )
 	return true;
 }
 
-bool KAccelActions::readActions( const QString& sConfigGroup, KConfigBase* pConfig )
+bool KAccelActions::readActions( const TQString& sConfigGroup, KConfigBase* pConfig )
 {
 	KAccelShortcutList accelList(*this, false);
 	return accelList.readSettings( sConfigGroup, pConfig );
@@ -502,7 +502,7 @@ bool KAccelActions::readActions( const QString& sConfigGroup, KConfigBase* pConf
 				1) KKeySequence = Alt+F2
 	-> "Something=Meta+X,Asterisk;Alt+F2"
 */
-bool KAccelActions::writeActions( const QString &sGroup, KConfigBase* pConfig,
+bool KAccelActions::writeActions( const TQString &sGroup, KConfigBase* pConfig,
 			bool bWriteAll, bool bGlobal ) const
 {
 	kdDebug(125) << "KAccelActions::writeActions( " << sGroup << ", " << pConfig << ", " << bWriteAll << ", " << bGlobal << " )" << endl;
@@ -517,7 +517,7 @@ bool KAccelActions::writeActions( const QString &sGroup, KConfigBase* pConfig,
 		}
 		const KAccelAction& action = *m_prgActions[i];
 
-		QString s;
+		TQString s;
 		bool bConfigHasAction = !pConfig->readEntry( action.m_sName ).isEmpty();
 		bool bSameAsDefault = true;
 		bool bWriteAction = false;

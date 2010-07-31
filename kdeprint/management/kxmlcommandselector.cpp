@@ -22,13 +22,13 @@
 #include "kxmlcommanddlg.h"
 #include "kdeprintcheck.h"
 
-#include <qcombobox.h>
+#include <tqcombobox.h>
 #include <kpushbutton.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qlineedit.h>
+#include <tqlabel.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqtooltip.h>
+#include <tqlineedit.h>
 #include <kinputdialog.h>
 #include <klocale.h>
 #include <kiconloader.h>
@@ -40,45 +40,45 @@
 #include <kdatetbl.h>
 #include <kdialogbase.h>
 
-KXmlCommandSelector::KXmlCommandSelector(bool canBeNull, QWidget *parent, const char *name, KDialogBase *dlg)
-: QWidget(parent, name)
+KXmlCommandSelector::KXmlCommandSelector(bool canBeNull, TQWidget *parent, const char *name, KDialogBase *dlg)
+: TQWidget(parent, name)
 {
-	m_cmd = new QComboBox(this);
-	connect(m_cmd, SIGNAL(activated(int)), SLOT(slotCommandSelected(int)));
+	m_cmd = new TQComboBox(this);
+	connect(m_cmd, TQT_SIGNAL(activated(int)), TQT_SLOT(slotCommandSelected(int)));
 	QPushButton	*m_add = new KPushButton(this);
 	QPushButton	*m_edit = new KPushButton(this);
 	m_add->setPixmap(SmallIcon("filenew"));
 	m_edit->setPixmap(SmallIcon("configure"));
-	connect(m_add, SIGNAL(clicked()), SLOT(slotAddCommand()));
-	connect(m_edit, SIGNAL(clicked()), SLOT(slotEditCommand()));
-	QToolTip::add(m_add, i18n("New command"));
-	QToolTip::add(m_edit, i18n("Edit command"));
-	m_shortinfo = new QLabel(this);
+	connect(m_add, TQT_SIGNAL(clicked()), TQT_SLOT(slotAddCommand()));
+	connect(m_edit, TQT_SIGNAL(clicked()), TQT_SLOT(slotEditCommand()));
+	TQToolTip::add(m_add, i18n("New command"));
+	TQToolTip::add(m_edit, i18n("Edit command"));
+	m_shortinfo = new TQLabel(this);
 	m_helpbtn = new KPushButton( this );
 	m_helpbtn->setIconSet( SmallIconSet( "help" ) );
-	connect( m_helpbtn, SIGNAL( clicked() ), SLOT( slotHelpCommand() ) );
-	QToolTip::add( m_helpbtn, i18n( "Information" ) );
+	connect( m_helpbtn, TQT_SIGNAL( clicked() ), TQT_SLOT( slotHelpCommand() ) );
+	TQToolTip::add( m_helpbtn, i18n( "Information" ) );
         m_helpbtn->setEnabled( false );
 
 	m_line = 0;
 	m_usefilter = 0;
 	QPushButton	*m_browse = 0;
 
-	QVBoxLayout	*l0 = new QVBoxLayout(this, 0, 10);
+	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
 
 	if (canBeNull)
 	{
-		m_line = new QLineEdit(this);
+		m_line = new TQLineEdit(this);
 		m_browse = new KPushButton(KGuiItem(i18n("&Browse..."), "fileopen"), this);
-		m_usefilter = new QCheckBox(i18n("Use co&mmand:"), this);
-		connect(m_browse, SIGNAL(clicked()), SLOT(slotBrowse()));
-		connect(m_usefilter, SIGNAL(toggled(bool)), m_line, SLOT(setDisabled(bool)));
-		connect(m_usefilter, SIGNAL(toggled(bool)), m_browse, SLOT(setDisabled(bool)));
-		connect(m_usefilter, SIGNAL(toggled(bool)), m_cmd, SLOT(setEnabled(bool)));
-		connect(m_usefilter, SIGNAL(toggled(bool)), m_add, SLOT(setEnabled(bool)));
-		connect(m_usefilter, SIGNAL(toggled(bool)), m_edit, SLOT(setEnabled(bool)));
-		connect(m_usefilter, SIGNAL(toggled(bool)), m_shortinfo, SLOT(setEnabled(bool)));
-		connect( m_usefilter, SIGNAL( toggled( bool ) ), SLOT( slotXmlCommandToggled( bool ) ) );
+		m_usefilter = new TQCheckBox(i18n("Use co&mmand:"), this);
+		connect(m_browse, TQT_SIGNAL(clicked()), TQT_SLOT(slotBrowse()));
+		connect(m_usefilter, TQT_SIGNAL(toggled(bool)), m_line, TQT_SLOT(setDisabled(bool)));
+		connect(m_usefilter, TQT_SIGNAL(toggled(bool)), m_browse, TQT_SLOT(setDisabled(bool)));
+		connect(m_usefilter, TQT_SIGNAL(toggled(bool)), m_cmd, TQT_SLOT(setEnabled(bool)));
+		connect(m_usefilter, TQT_SIGNAL(toggled(bool)), m_add, TQT_SLOT(setEnabled(bool)));
+		connect(m_usefilter, TQT_SIGNAL(toggled(bool)), m_edit, TQT_SLOT(setEnabled(bool)));
+		connect(m_usefilter, TQT_SIGNAL(toggled(bool)), m_shortinfo, TQT_SLOT(setEnabled(bool)));
+		connect( m_usefilter, TQT_SIGNAL( toggled( bool ) ), TQT_SLOT( slotXmlCommandToggled( bool ) ) );
 		m_usefilter->setChecked(true);
 		m_usefilter->setChecked(false);
 		//setFocusProxy(m_line);
@@ -86,7 +86,7 @@ KXmlCommandSelector::KXmlCommandSelector(bool canBeNull, QWidget *parent, const 
 		setTabOrder(m_cmd, m_add);
 		setTabOrder(m_add, m_edit);
 
-		QHBoxLayout	*l1 = new QHBoxLayout(0, 0, 10);
+		QHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 10);
 		l0->addLayout(l1);
 		l1->addWidget(m_line);
 		l1->addWidget(m_browse);
@@ -97,7 +97,7 @@ KXmlCommandSelector::KXmlCommandSelector(bool canBeNull, QWidget *parent, const 
 	else
 		setFocusProxy(m_cmd);
 
-	QGridLayout	*l2 = new QGridLayout(0, 2, (m_usefilter?3:2), 0, 5);
+	QGridLayout	*l2 = new TQGridLayout(0, 2, (m_usefilter?3:2), 0, 5);
 	int	c(0);
 	l0->addLayout(l2);
 	if (m_usefilter)
@@ -105,31 +105,31 @@ KXmlCommandSelector::KXmlCommandSelector(bool canBeNull, QWidget *parent, const 
 		l2->addWidget(m_usefilter, 0, c++);
 	}
 	l2->addWidget(m_cmd, 0, c);
-	QHBoxLayout *l4 = new QHBoxLayout( 0, 0, 5 );
+	TQHBoxLayout *l4 = new TQHBoxLayout( 0, 0, 5 );
 	l2->addLayout( l4, 1, c );
 	l4->addWidget( m_helpbtn, 0 );
 	l4->addWidget( m_shortinfo, 1 );
-	QHBoxLayout	*l3 = new QHBoxLayout(0, 0, 0);
+	QHBoxLayout	*l3 = new TQHBoxLayout(0, 0, 0);
 	l2->addLayout(l3, 0, c+1);
 	l3->addWidget(m_add);
 	l3->addWidget(m_edit);
 
 	if ( dlg )
-		connect( this, SIGNAL( commandValid( bool ) ), dlg, SLOT( enableButtonOK( bool ) ) );
+		connect( this, TQT_SIGNAL( commandValid( bool ) ), dlg, TQT_SLOT( enableButtonOK( bool ) ) );
 
 	loadCommands();
 }
 
 void KXmlCommandSelector::loadCommands()
 {
-	QString	thisCmd = (m_cmd->currentItem() != -1 ? m_cmdlist[m_cmd->currentItem()] : QString::null);
+	QString	thisCmd = (m_cmd->currentItem() != -1 ? m_cmdlist[m_cmd->currentItem()] : TQString::null);
 
 	m_cmd->clear();
 	m_cmdlist.clear();
 
 	QStringList	list = KXmlCommandManager::self()->commandListWithDescription();
 	QStringList	desclist;
-	for (QStringList::Iterator it=list.begin(); it!=list.end(); ++it)
+	for (TQStringList::Iterator it=list.begin(); it!=list.end(); ++it)
 	{
 		m_cmdlist << (*it);
 		++it;
@@ -144,7 +144,7 @@ void KXmlCommandSelector::loadCommands()
 		slotCommandSelected(m_cmd->currentItem());
 }
 
-QString KXmlCommandSelector::command() const
+TQString KXmlCommandSelector::command() const
 {
 	QString	cmd;
 	if (m_line && !m_usefilter->isChecked())
@@ -154,14 +154,14 @@ QString KXmlCommandSelector::command() const
 	return cmd;
 }
 
-void KXmlCommandSelector::setCommand(const QString& cmd)
+void KXmlCommandSelector::setCommand(const TQString& cmd)
 {
 	int	index = m_cmdlist.findIndex(cmd);
 
 	if (m_usefilter)
 		m_usefilter->setChecked(index != -1);
 	if (m_line)
-		m_line->setText((index == -1 ? cmd : QString::null));
+		m_line->setText((index == -1 ? cmd : TQString::null));
 	if (index != -1)
 		m_cmd->setCurrentItem(index);
 	if (m_cmd->currentItem() != -1 && m_cmd->isEnabled())
@@ -171,7 +171,7 @@ void KXmlCommandSelector::setCommand(const QString& cmd)
 void KXmlCommandSelector::slotAddCommand()
 {
 	bool	ok(false);
-	QString	cmdId = KInputDialog::getText(i18n("Command Name"), i18n("Enter an identification name for the new command:"), QString::null, &ok, this);
+	QString	cmdId = KInputDialog::getText(i18n("Command Name"), i18n("Enter an identification name for the new command:"), TQString::null, &ok, this);
 	if (ok)
 	{
 		bool	added(true);
@@ -182,7 +182,7 @@ void KXmlCommandSelector::slotAddCommand()
 				this,
 				i18n("A command named %1 already exists. Do you want "
 				     "to continue and edit the existing one?").arg(cmdId),
-				QString::null,
+				TQString::null,
 				KStdGuiItem::cont()) == KMessageBox::Cancel)
 			{
 				return;
@@ -222,7 +222,7 @@ void KXmlCommandSelector::slotEditCommand()
 
 void KXmlCommandSelector::slotBrowse()
 {
-	QString	filename = KFileDialog::getOpenFileName(QString::null, QString::null, this);
+	QString	filename = KFileDialog::getOpenFileName(TQString::null, TQString::null, this);
 	if (!filename.isEmpty() && m_line)
 		m_line->setText(filename);
 }
@@ -232,10 +232,10 @@ void KXmlCommandSelector::slotCommandSelected(int ID)
 	KXmlCommand	*xmlCmd = KXmlCommandManager::self()->loadCommand(m_cmdlist[ID], true);
 	if (xmlCmd)
 	{
-		QString msg;
+		TQString msg;
 		if ( xmlCmd->isValid() && KdeprintChecker::check( xmlCmd->requirements() ) )
 		{
-			msg = QString::fromLocal8Bit("(ID = %1, %2 = ").arg(xmlCmd->name()).arg(i18n("output"));
+			msg = TQString::fromLocal8Bit("(ID = %1, %2 = ").arg(xmlCmd->name()).arg(i18n("output"));
 			if (KXmlCommandManager::self()->checkCommand(xmlCmd->name(), KXmlCommandManager::None, KXmlCommandManager::Basic))
 			{
 				if (xmlCmd->mimeType() == "all/all")
@@ -267,7 +267,7 @@ void KXmlCommandSelector::slotXmlCommandToggled( bool on )
 	else
 	{
 		emit commandValid( true );
-		m_shortinfo->setText( QString::null );
+		m_shortinfo->setText( TQString::null );
 	}
 }
 
@@ -277,7 +277,7 @@ void KXmlCommandSelector::slotHelpCommand()
 	KActiveLabel *lab = new KActiveLabel( m_help, pop );
 	lab->resize( lab->sizeHint() );
 	pop->setMainWidget( lab );
-	pop->exec( m_helpbtn->mapToGlobal( QPoint( m_helpbtn->width(), 0 ) ) );
+	pop->exec( m_helpbtn->mapToGlobal( TQPoint( m_helpbtn->width(), 0 ) ) );
 	pop->close( 0 );
 	delete pop;
 }

@@ -17,16 +17,16 @@ class Test8a : public KConfigSkeleton
     /**
       Set Font
     */
-    void setFont( const QFont & v )
+    void setFont( const TQFont & v )
     {
-      if (!isImmutable( QString::fromLatin1( "Font" ) ))
+      if (!isImmutable( TQString::fromLatin1( "Font" ) ))
         mFont = v;
     }
 
     /**
       Get Font
     */
-    QFont font() const
+    TQFont font() const
     {
       return mFont;
     }
@@ -34,16 +34,16 @@ class Test8a : public KConfigSkeleton
     /**
       Set TitleFont
     */
-    void setTitleFont( const QFont & v )
+    void setTitleFont( const TQFont & v )
     {
-      if (!isImmutable( QString::fromLatin1( "TitleFont" ) ))
+      if (!isImmutable( TQString::fromLatin1( "TitleFont" ) ))
         mTitleFont = v;
     }
 
     /**
       Get TitleFont
     */
-    QFont titleFont() const
+    TQFont titleFont() const
     {
       return mTitleFont;
     }
@@ -51,8 +51,8 @@ class Test8a : public KConfigSkeleton
   protected:
 
     // Group
-    QFont mFont;
-    QFont mTitleFont;
+    TQFont mFont;
+    TQFont mTitleFont;
 
   private:
 };

@@ -50,7 +50,7 @@ namespace KSpell2
     {
         Q_OBJECT
     public:
-        BackgroundChecker( const Broker::Ptr& broker, QObject *parent =0,
+        BackgroundChecker( const Broker::Ptr& broker, TQObject *parent =0,
                            const char *name =0 );
         ~BackgroundChecker();
 
@@ -60,16 +60,16 @@ namespace KSpell2
          *
          * Use getMoreText() with start() to spell check a stream.
          */
-        void checkText( const QString& );
+        void checkText( const TQString& );
 
         Filter *filter() const;
 
         Broker *broker() const;
-        void changeLanguage( const QString& lang );
+        void changeLanguage( const TQString& lang );
 
-        bool checkWord( const QString& word );
-        QStringList suggest( const QString& ) const;
-        bool addWord( const QString& word );
+        bool checkWord( const TQString& word );
+        TQStringList suggest( const TQString& ) const;
+        bool addWord( const TQString& word );
     public slots:
         virtual void setFilter( KSpell2::Filter *filter );
         virtual void start();
@@ -86,7 +86,7 @@ namespace KSpell2
         /**
          * Emitted whenever a misspelled word is found
          */
-        void misspelling( const QString& word, int start );
+        void misspelling( const TQString& word, int start );
 
         /**
          * Emitted after the whole text has been spell checked.
@@ -96,13 +96,13 @@ namespace KSpell2
     protected:
         /**
          * This function is called to get the text to spell check.
-         * It will be called continuesly until it returns QString::null
+         * It will be called continuesly until it returns TQString::null
          * in which case the done() singnal is emitted.
          * Note: the start parameter in mispelling() is not a combined
          * position but a position in the last string returned
          * by getMoreText. You need to store the state in the derivatives.
          */
-        virtual QString getMoreText();
+        virtual TQString getMoreText();
 
         /**
          * This function will be called whenever the background checker
@@ -113,7 +113,7 @@ namespace KSpell2
     protected slots:
         void slotEngineDone();
     protected:
-        //void customEvent( QCustomEvent *event );
+        //void customEvent( TQCustomEvent *event );
     private:
         class Private;
         Private *d;

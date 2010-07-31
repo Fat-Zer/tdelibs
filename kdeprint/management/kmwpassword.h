@@ -28,16 +28,16 @@ class QButtonGroup;
 class KMWPassword : public KMWizardPage
 {
 public:
-	KMWPassword(QWidget *parent = 0, const char *name = 0);
+	KMWPassword(TQWidget *parent = 0, const char *name = 0);
 
-	bool isValid(QString&);
+	bool isValid(TQString&);
 	void initPrinter( KMPrinter* );
 	void updatePrinter(KMPrinter*);
 
 private:
-	QLineEdit    *m_login;
-	QLineEdit    *m_password;
-	QButtonGroup *m_btngroup;
+	TQLineEdit    *m_login;
+	TQLineEdit    *m_password;
+	TQButtonGroup *m_btngroup;
 };
 
 #endif

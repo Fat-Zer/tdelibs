@@ -87,7 +87,7 @@ public:
    * Name-based connection.
    * We can tell the HTTP proxy server the full name.
    */
-  virtual bool connect(const QString& name, const QString& service);
+  virtual bool connect(const TQString& name, const TQString& service);
 
   /**
    * Return the peer address.

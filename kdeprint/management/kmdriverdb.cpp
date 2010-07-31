@@ -24,9 +24,9 @@
 #include "kmfactory.h"
 #include <kdebug.h>
 
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qfileinfo.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqfileinfo.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -43,11 +43,11 @@ KMDriverDB* KMDriverDB::self()
 	return m_self;
 }
 
-KMDriverDB::KMDriverDB(QObject *parent, const char *name)
-: QObject(parent,name)
+KMDriverDB::KMDriverDB(TQObject *parent, const char *name)
+: TQObject(parent,name)
 {
 	m_creator = new KMDBCreator(this,"db-creator");
-	connect(m_creator,SIGNAL(dbCreated()),SLOT(slotDbCreated()));
+	connect(m_creator,TQT_SIGNAL(dbCreated()),TQT_SLOT(slotDbCreated()));
 
 	m_entries.setAutoDelete(true);
 	m_pnpentries.setAutoDelete(true);
@@ -57,21 +57,21 @@ KMDriverDB::~KMDriverDB()
 {
 }
 
-QString KMDriverDB::dbFile()
+TQString KMDriverDB::dbFile()
 {
 	// this calls insure missing directories creation
-	QString	filename = locateLocal("data",QString::fromLatin1("kdeprint/printerdb_%1.txt").arg(KMFactory::self()->printSystem()));
+	QString	filename = locateLocal("data",TQString::fromLatin1("kdeprint/printerdb_%1.txt").arg(KMFactory::self()->printSystem()));
 	return filename;
 }
 
-void KMDriverDB::init(QWidget *parent)
+void KMDriverDB::init(TQWidget *parent)
 {
 	QFileInfo	dbfi(dbFile());
 	QString		dirname = KMFactory::self()->manager()->driverDirectory();
-	QStringList	dbDirs = QStringList::split(':', dirname, false);
+	QStringList	dbDirs = TQStringList::split(':', dirname, false);
 	bool	createflag(false);
 
-	for (QStringList::ConstIterator it=dbDirs.begin(); it!=dbDirs.end() && !createflag; ++it)
+	for (TQStringList::ConstIterator it=dbDirs.begin(); it!=dbDirs.end() && !createflag; ++it)
 		if (!(*it).startsWith("module:") && !m_creator->checkDriverDB(*it, dbfi.lastModified()))
 			createflag = true;
 
@@ -108,23 +108,23 @@ void KMDriverDB::slotDbCreated()
 	//emit dbLoaded(true);
 }
 
-KMDBEntryList* KMDriverDB::findEntry(const QString& manu, const QString& model)
+KMDBEntryList* KMDriverDB::findEntry(const TQString& manu, const TQString& model)
 {
-	QDict<KMDBEntryList>	*models = m_entries.find(manu);
+	TQDict<KMDBEntryList>	*models = m_entries.find(manu);
 	if (models)
 		return models->find(model);
 	return 0;
 }
 
-KMDBEntryList* KMDriverDB::findPnpEntry(const QString& manu, const QString& model)
+KMDBEntryList* KMDriverDB::findPnpEntry(const TQString& manu, const TQString& model)
 {
-	QDict<KMDBEntryList>	*models = m_pnpentries.find(manu);
+	TQDict<KMDBEntryList>	*models = m_pnpentries.find(manu);
 	if (models)
 		return models->find(model);
 	return 0;
 }
 
-QDict<KMDBEntryList>* KMDriverDB::findModels(const QString& manu)
+TQDict<KMDBEntryList>* KMDriverDB::findModels(const TQString& manu)
 {
 	return m_entries.find(manu);
 }
@@ -140,10 +140,10 @@ void KMDriverDB::insertEntry(KMDBEntry *entry)
 	}
 
 	// insert it in normal entries
-	QDict<KMDBEntryList>	*models = m_entries.find(entry->manufacturer);
+	TQDict<KMDBEntryList>	*models = m_entries.find(entry->manufacturer);
 	if (!models)
 	{
-		models = new QDict<KMDBEntryList>(17,false);
+		models = new TQDict<KMDBEntryList>(17,false);
 		models->setAutoDelete(true);
 		m_entries.insert(entry->manufacturer,models);
 	}
@@ -162,7 +162,7 @@ void KMDriverDB::insertEntry(KMDBEntry *entry)
 		models = m_pnpentries.find(entry->manufacturer);
 		if (!models)
 		{
-			models = new QDict<KMDBEntryList>(17,false);
+			models = new TQDict<KMDBEntryList>(17,false);
 			models->setAutoDelete(true);
 			m_pnpentries.insert(entry->manufacturer,models);
 		}

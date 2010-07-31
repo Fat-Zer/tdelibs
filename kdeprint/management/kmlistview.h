@@ -20,8 +20,8 @@
 #ifndef KMLISTVIEW_H
 #define KMLISTVIEW_H
 
-#include <qlistview.h>
-#include <qptrlist.h>
+#include <tqlistview.h>
+#include <tqptrlist.h>
 
 class KMListViewItem;
 class KMPrinter;
@@ -30,29 +30,29 @@ class KMListView : public QListView
 {
 	Q_OBJECT
 public:
-	KMListView(QWidget *parent = 0, const char *name = 0);
+	KMListView(TQWidget *parent = 0, const char *name = 0);
 	~KMListView();
 
-	void setPrinterList(QPtrList<KMPrinter> *list);
-	void setPrinter(const QString&);
+	void setPrinterList(TQPtrList<KMPrinter> *list);
+	void setPrinter(const TQString&);
 	void setPrinter(KMPrinter*);
 
 signals:
-	void rightButtonClicked(const QString&, const QPoint&);
-	void printerSelected(const QString&);
+	void rightButtonClicked(const TQString&, const TQPoint&);
+	void printerSelected(const TQString&);
 
 protected slots:
-	void slotRightButtonClicked(QListViewItem*, const QPoint&, int);
+	void slotRightButtonClicked(TQListViewItem*, const TQPoint&, int);
 	void slotSelectionChanged();
-	void slotOnItem(QListViewItem*);
+	void slotOnItem(TQListViewItem*);
 	void slotOnViewport();
 
 protected:
 	KMListViewItem* findItem(KMPrinter*);
-	KMListViewItem* findItem(const QString&);
+	KMListViewItem* findItem(const TQString&);
 
 private:
-	QPtrList<KMListViewItem>	m_items;
+	TQPtrList<KMListViewItem>	m_items;
 	KMListViewItem		*m_root, *m_classes, *m_printers, *m_specials;
 };
 

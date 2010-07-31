@@ -24,8 +24,8 @@
 namespace KSpell2
 {
 
-Client::Client( QObject *parent, const char *name )
-    : QObject( parent, name )
+Client::Client( TQObject *parent, const char *name )
+    : TQObject( parent, name )
 {
 }
 

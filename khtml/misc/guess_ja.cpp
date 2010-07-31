@@ -37,7 +37,7 @@
  */
 
 /*
- * Maybe we should use QTextCodec::heuristicContentMatch()
+ * Maybe we should use TQTextCodec::heuristicContentMatch()
  * But it fails detection. It's not useful.
  */
 #include "decoder.h"

@@ -32,9 +32,9 @@
 #include <kglobal.h>
 #include <kdebug.h>
 
-#include <qstring.h>
-#include <qptrqueue.h>
-#include <qcstring.h> //QByteArray
+#include <tqstring.h>
+#include <tqptrqueue.h>
+#include <tqcstring.h> //QByteArray
 
 #include <assert.h>
 
@@ -50,12 +50,12 @@ struct KAudioRecordStream::Data
 	bool blocking;
 	bool polling;
 	unsigned int pos;
-	QPtrQueue<QByteArray> inqueue;
-	QString title;
+	TQPtrQueue<TQByteArray> inqueue;
+	TQString title;
 };
 
-KAudioRecordStream::KAudioRecordStream( KArtsServer * kserver, const QString & title, QObject * parent, const char * name )
-	: QObject( parent, name )
+KAudioRecordStream::KAudioRecordStream( KArtsServer * kserver, const TQString & title, TQObject * parent, const char * name )
+	: TQObject( parent, name )
 	, d( new Data )
 {
 	d->kserver = kserver;
@@ -66,7 +66,7 @@ KAudioRecordStream::KAudioRecordStream( KArtsServer * kserver, const QString & t
 	d->inqueue.setAutoDelete( true );
 	d->title = title;
 
-	connect( d->kserver, SIGNAL( restartedServer() ), SLOT( slotRestartedServer() ) );
+	connect( d->kserver, TQT_SIGNAL( restartedServer() ), TQT_SLOT( slotRestartedServer() ) );
 
 	d->in = Arts::DynamicCast( d->kserver->server().createObject( "Arts::Synth_AMAN_RECORD" ) );
 	d->effectStack = Arts::DynamicCast( d->kserver->server().createObject( "Arts::StereoEffectStack" ) );
@@ -109,7 +109,7 @@ int KAudioRecordStream::read( char * buffer, int size )
 			if( d->inqueue.isEmpty() )
 				return size - remaining;
 		}
-		QByteArray * data = d->inqueue.head();
+		TQByteArray * data = d->inqueue.head();
 		unsigned int tocopy = kMin( remaining, data->size() - d->pos );
 		memcpy( buffer, data->data() + d->pos, tocopy );
 		d->pos += tocopy;
@@ -196,8 +196,8 @@ void KAudioRecordStream::start( int samplingRate, int bits, int channels )
 
 			d->receiver_base = new KByteSoundReceiver( samplingRate, bits, channels, d->title.local8Bit() );
 			d->receiver = Arts::ByteSoundReceiver::_from_base( d->receiver_base );
-			connect( d->receiver_base, SIGNAL( data( const char *, unsigned int ) ),
-					SLOT( slotData( const char *, unsigned int ) ) );
+			connect( d->receiver_base, TQT_SIGNAL( data( const char *, unsigned int ) ),
+					TQT_SLOT( slotData( const char *, unsigned int ) ) );
 			Arts::connect( d->convert, "outdata", d->receiver, "indata" );
 
 			d->convert.start();
@@ -222,7 +222,7 @@ void KAudioRecordStream::slotRestartedServer() { }
 void KAudioRecordStream::slotData( const char * contents, unsigned int size )
 {
 	//kdDebug( 400 ) << k_funcinfo << endl;
-	QByteArray * bytearray = new QByteArray( size );
+	TQByteArray * bytearray = new TQByteArray( size );
 	// copy the contents to the bytearray
 	// this has to be deleted later
 	bytearray->duplicate( contents, size );

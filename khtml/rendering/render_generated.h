@@ -49,7 +49,7 @@ public:
     void updateContent();
 
 protected:
-    QString m_item;
+    TQString m_item;
     CounterNode *m_counterNode; // Cache of the counternode
 };
 
@@ -66,7 +66,7 @@ public:
     virtual void generateContent();
 
 protected:
-    QString toListStyleType(int value, int total, EListStyleType type);
+    TQString toListStyleType(int value, int total, EListStyleType type);
 
     const DOM::CounterImpl* m_counter;
 };

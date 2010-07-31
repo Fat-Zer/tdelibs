@@ -20,8 +20,8 @@
 #ifndef __KSHORTCUTMENU_H
 #define __KSHORTCUTMENU_H
 
-#include <qmap.h>
-#include <qpopupmenu.h>
+#include <tqmap.h>
+#include <tqpopupmenu.h>
 
 #include "kshortcut.h"
 
@@ -36,25 +36,25 @@ class KDECORE_EXPORT KShortcutMenu : public QPopupMenu
 {
 	Q_OBJECT
  public:
-	KShortcutMenu( QWidget* pParent, KAccelActions* pActions, KKeySequence seq );
+	KShortcutMenu( TQWidget* pParent, KAccelActions* pActions, KKeySequence seq );
 
 	bool insertAction( uint iAction, KKeySequence seq );
 
 	void updateShortcuts();
  
  protected:
-	void keyPressEvent( QKeyEvent* pEvent );
+	void keyPressEvent( TQKeyEvent* pEvent );
 
  private:
 	int searchForKey( KKey key );
 	void keepItemsMatching( KKey key );
  
  private:
-	typedef QMap<uint, KKeySequence> IndexToKKeySequence;
+	typedef TQMap<uint, KKeySequence> IndexToKKeySequence;
 	
 	KAccelActions* m_pActions;
 	KKeySequence m_seq;
-	QLabel* pTitle;
+	TQLabel* pTitle;
 	IndexToKKeySequence m_seqs;
 };
 

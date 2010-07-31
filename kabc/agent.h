@@ -23,7 +23,7 @@
 
 class QDataStream;
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -39,8 +39,8 @@ class Addressee;
  */
 class KABC_EXPORT Agent
 {
-  friend KABC_EXPORT QDataStream &operator<<( QDataStream &, const Agent & );
-  friend KABC_EXPORT QDataStream &operator>>( QDataStream &, Agent & );
+  friend KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const Agent & );
+  friend KABC_EXPORT TQDataStream &operator>>( TQDataStream &, Agent & );
 
 public:
 
@@ -54,7 +54,7 @@ public:
    *
    * @param url  A URL that describes the position of the agent file.
    */
-  Agent( const QString &url );
+  Agent( const TQString &url );
 
   /**
    * Consturctor.
@@ -80,7 +80,7 @@ public:
    *
    * @param url  The location URL of the agent file.
    */
-  void setUrl( const QString &url );
+  void setUrl( const TQString &url );
 
   /**
    * Sets the addressee of the agent. When using this function,
@@ -102,7 +102,7 @@ public:
   /**
    * Returns the location URL of this agent.
    */
-  QString url() const;
+  TQString url() const;
 
   /**
    * Returns the addressee object of this agent.
@@ -112,17 +112,17 @@ public:
   /**
    * Returns string representation of the agent.
    */
-  QString asString() const;
+  TQString asString() const;
 
 private:
   Addressee *mAddressee;
-  QString mUrl;
+  TQString mUrl;
 
   int mIntern;
 };
 
-KABC_EXPORT QDataStream &operator<<( QDataStream &, const Agent & );
-KABC_EXPORT QDataStream &operator>>( QDataStream &, Agent & );
+KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const Agent & );
+KABC_EXPORT TQDataStream &operator>>( TQDataStream &, Agent & );
 
 }
 #endif

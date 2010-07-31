@@ -20,7 +20,7 @@
 #ifndef __KPIXMAPREGIONSELECTORDIALOG_H__
 #define __KPIXMAPREGIONSELECTORDIALOG_H__
 
-#include <qimage.h>
+#include <tqimage.h>
 
 #include <kdialogbase.h>
 #include <kpixmapregionselectorwidget.h>
@@ -47,7 +47,7 @@ public:
     * later the setPixmap method of the KPixmapRegionSelectorWidget widget of
     * the new object.
     */
-   KPixmapRegionSelectorDialog(QWidget *parent=0L, const char *name=0L,
+   KPixmapRegionSelectorDialog(TQWidget *parent=0L, const char *name=0L,
                       bool modal = false );
    /**
     * The destructor of the dialog
@@ -68,7 +68,7 @@ public:
     * @returns the selected rectangle, or an invalid rectangle if the user 
     * pressed the Cancel button.
     */
-   static QRect getSelectedRegion(const QPixmap &pixmap, QWidget *parent = 0L );
+   static TQRect getSelectedRegion(const TQPixmap &pixmap, TQWidget *parent = 0L );
 
    /**
     * Creates a modal dialog, lets the user to select a region of the @p pixmap
@@ -78,7 +78,7 @@ public:
     * @returns the selected rectangle, or an invalid rectangle if the user 
     * pressed the Cancel button.
     */
-   static QRect getSelectedRegion(const QPixmap &pixmap, int aspectRatioWidth, int aspectRatioHeight, QWidget *parent = 0L );
+   static TQRect getSelectedRegion(const TQPixmap &pixmap, int aspectRatioWidth, int aspectRatioHeight, TQWidget *parent = 0L );
 
    /**
     * Creates a modal dialog, lets the user to select a region of the @p pixmap
@@ -87,7 +87,7 @@ public:
     * @returns the selected image, or an invalid image if the user 
     * pressed the Cancel button.
     */
-   static QImage getSelectedImage(const QPixmap &pixmap, QWidget *parent = 0L );
+   static TQImage getSelectedImage(const TQPixmap &pixmap, TQWidget *parent = 0L );
 
    /**
     * Creates a modal dialog, lets the user to select a region of the @p pixmap
@@ -97,7 +97,7 @@ public:
     * @returns the selected image, or an invalid image if the user 
     * pressed the Cancel button.
     */
-   static QImage getSelectedImage(const QPixmap &pixmap, int aspectRatioWidth, int aspectRatioHeight, QWidget *parent = 0L );
+   static TQImage getSelectedImage(const TQPixmap &pixmap, int aspectRatioWidth, int aspectRatioHeight, TQWidget *parent = 0L );
 
 protected:
    KPixmapRegionSelectorWidget *m_pixmapSelectorWidget;

@@ -37,8 +37,8 @@
 #ifndef __HIGHCONTRAST_H
 #define __HIGHCONTRAST_H
 
-#include <qbitmap.h>
-#include <qintdict.h>
+#include <tqbitmap.h>
+#include <tqintdict.h>
 #include <kdrawutil.h>
 #include <kpixmap.h>
 #include <kstyle.h>
@@ -54,101 +54,101 @@ class HighContrastStyle : public KStyle
 		HighContrastStyle();
 		virtual ~HighContrastStyle();
         
-		void polish( QPalette& pal );        
+		void polish( TQPalette& pal );        
 
-		void polish( QWidget* widget );
-		void unPolish( QWidget* widget );
+		void polish( TQWidget* widget );
+		void unPolish( TQWidget* widget );
 
 		void drawKStylePrimitive( KStylePrimitive kpe,
-					QPainter* p,
-					const QWidget* widget,
-					const QRect &r,
-					const QColorGroup &cg,
+					TQPainter* p,
+					const TQWidget* widget,
+					const TQRect &r,
+					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 		void drawPrimitive( PrimitiveElement pe,
-					QPainter* p,
-					const QRect &r,
-					const QColorGroup &cg,
+					TQPainter* p,
+					const TQRect &r,
+					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 		void drawControl( ControlElement element,
-					QPainter *p,
-					const QWidget *widget,
-					const QRect &r,
-					const QColorGroup &cg,
+					TQPainter *p,
+					const TQWidget *widget,
+					const TQRect &r,
+					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 		void drawControlMask( ControlElement element,
-					QPainter *p,
-					const QWidget *widget,
-					const QRect &r,
-					const QStyleOption& = QStyleOption::Default ) const;
+					TQPainter *p,
+					const TQWidget *widget,
+					const TQRect &r,
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 		void drawComplexControl( ComplexControl control,
-					QPainter *p,
-					const QWidget *widget,
-					const QRect &r,
-					const QColorGroup &cg,
+					TQPainter *p,
+					const TQWidget *widget,
+					const TQRect &r,
+					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
 					SCFlags controls = SC_All,
 					SCFlags active = SC_None,
-					const QStyleOption& = QStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
 		void drawComplexControlMask( ComplexControl control,
-					QPainter *p,
-					const QWidget *widget,
-					const QRect &r,
-					const QStyleOption& = QStyleOption::Default ) const;
+					TQPainter *p,
+					const TQWidget *widget,
+					const TQRect &r,
+					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		QRect querySubControlMetrics( ComplexControl control,
-					const QWidget* widget,
+		TQRect querySubControlMetrics( ComplexControl control,
+					const TQWidget* widget,
 					SubControl subcontrol,
-					const QStyleOption& opt = QStyleOption::Default ) const;
+					const TQStyleOption& opt = TQStyleOption::Default ) const;
 
 
-		void drawItem( QPainter *p,
-					const QRect &r,
+		void drawItem( TQPainter *p,
+					const TQRect &r,
 					int flags,
-					const QColorGroup &cg,
+					const TQColorGroup &cg,
 					bool enabled,
-					const QPixmap *pixmap,
-					const QString &text,
+					const TQPixmap *pixmap,
+					const TQString &text,
 					int len = -1,
-					const QColor *penColor = 0 ) const;
+					const TQColor *penColor = 0 ) const;
 
 		int pixelMetric( PixelMetric m,
-					const QWidget *widget = 0 ) const;
+					const TQWidget *widget = 0 ) const;
 
 		int kPixelMetric( KStylePixelMetric m,
-					const QWidget *widget = 0 ) const;
+					const TQWidget *widget = 0 ) const;
 
-		QSize sizeFromContents( ContentsType contents,
-					const QWidget *widget,
-					const QSize &contentSize,
-					const QStyleOption& opt ) const;
+		TQSize sizeFromContents( ContentsType contents,
+					const TQWidget *widget,
+					const TQSize &contentSize,
+					const TQStyleOption& opt ) const;
 
-		QRect subRect (SubRect subrect, const QWidget * widget) const;
+		TQRect subRect (SubRect subrect, const TQWidget * widget) const;
 
 	protected:
-		bool eventFilter( QObject *object, QEvent *event );
+		bool eventFilter( TQObject *object, TQEvent *event );
 
-		QWidget     *hoverWidget;
+		TQWidget     *hoverWidget;
 
 	private:
-		void setColorsNormal (QPainter* p, const QColorGroup& cg, int flags = Style_Enabled, int highlight = Style_Down|Style_MouseOver) const;
-		void setColorsButton (QPainter* p, const QColorGroup& cg, int flags = Style_Enabled, int highlight = Style_Down|Style_MouseOver) const;
-		void setColorsText (QPainter* p, const QColorGroup& cg, int flags = Style_Enabled, int highlight = Style_Down|Style_MouseOver) const;
-		void setColorsHighlight (QPainter* p, const QColorGroup& cg, int flags = Style_Enabled) const;
-		void setColorsByState (QPainter* p, const QColorGroup& cg, const QColor& fg, const QColor& bg, int flags, int highlight) const;
+		void setColorsNormal (TQPainter* p, const TQColorGroup& cg, int flags = Style_Enabled, int highlight = Style_Down|Style_MouseOver) const;
+		void setColorsButton (TQPainter* p, const TQColorGroup& cg, int flags = Style_Enabled, int highlight = Style_Down|Style_MouseOver) const;
+		void setColorsText (TQPainter* p, const TQColorGroup& cg, int flags = Style_Enabled, int highlight = Style_Down|Style_MouseOver) const;
+		void setColorsHighlight (TQPainter* p, const TQColorGroup& cg, int flags = Style_Enabled) const;
+		void setColorsByState (TQPainter* p, const TQColorGroup& cg, const TQColor& fg, const TQColor& bg, int flags, int highlight) const;
 
-		void drawRect (QPainter* p, QRect r, int offset = 0, bool filled = true) const;
-		void drawRoundRect (QPainter* p, QRect r, int offset = 0, bool filled = true) const;
-		void drawEllipse (QPainter* p, QRect r, int offset = 0, bool filled = true) const;
-		void drawArrow (QPainter* p, QRect r, PrimitiveElement arrow, int offset = 0) const;
+		void drawRect (TQPainter* p, TQRect r, int offset = 0, bool filled = true) const;
+		void drawRoundRect (TQPainter* p, TQRect r, int offset = 0, bool filled = true) const;
+		void drawEllipse (TQPainter* p, TQRect r, int offset = 0, bool filled = true) const;
+		void drawArrow (TQPainter* p, TQRect r, PrimitiveElement arrow, int offset = 0) const;
 
 		int basicLineWidth;
 		// Disable copy constructor and = operator

@@ -24,25 +24,25 @@
 #include <kdebug.h>
 #include <kio/kprotocolmanager.h>
 
-#include <qtextstream.h>
-#include <qmap.h>
+#include <tqtextstream.h>
+#include <tqmap.h>
 
 #include <config.h>
 
 #include <unistd.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 class KJavaProcessPrivate
 {
 friend class KJavaProcess;
 private:
-    QString jvmPath;
-    QString classPath;
-    QString mainClass;
-    QString extraArgs;
-    QString classArgs;
-    QPtrList<QByteArray> BufferList;
-    QMap<QString, QString> systemProps;
+    TQString jvmPath;
+    TQString classPath;
+    TQString mainClass;
+    TQString extraArgs;
+    TQString classArgs;
+    TQPtrList<TQByteArray> BufferList;
+    TQMap<TQString, TQString> systemProps;
     bool processKilled;
 };
 
@@ -54,12 +54,12 @@ KJavaProcess::KJavaProcess() : KProcess()
 
     javaProcess = this; //new KProcess();
 
-    connect( javaProcess, SIGNAL( wroteStdin( KProcess * ) ),
-             this, SLOT( slotWroteData() ) );
-    connect( javaProcess, SIGNAL( receivedStdout( int, int& ) ),
-             this, SLOT( slotReceivedData(int, int&) ) );
-    connect( javaProcess, SIGNAL( processExited (KProcess *) ),
-             this, SLOT( slotExited (KProcess *) ) );
+    connect( javaProcess, TQT_SIGNAL( wroteStdin( KProcess * ) ),
+             this, TQT_SLOT( slotWroteData() ) );
+    connect( javaProcess, TQT_SIGNAL( receivedStdout( int, int& ) ),
+             this, TQT_SLOT( slotReceivedData(int, int&) ) );
+    connect( javaProcess, TQT_SIGNAL( processExited (KProcess *) ),
+             this, TQT_SLOT( slotExited (KProcess *) ) );
 
     d->jvmPath = "java";
     d->mainClass = "-help";
@@ -92,47 +92,47 @@ void KJavaProcess::stopJava()
    killJVM();
 }
 
-void KJavaProcess::setJVMPath( const QString& path )
+void KJavaProcess::setJVMPath( const TQString& path )
 {
    d->jvmPath = path;
 }
 
-void KJavaProcess::setClasspath( const QString& classpath )
+void KJavaProcess::setClasspath( const TQString& classpath )
 {
     d->classPath = classpath;
 }
 
-void KJavaProcess::setSystemProperty( const QString& name,
-                                      const QString& value )
+void KJavaProcess::setSystemProperty( const TQString& name,
+                                      const TQString& value )
 {
    d->systemProps.insert( name, value );
 }
 
-void KJavaProcess::setMainClass( const QString& className )
+void KJavaProcess::setMainClass( const TQString& className )
 {
    d->mainClass = className;
 }
 
-void KJavaProcess::setExtraArgs( const QString& args )
+void KJavaProcess::setExtraArgs( const TQString& args )
 {
    d->extraArgs = args;
 }
 
-void KJavaProcess::setClassArgs( const QString& args )
+void KJavaProcess::setClassArgs( const TQString& args )
 {
    d->classArgs = args;
 }
 
 //Private Utility Functions used by the two send() methods
-QByteArray* KJavaProcess::addArgs( char cmd_code, const QStringList& args )
+TQByteArray* KJavaProcess::addArgs( char cmd_code, const TQStringList& args )
 {
     //the buffer to store stuff, etc.
-    QByteArray* const buff = new QByteArray();
-    QTextOStream output( *buff );
+    TQByteArray* const buff = new TQByteArray();
+    TQTextOStream output( *buff );
     const char sep = 0;
 
     //make space for the command size: 8 characters...
-    const QCString space( "        " );
+    const TQCString space( "        " );
     output << space;
 
     //write command code
@@ -145,8 +145,8 @@ QByteArray* KJavaProcess::addArgs( char cmd_code, const QStringList& args )
     }
     else
     {
-        QStringList::ConstIterator it = args.begin();
-        const QStringList::ConstIterator itEnd = args.end();
+        TQStringList::ConstIterator it = args.begin();
+        const TQStringList::ConstIterator itEnd = args.end();
         for( ; it != itEnd; ++it )
         {
             if( !(*it).isEmpty() )
@@ -160,10 +160,10 @@ QByteArray* KJavaProcess::addArgs( char cmd_code, const QStringList& args )
     return buff;
 }
 
-void KJavaProcess::storeSize( QByteArray* buff )
+void KJavaProcess::storeSize( TQByteArray* buff )
 {
     const int size = buff->size() - 8;  //subtract out the length of the size_str
-    const QString size_str = QString("%1").arg( size, 8 );
+    const TQString size_str = TQString("%1").arg( size, 8 );
     kdDebug(6100) << "KJavaProcess::storeSize, size = " << size_str << endl;
 
     const char* size_ptr = size_str.latin1();
@@ -171,7 +171,7 @@ void KJavaProcess::storeSize( QByteArray* buff )
         buff->at(i) = size_ptr[i];
 }
 
-void KJavaProcess::sendBuffer( QByteArray* buff )
+void KJavaProcess::sendBuffer( TQByteArray* buff )
 {
     d->BufferList.append( buff );
     if( d->BufferList.count() == 1)
@@ -180,25 +180,25 @@ void KJavaProcess::sendBuffer( QByteArray* buff )
     }
 }
 
-void KJavaProcess::send( char cmd_code, const QStringList& args )
+void KJavaProcess::send( char cmd_code, const TQStringList& args )
 {
     if( isRunning() )
     {
-        QByteArray* const buff = addArgs( cmd_code, args );
+        TQByteArray* const buff = addArgs( cmd_code, args );
         storeSize( buff );
         kdDebug(6100) << "<KJavaProcess::send " << (int)cmd_code << endl;
         sendBuffer( buff );
     }
 }
 
-void KJavaProcess::send( char cmd_code, const QStringList& args,
-                         const QByteArray& data )
+void KJavaProcess::send( char cmd_code, const TQStringList& args,
+                         const TQByteArray& data )
 {
     if( isRunning() )
     {
         kdDebug(6100) << "KJavaProcess::send, qbytearray is size = " << data.size() << endl;
 
-        QByteArray* const buff = addArgs( cmd_code, args );
+        TQByteArray* const buff = addArgs( cmd_code, args );
         const int cur_size = buff->size();
         const int data_size = data.size();
         buff->resize( cur_size + data_size );
@@ -211,7 +211,7 @@ void KJavaProcess::send( char cmd_code, const QStringList& args,
 
 void KJavaProcess::popBuffer()
 {
-    QByteArray* const buf = d->BufferList.first();
+    TQByteArray* const buf = d->BufferList.first();
     if( buf )
     {
 //        DEBUG stuff...
@@ -261,12 +261,12 @@ bool KJavaProcess::invokeJVM()
     }
 
     //set the system properties, iterate through the qmap of system properties
-    QMap<QString,QString>::ConstIterator it = d->systemProps.begin();
-    const QMap<QString,QString>::ConstIterator itEnd = d->systemProps.end();
+    TQMap<TQString,TQString>::ConstIterator it = d->systemProps.begin();
+    const TQMap<TQString,TQString>::ConstIterator itEnd = d->systemProps.end();
 
     for( ; it != itEnd; ++it )
     {
-        QString currarg;
+        TQString currarg;
 
         if( !it.key().isEmpty() )
         {
@@ -284,9 +284,9 @@ bool KJavaProcess::invokeJVM()
     {
         // BUG HERE: if an argument contains space (-Dname="My name")
         // this parsing will fail. Need more sophisticated parsing -- use KShell?
-        const QStringList args = QStringList::split( " ", d->extraArgs );
-        QStringList::ConstIterator it = args.begin();
-        const QStringList::ConstIterator itEnd = args.end();
+        const TQStringList args = TQStringList::split( " ", d->extraArgs );
+        TQStringList::ConstIterator it = args.begin();
+        const TQStringList::ConstIterator itEnd = args.end();
         for ( ; it != itEnd; ++it )
             *javaProcess << *it;
     }
@@ -297,10 +297,10 @@ bool KJavaProcess::invokeJVM()
         *javaProcess << d->classArgs;
 
     kdDebug(6100) << "Invoking JVM now...with arguments = " << endl;
-    QString argStr;
-    QTextOStream stream( &argStr );
-    const QValueList<QCString> args = javaProcess->args();
-    qCopy( args.begin(), args.end(), QTextOStreamIterator<QCString>( stream, " " ) );
+    TQString argStr;
+    TQTextOStream stream( &argStr );
+    const TQValueList<TQCString> args = javaProcess->args();
+    qCopy( args.begin(), args.end(), TQTextOStreamIterator<TQCString>( stream, " " ) );
     kdDebug(6100) << argStr << endl;
 
     KProcess::Communication flags =  (KProcess::Communication)
@@ -319,8 +319,8 @@ bool KJavaProcess::invokeJVM()
 void KJavaProcess::killJVM()
 {
    d->processKilled = true;
-   disconnect( javaProcess, SIGNAL( receivedStdout( int, int& ) ),
-               this, SLOT( slotReceivedData(int, int&) ) );
+   disconnect( javaProcess, TQT_SIGNAL( receivedStdout( int, int& ) ),
+               this, TQT_SLOT( slotReceivedData(int, int&) ) );
    javaProcess->kill();
 }
 
@@ -355,7 +355,7 @@ void KJavaProcess::slotReceivedData( int fd, int& len )
         return;
     }
 
-    const QString lengthstr( length );
+    const TQString lengthstr( length );
     bool ok;
     const int num_len = lengthstr.toInt( &ok );
     if( !ok )
@@ -376,7 +376,7 @@ void KJavaProcess::slotReceivedData( int fd, int& len )
         return;
     }
 
-    QByteArray qb;
+    TQByteArray qb;
     emit received( qb.duplicate( msg, num_len ) );
     delete[] msg;
     len = num_bytes + num_bytes_msg;

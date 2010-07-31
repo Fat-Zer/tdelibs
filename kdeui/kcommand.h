@@ -21,9 +21,9 @@
 #ifndef kcommand_h
 #define kcommand_h
 
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qobject.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqobject.h>
 #include <kdelibs_export.h>
 
 class KAction;
@@ -65,7 +65,7 @@ public:
      * @return the name of this command, translated, since it will appear
      * in the menus.
      */
-    virtual QString name() const = 0;
+    virtual TQString name() const = 0;
 protected:
     virtual void virtual_hook( int id, void* data );
 };
@@ -83,21 +83,21 @@ protected:
      * @param name the name of this command, translated, since it will appear
      * in the menus.
      */
-    KNamedCommand(const QString &name) : KCommand(), m_name(name) {}
+    KNamedCommand(const TQString &name) : KCommand(), m_name(name) {}
 
 public:
     /**
      * @return the name of this command
      */
-    virtual QString name() const { return m_name; }
+    virtual TQString name() const { return m_name; }
     /**
      * Updates the name of this command.
      * Rarely necessary.
      */
-    void setName(const QString &name) { m_name=name; }
+    void setName(const TQString &name) { m_name=name; }
 
 private:
-    QString m_name;
+    TQString m_name;
 protected:
     virtual void virtual_hook( int id, void* data );
 };
@@ -116,7 +116,7 @@ public:
      * @param name the name of this command, translated, since it will appear
      * in the menus.
      */
-    KMacroCommand( const QString & name );
+    KMacroCommand( const TQString & name );
     virtual ~KMacroCommand() {}
 
     /**
@@ -137,7 +137,7 @@ public:
     virtual void unexecute();
 
 protected:
-    QPtrList<KCommand> m_commands;
+    TQPtrList<KCommand> m_commands;
 protected:
     virtual void virtual_hook( int id, void* data );
 };
@@ -153,7 +153,7 @@ protected:
  * undo/redo actions in the menu and changes the text according
  * to the name of the command.
  */
-class KDEUI_EXPORT KCommandHistory : public QObject {
+class KDEUI_EXPORT KCommandHistory : public TQObject {
     Q_OBJECT
 public:
     /**
@@ -274,9 +274,9 @@ signals:
 private:
     void clipCommands();  // ensures that the limits are kept
 
-    QPtrList<KCommand> m_commands;
+    TQPtrList<KCommand> m_commands;
     KAction *m_undo, *m_redo;
-    QPopupMenu *m_undoPopup, *m_redoPopup;
+    TQPopupMenu *m_undoPopup, *m_redoPopup;
     int m_undoLimit, m_redoLimit;
     bool m_first;  // attention: it's the first command in the list!
 protected:

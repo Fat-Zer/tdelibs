@@ -205,9 +205,9 @@ public:
 
     void removeFromLine(InlineBox* child);
     virtual void paintBackgroundAndBorder(RenderObject::PaintInfo&, int _tx, int _ty);
-    void paintBackgrounds(QPainter* p, const QColor& c, const BackgroundLayer* bgLayer,
+    void paintBackgrounds(TQPainter* p, const TQColor& c, const BackgroundLayer* bgLayer,
                           int my, int mh, int _tx, int _ty, int w, int h);
-    void paintBackground(QPainter* p, const QColor& c, const BackgroundLayer* bgLayer,
+    void paintBackground(TQPainter* p, const TQColor& c, const BackgroundLayer* bgLayer,
                          int my, int mh, int _tx, int _ty, int w, int h);
     virtual void paint(RenderObject::PaintInfo& i, int _tx, int _ty);
     virtual void paintDecorations(RenderObject::PaintInfo&, int _tx, int _ty, bool paintedChildren = false);

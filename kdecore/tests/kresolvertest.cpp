@@ -33,8 +33,8 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#include <qptrlist.h>
-#include <qstring.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
 
 #include <kuniqueapplication.h>
 #include <ksocks.h>
@@ -69,17 +69,17 @@ public:
     KUniqueApplication()
   { }
 
-  int newInstance(QValueList<QCString> params);
+  int newInstance(TQValueList<TQCString> params);
 };
 
 bool tryLookup(const char* node, const char *serv)
 {
   int error;
-  QString _node = QString::fromLatin1(node);
-  QString _serv = QString::fromLatin1(serv);
+  TQString _node = TQString::fromLatin1(node);
+  TQString _serv = TQString::fromLatin1(serv);
 
   printf("\tTrying to lookup %s|%s... ", node, serv);
-  QPtrList<KAddressInfo> list = KExtendedSocket::lookup(_node, _serv, 0, &error);
+  TQPtrList<KAddressInfo> list = KExtendedSocket::lookup(_node, _serv, 0, &error);
   list.setAutoDelete(true);
   if (!list.isEmpty())
     {
@@ -138,11 +138,11 @@ bool try_pton()
 bool tryLookup6(const char *node, const char *serv)
 {
   int error;
-  QString _node = QString::fromLatin1(node);
-  QString _serv = QString::fromLatin1(serv);
+  TQString _node = TQString::fromLatin1(node);
+  TQString _serv = TQString::fromLatin1(serv);
 
   printf("\tTrying to lookup IPv6 of %s|%s... ", node, serv);
-  QPtrList<KAddressInfo> list = KExtendedSocket::lookup(_node, _serv, KExtendedSocket::ipv6Socket, &error);
+  TQPtrList<KAddressInfo> list = KExtendedSocket::lookup(_node, _serv, KExtendedSocket::ipv6Socket, &error);
   list.setAutoDelete(true);
   if (!list.isEmpty())
     {
@@ -403,7 +403,7 @@ void go()
   printf("\n\nTest finished\n");
 }
 
-int TestApp::newInstance(QValueList<QCString> /*params*/)
+int TestApp::newInstance(TQValueList<TQCString> /*params*/)
 {
   go();
 }

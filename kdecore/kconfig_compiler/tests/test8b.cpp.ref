@@ -22,20 +22,20 @@ Test8b::Test8b(  )
   : Test8a()
 {
   mSelf = this;
-  setCurrentGroup( QString::fromLatin1( "Group8b1" ) );
+  setCurrentGroup( TQString::fromLatin1( "Group8b1" ) );
 
   KConfigSkeleton::ItemUInt  *itemSomething;
-  itemSomething = new KConfigSkeleton::ItemUInt( currentGroup(), QString::fromLatin1( "Something" ), mSomething, 60 );
-  addItem( itemSomething, QString::fromLatin1( "Something" ) );
+  itemSomething = new KConfigSkeleton::ItemUInt( currentGroup(), TQString::fromLatin1( "Something" ), mSomething, 60 );
+  addItem( itemSomething, TQString::fromLatin1( "Something" ) );
 
-  setCurrentGroup( QString::fromLatin1( "Group8b2" ) );
+  setCurrentGroup( TQString::fromLatin1( "Group8b2" ) );
 
   KConfigSkeleton::ItemBool  *itemFooBoo;
-  itemFooBoo = new KConfigSkeleton::ItemBool( currentGroup(), QString::fromLatin1( "FooBoo" ), mFooBoo, false );
-  addItem( itemFooBoo, QString::fromLatin1( "FooBoo" ) );
+  itemFooBoo = new KConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "FooBoo" ), mFooBoo, false );
+  addItem( itemFooBoo, TQString::fromLatin1( "FooBoo" ) );
   KConfigSkeleton::ItemUInt  *itemPort;
-  itemPort = new KConfigSkeleton::ItemUInt( currentGroup(), QString::fromLatin1( "Port" ), mPort, 1000 );
-  addItem( itemPort, QString::fromLatin1( "Port" ) );
+  itemPort = new KConfigSkeleton::ItemUInt( currentGroup(), TQString::fromLatin1( "Port" ), mPort, 1000 );
+  addItem( itemPort, TQString::fromLatin1( "Port" ) );
 }
 
 Test8b::~Test8b()

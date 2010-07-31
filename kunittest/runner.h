@@ -36,9 +36,9 @@
 #include <iostream>
 using namespace std;
 
-#include <qobject.h>
-#include <qasciidict.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqasciidict.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -54,7 +54,7 @@ namespace KUnitTest
      * defines the name of the test suite.
      */
     #define KUNITTEST_SUITE(suite)\
-    static const QString s_kunittest_suite  = suite;
+    static const TQString s_kunittest_suite  = suite;
 
     /*! @def KUNITTEST_REGISTER_TESTER( tester )
      * @brief Automatic registration of Tester classes.
@@ -66,16 +66,16 @@ namespace KUnitTest
      * You can always use the static Runner::registerTester(const char *name, Tester *test) method.
     */
     #define KUNITTEST_REGISTER_TESTER( tester )\
-    static TesterAutoregister tester##Autoregister( QString(s_kunittest_suite + QString("::") + QString::fromLocal8Bit(#tester)).local8Bit() , new tester ())
+    static TesterAutoregister tester##Autoregister( TQString(s_kunittest_suite + TQString("::") + TQString::fromLocal8Bit(#tester)).local8Bit() , new tester ())
 
     #define KUNITTEST_REGISTER_NAMEDTESTER( name, tester )\
-    static TesterAutoregister tester##Autoregister( QString(s_kunittest_suite + QString("::") + QString::fromLocal8Bit(name)).local8Bit() , new tester ())
+    static TesterAutoregister tester##Autoregister( TQString(s_kunittest_suite + TQString("::") + TQString::fromLocal8Bit(name)).local8Bit() , new tester ())
 
     /*! The type of the registry. */
-    typedef QAsciiDict<Tester> RegistryType;
+    typedef TQAsciiDict<Tester> RegistryType;
 
     /*! A type that can be used to iterate through the registry. */
-    typedef QAsciiDictIterator<Tester> RegistryIteratorType;
+    typedef TQAsciiDictIterator<Tester> RegistryIteratorType;
     
     /*! The Runner class holds a list of registered Tester classes and is able
      * to run those test cases. The Runner class follows the singleton design
@@ -121,7 +121,7 @@ namespace KUnitTest
          * @param folder The folder where to look for modules.
          * @param query A regular expression. Only modules which match the query will be run.
          */
-        static void loadModules(const QString &folder, const QString &query);
+        static void loadModules(const TQString &folder, const TQString &query);
 
         /*! The runner can spit out special debug messages needed by the Perl script: kunittest_debughelper.
          * This script can attach the debug output of each suite to the results in the KUnitTest GUI.
@@ -171,7 +171,7 @@ namespace KUnitTest
         /*! Call this slot to run tests with names starting with prefix.
          * @param prefix Only run tests starting with the string prefix.
          */
-        void runMatchingTests(const QString &prefix);
+        void runMatchingTests(const TQString &prefix);
 
         /*! Reset the Runner in order to prepare it to run one or more tests again.
          */

@@ -32,10 +32,10 @@ main(int argc, char *argv[])
 
    KApplication a;
 
-   QString error;
-   QCString dcopService;
+   TQString error;
+   TQCString dcopService;
    int pid;
-   a.startServiceByDesktopName( "kaddressbook", QString::null, &error, &dcopService, &pid );
+   a.startServiceByDesktopName( "kaddressbook", TQString::null, &error, &dcopService, &pid );
    kdDebug() << "Started. error=" << error << " dcopService=" << dcopService << " pid=" << pid << endl;
    a.exec();
 }

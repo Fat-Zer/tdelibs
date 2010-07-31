@@ -18,7 +18,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qlabel.h>
+#include <tqlabel.h>
 #include <kapplication.h>
 #include <kdebug.h>
 
@@ -26,7 +26,7 @@
 #include <kmessagebox.h>
 #include "kreplace.h"
 #include "kreplacedialog.h"
-#include <qregexp.h>
+#include <tqregexp.h>
 
 //#define DEBUG_REPLACE
 #define INDEX_NOMATCH -1
@@ -34,13 +34,13 @@
 class KReplaceNextDialog : public KDialogBase
 {
 public:
-    KReplaceNextDialog( QWidget *parent );
-    void setLabel( const QString& pattern, const QString& replacement );
+    KReplaceNextDialog( TQWidget *parent );
+    void setLabel( const TQString& pattern, const TQString& replacement );
 private:
-    QLabel* m_mainLabel;
+    TQLabel* m_mainLabel;
 };
 
-KReplaceNextDialog::KReplaceNextDialog(QWidget *parent) :
+KReplaceNextDialog::KReplaceNextDialog(TQWidget *parent) :
     KDialogBase(parent, 0, false,  // non-modal!
         i18n("Replace"),
         User3 | User2 | User1 | Close,
@@ -48,26 +48,26 @@ KReplaceNextDialog::KReplaceNextDialog(QWidget *parent) :
         false,
         i18n("&All"), i18n("&Skip"), i18n("Replace"))
 {
-    m_mainLabel = new QLabel( this );
+    m_mainLabel = new TQLabel( this );
     setMainWidget( m_mainLabel );
     resize(minimumSize());
 }
 
-void KReplaceNextDialog::setLabel( const QString& pattern, const QString& replacement )
+void KReplaceNextDialog::setLabel( const TQString& pattern, const TQString& replacement )
 {
     m_mainLabel->setText( i18n("Replace '%1' with '%2'?").arg(pattern).arg(replacement) );
 }
 
 ////
 
-KReplace::KReplace(const QString &pattern, const QString &replacement, long options, QWidget *parent) :
+KReplace::KReplace(const TQString &pattern, const TQString &replacement, long options, TQWidget *parent) :
     KFind( pattern, options, parent )
 {
     m_replacements = 0;
     m_replacement = replacement;
 }
 
-KReplace::KReplace(const QString &pattern, const QString &replacement, long options, QWidget *parent, QWidget *dlg) :
+KReplace::KReplace(const TQString &pattern, const TQString &replacement, long options, TQWidget *parent, TQWidget *dlg) :
     KFind( pattern, options, parent, dlg )
 {
     m_replacements = 0;
@@ -91,10 +91,10 @@ KReplaceNextDialog* KReplace::dialog()
     if ( !m_dialog )
     {
         m_dialog = new KReplaceNextDialog( parentWidget() );
-        connect( m_dialog, SIGNAL( user1Clicked() ), this, SLOT( slotReplaceAll() ) );
-        connect( m_dialog, SIGNAL( user2Clicked() ), this, SLOT( slotSkip() ) );
-        connect( m_dialog, SIGNAL( user3Clicked() ), this, SLOT( slotReplace() ) );
-        connect( m_dialog, SIGNAL( finished() ), this, SLOT( slotDialogClosed() ) );
+        connect( m_dialog, TQT_SIGNAL( user1Clicked() ), this, TQT_SLOT( slotReplaceAll() ) );
+        connect( m_dialog, TQT_SIGNAL( user2Clicked() ), this, TQT_SLOT( slotSkip() ) );
+        connect( m_dialog, TQT_SIGNAL( user3Clicked() ), this, TQT_SLOT( slotReplace() ) );
+        connect( m_dialog, TQT_SIGNAL( finished() ), this, TQT_SLOT( slotDialogClosed() ) );
     }
     return static_cast<KReplaceNextDialog *>(m_dialog);
 }
@@ -142,8 +142,8 @@ KFind::Result KReplace::replace()
                     kdDebug() << k_funcinfo << "PromptOnReplace" << endl;
 #endif
                     // Display accurate initial string and replacement string, they can vary
-                    QString matchedText = m_text.mid( m_index, m_matchedLength );
-                    QString rep = matchedText;
+                    TQString matchedText = m_text.mid( m_index, m_matchedLength );
+                    TQString rep = matchedText;
                     KReplace::replace(rep, m_replacement, 0, m_options, m_matchedLength);
                     dialog()->setLabel( matchedText, rep );
                     dialog()->show();
@@ -177,7 +177,7 @@ KFind::Result KReplace::replace()
     return NoMatch;
 }
 
-int KReplace::replace(QString &text, const QString &pattern, const QString &replacement, int index, long options, int *replacedLength)
+int KReplace::replace(TQString &text, const TQString &pattern, const TQString &replacement, int index, long options, int *replacedLength)
 {
     int matchedLength;
 
@@ -193,7 +193,7 @@ int KReplace::replace(QString &text, const QString &pattern, const QString &repl
     return index;
 }
 
-int KReplace::replace(QString &text, const QRegExp &pattern, const QString &replacement, int index, long options, int *replacedLength)
+int KReplace::replace(TQString &text, const TQRegExp &pattern, const TQString &replacement, int index, long options, int *replacedLength)
 {
     int matchedLength;
 
@@ -209,9 +209,9 @@ int KReplace::replace(QString &text, const QRegExp &pattern, const QString &repl
     return index;
 }
 
-int KReplace::replace(QString &text, const QString &replacement, int index, long options, int length)
+int KReplace::replace(TQString &text, const TQString &replacement, int index, long options, int length)
 {
-    QString rep = replacement;
+    TQString rep = replacement;
     // Backreferences: replace \0 with the right portion of 'text'
     if ( options & KReplaceDialog::BackReference )
         rep.replace( "\\0", text.mid( index, length ) );
@@ -293,7 +293,7 @@ bool KReplace::shouldRestart( bool forceAsking, bool showNumMatches ) const
         displayFinalDialog();
         return false;
     }
-    QString message;
+    TQString message;
     if ( showNumMatches )
     {
         if ( !m_replacements )
@@ -316,7 +316,7 @@ bool KReplace::shouldRestart( bool forceAsking, bool showNumMatches ) const
         i18n("Do you want to restart search from the end?")
         : i18n("Do you want to restart search at the beginning?");
 
-    int ret = KMessageBox::questionYesNo( parentWidget(), message, QString::null, i18n("Restart"), i18n("Stop") );
+    int ret = KMessageBox::questionYesNo( parentWidget(), message, TQString::null, i18n("Restart"), i18n("Stop") );
     return( ret == KMessageBox::Yes );
 }
 

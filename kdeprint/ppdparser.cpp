@@ -125,7 +125,7 @@
 #define YYDEBUG 1
 #define YYERROR_VERBOSE 1
 #include <stdlib.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include "ppdloader.h"
 
@@ -1158,7 +1158,7 @@ yyreduce:
 
   case 15:
 #line 77 "./ppdparser.y"
-    { builder->openUi(yyvsp[-2][0], QString::null, yyvsp[0][0]); ;}
+    { builder->openUi(yyvsp[-2][0], TQString::null, yyvsp[0][0]); ;}
     break;
 
   case 16:
@@ -1178,7 +1178,7 @@ yyreduce:
 
   case 19:
 #line 85 "./ppdparser.y"
-    { builder->openGroup(yyvsp[0].join(" "), QString::null); ;}
+    { builder->openGroup(yyvsp[0].join(" "), TQString::null); ;}
     break;
 
   case 20:
@@ -1203,17 +1203,17 @@ yyreduce:
 
   case 24:
 #line 94 "./ppdparser.y"
-    { builder->putConstraint(yyvsp[-2][0], yyvsp[0][0], yyvsp[-1][0], QString::null); ;}
+    { builder->putConstraint(yyvsp[-2][0], yyvsp[0][0], yyvsp[-1][0], TQString::null); ;}
     break;
 
   case 25:
 #line 95 "./ppdparser.y"
-    { builder->putConstraint(yyvsp[-2][0], yyvsp[-1][0], QString::null, yyvsp[0][0]); ;}
+    { builder->putConstraint(yyvsp[-2][0], yyvsp[-1][0], TQString::null, yyvsp[0][0]); ;}
     break;
 
   case 26:
 #line 96 "./ppdparser.y"
-    { builder->putConstraint(yyvsp[-1][0], yyvsp[0][0], QString::null, QString::null); ;}
+    { builder->putConstraint(yyvsp[-1][0], yyvsp[0][0], TQString::null, TQString::null); ;}
     break;
 
   case 27:
@@ -1223,7 +1223,7 @@ yyreduce:
 
   case 28:
 #line 100 "./ppdparser.y"
-    { builder->putStatement(yyvsp[-3][0], yyvsp[-2][0], QString::null, yyvsp[0]); ;}
+    { builder->putStatement(yyvsp[-3][0], yyvsp[-2][0], TQString::null, yyvsp[0]); ;}
     break;
 
   case 29:
@@ -1233,7 +1233,7 @@ yyreduce:
 
   case 30:
 #line 102 "./ppdparser.y"
-    { builder->putStatement(yyvsp[-4][0], yyvsp[-3][0], QString::null, yyvsp[-1]); ;}
+    { builder->putStatement(yyvsp[-4][0], yyvsp[-3][0], TQString::null, yyvsp[-1]); ;}
     break;
 
   case 31:

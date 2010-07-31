@@ -20,10 +20,10 @@
 #ifndef __khtml_pagecache_h__
 #define __khtml_pagecache_h__
 
-#include <qobject.h>
-#include <qcstring.h>
-#include <qvaluelist.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqcstring.h>
+#include <tqvaluelist.h>
+#include <tqptrlist.h>
 
 class KHTMLPageCachePrivate;
 
@@ -60,7 +60,7 @@ public:
   /**
    * Add @p data to the cache entry with id @p id.
    */
-  void addData(long id, const QByteArray &data);
+  void addData(long id, const TQByteArray &data);
 
   /**
    * Signal end of data for the cache entry with id @p id.
@@ -90,17 +90,17 @@ public:
    * Fetch data for cache entry @p id and send it to slot @p recvSlot
    * in the object @p recvObj
    */
-  void fetchData(long id, QObject *recvObj, const char *recvSlot);
+  void fetchData(long id, TQObject *recvObj, const char *recvSlot);
 
   /**
    * Cancel sending data to @p recvObj
    */
-  void cancelFetch(QObject *recvObj);
+  void cancelFetch(TQObject *recvObj);
 
   /**
    * Save the data of cache entry @p id to the datastream @p str
    */
-  void saveData(long id, QDataStream *str);
+  void saveData(long id, TQDataStream *str);
 
 private slots:
   void sendData();
@@ -123,10 +123,10 @@ public:
    ~KHTMLPageCacheDelivery();
 
 signals:
-   void emitData(const QByteArray &data);
+   void emitData(const TQByteArray &data);
 
 public: 
-   QObject *recvObj;
+   TQObject *recvObj;
    int fd;      
 };
 

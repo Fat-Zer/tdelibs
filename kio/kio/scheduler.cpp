@@ -22,8 +22,8 @@
 #include "kio/scheduler.h"
 #include "kio/authinfo.h"
 #include "kio/slave.h"
-#include <qptrlist.h>
-#include <qdict.h>
+#include <tqptrlist.h>
+#include <tqdict.h>
 
 #include <dcopclient.h>
 
@@ -42,11 +42,11 @@
 
 using namespace KIO;
 
-template class QDict<KIO::Scheduler::ProtocolInfo>;
+template class TQDict<KIO::Scheduler::ProtocolInfo>;
 
 Scheduler *Scheduler::instance = 0;
 
-class KIO::SlaveList: public QPtrList<Slave>
+class KIO::SlaveList: public TQPtrList<Slave>
 {
    public:
       SlaveList() { }
@@ -73,12 +73,12 @@ public:
     JobData() : checkOnHold(false) { }
 
 public:
-    QString protocol;
-    QString proxy;
+    TQString protocol;
+    TQString proxy;
     bool checkOnHold;
 };
 
-class KIO::Scheduler::ExtraJobData: public QPtrDict<KIO::Scheduler::JobData>
+class KIO::Scheduler::ExtraJobData: public TQPtrDict<KIO::Scheduler::JobData>
 {
 public:
     ExtraJobData() { setAutoDelete(true); }
@@ -92,23 +92,23 @@ public:
        joblist.setAutoDelete(false);
     }
 
-    QPtrList<SimpleJob> joblist;
+    TQPtrList<SimpleJob> joblist;
     SlaveList activeSlaves;
     int maxSlaves;
     int skipCount;
-    QString protocol;
+    TQString protocol;
 };
 
-class KIO::Scheduler::ProtocolInfoDict : public QDict<KIO::Scheduler::ProtocolInfo>
+class KIO::Scheduler::ProtocolInfoDict : public TQDict<KIO::Scheduler::ProtocolInfo>
 {
   public:
     ProtocolInfoDict() { }
 
-    KIO::Scheduler::ProtocolInfo *get( const QString &protocol);
+    KIO::Scheduler::ProtocolInfo *get( const TQString &protocol);
 };
 
 KIO::Scheduler::ProtocolInfo *
-KIO::Scheduler::ProtocolInfoDict::get(const QString &protocol)
+KIO::Scheduler::ProtocolInfoDict::get(const TQString &protocol)
 {
     ProtocolInfo *info = find(protocol);
     if (!info)
@@ -125,7 +125,7 @@ KIO::Scheduler::ProtocolInfoDict::get(const QString &protocol)
 
 Scheduler::Scheduler()
           : DCOPObject( "KIO::Scheduler" ),
-           QObject(kapp, "scheduler"),
+           TQObject(kapp, "scheduler"),
            slaveTimer(0, "Scheduler::slaveTimer"),
            coSlaveTimer(0, "Scheduler::coSlaveTimer"),
            cleanupTimer(0, "Scheduler::cleanupTimer")
@@ -139,9 +139,9 @@ Scheduler::Scheduler()
     extraJobData = new ExtraJobData;
     sessionData = new SessionData;
     slaveConfig = SlaveConfig::self();
-    connect(&slaveTimer, SIGNAL(timeout()), SLOT(startStep()));
-    connect(&coSlaveTimer, SIGNAL(timeout()), SLOT(slotScheduleCoSlave()));
-    connect(&cleanupTimer, SIGNAL(timeout()), SLOT(slotCleanIdleSlaves()));
+    connect(&slaveTimer, TQT_SIGNAL(timeout()), TQT_SLOT(startStep()));
+    connect(&coSlaveTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotScheduleCoSlave()));
+    connect(&cleanupTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotCleanIdleSlaves()));
     busy = false;
 }
 
@@ -163,15 +163,15 @@ Scheduler::debug_info()
 {
 }
 
-bool Scheduler::process(const QCString &fun, const QByteArray &data, QCString &replyType, QByteArray &replyData )
+bool Scheduler::process(const TQCString &fun, const TQByteArray &data, TQCString &replyType, TQByteArray &replyData )
 {
-    if ( fun != "reparseSlaveConfiguration(QString)" )
+    if ( fun != "reparseSlaveConfiguration(TQString)" )
         return DCOPObject::process( fun, data, replyType, replyData );
 
     slaveConfig = SlaveConfig::self();
     replyType = "void";
-    QDataStream stream( data, IO_ReadOnly );
-    QString proto;
+    TQDataStream stream( data, IO_ReadOnly );
+    TQString proto;
     stream >> proto;
 
     kdDebug( 7006 ) << "reparseConfiguration( " << proto << " )" << endl;
@@ -193,7 +193,7 @@ bool Scheduler::process(const QCString &fun, const QByteArray &data, QCString &r
 QCStringList Scheduler::functions()
 {
     QCStringList funcs = DCOPObject::functions();
-    funcs << "void reparseSlaveConfiguration(QString)";
+    funcs << "void reparseSlaveConfiguration(TQString)";
     return funcs;
 }
 
@@ -211,7 +211,7 @@ void Scheduler::_doJob(SimpleJob *job) {
     slaveTimer.start(0, true);
 #ifndef NDEBUG
     if (newJobs.count() > 150)
-	kdDebug() << "WARNING - KIO::Scheduler got more than 150 jobs! This shows a misuse in your app (yes, a job is a QObject)." << endl;
+	kdDebug() << "WARNING - KIO::Scheduler got more than 150 jobs! This shows a misuse in your app (yes, a job is a TQObject)." << endl;
 #endif
 }
 
@@ -223,7 +223,7 @@ void Scheduler::_scheduleJob(SimpleJob *job) {
     kdFatal(7006) << "BUG! _ScheduleJob(): No extraJobData for job!" << endl;
     return;
 }
-    QString protocol = jobData->protocol;
+    TQString protocol = jobData->protocol;
 //    kdDebug(7006) << "Scheduler::_scheduleJob protocol=" << protocol << endl;
     ProtocolInfo *protInfo = protInfoDict->get(protocol);
     protInfo->joblist.append(job);
@@ -272,7 +272,7 @@ void Scheduler::startStep()
     {
        (void) startJobDirect();
     }
-    QDictIterator<KIO::Scheduler::ProtocolInfo> it(*protInfoDict);
+    TQDictIterator<KIO::Scheduler::ProtocolInfo> it(*protInfoDict);
     while(it.current())
     {
        if (startJobScheduled(it.current())) return;
@@ -280,12 +280,12 @@ void Scheduler::startStep()
     }
 }
 
-void Scheduler::setupSlave(KIO::Slave *slave, const KURL &url, const QString &protocol, const QString &proxy , bool newSlave, const KIO::MetaData *config)
+void Scheduler::setupSlave(KIO::Slave *slave, const KURL &url, const TQString &protocol, const TQString &proxy , bool newSlave, const KIO::MetaData *config)
 {
-    QString host = url.host();
+    TQString host = url.host();
     int port = url.port();
-    QString user = url.user();
-    QString passwd = url.pass();
+    TQString user = url.user();
+    TQString passwd = url.pass();
 
     if ((newSlave) ||
         (slave->host() != host) ||
@@ -300,7 +300,7 @@ void Scheduler::setupSlave(KIO::Slave *slave, const KURL &url, const QString &pr
 
         configData["UseProxy"] = proxy;
 
-        QString autoLogin = configData["EnableAutoLogin"].lower();
+        TQString autoLogin = configData["EnableAutoLogin"].lower();
         if ( autoLogin == "true" )
         {
             NetRC::AutoLogin l;
@@ -312,8 +312,8 @@ void Scheduler::setupSlave(KIO::Slave *slave, const KURL &url, const QString &pr
                 configData["autoLoginPass"] = l.password;
                 if ( usern )
                 {
-                    QString macdef;
-                    QMap<QString, QStringList>::ConstIterator it = l.macdef.begin();
+                    TQString macdef;
+                    TQMap<TQString, TQStringList>::ConstIterator it = l.macdef.begin();
                     for ( ; it != l.macdef.end(); ++it )
                         macdef += it.key() + '\\' + it.data().join( "\\" ) + '\n';
                     configData["autoLoginMacro"] = macdef;
@@ -421,7 +421,7 @@ bool Scheduler::startJobDirect()
                       << endl;
         return false;
     }
-    QString protocol = jobData->protocol;
+    TQString protocol = jobData->protocol;
     ProtocolInfo *protInfo = protInfoDict->get(protocol);
 
     bool newSlave = false;
@@ -447,11 +447,11 @@ bool Scheduler::startJobDirect()
     return true;
 }
 
-static Slave *searchIdleList(SlaveList *idleSlaves, const KURL &url, const QString &protocol, bool &exact)
+static Slave *searchIdleList(SlaveList *idleSlaves, const KURL &url, const TQString &protocol, bool &exact)
 {
-    QString host = url.host();
+    TQString host = url.host();
     int port = url.port();
-    QString user = url.user();
+    TQString user = url.user();
     exact = true;
 
     for( Slave *slave = idleSlaves->first();
@@ -504,7 +504,7 @@ Slave *Scheduler::findIdleSlave(ProtocolInfo *, SimpleJob *job, bool &exact)
           if ( bCanReuse )
           {
             KIO::MetaData outgoing = tJob->outgoingMetaData();
-            QString resume = (!outgoing.contains("resume")) ? QString::null : outgoing["resume"];
+            TQString resume = (!outgoing.contains("resume")) ? TQString::null : outgoing["resume"];
             kdDebug(7006) << "Resume metadata is '" << resume << "'" << endl;
             bCanReuse = (resume.isEmpty() || resume == "0");
           }
@@ -535,21 +535,21 @@ Slave *Scheduler::findIdleSlave(ProtocolInfo *, SimpleJob *job, bool &exact)
 Slave *Scheduler::createSlave(ProtocolInfo *protInfo, SimpleJob *job, const KURL &url)
 {
    int error;
-   QString errortext;
+   TQString errortext;
    Slave *slave = Slave::createSlave(protInfo->protocol, url, error, errortext);
    if (slave)
    {
       slaveList->append(slave);
       idleSlaves->append(slave);
-      connect(slave, SIGNAL(slaveDied(KIO::Slave *)),
-                SLOT(slotSlaveDied(KIO::Slave *)));
-      connect(slave, SIGNAL(slaveStatus(pid_t,const QCString &,const QString &, bool)),
-                SLOT(slotSlaveStatus(pid_t,const QCString &, const QString &, bool)));
+      connect(slave, TQT_SIGNAL(slaveDied(KIO::Slave *)),
+                TQT_SLOT(slotSlaveDied(KIO::Slave *)));
+      connect(slave, TQT_SIGNAL(slaveStatus(pid_t,const TQCString &,const TQString &, bool)),
+                TQT_SLOT(slotSlaveStatus(pid_t,const TQCString &, const TQString &, bool)));
 
-      connect(slave,SIGNAL(authorizationKey(const QCString&, const QCString&, bool)),
-              sessionData,SLOT(slotAuthData(const QCString&, const QCString&, bool)));
-      connect(slave,SIGNAL(delAuthorization(const QCString&)), sessionData,
-              SLOT(slotDelAuthData(const QCString&)));
+      connect(slave,TQT_SIGNAL(authorizationKey(const TQCString&, const TQCString&, bool)),
+              sessionData,TQT_SLOT(slotAuthData(const TQCString&, const TQCString&, bool)));
+      connect(slave,TQT_SIGNAL(delAuthorization(const TQCString&)), sessionData,
+              TQT_SLOT(slotDelAuthData(const TQCString&)));
    }
    else
    {
@@ -564,7 +564,7 @@ Slave *Scheduler::createSlave(ProtocolInfo *protInfo, SimpleJob *job, const KURL
    return slave;
 }
 
-void Scheduler::slotSlaveStatus(pid_t, const QCString &, const QString &, bool)
+void Scheduler::slotSlaveStatus(pid_t, const TQCString &, const TQString &, bool)
 {
 }
 
@@ -697,8 +697,8 @@ void Scheduler::_removeSlaveOnHold()
 Slave *
 Scheduler::_getConnectedSlave(const KURL &url, const KIO::MetaData &config )
 {
-    QString proxy;
-    QString protocol = KProtocolManager::slaveProtocol(url, proxy);
+    TQString proxy;
+    TQString protocol = KProtocolManager::slaveProtocol(url, proxy);
     bool dummy;
     Slave *slave = searchIdleList(idleSlaves, url, protocol, dummy);
     if (!slave)
@@ -713,12 +713,12 @@ Scheduler::_getConnectedSlave(const KURL &url, const KIO::MetaData &config )
     setupSlave(slave, url, protocol, proxy, true, &config);
 
     slave->send( CMD_CONNECT );
-    connect(slave, SIGNAL(connected()),
-                SLOT(slotSlaveConnected()));
-    connect(slave, SIGNAL(error(int, const QString &)),
-                SLOT(slotSlaveError(int, const QString &)));
+    connect(slave, TQT_SIGNAL(connected()),
+                TQT_SLOT(slotSlaveConnected()));
+    connect(slave, TQT_SIGNAL(error(int, const TQString &)),
+                TQT_SLOT(slotSlaveError(int, const TQString &)));
 
-    coSlaves.insert(slave, new QPtrList<SimpleJob>());
+    coSlaves.insert(slave, new TQPtrList<SimpleJob>());
 //    kdDebug(7006) << "_getConnectedSlave( " << slave << ")" << endl;
     return slave;
 }
@@ -744,13 +744,13 @@ Scheduler::slotScheduleCoSlave()
            assert(!coIdleSlaves->contains(slave));
 
            KURL url =job->url();
-           QString host = url.host();
+           TQString host = url.host();
            int port = url.port();
 
            if (slave->host() == "<reset>")
            {
-              QString user = url.user();
-              QString passwd = url.pass();
+              TQString user = url.user();
+              TQString passwd = url.pass();
 
               MetaData configData = slaveConfig->configData(url.protocol(), url.host());
               slave->setConfig(configData);
@@ -772,8 +772,8 @@ Scheduler::slotSlaveConnected()
     Slave *slave = (Slave *)sender();
 //    kdDebug(7006) << "slotSlaveConnected( " << slave << ")" << endl;
     slave->setConnected(true);
-    disconnect(slave, SIGNAL(connected()),
-               this, SLOT(slotSlaveConnected()));
+    disconnect(slave, TQT_SIGNAL(connected()),
+               this, TQT_SLOT(slotSlaveConnected()));
     emit slaveConnected(slave);
     assert(!coIdleSlaves->contains(slave));
     coIdleSlaves->append(slave);
@@ -781,7 +781,7 @@ Scheduler::slotSlaveConnected()
 }
 
 void
-Scheduler::slotSlaveError(int errorNr, const QString &errorMsg)
+Scheduler::slotSlaveError(int errorNr, const TQString &errorMsg)
 {
     Slave *slave = (Slave *)sender();
     if (!slave->isConnected() || (coIdleSlaves->find(slave) != -1))
@@ -795,7 +795,7 @@ bool
 Scheduler::_assignJobToSlave(KIO::Slave *slave, SimpleJob *job)
 {
 //    kdDebug(7006) << "_assignJobToSlave( " << job << ", " << slave << ")" << endl;
-    QString dummy;
+    TQString dummy;
     if ((slave->slaveProtocol() != KProtocolManager::slaveProtocol( job->url(), dummy ))
         ||
         (!newJobs.removeRef(job)))
@@ -838,10 +838,10 @@ Scheduler::_disconnectSlave(KIO::Slave *slave)
     delete list;
     coIdleSlaves->removeRef(slave);
     assert(!coIdleSlaves->contains(slave));
-    disconnect(slave, SIGNAL(connected()),
-               this, SLOT(slotSlaveConnected()));
-    disconnect(slave, SIGNAL(error(int, const QString &)),
-               this, SLOT(slotSlaveError(int, const QString &)));
+    disconnect(slave, TQT_SIGNAL(connected()),
+               this, TQT_SLOT(slotSlaveConnected()));
+    disconnect(slave, TQT_SIGNAL(error(int, const TQString &)),
+               this, TQT_SLOT(slotSlaveError(int, const TQString &)));
     if (slave->isAlive())
     {
        idleSlaves->append(slave);
@@ -860,23 +860,23 @@ Scheduler::_checkSlaveOnHold(bool b)
 }
 
 void
-Scheduler::_registerWindow(QWidget *wid)
+Scheduler::_registerWindow(TQWidget *wid)
 {
    if (!wid)
       return;
 
-   QObject *obj = static_cast<QObject *>(wid);
+   TQObject *obj = static_cast<TQObject *>(wid);
    if (!m_windowList.contains(obj))
    {
       // We must store the window Id because by the time
       // the destroyed signal is emitted we can no longer
-      // access QWidget::winId() (already destructed)
+      // access TQWidget::winId() (already destructed)
       WId windowId = wid->winId();
       m_windowList.insert(obj, windowId);
-      connect(wid, SIGNAL(destroyed(QObject *)),
-              this, SLOT(slotUnregisterWindow(QObject*)));
-      QByteArray params;
-      QDataStream stream(params, IO_WriteOnly);
+      connect(wid, TQT_SIGNAL(destroyed(TQObject *)),
+              this, TQT_SLOT(slotUnregisterWindow(TQObject*)));
+      TQByteArray params;
+      TQDataStream stream(params, IO_WriteOnly);
       stream << windowId;
       if( !kapp->dcopClient()->send( "kded", "kded",
                     "registerWindowId(long int)", params ) )
@@ -885,22 +885,22 @@ Scheduler::_registerWindow(QWidget *wid)
 }
 
 void
-Scheduler::slotUnregisterWindow(QObject *obj)
+Scheduler::slotUnregisterWindow(TQObject *obj)
 {
    if (!obj)
       return;
 
-   QMap<QObject *, WId>::Iterator it = m_windowList.find(obj);
+   TQMap<TQObject *, WId>::Iterator it = m_windowList.find(obj);
    if (it == m_windowList.end())
       return;
    WId windowId = it.data();
-   disconnect( it.key(), SIGNAL(destroyed(QObject *)),
-              this, SLOT(slotUnregisterWindow(QObject*)));
+   disconnect( it.key(), TQT_SIGNAL(destroyed(TQObject *)),
+              this, TQT_SLOT(slotUnregisterWindow(TQObject*)));
    m_windowList.remove( it );
    if (kapp)
    {
-      QByteArray params;
-      QDataStream stream(params, IO_WriteOnly);
+      TQByteArray params;
+      TQDataStream stream(params, IO_WriteOnly);
       stream << windowId;
       kapp->dcopClient()->send( "kded", "kded",
                     "unregisterWindowId(long int)", params );

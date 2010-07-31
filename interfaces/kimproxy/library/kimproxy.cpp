@@ -21,8 +21,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qglobal.h>
-#include <qpixmapcache.h>
+#include <tqglobal.h>
+#include <tqpixmapcache.h>
 #include <dcopclient.h>
 #include <kapplication.h>
 #include <kdcopservicestarter.h> 
@@ -43,11 +43,11 @@ KIMProxy * KIMProxy::s_instance = 0L;
 
 struct AppPresenceCurrent
 {
-	QCString appId;
+	TQCString appId;
 	int presence;
 };
 
-class ContactPresenceListCurrent : public QValueList<AppPresenceCurrent>
+class ContactPresenceListCurrent : public TQValueList<AppPresenceCurrent>
 {
 	public:
 		// return value indicates if the supplied parameter was better than any existing presence
@@ -60,9 +60,9 @@ struct KIMProxy::Private
 {
 	DCOPClient * dc;
 	// list of the strings in use by KIMIface
-	QStringList presence_strings;
+	TQStringList presence_strings;
 	// list of the icon names in use by KIMIface
-	QStringList presence_icons;
+	TQStringList presence_icons;
 	// map of presences
 	PresenceStringMap presence_map;
 };
@@ -140,11 +140,11 @@ AppPresenceCurrent ContactPresenceListCurrent::best()
 // 	return best;
 // }
 // 
-// QCString bestAppId( AppPresence* ap )
+// TQCString bestAppId( AppPresence* ap )
 // {
 // 	Q_ASSERT( ap );
 // 	AppPresence::const_iterator it;
-// 	QCString bestAppId;
+// 	TQCString bestAppId;
 // 	it = ap->begin();
 // 	if ( it != ap->end() )
 // 	{
@@ -175,14 +175,14 @@ KIMProxy * KIMProxy::instance( DCOPClient * client )
 		return 0L;
 }
 
-KIMProxy::KIMProxy( DCOPClient* dc ) : DCOPObject( "KIMProxyIface" ), QObject(), d( new Private )
+KIMProxy::KIMProxy( DCOPClient* dc ) : DCOPObject( "KIMProxyIface" ), TQObject(), d( new Private )
 {
 	m_im_client_stubs.setAutoDelete( true );
 
 	d->dc = dc;
 	m_initialized = false;
-	connect( d->dc, SIGNAL( applicationRemoved( const QCString& ) ) , this, SLOT( unregisteredFromDCOP( const QCString& ) ) );
-	connect( d->dc, SIGNAL( applicationRegistered( const QCString& ) ) , this, SLOT( registeredToDCOP( const QCString& ) ) );
+	connect( d->dc, TQT_SIGNAL( applicationRemoved( const TQCString& ) ) , this, TQT_SLOT( unregisteredFromDCOP( const TQCString& ) ) );
+	connect( d->dc, TQT_SIGNAL( applicationRegistered( const TQCString& ) ) , this, TQT_SLOT( registeredToDCOP( const TQCString& ) ) );
 	d->dc->setNotifications( true );
 
 	d->presence_strings.append( "Unknown" );
@@ -197,14 +197,14 @@ KIMProxy::KIMProxy( DCOPClient* dc ) : DCOPObject( "KIMProxyIface" ), QObject(),
 	d->presence_icons.append( "presence_away" );
 	d->presence_icons.append( "presence_online" );
 	
-	//QCString senderApp = "Kopete";
-	//QCString senderObjectId = "KIMIface";
-	QCString method = "contactPresenceChanged( QString, QCString, int )";
-	//QCString receiverObjectId = "KIMProxyIface";
+	//TQCString senderApp = "Kopete";
+	//TQCString senderObjectId = "KIMIface";
+	TQCString method = "contactPresenceChanged( TQString, TQCString, int )";
+	//TQCString receiverObjectId = "KIMProxyIface";
 	
 	// FIXME: make this work when the sender object id is set to KIMIFace
 	if ( !connectDCOPSignal( 0, 0, method, method, false ) )
-		KMessageBox::information( 0, QString( "Couldn't connect DCOP signal.\nWon't receive any status notifications!" ) );
+		KMessageBox::information( 0, TQString( "Couldn't connect DCOP signal.\nWon't receive any status notifications!" ) );
 }
 
 KIMProxy::~KIMProxy( )
@@ -221,12 +221,12 @@ bool KIMProxy::initialize()
 		if ( KServiceType::serviceType( IM_SERVICE_TYPE ) ) 
 		{
 			//kdDebug( 790 ) << k_funcinfo << endl;
-			QCString dcopObjectId = "KIMIface";
+			TQCString dcopObjectId = "KIMIface";
 	
 			// see what apps implementing our service type are out there
 			KService::List offers = KServiceType::offers( IM_SERVICE_TYPE );
 			KService::List::iterator offer;
-			typedef QValueList<QCString> QCStringList;
+			typedef TQValueList<TQCString> QCStringList;
 			QCStringList registeredApps = d->dc->registeredApplications();
 			QCStringList::iterator app;
 			const QCStringList::iterator end = registeredApps.end();
@@ -237,12 +237,12 @@ bool KIMProxy::initialize()
 				//for each offer
 				for ( offer = offers.begin(); offer != offers.end(); ++offer )
 				{
-					QCString dcopService = (*offer)->property("X-DCOP-ServiceName").toString().latin1();
+					TQCString dcopService = (*offer)->property("X-DCOP-ServiceName").toString().latin1();
 					if ( !dcopService.isEmpty() )
 					{
 						//kdDebug( 790 ) << " is it: " << dcopService << "?" << endl;
 						// get the application name ( minus any process ID )
-						QCString instanceName =  (*app).left( dcopService.length() );
+						TQCString instanceName =  (*app).left( dcopService.length() );
 						// if the application implements the dcop service, add it 
 						if ( instanceName == dcopService )
 						{
@@ -263,7 +263,7 @@ bool KIMProxy::initialize()
 	return !m_im_client_stubs.isEmpty();
 }
 
-void KIMProxy::registeredToDCOP( const QCString& appId )
+void KIMProxy::registeredToDCOP( const TQCString& appId )
 {
 	//kdDebug( 790 ) << k_funcinfo << " appId '" << appId << "'" << endl;
 	// check that appId implements our service
@@ -279,8 +279,8 @@ void KIMProxy::registeredToDCOP( const QCString& appId )
 	KService::List::const_iterator it;
 	for ( it = offers.begin(); it != offers.end(); ++it )
 	{
-		QCString dcopObjectId = "KIMIface";
-		QCString dcopService = (*it)->property("X-DCOP-ServiceName").toString().latin1();
+		TQCString dcopObjectId = "KIMIface";
+		TQCString dcopService = (*it)->property("X-DCOP-ServiceName").toString().latin1();
 		if ( appId.left( dcopService.length() ) == dcopService )
 		{
 			// if it's not already known, insert it
@@ -298,7 +298,7 @@ void KIMProxy::registeredToDCOP( const QCString& appId )
 	//	emit sigPresenceInfoExpired();
 }
 
-void KIMProxy::unregisteredFromDCOP( const QCString& appId )
+void KIMProxy::unregisteredFromDCOP( const TQCString& appId )
 {
 	//kdDebug( 790 ) << k_funcinfo << appId << endl;
 	if ( m_im_client_stubs.find( appId ) )
@@ -325,7 +325,7 @@ void KIMProxy::unregisteredFromDCOP( const QCString& appId )
 	}
 }
 
-void KIMProxy::contactPresenceChanged( QString uid, QCString appId, int presence )
+void KIMProxy::contactPresenceChanged( TQString uid, TQCString appId, int presence )
 {
 	// update the presence map
 	//kdDebug( 790 ) << k_funcinfo << "uid: " << uid << " appId: " << appId << " presence " << presence << endl;
@@ -343,7 +343,7 @@ void KIMProxy::contactPresenceChanged( QString uid, QCString appId, int presence
 	}
 }
 
-int KIMProxy::presenceNumeric( const QString& uid )
+int KIMProxy::presenceNumeric( const TQString& uid )
 {
 	AppPresenceCurrent ap;
 	ap.presence = 0;
@@ -355,7 +355,7 @@ int KIMProxy::presenceNumeric( const QString& uid )
 	return ap.presence;
 }
 
-QString KIMProxy::presenceString( const QString& uid )
+TQString KIMProxy::presenceString( const TQString& uid )
 {
 	AppPresenceCurrent ap;
 	ap.presence = 0;
@@ -365,12 +365,12 @@ QString KIMProxy::presenceString( const QString& uid )
 		ap = presence.best();
 	}
 	if ( ap.appId.isEmpty() )
-		return QString::null;
+		return TQString::null;
 	else
 		return d->presence_strings[ ap.presence ];
 }
 
-QPixmap KIMProxy::presenceIcon( const QString& uid )
+TQPixmap KIMProxy::presenceIcon( const TQString& uid )
 {
 	AppPresenceCurrent ap;
 	ap.presence = 0;
@@ -381,8 +381,8 @@ QPixmap KIMProxy::presenceIcon( const QString& uid )
 	}
 	if ( ap.appId.isEmpty() )
 	{
-		//kdDebug( 790 ) << k_funcinfo << "returning a null QPixmap because we were asked for an icon for a uid we know nothing about" << endl;
-		return QPixmap();
+		//kdDebug( 790 ) << k_funcinfo << "returning a null TQPixmap because we were asked for an icon for a uid we know nothing about" << endl;
+		return TQPixmap();
 	}
 	else
 	{
@@ -391,19 +391,19 @@ QPixmap KIMProxy::presenceIcon( const QString& uid )
 	}
 }
 
-QStringList KIMProxy::allContacts()
+TQStringList KIMProxy::allContacts()
 {
-	QStringList value = d->presence_map.keys();
+	TQStringList value = d->presence_map.keys();
 	return value;
 }
 
-QStringList KIMProxy::reachableContacts()
+TQStringList KIMProxy::reachableContacts()
 {
-	QStringList value;
+	TQStringList value;
 	
 	if ( initialize() )
 	{
-		QDictIterator<KIMIface_stub> it( m_im_client_stubs );
+		TQDictIterator<KIMIface_stub> it( m_im_client_stubs );
 		for ( ; it.current(); ++it )
 		{
 			value += it.current()->reachableContacts( );
@@ -412,9 +412,9 @@ QStringList KIMProxy::reachableContacts()
 	return value;
 }
 
-QStringList KIMProxy::onlineContacts()
+TQStringList KIMProxy::onlineContacts()
 {
-	QStringList value;
+	TQStringList value;
 	PresenceStringMap::iterator it = d->presence_map.begin();
 	const PresenceStringMap::iterator end= d->presence_map.end();
 	for ( ; it != end; ++it )
@@ -424,13 +424,13 @@ QStringList KIMProxy::onlineContacts()
 	return value;
 }
 
-QStringList KIMProxy::fileTransferContacts()
+TQStringList KIMProxy::fileTransferContacts()
 {
-	QStringList value;
+	TQStringList value;
 	
 	if ( initialize() )
 	{
-		QDictIterator<KIMIface_stub> it( m_im_client_stubs );
+		TQDictIterator<KIMIface_stub> it( m_im_client_stubs );
 		for ( ; it.current(); ++it )
 		{
 			value += it.current()->fileTransferContacts( );
@@ -439,14 +439,14 @@ QStringList KIMProxy::fileTransferContacts()
 	return value;
 }
 
-bool KIMProxy::isPresent( const QString& uid )
+bool KIMProxy::isPresent( const TQString& uid )
 {
 	return ( !d->presence_map[ uid ].isEmpty() );
 }
 
-QString KIMProxy::displayName( const QString& uid )
+TQString KIMProxy::displayName( const TQString& uid )
 {
-	QString name;
+	TQString name;
 	if ( initialize() )
 	{
 		if ( KIMIface_stub* s = stubForUid( uid ) )
@@ -456,7 +456,7 @@ QString KIMProxy::displayName( const QString& uid )
     return name;
 }
 
-bool KIMProxy::canReceiveFiles( const QString & uid )
+bool KIMProxy::canReceiveFiles( const TQString & uid )
 {
 	if ( initialize() )
 	{
@@ -466,7 +466,7 @@ bool KIMProxy::canReceiveFiles( const QString & uid )
 	return false;
 }
 
-bool KIMProxy::canRespond( const QString & uid )
+bool KIMProxy::canRespond( const TQString & uid )
 {
 	if ( initialize() )
 	{
@@ -476,17 +476,17 @@ bool KIMProxy::canRespond( const QString & uid )
 	return false;
 }
 
-QString KIMProxy::context( const QString & uid )
+TQString KIMProxy::context( const TQString & uid )
 {
 	if ( initialize() )
 	{
 		if ( KIMIface_stub* s = stubForUid( uid ) )
 			return s->context( uid );
 	}
-	return QString::null;
+	return TQString::null;
 }
 	
-void KIMProxy::chatWithContact( const QString& uid )
+void KIMProxy::chatWithContact( const TQString& uid )
 {
 	if ( initialize() )
 	{
@@ -499,7 +499,7 @@ void KIMProxy::chatWithContact( const QString& uid )
 	return;
 }
 
-void KIMProxy::messageContact( const QString& uid, const QString& message )
+void KIMProxy::messageContact( const TQString& uid, const TQString& message )
 {
 	if ( initialize() )
 	{
@@ -512,11 +512,11 @@ void KIMProxy::messageContact( const QString& uid, const QString& message )
 	return;
 }
 
-void KIMProxy::sendFile(const QString &uid, const KURL &sourceURL, const QString &altFileName, uint fileSize )
+void KIMProxy::sendFile(const TQString &uid, const KURL &sourceURL, const TQString &altFileName, uint fileSize )
 {
 	if ( initialize() )
 	{
-		QDictIterator<KIMIface_stub> it( m_im_client_stubs );
+		TQDictIterator<KIMIface_stub> it( m_im_client_stubs );
 		for ( ; it.current(); ++it )
 		{
 			if ( it.current()->canReceiveFiles( uid ) )
@@ -530,7 +530,7 @@ void KIMProxy::sendFile(const QString &uid, const KURL &sourceURL, const QString
 	return;
 }
 
-bool KIMProxy::addContact( const QString &contactId, const QString &protocol )
+bool KIMProxy::addContact( const TQString &contactId, const TQString &protocol )
 {
 	if ( initialize() )
 	{
@@ -540,14 +540,14 @@ bool KIMProxy::addContact( const QString &contactId, const QString &protocol )
 	return false;
 }
 
-QString KIMProxy::locate( const QString & contactId, const QString & protocol )
+TQString KIMProxy::locate( const TQString & contactId, const TQString & protocol )
 {
 	if ( initialize() )
 	{
 		if ( KIMIface_stub* s = stubForProtocol( protocol ) )
 		return s->locate( contactId, protocol );
 	}
-	return QString::null;
+	return TQString::null;
 }
 
 bool KIMProxy::imAppsAvailable()
@@ -557,15 +557,15 @@ bool KIMProxy::imAppsAvailable()
 
 bool KIMProxy::startPreferredApp()
 {
-	QString preferences = QString("[X-DCOP-ServiceName] = '%1'").arg( preferredApp() );
+	TQString preferences = TQString("[X-DCOP-ServiceName] = '%1'").arg( preferredApp() );
 	// start/find an instance of DCOP/InstantMessenger
-	QString error;
-	QCString dcopService;
+	TQString error;
+	TQCString dcopService;
 	// Get a preferred IM client.
 	// The app will notify itself to us using registeredToDCOP, so we don't need to record a stub for it here
 	// FIXME: error in preferences, see debug output
-	preferences = QString::null;
-	int result = KDCOPServiceStarter::self()->findServiceFor( IM_SERVICE_TYPE, QString::null, preferences, &error, &dcopService );
+	preferences = TQString::null;
+	int result = KDCOPServiceStarter::self()->findServiceFor( IM_SERVICE_TYPE, TQString::null, preferences, &error, &dcopService );
 
 	kdDebug( 790 ) << k_funcinfo << "error was: " << error << ", dcopService: " << dcopService << endl;
 
@@ -573,7 +573,7 @@ bool KIMProxy::startPreferredApp()
 }
 
 
-void KIMProxy::pollAll( const QString &uid )
+void KIMProxy::pollAll( const TQString &uid )
 {
 /*	// We only need to call this function if we don't have any data at all
 	// otherwise, the data will be kept fresh by received presence change
@@ -582,7 +582,7 @@ void KIMProxy::pollAll( const QString &uid )
 	{
 		AppPresence *presence = new AppPresence();
 		// record current presence from known clients
-		QDictIterator<KIMIface_stub> it( m_im_client_stubs );
+		TQDictIterator<KIMIface_stub> it( m_im_client_stubs );
 		for ( ; it.current(); ++it )
 		{
 			presence->insert( it.currentKey().ascii(), it.current()->presenceStatus( uid ) ); // m_im_client_stubs has qstring keys...
@@ -591,13 +591,13 @@ void KIMProxy::pollAll( const QString &uid )
 	}*/
 }
 
-void KIMProxy::pollApp( const QCString & appId )
+void KIMProxy::pollApp( const TQCString & appId )
 {
 	//kdDebug( 790 ) << k_funcinfo << endl;
 	KIMIface_stub * appStub = m_im_client_stubs[ appId ];
-	QStringList contacts = m_im_client_stubs[ appId ]->allContacts();
-	QStringList::iterator it = contacts.begin();
-	QStringList::iterator end = contacts.end();
+	TQStringList contacts = m_im_client_stubs[ appId ]->allContacts();
+	TQStringList::iterator it = contacts.begin();
+	TQStringList::iterator end = contacts.end();
 	for ( ; it != end; ++it )
 	{
 		ContactPresenceListCurrent current = d->presence_map[ *it ];
@@ -613,7 +613,7 @@ void KIMProxy::pollApp( const QCString & appId )
 	}
 }
 
-KIMIface_stub * KIMProxy::stubForUid( const QString &uid )
+KIMIface_stub * KIMProxy::stubForUid( const TQString &uid )
 {
 	// get best appPresence
 	AppPresenceCurrent ap = d->presence_map[ uid ].best();
@@ -621,18 +621,18 @@ KIMIface_stub * KIMProxy::stubForUid( const QString &uid )
 		return m_im_client_stubs.find( ap.appId );
 }
 
-KIMIface_stub * KIMProxy::stubForProtocol( const QString &protocol)
+KIMIface_stub * KIMProxy::stubForProtocol( const TQString &protocol)
 {
 	KIMIface_stub * app;
 	// see if the preferred client supports this protocol
-	QString preferred = preferredApp();
+	TQString preferred = preferredApp();
 	if ( ( app = m_im_client_stubs.find( preferred ) ) )
 	{
 		if ( app->protocols().grep( protocol ).count() > 0 )
 			return app;
 	}
 	// preferred doesn't do this protocol, try the first of the others that says it does
-	QDictIterator<KIMIface_stub> it( m_im_client_stubs );
+	TQDictIterator<KIMIface_stub> it( m_im_client_stubs );
 	for ( ; it.current(); ++it )
 	{
 		if ( it.current()->protocols().grep( protocol ).count() > 0 )
@@ -641,11 +641,11 @@ KIMIface_stub * KIMProxy::stubForProtocol( const QString &protocol)
 	return 0L;
 }
 
-QString KIMProxy::preferredApp()
+TQString KIMProxy::preferredApp()
 {
 	KConfig *store = new KSimpleConfig( IM_CLIENT_PREFERENCES_FILE );
 	store->setGroup( IM_CLIENT_PREFERENCES_SECTION );
-	QString preferredApp = store->readEntry( IM_CLIENT_PREFERENCES_ENTRY );
+	TQString preferredApp = store->readEntry( IM_CLIENT_PREFERENCES_ENTRY );
 	//kdDebug( 790 ) << k_funcinfo << "found preferred app: " << preferredApp << endl;
 	return preferredApp;
 }	

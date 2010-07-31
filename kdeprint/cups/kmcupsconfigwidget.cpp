@@ -20,13 +20,13 @@
 #include "kmcupsconfigwidget.h"
 #include "cupsinfos.h"
 
-#include <qlabel.h>
-#include <qgroupbox.h>
-#include <qlineedit.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qvalidator.h>
+#include <tqlabel.h>
+#include <tqgroupbox.h>
+#include <tqlineedit.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqvalidator.h>
 
 #include <klocale.h>
 #include <kcursor.h>
@@ -36,64 +36,64 @@
 class PortValidator : public QIntValidator
 {
 public:
-	PortValidator(QWidget *parent, const char *name = 0);
-	virtual QValidator::State validate(QString&, int&) const;
+	PortValidator(TQWidget *parent, const char *name = 0);
+	virtual TQValidator::State validate(TQString&, int&) const;
 };
 
-PortValidator::PortValidator(QWidget *parent, const char *name)
-: QIntValidator(1, 65535, parent, name)
+PortValidator::PortValidator(TQWidget *parent, const char *name)
+: TQIntValidator(1, 65535, parent, name)
 {
 }
 
-QValidator::State PortValidator::validate(QString& txt, int&) const
+TQValidator::State PortValidator::validate(TQString& txt, int&) const
 {
 	bool 	ok(false);
 	int 	p = txt.toInt(&ok);
 	if (txt.isEmpty())
-		return QValidator::Intermediate;
+		return TQValidator::Intermediate;
 	else if (ok && p >= bottom() && p <= top())
-		return QValidator::Acceptable;
-	return QValidator::Invalid;
+		return TQValidator::Acceptable;
+	return TQValidator::Invalid;
 }
 
 //******************************************************************************************
 
-KMCupsConfigWidget::KMCupsConfigWidget(QWidget *parent, const char *name)
-: QWidget(parent,name)
+KMCupsConfigWidget::KMCupsConfigWidget(TQWidget *parent, const char *name)
+: TQWidget(parent,name)
 {
 	// widget creation
-	QGroupBox	*m_hostbox = new QGroupBox(0, Qt::Vertical, i18n("Server Information"), this);
-	QGroupBox	*m_loginbox = new QGroupBox(0, Qt::Vertical, i18n("Account Information"), this);
-	QLabel	*m_hostlabel = new QLabel(i18n("&Host:"), m_hostbox);
-	QLabel	*m_portlabel = new QLabel(i18n("&Port:"), m_hostbox);
-	m_host = new QLineEdit(m_hostbox);
-	m_port = new QLineEdit(m_hostbox);
+	QGroupBox	*m_hostbox = new TQGroupBox(0, Qt::Vertical, i18n("Server Information"), this);
+	QGroupBox	*m_loginbox = new TQGroupBox(0, Qt::Vertical, i18n("Account Information"), this);
+	QLabel	*m_hostlabel = new TQLabel(i18n("&Host:"), m_hostbox);
+	QLabel	*m_portlabel = new TQLabel(i18n("&Port:"), m_hostbox);
+	m_host = new TQLineEdit(m_hostbox);
+	m_port = new TQLineEdit(m_hostbox);
 	m_hostlabel->setBuddy(m_host);
 	m_portlabel->setBuddy(m_port);
 	m_port->setValidator(new PortValidator(m_port));
-	m_login = new QLineEdit(m_loginbox);
-	QLabel	*m_loginlabel = new QLabel(i18n("&User:"), m_loginbox);
-	QLabel	*m_passwordlabel = new QLabel(i18n("Pass&word:"), m_loginbox);
-	m_password = new QLineEdit(m_loginbox);
-	m_password->setEchoMode(QLineEdit::Password);
-	m_savepwd = new QCheckBox( i18n( "&Store password in configuration file" ), m_loginbox );
+	m_login = new TQLineEdit(m_loginbox);
+	QLabel	*m_loginlabel = new TQLabel(i18n("&User:"), m_loginbox);
+	QLabel	*m_passwordlabel = new TQLabel(i18n("Pass&word:"), m_loginbox);
+	m_password = new TQLineEdit(m_loginbox);
+	m_password->setEchoMode(TQLineEdit::Password);
+	m_savepwd = new TQCheckBox( i18n( "&Store password in configuration file" ), m_loginbox );
 	m_savepwd->setCursor( KCursor::handCursor() );
-	m_anonymous = new QCheckBox(i18n("Use &anonymous access"), m_loginbox);
+	m_anonymous = new TQCheckBox(i18n("Use &anonymous access"), m_loginbox);
 	m_anonymous->setCursor(KCursor::handCursor());
 	m_loginlabel->setBuddy(m_login);
 	m_passwordlabel->setBuddy(m_password);
 
 	// layout creation
-	QVBoxLayout	*lay0 = new QVBoxLayout(this, 0, 10);
+	QVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, 10);
 	lay0->addWidget(m_hostbox,1);
 	lay0->addWidget(m_loginbox,1);
-	QGridLayout	*lay2 = new QGridLayout(m_hostbox->layout(), 2, 2, 10);
+	QGridLayout	*lay2 = new TQGridLayout(m_hostbox->layout(), 2, 2, 10);
 	lay2->setColStretch(1,1);
 	lay2->addWidget(m_hostlabel,0,0);
 	lay2->addWidget(m_portlabel,1,0);
 	lay2->addWidget(m_host,0,1);
 	lay2->addWidget(m_port,1,1);
-	QGridLayout	*lay3 = new QGridLayout(m_loginbox->layout(), 4, 2, 10);
+	QGridLayout	*lay3 = new TQGridLayout(m_loginbox->layout(), 4, 2, 10);
 	lay3->setColStretch(1,1);
 	lay3->addWidget(m_loginlabel,0,0);
 	lay3->addWidget(m_passwordlabel,1,0);
@@ -103,16 +103,16 @@ KMCupsConfigWidget::KMCupsConfigWidget(QWidget *parent, const char *name)
 	lay3->addMultiCellWidget(m_anonymous,3,3,0,1);
 
 	// connections
-	connect(m_anonymous,SIGNAL(toggled(bool)),m_login,SLOT(setDisabled(bool)));
-	connect(m_anonymous,SIGNAL(toggled(bool)),m_password,SLOT(setDisabled(bool)));
-	connect(m_anonymous,SIGNAL(toggled(bool)),m_savepwd,SLOT(setDisabled(bool)));
+	connect(m_anonymous,TQT_SIGNAL(toggled(bool)),m_login,TQT_SLOT(setDisabled(bool)));
+	connect(m_anonymous,TQT_SIGNAL(toggled(bool)),m_password,TQT_SLOT(setDisabled(bool)));
+	connect(m_anonymous,TQT_SIGNAL(toggled(bool)),m_savepwd,TQT_SLOT(setDisabled(bool)));
 }
 
 void KMCupsConfigWidget::load()
 {
 	CupsInfos	*inf = CupsInfos::self();
 	m_host->setText(inf->host());
-	m_port->setText(QString::number(inf->port()));
+	m_port->setText(TQString::number(inf->port()));
 	if (inf->login().isEmpty())
 		m_anonymous->setChecked(true);
 	else
@@ -130,8 +130,8 @@ void KMCupsConfigWidget::save(bool sync)
 	inf->setPort(m_port->text().toInt());
 	if (m_anonymous->isChecked())
 	{
-		inf->setLogin(QString::null);
-		inf->setPassword(QString::null);
+		inf->setLogin(TQString::null);
+		inf->setPassword(TQString::null);
 		inf->setSavePassword( false );
 	}
 	else
@@ -148,10 +148,10 @@ void KMCupsConfigWidget::saveConfig(KConfig *conf)
 	conf->setGroup("CUPS");
 	conf->writeEntry("Host",m_host->text());
 	conf->writeEntry("Port",m_port->text().toInt());
-	conf->writeEntry("Login",(m_anonymous->isChecked() ? QString::null : m_login->text()));
+	conf->writeEntry("Login",(m_anonymous->isChecked() ? TQString::null : m_login->text()));
 	conf->writeEntry( "SavePassword", ( m_anonymous->isChecked() ? false : m_savepwd->isChecked() ) );
 	if ( m_savepwd->isChecked() && !m_anonymous->isChecked() )
-		conf->writeEntry( "Password", ( m_anonymous->isChecked() ? QString::null : KStringHandler::obscure( m_password->text() ) ) );
+		conf->writeEntry( "Password", ( m_anonymous->isChecked() ? TQString::null : KStringHandler::obscure( m_password->text() ) ) );
 	else
 		conf->deleteEntry( "Password" );
 	// synchronize CupsInfos object

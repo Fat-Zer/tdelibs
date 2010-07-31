@@ -19,7 +19,7 @@
 #ifndef _KACTION_SELECTOR_H_
 #define _KACTION_SELECTOR_H_
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kdelibs_export.h>
 
@@ -48,13 +48,13 @@ class KActionSelectorPrivate;
     see keyboardEnabled.
 
     Note that this may conflist with keyboard selection in the selected list box,
-    if you set that to anything else than QListBox::Single (which is the default).
+    if you set that to anything else than TQListBox::Single (which is the default).
 
     To use it, simply construct an instance and then add items to the two listboxes,
     available through lbAvailable() and lbSelected(). Whenever you want, you can retrieve
-    the selected options using QListBox methods on lbSelected().
+    the selected options using TQListBox methods on lbSelected().
 
-    This way, you can use your own QListBoxItem class, allowing you to easily
+    This way, you can use your own TQListBoxItem class, allowing you to easily
     store object data in those.
 
     When an item is moved to a listbox, it is placed below the current item
@@ -76,31 +76,31 @@ class KActionSelectorPrivate;
     @author Anders Lund <anders@alweb.dk>
 */
 
-class KDEUI_EXPORT KActionSelector : public QWidget {
+class KDEUI_EXPORT KActionSelector : public TQWidget {
   Q_OBJECT
   Q_ENUMS( ButtonIconSize InsertionPolicy )
   Q_PROPERTY( bool moveOnDoubleClick READ moveOnDoubleClick WRITE setMoveOnDoubleClick )
   Q_PROPERTY( bool keyboardEnabled READ keyboardEnabled WRITE setKeyboardEnabled )
-  Q_PROPERTY( QString availableLabel READ availableLabel WRITE setAvailableLabel )
-  Q_PROPERTY( QString selectedLabel READ selectedLabel WRITE setSelectedLabel )
+  Q_PROPERTY( TQString availableLabel READ availableLabel WRITE setAvailableLabel )
+  Q_PROPERTY( TQString selectedLabel READ selectedLabel WRITE setSelectedLabel )
   Q_PROPERTY( ButtonIconSize buttonIconSize READ buttonIconSize WRITE setButtonIconSize )
   Q_PROPERTY( InsertionPolicy availableInsertionPolicy READ availableInsertionPolicy WRITE setAvailableInsertionPolicy )
   Q_PROPERTY( InsertionPolicy selectedInsertionPolicy READ selectedInsertionPolicy WRITE setSelectedInsertionPolicy )
   Q_PROPERTY( bool showUpDownButtons READ showUpDownButtons WRITE setShowUpDownButtons )
 
 public:
-  KActionSelector( QWidget *parent=0, const char *name=0 );
+  KActionSelector( TQWidget *parent=0, const char *name=0 );
   ~KActionSelector();
 
   /**
-     @return The QListBox holding the available actions
+     @return The TQListBox holding the available actions
   */
-  QListBox *availableListBox() const;
+  TQListBox *availableListBox() const;
 
   /**
-     @return The QListBox holding the selected actions
+     @return The TQListBox holding the selected actions
   */
-  QListBox *selectedListBox() const;
+  TQListBox *selectedListBox() const;
 
   /**
     This enum indentifies the moving buttons
@@ -193,7 +193,7 @@ public:
   /**
     @return The text of the label for the available items listbox.
   */
-  QString availableLabel() const;
+  TQString availableLabel() const;
 
   /**
     Sets the label for the available items listbox to @p text.
@@ -201,12 +201,12 @@ public:
     if you have a single ampersand in the text, the following character
     will become the accellerator to focus te listbox.
   */
-  void setAvailableLabel( const QString & text );
+  void setAvailableLabel( const TQString & text );
 
   /**
     @return the label of the selected items listbox.
   */
-  QString selectedLabel() const;
+  TQString selectedLabel() const;
 
   /**
     Sets the label for the selected items listbox to @p text.
@@ -214,7 +214,7 @@ public:
     if you have a single ampersand in the text, the following character
     will become the accellerator to focus te listbox.
   */
-  void setSelectedLabel( const QString & text );
+  void setSelectedLabel( const TQString & text );
 
   /**
     @return the current ButtonIconSize.
@@ -268,25 +268,25 @@ public:
     Sets the pixmap of the button @p button to @p icon.
     It calls SmallIconSet(pm) to generate the icon set.
   */
-  void setButtonIcon( const QString &icon, MoveButton button );
+  void setButtonIcon( const TQString &icon, MoveButton button );
 
   /**
     Sets the iconset for button @p button to @p iconset.
     You can use this method to et a costum icon set. Either
-    created by QIconSet, or use the application instance of
+    created by TQIconSet, or use the application instance of
     KIconLoader (recommended).
   */
-  void setButtonIconSet( const QIconSet &iconset, MoveButton button );
+  void setButtonIconSet( const TQIconSet &iconset, MoveButton button );
 
   /**
     Sets the tooltip for the button @p button to @p tip.
   */
-  void setButtonTooltip( const QString &tip, MoveButton button );
+  void setButtonTooltip( const TQString &tip, MoveButton button );
 
   /**
     Sets the whatsthis help for button @p button to @p text.
   */
-  void setButtonWhatsThis( const QString &text, MoveButton button );
+  void setButtonWhatsThis( const TQString &text, MoveButton button );
 
   /**
      Sets the enabled state of all moving buttons to reflect the current
@@ -301,27 +301,27 @@ signals:
   /**
     Emitted when an item is moved to the "selected" listbox.
   */
-  void added( QListBoxItem *item );
+  void added( TQListBoxItem *item );
 
   /**
     Emitted when an item is moved out of the "selected" listbox.
   */
-  void removed( QListBoxItem *item );
+  void removed( TQListBoxItem *item );
 
   /**
     Emitted when an item is moved upwards in the "selected" listbox.
   */
-  void movedUp( QListBoxItem *item );
+  void movedUp( TQListBoxItem *item );
 
   /**
     Emitted when an item is moved downwards in the "selected" listbox.
   */
-  void movedDown( QListBoxItem *item );
+  void movedDown( TQListBoxItem *item );
 
   /**
     Emitted when an item is moved to the "selected" listbox.
   */
-//  void addedToSelection( QListBoxItem *item );
+//  void addedToSelection( TQListBoxItem *item );
 
 public slots:
   /**
@@ -334,12 +334,12 @@ protected:
   /**
     Reimplamented for internal reasons.
   */
-  void keyPressEvent( QKeyEvent * );
+  void keyPressEvent( TQKeyEvent * );
 
   /**
     Reimplemented for internal reasons.
   */
-  bool eventFilter( QObject *, QEvent * );
+  bool eventFilter( TQObject *, TQEvent * );
 
 private slots:
   /**
@@ -365,19 +365,19 @@ private slots:
   /**
     Moves the item @p item to the other listbox if moveOnDoubleClick is enabled.
   */
-  void  itemDoubleClicked( QListBoxItem *item );
+  void  itemDoubleClicked( TQListBoxItem *item );
 
   /**
     connected to both list boxes to set the buttons enabled
   */
-  void slotCurrentChanged( QListBoxItem * ) { setButtonsEnabled(); }
+  void slotCurrentChanged( TQListBoxItem * ) { setButtonsEnabled(); }
 
 private:
 
   /**
     Move item @p item to the other listbox
   */
-  void moveItem( QListBoxItem *item );
+  void moveItem( TQListBoxItem *item );
 
   /**
     loads the icons for the move buttons.
@@ -391,7 +391,7 @@ private:
     Note that if policy is Sorted, this will return -1.
     Sort the listbox after inserting the item in that case.
   */
-  int insertionIndex( QListBox *lb, InsertionPolicy policy );
+  int insertionIndex( TQListBox *lb, InsertionPolicy policy );
 
   /** @private
     Private data storage

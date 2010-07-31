@@ -22,7 +22,7 @@
 #ifndef KABC_ERRORHANDLER_H
 #define KABC_ERRORHANDLER_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -43,7 +43,7 @@ class KABC_EXPORT ErrorHandler
     /**
       Show error message.
     */
-    virtual void error( const QString &msg ) = 0;
+    virtual void error( const TQString &msg ) = 0;
 };
 
 /**
@@ -52,7 +52,7 @@ class KABC_EXPORT ErrorHandler
 class KABC_EXPORT ConsoleErrorHandler : public ErrorHandler
 {
   public:
-    virtual void error( const QString &msg );
+    virtual void error( const TQString &msg );
 };
 
 /**
@@ -64,7 +64,7 @@ class KABC_EXPORT ConsoleErrorHandler : public ErrorHandler
 class KABC_EXPORT GUIErrorHandler : public ErrorHandler
 {
   public:
-    virtual void error( const QString &msg );
+    virtual void error( const TQString &msg );
 };
 
 /**
@@ -79,12 +79,12 @@ class KABC_EXPORT GuiErrorHandler : public ErrorHandler
       
       \param parent Widget which is used as parent for the error dialogs.
     */      
-    GuiErrorHandler( QWidget *parent );
+    GuiErrorHandler( TQWidget *parent );
   
-    virtual void error( const QString &msg );
+    virtual void error( const TQString &msg );
 
   private:
-    QWidget *mParent;
+    TQWidget *mParent;
     
     class Private;
     Private *d;

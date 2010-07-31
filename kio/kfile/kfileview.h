@@ -25,7 +25,7 @@
 class QPoint;
 class KActionCollection;
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include "kfileitem.h"
 #include "kfile.h"
@@ -55,22 +55,22 @@ public:
      */
     void highlightFile(const KFileItem *i) { emit fileHighlighted(i); }
 
-    void activateMenu( const KFileItem *i, const QPoint& pos ) {
+    void activateMenu( const KFileItem *i, const TQPoint& pos ) {
         emit activatedMenu( i, pos );
     }
 
-    void changeSorting( QDir::SortSpec sorting ) {
+    void changeSorting( TQDir::SortSpec sorting ) {
         emit sortingChanged( sorting );
     }
     
-    void dropURLs(const KFileItem *i, QDropEvent*e, const KURL::List&urls) {
+    void dropURLs(const KFileItem *i, TQDropEvent*e, const KURL::List&urls) {
         emit dropped(i, e, urls);
     }
 
 signals:
     void dirActivated(const KFileItem*);
 
-    void sortingChanged( QDir::SortSpec );
+    void sortingChanged( TQDir::SortSpec );
 
     /**
      * the item maybe be 0L, indicating that we're in multiselection mode and
@@ -78,8 +78,8 @@ signals:
      */
     void fileHighlighted(const KFileItem*);
     void fileSelected(const KFileItem*);
-    void activatedMenu( const KFileItem *i, const QPoint& );
-    void dropped(const KFileItem *, QDropEvent*, const KURL::List&);
+    void activatedMenu( const KFileItem *i, const TQPoint& );
+    void dropped(const KFileItem *, TQDropEvent*, const KURL::List&);
 };
 
 /**
@@ -111,21 +111,21 @@ public:
     void addItemList(const KFileItemList &list);
 
     /**
-      * a pure virtual function to get a QWidget, that can be added to
+      * a pure virtual function to get a TQWidget, that can be added to
       * other widgets. This function is needed to make it possible for
       * derived classes to derive from other widgets.
       **/
-    virtual QWidget *widget() = 0;
+    virtual TQWidget *widget() = 0;
 
     /**
      * ### As const-method, to be fixed in 3.0
      */
-    QWidget *widget() const { return const_cast<KFileView*>(this)->widget(); }
+    TQWidget *widget() const { return const_cast<KFileView*>(this)->widget(); }
 
     /**
      * Sets @p filename the current item in the view, if available.
      */
-    void setCurrentItem( const QString &filename );
+    void setCurrentItem( const TQString &filename );
 
     /**
      * Reimplement this to set @p item the current item in the view, e.g.
@@ -174,29 +174,29 @@ public:
       * Returns the sorting order of the internal list. Newly added files
       * are added through this sorting.
       */
-    QDir::SortSpec sorting() const { return m_sorting; }
+    TQDir::SortSpec sorting() const { return m_sorting; }
 
     /**
       * Sets the sorting order of the view.
       *
-      * Default is QDir::Name | QDir::IgnoreCase | QDir::DirsFirst
+      * Default is TQDir::Name | TQDir::IgnoreCase | TQDir::DirsFirst
       * Override this in your subclass and sort accordingly (usually by
       * setting the sorting-key for every item and telling QIconView
-      * or QListView to sort.
+      * or TQListView to sort.
       *
-      * A view may choose to use a different sorting than QDir::Name, Time
+      * A view may choose to use a different sorting than TQDir::Name, Time
       * or Size. E.g. to sort by mimetype or any possible string. Set the
-      * sorting to QDir::Unsorted for that and do the rest internally.
+      * sorting to TQDir::Unsorted for that and do the rest internally.
       *
       * @see sortingKey
       */
-    virtual void setSorting(QDir::SortSpec sort);
+    virtual void setSorting(TQDir::SortSpec sort);
 
     /**
      * Tells whether the current items are in reversed order (shortcut to
-     * sorting() & QDir::Reversed).
+     * sorting() & TQDir::Reversed).
      */
-    bool isReversed() const { return (m_sorting & QDir::Reversed); }
+    bool isReversed() const { return (m_sorting & TQDir::Reversed); }
 
     void sortReversed();
 
@@ -231,13 +231,13 @@ public:
      * somewhere, e.g. in a menu, where the user can choose between views.
      * @see setViewName
      */
-    QString viewName() const { return m_viewName; }
+    TQString viewName() const { return m_viewName; }
 
     /**
      * Sets the name of the view, which could be displayed somewhere.
      * E.g. "Image Preview".
      */
-    void setViewName( const QString& name ) { m_viewName = name; }
+    void setViewName( const TQString& name ) { m_viewName = name; }
 
     virtual void setParentView(KFileView *parent);
 
@@ -346,8 +346,8 @@ public:
 
     KFileViewSignaler * signaler() const { return sig; }
 
-    virtual void readConfig( KConfig *, const QString& group = QString::null );
-    virtual void writeConfig( KConfig *, const QString& group = QString::null);
+    virtual void readConfig( KConfig *, const TQString& group = TQString::null );
+    virtual void writeConfig( KConfig *, const TQString& group = TQString::null);
 
     /**
      * Various options for drag and drop support. 
@@ -375,27 +375,27 @@ public:
     int dropOptions();
     
     /**
-     * This method calculates a QString from the given parameters, that is
-     * suitable for sorting with e.g. QIconView or QListView. Their
-     * Item-classes usually have a setKey( const QString& ) method or a virtual
-     * method QString key() that is used for sorting.
+     * This method calculates a TQString from the given parameters, that is
+     * suitable for sorting with e.g. TQIconView or TQListView. Their
+     * Item-classes usually have a setKey( const TQString& ) method or a virtual
+     * method TQString key() that is used for sorting.
      *
      * @param value Any string that should be used as sort criterion
      * @param isDir Tells whether the key is computed for an item representing
      *              a directory (directories are usually sorted before files)
-     * @param sortSpec An ORed combination of QDir::SortSpec flags.
+     * @param sortSpec An ORed combination of TQDir::SortSpec flags.
      *                 Currently, the values IgnoreCase, Reversed and
      *                 DirsFirst are taken into account.
      */
-    static QString sortingKey( const QString& value, bool isDir, int sortSpec);
+    static TQString sortingKey( const TQString& value, bool isDir, int sortSpec);
 
     /**
-     * An overloaded method that takes not a QString, but a number as sort
+     * An overloaded method that takes not a TQString, but a number as sort
      * criterion. You can use this for file-sizes or dates/times for example.
      * If you use a time_t, you need to cast that to KIO::filesize_t because
      * of ambiguity problems.
      */
-    static QString sortingKey( KIO::filesize_t value, bool isDir,int sortSpec);
+    static TQString sortingKey( KIO::filesize_t value, bool isDir,int sortSpec);
 
     /**
      * @internal
@@ -411,9 +411,9 @@ protected:
     KFileViewSignaler *sig;
 
 private:
-    static QDir::SortSpec defaultSortSpec;
-    QDir::SortSpec m_sorting;
-    QString m_viewName;
+    static TQDir::SortSpec defaultSortSpec;
+    TQDir::SortSpec m_sorting;
+    TQString m_viewName;
 
     /**
      * counters

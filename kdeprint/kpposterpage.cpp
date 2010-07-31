@@ -23,27 +23,27 @@
 #include "kmfactory.h"
 #include "util.h"
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qlineedit.h>
-#include <qwhatsthis.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqtooltip.h>
+#include <tqlineedit.h>
+#include <tqwhatsthis.h>
 #include <kpushbutton.h>
 #include <klocale.h>
 #include <knuminput.h>
 #include <kiconloader.h>
 
-KPPosterPage::KPPosterPage( QWidget *parent, const char *name )
+KPPosterPage::KPPosterPage( TQWidget *parent, const char *name )
 	: KPrintDialogPage( parent, name )
 {
         //WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThis5_PosterPage = i18n( " <qt> "
+	TQString whatsThis5_PosterPage = i18n( " <qt> "
 			" 5. "
 			" </qt>" );
 
-	QString whatsThisEnablePosterPage = i18n( " <qt> "
+	TQString whatsThisEnablePosterPage = i18n( " <qt> "
                         " <b>Print Poster</b> (enabled or disabled). "
 			" <p>If you enable this option, you can print posters of different sizes "
 			" The printout will happen in the form <em>'tiles'</em> printed on smaller "
@@ -65,7 +65,7 @@ KPPosterPage::KPPosterPage( QWidget *parent, const char *name )
 			" </p> "
 			" </qt>" );
 
-	QString whatsThisTileSelectionPosterPage = i18n( " <qt> "
+	TQString whatsThisTileSelectionPosterPage = i18n( " <qt> "
                         " <b>Tile Selection widget</b> "
 			" <p>This GUI element is <em>not only for viewing</em> your selections: it also "
 			" lets you interactively select the tile(s) you want to print. "
@@ -86,7 +86,7 @@ KPPosterPage::KPPosterPage( QWidget *parent, const char *name )
 			" of) your poster, you must select at least one tile. </p> "
 			" </qt>" );
 
-	QString whatsThisPostersizePosterPage = i18n( " <qt> "
+	TQString whatsThisPostersizePosterPage = i18n( " <qt> "
                         " <b>Poster Size</b> "
 			" <p>Select the poster size you want from the dropdown list. </p> "
 			" Available sizes are all standard paper sizes up to "
@@ -105,7 +105,7 @@ KPPosterPage::KPPosterPage( QWidget *parent, const char *name )
 			" of) your poster, you must select at least one tile. </p> "
 			" </qt>" );
 
-	QString whatsThisPrintsizePosterPage = i18n( " <qt> "
+	TQString whatsThisPrintsizePosterPage = i18n( " <qt> "
                         " <b>Paper Size</b> "
 			" <p>This field indicates the paper size the poster tiles will be printed on. "
 			" To select a different paper size for your poster tiles, go to the 'General' tab "
@@ -129,7 +129,7 @@ KPPosterPage::KPPosterPage( QWidget *parent, const char *name )
 			" of) your poster, you must select at least one tile. </p> "
 			" </qt>" );
 
-	QString whatsThisCutmarginPosterPage = i18n( " <qt> "
+	TQString whatsThisCutmarginPosterPage = i18n( " <qt> "
                         " <b>Cut Margin selection</b> "
 			" <p>Slider and spinbox let you determine a <em>'cut margin'</em> which will be printed onto "
 			" each tile of your poster to help you cut the pieces as needed. </p>"
@@ -140,7 +140,7 @@ KPPosterPage::KPPosterPage( QWidget *parent, const char *name )
 			" keywords of its driver PPD file. </p> "
 			" </qt>" );
 
-	QString whatsThisTileOrderSelectionPosterPage = i18n( " <qt> "
+	TQString whatsThisTileOrderSelectionPosterPage = i18n( " <qt> "
                         " <b>Order and number of tile pages to be printed</b> "
 			" <p>This field displays and sets the individual tiles to be printed, as well as the order "
 			" for their printout. </p> "
@@ -159,43 +159,43 @@ KPPosterPage::KPPosterPage( QWidget *parent, const char *name )
 
 	setTitle( i18n( "Poster" ) );
 
-	m_postercheck = new QCheckBox( i18n( "&Print poster" ), this );
-          QWhatsThis::add(m_postercheck, whatsThisEnablePosterPage);
-	QWidget *dummy = new QWidget( this );
+	m_postercheck = new TQCheckBox( i18n( "&Print poster" ), this );
+          TQWhatsThis::add(m_postercheck, whatsThisEnablePosterPage);
+	TQWidget *dummy = new TQWidget( this );
 	m_preview = new PosterPreview( dummy );
-          QWhatsThis::add(m_preview, whatsThisTileSelectionPosterPage);
-	m_postersize = new QComboBox( dummy );
-          QWhatsThis::add(m_postersize, whatsThisPostersizePosterPage);
-	m_printsize = new QComboBox( dummy );
-          QWhatsThis::add(m_printsize, whatsThisPrintsizePosterPage);
+          TQWhatsThis::add(m_preview, whatsThisTileSelectionPosterPage);
+	m_postersize = new TQComboBox( dummy );
+          TQWhatsThis::add(m_postersize, whatsThisPostersizePosterPage);
+	m_printsize = new TQComboBox( dummy );
+          TQWhatsThis::add(m_printsize, whatsThisPrintsizePosterPage);
 	m_lockbtn = new KPushButton( dummy );
-          //QWhatsThis::add(m_lockbtn, whatsThis5_PosterPage);           //FIXME ASK_MICHAEL: which pushbutton would that be?
-	m_mediasize = new QLabel( dummy );
-          QWhatsThis::add(m_mediasize, whatsThisPrintsizePosterPage);
-	m_mediasize->setFrameStyle( QFrame::Panel|QFrame::Sunken );
-	QLabel *posterlab = new QLabel( i18n( "Poste&r size:" ), dummy );
-          QWhatsThis::add(posterlab, whatsThisPostersizePosterPage);
-	QLabel *medialab = new QLabel( i18n( "Media size:" ), dummy );
-          QWhatsThis::add(medialab, whatsThisPrintsizePosterPage);
-	QLabel *printlab = new QLabel( i18n( "Pri&nt size:" ), dummy );
-          QWhatsThis::add(printlab, whatsThisPrintsizePosterPage);
+          //TQWhatsThis::add(m_lockbtn, whatsThis5_PosterPage);           //FIXME ASK_MICHAEL: which pushbutton would that be?
+	m_mediasize = new TQLabel( dummy );
+          TQWhatsThis::add(m_mediasize, whatsThisPrintsizePosterPage);
+	m_mediasize->setFrameStyle( TQFrame::Panel|TQFrame::Sunken );
+	TQLabel *posterlab = new TQLabel( i18n( "Poste&r size:" ), dummy );
+          TQWhatsThis::add(posterlab, whatsThisPostersizePosterPage);
+	TQLabel *medialab = new TQLabel( i18n( "Media size:" ), dummy );
+          TQWhatsThis::add(medialab, whatsThisPrintsizePosterPage);
+	TQLabel *printlab = new TQLabel( i18n( "Pri&nt size:" ), dummy );
+          TQWhatsThis::add(printlab, whatsThisPrintsizePosterPage);
 	posterlab->setBuddy( m_postersize );
 	printlab->setBuddy( m_printsize );
 	m_cutmargin = new KIntNumInput( 5, dummy );
-          QWhatsThis::add(m_cutmargin, whatsThisCutmarginPosterPage);
+          TQWhatsThis::add(m_cutmargin, whatsThisCutmarginPosterPage);
 	// xgettext:no-c-format
 	m_cutmargin->setLabel( i18n( "C&ut margin (% of media):" ) );
 	m_cutmargin->setRange( 0, 100, 2, true );                     // step width was too big, changed from 10 to 2 (-kp-)
-	m_selection = new QLineEdit( dummy );
-          QWhatsThis::add(m_selection, whatsThisTileOrderSelectionPosterPage);
-	QLabel *selectionlab = new QLabel( i18n( "&Tile pages (to be printed):" ), dummy );
-          QWhatsThis::add(selectionlab, whatsThisTileOrderSelectionPosterPage);
+	m_selection = new TQLineEdit( dummy );
+          TQWhatsThis::add(m_selection, whatsThisTileOrderSelectionPosterPage);
+	TQLabel *selectionlab = new TQLabel( i18n( "&Tile pages (to be printed):" ), dummy );
+          TQWhatsThis::add(selectionlab, whatsThisTileOrderSelectionPosterPage);
 	selectionlab->setBuddy( m_selection );
 	m_lockbtn->setToggleButton( true );
 	m_lockbtn->setPixmap( SmallIcon( "encrypted" ) );
 	m_lockbtn->setOn( true );
 	m_lockbtn->setFixedSize( m_lockbtn->sizeHint() );
-	QToolTip::add( m_lockbtn, i18n( "Link/unlink poster and print size" ) );
+	TQToolTip::add( m_lockbtn, i18n( "Link/unlink poster and print size" ) );
 
 	for ( int i=0; i<KPrinter::NPageSize-1; i++ )
 	{
@@ -205,15 +205,15 @@ KPPosterPage::KPPosterPage( QWidget *parent, const char *name )
 	m_postersize->setCurrentItem( findIndex( KPrinter::A3 ) );
 	slotPosterSizeChanged( m_postersize->currentItem() );
 
-	connect( m_postercheck, SIGNAL( toggled( bool ) ), dummy, SLOT( setEnabled( bool ) ) );
+	connect( m_postercheck, TQT_SIGNAL( toggled( bool ) ), dummy, TQT_SLOT( setEnabled( bool ) ) );
 	dummy->setEnabled( false );
-	connect( m_postersize, SIGNAL( activated( int ) ), SLOT( slotPosterSizeChanged( int ) ) );
-	connect( m_cutmargin, SIGNAL( valueChanged( int ) ), SLOT( slotMarginChanged( int ) ) );
-	connect( m_lockbtn, SIGNAL( toggled( bool ) ), m_printsize, SLOT( setDisabled( bool ) ) );
+	connect( m_postersize, TQT_SIGNAL( activated( int ) ), TQT_SLOT( slotPosterSizeChanged( int ) ) );
+	connect( m_cutmargin, TQT_SIGNAL( valueChanged( int ) ), TQT_SLOT( slotMarginChanged( int ) ) );
+	connect( m_lockbtn, TQT_SIGNAL( toggled( bool ) ), m_printsize, TQT_SLOT( setDisabled( bool ) ) );
 	m_printsize->setEnabled( false );
-	connect( m_lockbtn, SIGNAL( toggled( bool ) ), SLOT( slotLockToggled( bool ) ) );
-	connect( m_selection, SIGNAL( textChanged( const QString& ) ), m_preview, SLOT( setSelectedPages( const QString& ) ) );
-	connect( m_preview, SIGNAL( selectionChanged( const QString& ) ), m_selection, SLOT( setText( const QString& ) ) );
+	connect( m_lockbtn, TQT_SIGNAL( toggled( bool ) ), TQT_SLOT( slotLockToggled( bool ) ) );
+	connect( m_selection, TQT_SIGNAL( textChanged( const TQString& ) ), m_preview, TQT_SLOT( setSelectedPages( const TQString& ) ) );
+	connect( m_preview, TQT_SIGNAL( selectionChanged( const TQString& ) ), m_selection, TQT_SLOT( setText( const TQString& ) ) );
 
 	if ( KMFactory::self()->settings()->application != KPrinter::Dialog 
 			&& KMFactory::self()->settings()->application >= 0 )
@@ -223,10 +223,10 @@ KPPosterPage::KPPosterPage( QWidget *parent, const char *name )
 		printlab->hide();
 	}
 
-	QVBoxLayout *l0 = new QVBoxLayout( this, 0, 10 );
+	TQVBoxLayout *l0 = new TQVBoxLayout( this, 0, 10 );
 	l0->addWidget( m_postercheck );
 	l0->addWidget( dummy, 1 );
-	QGridLayout *l1 = new QGridLayout( dummy, 8, 3, 0, 5 );
+	TQGridLayout *l1 = new TQGridLayout( dummy, 8, 3, 0, 5 );
 	l1->addWidget( posterlab, 0, 0 );
 	l1->addWidget( m_postersize, 0, 1 );
 	l1->addWidget( printlab, 1, 0 );
@@ -236,7 +236,7 @@ KPPosterPage::KPPosterPage( QWidget *parent, const char *name )
 	l1->addMultiCellWidget( m_preview, 4, 4, 0, 2 );
 	l1->addMultiCellWidget( m_cutmargin, 6, 6, 0, 2 );
 	l1->addMultiCellWidget( m_lockbtn, 0, 1, 2, 2 );
-	QHBoxLayout *l2 = new QHBoxLayout( 0, 0, 5 );
+	TQHBoxLayout *l2 = new TQHBoxLayout( 0, 0, 5 );
 	l1->addMultiCellLayout( l2, 7, 7, 0, 2 );
 	l2->addWidget( selectionlab );
 	l2->addWidget( m_selection );
@@ -250,9 +250,9 @@ KPPosterPage::~KPPosterPage()
 {
 }
 
-void KPPosterPage::setOptions( const QMap<QString,QString>& opts )
+void KPPosterPage::setOptions( const TQMap<TQString,TQString>& opts )
 {
-	QString ps = opts[ "PageSize" ];
+	TQString ps = opts[ "PageSize" ];
 	if ( ps.isEmpty() && !opts[ "kde-pagesize" ].isEmpty() )
 	{
 		ps = pageSizeToPageName( ( KPrinter::PageSize )opts[ "kde-pagesize" ].toInt() );
@@ -269,7 +269,7 @@ void KPPosterPage::setOptions( const QMap<QString,QString>& opts )
 	{
 		m_postercheck->setChecked( true );
 		ps = opts[ "_kde-poster-size" ];
-		QString prtsize = opts[ "kde-printsize" ];
+		TQString prtsize = opts[ "kde-printsize" ];
 		if ( !ps.isEmpty() )
 		{
 			m_postersize->setCurrentItem( findIndex( pageNameToPageSize( ps ) ) );
@@ -287,9 +287,9 @@ void KPPosterPage::setOptions( const QMap<QString,QString>& opts )
 		m_postercheck->setChecked( false );
 }
 
-void KPPosterPage::getOptions( QMap<QString,QString>& opts, bool )
+void KPPosterPage::getOptions( TQMap<TQString,TQString>& opts, bool )
 {
-	QStringList o = QStringList::split( ",", opts[ "_kde-filters" ], false );
+	TQStringList o = TQStringList::split( ",", opts[ "_kde-filters" ], false );
 	if ( !m_postercheck->isChecked() )
 	{
 		o.remove( "poster" );
@@ -307,8 +307,8 @@ void KPPosterPage::getOptions( QMap<QString,QString>& opts, bool )
 		opts[ "_kde-filters" ] = o.join( "," );
 		opts[ "_kde-poster-media" ] = m_mediasize->text();
 		opts[ "_kde-poster-size" ] = pageSizeToPageName( ( KPrinter::PageSize )page_sizes[ m_postersize->currentItem() ].ID );
-		opts[ "kde-printsize" ] = QString::number( page_sizes[ m_printsize->currentItem() ].ID );
-		opts[ "_kde-poster-cut" ] = QString::number( m_cutmargin->value() );
+		opts[ "kde-printsize" ] = TQString::number( page_sizes[ m_printsize->currentItem() ].ID );
+		opts[ "_kde-poster-cut" ] = TQString::number( m_cutmargin->value() );
 		opts[ "_kde-poster-select" ] = m_selection->text().stripWhiteSpace();
 	}
 }

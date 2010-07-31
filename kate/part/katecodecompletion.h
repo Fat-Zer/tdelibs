@@ -30,12 +30,12 @@
 
 #include <ktexteditor/codecompletioninterface.h>
 
-#include <qvaluelist.h>
-#include <qstringlist.h>
-#include <qlabel.h>
-#include <qframe.h>
-#include <qmap.h>
-#include <qintdict.h>
+#include <tqvaluelist.h>
+#include <tqstringlist.h>
+#include <tqlabel.h>
+#include <tqframe.h>
+#include <tqmap.h>
+#include <tqintdict.h>
 
 class KateView;
 class KateArgHint;
@@ -49,13 +49,13 @@ class KateCodeCompletionCommentLabel : public QLabel
   Q_OBJECT
 
   public:
-    KateCodeCompletionCommentLabel( QWidget* parent, const QString& text) : QLabel( parent, "toolTipTip",
+    KateCodeCompletionCommentLabel( TQWidget* parent, const TQString& text) : TQLabel( parent, "toolTipTip",
              WStyle_StaysOnTop | WStyle_Customize | WStyle_NoBorder | WStyle_Tool | WX11BypassWM )
     {
         setMargin(1);
         setIndent(0);
         setAutoMask( false );
-        setFrameStyle( QFrame::Plain | QFrame::Box );
+        setFrameStyle( TQFrame::Plain | TQFrame::Box );
         setLineWidth( 1 );
         setAlignment( AlignAuto | AlignTop );
         polish();
@@ -77,12 +77,12 @@ class KateCodeCompletion : public QObject
     bool codeCompletionVisible ();
 
     void showArgHint(
-        QStringList functionList, const QString& strWrapping, const QString& strDelimiter );
+        TQStringList functionList, const TQString& strWrapping, const TQString& strDelimiter );
     void showCompletionBox(
-        QValueList<KTextEditor::CompletionEntry> entries, int offset = 0, bool casesensitive = true );
-    bool eventFilter( QObject* o, QEvent* e );
+        TQValueList<KTextEditor::CompletionEntry> entries, int offset = 0, bool casesensitive = true );
+    bool eventFilter( TQObject* o, TQEvent* e );
 
-    void handleKey (QKeyEvent *e);
+    void handleKey (TQKeyEvent *e);
 
   public slots:
     void slotCursorPosChanged();
@@ -94,7 +94,7 @@ class KateCodeCompletion : public QObject
     void completionDone();
     void argHintHidden();
     void completionDone(KTextEditor::CompletionEntry);
-    void filterInsertString(KTextEditor::CompletionEntry*,QString *);
+    void filterInsertString(KTextEditor::CompletionEntry*,TQString *);
 
   private:
     void doComplete();
@@ -104,9 +104,9 @@ class KateCodeCompletion : public QObject
 
     KateArgHint*    m_pArgHint;
     KateView*       m_view;
-    QVBox*          m_completionPopup;
+    TQVBox*          m_completionPopup;
     KateCCListBox*       m_completionListBox;
-    QValueList<KTextEditor::CompletionEntry> m_complList;
+    TQValueList<KTextEditor::CompletionEntry> m_complList;
     uint            m_lineCursor;
     uint            m_colCursor;
     int             m_offset;
@@ -125,14 +125,14 @@ class KateArgHint: public QFrame
       virtual void setCurrentFunction( int );
       virtual int currentFunction() const { return m_currentFunction; }
 
-      void setArgMarkInfos( const QString&, const QString& );
+      void setArgMarkInfos( const TQString&, const TQString& );
 
-      virtual void addFunction( int, const QString& );
-      QString functionAt( int id ) const { return m_functionMap[ id ]; }
+      virtual void addFunction( int, const TQString& );
+      TQString functionAt( int id ) const { return m_functionMap[ id ]; }
 
       virtual void show();
       virtual void adjustSize();
-      virtual bool eventFilter( QObject*, QEvent* );
+      virtual bool eventFilter( TQObject*, TQEvent* );
 
   signals:
       void argHintHidden();
@@ -147,16 +147,16 @@ class KateArgHint: public QFrame
       void slotDone(bool completed);
 
   private:
-      QMap<int, QString> m_functionMap;
+      TQMap<int, TQString> m_functionMap;
       int m_currentFunction;
-      QString m_wrapping;
-      QString m_delimiter;
+      TQString m_wrapping;
+      TQString m_delimiter;
       bool m_markCurrentFunction;
       int m_currentLine;
       int m_currentCol;
       KateView* editorView;
-      QIntDict<QLabel> labelDict;
-      QLayout* layout;
+      TQIntDict<TQLabel> labelDict;
+      TQLayout* layout;
 };
 
 #endif

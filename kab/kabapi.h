@@ -76,10 +76,10 @@ public:
    * database itselfes, as you could not query if this could be done
    * without failures. Thus you have to call init before you can
    * use the database.
-   * @param parent The QWidget pointer to the parent widget.
+   * @param parent The TQWidget pointer to the parent widget.
    * @param name The widgets name (used for debugging)
    */
-  KabAPI(QWidget* parent=0, const char* name=0);
+  KabAPI(TQWidget* parent=0, const char* name=0);
   /**
    * You must call init before accessing the database. init opens the
    * database file (usually $HOME/.kde/share/apps/kab/addressbook.database)
@@ -158,7 +158,7 @@ public:
    * @param max Maximum number of returned entries.
    * @return NoError if an entry is found or NoEntry.
    */
-  AddressBook::ErrorCode getEntryByName(const QString& name,
+  AddressBook::ErrorCode getEntryByName(const TQString& name,
 			   std::list<AddressBook::Entry>& entries,
 			   const int max=5);
   /**
@@ -176,7 +176,7 @@ public:
 			   std::list<AddressBook::Entry>& entries,
 			   const int max=5);
   /**
-   * Execute this dialog. This overloads QDialog::exec to fill the list box
+   * Execute this dialog. This overloads TQDialog::exec to fill the list box
    * before showing.
    */
   int exec();
@@ -203,13 +203,13 @@ protected slots:
   /**
    * Capture status messages from book.
    */
-  void setStatusSlot(const QString&);
-  void slotDoubleClicked ( QListBoxItem * );
+  void setStatusSlot(const TQString&);
+  void slotDoubleClicked ( TQListBoxItem * );
   signals:
   /**
    * Send status messages.
    */
-  void setStatus(const QString&);
+  void setStatus(const TQString&);
   // ############################################################################
 private:
   class KAbAPIPrivate;

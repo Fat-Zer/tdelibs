@@ -24,8 +24,8 @@
 #define KRESOURCES_CONFIGPAGE_H
 
 #include <ksharedptr.h>
-#include <qstringlist.h>
-#include <qwidget.h>
+#include <tqstringlist.h>
+#include <tqwidget.h>
 
 #include "manager.h"
 
@@ -49,12 +49,12 @@ class KRESOURCES_EXPORT ResourcePageInfo : public KShared
 class Resource;
 class ConfigViewItem;
 
-class KRESOURCES_EXPORT ConfigPage : public QWidget, public ManagerObserver<Resource>
+class KRESOURCES_EXPORT ConfigPage : public TQWidget, public ManagerObserver<Resource>
 {
   Q_OBJECT
 
   public:
-    ConfigPage( QWidget *parent = 0, const char *name = 0 );
+    ConfigPage( TQWidget *parent = 0, const char *name = 0 );
     virtual ~ConfigPage();
 
     void load();
@@ -79,30 +79,30 @@ class KRESOURCES_EXPORT ConfigPage : public QWidget, public ManagerObserver<Reso
     ConfigViewItem *findItem( Resource *resource );
 
   protected slots:
-    void slotItemClicked( QListViewItem * );
+    void slotItemClicked( TQListViewItem * );
 
   signals:
     void changed( bool );
 
   private:
-    void loadManager( const QString& family );
+    void loadManager( const TQString& family );
     void saveResourceSettings();
 
     Manager<Resource>* mCurrentManager;
     KConfig* mCurrentConfig;
     KConfig* mConfig;
-    QString mFamily;
-    QStringList mFamilyMap;
-    QValueList<KSharedPtr<ResourcePageInfo> > mInfoMap;
+    TQString mFamily;
+    TQStringList mFamilyMap;
+    TQValueList<KSharedPtr<ResourcePageInfo> > mInfoMap;
 
     KComboBox* mFamilyCombo;
     KListView* mListView;
-    QPushButton* mAddButton;
-    QPushButton* mRemoveButton;
-    QPushButton* mEditButton;
-    QPushButton* mStandardButton;
+    TQPushButton* mAddButton;
+    TQPushButton* mRemoveButton;
+    TQPushButton* mEditButton;
+    TQPushButton* mStandardButton;
 
-    QListViewItem* mLastItem;
+    TQListViewItem* mLastItem;
 };
 
 }

@@ -8,9 +8,9 @@
 #include <kcmdlineargs.h>
 #include <klibloader.h>
 
-#include <qwidget.h>
-#include <qdir.h>
-#include <qfile.h>
+#include <tqwidget.h>
+#include <tqdir.h>
+#include <tqfile.h>
 
 #include <ktrader.h>
 
@@ -21,9 +21,9 @@ Shell::Shell()
   setXMLFile( "ghostviewtest_shell.rc" );
 
   KAction * paOpen = new KAction( "&Open file" , "fileopen", 0, this,
-    SLOT( slotFileOpen() ), actionCollection(), "file_open" );
+    TQT_SLOT( slotFileOpen() ), actionCollection(), "file_open" );
 
-  KAction * paQuit = new KAction( "&Quit" , "exit", 0, this, SLOT( close() ), actionCollection(), "file_quit" );
+  KAction * paQuit = new KAction( "&Quit" , "exit", 0, this, TQT_SLOT( close() ), actionCollection(), "file_quit" );
 
   // Try to find a postscript component first
   KTrader::OfferList offers = KTrader::self()->query("application/postscript", "('KParts/ReadOnlyPart' in ServiceTypes) or ('Browser/View' in ServiceTypes)");
@@ -35,7 +35,7 @@ Shell::Shell()
   {
     KService::Ptr ptr = (*it);
 
-    factory = KLibLoader::self()->factory( QFile::encodeName(ptr->library()) );
+    factory = KLibLoader::self()->factory( TQFile::encodeName(ptr->library()) );
     if (factory)
     {
       m_gvpart = static_cast<KParts::ReadOnlyPart *>(factory->create(this, ptr->name().latin1(), "KParts::ReadOnlyPart"));
@@ -85,7 +85,7 @@ void Shell::openURL( const KURL & url )
 
 void Shell::slotFileOpen()
 {
-  KURL url = KFileDialog::getOpenURL( QString::null, "*.ps|Postscript files (*.ps)", 0L, "file dialog" );
+  KURL url = KFileDialog::getOpenURL( TQString::null, "*.ps|Postscript files (*.ps)", 0L, "file dialog" );
 
   if( !url.isEmpty() )
      openURL( url );
@@ -109,7 +109,7 @@ int main( int argc, char **argv )
   if ( args->count() == 1 )
   {
     // Allow full paths, but also simple filenames from current dir
-    KURL url( QDir::currentDirPath()+"/", args->arg(0) );
+    KURL url( TQDir::currentDirPath()+"/", args->arg(0) );
     shell->openURL( url );
   }
   shell->show();

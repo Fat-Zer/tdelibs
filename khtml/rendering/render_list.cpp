@@ -36,7 +36,7 @@
 
 #include <kdebug.h>
 #include <kglobal.h>
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 //#define BOX_DEBUG
 
@@ -238,12 +238,12 @@ void RenderListMarker::paint(PaintInfo& paintInfo, int _tx, int _ty)
     if(shouldPaintBackgroundOrBorder())
         paintBoxDecorations(paintInfo, _tx, _ty);
 
-    QPainter* p = paintInfo.p;
+    TQPainter* p = paintInfo.p;
 #ifdef DEBUG_LAYOUT
     kdDebug( 6040 ) << nodeName().string() << "(ListMarker)::paintObject(" << _tx << ", " << _ty << ")" << endl;
 #endif
     p->setFont(style()->font());
-    const QFontMetrics fm = p->fontMetrics();
+    const TQFontMetrics fm = p->fontMetrics();
 
 
     // The marker needs to adjust its tx, for the case where it's an outside marker.
@@ -294,7 +294,7 @@ void RenderListMarker::paint(PaintInfo& paintInfo, int _tx, int _ty)
         xoff += haveImage ? cMarkerPadding : (m_width - bulletWidth);
 
     if ( m_listImage && !m_listImage->isErrorImage()) {
-	p->drawPixmap( QPoint( _tx + xoff, _ty ), m_listImage->pixmap());
+	p->drawPixmap( TQPoint( _tx + xoff, _ty ), m_listImage->pixmap());
         return;
     }
 
@@ -303,7 +303,7 @@ void RenderListMarker::paint(PaintInfo& paintInfo, int _tx, int _ty)
     p->drawRect( _tx + xoff, _ty + yoff, offset, offset );
 #endif
 
-    const QColor color( style()->color() );
+    const TQColor color( style()->color() );
     p->setPen( color );
 
     switch(style()->listStyleType()) {
@@ -324,14 +324,14 @@ void RenderListMarker::paint(PaintInfo& paintInfo, int _tx, int _ty)
         p->drawRect( _tx + xoff, _ty + (3 * yoff)/2, (offset>>1)+1, (offset>>1)+1 );
         return;
     case LDIAMOND: {
-        static QPointArray diamond(4);
+        static TQPointArray diamond(4);
         int x = _tx + xoff;
         int y = _ty + (3 * yoff)/2 - 1;
         int s = (offset>>2)+1;
-        diamond[0] = QPoint(x+s,   y);
-        diamond[1] = QPoint(x+2*s, y+s);
-        diamond[2] = QPoint(x+s,   y+2*s);
-        diamond[3] = QPoint(x,     y+s);
+        diamond[0] = TQPoint(x+s,   y);
+        diamond[1] = TQPoint(x+2*s, y+s);
+        diamond[2] = TQPoint(x+s,   y+2*s);
+        diamond[3] = TQPoint(x,     y+s);
         p->setBrush( color );
         p->drawConvexPolygon( diamond, 0, 4 );
         return;
@@ -344,21 +344,21 @@ void RenderListMarker::paint(PaintInfo& paintInfo, int _tx, int _ty)
             	if( style()->direction() == LTR) {
                     p->drawText(_tx, _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, m_item);
                     p->drawText(_tx + fm.width(m_item), _ty, 0, 0, Qt::AlignLeft|Qt::DontClip,
-                                QString::fromLatin1(". "));
+                                TQString::fromLatin1(". "));
                 }
             	else {
-                    const QString& punct(QString::fromLatin1(" ."));
+                    const TQString& punct(TQString::fromLatin1(" ."));
                     p->drawText(_tx, _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, punct);
             	    p->drawText(_tx + fm.width(punct), _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, m_item);
                 }
             } else {
                 if (style()->direction() == LTR) {
-                    const QString& punct(QString::fromLatin1(". "));
+                    const TQString& punct(TQString::fromLatin1(". "));
                     p->drawText(_tx-offset/2, _ty, 0, 0, Qt::AlignRight|Qt::DontClip, punct);
                     p->drawText(_tx-offset/2-fm.width(punct), _ty, 0, 0, Qt::AlignRight|Qt::DontClip, m_item);
                 }
             	else {
-                    const QString& punct(QString::fromLatin1(" ."));
+                    const TQString& punct(TQString::fromLatin1(" ."));
             	    p->drawText(_tx+offset/2, _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, punct);
                     p->drawText(_tx+offset/2+fm.width(punct), _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, m_item);
                 }
@@ -377,7 +377,7 @@ void RenderListMarker::layout()
     setNeedsLayout(false);
 }
 
-void RenderListMarker::setPixmap( const QPixmap &p, const QRect& r, CachedImage *o)
+void RenderListMarker::setPixmap( const TQPixmap &p, const TQRect& r, CachedImage *o)
 {
     if(o != m_listImage) {
         RenderBox::setPixmap(p, r, o);
@@ -406,7 +406,7 @@ void RenderListMarker::calcMinMaxWidth()
         return;
     }
 
-    const QFontMetrics &fm = style()->fontMetrics();
+    const TQFontMetrics &fm = style()->fontMetrics();
     m_height = fm.ascent();
 
     // Skip uncounted elements
@@ -452,7 +452,7 @@ void RenderListMarker::calcMinMaxWidth()
             decimals++;
         }
         decimals = kMax(decimals, 2);
-        QString num = QString::number(value);
+        TQString num = TQString::number(value);
         m_item.fill('0',decimals-num.length());
         m_item.append(num);
         break;
@@ -543,7 +543,7 @@ void RenderListMarker::calcMinMaxWidth()
     default:
         KHTMLAssert(false);
     }
-    m_markerWidth = fm.width(m_item) + fm.width(QString::fromLatin1(". "));
+    m_markerWidth = fm.width(m_item) + fm.width(TQString::fromLatin1(". "));
     }
 
 end:

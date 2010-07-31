@@ -24,7 +24,7 @@
 #include "kxmlcommand.h"
 #include "driver.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <kstandarddirs.h>
 #include <kglobal.h>
 #include <ksimpleconfig.h>
@@ -36,7 +36,7 @@
 #include <sys/stat.h>
 
 KMSpecialManager::KMSpecialManager(KMManager *parent, const char *name)
-: QObject(parent,name), m_mgr(parent), m_loaded(false)
+: TQObject(parent,name), m_mgr(parent), m_loaded(false)
 {
 }
 
@@ -66,15 +66,15 @@ bool KMSpecialManager::savePrinters()
 	conf.setGroup("General");
 	int	n = conf.readNumEntry("Number",0);
 	for (int i=0;i<n;i++)
-		conf.deleteGroup(QString::fromLatin1("Printer %1").arg(i),true);
+		conf.deleteGroup(TQString::fromLatin1("Printer %1").arg(i),true);
 
 	// then add printers
 	n = 0;
-	QPtrListIterator<KMPrinter>	it(m_mgr->m_printers);
+	TQPtrListIterator<KMPrinter>	it(m_mgr->m_printers);
 	for (;it.current();++it)
 	{
 		if (!it.current()->isSpecial() || it.current()->isVirtual()) continue;
-		conf.setGroup(QString::fromLatin1("Printer %1").arg(n));
+		conf.setGroup(TQString::fromLatin1("Printer %1").arg(n));
 		conf.writeEntry("Name",it.current()->name());
 		conf.writeEntry("Description",it.current()->description());
 		conf.writeEntry("Comment",it.current()->location());
@@ -93,7 +93,7 @@ bool KMSpecialManager::savePrinters()
 	if (getuid() == 0)
 	{
 		conf.sync();
-		::chmod(QFile::encodeName(confname), S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+		::chmod(TQFile::encodeName(confname), S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 	}
 
 	// force reload on next update
@@ -112,7 +112,7 @@ bool KMSpecialManager::loadPrinters()
 	// local files should processed last, so we need to reorder the list
 	// and put local files at the end
 	QStringList	orderedFiles;
-	for (QStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
+	for (TQStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
 	{
 		if ((*it).startsWith(localDir))
 			orderedFiles.append(*it);
@@ -120,7 +120,7 @@ bool KMSpecialManager::loadPrinters()
 			orderedFiles.prepend(*it);
 	}
 	// then parse the ordered list
-	for (QStringList::ConstIterator it=orderedFiles.begin(); it!=orderedFiles.end() && result; ++it)
+	for (TQStringList::ConstIterator it=orderedFiles.begin(); it!=orderedFiles.end() && result; ++it)
 	{
 		// skip the local file for root
 		if (getuid() == 0 && (*it).startsWith(localDir))
@@ -132,14 +132,14 @@ bool KMSpecialManager::loadPrinters()
 	return result;
 }
 
-bool KMSpecialManager::loadDesktopFile(const QString& filename)
+bool KMSpecialManager::loadDesktopFile(const TQString& filename)
 {
 	KSimpleConfig	conf(filename);
 	conf.setGroup("General");
 	int	n = conf.readNumEntry("Number",0);
 	for (int i=0;i<n;i++)
 	{
-		QString	grpname = QString::fromLatin1("Printer %1").arg(i);
+		QString	grpname = TQString::fromLatin1("Printer %1").arg(i);
 		if (!conf.hasGroup(grpname)) continue;
 		conf.setGroup(grpname);
 		KMPrinter	*printer = new KMPrinter;
@@ -172,13 +172,13 @@ void KMSpecialManager::refresh()
 		loadPrinters();
 	else
 	{
-		QPtrListIterator<KMPrinter>	it(m_mgr->m_printers);
+		TQPtrListIterator<KMPrinter>	it(m_mgr->m_printers);
 		for (;it.current();++it)
 			if (it.current()->isSpecial())
 			{
 				it.current()->setDiscarded(false);
 				it.current()->setType(KMPrinter::Special);
-				if (KdeprintChecker::check(QStringList::split(',',it.current()->option("kde-special-require"),false)))
+				if (KdeprintChecker::check(TQStringList::split(',',it.current()->option("kde-special-require"),false)))
 					it.current()->addType(KMPrinter::Invalid);
 			}
 	}
@@ -192,7 +192,7 @@ KXmlCommand* KMSpecialManager::loadCommand(KMPrinter *pr)
 	return xmlCmd;
 }
 
-KXmlCommand* KMSpecialManager::loadCommand(const QString& xmlId)
+KXmlCommand* KMSpecialManager::loadCommand(const TQString& xmlId)
 {
 	return KXmlCommandManager::self()->loadCommand(xmlId, true);
 }
@@ -211,7 +211,7 @@ DrMain* KMSpecialManager::loadDriver(KMPrinter *pr)
 	return driver;
 }
 
-QString KMSpecialManager::setupCommand(const QString& cmd, const QMap<QString,QString>& opts)
+TQString KMSpecialManager::setupCommand(const TQString& cmd, const TQMap<TQString,TQString>& opts)
 {
 	QString	s(cmd);
 	if (!s.isEmpty())

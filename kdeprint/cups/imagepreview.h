@@ -20,19 +20,19 @@
 #ifndef IMAGEPREVIEW_H
 #define IMAGEPREVIEW_H
 
-#include <qwidget.h>
-#include <qimage.h>
+#include <tqwidget.h>
+#include <tqimage.h>
 
 class ImagePreview : public QWidget
 {
 public:
-	ImagePreview(QWidget *parent=0, const char *name=0);
+	ImagePreview(TQWidget *parent=0, const char *name=0);
 	~ImagePreview();
 
 	void setParameters(int brightness, int hue, int saturation, int gamma);
-	void setImage(const QImage& image);
+	void setImage(const TQImage& image);
 	void setBlackAndWhite(bool on);
-	QSize minimumSizeHint() const;
+	TQSize minimumSizeHint() const;
 
 private: // Private attributes
 	int brightness_;
@@ -40,10 +40,10 @@ private: // Private attributes
 	int saturation_;
 	int gamma_;
 	bool bw_;
-	QImage image_;
+	TQImage image_;
 
 protected: // Protected methods
-	void paintEvent(QPaintEvent*);
+	void paintEvent(TQPaintEvent*);
 };
 
 #endif

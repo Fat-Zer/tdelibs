@@ -26,7 +26,7 @@
 #ifndef _KCOLORCOMBO_H__
 #define _KCOLORCOMBO_H__
 
-#include <qcombobox.h>
+#include <tqcombobox.h>
 #include <kcolordialog.h>
 #include "kselect.h"
 
@@ -39,23 +39,23 @@ class KColorComboInternal;
 class KDEUI_EXPORT KColorCombo : public QComboBox
 {
     Q_OBJECT
-    Q_PROPERTY( QColor color READ color WRITE setColor )
+    Q_PROPERTY( TQColor color READ color WRITE setColor )
 
 public:
     /**
      * Constructs a color combo box.
      */
-    KColorCombo( QWidget *parent, const char *name = 0L );
+    KColorCombo( TQWidget *parent, const char *name = 0L );
     ~KColorCombo();
 
     /**
      * Selects the color @p col.
      */
-    void setColor( const QColor &col );
+    void setColor( const TQColor &col );
     /**
      * Returns the currently selected color.
      **/
-    QColor color() const;
+    TQColor color() const;
 
 
     /**
@@ -67,14 +67,14 @@ signals:
     /**
      * Emitted when a new color box has been selected.
      */
-    void activated( const QColor &col );
+    void activated( const TQColor &col );
     /**
      * Emitted when a new item has been highlighted.
      */
-    void highlighted( const QColor &col );
+    void highlighted( const TQColor &col );
 
 protected:
-	virtual void resizeEvent( QResizeEvent *re );
+	virtual void resizeEvent( TQResizeEvent *re );
 
 private slots:
 	void slotActivated( int index );
@@ -82,8 +82,8 @@ private slots:
 
 private:
 	void addColors();
-	QColor customColor;
-	QColor internalcolor;
+	TQColor customColor;
+	TQColor internalcolor;
 
 protected:
 	virtual void virtual_hook( int id, void* data );

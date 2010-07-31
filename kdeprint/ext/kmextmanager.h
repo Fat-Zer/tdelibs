@@ -21,13 +21,13 @@
 #define KMEXTMANAGER_H
 
 #include "kmmanager.h"
-#include <qdict.h>
-#include <qdatetime.h>
+#include <tqdict.h>
+#include <tqdatetime.h>
 
 class KMExtManager : public KMManager
 {
 public:
-	KMExtManager(QObject *parent, const char *name, const QStringList & /*args*/);
+	KMExtManager(TQObject *parent, const char *name, const TQStringList & /*args*/);
 	~KMExtManager();
 
 protected:

@@ -33,43 +33,43 @@ KRemoteEncoding::~KRemoteEncoding()
   // delete d;		// not necessary yet
 }
 
-QString KRemoteEncoding::decode(const QCString& name) const
+TQString KRemoteEncoding::decode(const TQCString& name) const
 {
 #ifdef CHECK_UTF8
   if (codec->mibEnum() == 106 && !KStringHandler::isUtf8(name))
-    return QString::fromLatin1(name);
+    return TQString::fromLatin1(name);
 #endif
 
-  QString result = codec->toUnicode(name);
+  TQString result = codec->toUnicode(name);
   if (codec->fromUnicode(result) != name)
     // fallback in case of decoding failure
-    return QString::fromLatin1(name);
+    return TQString::fromLatin1(name);
 
   return result;
 }
 
-QCString KRemoteEncoding::encode(const QString& name) const
+TQCString KRemoteEncoding::encode(const TQString& name) const
 {
-  QCString result = codec->fromUnicode(name);
+  TQCString result = codec->fromUnicode(name);
   if (codec->toUnicode(result) != name)
     return name.latin1();
  
   return result;
 }
 
-QCString KRemoteEncoding::encode(const KURL& url) const
+TQCString KRemoteEncoding::encode(const KURL& url) const
 {
   return encode(url.path());
 }
 
-QCString KRemoteEncoding::directory(const KURL& url, bool ignore_trailing_slash) const
+TQCString KRemoteEncoding::directory(const KURL& url, bool ignore_trailing_slash) const
 {
-  QString dir = url.directory(true, ignore_trailing_slash);
+  TQString dir = url.directory(true, ignore_trailing_slash);
 
   return encode(dir);
 }
 
-QCString KRemoteEncoding::fileName(const KURL& url) const
+TQCString KRemoteEncoding::fileName(const KURL& url) const
 {
   return encode(url.fileName());
 }
@@ -79,10 +79,10 @@ void KRemoteEncoding::setEncoding(const char *name)
   // don't delete codecs
 
   if (name)
-    codec = QTextCodec::codecForName(name);
+    codec = TQTextCodec::codecForName(name);
 
   if (codec == 0L)
-    codec = QTextCodec::codecForMib(1);
+    codec = TQTextCodec::codecForMib(1);
 
   kdDebug() << k_funcinfo << "setting encoding " << codec->name() 
 	    << " for name=" << name << endl;

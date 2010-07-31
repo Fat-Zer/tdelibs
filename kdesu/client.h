@@ -15,7 +15,7 @@
 #ifndef __KDE_su_Client_h_Included__
 #define __KDE_su_Client_h_Included__
 
-#include <qglobal.h>
+#include <tqglobal.h>
 #include <kdelibs_export.h>
 
 #ifdef Q_OS_UNIX
@@ -24,10 +24,10 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
-#include <qcstring.h>
-#include <qvaluelist.h>
+#include <tqcstring.h>
+#include <tqvaluelist.h>
 
-typedef QValueList<QCString> QCStringList;
+typedef TQValueList<TQCString> QCStringList;
 
 /**
  * A client class to access kdesud, the KDE su daemon. Kdesud can assist in 
@@ -62,7 +62,7 @@ public:
      * @param env Extra environment variables.
      * @return Zero on success, -1 on failure.
      */
-    int exec(const QCString &command, const QCString &user, const QCString &options=0, const QCStringList &env=QCStringList());
+    int exec(const TQCString &command, const TQCString &user, const TQCString &options=0, const QCStringList &env=QCStringList());
 
     /**
      * Wait for the last command to exit and return the exit code.
@@ -82,7 +82,7 @@ public:
     /**
      * Set the target host (optional).
      */
-    int setHost(const QCString &host);
+    int setHost(const TQCString &host);
 
     /**
      * Set the desired priority (optional), see StubProcess.
@@ -100,7 +100,7 @@ public:
      * @param user The user.
      * @return zero on success, -1 on an error
      */
-    int delCommand(const QCString &command, const QCString &user);
+    int delCommand(const TQCString &command, const TQCString &user);
 
     /**
      * Set a persistent variable.
@@ -111,21 +111,21 @@ public:
      * @param group Make the key part of a group. See delGroup.
      * @return zero on success, -1 on failure.
      */
-    int setVar(const QCString &key, const QCString &value, int timeout=0, const QCString &group=0);
+    int setVar(const TQCString &key, const TQCString &value, int timeout=0, const TQCString &group=0);
 
     /**
      * Get a persistent variable.
      * @param key The name of the variable.
      * @return Its value.
      */
-    QCString getVar(const QCString &key);
+    TQCString getVar(const TQCString &key);
 
     /**
      * Gets all the keys that are membes of the given group.
      * @param group the group name of the variables.
      * @return a list of the keys in the group.
      */
-    QValueList<QCString> getKeys(const QCString &group);
+    TQValueList<TQCString> getKeys(const TQCString &group);
 
     /**
      * Returns true if the specified group exists is
@@ -134,19 +134,19 @@ public:
      * @param group the group key
      * @return true if the group is found
      */
-    bool findGroup(const QCString &group);
+    bool findGroup(const TQCString &group);
 
     /**
      * Delete a persistent variable.
      * @param key The name of the variable.
      * @return zero on success, -1 on failure.
      */
-    int delVar(const QCString &key);
+    int delVar(const TQCString &key);
 
     /**
      * Delete all persistent variables with the given key.
      *
-     * A specicalized variant of delVar(QCString) that removes all
+     * A specicalized variant of delVar(TQCString) that removes all
      * subsets of the cached varaibles given by @p key. In order for all
      * cached variables related to this key to be deleted properly, the
      * value given to the @p group argument when the setVar function
@@ -158,7 +158,7 @@ public:
      * @param special_key the name of the variable.
      * @return zero on success, -1 on failure.
      */
-    int delVars(const QCString &special_key);
+    int delVars(const TQCString &special_key);
 
     /**
      * Delete all persistent variables in a group.
@@ -166,7 +166,7 @@ public:
      * @param group the group name. See setVar.
      * @return
      */
-    int delGroup(const QCString &group);
+    int delGroup(const TQCString &group);
 
     /**
      * Ping kdesud. This can be used for diagnostics.
@@ -193,10 +193,10 @@ private:
     int connect();
 
     int sockfd;
-    QCString sock;
+    TQCString sock;
 
-    int command(const QCString &cmd, QCString *result=0L);
-    QCString escape(const QCString &str);
+    int command(const TQCString &cmd, TQCString *result=0L);
+    TQCString escape(const TQCString &str);
 
     class KDEsuClientPrivate;
     KDEsuClientPrivate *d;

@@ -13,8 +13,8 @@
 class QImageIO;
 
 extern "C" {
-void kimgio_hdr_read( QImageIO * );
-void kimgio_hdr_write( QImageIO * );
+void kimgio_hdr_read( TQImageIO * );
+void kimgio_hdr_write( TQImageIO * );
 }
 
 #endif

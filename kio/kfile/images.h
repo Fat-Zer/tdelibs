@@ -1,8 +1,8 @@
 #ifdef USE_POSIX_ACL
 #ifndef _QEMBED_1804289383
 #define _QEMBED_1804289383
-#include <qimage.h>
-#include <qdict.h>
+#include <tqimage.h>
+#include <tqdict.h>
 static const QRgb group_grey_data[] = {
     0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x42484848,0xc39b9b9b,0xeab1b1b1,0xce9d9d9d,0x5a4d4d4d,0x0,
     0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x563b3b3b,0xfdaeaeae,0xffcfcfcf,0xffcccccc,0xffcecece,
@@ -245,20 +245,20 @@ static struct EmbedImage {
     { 0, 0, 0, 0, 0, 0, 0, 0 }
 };
 
-static const QImage& qembed_findImage( const QString& name )
+static const TQImage& qembed_findImage( const TQString& name )
 {
-    static QDict<QImage> dict;
-    QImage* img = dict.find( name );
+    static TQDict<TQImage> dict;
+    TQImage* img = dict.find( name );
     if ( !img ) {
 	for ( int i = 0; embed_image_vec[i].data; i++ ) {
 	    if ( strcmp(embed_image_vec[i].name, name.latin1()) == 0 ) {
-		img = new QImage((uchar*)embed_image_vec[i].data,
+		img = new TQImage((uchar*)embed_image_vec[i].data,
 			    embed_image_vec[i].width,
 			    embed_image_vec[i].height,
 			    embed_image_vec[i].depth,
 			    (QRgb*)embed_image_vec[i].colorTable,
 			    embed_image_vec[i].numColors,
-			    QImage::BigEndian );
+			    TQImage::BigEndian );
 		if ( embed_image_vec[i].alpha )
 		    img->setAlphaBuffer( TRUE );
 		dict.insert( name, img );
@@ -266,7 +266,7 @@ static const QImage& qembed_findImage( const QString& name )
 	    }
 	}
 	if ( !img ) {
-	    static QImage dummy;
+	    static TQImage dummy;
 	    return dummy;
 	}
     }

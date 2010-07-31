@@ -9,7 +9,7 @@ namespace KIO {
     class Job;
 }
 
-class SpeedTest : public QObject {
+class SpeedTest : public TQObject {
     Q_OBJECT
 
 public:

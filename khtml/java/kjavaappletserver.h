@@ -25,8 +25,8 @@
 #define KJAVAAPPLETSERVER_H
 
 #include "kjavaprocess.h"
-#include <qobject.h>
-#include <qmap.h>
+#include <tqobject.h>
+#include <tqmap.h>
 
 
 /**
@@ -68,7 +68,7 @@ public:
      * while the applet is being loaded.  If the java process could not be
      * started, an error message is displayed instead.
      */
-    static QString getAppletLabel();
+    static TQString getAppletLabel();
 
     /**
      * Create an applet context with the specified id.
@@ -86,12 +86,12 @@ public:
      * name, class etc. are specified in the same way as in the HTML APPLET tag.
      */
     bool createApplet( int contextId, int appletId,
-                       const QString & name, const QString & clazzName,
-                       const QString & baseURL, const QString & user,
-                       const QString & password, const QString & authname,
-                       const QString & codeBase, const QString & jarFile,
-                       QSize size, const QMap<QString, QString>& params,
-                       const QString & windowTitle );
+                       const TQString & name, const TQString & clazzName,
+                       const TQString & baseURL, const TQString & user,
+                       const TQString & password, const TQString & authname,
+                       const TQString & codeBase, const TQString & jarFile,
+                       TQSize size, const TQMap<TQString, TQString>& params,
+                       const TQString & windowTitle );
 
     /**
      * This should be called by the KJavaAppletWidget
@@ -122,7 +122,7 @@ public:
      * Send data we got back from a KJavaDownloader back to the appropriate
      * class loader.
      */
-    void sendURLData( int loaderID, int code, const QByteArray& data );
+    void sendURLData( int loaderID, int code, const TQByteArray& data );
     /**
      * Removes KJavaDownloader from the list (deletes it too).
      */
@@ -134,15 +134,15 @@ public:
     void quit();
     KJavaProcess* javaProcess() { return process; }
 
-    QString appletLabel();
+    TQString appletLabel();
 
     void waitForReturnData(JSStackFrame *);
     void endWaitForReturnData();
 
-    bool getMember(QStringList & args, QStringList & ret_args);
-    bool putMember(QStringList & args);
-    bool callMember(QStringList & args, QStringList & ret_args);
-    void derefObject(QStringList & args);
+    bool getMember(TQStringList & args, TQStringList & ret_args);
+    bool putMember(TQStringList & args);
+    bool callMember(TQStringList & args, TQStringList & ret_args);
+    void derefObject(TQStringList & args);
 
     bool usingKIO();
 protected:
@@ -151,9 +151,9 @@ protected:
     KJavaProcess* process;
 
 protected slots:
-    void slotJavaRequest( const QByteArray& qb );
+    void slotJavaRequest( const TQByteArray& qb );
     void checkShutdown();
-    void timerEvent(QTimerEvent *);
+    void timerEvent(TQTimerEvent *);
 
 private:
     KJavaAppletServerPrivate* d;
@@ -165,16 +165,16 @@ class PermissionDialog : public QObject
 {
     Q_OBJECT
 public:
-    PermissionDialog( QWidget* );
+    PermissionDialog( TQWidget* );
     ~PermissionDialog();
 
-    QCString exec( const QString & cert, const QString & perm );
+    TQCString exec( const TQString & cert, const TQString & perm );
 
 private slots:
      void clicked();
 
 private:
-    QCString m_button;
+    TQCString m_button;
 };
 
 #endif // KJAVAAPPLETSERVER_H

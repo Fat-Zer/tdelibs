@@ -20,8 +20,8 @@
 #define __k_build_service_group_factory_h__
 
 #include <kservicegroupfactory.h>
-#include <qdict.h>
-#include <qstringlist.h>
+#include <tqdict.h>
+#include <tqstringlist.h>
 
 /**
  * Service group factory for building ksycoca
@@ -40,14 +40,14 @@ public:
   /**
    * Create new entry.
    */
-  virtual KServiceGroup * createEntry(const QString &, const char *);
+  virtual KServiceGroup * createEntry(const TQString &, const char *);
 
   virtual KServiceGroup * createEntry(int) { assert(0); return 0L; }
 
   /**
    * Adds the entry @p newEntry to the menu @p menuName
    */
-  void addNewEntryTo( const QString &menuName, KService *newEntry);
+  void addNewEntryTo( const TQString &menuName, KService *newEntry);
 
   /**
    * Adds the entry @p newEntry to the "parent group" @p parent, creating
@@ -55,14 +55,14 @@ public:
    * A "parent group" is a group of services that all have the same
    * "X-KDE-ParentApp".
    */
-  KServiceGroup *addNewChild( const QString &parent, const char *resource, KSycocaEntry *newEntry);
+  KServiceGroup *addNewChild( const TQString &parent, const char *resource, KSycocaEntry *newEntry);
  
   /**
    * Add new menu @p menuName defined by @p file
    * When @p entry is non-null it is re-used, otherwise a new group is created.
    * A pointer to the group is returned.
    */
-  KServiceGroup *addNew( const QString &menuName, const QString& file, KServiceGroup *entry, bool isDeleted);
+  KServiceGroup *addNew( const TQString &menuName, const TQString& file, KServiceGroup *entry, bool isDeleted);
 
   /**
    * Add a new menu entry
@@ -72,17 +72,17 @@ public:
   /**
    * Write out servicegroup  specific index files.
    */
-  virtual void save(QDataStream &str);
+  virtual void save(TQDataStream &str);
 
   /**
    * Write out header information
    */
-  virtual void saveHeader(QDataStream &str);
+  virtual void saveHeader(TQDataStream &str);
 
   /**
    * Returns all resource types for this service factory
    */  
-  static QStringList resourceTypes();
+  static TQStringList resourceTypes();
 };
 
 #endif

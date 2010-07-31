@@ -19,14 +19,14 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qfontmetrics.h>
-#include <qkeycode.h>
-#include <qlabel.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qregexp.h>
-#include <qtimer.h>
-#include <qtooltip.h>
+#include <tqfontmetrics.h>
+#include <tqkeycode.h>
+#include <tqlabel.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqregexp.h>
+#include <tqtimer.h>
+#include <tqtooltip.h>
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -60,37 +60,37 @@ public:
         noArrangement = false;
 	ignoreMaximumSize = false;
 	smallColumns = new KRadioAction( i18n("Small Icons"), 0, parent,
-					 SLOT( slotSmallColumns() ),
+					 TQT_SLOT( slotSmallColumns() ),
 					 parent->actionCollection(),
 					 "small columns" );
 
 	largeRows = new KRadioAction( i18n("Large Icons"), 0, parent,
-				      SLOT( slotLargeRows() ),
+				      TQT_SLOT( slotLargeRows() ),
 				      parent->actionCollection(),
 				      "large rows" );
 
-	smallColumns->setExclusiveGroup(QString::fromLatin1("IconView mode"));
-	largeRows->setExclusiveGroup(QString::fromLatin1("IconView mode"));
+	smallColumns->setExclusiveGroup(TQString::fromLatin1("IconView mode"));
+	largeRows->setExclusiveGroup(TQString::fromLatin1("IconView mode"));
 
         previews = new KToggleAction( i18n("Thumbnail Previews"), 0,
                                       parent->actionCollection(),
                                       "show previews" );
-        zoomIn = KStdAction::zoomIn( parent, SLOT( zoomIn() ),
+        zoomIn = KStdAction::zoomIn( parent, TQT_SLOT( zoomIn() ),
                                      parent->actionCollection(), "zoomIn" );
-        zoomOut = KStdAction::zoomOut( parent, SLOT( zoomOut() ),
+        zoomOut = KStdAction::zoomOut( parent, TQT_SLOT( zoomOut() ),
                                      parent->actionCollection(), "zoomOut" );
 
         previews->setGroup("previews");
         zoomIn->setGroup("previews");
         zoomOut->setGroup("previews");
 
-        connect( previews, SIGNAL( toggled( bool )),
-                 parent, SLOT( slotPreviewsToggled( bool )));
+        connect( previews, TQT_SIGNAL( toggled( bool )),
+                 parent, TQT_SLOT( slotPreviewsToggled( bool )));
 
-        connect( &previewTimer, SIGNAL( timeout() ),
-                 parent, SLOT( showPreviews() ));
-        connect( &autoOpenTimer, SIGNAL( timeout() ),
-                 parent, SLOT( slotAutoOpen() ));
+        connect( &previewTimer, TQT_SIGNAL( timeout() ),
+                 parent, TQT_SLOT( showPreviews() ));
+        connect( &autoOpenTimer, TQT_SIGNAL( timeout() ),
+                 parent, TQT_SLOT( slotAutoOpen() ));
     }
 
     ~KFileIconViewPrivate() {
@@ -103,15 +103,15 @@ public:
     KToggleAction *previews;
     KIO::PreviewJob *job;
     KFileIconViewItem *dropItem;
-    QTimer previewTimer;
-    QTimer autoOpenTimer;
-    QStringList previewMimeTypes;
+    TQTimer previewTimer;
+    TQTimer autoOpenTimer;
+    TQStringList previewMimeTypes;
     int previewIconSize;
     bool noArrangement :1;
     bool ignoreMaximumSize :1;
 };
 
-KFileIconView::KFileIconView(QWidget *parent, const char *name)
+KFileIconView::KFileIconView(TQWidget *parent, const char *name)
     : KIconView(parent, name), KFileView()
 {
     d = new KFileIconViewPrivate( this );
@@ -127,51 +127,51 @@ KFileIconView::KFileIconView(QWidget *parent, const char *name)
     setItemsMovable( false );
     setMode( KIconView::Select );
     KIconView::setSorting( true );
-    // as long as QIconView only shows tooltips when the cursor is over the
+    // as long as TQIconView only shows tooltips when the cursor is over the
     // icon (and not the text), we have to create our own tooltips
     setShowToolTips( false );
     slotSmallColumns();
     d->smallColumns->setChecked( true );
 
-    connect( this, SIGNAL( returnPressed(QIconViewItem *) ),
-	     SLOT( slotActivate( QIconViewItem *) ) );
+    connect( this, TQT_SIGNAL( returnPressed(TQIconViewItem *) ),
+	     TQT_SLOT( slotActivate( TQIconViewItem *) ) );
 
     // we want single click _and_ double click (as convenience)
-    connect( this, SIGNAL( clicked(QIconViewItem *, const QPoint&) ),
-	     SLOT( selected( QIconViewItem *) ) );
-    connect( this, SIGNAL( doubleClicked(QIconViewItem *, const QPoint&) ),
-	     SLOT( slotActivate( QIconViewItem *) ) );
+    connect( this, TQT_SIGNAL( clicked(TQIconViewItem *, const TQPoint&) ),
+	     TQT_SLOT( selected( TQIconViewItem *) ) );
+    connect( this, TQT_SIGNAL( doubleClicked(TQIconViewItem *, const TQPoint&) ),
+	     TQT_SLOT( slotActivate( TQIconViewItem *) ) );
 
-    connect( this, SIGNAL( onItem( QIconViewItem * ) ),
-	     SLOT( showToolTip( QIconViewItem * ) ) );
-    connect( this, SIGNAL( onViewport() ),
-	     SLOT( removeToolTip() ) );
-    connect( this, SIGNAL( contextMenuRequested(QIconViewItem*,const QPoint&)),
-	     SLOT( slotActivateMenu( QIconViewItem*, const QPoint& ) ) );
+    connect( this, TQT_SIGNAL( onItem( TQIconViewItem * ) ),
+	     TQT_SLOT( showToolTip( TQIconViewItem * ) ) );
+    connect( this, TQT_SIGNAL( onViewport() ),
+	     TQT_SLOT( removeToolTip() ) );
+    connect( this, TQT_SIGNAL( contextMenuRequested(TQIconViewItem*,const TQPoint&)),
+	     TQT_SLOT( slotActivateMenu( TQIconViewItem*, const TQPoint& ) ) );
 
     KFile::SelectionMode sm = KFileView::selectionMode();
     switch ( sm ) {
     case KFile::Multi:
-	QIconView::setSelectionMode( QIconView::Multi );
+	TQIconView::setSelectionMode( TQIconView::Multi );
 	break;
     case KFile::Extended:
-	QIconView::setSelectionMode( QIconView::Extended );
+	TQIconView::setSelectionMode( TQIconView::Extended );
 	break;
     case KFile::NoSelection:
-	QIconView::setSelectionMode( QIconView::NoSelection );
+	TQIconView::setSelectionMode( TQIconView::NoSelection );
 	break;
     default: // fall through
     case KFile::Single:
-	QIconView::setSelectionMode( QIconView::Single );
+	TQIconView::setSelectionMode( TQIconView::Single );
 	break;
     }
 
     if ( sm == KFile::Multi || sm == KFile::Extended )
-	connect( this, SIGNAL( selectionChanged() ),
-		 SLOT( slotSelectionChanged() ));
+	connect( this, TQT_SIGNAL( selectionChanged() ),
+		 TQT_SLOT( slotSelectionChanged() ));
     else
-	connect( this, SIGNAL( selectionChanged( QIconViewItem * )),
-		 SLOT( highlighted( QIconViewItem * )));
+	connect( this, TQT_SIGNAL( selectionChanged( TQIconViewItem * )),
+		 TQT_SLOT( highlighted( TQIconViewItem * )));
 
     viewport()->installEventFilter( this );
 
@@ -186,11 +186,11 @@ KFileIconView::~KFileIconView()
     delete d;
 }
 
-void KFileIconView::readConfig( KConfig *kc, const QString& group )
+void KFileIconView::readConfig( KConfig *kc, const TQString& group )
 {
-    QString gr = group.isEmpty() ? QString("KFileIconView") : group;
+    TQString gr = group.isEmpty() ? TQString("KFileIconView") : group;
     KConfigGroupSaver cs( kc, gr );
-    QString small = QString::fromLatin1("SmallColumns");
+    TQString small = TQString::fromLatin1("SmallColumns");
     d->previewIconSize = kc->readNumEntry( "Preview Size", DEFAULT_PREVIEW_SIZE );
     d->previews->setChecked( kc->readBoolEntry( "ShowPreviews", DEFAULT_SHOW_PREVIEWS ) );
 
@@ -207,14 +207,14 @@ void KFileIconView::readConfig( KConfig *kc, const QString& group )
         showPreviews();
 }
 
-void KFileIconView::writeConfig( KConfig *kc, const QString& group )
+void KFileIconView::writeConfig( KConfig *kc, const TQString& group )
 {
-    QString gr = group.isEmpty() ? QString("KFileIconView") : group;
+    TQString gr = group.isEmpty() ? TQString("KFileIconView") : group;
     KConfigGroupSaver cs( kc, gr );
 
-    QString viewMode =  d->smallColumns->isChecked() ?
-        QString::fromLatin1("SmallColumns") :
-        QString::fromLatin1("LargeRows");
+    TQString viewMode =  d->smallColumns->isChecked() ?
+        TQString::fromLatin1("SmallColumns") :
+        TQString::fromLatin1("LargeRows");
     if(!kc->hasDefault( "ViewMode" ) && viewMode == DEFAULT_VIEW_MODE )
         kc->revertToDefault( "ViewMode" );
     else
@@ -239,7 +239,7 @@ void KFileIconView::removeToolTip()
     toolTip = 0;
 }
 
-void KFileIconView::showToolTip( QIconViewItem *item )
+void KFileIconView::showToolTip( TQIconViewItem *item )
 {
     delete toolTip;
     toolTip = 0;
@@ -247,32 +247,32 @@ void KFileIconView::showToolTip( QIconViewItem *item )
     if ( !item )
 	return;
 
-    int w = maxItemWidth() - ( itemTextPos() == QIconView::Bottom ? 0 :
+    int w = maxItemWidth() - ( itemTextPos() == TQIconView::Bottom ? 0 :
 			       item->pixmapRect().width() ) - 4;
     if ( fontMetrics().width( item->text() ) >= w ) {
-	toolTip = new QLabel( QString::fromLatin1(" %1 ").arg(item->text()), 0,
+	toolTip = new TQLabel( TQString::fromLatin1(" %1 ").arg(item->text()), 0,
 			      "myToolTip",
 			      WStyle_StaysOnTop | WStyle_Customize | WStyle_NoBorder | WStyle_Tool | WX11BypassWM );
-	toolTip->setFrameStyle( QFrame::Plain | QFrame::Box );
+	toolTip->setFrameStyle( TQFrame::Plain | TQFrame::Box );
 	toolTip->setLineWidth( 1 );
 	toolTip->setAlignment( AlignLeft | AlignTop );
-	toolTip->move( QCursor::pos() + QPoint( 14, 14 ) );
+	toolTip->move( TQCursor::pos() + TQPoint( 14, 14 ) );
 	toolTip->adjustSize();
-	QRect screen = QApplication::desktop()->screenGeometry(
-			QApplication::desktop()->screenNumber(QCursor::pos()));
+	TQRect screen = TQApplication::desktop()->screenGeometry(
+			TQApplication::desktop()->screenNumber(TQCursor::pos()));
 	if (toolTip->x()+toolTip->width() > screen.right()) {
 		toolTip->move(toolTip->x()+screen.right()-toolTip->x()-toolTip->width(), toolTip->y());
 	}
 	if (toolTip->y()+toolTip->height() > screen.bottom()) {
 		toolTip->move(toolTip->x(), screen.bottom()-toolTip->y()-toolTip->height()+toolTip->y());
 	}
-	toolTip->setFont( QToolTip::font() );
-	toolTip->setPalette( QToolTip::palette(), true );
+	toolTip->setFont( TQToolTip::font() );
+	toolTip->setPalette( TQToolTip::palette(), true );
 	toolTip->show();
     }
 }
 
-void KFileIconView::slotActivateMenu( QIconViewItem* item, const QPoint& pos )
+void KFileIconView::slotActivateMenu( TQIconViewItem* item, const TQPoint& pos )
 {
     if ( !item ) {
 	sig->activateMenu( 0, pos );
@@ -282,13 +282,13 @@ void KFileIconView::slotActivateMenu( QIconViewItem* item, const QPoint& pos )
     sig->activateMenu( i->fileInfo(), pos );
 }
 
-void KFileIconView::hideEvent( QHideEvent *e )
+void KFileIconView::hideEvent( TQHideEvent *e )
 {
     removeToolTip();
     KIconView::hideEvent( e );
 }
 
-void KFileIconView::keyPressEvent( QKeyEvent *e )
+void KFileIconView::keyPressEvent( TQKeyEvent *e )
 {
     KIconView::keyPressEvent( e );
 
@@ -336,7 +336,7 @@ void KFileIconView::insertItem( KFileItem *i )
 {
     KFileView::insertItem( i );
 
-    QIconView* qview = static_cast<QIconView*>( this );
+    TQIconView* qview = static_cast<TQIconView*>( this );
     // Since creating and initializing an item leads to a repaint,
     // we disable updates on the IconView for a while.
     qview->setUpdatesEnabled( false );
@@ -350,7 +350,7 @@ void KFileIconView::insertItem( KFileItem *i )
     i->setExtraData( this, item );
 }
 
-void KFileIconView::slotActivate( QIconViewItem *item )
+void KFileIconView::slotActivate( TQIconViewItem *item )
 {
     if ( !item )
 	return;
@@ -359,7 +359,7 @@ void KFileIconView::slotActivate( QIconViewItem *item )
 	sig->activate( fi );
 }
 
-void KFileIconView::selected( QIconViewItem *item )
+void KFileIconView::selected( TQIconViewItem *item )
 {
     if ( !item || (KApplication::keyboardMouseState() & (ShiftButton | ControlButton)) != 0 )
 	return;
@@ -387,7 +387,7 @@ KFileItem * KFileIconView::currentFileItem() const
     return 0L;
 }
 
-void KFileIconView::highlighted( QIconViewItem *item )
+void KFileIconView::highlighted( TQIconViewItem *item )
 {
     if ( !item )
 	return;
@@ -398,32 +398,32 @@ void KFileIconView::highlighted( QIconViewItem *item )
 
 void KFileIconView::setSelectionMode( KFile::SelectionMode sm )
 {
-    disconnect( SIGNAL( selectionChanged() ), this );
-    disconnect( SIGNAL( selectionChanged( QIconViewItem * )), this );
+    disconnect( TQT_SIGNAL( selectionChanged() ), this );
+    disconnect( TQT_SIGNAL( selectionChanged( TQIconViewItem * )), this );
 
     KFileView::setSelectionMode( sm );
     switch ( KFileView::selectionMode() ) {
     case KFile::Multi:
-	QIconView::setSelectionMode( QIconView::Multi );
+	TQIconView::setSelectionMode( TQIconView::Multi );
 	break;
     case KFile::Extended:
-	QIconView::setSelectionMode( QIconView::Extended );
+	TQIconView::setSelectionMode( TQIconView::Extended );
 	break;
     case KFile::NoSelection:
-	QIconView::setSelectionMode( QIconView::NoSelection );
+	TQIconView::setSelectionMode( TQIconView::NoSelection );
 	break;
     default: // fall through
     case KFile::Single:
-	QIconView::setSelectionMode( QIconView::Single );
+	TQIconView::setSelectionMode( TQIconView::Single );
 	break;
     }
 
     if ( sm == KFile::Multi || sm == KFile::Extended )
-	connect( this, SIGNAL( selectionChanged() ),
-		 SLOT( slotSelectionChanged() ));
+	connect( this, TQT_SIGNAL( selectionChanged() ),
+		 TQT_SLOT( slotSelectionChanged() ));
     else
-	connect( this, SIGNAL( selectionChanged( QIconViewItem * )),
-		 SLOT( highlighted( QIconViewItem * )));
+	connect( this, TQT_SIGNAL( selectionChanged( TQIconViewItem * )),
+		 TQT_SLOT( highlighted( TQIconViewItem * )));
 }
 
 bool KFileIconView::isSelected( const KFileItem *i ) const
@@ -437,17 +437,17 @@ void KFileIconView::updateView( bool b )
     if ( !b )
         return; // eh?
 
-    KFileIconViewItem *item = static_cast<KFileIconViewItem*>(QIconView::firstItem());
+    KFileIconViewItem *item = static_cast<KFileIconViewItem*>(TQIconView::firstItem());
     if ( item ) {
         do {
             if ( d->previews->isChecked() ) {
                 if ( canPreview( item->fileInfo() ) )
-                    item->setPixmapSize( QSize( d->previewIconSize, d->previewIconSize ) );
+                    item->setPixmapSize( TQSize( d->previewIconSize, d->previewIconSize ) );
             }
             else {
                 // unset pixmap size (used for previews)
                 if ( !item->pixmapSize().isNull() )
-                    item->setPixmapSize( QSize( 0, 0 ) );
+                    item->setPixmapSize( TQSize( 0, 0 ) );
             }
             // recalculate item parameters but avoid an in-place repaint
             item->setPixmap( (item->fileInfo())->pixmap( myIconSize ), true, false );
@@ -593,12 +593,12 @@ void KFileIconView::showPreviews()
     d->job = KIO::filePreview(*items(), d->previewIconSize,d->previewIconSize);
     d->job->setIgnoreMaximumSize(d->ignoreMaximumSize);
 
-    connect( d->job, SIGNAL( result( KIO::Job * )),
-             this, SLOT( slotPreviewResult( KIO::Job * )));
-    connect( d->job, SIGNAL( gotPreview( const KFileItem*, const QPixmap& )),
-             SLOT( gotPreview( const KFileItem*, const QPixmap& ) ));
-//     connect( d->job, SIGNAL( failed( const KFileItem* )),
-//              this, SLOT( slotFailed( const KFileItem* ) ));
+    connect( d->job, TQT_SIGNAL( result( KIO::Job * )),
+             this, TQT_SLOT( slotPreviewResult( KIO::Job * )));
+    connect( d->job, TQT_SIGNAL( gotPreview( const KFileItem*, const TQPixmap& )),
+             TQT_SLOT( gotPreview( const KFileItem*, const TQPixmap& ) ));
+//     connect( d->job, TQT_SIGNAL( failed( const KFileItem* )),
+//              this, TQT_SLOT( slotFailed( const KFileItem* ) ));
 }
 
 void KFileIconView::slotPreviewResult( KIO::Job *job )
@@ -607,13 +607,13 @@ void KFileIconView::slotPreviewResult( KIO::Job *job )
         d->job = 0L;
 }
 
-void KFileIconView::gotPreview( const KFileItem *item, const QPixmap& pix )
+void KFileIconView::gotPreview( const KFileItem *item, const TQPixmap& pix )
 {
     KFileIconViewItem *it = viewItem( item );
     if ( it )
         if( item->overlays() & KIcon::HiddenOverlay )
         {
-            QPixmap p( pix );
+            TQPixmap p( pix );
 
             KIconEffect::semiTransparent( p );
             it->setPixmap( p );
@@ -624,12 +624,12 @@ void KFileIconView::gotPreview( const KFileItem *item, const QPixmap& pix )
 
 bool KFileIconView::canPreview( const KFileItem *item ) const
 {
-    QStringList::Iterator it = d->previewMimeTypes.begin();
-    QRegExp r;
+    TQStringList::Iterator it = d->previewMimeTypes.begin();
+    TQRegExp r;
     r.setWildcard( true );
 
     for ( ; it != d->previewMimeTypes.end(); ++it ) {
-        QString type = *it;
+        TQString type = *it;
         // the "mimetype" can be "image/*"
         if ( type.at( type.length() - 1 ) == '*' ) {
             r.setPattern( type );
@@ -672,20 +672,20 @@ KFileItem * KFileIconView::prevItem( const KFileItem *fileItem ) const
     return 0L;
 }
 
-void KFileIconView::setSorting( QDir::SortSpec spec )
+void KFileIconView::setSorting( TQDir::SortSpec spec )
 {
     KFileView::setSorting( spec );
     KFileItemListIterator it( *items() );
 
     KFileItem *item;
 
-    if ( spec & QDir::Time ) {
+    if ( spec & TQDir::Time ) {
         for ( ; (item = it.current()); ++it )
             // warning, time_t is often signed -> cast it
             viewItem(item)->setKey( sortingKey( (unsigned long)item->time( KIO::UDS_MODIFICATION_TIME ), item->isDir(), spec ));
     }
 
-    else if ( spec & QDir::Size ) {
+    else if ( spec & TQDir::Size ) {
         for ( ; (item = it.current()); ++it )
             viewItem(item)->setKey( sortingKey( item->size(), item->isDir(),
                                                 spec ));
@@ -718,12 +718,12 @@ void KFileIconView::listingCompleted()
 {
     arrangeItemsInGrid();
 
-    // QIconView doesn't set the current item automatically, so we have to do
+    // TQIconView doesn't set the current item automatically, so we have to do
     // that. We don't want to emit selectionChanged() tho.
     if ( !currentItem() ) {
         bool block = signalsBlocked();
         blockSignals( true );
-        QIconViewItem *item = viewItem( firstFileItem() );
+        TQIconViewItem *item = viewItem( firstFileItem() );
         KIconView::setCurrentItem( item );
         KIconView::setSelected( item, false );
         blockSignals( block );
@@ -733,12 +733,12 @@ void KFileIconView::listingCompleted()
 }
 
 // need to remove our tooltip, eventually
-bool KFileIconView::eventFilter( QObject *o, QEvent *e )
+bool KFileIconView::eventFilter( TQObject *o, TQEvent *e )
 {
     if ( o == viewport() || o == this ) {
         int type = e->type();
-        if ( type == QEvent::Leave ||
-             type == QEvent::FocusOut )
+        if ( type == TQEvent::Leave ||
+             type == TQEvent::FocusOut )
             removeToolTip();
     }
 
@@ -748,7 +748,7 @@ bool KFileIconView::eventFilter( QObject *o, QEvent *e )
 /////////////////////////////////////////////////////////////////
 
 // ### workaround for Qt3 Bug
-void KFileIconView::showEvent( QShowEvent *e )
+void KFileIconView::showEvent( TQShowEvent *e )
 {
     KIconView::showEvent( e );
 }
@@ -758,7 +758,7 @@ void KFileIconView::initItem( KFileIconViewItem *item, const KFileItem *i,
                               bool updateTextAndPixmap )
 {
     if ( d->previews->isChecked() && canPreview( i ) )
-        item->setPixmapSize( QSize( d->previewIconSize, d->previewIconSize ) );
+        item->setPixmapSize( TQSize( d->previewIconSize, d->previewIconSize ) );
 
     if ( updateTextAndPixmap )
     {
@@ -770,13 +770,13 @@ void KFileIconView::initItem( KFileIconViewItem *item, const KFileItem *i,
     }
 
     // see also setSorting()
-    QDir::SortSpec spec = KFileView::sorting();
+    TQDir::SortSpec spec = KFileView::sorting();
 
-    if ( spec & QDir::Time )
+    if ( spec & TQDir::Time )
         // warning, time_t is often signed -> cast it
         item->setKey( sortingKey( (unsigned long) i->time( KIO::UDS_MODIFICATION_TIME ),
                                   i->isDir(), spec ));
-    else if ( spec & QDir::Size )
+    else if ( spec & TQDir::Size )
         item->setKey( sortingKey( i->size(), i->isDir(), spec ));
 
     else // Name or Unsorted
@@ -806,7 +806,7 @@ void KFileIconView::zoomOut()
     setPreviewSize( d->previewIconSize - 30 );
 }
 
-QDragObject *KFileIconView::dragObject()
+TQDragObject *KFileIconView::dragObject()
 {
     // create a list of the URL:s that we want to drag
     KURL::List urls;
@@ -814,16 +814,16 @@ QDragObject *KFileIconView::dragObject()
     for ( ; it.current(); ++it ){
         urls.append( (*it)->url() );
     }
-    QPixmap pixmap;
+    TQPixmap pixmap;
     if( urls.count() > 1 )
         pixmap = DesktopIcon( "kmultiple", iconSize() );
     if( pixmap.isNull() )
         pixmap = currentFileItem()->pixmap( iconSize() );
 
-    QPoint hotspot;
+    TQPoint hotspot;
     hotspot.setX( pixmap.width() / 2 );
     hotspot.setY( pixmap.height() / 2 );
-    QDragObject* myDragObject = new KURLDrag( urls, widget() );
+    TQDragObject* myDragObject = new KURLDrag( urls, widget() );
     myDragObject->setPixmap( pixmap, hotspot );
     return myDragObject;
 }
@@ -845,16 +845,16 @@ void KFileIconView::slotAutoOpen()
         sig->activate( fileItem );
 }
 
-bool KFileIconView::acceptDrag(QDropEvent* e) const
+bool KFileIconView::acceptDrag(TQDropEvent* e) const
 {
    return KURLDrag::canDecode( e ) &&
        (e->source()!=const_cast<KFileIconView*>(this)) &&
-       ( e->action() == QDropEvent::Copy
-      || e->action() == QDropEvent::Move
-      || e->action() == QDropEvent::Link );
+       ( e->action() == TQDropEvent::Copy
+      || e->action() == TQDropEvent::Move
+      || e->action() == TQDropEvent::Link );
 }
 
-void KFileIconView::contentsDragEnterEvent( QDragEnterEvent *e )
+void KFileIconView::contentsDragEnterEvent( TQDragEnterEvent *e )
 {
     if ( ! acceptDrag( e ) ) { // can we decode this ?
         e->ignore();            // No
@@ -877,7 +877,7 @@ void KFileIconView::contentsDragEnterEvent( QDragEnterEvent *e )
     }
 }
 
-void KFileIconView::contentsDragMoveEvent( QDragMoveEvent *e )
+void KFileIconView::contentsDragMoveEvent( TQDragMoveEvent *e )
 {
     if ( ! acceptDrag( e ) ) { // can we decode this ?
         e->ignore();            // No
@@ -903,13 +903,13 @@ void KFileIconView::contentsDragMoveEvent( QDragMoveEvent *e )
     }
 }
 
-void KFileIconView::contentsDragLeaveEvent( QDragLeaveEvent * )
+void KFileIconView::contentsDragLeaveEvent( TQDragLeaveEvent * )
 {
     d->dropItem = 0;
     d->autoOpenTimer.stop();
 }
 
-void KFileIconView::contentsDropEvent( QDropEvent *e )
+void KFileIconView::contentsDropEvent( TQDropEvent *e )
 {
     d->dropItem = 0;
     d->autoOpenTimer.stop();

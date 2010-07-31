@@ -19,10 +19,10 @@
 #ifndef _KXMLGUICLIENT_H
 #define _KXMLGUICLIENT_H
 
-#include <qdom.h>
-#include <qptrlist.h>
-#include <qmap.h>
-#include <qstringlist.h>
+#include <tqdom.h>
+#include <tqptrlist.h>
+#include <tqmap.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -77,20 +77,20 @@ public:
   KAction* action( const char* name ) const;
 
   /**
-   * Retrieves an action for a given QDomElement. The default
+   * Retrieves an action for a given TQDomElement. The default
    * implementation uses the "name" attribute to query the action
    * object via the other action() method.
    */
-  virtual KAction *action( const QDomElement &element ) const;
+  virtual KAction *action( const TQDomElement &element ) const;
 
   /**
    * Retrieves the entire action collection for the GUI client. If
    * you subclass KXMLGUIClient you should call
-   * KActionCollection::setWidget( QWidget* ) with this object, or
+   * KActionCollection::setWidget( TQWidget* ) with this object, or
    * you will encounter subtle bugs with KAction keyboard shortcuts.
    * This is not necessary if your KXMLGUIClient is a KMainWindow.
    *
-   * @see KActionCollection::setWidget( QWidget* )
+   * @see KActionCollection::setWidget( TQWidget* )
    */
   virtual KActionCollection* actionCollection() const;
 
@@ -100,11 +100,11 @@ public:
   virtual KInstance *instance() const;
 
   /**
-   * @return The parsed XML in a QDomDocument, set by
+   * @return The parsed XML in a TQDomDocument, set by
    * setXMLFile() or setXML().
    * This document describes the layout of the GUI.
    */
-  virtual QDomDocument domDocument() const;
+  virtual TQDomDocument domDocument() const;
 
   /**
    * This will return the name of the XML file as set by setXMLFile().
@@ -117,20 +117,20 @@ public:
    * return the last XML file set.  This, in almost all cases, will
    * be the local XML file.
    *
-   * @return The name of the XML file or QString::null
+   * @return The name of the XML file or TQString::null
    */
-  virtual QString xmlFile() const;
+  virtual TQString xmlFile() const;
 
-  virtual QString localXMLFile() const;
+  virtual TQString localXMLFile() const;
 
   /**
    * @internal
    */
-  void setXMLGUIBuildDocument( const QDomDocument &doc );
+  void setXMLGUIBuildDocument( const TQDomDocument &doc );
   /**
    * @internal
    */
-  QDomDocument xmlguiBuildDocument() const;
+  TQDomDocument xmlguiBuildDocument() const;
 
   /**
    * This method is called by the KXMLGUIFactory as soon as the client
@@ -167,7 +167,7 @@ public:
   /**
    * Retrieves a list of all child clients.
    */
-  const QPtrList<KXMLGUIClient> *childClients();
+  const TQPtrList<KXMLGUIClient> *childClients();
 
   /**
    * A client can have an own KXMLGUIBuilder.
@@ -218,7 +218,7 @@ public:
    * This tag will get expanded to a list of actions.  In the example
    * above ( a file manager with a dynamic file menu ), you would call
    * \code
-   * QPtrList<KAction> file_actions;
+   * TQPtrList<KAction> file_actions;
    * for( ... )
    *   if( ... )
    *     file_actions.append( cool_action );
@@ -234,34 +234,34 @@ public:
    *       plugActionList() would leave the previous actions in the
    *       menu too..
    */
-  void plugActionList( const QString &name, const QPtrList<KAction> &actionList );
+  void plugActionList( const TQString &name, const TQPtrList<KAction> &actionList );
 
   /**
    * The complement of plugActionList() ...
    */
-  void unplugActionList( const QString &name );
+  void unplugActionList( const TQString &name );
 
-  static QString findMostRecentXMLFile( const QStringList &files, QString &doc );
+  static TQString findMostRecentXMLFile( const TQStringList &files, TQString &doc );
 
-  void addStateActionEnabled(const QString& state, const QString& action);
+  void addStateActionEnabled(const TQString& state, const TQString& action);
 
-  void addStateActionDisabled(const QString& state, const QString& action);
+  void addStateActionDisabled(const TQString& state, const TQString& action);
 
   enum ReverseStateChange { StateNoReverse, StateReverse };
   struct StateChange
   {
-    QStringList actionsToEnable;
-    QStringList actionsToDisable;
+    TQStringList actionsToEnable;
+    TQStringList actionsToDisable;
   };
 
-  StateChange getActionsToChangeForState(const QString& state);
+  StateChange getActionsToChangeForState(const TQString& state);
 
   /// @since 3.1
-  void beginXMLPlug( QWidget * );
+  void beginXMLPlug( TQWidget * );
   /// @since 3.1
   void endXMLPlug();
   /// @since 3.1
-  void prepareXMLUnplug( QWidget * );
+  void prepareXMLUnplug( TQWidget * );
 
 protected:
   /**
@@ -291,9 +291,9 @@ protected:
    * @param setXMLDoc Specify whether to call setXML. Default is true.
    *               and the DOM document at once.
    **/
-  virtual void setXMLFile( const QString& file, bool merge = false, bool setXMLDoc = true );
+  virtual void setXMLFile( const TQString& file, bool merge = false, bool setXMLDoc = true );
 
-  virtual void setLocalXMLFile( const QString &file );
+  virtual void setLocalXMLFile( const TQString &file );
 
   /**
    * Sets the XML for the part.
@@ -301,7 +301,7 @@ protected:
    * Call this in the Part-inherited class constructor if you
    *  don't call setXMLFile().
    **/
-  virtual void setXML( const QString &document, bool merge = false );
+  virtual void setXML( const TQString &document, bool merge = false );
 
   /**
    * Sets the Document for the part, describing the layout of the GUI.
@@ -309,7 +309,7 @@ protected:
    * Call this in the Part-inherited class constructor if you don't call
    * setXMLFile or setXML .
    */
-  virtual void setDOMDocument( const QDomDocument &document, bool merge = false );
+  virtual void setDOMDocument( const TQDomDocument &document, bool merge = false );
 
   /**
    * This function will attempt to give up some memory after the GUI
@@ -329,34 +329,34 @@ protected:
    * (actions to be enabled will be disabled and action to be disabled will be enabled)
    * Default is reverse=false.
    */
-   virtual void stateChanged(const QString &newstate, ReverseStateChange reverse = StateNoReverse);
+   virtual void stateChanged(const TQString &newstate, ReverseStateChange reverse = StateNoReverse);
 
    // Use this one for KDE 4.0
-   //virtual void stateChanged(const QString &newstate, bool reverse = false);
+   //virtual void stateChanged(const TQString &newstate, bool reverse = false);
 
 private:
   struct DocStruct
   {
-    QString file;
-    QString data;
+    TQString file;
+    TQString data;
   };
 
-  bool mergeXML( QDomElement &base, const QDomElement &additive,
+  bool mergeXML( TQDomElement &base, const TQDomElement &additive,
                  KActionCollection *actionCollection );
 
-  QDomElement findMatchingElement( const QDomElement &base,
-                                   const QDomElement &additive );
+  TQDomElement findMatchingElement( const TQDomElement &base,
+                                   const TQDomElement &additive );
 
-  typedef QMap<QString, QMap<QString, QString> > ActionPropertiesMap;
+  typedef TQMap<TQString, TQMap<TQString, TQString> > ActionPropertiesMap;
 
-  static ActionPropertiesMap extractActionProperties( const QDomDocument &doc );
+  static ActionPropertiesMap extractActionProperties( const TQDomDocument &doc );
 
-  static void storeActionProperties( QDomDocument &doc, const ActionPropertiesMap &properties );
+  static void storeActionProperties( TQDomDocument &doc, const ActionPropertiesMap &properties );
 
-  static QString findVersionNumber( const QString &_xml );
+  static TQString findVersionNumber( const TQString &_xml );
 
   // Actions to enable/disable on a state change
-  QMap<QString,StateChange> m_actionsStateMap;
+  TQMap<TQString,StateChange> m_actionsStateMap;
 
 protected:
   virtual void virtual_hook( int id, void* data );

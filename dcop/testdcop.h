@@ -26,12 +26,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _TESTDCOP_H_
 #define _TESTDCOP_H_
 
-#include <qapplication.h>
-#include <qbitarray.h>
+#include <tqapplication.h>
+#include <tqbitarray.h>
 #include <dcopclient.h>
 #include <dcopobject.h>
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <stdio.h>
 /**
@@ -45,32 +45,32 @@ class TestObject : public QObject
 {
   Q_OBJECT
 public:
-  TestObject(const QCString &app);
+  TestObject(const TQCString &app);
 
 public slots:
   void slotTimeout();
-  void slotCallBack(int, const QCString&, const QByteArray&);
+  void slotCallBack(int, const TQCString&, const TQByteArray&);
 private:
 
-  QCString m_app;
+  TQCString m_app;
 };
 
 
-class MyDCOPObject : public QObject, public DCOPObject
+class MyDCOPObject : public TQObject, public DCOPObject
 {
   Q_OBJECT
 public:
-  MyDCOPObject(const QCString &name) : DCOPObject(name) {}
-  bool process(const QCString &fun, const QByteArray &data,
-	       QCString& replyType, QByteArray &replyData);
-  void function(const QString &arg1, int arg2) { qDebug("function got arg: %s and %d", arg1.utf8().data(), arg2); }
+  MyDCOPObject(const TQCString &name) : DCOPObject(name) {}
+  bool process(const TQCString &fun, const TQByteArray &data,
+	       TQCString& replyType, TQByteArray &replyData);
+  void function(const TQString &arg1, int arg2) { qDebug("function got arg: %s and %d", arg1.utf8().data(), arg2); }
 public slots:
   void slotTimeout();
   void slotTimeout2();
-  void registered(const QCString &appName)
+  void registered(const TQCString &appName)
      { printf("REGISTER: %s\n", appName.data()); }
 
-  void unregistered(const QCString &appName)
+  void unregistered(const TQCString &appName)
      { printf("UNREGISTER: %s\n", appName.data()); }
   QCStringList functions();
 };

@@ -3,8 +3,8 @@
 
 #include <db.h>
 
-#include <qstring.h>
-#include <qpair.h>
+#include <tqstring.h>
+#include <tqpair.h>
 
 namespace Evolution {
 
@@ -18,10 +18,10 @@ namespace Evolution {
         DBIterator( const DBIterator& );
         DBIterator &operator=( const DBIterator& );
 
-        QString key()const;
-        QString value()const;
+        TQString key()const;
+        TQString value()const;
 
-        QString operator*();
+        TQString operator*();
 
         DBIterator &operator++();
         DBIterator &operator--();
@@ -37,18 +37,18 @@ namespace Evolution {
         DBWrapper();
         ~DBWrapper();
 
-        QString lastError()const;
+        TQString lastError()const;
 
-        bool open( const QString& file, bool readOnly = false);
+        bool open( const TQString& file, bool readOnly = false);
         bool save();
         DBIterator begin();
         DBIterator end();
 
-        bool find( const QString& key, QString& value );
-        bool add( const QString& key,  const QString& val );
-        bool remove( const QString& key );
+        bool find( const TQString& key, TQString& value );
+        bool add( const TQString& key,  const TQString& val );
+        bool remove( const TQString& key );
     private:
-        //  DBT element( const QString& );
+        //  DBT element( const TQString& );
         struct Data;
         Data* data;
 

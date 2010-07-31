@@ -19,17 +19,17 @@
 
 #include "sizewidget.h"
 
-#include <qcombobox.h>
-#include <qspinbox.h>
-#include <qlayout.h>
-#include <qregexp.h>
+#include <tqcombobox.h>
+#include <tqspinbox.h>
+#include <tqlayout.h>
+#include <tqregexp.h>
 #include <klocale.h>
 
-SizeWidget::SizeWidget( QWidget *parent, const char *name )
-	: QWidget( parent, name )
+SizeWidget::SizeWidget( TQWidget *parent, const char *name )
+	: TQWidget( parent, name )
 {
-	m_size = new QSpinBox( 0, 9999, 1, this );
-	m_unit = new QComboBox( this );
+	m_size = new TQSpinBox( 0, 9999, 1, this );
+	m_unit = new TQComboBox( this );
 
 	m_unit->insertItem( i18n( "KB" ) );
 	m_unit->insertItem( i18n( "MB" ) );
@@ -38,14 +38,14 @@ SizeWidget::SizeWidget( QWidget *parent, const char *name )
 	m_unit->setCurrentItem( 1 );
 	m_size->setSpecialValueText( i18n( "Unlimited" ) );
 
-	QHBoxLayout *l0 = new QHBoxLayout( this, 0, 5 );
+	TQHBoxLayout *l0 = new TQHBoxLayout( this, 0, 5 );
 	l0->addWidget( m_size, 1 );
 	l0->addWidget( m_unit, 0 );
 }
 
-void SizeWidget::setSizeString( const QString& sz )
+void SizeWidget::setSizeString( const TQString& sz )
 {
-	int p = sz.find( QRegExp( "\\D" ) );
+	int p = sz.find( TQRegExp( "\\D" ) );
 	m_size->setValue( sz.left( p ).toInt() );
 	switch( sz[ p ].latin1() )
 	{
@@ -58,9 +58,9 @@ void SizeWidget::setSizeString( const QString& sz )
 	m_unit->setCurrentItem( p );
 }
 
-QString SizeWidget::sizeString() const
+TQString SizeWidget::sizeString() const
 {
-	QString result = QString::number( m_size->value() );
+	TQString result = TQString::number( m_size->value() );
 	switch ( m_unit->currentItem() )
 	{
 		case 0: result.append( "k" ); break;

@@ -30,14 +30,14 @@
 #include "render_arena.h"
 
 #include <assert.h>
-#include <qwidget.h>
-#include <qpainter.h>
-#include <qevent.h>
-#include <qapplication.h>
-#include <qlineedit.h>
+#include <tqwidget.h>
+#include <tqpainter.h>
+#include <tqevent.h>
+#include <tqapplication.h>
+#include <tqlineedit.h>
 #include <kglobalsettings.h>
-#include <qobjectlist.h>
-#include <qvaluevector.h>
+#include <tqobjectlist.h>
+#include <tqvaluevector.h>
 
 #include "khtml_ext.h"
 #include "khtmlview.h"
@@ -142,9 +142,9 @@ RenderWidget::~RenderWidget()
 class QWidgetResizeEvent : public QEvent
 {
 public:
-    enum { Type = QEvent::User + 0xbee };
+    enum { Type = TQEvent::User + 0xbee };
     QWidgetResizeEvent( int _w,  int _h ) :
-        QEvent( ( QEvent::Type ) Type ),  w( _w ), h( _h ) {}
+        TQEvent( ( TQEvent::Type ) Type ),  w( _w ), h( _h ) {}
     int w;
     int h;
 };
@@ -160,7 +160,7 @@ void  RenderWidget::resizeWidget( int w, int h )
         m_resizePending = isKHTMLWidget();
         ref();
         element()->ref();
-        QApplication::postEvent( this, new QWidgetResizeEvent( w, h ) );
+        TQApplication::postEvent( this, new QWidgetResizeEvent( w, h ) );
         element()->deref();
         deref();
     }
@@ -171,13 +171,13 @@ void RenderWidget::cancelPendingResize()
     if (!m_widget)
         return;
     m_discardResizes = true;
-    QApplication::sendPostedEvents(this, QWidgetResizeEvent::Type);
+    TQApplication::sendPostedEvents(this, QWidgetResizeEvent::Type);
     m_discardResizes = false;
 }
 
-bool RenderWidget::event( QEvent *e )
+bool RenderWidget::event( TQEvent *e )
 {
-    if ( m_widget && (e->type() == (QEvent::Type)QWidgetResizeEvent::Type) ) {
+    if ( m_widget && (e->type() == (TQEvent::Type)QWidgetResizeEvent::Type) ) {
         m_resizePending = false;
         if (m_discardResizes)
             return true;
@@ -187,36 +187,36 @@ bool RenderWidget::event( QEvent *e )
     }
     // eat all events - except if this is a frame (in which case KHTMLView handles it all)
     if ( ::qt_cast<KHTMLView *>( m_widget ) )
-        return QObject::event( e );
+        return TQObject::event( e );
     return true;
 }
 
 void RenderWidget::flushWidgetResizes() //static
 {
-    QApplication::sendPostedEvents( 0, QWidgetResizeEvent::Type );
+    TQApplication::sendPostedEvents( 0, QWidgetResizeEvent::Type );
 }
 
-void RenderWidget::setQWidget(QWidget *widget)
+void RenderWidget::setQWidget(TQWidget *widget)
 {
     if (widget != m_widget)
     {
         if (m_widget) {
             m_widget->removeEventFilter(this);
-            disconnect( m_widget, SIGNAL( destroyed()), this, SLOT( slotWidgetDestructed()));
+            disconnect( m_widget, TQT_SIGNAL( destroyed()), this, TQT_SLOT( slotWidgetDestructed()));
             m_widget->hide();
             m_widget->deleteLater(); //Might happen due to event on the widget, so be careful
             m_widget = 0;
         }
         m_widget = widget;
         if (m_widget) {
-            connect( m_widget, SIGNAL( destroyed()), this, SLOT( slotWidgetDestructed()));
+            connect( m_widget, TQT_SIGNAL( destroyed()), this, TQT_SLOT( slotWidgetDestructed()));
             m_widget->installEventFilter(this);
 
-            if ( (m_isKHTMLWidget = !strcmp(m_widget->name(), "__khtml")) && !::qt_cast<QFrame*>(m_widget))
-                m_widget->setBackgroundMode( QWidget::NoBackground );
+            if ( (m_isKHTMLWidget = !strcmp(m_widget->name(), "__khtml")) && !::qt_cast<TQFrame*>(m_widget))
+                m_widget->setBackgroundMode( TQWidget::NoBackground );
 
-            if (m_widget->focusPolicy() > QWidget::StrongFocus)
-                m_widget->setFocusPolicy(QWidget::StrongFocus);
+            if (m_widget->focusPolicy() > TQWidget::StrongFocus)
+                m_widget->setFocusPolicy(TQWidget::StrongFocus);
             // if we've already received a layout, apply the calculated space to the
             // widget immediately, but we have to have really been full constructed (with a non-null
             // style pointer).
@@ -266,11 +266,11 @@ void RenderWidget::updateFromElement()
 {
     if (m_widget) {
         // Color:
-        QColor color = style()->color();
-        QColor backgroundColor = style()->backgroundColor();
+        TQColor color = style()->color();
+        TQColor backgroundColor = style()->backgroundColor();
 
         if ( color.isValid() || backgroundColor.isValid() ) {
-            QPalette pal(QApplication::palette(m_widget));
+            TQPalette pal(TQApplication::palette(m_widget));
 
             int contrast_ = KGlobalSettings::contrast();
             int highlightVal = 100 + (2*contrast_+4)*16/10;
@@ -279,38 +279,38 @@ void RenderWidget::updateFromElement()
             if (backgroundColor.isValid()) {
                 if (!isKHTMLWidget())
                     widget()->setEraseColor(backgroundColor );
-                for ( int i = 0; i < QPalette::NColorGroups; ++i ) {
-                    pal.setColor( (QPalette::ColorGroup)i, QColorGroup::Background, backgroundColor );
-                    pal.setColor( (QPalette::ColorGroup)i, QColorGroup::Light, backgroundColor.light(highlightVal) );
-                    pal.setColor( (QPalette::ColorGroup)i, QColorGroup::Dark, backgroundColor.dark(lowlightVal) );
-                    pal.setColor( (QPalette::ColorGroup)i, QColorGroup::Mid, backgroundColor.dark(120) );
-                    pal.setColor( (QPalette::ColorGroup)i, QColorGroup::Midlight, backgroundColor.light(110) );
-                    pal.setColor( (QPalette::ColorGroup)i, QColorGroup::Button, backgroundColor );
-                    pal.setColor( (QPalette::ColorGroup)i, QColorGroup::Base, backgroundColor );
+                for ( int i = 0; i < TQPalette::NColorGroups; ++i ) {
+                    pal.setColor( (TQPalette::ColorGroup)i, TQColorGroup::Background, backgroundColor );
+                    pal.setColor( (TQPalette::ColorGroup)i, TQColorGroup::Light, backgroundColor.light(highlightVal) );
+                    pal.setColor( (TQPalette::ColorGroup)i, TQColorGroup::Dark, backgroundColor.dark(lowlightVal) );
+                    pal.setColor( (TQPalette::ColorGroup)i, TQColorGroup::Mid, backgroundColor.dark(120) );
+                    pal.setColor( (TQPalette::ColorGroup)i, TQColorGroup::Midlight, backgroundColor.light(110) );
+                    pal.setColor( (TQPalette::ColorGroup)i, TQColorGroup::Button, backgroundColor );
+                    pal.setColor( (TQPalette::ColorGroup)i, TQColorGroup::Base, backgroundColor );
             }
             }
             if ( color.isValid() ) {
                 struct ColorSet {
-                    QPalette::ColorGroup cg;
-                    QColorGroup::ColorRole cr;
+                    TQPalette::ColorGroup cg;
+                    TQColorGroup::ColorRole cr;
                 };
                 const struct ColorSet toSet [] = {
-                    { QPalette::Active, QColorGroup::Foreground },
-                    { QPalette::Active, QColorGroup::ButtonText },
-                    { QPalette::Active, QColorGroup::Text },
-                    { QPalette::Inactive, QColorGroup::Foreground },
-                    { QPalette::Inactive, QColorGroup::ButtonText },
-                    { QPalette::Inactive, QColorGroup::Text },
-                    { QPalette::Disabled,QColorGroup::ButtonText },
-                    { QPalette::NColorGroups, QColorGroup::NColorRoles },
+                    { TQPalette::Active, TQColorGroup::Foreground },
+                    { TQPalette::Active, TQColorGroup::ButtonText },
+                    { TQPalette::Active, TQColorGroup::Text },
+                    { TQPalette::Inactive, TQColorGroup::Foreground },
+                    { TQPalette::Inactive, TQColorGroup::ButtonText },
+                    { TQPalette::Inactive, TQColorGroup::Text },
+                    { TQPalette::Disabled,TQColorGroup::ButtonText },
+                    { TQPalette::NColorGroups, TQColorGroup::NColorRoles },
                 };
                 const ColorSet *set = toSet;
-                while( set->cg != QPalette::NColorGroups ) {
+                while( set->cg != TQPalette::NColorGroups ) {
                     pal.setColor( set->cg, set->cr, color );
                     ++set;
                 }
 
-                QColor disfg = color;
+                TQColor disfg = color;
                 int h, s, v;
                 disfg.hsv( &h, &s, &v );
                 if (v > 128)
@@ -322,7 +322,7 @@ void RenderWidget::updateFromElement()
                 else
                     // black fg - use darkgray disabled fg
                     disfg = Qt::darkGray;
-                pal.setColor(QPalette::Disabled,QColorGroup::Foreground,disfg);
+                pal.setColor(TQPalette::Disabled,TQColorGroup::Foreground,disfg);
             }
 
             m_widget->setPalette(pal);
@@ -330,11 +330,11 @@ void RenderWidget::updateFromElement()
         else
             m_widget->unsetPalette();
         // Border:
-        QFrame* frame = ::qt_cast<QFrame*>(m_widget);
+        TQFrame* frame = ::qt_cast<TQFrame*>(m_widget);
         if (frame) {
             if (shouldPaintBackgroundOrBorder())
             {
-                frame->setFrameShape(QFrame::NoFrame);
+                frame->setFrameShape(TQFrame::NoFrame);
             }
         }
 
@@ -455,7 +455,7 @@ public:
     static const int maxPixelBuffering = 320*200;
     static const int leaseTime = 20*1000;
 
-    static QPixmap *grab( QSize s = QSize() ) {
+    static TQPixmap *grab( TQSize s = TQSize() ) {
         if (!m_inst)
             m_inst = new PaintBuffer;
         return m_inst->getBuf( s );
@@ -464,7 +464,7 @@ public:
 protected:
     PaintBuffer(): m_overflow(false), m_grabbed(false),
                    m_timer(0), m_resetWidth(0), m_resetHeight(0) {};
-    void timerEvent(QTimerEvent* e) {
+    void timerEvent(TQTimerEvent* e) {
         assert( m_timer == e->timerId() );
         if (m_grabbed)
             return;
@@ -474,7 +474,7 @@ protected:
         m_timer = 0;
     }
 
-    QPixmap *getBuf( QSize s ) {
+    TQPixmap *getBuf( TQSize s ) {
         assert( !m_grabbed );
         if (s.isEmpty())
             return 0;
@@ -509,7 +509,7 @@ protected:
     }
 private:
     static PaintBuffer* m_inst;
-    QPixmap m_buf;
+    TQPixmap m_buf;
     bool m_overflow;
     bool m_grabbed;
     int m_timer;
@@ -519,21 +519,21 @@ private:
 
 PaintBuffer *PaintBuffer::m_inst = 0;
 
-static void copyWidget(const QRect& r, QPainter *p, QWidget *widget, int tx, int ty)
+static void copyWidget(const TQRect& r, TQPainter *p, TQWidget *widget, int tx, int ty)
 {
     if (r.isNull() || r.isEmpty() )
         return;
-    QRegion blit(r);
-    QValueVector<QWidget*> cw;
-    QValueVector<QRect> cr;
+    TQRegion blit(r);
+    TQValueVector<TQWidget*> cw;
+    TQValueVector<TQRect> cr;
 
     if (widget->children()) {
         // build region
-        QObjectListIterator it = *widget->children();
+        TQObjectListIterator it = *widget->children();
         for (; it.current(); ++it) {
-            QWidget* const w = ::qt_cast<QWidget *>(it.current());
+            TQWidget* const w = ::qt_cast<TQWidget *>(it.current());
 	    if ( w && !w->isTopLevel() && !w->isHidden()) {
-	        QRect r2 = w->geometry();
+	        TQRect r2 = w->geometry();
 	        blit -= r2;
 	        r2 = r2.intersect( r );
 	        r2.moveBy(-w->x(), -w->y());
@@ -542,11 +542,11 @@ static void copyWidget(const QRect& r, QPainter *p, QWidget *widget, int tx, int
             }
         }
     }
-    QMemArray<QRect> br = blit.rects();
+    TQMemArray<TQRect> br = blit.rects();
 
     const int cnt = br.size();
     const bool external = p->device()->isExtDev();
-    QPixmap* const pm = PaintBuffer::grab( widget->size() );
+    TQPixmap* const pm = PaintBuffer::grab( widget->size() );
     if (!pm)
     {
         kdWarning(6040) << "Rendering widget [ " << widget->className() << " ] failed due to invalid size." << endl;
@@ -556,12 +556,12 @@ static void copyWidget(const QRect& r, QPainter *p, QWidget *widget, int tx, int
     // fill background
     if ( external ) {
 	// even hackier!
-        QPainter pt( pm );
-        const QColor c = widget->colorGroup().base();
+        TQPainter pt( pm );
+        const TQColor c = widget->colorGroup().base();
         for (int i = 0; i < cnt; ++i)
             pt.fillRect( br[i], c );
     } else {
-        QRect dr;
+        TQRect dr;
         for (int i = 0; i < cnt; ++i ) {
             dr = br[i];
 	    dr.moveBy( tx, ty );
@@ -571,45 +571,45 @@ static void copyWidget(const QRect& r, QPainter *p, QWidget *widget, int tx, int
     }
 
     // send paint event
-    QPainter::redirect(widget, pm);
-    QPaintEvent e( r, false );
-    QApplication::sendEvent( widget, &e );
-    QPainter::redirect(widget, 0);
+    TQPainter::redirect(widget, pm);
+    TQPaintEvent e( r, false );
+    TQApplication::sendEvent( widget, &e );
+    TQPainter::redirect(widget, 0);
 
     // transfer result
     if ( external )
         for ( int i = 0; i < cnt; ++i )
-            p->drawPixmap(QPoint(tx+br[i].x(), ty+br[i].y()), *pm, br[i]);
+            p->drawPixmap(TQPoint(tx+br[i].x(), ty+br[i].y()), *pm, br[i]);
     else
         for ( int i = 0; i < cnt; ++i )
-            bitBlt(p->device(), p->xForm( QPoint(tx, ty) + br[i].topLeft() ), pm, br[i]);
+            bitBlt(p->device(), p->xForm( TQPoint(tx, ty) + br[i].topLeft() ), pm, br[i]);
 
     // cleanup and recurse
     PaintBuffer::release();
-    QValueVector<QWidget*>::iterator cwit = cw.begin();
-    QValueVector<QWidget*>::iterator cwitEnd = cw.end();
-    QValueVector<QRect>::const_iterator crit = cr.begin();
+    TQValueVector<TQWidget*>::iterator cwit = cw.begin();
+    TQValueVector<TQWidget*>::iterator cwitEnd = cw.end();
+    TQValueVector<TQRect>::const_iterator crit = cr.begin();
     for (; cwit != cwitEnd; ++cwit, ++crit)
         copyWidget(*crit, p, *cwit, tx+(*cwit)->x(), ty+(*cwit)->y());
 }
 
-void RenderWidget::paintWidget(PaintInfo& pI, QWidget *widget, int tx, int ty)
+void RenderWidget::paintWidget(PaintInfo& pI, TQWidget *widget, int tx, int ty)
 {
-    QPainter* const p = pI.p;
+    TQPainter* const p = pI.p;
     allowWidgetPaintEvents = true;
 
     const bool dsbld = QSharedDoubleBuffer::isDisabled();
     QSharedDoubleBuffer::setDisabled(true);
-    QRect rr = pI.r;
+    TQRect rr = pI.r;
     rr.moveBy(-tx, -ty);
-    const QRect r = widget->rect().intersect( rr );
+    const TQRect r = widget->rect().intersect( rr );
     copyWidget(r, p, widget, tx, ty);
     QSharedDoubleBuffer::setDisabled(dsbld);
 
     allowWidgetPaintEvents = false;
 }
 
-bool RenderWidget::eventFilter(QObject* /*o*/, QEvent* e)
+bool RenderWidget::eventFilter(TQObject* /*o*/, TQEvent* e)
 {
     // no special event processing if this is a frame (in which case KHTMLView handles it all)
     if ( ::qt_cast<KHTMLView *>( m_widget ) )
@@ -631,23 +631,23 @@ bool RenderWidget::eventFilter(QObject* /*o*/, QEvent* e)
 
     //kdDebug() << "RenderWidget::eventFilter type=" << e->type() << endl;
     switch(e->type()) {
-    case QEvent::FocusOut:
+    case TQEvent::FocusOut:
         // First, forward it to the widget, so that Qt gets a precise
         // state of the focus before pesky JS can try changing it..
         directToWidget = true;
-        QApplication::sendEvent(m_widget, e);
+        TQApplication::sendEvent(m_widget, e);
         directToWidget = false;
         filtered       = true; //We already delivered it!
         
         // Don't count popup as a valid reason for losing the focus
         // (example: opening the options of a select combobox shouldn't emit onblur)
-        if ( QFocusEvent::reason() != QFocusEvent::Popup )
+        if ( TQFocusEvent::reason() != TQFocusEvent::Popup )
             handleFocusOut();
         break;
-    case QEvent::FocusIn:
+    case TQEvent::FocusIn:
         //As above, forward to the widget first...
         directToWidget = true;
-        QApplication::sendEvent(m_widget, e);
+        TQApplication::sendEvent(m_widget, e);
         directToWidget = false;
         filtered       = true; //We already delivered it!
 
@@ -658,23 +658,23 @@ bool RenderWidget::eventFilter(QObject* /*o*/, QEvent* e)
 //             if ( ext )  ext->editableWidgetFocused( m_widget );
 //         }
         break;
-    case QEvent::KeyPress:
-    case QEvent::KeyRelease:
+    case TQEvent::KeyPress:
+    case TQEvent::KeyRelease:
     // TODO this seems wrong - Qt events are not correctly translated to DOM ones,
     // like in KHTMLView::dispatchKeyEvent()
-        if (element()->dispatchKeyEvent(static_cast<QKeyEvent*>(e),false))
+        if (element()->dispatchKeyEvent(static_cast<TQKeyEvent*>(e),false))
             filtered = true;
         break;
 
-    case QEvent::Wheel:
+    case TQEvent::Wheel:
         if (widget()->parentWidget() == view()->viewport()) {
             // don't allow the widget to react to wheel event unless its
             // currently focused. this avoids accidentally changing a select box
             // or something while wheeling a webpage.
             if (qApp->focusWidget() != widget() &&
-                widget()->focusPolicy() <= QWidget::StrongFocus)  {
-                static_cast<QWheelEvent*>(e)->ignore();
-                QApplication::sendEvent(view(), e);
+                widget()->focusPolicy() <= TQWidget::StrongFocus)  {
+                static_cast<TQWheelEvent*>(e)->ignore();
+                TQApplication::sendEvent(view(), e);
                 filtered = true;
             }
         }
@@ -693,50 +693,50 @@ bool RenderWidget::eventFilter(QObject* /*o*/, QEvent* e)
     return filtered;
 }
 
-void RenderWidget::EventPropagator::sendEvent(QEvent *e) {
+void RenderWidget::EventPropagator::sendEvent(TQEvent *e) {
     switch(e->type()) {
-    case QEvent::MouseButtonPress:
-        mousePressEvent(static_cast<QMouseEvent *>(e));
+    case TQEvent::MouseButtonPress:
+        mousePressEvent(static_cast<TQMouseEvent *>(e));
         break;
-    case QEvent::MouseButtonRelease:
-        mouseReleaseEvent(static_cast<QMouseEvent *>(e));
+    case TQEvent::MouseButtonRelease:
+        mouseReleaseEvent(static_cast<TQMouseEvent *>(e));
         break;
-    case QEvent::MouseButtonDblClick:
-        mouseDoubleClickEvent(static_cast<QMouseEvent *>(e));
+    case TQEvent::MouseButtonDblClick:
+        mouseDoubleClickEvent(static_cast<TQMouseEvent *>(e));
         break;
-    case QEvent::MouseMove:
-        mouseMoveEvent(static_cast<QMouseEvent *>(e));
+    case TQEvent::MouseMove:
+        mouseMoveEvent(static_cast<TQMouseEvent *>(e));
         break;
-    case QEvent::KeyPress:
-        keyPressEvent(static_cast<QKeyEvent *>(e));
+    case TQEvent::KeyPress:
+        keyPressEvent(static_cast<TQKeyEvent *>(e));
         break;
-    case QEvent::KeyRelease:
-        keyReleaseEvent(static_cast<QKeyEvent *>(e));
+    case TQEvent::KeyRelease:
+        keyReleaseEvent(static_cast<TQKeyEvent *>(e));
         break;
     default:
         break;
     }
 }
 
-void RenderWidget::ScrollViewEventPropagator::sendEvent(QEvent *e) {
+void RenderWidget::ScrollViewEventPropagator::sendEvent(TQEvent *e) {
     switch(e->type()) {
-    case QEvent::MouseButtonPress:
-        viewportMousePressEvent(static_cast<QMouseEvent *>(e));
+    case TQEvent::MouseButtonPress:
+        viewportMousePressEvent(static_cast<TQMouseEvent *>(e));
         break;
-    case QEvent::MouseButtonRelease:
-        viewportMouseReleaseEvent(static_cast<QMouseEvent *>(e));
+    case TQEvent::MouseButtonRelease:
+        viewportMouseReleaseEvent(static_cast<TQMouseEvent *>(e));
         break;
-    case QEvent::MouseButtonDblClick:
-        viewportMouseDoubleClickEvent(static_cast<QMouseEvent *>(e));
+    case TQEvent::MouseButtonDblClick:
+        viewportMouseDoubleClickEvent(static_cast<TQMouseEvent *>(e));
         break;
-    case QEvent::MouseMove:
-        viewportMouseMoveEvent(static_cast<QMouseEvent *>(e));
+    case TQEvent::MouseMove:
+        viewportMouseMoveEvent(static_cast<TQMouseEvent *>(e));
         break;
-    case QEvent::KeyPress:
-        keyPressEvent(static_cast<QKeyEvent *>(e));
+    case TQEvent::KeyPress:
+        keyPressEvent(static_cast<TQKeyEvent *>(e));
         break;
-    case QEvent::KeyRelease:
-        keyReleaseEvent(static_cast<QKeyEvent *>(e));
+    case TQEvent::KeyRelease:
+        keyReleaseEvent(static_cast<TQKeyEvent *>(e));
         break;
     default:
         break;
@@ -752,15 +752,15 @@ bool RenderWidget::handleEvent(const DOM::EventImpl& ev)
     case EventImpl::MOUSEMOVE_EVENT: {
         if (!ev.isMouseEvent()) break;
         const MouseEventImpl &me = static_cast<const MouseEventImpl &>(ev);
-        QMouseEvent* const qme = me.qEvent();
+        TQMouseEvent* const qme = me.qEvent();
 
         int absx = 0;
         int absy = 0;
 
         absolutePosition(absx, absy);
-        QPoint p(me.clientX() - absx + m_view->contentsX(),
+        TQPoint p(me.clientX() - absx + m_view->contentsX(),
                  me.clientY() - absy + m_view->contentsY());
-        QMouseEvent::Type type;
+        TQMouseEvent::Type type;
         int button = 0;
         int state = 0;
 
@@ -771,14 +771,14 @@ bool RenderWidget::handleEvent(const DOM::EventImpl& ev)
         } else {
             switch(me.id())  {
             case EventImpl::MOUSEDOWN_EVENT:
-                type = QMouseEvent::MouseButtonPress;
+                type = TQMouseEvent::MouseButtonPress;
                 break;
             case EventImpl::MOUSEUP_EVENT:
-                type = QMouseEvent::MouseButtonRelease;
+                type = TQMouseEvent::MouseButtonRelease;
                 break;
             case EventImpl::MOUSEMOVE_EVENT:
             default:
-                type = QMouseEvent::MouseMove;
+                type = TQMouseEvent::MouseMove;
                 break;
             }
             switch (me.button()) {
@@ -807,9 +807,9 @@ bool RenderWidget::handleEvent(const DOM::EventImpl& ev)
 //     kdDebug(6000) << "sending event to widget "
 //                   << " pos=" << p << " type=" << type
 //                   << " button=" << button << " state=" << state << endl;
-        QMouseEvent e(type, p, button, state);
-        QScrollView * sc = ::qt_cast<QScrollView*>(m_widget);
-        if (sc && !::qt_cast<QListBox*>(m_widget))
+        TQMouseEvent e(type, p, button, state);
+        TQScrollView * sc = ::qt_cast<TQScrollView*>(m_widget);
+        if (sc && !::qt_cast<TQListBox*>(m_widget))
             static_cast<ScrollViewEventPropagator *>(sc)->sendEvent(&e);
         else
             static_cast<EventPropagator *>(m_widget)->sendEvent(&e);
@@ -825,7 +825,7 @@ bool RenderWidget::handleEvent(const DOM::EventImpl& ev)
         const KeyEventBaseImpl& domKeyEv = static_cast<const KeyEventBaseImpl &>(ev);
         if (domKeyEv.isSynthetic() && !acceptsSyntheticEvents()) break;
 
-        QKeyEvent* const ke = domKeyEv.qKeyEvent();
+        TQKeyEvent* const ke = domKeyEv.qKeyEvent();
         static_cast<EventPropagator *>(m_widget)->sendEvent(ke);
         ret = ke->isAccepted();
         break;
@@ -849,9 +849,9 @@ bool RenderWidget::handleEvent(const DOM::EventImpl& ev)
         // Qt::KeyPress is sent for DOM keypress and not DOM keydown to allow
         // sites to block a key with onkeypress, #99749
 
-        QKeyEvent* const ke = domKeyEv.qKeyEvent();
+        TQKeyEvent* const ke = domKeyEv.qKeyEvent();
         if (ke->isAutoRepeat()) {
-            QKeyEvent releaseEv( QEvent::KeyRelease, ke->key(), ke->ascii(), ke->state(),
+            TQKeyEvent releaseEv( TQEvent::KeyRelease, ke->key(), ke->ascii(), ke->state(),
                                ke->text(), ke->isAutoRepeat(), ke->count() );
             static_cast<EventPropagator *>(m_widget)->sendEvent(&releaseEv);
         }
@@ -860,13 +860,13 @@ bool RenderWidget::handleEvent(const DOM::EventImpl& ev)
 	break;
     }
     case EventImpl::MOUSEOUT_EVENT: {
-	QEvent moe( QEvent::Leave );
-	QApplication::sendEvent(m_widget, &moe);
+	TQEvent moe( TQEvent::Leave );
+	TQApplication::sendEvent(m_widget, &moe);
 	break;
     }
     case EventImpl::MOUSEOVER_EVENT: {
-	QEvent moe( QEvent::Enter );
-	QApplication::sendEvent(m_widget, &moe);
+	TQEvent moe( TQEvent::Enter );
+	TQApplication::sendEvent(m_widget, &moe);
 	view()->part()->resetHoverText();
 	break;
     }
@@ -924,7 +924,7 @@ FindSelectionResult RenderReplaced::checkSelectionPoint(int _x, int _y, int _tx,
 }
 
 #ifdef ENABLE_DUMP
-void RenderWidget::dump(QTextStream &stream, const QString &ind) const
+void RenderWidget::dump(TQTextStream &stream, const TQString &ind) const
 {
     RenderReplaced::dump(stream,ind);
     if ( widget() )

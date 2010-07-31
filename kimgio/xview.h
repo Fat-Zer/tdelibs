@@ -5,8 +5,8 @@
 class QImageIO;
 
 extern "C" {   
-void kimgio_xv_read( QImageIO * );
-void kimgio_xv_write( QImageIO * );
+void kimgio_xv_read( TQImageIO * );
+void kimgio_xv_write( TQImageIO * );
 }
 
 #endif

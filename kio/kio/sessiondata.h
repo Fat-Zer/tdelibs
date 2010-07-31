@@ -21,7 +21,7 @@
 #ifndef __KIO_SESSIONDATA_H
 #define __KIO_SESSIONDATA_H
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <kio/global.h>
 
 namespace KIO  {
@@ -40,15 +40,15 @@ public:
     SessionData();
     ~SessionData();
 
-    virtual void configDataFor( KIO::MetaData &configData, const QString &proto,
-                                const QString &host );
+    virtual void configDataFor( KIO::MetaData &configData, const TQString &proto,
+                                const TQString &host );
     virtual void reset();
 
     /// @since 3.1
     struct AuthData;
 public slots:
-    void slotAuthData( const QCString&, const QCString&, bool );
-    void slotDelAuthData( const QCString& );
+    void slotAuthData( const TQCString&, const TQCString&, bool );
+    void slotDelAuthData( const TQCString& );
 
 private:
     class AuthDataList;

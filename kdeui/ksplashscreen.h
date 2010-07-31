@@ -20,7 +20,7 @@
 #ifndef KSPLASHSCREEN_H
 #define KSPLASHSCREEN_H
 
-#include <qsplashscreen.h>
+#include <tqsplashscreen.h>
 
 #include <kdelibs_export.h>
 
@@ -29,11 +29,11 @@ class QPixmap;
 /**
  *  @short %KDE splash screen
  *
- *  This class is based on QSplashScreen and exists solely to make
+ *  This class is based on TQSplashScreen and exists solely to make
  *  splash screens obey KDE's Xinerama settings.
  *
  *  For documentation on how to use the class, see the documentation
- *  for QSplashScreen.
+ *  for TQSplashScreen.
  *
  *  @author Chris Howells (howells@kde.org)
  *  @since 3.2
@@ -47,7 +47,7 @@ public:
   /**
    *  Constructs a splash screen.
    */
-  KSplashScreen(const QPixmap &pixmap, WFlags f = 0);
+  KSplashScreen(const TQPixmap &pixmap, WFlags f = 0);
 
   /**
    *  Destructor.

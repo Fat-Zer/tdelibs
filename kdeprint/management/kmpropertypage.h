@@ -24,7 +24,7 @@
 #include "kmprinterpage.h"
 #include <kdeprint/kpreloadobject.h>
 #include <kdelibs_export.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 class KMPropWidget;
 class KMPrinter;
@@ -33,7 +33,7 @@ class KDEPRINT_EXPORT KMPropertyPage : public CJanusWidget, public KMPrinterPage
 {
 	Q_OBJECT
 public:
-	KMPropertyPage(QWidget *parent = 0, const char *name = 0);
+	KMPropertyPage(TQWidget *parent = 0, const char *name = 0);
 	~KMPropertyPage();
 
 	void addPropPage(KMPropWidget*);
@@ -47,7 +47,7 @@ protected:
 	void reload();
 
 private:
-	QPtrList<KMPropWidget>	m_widgets;
+	TQPtrList<KMPropWidget>	m_widgets;
 };
 
 #endif

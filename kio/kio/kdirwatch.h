@@ -18,9 +18,9 @@
 #ifndef _KDIRWATCH_H
 #define _KDIRWATCH_H
 
-#include <qtimer.h>
-#include <qdatetime.h>
-#include <qmap.h>
+#include <tqtimer.h>
+#include <tqdatetime.h>
+#include <tqmap.h>
 
 #include <kdelibs_export.h>
 
@@ -70,10 +70,10 @@ class KIO_EXPORT KDirWatch : public QObject
     *
     * Scanning begins immediately when a dir/file watch
     * is added.
-    * @param parent the parent of the QObject (or 0 for parent-less KDataTools)
-    * @param name the name of the QObject, can be 0
+    * @param parent the parent of the TQObject (or 0 for parent-less KDataTools)
+    * @param name the name of the TQObject, can be 0
     */
-   KDirWatch (QObject* parent = 0, const char* name = 0);
+   KDirWatch (TQObject* parent = 0, const char* name = 0);
 
    /**
     * Destructor.
@@ -96,21 +96,21 @@ class KIO_EXPORT KDirWatch : public QObject
     * @param watchFiles if true, the KDirWatch will also watch files - NOT IMPLEMENTED YET
     * @param recursive if true, all sub directories are also watched - NOT IMPLEMENTED YET
     */
-   void addDir(const QString& path, 
+   void addDir(const TQString& path, 
 	       bool watchFiles = false, bool recursive = false);
 
    /**
     * Adds a file to be watched.
     * @param file the file to watch
     */
-   void addFile(const QString& file);
+   void addFile(const TQString& file);
 
    /**
     * Returns the time the directory/file was last changed.
     * @param path the file to check
     * @return the date of the last modification
     */
-   QDateTime ctime(const QString& path);
+   TQDateTime ctime(const TQString& path);
 
    /**
     * Removes a directory from the list of scanned directories.
@@ -118,7 +118,7 @@ class KIO_EXPORT KDirWatch : public QObject
     * If specified path is not in the list this does nothing.
     * @param path the path of the dir to be removed from the list
     */
-   void removeDir(const QString& path);
+   void removeDir(const TQString& path);
 
    /**
     * Removes a file from the list of watched files.
@@ -126,7 +126,7 @@ class KIO_EXPORT KDirWatch : public QObject
     * If specified path is not in the list this does nothing.
     * @param file the file to be removed from the list
     */
-   void removeFile(const QString& file);
+   void removeFile(const TQString& file);
 
    /**
     * Stops scanning the specified path.
@@ -140,7 +140,7 @@ class KIO_EXPORT KDirWatch : public QObject
     * @return true if the @p path is being watched, otherwise false
     * @see restartDirScanning()
     */
-   bool stopDirScan(const QString& path);
+   bool stopDirScan(const TQString& path);
 
    /**
     * Restarts scanning for specified path.
@@ -155,7 +155,7 @@ class KIO_EXPORT KDirWatch : public QObject
     * @return true if the @p path is being watched, otherwise false
     * @see stopDirScanning()
     */
-   bool restartDirScan(const QString& path);
+   bool restartDirScan(const TQString& path);
 
    /**
     * Starts scanning of all dirs in list.
@@ -194,7 +194,7 @@ class KIO_EXPORT KDirWatch : public QObject
     * @param path the directory to check
     * @return true if the directory is being watched
     */
-   bool contains( const QString& path ) const;
+   bool contains( const TQString& path ) const;
 
    /**
     * Dump statistic information about all KDirWatch instances.
@@ -206,17 +206,17 @@ class KIO_EXPORT KDirWatch : public QObject
     * Emits created().
     * @param path the path of the file or directory
     */
-   void setCreated( const QString &path );
+   void setCreated( const TQString &path );
    /** 
     * Emits dirty().
     * @param path the path of the file or directory
     */
-   void setDirty( const QString &path );
+   void setDirty( const TQString &path );
    /** 
     * Emits deleted().
     * @param path the path of the file or directory
     */
-   void setDeleted( const QString &path );
+   void setDeleted( const TQString &path );
 
    enum Method { FAM, DNotify, Stat, INotify };
    /**
@@ -262,13 +262,13 @@ class KIO_EXPORT KDirWatch : public QObject
     * The new ctime is set before the signal is emitted.
     * @param path the path of the file or directory
     */
-   void dirty (const QString &path);
+   void dirty (const TQString &path);
 
    /**
     * Emitted when a file or directory is created.
     * @param path the path of the file or directory
     */
-   void created (const QString &path );
+   void created (const TQString &path );
      
    /**
     * Emitted when a file or directory is deleted.
@@ -276,7 +276,7 @@ class KIO_EXPORT KDirWatch : public QObject
     * The object is still watched for new creation.
     * @param path the path of the file or directory
     */
-   void deleted (const QString &path );
+   void deleted (const TQString &path );
      
  private:
    bool _isStopped;

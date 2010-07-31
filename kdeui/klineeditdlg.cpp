@@ -18,13 +18,13 @@
 */
 #include <config.h>
 
-#include <qvalidator.h>
-#include <qpushbutton.h>
-#include <qlineedit.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#undef Unsorted // Required for --enable-final (qdir.h)
-#include <qfiledialog.h>
+#include <tqvalidator.h>
+#include <tqpushbutton.h>
+#include <tqlineedit.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#undef Unsorted // Required for --enable-final (tqdir.h)
+#include <tqfiledialog.h>
 
 #include <kbuttonbox.h>
 #include <klocale.h>
@@ -34,24 +34,24 @@
 
 #include "klineeditdlg.h"
 
-KLineEditDlg::KLineEditDlg( const QString&_text, const QString& _value,
-			    QWidget *parent )
-  : KDialogBase( Plain, QString::null, Ok|Cancel|User1, Ok, parent, 0L, true,
+KLineEditDlg::KLineEditDlg( const TQString&_text, const TQString& _value,
+			    TQWidget *parent )
+  : KDialogBase( Plain, TQString::null, Ok|Cancel|User1, Ok, parent, 0L, true,
 		 true, KStdGuiItem::clear() )
 {
-  QVBoxLayout *topLayout = new QVBoxLayout( plainPage(), 0, spacingHint() );
-  QLabel *label = new QLabel(_text, plainPage() );
+  TQVBoxLayout *topLayout = new TQVBoxLayout( plainPage(), 0, spacingHint() );
+  TQLabel *label = new TQLabel(_text, plainPage() );
   topLayout->addWidget( label, 1 );
 
   edit = new KLineEdit( plainPage(), 0L );
   edit->setMinimumWidth(edit->sizeHint().width() * 3);
   label->setBuddy(edit);  // please "scheck" style
-  //  connect( edit, SIGNAL(returnPressed()), SLOT(accept()) );
-  connect( edit, SIGNAL(textChanged(const QString&)),
-	   SLOT(slotTextChanged(const QString&)) );
+  //  connect( edit, TQT_SIGNAL(returnPressed()), TQT_SLOT(accept()) );
+  connect( edit, TQT_SIGNAL(textChanged(const TQString&)),
+	   TQT_SLOT(slotTextChanged(const TQString&)) );
   topLayout->addWidget( edit, 1 );
 
-  connect( this, SIGNAL(user1Clicked()), this, SLOT(slotClear()) );
+  connect( this, TQT_SIGNAL(user1Clicked()), this, TQT_SLOT(slotClear()) );
   edit->setText( _value );
   if ( _value.isEmpty() )
   {
@@ -65,18 +65,18 @@ KLineEditDlg::KLineEditDlg( const QString&_text, const QString& _value,
 
 
 #if 0
-KLineEditDlg::KLineEditDlg( const QString&_text, const QString& _value,
-			    QWidget *parent, bool _file_mode )
-    : QDialog( parent, 0L, true )
+KLineEditDlg::KLineEditDlg( const TQString&_text, const TQString& _value,
+			    TQWidget *parent, bool _file_mode )
+    : TQDialog( parent, 0L, true )
 {
-  QGridLayout *layout = new QGridLayout(this, 4, 3, 10);
+  TQGridLayout *layout = new TQGridLayout(this, 4, 3, 10);
 
-  QLabel *label = new QLabel(_text, this);
+  TQLabel *label = new TQLabel(_text, this);
   layout->addWidget(label, 0, 0, AlignLeft);
 
   edit = new KLineEdit( this, 0L );
   edit->setMinimumWidth(edit->sizeHint().width() * 3);
-  connect( edit, SIGNAL(returnPressed()), SLOT(accept()) );
+  connect( edit, TQT_SIGNAL(returnPressed()), TQT_SLOT(accept()) );
 
   if ( _file_mode ) {
     completion = new KURLCompletion();
@@ -89,32 +89,32 @@ KLineEditDlg::KLineEditDlg( const QString&_text, const QString& _value,
   layout->setColStretch(1, 1);
 
   if (_file_mode) {
-    QPushButton *browse = new QPushButton(i18n("&Browse..."), this);
+    TQPushButton *browse = new TQPushButton(i18n("&Browse..."), this);
     layout->addWidget(browse, 1, 2, AlignCenter);
-    connect(browse, SIGNAL(clicked()),
-	    SLOT(slotBrowse()));
+    connect(browse, TQT_SIGNAL(clicked()),
+	    TQT_SLOT(slotBrowse()));
   }
 
-  QFrame *hLine = new QFrame(this);
-  hLine->setFrameStyle(QFrame::Sunken|QFrame::HLine);
+  TQFrame *hLine = new TQFrame(this);
+  hLine->setFrameStyle(TQFrame::Sunken|TQFrame::HLine);
   layout->addMultiCellWidget(hLine, 2, 2, 0, 2);
 
   KButtonBox *bBox = new KButtonBox(this);
   layout->addMultiCellWidget(bBox, 3, 3, 0, 2);
 
-  QPushButton *ok = bBox->addButton(KStdGuiItem::ok());
+  TQPushButton *ok = bBox->addButton(KStdGuiItem::ok());
   ok->setDefault(true);
-  connect( ok, SIGNAL(clicked()), SLOT(accept()));
+  connect( ok, TQT_SIGNAL(clicked()), TQT_SLOT(accept()));
 
   bBox->addStretch(1);
 
-  QPushButton *clear = bBox->addButton(KStdGuiItem::clear());
-  connect( clear, SIGNAL(clicked()), SLOT(slotClear()));
+  TQPushButton *clear = bBox->addButton(KStdGuiItem::clear());
+  connect( clear, TQT_SIGNAL(clicked()), TQT_SLOT(slotClear()));
 
   bBox->addStretch(1);
 
-  QPushButton *cancel = bBox->addButton(KStdGuiItem::cancel());
-  connect( cancel, SIGNAL(clicked()), SLOT(reject()));
+  TQPushButton *cancel = bBox->addButton(KStdGuiItem::cancel());
+  connect( cancel, TQT_SIGNAL(clicked()), TQT_SLOT(reject()));
 
   bBox->layout();
 
@@ -133,17 +133,17 @@ KLineEditDlg::~KLineEditDlg()
 
 void KLineEditDlg::slotClear()
 {
-    edit->setText(QString::null);
+    edit->setText(TQString::null);
 }
 
-void KLineEditDlg::slotTextChanged(const QString &text)
+void KLineEditDlg::slotTextChanged(const TQString &text)
 {
   bool on;
   if ( edit->validator() ) {
-    QString str = edit->text();
+    TQString str = edit->text();
     int index = edit->cursorPosition();
     on = ( edit->validator()->validate( str, index )
-	   == QValidator::Acceptable );
+	   == TQValidator::Acceptable );
   } else {
     on = !text.isEmpty();
   }
@@ -151,41 +151,41 @@ void KLineEditDlg::slotTextChanged(const QString &text)
   enableButton(KDialogBase::User1, text.length());
 }
 
-QString KLineEditDlg::text() const
+TQString KLineEditDlg::text() const
 {
     return edit->text();
 }
 
-QString KLineEditDlg::getText(const QString &_text, const QString& _value,
-                              bool *ok, QWidget *parent, QValidator *_validator )
+TQString KLineEditDlg::getText(const TQString &_text, const TQString& _value,
+                              bool *ok, TQWidget *parent, TQValidator *_validator )
 {
     KLineEditDlg dlg(_text, _value, parent );
     dlg.lineEdit()->setValidator( _validator );
     dlg.slotTextChanged( _value ); // trigger validation
 
-    bool ok_ = dlg.exec() == QDialog::Accepted;
+    bool ok_ = dlg.exec() == TQDialog::Accepted;
     if ( ok )
         *ok = ok_;
     if ( ok_ )
         return dlg.text();
-    return QString::null;
+    return TQString::null;
 }
 
-QString KLineEditDlg::getText(const QString &_caption, const QString &_text,
-                              const QString& _value,
-                              bool *ok, QWidget *parent, QValidator *_validator )
+TQString KLineEditDlg::getText(const TQString &_caption, const TQString &_text,
+                              const TQString& _value,
+                              bool *ok, TQWidget *parent, TQValidator *_validator )
 {
     KLineEditDlg dlg( _text, _value, parent );
     dlg.setCaption( _caption );
     dlg.lineEdit()->setValidator( _validator );
     dlg.slotTextChanged( _value ); // trigger validation
 
-    bool ok_ = dlg.exec() == QDialog::Accepted;
+    bool ok_ = dlg.exec() == TQDialog::Accepted;
     if ( ok )
         *ok = ok_;
     if ( ok_ )
         return dlg.text();
-    return QString::null;
+    return TQString::null;
 }
 
 void KLineEditDlg::virtual_hook( int id, void* data )

@@ -233,7 +233,7 @@ kdDebug(6200) << "getCaret: node " << this << " " << nodeName().string() << " of
 #endif
         mapDOMPosToRenderPos(this, offset, r, r_ofs, outside, outsideEnd);
 #if 0
-kdDebug(6200) << "getCaret: r " << r << " " << (r?r->renderName():QString::null) << " r_ofs: " << r_ofs << " outside " << outside << " outsideEnd " << outsideEnd << endl;
+kdDebug(6200) << "getCaret: r " << r << " " << (r?r->renderName():TQString::null) << " r_ofs: " << r_ofs << " outside " << outside << " outsideEnd " << outsideEnd << endl;
 #endif
 	if (r) {
             r->caretPos(r_ofs, override*RenderObject::CFOverride
@@ -244,14 +244,14 @@ kdDebug(6200) << "getCaret: r " << r << " " << (r?r->renderName():QString::null)
     } else _x = _y = height = -1, width = 1;
 }
 
-QRect NodeImpl::getRect() const
+TQRect NodeImpl::getRect() const
 {
     int _x, _y;
     if(m_render && m_render->absolutePosition(_x, _y))
-        return QRect( _x + m_render->inlineXPos(), _y + m_render->inlineYPos(),
+        return TQRect( _x + m_render->inlineXPos(), _y + m_render->inlineYPos(),
         		m_render->width(), m_render->height() + renderer()->borderTopExtra() + renderer()->borderBottomExtra() );
 
-    return QRect();
+    return TQRect();
 }
 
 void NodeImpl::setChanged(bool b)
@@ -353,7 +353,7 @@ void NodeImpl::dispatchGenericEvent( EventImpl *evt, int &/*exceptioncode */)
     // ### check that type specified
 
     // work out what nodes to send event to
-    QPtrList<NodeImpl> nodeChain;
+    TQPtrList<NodeImpl> nodeChain;
     NodeImpl *n;
     for (n = this; n; n = n->parentNode()) {
         n->ref();
@@ -362,7 +362,7 @@ void NodeImpl::dispatchGenericEvent( EventImpl *evt, int &/*exceptioncode */)
 
     // trigger any capturing event handlers on our way down
     evt->setEventPhase(Event::CAPTURING_PHASE);
-    QPtrListIterator<NodeImpl> it(nodeChain);
+    TQPtrListIterator<NodeImpl> it(nodeChain);
     for (; it.current() && it.current() != this && !evt->propagationStopped(); ++it) {
         evt->setCurrentTarget(it.current());
         it.current()->handleLocalEvents(evt,true);
@@ -463,7 +463,7 @@ void NodeImpl::dispatchWindowEvent(int _id, bool canBubbleArg, bool cancelableAr
     evt->deref();
 }
 
-void NodeImpl::dispatchMouseEvent(QMouseEvent *_mouse, int overrideId, int overrideDetail)
+void NodeImpl::dispatchMouseEvent(TQMouseEvent *_mouse, int overrideId, int overrideDetail)
 {
     bool cancelable = true;
     int detail = overrideDetail; // defaults to 0
@@ -473,17 +473,17 @@ void NodeImpl::dispatchMouseEvent(QMouseEvent *_mouse, int overrideId, int overr
     }
     else {
         switch (_mouse->type()) {
-            case QEvent::MouseButtonPress:
+            case TQEvent::MouseButtonPress:
                 evtId = EventImpl::MOUSEDOWN_EVENT;
                 break;
-            case QEvent::MouseButtonRelease:
+            case TQEvent::MouseButtonRelease:
                 evtId = EventImpl::MOUSEUP_EVENT;
                 break;
-            case QEvent::MouseButtonDblClick:
+            case TQEvent::MouseButtonDblClick:
                 evtId = EventImpl::CLICK_EVENT;
                 detail = 1; // ### support for multiple double clicks
                 break;
-            case QEvent::MouseMove:
+            case TQEvent::MouseMove:
                 evtId = EventImpl::MOUSEMOVE_EVENT;
                 cancelable = false;
                 break;
@@ -565,7 +565,7 @@ void NodeImpl::dispatchSubtreeModifiedEvent()
     evt->deref();
 }
 
-bool NodeImpl::dispatchKeyEvent(QKeyEvent *key, bool keypress)
+bool NodeImpl::dispatchKeyEvent(TQKeyEvent *key, bool keypress)
 {
     int exceptioncode = 0;
     //kdDebug(6010) << "DOM::NodeImpl: dispatching keyboard event" << endl;
@@ -590,8 +590,8 @@ void NodeImpl::handleLocalEvents(EventImpl *evt, bool useCapture)
     // removeEventListener (e.g. called from a JS event listener) might
     // invalidate the item after the current iterator (which "it" is pointing to).
     // So we make a copy of the list.
-    QValueList<RegisteredEventListener> listeners = *m_regdListeners.listeners;
-    QValueList<RegisteredEventListener>::iterator it;
+    TQValueList<RegisteredEventListener> listeners = *m_regdListeners.listeners;
+    TQValueList<RegisteredEventListener>::iterator it;
     for (it = listeners.begin(); it != listeners.end(); ++it) {
         //Check whether this got removed...KDE4: use Java-style iterators
         if (!m_regdListeners.stillContainsListener(*it))
@@ -860,12 +860,12 @@ bool NodeImpl::maintainsState()
     return false;
 }
 
-QString NodeImpl::state()
+TQString NodeImpl::state()
 {
-    return QString::null;
+    return TQString::null;
 }
 
-void NodeImpl::restoreState(const QString &/*state*/)
+void NodeImpl::restoreState(const TQString &/*state*/)
 {
 }
 
@@ -979,13 +979,13 @@ long NodeImpl::maxOffset() const
 
 DOMStringImpl* NodeImpl::textContent() const
 {
-  QString out;
+  TQString out;
   for (NodeImpl *child = firstChild(); child != 0; child = child->nextSibling()) {
     short type = child->nodeType();
     if (type != Node::COMMENT_NODE && type != Node::PROCESSING_INSTRUCTION_NODE) {
       DOMStringImpl* kidText = child->textContent();
       if (kidText)
-         out += QConstString(kidText->s, kidText->l).string();
+         out += TQConstString(kidText->s, kidText->l).string();
       delete kidText;
     }
   }
@@ -1883,7 +1883,7 @@ GenericRONamedNodeMapImpl::GenericRONamedNodeMapImpl(DocumentImpl* doc)
     : NamedNodeMapImpl()
 {
     m_doc = doc;
-    m_contents = new QPtrList<NodeImpl>;
+    m_contents = new TQPtrList<NodeImpl>;
 }
 
 GenericRONamedNodeMapImpl::~GenericRONamedNodeMapImpl()
@@ -1897,7 +1897,7 @@ GenericRONamedNodeMapImpl::~GenericRONamedNodeMapImpl()
 NodeImpl *GenericRONamedNodeMapImpl::getNamedItem ( NodeImpl::Id id, bool /*nsAware*/, DOMStringImpl* /*qName*/ ) const
 {
     // ## do we need namespace support in this class?
-    QPtrListIterator<NodeImpl> it(*m_contents);
+    TQPtrListIterator<NodeImpl> it(*m_contents);
     for (; it.current(); ++it)
         if (it.current()->id() == id)
             return it.current();
@@ -1960,12 +1960,12 @@ void RegisteredListenerList::addEventListener(int id, EventListener *listener, c
 {
     RegisteredEventListener rl(static_cast<EventImpl::EventId>(id),listener,useCapture);
     if (!listeners)
-        listeners = new QValueList<RegisteredEventListener>;
+        listeners = new TQValueList<RegisteredEventListener>;
 
     // if this id/listener/useCapture combination is already registered, do nothing.
     // the DOM2 spec says that "duplicate instances are discarded", and this keeps
     // the listener order intact.
-    QValueList<RegisteredEventListener>::iterator it;
+    TQValueList<RegisteredEventListener>::iterator it;
     for (it = listeners->begin(); it != listeners->end(); ++it)
         if (*it == rl)
             return;
@@ -1980,7 +1980,7 @@ void RegisteredListenerList::removeEventListener(int id, EventListener *listener
 
     RegisteredEventListener rl(static_cast<EventImpl::EventId>(id),listener,useCapture);
 
-    QValueList<RegisteredEventListener>::iterator it;
+    TQValueList<RegisteredEventListener>::iterator it;
     for (it = listeners->begin(); it != listeners->end(); ++it)
         if (*it == rl) {
             listeners->remove(it);
@@ -1996,9 +1996,9 @@ bool RegisteredListenerList::isHTMLEventListener(EventListener* listener)
 void RegisteredListenerList::setHTMLEventListener(int id, EventListener *listener)
 {
     if (!listeners)
-        listeners = new QValueList<RegisteredEventListener>;
+        listeners = new TQValueList<RegisteredEventListener>;
 
-    QValueList<RegisteredEventListener>::iterator it;
+    TQValueList<RegisteredEventListener>::iterator it;
     if (!listener) {
         for (it = listeners->begin(); it != listeners->end(); ++it) {
             if ((*it).id == id && isHTMLEventListener((*it).listener)) {
@@ -2029,7 +2029,7 @@ EventListener *RegisteredListenerList::getHTMLEventListener(int id)
     if (!listeners)
         return 0;
 
-    QValueList<RegisteredEventListener>::iterator it;
+    TQValueList<RegisteredEventListener>::iterator it;
     for (it = listeners->begin(); it != listeners->end(); ++it)
         if ((*it).id == id && isHTMLEventListener((*it).listener)) {
             return (*it).listener;
@@ -2042,7 +2042,7 @@ bool RegisteredListenerList::hasEventListener(int id)
     if (!listeners)
         return false;
 
-    QValueList<RegisteredEventListener>::iterator it;
+    TQValueList<RegisteredEventListener>::iterator it;
     for (it = listeners->begin(); it != listeners->end(); ++it)
         if ((*it).id == id)
             return true;

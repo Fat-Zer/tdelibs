@@ -20,8 +20,8 @@
 #ifndef EDITLIST_H
 #define EDITLIST_H
 
-#include <qwidget.h>
-#include <qpixmap.h>
+#include <tqwidget.h>
+#include <tqpixmap.h>
 
 class KListBox;
 class QPushButton;
@@ -31,14 +31,14 @@ class EditList : public QWidget
 	Q_OBJECT
 
 public:
-	EditList(QWidget *parent = 0, const char *name = 0);
+	EditList(TQWidget *parent = 0, const char *name = 0);
 
-	QString text(int);
-	void setText(int, const QString&);
-	void insertItem(const QString&);
-	void insertItem(const QPixmap&, const QString&);
-	void insertItems(const QStringList&);
-	QStringList items();
+	TQString text(int);
+	void setText(int, const TQString&);
+	void insertItem(const TQString&);
+	void insertItem(const TQPixmap&, const TQString&);
+	void insertItems(const TQStringList&);
+	TQStringList items();
 	void clear();
 
 signals:

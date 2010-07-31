@@ -25,8 +25,8 @@
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 
-#include <qstring.h>
-#include <qvaluevector.h>
+#include <tqstring.h>
+#include <tqvaluevector.h>
 #include <kdeprint/kmobject.h>
 #include <kdelibs_export.h>
 
@@ -69,26 +69,26 @@ public:
 
 	KMJob& operator=(const KMJob& j);
 	void copy(const KMJob& j);
-	QString pixmap();
-	QString stateString();
+	TQString pixmap();
+	TQString stateString();
 	bool isCompleted() const		{ return (m_state >= Cancelled && m_state <= Completed); }
 	bool isActive() const			{ return !isCompleted(); }
 
 	// inline access functions
 	int id() const				{ return m_ID; }
 	void setId(int id)			{ m_ID = id; }
-	const QString& name() const		{ return m_name; }
-	void setName(const QString& s)		{ m_name = s; }
-	const QString& printer() const		{ return m_printer; }
-	void setPrinter(const QString& s)	{ m_printer = s; }
-	const QString& owner() const		{ return m_owner; }
-	void setOwner(const QString& s)		{ m_owner = s; }
+	const TQString& name() const		{ return m_name; }
+	void setName(const TQString& s)		{ m_name = s; }
+	const TQString& printer() const		{ return m_printer; }
+	void setPrinter(const TQString& s)	{ m_printer = s; }
+	const TQString& owner() const		{ return m_owner; }
+	void setOwner(const TQString& s)		{ m_owner = s; }
 	int state() const			{ return m_state; }
 	void setState(int s)			{ m_state = s; }
 	int size() const			{ return m_size; }
 	void setSize(int s)			{ m_size = s; }
-	const QString& uri() const		{ return m_uri; }
-	void setUri(const QString& s)		{ m_uri = s; }
+	const TQString& uri() const		{ return m_uri; }
+	void setUri(const TQString& s)		{ m_uri = s; }
 	int type() const			{ return m_type; }
 	void setType(int t)			{ m_type = t; }
 	int pages() const			{ return m_pages; }
@@ -100,8 +100,8 @@ public:
 	bool isRemote() const		{ return m_remote; }
 	void setRemote(bool on)		{ m_remote = on; }
 
-	QString attribute(int i) const	{ return m_attributes[i]; }
-	void setAttribute(int i, const QString& att)	{ m_attributes[i] = att; }
+	TQString attribute(int i) const	{ return m_attributes[i]; }
+	void setAttribute(int i, const TQString& att)	{ m_attributes[i] = att; }
 	int attributeCount() const	{ return m_attributes.size(); }
 	void setAttributeCount(int c)	{ m_attributes.resize(c); }
 
@@ -124,7 +124,7 @@ protected:
 
 	// internal members
 	QString	m_uri;
-	QValueVector<QString>	m_attributes;
+	TQValueVector<TQString>	m_attributes;
 };
 
 #endif

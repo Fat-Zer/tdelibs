@@ -21,7 +21,7 @@
   Boston, MA 02110-1301, USA.
 */
 
-#include <qvariant.h>
+#include <tqvariant.h>
 
 #include <kdesktopfile.h>
 #include <kdebug.h>
@@ -40,7 +40,7 @@ class KCModuleInfo::KCModuleInfoPrivate
     ~KCModuleInfoPrivate()
     { }
 
-    QString factoryName;
+    TQString factoryName;
     bool testModule;
 
 };
@@ -51,7 +51,7 @@ KCModuleInfo::KCModuleInfo()
   d = new KCModuleInfoPrivate;
 }
 
-KCModuleInfo::KCModuleInfo(const QString& desktopFile)
+KCModuleInfo::KCModuleInfo(const TQString& desktopFile)
 {
   KService::Ptr service = KService::serviceByStorageId(desktopFile);
   if(!service) setName(desktopFile);
@@ -92,11 +92,11 @@ KCModuleInfo &KCModuleInfo::operator=( const KCModuleInfo &rhs )
     return *this;
 }
 
-QString KCModuleInfo::factoryName() const
+TQString KCModuleInfo::factoryName() const
 {
   if( d->factoryName.isEmpty() )
   {
-    d->factoryName = _service->property("X-KDE-FactoryName", QVariant::String).toString();
+    d->factoryName = _service->property("X-KDE-FactoryName", TQVariant::String).toString();
     if ( d->factoryName.isEmpty() )
       d->factoryName = library();
   }
@@ -155,27 +155,27 @@ KCModuleInfo::loadAll()
   _allLoaded = true;
 
   // library and factory
-  setHandle(_service->property("X-KDE-FactoryName", QVariant::String).toString());
+  setHandle(_service->property("X-KDE-FactoryName", TQVariant::String).toString());
 
-  QVariant tmp;
+  TQVariant tmp;
 
   // read weight
-  tmp = _service->property( "X-KDE-Weight", QVariant::Int );
+  tmp = _service->property( "X-KDE-Weight", TQVariant::Int );
   setWeight( tmp.isValid() ? tmp.toInt() : 100 );
 
   // does the module need super user privileges?
-  tmp = _service->property( "X-KDE-RootOnly", QVariant::Bool );
+  tmp = _service->property( "X-KDE-RootOnly", TQVariant::Bool );
   setNeedsRootPrivileges( tmp.isValid() ? tmp.toBool() : false );
 
   // does the module need to be shown to root only?
   // Deprecated ! KDE 4
-  tmp = _service->property( "X-KDE-IsHiddenByDefault", QVariant::Bool );
+  tmp = _service->property( "X-KDE-IsHiddenByDefault", TQVariant::Bool );
   setIsHiddenByDefault( tmp.isValid() ? tmp.toBool() : false );
 
   // get the documentation path
-  setDocPath( _service->property( "DocPath", QVariant::String ).toString() );
+  setDocPath( _service->property( "DocPath", TQVariant::String ).toString() );
 
-  tmp = _service->property( "X-KDE-Test-Module", QVariant::Bool );
+  tmp = _service->property( "X-KDE-Test-Module", TQVariant::Bool );
   setNeedsTest( tmp.isValid() ? tmp.asBool() : false );
 }
 

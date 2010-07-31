@@ -31,13 +31,13 @@
 #include <klocale.h>
 #include <kdebug.h>
 
-#include <qlistview.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qlineedit.h>
-#include <qlabel.h>
-#include <qtimer.h>
-#include <qdict.h>
+#include <tqlistview.h>
+#include <tqpushbutton.h>
+#include <tqcombobox.h>
+#include <tqlineedit.h>
+#include <tqlabel.h>
+#include <tqtimer.h>
+#include <tqdict.h>
 
 namespace KSpell2
 {
@@ -49,15 +49,15 @@ class Dialog::Private
 {
 public:
     KSpell2UI *ui;
-    QString   originalBuffer;
+    TQString   originalBuffer;
     BackgroundChecker *checker;
 
     Word   currentWord;
-    QMap<QString, QString> replaceAllMap;
+    TQMap<TQString, TQString> replaceAllMap;
 };
 
 Dialog::Dialog( BackgroundChecker *checker,
-                QWidget *parent, const char *name )
+                TQWidget *parent, const char *name )
     : KDialogBase( parent, name, true,
                    i18n( "Check Spelling" ),
                    Help|Cancel|User1, Cancel,  true,
@@ -79,35 +79,35 @@ Dialog::~Dialog()
 
 void Dialog::initConnections()
 {
-    connect( d->ui->m_addBtn, SIGNAL(clicked()),
-             SLOT(slotAddWord()) );
-    connect( d->ui->m_replaceBtn, SIGNAL(clicked()),
-             SLOT(slotReplaceWord()) );
-    connect( d->ui->m_replaceAllBtn, SIGNAL(clicked()),
-             SLOT(slotReplaceAll()) );
-    connect( d->ui->m_skipBtn, SIGNAL(clicked()),
-             SLOT(slotSkip()) );
-    connect( d->ui->m_skipAllBtn, SIGNAL(clicked()),
-             SLOT(slotSkipAll()) );
-    connect( d->ui->m_suggestBtn, SIGNAL(clicked()),
-             SLOT(slotSuggest()) );
-    connect( d->ui->m_language, SIGNAL(activated(const QString&)),
-             SLOT(slotChangeLanguage(const QString&)) );
-    connect( d->ui->m_suggestions, SIGNAL(selectionChanged(QListViewItem*)),
-             SLOT(slotSelectionChanged(QListViewItem*)) );
-    connect( d->checker, SIGNAL(misspelling(const QString&, int)),
-             SIGNAL(misspelling(const QString&, int)) );
-    connect( d->checker, SIGNAL(misspelling(const QString&, int)),
-             SLOT(slotMisspelling(const QString&, int)) );
-    connect( d->checker, SIGNAL(done()),
-             SLOT(slotDone()) );
-    connect( d->ui->m_suggestions, SIGNAL(doubleClicked(QListViewItem*, const QPoint&, int)),
-             SLOT( slotReplaceWord() ) );
-    connect( this, SIGNAL(user1Clicked()), this, SLOT(slotFinished()) );
-    connect( this, SIGNAL(cancelClicked()),this, SLOT(slotCancel()) );
-    connect( d->ui->m_replacement, SIGNAL(returnPressed()), this, SLOT(slotReplaceWord()) );
-    connect( d->ui->m_autoCorrect, SIGNAL(clicked()),
-             SLOT(slotAutocorrect()) );
+    connect( d->ui->m_addBtn, TQT_SIGNAL(clicked()),
+             TQT_SLOT(slotAddWord()) );
+    connect( d->ui->m_replaceBtn, TQT_SIGNAL(clicked()),
+             TQT_SLOT(slotReplaceWord()) );
+    connect( d->ui->m_replaceAllBtn, TQT_SIGNAL(clicked()),
+             TQT_SLOT(slotReplaceAll()) );
+    connect( d->ui->m_skipBtn, TQT_SIGNAL(clicked()),
+             TQT_SLOT(slotSkip()) );
+    connect( d->ui->m_skipAllBtn, TQT_SIGNAL(clicked()),
+             TQT_SLOT(slotSkipAll()) );
+    connect( d->ui->m_suggestBtn, TQT_SIGNAL(clicked()),
+             TQT_SLOT(slotSuggest()) );
+    connect( d->ui->m_language, TQT_SIGNAL(activated(const TQString&)),
+             TQT_SLOT(slotChangeLanguage(const TQString&)) );
+    connect( d->ui->m_suggestions, TQT_SIGNAL(selectionChanged(TQListViewItem*)),
+             TQT_SLOT(slotSelectionChanged(TQListViewItem*)) );
+    connect( d->checker, TQT_SIGNAL(misspelling(const TQString&, int)),
+             TQT_SIGNAL(misspelling(const TQString&, int)) );
+    connect( d->checker, TQT_SIGNAL(misspelling(const TQString&, int)),
+             TQT_SLOT(slotMisspelling(const TQString&, int)) );
+    connect( d->checker, TQT_SIGNAL(done()),
+             TQT_SLOT(slotDone()) );
+    connect( d->ui->m_suggestions, TQT_SIGNAL(doubleClicked(TQListViewItem*, const TQPoint&, int)),
+             TQT_SLOT( slotReplaceWord() ) );
+    connect( this, TQT_SIGNAL(user1Clicked()), this, TQT_SLOT(slotFinished()) );
+    connect( this, TQT_SIGNAL(cancelClicked()),this, TQT_SLOT(slotCancel()) );
+    connect( d->ui->m_replacement, TQT_SIGNAL(returnPressed()), this, TQT_SLOT(slotReplaceWord()) );
+    connect( d->ui->m_autoCorrect, TQT_SIGNAL(clicked()),
+             TQT_SLOT(slotAutocorrect()) );
     // button use by kword/kpresenter
     // hide by default
     d->ui->m_autoCorrect->hide();
@@ -120,7 +120,7 @@ void Dialog::initGui()
     d->ui->m_language->clear();
     d->ui->m_language->insertStringList( d->checker->broker()->languages() );
     for ( int i = 0; !d->ui->m_language->text( i ).isNull(); ++i ) {
-        QString ct = d->ui->m_language->text( i );
+        TQString ct = d->ui->m_language->text( i );
         if ( ct == d->checker->broker()->settings()->defaultLanguage() ) {
             d->ui->m_language->setCurrentItem( i );
             break;
@@ -159,17 +159,17 @@ void Dialog::slotCancel()
     reject();
 }
 
-QString Dialog::originalBuffer() const
+TQString Dialog::originalBuffer() const
 {
     return d->originalBuffer;
 }
 
-QString Dialog::buffer() const
+TQString Dialog::buffer() const
 {
     return d->checker->filter()->buffer();
 }
 
-void Dialog::setBuffer( const QString& buf )
+void Dialog::setBuffer( const TQString& buf )
 {
     d->originalBuffer = buf;
 }
@@ -180,11 +180,11 @@ void Dialog::setFilter( Filter *filter )
     d->checker->setFilter( filter );
 }
 
-void Dialog::updateDialog( const QString& word )
+void Dialog::updateDialog( const TQString& word )
 {
     d->ui->m_unknownWord->setText( word );
     d->ui->m_contextLabel->setText( d->checker->filter()->context() );
-    QStringList suggs = d->checker->suggest( word );
+    TQStringList suggs = d->checker->suggest( word );
     d->ui->m_replacement->setText( suggs.first() );
     fillSuggestions( suggs );
 }
@@ -233,31 +233,31 @@ void Dialog::slotSkipAll()
 
 void Dialog::slotSuggest()
 {
-    QStringList suggs = d->checker->suggest( d->ui->m_replacement->text() );
+    TQStringList suggs = d->checker->suggest( d->ui->m_replacement->text() );
     fillSuggestions( suggs );
 }
 
-void Dialog::slotChangeLanguage( const QString& lang )
+void Dialog::slotChangeLanguage( const TQString& lang )
 {
     d->checker->changeLanguage( lang );
     slotSuggest();
 }
 
-void Dialog::slotSelectionChanged( QListViewItem *item )
+void Dialog::slotSelectionChanged( TQListViewItem *item )
 {
     d->ui->m_replacement->setText( item->text( 0 ) );
 }
 
-void Dialog::fillSuggestions( const QStringList& suggs )
+void Dialog::fillSuggestions( const TQStringList& suggs )
 {
     d->ui->m_suggestions->clear();
-    for ( QStringList::ConstIterator it = suggs.begin(); it != suggs.end(); ++it ) {
-        new QListViewItem( d->ui->m_suggestions, d->ui->m_suggestions->firstChild(),
+    for ( TQStringList::ConstIterator it = suggs.begin(); it != suggs.end(); ++it ) {
+        new TQListViewItem( d->ui->m_suggestions, d->ui->m_suggestions->firstChild(),
                            *it );
     }
 }
 
-void Dialog::slotMisspelling(const QString& word, int start )
+void Dialog::slotMisspelling(const TQString& word, int start )
 {
     kdDebug()<<"Dialog misspelling!!"<<endl;
     d->currentWord = Word( word, start );

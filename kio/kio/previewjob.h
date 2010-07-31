@@ -56,7 +56,7 @@ namespace KIO {
 	 */
         PreviewJob( const KFileItemList &items, int width, int height,
             int iconSize, int iconAlpha, bool scale, bool save,
-            const QStringList *enabledPlugins, bool deleteItems = false );
+            const TQStringList *enabledPlugins, bool deleteItems = false );
         virtual ~PreviewJob();
 
         /**
@@ -81,14 +81,14 @@ namespace KIO {
          * no .desktop).
 	 * @return the list of plugins
          */
-        static QStringList availablePlugins();
+        static TQStringList availablePlugins();
 
         /**
          * Returns a list of all supported MIME types. The list can
          * contain entries like text/ * (without the space).
 	 * @return the list of mime types
          */
-        static QStringList supportedMimeTypes();
+        static TQStringList supportedMimeTypes();
 
         /**
          * Reimplemented for internal reasons
@@ -102,7 +102,7 @@ namespace KIO {
 	 * @param item the file of the preview
 	 * @param preview the preview image
          */
-        void gotPreview( const KFileItem *item, const QPixmap &preview );
+        void gotPreview( const KFileItem *item, const TQPixmap &preview );
         /**
          * Emitted when a thumbnail for @p item could not be created,
          * either because a ThumbCreator for its MIME type does not
@@ -114,18 +114,18 @@ namespace KIO {
     protected:
         void getOrCreateThumbnail();
         bool statResultThumbnail();
-        void createThumbnail( QString );
+        void createThumbnail( TQString );
 
     protected slots:
         virtual void slotResult( KIO::Job *job );
 
     private slots:
         void startPreview();
-        void slotThumbData(KIO::Job *, const QByteArray &);
+        void slotThumbData(KIO::Job *, const TQByteArray &);
 
     private:
         void determineNextFile();
-        void emitPreview(const QImage &thumb);
+        void emitPreview(const TQImage &thumb);
         void emitFailed(const KFileItem *item = 0);
 
     protected:
@@ -154,7 +154,7 @@ namespace KIO {
      * @return the new PreviewJob
      * @see PreviewJob::availablePlugins()
      */
-    KIO_EXPORT PreviewJob *filePreview( const KFileItemList &items, int width, int height = 0, int iconSize = 0, int iconAlpha = 70, bool scale = true, bool save = true, const QStringList *enabledPlugins = 0 );
+    KIO_EXPORT PreviewJob *filePreview( const KFileItemList &items, int width, int height = 0, int iconSize = 0, int iconAlpha = 70, bool scale = true, bool save = true, const TQStringList *enabledPlugins = 0 );
 
     /**
      * Creates a PreviewJob to generate or retrieve a preview image 
@@ -176,7 +176,7 @@ namespace KIO {
      * @return the new PreviewJob
      * @see PreviewJob::availablePlugins()
      */
-    KIO_EXPORT PreviewJob *filePreview( const KURL::List &items, int width, int height = 0, int iconSize = 0, int iconAlpha = 70, bool scale = true, bool save = true, const QStringList *enabledPlugins = 0 );
+    KIO_EXPORT PreviewJob *filePreview( const KURL::List &items, int width, int height = 0, int iconSize = 0, int iconAlpha = 70, bool scale = true, bool save = true, const TQStringList *enabledPlugins = 0 );
 }
 
 #endif

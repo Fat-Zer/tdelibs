@@ -54,7 +54,7 @@ struct CollectionCache: public NodeListImpl::Cache
 {
     static Cache* make() { return new CollectionCache; }
 
-    QDict<QValueList<NodeImpl*> > nameCache;
+    TQDict<TQValueList<NodeImpl*> > nameCache;
 
     CollectionCache(): nameCache(127)
     {
@@ -282,19 +282,19 @@ NodeImpl *HTMLCollectionImpl::nextNamedItem( const DOMString &name ) const
     return 0;
 }
 
-QValueList<NodeImpl*> HTMLCollectionImpl::namedItems( const DOMString &name ) const
+TQValueList<NodeImpl*> HTMLCollectionImpl::namedItems( const DOMString &name ) const
 {
-    QString key = name.string();
+    TQString key = name.string();
 
     //We use a work-conserving design for the name cache presently -- only
     //remember stuff about elements we were asked for.
     m_cache->updateNodeListInfo(m_refNode->getDocument());
     CollectionCache* cache = static_cast<CollectionCache*>(m_cache);
-    if (QValueList<NodeImpl*>* info = cache->nameCache.find(key)) {
+    if (TQValueList<NodeImpl*>* info = cache->nameCache.find(key)) {
         return *info;
     }
     else {
-        QValueList<NodeImpl*>* newInfo = new QValueList<NodeImpl*>;
+        TQValueList<NodeImpl*>* newInfo = new TQValueList<NodeImpl*>;
 
         NodeImpl* match = namedItem(name);
         while (match) {
@@ -325,7 +325,7 @@ NodeImpl *HTMLFormCollectionImpl::item( unsigned long index ) const
         strt = m_cache->current.index;
     }
 
-    QPtrList<HTMLGenericFormElementImpl>& l = static_cast<HTMLFormElementImpl*>( m_refNode )->formElements;
+    TQPtrList<HTMLGenericFormElementImpl>& l = static_cast<HTMLFormElementImpl*>( m_refNode )->formElements;
     for (unsigned i = strt; i < l.count(); i++)
     {
         if (l.at( i )->isEnumeratable())
@@ -347,7 +347,7 @@ NodeImpl *HTMLFormCollectionImpl::item( unsigned long index ) const
 unsigned long HTMLFormCollectionImpl::calcLength(NodeImpl *start) const
 {
     unsigned length = 0;
-    QPtrList<HTMLGenericFormElementImpl> l = static_cast<HTMLFormElementImpl*>( start )->formElements;
+    TQPtrList<HTMLGenericFormElementImpl> l = static_cast<HTMLFormElementImpl*>( start )->formElements;
     for ( unsigned i = 0; i < l.count(); i++ )
         if ( l.at( i )->isEnumeratable() )
             ++length;
@@ -364,7 +364,7 @@ NodeImpl *HTMLFormCollectionImpl::namedItem( const DOMString &name ) const
 
 NodeImpl *HTMLFormCollectionImpl::nextNamedItem( const DOMString &name ) const
 {
-    QPtrList<HTMLGenericFormElementImpl>& l = static_cast<HTMLFormElementImpl*>( m_refNode )->formElements;
+    TQPtrList<HTMLGenericFormElementImpl>& l = static_cast<HTMLFormElementImpl*>( m_refNode )->formElements;
 
     //Go through the list, trying to find the appropriate named form element.
     for ( ; currentNamePos < l.count(); ++currentNamePos )
@@ -384,7 +384,7 @@ NodeImpl *HTMLFormCollectionImpl::nextNamedItem( const DOMString &name ) const
     //but only if no input tags were matched
     if (foundInput) return 0;
 
-    QPtrList<HTMLImageElementImpl>& il = static_cast<HTMLFormElementImpl*>( m_refNode )->imgElements;
+    TQPtrList<HTMLImageElementImpl>& il = static_cast<HTMLFormElementImpl*>( m_refNode )->imgElements;
     for ( ; currentNameImgPos < il.count(); ++currentNameImgPos )
     {
         HTMLImageElementImpl* el = il.at(currentNameImgPos);

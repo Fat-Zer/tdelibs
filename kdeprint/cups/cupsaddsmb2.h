@@ -20,8 +20,8 @@
 #ifndef CUPSADDSMB_H
 #define CUPSADDSMB_H
 
-#include <qobject.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
 #include <kprocess.h>
 #include <kdialog.h>
 
@@ -38,10 +38,10 @@ class CupsAddSmb : public KDialog
 
 public:
 	enum State { None, Start, MkDir, Copy, AddDriver, AddPrinter };
-	CupsAddSmb(QWidget *parent = 0, const char *name = 0);
+	CupsAddSmb(TQWidget *parent = 0, const char *name = 0);
 	~CupsAddSmb();
 
-	static bool exportDest(const QString& dest, const QString& datadir);
+	static bool exportDest(const TQString& dest, const TQString& datadir);
 
 protected slots:
 	void slotReceived(KProcess*, char*, int);
@@ -55,7 +55,7 @@ protected:
 	bool startProcess();
 	bool doExport();
 	bool doInstall();
-	void showError(const QString& msg);
+	void showError(const TQString& msg);
 
 private:
 	KProcess	m_proc;
@@ -69,8 +69,8 @@ private:
 	SidePixmap	*m_side;
 	QPushButton	*m_doit, *m_cancel;
 	KActiveLabel	*m_text;
-	QLabel *m_textinfo;
-	QLineEdit *m_logined, *m_passwded, *m_servered;
+	TQLabel *m_textinfo;
+	TQLineEdit *m_logined, *m_passwded, *m_servered;
 	QString	m_datadir;
 };
 

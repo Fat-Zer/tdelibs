@@ -20,7 +20,7 @@
 #include <kdebug.h>
 #include <kurl.h>
 #include <kio/netaccess.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 int main(int argc, char **argv)
 {
@@ -34,7 +34,7 @@ int main(int argc, char **argv)
     if ( !KIO::NetAccess::file_copy(srcURL, tmpURL, -1, true, false, 0) )
       kdError() << "file_copy failed: " << KIO::NetAccess::lastErrorString() << endl;
     else {
-      QFile f( tmpURL.path() );
+      TQFile f( tmpURL.path() );
       if (!f.open(IO_ReadOnly))
         kdFatal() << "Cannot open: " << f.name() << ". The error was: " << f.errorString() << endl;
       else {

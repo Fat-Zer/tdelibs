@@ -13,10 +13,10 @@
 #include "kpixmapio.h"
 #include "config.h"
 
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qcolor.h>
-#include <qglobal.h>
+#include <tqimage.h>
+#include <tqpixmap.h>
+#include <tqcolor.h>
+#include <tqglobal.h>
 
 #include <kglobal.h>
 #include <kconfig.h>
@@ -108,8 +108,8 @@ KPixmapIO::KPixmapIO()
 
     // Sort out bit format. Create a temporary XImage for this.
     d->shminfo = new XShmSegmentInfo;
-    d->ximage = XShmCreateImage(qt_xdisplay(), (Visual *) QPaintDevice::x11AppVisual(),
-	    QPaintDevice::x11AppDepth(), ZPixmap, 0L, d->shminfo, 10, 10);
+    d->ximage = XShmCreateImage(qt_xdisplay(), (Visual *) TQPaintDevice::x11AppVisual(),
+	    TQPaintDevice::x11AppDepth(), ZPixmap, 0L, d->shminfo, 10, 10);
     d->bpp = d->ximage->bits_per_pixel;
     d->first_try = true;
     int bpp = d->bpp;
@@ -184,17 +184,17 @@ KPixmapIO::~KPixmapIO()
 }
 
 
-QPixmap KPixmapIO::convertToPixmap(const QImage &img)
+TQPixmap KPixmapIO::convertToPixmap(const TQImage &img)
 {
     int size = img.width() * img.height();
     if (m_bShm && (img.depth() > 1) && (d->bpp > 8) && (size > d->threshold))
     {
-	QPixmap dst(img.width(), img.height());
+	TQPixmap dst(img.width(), img.height());
 	putImage(&dst, 0, 0, &img);
 	return dst;
     } else
     {
-	QPixmap dst;
+	TQPixmap dst;
 	dst.convertFromImage(img);
 	return dst;
     }
@@ -202,9 +202,9 @@ QPixmap KPixmapIO::convertToPixmap(const QImage &img)
 }
 
 
-QImage KPixmapIO::convertToImage(const QPixmap &pm)
+TQImage KPixmapIO::convertToImage(const TQPixmap &pm)
 {
-    QImage image;
+    TQImage image;
     int size = pm.width() * pm.height();
     if (m_bShm && (d->bpp >= 8) && (size > d->threshold))
 	image = getImage(&pm, 0, 0, pm.width(), pm.height());
@@ -214,14 +214,14 @@ QImage KPixmapIO::convertToImage(const QPixmap &pm)
 }
 
 
-void KPixmapIO::putImage(QPixmap *dst, const QPoint &offset,
-    const QImage *src)
+void KPixmapIO::putImage(TQPixmap *dst, const TQPoint &offset,
+    const TQImage *src)
 {
     putImage(dst, offset.x(), offset.y(), src);
 }
 
 
-void KPixmapIO::putImage(QPixmap *dst, int dx, int dy, const QImage *src)
+void KPixmapIO::putImage(TQPixmap *dst, int dx, int dy, const TQImage *src)
 {
     int size = src->width() * src->height();
     bool fallback = true;
@@ -242,22 +242,22 @@ void KPixmapIO::putImage(QPixmap *dst, int dx, int dy, const QImage *src)
     }
     if( fallback )
     {
-	QPixmap pix;
+	TQPixmap pix;
 	pix.convertFromImage(*src);
 	bitBlt(dst, dx, dy, &pix, 0, 0, pix.width(), pix.height());
     }
 }
 
 
-QImage KPixmapIO::getImage(const QPixmap *src, const QRect &rect)
+TQImage KPixmapIO::getImage(const TQPixmap *src, const TQRect &rect)
 {
     return getImage(src, rect.x(), rect.y(), rect.width(), rect.height());
 }
 
 
-QImage KPixmapIO::getImage(const QPixmap *src, int sx, int sy, int sw, int sh)
+TQImage KPixmapIO::getImage(const TQPixmap *src, int sx, int sy, int sw, int sh)
 {
-    QImage image;
+    TQImage image;
     int size = src->width() * src->height();
     bool fallback = true;
     if ((m_bShm) && (d->bpp >= 8) && (size > d->threshold))
@@ -274,7 +274,7 @@ QImage KPixmapIO::getImage(const QPixmap *src, int sx, int sy, int sw, int sh)
     }
     if( fallback )
     {
-	QPixmap pix(sw, sh);
+	TQPixmap pix(sw, sh);
 	bitBlt(&pix, 0, 0, src, sx, sy, sw, sh);
 	image = pix.convertToImage();
     }
@@ -353,8 +353,8 @@ void KPixmapIO::destroyXImage()
 bool KPixmapIO::createXImage(int w, int h)
 {
     destroyXImage();
-    d->ximage = XShmCreateImage(qt_xdisplay(), (Visual *) QPaintDevice::x11AppVisual(),
-	    QPaintDevice::x11AppDepth(), ZPixmap, 0L, d->shminfo, w, h);
+    d->ximage = XShmCreateImage(qt_xdisplay(), (Visual *) TQPaintDevice::x11AppVisual(),
+	    TQPaintDevice::x11AppDepth(), ZPixmap, 0L, d->shminfo, w, h);
     return d->ximage != None;
 }
 
@@ -446,14 +446,14 @@ bool KPixmapIO::createShmSegment(int size)
  * loop as possible.
  */
 
-QImage KPixmapIO::convertFromXImage()
+TQImage KPixmapIO::convertFromXImage()
 {
     int x, y;
     int width = d->ximage->width, height = d->ximage->height;
     int bpl = d->ximage->bytes_per_line;
     char *data = d->ximage->data;
 
-    QImage image;
+    TQImage image;
     if (d->bpp == 8)
     {
 	image.create(width, height, 8);
@@ -464,7 +464,7 @@ QImage KPixmapIO::convertFromXImage()
 	XColor *cmap = new XColor[ncells];
 	for (i=0; i<ncells; i++)
 	    cmap[i].pixel = i;
-	XQueryColors(qt_xdisplay(), QPaintDevice::x11AppColormap(),
+	XQueryColors(qt_xdisplay(), TQPaintDevice::x11AppColormap(),
 		cmap, ncells);
 	image.setNumColors(ncells);
 	for (i=0; i<ncells; i++)
@@ -622,7 +622,7 @@ QImage KPixmapIO::convertFromXImage()
 }
 
 
-void KPixmapIO::convertToXImage(const QImage &img)
+void KPixmapIO::convertToXImage(const TQImage &img)
 {
     int x, y;
     int width = d->ximage->width, height = d->ximage->height;
@@ -902,7 +902,7 @@ bool KPixmapIO::createXImage(int, int) { return false; }
 void KPixmapIO::destroyXImage() {}
 bool KPixmapIO::createShmSegment(int) { return false; }
 void KPixmapIO::destroyShmSegment() {}
-QImage KPixmapIO::convertFromXImage() { return QImage(); }
-void KPixmapIO::convertToXImage(const QImage &) {}
+TQImage KPixmapIO::convertFromXImage() { return TQImage(); }
+void KPixmapIO::convertToXImage(const TQImage &) {}
 
 #endif // HAVE_MITSHM

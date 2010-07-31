@@ -27,11 +27,11 @@ struct KMediaPlayer::View::Data
 {
 	Data() : videoWidget(0L) {}
 
-	QWidget *videoWidget;
+	TQWidget *videoWidget;
 };
 
-KMediaPlayer::View::View(QWidget *parent, const char *name)
-	: QWidget(parent, name)
+KMediaPlayer::View::View(TQWidget *parent, const char *name)
+	: TQWidget(parent, name)
 	, currentButtons((int)All)
 	, d(new Data())
 {
@@ -76,12 +76,12 @@ void KMediaPlayer::View::toggleButton(int b)
 	setButtons(currentButtons ^ b);
 }
 
-void KMediaPlayer::View::setVideoWidget(QWidget *videoWidget)
+void KMediaPlayer::View::setVideoWidget(TQWidget *videoWidget)
 {
 	d->videoWidget = videoWidget;
 }
 
-QWidget* KMediaPlayer::View::videoWidget()
+TQWidget* KMediaPlayer::View::videoWidget()
 {
 	return d->videoWidget;
 }

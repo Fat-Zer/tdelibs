@@ -23,7 +23,7 @@
 
 #include <stdlib.h>
 
-#include <qpushbutton.h>
+#include <tqpushbutton.h>
 
 #include <kapplication.h>
 #include <kdebug.h>

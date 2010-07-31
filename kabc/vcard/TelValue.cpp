@@ -37,7 +37,7 @@ TelValue::TelValue(const TelValue & x)
 {
 }
 
-TelValue::TelValue(const QCString & s)
+TelValue::TelValue(const TQCString & s)
 	:	Value(s)
 {
 }
@@ -52,7 +52,7 @@ TelValue::operator = (TelValue & x)
 }
 
 	TelValue &
-TelValue::operator = (const QCString & s)
+TelValue::operator = (const TQCString & s)
 {
 	Value::operator = (s);
 	return *this;

@@ -20,8 +20,8 @@
 #ifndef KABC_LDIFCONVERTER_H
 #define KABC_LDIFCONVERTER_H
 
-#include <qstring.h>
-#include <qdatetime.h>
+#include <tqstring.h>
+#include <tqdatetime.h>
 
 #include "addressee.h"
 #include "addresseelist.h"
@@ -44,7 +44,7 @@ namespace KABC {
    * @param dt          The date & time value of the last modification (e.g. file modification time).
    * @since 3.2
    */
-  KABC_EXPORT bool LDIFToAddressee( const QString &str, AddresseeList &addrList, QDateTime dt = QDateTime::currentDateTime() );
+  KABC_EXPORT bool LDIFToAddressee( const TQString &str, AddresseeList &addrList, TQDateTime dt = TQDateTime::currentDateTime() );
 
   /**
    * Converts a list of addressees to a LDIF string.
@@ -53,7 +53,7 @@ namespace KABC {
    * @param str         The LDIF string.
    * @since 3.2
    */
-  KABC_EXPORT bool addresseeToLDIF( const AddresseeList &addrList, QString &str );
+  KABC_EXPORT bool addresseeToLDIF( const AddresseeList &addrList, TQString &str );
 
   /**
    * Converts an addressee to a LDIF string.
@@ -62,7 +62,7 @@ namespace KABC {
    * @param str     The LDIF string.
    * @since 3.2
    */
-  KABC_EXPORT bool addresseeToLDIF( const Addressee &addr, QString &str );
+  KABC_EXPORT bool addresseeToLDIF( const Addressee &addr, TQString &str );
 
   /**
    * @deprecated
@@ -76,7 +76,7 @@ namespace KABC {
    * @param allowEncode Set to false if you wish no encoding of the value.
    * @since 3.2
    */
-  KABC_EXPORT QString makeLDIFfieldString( QString field, QString value, bool allowEncode = true ) KDE_DEPRECATED;
+  KABC_EXPORT TQString makeLDIFfieldString( TQString field, TQString value, bool allowEncode = true ) KDE_DEPRECATED;
 
 
 
@@ -84,14 +84,14 @@ namespace KABC {
   
   /** No need for this function anymore - use LDIF::splitLine() + evaluatePair() */
   KABC_EXPORT bool parseSingleLine( Addressee &a,
-		Address &homeAddr, Address &workAddr, QString &line );
+		Address &homeAddr, Address &workAddr, TQString &line );
 
   /** No need for this function anymore - use LDIF::splitLine() */
-  KABC_EXPORT bool splitLine( QString &line, QString &fieldname, QString &value);
+  KABC_EXPORT bool splitLine( TQString &line, TQString &fieldname, TQString &value);
 
 
   KABC_EXPORT bool evaluatePair( Addressee &a, Address &homeAddr, Address &workAddr,
-	QString &fieldname, QString &value );
+	TQString &fieldname, TQString &value );
 
   }
 

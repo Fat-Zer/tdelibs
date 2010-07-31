@@ -24,9 +24,9 @@
 
 #include <kurl.h>
 #include <klocale.h>
-#include <qlabel.h>
+#include <tqlabel.h>
 #include <kdebug.h>
-#include <qlineedit.h>
+#include <tqlineedit.h>
 #include <kmessagebox.h>
 #include <kextsock.h>
 
@@ -34,7 +34,7 @@ static bool checkLpdQueue(const char *host, const char *queue);
 
 //********************************************************************************************************
 
-KMWLpd::KMWLpd(QWidget *parent, const char *name)
+KMWLpd::KMWLpd(TQWidget *parent, const char *name)
 : KMWInfoBase(2,parent,name)
 {
 	m_ID = KMWizard::LPD;
@@ -47,7 +47,7 @@ KMWLpd::KMWLpd(QWidget *parent, const char *name)
 	setLabel(1,i18n("Queue:"));
 }
 
-bool KMWLpd::isValid(QString& msg)
+bool KMWLpd::isValid(TQString& msg)
 {
 	if (text(0).isEmpty() || text(1).isEmpty())
 	{
@@ -66,7 +66,7 @@ bool KMWLpd::isValid(QString& msg)
 
 void KMWLpd::updatePrinter(KMPrinter *p)
 {
-	QString	dev = QString::fromLatin1("lpd://%1/%2").arg(text(0)).arg(text(1));
+	QString	dev = TQString::fromLatin1("lpd://%1/%2").arg(text(0)).arg(text(1));
 	p->setDevice(dev);
 }
 

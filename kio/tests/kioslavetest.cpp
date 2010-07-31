@@ -9,9 +9,9 @@
   LGPL version 2.
  */
 
-#include <qlayout.h>
-#include <qmessagebox.h>
-#include <qdir.h>
+#include <tqlayout.h>
+#include <tqmessagebox.h>
+#include <tqdir.h>
 
 #include <kacl.h>
 #include <kapplication.h>
@@ -28,16 +28,16 @@
 
 using namespace KIO;
 
-KioslaveTest::KioslaveTest( QString src, QString dest, uint op, uint pr )
+KioslaveTest::KioslaveTest( TQString src, TQString dest, uint op, uint pr )
   : KMainWindow(0, "")
 {
 
   job = 0L;
 
-  main_widget = new QWidget( this, "");
-  QBoxLayout *topLayout = new QVBoxLayout( main_widget, 10, 5 );
+  main_widget = new TQWidget( this, "");
+  TQBoxLayout *topLayout = new TQVBoxLayout( main_widget, 10, 5 );
 
-  QGridLayout *grid = new QGridLayout( 2, 2, 10 );
+  TQGridLayout *grid = new TQGridLayout( 2, 2, 10 );
   topLayout->addLayout( grid );
 
   grid->setRowStretch(0,1);
@@ -46,68 +46,68 @@ KioslaveTest::KioslaveTest( QString src, QString dest, uint op, uint pr )
   grid->setColStretch(0,1);
   grid->setColStretch(1,100);
 
-  lb_from = new QLabel( "From:", main_widget );
+  lb_from = new TQLabel( "From:", main_widget );
   grid->addWidget( lb_from, 0, 0 );
 
-  le_source = new QLineEdit( main_widget );
+  le_source = new TQLineEdit( main_widget );
   grid->addWidget( le_source, 0, 1 );
   le_source->setText( src );
 
-  lb_to = new QLabel( "To:", main_widget );
+  lb_to = new TQLabel( "To:", main_widget );
   grid->addWidget( lb_to, 1, 0 );
 
-  le_dest = new QLineEdit( main_widget );
+  le_dest = new TQLineEdit( main_widget );
   grid->addWidget( le_dest, 1, 1 );
   le_dest->setText( dest );
 
   // Operation groupbox & buttons
-  opButtons = new QButtonGroup( "Operation", main_widget );
+  opButtons = new TQButtonGroup( "Operation", main_widget );
   topLayout->addWidget( opButtons, 10 );
-  connect( opButtons, SIGNAL(clicked(int)), SLOT(changeOperation(int)) );
+  connect( opButtons, TQT_SIGNAL(clicked(int)), TQT_SLOT(changeOperation(int)) );
 
-  QBoxLayout *hbLayout = new QHBoxLayout( opButtons, 15 );
+  TQBoxLayout *hbLayout = new TQHBoxLayout( opButtons, 15 );
 
-  rbList = new QRadioButton( "List", opButtons );
+  rbList = new TQRadioButton( "List", opButtons );
   opButtons->insert( rbList, List );
   hbLayout->addWidget( rbList, 5 );
 
-  rbListRecursive = new QRadioButton( "ListRecursive", opButtons );
+  rbListRecursive = new TQRadioButton( "ListRecursive", opButtons );
   opButtons->insert( rbListRecursive, ListRecursive );
   hbLayout->addWidget( rbListRecursive, 5 );
 
-  rbStat = new QRadioButton( "Stat", opButtons );
+  rbStat = new TQRadioButton( "Stat", opButtons );
   opButtons->insert( rbStat, Stat );
   hbLayout->addWidget( rbStat, 5 );
 
-  rbGet = new QRadioButton( "Get", opButtons );
+  rbGet = new TQRadioButton( "Get", opButtons );
   opButtons->insert( rbGet, Get );
   hbLayout->addWidget( rbGet, 5 );
 
-  rbPut = new QRadioButton( "Put", opButtons );
+  rbPut = new TQRadioButton( "Put", opButtons );
   opButtons->insert( rbPut, Put );
   hbLayout->addWidget( rbPut, 5 );
 
-  rbCopy = new QRadioButton( "Copy", opButtons );
+  rbCopy = new TQRadioButton( "Copy", opButtons );
   opButtons->insert( rbCopy, Copy );
   hbLayout->addWidget( rbCopy, 5 );
 
-  rbMove = new QRadioButton( "Move", opButtons );
+  rbMove = new TQRadioButton( "Move", opButtons );
   opButtons->insert( rbMove, Move );
   hbLayout->addWidget( rbMove, 5 );
 
-  rbDelete = new QRadioButton( "Delete", opButtons );
+  rbDelete = new TQRadioButton( "Delete", opButtons );
   opButtons->insert( rbDelete, Delete );
   hbLayout->addWidget( rbDelete, 5 );
 
-  rbShred = new QRadioButton( "Shred", opButtons );
+  rbShred = new TQRadioButton( "Shred", opButtons );
   opButtons->insert( rbShred, Shred );
   hbLayout->addWidget( rbShred, 5 );
 
-  rbMkdir = new QRadioButton( "Mkdir", opButtons );
+  rbMkdir = new TQRadioButton( "Mkdir", opButtons );
   opButtons->insert( rbMkdir, Mkdir );
   hbLayout->addWidget( rbMkdir, 5 );
 
-  rbMimetype = new QRadioButton( "Mimetype", opButtons );
+  rbMimetype = new TQRadioButton( "Mimetype", opButtons );
   opButtons->insert( rbMimetype, Mimetype );
   hbLayout->addWidget( rbMimetype, 5 );
 
@@ -115,21 +115,21 @@ KioslaveTest::KioslaveTest( QString src, QString dest, uint op, uint pr )
   changeOperation( op );
 
   // Progress groupbox & buttons
-  progressButtons = new QButtonGroup( "Progress dialog mode", main_widget );
+  progressButtons = new TQButtonGroup( "Progress dialog mode", main_widget );
   topLayout->addWidget( progressButtons, 10 );
-  connect( progressButtons, SIGNAL(clicked(int)), SLOT(changeProgressMode(int)) );
+  connect( progressButtons, TQT_SIGNAL(clicked(int)), TQT_SLOT(changeProgressMode(int)) );
 
-  hbLayout = new QHBoxLayout( progressButtons, 15 );
+  hbLayout = new TQHBoxLayout( progressButtons, 15 );
 
-  rbProgressNone = new QRadioButton( "None", progressButtons );
+  rbProgressNone = new TQRadioButton( "None", progressButtons );
   progressButtons->insert( rbProgressNone, ProgressNone );
   hbLayout->addWidget( rbProgressNone, 5 );
 
-  rbProgressDefault = new QRadioButton( "Default", progressButtons );
+  rbProgressDefault = new TQRadioButton( "Default", progressButtons );
   progressButtons->insert( rbProgressDefault, ProgressDefault );
   hbLayout->addWidget( rbProgressDefault, 5 );
 
-  rbProgressStatus = new QRadioButton( "Status", progressButtons );
+  rbProgressStatus = new TQRadioButton( "Status", progressButtons );
   progressButtons->insert( rbProgressStatus, ProgressStatus );
   hbLayout->addWidget( rbProgressStatus, 5 );
 
@@ -141,23 +141,23 @@ KioslaveTest::KioslaveTest( QString src, QString dest, uint op, uint pr )
   statusBar()->addWidget( statusProgress, 0, true );
 
   // run & stop butons
-  hbLayout = new QHBoxLayout( topLayout, 15 );
+  hbLayout = new TQHBoxLayout( topLayout, 15 );
 
-  pbStart = new QPushButton( "&Start", main_widget );
+  pbStart = new TQPushButton( "&Start", main_widget );
   pbStart->setFixedSize( pbStart->sizeHint() );
-  connect( pbStart, SIGNAL(clicked()), SLOT(startJob()) );
+  connect( pbStart, TQT_SIGNAL(clicked()), TQT_SLOT(startJob()) );
   hbLayout->addWidget( pbStart, 5 );
 
-  pbStop = new QPushButton( "Sto&p", main_widget );
+  pbStop = new TQPushButton( "Sto&p", main_widget );
   pbStop->setFixedSize( pbStop->sizeHint() );
   pbStop->setEnabled( false );
-  connect( pbStop, SIGNAL(clicked()), SLOT(stopJob()) );
+  connect( pbStop, TQT_SIGNAL(clicked()), TQT_SLOT(stopJob()) );
   hbLayout->addWidget( pbStop, 5 );
 
   // close button
-  close = new QPushButton( "&Close", main_widget );
+  close = new TQPushButton( "&Close", main_widget );
   close->setFixedSize( close->sizeHint() );
-  connect(close, SIGNAL(clicked()), this, SLOT(slotQuit()));
+  connect(close, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotQuit()));
 
   topLayout->addWidget( close, 5 );
 
@@ -166,14 +166,14 @@ KioslaveTest::KioslaveTest( QString src, QString dest, uint op, uint pr )
 
   slave = 0;
 //  slave = KIO::Scheduler::getConnectedSlave(KURL("ftp://ftp.kde.org"));
-  KIO::Scheduler::connect(SIGNAL(slaveConnected(KIO::Slave*)),
-	this, SLOT(slotSlaveConnected()));
-  KIO::Scheduler::connect(SIGNAL(slaveError(KIO::Slave*,int,const QString&)),
-	this, SLOT(slotSlaveError()));
+  KIO::Scheduler::connect(TQT_SIGNAL(slaveConnected(KIO::Slave*)),
+	this, TQT_SLOT(slotSlaveConnected()));
+  KIO::Scheduler::connect(TQT_SIGNAL(slaveError(KIO::Slave*,int,const TQString&)),
+	this, TQT_SLOT(slotSlaveError()));
 }
 
 
-void KioslaveTest::closeEvent( QCloseEvent * ){
+void KioslaveTest::closeEvent( TQCloseEvent * ){
   slotQuit();
 }
 
@@ -210,22 +210,22 @@ void KioslaveTest::changeProgressMode( int id ) {
 
 
 void KioslaveTest::startJob() {
-  QString sCurrent = QDir::currentDirPath()+"/";
+  TQString sCurrent = TQDir::currentDirPath()+"/";
   KURL::encode_string(sCurrent);
-  QString sSrc( le_source->text() );
+  TQString sSrc( le_source->text() );
   KURL src( sCurrent, sSrc );
 
   if ( !src.isValid() ) {
-    QMessageBox::critical(this, "Kioslave Error Message", "Source URL is malformed" );
+    TQMessageBox::critical(this, "Kioslave Error Message", "Source URL is malformed" );
     return;
   }
 
-  QString sDest( le_dest->text() );
+  TQString sDest( le_dest->text() );
   KURL dest( sCurrent, sDest );
 
   if ( !dest.isValid() &&
        ( selectedOperation == Copy || selectedOperation == Move ) ) {
-    QMessageBox::critical(this, "Kioslave Error Message",
+    TQMessageBox::critical(this, "Kioslave Error Message",
                        "Destination URL is malformed" );
     return;
   }
@@ -242,14 +242,14 @@ void KioslaveTest::startJob() {
   switch ( selectedOperation ) {
   case List:
     myJob = KIO::listDir( src );
-    connect(myJob, SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList&)),
-            SLOT( slotEntries( KIO::Job*, const KIO::UDSEntryList&)));
+    connect(myJob, TQT_SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList&)),
+            TQT_SLOT( slotEntries( KIO::Job*, const KIO::UDSEntryList&)));
     break;
 
   case ListRecursive:
     myJob = KIO::listRecursive( src );
-    connect(myJob, SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList&)),
-            SLOT( slotEntries( KIO::Job*, const KIO::UDSEntryList&)));
+    connect(myJob, TQT_SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList&)),
+            TQT_SLOT( slotEntries( KIO::Job*, const KIO::UDSEntryList&)));
     break;
 
   case Stat:
@@ -258,15 +258,15 @@ void KioslaveTest::startJob() {
 
   case Get:
     myJob = KIO::get( src, true );
-    connect(myJob, SIGNAL( data( KIO::Job*, const QByteArray &)),
-            SLOT( slotData( KIO::Job*, const QByteArray &)));
+    connect(myJob, TQT_SIGNAL( data( KIO::Job*, const TQByteArray &)),
+            TQT_SLOT( slotData( KIO::Job*, const TQByteArray &)));
     break;
 
   case Put:
     putBuffer = 0;
     myJob = KIO::put( src, -1, true, false);
-    connect(myJob, SIGNAL( dataReq( KIO::Job*, QByteArray &)),
-            SLOT( slotDataReq( KIO::Job*, QByteArray &)));
+    connect(myJob, TQT_SIGNAL( dataReq( KIO::Job*, TQByteArray &)),
+            TQT_SLOT( slotDataReq( KIO::Job*, TQByteArray &)));
     break;
 
   case Copy:
@@ -300,11 +300,11 @@ void KioslaveTest::startJob() {
     job = myJob;
   }
 
-  connect( job, SIGNAL( result( KIO::Job * ) ),
-           SLOT( slotResult( KIO::Job * ) ) );
+  connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
+           TQT_SLOT( slotResult( KIO::Job * ) ) );
 
-  connect( job, SIGNAL( canceled( KIO::Job * ) ),
-           SLOT( slotResult( KIO::Job * ) ) );
+  connect( job, TQT_SIGNAL( canceled( KIO::Job * ) ),
+           TQT_SLOT( slotResult( KIO::Job * ) ) );
 
   if (progressMode == ProgressStatus) {
     statusProgress->setJob( job );
@@ -347,7 +347,7 @@ void KioslaveTest::slotSlaveError()
    slave = 0;
 }
 
-static void printACL( const QString& acl )
+static void printACL( const TQString& acl )
 {
   KACL kacl( acl );
   kdDebug() << "According to KACL: " << endl << kacl.asString() << endl;
@@ -424,8 +424,8 @@ void KioslaveTest::slotEntries(KIO::Job* job, const KIO::UDSEntryList& list) {
                 kdDebug() << "" << ( *it2 ).m_str << endl;
             else if ( (*it2).m_uds == UDS_EXTRA) {
                 Q_ASSERT( extraFieldsIt != extraFields.end() );
-                QString column = (*extraFieldsIt).name;
-                //QString type = (*extraFieldsIt).type;
+                TQString column = (*extraFieldsIt).name;
+                //TQString type = (*extraFieldsIt).type;
                 kdDebug() << "  Extra data (" << column << ") :" << ( *it2 ).m_str << endl;
                 ++extraFieldsIt;
             }
@@ -433,7 +433,7 @@ void KioslaveTest::slotEntries(KIO::Job* job, const KIO::UDSEntryList& list) {
     }
 }
 
-void KioslaveTest::slotData(KIO::Job*, const QByteArray &data)
+void KioslaveTest::slotData(KIO::Job*, const TQByteArray &data)
 {
     if (data.size() == 0)
     {
@@ -441,11 +441,11 @@ void KioslaveTest::slotData(KIO::Job*, const QByteArray &data)
     }
     else
     {
-       kdDebug(0) << "Data: \"" << QCString(data, data.size()+1) << "\"" << endl;
+       kdDebug(0) << "Data: \"" << TQCString(data, data.size()+1) << "\"" << endl;
     }
 }
 
-void KioslaveTest::slotDataReq(KIO::Job*, QByteArray &data)
+void KioslaveTest::slotDataReq(KIO::Job*, TQByteArray &data)
 {
     const char *fileDataArray[] =
        {
@@ -500,13 +500,13 @@ int main(int argc, char **argv) {
 
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
-  QString src = args->getOption("src");
-  QString dest = args->getOption("dest");
+  TQString src = args->getOption("src");
+  TQString dest = args->getOption("dest");
 
   uint op = 0;
   uint pr = 0;
 
-  QString tmps;
+  TQString tmps;
 
   tmps = args->getOption("operation");
   if ( tmps == "list") {

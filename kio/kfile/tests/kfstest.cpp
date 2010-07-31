@@ -23,10 +23,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include <qdir.h>
-#include <qlayout.h>
-#include <qstringlist.h>
-#include <qwidget.h>
+#include <tqdir.h>
+#include <tqlayout.h>
+#include <tqstringlist.h>
+#include <tqwidget.h>
 
 #include <kfiledialog.h>
 #include <kfileiconview.h>
@@ -45,17 +45,17 @@
 int main(int argc, char **argv)
 {
     KApplication a(argc, argv, "kfstest");
-    QString name1;
-    QStringList names;
+    TQString name1;
+    TQStringList names;
 
-    QString argv1;
-    QString startDir;
+    TQString argv1;
+    TQString startDir;
     if (argc > 1)
-	argv1 = QString::fromLatin1(argv[1]);
+	argv1 = TQString::fromLatin1(argv[1]);
     if ( argc > 2 )
-        startDir = QString::fromLatin1( argv[2]);
+        startDir = TQString::fromLatin1( argv[2]);
 
-    if (argv1 == QString::fromLatin1("diroperator")) {
+    if (argv1 == TQString::fromLatin1("diroperator")) {
 	KDirOperator *op = new KDirOperator(startDir, 0, "operator");
 	op->setViewConfig( KGlobal::config(), "TestGroup" );
 	op->setView(KFile::Simple);
@@ -64,73 +64,73 @@ int main(int argc, char **argv)
 	a.exec();
     }
 
-    else if (argv1 == QString::fromLatin1("justone")) {
-        QString name = KFileDialog::getOpenFileName(startDir);
+    else if (argv1 == TQString::fromLatin1("justone")) {
+        TQString name = KFileDialog::getOpenFileName(startDir);
         qDebug("filename=%s",name.latin1());
     }
 
-    else if (argv1 == QString::fromLatin1("existingURL")) {
+    else if (argv1 == TQString::fromLatin1("existingURL")) {
         KURL url = KFileDialog::getExistingURL();
         qDebug("URL=%s",url.url().latin1());
         name1 = url.url();
     }
 
-    else if (argv1 == QString::fromLatin1("preview")) {
+    else if (argv1 == TQString::fromLatin1("preview")) {
         KURL u =  KFileDialog::getImageOpenURL();
         qDebug("filename=%s", u.url().latin1());
     }
 
-    else if (argv1 == QString::fromLatin1("preselect")) {
-        names = KFileDialog::getOpenFileNames(QString::fromLatin1("/etc/passwd"));
-        QStringList::Iterator it = names.begin();
+    else if (argv1 == TQString::fromLatin1("preselect")) {
+        names = KFileDialog::getOpenFileNames(TQString::fromLatin1("/etc/passwd"));
+        TQStringList::Iterator it = names.begin();
         while ( it != names.end() ) {
             qDebug("selected file: %s", (*it).latin1());
             ++it;
         }
     }
 
-    else if (argv1 == QString::fromLatin1("dirs"))
+    else if (argv1 == TQString::fromLatin1("dirs"))
 	name1 = KFileDialog::getExistingDirectory();
 
-    else if (argv1 == QString::fromLatin1("heap")) {
-	KFileDialog *dlg = new KFileDialog( startDir, QString::null, 0L,
+    else if (argv1 == TQString::fromLatin1("heap")) {
+	KFileDialog *dlg = new KFileDialog( startDir, TQString::null, 0L,
 					    "file dialog", true );
 	dlg->setMode( KFile::File);
     dlg->setOperationMode( KFileDialog::Saving );
-    QStringList filter;
+    TQStringList filter;
     filter << "all/allfiles" << "text/plain";
     dlg->setMimeFilter( filter, "all/allfiles" );
     KURLBar *urlBar = dlg->speedBar();
     if ( urlBar )
     {
         urlBar->insertDynamicItem( KURL("ftp://ftp.kde.org"), 
-                                   QString::fromLatin1("KDE FTP Server") );
+                                   TQString::fromLatin1("KDE FTP Server") );
     }
 
 	if ( dlg->exec() == KDialog::Accepted )
 	    name1 = dlg->selectedURL().url();
     }
 
-    else if ( argv1 == QString::fromLatin1("eventloop") )
+    else if ( argv1 == TQString::fromLatin1("eventloop") )
     {
         KFDTest *test = new KFDTest( startDir );
         return a.exec();
     }
 
-    else if (argv1 == QString::fromLatin1("save")) {
+    else if (argv1 == TQString::fromLatin1("save")) {
         KURL u = KFileDialog::getSaveURL();
-//        QString(QDir::homeDirPath() + QString::fromLatin1("/testfile")),
-//        QString::null, 0L);
+//        TQString(TQDir::homeDirPath() + TQString::fromLatin1("/testfile")),
+//        TQString::null, 0L);
         name1 = u.url();
     }
 
-    else if (argv1 == QString::fromLatin1("icon")) {
+    else if (argv1 == TQString::fromLatin1("icon")) {
     	KIconDialog dlg;
-	QString icon = dlg.selectIcon();
+	TQString icon = dlg.selectIcon();
 	kdDebug() << icon << endl;
     }
 
-//     else if ( argv1 == QString::fromLatin1("dirselect") ) {
+//     else if ( argv1 == TQString::fromLatin1("dirselect") ) {
 //         KURL url;
 //         url.setPath( "/" );
 //         KURL selected = KDirSelectDialog::selectDirectory( url );
@@ -140,7 +140,7 @@ int main(int argc, char **argv)
 
     else {
 	KFileDialog dlg(startDir,
-			QString::fromLatin1("*|All Files\n"
+			TQString::fromLatin1("*|All Files\n"
 					    "*.lo *.o *.la|All libtool Files"),
 			0, 0, true);
 //    dlg.setFilter( "*.kdevelop" );
@@ -148,14 +148,14 @@ int main(int argc, char **argv)
                                     KFile::Directory |
                                     KFile::ExistingOnly |
                                     KFile::LocalOnly) );
-//         QStringList filter;
+//         TQStringList filter;
 //         filter << "text/plain" << "text/html" << "image/png";
 //        dlg.setMimeFilter( filter );
 //    KMimeType::List types;
 //    types.append( KMimeType::mimeType( "text/plain" ) );
 //    types.append( KMimeType::mimeType( "text/html" ) );
 //    dlg.setFilterMimeType( "Filetypes:", types, types.first() );
-	if ( dlg.exec() == QDialog::Accepted ) {
+	if ( dlg.exec() == TQDialog::Accepted ) {
 	    KURL::List list = dlg.selectedURLs();
 	    KURL::List::ConstIterator it = list.begin();
             qDebug("*** selectedURLs(): ");
@@ -167,8 +167,8 @@ int main(int argc, char **argv)
             qDebug("*** selectedFile: %s", dlg.selectedFile().latin1());
             qDebug("*** selectedURL: %s", dlg.selectedURL().url().latin1());
             qDebug("*** selectedFiles: ");
-            QStringList l = dlg.selectedFiles();
-            QStringList::Iterator it2 = l.begin();
+            TQStringList l = dlg.selectedFiles();
+            TQStringList::Iterator it2 = l.begin();
             while ( it2 != l.end() ) {
                 qDebug("  -> %s", (*it2).latin1());
                 ++it2;
@@ -177,7 +177,7 @@ int main(int argc, char **argv)
     }
 
     if (!(name1.isNull()))
-	KMessageBox::information(0, QString::fromLatin1("You selected the file " ) + name1,
-				 QString::fromLatin1("Your Choice"));
+	KMessageBox::information(0, TQString::fromLatin1("You selected the file " ) + name1,
+				 TQString::fromLatin1("Your Choice"));
     return 0;
 }

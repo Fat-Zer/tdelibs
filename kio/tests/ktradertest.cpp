@@ -44,18 +44,18 @@ int main( int argc, char **argv )
   if ( args->count() < 1 )
       KCmdLineArgs::usage();
 
-  QString query = QString::fromLocal8Bit( args->arg( 0 ) );
+  TQString query = TQString::fromLocal8Bit( args->arg( 0 ) );
 
-  QString genericServiceType, constraint, preference;
+  TQString genericServiceType, constraint, preference;
 
   if ( args->count() >= 2 )
-    genericServiceType = QString::fromLocal8Bit( args->arg( 1 ) );
+    genericServiceType = TQString::fromLocal8Bit( args->arg( 1 ) );
 
   if ( args->count() >= 3 )
-    constraint = QString::fromLocal8Bit( args->arg( 2 ) );
+    constraint = TQString::fromLocal8Bit( args->arg( 2 ) );
 
   if ( args->count() == 4 )
-    preference = QString::fromLocal8Bit( args->arg( 3 ) );
+    preference = TQString::fromLocal8Bit( args->arg( 3 ) );
 
   printf( "query is : %s\n", query.local8Bit().data() );
   printf( "genericServiceType is : %s\n", genericServiceType.local8Bit().data() );
@@ -72,12 +72,12 @@ int main( int argc, char **argv )
   for (; it != end; ++it, ++i )
   {
     printf("---- Offer %d ----\n", i);
-    QStringList props = (*it)->propertyNames();
-    QStringList::ConstIterator propIt = props.begin();
-    QStringList::ConstIterator propEnd = props.end();
+    TQStringList props = (*it)->propertyNames();
+    TQStringList::ConstIterator propIt = props.begin();
+    TQStringList::ConstIterator propEnd = props.end();
     for (; propIt != propEnd; ++propIt )
     {
-      QVariant prop = (*it)->property( *propIt );
+      TQVariant prop = (*it)->property( *propIt );
 
       if ( !prop.isValid() )
       {
@@ -85,15 +85,15 @@ int main( int argc, char **argv )
 	continue;
       }
 
-      QString outp = *propIt;
+      TQString outp = *propIt;
       outp += " : '";
 
       switch ( prop.type() )
       {
-        case QVariant::StringList:
+        case TQVariant::StringList:
           outp += prop.toStringList().join(" - ");
         break;
-        case QVariant::Bool:
+        case TQVariant::Bool:
           outp += prop.toBool() ? "TRUE" : "FALSE";
           break;
         default:

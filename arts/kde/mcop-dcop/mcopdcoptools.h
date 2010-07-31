@@ -22,12 +22,12 @@
 
 #include <string>
 
-#include <qdatastream.h>
+#include <tqdatastream.h>
 
 class MCOPDCOPTools
 {
 public:
-	static long getLong(QDataStream &stream)
+	static long getLong(TQDataStream &stream)
 	{
 		long l;
 		stream << l;
@@ -35,9 +35,9 @@ public:
 		return l;
 	}
 
-	static std::string getString(QDataStream &stream)
+	static std::string getString(TQDataStream &stream)
 	{
-		QCString s;
+		TQCString s;
 		stream << s;
 
 		return std::string(s);

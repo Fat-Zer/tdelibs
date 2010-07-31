@@ -28,8 +28,8 @@
 #include <ktrader.h>
 #include <kparts/componentfactory.h>
 
-#include <qpixmap.h>
-#include <qfile.h>
+#include <tqpixmap.h>
+#include <tqfile.h>
 
 /*************************************************
  *
@@ -68,18 +68,18 @@ KDataToolInfo& KDataToolInfo::operator= ( const KDataToolInfo& info )
     return *this;
 }
 
-QString KDataToolInfo::dataType() const
+TQString KDataToolInfo::dataType() const
 {
     if ( !m_service )
-        return QString::null;
+        return TQString::null;
 
     return m_service->property( "DataType" ).toString();
 }
 
-QStringList KDataToolInfo::mimeTypes() const
+TQStringList KDataToolInfo::mimeTypes() const
 {
     if ( !m_service )
-        return QStringList();
+        return TQStringList();
 
     return m_service->property( "DataMimeTypes" ).toStringList();
 }
@@ -92,58 +92,58 @@ bool KDataToolInfo::isReadOnly() const
     return m_service->property( "ReadOnly" ).toBool();
 }
 
-QPixmap KDataToolInfo::icon() const
+TQPixmap KDataToolInfo::icon() const
 {
     if ( !m_service )
-        return QPixmap();
+        return TQPixmap();
 
-    QPixmap pix;
-    QStringList lst = KGlobal::dirs()->resourceDirs("icon");
-    QStringList::ConstIterator it = lst.begin();
+    TQPixmap pix;
+    TQStringList lst = KGlobal::dirs()->resourceDirs("icon");
+    TQStringList::ConstIterator it = lst.begin();
     while (!pix.load( *it + "/" + m_service->icon() ) && it != lst.end() )
         it++;
 
     return pix;
 }
 
-QPixmap KDataToolInfo::miniIcon() const
+TQPixmap KDataToolInfo::miniIcon() const
 {
     if ( !m_service )
-        return QPixmap();
+        return TQPixmap();
 
-    QPixmap pix;
-    QStringList lst = KGlobal::dirs()->resourceDirs("mini");
-    QStringList::ConstIterator it = lst.begin();
+    TQPixmap pix;
+    TQStringList lst = KGlobal::dirs()->resourceDirs("mini");
+    TQStringList::ConstIterator it = lst.begin();
     while (!pix.load( *it + "/" + m_service->icon() ) && it != lst.end() )
         it++;
 
     return pix;
 }
 
-QString KDataToolInfo::iconName() const
+TQString KDataToolInfo::iconName() const
 {
     if ( !m_service )
-        return QString::null;
+        return TQString::null;
     return m_service->icon();
 }
 
-QStringList KDataToolInfo::commands() const
+TQStringList KDataToolInfo::commands() const
 {
     if ( !m_service )
-        return QString::null;
+        return TQString::null;
 
     return m_service->property( "Commands" ).toStringList();
 }
 
-QStringList KDataToolInfo::userCommands() const
+TQStringList KDataToolInfo::userCommands() const
 {
     if ( !m_service )
-        return QString::null;
+        return TQString::null;
 
-    return QStringList::split( ',', m_service->comment() );
+    return TQStringList::split( ',', m_service->comment() );
 }
 
-KDataTool* KDataToolInfo::createTool( QObject* parent, const char* name ) const
+KDataTool* KDataToolInfo::createTool( TQObject* parent, const char* name ) const
 {
     if ( !m_service )
         return 0;
@@ -159,19 +159,19 @@ KService::Ptr KDataToolInfo::service() const
     return m_service;
 }
 
-QValueList<KDataToolInfo> KDataToolInfo::query( const QString& datatype, const QString& mimetype, KInstance* instance )
+TQValueList<KDataToolInfo> KDataToolInfo::query( const TQString& datatype, const TQString& mimetype, KInstance* instance )
 {
-    QValueList<KDataToolInfo> lst;
+    TQValueList<KDataToolInfo> lst;
 
-    QString constr;
+    TQString constr;
 
     if ( !datatype.isEmpty() )
     {
-        constr = QString::fromLatin1( "DataType == '%1'" ).arg( datatype );
+        constr = TQString::fromLatin1( "DataType == '%1'" ).arg( datatype );
     }
     if ( !mimetype.isEmpty() )
     {
-        QString tmp = QString::fromLatin1( "'%1' in DataMimeTypes" ).arg( mimetype );
+        TQString tmp = TQString::fromLatin1( "'%1' in DataMimeTypes" ).arg( mimetype );
         if ( constr.isEmpty() )
             constr = tmp;
         else
@@ -180,7 +180,7 @@ QValueList<KDataToolInfo> KDataToolInfo::query( const QString& datatype, const Q
 /* Bug in KTrader ? Test with HEAD-kdelibs!
     if ( instance )
     {
-        QString tmp = QString::fromLatin1( "not ('%1' in ExcludeFrom)" ).arg( instance->instanceName() );
+        TQString tmp = TQString::fromLatin1( "not ('%1' in ExcludeFrom)" ).arg( instance->instanceName() );
         if ( constr.isEmpty() )
             constr = tmp;
         else
@@ -215,8 +215,8 @@ bool KDataToolInfo::isValid() const
  * KDataToolAction
  *
  *************************************************/
-KDataToolAction::KDataToolAction( const QString & text, const KDataToolInfo & info, const QString & command,
-                                    QObject * parent, const char * name )
+KDataToolAction::KDataToolAction( const TQString & text, const KDataToolInfo & info, const TQString & command,
+                                    TQObject * parent, const char * name )
     : KAction( text, info.iconName(), 0, parent, name ),
       m_command( command ),
       m_info( info )
@@ -228,30 +228,30 @@ void KDataToolAction::slotActivated()
     emit toolActivated( m_info, m_command );
 }
 
-QPtrList<KAction> KDataToolAction::dataToolActionList( const QValueList<KDataToolInfo> & tools, const QObject *receiver, const char* slot )
+TQPtrList<KAction> KDataToolAction::dataToolActionList( const TQValueList<KDataToolInfo> & tools, const TQObject *receiver, const char* slot )
 {
-    QPtrList<KAction> actionList;
+    TQPtrList<KAction> actionList;
     if ( tools.isEmpty() )
         return actionList;
 
     actionList.append( new KActionSeparator() );
-    QValueList<KDataToolInfo>::ConstIterator entry = tools.begin();
+    TQValueList<KDataToolInfo>::ConstIterator entry = tools.begin();
     for( ; entry != tools.end(); ++entry )
     {
-        QStringList userCommands = (*entry).userCommands();
-        QStringList commands = (*entry).commands();
+        TQStringList userCommands = (*entry).userCommands();
+        TQStringList commands = (*entry).commands();
         Q_ASSERT(!commands.isEmpty());
         if ( commands.count() != userCommands.count() )
             kdWarning() << "KDataTool desktop file error (" << (*entry).service()->entryPath()
                         << "). " << commands.count() << " commands and "
                         << userCommands.count() << " descriptions." << endl;
-        QStringList::ConstIterator uit = userCommands.begin();
-        QStringList::ConstIterator cit = commands.begin();
+        TQStringList::ConstIterator uit = userCommands.begin();
+        TQStringList::ConstIterator cit = commands.begin();
         for (; uit != userCommands.end() && cit != commands.end(); ++uit, ++cit )
         {
             //kdDebug() << "creating action " << *uit << " " << *cit << endl;
             KDataToolAction * action = new KDataToolAction( *uit, *entry, *cit );
-            connect( action, SIGNAL( toolActivated( const KDataToolInfo &, const QString & ) ),
+            connect( action, TQT_SIGNAL( toolActivated( const KDataToolInfo &, const TQString & ) ),
                      receiver, slot );
             actionList.append( action );
         }
@@ -266,8 +266,8 @@ QPtrList<KAction> KDataToolAction::dataToolActionList( const QValueList<KDataToo
  *
  *************************************************/
 
-KDataTool::KDataTool( QObject* parent, const char* name )
-    : QObject( parent, name ), m_instance( 0L )
+KDataTool::KDataTool( TQObject* parent, const char* name )
+    : TQObject( parent, name ), m_instance( 0L )
 {
 }
 

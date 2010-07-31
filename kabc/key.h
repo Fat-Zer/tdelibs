@@ -21,7 +21,7 @@
 #ifndef KABC_KEY_H
 #define KABC_KEY_H
 
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 #include <kdelibs_export.h>
 
@@ -32,12 +32,12 @@ namespace KABC {
  */
 class KABC_EXPORT Key
 {
-  friend KABC_EXPORT QDataStream &operator<<( QDataStream &, const Key & );
-  friend KABC_EXPORT QDataStream &operator>>( QDataStream &, Key & );
+  friend KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const Key & );
+  friend KABC_EXPORT TQDataStream &operator>>( TQDataStream &, Key & );
 
 public:
-  typedef QValueList<Key> List;
-  typedef QValueList<int> TypeList;  
+  typedef TQValueList<Key> List;
+  typedef TQValueList<int> TypeList;  
 
   /**
    * Key types
@@ -58,7 +58,7 @@ public:
    * @param text  The text data.
    * @param type  The key type, see Types.
    */
-  Key( const QString &text = QString::null, int type = PGP );
+  Key( const TQString &text = TQString::null, int type = PGP );
 
   /**
    * Destructor.
@@ -71,32 +71,32 @@ public:
   /**
    * Sets the unique identifier.
    */
-  void setId( const QString &id );
+  void setId( const TQString &id );
 
   /**
    * Returns the unique identifier.
    */
-  QString id() const;
+  TQString id() const;
 
   /**
    * Sets binary data.
    */
-  void setBinaryData( const QByteArray &binary );
+  void setBinaryData( const TQByteArray &binary );
 
   /**
    * Returns the binary data.
    */
-  QByteArray binaryData() const;
+  TQByteArray binaryData() const;
 
   /**
    * Sets text data.
    */
-  void setTextData( const QString &text );
+  void setTextData( const TQString &text );
 
   /**
    * Returns the text data.
    */
-  QString textData() const;
+  TQString textData() const;
 
   /**
    * Returns whether the key contains binary or text data.
@@ -111,7 +111,7 @@ public:
   /**
    * Sets custom type string.
    */
-  void setCustomTypeString( const QString &custom );
+  void setCustomTypeString( const TQString &custom );
 
   /**
    * Returns the type, see Type.
@@ -121,7 +121,7 @@ public:
   /**
    * Returns the custom type string.
    */
-  QString customTypeString() const;
+  TQString customTypeString() const;
 
   /**
    * Returns a list of all available key types.
@@ -131,20 +131,20 @@ public:
   /**
    * Returns a translated label for a given key type.
    */
-  static QString typeLabel( int type );
+  static TQString typeLabel( int type );
 
 private:
-  QByteArray mBinaryData;
-  QString mId;
-  QString mTextData;
-  QString mCustomTypeString;
+  TQByteArray mBinaryData;
+  TQString mId;
+  TQString mTextData;
+  TQString mCustomTypeString;
 
   int mIsBinary;
   int mType;
 };
 
-KABC_EXPORT QDataStream &operator<<( QDataStream &, const Key & );
-KABC_EXPORT QDataStream &operator>>( QDataStream &, Key & );
+KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const Key & );
+KABC_EXPORT TQDataStream &operator>>( TQDataStream &, Key & );
 
 }
 #endif

@@ -21,8 +21,8 @@
 #ifndef __KEDITCL_H__
 #define __KEDITCL_H__
 
-#include <qmultilineedit.h>
-#include <qstring.h>
+#include <tqmultilineedit.h>
+#include <tqstring.h>
 #include <kdialogbase.h>
 
 class QDropEvent;
@@ -39,7 +39,7 @@ class KDEUI_EXPORT KEdGotoLine : public KDialogBase
     Q_OBJECT
 
 public:
-    KEdGotoLine( QWidget *parent=0, const char *name=0, bool modal=true );
+    KEdGotoLine( TQWidget *parent=0, const char *name=0, bool modal=true );
     int getLineNumber();
 
 public slots:
@@ -59,16 +59,16 @@ private:
 class KDEUI_EXPORT KEdFind : public KDialogBase
 {
     Q_OBJECT
-    Q_PROPERTY( QString text READ getText WRITE setText )
+    Q_PROPERTY( TQString text READ getText WRITE setText )
     Q_PROPERTY( bool caseSensitivity READ case_sensitive WRITE setCaseSensitive )
     Q_PROPERTY( bool direction READ get_direction WRITE setDirection )
 public:
 
-    KEdFind( QWidget *parent = 0, const char *name=0, bool modal=true);
+    KEdFind( TQWidget *parent = 0, const char *name=0, bool modal=true);
     ~KEdFind();
 
-    QString getText() const;
-    void setText(QString string);
+    TQString getText() const;
+    void setText(TQString string);
     void setCaseSensitive( bool b );
     bool case_sensitive() const;
     void setDirection( bool b );
@@ -83,14 +83,14 @@ public:
 protected slots:
     void slotCancel( void );
     void slotUser1( void );
-    void textSearchChanged ( const QString & );
+    void textSearchChanged ( const TQString & );
 
 protected:
-  QVButtonGroup* group;
+  TQVButtonGroup* group;
 
 private:
-    QCheckBox *sensitive;
-    QCheckBox *direction;
+    TQCheckBox *sensitive;
+    TQCheckBox *direction;
 
     virtual void done(int i ) { KDialogBase::done(i); }
 
@@ -112,12 +112,12 @@ class KDEUI_EXPORT KEdReplace : public KDialogBase
 
 public:
 
-    KEdReplace ( QWidget *parent = 0, const char *name=0, bool modal=true );
+    KEdReplace ( TQWidget *parent = 0, const char *name=0, bool modal=true );
     ~KEdReplace();
 
-    QString 	getText();
-    QString 	getReplaceText();
-    void 	setText(QString);
+    TQString 	getText();
+    TQString 	getReplaceText();
+    void 	setText(TQString);
 
     /**
      * @returns the combobox containing the history of searches. Can be used
@@ -140,11 +140,11 @@ protected slots:
     void slotUser1( void );
     void slotUser2( void );
     void slotUser3( void );
-    void textSearchChanged ( const QString & );
+    void textSearchChanged ( const TQString & );
 
 private:
-    QCheckBox 	*sensitive;
-    QCheckBox 	*direction;
+    TQCheckBox 	*sensitive;
+    TQCheckBox 	*direction;
 
 	virtual void done(int i ) { KDialogBase::done(i); }
 
@@ -176,7 +176,7 @@ public:
     /**
      * The usual constructor.
      **/
-    KEdit (QWidget *_parent=NULL, const char *name=NULL);
+    KEdit (TQWidget *_parent=NULL, const char *name=NULL);
 
     ~KEdit();
 
@@ -190,7 +190,7 @@ public:
     /**
      * Insert text from the text stream into the edit widget.
      **/
-    void insertText(QTextStream *);
+    void insertText(TQTextStream *);
 
     /**
      * Save text from the edit widget to a text stream.
@@ -198,8 +198,8 @@ public:
      * If @p softWrap is true soft line wrappings are ignored.
      * @since 3.1
      **/
-    void saveText(QTextStream *, bool softWrap);
-    void saveText(QTextStream *); // KDE 4.0: remove
+    void saveText(TQTextStream *, bool softWrap);
+    void saveText(TQTextStream *); // KDE 4.0: remove
 
     /**
      *  Let the user select a font and set the font of the textwidget to that
@@ -242,7 +242,7 @@ public:
      *
      *  The Popup Menu will be activated on a right mouse button press event.
      */
-    void 	installRBPopup( QPopupMenu* );
+    void 	installRBPopup( TQPopupMenu* );
 
     /**
      * Retrieve the current line number.
@@ -255,7 +255,7 @@ public:
      * Retrieve the actual column number the cursor is on.
      *
      *  This call differs
-     *    from QMultiLineEdit::getCursorPosition() in that it returns the actual cursor
+     *    from TQMultiLineEdit::getCursorPosition() in that it returns the actual cursor
      *    position and not the character position. Use currentLine() and currentColumn()
      *    if you want to display the current line or column in the status bar for
      *    example.
@@ -281,21 +281,21 @@ public:
      */
     void setOverwriteEnabled(bool b);
 
-    QString selectWordUnderCursor();
+    TQString selectWordUnderCursor();
 
     /// @since 3.3
-    QPopupMenu *createPopupMenu( const QPoint& pos );
+    TQPopupMenu *createPopupMenu( const TQPoint& pos );
 
     void setAutoUpdate(bool b);
 
 signals:
     /** This signal is emitted if the user dropped a URL over the text editor
-      * QMultiLineEdit widget.
+      * TQMultiLineEdit widget.
       *
       *  Note that the user can drop also Text on it, but
-      * this is already handled internally by QMultiLineEdit.
+      * this is already handled internally by TQMultiLineEdit.
       */
-    void        gotUrlDrop(QDropEvent* e);
+    void        gotUrlDrop(TQDropEvent* e);
 
     /** This signal is emitted whenever the cursor position changes.
      *
@@ -319,11 +319,11 @@ public slots:
       /**
        * @internal
        **/
-    void corrected (const QString &originalword, const QString &newword, unsigned int pos);
+    void corrected (const TQString &originalword, const TQString &newword, unsigned int pos);
       /**
        * @internal
        **/
-    void misspelling (const QString &word, const QStringList &, unsigned int pos);
+    void misspelling (const TQString &word, const TQStringList &, unsigned int pos);
 private slots:
 
       /**
@@ -364,10 +364,10 @@ private slots:
 
 protected:
     void computePosition();
-    int 	doSearch(QString s_pattern, bool case_sensitive,
+    int 	doSearch(TQString s_pattern, bool case_sensitive,
 			 bool regex, bool forward,int line, int col);
 
-    int 	doReplace(QString s_pattern, bool case_sensitive,
+    int 	doReplace(TQString s_pattern, bool case_sensitive,
 			  bool regex, bool forward,int line, int col,bool replace);
 
       /**
@@ -385,31 +385,31 @@ protected:
      * Reimplemented for internal reasons, the API is not affected.
      */
     virtual void ensureCursorVisible();
-    virtual void setCursor( const QCursor & );
-    virtual void viewportPaintEvent( QPaintEvent* );
+    virtual void setCursor( const TQCursor & );
+    virtual void viewportPaintEvent( TQPaintEvent* );
 
 protected:
 
-    void 	keyPressEvent 	 ( QKeyEvent *  );
+    void 	keyPressEvent 	 ( TQKeyEvent *  );
 
     // DnD interface
-    void        dragMoveEvent(QDragMoveEvent* e);
-    void        dragEnterEvent(QDragEnterEvent* e);
-    void        dropEvent(QDropEvent* e);
-    void        contentsDragMoveEvent(QDragMoveEvent* e);
-    void        contentsDragEnterEvent(QDragEnterEvent* e);
-    void        contentsDropEvent(QDropEvent* e);
+    void        dragMoveEvent(TQDragMoveEvent* e);
+    void        dragEnterEvent(TQDragEnterEvent* e);
+    void        dropEvent(TQDropEvent* e);
+    void        contentsDragMoveEvent(TQDragMoveEvent* e);
+    void        contentsDragEnterEvent(TQDragEnterEvent* e);
+    void        contentsDropEvent(TQDropEvent* e);
 
 private:
-    QTimer* repaintTimer;
+    TQTimer* repaintTimer;
 
     QString	killbufferstring;
-    QWidget     *parent;
+    TQWidget     *parent;
     KEdFind 	*srchdialog;
     KEdReplace 	*replace_dialog;
     KEdGotoLine *gotodialog;
 
-    QString     pattern;
+    TQString     pattern;
 
     bool 	can_replace;
     bool	killing;

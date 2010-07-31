@@ -21,15 +21,15 @@
 #ifndef DRIVERITEM_H
 #define DRIVERITEM_H
 
-#include <qlistview.h>
+#include <tqlistview.h>
 
 class DrBase;
 
 class DriverItem : public QListViewItem
 {
 public:
-	DriverItem(QListView *parent, DrBase *item);
-	DriverItem(QListViewItem *parent, QListViewItem *after, DrBase *item);
+	DriverItem(TQListView *parent, DrBase *item);
+	DriverItem(TQListViewItem *parent, TQListViewItem *after, DrBase *item);
 
 	void updateText();
 	void updateTextRecursive();
@@ -37,7 +37,7 @@ public:
 	bool hasConflict()	{ return m_conflict; }
 	bool updateConflict();
 
-	void paintCell(QPainter*, const QColorGroup&, int, int, int);
+	void paintCell(TQPainter*, const TQColorGroup&, int, int, int);
 
 private:
 	DrBase	*m_item;

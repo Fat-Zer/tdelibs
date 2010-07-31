@@ -25,13 +25,13 @@
 #include <kdebug.h>
 #include <kstaticdeleter.h>
 
-#include <qlayout.h>
-#include <qobjectlist.h>
-#include <qguardedptr.h>
-#include <qlineedit.h>
-#include <qvaluelist.h>
-#include <qtimer.h>
-#include <qcursor.h>
+#include <tqlayout.h>
+#include <tqobjectlist.h>
+#include <tqguardedptr.h>
+#include <tqlineedit.h>
+#include <tqvaluelist.h>
+#include <tqtimer.h>
+#include <tqcursor.h>
 
 #include "config.h"
 #ifdef Q_WS_X11
@@ -41,10 +41,10 @@
 const int KDialog::mMarginSize = 11;
 const int KDialog::mSpacingSize = 6;
 
-template class QPtrList<QLayoutItem>;
+template class TQPtrList<TQLayoutItem>;
 
-KDialog::KDialog(QWidget *parent, const char *name, bool modal, WFlags f)
-  : QDialog(parent, name, modal, f), d(0)
+KDialog::KDialog(TQWidget *parent, const char *name, bool modal, WFlags f)
+  : TQDialog(parent, name, modal, f), d(0)
 {
     KWhatsThisManager::init ();
 }
@@ -52,7 +52,7 @@ KDialog::KDialog(QWidget *parent, const char *name, bool modal, WFlags f)
 //
 // Grab QDialogs keypresses if non-modal.
 //
-void KDialog::keyPressEvent(QKeyEvent *e)
+void KDialog::keyPressEvent(TQKeyEvent *e)
 {
   if ( e->state() == 0 )
   {
@@ -64,7 +64,7 @@ void KDialog::keyPressEvent(QKeyEvent *e)
       {
         if(testWFlags(WType_Dialog | WShowModal))
 	{
-          QDialog::keyPressEvent(e);
+          TQDialog::keyPressEvent(e);
 	}
         else
         {
@@ -108,20 +108,20 @@ int KDialog::spacingHint()
 // KDE4: Remove me
 void KDialog::polish()
 {
-  QDialog::polish();
+  TQDialog::polish();
 }
 
 
-void KDialog::setCaption( const QString &_caption )
+void KDialog::setCaption( const TQString &_caption )
 {
-  QString caption = kapp ? kapp->makeStdCaption( _caption ) : _caption;
+  TQString caption = kapp ? kapp->makeStdCaption( _caption ) : _caption;
   setPlainCaption( caption );
 }
 
 
-void KDialog::setPlainCaption( const QString &caption )
+void KDialog::setPlainCaption( const TQString &caption )
 {
-  QDialog::setCaption( caption );
+  TQDialog::setCaption( caption );
 
 #ifdef Q_WS_X11
   NETWinInfo info( qt_xdisplay(), winId(), qt_xrootwin(), 0 );
@@ -130,7 +130,7 @@ void KDialog::setPlainCaption( const QString &caption )
 }
 
 
-void KDialog::resizeLayout( QWidget *w, int margin, int spacing )
+void KDialog::resizeLayout( TQWidget *w, int margin, int spacing )
 {
   if( w->layout() )
   {
@@ -139,13 +139,13 @@ void KDialog::resizeLayout( QWidget *w, int margin, int spacing )
 
   if( w->children() )
   {
-    const QObjectList * const l = w->children();
-    QObjectListIterator itr(*l);
-    QObject *o;
+    const TQObjectList * const l = w->children();
+    TQObjectListIterator itr(*l);
+    TQObject *o;
     while ((o = itr.current()) != 0) {
       if( o->isWidgetType() )
       {
-	resizeLayout( (QWidget*)o, margin, spacing );
+	resizeLayout( (TQWidget*)o, margin, spacing );
       }
       ++itr;
     }
@@ -153,10 +153,10 @@ void KDialog::resizeLayout( QWidget *w, int margin, int spacing )
 }
 
 
-void KDialog::resizeLayout( QLayoutItem *lay, int margin, int spacing )
+void KDialog::resizeLayout( TQLayoutItem *lay, int margin, int spacing )
 {
-  QLayoutIterator it = lay->iterator();
-  QLayoutItem *child;
+  TQLayoutIterator it = lay->iterator();
+  TQLayoutItem *child;
   while ( (child = it.current() ) )
   {
     resizeLayout( child, margin, spacing );
@@ -169,9 +169,9 @@ void KDialog::resizeLayout( QLayoutItem *lay, int margin, int spacing )
   }
 }
 
-static QRect screenRect( QWidget *w, int screen )
+static TQRect screenRect( TQWidget *w, int screen )
 {
-  QDesktopWidget *desktop = QApplication::desktop();
+  TQDesktopWidget *desktop = TQApplication::desktop();
   KConfig gc("kdeglobals", false, false);
   gc.setGroup("Windows");
   if (desktop->isVirtualDesktop() &&
@@ -181,7 +181,7 @@ static QRect screenRect( QWidget *w, int screen )
       if ( screen == -1 ) {
         screen = desktop->primaryScreen();
       } else if ( screen == -3 ) {
-        screen = desktop->screenNumber( QCursor::pos() );
+        screen = desktop->screenNumber( TQCursor::pos() );
       } else {
         screen = desktop->screenNumber( w );
       }
@@ -192,26 +192,26 @@ static QRect screenRect( QWidget *w, int screen )
   }
 }
 
-void KDialog::centerOnScreen( QWidget *w, int screen )
+void KDialog::centerOnScreen( TQWidget *w, int screen )
 {
   if ( !w )
     return;
-  QRect r = screenRect( w, screen );
+  TQRect r = screenRect( w, screen );
 
   w->move( r.center().x() - w->width()/2,
            r.center().y() - w->height()/2 );
 }
 
-bool KDialog::avoidArea( QWidget *w, const QRect& area, int screen )
+bool KDialog::avoidArea( TQWidget *w, const TQRect& area, int screen )
 {
   if ( !w )
     return false;
-  QRect fg = w->frameGeometry();
+  TQRect fg = w->frameGeometry();
   if ( !fg.intersects( area ) )
     return true; // nothing to do.
 
-  QRect scr = screenRect( w, screen );
-  QRect avoid( area ); // let's add some margin
+  TQRect scr = screenRect( w, screen );
+  TQRect avoid( area ); // let's add some margin
   avoid.moveBy( -5, -5 );
   avoid.rRight() += 10;
   avoid.rBottom() += 10;
@@ -257,7 +257,7 @@ bool KDialog::avoidArea( QWidget *w, const QRect& area, int screen )
 class KDialogQueuePrivate
 {
 public:
-  QValueList< QGuardedPtr<QDialog> > queue;
+  TQValueList< TQGuardedPtr<TQDialog> > queue;
   bool busy;
 };
 
@@ -284,18 +284,18 @@ KDialogQueue::~KDialogQueue()
 }
 
 // static
-void KDialogQueue::queueDialog(QDialog *dialog)
+void KDialogQueue::queueDialog(TQDialog *dialog)
 {
    KDialogQueue *_this = self();
    _this->d->queue.append(dialog);
-   QTimer::singleShot(0, _this, SLOT(slotShowQueuedDialog()));
+   TQTimer::singleShot(0, _this, TQT_SLOT(slotShowQueuedDialog()));
 }
 
 void KDialogQueue::slotShowQueuedDialog()
 {
    if (d->busy)
       return;
-   QDialog *dialog;
+   TQDialog *dialog;
    do {
        if(d->queue.isEmpty())
          return;
@@ -310,7 +310,7 @@ void KDialogQueue::slotShowQueuedDialog()
    delete dialog;
 
    if (!d->queue.isEmpty())
-      QTimer::singleShot(20, this, SLOT(slotShowQueuedDialog()));
+      TQTimer::singleShot(20, this, TQT_SLOT(slotShowQueuedDialog()));
    else
       ksdkdq.destructObject(); // Suicide.
 }

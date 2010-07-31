@@ -42,7 +42,7 @@
 #include <volmgt.h>
 #endif
 
-KIO_EXPORT QString KIO::convertSizeWithBytes( KIO::filesize_t size )
+KIO_EXPORT TQString KIO::convertSizeWithBytes( KIO::filesize_t size )
 {
     if ( size >= 1024 )
         return convertSize( size ) + " (" + i18n( "%1 B" ).arg( KGlobal::locale()->formatNumber(size, 0) ) + ")";
@@ -50,10 +50,10 @@ KIO_EXPORT QString KIO::convertSizeWithBytes( KIO::filesize_t size )
 	return convertSize( size );
 }
 
-KIO_EXPORT QString KIO::convertSize( KIO::filesize_t size )
+KIO_EXPORT TQString KIO::convertSize( KIO::filesize_t size )
 {
     double fsize = size;
-    QString s;
+    TQString s;
     // Giga-byte
     if ( size >= 1073741824 )
     {
@@ -88,16 +88,16 @@ KIO_EXPORT QString KIO::convertSize( KIO::filesize_t size )
     return s;
 }
 
-KIO_EXPORT QString KIO::convertSizeFromKB( KIO::filesize_t kbSize )
+KIO_EXPORT TQString KIO::convertSizeFromKB( KIO::filesize_t kbSize )
 {
     return convertSize(kbSize * 1024);
 }
 
-KIO_EXPORT QString KIO::number( KIO::filesize_t size )
+KIO_EXPORT TQString KIO::number( KIO::filesize_t size )
 {
     char charbuf[256];
     sprintf(charbuf, "%lld", size);
-    return QString::fromLatin1(charbuf);
+    return TQString::fromLatin1(charbuf);
 }
 
 KIO_EXPORT unsigned int KIO::calculateRemainingSeconds( KIO::filesize_t totalSize,
@@ -109,24 +109,24 @@ KIO_EXPORT unsigned int KIO::calculateRemainingSeconds( KIO::filesize_t totalSiz
     return 0;
 }
 
-KIO_EXPORT QString KIO::convertSeconds( unsigned int seconds )
+KIO_EXPORT TQString KIO::convertSeconds( unsigned int seconds )
 {
   unsigned int days  = seconds / 86400;
   unsigned int hours = (seconds - (days * 86400)) / 3600;
   unsigned int mins  = (seconds - (days * 86400) - (hours * 3600)) / 60;
   seconds            = (seconds - (days * 86400) - (hours * 3600) - (mins * 60));
 
-  const QTime time(hours, mins, seconds);
-  const QString timeStr( KGlobal::locale()->formatTime(time, true /*with seconds*/, true /*duration*/) );
+  const TQTime time(hours, mins, seconds);
+  const TQString timeStr( KGlobal::locale()->formatTime(time, true /*with seconds*/, true /*duration*/) );
   if ( days > 0 )
     return i18n("1 day %1", "%n days %1", days).arg(timeStr);
   else
     return timeStr;
 }
 
-KIO_EXPORT QTime KIO::calculateRemaining( KIO::filesize_t totalSize, KIO::filesize_t processedSize, KIO::filesize_t speed )
+KIO_EXPORT TQTime KIO::calculateRemaining( KIO::filesize_t totalSize, KIO::filesize_t processedSize, KIO::filesize_t speed )
 {
-  QTime remainingTime;
+  TQTime remainingTime;
 
   if ( speed != 0 ) {
     KIO::filesize_t secs;
@@ -147,9 +147,9 @@ KIO_EXPORT QTime KIO::calculateRemaining( KIO::filesize_t totalSize, KIO::filesi
   return remainingTime;
 }
 
-KIO_EXPORT QString KIO::itemsSummaryString(uint items, uint files, uint dirs, KIO::filesize_t size, bool showSize)
+KIO_EXPORT TQString KIO::itemsSummaryString(uint items, uint files, uint dirs, KIO::filesize_t size, bool showSize)
 {
-    QString text = items == 0 ? i18n( "No Items" ) : i18n( "One Item", "%n Items", items );
+    TQString text = items == 0 ? i18n( "No Items" ) : i18n( "One Item", "%n Items", items );
     text += " - ";
     text += files == 0 ? i18n( "No Files" ) : i18n( "One File", "%n Files", files );
     if ( showSize && files > 0 )
@@ -162,9 +162,9 @@ KIO_EXPORT QString KIO::itemsSummaryString(uint items, uint files, uint dirs, KI
     return text;
 }
 
-KIO_EXPORT QString KIO::encodeFileName( const QString & _str )
+KIO_EXPORT TQString KIO::encodeFileName( const TQString & _str )
 {
-  QString str( _str );
+  TQString str( _str );
 
   int i = 0;
   while ( ( i = str.find( "%", i ) ) != -1 )
@@ -177,9 +177,9 @@ KIO_EXPORT QString KIO::encodeFileName( const QString & _str )
   return str;
 }
 
-KIO_EXPORT QString KIO::decodeFileName( const QString & _str )
+KIO_EXPORT TQString KIO::decodeFileName( const TQString & _str )
 {
-  QString str;
+  TQString str;
 
   unsigned int i = 0;
   for ( ; i < _str.length() ; ++i )
@@ -205,14 +205,14 @@ KIO_EXPORT QString KIO::decodeFileName( const QString & _str )
   return str;
 }
 
-KIO_EXPORT QString KIO::Job::errorString() const
+KIO_EXPORT TQString KIO::Job::errorString() const
 {
   return KIO::buildErrorString(m_error, m_errorText);
 }
 
-KIO_EXPORT QString KIO::buildErrorString(int errorCode, const QString &errorText)
+KIO_EXPORT TQString KIO::buildErrorString(int errorCode, const TQString &errorText)
 {
-  QString result;
+  TQString result;
 
   switch( errorCode )
     {
@@ -284,7 +284,7 @@ KIO_EXPORT QString KIO::buildErrorString(int errorCode, const QString &errorText
       result = i18n( "Could not create socket for accessing %1." ).arg( errorText );
       break;
     case  KIO::ERR_COULD_NOT_CONNECT:
-      result = i18n( "Could not connect to host %1." ).arg( errorText.isEmpty() ? QString::fromLatin1("localhost") : errorText );
+      result = i18n( "Could not connect to host %1." ).arg( errorText.isEmpty() ? TQString::fromLatin1("localhost") : errorText );
       break;
     case  KIO::ERR_CONNECTION_BROKEN:
       result = i18n( "Connection to host %1 is broken." ).arg( errorText );
@@ -416,7 +416,7 @@ KIO_EXPORT QString KIO::buildErrorString(int errorCode, const QString &errorText
   return result;
 }
 
-KIO_EXPORT QString KIO::unsupportedActionErrorString(const QString &protocol, int cmd) {
+KIO_EXPORT TQString KIO::unsupportedActionErrorString(const TQString &protocol, int cmd) {
   switch (cmd) {
     case CMD_CONNECT:
       return i18n("Opening connections is not supported with the protocol %1." ).arg(protocol);
@@ -455,18 +455,18 @@ KIO_EXPORT QString KIO::unsupportedActionErrorString(const QString &protocol, in
   }/*end switch*/
 }
 
-KIO_EXPORT QStringList KIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0L*/,
+KIO_EXPORT TQStringList KIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0L*/,
                                             int method /*= -1*/ ) const
 {
-  QString errorName, techName, description, ret2;
-  QStringList causes, solutions, ret;
+  TQString errorName, techName, description, ret2;
+  TQStringList causes, solutions, ret;
 
-  QByteArray raw = rawErrorDetail( m_error, m_errorText, reqUrl, method );
-  QDataStream stream(raw, IO_ReadOnly);
+  TQByteArray raw = rawErrorDetail( m_error, m_errorText, reqUrl, method );
+  TQDataStream stream(raw, IO_ReadOnly);
 
   stream >> errorName >> techName >> description >> causes >> solutions;
 
-  QString url, protocol, datetime;
+  TQString url, protocol, datetime;
   if ( reqUrl ) {
     url = reqUrl->htmlURL();
     protocol = reqUrl->protocol();
@@ -474,16 +474,16 @@ KIO_EXPORT QStringList KIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0L
     url = i18n( "(unknown)" );
   }
 
-  datetime = KGlobal::locale()->formatDateTime( QDateTime::currentDateTime(),
+  datetime = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
                                                 false );
 
   ret << errorName;
-  ret << QString::fromLatin1( "<qt><p><b>" ) + errorName +
-         QString::fromLatin1( "</b></p><p>" ) + description +
-         QString::fromLatin1( "</p>" );
-  ret2 = QString::fromLatin1( "<qt><p>" );
+  ret << TQString::fromLatin1( "<qt><p><b>" ) + errorName +
+         TQString::fromLatin1( "</b></p><p>" ) + description +
+         TQString::fromLatin1( "</p>" );
+  ret2 = TQString::fromLatin1( "<qt><p>" );
   if ( !techName.isEmpty() )
-    ret2 += i18n( "<b>Technical reason</b>: " ) + techName + QString::fromLatin1( "</p>" );
+    ret2 += i18n( "<b>Technical reason</b>: " ) + techName + TQString::fromLatin1( "</p>" );
   ret2 += i18n( "</p><p><b>Details of the request</b>:" );
   ret2 += i18n( "</p><ul><li>URL: %1</li>" ).arg( url );
   if ( !protocol.isEmpty() ) {
@@ -494,21 +494,21 @@ KIO_EXPORT QStringList KIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0L
   if ( !causes.isEmpty() ) {
     ret2 += i18n( "<p><b>Possible causes</b>:</p><ul><li>" );
     ret2 += causes.join( "</li><li>" );
-    ret2 += QString::fromLatin1( "</li></ul>" );
+    ret2 += TQString::fromLatin1( "</li></ul>" );
   }
   if ( !solutions.isEmpty() ) {
     ret2 += i18n( "<p><b>Possible solutions</b>:</p><ul><li>" );
     ret2 += solutions.join( "</li><li>" );
-    ret2 += QString::fromLatin1( "</li></ul>" );
+    ret2 += TQString::fromLatin1( "</li></ul>" );
   }
   ret << ret2;
   return ret;
 }
 
-KIO_EXPORT QByteArray KIO::rawErrorDetail(int errorCode, const QString &errorText,
+KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorText,
                                const KURL *reqUrl /*= 0L*/, int /*method = -1*/ )
 {
-  QString url, host, protocol, datetime, domain, path, dir, filename;
+  TQString url, host, protocol, datetime, domain, path, dir, filename;
   bool isSlaveNetwork = false;
   if ( reqUrl ) {
     url = reqUrl->prettyURL();
@@ -556,34 +556,34 @@ KIO_EXPORT QByteArray KIO::rawErrorDetail(int errorCode, const QString &errorTex
     protocol = i18n( "(unknown)" );
   }
 
-  datetime = KGlobal::locale()->formatDateTime( QDateTime::currentDateTime(),
+  datetime = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
                                                 false );
 
-  QString errorName, techName, description;
-  QStringList causes, solutions;
+  TQString errorName, techName, description;
+  TQStringList causes, solutions;
 
   // c == cause, s == solution
-  QString sSysadmin = i18n( "Contact your appropriate computer support system, "
+  TQString sSysadmin = i18n( "Contact your appropriate computer support system, "
     "whether the system administrator, or technical support group for further "
     "assistance." );
-  QString sServeradmin = i18n( "Contact the administrator of the server "
+  TQString sServeradmin = i18n( "Contact the administrator of the server "
     "for further assistance." );
   // FIXME active link to permissions dialog
-  QString sAccess = i18n( "Check your access permissions on this resource." );
-  QString cAccess = i18n( "Your access permissions may be inadequate to "
+  TQString sAccess = i18n( "Check your access permissions on this resource." );
+  TQString cAccess = i18n( "Your access permissions may be inadequate to "
     "perform the requested operation on this resource." );
-  QString cLocked = i18n( "The file may be in use (and thus locked) by "
+  TQString cLocked = i18n( "The file may be in use (and thus locked) by "
     "another user or application." );
-  QString sQuerylock = i18n( "Check to make sure that no other "
+  TQString sQuerylock = i18n( "Check to make sure that no other "
     "application or user is using the file or has locked the file." );
-  QString cHardware = i18n( "Although unlikely, a hardware error may have "
+  TQString cHardware = i18n( "Although unlikely, a hardware error may have "
     "occurred." );
-  QString cBug = i18n( "You may have encountered a bug in the program." );
-  QString cBuglikely = i18n( "This is most likely to be caused by a bug in the "
+  TQString cBug = i18n( "You may have encountered a bug in the program." );
+  TQString cBuglikely = i18n( "This is most likely to be caused by a bug in the "
     "program. Please consider submitting a full bug report as detailed below." );
-  QString sUpdate = i18n( "Update your software to the latest version. "
+  TQString sUpdate = i18n( "Update your software to the latest version. "
     "Your distribution should provide tools to update your software." );
-  QString sBugreport = i18n( "When all else fails, please consider helping the "
+  TQString sBugreport = i18n( "When all else fails, please consider helping the "
     "KDE team or the third party maintainer of this software by submitting a "
     "high quality bug report. If the software is provided by a third party, "
     "please contact them directly. Otherwise, first look to see if "
@@ -591,22 +591,22 @@ KIO_EXPORT QByteArray KIO::rawErrorDetail(int errorCode, const QString &errorTex
     "<a href=\"http://bugs.kde.org/\">KDE bug reporting website</a>. If not, take "
     "note of the details given above, and include them in your bug report, along "
     "with as many other details as you think might help." );
-  QString cNetwork = i18n( "There may have been a problem with your network "
+  TQString cNetwork = i18n( "There may have been a problem with your network "
     "connection." );
   // FIXME netconf kcontrol link
-  QString cNetconf = i18n( "There may have been a problem with your network "
+  TQString cNetconf = i18n( "There may have been a problem with your network "
     "configuration. If you have been accessing the Internet with no problems "
     "recently, this is unlikely." );
-  QString cNetpath = i18n( "There may have been a problem at some point along "
+  TQString cNetpath = i18n( "There may have been a problem at some point along "
     "the network path between the server and this computer." );
-  QString sTryagain = i18n( "Try again, either now or at a later time." );
-  QString cProtocol = i18n( "A protocol error or incompatibility may have occurred." );
-  QString sExists = i18n( "Ensure that the resource exists, and try again." );
-  QString cExists = i18n( "The specified resource may not exist." );
-  QString cTypo = i18n( "You may have incorrectly typed the location." );
-  QString sTypo = i18n( "Double-check that you have entered the correct location "
+  TQString sTryagain = i18n( "Try again, either now or at a later time." );
+  TQString cProtocol = i18n( "A protocol error or incompatibility may have occurred." );
+  TQString sExists = i18n( "Ensure that the resource exists, and try again." );
+  TQString cExists = i18n( "The specified resource may not exist." );
+  TQString cTypo = i18n( "You may have incorrectly typed the location." );
+  TQString sTypo = i18n( "Double-check that you have entered the correct location "
     "and try again." );
-  QString sNetwork = i18n( "Check your network connection status." );
+  TQString sNetwork = i18n( "Check your network connection status." );
 
   switch( errorCode ) {
     case  KIO::ERR_CANNOT_OPEN_FOR_READING:
@@ -869,7 +869,7 @@ KIO_EXPORT QByteArray KIO::rawErrorDetail(int errorCode, const QString &errorTex
         "<strong>L</strong>ocator (URL) that you entered did not refer to "
         "a valid mechanism of accessing the specific resource, "
         "<strong>%1%2</strong>." )
-        .arg( !host.isNull() ? host + '/' : QString::null ).arg( dir );
+        .arg( !host.isNull() ? host + '/' : TQString::null ).arg( dir );
       causes << i18n( "KDE is able to communicate through a protocol within a "
         "protocol. This request specified a protocol be used as such, however "
         "this protocol is not capable of such an action. This is a rare event, "
@@ -1231,7 +1231,7 @@ KIO_EXPORT QByteArray KIO::rawErrorDetail(int errorCode, const QString &errorTex
 
     // We assume that the slave has all the details
     case KIO::ERR_SLAVE_DEFINED:
-      errorName = QString::null;
+      errorName = TQString::null;
       description = errorText;
       break;
 
@@ -1241,8 +1241,8 @@ KIO_EXPORT QByteArray KIO::rawErrorDetail(int errorCode, const QString &errorTex
       description = buildErrorString( errorCode, errorText );
   }
 
-  QByteArray ret;
-  QDataStream stream(ret, IO_WriteOnly);
+  TQByteArray ret;
+  TQDataStream stream(ret, IO_WriteOnly);
   stream << errorName << techName << description << causes << solutions;
   return ret;
 }
@@ -1252,7 +1252,7 @@ KIO_EXPORT QByteArray KIO::rawErrorDetail(int errorCode, const QString &errorTex
 #include <limits.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <config.h>
 
@@ -1365,9 +1365,9 @@ extern "C" void endvfsent( );
 
 #endif /* HAVE_GETMNTINFO */
 
-QString KIO::findDeviceMountPoint( const QString& filename )
+TQString KIO::findDeviceMountPoint( const TQString& filename )
 {
-    QString result;
+    TQString result;
 
 #ifdef HAVE_VOLMGT
 	/*
@@ -1377,22 +1377,22 @@ QString KIO::findDeviceMountPoint( const QString& filename )
 	FILE *mnttab;
 	struct mnttab mnt;
 	int len;
-	QCString devname;
+	TQCString devname;
 
 	if( (volpath = volmgt_root()) == NULL ) {
 		kdDebug( 7007 ) << "findDeviceMountPoint: "
 			<< "VOLMGT: can't find volmgt root dir" << endl;
-		return QString::null;
+		return TQString::null;
 	}
 
 	if( (mnttab = fopen( MNTTAB, "r" )) == NULL ) {
 		kdDebug( 7007 ) << "findDeviceMountPoint: "
 			<< "VOLMGT: can't open mnttab" << endl;
-		return QString::null;
+		return TQString::null;
 	}
 
 	devname = volpath;
-	devname += QFile::encodeName( filename );
+	devname += TQFile::encodeName( filename );
 	devname += '/';
 	len = devname.length();
 //	kdDebug( 7007 ) << "findDeviceMountPoint: "
@@ -1407,7 +1407,7 @@ QString KIO::findDeviceMountPoint( const QString& filename )
 	 *	/dev/dsk/cXtYdZs2 => <volpath>/dev/dsk/cXtYdZ  (without slice#)
 	 */
 	rewind( mnttab );
-	result = QString::null;
+	result = TQString::null;
 	while( getmntent( mnttab, &mnt ) == 0 ) {
 		/*
 		 *  either match the exact device name (floppies),
@@ -1416,7 +1416,7 @@ QString KIO::findDeviceMountPoint( const QString& filename )
 		if( strncmp( devname.data(), mnt.mnt_special, len ) == 0
 			|| (strncmp( devname.data(), mnt.mnt_special, len - 3 ) == 0
 				&& mnt.mnt_special[len - 3] == '/' )
-			|| (strcmp(QFile::encodeName(filename).data()
+			|| (strcmp(TQFile::encodeName(filename).data()
 					, mnt.mnt_special)==0)) {
 			result = mnt.mnt_mountp;
 			break;
@@ -1426,9 +1426,9 @@ QString KIO::findDeviceMountPoint( const QString& filename )
 #else
 
     char    realpath_buffer[MAXPATHLEN];
-    QCString realname;
+    TQCString realname;
 
-    realname = QFile::encodeName(filename);
+    realname = TQFile::encodeName(filename);
     /* If the path contains symlinks, get the real name */
     if (realpath(realname, realpath_buffer) != 0)
       // succes, use result from realpath
@@ -1448,7 +1448,7 @@ QString KIO::findDeviceMountPoint( const QString& filename )
 
     for (int i=0;i<num_fs;i++) {
 
-        QCString device_name = mounted[i].f_mntfromname;
+        TQCString device_name = mounted[i].f_mntfromname;
 
         // If the path contains symlinks, get
         // the real name
@@ -1509,7 +1509,7 @@ QString KIO::findDeviceMountPoint( const QString& filename )
 	    mountedfrom[fsname_len] = '\0';
             strncpy(mountedfrom, (char *)vmt2dataptr(vm, VMT_OBJECT), fsname_len);
 
-            QCString device_name = mountedfrom;
+            TQCString device_name = mountedfrom;
 
             if (realpath(device_name, realpath_buffer) != 0)
                 // success, use result from realpath
@@ -1540,7 +1540,7 @@ QString KIO::findDeviceMountPoint( const QString& filename )
 
     if ((mtab = SETMNTENT(MNTTAB, "r")) == 0) {
         perror("setmntent");
-        return QString::null;
+        return TQString::null;
     }
 
     /* Loop over all file systems and see if we can find our
@@ -1559,7 +1559,7 @@ QString KIO::findDeviceMountPoint( const QString& filename )
     {
       // There may be symbolic links into the /etc/mnttab
       // So we have to find the real device name here as well!
-      QCString device_name = FSNAME(me);
+      TQCString device_name = FSNAME(me);
       if (device_name.isEmpty() || (device_name == "none"))
          continue;
 
@@ -1630,9 +1630,9 @@ static void check_mount_point(const char *mounttype,
 
 // returns the mount point, checks the mount state.
 // if ismanual == Wrong this function does not check the manual mount state
-static QString get_mount_info(const QString& filename,
+static TQString get_mount_info(const TQString& filename,
     MountState& isautofs, MountState& isslow, MountState& ismanual,
-    QString& fstype)
+    TQString& fstype)
 {
     static bool gotRoot = false;
     static dev_t rootDevice;
@@ -1640,11 +1640,11 @@ static QString get_mount_info(const QString& filename,
     struct cachedDevice_t
     {
        dev_t device;
-       QString mountPoint;
+       TQString mountPoint;
        MountState isautofs;
        MountState isslow;
        MountState ismanual;
-       QString fstype;
+       TQString fstype;
     };
     static struct cachedDevice_t *cachedDevice = 0;
 
@@ -1658,16 +1658,16 @@ static QString get_mount_info(const QString& filename,
 
     bool gotDevice = false;
     KDE_struct_stat stat_buf;
-    if (KDE_stat(QFile::encodeName(filename), &stat_buf) == 0)
+    if (KDE_stat(TQFile::encodeName(filename), &stat_buf) == 0)
     {
        gotDevice = true;
        if (stat_buf.st_dev == rootDevice)
        {
-          static const QString &root = KGlobal::staticQString("/");
+          static const TQString &root = KGlobal::staticQString("/");
           isautofs = Wrong;
           isslow = Wrong;
           ismanual = Wrong;
-          fstype = QString::null; // ### do we need it?
+          fstype = TQString::null; // ### do we need it?
           return root;
        }
        if (cachedDevice && (stat_buf.st_dev == cachedDevice->device))
@@ -1688,13 +1688,13 @@ static QString get_mount_info(const QString& filename,
     memset(realname, 0, MAXPATHLEN);
 
     /* If the path contains symlinks, get the real name */
-    if (realpath(QFile::encodeName(filename), realname) == 0) {
-        if( strlcpy(realname, QFile::encodeName(filename), MAXPATHLEN)>=MAXPATHLEN)
-            return QString::null;
+    if (realpath(TQFile::encodeName(filename), realname) == 0) {
+        if( strlcpy(realname, TQFile::encodeName(filename), MAXPATHLEN)>=MAXPATHLEN)
+            return TQString::null;
     }
 
     int max = 0;
-    QString mountPoint;
+    TQString mountPoint;
 
     /* Loop over all file systems and see if we can find our
      * mount point.
@@ -1720,7 +1720,7 @@ static QString get_mount_info(const QString& filename,
 
     for (int i=0;i<num_fs;i++) {
 
-        QCString device_name = mounted[i].f_mntfromname;
+        TQCString device_name = mounted[i].f_mntfromname;
 
         // If the path contains symlinks, get
         // the real name
@@ -1734,8 +1734,8 @@ static QString get_mount_info(const QString& filename,
 #endif
         if ( is_my_mountpoint( mounted[i].f_mntonname, realname, max ) )
         {
-            mountPoint = QFile::decodeName(mounted[i].f_mntonname);
-            fstype = QString::fromLatin1(mounttype);
+            mountPoint = TQFile::decodeName(mounted[i].f_mntonname);
+            fstype = TQString::fromLatin1(mounttype);
             check_mount_point( mounttype, mounted[i].f_mntfromname,
                                isautofs, isslow );
             // keep going, looking for a potentially better one
@@ -1787,7 +1787,7 @@ static QString get_mount_info(const QString& filename,
             strncpy(mountedfrom, (char *)vmt2dataptr(vm, VMT_OBJECT), fsname_len);
 
             /* get the mount-from information: */
-            QCString device_name = mountedfrom;
+            TQCString device_name = mountedfrom;
 
             if (realpath(device_name, realpath_buffer) != 0)
                 // success, use result from realpath
@@ -1801,8 +1801,8 @@ static QString get_mount_info(const QString& filename,
 
             if ( is_my_mountpoint( mountedto, realname, max ) )
             {
-                mountPoint = QFile::decodeName(mountedto);
-                fstype = QString::fromLatin1(ent->vfsent_name);
+                mountPoint = TQFile::decodeName(mountedto);
+                fstype = TQString::fromLatin1(ent->vfsent_name);
                 check_mount_point(ent->vfsent_name, device_name, isautofs, isslow);
 
                 if (ismanual == Unseen)
@@ -1832,7 +1832,7 @@ static QString get_mount_info(const QString& filename,
 
     if ((mtab = SETMNTENT(MNTTAB, "r")) == 0) {
         perror("setmntent");
-        return QString::null;
+        return TQString::null;
     }
 
     STRUCT_MNTENT me;
@@ -1843,7 +1843,7 @@ static QString get_mount_info(const QString& filename,
 
         if ( is_my_mountpoint( MOUNTPOINT(me), realname, max ) )
         {
-            mountPoint = QFile::decodeName( MOUNTPOINT(me) );
+            mountPoint = TQFile::decodeName( MOUNTPOINT(me) );
             fstype = MOUNTTYPE(me);
             check_mount_point(MOUNTTYPE(me), FSNAME(me), isautofs, isslow);
             // we don't check if ismanual is Right, if /a/b is manually
@@ -1852,8 +1852,8 @@ static QString get_mount_info(const QString& filename,
             {
                 // The next GETMNTENT call may destroy 'me'
                 // Copy out the info that we need
-                QCString fsname_me = FSNAME(me);
-                QCString mounttype_me = MOUNTTYPE(me);
+                TQCString fsname_me = FSNAME(me);
+                TQCString mounttype_me = MOUNTTYPE(me);
 
                 STRUCT_SETMNTENT fstab;
                 if ((fstab = SETMNTENT(FSTAB, "r")) == 0) {
@@ -1906,53 +1906,53 @@ static QString get_mount_info(const QString& filename,
 
 #else //!Q_OS_UNIX
 //dummy
-QString KIO::findDeviceMountPoint( const QString& filename )
+TQString KIO::findDeviceMountPoint( const TQString& filename )
 {
-	return QString::null;
+	return TQString::null;
 }
 #endif
 
-QString KIO::findPathMountPoint(const QString& filename)
+TQString KIO::findPathMountPoint(const TQString& filename)
 {
 #ifdef Q_OS_UNIX
   MountState isautofs = Unseen, isslow = Unseen, ismanual = Wrong;
-  QString fstype;
+  TQString fstype;
   return get_mount_info(filename, isautofs, isslow, ismanual, fstype);
 #else //!Q_OS_UNIX
-  return QString::null;
+  return TQString::null;
 #endif 
 }
 
-bool KIO::manually_mounted(const QString& filename)
+bool KIO::manually_mounted(const TQString& filename)
 {
 #ifdef Q_OS_UNIX
   MountState isautofs = Unseen, isslow = Unseen, ismanual = Unseen;
-  QString fstype;
-  QString mountPoint = get_mount_info(filename, isautofs, isslow, ismanual, fstype);
+  TQString fstype;
+  TQString mountPoint = get_mount_info(filename, isautofs, isslow, ismanual, fstype);
   return !mountPoint.isNull() && (ismanual == Right);
 #else //!Q_OS_UNIX
   return false;
 #endif 
 }
 
-bool KIO::probably_slow_mounted(const QString& filename)
+bool KIO::probably_slow_mounted(const TQString& filename)
 {
 #ifdef Q_OS_UNIX
   MountState isautofs = Unseen, isslow = Unseen, ismanual = Wrong;
-  QString fstype;
-  QString mountPoint = get_mount_info(filename, isautofs, isslow, ismanual, fstype);
+  TQString fstype;
+  TQString mountPoint = get_mount_info(filename, isautofs, isslow, ismanual, fstype);
   return !mountPoint.isNull() && (isslow == Right);
 #else //!Q_OS_UNIX
   return false;
 #endif 
 }
 
-bool KIO::testFileSystemFlag(const QString& filename, FileSystemFlag flag)
+bool KIO::testFileSystemFlag(const TQString& filename, FileSystemFlag flag)
 {
 #ifdef Q_OS_UNIX
   MountState isautofs = Unseen, isslow = Unseen, ismanual = Wrong;
-  QString fstype;
-  QString mountPoint = get_mount_info(filename, isautofs, isslow, ismanual, fstype);
+  TQString fstype;
+  TQString mountPoint = get_mount_info(filename, isautofs, isslow, ismanual, fstype);
     kdDebug() << "testFileSystemFlag: fstype=" << fstype << endl;
   if (mountPoint.isNull())
       return false;
@@ -1970,9 +1970,9 @@ bool KIO::testFileSystemFlag(const QString& filename, FileSystemFlag flag)
   return false;
 }
 
-KIO::CacheControl KIO::parseCacheControl(const QString &cacheControl)
+KIO::CacheControl KIO::parseCacheControl(const TQString &cacheControl)
 {
-  QString tmp = cacheControl.lower();
+  TQString tmp = cacheControl.lower();
 
   if (tmp == "cacheonly")
      return KIO::CC_CacheOnly;
@@ -1989,7 +1989,7 @@ KIO::CacheControl KIO::parseCacheControl(const QString &cacheControl)
   return KIO::CC_Verify;
 }
 
-QString KIO::getCacheControlString(KIO::CacheControl cacheControl)
+TQString KIO::getCacheControlString(KIO::CacheControl cacheControl)
 {
     if (cacheControl == KIO::CC_CacheOnly)
 	return "CacheOnly";
@@ -2002,5 +2002,5 @@ QString KIO::getCacheControlString(KIO::CacheControl cacheControl)
     if (cacheControl == KIO::CC_Reload)
 	return "Reload";
     kdDebug() << "unrecognized Cache control enum value:"<<cacheControl<<endl;
-    return QString::null;
+    return TQString::null;
 }

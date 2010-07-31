@@ -20,7 +20,7 @@
 #define KLISTVIEWSEARCHLINE_H
 
 #include <klineedit.h>
-#include <qhbox.h>
+#include <tqhbox.h>
 
 class KListView;
 class QListViewItem;
@@ -38,7 +38,7 @@ class QToolButton;
  *
  * @note { When iterating over items in the KListView, make sure that
  * the iterator only includes visible items (for example, by adding
- * QListViewItemIterator::Visible to the iterator flags). Otherwise,
+ * TQListViewItemIterator::Visible to the iterator flags). Otherwise,
  * actions (such as deletion) may be taken on items that have been
  * hidden by the search function. } 
  * @since 3.3
@@ -57,13 +57,13 @@ public:
      * If \a listView is null then the widget will be disabled until a listview
      * is set with setListView().
      */
-    KListViewSearchLine(QWidget *parent = 0, KListView *listView = 0, const char *name = 0);
+    KListViewSearchLine(TQWidget *parent = 0, KListView *listView = 0, const char *name = 0);
 
     /**
      * Constructs a KListViewSearchLine without any KListView to filter. The
      * KListView object has to be set later with setListView(). 
      */
-    KListViewSearchLine(QWidget *parent, const char *name);
+    KListViewSearchLine(TQWidget *parent, const char *name);
 
     /**
      * Destroys the KListViewSearchLine.
@@ -83,7 +83,7 @@ public:
      *
      * @see setSearchColumns
      */
-    QValueList<int> searchColumns() const;
+    TQValueList<int> searchColumns() const;
 
     /**
      * If this is true (the default) then the parents of matched items will also
@@ -105,7 +105,7 @@ public slots:
      * Updates search to only make visible the items that match \a s.  If
      * \a s is null then the line edit's text will be used.
      */
-    virtual void updateSearch(const QString &s = QString::null);
+    virtual void updateSearch(const TQString &s = TQString::null);
 
     /**
      * Make the search case sensitive or case insensitive.
@@ -133,7 +133,7 @@ public slots:
      *
      * @see searchColumns
      */
-    void setSearchColumns(const QValueList<int> &columns);
+    void setSearchColumns(const TQValueList<int> &columns);
 
     /**
      * Sets the KListView that is filtered by this search line.  If \a lv is null
@@ -150,14 +150,14 @@ protected:
      * based on the value of caseSensitive().  This can be overridden in
      * subclasses to implement more complicated matching schemes.
      */
-    virtual bool itemMatches(const QListViewItem *item, const QString &s) const;
+    virtual bool itemMatches(const TQListViewItem *item, const TQString &s) const;
 
     /**
     * Re-implemented for internal reasons.  API not affected.
     *
-    * See QLineEdit::mousePressEvent().
+    * See TQLineEdit::mousePressEvent().
     */
-    virtual QPopupMenu *createPopupMenu();
+    virtual TQPopupMenu *createPopupMenu();
 
 protected slots:
     /**
@@ -173,7 +173,7 @@ protected slots:
      *
      * @see activateSearch()
      */
-    void queueSearch(const QString &search);
+    void queueSearch(const TQString &search);
 
     /**
      * When the timer started with queueSearch() expires this slot is called.
@@ -198,10 +198,10 @@ private:
      * It makes a recursive call to all children.  It returns true if at least
      * one item in the subtree with the given root item is visible.
      */
-    bool checkItemParentsVisible(QListViewItem *item, QListViewItem *highestHiddenParent = 0);
+    bool checkItemParentsVisible(TQListViewItem *item, TQListViewItem *highestHiddenParent = 0);
 
 private slots:
-    void itemAdded(QListViewItem *item) const;
+    void itemAdded(TQListViewItem *item) const;
     void listViewDeleted();
     void searchColumnsMenuActivated(int);
 
@@ -225,7 +225,7 @@ public:
      * Creates a KListViewSearchLineWidget for \a listView with \a parent as the
      * parent with and \a name.
      */
-    KListViewSearchLineWidget(KListView *listView = 0, QWidget *parent = 0,
+    KListViewSearchLineWidget(KListView *listView = 0, TQWidget *parent = 0,
                               const char *name = 0);
 
     /**

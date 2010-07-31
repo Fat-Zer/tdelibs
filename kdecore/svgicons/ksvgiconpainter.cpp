@@ -18,14 +18,14 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qvaluevector.h>
-#include <qstringlist.h>
-#include <qwmatrix.h>
-#include <qregexp.h>
-#include <qimage.h>
-#include <qdict.h>
-#include <qmap.h>
-#include <qdom.h>
+#include <tqvaluevector.h>
+#include <tqstringlist.h>
+#include <tqwmatrix.h>
+#include <tqregexp.h>
+#include <tqimage.h>
+#include <tqdict.h>
+#include <tqmap.h>
+#include <tqdom.h>
 
 #include <math.h>
 
@@ -65,10 +65,10 @@ public:
 		m_useFillGradient = false;
 		m_useStrokeGradient = false;
 
-		m_worldMatrix = new QWMatrix();
+		m_worldMatrix = new TQWMatrix();
 
 		// Create new image with alpha support
-		m_image = new QImage(width, height, 32);
+		m_image = new TQImage(width, height, 32);
 		m_image->setAlphaBuffer(true);
 
 		m_strokeWidth = 1.0;
@@ -104,14 +104,14 @@ public:
 		delete m_image;
 		delete m_worldMatrix;
 
-		for(QMap<QString, ArtGradientLinear *>::Iterator it = m_linearGradientMap.begin(); it != m_linearGradientMap.end(); ++it)
+		for(TQMap<TQString, ArtGradientLinear *>::Iterator it = m_linearGradientMap.begin(); it != m_linearGradientMap.end(); ++it)
 		{
 			if (!it.data())
 				continue;
 			delete [] it.data()->stops;
 			delete it.data();
 		}
-		for(QMap<QString, ArtGradientRadial *>::Iterator it = m_radialGradientMap.begin(); it != m_radialGradientMap.end(); ++it)
+		for(TQMap<TQString, ArtGradientRadial *>::Iterator it = m_radialGradientMap.begin(); it != m_radialGradientMap.end(); ++it)
 		{
 			if (!it.data())
 				continue;
@@ -130,7 +130,7 @@ public:
 		return art_new(ArtBpath, number);
 	}
 
-	void ensureSpace(QMemArray<ArtBpath> &vec, int index)
+	void ensureSpace(TQMemArray<ArtBpath> &vec, int index)
 	{
 		if(vec.size() == (unsigned int) index)
 			vec.resize(index + 1);
@@ -185,10 +185,10 @@ public:
 		m_tempBuffer = 0;
 	}
 
-	Q_UINT32 toArtColor(const QColor &color)
+	Q_UINT32 toArtColor(const TQColor &color)
 	{
 		// Convert in a libart suitable form
-		QString tempName = color.name();
+		TQString tempName = color.name();
 		const char *str = tempName.latin1();
 
 		int result = 0;
@@ -272,7 +272,7 @@ public:
 		// Filling
 		{
 			int index = -1;
-			QValueVector<int> toCorrect;
+			TQValueVector<int> toCorrect;
 			while(vec[++index].code != ART_END)
 			{
 				if(vec[index].code == ART_END2)
@@ -300,7 +300,7 @@ public:
 
 			art_svp_free(temp);
 
-			QValueVector<int>::iterator it;
+			TQValueVector<int>::iterator it;
 			for(it = toCorrect.begin(); it != toCorrect.end(); ++it)
 				vec[(*it)].code = (ArtPathcode)ART_END2;
 		}
@@ -337,8 +337,8 @@ public:
 
 			if(m_dashes.length() > 0)
 			{
-				QRegExp reg("[, ]");
-				QStringList dashList = QStringList::split(reg, m_dashes);
+				TQRegExp reg("[, ]");
+				TQStringList dashList = TQStringList::split(reg, m_dashes);
 
 				double *dashes = new double[dashList.count()];
 				for(unsigned int i = 0; i < dashList.count(); i++)
@@ -428,12 +428,12 @@ public:
 		art_free(vec);
 	}
 
-	void applyLinearGradient(ArtSVP *svp, const QString &ref)
+	void applyLinearGradient(ArtSVP *svp, const TQString &ref)
 	{
 		ArtGradientLinear *linear = m_linearGradientMap[ref];
 		if(linear)
 		{
-			QDomElement element = m_linearGradientElementMap[linear];
+			TQDomElement element = m_linearGradientElementMap[linear];
 
 			double x1, y1, x2, y2;
 			if(element.hasAttribute("x1"))
@@ -457,7 +457,7 @@ public:
 				y2 = 0;
 
 			// Adjust to gradientTransform
-			QWMatrix m = m_painter->parseTransform(element.attribute("gradientTransform"));
+			TQWMatrix m = m_painter->parseTransform(element.attribute("gradientTransform"));
 			m.map(x1, y1, &x1, &y1);
 			m.map(x2, y2, &x2, &y2);
 
@@ -482,12 +482,12 @@ public:
 		}
 	}
 
-	void applyRadialGradient(ArtSVP *svp, const QString &ref)
+	void applyRadialGradient(ArtSVP *svp, const TQString &ref)
 	{
 		ArtGradientRadial *radial = m_radialGradientMap[ref];
 		if(radial)
 		{
-			QDomElement element = m_radialGradientElementMap[radial];
+			TQDomElement element = m_radialGradientElementMap[radial];
 
 			double cx, cy, r, fx, fy;
 			if(element.hasAttribute("cx"))
@@ -528,7 +528,7 @@ public:
 			double aff1[6], aff2[6], gradTransform[6];
 
 			// Respect gradientTransform
-			QWMatrix m = m_painter->parseTransform(element.attribute("gradientTransform"));
+			TQWMatrix m = m_painter->parseTransform(element.attribute("gradientTransform"));
 
 			gradTransform[0] = m.m11();
 			gradTransform[1] = m.m12();
@@ -553,12 +553,12 @@ public:
 		}
 	}
 
-	void applyGradient(ArtSVP *svp, const QString &ref)
+	void applyGradient(ArtSVP *svp, const TQString &ref)
 	{
 		ArtGradientLinear *linear = m_linearGradientMap[ref];
 		if(linear)
 		{
-			QDomElement element = m_linearGradientElementMap[linear];
+			TQDomElement element = m_linearGradientElementMap[linear];
 
 			if(!element.hasAttribute("xlink:href"))
 			{
@@ -568,23 +568,23 @@ public:
 			else
 			{
 				ArtGradientLinear *linear = m_linearGradientMap[element.attribute("xlink:href").mid(1)];
-				QDomElement newElement = m_linearGradientElementMap[linear];
+				TQDomElement newElement = m_linearGradientElementMap[linear];
 
 				// Saved 'old' attributes
-				QDict<QString> refattrs;
+				TQDict<TQString> refattrs;
 				refattrs.setAutoDelete(true);
 
 				for(unsigned int i = 0; i < newElement.attributes().length(); ++i)
-					refattrs.insert(newElement.attributes().item(i).nodeName(), new QString(newElement.attributes().item(i).nodeValue()));
+					refattrs.insert(newElement.attributes().item(i).nodeName(), new TQString(newElement.attributes().item(i).nodeValue()));
 
 				// Copy attributes
 				if(!newElement.isNull())
 				{
-					QDomNamedNodeMap attr = element.attributes();
+					TQDomNamedNodeMap attr = element.attributes();
 
 					for(unsigned int i = 0; i < attr.length(); i++)
 					{
-						QString name = attr.item(i).nodeName();
+						TQString name = attr.item(i).nodeName();
 						if(name != "xlink:href" && name != "id")
 							newElement.setAttribute(name, attr.item(i).nodeValue());
 					}
@@ -593,7 +593,7 @@ public:
 				applyGradient(svp, element.attribute("xlink:href").mid(1));
 
 				// Restore attributes
-				QDictIterator<QString> itr(refattrs);
+				TQDictIterator<TQString> itr(refattrs);
 				for(; itr.current(); ++itr)
 					newElement.setAttribute(itr.currentKey(), *(itr.current()));
 
@@ -604,7 +604,7 @@ public:
 		ArtGradientRadial *radial = m_radialGradientMap[ref];
 		if(radial)
 		{
-			QDomElement element = m_radialGradientElementMap[radial];
+			TQDomElement element = m_radialGradientElementMap[radial];
 
 			if(!element.hasAttribute("xlink:href"))
 			{
@@ -614,23 +614,23 @@ public:
 			else
 			{
 				ArtGradientRadial *radial = m_radialGradientMap[element.attribute("xlink:href").mid(1)];
-				QDomElement newElement = m_radialGradientElementMap[radial];
+				TQDomElement newElement = m_radialGradientElementMap[radial];
 
 				// Saved 'old' attributes
-				QDict<QString> refattrs;
+				TQDict<TQString> refattrs;
 				refattrs.setAutoDelete(true);
 
 				for(unsigned int i = 0; i < newElement.attributes().length(); ++i)
-					refattrs.insert(newElement.attributes().item(i).nodeName(), new QString(newElement.attributes().item(i).nodeValue()));
+					refattrs.insert(newElement.attributes().item(i).nodeName(), new TQString(newElement.attributes().item(i).nodeValue()));
 
 				// Copy attributes
 				if(!newElement.isNull())
 				{
-					QDomNamedNodeMap attr = element.attributes();
+					TQDomNamedNodeMap attr = element.attributes();
 
 					for(unsigned int i = 0; i < attr.length(); i++)
 					{
-						QString name = attr.item(i).nodeName();
+						TQString name = attr.item(i).nodeName();
 						if(name != "xlink:href" && name != "id")
 							newElement.setAttribute(name, attr.item(i).nodeValue());
 					}
@@ -639,7 +639,7 @@ public:
 				applyGradient(svp, element.attribute("xlink:href").mid(1));
 
 				// Restore attributes
-				QDictIterator<QString> itr(refattrs);
+				TQDictIterator<TQString> itr(refattrs);
 				for(; itr.current(); ++itr)
 					newElement.setAttribute(itr.currentKey(), *(itr.current()));
 
@@ -650,7 +650,7 @@ public:
 
 	void applyGradient(ArtSVP *svp, bool fill)
 	{
-		QString ref;
+		TQString ref;
 
 		if(fill)
 		{
@@ -680,7 +680,7 @@ public:
 		  }
 	}
 
-	void calculateArc(bool relative, QMemArray<ArtBpath> &vec, int &index, double &curx, double &cury, double angle, double x, double y, double r1, double r2, bool largeArcFlag, bool sweepFlag)
+	void calculateArc(bool relative, TQMemArray<ArtBpath> &vec, int &index, double &curx, double &cury, double angle, double x, double y, double r1, double r2, bool largeArcFlag, bool sweepFlag)
 	{
 		double sin_th, cos_th;
 		double a00, a01, a10, a11;
@@ -1122,20 +1122,20 @@ private:
 	friend class KSVGIconPainter;
 	ArtSVP *m_clipSVP;
 
-	QImage *m_image;
-	QWMatrix *m_worldMatrix;
+	TQImage *m_image;
+	TQWMatrix *m_worldMatrix;
 
-	QString m_fillRule;
-	QString m_joinStyle;
-	QString m_capStyle;
+	TQString m_fillRule;
+	TQString m_joinStyle;
+	TQString m_capStyle;
 
 	int m_strokeMiterLimit;
 
-	QString m_dashes;
+	TQString m_dashes;
 	unsigned short m_dashOffset;
 
-	QColor m_fillColor;
-	QColor m_strokeColor;
+	TQColor m_fillColor;
+	TQColor m_strokeColor;
 
 	art_u8 *m_buffer;
 	art_u8 *m_tempBuffer;
@@ -1155,14 +1155,14 @@ private:
 	bool m_useFillGradient;
 	bool m_useStrokeGradient;
 
-	QString m_fillGradientReference;
-	QString m_strokeGradientReference;
+	TQString m_fillGradientReference;
+	TQString m_strokeGradientReference;
 
-	QMap<QString, ArtGradientLinear *> m_linearGradientMap;
-	QMap<ArtGradientLinear *, QDomElement> m_linearGradientElementMap;
+	TQMap<TQString, ArtGradientLinear *> m_linearGradientMap;
+	TQMap<ArtGradientLinear *, TQDomElement> m_linearGradientElementMap;
 
-	QMap<QString, ArtGradientRadial *> m_radialGradientMap;
-	QMap<ArtGradientRadial *, QDomElement> m_radialGradientElementMap;
+	TQMap<TQString, ArtGradientRadial *> m_radialGradientMap;
+	TQMap<ArtGradientRadial *, TQDomElement> m_radialGradientElementMap;
 
 	KSVGIconPainter *m_painter;
 
@@ -1206,17 +1206,17 @@ void KSVGIconPainter::finish()
 	d->helper->blit();
 }
 
-QImage *KSVGIconPainter::image()
+TQImage *KSVGIconPainter::image()
 {
-	return new QImage(*d->helper->m_image);
+	return new TQImage(*d->helper->m_image);
 }
 
-QWMatrix *KSVGIconPainter::worldMatrix()
+TQWMatrix *KSVGIconPainter::worldMatrix()
 {
 	return d->helper->m_worldMatrix;
 }
 
-void KSVGIconPainter::setWorldMatrix(QWMatrix *matrix)
+void KSVGIconPainter::setWorldMatrix(TQWMatrix *matrix)
 {
 	if(d->helper->m_worldMatrix)
 		delete d->helper->m_worldMatrix;
@@ -1229,39 +1229,39 @@ void KSVGIconPainter::setStrokeWidth(double width)
 	d->helper->m_strokeWidth = width;
 }
 
-void KSVGIconPainter::setStrokeMiterLimit(const QString &miter)
+void KSVGIconPainter::setStrokeMiterLimit(const TQString &miter)
 {
 	d->helper->m_strokeMiterLimit = miter.toInt();
 }
 
-void KSVGIconPainter::setStrokeDashOffset(const QString &dashOffset)
+void KSVGIconPainter::setStrokeDashOffset(const TQString &dashOffset)
 {
 	d->helper->m_dashOffset = dashOffset.toUInt();
 }
 
-void KSVGIconPainter::setStrokeDashArray(const QString &dashes)
+void KSVGIconPainter::setStrokeDashArray(const TQString &dashes)
 {
 	d->helper->m_dashes = dashes;
 }
 
-void KSVGIconPainter::setCapStyle(const QString &cap)
+void KSVGIconPainter::setCapStyle(const TQString &cap)
 {
 	d->helper->m_capStyle = cap;
 }
 
-void KSVGIconPainter::setJoinStyle(const QString &join)
+void KSVGIconPainter::setJoinStyle(const TQString &join)
 {
 	d->helper->m_joinStyle = join;
 }
 
-void KSVGIconPainter::setStrokeColor(const QString &stroke)
+void KSVGIconPainter::setStrokeColor(const TQString &stroke)
 {
 	if(stroke.startsWith("url"))
 	{
 		d->helper->m_useStroke = false;
 		d->helper->m_useStrokeGradient = true;
 
-		QString url = stroke;
+		TQString url = stroke;
 
 		unsigned int start = url.find("#") + 1;
 		unsigned int end = url.findRev(")");
@@ -1273,7 +1273,7 @@ void KSVGIconPainter::setStrokeColor(const QString &stroke)
 		d->helper->m_strokeColor = parseColor(stroke);
 
 		d->helper->m_useStrokeGradient = false;
-		d->helper->m_strokeGradientReference = QString::null;
+		d->helper->m_strokeGradientReference = TQString::null;
 
 		if(stroke.stripWhiteSpace().lower() != "none")
 			setUseStroke(true);
@@ -1282,14 +1282,14 @@ void KSVGIconPainter::setStrokeColor(const QString &stroke)
 	}
 }
 
-void KSVGIconPainter::setFillColor(const QString &fill)
+void KSVGIconPainter::setFillColor(const TQString &fill)
 {
 	if(fill.startsWith("url"))
 	{
 		d->helper->m_useFill = false;
 		d->helper->m_useFillGradient = true;
 
-		QString url = fill;
+		TQString url = fill;
 
 		unsigned int start = url.find("#") + 1;
 		unsigned int end = url.findRev(")");
@@ -1301,7 +1301,7 @@ void KSVGIconPainter::setFillColor(const QString &fill)
 		d->helper->m_fillColor = parseColor(fill);
 
 		d->helper->m_useFillGradient = false;
-		d->helper->m_fillGradientReference = QString::null;
+		d->helper->m_fillGradientReference = TQString::null;
 
 		if(fill.stripWhiteSpace().lower() != "none")
 			setUseFill(true);
@@ -1310,12 +1310,12 @@ void KSVGIconPainter::setFillColor(const QString &fill)
 	}
 }
 
-void KSVGIconPainter::setFillRule(const QString &fillRule)
+void KSVGIconPainter::setFillRule(const TQString &fillRule)
 {
 	d->helper->m_fillRule = fillRule;
 }
 
-Q_UINT32 KSVGIconPainter::parseOpacity(const QString &data)
+Q_UINT32 KSVGIconPainter::parseOpacity(const TQString &data)
 {
 	int opacity = 255;
 
@@ -1325,7 +1325,7 @@ Q_UINT32 KSVGIconPainter::parseOpacity(const QString &data)
 
 		if(data.contains("%"))
 		{
-			QString tempString = data.left(data.length() - 1);
+			TQString tempString = data.left(data.length() - 1);
 			temp = double(255 * tempString.toDouble()) / 100.0;
 		}
 		else
@@ -1337,17 +1337,17 @@ Q_UINT32 KSVGIconPainter::parseOpacity(const QString &data)
 	return opacity;
 }
 
-void KSVGIconPainter::setFillOpacity(const QString &fillOpacity)
+void KSVGIconPainter::setFillOpacity(const TQString &fillOpacity)
 {
 	d->helper->m_fillOpacity = parseOpacity(fillOpacity);
 }
 
-void KSVGIconPainter::setStrokeOpacity(const QString &strokeOpacity)
+void KSVGIconPainter::setStrokeOpacity(const TQString &strokeOpacity)
 {
 	d->helper->m_strokeOpacity = parseOpacity(strokeOpacity);
 }
 
-void KSVGIconPainter::setOpacity(const QString &opacity)
+void KSVGIconPainter::setOpacity(const TQString &opacity)
 {
 	d->helper->m_opacity = parseOpacity(opacity);
 }
@@ -1594,7 +1594,7 @@ void KSVGIconPainter::drawLine(double x1, double y1, double x2, double y2)
 	d->helper->drawVPath(vec);
 }
 
-void KSVGIconPainter::drawPolyline(QPointArray polyArray, int points)
+void KSVGIconPainter::drawPolyline(TQPointArray polyArray, int points)
 {
 	if(polyArray.point(0).x() == -1 || polyArray.point(0).y() == -1)
 		return;
@@ -1612,7 +1612,7 @@ void KSVGIconPainter::drawPolyline(QPointArray polyArray, int points)
 	int index;
 	for(index = 1; index < points; index++)
 	{
-		QPoint point = polyArray.point(index);
+		TQPoint point = polyArray.point(index);
 		polyline[index].code = ART_LINETO;
 		polyline[index].x = point.x();
 		polyline[index].y = point.y();
@@ -1630,7 +1630,7 @@ void KSVGIconPainter::drawPolyline(QPointArray polyArray, int points)
 	d->helper->drawVPath(polyline);
 }
 
-void KSVGIconPainter::drawPolygon(QPointArray polyArray)
+void KSVGIconPainter::drawPolygon(TQPointArray polyArray)
 {
 	ArtVpath *polygon;
 
@@ -1642,7 +1642,7 @@ void KSVGIconPainter::drawPolygon(QPointArray polyArray)
 	unsigned int index;
 	for(index = 1; index < polyArray.count(); index++)
 	{
-		QPoint point = polyArray.point(index);
+		TQPoint point = polyArray.point(index);
 		polygon[index].code = ART_LINETO;
 		polygon[index].x = point.x();
 		polygon[index].y = point.y();
@@ -1724,19 +1724,19 @@ static const char *getCoord(const char *ptr, double &number)
 	return ptr;
 }
 
-void KSVGIconPainter::drawPath(const QString &data, bool filled)
+void KSVGIconPainter::drawPath(const TQString &data, bool filled)
 {
 	if (!data.isEmpty())
 	{
-	QString value = data;
+	TQString value = data;
 
-	QMemArray<ArtBpath> vec;
+	TQMemArray<ArtBpath> vec;
 	int index = -1;
 
 	double curx = 0.0, cury = 0.0, contrlx = 0.0, contrly = 0.0, xc, yc;
 	unsigned int lastCommand = 0;
 
-	QString _d = value.replace(",", " ");
+	TQString _d = value.replace(",", " ");
 	_d = _d.simplifyWhiteSpace();
 	const char *ptr = _d.latin1();
 	const char *end = _d.latin1() + _d.length() + 1;
@@ -2304,7 +2304,7 @@ void KSVGIconPainter::drawPath(const QString &data, bool filled)
 	}
 }
 
-void KSVGIconPainter::drawImage(double x, double y, QImage &image)
+void KSVGIconPainter::drawImage(double x, double y, TQImage &image)
 {
 	if(image.depth() != 32)
 		image = image.convertDepth(32);
@@ -2322,343 +2322,343 @@ void KSVGIconPainter::drawImage(double x, double y, QImage &image)
 									image.width() * 4, affine);
 }
 
-QColor KSVGIconPainter::parseColor(const QString &param)
+TQColor KSVGIconPainter::parseColor(const TQString &param)
 {
 	if(param.stripWhiteSpace().startsWith("#"))
 	{
-		QColor color;
+		TQColor color;
 		color.setNamedColor(param.stripWhiteSpace());
 		return color;
 	}
 	else if(param.stripWhiteSpace().startsWith("rgb("))
 	{
-		QString parse = param.stripWhiteSpace();
-		QStringList colors = QStringList::split(',', parse);
-		QString r = colors[0].right((colors[0].length() - 4));
-		QString g = colors[1];
-		QString b = colors[2].left((colors[2].length() - 1));
+		TQString parse = param.stripWhiteSpace();
+		TQStringList colors = TQStringList::split(',', parse);
+		TQString r = colors[0].right((colors[0].length() - 4));
+		TQString g = colors[1];
+		TQString b = colors[2].left((colors[2].length() - 1));
 
 		if(r.contains("%"))
 		{
 			r = r.left(r.length() - 1);
-			r = QString::number(int((double(255 * r.toDouble()) / 100.0)));
+			r = TQString::number(int((double(255 * r.toDouble()) / 100.0)));
 		}
 
 		if(g.contains("%"))
 		{
 			g = g.left(g.length() - 1);
-			g = QString::number(int((double(255 * g.toDouble()) / 100.0)));
+			g = TQString::number(int((double(255 * g.toDouble()) / 100.0)));
 		}
 
 		if(b.contains("%"))
 		{
 			b = b.left(b.length() - 1);
-			b = QString::number(int((double(255 * b.toDouble()) / 100.0)));
+			b = TQString::number(int((double(255 * b.toDouble()) / 100.0)));
 		}
 
-		return QColor(r.toInt(), g.toInt(), b.toInt());
+		return TQColor(r.toInt(), g.toInt(), b.toInt());
 	}
 	else
 	{
-		QString rgbColor = param.stripWhiteSpace();
+		TQString rgbColor = param.stripWhiteSpace();
 
 		if(rgbColor == "aliceblue")
-			return QColor(240, 248, 255);
+			return TQColor(240, 248, 255);
 		else if(rgbColor == "antiquewhite")
-			return QColor(250, 235, 215);
+			return TQColor(250, 235, 215);
 		else if(rgbColor == "aqua")
-			return QColor(0, 255, 255);
+			return TQColor(0, 255, 255);
 		else if(rgbColor == "aquamarine")
-			return QColor(127, 255, 212);
+			return TQColor(127, 255, 212);
 		else if(rgbColor == "azure")
-			return QColor(240, 255, 255);
+			return TQColor(240, 255, 255);
 		else if(rgbColor == "beige")
-			return QColor(245, 245, 220);
+			return TQColor(245, 245, 220);
 		else if(rgbColor == "bisque")
-			return QColor(255, 228, 196);
+			return TQColor(255, 228, 196);
 		else if(rgbColor == "black")
-			return QColor(0, 0, 0);
+			return TQColor(0, 0, 0);
 		else if(rgbColor == "blanchedalmond")
-			return QColor(255, 235, 205);
+			return TQColor(255, 235, 205);
 		else if(rgbColor == "blue")
-			return QColor(0, 0, 255);
+			return TQColor(0, 0, 255);
 		else if(rgbColor == "blueviolet")
-			return QColor(138, 43, 226);
+			return TQColor(138, 43, 226);
 		else if(rgbColor == "brown")
-			return QColor(165, 42, 42);
+			return TQColor(165, 42, 42);
 		else if(rgbColor == "burlywood")
-			return QColor(222, 184, 135);
+			return TQColor(222, 184, 135);
 		else if(rgbColor == "cadetblue")
-			return QColor(95, 158, 160);
+			return TQColor(95, 158, 160);
 		else if(rgbColor == "chartreuse")
-			return QColor(127, 255, 0);
+			return TQColor(127, 255, 0);
 		else if(rgbColor == "chocolate")
-			return QColor(210, 105, 30);
+			return TQColor(210, 105, 30);
 		else if(rgbColor == "coral")
-			return QColor(255, 127, 80);
+			return TQColor(255, 127, 80);
 		else if(rgbColor == "cornflowerblue")
-			return QColor(100, 149, 237);
+			return TQColor(100, 149, 237);
 		else if(rgbColor == "cornsilk")
-			return QColor(255, 248, 220);
+			return TQColor(255, 248, 220);
 		else if(rgbColor == "crimson")
-			return QColor(220, 20, 60);
+			return TQColor(220, 20, 60);
 		else if(rgbColor == "cyan")
-			return QColor(0, 255, 255);
+			return TQColor(0, 255, 255);
 		else if(rgbColor == "darkblue")
-			return QColor(0, 0, 139);
+			return TQColor(0, 0, 139);
 		else if(rgbColor == "darkcyan")
-			return QColor(0, 139, 139);
+			return TQColor(0, 139, 139);
 		else if(rgbColor == "darkgoldenrod")
-			return QColor(184, 134, 11);
+			return TQColor(184, 134, 11);
 		else if(rgbColor == "darkgray")
-			return QColor(169, 169, 169);
+			return TQColor(169, 169, 169);
 		else if(rgbColor == "darkgrey")
-			return QColor(169, 169, 169);
+			return TQColor(169, 169, 169);
 		else if(rgbColor == "darkgreen")
-			return QColor(0, 100, 0);
+			return TQColor(0, 100, 0);
 		else if(rgbColor == "darkkhaki")
-			return QColor(189, 183, 107);
+			return TQColor(189, 183, 107);
 		else if(rgbColor == "darkmagenta")
-			return QColor(139, 0, 139);
+			return TQColor(139, 0, 139);
 		else if(rgbColor == "darkolivegreen")
-			return QColor(85, 107, 47);
+			return TQColor(85, 107, 47);
 		else if(rgbColor == "darkorange")
-			return QColor(255, 140, 0);
+			return TQColor(255, 140, 0);
 		else if(rgbColor == "darkorchid")
-			return QColor(153, 50, 204);
+			return TQColor(153, 50, 204);
 		else if(rgbColor == "darkred")
-			return QColor(139, 0, 0);
+			return TQColor(139, 0, 0);
 		else if(rgbColor == "darksalmon")
-			return QColor(233, 150, 122);
+			return TQColor(233, 150, 122);
 		else if(rgbColor == "darkseagreen")
-			return QColor(143, 188, 143);
+			return TQColor(143, 188, 143);
 		else if(rgbColor == "darkslateblue")
-			return QColor(72, 61, 139);
+			return TQColor(72, 61, 139);
 		else if(rgbColor == "darkslategray")
-			return QColor(47, 79, 79);
+			return TQColor(47, 79, 79);
 		else if(rgbColor == "darkslategrey")
-			return QColor(47, 79, 79);
+			return TQColor(47, 79, 79);
 		else if(rgbColor == "darkturquoise")
-			return QColor(0, 206, 209);
+			return TQColor(0, 206, 209);
 		else if(rgbColor == "darkviolet")
-			return QColor(148, 0, 211);
+			return TQColor(148, 0, 211);
 		else if(rgbColor == "deeppink")
-			return QColor(255, 20, 147);
+			return TQColor(255, 20, 147);
 		else if(rgbColor == "deepskyblue")
-			return QColor(0, 191, 255);
+			return TQColor(0, 191, 255);
 		else if(rgbColor == "dimgray")
-			return QColor(105, 105, 105);
+			return TQColor(105, 105, 105);
 		else if(rgbColor == "dimgrey")
-			return QColor(105, 105, 105);
+			return TQColor(105, 105, 105);
 		else if(rgbColor == "dodgerblue")
-			return QColor(30, 144, 255);
+			return TQColor(30, 144, 255);
 		else if(rgbColor == "firebrick")
-			return QColor(178, 34, 34);
+			return TQColor(178, 34, 34);
 		else if(rgbColor == "floralwhite")
-			return QColor(255, 250, 240);
+			return TQColor(255, 250, 240);
 		else if(rgbColor == "forestgreen")
-			return QColor(34, 139, 34);
+			return TQColor(34, 139, 34);
 		else if(rgbColor == "fuchsia")
-			return QColor(255, 0, 255);
+			return TQColor(255, 0, 255);
 		else if(rgbColor == "gainsboro")
-			return QColor(220, 220, 220);
+			return TQColor(220, 220, 220);
 		else if(rgbColor == "ghostwhite")
-			return QColor(248, 248, 255);
+			return TQColor(248, 248, 255);
 		else if(rgbColor == "gold")
-			return QColor(255, 215, 0);
+			return TQColor(255, 215, 0);
 		else if(rgbColor == "goldenrod")
-			return QColor(218, 165, 32);
+			return TQColor(218, 165, 32);
 		else if(rgbColor == "gray")
-			return QColor(128, 128, 128);
+			return TQColor(128, 128, 128);
 		else if(rgbColor == "grey")
-			return QColor(128, 128, 128);
+			return TQColor(128, 128, 128);
 		else if(rgbColor == "green")
-			return QColor(0, 128, 0);
+			return TQColor(0, 128, 0);
 		else if(rgbColor == "greenyellow")
-			return QColor(173, 255, 47);
+			return TQColor(173, 255, 47);
 		else if(rgbColor == "honeydew")
-			return QColor(240, 255, 240);
+			return TQColor(240, 255, 240);
 		else if(rgbColor == "hotpink")
-			return QColor(255, 105, 180);
+			return TQColor(255, 105, 180);
 		else if(rgbColor == "indianred")
-			return QColor(205, 92, 92);
+			return TQColor(205, 92, 92);
 		else if(rgbColor == "indigo")
-			return QColor(75, 0, 130);
+			return TQColor(75, 0, 130);
 		else if(rgbColor == "ivory")
-			return QColor(255, 255, 240);
+			return TQColor(255, 255, 240);
 		else if(rgbColor == "khaki")
-			return QColor(240, 230, 140);
+			return TQColor(240, 230, 140);
 		else if(rgbColor == "lavender")
-			return QColor(230, 230, 250);
+			return TQColor(230, 230, 250);
 		else if(rgbColor == "lavenderblush")
-			return QColor(255, 240, 245);
+			return TQColor(255, 240, 245);
 		else if(rgbColor == "lawngreen")
-			return QColor(124, 252, 0);
+			return TQColor(124, 252, 0);
 		else if(rgbColor == "lemonchiffon")
-			return QColor(255, 250, 205);
+			return TQColor(255, 250, 205);
 		else if(rgbColor == "lightblue")
-			return QColor(173, 216, 230);
+			return TQColor(173, 216, 230);
 		else if(rgbColor == "lightcoral")
-			return QColor(240, 128, 128);
+			return TQColor(240, 128, 128);
 		else if(rgbColor == "lightcyan")
-			return QColor(224, 255, 255);
+			return TQColor(224, 255, 255);
 		else if(rgbColor == "lightgoldenrodyellow")
-			return QColor(250, 250, 210);
+			return TQColor(250, 250, 210);
 		else if(rgbColor == "lightgray")
-			return QColor(211, 211, 211);
+			return TQColor(211, 211, 211);
 		else if(rgbColor == "lightgrey")
-			return QColor(211, 211, 211);
+			return TQColor(211, 211, 211);
 		else if(rgbColor == "lightgreen")
-			return QColor(144, 238, 144);
+			return TQColor(144, 238, 144);
 		else if(rgbColor == "lightpink")
-			return QColor(255, 182, 193);
+			return TQColor(255, 182, 193);
 		else if(rgbColor == "lightsalmon")
-			return QColor(255, 160, 122);
+			return TQColor(255, 160, 122);
 		else if(rgbColor == "lightseagreen")
-			return QColor(32, 178, 170);
+			return TQColor(32, 178, 170);
 		else if(rgbColor == "lightskyblue")
-			return QColor(135, 206, 250);
+			return TQColor(135, 206, 250);
 		else if(rgbColor == "lightslategray")
-			return QColor(119, 136, 153);
+			return TQColor(119, 136, 153);
 		else if(rgbColor == "lightslategrey")
-			return QColor(119, 136, 153);
+			return TQColor(119, 136, 153);
 		else if(rgbColor == "lightsteelblue")
-			return QColor(176, 196, 222);
+			return TQColor(176, 196, 222);
 		else if(rgbColor == "lightyellow")
-			return QColor(255, 255, 224);
+			return TQColor(255, 255, 224);
 		else if(rgbColor == "lime")
-			return QColor(0, 255, 0);
+			return TQColor(0, 255, 0);
 		else if(rgbColor == "limegreen")
-			return QColor(50, 205, 50);
+			return TQColor(50, 205, 50);
 		else if(rgbColor == "linen")
-			return QColor(250, 240, 230);
+			return TQColor(250, 240, 230);
 		else if(rgbColor == "magenta")
-			return QColor(255, 0, 255);
+			return TQColor(255, 0, 255);
 		else if(rgbColor == "maroon")
-			return QColor(128, 0, 0);
+			return TQColor(128, 0, 0);
 		else if(rgbColor == "mediumaquamarine")
-			return QColor(102, 205, 170);
+			return TQColor(102, 205, 170);
 		else if(rgbColor == "mediumblue")
-			return QColor(0, 0, 205);
+			return TQColor(0, 0, 205);
 		else if(rgbColor == "mediumorchid")
-			return QColor(186, 85, 211);
+			return TQColor(186, 85, 211);
 		else if(rgbColor == "mediumpurple")
-			return QColor(147, 112, 219);
+			return TQColor(147, 112, 219);
 		else if(rgbColor == "mediumseagreen")
-			return QColor(60, 179, 113);
+			return TQColor(60, 179, 113);
 		else if(rgbColor == "mediumslateblue")
-			return QColor(123, 104, 238);
+			return TQColor(123, 104, 238);
 		else if(rgbColor == "mediumspringgreen")
-			return QColor(0, 250, 154);
+			return TQColor(0, 250, 154);
 		else if(rgbColor == "mediumturquoise")
-			return QColor(72, 209, 204);
+			return TQColor(72, 209, 204);
 		else if(rgbColor == "mediumvioletred")
-			return QColor(199, 21, 133);
+			return TQColor(199, 21, 133);
 		else if(rgbColor == "midnightblue")
-			return QColor(25, 25, 112);
+			return TQColor(25, 25, 112);
 		else if(rgbColor == "mintcream")
-			return QColor(245, 255, 250);
+			return TQColor(245, 255, 250);
 		else if(rgbColor == "mistyrose")
-			return QColor(255, 228, 225);
+			return TQColor(255, 228, 225);
 		else if(rgbColor == "moccasin")
-			return QColor(255, 228, 181);
+			return TQColor(255, 228, 181);
 		else if(rgbColor == "navajowhite")
-			return QColor(255, 222, 173);
+			return TQColor(255, 222, 173);
 		else if(rgbColor == "navy")
-			return QColor(0, 0, 128);
+			return TQColor(0, 0, 128);
 		else if(rgbColor == "oldlace")
-			return QColor(253, 245, 230);
+			return TQColor(253, 245, 230);
 		else if(rgbColor == "olive")
-			return QColor(128, 128, 0);
+			return TQColor(128, 128, 0);
 		else if(rgbColor == "olivedrab")
-			return QColor(107, 142, 35);
+			return TQColor(107, 142, 35);
 		else if(rgbColor == "orange")
-			return QColor(255, 165, 0);
+			return TQColor(255, 165, 0);
 		else if(rgbColor == "orangered")
-			return QColor(255, 69, 0);
+			return TQColor(255, 69, 0);
 		else if(rgbColor == "orchid")
-			return QColor(218, 112, 214);
+			return TQColor(218, 112, 214);
 		else if(rgbColor == "palegoldenrod")
-			return QColor(238, 232, 170);
+			return TQColor(238, 232, 170);
 		else if(rgbColor == "palegreen")
-			return QColor(152, 251, 152);
+			return TQColor(152, 251, 152);
 		else if(rgbColor == "paleturquoise")
-			return QColor(175, 238, 238);
+			return TQColor(175, 238, 238);
 		else if(rgbColor == "palevioletred")
-			return QColor(219, 112, 147);
+			return TQColor(219, 112, 147);
 		else if(rgbColor == "papayawhip")
-			return QColor(255, 239, 213);
+			return TQColor(255, 239, 213);
 		else if(rgbColor == "peachpuff")
-			return QColor(255, 218, 185);
+			return TQColor(255, 218, 185);
 		else if(rgbColor == "peru")
-			return QColor(205, 133, 63);
+			return TQColor(205, 133, 63);
 		else if(rgbColor == "pink")
-			return QColor(255, 192, 203);
+			return TQColor(255, 192, 203);
 		else if(rgbColor == "plum")
-			return QColor(221, 160, 221);
+			return TQColor(221, 160, 221);
 		else if(rgbColor == "powderblue")
-			return QColor(176, 224, 230);
+			return TQColor(176, 224, 230);
 		else if(rgbColor == "purple")
-			return QColor(128, 0, 128);
+			return TQColor(128, 0, 128);
 		else if(rgbColor == "red")
-			return QColor(255, 0, 0);
+			return TQColor(255, 0, 0);
 		else if(rgbColor == "rosybrown")
-			return QColor(188, 143, 143);
+			return TQColor(188, 143, 143);
 		else if(rgbColor == "royalblue")
-			return QColor(65, 105, 225);
+			return TQColor(65, 105, 225);
 		else if(rgbColor == "saddlebrown")
-			return QColor(139, 69, 19);
+			return TQColor(139, 69, 19);
 		else if(rgbColor == "salmon")
-			return QColor(250, 128, 114);
+			return TQColor(250, 128, 114);
 		else if(rgbColor == "sandybrown")
-			return QColor(244, 164, 96);
+			return TQColor(244, 164, 96);
 		else if(rgbColor == "seagreen")
-			return QColor(46, 139, 87);
+			return TQColor(46, 139, 87);
 		else if(rgbColor == "seashell")
-			return QColor(255, 245, 238);
+			return TQColor(255, 245, 238);
 		else if(rgbColor == "sienna")
-			return QColor(160, 82, 45);
+			return TQColor(160, 82, 45);
 		else if(rgbColor == "silver")
-			return QColor(192, 192, 192);
+			return TQColor(192, 192, 192);
 		else if(rgbColor == "skyblue")
-			return QColor(135, 206, 235);
+			return TQColor(135, 206, 235);
 		else if(rgbColor == "slateblue")
-			return QColor(106, 90, 205);
+			return TQColor(106, 90, 205);
 		else if(rgbColor == "slategray")
-			return QColor(112, 128, 144);
+			return TQColor(112, 128, 144);
 		else if(rgbColor == "slategrey")
-			return QColor(112, 128, 144);
+			return TQColor(112, 128, 144);
 		else if(rgbColor == "snow")
-			return QColor(255, 250, 250);
+			return TQColor(255, 250, 250);
 		else if(rgbColor == "springgreen")
-			return QColor(0, 255, 127);
+			return TQColor(0, 255, 127);
 		else if(rgbColor == "steelblue")
-			return QColor(70, 130, 180);
+			return TQColor(70, 130, 180);
 		else if(rgbColor == "tan")
-			return QColor(210, 180, 140);
+			return TQColor(210, 180, 140);
 		else if(rgbColor == "teal")
-			return QColor(0, 128, 128);
+			return TQColor(0, 128, 128);
 		else if(rgbColor == "thistle")
-			return QColor(216, 191, 216);
+			return TQColor(216, 191, 216);
 		else if(rgbColor == "tomato")
-			return QColor(255, 99, 71);
+			return TQColor(255, 99, 71);
 		else if(rgbColor == "turquoise")
-			return QColor(64, 224, 208);
+			return TQColor(64, 224, 208);
 		else if(rgbColor == "violet")
-			return QColor(238, 130, 238);
+			return TQColor(238, 130, 238);
 		else if(rgbColor == "wheat")
-			return QColor(245, 222, 179);
+			return TQColor(245, 222, 179);
 		else if(rgbColor == "white")
-			return QColor(255, 255, 255);
+			return TQColor(255, 255, 255);
 		else if(rgbColor == "whitesmoke")
-			return QColor(245, 245, 245);
+			return TQColor(245, 245, 245);
 		else if(rgbColor == "yellow")
-			return QColor(255, 255, 0);
+			return TQColor(255, 255, 0);
 		else if(rgbColor == "yellowgreen")
-			return QColor(154, 205, 50);
+			return TQColor(154, 205, 50);
 	}
 
-	return QColor();
+	return TQColor();
 }
 
 double KSVGIconPainter::dpi()
@@ -2666,12 +2666,12 @@ double KSVGIconPainter::dpi()
 	return 90.0; // TODO: make modal?
 }
 
-double KSVGIconPainter::toPixel(const QString &s, bool hmode)
+double KSVGIconPainter::toPixel(const TQString &s, bool hmode)
 {
 	if(s.isEmpty())
 		return 0.0;
 
-	QString check = s;
+	TQString check = s;
 
 	double ret = 0.0;
 
@@ -2713,69 +2713,69 @@ double KSVGIconPainter::toPixel(const QString &s, bool hmode)
 	return ret;
 }
 
-ArtGradientLinear *KSVGIconPainter::linearGradient(const QString &id)
+ArtGradientLinear *KSVGIconPainter::linearGradient(const TQString &id)
 {
 	return d->helper->m_linearGradientMap[id];
 }
 
-void KSVGIconPainter::addLinearGradient(const QString &id, ArtGradientLinear *gradient)
+void KSVGIconPainter::addLinearGradient(const TQString &id, ArtGradientLinear *gradient)
 {
 	d->helper->m_linearGradientMap.insert(id, gradient);
 }
 
-QDomElement KSVGIconPainter::linearGradientElement(ArtGradientLinear *linear)
+TQDomElement KSVGIconPainter::linearGradientElement(ArtGradientLinear *linear)
 {
 	return d->helper->m_linearGradientElementMap[linear];
 }
 
-void KSVGIconPainter::addLinearGradientElement(ArtGradientLinear *gradient, QDomElement element)
+void KSVGIconPainter::addLinearGradientElement(ArtGradientLinear *gradient, TQDomElement element)
 {
 	d->helper->m_linearGradientElementMap.insert(gradient, element);
 }
 
-ArtGradientRadial *KSVGIconPainter::radialGradient(const QString &id)
+ArtGradientRadial *KSVGIconPainter::radialGradient(const TQString &id)
 {
 	return d->helper->m_radialGradientMap[id];
 }
 
-void KSVGIconPainter::addRadialGradient(const QString &id, ArtGradientRadial *gradient)
+void KSVGIconPainter::addRadialGradient(const TQString &id, ArtGradientRadial *gradient)
 {
 	d->helper->m_radialGradientMap.insert(id, gradient);
 }
 
-QDomElement KSVGIconPainter::radialGradientElement(ArtGradientRadial *radial)
+TQDomElement KSVGIconPainter::radialGradientElement(ArtGradientRadial *radial)
 {
 	return d->helper->m_radialGradientElementMap[radial];
 }
 
-void KSVGIconPainter::addRadialGradientElement(ArtGradientRadial *gradient, QDomElement element)
+void KSVGIconPainter::addRadialGradientElement(ArtGradientRadial *gradient, TQDomElement element)
 {
 	d->helper->m_radialGradientElementMap.insert(gradient, element);
 }
 
-Q_UINT32 KSVGIconPainter::toArtColor(const QColor &color)
+Q_UINT32 KSVGIconPainter::toArtColor(const TQColor &color)
 {
 	return d->helper->toArtColor(color);
 }
 
-QWMatrix KSVGIconPainter::parseTransform(const QString &transform)
+TQWMatrix KSVGIconPainter::parseTransform(const TQString &transform)
 {
-	QWMatrix result;
+	TQWMatrix result;
 
 	// Split string for handling 1 transform statement at a time
-	QStringList subtransforms = QStringList::split(')', transform);
-	QStringList::ConstIterator it = subtransforms.begin();
-	QStringList::ConstIterator end = subtransforms.end();
+	TQStringList subtransforms = TQStringList::split(')', transform);
+	TQStringList::ConstIterator it = subtransforms.begin();
+	TQStringList::ConstIterator end = subtransforms.end();
 	for(; it != end; ++it)
 	{
-		QStringList subtransform = QStringList::split('(', (*it));
+		TQStringList subtransform = TQStringList::split('(', (*it));
 
 		subtransform[0] = subtransform[0].stripWhiteSpace().lower();
 		subtransform[1] = subtransform[1].simplifyWhiteSpace();
-		QRegExp reg("([-]?\\d*\\.?\\d+(?:e[-]?\\d+)?)");
+		TQRegExp reg("([-]?\\d*\\.?\\d+(?:e[-]?\\d+)?)");
 
                 int pos = 0;
-                QStringList params;
+                TQStringList params;
 
                 while(pos >= 0)
                 {

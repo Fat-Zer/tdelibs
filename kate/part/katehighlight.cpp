@@ -46,8 +46,8 @@
 #include <kstaticdeleter.h>
 #include <kapplication.h>
 
-#include <qstringlist.h>
-#include <qtextstream.h>
+#include <tqstringlist.h>
+#include <tqtextstream.h>
 //END
 
 //BEGIN defines
@@ -57,15 +57,15 @@
 // min. x seconds between two dynamic contexts reset
 static const int KATE_DYNAMIC_CONTEXTS_RESET_DELAY = 30 * 1000;
 
-// x is a QString. if x is "true" or "1" this expression returns "true"
-#define IS_TRUE(x) x.lower() == QString("true") || x.toInt() == 1
+// x is a TQString. if x is "true" or "1" this expression returns "true"
+#define IS_TRUE(x) x.lower() == TQString("true") || x.toInt() == 1
 //END defines
 
 //BEGIN  Prviate HL classes
 
-inline bool kateInsideString (const QString &str, QChar ch)
+inline bool kateInsideString (const TQString &str, TQChar ch)
 {
-  const QChar *unicode = str.unicode();
+  const TQChar *unicode = str.unicode();
   const uint len = str.length();
   for (uint i=0; i < len; i++)
     if (unicode[i] == ch)
@@ -84,16 +84,16 @@ class KateHlItem
     // caller must keep in mind: LEN > 0 is a must !!!!!!!!!!!!!!!!!!!!!1
     // Now, the function returns the offset detected, or 0 if no match is found.
     // bool linestart isn't needed, this is equivalent to offset == 0.
-    virtual int checkHgl(const QString& text, int offset, int len) = 0;
+    virtual int checkHgl(const TQString& text, int offset, int len) = 0;
 
     virtual bool lineContinue(){return false;}
 
-    virtual QStringList *capturedTexts() {return 0;}
-    virtual KateHlItem *clone(const QStringList *) {return this;}
+    virtual TQStringList *capturedTexts() {return 0;}
+    virtual KateHlItem *clone(const TQStringList *) {return this;}
 
-    static void dynamicSubstitute(QString& str, const QStringList *args);
+    static void dynamicSubstitute(TQString& str, const TQStringList *args);
 
-    QMemArray<KateHlItem*> subItems;
+    TQMemArray<KateHlItem*> subItems;
     int attr;
     int ctx;
     signed char region;
@@ -116,13 +116,13 @@ class KateHlItem
 class KateHlContext
 {
   public:
-    KateHlContext(const QString &_hlId, int attribute, int lineEndContext,int _lineBeginContext,
+    KateHlContext(const TQString &_hlId, int attribute, int lineEndContext,int _lineBeginContext,
                   bool _fallthrough, int _fallthroughContext, bool _dynamic,bool _noIndentationBasedFolding);
     virtual ~KateHlContext();
-    KateHlContext *clone(const QStringList *args);
+    KateHlContext *clone(const TQStringList *args);
 
-    QValueVector<KateHlItem*> items;
-    QString hlId; ///< A unique highlight identifier. Used to look up correct properties.
+    TQValueVector<KateHlItem*> items;
+    TQString hlId; ///< A unique highlight identifier. Used to look up correct properties.
     int attr;
     int ctx;
     int lineBeginContext;
@@ -153,7 +153,7 @@ class KateEmbeddedHlInfo
 class KateHlIncludeRule
 {
   public:
-    KateHlIncludeRule(int ctx_=0, uint pos_=0, const QString &incCtxN_="", bool incAttrib=false)
+    KateHlIncludeRule(int ctx_=0, uint pos_=0, const TQString &incCtxN_="", bool incAttrib=false)
       : ctx(ctx_)
       , pos( pos_)
       , incCtxN( incCtxN_ )
@@ -167,46 +167,46 @@ class KateHlIncludeRule
     int ctx;
     uint pos;
     int incCtx;
-    QString incCtxN;
+    TQString incCtxN;
     bool includeAttrib;
 };
 
 class KateHlCharDetect : public KateHlItem
 {
   public:
-    KateHlCharDetect(int attribute, int context,signed char regionId,signed char regionId2, QChar);
+    KateHlCharDetect(int attribute, int context,signed char regionId,signed char regionId2, TQChar);
 
-    virtual int checkHgl(const QString& text, int offset, int len);
-    virtual KateHlItem *clone(const QStringList *args);
+    virtual int checkHgl(const TQString& text, int offset, int len);
+    virtual KateHlItem *clone(const TQStringList *args);
 
   private:
-    QChar sChar;
+    TQChar sChar;
 };
 
 class KateHl2CharDetect : public KateHlItem
 {
   public:
-    KateHl2CharDetect(int attribute, int context, signed char regionId,signed char regionId2,  QChar ch1, QChar ch2);
-    KateHl2CharDetect(int attribute, int context,signed char regionId,signed char regionId2,  const QChar *ch);
+    KateHl2CharDetect(int attribute, int context, signed char regionId,signed char regionId2,  TQChar ch1, TQChar ch2);
+    KateHl2CharDetect(int attribute, int context,signed char regionId,signed char regionId2,  const TQChar *ch);
 
-    virtual int checkHgl(const QString& text, int offset, int len);
-    virtual KateHlItem *clone(const QStringList *args);
+    virtual int checkHgl(const TQString& text, int offset, int len);
+    virtual KateHlItem *clone(const TQStringList *args);
 
   private:
-    QChar sChar1;
-    QChar sChar2;
+    TQChar sChar1;
+    TQChar sChar2;
 };
 
 class KateHlStringDetect : public KateHlItem
 {
   public:
-    KateHlStringDetect(int attribute, int context, signed char regionId,signed char regionId2, const QString &, bool inSensitive=false);
+    KateHlStringDetect(int attribute, int context, signed char regionId,signed char regionId2, const TQString &, bool inSensitive=false);
 
-    virtual int checkHgl(const QString& text, int offset, int len);
-    virtual KateHlItem *clone(const QStringList *args);
+    virtual int checkHgl(const TQString& text, int offset, int len);
+    virtual KateHlItem *clone(const TQStringList *args);
 
   private:
-    const QString str;
+    const TQString str;
     const int strLen;
     const bool _inSensitive;
 };
@@ -214,28 +214,28 @@ class KateHlStringDetect : public KateHlItem
 class KateHlRangeDetect : public KateHlItem
 {
   public:
-    KateHlRangeDetect(int attribute, int context, signed char regionId,signed char regionId2, QChar ch1, QChar ch2);
+    KateHlRangeDetect(int attribute, int context, signed char regionId,signed char regionId2, TQChar ch1, TQChar ch2);
 
-    virtual int checkHgl(const QString& text, int offset, int len);
+    virtual int checkHgl(const TQString& text, int offset, int len);
 
   private:
-    QChar sChar1;
-    QChar sChar2;
+    TQChar sChar1;
+    TQChar sChar2;
 };
 
 class KateHlKeyword : public KateHlItem
 {
   public:
-    KateHlKeyword(int attribute, int context,signed char regionId,signed char regionId2, bool insensitive, const QString& delims);
+    KateHlKeyword(int attribute, int context,signed char regionId,signed char regionId2, bool insensitive, const TQString& delims);
     virtual ~KateHlKeyword ();
 
-    void addList(const QStringList &);
-    virtual int checkHgl(const QString& text, int offset, int len);
+    void addList(const TQStringList &);
+    virtual int checkHgl(const TQString& text, int offset, int len);
 
   private:
-    QMemArray< QDict<bool>* > dict;
+    TQMemArray< TQDict<bool>* > dict;
     bool _insensitive;
-    const QString& deliminators;
+    const TQString& deliminators;
     int minLen;
     int maxLen;
 };
@@ -245,7 +245,7 @@ class KateHlInt : public KateHlItem
   public:
     KateHlInt(int attribute, int context, signed char regionId,signed char regionId2);
 
-    virtual int checkHgl(const QString& text, int offset, int len);
+    virtual int checkHgl(const TQString& text, int offset, int len);
 };
 
 class KateHlFloat : public KateHlItem
@@ -254,7 +254,7 @@ class KateHlFloat : public KateHlItem
     KateHlFloat(int attribute, int context, signed char regionId,signed char regionId2);
     virtual ~KateHlFloat () {}
 
-    virtual int checkHgl(const QString& text, int offset, int len);
+    virtual int checkHgl(const TQString& text, int offset, int len);
 };
 
 class KateHlCFloat : public KateHlFloat
@@ -262,8 +262,8 @@ class KateHlCFloat : public KateHlFloat
   public:
     KateHlCFloat(int attribute, int context, signed char regionId,signed char regionId2);
 
-    virtual int checkHgl(const QString& text, int offset, int len);
-    int checkIntHgl(const QString& text, int offset, int len);
+    virtual int checkHgl(const TQString& text, int offset, int len);
+    int checkIntHgl(const TQString& text, int offset, int len);
 };
 
 class KateHlCOct : public KateHlItem
@@ -271,7 +271,7 @@ class KateHlCOct : public KateHlItem
   public:
     KateHlCOct(int attribute, int context, signed char regionId,signed char regionId2);
 
-    virtual int checkHgl(const QString& text, int offset, int len);
+    virtual int checkHgl(const TQString& text, int offset, int len);
 };
 
 class KateHlCHex : public KateHlItem
@@ -279,7 +279,7 @@ class KateHlCHex : public KateHlItem
   public:
     KateHlCHex(int attribute, int context, signed char regionId,signed char regionId2);
 
-    virtual int checkHgl(const QString& text, int offset, int len);
+    virtual int checkHgl(const TQString& text, int offset, int len);
 };
 
 class KateHlLineContinue : public KateHlItem
@@ -287,8 +287,8 @@ class KateHlLineContinue : public KateHlItem
   public:
     KateHlLineContinue(int attribute, int context, signed char regionId,signed char regionId2);
 
-    virtual bool endEnable(QChar c) {return c == '\0';}
-    virtual int checkHgl(const QString& text, int offset, int len);
+    virtual bool endEnable(TQChar c) {return c == '\0';}
+    virtual int checkHgl(const TQString& text, int offset, int len);
     virtual bool lineContinue(){return true;}
 };
 
@@ -297,7 +297,7 @@ class KateHlCStringChar : public KateHlItem
   public:
     KateHlCStringChar(int attribute, int context, signed char regionId,signed char regionId2);
 
-    virtual int checkHgl(const QString& text, int offset, int len);
+    virtual int checkHgl(const TQString& text, int offset, int len);
 };
 
 class KateHlCChar : public KateHlItem
@@ -305,34 +305,34 @@ class KateHlCChar : public KateHlItem
   public:
     KateHlCChar(int attribute, int context,signed char regionId,signed char regionId2);
 
-    virtual int checkHgl(const QString& text, int offset, int len);
+    virtual int checkHgl(const TQString& text, int offset, int len);
 };
 
 class KateHlAnyChar : public KateHlItem
 {
   public:
-    KateHlAnyChar(int attribute, int context, signed char regionId,signed char regionId2, const QString& charList);
+    KateHlAnyChar(int attribute, int context, signed char regionId,signed char regionId2, const TQString& charList);
 
-    virtual int checkHgl(const QString& text, int offset, int len);
+    virtual int checkHgl(const TQString& text, int offset, int len);
 
   private:
-    const QString _charList;
+    const TQString _charList;
 };
 
 class KateHlRegExpr : public KateHlItem
 {
   public:
-    KateHlRegExpr(int attribute, int context,signed char regionId,signed char regionId2 ,QString expr, bool insensitive, bool minimal);
+    KateHlRegExpr(int attribute, int context,signed char regionId,signed char regionId2 ,TQString expr, bool insensitive, bool minimal);
     ~KateHlRegExpr() { delete Expr; };
 
-    virtual int checkHgl(const QString& text, int offset, int len);
-    virtual QStringList *capturedTexts();
-    virtual KateHlItem *clone(const QStringList *args);
+    virtual int checkHgl(const TQString& text, int offset, int len);
+    virtual TQStringList *capturedTexts();
+    virtual KateHlItem *clone(const TQStringList *args);
 
   private:
-    QRegExp *Expr;
+    TQRegExp *Expr;
     bool handlesLinestart;
-    QString _regexp;
+    TQString _regexp;
     bool _insensitive;
     bool _minimal;
 };
@@ -343,7 +343,7 @@ class KateHlDetectSpaces : public KateHlItem
     KateHlDetectSpaces (int attribute, int context,signed char regionId,signed char regionId2)
       : KateHlItem(attribute,context,regionId,regionId2) {}
 
-    virtual int checkHgl(const QString& text, int offset, int len)
+    virtual int checkHgl(const TQString& text, int offset, int len)
     {
       int len2 = offset + len;
       while ((offset < len2) && text[offset].isSpace()) offset++;
@@ -357,10 +357,10 @@ class KateHlDetectIdentifier : public KateHlItem
     KateHlDetectIdentifier (int attribute, int context,signed char regionId,signed char regionId2)
       : KateHlItem(attribute,context,regionId,regionId2) { alwaysStartEnable = false; }
 
-    virtual int checkHgl(const QString& text, int offset, int len)
+    virtual int checkHgl(const TQString& text, int offset, int len)
     {
       // first char should be a letter or underscore
-      if ( text[offset].isLetter() || text[offset] == QChar ('_') )
+      if ( text[offset].isLetter() || text[offset] == TQChar ('_') )
       {
         // memorize length
         int len2 = offset+len;
@@ -371,7 +371,7 @@ class KateHlDetectIdentifier : public KateHlItem
         // now loop for all other thingies
         while (
                (offset < len2)
-               && (text[offset].isLetterOrNumber() || (text[offset] == QChar ('_')))
+               && (text[offset].isLetterOrNumber() || (text[offset] == TQChar ('_')))
               )
           offset++;
 
@@ -388,11 +388,11 @@ class KateHlDetectIdentifier : public KateHlItem
 KateHlManager *KateHlManager::s_self = 0;
 
 static const bool trueBool = true;
-static const QString stdDeliminator = QString (" \t.():!+,-<=>%&*/;?[]^{|}~\\");
+static const TQString stdDeliminator = TQString (" \t.():!+,-<=>%&*/;?[]^{|}~\\");
 //END
 
 //BEGIN NON MEMBER FUNCTIONS
-static KateHlItemData::ItemStyles getDefStyleNum(QString name)
+static KateHlItemData::ItemStyles getDefStyleNum(TQString name)
 {
   if (name=="dsNormal") return KateHlItemData::dsNormal;
   else if (name=="dsKeyword") return KateHlItemData::dsKeyword;
@@ -437,7 +437,7 @@ KateHlItem::~KateHlItem()
     delete subItems[i];
 }
 
-void KateHlItem::dynamicSubstitute(QString &str, const QStringList *args)
+void KateHlItem::dynamicSubstitute(TQString &str, const TQStringList *args)
 {
   for (uint i = 0; i < str.length() - 1; ++i)
   {
@@ -465,13 +465,13 @@ void KateHlItem::dynamicSubstitute(QString &str, const QStringList *args)
 //END
 
 //BEGIN KateHlCharDetect
-KateHlCharDetect::KateHlCharDetect(int attribute, int context, signed char regionId,signed char regionId2, QChar c)
+KateHlCharDetect::KateHlCharDetect(int attribute, int context, signed char regionId,signed char regionId2, TQChar c)
   : KateHlItem(attribute,context,regionId,regionId2)
   , sChar(c)
 {
 }
 
-int KateHlCharDetect::checkHgl(const QString& text, int offset, int /*len*/)
+int KateHlCharDetect::checkHgl(const TQString& text, int offset, int /*len*/)
 {
   if (text[offset] == sChar)
     return offset + 1;
@@ -479,7 +479,7 @@ int KateHlCharDetect::checkHgl(const QString& text, int offset, int /*len*/)
   return 0;
 }
 
-KateHlItem *KateHlCharDetect::clone(const QStringList *args)
+KateHlItem *KateHlCharDetect::clone(const TQStringList *args)
 {
   char c = sChar.latin1();
 
@@ -493,14 +493,14 @@ KateHlItem *KateHlCharDetect::clone(const QStringList *args)
 //END
 
 //BEGIN KateHl2CharDetect
-KateHl2CharDetect::KateHl2CharDetect(int attribute, int context, signed char regionId,signed char regionId2, QChar ch1, QChar ch2)
+KateHl2CharDetect::KateHl2CharDetect(int attribute, int context, signed char regionId,signed char regionId2, TQChar ch1, TQChar ch2)
   : KateHlItem(attribute,context,regionId,regionId2)
   , sChar1 (ch1)
   , sChar2 (ch2)
 {
 }
 
-int KateHl2CharDetect::checkHgl(const QString& text, int offset, int len)
+int KateHl2CharDetect::checkHgl(const TQString& text, int offset, int len)
 {
   if ((len >= 2) && text[offset++] == sChar1 && text[offset++] == sChar2)
     return offset;
@@ -508,7 +508,7 @@ int KateHl2CharDetect::checkHgl(const QString& text, int offset, int len)
   return 0;
 }
 
-KateHlItem *KateHl2CharDetect::clone(const QStringList *args)
+KateHlItem *KateHl2CharDetect::clone(const TQStringList *args)
 {
   char c1 = sChar1.latin1();
   char c2 = sChar2.latin1();
@@ -526,7 +526,7 @@ KateHlItem *KateHl2CharDetect::clone(const QStringList *args)
 //END
 
 //BEGIN KateHlStringDetect
-KateHlStringDetect::KateHlStringDetect(int attribute, int context, signed char regionId,signed char regionId2,const QString &s, bool inSensitive)
+KateHlStringDetect::KateHlStringDetect(int attribute, int context, signed char regionId,signed char regionId2,const TQString &s, bool inSensitive)
   : KateHlItem(attribute, context,regionId,regionId2)
   , str(inSensitive ? s.upper() : s)
   , strLen (str.length())
@@ -534,7 +534,7 @@ KateHlStringDetect::KateHlStringDetect(int attribute, int context, signed char r
 {
 }
 
-int KateHlStringDetect::checkHgl(const QString& text, int offset, int len)
+int KateHlStringDetect::checkHgl(const TQString& text, int offset, int len)
 {
   if (len < strLen)
     return 0;
@@ -559,9 +559,9 @@ int KateHlStringDetect::checkHgl(const QString& text, int offset, int len)
   return 0;
 }
 
-KateHlItem *KateHlStringDetect::clone(const QStringList *args)
+KateHlItem *KateHlStringDetect::clone(const TQStringList *args)
 {
-  QString newstr = str;
+  TQString newstr = str;
 
   dynamicSubstitute(newstr, args);
 
@@ -575,14 +575,14 @@ KateHlItem *KateHlStringDetect::clone(const QStringList *args)
 //END
 
 //BEGIN KateHlRangeDetect
-KateHlRangeDetect::KateHlRangeDetect(int attribute, int context, signed char regionId,signed char regionId2, QChar ch1, QChar ch2)
+KateHlRangeDetect::KateHlRangeDetect(int attribute, int context, signed char regionId,signed char regionId2, TQChar ch1, TQChar ch2)
   : KateHlItem(attribute,context,regionId,regionId2)
   , sChar1 (ch1)
   , sChar2 (ch2)
 {
 }
 
-int KateHlRangeDetect::checkHgl(const QString& text, int offset, int len)
+int KateHlRangeDetect::checkHgl(const TQString& text, int offset, int len)
 {
   if (text[offset] == sChar1)
   {
@@ -601,7 +601,7 @@ int KateHlRangeDetect::checkHgl(const QString& text, int offset, int len)
 //END
 
 //BEGIN KateHlKeyword
-KateHlKeyword::KateHlKeyword (int attribute, int context, signed char regionId,signed char regionId2, bool insensitive, const QString& delims)
+KateHlKeyword::KateHlKeyword (int attribute, int context, signed char regionId,signed char regionId2, bool insensitive, const TQString& delims)
   : KateHlItem(attribute,context,regionId,regionId2)
   , _insensitive(insensitive)
   , deliminators(delims)
@@ -618,7 +618,7 @@ KateHlKeyword::~KateHlKeyword ()
     delete dict[i];
 }
 
-void KateHlKeyword::addList(const QStringList& list)
+void KateHlKeyword::addList(const TQStringList& list)
 {
   for(uint i=0; i < list.count(); ++i)
   {
@@ -640,13 +640,13 @@ void KateHlKeyword::addList(const QStringList& list)
     }
 
     if (!dict[len])
-      dict[len] = new QDict<bool> (17, !_insensitive);
+      dict[len] = new TQDict<bool> (17, !_insensitive);
 
     dict[len]->insert(list[i], &trueBool);
   }
 }
 
-int KateHlKeyword::checkHgl(const QString& text, int offset, int len)
+int KateHlKeyword::checkHgl(const TQString& text, int offset, int len)
 {
   int offset2 = offset;
   int wordLen = 0;
@@ -661,7 +661,7 @@ int KateHlKeyword::checkHgl(const QString& text, int offset, int len)
 
   if (wordLen < minLen) return 0;
 
-  if ( dict[wordLen] && dict[wordLen]->find(QConstString(text.unicode() + offset, wordLen).string()) )
+  if ( dict[wordLen] && dict[wordLen]->find(TQConstString(text.unicode() + offset, wordLen).string()) )
     return offset2;
 
   return 0;
@@ -675,7 +675,7 @@ KateHlInt::KateHlInt(int attribute, int context, signed char regionId,signed cha
   alwaysStartEnable = false;
 }
 
-int KateHlInt::checkHgl(const QString& text, int offset, int len)
+int KateHlInt::checkHgl(const TQString& text, int offset, int len)
 {
   int offset2 = offset;
 
@@ -710,7 +710,7 @@ KateHlFloat::KateHlFloat(int attribute, int context, signed char regionId,signed
   alwaysStartEnable = false;
 }
 
-int KateHlFloat::checkHgl(const QString& text, int offset, int len)
+int KateHlFloat::checkHgl(const TQString& text, int offset, int len)
 {
   bool b = false;
   bool p = false;
@@ -806,7 +806,7 @@ KateHlCOct::KateHlCOct(int attribute, int context, signed char regionId,signed c
   alwaysStartEnable = false;
 }
 
-int KateHlCOct::checkHgl(const QString& text, int offset, int len)
+int KateHlCOct::checkHgl(const TQString& text, int offset, int len)
 {
   if (text[offset] == '0')
   {
@@ -841,7 +841,7 @@ KateHlCHex::KateHlCHex(int attribute, int context,signed char regionId,signed ch
   alwaysStartEnable = false;
 }
 
-int KateHlCHex::checkHgl(const QString& text, int offset, int len)
+int KateHlCHex::checkHgl(const TQString& text, int offset, int len)
 {
   if ((len > 1) && (text[offset++] == '0') && ((text[offset++] & 0xdf) == 'X' ))
   {
@@ -875,7 +875,7 @@ KateHlCFloat::KateHlCFloat(int attribute, int context, signed char regionId,sign
   alwaysStartEnable = false;
 }
 
-int KateHlCFloat::checkIntHgl(const QString& text, int offset, int len)
+int KateHlCFloat::checkIntHgl(const TQString& text, int offset, int len)
 {
   int offset2 = offset;
 
@@ -890,7 +890,7 @@ int KateHlCFloat::checkIntHgl(const QString& text, int offset, int len)
   return 0;
 }
 
-int KateHlCFloat::checkHgl(const QString& text, int offset, int len)
+int KateHlCFloat::checkHgl(const TQString& text, int offset, int len)
 {
   int offset2 = KateHlFloat::checkHgl(text, offset, len);
 
@@ -914,13 +914,13 @@ int KateHlCFloat::checkHgl(const QString& text, int offset, int len)
 //END
 
 //BEGIN KateHlAnyChar
-KateHlAnyChar::KateHlAnyChar(int attribute, int context, signed char regionId,signed char regionId2, const QString& charList)
+KateHlAnyChar::KateHlAnyChar(int attribute, int context, signed char regionId,signed char regionId2, const TQString& charList)
   : KateHlItem(attribute, context,regionId,regionId2)
   , _charList(charList)
 {
 }
 
-int KateHlAnyChar::checkHgl(const QString& text, int offset, int)
+int KateHlAnyChar::checkHgl(const TQString& text, int offset, int)
 {
   if (kateInsideString (_charList, text[offset]))
     return ++offset;
@@ -930,7 +930,7 @@ int KateHlAnyChar::checkHgl(const QString& text, int offset, int)
 //END
 
 //BEGIN KateHlRegExpr
-KateHlRegExpr::KateHlRegExpr( int attribute, int context, signed char regionId,signed char regionId2, QString regexp, bool insensitive, bool minimal)
+KateHlRegExpr::KateHlRegExpr( int attribute, int context, signed char regionId,signed char regionId2, TQString regexp, bool insensitive, bool minimal)
   : KateHlItem(attribute, context, regionId,regionId2)
   , handlesLinestart (regexp.startsWith("^"))
   , _regexp(regexp)
@@ -940,35 +940,35 @@ KateHlRegExpr::KateHlRegExpr( int attribute, int context, signed char regionId,s
   if (!handlesLinestart)
     regexp.prepend("^");
 
-  Expr = new QRegExp(regexp, !_insensitive);
+  Expr = new TQRegExp(regexp, !_insensitive);
   Expr->setMinimal(_minimal);
 }
 
-int KateHlRegExpr::checkHgl(const QString& text, int offset, int /*len*/)
+int KateHlRegExpr::checkHgl(const TQString& text, int offset, int /*len*/)
 {
   if (offset && handlesLinestart)
     return 0;
 
-  int offset2 = Expr->search( text, offset, QRegExp::CaretAtOffset );
+  int offset2 = Expr->search( text, offset, TQRegExp::CaretAtOffset );
 
   if (offset2 == -1) return 0;
 
   return (offset + Expr->matchedLength());
 }
 
-QStringList *KateHlRegExpr::capturedTexts()
+TQStringList *KateHlRegExpr::capturedTexts()
 {
-  return new QStringList(Expr->capturedTexts());
+  return new TQStringList(Expr->capturedTexts());
 }
 
-KateHlItem *KateHlRegExpr::clone(const QStringList *args)
+KateHlItem *KateHlRegExpr::clone(const TQStringList *args)
 {
-  QString regexp = _regexp;
-  QStringList escArgs = *args;
+  TQString regexp = _regexp;
+  TQStringList escArgs = *args;
 
-  for (QStringList::Iterator it = escArgs.begin(); it != escArgs.end(); ++it)
+  for (TQStringList::Iterator it = escArgs.begin(); it != escArgs.end(); ++it)
   {
-    (*it).replace(QRegExp("(\\W)"), "\\\\1");
+    (*it).replace(TQRegExp("(\\W)"), "\\\\1");
   }
 
   dynamicSubstitute(regexp, &escArgs);
@@ -989,7 +989,7 @@ KateHlLineContinue::KateHlLineContinue(int attribute, int context, signed char r
   : KateHlItem(attribute,context,regionId,regionId2) {
 }
 
-int KateHlLineContinue::checkHgl(const QString& text, int offset, int len)
+int KateHlLineContinue::checkHgl(const TQString& text, int offset, int len)
 {
   if ((len == 1) && (text[offset] == '\\'))
     return ++offset;
@@ -1004,7 +1004,7 @@ KateHlCStringChar::KateHlCStringChar(int attribute, int context,signed char regi
 }
 
 // checks for C escaped chars \n and escaped hex/octal chars
-static int checkEscapedChar(const QString& text, int offset, int& len)
+static int checkEscapedChar(const TQString& text, int offset, int& len)
 {
   int i;
   if (text[offset] == '\\' && len > 1)
@@ -1068,7 +1068,7 @@ static int checkEscapedChar(const QString& text, int offset, int& len)
   return 0;
 }
 
-int KateHlCStringChar::checkHgl(const QString& text, int offset, int len)
+int KateHlCStringChar::checkHgl(const TQString& text, int offset, int len)
 {
   return checkEscapedChar(text, offset, len);
 }
@@ -1079,7 +1079,7 @@ KateHlCChar::KateHlCChar(int attribute, int context,signed char regionId,signed 
   : KateHlItem(attribute,context,regionId,regionId2) {
 }
 
-int KateHlCChar::checkHgl(const QString& text, int offset, int len)
+int KateHlCChar::checkHgl(const TQString& text, int offset, int len)
 {
   if ((len > 1) && (text[offset] == '\'') && (text[offset+1] != '\''))
   {
@@ -1112,24 +1112,24 @@ int KateHlCChar::checkHgl(const QString& text, int offset, int len)
 //END
 
 //BEGIN KateHl2CharDetect
-KateHl2CharDetect::KateHl2CharDetect(int attribute, int context, signed char regionId,signed char regionId2, const QChar *s)
+KateHl2CharDetect::KateHl2CharDetect(int attribute, int context, signed char regionId,signed char regionId2, const TQChar *s)
   : KateHlItem(attribute,context,regionId,regionId2) {
   sChar1 = s[0];
   sChar2 = s[1];
   }
 //END KateHl2CharDetect
 
-KateHlItemData::KateHlItemData(const QString  name, int defStyleNum)
+KateHlItemData::KateHlItemData(const TQString  name, int defStyleNum)
   : name(name), defStyleNum(defStyleNum) {
 }
 
-KateHlData::KateHlData(const QString &wildcards, const QString &mimetypes, const QString &identifier, int priority)
+KateHlData::KateHlData(const TQString &wildcards, const TQString &mimetypes, const TQString &identifier, int priority)
   : wildcards(wildcards), mimetypes(mimetypes), identifier(identifier), priority(priority)
 {
 }
 
 //BEGIN KateHlContext
-KateHlContext::KateHlContext (const QString &_hlId, int attribute, int lineEndContext, int _lineBeginContext, bool _fallthrough,
+KateHlContext::KateHlContext (const TQString &_hlId, int attribute, int lineEndContext, int _lineBeginContext, bool _fallthrough,
 	int _fallthroughContext, bool _dynamic, bool _noIndentationBasedFolding)
 {
   hlId = _hlId;
@@ -1141,11 +1141,11 @@ KateHlContext::KateHlContext (const QString &_hlId, int attribute, int lineEndCo
   dynamic = _dynamic;
   dynamicChild = false;
   noIndentationBasedFolding=_noIndentationBasedFolding;
-  if (_noIndentationBasedFolding) kdDebug(13010)<<QString("**********************_noIndentationBasedFolding is TRUE*****************")<<endl;
+  if (_noIndentationBasedFolding) kdDebug(13010)<<TQString("**********************_noIndentationBasedFolding is TRUE*****************")<<endl;
 
 }
 
-KateHlContext *KateHlContext::clone(const QStringList *args)
+KateHlContext *KateHlContext::clone(const TQStringList *args)
 {
   KateHlContext *ret = new KateHlContext(hlId, attr, ctx, lineBeginContext, fallthrough, ftctx, false,noIndentationBasedFolding);
 
@@ -1225,16 +1225,16 @@ KateHighlighting::~KateHighlighting()
   m_contexts.clear ();
 }
 
-void KateHighlighting::generateContextStack(int *ctxNum, int ctx, QMemArray<short>* ctxs, int *prevLine)
+void KateHighlighting::generateContextStack(int *ctxNum, int ctx, TQMemArray<short>* ctxs, int *prevLine)
 {
-  //kdDebug(13010)<<QString("Entering generateContextStack with %1").arg(ctx)<<endl;
+  //kdDebug(13010)<<TQString("Entering generateContextStack with %1").arg(ctx)<<endl;
   while (true)
   {
     if (ctx >= 0)
     {
       (*ctxNum) = ctx;
 
-      ctxs->resize (ctxs->size()+1, QGArray::SpeedOptim);
+      ctxs->resize (ctxs->size()+1, TQGArray::SpeedOptim);
       (*ctxs)[ctxs->size()-1]=(*ctxNum);
 
       return;
@@ -1251,12 +1251,12 @@ void KateHighlighting::generateContextStack(int *ctxNum, int ctx, QMemArray<shor
 
         if (size > 0)
         {
-          ctxs->resize (size, QGArray::SpeedOptim);
+          ctxs->resize (size, TQGArray::SpeedOptim);
           (*ctxNum)=(*ctxs)[size-1];
         }
         else
         {
-          ctxs->resize (0, QGArray::SpeedOptim);
+          ctxs->resize (0, TQGArray::SpeedOptim);
           (*ctxNum)=0;
         }
 
@@ -1288,9 +1288,9 @@ void KateHighlighting::generateContextStack(int *ctxNum, int ctx, QMemArray<shor
 /**
  * Creates a new dynamic context or reuse an old one if it has already been created.
  */
-int KateHighlighting::makeDynamicContext(KateHlContext *model, const QStringList *args)
+int KateHighlighting::makeDynamicContext(KateHlContext *model, const TQStringList *args)
 {
-  QPair<KateHlContext *, QString> key(model, args->front());
+  QPair<KateHlContext *, TQString> key(model, args->front());
   short value;
 
   if (dynamicCtxs.contains(key))
@@ -1338,7 +1338,7 @@ void KateHighlighting::dropDynamicContexts()
  */
 void KateHighlighting::doHighlight ( KateTextLine *prevLine,
                                      KateTextLine *textLine,
-                                     QMemArray<uint>* foldingList,
+                                     TQMemArray<uint>* foldingList,
                                      bool *ctxChanged )
 {
   if (!textLine)
@@ -1353,7 +1353,7 @@ void KateHighlighting::doHighlight ( KateTextLine *prevLine,
   }
 
   // duplicate the ctx stack, only once !
-  QMemArray<short> ctx;
+  TQMemArray<short> ctx;
   ctx.duplicate (prevLine->ctxArray());
 
   int ctxNum = 0;
@@ -1372,7 +1372,7 @@ void KateHighlighting::doHighlight ( KateTextLine *prevLine,
 
     //kdDebug(13010) << "\t\tctxNum = " << ctxNum << " contextList[ctxNum] = " << contextList[ctxNum] << endl; // ellis
 
-    //if (lineContinue)   kdDebug(13010)<<QString("The old context should be %1").arg((int)ctxNum)<<endl;
+    //if (lineContinue)   kdDebug(13010)<<TQString("The old context should be %1").arg((int)ctxNum)<<endl;
 
     if (!(context = contextNum(ctxNum)))
       context = contextNum(0);
@@ -1396,12 +1396,12 @@ void KateHighlighting::doHighlight ( KateTextLine *prevLine,
 
     //kdDebug(13010)<<"test1-2-1-text4"<<endl;
 
-    //if (lineContinue)   kdDebug(13010)<<QString("The new context is %1").arg((int)ctxNum)<<endl;
+    //if (lineContinue)   kdDebug(13010)<<TQString("The new context is %1").arg((int)ctxNum)<<endl;
   }
 
   // text, for programming convenience :)
-  QChar lastChar = ' ';
-  const QString& text = textLine->string();
+  TQChar lastChar = ' ';
+  const TQString& text = textLine->string();
   const int len = textLine->length();
 
   // calc at which char the first char occurs, set it to lenght of line if never
@@ -1459,14 +1459,14 @@ void KateHighlighting::doHighlight ( KateTextLine *prevLine,
 
       if (item->region2)
       {
-        // kdDebug(13010)<<QString("Region mark 2 detected: %1").arg(item->region2)<<endl;
+        // kdDebug(13010)<<TQString("Region mark 2 detected: %1").arg(item->region2)<<endl;
         if ( !foldingList->isEmpty() && ((item->region2 < 0) && (*foldingList)[foldingList->size()-2] == -item->region2 ) )
         {
-          foldingList->resize (foldingList->size()-2, QGArray::SpeedOptim);
+          foldingList->resize (foldingList->size()-2, TQGArray::SpeedOptim);
         }
         else
         {
-          foldingList->resize (foldingList->size()+2, QGArray::SpeedOptim);
+          foldingList->resize (foldingList->size()+2, TQGArray::SpeedOptim);
           (*foldingList)[foldingList->size()-2] = (uint)item->region2;
           if (item->region2<0) //check not really needed yet
             (*foldingList)[foldingList->size()-1] = offset2;
@@ -1478,15 +1478,15 @@ void KateHighlighting::doHighlight ( KateTextLine *prevLine,
 
       if (item->region)
       {
-        // kdDebug(13010)<<QString("Region mark detected: %1").arg(item->region)<<endl;
+        // kdDebug(13010)<<TQString("Region mark detected: %1").arg(item->region)<<endl;
 
       /* if ( !foldingList->isEmpty() && ((item->region < 0) && (*foldingList)[foldingList->size()-1] == -item->region ) )
         {
-          foldingList->resize (foldingList->size()-1, QGArray::SpeedOptim);
+          foldingList->resize (foldingList->size()-1, TQGArray::SpeedOptim);
         }
         else*/
         {
-          foldingList->resize (foldingList->size()+2, QGArray::SpeedOptim);
+          foldingList->resize (foldingList->size()+2, TQGArray::SpeedOptim);
           (*foldingList)[foldingList->size()-2] = item->region;
           if (item->region<0) //check not really needed yet
             (*foldingList)[foldingList->size()-1] = offset2;
@@ -1506,7 +1506,7 @@ void KateHighlighting::doHighlight ( KateTextLine *prevLine,
       // dynamic context: substitute the model with an 'instance'
       if (context->dynamic)
       {
-        QStringList *lst = item->capturedTexts();
+        TQStringList *lst = item->capturedTexts();
         if (lst != 0)
         {
           // Replace the top of the stack and the current context
@@ -1602,7 +1602,7 @@ void KateHighlighting::loadWildcards()
   KConfig *config = KateHlManager::self()->getKConfig();
   config->setGroup("Highlighting " + iName);
 
-  QString extensionString = config->readEntry("Wildcards", iWildcards);
+  TQString extensionString = config->readEntry("Wildcards", iWildcards);
 
   if (extensionSource != extensionString) {
     regexpExtensions.clear();
@@ -1610,31 +1610,31 @@ void KateHighlighting::loadWildcards()
 
     extensionSource = extensionString;
 
-    static QRegExp sep("\\s*;\\s*");
+    static TQRegExp sep("\\s*;\\s*");
 
-    QStringList l = QStringList::split( sep, extensionSource );
+    TQStringList l = TQStringList::split( sep, extensionSource );
 
-    static QRegExp boringExpression("\\*\\.[\\d\\w]+");
+    static TQRegExp boringExpression("\\*\\.[\\d\\w]+");
 
-    for( QStringList::Iterator it = l.begin(); it != l.end(); ++it )
+    for( TQStringList::Iterator it = l.begin(); it != l.end(); ++it )
       if (boringExpression.exactMatch(*it))
         plainExtensions.append((*it).mid(1));
       else
-        regexpExtensions.append(QRegExp((*it), true, true));
+        regexpExtensions.append(TQRegExp((*it), true, true));
   }
 }
 
-QValueList<QRegExp>& KateHighlighting::getRegexpExtensions()
+TQValueList<TQRegExp>& KateHighlighting::getRegexpExtensions()
 {
   return regexpExtensions;
 }
 
-QStringList& KateHighlighting::getPlainExtensions()
+TQStringList& KateHighlighting::getPlainExtensions()
 {
   return plainExtensions;
 }
 
-QString KateHighlighting::getMimetypes()
+TQString KateHighlighting::getMimetypes()
 {
   KConfig *config = KateHlManager::self()->getKConfig();
   config->setGroup("Highlighting " + iName);
@@ -1684,7 +1684,7 @@ void KateHighlighting::getKateHlItemDataList (uint schema, KateHlItemDataList &l
 
   for (KateHlItemData *p = list.first(); p != 0L; p = list.next())
   {
-    QStringList s = config->readListEntry(p->name);
+    TQStringList s = config->readListEntry(p->name);
 
 //    kdDebug(13010)<<p->name<<s.count()<<endl;
     if (s.count()>0)
@@ -1693,7 +1693,7 @@ void KateHighlighting::getKateHlItemDataList (uint schema, KateHlItemDataList &l
       while(s.count()<9) s<<"";
       p->clear();
 
-      QString tmp=s[0]; if (!tmp.isEmpty()) p->defStyleNum=tmp.toInt();
+      TQString tmp=s[0]; if (!tmp.isEmpty()) p->defStyleNum=tmp.toInt();
 
       QRgb col;
 
@@ -1733,20 +1733,20 @@ void KateHighlighting::setKateHlItemDataList(uint schema, KateHlItemDataList &li
   config->setGroup("Highlighting " + iName + " - Schema "
       + KateFactory::self()->schemaManager()->name(schema));
 
-  QStringList settings;
+  TQStringList settings;
 
   for (KateHlItemData *p = list.first(); p != 0L; p = list.next())
   {
     settings.clear();
-    settings<<QString::number(p->defStyleNum,10);
-    settings<<(p->itemSet(KateAttribute::TextColor)?QString::number(p->textColor().rgb(),16):"");
-    settings<<(p->itemSet(KateAttribute::SelectedTextColor)?QString::number(p->selectedTextColor().rgb(),16):"");
+    settings<<TQString::number(p->defStyleNum,10);
+    settings<<(p->itemSet(KateAttribute::TextColor)?TQString::number(p->textColor().rgb(),16):"");
+    settings<<(p->itemSet(KateAttribute::SelectedTextColor)?TQString::number(p->selectedTextColor().rgb(),16):"");
     settings<<(p->itemSet(KateAttribute::Weight)?(p->bold()?"1":"0"):"");
     settings<<(p->itemSet(KateAttribute::Italic)?(p->italic()?"1":"0"):"");
     settings<<(p->itemSet(KateAttribute::StrikeOut)?(p->strikeOut()?"1":"0"):"");
     settings<<(p->itemSet(KateAttribute::Underline)?(p->underline()?"1":"0"):"");
-    settings<<(p->itemSet(KateAttribute::BGColor)?QString::number(p->bgColor().rgb(),16):"");
-    settings<<(p->itemSet(KateAttribute::SelectedBGColor)?QString::number(p->selectedBGColor().rgb(),16):"");
+    settings<<(p->itemSet(KateAttribute::BGColor)?TQString::number(p->bgColor().rgb(),16):"");
+    settings<<(p->itemSet(KateAttribute::SelectedBGColor)?TQString::number(p->selectedBGColor().rgb(),16):"");
     settings<<"---";
     config->writeEntry(p->name,settings);
   }
@@ -1845,29 +1845,29 @@ void KateHighlighting::addToKateHlItemDataList()
   while (KateHlManager::self()->syntax->nextGroup(data))
   {
     // read all attributes
-    QString color = KateHlManager::self()->syntax->groupData(data,QString("color"));
-    QString selColor = KateHlManager::self()->syntax->groupData(data,QString("selColor"));
-    QString bold = KateHlManager::self()->syntax->groupData(data,QString("bold"));
-    QString italic = KateHlManager::self()->syntax->groupData(data,QString("italic"));
-    QString underline = KateHlManager::self()->syntax->groupData(data,QString("underline"));
-    QString strikeOut = KateHlManager::self()->syntax->groupData(data,QString("strikeOut"));
-    QString bgColor = KateHlManager::self()->syntax->groupData(data,QString("backgroundColor"));
-    QString selBgColor = KateHlManager::self()->syntax->groupData(data,QString("selBackgroundColor"));
+    TQString color = KateHlManager::self()->syntax->groupData(data,TQString("color"));
+    TQString selColor = KateHlManager::self()->syntax->groupData(data,TQString("selColor"));
+    TQString bold = KateHlManager::self()->syntax->groupData(data,TQString("bold"));
+    TQString italic = KateHlManager::self()->syntax->groupData(data,TQString("italic"));
+    TQString underline = KateHlManager::self()->syntax->groupData(data,TQString("underline"));
+    TQString strikeOut = KateHlManager::self()->syntax->groupData(data,TQString("strikeOut"));
+    TQString bgColor = KateHlManager::self()->syntax->groupData(data,TQString("backgroundColor"));
+    TQString selBgColor = KateHlManager::self()->syntax->groupData(data,TQString("selBackgroundColor"));
 
     KateHlItemData* newData = new KateHlItemData(
-            buildPrefix+KateHlManager::self()->syntax->groupData(data,QString("name")).simplifyWhiteSpace(),
-            getDefStyleNum(KateHlManager::self()->syntax->groupData(data,QString("defStyleNum"))));
+            buildPrefix+KateHlManager::self()->syntax->groupData(data,TQString("name")).simplifyWhiteSpace(),
+            getDefStyleNum(KateHlManager::self()->syntax->groupData(data,TQString("defStyleNum"))));
 
     /* here the custom style overrides are specified, if needed */
-    if (!color.isEmpty()) newData->setTextColor(QColor(color));
-    if (!selColor.isEmpty()) newData->setSelectedTextColor(QColor(selColor));
+    if (!color.isEmpty()) newData->setTextColor(TQColor(color));
+    if (!selColor.isEmpty()) newData->setSelectedTextColor(TQColor(selColor));
     if (!bold.isEmpty()) newData->setBold( IS_TRUE(bold) );
     if (!italic.isEmpty()) newData->setItalic( IS_TRUE(italic) );
     // new attributes for the new rendering view
     if (!underline.isEmpty()) newData->setUnderline( IS_TRUE(underline) );
     if (!strikeOut.isEmpty()) newData->setStrikeOut( IS_TRUE(strikeOut) );
-    if (!bgColor.isEmpty()) newData->setBGColor(QColor(bgColor));
-    if (!selBgColor.isEmpty()) newData->setSelectedBGColor(QColor(selBgColor));
+    if (!bgColor.isEmpty()) newData->setBGColor(TQColor(bgColor));
+    if (!selBgColor.isEmpty()) newData->setSelectedBGColor(TQColor(selBgColor));
 
     internalIDList.append(newData);
   }
@@ -1887,7 +1887,7 @@ void KateHighlighting::addToKateHlItemDataList()
  *
  * @return The index of the attribute, or 0 if the attribute isn't found
  */
-int  KateHighlighting::lookupAttrName(const QString& name, KateHlItemDataList &iDl)
+int  KateHighlighting::lookupAttrName(const TQString& name, KateHlItemDataList &iDl)
 {
   for (uint i = 0; i < iDl.count(); i++)
     if (iDl.at(i)->name == buildPrefix+name)
@@ -1912,19 +1912,19 @@ int  KateHighlighting::lookupAttrName(const QString& name, KateHlItemDataList &i
  */
 KateHlItem *KateHighlighting::createKateHlItem(KateSyntaxContextData *data,
                                                KateHlItemDataList &iDl,
-                                               QStringList *RegionList,
-                                               QStringList *ContextNameList)
+                                               TQStringList *RegionList,
+                                               TQStringList *ContextNameList)
 {
   // No highlighting -> exit
   if (noHl)
     return 0;
 
   // get the (tagname) itemd type
-  QString dataname=KateHlManager::self()->syntax->groupItemData(data,QString(""));
+  TQString dataname=KateHlManager::self()->syntax->groupItemData(data,TQString(""));
 
   // code folding region handling:
-  QString beginRegionStr=KateHlManager::self()->syntax->groupItemData(data,QString("beginRegion"));
-  QString endRegionStr=KateHlManager::self()->syntax->groupItemData(data,QString("endRegion"));
+  TQString beginRegionStr=KateHlManager::self()->syntax->groupItemData(data,TQString("beginRegion"));
+  TQString endRegionStr=KateHlManager::self()->syntax->groupItemData(data,TQString("endRegion"));
 
   signed char regionId=0;
   signed char regionId2=0;
@@ -1960,13 +1960,13 @@ KateHlItem *KateHighlighting::createKateHlItem(KateSyntaxContextData *data,
   }
 
   int attr = 0;
-  QString tmpAttr=KateHlManager::self()->syntax->groupItemData(data,QString("attribute")).simplifyWhiteSpace();
+  TQString tmpAttr=KateHlManager::self()->syntax->groupItemData(data,TQString("attribute")).simplifyWhiteSpace();
   bool onlyConsume = tmpAttr.isEmpty();
 
   // only relevant for non consumer
   if (!onlyConsume)
   {
-    if (QString("%1").arg(tmpAttr.toInt())==tmpAttr)
+    if (TQString("%1").arg(tmpAttr.toInt())==tmpAttr)
     {
       errorsAndWarnings+=i18n(
           "<B>%1</B>: Deprecated syntax. Attribute (%2) not addressed by symbolic name<BR>").
@@ -1979,44 +1979,44 @@ KateHlItem *KateHighlighting::createKateHlItem(KateSyntaxContextData *data,
 
   // Info about context switch
   int context = -1;
-  QString unresolvedContext;
-  QString tmpcontext=KateHlManager::self()->syntax->groupItemData(data,QString("context"));
+  TQString unresolvedContext;
+  TQString tmpcontext=KateHlManager::self()->syntax->groupItemData(data,TQString("context"));
   if (!tmpcontext.isEmpty())
     context=getIdFromString(ContextNameList, tmpcontext,unresolvedContext);
 
   // Get the char parameter (eg DetectChar)
   char chr;
-  if (! KateHlManager::self()->syntax->groupItemData(data,QString("char")).isEmpty())
-    chr= (KateHlManager::self()->syntax->groupItemData(data,QString("char")).latin1())[0];
+  if (! KateHlManager::self()->syntax->groupItemData(data,TQString("char")).isEmpty())
+    chr= (KateHlManager::self()->syntax->groupItemData(data,TQString("char")).latin1())[0];
   else
     chr=0;
 
   // Get the String parameter (eg. StringDetect)
-  QString stringdata=KateHlManager::self()->syntax->groupItemData(data,QString("String"));
+  TQString stringdata=KateHlManager::self()->syntax->groupItemData(data,TQString("String"));
 
   // Get a second char parameter (char1) (eg Detect2Chars)
   char chr1;
-  if (! KateHlManager::self()->syntax->groupItemData(data,QString("char1")).isEmpty())
-    chr1= (KateHlManager::self()->syntax->groupItemData(data,QString("char1")).latin1())[0];
+  if (! KateHlManager::self()->syntax->groupItemData(data,TQString("char1")).isEmpty())
+    chr1= (KateHlManager::self()->syntax->groupItemData(data,TQString("char1")).latin1())[0];
   else
     chr1=0;
 
   // Will be removed eventually. Atm used for StringDetect, keyword and RegExp
-  const QString & insensitive_str = KateHlManager::self()->syntax->groupItemData(data,QString("insensitive"));
+  const TQString & insensitive_str = KateHlManager::self()->syntax->groupItemData(data,TQString("insensitive"));
   bool insensitive = IS_TRUE( insensitive_str );
 
   // for regexp only
-  bool minimal = IS_TRUE( KateHlManager::self()->syntax->groupItemData(data,QString("minimal")) );
+  bool minimal = IS_TRUE( KateHlManager::self()->syntax->groupItemData(data,TQString("minimal")) );
 
   // dominik: look ahead and do not change offset. so we can change contexts w/o changing offset1.
-  bool lookAhead = IS_TRUE( KateHlManager::self()->syntax->groupItemData(data,QString("lookAhead")) );
+  bool lookAhead = IS_TRUE( KateHlManager::self()->syntax->groupItemData(data,TQString("lookAhead")) );
 
-  bool dynamic= IS_TRUE(KateHlManager::self()->syntax->groupItemData(data,QString("dynamic")) );
+  bool dynamic= IS_TRUE(KateHlManager::self()->syntax->groupItemData(data,TQString("dynamic")) );
 
-  bool firstNonSpace = IS_TRUE(KateHlManager::self()->syntax->groupItemData(data,QString("firstNonSpace")) );
+  bool firstNonSpace = IS_TRUE(KateHlManager::self()->syntax->groupItemData(data,TQString("firstNonSpace")) );
 
   int column = -1;
-  QString colStr = KateHlManager::self()->syntax->groupItemData(data,QString("column"));
+  TQString colStr = KateHlManager::self()->syntax->groupItemData(data,TQString("column"));
   if (!colStr.isEmpty())
     column = colStr.toInt();
 
@@ -2070,12 +2070,12 @@ KateHlItem *KateHighlighting::createKateHlItem(KateSyntaxContextData *data,
   return tmpItem;
 }
 
-QString KateHighlighting::hlKeyForAttrib( int i ) const
+TQString KateHighlighting::hlKeyForAttrib( int i ) const
 {
-  // find entry. This is faster than QMap::find. m_hlIndex always has an entry
+  // find entry. This is faster than TQMap::find. m_hlIndex always has an entry
   // for key '0' (it is "none"), so the result is always valid.
   int k = 0;
-  QMap<int,QString>::const_iterator it = m_hlIndex.constEnd();
+  TQMap<int,TQString>::const_iterator it = m_hlIndex.constEnd();
   while ( it != m_hlIndex.constBegin() )
   {
     --it;
@@ -2086,42 +2086,42 @@ QString KateHighlighting::hlKeyForAttrib( int i ) const
   return it.data();
 }
 
-bool KateHighlighting::isInWord( QChar c, int attrib ) const
+bool KateHighlighting::isInWord( TQChar c, int attrib ) const
 {
   return m_additionalData[ hlKeyForAttrib( attrib ) ]->deliminator.find(c) < 0
       && !c.isSpace() && c != '"' && c != '\'';
 }
 
-bool KateHighlighting::canBreakAt( QChar c, int attrib ) const
+bool KateHighlighting::canBreakAt( TQChar c, int attrib ) const
 {
-  static const QString& sq = KGlobal::staticQString("\"'");
+  static const TQString& sq = KGlobal::staticQString("\"'");
   return (m_additionalData[ hlKeyForAttrib( attrib ) ]->wordWrapDeliminator.find(c) != -1) && (sq.find(c) == -1);
 }
 
 signed char KateHighlighting::commentRegion(int attr) const {
-  QString commentRegion=m_additionalData[ hlKeyForAttrib( attr ) ]->multiLineRegion;
+  TQString commentRegion=m_additionalData[ hlKeyForAttrib( attr ) ]->multiLineRegion;
   return (commentRegion.isEmpty()?0:(commentRegion.toShort()));
 }
 
 bool KateHighlighting::canComment( int startAttrib, int endAttrib ) const
 {
-  QString k = hlKeyForAttrib( startAttrib );
+  TQString k = hlKeyForAttrib( startAttrib );
   return ( k == hlKeyForAttrib( endAttrib ) &&
       ( ( !m_additionalData[k]->multiLineCommentStart.isEmpty() && !m_additionalData[k]->multiLineCommentEnd.isEmpty() ) ||
        ! m_additionalData[k]->singleLineCommentMarker.isEmpty() ) );
 }
 
-QString KateHighlighting::getCommentStart( int attrib ) const
+TQString KateHighlighting::getCommentStart( int attrib ) const
 {
   return m_additionalData[ hlKeyForAttrib( attrib) ]->multiLineCommentStart;
 }
 
-QString KateHighlighting::getCommentEnd( int attrib ) const
+TQString KateHighlighting::getCommentEnd( int attrib ) const
 {
   return m_additionalData[ hlKeyForAttrib( attrib ) ]->multiLineCommentEnd;
 }
 
-QString KateHighlighting::getCommentSingleLineStart( int attrib ) const
+TQString KateHighlighting::getCommentSingleLineStart( int attrib ) const
 {
   return m_additionalData[ hlKeyForAttrib( attrib) ]->singleLineCommentMarker;
 }
@@ -2141,7 +2141,7 @@ void KateHighlighting::readCommentConfig()
   KateHlManager::self()->syntax->setIdentifier(buildIdentifier);
   KateSyntaxContextData *data=KateHlManager::self()->syntax->getGroupInfo("general","comment");
 
-  QString cmlStart="", cmlEnd="", cmlRegion="", cslStart="";
+  TQString cmlStart="", cmlEnd="", cmlRegion="", cslStart="";
   CSLPos cslPosition=CSLPosColumn0;
 
   if (data)
@@ -2151,7 +2151,7 @@ void KateHighlighting::readCommentConfig()
       if (KateHlManager::self()->syntax->groupData(data,"name")=="singleLine")
       {
         cslStart=KateHlManager::self()->syntax->groupData(data,"start");
-        QString cslpos=KateHlManager::self()->syntax->groupData(data,"position");
+        TQString cslpos=KateHlManager::self()->syntax->groupData(data,"position");
         if (cslpos=="afterwhitespace")
           cslPosition=CSLPosAfterWhitespace;
         else
@@ -2193,13 +2193,13 @@ void KateHighlighting::readGlobalKeywordConfig()
   {
     kdDebug(13010)<<"Found global keyword config"<<endl;
 
-    if ( IS_TRUE( KateHlManager::self()->syntax->groupItemData(data,QString("casesensitive")) ) )
+    if ( IS_TRUE( KateHlManager::self()->syntax->groupItemData(data,TQString("casesensitive")) ) )
       casesensitive=true;
     else
       casesensitive=false;
 
     //get the weak deliminators
-    weakDeliminator=(KateHlManager::self()->syntax->groupItemData(data,QString("weakDeliminator")));
+    weakDeliminator=(KateHlManager::self()->syntax->groupItemData(data,TQString("weakDeliminator")));
 
     kdDebug(13010)<<"weak delimiters are: "<<weakDeliminator<<endl;
 
@@ -2212,7 +2212,7 @@ void KateHighlighting::readGlobalKeywordConfig()
         deliminator.remove (f, 1);
     }
 
-    QString addDelim = (KateHlManager::self()->syntax->groupItemData(data,QString("additionalDeliminator")));
+    TQString addDelim = (KateHlManager::self()->syntax->groupItemData(data,TQString("additionalDeliminator")));
 
     if (!addDelim.isEmpty())
       deliminator=deliminator+addDelim;
@@ -2223,7 +2223,7 @@ void KateHighlighting::readGlobalKeywordConfig()
   {
     //Default values
     casesensitive=true;
-    weakDeliminator=QString("");
+    weakDeliminator=TQString("");
   }
 
   kdDebug(13010)<<"readGlobalKeywordConfig:END"<<endl;
@@ -2251,12 +2251,12 @@ void KateHighlighting::readWordWrapConfig()
   KateHlManager::self()->syntax->setIdentifier(buildIdentifier);
   KateSyntaxContextData *data = KateHlManager::self()->syntax->getConfig("general","keywords");
 
-  QString wordWrapDeliminator = stdDeliminator;
+  TQString wordWrapDeliminator = stdDeliminator;
   if (data)
   {
     kdDebug(13010)<<"Found global keyword config"<<endl;
 
-    wordWrapDeliminator = (KateHlManager::self()->syntax->groupItemData(data,QString("wordWrapDeliminator")));
+    wordWrapDeliminator = (KateHlManager::self()->syntax->groupItemData(data,TQString("wordWrapDeliminator")));
     //when no wordWrapDeliminator is defined use the deliminator list
     if ( wordWrapDeliminator.length() == 0 ) wordWrapDeliminator = deliminator;
 
@@ -2279,7 +2279,7 @@ void KateHighlighting::readIndentationConfig()
 
   if (data)
   {
-    m_indentation = (KateHlManager::self()->syntax->groupItemData(data,QString("mode")));
+    m_indentation = (KateHlManager::self()->syntax->groupItemData(data,TQString("mode")));
 
     KateHlManager::self()->syntax->freeGroupInfo(data);
   }
@@ -2297,7 +2297,7 @@ void KateHighlighting::readFoldingConfig()
   {
     kdDebug(13010)<<"Found global keyword config"<<endl;
 
-    if ( IS_TRUE( KateHlManager::self()->syntax->groupItemData(data,QString("indentationsensitive")) ) )
+    if ( IS_TRUE( KateHlManager::self()->syntax->groupItemData(data,TQString("indentationsensitive")) ) )
       m_foldingIndentationSensitive=true;
     else
       m_foldingIndentationSensitive=false;
@@ -2315,7 +2315,7 @@ void KateHighlighting::readFoldingConfig()
   kdDebug(13010)<<"############################ use indent for fold are: "<<m_foldingIndentationSensitive<<endl;
 }
 
-void  KateHighlighting::createContextNameList(QStringList *ContextNameList,int ctx0)
+void  KateHighlighting::createContextNameList(TQStringList *ContextNameList,int ctx0)
 {
   kdDebug(13010)<<"creatingContextNameList:BEGIN"<<endl;
 
@@ -2332,10 +2332,10 @@ void  KateHighlighting::createContextNameList(QStringList *ContextNameList,int c
   {
      while (KateHlManager::self()->syntax->nextGroup(data))
      {
-          QString tmpAttr=KateHlManager::self()->syntax->groupData(data,QString("name")).simplifyWhiteSpace();
+          TQString tmpAttr=KateHlManager::self()->syntax->groupData(data,TQString("name")).simplifyWhiteSpace();
     if (tmpAttr.isEmpty())
     {
-     tmpAttr=QString("!KATE_INTERNAL_DUMMY! %1").arg(id);
+     tmpAttr=TQString("!KATE_INTERNAL_DUMMY! %1").arg(id);
      errorsAndWarnings +=i18n("<B>%1</B>: Deprecated syntax. Context %2 has no symbolic name<BR>").arg(buildIdentifier).arg(id-ctx0);
     }
           else tmpAttr=buildPrefix+tmpAttr;
@@ -2348,7 +2348,7 @@ void  KateHighlighting::createContextNameList(QStringList *ContextNameList,int c
 
 }
 
-int KateHighlighting::getIdFromString(QStringList *ContextNameList, QString tmpLineEndContext, /*NO CONST*/ QString &unres)
+int KateHighlighting::getIdFromString(TQStringList *ContextNameList, TQString tmpLineEndContext, /*NO CONST*/ TQString &unres)
 {
   unres="";
   int context;
@@ -2370,7 +2370,7 @@ int KateHighlighting::getIdFromString(QStringList *ContextNameList, QString tmpL
     int o = tmpLineEndContext.find("##");
     // FIXME at least with 'foo##bar'-style contexts the rules are picked up
     // but the default attribute is not
-    QString tmp=tmpLineEndContext.mid(o+2);
+    TQString tmp=tmpLineEndContext.mid(o+2);
     if (!embeddedHls.contains(tmp))  embeddedHls.insert(tmp,KateEmbeddedHlInfo());
     unres=tmp+':'+tmpLineEndContext.left(o);
     context=0;
@@ -2427,7 +2427,7 @@ void KateHighlighting::makeContextList()
       if (!it.data().loaded)  // we found one, we still have to load
       {
         kdDebug(13010)<<"**************** Inner loop in make ContextList"<<endl;
-        QString identifierToUse;
+        TQString identifierToUse;
         kdDebug(13010)<<"Trying to open highlighting definition file: "<< it.key()<<endl;
         if (iName==it.key()) // the own identifier is known
           identifierToUse=identifier;
@@ -2469,7 +2469,7 @@ void KateHighlighting::makeContextList()
   for (KateHlUnresolvedCtxRefs::iterator unresIt=unresolvedContextReferences.begin();
     unresIt!=unresolvedContextReferences.end();++unresIt)
   {
-    QString incCtx = unresIt.data();
+    TQString incCtx = unresIt.data();
     kdDebug(13010)<<"Context "<<incCtx<<" is unresolved"<<endl;
     // only resolve '##Name' contexts here; handleKateHlIncludeRules() can figure
     // out 'Name##Name'-style inclusions, but we screw it up
@@ -2513,7 +2513,7 @@ void KateHighlighting::handleKateHlIncludeRules()
   if (includeRules.isEmpty()) return;
 
   buildPrefix="";
-  QString dummy;
+  TQString dummy;
 
   // By now the context0 references are resolved, now more or less only inner
   // file references are resolved. If we decide that arbitrary inclusion is
@@ -2636,7 +2636,7 @@ void KateHighlighting::handleKateHlIncludeRulesRecursive(KateHlIncludeRules::ite
  *
  * @return the number of contexts after this is added.
  */
-int KateHighlighting::addToContextList(const QString &ident, int ctx0)
+int KateHighlighting::addToContextList(const TQString &ident, int ctx0)
 {
   kdDebug(13010)<<"=== Adding hl with ident '"<<ident<<"'"<<endl;
 
@@ -2644,7 +2644,7 @@ int KateHighlighting::addToContextList(const QString &ident, int ctx0)
   KateSyntaxContextData *data, *datasub;
   KateHlItem *c;
 
-  QString dummy;
+  TQString dummy;
 
   // Let the syntax document class know, which file we'd like to parse
   if (!KateHlManager::self()->syntax->setIdentifier(ident))
@@ -2674,7 +2674,7 @@ int KateHighlighting::addToContextList(const QString &ident, int ctx0)
 
   readFoldingConfig ();
 
-  QString ctxName;
+  TQString ctxName;
 
   // This list is needed for the translation of the attribute parameter,
   // if the itemData name is given instead of the index
@@ -2694,22 +2694,22 @@ int KateHighlighting::addToContextList(const QString &ident, int ctx0)
     {
       kdDebug(13010)<<"Found a context in file, building structure now"<<endl;
       //BEGIN - Translation of the attribute parameter
-      QString tmpAttr=KateHlManager::self()->syntax->groupData(data,QString("attribute")).simplifyWhiteSpace();
+      TQString tmpAttr=KateHlManager::self()->syntax->groupData(data,TQString("attribute")).simplifyWhiteSpace();
       int attr;
-      if (QString("%1").arg(tmpAttr.toInt())==tmpAttr)
+      if (TQString("%1").arg(tmpAttr.toInt())==tmpAttr)
         attr=tmpAttr.toInt();
       else
         attr=lookupAttrName(tmpAttr,iDl);
       //END - Translation of the attribute parameter
 
-      ctxName=buildPrefix+KateHlManager::self()->syntax->groupData(data,QString("lineEndContext")).simplifyWhiteSpace();
+      ctxName=buildPrefix+KateHlManager::self()->syntax->groupData(data,TQString("lineEndContext")).simplifyWhiteSpace();
 
-      QString tmpLineEndContext=KateHlManager::self()->syntax->groupData(data,QString("lineEndContext")).simplifyWhiteSpace();
+      TQString tmpLineEndContext=KateHlManager::self()->syntax->groupData(data,TQString("lineEndContext")).simplifyWhiteSpace();
       int context;
 
       context=getIdFromString(&ContextNameList, tmpLineEndContext,dummy);
 
-      QString tmpNIBF = KateHlManager::self()->syntax->groupData(data, QString("noIndentationBasedFolding") );
+      TQString tmpNIBF = KateHlManager::self()->syntax->groupData(data, TQString("noIndentationBasedFolding") );
       bool noIndentationBasedFolding=IS_TRUE(tmpNIBF);
 
       //BEGIN get fallthrough props
@@ -2717,12 +2717,12 @@ int KateHighlighting::addToContextList(const QString &ident, int ctx0)
       int ftc = 0; // fallthrough context
       if ( i > 0 )  // fallthrough is not smart in context 0
       {
-        QString tmpFt = KateHlManager::self()->syntax->groupData(data, QString("fallthrough") );
+        TQString tmpFt = KateHlManager::self()->syntax->groupData(data, TQString("fallthrough") );
         if ( IS_TRUE(tmpFt) )
           ft = true;
         if ( ft )
         {
-          QString tmpFtc = KateHlManager::self()->syntax->groupData( data, QString("fallthroughContext") );
+          TQString tmpFtc = KateHlManager::self()->syntax->groupData( data, TQString("fallthroughContext") );
 
           ftc=getIdFromString(&ContextNameList, tmpFtc,dummy);
           if (ftc == -1) ftc =0;
@@ -2733,7 +2733,7 @@ int KateHighlighting::addToContextList(const QString &ident, int ctx0)
       //END falltrhough props
 
       bool dynamic = false;
-      QString tmpDynamic = KateHlManager::self()->syntax->groupData(data, QString("dynamic") );
+      TQString tmpDynamic = KateHlManager::self()->syntax->groupData(data, TQString("dynamic") );
       if ( tmpDynamic.lower() == "true" ||  tmpDynamic.toInt() == 1 )
         dynamic = true;
 
@@ -2741,8 +2741,8 @@ int KateHighlighting::addToContextList(const QString &ident, int ctx0)
         ident,
         attr,
         context,
-        (KateHlManager::self()->syntax->groupData(data,QString("lineBeginContext"))).isEmpty()?-1:
-        (KateHlManager::self()->syntax->groupData(data,QString("lineBeginContext"))).toInt(),
+        (KateHlManager::self()->syntax->groupData(data,TQString("lineBeginContext"))).isEmpty()?-1:
+        (KateHlManager::self()->syntax->groupData(data,TQString("lineBeginContext"))).toInt(),
         ft, ftc, dynamic,noIndentationBasedFolding);
 
       m_contexts.push_back (ctxNew);
@@ -2756,11 +2756,11 @@ int KateHighlighting::addToContextList(const QString &ident, int ctx0)
 
       // KateHlIncludeRules : add a pointer to each item in that context
         // TODO add a attrib includeAttrib
-      QString tag = KateHlManager::self()->syntax->groupItemData(data,QString(""));
+      TQString tag = KateHlManager::self()->syntax->groupItemData(data,TQString(""));
       if ( tag == "IncludeRules" ) //if the new item is an Include rule, we have to take special care
       {
-        QString incCtx = KateHlManager::self()->syntax->groupItemData( data, QString("context"));
-        QString incAttrib = KateHlManager::self()->syntax->groupItemData( data, QString("includeAttrib"));
+        TQString incCtx = KateHlManager::self()->syntax->groupItemData( data, TQString("context"));
+        TQString incAttrib = KateHlManager::self()->syntax->groupItemData( data, TQString("includeAttrib"));
         bool includeAttrib = IS_TRUE( incAttrib );
         // only context refernces of type Name, ##Name, and Subname##Name are allowed
         if (incCtx.startsWith("##") || (!incCtx.startsWith("#")))
@@ -2769,8 +2769,8 @@ int KateHighlighting::addToContextList(const QString &ident, int ctx0)
           //#stay, #pop is not interesting here
           if (incCtxi >= 0)
           {
-            QString incSet = incCtx.mid(incCtxi + 2);
-            QString incCtxN = incSet + ":" + incCtx.left(incCtxi);
+            TQString incSet = incCtx.mid(incCtxi + 2);
+            TQString incCtxN = incSet + ":" + incCtx.left(incCtxi);
 
             //a cross highlighting reference
             kdDebug(13010)<<"Cross highlight reference <IncludeRules>, context "<<incCtxN<<endl;
@@ -2798,13 +2798,13 @@ int KateHighlighting::addToContextList(const QString &ident, int ctx0)
       }
       // TODO -- can we remove the block below??
 #if 0
-                QString tag = KateHlManager::self()->syntax->groupKateHlItemData(data,QString(""));
+                TQString tag = KateHlManager::self()->syntax->groupKateHlItemData(data,TQString(""));
                 if ( tag == "IncludeRules" ) {
                   // attrib context: the index (jowenn, i think using names here
                   // would be a cool feat, goes for mentioning the context in
                   // any item. a map or dict?)
                   int ctxId = getIdFromString(&ContextNameList,
-                                               KateHlManager::self()->syntax->groupKateHlItemData( data, QString("context")),dummy); // the index is *required*
+                                               KateHlManager::self()->syntax->groupKateHlItemData( data, TQString("context")),dummy); // the index is *required*
                   if ( ctxId > -1) { // we can even reuse rules of 0 if we want to:)
                     kdDebug(13010)<<"makeContextList["<<i<<"]: including all items of context "<<ctxId<<endl;
                     if ( ctxId < (int) i ) { // must be defined
@@ -2855,11 +2855,11 @@ int KateHighlighting::addToContextList(const QString &ident, int ctx0)
       errorsAndWarnings+=i18n(
           "<B>%1</B>: Specified multiline comment region (%2) could not be resolved<BR>"
                              ).arg(buildIdentifier).arg( m_additionalData[ ident ]->multiLineRegion );
-      m_additionalData[ ident ]->multiLineRegion = QString();
+      m_additionalData[ ident ]->multiLineRegion = TQString();
       kdDebug(13010)<<"ERROR comment region attribute could not be resolved"<<endl;
 
     } else {
-      m_additionalData[ ident ]->multiLineRegion=QString::number(commentregionid+1);
+      m_additionalData[ ident ]->multiLineRegion=TQString::number(commentregionid+1);
       kdDebug(13010)<<"comment region resolved to:"<<m_additionalData[ ident ]->multiLineRegion<<endl;
     }
   }
@@ -2869,7 +2869,7 @@ int KateHighlighting::addToContextList(const QString &ident, int ctx0)
 
 void KateHighlighting::clearAttributeArrays ()
 {
-  for ( QIntDictIterator< QMemArray<KateAttribute> > it( m_attributeArrays ); it.current(); ++it )
+  for ( TQIntDictIterator< TQMemArray<KateAttribute> > it( m_attributeArrays ); it.current(); ++it )
   {
     // k, schema correct, let create the data
     KateAttributeList defaultStyleList;
@@ -2880,7 +2880,7 @@ void KateHighlighting::clearAttributeArrays ()
     getKateHlItemDataList(it.currentKey(), itemDataList);
 
     uint nAttribs = itemDataList.count();
-    QMemArray<KateAttribute> *array = it.current();
+    TQMemArray<KateAttribute> *array = it.current();
     array->resize (nAttribs);
 
     for (uint z = 0; z < nAttribs; z++)
@@ -2896,9 +2896,9 @@ void KateHighlighting::clearAttributeArrays ()
   }
 }
 
-QMemArray<KateAttribute> *KateHighlighting::attributes (uint schema)
+TQMemArray<KateAttribute> *KateHighlighting::attributes (uint schema)
 {
-  QMemArray<KateAttribute> *array;
+  TQMemArray<KateAttribute> *array;
 
   // found it, allready floating around
   if ((array = m_attributeArrays[schema]))
@@ -2920,7 +2920,7 @@ QMemArray<KateAttribute> *KateHighlighting::attributes (uint schema)
   getKateHlItemDataList(schema, itemDataList);
 
   uint nAttribs = itemDataList.count();
-  array = new QMemArray<KateAttribute> (nAttribs);
+  array = new TQMemArray<KateAttribute> (nAttribs);
 
   for (uint z = 0; z < nAttribs; z++)
   {
@@ -2953,9 +2953,9 @@ void KateHighlighting::getKateHlItemDataListCopy (uint schema, KateHlItemDataLis
 
 //BEGIN KateHlManager
 KateHlManager::KateHlManager()
-  : QObject()
+  : TQObject()
   , m_config ("katesyntaxhighlightingrc", false, false)
-  , commonSuffixes (QStringList::split(";", ".orig;.new;~;.bak;.BAK"))
+  , commonSuffixes (TQStringList::split(";", ".orig;.new;~;.bak;.BAK"))
   , syntax (new KateSyntaxDocument())
   , dynamicCtxsCount(0)
   , forceNoDCReset(false)
@@ -2974,8 +2974,8 @@ KateHlManager::KateHlManager()
       if (insert == hlList.count())
         break;
 
-      if ( QString(hlList.at(insert)->section() + hlList.at(insert)->nameTranslated()).lower()
-            > QString(hl->section() + hl->nameTranslated()).lower() )
+      if ( TQString(hlList.at(insert)->section() + hlList.at(insert)->nameTranslated()).lower()
+            > TQString(hl->section() + hl->nameTranslated()).lower() )
         break;
     }
 
@@ -3014,7 +3014,7 @@ KateHighlighting *KateHlManager::getHl(int n)
   return hlList.at(n);
 }
 
-int KateHlManager::nameFind(const QString &name)
+int KateHlManager::nameFind(const TQString &name)
 {
   int z (hlList.count() - 1);
   for (; z > 0; z--)
@@ -3033,20 +3033,20 @@ int KateHlManager::detectHighlighting (KateDocument *doc)
   return hl;
 }
 
-int KateHlManager::wildcardFind(const QString &fileName)
+int KateHlManager::wildcardFind(const TQString &fileName)
 {
   int result = -1;
   if ((result = realWildcardFind(fileName)) != -1)
     return result;
 
   int length = fileName.length();
-  QString backupSuffix = KateDocumentConfig::global()->backupSuffix();
+  TQString backupSuffix = KateDocumentConfig::global()->backupSuffix();
   if (fileName.endsWith(backupSuffix)) {
     if ((result = realWildcardFind(fileName.left(length - backupSuffix.length()))) != -1)
       return result;
   }
 
-  for (QStringList::Iterator it = commonSuffixes.begin(); it != commonSuffixes.end(); ++it) {
+  for (TQStringList::Iterator it = commonSuffixes.begin(); it != commonSuffixes.end(); ++it) {
     if (*it != backupSuffix && fileName.endsWith(*it)) {
       if ((result = realWildcardFind(fileName.left(length - (*it).length()))) != -1)
         return result;
@@ -3056,21 +3056,21 @@ int KateHlManager::wildcardFind(const QString &fileName)
   return -1;
 }
 
-int KateHlManager::realWildcardFind(const QString &fileName)
+int KateHlManager::realWildcardFind(const TQString &fileName)
 {
-  static QRegExp sep("\\s*;\\s*");
+  static TQRegExp sep("\\s*;\\s*");
 
-  QPtrList<KateHighlighting> highlights;
+  TQPtrList<KateHighlighting> highlights;
 
   for (KateHighlighting *highlight = hlList.first(); highlight != 0L; highlight = hlList.next()) {
     highlight->loadWildcards();
 
-    for (QStringList::Iterator it = highlight->getPlainExtensions().begin(); it != highlight->getPlainExtensions().end(); ++it)
+    for (TQStringList::Iterator it = highlight->getPlainExtensions().begin(); it != highlight->getPlainExtensions().end(); ++it)
       if (fileName.endsWith((*it)))
         highlights.append(highlight);
 
     for (int i = 0; i < (int)highlight->getRegexpExtensions().count(); i++) {
-      QRegExp re = highlight->getRegexpExtensions()[i];
+      TQRegExp re = highlight->getRegexpExtensions()[i];
       if (re.exactMatch(fileName))
         highlights.append(highlight);
     }
@@ -3097,17 +3097,17 @@ int KateHlManager::realWildcardFind(const QString &fileName)
 
 int KateHlManager::mimeFind( KateDocument *doc )
 {
-  static QRegExp sep("\\s*;\\s*");
+  static TQRegExp sep("\\s*;\\s*");
 
   KMimeType::Ptr mt = doc->mimeTypeForContent();
 
-  QPtrList<KateHighlighting> highlights;
+  TQPtrList<KateHighlighting> highlights;
 
   for (KateHighlighting *highlight = hlList.first(); highlight != 0L; highlight = hlList.next())
   {
-    QStringList l = QStringList::split( sep, highlight->getMimetypes() );
+    TQStringList l = TQStringList::split( sep, highlight->getMimetypes() );
 
-    for( QStringList::Iterator it = l.begin(); it != l.end(); ++it )
+    for( TQStringList::Iterator it = l.begin(); it != l.end(); ++it )
     {
       if ( *it == mt->name() ) // faster than a regexp i guess?
         highlights.append (highlight);
@@ -3139,10 +3139,10 @@ uint KateHlManager::defaultStyles()
   return 14;
 }
 
-QString KateHlManager::defaultStyleName(int n, bool translateNames)
+TQString KateHlManager::defaultStyleName(int n, bool translateNames)
 {
-  static QStringList names;
-  static QStringList translatedNames;
+  static TQStringList names;
+  static TQStringList translatedNames;
 
   if (names.isEmpty())
   {
@@ -3225,7 +3225,7 @@ void KateHlManager::getDefaults(uint schema, KateAttributeList &list)
   list.append(charAttribute);
 
   KateAttribute* string = new KateAttribute();
-  string->setTextColor(QColor::QColor("#D00"));
+  string->setTextColor(TQColor::TQColor("#D00"));
   string->setSelectedTextColor(Qt::red);
   list.append(string);
 
@@ -3242,9 +3242,9 @@ void KateHlManager::getDefaults(uint schema, KateAttributeList &list)
 
   KateAttribute* alert = new KateAttribute();
   alert->setTextColor(Qt::black);
-  alert->setSelectedTextColor( QColor::QColor("#FCC") );
+  alert->setSelectedTextColor( TQColor::TQColor("#FCC") );
   alert->setBold(true);
-  alert->setBGColor( QColor::QColor("#FCC") );
+  alert->setBGColor( TQColor::TQColor("#FCC") );
   list.append(alert);
 
   KateAttribute* functionAttribute = new KateAttribute();
@@ -3270,13 +3270,13 @@ void KateHlManager::getDefaults(uint schema, KateAttributeList &list)
   for (uint z = 0; z < defaultStyles(); z++)
   {
     KateAttribute *i = list.at(z);
-    QStringList s = config->readListEntry(defaultStyleName(z));
+    TQStringList s = config->readListEntry(defaultStyleName(z));
     if (!s.isEmpty())
     {
       while( s.count()<8)
         s << "";
 
-      QString tmp;
+      TQString tmp;
       QRgb col;
 
       tmp=s[0]; if (!tmp.isEmpty()) {
@@ -3322,17 +3322,17 @@ void KateHlManager::setDefaults(uint schema, KateAttributeList &list)
 
   for (uint z = 0; z < defaultStyles(); z++)
   {
-    QStringList settings;
+    TQStringList settings;
     KateAttribute *i = list.at(z);
 
-    settings<<(i->itemSet(KateAttribute::TextColor)?QString::number(i->textColor().rgb(),16):"");
-    settings<<(i->itemSet(KateAttribute::SelectedTextColor)?QString::number(i->selectedTextColor().rgb(),16):"");
+    settings<<(i->itemSet(KateAttribute::TextColor)?TQString::number(i->textColor().rgb(),16):"");
+    settings<<(i->itemSet(KateAttribute::SelectedTextColor)?TQString::number(i->selectedTextColor().rgb(),16):"");
     settings<<(i->itemSet(KateAttribute::Weight)?(i->bold()?"1":"0"):"");
     settings<<(i->itemSet(KateAttribute::Italic)?(i->italic()?"1":"0"):"");
     settings<<(i->itemSet(KateAttribute::StrikeOut)?(i->strikeOut()?"1":"0"):"");
     settings<<(i->itemSet(KateAttribute::Underline)?(i->underline()?"1":"0"):"");
-    settings<<(i->itemSet(KateAttribute::BGColor)?QString::number(i->bgColor().rgb(),16):"-");
-    settings<<(i->itemSet(KateAttribute::SelectedBGColor)?QString::number(i->selectedBGColor().rgb(),16):"-");
+    settings<<(i->itemSet(KateAttribute::BGColor)?TQString::number(i->bgColor().rgb(),16):"-");
+    settings<<(i->itemSet(KateAttribute::SelectedBGColor)?TQString::number(i->selectedBGColor().rgb(),16):"-");
     settings<<"---";
 
     config->writeEntry(defaultStyleName(z),settings);
@@ -3346,17 +3346,17 @@ int KateHlManager::highlights()
   return (int) hlList.count();
 }
 
-QString KateHlManager::hlName(int n)
+TQString KateHlManager::hlName(int n)
 {
   return hlList.at(n)->name();
 }
 
-QString KateHlManager::hlNameTranslated(int n)
+TQString KateHlManager::hlNameTranslated(int n)
 {
   return hlList.at(n)->nameTranslated();
 }
 
-QString KateHlManager::hlSection(int n)
+TQString KateHlManager::hlSection(int n)
 {
   return hlList.at(n)->section();
 }
@@ -3366,14 +3366,14 @@ bool KateHlManager::hlHidden(int n)
   return hlList.at(n)->hidden();
 }
 
-QString KateHlManager::identifierForName(const QString& name)
+TQString KateHlManager::identifierForName(const TQString& name)
 {
   KateHighlighting *hl = 0;
 
   if ((hl = hlDict[name]))
     return hl->getIdentifier ();
 
-  return QString();
+  return TQString();
 }
 
 bool KateHlManager::resetDynamicCtxs()
@@ -3401,7 +3401,7 @@ void KateViewHighlightAction::init()
   m_doc = 0;
   subMenus.setAutoDelete( true );
 
-  connect(popupMenu(),SIGNAL(aboutToShow()),this,SLOT(slotAboutToShow()));
+  connect(popupMenu(),TQT_SIGNAL(aboutToShow()),this,TQT_SLOT(slotAboutToShow()));
 }
 
 void KateViewHighlightAction::updateMenu (Kate::Document *doc)
@@ -3416,8 +3416,8 @@ void KateViewHighlightAction::slotAboutToShow()
 
   for (int z=0; z<count; z++)
   {
-    QString hlName = KateHlManager::self()->hlNameTranslated (z);
-    QString hlSection = KateHlManager::self()->hlSection (z);
+    TQString hlName = KateHlManager::self()->hlNameTranslated (z);
+    TQString hlSection = KateHlManager::self()->hlSection (z);
 
     if (!KateHlManager::self()->hlHidden(z))
     {
@@ -3426,19 +3426,19 @@ void KateViewHighlightAction::slotAboutToShow()
         if (subMenusName.contains(hlSection) < 1)
         {
           subMenusName << hlSection;
-          QPopupMenu *menu = new QPopupMenu ();
+          TQPopupMenu *menu = new TQPopupMenu ();
           subMenus.append(menu);
           popupMenu()->insertItem ( '&' + hlSection, menu);
         }
 
         int m = subMenusName.findIndex (hlSection);
         names << hlName;
-        subMenus.at(m)->insertItem ( '&' + hlName, this, SLOT(setHl(int)), 0,  z);
+        subMenus.at(m)->insertItem ( '&' + hlName, this, TQT_SLOT(setHl(int)), 0,  z);
       }
       else if (names.contains(hlName) < 1)
       {
         names << hlName;
-        popupMenu()->insertItem ( '&' + hlName, this, SLOT(setHl(int)), 0,  z);
+        popupMenu()->insertItem ( '&' + hlName, this, TQT_SLOT(setHl(int)), 0,  z);
       }
     }
   }

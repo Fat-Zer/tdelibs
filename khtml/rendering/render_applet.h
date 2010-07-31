@@ -25,8 +25,8 @@
 #include "rendering/render_replaced.h"
 #include "html/html_objectimpl.h"
 
-#include <qwidget.h>
-#include <qmap.h>
+#include <tqwidget.h>
+#include <tqmap.h>
 
 class KHTMLView;
 
@@ -39,7 +39,7 @@ namespace khtml {
 class RenderApplet : public RenderWidget
 {
 public:
-    RenderApplet(DOM::HTMLElementImpl* node, const QMap<QString, QString> &args);
+    RenderApplet(DOM::HTMLElementImpl* node, const TQMap<TQString, TQString> &args);
     virtual ~RenderApplet();
 
     virtual const char *renderName() const { return "RenderApplet"; }
@@ -53,7 +53,7 @@ public:
     { return static_cast<DOM::HTMLElementImpl*>(RenderObject::element()); }
 
 private:
-    void processArguments( const QMap<QString, QString> &args );
+    void processArguments( const TQMap<TQString, TQString> &args );
 };
 
 }

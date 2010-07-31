@@ -42,7 +42,7 @@ class KDEUI_EXPORT KShortcutDialog : public KDialogBase
 {
 	Q_OBJECT
 public:
-	KShortcutDialog( const KShortcut& shortcut, bool bQtShortcut, QWidget* parent = 0, const char* name = 0 );
+	KShortcutDialog( const KShortcut& shortcut, bool bQtShortcut, TQWidget* parent = 0, const char* name = 0 );
 	~KShortcutDialog();
 
 	void setShortcut( const KShortcut & shortcut );
@@ -61,7 +61,7 @@ private:
 	uint m_mod;
 	KShortcutDialogSimple *m_simple;
 	KShortcutDialogAdvanced *m_adv;
-	QVBox *m_stack;
+	TQVBox *m_stack;
 	
 	void updateShortcutDisplay();
 	//void displayMods();
@@ -75,8 +75,8 @@ private:
 	void x11KeyReleaseEvent( XEvent* pEvent );
 	#endif
 	#ifdef Q_WS_WIN
-	virtual void keyPressEvent( QKeyEvent * e );
-	virtual bool event(QEvent * e);
+	virtual void keyPressEvent( TQKeyEvent * e );
+	virtual bool event(TQEvent * e);
 	#endif
 
 protected slots:

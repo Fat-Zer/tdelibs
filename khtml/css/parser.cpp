@@ -264,7 +264,7 @@ static inline int getValueID(const char *tagStr, int len)
 typedef union YYSTYPE {
     CSSRuleImpl *rule;
     CSSSelector *selector;
-    QPtrList<CSSSelector> *selectorList;
+    TQPtrList<CSSSelector> *selectorList;
     bool ok;
     MediaListImpl *mediaList;
     CSSMediaRuleImpl *mediaRule;
@@ -1862,7 +1862,7 @@ yyreduce:
 
     {
 	if ( yyvsp[0].selector ) {
-	    yyval.selectorList = new QPtrList<CSSSelector>;
+	    yyval.selectorList = new TQPtrList<CSSSelector>;
             yyval.selectorList->setAutoDelete( true );
 #ifdef CSS_DEBUG
 	    kdDebug( 6080 ) << "   got simple selector:" << endl;
@@ -2019,7 +2019,7 @@ yyreduce:
     {
 	CSSParser *p = static_cast<CSSParser *>(parser);
 	DOM::DocumentImpl *doc = p->document();
-	QString tag = qString(yyvsp[0].string);
+	TQString tag = qString(yyvsp[0].string);
 	if ( doc ) {
 	    if (doc->isHTMLDocument())
 		tag = tag.lower();
@@ -2097,7 +2097,7 @@ yyreduce:
 	CSSParser *p = static_cast<CSSParser *>(parser);
 	DOM::DocumentImpl *doc = p->document();
 
-	QString attr = qString(yyvsp[-1].string);
+	TQString attr = qString(yyvsp[-1].string);
 	if ( doc ) {
 	    if (doc->isHTMLDocument())
 		attr = attr.lower();
@@ -2235,7 +2235,7 @@ yyreduce:
     {
         yyval.selector = new CSSSelector();
         yyval.selector->match = CSSSelector::PseudoClass;
-        yyval.selector->string_arg = QString::number(yyvsp[-1].val);
+        yyval.selector->string_arg = TQString::number(yyvsp[-1].val);
         yyval.selector->value = domString(yyvsp[-2].string);
     ;}
     break;
@@ -2373,7 +2373,7 @@ yyreduce:
   case 117:
 
     {
-	QString str = qString(yyvsp[-1].string);
+	TQString str = qString(yyvsp[-1].string);
 	yyval.prop_id = getPropertyID( str.lower().latin1(), str.length() );
     ;}
     break;
@@ -2457,7 +2457,7 @@ yyreduce:
   case 129:
 
     {
-      QString str = qString( yyvsp[-1].string );
+      TQString str = qString( yyvsp[-1].string );
       yyval.value.id = getValueID( str.lower().latin1(), str.length() );
       yyval.value.unit = CSSPrimitiveValue::CSS_IDENT;
       yyval.value.string = yyvsp[-1].string;

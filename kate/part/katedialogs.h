@@ -33,11 +33,11 @@
 #include <kdialogbase.h>
 #include <kmimetype.h>
 
-#include <qstringlist.h>
-#include <qcolor.h>
-#include <qintdict.h>
-#include <qvbox.h>
-#include <qtabwidget.h>
+#include <tqstringlist.h>
+#include <tqcolor.h>
+#include <tqintdict.h>
+#include <tqvbox.h>
+#include <tqtabwidget.h>
 
 class KatePartPluginListItem;
 
@@ -82,7 +82,7 @@ class KateConfigPage : public Kate::ConfigPage
   Q_OBJECT
 
   public:
-    KateConfigPage ( QWidget *parent=0, const char *name=0 );
+    KateConfigPage ( TQWidget *parent=0, const char *name=0 );
     virtual ~KateConfigPage ();
 
   public:
@@ -101,13 +101,13 @@ class KateGotoLineDialog : public KDialogBase
 
   public:
 
-    KateGotoLineDialog(QWidget *parent, int line, int max);
+    KateGotoLineDialog(TQWidget *parent, int line, int max);
     int getLine();
 
   protected:
 
     KIntNumInput *e1;
-    QPushButton *btnOK;
+    TQPushButton *btnOK;
 };
 
 class KateIndentConfigTab : public KateConfigPage
@@ -115,7 +115,7 @@ class KateIndentConfigTab : public KateConfigPage
   Q_OBJECT
 
   public:
-    KateIndentConfigTab(QWidget *parent);
+    KateIndentConfigTab(TQWidget *parent);
 
   protected slots:
     void somethingToggled();
@@ -124,11 +124,11 @@ class KateIndentConfigTab : public KateConfigPage
   protected:
     enum { numFlags = 8 };
     static const int flags[numFlags];
-    QCheckBox *opt[numFlags];
+    TQCheckBox *opt[numFlags];
     KIntNumInput *indentationWidth;
-    QButtonGroup *m_tabs;
+    TQButtonGroup *m_tabs;
     KComboBox *m_indentMode;
-    QPushButton *m_configPage;
+    TQPushButton *m_configPage;
 
   public slots:
     void configPage();
@@ -144,16 +144,16 @@ class KateSelectConfigTab : public KateConfigPage
   Q_OBJECT
 
   public:
-    KateSelectConfigTab(QWidget *parent);
+    KateSelectConfigTab(TQWidget *parent);
 
   protected:
     enum { numFlags = 2 };
     static const int flags[numFlags];
-    QCheckBox *opt[numFlags];
+    TQCheckBox *opt[numFlags];
 
-    QButtonGroup *m_tabs;
+    TQButtonGroup *m_tabs;
     KIntNumInput *e4;
-    QCheckBox *e6;
+    TQCheckBox *e6;
 
   public slots:
     void apply ();
@@ -167,18 +167,18 @@ class KateEditConfigTab : public KateConfigPage
     Q_OBJECT
 
   public:
-    KateEditConfigTab(QWidget *parent);
+    KateEditConfigTab(TQWidget *parent);
 
   protected:
     enum { numFlags = 5 };
     static const int flags[numFlags];
-    QCheckBox *opt[numFlags];
+    TQCheckBox *opt[numFlags];
 
     KIntNumInput *e1;
     KIntNumInput *e2;
     KIntNumInput *e3;
     KComboBox *e5;
-    QCheckBox *m_wwmarker;
+    TQCheckBox *m_wwmarker;
 
   public slots:
     void apply ();
@@ -192,21 +192,21 @@ class KateViewDefaultsConfig : public KateConfigPage
   Q_OBJECT
 
   public:
-    KateViewDefaultsConfig( QWidget *parent );
+    KateViewDefaultsConfig( TQWidget *parent );
     ~KateViewDefaultsConfig();
 
   private:
-    QCheckBox *m_line;
-    QCheckBox *m_folding;
-    QCheckBox *m_collapseTopLevel;
-    QCheckBox *m_icons;
-    QCheckBox *m_scrollBarMarks;
-    QCheckBox *m_dynwrap;
-	QCheckBox *m_showIndentLines;
+    TQCheckBox *m_line;
+    TQCheckBox *m_folding;
+    TQCheckBox *m_collapseTopLevel;
+    TQCheckBox *m_icons;
+    TQCheckBox *m_scrollBarMarks;
+    TQCheckBox *m_dynwrap;
+	TQCheckBox *m_showIndentLines;
     KIntNumInput *m_dynwrapAlignLevel;
-    QLabel *m_dynwrapIndicatorsLabel;
+    TQLabel *m_dynwrapIndicatorsLabel;
     KComboBox *m_dynwrapIndicatorsCombo;
-    QButtonGroup *m_bmSort;
+    TQButtonGroup *m_bmSort;
 
   public slots:
   void apply ();
@@ -220,7 +220,7 @@ class KateEditKeyConfiguration: public KateConfigPage
   Q_OBJECT
 
   public:
-    KateEditKeyConfiguration( QWidget* parent, KateDocument* doc );
+    KateEditKeyConfiguration( TQWidget* parent, KateDocument* doc );
 
   public slots:
     void apply();
@@ -229,7 +229,7 @@ class KateEditKeyConfiguration: public KateConfigPage
     void defaults() {};
 
   protected:
-    void showEvent ( QShowEvent * );
+    void showEvent ( TQShowEvent * );
 
   private:
     bool m_ready;
@@ -242,7 +242,7 @@ class KateSaveConfigTab : public KateConfigPage
 {
   Q_OBJECT
   public:
-  KateSaveConfigTab( QWidget *parent );
+  KateSaveConfigTab( TQWidget *parent );
 
   public slots:
   void apply();
@@ -252,13 +252,13 @@ class KateSaveConfigTab : public KateConfigPage
 
   protected:
   KComboBox *m_encoding, *m_eol;
-  QCheckBox *cbLocalFiles, *cbRemoteFiles;
-  QCheckBox *replaceTabs, *removeSpaces, *allowEolDetection;
-  QLineEdit *leBuPrefix;
-  QLineEdit *leBuSuffix;
+  TQCheckBox *cbLocalFiles, *cbRemoteFiles;
+  TQCheckBox *replaceTabs, *removeSpaces, *allowEolDetection;
+  TQLineEdit *leBuPrefix;
+  TQLineEdit *leBuSuffix;
   KIntNumInput *dirSearchDepth;
-  class QSpinBox *blockCount;
-  class QLabel *blockCountLabel;
+  class TQSpinBox *blockCount;
+  class TQLabel *blockCountLabel;
 };
 
 class KatePartPluginListItem;
@@ -270,7 +270,7 @@ class KatePartPluginListView : public KListView
   friend class KatePartPluginListItem;
 
   public:
-    KatePartPluginListView (QWidget *parent = 0, const char *name = 0);
+    KatePartPluginListView (TQWidget *parent = 0, const char *name = 0);
 
   signals:
     void stateChange(KatePartPluginListItem *, bool);
@@ -285,7 +285,7 @@ class KatePartPluginConfigPage : public KateConfigPage
   Q_OBJECT
 
   public:
-    KatePartPluginConfigPage (QWidget *parent);
+    KatePartPluginConfigPage (TQWidget *parent);
     ~KatePartPluginConfigPage ();
 
   public slots:
@@ -295,14 +295,14 @@ class KatePartPluginConfigPage : public KateConfigPage
     void defaults () {};
 
   private slots:
-    void slotCurrentChanged( QListViewItem * );
+    void slotCurrentChanged( TQListViewItem * );
     void slotConfigure();
     void slotStateChanged( KatePartPluginListItem *, bool );
 
   private:
     KatePartPluginListView *listView;
-    QPtrList<KatePartPluginListItem> m_items;
-    class QPushButton *btnConfigure;
+    TQPtrList<KatePartPluginListItem> m_items;
+    class TQPushButton *btnConfigure;
 };
 
 class KateHlConfigPage : public KateConfigPage
@@ -310,7 +310,7 @@ class KateHlConfigPage : public KateConfigPage
   Q_OBJECT
 
   public:
-    KateHlConfigPage (QWidget *parent, KateDocument *doc);
+    KateHlConfigPage (TQWidget *parent, KateDocument *doc);
     ~KateHlConfigPage ();
 
   public slots:
@@ -327,13 +327,13 @@ class KateHlConfigPage : public KateConfigPage
   private:
     void writeback ();
 
-    QComboBox *hlCombo;
-    QLineEdit *wildcards;
-    QLineEdit *mimetypes;
+    TQComboBox *hlCombo;
+    TQLineEdit *wildcards;
+    TQLineEdit *mimetypes;
     class KIntNumInput *priority;
-    class QLabel *author, *license;
+    class TQLabel *author, *license;
 
-    QIntDict<KateHlData> hlDataDict;
+    TQIntDict<KateHlData> hlDataDict;
     KateHlData *hlData;
 
 	KateDocument *m_doc;
@@ -344,16 +344,16 @@ class KateHlDownloadDialog: public KDialogBase
   Q_OBJECT
 
   public:
-    KateHlDownloadDialog(QWidget *parent, const char *name, bool modal);
+    KateHlDownloadDialog(TQWidget *parent, const char *name, bool modal);
     ~KateHlDownloadDialog();
 
   private:
-    class QListView  *list;
-    class QString listData;
+    class TQListView  *list;
+    class TQString listData;
     KIO::TransferJob *transferJob;
 
   private slots:
-    void listDataReceived(KIO::Job *, const QByteArray &data);
+    void listDataReceived(KIO::Job *, const TQByteArray &data);
 
   public slots:
     void slotUser1();
@@ -377,7 +377,7 @@ class KateModOnHdPrompt : public KDialogBase
       Overwrite,
       Ignore
     };
-    KateModOnHdPrompt( KateDocument *doc, int modtype, const QString &reason, QWidget *parent  );
+    KateModOnHdPrompt( KateDocument *doc, int modtype, const TQString &reason, TQWidget *parent  );
     ~KateModOnHdPrompt();
 
   public slots:

@@ -20,9 +20,9 @@
 #ifndef TREECOMBOBOX_H
 #define TREECOMBOBOX_H
 
-#include <qlistbox.h>
-#include <qcombobox.h>
-#include <qstringlist.h>
+#include <tqlistbox.h>
+#include <tqcombobox.h>
+#include <tqstringlist.h>
 
 /**
  * Class that represents a single object in the tree
@@ -30,12 +30,12 @@
 class TreeListBoxItem : public QListBoxPixmap
 {
 public:
-	TreeListBoxItem(QListBox *lb, const QPixmap& pix, const QString& txt, bool oneBlock = false);
+	TreeListBoxItem(TQListBox *lb, const TQPixmap& pix, const TQString& txt, bool oneBlock = false);
 
-	virtual int width(const QListBox *lb) const;
+	virtual int width(const TQListBox *lb) const;
 
 protected:
-	virtual void paint(QPainter *p);
+	virtual void paint(TQPainter *p);
 	int stepSize() const { return 16; }
 
 private:
@@ -51,10 +51,10 @@ class TreeListBox : public QListBox
 {
 	friend class TreeListBoxItem;
 public:
-	TreeListBox(QWidget *parent = 0, const char *name = 0);
+	TreeListBox(TQWidget *parent = 0, const char *name = 0);
 
 protected:
-	virtual void paintCell(QPainter *p, int row, int col);
+	virtual void paintCell(TQPainter *p, int row, int col);
 
 private:
 	bool	m_painting;
@@ -66,8 +66,8 @@ private:
 class TreeComboBox : public QComboBox
 {
 public:
-	TreeComboBox(QWidget *parent = 0, const char *name = 0);
-	void insertItem(const QPixmap& pix, const QString& txt, bool oneBlock = false);
+	TreeComboBox(TQWidget *parent = 0, const char *name = 0);
+	void insertItem(const TQPixmap& pix, const TQString& txt, bool oneBlock = false);
 
 private:
 	QListBox	*m_listbox;

@@ -21,8 +21,8 @@
 #ifndef _KMDI_GUICLIENT_H_
 #define _KMDI_GUICLIENT_H_
 
-#include <qobject.h>
-#include <qguardedptr.h>
+#include <tqobject.h>
+#include <tqguardedptr.h>
 #include <kxmlguiclient.h>
 #include <kaction.h>
 
@@ -42,7 +42,7 @@ namespace KMDIPrivate {
 
 class GUIClientPrivate;
 
-class GUIClient : public QObject, public KXMLGUIClient
+class GUIClient : public TQObject, public KXMLGUIClient
 {
   Q_OBJECT
 
@@ -55,7 +55,7 @@ class GUIClient : public QObject, public KXMLGUIClient
   private slots:
     void clientAdded( KXMLGUIClient *client );
     void setupActions();
-    void actionDeleted(QObject*);
+    void actionDeleted(TQObject*);
 
   signals:
     void toggleTop();
@@ -66,9 +66,9 @@ class GUIClient : public QObject, public KXMLGUIClient
   private:
     GUIClientPrivate *d;
 
-    QGuardedPtr<KMDI::MainWindow> m_mdiMainFrm;
-    QPtrList<KAction> m_toolViewActions;
-    QPtrList<KAction> m_documentViewActions;
+    TQGuardedPtr<KMDI::MainWindow> m_mdiMainFrm;
+    TQPtrList<KAction> m_toolViewActions;
+    TQPtrList<KAction> m_documentViewActions;
 
     KActionMenu *m_docMenu;
     KActionMenu *m_toolMenu;
@@ -81,8 +81,8 @@ class ToggleToolViewAction:public KToggleAction
   Q_OBJECT
 
   public:
-    ToggleToolViewAction ( const QString& text, const KShortcut& cut = KShortcut(),
-                           KDockWidget *dw=0,KMDI::MainWindow *mdiMainFrm=0, QObject* parent = 0, const char* name = 0 );
+    ToggleToolViewAction ( const TQString& text, const KShortcut& cut = KShortcut(),
+                           KDockWidget *dw=0,KMDI::MainWindow *mdiMainFrm=0, TQObject* parent = 0, const char* name = 0 );
 
     virtual ~ToggleToolViewAction();
 

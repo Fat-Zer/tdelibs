@@ -25,12 +25,12 @@
 
 #include "addresslineedit.h"
 
-#include <qapplication.h>
-#include <qobject.h>
-#include <qptrlist.h>
-#include <qregexp.h>
-#include <qevent.h>
-#include <qdragobject.h>
+#include <tqapplication.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
+#include <tqregexp.h>
+#include <tqevent.h>
+#include <tqdragobject.h>
 
 #include <kcompletionbox.h>
 #include <kconfig.h>
@@ -57,19 +57,19 @@ using namespace KABC;
 
 KCompletion * AddressLineEdit::s_completion = 0L;
 bool AddressLineEdit::s_addressesDirty = false;
-QTimer* AddressLineEdit::s_LDAPTimer = 0L;
+TQTimer* AddressLineEdit::s_LDAPTimer = 0L;
 LdapSearch* AddressLineEdit::s_LDAPSearch = 0L;
-QString* AddressLineEdit::s_LDAPText = 0L;
+TQString* AddressLineEdit::s_LDAPText = 0L;
 AddressLineEdit* AddressLineEdit::s_LDAPLineEdit = 0L;
 KConfig *AddressLineEdit::s_config = 0L;
 
 static KStaticDeleter<KCompletion> completionDeleter;
-static KStaticDeleter<QTimer> ldapTimerDeleter;
+static KStaticDeleter<TQTimer> ldapTimerDeleter;
 static KStaticDeleter<LdapSearch> ldapSearchDeleter;
-static KStaticDeleter<QString> ldapTextDeleter;
+static KStaticDeleter<TQString> ldapTextDeleter;
 static KStaticDeleter<KConfig> configDeleter;
 
-AddressLineEdit::AddressLineEdit(QWidget* parent,
+AddressLineEdit::AddressLineEdit(TQWidget* parent,
 		bool useCompletion,
 		const char *name)
     : KLineEdit(parent,name)
@@ -100,26 +100,26 @@ void AddressLineEdit::init()
 
   if( m_useCompletion ) {
       if( !s_LDAPTimer ) {
-        ldapTimerDeleter.setObject( s_LDAPTimer, new QTimer );
+        ldapTimerDeleter.setObject( s_LDAPTimer, new TQTimer );
         ldapSearchDeleter.setObject( s_LDAPSearch, new LdapSearch );
-        ldapTextDeleter.setObject( s_LDAPText, new QString );
+        ldapTextDeleter.setObject( s_LDAPText, new TQString );
       }
-      connect( s_LDAPTimer, SIGNAL( timeout()), SLOT( slotStartLDAPLookup()));
-      connect( s_LDAPSearch, SIGNAL( searchData( const QStringList& )),
-        SLOT( slotLDAPSearchData( const QStringList& )));
+      connect( s_LDAPTimer, TQT_SIGNAL( timeout()), TQT_SLOT( slotStartLDAPLookup()));
+      connect( s_LDAPSearch, TQT_SIGNAL( searchData( const TQStringList& )),
+        TQT_SLOT( slotLDAPSearchData( const TQStringList& )));
   }
 
   if ( m_useCompletion && !m_completionInitialized )
   {
       setCompletionObject( s_completion, false ); // we handle it ourself
-      connect( this, SIGNAL( completion(const QString&)),
-               this, SLOT(slotCompletion() ));
+      connect( this, TQT_SIGNAL( completion(const TQString&)),
+               this, TQT_SLOT(slotCompletion() ));
       
       KCompletionBox *box = completionBox();
-      connect( box, SIGNAL( highlighted( const QString& )),
-               this, SLOT( slotPopupCompletion( const QString& ) ));
-      connect( box, SIGNAL( userCancelled( const QString& )),
-               SLOT( userCancelled( const QString& )));
+      connect( box, TQT_SIGNAL( highlighted( const TQString& )),
+               this, TQT_SLOT( slotPopupCompletion( const TQString& ) ));
+      connect( box, TQT_SIGNAL( userCancelled( const TQString& )),
+               TQT_SLOT( userCancelled( const TQString& )));
 
       m_completionInitialized = true; // don't connect muliple times. That's
                                       // ugly, tho, better have completionBox()
@@ -144,7 +144,7 @@ KConfig* AddressLineEdit::config()
   return s_config;
 }
 
-void AddressLineEdit::setFont( const QFont& font )
+void AddressLineEdit::setFont( const TQFont& font )
 {
     KLineEdit::setFont( font );
     if ( m_useCompletion )
@@ -152,7 +152,7 @@ void AddressLineEdit::setFont( const QFont& font )
 }
 
 //-----------------------------------------------------------------------------
-void AddressLineEdit::keyPressEvent(QKeyEvent *e)
+void AddressLineEdit::keyPressEvent(TQKeyEvent *e)
 {
     bool accept = false;
 
@@ -188,7 +188,7 @@ void AddressLineEdit::keyPressEvent(QKeyEvent *e)
     }
 }
 
-void AddressLineEdit::mouseReleaseEvent( QMouseEvent * e )
+void AddressLineEdit::mouseReleaseEvent( TQMouseEvent * e )
 {
    if (m_useCompletion && (e->button() == MidButton))
    {
@@ -200,20 +200,20 @@ void AddressLineEdit::mouseReleaseEvent( QMouseEvent * e )
    KLineEdit::mouseReleaseEvent(e);
 }
 
-void AddressLineEdit::insert(const QString &t)
+void AddressLineEdit::insert(const TQString &t)
 {
     if (!m_smartPaste)
     {
        KLineEdit::insert(t);
        return;
     }
-    QString newText = t.stripWhiteSpace();
+    TQString newText = t.stripWhiteSpace();
     if (newText.isEmpty())
        return;
 
     // remove newlines in the to-be-pasted string as well as an eventual
     // mailto: protocol
-    newText.replace( QRegExp("\r?\n"), ", " );
+    newText.replace( TQRegExp("\r?\n"), ", " );
     if ( newText.startsWith( "mailto:" ) )
     {
       KURL u(newText);
@@ -227,10 +227,10 @@ void AddressLineEdit::insert(const QString &t)
     }
     else if (newText.find("(at)") != -1)
     {
-      newText.replace( QRegExp("\\s*\\(at\\)\\s*"), "@" );
+      newText.replace( TQRegExp("\\s*\\(at\\)\\s*"), "@" );
     }
 
-    QString contents = text();
+    TQString contents = text();
     int start_sel = 0;
     int end_sel = 0;
     int pos = cursorPosition();
@@ -248,7 +248,7 @@ void AddressLineEdit::insert(const QString &t)
     while ((eot > 0) && contents[eot-1].isSpace()) eot--;
     if (eot == 0)
     {
-       contents = QString::null;
+       contents = TQString::null;
     }
     else if (pos >= eot)
     {
@@ -290,9 +290,9 @@ void AddressLineEdit::doCompletion(bool ctrlT)
     if ( !m_useCompletion )
         return;
 
-    QString prevAddr;    
+    TQString prevAddr;    
     
-    QString s(text());    
+    TQString s(text());    
     int n = s.findRev(',');
         
     if (n >= 0)
@@ -314,7 +314,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
 
     if ( ctrlT )
     {
-        QStringList completions = s_completion->substringCompletion( s );
+        TQStringList completions = s_completion->substringCompletion( s );
         if (completions.count() > 1) {
             m_previousAddresses = prevAddr;
             setCompletedItems( completions );
@@ -338,7 +338,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
         case KGlobalSettings::CompletionPopup:        
         {
             m_previousAddresses = prevAddr;
-            QStringList items = s_completion->allMatches( s );
+            TQStringList items = s_completion->allMatches( s );
             items += s_completion->allMatches( "\"" + s );
             items += s_completion->substringCompletion( '<' + s );
             uint beforeDollarCompletionCount = items.count();
@@ -351,7 +351,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
                 if ( items.count() > beforeDollarCompletionCount )
                 {
                     // remove the '$$whatever$' part                    
-                    for( QStringList::Iterator it = items.begin();
+                    for( TQStringList::Iterator it = items.begin();
                          it != items.end();
                          ++it )
                     { 
@@ -374,7 +374,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
                 if (!autoSuggest)
                 {
                     int index = items.first().find( s );
-                    QString newText = prevAddr + items.first().mid( index );
+                    TQString newText = prevAddr + items.first().mid( index );
                     //kdDebug() << "OLD TEXT: " << text() << endl;
                     //kdDebug() << "NEW TEXT: " << newText << endl;
                     setUserSelection(false);
@@ -387,7 +387,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
 
         case KGlobalSettings::CompletionShell:
         {
-            QString match = s_completion->makeCompletion( s );
+            TQString match = s_completion->makeCompletion( s );
             if ( !match.isNull() && match != s )
             {
                 setText( prevAddr + match );
@@ -401,10 +401,10 @@ void AddressLineEdit::doCompletion(bool ctrlT)
         {
             if (!s.isEmpty())
             {              
-                QString match = s_completion->makeCompletion( s );
+                TQString match = s_completion->makeCompletion( s );
                 if ( !match.isNull() && match != s )
                 {
-                  QString adds = prevAddr + match;
+                  TQString adds = prevAddr + match;
                   setCompletedText( adds );
                 }
                 break;
@@ -417,7 +417,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
 }
 
 //-----------------------------------------------------------------------------
-void AddressLineEdit::slotPopupCompletion( const QString& completion )
+void AddressLineEdit::slotPopupCompletion( const TQString& completion )
 {
     setText( m_previousAddresses + completion );
     cursorAtEnd();
@@ -429,12 +429,12 @@ void AddressLineEdit::loadAddresses()
     s_completion->clear();
     s_addressesDirty = false;
 
-    QStringList adrs = addresses();
-    for( QStringList::ConstIterator it = adrs.begin(); it != adrs.end(); ++it)
+    TQStringList adrs = addresses();
+    for( TQStringList::ConstIterator it = adrs.begin(); it != adrs.end(); ++it)
         addAddress( *it );
 }
 
-void AddressLineEdit::addAddress( const QString& adr )
+void AddressLineEdit::addAddress( const TQString& adr )
 {
     s_completion->addItem( adr );
     int pos = adr.find( '<' );
@@ -462,9 +462,9 @@ void AddressLineEdit::stopLDAPLookup()
 
 void AddressLineEdit::startLoadingLDAPEntries()
 {
-    QString s( *s_LDAPText );
+    TQString s( *s_LDAPText );
     // TODO cache last?
-    QString prevAddr;
+    TQString prevAddr;
     int n = s.findRev(',');
     if (n>= 0)
     {
@@ -478,12 +478,12 @@ void AddressLineEdit::startLoadingLDAPEntries()
     s_LDAPSearch->startSearch( s );
 }
 
-void AddressLineEdit::slotLDAPSearchData( const QStringList& adrs )
+void AddressLineEdit::slotLDAPSearchData( const TQStringList& adrs )
 {
     if( s_LDAPLineEdit != this )
         return;
-    for( QStringList::ConstIterator it = adrs.begin(); it != adrs.end(); ++it ) {
-        QString name(*it);
+    for( TQStringList::ConstIterator it = adrs.begin(); it != adrs.end(); ++it ) {
+        TQString name(*it);
         int pos = name.find( " <" );
         int pos_comma = name.find( ',' );
         // put name in quotes, if we have a comma in the name
@@ -503,12 +503,12 @@ void AddressLineEdit::slotLDAPSearchData( const QStringList& adrs )
     }
 }
 
-QStringList AddressLineEdit::removeMailDupes( const QStringList& adrs )
+TQStringList AddressLineEdit::removeMailDupes( const TQStringList& adrs )
 {
-    QStringList src = adrs;
+    TQStringList src = adrs;
     qHeapSort( src );
-    QString last;
-    for( QStringList::Iterator it = src.begin(); it != src.end(); ) {
+    TQString last;
+    for( TQStringList::Iterator it = src.begin(); it != src.end(); ) {
         if( *it == last )
         {
             it = src.remove( it );
@@ -521,12 +521,12 @@ QStringList AddressLineEdit::removeMailDupes( const QStringList& adrs )
 }
 
 //-----------------------------------------------------------------------------
-void AddressLineEdit::dropEvent(QDropEvent *e)
+void AddressLineEdit::dropEvent(TQDropEvent *e)
 {
   KURL::List uriList;
   if(KURLDrag::canDecode(e) && KURLDrag::decode( e, uriList ))
   {
-    QString ct = text();
+    TQString ct = text();
     KURL::List::Iterator it = uriList.begin();
     for (; it != uriList.end(); ++it)
     {
@@ -543,28 +543,28 @@ void AddressLineEdit::dropEvent(QDropEvent *e)
   else {
     if (m_useCompletion)
        m_smartPaste = true;
-    QLineEdit::dropEvent(e);
+    TQLineEdit::dropEvent(e);
     m_smartPaste = false;
   }
 }
 
 
-QStringList AddressLineEdit::addresses()
+TQStringList AddressLineEdit::addresses()
 {
-  QApplication::setOverrideCursor( KCursor::waitCursor() ); // loading might take a while
+  TQApplication::setOverrideCursor( KCursor::waitCursor() ); // loading might take a while
 
-  QStringList result;
-  QString space(" ");
-  QRegExp needQuotes("[^ 0-9A-Za-z\\x0080-\\xFFFF]");
-  QString endQuote("\" ");
-  QString addr, email;
+  TQStringList result;
+  TQString space(" ");
+  TQRegExp needQuotes("[^ 0-9A-Za-z\\x0080-\\xFFFF]");
+  TQString endQuote("\" ");
+  TQString addr, email;
 
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
   KABC::AddressBook::Iterator it;
   for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
-    QStringList emails = (*it).emails();
+    TQStringList emails = (*it).emails();
     
-    QString n = (*it).prefix() + space +
+    TQString n = (*it).prefix() + space +
                 (*it).givenName() + space +
                 (*it).additionalName() + space +
                 (*it).familyName() + space +
@@ -572,13 +572,13 @@ QStringList AddressLineEdit::addresses()
     
     n = n.simplifyWhiteSpace();
 
-    QStringList::ConstIterator mit;
+    TQStringList::ConstIterator mit;
 
     for ( mit = emails.begin(); mit != emails.end(); ++mit ) {
       email = *mit;
       if (!email.isEmpty()) {
         if (n.isEmpty() || (email.find( '<' ) != -1))
-          addr = QString::null;
+          addr = TQString::null;
         else { /* do we really need quotes around this name ? */
                 if (n.find(needQuotes) != -1)
             addr = '"' + n + endQuote;
@@ -602,7 +602,7 @@ QStringList AddressLineEdit::addresses()
   manager.load();
   result += manager.listNames();
 
-  QApplication::restoreOverrideCursor();
+  TQApplication::restoreOverrideCursor();
 
   return result;
 }

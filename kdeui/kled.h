@@ -23,7 +23,7 @@
 #ifndef _KLED_H_
 #define _KLED_H_
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kdelibs_export.h>
 
 class QColor;
@@ -49,7 +49,7 @@ class KDEUI_EXPORT KLed : public QWidget
     Q_PROPERTY( State state READ state WRITE setState )
     Q_PROPERTY( Shape shape READ shape WRITE setShape )
     Q_PROPERTY( Look look READ look WRITE setLook )
-    Q_PROPERTY( QColor color READ color WRITE setColor )
+    Q_PROPERTY( TQColor color READ color WRITE setColor )
     Q_PROPERTY( int darkFactor READ darkFactor WRITE setDarkFactor )
 
 public:
@@ -92,18 +92,18 @@ public:
    * Constructs a green, round LED widget which will initially
    * be turned on.
    */
-  KLed(QWidget *parent=0, const char *name=0);
+  KLed(TQWidget *parent=0, const char *name=0);
   /**
    * Constructor with the ledcolor, the parent widget, and the name.
    *
    * The State will be defaulted On and the Look round.
    *
    * @param col Initial color of the LED.
-   * @param parent   Will be handed over to QWidget.
-   * @param name     Will be handed over to QWidget.
+   * @param parent   Will be handed over to TQWidget.
+   * @param name     Will be handed over to TQWidget.
    * @short Constructor
    */
-  KLed(const QColor &col, QWidget *parent=0, const char *name=0);
+  KLed(const TQColor &col, TQWidget *parent=0, const char *name=0);
 
   /**
    * Constructor with the ledcolor, ledstate, ledlook,
@@ -115,12 +115,12 @@ public:
    * @param state    Sets the State.
    * @param look     Sets the Look.
    * @param shape    Sets the Shape (rectangular or circular)
-   * @param parent   Will be handed over to QWidget.
-   * @param name     Will be handed over to QWidget.
+   * @param parent   Will be handed over to TQWidget.
+   * @param name     Will be handed over to TQWidget.
    * @short Constructor
    */
-  KLed(const QColor& col, KLed::State state, KLed::Look look, KLed::Shape shape,
-       QWidget *parent=0, const char *name=0);
+  KLed(const TQColor& col, KLed::State state, KLed::Look look, KLed::Shape shape,
+       TQWidget *parent=0, const char *name=0);
 
 
   /**
@@ -145,7 +145,7 @@ public:
    * @see Color
    * @short Returns LED color.
    */
-  QColor color() const;
+  TQColor color() const;
 
   /**
    * Returns the look of the widget.
@@ -191,7 +191,7 @@ public:
   /**
    * Set the color of the widget.
    * The Color is shown with the KLed::On state.
-   * The KLed::Off state is shown with QColor.dark() method
+   * The KLed::Off state is shown with TQColor.dark() method
    *
    * The widget calls the update() method, so it will
    * be updated when entering the main event loop.
@@ -201,11 +201,11 @@ public:
    * @param color New color of the LED.
    * @short Sets the LED color.
    */
-  void setColor(const QColor& color);
+  void setColor(const TQColor& color);
 
   /**
    * Sets the factor to darken the LED in OFF state.
-   * Same as QColor::dark().
+   * Same as TQColor::dark().
    * "darkfactor should be greater than 100, else the LED gets lighter
    * in OFF state.
    * Defaults to 300.
@@ -221,7 +221,7 @@ public:
    * Sets the color of the widget.
    * The Color is shown with the KLed::On state.
    * darkcolor is explicidly used for the off state of the LED.
-   * Normally you don't have to use this method, the setColor(const QColor& color) is sufficient for the task.
+   * Normally you don't have to use this method, the setColor(const TQColor& color) is sufficient for the task.
    *
    * The widget calls the update() method, so it will
    * be updated when entering the main event loop.
@@ -232,7 +232,7 @@ public:
    * @param darkcolor Dark color of the LED used for off state.
    * @short Sets the light and dark LED color.
    *
-  void setColor(const QColor& color, const QColor& darkcolor);
+  void setColor(const TQColor& color, const TQColor& darkcolor);
   */
 
   /**
@@ -249,8 +249,8 @@ public:
    */
   void setLook( Look look );
 
-  virtual QSize sizeHint() const;
-  virtual QSize minimumSizeHint() const;
+  virtual TQSize sizeHint() const;
+  virtual TQSize minimumSizeHint() const;
 
 public slots:
 
@@ -300,7 +300,7 @@ protected:
    */
   virtual void paintRectFrame(bool raised);
 
-  void paintEvent( QPaintEvent * );
+  void paintEvent( TQPaintEvent * );
 
   /**
    * Compute LED width
@@ -315,7 +315,7 @@ protected:
 
 private:
   State led_state;
-  QColor led_color;
+  TQColor led_color;
   Look  led_look;
   Shape led_shape;
 

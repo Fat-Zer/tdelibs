@@ -20,8 +20,8 @@
 #ifndef __KSHORTCUT_H
 #define __KSHORTCUT_H
 
-#include <qkeysequence.h>
-#include <qstring.h>
+#include <tqkeysequence.h>
+#include <tqstring.h>
 #include "kdelibs_export.h"
 
 class QKeyEvent;
@@ -76,13 +76,13 @@ class KDECORE_EXPORT KKey
 	 * Creates a new key from the first key code of the given key sequence.
 	 * @param keySeq the key sequence that contains the key
 	 */
-	KKey( const QKeySequence& keySeq );
+	KKey( const TQKeySequence& keySeq );
 
 	/**
 	 * Extracts the key from the given key event.
 	 * @param keyEvent the key event to get the key from
 	 */
-	KKey( const QKeyEvent* keyEvent );
+	KKey( const TQKeyEvent* keyEvent );
 
 	/**
 	 * Copy constructor.
@@ -97,7 +97,7 @@ class KDECORE_EXPORT KKey
 	 * @param key the description of the key
 	 * @see KKeyServer::Sym::init()
 	 */
-	KKey( const QString& key );
+	KKey( const TQString& key );
 	/**
 	 * @internal
 	 */
@@ -124,14 +124,14 @@ class KDECORE_EXPORT KKey
 	 * @param keySeq the key sequence that contains the key
 	 * @return true if successful, false otherwise
 	 */
-	bool init( const QKeySequence& keySeq );
+	bool init( const TQKeySequence& keySeq );
 
 	/**
 	 * Initializes the key by extracting the code from the given key event.
 	 * @param keyEvent the key event to get the key from
 	 * @return true if successful, false otherwise
 	 */
-	bool init( const QKeyEvent* keyEvent );
+	bool init( const TQKeyEvent* keyEvent );
 
 	/**
 	 * Copies the given key.
@@ -149,7 +149,7 @@ class KDECORE_EXPORT KKey
 	 * @return true if successful, false otherwise
 	 * @see KKeyServer::Sym::init()
 	 */
-	bool init( const QString& key);
+	bool init( const TQString& key);
 
 	/**
 	 * @internal
@@ -228,13 +228,13 @@ class KDECORE_EXPORT KKey
 	 * @return the string representation of the key
 	 * @see toStringInternal()
 	 */
-	QString toString() const;
+	TQString toString() const;
 
 	/**
 	 * Returns an untranslated text representation of the key in the form
 	 * "modifier+key", suitable e.g. for saving in configuration files.
 	 */
-	QString toStringInternal() const;
+	TQString toStringInternal() const;
 
  // Operation methods
 	/**
@@ -255,7 +255,7 @@ class KDECORE_EXPORT KKey
 	 * @param f the modifiers to convert
 	 * @return the string representation of the modifiers
 	 */
-	static QString modFlagLabel( ModFlag f );
+	static TQString modFlagLabel( ModFlag f );
 
  private:
 	/*
@@ -266,7 +266,7 @@ class KDECORE_EXPORT KKey
 	 * Returns the native key symbol value key.  Under X11, this is the X
 	 * keycode.  Under Qt/Embedded, this is the Qt keycode.
 	 * @see /usr/include/X11/keysymdef.h
-	 * @see qnamespace.h
+	 * @see tqnamespace.h
 	 */
 	uint m_sym;
 	/**
@@ -303,7 +303,7 @@ class KDECORE_EXPORT KKeySequence
 	 * Copies the given qt key sequence.
 	 * @param keySeq the qt key sequence to copy
 	 */
-	KKeySequence( const QKeySequence& keySeq );
+	KKeySequence( const TQKeySequence& keySeq );
 
 	/**
 	 * Create a new key sequence that only contains the given key.
@@ -326,12 +326,12 @@ class KDECORE_EXPORT KKeySequence
 	/**
 	 * Creates a new key sequence that contains the given key sequence.
 	 * The description consists of comma-separated keys as
-	 * required by KKey::KKey(const QString&).
+	 * required by KKey::KKey(const TQString&).
 	 * @param keySeq the description of the key
 	 * @see KKeyServer::Sym::init()
-	 * @see KKey::KKey(const QString&)
+	 * @see KKey::KKey(const TQString&)
 	 */
-	KKeySequence( const QString& keySeq );
+	KKeySequence( const TQString& keySeq );
 
 	~KKeySequence();
 
@@ -347,7 +347,7 @@ class KDECORE_EXPORT KKeySequence
 	 * @param keySeq the qt key sequence to copy
 	 * @return true if successful, false otherwise
 	 */
-	bool init( const QKeySequence& keySeq );
+	bool init( const TQKeySequence& keySeq );
 
 	/**
 	 * Initializes the key sequence to only contain the given key.
@@ -373,13 +373,13 @@ class KDECORE_EXPORT KKeySequence
 	/**
 	 * Initializes this key sequence to contain the given key sequence.
 	 * The description consists of comma-separated keys as
-	 * required by KKey::KKey(const QString&).
+	 * required by KKey::KKey(const TQString&).
 	 * @param key the description of the key
 	 * @return true if successful, false otherwise
 	 * @see KKeyServer::Sym::init()
-	 * @see KKey::KKey(const QString&)
+	 * @see KKey::KKey(const TQString&)
 	 */
-	bool init( const QString& key );
+	bool init( const TQString& key );
 
 	/**
 	 * Copy the given key sequence into this sequence.
@@ -469,13 +469,13 @@ class KDECORE_EXPORT KKeySequence
 	 */
 	bool operator < ( const KKeySequence& seq ) const
 		{ return compare( seq ) < 0; }
-	// TODO: consider adding Qt::SequenceMatch matches(...) methods for QKeySequence equivalence
+	// TODO: consider adding Qt::SequenceMatch matches(...) methods for TQKeySequence equivalence
 
 	/**
-	 * Converts this key sequence to a QKeySequence.
+	 * Converts this key sequence to a TQKeySequence.
 	 * @return the QKeySequence
 	 */
-	QKeySequence qt() const;
+	TQKeySequence qt() const;
 
 	/**
 	 * Returns the qt key code of the first key.
@@ -491,12 +491,12 @@ class KDECORE_EXPORT KKeySequence
 	 * @return the string represenation of this key sequence
 	 * @see KKey::toString()
 	 */
-	QString toString() const;
+	TQString toString() const;
 
 	/**
 	 * @internal
 	 */
-	QString toStringInternal() const;
+	TQString toStringInternal() const;
 
 	/**
 	 * Returns a null key sequence.
@@ -528,7 +528,7 @@ class KDECORE_EXPORT KKeySequence
 * the below code binds the escape key to the close action.
 *
 * \code
-*  KAction *closeAction = KStdAction::close( this, SLOT( close() ), actionCollection() );
+*  KAction *closeAction = KStdAction::close( this, TQT_SLOT( close() ), actionCollection() );
 *  KShortcut closeShortcut = closeAction->shortcut();
 *  closeShortcut.append( KKey(Key_Escape));
 *  closeAction->setShortcut(closeShortcut);
@@ -570,7 +570,7 @@ class KDECORE_EXPORT KShortcut
 	 * sequence.
 	 * @param keySeq the qt key sequence to add
 	 */
-	KShortcut( const QKeySequence& keySeq );
+	KShortcut( const TQKeySequence& keySeq );
 
 	/**
 	 * Creates a new shortcut that contains only the given key
@@ -595,20 +595,20 @@ class KDECORE_EXPORT KShortcut
 	/**
 	 * Creates a new key sequence that contains the given key sequence.
 	 * The description consists of semicolon-separated keys as
-	 * used in KKeySequence::KKeySequence(const QString&).
+	 * used in KKeySequence::KKeySequence(const TQString&).
 	 * @param shortcut the description of the key
-	 * @see KKeySequence::KKeySequence(const QString&)
+	 * @see KKeySequence::KKeySequence(const TQString&)
 	 */
 	KShortcut( const char* shortcut );
 
 	/**
 	 * Creates a new key sequence that contains the given key sequence.
 	 * The description consists of semicolon-separated keys as
-	 * used in KKeySequence::KKeySequence(const QString&).
+	 * used in KKeySequence::KKeySequence(const TQString&).
 	 * @param shortcut the description of the key
-	 * @see KKeySequence::KKeySequence(const QString&)
+	 * @see KKeySequence::KKeySequence(const TQString&)
 	 */
-	KShortcut( const QString& shortcut );
+	KShortcut( const TQString& shortcut );
 	~KShortcut();
 
 	/**
@@ -630,7 +630,7 @@ class KDECORE_EXPORT KShortcut
 	 * Initializes the shortcut with the given qt key sequence.
 	 * @param keySeq the qt key sequence to add
 	 */
-	bool init( const QKeySequence& keySeq );
+	bool init( const TQKeySequence& keySeq );
 
 	/**
 	 * Initializes the shortcut with the given key as its only sequence.
@@ -653,11 +653,11 @@ class KDECORE_EXPORT KShortcut
 	/**
 	 * Initializes the key sequence with the given key sequence.
 	 * The description consists of semicolon-separated keys as
-	 * used in KKeySequence::KKeySequence(const QString&).
+	 * used in KKeySequence::KKeySequence(const TQString&).
 	 * @param shortcut the description of the key
-	 * @see KKeySequence::KKeySequence(const QString&)
+	 * @see KKeySequence::KKeySequence(const TQString&)
 	 */
-	bool init( const QString& shortcut );
+	bool init( const TQString& shortcut );
 
 	/**
 	 * Copies the given shortcut over this shortcut.
@@ -810,7 +810,7 @@ class KDECORE_EXPORT KShortcut
 	 * Converts this shortcut to a key sequence. The first key sequence
 	 * will be taken.
 	 */
-	operator QKeySequence () const;
+	operator TQKeySequence () const;
 
 	/**
 	 * Returns a description of the shortcut as semicolon-separated
@@ -819,12 +819,12 @@ class KDECORE_EXPORT KShortcut
 	 * @see KKey::toString()
 	 * @see KKeySequence::toString()
 	 */
-	QString toString() const;
+	TQString toString() const;
 
 	/**
 	 * @internal
 	 */
-	QString toStringInternal( const KShortcut* pcutDefault = 0 ) const;
+	TQString toStringInternal( const KShortcut* pcutDefault = 0 ) const;
 
 	/**
 	 * Returns a null shortcut.

@@ -43,7 +43,7 @@ BlockSelectionInterface::BlockSelectionInterface()
 {
   globalBlockSelectionInterfaceNumber++;
   myBlockSelectionInterfaceNumber = globalBlockSelectionInterfaceNumber++;
-  QString name = "BlockSelectionInterface#" + QString::number(myBlockSelectionInterfaceNumber);
+  TQString name = "BlockSelectionInterface#" + TQString::number(myBlockSelectionInterfaceNumber);
 
   d = new PrivateBlockSelectionInterface();
   d->interface = new BlockSelectionDCOPInterface(this, name.latin1());
@@ -60,7 +60,7 @@ unsigned int BlockSelectionInterface::blockSelectionInterfaceNumber () const
   return myBlockSelectionInterfaceNumber;
 }
 
-void BlockSelectionInterface::setBlockSelectionInterfaceDCOPSuffix (const QCString &suffix)
+void BlockSelectionInterface::setBlockSelectionInterfaceDCOPSuffix (const TQCString &suffix)
 {
   d->interface->setObjId ("BlockSelectionInterface#"+suffix);
 }

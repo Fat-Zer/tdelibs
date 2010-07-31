@@ -20,8 +20,8 @@
 #ifndef MESSAGEWINDOW_H
 #define MESSAGEWINDOW_H
 
-#include <qwidget.h>
-#include <qptrdict.h>
+#include <tqwidget.h>
+#include <tqptrdict.h>
 
 #include <kdelibs_export.h>
 
@@ -34,22 +34,22 @@ class KDEPRINT_EXPORT MessageWindow : public QWidget
 public:
 	~MessageWindow();
 
-	static void add( QWidget *parent, const QString& txt, int delay = 500 );
-	static void change( QWidget *parent, const QString& txt );
-	static void remove( QWidget *parent );
+	static void add( TQWidget *parent, const TQString& txt, int delay = 500 );
+	static void change( TQWidget *parent, const TQString& txt );
+	static void remove( TQWidget *parent );
 	static void removeAll();
 
 protected slots:
 	void slotTimer();
 
 protected:
-	MessageWindow( const QString& txt, int delay = 500, QWidget *parent = 0, const char *name = 0 );
-	void setText( const QString& txt );
-	QString text() const;
+	MessageWindow( const TQString& txt, int delay = 500, TQWidget *parent = 0, const char *name = 0 );
+	void setText( const TQString& txt );
+	TQString text() const;
 
 private:
-	QLabel *m_text;
-	static QPtrDict<MessageWindow> m_windows;
+	TQLabel *m_text;
+	static TQPtrDict<MessageWindow> m_windows;
 };
 
 #endif

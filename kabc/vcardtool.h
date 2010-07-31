@@ -44,25 +44,25 @@ class KABC_EXPORT VCardTool
       Creates a string that contains the addressees from the list in
       the vCard format.
      */
-    QString createVCards( Addressee::List list, VCard::Version version = VCard::v3_0 );
+    TQString createVCards( Addressee::List list, VCard::Version version = VCard::v3_0 );
 
     /**
       Parses the string and returns a list of addressee objects.
      */
-    Addressee::List parseVCards( const QString& vcard );
+    Addressee::List parseVCards( const TQString& vcard );
 
   private:
     /**
       Split a string and replaces escaped separators on the fly with
       unescaped ones.
      */
-    QStringList splitString( const QChar &sep, const QString &value );
+    TQStringList splitString( const TQChar &sep, const TQString &value );
     
-    QDateTime parseDateTime( const QString &str );
-    QString createDateTime( const QDateTime &dateTime );
+    TQDateTime parseDateTime( const TQString &str );
+    TQString createDateTime( const TQDateTime &dateTime );
 
     Picture parsePicture( const VCardLine &line );
-    VCardLine createPicture( const QString &identifier, const Picture &pic );
+    VCardLine createPicture( const TQString &identifier, const Picture &pic );
 
     Sound parseSound( const VCardLine &line );
     VCardLine createSound( const Sound &snd );
@@ -76,8 +76,8 @@ class KABC_EXPORT VCardTool
     Agent parseAgent( const VCardLine &line );
     VCardLine createAgent( VCard::Version version, const Agent &agent );
 
-    QMap<QString, int> mAddressTypeMap;
-    QMap<QString, int> mPhoneTypeMap;
+    TQMap<TQString, int> mAddressTypeMap;
+    TQMap<TQString, int> mPhoneTypeMap;
 
     class VCardToolPrivate;
     VCardToolPrivate *d;

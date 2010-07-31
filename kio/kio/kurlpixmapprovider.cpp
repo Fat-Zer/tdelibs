@@ -20,7 +20,7 @@
 
 #include "kurlpixmapprovider.h"
 
-QPixmap KURLPixmapProvider::pixmapFor( const QString& url, int size ) {
+TQPixmap KURLPixmapProvider::pixmapFor( const TQString& url, int size ) {
 	KURL u;
 	if ( url.at(0) == '/' )
 	    u.setPath( url );

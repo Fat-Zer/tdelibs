@@ -19,36 +19,36 @@
 
 #include "kmconfigcupsdir.h"
 
-#include <qcheckbox.h>
+#include <tqcheckbox.h>
 #include <kurlrequester.h>
 #include <klocale.h>
 #include <kdialog.h>
 #include <kconfig.h>
-#include <qgroupbox.h>
-#include <qlayout.h>
+#include <tqgroupbox.h>
+#include <tqlayout.h>
 #include <kcursor.h>
 
-KMConfigCupsDir::KMConfigCupsDir(QWidget *parent)
+KMConfigCupsDir::KMConfigCupsDir(TQWidget *parent)
 : KMConfigPage(parent,"ConfigCupsDir")
 {
 	setPageName(i18n("Folder"));
 	setPageHeader(i18n("CUPS Folder Settings"));
 	setPagePixmap("folder");
 
-	QGroupBox *m_dirbox = new QGroupBox(0, Qt::Vertical, i18n("Installation Folder"), this);
+	TQGroupBox *m_dirbox = new TQGroupBox(0, Qt::Vertical, i18n("Installation Folder"), this);
 	m_installdir = new KURLRequester(m_dirbox);
 	m_installdir->setMode((KFile::Mode)(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly));
-	m_stddir = new QCheckBox(i18n("Standard installation (/)"), m_dirbox);
+	m_stddir = new TQCheckBox(i18n("Standard installation (/)"), m_dirbox);
 	m_stddir->setCursor(KCursor::handCursor());
 
-	QVBoxLayout *lay0 = new QVBoxLayout(this, 0, KDialog::spacingHint());
+	TQVBoxLayout *lay0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	lay0->addWidget(m_dirbox);
 	lay0->addStretch(1);
-	QVBoxLayout *lay1 = new QVBoxLayout(m_dirbox->layout(), 10);
+	TQVBoxLayout *lay1 = new TQVBoxLayout(m_dirbox->layout(), 10);
 	lay1->addWidget(m_stddir);
 	lay1->addWidget(m_installdir);
 
-	connect(m_stddir,SIGNAL(toggled(bool)),m_installdir,SLOT(setDisabled(bool)));
+	connect(m_stddir,TQT_SIGNAL(toggled(bool)),m_installdir,TQT_SLOT(setDisabled(bool)));
 	m_stddir->setChecked(true);
 }
 
@@ -63,5 +63,5 @@ void KMConfigCupsDir::loadConfig(KConfig *conf)
 void KMConfigCupsDir::saveConfig(KConfig *conf)
 {
 	conf->setGroup("CUPS");
-	conf->writePathEntry("InstallDir",(m_stddir->isChecked() ? QString::null : m_installdir->url()));
+	conf->writePathEntry("InstallDir",(m_stddir->isChecked() ? TQString::null : m_installdir->url()));
 }

@@ -28,8 +28,8 @@
 #ifndef _KMDI_CHILD_AREA_H_
 #define _KMDI_CHILD_AREA_H_
 
-#include <qframe.h>
-#include <qptrlist.h>
+#include <tqframe.h>
+#include <tqptrlist.h>
 
 #include "kmdichildfrm.h"
 #include "kmdichildview.h"
@@ -61,37 +61,37 @@ public:
 	/**
 	 * Z Order stack of KMdiChildFrm childframe windows (top=last)
 	 */
-	QPtrList<KMdiChildFrm> *m_pZ; //Auto delete enabled
+	TQPtrList<KMdiChildFrm> *m_pZ; //Auto delete enabled
 
 	/**
 	 * the default size of an newly created childframe
 	 */
-	QSize m_defaultChildFrmSize;
+	TQSize m_defaultChildFrmSize;
 protected:
 	/**
 	 * The MDI childframe window caption font
 	 */
-	QFont m_captionFont;
+	TQFont m_captionFont;
 
 	/**
 	 * The foreground color of the active MDI childframe window caption
 	 */
-	QColor m_captionActiveBackColor;
+	TQColor m_captionActiveBackColor;
 
 	/**
 	 * The background color of the active MDI childframe window captions
 	 */
-	QColor m_captionActiveForeColor;
+	TQColor m_captionActiveForeColor;
 
 	/**
 	 * The foreground color of inactive MDI childframe window captions
 	 */
-	QColor m_captionInactiveBackColor;
+	TQColor m_captionInactiveBackColor;
 
 	/**
 	 * The background color of inactive MDI childframe window captions
 	 */
-	QColor m_captionInactiveForeColor;
+	TQColor m_captionInactiveForeColor;
 
 	int m_captionFontLineSpacing;
 
@@ -101,7 +101,7 @@ public:
 	/**
 	 * Consruction. Note: This class needn't to know about KMdiMainFrm .
 	 */
-	KMdiChildArea( QWidget *parent );
+	KMdiChildArea( TQWidget *parent );
 
 	/**
 	 * Destructor : THERE should be no child windows anymore...
@@ -150,37 +150,37 @@ public:
 	 * the cascade point is calculated for the window following the last window
 	 * @param indexOfWindow the index of the window in relation the z-ordered window list
 	 */
-	QPoint getCascadePoint( int indexOfWindow = -1 );
+	TQPoint getCascadePoint( int indexOfWindow = -1 );
 
 	/**
 	 * Sets the MDI childframe window caption font
 	 * A relayout does not occur when using this function
 	 */
-	void setMdiCaptionFont( const QFont &fnt );
+	void setMdiCaptionFont( const TQFont &fnt );
 
 	/**
 	 * Sets the foreground color of the active MDI childframe window caption
 	 * A relayout does not occur when using this function
 	 */
-	void setMdiCaptionActiveForeColor( const QColor &clr );
+	void setMdiCaptionActiveForeColor( const TQColor &clr );
 
 	/**
 	 * Sets the background color of the active MDI childframe window captions
 	 * A relayout does not occur when using this function
 	 */
-	void setMdiCaptionActiveBackColor( const QColor &clr );
+	void setMdiCaptionActiveBackColor( const TQColor &clr );
 
 	/**
 	 * Sets the foreground color of inactive MDI childframe window captions
 	 * A relayout does not occur when using this function
 	 */
-	void setMdiCaptionInactiveForeColor( const QColor &clr );
+	void setMdiCaptionInactiveForeColor( const TQColor &clr );
 
 	/**
 	 * Sets the background color of inactive MDI childframe window captions
 	 * A relayout does not occur when using this function
 	 */
-	void setMdiCaptionInactiveBackColor( const QColor &clr );
+	void setMdiCaptionInactiveBackColor( const TQColor &clr );
 
 	/**
 	 * Gets all caption colors, consistent with current WM settings
@@ -191,8 +191,8 @@ public:
 	 * @deprecated Use KGlobalSettings::activeTitleColor(), KGlobalSettings::activeTextColor(),
 	 * KGlobalSettings::inactiveTitleColor() and KGlobalSettings::inactiveTextColor() instead.
 	 */
-	static void getCaptionColors( const QPalette &pal, QColor &activeBG, QColor &activeFG,
-	                              QColor &inactiveBG, QColor &inactiveFG ) KDE_DEPRECATED;
+	static void getCaptionColors( const TQPalette &pal, TQColor &activeBG, TQColor &activeFG,
+	                              TQColor &inactiveBG, TQColor &inactiveFG ) KDE_DEPRECATED;
 
 public slots:
 	/**
@@ -251,12 +251,12 @@ protected:
 	/**
 	 * Automatically resizes a maximized MDI view and layouts the positions of minimized MDI views.
 	 */
-	virtual void resizeEvent( QResizeEvent * );
+	virtual void resizeEvent( TQResizeEvent * );
 
 	/**
 	 * Shows the 'Window' popup menu on right mouse button click
 	 */
-	void mousePressEvent( QMouseEvent *e );
+	void mousePressEvent( TQMouseEvent *e );
 
 	/**
 	 * Internally used. Actions that are necessary when an MDI view gets minimized
@@ -286,7 +286,7 @@ signals:
 	 * Signals a KMdiMainFrm that the 'Window' popup menu must be shown
 	 * @internal
 	 */
-	void popupWindowMenu( QPoint );
+	void popupWindowMenu( TQPoint );
 
 	/**
 	 * Signals that the last attached (docked) MDI view has been closed.

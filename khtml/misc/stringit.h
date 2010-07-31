@@ -28,8 +28,8 @@
 
 #include "dom/dom_string.h"
 
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 
 #include <assert.h>
 
@@ -43,9 +43,9 @@ class DOMStringIt
 public:
     DOMStringIt()
 	{ s = 0, l = 0; lines = 0; }
-    DOMStringIt(QChar *str, uint len)
+    DOMStringIt(TQChar *str, uint len)
 	{ s = str, l = len; lines = 0; }
-    DOMStringIt(const QString &str)
+    DOMStringIt(const TQString &str)
 	{ s = str.unicode(); l = str.length(); lines = 0; }
 
     DOMStringIt *operator++()
@@ -60,20 +60,20 @@ public:
 	return this;
     }
 public:
-    void push(const QChar& c) { /* assert(pushedChar.isNull());*/  pushedChar = c; }
+    void push(const TQChar& c) { /* assert(pushedChar.isNull());*/  pushedChar = c; }
 
-    const QChar& operator*() const  { return pushedChar.isNull() ? *s : pushedChar; }
-    const QChar* operator->() const { return pushedChar.isNull() ? s : &pushedChar; }
+    const TQChar& operator*() const  { return pushedChar.isNull() ? *s : pushedChar; }
+    const TQChar* operator->() const { return pushedChar.isNull() ? s : &pushedChar; }
 
     bool escaped() const { return !pushedChar.isNull(); }
     uint length() const { return l+(!pushedChar.isNull()); }
 
-    const QChar *current() const { return pushedChar.isNull() ? s : &pushedChar; }
+    const TQChar *current() const { return pushedChar.isNull() ? s : &pushedChar; }
     int lineCount() const { return lines; }
 
 protected:
-    QChar pushedChar;
-    const QChar *s;
+    TQChar pushedChar;
+    const TQChar *s;
     int l;
     int lines;
 };
@@ -85,12 +85,12 @@ class TokenizerSubstring
     friend class TokenizerString;
 public:    
     TokenizerSubstring() : m_length(0), m_current(0) {}
-    TokenizerSubstring(const QString &str) : m_string(str), m_length(str.length()), m_current(m_length == 0 ? 0 : str.unicode()) {}
-    TokenizerSubstring(const QChar *str, int length) : m_length(length), m_current(length == 0 ? 0 : str) {}
+    TokenizerSubstring(const TQString &str) : m_string(str), m_length(str.length()), m_current(m_length == 0 ? 0 : str.unicode()) {}
+    TokenizerSubstring(const TQChar *str, int length) : m_length(length), m_current(length == 0 ? 0 : str) {}
 
     void clear() { m_length = 0; m_current = 0; }
 
-    void appendTo(QString &str) const {
+    void appendTo(TQString &str) const {
         if (m_string.unicode() == m_current) {
             if (str.isEmpty())
                 str = m_string;
@@ -101,9 +101,9 @@ public:
         }
     }
 private:
-    QString m_string;
+    TQString m_string;
     int m_length;
-    const QChar *m_current;
+    const TQChar *m_current;
 };
 
 class TokenizerString
@@ -111,8 +111,8 @@ class TokenizerString
 
 public:
     TokenizerString() : m_currentChar(0), m_lines(0), m_composite(false) {}
-    TokenizerString(const QChar *str, int length) : m_currentString(str, length), m_currentChar(m_currentString.m_current), m_lines(0), m_composite(false) {}
-    TokenizerString(const QString &str) : m_currentString(str), m_currentChar(m_currentString.m_current), m_lines(0), m_composite(false) {}
+    TokenizerString(const TQChar *str, int length) : m_currentString(str, length), m_currentChar(m_currentString.m_current), m_lines(0), m_composite(false) {}
+    TokenizerString(const TQString &str) : m_currentString(str), m_currentChar(m_currentString.m_current), m_lines(0), m_composite(false) {}
     TokenizerString(const TokenizerString &o) : m_pushedChar1(o.m_pushedChar1), m_pushedChar2(o.m_pushedChar2),
                                                 m_currentString(o.m_currentString), m_substrings(o.m_substrings),
                                                 m_lines(o.m_lines), m_composite(o.m_composite) { 
@@ -124,7 +124,7 @@ public:
     void append(const TokenizerString &);
     void prepend(const TokenizerString &);
     
-    void push(QChar c) {
+    void push(TQChar c) {
         if (m_pushedChar1.isNull()) {
             m_pushedChar1 = c;
 	    m_currentChar = m_pushedChar1.isNull() ? m_currentString.m_current : &m_pushedChar1;
@@ -155,31 +155,31 @@ public:
     int lineCount() const { return m_lines; }
     void resetLineCount() { m_lines = 0; }
     
-    QString toString() const;
+    TQString toString() const;
 
     void operator++() { advance(); }
-    const QChar &operator*() const { return *current(); }
-    const QChar *operator->() const { return current(); }
+    const TQChar &operator*() const { return *current(); }
+    const TQChar *operator->() const { return current(); }
     
 private:
     void append(const TokenizerSubstring &);
     void prepend(const TokenizerSubstring &);
 
     void advanceSubstring();
-    const QChar *current() const { return m_currentChar; }
+    const TQChar *current() const { return m_currentChar; }
 
-    QChar m_pushedChar1;
-    QChar m_pushedChar2;
+    TQChar m_pushedChar1;
+    TQChar m_pushedChar2;
     TokenizerSubstring m_currentString;
-    const QChar *m_currentChar;
-    QValueList<TokenizerSubstring> m_substrings;
+    const TQChar *m_currentChar;
+    TQValueList<TokenizerSubstring> m_substrings;
     int m_lines;
     bool m_composite;
 
 };
 
 
-class TokenizerQueue : public QValueList<TokenizerString>
+class TokenizerQueue : public TQValueList<TokenizerString>
 {
 
 public:

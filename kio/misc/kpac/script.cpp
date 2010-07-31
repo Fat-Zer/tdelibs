@@ -30,8 +30,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#include <qregexp.h>
-#include <qstring.h>
+#include <tqregexp.h>
+#include <tqstring.h>
 
 #include <kurl.h>
 #include <kjs/object.h>
@@ -41,12 +41,12 @@
 
 using namespace KJS;
 
-QString UString::qstring() const
+TQString UString::qstring() const
 {
-    return QString( reinterpret_cast< const QChar* >( data() ), size() );
+    return TQString( reinterpret_cast< const TQChar* >( data() ), size() );
 }
 
-UString::UString( const QString &s )
+UString::UString( const TQString &s )
 {
     UChar* data = new UChar[ s.length() ];
     std::memcpy( data, s.unicode(), s.length() * sizeof( UChar ) );
@@ -72,7 +72,7 @@ namespace
         operator String() const { return String( m_address.ipAddress().toString() ); }
 
     private:
-        Address( const QString& host, bool numeric )
+        Address( const TQString& host, bool numeric )
         {
             int flags = 0;
 
@@ -80,7 +80,7 @@ namespace
               flags = KNetwork::KResolver::NoResolve;
 
             KNetwork::KResolverResults addresses =
-               KNetwork::KResolver::resolve( host, QString::null, flags,
+               KNetwork::KResolver::resolve( host, TQString::null, flags,
                                              KNetwork::KResolver::IPv4Family );
 
             if ( addresses.isEmpty() )
@@ -140,8 +140,8 @@ namespace
         virtual Value call( ExecState* exec, Object&, const List& args )
         {
             if ( args.size() != 2 ) return Undefined();
-            QString host = args[ 0 ].toString( exec ).qstring().lower();
-            QString domain = args[ 1 ].toString( exec ).qstring().lower();
+            TQString host = args[ 0 ].toString( exec ).qstring().lower();
+            TQString domain = args[ 1 ].toString( exec ).qstring().lower();
             return Boolean( host.endsWith( domain ) );
         }
     };
@@ -243,7 +243,7 @@ namespace
         virtual Value call( ExecState* exec, Object&, const List& args )
         {
             if ( args.size() != 2 ) return Undefined();
-            QRegExp pattern( args[ 1 ].toString( exec ).qstring(), true, true );
+            TQRegExp pattern( args[ 1 ].toString( exec ).qstring(), true, true );
             return Boolean( pattern.exactMatch(args[ 0 ].toString( exec ).qstring()) );
         }
     };
@@ -427,7 +427,7 @@ namespace
 
 namespace KPAC
 {
-    Script::Script( const QString& code )
+    Script::Script( const TQString& code )
     {
         ExecState* exec = m_interpreter.globalExec();
         Object global = m_interpreter.globalObject();
@@ -438,7 +438,7 @@ namespace KPAC
             throw Error( result.value().toString( exec ).qstring() );
     }
 
-    QString Script::evaluate( const KURL& url )
+    TQString Script::evaluate( const KURL& url )
     {
 	ExecState *exec = m_interpreter.globalExec();
 	Value findFunc = m_interpreter.globalObject().get( exec, "FindProxyForURL" );

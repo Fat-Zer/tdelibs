@@ -22,10 +22,10 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include <qdatetime.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qdict.h>
+#include <tqdatetime.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqdict.h>
 
 #include <karchive.h>
 
@@ -50,17 +50,17 @@ public:
      * specify the compression layer !  If the mimetype is omitted, it
      * will be determined from the filename.
      */
-    KTar( const QString& filename, const QString & mimetype = QString::null );
+    KTar( const TQString& filename, const TQString & mimetype = TQString::null );
 
     /**
      * Creates an instance that operates on the given device.
-     * The device can be compressed (KFilterDev) or not (QFile, etc.).
-     * @warning Do not assume that giving a QFile here will decompress the file,
+     * The device can be compressed (KFilterDev) or not (TQFile, etc.).
+     * @warning Do not assume that giving a TQFile here will decompress the file,
      * in case it's compressed!
      * @param dev the device to read from. If the source is compressed, the
-     * QIODevice must take care of decompression
+     * TQIODevice must take care of decompression
      */
-    KTar( QIODevice * dev );
+    KTar( TQIODevice * dev );
 
     /**
      * If the tar ball is still opened, then it will be
@@ -70,10 +70,10 @@ public:
 
     /**
      * The name of the tar file, as passed to the constructor
-     * Null if you used the QIODevice constructor.
-     * @return the name of the file, or QString::null if unknown
+     * Null if you used the TQIODevice constructor.
+     * @return the name of the file, or TQString::null if unknown
      */
-    QString fileName() { return m_filename; } // TODO KDE4 const
+    TQString fileName() { return m_filename; } // TODO KDE4 const
 
     /**
      * Special function for setting the "original file name" in the gzip header,
@@ -81,20 +81,20 @@ public:
      * for instance. Should only be called if the underlying device is a KFilterDev!
      * @param fileName the original file name
      */
-    void setOrigFileName( const QCString & fileName );
+    void setOrigFileName( const TQCString & fileName );
 
     // TODO(BIC) make virtual. For now it must be implemented by virtual_hook.
-    bool writeSymLink(const QString &name, const QString &target,
-    			const QString &user, const QString &group,
+    bool writeSymLink(const TQString &name, const TQString &target,
+    			const TQString &user, const TQString &group,
     			mode_t perm, time_t atime, time_t mtime, time_t ctime);
-    virtual bool writeDir( const QString& name, const QString& user, const QString& group );
+    virtual bool writeDir( const TQString& name, const TQString& user, const TQString& group );
     // TODO(BIC) make virtual. For now it must be implemented by virtual_hook.
-    bool writeDir( const QString& name, const QString& user, const QString& group,
+    bool writeDir( const TQString& name, const TQString& user, const TQString& group,
     			mode_t perm, time_t atime, time_t mtime, time_t ctime );
-    virtual bool prepareWriting( const QString& name, const QString& user, const QString& group, uint size );
+    virtual bool prepareWriting( const TQString& name, const TQString& user, const TQString& group, uint size );
     // TODO(BIC) make virtual. For now it must be implemented by virtual_hook.
-    bool prepareWriting( const QString& name, const QString& user,
-    			const QString& group, uint size, mode_t perm,
+    bool prepareWriting( const TQString& name, const TQString& user,
+    			const TQString& group, uint size, mode_t perm,
        			time_t atime, time_t mtime, time_t ctime );
     virtual bool doneWriting( uint size );
 
@@ -112,7 +112,7 @@ private:
     /**
      * @internal
      */
-    void prepareDevice( const QString & filename, const QString & mimetype, bool forced = false );
+    void prepareDevice( const TQString & filename, const TQString & mimetype, bool forced = false );
 
     /**
      * @internal
@@ -135,24 +135,24 @@ private:
      * @p uname user name
      * @p gname group name
      */
-    void writeLonglink(char *buffer, const QCString &name, char typeflag,
+    void writeLonglink(char *buffer, const TQCString &name, char typeflag,
 			const char *uname, const char *gname);
 
     Q_LONG readRawHeader(char *buffer);
-    bool readLonglink(char *buffer,QCString &longlink);
-    Q_LONG readHeader(char *buffer,QString &name,QString &symlink);
+    bool readLonglink(char *buffer,TQCString &longlink);
+    Q_LONG readHeader(char *buffer,TQString &name,TQString &symlink);
 
-    QString m_filename;
+    TQString m_filename;
 protected:
     virtual void virtual_hook( int id, void* data );
-    bool prepareWriting_impl(const QString& name, const QString& user,
-    			const QString& group, uint size, mode_t perm,
+    bool prepareWriting_impl(const TQString& name, const TQString& user,
+    			const TQString& group, uint size, mode_t perm,
     			time_t atime, time_t mtime, time_t ctime);
-    bool writeDir_impl(const QString& name, const QString& user,
-    			const QString& group, mode_t perm,
+    bool writeDir_impl(const TQString& name, const TQString& user,
+    			const TQString& group, mode_t perm,
     			time_t atime, time_t mtime, time_t ctime );
-    bool writeSymLink_impl(const QString &name, const QString &target,
-    			const QString &user, const QString &group,
+    bool writeSymLink_impl(const TQString &name, const TQString &target,
+    			const TQString &user, const TQString &group,
     			mode_t perm, time_t atime, time_t mtime, time_t ctime);
 private:
     class KTarPrivate;

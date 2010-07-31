@@ -3,8 +3,8 @@
 #ifndef SMTP_H
 #define SMTP_H
 
-#include <qobject.h>
-#include <qtimer.h>
+#include <tqobject.h>
+#include <tqtimer.h>
 #include <ksock.h>
 
 /*int SMTPServerStatus[] = {
@@ -44,19 +44,19 @@ public:
     SMTP(char *serverhost = 0, unsigned short int port = 0, int timeout = DEFAULT_SMTP_TIMEOUT);
     ~SMTP();
 
-    void setServerHost(const QString& serverhost);
+    void setServerHost(const TQString& serverhost);
     void setPort(unsigned short int port);
     void setTimeOut(int timeout);
 
     bool isConnected(){return connected;};
     bool isFinished(){return finished;};
-    QString getLastLine(){return lastLine;};
+    TQString getLastLine(){return lastLine;};
 
-    void setSenderAddress(const QString& sender);
-    void setRecipientAddress(const QString& recipient);
-    void setMessageSubject(const QString& subject);
-    void setMessageBody(const QString& message);
-    void setMessageHeader(const QString &header);
+    void setSenderAddress(const TQString& sender);
+    void setRecipientAddress(const TQString& recipient);
+    void setMessageSubject(const TQString& subject);
+    void setMessageBody(const TQString& message);
+    void setMessageHeader(const TQString &header);
 
     typedef enum {
         NONE = 0,             // null
@@ -93,7 +93,7 @@ public:
     }SMTPError;
 
 protected:
-    void processLine(QString *line);
+    void processLine(TQString *line);
 
 public slots:
     void openConnection();
@@ -113,32 +113,32 @@ signals:
     void error(int);
 
 private:
-    QString serverHost;
+    TQString serverHost;
     unsigned short int hostPort;
     int timeOut;
 
     bool connected;
     bool finished;
 
-    QString senderAddress;
-    QString recipientAddress;
-    QString messageSubject;
-    QString messageBody, messageHeader;
+    TQString senderAddress;
+    TQString recipientAddress;
+    TQString messageSubject;
+    TQString messageBody, messageHeader;
 
     SMTPClientStatus state;
     SMTPClientStatus lastState;
     SMTPServerStatus serverState;
 
-    QString domainName;
+    TQString domainName;
 
     KSocket *sock;
-    QTimer connectTimer;
-    QTimer timeOutTimer;
-    QTimer interactTimer;
+    TQTimer connectTimer;
+    TQTimer timeOutTimer;
+    TQTimer interactTimer;
 
     char readBuffer[SMTP_READ_BUFFER_SIZE];
-    QString lineBuffer;
-    QString lastLine;
-    QString writeString;
+    TQString lineBuffer;
+    TQString lastLine;
+    TQString writeString;
 };
 #endif

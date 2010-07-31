@@ -23,8 +23,8 @@
 #include <klocale.h>
 #include <dcopclient.h>
 
-#include <qvaluelist.h>
-#include <qcstring.h>
+#include <tqvaluelist.h>
+#include <tqcstring.h>
 
 #include <kartsdispatcher.h>
 #include <soundserver.h>
@@ -43,7 +43,7 @@ class KMCOPPrivate
 {
 public:
 	MCOPInfo mcopInfo; 
-	QPtrList<MCOPDCOPObject> list;
+	TQPtrList<MCOPDCOPObject> list;
 };
 
 int main(int argc, char **argv)
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
     return app.exec();
 }
 
-KMCOP::KMCOP() : QObject(), DCOPObject("arts")
+KMCOP::KMCOP() : TQObject(), DCOPObject("arts")
 {
     d = new KMCOPPrivate();
 	d->mcopInfo = Reference("global:Arts_MCOPInfo");
@@ -91,10 +91,10 @@ int KMCOP::objectCount()
 	return d->mcopInfo.objectCount();
 }
 
-QCString KMCOP::correctType(const QCString &str)
+TQCString KMCOP::correctType(const TQCString &str)
 {
 	if(str == "string")
-		return "QCString";
+		return "TQCString";
 	return str;
 }
 
@@ -106,7 +106,7 @@ void KMCOP::addInterfacesHackHackHack()
 		
 		if(!obj.isNull())		
 		{
-			QCString interfaceName = obj._interfaceName().c_str();
+			TQCString interfaceName = obj._interfaceName().c_str();
 
 			if(interfaceName != "Arts::TraderOffer")
 			{
@@ -121,21 +121,21 @@ void KMCOP::addInterfacesHackHackHack()
 				vector<MethodDef>::iterator ifaceMethodsIterator;
 				for(ifaceMethodsIterator = ifaceMethods.begin(); ifaceMethodsIterator != ifaceMethods.end(); ifaceMethodsIterator++)
 				{
-					QCString function, signature;
+					TQCString function, signature;
 
 					MCOPEntryInfo *entry = new MCOPEntryInfo();
 					
 					MethodDef currentMethod = *ifaceMethodsIterator;
 					vector<ParamDef> currentParameters = currentMethod.signature;
 
-					QCString newType = correctType(QCString(currentMethod.type.c_str()));
+					TQCString newType = correctType(TQCString(currentMethod.type.c_str()));
 					
 					entry->setFunctionType(newType);
-					entry->setFunctionName(QCString(currentMethod.name.c_str()));
+					entry->setFunctionName(TQCString(currentMethod.name.c_str()));
 					
-					function = entry->functionType() + QCString(" ") + entry->functionName() + QCString("(");
+					function = entry->functionType() + TQCString(" ") + entry->functionName() + TQCString("(");
 					
-					signature = QCString("(");
+					signature = TQCString("(");
 
 					QCStringList signatureList;
 					
@@ -145,20 +145,20 @@ void KMCOP::addInterfacesHackHackHack()
 						ParamDef parameter = *methodParametersIterator;
 						if(methodParametersIterator != currentParameters.begin())
 						{
-							function += QCString(", ");						
-							signature += QCString(",");
+							function += TQCString(", ");						
+							signature += TQCString(",");
 						}
 						
-						QCString correctParameter = correctType(QCString(parameter.type.c_str()));
+						TQCString correctParameter = correctType(TQCString(parameter.type.c_str()));
 						
 						function += correctParameter;
 						signature += correctParameter;
 
-						signatureList.append(QCString(parameter.type.c_str()));
+						signatureList.append(TQCString(parameter.type.c_str()));
 					}
 					
-					function += QCString(")");
-					signature += QCString(")");
+					function += TQCString(")");
+					signature += TQCString(")");
 
 					entry->setSignature(signature);
 					entry->setSignatureList(signatureList);

@@ -19,7 +19,7 @@
 #ifndef __karrowbutton_h__
 #define __karrowbutton_h__
 
-#include <qpushbutton.h>
+#include <tqpushbutton.h>
 
 #include <kdelibs_export.h>
 
@@ -48,7 +48,7 @@ class KDEUI_EXPORT KArrowButton : public QPushButton
 		 * @param arrow The direction the arrrow should be pointing in
 		 * @param name An internal name for this widget
 		 */
-		KArrowButton(QWidget *parent = 0, Qt::ArrowType arrow = Qt::UpArrow,
+		KArrowButton(TQWidget *parent = 0, Qt::ArrowType arrow = Qt::UpArrow,
 			const char *name = 0);
 
 		/**
@@ -57,9 +57,9 @@ class KDEUI_EXPORT KArrowButton : public QPushButton
 		virtual ~KArrowButton();
 
 		/**
-		 * Reimplemented from QPushButton.
+		 * Reimplemented from TQPushButton.
 		 */
-		virtual QSize sizeHint() const;
+		virtual TQSize sizeHint() const;
 
 		/**
 		* Returns the arrow type
@@ -81,9 +81,9 @@ class KDEUI_EXPORT KArrowButton : public QPushButton
 
 	protected:
 		/**
-		 * Reimplemented from QPushButton.
+		 * Reimplemented from TQPushButton.
 		 */
-		virtual void drawButton(QPainter *);
+		virtual void drawButton(TQPainter *);
 
 	protected:
 		virtual void virtual_hook( int id, void* data );

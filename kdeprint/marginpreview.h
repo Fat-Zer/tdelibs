@@ -20,14 +20,14 @@
 #ifndef	MARGINPREVIEW_H
 #define	MARGINPREVIEW_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class MarginPreview : public QWidget
 {
 	Q_OBJECT
 
 public:
-	MarginPreview(QWidget *parent = 0, const char *name = 0);
+	MarginPreview(TQWidget *parent = 0, const char *name = 0);
 	~MarginPreview();
 	// note : unit -> points (1/72th in)
 	void setPageSize(float w, float h);
@@ -43,13 +43,13 @@ signals:
 	void marginChanged(int type, float value);
 
 protected:
-	void paintEvent(QPaintEvent *);
-	void resizeEvent(QResizeEvent *);
-	void mouseMoveEvent(QMouseEvent *);
-	void mousePressEvent(QMouseEvent *);
-	void mouseReleaseEvent(QMouseEvent *);
-	int locateMouse(const QPoint& p);
-	void drawTempLine(QPainter*);
+	void paintEvent(TQPaintEvent *);
+	void resizeEvent(TQResizeEvent *);
+	void mouseMoveEvent(TQMouseEvent *);
+	void mousePressEvent(TQMouseEvent *);
+	void mouseReleaseEvent(TQMouseEvent *);
+	int locateMouse(const TQPoint& p);
+	void drawTempLine(TQPainter*);
 
 private:
 	float	width_, height_;

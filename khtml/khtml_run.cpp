@@ -26,7 +26,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include "khtml_ext.h"
-#include <qwidget.h>
+#include <tqwidget.h>
 
 KHTMLRun::KHTMLRun( KHTMLPart *part, khtml::ChildFrame *child, const KURL &url,
                     const KParts::URLArgs &args, bool hideErrorDialog )
@@ -44,10 +44,10 @@ KHTMLRun::KHTMLRun( KHTMLPart *part, khtml::ChildFrame *child, const KURL &url,
 //KHTMLPart *KHTMLRun::htmlPart() const
 //{ return static_cast<KHTMLPart *>(m_part); }
 
-void KHTMLRun::foundMimeType( const QString &_type )
+void KHTMLRun::foundMimeType( const TQString &_type )
 {
     Q_ASSERT(!m_bFinished);
-    QString mimeType = _type; // this ref comes from the job, we lose it when using KIO again
+    TQString mimeType = _type; // this ref comes from the job, we lose it when using KIO again
     if ( static_cast<KHTMLPart *>(m_part)->processObjectRequest( m_child, m_strURL, mimeType ) )
         m_bFinished = true;
     else {
@@ -78,9 +78,9 @@ void KHTMLRun::foundMimeType( const QString &_type )
     static_cast<KHTMLPart *>(m_part)->checkCompleted();
 }
 
-void KHTMLRun::save( const KURL & url, const QString & suggestedFilename )
+void KHTMLRun::save( const KURL & url, const TQString & suggestedFilename )
 {
-    KHTMLPopupGUIClient::saveURL( m_part->widget(), i18n( "Save As" ), url, m_args.metaData(), QString::null, 0, suggestedFilename );
+    KHTMLPopupGUIClient::saveURL( m_part->widget(), i18n( "Save As" ), url, m_args.metaData(), TQString::null, 0, suggestedFilename );
 }
 
 // KDE4: remove

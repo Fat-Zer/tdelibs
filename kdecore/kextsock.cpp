@@ -36,11 +36,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <qglobal.h>
-#include <qstring.h>
-#include <qiodevice.h>
-#include <qsocketnotifier.h>
-#include <qguardedptr.h>
+#include <tqglobal.h>
+#include <tqstring.h>
+#include <tqiodevice.h>
+#include <tqsocketnotifier.h>
+#include <tqguardedptr.h>
 
 #include "kresolver.h"
 
@@ -75,7 +75,7 @@ public:
   ::KSocketAddress *local;	// local socket address
   ::KSocketAddress *peer;	// peer socket address
 
-  QSocketNotifier *qsnIn, *qsnOut;
+  TQSocketNotifier *qsnIn, *qsnOut;
   int inMaxSize, outMaxSize;
   bool emitRead : 1, emitWrite : 1;
   mutable bool addressReusable : 1, ipv6only : 1;
@@ -189,7 +189,7 @@ KExtendedSocket::KExtendedSocket() :
 }
 
 // constructor with hostname
-KExtendedSocket::KExtendedSocket(const QString& host, int port, int flags) :
+KExtendedSocket::KExtendedSocket(const TQString& host, int port, int flags) :
   sockfd(-1), d(new KExtendedSocketPrivate)
 {
   setAddress(host, port);
@@ -197,7 +197,7 @@ KExtendedSocket::KExtendedSocket(const QString& host, int port, int flags) :
 }
 
 // same
-KExtendedSocket::KExtendedSocket(const QString& host, const QString& service, int flags) :
+KExtendedSocket::KExtendedSocket(const TQString& host, const TQString& service, int flags) :
   sockfd(-1), d(new KExtendedSocketPrivate)
 {
   setAddress(host, service);
@@ -273,7 +273,7 @@ int KExtendedSocket::socketFlags() const
  * Sets socket target hostname
  * This is only allowed if we are in nothing state
  */
-bool KExtendedSocket::setHost(const QString& host)
+bool KExtendedSocket::setHost(const TQString& host)
 {
   if (d->status > nothing)
     return false;		// error!
@@ -285,7 +285,7 @@ bool KExtendedSocket::setHost(const QString& host)
 /*
  * returns the hostname
  */
-QString KExtendedSocket::host() const
+TQString KExtendedSocket::host() const
 {
   return d->resRemote.nodeName();
 }
@@ -296,10 +296,10 @@ QString KExtendedSocket::host() const
  */
 bool KExtendedSocket::setPort(int port)
 {
-  return setPort(QString::number(port));
+  return setPort(TQString::number(port));
 }
 
-bool KExtendedSocket::setPort(const QString& service)
+bool KExtendedSocket::setPort(const TQString& service)
 {
   if (d->status > nothing)
     return false;		// error
@@ -311,7 +311,7 @@ bool KExtendedSocket::setPort(const QString& service)
 /*
  * returns the service port number
  */
-QString KExtendedSocket::port() const
+TQString KExtendedSocket::port() const
 {
   return d->resRemote.serviceName();
 }
@@ -319,7 +319,7 @@ QString KExtendedSocket::port() const
 /*
  * sets the address
  */
-bool KExtendedSocket::setAddress(const QString& host, int port)
+bool KExtendedSocket::setAddress(const TQString& host, int port)
 {
   return setHost(host) && setPort(port);
 }
@@ -327,7 +327,7 @@ bool KExtendedSocket::setAddress(const QString& host, int port)
 /*
  * the same
  */
-bool KExtendedSocket::setAddress(const QString& host, const QString& serv)
+bool KExtendedSocket::setAddress(const TQString& host, const TQString& serv)
 {
   return setHost(host) && setPort(serv);
 }
@@ -337,7 +337,7 @@ bool KExtendedSocket::setAddress(const QString& host, const QString& serv)
  * This is only valid in the 'nothing' state and if this is not a
  * passiveSocket socket
  */
-bool KExtendedSocket::setBindHost(const QString& host)
+bool KExtendedSocket::setBindHost(const TQString& host)
 {
   if (d->status > nothing || d->flags & passiveSocket)
     return false;		// error
@@ -352,13 +352,13 @@ bool KExtendedSocket::setBindHost(const QString& host)
  */
 bool KExtendedSocket::unsetBindHost()
 {
-  return setBindHost(QString::null);
+  return setBindHost(TQString::null);
 }
 
 /*
  * returns the binding host
  */
-QString KExtendedSocket::bindHost() const
+TQString KExtendedSocket::bindHost() const
 {
   return d->resLocal.serviceName();
 }
@@ -369,10 +369,10 @@ QString KExtendedSocket::bindHost() const
  */
 bool KExtendedSocket::setBindPort(int port)
 {
-  return setBindPort(QString::number(port));
+  return setBindPort(TQString::number(port));
 }
 
-bool KExtendedSocket::setBindPort(const QString& service)
+bool KExtendedSocket::setBindPort(const TQString& service)
 {
   if (d->status > nothing || d->flags & passiveSocket)
     return false;		// error
@@ -386,13 +386,13 @@ bool KExtendedSocket::setBindPort(const QString& service)
  */
 bool KExtendedSocket::unsetBindPort()
 {
-  return setBindPort(QString::null);
+  return setBindPort(TQString::null);
 }
 
 /*
  * returns the binding port
  */
-QString KExtendedSocket::bindPort() const
+TQString KExtendedSocket::bindPort() const
 {
   return d->resLocal.serviceName();
 }
@@ -400,7 +400,7 @@ QString KExtendedSocket::bindPort() const
 /*
  * sets the binding address
  */
-bool KExtendedSocket::setBindAddress(const QString& host, int port)
+bool KExtendedSocket::setBindAddress(const TQString& host, int port)
 {
   return setBindHost(host) && setBindPort(port);
 }
@@ -408,7 +408,7 @@ bool KExtendedSocket::setBindAddress(const QString& host, int port)
 /*
  * same
  */
-bool KExtendedSocket::setBindAddress(const QString& host, const QString& service)
+bool KExtendedSocket::setBindAddress(const TQString& host, const TQString& service)
 {
   return setBindHost(host) && setBindPort(service);
 }
@@ -638,8 +638,8 @@ bool KExtendedSocket::setBufferSize(int rsize, int wsize)
   // closed
   if (d->qsnIn == NULL)
     {
-      d->qsnIn = new QSocketNotifier(sockfd, QSocketNotifier::Read);
-      QObject::connect(d->qsnIn, SIGNAL(activated(int)), this, SLOT(socketActivityRead()));
+      d->qsnIn = new TQSocketNotifier(sockfd, TQSocketNotifier::Read);
+      TQObject::connect(d->qsnIn, TQT_SIGNAL(activated(int)), this, TQT_SLOT(socketActivityRead()));
       d->qsnIn->setEnabled(true);
     }
 
@@ -686,8 +686,8 @@ bool KExtendedSocket::setBufferSize(int rsize, int wsize)
 
       if (d->qsnOut == NULL)
 	{
-	  d->qsnOut = new QSocketNotifier(sockfd, QSocketNotifier::Write);
-	  QObject::connect(d->qsnOut, SIGNAL(activated(int)), this, SLOT(socketActivityWrite()));
+	  d->qsnOut = new TQSocketNotifier(sockfd, TQSocketNotifier::Write);
+	  TQObject::connect(d->qsnOut, TQT_SIGNAL(activated(int)), this, TQT_SLOT(socketActivityWrite()));
 	  // if the class is being created now, there's nothing to write yet
 	  // so socketActivityWrite() will get called once and disable
 	  // the notifier
@@ -701,8 +701,8 @@ bool KExtendedSocket::setBufferSize(int rsize, int wsize)
   // check we didn't turn something off we shouldn't
   if (d->emitWrite && d->qsnOut == NULL)
     {
-      d->qsnOut = new QSocketNotifier(sockfd, QSocketNotifier::Write);
-      QObject::connect(d->qsnOut, SIGNAL(activated(int)), this, SLOT(socketActivityWrite()));
+      d->qsnOut = new TQSocketNotifier(sockfd, TQSocketNotifier::Write);
+      TQObject::connect(d->qsnOut, TQT_SIGNAL(activated(int)), this, TQT_SLOT(socketActivityWrite()));
     }
 
   return true;
@@ -783,8 +783,8 @@ int KExtendedSocket::startAsyncLookup()
       d->resRemote.setFlags(flags);
       d->resRemote.setFamily(familyMask);
       d->resRemote.setSocketType(socktype);
-      QObject::connect(&d->resRemote, SIGNAL(finished(KResolverResults)), 
-		       this, SLOT(dnsResultsReady()));
+      TQObject::connect(&d->resRemote, TQT_SIGNAL(finished(KResolverResults)), 
+		       this, TQT_SLOT(dnsResultsReady()));
 
       if (!d->resRemote.start())
 	{
@@ -800,8 +800,8 @@ int KExtendedSocket::startAsyncLookup()
       d->resLocal.setFlags(flags);
       d->resLocal.setFamily(familyMask);
       d->resLocal.setSocketType(socktype);
-      QObject::connect(&d->resLocal, SIGNAL(finished(KResolverResults)), 
-		       this, SLOT(dnsResultsReady()));
+      TQObject::connect(&d->resLocal, TQT_SIGNAL(finished(KResolverResults)), 
+		       this, TQT_SLOT(dnsResultsReady()));
 
       if (!d->resLocal.start())
 	{
@@ -895,8 +895,8 @@ int KExtendedSocket::listen(int N)
   else
     {
       d->status = listening;
-      d->qsnIn = new QSocketNotifier(sockfd, QSocketNotifier::Read);
-      QObject::connect(d->qsnIn, SIGNAL(activated(int)), this, SLOT(socketActivityRead()));
+      d->qsnIn = new TQSocketNotifier(sockfd, TQSocketNotifier::Read);
+      TQObject::connect(d->qsnIn, TQT_SIGNAL(activated(int)), this, TQT_SLOT(socketActivityRead()));
     }
   return retval == -1 ? -1 : 0;
 }
@@ -1218,7 +1218,7 @@ int KExtendedSocket::startAsyncConnect()
   // signal lookupFinished to do connection
   if (d->status < lookupDone)
     {
-      QObject::connect(this, SIGNAL(lookupFinished(int)), this, SLOT(startAsyncConnectSlot()));
+      TQObject::connect(this, TQT_SIGNAL(lookupFinished(int)), this, TQT_SLOT(startAsyncConnectSlot()));
       if (d->status < lookupInProgress)
 	return startAsyncLookup();
       else
@@ -1228,7 +1228,7 @@ int KExtendedSocket::startAsyncConnect()
   // here we have d->status >= lookupDone and <= connecting
   // we can do our connection
   d->status = connecting;
-  QGuardedPtr<QObject> p = this;
+  TQGuardedPtr<TQObject> p = this;
   connectionEvent();
   if (!p) 
     return -1; // We have been deleted.
@@ -1385,8 +1385,8 @@ void KExtendedSocket::flush()
       // better by concatenating a few of them into a big buffer
       // question is: how big should that buffer be? 16 kB should be enough
 
-      QByteArray buf(16384);
-      QByteArray *a = outBuf.first();
+      TQByteArray buf(16384);
+      TQByteArray *a = outBuf.first();
       unsigned count = 0;
 
       while (a && count + (a->size() - offset) <= buf.size())
@@ -1657,7 +1657,7 @@ void KExtendedSocket::socketActivityRead()
   if (d->flags & inputBufferedSocket)
     {
       // aye. Do read from the socket and feed our buffer
-      QByteArray a;
+      TQByteArray a;
       char buf[1024];
       int len, totalread = 0;
 
@@ -1908,10 +1908,10 @@ void KExtendedSocket::connectionEvent()
 
 	  // error here is either EWOULDBLOCK or EINPROGRESS
 	  // so, it is a good condition
-	  d->qsnIn = new QSocketNotifier(sockfd, QSocketNotifier::Read);
-	  QObject::connect(d->qsnIn, SIGNAL(activated(int)), this, SLOT(socketActivityRead()));
-	  d->qsnOut = new QSocketNotifier(sockfd, QSocketNotifier::Write);
-	  QObject::connect(d->qsnOut, SIGNAL(activated(int)), this, SLOT(socketActivityWrite()));
+	  d->qsnIn = new TQSocketNotifier(sockfd, TQSocketNotifier::Read);
+	  TQObject::connect(d->qsnIn, TQT_SIGNAL(activated(int)), this, TQT_SLOT(socketActivityRead()));
+	  d->qsnOut = new TQSocketNotifier(sockfd, TQSocketNotifier::Write);
+	  TQObject::connect(d->qsnOut, TQT_SIGNAL(activated(int)), this, TQT_SLOT(socketActivityWrite()));
 
 	  // ok, let the Qt event loop do the selecting for us
 	  return;
@@ -1969,14 +1969,14 @@ void KExtendedSocket::dnsResultsReady()
 
 void KExtendedSocket::startAsyncConnectSlot()
 {
-  QObject::disconnect(this, SIGNAL(lookupFinished(int)), this, SLOT(startAsyncConnectSlot()));
+  TQObject::disconnect(this, TQT_SIGNAL(lookupFinished(int)), this, TQT_SLOT(startAsyncConnectSlot()));
 
   if (d->status == lookupDone)
     startAsyncConnect();
 }
 
-int KExtendedSocket::resolve(sockaddr *sock, ksocklen_t len, QString &host,
-			     QString &port, int flags)
+int KExtendedSocket::resolve(sockaddr *sock, ksocklen_t len, TQString &host,
+			     TQString &port, int flags)
 {
   kdDebug(170) << "Deprecated function called:" << k_funcinfo << endl;
 
@@ -1986,26 +1986,26 @@ int KExtendedSocket::resolve(sockaddr *sock, ksocklen_t len, QString &host,
   h[0] = s[0] = '\0';
 
   err = getnameinfo(sock, len, h, sizeof(h) - 1, s, sizeof(s) - 1, flags);
-  host = QString::fromUtf8(h);
-  port = QString::fromUtf8(s);
+  host = TQString::fromUtf8(h);
+  port = TQString::fromUtf8(s);
 
   return err;
 }
 
-int KExtendedSocket::resolve(::KSocketAddress *sock, QString &host, QString &port,
+int KExtendedSocket::resolve(::KSocketAddress *sock, TQString &host, TQString &port,
 			     int flags)
 {
   return resolve(sock->data, sock->datasize, host, port, flags);
 }
 
-QPtrList<KAddressInfo> KExtendedSocket::lookup(const QString& host, const QString& port,
+TQPtrList<KAddressInfo> KExtendedSocket::lookup(const TQString& host, const TQString& port,
 					    int userflags, int *error)
 {
   kdDebug(170) << "Deprecated function called:" << k_funcinfo << endl;
 
   int socktype, familyMask, flags;
   unsigned i;
-  QPtrList<KAddressInfo> l;
+  TQPtrList<KAddressInfo> l;
 
   /* check socket type flags */
   if (!process_flags(userflags, socktype, familyMask, flags))
@@ -2032,7 +2032,7 @@ QPtrList<KAddressInfo> KExtendedSocket::lookup(const QString& host, const QStrin
       ai->ai->ai_family = res[i].family();
       ai->ai->ai_socktype = res[i].socketType();
       ai->ai->ai_protocol = res[i].protocol();
-      QString canon = res[i].canonicalName();
+      TQString canon = res[i].canonicalName();
       if (!canon.isEmpty())
 	{
 	  ai->ai->ai_canonname = (char *) malloc(canon.length()+1);
@@ -2153,7 +2153,7 @@ QPtrList<KAddressInfo> KExtendedSocket::lookup(const QString& host, const QStrin
   return peer;
 }
 
-QString KExtendedSocket::strError(int code, int syserr)
+TQString KExtendedSocket::strError(int code, int syserr)
 {
   const char * msg;
   if (code == IO_LookupError)
@@ -2161,12 +2161,12 @@ QString KExtendedSocket::strError(int code, int syserr)
   else
     msg = strerror(syserr);
 
-  return QString::fromLocal8Bit(msg);
+  return TQString::fromLocal8Bit(msg);
 }
 
 
-QSocketNotifier *KExtendedSocket::readNotifier() { return d->qsnIn; }
-QSocketNotifier *KExtendedSocket::writeNotifier() { return d->qsnOut; }
+TQSocketNotifier *KExtendedSocket::readNotifier() { return d->qsnIn; }
+TQSocketNotifier *KExtendedSocket::writeNotifier() { return d->qsnOut; }
 
 /*
  * class KAddressInfo

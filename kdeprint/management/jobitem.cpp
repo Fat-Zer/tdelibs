@@ -22,8 +22,8 @@
 
 #include <kiconloader.h>
 
-JobItem::JobItem(QListView *parent, KMJob *job)
-: QListViewItem(parent)
+JobItem::JobItem(TQListView *parent, KMJob *job)
+: TQListViewItem(parent)
 {
 	m_job = new KMJob;
 	init(job);
@@ -39,13 +39,13 @@ void JobItem::init(KMJob *job)
 	m_job->copy(job ? *job : KMJob());
 
 	setPixmap(0,SmallIcon(m_job->pixmap()));
-	setText(0,QString::number(m_job->id()));
+	setText(0,TQString::number(m_job->id()));
 	//setText(6,m_job->printer());
 	setText(2,m_job->name());
 	setText(1,m_job->owner());
 	setText(3,m_job->stateString());
-	setText(4,QString::number(m_job->size()));
-	setText(5,QString::number(m_job->processedPages()));
+	setText(4,TQString::number(m_job->size()));
+	setText(5,TQString::number(m_job->processedPages()));
 	m_ID = m_job->id();
 	m_uri = m_job->uri();
 
@@ -56,7 +56,7 @@ void JobItem::init(KMJob *job)
 	widthChanged();
 }
 
-int JobItem::compare(QListViewItem *item, int col, bool asc) const
+int JobItem::compare(TQListViewItem *item, int col, bool asc) const
 {
 	switch (col)
 	{
@@ -69,6 +69,6 @@ int JobItem::compare(QListViewItem *item, int col, bool asc) const
 				break;
 			}
 		default:
-			return QListViewItem::compare(item, col, asc);
+			return TQListViewItem::compare(item, col, asc);
 	}
 }

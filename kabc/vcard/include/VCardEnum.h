@@ -24,14 +24,14 @@
 #ifndef  ENUM_H
 #define  ENUM_H
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <kdelibs_export.h>
 
 namespace VCARD
 {
 
-extern const QCString paramNames [];
+extern const TQCString paramNames [];
 
 enum EntityType {
 	EntityName,
@@ -111,8 +111,8 @@ extern const ParamType paramTypesTable[];
 
 KVCARD_EXPORT ParamType EntityTypeToParamType(EntityType);
 KVCARD_EXPORT ValueType EntityTypeToValueType(EntityType);
-KVCARD_EXPORT QCString EntityTypeToParamName(EntityType);
-KVCARD_EXPORT EntityType EntityNameToEntityType(const QCString &);
+KVCARD_EXPORT TQCString EntityTypeToParamName(EntityType);
+KVCARD_EXPORT EntityType EntityNameToEntityType(const TQCString &);
 
 KVCARD_EXPORT char * encodeBase64(const char *, unsigned long, unsigned long &);
 KVCARD_EXPORT char * decodeBase64(const char *, unsigned long, unsigned long &);

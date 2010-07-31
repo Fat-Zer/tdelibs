@@ -24,13 +24,13 @@
 #include "kplayobjectcreator.h"
 #include <kdebug.h>
 
-KPlayObject::KPlayObject() : QObject()
+KPlayObject::KPlayObject() : TQObject()
 {
 	m_playObject = Arts::PlayObject::null();
 	m_isStream = false;
 }
 
-KPlayObject::KPlayObject(Arts::PlayObject playobject, bool isStream) : QObject()
+KPlayObject::KPlayObject(Arts::PlayObject playobject, bool isStream) : TQObject()
 {
 	m_playObject = playobject;
 	m_isStream = isStream;
@@ -63,9 +63,9 @@ void KPlayObject::halt()
 	object().halt();
 }
 
-QString KPlayObject::description()
+TQString KPlayObject::description()
 {
-	return QString::fromLatin1(object().description().c_str());
+	return TQString::fromLatin1(object().description().c_str());
 }
 
 Arts::poTime KPlayObject::currentTime()
@@ -83,9 +83,9 @@ Arts::poCapabilities KPlayObject::capabilities()
 	return object().capabilities();
 }
 
-QString KPlayObject::mediaName()
+TQString KPlayObject::mediaName()
 {
-	return QString::fromLatin1(object().mediaName().c_str());
+	return TQString::fromLatin1(object().mediaName().c_str());
 }
 
 Arts::poState KPlayObject::state()
@@ -131,14 +131,14 @@ struct KDE::PlayObject::PrivateData
 	KURL url;
 };
 
-KDE::PlayObject::PlayObject() : QObject()
+KDE::PlayObject::PlayObject() : TQObject()
 {
 	m_playObject = Arts::PlayObject::null();
 	m_isStream = false;
 	d = new PrivateData;
 }
 
-KDE::PlayObject::PlayObject(Arts::PlayObject playobject, bool isStream) : QObject()
+KDE::PlayObject::PlayObject(Arts::PlayObject playobject, bool isStream) : TQObject()
 {
 	m_playObject = playobject;
 	m_isStream = isStream;
@@ -150,7 +150,7 @@ KDE::PlayObject::PlayObject(Arts::PlayObject playobject, bool isStream) : QObjec
 	//emit playObjectCreated();
 }
 
-KDE::PlayObject::PlayObject( Arts::SoundServerV2 server, const KURL& url, bool isStream, bool createBUS ) : QObject()
+KDE::PlayObject::PlayObject( Arts::SoundServerV2 server, const KURL& url, bool isStream, bool createBUS ) : TQObject()
 {
 	kdDebug( 400 ) << "KDE::PlayObject: created as proxy for URL " << url.url()<< endl;
 
@@ -179,7 +179,7 @@ void KDE::PlayObject::play()
 			if ( d->creator )
 				delete d->creator;
 			d->creator = new KDE::PlayObjectCreator( d->server );
-			d->creator->create( d->url, d->createBUS, this, SLOT( attachPlayObject( Arts::PlayObject ) ) );
+			d->creator->create( d->url, d->createBUS, this, TQT_SLOT( attachPlayObject( Arts::PlayObject ) ) );
 			kdDebug( 400 ) << "KDE::PlayObject::play(): creator called" << endl;
 			d->internalState = Arts::posPlaying;
 		}
@@ -239,11 +239,11 @@ void KDE::PlayObject::halt()
 	d->internalState = Arts::posIdle;
 }
 
-QString KDE::PlayObject::description()
+TQString KDE::PlayObject::description()
 {
 	if ( object().isNull() )
-		return QString();
-	return QString::fromLatin1(object().description().c_str());
+		return TQString();
+	return TQString::fromLatin1(object().description().c_str());
 }
 
 Arts::poTime KDE::PlayObject::currentTime()
@@ -267,11 +267,11 @@ Arts::poCapabilities KDE::PlayObject::capabilities()
 	return object().capabilities();
 }
 
-QString KDE::PlayObject::mediaName()
+TQString KDE::PlayObject::mediaName()
 {
 	if ( object().isNull() )
-		return QString();
-	return QString::fromLatin1(object().mediaName().c_str());
+		return TQString();
+	return TQString::fromLatin1(object().mediaName().c_str());
 }
 
 Arts::poState KDE::PlayObject::state()

@@ -76,7 +76,7 @@ struct RegisteredListenerList {
     //### KDE4: should disappear
     bool stillContainsListener(const RegisteredEventListener& listener);
 
-    QValueList<RegisteredEventListener>* listeners;//The actual listener list - may be 0
+    TQValueList<RegisteredEventListener>* listeners;//The actual listener list - may be 0
 private:
     bool isHTMLEventListener(EventListener* listener);
 };
@@ -257,7 +257,7 @@ public:
     virtual bool isInline() const;
 
     virtual void getCaret(int offset, bool override, int &_x, int &_y, int &width, int &height);
-    virtual QRect getRect() const;
+    virtual TQRect getRect() const;
 
     enum StyleChange { NoChange, NoInherit, Inherit, Detach, Force };
     virtual void recalcStyle( StyleChange = NoChange ) {}
@@ -279,12 +279,12 @@ public:
     // return true if event not prevented
     bool dispatchHTMLEvent(int _id, bool canBubbleArg, bool cancelableArg);
     void dispatchWindowEvent(int _id, bool canBubbleArg, bool cancelableArg);
-    void dispatchMouseEvent(QMouseEvent *e, int overrideId = 0, int overrideDetail = 0);
+    void dispatchMouseEvent(TQMouseEvent *e, int overrideId = 0, int overrideDetail = 0);
     void dispatchUIEvent(int _id, int detail = 0);
     void dispatchSubtreeModifiedEvent();
     // return true if defaultPrevented (i.e. event should be swallowed)
     // this matches the logic in KHTMLView.
-    bool dispatchKeyEvent(QKeyEvent *key, bool keypress);
+    bool dispatchKeyEvent(TQKeyEvent *key, bool keypress);
 
     void handleLocalEvents(EventImpl *evt, bool useCapture);
 
@@ -392,7 +392,7 @@ public:
      *
      * @return State information about the node represented as a string
      */
-    virtual QString state();
+    virtual TQString state();
 
     /**
      * Sets the state of the element based on a string previosuly returned by state(). This is used to initialize form
@@ -400,7 +400,7 @@ public:
      *
      * @param state A string representation of the node's previously-stored state
      */
-    virtual void restoreState(const QString &state);
+    virtual void restoreState(const TQString &state);
 
     // -----------------------------------------------------------------------------
     // Notification of document stucture changes
@@ -584,7 +584,7 @@ public:
     {
         static Cache* make() { return new Cache; }
 
-        CacheKey key;//### We must store this in here due to QCache in Qt3 sucking
+        CacheKey key;//### We must store this in here due to TQCache in Qt3 sucking
 
         unsigned int version;
         union
@@ -729,7 +729,7 @@ public:
 
 protected:
     DocumentImpl* m_doc;
-    QPtrList<NodeImpl> *m_contents;
+    TQPtrList<NodeImpl> *m_contents;
 };
 
 } //namespace

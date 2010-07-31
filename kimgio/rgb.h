@@ -11,37 +11,37 @@
 #ifndef KIMG_RGB_H
 #define KIMG_RGB_H
 
-#include <qmap.h>
-#include <qptrvector.h>
+#include <tqmap.h>
+#include <tqptrvector.h>
 
 
 class QImage;
 class QImageIO;
 
 extern "C" {
-void kimgio_rgb_read(QImageIO *);
-void kimgio_rgb_write(QImageIO *);
+void kimgio_rgb_read(TQImageIO *);
+void kimgio_rgb_write(TQImageIO *);
 }
 
 
-class RLEData : public QMemArray<uchar> {
+class RLEData : public TQMemArray<uchar> {
 public:
 	RLEData() {}
 	RLEData(const uchar *d, uint l, uint o) : m_offset(o) { duplicate(d, l); }
 	bool operator<(const RLEData&) const;
-	void write(QDataStream& s);
-	void print(QString) const;				// TODO remove
+	void write(TQDataStream& s);
+	void print(TQString) const;				// TODO remove
 	uint offset() { return m_offset; }
 private:
 	uint			m_offset;
 };
 
 
-class RLEMap : public QMap<RLEData, uint> {
+class RLEMap : public TQMap<RLEData, uint> {
 public:
 	RLEMap() : m_counter(0), m_offset(0) {}
 	uint insert(const uchar *d, uint l);
-	QPtrVector<RLEData> vector();
+	TQPtrVector<RLEData> vector();
 	void setBaseOffset(uint o) { m_offset = o; }
 private:
 	uint			m_counter;
@@ -51,11 +51,11 @@ private:
 
 class SGIImage {
 public:
-	SGIImage(QImageIO *);
+	SGIImage(TQImageIO *);
 	~SGIImage();
 
-	bool readImage(QImage&);
-	bool writeImage(QImage&);
+	bool readImage(TQImage&);
+	bool writeImage(TQImage&);
 
 private:
 	enum { NORMAL, DITHERED, SCREEN, COLORMAP };		// colormap
@@ -77,18 +77,18 @@ private:
 	Q_UINT32		*m_starttab;
 	Q_UINT32		*m_lengthtab;
 	QByteArray		m_data;
-	QByteArray::Iterator	m_pos;
+	TQByteArray::Iterator	m_pos;
 	RLEMap			m_rlemap;
-	QPtrVector<RLEData>	m_rlevector;
+	TQPtrVector<RLEData>	m_rlevector;
 	uint			m_numrows;
 
-	bool readData(QImage&);
+	bool readData(TQImage&);
 	bool getRow(uchar *dest);
 
 	void writeHeader();
 	void writeRle();
-	void writeVerbatim(const QImage&);
-	bool scanData(const QImage&);
+	void writeVerbatim(const TQImage&);
+	bool scanData(const TQImage&);
 	uint compact(uchar *, uchar *);
 	uchar intensity(uchar);
 };

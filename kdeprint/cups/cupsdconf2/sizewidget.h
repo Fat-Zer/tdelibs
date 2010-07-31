@@ -20,7 +20,7 @@
 #ifndef SIZEWIDGET_H
 #define SIZEWIDGET_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class QSpinBox;
 class QComboBox;
@@ -28,16 +28,16 @@ class QComboBox;
 class SizeWidget : public QWidget
 {
 public:
-	SizeWidget( QWidget *parent = 0, const char *name = 0 );
+	SizeWidget( TQWidget *parent = 0, const char *name = 0 );
 
-	void setSizeString( const QString& sizeString );
-	QString sizeString() const;
+	void setSizeString( const TQString& sizeString );
+	TQString sizeString() const;
 	void setValue( int sz );
 	int value() const;
 
 private:
-	QSpinBox *m_size;
-	QComboBox *m_unit;
+	TQSpinBox *m_size;
+	TQComboBox *m_unit;
 };
 
 #endif

@@ -25,9 +25,9 @@ DEALINGS IN THE SOFTWARE.
 #ifndef __KXMESSAGES_H
 #define __KXMESSAGES_H
 
-#include <qwidget.h>
-#include <qcstring.h>
-#include <qmap.h>
+#include <tqwidget.h>
+#include <tqcstring.h>
+#include <tqmap.h>
 #include <kdelibs_export.h>
 #ifdef Q_WS_X11
 #include <X11/X.h>
@@ -58,12 +58,12 @@ class KDECORE_EXPORT KXMessages
          * @param obsolete always set to false (needed for backwards compatibility
          *                 with KDE3.1 and older)
 	 */
-        KXMessages( const char* accept_broadcast, QWidget* parent, bool obsolete );
+        KXMessages( const char* accept_broadcast, TQWidget* parent, bool obsolete );
         /**
          * @deprecated
          * This method is equivalent to the other constructor with obsolete = true.
          */
-        KXMessages( const char* accept_broadcast = NULL, QWidget* parent = NULL );
+        KXMessages( const char* accept_broadcast = NULL, TQWidget* parent = NULL );
 
         virtual ~KXMessages();
 	/**
@@ -76,13 +76,13 @@ class KDECORE_EXPORT KXMessages
          * @param obsolete always set to false (needed for backwards compatibility
          *                 with KDE3.1 and older)
 	 */
-        void sendMessage( WId w, const char* msg_type, const QString& message,
+        void sendMessage( WId w, const char* msg_type, const TQString& message,
             bool obsolete );
 	/**
          * @deprecated
          * This method is equivalent to sendMessage() with obsolete = true.
 	 */
-        void sendMessage( WId w, const char* msg_type, const QString& message );
+        void sendMessage( WId w, const char* msg_type, const TQString& message );
 	/**
 	 * Broadcasts the given message with the given message type.
 	 * @param msg_type the type of the message
@@ -91,13 +91,13 @@ class KDECORE_EXPORT KXMessages
          * @param obsolete always set to false (needed for backwards compatibility
          *                 with KDE3.1 and older)
 	 */
-        void broadcastMessage( const char* msg_type, const QString& message,
+        void broadcastMessage( const char* msg_type, const TQString& message,
             int screen, bool obsolete );
 	/**
          * @deprecated
          * This method is equivalent to broadcastMessage() with obsolete = true.
 	 */
-        void broadcastMessage( const char* msg_type, const QString& message );
+        void broadcastMessage( const char* msg_type, const TQString& message );
 
 	/**
 	 * Sends the given message with the given message type only to given
@@ -113,13 +113,13 @@ class KDECORE_EXPORT KXMessages
 	 * @return false when an error occurred, true otherwise
 	 */
         static bool sendMessageX( Display* disp, WId w, const char* msg_type,
-            const QString& message, bool obsolete );
+            const TQString& message, bool obsolete );
 	/**
          * @deprecated
          * This method is equivalent to sendMessageX() with obsolete = true.
 	 */
         static bool sendMessageX( Display* disp, WId w, const char* msg_type,
-            const QString& message );
+            const TQString& message );
 
 	/**
 	 * Broadcasts the given message with the given message type.
@@ -134,32 +134,32 @@ class KDECORE_EXPORT KXMessages
 	 * @return false when an error occurred, true otherwise
 	 */
         static bool broadcastMessageX( Display* disp, const char* msg_type,
-            const QString& message, int screen, bool obsolete );
+            const TQString& message, int screen, bool obsolete );
 	/**
          * @deprecated
          * This method is equivalent to broadcastMessageX() with obsolete = true.
 	 */
         static bool broadcastMessageX( Display* disp, const char* msg_type,
-            const QString& message );
+            const TQString& message );
     signals:
 	/**
 	 * Emitted when a message was received.
 	 * @param message the message that has been received
 	 */
-        void gotMessage( const QString& message );
+        void gotMessage( const TQString& message );
     protected:
 	/**
 	 * @internal
 	 */
         virtual bool x11Event( XEvent* ev );
     private:
-        static void send_message_internal( WId w_P, const QString& msg_P, long mask_P,
+        static void send_message_internal( WId w_P, const TQString& msg_P, long mask_P,
             Display* disp, Atom atom1_P, Atom atom2_P, Window handle_P );
-        QWidget* handle;
+        TQWidget* handle;
         Atom accept_atom2;
-        QCString cached_atom_name_; // KDE4 unused
+        TQCString cached_atom_name_; // KDE4 unused
         Atom accept_atom1;
-        QMap< WId, QCString > incoming_messages;
+        TQMap< WId, TQCString > incoming_messages;
         KXMessagesPrivate* d;
     };
 

@@ -29,10 +29,10 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include <qobject.h>
-#include <qintdict.h>
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqobject.h>
+#include <tqintdict.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 
 #include <kio/global.h>
 #include <kio/slavebase.h>
@@ -40,11 +40,11 @@
 // Note that this header file is installed, so think twice
 // before breaking binary compatibility (read: it is forbidden :)
 
-class FileProtocol : public QObject, public KIO::SlaveBase
+class FileProtocol : public TQObject, public KIO::SlaveBase
 {
   Q_OBJECT
 public:
-  FileProtocol( const QCString &pool, const QCString &app);
+  FileProtocol( const TQCString &pool, const TQCString &app);
   virtual ~FileProtocol() { }
 
   virtual void get( const KURL& url );
@@ -54,7 +54,7 @@ public:
                      int permissions, bool overwrite );
   virtual void rename( const KURL &src, const KURL &dest,
                        bool overwrite );
-  virtual void symlink( const QString &target, const KURL &dest,
+  virtual void symlink( const TQString &target, const KURL &dest,
                         bool overwrite );
 
   virtual void stat( const KURL& url );
@@ -69,27 +69,27 @@ public:
    * 2 - unmount
    * 3 - shred
    */
-  virtual void special( const QByteArray &data);
-  void unmount( const QString& point );
-  void mount( bool _ro, const char *_fstype, const QString& dev, const QString& point );
-  bool pumount( const QString &point );
-  bool pmount( const QString &dev );
+  virtual void special( const TQByteArray &data);
+  void unmount( const TQString& point );
+  void mount( bool _ro, const char *_fstype, const TQString& dev, const TQString& point );
+  bool pumount( const TQString &point );
+  bool pmount( const TQString &dev );
 
 protected slots:
   void slotProcessedSize( KIO::filesize_t _bytes );
-  void slotInfoMessage( const QString & msg );
+  void slotInfoMessage( const TQString & msg );
 
 protected:
 
-  bool createUDSEntry( const QString & filename, const QCString & path, KIO::UDSEntry & entry, 
+  bool createUDSEntry( const TQString & filename, const TQCString & path, KIO::UDSEntry & entry, 
                        short int details, bool withACL );
   int setACL( const char *path, mode_t perm, bool _directoryDefault );
   
-  QString getUserName( uid_t uid );
-  QString getGroupName( gid_t gid );
+  TQString getUserName( uid_t uid );
+  TQString getGroupName( gid_t gid );
 
-  QIntDict<QString> usercache;      // maps long ==> QString *
-  QIntDict<QString> groupcache;
+  TQIntDict<TQString> usercache;      // maps long ==> TQString *
+  TQIntDict<TQString> groupcache;
 
   class FileProtocolPrivate;
   FileProtocolPrivate *d;

@@ -23,10 +23,10 @@
 #include "kmwizard.h"
 #include "kmprinter.h"
 
-#include <qspinbox.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qlayout.h>
+#include <tqspinbox.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
 #ifdef HAVE_LIMITS_H
@@ -72,41 +72,41 @@ int findUnit(int& period)
 const char* unitKeyword(int i)
 { return time_keywords[i]; }
 
-KMWQuota::KMWQuota(QWidget *parent, const char *name)
+KMWQuota::KMWQuota(TQWidget *parent, const char *name)
 : KMWizardPage(parent, name)
 {
 	m_ID = KMWizard::Custom+3;
 	m_title = i18n("Printer Quota Settings");
 	m_nextpage = KMWizard::Custom+4;
 
-	m_period = new QSpinBox(this);
+	m_period = new TQSpinBox(this);
 	m_period->setRange(-1, INT_MAX);
 	m_period->setSpecialValueText(i18n("No quota"));
-	m_sizelimit = new QSpinBox(this);
+	m_sizelimit = new TQSpinBox(this);
 	m_sizelimit->setRange(0, INT_MAX);
 	m_sizelimit->setSpecialValueText(i18n("None"));
-	m_pagelimit = new QSpinBox(this);
+	m_pagelimit = new TQSpinBox(this);
 	m_pagelimit->setRange(0, INT_MAX);
 	m_pagelimit->setSpecialValueText(i18n("None"));
-	m_timeunit = new QComboBox(this);
+	m_timeunit = new TQComboBox(this);
 	for (int i=0;i<N_TIME_LIMITS;i++)
 		m_timeunit->insertItem(i18n(time_keywords[i]));
 	m_timeunit->setCurrentItem(3);
 
-	QLabel	*lab1 = new QLabel(i18n("&Period:"), this);
-	QLabel	*lab2 = new QLabel(i18n("&Size limit (KB):"), this);
-	QLabel	*lab3 = new QLabel(i18n("&Page limit:"), this);
+	QLabel	*lab1 = new TQLabel(i18n("&Period:"), this);
+	QLabel	*lab2 = new TQLabel(i18n("&Size limit (KB):"), this);
+	QLabel	*lab3 = new TQLabel(i18n("&Page limit:"), this);
 
 	lab1->setBuddy(m_period);
 	lab2->setBuddy(m_sizelimit);
 	lab3->setBuddy(m_pagelimit);
 
-	QLabel	*lab4 = new QLabel(i18n("<p>Set here the quota for this printer. Using limits of <b>0</b> means "
+	QLabel	*lab4 = new TQLabel(i18n("<p>Set here the quota for this printer. Using limits of <b>0</b> means "
 					"that no quota will be used. This is equivalent to set quota period to "
 					"<b><nobr>No quota</nobr></b> (-1). Quota limits are defined on a per-user base and "
 					"applied to all users.</p>"), this);
 
-	QGridLayout	*l0 = new QGridLayout(this, 5, 3, 0, 10);
+	QGridLayout	*l0 = new TQGridLayout(this, 5, 3, 0, 10);
 	l0->setRowStretch(4, 1);
 	l0->setColStretch(1, 1);
 	l0->addMultiCellWidget(lab4, 0, 0, 0, 2);
@@ -123,7 +123,7 @@ KMWQuota::~KMWQuota()
 {
 }
 
-bool KMWQuota::isValid(QString& msg)
+bool KMWQuota::isValid(TQString& msg)
 {
 	if (m_period->value() >= 0 && m_sizelimit->value() == 0 && m_pagelimit->value() == 0)
 	{
@@ -164,8 +164,8 @@ void KMWQuota::updatePrinter(KMPrinter *p)
 	}
 	qu *= time_periods[m_timeunit->currentItem()];
 
-	p->setOption("job-quota-period", QString::number(qu));
-	p->setOption("job-k-limit", QString::number(si));
-	p->setOption("job-page-limit", QString::number(pa));
+	p->setOption("job-quota-period", TQString::number(qu));
+	p->setOption("job-k-limit", TQString::number(si));
+	p->setOption("job-page-limit", TQString::number(pa));
 }
 #include "kmwquota.moc"

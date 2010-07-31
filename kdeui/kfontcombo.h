@@ -35,7 +35,7 @@
 class KDEUI_EXPORT KFontCombo : public KComboBox
 {
     Q_OBJECT
-    Q_PROPERTY(QString family READ currentFont WRITE setCurrentFont)
+    Q_PROPERTY(TQString family READ currentFont WRITE setCurrentFont)
     Q_PROPERTY(bool bold READ bold WRITE setBold DESIGNABLE true)
     Q_PROPERTY(bool italic READ italic WRITE setItalic DESIGNABLE true)
     Q_PROPERTY(bool underline READ underline WRITE setUnderline DESIGNABLE true)
@@ -48,7 +48,7 @@ public:
      * @param parent The parent widget
      * @param name The object name for the widget
      */
-    KFontCombo(QWidget *parent, const char *name = 0);
+    KFontCombo(TQWidget *parent, const char *name = 0);
     /**
      * Constructor that takes an already initialzed font list
      *
@@ -56,7 +56,7 @@ public:
      * @param parent The parent widget
      * @param name The object name for the widget
      */
-    KFontCombo(const QStringList &fonts, QWidget *parent, const char *name = 0);
+    KFontCombo(const TQStringList &fonts, TQWidget *parent, const char *name = 0);
     /**
      * Destructor
      */
@@ -67,17 +67,17 @@ public:
      *
      * @param fonts Font list to show
      */
-    void setFonts(const QStringList &fonts);
+    void setFonts(const TQStringList &fonts);
     /**
      * Sets the currently selected font.
      *
      * @param family Font to select.
      */
-    void setCurrentFont(const QString &family);
+    void setCurrentFont(const TQString &family);
     /**
      * @return the currently selected font.
      */
-    QString currentFont() const;
+    TQString currentFont() const;
 
     /**
      * Sets the listed fonts to bold or normal.

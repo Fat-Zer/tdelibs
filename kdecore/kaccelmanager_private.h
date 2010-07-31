@@ -22,10 +22,10 @@
 #define __KACCELMANAGER_PRIVATE_H__
 
 
-#include <qstring.h>
-#include <qmemarray.h>
-#include <qvaluelist.h>
-#include <qobject.h>
+#include <tqstring.h>
+#include <tqmemarray.h>
+#include <tqvaluelist.h>
+#include <tqobject.h>
 
 class QWidgetStack;
 
@@ -44,40 +44,40 @@ class KAccelString
 public:
 
   KAccelString() : m_pureText(), m_accel(-1) {}
-  KAccelString(const QString &input, int initalWeight=-1);
+  KAccelString(const TQString &input, int initalWeight=-1);
 
   void calculateWeights(int initialWeight);
 
-  const QString &pure() const { return m_pureText; }
-  QString accelerated() const;
+  const TQString &pure() const { return m_pureText; }
+  TQString accelerated() const;
 
   int accel() const { return m_accel; }
   void setAccel(int accel) { m_accel = accel; }
 
   int originalAccel() const { return m_orig_accel; }
-  QString originalText() const { return m_origText; }
+  TQString originalText() const { return m_origText; }
 
-  QChar accelerator() const;
+  TQChar accelerator() const;
 
-  int maxWeight(int &index, const QString &used);
+  int maxWeight(int &index, const TQString &used);
 
   bool operator == (const KAccelString &c) const { return m_pureText == c.m_pureText && m_accel == c.m_accel && m_orig_accel == c.m_orig_accel; }
 
 
 private:
 
-  int stripAccelerator(QString &input);
+  int stripAccelerator(TQString &input);
 
   void dump();
 
-  QString        m_pureText,  m_origText;
+  TQString        m_pureText,  m_origText;
   int            m_accel, m_orig_accel;
-  QMemArray<int> m_weight;
+  TQMemArray<int> m_weight;
 
 };
 
 
-typedef QValueList<KAccelString> KAccelStringList;
+typedef TQValueList<KAccelString> KAccelStringList;
 
 
 /**
@@ -114,7 +114,7 @@ public:
   };
 
   /// Method to call to find the best distribution of accelerators.
-  static void findAccelerators(KAccelStringList &result, QString &used);
+  static void findAccelerators(KAccelStringList &result, TQString &used);
 
 };
 
@@ -137,12 +137,12 @@ class KPopupAccelManager : public QObject
 
 public:
 
-  static void manage(QPopupMenu *popup);
+  static void manage(TQPopupMenu *popup);
 
 
 protected:
 
-  KPopupAccelManager(QPopupMenu *popup);
+  KPopupAccelManager(TQPopupMenu *popup);
 
 
 private slots:
@@ -157,7 +157,7 @@ private:
   void findMenuEntries(KAccelStringList &list);
   void setMenuEntries(const KAccelStringList &list);
 
-  QPopupMenu       *m_popup;
+  TQPopupMenu       *m_popup;
   KAccelStringList m_entries;
   int              m_count;
 
@@ -170,24 +170,24 @@ class QWidgetStackAccelManager : public QObject
 
 public:
 
-  static void manage(QWidgetStack *popup);
+  static void manage(TQWidgetStack *popup);
 
 
 protected:
 
-  QWidgetStackAccelManager(QWidgetStack *popup);
+  QWidgetStackAccelManager(TQWidgetStack *popup);
 
 
 private slots:
 
-  void aboutToShow(QWidget *);
-    bool eventFilter ( QObject * watched, QEvent * e );
+  void aboutToShow(TQWidget *);
+    bool eventFilter ( TQObject * watched, TQEvent * e );
 
 private:
 
   void calculateAccelerators();
 
-  QWidgetStack     *m_stack;
+  TQWidgetStack     *m_stack;
   KAccelStringList m_entries;
 
 };

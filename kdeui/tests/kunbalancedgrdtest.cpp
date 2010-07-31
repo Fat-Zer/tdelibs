@@ -1,31 +1,31 @@
 #include "kunbalancedgrdtest.h"
 #include <kapplication.h>
 #include <kpixmapeffect.h>
-#include <qpainter.h>
-#include <qstring.h>
-#include <qlayout.h>
+#include <tqpainter.h>
+#include <tqstring.h>
+#include <tqlayout.h>
 
 int cols = 3, rows = 3; // how many
 
 
-KGradientWidget::KGradientWidget(QWidget *parent, const char *name)
-  :QWidget(parent, name)
+KGradientWidget::KGradientWidget(TQWidget *parent, const char *name)
+  :TQWidget(parent, name)
 {
   time.start();
   setMinimumSize(250 * cols, 250 * rows);
 }
 
-void KGradientWidget::paintEvent(QPaintEvent *)
+void KGradientWidget::paintEvent(TQPaintEvent *)
 {
     int it, ft;
-    QString say;
+    TQString say;
 
-    QColor ca = Qt::black, cb = Qt::cyan;
+    TQColor ca = Qt::black, cb = Qt::cyan;
 
     int x = 0, y = 0;
 
     pix.resize(width()/cols, height()/rows);
-    QPainter p(this);
+    TQPainter p(this);
     p.setPen(Qt::white);
 
     // draw once, so that the benchmarking be fair :-)
@@ -121,25 +121,25 @@ void KGradientWidget::paintEvent(QPaintEvent *)
     p.drawText(5+(x++)*width()/rows, 15+y*height()/rows, say);
 }
 
-myTopWidget::myTopWidget (QWidget *parent, const char *name)
-  :QWidget(parent, name)
+myTopWidget::myTopWidget (TQWidget *parent, const char *name)
+  :TQWidget(parent, name)
 {
-  QGridLayout *lay = new QGridLayout (this, 2, 3, 0);
+  TQGridLayout *lay = new TQGridLayout (this, 2, 3, 0);
 
   grds = new KGradientWidget(this);
   lay->addMultiCellWidget(grds, 0, 0 ,0, 2);
 
-  bLabel = new QLabel("Balance: X = 000; Y = 000", this);
+  bLabel = new TQLabel("Balance: X = 000; Y = 000", this);
   lay->addWidget(bLabel, 1, 0);
 
-  xSlider = new QSlider ( -200, 200, 1, 100, QSlider::Horizontal, this);
+  xSlider = new TQSlider ( -200, 200, 1, 100, TQSlider::Horizontal, this);
   lay->addWidget(xSlider, 1, 1);
 
-  ySlider = new QSlider ( -200, 200, 1, 100, QSlider::Horizontal, this);
+  ySlider = new TQSlider ( -200, 200, 1, 100, TQSlider::Horizontal, this);
   lay->addWidget(ySlider, 1, 2);
 
-  connect(xSlider, SIGNAL(valueChanged(int)), this, SLOT(rebalance()));
-  connect(ySlider, SIGNAL(valueChanged(int)), this, SLOT(rebalance()));
+  connect(xSlider, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(rebalance()));
+  connect(ySlider, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(rebalance()));
 
   rebalance();
 
@@ -151,7 +151,7 @@ void myTopWidget::rebalance()
 {
   otime = time.elapsed();
 
-  QString val; val.sprintf("Balance: X = %3d; Y = %3d",
+  TQString val; val.sprintf("Balance: X = %3d; Y = %3d",
 			   xSlider->value(), ySlider->value());
 
   bLabel->setText(val);

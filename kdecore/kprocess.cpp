@@ -72,9 +72,9 @@
 #include <pwd.h>
 #include <grp.h>
 
-#include <qfile.h>
-#include <qsocketnotifier.h>
-#include <qapplication.h>
+#include <tqfile.h>
+#include <tqsocketnotifier.h>
+#include <tqapplication.h>
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
@@ -107,18 +107,18 @@ public:
 
    int priority;
 
-   QMap<QString,QString> env;
-   QString wd;
-   QCString shell;
-   QCString executable;
+   TQMap<TQString,TQString> env;
+   TQString wd;
+   TQCString shell;
+   TQCString executable;
 };
 
 /////////////////////////////
 // public member functions //
 /////////////////////////////
 
-KProcess::KProcess( QObject* parent, const char *name )
-  : QObject( parent, name ),
+KProcess::KProcess( TQObject* parent, const char *name )
+  : TQObject( parent, name ),
     run_mode(NotifyOnExit),
     runs(false),
     pid_(0),
@@ -143,7 +143,7 @@ KProcess::KProcess( QObject* parent, const char *name )
 }
 
 KProcess::KProcess()
-  : QObject(),
+  : TQObject(),
     run_mode(NotifyOnExit),
     runs(false),
     pid_(0),
@@ -168,13 +168,13 @@ KProcess::KProcess()
 }
 
 void
-KProcess::setEnvironment(const QString &name, const QString &value)
+KProcess::setEnvironment(const TQString &name, const TQString &value)
 {
    d->env.insert(name, value);
 }
 
 void
-KProcess::setWorkingDirectory(const QString &dir)
+KProcess::setWorkingDirectory(const TQString &dir)
 {
    d->wd = dir;   
 } 
@@ -182,15 +182,15 @@ KProcess::setWorkingDirectory(const QString &dir)
 void 
 KProcess::setupEnvironment()
 {
-   QMap<QString,QString>::Iterator it;
+   TQMap<TQString,TQString>::Iterator it;
    for(it = d->env.begin(); it != d->env.end(); ++it)
    {
-      setenv(QFile::encodeName(it.key()).data(),
-             QFile::encodeName(it.data()).data(), 1);
+      setenv(TQFile::encodeName(it.key()).data(),
+             TQFile::encodeName(it.data()).data(), 1);
    }
    if (!d->wd.isEmpty())
    {
-      chdir(QFile::encodeName(d->wd).data());
+      chdir(TQFile::encodeName(d->wd).data());
    }
 }
 
@@ -252,7 +252,7 @@ void KProcess::setBinaryExecutable(const char *filename)
    d->executable = filename;
 }
 
-bool KProcess::setExecutable(const QString& proc)
+bool KProcess::setExecutable(const TQString& proc)
 {
   if (runs) return false;
 
@@ -260,20 +260,20 @@ bool KProcess::setExecutable(const QString& proc)
 
   if (!arguments.isEmpty())
      arguments.remove(arguments.begin());
-  arguments.prepend(QFile::encodeName(proc));
+  arguments.prepend(TQFile::encodeName(proc));
 
   return true;
 }
 
-KProcess &KProcess::operator<<(const QStringList& args)
+KProcess &KProcess::operator<<(const TQStringList& args)
 {
-  QStringList::ConstIterator it = args.begin();
+  TQStringList::ConstIterator it = args.begin();
   for ( ; it != args.end() ; ++it )
-      arguments.append(QFile::encodeName(*it));
+      arguments.append(TQFile::encodeName(*it));
   return *this;
 }
 
-KProcess &KProcess::operator<<(const QCString& arg)
+KProcess &KProcess::operator<<(const TQCString& arg)
 {
   return operator<< (arg.data());
 }
@@ -284,9 +284,9 @@ KProcess &KProcess::operator<<(const char* arg)
   return *this;
 }
 
-KProcess &KProcess::operator<<(const QString& arg)
+KProcess &KProcess::operator<<(const TQString& arg)
 {
-  arguments.append(QFile::encodeName(arg));
+  arguments.append(TQFile::encodeName(arg));
   return *this;
 }
 
@@ -309,7 +309,7 @@ bool KProcess::start(RunMode runmode, Communication comm)
   }
 #ifdef Q_OS_UNIX
   char **arglist;
-  QCString shellCmd;
+  TQCString shellCmd;
   if (d->useShell)
   {
       if (d->shell.isEmpty()) {
@@ -806,10 +806,10 @@ KPty *KProcess::pty() const
 }
 #endif //Q_OS_UNIX
 
-QString KProcess::quote(const QString &arg)
+TQString KProcess::quote(const TQString &arg)
 {
-    QChar q('\'');
-    return QString(arg).replace(q, "'\\''").prepend(q).append(q);
+    TQChar q('\'');
+    return TQString(arg).replace(q, "'\\''").prepend(q).append(q);
 }
 
 
@@ -956,27 +956,27 @@ int KProcess::commSetupDoneP()
 
   if (communication & Stdin) {
     fcntl(in[1], F_SETFL, O_NONBLOCK | fcntl(in[1], F_GETFL));
-    innot =  new QSocketNotifier(in[1], QSocketNotifier::Write, this);
+    innot =  new TQSocketNotifier(in[1], TQSocketNotifier::Write, this);
     Q_CHECK_PTR(innot);
     innot->setEnabled(false); // will be enabled when data has to be sent
-    QObject::connect(innot, SIGNAL(activated(int)),
-                     this, SLOT(slotSendData(int)));
+    TQObject::connect(innot, TQT_SIGNAL(activated(int)),
+                     this, TQT_SLOT(slotSendData(int)));
   }
 
   if (communication & Stdout) {
-    outnot = new QSocketNotifier(out[0], QSocketNotifier::Read, this);
+    outnot = new TQSocketNotifier(out[0], TQSocketNotifier::Read, this);
     Q_CHECK_PTR(outnot);
-    QObject::connect(outnot, SIGNAL(activated(int)),
-                     this, SLOT(slotChildOutput(int)));
+    TQObject::connect(outnot, TQT_SIGNAL(activated(int)),
+                     this, TQT_SLOT(slotChildOutput(int)));
     if (communication & NoRead)
         suspend();
   }
 
   if (communication & Stderr) {
-    errnot = new QSocketNotifier(err[0], QSocketNotifier::Read, this );
+    errnot = new TQSocketNotifier(err[0], TQSocketNotifier::Read, this );
     Q_CHECK_PTR(errnot);
-    QObject::connect(errnot, SIGNAL(activated(int)),
-                     this, SLOT(slotChildError(int)));
+    TQObject::connect(errnot, TQT_SIGNAL(activated(int)),
+                     this, TQT_SLOT(slotChildError(int)));
   }
 
   return 1;
@@ -1121,7 +1121,7 @@ KShellProcess::KShellProcess(const char *shellname):
 KShellProcess::~KShellProcess() {
 }
 
-QString KShellProcess::quote(const QString &arg)
+TQString KShellProcess::quote(const TQString &arg)
 {
     return KProcess::quote(arg);
 }

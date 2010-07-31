@@ -40,7 +40,7 @@ Entity::Entity(const Entity & e)
 	// empty
 }
 		
-Entity::Entity(const QCString & s)
+Entity::Entity(const TQCString & s)
 	:	strRep_		(s),
 		parsed_		(false),
 		assembled_	(true)
@@ -61,7 +61,7 @@ Entity::operator = (const Entity & e)
 }
 		
 	Entity &
-Entity::operator = (const QCString & s)
+Entity::operator = (const TQCString & s)
 {
 	strRep_		= s;
 	parsed_		= false;
@@ -83,13 +83,13 @@ Entity::operator != (Entity & e)
 }
 		
 	bool
-Entity::operator == (const QCString & s)
+Entity::operator == (const TQCString & s)
 {
 	return asString() == s;
 }
 		
 	bool
-Entity::operator != (const QCString & s)
+Entity::operator != (const TQCString & s)
 {
 	return !(*this == s);
 }

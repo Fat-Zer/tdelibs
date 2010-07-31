@@ -17,10 +17,10 @@
 */
 
 
-#include <qpopupmenu.h>
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qlineedit.h>
+#include <tqpopupmenu.h>
+#include <tqcombobox.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
 
 #include "knuminput.h"
 #include "kglobal.h"
@@ -34,8 +34,8 @@
 class KDateWidgetSpinBox : public QSpinBox
 {
 public:
-  KDateWidgetSpinBox(int min, int max, QWidget *parent)
-    : QSpinBox(min, max, 1, parent)
+  KDateWidgetSpinBox(int min, int max, TQWidget *parent)
+    : TQSpinBox(min, max, 1, parent)
   {
      editor()->setAlignment(AlignRight);
   }
@@ -45,42 +45,42 @@ class KDateWidget::KDateWidgetPrivate
 {
 public:
    KDateWidgetSpinBox *m_day;
-   QComboBox *m_month;
+   TQComboBox *m_month;
    KDateWidgetSpinBox *m_year;
-   QDate m_dat;
+   TQDate m_dat;
 };
 
 
-KDateWidget::KDateWidget( QWidget *parent, const char *name )
-  : QWidget( parent, name )
+KDateWidget::KDateWidget( TQWidget *parent, const char *name )
+  : TQWidget( parent, name )
 {
-  init(QDate());
-  setDate(QDate());
+  init(TQDate());
+  setDate(TQDate());
 }
 
-// ### HPB change QDate to const QDate & in KDE 4.0
-KDateWidget::KDateWidget( QDate date, QWidget *parent,
+// ### HPB change TQDate to const TQDate & in KDE 4.0
+KDateWidget::KDateWidget( TQDate date, TQWidget *parent,
 			    const char *name )
-  : QWidget( parent, name )
+  : TQWidget( parent, name )
 {
   init(date);
   setDate(date);
 }
 
-// ### CFM Repaced by init(const QDate&). Can be safely removed
+// ### CFM Repaced by init(const TQDate&). Can be safely removed
 //     when no risk of BIC
 void KDateWidget::init()
 {
   d = new KDateWidgetPrivate;
   KLocale *locale = KGlobal::locale();
-  QHBoxLayout *layout = new QHBoxLayout(this, 0, KDialog::spacingHint());
+  TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
   layout->setAutoAdd(true);
   d->m_day = new KDateWidgetSpinBox(1, 1, this);
-  d->m_month = new QComboBox(false, this);
+  d->m_month = new TQComboBox(false, this);
   for (int i = 1; ; ++i)
   {
-    QString str = locale->calendar()->monthName(i,
-       locale->calendar()->year(QDate()));
+    TQString str = locale->calendar()->monthName(i,
+       locale->calendar()->year(TQDate()));
     if (str.isNull()) break;
     d->m_month->insertItem(str);
   }
@@ -88,22 +88,22 @@ void KDateWidget::init()
   d->m_year = new KDateWidgetSpinBox(locale->calendar()->minValidYear(),
 				     locale->calendar()->maxValidYear(), this);
 
-  connect(d->m_day, SIGNAL(valueChanged(int)), this, SLOT(slotDateChanged()));
-  connect(d->m_month, SIGNAL(activated(int)), this, SLOT(slotDateChanged()));
-  connect(d->m_year, SIGNAL(valueChanged(int)), this, SLOT(slotDateChanged()));
+  connect(d->m_day, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(slotDateChanged()));
+  connect(d->m_month, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotDateChanged()));
+  connect(d->m_year, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(slotDateChanged()));
 }
 
-void KDateWidget::init(const QDate& date)
+void KDateWidget::init(const TQDate& date)
 {
   d = new KDateWidgetPrivate;
   KLocale *locale = KGlobal::locale();
-  QHBoxLayout *layout = new QHBoxLayout(this, 0, KDialog::spacingHint());
+  TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
   layout->setAutoAdd(true);
   d->m_day = new KDateWidgetSpinBox(1, 1, this);
-  d->m_month = new QComboBox(false, this);
+  d->m_month = new TQComboBox(false, this);
   for (int i = 1; ; ++i)
   {
-    QString str = locale->calendar()->monthName(i,
+    TQString str = locale->calendar()->monthName(i,
        locale->calendar()->year(date));
     if (str.isNull()) break;
     d->m_month->insertItem(str);
@@ -112,9 +112,9 @@ void KDateWidget::init(const QDate& date)
   d->m_year = new KDateWidgetSpinBox(locale->calendar()->minValidYear(),
 				     locale->calendar()->maxValidYear(), this);
 
-  connect(d->m_day, SIGNAL(valueChanged(int)), this, SLOT(slotDateChanged()));
-  connect(d->m_month, SIGNAL(activated(int)), this, SLOT(slotDateChanged()));
-  connect(d->m_year, SIGNAL(valueChanged(int)), this, SLOT(slotDateChanged()));
+  connect(d->m_day, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(slotDateChanged()));
+  connect(d->m_month, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotDateChanged()));
+  connect(d->m_year, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(slotDateChanged()));
 }
 
 KDateWidget::~KDateWidget()
@@ -122,8 +122,8 @@ KDateWidget::~KDateWidget()
   delete d;
 }
 
-// ### HPB change QDate to const QDate & in KDE 4.0
-void KDateWidget::setDate( QDate date )
+// ### HPB change TQDate to const TQDate & in KDE 4.0
+void KDateWidget::setDate( TQDate date )
 {
   const KCalendarSystem * calendar = KGlobal::locale()->calendar();
 
@@ -144,7 +144,7 @@ void KDateWidget::setDate( QDate date )
   emit changed(d->m_dat);
 }
 
-QDate KDateWidget::date() const
+TQDate KDateWidget::date() const
 {
   return d->m_dat;
 }
@@ -153,7 +153,7 @@ void KDateWidget::slotDateChanged( )
 {
   const KCalendarSystem * calendar = KGlobal::locale()->calendar();
 
-  QDate date;
+  TQDate date;
   int y,m,day;
 
   y = d->m_year->value();

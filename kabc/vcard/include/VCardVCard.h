@@ -24,8 +24,8 @@
 #ifndef  VCARD_VCARD_H
 #define  VCARD_VCARD_H
 
-#include <qstring.h>
-#include <qptrlist.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
 
 #include <VCardEnum.h>
 #include <VCardEntity.h>
@@ -40,22 +40,22 @@ class KVCARD_EXPORT VCard : public Entity
 #include "VCard-generated.h"
 	
 	bool has(EntityType);
-	bool has(const QCString &);
+	bool has(const TQCString &);
 	
 	void add(const ContentLine &);
-	void add(const QCString &);
+	void add(const TQCString &);
 	
 	ContentLine * contentLine(EntityType);
-	ContentLine * contentLine(const QCString &);
+	ContentLine * contentLine(const TQCString &);
 	
-	QCString group() { parse(); return group_; }
+	TQCString group() { parse(); return group_; }
 	
-	QPtrList<ContentLine>	contentLineList() { parse(); return contentLineList_; }
+	TQPtrList<ContentLine>	contentLineList() { parse(); return contentLineList_; }
 	
 	private:
 
 	QCString		group_;
-	QPtrList<ContentLine>	contentLineList_;
+	TQPtrList<ContentLine>	contentLineList_;
 };
 
 }

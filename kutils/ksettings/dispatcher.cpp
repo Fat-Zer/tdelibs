@@ -19,7 +19,7 @@
 
 #include "ksettings/dispatcher.h"
 
-#include <qsignal.h>
+#include <tqsignal.h>
 
 #include <kstaticdeleter.h>
 #include <kdebug.h>
@@ -45,8 +45,8 @@ Dispatcher * Dispatcher::self()
     return m_self;
 }
 
-Dispatcher::Dispatcher( QObject * parent, const char * name )
-    : QObject( parent, name )
+Dispatcher::Dispatcher( TQObject * parent, const char * name )
+    : TQObject( parent, name )
     //, d( 0 )
 {
     kdDebug( 701 ) << k_funcinfo << endl;
@@ -58,32 +58,32 @@ Dispatcher::~Dispatcher()
     //delete d;
 }
 
-void Dispatcher::registerInstance( KInstance * instance, QObject * recv, const char * slot )
+void Dispatcher::registerInstance( KInstance * instance, TQObject * recv, const char * slot )
 {
     assert( instance != 0 );
     // keep the KInstance around and call
     // instance->config()->reparseConfiguration when the app should reparse
-    QCString instanceName = instance->instanceName();
+    TQCString instanceName = instance->instanceName();
     kdDebug( 701 ) << k_funcinfo << instanceName << endl;
     m_instanceName[ recv ] = instanceName;
-    QSignal * sig;
+    TQSignal * sig;
     if( m_instanceInfo.contains( instanceName ) )
     {
         sig = m_instanceInfo[ instanceName ].signal;
     }
     else
     {
-        sig = new QSignal( this, "signal dispatcher" );
+        sig = new TQSignal( this, "signal dispatcher" );
         m_instanceInfo[ instanceName ].signal = sig;
         m_instanceInfo[ instanceName ].instance = instance;
     }
     sig->connect( recv, slot );
 
     ++m_instanceInfo[ instanceName ].count;
-    connect( recv, SIGNAL( destroyed( QObject * ) ), this, SLOT( unregisterInstance( QObject * ) ) );
+    connect( recv, TQT_SIGNAL( destroyed( TQObject * ) ), this, TQT_SLOT( unregisterInstance( TQObject * ) ) );
 }
 
-KConfig * Dispatcher::configForInstanceName( const QCString & instanceName )
+KConfig * Dispatcher::configForInstanceName( const TQCString & instanceName )
 {
     kdDebug( 701 ) << k_funcinfo << endl;
     if( m_instanceInfo.contains( instanceName ) )
@@ -97,17 +97,17 @@ KConfig * Dispatcher::configForInstanceName( const QCString & instanceName )
     return 0;
 }
 
-QStrList Dispatcher::instanceNames() const
+TQStrList Dispatcher::instanceNames() const
 {
     kdDebug( 701 ) << k_funcinfo << endl;
-    QStrList names;
-    for( QMap<QCString, InstanceInfo>::ConstIterator it = m_instanceInfo.begin(); it != m_instanceInfo.end(); ++it )
+    TQStrList names;
+    for( TQMap<TQCString, InstanceInfo>::ConstIterator it = m_instanceInfo.begin(); it != m_instanceInfo.end(); ++it )
         if( ( *it ).count > 0 )
             names.append( it.key() );
     return names;
 }
 
-void Dispatcher::reparseConfiguration( const QCString & instanceName )
+void Dispatcher::reparseConfiguration( const TQCString & instanceName )
 {
     kdDebug( 701 ) << k_funcinfo << instanceName << endl;
     // check if the instanceName is valid:
@@ -116,7 +116,7 @@ void Dispatcher::reparseConfiguration( const QCString & instanceName )
     // first we reparse the config of the instance so that the KConfig object
     // will be up to date
     m_instanceInfo[ instanceName ].instance->config()->reparseConfiguration();
-    QSignal * sig = m_instanceInfo[ instanceName ].signal;
+    TQSignal * sig = m_instanceInfo[ instanceName ].signal;
     if( sig )
     {
         kdDebug( 701 ) << "emit signal to instance" << endl;
@@ -126,16 +126,16 @@ void Dispatcher::reparseConfiguration( const QCString & instanceName )
 
 void Dispatcher::syncConfiguration()
 {
-    for( QMap<QCString, InstanceInfo>::ConstIterator it = m_instanceInfo.begin(); it != m_instanceInfo.end(); ++it )
+    for( TQMap<TQCString, InstanceInfo>::ConstIterator it = m_instanceInfo.begin(); it != m_instanceInfo.end(); ++it )
     {
         ( *it ).instance->config()->sync();
     }
 }
 
-void Dispatcher::unregisterInstance( QObject * obj )
+void Dispatcher::unregisterInstance( TQObject * obj )
 {
     kdDebug( 701 ) << k_funcinfo << endl;
-    QCString name = m_instanceName[ obj ];
+    TQCString name = m_instanceName[ obj ];
     m_instanceName.remove( obj ); //obj will be destroyed when we return, so we better remove this entry
     --m_instanceInfo[ name ].count;
     if( m_instanceInfo[ name ].count == 0 )
@@ -145,7 +145,7 @@ void Dispatcher::unregisterInstance( QObject * obj )
     }
 }
 
-//X KInstance * Dispatcher::instanceForName( const QCString & instanceName )
+//X KInstance * Dispatcher::instanceForName( const TQCString & instanceName )
 //X {
 //X     return m_instanceInfo[ instanceName ].instance;
 //X }

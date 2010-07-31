@@ -21,8 +21,8 @@
 #ifndef DNSSDSERVICEBROWSER_H
 #define DNSSDSERVICEBROWSER_H
 
-#include <qobject.h>
-#include <qdict.h>
+#include <tqobject.h>
+#include <tqdict.h>
 #include <dnssd/remoteservice.h>
 
 
@@ -38,8 +38,8 @@ Suppose that you need list of web servers running. Example:
 
 \code
 DNSSD::ServiceBrowser* browser = new DNSSD::ServiceBrowser("_http._tcp");
-connect(browser,SIGNAL(serviceAdded(RemoteService::Ptr)),this,SLOT(addService(RemoteService::Ptr)));
-connect(browser,SIGNAL(serviceRemoved(RemoteService::Ptr)),this,SLOT(delService(RemoteService::Ptr)));
+connect(browser,TQT_SIGNAL(serviceAdded(RemoteService::Ptr)),this,TQT_SLOT(addService(RemoteService::Ptr)));
+connect(browser,TQT_SIGNAL(serviceRemoved(RemoteService::Ptr)),this,TQT_SLOT(delService(RemoteService::Ptr)));
 browser->startBrowse();
 \endcode
 
@@ -88,7 +88,7 @@ public:
 	@since 3.5
 	@todo KDE4: set default values for domains and flags
 	 */
-	ServiceBrowser(const QStringList& types,DomainBrowser* domains,int flags);
+	ServiceBrowser(const TQStringList& types,DomainBrowser* domains,int flags);
 
 	/**
 	The same as above, but allows only one service type
@@ -97,7 +97,7 @@ public:
 	@param autoResolve auto resolve, if set
 	@deprecated use previous constructor instead
 	 */
-	ServiceBrowser(const QString& type,DomainBrowser* domains=0,bool autoResolve=false);
+	ServiceBrowser(const TQString& type,DomainBrowser* domains=0,bool autoResolve=false);
 
 	/**
 	Overloaded constructor used to create browser for one domain
@@ -108,19 +108,19 @@ public:
 	@param flags One or more values from #Flags. AutoDelete flag has no effect
 	@since 3.5
 	 */
-	ServiceBrowser(const QString& type,const QString& domain, int flags);
+	ServiceBrowser(const TQString& type,const TQString& domain, int flags);
 
 	/**
 	@deprecated user previous constructor instead
 	 */
-	ServiceBrowser(const QString& type,const QString& domain, bool autoResolve=false);
+	ServiceBrowser(const TQString& type,const TQString& domain, bool autoResolve=false);
 
 	~ServiceBrowser();
 
 	/**
 	Returns list of services
 	 */
-	const QValueList<RemoteService::Ptr>& services() const;
+	const TQValueList<RemoteService::Ptr>& services() const;
 
 	/**
 	Starts browsing for services.
@@ -139,7 +139,7 @@ public:
 	Special service type to search for all available service types. Pass it as "type"
 	parameter to ServiceBrowser constructor.
 	 */
-	static const QString AllServices;
+	static const TQString AllServices;
 
 	/**
 	Checks availability of DNS-SD services (this also covers publishing).
@@ -199,12 +199,12 @@ public slots:
 	/**
 	Remove one domain from list of domains to browse
 	 */
-	void removeDomain(const QString& domain);
+	void removeDomain(const TQString& domain);
 
 	/**
 	Add new domain to browse
 	 */
-	void addDomain(const QString& domain);
+	void addDomain(const TQString& domain);
 
 protected:
 	virtual void virtual_hook(int, void*);
@@ -212,8 +212,8 @@ private:
 	ServiceBrowserPrivate *d;
 
 	bool allFinished();
-	void init(const QStringList&, DomainBrowser*, int);
-	QValueList<RemoteService::Ptr>::Iterator findDuplicate(RemoteService::Ptr src);
+	void init(const TQStringList&, DomainBrowser*, int);
+	TQValueList<RemoteService::Ptr>::Iterator findDuplicate(RemoteService::Ptr src);
 private slots:
 	void serviceResolved(bool success);
 	void gotNewService(DNSSD::RemoteService::Ptr);

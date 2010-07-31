@@ -19,9 +19,9 @@
  */
 
 
-#include <qptrlist.h>
-#include <qcstring.h>
-#include <qstring.h>
+#include <tqptrlist.h>
+#include <tqcstring.h>
+#include <tqstring.h>
 #include <kdebug.h>
 
 #include "kopenssl.h"
@@ -57,26 +57,26 @@ public:
     KSMIMECryptoPrivate(KOpenSSLProxy *kossl);
 
 
-    STACK_OF(X509) *certsToX509(QPtrList<KSSLCertificate> &certs);
+    STACK_OF(X509) *certsToX509(TQPtrList<KSSLCertificate> &certs);
 
     KSMIMECrypto::rc signMessage(BIO *clearText,
 				 BIO *cipherText,
-				 KSSLPKCS12 &privKey, QPtrList<KSSLCertificate> &certs,
+				 KSSLPKCS12 &privKey, TQPtrList<KSSLCertificate> &certs,
 				 bool detached);
 
     KSMIMECrypto::rc encryptMessage(BIO *clearText,
 				    BIO *cipherText, KSMIMECrypto::algo algorithm,
-				    QPtrList<KSSLCertificate> &recip);
+				    TQPtrList<KSSLCertificate> &recip);
 
     KSMIMECrypto::rc checkSignature(BIO *clearText,
 				    BIO *signature, bool detached,
-				    QPtrList<KSSLCertificate> &recip);
+				    TQPtrList<KSSLCertificate> &recip);
     
     KSMIMECrypto::rc decryptMessage(BIO *cipherText,
 				    BIO *clearText,
 				    KSSLPKCS12 &privKey);
     
-    void MemBIOToQByteArray(BIO *src, QByteArray &dest);
+    void MemBIOToQByteArray(BIO *src, TQByteArray &dest);
 
     KSMIMECrypto::rc sslErrToRc(void);
 };
@@ -86,7 +86,7 @@ KSMIMECryptoPrivate::KSMIMECryptoPrivate(KOpenSSLProxy *kossl): kossl(kossl) {
 }
 
 
-STACK_OF(X509) *KSMIMECryptoPrivate::certsToX509(QPtrList<KSSLCertificate> &certs) {
+STACK_OF(X509) *KSMIMECryptoPrivate::certsToX509(TQPtrList<KSSLCertificate> &certs) {
     STACK_OF(X509) *x509 = sk_new(NULL);
     KSSLCertificate *cert = certs.first();
     while(cert) {
@@ -99,7 +99,7 @@ STACK_OF(X509) *KSMIMECryptoPrivate::certsToX509(QPtrList<KSSLCertificate> &cert
 
 KSMIMECrypto::rc KSMIMECryptoPrivate::signMessage(BIO *clearText,
 						  BIO *cipherText,
-						  KSSLPKCS12 &privKey, QPtrList<KSSLCertificate> &certs,
+						  KSSLPKCS12 &privKey, TQPtrList<KSSLCertificate> &certs,
 						  bool detached) {
 
     STACK_OF(X509) *other = NULL;
@@ -128,7 +128,7 @@ KSMIMECrypto::rc KSMIMECryptoPrivate::signMessage(BIO *clearText,
 
 KSMIMECrypto::rc KSMIMECryptoPrivate::encryptMessage(BIO *clearText,
 						     BIO *cipherText, KSMIMECrypto::algo algorithm,
-						     QPtrList<KSSLCertificate> &recip) {
+						     TQPtrList<KSSLCertificate> &recip) {
     EVP_CIPHER *cipher = NULL;
     KSMIMECrypto::rc rc;
     switch(algorithm) {
@@ -172,7 +172,7 @@ KSMIMECrypto::rc KSMIMECryptoPrivate::encryptMessage(BIO *clearText,
 
 KSMIMECrypto::rc KSMIMECryptoPrivate::checkSignature(BIO *clearText,
 						     BIO *signature, bool detached,
-						     QPtrList<KSSLCertificate> &recip) {
+						     TQPtrList<KSSLCertificate> &recip) {
     
     PKCS7 *p7 = kossl->d2i_PKCS7_bio(signature, NULL);
     KSMIMECrypto::rc rc = KSMIMECrypto::KSC_R_OTHER;
@@ -234,7 +234,7 @@ KSMIMECrypto::rc KSMIMECryptoPrivate::decryptMessage(BIO *cipherText,
 }
 
 
-void KSMIMECryptoPrivate::MemBIOToQByteArray(BIO *src, QByteArray &dest) {
+void KSMIMECryptoPrivate::MemBIOToQByteArray(BIO *src, TQByteArray &dest) {
     char *buf;
     long len = BIO_get_mem_data(src, &buf);
     dest.assign(buf, len);
@@ -303,10 +303,10 @@ KSMIMECrypto::~KSMIMECrypto() {
 }
 
 
-KSMIMECrypto::rc KSMIMECrypto::signMessage(const QCString &clearText,
-					   QByteArray &cipherText,
+KSMIMECrypto::rc KSMIMECrypto::signMessage(const TQCString &clearText,
+					   TQByteArray &cipherText,
 					   const KSSLPKCS12 &privKey,
-					   const QPtrList<KSSLCertificate> &certs,
+					   const TQPtrList<KSSLCertificate> &certs,
 					   bool detached) {
 #ifdef KSSL_HAVE_SSL
     if (!kossl) return KSC_R_NO_SSL;
@@ -315,7 +315,7 @@ KSMIMECrypto::rc KSMIMECrypto::signMessage(const QCString &clearText,
 
     rc rc = priv->signMessage(in, out,
 			      const_cast<KSSLPKCS12 &>(privKey),
-			      const_cast<QPtrList<KSSLCertificate> &>(certs),
+			      const_cast<TQPtrList<KSSLCertificate> &>(certs),
 			      detached);
 
     if (!rc) priv->MemBIOToQByteArray(out, cipherText);
@@ -330,9 +330,9 @@ KSMIMECrypto::rc KSMIMECrypto::signMessage(const QCString &clearText,
 }
 
 
-KSMIMECrypto::rc KSMIMECrypto::checkDetachedSignature(const QCString &clearText,
-						      const QByteArray &signature,
-						      QPtrList<KSSLCertificate> &foundCerts) {
+KSMIMECrypto::rc KSMIMECrypto::checkDetachedSignature(const TQCString &clearText,
+						      const TQByteArray &signature,
+						      TQPtrList<KSSLCertificate> &foundCerts) {
 #ifdef KSSL_HAVE_SSL
     if (!kossl) return KSC_R_NO_SSL;
     BIO *txt = kossl->BIO_new_mem_buf((char *)clearText.data(), clearText.length());
@@ -350,9 +350,9 @@ KSMIMECrypto::rc KSMIMECrypto::checkDetachedSignature(const QCString &clearText,
 }
 
 
-KSMIMECrypto::rc KSMIMECrypto::checkOpaqueSignature(const QByteArray &signedText,
-						    QCString &clearText,
-						    QPtrList<KSSLCertificate> &foundCerts) {
+KSMIMECrypto::rc KSMIMECrypto::checkOpaqueSignature(const TQByteArray &signedText,
+						    TQCString &clearText,
+						    TQPtrList<KSSLCertificate> &foundCerts) {
 #ifdef KSSL_HAVE_SSL
     if (!kossl) return KSC_R_NO_SSL;
 
@@ -374,10 +374,10 @@ KSMIMECrypto::rc KSMIMECrypto::checkOpaqueSignature(const QByteArray &signedText
 }
 
 
-KSMIMECrypto::rc KSMIMECrypto::encryptMessage(const QCString &clearText,
-					      QByteArray &cipherText,
+KSMIMECrypto::rc KSMIMECrypto::encryptMessage(const TQCString &clearText,
+					      TQByteArray &cipherText,
 					      algo algorithm,
-					      const QPtrList<KSSLCertificate> &recip) {
+					      const TQPtrList<KSSLCertificate> &recip) {
 #ifdef KSSL_HAVE_SSL
     if (!kossl) return KSC_R_NO_SSL;
 
@@ -385,7 +385,7 @@ KSMIMECrypto::rc KSMIMECrypto::encryptMessage(const QCString &clearText,
     BIO *out = kossl->BIO_new(kossl->BIO_s_mem());
 
     rc rc = priv->encryptMessage(in,out,algorithm,
-				 const_cast< QPtrList<KSSLCertificate> &>(recip));
+				 const_cast< TQPtrList<KSSLCertificate> &>(recip));
 
     if (!rc) priv->MemBIOToQByteArray(out, cipherText);
 
@@ -399,8 +399,8 @@ KSMIMECrypto::rc KSMIMECrypto::encryptMessage(const QCString &clearText,
 }
 
 
-KSMIMECrypto::rc KSMIMECrypto::decryptMessage(const QByteArray &cipherText,
-					      QCString &clearText,
+KSMIMECrypto::rc KSMIMECrypto::decryptMessage(const TQByteArray &cipherText,
+					      TQCString &clearText,
 					      const KSSLPKCS12 &privKey) {
 #ifdef KSSL_HAVE_SSL
     if (!kossl) return KSC_R_NO_SSL;

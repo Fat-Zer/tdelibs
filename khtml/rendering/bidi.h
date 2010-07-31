@@ -23,7 +23,7 @@
 #ifndef BIDI_H
 #define BIDI_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 namespace khtml {
     class RenderArena;
@@ -33,7 +33,7 @@ namespace khtml {
 
     class BidiContext {
     public:
-	BidiContext(unsigned char level, QChar::Direction embedding, BidiContext *parent = 0, bool override = false);
+	BidiContext(unsigned char level, TQChar::Direction embedding, BidiContext *parent = 0, bool override = false);
 	~BidiContext();
 
 	void ref() const;
@@ -41,8 +41,8 @@ namespace khtml {
 
 	unsigned char level;
 	bool override : 1;
-	QChar::Direction dir : 5;
-	QChar::Direction basicDir : 5;
+	TQChar::Direction dir : 5;
+	TQChar::Direction basicDir : 5;
 
 	BidiContext *parent;
 
@@ -52,21 +52,21 @@ namespace khtml {
     };
 
     struct BidiRun {
-	BidiRun(int _start, int _stop, RenderObject *_obj, BidiContext *context, QChar::Direction dir)
+	BidiRun(int _start, int _stop, RenderObject *_obj, BidiContext *context, TQChar::Direction dir)
 	    :  start( _start ), stop( _stop ), obj( _obj ), box(0), nextRun(0)
 	{
-	    if(dir == QChar::DirON) dir = context->dir;
+	    if(dir == TQChar::DirON) dir = context->dir;
 
 	    level = context->level;
 
 	    // add level of run (cases I1 & I2)
 	    if( level % 2 ) {
-		if(dir == QChar::DirL || dir == QChar::DirAN || dir == QChar::DirEN)
+		if(dir == TQChar::DirL || dir == TQChar::DirAN || dir == TQChar::DirEN)
 		    level++;
 	    } else {
-		if( dir == QChar::DirR )
+		if( dir == TQChar::DirR )
 		    level++;
-		else if( dir == QChar::DirAN || dir == QChar::DirEN)
+		else if( dir == TQChar::DirAN || dir == TQChar::DirEN)
 		    level += 2;
 	    }
 	}

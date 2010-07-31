@@ -21,9 +21,9 @@
 #ifndef __kbookmarkimporter_ie_h
 #define __kbookmarkimporter_ie_h
 
-#include <qdom.h>
-#include <qcstring.h>
-#include <qstringlist.h>
+#include <tqdom.h>
+#include <tqcstring.h>
+#include <tqstringlist.h>
 #include <ksimpleconfig.h>
 #include <kdemacros.h>
 
@@ -37,25 +37,25 @@ class KIO_EXPORT_DEPRECATED KIEBookmarkImporter : public QObject
 {
     Q_OBJECT
 public:
-    KIEBookmarkImporter( const QString & fileName ) : m_fileName(fileName) {}
+    KIEBookmarkImporter( const TQString & fileName ) : m_fileName(fileName) {}
     ~KIEBookmarkImporter() {}
 
     void parseIEBookmarks();
 
     // Usual place for IE bookmarks
-    static QString IEBookmarksDir();
+    static TQString IEBookmarksDir();
 
 signals:
-    void newBookmark( const QString & text, const QCString & url, const QString & additionalInfo );
-    void newFolder( const QString & text, bool open, const QString & additionalInfo );
+    void newBookmark( const TQString & text, const TQCString & url, const TQString & additionalInfo );
+    void newFolder( const TQString & text, bool open, const TQString & additionalInfo );
     void newSeparator();
     void endFolder();
 
 protected:
-    void parseIEBookmarks_dir( QString dirname, QString name = QString::null );
-    void parseIEBookmarks_url_file( QString filename, QString name );
+    void parseIEBookmarks_dir( TQString dirname, TQString name = TQString::null );
+    void parseIEBookmarks_url_file( TQString filename, TQString name );
 
-    QString m_fileName;
+    TQString m_fileName;
 };
 
 /**
@@ -67,7 +67,7 @@ class KIO_EXPORT KIEBookmarkImporterImpl : public KBookmarkImporterBase
 public:
     KIEBookmarkImporterImpl() { }
     virtual void parse();
-    virtual QString findDefaultLocation(bool forSaving = false) const;
+    virtual TQString findDefaultLocation(bool forSaving = false) const;
 private:
     class KIEBookmarkImporterImplPrivate *d;
 };
@@ -78,7 +78,7 @@ private:
 class KIO_EXPORT KIEBookmarkExporterImpl : public KBookmarkExporterBase
 {
 public:
-    KIEBookmarkExporterImpl(KBookmarkManager* mgr, const QString & path)
+    KIEBookmarkExporterImpl(KBookmarkManager* mgr, const TQString & path)
       : KBookmarkExporterBase(mgr, path) 
     { ; }
     virtual ~KIEBookmarkExporterImpl() {}

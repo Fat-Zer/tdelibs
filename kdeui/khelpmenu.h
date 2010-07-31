@@ -22,8 +22,8 @@
 #ifndef _KHELPMENU_H_
 #define _KHELPMENU_H_
 
-#include <qobject.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -60,7 +60,7 @@ class KHelpMenuPrivate;
  *
  * \code
  * mHelpMenu = new KHelpMenu( this, <someText> );
- * connect( this, SIGNAL(someSignal()), mHelpMenu,SLOT(mHelpMenu->aboutKDE()));
+ * connect( this, TQT_SIGNAL(someSignal()), mHelpMenu,TQT_SLOT(mHelpMenu->aboutKDE()));
  * \endcode
  *
  * IMPORTANT:
@@ -97,8 +97,8 @@ class KHelpMenuPrivate;
  * {
  *   ..
  *   KHelpMenu *helpMenu = new KHelpMenu( this );
- *   connect( helpMenu, SIGNAL(showAboutApplication()),
- *          this, SLOT(myDialogSlot()));
+ *   connect( helpMenu, TQT_SIGNAL(showAboutApplication()),
+ *          this, TQT_SLOT(myDialogSlot()));
  *   ..
  * }
  *
@@ -116,7 +116,7 @@ class KHelpMenuPrivate;
  * {
  *   KHelpMenu *helpMenu = new KHelpMenu( this );
  *   KPopupMenu *help = mHelpMenu->menu();
- *   help->connectItem( KHelpMenu::menuAboutApp, this, SLOT(myDialogSlot()) );
+ *   help->connectItem( KHelpMenu::menuAboutApp, this, TQT_SLOT(myDialogSlot()) );
  * }
  *
  * void MyClass::myDialogSlot()
@@ -156,7 +156,7 @@ class KDEUI_EXPORT KHelpMenu : public QObject
      *        added to the dialog.
      *
      */
-    KHelpMenu( QWidget *parent=0, const QString &aboutAppText=QString::null,
+    KHelpMenu( TQWidget *parent=0, const TQString &aboutAppText=TQString::null,
 	       bool showWhatsThis=true );
 
     /**
@@ -175,7 +175,7 @@ class KDEUI_EXPORT KHelpMenu : public QObject
      *        standard actions.
      *
      */
-    KHelpMenu( QWidget *parent, const KAboutData *aboutData,
+    KHelpMenu( TQWidget *parent, const KAboutData *aboutData,
 	       bool showWhatsThis=true, KActionCollection *actions = 0 );
 
     /**
@@ -266,8 +266,8 @@ class KDEUI_EXPORT KHelpMenu : public QObject
     KAboutKDE    *mAboutKDE;
     KBugReport   *mBugReport;
 
-    QString      mAboutAppText;
-    QWidget      *mParent;
+    TQString      mAboutAppText;
+    TQWidget      *mParent;
 
     bool         mShowWhatsThis;
 

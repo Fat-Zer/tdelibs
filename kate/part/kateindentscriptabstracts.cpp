@@ -19,13 +19,13 @@
 #include "kateindentscriptabstracts.h"
 
 #include <kdebug.h>
-#include <qstring.h>
+#include <tqstring.h>
 
 //BEGIN KateIndentScriptImplAbstractImpl
 
-KateIndentScriptImplAbstract::KateIndentScriptImplAbstract(const QString& internalName,
-        const QString  &filePath, const QString &niceName,
-        const QString &copyright, double version):m_refcount(0),m_filePath(filePath),m_niceName(niceName),
+KateIndentScriptImplAbstract::KateIndentScriptImplAbstract(const TQString& internalName,
+        const TQString  &filePath, const TQString &niceName,
+        const TQString &copyright, double version):m_refcount(0),m_filePath(filePath),m_niceName(niceName),
             m_copyright(copyright),m_version(version)
 {
 }

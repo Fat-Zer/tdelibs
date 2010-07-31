@@ -18,10 +18,10 @@
 #ifndef _KAUTHICON_H
 #define _KAUTHICON_H "$Id$"
 
-#include <qfileinfo.h>
-#include <qpixmap.h>
-#include <qstring.h>
-#include <qwidget.h>
+#include <tqfileinfo.h>
+#include <tqpixmap.h>
+#include <tqstring.h>
+#include <tqwidget.h>
 
 #include <kdelibs_export.h>
 
@@ -52,10 +52,10 @@ public:
   /**
    * Constructor.
    */
-  KAuthIcon(QWidget *parent = 0, const char *name = 0);
+  KAuthIcon(TQWidget *parent = 0, const char *name = 0);
   ~KAuthIcon();
 
-  virtual QSize sizeHint() const;
+  virtual TQSize sizeHint() const;
   /**
    * return the status of whatever is being monitored.
    */
@@ -78,14 +78,14 @@ signals:
   void authChanged(bool authorized);
 
 protected:
-  QHBoxLayout *layout;
+  TQHBoxLayout *layout;
 
-  QLabel *lockBox;
-  QLabel *lockLabel;
-  QPixmap lockPM;
-  QPixmap openLockPM;
-  QString lockText;
-  QString openLockText;
+  TQLabel *lockBox;
+  TQLabel *lockLabel;
+  TQPixmap lockPM;
+  TQPixmap openLockPM;
+  TQString lockText;
+  TQString openLockText;
 
 protected:
   virtual void virtual_hook( int id, void* data );
@@ -105,7 +105,7 @@ class KDEUI_EXPORT KRootPermsIcon : public KAuthIcon
   Q_OBJECT
 
 public:
-  KRootPermsIcon(QWidget *parent = 0, const char *name = 0);
+  KRootPermsIcon(TQWidget *parent = 0, const char *name = 0);
   ~KRootPermsIcon();
 
   /**
@@ -135,10 +135,10 @@ class KWritePermsIconPrivate;
 class KDEUI_EXPORT KWritePermsIcon : public KAuthIcon
 {
   Q_OBJECT
-  Q_PROPERTY( QString fileName READ fileName WRITE setFileName )
+  Q_PROPERTY( TQString fileName READ fileName WRITE setFileName )
 
 public:
-  KWritePermsIcon(const QString & fileName, QWidget *parent = 0, const char *name = 0);
+  KWritePermsIcon(const TQString & fileName, TQWidget *parent = 0, const char *name = 0);
   ~KWritePermsIcon();
   /**
    * @return whether or not the monitored file is writable.
@@ -149,20 +149,20 @@ public:
    * make the icon watch a new filename.
    * @param fileName the new file to monitor / display status for.
    */
-  void setFileName(const QString & fileName) { fi.setFile(fileName); updateStatus(); }
+  void setFileName(const TQString & fileName) { fi.setFile(fileName); updateStatus(); }
 
   /**
   * return the filename of the currently watched file.
   * @since 3.4
   */
-  QString fileName() const { return fi.fileName(); }
+  TQString fileName() const { return fi.fileName(); }
 
 public slots:
   void updateStatus();
 
 protected:
   bool writable;
-  QFileInfo fi;
+  TQFileInfo fi;
 
 protected:
   virtual void virtual_hook( int id, void* data );

@@ -39,7 +39,7 @@ OrgValue::OrgValue(const OrgValue & x)
 {
 }
 
-OrgValue::OrgValue(const QCString & s)
+OrgValue::OrgValue(const TQCString & s)
 	:	Value(s)
 {
 }
@@ -54,7 +54,7 @@ OrgValue::operator = (OrgValue & x)
 }
 
 	OrgValue &
-OrgValue::operator = (const QCString & s)
+OrgValue::operator = (const TQCString & s)
 {
 	Value::operator = (s);
 	return *this;
@@ -82,7 +82,7 @@ OrgValue::_assemble()
 {
 	bool first(true);
 	
-	QStrListIterator it(valueList_);
+	TQStrListIterator it(valueList_);
 	
 	for (; it.current(); ++it) {
 		if (!first) strRep_ += ';';

@@ -23,41 +23,41 @@
 #include "kprinter.h"
 #include "kxmlcommand.h"
 
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qspinbox.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
-#include <qlineedit.h>
-#include <qcheckbox.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqspinbox.h>
+#include <tqbuttongroup.h>
+#include <tqradiobutton.h>
+#include <tqlineedit.h>
+#include <tqcheckbox.h>
+#include <tqtooltip.h>
+#include <tqwhatsthis.h>
+#include <tqlayout.h>
 
 #include <kapplication.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kseparator.h>
 
-KPCopiesPage::KPCopiesPage(KPrinter *prt, QWidget *parent, const char *name)
+KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 : KPrintDialogPage(parent,name)
 {
 	//WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThisPageSelectionLabel = i18n(  " <qt><p><b>Page Selection</b></p> "
+	TQString whatsThisPageSelectionLabel = i18n(  " <qt><p><b>Page Selection</b></p> "
 						" <p>Here you can control if you print a certain selection only out of all"
 						" the pages from the complete document."
 						" </p>"
 						" </qt>" );
-	QString whatsThisAllPagesLabel = i18n(  " <qt><b>All Pages:</b> Select \"All\" to print the complete document."
+	TQString whatsThisAllPagesLabel = i18n(  " <qt><b>All Pages:</b> Select \"All\" to print the complete document."
 						" Since this is the default, it is pre-selected."
 						" </p>"
 						" </qt>" );
-	QString whatsThisCurrentPagesLabel = i18n(  " <qt><b>Current Page:</b> Select <em>\"Current\"</em> if you want "
+	TQString whatsThisCurrentPagesLabel = i18n(  " <qt><b>Current Page:</b> Select <em>\"Current\"</em> if you want "
 						" to print the page currently visible in your KDE application.</p>"
 						" <p><b>Note:</b> this field is disabled if you print from"
 						" non-KDE applications like Mozilla or OpenOffice.org, since here KDEPrint has no"
 						" means to determine which document page you are currently viewing.</p></qt>" );
-	QString whatsThisPageRangeLabel = i18n(  " <qt><b>Page Range:</b> Choose a \"Page Range\" to select a subset of the"
+	TQString whatsThisPageRangeLabel = i18n(  " <qt><b>Page Range:</b> Choose a \"Page Range\" to select a subset of the"
 						" complete document pages"
 						" to be printed. The format is <em>\"n,m,o-p,q,r,s-t, u\"</em>.</p>"
 						" <p><b>Example:</b> <em>\"4,6,10-13,17,20,23-25\"</em> will print"
@@ -71,7 +71,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, QWidget *parent, const char *name)
 						" </pre>"
 						" </p> "
 						"</qt>" );
-	QString whatsThisPageSetLabel = i18n(  " <qt><b>Page Set:</b>"
+	TQString whatsThisPageSetLabel = i18n(  " <qt><b>Page Set:</b>"
 						" <p>Choose <em>\"All Pages\"</em>, <em>\"Even Pages\"</em> or"
 						" <em>\"Odd Pages\"</em>"
 						" if you want to print a page selection matching one of these terms. The default"
@@ -94,7 +94,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, QWidget *parent, const char *name)
 						" </pre>"
 						" </p> "
 						" </qt>" );
-	QString whatsThisCopiesLabel = i18n(  " <qt><b>Output Settings:</b>"
+	TQString whatsThisCopiesLabel = i18n(  " <qt><b>Output Settings:</b>"
 						" Here you can determine the number of copies, the output order and the collate"
 						" mode for the pages of your printjob. (Note, that the maximum number of copies "
 						" allowed to print may be restricted by your print subsystem.)</p>"
@@ -112,7 +112,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, QWidget *parent, const char *name)
 						" </pre>"
 						" </p> "
 						".</qt>" );
-	QString whatsThisNumberOfCopiesLabel = i18n(  " <qt><b>Number of Copies:</b> Determine the number of requested copies here."
+	TQString whatsThisNumberOfCopiesLabel = i18n(  " <qt><b>Number of Copies:</b> Determine the number of requested copies here."
 						" You can increase or decrease"
 						" the number of printed copies by clicking on the up and down arrows. You can also type the figure"
 						" directly into the box. </p>"
@@ -125,7 +125,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, QWidget *parent, const char *name)
 						" </pre>"
 						" </p> "
 						" </qt>" );
-	QString whatsThisCollateLabel = i18n(  " <qt><b>Collate Copies</b>"
+	TQString whatsThisCollateLabel = i18n(  " <qt><b>Collate Copies</b>"
 						" <p>If the <em>\"Collate\"</em> checkbox is enabled (default), the output order for"
 						" multiple copies of a multi-page document will be \"1-2-3-..., 1-2-3-..., 1-2-3-...\".</p>"
 						" <p>If the <em>\"Collate\"</em> checkbox is disabled, the output order for"
@@ -139,7 +139,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, QWidget *parent, const char *name)
 						" </pre>"
 						" </p> "
 						" </qt>" );
-	QString whatsThisReverseLabel = i18n(  " <qt><b>Reverse Order</b>"
+	TQString whatsThisReverseLabel = i18n(  " <qt><b>Reverse Order</b>"
 						" <p> If the <em>\"Reverse\"</em> checkbox is enabled, the output order for"
 						" multiple copies of a multi-page document will be \"...-3-2-1, ...-3-2-1, ...-3-2-1\", if you"
 						" also have <em>en</em>abled the <em>\"Collate\"</em> checkbox at the same time"
@@ -164,76 +164,76 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, QWidget *parent, const char *name)
 	setId(KPrinter::CopiesPage);
 
 	// widget creation
-	QButtonGroup	*m_pagebox = new QButtonGroup(0, Qt::Vertical, i18n("Page Selection"), this);
-	QWhatsThis::add(m_pagebox, whatsThisPageSelectionLabel);
-	m_all = new QRadioButton(i18n("&All"), m_pagebox);
-	QWhatsThis::add(m_all, whatsThisAllPagesLabel);
-	m_current = new QRadioButton(i18n("Cu&rrent"), m_pagebox);
-	QWhatsThis::add(m_current, whatsThisCurrentPagesLabel);
-	m_range = new QRadioButton(i18n("Ran&ge"), m_pagebox);
-	QWhatsThis::add(m_range, whatsThisPageRangeLabel);
-	m_rangeedit = new QLineEdit(m_pagebox);
-	QWhatsThis::add(m_rangeedit, whatsThisPageRangeLabel);
-	connect(m_range, SIGNAL(clicked()), m_rangeedit, SLOT(setFocus()));
-	QToolTip::add(m_rangeedit, i18n("<p>Enter pages or group of pages to print separated by commas (1,2-5,8).</p>"));
-//	QWhatsThis::add(m_rangeedit, i18n("<p>Enter pages or group of pages to print separated by commas (1,2-5,8).</p>"));
-	//QLabel	*m_rangeexpl = new QLabel(m_pagebox);
+	QButtonGroup	*m_pagebox = new TQButtonGroup(0, Qt::Vertical, i18n("Page Selection"), this);
+	TQWhatsThis::add(m_pagebox, whatsThisPageSelectionLabel);
+	m_all = new TQRadioButton(i18n("&All"), m_pagebox);
+	TQWhatsThis::add(m_all, whatsThisAllPagesLabel);
+	m_current = new TQRadioButton(i18n("Cu&rrent"), m_pagebox);
+	TQWhatsThis::add(m_current, whatsThisCurrentPagesLabel);
+	m_range = new TQRadioButton(i18n("Ran&ge"), m_pagebox);
+	TQWhatsThis::add(m_range, whatsThisPageRangeLabel);
+	m_rangeedit = new TQLineEdit(m_pagebox);
+	TQWhatsThis::add(m_rangeedit, whatsThisPageRangeLabel);
+	connect(m_range, TQT_SIGNAL(clicked()), m_rangeedit, TQT_SLOT(setFocus()));
+	TQToolTip::add(m_rangeedit, i18n("<p>Enter pages or group of pages to print separated by commas (1,2-5,8).</p>"));
+//	TQWhatsThis::add(m_rangeedit, i18n("<p>Enter pages or group of pages to print separated by commas (1,2-5,8).</p>"));
+	//QLabel	*m_rangeexpl = new TQLabel(m_pagebox);
 	//m_rangeexpl->setText(i18n("<p>Enter pages or group of pages to print separated by commas (1,2-5,8).</p>"));
-	QGroupBox	*m_copybox = new QGroupBox(0, Qt::Vertical, i18n("Output Settings"), this);
-	QWhatsThis::add(m_copybox, whatsThisCopiesLabel);
-	m_collate = new QCheckBox(i18n("Co&llate"), m_copybox);
-	QWhatsThis::add(m_collate, whatsThisCollateLabel);
-	m_order = new QCheckBox(i18n("Re&verse"), m_copybox);
-	QWhatsThis::add(m_order, whatsThisReverseLabel);
-	m_collatepix = new QLabel(m_copybox);
+	QGroupBox	*m_copybox = new TQGroupBox(0, Qt::Vertical, i18n("Output Settings"), this);
+	TQWhatsThis::add(m_copybox, whatsThisCopiesLabel);
+	m_collate = new TQCheckBox(i18n("Co&llate"), m_copybox);
+	TQWhatsThis::add(m_collate, whatsThisCollateLabel);
+	m_order = new TQCheckBox(i18n("Re&verse"), m_copybox);
+	TQWhatsThis::add(m_order, whatsThisReverseLabel);
+	m_collatepix = new TQLabel(m_copybox);
 	m_collatepix->setAlignment(Qt::AlignCenter);
 	m_collatepix->setMinimumHeight(70);
-	QLabel	*m_copieslabel = new QLabel(i18n("Cop&ies:"), m_copybox);
-	m_copies = new QSpinBox(m_copybox);
+	QLabel	*m_copieslabel = new TQLabel(i18n("Cop&ies:"), m_copybox);
+	m_copies = new TQSpinBox(m_copybox);
 	m_copies->setRange(1,999);
-	QWhatsThis::add(m_copies, whatsThisNumberOfCopiesLabel);
+	TQWhatsThis::add(m_copies, whatsThisNumberOfCopiesLabel);
 	m_copieslabel->setBuddy(m_copies);
-	QWhatsThis::add(m_copieslabel, whatsThisNumberOfCopiesLabel);
-	m_pageset = new QComboBox(m_pagebox);
+	TQWhatsThis::add(m_copieslabel, whatsThisNumberOfCopiesLabel);
+	m_pageset = new TQComboBox(m_pagebox);
 	m_pageset->insertItem(i18n("All Pages"));
 	m_pageset->insertItem(i18n("Odd Pages"));
 	m_pageset->insertItem(i18n("Even Pages"));
-	QWhatsThis::add(m_pageset, whatsThisPageSetLabel);
-	QLabel	*m_pagesetlabel = new QLabel(i18n("Page &set:"), m_pagebox);
+	TQWhatsThis::add(m_pageset, whatsThisPageSetLabel);
+	QLabel	*m_pagesetlabel = new TQLabel(i18n("Page &set:"), m_pagebox);
 	m_pagesetlabel->setBuddy(m_pageset);
-	QWhatsThis::add(m_pagesetlabel, whatsThisPageSetLabel);
+	TQWhatsThis::add(m_pagesetlabel, whatsThisPageSetLabel);
 	KSeparator	*sepline = new KSeparator(Horizontal, m_pagebox);
 	sepline->setMinimumHeight(10);
 
-	QWidget::setTabOrder( m_all, m_current );
-	QWidget::setTabOrder( m_current, m_range );
-	QWidget::setTabOrder( m_range, m_rangeedit );
-	QWidget::setTabOrder( m_rangeedit, m_pageset );
-	QWidget::setTabOrder( m_pageset, m_copies );
-	QWidget::setTabOrder( m_copies, m_collate );
-	QWidget::setTabOrder( m_collate, m_order );
+	TQWidget::setTabOrder( m_all, m_current );
+	TQWidget::setTabOrder( m_current, m_range );
+	TQWidget::setTabOrder( m_range, m_rangeedit );
+	TQWidget::setTabOrder( m_rangeedit, m_pageset );
+	TQWidget::setTabOrder( m_pageset, m_copies );
+	TQWidget::setTabOrder( m_copies, m_collate );
+	TQWidget::setTabOrder( m_collate, m_order );
 
 	// layout creation
-	QGridLayout	*l1 = new QGridLayout(this, 2, 2, 0, 5);
+	QGridLayout	*l1 = new TQGridLayout(this, 2, 2, 0, 5);
 	l1->setRowStretch(1,1);
 	l1->setColStretch(0,1);
 	l1->setColStretch(1,1);
 	l1->addWidget(m_pagebox,0,0);
 	l1->addWidget(m_copybox,0,1);
-	QVBoxLayout	*l3 = new QVBoxLayout(m_pagebox->layout(), 5);
+	QVBoxLayout	*l3 = new TQVBoxLayout(m_pagebox->layout(), 5);
 	l3->addWidget(m_all);
 	l3->addWidget(m_current);
-	QHBoxLayout	*l4 = new QHBoxLayout(0, 0, 5);
+	QHBoxLayout	*l4 = new TQHBoxLayout(0, 0, 5);
 	l3->addLayout(l4);
 	l4->addWidget(m_range,0);
 	l4->addWidget(m_rangeedit,1);
 	//l3->addWidget(m_rangeexpl);
 	l3->addWidget(sepline);
-	QHBoxLayout	*l2 = new QHBoxLayout(0, 0, 5);
+	QHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 5);
 	l3->addLayout(l2);
 	l2->addWidget(m_pagesetlabel,0);
 	l2->addWidget(m_pageset,1);
-	QGridLayout	*l5 = new QGridLayout(m_copybox->layout(), 4, 2, 10);
+	QGridLayout	*l5 = new TQGridLayout(m_copybox->layout(), 4, 2, 10);
 	l5->setRowStretch(4,1);
 	l5->addWidget(m_copieslabel,0,0);
 	l5->addWidget(m_copies,0,1);
@@ -248,9 +248,9 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, QWidget *parent, const char *name)
 	slotCollateClicked();
 
 	// connections
-	connect(m_rangeedit,SIGNAL(textChanged(const QString&)),SLOT(slotRangeEntered()));
-	connect(m_collate,SIGNAL(clicked()),SLOT(slotCollateClicked()));
-	connect(m_order,SIGNAL(clicked()),SLOT(slotCollateClicked()));
+	connect(m_rangeedit,TQT_SIGNAL(textChanged(const TQString&)),TQT_SLOT(slotRangeEntered()));
+	connect(m_collate,TQT_SIGNAL(clicked()),TQT_SLOT(slotCollateClicked()));
+	connect(m_order,TQT_SIGNAL(clicked()),TQT_SLOT(slotCollateClicked()));
 
 	if (!kapp->authorize("print/copies"))
 	{
@@ -293,7 +293,7 @@ void KPCopiesPage::initialize(bool usePlugin)
 	slotCollateClicked();
 }
 
-void KPCopiesPage::setOptions(const QMap<QString,QString>& options)
+void KPCopiesPage::setOptions(const TQMap<TQString,TQString>& options)
 {
 	QString	value;
 	// copies
@@ -326,7 +326,7 @@ void KPCopiesPage::setOptions(const QMap<QString,QString>& options)
 		m_pageset->setCurrentItem(0);
 }
 
-void KPCopiesPage::getOptions(QMap<QString,QString>& options, bool incldef)
+void KPCopiesPage::getOptions(TQMap<TQString,TQString>& options, bool incldef)
 {
 	// copies
 	options["kde-copies"] = m_copies->text();
@@ -336,9 +336,9 @@ void KPCopiesPage::getOptions(QMap<QString,QString>& options, bool incldef)
 	options["kde-collate"] = (m_collate->isChecked() ? "Collate" : "Uncollate");
 	// ranges
 	options["kde-current"] = (m_current->isChecked() ? "1" : "0");
-	options["kde-range"] = (m_range->isChecked() ? m_rangeedit->text() : (incldef ? QString::fromLatin1("1-") : QString::fromLatin1("")));
+	options["kde-range"] = (m_range->isChecked() ? m_rangeedit->text() : (incldef ? TQString::fromLatin1("1-") : TQString::fromLatin1("")));
 	// page set
-	options["kde-pageset"] = QString::number(m_pageset->currentItem());
+	options["kde-pageset"] = TQString::number(m_pageset->currentItem());
 }
 
 void KPCopiesPage::reload()

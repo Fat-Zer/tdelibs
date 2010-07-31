@@ -24,7 +24,7 @@
 
 #include <kde_file.h>
 #include <ksock.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <sys/types.h>
 #include <sys/signal.h>
@@ -41,7 +41,7 @@
 #include "kio/connection.h"
 
 #include <kdebug.h>
-#include <qsocketnotifier.h>
+#include <tqsocketnotifier.h>
 
 using namespace KIO;
 
@@ -95,7 +95,7 @@ void Connection::close()
     tasks.clear();
 }
 
-void Connection::send(int cmd, const QByteArray& data)
+void Connection::send(int cmd, const TQByteArray& data)
 {
     if (!inited() || tasks.count() > 0) {
 	Task *task = new Task();
@@ -132,11 +132,11 @@ void Connection::init(KSocket *sock)
     f_out = KDE_fdopen( socket->socket(), "wb" );
 #endif
     if (receiver && ( fd_in != -1 )) {
-	notifier = new QSocketNotifier(fd_in, QSocketNotifier::Read);
+	notifier = new TQSocketNotifier(fd_in, TQSocketNotifier::Read);
 	if ( m_suspended ) {
             suspend();
 	}
-	QObject::connect(notifier, SIGNAL(activated(int)), receiver, member);
+	TQObject::connect(notifier, TQT_SIGNAL(activated(int)), receiver, member);
     }
     dequeue();
 }
@@ -148,31 +148,31 @@ void Connection::init(int _fd_in, int fd_out)
     fd_in = _fd_in;
     f_out = KDE_fdopen( fd_out, "wb" );
     if (receiver && ( fd_in != -1 )) {
-	notifier = new QSocketNotifier(fd_in, QSocketNotifier::Read);
+	notifier = new TQSocketNotifier(fd_in, TQSocketNotifier::Read);
 	if ( m_suspended ) {
             suspend();
 	}
-	QObject::connect(notifier, SIGNAL(activated(int)), receiver, member);
+	TQObject::connect(notifier, TQT_SIGNAL(activated(int)), receiver, member);
     }
     dequeue();
 }
 
 
-void Connection::connect(QObject *_receiver, const char *_member)
+void Connection::connect(TQObject *_receiver, const char *_member)
 {
     receiver = _receiver;
     member = _member;
     delete notifier;
     notifier = 0;
     if (receiver && (fd_in != -1 )) {
-	notifier = new QSocketNotifier(fd_in, QSocketNotifier::Read);
+	notifier = new TQSocketNotifier(fd_in, TQSocketNotifier::Read);
         if ( m_suspended )
             suspend();
-	QObject::connect(notifier, SIGNAL(activated(int)), receiver, member);
+	TQObject::connect(notifier, TQT_SIGNAL(activated(int)), receiver, member);
     }
 }
 
-bool Connection::sendnow( int _cmd, const QByteArray &data )
+bool Connection::sendnow( int _cmd, const TQByteArray &data )
 {
     if (f_out == 0) {
 	return false;
@@ -206,7 +206,7 @@ bool Connection::sendnow( int _cmd, const QByteArray &data )
     return true;
 }
 
-int Connection::read( int* _cmd, QByteArray &data )
+int Connection::read( int* _cmd, TQByteArray &data )
 {
     if (fd_in == -1 ) {
 	kdError(7017) << "read: not yet inited" << endl;

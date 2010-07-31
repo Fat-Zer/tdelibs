@@ -64,7 +64,7 @@ namespace KKeyServer
 		 * @param s the description of the symbol
 		 * @see toString()
 		 */
-		Sym( const QString& s )
+		Sym( const TQString& s )
 			{ init( s ); }
 
 		/**
@@ -81,7 +81,7 @@ namespace KKeyServer
 		 * @return true if successful, false otherwise
 		 * @see toString()
 		 */
-		bool init( const QString &s );
+		bool init( const TQString &s );
 
 		/**
 		 * Returns the qt key code of the symbol.
@@ -92,13 +92,13 @@ namespace KKeyServer
 		/**
 		 * @internal
 		 */
-		QString toStringInternal() const;
+		TQString toStringInternal() const;
 
 		/**
 		 * Returns the string representation of the symbol.
 		 * @return the string representation of the symbol
 		 */
-		QString toString() const;
+		TQString toString() const;
 
 		/**
 		 * Returns the mods that are required for this symbol as
@@ -125,9 +125,9 @@ namespace KKeyServer
 		Sym& operator =( uint sym ) { m_sym = sym; return *this; }
 
 	 private:
-		QString toString( bool bUserSpace ) const;
+		TQString toString( bool bUserSpace ) const;
 
-		static void capitalizeKeyname( QString& );
+		static void capitalizeKeyname( TQString& );
 	};
 
 	/**
@@ -443,7 +443,7 @@ namespace KKeyServer
 	/**
 	 * @internal
 	 */
-	KDECORE_EXPORT QString modToStringInternal( uint mod );
+	KDECORE_EXPORT TQString modToStringInternal( uint mod );
 
 	/**
 	 * Converts the mask of ORed KKey::ModFlag modifiers to a
@@ -451,7 +451,7 @@ namespace KKeyServer
 	 * @param mod the mask of ORed KKey::ModFlag modifiers
 	 * @return the user-readable string
 	 */
-	KDECORE_EXPORT QString modToStringUser( uint mod );
+	KDECORE_EXPORT TQString modToStringUser( uint mod );
 
 	/**
 	 * Converts the modifier given as user-readable string
@@ -459,13 +459,13 @@ namespace KKeyServer
          * @internal
          * @since 3.5
 	 */
-	KDECORE_EXPORT uint stringUserToMod( const QString& mod );
+	KDECORE_EXPORT uint stringUserToMod( const TQString& mod );
 
 	/**
 	 * @internal
 	 * Unimplemented?
 	 */
-	KDECORE_EXPORT bool stringToSymMod( const QString&, uint& sym, uint& mod );
+	KDECORE_EXPORT bool stringToSymMod( const TQString&, uint& sym, uint& mod );
 
 	/**
 	 * @internal

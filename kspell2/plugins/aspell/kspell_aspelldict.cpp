@@ -22,11 +22,11 @@
 
 #include <kdebug.h>
 
-#include <qtextcodec.h>
+#include <tqtextcodec.h>
 
 using namespace KSpell2;
 
-ASpellDict::ASpellDict( const QString& lang )
+ASpellDict::ASpellDict( const TQString& lang )
     : Dictionary( lang )
 {
     m_config = new_aspell_config();
@@ -50,7 +50,7 @@ ASpellDict::~ASpellDict()
     delete_aspell_config( m_config );
 }
 
-bool ASpellDict::check( const QString& word )
+bool ASpellDict::check( const TQString& word )
 {
     /* ASpell is expecting length of a string in char representation */
     /* word.length() != word.utf8().length() for nonlatin strings    */
@@ -58,10 +58,10 @@ bool ASpellDict::check( const QString& word )
     return correct;
 }
 
-QStringList ASpellDict::suggest( const QString& word )
+TQStringList ASpellDict::suggest( const TQString& word )
 {
     /* Needed for Unicode conversion */
-    QTextCodec *codec = QTextCodec::codecForName("utf8");
+    TQTextCodec *codec = TQTextCodec::codecForName("utf8");
 
     /* ASpell is expecting length of a string in char representation */
     /* word.length() != word.utf8().length() for nonlatin strings    */
@@ -71,7 +71,7 @@ QStringList ASpellDict::suggest( const QString& word )
 
     AspellStringEnumeration * elements = aspell_word_list_elements( suggestions );
 
-    QStringList qsug;
+    TQStringList qsug;
     const char * cword;
 
     while ( (cword = aspell_string_enumeration_next( elements )) ) {
@@ -84,8 +84,8 @@ QStringList ASpellDict::suggest( const QString& word )
     return qsug;
 }
 
-bool ASpellDict::checkAndSuggest( const QString& word,
-                                  QStringList& suggestions )
+bool ASpellDict::checkAndSuggest( const TQString& word,
+                                  TQStringList& suggestions )
 {
     bool c = check( word );
     if ( c )
@@ -93,8 +93,8 @@ bool ASpellDict::checkAndSuggest( const QString& word,
     return c;
 }
 
-bool ASpellDict::storeReplacement( const QString& bad,
-                                   const QString& good )
+bool ASpellDict::storeReplacement( const TQString& bad,
+                                   const TQString& good )
 {
     /* ASpell is expecting length of a string in char representation */
     /* word.length() != word.utf8().length() for nonlatin strings    */
@@ -103,7 +103,7 @@ bool ASpellDict::storeReplacement( const QString& bad,
                                              good.utf8(), good.utf8().length() );
 }
 
-bool ASpellDict::addToPersonal( const QString& word )
+bool ASpellDict::addToPersonal( const TQString& word )
 {
     kdDebug() << "ASpellDict::addToPersonal: word = " << word << endl;
     /* ASpell is expecting length of a string in char representation */
@@ -116,7 +116,7 @@ bool ASpellDict::addToPersonal( const QString& word )
     return aspell_speller_save_all_word_lists( m_speller );
 }
 
-bool ASpellDict::addToSession( const QString& word )
+bool ASpellDict::addToSession( const TQString& word )
 {
     /* ASpell is expecting length of a string in char representation */
     /* word.length() != word.utf8().length() for nonlatin strings    */

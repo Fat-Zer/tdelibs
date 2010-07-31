@@ -1,9 +1,9 @@
 #include <kapplication.h>
 #include <kjanuswidget.h>
 
-#include <qstring.h>
-#include <qcheckbox.h>
-#include <qvbox.h>
+#include <tqstring.h>
+#include <tqcheckbox.h>
+#include <tqvbox.h>
 
 int main(int argc, char** argv)
 {
@@ -11,14 +11,14 @@ int main(int argc, char** argv)
   // -----
   KJanusWidget* janus = new KJanusWidget( 0, 0, KJanusWidget::IconList );
 
-  QVBox* page1 = janus->addVBoxPage( QString( "Page1" ) ); // use i18n in real apps
-  QCheckBox* cb1 = new QCheckBox( "a", page1 );
+  TQVBox* page1 = janus->addVBoxPage( TQString( "Page1" ) ); // use i18n in real apps
+  TQCheckBox* cb1 = new TQCheckBox( "a", page1 );
 
-  QVBox* page2 = janus->addVBoxPage( QString( "Page2" ) );
-  QCheckBox* cb2 = new QCheckBox( "a", page2 );
+  TQVBox* page2 = janus->addVBoxPage( TQString( "Page2" ) );
+  TQCheckBox* cb2 = new TQCheckBox( "a", page2 );
 
   janus->show();
-  QObject::connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
+  TQObject::connect( &app, TQT_SIGNAL( lastWindowClosed() ), &app, TQT_SLOT( quit() ) );
 
   return app.exec();
 }

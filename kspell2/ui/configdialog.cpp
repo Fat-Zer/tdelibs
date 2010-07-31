@@ -23,7 +23,7 @@
 
 #include <klocale.h>
 
-#include <qvbox.h>
+#include <tqvbox.h>
 
 using namespace KSpell2;
 
@@ -33,7 +33,7 @@ public:
     ConfigWidget *ui;
 };
 
-ConfigDialog::ConfigDialog( Broker *broker, QWidget *parent )
+ConfigDialog::ConfigDialog( Broker *broker, TQWidget *parent )
     : KDialogBase( parent, "KSpell2ConfigDialog", true,
                    i18n( "KSpell2 Configuration" ),
                    KDialogBase::Ok|KDialogBase::Apply|KDialogBase::Cancel,
@@ -50,7 +50,7 @@ ConfigDialog::~ConfigDialog()
 void ConfigDialog::init( Broker *broker )
 {
     d = new Private;
-    QVBox *page = makeVBoxMainWidget();
+    TQVBox *page = makeVBoxMainWidget();
     d->ui = new ConfigWidget( broker, page );
 }
 

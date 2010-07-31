@@ -19,7 +19,7 @@
 #define __progressbase_h__
 
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kio/global.h>
 
@@ -67,7 +67,7 @@ namespace KIO
 * @short Base class for IO progress dialogs.
 * @author Matej Koss <koss@miesto.sk>
 */
-class KIO_EXPORT ProgressBase : public QWidget {
+class KIO_EXPORT ProgressBase : public TQWidget {
 
   Q_OBJECT
 
@@ -77,7 +77,7 @@ public:
    * Creates a new progress dialog.
    * @param parent the parent of this dialog window, or 0
    */
-  ProgressBase( QWidget *parent );
+  ProgressBase( TQWidget *parent );
   ~ProgressBase() {}
 
   /**
@@ -251,7 +251,7 @@ protected slots:
 
 protected:
 
-  virtual void closeEvent( QCloseEvent * );
+  virtual void closeEvent( TQCloseEvent * );
 
   KIO::Job* m_pJob;
 

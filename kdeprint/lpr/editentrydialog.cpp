@@ -19,45 +19,45 @@
 
 #include "editentrydialog.h"
 
-#include <qlineedit.h>
-#include <qcheckbox.h>
-#include <qspinbox.h>
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qheader.h>
+#include <tqlineedit.h>
+#include <tqcheckbox.h>
+#include <tqspinbox.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqheader.h>
 #include <klistview.h>
-#include <qlayout.h>
-#include <qwidgetstack.h>
+#include <tqlayout.h>
+#include <tqwidgetstack.h>
 #include <klocale.h>
 #include <kiconloader.h>
 
-EditEntryDialog::EditEntryDialog(PrintcapEntry *entry, QWidget *parent, const char *name)
-: KDialogBase(parent, name, true, QString::null, Ok|Cancel)
+EditEntryDialog::EditEntryDialog(PrintcapEntry *entry, TQWidget *parent, const char *name)
+: KDialogBase(parent, name, true, TQString::null, Ok|Cancel)
 {
-	QWidget	*w = new QWidget(this);
+	QWidget	*w = new TQWidget(this);
 	setMainWidget(w);
 
-	QLabel	*lab0 = new QLabel(i18n("Aliases:"), w);
-	m_aliases = new QLineEdit(w);
+	QLabel	*lab0 = new TQLabel(i18n("Aliases:"), w);
+	m_aliases = new TQLineEdit(w);
 	m_view = new KListView(w);
 	m_view->addColumn("");
 	m_view->header()->hide();
-	m_type = new QComboBox(w);
+	m_type = new TQComboBox(w);
 	m_type->insertItem(i18n("String"));
 	m_type->insertItem(i18n("Number"));
 	m_type->insertItem(i18n("Boolean"));
-	m_stack = new QWidgetStack(w);
-	m_boolean = new QCheckBox(i18n("Enabled"), m_stack);
-	m_string = new QLineEdit(m_stack);
-	m_number = new QSpinBox(0, 9999, 1, m_stack);
+	m_stack = new TQWidgetStack(w);
+	m_boolean = new TQCheckBox(i18n("Enabled"), m_stack);
+	m_string = new TQLineEdit(m_stack);
+	m_number = new TQSpinBox(0, 9999, 1, m_stack);
 	m_stack->addWidget(m_string, 0);
 	m_stack->addWidget(m_boolean, 2);
 	m_stack->addWidget(m_number, 1);
-	m_name = new QLineEdit(w);
+	m_name = new TQLineEdit(w);
 
-	QVBoxLayout	*l0 = new QVBoxLayout(w, 0, 10);
-	QHBoxLayout	*l1 = new QHBoxLayout(0, 0, 10);
-	QHBoxLayout	*l2 = new QHBoxLayout(0, 0, 5);
+	QVBoxLayout	*l0 = new TQVBoxLayout(w, 0, 10);
+	QHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 10);
+	QHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 5);
 	l0->addLayout(l1);
 	l1->addWidget(lab0);
 	l1->addWidget(m_aliases);
@@ -72,12 +72,12 @@ EditEntryDialog::EditEntryDialog(PrintcapEntry *entry, QWidget *parent, const ch
 		setCaption(i18n("Printcap Entry: %1").arg(entry->name));
 		m_fields = entry->fields;
 		m_aliases->setText(entry->aliases.join("|"));
-		QListViewItem	*root = new QListViewItem(m_view, entry->name), *item = 0;
+		QListViewItem	*root = new TQListViewItem(m_view, entry->name), *item = 0;
 		root->setSelectable(false);
 		root->setOpen(true);
 		root->setPixmap(0, SmallIcon("fileprint"));
-		for (QMap<QString,Field>::ConstIterator it=m_fields.begin(); it!=m_fields.end(); ++it)
-			item = new QListViewItem(root, item, (*it).toString(), it.key());
+		for (TQMap<TQString,Field>::ConstIterator it=m_fields.begin(); it!=m_fields.end(); ++it)
+			item = new TQListViewItem(root, item, (*it).toString(), it.key());
 	}
 
 	m_block = true;
@@ -86,12 +86,12 @@ EditEntryDialog::EditEntryDialog(PrintcapEntry *entry, QWidget *parent, const ch
 	slotTypeChanged(0);
 	m_block = false;
 
-	connect(m_view, SIGNAL(selectionChanged(QListViewItem*)), SLOT(slotItemSelected(QListViewItem*)));
-	connect(m_string, SIGNAL(textChanged(const QString&)), SLOT(slotChanged()));
-	connect(m_boolean, SIGNAL(toggled(bool)), SLOT(slotChanged()));
-	connect(m_number, SIGNAL(valueChanged(int)), SLOT(slotChanged()));
-	connect(m_type, SIGNAL(activated(int)), SLOT(slotTypeChanged(int)));
-	connect(m_name, SIGNAL(textChanged(const QString&)), SLOT(slotChanged()));
+	connect(m_view, TQT_SIGNAL(selectionChanged(TQListViewItem*)), TQT_SLOT(slotItemSelected(TQListViewItem*)));
+	connect(m_string, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(slotChanged()));
+	connect(m_boolean, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChanged()));
+	connect(m_number, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotChanged()));
+	connect(m_type, TQT_SIGNAL(activated(int)), TQT_SLOT(slotTypeChanged(int)));
+	connect(m_name, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(slotChanged()));
 
 	resize(500,400);
 }
@@ -122,7 +122,7 @@ void EditEntryDialog::slotChanged()
 	}
 }
 
-void EditEntryDialog::slotItemSelected(QListViewItem *item)
+void EditEntryDialog::slotItemSelected(TQListViewItem *item)
 {
 	m_stack->setEnabled(item);
 	m_name->setEnabled(item);
@@ -144,7 +144,7 @@ void EditEntryDialog::slotItemSelected(QListViewItem *item)
 
 void EditEntryDialog::fillEntry(PrintcapEntry *entry)
 {
-	entry->aliases = QStringList::split('|', m_aliases->text(), false);
+	entry->aliases = TQStringList::split('|', m_aliases->text(), false);
 	entry->fields = m_fields;
 }
 

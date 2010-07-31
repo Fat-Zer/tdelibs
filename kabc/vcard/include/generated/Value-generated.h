@@ -3,13 +3,13 @@
 public:
 Value();
 Value(const Value&);
-Value(const QCString&);
+Value(const TQCString&);
 Value & operator = (Value&);
-Value & operator = (const QCString&);
+Value & operator = (const TQCString&);
 bool operator ==(Value&);
 bool operator !=(Value& x) {return !(*this==x);}
-bool operator ==(const QCString& s) {Value a(s);return(*this==a);} 
-bool operator != (const QCString& s) {return !(*this == s);}
+bool operator ==(const TQCString& s) {Value a(s);return(*this==a);} 
+bool operator != (const TQCString& s) {return !(*this == s);}
 
 virtual ~Value();
 void parse() {if(!parsed_) _parse();parsed_=true;assembled_=false;}

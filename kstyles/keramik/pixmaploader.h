@@ -22,9 +22,9 @@
 #ifndef __pixmaploader_h__
 #define __pixmaploader_h__
 
-#include <qintcache.h>
-#include <qdict.h>
-#include <qimage.h>
+#include <tqintcache.h>
+#include <tqdict.h>
+#include <tqimage.h>
 
 class QPixmap;
 class QImage;
@@ -38,12 +38,12 @@ namespace Keramik
 	public:
 		PixmapLoader();
 
-		QPixmap pixmap( int name, const QColor& color,  const QColor& bg,
+		TQPixmap pixmap( int name, const TQColor& color,  const TQColor& bg,
 										 bool disabled = false, bool blend = true );
 
-		QPixmap scale( int name, int width, int height, const QColor& color,  const QColor& bg,
+		TQPixmap scale( int name, int width, int height, const TQColor& color,  const TQColor& bg,
 										bool disabled = false, bool blend = true );
-		QSize size( int id );
+		TQSize size( int id );
 
 		void clear();
 
@@ -72,10 +72,10 @@ namespace Keramik
 			bool    m_disabled;
 			bool    m_blended;
 
-			QPixmap* m_pixmap;
+			TQPixmap* m_pixmap;
 
-			KeramikCacheEntry(int id, const QColor& color, const QColor& bg, bool disabled,
-											bool blended, int width, int height, QPixmap* pixmap = 0 ):
+			KeramikCacheEntry(int id, const TQColor& color, const TQColor& bg, bool disabled,
+											bool blended, int width, int height, TQPixmap* pixmap = 0 ):
 				m_id(id), m_width(width), m_height(height), m_colorCode(color.rgb()),m_bgCode(bg.rgb()),
 				m_disabled(disabled),  m_blended(blended), m_pixmap(pixmap)
 			{}
@@ -104,9 +104,9 @@ namespace Keramik
 
 
 
-		QImage* getColored(int id, const QColor& color, const QColor& bg, bool blended);
-		QImage* getDisabled(int id, const QColor& color, const QColor& bg, bool blended);
-		QIntCache <KeramikCacheEntry>  m_pixmapCache;
+		TQImage* getColored(int id, const TQColor& color, const TQColor& bg, bool blended);
+		TQImage* getDisabled(int id, const TQColor& color, const TQColor& bg, bool blended);
+		TQIntCache <KeramikCacheEntry>  m_pixmapCache;
 
 
 		unsigned char clamp[540];
@@ -128,9 +128,9 @@ namespace Keramik
 			PaintTrivialMask
 		};
 
-		void draw( QPainter *p, int x, int y, int width, int height, const QColor& color, const QColor& bg,
+		void draw( TQPainter *p, int x, int y, int width, int height, const TQColor& color, const TQColor& bg,
 		                 bool disabled = false, PaintMode mode = PaintNormal );
-		void draw( QPainter *p, const QRect& rect, const QColor& color, const QColor& bg, bool disabled = false, PaintMode mode = PaintNormal )
+		void draw( TQPainter *p, const TQRect& rect, const TQColor& color, const TQColor& bg, bool disabled = false, PaintMode mode = PaintNormal )
 		{
 			draw( p, rect.x(), rect.y(), rect.width(), rect.height(), color, bg, disabled, mode );
 		}
@@ -188,9 +188,9 @@ namespace Keramik
 		}
 
 
-		QPixmap tile( unsigned int column, unsigned int row, const QColor& color, const QColor& bg, bool disabled, bool blend)
+		TQPixmap tile( unsigned int column, unsigned int row, const TQColor& color, const TQColor& bg, bool disabled, bool blend)
 			{ return PixmapLoader::the().pixmap( absTileName( column, row ), color, bg, disabled, blend ); }
-		QPixmap scale( unsigned int column, unsigned int row, int width, int height, const QColor& color, const QColor& bg,
+		TQPixmap scale( unsigned int column, unsigned int row, int width, int height, const TQColor& color, const TQColor& bg,
 							bool disabled, bool blend )
 			{ return PixmapLoader::the().scale( absTileName( column, row ), width, height, color,
 							bg, disabled, blend ); }

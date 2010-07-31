@@ -21,17 +21,17 @@
 #include "kmwizard.h"
 #include "kmprinter.h"
 
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qvbuttongroup.h>
-#include <qradiobutton.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqvbuttongroup.h>
+#include <tqradiobutton.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kcursor.h>
 
 #include <stdlib.h>
 
-KMWPassword::KMWPassword(QWidget *parent, const char *name)
+KMWPassword::KMWPassword(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_title = i18n("User Identification");
@@ -39,20 +39,20 @@ KMWPassword::KMWPassword(QWidget *parent, const char *name)
 	m_nextpage = KMWizard::SMB;
 
 	// create widgets
-	QLabel	*infotext_ = new QLabel(this);
+	QLabel	*infotext_ = new TQLabel(this);
 	infotext_->setText(i18n("<p>This backend may require a login/password to work properly. "
 				"Select the type of access to use and fill in the login and password entries if needed.</p>"));
-	m_login = new QLineEdit(this);
-	m_login->setText(QString::fromLocal8Bit(getenv("USER")));
-	m_password = new QLineEdit(this);
-	m_password->setEchoMode(QLineEdit::Password);
-	QLabel	*loginlabel_ = new QLabel(i18n("&Login:"),this);
-	QLabel	*passwdlabel_ = new QLabel(i18n("&Password:"),this);
-	m_btngroup = new QVButtonGroup( this );
-	m_btngroup->setFrameStyle( QFrame::NoFrame );
-	QRadioButton *btn1 = new QRadioButton( i18n( "&Anonymous (no login/password)" ), m_btngroup );
-	QRadioButton *btn2 = new QRadioButton( i18n( "&Guest account (login=\"guest\")" ), m_btngroup );
-	QRadioButton *btn3 = new QRadioButton( i18n( "Nor&mal account" ), m_btngroup );
+	m_login = new TQLineEdit(this);
+	m_login->setText(TQString::fromLocal8Bit(getenv("USER")));
+	m_password = new TQLineEdit(this);
+	m_password->setEchoMode(TQLineEdit::Password);
+	QLabel	*loginlabel_ = new TQLabel(i18n("&Login:"),this);
+	QLabel	*passwdlabel_ = new TQLabel(i18n("&Password:"),this);
+	m_btngroup = new TQVButtonGroup( this );
+	m_btngroup->setFrameStyle( TQFrame::NoFrame );
+	TQRadioButton *btn1 = new TQRadioButton( i18n( "&Anonymous (no login/password)" ), m_btngroup );
+	TQRadioButton *btn2 = new TQRadioButton( i18n( "&Guest account (login=\"guest\")" ), m_btngroup );
+	TQRadioButton *btn3 = new TQRadioButton( i18n( "Nor&mal account" ), m_btngroup );
 	btn1->setCursor( KCursor::handCursor() );
 	btn2->setCursor( KCursor::handCursor() );
 	btn3->setCursor( KCursor::handCursor() );
@@ -63,15 +63,15 @@ KMWPassword::KMWPassword(QWidget *parent, const char *name)
 
 	m_login->setEnabled(false);
 	m_password->setEnabled(false);
-	connect(btn3,SIGNAL(toggled(bool)),m_login,SLOT(setEnabled(bool)));
-	connect(btn3,SIGNAL(toggled(bool)),m_password,SLOT(setEnabled(bool)));
+	connect(btn3,TQT_SIGNAL(toggled(bool)),m_login,TQT_SLOT(setEnabled(bool)));
+	connect(btn3,TQT_SIGNAL(toggled(bool)),m_password,TQT_SLOT(setEnabled(bool)));
 
 	// layout
-	QVBoxLayout *main_ = new QVBoxLayout( this, 0, 0 );
+	TQVBoxLayout *main_ = new TQVBoxLayout( this, 0, 0 );
 	main_->addWidget( infotext_ );
 	main_->addSpacing( 10 );
 	main_->addWidget( m_btngroup );
-	QGridLayout *l1 = new QGridLayout( 0, 2, 3 );
+	TQGridLayout *l1 = new TQGridLayout( 0, 2, 3 );
 	main_->addLayout( l1 );
 	main_->addStretch( 1 );
 	l1->setColSpacing( 0, 35 );
@@ -82,7 +82,7 @@ KMWPassword::KMWPassword(QWidget *parent, const char *name)
 	l1->addWidget( m_password, 1, 2 );
 }
 
-bool KMWPassword::isValid(QString& msg)
+bool KMWPassword::isValid(TQString& msg)
 {
 	if ( !m_btngroup->selected() )
 		msg = i18n( "Select one option" );
@@ -117,12 +117,12 @@ void KMWPassword::updatePrinter(KMPrinter *p)
 	switch ( m_btngroup->selectedId() )
 	{
 		case 0:
-			p->setOption( "kde-login", QString::null );
-			p->setOption( "kde-password", QString::null );
+			p->setOption( "kde-login", TQString::null );
+			p->setOption( "kde-password", TQString::null );
 			break;
 		case 1:
-			p->setOption( "kde-login", QString::fromLatin1( "guest" ) );
-			p->setOption( "kde-password", QString::null );
+			p->setOption( "kde-login", TQString::fromLatin1( "guest" ) );
+			p->setOption( "kde-password", TQString::null );
 			break;
 		case 2:
 			p->setOption( "kde-login", m_login->text() );

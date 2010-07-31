@@ -50,7 +50,7 @@ void VCard::clear()
   mLineMap.clear();
 }
 
-QStringList VCard::identifiers() const
+TQStringList VCard::identifiers() const
 {
   return mLineMap.keys();
 }
@@ -60,7 +60,7 @@ void VCard::addLine( const VCardLine& line )
   mLineMap[ line.identifier() ].append( line );
 }
 
-VCardLine::List VCard::lines( const QString& identifier ) const
+VCardLine::List VCard::lines( const TQString& identifier ) const
 {
   LineMap::ConstIterator it = mLineMap.find( identifier );
   if ( it == mLineMap.end() )
@@ -69,7 +69,7 @@ VCardLine::List VCard::lines( const QString& identifier ) const
   return *it;
 }
 
-VCardLine VCard::line( const QString& identifier ) const
+VCardLine VCard::line( const TQString& identifier ) const
 {
   LineMap::ConstIterator it = mLineMap.find( identifier );
   if ( it == mLineMap.end() )

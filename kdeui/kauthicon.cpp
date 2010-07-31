@@ -21,9 +21,9 @@
 
 #include <unistd.h> // For getuid
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qtimer.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqtimer.h>
 
 #include <klocale.h>
 
@@ -91,21 +91,21 @@ static const char * const openlock_xpm[] = {
 "                      ",
 "                      "};
 
-KAuthIcon::KAuthIcon(QWidget *parent, const char *name)
-  : QWidget(parent, name),
+KAuthIcon::KAuthIcon(TQWidget *parent, const char *name)
+  : TQWidget(parent, name),
    lockPM( const_cast< const char** >( lock_xpm)),
    openLockPM( const_cast< const char** >(openlock_xpm))
 {
   lockText = i18n("Editing disabled");
   openLockText = i18n("Editing enabled");
 
-  lockBox = new QLabel(this);
-  lockBox->setFrameStyle(QFrame::WinPanel|QFrame::Raised);
+  lockBox = new TQLabel(this);
+  lockBox->setFrameStyle(TQFrame::WinPanel|TQFrame::Raised);
   lockBox->setPixmap(lockPM);
   lockBox->setFixedSize(lockBox->sizeHint());
 
-  lockLabel = new QLabel(this);
-  lockLabel->setFrameStyle(QFrame::NoFrame);
+  lockLabel = new TQLabel(this);
+  lockLabel->setFrameStyle(TQFrame::NoFrame);
 
   // set fixed size of this frame to whichever phrase is longer
   if (lockLabel->fontMetrics().boundingRect(lockText).width() >
@@ -117,7 +117,7 @@ KAuthIcon::KAuthIcon(QWidget *parent, const char *name)
   lockLabel->setMinimumSize(lockLabel->sizeHint());
   lockLabel->setText(lockText);
 
-  layout = new QHBoxLayout(this);
+  layout = new TQHBoxLayout(this);
 
   layout->addWidget(lockBox, 0, AlignLeft|AlignVCenter);
   layout->addSpacing(5);
@@ -132,7 +132,7 @@ KAuthIcon::~KAuthIcon()
 }
 
 
-QSize KAuthIcon::sizeHint() const
+TQSize KAuthIcon::sizeHint() const
 {
   return layout->minimumSize();
 }
@@ -140,7 +140,7 @@ QSize KAuthIcon::sizeHint() const
 
 /************************************************************************/
 
-KRootPermsIcon::KRootPermsIcon(QWidget *parent, const char *name)
+KRootPermsIcon::KRootPermsIcon(TQWidget *parent, const char *name)
   : KAuthIcon(parent, name)
 {
   updateStatus();
@@ -165,8 +165,8 @@ void KRootPermsIcon::updateStatus()
 
 /************************************************************************/
 
-KWritePermsIcon::KWritePermsIcon(const QString & fileName,
-				 QWidget *parent, const char *name)
+KWritePermsIcon::KWritePermsIcon(const TQString & fileName,
+				 TQWidget *parent, const char *name)
   : KAuthIcon(parent, name)
 {
   fi.setFile(fileName);

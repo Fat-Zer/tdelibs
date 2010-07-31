@@ -27,15 +27,15 @@ class QTable;
 class KPTagsPage : public KPrintDialogPage
 {
 public:
-	KPTagsPage(bool ro = false, QWidget *parent = 0, const char *name = 0);
+	KPTagsPage(bool ro = false, TQWidget *parent = 0, const char *name = 0);
 	~KPTagsPage();
 
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
-	void setOptions(const QMap<QString,QString>& opts);
-	bool isValid(QString& msg);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
+	void setOptions(const TQMap<TQString,TQString>& opts);
+	bool isValid(TQString& msg);
 
-	QSize sizeHint() const;
-	QSize minimumSizeHint() const;
+	TQSize sizeHint() const;
+	TQSize minimumSizeHint() const;
 
 private:
 	QTable	*m_tags;

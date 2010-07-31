@@ -25,8 +25,8 @@
 
 #include <kopenssl.h>
 
-#include <qstring.h>
-#include <qfile.h>
+#include <tqstring.h>
+#include <tqfile.h>
 #include <ksslall.h>
 #include <kdebug.h>
 #include <ktempfile.h>
@@ -60,12 +60,12 @@ KSSLPKCS7::~KSSLPKCS7() {
 }
 
 
-KSSLPKCS7* KSSLPKCS7::fromString(QString base64) {
+KSSLPKCS7* KSSLPKCS7::fromString(TQString base64) {
 #ifdef KSSL_HAVE_SSL
 KTempFile ktf;
 
     if (base64.isEmpty()) return NULL;
-    QByteArray qba, qbb = QCString(base64.latin1()).copy();
+    TQByteArray qba, qbb = TQCString(base64.latin1()).copy();
     KCodecs::base64Decode(qbb, qba);
     ktf.file()->writeBlock(qba);
     ktf.close();
@@ -78,9 +78,9 @@ return NULL;
 
 
 
-KSSLPKCS7* KSSLPKCS7::loadCertFile(QString filename) {
+KSSLPKCS7* KSSLPKCS7::loadCertFile(TQString filename) {
 #ifdef KSSL_HAVE_SSL
-QFile qf(filename);
+TQFile qf(filename);
 PKCS7 *newpkcs = NULL;
 
   if (!qf.open(IO_ReadOnly))
@@ -122,8 +122,8 @@ KSSLCertChain *KSSLPKCS7::getChain() {
 }
 
 
-QString KSSLPKCS7::toString() {
-QString base64;
+TQString KSSLPKCS7::toString() {
+TQString base64;
 #ifdef KSSL_HAVE_SSL
 unsigned char *p;
 int len;
@@ -133,7 +133,7 @@ int len;
        char *buf = new char[len];
        p = (unsigned char *)buf;
        kossl->i2d_PKCS7(_pkcs, &p);
-       QByteArray qba;
+       TQByteArray qba;
        qba.setRawData(buf, len);
        base64 = KCodecs::base64Encode(qba);
        qba.resetRawData(buf, len);
@@ -145,9 +145,9 @@ return base64;
 
 
 
-bool KSSLPKCS7::toFile(QString filename) {
+bool KSSLPKCS7::toFile(TQString filename) {
 #ifdef KSSL_HAVE_SSL
-QFile out(filename);
+TQFile out(filename);
 
    if (!out.open(IO_WriteOnly)) return false;
 
@@ -190,10 +190,10 @@ return (validate() == KSSLCertificate::Ok);
 }
 
 
-QString KSSLPKCS7::name() {
+TQString KSSLPKCS7::name() {
    if (_cert)
       return _cert->getSubject();
-   return QString();
+   return TQString();
 }
 
  

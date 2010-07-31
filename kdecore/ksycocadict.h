@@ -19,9 +19,9 @@
 #ifndef __ksycocadict_h__
 #define __ksycocadict_h__
 
-#include <qstring.h>
-#include <qvaluelist.h>
-#include <qdatastream.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
+#include <tqdatastream.h>
 #include "kdelibs_export.h"
 
 class KSycocaEntry;
@@ -41,7 +41,7 @@ public:
    /**
     * Create a dict from an existing database
     */
-   KSycocaDict(QDataStream *str, int offset);
+   KSycocaDict(TQDataStream *str, int offset);
 
    ~KSycocaDict();
 
@@ -51,14 +51,14 @@ public:
     * 'payload' should have a valid offset by the time  
     * the dictionary gets saved.
     **/
-   void add(const QString &key, KSycocaEntry *payload);
+   void add(const TQString &key, KSycocaEntry *payload);
 
    /**
     * Removes the 'payload' from the dictionary with key 'key'.
     * 
     * Not very fast, use with care O(N)
     **/
-   void remove(const QString &key);
+   void remove(const TQString &key);
    
    /**
     * Looks up an entry identified by 'key'.
@@ -72,7 +72,7 @@ public:
     * indeed matches the search key. If it doesn't
     * then no matching entry exists.
     */
-   int find_string(const QString &key );
+   int find_string(const TQString &key );
    
    /**
     * The number of entries in the dictionary.
@@ -108,16 +108,16 @@ public:
     *   The hash table size will be approx. 20Kb.
     *   The duplicate list size will be approx. 12Kb.
     **/    
-   void save(QDataStream &str);
+   void save(TQDataStream &str);
 
 protected:
-   Q_UINT32 hashKey( const QString &);
+   Q_UINT32 hashKey( const TQString &);
 private:
    KSycocaDictStringList *d;
-   QDataStream *mStr;
+   TQDataStream *mStr;
    Q_INT32 mOffset;
    Q_UINT32 mHashTableSize;
-   QValueList<Q_INT32> mHashList;
+   TQValueList<Q_INT32> mHashList;
 };
 
 #endif

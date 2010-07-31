@@ -1,7 +1,7 @@
 #include "kmessagebox.h"
 
-#include <qdialog.h>
-#include <qlayout.h>
+#include <tqdialog.h>
+#include <tqlayout.h>
 
 #include <stdlib.h>
 
@@ -15,15 +15,15 @@
 class ExampleWidget : public QLabel
 {
 public:
-    ExampleWidget( QWidget *parent = 0, const char *name = 0 );
+    ExampleWidget( TQWidget *parent = 0, const char *name = 0 );
 };
 
-ExampleWidget::ExampleWidget( QWidget *parent, const char *name )
-    : QLabel(parent, name )
+ExampleWidget::ExampleWidget( TQWidget *parent, const char *name )
+    : TQLabel(parent, name )
 {
     // Make the top-level layout; a vertical box to contain all widgets
     // and sub-layouts.
-    QSize sh;
+    TQSize sh;
     setText("<p>Hello.</p>");
     sh = sizeHint();
     qWarning("SizeHint = %d x %d", sh.width(), sh.height());
@@ -43,7 +43,7 @@ ExampleWidget::ExampleWidget( QWidget *parent, const char *name )
 class Foo: public QDialog
 {
  public:
-   Foo() : QDialog(0, "foo", true) { resize(200,200); new QLabel("Hello World", this); show(); }
+   Foo() : TQDialog(0, "foo", true) { resize(200,200); new TQLabel("Hello World", this); show(); }
 };
 
 void showResult(int test, int i)
@@ -69,7 +69,7 @@ int main( int argc, char *argv[] )
     w->show();    
     w->deleteLater();
 
-    QStringList list; list.append("Hello"); list.append("World");
+    TQStringList list; list.append("Hello"); list.append("World");
 
     for( test = 1; true; test++)
     {
@@ -79,24 +79,24 @@ case 1:
   i = KMessageBox::warningContinueCancel(w, 
                 "You are about to <Print>.\n"
 		"Are you sure?",
-                "Print", QString::fromLatin1("&Print"), "dontask", false);
+                "Print", TQString::fromLatin1("&Print"), "dontask", false);
   i = KMessageBox::warningContinueCancel(0, 
                 "You are about to <Print>.\n"
 		"Are you sure?",
-                "Print", QString::fromLatin1("&Print"), "dontask", KMessageBox::AllowLink);
+                "Print", TQString::fromLatin1("&Print"), "dontask", KMessageBox::AllowLink);
   i = KMessageBox::questionYesNo(0, "<p>Do you have a printer? thisisaverylongdkldhklghklghklashgkllasghkdlsghkldfghklsabla bla bbla bla. It also has <a href=http://www.kde.org>this URL</a>.</p>",
-  	QString("Bla"), QString("Yes"), QString("No"), "bla", KMessageBox::AllowLink);
+  	TQString("Bla"), TQString("Yes"), TQString("No"), "bla", KMessageBox::AllowLink);
   break;
 
 case 2:
   i = KMessageBox::questionYesNo(0, "Do you have a printer?",
-				 QString("Printer setup"), QString::null);
+				 TQString("Printer setup"), TQString::null);
   break;
 
 case 3:
   i = KMessageBox::questionYesNo(0,
                 "Does your printer support color or only black and white?",
-                "Printer setup", QString::fromLatin1("&Color"), QString::fromLatin1("&Black & White"));
+                "Printer setup", TQString::fromLatin1("&Color"), TQString::fromLatin1("&Black & White"));
   break;
 
 case 4:
@@ -123,13 +123,13 @@ case 6:
   i = KMessageBox::warningContinueCancel(0, 
                 "You are about to print.\n"
 		"Are you sure?",
-                "Print", QString::fromLatin1("&Print"));
+                "Print", TQString::fromLatin1("&Print"));
   break;
 case 7:
   i = KMessageBox::warningContinueCancel(0, 
                 "You are about to <Print>.\n"
 		"Are you sure?",
-                "Print", QString::fromLatin1("&Print"), "dontask", false);
+                "Print", TQString::fromLatin1("&Print"), "dontask", false);
   break;
 
 case 8:
@@ -142,14 +142,14 @@ case 9:
   i = KMessageBox::warningYesNoCancel(0,
                 "Your document contains unsaved changes.\n"
                 "Do you want to save your changes?\n",
-                QString::fromLatin1("Close"));
+                TQString::fromLatin1("Close"));
   break;
 
 case 10:
   i = KMessageBox::warningYesNoCancel(0,
                 "Your document contains unsaved changes.\n"
                 "Do you want to save or discard your changes?\n",
-                "Close", QString::fromLatin1("&Save"), QString::fromLatin1("&Discard") );
+                "Close", TQString::fromLatin1("&Save"), TQString::fromLatin1("&Discard") );
   break;
 
 case 11:
@@ -186,7 +186,7 @@ case 16:
 
 case 17:
   i = KMessageBox::Ok;
-  KMessageBox::information(0, "You can enable the menubar again\nwith the right mouse button menu.", QString::null, "Enable_Menubar");
+  KMessageBox::information(0, "You can enable the menubar again\nwith the right mouse button menu.", TQString::null, "Enable_Menubar");
   break;
 
 case 18:
@@ -196,11 +196,11 @@ case 18:
 
 case 19:
   i = KMessageBox::Ok;
-  KMessageBox::information(0, "Return of the annoying popup message.", QString::null, "Enable_Menubar");
+  KMessageBox::information(0, "Return of the annoying popup message.", TQString::null, "Enable_Menubar");
   break;
 case 20:
   {
-  QStringList strlist;
+  TQStringList strlist;
   strlist << "/dev/hda" << "/etc/inittab" << "/usr/somefile" << "/some/really/"
    "long/file/name/which/is/in/a/really/deep/directory/in/a/really/large/"
    "hard/disk/of/your/system" << "/and/another/one" ;
@@ -209,9 +209,9 @@ case 20:
   break;
 case 21:
   {
-  QStringList strlist;
+  TQStringList strlist;
   printf("Filling StringList...\n");  
-  for (int j=1;j<=6000;j++) strlist.append(QString("/tmp/tmp.%1").arg(j));
+  for (int j=1;j<=6000;j++) strlist.append(TQString("/tmp/tmp.%1").arg(j));
   printf("Completed...\n");  
   i = KMessageBox::questionYesNoList(0, "Do you want to delete the following files ?",strlist);
   }
@@ -229,7 +229,7 @@ case 23:
 
 case 24:
   i = KMessageBox::Ok;
-  KMessageBox::informationList(0, "The follwoing words have been found:", list, QString::null, "Search_Words");
+  KMessageBox::informationList(0, "The follwoing words have been found:", list, TQString::null, "Search_Words");
   break;
 
 default:

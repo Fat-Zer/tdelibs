@@ -53,39 +53,39 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
    kapp->dcopClient()->attach();
 
    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-   QCString replyType;
-   QByteArray replyData;
+   TQCString replyType;
+   TQByteArray replyData;
    if (args->isSet("remove-all"))
    {
-      kapp->dcopClient()->call( "kded", "kcookiejar", "deleteAllCookies()", QByteArray(), replyType, replyData);
+      kapp->dcopClient()->call( "kded", "kcookiejar", "deleteAllCookies()", TQByteArray(), replyType, replyData);
    }
    if (args->isSet("remove"))
    {
-      QString domain = args->getOption("remove");
-      QByteArray params;
-      QDataStream stream(params, IO_WriteOnly);
+      TQString domain = args->getOption("remove");
+      TQByteArray params;
+      TQDataStream stream(params, IO_WriteOnly);
       stream << domain;
-      kapp->dcopClient()->call( "kded", "kcookiejar", "deleteCookiesFromDomain(QString)", params, replyType, replyData);
+      kapp->dcopClient()->call( "kded", "kcookiejar", "deleteCookiesFromDomain(TQString)", params, replyType, replyData);
    }
    if (args->isSet("shutdown"))
    {
-      QCString module = "kcookiejar";
-      QByteArray params;
-      QDataStream stream(params, IO_WriteOnly);
+      TQCString module = "kcookiejar";
+      TQByteArray params;
+      TQDataStream stream(params, IO_WriteOnly);
       stream << module;
-      kapp->dcopClient()->call( "kded", "kded", "unloadModule(QCString)", params, replyType, replyData);
+      kapp->dcopClient()->call( "kded", "kded", "unloadModule(TQCString)", params, replyType, replyData);
    }
    else if(args->isSet("reload-config"))
    {
-      kapp->dcopClient()->call( "kded", "kcookiejar", "reloadPolicy()", QByteArray(), replyType, replyData);
+      kapp->dcopClient()->call( "kded", "kcookiejar", "reloadPolicy()", TQByteArray(), replyType, replyData);
    }
    else
    {
-      QCString module = "kcookiejar";
-      QByteArray params;
-      QDataStream stream(params, IO_WriteOnly);
+      TQCString module = "kcookiejar";
+      TQByteArray params;
+      TQDataStream stream(params, IO_WriteOnly);
       stream << module;
-      kapp->dcopClient()->call( "kded", "kded", "loadModule(QCString)", params, replyType, replyData);
+      kapp->dcopClient()->call( "kded", "kded", "loadModule(TQCString)", params, replyType, replyData);
    }
 
    return 0;

@@ -98,7 +98,7 @@ void HTMLBaseFontElement::setSize( long _value )
 {
     if ( impl )
     {
-        DOMString value( QString::number( _value ) );
+        DOMString value( TQString::number( _value ) );
         ((ElementImpl *)impl)->setAttribute(ATTR_SIZE, value);
     }
 }

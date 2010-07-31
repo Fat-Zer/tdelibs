@@ -23,12 +23,12 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
-#include <qfileinfo.h>
-#include <qimage.h>
-#include <qmap.h>
-#include <qregexp.h>
-#include <qtextstream.h>
-#include <qvaluevector.h>
+#include <tqfileinfo.h>
+#include <tqimage.h>
+#include <tqmap.h>
+#include <tqregexp.h>
+#include <tqtextstream.h>
+#include <tqvaluevector.h>
 
 #include <kimageeffect.h>
 
@@ -52,7 +52,7 @@ so that one can do (R*T+GreyAdd, G*T+GreyAdd, B*T+GreyAdd, SrcAlpha) as pixel va
 */
 
 
-int evalSuffix(QString suffix)
+int evalSuffix(TQString suffix)
 {
 	if (suffix == "-tl")
 		return 0;
@@ -120,28 +120,28 @@ int main(int argc, char** argv)
 	if (argc < 2)
 		return 0;
 
-	QValueVector<KeramikEmbedImage> images;
+	TQValueVector<KeramikEmbedImage> images;
 
-	cout<<"#include <qintdict.h>\n\n";
+	cout<<"#include <tqintdict.h>\n\n";
 	cout<<"#include \"keramikimage.h\"\n\n";
 
-	QMap<QString, int> assignID;
+	TQMap<TQString, int> assignID;
 	int nextID = 0;
 
 	for (int c = 1; c<argc; c++)
 	{
 
-		QImage input(argv[c]);
+		TQImage input(argv[c]);
 
 
-		QFileInfo fi(argv[c]);
-		QString s = fi.baseName();
+		TQFileInfo fi(argv[c]);
+		TQString s = fi.baseName();
 
 		KeramikEmbedImage image;
 
 		int pos;
 
-		QString id = s;
+		TQString id = s;
 
 		int readJustID = 0;
 
@@ -248,7 +248,7 @@ int main(int argc, char** argv)
 			QRgb basePix = (QRgb)*read;
 			//cout<<(r*destAlpha.alphas[pos])<<"\n";
 			//cout<<(int)destAlpha.alphas[pos]<<"\n";
-			QColor clr(basePix);
+			TQColor clr(basePix);
 			int h,s,v;
 			clr.hsv(&h,&s,&v);
 
@@ -363,16 +363,16 @@ int main(int argc, char** argv)
 
 
 
-	QFile file("keramikrc.h");
+	TQFile file("keramikrc.h");
 	file.open(IO_WriteOnly);
-	QTextStream ts( &file);
+	TQTextStream ts( &file);
 	ts<<"#ifndef KERAMIK_RC_H\n";
 	ts<<"#define KERAMIK_RC_H\n";
 
 	ts<<"enum KeramikWidget {\n";
-	for (QMap<QString, int>::iterator i = assignID.begin(); i != assignID.end(); ++i)
+	for (TQMap<TQString, int>::iterator i = assignID.begin(); i != assignID.end(); ++i)
 	{
-		QString name = "keramik_"+i.key();
+		TQString name = "keramik_"+i.key();
 		name.replace("-","_");
 		ts<<"\t"<<name<<" = "<<i.data()<<",\n";
 	}

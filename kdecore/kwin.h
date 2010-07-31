@@ -20,9 +20,9 @@
 #define KWIN_H
 
 #include <sys/types.h>
-#include <qwindowdefs.h>
-#include <qstring.h>
-#include <qpixmap.h>
+#include <tqwindowdefs.h>
+#include <tqstring.h>
+#include <tqpixmap.h>
 #include "kdelibs_export.h"
 
 #ifdef Q_OS_UNIX
@@ -145,18 +145,18 @@ public:
 
     /**
      * Sets the parent window of @p subwindow to be @p mainwindow.
-     * This overrides the parent set the usual way as the QWidget parent,
+     * This overrides the parent set the usual way as the TQWidget parent,
      * but only for the window manager - e.g. stacking order and window grouping
      * will be affected, but features like automatic deletion of children
      * when the parent is deleted are unaffected and normally use
-     * the QWidget parent.
+     * the TQWidget parent.
      *
      * This function should be used before a dialog is shown for a window
      * that belongs to another application.
      *
      * @since 3.4
      */
-    static void setMainWindow( QWidget* subwindow, WId mainwindow );
+    static void setMainWindow( TQWidget* subwindow, WId mainwindow );
 
     /**
      * Makes @p trayWin a system tray window for @p forWin.
@@ -218,7 +218,7 @@ public:
      *        icon will not be modified.
      * @return the icon of the window
      */
-    static QPixmap icon( WId win, int width = -1, int height = -1, bool scale = false );
+    static TQPixmap icon( WId win, int width = -1, int height = -1, bool scale = false );
 
     /**
      * Masks specifying from which sources to read an icon. They are tried from the best
@@ -248,7 +248,7 @@ public:
      * @param flags OR-ed flags from the IconSource enum
      * @since 3.2
      */
-    static QPixmap icon( WId win, int width, int height, bool scale, int flags );
+    static TQPixmap icon( WId win, int width, int height, bool scale, int flags );
 
     /**
      * Sets an @p icon and a  @p miniIcon on window @p win
@@ -256,7 +256,7 @@ public:
      * @param icon the new icon
      * @param miniIcon the new mini icon
      */
-    static void  setIcons( WId win, const QPixmap& icon, const QPixmap& miniIcon );
+    static void  setIcons( WId win, const TQPixmap& icon, const TQPixmap& miniIcon );
 
     /**
      * Sets the type of window @p win to @p windowType.
@@ -397,7 +397,7 @@ public:
      * @param viewport the position of the new viewport
      * @since 3.5.5
      */
-    static void setCurrentDesktopViewport( int desktop, QPoint viewport );
+    static void setCurrentDesktopViewport( int desktop, TQPoint viewport );
 
     /**
      * Iconifies a window. Compatible to XIconifyWindow but has an
@@ -422,7 +422,7 @@ public:
     /**
      * Raises the given window. This call is only for pagers and similar
      * tools that represent direct user actions. Applications should not
-     * use it, they should keep using QWidget::raise() or XRaiseWindow()
+     * use it, they should keep using TQWidget::raise() or XRaiseWindow()
      * if necessary.
      * @since 3.2
      */
@@ -431,7 +431,7 @@ public:
     /**
      * Lowers the given window. This call is only for pagers and similar
      * tools that represent direct user actions. Applications should not
-     * use it, they should keep using QWidget::lower() or XLowerWindow()
+     * use it, they should keep using TQWidget::lower() or XLowerWindow()
      * if necessary.
      * @since 3.2
      */
@@ -455,7 +455,7 @@ public:
      * property (WM_NAME, WM_ICON_NAME,...).
      * @since 3.2
      */
-    static QString readNameProperty( WId window, unsigned long atom );
+    static TQString readNameProperty( WId window, unsigned long atom );
 
     /**
      * Returns true if a compositing manager is running (i.e. ARGB windows
@@ -481,9 +481,9 @@ public:
       /// The window type.
 	NET::WindowType windowType;
       /// The visible name of the window.
-	QString visibleName;
+	TQString visibleName;
       /// The name of the window.
-	QString name;
+	TQString name;
       /// The number of the window's desktop.
 	int desktop;
       /// true if the window is on all desktops.
@@ -491,11 +491,11 @@ public:
       /// The process id of the window's owner
 	pid_t pid;
       /// Position and size of the window contents.
-	QRect geometry;
+	TQRect geometry;
       /// Position and size of the window's frame.
-	QRect frameGeometry;
+	TQRect frameGeometry;
 
-	QString visibleNameWithState() const;
+	TQString visibleNameWithState() const;
     };
 
     /**
@@ -526,7 +526,7 @@ public:
      * Reads all the info about the given window.
      */
     WindowInfo( WId window, unsigned long properties, unsigned long properties2 );
-    WindowInfo(); // to make QValueList and others happy
+    WindowInfo(); // to make TQValueList and others happy
     ~WindowInfo();
     /**
      * Returns false if this window info is not valid (most probably the given
@@ -554,7 +554,7 @@ public:
      * Returns true if the window is minimized. Note that it is true only if
      * the window is truly minimized, not shaded or on another virtual desktops,
      * which makes it different from mappingState() == NET::Iconic
-     * or QWidget::isMinimized().
+     * or TQWidget::isMinimized().
      * Requires NET::WMState and NET::XAWMState passed to KWin::windowInfo().
      */
     bool isMinimized() const;
@@ -587,7 +587,7 @@ public:
      * when there are two or more windows with the same name).
      * Requires NET::WMVisibleName passed to KWin::windowInfo().
      */
-    QString visibleName() const;
+    TQString visibleName() const;
     /**
      * Returns a visible name with state.
      *
@@ -597,20 +597,20 @@ public:
      * to KWin::windowInfo().
      * @return the window name with state
      */
-    QString visibleNameWithState() const;
+    TQString visibleNameWithState() const;
     /**
      * Returns the name of the window, as specified by the application, without
      * any modifications. You should often use visibleName() instead.
      * Requires NET::WMName passed to KWin::windowInfo().
      */
-    QString name() const;
+    TQString name() const;
     /**
      * Returns the visible name of the window that should be shown in taskbar
      * and all other "iconic" representations of the window. Note that this
      * has nothing to do with normal icons.
      * Requires NET::WMVisibleIconName passed to KWin::windowInfo().
      */
-    QString visibleIconName() const;
+    TQString visibleIconName() const;
     /**
      * Returns a visible name with state.
      *
@@ -621,14 +621,14 @@ public:
      * to KWin::windowInfo().
      * @return the window iconic name with state
      */
-    QString visibleIconNameWithState() const;
+    TQString visibleIconNameWithState() const;
     /**
      * Returns the name of the window that should be shown in taskbar and all other
      * "iconic" representations of the window. Note that this has nothing to do
      * with normal icons.
      * Requires NET::WMIconName passed to KWin::windowInfo().
      */
-    QString iconName() const;
+    TQString iconName() const;
     /**
      * Returns true if the window is on the currently active virtual desktop.
      * Requires NET::WMDesktop passed to KWin::windowInfo().
@@ -655,12 +655,12 @@ public:
      * Returns the position and size of the window contents.
      * Requires NET::WMGeometry passed to KWin::windowInfo().
      */
-    QRect geometry() const;
+    TQRect geometry() const;
     /**
      * Returns the frame geometry of the window, i.e. including the window decoration.
      * Requires NET::WMKDEFrameStrut passed to KWin::windowInfo().
      */
-    QRect frameGeometry() const;
+    TQRect frameGeometry() const;
     /**
      * Returns the WM_TRANSIENT_FOR property for the window, i.e. the mainwindow
      * for this window.
@@ -679,7 +679,7 @@ public:
      * Requires NET::WM2WindowClass passed to KWin::windowInfo().
      * @since 3.3
      */
-    QCString windowClassClass() const;
+    TQCString windowClassClass() const;
 
     /**
      * Returns the name component of the window class for the window
@@ -687,21 +687,21 @@ public:
      * Requires NET::WM2WindowClass passed to KWin::windowInfo().
      * @since 3.3
      */
-    QCString windowClassName() const;
+    TQCString windowClassName() const;
 
     /**
      * Returns the window role for the window (i.e. WM_WINDOW_ROLE property).
      * Requires NET::WM2WindowRole passed to KWin::windowInfo().
      * @since 3.3
      */
-    QCString windowRole() const;
+    TQCString windowRole() const;
 
     /**
      * Returns the client machine for the window (i.e. WM_CLIENT_MACHINE property).
      * Requires NET::WMClientMachine passed to KWin::windowInfo().
      * @since 3.3
      */
-    QCString clientMachine() const;
+    TQCString clientMachine() const;
 
     /**
      * Returns true if the given action is currently supported for the window

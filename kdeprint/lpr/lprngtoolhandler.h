@@ -21,9 +21,9 @@
 #define LPRNGTOOLHANDLER_H
 
 #include "lprhandler.h"
-#include <qmap.h>
-#include <qstringlist.h>
-#include <qpair.h>
+#include <tqmap.h>
+#include <tqstringlist.h>
+#include <tqpair.h>
 
 class LPRngToolHandler : public LprHandler
 {
@@ -33,22 +33,22 @@ public:
 	bool validate(PrintcapEntry*);
 	bool completePrinter(KMPrinter*, PrintcapEntry*, bool = true);
 	DrMain* loadDriver(KMPrinter*, PrintcapEntry*, bool = false);
-	DrMain* loadDbDriver(const QString&);
+	DrMain* loadDbDriver(const TQString&);
 	PrintcapEntry* createEntry(KMPrinter*);
 	bool savePrinterDriver(KMPrinter*, PrintcapEntry*, DrMain*, bool* = 0);
-	QString printOptions(KPrinter*);
+	TQString printOptions(KPrinter*);
 
 protected:
-	QMap<QString,QString> parseXferOptions(const QString&);
-	void loadAuthFile(const QString&, QString&, QString&);
-	QValueList< QPair<QString,QStringList> > loadChoiceDict(const QString&);
-	QMap<QString,QString> parseZOptions(const QString&);
-	QString filterDir();
-	QString driverDirInternal();
+	TQMap<TQString,TQString> parseXferOptions(const TQString&);
+	void loadAuthFile(const TQString&, TQString&, TQString&);
+	TQValueList< QPair<TQString,TQStringList> > loadChoiceDict(const TQString&);
+	TQMap<TQString,TQString> parseZOptions(const TQString&);
+	TQString filterDir();
+	TQString driverDirInternal();
 
 
 private:
-	QValueList< QPair<QString,QStringList> >	m_dict;
+	TQValueList< QPair<TQString,TQStringList> >	m_dict;
 };
 
 #endif

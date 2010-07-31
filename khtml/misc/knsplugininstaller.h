@@ -30,21 +30,21 @@
 #include <kurl.h>
 #include <kwizard.h>
 
-#include <qbuttongroup.h>
-#include <qdom.h>
-#include <qlabel.h>
-#include <qobject.h>
-#include <qprocess.h>
-#include <qradiobutton.h>
-#include <qvaluelist.h>
-#include <qvbox.h>
-#include <qwidget.h>
+#include <tqbuttongroup.h>
+#include <tqdom.h>
+#include <tqlabel.h>
+#include <tqobject.h>
+#include <tqprocess.h>
+#include <tqradiobutton.h>
+#include <tqvaluelist.h>
+#include <tqvbox.h>
+#include <tqwidget.h>
 
 class QStringList;
 
 /*
  * This class contains all the infos needed to install a given plugin
- * Takes and parse a QDomNode in its constructor
+ * Takes and parse a TQDomNode in its constructor
  */
 class KNSPluginInfo 
 {
@@ -55,7 +55,7 @@ public:
      * Construct the plugin info object
      */
     KNSPluginInfo();
-    KNSPluginInfo(QDomNode pluginNode);
+    KNSPluginInfo(TQDomNode pluginNode);
     ~KNSPluginInfo();
 
     /*
@@ -64,20 +64,20 @@ public:
     bool isValid() const;
 
     //Accessor methods
-    QString pluginName() const;
-    QString licence() const;
+    TQString pluginName() const;
+    TQString licence() const;
     KURL licenceURL() const;
     KURL pluginURL() const;
-    const QStringList& pluginFileList() const;
+    const TQStringList& pluginFileList() const;
    
 private:
  
     // plugin info
-    QString m_pluginName;
-    QString m_licence;
+    TQString m_pluginName;
+    TQString m_licence;
     KURL m_licenceURL;
     KURL m_pluginURL;
-    QStringList m_pluginFileList;
+    TQStringList m_pluginFileList;
     
     
 };
@@ -109,7 +109,7 @@ public:
     /*
      * Return the list of plugins Available
      */
-    const QValueList<KNSPluginInfo>& pluginList() const;
+    const TQValueList<KNSPluginInfo>& pluginList() const;
     void startInstall(KNSPluginInfo info);
 
     
@@ -132,16 +132,16 @@ private:
     bool findPlugin();
     
 
-    QMap<QString, QString> m_archMap;
-    QString m_pluginsXmlConfig;
-    QValueList<KNSPluginInfo> m_pluginList;
+    TQMap<TQString, TQString> m_archMap;
+    TQString m_pluginsXmlConfig;
+    TQValueList<KNSPluginInfo> m_pluginList;
     KMimeType::Ptr m_mime;
     KURL m_pluginsListFileURL;
-    QString m_tmpPluginFileName;
+    TQString m_tmpPluginFileName;
     KIO::CopyJob *m_downloadJob;
     KIO::CopyJob *m_installFileJob;
     KNSPluginInfo m_toInstallPluginInfo;
-    QProcess *m_scanProc;
+    TQProcess *m_scanProc;
     
 signals:
     // Signals used to communicate with the wizzard 
@@ -177,7 +177,7 @@ public:
     /**
     * Construct a KNSpluginInstaller
     */
-    KNSPluginWizard(QWidget *parent, const char *name,  KMimeType::Ptr mime);
+    KNSPluginWizard(TQWidget *parent, const char *name,  KMimeType::Ptr mime);
     ~KNSPluginWizard();
 
 
@@ -209,33 +209,33 @@ private:
     /*
      * Overiden method called when a page is shown
      */
-    void showPage(QWidget *page);
+    void showPage(TQWidget *page);
 
 
     // Plugin installation engine
     KNSPluginInstallEngine m_installEngine;
 
     // pages widgets
-    QVBox *m_confirmationVBox;
-    QVBox *m_licenceVBox;
-    QWidget *m_installationProgressWidget;
-    QWidget *m_finishWidget;
+    TQVBox *m_confirmationVBox;
+    TQVBox *m_licenceVBox;
+    TQWidget *m_installationProgressWidget;
+    TQWidget *m_finishWidget;
     
     // plugin list
     KListView *m_pluginListView;
     
     // licence stuff
-    QLabel *m_licencePageLabel;
+    TQLabel *m_licencePageLabel;
     KTextEdit *m_licencePageText;
-    QRadioButton *m_licencePageAgree;
-    QRadioButton *m_licencePageDisagree;
-    QButtonGroup *m_agreementButtonGroup;
+    TQRadioButton *m_licencePageAgree;
+    TQRadioButton *m_licencePageDisagree;
+    TQButtonGroup *m_agreementButtonGroup;
 
     // installation progress bar
     KProgress *m_installationProgressBar;
 
     // Finish Label 
-    QLabel *m_finishLabel;
+    TQLabel *m_finishLabel;
 
     // installation status
     bool m_installationComplete;

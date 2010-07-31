@@ -21,93 +21,93 @@
 #include "cupsinfos.h"
 #include "sidepixmap.h"
 
-#include <qtimer.h>
-#include <qprogressbar.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
+#include <tqtimer.h>
+#include <tqprogressbar.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <qmessagebox.h>
-#include <qfile.h>
+#include <tqmessagebox.h>
+#include <tqfile.h>
 #include <kio/passdlg.h>
 #include <kdebug.h>
 #include <kseparator.h>
 #include <kactivelabel.h>
-#include <qwhatsthis.h>
+#include <tqwhatsthis.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
 
 #include <cups/cups.h>
 #include <ctype.h>
 
-CupsAddSmb::CupsAddSmb(QWidget *parent, const char *name)
+CupsAddSmb::CupsAddSmb(TQWidget *parent, const char *name)
 : KDialog(parent, name)
 {
 	m_state = None;
 	m_status = false;
 	m_actionindex = 0;
-	connect(&m_proc, SIGNAL(receivedStdout(KProcess*,char*,int)), SLOT(slotReceived(KProcess*,char*,int)));
-	connect(&m_proc, SIGNAL(receivedStderr(KProcess*,char*,int)), SLOT(slotReceived(KProcess*,char*,int)));
-	connect(&m_proc, SIGNAL(processExited(KProcess*)), SLOT(slotProcessExited(KProcess*)));
+	connect(&m_proc, TQT_SIGNAL(receivedStdout(KProcess*,char*,int)), TQT_SLOT(slotReceived(KProcess*,char*,int)));
+	connect(&m_proc, TQT_SIGNAL(receivedStderr(KProcess*,char*,int)), TQT_SLOT(slotReceived(KProcess*,char*,int)));
+	connect(&m_proc, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(slotProcessExited(KProcess*)));
 
 	m_side = new SidePixmap(this);
-	m_doit = new QPushButton(i18n("&Export"), this);
+	m_doit = new TQPushButton(i18n("&Export"), this);
 	m_cancel = new KPushButton(KStdGuiItem::cancel(), this);
-	connect(m_cancel, SIGNAL(clicked()), SLOT(reject()));
-	connect(m_doit, SIGNAL(clicked()), SLOT(slotActionClicked()));
-	m_bar = new QProgressBar(this);
+	connect(m_cancel, TQT_SIGNAL(clicked()), TQT_SLOT(reject()));
+	connect(m_doit, TQT_SIGNAL(clicked()), TQT_SLOT(slotActionClicked()));
+	m_bar = new TQProgressBar(this);
 	m_text = new KActiveLabel(this);
-	QLabel	*m_title = new QLabel(i18n("Export Printer Driver to Windows Clients"), this);
+	QLabel	*m_title = new TQLabel(i18n("Export Printer Driver to Windows Clients"), this);
 	setCaption(m_title->text());
 	QFont	f(m_title->font());
 	f.setBold(true);
 	m_title->setFont(f);
 	KSeparator	*m_sep = new KSeparator(Qt::Horizontal, this);
-	m_textinfo = new QLabel( this );
-	m_logined = new QLineEdit( this );
-	m_passwded = new QLineEdit( this );
-	m_passwded->setEchoMode( QLineEdit::Password );
-	m_servered = new QLineEdit( this );
-	QLabel *m_loginlab = new QLabel( i18n( "&Username:" ), this );
-	QLabel *m_serverlab = new QLabel( i18n( "&Samba server:" ), this );
-	QLabel *m_passwdlab = new QLabel( i18n( "&Password:" ), this );
+	m_textinfo = new TQLabel( this );
+	m_logined = new TQLineEdit( this );
+	m_passwded = new TQLineEdit( this );
+	m_passwded->setEchoMode( TQLineEdit::Password );
+	m_servered = new TQLineEdit( this );
+	TQLabel *m_loginlab = new TQLabel( i18n( "&Username:" ), this );
+	TQLabel *m_serverlab = new TQLabel( i18n( "&Samba server:" ), this );
+	TQLabel *m_passwdlab = new TQLabel( i18n( "&Password:" ), this );
 	m_loginlab->setBuddy( m_logined );
 	m_serverlab->setBuddy( m_servered );
 	m_passwdlab->setBuddy( m_passwded );
 
-	QString txt = i18n( "<p><b>Samba server</b></p>"
+	TQString txt = i18n( "<p><b>Samba server</b></p>"
 						"Adobe Windows PostScript driver files plus the CUPS printer PPD will be "
 						"exported to the <tt>[print$]</tt> special share of the Samba server (to change "
 						"the source CUPS server, use the <nobr><i>Configure Manager -> CUPS server</i></nobr> first). "
 						"The <tt>[print$]</tt> share must exist on the Samba side prior to clicking the "
 						"<b>Export</b> button below." );
-	QWhatsThis::add( m_serverlab, txt );
-	QWhatsThis::add( m_servered, txt );
+	TQWhatsThis::add( m_serverlab, txt );
+	TQWhatsThis::add( m_servered, txt );
 
 	txt = i18n( "<p><b>Samba username</b></p>"
 				"User needs to have write access to the <tt>[print$]</tt> share on the Samba server. "
 				"<tt>[print$]</tt> holds printer drivers prepared for download to Windows clients. "
 				"This dialog does not work for Samba servers configured with <tt>security = share</tt> "
 				"(but works fine with <tt>security = user</tt>)." );
-	QWhatsThis::add( m_loginlab, txt );
-	QWhatsThis::add( m_logined, txt );
+	TQWhatsThis::add( m_loginlab, txt );
+	TQWhatsThis::add( m_logined, txt );
 
 	txt = i18n( "<p><b>Samba password</b></p>"
 				"The Samba setting <tt>encrypt passwords = yes</tt> "
 				"(default) requires prior use of <tt>smbpasswd -a [username]</tt> command, "
 				"to create an encrypted Samba password and have Samba recognize it." );
-	QWhatsThis::add( m_passwdlab, txt );
-	QWhatsThis::add( m_passwded, txt );
+	TQWhatsThis::add( m_passwdlab, txt );
+	TQWhatsThis::add( m_passwded, txt );
 
-	QHBoxLayout	*l0 = new QHBoxLayout(this, 10, 10);
-	QVBoxLayout	*l1 = new QVBoxLayout(0, 0, 10);
+	QHBoxLayout	*l0 = new TQHBoxLayout(this, 10, 10);
+	QVBoxLayout	*l1 = new TQVBoxLayout(0, 0, 10);
 	l0->addWidget(m_side);
 	l0->addLayout(l1);
 	l1->addWidget(m_title);
 	l1->addWidget(m_sep);
 	l1->addWidget(m_text);
-	QGridLayout *l3 = new QGridLayout( 0, 3, 2, 0, 10 );
+	TQGridLayout *l3 = new TQGridLayout( 0, 3, 2, 0, 10 );
 	l1->addLayout( l3 );
 	l3->addWidget( m_loginlab, 1, 0 );
 	l3->addWidget( m_passwdlab, 2, 0 );
@@ -120,7 +120,7 @@ CupsAddSmb::CupsAddSmb(QWidget *parent, const char *name)
 	l1->addWidget(m_bar);
 	l1->addWidget( m_textinfo );
 	l1->addSpacing(30);
-	QHBoxLayout	*l2 = new QHBoxLayout(0, 0, 10);
+	QHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 10);
 	l1->addLayout(l2);
 	l2->addStretch(1);
 	l2->addWidget(m_doit);
@@ -156,7 +156,7 @@ void CupsAddSmb::slotReceived(KProcess*, char *buf, int buflen)
 	while (1)
 	{
 		// read a line
-		line = QString::fromLatin1("");
+		line = TQString::fromLatin1("");
 		partial = true;
 		while (index < buflen)
 		{
@@ -244,7 +244,7 @@ void CupsAddSmb::checkActionStatus()
 void CupsAddSmb::nextAction()
 {
 	if (m_actionindex < (int)(m_actions.count()))
-		QTimer::singleShot(1, this, SLOT(doNextAction()));
+		TQTimer::singleShot(1, this, TQT_SLOT(doNextAction()));
 }
 
 void CupsAddSmb::doNextAction()
@@ -273,7 +273,7 @@ void CupsAddSmb::doNextAction()
 			m_state = Copy;
 			//m_text->setText(i18n("Uploading %1").arg(m_actions[m_actionindex+1]));
 			m_textinfo->setText(i18n("Uploading %1").arg(m_actions[m_actionindex+1]));
-			s.append(" ").append(QFile::encodeName(m_actions[m_actionindex]).data()).append(" ").append(m_actions[m_actionindex+1].latin1());
+			s.append(" ").append(TQFile::encodeName(m_actions[m_actionindex]).data()).append(" ").append(m_actions[m_actionindex+1].latin1());
 			m_actionindex += 2;
 		}
 		else if (s == "adddriver")
@@ -332,7 +332,7 @@ void CupsAddSmb::slotProcessExited(KProcess*)
 			m_passwded->setEnabled( true );
 			m_text->setText(i18n("Driver successfully exported."));
 			m_bar->reset();
-			m_textinfo->setText( QString::null );
+			m_textinfo->setText( TQString::null );
 			return;
 		}
 	}
@@ -353,7 +353,7 @@ void CupsAddSmb::slotProcessExited(KProcess*)
 	}
 }
 
-void CupsAddSmb::showError(const QString& msg)
+void CupsAddSmb::showError(const TQString& msg)
 {
 	m_text->setText(i18n("<h3>Operation failed.</h3><p>%1</p>").arg(msg));
 	m_cancel->setEnabled(true);
@@ -364,7 +364,7 @@ void CupsAddSmb::showError(const QString& msg)
 	m_state = None;
 }
 
-bool CupsAddSmb::exportDest(const QString &dest, const QString& datadir)
+bool CupsAddSmb::exportDest(const TQString &dest, const TQString& datadir)
 {
 	CupsAddSmb	dlg;
 	dlg.m_dest = dest;
@@ -386,8 +386,8 @@ bool CupsAddSmb::doExport()
 	m_status = false;
 	m_state = None;
 
-	if (!QFile::exists(m_datadir+"/drivers/ADOBEPS5.DLL") ||
-	    !QFile::exists(m_datadir+"/drivers/ADOBEPS4.DRV"))
+	if (!TQFile::exists(m_datadir+"/drivers/ADOBEPS5.DLL") ||
+	    !TQFile::exists(m_datadir+"/drivers/ADOBEPS4.DRV"))
 	{
 		showError(
 			i18n("Some driver files are missing. You can get them on "
@@ -433,7 +433,7 @@ bool CupsAddSmb::doExport()
 	m_actions << "quit";
 
 	m_proc.clearArguments();
-	m_proc << "smbclient" << QString::fromLatin1("//")+m_servered->text()+"/print$";
+	m_proc << "smbclient" << TQString::fromLatin1("//")+m_servered->text()+"/print$";
 	return startProcess();
 }
 

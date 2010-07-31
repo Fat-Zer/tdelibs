@@ -21,16 +21,16 @@
 #include "kmfactory.h"
 #include "kmmanager.h"
 
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 #include <klocale.h>
-#include <qwhatsthis.h>
+#include <tqwhatsthis.h>
 
-PluginComboBox::PluginComboBox(QWidget *parent, const char *name)
-:QWidget(parent, name)
+PluginComboBox::PluginComboBox(TQWidget *parent, const char *name)
+:TQWidget(parent, name)
 {
-        QString whatsThisCurrentPrintsystem = i18n(" <qt><b>Print Subsystem Selection</b>"
+        TQString whatsThisCurrentPrintsystem = i18n(" <qt><b>Print Subsystem Selection</b>"
 						" <p>This combo box shows (and lets you select)"
 						" a print subsystem to be used by KDEPrint. (This print"
 						" subsystem must, of course, be installed inside your"
@@ -40,22 +40,22 @@ PluginComboBox::PluginComboBox(QWidget *parent, const char *name)
 						" UNIX Printing System</em>." 
                                                 " </qt>" );
 
-	m_combo = new QComboBox(this, "PluginCombo");
-        QWhatsThis::add(m_combo, whatsThisCurrentPrintsystem);
-	QLabel	*m_label = new QLabel(i18n("Print s&ystem currently used:"), this);
-        QWhatsThis::add(m_label, whatsThisCurrentPrintsystem);
+	m_combo = new TQComboBox(this, "PluginCombo");
+        TQWhatsThis::add(m_combo, whatsThisCurrentPrintsystem);
+	QLabel	*m_label = new TQLabel(i18n("Print s&ystem currently used:"), this);
+        TQWhatsThis::add(m_label, whatsThisCurrentPrintsystem);
 	m_label->setAlignment(AlignVCenter|AlignRight);
 	m_label->setBuddy(m_combo);
-	m_plugininfo = new QLabel("Plugin information", this);
-	QGridLayout	*l0 = new QGridLayout(this, 2, 2, 0, 5);
+	m_plugininfo = new TQLabel("Plugin information", this);
+	QGridLayout	*l0 = new TQGridLayout(this, 2, 2, 0, 5);
 	l0->setColStretch(0, 1);
 	l0->addWidget(m_label, 0, 0);
 	l0->addWidget(m_combo, 0, 1);
 	l0->addWidget(m_plugininfo, 1, 1);
 
-	QValueList<KMFactory::PluginInfo>	list = KMFactory::self()->pluginList();
+	TQValueList<KMFactory::PluginInfo>	list = KMFactory::self()->pluginList();
 	QString			currentPlugin = KMFactory::self()->printSystem();
-	for (QValueList<KMFactory::PluginInfo>::ConstIterator it=list.begin(); it!=list.end(); ++it)
+	for (TQValueList<KMFactory::PluginInfo>::ConstIterator it=list.begin(); it!=list.end(); ++it)
 	{
 		m_combo->insertItem((*it).comment);
 		if ((*it).name == currentPlugin)
@@ -63,7 +63,7 @@ PluginComboBox::PluginComboBox(QWidget *parent, const char *name)
 		m_pluginlist.append((*it).name);
 	}
 
-	connect(m_combo, SIGNAL(activated(int)), SLOT(slotActivated(int)));
+	connect(m_combo, TQT_SIGNAL(activated(int)), TQT_SLOT(slotActivated(int)));
 	configChanged();
 }
 
@@ -88,7 +88,7 @@ void PluginComboBox::reload()
 
 void PluginComboBox::configChanged()
 {
-        QString whatsThisCurrentConnection = i18n(" <qt><b>Current Connection</b>"
+        TQString whatsThisCurrentConnection = i18n(" <qt><b>Current Connection</b>"
 						" <p>This line shows which CUPS server your PC is"
 						" currently connected to for printing and retrieving"
 						" printer info. To switch to a different CUPS server,"
@@ -97,7 +97,7 @@ void PluginComboBox::configChanged()
                                                 " </qt>" );
 
 	m_plugininfo->setText(KMManager::self()->stateInformation());
-        QWhatsThis::add(m_plugininfo, whatsThisCurrentConnection);
+        TQWhatsThis::add(m_plugininfo, whatsThisCurrentConnection);
 
 }
 

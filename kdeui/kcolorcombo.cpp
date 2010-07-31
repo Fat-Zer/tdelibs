@@ -32,17 +32,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <qdrawutil.h>
-#include <qevent.h>
-#include <qfile.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qvalidator.h>
-#include <qpainter.h>
-#include <qpushbutton.h>
-#include <qtimer.h>
+#include <tqdrawutil.h>
+#include <tqevent.h>
+#include <tqfile.h>
+#include <tqimage.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqvalidator.h>
+#include <tqpainter.h>
+#include <tqpushbutton.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -68,14 +68,14 @@
 #ifndef KDE_USE_FINAL
 #define STANDARD_PAL_SIZE 17
 
-static QColor *standardPalette = 0;
+static TQColor *standardPalette = 0;
 
 static void createStandardPalette()
 {
     if ( standardPalette )
 	return;
 
-    standardPalette = new QColor [STANDARD_PAL_SIZE];
+    standardPalette = new TQColor [STANDARD_PAL_SIZE];
 
     int i = 0;
 
@@ -108,8 +108,8 @@ class KColorCombo::KColorComboPrivate
 	bool showEmptyList;
 };
 
-KColorCombo::KColorCombo( QWidget *parent, const char *name )
-	: QComboBox( parent, name )
+KColorCombo::KColorCombo( TQWidget *parent, const char *name )
+	: TQComboBox( parent, name )
 {
 	d=new KColorComboPrivate();
 	d->showEmptyList=false;
@@ -121,8 +121,8 @@ KColorCombo::KColorCombo( QWidget *parent, const char *name )
 
 	addColors();
 
-	connect( this, SIGNAL( activated(int) ), SLOT( slotActivated(int) ) );
-	connect( this, SIGNAL( highlighted(int) ), SLOT( slotHighlighted(int) ) );
+	connect( this, TQT_SIGNAL( activated(int) ), TQT_SLOT( slotActivated(int) ) );
+	connect( this, TQT_SIGNAL( highlighted(int) ), TQT_SLOT( slotHighlighted(int) ) );
 }
 
 
@@ -133,7 +133,7 @@ KColorCombo::~KColorCombo()
 /**
    Sets the current color
  */
-void KColorCombo::setColor( const QColor &col )
+void KColorCombo::setColor( const TQColor &col )
 {
 	internalcolor = col;
 	d->showEmptyList=false;
@@ -144,13 +144,13 @@ void KColorCombo::setColor( const QColor &col )
 /**
    Returns the currently selected color
  */
-QColor KColorCombo::color() const {
+TQColor KColorCombo::color() const {
   return internalcolor;
 }
 
-void KColorCombo::resizeEvent( QResizeEvent *re )
+void KColorCombo::resizeEvent( TQResizeEvent *re )
 {
-	QComboBox::resizeEvent( re );
+	TQComboBox::resizeEvent( re );
 
 	addColors();
 }
@@ -168,12 +168,12 @@ void KColorCombo::slotActivated( int index )
 {
 	if ( index == 0 )
 	{
-	    if ( KColorDialog::getColor( customColor, this ) == QDialog::Accepted )
+	    if ( KColorDialog::getColor( customColor, this ) == TQDialog::Accepted )
 		{
-			QPainter painter;
-			QPen pen;
-			QRect rect( 0, 0, width(), QFontMetrics(painter.font()).height()+4);
-			QPixmap pixmap( rect.width(), rect.height() );
+			TQPainter painter;
+			TQPen pen;
+			TQRect rect( 0, 0, width(), TQFontMetrics(painter.font()).height()+4);
+			TQPixmap pixmap( rect.width(), rect.height() );
 
 			if ( qGray( customColor.rgb() ) < 128 )
 				pen.setColor( white );
@@ -181,10 +181,10 @@ void KColorCombo::slotActivated( int index )
 				pen.setColor( black );
 
 			painter.begin( &pixmap );
-			QBrush brush( customColor );
+			TQBrush brush( customColor );
 			painter.fillRect( rect, brush );
 			painter.setPen( pen );
-			painter.drawText( 2, QFontMetrics(painter.font()).ascent()+2, i18n("Custom...") );
+			painter.drawText( 2, TQFontMetrics(painter.font()).ascent()+2, i18n("Custom...") );
 			painter.end();
 
 			changeItem( pixmap, 0 );
@@ -211,10 +211,10 @@ void KColorCombo::slotHighlighted( int index )
 
 void KColorCombo::addColors()
 {
-	QPainter painter;
-	QPen pen;
-	QRect rect( 0, 0, width(), QFontMetrics(painter.font()).height()+4 );
-	QPixmap pixmap( rect.width(), rect.height() );
+	TQPainter painter;
+	TQPen pen;
+	TQRect rect( 0, 0, width(), TQFontMetrics(painter.font()).height()+4 );
+	TQPixmap pixmap( rect.width(), rect.height() );
 	int i;
 
 	clear();
@@ -234,10 +234,10 @@ void KColorCombo::addColors()
 		pen.setColor( black );
 
 	painter.begin( &pixmap );
-	QBrush brush( customColor );
+	TQBrush brush( customColor );
 	painter.fillRect( rect, brush );
 	painter.setPen( pen );
-	painter.drawText( 2, QFontMetrics(painter.font()).ascent()+2, i18n("Custom...") );
+	painter.drawText( 2, TQFontMetrics(painter.font()).ascent()+2, i18n("Custom...") );
 	painter.end();
 
 	insertItem( pixmap );
@@ -246,7 +246,7 @@ void KColorCombo::addColors()
 	for ( i = 0; i < STANDARD_PAL_SIZE; i++ )
 	{
 		painter.begin( &pixmap );
-		QBrush brush( standardPalette[i] );
+		TQBrush brush( standardPalette[i] );
 		painter.fillRect( rect, brush );
 		painter.end();
 

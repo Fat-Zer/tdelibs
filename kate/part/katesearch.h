@@ -28,10 +28,10 @@
 
 #include <kdialogbase.h>
 
-#include <qstring.h>
-#include <qregexp.h>
-#include <qstringlist.h>
-#include <qvaluelist.h>
+#include <tqstring.h>
+#include <tqregexp.h>
+#include <tqstringlist.h>
+#include <tqvaluelist.h>
 
 class KateView;
 class KateDocument;
@@ -102,7 +102,7 @@ class KateSearch : public QObject
      * That must now be explicitly required -- the find dialog does, but the commandline
      * incremental search does not.
      */
-    void find( const QString &pattern, long flags, bool add=true, bool shownotfound=false );
+    void find( const TQString &pattern, long flags, bool add=true, bool shownotfound=false );
     void replace();
     /**
      * Replace @p pattern with @p replacement given @p flags.
@@ -112,7 +112,7 @@ class KateSearch : public QObject
      * @param replacement Replacement string.
      * @param flags OR'd combination of KFindDialog::Options
      */
-    void replace( const QString &pattern, const QString &replacement, long flags );
+    void replace( const TQString &pattern, const TQString &replacement, long flags );
     void findAgain( bool reverseDirection );
 
   private slots:
@@ -121,12 +121,12 @@ class KateSearch : public QObject
     void slotFindPrev() { findAgain( true );  }
 
   private:
-    static void addToList( QStringList&, const QString& );
-    static void addToSearchList( const QString& s )  { addToList( s_searchList, s ); }
-    static void addToReplaceList( const QString& s ) { addToList( s_replaceList, s ); }
-    static QStringList s_searchList; ///< recent patterns
-    static QStringList s_replaceList; ///< recent replacement strings
-    static QString s_pattern; ///< the string to search for
+    static void addToList( TQStringList&, const TQString& );
+    static void addToSearchList( const TQString& s )  { addToList( s_searchList, s ); }
+    static void addToReplaceList( const TQString& s ) { addToList( s_replaceList, s ); }
+    static TQStringList s_searchList; ///< recent patterns
+    static TQStringList s_replaceList; ///< recent replacement strings
+    static TQString s_pattern; ///< the string to search for
 
     void search( SearchFlags flags );
     void wrapSearch();
@@ -138,9 +138,9 @@ class KateSearch : public QObject
     void replaceOne();
     void skipOne();
 
-    QString getSearchText();
+    TQString getSearchText();
     KateTextCursor getCursor( SearchFlags flags );
-    bool doSearch( const QString& text );
+    bool doSearch( const TQString& text );
     void exposeFound( KateTextCursor &cursor, int slen );
 
     inline KateView* view()    { return m_view; }
@@ -153,13 +153,13 @@ class KateSearch : public QObject
 
     SConfig s;
 
-    QValueList<SConfig> m_searchResults;
+    TQValueList<SConfig> m_searchResults;
     int                 m_resultIndex;
 
     int           replaces;
-    QDialog*      replacePrompt;
-    QString m_replacement;
-    QRegExp m_re;
+    TQDialog*      replacePrompt;
+    TQString m_replacement;
+    TQRegExp m_re;
 };
 
 /**
@@ -174,7 +174,7 @@ class KateReplacePrompt : public KDialogBase
      * Constructor
      * @param parent parent widget for the dialog
      */
-    KateReplacePrompt(QWidget *parent);
+    KateReplacePrompt(TQWidget *parent);
 
   signals:
     /**
@@ -219,17 +219,17 @@ class SearchCommand : public Kate::Command, public Kate::CommandExtension
 {
   public:
     SearchCommand() : m_ifindFlags(0) {;}
-    bool exec(class Kate::View *view, const QString &cmd, QString &errorMsg);
-    bool help(class Kate::View *, const QString &, QString &);
-    QStringList cmds();
-    bool wantsToProcessText( const QString &/*cmdname*/ );
-    void processText( Kate::View *view, const QString& text );
+    bool exec(class Kate::View *view, const TQString &cmd, TQString &errorMsg);
+    bool help(class Kate::View *, const TQString &, TQString &);
+    TQStringList cmds();
+    bool wantsToProcessText( const TQString &/*cmdname*/ );
+    void processText( Kate::View *view, const TQString& text );
 
   private:
     /**
      * set up properties for incremental find
      */
-    void ifindInit( const QString &cmd );
+    void ifindInit( const TQString &cmd );
     /**
      * clear properties for incremental find
      */

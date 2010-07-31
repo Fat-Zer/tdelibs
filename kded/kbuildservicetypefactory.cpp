@@ -29,7 +29,7 @@
 #include <assert.h>
 #include <kdesktopfile.h>
 
-template class QDict<KMimeType>;
+template class TQDict<KMimeType>;
 
 KBuildServiceTypeFactory::KBuildServiceTypeFactory() :
   KServiceTypeFactory()
@@ -44,9 +44,9 @@ KBuildServiceTypeFactory::KBuildServiceTypeFactory() :
 
 // return all service types for this factory
 // i.e. first arguments to m_resourceList->add() above
-QStringList KBuildServiceTypeFactory::resourceTypes()
+TQStringList KBuildServiceTypeFactory::resourceTypes()
 {
-    return QStringList() << "servicetypes" << "mime";
+    return TQStringList() << "servicetypes" << "mime";
 }
 
 KBuildServiceTypeFactory::~KBuildServiceTypeFactory()
@@ -54,7 +54,7 @@ KBuildServiceTypeFactory::~KBuildServiceTypeFactory()
    delete m_resourceList;
 }
 
-KServiceType * KBuildServiceTypeFactory::findServiceTypeByName(const QString &_name)
+KServiceType * KBuildServiceTypeFactory::findServiceTypeByName(const TQString &_name)
 {
    assert (KSycoca::self()->isBuilding());
    // We're building a database - the service type must be in memory
@@ -66,9 +66,9 @@ KServiceType * KBuildServiceTypeFactory::findServiceTypeByName(const QString &_n
 
 
 KSycocaEntry *
-KBuildServiceTypeFactory::createEntry(const QString &file, const char *resource)
+KBuildServiceTypeFactory::createEntry(const TQString &file, const char *resource)
 {
-  QString name = file;
+  TQString name = file;
   int pos = name.findRev('/');
   if (pos != -1)
   {
@@ -84,12 +84,12 @@ KBuildServiceTypeFactory::createEntry(const QString &file, const char *resource)
       return 0;
 
   // TODO check Type field first
-  QString mime = desktopFile.readEntry( "MimeType" );
-  QString service = desktopFile.readEntry( "X-KDE-ServiceType" );
+  TQString mime = desktopFile.readEntry( "MimeType" );
+  TQString service = desktopFile.readEntry( "X-KDE-ServiceType" );
 
   if ( mime.isEmpty() && service.isEmpty() )
   {
-    QString tmp = QString("The service/mime type config file\n%1\n"
+    TQString tmp = TQString("The service/mime type config file\n%1\n"
                   "does not contain a ServiceType=...\nor MimeType=... entry").arg( file );
     kdWarning(7012) << tmp << endl;
     return 0;
@@ -124,14 +124,14 @@ KBuildServiceTypeFactory::createEntry(const QString &file, const char *resource)
 }
 
 void
-KBuildServiceTypeFactory::saveHeader(QDataStream &str)
+KBuildServiceTypeFactory::saveHeader(TQDataStream &str)
 {
    KSycocaFactory::saveHeader(str);
    str << (Q_INT32) m_fastPatternOffset;
    str << (Q_INT32) m_otherPatternOffset;
    str << (Q_INT32) m_propertyTypeDict.count();
 
-   QMapIterator<QString, int> it;
+   TQMapIterator<TQString, int> it;
    for (it = m_propertyTypeDict.begin(); it != m_propertyTypeDict.end(); ++it)
    {
      str << it.key() << (Q_INT32)it.data();
@@ -140,7 +140,7 @@ KBuildServiceTypeFactory::saveHeader(QDataStream &str)
 }
 
 void
-KBuildServiceTypeFactory::save(QDataStream &str)
+KBuildServiceTypeFactory::save(TQDataStream &str)
 {
    KSycocaFactory::save(str);
 
@@ -156,15 +156,15 @@ KBuildServiceTypeFactory::save(QDataStream &str)
 }
 
 void
-KBuildServiceTypeFactory::savePatternLists(QDataStream &str)
+KBuildServiceTypeFactory::savePatternLists(TQDataStream &str)
 {
    // Store each patterns in one of the 2 string lists (for sorting)
-   QStringList fastPatterns;  // for *.a to *.abcd
-   QStringList otherPatterns; // for the rest (core.*, *.tar.bz2, *~) ...
-   QDict<KMimeType> dict;
+   TQStringList fastPatterns;  // for *.a to *.abcd
+   TQStringList otherPatterns; // for the rest (core.*, *.tar.bz2, *~) ...
+   TQDict<KMimeType> dict;
 
    // For each mimetype in servicetypeFactory
-   for(QDictIterator<KSycocaEntry::Ptr> it ( *m_entryDict );
+   for(TQDictIterator<KSycocaEntry::Ptr> it ( *m_entryDict );
        it.current();
        ++it)
    {
@@ -172,11 +172,11 @@ KBuildServiceTypeFactory::savePatternLists(QDataStream &str)
       if ( entry->isType( KST_KMimeType ) )
       {
         KMimeType *mimeType = (KMimeType *) entry;
-        QStringList pat = mimeType->patterns();
-        QStringList::ConstIterator patit = pat.begin();
+        TQStringList pat = mimeType->patterns();
+        TQStringList::ConstIterator patit = pat.begin();
         for ( ; patit != pat.end() ; ++patit )
         {
-           const QString &pattern = *patit;
+           const TQString &pattern = *patit;
            if ( pattern.findRev('*') == 0
                 && pattern.findRev('.') == 1
                 && pattern.length() <= 6 )
@@ -205,14 +205,14 @@ KBuildServiceTypeFactory::savePatternLists(QDataStream &str)
    str << entrySize;
 
    // For each fast pattern
-   QStringList::ConstIterator it = fastPatterns.begin();
+   TQStringList::ConstIterator it = fastPatterns.begin();
    for ( ; it != fastPatterns.end() ; ++it )
    {
      int start = str.device()->at();
      // Justify to 6 chars with spaces, so that the size remains constant
      // in the database file.
-     QString paddedPattern = (*it).leftJustify(6).right(4); // remove leading "*."
-     //kdDebug(7021) << QString("FAST : '%1' '%2'").arg(paddedPattern).arg(dict[(*it)]->name()) << endl;
+     TQString paddedPattern = (*it).leftJustify(6).right(4); // remove leading "*."
+     //kdDebug(7021) << TQString("FAST : '%1' '%2'").arg(paddedPattern).arg(dict[(*it)]->name()) << endl;
      str << paddedPattern;
      str << dict[(*it)]->offset();
      entrySize = str.device()->at() - start;
@@ -233,12 +233,12 @@ KBuildServiceTypeFactory::savePatternLists(QDataStream &str)
    it = otherPatterns.begin();
    for ( ; it != otherPatterns.end() ; ++it )
    {
-     //kdDebug(7021) << QString("OTHER : '%1' '%2'").arg(*it).arg(dict[(*it)]->name()) << endl;
+     //kdDebug(7021) << TQString("OTHER : '%1' '%2'").arg(*it).arg(dict[(*it)]->name()) << endl;
      str << (*it);
      str << dict[(*it)]->offset();
    }
 
-   str << QString(""); // end of list marker (has to be a string !)
+   str << TQString(""); // end of list marker (has to be a string !)
 }
 
 void
@@ -257,8 +257,8 @@ KBuildServiceTypeFactory::addEntry(KSycocaEntry *newEntry, const char *resource)
    KSycocaFactory::addEntry(newEntry, resource);
 
 
-   const QMap<QString,QVariant::Type>& pd = serviceType->propertyDefs();
-   QMap<QString,QVariant::Type>::ConstIterator pit = pd.begin();
+   const TQMap<TQString,TQVariant::Type>& pd = serviceType->propertyDefs();
+   TQMap<TQString,TQVariant::Type>::ConstIterator pit = pd.begin();
    for( ; pit != pd.end(); ++pit )
    {
      if (!m_propertyTypeDict.contains(pit.key()))

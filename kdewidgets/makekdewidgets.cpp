@@ -6,11 +6,11 @@
 #include <kmacroexpander.h>
 #include <kdebug.h>
 
-#include <qtextstream.h>
-#include <qfileinfo.h>
-#include <qfile.h>
-#include <qbuffer.h>
-#include <qimage.h>
+#include <tqtextstream.h>
+#include <tqfileinfo.h>
+#include <tqfile.h>
+#include <tqbuffer.h>
+#include <tqimage.h>
 
 static const char description[] = I18N_NOOP( "Builds Qt widget plugins from an ini style description file." );
 static const char version[] = "0.2";
@@ -19,7 +19,7 @@ static const char classHeader[] = 	"/**\n"
 					"* The generated code in this file is licensed under the same license that the\n"
 					"* input file.\n"
                                    	"*/\n"
-					"#include <qwidgetplugin.h>\n";
+					"#include <tqwidgetplugin.h>\n";
 static const char classDef[] = "#ifndef EMBED_IMAGES\n"
                                 "#include <kstandarddirs.h>\n"
                                 "#endif\n"
@@ -31,76 +31,76 @@ static const char classDef[] = "#ifndef EMBED_IMAGES\n"
                                 "	\n"
                                 "	virtual ~%PluginName();\n"
                                 "	\n"
-                                "	virtual QStringList keys() const\n"
+                                "	virtual TQStringList keys() const\n"
                                 "	{\n"
-                                "		QStringList result;\n"
+                                "		TQStringList result;\n"
                                 "		for (WidgetInfos::ConstIterator it = m_widgets.begin(); it != m_widgets.end(); ++it)\n"
                                 "			result << it.key();\n"
                                 "		return result;\n"
                                 "	}\n"
                                 "	\n"
-                                "	virtual QWidget *create(const QString &key, QWidget *parent = 0, const char *name = 0);\n"
+                                "	virtual TQWidget *create(const TQString &key, TQWidget *parent = 0, const char *name = 0);\n"
                                 "	\n"
-                                "	virtual QIconSet iconSet(const QString &key) const\n"
+                                "	virtual TQIconSet iconSet(const TQString &key) const\n"
                                 "	{\n"
                                 "#ifdef EMBED_IMAGES\n"
-                                "		QPixmap pix(m_widgets[key].iconSet);\n"
+                                "		TQPixmap pix(m_widgets[key].iconSet);\n"
                                 "#else\n"
-                                "		QPixmap pix(locate( \"data\", \n"
-				"			QString::fromLatin1(\"%PluginNameLower/pics/\") + m_widgets[key].iconSet));\n"
+                                "		TQPixmap pix(locate( \"data\", \n"
+				"			TQString::fromLatin1(\"%PluginNameLower/pics/\") + m_widgets[key].iconSet));\n"
                                 "#endif\n"
-                                "		return QIconSet(pix);\n"
+                                "		return TQIconSet(pix);\n"
                                 "	}\n"
                                 "	\n"
-                                "	virtual bool isContainer(const QString &key) const { return m_widgets[key].isContainer; }\n"
+                                "	virtual bool isContainer(const TQString &key) const { return m_widgets[key].isContainer; }\n"
                                 "	\n"
-                                "	virtual QString group(const QString &key) const { return m_widgets[key].group; }\n"
+                                "	virtual TQString group(const TQString &key) const { return m_widgets[key].group; }\n"
                                 "	\n"
-                                "	virtual QString includeFile(const QString &key) const { return m_widgets[key].includeFile; }\n"
+                                "	virtual TQString includeFile(const TQString &key) const { return m_widgets[key].includeFile; }\n"
                                 "	\n"
-                                "	virtual QString toolTip(const QString &key) const { return m_widgets[key].toolTip; }\n"
+                                "	virtual TQString toolTip(const TQString &key) const { return m_widgets[key].toolTip; }\n"
                                 "	\n"
-                                "	virtual QString whatsThis(const QString &key) const { return m_widgets[key].whatsThis; }\n"
+                                "	virtual TQString whatsThis(const TQString &key) const { return m_widgets[key].whatsThis; }\n"
                                 "private:\n"
                                 "	struct WidgetInfo\n"
                                 "	{\n"
-                                "		QString group;\n"
+                                "		TQString group;\n"
                                 "#ifdef EMBED_IMAGES\n"
-                                "		QPixmap iconSet;\n"
+                                "		TQPixmap iconSet;\n"
                                 "#else\n"
-                                "		QString iconSet;\n"
+                                "		TQString iconSet;\n"
                                 "#endif\n"
-                                "		QString includeFile;\n"
-                                "		QString toolTip;\n"
-                                "		QString whatsThis;\n"
+                                "		TQString includeFile;\n"
+                                "		TQString toolTip;\n"
+                                "		TQString whatsThis;\n"
                                 "		bool isContainer;\n"
                                 "	};\n"
-                                "	typedef QMap<QString, WidgetInfo> WidgetInfos;\n"
+                                "	typedef TQMap<TQString, WidgetInfo> WidgetInfos;\n"
                                 "	WidgetInfos m_widgets;\n"
                                 "};\n"
                                 "%PluginName::%PluginName()\n"
                                 "{\n"
                                 "        WidgetInfo widget;\n";
-static const char widgetDef[] = "	widget.group = QString::fromLatin1(\"%Group\");\n"
+static const char widgetDef[] = "	widget.group = TQString::fromLatin1(\"%Group\");\n"
                                  "#ifdef EMBED_IMAGES\n"
-                                 "	widget.iconSet = QPixmap(%Pixmap);\n"
+                                 "	widget.iconSet = TQPixmap(%Pixmap);\n"
                                  "#else\n"
-                                 "	widget.iconSet = QString::fromLatin1(\"%IconSet\");\n"
+                                 "	widget.iconSet = TQString::fromLatin1(\"%IconSet\");\n"
                                  "#endif\n"
-                                 "	widget.includeFile = QString::fromLatin1(\"%IncludeFile\");\n"
-                                 "	widget.toolTip = QString::fromLatin1(\"%ToolTip\");\n"
-                                 "	widget.whatsThis = QString::fromLatin1(\"%WhatsThis\");\n"
+                                 "	widget.includeFile = TQString::fromLatin1(\"%IncludeFile\");\n"
+                                 "	widget.toolTip = TQString::fromLatin1(\"%ToolTip\");\n"
+                                 "	widget.whatsThis = TQString::fromLatin1(\"%WhatsThis\");\n"
                                  "	widget.isContainer = %IsContainer;\n"
-                                 "	m_widgets.insert(QString::fromLatin1(\"%Class\"), widget);\n";
+                                 "	m_widgets.insert(TQString::fromLatin1(\"%Class\"), widget);\n";
 static const char endCtor[] = "	%Init\n"
                                "}\n"
                                "%PluginName::~%PluginName()\n"
                                "{\n"
                                "	%Destroy\n"
                                "}\n"
-                               "QWidget *%PluginName::create(const QString &key, QWidget *parent, const char *name)\n"
+                               "TQWidget *%PluginName::create(const TQString &key, TQWidget *parent, const char *name)\n"
                                "{\n";
-static const char widgetCreate[] = "         if (key == QString::fromLatin1(\"%Class\"))\n"
+static const char widgetCreate[] = "         if (key == TQString::fromLatin1(\"%Class\"))\n"
                                     "                return new %ImplClass%ConstructorArgs;\n";
 static const char endCreate[] = "	return 0;\n"
                                  "}\n"
@@ -117,11 +117,11 @@ static KCmdLineOptions options[] =
         KCmdLineLastOption
     };
 
-static QString buildWidgetDef( const QString &name, KConfig &input, const QString &group );
-static QString buildWidgetCreate( const QString &name, KConfig &input );
-static QString buildWidgetInclude( const QString &name, KConfig &input );
-static void buildFile( QTextStream &stream, const QString& group, const QString& fileName, const QString& pluginName, const QString& iconPath );
-static QString buildPixmap( const QString &name, KConfig &input, const QString &iconPath );
+static TQString buildWidgetDef( const TQString &name, KConfig &input, const TQString &group );
+static TQString buildWidgetCreate( const TQString &name, KConfig &input );
+static TQString buildWidgetInclude( const TQString &name, KConfig &input );
+static void buildFile( TQTextStream &stream, const TQString& group, const TQString& fileName, const TQString& pluginName, const TQString& iconPath );
+static TQString buildPixmap( const TQString &name, KConfig &input, const TQString &iconPath );
 
 int main( int argc, char **argv ) {
     new KInstance( "makekdewidgets" );
@@ -136,42 +136,42 @@ int main( int argc, char **argv ) {
         return ( 1 );
     }
 
-    QFileInfo fi( args->arg( args->count() - 1 ) );
+    TQFileInfo fi( args->arg( args->count() - 1 ) );
 
-    QString outputFile = args->getOption( "o" );
-    QString pluginName = args->getOption( "n" );
-    QString group = args->getOption( "g" );
-    QString iconPath = "";
+    TQString outputFile = args->getOption( "o" );
+    TQString pluginName = args->getOption( "n" );
+    TQString group = args->getOption( "g" );
+    TQString iconPath = "";
     if ( args->isSet( "p" ) )
         iconPath = args->getOption( "p" );
-    QString fileName = fi.absFilePath();
+    TQString fileName = fi.absFilePath();
 
     if ( args->isSet( "o" ) ) {
-        QFile output( outputFile );
+        TQFile output( outputFile );
         if ( output.open( IO_WriteOnly ) ) {
-            QTextStream ts( &output );
+            TQTextStream ts( &output );
             buildFile( ts, group, fileName , pluginName, iconPath );
         }
         output.close();
     } else {
-        QTextStream ts( stdout, IO_WriteOnly );
+        TQTextStream ts( stdout, IO_WriteOnly );
         buildFile( ts, group, fileName , pluginName, iconPath );
     }
 }
 
-void buildFile( QTextStream &ts, const QString& group, const QString& fileName, const QString& pluginName, const QString& iconPath ) {
+void buildFile( TQTextStream &ts, const TQString& group, const TQString& fileName, const TQString& pluginName, const TQString& iconPath ) {
     KConfig input( fileName, true, false );
     input.setGroup( "Global" );
-    QMap<QString, QString> MainMap;
+    TQMap<TQString, TQString> MainMap;
     MainMap.insert( "PluginName", input.readEntry( "PluginName", pluginName ) );
     MainMap.insert( "PluginNameLower", input.readEntry( "PluginName", pluginName ).lower() );
     MainMap.insert( "Init", input.readEntry( "Init", "" ) );
     MainMap.insert( "Destroy", input.readEntry( "Destroy", "" ) );
     ts << classHeader << endl;
-    QStringList includes = input.readListEntry( "Includes", ',' );
+    TQStringList includes = input.readListEntry( "Includes", ',' );
     for ( uint idx = 0; idx < includes.count(); ++idx )
         ts << "#include <" << includes[ idx ] << ">" << endl;
-    QStringList classes = input.groupList();
+    TQStringList classes = input.groupList();
     classes.remove( classes.find( "Global" ) );
     // Autogenerate widget includes here
     for ( uint idx = 0; idx < classes.count(); ++idx )
@@ -195,9 +195,9 @@ void buildFile( QTextStream &ts, const QString& group, const QString& fileName, 
 
 }
 
-QString buildWidgetDef( const QString &name, KConfig &input, const QString &group ) {
+TQString buildWidgetDef( const TQString &name, KConfig &input, const TQString &group ) {
     input.setGroup( name );
-    QMap<QString, QString> defMap;
+    TQMap<TQString, TQString> defMap;
     defMap.insert( "Group", input.readEntry( "Group", group ).replace( "\"", "\\\"" ) );
     defMap.insert( "IconSet", input.readEntry( "IconSet", name.lower() + ".png" ).replace( ":", "_" ) );
     defMap.insert( "Pixmap", name.lower().replace( ":", "_" ) + "_xpm" );
@@ -209,31 +209,31 @@ QString buildWidgetDef( const QString &name, KConfig &input, const QString &grou
     return KMacroExpander::expandMacros( widgetDef, defMap );
 }
 
-QString buildWidgetCreate( const QString &name, KConfig &input ) {
+TQString buildWidgetCreate( const TQString &name, KConfig &input ) {
     input.setGroup( name );
-    QMap<QString, QString> createMap;
+    TQMap<TQString, TQString> createMap;
     createMap.insert( "ImplClass", input.readEntry( "ImplClass", name ) );
     createMap.insert( "ConstructorArgs", input.readEntry( "ConstructorArgs", "(parent, name)" ) );
     createMap.insert( "Class", name );
     return KMacroExpander::expandMacros( widgetCreate, createMap );
 }
 
-QString buildWidgetInclude( const QString &name, KConfig &input ) {
+TQString buildWidgetInclude( const TQString &name, KConfig &input ) {
     input.setGroup( name );
     return "#include <" + input.readEntry( "IncludeFile", name.lower() + ".h" ) + ">";
 }
 
-QString buildPixmap( const QString &name, KConfig &input, const QString &iconPath ) {
+TQString buildPixmap( const TQString &name, KConfig &input, const TQString &iconPath ) {
     input.setGroup( name );
-    QString cleanName = name.lower().replace( ":", "_" );
-    QString iconName = input.readEntry( "IconSet", cleanName + ".png" );
+    TQString cleanName = name.lower().replace( ":", "_" );
+    TQString iconName = input.readEntry( "IconSet", cleanName + ".png" );
 
-    QFileInfo fi( iconPath + "/" + iconName );
-    QImage pix( fi.absFilePath() );
-    QCString xpm;
-    QBuffer buff( xpm );
+    TQFileInfo fi( iconPath + "/" + iconName );
+    TQImage pix( fi.absFilePath() );
+    TQCString xpm;
+    TQBuffer buff( xpm );
     buff.open( IO_WriteOnly );
-    QImageIO io( &buff, "XPM" );
+    TQImageIO io( &buff, "XPM" );
     io.setFileName( cleanName + "_xpm" );
     io.setImage( pix );
     io.write();

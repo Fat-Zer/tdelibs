@@ -38,7 +38,7 @@ class KGzipFilterFactory : public KLibFactory
 public:
     KGzipFilterFactory() : KLibFactory() {}
     ~KGzipFilterFactory(){}
-    QObject *createObject( QObject *parent, const char *name, const char*className, const QStringList & args )
+    TQObject *createObject( TQObject *parent, const char *name, const char*className, const TQStringList & args )
     {
         Q_UNUSED(parent);
         Q_UNUSED(name);
@@ -141,11 +141,11 @@ bool KGzipFilter::readHeader()
     int i = d->zStream.avail_in;
     if ((i -= 10)  < 0) return false; // Need at least 10 bytes
 #ifdef DEBUG_GZIP
-    kdDebug(7005) << "KGzipFilter::readHeader first byte is " << QString::number(*p,16) << endl;
+    kdDebug(7005) << "KGzipFilter::readHeader first byte is " << TQString::number(*p,16) << endl;
 #endif
     if (*p++ != 0x1f) return false; // GZip magic
 #ifdef DEBUG_GZIP
-    kdDebug(7005) << "KGzipFilter::readHeader second byte is " << QString::number(*p,16) << endl;
+    kdDebug(7005) << "KGzipFilter::readHeader second byte is " << TQString::number(*p,16) << endl;
 #endif
     if (*p++ != 0x8b) return false;
     int method = *p++;
@@ -206,7 +206,7 @@ bool KGzipFilter::readHeader()
     put_short((n) & 0xffff); \
     put_short(((ulong)(n)) >> 16);
 
-bool KGzipFilter::writeHeader( const QCString & fileName )
+bool KGzipFilter::writeHeader( const TQCString & fileName )
 {
     Bytef *p = d->zStream.next_out;
     int i = d->zStream.avail_out;
@@ -238,7 +238,7 @@ void KGzipFilter::writeFooter()
     if (!m_headerWritten) kdDebug() << kdBacktrace();
     Bytef *p = d->zStream.next_out;
     int i = d->zStream.avail_out;
-    //kdDebug(7005) << "KGzipFilter::writeFooter writing CRC= " << QString::number( m_crc, 16 ) << endl;
+    //kdDebug(7005) << "KGzipFilter::writeFooter writing CRC= " << TQString::number( m_crc, 16 ) << endl;
     put_long( m_crc );
     //kdDebug(7005) << "KGzipFilter::writing writing totalin= " << d->zStream.total_in << endl;
     put_long( d->zStream.total_in );

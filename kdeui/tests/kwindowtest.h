@@ -1,9 +1,9 @@
 #ifndef testwindow_h
 #define testwindow_h
 
-#include <qpopupmenu.h>
-#include <qtimer.h>
-#include <qprogressbar.h>
+#include <tqpopupmenu.h>
+#include <tqtimer.h>
+#include <tqprogressbar.h>
 #include <kmenubar.h>
 #include <kstatusbar.h>
 #include <ktoolbar.h>
@@ -18,7 +18,7 @@ class testWindow  : public KMainWindow
     Q_OBJECT
 
 public:
-    testWindow (QWidget *parent=0, const char *name=0);
+    testWindow (TQWidget *parent=0, const char *name=0);
     ~testWindow ();
     
 public slots:
@@ -29,7 +29,7 @@ public slots:
     void slotPrint();
     void slotReturn();
     void slotSave();
-    void slotList(const QString &str);
+    void slotList(const TQString &str);
     void slotOpen();
     void slotCompletion();
     void slotCompletionsMenu(int id);
@@ -50,10 +50,10 @@ public slots:
     void slotToggled(int);
 protected:
     KMenuBar *menuBar;
-    QPopupMenu *fileMenu;
-    QPopupMenu *itemsMenu;
-    QPopupMenu *completions;
-    QPopupMenu *toolBarMenu;
+    TQPopupMenu *fileMenu;
+    TQPopupMenu *itemsMenu;
+    TQPopupMenu *completions;
+    TQPopupMenu *toolBarMenu;
     KStatusBar *statusBar;
     KHelpMenu *helpMenu;
     KToolBar *tb;
@@ -62,9 +62,9 @@ protected:
     bool exitB;
     bool greenF;
     bool ena;
-    QMultiLineEdit *widget;
-    QTimer *timer;
-    QProgressBar *pr;
+    TQMultiLineEdit *widget;
+    TQTimer *timer;
+    TQProgressBar *pr;
     KToolBarRadioGroup *rg;
 };
 #endif

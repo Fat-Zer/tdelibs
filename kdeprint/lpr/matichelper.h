@@ -20,10 +20,10 @@
 #ifndef MATICHELPER_H
 #define MATICHELPER_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 class PrintcapEntry;
 
-QString maticFile(PrintcapEntry*);
+TQString maticFile(PrintcapEntry*);
 
 #endif

@@ -21,7 +21,7 @@
 #ifndef KABC_LOCKNULL_H
 #define KABC_LOCKNULL_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include "lock.h"
 
@@ -40,7 +40,7 @@ class KABC_EXPORT LockNull : public Lock
     bool lock();
     bool unlock();
 
-    QString error() const;
+    TQString error() const;
 
   private:
     bool mAllowAccess;

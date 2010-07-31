@@ -27,10 +27,10 @@
 namespace KNS
 {
 
-Button::Button(const QString& what,
-               const QString& providerList,
-               const QString& resourceType,
-               QWidget* parent, const char* name)
+Button::Button(const TQString& what,
+               const TQString& providerList,
+               const TQString& resourceType,
+               TQWidget* parent, const char* name)
     : KPushButton(parent, name),
       d(0),
       m_providerList(providerList),
@@ -41,7 +41,7 @@ Button::Button(const QString& what,
     init();
 }
 
-Button::Button(QWidget* parent, const char* name)
+Button::Button(TQWidget* parent, const char* name)
     : KPushButton(parent, name),
       d(0),
       m_downloadDialog(0)
@@ -53,20 +53,20 @@ Button::Button(QWidget* parent, const char* name)
 void Button::init()
 {
     setIconSet(SmallIconSet("knewstuff"));
-    connect(this, SIGNAL(clicked()), SLOT(showDialog()));
+    connect(this, TQT_SIGNAL(clicked()), TQT_SLOT(showDialog()));
 }
 
-void Button::setButtonText(const QString& what)
+void Button::setButtonText(const TQString& what)
 {
     setText(i18n("Download New %1").arg(what));
 }
 
-void Button::setProviderList(const QString& providerList)
+void Button::setProviderList(const TQString& providerList)
 {
     m_providerList = providerList;
 }
 
-void Button::setResourceType(const QString& resourceType)
+void Button::setResourceType(const TQString& resourceType)
 {
     m_type = resourceType;
 }

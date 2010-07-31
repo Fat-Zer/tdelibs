@@ -24,7 +24,7 @@
 #include <config.h>
 #endif
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include "kssld.h"
 #include <kconfig.h>
@@ -34,18 +34,18 @@
 #include <ksslcertificatehome.h>
 #include <ksslpkcs12.h>
 #include <ksslx509map.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <pwd.h>
 #include <unistd.h>
-#include <qfile.h>
-#include <qsortedlist.h>
+#include <tqfile.h>
+#include <tqsortedlist.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
-#include <qdatetime.h>
+#include <tqdatetime.h>
 
 #include <kmdcodec.h>
 #include <kopenssl.h>
@@ -53,7 +53,7 @@
 // See design notes at end
 
 extern "C" {
-	KDE_EXPORT KDEDModule *create_kssld(const QCString &name) {
+	KDE_EXPORT KDEDModule *create_kssld(const TQCString &name) {
 		return new KSSLD(name);
 	}
 
@@ -62,9 +62,9 @@ extern "C" {
 
 
 static void updatePoliciesConfig(KConfig *cfg) {
-	QStringList groups = cfg->groupList();
+	TQStringList groups = cfg->groupList();
 
-	for (QStringList::Iterator i = groups.begin(); i != groups.end(); ++i) {
+	for (TQStringList::Iterator i = groups.begin(); i != groups.end(); ++i) {
 		if ((*i).isEmpty() || *i == "General") {
 			continue;
 		}
@@ -72,13 +72,13 @@ static void updatePoliciesConfig(KConfig *cfg) {
 		cfg->setGroup(*i);
 
 		// remove it if it has expired
-		if (!cfg->readBoolEntry("Permanent") && cfg->readDateTimeEntry("Expires") < QDateTime::currentDateTime()) {
+		if (!cfg->readBoolEntry("Permanent") && cfg->readDateTimeEntry("Expires") < TQDateTime::currentDateTime()) {
 			cfg->deleteGroup(*i);
 			continue;
 		}
 
-		QString encodedCertStr = cfg->readEntry("Certificate");
-		QCString encodedCert = encodedCertStr.local8Bit();
+		TQString encodedCertStr = cfg->readEntry("Certificate");
+		TQCString encodedCert = encodedCertStr.local8Bit();
 	       	KSSLCertificate *newCert = KSSLCertificate::fromString(encodedCert);
 		if (!newCert) {
 			cfg->deleteGroup(*i);
@@ -87,9 +87,9 @@ static void updatePoliciesConfig(KConfig *cfg) {
 
 		KSSLCertificateCache::KSSLCertificatePolicy policy = (KSSLCertificateCache::KSSLCertificatePolicy) cfg->readNumEntry("Policy");
 		bool permanent = cfg->readBoolEntry("Permanent");
-		QDateTime expires = cfg->readDateTimeEntry("Expires");
-		QStringList hosts = cfg->readListEntry("Hosts");
-		QStringList chain = cfg->readListEntry("Chain");
+		TQDateTime expires = cfg->readDateTimeEntry("Expires");
+		TQStringList hosts = cfg->readListEntry("Hosts");
+		TQStringList chain = cfg->readListEntry("Chain");
 		cfg->deleteGroup(*i);
 
 		cfg->setGroup(newCert->getMD5Digest());
@@ -109,7 +109,7 @@ static void updatePoliciesConfig(KConfig *cfg) {
 }
 
 
-KSSLD::KSSLD(const QCString &name) : KDEDModule(name)
+KSSLD::KSSLD(const TQCString &name) : KDEDModule(name)
 {
 // ----------------------- FOR THE CACHE ------------------------------------	
 	cfg = new KSimpleConfig("ksslpolicies", false);
@@ -145,8 +145,8 @@ class KSSLCNode {
 		KSSLCertificate *cert;
 		KSSLCertificateCache::KSSLCertificatePolicy policy;
 		bool permanent;
-		QDateTime expires;
-		QStringList hosts;
+		TQDateTime expires;
+		TQStringList hosts;
 		KSSLCNode() { cert = 0L;
 				policy = KSSLCertificateCache::Unknown; 
 				permanent = true;
@@ -164,7 +164,7 @@ KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (node->permanent ||
-			node->expires > QDateTime::currentDateTime()) {
+			node->expires > TQDateTime::currentDateTime()) {
 			// First convert to a binary format and then write the
 			// kconfig entry write the (CN, policy, cert) to
 			// KSimpleConfig
@@ -176,8 +176,8 @@ KSSLCNode *node;
 			cfg->writeEntry("Hosts", node->hosts);
 
 			// Also write the chain
-			QStringList qsl;
-			QPtrList<KSSLCertificate> cl =
+			TQStringList qsl;
+			TQPtrList<KSSLCertificate> cl =
 						node->cert->chain().getChain();
 			for (KSSLCertificate *c = cl.first();
 							c != 0;
@@ -195,10 +195,10 @@ KSSLCNode *node;
 	cfg->sync();
 
 	// insure proper permissions -- contains sensitive data
-	QString cfgName(KGlobal::dirs()->findResource("config", "ksslpolicies"));
+	TQString cfgName(KGlobal::dirs()->findResource("config", "ksslpolicies"));
 
 	if (!cfgName.isEmpty()) {
-		::chmod(QFile::encodeName(cfgName), 0600);
+		::chmod(TQFile::encodeName(cfgName), 0600);
 	}
 }
 
@@ -225,9 +225,9 @@ KSSLCNode *node;
 
 
 void KSSLD::cacheLoadDefaultPolicies() {
-QStringList groups = cfg->groupList();
+TQStringList groups = cfg->groupList();
 
-	for (QStringList::Iterator i = groups.begin();
+	for (TQStringList::Iterator i = groups.begin();
 				i != groups.end();
 				++i) {
 		if ((*i).isEmpty() || *i == "General") {
@@ -239,12 +239,12 @@ QStringList groups = cfg->groupList();
 		// remove it if it has expired
 		if (!cfg->readBoolEntry("Permanent") &&
 			cfg->readDateTimeEntry("Expires") <
-				QDateTime::currentDateTime()) {
+				TQDateTime::currentDateTime()) {
 			cfg->deleteGroup(*i);
 			continue;
 		}
 
-		QCString encodedCert;
+		TQCString encodedCert;
 		KSSLCertificate *newCert;
 
 		encodedCert = cfg->readEntry("Certificate").local8Bit();
@@ -278,7 +278,7 @@ KSSLCNode *node;
 			node->permanent = permanent;
 
 			if (!permanent) {
-				node->expires = QDateTime::currentDateTime();
+				node->expires = TQDateTime::currentDateTime();
 				// FIXME: make this configurable
 				node->expires = node->expires.addSecs(3600);
 			}
@@ -297,7 +297,7 @@ KSSLCNode *node;
 	certList.prepend(n); 
 
 	if (!permanent) {
-		n->expires = QDateTime::currentDateTime();
+		n->expires = TQDateTime::currentDateTime();
 		n->expires = n->expires.addSecs(3600);
 	}
 
@@ -306,13 +306,13 @@ KSSLCNode *node;
 }
 
 
-KSSLCertificateCache::KSSLCertificatePolicy KSSLD::cacheGetPolicyByCN(QString cn) {
+KSSLCertificateCache::KSSLCertificatePolicy KSSLD::cacheGetPolicyByCN(TQString cn) {
 KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (KSSLX509Map(node->cert->getSubject()).getValue("CN") == cn) {
 			if (!node->permanent &&
-				node->expires < QDateTime::currentDateTime()) {
+				node->expires < TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				delete node;
@@ -338,7 +338,7 @@ KSSLCNode *node;
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {  
 			if (!node->permanent &&
-				node->expires < QDateTime::currentDateTime()) {
+				node->expires < TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				delete node;
@@ -356,13 +356,13 @@ return KSSLCertificateCache::Unknown;
 }
 
 
-bool KSSLD::cacheSeenCN(QString cn) {
+bool KSSLD::cacheSeenCN(TQString cn) {
 KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (KSSLX509Map(node->cert->getSubject()).getValue("CN") == cn) {
 			if (!node->permanent &&
-				node->expires < QDateTime::currentDateTime()) {
+				node->expires < TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				delete node;
@@ -386,7 +386,7 @@ KSSLCNode *node;
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
 			if (!node->permanent &&
-				node->expires < QDateTime::currentDateTime()) {
+				node->expires < TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				delete node;
@@ -410,7 +410,7 @@ KSSLCNode *node;
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
 			if (!node->permanent && node->expires <
-					QDateTime::currentDateTime()) {
+					TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				delete node;
@@ -428,7 +428,7 @@ return false;
 }
 
 
-bool KSSLD::cacheRemoveBySubject(QString subject) {
+bool KSSLD::cacheRemoveBySubject(TQString subject) {
 KSSLCNode *node;
 bool gotOne = false;
 
@@ -448,7 +448,7 @@ return gotOne;
 }
 
 
-bool KSSLD::cacheRemoveByCN(QString cn) {
+bool KSSLD::cacheRemoveByCN(TQString cn) {
 KSSLCNode *node;
 bool gotOne = false;
 
@@ -486,9 +486,9 @@ return false;
 }
 
 
-bool KSSLD::cacheModifyByCN(QString cn,
+bool KSSLD::cacheModifyByCN(TQString cn,
                             KSSLCertificateCache::KSSLCertificatePolicy policy,                             bool permanent,
-                            QDateTime expires) {
+                            TQDateTime expires) {
 KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
@@ -510,7 +510,7 @@ return false;
 bool KSSLD::cacheModifyByCertificate(KSSLCertificate cert,
                              KSSLCertificateCache::KSSLCertificatePolicy policy,
 			     bool permanent,
-			     QDateTime expires) {
+			     TQDateTime expires) {
 KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
@@ -529,19 +529,19 @@ return false;
 }
 
 
-QStringList KSSLD::cacheGetHostList(KSSLCertificate cert) {
+TQStringList KSSLD::cacheGetHostList(KSSLCertificate cert) {
 KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
 			if (!node->permanent && node->expires <
-				       QDateTime::currentDateTime()) {
+				       TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				searchRemoveCert(node->cert);
 				delete node;
 				cacheSaveToDisk();
-				return QStringList();
+				return TQStringList();
 			}
 
 			certList.remove(node);
@@ -550,11 +550,11 @@ KSSLCNode *node;
 		}
 	}
 
-return QStringList();
+return TQStringList();
 }
 
 
-bool KSSLD::cacheAddHost(KSSLCertificate cert, QString host) {
+bool KSSLD::cacheAddHost(KSSLCertificate cert, TQString host) {
 KSSLCNode *node;
 
 	if (host.isEmpty())
@@ -563,7 +563,7 @@ KSSLCNode *node;
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
 			if (!node->permanent && node->expires <
-				       	QDateTime::currentDateTime()) {
+				       	TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				searchRemoveCert(node->cert);
@@ -587,13 +587,13 @@ return false;
 }
 
 
-bool KSSLD::cacheRemoveHost(KSSLCertificate cert, QString host) {
+bool KSSLD::cacheRemoveHost(KSSLCertificate cert, TQString host) {
 KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
 			if (!node->permanent && node->expires <
-				       	QDateTime::currentDateTime()) {
+				       	TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				searchRemoveCert(node->cert);
@@ -618,11 +618,11 @@ return false;
 ///////////////////////////////////////////////////////////////////////////
 
 void KSSLD::caVerifyUpdate() {
-	QString path = KGlobal::dirs()->saveLocation("kssl") + "/ca-bundle.crt";
-	if (!QFile::exists(path))
+	TQString path = KGlobal::dirs()->saveLocation("kssl") + "/ca-bundle.crt";
+	if (!TQFile::exists(path))
 		return;
 	
-	cfg->setGroup(QString::null);
+	cfg->setGroup(TQString::null);
 	Q_UINT32 newStamp = KGlobal::dirs()->calcResourceHash("config", "ksslcalist", true);
 	Q_UINT32 oldStamp = cfg->readUnsignedNumEntry("ksslcalistStamp");
 	if (oldStamp != newStamp)
@@ -634,18 +634,18 @@ void KSSLD::caVerifyUpdate() {
 }
 
 bool KSSLD::caRegenerate() {
-QString path = KGlobal::dirs()->saveLocation("kssl") + "/ca-bundle.crt";
+TQString path = KGlobal::dirs()->saveLocation("kssl") + "/ca-bundle.crt";
 
-QFile out(path);
+TQFile out(path);
 
 	if (!out.open(IO_WriteOnly))
 		return false;
 
 KConfig cfg("ksslcalist", true, false);
 
-QStringList x = cfg.groupList();
+TQStringList x = cfg.groupList();
 
-	for (QStringList::Iterator i = x.begin();
+	for (TQStringList::Iterator i = x.begin();
 				   i != x.end();
 				   ++i) {
 		if ((*i).isEmpty() || *i == "<default>") continue;
@@ -654,7 +654,7 @@ QStringList x = cfg.groupList();
 
 		if (!cfg.readBoolEntry("site", false)) continue;
 
-		QString cert = cfg.readEntry("x509", "");
+		TQString cert = cfg.readEntry("x509", "");
 		if (cert.length() <= 0) continue;
 
 		unsigned int xx = cert.length() - 1;
@@ -672,7 +672,7 @@ return true;
 
 
 
-bool KSSLD::caAdd(QString certificate, bool ssl, bool email, bool code) {
+bool KSSLD::caAdd(TQString certificate, bool ssl, bool email, bool code) {
 KSSLCertificate *x = KSSLCertificate::fromString(certificate.local8Bit());
 
 	if (!x) return false;
@@ -696,11 +696,11 @@ return true;
   * @internal
   * Returns a list of certificates as QStrings read from the given file
   */
-static QStringList caReadCerticatesFromFile(QString filename) {
+static TQStringList caReadCerticatesFromFile(TQString filename) {
 
-	QStringList certificates;
-	QString certificate, temp;
-	QFile file(filename);
+	TQStringList certificates;
+	TQString certificate, temp;
+	TQFile file(filename);
 
 	if (!file.open(IO_ReadOnly))
 		return certificates;
@@ -708,13 +708,13 @@ static QStringList caReadCerticatesFromFile(QString filename) {
 	while (!file.atEnd()) {
 		file.readLine(temp, 999);
 		if (temp.startsWith("-----BEGIN CERTIFICATE-----")) {
-			certificate = QString::null;
+			certificate = TQString::null;
 			continue;
 		}
 
 		if (temp.startsWith("-----END CERTIFICATE-----")) {
 			certificates.append(certificate);
-			certificate = QString::null;
+			certificate = TQString::null;
 			continue;
 		}
 
@@ -726,16 +726,16 @@ static QStringList caReadCerticatesFromFile(QString filename) {
 	return certificates;
 }
 
-bool KSSLD::caAddFromFile(QString filename, bool ssl, bool email, bool code) {
+bool KSSLD::caAddFromFile(TQString filename, bool ssl, bool email, bool code) {
 
-	QStringList certificates;
+	TQStringList certificates;
 	certificates = caReadCerticatesFromFile(filename);
 	if (certificates.isEmpty())
 		return false;
 
 	bool ok = true;
 
-	for (QStringList::Iterator it = certificates.begin();
+	for (TQStringList::Iterator it = certificates.begin();
 					it != certificates.end(); ++it ) {
 		ok &= caAdd(*it, ssl, email, code);
 	}
@@ -743,18 +743,18 @@ bool KSSLD::caAddFromFile(QString filename, bool ssl, bool email, bool code) {
 	return ok;
 }
 
-bool KSSLD::caRemoveFromFile(QString filename) {
+bool KSSLD::caRemoveFromFile(TQString filename) {
 
-	QStringList certificates;
+	TQStringList certificates;
 	certificates = caReadCerticatesFromFile(filename);
 	if (certificates.isEmpty())
 		return false;
 
 	bool ok = true;
 
-	for (QStringList::Iterator it = certificates.begin();
+	for (TQStringList::Iterator it = certificates.begin();
 					it != certificates.end(); ++it ) {
-		QString certificate = *it;
+		TQString certificate = *it;
 		KSSLCertificate *x = KSSLCertificate::fromString(certificate.local8Bit());
 		ok &= x && caRemove(x->getSubject());
 		delete x;
@@ -764,8 +764,8 @@ bool KSSLD::caRemoveFromFile(QString filename) {
 }
 
 
-QStringList KSSLD::caList() {
-QStringList x;
+TQStringList KSSLD::caList() {
+TQStringList x;
 KConfig cfg("ksslcalist", true, false);
 
 	x = cfg.groupList();
@@ -775,7 +775,7 @@ return x;
 }
 
 
-bool KSSLD::caUseForSSL(QString subject) {
+bool KSSLD::caUseForSSL(TQString subject) {
 KConfig cfg("ksslcalist", true, false);
 
 	if (!cfg.hasGroup(subject))
@@ -787,7 +787,7 @@ return cfg.readBoolEntry("site", false);
 
 
 
-bool KSSLD::caUseForEmail(QString subject) {
+bool KSSLD::caUseForEmail(TQString subject) {
 KConfig cfg("ksslcalist", true, false);
 
 	if (!cfg.hasGroup(subject))
@@ -799,7 +799,7 @@ return cfg.readBoolEntry("email", false);
 
 
 
-bool KSSLD::caUseForCode(QString subject) {
+bool KSSLD::caUseForCode(TQString subject) {
 KConfig cfg("ksslcalist", true, false);
 
 	if (!cfg.hasGroup(subject))
@@ -810,7 +810,7 @@ return cfg.readBoolEntry("code", false);
 }
 
 
-bool KSSLD::caRemove(QString subject) {
+bool KSSLD::caRemove(TQString subject) {
 KConfig cfg("ksslcalist", false, false);
 	if (!cfg.hasGroup(subject))
 		return false;
@@ -822,18 +822,18 @@ return true;
 }
 
 
-QString KSSLD::caGetCert(QString subject) {
+TQString KSSLD::caGetCert(TQString subject) {
 KConfig cfg("ksslcalist", true, false);
 	if (!cfg.hasGroup(subject))
-		return QString::null;
+		return TQString::null;
 
 	cfg.setGroup(subject);
 
-return cfg.readEntry("x509", QString::null);
+return cfg.readEntry("x509", TQString::null);
 }
 
 
-bool KSSLD::caSetUse(QString subject, bool ssl, bool email, bool code) {
+bool KSSLD::caSetUse(TQString subject, bool ssl, bool email, bool code) {
 KConfig cfg("ksslcalist", false, false);
 	if (!cfg.hasGroup(subject))
 		return false;
@@ -853,16 +853,16 @@ return true;
 void KSSLD::searchAddCert(KSSLCertificate *cert) {
 	skMD5Digest.insert(cert->getMD5Digest(), cert, true);
 
-	QStringList mails;
+	TQStringList mails;
 	cert->getEmails(mails);
-	for(QStringList::const_iterator iter = mails.begin(); iter != mails.end(); ++iter) {
-		QString email = static_cast<const QString &>(*iter).lower();
-		QMap<QString, QPtrVector<KSSLCertificate> >::iterator it = skEmail.find(email);
+	for(TQStringList::const_iterator iter = mails.begin(); iter != mails.end(); ++iter) {
+		TQString email = static_cast<const TQString &>(*iter).lower();
+		TQMap<TQString, TQPtrVector<KSSLCertificate> >::iterator it = skEmail.find(email);
 
 		if (it == skEmail.end())
-			it = skEmail.insert(email, QPtrVector<KSSLCertificate>());
+			it = skEmail.insert(email, TQPtrVector<KSSLCertificate>());
 
-		QPtrVector<KSSLCertificate> &elem = *it;
+		TQPtrVector<KSSLCertificate> &elem = *it;
 		
 		if (elem.findRef(cert) == -1) {
 			unsigned int n = 0;
@@ -884,15 +884,15 @@ void KSSLD::searchAddCert(KSSLCertificate *cert) {
 void KSSLD::searchRemoveCert(KSSLCertificate *cert) {
 	skMD5Digest.remove(cert->getMD5Digest());
 
-	QStringList mails;
+	TQStringList mails;
 	cert->getEmails(mails);
-	for(QStringList::const_iterator iter = mails.begin(); iter != mails.end(); ++iter) {
-		QMap<QString, QPtrVector<KSSLCertificate> >::iterator it = skEmail.find(static_cast<const QString &>(*iter).lower());
+	for(TQStringList::const_iterator iter = mails.begin(); iter != mails.end(); ++iter) {
+		TQMap<TQString, TQPtrVector<KSSLCertificate> >::iterator it = skEmail.find(static_cast<const TQString &>(*iter).lower());
 
 		if (it == skEmail.end())
 		       break;
 
-		QPtrVector<KSSLCertificate> &elem = *it;
+		TQPtrVector<KSSLCertificate> &elem = *it;
 
 		int n = elem.findRef(cert);
 		if (n != -1)
@@ -901,16 +901,16 @@ void KSSLD::searchRemoveCert(KSSLCertificate *cert) {
 }	
 
 
-QStringList KSSLD::getKDEKeyByEmail(const QString &email) {
-	QStringList rc;
-	QMap<QString, QPtrVector<KSSLCertificate> >::iterator it = skEmail.find(email.lower());
+TQStringList KSSLD::getKDEKeyByEmail(const TQString &email) {
+	TQStringList rc;
+	TQMap<TQString, TQPtrVector<KSSLCertificate> >::iterator it = skEmail.find(email.lower());
 
 	kdDebug() << "GETKDEKey " << email.latin1() << endl;
 
 	if (it == skEmail.end())
 		return rc;
 
-	QPtrVector<KSSLCertificate> &elem = *it;
+	TQPtrVector<KSSLCertificate> &elem = *it;
 	for (unsigned int n = 0; n < elem.size(); n++) {
 		KSSLCertificate *cert = elem.at(n);
 		if (cert) {
@@ -923,8 +923,8 @@ QStringList KSSLD::getKDEKeyByEmail(const QString &email) {
 }
 
 
-KSSLCertificate KSSLD::getCertByMD5Digest(const QString &key) {
-	QMap<QString, KSSLCertificate *>::iterator iter = skMD5Digest.find(key);
+KSSLCertificate KSSLD::getCertByMD5Digest(const TQString &key) {
+	TQMap<TQString, KSSLCertificate *>::iterator iter = skMD5Digest.find(key);
 	
 	kdDebug() << "Searching cert for " << key.latin1() << endl;
 
@@ -943,15 +943,15 @@ KSSLCertificate KSSLD::getCertByMD5Digest(const QString &key) {
 //  Certificate Home methods
 //
 
-QStringList KSSLD::getHomeCertificateList() {
+TQStringList KSSLD::getHomeCertificateList() {
 	return KSSLCertificateHome::getCertificateList();
 }
 
-bool KSSLD::addHomeCertificateFile(QString filename, QString password, bool storePass) {
+bool KSSLD::addHomeCertificateFile(TQString filename, TQString password, bool storePass) {
 	return KSSLCertificateHome::addCertificate(filename, password, storePass);
 }
 
-bool KSSLD::addHomeCertificatePKCS12(QString base64cert, QString passToStore) {
+bool KSSLD::addHomeCertificatePKCS12(TQString base64cert, TQString passToStore) {
 	bool ok;
 	KSSLPKCS12 *pkcs12 = KSSLPKCS12::fromString(base64cert, passToStore);
 	ok = KSSLCertificateHome::addCertificate(pkcs12, passToStore);
@@ -959,11 +959,11 @@ bool KSSLD::addHomeCertificatePKCS12(QString base64cert, QString passToStore) {
 	return ok;
 }
 
-bool KSSLD::deleteHomeCertificateByFile(QString filename, QString password) {
+bool KSSLD::deleteHomeCertificateByFile(TQString filename, TQString password) {
 	return KSSLCertificateHome::deleteCertificate(filename, password);
 }
 
-bool KSSLD::deleteHomeCertificateByPKCS12(QString base64cert, QString password) {
+bool KSSLD::deleteHomeCertificateByPKCS12(TQString base64cert, TQString password) {
 	bool ok;
 	KSSLPKCS12 *pkcs12 = KSSLPKCS12::fromString(base64cert, password);
 	ok = KSSLCertificateHome::deleteCertificate(pkcs12);
@@ -971,7 +971,7 @@ bool KSSLD::deleteHomeCertificateByPKCS12(QString base64cert, QString password) 
 	return ok;
 }
 
-bool KSSLD::deleteHomeCertificateByName(QString name) {
+bool KSSLD::deleteHomeCertificateByName(TQString name) {
 	return KSSLCertificateHome::deleteCertificateByName(name);
 }
 
@@ -991,7 +991,7 @@ bool KSSLD::deleteHomeCertificateByName(QString name) {
   experimentation to determine which implementation works best.  My current
   options are:
 
-   (1) Store copies of the X509 certificates in a QPtrList using a self
+   (1) Store copies of the X509 certificates in a TQPtrList using a self
        organizing heuristic as described by Munro and Suwanda.
    (2) Store copies of the X509 certificates in a tree structure, perhaps
        a redblack tree, avl tree, or even just a simple binary tree.

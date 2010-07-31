@@ -1,21 +1,21 @@
 #include "kdesattest.h"
 #include <kapplication.h>
 #include <kimageeffect.h>
-#include <qpainter.h>
-#include <qdatetime.h>
-#include <qstring.h>
+#include <tqpainter.h>
+#include <tqdatetime.h>
+#include <tqstring.h>
 
 int cols = 3, rows = 3; // how many
 
-KDesatWidget::KDesatWidget(QWidget *parent, const char *name)
-  :QWidget(parent, name)
+KDesatWidget::KDesatWidget(TQWidget *parent, const char *name)
+  :TQWidget(parent, name)
 {
 
-    image = QImage("testimage.png");
+    image = TQImage("testimage.png");
     slide = new KDoubleNumInput(700, this, "desat");
     slide->setRange(0, 1, 0.001);
     slide->setLabel("Desaturate: ", AlignVCenter | AlignLeft);
-    connect(slide,SIGNAL(valueChanged(double)), this, SLOT(change(double)));
+    connect(slide,TQT_SIGNAL(valueChanged(double)), this, TQT_SLOT(change(double)));
 
     resize(image.width()*2, image.height() + slide->height());
     slide->setGeometry(0, image.height(), image.width()*2, slide->height());
@@ -26,19 +26,19 @@ void KDesatWidget::change(double) {
     repaint(false);
 }
 
-void KDesatWidget::paintEvent(QPaintEvent */*ev*/)
+void KDesatWidget::paintEvent(TQPaintEvent */*ev*/)
 {
-    QTime time;
+    TQTime time;
     int it, ft;
-    QString say;
+    TQString say;
 
-    QPainter p(this);
+    TQPainter p(this);
     p.setPen(Qt::black);
 
     // original image
     time.start();
     it = time.elapsed();
-    image = QImage("testimage.png");
+    image = TQImage("testimage.png");
     p.drawImage(0, 0, image);
     ft = time.elapsed();
     say.setNum( ft - it); say += " ms, Vertical";

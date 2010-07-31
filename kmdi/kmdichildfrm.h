@@ -28,14 +28,14 @@
 #ifndef _KMDI_CHILD_FRM_H_
 #define _KMDI_CHILD_FRM_H_
 
-#include <qptrlist.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qdatetime.h>
-#include <qlayout.h>
+#include <tqptrlist.h>
+#include <tqpixmap.h>
+#include <tqpushbutton.h>
+#include <tqlabel.h>
+#include <tqdatetime.h>
+#include <tqlayout.h>
 
-#include <qdict.h>
+#include <tqdict.h>
 
 #include "kmdichildfrmcaption.h"
 
@@ -53,8 +53,8 @@ class KMDI_EXPORT KMdiWin32IconButton : public QLabel
 {
 	Q_OBJECT
 public:
-	KMdiWin32IconButton( QWidget* parent, const char* name = 0 );
-	virtual void mousePressEvent( QMouseEvent* );
+	KMdiWin32IconButton( TQWidget* parent, const char* name = 0 );
+	virtual void mousePressEvent( TQMouseEvent* );
 
 signals:
 	void pressed();
@@ -65,58 +65,58 @@ signals:
 */ 
 //------------------------------------------------------------------------------
 /**
- * @short a QCustomEvent for move
+ * @short a TQCustomEvent for move
  * This special event will be useful, to inform view about child frame event.
  */
 class KMDI_EXPORT KMdiChildFrmMoveEvent : public QCustomEvent
 {
 public:
-	KMdiChildFrmMoveEvent( QMoveEvent *e ) : QCustomEvent( QEvent::Type( QEvent::User + int( KMdi::EV_Move ) ), e ) {}
+	KMdiChildFrmMoveEvent( TQMoveEvent *e ) : TQCustomEvent( TQEvent::Type( TQEvent::User + int( KMdi::EV_Move ) ), e ) {}
 
 };
 
 //------------------------------------------------------------------------------
 /**
- * @short a QCustomEvent for begin of dragging
+ * @short a TQCustomEvent for begin of dragging
  * This special event will be useful, to inform view about child frame event.
  */
 class KMDI_EXPORT KMdiChildFrmDragBeginEvent : public QCustomEvent
 {
 public:
-	KMdiChildFrmDragBeginEvent( QMouseEvent *e ) : QCustomEvent( QEvent::Type( QEvent::User + int( KMdi::EV_DragBegin ) ), e ) {}
+	KMdiChildFrmDragBeginEvent( TQMouseEvent *e ) : TQCustomEvent( TQEvent::Type( TQEvent::User + int( KMdi::EV_DragBegin ) ), e ) {}
 };
 
 //------------------------------------------------------------------------------
 /**
- * @short a QCustomEvent for end of dragging
+ * @short a TQCustomEvent for end of dragging
  * This special event will be useful, to inform view about child frame event.
  */
 class KMDI_EXPORT KMdiChildFrmDragEndEvent : public QCustomEvent
 {
 public:
-	KMdiChildFrmDragEndEvent( QMouseEvent *e ) : QCustomEvent( QEvent::Type( QEvent::User + int( KMdi::EV_DragEnd ) ), e ) {}
+	KMdiChildFrmDragEndEvent( TQMouseEvent *e ) : TQCustomEvent( TQEvent::Type( TQEvent::User + int( KMdi::EV_DragEnd ) ), e ) {}
 };
 
 //------------------------------------------------------------------------------
 /**
- * @short a QCustomEvent for begin of resizing
+ * @short a TQCustomEvent for begin of resizing
  * This special event will be useful, to inform view about child frame event.
  */
 class KMDI_EXPORT KMdiChildFrmResizeBeginEvent : public QCustomEvent
 {
 public:
-	KMdiChildFrmResizeBeginEvent( QMouseEvent *e ) : QCustomEvent( QEvent::Type( QEvent::User + int( KMdi::EV_ResizeBegin ) ), e ) {}
+	KMdiChildFrmResizeBeginEvent( TQMouseEvent *e ) : TQCustomEvent( TQEvent::Type( TQEvent::User + int( KMdi::EV_ResizeBegin ) ), e ) {}
 };
 
 //------------------------------------------------------------------------------
 /**
- * @short a QCustomEvent for end of resizing
+ * @short a TQCustomEvent for end of resizing
  * This special event will be useful, to inform view about child frame event.
  */
 class KMDI_EXPORT KMdiChildFrmResizeEndEvent : public QCustomEvent
 {
 public:
-	KMdiChildFrmResizeEndEvent( QMouseEvent *e ) : QCustomEvent( QEvent::Type( QEvent::User + int( KMdi::EV_ResizeEnd ) ), e ) {}
+	KMdiChildFrmResizeEndEvent( TQMouseEvent *e ) : TQCustomEvent( TQEvent::Type( TQEvent::User + int( KMdi::EV_ResizeEnd ) ), e ) {}
 };
 
 
@@ -144,23 +144,23 @@ protected:
 	KMdiChildArea* m_pManager;
 	KMdiChildFrmCaption* m_pCaption;
 	KMdiWin32IconButton* m_pWinIcon;
-	QToolButton* m_pUnixIcon;
-	QToolButton* m_pMinimize;
-	QToolButton* m_pMaximize;
-	QToolButton* m_pClose;
-	QToolButton* m_pUndock;
+	TQToolButton* m_pUnixIcon;
+	TQToolButton* m_pMinimize;
+	TQToolButton* m_pMaximize;
+	TQToolButton* m_pClose;
+	TQToolButton* m_pUndock;
 	MdiWindowState m_state;
-	QRect m_restoredRect;
+	TQRect m_restoredRect;
 	int m_iResizeCorner;
 	int m_iLastCursorCorner;
 	bool m_bResizing;
 	bool m_bDragging;
-	QPixmap* m_pIconButtonPixmap;
-	QPixmap* m_pMinButtonPixmap;
-	QPixmap* m_pMaxButtonPixmap;
-	QPixmap* m_pRestoreButtonPixmap;
-	QPixmap* m_pCloseButtonPixmap;
-	QPixmap* m_pUndockButtonPixmap;
+	TQPixmap* m_pIconButtonPixmap;
+	TQPixmap* m_pMinButtonPixmap;
+	TQPixmap* m_pMaxButtonPixmap;
+	TQPixmap* m_pRestoreButtonPixmap;
+	TQPixmap* m_pCloseButtonPixmap;
+	TQPixmap* m_pUndockButtonPixmap;
 	
 	/**
 	* Every child frame window has an temporary ID in the Window menu of the child area.
@@ -170,12 +170,12 @@ protected:
 	/**
 	* Imitates a system menu for child frame windows
 	*/
-	QPopupMenu* m_pSystemMenu;
+	TQPopupMenu* m_pSystemMenu;
 	
-	QSize m_oldClientMinSize;
-	QSize m_oldClientMaxSize;
-	QLayout::ResizeMode m_oldLayoutResizeMode;
-	QTime m_timeMeasure;
+	TQSize m_oldClientMinSize;
+	TQSize m_oldClientMaxSize;
+	TQLayout::ResizeMode m_oldLayoutResizeMode;
+	TQTime m_timeMeasure;
 
 	// methods
 public:
@@ -202,17 +202,17 @@ public:
 	 * Reparents the client widget to 0 (desktop), moves with an offset from the original position
 	 * Removes the event filter.
 	 */
-	void unsetClient( QPoint positionOffset = QPoint( 0, 0 ) );
+	void unsetClient( TQPoint positionOffset = TQPoint( 0, 0 ) );
 	
 	/**
 	 * Sets the window icon pointer.
 	 */
-	void setIcon( const QPixmap &pxm );
+	void setIcon( const TQPixmap &pxm );
 	
 	/**
 	 * Returns the child frame icon.
 	 */
-	QPixmap* icon() const;
+	TQPixmap* icon() const;
 	
 	/**
 	 * Enables or disables the close button
@@ -222,12 +222,12 @@ public:
 	/**
 	 * Sets the caption of this window
 	 */
-	void setCaption( const QString& text );
+	void setCaption( const TQString& text );
 	
 	/**
  	 * Gets the caption of this mdi child.
 	 */
-	const QString& caption() { return m_pCaption->m_szCaption; }
+	const TQString& caption() { return m_pCaption->m_szCaption; }
 	
 	/**
 	 * Minimizes, Maximizes, or restores the window.
@@ -242,17 +242,17 @@ public:
 	/**
 	 * Returns the inner client area of the parent of this (which is KMdiChildArea).
 	 */
-	QRect mdiAreaContentsRect() const;
+	TQRect mdiAreaContentsRect() const;
 	
 	/**
 	 * Returns the geometry that will be restored by calling restore().
 	 */
-	QRect restoreGeometry() const;
+	TQRect restoreGeometry() const;
 	
 	/**
 	 * Sets the geometry that will be restored by calling restore().
 	 */
-	void setRestoreGeometry( const QRect& newRestGeo );
+	void setRestoreGeometry( const TQRect& newRestGeo );
 	
 	/**
 	 * Forces updating the rects of the caption and so...
@@ -263,7 +263,7 @@ public:
 	/**
 	 * Returns the system menu.
 	 */
-	QPopupMenu* systemMenu() const;
+	TQPopupMenu* systemMenu() const;
 	
 	/**
 	 * Returns the caption bar height 
@@ -309,39 +309,39 @@ protected:
 	 * Resizes the captionbar, relayouts the position of the system buttons,
 	 * and calls resize for its embedded KMdiChildView with the proper size
 	 */
-	virtual void resizeEvent( QResizeEvent * );
+	virtual void resizeEvent( TQResizeEvent * );
 	
 	/**
 	 * Reimplemented from the base class.
 	 * Detects if the mouse is on the edge of window and what resize cursor must be set.
 	 * Calls KMdiChildFrm::resizeWindow if it is in m_bResizing.
 	 */
-	virtual void mouseMoveEvent( QMouseEvent *e );
+	virtual void mouseMoveEvent( TQMouseEvent *e );
 	
 	/**
 	 * Reimplemented from the base class.
 	 * Colours the caption, raises the childfrm widget and
 	 * turns to resize mode if it is on the edge (resize-sensitive area)
 	 */
-	virtual void mousePressEvent( QMouseEvent *e );
+	virtual void mousePressEvent( TQMouseEvent *e );
 	
 	/**
 	 * Reimplemented from the base class.
 	 * Sets a normal cursor and leaves the resize mode.
 	 */
-	virtual void mouseReleaseEvent( QMouseEvent * );
+	virtual void mouseReleaseEvent( TQMouseEvent * );
 	
 	/**
 	 * Reimplemented from the base class.
 	 * give its child view the chance to notify a childframe move... that's why it sends
 	 * a KMdiChildMovedEvent to the embedded KMdiChildView .
 	 */
-	virtual void moveEvent( QMoveEvent* me );
+	virtual void moveEvent( TQMoveEvent* me );
 	
 	/**
 	 * Reimplemented from the base class. If not in resize mode, it sets the mouse cursor to normal appearance.
 	 */
-	virtual void leaveEvent( QEvent * );
+	virtual void leaveEvent( TQEvent * );
 	
 	/** 
 	 * Reimplemented from the base class.
@@ -349,7 +349,7 @@ protected:
 	 * -the client's mousebutton press events which raises and activates the childframe
 	 * -the client's resize event which resizes this widget as well
 	 */
-	virtual bool eventFilter( QObject*, QEvent* ); 
+	virtual bool eventFilter( TQObject*, TQEvent* ); 
 	
 	/**
 	 * Calculates the new geometry from the new mouse position given as parameters
@@ -422,13 +422,13 @@ protected:
 	 * Restore the focus policies for _all_ widgets in the view using the list given as parameter.
 	 * Install the event filter for all direct child widgets of this. (See KMdiChildFrm::eventFilter)
 	 */
-	void linkChildren( QDict<FocusPolicy>* pFocPolDict );
+	void linkChildren( TQDict<FocusPolicy>* pFocPolDict );
 
 	/**
 	 * Backups all focus policies of _all_ child widgets in the MDI childview since they get lost during a reparent.
 	 * Remove all event filters for all direct child widgets of this. (See KMdiChildFrm::eventFilter)
 	 */
-	QDict<QWidget::FocusPolicy>* unlinkChildren();
+	TQDict<TQWidget::FocusPolicy>* unlinkChildren();
 	
 	/**
 	 * Calculates the corner id for the resize cursor. The return value can be tested for:

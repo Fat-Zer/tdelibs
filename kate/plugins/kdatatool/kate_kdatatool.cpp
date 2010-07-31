@@ -37,7 +37,7 @@ K_EXPORT_COMPONENT_FACTORY( ktexteditor_kdatatool, KGenericFactory<KTextEditor::
 
 namespace KTextEditor {
 
-KDataToolPlugin::KDataToolPlugin( QObject *parent, const char* name, const QStringList& )
+KDataToolPlugin::KDataToolPlugin( TQObject *parent, const char* name, const TQStringList& )
 	: KTextEditor::Plugin ( (KTextEditor::Document*) parent, name )
 {
 }
@@ -76,7 +76,7 @@ KDataToolPluginView::KDataToolPluginView( KTextEditor::View *view )
 	setInstance( KGenericFactory<KDataToolPlugin>::instance() );
 
 	m_menu = new KActionMenu(i18n("Data Tools"), actionCollection(), "popup_dataTool");
-	connect(m_menu->popupMenu(), SIGNAL(aboutToShow()), this, SLOT(aboutToShow()));
+	connect(m_menu->popupMenu(), TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(aboutToShow()));
 	setXMLFile("ktexteditor_kdatatoolui.rc");
 
 	m_view = view;
@@ -91,9 +91,9 @@ KDataToolPluginView::~KDataToolPluginView()
 void KDataToolPluginView::aboutToShow()
 {
 	kdDebug()<<"KTextEditor::KDataToolPluginView::aboutToShow"<<endl;
-	QString word;
+	TQString word;
 	m_singleWord = false;
-	m_wordUnderCursor = QString::null;
+	m_wordUnderCursor = TQString::null;
 
 	// unplug old actions, if any:
 	KAction *ac;
@@ -121,12 +121,12 @@ void KDataToolPluginView::aboutToShow()
 		ci = KTextEditor::viewCursorInterface(v);
 		uint line, col;
 		ci->cursorPositionReal(&line, &col);
-		QString tmp_line = ei->textLine(line);
+		TQString tmp_line = ei->textLine(line);
 		m_wordUnderCursor = "";
 		// find begin of word:
 		m_singleWord_start = 0;
 		for(int i = col; i >= 0; i--) {
-			QChar ch = tmp_line.at(i);
+			TQChar ch = tmp_line.at(i);
 			if( ! (ch.isLetter() || ch == '-' || ch == '\'') )
 			{
 				m_singleWord_start = i+1;
@@ -137,7 +137,7 @@ void KDataToolPluginView::aboutToShow()
 		// find end of word:
 		m_singleWord_end = tmp_line.length();
 		for(uint i = col+1; i < tmp_line.length(); i++) {
-			QChar ch = tmp_line.at(i);
+			TQChar ch = tmp_line.at(i);
 			if( ! (ch.isLetter() || ch == '-' || ch == '\'') )
 			{
 				m_singleWord_end = i;
@@ -150,8 +150,8 @@ void KDataToolPluginView::aboutToShow()
 			m_singleWord = true;
 			m_singleWord_line = line;
 		} else {
-			m_notAvailable = new KAction(i18n("(not available)"), QString::null, 0, this, 
-					SLOT(slotNotAvailable()), actionCollection(),"dt_n_av");
+			m_notAvailable = new KAction(i18n("(not available)"), TQString::null, 0, this, 
+					TQT_SLOT(slotNotAvailable()), actionCollection(),"dt_n_av");
 			m_menu->insert(m_notAvailable);
 			return;
 		}
@@ -159,21 +159,21 @@ void KDataToolPluginView::aboutToShow()
 
 	KInstance *inst=instance();
 
-	QValueList<KDataToolInfo> tools;
-	tools += KDataToolInfo::query( "QString", "text/plain", inst );
+	TQValueList<KDataToolInfo> tools;
+	tools += KDataToolInfo::query( "TQString", "text/plain", inst );
 	if( m_singleWord )
-		tools += KDataToolInfo::query( "QString", "application/x-singleword", inst );
+		tools += KDataToolInfo::query( "TQString", "application/x-singleword", inst );
 
 	m_actionList = KDataToolAction::dataToolActionList( tools, this,
-		SLOT( slotToolActivated( const KDataToolInfo &, const QString & ) ) );
+		TQT_SLOT( slotToolActivated( const KDataToolInfo &, const TQString & ) ) );
 
 	for ( ac = m_actionList.first(); ac; ac = m_actionList.next() ) {
 		m_menu->insert(ac);
 	}
 
 	if( m_actionList.isEmpty() ) {
-		m_notAvailable = new KAction(i18n("(not available)"), QString::null, 0, this,
-			SLOT(slotNotAvailable()), actionCollection(),"dt_n_av");
+		m_notAvailable = new KAction(i18n("(not available)"), TQString::null, 0, this,
+			TQT_SLOT(slotNotAvailable()), actionCollection(),"dt_n_av");
 		m_menu->insert(m_notAvailable);
 	}
 }
@@ -186,7 +186,7 @@ void KDataToolPluginView::slotNotAvailable()
 		"of the KOffice package."));
 }
 
-void KDataToolPluginView::slotToolActivated( const KDataToolInfo &info, const QString &command )
+void KDataToolPluginView::slotToolActivated( const KDataToolInfo &info, const TQString &command )
 {
 
 	KDataTool* tool = info.createTool( );
@@ -196,14 +196,14 @@ void KDataToolPluginView::slotToolActivated( const KDataToolInfo &info, const QS
 		return;
 	}
 
-	QString text;
+	TQString text;
 	if ( selectionInterface(m_view->document())->hasSelection() )
 		text = selectionInterface(m_view->document())->selection();
 	else
 		text = m_wordUnderCursor;
 
-	QString mimetype = "text/plain";
-	QString datatype = "QString";
+	TQString mimetype = "text/plain";
+	TQString datatype = "TQString";
 
 	// If unsupported (and if we have a single word indeed), try application/x-singleword
 	if ( !info.mimeTypes().contains( mimetype ) && m_singleWord )
@@ -211,7 +211,7 @@ void KDataToolPluginView::slotToolActivated( const KDataToolInfo &info, const QS
 	
 	kdDebug() << "Running tool with datatype=" << datatype << " mimetype=" << mimetype << endl;
 
-	QString origText = text;
+	TQString origText = text;
 
 	if ( tool->run( command, &text, datatype, mimetype) )
 	{

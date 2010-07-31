@@ -12,30 +12,30 @@
 #include <libxslt/xsltInternals.h>
 #include <libxslt/transform.h>
 #include <libxslt/xsltutils.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <kstandarddirs.h>
 #include <kinstance.h>
 #include <xslt.h>
-#include <qfile.h>
-#include <qdir.h>
+#include <tqfile.h>
+#include <tqdir.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include <kaboutdata.h>
 #include <stdlib.h>
 #include <kdebug.h>
-#include <qtextcodec.h>
-#include <qfileinfo.h>
+#include <tqtextcodec.h>
+#include <tqfileinfo.h>
 #include <kprocess.h>
-#include <qvaluevector.h>
+#include <tqvaluevector.h>
 
 extern int xmlLoadExtDtdDefaultValue;
 
 class MyPair {
 public:
-    QString word;
+    TQString word;
     int base;};
 
-typedef QValueList<MyPair> PairList;
+typedef TQValueList<MyPair> PairList;
 
 void parseEntry(PairList &list, xmlNodePtr cur, int base)
 {
@@ -51,9 +51,9 @@ void parseEntry(PairList &list, xmlNodePtr cur, int base)
     while (cur != NULL) {
 
         if ( cur->type == XML_TEXT_NODE ) {
-            QString words = QString::fromUtf8( ( char* )cur->content );
-            QStringList wlist = QStringList::split( ' ',  words.simplifyWhiteSpace() );
-            for ( QStringList::ConstIterator it = wlist.begin();
+            TQString words = TQString::fromUtf8( ( char* )cur->content );
+            TQStringList wlist = TQStringList::split( ' ',  words.simplifyWhiteSpace() );
+            for ( TQStringList::ConstIterator it = wlist.begin();
                   it != wlist.end(); ++it )
             {
                 MyPair m;
@@ -110,15 +110,15 @@ int main(int argc, char **argv) {
     }
 
     // Need to set SRCDIR before calling fillInstance
-    QString srcdir;
+    TQString srcdir;
     if ( args->isSet( "srcdir" ) )
-        srcdir = QDir( QFile::decodeName( args->getOption( "srcdir" ) ) ).absPath();
+        srcdir = TQDir( TQFile::decodeName( args->getOption( "srcdir" ) ) ).absPath();
     fillInstance(ins,srcdir);
 
     LIBXML_TEST_VERSION
 
-    QString checkFilename = QFile::decodeName(args->arg( 0 ));
-    QFileInfo checkFile(checkFilename);
+    TQString checkFilename = TQFile::decodeName(args->arg( 0 ));
+    TQFileInfo checkFile(checkFilename);
     if (!checkFile.exists())
     {
         kdError() << "File '" << checkFilename << "' does not exist." << endl;
@@ -141,7 +141,7 @@ int main(int argc, char **argv) {
 #else
         char pwd_buffer[PATH_MAX];
 #endif
-        QFileInfo file( QFile::decodeName(args->arg( 0 )) );
+        TQFileInfo file( TQFile::decodeName(args->arg( 0 )) );
 #if !defined(PATH_MAX) && defined(__GLIBC__)
         if ( !(pwd_buffer = getcwd( NULL, 0 ) ) )
 #else
@@ -152,28 +152,28 @@ int main(int argc, char **argv) {
              return 2;
 	}
 
-        QString catalogs;
+        TQString catalogs;
         catalogs += locate( "dtd", "customization/catalog" );
         catalogs += " ";
         catalogs += locate( "dtd", "docbook/xml-dtd-4.1.2/docbook.cat" );
 
-        setenv( "SGML_CATALOG_FILES", QFile::encodeName( catalogs ).data(), 1);
-        QString exe;
+        setenv( "SGML_CATALOG_FILES", TQFile::encodeName( catalogs ).data(), 1);
+        TQString exe;
 #if defined( XMLLINT )
         exe = XMLLINT;
 #endif
-        if ( (::access( QFile::encodeName( exe ), X_OK )!=0) ) {
+        if ( (::access( TQFile::encodeName( exe ), X_OK )!=0) ) {
             exe = KStandardDirs::findExe( "xmllint" );
             if (exe.isEmpty())
                 exe = locate( "exe", "xmllint" );
         }
-        if ( ::access( QFile::encodeName( exe ), X_OK )==0 ) {
-            chdir( QFile::encodeName( file.dirPath( true ) ) );
-            QString cmd = exe;
+        if ( ::access( TQFile::encodeName( exe ), X_OK )==0 ) {
+            chdir( TQFile::encodeName( file.dirPath( true ) ) );
+            TQString cmd = exe;
             cmd += " --catalogs --valid --noout ";
             cmd += KProcess::quote(file.fileName());
             cmd += " 2>&1";
-            FILE *xmllint = popen( QFile::encodeName( cmd ), "r");
+            FILE *xmllint = popen( TQFile::encodeName( cmd ), "r");
             char buf[ 512 ];
             bool noout = true;
             unsigned int n;
@@ -201,17 +201,17 @@ int main(int argc, char **argv) {
     xmlSubstituteEntitiesDefault(1);
     xmlLoadExtDtdDefaultValue = 1;
 
-    QValueVector<const char *> params;
+    TQValueVector<const char *> params;
     if (args->isSet( "output" ) ) {
         params.append( qstrdup( "outputFile" ) );
-        params.append( qstrdup( QFile::decodeName( args->getOption( "output" ) ).latin1() ) );
+        params.append( qstrdup( TQFile::decodeName( args->getOption( "output" ) ).latin1() ) );
     }
     {
         const QCStringList paramList = args->getOptionList( "param" );
         QCStringList::ConstIterator it = paramList.begin();
         QCStringList::ConstIterator end = paramList.end();
         for ( ; it != end; ++it ) {
-            const QCString tuple = *it;
+            const TQCString tuple = *it;
             const int ch = tuple.find( '=' );
             if ( ch == -1 ) {
                 kdError() << "Key-Value tuple '" << tuple << "' lacks a '='!" << endl;
@@ -224,7 +224,7 @@ int main(int argc, char **argv) {
     params.append( NULL );
 
     bool index = args->isSet( "htdig" );
-    QString tss = args->getOption( "stylesheet" );
+    TQString tss = args->getOption( "stylesheet" );
     if ( tss.isEmpty() )
         tss =  "customization/kde-chunk.xsl";
     if ( index )
@@ -238,7 +238,7 @@ int main(int argc, char **argv) {
 
         if (style_sheet != NULL) {
 
-            xmlDocPtr doc = xmlParseFile( QFile::encodeName( args->arg( 0 ) ) );
+            xmlDocPtr doc = xmlParseFile( TQFile::encodeName( args->arg( 0 ) ) );
 
             xmlDocPtr res = xsltApplyStylesheet(style_sheet, doc, &params[0]);
 
@@ -268,13 +268,13 @@ int main(int argc, char **argv) {
         }
 
     } else {
-        QString output = transform(args->arg( 0 ) , tss, params);
+        TQString output = transform(args->arg( 0 ) , tss, params);
         if (output.isEmpty()) {
             fprintf(stderr, "unable to parse %s\n", args->arg( 0 ));
             return(1);
         }
 
-        QString cache = args->getOption( "cache" );
+        TQString cache = args->getOption( "cache" );
         if ( !cache.isEmpty() ) {
             if ( !saveToCache( output, cache ) ) {
                 kdError() << i18n( "Could not write to cache file %1." ).arg( cache ) << endl;
@@ -284,19 +284,19 @@ int main(int argc, char **argv) {
 
         if (output.find( "<FILENAME " ) == -1 || args->isSet( "stdout" ) || args->isSet("output") )
         {
-            QFile file;
+            TQFile file;
             if (args->isSet( "stdout" ) ) {
                 file.open( IO_WriteOnly, stdout );
             } else {
                 if (args->isSet( "output" ) )
-                   file.setName( QFile::decodeName(args->getOption( "output" )));
+                   file.setName( TQFile::decodeName(args->getOption( "output" )));
                 else
                    file.setName( "index.html" );
                 file.open(IO_WriteOnly);
             }
             replaceCharsetHeader( output );
 
-            QCString data = output.local8Bit();
+            TQCString data = output.local8Bit();
             file.writeBlock(data.data(), data.length());
             file.close();
         } else {
@@ -307,15 +307,15 @@ int main(int argc, char **argv) {
                     break;
                 int filename_index = index + strlen("<FILENAME filename=\"");
 
-                QString filename = output.mid(filename_index,
+                TQString filename = output.mid(filename_index,
                                               output.find("\"", filename_index) -
                                               filename_index);
 
-                QString filedata = splitOut(output, index);
-                QFile file(filename);
+                TQString filedata = splitOut(output, index);
+                TQFile file(filename);
                 file.open(IO_WriteOnly);
                 replaceCharsetHeader( filedata );
-                QCString data = fromUnicode( filedata );
+                TQCString data = fromUnicode( filedata );
                 file.writeBlock(data.data(), data.length());
                 file.close();
 

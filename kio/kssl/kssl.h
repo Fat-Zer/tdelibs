@@ -178,7 +178,7 @@ public:
 	 *  @param proxy is the IP or hostname of the proxy server
 	 *  @deprecated
 	 */
-	void setProxyUse(bool active, QString realIP = QString::null, int realPort = 0, QString proxy = QString::null) KDE_DEPRECATED;
+	void setProxyUse(bool active, TQString realIP = TQString::null, int realPort = 0, TQString proxy = TQString::null) KDE_DEPRECATED;
 
 	/**
 	 *  Set the peer hostname to be used for certificate verification.
@@ -186,7 +186,7 @@ public:
 	 *  @param realHost the remote hostname as the user believes to be
 	 *         connecting to
 	 */
-	void setPeerHost(QString realHost = QString::null);
+	void setPeerHost(TQString realHost = TQString::null);
 
 	/**
 	 *  Connect the SSL session to the remote host using the provided

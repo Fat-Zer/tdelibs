@@ -102,8 +102,8 @@ void JSEventListener::handleEvent(DOM::Event &evt)
       exec->clearException();
     else if (html)
     {
-      QVariant ret = ValueToVariant(exec, retval);
-      if (ret.type() == QVariant::Bool && ret.toBool() == false)
+      TQVariant ret = ValueToVariant(exec, retval);
+      if (ret.type() == TQVariant::Bool && ret.toBool() == false)
         evt.preventDefault();
     }
     window->afterScriptExecution();
@@ -124,7 +124,7 @@ Object JSEventListener::listenerObj() const
   return listener;
 }
 
-JSLazyEventListener::JSLazyEventListener(const QString &_code, const QString &_name, const Object &_win, DOM::NodeImpl* _originalNode)
+JSLazyEventListener::JSLazyEventListener(const TQString &_code, const TQString &_name, const Object &_win, DOM::NodeImpl* _originalNode)
   : JSEventListener(Object(), 0, _win, true),
     code(_code), name(_name),
     parsed(false)
@@ -211,7 +211,7 @@ void JSLazyEventListener::parseCode() const
     }
 
     // no more need to keep the unparsed code around
-    code = QString();
+    code = TQString();
 
     if (listener.isValid()) {
       static_cast<Window*>(win.imp())->jsEventListeners.insert(listener.imp(),

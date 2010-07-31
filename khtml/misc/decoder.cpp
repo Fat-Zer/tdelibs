@@ -36,8 +36,8 @@ using namespace khtml;
 
 #include "htmlhashes.h"
 
-#include <qregexp.h>
-#include <qtextcodec.h>
+#include <tqregexp.h>
+#include <tqtextcodec.h>
 
 #include <kglobal.h>
 #include <kcharsets.h>
@@ -51,7 +51,7 @@ using namespace khtml;
 Decoder::Decoder()
 {
     // latin1
-    m_codec = QTextCodec::codecForMib(4);
+    m_codec = TQTextCodec::codecForMib(4);
     m_decoder = m_codec->makeDecoder();
     enc = 0;
     m_type = DefaultEncoding;
@@ -86,9 +86,9 @@ void Decoder::setEncoding(const char *_encoding, EncodingType type)
         return;
 
 #ifdef APPLE_CHANGES
-    QTextCodec *codec = (type == EncodingFromMetaTag || type == EncodingFromXMLHeader)
-        ? QTextCodec::codecForNameEightBitOnly(enc)
-        : QTextCodec::codecForName(enc);
+    TQTextCodec *codec = (type == EncodingFromMetaTag || type == EncodingFromXMLHeader)
+        ? TQTextCodec::codecForNameEightBitOnly(enc)
+        : TQTextCodec::codecForName(enc);
     if (codec) {
         enc = codec->name();
         visualRTL = codec->usesVisualOrdering();
@@ -97,7 +97,7 @@ void Decoder::setEncoding(const char *_encoding, EncodingType type)
     if(enc == "visual") // hebrew visually ordered
         enc = "iso8859-8";
     bool b;
-    QTextCodec *codec = KGlobal::charsets()->codecForName(enc, b);
+    TQTextCodec *codec = KGlobal::charsets()->codecForName(enc, b);
     if (!b)
         codec = 0;
 
@@ -110,8 +110,8 @@ void Decoder::setEncoding(const char *_encoding, EncodingType type)
     }
 
     if (codec && codec->mibEnum() == 11)  {
-        //We do NOT want to use Qt's QHebrewCodec, since it tries to reorder itself.
-        codec = QTextCodec::codecForName("iso8859-8-i");
+        //We do NOT want to use Qt's TQHebrewCodec, since it tries to reorder itself.
+        codec = TQTextCodec::codecForName("iso8859-8-i");
 	
         // visually ordered unless one of the following
         if( !(enc == "iso-8859-8-i" || enc == "iso_8859-8-i"
@@ -166,7 +166,7 @@ static void skipComment(const char *&ptr, const char *pEnd)
 }
 
 // Returns the position of the encoding string.
-static int findXMLEncoding(const QCString &str, int &encodingLength)
+static int findXMLEncoding(const TQCString &str, int &encodingLength)
 {
     int len = str.length();
 
@@ -214,7 +214,7 @@ static int findXMLEncoding(const QCString &str, int &encodingLength)
     return pos;
 }
 
-QString Decoder::decode(const char *data, int len)
+TQString Decoder::decode(const char *data, int len)
 {
     // Check for UTF-16 or UTF-8 BOM mark at the beginning, which is a sure sign of a Unicode encoding.
     int bufferLength = buffer.length();
@@ -257,7 +257,7 @@ QString Decoder::decode(const char *data, int len)
             // If we found a BOM, use the encoding it implies.
             if (autoDetectedEncoding != 0) {
                 m_type = AutoDetectedEncoding;
-                m_codec = QTextCodec::codecForName(autoDetectedEncoding);
+                m_codec = TQTextCodec::codecForName(autoDetectedEncoding);
                 assert(m_codec);
                 enc = m_codec->name();
                 delete m_decoder;
@@ -295,7 +295,7 @@ QString Decoder::decode(const char *data, int len)
                     i--;
                 }
             }
-            buffer += QCString(data, len+1);
+            buffer += TQCString(data, len+1);
 #endif
             // we still don't have an encoding, and are in the head
             // the following tags are allowed in <head>:
@@ -327,7 +327,7 @@ QString Decoder::decode(const char *data, int len)
                         while (*end != '>' && *end != '\0') end++;
                         if (*end == '\0')
                             break;
-                        QCString str(ptr, end - ptr + 1); //+1 as it must include the \0 terminator
+                        TQCString str(ptr, end - ptr + 1); //+1 as it must include the \0 terminator
                         int len;
                         int pos = findXMLEncoding(str, len);
                         if (pos != -1) {
@@ -362,7 +362,7 @@ QString Decoder::decode(const char *data, int len)
                         const char * end = ptr;
                         while(*end != '>' && *end != '\0') end++;
                         if ( *end == '\0' ) break;
-                        QCString str( ptr, (end-ptr)+1);
+                        TQCString str( ptr, (end-ptr)+1);
                         str = str.lower();
                         int pos = 0;
                         //if( (pos = str.find("http-equiv", pos)) == -1) break;
@@ -442,7 +442,7 @@ QString Decoder::decode(const char *data, int len)
                 body = true;
                 goto found;
             }
-            return QString::null;
+            return TQString::null;
         }
     }
 
@@ -505,16 +505,16 @@ QString Decoder::decode(const char *data, int len)
     if (!m_codec)
     {
         if(enc.isEmpty()) enc = "iso8859-1";
-        m_codec = QTextCodec::codecForName(enc);
+        m_codec = TQTextCodec::codecForName(enc);
         // be sure not to crash
         if(!m_codec) {
-            m_codec = QTextCodec::codecForMib(4);
+            m_codec = TQTextCodec::codecForMib(4);
             enc = "iso8859-1";
         }
         delete m_decoder;
         m_decoder = m_codec->makeDecoder();
     }
-    QString out;
+    TQString out;
 
     if(!buffer.isEmpty() && enc != "ISO-10646-UCS-2") {
         out = m_decoder->toUnicode(buffer, buffer.length());
@@ -522,7 +522,7 @@ QString Decoder::decode(const char *data, int len)
     } else {
         if(m_codec->mibEnum() != 1000) // utf16
         {
-            // ### hack for a bug in QTextCodec. It cut's the input stream
+            // ### hack for a bug in TQTextCodec. It cut's the input stream
             // in case there are \0 in it. ZDNET has them inside... :-(
             char *d = const_cast<char *>(data);
             int i = len - 1;
@@ -537,12 +537,12 @@ QString Decoder::decode(const char *data, int len)
     return out;
 }
 
-QString Decoder::flush() const
+TQString Decoder::flush() const
 {
     return m_decoder->toUnicode(buffer, buffer.length());
 }
 
-QCString Decoder::automaticDetectionForArabic( const unsigned char* ptr, int size )
+TQCString Decoder::automaticDetectionForArabic( const unsigned char* ptr, int size )
 {
     for ( int i = 0; i < size; ++i ) {
         if ( ( ptr[ i ] >= 0x80 && ptr[ i ] <= 0x9F ) || ptr[ i ] == 0xA1 || ptr[ i ] == 0xA2 || ptr[ i ] == 0xA3
@@ -556,7 +556,7 @@ QCString Decoder::automaticDetectionForArabic( const unsigned char* ptr, int siz
     return "iso-8859-6";
 }
 
-QCString Decoder::automaticDetectionForBaltic( const unsigned char* ptr, int size )
+TQCString Decoder::automaticDetectionForBaltic( const unsigned char* ptr, int size )
 {
     for ( int i = 0; i < size; ++i ) {
         if ( ( ptr[ i ] >= 0x80 && ptr[ i ] <= 0x9E ) )
@@ -569,9 +569,9 @@ QCString Decoder::automaticDetectionForBaltic( const unsigned char* ptr, int siz
     return "iso-8859-13";
 }
 
-QCString Decoder::automaticDetectionForCentralEuropean(const unsigned char* ptr, int size )
+TQCString Decoder::automaticDetectionForCentralEuropean(const unsigned char* ptr, int size )
 {
-    QCString charset = QCString();
+    TQCString charset = TQCString();
     for ( int i = 0; i < size; ++i ) {
         if ( ptr[ i ] >= 0x80 && ptr[ i ] <= 0x9F ) {
             if ( ptr[ i ] == 0x81 || ptr[ i ] == 0x83 || ptr[ i ] == 0x90 || ptr[ i ] == 0x98 )
@@ -601,7 +601,7 @@ QCString Decoder::automaticDetectionForCentralEuropean(const unsigned char* ptr,
     return charset.data();
 }
 
-QCString Decoder::automaticDetectionForCyrillic( const unsigned char* ptr, int size, AutoDetectLanguage _language )
+TQCString Decoder::automaticDetectionForCyrillic( const unsigned char* ptr, int size, AutoDetectLanguage _language )
 {
     int koi_st=0;
     int cp1251_st=0;
@@ -680,8 +680,8 @@ QCString Decoder::automaticDetectionForCyrillic( const unsigned char* ptr, int s
     if (ibm866_small_range>cp1251_small_range+koi_small_range)
         return "ibm866"; //hehe this is a rare case :)
 
-    QCString koi_string = "koi8-u";
-    QCString cp1251_string = "cp1251";
+    TQCString koi_string = "koi8-u";
+    TQCString cp1251_string = "cp1251";
 
     if (cp1251_st==0 && koi_st>1)
         return koi_string;
@@ -714,7 +714,7 @@ QCString Decoder::automaticDetectionForCyrillic( const unsigned char* ptr, int s
 
 }
 
-QCString Decoder::automaticDetectionForGreek( const unsigned char* ptr, int size )
+TQCString Decoder::automaticDetectionForGreek( const unsigned char* ptr, int size )
 {
     for ( int i = 0; i < size; ++i ) {
         if ( ptr[ i ] == 0x80 || ( ptr[ i ] >= 0x82 && ptr[ i ] <= 0x87 ) || ptr[ i ] == 0x89 || ptr[ i ] == 0x8B
@@ -727,7 +727,7 @@ QCString Decoder::automaticDetectionForGreek( const unsigned char* ptr, int size
     return "iso-8859-7";
 }
 
-QCString Decoder::automaticDetectionForHebrew( const unsigned char* ptr, int size )
+TQCString Decoder::automaticDetectionForHebrew( const unsigned char* ptr, int size )
 {
     for ( int i = 0; i < size; ++i ) {
         if ( ptr[ i ] == 0x80 || ( ptr[ i ] >= 0x82 && ptr[ i ] <= 0x89 ) || ptr[ i ] == 0x8B
@@ -743,7 +743,7 @@ QCString Decoder::automaticDetectionForHebrew( const unsigned char* ptr, int siz
     return "iso-8859-8-i";
 }
 
-QCString Decoder::automaticDetectionForJapanese( const unsigned char* ptr, int size )
+TQCString Decoder::automaticDetectionForJapanese( const unsigned char* ptr, int size )
 {
     if (!kc)
         kc = new JapaneseCode();
@@ -764,7 +764,7 @@ QCString Decoder::automaticDetectionForJapanese( const unsigned char* ptr, int s
     return "";
 }
 
-QCString Decoder::automaticDetectionForTurkish( const unsigned char* ptr, int size )
+TQCString Decoder::automaticDetectionForTurkish( const unsigned char* ptr, int size )
 {
     for ( int i = 0; i < size; ++i ) {
         if ( ptr[ i ] == 0x80 || ( ptr[ i ] >= 0x82 && ptr[ i ] <= 0x8C ) || ( ptr[ i ] >= 0x91 && ptr[ i ] <= 0x9C ) || ptr[ i ] == 0x9F ) {
@@ -775,7 +775,7 @@ QCString Decoder::automaticDetectionForTurkish( const unsigned char* ptr, int si
     return "iso-8859-9";
 }
 
-QCString Decoder::automaticDetectionForWesternEuropean( const unsigned char* ptr, int size )
+TQCString Decoder::automaticDetectionForWesternEuropean( const unsigned char* ptr, int size )
 {
     for ( int i = 0; i < size; ++i ) {
         if ( ptr[ i ] >= 0x80 && ptr[ i ] <= 0x9F )

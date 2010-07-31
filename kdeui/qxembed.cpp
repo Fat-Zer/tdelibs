@@ -46,12 +46,12 @@
 // 
 
 
-#include <qapplication.h>
-#include <qptrlist.h>
-#include <qptrdict.h>
-#include <qguardedptr.h>
-#include <qwhatsthis.h>
-#include <qfocusdata.h>
+#include <tqapplication.h>
+#include <tqptrlist.h>
+#include <tqptrdict.h>
+#include <tqguardedptr.h>
+#include <tqwhatsthis.h>
+#include <tqfocusdata.h>
 
 // L0001: QXEmbed works only under X windows.
 #ifdef Q_WS_X11
@@ -134,7 +134,7 @@ public:
         xplain = false;
         xgrab = false;
         mapAfterRelease = false;
-        lastPos = QPoint(0,0);
+        lastPos = TQPoint(0,0);
     }
     ~QXEmbedData(){}
 
@@ -142,8 +142,8 @@ public:
     bool xplain;          // L0102: See L1100
     bool xgrab;           // L0103: See L2800
     bool mapAfterRelease;
-    QWidget* focusProxy;  // L0104: See XEmbed spec
-    QPoint lastPos;       // L0105: See L1390
+    TQWidget* focusProxy;  // L0104: See XEmbed spec
+    TQPoint lastPos;       // L0105: See L1390
 };
 
 namespace
@@ -155,18 +155,18 @@ namespace
     public:
         QXEmbedAppFilter()  { qApp->installEventFilter( this ); } 
         ~QXEmbedAppFilter() { }
-        bool eventFilter( QObject *, QEvent * );
+        bool eventFilter( TQObject *, TQEvent * );
     };
 }
 
 // L0201: See L0200, L0740
 static QXEmbedAppFilter* filter = 0;
 // L0202: See L0610, L0730
-static QPtrDict<QGuardedPtr<QWidget> > *focusMap = 0;
+static TQPtrDict<TQGuardedPtr<TQWidget> > *focusMap = 0;
 // L0203: See L0660, L1400, L1450
 static XKeyEvent last_key_event;
 
-// L0300: This class gives access protected members of class QWidget.
+// L0300: This class gives access protected members of class TQWidget.
 //        Function focusData() is useful to reimplement tab focus management
 //        (L0620) Function topData() returns a structure QTLWExtra containing
 //        information unique to toplevel windows.  This structure contains two
@@ -177,8 +177,8 @@ static XKeyEvent last_key_event;
 class QPublicWidget : public QWidget
 {
 public:
-    QTLWExtra* topData() { return QWidget::topData(); }
-    QFocusData *focusData(){ return QWidget::focusData(); }
+    QTLWExtra* topData() { return TQWidget::topData(); }
+    TQFocusData *focusData(){ return TQWidget::focusData(); }
     bool focusNextPrev(bool b) { return focusNextPrevChild(b); }
 };
 
@@ -297,25 +297,25 @@ static void sendFocusMessage(Window window, int type, int mode, int detail)
 //        when this happens (L2060).  This can be achieved without
 //        cooperation from the client.
 
-bool QXEmbedAppFilter::eventFilter( QObject *o, QEvent * e)
+bool QXEmbedAppFilter::eventFilter( TQObject *o, TQEvent * e)
 {
     static bool obeyFocus = false;
     switch ( e->type() ) {
-    case QEvent::MouseButtonPress:
+    case TQEvent::MouseButtonPress:
         // L0612: This will become clear with L0614
-        if ( !((QWidget*)o)->isActiveWindow() )
+        if ( !((TQWidget*)o)->isActiveWindow() )
             obeyFocus = true;
         break;
-    case QEvent::FocusIn:
+    case TQEvent::FocusIn:
         // L0613: FocusIn events either occur because the widget already was
         //        active and has just been given the Qt focus (L0614) or
         //        because the widget already had the Qt focus and just became
         //        active (L0615).
         if ( qApp->focusWidget() == o &&
              ((QPublicWidget*)qApp->focusWidget()->topLevelWidget())->topData()->embedded ) {
-            QFocusEvent* fe = (QFocusEvent*) e;
-            if ( obeyFocus || fe->reason() == QFocusEvent::Mouse ||
-                 fe->reason() == QFocusEvent::Shortcut ) {
+            TQFocusEvent* fe = (TQFocusEvent*) e;
+            if ( obeyFocus || fe->reason() == TQFocusEvent::Mouse ||
+                 fe->reason() == TQFocusEvent::Shortcut ) {
                 // L0614: A widget in the embedded client was just given the Qt focus.
                 //        Variable `obeyFocus' suggests that this is the result of mouse
                 //        activity in the client.  The XEMBED_REQUEST_FOCUS message causes
@@ -323,7 +323,7 @@ bool QXEmbedAppFilter::eventFilter( QObject *o, QEvent * e)
                 WId window = ((QPublicWidget*)qApp->focusWidget()->topLevelWidget())->topData()->parentWinId;
                 focusMap->remove( qApp->focusWidget()->topLevelWidget() );
                 sendXEmbedMessage( window, XEMBED_REQUEST_FOCUS );
-            } else if ( fe->reason() == QFocusEvent::ActiveWindow ) {
+            } else if ( fe->reason() == TQFocusEvent::ActiveWindow ) {
                 // L0615: Both the embedder and the embedded client became active.
                 //        But we do not know whether the QXEmbed widget has the Qt focus.
                 //        So we clear the Qt focus for now.  If indeed the QXEmbed widget
@@ -331,7 +331,7 @@ bool QXEmbedAppFilter::eventFilter( QObject *o, QEvent * e)
                 //        tell us to restore the focus (L0680, L0683).
                 focusMap->remove( qApp->focusWidget()->topLevelWidget() );
                 focusMap->insert( qApp->focusWidget()->topLevelWidget(),
-                                  new QGuardedPtr<QWidget>(qApp->focusWidget()->topLevelWidget()->focusWidget() ) );
+                                  new TQGuardedPtr<TQWidget>(qApp->focusWidget()->topLevelWidget()->focusWidget() ) );
                 // L0616: qApp->focusWidget() might belong to a modal dialog and not be 
                 //        equal to qApp->focusWidget()->topLevelWidget()->focusWidget() !
                 qApp->focusWidget()->clearFocus();
@@ -340,7 +340,7 @@ bool QXEmbedAppFilter::eventFilter( QObject *o, QEvent * e)
             obeyFocus = false;
         }
         break;
-    case QEvent::KeyPress: 
+    case TQEvent::KeyPress: 
         if (qApp->focusWidget() == o &&
             ((QPublicWidget*)qApp->focusWidget()->topLevelWidget())->topData()->embedded ) {
             // L0620: The following code replaces the Qt code that 
@@ -355,29 +355,29 @@ bool QXEmbedAppFilter::eventFilter( QObject *o, QEvent * e)
             //        messages are sent back to the embedding application
             //        (L0653, L0654) which then performs tab navigation
             //        (L2081).
-            QKeyEvent *k = (QKeyEvent *)e;
-            QWidget *w = qApp->focusWidget();
-            // L0621: The following tests are copied from QWidget::event().
+            TQKeyEvent *k = (TQKeyEvent *)e;
+            TQWidget *w = qApp->focusWidget();
+            // L0621: The following tests are copied from TQWidget::event().
             bool res = false;
             bool tabForward = true;
             if ( !(k->state() & ControlButton || k->state() & AltButton) ) {
                 if ( k->key() == Key_Backtab || (k->key() == Key_Tab && (k->state() & ShiftButton)) ) {
-                    QFocusEvent::setReason( QFocusEvent::Backtab );
+                    TQFocusEvent::setReason( TQFocusEvent::Backtab );
                     res = ((QPublicWidget*)w)->focusNextPrev( tabForward = false );
-                    QFocusEvent::resetReason();
+                    TQFocusEvent::resetReason();
                 } else if ( k->key() == Key_Tab ) {
-                    QFocusEvent::setReason( QFocusEvent::Tab );
+                    TQFocusEvent::setReason( TQFocusEvent::Tab );
                     res = ((QPublicWidget*)w)->focusNextPrev( tabForward = true );
-                    QFocusEvent::resetReason();
+                    TQFocusEvent::resetReason();
                 }
             }
             if (res) {
                 // L0625: We changed the focus because of tab/backtab key
                 //        Now check whether we have been looping around.
-                QFocusData *fd = ((QPublicWidget*)w)->focusData();
+                TQFocusData *fd = ((QPublicWidget*)w)->focusData();
                 WId window = ((QPublicWidget*)w->topLevelWidget())->topData()->parentWinId;
-                QWidget *cw = 0;
-                QWidget *fw = fd->home();
+                TQWidget *cw = 0;
+                TQWidget *fw = fd->home();
                 if (tabForward && window) {
                     while (cw != w && cw != fw && cw != w->topLevelWidget()) 
                         cw = fd->prev();
@@ -422,7 +422,7 @@ static int qxembed_x11_event_filter( XEvent* e)
             // L0671: Keep Qt message time up to date
             if ( msgtime > qt_x_time )
                 qt_x_time = msgtime;
-            QWidget* w = QWidget::find( e->xclient.window );
+            TQWidget* w = TQWidget::find( e->xclient.window );
             if ( !w )
                 break;
             switch ( message) {
@@ -468,8 +468,8 @@ static int qxembed_x11_event_filter( XEvent* e)
                 // L0680: Embedding application gives us the focus.
                 {
                     // L0681: Search saved focus widget.
-                    QWidget* focusCurrent = 0;
-                    QGuardedPtr<QWidget>* fw = focusMap->find( w->topLevelWidget() );
+                    TQWidget* focusCurrent = 0;
+                    TQGuardedPtr<TQWidget>* fw = focusMap->find( w->topLevelWidget() );
                     if ( fw ) {
                         focusCurrent = *fw;
                         // L0682: Remove it from the map
@@ -486,19 +486,19 @@ static int qxembed_x11_event_filter( XEvent* e)
                     case XEMBED_FOCUS_FIRST:
                         {
                             // L0684: Search first widget in tab chain
-                            QFocusEvent::setReason( QFocusEvent::Tab );
+                            TQFocusEvent::setReason( TQFocusEvent::Tab );
                             w->topLevelWidget()->setFocus();
                             ((QPublicWidget*)w->topLevelWidget())->focusNextPrev(true);
-                            QFocusEvent::resetReason();
+                            TQFocusEvent::resetReason();
                         }
                         break;
                     case XEMBED_FOCUS_LAST:
                         {
                             // L0686: Search last widget in tab chain
-                            QFocusEvent::setReason( QFocusEvent::Backtab );
+                            TQFocusEvent::setReason( TQFocusEvent::Backtab );
                             w->topLevelWidget()->setFocus();
                             ((QPublicWidget*)w->topLevelWidget())->focusNextPrev(false);
-                            QFocusEvent::resetReason();
+                            TQFocusEvent::resetReason();
                         }
                         break;
                     default:
@@ -512,7 +512,7 @@ static int qxembed_x11_event_filter( XEvent* e)
                 //        and clear the Qt focus.
                 if ( w->topLevelWidget()->focusWidget() ) {
                     focusMap->insert( w->topLevelWidget(),
-                        new QGuardedPtr<QWidget>(w->topLevelWidget()->focusWidget() ) );
+                        new TQGuardedPtr<TQWidget>(w->topLevelWidget()->focusWidget() ) );
                     w->topLevelWidget()->focusWidget()->clearFocus();
                 }
             break;
@@ -521,7 +521,7 @@ static int qxembed_x11_event_filter( XEvent* e)
             }
         } else if ( e->xclient.format == 32 && e->xclient.message_type ) {
             if ( e->xclient.message_type == qt_wm_protocols ) {
-                QWidget* w = QWidget::find( e->xclient.window );
+                TQWidget* w = TQWidget::find( e->xclient.window );
                 if ( !w )
                     break;
                 // L0690: This is for the embedding side!
@@ -541,8 +541,8 @@ static int qxembed_x11_event_filter( XEvent* e)
                     //        do the job (L1310).  This does not happen if the
                     //        window is already active.  So we simulate it.
                     if ( w->isActiveWindow() ) {
-                        QEvent e( QEvent::WindowActivate );
-                        QApplication::sendEvent( w, &e );
+                        TQEvent e( TQEvent::WindowActivate );
+                        TQApplication::sendEvent( w, &e );
                     }
                 }
             }
@@ -576,7 +576,7 @@ void QXEmbed::initialize()
     // L0720: Install low level filter for X11 events (L0650)
     oldFilter = qt_set_x11_event_filter( qxembed_x11_event_filter );
     // L0730: See L0610 for an explanation about focusMap.
-    focusMap = new QPtrDict<QGuardedPtr<QWidget> >;
+    focusMap = new TQPtrDict<TQGuardedPtr<TQWidget> >;
     focusMap->setAutoDelete( true );
     // L0740: Create client side application wide event filter (L0610)
     filter = new QXEmbedAppFilter;
@@ -605,8 +605,8 @@ void QXEmbed::initialize()
 
 
 // L0900: Constructs a xembed widget.
-QXEmbed::QXEmbed(QWidget *parent, const char *name, WFlags f)
-  : QWidget(parent, name, f)
+QXEmbed::QXEmbed(TQWidget *parent, const char *name, WFlags f)
+  : TQWidget(parent, name, f)
 {
     // L0901: Create private data. See L0100.
     d = new QXEmbedData;
@@ -616,11 +616,11 @@ QXEmbed::QXEmbed(QWidget *parent, const char *name, WFlags f)
     //        whole embedding application. They compete between themselves and
     //        against Qt (L0690, L0914, L1040, L1310, L1510, L1580). 
     //        This would be much simpler if implemented within Qt.
-    d->focusProxy = new QWidget( topLevelWidget(), "xembed_focus" );
+    d->focusProxy = new TQWidget( topLevelWidget(), "xembed_focus" );
     d->focusProxy->setGeometry( -1, -1, 1, 1 );
     d->focusProxy->show();
     // make sure it's shown - for XSetInputFocus
-    QApplication::sendPostedEvents( d->focusProxy, 0 );
+    TQApplication::sendPostedEvents( d->focusProxy, 0 );
     // L0903: Install the client side event filters
     //        because they also provide services for the embedder side
     //        See L0660, L0671, L0685.
@@ -755,14 +755,14 @@ QXEmbed::Protocol QXEmbed::protocol()
 
 
 // L1200: QXEmbed widget size changes: resize embedded window.
-void QXEmbed::resizeEvent(QResizeEvent*)
+void QXEmbed::resizeEvent(TQResizeEvent*)
 {
     if (window)
         XResizeWindow(qt_xdisplay(), window, width(), height());
 }
 
 // L1250: QXEmbed widget is shown: make sure embedded window is visible.
-void QXEmbed::showEvent(QShowEvent*)
+void QXEmbed::showEvent(TQShowEvent*)
 {
     if (window)
         XMapRaised(qt_xdisplay(), window);
@@ -770,11 +770,11 @@ void QXEmbed::showEvent(QShowEvent*)
 
 
 // L1300: This event filter sees all application events (L0913).
-bool QXEmbed::eventFilter( QObject *o, QEvent * e)
+bool QXEmbed::eventFilter( TQObject *o, TQEvent * e)
 {
 
     switch ( e->type() ) {
-    case QEvent::WindowActivate:
+    case TQEvent::WindowActivate:
         if ( o == topLevelWidget() ) {
             // L1310: Qt thinks the application window has just been activated.
             //        Make sure the X11 focus is on the focus proxy window. See L0686.
@@ -790,7 +790,7 @@ bool QXEmbed::eventFilter( QObject *o, QEvent * e)
                 sendXEmbedMessage( window, XEMBED_WINDOW_ACTIVATE );
         }
         break;
-    case QEvent::WindowDeactivate:
+    case TQEvent::WindowDeactivate:
         if ( o == topLevelWidget() ) {
             if (d->xplain)
                 // L1321: Activation has changed. Grab state might change. See L2800.
@@ -800,15 +800,15 @@ bool QXEmbed::eventFilter( QObject *o, QEvent * e)
                 sendXEmbedMessage( window, XEMBED_WINDOW_DEACTIVATE );
         }
         break;
-    case QEvent::Move:
+    case TQEvent::Move:
         {
-            QWidget* pos = this;
+            TQWidget* pos = this;
             while( pos != o && pos != topLevelWidget())
                 pos = pos->parentWidget();
             if( pos == o ) {
                 // L1390: Send fake configure notify events whenever the
                 //        global position of the client changes. See L2900.
-                QPoint globalPos = mapToGlobal(QPoint(0,0));
+                TQPoint globalPos = mapToGlobal(TQPoint(0,0));
                 if (globalPos != d->lastPos) {
                     d->lastPos = globalPos;
                     sendSyntheticConfigureNotifyEvent();
@@ -823,9 +823,9 @@ bool QXEmbed::eventFilter( QObject *o, QEvent * e)
 }
 
 // L1350: ??? [why this?]
-bool  QXEmbed::event( QEvent * e)
+bool  QXEmbed::event( TQEvent * e)
 {
-    return QWidget::event( e );
+    return TQWidget::event( e );
 }
 
 // L1400: Forward keypress event to the client
@@ -834,7 +834,7 @@ bool  QXEmbed::event( QEvent * e)
 //        The X11 event that caused the Qt key event
 //        must be forwarded to the client.
 //        See L0660.
-void QXEmbed::keyPressEvent( QKeyEvent *)
+void QXEmbed::keyPressEvent( TQKeyEvent *)
 {
     if (!window)
         return;
@@ -845,7 +845,7 @@ void QXEmbed::keyPressEvent( QKeyEvent *)
 
 // L1450: Forward keyrelease event to the client.
 //        See comment L1400.
-void QXEmbed::keyReleaseEvent( QKeyEvent *)
+void QXEmbed::keyReleaseEvent( TQKeyEvent *)
 {
     if (!window)
         return;
@@ -854,7 +854,7 @@ void QXEmbed::keyReleaseEvent( QKeyEvent *)
 }
 
 // L1500: Handle Qt focus in event.
-void QXEmbed::focusInEvent( QFocusEvent * e ){
+void QXEmbed::focusInEvent( TQFocusEvent * e ){
     if (!window)
         return;
     // L1510: This is a good time to set the X11 focus on the focus proxy window.
@@ -880,16 +880,16 @@ void QXEmbed::focusInEvent( QFocusEvent * e ){
         // L1531: When the focus change is caused by the tab key,
         //        the client must select the first (or last) widget of
         //        its own tab chain.
-        if ( e->reason() == QFocusEvent::Tab )
+        if ( e->reason() == TQFocusEvent::Tab )
             detail = XEMBED_FOCUS_FIRST;
-        else if ( e->reason() == QFocusEvent::Backtab )
+        else if ( e->reason() == TQFocusEvent::Backtab )
             detail = XEMBED_FOCUS_LAST;
         sendXEmbedMessage( window, XEMBED_FOCUS_IN, detail);
     }
 }
 
 // L1550: Handle Qt focus out event.
-void QXEmbed::focusOutEvent( QFocusEvent * ){
+void QXEmbed::focusOutEvent( TQFocusEvent * ){
     if (!window)
         return;
     if (d->xplain) {
@@ -971,7 +971,7 @@ void QXEmbed::embed(WId w)
         //        no longer try to manage this window.
         if ( !wstate_withdrawn(window) ) {
             XWithdrawWindow(qt_xdisplay(), window, qt_xscreen());
-            QApplication::flushX();
+            TQApplication::flushX();
             // L1711: See L1610
             for (int i=0; i < 10000; ++i) {
                 if (wstate_withdrawn(window)) {
@@ -988,7 +988,7 @@ void QXEmbed::embed(WId w)
         //        time to create the embedded application main window.
         Window parent = 0;
         get_parent(w, &parent);
-        kdDebug() << QString("> before reparent: parent=0x%1").arg(parent,0,16) << endl;
+        kdDebug() << TQString("> before reparent: parent=0x%1").arg(parent,0,16) << endl;
         for (int i = 0; i < 50; i++) {
             // this is done once more when finishing embedding, but it's done also here
             // just in case we crash before reaching that place
@@ -996,16 +996,16 @@ void QXEmbed::embed(WId w)
                 XAddToSaveSet( qt_xdisplay(), w );
             XReparentWindow(qt_xdisplay(), w, winId(), 0, 0);
             if (get_parent(w, &parent) && parent == winId()) {
-               kdDebug() << QString("> Loop %1: ").arg(i)
-                         << QString("> reparent of 0x%1").arg(w,0,16)
-                         << QString(" into 0x%1").arg(winId(),0,16)
-                         << QString(" successful") << endl;
+               kdDebug() << TQString("> Loop %1: ").arg(i)
+                         << TQString("> reparent of 0x%1").arg(w,0,16)
+                         << TQString(" into 0x%1").arg(winId(),0,16)
+                         << TQString(" successful") << endl;
                 break;
             }
-            kdDebug() << QString("> Loop %1: ").arg(i)
-                      << QString("> reparent of 0x%1").arg(w,0,16)
-                      << QString(" into 0x%1").arg(winId(),0,16)
-                      << QString(" failed") << endl;
+            kdDebug() << TQString("> Loop %1: ").arg(i)
+                      << TQString("> reparent of 0x%1").arg(w,0,16)
+                      << TQString(" into 0x%1").arg(winId(),0,16)
+                      << TQString(" failed") << endl;
             USLEEP(1000);
         }
         if( parent != winId()) // failed
@@ -1030,8 +1030,8 @@ void QXEmbed::handleEmbed()
     if ( parent() ) {
         // L2030: embedded window might have new size requirements.
         //        see L2500, L2520, L2550.
-        QEvent * layoutHint = new QEvent( QEvent::LayoutHint );
-        QApplication::postEvent( parent(), layoutHint );
+        TQEvent * layoutHint = new TQEvent( TQEvent::LayoutHint );
+        TQApplication::postEvent( parent(), layoutHint );
     }
     windowChanged( window );
     if (d->xplain) {
@@ -1069,11 +1069,11 @@ bool QXEmbed::focusNextPrevChild( bool next )
         //        the focus and pass the TAB key events to the QXEmbed widget.
         //        These key events will be forwarded to the client (L1400, L1450)
         //        who eventually will manage the tab focus (L0620) and possible
-        //        instruct us to call QWidget::focusNextPrevChild (L2081).
+        //        instruct us to call TQWidget::focusNextPrevChild (L2081).
         return false;
     else
         // L1920: Default behavior otherwise.
-        return QWidget::focusNextPrevChild( next );
+        return TQWidget::focusNextPrevChild( next );
 }
 
 
@@ -1122,9 +1122,9 @@ bool QXEmbed::x11Event( XEvent* e)
         if (d->xplain && d->xgrab) {
             // L2060: The passive grab has intercepted a mouse click
             //        in the embedded client window. Take the focus.
-            QFocusEvent::setReason( QFocusEvent::Mouse );
+            TQFocusEvent::setReason( TQFocusEvent::Mouse );
             setFocus();
-            QFocusEvent::resetReason();
+            TQFocusEvent::resetReason();
             // L2064: Resume X11 event processing.
             XAllowEvents(qt_xdisplay(), ReplayPointer, CurrentTime);
             // L2065: Qt should not know about this.
@@ -1150,13 +1150,13 @@ bool QXEmbed::x11Event( XEvent* e)
             long message = e->xclient.data.l[1];
             switch ( message ) {
                 // L2081: Tab focus management. It is very important to call the 
-                //        focusNextPrevChild() defined by QWidget (not QXEmbed). 
+                //        focusNextPrevChild() defined by TQWidget (not QXEmbed). 
                 //        See L1901.
             case XEMBED_FOCUS_NEXT:
-                QWidget::focusNextPrevChild( true );
+                TQWidget::focusNextPrevChild( true );
                 break;
             case XEMBED_FOCUS_PREV:
-                QWidget::focusNextPrevChild( false );
+                TQWidget::focusNextPrevChild( false );
                 break;
                 // L2085: The client asks for the focus.
             case XEMBED_REQUEST_FOCUS:
@@ -1164,9 +1164,9 @@ bool QXEmbed::x11Event( XEvent* e)
                     WId window = ((QPublicWidget*)topLevelWidget())->topData()->parentWinId;
                     sendXEmbedMessage( window, XEMBED_REQUEST_FOCUS );
                 } else {
-                    QFocusEvent::setReason( QFocusEvent::Mouse );
+                    TQFocusEvent::setReason( TQFocusEvent::Mouse );
                     setFocus();
-                    QFocusEvent::resetReason();
+                    TQFocusEvent::resetReason();
                 }
                 break;
             default:
@@ -1187,7 +1187,7 @@ bool QXEmbed::x11Event( XEvent* e)
 	// fall through, workaround for Qt 3.0 < 3.0.3
     case EnterNotify:
         // L2095: See L2200.
-        if ( QWhatsThis::inWhatsThisMode() )
+        if ( TQWhatsThis::inWhatsThisMode() )
             enterWhatsThisMode();
         break;
     default:
@@ -1205,7 +1205,7 @@ void QXEmbed::enterWhatsThisMode()
     //        cancel what-s-this mode, and use a non stantard _NET_WM_ message
     //        to instruct the embedded client to enter the "what's this" mode.
     //        This works only one way...
-    QWhatsThis::leaveWhatsThisMode();
+    TQWhatsThis::leaveWhatsThisMode();
     if ( !context_help )
         context_help = XInternAtom( x11Display(), "_NET_WM_CONTEXT_HELP", false );
     sendClientMessage(window , qt_wm_protocols, context_help );
@@ -1220,7 +1220,7 @@ void QXEmbed::windowChanged( WId )
 
 // L2400: Utility function for clients that embed themselves.
 //        This is client side code.
-bool QXEmbed::processClientCmdline( QWidget* client, int& argc, char ** argv )
+bool QXEmbed::processClientCmdline( TQWidget* client, int& argc, char ** argv )
 {
     int myargc = argc;
     WId window = 0;
@@ -1232,9 +1232,9 @@ bool QXEmbed::processClientCmdline( QWidget* client, int& argc, char ** argv )
             argv[j++] = argv[i];
             continue;
         }
-        QCString arg = argv[i];
+        TQCString arg = argv[i];
         if ( !strcmp(arg,"-embed") && i < myargc-1 ) {
-            QCString s = argv[++i];
+            TQCString s = argv[++i];
             window = s.toInt();
         } else
             argv[j++] = argv[i];
@@ -1252,7 +1252,7 @@ bool QXEmbed::processClientCmdline( QWidget* client, int& argc, char ** argv )
 
 // L2450: Utility function for clients that embed themselves.
 //        This is client side code.
-void QXEmbed::embedClientIntoWindow(QWidget* client, WId window)
+void QXEmbed::embedClientIntoWindow(TQWidget* client, WId window)
 {
     initialize();
     XReparentWindow(qt_xdisplay(), client->winId(), window, 0, 0);
@@ -1268,20 +1268,20 @@ void QXEmbed::embedClientIntoWindow(QWidget* client, WId window)
 
 // L2500: Specifies that this widget can use additional space,
 //        and that it can survive on less than sizeHint().
-QSizePolicy QXEmbed::sizePolicy() const
+TQSizePolicy QXEmbed::sizePolicy() const
 {
-    return QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+    return TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding );
 }
 
 
 // L2520: Returns a size sufficient for the embedded window
-QSize QXEmbed::sizeHint() const
+TQSize QXEmbed::sizeHint() const
 {
     return minimumSizeHint();
 }
 
 // L2550: Returns the minimum size specified by the embedded window.
-QSize QXEmbed::minimumSizeHint() const
+TQSize QXEmbed::minimumSizeHint() const
 {
     int minw = 0;
     int minh = 0;
@@ -1295,7 +1295,7 @@ QSize QXEmbed::minimumSizeHint() const
         }
     }
 
-    return QSize( minw, minh );
+    return TQSize( minw, minh );
 }
 
 // L2600: Tells what shoud be done with the embedded window when
@@ -1344,7 +1344,7 @@ void QXEmbed::sendSyntheticConfigureNotifyEvent()
     // L2910: It seems that the x and y coordinates are global.
     //        But this is what ICCCM section 4.1.5 wants.
     //        See http://lists.kde.org/?l=kfm-devel&m=107090222032378
-    QPoint globalPos = mapToGlobal(QPoint(0,0));
+    TQPoint globalPos = mapToGlobal(TQPoint(0,0));
     if (window) {
 #if 0
         XConfigureEvent c;
@@ -1369,15 +1369,15 @@ void QXEmbed::sendSyntheticConfigureNotifyEvent()
     }
 }
 
-// L3000: One should not call QWidget::reparent after embedding a window.
-void QXEmbed::reparent( QWidget * parent, WFlags f, const QPoint & p, bool showIt )
+// L3000: One should not call TQWidget::reparent after embedding a window.
+void QXEmbed::reparent( TQWidget * parent, WFlags f, const TQPoint & p, bool showIt )
 {
-    // QWidget::reparent() destroys the old X Window for the widget, and
+    // TQWidget::reparent() destroys the old X Window for the widget, and
     // creates a new one, thus QXEmbed after reparenting is no longer the
     // parent of the embedded window.  I think reparenting of QXEmbed can be
     // done only by a mistake, so just complain.
     Q_ASSERT( !window );
-    QWidget::reparent( parent, f, p, showIt );
+    TQWidget::reparent( parent, f, p, showIt );
 }
 
 // for KDE

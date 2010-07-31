@@ -26,7 +26,7 @@
 #include <kstatusbar.h>
 #include <khelpmenu.h>
 #include <kstandarddirs.h>
-#include <qapplication.h>
+#include <tqapplication.h>
 #include <kxmlguifactory.h>
 
 #include <kaccel.h>
@@ -51,13 +51,13 @@ public:
   {
   }
 
-  QGuardedPtr<Part> m_activePart;
+  TQGuardedPtr<Part> m_activePart;
   bool m_bShellGUIActivated;
   KHelpMenu *m_helpMenu;
 };
 }
 
-MainWindow::MainWindow( QWidget* parent,  const char *name, WFlags f )
+MainWindow::MainWindow( TQWidget* parent,  const char *name, WFlags f )
     : KMainWindow( parent, name, f )
 {
   d = new MainWindowPrivate();
@@ -71,7 +71,7 @@ MainWindow::MainWindow( const char *name, WFlags f )
   PartBase::setPartObject( this );
 }
 
-MainWindow::MainWindow( int cflags, QWidget* parent,  const char *name, WFlags f )
+MainWindow::MainWindow( int cflags, TQWidget* parent,  const char *name, WFlags f )
     : KMainWindow( cflags, parent, name, f )
 {
   d = new MainWindowPrivate();
@@ -95,7 +95,7 @@ void MainWindow::createGUI( Part * part )
 
   setUpdatesEnabled( false );
 
-  QPtrList<Plugin> plugins;
+  TQPtrList<Plugin> plugins;
 
   if ( d->m_activePart )
   {
@@ -103,14 +103,14 @@ void MainWindow::createGUI( Part * part )
                   << " " << d->m_activePart->name() << endl;
 
     GUIActivateEvent ev( false );
-    QApplication::sendEvent( d->m_activePart, &ev );
+    TQApplication::sendEvent( d->m_activePart, &ev );
 
     factory->removeClient( d->m_activePart );
 
-    disconnect( d->m_activePart, SIGNAL( setWindowCaption( const QString & ) ),
-             this, SLOT( setCaption( const QString & ) ) );
-    disconnect( d->m_activePart, SIGNAL( setStatusBarText( const QString & ) ),
-             this, SLOT( slotSetStatusBarText( const QString & ) ) );
+    disconnect( d->m_activePart, TQT_SIGNAL( setWindowCaption( const TQString & ) ),
+             this, TQT_SLOT( setCaption( const TQString & ) ) );
+    disconnect( d->m_activePart, TQT_SIGNAL( setStatusBarText( const TQString & ) ),
+             this, TQT_SLOT( slotSetStatusBarText( const TQString & ) ) );
   }
 
   if ( !d->m_bShellGUIActivated )
@@ -123,15 +123,15 @@ void MainWindow::createGUI( Part * part )
   if ( part )
   {
     // do this before sending the activate event
-    connect( part, SIGNAL( setWindowCaption( const QString & ) ),
-             this, SLOT( setCaption( const QString & ) ) );
-    connect( part, SIGNAL( setStatusBarText( const QString & ) ),
-             this, SLOT( slotSetStatusBarText( const QString & ) ) );
+    connect( part, TQT_SIGNAL( setWindowCaption( const TQString & ) ),
+             this, TQT_SLOT( setCaption( const TQString & ) ) );
+    connect( part, TQT_SIGNAL( setStatusBarText( const TQString & ) ),
+             this, TQT_SLOT( slotSetStatusBarText( const TQString & ) ) );
 
     factory->addClient( part );
 
     GUIActivateEvent ev( true );
-    QApplication::sendEvent( part, &ev );
+    TQApplication::sendEvent( part, &ev );
 
     if ( autoSaveSettings() )
         applyMainWindowSettings( KGlobal::config(), autoSaveGroup() );
@@ -142,7 +142,7 @@ void MainWindow::createGUI( Part * part )
   d->m_activePart = part;
 }
 
-void MainWindow::slotSetStatusBarText( const QString & text )
+void MainWindow::slotSetStatusBarText( const TQString & text )
 {
   statusBar()->message( text );
 }
@@ -157,25 +157,25 @@ void MainWindow::createShellGUI( bool create )
         if ( isHelpMenuEnabled() && !d->m_helpMenu )
             d->m_helpMenu = new KHelpMenu( this, instance()->aboutData(), true, actionCollection() );
 
-        QString f = xmlFile();
+        TQString f = xmlFile();
         setXMLFile( locate( "config", "ui/ui_standards.rc", instance() ) );
         if ( !f.isEmpty() )
             setXMLFile( f, true );
         else
         {
-            QString auto_file( instance()->instanceName() + "ui.rc" );
+            TQString auto_file( instance()->instanceName() + "ui.rc" );
             setXMLFile( auto_file, true );
         }
 
         GUIActivateEvent ev( true );
-        QApplication::sendEvent( this, &ev );
+        TQApplication::sendEvent( this, &ev );
 
         guiFactory()->addClient( this );
     }
     else
     {
         GUIActivateEvent ev( false );
-        QApplication::sendEvent( this, &ev );
+        TQApplication::sendEvent( this, &ev );
 
         guiFactory()->removeClient( this );
     }

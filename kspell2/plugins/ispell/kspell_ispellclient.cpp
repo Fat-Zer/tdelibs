@@ -31,7 +31,7 @@ K_EXPORT_COMPONENT_FACTORY( kspell_ispell, ISpellClientFactory( "kspell_ispell" 
 
 using namespace KSpell2;
 
-ISpellClient::ISpellClient( QObject *parent, const char *name, const QStringList& /* args */  )
+ISpellClient::ISpellClient( TQObject *parent, const char *name, const TQStringList& /* args */  )
     : Client( parent, name )
 {
 }
@@ -40,13 +40,13 @@ ISpellClient::~ISpellClient()
 {
 }
 
-Dictionary* ISpellClient::dictionary( const QString& language )
+Dictionary* ISpellClient::dictionary( const TQString& language )
 {
     ISpellDict *ad = new ISpellDict( language );
     return ad;
 }
 
-QStringList ISpellClient::languages() const
+TQStringList ISpellClient::languages() const
 {
     return ISpellChecker::allDics();
 }

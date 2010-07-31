@@ -1,4 +1,4 @@
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -30,7 +30,7 @@ int main(int argc,char **argv)
 
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
   if (args->isSet("list")) {
-    QString name = args->getOption("list");
+    TQString name = args->getOption("list");
     
     DistributionListManager *manager =
         new DistributionListManager( StdAddressBook::self() );
@@ -51,7 +51,7 @@ int main(int argc,char **argv)
   editor->show();
   app.setMainWidget(editor);
   
-  QObject::connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
+  TQObject::connect( &app, TQT_SIGNAL( lastWindowClosed() ), &app, TQT_SLOT( quit() ) );
 
   app.exec();
   

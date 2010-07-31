@@ -19,14 +19,14 @@
 
 #include "imagepreview.h"
 
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qpaintdevice.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqpaintdevice.h>
 
 // forward definition
-QImage convertImage(const QImage& image, int hue, int saturation, int brightness, int gamma);
+TQImage convertImage(const TQImage& image, int hue, int saturation, int brightness, int gamma);
 
-ImagePreview::ImagePreview(QWidget *parent, const char *name ) : QWidget(parent,name) {
+ImagePreview::ImagePreview(TQWidget *parent, const char *name ) : TQWidget(parent,name) {
 	brightness_ = 100;
 	hue_ = 0;
 	saturation_ = 100;
@@ -39,7 +39,7 @@ ImagePreview::ImagePreview(QWidget *parent, const char *name ) : QWidget(parent,
 ImagePreview::~ImagePreview(){
 }
 
-void ImagePreview::setImage(const QImage& image){
+void ImagePreview::setImage(const TQImage& image){
 	image_ = image.convertDepth(32);
 	image_.detach();
 	resize(image_.size());
@@ -54,7 +54,7 @@ void ImagePreview::setParameters(int brightness, int hue, int saturation, int ga
 	repaint();
 }
 
-void ImagePreview::paintEvent(QPaintEvent*){
+void ImagePreview::paintEvent(TQPaintEvent*){
 	QImage	tmpImage = convertImage(image_,hue_,(bw_ ? 0 : saturation_),brightness_,gamma_);
 	int	x = (width()-tmpImage.width())/2, y = (height()-tmpImage.height())/2;
 
@@ -64,7 +64,7 @@ void ImagePreview::paintEvent(QPaintEvent*){
 	p.drawImage(x,y,tmpImage);
 	p.end();
 
-	bitBlt(this, QPoint(0, 0), &buffer, buffer.rect(), Qt::CopyROP);
+	bitBlt(this, TQPoint(0, 0), &buffer, buffer.rect(), Qt::CopyROP);
 }
 
 void ImagePreview::setBlackAndWhite(bool on){
@@ -72,7 +72,7 @@ void ImagePreview::setBlackAndWhite(bool on){
 	update();
 }
 
-QSize ImagePreview::minimumSizeHint() const
+TQSize ImagePreview::minimumSizeHint() const
 {
 	return image_.size();
 }

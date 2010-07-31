@@ -23,24 +23,24 @@
 #include "kmfactory.h"
 #include "kmmanager.h"
 
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qmap.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqmap.h>
 #include <klocale.h>
 
-QStringList defaultBanners()
+TQStringList defaultBanners()
 {
 	QStringList	bans;
-	QPtrList<KMPrinter>	*list = KMFactory::self()->manager()->printerList(false);
+	TQPtrList<KMPrinter>	*list = KMFactory::self()->manager()->printerList(false);
 	if (list && list->count() > 0)
 	{
-		QPtrListIterator<KMPrinter>	it(*list);
+		TQPtrListIterator<KMPrinter>	it(*list);
 		for (;it.current() && !it.current()->isPrinter(); ++it) ;
 		if (it.current() && KMFactory::self()->manager()->completePrinter(it.current()))
 		{
 			QString	s = list->getFirst()->option("kde-banners-supported");
-			bans = QStringList::split(',',s,false);
+			bans = TQStringList::split(',',s,false);
 		}
 	}
 	if (bans.count() == 0)
@@ -64,13 +64,13 @@ static struct
 	{ 0, 0 }
 };
 
-QString mapBanner( const QString& ban )
+TQString mapBanner( const TQString& ban )
 {
-	static QMap<QString,QString> map;
+	static TQMap<TQString,TQString> map;
 	if ( map.size() == 0 )
 		for ( int i=0; bannermap[ i ].banner; i++ )
 			map[ bannermap[ i ].banner ] = bannermap[ i ].name;
-	QMap<QString,QString>::ConstIterator it = map.find( ban );
+	TQMap<TQString,TQString>::ConstIterator it = map.find( ban );
 	if ( it == map.end() )
 		return ban;
 	else
@@ -79,28 +79,28 @@ QString mapBanner( const QString& ban )
 
 //**************************************************************************************************************
 
-KMWBanners::KMWBanners(QWidget *parent, const char *name)
+KMWBanners::KMWBanners(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_ID = KMWizard::Banners;
 	m_title = i18n("Banner Selection");
 	m_nextpage = KMWizard::Custom+3;
 
-	m_start = new QComboBox(this);
-	m_end = new QComboBox(this);
+	m_start = new TQComboBox(this);
+	m_end = new TQComboBox(this);
 
-	QLabel	*l1 = new QLabel(i18n("&Starting banner:"),this);
-	QLabel	*l2 = new QLabel(i18n("&Ending banner:"),this);
+	QLabel	*l1 = new TQLabel(i18n("&Starting banner:"),this);
+	QLabel	*l2 = new TQLabel(i18n("&Ending banner:"),this);
 
 	l1->setBuddy(m_start);
 	l2->setBuddy(m_end);
 
-	QLabel	*l0 = new QLabel(this);
+	QLabel	*l0 = new TQLabel(this);
 	l0->setText(i18n("<p>Select the default banners associated with this printer. These "
 			 "banners will be inserted before and/or after each print job sent "
 			 "to the printer. If you don't want to use banners, select <b>No Banner</b>.</p>"));
 
-	QGridLayout	*lay = new QGridLayout(this, 5, 2, 0, 10);
+	QGridLayout	*lay = new TQGridLayout(this, 5, 2, 0, 10);
 	lay->setColStretch(1,1);
 	lay->addRowSpacing(1,20);
 	lay->setRowStretch(4,1);
@@ -117,18 +117,18 @@ void KMWBanners::initPrinter(KMPrinter *p)
 	{
 		if (m_start->count() == 0)
 		{
-			m_bans = QStringList::split(',',p->option("kde-banners-supported"),false);
+			m_bans = TQStringList::split(',',p->option("kde-banners-supported"),false);
 			if (m_bans.count() == 0)
 				m_bans = defaultBanners();
 			if (m_bans.find("none") == m_bans.end())
 				m_bans.prepend("none");
-			for ( QStringList::Iterator it=m_bans.begin(); it!=m_bans.end(); ++it )
+			for ( TQStringList::Iterator it=m_bans.begin(); it!=m_bans.end(); ++it )
 			{
 				m_start->insertItem( i18n( mapBanner(*it).utf8() ) );
 				m_end->insertItem( i18n( mapBanner(*it).utf8() ) );
 			}
 		}
-		QStringList	l = QStringList::split(',',p->option("kde-banners"),false);
+		QStringList	l = TQStringList::split(',',p->option("kde-banners"),false);
 		while (l.count() < 2)
 			l.append("none");
 		m_start->setCurrentItem(m_bans.findIndex(l[0]));

@@ -33,7 +33,7 @@ class ResourceSqlConfig : public ResourceConfigWidget
   Q_OBJECT
 
 public:
-  ResourceSqlConfig( QWidget* parent = 0, const char* name = 0 );
+  ResourceSqlConfig( TQWidget* parent = 0, const char* name = 0 );
 
 public slots:
   void loadSettings( KConfig *config );
@@ -44,7 +44,7 @@ private:
   KLineEdit* mPassword;
   KLineEdit* mDbName;
   KLineEdit* mHost;
-  QSpinBox* mPort;
+  TQSpinBox* mPort;
 };
 
 }

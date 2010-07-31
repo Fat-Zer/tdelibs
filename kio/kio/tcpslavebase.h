@@ -45,11 +45,11 @@ namespace KIO {
 class KIO_EXPORT TCPSlaveBase : public SlaveBase
 {
 public:
-    TCPSlaveBase(unsigned short int defaultPort, const QCString &protocol,
-                 const QCString &poolSocket, const QCString &appSocket);
+    TCPSlaveBase(unsigned short int defaultPort, const TQCString &protocol,
+                 const TQCString &poolSocket, const TQCString &appSocket);
 
-    TCPSlaveBase(unsigned short int defaultPort, const QCString &protocol,
-                 const QCString &poolSocket, const QCString &appSocket,
+    TCPSlaveBase(unsigned short int defaultPort, const TQCString &protocol,
+                 const TQCString &poolSocket, const TQCString &appSocket,
                  bool useSSL);
 
     virtual ~TCPSlaveBase();
@@ -80,7 +80,7 @@ protected:
     /**
      * @deprecated Due to inconsistency with KDE naming convention.
      */
-    KDE_DEPRECATED bool ConnectToHost( const QString &host, unsigned int port,
+    KDE_DEPRECATED bool ConnectToHost( const TQString &host, unsigned int port,
                         bool sendError ) { return connectToHost( host, port, sendError ); }
 
     /**
@@ -170,7 +170,7 @@ protected:
      *         on failure, false is returned and an appropriate
      *         error message is send to the application.
      */
-    bool connectToHost( const QString &host, unsigned int port,
+    bool connectToHost( const TQString &host, unsigned int port,
                         bool sendError = true );
 
     /**
@@ -352,7 +352,7 @@ protected:
      *
      * @param realHost the actual host name we are connecting to
      */
-    void setRealHost( const QString& realHost );
+    void setRealHost( const TQString& realHost );
 
     // don't use me!
     void doConstructorStuff();
@@ -371,7 +371,7 @@ protected:
     bool m_bIsSSL;
     unsigned short int m_iPort;
     unsigned short int m_iDefaultPort;
-    QCString m_sServiceName;
+    TQCString m_sServiceName;
     FILE *fp;
 
 private:

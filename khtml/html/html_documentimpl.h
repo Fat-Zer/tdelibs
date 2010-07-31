@@ -27,7 +27,7 @@
 #include "xml/dom_docimpl.h"
 #include "html/html_miscimpl.h"
 
-#include <qmap.h>
+#include <tqmap.h>
 
 class KHTMLView;
 class QString;
@@ -66,7 +66,7 @@ public:
 
     HTMLMapElementImpl* getMap(const DOMString& url_);
 
-    virtual void determineParseMode( const QString &str );
+    virtual void determineParseMode( const TQString &str );
     virtual void close();
 
     void setAutoFill() { m_doAutoFill = true; }
@@ -79,7 +79,7 @@ protected:
     HTMLElementImpl *htmlElement;
     friend class HTMLMapElementImpl;
     friend class HTMLImageElementImpl;
-    QMap<QString,HTMLMapElementImpl*> mapMap;
+    TQMap<TQString,HTMLMapElementImpl*> mapMap;
     bool m_doAutoFill;
     bool m_htmlRequested;
 

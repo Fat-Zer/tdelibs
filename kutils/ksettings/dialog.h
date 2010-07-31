@@ -20,7 +20,7 @@
 #ifndef KSETTINGS_DIALOG_H
 #define KSETTINGS_DIALOG_H
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <kservice.h>
 
 template<class T> class QValueList;
@@ -52,14 +52,14 @@ namespace KSettings
  * If you use a KPart that was not especially designed for your app you can use
  * the second constructor:
  * \code
- * QStringList kpartslist;
+ * TQStringList kpartslist;
  * for( all my kparts )
  *   kpartslist += m_mypart->instance().instanceName();
  * m_cfgdlg = new Dialog( kpartslist, this );
  * \endcode
  * and the action for the config dialog is connected to the show slot:
  * \code
- * KStdAction::preferences( m_cfgdlg, SLOT( show() ), actionCollection() );
+ * KStdAction::preferences( m_cfgdlg, TQT_SLOT( show() ), actionCollection() );
  * \endcode
  *
  * If you need to be informed when the config was changed and applied in the
@@ -102,7 +102,7 @@ class KUTILS_EXPORT Dialog : public QObject
          *                     widget.
          * @param name         name
          */
-        Dialog( QWidget * parent = 0, const char * name = 0 );
+        Dialog( TQWidget * parent = 0, const char * name = 0 );
 
         /**
          * Construct a new Preferences Dialog for the application. It uses all
@@ -115,14 +115,14 @@ class KUTILS_EXPORT Dialog : public QObject
          *                     widget.
          * @param name         name
          */
-        Dialog( ContentInListView content = Static, QWidget * parent = 0,
+        Dialog( ContentInListView content = Static, TQWidget * parent = 0,
                 const char * name = 0 );
 
         /**
          * Construct a new Preferences Dialog with the pages for the selected
          * instance names. For example if you want to have the configuration
          * pages for the kviewviewer KPart you would pass a
-         * QStringList consisting of only the name of the part "kviewviewer".
+         * TQStringList consisting of only the name of the part "kviewviewer".
          *
          * @param components   A list of the names of the components that your
          *                     config dialog should merge the config pages in.
@@ -131,14 +131,14 @@ class KUTILS_EXPORT Dialog : public QObject
          *                     widget.
          * @param name         name
          */
-        Dialog( const QStringList & components, QWidget * parent = 0,
+        Dialog( const TQStringList & components, TQWidget * parent = 0,
                 const char * name = 0 );
 
         /**
          * Construct a new Preferences Dialog with the pages for the selected
          * instance names. For example if you want to have the configuration
          * pages for the kviewviewer KPart you would pass a
-         * QStringList consisting of only the name of the part "kviewviewer".
+         * TQStringList consisting of only the name of the part "kviewviewer".
          *
          * @param components   A list of the names of the components that your
          *                     config dialog should merge the config pages in.
@@ -149,8 +149,8 @@ class KUTILS_EXPORT Dialog : public QObject
          *                     widget.
          * @param name         name
          */
-        Dialog( const QStringList & components, ContentInListView
-                content, QWidget * parent = 0, const char * name = 0 );
+        Dialog( const TQStringList & components, ContentInListView
+                content, TQWidget * parent = 0, const char * name = 0 );
 
         ~Dialog();
 
@@ -158,7 +158,7 @@ class KUTILS_EXPORT Dialog : public QObject
          * If you use a Configurable dialog you need to pass KPluginInfo
          * objects that the dialog should configure.
          */
-        void addPluginInfos( const QValueList<KPluginInfo*> & plugininfos );
+        void addPluginInfos( const TQValueList<KPluginInfo*> & plugininfos );
 
         KCMultiDialog * dialog();
 
@@ -190,21 +190,21 @@ class KUTILS_EXPORT Dialog : public QObject
          */
         bool isPluginForKCMEnabled( KCModuleInfo * ) const;
 
-        QValueList<KService::Ptr> instanceServices() const;
-        QValueList<KService::Ptr> parentComponentsServices(
-                const QStringList & ) const;
+        TQValueList<KService::Ptr> instanceServices() const;
+        TQValueList<KService::Ptr> parentComponentsServices(
+                const TQStringList & ) const;
         /**
          * @internal
          * Read the .setdlg file and add it to the groupmap
          */
-        void parseGroupFile( const QString & );
+        void parseGroupFile( const TQString & );
 
         /**
          * @internal
          * If this module is put into a TreeList hierarchy this will return a
          * list of the names of the parent modules.
          */
-        QStringList parentModuleNames( KCModuleInfo * );
+        TQStringList parentModuleNames( KCModuleInfo * );
 
         /**
          * @internal

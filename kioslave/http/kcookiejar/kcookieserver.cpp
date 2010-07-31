@@ -29,9 +29,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <unistd.h>
 
-#include <qtimer.h>
-#include <qptrlist.h>
-#include <qfile.h>
+#include <tqtimer.h>
+#include <tqptrlist.h>
+#include <tqfile.h>
 
 #include <dcopclient.h>
 
@@ -46,7 +46,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "kcookieserver.h"
 
 extern "C" {
-    KDE_EXPORT KDEDModule *create_kcookiejar(const QCString &name)
+    KDE_EXPORT KDEDModule *create_kcookiejar(const TQCString &name)
     {
        return new KCookieServer(name);
     }
@@ -62,20 +62,20 @@ class CookieRequest {
 public:
    DCOPClient *client;
    DCOPClientTransaction *transaction;
-   QString url;
+   TQString url;
    bool DOM;
    long windowId;
 };
 
-template class  QPtrList<CookieRequest>;
+template class  TQPtrList<CookieRequest>;
 
-class RequestList : public QPtrList<CookieRequest>
+class RequestList : public TQPtrList<CookieRequest>
 {
 public:
-   RequestList() : QPtrList<CookieRequest>() { }
+   RequestList() : TQPtrList<CookieRequest>() { }
 };
 
-KCookieServer::KCookieServer(const QCString &name)
+KCookieServer::KCookieServer(const TQCString &name)
               :KDEDModule(name)
 {
    mOldCookieServer = new DCOPClient(); // backwards compatibility.
@@ -86,29 +86,29 @@ KCookieServer::KCookieServer(const QCString &name)
    mPendingCookies->setAutoDelete(true);
    mRequestList = new RequestList;
    mAdvicePending = false;
-   mTimer = new QTimer();
-   connect( mTimer, SIGNAL( timeout()), SLOT( slotSave()));
+   mTimer = new TQTimer();
+   connect( mTimer, TQT_SIGNAL( timeout()), TQT_SLOT( slotSave()));
    mConfig = new KConfig("kcookiejarrc");
    mCookieJar->loadConfig( mConfig );
 
-   QString filename = locateLocal("data", "kcookiejar/cookies");
+   TQString filename = locateLocal("data", "kcookiejar/cookies");
 
    // Stay backwards compatible!
-   QString filenameOld = locate("data", "kfm/cookies");
+   TQString filenameOld = locate("data", "kfm/cookies");
    if (!filenameOld.isEmpty())
    {
       mCookieJar->loadCookies( filenameOld );
       if (mCookieJar->saveCookies( filename))
       {
-         unlink(QFile::encodeName(filenameOld)); // Remove old kfm cookie file
+         unlink(TQFile::encodeName(filenameOld)); // Remove old kfm cookie file
       }
    }
    else
    {
       mCookieJar->loadCookies( filename);
    }
-   connect(this, SIGNAL(windowUnregistered(long)),
-           this, SLOT(slotDeleteSessionCookies(long)));
+   connect(this, TQT_SIGNAL(windowUnregistered(long)),
+           this, TQT_SLOT(slotDeleteSessionCookies(long)));
 }
 
 KCookieServer::~KCookieServer()
@@ -122,11 +122,11 @@ KCookieServer::~KCookieServer()
    delete mConfig;
 }
 
-bool KCookieServer::cookiesPending( const QString &url, KHttpCookieList *cookieList )
+bool KCookieServer::cookiesPending( const TQString &url, KHttpCookieList *cookieList )
 {
-  QString fqdn;
-  QStringList domains;
-  QString path;
+  TQString fqdn;
+  TQStringList domains;
+  TQString path;
   // Check whether 'url' has cookies on the pending list
   if (mPendingCookies->isEmpty())
      return false;
@@ -150,7 +150,7 @@ bool KCookieServer::cookiesPending( const QString &url, KHttpCookieList *cookieL
   return cookieList->isEmpty();
 }
 
-void KCookieServer::addCookies( const QString &url, const QCString &cookieHeader,
+void KCookieServer::addCookies( const TQString &url, const TQCString &cookieHeader,
                                long windowId, bool useDOMFormat )
 {
     KHttpCookieList cookieList;
@@ -216,7 +216,7 @@ void KCookieServer::checkCookies( KHttpCookieList *cookieList)
     
     KHttpCookieList currentList;
     currentList.append(currentCookie);
-    QString currentHost = currentCookie->host();
+    TQString currentHost = currentCookie->host();
 
     cookie = mPendingCookies->next();
     while (cookie)
@@ -275,13 +275,13 @@ void KCookieServer::checkCookies( KHttpCookieList *cookieList)
     {
         if (!cookiesPending( request->url ))
         {
-           QCString replyType;
-           QByteArray replyData;
-           QString res = mCookieJar->findCookies( request->url, request->DOM, request->windowId );
+           TQCString replyType;
+           TQByteArray replyData;
+           TQString res = mCookieJar->findCookies( request->url, request->DOM, request->windowId );
 
-           QDataStream stream2(replyData, IO_WriteOnly);
+           TQDataStream stream2(replyData, IO_WriteOnly);
            stream2 << res;
-           replyType = "QString";
+           replyType = "TQString";
            request->client->endTransaction( request->transaction,
                                             replyType, replyData);
            CookieRequest *tmp = request;
@@ -300,7 +300,7 @@ void KCookieServer::checkCookies( KHttpCookieList *cookieList)
 
 void KCookieServer::slotSave()
 {
-   QString filename = locateLocal("data", "kcookiejar/cookies");
+   TQString filename = locateLocal("data", "kcookiejar/cookies");
    mCookieJar->saveCookies(filename);
 }
 
@@ -312,10 +312,10 @@ void KCookieServer::saveCookieJar()
     mTimer->start( 1000*60*SAVE_DELAY, true );
 }
 
-void KCookieServer::putCookie( QStringList& out, KHttpCookie *cookie,
-                               const QValueList<int>& fields )
+void KCookieServer::putCookie( TQStringList& out, KHttpCookie *cookie,
+                               const TQValueList<int>& fields )
 {
-    QValueList<int>::ConstIterator i = fields.begin();
+    TQValueList<int>::ConstIterator i = fields.begin();
     for ( ; i != fields.end(); ++i )
     {
         switch(*i)
@@ -336,23 +336,23 @@ void KCookieServer::putCookie( QStringList& out, KHttpCookie *cookie,
             out << cookie->value();
             break;
          case CF_EXPIRE :
-            out << QString::number(cookie->expireDate());
+            out << TQString::number(cookie->expireDate());
             break;
          case CF_PROVER :
-            out << QString::number(cookie->protocolVersion());
+            out << TQString::number(cookie->protocolVersion());
             break;
          case CF_SECURE :
-            out << QString::number( cookie->isSecure() ? 1 : 0 );
+            out << TQString::number( cookie->isSecure() ? 1 : 0 );
             break;
          default :
-            out << QString::null;
+            out << TQString::null;
         }
     }
 }
 
 bool KCookieServer::cookieMatches( KHttpCookiePtr c,
-                                   QString domain, QString fqdn,
-                                   QString path, QString name )
+                                   TQString domain, TQString fqdn,
+                                   TQString path, TQString name )
 {
     if( c )
     {
@@ -369,14 +369,14 @@ bool KCookieServer::cookieMatches( KHttpCookiePtr c,
 
 // DCOP function
 QString
-KCookieServer::findCookies(QString url)
+KCookieServer::findCookies(TQString url)
 {
   return findCookies(url, 0);
 }
 
 // DCOP function
 QString
-KCookieServer::findCookies(QString url, long windowId)
+KCookieServer::findCookies(TQString url, long windowId)
 {
    if (cookiesPending(url))
    {
@@ -387,10 +387,10 @@ KCookieServer::findCookies(QString url, long windowId)
       request->DOM = false;
       request->windowId = windowId;
       mRequestList->append( request );
-      return QString::null; // Talk to you later :-)
+      return TQString::null; // Talk to you later :-)
    }
 
-   QString cookies = mCookieJar->findCookies(url, false, windowId);
+   TQString cookies = mCookieJar->findCookies(url, false, windowId);
 
    if (mCookieJar->changed())
       saveCookieJar();
@@ -402,9 +402,9 @@ KCookieServer::findCookies(QString url, long windowId)
 QStringList
 KCookieServer::findDomains()
 {
-   QStringList result;
-   const QStringList domains = mCookieJar->getDomainList();
-   for ( QStringList::ConstIterator domIt = domains.begin();
+   TQStringList result;
+   const TQStringList domains = mCookieJar->getDomainList();
+   for ( TQStringList::ConstIterator domIt = domains.begin();
          domIt != domains.end(); ++domIt )
    {
        // Ignore domains that have policy set for but contain
@@ -418,19 +418,19 @@ KCookieServer::findDomains()
 
 // DCOP function
 QStringList
-KCookieServer::findCookies(QValueList<int> fields,
-                           QString domain,
-                           QString fqdn,
-                           QString path,
-                           QString name)
+KCookieServer::findCookies(TQValueList<int> fields,
+                           TQString domain,
+                           TQString fqdn,
+                           TQString path,
+                           TQString name)
 {
-   QStringList result;
+   TQStringList result;
    bool allDomCookies = name.isEmpty();
 
    const KHttpCookieList* list =  mCookieJar->getCookieList(domain, fqdn);
    if ( list && !list->isEmpty() )
    {
-      QPtrListIterator<KHttpCookie>it( *list );
+      TQPtrListIterator<KHttpCookie>it( *list );
       for ( ; it.current(); ++it )
       {
          if ( !allDomCookies )
@@ -450,14 +450,14 @@ KCookieServer::findCookies(QValueList<int> fields,
 
 // DCOP function
 QString
-KCookieServer::findDOMCookies(QString url)
+KCookieServer::findDOMCookies(TQString url)
 {
    return findDOMCookies(url, 0);
 }
 
 // DCOP function
 QString
-KCookieServer::findDOMCookies(QString url, long windowId)
+KCookieServer::findDOMCookies(TQString url, long windowId)
 {
    // We don't wait for pending cookies because it locks up konqueror 
    // which can cause a deadlock if it happens to have a popup-menu up.
@@ -470,20 +470,20 @@ KCookieServer::findDOMCookies(QString url, long windowId)
 
 // DCOP function
 void
-KCookieServer::addCookies(QString arg1, QCString arg2, long arg3)
+KCookieServer::addCookies(TQString arg1, TQCString arg2, long arg3)
 {
    addCookies(arg1, arg2, arg3, false);
 }
 
 // DCOP function
 void
-KCookieServer::deleteCookie(QString domain, QString fqdn,
-                            QString path, QString name)
+KCookieServer::deleteCookie(TQString domain, TQString fqdn,
+                            TQString path, TQString name)
 {
    const KHttpCookieList* list = mCookieJar->getCookieList( domain, fqdn );
    if ( list && !list->isEmpty() )
    {
-      QPtrListIterator<KHttpCookie>it (*list);
+      TQPtrListIterator<KHttpCookie>it (*list);
       for ( ; it.current(); ++it )
       {
          if( cookieMatches(it.current(), domain, fqdn, path, name) )
@@ -498,7 +498,7 @@ KCookieServer::deleteCookie(QString domain, QString fqdn,
 
 // DCOP function
 void
-KCookieServer::deleteCookiesFromDomain(QString domain)
+KCookieServer::deleteCookiesFromDomain(TQString domain)
 {
    mCookieJar->eatCookiesForDomain(domain);
    saveCookieJar();
@@ -521,7 +521,7 @@ KCookieServer::deleteSessionCookies( long windowId )
 }
 
 void
-KCookieServer::deleteSessionCookiesFor(QString fqdn, long windowId)
+KCookieServer::deleteSessionCookiesFor(TQString fqdn, long windowId)
 {
   mCookieJar->eatSessionCookies( fqdn, windowId );
   saveCookieJar();
@@ -537,20 +537,20 @@ KCookieServer::deleteAllCookies()
 
 // DCOP function
 void
-KCookieServer::addDOMCookies(QString arg1, QCString arg2, long arg3)
+KCookieServer::addDOMCookies(TQString arg1, TQCString arg2, long arg3)
 {
    addCookies(arg1, arg2, arg3, true);
 }
 
 // DCOP function
 void
-KCookieServer::setDomainAdvice(QString url, QString advice)
+KCookieServer::setDomainAdvice(TQString url, TQString advice)
 {
-   QString fqdn;
-   QString dummy;
+   TQString fqdn;
+   TQString dummy;
    if (KCookieJar::parseURL(url, fqdn, dummy))
    {
-      QStringList domains;
+      TQStringList domains;
       mCookieJar->extractDomains(fqdn, domains);
       
       mCookieJar->setDomainAdvice(domains[domains.count() > 3 ? 3 : 0],
@@ -562,17 +562,17 @@ KCookieServer::setDomainAdvice(QString url, QString advice)
 
 // DCOP function
 QString
-KCookieServer::getDomainAdvice(QString url)
+KCookieServer::getDomainAdvice(TQString url)
 {
    KCookieAdvice advice = KCookieDunno;
-   QString fqdn;
-   QString dummy;
+   TQString fqdn;
+   TQString dummy;
    if (KCookieJar::parseURL(url, fqdn, dummy))
    {
-      QStringList domains;
+      TQStringList domains;
       mCookieJar->extractDomains(fqdn, domains);
 
-      QStringList::ConstIterator it = domains.begin();
+      TQStringList::ConstIterator it = domains.begin();
       while ( (advice == KCookieDunno) && (it != domains.end()) )
       {
          // Always check advice in both ".domain" and "domain". Note

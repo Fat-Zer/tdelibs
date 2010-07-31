@@ -5,7 +5,7 @@
 #ifndef _KTABCTLTEST_H
 #define _KTABCTLTEST_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 class KTabCtl;
 class QPushButton;
 class QMultiLineEdit;
@@ -15,13 +15,13 @@ class TopLevel : public QWidget
     Q_OBJECT
 public:
 
-    TopLevel( QWidget *parent=0, const char *name=0 );
+    TopLevel( TQWidget *parent=0, const char *name=0 );
 protected:
-    void resizeEvent(QResizeEvent *);
+    void resizeEvent(TQResizeEvent *);
     KTabCtl *test;
-    QPushButton *ok, *cancel;
-    QMultiLineEdit *e;
-    QWidget *pages[3];
+    TQPushButton *ok, *cancel;
+    TQMultiLineEdit *e;
+    TQWidget *pages[3];
 public slots:
     void okPressed();
     void tabChanged(int);

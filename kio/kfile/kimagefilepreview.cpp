@@ -7,12 +7,12 @@
  * License. See the file "COPYING" for the exact licensing terms.
  */
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
-#include <qwhatsthis.h>
-#include <qtimer.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqcheckbox.h>
+#include <tqwhatsthis.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -31,7 +31,7 @@
 
 /**** KImageFilePreview ****/
 
-KImageFilePreview::KImageFilePreview( QWidget *parent )
+KImageFilePreview::KImageFilePreview( TQWidget *parent )
     : KPreviewWidgetBase( parent ),
       m_job( 0L )
 {
@@ -39,28 +39,28 @@ KImageFilePreview::KImageFilePreview( QWidget *parent )
     KConfigGroupSaver cs( config, ConfigGroup );
     autoMode = config->readBoolEntry( "Automatic Preview", true );
 
-    QVBoxLayout *vb = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+    TQVBoxLayout *vb = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
 
-    imageLabel = new QLabel( this );
-    imageLabel->setFrameStyle( QFrame::NoFrame );
+    imageLabel = new TQLabel( this );
+    imageLabel->setFrameStyle( TQFrame::NoFrame );
     imageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-    imageLabel->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding) );
+    imageLabel->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding) );
     vb->addWidget( imageLabel );
 
-    QHBoxLayout *hb = new QHBoxLayout( 0 );
+    TQHBoxLayout *hb = new TQHBoxLayout( 0 );
     vb->addLayout( hb );
 
-    autoPreview = new QCheckBox( i18n("&Automatic preview"), this );
+    autoPreview = new TQCheckBox( i18n("&Automatic preview"), this );
     autoPreview->setChecked( autoMode );
     hb->addWidget( autoPreview );
-    connect( autoPreview, SIGNAL(toggled(bool)), SLOT(toggleAuto(bool)) );
+    connect( autoPreview, TQT_SIGNAL(toggled(bool)), TQT_SLOT(toggleAuto(bool)) );
 
     previewButton = new KPushButton( SmallIconSet("thumbnail"), i18n("&Preview"), this );
     hb->addWidget( previewButton );
-    connect( previewButton, SIGNAL(clicked()), SLOT(showPreview()) );
+    connect( previewButton, TQT_SIGNAL(clicked()), TQT_SLOT(showPreview()) );
 
-    timer = new QTimer( this );
-    connect( timer, SIGNAL(timeout()), SLOT(showPreview()) );
+    timer = new TQTimer( this );
+    connect( timer, TQT_SIGNAL(timeout()), TQT_SLOT(showPreview()) );
 
     setSupportedMimeTypes( KIO::PreviewJob::supportedMimeTypes() );
 }
@@ -109,14 +109,14 @@ void KImageFilePreview::showPreview( const KURL &url, bool force )
             if ( force ) // explicitly requested previews shall always be generated!
                 m_job->setIgnoreMaximumSize( true );
             
-            connect( m_job, SIGNAL( result( KIO::Job * )),
-                     this, SLOT( slotResult( KIO::Job * )));
-            connect( m_job, SIGNAL( gotPreview( const KFileItem*,
-                                                const QPixmap& )),
-                     SLOT( gotPreview( const KFileItem*, const QPixmap& ) ));
+            connect( m_job, TQT_SIGNAL( result( KIO::Job * )),
+                     this, TQT_SLOT( slotResult( KIO::Job * )));
+            connect( m_job, TQT_SIGNAL( gotPreview( const KFileItem*,
+                                                const TQPixmap& )),
+                     TQT_SLOT( gotPreview( const KFileItem*, const TQPixmap& ) ));
 
-            connect( m_job, SIGNAL( failed( const KFileItem* )),
-                     this, SLOT( slotFailed( const KFileItem* ) ));
+            connect( m_job, TQT_SIGNAL( failed( const KFileItem* )),
+                     this, TQT_SLOT( slotFailed( const KFileItem* ) ));
 	}
     }
 }
@@ -132,14 +132,14 @@ void KImageFilePreview::toggleAuto( bool a )
     }
 }
 
-void KImageFilePreview::resizeEvent( QResizeEvent * )
+void KImageFilePreview::resizeEvent( TQResizeEvent * )
 {
     timer->start( 100, true ); // forces a new preview
 }
 
-QSize KImageFilePreview::sizeHint() const
+TQSize KImageFilePreview::sizeHint() const
 {
-    return QSize( 20, 200 ); // otherwise it ends up huge???
+    return TQSize( 20, 200 ); // otherwise it ends up huge???
 }
 
 KIO::PreviewJob * KImageFilePreview::createJob( const KURL& url, int w, int h )
@@ -149,7 +149,7 @@ KIO::PreviewJob * KImageFilePreview::createJob( const KURL& url, int w, int h )
     return KIO::filePreview( urls, w, h, 0, 0, true, false );
 }
 
-void KImageFilePreview::gotPreview( const KFileItem* item, const QPixmap& pm )
+void KImageFilePreview::gotPreview( const KFileItem* item, const TQPixmap& pm )
 {
     if ( item->url() == currentURL ) // should always be the case
         imageLabel->setPixmap( pm );

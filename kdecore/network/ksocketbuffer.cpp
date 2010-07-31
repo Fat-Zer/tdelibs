@@ -46,13 +46,13 @@ KSocketBuffer::KSocketBuffer(const KSocketBuffer& other)
 
 KSocketBuffer::~KSocketBuffer()
 {
-  // QValueList takes care of deallocating memory
+  // TQValueList takes care of deallocating memory
 }
 
 KSocketBuffer& KSocketBuffer::operator=(const KSocketBuffer& other)
 {
-  QMutexLocker locker1(&m_mutex);
-  QMutexLocker locker2(&other.m_mutex);
+  TQMutexLocker locker1(&m_mutex);
+  TQMutexLocker locker2(&other.m_mutex);
 
   KIOBufferBase::operator=(other);
 
@@ -66,11 +66,11 @@ KSocketBuffer& KSocketBuffer::operator=(const KSocketBuffer& other)
 
 bool KSocketBuffer::canReadLine() const
 {
-  QMutexLocker locker(&m_mutex);
+  TQMutexLocker locker(&m_mutex);
 
-  QValueListConstIterator<QByteArray> it = m_list.constBegin(),
+  TQValueListConstIterator<TQByteArray> it = m_list.constBegin(),
     end = m_list.constEnd();
-  QIODevice::Offset offset = m_offset;
+  TQIODevice::Offset offset = m_offset;
 
   // walk the buffer
   for ( ; it != end; ++it)
@@ -85,18 +85,18 @@ bool KSocketBuffer::canReadLine() const
   return false;			// not found
 }
 
-QCString KSocketBuffer::readLine()
+TQCString KSocketBuffer::readLine()
 {
   if (!canReadLine())
-    return QCString();		// empty
+    return TQCString();		// empty
 
-  QMutexLocker locker(&m_mutex);
+  TQMutexLocker locker(&m_mutex);
 
   // find the offset of the newline in the buffer
   int newline = 0;
-  QValueListConstIterator<QByteArray> it = m_list.constBegin(),
+  TQValueListConstIterator<TQByteArray> it = m_list.constBegin(),
     end = m_list.constEnd();
-  QIODevice::Offset offset = m_offset;
+  TQIODevice::Offset offset = m_offset;
 
   // walk the buffer
   for ( ; it != end; ++it)
@@ -115,7 +115,7 @@ QCString KSocketBuffer::readLine()
       break;
     }
 
-  QCString result(newline + 2 - m_offset);
+  TQCString result(newline + 2 - m_offset);
   consumeBuffer(result.data(), newline + 1 - m_offset);
   return result;
 }
@@ -137,7 +137,7 @@ bool KSocketBuffer::setSize(Q_LONG size)
     return true;
 
   // size is now smaller than length
-  QMutexLocker locker(&m_mutex);
+  TQMutexLocker locker(&m_mutex);
 
   // repeat the test
   if (m_length < m_size)
@@ -154,13 +154,13 @@ Q_LONG KSocketBuffer::feedBuffer(const char *data, Q_LONG len)
   if (isFull())
     return -1;			// can't write
 
-  QMutexLocker locker(&m_mutex);
+  TQMutexLocker locker(&m_mutex);
 
   // verify if we can add len bytes
   if (m_size != -1 && (m_size - m_length) < len)
     len = m_size - m_length;
 
-  QByteArray a(len);
+  TQByteArray a(len);
   a.duplicate(data, len);
   m_list.append(a);
 
@@ -173,9 +173,9 @@ Q_LONG KSocketBuffer::consumeBuffer(char *destbuffer, Q_LONG maxlen, bool discar
   if (maxlen == 0 || isEmpty())
     return 0;
 
-  QValueListIterator<QByteArray> it = m_list.begin(),
+  TQValueListIterator<TQByteArray> it = m_list.begin(),
     end = m_list.end();
-  QIODevice::Offset offset = m_offset;
+  TQIODevice::Offset offset = m_offset;
   Q_LONG copied = 0;
 
   // walk the buffer
@@ -222,7 +222,7 @@ Q_LONG KSocketBuffer::consumeBuffer(char *destbuffer, Q_LONG maxlen, bool discar
 
 void KSocketBuffer::clear()
 {
-  QMutexLocker locker(&m_mutex);
+  TQMutexLocker locker(&m_mutex);
   m_list.clear();
   m_offset = 0;
   m_length = 0;
@@ -233,11 +233,11 @@ Q_LONG KSocketBuffer::sendTo(KActiveSocketBase* dev, Q_LONG len)
   if (len == 0 || isEmpty())
     return 0;
 
-  QMutexLocker locker(&m_mutex);
+  TQMutexLocker locker(&m_mutex);
   
-  QValueListIterator<QByteArray> it = m_list.begin(),
+  TQValueListIterator<TQByteArray> it = m_list.begin(),
     end = m_list.end();
-  QIODevice::Offset offset = m_offset;
+  TQIODevice::Offset offset = m_offset;
   Q_LONG written = 0;
   
   // walk the buffer
@@ -251,7 +251,7 @@ Q_LONG KSocketBuffer::sendTo(KActiveSocketBase* dev, Q_LONG len)
       Q_ULONG bufsize = 1460;
       if (len != -1 && len < bufsize)
 	bufsize = len;
-      QByteArray buf(bufsize);
+      TQByteArray buf(bufsize);
       Q_LONG count = 0;
 
       while (it != end && count + ((*it).size() - offset) <= bufsize)
@@ -298,7 +298,7 @@ Q_LONG KSocketBuffer::receiveFrom(KActiveSocketBase* dev, Q_LONG len)
   if (len == 0 || isFull())
     return 0;
 
-  QMutexLocker locker(&m_mutex);
+  TQMutexLocker locker(&m_mutex);
 
   if (len == -1)
     len = dev->bytesAvailable();
@@ -313,7 +313,7 @@ Q_LONG KSocketBuffer::receiveFrom(KActiveSocketBase* dev, Q_LONG len)
   // here, len contains just as many bytes as we're supposed to read
 
   // now do the reading
-  QByteArray a(len);
+  TQByteArray a(len);
   len = dev->readBlock(a.data(), len);
 
   if (len == -1)

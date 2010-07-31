@@ -24,7 +24,7 @@
 #ifndef KJAVAAPPLETCONTEXT_H
 #define KJAVAAPPLETCONTEXT_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 /**
  * @short Provides a context for KJavaAppletWidgets
@@ -94,27 +94,27 @@ public:
      * use this for applet call backs, the AppletServer
      * calls this directly.
      */
-    void processCmd( QString cmd, QStringList args );
+    void processCmd( TQString cmd, TQStringList args );
 
     /**
      * LiveConnect functions
      */
-    bool getMember(QStringList & args, QStringList & ret_args);
-    bool putMember(QStringList & args);
-    bool callMember(QStringList & args, QStringList & ret_args);
-    void derefObject(QStringList & args);
+    bool getMember(TQStringList & args, TQStringList & ret_args);
+    bool putMember(TQStringList & args);
+    bool callMember(TQStringList & args, TQStringList & ret_args);
+    void derefObject(TQStringList & args);
 
     KJavaAppletServer* getServer() const { return server; }
 signals:
     /**
      * Signals the KHMTL Part to show this as the status message.
      */
-    void showStatus  ( const QString& txt );
+    void showStatus  ( const TQString& txt );
 
     /**
      * Signals the KHTML Part to show a url in a given target
      */
-    void showDocument( const QString& url, const QString& target );
+    void showDocument( const TQString& url, const TQString& target );
 
     /**
      * Signals the KHTML Part an applet is loaded
@@ -129,7 +129,7 @@ protected:
     KJavaAppletServer* server;
 
 protected slots:
-    void received( const QString& cmd, const QStringList& arg );
+    void received( const TQString& cmd, const TQStringList& arg );
     void javaProcessExited(int);
 
 private:

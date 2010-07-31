@@ -21,23 +21,23 @@
 
 #include "kpalette.h"
 
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 #include <kstandarddirs.h>
 #include <kglobal.h>
 #include <ksavefile.h>
 #include <kstringhandler.h>
 
-template class QPtrList<KPalette::kolor>;
+template class TQPtrList<KPalette::kolor>;
 
 QStringList
 KPalette::getPaletteList()
 {
-  QStringList paletteList;
+  TQStringList paletteList;
   KGlobal::dirs()->findAllResources("config", "colors/*", false, true, paletteList);
 
   int strip = strlen("colors/");
-  for(QStringList::Iterator it = paletteList.begin();
+  for(TQStringList::Iterator it = paletteList.begin();
       it != paletteList.end();
       it++)
   { 
@@ -47,21 +47,21 @@ KPalette::getPaletteList()
   return paletteList;
 }
 
-KPalette::KPalette(const QString &name)
+KPalette::KPalette(const TQString &name)
  : mName(name)
 {
   mKolorList.setAutoDelete(true);
   if (mName.isEmpty()) return;
 
-  QString filename = locate("config", "colors/"+mName);
+  TQString filename = locate("config", "colors/"+mName);
   if (filename.isEmpty()) return;
 
-  QFile paletteFile(filename);
+  TQFile paletteFile(filename);
   if (!paletteFile.exists()) return;
   if (!paletteFile.open(IO_ReadOnly)) return;
 
   uint maxLength = 1024;
-  QString line;
+  TQString line;
 
   // Read first line
   // Expected "GIMP Palette"
@@ -112,7 +112,7 @@ KPalette::KPalette(const KPalette &p)
    // Make a deep copy of the color list
    // We can't iterate a const list :(
    // DF: yes you can - use the proper iterator, not first/next
-   QPtrList<kolor> *nonConstList = (QPtrList<kolor> *) &p.mKolorList;
+   TQPtrList<kolor> *nonConstList = (TQPtrList<kolor> *) &p.mKolorList;
    for(kolor *node = nonConstList->first(); node; node = nonConstList->next())
    {
        mKolorList.append(new kolor(*node));
@@ -127,20 +127,20 @@ KPalette::~KPalette()
 bool
 KPalette::save()
 {
-   QString filename = locateLocal("config", "colors/"+mName);
+   TQString filename = locateLocal("config", "colors/"+mName);
    KSaveFile sf(filename);
    if (sf.status() != 0) return false;
 
-   QTextStream *str = sf.textStream();
+   TQTextStream *str = sf.textStream();
 
-   QString description = mDesc.stripWhiteSpace();
-   description = "#"+QStringList::split("\n", description, true).join("\n#");
+   TQString description = mDesc.stripWhiteSpace();
+   description = "#"+TQStringList::split("\n", description, true).join("\n#");
 
    (*str) << "KDE RGB Palette\n";   
    (*str) << description << "\n";
    // We can't iterate a const list :(
    // DF: yes you can - use the proper iterator, not first/next
-   QPtrList<kolor> *nonConstList = (QPtrList<kolor> *) (&mKolorList);
+   TQPtrList<kolor> *nonConstList = (TQPtrList<kolor> *) (&mKolorList);
    for(kolor *node = nonConstList->first(); node; node = nonConstList->next())
    {
        int r,g,b;
@@ -159,7 +159,7 @@ KPalette::operator=( const KPalette &p)
   // Make a deep copy of the color list
   // We can't iterate a const list :(
    // DF: yes you can - use the proper iterator, not first/next
-  QPtrList<kolor> *nonConstList = (QPtrList<kolor> *) &p.mKolorList;
+  TQPtrList<kolor> *nonConstList = (TQPtrList<kolor> *) &p.mKolorList;
   for(kolor *node = nonConstList->first(); node; node = nonConstList->next())
   {
      mKolorList.append(new kolor(*node));
@@ -174,20 +174,20 @@ QColor
 KPalette::color(int index) 
 {
   if ((index < 0) || (index >= nrColors()))
-	return QColor();
+	return TQColor();
 
   kolor *node = mKolorList.at(index);
   if (!node)
-	return QColor();
+	return TQColor();
 
   return node->color;
 }
 
 int
-KPalette::findColor(const QColor &color) const
+KPalette::findColor(const TQColor &color) const
 {
   int index;
-  QPtrListIterator<kolor> it( mKolorList );
+  TQPtrListIterator<kolor> it( mKolorList );
   for (index = 0; it.current(); ++it, ++index)
   {
      if (it.current()->color == color)
@@ -200,17 +200,17 @@ QString
 KPalette::colorName(int index) 
 {
   if ((index < 0) || (index >= nrColors()))
-	return QString::null;
+	return TQString::null;
 
   kolor *node = mKolorList.at(index);
   if (!node)
-	return QString::null;
+	return TQString::null;
 
   return node->name;
 }
 
 int
-KPalette::addColor(const QColor &newColor, const QString &newColorName)
+KPalette::addColor(const TQColor &newColor, const TQString &newColorName)
 {
   kolor *node = new kolor();
   node->color = newColor;
@@ -221,8 +221,8 @@ KPalette::addColor(const QColor &newColor, const QString &newColorName)
 
 int
 KPalette::changeColor(int index, 
-                      const QColor &newColor, 
-                      const QString &newColorName)
+                      const TQColor &newColor, 
+                      const TQString &newColorName)
 {
   if ((index < 0) || (index >= nrColors()))
 	return -1;

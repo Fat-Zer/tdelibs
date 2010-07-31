@@ -25,8 +25,8 @@
 #endif
 
 #include <kparts/part.h>
-#include <qptrlist.h>
-#include <qlistview.h>
+#include <tqptrlist.h>
+#include <tqlistview.h>
 #include <klistview.h>
 
 class KSSLCertBox;
@@ -52,7 +52,7 @@ class KX509Item : public KListViewItem {
 		~KX509Item();
 		virtual int rtti() const { return 1; }
 	KSSLCertificate *cert;
-	QString _prettyName;
+	TQString _prettyName;
 };
 
 
@@ -61,16 +61,16 @@ class KPKCS12Item : public KListViewItem {
 		KPKCS12Item(KListViewItem *parent, KSSLPKCS12 *x);
 		~KPKCS12Item();
 	KSSLPKCS12 *cert;
-	QString _prettyName;
+	TQString _prettyName;
 };
 
 
 class KCertPart : public KParts::ReadWritePart {
 Q_OBJECT
 public:
-  KCertPart(QWidget *parentWidget, const char *widgetName,
-            QObject *parent = 0L, const char *name = 0L,
-	    const QStringList &args = QStringList() );
+  KCertPart(TQWidget *parentWidget, const char *widgetName,
+            TQObject *parent = 0L, const char *name = 0L,
+	    const TQStringList &args = TQStringList() );
   virtual ~KCertPart();
 
   virtual void setReadWrite(bool readwrite);
@@ -83,7 +83,7 @@ protected slots:
   void slotSave();
   void slotDone();
   void slotLaunch();
-  void slotSelectionChanged(QListViewItem *x);
+  void slotSelectionChanged(TQListViewItem *x);
   void slotImportAll();
 
 protected:
@@ -96,35 +96,35 @@ protected:
 
   KListView *_sideList;
   KListViewItem *_parentCA, *_parentP12;
-  QFrame *_pkcsFrame, *_blankFrame, *_x509Frame, *_frame;
+  TQFrame *_pkcsFrame, *_blankFrame, *_x509Frame, *_frame;
 
   // for the PKCS12 widget
-  QLabel *_p12_filenameLabel, *_p12_validFrom, *_p12_validUntil, 
+  TQLabel *_p12_filenameLabel, *_p12_validFrom, *_p12_validUntil, 
          *_p12_serialNum, *_p12_certState;
-  QLabel *_p12_digest;
+  TQLabel *_p12_digest;
   KComboBox *_p12_chain;
-  QMultiLineEdit *_p12_pubkey, *_p12_sig;
+  TQMultiLineEdit *_p12_pubkey, *_p12_sig;
   KSSLCertBox *_p12_subject, *_p12_issuer;
 
   // for the CA widget
-  QLabel *_ca_filenameLabel, *_ca_validFrom, *_ca_validUntil, 
+  TQLabel *_ca_filenameLabel, *_ca_validFrom, *_ca_validUntil, 
          *_ca_serialNum, *_ca_certState;
-  QLabel *_ca_digest;
-  QMultiLineEdit *_ca_pubkey, *_ca_sig;
+  TQLabel *_ca_digest;
+  TQMultiLineEdit *_ca_pubkey, *_ca_sig;
   KSSLCertBox *_ca_subject, *_ca_issuer;
 
 
   // The rest
   KInstance *_instance;
-  QButton *_import, *_save, *_done, *_launch, *_importAll;
+  TQButton *_import, *_save, *_done, *_launch, *_importAll;
   // Store the pointer to the current item
   KSSLPKCS12 *_p12;
   KSSLCertificate *_ca;
-  QTabWidget *_tabs;
-  QGridLayout *_baseGrid;
+  TQTabWidget *_tabs;
+  TQGridLayout *_baseGrid;
   KSSLSigners *_signers;
   bool _silentImport;
-  QString _curName;
+  TQString _curName;
 
 private:
   KCertPartPrivate *d;

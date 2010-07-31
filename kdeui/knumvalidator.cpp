@@ -22,8 +22,8 @@
 **
 *****************************************************************************/
 
-#include <qwidget.h>
-#include <qstring.h>
+#include <tqwidget.h>
+#include <tqstring.h>
 
 #include "knumvalidator.h"
 #include <klocale.h>
@@ -34,8 +34,8 @@
 //  Implementation of KIntValidator
 //
 
-KIntValidator::KIntValidator ( QWidget * parent, int base, const char * name )
-  : QValidator(parent, name)
+KIntValidator::KIntValidator ( TQWidget * parent, int base, const char * name )
+  : TQValidator(parent, name)
 {
   _base = base;
   if (_base < 2) _base = 2;
@@ -44,8 +44,8 @@ KIntValidator::KIntValidator ( QWidget * parent, int base, const char * name )
   _min = _max = 0;
 }
 
-KIntValidator::KIntValidator ( int bottom, int top, QWidget * parent, int base, const char * name )
-  : QValidator(parent, name)
+KIntValidator::KIntValidator ( int bottom, int top, TQWidget * parent, int base, const char * name )
+  : TQValidator(parent, name)
 {
   _base = base;
   if (_base > 36) _base = 36;
@@ -57,21 +57,21 @@ KIntValidator::KIntValidator ( int bottom, int top, QWidget * parent, int base, 
 KIntValidator::~KIntValidator ()
 {}
 
-QValidator::State KIntValidator::validate ( QString &str, int & ) const
+TQValidator::State KIntValidator::validate ( TQString &str, int & ) const
 {
   bool ok;
   int  val = 0;
-  QString newStr;
+  TQString newStr;
 
   newStr = str.stripWhiteSpace();
   if (_base > 10)
     newStr = newStr.upper();
 
-  if (newStr == QString::fromLatin1("-")) // a special case
+  if (newStr == TQString::fromLatin1("-")) // a special case
     if ((_min || _max) && _min >= 0)
       ok = false;
     else
-      return QValidator::Acceptable;
+      return TQValidator::Acceptable;
   else if (newStr.length())
     val = newStr.toInt(&ok, _base);
   else {
@@ -80,26 +80,26 @@ QValidator::State KIntValidator::validate ( QString &str, int & ) const
   }
 
   if (! ok)
-    return QValidator::Invalid;
+    return TQValidator::Invalid;
 
   if ((! _min && ! _max) || (val >= _min && val <= _max))
-    return QValidator::Acceptable;
+    return TQValidator::Acceptable;
 
   if (_max && _min >= 0 && val < 0)
-    return QValidator::Invalid;
+    return TQValidator::Invalid;
 
-  return QValidator::Valid;
+  return TQValidator::Valid;
 }
 
-void KIntValidator::fixup ( QString &str ) const
+void KIntValidator::fixup ( TQString &str ) const
 {
   int                dummy;
   int                val;
-  QValidator::State  state;
+  TQValidator::State  state;
 
   state = validate(str, dummy);
 
-  if (state == QValidator::Invalid || state == QValidator::Acceptable)
+  if (state == TQValidator::Invalid || state == TQValidator::Acceptable)
     return;
 
   if (! _min && ! _max)
@@ -161,16 +161,16 @@ public:
 };
 
 
-KFloatValidator::KFloatValidator ( QWidget * parent, const char * name )
-  : QValidator(parent, name)
+KFloatValidator::KFloatValidator ( TQWidget * parent, const char * name )
+  : TQValidator(parent, name)
 {
     d = new KFloatValidatorPrivate;
     d->acceptLocalizedNumbers=false;
     _min = _max = 0;
 }
 
-KFloatValidator::KFloatValidator ( double bottom, double top, QWidget * parent, const char * name )
-  : QValidator(parent, name)
+KFloatValidator::KFloatValidator ( double bottom, double top, TQWidget * parent, const char * name )
+  : TQValidator(parent, name)
 {
     d = new KFloatValidatorPrivate;
     d->acceptLocalizedNumbers=false;
@@ -178,8 +178,8 @@ KFloatValidator::KFloatValidator ( double bottom, double top, QWidget * parent, 
     _max = top;
 }
 
-KFloatValidator::KFloatValidator ( double bottom, double top, bool localeAware, QWidget * parent, const char * name )
-  : QValidator(parent, name)
+KFloatValidator::KFloatValidator ( double bottom, double top, bool localeAware, TQWidget * parent, const char * name )
+  : TQValidator(parent, name)
 {
     d = new KFloatValidatorPrivate;
     d->acceptLocalizedNumbers = localeAware;
@@ -202,20 +202,20 @@ bool KFloatValidator::acceptLocalizedNumbers() const
     return d->acceptLocalizedNumbers;
 }
 
-QValidator::State KFloatValidator::validate ( QString &str, int & ) const
+TQValidator::State KFloatValidator::validate ( TQString &str, int & ) const
 {
   bool    ok;
   double  val = 0;
-  QString newStr;
+  TQString newStr;
   newStr = str.stripWhiteSpace();
 
-  if (newStr == QString::fromLatin1("-")) // a special case
+  if (newStr == TQString::fromLatin1("-")) // a special case
     if ((_min || _max) && _min >= 0)
       ok = false;
     else
-      return QValidator::Acceptable;
-  else if (newStr == QString::fromLatin1(".") || (d->acceptLocalizedNumbers && newStr==KGlobal::locale()->decimalSymbol())) // another special case
-    return QValidator::Acceptable;
+      return TQValidator::Acceptable;
+  else if (newStr == TQString::fromLatin1(".") || (d->acceptLocalizedNumbers && newStr==KGlobal::locale()->decimalSymbol())) // another special case
+    return TQValidator::Acceptable;
   else if (newStr.length())
   {
     val = newStr.toDouble(&ok);
@@ -228,29 +228,29 @@ QValidator::State KFloatValidator::validate ( QString &str, int & ) const
   }
 
   if (! ok)
-    return QValidator::Invalid;
+    return TQValidator::Invalid;
 
   if (( !_min && !_max) || (val >= _min && val <= _max))
-    return QValidator::Acceptable;
+    return TQValidator::Acceptable;
 
   if (_max && _min >= 0 && val < 0)
-    return QValidator::Invalid;
+    return TQValidator::Invalid;
 
   if ( (_min || _max) && (val < _min || val > _max))
-    return QValidator::Invalid;
+    return TQValidator::Invalid;
 
-  return QValidator::Valid;
+  return TQValidator::Valid;
 }
 
-void KFloatValidator::fixup ( QString &str ) const
+void KFloatValidator::fixup ( TQString &str ) const
 {
   int                dummy;
   double             val;
-  QValidator::State  state;
+  TQValidator::State  state;
 
   state = validate(str, dummy);
 
-  if (state == QValidator::Invalid || state == QValidator::Acceptable)
+  if (state == TQValidator::Invalid || state == TQValidator::Acceptable)
     return;
 
   if (! _min && ! _max)
@@ -297,15 +297,15 @@ public:
   bool acceptLocalizedNumbers;
 };
 
-KDoubleValidator::KDoubleValidator( QObject * parent, const char * name )
-  : QDoubleValidator( parent, name ), d( 0 )
+KDoubleValidator::KDoubleValidator( TQObject * parent, const char * name )
+  : TQDoubleValidator( parent, name ), d( 0 )
 {
   d = new Private();
 }
 
 KDoubleValidator::KDoubleValidator( double bottom, double top, int decimals,
-				    QObject * parent, const char * name )
-  : QDoubleValidator( bottom, top, decimals, parent, name ), d( 0 )
+				    TQObject * parent, const char * name )
+  : TQDoubleValidator( bottom, top, decimals, parent, name ), d( 0 )
 {
   d = new Private();
 }
@@ -323,8 +323,8 @@ void KDoubleValidator::setAcceptLocalizedNumbers( bool accept ) {
   d->acceptLocalizedNumbers = accept;
 }
 
-QValidator::State KDoubleValidator::validate( QString & input, int & p ) const {
-  QString s = input;
+TQValidator::State KDoubleValidator::validate( TQString & input, int & p ) const {
+  TQString s = input;
   if ( acceptLocalizedNumbers() ) {
     KLocale * l = KGlobal::locale();
     // ok, we have to re-format the number to have:
@@ -333,7 +333,7 @@ QValidator::State KDoubleValidator::validate( QString & input, int & p ) const {
     // 3. positiveSign  == <empty>
     // 4. thousandsSeparator() == <empty> (we don't check that there
     //    are exactly three decimals between each separator):
-    QString d = l->decimalSymbol(),
+    TQString d = l->decimalSymbol(),
             n = l->negativeSign(),
             p = l->positiveSign(),
             t = l->thousandsSeparator();

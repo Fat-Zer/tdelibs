@@ -22,15 +22,15 @@
 #include <stdlib.h>
 #include <io.h>
 #include <stdio.h>
-#include <qeventloop.h>
-#include <qapplication.h>
+#include <tqeventloop.h>
+#include <tqapplication.h>
 #include "qeventloopex.h"
 
 
 // Local defined structures and classes (needed only for QEventLoopEx implementation)
 struct QSockNotEx
 {
-	QSocketNotifier *obj;
+	TQSocketNotifier *obj;
 	int fd;
 	fd_set *queue;
 };
@@ -41,7 +41,7 @@ public:
 	QSockNotTypeEx();
 	~QSockNotTypeEx();
 
-	QPtrList<QSockNotEx> *list;
+	TQPtrList<QSockNotEx> *list;
 	fd_set select_fds;
 	fd_set enabled_fds;
 	fd_set pending_fds;
@@ -69,7 +69,7 @@ public:
 	SOCKET m_sockUpdate;
 
 	// pending socket notifiers list
-	QPtrList<QSockNotEx> sn_pending_list;
+	TQPtrList<QSockNotEx> sn_pending_list;
 	HANDLE m_evPendingListEmpty;
 	CRITICAL_SECTION m_csPendingList;
 
@@ -98,8 +98,8 @@ QSockNotTypeEx::~QSockNotTypeEx()
 	list = 0;
 }
 
-QEventLoopEx::QEventLoopEx( QObject *parent, const char *name) : 
-	QEventLoop(parent,name)
+QEventLoopEx::QEventLoopEx( TQObject *parent, const char *name) : 
+	TQEventLoop(parent,name)
 {
 	DWORD dwThreadId;
 
@@ -150,42 +150,42 @@ QEventLoopEx::~QEventLoopEx()
 /*****************************************************************************
  QEventLoopEx implementations for Windows (for synchronous socket calls)
  *****************************************************************************/
-void QEventLoopEx::registerSocketNotifier( QSocketNotifier *notifier )
+void QEventLoopEx::registerSocketNotifier( TQSocketNotifier *notifier )
 {
 	int sockfd = notifier->socket();
 	int type = notifier->type();
 	u_long	n;
 	DWORD dw;
 #ifdef _DEBUG_EVENTLOOPEX
-	qDebug( "QSocketNotifier::registerSocketNotifier %p", notifier );
+	qDebug( "TQSocketNotifier::registerSocketNotifier %p", notifier );
 #endif
 	if(ioctlsocket(sockfd,FIONREAD,&n) == SOCKET_ERROR)
 	{
 #ifdef _DEBUG_EVENTLOOPEX
-		qDebug( "QSocketNotifier::registerSocketNotifier %p not a socket", notifier );
+		qDebug( "TQSocketNotifier::registerSocketNotifier %p not a socket", notifier );
 #endif
 		dw = WSAGetLastError();
-		QEventLoop::registerSocketNotifier(notifier);
+		TQEventLoop::registerSocketNotifier(notifier);
 		return;
 	}
 
 	if ( sockfd < 0 || type < 0 || type > 2 || notifier == 0 ) 
 	{
 #if defined(QT_CHECK_RANGE)
-		qWarning( "QSocketNotifier: Internal error" );
+		qWarning( "TQSocketNotifier: Internal error" );
 #endif
 		return;
 	}
 
 	EnterCriticalSection(&d->m_csVec);
 
-	QPtrList<QSockNotEx>  *list = d->sn_vec[type].list;
+	TQPtrList<QSockNotEx>  *list = d->sn_vec[type].list;
 	fd_set *fds  = &d->sn_vec[type].enabled_fds;
 	QSockNotEx *sn;
 
 	if ( ! list ) {
 		// create new list, the QSockNotType destructor will delete it for us
-		list = new QPtrList<QSockNotEx>;
+		list = new TQPtrList<QSockNotEx>;
 		Q_CHECK_PTR( list );
 		list->setAutoDelete( TRUE );
 		d->sn_vec[type].list = list;
@@ -215,32 +215,32 @@ void QEventLoopEx::registerSocketNotifier( QSocketNotifier *notifier )
 	LeaveCriticalSection(&d->m_csVec);
 	
 #ifdef _DEBUG_EVENTLOOPEX
-	qDebug( "QSocketNotifier::signal update socket");
+	qDebug( "TQSocketNotifier::signal update socket");
 #endif	
 	closesocket(d->m_sockUpdate);
 }
 
-void QEventLoopEx::unregisterSocketNotifier( QSocketNotifier *notifier )
+void QEventLoopEx::unregisterSocketNotifier( TQSocketNotifier *notifier )
 {
 	int sockfd = notifier->socket();
 	int type = notifier->type();
 	if ( sockfd < 0 || type < 0 || type > 2 || notifier == 0 ) {
 #if defined(QT_CHECK_RANGE)
-		qWarning( "QSocketNotifier: Internal error" );
+		qWarning( "TQSocketNotifier: Internal error" );
 #endif
 		return;
 	}
 #ifdef _DEBUG_EVENTLOOPEX	
-	qDebug( "QSocketNotifier::unregisterSocketNotifier %p", notifier );
+	qDebug( "TQSocketNotifier::unregisterSocketNotifier %p", notifier );
 #endif
 
 	EnterCriticalSection(&d->m_csVec);
-	QPtrList<QSockNotEx> *list = d->sn_vec[type].list;
+	TQPtrList<QSockNotEx> *list = d->sn_vec[type].list;
 	fd_set *fds  =  &d->sn_vec[type].enabled_fds;
 	QSockNotEx *sn;
 	if ( ! list ) {
 		LeaveCriticalSection(&d->m_csVec);
-		QEventLoop::unregisterSocketNotifier(notifier);
+		TQEventLoop::unregisterSocketNotifier(notifier);
 		return;
 	}
 	sn = list->first();
@@ -248,7 +248,7 @@ void QEventLoopEx::unregisterSocketNotifier( QSocketNotifier *notifier )
 	sn = list->next();
 	if ( !sn ) {// not found
 		LeaveCriticalSection(&d->m_csVec);
-		QEventLoop::unregisterSocketNotifier(notifier);
+		TQEventLoop::unregisterSocketNotifier(notifier);
 		return;
 	}
 
@@ -273,42 +273,42 @@ void QEventLoopEx::unregisterSocketNotifier( QSocketNotifier *notifier )
 	}
 	LeaveCriticalSection(&d->m_csVec);
 #ifdef _DEBUG_EVENTLOOPEX	
-	qDebug( "QSocketNotifier::signal update socket");
+	qDebug( "TQSocketNotifier::signal update socket");
 #endif
 	closesocket(d->m_sockUpdate);
 }
 
 bool QEventLoopEx::processEvents( ProcessEventsFlags flags )
 {
-	if(!QEventLoop::processEvents(flags))
+	if(!TQEventLoop::processEvents(flags))
 		return false;
 
 	activateSocketNotifiers();
 	return true;
 }
 
-void QEventLoopEx::setSocketNotifierPending( QSocketNotifier *notifier )
+void QEventLoopEx::setSocketNotifierPending( TQSocketNotifier *notifier )
 {
 	int sockfd = notifier->socket();
 	int type = notifier->type();
 	if ( sockfd < 0 || type < 0 || type > 2 || notifier == 0 ) 
 	{
 #if defined(QT_CHECK_RANGE)
-		qWarning( "QSocketNotifier: Internal error" );
+		qWarning( "TQSocketNotifier: Internal error" );
 #endif
 		return;
 	}
 #ifdef _DEBUG_EVENTLOOPEX	
-	qDebug( "QSocketNotifier::setSocketNotifierPending %p",notifier );
+	qDebug( "TQSocketNotifier::setSocketNotifierPending %p",notifier );
 #endif
 	EnterCriticalSection(&d->m_csVec);
 
-	QPtrList<QSockNotEx> *list = d->sn_vec[type].list;
+	TQPtrList<QSockNotEx> *list = d->sn_vec[type].list;
 	QSockNotEx *sn;
 	if ( ! list )
 	{
 #ifdef _DEBUG_EVENTLOOPEX	
-		qDebug( "QSocketNotifier::setSocketNotifierPending %p: no list",notifier );
+		qDebug( "TQSocketNotifier::setSocketNotifierPending %p: no list",notifier );
 #endif
 		LeaveCriticalSection(&d->m_csVec);
 		return;
@@ -318,7 +318,7 @@ void QEventLoopEx::setSocketNotifierPending( QSocketNotifier *notifier )
 	sn = list->next();
 	if ( ! sn ) { // not found
 #ifdef _DEBUG_EVENTLOOPEX	
-		qDebug( "QSocketNotifier::setSocketNotifierPending %p: not found",notifier );
+		qDebug( "TQSocketNotifier::setSocketNotifierPending %p: not found",notifier );
 #endif
 		LeaveCriticalSection(&d->m_csVec);
 		return;
@@ -346,11 +346,11 @@ int QEventLoopEx::activateSocketNotifiers()
 		return 0; // nothing to do
 
 	int n_act = 0;
-	QEvent event( QEvent::SockAct );
+	TQEvent event( TQEvent::SockAct );
 
 	EnterCriticalSection(&d->m_csVec);			// Avoid deaklock
 	EnterCriticalSection(&d->m_csPendingList);
-	QPtrListIterator<QSockNotEx> it( d->sn_pending_list );
+	TQPtrListIterator<QSockNotEx> it( d->sn_pending_list );
 	QSockNotEx *sn;
 	while ( (sn=it.current()) ) {
 		++it;
@@ -360,7 +360,7 @@ int QEventLoopEx::activateSocketNotifiers()
 #ifdef _DEBUG_EVENTLOOPEX	
 			qDebug("QEventLoopEx:activateSocketNotifiers %p to object %p",sn, sn->obj);
 #endif
-			QApplication::sendEvent( sn->obj, &event );
+			TQApplication::sendEvent( sn->obj, &event );
 			n_act++;
 		}
 	}
@@ -369,7 +369,7 @@ int QEventLoopEx::activateSocketNotifiers()
 	LeaveCriticalSection(&d->m_csVec);			// Avoid deaklock
 
 #ifdef _DEBUG_EVENTLOOPEX	
-	qDebug( "QSocketNotifier::activateSocketNotifiers set m_evPendingListEmpty");
+	qDebug( "TQSocketNotifier::activateSocketNotifiers set m_evPendingListEmpty");
 #endif
 	SetEvent(d->m_evPendingListEmpty);
 
@@ -455,7 +455,7 @@ void QEventLoopEx::run()
 					
 					for (int type = 0; type < 3; ++type)
 					{
-						QPtrList<QSockNotEx> *list = d->sn_vec[type].list;
+						TQPtrList<QSockNotEx> *list = d->sn_vec[type].list;
 						if (!list) 
 							continue;
 
@@ -483,7 +483,7 @@ void QEventLoopEx::run()
 							{
 								// disable the invalid socket notifier
 								static const char *t[] = { "Read", "Write", "Exception" };
-								qWarning("QSocketNotifier: invalid socket %d and type '%s', disabling...",
+								qWarning("TQSocketNotifier: invalid socket %d and type '%s', disabling...",
 									sn->fd, t[type]);
 								sn->obj->setEnabled(FALSE);
 							}
@@ -520,12 +520,12 @@ void QEventLoopEx::run()
 				if ( ! d->sn_vec[i].list )
 					continue;
 
-				QPtrList<QSockNotEx> *list = d->sn_vec[i].list;
+				TQPtrList<QSockNotEx> *list = d->sn_vec[i].list;
 				QSockNotEx *sn = list->first();
 				while ( sn ) {
 					if ( FD_ISSET( sn->fd, &d->sn_vec[i].select_fds ) )
 					{
-						QEvent event( QEvent::SockAct );
+						TQEvent event( TQEvent::SockAct );
 						setSocketNotifierPending( sn->obj );
 					}
 					sn = list->next();
@@ -535,7 +535,7 @@ void QEventLoopEx::run()
 		}
 		if(!d->sn_pending_list.isEmpty() )
 		{
-			QApplication::eventLoop()->wakeUp();
+			TQApplication::eventLoop()->wakeUp();
 #ifdef _DEBUG_EVENTLOOPEX	
 			qDebug("QEventLoopEx: wake up main event loop and wait for pending list empty");
 #endif

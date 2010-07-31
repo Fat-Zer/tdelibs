@@ -24,12 +24,12 @@
 #include "ipprequest.h"
 
 #include <klistbox.h>
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 
-KMWIppSelect::KMWIppSelect(QWidget *parent, const char *name)
+KMWIppSelect::KMWIppSelect(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_ID = KMWizard::IPPSelect;
@@ -38,11 +38,11 @@ KMWIppSelect::KMWIppSelect(QWidget *parent, const char *name)
 
 	m_list = new KListBox(this);
 
-	QVBoxLayout	*lay = new QVBoxLayout(this, 0, 0);
+	QVBoxLayout	*lay = new TQVBoxLayout(this, 0, 0);
 	lay->addWidget(m_list);
 }
 
-bool KMWIppSelect::isValid(QString& msg)
+bool KMWIppSelect::isValid(TQString& msg)
 {
 	if (m_list->currentItem() == -1)
 	{
@@ -75,16 +75,16 @@ void KMWIppSelect::initPrinter(KMPrinter *p)
 	IppRequest	req;
 	QString		uri;
 	req.setOperation(CUPS_GET_PRINTERS);
-	uri = QString::fromLatin1("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
+	uri = TQString::fromLatin1("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
 	req.addURI(IPP_TAG_OPERATION,"printer-uri",uri);
-	req.addKeyword(IPP_TAG_OPERATION,"requested-attributes",QString::fromLatin1("printer-name"));
+	req.addKeyword(IPP_TAG_OPERATION,"requested-attributes",TQString::fromLatin1("printer-name"));
 	if (req.doRequest("/printers/"))
 	{
 		ipp_attribute_t	*attr = req.first();
 		while (attr)
 		{
 			if (attr->name && strcmp(attr->name,"printer-name") == 0)
-				m_list->insertItem(SmallIcon("kdeprint_printer"),QString::fromLatin1(attr->values[0].string.text));
+				m_list->insertItem(SmallIcon("kdeprint_printer"),TQString::fromLatin1(attr->values[0].string.text));
 			attr = attr->next;
 		}
 		m_list->sort();

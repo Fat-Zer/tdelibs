@@ -24,7 +24,7 @@
 #include <kstandarddirs.h>
 #include <kstaticdeleter.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include "vcardformatplugin.h"
 
@@ -56,8 +56,8 @@ FormatFactory::FormatFactory()
   info->descriptionLabel = i18n( "vCard Format" );
   mFormatList.insert( "vcard", info );
 
-  const QStringList list = KGlobal::dirs()->findAllResources( "data" ,"kabc/formats/*.desktop", true, true );
-  for ( QStringList::ConstIterator it = list.begin(); it != list.end(); ++it )
+  const TQStringList list = KGlobal::dirs()->findAllResources( "data" ,"kabc/formats/*.desktop", true, true );
+  for ( TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it )
   {
     KSimpleConfig config( *it, true );
 
@@ -67,7 +67,7 @@ FormatFactory::FormatFactory()
     info = new FormatInfo;
 
     config.setGroup( "Plugin" );
-    QString type = config.readEntry( "Type" );
+    TQString type = config.readEntry( "Type" );
     info->library = config.readEntry( "X-KDE-Library" );
 
     config.setGroup( "Misc" );
@@ -83,14 +83,14 @@ FormatFactory::~FormatFactory()
   mFormatList.clear();
 }
 
-QStringList FormatFactory::formats()
+TQStringList FormatFactory::formats()
 {
-  QStringList retval;
+  TQStringList retval;
 
   // make sure 'vcard' is the first entry
   retval << "vcard";
 
-  QDictIterator<FormatInfo> it( mFormatList );
+  TQDictIterator<FormatInfo> it( mFormatList );
   for ( ; it.current(); ++it )
     if ( it.currentKey() != "vcard" )
       retval << it.currentKey();
@@ -98,7 +98,7 @@ QStringList FormatFactory::formats()
   return retval;
 }
 
-FormatInfo *FormatFactory::info( const QString &type )
+FormatInfo *FormatFactory::info( const TQString &type )
 {
   if ( type.isEmpty() )
     return 0;
@@ -106,7 +106,7 @@ FormatInfo *FormatFactory::info( const QString &type )
     return mFormatList[ type ];
 }
 
-FormatPlugin *FormatFactory::format( const QString& type )
+FormatPlugin *FormatFactory::format( const TQString& type )
 {
   FormatPlugin *format = 0;
 
@@ -124,7 +124,7 @@ FormatPlugin *FormatFactory::format( const QString& type )
   FormatInfo *fi = mFormatList[ type ];
   if (!fi)
 	  return 0;
-  QString libName = fi->library;
+  TQString libName = fi->library;
 
   KLibrary *library = openLibrary( libName );
   if ( !library )
@@ -146,18 +146,18 @@ FormatPlugin *FormatFactory::format( const QString& type )
 }
 
 
-KLibrary *FormatFactory::openLibrary( const QString& libName )
+KLibrary *FormatFactory::openLibrary( const TQString& libName )
 {
   KLibrary *library = 0;
 
-  QString path = KLibLoader::findLibrary( QFile::encodeName( libName ) );
+  TQString path = KLibLoader::findLibrary( TQFile::encodeName( libName ) );
 
   if ( path.isEmpty() ) {
     kdDebug( 5700 ) << "No format plugin library was found!" << endl;
     return 0;
   }
 
-  library = KLibLoader::self()->library( QFile::encodeName( path ) );
+  library = KLibLoader::self()->library( TQFile::encodeName( path ) );
 
   if ( !library ) {
     kdDebug( 5700 ) << "Could not load library '" << libName << "'" << endl;

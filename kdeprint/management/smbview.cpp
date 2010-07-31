@@ -21,8 +21,8 @@
 
 #include <kprocess.h>
 #include <ktempfile.h>
-#include <qheader.h>
-#include <qapplication.h>
+#include <tqheader.h>
+#include <tqapplication.h>
 
 #include <kiconloader.h>
 #include <klocale.h>
@@ -30,19 +30,19 @@
 #include <kmessagebox.h>
 #include <kcursor.h>
 
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 #include <cstdlib>
 
 
 //*********************************************************************************************
 
-SmbView::SmbView(QWidget *parent, const char *name)
+SmbView::SmbView(TQWidget *parent, const char *name)
 : KListView(parent,name)
 {
 	addColumn(i18n("Printer"));
 	addColumn(i18n("Comment"));
-	setFrameStyle(QFrame::WinPanel|QFrame::Sunken);
+	setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	setLineWidth(1);
 	setAllColumnsShowFocus(true);
 	setRootIsDecorated(true);
@@ -52,9 +52,9 @@ SmbView::SmbView(QWidget *parent, const char *name)
 	m_proc = new KProcess();
 	m_proc->setUseShell(true);
 	m_passwdFile = 0;
-	connect(m_proc,SIGNAL(processExited(KProcess*)),SLOT(slotProcessExited(KProcess*)));
-	connect(m_proc,SIGNAL(receivedStdout(KProcess*,char*,int)),SLOT(slotReceivedStdout(KProcess*,char*,int)));
-	connect(this,SIGNAL(selectionChanged(QListViewItem*)),SLOT(slotSelectionChanged(QListViewItem*)));
+	connect(m_proc,TQT_SIGNAL(processExited(KProcess*)),TQT_SLOT(slotProcessExited(KProcess*)));
+	connect(m_proc,TQT_SIGNAL(receivedStdout(KProcess*,char*,int)),TQT_SLOT(slotReceivedStdout(KProcess*,char*,int)));
+	connect(this,TQT_SIGNAL(selectionChanged(TQListViewItem*)),TQT_SLOT(slotSelectionChanged(TQListViewItem*)));
 }
 
 SmbView::~SmbView()
@@ -63,7 +63,7 @@ SmbView::~SmbView()
 	delete m_passwdFile;
 }
 
-void SmbView::setLoginInfos(const QString& login, const QString& password)
+void SmbView::setLoginInfos(const TQString& login, const TQString& password)
 {
 	m_login = login;
 	m_password = password;
@@ -77,7 +77,7 @@ void SmbView::setLoginInfos(const QString& login, const QString& password)
 	m_passwdFile = new KTempFile;
 	m_passwdFile->setAutoDelete(true);
 		
-	QTextStream *passwdFile = m_passwdFile->textStream();
+	TQTextStream *passwdFile = m_passwdFile->textStream();
 	if (!passwdFile) return; // Error
 	(*passwdFile) << "username = " << m_login << endl;
 	(*passwdFile) << "password = " << m_password << endl;
@@ -88,9 +88,9 @@ void SmbView::setLoginInfos(const QString& login, const QString& password)
 
 void SmbView::startProcess(int state)
 {
-	m_buffer = QString::null;
+	m_buffer = TQString::null;
 	m_state = state;
-	QApplication::setOverrideCursor(KCursor::waitCursor());
+	TQApplication::setOverrideCursor(KCursor::waitCursor());
 	m_proc->start(KProcess::NotifyOnExit,KProcess::Stdout);
 	emit running(true);
 }
@@ -112,7 +112,7 @@ void SmbView::endProcess()
 			break;
 	}
 	m_state = Idle;
-	QApplication::restoreOverrideCursor();
+	TQApplication::restoreOverrideCursor();
 	emit running(false);
 	// clean up for future usage
 	m_proc->clearArguments();
@@ -125,24 +125,24 @@ void SmbView::slotProcessExited(KProcess*)
 
 void SmbView::slotReceivedStdout(KProcess*, char *buf, int len)
 {
-	m_buffer.append(QString::fromLocal8Bit(buf,len));
+	m_buffer.append(TQString::fromLocal8Bit(buf,len));
 }
 
 void SmbView::init()
 {
 	// Open Samba configuration file and check if a WINS server is defined
-	m_wins_server = QString::null;
-	QString wins_keyword("wins server");	
-	QFile smb_conf ("/etc/samba/smb.conf");
+	m_wins_server = TQString::null;
+	TQString wins_keyword("wins server");	
+	TQFile smb_conf ("/etc/samba/smb.conf");
 	if (smb_conf.exists () && smb_conf.open (IO_ReadOnly))
 	{
-		QTextStream smb_stream (&smb_conf);
+		TQTextStream smb_stream (&smb_conf);
 		while (!smb_stream.atEnd ())
 		{
-			QString smb_line = smb_stream.readLine ();
+			TQString smb_line = smb_stream.readLine ();
 			if (smb_line.contains (wins_keyword, FALSE) > 0)
 			{
-				QString key = smb_line.section ('=', 0, 0);
+				TQString key = smb_line.section ('=', 0, 0);
 				key = key.stripWhiteSpace();
 				if (key.lower() == wins_keyword)
 				{
@@ -164,13 +164,13 @@ void SmbView::init()
 		smb_conf.close ();
 	}
 	m_wins_server = m_wins_server.isEmpty ()? " " : " -U " + m_wins_server + " ";
-	QString cmd ("nmblookup" + m_wins_server +
+	TQString cmd ("nmblookup" + m_wins_server +
 					"-M -- - | grep '<01>' | awk '{print $1}' | xargs nmblookup -A | grep '<1d>'");
 	*m_proc << cmd;
 	startProcess(GroupListing);
 }
 
-void SmbView::setOpen(QListViewItem *item, bool on)
+void SmbView::setOpen(TQListViewItem *item, bool on)
 {
 	if (on && item->childCount() == 0)
 	{
@@ -189,7 +189,7 @@ void SmbView::setOpen(QListViewItem *item, bool on)
                         *m_proc << KProcess::quote(item->text(0));
                         *m_proc << " -W ";
                         *m_proc << KProcess::quote(item->parent()->text(0));
-                        if (m_login != QString::null)
+                        if (m_login != TQString::null)
                         {
 				*m_proc << " -A ";
                         	*m_proc << KProcess::quote(m_passwdFile->name());
@@ -197,19 +197,19 @@ void SmbView::setOpen(QListViewItem *item, bool on)
 			startProcess(ShareListing);
 		}
 	}
-	QListView::setOpen(item,on);
+	TQListView::setOpen(item,on);
 }
 
 void SmbView::processGroups()
 {
-	QStringList	grps = QStringList::split('\n',m_buffer,false);
+	QStringList	grps = TQStringList::split('\n',m_buffer,false);
 	clear();
-	for (QStringList::ConstIterator it=grps.begin(); it!=grps.end(); ++it)
+	for (TQStringList::ConstIterator it=grps.begin(); it!=grps.end(); ++it)
 	{
 		int	p = (*it).find("<1d>");
 		if (p == -1)
 			continue;
-		QListViewItem	*item = new QListViewItem(this,(*it).left(p).stripWhiteSpace());
+		QListViewItem	*item = new TQListViewItem(this,(*it).left(p).stripWhiteSpace());
 		item->setExpandable(true);
 		item->setPixmap(0,SmallIcon("network"));
 	}
@@ -217,7 +217,7 @@ void SmbView::processGroups()
 
 void SmbView::processServers()
 {
-	QStringList	lines = QStringList::split('\n',m_buffer,true);
+	QStringList	lines = TQStringList::split('\n',m_buffer,true);
 	QString		line;
 	uint 		index(0);
 	while (index < lines.count())
@@ -225,10 +225,10 @@ void SmbView::processServers()
 		line = lines[index++].stripWhiteSpace();
 		if (line.isEmpty())
 			break;
-		QStringList	words = QStringList::split(' ',line,false);
+		QStringList	words = TQStringList::split(' ',line,false);
 		if (words[1] != "<00>" || words[3] == "<GROUP>")
 			continue;
-		QListViewItem	*item = new QListViewItem(m_current,words[0]);
+		QListViewItem	*item = new TQListViewItem(m_current,words[0]);
 		item->setExpandable(true);
 		item->setPixmap(0,SmallIcon("kdeprint_computer"));
 	}
@@ -236,7 +236,7 @@ void SmbView::processServers()
 
 void SmbView::processShares()
 {
-	QStringList	lines = QStringList::split('\n',m_buffer,true);
+	QStringList	lines = TQStringList::split('\n',m_buffer,true);
 	QString		line;
 	uint 		index(0);
 	for (;index < lines.count();index++)
@@ -254,21 +254,21 @@ void SmbView::processShares()
 			break;
 		}
 		QString	typestr(line.mid(15, 10).stripWhiteSpace());
-		//QStringList	words = QStringList::split(' ',line,false);
+		//QStringList	words = TQStringList::split(' ',line,false);
 		//if (words[1] == "Printer")
 		if (typestr == "Printer")
 		{
 			QString	comm(line.mid(25).stripWhiteSpace()), sharen(line.mid(0, 15).stripWhiteSpace());
 			//for (uint i=2; i<words.count(); i++)
 			//	comm += (words[i]+" ");
-			//QListViewItem	*item = new QListViewItem(m_current,words[0],comm);
-			QListViewItem	*item = new QListViewItem(m_current,sharen,comm);
+			//QListViewItem	*item = new TQListViewItem(m_current,words[0],comm);
+			QListViewItem	*item = new TQListViewItem(m_current,sharen,comm);
 			item->setPixmap(0,SmallIcon("kdeprint_printer"));
 		}
 	}
 }
 
-void SmbView::slotSelectionChanged(QListViewItem *item)
+void SmbView::slotSelectionChanged(TQListViewItem *item)
 {
 	if (item && item->depth() == 2)
 		emit printerSelected(item->parent()->parent()->text(0),item->parent()->text(0),item->text(0));

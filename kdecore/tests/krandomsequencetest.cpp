@@ -16,7 +16,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 #include "krandomsequence.h"
 #include "kapplication.h"
@@ -56,34 +56,34 @@ main(int argc, char *argv[])
 
    seq.setSeed(kapp->random());
 
-   QPtrList<QString> list;
-   list.append(new QString("A"));
-   list.append(new QString("B"));
-   list.append(new QString("C"));
-   list.append(new QString("D"));
-   list.append(new QString("E"));
-   list.append(new QString("F"));
-   list.append(new QString("G"));
+   TQPtrList<TQString> list;
+   list.append(new TQString("A"));
+   list.append(new TQString("B"));
+   list.append(new TQString("C"));
+   list.append(new TQString("D"));
+   list.append(new TQString("E"));
+   list.append(new TQString("F"));
+   list.append(new TQString("G"));
 
-   for(QString *str = list.first(); str; str = list.next())
+   for(TQString *str = list.first(); str; str = list.next())
       printf("%s", str->latin1());
    printf("\n\n");
 
    seq.randomize(&list);
 
-   for(QString *str = list.first(); str; str = list.next())
+   for(TQString *str = list.first(); str; str = list.next())
       printf("%s", str->latin1());
    printf("\n\n");
 
    seq.randomize(&list);
 
-   for(QString *str = list.first(); str; str = list.next())
+   for(TQString *str = list.first(); str; str = list.next())
       printf("%s", str->latin1());
    printf("\n\n");
 
    seq.randomize(&list);
 
-   for(QString *str = list.first(); str; str = list.next())
+   for(TQString *str = list.first(); str; str = list.next())
       printf("%s", str->latin1());
    printf("\n\n");
 

@@ -19,9 +19,9 @@
 #ifndef __kprotocolinfo_h__
 #define __kprotocolinfo_h__
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qdatastream.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqdatastream.h>
 
 #include <kurl.h>
 #include <ksycocaentry.h>
@@ -54,7 +54,7 @@ public:
    * Read a protocol description file
    * @param path the path of the description file
    */
-  KProtocolInfo( const QString & path); // KDE4: make private and add friend class KProtocolInfoBuildFactory
+  KProtocolInfo( const TQString & path); // KDE4: make private and add friend class KProtocolInfoBuildFactory
                                         // Then we can get rid of the d pointer
 
   /**
@@ -71,7 +71,7 @@ public:
    * @return the name of the protocol
    * @see KURL::protocol()
    */
-  virtual QString name() const { return m_name; }
+  virtual TQString name() const { return m_name; }
 
   //
   // Static functions:
@@ -81,7 +81,7 @@ public:
    * Returns list of all known protocols.
    * @return a list of all known protocols
    */
-  static QStringList protocols();
+  static TQStringList protocols();
 
   /**
    * Returns whether a protocol is installed that is able to handle @p url.
@@ -96,7 +96,7 @@ public:
    * Same as above except you can supply just the protocol instead of
    * the whole URL.
    */
- static bool isKnownProtocol( const QString& protocol )
+ static bool isKnownProtocol( const TQString& protocol )
 #ifdef KPROTOCOLINFO_KDECORE
   KDE_WEAK_SYMBOL
 #endif
@@ -109,11 +109,11 @@ public:
    *
    * This corresponds to the "exec=" field in the protocol description file.
    * @param protocol the protocol to check
-   * @return the executable of library to open, or QString::null for
+   * @return the executable of library to open, or TQString::null for
    *         unsupported protocols
    * @see KURL::protocol()
    */
-  static QString exec( const QString& protocol );
+  static TQString exec( const TQString& protocol );
 
   /**
    * Describes the type of a protocol.
@@ -160,27 +160,27 @@ public:
    * @param url the url to check
    * @return a list of field names
    */
-  static QStringList listing( const KURL &url );
+  static TQStringList listing( const KURL &url );
 
   /**
    * Definition of an extra field in the UDS entries, returned by a listDir operation.
    *
    * The name is the name of the column, translated.
    *
-   * The type name comes from QVariant::typeName()
-   * Currently supported types: "QString", "QDateTime" (ISO-8601 format)
+   * The type name comes from TQVariant::typeName()
+   * Currently supported types: "TQString", "TQDateTime" (ISO-8601 format)
    *
    * @since 3.2
    */
   struct ExtraField {
     ExtraField() {} // for QValueList
-    ExtraField(const QString& _name, const QString& _type )
+    ExtraField(const TQString& _name, const TQString& _type )
       : name(_name), type(_type) {
     }
-    QString name;
-    QString type; // KDE4: make it QVariant::Type
+    TQString name;
+    TQString type; // KDE4: make it TQVariant::Type
   };
-  typedef QValueList<ExtraField > ExtraFieldList;
+  typedef TQValueList<ExtraField > ExtraFieldList;
   /**
    * Definition of extra fields in the UDS entries, returned by a listDir operation.
    *
@@ -225,7 +225,7 @@ public:
    * Same as above except you can supply just the protocol instead of
    * the whole URL.
    */
- static bool isHelperProtocol( const QString& protocol )
+ static bool isHelperProtocol( const TQString& protocol )
 #ifdef KPROTOCOLINFO_KDECORE
   KDE_WEAK_SYMBOL
 #endif
@@ -253,7 +253,7 @@ public:
    * Same as above except you can supply just the protocol instead of
    * the whole URL.
    */
-  static bool isFilterProtocol( const QString& protocol )
+  static bool isFilterProtocol( const TQString& protocol )
 #ifdef KPROTOCOLINFO_KDECORE
   KDE_WEAK_SYMBOL
 #endif
@@ -443,7 +443,7 @@ public:
    * @param url the url to check
    * @return the default mime type of the protocol, or null if unknown
    */
-  static QString defaultMimetype( const KURL& url );
+  static TQString defaultMimetype( const KURL& url );
 
   /**
    * Returns the name of the icon, associated with the specified protocol.
@@ -453,7 +453,7 @@ public:
    * @param protocol the protocol to check
    * @return the icon of the protocol, or null if unknown
    */
-  static QString icon( const QString& protocol );
+  static TQString icon( const TQString& protocol );
 
   /**
    * Returns the name of the config file associated with the
@@ -466,7 +466,7 @@ public:
    * @param protocol the protocol to check
    * @return the config file, or null if unknown
    */
-  static QString config( const QString& protocol );
+  static TQString config( const TQString& protocol );
 
   /**
    * Returns the soft limit on the number of slaves for this protocol.
@@ -480,7 +480,7 @@ public:
    * @param protocol the protocol to check
    * @return the maximum number of slaves, or 1 if unknown
    */
-  static int maxSlaves( const QString& protocol );
+  static int maxSlaves( const TQString& protocol );
 
   /**
    * Returns whether mimetypes can be determined based on extension for this
@@ -493,7 +493,7 @@ public:
    * @param protocol the protocol to check
    * @return true if the mime types can be determined by extension
    */
-  static bool determineMimetypeFromExtension( const QString &protocol );
+  static bool determineMimetypeFromExtension( const TQString &protocol );
 
   /**
    * Returns the documentation path for the specified protocol.
@@ -504,7 +504,7 @@ public:
    * @return the docpath of the protocol, or null if unknown
    * @since 3.2
    */
-  static QString docPath( const QString& protocol );
+  static TQString docPath( const TQString& protocol );
 
   /**
    * Returns the protocol class for the specified protocol.
@@ -522,7 +522,7 @@ public:
    * @return the class of the protocol, or null if unknown
    * @since 3.2
    */
-  static QString protocolClass( const QString& protocol );
+  static TQString protocolClass( const TQString& protocol );
 
   /**
    * Returns whether file previews should be shown for the specified protocol.
@@ -535,7 +535,7 @@ public:
    * @return true if previews should be shown by default, false otherwise
    * @since 3.2
    */
-  static bool showFilePreview( const QString& protocol );
+  static bool showFilePreview( const TQString& protocol );
 
   /**
    * Returns the suggested URI parsing mode for the KURL parser.
@@ -552,7 +552,7 @@ public:
    *
    * @since 3.2
    */
-  static KURL::URIMode uriParseMode( const QString& protocol );
+  static KURL::URIMode uriParseMode( const TQString& protocol );
 
   /**
    * Returns the list of capabilities provided by the kioslave implementing
@@ -572,7 +572,7 @@ public:
    *
    * @since 3.3
    */
-  static QStringList capabilities( const QString& protocol );
+  static TQStringList capabilities( const TQString& protocol );
 
   /**
    * Returns the name of the protocol through which the request
@@ -585,14 +585,14 @@ public:
    *
    * @since 3.3
    */
-  static QString proxiedBy( const QString& protocol );
+  static TQString proxiedBy( const TQString& protocol );
 
 public:
   // Internal functions:
   /**
    * @internal construct a KProtocolInfo from a stream
    */
-  KProtocolInfo( QDataStream& _str, int offset);
+  KProtocolInfo( TQDataStream& _str, int offset);
 
   virtual ~KProtocolInfo();
 
@@ -600,58 +600,58 @@ public:
    * @internal
    * Load the protocol info from a stream.
    */
-  virtual void load(QDataStream& );
+  virtual void load(TQDataStream& );
 
   /**
    * @internal
    * Save the protocol info to a stream.
    */
-  virtual void save(QDataStream& );
+  virtual void save(TQDataStream& );
 
   ////////////////////////// DEPRECATED /////////////////////////
   // The following methods are deprecated:
 
   /// @deprecated
-  static Type inputType( const QString& protocol ) KDE_DEPRECATED;
+  static Type inputType( const TQString& protocol ) KDE_DEPRECATED;
   /// @deprecated
-  static Type outputType( const QString& protocol ) KDE_DEPRECATED;
+  static Type outputType( const TQString& protocol ) KDE_DEPRECATED;
   /**
    * @deprecated
    * Returns the list of fields this protocol returns when listing
    * The current possibilities are
    * Name, Type, Size, Date, AccessDate, Access, Owner, Group, Link, URL, MimeType
    */
-  static QStringList listing( const QString& protocol ) KDE_DEPRECATED;
+  static TQStringList listing( const TQString& protocol ) KDE_DEPRECATED;
   /// @deprecated
-  static bool isSourceProtocol( const QString& protocol ) KDE_DEPRECATED;
+  static bool isSourceProtocol( const TQString& protocol ) KDE_DEPRECATED;
   /// @deprecated
-  static bool supportsListing( const QString& protocol ) KDE_DEPRECATED;
+  static bool supportsListing( const TQString& protocol ) KDE_DEPRECATED;
   /// @deprecated
-  static bool supportsReading( const QString& protocol ) KDE_DEPRECATED;
+  static bool supportsReading( const TQString& protocol ) KDE_DEPRECATED;
   /// @deprecated
-  static bool supportsWriting( const QString& protocol ) KDE_DEPRECATED;
+  static bool supportsWriting( const TQString& protocol ) KDE_DEPRECATED;
   /// @deprecated
-  static bool supportsMakeDir( const QString& protocol ) KDE_DEPRECATED;
+  static bool supportsMakeDir( const TQString& protocol ) KDE_DEPRECATED;
   /// @deprecated
-  static bool supportsDeleting( const QString& protocol ) KDE_DEPRECATED;
+  static bool supportsDeleting( const TQString& protocol ) KDE_DEPRECATED;
   /// @deprecated
-  static bool supportsLinking( const QString& protocol ) KDE_DEPRECATED;
+  static bool supportsLinking( const TQString& protocol ) KDE_DEPRECATED;
   /// @deprecated
-  static bool supportsMoving( const QString& protocol ) KDE_DEPRECATED;
+  static bool supportsMoving( const TQString& protocol ) KDE_DEPRECATED;
   /// @deprecated
-  static bool canCopyFromFile( const QString& protocol ) KDE_DEPRECATED;
+  static bool canCopyFromFile( const TQString& protocol ) KDE_DEPRECATED;
   /// @deprecated
-  static bool canCopyToFile( const QString& protocol ) KDE_DEPRECATED;
+  static bool canCopyToFile( const TQString& protocol ) KDE_DEPRECATED;
   /// @deprecated
-  static QString defaultMimetype( const QString& protocol) KDE_DEPRECATED;
+  static TQString defaultMimetype( const TQString& protocol) KDE_DEPRECATED;
   //////////////////////// END DEPRECATED ///////////////////////
 
 protected:
-  QString m_name;
-  QString m_exec;
+  TQString m_name;
+  TQString m_exec;
   Type m_inputType;
   Type m_outputType;
-  QStringList m_listing;
+  TQStringList m_listing;
   bool m_isSourceProtocol;
   bool m_isHelperProtocol;
   bool m_supportsListing;
@@ -661,12 +661,12 @@ protected:
   bool m_supportsDeleting;
   bool m_supportsLinking;
   bool m_supportsMoving;
-  QString m_defaultMimetype;
+  TQString m_defaultMimetype;
   bool m_determineMimetypeFromExtension;
-  QString m_icon;
+  TQString m_icon;
   bool m_canCopyFromFile;
   bool m_canCopyToFile;
-  QString m_config;
+  TQString m_config;
   int m_maxSlaves;
 
   bool canRenameFromFile() const; // for kprotocolinfo_kdecore
@@ -682,7 +682,7 @@ private:
   KProtocolInfoPrivate* d;
 };
 
-KIO_EXPORT QDataStream& operator>>( QDataStream& s, KProtocolInfo::ExtraField& field );
-KIO_EXPORT QDataStream& operator<<( QDataStream& s, const KProtocolInfo::ExtraField& field );
+KIO_EXPORT TQDataStream& operator>>( TQDataStream& s, KProtocolInfo::ExtraField& field );
+KIO_EXPORT TQDataStream& operator<<( TQDataStream& s, const KProtocolInfo::ExtraField& field );
 
 #endif

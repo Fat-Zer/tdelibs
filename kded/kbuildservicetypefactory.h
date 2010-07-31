@@ -21,7 +21,7 @@
 #define __k_build_service_type_factory_h__
 
 #include <kservicetypefactory.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 /**
  * Service-type factory for building ksycoca
@@ -41,12 +41,12 @@ public:
    * Find a service type in the database file 
    * @return a pointer to the servicetype in the memory dict (don't free!)
    */
-  virtual KServiceType * findServiceTypeByName(const QString &_name);
+  virtual KServiceType * findServiceTypeByName(const TQString &_name);
 
   /**
    * Construct a KServiceType from a config file.
    */
-  virtual KSycocaEntry * createEntry(const QString &file, const char *resource);
+  virtual KSycocaEntry * createEntry(const TQString &file, const char *resource);
 
   virtual KServiceType * createEntry( int ) { assert(0); return 0L; }
 
@@ -58,7 +58,7 @@ public:
   /**
    * Write out service type specific index files.
    */
-  virtual void save(QDataStream &str);
+  virtual void save(TQDataStream &str);
 
   /**
    * Write out header information
@@ -66,15 +66,15 @@ public:
    * Don't forget to call the parent first when you override 
    * this function.
    */
-  virtual void saveHeader(QDataStream &str);
+  virtual void saveHeader(TQDataStream &str);
 
   /**
    * Returns all resource types for this service factory
    */  
-  static QStringList resourceTypes();
+  static TQStringList resourceTypes();
 private:
 
-  void savePatternLists(QDataStream &str);
+  void savePatternLists(TQDataStream &str);
 };
 
 #endif

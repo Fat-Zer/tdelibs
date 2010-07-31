@@ -23,11 +23,11 @@
 #ifndef _XML_Tokenizer_h_
 #define _XML_Tokenizer_h_
 
-#include <qxml.h>
-#include <qptrlist.h>
-#include <qptrstack.h>
-#include <qvaluestack.h>
-#include <qobject.h>
+#include <tqxml.h>
+#include <tqptrlist.h>
+#include <tqptrstack.h>
+#include <tqvaluestack.h>
+#include <tqobject.h>
 #include "misc/loader_client.h"
 #include "misc/stringit.h"
 
@@ -55,41 +55,41 @@ public:
     virtual ~XMLHandler();
 
     // return the error protocol if parsing failed
-    QString errorProtocol();
+    TQString errorProtocol();
 
     // overloaded handler functions
     bool startDocument();
-    bool startElement(const QString& namespaceURI, const QString& localName, const QString& qName, const QXmlAttributes& atts);
-    bool endElement(const QString& namespaceURI, const QString& localName, const QString& qName);
+    bool startElement(const TQString& namespaceURI, const TQString& localName, const TQString& qName, const TQXmlAttributes& atts);
+    bool endElement(const TQString& namespaceURI, const TQString& localName, const TQString& qName);
     bool startCDATA();
     bool endCDATA();
-    bool characters(const QString& ch);
-    bool comment(const QString & ch);
-    bool processingInstruction(const QString &target, const QString &data);
+    bool characters(const TQString& ch);
+    bool comment(const TQString & ch);
+    bool processingInstruction(const TQString &target, const TQString &data);
     
     // namespace handling, to workaround problem in QXML where some attributes
     // do not get the namespace resolved properly
-    bool startPrefixMapping(const QString& prefix, const QString& uri);
-    bool endPrefixMapping(const QString& prefix);
-    void fixUpNSURI(QString& uri, const QString& qname);
-    QMap<QString, QValueStack<QString> > namespaceInfo;
+    bool startPrefixMapping(const TQString& prefix, const TQString& uri);
+    bool endPrefixMapping(const TQString& prefix);
+    void fixUpNSURI(TQString& uri, const TQString& qname);
+    TQMap<TQString, TQValueStack<TQString> > namespaceInfo;
 
 
     // from QXmlDeclHandler
-    bool attributeDecl(const QString &eName, const QString &aName, const QString &type, const QString &valueDefault, const QString &value);
-    bool externalEntityDecl(const QString &name, const QString &publicId, const QString &systemId);
-    bool internalEntityDecl(const QString &name, const QString &value);
+    bool attributeDecl(const TQString &eName, const TQString &aName, const TQString &type, const TQString &valueDefault, const TQString &value);
+    bool externalEntityDecl(const TQString &name, const TQString &publicId, const TQString &systemId);
+    bool internalEntityDecl(const TQString &name, const TQString &value);
 
     // from QXmlDTDHandler
-    bool notationDecl(const QString &name, const QString &publicId, const QString &systemId);
-    bool unparsedEntityDecl(const QString &name, const QString &publicId, const QString &systemId, const QString &notationName);
+    bool notationDecl(const TQString &name, const TQString &publicId, const TQString &systemId);
+    bool unparsedEntityDecl(const TQString &name, const TQString &publicId, const TQString &systemId, const TQString &notationName);
 
     bool enterText();
     void exitText();
 
-    QString errorString();
+    TQString errorString();
 
-    bool fatalError( const QXmlParseException& exception );
+    bool fatalError( const TQXmlParseException& exception );
 
     unsigned long errorLine;
     unsigned long errorCol;
@@ -99,10 +99,10 @@ private:
     DOM::NodeImpl *popNode();
     DOM::NodeImpl *currentNode() const;
 private:
-    QString errorProt;
+    TQString errorProt;
     DOM::DocumentImpl *m_doc;
     KHTMLView *m_view;
-    QPtrStack<DOM::NodeImpl> m_nodes;
+    TQPtrStack<DOM::NodeImpl> m_nodes;
     DOM::NodeImpl *m_rootNode;
 
     enum State {
@@ -144,18 +144,18 @@ class XMLIncrementalSource : public QXmlInputSource
 public:
     XMLIncrementalSource();
     virtual void fetchData();
-    virtual QChar next();
-    virtual void setData( const QString& str );
-    virtual void setData( const QByteArray& data );
-    virtual QString data();
+    virtual TQChar next();
+    virtual void setData( const TQString& str );
+    virtual void setData( const TQByteArray& data );
+    virtual TQString data();
 
-    void appendXML( const QString& str );
+    void appendXML( const TQString& str );
     void setFinished( bool );
 
 private:
-    QString      m_data;
+    TQString      m_data;
     uint         m_pos;
-    const QChar *m_unicode;
+    const TQChar *m_unicode;
     bool         m_finished;
 };
 
@@ -183,12 +183,12 @@ protected:
     void executeScripts();
     void addScripts(DOM::NodeImpl *n);
 
-    QPtrList<DOM::HTMLScriptElementImpl> m_scripts;
-    QPtrListIterator<DOM::HTMLScriptElementImpl> *m_scriptsIt;
+    TQPtrList<DOM::HTMLScriptElementImpl> m_scripts;
+    TQPtrListIterator<DOM::HTMLScriptElementImpl> *m_scriptsIt;
     khtml::CachedScript *m_cachedScript;
 
     XMLHandler m_handler;
-    QXmlSimpleReader m_reader;
+    TQXmlSimpleReader m_reader;
     XMLIncrementalSource m_source;
     bool m_noErrors;
 };

@@ -20,8 +20,8 @@
 #ifndef __kurl_h__
 #define __kurl_h__
 
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 #include "kdelibs_export.h"
 
 class QUrl;
@@ -52,16 +52,16 @@ class KURLPrivate;
  *  the position within a document)
  * - space -> "%20"
  *
- * The constructor KURL(const QString&) expects a string properly escaped,
+ * The constructor KURL(const TQString&) expects a string properly escaped,
  * or at least non-ambiguous.
  * For instance a local file or directory <tt>"/bar/#foo#"</tt> would have the
  * URL <tt>"file:///bar/%23foo%23"</tt>.
  * If you have the absolute path and need the URL-escaping you should create
- * KURL via the default-constructor and then call setPath(const QString&):
+ * KURL via the default-constructor and then call setPath(const TQString&):
  * @code
  *     KURL kurl;
  *     kurl.setPath( "/bar/#foo#" );
- *     QString url = kurl.url();    // -> "file:///bar/%23foo%23"
+ *     TQString url = kurl.url();    // -> "file:///bar/%23foo%23"
  * @endcode
  *
  * If you have the URL of a local file or directory and need the absolute path,
@@ -70,7 +70,7 @@ class KURLPrivate;
  *    KURL url( "file:///bar/%23foo%23" );
  *    ...
  *    if ( url.isLocalFile() )
- *       QString path = url.path();       // -> "/bar/#foo#"
+ *       TQString path = url.path();       // -> "/bar/#foo#"
  * @endcode
  *
  * The other way round: if the user can enter a string, that can be either a
@@ -85,18 +85,18 @@ class KURLPrivate;
  *
  * Wrong:
  * @code
- *    QString dirUrl = "file:///bar/";
- *    QString fileName = "#foo#";
- *    QString invalidURL = dirUrl + fileName;   // -> "file:///bar/#foo#" won't behave like you would expect.
+ *    TQString dirUrl = "file:///bar/";
+ *    TQString fileName = "#foo#";
+ *    TQString invalidURL = dirUrl + fileName;   // -> "file:///bar/#foo#" won't behave like you would expect.
  * @endcode
  * Instead you should use addPath().
  *
  * Right:
  * @code
  *    KURL url( "file:///bar/" );
- *    QString fileName = "#foo#";
+ *    TQString fileName = "#foo#";
  *    url.addPath( fileName );
- *    QString validURL = url.url();    // -> "file:///bar/%23foo%23"
+ *    TQString validURL = url.url();    // -> "file:///bar/%23foo%23"
  * @endcode
  *
  * Also consider that some URLs contain the password, but this shouldn't be
@@ -105,7 +105,7 @@ class KURLPrivate;
  *
  * @code
  *    KURL url( "ftp://name:password@ftp.faraway.org/bar/%23foo%23");
- *    QString visibleURL = url.prettyURL(); // -> "ftp://name@ftp.faraway.org/bar/%23foo%23"
+ *    TQString visibleURL = url.prettyURL(); // -> "ftp://name@ftp.faraway.org/bar/%23foo%23"
  * @endcode
  * Note that prettyURL() doesn't change the character escapes (like <tt>"%23"</tt>).
  * Otherwise the URL would be invalid and the user wouldn't be able to use it in another
@@ -179,12 +179,12 @@ public:
   };
 
   /**
-   * KURL::List is a QValueList that contains KURLs with a few
+   * KURL::List is a TQValueList that contains KURLs with a few
    * convenience methods.
    * @see KURL
    * @see QValueList
    */
-  class KDECORE_EXPORT List : public QValueList<KURL>
+  class KDECORE_EXPORT List : public TQValueList<KURL>
   {
   public:
     /**
@@ -207,9 +207,9 @@ public:
        *
        * @param list the list containing the URLs as strings
        *
-       * @see KURL(const QString &, int)
+       * @see KURL(const TQString &, int)
        */
-      List(const QStringList &list);
+      List(const TQStringList &list);
       /**
        * @brief Converts the URLs of this list to a list of strings
        *
@@ -223,7 +223,7 @@ public:
        *
        * @see KURL::url()
        */
-      QStringList toStringList() const;
+      TQStringList toStringList() const;
   };
   /**
    * @brief Constructs an empty URL
@@ -253,11 +253,11 @@ public:
    * @param url a URL, not a filename. If the URL does not have a protocol
    *            part, @c "file:" is assumed
    * @param encoding_hint MIB of original encoding of URL.
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @see fromPathOrURL()
    */
-  KURL( const QString& url, int encoding_hint = 0 );
+  KURL( const TQString& url, int encoding_hint = 0 );
   /**
    * @brief Constructor taking an URL encoded in a C string
    *
@@ -278,16 +278,16 @@ public:
    * @param url an encoded URL. If the URL does not have a protocol part,
    *            @c "file:" is assumed
    * @param encoding_hint MIB of original encoding of URL.
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @see fromPathOrURL()
-   * @see QString::fromLatin1()
+   * @see TQString::fromLatin1()
    */
   KURL( const char * url, int encoding_hint = 0 );
   /**
    * @brief Constructor taking an URL encoded in a QCString
    *
-   * Constructor taking a QCString @p url, which is an @em encoded
+   * Constructor taking a TQCString @p url, which is an @em encoded
    * representation of the URL, exactly like the usual constructor. This is
    * useful when the URL, in its encoded form, is strictly ASCII.
    *
@@ -304,12 +304,12 @@ public:
    * @param url A encoded URL. If the URL does not have a protocol part,
    *            @c "file:" is assumed
    * @param encoding_hint MIB of original encoding of URL.
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @see fromPathOrURL()
-   * @see QString::fromLatin1()
+   * @see TQString::fromLatin1()
    */
-  KURL( const QCString& url, int encoding_hint = 0 );
+  KURL( const TQCString& url, int encoding_hint = 0 );
 
   /**
    * @brief Copy constructor
@@ -324,7 +324,7 @@ public:
    *
    * @param u the QUrl
    */
-  KURL( const QUrl &u );
+  KURL( const TQUrl &u );
   /**
    * @brief Constructor allowing relative URLs
    *
@@ -346,11 +346,11 @@ public:
    *        So do NOT pass a path here (use setPath() or addPath() or
    *        fromPathOrURL() instead)
    * @param encoding_hint MIB of original encoding of URL.
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @see fromPathOrURL()
    */
-  KURL( const KURL& _baseurl, const QString& _rel_url, int encoding_hint=0 );
+  KURL( const KURL& _baseurl, const TQString& _rel_url, int encoding_hint=0 );
 
   /**
    * @brief Returns the protocol for the URL
@@ -359,12 +359,12 @@ public:
    * @c "mailto:" and other pseudo protocols.
    *
    * @return the protocol of the URL, does not include the colon. If the
-   *         URL is malformed, @c QString::null will be returned
+   *         URL is malformed, @c TQString::null will be returned
    *
    * @see setProtocol()
    * @see isValid()
    */
-  QString protocol() const { return m_bIsMalformed ? QString::null : m_strProtocol; }
+  TQString protocol() const { return m_bIsMalformed ? TQString::null : m_strProtocol; }
   /**
    * @brief Sets the protocol for the URL
    *
@@ -375,7 +375,7 @@ public:
    *
    * @see protocol()
    */
-  void setProtocol( const QString& _txt );
+  void setProtocol( const TQString& _txt );
 
   /**
    * @brief Returns the URI processing mode for the URL
@@ -393,12 +393,12 @@ public:
    * @brief Returns the decoded user name (login, user id, etc) included in
    *        the URL
    *
-   * @return the user name or @c QString::null if there is no user name
+   * @return the user name or @c TQString::null if there is no user name
    *
    * @see setUser()
    * @see hasUser()
    */
-  QString user() const { return m_strUser; }
+  TQString user() const { return m_strUser; }
   /**
    * @brief Sets the user name (login, user id, etc) to include in the URL
    *
@@ -406,13 +406,13 @@ public:
    * If there is a password associated with the user, it can be set using
    * setPass().
    *
-   * @param _txt the name of the user or @c QString::null to remove the user
+   * @param _txt the name of the user or @c TQString::null to remove the user
    *
    * @see user()
    * @see hasUser()
    * @see hasPass()
    */
-  void setUser( const QString& _txt );
+  void setUser( const TQString& _txt );
   /**
    * @brief Tests if this URL has a user name included in it
    *
@@ -431,13 +431,13 @@ public:
    * @note a password can only appear in a URL string if you also set
    * a user, see setUser().
    *
-   * @return the password or @c QString::null if it does not exist
+   * @return the password or @c TQString::null if it does not exist
    *
    * @see setPass()
    * @see hasPass()
    * @see hasUser()
    */
-  QString pass() const { return m_strPass; }
+  TQString pass() const { return m_strPass; }
   /**
    * @brief Sets the password (corresponding to user()) to include in the URL
    *
@@ -445,13 +445,13 @@ public:
    * @note a password can only appear in a URL string if you also set
    * a user, see setUser().
    *
-   * @param _txt the password to set or @c QString::null to remove the password
+   * @param _txt the password to set or @c TQString::null to remove the password
    *
    * @see pass()
    * @see hasPass()
    * @see hasUser()
    */
-  void setPass( const QString& _txt );
+  void setPass( const TQString& _txt );
   /**
    * @brief Tests if this URL has a password included in it
    *
@@ -469,24 +469,24 @@ public:
   /**
    * @brief Returns the decoded hostname included in the URL
    *
-   * @return the name of the host or @c QString::null if no host is set
+   * @return the name of the host or @c TQString::null if no host is set
    *
    * @see setHost()
    * @see hasHost()
    */
-  QString host() const { return m_strHost; }
+  TQString host() const { return m_strHost; }
 
   /**
    * @brief Sets the hostname to include in the URL
    *
    * Special characters in the hostname will appear encoded in the URL.
    *
-   * @param _txt the new name of the host or QString::null to remove the host
+   * @param _txt the new name of the host or TQString::null to remove the host
    *
    * @see host()
    * @see hasHost()
    */
-  void setHost( const QString& _txt );
+  void setHost( const TQString& _txt );
   /**
    * @brief Tests if this URL has a hostname included in it
    *
@@ -522,14 +522,14 @@ public:
    *
    * This does @em not include the query.
    *
-   * @return the path of the URL (without query), or @c QString::null if no
+   * @return the path of the URL (without query), or @c TQString::null if no
    *         path is set
    *
    * @see path(int)
    * @see setPath()
    * @see hasPath()
    */
-  QString path() const  { return m_strPath; }
+  TQString path() const  { return m_strPath; }
 
   /**
    * @brief Returns the current decoded path
@@ -552,7 +552,7 @@ public:
    *                  @c '/', @c +1 adds a trailing @c '/' if there is none yet
    *                  and @c 0 returns the path unchanged
    *
-   * @return the path of the URL (without query), or @c QString::null if no
+   * @return the path of the URL (without query), or @c TQString::null if no
    *         path is set
    *
    * @see path()
@@ -560,7 +560,7 @@ public:
    * @see hasPath()
    * @see adjustPath()
    */
-  QString path( int _trailing ) const;
+  TQString path( int _trailing ) const;
 
   /**
    * @brief Sets the decoded path of the URL
@@ -572,13 +572,13 @@ public:
    * beginning of the query part. Something that might look encoded,
    * like @c "%3f" will not become decoded.
    *
-   * @param path the new, decoded, path or @c QString::null to remove the path
+   * @param path the new, decoded, path or @c TQString::null to remove the path
    *
    * @see path()
    * @see path(int)
    * @see hasPath()
    */
-  void setPath( const QString& path );
+  void setPath( const TQString& path );
 
   /**
    * @brief Tests if this URL has a path included in it
@@ -638,25 +638,25 @@ public:
    *
    * @param _txt the new encoded path and encoded query
    * @param encoding_hint MIB of original encoding of @p _txt .
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @see encodedPathAndQuery()
    * @see setPath()
    * @see setQuery()
    */
-  void setEncodedPathAndQuery( const QString& _txt, int encoding_hint = 0 );
+  void setEncodedPathAndQuery( const TQString& _txt, int encoding_hint = 0 );
 
   /**
    * @brief Sets the (already encoded) path of the URL
    *
    * @param _txt the new encoded path
    * @param encoding_hint MIB of original encoding of @p _txt .
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @see setEncodedPathAndQuery()
    * @see setPath()
    */
-  void setEncodedPath(const QString& _txt, int encoding_hint = 0 );
+  void setEncodedPath(const TQString& _txt, int encoding_hint = 0 );
 
   /**
    * @brief Returns the encoded path and the query
@@ -679,7 +679,7 @@ public:
    * @param _no_empty_path if set to @c true then an empty path is substituted
    *        by @c "/"
    * @param encoding_hint MIB of desired encoding of URL.
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @return the concatenation of the encoded path , @c '?' and the
    *         encoded query
@@ -688,7 +688,7 @@ public:
    * @see path()
    * @see query()
    */
-  QString encodedPathAndQuery( int _trailing = 0, bool _no_empty_path = false, int encoding_hint = 0) const;
+  TQString encodedPathAndQuery( int _trailing = 0, bool _no_empty_path = false, int encoding_hint = 0) const;
 
   /**
    * @brief Sets the encoded query of the URL
@@ -699,11 +699,11 @@ public:
    *             the query may contain the @c '0' character
    *
    * @param encoding_hint MIB of the encoding. Reserved, should be @c 0 .
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @see query()
    */
-  void setQuery( const QString& _txt, int encoding_hint = 0);
+  void setQuery( const TQString& _txt, int encoding_hint = 0);
 
   /**
    * @brief Returns the encoded query of the URL
@@ -713,24 +713,24 @@ public:
    * A single @c '?' means an empty query.
    * An empty string means no query.
    *
-   * @return the encoded query or @c QString::null if there is none
+   * @return the encoded query or @c TQString::null if there is none
    *
    * @see setQuery()
    */
-  QString query() const;
+  TQString query() const;
 
   /**
    * @brief Returns the encoded reference of the URL
    *
    * The reference is @em never decoded automatically.
    *
-   * @return the undecoded reference, or @c QString::null if there is none
+   * @return the undecoded reference, or @c TQString::null if there is none
    *
    * @see setRef()
    * @see hasRef()
    * @see htmlRef()
    */
-  QString ref() const { return m_strRef_encoded; }
+  TQString ref() const { return m_strRef_encoded; }
 
   /**
    * @brief Sets the encoded reference part (everything after @c '#')
@@ -738,12 +738,12 @@ public:
    * This is considered to be encoded, i.e. characters that are not allowed
    * as part of the reference will @em not be encoded.
    *
-   * @param _txt the encoded reference or @c QString::null to remove it
+   * @param _txt the encoded reference or @c TQString::null to remove it
    *
    * @see ref()
    * @see hasRef()
    */
-  void setRef( const QString& _txt ) { m_strRef_encoded = _txt; }
+  void setRef( const TQString& _txt ) { m_strRef_encoded = _txt; }
 
   /**
    * @brief Tests if the URL has a reference part
@@ -770,7 +770,7 @@ public:
    * @see hasSubURL()
    * @see ref()
    */
-  QString htmlRef() const;
+  TQString htmlRef() const;
 
   /**
    * @brief Returns the encoded HTML-style reference
@@ -782,18 +782,18 @@ public:
    * @see setHTMLRef()
    * @see hasHTMLRef()
    */
-  QString encodedHtmlRef() const;
+  TQString encodedHtmlRef() const;
 
   /**
    * @brief Sets the decoded HTML-style reference
    *
    * @param _ref the new reference. This is considered to be @em not encoded in
-   *         contrast to setRef(). Use @c QString::null to remove it
+   *         contrast to setRef(). Use @c TQString::null to remove it
    *
    * @see htmlRef()
    * @see hasHTMLRef()
    */
-  void setHTMLRef( const QString& _ref );
+  void setHTMLRef( const TQString& _ref );
 
   /**
    * @brief Tests if there is an HTML-style reference
@@ -840,23 +840,23 @@ public:
    * Adds encoding information to the URL by adding a @c "charset" parameter.
    * If there is already a charset parameter, it will be replaced.
    *
-   * @param encoding the encoding to add or @c QString::null to remove the
+   * @param encoding the encoding to add or @c TQString::null to remove the
    *                 encoding
    *
    * @see fileEncoding()
-   * @see QTextCodec::codecForName()
+   * @see TQTextCodec::codecForName()
    */
-  void setFileEncoding(const QString &encoding);
+  void setFileEncoding(const TQString &encoding);
 
   /**
    * @brief Returns encoding information of the URL
    *
    * The encoding information is the content of the @c "charset" parameter.
    *
-   * @return an encoding suitable for QTextCodec::codecForName()
-   *         or @c QString::null if not encoding was specified
+   * @return an encoding suitable for TQTextCodec::codecForName()
+   *         or @c TQString::null if not encoding was specified
    */
-  QString fileEncoding() const;
+  TQString fileEncoding() const;
 
   /**
    * @brief Tests if the URL has any sub URLs
@@ -883,14 +883,14 @@ public:
    * @see setPath()
    * @see hasPath()
    */
-  void addPath( const QString& txt );
+  void addPath( const TQString& txt );
 
   /**
    * @brief Returns the value of a certain query item
    *
    * @param item item whose value we want
    *
-   * @return the value of the given query item name or @c QString::null if the
+   * @return the value of the given query item name or @c TQString::null if the
    *         specified item does not exist
    *
    * @see addQueryItem()
@@ -898,16 +898,16 @@ public:
    * @see queryItems()
    * @see query()
    */
-  QString queryItem( const QString& item ) const;
+  TQString queryItem( const TQString& item ) const;
 
   /**
    * @brief Returns the value of a certain query item
    *
    * @param item item whose value we want
    * @param encoding_hint MIB of encoding of query.
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
-   * @return the value of the given query item name or @c QString::null if the
+   * @return the value of the given query item name or @c TQString::null if the
    *         specified item does not exist
    *
    * @see addQueryItem()
@@ -915,7 +915,7 @@ public:
    * @see queryItems()
    * @see query()
    */
-  QString queryItem( const QString& item, int encoding_hint ) const;
+  TQString queryItem( const TQString& item, int encoding_hint ) const;
 
   /**
    * Options for queryItems()
@@ -933,14 +933,14 @@ public:
   /**
    * @internal, override for the below function
    */
-  QMap< QString, QString > queryItems( int options=0 ) const;
+  TQMap< TQString, TQString > queryItems( int options=0 ) const;
 
   /**
    * @brief Returns the list of query items as a map mapping keys to values
    *
    * @param options any of QueryItemsOptions <em>OR</em>ed together
    * @param encoding_hint MIB of encoding of query.
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @return the map of query items or the empty map if the URL has no
    *         query items
@@ -952,7 +952,7 @@ public:
    *
    * @since 3.1
    */
-  QMap< QString, QString > queryItems( int options, int encoding_hint ) const;
+  TQMap< TQString, TQString > queryItems( int options, int encoding_hint ) const;
 
   /**
    * @brief Adds an additional query item
@@ -963,13 +963,13 @@ public:
    * @param _item name of item to add
    * @param _value value of item to add
    * @param encoding_hint MIB of encoding to use for _value.
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @see queryItem()
    * @see queryItems()
    * @see query()
    */
-  void addQueryItem( const QString& _item, const QString& _value, int encoding_hint = 0 );
+  void addQueryItem( const TQString& _item, const TQString& _value, int encoding_hint = 0 );
 
   /**
    * @brief Removea an item from the query
@@ -981,7 +981,7 @@ public:
    * @see queryItems()
    * @see query()
    */
-  void removeQueryItem( const QString& _item );
+  void removeQueryItem( const TQString& _item );
 
   /**
    * @brief Sets the filename of the path
@@ -1003,7 +1003,7 @@ public:
    * @see setDirectory()
    * @see setPath()
    */
-  void setFileName( const QString&_txt );
+  void setFileName( const TQString&_txt );
 
   /**
    * @brief Returns the filename of the path
@@ -1016,13 +1016,13 @@ public:
    *        behind the last @c '/' is considered to be the filename
    *
    * @return the filename of the current path. The returned string is decoded.
-   *         @c QString::null if there is no file (and thus no path)
+   *         @c TQString::null if there is no file (and thus no path)
    *
    * @see setFileName()
    * @see directory()
    * @see path()
    */
-  QString fileName( bool _ignore_trailing_slash_in_path = true ) const;
+  TQString fileName( bool _ignore_trailing_slash_in_path = true ) const;
 
   /**
    * @brief Returns the directory of the path
@@ -1043,14 +1043,14 @@ public:
    * @param _ignore_trailing_slash_in_path if set to @c false, then everything
    *        behind the last @c '/' is considered to be the filename
    *
-   * @return the directory part of the current path or @c QString::null when
+   * @return the directory part of the current path or @c TQString::null when
    *         there is no path. The returned string is decoded
    *
    * @see setDirectory()
    * @see fileName()
    * @see path()
    */
-  QString directory( bool _strip_trailing_slash_from_result = true,
+  TQString directory( bool _strip_trailing_slash_from_result = true,
 		     bool _ignore_trailing_slash_in_path = true ) const;
 
   /**
@@ -1062,7 +1062,7 @@ public:
    * @see setFileName()
    * @see setPath()
    */
-  void setDirectory(const QString &dir);
+  void setDirectory(const TQString &dir);
 
   /**
    * @brief Changes the directory by descending into the given directory
@@ -1082,7 +1082,7 @@ public:
    * @see directory()
    * @see path()
    */
-  bool cd( const QString& _dir );
+  bool cd( const TQString& _dir );
 
   /**
    * @brief Returns the URL as string, with all escape sequences intact,
@@ -1110,7 +1110,7 @@ public:
    *                  @c '/', @c +1 adds a trailing @c '/' if there is none yet
    *                  and @c 0 returns the path unchanged
    * @param encoding_hint MIB of encoding to use.
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @return the complete URL, with all escape sequences intact, encoded
    *         in a given charset
@@ -1119,7 +1119,7 @@ public:
    * @see pathOrURL()
    * @see htmlURL()
    */
-  QString url( int _trailing = 0, int encoding_hint = 0) const;
+  TQString url( int _trailing = 0, int encoding_hint = 0) const;
 
   /**
    * @brief Returns the URL as string in human-friendly format
@@ -1153,7 +1153,7 @@ public:
    * @see url()
    * @see pathOrURL()
    */
-  QString prettyURL( int _trailing = 0) const;
+  TQString prettyURL( int _trailing = 0) const;
 
   /**
    * @brief Returns the URL as string in human-friendly format
@@ -1190,7 +1190,7 @@ public:
    * @see url()
    * @see pathOrURL()
    */
-  QString prettyURL( int _trailing, AdjustementFlags _flags) const;
+  TQString prettyURL( int _trailing, AdjustementFlags _flags) const;
   // ### BIC: Merge the two above + spell it as "Adjustment"
   // Or remove completely, and let people use pathOrURL() instead
 
@@ -1212,7 +1212,7 @@ public:
    *
    * @since 3.4
    */
-  QString pathOrURL() const;
+  TQString pathOrURL() const;
 
   /**
    * @brief Returns the URL as string, escaped for HTML
@@ -1225,7 +1225,7 @@ public:
    * @see url()
    * @see pathOrURL()
    */
-  QString htmlURL() const;
+  TQString htmlURL() const;
 
 
   /**
@@ -1285,10 +1285,10 @@ public:
    *
    * bool lessThan = url1 < url2; // false. Both invalid, no protocols
    *
-   * url2.setProtocol( QString::null );
+   * url2.setProtocol( TQString::null );
    * lessThan = url1 < url2;            // true. url2 is valid because of setProtocol()
    *
-   * url1.setProtocol( QString::null );
+   * url1.setProtocol( TQString::null );
    * lessThan = url1 < url2;            // false. Both valid and everything empty
    *
    * url1.setProtocol( "http" );
@@ -1311,7 +1311,7 @@ public:
    *         (equal or greater than)
    *
    * @see operator==()
-   * @see QString::compare()
+   * @see TQString::compare()
    */
   bool operator<(const KURL& _u) const;
 
@@ -1334,14 +1334,14 @@ public:
    * This will reset the current URL and parse the given string.
    * See the similar constructor for known limitations.
    *
-   * @param _url the QString to parse for values
+   * @param _url the TQString to parse for values
    *
    * @return a reference to this URL (*this)
    *
    * @see equals()
-   * @see KURL(const QString &, int)
+   * @see KURL(const TQString &, int)
    */
-  KURL& operator=( const QString& _url );
+  KURL& operator=( const TQString& _url );
 
   /**
    * @brief Assigns the URL, given as a C string, to this one
@@ -1368,9 +1368,9 @@ public:
    * @return a reference to this URL (*this)
    *
    * @see equals()
-   * @see KURL(const QUrl &)
+   * @see KURL(const TQUrl &)
    */
-  KURL& operator=( const QUrl & u );
+  KURL& operator=( const TQUrl & u );
 
   /**
    * @brief Tests if this URL is equal to the given one
@@ -1406,14 +1406,14 @@ public:
    * @return @c true if equal and neither this URL nor @p _u is malformed.
    *         Otherwise @c false
    *
-   * @see KURL(const QString &, int)
+   * @see KURL(const TQString &, int)
    * @see operator==(const KURL &)
    * @see equals()
    * @see isValid()
    * @see operator!=()
    * @see operator<()
    */
-  bool operator==( const QString& _u ) const;
+  bool operator==( const TQString& _u ) const;
 
   /**
    * @brief Tests if this URL is different from the given one
@@ -1432,16 +1432,16 @@ public:
   /**
    * @brief Tests if this URL is different from the one given as a string
    *
-   * Tests by negating the result of operator==(const QString &)
+   * Tests by negating the result of operator==(const TQString &)
    *
    * @param _u the URL to compare to
    *
-   * @return the negated result of operator==(const QString &)
+   * @return the negated result of operator==(const TQString &)
    *
-   * @see operator==(const QString &)
+   * @see operator==(const TQString &)
    * @see operator<()
    */
-  bool operator!=( const QString& _u ) const { return !( *this == _u ); }
+  bool operator!=( const TQString& _u ) const { return !( *this == _u ); }
 
   /**
    * @brief Compares this URL with another one
@@ -1511,10 +1511,10 @@ public:
    * @return an empty list on error or the list of split URLs
    *
    * @see hasSubURL()
-   * @see KURL(const QString&, int)
+   * @see KURL(const TQString&, int)
    * @see join()
    */
-  static List split( const QString& _url );
+  static List split( const TQString& _url );
 
   /**
    * @brief Splits nested URLs into a list of URLs
@@ -1559,12 +1559,12 @@ public:
   static KURL join( const List& _list );
 
   /**
-   * @brief Creates a KURL object from a QString representing either an
+   * @brief Creates a KURL object from a TQString representing either an
    *        absolute path or a real URL
    *
    * Use this method instead of
    * @code
-   * QString someDir = ...
+   * TQString someDir = ...
    * KURL url = someDir;
    * @endcode
    *
@@ -1575,11 +1575,11 @@ public:
    * @return the new KURL
    *
    * @see pathOrURL()
-   * @see KURL(const QString&, int)
+   * @see KURL(const TQString&, int)
    *
    * @since 3.1
    */
-  static KURL fromPathOrURL( const QString& text );
+  static KURL fromPathOrURL( const TQString& text );
 
   /**
    * @brief Encodes a string for use in URLs
@@ -1589,16 +1589,16 @@ public:
    * Convert unicoded string to local encoding and use %%-style
    * encoding for all common delimiters / non-ascii characters.
    *
-   * @param str the string to encode (can be @c QString::null)
+   * @param str the string to encode (can be @c TQString::null)
    * @param encoding_hint MIB of encoding to use.
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @return the encoded string
    *
    * @see encode_string_no_slash()
    * @see decode_string()
    */
-  static QString encode_string(const QString &str, int encoding_hint = 0);
+  static TQString encode_string(const TQString &str, int encoding_hint = 0);
 
   /**
    * @brief Encodes a string for use in URLs
@@ -1609,14 +1609,14 @@ public:
    * encoding for all common delimiters and non-ascii characters
    * as well as the slash @c '/'.
    *
-   * @param str the string to encode (can be @c QString::null)
+   * @param str the string to encode (can be @c TQString::null)
    * @param encoding_hint MIB of encoding to use.
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @see encode_string()
    * @see decode_string()
    */
-  static QString encode_string_no_slash(const QString &str, int encoding_hint = 0);
+  static TQString encode_string_no_slash(const TQString &str, int encoding_hint = 0);
 
   /**
    * @brief Decodes a string as used in URLs
@@ -1627,16 +1627,16 @@ public:
    *
    * Reverse of encode_string()
    *
-   * @param str the string to decode (can be @c QString::null)
+   * @param str the string to decode (can be @c TQString::null)
    * @param encoding_hint MIB of original encoding of @p str .
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @return the decoded string
    *
    * @see encode_string()
    * @see encode_string_no_slash()
    */
-  static QString decode_string(const QString &str, int encoding_hint = 0);
+  static TQString decode_string(const TQString &str, int encoding_hint = 0);
 
   /**
    * @brief Tests if a given URL is a relative as opposed to an absolute URL
@@ -1652,7 +1652,7 @@ public:
    *
    * @see relativeURL()
    */
-  static bool isRelativeURL(const QString &_url);
+  static bool isRelativeURL(const TQString &_url);
 
   /**
    * @brief Creates an URL relative to a base URL for a given input URL
@@ -1671,13 +1671,13 @@ public:
    * @param base_url the URL to derive from
    * @param url the URL to point to relatively from @p base_url
    * @param encoding_hint MIB of original encoding of @p str .
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    *
    * @see isRelativeURL()
    * @see relativePath()
    * @see adjustPath()
    */
-  static QString relativeURL(const KURL &base_url, const KURL &url, int encoding_hint = 0);
+  static TQString relativeURL(const KURL &base_url, const KURL &url, int encoding_hint = 0);
 
   /**
    * @brief Creates a path relative to a base path for a given input path
@@ -1693,7 +1693,7 @@ public:
    *
    * @see relativeURL()
    */
-  static QString relativePath(const QString &base_dir, const QString &path, bool *isParent=0);
+  static TQString relativePath(const TQString &base_dir, const TQString &path, bool *isParent=0);
 
   /**
    * @brief Determines which URI mode is suitable for processing URIs of a
@@ -1707,7 +1707,7 @@ public:
    *
    * @since 3.2
    */
-  static URIMode uriModeForProtocol(const QString& protocol);
+  static URIMode uriModeForProtocol(const TQString& protocol);
 
 #ifdef KDE_NO_COMPAT
 private:
@@ -1715,7 +1715,7 @@ private:
   /**
    * @deprecated change code to call fileName()
    */
-	QString filename( bool _ignore_trailing_slash_in_path = true ) const
+	TQString filename( bool _ignore_trailing_slash_in_path = true ) const
   {
     return fileName(_ignore_trailing_slash_in_path);
   }
@@ -1724,7 +1724,7 @@ protected:
   /**
    * @brief Resets the members to their "null" state
    *
-   * All QString members get reset to @c QString::null, the port to @c 0
+   * All TQString members get reset to @c TQString::null, the port to @c 0
    * the URIMode to @c Auto and the URL becomes invalid.
    *
    * This is like assigning a null URL, but more efficient as it doesn't
@@ -1745,9 +1745,9 @@ protected:
    *
    * @param _url the string to parse
    * @param encoding_hint MIB of original encoding of @p str .
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    */
-  void parseURL( const QString& _url, int encoding_hint = 0 );
+  void parseURL( const TQString& _url, int encoding_hint = 0 );
   /**
    * @brief Parses the given string and fills the URL's values on success
    *
@@ -1755,9 +1755,9 @@ protected:
    *
    * @param _url the string to parse
    * @param encoding_hint MIB of original encoding of @p str .
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    */
-  void parseRawURI( const QString& _url, int encoding_hint = 0 );
+  void parseRawURI( const TQString& _url, int encoding_hint = 0 );
   /**
    * @brief Parses the given string and fills the URL's values on success
    *
@@ -1765,36 +1765,36 @@ protected:
    *
    * @param _url the string to parse
    * @param encoding_hint MIB of original encoding of @p str .
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    */
-  void parseMailto( const QString& _url, int encoding_hint = 0 );
+  void parseMailto( const TQString& _url, int encoding_hint = 0 );
   /**
    * @brief Parses the given string and fills the URL's values on success
    *
    * @param _url the string to parse
    * @param encoding_hint MIB of original encoding of @p str .
-   *        See QTextCodec::mibEnum()
+   *        See TQTextCodec::mibEnum()
    */
-  void parse( const QString& _url, int encoding_hint = 0 );
+  void parse( const TQString& _url, int encoding_hint = 0 );
 
 private:
-  void _setQuery( const QString& _txt, int encoding_hint = 0);
+  void _setQuery( const TQString& _txt, int encoding_hint = 0);
 
-  QString m_strProtocol;
-  QString m_strUser;
-  QString m_strPass;
-  QString m_strHost;
-  QString m_strPath;
-  QString m_strRef_encoded;
-  QString m_strQuery_encoded;
+  TQString m_strProtocol;
+  TQString m_strUser;
+  TQString m_strPass;
+  TQString m_strHost;
+  TQString m_strPath;
+  TQString m_strRef_encoded;
+  TQString m_strQuery_encoded;
   bool m_bIsMalformed : 1;
   enum URIMode m_iUriMode : 3;
   uint freeForUse     : 4;
   unsigned short int m_iPort;
-  QString m_strPath_encoded;
+  TQString m_strPath_encoded;
 
-  friend KDECORE_EXPORT QDataStream & operator<< (QDataStream & s, const KURL & a);
-  friend KDECORE_EXPORT QDataStream & operator>> (QDataStream & s, KURL & a);
+  friend KDECORE_EXPORT TQDataStream & operator<< (TQDataStream & s, const KURL & a);
+  friend KDECORE_EXPORT TQDataStream & operator>> (TQDataStream & s, KURL & a);
 private:
   KURLPrivate* d;
 };
@@ -1806,7 +1806,7 @@ private:
  * are nevertheless considered to be unequal.
  * That means no malformed URL equals anything else.
  */
-KDECORE_EXPORT bool urlcmp( const QString& _url1, const QString& _url2 );
+KDECORE_EXPORT bool urlcmp( const TQString& _url1, const TQString& _url2 );
 
 /**
  * \relates KURL
@@ -1820,9 +1820,9 @@ KDECORE_EXPORT bool urlcmp( const QString& _url1, const QString& _url2 );
  * @param _ignore_trailing Described in KURL::cmp
  * @param _ignore_ref If true, disables comparison of HTML-style references.
  */
-KDECORE_EXPORT bool urlcmp( const QString& _url1, const QString& _url2, bool _ignore_trailing, bool _ignore_ref );
+KDECORE_EXPORT bool urlcmp( const TQString& _url1, const TQString& _url2, bool _ignore_trailing, bool _ignore_ref );
 
-KDECORE_EXPORT QDataStream & operator<< (QDataStream & s, const KURL & a);
-KDECORE_EXPORT QDataStream & operator>> (QDataStream & s, KURL & a);
+KDECORE_EXPORT TQDataStream & operator<< (TQDataStream & s, const KURL & a);
+KDECORE_EXPORT TQDataStream & operator>> (TQDataStream & s, KURL & a);
 
 #endif

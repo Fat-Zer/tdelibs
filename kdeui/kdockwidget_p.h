@@ -37,7 +37,7 @@ COMPATIBLE. THIS HEADER IS ONLY INSTALLED, BECAUSE IT IS NEEDED IN
 #define KDOCKWIDGET_P_H
 
 #include <kdockwidget.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 // Add some describing comment !!
 
 class KDEUI_EXPORT KDockContainer
@@ -46,24 +46,24 @@ public:
   KDockContainer();
   virtual ~KDockContainer();
   virtual KDockWidget *parentDockWidget();
-  virtual void insertWidget (KDockWidget *, QPixmap, const QString &, int &);
+  virtual void insertWidget (KDockWidget *, TQPixmap, const TQString &, int &);
   virtual void showWidget(KDockWidget *);
   virtual void removeWidget(KDockWidget*);
   virtual void undockWidget(KDockWidget*);
-  virtual void save(KConfig *cfg,const QString& group_or_prefix);
-  virtual void save(QDomElement& dockElement);
-  virtual void load(KConfig *cfg,const QString& group_or_prefix);
-  virtual void load(QDomElement& dockElement);
-  virtual void setToolTip (KDockWidget *, QString &);
-  virtual void  setPixmap(KDockWidget*,const QPixmap&);
-  QStringList containedWidgets() const;
-  virtual bool dockDragEnter(KDockWidget* dockWidget, QMouseEvent *event);
-  virtual bool dockDragMove(KDockWidget* dockWidget, QMouseEvent *event);
-  virtual bool dockDragLeave(KDockWidget* dockWidget, QMouseEvent *event);
+  virtual void save(KConfig *cfg,const TQString& group_or_prefix);
+  virtual void save(TQDomElement& dockElement);
+  virtual void load(KConfig *cfg,const TQString& group_or_prefix);
+  virtual void load(TQDomElement& dockElement);
+  virtual void setToolTip (KDockWidget *, TQString &);
+  virtual void  setPixmap(KDockWidget*,const TQPixmap&);
+  TQStringList containedWidgets() const;
+  virtual bool dockDragEnter(KDockWidget* dockWidget, TQMouseEvent *event);
+  virtual bool dockDragMove(KDockWidget* dockWidget, TQMouseEvent *event);
+  virtual bool dockDragLeave(KDockWidget* dockWidget, TQMouseEvent *event);
 protected:
   friend class KDockManager;
   friend class KDockSplitter;
-  void prepareSave(QStringList &names);
+  void prepareSave(TQStringList &names);
   void activateOverlapMode(int nonOverlapSize);
   void deactivateOverlapMode();
   bool isOverlapMode();

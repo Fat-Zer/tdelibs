@@ -19,21 +19,21 @@
 
 #include "kptagspage.h"
 
-#include <qtable.h>
-#include <qheader.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qregexp.h>
-#include <qwhatsthis.h>
+#include <tqtable.h>
+#include <tqheader.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqregexp.h>
+#include <tqwhatsthis.h>
 
 #include <klocale.h>
 
-KPTagsPage::KPTagsPage(bool ro, QWidget *parent, const char *name)
+KPTagsPage::KPTagsPage(bool ro, TQWidget *parent, const char *name)
 : KPrintDialogPage(parent, name)
 {
 
 	//WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThisAdditionalTagsTable = i18n(" <qt><p><b>Additional Tags</b></p>"
+	TQString whatsThisAdditionalTagsTable = i18n(" <qt><p><b>Additional Tags</b></p>"
 						" You may send additional commands to the CUPS server via this editable list. "
 						" There are 3 purposes for this:"
 						" <ul>"
@@ -77,19 +77,19 @@ KPTagsPage::KPTagsPage(bool ro, QWidget *parent, const char *name)
 	setTitle(i18n("Additional Tags"));
 	setOnlyRealPrinters(true);
 
-	m_tags = new QTable(10, 2, this);
+	m_tags = new TQTable(10, 2, this);
 	m_tags->horizontalHeader()->setStretchEnabled(true);
 	m_tags->horizontalHeader()->setLabel(0, i18n("Name"));
 	m_tags->horizontalHeader()->setLabel(1, i18n("Value"));
 	m_tags->setReadOnly(ro);
-	QWhatsThis::add(m_tags, whatsThisAdditionalTagsTable);
+	TQWhatsThis::add(m_tags, whatsThisAdditionalTagsTable);
 
-	QVBoxLayout	*l0 = new QVBoxLayout(this, 0, 5);
+	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 5);
 	l0->addWidget(m_tags);
 
 	if (ro)
 	{
-		QLabel	*lab = new QLabel(i18n("Read-Only"), this);
+		QLabel	*lab = new TQLabel(i18n("Read-Only"), this);
 		QFont	f = lab->font();
 		f.setBold(true);
 		lab->setFont(f);
@@ -102,7 +102,7 @@ KPTagsPage::~KPTagsPage()
 {
 }
 
-bool KPTagsPage::isValid(QString& msg)
+bool KPTagsPage::isValid(TQString& msg)
 {
 	QRegExp	re("\\s");
 	for (int r=0; r<m_tags->numCols(); r++)
@@ -119,11 +119,11 @@ bool KPTagsPage::isValid(QString& msg)
 	return true;
 }
 
-void KPTagsPage::setOptions(const QMap<QString,QString>& opts)
+void KPTagsPage::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	int	r(0);
 	QRegExp	re("^\"|\"$");
-	for (QMap<QString,QString>::ConstIterator it=opts.begin(); it!=opts.end() && r<m_tags->numRows(); ++it)
+	for (TQMap<TQString,TQString>::ConstIterator it=opts.begin(); it!=opts.end() && r<m_tags->numRows(); ++it)
 	{
 		if (it.key().startsWith("KDEPrint-"))
 		{
@@ -135,12 +135,12 @@ void KPTagsPage::setOptions(const QMap<QString,QString>& opts)
 	}
 	for (; r<m_tags->numRows(); r++)
 	{
-		m_tags->setText(r, 0, QString::null);
-		m_tags->setText(r, 1, QString::null);
+		m_tags->setText(r, 0, TQString::null);
+		m_tags->setText(r, 1, TQString::null);
 	}
 }
 
-void KPTagsPage::getOptions(QMap<QString,QString>& opts, bool)
+void KPTagsPage::getOptions(TQMap<TQString,TQString>& opts, bool)
 {
 	for (int r=0; r<m_tags->numRows(); r++)
 	{
@@ -153,12 +153,12 @@ void KPTagsPage::getOptions(QMap<QString,QString>& opts, bool)
 	}
 }
 
-QSize KPTagsPage::sizeHint() const
+TQSize KPTagsPage::sizeHint() const
 {
-	return QSize(-1, -1);
+	return TQSize(-1, -1);
 }
 
-QSize KPTagsPage::minimumSizeHint() const
+TQSize KPTagsPage::minimumSizeHint() const
 {
-	return QSize(-1, -1);
+	return TQSize(-1, -1);
 }

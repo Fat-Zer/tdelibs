@@ -18,7 +18,7 @@
  */
 
 
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 #include <kapplication.h>
 #include <kglobalsettings.h>
 #include <ktextbrowser.h>
@@ -26,14 +26,14 @@
 #include <kurl.h>
 #include <kiconloader.h>
 
-KTextBrowser::KTextBrowser( QWidget *parent, const char *name,
+KTextBrowser::KTextBrowser( TQWidget *parent, const char *name,
 			    bool notifyClick )
-  : QTextBrowser( parent, name ), mNotifyClick(notifyClick)
+  : TQTextBrowser( parent, name ), mNotifyClick(notifyClick)
 {
   //
   //1999-10-04 Espen Sand: Not required anymore ?
-  //connect( this, SIGNAL(highlighted(const QString &)),
-  //   this, SLOT(refChanged(const QString &)));
+  //connect( this, TQT_SIGNAL(highlighted(const TQString &)),
+  //   this, TQT_SLOT(refChanged(const TQString &)));
 }
 
 KTextBrowser::~KTextBrowser( void )
@@ -53,7 +53,7 @@ bool KTextBrowser::isNotifyClick() const
 }
 
 
-void KTextBrowser::setSource( const QString& name )
+void KTextBrowser::setSource( const TQString& name )
 {
   if( name.isNull() )
   {
@@ -68,7 +68,7 @@ void KTextBrowser::setSource( const QString& name )
     }
     else
     {
-      emit mailClick( QString::null, name );
+      emit mailClick( TQString::null, name );
     }
   }
   else
@@ -85,7 +85,7 @@ void KTextBrowser::setSource( const QString& name )
 }
 
 
-void KTextBrowser::keyPressEvent(QKeyEvent *e)
+void KTextBrowser::keyPressEvent(TQKeyEvent *e)
 {
   if( e->key() == Key_Escape )
   {
@@ -97,32 +97,32 @@ void KTextBrowser::keyPressEvent(QKeyEvent *e)
   }
   else
   {
-    QTextBrowser::keyPressEvent(e);
+    TQTextBrowser::keyPressEvent(e);
   }
 }
 
-void KTextBrowser::viewportMouseMoveEvent( QMouseEvent* e)
+void KTextBrowser::viewportMouseMoveEvent( TQMouseEvent* e)
 {
   // do this first so we get the right type of cursor
-  QTextBrowser::viewportMouseMoveEvent(e);
+  TQTextBrowser::viewportMouseMoveEvent(e);
 
   if ( viewport()->cursor().shape() == PointingHandCursor )
     viewport()->setCursor( KCursor::handCursor() );
 }
 
-void KTextBrowser::contentsWheelEvent( QWheelEvent *e )
+void KTextBrowser::contentsWheelEvent( TQWheelEvent *e )
 {
     if ( KGlobalSettings::wheelMouseZooms() )
-        QTextBrowser::contentsWheelEvent( e );
+        TQTextBrowser::contentsWheelEvent( e );
     else // thanks, we don't want to zoom, so skip QTextEdit's impl.
-        QScrollView::contentsWheelEvent( e );
+        TQScrollView::contentsWheelEvent( e );
 }
 
-QPopupMenu *KTextBrowser::createPopupMenu( const QPoint & pos )
+TQPopupMenu *KTextBrowser::createPopupMenu( const TQPoint & pos )
 {
     enum { IdUndo, IdRedo, IdSep1, IdCut, IdCopy, IdPaste, IdClear, IdSep2, IdSelectAll };
 
-    QPopupMenu *popup = QTextBrowser::createPopupMenu( pos );
+    TQPopupMenu *popup = TQTextBrowser::createPopupMenu( pos );
 
     if ( isReadOnly() )
       popup->changeItem( popup->idAt(0), SmallIconSet("editcopy"), popup->text( popup->idAt(0) ) );

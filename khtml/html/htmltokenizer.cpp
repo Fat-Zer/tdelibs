@@ -53,7 +53,7 @@
 #include <kglobal.h>
 #include <ctype.h>
 #include <assert.h>
-#include <qvariant.h>
+#include <tqvariant.h>
 #include <kdebug.h>
 #include <stdlib.h>
 
@@ -61,7 +61,7 @@
 
 using namespace khtml;
 
-static const QChar commentStart [] = { '<','!','-','-', QChar::null };
+static const TQChar commentStart [] = { '<','!','-','-', TQChar::null };
 
 static const char scriptEnd [] = "</script";
 static const char xmpEnd [] = "</xmp";
@@ -69,8 +69,8 @@ static const char styleEnd [] =  "</style";
 static const char textareaEnd [] = "</textarea";
 static const char titleEnd [] = "</title";
 
-#define KHTML_ALLOC_QCHAR_VEC( N ) (QChar*) malloc( sizeof(QChar)*( N ) )
-#define KHTML_REALLOC_QCHAR_VEC(P, N ) (QChar*) realloc(P, sizeof(QChar)*( N ))
+#define KHTML_ALLOC_QCHAR_VEC( N ) (TQChar*) malloc( sizeof(TQChar)*( N ) )
+#define KHTML_REALLOC_QCHAR_VEC(P, N ) (TQChar*) realloc(P, sizeof(TQChar)*( N ))
 #define KHTML_DELETE_QCHAR_VEC( P ) free((char*)( P ))
 
 // Full support for MS Windows extensions to Latin-1.
@@ -316,7 +316,7 @@ void HTMLTokenizer::parseSpecial(TokenizerString &src)
     while ( !src.isEmpty() ) {
         checkScriptBuffer();
         unsigned char ch = src->latin1();
-        if ( !scriptCodeResync && !brokenComments && !textarea && !xmp && ch == '-' && scriptCodeSize >= 3 && !src.escaped() && QConstString( scriptCode+scriptCodeSize-3, 3 ).string() == "<!-" ) {
+        if ( !scriptCodeResync && !brokenComments && !textarea && !xmp && ch == '-' && scriptCodeSize >= 3 && !src.escaped() && TQConstString( scriptCode+scriptCodeSize-3, 3 ).string() == "<!-" ) {
             comment = true;
             scriptCode[ scriptCodeSize++ ] = ch;
             ++src;
@@ -347,7 +347,7 @@ void HTMLTokenizer::parseSpecial(TokenizerString &src)
         // possible end of tagname, lets check.
         if ( !scriptCodeResync && !escaped && !src.escaped() && ( ch == '>' || ch == '/' || ch <= ' ' ) && ch &&
              scriptCodeSize >= searchStopperLen &&
-             !QConstString( scriptCode+scriptCodeSize-searchStopperLen, searchStopperLen ).string().find( searchStopper, 0, false )) {
+             !TQConstString( scriptCode+scriptCodeSize-searchStopperLen, searchStopperLen ).string().find( searchStopper, 0, false )) {
             scriptCodeResync = scriptCodeSize-searchStopperLen+1;
             tquote = NoQuote;
             continue;
@@ -362,7 +362,7 @@ void HTMLTokenizer::parseSpecial(TokenizerString &src)
         }
         escaped = ( !escaped && ch == '\\' );
         if (!scriptCodeResync && (textarea||title) && !src.escaped() && ch == '&') {
-            QChar *scriptCodeDest = scriptCode+scriptCodeSize;
+            TQChar *scriptCodeDest = scriptCode+scriptCodeSize;
             ++src;
             parseEntity(src,scriptCodeDest,true);
             scriptCodeSize = scriptCodeDest-scriptCode;
@@ -376,11 +376,11 @@ void HTMLTokenizer::parseSpecial(TokenizerString &src)
 
 void HTMLTokenizer::scriptHandler()
 {
-    QString currentScriptSrc = scriptSrc;
-    scriptSrc = QString::null;
+    TQString currentScriptSrc = scriptSrc;
+    scriptSrc = TQString::null;
 
     processListing(TokenizerString(scriptCode, scriptCodeSize));
-    QString exScript( buffer, dest-buffer );
+    TQString exScript( buffer, dest-buffer );
 
     processToken();
     currToken.tid = ID_SCRIPT + ID_CLOSE_TAG;
@@ -413,7 +413,7 @@ void HTMLTokenizer::scriptHandler()
             pendingQueue.push(src);
             setSrc(TokenizerString());
             scriptCodeSize = scriptCodeResync = 0;
-            scriptExecution( exScript, QString::null, tagStartLineno /*scriptStartLineno*/ );
+            scriptExecution( exScript, TQString::null, tagStartLineno /*scriptStartLineno*/ );
         } else {
             // script was filtered or disallowed
             effectiveScript = false;
@@ -436,13 +436,13 @@ void HTMLTokenizer::scriptHandler()
     }
 }
 
-void HTMLTokenizer::scriptExecution( const QString& str, const QString& scriptURL,
+void HTMLTokenizer::scriptExecution( const TQString& str, const TQString& scriptURL,
                                      int baseLine)
 {
     bool oldscript = script;
     m_executingScript++;
     script = false;
-    QString url;
+    TQString url;
     if (scriptURL.isNull() && view)
       url = static_cast<DocumentImpl*>(view->part()->document().handle())->URL().url();
     else
@@ -596,7 +596,7 @@ void HTMLTokenizer::parseText(TokenizerString &src)
 }
 
 
-void HTMLTokenizer::parseEntity(TokenizerString &src, QChar *&dest, bool start)
+void HTMLTokenizer::parseEntity(TokenizerString &src, TQChar *&dest, bool start)
 {
     if( start )
     {
@@ -642,7 +642,7 @@ void HTMLTokenizer::parseEntity(TokenizerString &src, QChar *&dest, bool start)
             int uc = EntityChar.unicode();
             int ll = kMin<uint>(src.length(), 8);
             while(ll--) {
-                QChar csrc(src->lower());
+                TQChar csrc(src->lower());
                 cc = csrc.cell();
 
                 if(csrc.row() || !((cc >= '0' && cc <= '9') || (cc >= 'a' && cc <= 'f'))) {
@@ -652,7 +652,7 @@ void HTMLTokenizer::parseEntity(TokenizerString &src, QChar *&dest, bool start)
                 cBuffer[cBufferPos++] = cc;
                 ++src;
             }
-            EntityChar = QChar(uc);
+            EntityChar = TQChar(uc);
             Entity = SearchSemicolon;
             break;
         }
@@ -672,7 +672,7 @@ void HTMLTokenizer::parseEntity(TokenizerString &src, QChar *&dest, bool start)
                 cBuffer[cBufferPos++] = cc;
                 ++src;
             }
-            EntityChar = QChar(uc);
+            EntityChar = TQChar(uc);
             if(cBufferPos == 9)  Entity = SearchSemicolon;
             break;
         }
@@ -680,7 +680,7 @@ void HTMLTokenizer::parseEntity(TokenizerString &src, QChar *&dest, bool start)
         {
             int ll = kMin(src.length(), 9-cBufferPos);
             while(ll--) {
-                QChar csrc = *src;
+                TQChar csrc = *src;
                 cc = csrc.cell();
 
                 if(csrc.row() || !((cc >= 'a' && cc <= 'z') ||
@@ -729,7 +729,7 @@ void HTMLTokenizer::parseEntity(TokenizerString &src, QChar *&dest, bool start)
                 checkBuffer();
                 if (entityLen > 0 && entityLen < cBufferPos) {
                     int rem = cBufferPos - entityLen;
-                    src.prepend( TokenizerString(QString::fromAscii(cBuffer+entityLen, rem)) );
+                    src.prepend( TokenizerString(TQString::fromAscii(cBuffer+entityLen, rem)) );
                 }
                 src.push( EntityChar );
             } else {
@@ -747,7 +747,7 @@ void HTMLTokenizer::parseEntity(TokenizerString &src, QChar *&dest, bool start)
             }
 
             Entity = NoEntity;
-            EntityChar = QChar::null;
+            EntityChar = TQChar::null;
             return;
         };
     }
@@ -848,7 +848,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
                 uint tagID = khtml::getTagID(ptr, len);
                 if (!tagID) {
 #ifdef TOKEN_DEBUG
-                    QCString tmp(ptr, len+1);
+                    TQCString tmp(ptr, len+1);
                     kdDebug( 6036 ) << "Unknown tag: \"" << tmp.data() << "\"" << endl;
 #endif
                     dest = buffer;
@@ -856,7 +856,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
                 else
                 {
 #ifdef TOKEN_DEBUG
-                    QCString tmp(ptr, len+1);
+                    TQCString tmp(ptr, len+1);
                     kdDebug( 6036 ) << "found tag id=" << tagID << ": " << tmp.data() << endl;
 #endif
                     currToken.tid = beginTag ? tagID : tagID + ID_CLOSE_TAG;
@@ -883,7 +883,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
                     {
                         tag = SearchValue;
                         *dest++ = 0;
-                        attrName = QString::null;
+                        attrName = TQString::null;
                     }
                     else
                         tag = AttributeName;
@@ -919,16 +919,16 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
                                     a = khtml::getAttrID(cBuffer, cBufferPos-1);
                             }
                             if (!a)
-                                attrName = QString::fromLatin1(QCString(cBuffer, cBufferPos+1).data());
+                                attrName = TQString::fromLatin1(TQCString(cBuffer, cBufferPos+1).data());
                         }
 
                         dest = buffer;
                         *dest++ = a;
 #ifdef TOKEN_DEBUG
                         if (!a || (cBufferPos && *cBuffer == '!'))
-                            kdDebug( 6036 ) << "Unknown attribute: *" << QCString(cBuffer, cBufferPos+1).data() << "*" << endl;
+                            kdDebug( 6036 ) << "Unknown attribute: *" << TQCString(cBuffer, cBufferPos+1).data() << "*" << endl;
                         else
-                            kdDebug( 6036 ) << "Known attribute: " << QCString(cBuffer, cBufferPos+1).data() << endl;
+                            kdDebug( 6036 ) << "Known attribute: " << TQCString(cBuffer, cBufferPos+1).data() << endl;
 #endif
 
                         tag = SearchEqual;
@@ -941,7 +941,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
             }
             if ( cBufferPos == CBUFLEN ) {
                 cBuffer[cBufferPos] = '\0';
-                attrName = QString::fromLatin1(QCString(cBuffer, cBufferPos+1).data());
+                attrName = TQString::fromLatin1(TQCString(cBuffer, cBufferPos+1).data());
                 dest = buffer;
                 *dest++ = 0;
                 tag = SearchEqual;
@@ -969,7 +969,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
                     {
                         tag = SearchValue;
                         *dest++ = 0;
-                        attrName = QString::null;
+                        attrName = TQString::null;
                     }
                     else {
                         DOMString v("");
@@ -1120,7 +1120,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
             else if ( !brokenScript && tagID == ID_SCRIPT ) {
                 DOMStringImpl* a = 0;
                 bool foundTypeAttribute = false;
-                scriptSrc = scriptSrcCharset = QString::null;
+                scriptSrc = scriptSrcCharset = TQString::null;
                 if ( currToken.attrs && /* potentially have a ATTR_SRC ? */
                      view &&  /* are we a regular tokenizer or just for innerHTML ? */
                      parser->doc()->view()->part()->jScriptEnabled() /* jscript allowed at all? */
@@ -1148,7 +1148,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
                         Mozilla 1.5 and WinIE 6 both accept the empty string, but neither accept a whitespace-only string.
                         We want to accept all the values that either of these browsers accept, but not other values.
                      */
-                    QString type = DOMString(a).string().stripWhiteSpace().lower();
+                    TQString type = DOMString(a).string().stripWhiteSpace().lower();
                     if( type.compare("text/javascript") != 0 &&
                         type.compare("text/javascript1.0") != 0 &&
                         type.compare("text/javascript1.1") != 0 &&
@@ -1171,7 +1171,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
                      Neither Mozilla 1.5 nor WinIE 6 accept leading or trailing whitespace.
                      We want to accept all the values that either of these browsers accept, but not other values.
                      */
-                    QString lang = DOMString(a).string();
+                    TQString lang = DOMString(a).string();
                     lang = lang.lower();
                     if( lang.compare("") != 0 &&
                         lang.compare("javascript") != 0 &&
@@ -1284,7 +1284,7 @@ void HTMLTokenizer::addPending()
         {
         case SpacePending:
             // Insert a breaking space
-            *dest++ = QChar(' ');
+            *dest++ = TQChar(' ');
             prePos++;
             break;
 
@@ -1297,7 +1297,7 @@ void HTMLTokenizer::addPending()
         case TabPending:
             p = TAB_SIZE - ( prePos % TAB_SIZE );
             for ( int x = 0; x < p; x++ )
-                *dest++ = QChar(' ');
+                *dest++ = TQChar(' ');
             prePos += p;
             break;
 
@@ -1552,7 +1552,7 @@ void HTMLTokenizer::write( const TokenizerString &str, bool appendData )
         end(); // this actually causes us to be deleted
 }
 
-void HTMLTokenizer::timerEvent( QTimerEvent *e )
+void HTMLTokenizer::timerEvent( TQTimerEvent *e )
 {
     if ( e->timerId() == m_autoCloseTimer && cachedScript.isEmpty() ) {
          finish();
@@ -1610,15 +1610,15 @@ void HTMLTokenizer::finish()
         scriptCode[ scriptCodeSize ] = 0;
         scriptCode[ scriptCodeSize + 1 ] = 0;
         int pos;
-        QString food;
+        TQString food;
         if (title || style || script)
             food.setUnicode(scriptCode, scriptCodeSize);
         else if (server) {
             food = "<";
-            food += QString(scriptCode, scriptCodeSize);
+            food += TQString(scriptCode, scriptCodeSize);
         }
         else {
-            pos = QConstString(scriptCode, scriptCodeSize).string().find('>');
+            pos = TQConstString(scriptCode, scriptCodeSize).string().find('>');
             food.setUnicode(scriptCode+pos+1, scriptCodeSize-pos-1); // deep copy
         }
         KHTML_DELETE_QCHAR_VEC(scriptCode);
@@ -1647,7 +1647,7 @@ void HTMLTokenizer::processToken()
     {
 #if 0
         if(currToken.tid) {
-            qDebug( "unexpected token id: %d, str: *%s*", currToken.tid,QConstString( buffer,dest-buffer ).string().latin1() );
+            qDebug( "unexpected token id: %d, str: *%s*", currToken.tid,TQConstString( buffer,dest-buffer ).string().latin1() );
             assert(0);
         }
 
@@ -1666,10 +1666,10 @@ void HTMLTokenizer::processToken()
     dest = buffer;
 
 #ifdef TOKEN_DEBUG
-    QString name = QString( getTagName(currToken.tid) );
-    QString text;
+    TQString name = TQString( getTagName(currToken.tid) );
+    TQString text;
     if(currToken.text)
-        text = QConstString(currToken.text->s, currToken.text->l).string();
+        text = TQConstString(currToken.text->s, currToken.text->l).string();
 
     kdDebug( 6036 ) << "Token --> " << name << "   id = " << currToken.tid << endl;
     if (currToken.flat)
@@ -1749,7 +1749,7 @@ void HTMLTokenizer::notifyFinished(CachedObject* /*finishedObj*/)
 
         // make sure we forget about the script before we execute the new one
         // infinite recursion might happen otherwise
-        QString cachedScriptUrl( cs->url().string() );
+        TQString cachedScriptUrl( cs->url().string() );
         cs->deref(this);
 
 	scriptExecution( scriptSource.string(), cachedScriptUrl );

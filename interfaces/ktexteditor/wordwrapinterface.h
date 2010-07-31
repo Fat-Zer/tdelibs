@@ -41,7 +41,7 @@ class KTEXTEDITOR_EXPORT WordWrapInterface
     unsigned int wordWrapInterfaceNumber () const;
     
   protected:  
-    void setWordWrapInterfaceDCOPSuffix (const QCString &suffix); 
+    void setWordWrapInterfaceDCOPSuffix (const TQCString &suffix); 
 
   //
   // slots !!!

@@ -14,7 +14,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <qobject.h>
+#include <tqobject.h>
 
 #include "kdirwatch.h"
 #include "kapplication.h"
@@ -38,9 +38,9 @@ public:
   virtual void allTests();
 
 private slots:
-  void slotDirty (const QString& s) { m_signals[sigDirty]++; m_lastSignal = s; }
-  void slotCreated (const QString& s) { m_signals[sigCreated]++; m_lastSignal = s; }
-  void slotDeleted (const QString& s) { m_signals[sigDeleted]++; m_lastSignal = s; }
+  void slotDirty (const TQString& s) { m_signals[sigDirty]++; m_lastSignal = s; }
+  void slotCreated (const TQString& s) { m_signals[sigCreated]++; m_lastSignal = s; }
+  void slotDeleted (const TQString& s) { m_signals[sigDeleted]++; m_lastSignal = s; }
 
 private:
   unsigned m_signals[3];
@@ -48,18 +48,18 @@ private:
   /* verify nothing happens */
   void VERIFY_NOTHING();
   /* verify that dirty got emitted */
-  void VERIFY_DIRTY (const QString&);
+  void VERIFY_DIRTY (const TQString&);
   /* verify that created got emitted */
-  void VERIFY_CREATED (const QString&);
+  void VERIFY_CREATED (const TQString&);
   /* verify that deleted got emitted */
-  void VERIFY_DELETED (const QString&);
+  void VERIFY_DELETED (const TQString&);
 
-  void touch_file (const QString& file);
-  void remove_file (const QString& file);
-  void rename_file (const QString& from, const QString& to);
+  void touch_file (const TQString& file);
+  void remove_file (const TQString& file);
+  void rename_file (const TQString& from, const TQString& to);
 
-  QString  m_lastSignal;
-  QString m_workingDir;
+  TQString  m_lastSignal;
+  TQString m_workingDir;
   KDirWatch* d;
 };
 

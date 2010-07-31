@@ -21,9 +21,9 @@
 #include "kkeybutton.h"
 #include "kshortcutdialog.h"
 
-#include <qcursor.h>
-#include <qdrawutil.h>
-#include <qpainter.h>
+#include <tqcursor.h>
+#include <tqdrawutil.h>
+#include <tqpainter.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kglobalaccel.h>
@@ -65,13 +65,13 @@ class KKeyButtonPrivate
 /*                                                                     */
 /***********************************************************************/
 
-KKeyButton::KKeyButton(QWidget *parent, const char *name)
-:	QPushButton( parent, name )
+KKeyButton::KKeyButton(TQWidget *parent, const char *name)
+:	TQPushButton( parent, name )
 {
 	d = new KKeyButtonPrivate;
-	setFocusPolicy( QWidget::StrongFocus );
+	setFocusPolicy( TQWidget::StrongFocus );
 	m_bEditing = false;
-	connect( this, SIGNAL(clicked()), this, SLOT(captureShortcut()) );
+	connect( this, TQT_SIGNAL(clicked()), this, TQT_SLOT(captureShortcut()) );
 	setShortcut( KShortcut(), true );
 }
 
@@ -84,8 +84,8 @@ void KKeyButton::setShortcut( const KShortcut& cut, bool bQtShortcut )
 {
 	d->bQtShortcut = bQtShortcut;
 	m_cut = cut;
-	QString keyStr = m_cut.toString();
-	keyStr.replace('&', QString::fromLatin1("&&"));
+	TQString keyStr = m_cut.toString();
+	keyStr.replace('&', TQString::fromLatin1("&&"));
 	setText( keyStr.isEmpty() ? i18n("None") : keyStr );
 }
 
@@ -95,9 +95,9 @@ void KKeyButton::setShortcut( const KShortcut& cut )
 	setShortcut( cut, false );
 }
 
-void KKeyButton::setText( const QString& text )
+void KKeyButton::setText( const TQString& text )
 {
-	QPushButton::setText( text );
+	TQPushButton::setText( text );
 	setFixedSize( sizeHint().width()+12, sizeHint().height()+8 );
 }
 
@@ -120,15 +120,15 @@ void KKeyButton::captureShortcut()
 	repaint();
 }
 
-void KKeyButton::drawButton( QPainter *painter )
+void KKeyButton::drawButton( TQPainter *painter )
 {
-  QPointArray a( 4 );
+  TQPointArray a( 4 );
   a.setPoint( 0, 0, 0) ;
   a.setPoint( 1, width(), 0 );
   a.setPoint( 2, 0, height() );
   a.setPoint( 3, 0, 0 );
 
-  QRegion r1( a );
+  TQRegion r1( a );
   painter->setClipRegion( r1 );
   painter->setBrush( backgroundColor().light() );
   painter->drawRoundRect( 0, 0, width(), height(), 20, 20);
@@ -138,7 +138,7 @@ void KKeyButton::drawButton( QPainter *painter )
   a.setPoint( 2, 0, height() );
   a.setPoint( 3, width(), height() );
 
-  QRegion r2( a );
+  TQRegion r2( a );
   painter->setClipRegion( r2 );
   painter->setBrush( backgroundColor().dark() );
   painter->drawRoundRect( 0, 0, width(), height(), 20, 20 );

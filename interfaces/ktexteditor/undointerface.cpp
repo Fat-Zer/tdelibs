@@ -45,7 +45,7 @@ UndoInterface::UndoInterface()
   myUndoInterfaceNumber = globalUndoInterfaceNumber++;
 
   d = new PrivateUndoInterface();   
-  QString name = "UndoInterface#" + QString::number(myUndoInterfaceNumber);
+  TQString name = "UndoInterface#" + TQString::number(myUndoInterfaceNumber);
   d->interface = new UndoDCOPInterface(this, name.latin1());
 }
 
@@ -60,7 +60,7 @@ unsigned int UndoInterface::undoInterfaceNumber () const
   return myUndoInterfaceNumber;
 }
 
-void UndoInterface::setUndoInterfaceDCOPSuffix (const QCString &suffix)
+void UndoInterface::setUndoInterfaceDCOPSuffix (const TQCString &suffix)
 {
   d->interface->setObjId ("UndoInterface#"+suffix);
 }

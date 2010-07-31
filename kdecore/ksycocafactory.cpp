@@ -21,12 +21,12 @@
 #include "ksycocafactory.h"
 #include "ksycocaentry.h"
 #include "ksycocadict.h"
-#include <qstringlist.h>
-#include <qdict.h>
+#include <tqstringlist.h>
+#include <tqdict.h>
 #include <kdebug.h>
 
-template class QDict<KSycocaEntry>;
-template class QDict<KSharedPtr<KSycocaEntry> >;
+template class TQDict<KSycocaEntry>;
+template class TQDict<KSharedPtr<KSycocaEntry> >;
 
 KSycocaFactory::KSycocaFactory(KSycocaFactoryId factory_id)
  : m_resourceList(0), m_entryDict(0), m_sycocaDict(0)
@@ -75,7 +75,7 @@ KSycocaFactory::~KSycocaFactory()
 }
 
 void
-KSycocaFactory::saveHeader(QDataStream &str)
+KSycocaFactory::saveHeader(TQDataStream &str)
 {
    // Write header 
    str.device()->at(mOffset);
@@ -85,7 +85,7 @@ KSycocaFactory::saveHeader(QDataStream &str)
 }
 
 void
-KSycocaFactory::save(QDataStream &str)
+KSycocaFactory::save(TQDataStream &str)
 {
    if (!m_entryDict) return; // Error! Function should only be called when
                              // building database
@@ -101,7 +101,7 @@ KSycocaFactory::save(QDataStream &str)
 
    // Write all entries.
    int entryCount = 0;
-   for(QDictIterator<KSycocaEntry::Ptr> it ( *m_entryDict ); 
+   for(TQDictIterator<KSycocaEntry::Ptr> it ( *m_entryDict ); 
        it.current(); 
        ++it)
    {
@@ -115,7 +115,7 @@ KSycocaFactory::save(QDataStream &str)
    // Write indices...
    // Linear index
    str << (Q_INT32) entryCount;
-   for(QDictIterator<KSycocaEntry::Ptr> it ( *m_entryDict ); 
+   for(TQDictIterator<KSycocaEntry::Ptr> it ( *m_entryDict ); 
        it.current(); 
        ++it)
    {
@@ -144,7 +144,7 @@ KSycocaFactory::addEntry(KSycocaEntry *newEntry, const char *)
 
    if (!m_sycocaDict) return; // Error!
 
-   QString name = newEntry->name();
+   TQString name = newEntry->name();
    m_entryDict->insert( name, new KSycocaEntry::Ptr(newEntry) );
    m_sycocaDict->add( name, newEntry );
 }
@@ -157,7 +157,7 @@ KSycocaFactory::removeEntry(KSycocaEntry *newEntry)
 
    if (!m_sycocaDict) return; // Error!
 
-   QString name = newEntry->name();
+   TQString name = newEntry->name();
    m_entryDict->remove( name );
    m_sycocaDict->remove( name );
 }

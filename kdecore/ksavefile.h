@@ -20,7 +20,7 @@
 #ifndef _KSAVEFILE_H_
 #define _KSAVEFILE_H_
 
-#include <qstring.h>
+#include <tqstring.h>
 #include <stdio.h>
 #include <errno.h>
 #include <ktempfile.h>
@@ -46,7 +46,7 @@ public:
     * @param filename the path of the file
     * @param mode the mode of the file (see chmod(1))
     */
-   KSaveFile(const QString &filename, int mode = 0666 );
+   KSaveFile(const TQString &filename, int mode = 0666 );
 
    /**
     * The destructor closes the file.
@@ -70,10 +70,10 @@ public:
 
    /**
     * The name of the file as passed to the constructor.
-    * @return The name of the file, or QString::null if opening the
+    * @return The name of the file, or TQString::null if opening the
     *         file has failed
     **/
-   QString name() const;
+   TQString name() const;
 
    /**
     * An integer file descriptor open for writing to the file.
@@ -92,27 +92,27 @@ public:
    	{ return mTempFile.fstream(); }
 
    /**
-    * A QFile* open for writing to the file.
-    * @return A QFile open for writing to the file, or 0 if
+    * A TQFile* open for writing to the file.
+    * @return A TQFile open for writing to the file, or 0 if
     *         opening the temporary file failed.
     **/
-   QFile *file()
+   TQFile *file()
    	{ return mTempFile.file(); }
 
    /**
-    * A QTextStream* open for writing to the file.
-    * @return A QTextStream that is open for writing to the file, or 0
+    * A TQTextStream* open for writing to the file.
+    * @return A TQTextStream that is open for writing to the file, or 0
     *         if opening the temporary file failed
     **/
-   QTextStream *textStream()
+   TQTextStream *textStream()
    	{ return mTempFile.textStream(); }
 
    /**
-    * A QDataStream* open for writing to the file.
-    * @return A QDataStream that is open for writing to the file, or 0
+    * A TQDataStream* open for writing to the file.
+    * @return A TQDataStream that is open for writing to the file, or 0
     *         if opening the file failed
     **/
-   QDataStream *dataStream()
+   TQDataStream *dataStream()
    	{ return mTempFile.dataStream(); }
 
    /**
@@ -138,12 +138,12 @@ public:
      * @param backupExtension the extension to append to @p filename, "~" by default.
      * @since 3.2
      */
-   static bool backupFile( const QString& filename,
-                           const QString& backupDir = QString::null,
-                           const QString& backupExtension = QString::fromLatin1( "~" ) );
+   static bool backupFile( const TQString& filename,
+                           const TQString& backupDir = TQString::null,
+                           const TQString& backupExtension = TQString::fromLatin1( "~" ) );
 
 private:
-   QString mFileName;
+   TQString mFileName;
    KTempFile mTempFile;
 
    KSaveFilePrivate *d;

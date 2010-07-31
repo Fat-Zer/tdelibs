@@ -26,7 +26,7 @@
 #include <kstandarddirs.h>
 #include <ktempfile.h>
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <signal.h>
 #include <sys/types.h>
@@ -35,7 +35,7 @@
 
 using namespace KABC;
 
-Lock::Lock( const QString &identifier )
+Lock::Lock( const TQString &identifier )
   : mIdentifier( identifier )
 {
   mIdentifier.replace( "/", "_" );
@@ -46,34 +46,34 @@ Lock::~Lock()
   unlock();
 }
 
-QString Lock::locksDir()
+TQString Lock::locksDir()
 {
   return locateLocal( "data", "kabc/lock/" );
 }
 
-bool Lock::readLockFile( const QString &filename, int &pid, QString &app )
+bool Lock::readLockFile( const TQString &filename, int &pid, TQString &app )
 {
-  QFile file( filename );
+  TQFile file( filename );
   if ( !file.open( IO_ReadOnly ) ) return false;
 
-  QTextStream t( &file );
+  TQTextStream t( &file );
   pid = t.readLine().toInt();
   app = t.readLine();
 
   return true;
 }
 
-bool Lock::writeLockFile( const QString &filename )
+bool Lock::writeLockFile( const TQString &filename )
 {
-  QFile file( filename );
+  TQFile file( filename );
   if ( !file.open( IO_WriteOnly ) ) return false;
-  QTextStream t( &file );
-  t << ::getpid() << endl << QString( KGlobal::instance()->instanceName() );
+  TQTextStream t( &file );
+  t << ::getpid() << endl << TQString( KGlobal::instance()->instanceName() );
 
   return true;
 }
 
-QString Lock::lockFileName() const
+TQString Lock::lockFileName() const
 {
   return locksDir() + mIdentifier + ".lock";
 }
@@ -82,12 +82,12 @@ bool Lock::lock()
 {
   kdDebug(5700) << "Lock::lock()" << endl;
 
-  QString lockName = lockFileName();
+  TQString lockName = lockFileName();
   kdDebug(5700) << "-- lock name: " << lockName << endl;
 
-  if ( QFile::exists( lockName ) ) {  // check if it is a stale lock file
+  if ( TQFile::exists( lockName ) ) {  // check if it is a stale lock file
     int pid;
-    QString app;
+    TQString app;
 
     if ( !readLockFile( lockFileName(), pid, app ) ) {
       mError = i18n("Unable to open lock file.");
@@ -96,11 +96,11 @@ bool Lock::lock()
 
     int retval = ::kill( pid, 0 );
     if ( retval == -1 && errno == ESRCH ) { // process doesn't exists anymore
-      QFile::remove( lockName );
+      TQFile::remove( lockName );
       kdWarning(5700) << "Removed stale lock file from process '" << app << "'"
                       << endl;
     } else {
-      QString identifier( mIdentifier );
+      TQString identifier( mIdentifier );
       identifier.replace( '_', '/' );
 
       mError = i18n("The address book '%1' is locked by application '%2'.\nIf you believe this is incorrect, just remove the lock file from '%3'")
@@ -109,7 +109,7 @@ bool Lock::lock()
     }
   }
 
-  QString lockUniqueName;
+  TQString lockUniqueName;
   lockUniqueName = mIdentifier + kapp->randomString( 8 );
   mLockUniqueName = locateLocal( "data", "kabc/lock/" + lockUniqueName );
   kdDebug(5700) << "-- lock unique name: " << mLockUniqueName << endl;
@@ -118,8 +118,8 @@ bool Lock::lock()
   writeLockFile( mLockUniqueName );
 
   // Create lock file
-  int result = ::link( QFile::encodeName( mLockUniqueName ),
-                       QFile::encodeName( lockName ) );
+  int result = ::link( TQFile::encodeName( mLockUniqueName ),
+                       TQFile::encodeName( lockName ) );
 
   if ( result == 0 ) {
     mError = "";
@@ -136,15 +136,15 @@ bool Lock::lock()
 bool Lock::unlock()
 {
   int pid;
-  QString app;
+  TQString app;
   if ( readLockFile( lockFileName(), pid, app ) ) {
     if ( pid == getpid() ) {
-      QFile::remove( lockFileName() );
-      QFile::remove( mLockUniqueName );
+      TQFile::remove( lockFileName() );
+      TQFile::remove( mLockUniqueName );
       emit unlocked();
     } else {
       mError = i18n("Unlock failed. Lock file is owned by other process: %1 (%2)")
-               .arg( app ).arg( QString::number( pid ) );
+               .arg( app ).arg( TQString::number( pid ) );
       kdDebug() << "Lock::unlock(): " << mError << endl;
       return false;
     }
@@ -154,7 +154,7 @@ bool Lock::unlock()
   return true;
 }
 
-QString Lock::error() const
+TQString Lock::error() const
 {
   return mError;
 }

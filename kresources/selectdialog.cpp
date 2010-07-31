@@ -26,8 +26,8 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include <qgroupbox.h>
-#include <qlayout.h>
+#include <tqgroupbox.h>
+#include <tqlayout.h>
 
 #include "resource.h"
 
@@ -35,17 +35,17 @@
 
 using namespace KRES;
 
-SelectDialog::SelectDialog( QPtrList<Resource> list, QWidget *parent,
+SelectDialog::SelectDialog( TQPtrList<Resource> list, TQWidget *parent,
                             const char *name )
   : KDialog( parent, name, true )
 {
   setCaption( i18n( "Resource Selection" ) );
   resize( 300, 200 );
 
-  QVBoxLayout *mainLayout = new QVBoxLayout( this );
+  TQVBoxLayout *mainLayout = new TQVBoxLayout( this );
   mainLayout->setMargin( marginHint() );
 
-  QGroupBox *groupBox = new QGroupBox( 2, Qt::Horizontal,  this );
+  TQGroupBox *groupBox = new TQGroupBox( 2, Qt::Horizontal,  this );
   groupBox->setTitle( i18n( "Resources" ) );
 
   mResourceId = new KListBox( groupBox );
@@ -57,8 +57,8 @@ SelectDialog::SelectDialog( QPtrList<Resource> list, QWidget *parent,
   KButtonBox *buttonBox = new KButtonBox( this );
 
   buttonBox->addStretch();
-  buttonBox->addButton( KStdGuiItem::ok(), this, SLOT( accept() ) );
-  buttonBox->addButton( KStdGuiItem::cancel(), this, SLOT( reject() ) );
+  buttonBox->addButton( KStdGuiItem::ok(), this, TQT_SLOT( accept() ) );
+  buttonBox->addButton( KStdGuiItem::cancel(), this, TQT_SLOT( reject() ) );
   buttonBox->layout();
 
   mainLayout->addWidget( buttonBox );
@@ -75,10 +75,10 @@ SelectDialog::SelectDialog( QPtrList<Resource> list, QWidget *parent,
   }
 
   mResourceId->setCurrentItem( 0 );
-  connect( mResourceId, SIGNAL(returnPressed(QListBoxItem*)),
-           SLOT(accept()) );
-  connect( mResourceId, SIGNAL( executed( QListBoxItem* ) ),
-           SLOT( accept() ) );
+  connect( mResourceId, TQT_SIGNAL(returnPressed(TQListBoxItem*)),
+           TQT_SLOT(accept()) );
+  connect( mResourceId, TQT_SIGNAL( executed( TQListBoxItem* ) ),
+           TQT_SLOT( accept() ) );
 }
 
 Resource *SelectDialog::resource()
@@ -89,7 +89,7 @@ Resource *SelectDialog::resource()
     return 0;
 }
 
-Resource *SelectDialog::getResource( QPtrList<Resource> list, QWidget *parent )
+Resource *SelectDialog::getResource( TQPtrList<Resource> list, TQWidget *parent )
 {
   if ( list.count() == 0 ) {
     KMessageBox::error( parent, i18n( "There is no resource available!" ) );

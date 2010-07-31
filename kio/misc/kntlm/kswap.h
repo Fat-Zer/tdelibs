@@ -24,7 +24,7 @@
 #include <config.h>
 #endif
 
-#include <qglobal.h>
+#include <tqglobal.h>
 
 /** 
  * \defgroup KSWAP Byte-swapping functions

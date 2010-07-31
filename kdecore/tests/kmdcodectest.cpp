@@ -23,8 +23,8 @@
 
 #include <iostream>
 
-#include <qbuffer.h>
-#include <qfile.h>
+#include <tqbuffer.h>
+#include <tqfile.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -57,7 +57,7 @@ void MD5_verify (const char*, const char*, bool);
 void MD5_file (const char * , bool rawOutput = false);
 void MD5_string (const char *, const char *expected = 0, bool rawOutput = false);
 
-long readContent (const QFile& f, long count, QByteArray& buf)
+long readContent (const TQFile& f, long count, TQByteArray& buf)
 {
     long result;
     int old_size;
@@ -85,14 +85,14 @@ long readContent (const QFile& f, long count, QByteArray& buf)
 
 void testCodec (const char* msg, Codec type, bool isFile)
 {
-    QByteArray output;
+    TQByteArray output;
 
     if ( isFile )
     {
         int count;
-        QByteArray data;
+        TQByteArray data;
 
-        QFile f (QFile::encodeName(msg));
+        TQFile f (TQFile::encodeName(msg));
 
         if (!f.exists())
         {
@@ -147,12 +147,12 @@ void testCodec (const char* msg, Codec type, bool isFile)
                 break;
         }
 
-        QCString result (output.data(), output.size()+1);
+        TQCString result (output.data(), output.size()+1);
         cout << "Result: " << endl << result << endl;
     }
     else
     {
-        QCString result;
+        TQCString result;
 
         const size_t len = strlen(msg);
         output.resize(len);
@@ -246,13 +246,13 @@ void MD5_verify( const char *input, const char *digest, bool isFile )
 
   if ( !isFile )
   {
-    context.update (QCString(input));
+    context.update (TQCString(input));
     result = context.verify( digest );
     cout << "Input string: " << input << endl;
   }
   else
   {
-    QFile f (input);
+    TQFile f (input);
 
     if (!f.open (IO_ReadOnly))
     {
@@ -273,7 +273,7 @@ void MD5_verify( const char *input, const char *digest, bool isFile )
 
 void MD5_file (const char *filename, bool rawOutput )
 {
-  QFile f (QFile::encodeName(filename));
+  TQFile f (TQFile::encodeName(filename));
 
   if (!f.open(IO_ReadOnly))
   {
@@ -296,7 +296,7 @@ void MD5_file (const char *filename, bool rawOutput )
 void MD5_string (const char *input, const char* expected, bool rawOutput )
 {
   KMD5 context;
-  context.update (QCString(input));
+  context.update (TQCString(input));
 
   cout << "Checking MD5 for: " << input << endl;
 
@@ -372,7 +372,7 @@ int main (int argc, char *argv[])
        {
           const char* opt = args->getOption( "c" ).data();
           for ( int i=0 ; i < count; i++ )
-            MD5_verify ( QCString(args->arg(i)), opt, (isString || !isFile) );
+            MD5_verify ( TQCString(args->arg(i)), opt, (isString || !isFile) );
        }
        else
        {

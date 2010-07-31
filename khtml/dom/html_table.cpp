@@ -193,7 +193,7 @@ long HTMLTableCellElement::colSpan() const
 void HTMLTableCellElement::setColSpan( long _colSpan )
 {
     if(impl) {
-	DOMString value(QString::number(_colSpan));
+	DOMString value(TQString::number(_colSpan));
         ((ElementImpl *)impl)->setAttribute(ATTR_COLSPAN,value);
     }
 }
@@ -241,7 +241,7 @@ long HTMLTableCellElement::rowSpan() const
 void HTMLTableCellElement::setRowSpan( long _rowSpan )
 {
     if(impl) {
-	DOMString value(QString::number(_rowSpan));
+	DOMString value(TQString::number(_rowSpan));
         ((ElementImpl *)impl)->setAttribute(ATTR_ROWSPAN,value);
     }
 }
@@ -358,7 +358,7 @@ long HTMLTableColElement::span() const
 void HTMLTableColElement::setSpan( long _span )
 {
     if(impl) {
-	DOMString value(QString::number(_span));
+	DOMString value(TQString::number(_span));
         ((ElementImpl *)impl)->setAttribute(ATTR_SPAN,value);
     }
 }

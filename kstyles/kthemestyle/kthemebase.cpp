@@ -41,18 +41,18 @@
 
 #include "kthemebase.h"
 #include <kpixmapeffect.h>
-#include <qimage.h>
-#include <qpainter.h>
-#include <qbitmap.h>
+#include <tqimage.h>
+#include <tqpainter.h>
+#include <tqbitmap.h>
 #include <stdlib.h>
 
-#include <qsettings.h>
-#include <qapplication.h>
-#include <qscrollbar.h>
+#include <tqsettings.h>
+#include <tqapplication.h>
+#include <tqscrollbar.h>
 
-typedef QMap<QString, QString> Prop;
+typedef TQMap<TQString, TQString> Prop;
 
-template class QIntCache<KThemePixmap>
+template class TQIntCache<KThemePixmap>
 ;
 
 /*
@@ -61,13 +61,13 @@ Can't delete old slider image when calculating the rotated one for some reason.
 */
 
 //Shamelessly stolen from KConfigBase
-static QColor readColorEntry( QSettings* s, const char *pKey,
-                              const QColor* pDefault )
+static TQColor readColorEntry( TQSettings* s, const char *pKey,
+                              const TQColor* pDefault )
 {
-    QColor aRetColor;
+    TQColor aRetColor;
     int nRed = 0, nGreen = 0, nBlue = 0;
 
-    QString aValue = s->readEntry( pKey );
+    TQString aValue = s->readEntry( pKey );
     if ( !aValue.isEmpty() )
     {
         if ( aValue.at( 0 ) == '#' )
@@ -156,36 +156,36 @@ public:
     /**
     * Colors to override defaults with..
     */
-    QColor overrideForegroundCol;
-    QColor overrideBackgroundCol;
-    QColor overrideSelectForegroundCol;
-    QColor overrideSelectBackgroundCol;
-    QColor overrideWindowForegroundCol;
-    QColor overrideWindowBackgroundCol;
+    TQColor overrideForegroundCol;
+    TQColor overrideBackgroundCol;
+    TQColor overrideSelectForegroundCol;
+    TQColor overrideSelectBackgroundCol;
+    TQColor overrideWindowForegroundCol;
+    TQColor overrideWindowBackgroundCol;
 
     int contrast;
 
 
-    QMap <QString, QMap<QString, QString> > props;
+    TQMap <TQString, TQMap<TQString, TQString> > props;
 
-    QMap<const QPixmap*, QColor> colorCache;
+    TQMap<const TQPixmap*, TQColor> colorCache;
 
     /*
     A heuristic routine that tries to determine the  avergae color of the image
     Wouldn't work for things like sliders, etc.
     */
-    QColor pixmapAveColor( const QPixmap* p )
+    TQColor pixmapAveColor( const TQPixmap* p )
     {
         if ( colorCache.contains( p ) )
             return colorCache[ p ];
 
-        QImage to_ave = p->convertToImage();
+        TQImage to_ave = p->convertToImage();
         double h = 0, s = 0, v = 0;
         int count = 0;
         int dh, ds, dv;
         for ( int x = 0; x < p->width(); x++ )
         {
-            QColor pix( to_ave.pixel( x, p->height() / 2 ) );
+            TQColor pix( to_ave.pixel( x, p->height() / 2 ) );
             pix.hsv( &dh, &ds, &dv );
             h += dh;
             s += ds;
@@ -195,14 +195,14 @@ public:
 
         for ( int y = 0; y < p->height(); y++ )
         {
-            QColor pix( to_ave.pixel( p->width() / 2, y ) );
+            TQColor pix( to_ave.pixel( p->width() / 2, y ) );
             pix.hsv( &dh, &ds, &dv );
             h += dh;
             s += ds;
             v += dv;
             count++;
         }
-        colorCache[ p ] = QColor( int( h / count + 0.5 ), int( s / count + 0.5 ), int( v / count + 0.5 ), QColor::Hsv );
+        colorCache[ p ] = TQColor( int( h / count + 0.5 ), int( s / count + 0.5 ), int( v / count + 0.5 ), TQColor::Hsv );
         return colorCache[ p ];
     }
 };
@@ -237,9 +237,9 @@ void KThemeBase::generateBorderPix( int i )
     if ( pbPixmaps[ i ] )
     {
         // evidently I have to do masks manually...
-        const QBitmap * srcMask = pbPixmaps[ i ] ->mask();
-        QBitmap destMask( pbWidth[ i ], pbWidth[ i ] );
-        QPixmap tmp( pbWidth[ i ], pbWidth[ i ] );
+        const TQBitmap * srcMask = pbPixmaps[ i ] ->mask();
+        TQBitmap destMask( pbWidth[ i ], pbWidth[ i ] );
+        TQPixmap tmp( pbWidth[ i ], pbWidth[ i ] );
 
         bitBlt( &tmp, 0, 0, pbPixmaps[ i ], 0, 0, pbWidth[ i ], pbWidth[ i ],
                 Qt::CopyROP, false );
@@ -338,8 +338,8 @@ void KThemeBase::generateBorderPix( int i )
 }
 
 
-void KThemeBase::copyWidgetConfig( int sourceID, int destID, QString *pixnames,
-                                   QString *brdnames )
+void KThemeBase::copyWidgetConfig( int sourceID, int destID, TQString *pixnames,
+                                   TQString *brdnames )
 {
     scaleHints[ destID ] = scaleHints[ sourceID ];
     gradients[ destID ] = gradients[ sourceID ];
@@ -349,17 +349,17 @@ void KThemeBase::copyWidgetConfig( int sourceID, int destID, QString *pixnames,
     highlights[ destID ] = highlights[ sourceID ];
 
     if ( grLowColors[ sourceID ] )
-        grLowColors[ destID ] = new QColor( *grLowColors[ sourceID ] );
+        grLowColors[ destID ] = new TQColor( *grLowColors[ sourceID ] );
     else
         grLowColors[ destID ] = NULL;
 
     if ( grHighColors[ sourceID ] )
-        grHighColors[ destID ] = new QColor( *grHighColors[ sourceID ] );
+        grHighColors[ destID ] = new TQColor( *grHighColors[ sourceID ] );
     else
         grHighColors[ destID ] = NULL;
 
     if ( colors[ sourceID ] )
-        colors[ destID ] = new QColorGroup( *colors[ sourceID ] );
+        colors[ destID ] = new TQColorGroup( *colors[ sourceID ] );
     else
         colors[ destID ] = NULL;
 
@@ -413,17 +413,17 @@ void KThemeBase::readConfig( Qt::GUIStyle /*style*/ )
         };
 
     int i;
-    QString tmpStr;
-    QString pixnames[ WIDGETS ]; // used for duplicate check
-    QString brdnames[ WIDGETS ];
+    TQString tmpStr;
+    TQString pixnames[ WIDGETS ]; // used for duplicate check
+    TQString brdnames[ WIDGETS ];
     bool loaded[ WIDGETS ]; // used for preloading for CopyWidget
 
-    QSettings config;
+    TQSettings config;
     if (configDirName.isEmpty() || configDirName == ".")
     {
     	KStyleDirs::dirs()->addToSearch( "themerc", config );
     }
-    else config.insertSearchPath( QSettings::Unix, configDirName );
+    else config.insertSearchPath( TQSettings::Unix, configDirName );
 
     applyConfigFile( config );
 
@@ -442,7 +442,7 @@ void KThemeBase::readConfig( Qt::GUIStyle /*style*/ )
         else
         {
             Prop& copyProp = d->props[ widgetEntries[ i ] ];
-            copyProp[ "CopyWidget" ] = QString( widgetEntries[ i - INHERIT_ITEMS ] );
+            copyProp[ "CopyWidget" ] = TQString( widgetEntries[ i - INHERIT_ITEMS ] );
         }
 #endif
 
@@ -473,20 +473,20 @@ void KThemeBase::readConfig( Qt::GUIStyle /*style*/ )
 
     if ( pixmaps[ RotSliderGroove ] )
     {
-        QWMatrix r270; //TODO: 90 if reverse?
+        TQWMatrix r270; //TODO: 90 if reverse?
         r270.rotate( 270 );
         KThemePixmap* bf = new KThemePixmap( pixmaps[ RotSliderGroove ], pixmaps[ RotSliderGroove ] ->xForm( r270 ) ); //
         pixmaps[ RotSliderGroove ] = bf;
         if ( images[ RotSliderGroove ] )
         {
             delete images[ RotSliderGroove ];
-            images[ RotSliderGroove ] = new QImage( bf->convertToImage() );
+            images[ RotSliderGroove ] = new TQImage( bf->convertToImage() );
         }
     }
 
     if ( pixmaps[ RotActiveTab ] )
     {
-        QWMatrix r180; 
+        TQWMatrix r180; 
         r180.rotate( 180 );
         KThemePixmap* bf = new KThemePixmap( pixmaps[ RotActiveTab ], pixmaps[ RotActiveTab ] ->xForm( r180 ) );
         
@@ -494,13 +494,13 @@ void KThemeBase::readConfig( Qt::GUIStyle /*style*/ )
         if ( images[ RotActiveTab ] )
         {
             delete images[ RotActiveTab ];
-            images[ RotActiveTab ] = new QImage( bf->convertToImage() );
+            images[ RotActiveTab ] = new TQImage( bf->convertToImage() );
         }
     }
     
     if ( pixmaps[ RotInactiveTab ] )
     {
-        QWMatrix r180; 
+        TQWMatrix r180; 
         r180.rotate( 180 );
         KThemePixmap* bf = new KThemePixmap( pixmaps[ RotInactiveTab ], pixmaps[ RotInactiveTab ] ->xForm( r180 ) );
         
@@ -508,7 +508,7 @@ void KThemeBase::readConfig( Qt::GUIStyle /*style*/ )
         if ( images[ RotInactiveTab ] )
         {
             delete images[ RotInactiveTab ];
-            images[ RotInactiveTab ] = new QImage( bf->convertToImage() );
+            images[ RotInactiveTab ] = new TQImage( bf->convertToImage() );
         }
     }
 
@@ -522,7 +522,7 @@ void KThemeBase::readConfig( Qt::GUIStyle /*style*/ )
     d->props.clear();
 }
 
-KThemeBase::KThemeBase( const QString& dir, const QString & configFile )
+KThemeBase::KThemeBase( const TQString& dir, const TQString & configFile )
         : KStyle( FilledFrameWorkaround ), configFileName( configFile )
 {
     d = new KThemeBasePrivate;
@@ -559,9 +559,9 @@ KThemeBase::KThemeBase( const QString& dir, const QString & configFile )
     ;
 }
 
-void KThemeBase::applyConfigFile( QSettings& config )
+void KThemeBase::applyConfigFile( TQSettings& config )
 {
-    QStringList keys = config.entryList( configFileName );
+    TQStringList keys = config.entryList( configFileName );
 
     if ( keys.contains( "foreground" ) )
     {
@@ -651,10 +651,10 @@ KThemeBase::~KThemeBase()
     delete d;
 }
 
-QImage* KThemeBase::loadImage( const QString &name )
+TQImage* KThemeBase::loadImage( const TQString &name )
 {
-    QImage * image = new QImage;
-    QString path = KStyleDirs::dirs()->findResource( "themepixmap",name );
+    TQImage * image = new QImage;
+    TQString path = KStyleDirs::dirs()->findResource( "themepixmap",name );
     image->load( path );
     if ( !image->isNull() )
         return ( image );
@@ -663,10 +663,10 @@ QImage* KThemeBase::loadImage( const QString &name )
     return ( NULL );
 }
 
-KThemePixmap* KThemeBase::loadPixmap( const QString &name )
+KThemePixmap* KThemeBase::loadPixmap( const TQString &name )
 {
     KThemePixmap * pixmap = new KThemePixmap( false );
-    QString path = KStyleDirs::dirs()->findResource( "themepixmap", name );
+    TQString path = KStyleDirs::dirs()->findResource( "themepixmap", name );
     pixmap->load( path );
     if ( !pixmap->isNull() )
         return pixmap;
@@ -697,7 +697,7 @@ KThemePixmap* KThemeBase::scale( int w, int h, WidgetType widget ) const
             else
             {
                 cache->insert( pixmaps[ widget ], KThemeCache::FullScale, widget );
-                QImage tmpImg = images[ widget ] ->smoothScale( w, h );
+                TQImage tmpImg = images[ widget ] ->smoothScale( w, h );
                 pixmaps[ widget ] = new KThemePixmap;
                 pixmaps[ widget ] ->convertFromImage( tmpImg );
                 if ( blends[ widget ] != 0.0 )
@@ -722,7 +722,7 @@ KThemePixmap* KThemeBase::scale( int w, int h, WidgetType widget ) const
             else
             {
                 cache->insert( pixmaps[ widget ], KThemeCache::HorizontalScale, widget );
-                QImage tmpImg = images[ widget ] ->
+                TQImage tmpImg = images[ widget ] ->
                                 smoothScale( w, images[ widget ] ->height() );
                 pixmaps[ widget ] = new KThemePixmap;
                 pixmaps[ widget ] ->convertFromImage( tmpImg );
@@ -748,7 +748,7 @@ KThemePixmap* KThemeBase::scale( int w, int h, WidgetType widget ) const
             else
             {
                 cache->insert( pixmaps[ widget ], KThemeCache::VerticalScale, widget );
-                QImage tmpImg =
+                TQImage tmpImg =
                     images[ widget ] ->smoothScale( images[ widget ] ->width(), h );
                 pixmaps[ widget ] = new KThemePixmap;
                 pixmaps[ widget ] ->convertFromImage( tmpImg );
@@ -773,11 +773,11 @@ KThemePixmap* KThemeBase::scale( int w, int h, WidgetType widget ) const
             else
             {
                 cache->insert( pixmaps[ widget ], KThemeCache::FullScale, widget );
-                QPixmap tile;
+                TQPixmap tile;
                 tile.convertFromImage( *images[ widget ] );
                 pixmaps[ widget ] = new KThemePixmap;
                 pixmaps[ widget ] ->resize( w, h );
-                QPainter p( pixmaps[ widget ] );
+                TQPainter p( pixmaps[ widget ] );
                 p.drawTiledPixmap( 0, 0, w, h, tile );
                 if ( blends[ widget ] != 0.0 )
                     blend( widget );
@@ -801,14 +801,14 @@ KThemePixmap* KThemeBase::scaleBorder( int w, int h, WidgetType widget ) const
     {
         pixmap = new KThemePixmap();
         pixmap->resize( w, h );
-        QBitmap mask;
+        TQBitmap mask;
         mask.resize( w, h );
         mask.fill( color0 );
-        QPainter mPainter;
+        TQPainter mPainter;
         mPainter.begin( &mask );
 
-        QPixmap *tmp = borderPixmap( widget ) ->border( KThemePixmap::TopLeft );
-        const QBitmap *srcMask = tmp->mask();
+        TQPixmap *tmp = borderPixmap( widget ) ->border( KThemePixmap::TopLeft );
+        const TQBitmap *srcMask = tmp->mask();
         int bdWidth = tmp->width();
 
         bitBlt( pixmap, 0, 0, tmp, 0, 0, bdWidth, bdWidth,
@@ -850,7 +850,7 @@ KThemePixmap* KThemeBase::scaleBorder( int w, int h, WidgetType widget ) const
         else
             mPainter.fillRect( w - bdWidth, h - bdWidth, bdWidth, bdWidth, color1 );
 
-        QPainter p;
+        TQPainter p;
         p.begin( pixmap );
         if ( w - bdWidth * 2 > 0 )
         {
@@ -1014,8 +1014,8 @@ KThemePixmap* KThemeBase::gradient( int w, int h, WidgetType widget ) const
                 KPixmap s;
                 int offset = decoWidth( widget );
                 s.resize( w - offset * 2, h - offset * 2 );
-                QColor lc( *grLowColors[ widget ] );
-                QColor hc( *grHighColors[ widget ] );
+                TQColor lc( *grLowColors[ widget ] );
+                TQColor hc( *grHighColors[ widget ] );
                 if ( bevelContrast( widget ) )
                 {
                     int bc = bevelContrast( widget );
@@ -1088,7 +1088,7 @@ KThemePixmap* KThemeBase::scalePixmap( int w, int h, WidgetType widget ) const
     return ( scale( w, h, widget ) );
 }
 
-QColorGroup* KThemeBase::makeColorGroup( const QColor &fg, const QColor &bg,
+TQColorGroup* KThemeBase::makeColorGroup( const TQColor &fg, const TQColor &bg,
         Qt::GUIStyle )
 {
     if ( shading == Motif )
@@ -1096,82 +1096,82 @@ QColorGroup* KThemeBase::makeColorGroup( const QColor &fg, const QColor &bg,
         int highlightVal, lowlightVal;
         highlightVal = 100 + ( 2 * d->contrast + 4 ) * 16 / 10;
         lowlightVal = 100 + ( ( 2 * d->contrast + 4 ) * 10 );
-        return ( new QColorGroup( fg, bg, bg.light( highlightVal ),
+        return ( new TQColorGroup( fg, bg, bg.light( highlightVal ),
                                   bg.dark( lowlightVal ), bg.dark( 120 ),
-                                  fg, QApplication::palette().active().base() ) );
+                                  fg, TQApplication::palette().active().base() ) );
     }
     else
-        return ( new QColorGroup( fg, bg, bg.light( 150 ), bg.dark(),
+        return ( new TQColorGroup( fg, bg, bg.light( 150 ), bg.dark(),
                                   bg.dark( 120 ), fg,
-                                  QApplication::palette().active().base() ) );
+                                  TQApplication::palette().active().base() ) );
 }
 
 
-void KThemeBase::applyMiscResourceGroup( QSettings *config )
+void KThemeBase::applyMiscResourceGroup( TQSettings *config )
 {
 #ifndef Q_WS_QWS //FIXME
     d->props.erase( "Misc" ); // clear the old property
 
-    QString base = configFileName + "Misc/";
+    TQString base = configFileName + "Misc/";
 
     Prop& prop = d->props[ "Misc" ];
-    QString tmpStr;
+    TQString tmpStr;
 
     tmpStr = config->readEntry( base + "SButtonPosition" );
     if ( tmpStr == "BottomLeft" )
-        prop[ "SButtonPosition" ] = QString::number( ( int ) SBBottomLeft );
+        prop[ "SButtonPosition" ] = TQString::number( ( int ) SBBottomLeft );
     else if ( tmpStr == "BottomRight" )
-        prop[ "SButtonPosition" ] = QString::number( ( int ) SBBottomRight );
+        prop[ "SButtonPosition" ] = TQString::number( ( int ) SBBottomRight );
     else
     {
         if ( tmpStr != "Opposite" && !tmpStr.isEmpty() )
             qWarning( "KThemeBase: Unrecognized sb button option %s, using Opposite.\n", tmpStr.latin1() );
         ;
-        prop[ "SButtonPosition" ] = QString::number( ( int ) SBOpposite );
+        prop[ "SButtonPosition" ] = TQString::number( ( int ) SBOpposite );
     }
     tmpStr = config->readEntry( base + "ArrowType" );
     if ( tmpStr == "Small" )
-        prop[ "ArrowType" ] = QString::number( ( int ) SmallArrow );
+        prop[ "ArrowType" ] = TQString::number( ( int ) SmallArrow );
     else if ( tmpStr == "3D" )
-        prop[ "ArrowType" ] = QString::number( ( int ) MotifArrow );
+        prop[ "ArrowType" ] = TQString::number( ( int ) MotifArrow );
     else
     {
         if ( tmpStr != "Normal" && !tmpStr.isEmpty() )
             qWarning( "KThemeBase: Unrecognized arrow option %s, using Normal.\n", tmpStr.latin1() );
-        prop[ "ArrowType" ] = QString::number( ( int ) LargeArrow );
+        prop[ "ArrowType" ] = TQString::number( ( int ) LargeArrow );
     }
     tmpStr = config->readEntry( base + "ShadeStyle" );
     if ( tmpStr == "Motif" )
-        prop[ "ShadeStyle" ] = QString::number( ( int ) Motif );
+        prop[ "ShadeStyle" ] = TQString::number( ( int ) Motif );
     else if ( tmpStr == "Next" )
-        prop[ "ShadeStyle" ] = QString::number( ( int ) Next );
+        prop[ "ShadeStyle" ] = TQString::number( ( int ) Next );
     else if ( tmpStr == "KDE" )
-        prop[ "ShadeStyle" ] = QString::number( ( int ) KDE );
+        prop[ "ShadeStyle" ] = TQString::number( ( int ) KDE );
     else
-        prop[ "ShadeStyle" ] = QString::number( ( int ) Windows );
+        prop[ "ShadeStyle" ] = TQString::number( ( int ) Windows );
 
-    prop[ "FrameWidth" ] = QString::number( config->readNumEntry( base + "FrameWidth", 2 ) );
-    prop[ "Cache" ] = QString::number( config->readNumEntry( base + "Cache", 1024 ) );
-    prop[ "ScrollBarExtent" ] = QString::number( config->readNumEntry( base + "ScrollBarExtent", 16 ) );
+    prop[ "FrameWidth" ] = TQString::number( config->readNumEntry( base + "FrameWidth", 2 ) );
+    prop[ "Cache" ] = TQString::number( config->readNumEntry( base + "Cache", 1024 ) );
+    prop[ "ScrollBarExtent" ] = TQString::number( config->readNumEntry( base + "ScrollBarExtent", 16 ) );
 #endif
 }
 
-static int readNumEntry( Prop& prop, QString setting, int def )
+static int readNumEntry( Prop& prop, TQString setting, int def )
 {
     bool ok;
-    QString s_val = prop[ setting ];
+    TQString s_val = prop[ setting ];
     int val = s_val.toInt( &ok );
     if ( ok )
         return val;
     return def;
 }
 
-static QColor readColorEntry( Prop& prop, QString setting, const QColor& def )
+static TQColor readColorEntry( Prop& prop, TQString setting, const TQColor& def )
 {
-    QString s_val = prop[ setting ];
+    TQString s_val = prop[ setting ];
     if ( !s_val.isEmpty() )
     {
-        QColor c( s_val );
+        TQColor c( s_val );
         return c;
     }
     return def;
@@ -1194,16 +1194,16 @@ void KThemeBase::readMiscResourceGroup()
 }
 
 
-void KThemeBase::applyResourceGroup( QSettings *config, int i )
+void KThemeBase::applyResourceGroup( TQSettings *config, int i )
 {
 #ifndef Q_WS_QWS //FIXME
-    QString tmpStr;
+    TQString tmpStr;
     int tmpVal;
 
     // clear the old property
     d->props.erase( widgetEntries[ i ] );
 
-    QString base = configFileName + widgetEntries[ i ] + "/";
+    TQString base = configFileName + widgetEntries[ i ] + "/";
 
     Prop& prop = d->props[ widgetEntries[ i ] ];
 
@@ -1227,7 +1227,7 @@ void KThemeBase::applyResourceGroup( QSettings *config, int i )
             qWarning( "KThemeBase: Unrecognized scale option %s, using Tile.\n", tmpStr.latin1() );
         tmpVal = ( int ) TileScale;
     }
-    prop[ "ScaleHint" ] = QString::number( tmpVal );
+    prop[ "ScaleHint" ] = TQString::number( tmpVal );
 
     // Gradient type
     tmpStr = config->readEntry( base + "Gradient" );
@@ -1251,41 +1251,41 @@ void KThemeBase::applyResourceGroup( QSettings *config, int i )
             qWarning( "KThemeBase: Unrecognized gradient option %s, using None.\n", tmpStr.latin1() );
         tmpVal = ( int ) GrNone;
     }
-    prop[ "Gradient" ] = QString::number( tmpVal );
+    prop[ "Gradient" ] = TQString::number( tmpVal );
 
     // Blend intensity
     tmpStr.setNum( config->readDoubleEntry( base + "BlendIntensity", 0.0 ) );
     prop[ "Blend" ] = tmpStr;
 
     // Bevel contrast
-    prop[ "BContrast" ] = QString::number( config->readNumEntry( base + "BevelContrast", 0 ) );
+    prop[ "BContrast" ] = TQString::number( config->readNumEntry( base + "BevelContrast", 0 ) );
 
     // Border width
-    prop[ "Border" ] = QString::number( config->readNumEntry( base + "Border", 1 ) );
+    prop[ "Border" ] = TQString::number( config->readNumEntry( base + "Border", 1 ) );
 
     // Highlight width
-    prop[ "Highlight" ] = QString::number( config->readNumEntry( base + "Highlight", 1 ) );
+    prop[ "Highlight" ] = TQString::number( config->readNumEntry( base + "Highlight", 1 ) );
 
-    QStringList keys = config->entryList( base );
+    TQStringList keys = config->entryList( base );
 
     // Gradient low color or blend background
     if ( keys.contains( "GradientLow" ) )
-        prop[ "GrLow" ] = readColorEntry( config, QString( base + "GradientLow" ).latin1(),
-                                          &QApplication::palette().active().background() ).name();
+        prop[ "GrLow" ] = readColorEntry( config, TQString( base + "GradientLow" ).latin1(),
+                                          &TQApplication::palette().active().background() ).name();
 
     // Gradient high color
     if ( keys.contains( "GradientHigh" ) )
-        prop[ "GrHigh" ] = readColorEntry( config, QString( base + "GradientHigh" ).latin1(),
-                                           &QApplication::palette().active().foreground() ).name();
+        prop[ "GrHigh" ] = readColorEntry( config, TQString( base + "GradientHigh" ).latin1(),
+                                           &TQApplication::palette().active().foreground() ).name();
 
     // Extended color attributes
     if ( keys.contains( "Foreground" ) || keys.contains( "Background" ) )
     {
-        QColor fg, bg;
+        TQColor fg, bg;
         if ( keys.contains( "Background" ) )
-            bg = readColorEntry( config, QString( base + "Background" ).latin1(), &bg );
+            bg = readColorEntry( config, TQString( base + "Background" ).latin1(), &bg );
         if ( keys.contains( "Foreground" ) )
-            fg = readColorEntry( config, QString( base + "Foreground" ).latin1(), &fg );
+            fg = readColorEntry( config, TQString( base + "Foreground" ).latin1(), &fg );
         prop[ "Foreground" ] = fg.name();
         prop[ "Background" ] = bg.name();
 
@@ -1302,24 +1302,24 @@ void KThemeBase::applyResourceGroup( QSettings *config, int i )
     if ( !tmpStr.isEmpty() )
     {
         prop[ "PixmapBorder" ] = tmpStr;
-        prop[ "PixmapBWidth" ] = QString::number(
+        prop[ "PixmapBWidth" ] = TQString::number(
                                      config->readNumEntry( base + "PixmapBWidth", 0 ) );
     }
 
     // Various widget specific settings. This was more efficient when bunched
     // together in the misc group, but this makes an easier to read config.
     if ( i == SliderGroove )
-        prop[ "SmallGroove" ] = QString::number(
+        prop[ "SmallGroove" ] = TQString::number(
                                     config->readBoolEntry( base + "SmallGroove", false ) );
     else if ( i == ActiveTab || i == InactiveTab )
-        prop[ "BottomLine" ] = QString::number(
+        prop[ "BottomLine" ] = TQString::number(
                                    config->readBoolEntry( base + "BottomLine", true ) );
     else if ( i == Splitter )
-        prop[ "Width" ] = QString::number( config->readNumEntry( base + "Width", 10 ) );
+        prop[ "Width" ] = TQString::number( config->readNumEntry( base + "Width", 10 ) );
     else if ( i == ComboBox || i == ComboBoxDown )
     {
         if ( keys.contains( "Round" ) )
-            prop[ "Round" ] = QString::number( config->readBoolEntry( base + "Round", false ) );
+            prop[ "Round" ] = TQString::number( config->readBoolEntry( base + "Round", false ) );
         else
             prop[ "Round" ] = "5000"; // invalid, used w/multiple groups
 
@@ -1327,32 +1327,32 @@ void KThemeBase::applyResourceGroup( QSettings *config, int i )
     else if ( i == PushButton || i == PushButtonDown )
     {
         if ( keys.contains( "XShift" ) )
-            prop[ "XShift" ] = QString::number( config->readNumEntry( base + "XShift", 0 ) );
+            prop[ "XShift" ] = TQString::number( config->readNumEntry( base + "XShift", 0 ) );
         else
             prop[ "XShift" ] = "5000";
         if ( keys.contains( "YShift" ) )
-            prop[ "YShift" ] = QString::number( config->readNumEntry( base + "YShift", 0 ) );
+            prop[ "YShift" ] = TQString::number( config->readNumEntry( base + "YShift", 0 ) );
         else
             prop[ "YShift" ] = "5000";
         if ( keys.contains( "3DFocusRect" ) )
-            prop[ "3DFRect" ] = QString::number( config->
+            prop[ "3DFRect" ] = TQString::number( config->
                                                  readBoolEntry(  base + "3DFocusRect", false ) );
         else
             prop[ "3DFRect" ] = "5000";
         if ( keys.contains( "3DFocusOffset" ) )
-            prop[ "3DFOffset" ] = QString::number( config->
+            prop[ "3DFOffset" ] = TQString::number( config->
                                                    readBoolEntry(  base + "3DFocusOffset", 0 ) );
         else
             prop[ "3DFOffset" ] = "5000";
         if ( keys.contains( "Round" ) )
-            prop[ "Round" ] = QString::number( config->readBoolEntry( base + "Round", false ) );
+            prop[ "Round" ] = TQString::number( config->readBoolEntry( base + "Round", false ) );
         else
             prop[ "Round" ] = "5000";
     }
 #endif
 }
 
-void KThemeBase::readResourceGroup( int i, QString *pixnames, QString *brdnames,
+void KThemeBase::readResourceGroup( int i, TQString *pixnames, TQString *brdnames,
                                     bool *loadArray )
 {
 #ifndef Q_WS_QWS //FIXME
@@ -1363,7 +1363,7 @@ void KThemeBase::readResourceGroup( int i, QString *pixnames, QString *brdnames,
 
     int tmpVal;
     Prop prop = d->props[ widgetEntries[ i ] ];
-    QString tmpStr;
+    TQString tmpStr;
 
     tmpStr = prop[ "CopyWidget" ];
     if ( !tmpStr.isEmpty() )
@@ -1411,7 +1411,7 @@ void KThemeBase::readResourceGroup( int i, QString *pixnames, QString *brdnames,
     // Blend intensity
     tmpStr = prop[ "Blend" ];
     if ( tmpStr.isEmpty() )
-        tmpStr = QString::fromLatin1( "0.0" );
+        tmpStr = TQString::fromLatin1( "0.0" );
     blends[ i ] = tmpStr.toFloat();
 
     // Bevel contrast
@@ -1426,8 +1426,8 @@ void KThemeBase::readResourceGroup( int i, QString *pixnames, QString *brdnames,
     // Gradient low color or blend background
     if ( gradients[ i ] != GrNone || blends[ i ] != 0.0 )
         grLowColors[ i ] =
-            new QColor( readColorEntry( prop, "GrLow",
-                                        QApplication::palette().active().
+            new TQColor( readColorEntry( prop, "GrLow",
+                                        TQApplication::palette().active().
                                         background() ) );
     else
         grLowColors[ i ] = NULL;
@@ -1435,22 +1435,22 @@ void KThemeBase::readResourceGroup( int i, QString *pixnames, QString *brdnames,
     // Gradient high color
     if ( gradients[ i ] != GrNone )
         grHighColors[ i ] =
-            new QColor( readColorEntry( prop, "GrHigh",
-                                        QApplication::palette().active().
+            new TQColor( readColorEntry( prop, "GrHigh",
+                                        TQApplication::palette().active().
                                         background() ) );
     else
         grHighColors[ i ] = NULL;
 
     // Extended color attributes
-    QColor fg, bg;
+    TQColor fg, bg;
     fg = readColorEntry( prop, "Foreground", fg );
     bg = readColorEntry( prop, "Background", bg );
     if ( fg.isValid() || bg.isValid() )
     {
         if ( !fg.isValid() )
-            fg = QApplication::palette().active().foreground();
+            fg = TQApplication::palette().active().foreground();
         if ( !bg.isValid() )
-            bg = QApplication::palette().active().background();
+            bg = TQApplication::palette().active().background();
         colors[ i ] = makeColorGroup( fg, bg, Qt::WindowsStyle );
     }
     else
@@ -1563,17 +1563,17 @@ void KThemeBase::readResourceGroup( int i, QString *pixnames, QString *brdnames,
 }
 
 
-QPalette KThemeBase::overridePalette( const QPalette& pal )
+TQPalette KThemeBase::overridePalette( const TQPalette& pal )
 {
 
     //Read current settings for colors..
-    QColor background = pal.active().background();
-    QColor foreground = pal.active().foreground();
-    QColor button = background; //CHECKME
-    QColor highlight = pal.active().highlight();
-    QColor highlightedText = pal.active().highlightedText(); //CHECKME
-    QColor base = pal.active().base(); //config->readColorEntry( "windowBackground", &white );
-    QColor baseText = pal.active().text(); //CHECKME
+    TQColor background = pal.active().background();
+    TQColor foreground = pal.active().foreground();
+    TQColor button = background; //CHECKME
+    TQColor highlight = pal.active().highlight();
+    TQColor highlightedText = pal.active().highlightedText(); //CHECKME
+    TQColor base = pal.active().base(); //config->readColorEntry( "windowBackground", &white );
+    TQColor baseText = pal.active().text(); //CHECKME
 
     //See whether there are any immediate overrides.
     if ( d->overrideBackground )
@@ -1596,7 +1596,7 @@ QPalette KThemeBase::overridePalette( const QPalette& pal )
     if ( uncached( Bevel ) )
         button = d->pixmapAveColor( uncached( Bevel ) );
 
-    QColor buttonText = foreground;
+    TQColor buttonText = foreground;
 
     int highlightVal, lowlightVal;
     highlightVal = 100 + ( 2 * d->contrast + 4 ) * 16 / 10;
@@ -1616,14 +1616,14 @@ QPalette KThemeBase::overridePalette( const QPalette& pal )
         }
 
 
-        QColorGroup pre( foreground, button, background.light( highlightVal ),
+        TQColorGroup pre( foreground, button, background.light( highlightVal ),
                             background.dark( lowlightVal ), background.dark( 120 ),
                             baseText, buttonText /*CHECKME: BrightText*/, base, background );
 
         buttonText = colorGroup( pre, PushButton ) ->foreground();
     }
 
-    QColor disfg = foreground;
+    TQColor disfg = foreground;
     int h, s, v;
     disfg.hsv( &h, &s, &v );
     if ( v > 128 )
@@ -1637,31 +1637,31 @@ QPalette KThemeBase::overridePalette( const QPalette& pal )
         disfg = Qt::darkGray;
 
 
-    QColorGroup disabledgrp( disfg, background,   //TODO:Convert this to the new ctor.
+    TQColorGroup disabledgrp( disfg, background,   //TODO:Convert this to the new ctor.
                              background.light( highlightVal ),
                              background.dark( lowlightVal ),
                              background.dark( 120 ),
                              background.dark( 120 ), base );
 
 
-    QColorGroup colgrp( foreground, button, background.light( highlightVal ),
+    TQColorGroup colgrp( foreground, button, background.light( highlightVal ),
                         background.dark( lowlightVal ), background.dark( 120 ),
                         baseText, buttonText /*CHECKME: BrightText*/, base, background );
 
 
 
-    colgrp.setColor( QColorGroup::Highlight, highlight );
-    colgrp.setColor( QColorGroup::HighlightedText, highlightedText );
-    colgrp.setColor( QColorGroup::ButtonText, buttonText );
-    colgrp.setColor( QColorGroup::Midlight, button.light( 110 ) );
+    colgrp.setColor( TQColorGroup::Highlight, highlight );
+    colgrp.setColor( TQColorGroup::HighlightedText, highlightedText );
+    colgrp.setColor( TQColorGroup::ButtonText, buttonText );
+    colgrp.setColor( TQColorGroup::Midlight, button.light( 110 ) );
 
 
-    disabledgrp.setColor( QColorGroup::Base, base );
-    disabledgrp.setColor( QColorGroup::Button, button );
-    disabledgrp.setColor( QColorGroup::ButtonText, buttonText );
-    disabledgrp.setColor( QColorGroup::Midlight, button.light( 110 ) );
+    disabledgrp.setColor( TQColorGroup::Base, base );
+    disabledgrp.setColor( TQColorGroup::Button, button );
+    disabledgrp.setColor( TQColorGroup::ButtonText, buttonText );
+    disabledgrp.setColor( TQColorGroup::Midlight, button.light( 110 ) );
 
-    QPalette newPal( colgrp, disabledgrp, colgrp );
+    TQPalette newPal( colgrp, disabledgrp, colgrp );
 
     return newPal;
 
@@ -1695,12 +1695,12 @@ KThemePixmap::KThemePixmap( const KThemePixmap &p )
     int i;
     for ( i = 0; i < 8; ++i )
         if ( p.b[ i ] )
-            b[ i ] = new QPixmap( *p.b[ i ] );
+            b[ i ] = new TQPixmap( *p.b[ i ] );
         else
             b[ i ] = NULL;
 }
 
-KThemePixmap::KThemePixmap( const KThemePixmap &p, const QPixmap &p2 )
+KThemePixmap::KThemePixmap( const KThemePixmap &p, const TQPixmap &p2 )
         : KPixmap( p2 )
 {
     if ( p.t )
@@ -1713,7 +1713,7 @@ KThemePixmap::KThemePixmap( const KThemePixmap &p, const QPixmap &p2 )
     int i;
     for ( i = 0; i < 8; ++i )
         if ( p.b[ i ] )
-            b[ i ] = new QPixmap( *p.b[ i ] );
+            b[ i ] = new TQPixmap( *p.b[ i ] );
         else
             b[ i ] = NULL;
 }
@@ -1730,18 +1730,18 @@ KThemePixmap::~KThemePixmap()
             delete b[ i ];
 }
 
-KThemeCache::KThemeCache( int maxSize, QObject *parent, const char *name )
-        : QObject( parent, name )
+KThemeCache::KThemeCache( int maxSize, TQObject *parent, const char *name )
+        : TQObject( parent, name )
 {
     cache.setMaxCost( maxSize * 1024 );
     cache.setAutoDelete( true );
     flushTimer.start( 300000 ); // 5 minutes
-    connect( &flushTimer, SIGNAL( timeout() ), SLOT( flushTimeout() ) );
+    connect( &flushTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( flushTimeout() ) );
 }
 
 void KThemeCache::flushTimeout()
 {
-    QIntCacheIterator<KThemePixmap> it( cache );
+    TQIntCacheIterator<KThemePixmap> it( cache );
     while ( it.current() )
     {
         if ( it.current() ->isOld() )

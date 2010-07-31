@@ -1,7 +1,7 @@
 #ifndef LOADER_CLIENT_H
 #define LOADER_CLIENT_H
 
-#include <qpixmap.h>
+#include <tqpixmap.h>
 #include "dom/dom_string.h"
 
 namespace khtml {
@@ -25,10 +25,10 @@ namespace khtml {
         // pointer to us
         // return whether we need manual update
         // don't ref() or deref() elements in setPixmap!!
-	virtual void setPixmap(const QPixmap &, const QRect&, CachedImage *);
+	virtual void setPixmap(const TQPixmap &, const TQRect&, CachedImage *);
 	virtual void setStyleSheet(const DOM::DOMString &/*url*/, const DOM::DOMString &/*sheet*/, const DOM::DOMString &/*charset*/);
 	virtual void notifyFinished(CachedObject * /*finishedObj*/);
-	virtual void error(int err, const QString &text);
+	virtual void error(int err, const TQString &text);
     };
 }
 

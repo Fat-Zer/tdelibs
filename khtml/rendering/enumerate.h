@@ -31,35 +31,35 @@ namespace khtml {
 namespace Enumerate {
 
 // Numeric
-    QString toArabicIndic( int number );
-    QString toLao( int number );
-    QString toPersianUrdu( int number );
-    QString toThai( int number );
-    QString toTibetan( int number );
+    TQString toArabicIndic( int number );
+    TQString toLao( int number );
+    TQString toPersianUrdu( int number );
+    TQString toThai( int number );
+    TQString toTibetan( int number );
 
 // Alphabetic
-    QString toLowerLatin( int number );
-    QString toUpperLatin( int number );
-    QString toLowerGreek( int number );
-    QString toUpperGreek( int number );
-    QString toHiragana( int number );
-    QString toHiraganaIroha( int number );
-    QString toKatakana( int number );
-    QString toKatakanaIroha( int number );
+    TQString toLowerLatin( int number );
+    TQString toUpperLatin( int number );
+    TQString toLowerGreek( int number );
+    TQString toUpperGreek( int number );
+    TQString toHiragana( int number );
+    TQString toHiraganaIroha( int number );
+    TQString toKatakana( int number );
+    TQString toKatakanaIroha( int number );
 
 // Algorithmic
-    QString toRoman( int number, bool upper );
-    QString toHebrew( int number );
-    QString toGeorgian( int number );
-    QString toArmenian( int number );
+    TQString toRoman( int number, bool upper );
+    TQString toHebrew( int number );
+    TQString toGeorgian( int number );
+    TQString toArmenian( int number );
 
 // Ideographic
-    QString toJapaneseFormal   ( int number );
-    QString toJapaneseInformal ( int number );
-    QString toSimpChineseFormal   ( int number );
-    QString toSimpChineseInformal ( int number );
-    QString toTradChineseFormal   ( int number );
-    QString toTradChineseInformal ( int number );
+    TQString toJapaneseFormal   ( int number );
+    TQString toJapaneseInformal ( int number );
+    TQString toSimpChineseFormal   ( int number );
+    TQString toSimpChineseInformal ( int number );
+    TQString toTradChineseFormal   ( int number );
+    TQString toTradChineseInformal ( int number );
 
 }} // namespaces
 

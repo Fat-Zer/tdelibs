@@ -12,15 +12,15 @@ int main ( int argc, char** argv )
     KCmdLineArgs::init(argc, argv, &aboutData);
     KApplication app;
 
-    QString usr, pass, comment, label;
+    TQString usr, pass, comment, label;
     label = "Site:";
     comment = "<b>localhost</b>";
     int res = KIO::PasswordDialog::getNameAndPassword( usr, pass, 0L,
-                                                       QString::null, false,
-                                                       QString::null, comment,
+                                                       TQString::null, false,
+                                                       TQString::null, comment,
                                                        label );
-    if ( res == QDialog::Accepted )
-        KMessageBox::information( 0L, QString("You entered:\n"
+    if ( res == TQDialog::Accepted )
+        KMessageBox::information( 0L, TQString("You entered:\n"
 					   "  Username: %1\n"
                                            "  Password: %2").arg(usr).arg(pass),
                                 	"Test Result");

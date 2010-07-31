@@ -12,7 +12,7 @@
 #define __DUMMY_H__
 
 #include <stdio.h>
-#include <qobject.h>
+#include <tqobject.h>
 #include "kprocess.h"
 
 class Dummy : public QObject

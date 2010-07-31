@@ -45,7 +45,7 @@ public:
 };
 
 KMimeSourceFactory::KMimeSourceFactory (KIconLoader* loader)
-  : QMimeSourceFactory (),
+  : TQMimeSourceFactory (),
 	d (new KMimeSourceFactoryPrivate (loader))
 {
 }
@@ -55,10 +55,10 @@ KMimeSourceFactory::~KMimeSourceFactory()
   delete d;
 }
 
-QString KMimeSourceFactory::makeAbsolute (const QString& absOrRelName, const QString& context) const
+TQString KMimeSourceFactory::makeAbsolute (const TQString& absOrRelName, const TQString& context) const
 {
-  QString myName;
-  QString myContext;
+  TQString myName;
+  TQString myContext;
 
   const int pos = absOrRelName.find ('|');
   if (pos > -1)
@@ -67,7 +67,7 @@ QString KMimeSourceFactory::makeAbsolute (const QString& absOrRelName, const QSt
 	  myName = absOrRelName.right (absOrRelName.length() - myContext.length() - 1);
 	}
 
-  QString result;
+  TQString result;
 
   if (myContext == "desktop")
 	{
@@ -91,7 +91,7 @@ QString KMimeSourceFactory::makeAbsolute (const QString& absOrRelName, const QSt
 	}
 
   if (result.isEmpty())
-	result = QMimeSourceFactory::makeAbsolute (absOrRelName, context);
+	result = TQMimeSourceFactory::makeAbsolute (absOrRelName, context);
   
   return result;
 }

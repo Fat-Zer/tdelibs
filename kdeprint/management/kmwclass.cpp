@@ -23,14 +23,14 @@
 #include "kmmanager.h"
 #include "kmprinter.h"
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qtoolbutton.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqtoolbutton.h>
 #include <klistbox.h>
 #include <klocale.h>
 #include <kiconloader.h>
 
-KMWClass::KMWClass(QWidget *parent, const char *name)
+KMWClass::KMWClass(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
 {
 	m_ID = KMWizard::Class;
@@ -38,23 +38,23 @@ KMWClass::KMWClass(QWidget *parent, const char *name)
 	m_nextpage = KMWizard::Name;
 
 	m_list1 = new KListBox(this);
-	m_list1->setSelectionMode(QListBox::Extended);
+	m_list1->setSelectionMode(TQListBox::Extended);
 	m_list2 = new KListBox(this);
-	m_list2->setSelectionMode(QListBox::Extended);
+	m_list2->setSelectionMode(TQListBox::Extended);
 
-	QToolButton	*add = new QToolButton(this);
-	QToolButton	*remove = new QToolButton(this);
+	QToolButton	*add = new TQToolButton(this);
+	QToolButton	*remove = new TQToolButton(this);
 	add->setIconSet(BarIcon("forward"));
 	remove->setIconSet(BarIcon("back"));
-	connect(add,SIGNAL(clicked()),SLOT(slotAdd()));
-	connect(remove,SIGNAL(clicked()),SLOT(slotRemove()));
+	connect(add,TQT_SIGNAL(clicked()),TQT_SLOT(slotAdd()));
+	connect(remove,TQT_SIGNAL(clicked()),TQT_SLOT(slotRemove()));
 
-	QLabel	*l1 = new QLabel(i18n("Available printers:"), this);
-	QLabel	*l2 = new QLabel(i18n("Class printers:"), this);
+	QLabel	*l1 = new TQLabel(i18n("Available printers:"), this);
+	QLabel	*l2 = new TQLabel(i18n("Class printers:"), this);
 
-        QHBoxLayout	*lay1 = new QHBoxLayout(this, 0, 15);
-        QVBoxLayout	*lay2 = new QVBoxLayout(0, 0, 20);
-        QVBoxLayout	*lay3 = new QVBoxLayout(0, 0, 0), *lay4 = new QVBoxLayout(0, 0, 0);
+        QHBoxLayout	*lay1 = new TQHBoxLayout(this, 0, 15);
+        QVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 20);
+        QVBoxLayout	*lay3 = new TQVBoxLayout(0, 0, 0), *lay4 = new TQVBoxLayout(0, 0, 0);
         lay1->addLayout(lay3, 1);
         lay1->addLayout(lay2, 0);
 	lay1->addLayout(lay4, 1);
@@ -72,7 +72,7 @@ KMWClass::~KMWClass()
 {
 }
 
-bool KMWClass::isValid(QString& msg)
+bool KMWClass::isValid(TQString& msg)
 {
 	if (m_list2->count() == 0)
 	{
@@ -88,11 +88,11 @@ void KMWClass::initPrinter(KMPrinter *p)
 	KMManager	*mgr = KMFactory::self()->manager();
 
 	// first load available printers
-	QPtrList<KMPrinter>	*list = mgr->printerList(false);
+	TQPtrList<KMPrinter>	*list = mgr->printerList(false);
 	m_list1->clear();
 	if (list)
 	{
-		QPtrListIterator<KMPrinter>	it(*list);
+		TQPtrListIterator<KMPrinter>	it(*list);
 		for (;it.current();++it)
 			if (it.current()->instanceName().isEmpty() && !it.current()->isClass(true) && !it.current()->isSpecial() && !members.contains(it.current()->name()))
 				m_list1->insertItem(SmallIcon(it.current()->pixmap()), it.current()->name());
@@ -101,7 +101,7 @@ void KMWClass::initPrinter(KMPrinter *p)
 
 	// set class printers
 	m_list2->clear();
-	for (QStringList::ConstIterator it=members.begin(); it!=members.end(); ++it)
+	for (TQStringList::ConstIterator it=members.begin(); it!=members.end(); ++it)
 	{
 		KMPrinter	*pr = mgr->findPrinter(*it);
 		if (pr) m_list2->insertItem(SmallIcon(pr->pixmap()), *it);

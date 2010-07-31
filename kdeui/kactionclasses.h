@@ -29,10 +29,10 @@
 
 #include <kaction.h>
 
-#include <qkeysequence.h>
-#include <qobject.h>
-#include <qvaluelist.h>
-#include <qguardedptr.h>
+#include <tqkeysequence.h>
+#include <tqobject.h>
+#include <tqvaluelist.h>
+#include <tqguardedptr.h>
 #include <kguiitem.h>
 #include <kshortcut.h>
 #include <kstdaction.h>
@@ -69,7 +69,7 @@ class KDEUI_EXPORT KToggleAction : public KAction
 {
     Q_OBJECT
     Q_PROPERTY( bool checked READ isChecked WRITE setChecked )
-    Q_PROPERTY( QString exclusiveGroup READ exclusiveGroup WRITE setExclusiveGroup )
+    Q_PROPERTY( TQString exclusiveGroup READ exclusiveGroup WRITE setExclusiveGroup )
 public:
 
     /**
@@ -82,18 +82,18 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KToggleAction( const QString& text, const KShortcut& cut = KShortcut(), QObject* parent = 0, const char* name = 0 );
+    KToggleAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
-     *  @param slot The SLOT to invoke to execute this action.
+     *  @param slot The TQT_SLOT to invoke to execute this action.
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KToggleAction( const QString& text, const KShortcut& cut,
-                   const QObject* receiver, const char* slot, QObject* parent, const char* name = 0 );
+    KToggleAction( const TQString& text, const KShortcut& cut,
+                   const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
@@ -102,8 +102,8 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KToggleAction( const QString& text, const QIconSet& pix, const KShortcut& cut = KShortcut(),
-             QObject* parent = 0, const char* name = 0 );
+    KToggleAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+             TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
@@ -112,39 +112,39 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KToggleAction( const QString& text, const QString& pix, const KShortcut& cut = KShortcut(),
-                   QObject* parent = 0, const char* name = 0 );
+    KToggleAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+                   TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
      *  @param pix The icons that go with this action.
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
-     *  @param slot The SLOT to invoke to execute this action.
+     *  @param slot The TQT_SLOT to invoke to execute this action.
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KToggleAction( const QString& text, const QIconSet& pix, const KShortcut& cut,
-                   const QObject* receiver, const char* slot, QObject* parent, const char* name = 0 );
+    KToggleAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+                   const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
      *  @param pix The dynamically loaded icon that goes with this action.
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
-     *  @param slot The SLOT to invoke to execute this action.
+     *  @param slot The TQT_SLOT to invoke to execute this action.
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KToggleAction( const QString& text, const QString& pix, const KShortcut& cut,
-                   const QObject* receiver, const char* slot,
-                   QObject* parent, const char* name = 0 );
+    KToggleAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+                   const TQObject* receiver, const char* slot,
+                   TQObject* parent, const char* name = 0 );
 
     /**
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KToggleAction( QObject* parent = 0, const char* name = 0 );
+    KToggleAction( TQObject* parent = 0, const char* name = 0 );
 
     /**
      * Destructor
@@ -162,7 +162,7 @@ public:
      *  @param widget The GUI element to display this action.
      *  @param index  The index of the item.
      */
-    virtual int plug( QWidget* widget, int index = -1 );
+    virtual int plug( TQWidget* widget, int index = -1 );
 
     /**
      *  Returns the actual state of the action.
@@ -173,7 +173,7 @@ public:
      * @return which "exclusive group" this action is part of.
      * @see setExclusiveGroup
      */
-    QString exclusiveGroup() const;
+    TQString exclusiveGroup() const;
 
     /**
      * Defines which "exclusive group" this action is part of.
@@ -181,7 +181,7 @@ public:
      * at a any moment. Checking an action unchecks the other actions
      * of the group.
      */
-    virtual void setExclusiveGroup( const QString& name );
+    virtual void setExclusiveGroup( const TQString& name );
 
     /**
      * Defines the text (and icon, tooltip, whatsthis) that should be displayed
@@ -197,7 +197,7 @@ public:
     void setCheckedState( const KGuiItem& checkedItem );
 
     /// Reimplemented for internal reasons
-    virtual QString toolTip() const;
+    virtual TQString toolTip() const;
 
 public slots:
     /**
@@ -241,18 +241,18 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KRadioAction( const QString& text, const KShortcut& cut = KShortcut(), QObject* parent = 0, const char* name = 0 );
+    KRadioAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
-     *  @param slot The SLOT to invoke to execute this action.
+     *  @param slot The TQT_SLOT to invoke to execute this action.
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KRadioAction( const QString& text, const KShortcut& cut,
-                  const QObject* receiver, const char* slot, QObject* parent, const char* name = 0 );
+    KRadioAction( const TQString& text, const KShortcut& cut,
+                  const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
@@ -261,8 +261,8 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KRadioAction( const QString& text, const QIconSet& pix, const KShortcut& cut = KShortcut(),
-                  QObject* parent = 0, const char* name = 0 );
+    KRadioAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+                  TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
@@ -271,39 +271,39 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KRadioAction( const QString& text, const QString& pix, const KShortcut& cut = KShortcut(),
-                  QObject* parent = 0, const char* name = 0 );
+    KRadioAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+                  TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
      *  @param pix The icons that go with this action.
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
-     *  @param slot The SLOT to invoke to execute this action.
+     *  @param slot The TQT_SLOT to invoke to execute this action.
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KRadioAction( const QString& text, const QIconSet& pix, const KShortcut& cut,
-                  const QObject* receiver, const char* slot, QObject* parent, const char* name = 0 );
+    KRadioAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+                  const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
      *  @param pix The dynamically loaded icon that goes with this action.
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
-     *  @param slot The SLOT to invoke to execute this action.
+     *  @param slot The TQT_SLOT to invoke to execute this action.
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KRadioAction( const QString& text, const QString& pix, const KShortcut& cut,
-                  const QObject* receiver, const char* slot,
-                  QObject* parent, const char* name = 0 );
+    KRadioAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+                  const TQObject* receiver, const char* slot,
+                  TQObject* parent, const char* name = 0 );
 
     /**
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KRadioAction( QObject* parent = 0, const char* name = 0 );
+    KRadioAction( TQObject* parent = 0, const char* name = 0 );
 
 protected:
     virtual void slotActivated();
@@ -330,10 +330,10 @@ class KDEUI_EXPORT KSelectAction : public KAction
 {
     Q_OBJECT
     Q_PROPERTY( int currentItem READ currentItem WRITE setCurrentItem )
-    Q_PROPERTY( QStringList items READ items WRITE setItems )
+    Q_PROPERTY( TQStringList items READ items WRITE setItems )
     Q_PROPERTY( bool editable READ isEditable WRITE setEditable )
     Q_PROPERTY( int comboWidth READ comboWidth WRITE setComboWidth )
-    Q_PROPERTY( QString currentText READ currentText )
+    Q_PROPERTY( TQString currentText READ currentText )
     Q_PROPERTY( bool menuAccelsEnabled READ menuAccelsEnabled WRITE setMenuAccelsEnabled )
 public:
 
@@ -347,18 +347,18 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KSelectAction( const QString& text, const KShortcut& cut = KShortcut(), QObject* parent = 0, const char* name = 0 );
+    KSelectAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
-     *  @param slot The SLOT to invoke to execute this action.
+     *  @param slot The TQT_SLOT to invoke to execute this action.
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KSelectAction( const QString& text, const KShortcut& cut,
-                   const QObject* receiver, const char* slot, QObject* parent, const char* name = 0 );
+    KSelectAction( const TQString& text, const KShortcut& cut,
+                   const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
@@ -367,8 +367,8 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KSelectAction( const QString& text, const QIconSet& pix, const KShortcut& cut = KShortcut(),
-             QObject* parent = 0, const char* name = 0 );
+    KSelectAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+             TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
@@ -377,39 +377,39 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KSelectAction( const QString& text, const QString& pix, const KShortcut& cut = KShortcut(),
-                   QObject* parent = 0, const char* name = 0 );
+    KSelectAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+                   TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
      *  @param pix The icons that go with this action.
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
-     *  @param slot The SLOT to invoke to execute this action.
+     *  @param slot The TQT_SLOT to invoke to execute this action.
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KSelectAction( const QString& text, const QIconSet& pix, const KShortcut& cut,
-                   const QObject* receiver, const char* slot, QObject* parent, const char* name = 0 );
+    KSelectAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+                   const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
      *  @param pix The dynamically loaded icon that goes with this action.
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
-     *  @param slot The SLOT to invoke to execute this action.
+     *  @param slot The TQT_SLOT to invoke to execute this action.
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KSelectAction( const QString& text, const QString& pix, const KShortcut& cut,
-                   const QObject* receiver, const char* slot,
-                   QObject* parent, const char* name = 0 );
+    KSelectAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+                   const TQObject* receiver, const char* slot,
+                   TQObject* parent, const char* name = 0 );
 
     /**
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KSelectAction( QObject* parent = 0, const char* name = 0 );
+    KSelectAction( TQObject* parent = 0, const char* name = 0 );
 
     /**
      * Destructor
@@ -427,7 +427,7 @@ public:
      *  @param widget The GUI element to display this action.
      *  @param index  The index of the item.
      */
-    virtual int plug( QWidget* widget, int index = -1 );
+    virtual int plug( TQWidget* widget, int index = -1 );
 
     /**
      * When this action is plugged into a toolbar, it creates a combobox.
@@ -439,17 +439,17 @@ public:
      * @return the items that can be selected with this action.
      * Use setItems to set them.
      */
-    virtual QStringList items() const;
+    virtual TQStringList items() const;
 
     /**
      * Changes the text of item @param index to @param text .
      */
-    virtual void changeItem( int index, const QString& text );
+    virtual void changeItem( int index, const TQString& text );
 
     /**
      * Returns the text of the currently selected item.
      */
-    virtual QString currentText() const;
+    virtual TQString currentText() const;
 
     /**
      * Returns the index of the current item.
@@ -474,7 +474,7 @@ public:
     /**
      * Returns a pointer to the popup menu used by this action.
      */
-    QPopupMenu* popupMenu() const;
+    TQPopupMenu* popupMenu() const;
 
     /**
      * @deprecated See setMenuAccelsEnabled .
@@ -508,7 +508,7 @@ public slots:
      * Sets the items to be displayed in this action
      * You need to call this.
      */
-    virtual void setItems( const QStringList &lst );
+    virtual void setItems( const TQStringList &lst );
 
     /**
      * Clears up all the items in this action
@@ -529,7 +529,7 @@ public slots:
     virtual void setComboWidth( int width );
 
 protected:
-    virtual void changeItem( int id, int index, const QString& text );
+    virtual void changeItem( int id, int index, const TQString& text );
 
     /**
      * Depending on the menuAccelsEnabled property this method will return the
@@ -537,11 +537,11 @@ protected:
      * character removed from all items or not.
      * @since 3.1
      */
-    QStringList comboItems() const;
+    TQStringList comboItems() const;
 
 protected slots:
     virtual void slotActivated( int id );
-    virtual void slotActivated( const QString &text );
+    virtual void slotActivated( const TQString &text );
     virtual void slotActivated();
 
 signals:
@@ -554,7 +554,7 @@ signals:
      * This signal is emitted when an item is selected; @param text indicates
      * the item selected.
      */
-    void activated( const QString& text );
+    void activated( const TQString& text );
 
 protected:
     virtual void updateCurrentItem( int id );
@@ -592,19 +592,19 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KListAction( const QString& text, const KShortcut& cut = KShortcut(), QObject* parent = 0,
+    KListAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0,
                   const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
-     *  @param slot The SLOT to invoke to execute this action.
+     *  @param slot The TQT_SLOT to invoke to execute this action.
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KListAction( const QString& text, const KShortcut& cut, const QObject* receiver,
-                  const char* slot, QObject* parent, const char* name = 0 );
+    KListAction( const TQString& text, const KShortcut& cut, const TQObject* receiver,
+                  const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
@@ -613,8 +613,8 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KListAction( const QString& text, const QIconSet& pix, const KShortcut& cut = KShortcut(),
-                      QObject* parent = 0, const char* name = 0 );
+    KListAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+                      TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
@@ -623,20 +623,20 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KListAction( const QString& text, const QString& pix, const KShortcut& cut = KShortcut(),
-                      QObject* parent = 0, const char* name = 0 );
+    KListAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+                      TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
      *  @param pix The icons that go with this action.
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
-     *  @param slot The SLOT to invoke to execute this action.
+     *  @param slot The TQT_SLOT to invoke to execute this action.
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KListAction( const QString& text, const QIconSet& pix, const KShortcut& cut,
-                          const QObject* receiver, const char* slot, QObject* parent,
+    KListAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+                          const TQObject* receiver, const char* slot, TQObject* parent,
                   const char* name = 0 );
 
     /**
@@ -644,19 +644,19 @@ public:
      *  @param pix The dynamically loaded icon that goes with this action.
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
-     *  @param slot The SLOT to invoke to execute this action.
+     *  @param slot The TQT_SLOT to invoke to execute this action.
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KListAction( const QString& text, const QString& pix, const KShortcut& cut,
-                 const QObject* receiver, const char* slot, QObject* parent,
+    KListAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+                 const TQObject* receiver, const char* slot, TQObject* parent,
                  const char* name = 0 );
 
     /**
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KListAction( QObject* parent = 0, const char* name = 0 );
+    KListAction( TQObject* parent = 0, const char* name = 0 );
 
     /**
      * Destructor
@@ -664,7 +664,7 @@ public:
     virtual ~KListAction();
 
 
-    virtual QString currentText() const;
+    virtual TQString currentText() const;
     virtual int currentItem() const;
 
 
@@ -705,23 +705,23 @@ public:
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( const QString& text, const KShortcut& cut,
-                      QObject* parent, const char* name = 0,
+  KRecentFilesAction( const TQString& text, const KShortcut& cut,
+                      TQObject* parent, const char* name = 0,
                       uint maxItems = 10 );
 
   /**
    *  @param text The text that will be displayed.
    *  @param cut The corresponding keyboard accelerator (shortcut).
    *  @param receiver The SLOT's parent.
-   *  @param slot The SLOT to invoke when a URL is selected.
+   *  @param slot The TQT_SLOT to invoke when a URL is selected.
    *  Its signature is of the form slotURLSelected( const KURL & ).
    *  @param parent This action's parent.
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( const QString& text, const KShortcut& cut,
-                      const QObject* receiver, const char* slot,
-                      QObject* parent, const char* name = 0,
+  KRecentFilesAction( const TQString& text, const KShortcut& cut,
+                      const TQObject* receiver, const char* slot,
+                      TQObject* parent, const char* name = 0,
                       uint maxItems = 10 );
 
   /**
@@ -732,8 +732,8 @@ public:
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( const QString& text, const QIconSet& pix, const KShortcut& cut,
-                      QObject* parent, const char* name = 0,
+  KRecentFilesAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+                      TQObject* parent, const char* name = 0,
                       uint maxItems = 10 );
 
   /**
@@ -744,8 +744,8 @@ public:
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( const QString& text, const QString& pix, const KShortcut& cut,
-                      QObject* parent, const char* name = 0,
+  KRecentFilesAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+                      TQObject* parent, const char* name = 0,
                       uint maxItems = 10 );
 
   /**
@@ -753,15 +753,15 @@ public:
    *  @param pix The icons that go with this action.
    *  @param cut The corresponding keyboard accelerator (shortcut).
    *  @param receiver The SLOT's parent.
-   *  @param slot The SLOT to invoke when a URL is selected.
+   *  @param slot The TQT_SLOT to invoke when a URL is selected.
    *  Its signature is of the form slotURLSelected( const KURL & ).
    *  @param parent This action's parent.
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( const QString& text, const QIconSet& pix, const KShortcut& cut,
-                      const QObject* receiver, const char* slot,
-                      QObject* parent, const char* name = 0,
+  KRecentFilesAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+                      const TQObject* receiver, const char* slot,
+                      TQObject* parent, const char* name = 0,
                       uint maxItems = 10 );
 
   /**
@@ -769,15 +769,15 @@ public:
    *  @param pix The dynamically loaded icon that goes with this action.
    *  @param cut The corresponding keyboard accelerator (shortcut).
    *  @param receiver The SLOT's parent.
-   *  @param slot The SLOT to invoke when a URL is selected.
+   *  @param slot The TQT_SLOT to invoke when a URL is selected.
    *  Its signature is of the form slotURLSelected( const KURL & ).
    *  @param parent This action's parent.
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( const QString& text, const QString& pix, const KShortcut& cut,
-                      const QObject* receiver, const char* slot,
-                      QObject* parent, const char* name = 0,
+  KRecentFilesAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+                      const TQObject* receiver, const char* slot,
+                      TQObject* parent, const char* name = 0,
                       uint maxItems = 10 );
 
   /**
@@ -785,7 +785,7 @@ public:
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( QObject* parent = 0, const char* name = 0,
+  KRecentFilesAction( TQObject* parent = 0, const char* name = 0,
                       uint maxItems = 10 );
 
   /**
@@ -793,7 +793,7 @@ public:
    */
   virtual ~KRecentFilesAction();
 
-  virtual int plug( QWidget *widget, int index = -1 );
+  virtual int plug( TQWidget *widget, int index = -1 );
 
   /**
    *  Returns the maximum of items in the recent files list.
@@ -808,14 +808,14 @@ public:
     * matching the pre-3.5 behavior.
     */
 
-  virtual QStringList items() const;
+  virtual TQStringList items() const;
 
   /**
     * @return the items that can be selected with this action.
     * The returned items contain the pretty name that can be set by addURL.
     * @since 3.5
     */
-  QStringList completeItems() const;
+  TQStringList completeItems() const;
 
 public slots:
   /**
@@ -835,7 +835,7 @@ public slots:
    *
    *  This method does not effect the active group of KConfig.
    */
-  void loadEntries( KConfig* config, QString groupname=QString::null );
+  void loadEntries( KConfig* config, TQString groupname=TQString::null );
 
   /**
    *  Saves the current recent files entries to a given KConfig object.
@@ -844,7 +844,7 @@ public slots:
    *
    *  This method does not effect the active group of KConfig.
    */
-  void saveEntries( KConfig* config, QString groupname=QString::null );
+  void saveEntries( KConfig* config, TQString groupname=TQString::null );
 
   /**
    *  Add URL to recent files list.
@@ -860,7 +860,7 @@ public slots:
    *  @param name The user visible pretty name that appears before the URL
    *  @since 3.5
    */
-  void addURL( const KURL& url, const QString& name ); //KDE4: Combine the above two methods
+  void addURL( const KURL& url, const TQString& name ); //KDE4: Combine the above two methods
 
   /**
    *  Remove an URL from the recent files list.
@@ -884,12 +884,12 @@ signals:
   void urlSelected( const KURL& url );
 
 protected slots:
-  void itemSelected( const QString& string );
+  void itemSelected( const TQString& string );
   void menuAboutToShow();
   void menuItemActivated( int id );
   void slotClicked();
   virtual void slotActivated(int);
-  virtual void slotActivated(const QString& );
+  virtual void slotActivated(const TQString& );
   virtual void slotActivated();
 
 protected:
@@ -905,45 +905,45 @@ private:
 class KDEUI_EXPORT KFontAction : public KSelectAction
 {
     Q_OBJECT
-    Q_PROPERTY( QString font READ font WRITE setFont )
+    Q_PROPERTY( TQString font READ font WRITE setFont )
 public:
-    KFontAction( const QString& text, const KShortcut& cut = KShortcut(), QObject* parent = 0,
+    KFontAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0,
                  const char* name = 0 );
-    KFontAction( const QString& text, const KShortcut& cut,
-                 const QObject* receiver, const char* slot, QObject* parent,
+    KFontAction( const TQString& text, const KShortcut& cut,
+                 const TQObject* receiver, const char* slot, TQObject* parent,
                  const char* name = 0 );
-    KFontAction( const QString& text, const QIconSet& pix, const KShortcut& cut = KShortcut(),
-                 QObject* parent = 0, const char* name = 0 );
-    KFontAction( const QString& text, const QString& pix, const KShortcut& cut = KShortcut(),
-                 QObject* parent = 0, const char* name = 0 );
-    KFontAction( const QString& text, const QIconSet& pix, const KShortcut& cut,
-                 const QObject* receiver, const char* slot, QObject* parent,
+    KFontAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+                 TQObject* parent = 0, const char* name = 0 );
+    KFontAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+                 TQObject* parent = 0, const char* name = 0 );
+    KFontAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+                 const TQObject* receiver, const char* slot, TQObject* parent,
                  const char* name = 0 );
-    KFontAction( const QString& text, const QString& pix, const KShortcut& cut,
-                 const QObject* receiver, const char* slot, QObject* parent,
+    KFontAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+                 const TQObject* receiver, const char* slot, TQObject* parent,
                  const char* name = 0 );
 
 // The ctors with fontListCriteria were added after 3.3-beta1.
 // This define is used in koffice. Remove when koffice has a dependency on kdelibs-3.3 or more.
 #define KFONTACTION_HAS_CRITERIA_ARG
-    KFontAction( uint fontListCriteria, const QString& text,
-                 const KShortcut& cut = KShortcut(), QObject* parent = 0,
+    KFontAction( uint fontListCriteria, const TQString& text,
+                 const KShortcut& cut = KShortcut(), TQObject* parent = 0,
                  const char* name = 0 );
-    KFontAction( uint fontListCriteria, const QString& text, const QString& pix,
+    KFontAction( uint fontListCriteria, const TQString& text, const TQString& pix,
                  const KShortcut& cut = KShortcut(),
-                 QObject* parent = 0, const char* name = 0 );
+                 TQObject* parent = 0, const char* name = 0 );
 
-    KFontAction( QObject* parent = 0, const char* name = 0 );
+    KFontAction( TQObject* parent = 0, const char* name = 0 );
     ~KFontAction();
 
-    QString font() const {
+    TQString font() const {
         return currentText();
     }
 
-    int plug( QWidget*widget, int index = -1 );
+    int plug( TQWidget*widget, int index = -1 );
 
 public slots:
-    void setFont( const QString &family );
+    void setFont( const TQString &family );
 
 protected:
     virtual void virtual_hook( int id, void* data );
@@ -957,21 +957,21 @@ class KDEUI_EXPORT KFontSizeAction : public KSelectAction
     Q_OBJECT
     Q_PROPERTY( int fontSize READ fontSize WRITE setFontSize )
 public:
-    KFontSizeAction( const QString& text, const KShortcut& cut = KShortcut(), QObject* parent = 0,
+    KFontSizeAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0,
                      const char* name = 0 );
-    KFontSizeAction( const QString& text, const KShortcut& cut, const QObject* receiver,
-                     const char* slot, QObject* parent, const char* name = 0 );
-    KFontSizeAction( const QString& text, const QIconSet& pix, const KShortcut& cut = KShortcut(),
-                     QObject* parent = 0, const char* name = 0 );
-    KFontSizeAction( const QString& text, const QString& pix, const KShortcut& cut = KShortcut(),
-                     QObject* parent = 0, const char* name = 0 );
-    KFontSizeAction( const QString& text, const QIconSet& pix, const KShortcut& cut,
-                     const QObject* receiver, const char* slot,
-                     QObject* parent, const char* name = 0 );
-    KFontSizeAction( const QString& text, const QString& pix, const KShortcut& cut,
-                     const QObject* receiver, const char* slot,
-                     QObject* parent, const char* name = 0 );
-    KFontSizeAction( QObject* parent = 0, const char* name = 0 );
+    KFontSizeAction( const TQString& text, const KShortcut& cut, const TQObject* receiver,
+                     const char* slot, TQObject* parent, const char* name = 0 );
+    KFontSizeAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+                     TQObject* parent = 0, const char* name = 0 );
+    KFontSizeAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+                     TQObject* parent = 0, const char* name = 0 );
+    KFontSizeAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+                     const TQObject* receiver, const char* slot,
+                     TQObject* parent, const char* name = 0 );
+    KFontSizeAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+                     const TQObject* receiver, const char* slot,
+                     TQObject* parent, const char* name = 0 );
+    KFontSizeAction( TQObject* parent = 0, const char* name = 0 );
 
     virtual ~KFontSizeAction();
 
@@ -982,7 +982,7 @@ public slots:
 
 protected slots:
     virtual void slotActivated( int );
-    virtual void slotActivated( const QString& );
+    virtual void slotActivated( const TQString& );
     virtual void slotActivated() { KAction::slotActivated(); }
 
 signals:
@@ -1017,20 +1017,20 @@ class KDEUI_EXPORT KActionMenu : public KAction
   Q_PROPERTY( bool stickyMenu READ stickyMenu WRITE setStickyMenu )
 
 public:
-    KActionMenu( const QString& text, QObject* parent = 0,
+    KActionMenu( const TQString& text, TQObject* parent = 0,
                  const char* name = 0 );
-    KActionMenu( const QString& text, const QIconSet& icon,
-                 QObject* parent = 0, const char* name = 0 );
-    KActionMenu( const QString& text, const QString& icon,
-                 QObject* parent = 0, const char* name = 0 );
-    KActionMenu( QObject* parent = 0, const char* name = 0 );
+    KActionMenu( const TQString& text, const TQIconSet& icon,
+                 TQObject* parent = 0, const char* name = 0 );
+    KActionMenu( const TQString& text, const TQString& icon,
+                 TQObject* parent = 0, const char* name = 0 );
+    KActionMenu( TQObject* parent = 0, const char* name = 0 );
     virtual ~KActionMenu();
 
     virtual void insert( KAction*, int index = -1 );
     virtual void remove( KAction* );
 
     KPopupMenu* popupMenu() const;
-    void popup( const QPoint& global );
+    void popup( const TQPoint& global );
 
     /**
      * Returns true if this action creates a delayed popup menu
@@ -1067,7 +1067,7 @@ public:
      */
     void setStickyMenu(bool sticky);
 
-    virtual int plug( QWidget* widget, int index = -1 );
+    virtual int plug( TQWidget* widget, int index = -1 );
 
 protected:
     virtual void virtual_hook( int id, void* data );
@@ -1102,8 +1102,8 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KToolBarPopupAction( const QString& text, const QString& icon, const KShortcut& cut = KShortcut(),
-                         QObject* parent = 0, const char* name = 0 );
+    KToolBarPopupAction( const TQString& text, const TQString& icon, const KShortcut& cut = KShortcut(),
+                         TQObject* parent = 0, const char* name = 0 );
 
     /**
      * Create a KToolBarPopupAction, with a text, an icon, an accelerator,
@@ -1116,13 +1116,13 @@ public:
      * @param icon The icon to display.
      * @param cut The corresponding keyboard accelerator (shortcut).
      * @param receiver The SLOT's owner.
-     * @param slot The SLOT to invoke to execute this action.
+     * @param slot The TQT_SLOT to invoke to execute this action.
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KToolBarPopupAction( const QString& text, const QString& icon, const KShortcut& cut,
-                         const QObject* receiver, const char* slot,
-                         QObject* parent = 0, const char* name = 0 );
+    KToolBarPopupAction( const TQString& text, const TQString& icon, const KShortcut& cut,
+                         const TQObject* receiver, const char* slot,
+                         TQObject* parent = 0, const char* name = 0 );
 
     /**
      * Create a KToolBarPopupAction, with a KGuiItem, an accelerator,
@@ -1135,17 +1135,17 @@ public:
      * @param item The text and icon that will be displayed.
      * @param cut The corresponding keyboard accelerator (shortcut).
      * @param receiver The SLOT's owner.
-     * @param slot The SLOT to invoke to execute this action.
+     * @param slot The TQT_SLOT to invoke to execute this action.
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
     KToolBarPopupAction( const KGuiItem& item, const KShortcut& cut,
-                         const QObject* receiver, const char* slot,
+                         const TQObject* receiver, const char* slot,
                          KActionCollection* parent, const char* name );
 
     virtual ~KToolBarPopupAction();
 
-    virtual int plug( QWidget *widget, int index = -1 );
+    virtual int plug( TQWidget *widget, int index = -1 );
 
     /**
      * The popup menu that is shown when clicking (some time) on the toolbar
@@ -1215,13 +1215,13 @@ public:
      * toolbar in an xml ui file, or a toolbar programmatically
      * created with that name.
      */
-    KToggleToolBarAction( const char* toolBarName, const QString& text,
+    KToggleToolBarAction( const char* toolBarName, const TQString& text,
                           KActionCollection* parent, const char* name );
-    KToggleToolBarAction( KToolBar *toolBar, const QString &text,
+    KToggleToolBarAction( KToolBar *toolBar, const TQString &text,
                           KActionCollection *parent, const char *name );
     virtual ~KToggleToolBarAction();
 
-    virtual int plug( QWidget * widget, int index = -1 );
+    virtual int plug( TQWidget * widget, int index = -1 );
 
     KToolBar *toolBar() { return m_toolBar; }
 
@@ -1229,8 +1229,8 @@ public slots:
     virtual void setChecked( bool );
 
 private:
-    QCString               m_toolBarName;
-    QGuardedPtr<KToolBar>  m_toolBar;
+    TQCString               m_toolBarName;
+    TQGuardedPtr<KToolBar>  m_toolBar;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
@@ -1240,13 +1240,13 @@ private:
 
 /**
  * An action for switching between to/from full screen mode. Note that
- * QWidget::isFullScreen() may reflect the new or the old state
+ * TQWidget::isFullScreen() may reflect the new or the old state
  * depending on how the action was triggered (by the application or
  * from the window manager). Also don't try to track the window state
  * yourself. Rely on this action's state (isChecked()) instead.
  *
  * Important: If you need to set/change the fullscreen state manually,
- * use the relevant QWidget function (showFullScreen etc.), do not
+ * use the relevant TQWidget function (showFullScreen etc.), do not
  * call directly the slot connected to the toggled() signal. The slot
  * still needs to explicitly set the window state though.
  * @since 3.2
@@ -1259,30 +1259,30 @@ public:
      * Create a KToggleFullScreenAction
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
-     *  @param slot The SLOT to invoke to execute this action.
+     *  @param slot The TQT_SLOT to invoke to execute this action.
      *  @param parent This action's parent.
      *  @param window the window that will switch to/from full screen mode
      *  @param name An internal name for this action.
      */
     KToggleFullScreenAction( const KShortcut &cut,
-                             const QObject* receiver, const char* slot,
-                             QObject* parent, QWidget* window,
+                             const TQObject* receiver, const char* slot,
+                             TQObject* parent, TQWidget* window,
                              const char* name );
     virtual ~KToggleFullScreenAction();
 
     /**
      * Sets the window that will be related to this action.
      */
-    void setWindow( QWidget* window );
+    void setWindow( TQWidget* window );
 public slots:
     virtual void setChecked( bool );
 protected:
     /**
      * @internal
      */
-    virtual bool eventFilter( QObject* o, QEvent* e );
+    virtual bool eventFilter( TQObject* o, TQEvent* e );
 private:
-    QWidget* window;
+    TQWidget* window;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
@@ -1304,16 +1304,16 @@ public:
      * when plugged. This action may only be plugged into
      * a toolbar.
      */
-    KWidgetAction( QWidget* widget, const QString& text,
+    KWidgetAction( TQWidget* widget, const TQString& text,
                    const KShortcut& cut,
-                   const QObject* receiver, const char* slot,
+                   const TQObject* receiver, const char* slot,
                    KActionCollection* parent, const char* name );
     virtual ~KWidgetAction();
 
     /**
      * Returns the widget associated with this action.
      */
-    QWidget* widget() { return m_widget; }
+    TQWidget* widget() { return m_widget; }
 
     void setAutoSized( bool );
 
@@ -1321,16 +1321,16 @@ public:
      * Plug the action. The widget passed to the constructor
      * will be reparented to w, which must inherit KToolBar.
      */
-    virtual int plug( QWidget* widget, int index = -1 );
+    virtual int plug( TQWidget* widget, int index = -1 );
     /**
      * Unplug the action. Ensures that the action is not
      * destroyed. It will be hidden and reparented to 0L instead.
      */
-    virtual void unplug( QWidget *w );
+    virtual void unplug( TQWidget *w );
 protected slots:
     void slotToolbarDestroyed();
 private:
-    QGuardedPtr<QWidget> m_widget;
+    TQGuardedPtr<TQWidget> m_widget;
     bool                 m_autoSized;
 protected:
     virtual void virtual_hook( int id, void* data );
@@ -1343,10 +1343,10 @@ class KDEUI_EXPORT KActionSeparator : public KAction
 {
     Q_OBJECT
 public:
-    KActionSeparator( QObject* parent = 0, const char* name = 0 );
+    KActionSeparator( TQObject* parent = 0, const char* name = 0 );
     virtual ~KActionSeparator();
 
-    virtual int plug( QWidget *widget, int index = -1 );
+    virtual int plug( TQWidget *widget, int index = -1 );
 
 protected:
     virtual void virtual_hook( int id, void* data );
@@ -1380,13 +1380,13 @@ public:
      * @param icon The icon to display.
      * @param cut The corresponding keyboard accelerator (shortcut).
      * @param receiver The SLOT's owner.
-     * @param slot The SLOT to invoke to execute this action.
+     * @param slot The TQT_SLOT to invoke to execute this action.
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KPasteTextAction( const QString& text, const QString& icon, const KShortcut& cut,
-                  const QObject* receiver, const char* slot,
-                  QObject* parent = 0, const char* name = 0 );
+    KPasteTextAction( const TQString& text, const TQString& icon, const KShortcut& cut,
+                  const TQObject* receiver, const char* slot,
+                  TQObject* parent = 0, const char* name = 0 );
 
     virtual ~KPasteTextAction();
 
@@ -1402,7 +1402,7 @@ public:
     */
     void setMixedMode(bool mode);
 
-    virtual int plug( QWidget *widget, int index = -1 );
+    virtual int plug( TQWidget *widget, int index = -1 );
 
 protected slots:
     void menuAboutToShow();

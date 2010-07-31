@@ -53,7 +53,7 @@ public:
    *                  directory for "config" files is used.
    * @param bReadOnly Whether the object should be read-only.
    */
-  KSimpleConfig( const QString &fileName, bool bReadOnly = false);
+  KSimpleConfig( const TQString &fileName, bool bReadOnly = false);
 
   KSimpleConfig(KConfigBackEnd *backEnd, bool bReadOnly = false);
 

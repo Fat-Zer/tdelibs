@@ -27,11 +27,11 @@
 #include <kiconloader.h>
 #include <kdebug.h>
 
-#include <qlayout.h>
-#include <qvbox.h>
-#include <qmap.h>
+#include <tqlayout.h>
+#include <tqvbox.h>
+#include <tqmap.h>
 
-QAsciiDict<KConfigDialog> KConfigDialog::openDialogs;
+TQAsciiDict<KConfigDialog> KConfigDialog::openDialogs;
 
 // This class is here purly so we don't break binary compatibility down the road.
 class KConfigDialog::KConfigDialogPrivate
@@ -43,10 +43,10 @@ public:
   bool shown;
   KDialogBase::DialogType type;
   KConfigDialogManager *manager;
-  QMap<QWidget *, KConfigDialogManager *> managerForPage;
+  TQMap<TQWidget *, KConfigDialogManager *> managerForPage;
 };
 
-KConfigDialog::KConfigDialog( QWidget *parent, const char *name,
+KConfigDialog::KConfigDialog( TQWidget *parent, const char *name,
           KConfigSkeleton *config,
           DialogType dialogType,
           int dialogButtons,
@@ -59,17 +59,17 @@ KConfigDialog::KConfigDialog( QWidget *parent, const char *name,
   if ( name ) {
     openDialogs.insert(name, this);
   } else {
-    QCString genericName;
+    TQCString genericName;
     genericName.sprintf("SettingsDialog-%p", this);
     openDialogs.insert(genericName, this);
     setName(genericName);
   }
 
-  connect(this, SIGNAL(okClicked()), this, SLOT(updateSettings()));
-  connect(this, SIGNAL(applyClicked()), this, SLOT(updateSettings()));
-  connect(this, SIGNAL(applyClicked()), this, SLOT(updateButtons()));
-  connect(this, SIGNAL(defaultClicked()), this, SLOT(updateWidgetsDefault()));
-  connect(this, SIGNAL(defaultClicked()), this, SLOT(updateButtons()));
+  connect(this, TQT_SIGNAL(okClicked()), this, TQT_SLOT(updateSettings()));
+  connect(this, TQT_SIGNAL(applyClicked()), this, TQT_SLOT(updateSettings()));
+  connect(this, TQT_SIGNAL(applyClicked()), this, TQT_SLOT(updateButtons()));
+  connect(this, TQT_SIGNAL(defaultClicked()), this, TQT_SLOT(updateWidgetsDefault()));
+  connect(this, TQT_SIGNAL(defaultClicked()), this, TQT_SLOT(updateButtons()));
 
   d->manager = new KConfigDialogManager(this, config);
   setupManagerConnections(d->manager);
@@ -83,10 +83,10 @@ KConfigDialog::~KConfigDialog()
   delete d;
 }
 
-void KConfigDialog::addPage(QWidget *page,
-                                const QString &itemName,
-                                const QString &pixmapName,
-                                const QString &header,
+void KConfigDialog::addPage(TQWidget *page,
+                                const TQString &itemName,
+                                const TQString &pixmapName,
+                                const TQString &header,
                                 bool manage)
 {
   addPageInternal(page, itemName, pixmapName, header);
@@ -94,21 +94,21 @@ void KConfigDialog::addPage(QWidget *page,
     d->manager->addWidget(page);
 }
 
-void KConfigDialog::addPage(QWidget *page,
+void KConfigDialog::addPage(TQWidget *page,
                                 KConfigSkeleton *config,
-                                const QString &itemName,
-                                const QString &pixmapName,
-                                const QString &header)
+                                const TQString &itemName,
+                                const TQString &pixmapName,
+                                const TQString &header)
 {
   addPageInternal(page, itemName, pixmapName, header);
   d->managerForPage[page] = new KConfigDialogManager(page, config);
   setupManagerConnections(d->managerForPage[page]);
 }
 
-void KConfigDialog::addPageInternal(QWidget *page,
-                                        const QString &itemName,
-                                        const QString &pixmapName,
-                                        const QString &header)
+void KConfigDialog::addPageInternal(TQWidget *page,
+                                        const TQString &itemName,
+                                        const TQString &pixmapName,
+                                        const TQString &header)
 {
   if(d->shown)
   {
@@ -120,25 +120,25 @@ void KConfigDialog::addPageInternal(QWidget *page,
     case TreeList:
     case IconList:
     case Tabbed: {
-      QVBox *frame = addVBoxPage(itemName, header, SmallIcon(pixmapName, 32));
+      TQVBox *frame = addVBoxPage(itemName, header, SmallIcon(pixmapName, 32));
       frame->setSpacing( 0 );
       frame->setMargin( 0 );
-      page->reparent(((QWidget*)frame), 0, QPoint());
+      page->reparent(((TQWidget*)frame), 0, TQPoint());
     }
     break;
 
     case Swallow:
     {
-      page->reparent(this, 0, QPoint());
+      page->reparent(this, 0, TQPoint());
       setMainWidget(page);
     }
     break;
 
     case Plain:
     {
-      QFrame *main = plainPage();
-      QVBoxLayout *topLayout = new QVBoxLayout( main, 0, 0 );
-      page->reparent(((QWidget*)main), 0, QPoint());
+      TQFrame *main = plainPage();
+      TQVBoxLayout *topLayout = new TQVBoxLayout( main, 0, 0 );
+      page->reparent(((TQWidget*)main), 0, TQPoint());
       topLayout->addWidget( page );
     }
     break;
@@ -150,12 +150,12 @@ void KConfigDialog::addPageInternal(QWidget *page,
 
 void KConfigDialog::setupManagerConnections(KConfigDialogManager *manager)
 {
-  connect(manager, SIGNAL(settingsChanged()), this, SLOT(settingsChangedSlot()));
-  connect(manager, SIGNAL(widgetModified()), this, SLOT(updateButtons()));
+  connect(manager, TQT_SIGNAL(settingsChanged()), this, TQT_SLOT(settingsChangedSlot()));
+  connect(manager, TQT_SIGNAL(widgetModified()), this, TQT_SLOT(updateButtons()));
 
-  connect(this, SIGNAL(okClicked()), manager, SLOT(updateSettings()));
-  connect(this, SIGNAL(applyClicked()), manager, SLOT(updateSettings()));
-  connect(this, SIGNAL(defaultClicked()), manager, SLOT(updateWidgetsDefault()));
+  connect(this, TQT_SIGNAL(okClicked()), manager, TQT_SLOT(updateSettings()));
+  connect(this, TQT_SIGNAL(applyClicked()), manager, TQT_SLOT(updateSettings()));
+  connect(this, TQT_SIGNAL(defaultClicked()), manager, TQT_SLOT(updateWidgetsDefault()));
 }
 
 KConfigDialog* KConfigDialog::exists(const char* name)
@@ -177,7 +177,7 @@ void KConfigDialog::updateButtons()
   if (only_once) return;
   only_once = true;
 
-  QMap<QWidget *, KConfigDialogManager *>::iterator it;
+  TQMap<TQWidget *, KConfigDialogManager *>::iterator it;
 
   bool has_changed = d->manager->hasChanged() || hasChanged();
   for (it = d->managerForPage.begin();
@@ -213,7 +213,7 @@ void KConfigDialog::settingsChangedSlot()
 
 void KConfigDialog::show()
 {
-  QMap<QWidget *, KConfigDialogManager *>::iterator it;
+  TQMap<TQWidget *, KConfigDialogManager *>::iterator it;
 
   updateWidgets();
   d->manager->updateWidgets();

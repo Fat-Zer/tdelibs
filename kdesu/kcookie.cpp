@@ -19,10 +19,10 @@
 #include <errno.h>
 #include <signal.h>
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qglobal.h>
-#include <qfile.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqglobal.h>
+#include <tqfile.h>
 
 #include <dcopclient.h>
 
@@ -39,7 +39,7 @@ KCookie::KCookie()
     setDcopTransport("local");
 }
 
-void KCookie::setDcopTransport(const QCString &dcopTransport)
+void KCookie::setDcopTransport(const TQCString &dcopTransport)
 {
     m_dcopTransport = dcopTransport;
     m_bHaveDCOPCookies = false;
@@ -49,7 +49,7 @@ void KCookie::setDcopTransport(const QCString &dcopTransport)
     m_ICEAuth = "";
 }    
 
-QCStringList KCookie::split(const QCString &line, char ch)
+QCStringList KCookie::split(const TQCString &line, char ch)
 {
     QCStringList result;
 
@@ -96,19 +96,19 @@ void KCookie::getXCookie()
 	return;
     }
 #ifdef Q_WS_X11 // No need to mess with X Auth stuff
-    QCString disp = m_Display;
+    TQCString disp = m_Display;
     if (!memcmp(disp.data(), "localhost:", 10))
        disp.remove(0, 9);
 
-    QString cmd = "xauth list "+KProcess::quote(disp);
+    TQString cmd = "xauth list "+KProcess::quote(disp);
     blockSigChild(); // pclose uses waitpid()
-    if (!(f = popen(QFile::encodeName(cmd), "r"))) 
+    if (!(f = popen(TQFile::encodeName(cmd), "r"))) 
     {
 	kdError(900) << k_lineinfo << "popen(): " << perror << "\n";
 	unblockSigChild();
 	return;
     }
-    QCString output = fgets(buf, 1024, f);
+    TQCString output = fgets(buf, 1024, f);
     if (pclose(f) < 0) 
     {
 	kdError(900) << k_lineinfo << "Could not run xauth.\n";
@@ -137,10 +137,10 @@ void KCookie::getICECookie()
     FILE *f;
     char buf[1024];
 
-    QCString dcopsrv = getenv("DCOPSERVER");
+    TQCString dcopsrv = getenv("DCOPSERVER");
     if (dcopsrv.isEmpty()) 
     {
-	QCString dcopFile = DCOPClient::dcopServerFile();
+	TQCString dcopFile = DCOPClient::dcopServerFile();
 	if (!(f = fopen(dcopFile, "r"))) 
 	{
 	    kdWarning(900) << k_lineinfo << "Cannot open " << dcopFile << ".\n";
@@ -163,7 +163,7 @@ void KCookie::getICECookie()
         if (strncmp((*it).data(), m_dcopTransport.data(), m_dcopTransport.length()) != 0)
             continue;
         m_DCOPSrv = *it;
-	QCString cmd = DCOPClient::iceauthPath()+" list netid="+QFile::encodeName(KProcess::quote(m_DCOPSrv));
+	TQCString cmd = DCOPClient::iceauthPath()+" list netid="+TQFile::encodeName(KProcess::quote(m_DCOPSrv));
 	blockSigChild();
 	if (!(f = popen(cmd, "r")))
 	{
@@ -203,21 +203,21 @@ void KCookie::getICECookie()
     m_bHaveICECookies = true;
 }
 
-QCString KCookie::dcopServer() 
+TQCString KCookie::dcopServer() 
 { 
    if (!m_bHaveDCOPCookies)
       getICECookie();
    return m_DCOPSrv; 
 }
 
-QCString KCookie::dcopAuth() 
+TQCString KCookie::dcopAuth() 
 { 
    if (!m_bHaveDCOPCookies)
       getICECookie();
    return m_DCOPAuth; 
 }
 
-QCString KCookie::iceAuth() 
+TQCString KCookie::iceAuth() 
 { 
    if (!m_bHaveICECookies)
       getICECookie(); 

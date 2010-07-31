@@ -18,8 +18,8 @@
 #ifndef QFILEHACK_H
 #define QFILEHACK_H
 
-#include <qfile.h>
-#include <qstring.h>
+#include <tqfile.h>
+#include <tqstring.h>
 
 /**
   *@author Szombathelyi György
@@ -27,10 +27,10 @@
   * block devices for example?
   */
 
-class QFileHack : public QFile  {
+class QFileHack : public TQFile  {
 public: 
     QFileHack();
-    QFileHack( const QString & name );
+    QFileHack( const TQString & name );
     ~QFileHack();
     virtual bool open ( int m );
 };

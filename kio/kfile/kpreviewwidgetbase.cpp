@@ -7,21 +7,21 @@
  */
 
 #include "kpreviewwidgetbase.h"
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 class KPreviewWidgetBase::KPreviewWidgetBasePrivate
 {
 public:
-    QStringList supportedMimeTypes;
+    TQStringList supportedMimeTypes;
 };
 
-QPtrDict<KPreviewWidgetBase::KPreviewWidgetBasePrivate> * KPreviewWidgetBase::s_private;
+TQPtrDict<KPreviewWidgetBase::KPreviewWidgetBasePrivate> * KPreviewWidgetBase::s_private;
 
-KPreviewWidgetBase::KPreviewWidgetBase( QWidget *parent, const char *name )
-    : QWidget( parent, name )
+KPreviewWidgetBase::KPreviewWidgetBase( TQWidget *parent, const char *name )
+    : TQWidget( parent, name )
 {
     if ( !s_private )
-        s_private = new QPtrDict<KPreviewWidgetBasePrivate>();
+        s_private = new TQPtrDict<KPreviewWidgetBasePrivate>();
 
     s_private->insert( this, new KPreviewWidgetBasePrivate() );
 }
@@ -36,12 +36,12 @@ KPreviewWidgetBase::~KPreviewWidgetBase()
     }
 }
 
-void KPreviewWidgetBase::setSupportedMimeTypes( const QStringList& mimeTypes )
+void KPreviewWidgetBase::setSupportedMimeTypes( const TQStringList& mimeTypes )
 {
     d()->supportedMimeTypes = mimeTypes;
 }
 
-QStringList KPreviewWidgetBase::supportedMimeTypes() const
+TQStringList KPreviewWidgetBase::supportedMimeTypes() const
 {
     return d()->supportedMimeTypes;
 }

@@ -2,30 +2,30 @@
 #define __KACCELPRIVATE_H
 
 #include "kkeyserver_x11.h"
-#include <qtimer.h>
+#include <tqtimer.h>
 
 class KAccelAction;
 
 /**
  * @internal
  */
-class KDECORE_EXPORT KAccelPrivate : public QObject, public KAccelBase
+class KDECORE_EXPORT KAccelPrivate : public TQObject, public KAccelBase
 {
 	Q_OBJECT
  public:
 	KAccel* m_pAccel;
-	QWidget* m_pWatch;
-	QMap<int, int> m_mapIDToKey;
-	QMap<int, KAccelAction*> m_mapIDToAction;
-	QTimer m_timerShowMenu;
+	TQWidget* m_pWatch;
+	TQMap<int, int> m_mapIDToKey;
+	TQMap<int, KAccelAction*> m_mapIDToAction;
+	TQTimer m_timerShowMenu;
 
-	KAccelPrivate( KAccel* pParent, QWidget* pWatch );
+	KAccelPrivate( KAccel* pParent, TQWidget* pWatch );
 
 	virtual void setEnabled( bool bEnabled );
 
-	bool setEnabled( const QString& sAction, bool bEnable );
+	bool setEnabled( const TQString& sAction, bool bEnable );
 
-	virtual bool removeAction( const QString& sAction );
+	virtual bool removeAction( const TQString& sAction );
 
 	virtual bool emitSignal( KAccelBase::Signal signal );
 	virtual bool connectKey( KAccelAction& action, const KKeyServer::Key& key );
@@ -47,7 +47,7 @@ class KDECORE_EXPORT KAccelPrivate : public QObject, public KAccelBase
 	void slotShowMenu();
 	void slotMenuActivated( int iAction );
 	
-	bool eventFilter( QObject* pWatched, QEvent* pEvent ); // virtual method from QObject
+	bool eventFilter( TQObject* pWatched, TQEvent* pEvent ); // virtual method from QObject
 };
 
 #endif // !__KACCELPRIVATE_H

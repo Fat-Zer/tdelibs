@@ -1,5 +1,5 @@
-#include <qtextstream.h>
-#include <qtimer.h>
+#include <tqtextstream.h>
+#include <tqtimer.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -12,7 +12,7 @@
 
 #include "kwallettest.h"
 
-static QTextStream _out( stdout, IO_WriteOnly );
+static TQTextStream _out( stdout, IO_WriteOnly );
 
 void openWallet()
 {
@@ -22,11 +22,11 @@ void openWallet()
 	KWallet::Wallet *wallet = KWallet::Wallet::openWallet( KWallet::Wallet::NetworkWallet(), 0, KWallet::Wallet::Asynchronous );
 
 	WalletReceiver r;
-	r.connect( wallet, SIGNAL( walletOpened(bool) ), SLOT( walletOpened(bool) ) );
+	r.connect( wallet, TQT_SIGNAL( walletOpened(bool) ), TQT_SLOT( walletOpened(bool) ) );
 
 	_out << "About to start 30 second event loop" << endl;
 
-	QTimer::singleShot( 30000, qApp, SLOT( quit() ) );
+	TQTimer::singleShot( 30000, qApp, TQT_SLOT( quit() ) );
 	int ret = qApp->exec();
 
 	if ( ret == 0 )

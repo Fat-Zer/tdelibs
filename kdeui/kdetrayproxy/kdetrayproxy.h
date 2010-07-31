@@ -20,10 +20,10 @@
 #ifndef _KDE_TRAY_PROXY_H_
 #define _KDE_TRAY_PROXY_H_
 
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 #include <kmanagerselection.h>
 #include <kwinmodule.h>
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class KDETrayProxy
     : public QWidget
@@ -42,9 +42,9 @@ class KDETrayProxy
         static Atom makeSelectionAtom();
         KSelectionWatcher selection;
         KWinModule module;
-        QValueList< Window > pending_windows;
-        QValueList< Window > tray_windows;
-        QMap< Window, unsigned long > docked_windows;
+        TQValueList< Window > pending_windows;
+        TQValueList< Window > tray_windows;
+        TQMap< Window, unsigned long > docked_windows;
     };
 
 #endif

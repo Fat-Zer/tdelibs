@@ -23,9 +23,9 @@
 #ifndef _KFILEPREVIEW_H
 #define _KFILEPREVIEW_H
 
-#include <qsplitter.h>
-#include <qwidget.h>
-#include <qstring.h>
+#include <tqsplitter.h>
+#include <tqwidget.h>
+#include <tqstring.h>
 
 #include <kurl.h>
 #include <kfileitem.h>
@@ -36,16 +36,16 @@
 /*!
  * This KFileView is an empbedded preview for some file types.
  */
-class KIO_EXPORT KFilePreview : public QSplitter, public KFileView
+class KIO_EXPORT KFilePreview : public TQSplitter, public KFileView
 {
     Q_OBJECT
 
 public:
-    KFilePreview(QWidget *parent, const char *name);
-    KFilePreview(KFileView *view, QWidget *parent, const char *name);
+    KFilePreview(TQWidget *parent, const char *name);
+    KFilePreview(KFileView *view, TQWidget *parent, const char *name);
     virtual ~KFilePreview();
 
-    virtual QWidget *widget() { return this; }
+    virtual TQWidget *widget() { return this; }
     virtual void clearView();
 
     /**
@@ -81,10 +81,10 @@ public:
     virtual KFileItem * nextItem( const KFileItem * ) const;
     virtual KFileItem * prevItem( const KFileItem * ) const;
 
-    virtual void setSorting( QDir::SortSpec sort );
+    virtual void setSorting( TQDir::SortSpec sort );
 
-    virtual void readConfig( KConfig *, const QString& group = QString::null );
-    virtual void writeConfig( KConfig *, const QString& group = QString::null);
+    virtual void readConfig( KConfig *, const TQString& group = TQString::null );
+    virtual void writeConfig( KConfig *, const TQString& group = TQString::null);
 
     /**
      * This overrides KFileView::actionCollection() by returning
@@ -96,7 +96,7 @@ public:
 
     void ensureItemVisible(const KFileItem *);
 
-    void setPreviewWidget(const QWidget *w, const KURL &u);
+    void setPreviewWidget(const TQWidget *w, const KURL &u);
 
 protected slots:
     virtual void slotHighlighted( const KFileItem * );
@@ -109,8 +109,8 @@ private:
     void init( KFileView *view );
 
     KFileView *left;
-    QWidget *preview;
-    QString viewname;
+    TQWidget *preview;
+    TQString viewname;
 
 protected:
     /** \internal */

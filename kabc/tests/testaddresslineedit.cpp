@@ -21,7 +21,7 @@ int main( int argc,char **argv )
   lineEdit->show();
   app.setMainWidget( lineEdit );
   
-  QObject::connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
+  TQObject::connect( &app, TQT_SIGNAL( lastWindowClosed() ), &app, TQT_SLOT( quit() ) );
 
   app.exec();
   

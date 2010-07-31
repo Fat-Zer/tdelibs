@@ -41,7 +41,7 @@ using namespace KNetwork;
  *
  */
 
-KDatagramSocket::KDatagramSocket(QObject* parent, const char *name)
+KDatagramSocket::KDatagramSocket(TQObject* parent, const char *name)
   : KClientSocketBase(parent, name), d(0L)
 {
   peerResolver().setFamily(KResolver::KnownFamily);
@@ -52,11 +52,11 @@ KDatagramSocket::KDatagramSocket(QObject* parent, const char *name)
 
   localResolver().setFlags(KResolver::Passive);
 
-  //  QObject::connect(localResolver(), SIGNAL(finished(KResolverResults)),
-  //		   this, SLOT(lookupFinishedLocal()));
-  QObject::connect(&peerResolver(), SIGNAL(finished(KResolverResults)),
-  		   this, SLOT(lookupFinishedPeer()));
-  QObject::connect(this, SIGNAL(hostFound()), this, SLOT(lookupFinishedLocal()));
+  //  TQObject::connect(localResolver(), TQT_SIGNAL(finished(KResolverResults)),
+  //		   this, TQT_SLOT(lookupFinishedLocal()));
+  TQObject::connect(&peerResolver(), TQT_SIGNAL(finished(KResolverResults)),
+  		   this, TQT_SLOT(lookupFinishedPeer()));
+  TQObject::connect(this, TQT_SIGNAL(hostFound()), this, TQT_SLOT(lookupFinishedLocal()));
 }
 
 KDatagramSocket::~KDatagramSocket()
@@ -66,7 +66,7 @@ KDatagramSocket::~KDatagramSocket()
   //delete d;
 }
 
-bool KDatagramSocket::bind(const QString& node, const QString& service)
+bool KDatagramSocket::bind(const TQString& node, const TQString& service)
 {
   if (state() >= Bound)
     return false;
@@ -89,7 +89,7 @@ bool KDatagramSocket::bind(const QString& node, const QString& service)
   return true;
 }
 
-bool KDatagramSocket::connect(const QString& node, const QString& service)
+bool KDatagramSocket::connect(const TQString& node, const TQString& service)
 {
   if (state() >= Connected)
     return true;		// already connected
@@ -152,7 +152,7 @@ KDatagramPacket KDatagramSocket::receive()
       size = bytesAvailable();
     }
 
-  QByteArray data(size);
+  TQByteArray data(size);
   KSocketAddress address;
   
   // now do the reading
@@ -261,11 +261,11 @@ bool KDatagramSocket::doBind()
 
 void KDatagramSocket::setupSignals()
 {
-  QSocketNotifier *n = socketDevice()->readNotifier();
+  TQSocketNotifier *n = socketDevice()->readNotifier();
   if (n)
     {
       n->setEnabled(emitsReadyRead());
-      QObject::connect(n, SIGNAL(activated(int)), this, SLOT(slotReadActivity()));
+      TQObject::connect(n, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotReadActivity()));
     }
   else
     return;
@@ -274,7 +274,7 @@ void KDatagramSocket::setupSignals()
   if (n)
     {
       n->setEnabled(emitsReadyWrite());
-      QObject::connect(n, SIGNAL(activated(int)), this, SLOT(slotWriteActivity()));
+      TQObject::connect(n, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotWriteActivity()));
     }
   else
     return;

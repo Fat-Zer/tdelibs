@@ -21,23 +21,23 @@
 #include "kmfactory.h"
 #include "kmmanager.h"
 
-#include <qprogressdialog.h>
-#include <qfileinfo.h>
-#include <qdir.h>
+#include <tqprogressdialog.h>
+#include <tqfileinfo.h>
+#include <tqdir.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 
-KMDBCreator::KMDBCreator(QObject *parent, const char *name)
-: QObject(parent,name)
+KMDBCreator::KMDBCreator(TQObject *parent, const char *name)
+: TQObject(parent,name)
 {
 	m_dlg = 0;
 	m_status = true;
 
-	connect(&m_proc,SIGNAL(receivedStdout(KProcess*,char*,int)),SLOT(slotReceivedStdout(KProcess*,char*,int)));
-	connect(&m_proc,SIGNAL(receivedStderr(KProcess*,char*,int)),SLOT(slotReceivedStderr(KProcess*,char*,int)));
-	connect(&m_proc,SIGNAL(processExited(KProcess*)),SLOT(slotProcessExited(KProcess*)));
+	connect(&m_proc,TQT_SIGNAL(receivedStdout(KProcess*,char*,int)),TQT_SLOT(slotReceivedStdout(KProcess*,char*,int)));
+	connect(&m_proc,TQT_SIGNAL(receivedStderr(KProcess*,char*,int)),TQT_SLOT(slotReceivedStderr(KProcess*,char*,int)));
+	connect(&m_proc,TQT_SIGNAL(processExited(KProcess*)),TQT_SLOT(slotProcessExited(KProcess*)));
 }
 
 KMDBCreator::~KMDBCreator()
@@ -48,7 +48,7 @@ KMDBCreator::~KMDBCreator()
 	// it's parent. It will be destroyed along with its parent.
 }
 
-bool KMDBCreator::checkDriverDB(const QString& dirname, const QDateTime& d)
+bool KMDBCreator::checkDriverDB(const TQString& dirname, const TQDateTime& d)
 {
 	// don't block GUI
 	kapp->processEvents();
@@ -60,13 +60,13 @@ bool KMDBCreator::checkDriverDB(const QString& dirname, const QDateTime& d)
 
 	// then check most recent file in current directory
 	QDir	dir(dirname);
-	const QFileInfoList	*list = dir.entryInfoList(QDir::Files,QDir::Time);
+	const QFileInfoList	*list = dir.entryInfoList(TQDir::Files,TQDir::Time);
 	if (list && list->count() > 0 && list->getFirst()->lastModified() > d)
 		return false;
 
 	// then loop into subdirs
-	QStringList	slist = dir.entryList(QDir::Dirs,QDir::Time);
-	for (QStringList::ConstIterator it=slist.begin(); it!=slist.end(); ++it)
+	QStringList	slist = dir.entryList(TQDir::Dirs,TQDir::Time);
+	for (TQStringList::ConstIterator it=slist.begin(); it!=slist.end(); ++it)
 		if ((*it) != "." && (*it) != ".." && !checkDriverDB(dir.absFilePath(*it),d))
 			return false;
 
@@ -74,7 +74,7 @@ bool KMDBCreator::checkDriverDB(const QString& dirname, const QDateTime& d)
 	return true;
 }
 
-bool KMDBCreator::createDriverDB(const QString& dirname, const QString& filename, QWidget *parent)
+bool KMDBCreator::createDriverDB(const TQString& dirname, const TQString& filename, TQWidget *parent)
 {
 	bool	started(true);
 
@@ -109,10 +109,10 @@ bool KMDBCreator::createDriverDB(const QString& dirname, const QString& filename
 	{
 		if (!m_dlg)
 		{
-			m_dlg = new QProgressDialog(parent->topLevelWidget(),"progress-dialog",true);
+			m_dlg = new TQProgressDialog(parent->topLevelWidget(),"progress-dialog",true);
 			m_dlg->setLabelText(i18n("Please wait while KDE rebuilds a driver database."));
 			m_dlg->setCaption(i18n("Driver Database"));
-			connect(m_dlg,SIGNAL(canceled()),SLOT(slotCancelled()));
+			connect(m_dlg,TQT_SIGNAL(canceled()),TQT_SLOT(slotCancelled()));
 		}
 		m_dlg->setMinimumDuration(0);	// always show the dialog
 		m_dlg->setProgress(0);		// to force showing
@@ -127,7 +127,7 @@ bool KMDBCreator::createDriverDB(const QString& dirname, const QString& filename
 void KMDBCreator::slotReceivedStdout(KProcess*, char *buf, int len)
 {
 	// save buffer
-	QString	str( QCString(buf, len) );
+	QString	str( TQCString(buf, len) );
 
 	// get the number, cut the string at the first '\n' otherwise
 	// the toInt() will return 0. If that occurs for the first number,
@@ -171,7 +171,7 @@ void KMDBCreator::slotProcessExited(KProcess*)
 		KMFactory::self()->manager()->setErrorMsg(i18n("Error while creating driver database: abnormal child-process termination."));
 		// remove the incomplete driver DB file so that, it will be
 		// reconstructed on next check
-		QFile::remove(m_proc.args()[2]);
+		TQFile::remove(m_proc.args()[2]);
 	}
 	//else
 		emit dbCreated();

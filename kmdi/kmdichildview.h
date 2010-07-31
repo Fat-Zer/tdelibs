@@ -31,11 +31,11 @@
 #ifndef _KMDI_CHILD_VIEW_H_
 #define _KMDI_CHILD_VIEW_H_
 
-#include <qwidget.h>
-#include <qpixmap.h>
-#include <qrect.h>
-#include <qapplication.h>
-#include <qdatetime.h>
+#include <tqwidget.h>
+#include <tqpixmap.h>
+#include <tqrect.h>
+#include <tqapplication.h>
+#include <tqdatetime.h>
 
 #include "kmdichildfrm.h"
 
@@ -65,18 +65,18 @@ class KMdiChildViewPrivate;
   * or you wrap them by a KMdiChildView somehow like this:
   *
   * \code
-  * void DocViewMan::addKMdiFrame(QWidget* pNewView, bool bShow, const QPixmap& icon)
+  * void DocViewMan::addKMdiFrame(TQWidget* pNewView, bool bShow, const TQPixmap& icon)
   * {
   *   // cover it by a KMdi childview and add that MDI system
   *   KMdiChildView* pMDICover = new KMdiChildView( pNewView->caption());
   *   pMDICover->setIcon(icon);
   *   m_MDICoverList.append( pMDICover);
-  *   QBoxLayout* pLayout = new QHBoxLayout( pMDICover, 0, -1, "layout");
-  *   pNewView->reparent( pMDICover, QPoint(0,0));
+  *   TQBoxLayout* pLayout = new TQHBoxLayout( pMDICover, 0, -1, "layout");
+  *   pNewView->reparent( pMDICover, TQPoint(0,0));
   *   pLayout->addWidget( pNewView);
   *   pMDICover->setName( pNewView->name());
   *   // captions
-  *   QString shortName = pNewView->caption();
+  *   TQString shortName = pNewView->caption();
   *   int length = shortName.length();
   *   shortName = shortName.right(length - (shortName.findRev('/') +1));
   *   pMDICover->setTabCaption( shortName);
@@ -94,7 +94,7 @@ class KMdiChildViewPrivate;
   *     flags = KMdi::Hide;
   *   }
   *   // set the accelerators for Toplevel MDI mode (each toplevel window needs its own accels
-  *   connect( m_pParent, SIGNAL(childViewIsDetachedNow(QWidget*)), this, SLOT(initKeyAccel(QWidget*)) );
+  *   connect( m_pParent, TQT_SIGNAL(childViewIsDetachedNow(TQWidget*)), this, TQT_SLOT(initKeyAccel(TQWidget*)) );
   *
   *   m_pParent->addWindow( pMDICover, flags);
   *   // correct the default settings of KMdi ('cause we haven't a tab order for subwidget focuses)
@@ -116,27 +116,27 @@ protected:
 	/**
 	 * See KMdiChildView::caption
 	 */
-	QString m_szCaption;
+	TQString m_szCaption;
 	
 	/**
 	 * See KMdiChildView::tabCaption
 	 */
-	QString m_sTabCaption;
+	TQString m_sTabCaption;
 	
 	/**
 	 * See KMdiChildView::focusedChildWidget
 	 */
-	QWidget* m_focusedChildWidget;
+	TQWidget* m_focusedChildWidget;
 	
 	/**
 	 * See KMdiChildView::setFirstFocusableChildWidget
 	 */
-	QWidget* m_firstFocusableChildWidget;
+	TQWidget* m_firstFocusableChildWidget;
 	
 	/**
 	 * See KMdiChildView::setLastFocusableChildWidget
 	 */
-	QWidget* m_lastFocusableChildWidget;
+	TQWidget* m_lastFocusableChildWidget;
 	
 	/**
 	 * Every child view window has an temporary ID in the Window menu of the main frame.
@@ -152,7 +152,7 @@ protected:
 	/**
 	 * Holds the time when this view was activated (not only displayed) for the last time.
 	 */
-	QDateTime m_time;
+	TQDateTime m_time;
 
 private:
 	/**
@@ -182,13 +182,13 @@ public:
 	/**
 	 * Constructor
 	 */
-	KMdiChildView( const QString& caption, QWidget* parentWidget = 0L, const char* name = 0L, WFlags f = 0 );
+	KMdiChildView( const TQString& caption, TQWidget* parentWidget = 0L, const char* name = 0L, WFlags f = 0 );
 	
 	/**
 	 * Constructor 
 	 * sets "Unnamed" as default caption
 	 */
-	KMdiChildView( QWidget* parentWidget = 0L, const char* name = 0L, WFlags f = 0 );
+	KMdiChildView( TQWidget* parentWidget = 0L, const char* name = 0L, WFlags f = 0 );
 	
 	/**
 	 * Destructor
@@ -208,17 +208,17 @@ public:
 	/**
 	 * Memorizes the first focusable child widget of this widget
 	 */
-	void setFirstFocusableChildWidget( QWidget* );
+	void setFirstFocusableChildWidget( TQWidget* );
 	
 	/**
 	 * Memorizes the last focusable child widget of this widget
 	 */
-	void setLastFocusableChildWidget( QWidget* );
+	void setLastFocusableChildWidget( TQWidget* );
 	
 	/**
 	 * Returns the current focused child widget of this widget
 	 */
-	QWidget* focusedChildWidget();
+	TQWidget* focusedChildWidget();
 	
 	/**
 	 * Returns true if the MDI view is a child window within the MDI mainframe widget
@@ -229,28 +229,28 @@ public:
 	/**
 	 * Returns the caption of the child window (different from the caption on the button in the taskbar)
 	 */
-	const QString& caption() const { return m_szCaption; }
+	const TQString& caption() const { return m_szCaption; }
 	
 	/**
 	 * Returns the caption of the button on the taskbar
 	 */
-	const QString& tabCaption() const { return m_sTabCaption; }
+	const TQString& tabCaption() const { return m_sTabCaption; }
 	
 	/**
 	 * Sets the window caption string...
 	 * Calls updateButton on the taskbar button if it has been set.
 	 */
-	virtual void setCaption( const QString& szCaption );
+	virtual void setCaption( const TQString& szCaption );
 	
 	/**
 	 * Sets the caption of the button referring to this window
 	 */
-	virtual void setTabCaption( const QString& caption );
+	virtual void setTabCaption( const TQString& caption );
 	
 	/**
 	 * Sets the caption of both the window and the button on the taskbar
 	 */
-	virtual void setMDICaption( const QString &caption );
+	virtual void setMDICaption( const TQString &caption );
 	
 	/**
 	 * Returns the KMdiChildFrm parent widget (or 0 if the window is not attached)
@@ -270,37 +270,37 @@ public:
 	bool isMaximized() const;
 	
 	/**
-	 * Returns the geometry of this MDI child window as QWidget::geometry() does.
+	 * Returns the geometry of this MDI child window as TQWidget::geometry() does.
 	 */
-	QRect internalGeometry() const;
+	TQRect internalGeometry() const;
 	
 	/**
 	 * Sets the geometry of the client area of this MDI child window. The
 	 * top left position of the argument is the position of the top left point
 	 * of the client area in its parent coordinates and the arguments width
 	 * and height is the width and height of the client area. Please note: This
-	 * differs from the behavior of QWidget::setGeometry()!
+	 * differs from the behavior of TQWidget::setGeometry()!
 	 */
-	void setInternalGeometry( const QRect& newGeomety );
+	void setInternalGeometry( const TQRect& newGeomety );
 	
 	/**
 	 * Returns the frame geometry of this window or of the parent if there is any...
 	 */
-	QRect externalGeometry() const;
+	TQRect externalGeometry() const;
 	
 	/**
 	 * Sets the geometry of the frame of this MDI child window. The top left
 	 * position of the argument is the position of the top left point of the
 	 * frame in its parent coordinates and the arguments width and height is
 	 * the width and height of the widget frame. Please note: This differs
-	 * from the behavior of QWidget::setGeometry()!
+	 * from the behavior of TQWidget::setGeometry()!
 	 */
-	void setExternalGeometry( const QRect& newGeomety );
+	void setExternalGeometry( const TQRect& newGeomety );
 	
 	/**
 	 * You should override this function in the derived class.
 	 */
-	virtual QPixmap* myIconPtr();
+	virtual TQPixmap* myIconPtr();
 	
 	/**
 	 * Minimizes this window when it is attached to the Mdi manager.
@@ -317,12 +317,12 @@ public:
 	/**
 	 * Returns the geometry that will be restored by calling restore().
 	 */
-	QRect restoreGeometry();
+	TQRect restoreGeometry();
 	
 	/**
 	 * Sets the geometry that will be restored by calling restore().
 	 */
-	void setRestoreGeometry( const QRect& newRestGeo );
+	void setRestoreGeometry( const TQRect& newRestGeo );
 	
 	/**
 	 * Switches interposing in event loop of all current child widgets off.
@@ -358,14 +358,14 @@ public:
 	 */
 	inline void updateTimeStamp()
 	{
-		m_time.setDate( QDate::currentDate() );
-		m_time.setTime( QTime::currentTime() );
+		m_time.setDate( TQDate::currentDate() );
+		m_time.setTime( TQTime::currentTime() );
 	}
 	
 	/**
 	 * Recall a previously remembered time, i.e. the value of m_time
 	 */
-	inline const QDateTime& getTimeStamp() const { return m_time; }
+	inline const TQDateTime& getTimeStamp() const { return m_time; }
 
 public slots:
 	/**
@@ -385,14 +385,14 @@ public slots:
 	/**
 	 * Mimimizes the MDI view. If attached, the covering childframe widget is minimized (only a mini widget
 	 * showing the caption bar and the system buttons will remain visible). If detached, it will use the
-	 * minimize of the underlying system ( QWidget::showMinimized ).
+	 * minimize of the underlying system ( TQWidget::showMinimized ).
 	 */
 	virtual void minimize();
 	
 	/**
 	 * Maximizes the MDI view. If attached, this widget will fill the whole MDI view area widget. The system buttons
 	 * move to the main menubar (if set by KMdiMainFrm::setMenuForSDIModeSysButtons ).
-	 * If detached, it will use the minimize of the underlying system ( QWidget::showMaximized ).
+	 * If detached, it will use the minimize of the underlying system ( TQWidget::showMaximized ).
 	 */
 	virtual void maximize();
 	
@@ -424,17 +424,17 @@ public slots:
 	virtual void slot_clickedInDockMenu();
 	
 	/**
-	 * Calls QWidget::show but also for it's parent widget if attached
+	 * Calls TQWidget::show but also for it's parent widget if attached
 	 */
 	virtual void show();
 	
 	/**
-	 * Calls QWidget::hide() or it's parent widget hide() if attached
+	 * Calls TQWidget::hide() or it's parent widget hide() if attached
 	 */
 	virtual void hide();
 	
 	/**
-	 * Calls QWidget::raise() or it's parent widget raise() if attached
+	 * Calls TQWidget::raise() or it's parent widget raise() if attached
 	 */
 	virtual void raise();
 	
@@ -462,15 +462,15 @@ protected:
 	 * Ignores the event and calls KMdiMainFrm::childWindowCloseRequest instead. This is because the
 	 * mainframe has control over the views. Therefore the MDI view has to request the mainframe for a close.
 	 */
-	virtual void closeEvent( QCloseEvent *e );
+	virtual void closeEvent( TQCloseEvent *e );
 	
 	/**
-	 * It only catches QEvent::KeyPress events there. If a Qt::Key_Tab is pressed, the internal MDI focus
+	 * It only catches TQEvent::KeyPress events there. If a Qt::Key_Tab is pressed, the internal MDI focus
 	 * handling is called. That means if the last focusable child widget of this is called, it will jump to the
 	 * first focusable child widget of this.
 	 * See KMdiChildView::setFirstFocusableChildWidget and KMdiChildView::lastFirstFocusableChildWidget
 	 */
-	virtual bool eventFilter( QObject *obj, QEvent *e );
+	virtual bool eventFilter( TQObject *obj, TQEvent *e );
 	
 	/**
 	 * If attached, the childframe will be activated and the MDI taskbar button will be pressed. Additionally, the
@@ -478,19 +478,19 @@ protected:
 	 * Sends the focusInEventOccurs signal before changing the focus and the
 	 * gotFocus signal after changing the focus.
 	 */
-	virtual void focusInEvent( QFocusEvent *e );
+	virtual void focusInEvent( TQFocusEvent *e );
 	
 	/**
 	 * Send the lostFocus signal
 	 */
-	virtual void focusOutEvent( QFocusEvent *e );
+	virtual void focusOutEvent( TQFocusEvent *e );
 	
 	/**
 	 * Internally used for the minimize/maximize/restore mechanism when in attach mode.
 	 */
-	virtual void resizeEvent( QResizeEvent *e );
+	virtual void resizeEvent( TQResizeEvent *e );
 
-	void trackIconAndCaptionChanges( QWidget *view );
+	void trackIconAndCaptionChanges( TQWidget *view );
 
 protected slots:
 	void slot_childDestroyed();
@@ -544,12 +544,12 @@ signals:
 	/**
 	 * Emitted when the window caption is changed via KMdiChildView::setCaption or KMdiChildView::setMDICaption
 	 */
-	void windowCaptionChanged( const QString& );
+	void windowCaptionChanged( const TQString& );
 	
 	/**
 	 * Emitted  when the window caption is changed via KMdiChildView::setTabCaption or KMdiChildView::setMDICaption
 	 */
-	void tabCaptionChanged( const QString& );
+	void tabCaptionChanged( const TQString& );
 	
 	/**
 	 * Internally used to send information to the mainframe that this MDI view is maximized now.
@@ -592,18 +592,18 @@ signals:
 	 */
 	void isDetachedNow();
 
-	void iconUpdated( QWidget*, QPixmap );
-	void captionUpdated( QWidget*, const QString& );
+	void iconUpdated( TQWidget*, TQPixmap );
+	void captionUpdated( TQWidget*, const TQString& );
 
 
 private:
 	KMdiChildViewPrivate *d;
-	QWidget *m_trackChanges;
+	TQWidget *m_trackChanges;
 };
 
 inline KMdiChildFrm *KMdiChildView::mdiParent() const
 {
-	QWidget * pw = parentWidget();
+	TQWidget * pw = parentWidget();
 	if ( pw != 0L )
 		if ( pw->inherits( "KMdiChildFrm" ) )
 			return ( KMdiChildFrm * ) pw;

@@ -33,13 +33,13 @@
 #include <ktempfile.h>
 #include <kwallet.h>
 
-#include <qlineedit.h>
-#include <qpushbutton.h>
+#include <tqlineedit.h>
+#include <tqpushbutton.h>
 
 #include <assert.h>
 
 
-KSSLKeyGen::KSSLKeyGen(QWidget *parent, const char *name, bool modal) 
+KSSLKeyGen::KSSLKeyGen(TQWidget *parent, const char *name, bool modal) 
 :KWizard(parent,name,modal) {
 	_idx = -1;
 
@@ -51,9 +51,9 @@ KSSLKeyGen::KSSLKeyGen(QWidget *parent, const char *name, bool modal)
 	setHelpEnabled(page1, false);
 	setHelpEnabled(page2, false);
 	setFinishEnabled(page2, false);
-	connect(page2->_password1, SIGNAL(textChanged(const QString&)), this, SLOT(slotPassChanged()));
-	connect(page2->_password2, SIGNAL(textChanged(const QString&)), this, SLOT(slotPassChanged()));
-	connect(finishButton(), SIGNAL(clicked()), SLOT(slotGenerate()));
+	connect(page2->_password1, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(slotPassChanged()));
+	connect(page2->_password2, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(slotPassChanged()));
+	connect(finishButton(), TQT_SIGNAL(clicked()), TQT_SLOT(slotGenerate()));
 #else
 	// tell him he doesn't have SSL
 #endif
@@ -104,7 +104,7 @@ void KSSLKeyGen::slotGenerate() {
 
 #ifndef Q_OS_WIN //TODO: reenable for WIN32
 	if (rc == 0 && KWallet::Wallet::isEnabled()) {
-		rc = KMessageBox::questionYesNo(this, i18n("Do you wish to store the passphrase in your wallet file?"), QString::null, i18n("Store"), i18n("Do Not Store"));
+		rc = KMessageBox::questionYesNo(this, i18n("Do you wish to store the passphrase in your wallet file?"), TQString::null, i18n("Store"), i18n("Do Not Store"));
 		if (rc == KMessageBox::Yes) {
 			KWallet::Wallet *w = KWallet::Wallet::openWallet(KWallet::Wallet::LocalWallet(), winId());
 			if (w) {
@@ -119,7 +119,7 @@ void KSSLKeyGen::slotGenerate() {
 }
 
 
-int KSSLKeyGen::generateCSR(const QString& name, const QString& pass, int bits, int e) {
+int KSSLKeyGen::generateCSR(const TQString& name, const TQString& pass, int bits, int e) {
 #ifdef KSSL_HAVE_SSL
 	KOSSL *kossl = KOSSL::self();
 	int rc;
@@ -168,7 +168,7 @@ int KSSLKeyGen::generateCSR(const QString& name, const QString& pass, int bits, 
   
 	KGlobal::dirs()->addResourceType("kssl", KStandardDirs::kde_default("data") + "kssl");
 
-	QString path = KGlobal::dirs()->saveLocation("kssl");
+	TQString path = KGlobal::dirs()->saveLocation("kssl");
 	KTempFile csrFile(path + "csr_", ".der");
 
 	if (!csrFile.fstream()) {
@@ -203,8 +203,8 @@ int KSSLKeyGen::generateCSR(const QString& name, const QString& pass, int bits, 
 }
 
 
-QStringList KSSLKeyGen::supportedKeySizes() {
-	QStringList x;
+TQStringList KSSLKeyGen::supportedKeySizes() {
+	TQStringList x;
 
 #ifdef KSSL_HAVE_SSL
 	x	<< i18n("2048 (High Grade)")

@@ -44,7 +44,7 @@ class KABC_EXPORT ResourceDir : public Resource
 
   public:
     ResourceDir( const KConfig* );
-    ResourceDir( const QString &path, const QString &type = "vcard" );
+    ResourceDir( const TQString &path, const TQString &type = "vcard" );
     ~ResourceDir();
 
     virtual void writeConfig( KConfig* );
@@ -63,22 +63,22 @@ class KABC_EXPORT ResourceDir : public Resource
     /**
       Set path to be used for saving.
      */
-    void setPath( const QString & );
+    void setPath( const TQString & );
 
     /**
       Return path used for loading and saving the address book.
      */
-    QString path() const;
+    TQString path() const;
 
     /**
       Set the format by name.
      */
-    void setFormat( const QString &format );
+    void setFormat( const TQString &format );
 
     /**
       Returns the format name.
      */
-    QString format() const;
+    TQString format() const;
   
     /**
       Remove a addressee from its source.
@@ -90,15 +90,15 @@ class KABC_EXPORT ResourceDir : public Resource
     void pathChanged();
 
   protected:
-    void init( const QString &path, const QString &format );
+    void init( const TQString &path, const TQString &format );
 
   private:
     FormatPlugin *mFormat;
 
     KDirWatch mDirWatch;
 
-    QString mPath;
-    QString mFormatName;
+    TQString mPath;
+    TQString mFormatName;
 
     Lock *mLock;
 

@@ -20,10 +20,10 @@
 #ifndef __kbookmarkmanager_h
 #define __kbookmarkmanager_h
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qobject.h>
-#include <qdom.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqobject.h>
+#include <tqdom.h>
 #include <dcopobject.h>
 #include "kbookmark.h"
 #include "kbookmarknotifier.h"
@@ -50,7 +50,7 @@
  * </xbel>
  * \endcode
  */
-class KIO_EXPORT KBookmarkManager : public QObject, public DCOPObject
+class KIO_EXPORT KBookmarkManager : public TQObject, public DCOPObject
 {
     Q_OBJECT
     K_DCOP
@@ -69,7 +69,7 @@ protected:
      * @param bImportDesktopFiles if true, and if the bookmarksFile
      * doesn't already exist, import bookmarks from desktop files
      */
-    KBookmarkManager( const QString & bookmarksFile, bool bImportDesktopFiles = true );
+    KBookmarkManager( const TQString & bookmarksFile, bool bImportDesktopFiles = true );
 
     /**
      * @since 3.2
@@ -103,7 +103,7 @@ public:
      * @param toolbarCache iff true save a cache of the toolbar folder, too
      * @return true if saving was successful
      */
-    bool saveAs( const QString & filename, bool toolbarCache = true ) const;
+    bool saveAs( const TQString & filename, bool toolbarCache = true ) const;
 
     /**
      * Update access time stamps for a given url.
@@ -112,7 +112,7 @@ public:
      * @since 3.2
      * @return true if any metadata was modified (bookmarks file is not saved automatically)
      */
-    bool updateAccessMetadata( const QString &url, bool emitSignal = true );
+    bool updateAccessMetadata( const TQString &url, bool emitSignal = true );
 
     /*
      * NB. currently *unimplemented*
@@ -123,7 +123,7 @@ public:
      * @emitSignal iff true emit KBookmarkNotifier signal
      * @since 3.3
      */
-    void updateFavicon( const QString &url, const QString &faviconurl, bool emitSignal = true );
+    void updateFavicon( const TQString &url, const TQString &faviconurl, bool emitSignal = true );
 
     /**
      * This will return the path that this manager is using to read
@@ -131,7 +131,7 @@ public:
      * @internal
      * @return the path containing the bookmarks
      */
-    QString path() { return m_bookmarksFile; }
+    TQString path() { return m_bookmarksFile; }
 
     /**
      * This will return the root bookmark.  It is used to iterate
@@ -155,7 +155,7 @@ public:
      * @param tolerate when true tries to find the most tolerable bookmark position
      * @see KBookmark::address
      */
-    KBookmark findByAddress( const QString & address, bool tolerate = false );
+    KBookmark findByAddress( const TQString & address, bool tolerate = false );
 
     /**
      * Saves the bookmark file and notifies everyone.
@@ -188,7 +188,7 @@ public:
      *            menu items in keditbookmarks :: --nobrowser
      * @since 3.2
      */
-    void setEditorOptions( const QString& caption, bool browser );
+    void setEditorOptions( const TQString& caption, bool browser );
 
     /**
      * This static function will return an instance of the
@@ -206,7 +206,7 @@ public:
      * doesn't already exist, import bookmarks from desktop files
      * @return a pointer to an instance of the KBookmarkManager.
      */
-    static KBookmarkManager* managerForFile( const QString& bookmarksFile,
+    static KBookmarkManager* managerForFile( const TQString& bookmarksFile,
                                    bool bImportDesktopFiles = true );
 
 
@@ -222,12 +222,12 @@ public:
      * Returns the path to the user's main bookmark collection file.
      * @since 3.5.5
      */
-    static QString userBookmarksFile();
+    static TQString userBookmarksFile();
 
     /**
      * @internal
      */
-    const QDomDocument & internalDocument() const;
+    const TQDomDocument & internalDocument() const;
 
     /**
      * Access to bookmark notifier, for emitting signals.
@@ -239,12 +239,12 @@ public:
     /**
      * @since 3.2
      */
-    KBookmarkGroup addBookmarkDialog( const QString & _url, const QString & _title,
-                                      const QString & _parentBookmarkAddress = QString::null );
+    KBookmarkGroup addBookmarkDialog( const TQString & _url, const TQString & _title,
+                                      const TQString & _parentBookmarkAddress = TQString::null );
 
 public slots:
     void slotEditBookmarks();
-    void slotEditBookmarksAtAddress( const QString& address );
+    void slotEditBookmarksAtAddress( const TQString& address );
 
 public:
 k_dcop:
@@ -252,7 +252,7 @@ k_dcop:
      * Reparse the whole bookmarks file and notify about the change
      * (Called by the bookmark editor)
      */
-    ASYNC notifyCompleteChange( QString caller );
+    ASYNC notifyCompleteChange( TQString caller );
 
     /**
      * Emit the changed signal for the group whose address is given
@@ -260,7 +260,7 @@ k_dcop:
      * Called by the instance of konqueror that saved the file after
      * a small change (new bookmark or new folder).
      */
-    ASYNC notifyChanged( QString groupAddress );
+    ASYNC notifyChanged( TQString groupAddress );
 
     ASYNC notifyConfigChanged();
 
@@ -270,23 +270,23 @@ signals:
      * @p groupAddress (e.g. "/4/5")
      * has been modified by the caller @p caller.
      */
-    void changed( const QString & groupAddress, const QString & caller );
+    void changed( const TQString & groupAddress, const TQString & caller );
 
 protected:
     // consts added to avoid a copy-and-paste of internalDocument
     void parse() const;
     void importDesktopFiles();
-    static void convertToXBEL( QDomElement & group );
-    static void convertAttribute( QDomElement elem, const QString & oldName, const QString & newName );
+    static void convertToXBEL( TQDomElement & group );
+    static void convertAttribute( TQDomElement elem, const TQString & oldName, const TQString & newName );
 
 private:
     KBookmarkNotifier m_notifier;
-    QString m_bookmarksFile;
-    mutable QDomDocument m_doc;
-    mutable QDomDocument m_toolbarDoc;
+    TQString m_bookmarksFile;
+    mutable TQDomDocument m_doc;
+    mutable TQDomDocument m_toolbarDoc;
     mutable bool m_docIsLoaded;
     bool m_update;
-    static QPtrList<KBookmarkManager>* s_pSelf;
+    static TQPtrList<KBookmarkManager>* s_pSelf;
     bool m_showNSBookmarks;
 
 private:
@@ -321,7 +321,7 @@ public:
    * This function is called if the user selects a bookmark.  It will
    * open up the bookmark in a default fashion unless you override it.
    */
-  virtual void openBookmarkURL(const QString& _url);
+  virtual void openBookmarkURL(const TQString& _url);
 
   /**
    * This function is called whenever the user wants to add the
@@ -331,7 +331,7 @@ public:
    *
    * @return the title of the current page.
    */
-  virtual QString currentTitle() const { return QString::null; }
+  virtual TQString currentTitle() const { return TQString::null; }
 
   /**
    * This function is called whenever the user wants to add the
@@ -341,7 +341,7 @@ public:
    *
    * @return the URL of the current page.
    */
-  virtual QString currentURL() const { return QString::null; }
+  virtual TQString currentURL() const { return TQString::null; }
 
 protected:
   virtual void virtual_hook( int id, void* data );
@@ -350,11 +350,11 @@ protected:
 /**
  * @since 3.2
  */
-class KIO_EXPORT KExtendedBookmarkOwner : public QObject, virtual public KBookmarkOwner
+class KIO_EXPORT KExtendedBookmarkOwner : public TQObject, virtual public KBookmarkOwner
 {
     Q_OBJECT
 public:
-    typedef QValueList<QPair<QString,QString> > QStringPairList;
+    typedef TQValueList<QPair<TQString,TQString> > QStringPairList;
 public slots:
     void fillBookmarksList( KExtendedBookmarkOwner::QStringPairList & list ) { emit signalFillBookmarksList( list ); };
 signals:

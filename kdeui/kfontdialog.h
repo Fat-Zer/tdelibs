@@ -26,8 +26,8 @@
 #ifndef _K_FONT_DIALOG_H_
 #define _K_FONT_DIALOG_H_
 
-#include <qlineedit.h>
-#include <qbutton.h>
+#include <tqlineedit.h>
+#include <tqbutton.h>
 #include <kdialogbase.h>
 
 class QComboBox;
@@ -54,7 +54,7 @@ class KIntNumInput;
 class KDEUI_EXPORT KFontChooser : public QWidget
 {
   Q_OBJECT
-  Q_PROPERTY( QFont font READ font WRITE setFont )
+  Q_PROPERTY( TQFont font READ font WRITE setFont )
 
 public:
   /**
@@ -78,7 +78,7 @@ public:
    * that will be displayed in the dialog.
    * <p>Consider the following code snippet;
    * \code
-   *    QStringList list;
+   *    TQStringList list;
    *    KFontChooser::getFontList(list,SmoothScalableFonts);
    *    KFontChooser chooseFont = new KFontChooser(0, "FontList", false, list);
    * \endcode
@@ -105,11 +105,11 @@ public:
    *        *sizeIsRelativeState, user choice may be retrieved by
    *        calling sizeIsRelative().
    */
-  KFontChooser(QWidget *parent = 0L, const char *name = 0L,
+  KFontChooser(TQWidget *parent = 0L, const char *name = 0L,
 	       bool onlyFixed = false,
-	       const QStringList &fontList = QStringList(),
+	       const TQStringList &fontList = TQStringList(),
 	       bool makeFrame = true, int visibleListSize=8,
-               bool diff = false, QButton::ToggleState *sizeIsRelativeState = 0L );
+               bool diff = false, TQButton::ToggleState *sizeIsRelativeState = 0L );
 
   /**
    * Destructs the font chooser.
@@ -136,7 +136,7 @@ public:
    * @param onlyFixed Readjust the font list to display only fixed
    *        width fonts if @p true, or vice-versa.
    */
-  void setFont( const QFont &font, bool onlyFixed = false );
+  void setFont( const TQFont &font, bool onlyFixed = false );
 
   /**
    * @return The bitmask corresponding to the attributes the user
@@ -147,29 +147,29 @@ public:
   /**
    * @return The currently selected font in the chooser.
    */
-  QFont font() const { return selFont; }
+  TQFont font() const { return selFont; }
 
   /**
    * Sets the color to use in the preview.
    */
-  void setColor( const QColor & col );
+  void setColor( const TQColor & col );
 
   /**
    * @return The color currently used in the preview (default: the text
    *         color of the active color group)
    */
-  QColor color() const;
+  TQColor color() const;
 
   /**
    * Sets the background color to use in the preview.
    */
-  void setBackgroundColor( const QColor & col );
+  void setBackgroundColor( const TQColor & col );
 
   /**
    * @return The background color currently used in the preview (default:
    *         the base color of the active colorgroup)
    */
-  QColor backgroundColor() const;
+  TQColor backgroundColor() const;
 
   /**
    * Sets the state of the checkbox indicating whether the font size
@@ -177,19 +177,19 @@ public:
    * NOTE: If parameter sizeIsRelative was not set in the constructor
    *       of the widget this setting will be ignored.
    */
-  void setSizeIsRelative( QButton::ToggleState relative );
+  void setSizeIsRelative( TQButton::ToggleState relative );
 
   /**
    * @return Whether the font size is to be interpreted as relative size
-   *         (default: QButton:Off)
+   *         (default: TQButton:Off)
    */
-  QButton::ToggleState sizeIsRelative() const;
+  TQButton::ToggleState sizeIsRelative() const;
 
 
   /**
    * @return The current text in the sample text input area.
    */
-  QString sampleText() const { return sampleEdit->text(); }
+  TQString sampleText() const { return sampleEdit->text(); }
 
   /**
    * Sets the sample text.
@@ -201,7 +201,7 @@ public:
    *
    * @param text The new sample text. The current will be removed.
    */
-  void setSampleText( const QString &text )
+  void setSampleText( const TQString &text )
   {
     sampleEdit->setText( text );
   }
@@ -218,13 +218,13 @@ public:
   }
 
   /**
-   * Converts a QFont into the corresponding X Logical Font
+   * Converts a TQFont into the corresponding X Logical Font
    * Description (XLFD).
    *
    * @param theFont The font to convert.
    * @return A string representing the given font in XLFD format.
    */
-  static QString getXLFD( const QFont &theFont )
+  static TQString getXLFD( const TQFont &theFont )
     { return theFont.rawName(); }
 
   /**
@@ -247,61 +247,61 @@ public:
    * @param fontListCriteria should contain all the restrictions for font selection as OR-ed values
    *        @see KFontChooser::FontListCriteria for the individual values
    */
-  static void getFontList( QStringList &list, uint fontListCriteria);
+  static void getFontList( TQStringList &list, uint fontListCriteria);
 
   /**
    * Reimplemented for internal reasons.
    */
-  virtual QSize sizeHint( void ) const;
+  virtual TQSize sizeHint( void ) const;
 
 signals:
   /**
    * Emitted whenever the selected font changes.
    */
-  void fontSelected( const QFont &font );
+  void fontSelected( const TQFont &font );
 
 private slots:
   void toggled_checkbox();
-  void family_chosen_slot(const QString&);
-  void size_chosen_slot(const QString&);
-  void style_chosen_slot(const QString&);
-  void displaySample(const QFont &font);
+  void family_chosen_slot(const TQString&);
+  void size_chosen_slot(const TQString&);
+  void style_chosen_slot(const TQString&);
+  void displaySample(const TQFont &font);
   void showXLFDArea(bool);
   void size_value_slot(int);
 private:
   void fillFamilyListBox(bool onlyFixedFonts = false);
   void fillSizeList();
-  // This one must be static since getFontList( QStringList, char*) is so
-  static void addFont( QStringList &list, const char *xfont );
+  // This one must be static since getFontList( TQStringList, char*) is so
+  static void addFont( TQStringList &list, const char *xfont );
 
   void setupDisplay();
 
   // pointer to an optinally supplied list of fonts to
   // inserted into the fontdialog font-family combo-box
-  QStringList  fontList;
+  TQStringList  fontList;
 
   KIntNumInput *sizeOfFont;
 
-  QLineEdit    *sampleEdit;
-  QLineEdit    *xlfdEdit;
+  TQLineEdit    *sampleEdit;
+  TQLineEdit    *xlfdEdit;
 
-  QLabel       *familyLabel;
-  QLabel       *styleLabel;
-  QCheckBox    *familyCheckbox;
-  QCheckBox    *styleCheckbox;
-  QCheckBox    *sizeCheckbox;
-  QLabel       *sizeLabel;
+  TQLabel       *familyLabel;
+  TQLabel       *styleLabel;
+  TQCheckBox    *familyCheckbox;
+  TQCheckBox    *styleCheckbox;
+  TQCheckBox    *sizeCheckbox;
+  TQLabel       *sizeLabel;
   KListBox     *familyListBox;
   KListBox     *styleListBox;
   KListBox     *sizeListBox;
-  QComboBox    *charsetsCombo; // BIC: remove in KDE4
-  QCheckBox    *sizeIsRelativeCheckBox;
+  TQComboBox    *charsetsCombo; // BIC: remove in KDE4
+  TQCheckBox    *sizeIsRelativeCheckBox;
 
-  QFont        selFont;
+  TQFont        selFont;
 
-  QString      selectedStyle;
+  TQString      selectedStyle;
   int          selectedSize;
-  QMap<QString, QString> currentStyles;
+  TQMap<TQString, TQString> currentStyles;
 
   bool usingFixed;
 
@@ -325,7 +325,7 @@ private:
  * Example:
  *
  * \code
- *      QFont myFont;
+ *      TQFont myFont;
  *      int result = KFontDialog::getFont( myFont );
  *      if ( result == KFontDialog::Accepted )
  *            ...
@@ -362,11 +362,11 @@ public:
    *        calling sizeIsRelative().
    *
    */
-  KFontDialog( QWidget *parent = 0L, const char *name = 0,
+  KFontDialog( TQWidget *parent = 0L, const char *name = 0,
 	       bool onlyFixed = false, bool modal = false,
-	       const QStringList &fontlist = QStringList(),
+	       const TQStringList &fontlist = TQStringList(),
 	       bool makeFrame = true, bool diff = false,
-               QButton::ToggleState *sizeIsRelativeState = 0L );
+               TQButton::ToggleState *sizeIsRelativeState = 0L );
 
   /**
    * Sets the currently selected font in the dialog.
@@ -375,13 +375,13 @@ public:
    * @param onlyFixed readjust the font list to display only fixed
    *        width fonts if true, or vice-versa
    */
-  void setFont( const QFont &font, bool onlyFixed = false )
+  void setFont( const TQFont &font, bool onlyFixed = false )
     { chooser->setFont(font, onlyFixed); }
 
   /**
    * @return The currently selected font in the dialog.
    */
-  QFont font() const { return chooser->font(); }
+  TQFont font() const { return chooser->font(); }
 
   /**
    * Sets the state of the checkbox indicating whether the font size
@@ -389,14 +389,14 @@ public:
    * NOTE: If parameter sizeIsRelative was not set in the constructor
    *       of the dialog this setting will be ignored.
    */
-  void setSizeIsRelative( QButton::ToggleState relative )
+  void setSizeIsRelative( TQButton::ToggleState relative )
     { chooser->setSizeIsRelative( relative ); }
 
   /**
    * @return Whether the font size is to be interpreted as relative size
    *         (default: false)
    */
-  QButton::ToggleState sizeIsRelative() const
+  TQButton::ToggleState sizeIsRelative() const
     { return chooser->sizeIsRelative(); }
 
   /**
@@ -416,11 +416,11 @@ public:
    *        *sizeIsRelativeState and user choice will be returned
    *        therein.
    *
-   * @return QDialog::result().
+   * @return TQDialog::result().
    */
-  static int getFont( QFont &theFont, bool onlyFixed = false,
-		      QWidget *parent = 0L, bool makeFrame = true,
-                      QButton::ToggleState *sizeIsRelativeState = 0L );
+  static int getFont( TQFont &theFont, bool onlyFixed = false,
+		      TQWidget *parent = 0L, bool makeFrame = true,
+                      TQButton::ToggleState *sizeIsRelativeState = 0L );
 
   /**
    * Creates a modal font difference dialog, lets the user choose a selection
@@ -452,11 +452,11 @@ public:
    *        *sizeIsRelativeState and user choice will be returned
    *        therein.
    *
-   * @returns QDialog::result().
+   * @returns TQDialog::result().
    */
-  static int getFontDiff( QFont &theFont, int &diffFlags, bool onlyFixed = false,
-		      QWidget *parent = 0L, bool makeFrame = true,
-                      QButton::ToggleState *sizeIsRelativeState = 0L );
+  static int getFontDiff( TQFont &theFont, int &diffFlags, bool onlyFixed = false,
+		      TQWidget *parent = 0L, bool makeFrame = true,
+                      TQButton::ToggleState *sizeIsRelativeState = 0L );
 
   /**
    * When you are not only interested in the font selected, but also
@@ -477,10 +477,10 @@ public:
    *        therein.
    * @return The result of the dialog.
    */
-  static int getFontAndText( QFont &theFont, QString &theString,
-			     bool onlyFixed = false, QWidget *parent = 0L,
+  static int getFontAndText( TQFont &theFont, TQString &theString,
+			     bool onlyFixed = false, TQWidget *parent = 0L,
 			     bool makeFrame = true,
-                             QButton::ToggleState *sizeIsRelativeState = 0L );
+                             TQButton::ToggleState *sizeIsRelativeState = 0L );
 
 signals:
   /**
@@ -488,7 +488,7 @@ signals:
    * Connect to this to monitor the font as it is selected if you are
    * not running modal.
    */
-  void fontSelected( const QFont &font );
+  void fontSelected( const TQFont &font );
 
 protected:
   KFontChooser *chooser;

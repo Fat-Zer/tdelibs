@@ -32,25 +32,25 @@ public:
 	KListViewLineEdit(KListView *parent);
 	~KListViewLineEdit();
 
-	QListViewItem *currentItem() const;
+	TQListViewItem *currentItem() const;
 
 signals:
-	void done(QListViewItem*, int);
+	void done(TQListViewItem*, int);
 
 public slots:
 	void terminate();
-	void load(QListViewItem *i, int c);
+	void load(TQListViewItem *i, int c);
 
 protected:
-	virtual void focusOutEvent(QFocusEvent *);
-	virtual void keyPressEvent(QKeyEvent *e);
-	virtual void paintEvent(QPaintEvent *e);
-	virtual bool event (QEvent *pe);
+	virtual void focusOutEvent(TQFocusEvent *);
+	virtual void keyPressEvent(TQKeyEvent *e);
+	virtual void paintEvent(TQPaintEvent *e);
+	virtual bool event (TQEvent *pe);
 
 	/// @since 3.1
-	void selectNextCell (QListViewItem *pi, int column, bool forward);
+	void selectNextCell (TQListViewItem *pi, int column, bool forward);
 	void terminate(bool commit);
-	QListViewItem *item;
+	TQListViewItem *item;
 	int col;
 	KListView* const p;
 
@@ -58,7 +58,7 @@ protected slots:
 	void slotSelectionChanged();
 
 	/// @since 3.5.4
-	void slotItemRemoved(QListViewItem *i);
+	void slotItemRemoved(TQListViewItem *i);
 
 };
 

@@ -27,8 +27,8 @@
 **/
 #ifndef __scriptinterface_h__
 #define __scriptinterface_h__
-#include <qvariant.h>
-#include <qobject.h>
+#include <tqvariant.h>
+#include <tqobject.h>
 #include <kdemacros.h>
 
 //#include <scripclientinterface.h>
@@ -50,25 +50,25 @@ class KScriptClientInterface;
 	public:
 		/**
 		*	Return the current script code data
-		*	@returns QString containing the currenly runable code
+		*	@returns TQString containing the currenly runable code
 		**/
-		virtual QString script() const = 0;
+		virtual TQString script() const = 0;
 		/**
 		*	Sets the path to the script library that we are going to embed.
 		**/
-		virtual void setScript( const QString &scriptFile ) = 0;
+		virtual void setScript( const TQString &scriptFile ) = 0;
 		/**
 		*	Sets the path to the script library that we are going to embed.
 		*	The second argument is the function from the script library that
 		*	we wish to call.
 		**/
-		virtual void setScript( const QString &scriptLibFile, const QString &method ) = 0;
+		virtual void setScript( const TQString &scriptLibFile, const TQString &method ) = 0;
 		/**
 		*	Run the actual script code
 		*	This can both take a context object that will be shared between the
 		*	main application and a variant that will contain the arguments.
 		**/
-		virtual void run(QObject *context = 0, const QVariant &arg = 0) = 0;
+		virtual void run(TQObject *context = 0, const TQVariant &arg = 0) = 0;
 		/**
 		*	Abort the scripts run
 		**/

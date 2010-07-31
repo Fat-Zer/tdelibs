@@ -26,9 +26,9 @@
 
 
 #include <unistd.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qfile.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqfile.h>
 
 #include "kssldefs.h"
 #include "ksslcertificate.h"
@@ -38,7 +38,7 @@
 #include <kstandarddirs.h>
 #include <kmdcodec.h>
 #include <klocale.h>
-#include <qdatetime.h>
+#include <tqdatetime.h>
 #include <ktempfile.h>
 
 #include <sys/types.h>
@@ -60,7 +60,7 @@
 #endif
 
 #include <kopenssl.h>
-#include <qcstring.h>
+#include <tqcstring.h>
 #include <kdebug.h>
 #include "ksslx509v3.h"
 
@@ -141,13 +141,13 @@ return n;
 }
 
 
-KSSLCertificate *KSSLCertificate::fromString(QCString cert) {
+KSSLCertificate *KSSLCertificate::fromString(TQCString cert) {
 KSSLCertificate *n = NULL;
 #ifdef KSSL_HAVE_SSL
 	if (cert.length() == 0)
 		return NULL;
 
-	QByteArray qba, qbb = cert.copy();
+	TQByteArray qba, qbb = cert.copy();
 	KCodecs::base64Decode(qbb, qba);
 	unsigned char *qbap = reinterpret_cast<unsigned char *>(qba.data());
 	X509 *x5c = KOSSL::self()->d2i_X509(NULL, &qbap, qba.size());
@@ -163,8 +163,8 @@ return n;
 
 
 
-QString KSSLCertificate::getSubject() const {
-QString rc = "";
+TQString KSSLCertificate::getSubject() const {
+TQString rc = "";
 
 #ifdef KSSL_HAVE_SSL
 	char *t = d->kossl->X509_NAME_oneline(d->kossl->X509_get_subject_name(d->m_cert), 0, 0);
@@ -177,8 +177,8 @@ return rc;
 }
 
 
-QString KSSLCertificate::getSerialNumber() const {
-QString rc = "";
+TQString KSSLCertificate::getSerialNumber() const {
+TQString rc = "";
 
 #ifdef KSSL_HAVE_SSL
 	ASN1_INTEGER *aint = d->kossl->X509_get_serialNumber(d->m_cert);
@@ -191,8 +191,8 @@ return rc;
 }
 
 
-QString KSSLCertificate::getSignatureText() const {
-QString rc = "";
+TQString KSSLCertificate::getSignatureText() const {
+TQString rc = "";
 
 #ifdef KSSL_HAVE_SSL
 char *s;
@@ -200,7 +200,7 @@ int n, i;
 
 	i = d->kossl->OBJ_obj2nid(d->m_cert->sig_alg->algorithm);
 	rc = i18n("Signature Algorithm: ");
-	rc += (i == NID_undef)?i18n("Unknown"):QString(d->kossl->OBJ_nid2ln(i));
+	rc += (i == NID_undef)?i18n("Unknown"):TQString(d->kossl->OBJ_nid2ln(i));
 
 	rc += "\n";
 	rc += i18n("Signature Contents:");
@@ -219,7 +219,7 @@ return rc;
 }
 
 
-void KSSLCertificate::getEmails(QStringList &to) const {
+void KSSLCertificate::getEmails(TQStringList &to) const {
 	to.clear();
 #ifdef KSSL_HAVE_SSL
 	if (!d->m_cert)
@@ -236,13 +236,13 @@ void KSSLCertificate::getEmails(QStringList &to) const {
 }	
 
 
-QString KSSLCertificate::getKDEKey() const {
+TQString KSSLCertificate::getKDEKey() const {
 	return getSubject() + " (" + getMD5DigestText() + ")";
 }
 
 
-QString KSSLCertificate::getMD5DigestFromKDEKey(const QString &k) {
-	QString rc;
+TQString KSSLCertificate::getMD5DigestFromKDEKey(const TQString &k) {
+	TQString rc;
 	int pos = k.findRev('(');
 	if (pos != -1) {
 		unsigned int len = k.length();
@@ -254,8 +254,8 @@ QString KSSLCertificate::getMD5DigestFromKDEKey(const QString &k) {
 }
 
 
-QString KSSLCertificate::getMD5DigestText() const {
-QString rc = "";
+TQString KSSLCertificate::getMD5DigestText() const {
+TQString rc = "";
 
 #ifdef KSSL_HAVE_SSL
 	unsigned int n;
@@ -279,8 +279,8 @@ return rc;
 
 
 
-QString KSSLCertificate::getMD5Digest() const {
-QString rc = "";
+TQString KSSLCertificate::getMD5Digest() const {
+TQString rc = "";
 
 #ifdef KSSL_HAVE_SSL
 	unsigned int n;
@@ -302,8 +302,8 @@ return rc;
 
 
 
-QString KSSLCertificate::getKeyType() const {
-QString rc = "";
+TQString KSSLCertificate::getKeyType() const {
+TQString rc = "";
 
 #ifdef KSSL_HAVE_SSL
 	EVP_PKEY *pkey = d->kossl->X509_get_pubkey(d->m_cert);
@@ -328,8 +328,8 @@ return rc;
 
 
 
-QString KSSLCertificate::getPublicKeyText() const {
-QString rc = "";
+TQString KSSLCertificate::getPublicKeyText() const {
+TQString rc = "";
 char *x = NULL;
 
 #ifdef KSSL_HAVE_SSL
@@ -389,7 +389,7 @@ char *x = NULL;
 				d->kossl->OPENSSL_free(x);
 	
 				x = d->kossl->BN_bn2hex(pkey->pkey.dsa->g);
-				rc += QString("g: ");
+				rc += TQString("g: ");
 				for (unsigned int i = 0; i < strlen(x); i++) {
 					if (i%40 != 0 && i%2 == 0)
 						rc += ":";
@@ -422,8 +422,8 @@ return rc;
 
 
 
-QString KSSLCertificate::getIssuer() const {
-QString rc = "";
+TQString KSSLCertificate::getIssuer() const {
+TQString rc = "";
 
 #ifdef KSSL_HAVE_SSL
 	char *t = d->kossl->X509_NAME_oneline(d->kossl->X509_get_issuer_name(d->m_cert), 0, 0);
@@ -478,10 +478,10 @@ if (c) {
 	}
 
 #if 0
-	kdDebug(7029) << "flags: " << QString::number(c->ex_flags, 2)
-		      << "\nkeyusage: " << QString::number(c->ex_kusage, 2)
-		      << "\nxkeyusage: " << QString::number(c->ex_xkusage, 2)
-		      << "\nnscert: " << QString::number(c->ex_nscert, 2)
+	kdDebug(7029) << "flags: " << TQString::number(c->ex_flags, 2)
+		      << "\nkeyusage: " << TQString::number(c->ex_kusage, 2)
+		      << "\nxkeyusage: " << TQString::number(c->ex_xkusage, 2)
+		      << "\nnscert: " << TQString::number(c->ex_nscert, 2)
 		      << endl;
 	if (c->ex_flags & EXFLAG_KUSAGE)
 		kdDebug(7029) << "     --- Key Usage extensions found" << endl;
@@ -637,7 +637,7 @@ KSSLCertificate::KSSLValidationList KSSLCertificate::validateVerbose(KSSLCertifi
 		return errors;
 	}
 
-	QStringList qsl = KGlobal::dirs()->resourceDirs("kssl");
+	TQStringList qsl = KGlobal::dirs()->resourceDirs("kssl");
 
 	if (qsl.isEmpty()) {
 		errors << KSSLCertificate::NoCARoot;
@@ -646,9 +646,9 @@ KSSLCertificate::KSSLValidationList KSSLCertificate::validateVerbose(KSSLCertifi
 
 	KSSLCertificate::KSSLValidation ksslv = Unknown;
 
-	for (QStringList::Iterator j = qsl.begin(); j != qsl.end(); ++j) {
+	for (TQStringList::Iterator j = qsl.begin(); j != qsl.end(); ++j) {
 		struct stat sb;
-		QString _j = (*j) + "ca-bundle.crt";
+		TQString _j = (*j) + "ca-bundle.crt";
 		if (-1 == stat(_j.ascii(), &sb)) {
 			continue;
 		}
@@ -849,38 +849,38 @@ return rc;
 }
 
 
-QString KSSLCertificate::getNotBefore() const {
+TQString KSSLCertificate::getNotBefore() const {
 #ifdef KSSL_HAVE_SSL
 return ASN1_UTCTIME_QString(X509_get_notBefore(d->m_cert));
 #else
-return QString::null;
+return TQString::null;
 #endif
 }
 
 
-QString KSSLCertificate::getNotAfter() const {
+TQString KSSLCertificate::getNotAfter() const {
 #ifdef KSSL_HAVE_SSL
 return ASN1_UTCTIME_QString(X509_get_notAfter(d->m_cert));
 #else
-return QString::null;
+return TQString::null;
 #endif
 }
 
 
-QDateTime KSSLCertificate::getQDTNotBefore() const {
+TQDateTime KSSLCertificate::getQDTNotBefore() const {
 #ifdef KSSL_HAVE_SSL
 return ASN1_UTCTIME_QDateTime(X509_get_notBefore(d->m_cert), NULL);
 #else
-return QDateTime::currentDateTime();
+return TQDateTime::currentDateTime();
 #endif
 }
 
 
-QDateTime KSSLCertificate::getQDTNotAfter() const {
+TQDateTime KSSLCertificate::getQDTNotAfter() const {
 #ifdef KSSL_HAVE_SSL
 return ASN1_UTCTIME_QDateTime(X509_get_notAfter(d->m_cert), NULL);
 #else
-return QDateTime::currentDateTime();
+return TQDateTime::currentDateTime();
 #endif
 }
 
@@ -909,12 +909,12 @@ return newOne;
 }
 
 
-QString KSSLCertificate::toString() {
+TQString KSSLCertificate::toString() {
 return KCodecs::base64Encode(toDer());
 }
 
 
-QString KSSLCertificate::verifyText(KSSLValidation x) {
+TQString KSSLCertificate::verifyText(KSSLValidation x) {
 switch (x) {
 case KSSLCertificate::Ok:
 	return i18n("The certificate is valid.");
@@ -954,8 +954,8 @@ return i18n("The certificate is invalid.");
 }
 
 
-QByteArray KSSLCertificate::toDer() {
-QByteArray qba;
+TQByteArray KSSLCertificate::toDer() {
+TQByteArray qba;
 #ifdef KSSL_HAVE_SSL
 unsigned int certlen = d->kossl->i2d_X509(getCert(), NULL);
 unsigned char *cert = new unsigned char[certlen];
@@ -972,9 +972,9 @@ return qba;
 
 
 
-QByteArray KSSLCertificate::toPem() {
-QByteArray qba;
-QString thecert = toString();
+TQByteArray KSSLCertificate::toPem() {
+TQByteArray qba;
+TQString thecert = toString();
 const char *header = "-----BEGIN CERTIFICATE-----\n";
 const char *footer = "-----END CERTIFICATE-----\n";
 
@@ -1000,8 +1000,8 @@ return qba;
 #define NETSCAPE_CERT_HDR     "certificate"
 
 // what a piece of crap this is
-QByteArray KSSLCertificate::toNetscape() {
-QByteArray qba;
+TQByteArray KSSLCertificate::toNetscape() {
+TQByteArray qba;
 #ifdef KSSL_HAVE_SSL
 ASN1_HEADER ah;
 ASN1_OCTET_STRING os;
@@ -1017,7 +1017,7 @@ KTempFile ktf;
 
 	ktf.close();
 
-	QFile qf(ktf.name());
+	TQFile qf(ktf.name());
 	qf.open(IO_ReadOnly);
 	char *buf = new char[qf.size()];
 	qf.readBlock(buf, qf.size());
@@ -1033,15 +1033,15 @@ return qba;
 
 
 
-QString KSSLCertificate::toText() {
-QString text;
+TQString KSSLCertificate::toText() {
+TQString text;
 #ifdef KSSL_HAVE_SSL
 KTempFile ktf;
 
 	d->kossl->X509_print(ktf.fstream(), getCert());
 	ktf.close();
 
-	QFile qf(ktf.name());
+	TQFile qf(ktf.name());
 	qf.open(IO_ReadOnly);
 	char *buf = new char[qf.size()+1];
 	qf.readBlock(buf, qf.size());
@@ -1054,10 +1054,10 @@ KTempFile ktf;
 return text;
 }
 
-// KDE 4: Make it const QString &
-bool KSSLCertificate::setCert(QString& cert) {
+// KDE 4: Make it const TQString &
+bool KSSLCertificate::setCert(TQString& cert) {
 #ifdef KSSL_HAVE_SSL
-QByteArray qba, qbb = cert.local8Bit().copy();
+TQByteArray qba, qbb = cert.local8Bit().copy();
 	KCodecs::base64Decode(qbb, qba);
 	unsigned char *qbap = reinterpret_cast<unsigned char *>(qba.data());
 	X509 *x5c = KOSSL::self()->d2i_X509(NULL, &qbap, qba.size());
@@ -1080,8 +1080,8 @@ return d->_extensions.certTypeCA();
 }
 
 
-QStringList KSSLCertificate::subjAltNames() const {
-	QStringList rc;
+TQStringList KSSLCertificate::subjAltNames() const {
+	TQStringList rc;
 #ifdef KSSL_HAVE_SSL
 	STACK_OF(GENERAL_NAME) *names;
 	names = (STACK_OF(GENERAL_NAME)*)d->kossl->X509_get_ext_d2i(d->m_cert, NID_subject_alt_name, 0, 0);
@@ -1098,7 +1098,7 @@ QStringList KSSLCertificate::subjAltNames() const {
 			continue;
 		}
 
-		QString s = (const char *)d->kossl->ASN1_STRING_data(val->d.ia5);
+		TQString s = (const char *)d->kossl->ASN1_STRING_data(val->d.ia5);
 		if (!s.isEmpty()) {
 			rc += s;
 		}
@@ -1109,9 +1109,9 @@ QStringList KSSLCertificate::subjAltNames() const {
 }
 
 
-QDataStream& operator<<(QDataStream& s, const KSSLCertificate& r) {
-QStringList qsl;
-QPtrList<KSSLCertificate> cl = const_cast<KSSLCertificate&>(r).chain().getChain();
+TQDataStream& operator<<(TQDataStream& s, const KSSLCertificate& r) {
+TQStringList qsl;
+TQPtrList<KSSLCertificate> cl = const_cast<KSSLCertificate&>(r).chain().getChain();
 
 	for (KSSLCertificate *c = cl.first(); c != 0; c = cl.next()) {
 		qsl << c->toString();
@@ -1125,9 +1125,9 @@ return s;
 }
 
 
-QDataStream& operator>>(QDataStream& s, KSSLCertificate& r) {
-QStringList qsl;
-QString cert;
+TQDataStream& operator>>(TQDataStream& s, KSSLCertificate& r) {
+TQStringList qsl;
+TQString cert;
 
 s >> cert >> qsl;
 

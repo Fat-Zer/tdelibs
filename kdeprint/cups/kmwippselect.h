@@ -27,9 +27,9 @@ class KListBox;
 class KMWIppSelect : public KMWizardPage
 {
 public:
-	KMWIppSelect(QWidget *parent = 0, const char *name = 0);
+	KMWIppSelect(TQWidget *parent = 0, const char *name = 0);
 
-	bool isValid(QString&);
+	bool isValid(TQString&);
 	void initPrinter(KMPrinter*);
 	void updatePrinter(KMPrinter*);
 

@@ -20,8 +20,8 @@
 #ifndef KMPRINTERVIEW_H
 #define KMPRINTERVIEW_H
 
-#include <qwidgetstack.h>
-#include <qptrlist.h>
+#include <tqwidgetstack.h>
+#include <tqptrlist.h>
 
 class KMIconView;
 class KMListView;
@@ -34,22 +34,22 @@ class KMPrinterView : public QWidgetStack
 public:
 	enum ViewType { Icons = 0, List, Tree };
 
-	KMPrinterView(QWidget *parent = 0, const char *name = 0);
+	KMPrinterView(TQWidget *parent = 0, const char *name = 0);
 	~KMPrinterView();
 
-	void setPrinterList(QPtrList<KMPrinter> *list);
+	void setPrinterList(TQPtrList<KMPrinter> *list);
 	void setPrinter( KMPrinter* );
 	void setViewType(ViewType t);
 	ViewType viewType() const 	{ return m_type; }
 
-	QSize minimumSizeHint() const;
+	TQSize minimumSizeHint() const;
 
 signals:
-	void printerSelected(const QString&);
-	void rightButtonClicked(const QString&, const QPoint&);
+	void printerSelected(const TQString&);
+	void rightButtonClicked(const TQString&, const TQPoint&);
 
 protected slots:
-	void slotPrinterSelected(const QString&);
+	void slotPrinterSelected(const TQString&);
 
 private:
 	KMIconView	*m_iconview;

@@ -21,9 +21,9 @@
   Boston, MA 02110-1301, USA.
 */
 
-#include <qfile.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqfile.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -42,12 +42,12 @@
 class KCMError : public KCModule
 {
 	public:
-		KCMError( const QString& msg, const QString& details, QWidget* parent )
+		KCMError( const TQString& msg, const TQString& details, TQWidget* parent )
 			: KCModule( parent, "KCMError" )
 		{
-			QVBoxLayout* topLayout = new QVBoxLayout( this );
-			topLayout->addWidget( new QLabel( msg, this ) );
-			topLayout->addWidget( new QLabel( details, this ) );
+			TQVBoxLayout* topLayout = new TQVBoxLayout( this );
+			topLayout->addWidget( new TQLabel( msg, this ) );
+			topLayout->addWidget( new TQLabel( details, this ) );
 		}
 };
 /***************************************************************/
@@ -55,19 +55,19 @@ class KCMError : public KCModule
 
 
 
-KCModule* KCModuleLoader::load(const KCModuleInfo &mod, const QString &libname,
-    KLibLoader *loader, ErrorReporting report, QWidget * parent,
-    const char * name, const QStringList & args )
+KCModule* KCModuleLoader::load(const KCModuleInfo &mod, const TQString &libname,
+    KLibLoader *loader, ErrorReporting report, TQWidget * parent,
+    const char * name, const TQStringList & args )
 {
   // attempt to load modules with ComponentFactory, only if the symbol init_<lib> exists
   // (this is because some modules, e.g. kcmkio with multiple modules in the library,
   // cannot be ported to KGenericFactory)
-  KLibrary *lib = loader->library(QFile::encodeName(libname.arg(mod.library())));
+  KLibrary *lib = loader->library(TQFile::encodeName(libname.arg(mod.library())));
   if (lib) {
-    QString initSym("init_");
+    TQString initSym("init_");
     initSym += libname.arg(mod.library());
 
-    if ( lib->hasSymbol(QFile::encodeName(initSym)) )
+    if ( lib->hasSymbol(TQFile::encodeName(initSym)) )
     {
       KLibFactory *factory = lib->factory();
       if ( factory )
@@ -81,19 +81,19 @@ KCModule* KCModuleLoader::load(const KCModuleInfo &mod, const QString &libname,
     }
 
     // get the create_ function
-    QString factory("create_%1");
-    void *create = lib->symbol(QFile::encodeName(factory.arg(mod.handle())));
+    TQString factory("create_%1");
+    void *create = lib->symbol(TQFile::encodeName(factory.arg(mod.handle())));
 
     if (create)
     {
       // create the module
-      KCModule* (*func)(QWidget *, const char *);
-      func = (KCModule* (*)(QWidget *, const char *)) create;
+      KCModule* (*func)(TQWidget *, const char *);
+      func = (KCModule* (*)(TQWidget *, const char *)) create;
       return  func( parent, name ? name : mod.handle().latin1() );
     }
     else
     {
-      QString libFileName = lib->fileName();
+      TQString libFileName = lib->fileName();
       lib->unload();
       return reportError( report, i18n("<qt>There was an error when loading the module '%1'.<br><br>"
           "The desktop file (%2) as well as the library (%3) was found but "
@@ -103,22 +103,22 @@ KCModule* KCModuleLoader::load(const KCModuleInfo &mod, const QString &libname,
           .arg( mod.moduleName() )
           .arg( mod.fileName() )
           .arg( libFileName ),
-          QString::null, parent );
+          TQString::null, parent );
     }
 
     lib->unload();
   }
   return reportError( report, i18n("The specified library %1 could not be found.")
-      .arg( mod.library() ), QString::null, parent );
+      .arg( mod.library() ), TQString::null, parent );
   return 0;
 }
 
-KCModule* KCModuleLoader::loadModule(const KCModuleInfo &mod, bool withfallback, QWidget * parent, const char * name, const QStringList & args )
+KCModule* KCModuleLoader::loadModule(const KCModuleInfo &mod, bool withfallback, TQWidget * parent, const char * name, const TQStringList & args )
 {
   return loadModule( mod, None, withfallback, parent, name, args );
 }
 
-KCModule* KCModuleLoader::loadModule(const KCModuleInfo &mod, ErrorReporting report, bool withfallback, QWidget * parent, const char * name, const QStringList & args )
+KCModule* KCModuleLoader::loadModule(const KCModuleInfo &mod, ErrorReporting report, bool withfallback, TQWidget * parent, const char * name, const TQStringList & args )
 {
   /*
    * Simple libraries as modules are the easiest case:
@@ -158,13 +158,13 @@ KCModule* KCModuleLoader::loadModule(const KCModuleInfo &mod, ErrorReporting rep
      * Only try to load libkcm_* if it exists, otherwise KLibLoader::lastErrorMessage would say
      * "libkcm_foo not found" instead of the real problem with loading kcm_foo.
      */
-    if (!KLibLoader::findLibrary( QCString( "libkcm_" ) + QFile::encodeName( mod.library() ) ).isEmpty() )
+    if (!KLibLoader::findLibrary( TQCString( "libkcm_" ) + TQFile::encodeName( mod.library() ) ).isEmpty() )
       module = load(mod, "libkcm_%1", loader, report, parent, name, args );
     if (module)
       return module;
     return reportError( report,
         i18n("The module %1 could not be loaded.")
-        .arg( mod.moduleName() ), QString::null, parent );
+        .arg( mod.moduleName() ), TQString::null, parent );
   }
 
   /*
@@ -177,7 +177,7 @@ KCModule* KCModuleLoader::loadModule(const KCModuleInfo &mod, ErrorReporting rep
    */
   if(withfallback)
   {
-    KApplication::startServiceByDesktopPath(mod.fileName(), QString::null);
+    KApplication::startServiceByDesktopPath(mod.fileName(), TQString::null);
   }
   else
   {
@@ -189,14 +189,14 @@ KCModule* KCModuleLoader::loadModule(const KCModuleInfo &mod, ErrorReporting rep
   return 0;
 }
 
-KCModule* KCModuleLoader::loadModule(const QString &module, QWidget *parent,
-      const char *name, const QStringList & args)
+KCModule* KCModuleLoader::loadModule(const TQString &module, TQWidget *parent,
+      const char *name, const TQStringList & args)
 {
   return loadModule(KCModuleInfo(module), None, false, parent, name, args);
 }
 
-KCModule* KCModuleLoader::loadModule(const QString &module, ErrorReporting
-    report, QWidget *parent, const char *name, const QStringList & args)
+KCModule* KCModuleLoader::loadModule(const TQString &module, ErrorReporting
+    report, TQWidget *parent, const char *name, const TQStringList & args)
 {
   return loadModule(KCModuleInfo(module), report, false, parent, name, args);
 }
@@ -207,14 +207,14 @@ void KCModuleLoader::unloadModule(const KCModuleInfo &mod)
   KLibLoader *loader = KLibLoader::self();
 
   // try to unload the library
-  QString libname("libkcm_%1");
-  loader->unloadLibrary(QFile::encodeName(libname.arg(mod.library())));
+  TQString libname("libkcm_%1");
+  loader->unloadLibrary(TQFile::encodeName(libname.arg(mod.library())));
 
   libname = "kcm_%1";
-  loader->unloadLibrary(QFile::encodeName(libname.arg(mod.library())));
+  loader->unloadLibrary(TQFile::encodeName(libname.arg(mod.library())));
 }
 
-void KCModuleLoader::showLastLoaderError(QWidget *parent)
+void KCModuleLoader::showLastLoaderError(TQWidget *parent)
 {
   KMessageBox::detailedError(parent,
       i18n("There was an error loading the module."),i18n("<qt><p>The diagnostics is:<br>%1"
@@ -227,7 +227,7 @@ void KCModuleLoader::showLastLoaderError(QWidget *parent)
 
 }
 
-bool KCModuleLoader::testModule( const QString& module )
+bool KCModuleLoader::testModule( const TQString& module )
 {
   return testModule( KCModuleInfo( module ) );
 }
@@ -240,7 +240,7 @@ bool KCModuleLoader::testModule( const KCModuleInfo& module )
     return true;
   }
 
-  bool doLoad = module.service()->property( "X-KDE-Test-Module", QVariant::Bool ).toBool();
+  bool doLoad = module.service()->property( "X-KDE-Test-Module", TQVariant::Bool ).toBool();
   if( !doLoad )
   {
     return true;
@@ -254,10 +254,10 @@ bool KCModuleLoader::testModule( const KCModuleInfo& module )
      * a corresponding KCMError.
      * */
     KLibLoader* loader = KLibLoader::self();
-    KLibrary* library = loader->library( QFile::encodeName((QString("kcm_%1").arg(module.library()))) );
+    KLibrary* library = loader->library( TQFile::encodeName((TQString("kcm_%1").arg(module.library()))) );
     if( library )
     {
-      void *test_func = library->symbol( QString("test_%1").arg(module.factoryName()).utf8() );
+      void *test_func = library->symbol( TQString("test_%1").arg(module.factoryName()).utf8() );
       if( test_func )
       {
         bool (*func)() = (bool(*)())test_func;
@@ -281,8 +281,8 @@ bool KCModuleLoader::testModule( const KCModuleInfo& module )
   }
 }
 
-KCModule* KCModuleLoader::reportError( ErrorReporting report, const QString & text,
-        QString details, QWidget * parent )
+KCModule* KCModuleLoader::reportError( ErrorReporting report, const TQString & text,
+        TQString details, TQWidget * parent )
 {
   if( details.isNull() )
     details = i18n("<qt><p>The diagnostics is:<br>%1"

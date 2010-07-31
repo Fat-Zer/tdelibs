@@ -20,9 +20,9 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include <qstring.h>
-#include <qtooltip.h>
-#include <qapplication.h>
+#include <tqstring.h>
+#include <tqtooltip.h>
+#include <tqapplication.h>
 
 #include <kaccel.h>
 #include <kcombobox.h>
@@ -44,7 +44,7 @@
 class KURLDragPushButton : public KPushButton
 {
 public:
-    KURLDragPushButton( QWidget *parent, const char *name=0 )
+    KURLDragPushButton( TQWidget *parent, const char *name=0 )
 	: KPushButton( parent, name ) {
     	setDragEnabled( true );
     }
@@ -63,11 +63,11 @@ public:
     */
 
 protected:
-    virtual QDragObject *dragObject() {
+    virtual TQDragObject *dragObject() {
 	if ( m_urls.isEmpty() )
 	    return 0L;
 
-	QDragObject *drag = new KURLDrag( m_urls, this, "url drag" );
+	TQDragObject *drag = new KURLDrag( m_urls, this, "url drag" );
 	return drag;
     }
 
@@ -90,7 +90,7 @@ public:
         fileDialogMode = KFile::File | KFile::ExistingOnly | KFile::LocalOnly;
     }
 
-    void setText( const QString& text ) {
+    void setText( const TQString& text ) {
 	if ( combo )
 	{
 	    if (combo->editable())
@@ -109,19 +109,19 @@ public:
 	}
     }
 
-    void connectSignals( QObject *receiver ) {
-	QObject *sender;
+    void connectSignals( TQObject *receiver ) {
+	TQObject *sender;
 	if ( combo )
 	    sender = combo;
 	else
 	    sender = edit;
 
-	connect( sender, SIGNAL( textChanged( const QString& )),
-		 receiver, SIGNAL( textChanged( const QString& )));
-	connect( sender, SIGNAL( returnPressed() ),
-		 receiver, SIGNAL( returnPressed() ));
-	connect( sender, SIGNAL( returnPressed( const QString& ) ),
-		 receiver, SIGNAL( returnPressed( const QString& ) ));
+	connect( sender, TQT_SIGNAL( textChanged( const TQString& )),
+		 receiver, TQT_SIGNAL( textChanged( const TQString& )));
+	connect( sender, TQT_SIGNAL( returnPressed() ),
+		 receiver, TQT_SIGNAL( returnPressed() ));
+	connect( sender, TQT_SIGNAL( returnPressed( const TQString& ) ),
+		 receiver, TQT_SIGNAL( returnPressed( const TQString& ) ));
     }
 
     void setCompletionObject( KCompletion *comp ) {
@@ -134,8 +134,8 @@ public:
     /**
      * replaces ~user or $FOO, if necessary
      */
-    QString url() {
-        QString txt = combo ? combo->currentText() : edit->text();
+    TQString url() {
+        TQString txt = combo ? combo->currentText() : edit->text();
         KURLCompletion *comp;
         if ( combo )
             comp = dynamic_cast<KURLCompletion*>(combo->completionObject());
@@ -151,19 +151,19 @@ public:
     KLineEdit *edit;
     KComboBox *combo;
     int fileDialogMode;
-    QString fileDialogFilter;
+    TQString fileDialogFilter;
 };
 
 
 
-KURLRequester::KURLRequester( QWidget *editWidget, QWidget *parent,
+KURLRequester::KURLRequester( TQWidget *editWidget, TQWidget *parent,
 			      const char *name )
-  : QHBox( parent, name )
+  : TQHBox( parent, name )
 {
     d = new KURLRequesterPrivate;
 
     // must have this as parent
-    editWidget->reparent( this, 0, QPoint(0,0) );
+    editWidget->reparent( this, 0, TQPoint(0,0) );
     d->edit = dynamic_cast<KLineEdit*>( editWidget );
     d->combo = dynamic_cast<KComboBox*>( editWidget );
 
@@ -171,17 +171,17 @@ KURLRequester::KURLRequester( QWidget *editWidget, QWidget *parent,
 }
 
 
-KURLRequester::KURLRequester( QWidget *parent, const char *name )
-  : QHBox( parent, name )
+KURLRequester::KURLRequester( TQWidget *parent, const char *name )
+  : TQHBox( parent, name )
 {
     d = new KURLRequesterPrivate;
     init();
 }
 
 
-KURLRequester::KURLRequester( const QString& url, QWidget *parent,
+KURLRequester::KURLRequester( const TQString& url, TQWidget *parent,
 			      const char *name )
-  : QHBox( parent, name )
+  : TQHBox( parent, name )
 {
     d = new KURLRequesterPrivate;
     init();
@@ -206,33 +206,33 @@ void KURLRequester::init()
 	d->edit = new KLineEdit( this, "line edit" );
 
     myButton = new KURLDragPushButton( this, "kfile button");
-    QIconSet iconSet = SmallIconSet(QString::fromLatin1("fileopen"));
-    QPixmap pixMap = iconSet.pixmap( QIconSet::Small, QIconSet::Normal );
+    TQIconSet iconSet = SmallIconSet(TQString::fromLatin1("fileopen"));
+    TQPixmap pixMap = iconSet.pixmap( TQIconSet::Small, TQIconSet::Normal );
     myButton->setIconSet( iconSet );
     myButton->setFixedSize( pixMap.width()+8, pixMap.height()+8 );
-    QToolTip::add(myButton, i18n("Open file dialog"));
+    TQToolTip::add(myButton, i18n("Open file dialog"));
 
-    connect( myButton, SIGNAL( pressed() ), SLOT( slotUpdateURL() ));
+    connect( myButton, TQT_SIGNAL( pressed() ), TQT_SLOT( slotUpdateURL() ));
 
     setSpacing( KDialog::spacingHint() );
 
-    QWidget *widget = d->combo ? (QWidget*) d->combo : (QWidget*) d->edit;
+    TQWidget *widget = d->combo ? (TQWidget*) d->combo : (TQWidget*) d->edit;
     widget->installEventFilter( this );
     setFocusProxy( widget );
 
     d->connectSignals( this );
-    connect( myButton, SIGNAL( clicked() ), this, SLOT( slotOpenDialog() ));
+    connect( myButton, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotOpenDialog() ));
 
     myCompletion = new KURLCompletion();
     d->setCompletionObject( myCompletion );
 
     KAccel *accel = new KAccel( this );
-    accel->insert( KStdAccel::Open, this, SLOT( slotOpenDialog() ));
+    accel->insert( KStdAccel::Open, this, TQT_SLOT( slotOpenDialog() ));
     accel->readSettings();
 }
 
 
-void KURLRequester::setURL( const QString& url )
+void KURLRequester::setURL( const TQString& url )
 {
     if ( myShowLocalProt )
     {
@@ -258,14 +258,14 @@ void KURLRequester::setKURL( const KURL& url )
         d->setText( url.pathOrURL() );
 }
 
-void KURLRequester::setCaption( const QString& caption )
+void KURLRequester::setCaption( const TQString& caption )
 {
-   QWidget::setCaption( caption );
+   TQWidget::setCaption( caption );
    if (myFileDialog)
       myFileDialog->setCaption( caption );
 }
 
-QString KURLRequester::url() const
+TQString KURLRequester::url() const
 {
     return d->url();
 }
@@ -296,7 +296,7 @@ void KURLRequester::slotOpenDialog()
               dlg->setSelection( u.url() );
       }
 
-      if ( dlg->exec() != QDialog::Accepted )
+      if ( dlg->exec() != TQDialog::Accepted )
       {
           return;
       }
@@ -324,14 +324,14 @@ unsigned int KURLRequester::mode() const
     return d->fileDialogMode;
 }
 
-void KURLRequester::setFilter(const QString &filter)
+void KURLRequester::setFilter(const TQString &filter)
 {
     d->fileDialogFilter = filter;
     if (myFileDialog)
        myFileDialog->setFilter( d->fileDialogFilter );
 }
 
-QString KURLRequester::filter( ) const
+TQString KURLRequester::filter( ) const
 {
     return d->fileDialogFilter;
 }
@@ -340,8 +340,8 @@ QString KURLRequester::filter( ) const
 KFileDialog * KURLRequester::fileDialog() const
 {
     if ( !myFileDialog ) {
-        QWidget *p = parentWidget();
-        myFileDialog = new KFileDialog( QString::null, d->fileDialogFilter, p,
+        TQWidget *p = parentWidget();
+        myFileDialog = new KFileDialog( TQString::null, d->fileDialogFilter, p,
                                         "file dialog", true );
 
         myFileDialog->setMode( d->fileDialogMode );
@@ -363,7 +363,7 @@ void KURLRequester::setShowLocalProtocol( bool b )
 
 void KURLRequester::clear()
 {
-    d->setText( QString::null );
+    d->setText( TQString::null );
 }
 
 KLineEdit * KURLRequester::lineEdit() const
@@ -380,19 +380,19 @@ void KURLRequester::slotUpdateURL()
 {
     // bin compat, myButton is declared as QPushButton
     KURL u;
-    u = KURL( KURL( QDir::currentDirPath() + '/' ), url() );
+    u = KURL( KURL( TQDir::currentDirPath() + '/' ), url() );
     (static_cast<KURLDragPushButton *>( myButton ))->setURL( u );
 }
 
-bool KURLRequester::eventFilter( QObject *obj, QEvent *ev )
+bool KURLRequester::eventFilter( TQObject *obj, TQEvent *ev )
 {
     if ( ( d->edit == obj ) || ( d->combo == obj ) )
     {
-        if (( ev->type() == QEvent::FocusIn ) || ( ev->type() == QEvent::FocusOut ))
+        if (( ev->type() == TQEvent::FocusIn ) || ( ev->type() == TQEvent::FocusOut ))
             // Forward focusin/focusout events to the urlrequester; needed by file form element in khtml
-            QApplication::sendEvent( this, ev );
+            TQApplication::sendEvent( this, ev );
     }
-    return QWidget::eventFilter( obj, ev );
+    return TQWidget::eventFilter( obj, ev );
 }
 
 KPushButton * KURLRequester::button() const
@@ -402,8 +402,8 @@ KPushButton * KURLRequester::button() const
 
 KEditListBox::CustomEditor KURLRequester::customEditor()
 {
-    setSizePolicy(QSizePolicy( QSizePolicy::Preferred,
-                               QSizePolicy::Fixed));
+    setSizePolicy(TQSizePolicy( TQSizePolicy::Preferred,
+                               TQSizePolicy::Fixed));
 
     KLineEdit *edit = d->edit;
     if ( !edit && d->combo )
@@ -421,7 +421,7 @@ KEditListBox::CustomEditor KURLRequester::customEditor()
 void KURLRequester::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-KURLComboRequester::KURLComboRequester( QWidget *parent,
+KURLComboRequester::KURLComboRequester( TQWidget *parent,
 			      const char *name )
   : KURLRequester( new KComboBox(false), parent, name)
 {

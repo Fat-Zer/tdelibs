@@ -28,7 +28,7 @@
 #include <kinstance.h>
 #include <khelpmenu.h>
 #include <kstandarddirs.h>
-#include <qapplication.h>
+#include <tqapplication.h>
 
 #include <kdebug.h>
 #include <kxmlguifactory.h>
@@ -52,13 +52,13 @@ public:
   {
   }
 
-  QGuardedPtr<Part> m_activePart;
+  TQGuardedPtr<Part> m_activePart;
   bool m_bShellGUIActivated;
   KHelpMenu *m_helpMenu;
 };
 }
 
-DockMainWindow::DockMainWindow( QWidget* parent, const char *name, WFlags f )
+DockMainWindow::DockMainWindow( TQWidget* parent, const char *name, WFlags f )
   : KDockMainWindow( parent, name, f )
 {
   d = new DockMainWindowPrivate();
@@ -72,27 +72,27 @@ DockMainWindow::~DockMainWindow()
 
 void DockMainWindow::createGUI( Part * part )
 {
-  kdDebug(1000) << QString("DockMainWindow::createGUI for %1").arg(part?part->name():"0L") << endl;
+  kdDebug(1000) << TQString("DockMainWindow::createGUI for %1").arg(part?part->name():"0L") << endl;
 
   KXMLGUIFactory *factory = guiFactory();
 
   setUpdatesEnabled( false );
 
-  QPtrList<Plugin> plugins;
+  TQPtrList<Plugin> plugins;
 
   if ( d->m_activePart )
   {
-    kdDebug(1000) << QString("deactivating GUI for %1").arg(d->m_activePart->name()) << endl;
+    kdDebug(1000) << TQString("deactivating GUI for %1").arg(d->m_activePart->name()) << endl;
 
     GUIActivateEvent ev( false );
-    QApplication::sendEvent( d->m_activePart, &ev );
+    TQApplication::sendEvent( d->m_activePart, &ev );
 
     factory->removeClient( d->m_activePart );
 
-    disconnect( d->m_activePart, SIGNAL( setWindowCaption( const QString & ) ),
-             this, SLOT( setCaption( const QString & ) ) );
-    disconnect( d->m_activePart, SIGNAL( setStatusBarText( const QString & ) ),
-             this, SLOT( slotSetStatusBarText( const QString & ) ) );
+    disconnect( d->m_activePart, TQT_SIGNAL( setWindowCaption( const TQString & ) ),
+             this, TQT_SLOT( setCaption( const TQString & ) ) );
+    disconnect( d->m_activePart, TQT_SIGNAL( setStatusBarText( const TQString & ) ),
+             this, TQT_SLOT( slotSetStatusBarText( const TQString & ) ) );
   }
 
   if ( !d->m_bShellGUIActivated )
@@ -105,15 +105,15 @@ void DockMainWindow::createGUI( Part * part )
   if ( part )
   {
     // do this before sending the activate event
-    connect( part, SIGNAL( setWindowCaption( const QString & ) ),
-             this, SLOT( setCaption( const QString & ) ) );
-    connect( part, SIGNAL( setStatusBarText( const QString & ) ),
-             this, SLOT( slotSetStatusBarText( const QString & ) ) );
+    connect( part, TQT_SIGNAL( setWindowCaption( const TQString & ) ),
+             this, TQT_SLOT( setCaption( const TQString & ) ) );
+    connect( part, TQT_SIGNAL( setStatusBarText( const TQString & ) ),
+             this, TQT_SLOT( slotSetStatusBarText( const TQString & ) ) );
 
     factory->addClient( part );
 
     GUIActivateEvent ev( true );
-    QApplication::sendEvent( part, &ev );
+    TQApplication::sendEvent( part, &ev );
 
   }
 
@@ -122,7 +122,7 @@ void DockMainWindow::createGUI( Part * part )
   d->m_activePart = part;
 }
 
-void DockMainWindow::slotSetStatusBarText( const QString & text )
+void DockMainWindow::slotSetStatusBarText( const TQString & text )
 {
   statusBar()->message( text );
 }
@@ -137,18 +137,18 @@ void DockMainWindow::createShellGUI( bool create )
         if ( isHelpMenuEnabled() )
             d->m_helpMenu = new KHelpMenu( this, instance()->aboutData(), true, actionCollection() );
 
-        QString f = xmlFile();
+        TQString f = xmlFile();
         setXMLFile( locate( "config", "ui/ui_standards.rc", instance() ) );
         if ( !f.isEmpty() )
             setXMLFile( f, true );
         else
         {
-            QString auto_file( instance()->instanceName() + "ui.rc" );
+            TQString auto_file( instance()->instanceName() + "ui.rc" );
             setXMLFile( auto_file, true );
         }
 
         GUIActivateEvent ev( true );
-        QApplication::sendEvent( this, &ev );
+        TQApplication::sendEvent( this, &ev );
 
         guiFactory()->addClient( this );
 
@@ -156,7 +156,7 @@ void DockMainWindow::createShellGUI( bool create )
     else
     {
         GUIActivateEvent ev( false );
-        QApplication::sendEvent( this, &ev );
+        TQApplication::sendEvent( this, &ev );
 
         guiFactory()->removeClient( this );
     }

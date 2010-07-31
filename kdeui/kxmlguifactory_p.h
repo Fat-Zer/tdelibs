@@ -19,10 +19,10 @@
 #ifndef __kxmlguifactory_p_h__
 #define __kxmlguifactory_p_h__
 
-#include <qstringlist.h>
-#include <qmap.h>
-#include <qdom.h>
-#include <qvaluestack.h>
+#include <tqstringlist.h>
+#include <tqmap.h>
+#include <tqdom.h>
+#include <tqvaluestack.h>
 
 #include <kaction.h>
 
@@ -36,22 +36,22 @@ namespace KXMLGUI
 
 struct BuildState;
 
-class KDEUI_EXPORT ActionList : public QPtrList<KAction>
+class KDEUI_EXPORT ActionList : public TQPtrList<KAction>
 {
 public:
     ActionList() {}
-    ActionList( const QPtrList<KAction> &rhs )
-        : QPtrList<KAction>( rhs )
+    ActionList( const TQPtrList<KAction> &rhs )
+        : TQPtrList<KAction>( rhs )
     {}
-    ActionList &operator=( const QPtrList<KAction> &rhs )
-    { QPtrList<KAction>::operator=( rhs ); return *this; }
+    ActionList &operator=( const TQPtrList<KAction> &rhs )
+    { TQPtrList<KAction>::operator=( rhs ); return *this; }
 
-    void plug( QWidget *container, int index ) const;
-    void unplug( QWidget *container ) const;
+    void plug( TQWidget *container, int index ) const;
+    void unplug( TQWidget *container ) const;
 };
 
-typedef QPtrListIterator<KAction> ActionListIt;
-typedef QMap< QString, ActionList > ActionListMap;
+typedef TQPtrListIterator<KAction> ActionListIt;
+typedef TQMap< TQString, ActionList > ActionListMap;
 
 /*
  * This structure is used to know to which client certain actions and custom elements
@@ -69,24 +69,24 @@ struct ContainerClient
 {
     KXMLGUIClient *client;
     ActionList actions;
-    QValueList<int> customElements;
-    QString groupName; //is empty if no group client
+    TQValueList<int> customElements;
+    TQString groupName; //is empty if no group client
     ActionListMap actionLists;
-    QString mergingName;
+    TQString mergingName;
 };
-typedef QPtrList<ContainerClient> ContainerClientList;
-typedef QPtrListIterator<ContainerClient> ContainerClientListIt;
+typedef TQPtrList<ContainerClient> ContainerClientList;
+typedef TQPtrListIterator<ContainerClient> ContainerClientListIt;
 
 struct ContainerNode;
 
 struct MergingIndex
 {
     int value; // the actual index value, used as index for plug() or createContainer() calls
-    QString mergingName; // the name of the merging index (i.e. the name attribute of the
+    TQString mergingName; // the name of the merging index (i.e. the name attribute of the
                          // Merge or DefineGroup tag)
-    QString clientName; // the name of the client that defined this index
+    TQString clientName; // the name of the client that defined this index
 };
-typedef QValueList<MergingIndex> MergingIndexList;
+typedef TQValueList<MergingIndex> MergingIndexList;
 
 /*
  * Here we store detailed information about a container, its clients (client=a guiclient having actions
@@ -109,47 +109,47 @@ typedef QValueList<MergingIndex> MergingIndexList;
  */
 struct KDEUI_EXPORT ContainerNode
 {
-    ContainerNode( QWidget *_container, const QString &_tagName, const QString &_name,
+    ContainerNode( TQWidget *_container, const TQString &_tagName, const TQString &_name,
                    ContainerNode *_parent = 0L, KXMLGUIClient *_client = 0L,
                    KXMLGUIBuilder *_builder = 0L, int id = -1,
-                   const QString &_mergingName = QString::null,
-                   const QString &groupName = QString::null,
-                   const QStringList &customTags = QStringList(),
-                   const QStringList &containerTags = QStringList() );
+                   const TQString &_mergingName = TQString::null,
+                   const TQString &groupName = TQString::null,
+                   const TQStringList &customTags = TQStringList(),
+                   const TQStringList &containerTags = TQStringList() );
 
     ContainerNode *parent;
     KXMLGUIClient *client;
     KXMLGUIBuilder *builder;
-    QStringList builderCustomTags;
-    QStringList builderContainerTags;
-    QWidget *container;
+    TQStringList builderCustomTags;
+    TQStringList builderContainerTags;
+    TQWidget *container;
     int containerId;
 
-    QString tagName;
-    QString name;
+    TQString tagName;
+    TQString name;
 
-    QString groupName; //is empty if the container is in no group
+    TQString groupName; //is empty if the container is in no group
 
     ContainerClientList clients;
-    QPtrList<ContainerNode> children;
+    TQPtrList<ContainerNode> children;
 
     int index;
     MergingIndexList mergingIndices;
 
-    QString mergingName;
+    TQString mergingName;
 
     void clearChildren() { children.clear(); }
     void removeChild( ContainerNode *child );
 
-    MergingIndexList::Iterator findIndex( const QString &name );
-    ContainerNode *findContainerNode( QWidget *container );
-    ContainerNode *findContainer( const QString &_name, bool tag );
-    ContainerNode *findContainer( const QString &name, const QString &tagName,
-                                  const QPtrList<QWidget> *excludeList,
+    MergingIndexList::Iterator findIndex( const TQString &name );
+    ContainerNode *findContainerNode( TQWidget *container );
+    ContainerNode *findContainer( const TQString &_name, bool tag );
+    ContainerNode *findContainer( const TQString &name, const TQString &tagName,
+                                  const TQPtrList<TQWidget> *excludeList,
                                   KXMLGUIClient *currClient );
 
     ContainerClient *findChildContainerClient( KXMLGUIClient *currentGUIClient, 
-                                               const QString &groupName, 
+                                               const TQString &groupName, 
                                                const MergingIndexList::Iterator &mergingIdx );
 
     void plugActionList( BuildState &state );
@@ -160,23 +160,23 @@ struct KDEUI_EXPORT ContainerNode
 
     void adjustMergingIndices( int offset, const MergingIndexList::Iterator &it );
 
-    bool destruct( QDomElement element, BuildState &state );
-    void destructChildren( const QDomElement &element, BuildState &state );
-    static QDomElement findElementForChild( const QDomElement &baseElement, 
+    bool destruct( TQDomElement element, BuildState &state );
+    void destructChildren( const TQDomElement &element, BuildState &state );
+    static TQDomElement findElementForChild( const TQDomElement &baseElement, 
                                             ContainerNode *childNode );
     void unplugActions( BuildState &state );
     void unplugClient( ContainerClient *client );
 
     void reset();
 
-    int calcMergingIndex( const QString &mergingName,
+    int calcMergingIndex( const TQString &mergingName,
                           MergingIndexList::Iterator &it,
                           BuildState &state,
                           bool ignoreDefaultMergingIndex );
 };
 
-typedef QPtrList<ContainerNode> ContainerNodeList;
-typedef QPtrListIterator<ContainerNode> ContainerNodeListIt;
+typedef TQPtrList<ContainerNode> ContainerNodeList;
+typedef TQPtrListIterator<ContainerNode> ContainerNodeListIt;
 
 class KDEUI_EXPORT BuildHelper
 {
@@ -184,32 +184,32 @@ public:
     BuildHelper( BuildState &state, 
                  ContainerNode *node );
 
-    void build( const QDomElement &element );
+    void build( const TQDomElement &element );
 
 private:
-    void processElement( const QDomElement &element );
+    void processElement( const TQDomElement &element );
 
-    void processActionOrCustomElement( const QDomElement &e, bool isActionTag );
-    bool processActionElement( const QDomElement &e, int idx );
-    bool processCustomElement( const QDomElement &e, int idx );
+    void processActionOrCustomElement( const TQDomElement &e, bool isActionTag );
+    bool processActionElement( const TQDomElement &e, int idx );
+    bool processCustomElement( const TQDomElement &e, int idx );
 
-    void processStateElement( const QDomElement &element );
+    void processStateElement( const TQDomElement &element );
 
-    void processMergeElement( const QString &tag, const QString &name, const QDomElement &e );
+    void processMergeElement( const TQString &tag, const TQString &name, const TQDomElement &e );
 
-    void processContainerElement( const QDomElement &e, const QString &tag,
-                                  const QString &name );
+    void processContainerElement( const TQDomElement &e, const TQString &tag,
+                                  const TQString &name );
 
 
-    QWidget *createContainer( QWidget *parent, int index, const QDomElement &element,
+    TQWidget *createContainer( TQWidget *parent, int index, const TQDomElement &element,
                               int &id, KXMLGUIBuilder **builder );
 
-    int calcMergingIndex( const QDomElement &element, MergingIndexList::Iterator &it, QString &group );
+    int calcMergingIndex( const TQDomElement &element, MergingIndexList::Iterator &it, TQString &group );
 
-    QStringList customTags;
-    QStringList containerTags;
+    TQStringList customTags;
+    TQStringList containerTags;
 
-    QPtrList<QWidget> containerList;
+    TQPtrList<TQWidget> containerList;
 
     ContainerClient *containerClient;
 
@@ -226,9 +226,9 @@ struct KDEUI_EXPORT BuildState
 
     void reset();
 
-    QString clientName;
+    TQString clientName;
 
-    QString actionListName;
+    TQString actionListName;
     ActionList actionList;
 
     KXMLGUIClient *guiClient;
@@ -237,15 +237,15 @@ struct KDEUI_EXPORT BuildState
     MergingIndexList::Iterator currentClientMergingIt;
 
     KXMLGUIBuilder *builder;
-    QStringList builderCustomTags;
-    QStringList builderContainerTags;
+    TQStringList builderCustomTags;
+    TQStringList builderContainerTags;
 
     KXMLGUIBuilder *clientBuilder;
-    QStringList clientBuilderCustomTags;
-    QStringList clientBuilderContainerTags;
+    TQStringList clientBuilderCustomTags;
+    TQStringList clientBuilderContainerTags;
 };
 
-typedef QValueStack<BuildState> BuildStateStack;
+typedef TQValueStack<BuildState> BuildStateStack;
 
 }
 

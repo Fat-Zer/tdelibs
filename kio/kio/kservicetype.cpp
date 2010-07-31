@@ -27,8 +27,8 @@
 #include <kdebug.h>
 #include <kdesktopfile.h>
 
-template QDataStream& operator>> <QString, QVariant>(QDataStream&, QMap<QString, QVariant>&);
-template QDataStream& operator<< <QString, QVariant>(QDataStream&, const QMap<QString, QVariant>&);
+template TQDataStream& operator>> <TQString, TQVariant>(TQDataStream&, TQMap<TQString, TQVariant>&);
+template TQDataStream& operator<< <TQString, TQVariant>(TQDataStream&, const TQMap<TQString, TQVariant>&);
 
 class KServiceType::KServiceTypePrivate
 {
@@ -40,7 +40,7 @@ public:
   bool parentTypeLoaded;
 };
 
-KServiceType::KServiceType( const QString & _fullpath)
+KServiceType::KServiceType( const TQString & _fullpath)
  : KSycocaEntry(_fullpath), d(0)
 {
   KDesktopFile config( _fullpath );
@@ -72,21 +72,21 @@ KServiceType::init( KDesktopFile *config)
 
   // We store this as property to preserve BC, we can't change that
   // because KSycoca needs to remain BC between KDE 2.x and KDE 3.x
-  QString sDerived = config->readEntry( "X-KDE-Derived" );
+  TQString sDerived = config->readEntry( "X-KDE-Derived" );
   m_bDerived = !sDerived.isEmpty();
   if ( m_bDerived )
     m_mapProps.insert( "X-KDE-Derived", sDerived );
 
-  QStringList tmpList = config->groupList();
-  QStringList::Iterator gIt = tmpList.begin();
+  TQStringList tmpList = config->groupList();
+  TQStringList::Iterator gIt = tmpList.begin();
 
   for( ; gIt != tmpList.end(); ++gIt )
   {
     if ( (*gIt).find( "Property::" ) == 0 )
     {
       config->setGroup( *gIt );
-      QVariant v = config->readPropertyEntry( "Value",
-                   QVariant::nameToType( config->readEntry( "Type" ).ascii() ) );
+      TQVariant v = config->readPropertyEntry( "Value",
+                   TQVariant::nameToType( config->readEntry( "Type" ).ascii() ) );
       if ( v.isValid() )
           m_mapProps.insert( (*gIt).mid( 10 ), v );
     }
@@ -99,15 +99,15 @@ KServiceType::init( KDesktopFile *config)
     {
       config->setGroup( *gIt );
       m_mapPropDefs.insert( (*gIt).mid( 13 ),
-			    QVariant::nameToType( config->readEntry( "Type" ).ascii() ) );
+			    TQVariant::nameToType( config->readEntry( "Type" ).ascii() ) );
     }
   }
 
   m_bValid = !m_strName.isEmpty();
 }
 
-KServiceType::KServiceType( const QString & _fullpath, const QString& _type,
-                            const QString& _icon, const QString& _comment )
+KServiceType::KServiceType( const TQString & _fullpath, const TQString& _type,
+                            const TQString& _icon, const TQString& _comment )
  : KSycocaEntry(_fullpath), d(0)
 {
   m_strName = _type;
@@ -116,14 +116,14 @@ KServiceType::KServiceType( const QString & _fullpath, const QString& _type,
   m_bValid = !m_strName.isEmpty();
 }
 
-KServiceType::KServiceType( QDataStream& _str, int offset )
+KServiceType::KServiceType( TQDataStream& _str, int offset )
  : KSycocaEntry( _str, offset ), d(0)
 {
   load( _str);
 }
 
 void
-KServiceType::load( QDataStream& _str )
+KServiceType::load( TQDataStream& _str )
 {
   Q_INT8 b;
   _str >> m_strName >> m_strIcon >> m_strComment >> m_mapProps >> m_mapPropDefs
@@ -133,7 +133,7 @@ KServiceType::load( QDataStream& _str )
 }
 
 void
-KServiceType::save( QDataStream& _str )
+KServiceType::save( TQDataStream& _str )
 {
   KSycocaEntry::save( _str );
   // !! This data structure should remain binary compatible at all times !!
@@ -148,17 +148,17 @@ KServiceType::~KServiceType()
   delete d;
 }
 
-QString KServiceType::parentServiceType() const
+TQString KServiceType::parentServiceType() const
 {
-  QVariant v = property("X-KDE-Derived");
+  TQVariant v = property("X-KDE-Derived");
   return v.toString();
 }
 
-bool KServiceType::inherits( const QString& servTypeName ) const
+bool KServiceType::inherits( const TQString& servTypeName ) const
 {
   if ( name() == servTypeName )
       return true;
-  QString st = parentServiceType();
+  TQString st = parentServiceType();
   while ( !st.isEmpty() )
   {
       KServiceType::Ptr ptr = KServiceType::serviceType( st );
@@ -171,18 +171,18 @@ bool KServiceType::inherits( const QString& servTypeName ) const
 }
 
 QVariant
-KServiceType::property( const QString& _name ) const
+KServiceType::property( const TQString& _name ) const
 {
-  QVariant v;
+  TQVariant v;
 
   if ( _name == "Name" )
-    v = QVariant( m_strName );
+    v = TQVariant( m_strName );
   else if ( _name == "Icon" )
-    v = QVariant( m_strIcon );
+    v = TQVariant( m_strIcon );
   else if ( _name == "Comment" )
-    v = QVariant( m_strComment );
+    v = TQVariant( m_strComment );
   else {
-    QMap<QString,QVariant>::ConstIterator it = m_mapProps.find( _name );
+    TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( _name );
     if ( it != m_mapProps.end() )
       v = it.data();
   }
@@ -193,9 +193,9 @@ KServiceType::property( const QString& _name ) const
 QStringList
 KServiceType::propertyNames() const
 {
-  QStringList res;
+  TQStringList res;
 
-  QMap<QString,QVariant>::ConstIterator it = m_mapProps.begin();
+  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.begin();
   for( ; it != m_mapProps.end(); ++it )
     res.append( it.key() );
 
@@ -206,36 +206,36 @@ KServiceType::propertyNames() const
   return res;
 }
 
-QVariant::Type
-KServiceType::propertyDef( const QString& _name ) const
+TQVariant::Type
+KServiceType::propertyDef( const TQString& _name ) const
 {
-  QMap<QString,QVariant::Type>::ConstIterator it = m_mapPropDefs.find( _name );
+  TQMap<TQString,TQVariant::Type>::ConstIterator it = m_mapPropDefs.find( _name );
   if ( it == m_mapPropDefs.end() )
-    return QVariant::Invalid;
+    return TQVariant::Invalid;
   return it.data();
 }
 
 QStringList
 KServiceType::propertyDefNames() const
 {
-  QStringList l;
+  TQStringList l;
 
-  QMap<QString,QVariant::Type>::ConstIterator it = m_mapPropDefs.begin();
+  TQMap<TQString,TQVariant::Type>::ConstIterator it = m_mapPropDefs.begin();
   for( ; it != m_mapPropDefs.end(); ++it )
     l.append( it.key() );
 
   return l;
 }
 
-KServiceType::Ptr KServiceType::serviceType( const QString& _name )
+KServiceType::Ptr KServiceType::serviceType( const TQString& _name )
 {
   KServiceType * p = KServiceTypeFactory::self()->findServiceTypeByName( _name );
   return KServiceType::Ptr( p );
 }
 
-static void addUnique(KService::List &lst, QDict<KService> &dict, const KService::List &newLst, bool lowPrio)
+static void addUnique(KService::List &lst, TQDict<KService> &dict, const KService::List &newLst, bool lowPrio)
 {
-  QValueListConstIterator<KService::Ptr> it = newLst.begin();
+  TQValueListConstIterator<KService::Ptr> it = newLst.begin();
   for( ; it != newLst.end(); ++it )
   {
      KService *service = static_cast<KService*>(*it);
@@ -248,9 +248,9 @@ static void addUnique(KService::List &lst, QDict<KService> &dict, const KService
   }
 }
 
-KService::List KServiceType::offers( const QString& _servicetype )
+KService::List KServiceType::offers( const TQString& _servicetype )
 {
-  QDict<KService> dict(53);
+  TQDict<KService> dict(53);
   KService::List lst;
 
   // Services associated directly with this servicetype (the normal case)
@@ -267,7 +267,7 @@ KService::List KServiceType::offers( const QString& _servicetype )
   {
      while(true)
      {
-        QString parent = mime->parentMimeType();
+        TQString parent = mime->parentMimeType();
         if (parent.isEmpty())
            break;
         mime = dynamic_cast<KMimeType *>(KServiceTypeFactory::self()->findServiceTypeByName( parent ));
@@ -279,7 +279,7 @@ KService::List KServiceType::offers( const QString& _servicetype )
   }
   serv = mime = 0;
 
-  //QValueListIterator<KService::Ptr> it = lst.begin();
+  //TQValueListIterator<KService::Ptr> it = lst.begin();
   //for( ; it != lst.end(); ++it )
   //    kdDebug() << (*it).data() << " " << (*it)->name() << endl;
 
@@ -330,7 +330,7 @@ KServiceType::Ptr KServiceType::parentType()
   if (!d)
      d = new KServiceTypePrivate;
      
-  QString parentSt = parentServiceType();
+  TQString parentSt = parentServiceType();
   if (!parentSt.isEmpty())
   {
     d->parentType = KServiceTypeFactory::self()->findServiceTypeByName( parentSt );

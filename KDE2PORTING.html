@@ -136,7 +136,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   generalFont() and fixedFont() are deprecated and will be removed soon.
   Please use KGlobalSettings::generalFont() and KGlobalSettings::fixedFont() instead.<P>
 
-  appName() is deprecated. Please use QApplication::name() or instanceName
+  appName() is deprecated. Please use TQApplication::name() or instanceName
   instead.<P>
 
   The methods tempSaveName() and checkRecoverFile() return QString
@@ -189,7 +189,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   to klocale-&gt;translate with i18n.<P>
 
   The return value of i18n is also no longer a const char*,
-  but a unicode QString.<P>
+  but a unicode TQString.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
@@ -216,7 +216,7 @@ must have created a KApplication object before the methods can be used.<P>
     <PRE>
     ...
         	KConfig *appcfg = KGlobal::config();
-	        QString mystr	 = i18n( "This is a string" );
+	        TQString mystr	 = i18n( "This is a string" );
 
 
 		KIconLoader *loader = KGlobal::iconLoader();
@@ -277,9 +277,9 @@ Both the "About KDE" and the "About &lt;Application&gt;" dialog boxes
 are now modeless. "About KDE" is a completely new widget.<P>
 
 If you used in the toplevel window (that is derived from KMainWindow)
-"kapp-&gt;helpMenu( bool, QString )" to get the help menu
-you must now change this to "helpMenu( QString )". The QString defaults
-to QString::null so it is sufficient to write helpMenu().<P>
+"kapp-&gt;helpMenu( bool, TQString )" to get the help menu
+you must now change this to "helpMenu( TQString )". The TQString defaults
+to TQString::null so it is sufficient to write helpMenu().<P>
 
 The old aboutKDE(), aboutApp() and appHelpActivated() of KApplication
 have all been removed. If you need direct access to these or need
@@ -365,7 +365,7 @@ khtmlw has been replaced with khtml.<BR>
   of the api has changed. In all functions:<P>
   <PRE>
      const char * -&gt; QString
-     QStrList -&gt; QStringList
+     TQStrList -&gt; QStringList
   </PRE>
   The only exception for the moment is KHTMLWidget::write(), which does
   also exist in a const char * version.<P>
@@ -373,7 +373,7 @@ khtmlw has been replaced with khtml.<BR>
 
 <LI>you won't need the getKHTMLWiget function anymore. Just replace
 	getKHTMLWidget-&gt;xxx() with xxx()<P>
-<LI>xxx(QString) -&gt; xxx(const QString &amp;)<P>
+<LI>xxx(TQString) -&gt; xxx(const TQString &amp;)<P>
 <LI>consistent naming. All getXyz() functions are renamed to xyz()<P>
 <LI>replaced/changed functions:<P>
 <TABLE BORDER="1">
@@ -386,8 +386,8 @@ khtmlw has been replaced with khtml.<BR>
 <TD>-&gt; contentsX/Y()</TD>
 </TR>
 <TR>
-<TD>getSelectedText(QString &amp;)</TD>
-<TD>-&gt; QString selectedText()</TD>
+<TD>getSelectedText(TQString &amp;)</TD>
+<TD>-&gt; TQString selectedText()</TD>
 </TR>
 <TR>
 <TD COLSPAN="2" ROWSPAN="0">findTextEnd() has vanished. just remove the call from your code</TD>
@@ -448,7 +448,7 @@ are necessary to convert your old KDND-based stuff to Qt DND.<P>
 <LI>You should be aware that to handle drops, you will either have to
   inherit a widget and then override the methods mentioned above,
   or install an event handler for the widget in that widget's parent,
-  and then handle QEvent::DragMove or QEvent::Drop inside there (if
+  and then handle TQEvent::DragMove or TQEvent::Drop inside there (if
   you want to avoid inheritance).<P>
 <LI>You can emulate the old DndURL drop-type behavior with the Qt
   Drag Object type QUriList.<P>
@@ -456,12 +456,12 @@ are necessary to convert your old KDND-based stuff to Qt DND.<P>
   method if you wish.<P>
 <LI>Qt includes a Drag and Drop tutorial.  We suggest you read that
   now if you are confused.<P>
-<LI>QMultiLineEdit has already a DnD interface that accepts text/*
+<LI>TQMultiLineEdit has already a DnD interface that accepts text/*
   If you want to add support for other mimetypes, you need to
   re-implement all DnD-methods (also dragMoveEvent()) and pass
   QTextDrag's to the parent methods.<P>
-<LI>QTextDrag also accepts text/uri-list, which means that you
-  always need to check for QUriDrag first if you want to get
+<LI>TQTextDrag also accepts text/uri-list, which means that you
+  always need to check for TQUriDrag first if you want to get
   both working.<P>
 <LI>The mimetype for Uri's is now text/uri-list. If you've used
   the proprietary Qt 1.x url/url, you need to adjust that.
@@ -474,8 +474,8 @@ are necessary to convert your old KDND-based stuff to Qt DND.<P>
   These classes have been largely re-implemented.  The external API
   remains mostly the same, with the single notable change that
   the groupIterator and entryIterator methods have been removed and
-  instead replaced by groupList (which returns a QStringList of groups)
-  and entryMap(const QString &amp;group) (which returns a QMap of entries
+  instead replaced by groupList (which returns a TQStringList of groups)
+  and entryMap(const TQString &amp;group) (which returns a TQMap of entries
   in the specified group).  This is due to internal changes in KConfig
   which would make providing iterators possibly rather difficult.<P>
 
@@ -487,8 +487,8 @@ are necessary to convert your old KDND-based stuff to Qt DND.<P>
   this:<P>
   <PRE>
 
-  QMap&lt;QString, QString&gt; tmpMap = config-&lt;entryMap(myGroup);
-  QMap&lt;QString, QString&gt;::Iterator aIt(tmpMap.begin());
+  TQMap&lt;TQString, TQString&gt; tmpMap = config-&lt;entryMap(myGroup);
+  TQMap&lt;TQString, TQString&gt;::Iterator aIt(tmpMap.begin());
 
   for (; aIt != tmpMap.end(); ++aIt) {
    // body here.  Access iterator key as aIt.key(),
@@ -537,7 +537,7 @@ Most applications will only need to replace kapp-&gt;getKCharsets() with
 KGlobal::charsets().<P>
 
 For conversion of various input formats to QStrings, please have a
-look at QTextCodec and classes derived from it.<P>
+look at TQTextCodec and classes derived from it.<P>
 
 Character entities are now  converted from and to QChars. The name has
 changed from convertTag to fromEntity and toEntity.<P>
@@ -551,7 +551,7 @@ input font most closely, but can display the given charset.<P>
 
 <H3><A NAME="KWizard">KWizard, KNoteBook</A></H3>
 
-KWizard is based on QWizard now. The API has changed. Consult Qt's
+KWizard is based on TQWizard now. The API has changed. Consult Qt's
 documentation and kdelibs/kdetest/kwizardtest.cpp for an example use.<P>
 KNoteBook (deeply entwined with the former KWizard) has been removed until
 someone is willing to port it to work with the new wizard. If you want to
@@ -561,7 +561,7 @@ use it you'll find the necessary files in kdegraphics/kiconedit.<P>
 
 <H3><A NAME="KSpinBox">KSpinBox, KNumericSpinBox</A></H3>
 
-These classes have been replaced by QSpinBox. API is almost the same
+These classes have been replaced by TQSpinBox. API is almost the same
 HINTS:<P>
 <UL>
 	<LI>valueincreased()/valuedecreased -&gt; valueChanged()
@@ -580,16 +580,16 @@ version had, and more.<P>
 
 <H3><A NAME="KPanner">KPanner, KNewPanner</A></H3>
 
-KPanner and KNewPanner have been removed.  QSplitter does everything
+KPanner and KNewPanner have been removed.  TQSplitter does everything
 KPanner did and more. The api is similar, but not compatible.
 Basically to set it up so that you have a vertical splitter between a
 listbox, a listview and multi line editor, you would do something like
 this:<P>
 <TABLE><TR><TD>
-    QSplitter *split = new QSplitter( parent );<BR>
-    QListBox *lb = new QListBox( split );<BR>
+    TQSplitter *split = new TQSplitter( parent );<BR>
+    TQListBox *lb = new TQListBox( split );<BR>
     KListView *lv = new KListView( split );<BR>
-    QMultiLineEdit *ed = new QMultiLineEdit( split );
+    TQMultiLineEdit *ed = new TQMultiLineEdit( split );
 </TD></TR></TABLE>
 
 As you can see you are not limited to two children.  Additionally, you
@@ -600,26 +600,26 @@ possible if you call setOpaqueResize(true).<P>
 
 <H3><A NAME="KTreeList">KTreeList, KTreeListItem</A></H3>
 
-Use KListView, QListViewItem instead. API is almost the same, you only
+Use KListView, TQListViewItem instead. API is almost the same, you only
 need to add a Column (KListView::addColum) before KListView is useable.<P>
 
 KListView has no addChild(), insertItem() and removeItem() calls. Inserting
-a root item is done by constructing a QListViewItem with the KListView
+a root item is done by constructing a TQListViewItem with the KListView
 passed as the parent widget. adding a child item is done by constructing
-a QListViewItem with the parent item as parameter. removeItem() should
+a TQListViewItem with the parent item as parameter. removeItem() should
 be replaced by delete &lt;pointer to item&gt;.<P>
 
 The root items are not shown in a tree fashion by default. to get this,
 use KListView::setDecorativeRoot(true).<P>
 
-Expanding and collapsing can by done by using QListViewItem::setOpen(bool).<P>
+Expanding and collapsing can by done by using TQListViewItem::setOpen(bool).<P>
 
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
 <H3><A NAME="KMsgBox">KMsgBox</A></H3>
 
-KMsgBox has been superseded by QMessageBox. Which has been superseded
+KMsgBox has been superseded by TQMessageBox. Which has been superseded
 by KMessageBox.<P>
 <UL>
 <LI>KMsgBox had return codes starting with 1 for the first button, 2 for
@@ -642,7 +642,7 @@ KComboBox::setEditText.<P>
 
 <H3><A NAME="KQuickHelp">KQuickHelp</A></H3>
 
-KQuickHelp, the "super-tooltip" widget, has been replaced by QWhatsThis.
+KQuickHelp, the "super-tooltip" widget, has been replaced by TQWhatsThis.
 It provides a compatible API and almost the same look and feel, in addition
 to some new functionality.<P>
 
@@ -652,7 +652,7 @@ to some new functionality.<P>
 
 Instead of old KPixmap::gradientFill, use:<P>
 
-KPixmapEffect::gradient(KPixmap&amp;, QColor, QColor, enum KPixmapEffect::GradientType, int)<P>
+KPixmapEffect::gradient(KPixmap&amp;, TQColor, TQColor, enum KPixmapEffect::GradientType, int)<P>
 
  Hence:<P>
 
@@ -710,7 +710,7 @@ declared globally in kaccel.h are now static methods in KAccel.<P>
 
 The KString class is obsolete and is not defined in
 kstring.h anymore. The header file only existed for compatibility reasons.
-The file has been removed completely, use QString instead. (<A HREF="mailto:mirko@kde.org">mirko@kde.org</A>)<P>
+The file has been removed completely, use TQString instead. (<A HREF="mailto:mirko@kde.org">mirko@kde.org</A>)<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
@@ -723,7 +723,7 @@ exist in KDE 2. (<A HREF="mailto:mirko@kde.org">mirko@kde.org</A>)<P>
 
 <H3><A NAME="kbutton">kbutton.h / KButton</A></H3>
 
-Since Qt 2.0, the class QToolButton provides the functionality of
+Since Qt 2.0, the class TQToolButton provides the functionality of
 buttons that raise when the mouse is moved over them, so there is no
 reason to have a class providing the same feature in KDE libs. All
 occurrences of KButton in the KDE CVS have been replaced by QToolButtons,
@@ -831,11 +831,11 @@ Werner Trobin &lt;<A HREF="mailto:wtrobin@carinthia.com">wtrobin@carinthia.com</
 There is also a new preview mode which is quite different to the one we had in
 the KDE 1.x KFD. There are no preview modules you have to register but there
 is a single method you can use to set a preview widget. This widget has to
-inherit QWidget and you have to implement a slot (showPreview(const KURL &amp;)) 
+inherit TQWidget and you have to implement a slot (showPreview(const KURL &amp;)) 
 in this class. This slot is called each time the selected file/dir changes.
 In this slot you have to react appropriate (i.e. show the preview :). The
-easiest way this can be done is to derive your class from QWidgetStack and 
-add a Object (derived from QWidget) for each file type. In the showPreview
+easiest way this can be done is to derive your class from TQWidgetStack and 
+add a Object (derived from TQWidget) for each file type. In the showPreview
 method you just raise the matching widget. If you can't find an appropriate
 widget just hide() the widget stack.<P>
 If you need some "inspiration" on how that could be done, please have a look

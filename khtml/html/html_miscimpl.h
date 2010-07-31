@@ -23,7 +23,7 @@
 #ifndef HTML_MISCIMPL_H
 #define HTML_MISCIMPL_H
 
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 #include "html_elementimpl.h"
 #include "misc/shared.h"
 
@@ -87,7 +87,7 @@ public:
     // In case of multiple items named the same way
     virtual NodeImpl *nextNamedItem( const DOMString &name ) const;
 
-    QValueList<NodeImpl*> namedItems( const DOMString &name ) const;
+    TQValueList<NodeImpl*> namedItems( const DOMString &name ) const;
 
     int getType() const {
         return type;

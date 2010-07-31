@@ -43,7 +43,7 @@ Param::Param(const Param & x)
 {
 }
 
-Param::Param(const QCString & s)
+Param::Param(const TQCString & s)
 	:	Entity(s),
 		name_(""),
 		value_("")
@@ -63,7 +63,7 @@ Param::operator = (Param & x)
 }
 
 	Param &
-Param::operator = (const QCString & s)
+Param::operator = (const TQCString & s)
 {
 	Entity::operator = (s);
 	return *this;
@@ -91,7 +91,7 @@ Param::_assemble()
 	strRep_ = name_ + "=" + value_;
 }
 
-Param::Param(const QCString &name, const QCString &value)
+Param::Param(const TQCString &name, const TQCString &value)
 	:	Entity(),
 		name_(name),
 		value_(value)
@@ -101,7 +101,7 @@ Param::Param(const QCString &name, const QCString &value)
 }
 
 	void
-Param::setName(const QCString & name)
+Param::setName(const TQCString & name)
 {
 	name_ = name;
         
@@ -109,7 +109,7 @@ Param::setName(const QCString & name)
 }
 
 	void
-Param::setValue(const QCString & value)
+Param::setValue(const TQCString & value)
 {
 	value_ = value;
         

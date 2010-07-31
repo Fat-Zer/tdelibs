@@ -22,10 +22,10 @@
 #ifndef KDELIBS_KPALETTE_H
 #define KDELIBS_KPALETTE_H
 
-#include <qcolor.h>
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqcolor.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 #include "kdelibs_export.h"
 
 class KPalettePrivate;
@@ -39,7 +39,7 @@ class KPalettePrivate;
  *
  * This class uses the "GIMP" palette file format.
  *
- * This class is totally unrelated to QPalette.
+ * This class is totally unrelated to TQPalette.
  *
  * @author Waldo Bastian (bastian@kde.org)
  **/
@@ -51,14 +51,14 @@ public:
     *
     * @return A list with a palette names.
     */
-   static QStringList getPaletteList();
+   static TQStringList getPaletteList();
 
    /**
     * KPalette constructor. Creates a KPalette from a file
     * the filename is derived from the name.
     * @param name The name of palette as returned by getPaletteList()
     **/
-   KPalette(const QString &name=QString::null);
+   KPalette(const TQString &name=TQString::null);
 
    /**
     * KPalette copy constructor.
@@ -86,28 +86,28 @@ public:
     * Get the description of the palette.
     * @return the description of the palette.
     **/
-   QString description() const
+   TQString description() const
    	{ return mDesc; }
 
    /**   	
     * Set the description of the palette.
     * @param desc the new description
     **/
-   void setDescription(const QString &desc)
+   void setDescription(const TQString &desc)
    	{ mDesc = desc; }
    
    /**
     * Get the name of the palette. 
     * @return the name of the palette
     **/
-   QString name() const
+   TQString name() const
    	{ return mName; }
 
    /**
     * Set the name of the palette.
     * @param name the name of the palette
     **/
-   void setName(const QString &name)
+   void setName(const TQString &name)
    	{ mName = name; }
 
    /**
@@ -146,7 +146,7 @@ public:
     * @param index the index of the desired color
     * @return The @p index -th color of the palette, null if not found.
     **/
-   QColor color(int index);
+   TQColor color(int index);
    
    /**
     * Find index by @p color.
@@ -154,7 +154,7 @@ public:
     * @return The index of the color in the palette or -1 if the
     * color is not found.
     **/
-   int findColor(const QColor &color) const;
+   int findColor(const TQColor &color) const;
 
    /**
     * Find color name by @p index.
@@ -163,7 +163,7 @@ public:
     * Note that not all palettes have named the colors. Null is
     * returned if the color does not exist or has no name.
     **/
-   QString colorName(int index);
+   TQString colorName(int index);
    
    /**
     * Find color name by @p color.
@@ -172,7 +172,7 @@ public:
     * Note also that each palette can give the same color
     * a different name.
     **/
-   QString colorName(const QColor &color)
+   TQString colorName(const TQColor &color)
    	{ return colorName( findColor(color)); }
    
    /**
@@ -182,8 +182,8 @@ public:
     *                     the name.
     * @return The index of the added color.
     **/
-   int addColor(const QColor &newColor, 
-                const QString &newColorName = QString::null);
+   int addColor(const TQColor &newColor, 
+                const TQString &newColorName = TQString::null);
 
    /**
     * Change a color.
@@ -195,8 +195,8 @@ public:
     * be changed.
     **/
    int changeColor(int index, 
-                   const QColor &newColor, 
-                   const QString &newColorName = QString::null);
+                   const TQColor &newColor, 
+                   const TQString &newColorName = TQString::null);
  
    /**
     * Change a color.
@@ -207,17 +207,17 @@ public:
     * @return The index of the new color or -1 if the color couldn't
     * be changed.
     **/
-   int changeColor(const QColor &oldColor, 
-                   const QColor &newColor, 
-                   const QString &newColorName = QString::null)
+   int changeColor(const TQColor &oldColor, 
+                   const TQColor &newColor, 
+                   const TQString &newColorName = TQString::null)
    	{ return changeColor( findColor(oldColor), newColor, newColorName); }
 
 private:   
-   typedef struct { QColor color; QString name; } kolor;
-   QPtrList<kolor> mKolorList;
+   typedef struct { TQColor color; TQString name; } kolor;
+   TQPtrList<kolor> mKolorList;
    
-   QString mName;
-   QString mDesc;
+   TQString mName;
+   TQString mDesc;
    Editable mEditable;
 
    KPalettePrivate *d;

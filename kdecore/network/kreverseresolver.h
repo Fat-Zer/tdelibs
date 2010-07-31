@@ -27,8 +27,8 @@
 
 //////////////////
 // Needed includes
-#include <qobject.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqstring.h>
 
 #include "ksocketaddress.h"
 
@@ -88,7 +88,7 @@ public:
    * @param flags	the flags to use, see @ref Flags
    */
   KReverseResolver(const KSocketAddress& addr, int flags = 0,
-		   QObject * = 0L, const char * = 0L);
+		   TQObject * = 0L, const char * = 0L);
 
   /**
    * Destructor.
@@ -114,15 +114,15 @@ public:
 
   /**
    * Returns the resolved node name, if the resolution has finished 
-   * successfully, or QString::null otherwise.
+   * successfully, or TQString::null otherwise.
    */
-  QString node() const;
+  TQString node() const;
 
   /**
    * Returns the resolved service name, if the resolution has finished
-   * successfully, or QString::null otherwise.
+   * successfully, or TQString::null otherwise.
    */
-  QString service() const;
+  TQString service() const;
 
   /**
    * Returns the socket address which was subject to resolution.
@@ -138,7 +138,7 @@ public:
   /**
    * Overrides event handling
    */
-  virtual bool event(QEvent* );
+  virtual bool event(TQEvent* );
 
 signals:
   /**
@@ -158,14 +158,14 @@ public:
    * binary representation to a textual form, even if numeric only.
    *
    * @param addr	the socket address to be resolved
-   * @param node	the QString where we will store the resolved node
-   * @param serv	the QString where we will store the resolved service
+   * @param node	the TQString where we will store the resolved node
+   * @param serv	the TQString where we will store the resolved service
    * @param flags	flags to be used for this resolution.
    * @return true if the resolution succeeded, false if not
    * @see ReverseFlags for the possible values for @p flags
    */
-  static bool resolve(const KSocketAddress& addr, QString& node, 
-		      QString& serv, int flags = 0);
+  static bool resolve(const KSocketAddress& addr, TQString& node, 
+		      TQString& serv, int flags = 0);
 
   /**
    * Resolves a socket address to its textual representation
@@ -177,14 +177,14 @@ public:
    *
    * @param sa	the sockaddr structure containing the address to be resolved
    * @param salen	the length of the sockaddr structure
-   * @param node	the QString where we will store the resolved node
-   * @param serv	the QString where we will store the resolved service
+   * @param node	the TQString where we will store the resolved node
+   * @param serv	the TQString where we will store the resolved service
    * @param flags	flags to be used for this resolution.
    * @return true if the resolution succeeded, false if not
    * @see ReverseFlags for the possible values for @p flags
    */
   static bool resolve(const struct sockaddr* sa, Q_UINT16 salen, 
-		      QString& node, QString& serv, int flags = 0);
+		      TQString& node, TQString& serv, int flags = 0);
 
 private:
   KReverseResolverPrivate* d;

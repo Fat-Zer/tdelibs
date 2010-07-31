@@ -36,11 +36,11 @@
   KConfig aConfig;
   aConfig.setGroup( "KFontDialog-test" );
 
-  app.setFont(QFont("Helvetica",12));
+  app.setFont(TQFont("Helvetica",12));
 
-  //  QFont font = QFont("Times",18,QFont::Bold);
+  //  TQFont font = TQFont("Times",18,TQFont::Bold);
 
-  QFont font = aConfig.readFontEntry( "Chosen" );
+  TQFont font = aConfig.readFontEntry( "Chosen" );
   int nRet = KFontDialog::getFont(font);
   int flags;
   nRet = KFontDialog::getFontDiff(font, flags);

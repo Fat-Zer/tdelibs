@@ -25,8 +25,8 @@
 
 #include "html_elementimpl.h"
 #include "xml/dom_stringimpl.h"
-#include <qobject.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
 
 class KHTMLView;
 
@@ -36,7 +36,7 @@ namespace DOM {
 class HTMLFormElementImpl;
 class DOMStringImpl;
 
-class HTMLObjectBaseElementImpl : public QObject, public HTMLElementImpl
+class HTMLObjectBaseElementImpl : public TQObject, public HTMLElementImpl
 {
     Q_OBJECT
 public:
@@ -49,18 +49,18 @@ public:
 
     void renderAlternative();
 
-    void setServiceType(const QString &);
+    void setServiceType(const TQString &);
 
-    QString url;
-    QString classId;
-    QString serviceType;
+    TQString url;
+    TQString classId;
+    TQString serviceType;
     bool needWidgetUpdate;
     bool m_renderAlternative;
 
     virtual void insertedIntoDocument();
     virtual void removedFromDocument();
-    virtual void addId(const QString& id);
-    virtual void removeId(const QString& id);
+    virtual void addId(const TQString& id);
+    virtual void removeId(const TQString& id);
 protected slots:
     void slotRenderAlternative();
 protected:
@@ -97,7 +97,7 @@ public:
     virtual void parseAttribute(AttributeImpl *attr);
     virtual void attach();
 
-    QString pluginPage;
+    TQString pluginPage;
     bool hidden;
 };
 
@@ -133,12 +133,12 @@ public:
 
     virtual void parseAttribute(AttributeImpl *token);
 
-    QString name() const { return m_name; }
-    QString value() const { return m_value; }
+    TQString name() const { return m_name; }
+    TQString value() const { return m_value; }
 
  protected:
-    QString m_name;
-    QString m_value;
+    TQString m_name;
+    TQString m_value;
 };
 
 } // namespace

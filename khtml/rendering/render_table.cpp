@@ -42,8 +42,8 @@
 
 #include <kglobal.h>
 
-#include <qapplication.h>
-#include <qstyle.h>
+#include <tqapplication.h>
+#include <tqstyle.h>
 
 #include <kdebug.h>
 #include <assert.h>
@@ -477,16 +477,16 @@ void RenderTable::paint( PaintInfo& pI, int _tx, int _ty)
         // have all the styles sorted, we then do individual passes, painting each style of border
         // from lowest precedence to highest precedence.
         pI.phase = PaintActionCollapsedTableBorders;
-        QValueList<CollapsedBorderValue> borderStyles;
+        TQValueList<CollapsedBorderValue> borderStyles;
         collectBorders(borderStyles);
 #if 0
-       QString m;
+       TQString m;
        for (uint i = 0; i < borderStyles.count(); i++)
-         m += QString("%1 ").arg((*borderStyles.at(i)).width());
+         m += TQString("%1 ").arg((*borderStyles.at(i)).width());
        kdDebug(6040) << m << endl;
 #endif
-        QValueListIterator<CollapsedBorderValue> it = borderStyles.begin();
-        QValueListIterator<CollapsedBorderValue> end = borderStyles.end();
+        TQValueListIterator<CollapsedBorderValue> it = borderStyles.begin();
+        TQValueListIterator<CollapsedBorderValue> end = borderStyles.end();
         for (; it != end; ++it) {
             m_currentBorder = &*it;
             for (RenderObject *child = firstChild(); child; child = child->nextSibling()) {
@@ -879,7 +879,7 @@ RenderTableCell* RenderTable::cellRight(const RenderTableCell* cell) const
 }
 
 #ifdef ENABLE_DUMP
-void RenderTable::dump(QTextStream &stream, const QString &ind) const
+void RenderTable::dump(TQTextStream &stream, const TQString &ind) const
 {
     RenderBlock::dump(stream, ind);
 
@@ -1074,7 +1074,7 @@ void RenderTableSection::addCell( RenderTableCell *cell, RenderTableRow *row )
 {
     int rSpan = cell->rowSpan();
     int cSpan = cell->colSpan();
-    QMemArray<RenderTable::ColumnStruct> &columns = table()->columns;
+    TQMemArray<RenderTable::ColumnStruct> &columns = table()->columns;
     int nCols = columns.size();
 
     // ### mozilla still seems to do the old HTML way, even for strict DTD
@@ -1161,7 +1161,7 @@ void RenderTableSection::setCellWidths()
 #ifdef DEBUG_LAYOUT
     kdDebug( 6040 ) << renderName() << "(Table, this=0x" << this << ")::setCellWidths()" << endl;
 #endif
-    QMemArray<int> &columnPos = table()->columnPos;
+    TQMemArray<int> &columnPos = table()->columnPos;
 
 	int rows = grid.size();
     for ( int i = 0; i < rows; i++ ) {
@@ -1609,7 +1609,7 @@ int RenderTableSection::highestPosition(bool includeOverflowInterior, bool inclu
 
 // Search from first_row to last_row for the row containing y
 static unsigned int findRow(unsigned int first_row, unsigned int last_row,
-                            const QMemArray<int> &rowPos, int y)
+                            const TQMemArray<int> &rowPos, int y)
 {
     unsigned int under = first_row;
     unsigned int over = last_row;
@@ -1629,7 +1629,7 @@ static unsigned int findRow(unsigned int first_row, unsigned int last_row,
 }
 
 static void findRowCover(unsigned int &startrow, unsigned int &endrow,
-                         const QMemArray<int> &rowPos,
+                         const TQMemArray<int> &rowPos,
                          int min_y, int max_y)
 {
     assert(max_y >= min_y);
@@ -1844,7 +1844,7 @@ void RenderTableSection::addSpaceAt(int pos, int dy)
 
 
 #ifdef ENABLE_DUMP
-void RenderTableSection::dump(QTextStream &stream, const QString &ind) const
+void RenderTableSection::dump(TQTextStream &stream, const TQString &ind) const
 {
     RenderContainer::dump(stream,ind);
 
@@ -2693,11 +2693,11 @@ int RenderTableCell::borderBottom() const
 }
 
 #ifdef BOX_DEBUG
-#include <qpainter.h>
+#include <tqpainter.h>
 
-static void outlineBox(QPainter *p, int _tx, int _ty, int w, int h)
+static void outlineBox(TQPainter *p, int _tx, int _ty, int w, int h)
 {
-    p->setPen(QPen(QColor("yellow"), 3, Qt::DotLine));
+    p->setPen(TQPen(TQColor("yellow"), 3, Qt::DotLine));
     p->setBrush( Qt::NoBrush );
     p->drawRect(_tx, _ty, w, h );
 }
@@ -2798,13 +2798,13 @@ public:
     int count;
 };
 
-static void addBorderStyle(QValueList<CollapsedBorderValue>& borderStyles, CollapsedBorderValue borderValue)
+static void addBorderStyle(TQValueList<CollapsedBorderValue>& borderStyles, CollapsedBorderValue borderValue)
 {
     if (!borderValue.exists() || borderStyles.contains(borderValue))
         return;
 
-    QValueListIterator<CollapsedBorderValue> it = borderStyles.begin();
-    QValueListIterator<CollapsedBorderValue> end = borderStyles.end();
+    TQValueListIterator<CollapsedBorderValue> it = borderStyles.begin();
+    TQValueListIterator<CollapsedBorderValue> end = borderStyles.end();
     for (; it != end; ++it) {
         CollapsedBorderValue result = compareBorders(*it, borderValue);
         if (result == *it) {
@@ -2816,7 +2816,7 @@ static void addBorderStyle(QValueList<CollapsedBorderValue>& borderStyles, Colla
     borderStyles.append(borderValue);
 }
 
-void RenderTableCell::collectBorders(QValueList<CollapsedBorderValue>& borderStyles)
+void RenderTableCell::collectBorders(TQValueList<CollapsedBorderValue>& borderStyles)
 {
     addBorderStyle(borderStyles, collapsedLeftBorder());
     addBorderStyle(borderStyles, collapsedRightBorder());
@@ -2824,7 +2824,7 @@ void RenderTableCell::collectBorders(QValueList<CollapsedBorderValue>& borderSty
     addBorderStyle(borderStyles, collapsedBottomBorder());
 }
 
-void RenderTableCell::paintCollapsedBorder(QPainter* p, int _tx, int _ty, int w, int h)
+void RenderTableCell::paintCollapsedBorder(TQPainter* p, int _tx, int _ty, int w, int h)
 {
     if (!table()->currentBorderStyle())
         return;
@@ -2894,7 +2894,7 @@ void RenderTableCell::paintBackgroundsBehindCell(PaintInfo& pI, int _tx, int _ty
     int end = kMin( pI.r.y() + pI.r.height(),  _ty + h );
     int mh = end - my;
 
-    QColor c = backgroundObject->style()->backgroundColor();
+    TQColor c = backgroundObject->style()->backgroundColor();
     const BackgroundLayer* bgLayer = backgroundObject->style()->backgroundLayers();
 
     if (bgLayer->hasImage() || c.isValid()) {
@@ -2903,10 +2903,10 @@ void RenderTableCell::paintBackgroundsBehindCell(PaintInfo& pI, int _tx, int _ty
         bool hasLayer = backgroundObject->layer() && (backgroundObject == this || backgroundObject == parent());
         if (hasLayer && tableElt->collapseBorders()) {
             pI.p->save();
-            QRect clipRect(_tx + borderLeft(), _ty + borderTop(), w - borderLeft() - borderRight(), h - borderTop() - borderBottom());
+            TQRect clipRect(_tx + borderLeft(), _ty + borderTop(), w - borderLeft() - borderRight(), h - borderTop() - borderBottom());
             clipRect = pI.p->xForm(clipRect);
-            QRegion creg(clipRect);
-            QRegion old = pI.p->clipRegion();
+            TQRegion creg(clipRect);
+            TQRegion old = pI.p->clipRegion();
             if (!old.isNull())
                 creg = old.intersect(creg);
             pI.p->setClipRegion(creg);
@@ -2940,7 +2940,7 @@ void RenderTableCell::paintBoxDecorations(PaintInfo& pI, int _tx, int _ty)
 
 
 #ifdef ENABLE_DUMP
-void RenderTableCell::dump(QTextStream &stream, const QString &ind) const
+void RenderTableCell::dump(TQTextStream &stream, const TQString &ind) const
 {
     RenderFlow::dump(stream,ind);
     stream << " row=" << _row;
@@ -2972,7 +2972,7 @@ void RenderTableCol::updateFromElement()
 }
 
 #ifdef ENABLE_DUMP
-void RenderTableCol::dump(QTextStream &stream, const QString &ind) const
+void RenderTableCol::dump(TQTextStream &stream, const TQString &ind) const
 {
     RenderContainer::dump(stream,ind);
     stream << " _span=" << m_span;

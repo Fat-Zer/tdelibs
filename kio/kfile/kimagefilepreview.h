@@ -11,7 +11,7 @@
 #ifndef KIMAGEFILEPREVIEW_H
 #define KIMAGEFILEPREVIEW_H
 
-#include <qpixmap.h>
+#include <tqpixmap.h>
 
 #include <kurl.h>
 #include <kpreviewwidgetbase.h>
@@ -33,10 +33,10 @@ class KIO_EXPORT KImageFilePreview : public KPreviewWidgetBase
 	Q_OBJECT
 
 	public:
-		KImageFilePreview(QWidget *parent);
+		KImageFilePreview(TQWidget *parent);
 		~KImageFilePreview();
 
-		virtual QSize sizeHint() const;
+		virtual TQSize sizeHint() const;
 
 	public slots:
 		virtual void showPreview(const KURL &url);
@@ -47,10 +47,10 @@ class KIO_EXPORT KImageFilePreview : public KPreviewWidgetBase
 		void showPreview( const KURL& url, bool force );
 
 		void toggleAuto(bool);
-		virtual void gotPreview( const KFileItem*, const QPixmap& );
+		virtual void gotPreview( const KFileItem*, const TQPixmap& );
 
 	protected:
-		virtual void resizeEvent(QResizeEvent *e);
+		virtual void resizeEvent(TQResizeEvent *e);
 		virtual KIO::PreviewJob * createJob( const KURL& url,
                                                      int w, int h );
 
@@ -61,11 +61,11 @@ class KIO_EXPORT KImageFilePreview : public KPreviewWidgetBase
 	private:
 		bool autoMode;
 		KURL currentURL;
-		QTimer *timer;
-		QLabel *imageLabel;
-		QLabel *infoLabel;
-		QCheckBox *autoPreview;
-		QPushButton *previewButton;
+		TQTimer *timer;
+		TQLabel *imageLabel;
+		TQLabel *infoLabel;
+		TQCheckBox *autoPreview;
+		TQPushButton *previewButton;
 		KIO::PreviewJob *m_job;
         protected:
                 virtual void virtual_hook( int id, void* data );

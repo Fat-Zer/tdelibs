@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 #include "kpanelapplet.h"
 #include "kpanelapplet.moc"
@@ -36,15 +36,15 @@ public:
       hasFocus(false)
       {}
 
-  const QPopupMenu* customMenu;
+  const TQPopupMenu* customMenu;
   KSharedConfig::Ptr sharedConfig;
-  QPtrList<QObject> watchedForFocus;
+  TQPtrList<TQObject> watchedForFocus;
   bool hasFocus;
 };
 
-KPanelApplet::KPanelApplet(const QString& configFile, Type type,
-                           int actions, QWidget *parent, const char *name, WFlags f)
-  : QFrame(parent, name, f)
+KPanelApplet::KPanelApplet(const TQString& configFile, Type type,
+                           int actions, TQWidget *parent, const char *name, WFlags f)
+  : TQFrame(parent, name, f)
   , _type(type)
   , _position( pBottom )
   , _alignment( LeftTop )
@@ -53,7 +53,7 @@ KPanelApplet::KPanelApplet(const QString& configFile, Type type,
   , d(new KPanelApplet::KPanelAppletPrivate())
 {
   setFrameStyle(NoFrame);
-  QPalette pal(palette());
+  TQPalette pal(palette());
   if(pal.active().mid() != pal.inactive().mid()){
     pal.setInactive(pal.active());
     setPalette(pal);
@@ -89,7 +89,7 @@ void KPanelApplet::setAlignment( Alignment a )
 void KPanelApplet::positionChange( Position )
 {
   orientationChange( orientation() );
-  QResizeEvent e( size(), size() );
+  TQResizeEvent e( size(), size() );
   resizeEvent( &e );
   popupDirectionChange( popupDirection() );
 }
@@ -127,17 +127,17 @@ void KPanelApplet::action( Action a )
     reportBug();
 }
 
-const QPopupMenu* KPanelApplet::customMenu() const
+const TQPopupMenu* KPanelApplet::customMenu() const
 {
     return d->customMenu;
 }
 
-void KPanelApplet::setCustomMenu(const QPopupMenu* menu)
+void KPanelApplet::setCustomMenu(const TQPopupMenu* menu)
 {
     d->customMenu = menu;
 }
 
-void KPanelApplet::watchForFocus(QWidget* widget, bool watch)
+void KPanelApplet::watchForFocus(TQWidget* widget, bool watch)
 {
     if (!widget)
     {
@@ -170,22 +170,22 @@ void KPanelApplet::needsFocus(bool focus)
     emit requestFocus(focus);
 }
 
-bool KPanelApplet::eventFilter(QObject *o, QEvent * e)
+bool KPanelApplet::eventFilter(TQObject *o, TQEvent * e)
 {
     if (d->watchedForFocus.find(o) != -1)
     {
-        if (e->type() == QEvent::MouseButtonRelease ||
-            e->type() == QEvent::FocusIn)
+        if (e->type() == TQEvent::MouseButtonRelease ||
+            e->type() == TQEvent::FocusIn)
         {
             needsFocus(true);
         }
-        else if (e->type() == QEvent::FocusOut)
+        else if (e->type() == TQEvent::FocusOut)
         {
             needsFocus(false);
         }
     }
 
-    return QFrame::eventFilter(o, e);
+    return TQFrame::eventFilter(o, e);
 }
 
 KSharedConfig::Ptr KPanelApplet::sharedConfig() const

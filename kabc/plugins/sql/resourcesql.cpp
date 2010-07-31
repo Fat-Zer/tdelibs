@@ -18,8 +18,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qsqldatabase.h>
-#include <qsqlcursor.h>
+#include <tqsqldatabase.h>
+#include <tqsqlcursor.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -42,7 +42,7 @@ extern "C"
 ResourceSql::ResourceSql( AddressBook *ab, const KConfig *config )
   : Resource( ab ), mDb( 0 )
 {
-  QString user, password, db, host;
+  TQString user, password, db, host;
 
   user = config->readEntry( "SqlUser" );
   password = cryptStr( config->readEntry( "SqlPassword " ) );
@@ -52,15 +52,15 @@ ResourceSql::ResourceSql( AddressBook *ab, const KConfig *config )
   init( user, password, db, host );
 }
 
-ResourceSql::ResourceSql( AddressBook *ab, const QString &user,
-    const QString &password, const QString &db, const QString &host )
+ResourceSql::ResourceSql( AddressBook *ab, const TQString &user,
+    const TQString &password, const TQString &db, const TQString &host )
   : Resource( ab ), mDb( 0 )
 {
   init( user, password, db, host );
 }
 
-void ResourceSql::init( const QString &user, const QString &password,
-    const QString &db, const QString &host )
+void ResourceSql::init( const TQString &user, const TQString &password,
+    const TQString &db, const TQString &host )
 {
   mUser = user;
   mPassword = password;
@@ -80,12 +80,12 @@ Ticket *ResourceSql::requestSaveTicket()
 
 bool ResourceSql::open()
 {
-  QStringList drivers = QSqlDatabase::drivers();
-  for ( QStringList::Iterator it = drivers.begin(); it != drivers.end(); ++it ) {
+  TQStringList drivers = TQSqlDatabase::drivers();
+  for ( TQStringList::Iterator it = drivers.begin(); it != drivers.end(); ++it ) {
     kdDebug(5700) << "Driver: " << (*it) << endl;
   }
 
-  mDb = QSqlDatabase::addDatabase( "QMYSQL3" );
+  mDb = TQSqlDatabase::addDatabase( "QMYSQL3" );
 
   if ( !mDb ) {
     kdDebug(5700) << "Error. Unable to connect to database." << endl;
@@ -112,14 +112,14 @@ void ResourceSql::close()
 
 bool ResourceSql::load()
 {
-  QSqlQuery query( "select addressId, name, familyName, givenName, "
+  TQSqlQuery query( "select addressId, name, familyName, givenName, "
       "additionalName, prefix, suffix, nickname, birthday, "
       "mailer, timezone, geo_latitude, geo_longitude, title, "
       "role, organization, note, productId, revision, "
       "sortString, url from kaddressbook_main_" + mUser );
 
   while ( query.next() ) {
-    QString addrId = query.value(0).toString();
+    TQString addrId = query.value(0).toString();
 
     Addressee addr;
     addr.setResource( this );
@@ -146,7 +146,7 @@ bool ResourceSql::load()
 
     // emails
     {
-      QSqlQuery emailsQuery( "select email, preferred from kaddressbook_emails "
+      TQSqlQuery emailsQuery( "select email, preferred from kaddressbook_emails "
           "where addressId = '" + addrId + "'" );
       while ( emailsQuery.next() )
         addr.insertEmail( emailsQuery.value( 0 ).toString(),
@@ -155,7 +155,7 @@ bool ResourceSql::load()
 
     // phones
     {
-      QSqlQuery phonesQuery( "select number, type from kaddressbook_phones "
+      TQSqlQuery phonesQuery( "select number, type from kaddressbook_phones "
           "where addressId = '" + addrId + "'" );
       while ( phonesQuery.next() )
         addr.insertPhoneNumber( PhoneNumber( phonesQuery.value( 0 ).toString(),
@@ -164,7 +164,7 @@ bool ResourceSql::load()
 
     // addresses
     {
-      QSqlQuery addressesQuery( "select postOfficeBox, extended, street, "
+      TQSqlQuery addressesQuery( "select postOfficeBox, extended, street, "
           "locality, region, postalCode, country, label, type "
           "from kaddressbook_addresses where addressId = '" + addrId + "'" );
       while ( addressesQuery.next() ) {
@@ -185,7 +185,7 @@ bool ResourceSql::load()
 
     // categories
     {
-      QSqlQuery categoriesQuery( "select category from kaddressbook_categories "
+      TQSqlQuery categoriesQuery( "select category from kaddressbook_categories "
           "where addressId = '" + addrId + "'" );
       while ( categoriesQuery.next() )
         addr.insertCategory( categoriesQuery.value( 0 ).toString() );
@@ -193,7 +193,7 @@ bool ResourceSql::load()
 
     // customs
     {
-      QSqlQuery customsQuery( "select app, name, value from kaddressbook_customs "
+      TQSqlQuery customsQuery( "select app, name, value from kaddressbook_customs "
           "where addressId = '" + addrId + "'" );
       while ( customsQuery.next() )
         addr.insertCustom( customsQuery.value( 0 ).toString(),
@@ -210,11 +210,11 @@ bool ResourceSql::load()
 bool ResourceSql::save( Ticket * )
 {
   // we have to delete all entries for this user and reinsert them
-  QSqlQuery query( "select addressId from kaddressbook_main_" + mUser );
+  TQSqlQuery query( "select addressId from kaddressbook_main_" + mUser );
 
   while ( query.next() ) {
-    QString addrId = query.value( 0 ).toString();
-    QSqlQuery q;
+    TQString addrId = query.value( 0 ).toString();
+    TQSqlQuery q;
 	
     q.exec( "DELETE FROM kaddressbook_emails WHERE addressId = '" + addrId + "'" );
     q.exec( "DELETE FROM kaddressbook_phones WHERE addressId = '" + addrId + "'" );
@@ -231,7 +231,7 @@ bool ResourceSql::save( Ticket * )
     if ( (*it).resource() != this && (*it).resource() != 0 ) // save only my and new entries
       continue;
 
-    QString uid = (*it).uid();
+    TQString uid = (*it).uid();
 
     query.exec( "INSERT INTO kaddressbook_main_" + mUser + " VALUES ('" +
         (*it).uid() + "','" +
@@ -244,9 +244,9 @@ bool ResourceSql::save( Ticket * )
         (*it).nickName() + "','" +
         (*it).birthday().toString( Qt::ISODate ) + "','" +
         (*it).mailer() + "','" +
-        QString::number( (*it).timeZone().offset() ) + "','" +
-        QString::number( (*it).geo().latitude() ) + "','" +
-        QString::number( (*it).geo().longitude() ) + "','" +
+        TQString::number( (*it).timeZone().offset() ) + "','" +
+        TQString::number( (*it).geo().latitude() ) + "','" +
+        TQString::number( (*it).geo().longitude() ) + "','" +
         (*it).title() + "','" +
         (*it).role() + "','" +
         (*it).organization() + "','" +
@@ -259,14 +259,14 @@ bool ResourceSql::save( Ticket * )
 
     // emails
     {
-      QStringList emails = (*it).emails();
-      QStringList::ConstIterator it;
+      TQStringList emails = (*it).emails();
+      TQStringList::ConstIterator it;
       bool preferred = true;
       for( it = emails.begin(); it != emails.end(); ++it ) {
         query.exec("INSERT INTO kaddressbook_emails VALUES ('" +
             uid + "','" +
             (*it) + "','" +
-            QString::number(preferred) + "')");
+            TQString::number(preferred) + "')");
         preferred = false;
       }
     }
@@ -279,7 +279,7 @@ bool ResourceSql::save( Ticket * )
         query.exec("INSERT INTO kaddressbook_phones VALUES ('" +
             uid + "','" +
             (*it).number() + "','" +
-            QString::number( (*it).type() ) + "')");
+            TQString::number( (*it).type() ) + "')");
       }
     }
 
@@ -298,14 +298,14 @@ bool ResourceSql::save( Ticket * )
             (*it).postalCode() + "','" +
             (*it).country() + "','" +
             (*it).label() + "','" +
-            QString::number( (*it).type() ) + "')");
+            TQString::number( (*it).type() ) + "')");
       }
     }
 
     // categories
     {
-      QStringList categories = (*it).categories();
-      QStringList::ConstIterator it;
+      TQStringList categories = (*it).categories();
+      TQStringList::ConstIterator it;
       for( it = categories.begin(); it != categories.end(); ++it )
         query.exec("INSERT INTO kaddressbook_categories VALUES ('" +
             uid + "','" +
@@ -314,14 +314,14 @@ bool ResourceSql::save( Ticket * )
 
     // customs
     {
-      QStringList list = (*it).customs();
-      QStringList::ConstIterator it;
+      TQStringList list = (*it).customs();
+      TQStringList::ConstIterator it;
       for( it = list.begin(); it != list.end(); ++it ) {
         int dashPos = (*it).find( '-' );
         int colonPos = (*it).find( ':' );
-        QString app = (*it).left( dashPos );
-        QString name = (*it).mid( dashPos + 1, colonPos - dashPos - 1 );
-        QString value = (*it).right( (*it).length() - colonPos - 1 );
+        TQString app = (*it).left( dashPos );
+        TQString name = (*it).mid( dashPos + 1, colonPos - dashPos - 1 );
+        TQString value = (*it).right( (*it).length() - colonPos - 1 );
 
         query.exec("INSERT INTO kaddressbook_categories VALUES ('" +
             uid + "','" + app + "','" + name + "','" + value + "')");
@@ -332,7 +332,7 @@ bool ResourceSql::save( Ticket * )
   return true;
 }
 
-QString ResourceSql::identifier() const
+TQString ResourceSql::identifier() const
 {
   return mHost + "_" + mDbName;
 }

@@ -19,8 +19,8 @@
 #ifndef __ktexteditor_codecompletioninterface_h__
 #define __ktexteditor_codecompletioninterface_h__
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -42,13 +42,13 @@ namespace KTextEditor
 class KTEXTEDITOR_EXPORT CompletionEntry
 {
   public:
-    QString type;
-    QString text;
-    QString prefix;
-    QString postfix;
-    QString comment;
+    TQString type;
+    TQString text;
+    TQString prefix;
+    TQString postfix;
+    TQString comment;
 
-    QString userdata;
+    TQString userdata;
 
     bool operator==( const CompletionEntry &c ) const {
       return ( c.type == type &&
@@ -94,7 +94,7 @@ class KTEXTEDITOR_EXPORT CodeCompletionInterface
 	unsigned int codeCompletionInterfaceNumber () const;
 
   protected:
-    void setCodeCompletionInterfaceDCOPSuffix (const QCString &suffix);
+    void setCodeCompletionInterfaceDCOPSuffix (const TQCString &suffix);
 
 
   public:
@@ -104,7 +104,7 @@ class KTEXTEDITOR_EXPORT CodeCompletionInterface
     /**
      * This shows an argument hint.
      */
-    virtual void showArgHint (QStringList functionList, const QString& strWrapping, const QString& strDelimiter) = 0;
+    virtual void showArgHint (TQStringList functionList, const TQString& strWrapping, const TQString& strDelimiter) = 0;
 
     /**
      * This shows a completion list. @p offset is the real start of the text that
@@ -112,7 +112,7 @@ class KTEXTEDITOR_EXPORT CodeCompletionInterface
      * position. if @p casesensitive is @p true, the popup will only contain completions
      * that match the input text regarding case.
      */
-    virtual void showCompletionBox (QValueList<CompletionEntry> complList,int offset=0, bool casesensitive=true)=0;
+    virtual void showCompletionBox (TQValueList<CompletionEntry> complList,int offset=0, bool casesensitive=true)=0;
 
 	//
 	// signals !!!
@@ -186,7 +186,7 @@ class KTEXTEDITOR_EXPORT CodeCompletionInterface
 	 * IMPORTANT FOR IMPLEMENTERS: When you don't support this signal, please just override the inherited
 	 * function, if you support it, declare it as a signal
 	 */
-    virtual void filterInsertString(CompletionEntry*,QString*)=0;
+    virtual void filterInsertString(CompletionEntry*,TQString*)=0;
 
 
   private:

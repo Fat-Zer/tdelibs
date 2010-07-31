@@ -26,7 +26,7 @@
 
 using namespace KSpell2;
 
-ISpellDict::ISpellDict( const QString& lang )
+ISpellDict::ISpellDict( const TQString& lang )
     : Dictionary( lang )
 {
     m_checker = new ISpellChecker();
@@ -40,18 +40,18 @@ ISpellDict::~ISpellDict()
 {
 }
 
-bool ISpellDict::check( const QString& word )
+bool ISpellDict::check( const TQString& word )
 {
     return m_checker->checkWord( word );
 }
 
-QStringList ISpellDict::suggest( const QString& word )
+TQStringList ISpellDict::suggest( const TQString& word )
 {
     return m_checker->suggestWord( word );
 }
 
-bool ISpellDict::checkAndSuggest( const QString& word,
-                                  QStringList& suggestions )
+bool ISpellDict::checkAndSuggest( const TQString& word,
+                                  TQStringList& suggestions )
 {
     bool c = check( word );
     if ( c )
@@ -59,18 +59,18 @@ bool ISpellDict::checkAndSuggest( const QString& word,
     return c;
 }
 
-bool ISpellDict::storeReplacement( const QString& ,
-                                   const QString& )
+bool ISpellDict::storeReplacement( const TQString& ,
+                                   const TQString& )
 {
     return false;
 }
 
-bool ISpellDict::addToPersonal( const QString& )
+bool ISpellDict::addToPersonal( const TQString& )
 {
     return false;
 }
 
-bool ISpellDict::addToSession( const QString& )
+bool ISpellDict::addToSession( const TQString& )
 {
     return false;
 }

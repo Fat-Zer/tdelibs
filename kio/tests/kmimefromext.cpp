@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
   KApplication app;
 
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-  QString fileName = args->arg( 0 );
+  TQString fileName = args->arg( 0 );
 
   // The "true" here means only the filename will be looked at.
   // "Mime-magic" will not interfer. The file doesn't exist.

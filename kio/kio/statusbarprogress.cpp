@@ -16,11 +16,11 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qtooltip.h>
-#include <qlayout.h>
-#include <qwidgetstack.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
+#include <tqtooltip.h>
+#include <tqlayout.h>
+#include <tqwidgetstack.h>
+#include <tqpushbutton.h>
+#include <tqlabel.h>
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -32,7 +32,7 @@
 
 namespace KIO {
 
-StatusbarProgress::StatusbarProgress( QWidget* parent, bool button )
+StatusbarProgress::StatusbarProgress( TQWidget* parent, bool button )
   : ProgressBase( parent ) {
 
   m_bShowButton = button;
@@ -43,23 +43,23 @@ StatusbarProgress::StatusbarProgress( QWidget* parent, bool button )
   setStopOnClose(false);
 
   int w = fontMetrics().width( " 999.9 kB/s 00:00:01 " ) + 8;
-  box = new QHBoxLayout( this, 0, 0 );
+  box = new TQHBoxLayout( this, 0, 0 );
 
-  m_pButton = new QPushButton( "X", this );
+  m_pButton = new TQPushButton( "X", this );
   box->addWidget( m_pButton  );
-  stack = new QWidgetStack( this );
+  stack = new TQWidgetStack( this );
   box->addWidget( stack );
-  connect( m_pButton, SIGNAL( clicked() ), this, SLOT( slotStop() ) );
+  connect( m_pButton, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotStop() ) );
 
   m_pProgressBar = new KProgress( this );
-  m_pProgressBar->setFrameStyle( QFrame::Box | QFrame::Raised );
+  m_pProgressBar->setFrameStyle( TQFrame::Box | TQFrame::Raised );
   m_pProgressBar->setLineWidth( 1 );
-  m_pProgressBar->setBackgroundMode( QWidget::PaletteBackground );
+  m_pProgressBar->setBackgroundMode( TQWidget::PaletteBackground );
   m_pProgressBar->installEventFilter( this );
   m_pProgressBar->setMinimumWidth( w );
   stack->addWidget( m_pProgressBar, 1 );
 
-  m_pLabel = new QLabel( "", this );
+  m_pLabel = new TQLabel( "", this );
   m_pLabel->setAlignment( AlignHCenter | AlignVCenter );
   m_pLabel->installEventFilter( this );
   m_pLabel->setMinimumWidth( w );
@@ -136,13 +136,13 @@ void StatusbarProgress::slotSpeed( KIO::Job*, unsigned long speed ) {
 }
 
 
-bool StatusbarProgress::eventFilter( QObject *, QEvent *ev ) {
+bool StatusbarProgress::eventFilter( TQObject *, TQEvent *ev ) {
   if ( ! m_pJob ) { // don't react when there isn't any job doing IO
     return true;
   }
 
-  if ( ev->type() == QEvent::MouseButtonPress ) {
-    QMouseEvent *e = (QMouseEvent*)ev;
+  if ( ev->type() == TQEvent::MouseButtonPress ) {
+    TQMouseEvent *e = (TQMouseEvent*)ev;
 
     if ( e->button() == LeftButton ) {    // toggle view on left mouse button
       if ( mode == Label ) {

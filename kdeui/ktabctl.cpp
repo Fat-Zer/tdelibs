@@ -21,21 +21,21 @@
  * KTabCtl provides a universal tab control. It is in no ways limited to dialogs and
  * can be used for whatever you want. It has no buttons or any other stuff.
  *
- * However, this is based on the original QTabDialog.
+ * However, this is based on the original TQTabDialog.
  */
 
-#include <qtabbar.h>
-#include <qpushbutton.h>
-#include <qpainter.h>
-#include <qpixmap.h>
+#include <tqtabbar.h>
+#include <tqpushbutton.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
 
 #include "ktabctl.h"
 
-KTabCtl::KTabCtl(QWidget *parent, const char *name)
-    : QWidget(parent, name)
+KTabCtl::KTabCtl(TQWidget *parent, const char *name)
+    : TQWidget(parent, name)
 {
-    tabs = new QTabBar(this, "_tabbar");
-    connect(tabs, SIGNAL(selected(int)), this, SLOT(showTab(int)));
+    tabs = new TQTabBar(this, "_tabbar");
+    connect(tabs, TQT_SIGNAL(selected(int)), this, TQT_SLOT(showTab(int)));
     tabs->move(2, 1);
 
     blBorder = true;
@@ -47,35 +47,35 @@ KTabCtl::~KTabCtl()
 	delete tabs;
 }
 
-void KTabCtl::resizeEvent(QResizeEvent *)
+void KTabCtl::resizeEvent(TQResizeEvent *)
 {
     int i;
-    QRect r = getChildRect();
+    TQRect r = getChildRect();
 
     if (tabs) {
         for (i=0; i<(int)pages.size(); i++) {
             pages[i]->setGeometry(r);
         }
-        if( ( tabs->shape() == QTabBar::RoundedBelow ) ||
-            ( tabs->shape() == QTabBar::TriangularBelow ) ) {
+        if( ( tabs->shape() == TQTabBar::RoundedBelow ) ||
+            ( tabs->shape() == TQTabBar::TriangularBelow ) ) {
             tabs->move( 0, height()-tabs->height()-4 );
         }
     }
 }
 
-void KTabCtl::setFont(const QFont & font)
+void KTabCtl::setFont(const TQFont & font)
 {
-    QFont f(font);
-    f.setWeight(QFont::Light);
-    QWidget::setFont(f);
+    TQFont f(font);
+    f.setWeight(TQFont::Light);
+    TQWidget::setFont(f);
 
     setSizes();
 }
 
-void KTabCtl::setTabFont(const QFont & font)
+void KTabCtl::setTabFont(const TQFont & font)
 {
-    QFont f(font);
-//    f.setWeight(QFont::Light);
+    TQFont f(font);
+//    f.setWeight(TQFont::Light);
     tabs->setFont(f);
 
     setSizes();
@@ -93,23 +93,23 @@ void KTabCtl::show()
     for(i = 0; i < pages.size(); i++)
 	pages[i]->hide();
 
-    QResizeEvent r(size(), size());
+    TQResizeEvent r(size(), size());
     resizeEvent(&r);
 
-    QWidget::show();
+    TQWidget::show();
 }
 
-bool KTabCtl::isTabEnabled(const QString& name)
+bool KTabCtl::isTabEnabled(const TQString& name)
 {
     unsigned int i;
 
     for(i = 0; i < pages.size(); i++)
-	if (QString::fromLatin1(pages[i]->name()) == name)
+	if (TQString::fromLatin1(pages[i]->name()) == name)
 	    return tabs->isTabEnabled(i);   /* return the enabled status */
     return false;     /* tab does not exist */
 }
 
-void KTabCtl::setTabEnabled(const QString& name, bool state)
+void KTabCtl::setTabEnabled(const TQString& name, bool state)
 {
     unsigned i;
 
@@ -117,7 +117,7 @@ void KTabCtl::setTabEnabled(const QString& name, bool state)
         return;
 
     for (i = 0; i < pages.size(); i++)
-	if (QString::fromLatin1(pages[i]->name()) == name)
+	if (TQString::fromLatin1(pages[i]->name()) == name)
 	    tabs->setTabEnabled(i, state);
 }
 
@@ -125,11 +125,11 @@ void KTabCtl::setSizes()
 {
     unsigned i;
 
-    QSize min(tabs->sizeHint());    /* the minimum required size for the tabbar */
+    TQSize min(tabs->sizeHint());    /* the minimum required size for the tabbar */
     tabs->resize(min);         /* make sure that the tabbar does not require more space than actually needed. */
 
 
-    QSize max(QCOORD_MAX,QCOORD_MAX);
+    TQSize max(QCOORD_MAX,QCOORD_MAX);
     //int th = min.height();          /* the height of the tabbar itself (without pages and stuff) */
 
     for (i = 0; i < pages.size(); i++) {
@@ -174,7 +174,7 @@ void KTabCtl::setSizes()
      */
 
     if(isVisible()) {
-	QResizeEvent r(size(), size());
+	TQResizeEvent r(size(), size());
 	resizeEvent(&r);
     }
 }
@@ -184,7 +184,7 @@ void KTabCtl::setBorder( bool state )
     blBorder = state;
 }
 
-void KTabCtl::setShape( QTabBar::Shape shape )
+void KTabCtl::setShape( TQTabBar::Shape shape )
 {
     tabs->setShape( shape );
 }
@@ -193,13 +193,13 @@ QSize
 KTabCtl::sizeHint() const
 {
 	/* desired size of the tabbar */
-	QSize hint(tabs->sizeHint());
+	TQSize hint(tabs->sizeHint());
 
 	/* overall desired size of all pages */
-	QSize pageHint;
+	TQSize pageHint;
 	for (unsigned int i = 0; i < pages.size(); i++)
 	{
-		QSize sizeI(pages[i]->sizeHint());
+		TQSize sizeI(pages[i]->sizeHint());
 
 		if (sizeI.isValid())
 		{
@@ -225,7 +225,7 @@ KTabCtl::sizeHint() const
 		   I cannot get the size to be correct unless the total
 		   border size is included: ie 2*2 pixels.
 		*/
-		return (hint + QSize(4,4));
+		return (hint + TQSize(4,4));
 	}
 
 	/*
@@ -235,7 +235,7 @@ KTabCtl::sizeHint() const
 	return (pageHint);
 }
 
-void KTabCtl::paintEvent(QPaintEvent *)
+void KTabCtl::paintEvent(TQPaintEvent *)
 {
     if (!tabs)
 	return;
@@ -243,7 +243,7 @@ void KTabCtl::paintEvent(QPaintEvent *)
     if( !blBorder )
         return;
 
-    QPainter p;
+    TQPainter p;
     p.begin(this);
 
     int y0 = getChildRect().top() - 1;
@@ -271,14 +271,14 @@ void KTabCtl::paintEvent(QPaintEvent *)
  * widget (page).
  */
 
-QRect KTabCtl::getChildRect() const
+TQRect KTabCtl::getChildRect() const
 {
-    if( ( tabs->shape() == QTabBar::RoundedBelow ) ||
-        ( tabs->shape() == QTabBar::TriangularBelow ) ) {
-    	return QRect(2, 1, width() - 4,
+    if( ( tabs->shape() == TQTabBar::RoundedBelow ) ||
+        ( tabs->shape() == TQTabBar::TriangularBelow ) ) {
+    	return TQRect(2, 1, width() - 4,
 		     height() - tabs->height() - 4);
     } else {
-      	return QRect(2, tabs->height() + 1, width() - 4,
+      	return TQRect(2, tabs->height() + 1, width() - 4,
 		     height() - tabs->height() - 4);
     }
 }
@@ -310,15 +310,15 @@ void KTabCtl::showTab(int i)
 
 /*
  * add a tab to the control. This tab will manage the given Widget w.
- * in most cases, w will be a QWidget and will only act as parent for the
+ * in most cases, w will be a TQWidget and will only act as parent for the
  * actual widgets on this page
- * NOTE: w is not required to be of class QWidget, but expect strange results with
+ * NOTE: w is not required to be of class TQWidget, but expect strange results with
  * other types of widgets
  */
 
-void KTabCtl::addTab(QWidget *w, const QString& name)
+void KTabCtl::addTab(TQWidget *w, const TQString& name)
 {
-    QTab *t = new QTab();
+    TQTab *t = new TQTab();
     t->setText( name );
     t->setEnabled( true );
     int id = tabs->addTab(t);   /* add the tab itself to the tabbar */

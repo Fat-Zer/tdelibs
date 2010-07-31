@@ -29,10 +29,10 @@
 #include "html/html_imageimpl.h"
 #include "dom/html_element.h"
 
-#include <qvaluelist.h>
-#include <qptrlist.h>
-#include <qcstring.h>
-#include <qmemarray.h>
+#include <tqvaluelist.h>
+#include <tqptrlist.h>
+#include <tqcstring.h>
+#include <tqmemarray.h>
 
 class KHTMLView;
 class QTextCodec;
@@ -46,7 +46,7 @@ namespace khtml
     class RenderRadioButton;
     class RenderFileButton;
 
-    typedef QValueList<QCString> encodingList;
+    typedef TQValueList<TQCString> encodingList;
 }
 
 namespace KWallet {
@@ -72,13 +72,13 @@ public:
 
     virtual void insertedIntoDocument();
     virtual void removedFromDocument();
-    virtual void addId(const QString& id);
-    virtual void removeId(const QString& id);
+    virtual void addId(const TQString& id);
+    virtual void removeId(const TQString& id);
 
 
     long length() const;
 
-    QByteArray formData(bool& ok);
+    TQByteArray formData(bool& ok);
 
     DOMString enctype() const { return m_enctype; }
     void setEnctype( const DOMString & );
@@ -109,13 +109,13 @@ public:
 
 private:
     void gatherWalletData();
-    QPtrList<HTMLGenericFormElementImpl> formElements;
-    QPtrList<HTMLImageElementImpl> imgElements;
+    TQPtrList<HTMLGenericFormElementImpl> formElements;
+    TQPtrList<HTMLImageElementImpl> imgElements;
     DOMString m_target;
     DOMString m_enctype;
-    QString m_boundary;
+    TQString m_boundary;
     DOMString m_acceptcharset;
-    QString m_encCharset;
+    TQString m_encCharset;
     bool m_post : 1;
     bool m_multipart : 1;
     bool m_autocomplete : 1;
@@ -126,7 +126,7 @@ private:
     bool m_haveTextarea : 1; // for wallet storage
     bool m_havePassword : 1; // for wallet storage
     DOMString m_name;        // our name
-    QMap<QString, QString> m_walletMap; // for wallet storage
+    TQMap<TQString, TQString> m_walletMap; // for wallet storage
 };
 
 // -------------------------------------------------------------------------
@@ -171,7 +171,7 @@ public:
      * for submitting
      * return true for a successful control (see HTML4-17.13.2)
      */
-    virtual bool encoding(const QTextCodec*, khtml::encodingList&, bool) { return false; }
+    virtual bool encoding(const TQTextCodec*, khtml::encodingList&, bool) { return false; }
 
     virtual void defaultEventHandler(EventImpl *evt);
     virtual bool isEditable();
@@ -206,7 +206,7 @@ public:
     typeEnum buttonType() const { return m_type; }
     virtual void parseAttribute(AttributeImpl *attr);
     virtual void defaultEventHandler(EventImpl *evt);
-    virtual bool encoding(const QTextCodec*, khtml::encodingList&, bool);
+    virtual bool encoding(const TQTextCodec*, khtml::encodingList&, bool);
     void activate();
     virtual void attach();
     void click();
@@ -215,7 +215,7 @@ public:
 
 protected:
     DOMString m_value;
-    QString   m_currValue;
+    TQString   m_currValue;
     typeEnum  m_type : 2;
     bool      m_dirty : 1;
     bool      m_clicked : 1;
@@ -288,8 +288,8 @@ public:
     void focus();
 
     virtual bool maintainsState() { return true; }
-    virtual QString state();
-    virtual void restoreState(const QString &state);
+    virtual TQString state();
+    virtual void restoreState(const TQString &state);
 
     void select();
     void click();
@@ -297,7 +297,7 @@ public:
     virtual void parseAttribute(AttributeImpl *attr);
 
     virtual void attach();
-    virtual bool encoding(const QTextCodec*, khtml::encodingList&, bool);
+    virtual bool encoding(const TQTextCodec*, khtml::encodingList&, bool);
 
     typeEnum inputType() const { return m_type; }
     virtual void reset();
@@ -411,8 +411,8 @@ public:
     void setValue(DOMStringImpl* value);
 
     virtual bool maintainsState() { return true; }
-    virtual QString state();
-    virtual void restoreState(const QString &state);
+    virtual TQString state();
+    virtual void restoreState(const TQString &state);
 
     virtual NodeImpl *insertBefore ( NodeImpl *newChild, NodeImpl *refChild, int &exceptioncode );
     virtual void      replaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode );
@@ -425,7 +425,7 @@ public:
     virtual void parseAttribute(AttributeImpl *attr);
 
     virtual void attach();
-    virtual bool encoding(const QTextCodec*, khtml::encodingList&, bool);
+    virtual bool encoding(const TQTextCodec*, khtml::encodingList&, bool);
 
     // get the actual listbox index of the optionIndexth option
     int optionToListIndex(int optionIndex) const;
@@ -434,7 +434,7 @@ public:
 
     void setRecalcListItems();
 
-    QMemArray<HTMLGenericFormElementImpl*> listItems() const
+    TQMemArray<HTMLGenericFormElementImpl*> listItems() const
      {
          if (m_recalcListItems) const_cast<HTMLSelectElementImpl*>(this)->recalcListItems();
          return m_listItems;
@@ -446,7 +446,7 @@ private:
     void recalcListItems() const;
 
 protected:
-    mutable QMemArray<HTMLGenericFormElementImpl*> m_listItems;
+    mutable TQMemArray<HTMLGenericFormElementImpl*> m_listItems;
     short m_minwidth;
     signed short m_size : 15;
     bool m_multiple : 1;
@@ -472,7 +472,7 @@ public:
     virtual bool isEnumeratable() const { return false; }
 
     virtual void parseAttribute(AttributeImpl *attr);
-    virtual bool encoding(const QTextCodec*, khtml::encodingList&, bool);
+    virtual bool encoding(const TQTextCodec*, khtml::encodingList&, bool);
 
 };
 
@@ -548,14 +548,14 @@ public:
     DOMString type() const;
 
     virtual bool maintainsState() { return true; }
-    virtual QString state();
-    virtual void restoreState(const QString &state);
+    virtual TQString state();
+    virtual void restoreState(const TQString &state);
 
     void select (  );
 
     virtual void parseAttribute(AttributeImpl *attr);
     virtual void attach();
-    virtual bool encoding(const QTextCodec*, khtml::encodingList&, bool);
+    virtual bool encoding(const TQTextCodec*, khtml::encodingList&, bool);
     virtual void reset();
     DOMString value();
     void setValue(DOMString _value);
@@ -578,7 +578,7 @@ protected:
     int m_rows;
     int m_cols;
     WrapMethod m_wrap;
-    QString m_value;
+    TQString m_value;
     bool m_changed: 1;    //States whether the contents has been editted
     bool m_dirtyvalue: 1; //States whether m_value is out-of-date compared to the renderer or default
     bool m_unsubmittedFormChange: 1;

@@ -28,7 +28,7 @@ class KMConfigJobs : public KMConfigPage
 {
 	Q_OBJECT
 public:
-	KMConfigJobs(QWidget *parent = 0, const char *name = 0);
+	KMConfigJobs(TQWidget *parent = 0, const char *name = 0);
 
 	void loadConfig(KConfig*);
 	void saveConfig(KConfig*);

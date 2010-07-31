@@ -20,18 +20,18 @@
 
 #include "katesupercursor.h"
 #include "katekeyinterceptorfunctor.h"
-#include <qobject.h>
-#include <qmap.h>
-#include <qdict.h>
-#include <qptrlist.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqmap.h>
+#include <tqdict.h>
+#include <tqptrlist.h>
+#include <tqstring.h>
 
 class KateDocument;
 
-class KateTemplateHandler: public QObject, public KateKeyInterceptorFunctor {
+class KateTemplateHandler: public TQObject, public KateKeyInterceptorFunctor {
 		Q_OBJECT
 	public:
-		KateTemplateHandler(KateDocument *doc,uint line,uint column, const QString &templateString, const QMap<QString,QString> &initialValues);
+		KateTemplateHandler(KateDocument *doc,uint line,uint column, const TQString &templateString, const TQMap<TQString,TQString> &initialValues);
 		virtual ~KateTemplateHandler();
 		inline bool initOk() {return m_initOk;}
 		virtual bool operator()(KKey key);
@@ -44,16 +44,16 @@ class KateTemplateHandler: public QObject, public KateKeyInterceptorFunctor {
 		class KateTemplateHandlerPlaceHolderInfo{
 			public:
 				KateTemplateHandlerPlaceHolderInfo():begin(0),len(0),placeholder(""){};
-				KateTemplateHandlerPlaceHolderInfo(uint begin_,uint len_,const QString& placeholder_):begin(begin_),len(len_),placeholder(placeholder_){}
+				KateTemplateHandlerPlaceHolderInfo(uint begin_,uint len_,const TQString& placeholder_):begin(begin_),len(len_),placeholder(placeholder_){}
 				uint begin;
 				uint len;
-				QString placeholder;
+				TQString placeholder;
 		};
 		class KateSuperRangeList *m_ranges;
 		class KateDocument *m_doc;
-		QPtrList<KateTemplatePlaceHolder> m_tabOrder;
-		QDict<KateTemplatePlaceHolder> m_dict;
-		void generateRangeTable(uint insertLine,uint insertCol, const QString& insertString, const QValueList<KateTemplateHandlerPlaceHolderInfo> &buildList);
+		TQPtrList<KateTemplatePlaceHolder> m_tabOrder;
+		TQDict<KateTemplatePlaceHolder> m_dict;
+		void generateRangeTable(uint insertLine,uint insertCol, const TQString& insertString, const TQValueList<KateTemplateHandlerPlaceHolderInfo> &buildList);
 		int m_currentTabStop;
 		KateSuperRange *m_currentRange;
 		void locateRange(const KateTextCursor &cursor );

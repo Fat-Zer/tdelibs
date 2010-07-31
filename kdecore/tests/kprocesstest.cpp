@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
  //
 
  p1 << "kghostview";
- QObject::connect(&p1, SIGNAL(processExited(KProcess *)),  &dummy, SLOT(printMessage(KProcess *)));
+ TQObject::connect(&p1, TQT_SIGNAL(processExited(KProcess *)),  &dummy, TQT_SLOT(printMessage(KProcess *)));
  
  printf("starting kghostview blocking (close to continue)\n");
  p1.start(KProcess::Block);
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
  printf("Starting konsole with /bin/tcsh as shell (close to continue)\n");
  p2 << "konsole" << "-e" << "/bin/tcsh";
  p2.setWorkingDirectory("/tmp");
- QObject::connect(&p2, SIGNAL(processExited(KProcess *)),  &dummy, SLOT(printMessage(KProcess *)));
+ TQObject::connect(&p2, TQT_SIGNAL(processExited(KProcess *)),  &dummy, TQT_SLOT(printMessage(KProcess *)));
  p2.start(KProcess::Block);
 
  //
@@ -70,13 +70,13 @@ int main(int argc, char *argv[])
  //
 
  p3 << "ls" << "-l";
- QObject::connect(&p3, SIGNAL(processExited(KProcess *)), 
-		  &dummy, SLOT(printMessage(KProcess *)));
+ TQObject::connect(&p3, TQT_SIGNAL(processExited(KProcess *)), 
+		  &dummy, TQT_SLOT(printMessage(KProcess *)));
 
- QObject::connect(&p3, SIGNAL(receivedStdout(KProcess *, char *, int)),
-		  &dummy, SLOT(gotOutput(KProcess *, char *, int)));
- QObject::connect(&p3, SIGNAL(receivedStderr(KProcess *, char *, int)),
-		  &dummy, SLOT(gotOutput(KProcess *, char *, int)));
+ TQObject::connect(&p3, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
+		  &dummy, TQT_SLOT(gotOutput(KProcess *, char *, int)));
+ TQObject::connect(&p3, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)),
+		  &dummy, TQT_SLOT(gotOutput(KProcess *, char *, int)));
 
  p3.start(KProcess::NotifyOnExit, KProcess::AllOutput);
  
@@ -93,16 +93,16 @@ int main(int argc, char *argv[])
  //
 
  p4 << "sort";
- QObject::connect(&p4, SIGNAL(processExited(KProcess *)), 
-		  &dummy, SLOT(printMessage(KProcess *)));
+ TQObject::connect(&p4, TQT_SIGNAL(processExited(KProcess *)), 
+		  &dummy, TQT_SLOT(printMessage(KProcess *)));
 
- QObject::connect(&p4, SIGNAL(receivedStdout(KProcess *, char *, int)),
-		  &dummy, SLOT(gotOutput(KProcess *, char *, int)));
- QObject::connect(&p4, SIGNAL(receivedStderr(KProcess *, char *, int)),
-		  &dummy, SLOT(gotOutput(KProcess *, char *, int)));
+ TQObject::connect(&p4, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
+		  &dummy, TQT_SLOT(gotOutput(KProcess *, char *, int)));
+ TQObject::connect(&p4, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)),
+		  &dummy, TQT_SLOT(gotOutput(KProcess *, char *, int)));
 
- QObject::connect(&p4, SIGNAL(wroteStdin(KProcess *)),
-		  &dummy, SLOT(outputDone(KProcess *)));
+ TQObject::connect(&p4, TQT_SIGNAL(wroteStdin(KProcess *)),
+		  &dummy, TQT_SLOT(outputDone(KProcess *)));
 
  p4.start(KProcess::NotifyOnExit, KProcess::All);
  printf("after p4.start");

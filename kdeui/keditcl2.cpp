@@ -21,15 +21,15 @@
 
 #include <limits.h> // INT_MAX
 
-#include <qframe.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qvbuttongroup.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qhbox.h>
-#include <qpopupmenu.h>
+#include <tqframe.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqvbuttongroup.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqhbox.h>
+#include <tqpopupmenu.h>
 
 #include <kapplication.h>
 #include <kcombobox.h>
@@ -58,14 +58,14 @@ void KEdit::search(){
   if( !srchdialog )
   {
     srchdialog = new KEdFind( this, "searchdialog", false);
-    connect(srchdialog,SIGNAL(search()),this,SLOT(search_slot()));
-    connect(srchdialog,SIGNAL(done()),this,SLOT(searchdone_slot()));
+    connect(srchdialog,TQT_SIGNAL(search()),this,TQT_SLOT(search_slot()));
+    connect(srchdialog,TQT_SIGNAL(done()),this,TQT_SLOT(searchdone_slot()));
   }
 
   // If we already searched / replaced something before make sure it shows
   // up in the find dialog line-edit.
 
-  QString string;
+  TQString string;
   string = srchdialog->getText();
   srchdialog->setText(string.isEmpty() ? pattern : string);
 
@@ -84,7 +84,7 @@ void KEdit::search_slot(){
   if (!srchdialog)
     return;
 
-  QString to_find_string = srchdialog->getText();
+  TQString to_find_string = srchdialog->getText();
   getCursorPosition(&line,&col);
 
   // srchdialog->get_direction() is true if searching backward
@@ -119,7 +119,7 @@ again:
                              "Continue from the end?"),
                         i18n("Find"),KStdGuiItem::cont(),i18n("Stop"));
       if (query == KMessageBox::Yes){
-	QString string = textLine( numLines() - 1 );
+	TQString string = textLine( numLines() - 1 );
 	line = numLines() - 1;
 	col  = string.length();
 	last_search = BACKWARD;
@@ -144,8 +144,8 @@ void KEdit::searchdone_slot(){
   last_search = NONE;
 }
 
-/* antlarr: KDE 4: make it const QString & */
-int KEdit::doSearch(QString s_pattern, bool case_sensitive,
+/* antlarr: KDE 4: make it const TQString & */
+int KEdit::doSearch(TQString s_pattern, bool case_sensitive,
 		    bool wildcard, bool forward, int line, int col){
 
   (void) wildcard; // reserved for possible extension to regex
@@ -156,7 +156,7 @@ int KEdit::doSearch(QString s_pattern, bool case_sensitive,
 
   if(forward){
 
-    QString string;
+    TQString string;
 
     for(i = line; i < numLines(); i++) {
 
@@ -184,7 +184,7 @@ int KEdit::doSearch(QString s_pattern, bool case_sensitive,
   }
   else{ // searching backwards
 
-    QString string;
+    TQString string;
 
     for(i = line; i >= 0; i--) {
 
@@ -254,13 +254,13 @@ void KEdit::replace()
   if( !replace_dialog )
   {
     replace_dialog = new KEdReplace( this, "replace_dialog", false );
-    connect(replace_dialog,SIGNAL(find()),this,SLOT(replace_search_slot()));
-    connect(replace_dialog,SIGNAL(replace()),this,SLOT(replace_slot()));
-    connect(replace_dialog,SIGNAL(replaceAll()),this,SLOT(replace_all_slot()));
-    connect(replace_dialog,SIGNAL(done()),this,SLOT(replacedone_slot()));
+    connect(replace_dialog,TQT_SIGNAL(find()),this,TQT_SLOT(replace_search_slot()));
+    connect(replace_dialog,TQT_SIGNAL(replace()),this,TQT_SLOT(replace_slot()));
+    connect(replace_dialog,TQT_SIGNAL(replaceAll()),this,TQT_SLOT(replace_all_slot()));
+    connect(replace_dialog,TQT_SIGNAL(done()),this,TQT_SLOT(replacedone_slot()));
   }
 
-  QString string = replace_dialog->getText();
+  TQString string = replace_dialog->getText();
   replace_dialog->setText(string.isEmpty() ? pattern : string);
 
 
@@ -284,7 +284,7 @@ void KEdit::replace_slot(){
 
   int line,col, length;
 
-  QString string = replace_dialog->getReplaceText();
+  TQString string = replace_dialog->getReplaceText();
   length = string.length();
 
   this->cut();
@@ -318,7 +318,7 @@ void KEdit::replace_all_slot(){
   if (!replace_dialog)
     return;
 
-  QString to_find_string = replace_dialog->getText();
+  TQString to_find_string = replace_dialog->getText();
 
   int lineFrom, lineTo, colFrom, colTo;
   getSelection(&lineFrom, &colFrom, &lineTo, &colTo);
@@ -389,7 +389,7 @@ again:
                              "Continue from the end?"),
                         i18n("Find"),KStdGuiItem::cont(),i18n("Stop"));
     if (query == KMessageBox::Yes){
-      QString string = textLine( numLines() - 1 );
+      TQString string = textLine( numLines() - 1 );
       replace_all_line = numLines() - 1;
       replace_all_col  = string.length();
       last_replace = BACKWARD;
@@ -409,7 +409,7 @@ void KEdit::replace_search_slot(){
   if (!replace_dialog)
     return;
 
-  QString to_find_string = replace_dialog->getText();
+  TQString to_find_string = replace_dialog->getText();
 
   int lineFrom, lineTo, colFrom, colTo;
   getSelection(&lineFrom, &colFrom, &lineTo, &colTo);
@@ -468,7 +468,7 @@ again:
                              "Continue from the end?"),
                         i18n("Replace"),KStdGuiItem::cont(),i18n("Stop"));
       if (query == KMessageBox::Yes){
-	QString string = textLine( numLines() - 1 );
+	TQString string = textLine( numLines() - 1 );
 	line = numLines() - 1;
 	col  = string.length();
 	last_replace = BACKWARD;
@@ -501,8 +501,8 @@ void KEdit::replacedone_slot(){
 
 
 
-/* antlarr: KDE 4: make it const QString & */
-int KEdit::doReplace(QString s_pattern, bool case_sensitive,
+/* antlarr: KDE 4: make it const TQString & */
+int KEdit::doReplace(TQString s_pattern, bool case_sensitive,
 	   bool wildcard, bool forward, int line, int col, bool replace_all){
 
 
@@ -511,9 +511,9 @@ int KEdit::doReplace(QString s_pattern, bool case_sensitive,
   int line_counter, length;
   int pos = -1;
 
-  QString string;
-  QString stringnew;
-  QString replacement;
+  TQString string;
+  TQString stringnew;
+  TQString replacement;
 
   replacement = replace_dialog->getReplaceText();
   line_counter = line;
@@ -684,7 +684,7 @@ int KEdit::doReplace(QString s_pattern, bool case_sensitive,
 class KEdFind::KEdFindPrivate
 {
 public:
-    KEdFindPrivate( QWidget *parent ) {
+    KEdFindPrivate( TQWidget *parent ) {
 	combo = new KHistoryCombo( parent, "value" );
 	combo->setMaxCount( 20 ); // just some default
     }
@@ -696,45 +696,45 @@ public:
 };
 
 
-KEdFind::KEdFind( QWidget *parent, const char *name, bool modal )
+KEdFind::KEdFind( TQWidget *parent, const char *name, bool modal )
   :KDialogBase( parent, name, modal, i18n("Find"),
 		modal ? User1|Cancel : User1|Close, User1, false, KGuiItem( i18n("&Find"), "find") )
 {
   setWFlags( WType_TopLevel );
 
-  QWidget *page = new QWidget( this );
+  TQWidget *page = new TQWidget( this );
   setMainWidget(page);
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+  TQVBoxLayout *topLayout = new TQVBoxLayout( page, 0, spacingHint() );
 
   d = new KEdFindPrivate( page );
 
-  QString text = i18n("Find:");
-  QLabel *label = new QLabel( text, page , "find" );
+  TQString text = i18n("Find:");
+  TQLabel *label = new TQLabel( text, page , "find" );
   topLayout->addWidget( label );
 
   d->combo->setMinimumWidth(fontMetrics().maxWidth()*20);
   d->combo->setFocus();
 
-  connect(d->combo, SIGNAL(textChanged ( const QString & )),
-          this,SLOT(textSearchChanged ( const QString & )));
+  connect(d->combo, TQT_SIGNAL(textChanged ( const TQString & )),
+          this,TQT_SLOT(textSearchChanged ( const TQString & )));
 
   topLayout->addWidget(d->combo);
 
-  group = new QVButtonGroup( i18n("Options"), page );
+  group = new TQVButtonGroup( i18n("Options"), page );
   topLayout->addWidget( group );
 
-  QHBox* row1 = new QHBox( group );
+  TQHBox* row1 = new TQHBox( group );
 
   text = i18n("Case &sensitive");
-  sensitive = new QCheckBox( text, row1, "case");
+  sensitive = new TQCheckBox( text, row1, "case");
   text = i18n("Find &backwards");
-  direction = new QCheckBox( text, row1, "direction" );
+  direction = new TQCheckBox( text, row1, "direction" );
 
 
   enableButton( KDialogBase::User1, !d->combo->currentText().isEmpty() );
 
   if ( !modal )
-    connect( this, SIGNAL( closeClicked() ), this, SLOT( slotCancel() ) );
+    connect( this, TQT_SIGNAL( closeClicked() ), this, TQT_SLOT( slotCancel() ) );
 }
 
 KEdFind::~KEdFind()
@@ -742,7 +742,7 @@ KEdFind::~KEdFind()
     delete d;
 }
 
-void KEdFind::textSearchChanged ( const QString &text )
+void KEdFind::textSearchChanged ( const TQString &text )
 {
    enableButton( KDialogBase::User1, !text.isEmpty() );
 }
@@ -763,14 +763,14 @@ void KEdFind::slotUser1( void )
 }
 
 
-QString KEdFind::getText() const
+TQString KEdFind::getText() const
 {
     return d->combo->currentText();
 }
 
 
-/* antlarr: KDE 4: make it const QString & */
-void KEdFind::setText(QString string)
+/* antlarr: KDE 4: make it const TQString & */
+void KEdFind::setText(TQString string)
 {
   d->combo->setEditText(string);
   d->combo->lineEdit()->selectAll();
@@ -811,7 +811,7 @@ KHistoryCombo * KEdFind::searchCombo() const
 class KEdReplace::KEdReplacePrivate
 {
 public:
-    KEdReplacePrivate( QWidget *parent ) {
+    KEdReplacePrivate( TQWidget *parent ) {
 	searchCombo = new KHistoryCombo( parent, "value" );
 	replaceCombo = new KHistoryCombo( parent, "replace_value" );
 
@@ -826,7 +826,7 @@ public:
     KHistoryCombo *searchCombo, *replaceCombo;
 };
 
-KEdReplace::KEdReplace( QWidget *parent, const char *name, bool modal )
+KEdReplace::KEdReplace( TQWidget *parent, const char *name, bool modal )
   :KDialogBase( parent, name, modal, i18n("Replace"),
 		modal ? User3|User2|User1|Cancel : User3|User2|User1|Close,
                 User3, false,
@@ -836,13 +836,13 @@ KEdReplace::KEdReplace( QWidget *parent, const char *name, bool modal )
 
   setButtonBoxOrientation( Vertical );
 
-  QFrame *page = makeMainWidget();
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+  TQFrame *page = makeMainWidget();
+  TQVBoxLayout *topLayout = new TQVBoxLayout( page, 0, spacingHint() );
 
   d = new KEdReplacePrivate( page );
 
-  QString text = i18n("Find:");
-  QLabel *label = new QLabel( text, page, "find" );
+  TQString text = i18n("Find:");
+  TQLabel *label = new TQLabel( text, page, "find" );
   topLayout->addWidget( label );
 
   d->searchCombo->setMinimumWidth(fontMetrics().maxWidth()*20);
@@ -850,25 +850,25 @@ KEdReplace::KEdReplace( QWidget *parent, const char *name, bool modal )
   topLayout->addWidget(d->searchCombo);
 
   text = i18n("Replace with:");
-  label = new QLabel( text, page, "replace" );
+  label = new TQLabel( text, page, "replace" );
   topLayout->addWidget( label );
 
   d->replaceCombo->setMinimumWidth(fontMetrics().maxWidth()*20);
   topLayout->addWidget(d->replaceCombo);
 
-  connect(d->searchCombo, SIGNAL(textChanged ( const QString & )),
-          this,SLOT(textSearchChanged ( const QString & )));
+  connect(d->searchCombo, TQT_SIGNAL(textChanged ( const TQString & )),
+          this,TQT_SLOT(textSearchChanged ( const TQString & )));
 
-  QButtonGroup *group = new QButtonGroup( i18n("Options"), page );
+  TQButtonGroup *group = new TQButtonGroup( i18n("Options"), page );
   topLayout->addWidget( group );
 
-  QGridLayout *gbox = new QGridLayout( group, 3, 2, spacingHint() );
+  TQGridLayout *gbox = new TQGridLayout( group, 3, 2, spacingHint() );
   gbox->addRowSpacing( 0, fontMetrics().lineSpacing() );
 
   text = i18n("Case &sensitive");
-  sensitive = new QCheckBox( text, group, "case");
+  sensitive = new TQCheckBox( text, group, "case");
   text = i18n("Find &backwards");
-  direction = new QCheckBox( text, group, "direction" );
+  direction = new TQCheckBox( text, group, "direction" );
   gbox->addWidget( sensitive, 1, 0 );
   gbox->addWidget( direction, 1, 1 );
   gbox->setRowStretch( 2, 10 );
@@ -880,7 +880,7 @@ KEdReplace::~KEdReplace()
     delete d;
 }
 
-void KEdReplace::textSearchChanged ( const QString &text )
+void KEdReplace::textSearchChanged ( const TQString &text )
 {
     bool state=text.isEmpty();
     enableButton( KDialogBase::User1, !state );
@@ -930,20 +930,20 @@ void KEdReplace::slotUser3( void )
 }
 
 
-QString KEdReplace::getText()
+TQString KEdReplace::getText()
 {
     return d->searchCombo->currentText();
 }
 
 
-QString KEdReplace::getReplaceText()
+TQString KEdReplace::getReplaceText()
 {
     return d->replaceCombo->currentText();
 }
 
 
-/* antlarr: KDE 4: make it const QString & */
-void KEdReplace::setText(QString string)
+/* antlarr: KDE 4: make it const TQString & */
+void KEdReplace::setText(TQString string)
 {
   d->searchCombo->setEditText(string);
   d->searchCombo->lineEdit()->selectAll();
@@ -972,12 +972,12 @@ KHistoryCombo * KEdReplace::replaceCombo() const
 }
 
 
-KEdGotoLine::KEdGotoLine( QWidget *parent, const char *name, bool modal )
+KEdGotoLine::KEdGotoLine( TQWidget *parent, const char *name, bool modal )
   :KDialogBase( parent, name, modal, i18n("Go to Line"), modal ? Ok|Cancel : Ok|Close, Ok, false )
 {
-  QWidget *page = new QWidget( this );
+  TQWidget *page = new TQWidget( this );
   setMainWidget(page);
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+  TQVBoxLayout *topLayout = new TQVBoxLayout( page, 0, spacingHint() );
 
   lineNum = new KIntNumInput( 1, page);
   lineNum->setRange(1, 1000000, 1, false);
@@ -1013,7 +1013,7 @@ void KEdit::spellcheck_start()
    setReadOnly(true);
 }
 
-void KEdit::misspelling (const QString &word, const QStringList &, unsigned int pos)
+void KEdit::misspelling (const TQString &word, const TQStringList &, unsigned int pos)
 {
 
   unsigned int l = 0;
@@ -1031,7 +1031,7 @@ void KEdit::misspelling (const QString &word, const QStringList &, unsigned int 
 }
 
 //need to use pos for insert, not cur, so forget cur altogether
-void KEdit::corrected (const QString &originalword, const QString &newword, unsigned int pos)
+void KEdit::corrected (const TQString &originalword, const TQString &newword, unsigned int pos)
 {
   //we'll reselect the original word in case the user has played with
   //the selection in eframe or the word was auto-replaced
@@ -1072,20 +1072,20 @@ void KEdit::spellcheck_stop()
   setReadOnly ( saved_readonlystate);
 }
 
-QString KEdit::selectWordUnderCursor( )
+TQString KEdit::selectWordUnderCursor( )
 {
     int parag;
     int pos;
 
     getCursorPosition(&parag, &pos);
 
-    QString txt = text(parag);
+    TQString txt = text(parag);
 
     // Find start
     int start = pos;
     while( start > 0 )
     {
-       const QChar &ch = txt[start-1];
+       const TQChar &ch = txt[start-1];
        if (ch.isSpace() || ch.isPunct())
           break;
        start--;
@@ -1096,7 +1096,7 @@ QString KEdit::selectWordUnderCursor( )
     int len = txt.length();
     while( end < len )
     {
-       const QChar &ch = txt[end];
+       const TQChar &ch = txt[end];
        if (ch.isSpace() || ch.isPunct())
           break;
        end++;
@@ -1105,11 +1105,11 @@ QString KEdit::selectWordUnderCursor( )
     return txt.mid(start, end-start);
 }
 
-QPopupMenu *KEdit::createPopupMenu( const QPoint& pos )
+TQPopupMenu *KEdit::createPopupMenu( const TQPoint& pos )
 {
     enum { IdUndo, IdRedo, IdSep1, IdCut, IdCopy, IdPaste, IdClear, IdSep2, IdSelectAll };
 
-    QPopupMenu *menu = QMultiLineEdit::createPopupMenu( pos );
+    TQPopupMenu *menu = TQMultiLineEdit::createPopupMenu( pos );
     
     if ( isReadOnly() )
       menu->changeItem( menu->idAt(0), SmallIconSet("editcopy"), menu->text( menu->idAt(0) ) );

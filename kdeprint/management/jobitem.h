@@ -20,21 +20,21 @@
 #ifndef JOBITEM_H
 #define JOBITEM_H
 
-#include <qlistview.h>
+#include <tqlistview.h>
 #include "kmobject.h"
 
 class KMJob;
 
-class JobItem : public QListViewItem, public KMObject
+class JobItem : public TQListViewItem, public KMObject
 {
 public:
-	JobItem(QListView *parent, KMJob *job = 0);
+	JobItem(TQListView *parent, KMJob *job = 0);
 	~JobItem();
 	void init(KMJob *job);
-	int compare(QListViewItem*, int, bool) const;
+	int compare(TQListViewItem*, int, bool) const;
 
 	int jobID() const;
-	QString jobUri() const;
+	TQString jobUri() const;
 	KMJob* job() const;
 
 private:
@@ -49,7 +49,7 @@ inline int JobItem::jobID() const
 inline KMJob* JobItem::job() const
 { return m_job; }
 
-inline QString JobItem::jobUri() const
+inline TQString JobItem::jobUri() const
 { return m_uri; }
 
 #endif

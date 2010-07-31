@@ -21,7 +21,7 @@
 #ifndef KABC_PLUGIN_H
 #define KABC_PLUGIN_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -33,19 +33,19 @@ public:
   Plugin();
   virtual ~Plugin();
 
-  virtual void setType( const QString& type );
-  virtual QString type() const;
+  virtual void setType( const TQString& type );
+  virtual TQString type() const;
 
-  virtual void setNameLabel( const QString& label );
-  virtual QString nameLabel() const;
+  virtual void setNameLabel( const TQString& label );
+  virtual TQString nameLabel() const;
 
-  virtual void setDescriptionLabel( const QString& label );
-  virtual QString descriptionLabel() const;
+  virtual void setDescriptionLabel( const TQString& label );
+  virtual TQString descriptionLabel() const;
 
 private:
-  QString mType;
-  QString mNameLabel;
-  QString mDescriptionLabel;
+  TQString mType;
+  TQString mNameLabel;
+  TQString mDescriptionLabel;
 };
 
 }

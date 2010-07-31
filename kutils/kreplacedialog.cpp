@@ -20,11 +20,11 @@
 
 #include "kreplacedialog.h"
 
-#include <qcheckbox.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qregexp.h>
+#include <tqcheckbox.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqregexp.h>
 #include <kcombobox.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -32,17 +32,17 @@
 
 /**
  * we need to insert the strings after the dialog is set
- * up, otherwise QComboBox will deliver an aweful big sizeHint
+ * up, otherwise TQComboBox will deliver an aweful big sizeHint
  * for long replacement texts.
  */
 class KReplaceDialog::KReplaceDialogPrivate {
   public:
     KReplaceDialogPrivate() : m_initialShowDone(false) {}
-    QStringList replaceStrings;
+    TQStringList replaceStrings;
     bool m_initialShowDone;
 };
 
-KReplaceDialog::KReplaceDialog(QWidget *parent, const char *name, long options, const QStringList &findStrings, const QStringList &replaceStrings, bool hasSelection) :
+KReplaceDialog::KReplaceDialog(TQWidget *parent, const char *name, long options, const TQStringList &findStrings, const TQStringList &replaceStrings, bool hasSelection) :
     KFindDialog(parent, name, true)
 {
     d = new KReplaceDialogPrivate;
@@ -56,7 +56,7 @@ KReplaceDialog::~KReplaceDialog()
     delete d;
 }
 
-void KReplaceDialog::showEvent( QShowEvent *e )
+void KReplaceDialog::showEvent( TQShowEvent *e )
 {
     if ( !d->m_initialShowDone )
     {
@@ -84,28 +84,28 @@ long KReplaceDialog::options() const
     return options;
 }
 
-QWidget *KReplaceDialog::replaceExtension()
+TQWidget *KReplaceDialog::replaceExtension()
 {
     if (!m_replaceExtension)
     {
-      m_replaceExtension = new QWidget(m_replaceGrp);
+      m_replaceExtension = new TQWidget(m_replaceGrp);
       m_replaceLayout->addMultiCellWidget(m_replaceExtension, 3, 3, 0, 1);
     }
 
     return m_replaceExtension;
 }
 
-QString KReplaceDialog::replacement() const
+TQString KReplaceDialog::replacement() const
 {
     return m_replace->currentText();
 }
 
-QStringList KReplaceDialog::replacementHistory() const
+TQStringList KReplaceDialog::replacementHistory() const
 {
-    QStringList lst = m_replace->historyItems();
+    TQStringList lst = m_replace->historyItems();
     // historyItems() doesn't tell us about the case of replacing with an empty string
     if ( m_replace->lineEdit()->text().isEmpty() )
-        lst.prepend( QString::null );
+        lst.prepend( TQString::null );
     return lst;
 }
 
@@ -116,7 +116,7 @@ void KReplaceDialog::setOptions(long options)
     m_backRef->setChecked(options & BackReference);
 }
 
-void KReplaceDialog::setReplacementHistory(const QStringList &strings)
+void KReplaceDialog::setReplacementHistory(const TQStringList &strings)
 {
     if (strings.count() > 0)
         m_replace->setHistoryItems(strings, true);
@@ -129,11 +129,11 @@ void KReplaceDialog::slotOk()
     // If regex and backrefs are enabled, do a sanity check.
     if ( m_regExp->isChecked() && m_backRef->isChecked() )
     {
-        QRegExp r ( pattern() );
+        TQRegExp r ( pattern() );
         int caps = r.numCaptures();
-        QRegExp check(QString("((?:\\\\)+)(\\d+)"));
+        TQRegExp check(TQString("((?:\\\\)+)(\\d+)"));
         int p = 0;
-        QString rep = replacement();
+        TQString rep = replacement();
         while ( (p = check.search( rep, p ) ) > -1 )
         {
             if ( check.cap(1).length()%2 && check.cap(2).toInt() > caps )

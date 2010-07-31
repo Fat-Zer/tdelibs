@@ -22,7 +22,7 @@
 
 #include <kparts/factory.h>
 #include <kparts/historyprovider.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <kurl.h>
 
 class KInstance;
@@ -45,12 +45,12 @@ public:
   KHTMLFactory( bool clone = false );
   virtual ~KHTMLFactory();
 
-  virtual KParts::Part *createPartObject( QWidget *parentWidget, const char *widgetName, QObject *parent, const char *name, const char *className, const QStringList &args );
+  virtual KParts::Part *createPartObject( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *className, const TQStringList &args );
 
   static void registerPart( KHTMLPart *part );
   static void deregisterPart( KHTMLPart *part );
 
-  static QPtrList<KHTMLPart> *partList() { return s_parts; }
+  static TQPtrList<KHTMLPart> *partList() { return s_parts; }
 
   static KInstance *instance();
 
@@ -70,7 +70,7 @@ private:
   static KInstance *s_instance;
   static KAboutData *s_about;
   static KHTMLSettings *s_settings;
-  static QPtrList<KHTMLPart> *s_parts;
+  static TQPtrList<KHTMLPart> *s_parts;
 };
 
 #endif

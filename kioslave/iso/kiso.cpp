@@ -27,9 +27,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <qcstring.h>
-#include <qdir.h>
-#include <qfile.h>
+#include <tqcstring.h>
+#include <tqdir.h>
+#include <tqfile.h>
 #include <kdebug.h>
 #include <kurl.h>
 #include <kmimetype.h>
@@ -102,16 +102,16 @@ class KIso::KIsoPrivate
 {
 public:
     KIsoPrivate() {}
-    QStringList dirList;
+    TQStringList dirList;
 };
 
-KIso::KIso( const QString& filename, const QString & _mimetype )
+KIso::KIso( const TQString& filename, const TQString & _mimetype )
     : KArchive( 0L )
 {
     m_startsec = -1;
     m_filename = filename;
     d = new KIsoPrivate;
-    QString mimetype( _mimetype );
+    TQString mimetype( _mimetype );
     bool forced = true;
     if ( mimetype.isEmpty() )
     {
@@ -128,7 +128,7 @@ KIso::KIso( const QString& filename, const QString & _mimetype )
         else
         {
             // Something else. Check if it's not really gzip though (e.g. for KOffice docs)
-            QFile file( filename );
+            TQFile file( filename );
             if ( file.open( IO_ReadOnly ) )
             {
                 unsigned char firstByte = file.getch();
@@ -152,8 +152,8 @@ KIso::KIso( const QString& filename, const QString & _mimetype )
     prepareDevice( filename, mimetype, forced );
 }
 
-void KIso::prepareDevice( const QString & filename,
-                            const QString & mimetype, bool forced )
+void KIso::prepareDevice( const TQString & filename,
+                            const TQString & mimetype, bool forced )
 {
   /* 'hack' for Qt's false assumption that only S_ISREG is seekable */
   if( "inode/blockdevice" == mimetype )
@@ -164,14 +164,14 @@ void KIso::prepareDevice( const QString & filename,
        || "application/x-bzip2" == mimetype)
         forced = true;
 
-    QIODevice *dev = KFilterDev::deviceForFile( filename, mimetype, forced );
+    TQIODevice *dev = KFilterDev::deviceForFile( filename, mimetype, forced );
     if( dev )
       setDevice( dev );
   }
 
 }
 
-KIso::KIso( QIODevice * dev )
+KIso::KIso( TQIODevice * dev )
     : KArchive( dev )
 {
     d = new KIsoPrivate;
@@ -190,7 +190,7 @@ KIso::~KIso()
 /* callback function for libisofs */
 static int readf(char *buf, int start, int len,void *udata) {
 
-    QIODevice* dev = ( static_cast<KIso*> (udata) )->device();
+    TQIODevice* dev = ( static_cast<KIso*> (udata) )->device();
 
     if (dev->at(start<<11)) {
         if ((dev->readBlock(buf, len<<11)) != -1) return (len);
@@ -204,7 +204,7 @@ static int readf(char *buf, int start, int len,void *udata) {
 static int mycallb(struct iso_directory_record *idr,void *udata) {
 
     KIso *iso = static_cast<KIso*> (udata);
-    QString path,user,group,symlink;
+    TQString path,user,group,symlink;
     int i;
     int access;
     int time,cdate,adate;
@@ -249,7 +249,7 @@ static int mycallb(struct iso_directory_record *idr,void *udata) {
             if (!special) {
                 if (iso->joliet) {
                     for (i=0;i<(isonum_711(idr->name_len)-1);i+=2) {
-                        QChar ch( be2me_16(*((ushort*)&(idr->name[i]))) );
+                        TQChar ch( be2me_16(*((ushort*)&(idr->name[i]))) );
                         if (ch==';') break;
                         path+=ch;
                     }
@@ -292,12 +292,12 @@ void KIso::addBoot(struct el_torito_boot_descriptor* bootdesc) {
     int i,size;
     boot_head boot;
     boot_entry *be;
-    QString path;
+    TQString path;
     KIsoFile *entry;
     
     entry=new KIsoFile( this, "Catalog", dirent->permissions() & ~S_IFDIR,
         dirent->date(), dirent->adate(), dirent->cdate(),
-        dirent->user(), dirent->group(), QString::null,
+        dirent->user(), dirent->group(), TQString::null,
         isonum_731(bootdesc->boot_catalog)<<11, 2048 );
     dirent->addEntry(entry);
     if (!ReadBootTable(&readf,isonum_731(bootdesc->boot_catalog),&boot,this)) {
@@ -307,10 +307,10 @@ void KIso::addBoot(struct el_torito_boot_descriptor* bootdesc) {
             size=BootImageSize( isonum_711(((struct default_entry*) be->data)->media),
                                 isonum_721(((struct default_entry*) be->data)->seccount));
             path="Default Image";
-            if (i>1) path += " (" + QString::number(i) + ")";
+            if (i>1) path += " (" + TQString::number(i) + ")";
             entry=new KIsoFile( this, path, dirent->permissions() & ~S_IFDIR,
                 dirent->date(), dirent->adate(), dirent->cdate(),
-                dirent->user(), dirent->group(), QString::null,
+                dirent->user(), dirent->group(), TQString::null,
                 isonum_731(((struct default_entry*) be->data)->start)<<11, size<<9 );
             dirent->addEntry(entry);
             be=be->next;
@@ -335,7 +335,7 @@ void KIso::readParams()
 bool KIso::openArchive( int mode )
 {
     iso_vol_desc *desc;
-    QString path,tmp,uid,gid;
+    TQString path,tmp,uid,gid;
     struct stat buf;
     int tracks[2*100],trackno=0,i,access,c_b,c_i,c_j;
     KArchiveDirectory *root;
@@ -375,10 +375,10 @@ bool KIso::openArchive( int mode )
         c_b=1;c_i=1;c_j=1;       
         root=rootDir();
         if (trackno>1) {
-            path=QString::null;
-            QTextOStream(&path) << "Track " << tracks[(i<<1)+1];
+            path=TQString::null;
+            TQTextOStream(&path) << "Track " << tracks[(i<<1)+1];
             root = new KIsoDirectory( this, path, access | S_IFDIR,
-                buf.st_mtime, buf.st_atime, buf.st_ctime, uid, gid, QString::null );
+                buf.st_mtime, buf.st_atime, buf.st_ctime, uid, gid, TQString::null );
             rootDir()->addEntry(root);
         }
 
@@ -395,10 +395,10 @@ bool KIso::openArchive( int mode )
                     bootdesc=(struct el_torito_boot_descriptor*) &(desc->data);
                     if ( !memcmp(EL_TORITO_ID,bootdesc->system_id,ISODCL(8,39)) ) {
                         path="El Torito Boot";
-                        if (c_b>1) path += " (" + QString::number(c_b) + ")";
+                        if (c_b>1) path += " (" + TQString::number(c_b) + ")";
                         
                         dirent = new KIsoDirectory( this, path, access | S_IFDIR,
-                            buf.st_mtime, buf.st_atime, buf.st_ctime, uid, gid, QString::null );
+                            buf.st_mtime, buf.st_atime, buf.st_ctime, uid, gid, TQString::null );
                         root->addEntry(dirent);
                         
                         addBoot(bootdesc);
@@ -411,14 +411,14 @@ bool KIso::openArchive( int mode )
                     idr=(struct iso_directory_record*) &( ((struct iso_primary_descriptor*) &desc->data)->root_directory_record);
                     joliet = JolietLevel(&desc->data);
                     if (joliet) {
-                        QTextOStream(&path) << "Joliet level " << joliet;
-                        if (c_j>1) path += " (" + QString::number(c_j) + ")";
+                        TQTextOStream(&path) << "Joliet level " << joliet;
+                        if (c_j>1) path += " (" + TQString::number(c_j) + ")";
                     } else {
                         path = "ISO9660";
-                        if (c_i>1) path += " (" + QString::number(c_i) + ")";
+                        if (c_i>1) path += " (" + TQString::number(c_i) + ")";
                     }
                     dirent = new KIsoDirectory( this, path, access | S_IFDIR,
-                        buf.st_mtime, buf.st_atime, buf.st_ctime, uid, gid, QString::null );
+                        buf.st_mtime, buf.st_atime, buf.st_ctime, uid, gid, TQString::null );
                     root->addEntry(dirent);
                     level=0;
                     mycallb(idr, this );
@@ -439,12 +439,12 @@ bool KIso::closeArchive()
     return true;
 }
 
-bool KIso::writeDir( const QString&, const QString&, const QString& )
+bool KIso::writeDir( const TQString&, const TQString&, const TQString& )
 {
     return false;
 }
 
-bool KIso::prepareWriting( const QString&, const QString&, const QString&, uint)
+bool KIso::prepareWriting( const TQString&, const TQString&, const TQString&, uint)
 {
     return false;
 }

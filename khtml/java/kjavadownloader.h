@@ -22,7 +22,7 @@
 #ifndef KJAVADOWNLOADER_H
 #define KJAVADOWNLOADER_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 /**
  * @short A class for handling downloads from KIO
@@ -46,7 +46,7 @@ Q_OBJECT
 public:
     virtual ~KJavaKIOJob();
     virtual void jobCommand( int cmd ) = 0;
-    virtual void data( const QByteArray& qb );
+    virtual void data( const TQByteArray& qb );
 };
 
 class KJavaDownloader : public KJavaKIOJob
@@ -54,14 +54,14 @@ class KJavaDownloader : public KJavaKIOJob
 Q_OBJECT
 
 public:
-    KJavaDownloader( int ID, const QString& url );
+    KJavaDownloader( int ID, const TQString& url );
     ~KJavaDownloader();
 
     virtual void jobCommand( int cmd );
 protected slots:
-    void slotData( KIO::Job*, const QByteArray& );
+    void slotData( KIO::Job*, const TQByteArray& );
     void slotConnected( KIO::Job* );
-    void slotMimetype( KIO::Job*, const QString& );
+    void slotMimetype( KIO::Job*, const TQString& );
     void slotResult( KIO::Job* );
 
 private:
@@ -74,14 +74,14 @@ class KJavaUploader : public KJavaKIOJob
 Q_OBJECT
 
 public:
-    KJavaUploader( int ID, const QString& url );
+    KJavaUploader( int ID, const TQString& url );
     ~KJavaUploader();
 
     virtual void jobCommand( int cmd );
-    virtual void data( const QByteArray& qb );
+    virtual void data( const TQByteArray& qb );
     void start();
 protected slots:
-    void slotDataRequest( KIO::Job*, QByteArray& );
+    void slotDataRequest( KIO::Job*, TQByteArray& );
     void slotResult( KIO::Job* );
 private:
     KJavaUploaderPrivate* d;

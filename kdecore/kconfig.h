@@ -24,7 +24,7 @@
 
 class QTimer;
 
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 
 #include "kconfigbase.h"
 #include "klockfile.h"
@@ -59,7 +59,7 @@ public:
    * @param bUseKDEGlobals Toggle reading the global KDE configuration file.
    * @param resType the place to look in (config, data, etc) See KStandardDirs.
    */
-  KConfig( const QString& fileName = QString::null,
+  KConfig( const TQString& fileName = TQString::null,
           bool bReadOnly = false, bool bUseKDEGlobals = true, const char *resType="config");
 
   KConfig(KConfigBackEnd *backEnd, bool bReadOnly = false);
@@ -91,7 +91,7 @@ public:
    * Returns a list of groups that are known.
    * @return a list of of groups
    */
-  virtual QStringList groupList() const;
+  virtual TQStringList groupList() const;
 
   /**
    * Returns a map (tree) of entries for all entries in a particular
@@ -104,7 +104,7 @@ public:
    * @return A map of entries in the group specified, indexed by key.
    *         The returned map may be empty if the group is not found.
    */
-  virtual QMap<QString, QString> entryMap(const QString &pGroup) const;
+  virtual TQMap<TQString, TQString> entryMap(const TQString &pGroup) const;
 
   /**
    * Clears all internal data structures and then reread
@@ -149,7 +149,7 @@ public:
    * @param updateFile the file containing the update
    * @since 3.1
    */
-  void checkUpdate(const QString &id, const QString &updateFile);
+  void checkUpdate(const TQString &id, const TQString &updateFile);
 
   /**
    * Copies all entries from this config object to a new config
@@ -162,7 +162,7 @@ public:
    * @param config optional config object to reuse
    * @since 3.2
    */
-  KConfig* copyTo(const QString &file, KConfig *config=0) const;
+  KConfig* copyTo(const TQString &file, KConfig *config=0) const;
 
   /**
    * Returns a lock file object for the configuration file or 0 if
@@ -186,7 +186,7 @@ protected:
    * @param group The group to search for.
    * @returns true if the group exists.
    */
-  virtual bool internalHasGroup(const QCString &group) const;
+  virtual bool internalHasGroup(const TQCString &group) const;
 
   /**
    * @internal
@@ -198,7 +198,7 @@ protected:
    * @param pGroup the group to provide a KEntryMap for.
    * @return The map of the entries in the group.
    */
-  virtual KEntryMap internalEntryMap(const QString &pGroup) const;
+  virtual KEntryMap internalEntryMap(const TQString &pGroup) const;
 
   /**
    * @internal
@@ -238,7 +238,7 @@ protected:
    * keys which indicate the start of a group of entries.
    *
    * These special keys will have the .key portion of their KEntryKey
-   * set to QString::null.
+   * set to TQString::null.
    */
   KEntryMap aEntryMap;
 
@@ -272,7 +272,7 @@ private:
  */
 class KDECORE_EXPORT KSharedConfig : public KConfig, public KShared
 {
-  friend class QValueList<KSharedConfig*>;
+  friend class TQValueList<KSharedConfig*>;
 public:
   typedef KSharedPtr<KSharedConfig> Ptr;
 
@@ -283,14 +283,14 @@ public:
    * @param readOnly set the config object's read-only status
    * @param bUseKDEGlobals Toggle reading the global KDE configuration file.
    */
-  static KSharedConfig::Ptr openConfig(const QString& fileName, bool readOnly = false,
+  static KSharedConfig::Ptr openConfig(const TQString& fileName, bool readOnly = false,
     bool bUseKDEGlobals = true);
 
 private:
-  KSharedConfig( const QString& fileName, bool readOnly, bool useKDEGlobals );
+  KSharedConfig( const TQString& fileName, bool readOnly, bool useKDEGlobals );
   ~KSharedConfig();
 
-  static QValueList<KSharedConfig*> *s_list;
+  static TQValueList<KSharedConfig*> *s_list;
 };
 
 #endif

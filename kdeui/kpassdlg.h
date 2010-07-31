@@ -21,8 +21,8 @@
 #ifndef __KPassDlg_h_included__
 #define __KPassDlg_h_included__
 
-#include <qstring.h>
-#include <qlineedit.h>
+#include <tqstring.h>
+#include <tqlineedit.h>
 #include <kdialogbase.h>
 
 class QLabel;
@@ -47,28 +47,28 @@ public:
     /**
      * Constructs a password input widget using the user's global "echo mode" setting.
      */
-    KPasswordEdit(QWidget *parent=0, const char *name=0);
+    KPasswordEdit(TQWidget *parent=0, const char *name=0);
     // KDE4: either of the two must go! add default values for parameters
 
     /**
      * Constructs a password input widget using echoMode as "echo mode".
-     * Note that echoMode is a QLineEdit::EchoMode.
+     * Note that echoMode is a TQLineEdit::EchoMode.
      * @since 3.0
      */
-    KPasswordEdit(EchoMode echoMode, QWidget *parent, const char *name);
+    KPasswordEdit(EchoMode echoMode, TQWidget *parent, const char *name);
 
     /**
      * Constructs a password input widget using echoMode as "echo mode".
      * Note that echoMode is a KPasswordEdit::EchoModes.
      * @since 3.2
      */
-    KPasswordEdit(EchoModes echoMode, QWidget *parent, const char *name);
+    KPasswordEdit(EchoModes echoMode, TQWidget *parent, const char *name);
 
     /**
      * @deprecated, will be removed in KDE 4.0
      * Creates a password input widget using echoMode as "echo mode".
      */
-    KPasswordEdit(QWidget *parent, const char *name, int echoMode) KDE_DEPRECATED;
+    KPasswordEdit(TQWidget *parent, const char *name, int echoMode) KDE_DEPRECATED;
 
     /**
      * Destructs the widget.
@@ -109,12 +109,12 @@ public slots:
     /**
      * Reimplementation
      */
-    virtual void insert( const QString &);
+    virtual void insert( const TQString &);
 
 protected:
-    virtual void keyPressEvent(QKeyEvent *);
-    virtual void focusInEvent(QFocusEvent *e);
-    virtual bool event(QEvent *e);
+    virtual void keyPressEvent(TQKeyEvent *);
+    virtual void focusInEvent(TQFocusEvent *e);
+    virtual bool event(TQEvent *e);
 
 private:
     void init();
@@ -135,7 +135,7 @@ private:
  * <b>Usage example</b>\n
  *
  * \code
- * QCString password;
+ * TQCString password;
  * int result = KPasswordDialog::getPassword(password, i18n("Prompt message"));
  * if (result == KPasswordDialog::Accepted)
  *     use(password);
@@ -154,9 +154,9 @@ private:
  *
  * @li You should delete passwords as soon as they are not needed anymore.
  * The functions getPassword() and getNewPassword() return the
- * password as a QCString. I believe this is safer than a QString. A QString
+ * password as a TQCString. I believe this is safer than a TQString. A QString
  * stores its characters internally as 16-bit wide values, so conversions are
- * needed, both for creating the QString and by using it. The temporary
+ * needed, both for creating the TQString and by using it. The temporary
  * memory used for these conversion is probably not erased. This could lead
  * to stray  passwords in memory, even if you think you erased all of them.
  *
@@ -201,13 +201,13 @@ public:
      * @since 3.0
      */
     KPasswordDialog(Types type, bool enableKeep, int extraBttn,
-                    QWidget *parent=0, const char *name=0);
+                    TQWidget *parent=0, const char *name=0);
 
     /**
      * @deprecated Variant of the previous constructor without the
      * possibility to specify a parent. Will be removed in KDE 4.0
      */
-    KPasswordDialog(int type, QString prompt, bool enableKeep=false,
+    KPasswordDialog(int type, TQString prompt, bool enableKeep=false,
                     int extraBttn=0) KDE_DEPRECATED;
     // note that this implicitly deprecates the 'prompt' variants of
     // getPassword() below. i guess the above constructor needs to be extended.
@@ -227,8 +227,8 @@ public:
      * @param name Passed to lower level constructor
      * @since 3.3
      */
-    KPasswordDialog(Types type, bool enableKeep, int extraBttn, const QString& iconName,
-                    QWidget *parent = 0, const char *name = 0);
+    KPasswordDialog(Types type, bool enableKeep, int extraBttn, const TQString& iconName,
+                    TQWidget *parent = 0, const char *name = 0);
 
     /**
      * Destructs the password dialog.
@@ -238,17 +238,17 @@ public:
     /**
      * Sets the password prompt.
      */
-    void setPrompt(QString prompt);
+    void setPrompt(TQString prompt);
 
     /**
      * Returns the password prompt.
      */
-    QString prompt() const;
+    TQString prompt() const;
 
     /**
      * Adds a line of information to the dialog.
      */
-    void addLine(QString key, QString value);
+    void addLine(TQString key, TQString value);
 
     /**
      * Allow empty passwords? - Default: false
@@ -357,7 +357,7 @@ public:
      * is shown and the result is stored in *keep.
      * @return Result code: Accepted or Rejected.
      */
-    static int getPassword(QCString &password, QString prompt, int *keep=0L);
+    static int getPassword(TQCString &password, TQString prompt, int *keep=0L);
 
     /**
      * Pops up the dialog, asks the user for a password and returns it. The
@@ -369,7 +369,7 @@ public:
      * information. The text is word broken to fit nicely in the dialog.
      * @return Result code: Accepted or Rejected.
      */
-    static int getNewPassword(QCString &password, QString prompt);
+    static int getNewPassword(TQCString &password, TQString prompt);
 
     /**
      * Static helper function that disables core dumps.
@@ -398,9 +398,9 @@ private:
     void erase();
 
     int m_Keep, m_Type, m_Row;
-    QLabel *m_pHelpLbl;
-    QGridLayout *m_pGrid;
-    QWidget *m_pMain;
+    TQLabel *m_pHelpLbl;
+    TQGridLayout *m_pGrid;
+    TQWidget *m_pMain;
     KPasswordEdit *m_pEdit, *m_pEdit2;
 
 protected:

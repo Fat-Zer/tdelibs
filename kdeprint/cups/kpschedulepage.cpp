@@ -19,25 +19,25 @@
 
 #include "kpschedulepage.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qcombobox.h>
-#include <qregexp.h>
-#include <qdatetimeedit.h>
-#include <qdatetime.h>
-#include <qlineedit.h>
-#include <qwhatsthis.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqcombobox.h>
+#include <tqregexp.h>
+#include <tqdatetimeedit.h>
+#include <tqdatetime.h>
+#include <tqlineedit.h>
+#include <tqwhatsthis.h>
 #include <klocale.h>
 #include <kseparator.h>
 #include <knuminput.h>
 
 #include <time.h>
 
-KPSchedulePage::KPSchedulePage(QWidget *parent, const char *name)
+KPSchedulePage::KPSchedulePage(TQWidget *parent, const char *name)
 : KPrintDialogPage(parent, name)
 {
 	//WhatsThis strings.... (added by pfeifle@kde.org)
-	QString whatsThisBillingInfo = i18n(    " <qt> <p><b>Print Job Billing and Accounting</b></p> "
+	TQString whatsThisBillingInfo = i18n(    " <qt> <p><b>Print Job Billing and Accounting</b></p> "
 						" <p>Insert a meaningful string here to associate"
 						" the current print job with a certain account. This"
 						" string will appear in the CUPS \"page_log\" to help"
@@ -57,7 +57,7 @@ KPSchedulePage::KPSchedulePage(QWidget *parent, const char *name)
 						" </p> "
                                                 " </qt>" );
 
-	QString whatsThisScheduledPrinting = i18n(" <qt> <p><b>Scheduled Printing</b></p> "
+	TQString whatsThisScheduledPrinting = i18n(" <qt> <p><b>Scheduled Printing</b></p> "
 						" <p>Scheduled printing lets you control the time"
 						" of the actual printout, while you can still send away your"
 						" job <b>now</b> and have it out of your way."
@@ -84,7 +84,7 @@ KPSchedulePage::KPSchedulePage(QWidget *parent, const char *name)
 						" </p> "
 						" </qt>" );
 
-	QString whatsThisPageLabel = i18n(      " <qt> <p><b>Page Labels</b></p> "
+	TQString whatsThisPageLabel = i18n(      " <qt> <p><b>Page Labels</b></p> "
 						" <p>Page Labels are printed by CUPS at the top and bottom"
 						" of each page. They appear on the pages surrounded by a little"
 						" frame box."
@@ -99,7 +99,7 @@ KPSchedulePage::KPSchedulePage(QWidget *parent, const char *name)
 						" </p> "
 						" </qt>" );
 
-	QString whatsThisJobPriority = i18n(    " <qt> <p><b>Job Priority</b></p> "
+	TQString whatsThisJobPriority = i18n(    " <qt> <p><b>Job Priority</b></p> "
 						" <p>Usually CUPS prints all jobs per queue according to"
 						" the \"FIFO\" principle: <em>First In, First Out</em>."
 						" <p> The"
@@ -133,7 +133,7 @@ KPSchedulePage::KPSchedulePage(QWidget *parent, const char *name)
 	ts = localtime(&ct);
 	m_gmtdiff -= ts->tm_hour;
 
-	m_time = new QComboBox(this);
+	m_time = new TQComboBox(this);
 	m_time->insertItem(i18n("Immediately"));
 	m_time->insertItem(i18n("Never (hold indefinitely)"));
 	m_time->insertItem(i18n("Daytime (6 am - 6 pm)"));
@@ -143,38 +143,38 @@ KPSchedulePage::KPSchedulePage(QWidget *parent, const char *name)
 	m_time->insertItem(i18n("Second Shift (4 pm - 12 am)"));
 	m_time->insertItem(i18n("Third Shift (12 am - 8 am)"));
 	m_time->insertItem(i18n("Specified Time"));
-        QWhatsThis::add(m_time, whatsThisScheduledPrinting);
+        TQWhatsThis::add(m_time, whatsThisScheduledPrinting);
 	m_tedit = new QTimeEdit(this);
 	m_tedit->setAutoAdvance(true);
-	m_tedit->setTime(QTime::currentTime());
+	m_tedit->setTime(TQTime::currentTime());
 	m_tedit->setEnabled(false);
-        QWhatsThis::add(m_tedit, whatsThisScheduledPrinting);
-	m_billing = new QLineEdit(this);
-        QWhatsThis::add(m_billing, whatsThisBillingInfo);
-	m_pagelabel = new QLineEdit(this);
-        QWhatsThis::add(m_pagelabel, whatsThisPageLabel);
+        TQWhatsThis::add(m_tedit, whatsThisScheduledPrinting);
+	m_billing = new TQLineEdit(this);
+        TQWhatsThis::add(m_billing, whatsThisBillingInfo);
+	m_pagelabel = new TQLineEdit(this);
+        TQWhatsThis::add(m_pagelabel, whatsThisPageLabel);
 	m_priority = new KIntNumInput(50, this);
-        QWhatsThis::add(m_priority, whatsThisJobPriority);
+        TQWhatsThis::add(m_priority, whatsThisJobPriority);
 	m_priority->setRange(1, 100, 10, true);
 
-	QLabel	*lab = new QLabel(i18n("&Scheduled printing:"), this);
+	QLabel	*lab = new TQLabel(i18n("&Scheduled printing:"), this);
 	lab->setBuddy(m_time);
-        QWhatsThis::add(lab, whatsThisScheduledPrinting);
-	QLabel	*lab1 = new QLabel(i18n("&Billing information:"), this);
-        QWhatsThis::add(lab1, whatsThisBillingInfo);
+        TQWhatsThis::add(lab, whatsThisScheduledPrinting);
+	QLabel	*lab1 = new TQLabel(i18n("&Billing information:"), this);
+        TQWhatsThis::add(lab1, whatsThisBillingInfo);
 	lab1->setBuddy(m_billing);
-	QLabel	*lab2 = new QLabel(i18n("T&op/Bottom page label:"), this);
-        QWhatsThis::add(lab2, whatsThisPageLabel);
+	QLabel	*lab2 = new TQLabel(i18n("T&op/Bottom page label:"), this);
+        TQWhatsThis::add(lab2, whatsThisPageLabel);
 	lab2->setBuddy(m_pagelabel);
 	m_priority->setLabel(i18n("&Job priority:"), Qt::AlignVCenter|Qt::AlignLeft);
-        QWhatsThis::add(m_priority, whatsThisJobPriority);
+        TQWhatsThis::add(m_priority, whatsThisJobPriority);
 
 	KSeparator	*sep0 = new KSeparator(this);
 	sep0->setFixedHeight(10);
 
-	QGridLayout	*l0 = new QGridLayout(this, 6, 2, 0, 7);
+	QGridLayout	*l0 = new TQGridLayout(this, 6, 2, 0, 7);
 	l0->addWidget(lab, 0, 0);
-	QHBoxLayout	*l1 = new QHBoxLayout(0, 0, 5);
+	QHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 5);
 	l0->addLayout(l1, 0, 1);
 	l1->addWidget(m_time);
 	l1->addWidget(m_tedit);
@@ -186,14 +186,14 @@ KPSchedulePage::KPSchedulePage(QWidget *parent, const char *name)
 	l0->addMultiCellWidget(m_priority, 4, 4, 0, 1);
 	l0->setRowStretch(5, 1);
 
-	connect(m_time, SIGNAL(activated(int)), SLOT(slotTimeChanged()));
+	connect(m_time, TQT_SIGNAL(activated(int)), TQT_SLOT(slotTimeChanged()));
 }
 
 KPSchedulePage::~KPSchedulePage()
 {
 }
 
-bool KPSchedulePage::isValid(QString& msg)
+bool KPSchedulePage::isValid(TQString& msg)
 {
 	if (m_time->currentItem() == 8 && !m_tedit->time().isValid())
 	{
@@ -203,7 +203,7 @@ bool KPSchedulePage::isValid(QString& msg)
 	return true;
 }
 
-void KPSchedulePage::setOptions(const QMap<QString,QString>& opts)
+void KPSchedulePage::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	QString	t = opts["job-hold-until"];
 	if (!t.isEmpty())
@@ -220,7 +220,7 @@ void KPSchedulePage::setOptions(const QMap<QString,QString>& opts)
 		else if (t == "third-shift") item = 7;
 		else
 		{
-			QTime	qt = QTime::fromString(t);
+			QTime	qt = TQTime::fromString(t);
 			m_tedit->setTime(qt.addSecs(-3600 * m_gmtdiff));
 			item = 8;
 		}
@@ -243,7 +243,7 @@ void KPSchedulePage::setOptions(const QMap<QString,QString>& opts)
 		m_priority->setValue(val);
 }
 
-void KPSchedulePage::getOptions(QMap<QString,QString>& opts, bool incldef)
+void KPSchedulePage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	if (incldef || m_time->currentItem() != 0)
 	{
@@ -269,7 +269,7 @@ void KPSchedulePage::getOptions(QMap<QString,QString>& opts, bool incldef)
 	if (incldef || !m_pagelabel->text().isEmpty())
 		opts["page-label"] = "\"" + m_pagelabel->text() + "\"";
 	if (incldef || m_priority->value() != 50)
-		opts["job-priority"] = QString::number(m_priority->value());
+		opts["job-priority"] = TQString::number(m_priority->value());
 }
 
 void KPSchedulePage::slotTimeChanged()

@@ -38,15 +38,15 @@
 #endif
 
 #include <stdlib.h>
-#include <qptrlist.h>
-#include <qobject.h>
-#include <qptrdict.h>
-#include <qdict.h>
-#include <qpixmap.h>
-#include <qbuffer.h>
-#include <qstringlist.h>
-#include <qtextcodec.h>
-#include <qtimer.h>
+#include <tqptrlist.h>
+#include <tqobject.h>
+#include <tqptrdict.h>
+#include <tqdict.h>
+#include <tqpixmap.h>
+#include <tqbuffer.h>
+#include <tqstringlist.h>
+#include <tqtextcodec.h>
+#include <tqtimer.h>
 
 #include <kurl.h>
 #include <kio/global.h>
@@ -115,7 +115,7 @@ namespace khtml
 	}
         virtual ~CachedObject();
 
-	virtual void data( QBuffer &buffer, bool eof) = 0;
+	virtual void data( TQBuffer &buffer, bool eof) = 0;
 	virtual void error( int err, const char *text ) = 0;
 
 	const DOM::DOMString &url() const { return m_url; }
@@ -130,9 +130,9 @@ namespace khtml
 	void setStatus(Status s) { m_status = s; }
 	Status status() const { return m_status; }
 
-        virtual void setCharset( const QString& /*charset*/ ) {}
+        virtual void setCharset( const TQString& /*charset*/ ) {}
 
-        QTextCodec* codecForBuffer( const QString& charset, const QByteArray& buffer ) const;
+        TQTextCodec* codecForBuffer( const TQString& charset, const TQByteArray& buffer ) const;
 
 	int size() const { return m_size; }
 
@@ -157,14 +157,14 @@ namespace khtml
          * List of acceptable mimetypes separated by ",". A mimetype may contain a wildcard.
          */
         // e.g. "text/*"
-        QString accept() const { return m_accept; }
-        void setAccept(const QString &_accept) { m_accept = _accept; }
+        TQString accept() const { return m_accept; }
+        void setAccept(const TQString &_accept) { m_accept = _accept; }
 
     protected:
         void setSize(int size);
-        QPtrDict<CachedObjectClient> m_clients;
+        TQPtrDict<CachedObjectClient> m_clients;
 	DOM::DOMString m_url;
-        QString m_accept;
+        TQString m_accept;
         Request *m_request;
 	Type m_type;
 	Status m_status;
@@ -197,27 +197,27 @@ namespace khtml
     public:
 	CachedCSSStyleSheet(DocLoader* dl, const DOM::DOMString &url, KIO::CacheControl cachePolicy,
 			    const char *accept);
-	CachedCSSStyleSheet(const DOM::DOMString &url, const QString &stylesheet_data);
+	CachedCSSStyleSheet(const DOM::DOMString &url, const TQString &stylesheet_data);
 
 	const DOM::DOMString &sheet() const { return m_sheet; }
 
 	virtual void ref(CachedObjectClient *consumer);
 
-	virtual void data( QBuffer &buffer, bool eof );
+	virtual void data( TQBuffer &buffer, bool eof );
 	virtual void error( int err, const char *text );
 
         virtual bool schedule() const { return true; }
-        void setCharsetHint( const QString& charset ) { m_charsetHint = charset; }
-        void setCharset( const QString& charset ) { m_charset = charset; }
+        void setCharsetHint( const TQString& charset ) { m_charsetHint = charset; }
+        void setCharset( const TQString& charset ) { m_charset = charset; }
 
     protected:
         void checkNotify();
 
 	DOM::DOMString m_sheet;
-        QString m_charset;
-        QString m_charsetHint;
+        TQString m_charset;
+        TQString m_charsetHint;
 	int m_err;
-	QString m_errText;
+	TQString m_errText;
     };
 
     /**
@@ -227,13 +227,13 @@ namespace khtml
     {
     public:
 	CachedScript(DocLoader* dl, const DOM::DOMString &url, KIO::CacheControl cachePolicy, const char* accept );
-	CachedScript(const DOM::DOMString &url, const QString &script_data);
+	CachedScript(const DOM::DOMString &url, const TQString &script_data);
 
 	const DOM::DOMString &script() const { return m_script; }
 
 	virtual void ref(CachedObjectClient *consumer);
 
-	virtual void data( QBuffer &buffer, bool eof );
+	virtual void data( TQBuffer &buffer, bool eof );
 	virtual void error( int err, const char *text );
 
         virtual bool schedule() const { return false; }
@@ -241,10 +241,10 @@ namespace khtml
 	void checkNotify();
 
         bool isLoaded() const { return !m_loading; }
-        void setCharset( const QString& charset ) { m_charset = charset; }
+        void setCharset( const TQString& charset ) { m_charset = charset; }
 
     protected:
-        QString m_charset;
+        TQString m_charset;
 	DOM::DOMString m_script;
     };
 
@@ -253,37 +253,37 @@ namespace khtml
     /**
      * a cached image
      */
-    class CachedImage : public QObject, public CachedObject
+    class CachedImage : public TQObject, public CachedObject
     {
 	Q_OBJECT
     public:
 	CachedImage(DocLoader* dl, const DOM::DOMString &url, KIO::CacheControl cachePolicy, const char* accept);
 	virtual ~CachedImage();
 
-	const QPixmap &pixmap() const;
-	const QPixmap &scaled_pixmap(int xWidth, int xHeight);
-	const QPixmap &tiled_pixmap(const QColor& bg, int xWidth = -1, int xHeight = -1);
+	const TQPixmap &pixmap() const;
+	const TQPixmap &scaled_pixmap(int xWidth, int xHeight);
+	const TQPixmap &tiled_pixmap(const TQColor& bg, int xWidth = -1, int xHeight = -1);
 
-        QSize pixmap_size() const;    // returns the size of the complete (i.e. when finished) loading
-        QRect valid_rect() const;     // returns the rectangle of pixmap that has been loaded already
+        TQSize pixmap_size() const;    // returns the size of the complete (i.e. when finished) loading
+        TQRect valid_rect() const;     // returns the rectangle of pixmap that has been loaded already
 
         bool canRender() const { return !isErrorImage() && pixmap_size().width() > 0 && pixmap_size().height() > 0; }
         void ref(CachedObjectClient *consumer);
 	virtual void deref(CachedObjectClient *consumer);
 
-	virtual void data( QBuffer &buffer, bool eof );
+	virtual void data( TQBuffer &buffer, bool eof );
 	virtual void error( int err, const char *text );
 
         bool isTransparent() const { return isFullyTransparent; }
         bool isErrorImage() const { return m_hadError; }
         bool isBlockedImage() const { return m_wasBlocked; }
-        const QString& suggestedFilename() const { return m_suggestedFilename; }
-        void setSuggestedFilename( const QString& s ) { m_suggestedFilename = s;  }
+        const TQString& suggestedFilename() const { return m_suggestedFilename; }
+        void setSuggestedFilename( const TQString& s ) { m_suggestedFilename = s;  }
 #ifdef IMAGE_TITLES
-        const QString& suggestedTitle() const { return m_suggestedTitle; }
-        void setSuggestedTitle( const QString& s ) { m_suggestedTitle = s;  }
+        const TQString& suggestedTitle() const { return m_suggestedTitle; }
+        void setSuggestedTitle( const TQString& s ) { m_suggestedTitle = s;  }
 #else
-        const QString& suggestedTitle() const { return m_suggestedFilename; }
+        const TQString& suggestedTitle() const { return m_suggestedFilename; }
 #endif
 
         void setShowAnimations( KHTMLSettings::KAnimationAdvice );
@@ -299,27 +299,27 @@ namespace khtml
 
     private slots:
 	/**
-	 * gets called, whenever a QMovie changes frame
+	 * gets called, whenever a TQMovie changes frame
 	 */
-	void movieUpdated( const QRect &rect );
+	void movieUpdated( const TQRect &rect );
         void movieStatus(int);
-        void movieResize(const QSize&);
+        void movieResize(const TQSize&);
         void deleteMovie();
 
     private:
-        void do_notify(const QPixmap& p, const QRect& r);
+        void do_notify(const TQPixmap& p, const TQRect& r);
 
-        QString m_suggestedFilename;
+        TQString m_suggestedFilename;
 #ifdef IMAGE_TITLES
-        QString m_suggestedTitle;
+        TQString m_suggestedTitle;
 #endif
-	QMovie* m;
-        QPixmap* p;
-	QPixmap* scaled;
-	QPixmap* bg;
+	TQMovie* m;
+        TQPixmap* p;
+	TQPixmap* scaled;
+	TQPixmap* bg;
         QRgb bgColor;
-        QSize bgSize;
-        mutable QPixmap* pixPart;
+        TQSize bgSize;
+        mutable TQPixmap* pixPart;
 
         ImageSource* imgSource;
         const char* formatType;  // Is the name of the movie format type
@@ -349,9 +349,9 @@ namespace khtml
  	~DocLoader();
 
 	CachedImage *requestImage( const DOM::DOMString &url);
-	CachedCSSStyleSheet *requestStyleSheet( const DOM::DOMString &url, const QString& charsetHint,
+	CachedCSSStyleSheet *requestStyleSheet( const DOM::DOMString &url, const TQString& charsetHint,
 						const char *accept = "text/css", bool userSheet = false );
-        CachedScript *requestScript( const DOM::DOMString &url, const QString& charset);
+        CachedScript *requestScript( const DOM::DOMString &url, const TQString& charset);
 
 	bool autoloadImages() const { return m_bautoloadImages; }
         KIO::CacheControl cachePolicy() const { return m_cachePolicy; }
@@ -371,14 +371,14 @@ namespace khtml
         void removeCachedObject( CachedObject* o) const { m_docObjects.remove( o ); }
 
     private:
-        bool needReload(CachedObject *existing, const QString &fullUrl);
+        bool needReload(CachedObject *existing, const TQString &fullUrl);
 
         friend class Cache;
         friend class DOM::DocumentImpl;
         friend class ::KHTMLPart;
 
-        QStringList m_reloadedURLs;
-        mutable QPtrDict<CachedObject> m_docObjects;
+        TQStringList m_reloadedURLs;
+        mutable TQPtrDict<CachedObject> m_docObjects;
 	time_t m_expireDate;
 	time_t m_creationDate;
 	KIO::CacheControl m_cachePolicy;
@@ -397,7 +397,7 @@ namespace khtml
 	Request(DocLoader* dl, CachedObject *_object, bool _incremental);
 	~Request();
 	bool incremental;
-	QBuffer m_buffer;
+	TQBuffer m_buffer;
 	CachedObject *object;
         DocLoader* m_docLoader;
     };
@@ -427,16 +427,16 @@ namespace khtml
 
     protected slots:
 	void slotFinished( KIO::Job * );
-	void slotData( KIO::Job *, const QByteArray & );
+	void slotData( KIO::Job *, const TQByteArray & );
 	void servePendingRequests();
 
     protected:
-	QPtrList<Request> m_requestsPending;
-	QPtrDict<Request> m_requestsLoading;
+	TQPtrList<Request> m_requestsPending;
+	TQPtrDict<Request> m_requestsLoading;
 #ifdef HAVE_LIBJPEG
         KJPEGFormatType m_jpegloader;
 #endif
-        QTimer m_timer;
+        TQTimer m_timer;
     };
 
         /**
@@ -471,12 +471,12 @@ namespace khtml
         /**
          * Pre-loads a stylesheet into the cache.
          */
-        static void preloadStyleSheet(const QString &url, const QString &stylesheet_data);
+        static void preloadStyleSheet(const TQString &url, const TQString &stylesheet_data);
 
         /**
          * Pre-loads a script into the cache.
          */
-        static void preloadScript(const QString &url, const QString &script_data);
+        static void preloadScript(const TQString &url, const TQString &script_data);
 
 	static void setSize( int bytes );
 	static int size() { return maxSize; };
@@ -492,9 +492,9 @@ namespace khtml
 
 	static Loader *loader() { return m_loader; }
 
-    	static QPixmap *nullPixmap;
-        static QPixmap *brokenPixmap;
-        static QPixmap *blockedPixmap;
+    	static TQPixmap *nullPixmap;
+        static TQPixmap *brokenPixmap;
+        static TQPixmap *blockedPixmap;
         static int cacheSize;
 
         static void removeCacheEntry( CachedObject *object );
@@ -505,9 +505,9 @@ namespace khtml
 
         friend class CachedObject;
 
-	static QDict<CachedObject> *cache;
-        static QPtrList<DocLoader>* docloader;
-        static QPtrList<CachedObject> *freeList;
+	static TQDict<CachedObject> *cache;
+        static TQPtrList<DocLoader>* docloader;
+        static TQPtrList<CachedObject> *freeList;
         static void insertInLRUList(CachedObject*);
         static void removeFromLRUList(CachedObject*);
 

@@ -52,7 +52,7 @@ public:
   /**
    * Constructor.
    */
-  KMulticastSocket(QObject* parent = 0L, const char *name = 0L);
+  KMulticastSocket(TQObject* parent = 0L, const char *name = 0L);
 
   /**
    * Destructor.

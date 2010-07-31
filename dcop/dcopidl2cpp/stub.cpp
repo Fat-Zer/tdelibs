@@ -20,11 +20,11 @@ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
-#include <qdom.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqdom.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <string.h>
 #include <stdlib.h>
@@ -36,13 +36,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /*
  * Writes the stubs header
  */
-void generateStub( const QString& idl, const QString& filename, QDomElement de)
+void generateStub( const TQString& idl, const TQString& filename, TQDomElement de)
 {
-    QFile stub( filename );
+    TQFile stub( filename );
     if ( !stub.open( IO_WriteOnly ) )
 	qFatal("Could not write to %s", filename.local8Bit().data() );
 	
-    QTextStream str( &stub );
+    TQTextStream str( &stub );
 
     str << "/****************************************************************************" << endl;
     str << "**" << endl;
@@ -53,19 +53,19 @@ void generateStub( const QString& idl, const QString& filename, QDomElement de)
     str << "*****************************************************************************/" << endl;
     str << endl;
 
-    QString ifdefstring = idl.upper();
+    TQString ifdefstring = idl.upper();
     int pos = idl.findRev( '.' );
     if ( pos != -1 )
 	ifdefstring = ifdefstring.left( pos );
 
-    QString ifdefsuffix = "_STUB__";
+    TQString ifdefsuffix = "_STUB__";
     str << "#ifndef __" << ifdefstring << ifdefsuffix << endl;
     str << "#define __" << ifdefstring << ifdefsuffix << endl << endl;
 
     str << "#include <dcopstub.h>" << endl;
 
-    QStringList includeslist, all_includes;
-    QDomElement e = de.firstChild().toElement();
+    TQStringList includeslist, all_includes;
+    TQDomElement e = de.firstChild().toElement();
     for( ; !e.isNull(); e = e.nextSibling().toElement() ) {
 	if ( e.tagName() == "INCLUDE" ) {
             // dcopidl lists the includes in reversed order because of the used yacc/bison gramatic
@@ -74,7 +74,7 @@ void generateStub( const QString& idl, const QString& filename, QDomElement de)
             continue;
 	}
         if( !includeslist.empty()) {
-            for( QStringList::ConstIterator it = includeslist.begin();
+            for( TQStringList::ConstIterator it = includeslist.begin();
                  it != includeslist.end();
                  ++it ) {
     	        str << "#include <" << ( *it ) << ">" << endl;
@@ -87,20 +87,20 @@ void generateStub( const QString& idl, const QString& filename, QDomElement de)
 
 	str << endl;
     
-	QDomElement n = e.firstChild().toElement();
+	TQDomElement n = e.firstChild().toElement();
 	Q_ASSERT( n.tagName() == "NAME" );
-	QString className = n.firstChild().toText().data() + ( "_stub" );
+	TQString className = n.firstChild().toText().data() + ( "_stub" );
 
 	//add link scope, if available
 	n = n.nextSibling().toElement();
-	QString linkScope;
+	TQString linkScope;
 	if (n.tagName()=="LINK_SCOPE") {
 		linkScope = n.firstChild().toText().data() + " ";
 		n = n.nextSibling().toElement();
 	}
 
 	// find dcop parent ( rightmost super class )
-	QString DCOPParent;
+	TQString DCOPParent;
 	for( ; !n.isNull(); n = n.nextSibling().toElement() ) {
 	    if ( n.tagName() == "SUPER" )
 		DCOPParent = n.firstChild().toText().data();
@@ -112,7 +112,7 @@ void generateStub( const QString& idl, const QString& filename, QDomElement de)
 	    else if( all_includes.contains( DCOPParent.lower() + ".h" ))
 		str << "#include <" << DCOPParent.lower() << "_stub.h>" << endl;
 	    else {// damn ... let's assume it's the last include
-		QString stub_h = all_includes.last();
+		TQString stub_h = all_includes.last();
 		unsigned int pos = stub_h.find( ".h" );
 		if( pos > 0 ) {
 		    stub_h = stub_h.remove( pos, 100000 );
@@ -123,10 +123,10 @@ void generateStub( const QString& idl, const QString& filename, QDomElement de)
 	    }
 	}
 
-	QString classNameFull = className; // class name with possible namespaces prepended
+	TQString classNameFull = className; // class name with possible namespaces prepended
 					   // namespaces will be removed from className now
 	int namespace_count = 0;
-	QString namespace_tmp = className;
+	TQString namespace_tmp = className;
 	for(;;) {
 	    int pos = namespace_tmp.find( "::" );
 	    if( pos < 0 ) {
@@ -156,15 +156,15 @@ void generateStub( const QString& idl, const QString& filename, QDomElement de)
 	str << "public:" << endl;
     
 	// Constructors
-	str << "    " << className << "( const QCString& app, const QCString& id );" << endl;
-	str << "    " << className << "( DCOPClient* client, const QCString& app, const QCString& id );" << endl;
+	str << "    " << className << "( const TQCString& app, const TQCString& id );" << endl;
+	str << "    " << className << "( DCOPClient* client, const TQCString& app, const TQCString& id );" << endl;
 	str << "    explicit " << className << "( const DCOPRef& ref );" << endl;
 
 	n = e.firstChild().toElement();
 	for( ; !n.isNull(); n = n.nextSibling().toElement() ) {
 	    if (n.tagName() != "FUNC")
 		continue;
-	    QDomElement r = n.firstChild().toElement();
+	    TQDomElement r = n.firstChild().toElement();
 	    str << "    virtual "; // KDE4 - I really don't think these need to be virtual
 	    writeType( str, r );
 
@@ -181,7 +181,7 @@ void generateStub( const QString& idl, const QString& filename, QDomElement de)
 		    str << " ";
 		first = false;
 		Q_ASSERT( r.tagName() == "ARG" );
-		QDomElement a = r.firstChild().toElement();
+		TQDomElement a = r.firstChild().toElement();
 		writeType( str, a );
 		a = a.nextSibling().toElement();
 		if ( a.tagName() == "NAME" )

@@ -25,12 +25,12 @@
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 
-#include <qstring.h>
-#include <qptrlist.h>
-#include <qdict.h>
-#include <qmap.h>
-#include <qrect.h>
-#include <qsize.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
+#include <tqdict.h>
+#include <tqmap.h>
+#include <tqrect.h>
+#include <tqsize.h>
 
 #include <kdelibs_export.h>
 
@@ -69,24 +69,24 @@ public:
 	Type type() const 					{ return m_type; }
 	bool isOption() const 					{ return (m_type >= DrBase::String); }
 
-	const QString& get(const QString& key) const 		{ return m_map[key]; }
-	void set(const QString& key, const QString& val)	{ m_map[key] = val; }
-	bool has(const QString& key) const 			{ return m_map.contains(key); }
-	const QString& name() const				{ return m_name; }
-	void setName(const QString& s)				{ m_name = s; }
+	const TQString& get(const TQString& key) const 		{ return m_map[key]; }
+	void set(const TQString& key, const TQString& val)	{ m_map[key] = val; }
+	bool has(const TQString& key) const 			{ return m_map.contains(key); }
+	const TQString& name() const				{ return m_name; }
+	void setName(const TQString& s)				{ m_name = s; }
 	bool conflict() const 					{ return m_conflict; }
 	void setConflict(bool on)				{ m_conflict = on; }
 
-	virtual QString valueText();
-	virtual QString prettyText();
-	virtual void setValueText(const QString&);
+	virtual TQString valueText();
+	virtual TQString prettyText();
+	virtual void setValueText(const TQString&);
 	virtual DriverItem* createItem(DriverItem *parent, DriverItem *after = 0);
-	virtual void setOptions(const QMap<QString,QString>& opts);
-	virtual void getOptions(QMap<QString,QString>& opts, bool incldef = false);
+	virtual void setOptions(const TQMap<TQString,TQString>& opts);
+	virtual void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
 	virtual DrBase* clone();
 
 protected:
-	QMap<QString,QString>	m_map;
+	TQMap<TQString,TQString>	m_map;
 	QString			m_name;		// used as a search key, better to have defined directly
 	Type			m_type;
 	bool			m_conflict;
@@ -113,30 +113,30 @@ public:
 	void addGroup(DrGroup *grp);
 	void addObject(DrBase *optgrp);
 	void clearConflict();
-	void removeOption(const QString& name);
+	void removeOption(const TQString& name);
 	void removeGroup(DrGroup *grp);
 	bool isEmpty();
 
 	virtual DriverItem* createItem(DriverItem *parent, DriverItem *after = 0);
-	DrBase* findOption(const QString& name, DrGroup **parentGroup = 0);
+	DrBase* findOption(const TQString& name, DrGroup **parentGroup = 0);
 	DrGroup* findGroup(DrGroup *grp, DrGroup **parentGroup = 0);
-	void setOptions(const QMap<QString,QString>& opts);
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
+	void setOptions(const TQMap<TQString,TQString>& opts);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
 	DrBase* clone();
 
-	const QPtrList<DrGroup>& groups()	{ return m_subgroups; }
-	const QPtrList<DrBase>& options()	{ return m_listoptions; }
+	const TQPtrList<DrGroup>& groups()	{ return m_subgroups; }
+	const TQPtrList<DrBase>& options()	{ return m_listoptions; }
 
-	static QString groupForOption( const QString& optname );
+	static TQString groupForOption( const TQString& optname );
 
 protected:
 	void createTree(DriverItem *parent);
-	void flattenGroup(QMap<QString, DrBase*>&, int&);
+	void flattenGroup(TQMap<TQString, DrBase*>&, int&);
 
 protected:
-	QPtrList<DrGroup>	m_subgroups;
-	QDict<DrBase>	m_options;
-	QPtrList<DrBase>	m_listoptions;	// keep track of order of appearance
+	TQPtrList<DrGroup>	m_subgroups;
+	TQDict<DrBase>	m_options;
+	TQPtrList<DrBase>	m_listoptions;	// keep track of order of appearance
 };
 
 /*********************
@@ -156,19 +156,19 @@ public:
 	DrMain();
 	~DrMain();
 
-	DriverItem* createTreeView(QListView *parent);
+	DriverItem* createTreeView(TQListView *parent);
 	void addConstraint(DrConstraint *c)		{ m_constraints.append(c); }
 	int checkConstraints();
-	DrPageSize* findPageSize(const QString& name)	{ return m_pagesizes.find(name); }
+	DrPageSize* findPageSize(const TQString& name)	{ return m_pagesizes.find(name); }
 	void addPageSize(DrPageSize *sz);
-	void removeOptionGlobally(const QString& name);
+	void removeOptionGlobally(const TQString& name);
 	void removeGroupGlobally(DrGroup *grp);
-	QMap<QString, DrBase*> flatten();
+	TQMap<TQString, DrBase*> flatten();
 	DrMain* cloneDriver();
 
 protected:
-	QPtrList<DrConstraint>	m_constraints;
-	QDict<DrPageSize>	m_pagesizes;
+	TQPtrList<DrConstraint>	m_constraints;
+	TQDict<DrPageSize>	m_pagesizes;
 };
 
 /**********************************************************
@@ -208,8 +208,8 @@ public:
 	DrStringOption();
 	~DrStringOption();
 
-	virtual QString valueText();
-	virtual void setValueText(const QString& s);
+	virtual TQString valueText();
+	virtual void setValueText(const TQString& s);
 
 protected:
 	QString	m_value;
@@ -232,9 +232,9 @@ public:
 	DrIntegerOption();
 	~DrIntegerOption();
 
-	virtual QString valueText();
-	virtual void setValueText(const QString& s);
-	QString fixedVal();
+	virtual TQString valueText();
+	virtual void setValueText(const TQString& s);
+	TQString fixedVal();
 
 protected:
 	int	m_value;
@@ -257,9 +257,9 @@ public:
 	DrFloatOption();
 	~DrFloatOption();
 
-	virtual QString valueText();
-	virtual void setValueText(const QString& s);
-	QString fixedVal();
+	virtual TQString valueText();
+	virtual void setValueText(const TQString& s);
+	TQString fixedVal();
 
 protected:
 	float	m_value;
@@ -283,21 +283,21 @@ public:
 	~DrListOption();
 
 	void addChoice(DrBase *ch)	{ m_choices.append(ch); }
-	QPtrList<DrBase>* choices()	{ return &m_choices; }
+	TQPtrList<DrBase>* choices()	{ return &m_choices; }
 	DrBase* currentChoice() const 	{ return m_current; }
-	DrBase* findChoice(const QString& txt);
+	DrBase* findChoice(const TQString& txt);
 	void setChoice(int choicenum);
 
-	virtual QString valueText();
-	virtual QString prettyText();
-	virtual void setValueText(const QString& s);
-	void setOptions(const QMap<QString,QString>& opts);
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
+	virtual TQString valueText();
+	virtual TQString prettyText();
+	virtual void setValueText(const TQString& s);
+	void setOptions(const TQMap<TQString,TQString>& opts);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
 	DriverItem* createItem(DriverItem *parent, DriverItem *after = 0);
 	DrBase* clone();
 
 protected:
-	QPtrList<DrBase>	m_choices;
+	TQPtrList<DrBase>	m_choices;
 	DrBase		*m_current;
 };
 
@@ -330,7 +330,7 @@ public:
 class DrConstraint
 {
 public:
-	DrConstraint(const QString& o1, const QString& o2, const QString& c1 = QString::null, const QString& c2 = QString::null);
+	DrConstraint(const TQString& o1, const TQString& o2, const TQString& c1 = TQString::null, const TQString& c2 = TQString::null);
 	DrConstraint(const DrConstraint&);
 
 	bool check(DrMain*);
@@ -355,7 +355,7 @@ protected:
 class DrPageSize
 {
 public:
-	DrPageSize(const QString& s, float width, float height, float left, float bottom, float right, float top);
+	DrPageSize(const TQString& s, float width, float height, float left, float bottom, float right, float top);
 	DrPageSize(const DrPageSize&);
 
 	/**
@@ -369,11 +369,11 @@ public:
 	float rightMargin() const  { return m_right; }
 	float topMargin() const    { return m_top; }
 	float bottomMargin() const { return m_bottom; }
-	QString pageName() const   { return m_name; }
+	TQString pageName() const   { return m_name; }
 
-	QSize pageSize() const;
-	QRect pageRect() const;
-	QSize margins() const;
+	TQSize pageSize() const;
+	TQRect pageRect() const;
+	TQSize margins() const;
 
 protected:
 	QString	m_name;

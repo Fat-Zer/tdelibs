@@ -22,7 +22,7 @@
 #ifndef _KCONFIGDATA_H
 #define _KCONFIGDATA_H
 
-#include <qmap.h> // generic red-black tree class
+#include <tqmap.h> // generic red-black tree class
 #include "kdelibs_export.h"
 
 /**
@@ -34,7 +34,7 @@ struct KDECORE_EXPORT KEntry
   KEntry()
     : mValue(0), bDirty(false), bNLS(false), 
       bGlobal(false), bImmutable(false), bDeleted(false), bExpand(false) {}
-  QCString mValue;
+  TQCString mValue;
   /**
    * Must the entry be written back to disk?
    */
@@ -68,18 +68,18 @@ struct KDECORE_EXPORT KEntry
  */
 struct KDECORE_EXPORT KEntryKey
 {
-  KEntryKey(const QCString& _group = 0,
-	    const QCString& _key = 0)
+  KEntryKey(const TQCString& _group = 0,
+	    const TQCString& _key = 0)
       : mGroup(_group), mKey(_key), bLocal(false), bDefault(false),
         c_key(_key.data()) {}
   /**
    * The "group" to which this EntryKey belongs
    */ 
-  QCString mGroup;
+  TQCString mGroup;
   /**
    * The _actual_ key of the entry in question
    */ 
-  QCString mKey;
+  TQCString mKey;
   /**
    * Entry is localised or not
    */ 
@@ -93,7 +93,7 @@ struct KDECORE_EXPORT KEntryKey
 };
 
 /**
- * compares two KEntryKeys (needed for QMap).
+ * compares two KEntryKeys (needed for TQMap).
  * @internal
  */
 inline bool operator <(const KEntryKey &k1, const KEntryKey &k2)
@@ -125,14 +125,14 @@ inline bool operator <(const KEntryKey &k1, const KEntryKey &k2)
  * with the group name.
  * @internal
  */
-typedef QMap<KEntryKey, KEntry> KEntryMap;
+typedef TQMap<KEntryKey, KEntry> KEntryMap;
 
 /**
  * \relates KEntry
  * type for iterating over keys in a KEntryMap in sorted order.
  * @internal
  */
-typedef QMap<KEntryKey, KEntry>::Iterator KEntryMapIterator;
+typedef TQMap<KEntryKey, KEntry>::Iterator KEntryMapIterator;
 
 /**
  * \relates KEntry
@@ -141,6 +141,6 @@ typedef QMap<KEntryKey, KEntry>::Iterator KEntryMapIterator;
  * only examine them.
  * @internal
  */
-typedef QMap<KEntryKey, KEntry>::ConstIterator KEntryMapConstIterator;
+typedef TQMap<KEntryKey, KEntry>::ConstIterator KEntryMapConstIterator;
 
 #endif

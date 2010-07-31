@@ -35,12 +35,12 @@
  * and produce invaliud results.
  */
 
-#include <qcolor.h>
-#include <qfont.h>
-#include <qfontmetrics.h>
-#include <qptrlist.h>
-#include <qpalette.h>
-#include <qapplication.h>
+#include <tqcolor.h>
+#include <tqfont.h>
+#include <tqfontmetrics.h>
+#include <tqptrlist.h>
+#include <tqpalette.h>
+#include <tqapplication.h>
 
 #include "dom/dom_misc.h"
 #include "dom/dom_string.h"
@@ -208,7 +208,7 @@ class BorderValue
 public:
     BorderValue() : width( 3 ), style( BNONE ) {}
 
-    QColor color;
+    TQColor color;
     unsigned short width : 12;
     EBorderStyle style : 6;
 
@@ -264,7 +264,7 @@ struct CollapsedBorderValue
     int width() const { return border && border->nonZero() ? border->width : 0; }
     EBorderStyle style() const { return border ? border->style : BHIDDEN; }
     bool exists() const { return border; }
-    QColor color() const { return border ? border->color : QColor(); }
+    TQColor color() const { return border ? border->color : TQColor(); }
     bool isTransparent() const { return border ? border->isTransparent() : true; }
 
     bool operator==(const CollapsedBorderValue& o) const
@@ -428,7 +428,7 @@ public:
     LengthBox clip;
     unsigned textDecoration : 4; // Text decorations defined *only* by this element.
 
-    QPalette palette;      //widget styling with IE attributes
+    TQPalette palette;      //widget styling with IE attributes
 
 };
 
@@ -553,7 +553,7 @@ public:
     }
 
     BackgroundLayer m_background;
-    QColor m_color;
+    TQColor m_color;
     OutlineValue m_outline;
 };
 
@@ -641,7 +641,7 @@ public:
 
 // This struct holds information about shadows for the text-shadow and box-shadow properties.
 struct ShadowData {
-    ShadowData(int _x, int _y, int _blur, const QColor& _color)
+    ShadowData(int _x, int _y, int _blur, const TQColor& _color)
     :x(_x), y(_y), blur(_blur), color(_color), next(0) {}
     ShadowData(const ShadowData& o);
 
@@ -655,7 +655,7 @@ struct ShadowData {
     int x;
     int y;
     int blur;
-    QColor color;
+    TQColor color;
     ShadowData* next;
 };
 
@@ -761,7 +761,7 @@ public:
     CachedImage *style_image;
 
     khtml::Font font;
-    QColor color;
+    TQColor color;
 
     short border_hspacing;
     short border_vspacing;
@@ -1063,19 +1063,19 @@ public:
 
     unsigned short  borderLeftWidth() const { return surround->border.borderLeftWidth(); }
     EBorderStyle    borderLeftStyle() const { return surround->border.left.style; }
-    const QColor&  borderLeftColor() const { return surround->border.left.color; }
+    const TQColor&  borderLeftColor() const { return surround->border.left.color; }
     bool borderLeftIsTransparent() const { return surround->border.left.isTransparent(); }
     unsigned short  borderRightWidth() const { return surround->border.borderRightWidth(); }
     EBorderStyle    borderRightStyle() const {  return surround->border.right.style; }
-    const QColor&   borderRightColor() const {  return surround->border.right.color; }
+    const TQColor&   borderRightColor() const {  return surround->border.right.color; }
     bool borderRightIsTransparent() const { return surround->border.right.isTransparent(); }
     unsigned short  borderTopWidth() const { return surround->border.borderTopWidth(); }
     EBorderStyle    borderTopStyle() const { return surround->border.top.style; }
-    const QColor&  borderTopColor() const {  return surround->border.top.color; }
+    const TQColor&  borderTopColor() const {  return surround->border.top.color; }
     bool borderTopIsTransparent() const { return surround->border.top.isTransparent(); }
     unsigned short  borderBottomWidth() const { return surround->border.borderBottomWidth(); }
     EBorderStyle    borderBottomStyle() const {  return surround->border.bottom.style; }
-    const QColor&   borderBottomColor() const {  return surround->border.bottom.color; }
+    const TQColor&   borderBottomColor() const {  return surround->border.bottom.color; }
     bool borderBottomIsTransparent() const { return surround->border.bottom.isTransparent(); }
 
     unsigned short  outlineSize() const { return outlineWidth() + outlineOffset(); }
@@ -1084,7 +1084,7 @@ public:
       else return background->m_outline.width; }
     EBorderStyle    outlineStyle() const {  return background->m_outline.style; }
     bool outlineStyleIsAuto() const { return background->m_outline._auto; }
-    const QColor &  outlineColor() const {  return background->m_outline.color; }
+    const TQColor &  outlineColor() const {  return background->m_outline.color; }
 
     EOverflow overflowX() const { return  noninherited_flags.f._overflowX; }
     EOverflow overflowY() const { return  noninherited_flags.f._overflowY; }
@@ -1109,12 +1109,12 @@ public:
     EClear clear() const { return  noninherited_flags.f._clear; }
     ETableLayout tableLayout() const { return  noninherited_flags.f._table_layout; }
 
-    const QFont & font() const { return inherited->font.f; }
+    const TQFont & font() const { return inherited->font.f; }
     // use with care. call font->update() after modifications
     const Font &htmlFont() { return inherited->font; }
-    const QFontMetrics & fontMetrics() const { return inherited->font.fm; }
+    const TQFontMetrics & fontMetrics() const { return inherited->font.fm; }
 
-    const QColor & color() const { return inherited->color; }
+    const TQColor & color() const { return inherited->color; }
     Length textIndent() const { return inherited->indent; }
     ETextAlign textAlign() const { return inherited_flags.f._text_align; }
     ETextTransform textTransform() const { return inherited_flags.f._text_transform; }
@@ -1146,7 +1146,7 @@ public:
         return false;
     }
 
-    const QColor & backgroundColor() const { return background->m_color; }
+    const TQColor & backgroundColor() const { return background->m_color; }
     CachedImage *backgroundImage() const { return background->m_background.m_image; }
     EBackgroundRepeat backgroundRepeat() const { return background->m_background.m_bgRepeat; }
     bool backgroundAttachment() const { return background->m_background.m_bgAttachment; }
@@ -1185,8 +1185,8 @@ public:
     EPageBreak pageBreakAfter() const { return noninherited_flags.f._page_break_after; }
 
     DOM::QuotesValueImpl* quotes() const { return inherited->quotes; }
-    QString openQuote(int level) const;
-    QString closeQuote(int level) const;
+    TQString openQuote(int level) const;
+    TQString closeQuote(int level) const;
 
     // CSS3 Getter Methods
     EBoxSizing boxSizing() const { return box->box_sizing; }
@@ -1232,27 +1232,27 @@ public:
     void resetBorderLeft() { SET_VAR(surround, border.left, BorderValue()) }
     void resetOutline() { SET_VAR(background, m_outline, OutlineValue()) }
 
-    void setBackgroundColor(const QColor& v)    { SET_VAR(background, m_color, v) }
+    void setBackgroundColor(const TQColor& v)    { SET_VAR(background, m_color, v) }
 
     void setBorderLeftWidth(unsigned short v)   {  SET_VAR(surround,border.left.width,v) }
     void setBorderLeftStyle(EBorderStyle v)     {  SET_VAR(surround,border.left.style,v) }
-    void setBorderLeftColor(const QColor & v)   {  SET_VAR(surround,border.left.color,v) }
+    void setBorderLeftColor(const TQColor & v)   {  SET_VAR(surround,border.left.color,v) }
     void setBorderRightWidth(unsigned short v)  {  SET_VAR(surround,border.right.width,v) }
     void setBorderRightStyle(EBorderStyle v)    {  SET_VAR(surround,border.right.style,v) }
-    void setBorderRightColor(const QColor & v)  {  SET_VAR(surround,border.right.color,v) }
+    void setBorderRightColor(const TQColor & v)  {  SET_VAR(surround,border.right.color,v) }
     void setBorderTopWidth(unsigned short v)    {  SET_VAR(surround,border.top.width,v) }
     void setBorderTopStyle(EBorderStyle v)      {  SET_VAR(surround,border.top.style,v) }
-    void setBorderTopColor(const QColor & v)    {  SET_VAR(surround,border.top.color,v) }
+    void setBorderTopColor(const TQColor & v)    {  SET_VAR(surround,border.top.color,v) }
     void setBorderBottomWidth(unsigned short v) {  SET_VAR(surround,border.bottom.width,v) }
     void setBorderBottomStyle(EBorderStyle v)   {  SET_VAR(surround,border.bottom.style,v) }
-    void setBorderBottomColor(const QColor & v) {  SET_VAR(surround,border.bottom.color,v) }
+    void setBorderBottomColor(const TQColor & v) {  SET_VAR(surround,border.bottom.color,v) }
     void setOutlineWidth(unsigned short v) {  SET_VAR(background,m_outline.width,v) }
     void setOutlineStyle(EBorderStyle v, bool isAuto = false)
     {
         SET_VAR(background,m_outline.style,v)
         SET_VAR(background,m_outline._auto, isAuto)
     }
-    void setOutlineColor(const QColor & v) {  SET_VAR(background,m_outline.color,v) }
+    void setOutlineColor(const TQColor & v) {  SET_VAR(background,m_outline.color,v) }
 
     void setOverflowX(EOverflow v) {  noninherited_flags.f._overflowX = v; }
     void setOverflowY(EOverflow v) {  noninherited_flags.f._overflowY = v; }
@@ -1280,7 +1280,7 @@ public:
         return false;
     }
 
-    void setColor(const QColor & v) { SET_VAR(inherited,color,v) }
+    void setColor(const TQColor & v) { SET_VAR(inherited,color,v) }
     void setTextIndent(Length v) { SET_VAR(inherited,indent,v) }
     void setTextAlign(ETextAlign v) { inherited_flags.f._text_align = v; }
     void setTextTransform(ETextTransform v) { inherited_flags.f._text_transform = v; }
@@ -1358,11 +1358,11 @@ public:
     void setTextOverflow(bool b) { noninherited_flags.f._textOverflow = b; }
     // End CSS3 Setters
 
-    QPalette palette() const { return visual->palette; }
-    void setPaletteColor(QPalette::ColorGroup g, QColorGroup::ColorRole r, const QColor& c);
+    TQPalette palette() const { return visual->palette; }
+    void setPaletteColor(TQPalette::ColorGroup g, TQColorGroup::ColorRole r, const TQColor& c);
     void resetPalette() // Called when the desktop color scheme changes.
     {
-        const_cast<StyleVisualData *>(visual.get())->palette = QApplication::palette();
+        const_cast<StyleVisualData *>(visual.get())->palette = TQApplication::palette();
     }
 
     bool useNormalContent() const { return generated->content == 0; }
@@ -1407,7 +1407,7 @@ public:
 
 
 #ifdef ENABLE_DUMP
-    QString createDiff( const RenderStyle &parent ) const;
+    TQString createDiff( const RenderStyle &parent ) const;
 #endif
 
     // Initial values for all the properties
@@ -1443,7 +1443,7 @@ public:
     static short initialBorderHorizontalSpacing() { return 0; }
     static short initialBorderVerticalSpacing() { return 0; }
     static ECursor initialCursor() { return CURSOR_AUTO; }
-    static QColor initialColor() { return Qt::black; }
+    static TQColor initialColor() { return Qt::black; }
     static CachedImage* initialBackgroundImage() { return 0; }
     static CachedImage* initialListStyleImage() { return 0; }
     static unsigned short initialBorderWidth() { return 3; }

@@ -20,11 +20,11 @@
 #ifndef	CUPSDCONF_H
 #define	CUPSDCONF_H
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qptrlist.h>
-#include <qtextstream.h>
-#include <qpair.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqptrlist.h>
+#include <tqtextstream.h>
+#include <tqpair.h>
 
 #include "cupsdcomment.h"
 
@@ -50,10 +50,10 @@ struct CupsdConf
 	CupsdConf();
 	~CupsdConf();
 
-	bool loadFromFile(const QString& filename);
-	bool saveToFile(const QString& filename);
-	bool parseOption(const QString& line);
-	bool parseLocation(CupsLocation *location, QTextStream& file);
+	bool loadFromFile(const TQString& filename);
+	bool saveToFile(const TQString& filename);
+	bool parseOption(const TQString& line);
+	bool parseLocation(CupsLocation *location, TQTextStream& file);
 
 	bool loadAvailableResources();
 
@@ -67,35 +67,35 @@ struct CupsdConf
 	QString	servername_;
 	QString	serveradmin_;
 	int classification_;
-	QString otherclassname_;
+	TQString otherclassname_;
 	bool classoverride_;
-	QString charset_;
-	QString language_;
-	QString printcap_;
+	TQString charset_;
+	TQString language_;
+	TQString printcap_;
 	int printcapformat_;
 
 	// Security
-	QString remoteroot_;
-	QString systemgroup_;
-	QString encryptcert_;
-	QString encryptkey_;
-	QPtrList<CupsLocation> locations_;
-	QPtrList<CupsResource> resources_;
+	TQString remoteroot_;
+	TQString systemgroup_;
+	TQString encryptcert_;
+	TQString encryptkey_;
+	TQPtrList<CupsLocation> locations_;
+	TQPtrList<CupsResource> resources_;
 
 	// Network
 	int hostnamelookup_;
 	bool keepalive_;
 	int keepalivetimeout_;
 	int maxclients_;
-	QString maxrequestsize_;
+	TQString maxrequestsize_;
 	int clienttimeout_;
-	QStringList listenaddresses_;
+	TQStringList listenaddresses_;
 
 	// Log
-	QString accesslog_;
-	QString errorlog_;
-	QString pagelog_;
-	QString maxlogsize_;
+	TQString accesslog_;
+	TQString errorlog_;
+	TQString pagelog_;
+	TQString maxlogsize_;
 	int loglevel_;
 
 	// Jobs
@@ -107,27 +107,27 @@ struct CupsdConf
 	int maxjobsperuser_;
 
 	// Filter
-	QString user_;
-	QString group_;
-	QString ripcache_;
+	TQString user_;
+	TQString group_;
+	TQString ripcache_;
 	int filterlimit_;
 
 	// Directories
-	QString datadir_;
-	QString documentdir_;
-	QStringList fontpath_;
-	QString requestdir_;
-	QString serverbin_;
-	QString serverfiles_;
-	QString tmpfiles_;
+	TQString datadir_;
+	TQString documentdir_;
+	TQStringList fontpath_;
+	TQString requestdir_;
+	TQString serverbin_;
+	TQString serverfiles_;
+	TQString tmpfiles_;
 
 	// Browsing
 	bool browsing_;
-	QStringList browseprotocols_;
+	TQStringList browseprotocols_;
 	int browseport_;
 	int browseinterval_;
 	int browsetimeout_;
-	QStringList browseaddresses_;
+	TQStringList browseaddresses_;
 	int browseorder_;
 	bool useimplicitclasses_;
 	bool hideimplicitmembers_;
@@ -138,7 +138,7 @@ struct CupsdConf
 	CupsdComment	comments_;
 	
 	// unrecognized options
-	QValueList< QPair<QString,QString> >	unknown_;
+	TQValueList< QPair<TQString,TQString> >	unknown_;
 };
 
 struct CupsLocation
@@ -146,8 +146,8 @@ struct CupsLocation
 	CupsLocation();
 	CupsLocation(const CupsLocation& loc);
 
-	bool parseOption(const QString& line);
-	bool parseResource(const QString& line);
+	bool parseOption(const TQString& line);
+	bool parseResource(const TQString& line);
 
 	CupsResource	*resource_;
 	QString	resourcename_;
@@ -163,19 +163,19 @@ struct CupsLocation
 struct CupsResource
 {
 	CupsResource();
-	CupsResource(const QString& path);
+	CupsResource(const TQString& path);
 
-	void setPath(const QString& path);
+	void setPath(const TQString& path);
 
 	int	type_;
 	QString	path_;
 	QString	text_;
 
-	static QString textToPath(const QString& text);
-	static QString pathToText(const QString& path);
-	static int typeFromPath(const QString& path);
-	static int typeFromText(const QString& text);
-	static QString typeToIconName(int type);
+	static TQString textToPath(const TQString& text);
+	static TQString pathToText(const TQString& path);
+	static int typeFromPath(const TQString& path);
+	static int typeFromText(const TQString& text);
+	static TQString typeToIconName(int type);
 };
 
 #endif

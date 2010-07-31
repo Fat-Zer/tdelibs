@@ -22,18 +22,18 @@
 #ifndef KMIMESOURCEFACTORY_H
 #define KMIMESOURCEFACTORY_H
 
-#include <qmime.h>
+#include <tqmime.h>
 #include <kglobal.h>
 
 class KMimeSourceFactoryPrivate;
 class KInstance;
 
 /**
- * An extension to QMimeSourceFactory that uses KIconLoader to
+ * An extension to TQMimeSourceFactory that uses KIconLoader to
  * find images.
  *
  * Normally you don't have to instantiate this class at all, KApplication does that for
- * you automagically and sets QMimeSourceFactory::setDefaultFactory().
+ * you automagically and sets TQMimeSourceFactory::setDefaultFactory().
  *
  * @author Peter Putzer <putzer@kde.org>
  */
@@ -67,7 +67,7 @@ public:
    * @param abs_or_rel_name is the absolute or relative pathname.
    * @param context is the path of the context object for the queried resource. Almost always empty.
    */
-  virtual QString makeAbsolute (const QString& abs_or_rel_name, const QString& context) const;
+  virtual TQString makeAbsolute (const TQString& abs_or_rel_name, const TQString& context) const;
 
 protected:
   virtual void virtual_hook( int id, void* data );

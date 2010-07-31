@@ -1,22 +1,22 @@
 #include <kapplication.h>
-#include <qwidget.h>
-#include <qtimer.h>
+#include <tqwidget.h>
+#include <tqtimer.h>
 #include <stdlib.h>
 #include "kled.h"
 #include "kledtest.h"
 
 
 
-KLedTest::KLedTest(QWidget* parent)
-  : QWidget(parent, 0),
+KLedTest::KLedTest(TQWidget* parent)
+  : TQWidget(parent, 0),
     LedWidth(16),
     LedHeight(10),
     Grid(3),
     ledcolor(0),
-    red(QColor("red")),
-    blue(QColor("blue")),
-    green(QColor("green")),
-    yellow(QColor("yellow")),
+    red(TQColor("red")),
+    blue(TQColor("blue")),
+    green(TQColor("green")),
+    yellow(TQColor("yellow")),
     kled_round(true) // Switch HERE between rectangle and circular leds
 {
   if (kled_round) {
@@ -42,9 +42,9 @@ KLedTest::KLedTest(QWidget* parent)
     t_toggle.start(1000, false);
     t_color.start(3500, false);
     t_look.start(3500, false);
-    QObject::connect(&t_toggle, SIGNAL(timeout()), l, SLOT(toggle()));
-    QObject::connect(&t_color, SIGNAL(timeout()), this, SLOT(nextColor()));
-    QObject::connect(&t_look, SIGNAL(timeout()), this, SLOT(nextLook()));
+    TQObject::connect(&t_toggle, TQT_SIGNAL(timeout()), l, TQT_SLOT(toggle()));
+    TQObject::connect(&t_color, TQT_SIGNAL(timeout()), this, TQT_SLOT(nextColor()));
+    TQObject::connect(&t_look, TQT_SIGNAL(timeout()), this, TQT_SLOT(nextLook()));
     l->show();
     resize(240,140);
   }
@@ -66,7 +66,7 @@ KLedTest::KLedTest(QWidget* parent)
       y+=Grid+LedHeight;
       }
     setFixedSize(x+Grid, y+Grid);
-    connect(&timer, SIGNAL(timeout()), SLOT(timeout()));
+    connect(&timer, TQT_SIGNAL(timeout()), TQT_SLOT(timeout()));
     timer.start(500);
   }
 }

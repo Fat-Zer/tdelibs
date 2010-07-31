@@ -19,8 +19,8 @@
 #ifndef KBARHANDLER_H
 #define KBARHANDLER_H
 
-#include <qobject.h>
-#include <qguardedptr.h>
+#include <tqobject.h>
+#include <tqguardedptr.h>
 #include <kxmlguiclient.h>
 
 class KMainWindow;
@@ -30,13 +30,13 @@ namespace KDEPrivate
 {
 
 /// @since 3.1
-class ToolBarHandler : public QObject,
+class ToolBarHandler : public TQObject,
                        public KXMLGUIClient
 {
     Q_OBJECT
 public:
     ToolBarHandler( KMainWindow *mainWindow, const char *name = 0 );
-    ToolBarHandler( KMainWindow *mainWindow, QObject *parent, const char *name = 0 );
+    ToolBarHandler( KMainWindow *mainWindow, TQObject *parent, const char *name = 0 );
     virtual ~ToolBarHandler();
 
     KAction *toolBarMenuAction();
@@ -51,14 +51,14 @@ private:
     void init( KMainWindow *mainWindow );
     void connectToActionContainers();
     void connectToActionContainer( KAction *action );
-    void connectToActionContainer( QWidget *container );
+    void connectToActionContainer( TQWidget *container );
 
     struct Data;
     Data *d;
 
-    QGuardedPtr<KMainWindow> m_mainWindow;
-    QPtrList<KAction> m_actions;
-    QPtrList<KToolBar> m_toolBars;
+    TQGuardedPtr<KMainWindow> m_mainWindow;
+    TQPtrList<KAction> m_actions;
+    TQPtrList<KToolBar> m_toolBars;
 };
 
 } // namespace KDEPrivate

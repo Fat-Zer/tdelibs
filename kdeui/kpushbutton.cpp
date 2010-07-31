@@ -19,9 +19,9 @@
 
 #include "kpushbutton.h"
 
-#include <qdragobject.h>
-#include <qwhatsthis.h>
-#include <qtooltip.h>
+#include <tqdragobject.h>
+#include <tqwhatsthis.h>
+#include <tqtooltip.h>
 
 #include "config.h"
 
@@ -40,32 +40,32 @@ public:
 
 bool KPushButton::s_useIcons = false;
 
-KPushButton::KPushButton( QWidget *parent, const char *name )
-    : QPushButton( parent, name ),
+KPushButton::KPushButton( TQWidget *parent, const char *name )
+    : TQPushButton( parent, name ),
       m_dragEnabled( false )
 {
     init( KGuiItem( "" ) );
 }
 
-KPushButton::KPushButton( const QString &text, QWidget *parent,
+KPushButton::KPushButton( const TQString &text, TQWidget *parent,
                           const char *name)
-    : QPushButton( parent, name ),
+    : TQPushButton( parent, name ),
       m_dragEnabled( false )
 {
     init( KGuiItem( text ) );
 }
 
-KPushButton::KPushButton( const QIconSet &icon, const QString &text,
-                          QWidget *parent, const char *name )
-    : QPushButton( text, parent, name ),
+KPushButton::KPushButton( const TQIconSet &icon, const TQString &text,
+                          TQWidget *parent, const char *name )
+    : TQPushButton( text, parent, name ),
       m_dragEnabled( false )
 {
     init( KGuiItem( text, icon ) );
 }
 
-KPushButton::KPushButton( const KGuiItem &item, QWidget *parent,
+KPushButton::KPushButton( const KGuiItem &item, TQWidget *parent,
                           const char *name )
-    : QPushButton( parent, name ),
+    : TQPushButton( parent, name ),
       m_dragEnabled( false )
 {
     init( item );
@@ -88,7 +88,7 @@ void KPushButton::init( const KGuiItem &item )
 
     // call QPushButton's implementation since we don't need to 
     // set the GUI items text or check the state of the icon set
-    QPushButton::setText( d->item.text() );
+    TQPushButton::setText( d->item.text() );
 
     static bool initialized = false;
     if ( !initialized ) {
@@ -98,16 +98,16 @@ void KPushButton::init( const KGuiItem &item )
 
     setIconSet( d->item.iconSet() );
 
-    setSizePolicy( QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum ) );
+    setSizePolicy( TQSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Minimum ) );
 
-    QToolTip::add( this, item.toolTip() );
+    TQToolTip::add( this, item.toolTip() );
 
-    QWhatsThis::add( this, item.whatsThis() );
+    TQWhatsThis::add( this, item.whatsThis() );
 
     if (kapp)
     {
-       connect( kapp, SIGNAL( settingsChanged(int) ),
-               SLOT( slotSettingsChanged(int) ) );
+       connect( kapp, TQT_SIGNAL( settingsChanged(int) ),
+               TQT_SLOT( slotSettingsChanged(int) ) );
        kapp->addKipcEventMask( KIPC::SettingsChanged );
     }
 }
@@ -123,15 +123,15 @@ void KPushButton::setGuiItem( const KGuiItem& item )
 
     // call QPushButton's implementation since we don't need to 
     // set the GUI items text or check the state of the icon set
-    QPushButton::setText( d->item.text() );
+    TQPushButton::setText( d->item.text() );
     setIconSet( d->item.iconSet() );
-    QWhatsThis::add( this, d->item.whatsThis() );
+    TQWhatsThis::add( this, d->item.whatsThis() );
 
     // Do not add a tooltip to the button automatically as 99% of the time the
     // tooltip is redundant to the button text and it results in QTipManager
-    // invoking an eventHandler on the QApplication which breaks certain apps
+    // invoking an eventHandler on the TQApplication which breaks certain apps
     // like KDesktop which are sensitive to such things
-//    QToolTip::add( this, d->item.toolTip() );
+//    TQToolTip::add( this, d->item.toolTip() );
 }
 
 void KPushButton::setGuiItem( KStdGuiItem::StdItem item )
@@ -145,9 +145,9 @@ KStdGuiItem::StdItem KPushButton::guiItem() const
 	return d->itemType;
 }
 
-void KPushButton::setText( const QString &text )
+void KPushButton::setText( const TQString &text )
 {
-    QPushButton::setText(text);
+    TQPushButton::setText(text);
 
     // we need to re-evaluate the icon set when the text
     // is removed, or when it is supplied
@@ -157,14 +157,14 @@ void KPushButton::setText( const QString &text )
     d->item.setText(text);
 }
 
-void KPushButton::setIconSet( const QIconSet &iconSet )
+void KPushButton::setIconSet( const TQIconSet &iconSet )
 {
     d->item.setIconSet(iconSet);
 
     if ( s_useIcons || text().isEmpty() )
-        QPushButton::setIconSet( iconSet );
+        TQPushButton::setIconSet( iconSet );
     else
-        QPushButton::setIconSet( QIconSet() );
+        TQPushButton::setIconSet( TQIconSet() );
 }
 
 void KPushButton::slotSettingsChanged( int /* category */ )
@@ -178,18 +178,18 @@ void KPushButton::setDragEnabled( bool enable )
     m_dragEnabled = enable;
 }
 
-void KPushButton::mousePressEvent( QMouseEvent *e )
+void KPushButton::mousePressEvent( TQMouseEvent *e )
 {
     if ( m_dragEnabled )
 	startPos = e->pos();
-    QPushButton::mousePressEvent( e );
+    TQPushButton::mousePressEvent( e );
 }
 
-void KPushButton::mouseMoveEvent( QMouseEvent *e )
+void KPushButton::mouseMoveEvent( TQMouseEvent *e )
 {
     if ( !m_dragEnabled )
     {
-        QPushButton::mouseMoveEvent( e );
+        TQPushButton::mouseMoveEvent( e );
         return;
     }
 
@@ -202,14 +202,14 @@ void KPushButton::mouseMoveEvent( QMouseEvent *e )
     }
 }
 
-QDragObject * KPushButton::dragObject()
+TQDragObject * KPushButton::dragObject()
 {
     return 0L;
 }
 
 void KPushButton::startDrag()
 {
-    QDragObject *d = dragObject();
+    TQDragObject *d = dragObject();
     if ( d )
 	d->dragCopy();
 }

@@ -183,7 +183,7 @@ struct KPtyPrivate {
    int slaveFd;
    struct winsize winSize;
 
-   QCString ttyName;
+   TQCString ttyName;
 };
 
 /////////////////////////////
@@ -217,7 +217,7 @@ bool KPty::setPty(int pty_master)
 
 bool KPty::_attachPty(int pty_master)
 {
-  QCString ptyName;
+  TQCString ptyName;
 
     kdWarning(175)
        << "_attachPty() " << pty_master << endl;
@@ -309,7 +309,7 @@ bool KPty::open()
   if (d->masterFd >= 0)
     return true;
 
-  QCString ptyName;
+  TQCString ptyName;
 
   // Find a master pty that we can open ////////////////////////////////
 
@@ -571,7 +571,7 @@ int KPty::slaveFd() const
 bool KPty::chownpty(bool grant)
 {
   KProcess proc;
-  proc << locate("exe", BASE_CHOWN) << (grant?"--grant":"--revoke") << QString::number(d->masterFd);
+  proc << locate("exe", BASE_CHOWN) << (grant?"--grant":"--revoke") << TQString::number(d->masterFd);
   return proc.start(KProcess::Block) && proc.normalExit() && !proc.exitStatus();
 }
 

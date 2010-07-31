@@ -19,10 +19,10 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qstringlist.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqstringlist.h>
+#include <tqpushbutton.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -48,7 +48,7 @@ public:
   KSpellConfig* spellConfig;
 };
 
-KSpellDlg::KSpellDlg( QWidget * parent, const char * name, bool _progressbar, bool _modal )
+KSpellDlg::KSpellDlg( TQWidget * parent, const char * name, bool _progressbar, bool _modal )
   : KDialogBase(
       parent, name, _modal, i18n("Check Spelling"), Help|Cancel|User1,
       Cancel, true, i18n("&Finished")
@@ -60,44 +60,44 @@ KSpellDlg::KSpellDlg( QWidget * parent, const char * name, bool _progressbar, bo
   d->ui = new KSpellUI( this );
   setMainWidget( d->ui );
 
-  connect( d->ui->m_replaceBtn, SIGNAL(clicked()),
-           this, SLOT(replace()));
-  connect( this, SIGNAL(ready(bool)),
-           d->ui->m_replaceBtn, SLOT(setEnabled(bool)) );
+  connect( d->ui->m_replaceBtn, TQT_SIGNAL(clicked()),
+           this, TQT_SLOT(replace()));
+  connect( this, TQT_SIGNAL(ready(bool)),
+           d->ui->m_replaceBtn, TQT_SLOT(setEnabled(bool)) );
 
-  connect( d->ui->m_replaceAllBtn, SIGNAL(clicked()), this, SLOT(replaceAll()));
-  connect(this, SIGNAL(ready(bool)), d->ui->m_replaceAllBtn, SLOT(setEnabled(bool)));
+  connect( d->ui->m_replaceAllBtn, TQT_SIGNAL(clicked()), this, TQT_SLOT(replaceAll()));
+  connect(this, TQT_SIGNAL(ready(bool)), d->ui->m_replaceAllBtn, TQT_SLOT(setEnabled(bool)));
 
-  connect( d->ui->m_skipBtn, SIGNAL(clicked()), this, SLOT(ignore()));
-  connect( this, SIGNAL(ready(bool)), d->ui->m_skipBtn, SLOT(setEnabled(bool)));
+  connect( d->ui->m_skipBtn, TQT_SIGNAL(clicked()), this, TQT_SLOT(ignore()));
+  connect( this, TQT_SIGNAL(ready(bool)), d->ui->m_skipBtn, TQT_SLOT(setEnabled(bool)));
 
-  connect( d->ui->m_skipAllBtn, SIGNAL(clicked()), this, SLOT(ignoreAll()));
-  connect( this, SIGNAL(ready(bool)), d->ui->m_skipAllBtn, SLOT(setEnabled(bool)));
+  connect( d->ui->m_skipAllBtn, TQT_SIGNAL(clicked()), this, TQT_SLOT(ignoreAll()));
+  connect( this, TQT_SIGNAL(ready(bool)), d->ui->m_skipAllBtn, TQT_SLOT(setEnabled(bool)));
 
-  connect( d->ui->m_addBtn, SIGNAL(clicked()), this, SLOT(add()));
-  connect( this, SIGNAL(ready(bool)), d->ui->m_addBtn, SLOT(setEnabled(bool)));
+  connect( d->ui->m_addBtn, TQT_SIGNAL(clicked()), this, TQT_SLOT(add()));
+  connect( this, TQT_SIGNAL(ready(bool)), d->ui->m_addBtn, TQT_SLOT(setEnabled(bool)));
 
-  connect( d->ui->m_suggestBtn, SIGNAL(clicked()), this, SLOT(suggest()));
-  connect( this, SIGNAL(ready(bool)), d->ui->m_suggestBtn, SLOT(setEnabled(bool)) );
+  connect( d->ui->m_suggestBtn, TQT_SIGNAL(clicked()), this, TQT_SLOT(suggest()));
+  connect( this, TQT_SIGNAL(ready(bool)), d->ui->m_suggestBtn, TQT_SLOT(setEnabled(bool)) );
   d->ui->m_suggestBtn->hide();
 
-  connect(this, SIGNAL(user1Clicked()), this, SLOT(stop()));
+  connect(this, TQT_SIGNAL(user1Clicked()), this, TQT_SLOT(stop()));
 
-  connect( d->ui->m_replacement, SIGNAL(textChanged(const QString &)),
-           SLOT(textChanged(const QString &)) );
+  connect( d->ui->m_replacement, TQT_SIGNAL(textChanged(const TQString &)),
+           TQT_SLOT(textChanged(const TQString &)) );
 
-  connect( d->ui->m_replacement, SIGNAL(returnPressed()),   SLOT(replace()) );
-  connect( d->ui->m_suggestions, SIGNAL(selectionChanged(QListViewItem*)),
-           SLOT(slotSelectionChanged(QListViewItem*)) );
+  connect( d->ui->m_replacement, TQT_SIGNAL(returnPressed()),   TQT_SLOT(replace()) );
+  connect( d->ui->m_suggestions, TQT_SIGNAL(selectionChanged(TQListViewItem*)),
+           TQT_SLOT(slotSelectionChanged(TQListViewItem*)) );
 
-  connect( d->ui->m_suggestions, SIGNAL( doubleClicked ( QListViewItem *, const QPoint &, int ) ),
-           SLOT( replace() ) );
+  connect( d->ui->m_suggestions, TQT_SIGNAL( doubleClicked ( TQListViewItem *, const TQPoint &, int ) ),
+           TQT_SLOT( replace() ) );
   d->spellConfig = new KSpellConfig( 0, 0 ,0, false );
   d->spellConfig->fillDicts( d->ui->m_language );
-  connect( d->ui->m_language, SIGNAL(activated(int)),
-	   d->spellConfig, SLOT(sSetDictionary(int)) );
-  connect( d->spellConfig, SIGNAL(configChanged()),
-           SLOT(slotConfigChanged()) );
+  connect( d->ui->m_language, TQT_SIGNAL(activated(int)),
+	   d->spellConfig, TQT_SLOT(sSetDictionary(int)) );
+  connect( d->spellConfig, TQT_SIGNAL(configChanged()),
+           TQT_SLOT(slotConfigChanged()) );
 
   setHelp( "spelldlg", "kspell" );
   setMinimumSize( sizeHint() );
@@ -111,15 +111,15 @@ KSpellDlg::~KSpellDlg()
 }
 
 void
-KSpellDlg::init( const QString & _word, QStringList * _sugg )
+KSpellDlg::init( const TQString & _word, TQStringList * _sugg )
 {
   sugg = _sugg;
   word = _word;
 
   d->ui->m_suggestions->clear();
   d->ui->m_suggestions->setSorting( NONSORTINGCOLUMN );
-  for ( QStringList::Iterator it = _sugg->begin(); it != _sugg->end(); ++it ) {
-    QListViewItem *item = new QListViewItem( d->ui->m_suggestions,
+  for ( TQStringList::Iterator it = _sugg->begin(); it != _sugg->end(); ++it ) {
+    TQListViewItem *item = new TQListViewItem( d->ui->m_suggestions,
                                              d->ui->m_suggestions->lastItem() );
     item->setText( 0, *it );
   }
@@ -144,16 +144,16 @@ KSpellDlg::init( const QString & _word, QStringList * _sugg )
 }
 
 void
-KSpellDlg::init( const QString& _word, QStringList* _sugg,
-                 const QString& context )
+KSpellDlg::init( const TQString& _word, TQStringList* _sugg,
+                 const TQString& context )
 {
   sugg = _sugg;
   word = _word;
 
   d->ui->m_suggestions->clear();
   d->ui->m_suggestions->setSorting( NONSORTINGCOLUMN );
-  for ( QStringList::Iterator it = _sugg->begin(); it != _sugg->end(); ++it ) {
-      QListViewItem *item = new QListViewItem( d->ui->m_suggestions,
+  for ( TQStringList::Iterator it = _sugg->begin(); it != _sugg->end(); ++it ) {
+      TQListViewItem *item = new TQListViewItem( d->ui->m_suggestions,
                                                d->ui->m_suggestions->lastItem() );
       item->setText( 0, *it );
   }
@@ -189,7 +189,7 @@ KSpellDlg::slotProgress( unsigned int p )
 }
 
 void
-KSpellDlg::textChanged( const QString & )
+KSpellDlg::textChanged( const TQString & )
 {
   d->ui->m_replaceBtn->setEnabled( true );
   d->ui->m_replaceAllBtn->setEnabled( true );
@@ -197,7 +197,7 @@ KSpellDlg::textChanged( const QString & )
 }
 
 void
-KSpellDlg::slotSelectionChanged( QListViewItem* item )
+KSpellDlg::slotSelectionChanged( TQListViewItem* item )
 {
   if ( item )
     d->ui->m_replacement->setText( item->text( 0 ) );
@@ -208,7 +208,7 @@ KSpellDlg::slotSelectionChanged( QListViewItem* item )
   */
 
 void
-KSpellDlg::closeEvent( QCloseEvent * )
+KSpellDlg::closeEvent( TQCloseEvent * )
 {
   cancel();
 }

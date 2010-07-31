@@ -18,7 +18,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qregexp.h>
+#include <tqregexp.h>
 
 #include <kfileitem.h>
 #include <kglobal.h>
@@ -47,27 +47,27 @@ void KSimpleFileFilter::setFilterSpecials( bool filter )
     m_filterSpecials = filter;
 }
 
-void KSimpleFileFilter::setNameFilters( const QString& nameFilters )
+void KSimpleFileFilter::setNameFilters( const TQString& nameFilters )
 {
     // KDE 3.0 defaults
     setNameFilters( nameFilters, false, ' ' );
 }
 
-void KSimpleFileFilter::setNameFilters( const QString& nameFilters,
+void KSimpleFileFilter::setNameFilters( const TQString& nameFilters,
                                         bool caseSensitive, 
-                                        const QChar& separator )
+                                        const TQChar& separator )
 {
     m_nameFilters.clear();
 
     // Split on white space
-    QStringList list = QStringList::split(separator, nameFilters);
+    TQStringList list = TQStringList::split(separator, nameFilters);
 
-    QStringList::ConstIterator it = list.begin();
+    TQStringList::ConstIterator it = list.begin();
     for ( ; it != list.end(); ++it )
-        m_nameFilters.append(new QRegExp(*it, caseSensitive, true ));
+        m_nameFilters.append(new TQRegExp(*it, caseSensitive, true ));
 }
 
-void KSimpleFileFilter::setMimeFilters( const QStringList& mimeFilters )
+void KSimpleFileFilter::setMimeFilters( const TQStringList& mimeFilters )
 {
     m_mimeFilters = mimeFilters;
 }
@@ -79,10 +79,10 @@ void KSimpleFileFilter::setModeFilter( mode_t mode )
 
 bool KSimpleFileFilter::passesFilter( const KFileItem *item ) const
 {
-    static const QString& dot    = KGlobal::staticQString(".");
-    static const QString& dotdot = KGlobal::staticQString("..");
+    static const TQString& dot    = KGlobal::staticQString(".");
+    static const TQString& dotdot = KGlobal::staticQString("..");
 
-    const QString& name = item->name();
+    const TQString& name = item->name();
 
     if ( m_filterDotFiles && item->isHidden() )
         return false;
@@ -98,7 +98,7 @@ bool KSimpleFileFilter::passesFilter( const KFileItem *item ) const
         KMimeType::Ptr mime = item->mimeTypePtr();
         bool ok = false;
 
-        QStringList::ConstIterator it = m_mimeFilters.begin();
+        TQStringList::ConstIterator it = m_mimeFilters.begin();
         for ( ; it != m_mimeFilters.end(); ++it ) {
             if ( mime->is(*it) ) { // match!
                 ok = true;
@@ -112,7 +112,7 @@ bool KSimpleFileFilter::passesFilter( const KFileItem *item ) const
     if ( !m_nameFilters.isEmpty() ) {
         bool ok = false;
 
-        QPtrListIterator<QRegExp> it( m_nameFilters );
+        TQPtrListIterator<TQRegExp> it( m_nameFilters );
         for ( ; it.current(); ++it ) {
             if ( it.current()->exactMatch( name ) ) { // match!
                 ok = true;

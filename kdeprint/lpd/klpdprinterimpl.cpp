@@ -20,11 +20,11 @@
 #include "klpdprinterimpl.h"
 #include "kprinter.h"
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 
-KLpdPrinterImpl::KLpdPrinterImpl(QObject *parent, const char *name)
+KLpdPrinterImpl::KLpdPrinterImpl(TQObject *parent, const char *name)
 : KPrinterImpl(parent,name)
 {
 }
@@ -33,12 +33,12 @@ KLpdPrinterImpl::~KLpdPrinterImpl()
 {
 }
 
-QString KLpdPrinterImpl::executable()
+TQString KLpdPrinterImpl::executable()
 {
 	return KStandardDirs::findExe("lpr");
 }
 
-bool KLpdPrinterImpl::setupCommand(QString& cmd, KPrinter *printer)
+bool KLpdPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 {
 	QString	exestr = executable();
 	if (exestr.isEmpty())
@@ -46,6 +46,6 @@ bool KLpdPrinterImpl::setupCommand(QString& cmd, KPrinter *printer)
 		printer->setErrorMessage(i18n("The <b>%1</b> executable could not be found in your path. Check your installation.").arg("lpr"));
 		return false;
 	}
-	cmd = QString::fromLatin1("%1 -P %2 '-#%3'").arg(exestr).arg(quote(printer->printerName())).arg(printer->numCopies());
+	cmd = TQString::fromLatin1("%1 -P %2 '-#%3'").arg(exestr).arg(quote(printer->printerName())).arg(printer->numCopies());
 	return true;
 }

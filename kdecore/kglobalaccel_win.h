@@ -20,8 +20,8 @@
 #ifndef _KGLOBALACCEL_WIN_H
 #define _KGLOBALACCEL_WIN_H
 
-#include <qmap.h>
-#include <qwidget.h>
+#include <tqmap.h>
+#include <tqwidget.h>
 
 #include "kaccelbase.h"
 #include "kkeyserver.h"
@@ -30,7 +30,7 @@
 /**
  * @internal
  */
-class KGlobalAccelPrivate : public QWidget, public KAccelBase
+class KGlobalAccelPrivate : public TQWidget, public KAccelBase
 {
 	friend class KGlobalAccel;
 	Q_OBJECT

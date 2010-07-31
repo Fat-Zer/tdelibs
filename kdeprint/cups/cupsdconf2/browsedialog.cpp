@@ -20,35 +20,35 @@
 #include "browsedialog.h"
 #include "cupsdconf.h"
 
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qregexp.h>
+#include <tqlineedit.h>
+#include <tqpushbutton.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqwhatsthis.h>
+#include <tqregexp.h>
 
 #include <klocale.h>
 
-BrowseDialog::BrowseDialog(QWidget *parent, const char *name)
-	: KDialogBase(parent, name, true, QString::null, Ok|Cancel, Ok, true)
+BrowseDialog::BrowseDialog(TQWidget *parent, const char *name)
+	: KDialogBase(parent, name, true, TQString::null, Ok|Cancel, Ok, true)
 {
-	QWidget	*dummy = new QWidget(this);
+	QWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
-	type_ = new QComboBox(dummy);
-	from_ = new QLineEdit(dummy);
-	to_ = new QLineEdit(dummy);
+	type_ = new TQComboBox(dummy);
+	from_ = new TQLineEdit(dummy);
+	to_ = new TQLineEdit(dummy);
 	type_->insertItem(i18n("Send"));
 	type_->insertItem(i18n("Allow"));
 	type_->insertItem(i18n("Deny"));
 	type_->insertItem(i18n("Relay"));
 	type_->insertItem(i18n("Poll"));
 
-	QLabel	*l1 = new QLabel(i18n("Type:"), dummy);
-	QLabel	*l2 = new QLabel(i18n("From:"), dummy);
-	QLabel	*l3 = new QLabel(i18n("To:"), dummy);
+	QLabel	*l1 = new TQLabel(i18n("Type:"), dummy);
+	QLabel	*l2 = new TQLabel(i18n("From:"), dummy);
+	QLabel	*l3 = new TQLabel(i18n("To:"), dummy);
 
-	QGridLayout	*m1 = new QGridLayout(dummy, 3, 2, 0, 5);
+	QGridLayout	*m1 = new TQGridLayout(dummy, 3, 2, 0, 5);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);
 	m1->addWidget(l2, 1, 0, Qt::AlignRight);
 	m1->addWidget(l3, 2, 0, Qt::AlignRight);
@@ -56,16 +56,16 @@ BrowseDialog::BrowseDialog(QWidget *parent, const char *name)
 	m1->addWidget(from_, 1, 1);
 	m1->addWidget(to_, 2, 1);
 
-	connect(type_, SIGNAL(activated(int)), SLOT(slotTypeChanged(int)));
+	connect(type_, TQT_SIGNAL(activated(int)), TQT_SLOT(slotTypeChanged(int)));
 	slotTypeChanged(type_->currentItem());
 
 	setCaption(i18n("Browse Address"));
 	resize(250, 100);
 }
 
-QString BrowseDialog::addressString()
+TQString BrowseDialog::addressString()
 {
-	QString s;
+	TQString s;
 	switch (type_->currentItem())
 	{
 		case 0:
@@ -93,10 +93,10 @@ QString BrowseDialog::addressString()
 
 void BrowseDialog::setInfos(CupsdConf *conf)
 {
-	QWhatsThis::add(type_, conf->comments_.toolTip("browsetype"));
+	TQWhatsThis::add(type_, conf->comments_.toolTip("browsetype"));
 }
 
-QString BrowseDialog::newAddress(QWidget *parent, CupsdConf *conf)
+TQString BrowseDialog::newAddress(TQWidget *parent, CupsdConf *conf)
 {
 	BrowseDialog	dlg(parent);
 	dlg.setInfos(conf);
@@ -104,14 +104,14 @@ QString BrowseDialog::newAddress(QWidget *parent, CupsdConf *conf)
 	{
 		return dlg.addressString();
 	}
-	return QString::null;
+	return TQString::null;
 }
 
-QString BrowseDialog::editAddress(const QString& s, QWidget *parent, CupsdConf *conf)
+TQString BrowseDialog::editAddress(const TQString& s, TQWidget *parent, CupsdConf *conf)
 {
 	BrowseDialog	dlg(parent);
 	dlg.setInfos(conf);
-	QStringList	l = QStringList::split(QRegExp("\\s"), s, false);
+	QStringList	l = TQStringList::split(TQRegExp("\\s"), s, false);
 	if (l.count() > 1)
 	{
 		if (l[0] == "Send") dlg.type_->setCurrentItem(0);
@@ -130,7 +130,7 @@ QString BrowseDialog::editAddress(const QString& s, QWidget *parent, CupsdConf *
 	{
 		return dlg.addressString();
 	}
-	return QString::null;
+	return TQString::null;
 }
 
 void BrowseDialog::slotTypeChanged(int index)

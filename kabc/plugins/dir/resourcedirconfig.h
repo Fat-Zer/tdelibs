@@ -33,7 +33,7 @@ class KABC_EXPORT ResourceDirConfig : public KRES::ConfigWidget
   Q_OBJECT
 
 public:
-  ResourceDirConfig( QWidget* parent = 0, const char* name = 0 );
+  ResourceDirConfig( TQWidget* parent = 0, const char* name = 0 );
 
   void setEditMode( bool value );
 
@@ -45,7 +45,7 @@ private:
   KComboBox* mFormatBox;
   KURLRequester* mFileNameEdit;
 
-  QStringList mFormatTypes;
+  TQStringList mFormatTypes;
 
   bool mInEditMode;
 };

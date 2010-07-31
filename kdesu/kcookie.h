@@ -13,10 +13,10 @@
 #ifndef __KCookie_h_Included__
 #define __KCookie_h_Included__
 
-#include <qcstring.h>
-#include <qvaluelist.h>
+#include <tqcstring.h>
+#include <tqvaluelist.h>
 
-typedef QValueList<QCString> QCStringList;
+typedef TQValueList<TQCString> QCStringList;
 
 
 /**
@@ -32,40 +32,40 @@ public:
     /**
      * Returns the X11 display.
      */
-    QCString display() { return m_Display; }
+    TQCString display() { return m_Display; }
 
 #ifdef Q_WS_X11
     /**
      * Returns the X11 magic cookie, if available.
      */
-    QCString displayAuth() { return m_DisplayAuth; }
+    TQCString displayAuth() { return m_DisplayAuth; }
 #endif
 
     /**
      * Select the DCOP transport to look for. Default: "local"
      */
-    void setDcopTransport(const QCString &dcopTransport);
+    void setDcopTransport(const TQCString &dcopTransport);
 
     /**
      * Returns the netid where the dcopserver is running
      */
-    QCString dcopServer();
+    TQCString dcopServer();
 
     /** 
      * Returns a list of magic cookies for DCOP protocol authentication. 
      * The order is the same as in dcopServer().
      */
-    QCString dcopAuth();
+    TQCString dcopAuth();
 
     /**
      * Returns a list of magic cookies for the ICE protocol.
      */
-    QCString iceAuth();
+    TQCString iceAuth();
 
 private:
     void getXCookie();
     void getICECookie();
-    QCStringList split(const QCString &line, char ch);
+    QCStringList split(const TQCString &line, char ch);
 
     void blockSigChild();
     void unblockSigChild();
@@ -73,14 +73,14 @@ private:
     bool m_bHaveDCOPCookies;
     bool m_bHaveICECookies;
 
-    QCString m_Display;
+    TQCString m_Display;
 #ifdef Q_WS_X11
-    QCString m_DisplayAuth;
+    TQCString m_DisplayAuth;
 #endif
-    QCString m_DCOPSrv;
-    QCString m_DCOPAuth;
-    QCString m_ICEAuth;
-    QCString m_dcopTransport;
+    TQCString m_DCOPSrv;
+    TQCString m_DCOPAuth;
+    TQCString m_ICEAuth;
+    TQCString m_dcopTransport;
 
     class KCookiePrivate;
     KCookiePrivate *d;

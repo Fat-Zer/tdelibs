@@ -34,9 +34,9 @@
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kprocess.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qregexp.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqregexp.h>
 
 #include <stdlib.h>
 #include <sys/wait.h>
@@ -104,18 +104,18 @@ bool MaticHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool sh
 				KURL	url ( parsePostpipe(postpipe) );
 				if (!url.isEmpty())
 				{
-					QString	ds = QString::fromLatin1("%1 (%2)").arg(prt->location()).arg(url.protocol());
+					QString	ds = TQString::fromLatin1("%1 (%2)").arg(prt->location()).arg(url.protocol());
 					prt->setDevice(url.url());
 					prt->setLocation(ds);
 				}
 			}
 
-			QMap<QString,QVariant> m = loader.data()[ "VAR" ].toMap();
+			TQMap<TQString,TQVariant> m = loader.data()[ "VAR" ].toMap();
 			if ( !m.isEmpty() )
 			{
 				prt->setManufacturer(m["make"].toString());
 				prt->setModel(m["model"].toString());
-				prt->setDriverInfo(QString::fromLatin1("%1 %2 (%3)").arg(prt->manufacturer()).arg(prt->model()).arg(m["driver"].toString()));
+				prt->setDriverInfo(TQString::fromLatin1("%1 %2 (%3)").arg(prt->manufacturer()).arg(prt->model()).arg(m["driver"].toString()));
 			}
 		}
 	}
@@ -123,11 +123,11 @@ bool MaticHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool sh
 	return true;
 }
 
-QString MaticHandler::parsePostpipe(const QString& s)
+TQString MaticHandler::parsePostpipe(const TQString& s)
 {
 	QString	url;
 	int	p = s.findRev('|');
-	QStringList	args = QStringList::split(" ", s.right(s.length()-p-1));
+	QStringList	args = TQStringList::split(" ", s.right(s.length()-p-1));
 
 	if (args.count() != 0)
 	{
@@ -143,7 +143,7 @@ QString MaticHandler::parsePostpipe(const QString& s)
 		// smb printer
 		else if (args[0].right(10) == "/smbclient")
 		{
-			QStringList	host_components = QStringList::split(QRegExp("/|\\\\\""), args[1], false);
+			QStringList	host_components = TQStringList::split(TQRegExp("/|\\\\\""), args[1], false);
 			QString	workgrp, user, pass;
 			for (uint i=2; i<args.count(); i++)
 			{
@@ -181,7 +181,7 @@ QString MaticHandler::parsePostpipe(const QString& s)
 	return url;
 }
 
-QString MaticHandler::createPostpipe(const QString& _url)
+TQString MaticHandler::createPostpipe(const TQString& _url)
 {
 	KURL url( _url );
 	QString	prot = url.protocol();
@@ -191,7 +191,7 @@ QString MaticHandler::createPostpipe(const QString& _url)
 		str += ("| " + m_ncpath);
 		str += (" " + url.host());
 		if (url.port() != 0)
-			str += (" " + QString::number(url.port()));
+			str += (" " + TQString::number(url.port()));
 	}
 	else if (prot == "lpd")
 	{
@@ -201,7 +201,7 @@ QString MaticHandler::createPostpipe(const QString& _url)
 	}
 	else if (prot == "smb")
 	{
-		QString work, server, printer, user, passwd;
+		TQString work, server, printer, user, passwd;
 		if ( splitSmbURI( _url, work, server, printer, user, passwd ) )
 		{
 			str += ("| (\\n echo \\\"print -\\\"\\n cat \\n) | " + m_smbpath);
@@ -225,7 +225,7 @@ DrMain* MaticHandler::loadDriver(KMPrinter*, PrintcapEntry *entry, bool)
 	// changing printer name), the template would be also removed
 	QString	origfilename = maticFile(entry);
 	QString	filename = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
-	::system(QFile::encodeName("cp " + KProcess::quote(origfilename) + " " + KProcess::quote(filename)));
+	::system(TQFile::encodeName("cp " + KProcess::quote(origfilename) + " " + KProcess::quote(filename)));
 	DrMain	*driver = Foomatic2Loader::loadDriver(filename);
 	if (driver)
 	{
@@ -237,9 +237,9 @@ DrMain* MaticHandler::loadDriver(KMPrinter*, PrintcapEntry *entry, bool)
 		return NULL;
 }
 
-DrMain* MaticHandler::loadDbDriver(const QString& path)
+DrMain* MaticHandler::loadDbDriver(const TQString& path)
 {
-	QStringList	comps = QStringList::split('/', path, false);
+	QStringList	comps = TQStringList::split('/', path, false);
 	if (comps.count() < 3 || comps[0] != "foomatic")
 	{
 		manager()->setErrorMsg(i18n("Internal error."));
@@ -247,7 +247,7 @@ DrMain* MaticHandler::loadDbDriver(const QString& path)
 	}
 
 	QString	tmpFile = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
-	QString	PATH = getenv("PATH") + QString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
+	QString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
 	QString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
@@ -258,7 +258,7 @@ DrMain* MaticHandler::loadDbDriver(const QString& path)
 
 	KPipeProcess	in;
 	QFile		out(tmpFile);
-	QString cmd = KProcess::quote(exe);
+	TQString cmd = KProcess::quote(exe);
 	cmd += " -t lpd -d ";
 	cmd += KProcess::quote(comps[2]);
 	cmd += " -p ";
@@ -330,28 +330,28 @@ bool MaticHandler::savePrinterDriver(KMPrinter *prt, PrintcapEntry *entry, DrMai
 		tmpFile.close();
 
 		QString	cmd = "mv " + KProcess::quote(tmpFile.name()) + " " + KProcess::quote(outFile);
-		int	status = ::system(QFile::encodeName(cmd).data());
-		QFile::remove(tmpFile.name());
+		int	status = ::system(TQFile::encodeName(cmd).data());
+		TQFile::remove(tmpFile.name());
 		result = (status != -1 && WEXITSTATUS(status) == 0);
 	}
 
 	if (!result)
 		manager()->setErrorMsg(i18n("You probably don't have the required permissions "
 		                            "to perform that operation."));
-	QFile::remove(tmpFile.name());
+	TQFile::remove(tmpFile.name());
 	if (!result || entry->field("ppdfile").isEmpty())
 		return result;
 	else
 		return savePpdFile(driver, entry->field("ppdfile"));
 }
 
-bool MaticHandler::savePpdFile(DrMain *driver, const QString& filename)
+bool MaticHandler::savePpdFile(DrMain *driver, const TQString& filename)
 {
 	QString	mdriver(driver->get("matic_driver")), mprinter(driver->get("matic_printer"));
 	if (mdriver.isEmpty() || mprinter.isEmpty())
 		return true;
 
-	QString	PATH = getenv("PATH") + QString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
+	QString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
 	QString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
@@ -452,7 +452,7 @@ bool MaticHandler::removePrinter(KMPrinter *prt, PrintcapEntry *entry)
 	QString	af = entry->field("af");
 	if (af.isEmpty())
 		return true;
-	if (!QFile::remove(af))
+	if (!TQFile::remove(af))
 	{
 		manager()->setErrorMsg(i18n("Unable to remove driver file %1.").arg(af));
 		return false;
@@ -460,11 +460,11 @@ bool MaticHandler::removePrinter(KMPrinter *prt, PrintcapEntry *entry)
 	return true;
 }
 
-QString MaticHandler::printOptions(KPrinter *printer)
+TQString MaticHandler::printOptions(KPrinter *printer)
 {
-	QMap<QString,QString>	opts = printer->options();
+	TQMap<TQString,TQString>	opts = printer->options();
 	QString	str;
-	for (QMap<QString,QString>::Iterator it=opts.begin(); it!=opts.end(); ++it)
+	for (TQMap<TQString,TQString>::Iterator it=opts.begin(); it!=opts.end(); ++it)
 	{
 		if (it.key().startsWith("kde-") || it.key().startsWith("_kde-") || it.key().startsWith( "app-" ))
 			continue;
@@ -475,7 +475,7 @@ QString MaticHandler::printOptions(KPrinter *printer)
 	return str;
 }
 
-QString MaticHandler::driverDirInternal()
+TQString MaticHandler::driverDirInternal()
 {
 	return locateDir("foomatic/db/source", "/usr/share:/usr/local/share:/opt/share");
 }

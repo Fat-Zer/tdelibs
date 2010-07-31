@@ -90,42 +90,42 @@ public:
     static KCharsets	        *charsets();
 
     /**
-     * Creates a static QString.
+     * Creates a static TQString.
      *
      * To be used inside functions(!) like:
      * \code
-     * static const QString &myString = KGlobal::staticQString("myText");
+     * static const TQString &myString = KGlobal::staticQString("myText");
      * \endcode
      *
      * !!! Do _NOT_ use: !!!
      * \code
-     * static QString myString = KGlobal::staticQString("myText");
+     * static TQString myString = KGlobal::staticQString("myText");
      * \endcode
      * This creates a static object (instead of a static reference)
      * and as you know static objects are EVIL.
      * @param str the string to create
      * @return the static string
      */
-    static const QString        &staticQString(const char *str);
+    static const TQString        &staticQString(const char *str);
 
     /**
-     * Creates a static QString.
+     * Creates a static TQString.
      *
      * To be used inside functions(!) like:
      * \code
-     * static const QString &myString = KGlobal::staticQString(i18n("My Text"));
+     * static const TQString &myString = KGlobal::staticQString(i18n("My Text"));
      * \endcode
      *
      * !!! Do _NOT_ use: !!!
      * \code
-     * static QString myString = KGlobal::staticQString(i18n("myText"));
+     * static TQString myString = KGlobal::staticQString(i18n("myText"));
      * \endcode
      * This creates a static object (instead of a static reference)
      * and as you know static objects are EVIL.
      * @param str the string to create
      * @return the static string
      */
-    static const QString        &staticQString(const QString &str);
+    static const TQString        &staticQString(const TQString &str);
 
     /**
      * Registers a static deleter.
@@ -228,7 +228,7 @@ int KDECORE_EXPORT kasciistricmp( const char *str1, const char *str2 );
  * of other (but no less important) things.
  *
  * All KDE applications should link to the kdecore library. Also, using a
- * KApplication derived class instead of QApplication is almost
+ * KApplication derived class instead of TQApplication is almost
  * mandatory if you expect your application to behave nicely within the
  * KDE environment.
  */

@@ -46,15 +46,15 @@ KDCOPServiceStarter::~KDCOPServiceStarter()
 {
 }
 
-int KDCOPServiceStarter::findServiceFor( const QString& serviceType,
-                                         const QString& _constraint,
-                                         const QString& preferences,
-                                         QString *error, QCString* pDcopService,
+int KDCOPServiceStarter::findServiceFor( const TQString& serviceType,
+                                         const TQString& _constraint,
+                                         const TQString& preferences,
+                                         TQString *error, TQCString* pDcopService,
                                          int flags )
 {
     // Ask the trader which service is preferred for this servicetype
     // We want one that provides a DCOP interface
-    QString constraint = _constraint;
+    TQString constraint = _constraint;
     if ( !constraint.isEmpty() )
         constraint += " and ";
     constraint += "exist [X-DCOP-ServiceName]";
@@ -66,11 +66,11 @@ int KDCOPServiceStarter::findServiceFor( const QString& serviceType,
         return -1;
     }
     KService::Ptr ptr = offers.first();
-    QCString dcopService = ptr->property("X-DCOP-ServiceName").toString().latin1();
+    TQCString dcopService = ptr->property("X-DCOP-ServiceName").toString().latin1();
 
     if ( !kapp->dcopClient()->isApplicationRegistered( dcopService ) )
     {
-        QString error;
+        TQString error;
         if ( startServiceFor( serviceType, constraint, preferences, &error, &dcopService, flags ) != 0 )
         {
             kdDebug() << "KDCOPServiceStarter: Couldn't start service: " << error << endl;
@@ -83,15 +83,15 @@ int KDCOPServiceStarter::findServiceFor( const QString& serviceType,
     return 0;
 }
 
-int KDCOPServiceStarter::startServiceFor( const QString& serviceType,
-                                          const QString& constraint,
-                                          const QString& preferences,
-                                          QString *error, QCString* dcopService, int /*flags*/ )
+int KDCOPServiceStarter::startServiceFor( const TQString& serviceType,
+                                          const TQString& constraint,
+                                          const TQString& preferences,
+                                          TQString *error, TQCString* dcopService, int /*flags*/ )
 {
     KTrader::OfferList offers = KTrader::self()->query(serviceType, "Application", constraint, preferences);
     if ( offers.isEmpty() )
         return -1;
     KService::Ptr ptr = offers.first();
     kdDebug() << "KDCOPServiceStarter: starting " << ptr->desktopEntryPath() << endl;
-    return kapp->startServiceByDesktopPath( ptr->desktopEntryPath(), QStringList(), error, dcopService );
+    return kapp->startServiceByDesktopPath( ptr->desktopEntryPath(), TQStringList(), error, dcopService );
 }

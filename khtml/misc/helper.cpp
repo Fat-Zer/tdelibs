@@ -22,25 +22,25 @@
  */
 #include "helper.h"
 #include "khtmllayout.h"
-#include <qmap.h>
-#include <qpainter.h>
+#include <tqmap.h>
+#include <tqpainter.h>
 #include <dom/dom_string.h>
 #include <xml/dom_stringimpl.h>
 #include <rendering/render_object.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <kstaticdeleter.h>
 #include <kapplication.h>
 #include <kconfig.h>
-#include <qtooltip.h>
+#include <tqtooltip.h>
 
 using namespace DOM;
 using namespace khtml;
 
 namespace khtml {
-  QPainter *printpainter;
+  TQPainter *printpainter;
 }
 
-void khtml::setPrintPainter( QPainter *printer )
+void khtml::setPrintPainter( TQPainter *printer )
 {
     printpainter = printer;
 }
@@ -78,9 +78,9 @@ QRgb khtml::qRgbaFromHsla(double h, double s, double l, double a)
  * @param obj render object
  * @return the background color. It is guaranteed that a valid color is returned.
  */
-QColor khtml::retrieveBackgroundColor(const RenderObject *obj)
+TQColor khtml::retrieveBackgroundColor(const RenderObject *obj)
 {
-  QColor result;
+  TQColor result;
   while (!obj->isCanvas()) {
     result = obj->style()->backgroundColor();
     if (result.isValid()) return result;
@@ -95,7 +95,7 @@ QColor khtml::retrieveBackgroundColor(const RenderObject *obj)
 /** checks whether the given colors have enough contrast
  * @returns @p true if contrast is ok.
  */
-bool khtml::hasSufficientContrast(const QColor &c1, const QColor &c2)
+bool khtml::hasSufficientContrast(const TQColor &c1, const TQColor &c2)
 {
 // New version from Germain Garand, better suited for contrast measurement
 #if 1

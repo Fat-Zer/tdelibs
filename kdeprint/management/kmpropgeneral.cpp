@@ -23,23 +23,23 @@
 #include "kmfactory.h"
 #include "kmmanager.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
-KMPropGeneral::KMPropGeneral(QWidget *parent, const char *name)
+KMPropGeneral::KMPropGeneral(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)
 {
-	m_name = new QLabel("",this);
-	m_location = new QLabel("",this);
-	m_description = new QLabel("",this);
+	m_name = new TQLabel("",this);
+	m_location = new TQLabel("",this);
+	m_description = new TQLabel("",this);
 
-	QLabel	*l1 = new QLabel(i18n("Printer name:"), this);
-	QLabel	*l2 = new QLabel(i18n("Physical Location", "Location:"), this);
-	QLabel	*l3 = new QLabel(i18n("Description:"), this);
+	QLabel	*l1 = new TQLabel(i18n("Printer name:"), this);
+	QLabel	*l2 = new TQLabel(i18n("Physical Location", "Location:"), this);
+	QLabel	*l3 = new TQLabel(i18n("Description:"), this);
 
 	// layout
-	QGridLayout	*main_ = new QGridLayout(this, 4, 2, 10, 7);
+	QGridLayout	*main_ = new TQGridLayout(this, 4, 2, 10, 7);
 	main_->setColStretch(0,0);
 	main_->setColStretch(1,1);
 	main_->setRowStretch(3,1);

@@ -21,10 +21,10 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include <qdatetime.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qdict.h>
+#include <tqdatetime.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqdict.h>
 
 #include <karchive.h>
 
@@ -43,14 +43,14 @@ public:
      *
      * @param filename is a local path (e.g. "/home/holger/myfile.ar")
      */
-    KAr( const QString& filename );
+    KAr( const TQString& filename );
 
     /**
      * Creates an instance that operates on the given device.
-     * The device can be compressed (KFilterDev) or not (QFile, etc.).
+     * The device can be compressed (KFilterDev) or not (TQFile, etc.).
      * @param dev the device to read from
      */
-    KAr( QIODevice * dev );
+    KAr( TQIODevice * dev );
 
     /**
      * If the ar file is still opened, then it will be
@@ -60,15 +60,15 @@ public:
 
     /**
      * The name of the ar file, as passed to the constructor.
-     * @return the filename. Null if you used the QIODevice constructor
+     * @return the filename. Null if you used the TQIODevice constructor
      */
-    QString fileName() { return m_filename; }
+    TQString fileName() { return m_filename; }
 
     /*
      * Writing not supported by this class, will always fail.
      * @return always false
      */
-    virtual bool prepareWriting( const QString& name, const QString& user, const QString& group, uint size ) { Q_UNUSED(name); Q_UNUSED(user); Q_UNUSED(group); Q_UNUSED(size); return false; }
+    virtual bool prepareWriting( const TQString& name, const TQString& user, const TQString& group, uint size ) { Q_UNUSED(name); Q_UNUSED(user); Q_UNUSED(group); Q_UNUSED(size); return false; }
 
     /*
      * Writing not supported by this class, will always fail.
@@ -80,7 +80,7 @@ public:
      * Writing not supported by this class, will always fail.
      * @return always false
      */
-    virtual bool writeDir( const QString& name, const QString& user, const QString& group )  { Q_UNUSED(name); Q_UNUSED(user); Q_UNUSED(group); return false; }
+    virtual bool writeDir( const TQString& name, const TQString& user, const TQString& group )  { Q_UNUSED(name); Q_UNUSED(user); Q_UNUSED(group); return false; }
 
 protected:
     /**
@@ -95,7 +95,7 @@ protected:
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    QString m_filename;
+    TQString m_filename;
     class KArPrivate;
     KArPrivate * d;
 };

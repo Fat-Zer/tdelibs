@@ -11,8 +11,8 @@
 
 #include <unistd.h>
 
-#include <qfile.h>
-#include <qdir.h>
+#include <tqfile.h>
+#include <tqdir.h>
 
 #include <kdebug.h>
 
@@ -39,7 +39,7 @@ void KDirWatchTest::VERIFY_NOTHING()
     VERIFY (nothing_failed);
 }
 
-void KDirWatchTest::VERIFY_DIRTY(const QString& alert)
+void KDirWatchTest::VERIFY_DIRTY(const TQString& alert)
 {
     unsigned m_s[3];
     for(int i = 0; i < 3; ++i)
@@ -56,7 +56,7 @@ void KDirWatchTest::VERIFY_DIRTY(const QString& alert)
             m_lastSignal == alert);
 }
 
-void KDirWatchTest::VERIFY_CREATED(const QString& alert)
+void KDirWatchTest::VERIFY_CREATED(const TQString& alert)
 {
     unsigned m_s[3];
     for(int i = 0; i < 3; ++i)
@@ -73,7 +73,7 @@ void KDirWatchTest::VERIFY_CREATED(const QString& alert)
             m_lastSignal == alert);
 }
 
-void KDirWatchTest::VERIFY_DELETED(const QString& alert)
+void KDirWatchTest::VERIFY_DELETED(const TQString& alert)
 {
     unsigned m_s[3];
     for(int i = 0; i < 3; ++i)
@@ -90,26 +90,26 @@ void KDirWatchTest::VERIFY_DELETED(const QString& alert)
             m_lastSignal == alert);
 }
 
-void KDirWatchTest::remove_file (const QString& file)
+void KDirWatchTest::remove_file (const TQString& file)
 {
-  ::unlink (QFile::encodeName(file));
+  ::unlink (TQFile::encodeName(file));
 }
 
-void KDirWatchTest::touch_file (const QString& file)
+void KDirWatchTest::touch_file (const TQString& file)
 {
-  QFile f(file);
+  TQFile f(file);
   f.open(IO_WriteOnly);
 }
 
-void KDirWatchTest::rename_file(const QString& from, const QString& to)
+void KDirWatchTest::rename_file(const TQString& from, const TQString& to)
 {
-  ::rename(QFile::encodeName(from), QFile::encodeName(to));
+  ::rename(TQFile::encodeName(from), TQFile::encodeName(to));
 }
 
 KUNITTEST_MODULE ( kunittest_kdirwatch, "KDirWatchTest" )
 KUNITTEST_MODULE_REGISTER_TESTER (KDirWatchTest)
 
-#define SLEEP() QApplication::processEvents();
+#define SLEEP() TQApplication::processEvents();
 
 void KDirWatchTest::allTests()
 {
@@ -117,12 +117,12 @@ void KDirWatchTest::allTests()
     d = new KDirWatch;
     VERIFY (d != 0);
 
-    QDir* dir = new QDir(m_workingDir);
+    TQDir* dir = new TQDir(m_workingDir);
     VERIFY (dir != 0);
 
-    connect(d, SIGNAL (dirty( const QString &)), SLOT( slotDirty( const QString &)) );
-    connect(d, SIGNAL (created( const QString &)), SLOT( slotCreated( const QString &)) );
-    connect(d, SIGNAL (deleted( const QString &)), SLOT( slotDeleted( const QString &)) );
+    connect(d, TQT_SIGNAL (dirty( const TQString &)), TQT_SLOT( slotDirty( const TQString &)) );
+    connect(d, TQT_SIGNAL (created( const TQString &)), TQT_SLOT( slotCreated( const TQString &)) );
+    connect(d, TQT_SIGNAL (deleted( const TQString &)), TQT_SLOT( slotDeleted( const TQString &)) );
 
     VERIFY (dir->mkdir (m_workingDir));
 

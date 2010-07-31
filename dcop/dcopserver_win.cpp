@@ -19,7 +19,7 @@
 
 //this file is included by dcopserver.cpp
 
-#include <qeventloop.h>
+#include <tqeventloop.h>
 
 DWORD WINAPI DCOPServer::TerminatorThread(void * pParam)
 {
@@ -35,7 +35,7 @@ DWORD WINAPI DCOPServer::TerminatorThread(void * pParam)
 		// Wait for main thread to tell us to realy terminate now
 		// Need some further event processing to get the timer signals
 		while(WaitForSingleObject(server->m_evTerminate,100) != WAIT_OBJECT_0)
-			QApplication::eventLoop()->processEvents(QEventLoop::ExcludeUserInput|QEventLoop::ExcludeSocketNotifiers);
+			TQApplication::eventLoop()->processEvents(TQEventLoop::ExcludeUserInput|TQEventLoop::ExcludeSocketNotifiers);
 		fprintf( stderr, "DCOPServer : terminated event signaled the last time\n" );
     }
 	fprintf( stderr, "DCOPServer : terminate thread teminated\n" );

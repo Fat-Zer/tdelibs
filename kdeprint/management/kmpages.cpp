@@ -27,8 +27,8 @@
 #include <kiconloader.h>
 #include <kdialog.h>
 
-KMPages::KMPages(QWidget *parent, const char *name)
-: QTabWidget(parent,name)
+KMPages::KMPages(TQWidget *parent, const char *name)
+: TQTabWidget(parent,name)
 {
 	m_pages.setAutoDelete(false);
 	initialize();
@@ -40,7 +40,7 @@ KMPages::~KMPages()
 
 void KMPages::setPrinter(KMPrinter *p)
 {
-	QPtrListIterator<KMPrinterPage>	it(m_pages);
+	TQPtrListIterator<KMPrinterPage>	it(m_pages);
 	for (int i=0;it.current();++it,i++)
 		it.current()->setPrinter(p);
 }

@@ -28,8 +28,8 @@
 #include <kcombobox.h>
 #include <klocale.h>
 
-#include <qcheckbox.h>
-#include <qlayout.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
 
 using namespace KSpell2;
 
@@ -40,8 +40,8 @@ public:
     KSpell2ConfigUI *ui;
 };
 
-ConfigWidget::ConfigWidget( Broker *broker, QWidget *parent, const char *name )
-    : QWidget( parent, name )
+ConfigWidget::ConfigWidget( Broker *broker, TQWidget *parent, const char *name )
+    : TQWidget( parent, name )
 {
     init( broker );
 }
@@ -56,22 +56,22 @@ void ConfigWidget::init( Broker *broker )
     d = new Private;
     d->broker = broker;
 
-    QVBoxLayout *layout = new QVBoxLayout( this, 0, 0, "KSpell2ConfigUILayout");
+    TQVBoxLayout *layout = new TQVBoxLayout( this, 0, 0, "KSpell2ConfigUILayout");
     d->ui = new KSpell2ConfigUI( this );
 
-    QStringList langs = d->broker->languages();
-    //QStringList clients = d->broker->clients();
+    TQStringList langs = d->broker->languages();
+    //TQStringList clients = d->broker->clients();
     d->ui->m_langCombo->insertStringList( langs );
     setCorrectLanguage( langs );
     //d->ui->m_clientCombo->insertStringList( clients );
     d->ui->m_skipUpperCB->setChecked( !d->broker->settings()->checkUppercase() );
     d->ui->m_skipRunTogetherCB->setChecked( d->broker->settings()->skipRunTogether() );
-    QStringList ignoreList = d->broker->settings()->currentIgnoreList();
+    TQStringList ignoreList = d->broker->settings()->currentIgnoreList();
     ignoreList.sort();
     d->ui->m_ignoreListBox->insertStringList( ignoreList );
     d->ui->m_bgSpellCB->setChecked( d->broker->settings()->backgroundCheckerEnabled() );
     d->ui->m_bgSpellCB->hide();//hidden by default
-    connect( d->ui->m_ignoreListBox, SIGNAL(changed()), SLOT(slotChanged()) );
+    connect( d->ui->m_ignoreListBox, TQT_SIGNAL(changed()), TQT_SLOT(slotChanged()) );
 
     layout->addWidget( d->ui );
 }
@@ -100,10 +100,10 @@ void ConfigWidget::slotChanged()
         d->ui->m_ignoreListBox->items() );
 }
 
-void ConfigWidget::setCorrectLanguage( const QStringList& langs)
+void ConfigWidget::setCorrectLanguage( const TQStringList& langs)
 {
     int idx = 0;
-    for ( QStringList::const_iterator itr = langs.begin();
+    for ( TQStringList::const_iterator itr = langs.begin();
           itr != langs.end(); ++itr, ++idx ) {
         if ( *itr == d->broker->settings()->defaultLanguage() )
             d->ui->m_langCombo->setCurrentItem( idx );

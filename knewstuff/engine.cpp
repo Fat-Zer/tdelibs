@@ -18,9 +18,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qcstring.h>
-#include <qdom.h>
-#include <qfileinfo.h>
+#include <tqcstring.h>
+#include <tqdom.h>
+#include <tqfileinfo.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -45,8 +45,8 @@ struct Engine::Private
     KNewStuff *mNewStuff;
 };
 
-Engine::Engine( KNewStuff *newStuff, const QString &type,
-                QWidget *parentWidget ) :
+Engine::Engine( KNewStuff *newStuff, const TQString &type,
+                TQWidget *parentWidget ) :
   mParentWidget( parentWidget ), mDownloadDialog( 0 ),
   mUploadDialog( 0 ), mProviderDialog( 0 ), mUploadProvider( 0 ),
   d(new Private), mType( type )
@@ -56,8 +56,8 @@ Engine::Engine( KNewStuff *newStuff, const QString &type,
   mProviderLoader = new ProviderLoader( mParentWidget );
 }
 
-Engine::Engine( KNewStuff *newStuff, const QString &type,
-                const QString &providerList, QWidget *parentWidget ) :
+Engine::Engine( KNewStuff *newStuff, const TQString &type,
+                const TQString &providerList, TQWidget *parentWidget ) :
                 mParentWidget( parentWidget ),
 		mDownloadDialog( 0 ), mUploadDialog( 0 ),
 		mProviderDialog( 0 ), mUploadProvider( 0 ),
@@ -83,8 +83,8 @@ void Engine::download()
   kdDebug() << "Engine::download()" << endl;
 
   connect( mProviderLoader,
-           SIGNAL( providersLoaded( Provider::List * ) ),
-           SLOT( getMetaInformation( Provider::List * ) ) );
+           TQT_SIGNAL( providersLoaded( Provider::List * ) ),
+           TQT_SLOT( getMetaInformation( Provider::List * ) ) );
   mProviderLoader->load( mType, mProviderList );
 }
 
@@ -105,25 +105,25 @@ void Engine::getMetaInformation( Provider::List *providers )
     if ( p->downloadUrl().isEmpty() ) continue;
 
     KIO::TransferJob *job = KIO::get( p->downloadUrl(), false, false );
-    connect( job, SIGNAL( result( KIO::Job * ) ),
-             SLOT( slotNewStuffJobResult( KIO::Job * ) ) );
-    connect( job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
-             SLOT( slotNewStuffJobData( KIO::Job *, const QByteArray & ) ) );
+    connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
+             TQT_SLOT( slotNewStuffJobResult( KIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( data( KIO::Job *, const TQByteArray & ) ),
+             TQT_SLOT( slotNewStuffJobData( KIO::Job *, const TQByteArray & ) ) );
 
     mNewStuffJobData.insert( job, "" );
     mProviderJobs[ job ] = p;
   }
 }
 
-void Engine::slotNewStuffJobData( KIO::Job *job, const QByteArray &data )
+void Engine::slotNewStuffJobData( KIO::Job *job, const TQByteArray &data )
 {
   if ( data.isEmpty() ) return;
 
   kdDebug() << "Engine:slotNewStuffJobData()" << endl;
 
-  QCString str( data, data.size() + 1 );
+  TQCString str( data, data.size() + 1 );
 
-  mNewStuffJobData[ job ].append( QString::fromUtf8( str ) );
+  mNewStuffJobData[ job ].append( TQString::fromUtf8( str ) );
 }
 
 void Engine::slotNewStuffJobResult( KIO::Job *job )
@@ -132,25 +132,25 @@ void Engine::slotNewStuffJobResult( KIO::Job *job )
     kdDebug() << "Error downloading new stuff descriptions." << endl;
     job->showErrorDialog( mParentWidget );
   } else {
-    QString knewstuffDoc = mNewStuffJobData[ job ];
+    TQString knewstuffDoc = mNewStuffJobData[ job ];
 
     kdDebug() << "---START---" << endl << knewstuffDoc << "---END---" << endl;
 
     mDownloadDialog->addProvider( mProviderJobs[ job ] );
 
-    QDomDocument doc;
+    TQDomDocument doc;
     if ( !doc.setContent( knewstuffDoc ) ) {
       kdDebug() << "Error parsing knewstuff.xml." << endl;
       return;
     } else {
-      QDomElement knewstuff = doc.documentElement();
+      TQDomElement knewstuff = doc.documentElement();
 
       if ( knewstuff.isNull() ) {
         kdDebug() << "No document in knewstuffproviders.xml." << endl;
       } else {
-        QDomNode p;
+        TQDomNode p;
         for ( p = knewstuff.firstChild(); !p.isNull(); p = p.nextSibling() ) {
-          QDomElement stuff = p.toElement();
+          TQDomElement stuff = p.toElement();
           if ( stuff.tagName() != "stuff" ) continue;
           if ( stuff.attribute("type", mType) != mType ) continue;
 
@@ -200,8 +200,8 @@ void Engine::download( Entry *entry )
   kdDebug() << "  DESTINATION: " << destination.url() << endl;
 
   KIO::FileCopyJob *job = KIO::file_copy( source, destination, -1, true );
-  connect( job, SIGNAL( result( KIO::Job * ) ),
-           SLOT( slotDownloadJobResult( KIO::Job * ) ) );
+  connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
+           TQT_SLOT( slotDownloadJobResult( KIO::Job * ) ) );
 }
 
 void Engine::slotDownloadJobResult( KIO::Job *job )
@@ -224,14 +224,14 @@ void Engine::slotDownloadJobResult( KIO::Job *job )
   }
 }
 
-void Engine::upload(const QString &fileName, const QString &previewName )
+void Engine::upload(const TQString &fileName, const TQString &previewName )
 {
   mUploadFile = fileName;
   mPreviewFile = previewName;
 
   connect( mProviderLoader,
-           SIGNAL( providersLoaded( Provider::List * ) ),
-           SLOT( selectUploadProvider( Provider::List * ) ) );
+           TQT_SIGNAL( providersLoaded( Provider::List * ) ),
+           TQT_SLOT( selectUploadProvider( Provider::List * ) ) );
   mProviderLoader->load( mType );
 }
 
@@ -272,7 +272,7 @@ void Engine::upload( Entry *entry )
 {
   if ( mUploadFile.isNull()) {
     mUploadFile = entry->fullName();
-    mUploadFile = locateLocal( "data", QString(kapp->instanceName()) + "/upload/" + mUploadFile );
+    mUploadFile = locateLocal( "data", TQString(kapp->instanceName()) + "/upload/" + mUploadFile );
 
     if ( !d->mNewStuff->createUploadFile( mUploadFile ) ) {
       KMessageBox::error( mParentWidget, i18n("Unable to create file to upload.") );
@@ -281,8 +281,8 @@ void Engine::upload( Entry *entry )
     }
   }
 
-  QString lang = entry->langs().first();
-  QFileInfo fi( mUploadFile );
+  TQString lang = entry->langs().first();
+  TQFileInfo fi( mUploadFile );
   entry->setPayload( KURL::fromPathOrURL( fi.fileName() ), lang );
 
   if ( !createMetaFile( entry ) ) {
@@ -290,7 +290,7 @@ void Engine::upload( Entry *entry )
     return;
   } 
 
-  QString text = i18n("The files to be uploaded have been created at:\n");
+  TQString text = i18n("The files to be uploaded have been created at:\n");
   text.append( i18n("Data file: %1\n").arg( mUploadFile) );
   if (!mPreviewFile.isEmpty()) {
     text.append( i18n("Preview image: %1\n").arg( mPreviewFile) );
@@ -299,7 +299,7 @@ void Engine::upload( Entry *entry )
   text.append( i18n("Those files can now be uploaded.\n") );
   text.append( i18n("Beware that any people might have access to them at any time.") );
 
-  QString caption = i18n("Upload Files");
+  TQString caption = i18n("Upload Files");
 
   if ( mUploadProvider->noUpload() ) {
     KURL noUploadUrl = mUploadProvider->noUploadUrl();
@@ -322,8 +322,8 @@ void Engine::upload( Entry *entry )
       destination.setFileName( fi.fileName() );
 
       KIO::FileCopyJob *job = KIO::file_copy( KURL::fromPathOrURL( mUploadFile ), destination );
-      connect( job, SIGNAL( result( KIO::Job * ) ),
-               SLOT( slotUploadPayloadJobResult( KIO::Job * ) ) );
+      connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
+               TQT_SLOT( slotUploadPayloadJobResult( KIO::Job * ) ) );
     } else {
       emit uploadFinished( false );
     }
@@ -332,10 +332,10 @@ void Engine::upload( Entry *entry )
 
 bool Engine::createMetaFile( Entry *entry )
 {
-  QDomDocument doc("knewstuff");
+  TQDomDocument doc("knewstuff");
   doc.appendChild( doc.createProcessingInstruction(
                    "xml", "version=\"1.0\" encoding=\"UTF-8\"" ) );
-  QDomElement de = doc.createElement("knewstuff");
+  TQDomElement de = doc.createElement("knewstuff");
   doc.appendChild( de );
 
   entry->setType(type());
@@ -346,17 +346,17 @@ bool Engine::createMetaFile( Entry *entry )
 
   if ( mUploadMetaFile.isNull() ) {
     mUploadMetaFile = entry->fullName() + ".meta";
-    mUploadMetaFile = locateLocal( "data", QString(kapp->instanceName()) + "/upload/" + mUploadMetaFile );
+    mUploadMetaFile = locateLocal( "data", TQString(kapp->instanceName()) + "/upload/" + mUploadMetaFile );
   }
 
-  QFile f( mUploadMetaFile );
+  TQFile f( mUploadMetaFile );
   if ( !f.open( IO_WriteOnly ) ) {
-    mUploadMetaFile = QString::null;
+    mUploadMetaFile = TQString::null;
     return false;
   }
 
-  QTextStream ts( &f );
-  ts.setEncoding( QTextStream::UnicodeUTF8 );
+  TQTextStream ts( &f );
+  ts.setEncoding( TQTextStream::UnicodeUTF8 );
   ts << doc.toString();
 
   f.close();
@@ -378,14 +378,14 @@ void Engine::slotUploadPayloadJobResult( KIO::Job *job )
     return;
   }
 
-  QFileInfo fi( mPreviewFile );
+  TQFileInfo fi( mPreviewFile );
 
   KURL previewDestination = mUploadProvider->uploadUrl();
   previewDestination.setFileName( fi.fileName() );
 
   KIO::FileCopyJob *newJob = KIO::file_copy( KURL::fromPathOrURL( mPreviewFile ), previewDestination );
-  connect( newJob, SIGNAL( result( KIO::Job * ) ),
-           SLOT( slotUploadPreviewJobResult( KIO::Job * ) ) );
+  connect( newJob, TQT_SIGNAL( result( KIO::Job * ) ),
+           TQT_SLOT( slotUploadPreviewJobResult( KIO::Job * ) ) );
 }
 
 void Engine::slotUploadPreviewJobResult( KIO::Job *job )
@@ -397,19 +397,19 @@ void Engine::slotUploadPreviewJobResult( KIO::Job *job )
     return;
   }
 
-  QFileInfo fi( mUploadMetaFile );
+  TQFileInfo fi( mUploadMetaFile );
 
   KURL metaDestination = mUploadProvider->uploadUrl();
   metaDestination.setFileName( fi.fileName() );
 
   KIO::FileCopyJob *newJob = KIO::file_copy( KURL::fromPathOrURL( mUploadMetaFile ), metaDestination );
-  connect( newJob, SIGNAL( result( KIO::Job * ) ),
-           SLOT( slotUploadMetaJobResult( KIO::Job * ) ) );
+  connect( newJob, TQT_SIGNAL( result( KIO::Job * ) ),
+           TQT_SLOT( slotUploadMetaJobResult( KIO::Job * ) ) );
 }
 
 void Engine::slotUploadMetaJobResult( KIO::Job *job )
 {
-  mUploadMetaFile = QString::null;
+  mUploadMetaFile = TQString::null;
   if ( job->error() ) {
     kdDebug() << "Error uploading new stuff metadata." << endl;
     job->showErrorDialog( mParentWidget );

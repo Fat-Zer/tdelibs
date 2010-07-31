@@ -24,8 +24,8 @@
 #ifndef  LANGVALUE_H
 #define  LANGVALUE_H
 
-#include <qcstring.h>
-#include <qstrlist.h>
+#include <tqcstring.h>
+#include <tqstrlist.h>
 
 #include <VCardValue.h>
 
@@ -36,14 +36,14 @@ class KVCARD_EXPORT LangValue : public Value
 {
 #include "LangValue-generated.h"
 	
-	QCString primary();
-	QStrList subtags();
+	TQCString primary();
+	TQStrList subtags();
 	
-	void setPrimary(const QCString &);	
-	void setSubTags(const QStrList &);
+	void setPrimary(const TQCString &);	
+	void setSubTags(const TQStrList &);
 	
-	QCString primary_;
-	QStrList subtags_;
+	TQCString primary_;
+	TQStrList subtags_;
 };
 
 }

@@ -25,11 +25,11 @@
 #include <kded/kdedmodule.h>
 #include <ksslcertificate.h>
 #include <ksslcertificatecache.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qvaluelist.h>
-#include <qmap.h>
-#include <qptrvector.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqvaluelist.h>
+#include <tqmap.h>
+#include <tqptrvector.h>
 
 
 class KSimpleConfig;
@@ -43,7 +43,7 @@ class KSSLD : public KDEDModule
 
 public:
   
-  KSSLD(const QCString &name);
+  KSSLD(const TQCString &name);
   
   virtual ~KSSLD();
 
@@ -54,80 +54,80 @@ k_dcop:
   void cacheAddCertificate(KSSLCertificate cert, 
 		           KSSLCertificateCache::KSSLCertificatePolicy policy,
 		           bool permanent = true);
-  KSSLCertificateCache::KSSLCertificatePolicy cacheGetPolicyByCN(QString cn);
+  KSSLCertificateCache::KSSLCertificatePolicy cacheGetPolicyByCN(TQString cn);
 
   KSSLCertificateCache::KSSLCertificatePolicy cacheGetPolicyByCertificate(KSSLCertificate cert);
 
-  bool cacheSeenCN(QString cn);
+  bool cacheSeenCN(TQString cn);
   bool cacheSeenCertificate(KSSLCertificate cert);
 
-  bool cacheRemoveByCN(QString cn);
-  bool cacheRemoveBySubject(QString subject);
+  bool cacheRemoveByCN(TQString cn);
+  bool cacheRemoveBySubject(TQString subject);
   bool cacheRemoveByCertificate(KSSLCertificate cert);
 	       
   bool cacheIsPermanent(KSSLCertificate cert);
 
   void cacheReload();
 
-  bool cacheModifyByCN(QString cn,
+  bool cacheModifyByCN(TQString cn,
                        KSSLCertificateCache::KSSLCertificatePolicy policy,
                        bool permanent,
-                       QDateTime expires);
+                       TQDateTime expires);
 
   bool cacheModifyByCertificate(KSSLCertificate cert,
                            KSSLCertificateCache::KSSLCertificatePolicy policy,
                                 bool permanent,
-                                QDateTime expires);
+                                TQDateTime expires);
 
-  QStringList cacheGetHostList(KSSLCertificate cert);
+  TQStringList cacheGetHostList(KSSLCertificate cert);
 
-  bool cacheAddHost(KSSLCertificate cert, QString host);
+  bool cacheAddHost(KSSLCertificate cert, TQString host);
 
-  bool cacheRemoveHost(KSSLCertificate cert, QString host);
+  bool cacheRemoveHost(KSSLCertificate cert, TQString host);
 
   /* Certificate Authorities */
   void caVerifyUpdate();
   bool caRegenerate();
 
-  QStringList caList();
+  TQStringList caList();
 
-  bool caUseForSSL(QString subject);
+  bool caUseForSSL(TQString subject);
 
-  bool caUseForEmail(QString subject);
+  bool caUseForEmail(TQString subject);
   
-  bool caUseForCode(QString subject);
+  bool caUseForCode(TQString subject);
 
-  bool caAdd(QString certificate, bool ssl, bool email, bool code);
+  bool caAdd(TQString certificate, bool ssl, bool email, bool code);
 
-  bool caAddFromFile(QString filename, bool ssl, bool email, bool code);
+  bool caAddFromFile(TQString filename, bool ssl, bool email, bool code);
 
-  bool caRemove(QString subject);
+  bool caRemove(TQString subject);
 
-  bool caRemoveFromFile(QString filename);
+  bool caRemoveFromFile(TQString filename);
 
-  QString caGetCert(QString subject);
+  TQString caGetCert(TQString subject);
 
-  bool caSetUse(QString subject, bool ssl, bool email, bool code);
+  bool caSetUse(TQString subject, bool ssl, bool email, bool code);
 
-  QStringList getKDEKeyByEmail(const QString &email);
+  TQStringList getKDEKeyByEmail(const TQString &email);
 
-  KSSLCertificate getCertByMD5Digest(const QString &key);
+  KSSLCertificate getCertByMD5Digest(const TQString &key);
 
   //
   //  Certificate Home methods
   //
 
-  QStringList getHomeCertificateList();
+  TQStringList getHomeCertificateList();
 
-  bool addHomeCertificateFile(QString filename, QString password, bool storePass /*=false*/);
+  bool addHomeCertificateFile(TQString filename, TQString password, bool storePass /*=false*/);
 
-  bool addHomeCertificatePKCS12(QString base64cert, QString passToStore);
+  bool addHomeCertificatePKCS12(TQString base64cert, TQString passToStore);
 
-  bool deleteHomeCertificateByFile(QString filename, QString password);
+  bool deleteHomeCertificateByFile(TQString filename, TQString password);
 
-  bool deleteHomeCertificateByPKCS12(QString base64cert, QString password);
+  bool deleteHomeCertificateByPKCS12(TQString base64cert, TQString password);
 
-  bool deleteHomeCertificateByName(QString name);
+  bool deleteHomeCertificateByName(TQString name);
 
 private:
 
@@ -137,7 +137,7 @@ private:
 
   // for the cache portion:
   KSimpleConfig *cfg;
-  QPtrList<KSSLCNode> certList;
+  TQPtrList<KSSLCNode> certList;
 
   // Our pointer to OpenSSL
   KOpenSSLProxy *kossl;
@@ -146,8 +146,8 @@ private:
   void searchAddCert(KSSLCertificate *cert);
   void searchRemoveCert(KSSLCertificate *cert);
 
-  QMap<QString, QPtrVector<KSSLCertificate> > skEmail;
-  QMap<QString, KSSLCertificate *> skMD5Digest;
+  TQMap<TQString, TQPtrVector<KSSLCertificate> > skEmail;
+  TQMap<TQString, KSSLCertificate *> skMD5Digest;
 };
 
 

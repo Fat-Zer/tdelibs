@@ -12,7 +12,7 @@
 
 #include <kdelibs_export.h>
 
-#include <qsize.h>
+#include <tqsize.h>
 class KPixmap;
 class QColor;
 
@@ -48,7 +48,7 @@ public:
      * colors. Pass 0 to prevent dithering.
      * @return Returns the generated pixmap, for convenience.
      */
-    static KPixmap& gradient(KPixmap& pixmap, const QColor &ca, const QColor &cb,
+    static KPixmap& gradient(KPixmap& pixmap, const TQColor &ca, const TQColor &cb,
                             GradientType type, int ncols=3);
 
     /**
@@ -66,8 +66,8 @@ public:
      * @param ncols The number of colors. See #gradient.
      * @return The generated pixmap, for convencience.
      */
-    static KPixmap& unbalancedGradient(KPixmap& pixmap, const QColor &ca,
-                   const QColor &cb, GradientType type, int xfactor = 100,
+    static KPixmap& unbalancedGradient(KPixmap& pixmap, const TQColor &ca,
+                   const TQColor &cb, GradientType type, int xfactor = 100,
                    int yfactor = 100, int ncols=3);
 
     /**
@@ -81,7 +81,7 @@ public:
      * @param size   The size the new pixmap should have.
      * @return The generated, tiled pixmap.
      */
-    static KPixmap createTiled(const KPixmap& pixmap, QSize size);
+    static KPixmap createTiled(const KPixmap& pixmap, TQSize size);
 
     /**
      * Either brightens or dims a pixmap by a specified ratio.
@@ -121,7 +121,7 @@ public:
      * @return Returns the pixmap(), provided for convenience.
      */
     static KPixmap& blend(KPixmap& pixmap, float initial_intensity,
-                         const QColor &bgnd, GradientType eff,
+                         const TQColor &bgnd, GradientType eff,
                          bool anti_dir=false, int ncols=3);
 
     /**
@@ -153,8 +153,8 @@ public:
      * dithered to this depth. Pass zero to prevent dithering.
      * @return The resulting pixmap.
      */
-    static KPixmap pattern(const KPixmap& pixmap, QSize size,
-                   const QColor &ca, const QColor &cb, int ncols=8);
+    static KPixmap pattern(const KPixmap& pixmap, TQSize size,
+                   const TQColor &ca, const TQColor &cb, int ncols=8);
 
     /**
      * Fades a pixmap to a certain color.
@@ -164,7 +164,7 @@ public:
      * @param color The color to blend to.
      * @return Returns the pixmap(), provided for convenience.
      */
-    static KPixmap& fade(KPixmap& pixmap, double val, const QColor &color);
+    static KPixmap& fade(KPixmap& pixmap, double val, const TQColor &color);
 
     /**
      * Converts a pixmap to grayscale.
@@ -203,15 +203,15 @@ public:
      * @param size The size of the palette.
      * @return Returns the pixmap(), provided for convenience.
      */
-    static KPixmap& dither(KPixmap &pixmap, const QColor *palette, int size);
+    static KPixmap& dither(KPixmap &pixmap, const TQColor *palette, int size);
 
     /**
      * Calculate a 'selected' pixmap, for instance a selected icon
      * on the desktop.
      * @param pixmap the pixmap to select
-     * @param col the selected color, usually from QColorGroup::highlight().
+     * @param col the selected color, usually from TQColorGroup::highlight().
      */
-    static KPixmap selectedPixmap( const KPixmap &pixmap, const QColor &col );
+    static KPixmap selectedPixmap( const KPixmap &pixmap, const TQColor &col );
 };
 
 

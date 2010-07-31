@@ -30,14 +30,14 @@ class KMWRlpr : public KMWizardPage
 {
 	Q_OBJECT
 public:
-	KMWRlpr(QWidget *parent = 0, const char *name = 0);
+	KMWRlpr(TQWidget *parent = 0, const char *name = 0);
 
-	bool isValid(QString&);
+	bool isValid(TQString&);
 	void initPrinter(KMPrinter*);
 	void updatePrinter(KMPrinter*);
 
 protected slots:
-	void slotPrinterSelected(QListViewItem*);
+	void slotPrinterSelected(TQListViewItem*);
 
 protected:
 	void initialize();

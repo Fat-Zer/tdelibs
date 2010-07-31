@@ -28,11 +28,11 @@
 #include "kmmanager.h"
 #include "driver.h"
 
-#include <qpaintdevicemetrics.h>
-#include <qfile.h>
-#include <qtl.h>
-#include <qdir.h>
-#include <qguardedptr.h>
+#include <tqpaintdevicemetrics.h>
+#include <tqfile.h>
+#include <tqtl.h>
+#include <tqdir.h>
+#include <tqguardedptr.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <kglobal.h>
@@ -45,7 +45,7 @@
 #include <klibloader.h>
 #include <kmessagebox.h>
 
-static void dumpOptions(const QMap<QString,QString>& opts);
+static void dumpOptions(const TQMap<TQString,TQString>& opts);
 static void reportError(KPrinter*);
 
 //**************************************************************************************
@@ -59,15 +59,15 @@ public:
 	KPrinterWrapper(KPrinter*, PrinterMode m = ScreenResolution);
 	~KPrinterWrapper();
 protected:
-	virtual bool cmd(int, QPainter*, QPDevCmdParam*);
+	virtual bool cmd(int, TQPainter*, QPDevCmdParam*);
 	virtual int metric(int) const;
 	int qprinterMetric(int) const;
 private:
 	KPrinter	*m_printer;
 };
 
-KPrinterWrapper::KPrinterWrapper(KPrinter *prt, QPrinter::PrinterMode m)
-: QPrinter(m), m_printer(prt)
+KPrinterWrapper::KPrinterWrapper(KPrinter *prt, TQPrinter::PrinterMode m)
+: TQPrinter(m), m_printer(prt)
 {
 }
 
@@ -75,9 +75,9 @@ KPrinterWrapper::~KPrinterWrapper()
 {
 }
 
-bool KPrinterWrapper::cmd(int c, QPainter *painter, QPDevCmdParam *p)
+bool KPrinterWrapper::cmd(int c, TQPainter *painter, QPDevCmdParam *p)
 {
-	return QPrinter::cmd(c,painter,p);
+	return TQPrinter::cmd(c,painter,p);
 }
 
 int KPrinterWrapper::metric(int m) const
@@ -87,7 +87,7 @@ int KPrinterWrapper::metric(int m) const
 
 int KPrinterWrapper::qprinterMetric(int m) const
 {
-	return QPrinter::metric(m);
+	return TQPrinter::metric(m);
 }
 
 //**************************************************************************************
@@ -97,14 +97,14 @@ int KPrinterWrapper::qprinterMetric(int m) const
 class KPrinterPrivate
 {
 public:
-	QGuardedPtr<KPrinterImpl>	m_impl;
+	TQGuardedPtr<KPrinterImpl>	m_impl;
 	bool		m_restore;
 	bool		m_previewonly;
 	WId		m_parentId;
 	QString		m_docfilename;
-	QString m_docdirectory;
+	TQString m_docdirectory;
 	KPrinterWrapper		*m_wrapper;
-	QMap<QString,QString>	m_options;
+	TQMap<TQString,TQString>	m_options;
 	QString			m_tmpbuffer;
 	QString			m_printername;
 	QString			m_searchname;
@@ -120,8 +120,8 @@ public:
 // KPrinter class
 //**************************************************************************************
 
-KPrinter::KPrinter(bool restore, QPrinter::PrinterMode m)
-: QPaintDevice(QInternal::Printer|QInternal::ExternalDevice)
+KPrinter::KPrinter(bool restore, TQPrinter::PrinterMode m)
+: TQPaintDevice(TQInternal::Printer|TQInternal::ExternalDevice)
 {
 	init(restore, m);
 }
@@ -140,7 +140,7 @@ KPrinter::~KPrinter()
 	delete d;
 }
 
-void KPrinter::init(bool restore, QPrinter::PrinterMode m)
+void KPrinter::init(bool restore, TQPrinter::PrinterMode m)
 {
 	// Private data initialization
 	d = new KPrinterPrivate;
@@ -150,7 +150,7 @@ void KPrinter::init(bool restore, QPrinter::PrinterMode m)
 	d->m_parentId = 0;
 	d->m_pagesize = 0;
 
-	// initialize QPrinter wrapper
+	// initialize TQPrinter wrapper
 	d->m_wrapper = new KPrinterWrapper(this, m);
 
 	// other initialization
@@ -216,11 +216,11 @@ void KPrinter::saveSettings()
 		conf->writePathEntry( "DocDirectory", d->m_docdirectory );
 }
 
-bool KPrinter::setup(QWidget *parent, const QString& caption, bool forceExpand)
+bool KPrinter::setup(TQWidget *parent, const TQString& caption, bool forceExpand)
 {
 	if (!kapp->authorize("print/dialog"))
 	{
-		autoConfigure(QString::null, parent);
+		autoConfigure(TQString::null, parent);
 		return true; // Just print it
 	}
 
@@ -272,10 +272,10 @@ KPrinter::ApplicationType KPrinter::applicationType()
 	return (ApplicationType)KMFactory::self()->settings()->application;
 }
 
-bool KPrinter::cmd(int c, QPainter *painter, QPDevCmdParam *p)
+bool KPrinter::cmd(int c, TQPainter *painter, QPDevCmdParam *p)
 {
 	bool value(true);
-	if (c == QPaintDevice::PdcBegin)
+	if (c == TQPaintDevice::PdcBegin)
 	{
 		d->m_impl->statusMessage(i18n("Initialization..."), this);
 		d->m_pagenumber = 1;
@@ -283,10 +283,10 @@ bool KPrinter::cmd(int c, QPainter *painter, QPDevCmdParam *p)
 		d->m_impl->statusMessage(i18n("Generating print data: page %1").arg(d->m_pagenumber), this);
 	}
 	value = d->m_wrapper->cmd(c,painter,p);
-	if (c == QPaintDevice::PdcEnd)
+	if (c == TQPaintDevice::PdcEnd)
 	{
 		// this call should take care of everything (preview, output-to-file, filtering, ...)
-		value = value && printFiles(QStringList(d->m_wrapper->outputFileName()),true);
+		value = value && printFiles(TQStringList(d->m_wrapper->outputFileName()),true);
 		// reset "ready" state
 		finishPrinting();
 	}
@@ -298,12 +298,12 @@ void KPrinter::translateQtOptions()
 	d->m_wrapper->setCreator(creator());
 	d->m_wrapper->setDocName(docName());
 	d->m_wrapper->setFullPage(fullPage());
-	d->m_wrapper->setColorMode((QPrinter::ColorMode)colorMode());
-	d->m_wrapper->setOrientation((QPrinter::Orientation)orientation());
+	d->m_wrapper->setColorMode((TQPrinter::ColorMode)colorMode());
+	d->m_wrapper->setOrientation((TQPrinter::Orientation)orientation());
 	if ( !option( "kde-printsize" ).isEmpty() )
-		d->m_wrapper->setPageSize( ( QPrinter::PageSize )option( "kde-printsize" ).toInt() );
+		d->m_wrapper->setPageSize( ( TQPrinter::PageSize )option( "kde-printsize" ).toInt() );
 	else
-		d->m_wrapper->setPageSize((QPrinter::PageSize)pageSize());
+		d->m_wrapper->setPageSize((TQPrinter::PageSize)pageSize());
 	d->m_wrapper->setOutputToFile(true);
 	d->m_wrapper->setOutputFileName(d->m_tmpbuffer);
 	d->m_wrapper->setNumCopies(option("kde-qtcopies").isEmpty() ? 1 : option("kde-qtcopies").toInt());
@@ -355,7 +355,7 @@ void KPrinter::translateQtOptions()
 		d->m_wrapper->setNumCopies(numCopies());
 }
 
-bool KPrinter::printFiles(const QStringList& l, bool flag, bool startviewer)
+bool KPrinter::printFiles(const TQStringList& l, bool flag, bool startviewer)
 {
 	QStringList	files(l);
 	bool		status(true);
@@ -393,7 +393,7 @@ bool KPrinter::printFiles(const QStringList& l, bool flag, bool startviewer)
 		if (((files.count() != 1 || option("kde-preview") != "1") && !d->m_previewonly) || doPreview(files[0]))
 		{
 			// check if printing has been prepared (it may be not prepared if the KPrinter object is not
-			// use as a QPaintDevice object)
+			// use as a TQPaintDevice object)
 			preparePrinting();
 
 			if (!d->m_impl->printFiles(this, files, flag))
@@ -403,9 +403,9 @@ bool KPrinter::printFiles(const QStringList& l, bool flag, bool startviewer)
 			}
 			else
 			{
-				if (/* !outputToFile() && */ startviewer && !QFile::exists("/etc/xdg/autostart/system-config-printer-applet-kde.desktop") )
+				if (/* !outputToFile() && */ startviewer && !TQFile::exists("/etc/xdg/autostart/system-config-printer-applet-kde.desktop") )
 				{
-					QStringList args;
+					TQStringList args;
 					args << "-d";
 					args << printerName();
 					args << "--noshow";
@@ -417,17 +417,17 @@ bool KPrinter::printFiles(const QStringList& l, bool flag, bool startviewer)
 		// situation: only one file, it has been previewed and printing has been canceled, then
 		//            we should remove the file ourself
 		{
-			QFile::remove(files[0]);
+			TQFile::remove(files[0]);
 		}
 	}
 	finishPrinting();
 	return status;
 }
 
-bool KPrinter::doPreview(const QString& file)
+bool KPrinter::doPreview(const TQString& file)
 {
 	d->m_impl->statusMessage(i18n("Previewing..."), this);
-	d->m_impl->statusMessage(QString::null, this);
+	d->m_impl->statusMessage(TQString::null, this);
 	return KPrintPreview::preview(file, d->m_previewonly, d->m_parentId);
 }
 
@@ -437,7 +437,7 @@ void KPrinter::preparePrinting()
 	if (d->m_ready) return;
 
 	// re-initialize error
-	setErrorMessage(QString::null);
+	setErrorMessage(TQString::null);
 
 	// re-initialize margins and page size (by default, use Qt mechanism)
 	setRealPageSize(NULL);
@@ -464,12 +464,12 @@ void KPrinter::finishPrinting()
 {
 	d->m_ready = false;
 	// close the status window
-	d->m_impl->statusMessage(QString::null, this);
+	d->m_impl->statusMessage(TQString::null, this);
 }
 
-QValueList<int> KPrinter::pageList() const
+TQValueList<int> KPrinter::pageList() const
 {
-	QValueList<int>	list;
+	TQValueList<int>	list;
 	int	mp(minPage()), MP(maxPage());
 	if (mp > 0 && MP > 0 && MP >= mp)
 	{ // do something only if bounds specified
@@ -483,8 +483,8 @@ QValueList<int> KPrinter::pageList() const
 			// process range specification
 			if (!option("kde-range").isEmpty())
 			{
-				QStringList	ranges = QStringList::split(',',option("kde-range"),false);
-				for (QStringList::ConstIterator it=ranges.begin();it!=ranges.end();++it)
+				QStringList	ranges = TQStringList::split(',',option("kde-range"),false);
+				for (TQStringList::ConstIterator it=ranges.begin();it!=ranges.end();++it)
 				{
 					int	p = (*it).find('-');
 					bool	ok;
@@ -526,7 +526,7 @@ QValueList<int> KPrinter::pageList() const
 			if (pageSet() != AllPages)
 			{
 				bool	keepEven = (pageSet() == EvenPages);
-				for (QValueList<int>::Iterator it=list.begin();it!=list.end();)
+				for (TQValueList<int>::Iterator it=list.begin();it!=list.end();)
 					if ((((*it) % 2) != 0 && keepEven) ||
 					    (((*it) % 2) == 0 && !keepEven)) it = list.remove(it);
 					else ++it;
@@ -537,7 +537,7 @@ QValueList<int> KPrinter::pageList() const
 }
 
 //**************************************************************************************
-// QPrinter interface
+// TQPrinter interface
 //**************************************************************************************
 
 int KPrinter::numCopies() const
@@ -547,7 +547,7 @@ int KPrinter::numCopies() const
 	return (ok ? p : 1);
 }
 
-QSize KPrinter::margins() const
+TQSize KPrinter::margins() const
 {
 	return d->m_wrapper->margins();
 }
@@ -568,26 +568,26 @@ int KPrinter::metric(int m) const
 	margins( &top, &left, &bottom, &right );
 	switch ( m )
 	{
-		case QPaintDeviceMetrics::PdmWidth:
+		case TQPaintDeviceMetrics::PdmWidth:
 			val = (land ? ( int )d->m_pagesize->pageHeight() : ( int )d->m_pagesize->pageWidth());
 			if ( res != 72 )
 				val = (val * res + 36) / 72;
 			if ( !fullPage() )
 				val -= ( left + right );
 			break;
-		case QPaintDeviceMetrics::PdmHeight:
+		case TQPaintDeviceMetrics::PdmHeight:
 			val = (land ? ( int )d->m_pagesize->pageWidth() : ( int )d->m_pagesize->pageHeight());
 			if ( res != 72 )
 				val = (val * res + 36) / 72;
 			if ( !fullPage() )
 				val -= ( top + bottom );
 			break;
-		case QPaintDeviceMetrics::PdmWidthMM:
-			val = metric( QPaintDeviceMetrics::PdmWidth );
+		case TQPaintDeviceMetrics::PdmWidthMM:
+			val = metric( TQPaintDeviceMetrics::PdmWidth );
 			val = (val * 254 + 5*res) / (10*res); // +360 to get the right rounding
 			break;
-		case QPaintDeviceMetrics::PdmHeightMM:
-			val = metric( QPaintDeviceMetrics::PdmHeight );
+		case TQPaintDeviceMetrics::PdmHeightMM:
+			val = metric( TQPaintDeviceMetrics::PdmHeight );
 			val = (val * 254 + 5*res) / (10*res);
 			break;
 		default:
@@ -605,7 +605,7 @@ void KPrinter::setOrientation(Orientation o)
 	d->m_impl->broadcastOption( "kde-orientation-fixed", "1" );
 }
 
-void KPrinter::setOption( const QString& key, const QString& value, bool broadcast )
+void KPrinter::setOption( const TQString& key, const TQString& value, bool broadcast )
 {
 	setOption( key, value );
 	if ( broadcast )
@@ -615,15 +615,15 @@ void KPrinter::setOption( const QString& key, const QString& value, bool broadca
 void KPrinter::setPageSize(PageSize s)
 {
 	KMFactory::self()->settings()->pageSize = s;
-	setOption("kde-pagesize",QString::number((int)s),true);
+	setOption("kde-pagesize",TQString::number((int)s),true);
 	d->m_impl->broadcastOption( "kde-pagesize-fixed", "1" );
 }
 
-void KPrinter::setOptions(const QMap<QString,QString>& opts)
+void KPrinter::setOptions(const TQMap<TQString,TQString>& opts)
 { // This functions remove all options except those with "kde-..."
   // which correspond to externally-sets options (use the value
   // from "opts" if specified
-	QMap<QString,QString>	tmpset = d->m_options;
+	TQMap<TQString,TQString>	tmpset = d->m_options;
 	d->m_options = opts;
 	// remove some problematic options that may not be overwritten (ugly hack).
 	// Default values will be used instead, except if the dialog has set new ones.
@@ -637,16 +637,16 @@ void KPrinter::setOptions(const QMap<QString,QString>& opts)
 	tmpset.remove("kde-margin-right");
 	tmpset.remove( "kde-resolution" );
 	tmpset.remove( "kde-fonts" );
-	for (QMap<QString,QString>::ConstIterator it=tmpset.begin();it!=tmpset.end();++it)
+	for (TQMap<TQString,TQString>::ConstIterator it=tmpset.begin();it!=tmpset.end();++it)
 		if (it.key().left(4) == "kde-" && !(d->m_options.contains(it.key())))
 			d->m_options[it.key()] = it.data();
 }
 
-void KPrinter::initOptions(const QMap<QString,QString>& opts)
+void KPrinter::initOptions(const TQMap<TQString,TQString>& opts)
 { // This function can be used to initialize the KPrinter object just after
   // creation to set some options. Non global options will be propagated to
   // all listed printers (non-global => start with "kde-...")
-	for (QMap<QString,QString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
+	for (TQMap<TQString,TQString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
 	{
 		setOption(it.key(), it.data());
 		if (it.key().left(4) != "kde-")
@@ -664,7 +664,7 @@ void KPrinter::reload()
 	//initOptions(d->m_options);
 }
 
-bool KPrinter::autoConfigure(const QString& prname, QWidget *parent)
+bool KPrinter::autoConfigure(const TQString& prname, TQWidget *parent)
 {
 	KMManager	*mgr = KMManager::self();
 	KMPrinter	*mprt(0);
@@ -691,9 +691,9 @@ void reportError(KPrinter *p)
 		kdDebug(500) << "could not send notify event" << endl;
 }
 
-KPrinter::PageSize pageNameToPageSize(const QString& _name)
+KPrinter::PageSize pageNameToPageSize(const TQString& _name)
 {
-	QString name = _name.upper();
+	TQString name = _name.upper();
 	if (name == "LETTER") return KPrinter::Letter;
 	else if (name == "LEGAL") return KPrinter::Legal;
 	else if (name == "A4") return KPrinter::A4;
@@ -766,38 +766,38 @@ const char* pageSizeToPageName(KPrinter::PageSize s)
 }
 
 // FIXME: remove for 4.0
-QSize rangeToSize( const QString& )
+TQSize rangeToSize( const TQString& )
 {
-	kdWarning( 500 ) << "rangeToSize(QString) is obsolete, do not use (no effect)" << endl;
-	return QSize();
+	kdWarning( 500 ) << "rangeToSize(TQString) is obsolete, do not use (no effect)" << endl;
+	return TQSize();
 }
 
-static void dumpOptions(const QMap<QString,QString>& opts)
+static void dumpOptions(const TQMap<TQString,TQString>& opts)
 {
 	kdDebug(500) << "********************" << endl;
-	for (QMap<QString,QString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
+	for (TQMap<TQString,TQString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
 		kdDebug(500) << it.key() << " = " << it.data() << endl;
 }
 
 KPrinterImpl* KPrinter::implementation() const
 { return d->m_impl; }
 
-const QString& KPrinter::option(const QString& key) const
+const TQString& KPrinter::option(const TQString& key) const
 { return ((const KPrinterPrivate*)(d))->m_options[key]; }
 
-void KPrinter::setOption(const QString& key, const QString& value)
+void KPrinter::setOption(const TQString& key, const TQString& value)
 { d->m_options[key] = value; }
 
-QString KPrinter::docName() const
+TQString KPrinter::docName() const
 { return option("kde-docname"); }
 
-void KPrinter::setDocName(const QString& d)
+void KPrinter::setDocName(const TQString& d)
 { setOption("kde-docname",d); }
 
-QString KPrinter::creator() const
+TQString KPrinter::creator() const
 { return option("kde-creator"); }
 
-void KPrinter::setCreator(const QString& d)
+void KPrinter::setCreator(const TQString& d)
 { setOption("kde-creator",d); }
 
 bool KPrinter::fullPage() const
@@ -813,7 +813,7 @@ void KPrinter::setColorMode(ColorMode m)
 { setOption("kde-colormode",(m == Color ? "Color" : "GrayScale")); }
 
 void KPrinter::setNumCopies(int n)
-{ setOption("kde-copies",QString::number(n)); }
+{ setOption("kde-copies",TQString::number(n)); }
 
 KPrinter::Orientation KPrinter::orientation() const
 { return (option("kde-orientation") == "Landscape" ? Landscape : Portrait); }
@@ -837,7 +837,7 @@ int KPrinter::maxPage() const
 { return (option("kde-maxpage").isEmpty() ? 0 : option("kde-maxpage").toInt()); }
 
 void KPrinter::setMinMax(int m, int M)
-{ setOption("kde-minpage",QString::number(m)); setOption("kde-maxpage",QString::number(M)); }
+{ setOption("kde-minpage",TQString::number(m)); setOption("kde-maxpage",TQString::number(M)); }
 
 int KPrinter::fromPage() const
 { return (option("kde-frompage").isEmpty() ? 0 : option("kde-frompage").toInt()); }
@@ -846,7 +846,7 @@ int KPrinter::toPage() const
 { return (option("kde-topage").isEmpty() ? 0 : option("kde-topage").toInt()); }
 
 void KPrinter::setFromTo(int m, int M)
-{ setOption("kde-frompage",QString::number(m)); setOption("kde-topage",QString::number(M)); setOption("kde-range",(m>0 && M>0 ? QString("%1-%2").arg(m).arg(M) : QString::fromLatin1(""))); }
+{ setOption("kde-frompage",TQString::number(m)); setOption("kde-topage",TQString::number(M)); setOption("kde-range",(m>0 && M>0 ? TQString("%1-%2").arg(m).arg(M) : TQString::fromLatin1(""))); }
 
 // if no page size defined, use the localized one
 KPrinter::PageSize KPrinter::pageSize() const
@@ -859,18 +859,18 @@ int KPrinter::currentPage() const
 { return (option("kde-currentpage").isEmpty() ? 0 : option("kde-currentpage").toInt()); }
 
 void KPrinter::setCurrentPage(int p)
-{ setOption("kde-currentpage",QString::number(p)); }
+{ setOption("kde-currentpage",TQString::number(p)); }
 
-QString KPrinter::printerName() const
+TQString KPrinter::printerName() const
 { return d->m_printername; }
 
-void KPrinter::setPrinterName(const QString& s)
+void KPrinter::setPrinterName(const TQString& s)
 { d->m_printername = s; }
 
-QString KPrinter::printProgram() const
-{ return (option("kde-isspecial") == "1" ? option("kde-special-command") : QString::null); }
+TQString KPrinter::printProgram() const
+{ return (option("kde-isspecial") == "1" ? option("kde-special-command") : TQString::null); }
 
-void KPrinter::setPrintProgram(const QString& prg)
+void KPrinter::setPrintProgram(const TQString& prg)
 {
 	if (prg.isNull())
 	{
@@ -888,19 +888,19 @@ void KPrinter::setPrintProgram(const QString& prg)
 	}
 }
 
-QString KPrinter::printerSelectionOption() const
-{ return QString::fromLatin1(""); }
+TQString KPrinter::printerSelectionOption() const
+{ return TQString::fromLatin1(""); }
 
-void KPrinter::setPrinterSelectionOption(const QString&)
+void KPrinter::setPrinterSelectionOption(const TQString&)
 {}
 
-const QMap<QString,QString>& KPrinter::options() const
+const TQMap<TQString,TQString>& KPrinter::options() const
 { return d->m_options; }
 
-QString KPrinter::searchName() const
+TQString KPrinter::searchName() const
 { return d->m_searchname; }
 
-void KPrinter::setSearchName(const QString& s)
+void KPrinter::setSearchName(const TQString& s)
 { d->m_searchname = s; }
 
 bool KPrinter::newPage()
@@ -910,10 +910,10 @@ bool KPrinter::newPage()
 	return d->m_wrapper->newPage();
 }
 
-QString KPrinter::outputFileName() const
+TQString KPrinter::outputFileName() const
 { return option("kde-outputfilename"); }
 
-void KPrinter::setOutputFileName(const QString& f)
+void KPrinter::setOutputFileName(const TQString& f)
 { setOption("kde-outputfilename",f); setOutputToFile(!f.isEmpty()); }
 
 bool KPrinter::outputToFile() const
@@ -924,7 +924,7 @@ void KPrinter::setOutputToFile(bool on)
 	setOption("kde-outputtofile",(on ? "1" : "0"));
 	if (on)
 	{
-		setOption("kde-special-command",QString::null);
+		setOption("kde-special-command",TQString::null);
 		setOption("kde-isspecial","1");
 	}
 }
@@ -935,7 +935,7 @@ bool KPrinter::abort()
 bool KPrinter::aborted() const
 { return d->m_wrapper->aborted(); }
 
-void KPrinter::setMargins(QSize m)
+void KPrinter::setMargins(TQSize m)
 {
 	setMargins( m.height(), m.width(), m.height(), m.width() );
 }
@@ -943,20 +943,20 @@ void KPrinter::setMargins(QSize m)
 void KPrinter::setMargins( uint top, uint left, uint bottom, uint right )
 {
 	d->m_wrapper->setMargins( top, left, bottom, right );
-	setOption( "kde-margin-top", QString::number( top ), true );
-	setOption( "kde-margin-left", QString::number( left ), true );
-	setOption( "kde-margin-bottom", QString::number( bottom ), true );
-	setOption( "kde-margin-right", QString::number( right ), true );
+	setOption( "kde-margin-top", TQString::number( top ), true );
+	setOption( "kde-margin-left", TQString::number( left ), true );
+	setOption( "kde-margin-bottom", TQString::number( bottom ), true );
+	setOption( "kde-margin-right", TQString::number( right ), true );
 }
 
 // FIXME: remove for 4.0
-QSize KPrinter::realPageSize() const
+TQSize KPrinter::realPageSize() const
 {
 	kdWarning( 500 ) << "KPrinter::realPageSize() is obsolete, do not use" << endl;
 	if ( d->m_pagesize )
 		return d->m_pagesize->pageSize();
 	else
-		return QSize();
+		return TQSize();
 }
 
 void KPrinter::setRealPageSize(DrPageSize *p)
@@ -983,36 +983,36 @@ void KPrinter::setRealPageSize(DrPageSize *p)
 }
 
 // FIXME: remove for 4.0
-void KPrinter::setRealPageSize( QSize )
+void KPrinter::setRealPageSize( TQSize )
 {
-	kdWarning( 500 ) << "KPrinter::setRealPageSize(QSize) is obsolete, do not use (no effect)" << endl;
+	kdWarning( 500 ) << "KPrinter::setRealPageSize(TQSize) is obsolete, do not use (no effect)" << endl;
 }
 
 // FIXME: remove for 4.0
-void KPrinter::setRealDrawableArea( const QRect& )
+void KPrinter::setRealDrawableArea( const TQRect& )
 {
-	kdWarning( 500 ) << "KPrinter::setRealDrawableArea(QRect) is obsolete, do not use (no effect)" << endl;
+	kdWarning( 500 ) << "KPrinter::setRealDrawableArea(TQRect) is obsolete, do not use (no effect)" << endl;
 }
 
 // FIXME: remove for 4.0
-QRect KPrinter::realDrawableArea() const
+TQRect KPrinter::realDrawableArea() const
 {
 	kdWarning( 500 ) << "KPrinter::realDrawableArea() is obsolete, do not use" << endl;
 	if ( d->m_pagesize )
 		return d->m_pagesize->pageRect();
 	else
-		return QRect();
+		return TQRect();
 }
 
-QString KPrinter::errorMessage() const
+TQString KPrinter::errorMessage() const
 { return d->m_errormsg; }
 
-void KPrinter::setErrorMessage(const QString& msg)
+void KPrinter::setErrorMessage(const TQString& msg)
 { d->m_errormsg = msg; }
 
 /* we're using a builtin member to store this state because we don't
  * want to keep it from object to object. So there's no need to use
- * the QMap structure to store this
+ * the TQMap structure to store this
  */
 void KPrinter::setPreviewOnly(bool on)
 { d->m_previewonly = on; }
@@ -1020,17 +1020,17 @@ void KPrinter::setPreviewOnly(bool on)
 bool KPrinter::previewOnly() const
 { return d->m_previewonly; }
 
-void KPrinter::setDocFileName(const QString& s)
+void KPrinter::setDocFileName(const TQString& s)
 { d->m_docfilename = s; }
 
-QString KPrinter::docFileName() const
+TQString KPrinter::docFileName() const
 { return d->m_docfilename; }
 
-void KPrinter::setDocDirectory( const QString& s )
+void KPrinter::setDocDirectory( const TQString& s )
 { d->m_docdirectory = s; }
 
-QString KPrinter::docDirectory() const
-{ return ( d->m_docdirectory.isEmpty() ? QDir::homeDirPath() : d->m_docdirectory ); }
+TQString KPrinter::docDirectory() const
+{ return ( d->m_docdirectory.isEmpty() ? TQDir::homeDirPath() : d->m_docdirectory ); }
 
 void KPrinter::setResolution(int dpi)
 {

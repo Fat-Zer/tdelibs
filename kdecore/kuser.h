@@ -82,7 +82,7 @@ public:
    * @param name the name of the user
    */
   // XXX KDE4: Make this explicit
-  KUser(const QString& name);
+  KUser(const TQString& name);
 
   /**
    * Creates an object that contains information about the user with the given
@@ -157,62 +157,62 @@ public:
 
   /**
    * The login name of the user.
-   * @return the login name of the user or QString::null if user is invalid 
+   * @return the login name of the user or TQString::null if user is invalid 
    */
-  QString loginName() const;
+  TQString loginName() const;
 
   /**
    * The full name of the user.
-   * @return the full name of the user or QString::null if user is invalid
+   * @return the full name of the user or TQString::null if user is invalid
    */
-  QString fullName() const;
+  TQString fullName() const;
 
   /**
    * The user's room number.
-   * @return the room number of the user or QString::null if not set or the
+   * @return the room number of the user or TQString::null if not set or the
    *         user is invalid 
    */
-  QString roomNumber() const;
+  TQString roomNumber() const;
 
   /**
    * The user's work phone.
-   * @return the work phone of the user or QString::null if not set or the
+   * @return the work phone of the user or TQString::null if not set or the
    *         user is invalid 
    */
-  QString workPhone() const;
+  TQString workPhone() const;
 
   /**
    * The user's home phone.
-   * @return the home phone of the user or QString::null if not set or the
+   * @return the home phone of the user or TQString::null if not set or the
    *         user is invalid 
    */
-  QString homePhone() const;
+  TQString homePhone() const;
 
   /**
    * The path to the user's home directory.
-   * @return the home directory of the user or QString::null if the
+   * @return the home directory of the user or TQString::null if the
    *         user is invalid 
    */
-  QString homeDir() const;
+  TQString homeDir() const;
 
   /**
    * The path to the user's login shell.
-   * @return the login shell of the user or QString::null if the
+   * @return the login shell of the user or TQString::null if the
    *         user is invalid 
    */
-  QString shell() const;
+  TQString shell() const;
 
   /**
    * Returns all groups of the user
    * @return all groups of the user
    */
-  QValueList<KUserGroup> groups() const;
+  TQValueList<KUserGroup> groups() const;
   
   /**
    * Returns all group names of the user
    * @return all group names of the user
    */
-  QStringList groupNames() const;
+  TQStringList groupNames() const;
   
   
   /**
@@ -224,13 +224,13 @@ public:
    * Returns all users of the system.
    * @return all users of the system.
    */
-  static QValueList<KUser> allUsers();
+  static TQValueList<KUser> allUsers();
 
   /** 
    * Returns all user names of the system.
    * @return all user names of the system.
    */
-  static QStringList allUserNames();
+  static TQStringList allUserNames();
 
 private:
   KSharedPtr<KUserPrivate> d;
@@ -282,7 +282,7 @@ public:
    * If the group does not exist, isValid() will return false.
    * @param name the name of the group
    */
-  explicit KUserGroup(const QString& name);
+  explicit KUserGroup(const TQString& name);
   
   /**
    * Create an object from a group name.
@@ -344,19 +344,19 @@ public:
    * The name of the group.
    * @return the name of the group
    */
-  QString name() const;
+  TQString name() const;
   
   /**
    * Returns a list of all users of the group.
    * @return a list of all users of the group
    */
-  const QValueList<KUser>& users() const;
+  const TQValueList<KUser>& users() const;
   
   /**
    * Returns a list of all user login names of the group.
    * @return a list of all user login names of the group
    */
-  QStringList userNames() const;
+  TQStringList userNames() const;
   
   
   /**
@@ -367,12 +367,12 @@ public:
   /**
    * Returns a list of all groups on this system
    */
-  static QValueList<KUserGroup> allGroups();
+  static TQValueList<KUserGroup> allGroups();
   
   /**
    * Returns a list of all group names on this system
    */
-  static QStringList allGroupNames();
+  static TQStringList allGroupNames();
   
 private:
   KSharedPtr<KUserGroupPrivate> d;

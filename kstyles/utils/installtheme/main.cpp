@@ -20,10 +20,10 @@
   DEALINGS IN THE SOFTWARE.
 */
 
-#include <qfileinfo.h>
-#include <qmap.h>
-#include <qstringlist.h>
-#include <qsettings.h>
+#include <tqfileinfo.h>
+#include <tqmap.h>
+#include <tqstringlist.h>
+#include <tqsettings.h>
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
@@ -40,16 +40,16 @@ int main(int argc, char **argv)
     KCmdLineArgs::init(argc, argv, "kinstalltheme", I18N_NOOP("KInstalltheme"), desc, ver);
     KApplication qapp(false, false); //We don't  allow styles.. Kind of ironic, isn't it?
 
-    KGlobal::dirs()->addResourceType("themercs", KGlobal::dirs()->kde_default("data")+QString("kstyle/themes"));
-    QStringList themercs = KGlobal::dirs()->findAllResources("themercs","*.themerc");
+    KGlobal::dirs()->addResourceType("themercs", KGlobal::dirs()->kde_default("data")+TQString("kstyle/themes"));
+    TQStringList themercs = KGlobal::dirs()->findAllResources("themercs","*.themerc");
 
-    QMap <QString, QString> themes; //Name->file mapping..
+    TQMap <TQString, TQString> themes; //Name->file mapping..
 
-    for (QStringList::iterator i = themercs.begin(); i!=themercs.end(); ++i)
+    for (TQStringList::iterator i = themercs.begin(); i!=themercs.end(); ++i)
     {
-        QString file=*i;
+        TQString file=*i;
         KSimpleConfig config(file, true);
-        QString name = QFileInfo(file).baseName(); //This is nice and static...
+        TQString name = TQFileInfo(file).baseName(); //This is nice and static...
         //So we don't have to worry about our key changing when the language does.
 
         config.setGroup( "KDE" );
@@ -66,20 +66,20 @@ int main(int argc, char **argv)
 
 #if 0
 //Doesn't seem to work with present Qt..
-	QStringList existing = cache.subkeyList("/kthemestyle");
-	for (QStringList::iterator i = existing.begin(); i != existing.end(); i++)
+	TQStringList existing = cache.subkeyList("/kthemestyle");
+	for (TQStringList::iterator i = existing.begin(); i != existing.end(); i++)
 	{
 		cout<<"Have:"<<(*i).latin1()<<"\n";
 		cache.removeEntry("/ktmthestyle"+(*i));
 	}
 #endif
 
-    QStringList themeNames; //A list of names, each occurring once - the keys of the themes map..
+    TQStringList themeNames; //A list of names, each occurring once - the keys of the themes map..
 
-    for (QMap<QString, QString>::Iterator  i = themes.begin(); i!=themes.end(); ++i)
+    for (TQMap<TQString, TQString>::Iterator  i = themes.begin(); i!=themes.end(); ++i)
     {
         cache.setGroup(i.key().lower());
-        cache.writePathEntry("file",QFileInfo(i.data()).fileName());
+        cache.writePathEntry("file",TQFileInfo(i.data()).fileName());
         themeNames.push_back(i.key());
     }
 

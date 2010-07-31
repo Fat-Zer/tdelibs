@@ -40,19 +40,19 @@
 #include <kurl.h>
 #include <kuser.h> // for loginName
 
-#include <qpainter.h>
-#include <qpopupmenu.h>
-#include <qpaintdevicemetrics.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qgroupbox.h>
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qspinbox.h>
-#include <qstringlist.h>
-#include <qwhatsthis.h>
+#include <tqpainter.h>
+#include <tqpopupmenu.h>
+#include <tqpaintdevicemetrics.h>
+#include <tqcheckbox.h>
+#include <tqcombobox.h>
+#include <tqgroupbox.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqlineedit.h>
+#include <tqspinbox.h>
+#include <tqstringlist.h>
+#include <tqwhatsthis.h>
 
 //BEGIN KatePrinter
 bool KatePrinter::print (KateDocument *doc)
@@ -75,8 +75,8 @@ bool KatePrinter::print (KateDocument *doc)
      //renderer.config()->setSchema (1);
      renderer.setPrinterFriendly(true);
 
-     QPainter paint( &printer );
-     QPaintDeviceMetrics pdm( &printer );
+     TQPainter paint( &printer );
+     TQPaintDeviceMetrics pdm( &printer );
      /*
         We work in tree cycles:
         1) initialize variables and retrieve print settings
@@ -108,23 +108,23 @@ bool KatePrinter::print (KateDocument *doc)
      uint lineNumberWidth( 0 );
 
      // Header/Footer Page
-     QFont headerFont; // used for header/footer
-     QString f = printer.option("app-kate-hffont");
+     TQFont headerFont; // used for header/footer
+     TQString f = printer.option("app-kate-hffont");
      if (!f.isEmpty())
        headerFont.fromString( f );
 
      bool useHeader = (printer.option("app-kate-useheader") == "true");
-     QColor headerBgColor(printer.option("app-kate-headerbg"));
-     QColor headerFgColor(printer.option("app-kate-headerfg"));
+     TQColor headerBgColor(printer.option("app-kate-headerbg"));
+     TQColor headerFgColor(printer.option("app-kate-headerfg"));
      uint headerHeight( 0 ); // further init only if needed
-     QStringList headerTagList; // do
+     TQStringList headerTagList; // do
      bool headerDrawBg = false; // do
 
      bool useFooter = (printer.option("app-kate-usefooter") == "true");
-     QColor footerBgColor(printer.option("app-kate-footerbg"));
-     QColor footerFgColor(printer.option("app-kate-footerfg"));
+     TQColor footerBgColor(printer.option("app-kate-footerbg"));
+     TQColor footerFgColor(printer.option("app-kate-footerfg"));
      uint footerHeight( 0 ); // further init only if needed
-     QStringList footerTagList = 0; // do
+     TQStringList footerTagList = 0; // do
      bool footerDrawBg = 0; // do
 
      // Layout Page
@@ -133,7 +133,7 @@ bool KatePrinter::print (KateDocument *doc)
      bool useBackground = ( printer.option("app-kate-usebackground") == "true" );
      bool useBox = (printer.option("app-kate-usebox") == "true");
      int boxWidth(printer.option("app-kate-boxwidth").toInt());
-     QColor boxColor(printer.option("app-kate-boxcolor"));
+     TQColor boxColor(printer.option("app-kate-boxcolor"));
      int innerMargin = useBox ? printer.option("app-kate-boxmargin").toInt() : 6;
 
      // Post initialization
@@ -167,7 +167,7 @@ bool KatePrinter::print (KateDocument *doc)
        if ( printLineNumbers )
        {
          // figure out the horiizontal space required
-         QString s( QString("%1 ").arg( doc->numLines() ) );
+         TQString s( TQString("%1 ").arg( doc->numLines() ) );
          s.fill('5', -1); // some non-fixed fonts haven't equally wide numbers
                           // FIXME calculate which is actually the widest...
          lineNumberWidth = renderer.currentFontMetrics()->width( s );
@@ -184,8 +184,8 @@ bool KatePrinter::print (KateDocument *doc)
          // This retrieves all tags, ued or not, but
          // none of theese operations should be expensive,
          // and searcing each tag in the format strings is avoided.
-         QDateTime dt = QDateTime::currentDateTime();
-         QMap<QString,QString> tags;
+         TQDateTime dt = TQDateTime::currentDateTime();
+         TQMap<TQString,TQString> tags;
 
          KUser u (KUser::UseRealUserID);
          tags["u"] = u.loginName();
@@ -199,25 +199,25 @@ bool KatePrinter::print (KateDocument *doc)
          tags["U"] =  doc->url().prettyURL();
          if ( selectionOnly )
          {
-           QString s( i18n("(Selection of) ") );
+           TQString s( i18n("(Selection of) ") );
            tags["f"].prepend( s );
            tags["U"].prepend( s );
          }
 
-         QRegExp reTags( "%([dDfUhuyY])" ); // TODO tjeck for "%%<TAG>"
+         TQRegExp reTags( "%([dDfUhuyY])" ); // TODO tjeck for "%%<TAG>"
 
          if (useHeader)
          {
            headerDrawBg = ( printer.option("app-kate-headerusebg") == "true" );
-           headerHeight = QFontMetrics( headerFont ).height();
+           headerHeight = TQFontMetrics( headerFont ).height();
            if ( useBox || headerDrawBg )
              headerHeight += innerMargin * 2;
            else
-             headerHeight += 1 + QFontMetrics( headerFont ).leading();
+             headerHeight += 1 + TQFontMetrics( headerFont ).leading();
 
-           QString headerTags = printer.option("app-kate-headerformat");
+           TQString headerTags = printer.option("app-kate-headerformat");
            int pos = reTags.search( headerTags );
-           QString rep;
+           TQString rep;
            while ( pos > -1 )
            {
              rep = tags[reTags.cap( 1 )];
@@ -225,7 +225,7 @@ bool KatePrinter::print (KateDocument *doc)
              pos += rep.length();
              pos = reTags.search( headerTags, pos );
            }
-           headerTagList = QStringList::split('|', headerTags, true);
+           headerTagList = TQStringList::split('|', headerTags, true);
 
            if (!headerBgColor.isValid())
              headerBgColor = Qt::lightGray;
@@ -236,15 +236,15 @@ bool KatePrinter::print (KateDocument *doc)
          if (useFooter)
          {
            footerDrawBg = ( printer.option("app-kate-footerusebg") == "true" );
-           footerHeight = QFontMetrics( headerFont ).height();
+           footerHeight = TQFontMetrics( headerFont ).height();
            if ( useBox || footerDrawBg )
              footerHeight += 2*innerMargin;
            else
              footerHeight += 1; // line only
 
-           QString footerTags = printer.option("app-kate-footerformat");
+           TQString footerTags = printer.option("app-kate-footerformat");
            int pos = reTags.search( footerTags );
-           QString rep;
+           TQString rep;
            while ( pos > -1 )
            {
              rep = tags[reTags.cap( 1 )];
@@ -253,7 +253,7 @@ bool KatePrinter::print (KateDocument *doc)
              pos = reTags.search( footerTags, pos );
            }
 
-           footerTagList = QStringList::split('|', footerTags, true);
+           footerTagList = TQStringList::split('|', footerTags, true);
            if (!footerBgColor.isValid())
              footerBgColor = Qt::lightGray;
            if (!footerFgColor.isValid())
@@ -306,19 +306,19 @@ bool KatePrinter::print (KateDocument *doc)
          guideHeight = ( innerMargin * 4 ) + 1;
 
          // get a title and add the height required to draw it
-         QString _title = i18n("Typographical Conventions for %1").arg(doc->highlight()->name());
+         TQString _title = i18n("Typographical Conventions for %1").arg(doc->highlight()->name());
          guideHeight += paint.boundingRect( 0, 0, _w, 1000, Qt::AlignTop|Qt::AlignHCenter, _title ).height();
 
          // see how many columns we can fit in
          int _widest( 0 );
 
-         QPtrListIterator<KateHlItemData> it( ilist );
+         TQPtrListIterator<KateHlItemData> it( ilist );
          KateHlItemData *_d;
 
          int _items ( 0 );
          while ( ( _d = it.current()) != 0 )
          {
-           _widest = kMax( _widest, ((QFontMetrics)(
+           _widest = kMax( _widest, ((TQFontMetrics)(
                                 _d->bold() ?
                                   _d->italic() ?
                                     renderer.config()->fontStruct()->myFontMetricsBI :
@@ -375,12 +375,12 @@ bool KatePrinter::print (KateDocument *doc)
          if ( _lt ) _pages++; // last page
 
          // substitute both tag lists
-         QString re("%P");
-         QStringList::Iterator it;
+         TQString re("%P");
+         TQStringList::Iterator it;
          for ( it=headerTagList.begin(); it!=headerTagList.end(); ++it )
-           (*it).replace( re, QString( "%1" ).arg( _pages ) );
+           (*it).replace( re, TQString( "%1" ).arg( _pages ) );
          for ( it=footerTagList.begin(); it!=footerTagList.end(); ++it )
-           (*it).replace( re, QString( "%1" ).arg( _pages ) );
+           (*it).replace( re, TQString( "%1" ).arg( _pages ) );
        }
      } // end prepare block
 
@@ -421,11 +421,11 @@ bool KatePrinter::print (KateDocument *doc)
                int align = valign|Qt::AlignLeft;
                int marg = ( useBox || headerDrawBg ) ? innerMargin : 0;
                if ( useBox ) marg += boxWidth;
-               QString s;
+               TQString s;
                for (int i=0; i<3; i++)
                {
                  s = headerTagList[i];
-                 if (s.find("%p") != -1) s.replace("%p", QString::number(currentPage));
+                 if (s.find("%p") != -1) s.replace("%p", TQString::number(currentPage));
                  paint.drawText(marg, 0, headerWidth-(marg*2), headerHeight, align, s);
                  align = valign|(i == 0 ? Qt::AlignHCenter : Qt::AlignRight);
                }
@@ -449,11 +449,11 @@ bool KatePrinter::print (KateDocument *doc)
                int align = Qt::AlignVCenter|Qt::AlignLeft;
                int marg = ( useBox || footerDrawBg ) ? innerMargin : 0;
                if ( useBox ) marg += boxWidth;
-               QString s;
+               TQString s;
                for (int i=0; i<3; i++)
                {
                  s = footerTagList[i];
-                 if (s.find("%p") != -1) s.replace("%p", QString::number(currentPage));
+                 if (s.find("%p") != -1) s.replace("%p", TQString::number(currentPage));
                  paint.drawText(marg, maxHeight+innerMargin, headerWidth-(marg*2), footerHeight, align, s);
                  align = Qt::AlignVCenter|(i == 0 ? Qt::AlignHCenter : Qt::AlignRight);
                }
@@ -487,7 +487,7 @@ bool KatePrinter::print (KateDocument *doc)
 
            if ( useBox )
            {
-             paint.setPen(QPen(boxColor, boxWidth));
+             paint.setPen(TQPen(boxColor, boxWidth));
              paint.drawRect(0, 0, pdmWidth, pdm.height());
              if (useHeader)
                paint.drawLine(0, headerHeight, headerWidth, headerHeight);
@@ -522,7 +522,7 @@ bool KatePrinter::print (KateDocument *doc)
              }
              // draw a title string
              paint.setFont( renderer.config()->fontStruct()->myFontBold );
-             QRect _r;
+             TQRect _r;
              paint.drawText( _marg, y, pdmWidth-(2*_marg), maxHeight - y,
                 Qt::AlignTop|Qt::AlignHCenter,
                 i18n("Typographical Conventions for %1").arg(doc->highlight()->name()), -1, &_r );
@@ -533,7 +533,7 @@ bool KatePrinter::print (KateDocument *doc)
              y += 1 + innerMargin;
              // draw attrib names using their styles
 
-             QPtrListIterator<KateHlItemData> _it( ilist );
+             TQPtrListIterator<KateHlItemData> _it( ilist );
              KateHlItemData *_d;
              int _cw = _w/guideCols;
              int _i(0);
@@ -561,7 +561,7 @@ bool KatePrinter::print (KateDocument *doc)
            paint.setPen( renderer.config()->lineNumberColor() );
            paint.drawText( (( useBox || useBackground ) ? innerMargin : 0), y,
                         lineNumberWidth, renderer.fontHeight(),
-                        Qt::AlignRight, QString("%1").arg( lineCount + 1 ) );
+                        Qt::AlignRight, TQString("%1").arg( lineCount + 1 ) );
          }
          endCol = renderer.textWidth(doc->kateTextLine(lineCount), startCol, maxWidth, &needWrap);
 
@@ -633,21 +633,21 @@ bool KatePrinter::print (KateDocument *doc)
 
 #ifndef Q_WS_WIN //TODO: reenable
 //BEGIN KatePrintTextSettings
-KatePrintTextSettings::KatePrintTextSettings( KPrinter * /*printer*/, QWidget *parent, const char *name )
+KatePrintTextSettings::KatePrintTextSettings( KPrinter * /*printer*/, TQWidget *parent, const char *name )
   : KPrintDialogPage( parent, name )
 {
   setTitle( i18n("Te&xt Settings") );
 
-  QVBoxLayout *lo = new QVBoxLayout ( this );
+  TQVBoxLayout *lo = new TQVBoxLayout ( this );
   lo->setSpacing( KDialog::spacingHint() );
 
-  cbSelection = new QCheckBox( i18n("Print &selected text only"), this );
+  cbSelection = new TQCheckBox( i18n("Print &selected text only"), this );
   lo->addWidget( cbSelection );
 
-  cbLineNumbers = new QCheckBox( i18n("Print &line numbers"), this );
+  cbLineNumbers = new TQCheckBox( i18n("Print &line numbers"), this );
   lo->addWidget( cbLineNumbers );
 
-  cbGuide = new QCheckBox( i18n("Print syntax &guide"), this );
+  cbGuide = new TQCheckBox( i18n("Print syntax &guide"), this );
   lo->addWidget( cbGuide );
 
   lo->addStretch( 1 );
@@ -655,26 +655,26 @@ KatePrintTextSettings::KatePrintTextSettings( KPrinter * /*printer*/, QWidget *p
   // set defaults - nothing to do :-)
 
   // whatsthis
-  QWhatsThis::add( cbSelection, i18n(
+  TQWhatsThis::add( cbSelection, i18n(
         "<p>This option is only available if some text is selected in the document.</p>"
         "<p>If available and enabled, only the selected text is printed.</p>") );
-  QWhatsThis::add( cbLineNumbers, i18n(
+  TQWhatsThis::add( cbLineNumbers, i18n(
         "<p>If enabled, line numbers will be printed on the left side of the page(s).</p>") );
-  QWhatsThis::add( cbGuide, i18n(
+  TQWhatsThis::add( cbGuide, i18n(
         "<p>Print a box displaying typographical conventions for the document type, as "
         "defined by the syntax highlighting being used.") );
 }
 
-void KatePrintTextSettings::getOptions( QMap<QString,QString>& opts, bool )
+void KatePrintTextSettings::getOptions( TQMap<TQString,TQString>& opts, bool )
 {
   opts["app-kate-printselection"] = cbSelection->isChecked() ? "true" : "false";
   opts["app-kate-printlinenumbers"] = cbLineNumbers->isChecked() ? "true" : "false";
   opts["app-kate-printguide"] = cbGuide->isChecked() ? "true" : "false" ;
 }
 
-void KatePrintTextSettings::setOptions( const QMap<QString,QString>& opts )
+void KatePrintTextSettings::setOptions( const TQMap<TQString,TQString>& opts )
 {
-  QString v;
+  TQString v;
   v = opts["app-kate-printselection"];
   if ( ! v.isEmpty() )
     cbSelection->setChecked( v == "true" );
@@ -694,99 +694,99 @@ void KatePrintTextSettings::enableSelection( bool enable )
 //END KatePrintTextSettings
 
 //BEGIN KatePrintHeaderFooter
-KatePrintHeaderFooter::KatePrintHeaderFooter( KPrinter * /*printer*/, QWidget *parent, const char *name )
+KatePrintHeaderFooter::KatePrintHeaderFooter( KPrinter * /*printer*/, TQWidget *parent, const char *name )
   : KPrintDialogPage( parent, name )
 {
   setTitle( i18n("Hea&der && Footer") );
 
-  QVBoxLayout *lo = new QVBoxLayout ( this );
+  TQVBoxLayout *lo = new TQVBoxLayout ( this );
   uint sp = KDialog::spacingHint();
   lo->setSpacing( sp );
 
   // enable
-  QHBoxLayout *lo1 = new QHBoxLayout ( lo );
-  cbEnableHeader = new QCheckBox( i18n("Pr&int header"), this );
+  TQHBoxLayout *lo1 = new TQHBoxLayout ( lo );
+  cbEnableHeader = new TQCheckBox( i18n("Pr&int header"), this );
   lo1->addWidget( cbEnableHeader );
-  cbEnableFooter = new QCheckBox( i18n("Pri&nt footer"), this );
+  cbEnableFooter = new TQCheckBox( i18n("Pri&nt footer"), this );
   lo1->addWidget( cbEnableFooter );
 
   // font
-  QHBoxLayout *lo2 = new QHBoxLayout( lo );
-  lo2->addWidget( new QLabel( i18n("Header/footer font:"), this ) );
-  lFontPreview = new QLabel( this );
-  lFontPreview->setFrameStyle( QFrame::Panel|QFrame::Sunken );
+  TQHBoxLayout *lo2 = new TQHBoxLayout( lo );
+  lo2->addWidget( new TQLabel( i18n("Header/footer font:"), this ) );
+  lFontPreview = new TQLabel( this );
+  lFontPreview->setFrameStyle( TQFrame::Panel|TQFrame::Sunken );
   lo2->addWidget( lFontPreview );
   lo2->setStretchFactor( lFontPreview, 1 );
-  QPushButton *btnChooseFont = new QPushButton( i18n("Choo&se Font..."), this );
+  TQPushButton *btnChooseFont = new TQPushButton( i18n("Choo&se Font..."), this );
   lo2->addWidget( btnChooseFont );
-  connect( btnChooseFont, SIGNAL(clicked()), this, SLOT(setHFFont()) );
+  connect( btnChooseFont, TQT_SIGNAL(clicked()), this, TQT_SLOT(setHFFont()) );
   // header
-  gbHeader = new QGroupBox( 2, Qt::Horizontal, i18n("Header Properties"), this );
+  gbHeader = new TQGroupBox( 2, Qt::Horizontal, i18n("Header Properties"), this );
   lo->addWidget( gbHeader );
 
-  QLabel *lHeaderFormat = new QLabel( i18n("&Format:"), gbHeader );
-  QHBox *hbHeaderFormat = new QHBox( gbHeader );
+  TQLabel *lHeaderFormat = new TQLabel( i18n("&Format:"), gbHeader );
+  TQHBox *hbHeaderFormat = new TQHBox( gbHeader );
   hbHeaderFormat->setSpacing( sp );
-  leHeaderLeft = new QLineEdit( hbHeaderFormat );
-  leHeaderCenter = new QLineEdit( hbHeaderFormat );
-  leHeaderRight = new QLineEdit( hbHeaderFormat );
+  leHeaderLeft = new TQLineEdit( hbHeaderFormat );
+  leHeaderCenter = new TQLineEdit( hbHeaderFormat );
+  leHeaderRight = new TQLineEdit( hbHeaderFormat );
   lHeaderFormat->setBuddy( leHeaderLeft );
-  new QLabel( i18n("Colors:"), gbHeader );
-  QHBox *hbHeaderColors = new QHBox( gbHeader );
+  new TQLabel( i18n("Colors:"), gbHeader );
+  TQHBox *hbHeaderColors = new TQHBox( gbHeader );
   hbHeaderColors->setSpacing( sp );
-  QLabel *lHeaderFgCol = new QLabel( i18n("Foreground:"), hbHeaderColors );
+  TQLabel *lHeaderFgCol = new TQLabel( i18n("Foreground:"), hbHeaderColors );
   kcbtnHeaderFg = new KColorButton( hbHeaderColors );
   lHeaderFgCol->setBuddy( kcbtnHeaderFg );
-  cbHeaderEnableBgColor = new QCheckBox( i18n("Bac&kground"), hbHeaderColors );
+  cbHeaderEnableBgColor = new TQCheckBox( i18n("Bac&kground"), hbHeaderColors );
   kcbtnHeaderBg = new KColorButton( hbHeaderColors );
 
-  gbFooter = new QGroupBox( 2, Qt::Horizontal, i18n("Footer Properties"), this );
+  gbFooter = new TQGroupBox( 2, Qt::Horizontal, i18n("Footer Properties"), this );
   lo->addWidget( gbFooter );
 
   // footer
-  QLabel *lFooterFormat = new QLabel( i18n("For&mat:"), gbFooter );
-  QHBox *hbFooterFormat = new QHBox( gbFooter );
+  TQLabel *lFooterFormat = new TQLabel( i18n("For&mat:"), gbFooter );
+  TQHBox *hbFooterFormat = new TQHBox( gbFooter );
   hbFooterFormat->setSpacing( sp );
-  leFooterLeft = new QLineEdit( hbFooterFormat );
-  leFooterCenter = new QLineEdit( hbFooterFormat );
-  leFooterRight = new QLineEdit( hbFooterFormat );
+  leFooterLeft = new TQLineEdit( hbFooterFormat );
+  leFooterCenter = new TQLineEdit( hbFooterFormat );
+  leFooterRight = new TQLineEdit( hbFooterFormat );
   lFooterFormat->setBuddy( leFooterLeft );
 
-  new QLabel( i18n("Colors:"), gbFooter );
-  QHBox *hbFooterColors = new QHBox( gbFooter );
+  new TQLabel( i18n("Colors:"), gbFooter );
+  TQHBox *hbFooterColors = new TQHBox( gbFooter );
   hbFooterColors->setSpacing( sp );
-  QLabel *lFooterBgCol = new QLabel( i18n("Foreground:"), hbFooterColors );
+  TQLabel *lFooterBgCol = new TQLabel( i18n("Foreground:"), hbFooterColors );
   kcbtnFooterFg = new KColorButton( hbFooterColors );
   lFooterBgCol->setBuddy( kcbtnFooterFg );
-  cbFooterEnableBgColor = new QCheckBox( i18n("&Background"), hbFooterColors );
+  cbFooterEnableBgColor = new TQCheckBox( i18n("&Background"), hbFooterColors );
   kcbtnFooterBg = new KColorButton( hbFooterColors );
 
   lo->addStretch( 1 );
 
   // user friendly
-  connect( cbEnableHeader, SIGNAL(toggled(bool)), gbHeader, SLOT(setEnabled(bool)) );
-  connect( cbEnableFooter, SIGNAL(toggled(bool)), gbFooter, SLOT(setEnabled(bool)) );
-  connect( cbHeaderEnableBgColor, SIGNAL(toggled(bool)), kcbtnHeaderBg, SLOT(setEnabled(bool)) );
-  connect( cbFooterEnableBgColor, SIGNAL(toggled(bool)), kcbtnFooterBg, SLOT(setEnabled(bool)) );
+  connect( cbEnableHeader, TQT_SIGNAL(toggled(bool)), gbHeader, TQT_SLOT(setEnabled(bool)) );
+  connect( cbEnableFooter, TQT_SIGNAL(toggled(bool)), gbFooter, TQT_SLOT(setEnabled(bool)) );
+  connect( cbHeaderEnableBgColor, TQT_SIGNAL(toggled(bool)), kcbtnHeaderBg, TQT_SLOT(setEnabled(bool)) );
+  connect( cbFooterEnableBgColor, TQT_SIGNAL(toggled(bool)), kcbtnFooterBg, TQT_SLOT(setEnabled(bool)) );
 
   // set defaults
   cbEnableHeader->setChecked( true );
   leHeaderLeft->setText( "%y" );
   leHeaderCenter->setText( "%f" );
   leHeaderRight->setText( "%p" );
-  kcbtnHeaderFg->setColor( QColor("black") );
+  kcbtnHeaderFg->setColor( TQColor("black") );
   cbHeaderEnableBgColor->setChecked( true );
-  kcbtnHeaderBg->setColor( QColor("lightgrey") );
+  kcbtnHeaderBg->setColor( TQColor("lightgrey") );
 
   cbEnableFooter->setChecked( true );
   leFooterRight->setText( "%U" );
-  kcbtnFooterFg->setColor( QColor("black") );
+  kcbtnFooterFg->setColor( TQColor("black") );
   cbFooterEnableBgColor->setChecked( true );
-  kcbtnFooterBg->setColor( QColor("lightgrey") );
+  kcbtnFooterBg->setColor( TQColor("lightgrey") );
 
   // whatsthis
-  QString  s = i18n("<p>Format of the page header. The following tags are supported:</p>");
-  QString s1 = i18n(
+  TQString  s = i18n("<p>Format of the page header. The following tags are supported:</p>");
+  TQString s1 = i18n(
       "<ul><li><tt>%u</tt>: current user name</li>"
       "<li><tt>%d</tt>: complete date/time in short format</li>"
       "<li><tt>%D</tt>: complete date/time in long format</li>"
@@ -798,18 +798,18 @@ KatePrintHeaderFooter::KatePrintHeaderFooter( KPrinter * /*printer*/, QWidget *p
       "<li><tt>%p</tt>: page number</li>"
       "</ul><br>"
       "<u>Note:</u> Do <b>not</b> use the '|' (vertical bar) character.");
-  QWhatsThis::add(leHeaderRight, s + s1 );
-  QWhatsThis::add(leHeaderCenter, s + s1 );
-  QWhatsThis::add(leHeaderLeft, s + s1 );
+  TQWhatsThis::add(leHeaderRight, s + s1 );
+  TQWhatsThis::add(leHeaderCenter, s + s1 );
+  TQWhatsThis::add(leHeaderLeft, s + s1 );
   s = i18n("<p>Format of the page footer. The following tags are supported:</p>");
-  QWhatsThis::add(leFooterRight, s + s1 );
-  QWhatsThis::add(leFooterCenter, s + s1 );
-  QWhatsThis::add(leFooterLeft, s + s1 );
+  TQWhatsThis::add(leFooterRight, s + s1 );
+  TQWhatsThis::add(leFooterCenter, s + s1 );
+  TQWhatsThis::add(leFooterLeft, s + s1 );
 
 
 }
 
-void KatePrintHeaderFooter::getOptions(QMap<QString,QString>& opts, bool )
+void KatePrintHeaderFooter::getOptions(TQMap<TQString,TQString>& opts, bool )
 {
   opts["app-kate-hffont"] = strFont;
 
@@ -826,12 +826,12 @@ void KatePrintHeaderFooter::getOptions(QMap<QString,QString>& opts, bool )
   opts["app-kate-footerformat"] = leFooterLeft->text() + "|" + leFooterCenter->text() + "|" + leFooterRight->text();
 }
 
-void KatePrintHeaderFooter::setOptions( const QMap<QString,QString>& opts )
+void KatePrintHeaderFooter::setOptions( const TQMap<TQString,TQString>& opts )
 {
-  QString v;
+  TQString v;
   v = opts["app-kate-hffont"];
   strFont = v;
-  QFont f = font();
+  TQFont f = font();
   if ( ! v.isEmpty() )
   {
     if (!strFont.isEmpty())
@@ -846,15 +846,15 @@ void KatePrintHeaderFooter::setOptions( const QMap<QString,QString>& opts )
     cbEnableHeader->setChecked( v == "true" );
   v = opts["app-kate-headerfg"];
   if ( ! v.isEmpty() )
-    kcbtnHeaderFg->setColor( QColor( v ) );
+    kcbtnHeaderFg->setColor( TQColor( v ) );
   v = opts["app-kate-headerusebg"];
   if ( ! v.isEmpty() )
     cbHeaderEnableBgColor->setChecked( v == "true" );
   v = opts["app-kate-headerbg"];
   if ( ! v.isEmpty() )
-    kcbtnHeaderBg->setColor( QColor( v ) );
+    kcbtnHeaderBg->setColor( TQColor( v ) );
 
-  QStringList tags = QStringList::split('|', opts["app-kate-headerformat"], "true");
+  TQStringList tags = TQStringList::split('|', opts["app-kate-headerformat"], "true");
   if (tags.count() == 3)
   {
     leHeaderLeft->setText(tags[0]);
@@ -867,15 +867,15 @@ void KatePrintHeaderFooter::setOptions( const QMap<QString,QString>& opts )
     cbEnableFooter->setChecked( v == "true" );
   v = opts["app-kate-footerfg"];
   if ( ! v.isEmpty() )
-    kcbtnFooterFg->setColor( QColor( v ) );
+    kcbtnFooterFg->setColor( TQColor( v ) );
   v = opts["app-kate-footerusebg"];
   if ( ! v.isEmpty() )
     cbFooterEnableBgColor->setChecked( v == "true" );
   v = opts["app-kate-footerbg"];
   if ( ! v.isEmpty() )
-    kcbtnFooterBg->setColor( QColor( v ) );
+    kcbtnFooterBg->setColor( TQColor( v ) );
 
-  tags = QStringList::split('|', opts["app-kate-footerformat"], "true");
+  tags = TQStringList::split('|', opts["app-kate-footerformat"], "true");
   if (tags.count() == 3)
   {
     leFooterLeft->setText(tags[0]);
@@ -886,7 +886,7 @@ void KatePrintHeaderFooter::setOptions( const QMap<QString,QString>& opts )
 
 void KatePrintHeaderFooter::setHFFont()
 {
-  QFont fnt( lFontPreview->font() );
+  TQFont fnt( lFontPreview->font() );
   // display a font dialog
   if ( KFontDialog::getFont( fnt, false, this ) == KFontDialog::Accepted )
   {
@@ -902,42 +902,42 @@ void KatePrintHeaderFooter::setHFFont()
 
 //BEGIN KatePrintLayout
 
-KatePrintLayout::KatePrintLayout( KPrinter * /*printer*/, QWidget *parent, const char *name )
+KatePrintLayout::KatePrintLayout( KPrinter * /*printer*/, TQWidget *parent, const char *name )
   : KPrintDialogPage( parent, name )
 {
   setTitle( i18n("L&ayout") );
 
-  QVBoxLayout *lo = new QVBoxLayout ( this );
+  TQVBoxLayout *lo = new TQVBoxLayout ( this );
   lo->setSpacing( KDialog::spacingHint() );
 
-  QHBox *hb = new QHBox( this );
+  TQHBox *hb = new TQHBox( this );
   lo->addWidget( hb );
-  QLabel *lSchema = new QLabel( i18n("&Schema:"), hb );
-  cmbSchema = new QComboBox( false, hb );
+  TQLabel *lSchema = new TQLabel( i18n("&Schema:"), hb );
+  cmbSchema = new TQComboBox( false, hb );
   lSchema->setBuddy( cmbSchema );
 
-  cbDrawBackground = new QCheckBox( i18n("Draw bac&kground color"), this );
+  cbDrawBackground = new TQCheckBox( i18n("Draw bac&kground color"), this );
   lo->addWidget( cbDrawBackground );
 
-  cbEnableBox = new QCheckBox( i18n("Draw &boxes"), this );
+  cbEnableBox = new TQCheckBox( i18n("Draw &boxes"), this );
   lo->addWidget( cbEnableBox );
 
-  gbBoxProps = new QGroupBox( 2, Qt::Horizontal, i18n("Box Properties"), this );
+  gbBoxProps = new TQGroupBox( 2, Qt::Horizontal, i18n("Box Properties"), this );
   lo->addWidget( gbBoxProps );
 
-  QLabel *lBoxWidth = new QLabel( i18n("W&idth:"), gbBoxProps );
-  sbBoxWidth = new QSpinBox( 1, 100, 1, gbBoxProps );
+  TQLabel *lBoxWidth = new TQLabel( i18n("W&idth:"), gbBoxProps );
+  sbBoxWidth = new TQSpinBox( 1, 100, 1, gbBoxProps );
   lBoxWidth->setBuddy( sbBoxWidth );
 
-  QLabel *lBoxMargin = new QLabel( i18n("&Margin:"), gbBoxProps );
-  sbBoxMargin = new QSpinBox( 0, 100, 1, gbBoxProps );
+  TQLabel *lBoxMargin = new TQLabel( i18n("&Margin:"), gbBoxProps );
+  sbBoxMargin = new TQSpinBox( 0, 100, 1, gbBoxProps );
   lBoxMargin->setBuddy( sbBoxMargin );
 
-  QLabel *lBoxColor = new QLabel( i18n("Co&lor:"), gbBoxProps );
+  TQLabel *lBoxColor = new TQLabel( i18n("Co&lor:"), gbBoxProps );
   kcbtnBoxColor = new KColorButton( gbBoxProps );
   lBoxColor->setBuddy( kcbtnBoxColor );
 
-  connect( cbEnableBox, SIGNAL(toggled(bool)), gbBoxProps, SLOT(setEnabled(bool)) );
+  connect( cbEnableBox, TQT_SIGNAL(toggled(bool)), gbBoxProps, TQT_SLOT(setEnabled(bool)) );
 
   lo->addStretch( 1 );
   // set defaults:
@@ -948,24 +948,24 @@ KatePrintLayout::KatePrintLayout( KPrinter * /*printer*/, QWidget *parent, const
 
   // whatsthis
   // FIXME uncomment when string freeze is over
-//   QWhatsThis::add ( cmbSchema, i18n(
+//   TQWhatsThis::add ( cmbSchema, i18n(
 //         "Select the color scheme to use for the print." ) );
-  QWhatsThis::add( cbDrawBackground, i18n(
+  TQWhatsThis::add( cbDrawBackground, i18n(
         "<p>If enabled, the background color of the editor will be used.</p>"
         "<p>This may be useful if your color scheme is designed for a dark background.</p>") );
-  QWhatsThis::add( cbEnableBox, i18n(
+  TQWhatsThis::add( cbEnableBox, i18n(
         "<p>If enabled, a box as defined in the properties below will be drawn "
         "around the contents of each page. The Header and Footer will be separated "
         "from the contents with a line as well.</p>") );
-  QWhatsThis::add( sbBoxWidth, i18n(
+  TQWhatsThis::add( sbBoxWidth, i18n(
         "The width of the box outline" ) );
-  QWhatsThis::add( sbBoxMargin, i18n(
+  TQWhatsThis::add( sbBoxMargin, i18n(
         "The margin inside boxes, in pixels") );
-  QWhatsThis::add( kcbtnBoxColor, i18n(
+  TQWhatsThis::add( kcbtnBoxColor, i18n(
         "The line color to use for boxes") );
 }
 
-void KatePrintLayout::getOptions(QMap<QString,QString>& opts, bool )
+void KatePrintLayout::getOptions(TQMap<TQString,TQString>& opts, bool )
 {
   opts["app-kate-colorscheme"] = cmbSchema->currentText();
   opts["app-kate-usebackground"] = cbDrawBackground->isChecked() ? "true" : "false";
@@ -975,9 +975,9 @@ void KatePrintLayout::getOptions(QMap<QString,QString>& opts, bool )
   opts["app-kate-boxcolor"] = kcbtnBoxColor->color().name();
 }
 
-void KatePrintLayout::setOptions( const QMap<QString,QString>& opts )
+void KatePrintLayout::setOptions( const TQMap<TQString,TQString>& opts )
 {
-  QString v;
+  TQString v;
   v = opts["app-kate-colorscheme"];
   if ( ! v.isEmpty() )
     cmbSchema->setCurrentItem( KateFactory::self()->schemaManager()->number( v ) );
@@ -995,7 +995,7 @@ void KatePrintLayout::setOptions( const QMap<QString,QString>& opts )
     sbBoxMargin->setValue( v.toInt() );
   v = opts["app-kate-boxcolor"];
   if ( ! v.isEmpty() )
-    kcbtnBoxColor->setColor( QColor( v ) );
+    kcbtnBoxColor->setColor( TQColor( v ) );
 }
 //END KatePrintLayout
 

@@ -27,10 +27,10 @@
 #include <kconfig.h>
 #include <kdebug.h>
 
-#include <qtextedit.h>
-#include <qtimer.h>
-#include <qcolor.h>
-#include <qdict.h>
+#include <tqtextedit.h>
+#include <tqtimer.h>
+#include <tqcolor.h>
+#include <tqdict.h>
 
 namespace KSpell2 {
 
@@ -40,13 +40,13 @@ public:
     Filter     *filter;
     Broker::Ptr broker;
     Dictionary *dict;
-    QDict<Dictionary>  dictCache;
+    TQDict<Dictionary>  dictCache;
 };
 
-Highlighter::Highlighter( QTextEdit *textEdit,
-                          const QString& configFile,
+Highlighter::Highlighter( TQTextEdit *textEdit,
+                          const TQString& configFile,
                           Filter *filter)
-    : QSyntaxHighlighter( textEdit )
+    : TQSyntaxHighlighter( textEdit )
 {
     d = new Private;
     d->filter = filter;
@@ -67,7 +67,7 @@ Highlighter::~Highlighter()
     delete d; d = 0;
 }
 
-int Highlighter::highlightParagraph( const QString& text,
+int Highlighter::highlightParagraph( const TQString& text,
                                      int endStateOfLastPara )
 {
     Q_UNUSED( endStateOfLastPara );
@@ -87,7 +87,7 @@ int Highlighter::highlightParagraph( const QString& text,
             w = d->filter->nextWord();
         }
     }
-    //QTimer::singleShot( 0, this, SLOT(checkWords()) );
+    //TQTimer::singleShot( 0, this, TQT_SLOT(checkWords()) );
 
     return 0;
 }
@@ -103,12 +103,12 @@ void Highlighter::setCurrentFilter( Filter *filter )
     d->filter->setSettings( d->broker->settings() );
 }
 
-QString Highlighter::currentLanguage() const
+TQString Highlighter::currentLanguage() const
 {
     return d->dict->language();
 }
 
-void Highlighter::setCurrentLanguage( const QString& lang )
+void Highlighter::setCurrentLanguage( const TQString& lang )
 {
     if ( !d->dictCache.find( lang ) ) {
         Dictionary *dict = d->broker->dictionary( lang );

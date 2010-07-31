@@ -20,7 +20,7 @@
 #ifndef _AUTOSTART_H_
 #define _AUTOSTART_H_
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 class AutoStartList;
 
@@ -31,7 +31,7 @@ public:
   ~AutoStart();
     
   void loadAutoStartList();
-  QString startService();
+  TQString startService();
   void    setPhase(int phase);
   void	  setPhaseDone();
   int     phase() const { return m_phase; }
@@ -40,7 +40,7 @@ public:
 private:
   bool m_newStartup;
   AutoStartList *m_startList;  
-  QStringList m_started;
+  TQStringList m_started;
   int m_phase;
   bool m_phasedone;
 };

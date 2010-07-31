@@ -20,9 +20,9 @@
 #ifndef KCMODULECONTAINER_H
 #define KCMODULECONTAINER_H
 
-#include <qvaluelist.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <tqvaluelist.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
 
 #include <kcmodule.h>
 #include <kcmoduleloader.h>
@@ -58,20 +58,20 @@ class KUTILS_EXPORT KCModuleContainer : public KCModule
 		 * Creates a KCModuleContainer with tabs, each one containing one of the
 		 * specified modules in @p mods.
 		 *
-                 * @param parent the parent QWidget.
+                 * @param parent the parent TQWidget.
                  * @param name the module's name.
 		 * @param mods The list of KCModules to be loaded. The name of each
 		 * KCModule is its service name, that is the name of the desktop file without
 		 * the ".desktop" part
 		 *
 		 */
-		KCModuleContainer( QWidget* parent, const char* name, const QStringList& mods );
+		KCModuleContainer( TQWidget* parent, const char* name, const TQStringList& mods );
 
 		/**
-		 * This is a convenience function, instead of building a QStringList you
-		 * can specify the modules in a comma separated QString. For example;
+		 * This is a convenience function, instead of building a TQStringList you
+		 * can specify the modules in a comma separated TQString. For example;
 		 * \code
-		 * KCModuleContainer* cont = KCModuleContainer( this, "kcm_misc", QString("kcm_energy, kcm_keyboard ,kcm_useraccount, kcm_mouse") );
+		 * KCModuleContainer* cont = KCModuleContainer( this, "kcm_misc", TQString("kcm_energy, kcm_keyboard ,kcm_useraccount, kcm_mouse") );
 		 * \endcode
 		 * The other constructor takes its modules in a QStringlist which also can be constructed from a
 		 * string and thus you will have to be explicit on the data type.
@@ -84,7 +84,7 @@ class KUTILS_EXPORT KCModuleContainer : public KCModule
 		 * @param mods The modules to load
 		 * @return The KCModule containing the requested modules.
 		 */
-		KCModuleContainer( QWidget *parent, const char* name, const QString& mods = QString() );
+		KCModuleContainer( TQWidget *parent, const char* name, const TQString& mods = TQString() );
 
 		/**
 		 * Adds the specified module to the tab widget. Setting the tab icon, text,
@@ -93,7 +93,7 @@ class KUTILS_EXPORT KCModuleContainer : public KCModule
 		 * @param module the name of the module to add. The name is the desktop file's name
 		 * without the ".desktop" part.
 		 */
-		void addModule( const QString& module );
+		void addModule( const TQString& module );
 
 		/**
 		 * Default destructor.
@@ -128,7 +128,7 @@ class KUTILS_EXPORT KCModuleContainer : public KCModule
 		 */
 		void finalize();
 
-		typedef QValueList<KCModuleProxy*> ModuleList;
+		typedef TQValueList<KCModuleProxy*> ModuleList;
 
 		/**
 		 * A list containing KCModuleProxy objects which
@@ -146,7 +146,7 @@ class KUTILS_EXPORT KCModuleContainer : public KCModule
 		/**
 		 * Enables/disables the Admin Mode button, as appropriate.
 		 */
-		void tabSwitched( QWidget * module );
+		void tabSwitched( TQWidget * module );
 
 		void moduleChanged(KCModuleProxy *proxy);
 
@@ -188,15 +188,15 @@ class KUTILS_EXPORT KCModuleContainer : public KCModule
 #define KCMODULECONTAINER( modules, factoryName ) \
 extern "C" \
 { \
-	KCModule *create_## factoryName(QWidget *parent, const char *name) \
+	KCModule *create_## factoryName(TQWidget *parent, const char *name) \
 	{ \
-		return new KCModuleContainer( parent, name, QString( modules ) ); \
+		return new KCModuleContainer( parent, name, TQString( modules ) ); \
 	} \
 	\
 	bool test_## factoryName() \
 	{ \
-		QStringList modList = QStringList::split( ",", QString(modules).remove( " " )); \
-		for ( QStringList::Iterator it = modList.begin(); it != modList.end(); ++it ) \
+		TQStringList modList = TQStringList::split( ",", TQString(modules).remove( " " )); \
+		for ( TQStringList::Iterator it = modList.begin(); it != modList.end(); ++it ) \
 			if ( KCModuleLoader::testModule( *it ) ) \
 				return true; \
 		return false; \

@@ -19,8 +19,8 @@
 #ifndef __kfilterbase__h
 #define __kfilterbase__h
 
-#include <qobject.h>
-#include <qstring.h>
+#include <tqobject.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -35,7 +35,7 @@ class QIODevice;
  * such as gzip and bzip2. It's pretty much internal.
  * Don't use directly, use KFilterDev instead.
  */
-class KIO_EXPORT KFilterBase : public QObject // needs to inherit QObject for KLibFactory::create
+class KIO_EXPORT KFilterBase : public TQObject // needs to inherit TQObject for KLibFactory::create
 {
     Q_OBJECT
 public:
@@ -47,7 +47,7 @@ public:
      * @param dev the device on which the filter will work
      * @param autodelete if true, @p dev is deleted when the filter is deleted
      */
-    void setDevice( QIODevice * dev, bool autodelete = false );
+    void setDevice( TQIODevice * dev, bool autodelete = false );
     // Note that this isn't in the constructor, because of KLibFactory::create,
     // but it should be called before using the filterbase !
 
@@ -55,7 +55,7 @@ public:
      * Returns the device on which the filter will work.
      * @returns the device on which the filter will work
      */
-    QIODevice * device() { return m_dev; }
+    TQIODevice * device() { return m_dev; }
     /** \internal */
     virtual void init( int mode ) = 0;
     /** \internal */
@@ -67,7 +67,7 @@ public:
     /** \internal */
     virtual bool readHeader() = 0;
     /** \internal */
-    virtual bool writeHeader( const QCString & filename ) = 0;
+    virtual bool writeHeader( const TQCString & filename ) = 0;
     /** \internal */
     virtual void setOutBuffer( char * data, uint maxlen ) = 0;
     /** \internal */
@@ -94,7 +94,7 @@ public:
      * @param fileName the name of the file to filter
      * @return the filter for the @p fileName, or 0 if not found
      */
-    static KFilterBase * findFilterByFileName( const QString & fileName );
+    static KFilterBase * findFilterByFileName( const TQString & fileName );
 
     /**
      * Call this to create the appropriate filter for the mimetype
@@ -102,10 +102,10 @@ public:
      * @param mimeType the mime type of the file to filter
      * @return the filter for the @p mimeType, or 0 if not found
      */
-    static KFilterBase * findFilterByMimeType( const QString & mimeType );
+    static KFilterBase * findFilterByMimeType( const TQString & mimeType );
 
 protected:
-    QIODevice * m_dev;
+    TQIODevice * m_dev;
     bool m_bAutoDel;
 protected:
     virtual void virtual_hook( int id, void* data );

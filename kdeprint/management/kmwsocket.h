@@ -31,14 +31,14 @@ class KMWSocket : public KMWizardPage
 {
 	Q_OBJECT
 public:
-	KMWSocket(QWidget *parent = 0, const char *name = 0);
+	KMWSocket(TQWidget *parent = 0, const char *name = 0);
 	~KMWSocket();
 
-	bool isValid(QString&);
+	bool isValid(TQString&);
 	void updatePrinter(KMPrinter*);
 
 protected slots:
-	void slotPrinterSelected(QListViewItem*);
+	void slotPrinterSelected(TQListViewItem*);
 	void slotScanStarted();
 	void slotScanFinished();
 

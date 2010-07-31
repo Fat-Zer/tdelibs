@@ -46,20 +46,20 @@ class CoreCommands : public Kate::Command, public Kate::CommandExtension
      * @param errorMsg error to return if no success
      * @return success
      */
-    bool exec( class Kate::View *view, const QString &cmd, QString &errorMsg );
+    bool exec( class Kate::View *view, const TQString &cmd, TQString &errorMsg );
 
-    bool help( class Kate::View *, const QString &, QString & ) {return false;};
+    bool help( class Kate::View *, const TQString &, TQString & ) {return false;};
 
     /**
      * supported commands as prefixes
      * @return prefix list
      */
-    QStringList cmds();
+    TQStringList cmds();
 
     /**
     * override completionObject from interfaces/document.h .
     */
-    KCompletion *completionObject( const QString &cmd, Kate::View *view );
+    KCompletion *completionObject( const TQString &cmd, Kate::View *view );
 };
 
 /**
@@ -82,15 +82,15 @@ class SedReplace : public Kate::Command
      * @param errorMsg error to return if no success
      * @return success
      */
-    bool exec (class Kate::View *view, const QString &cmd, QString &errorMsg);
+    bool exec (class Kate::View *view, const TQString &cmd, TQString &errorMsg);
 
-    bool help (class Kate::View *, const QString &, QString &) { return false; };
+    bool help (class Kate::View *, const TQString &, TQString &) { return false; };
 
     /**
      * supported commands as prefixes
      * @return prefix list
      */
-    QStringList cmds () { QStringList l("s"); l << "%s" << "$s"; return l; };
+    TQStringList cmds () { TQStringList l("s"); l << "%s" << "$s"; return l; };
 
   private:
     /**
@@ -113,7 +113,7 @@ class SedReplace : public Kate::Command
      * If it is -1, the whole line is used.
      */
     static int sedMagic(KateDocument *doc, int &line,
-                        const QString &find, const QString &replace, const QString &delim,
+                        const TQString &find, const TQString &replace, const TQString &delim,
                         bool noCase, bool repeat,
                         uint startcol=0, int endcol=-1);
 };
@@ -136,15 +136,15 @@ class Character : public Kate::Command
      * @param errorMsg error to return if no success
      * @return success
      */
-    bool exec (class Kate::View *view, const QString &cmd, QString &errorMsg);
+    bool exec (class Kate::View *view, const TQString &cmd, TQString &errorMsg);
 
-    bool help (class Kate::View *, const QString &, QString &) { return false; };
+    bool help (class Kate::View *, const TQString &, TQString &) { return false; };
 
     /**
      * supported commands as prefixes
      * @return prefix list
      */
-    QStringList cmds () { return QStringList("char"); };
+    TQStringList cmds () { return TQStringList("char"); };
 };
 
 /**
@@ -160,15 +160,15 @@ class Date : public Kate::Command
      * @param errorMsg error to return if no success
      * @return success
      */
-    bool exec (class Kate::View *view, const QString &cmd, QString &errorMsg);
+    bool exec (class Kate::View *view, const TQString &cmd, TQString &errorMsg);
 
-    bool help (class Kate::View *, const QString &, QString &) { return false; };
+    bool help (class Kate::View *, const TQString &, TQString &) { return false; };
 
     /**
      * supported commands as prefixes
      * @return prefix list
      */
-    QStringList cmds () { return QStringList("date"); };
+    TQStringList cmds () { return TQStringList("date"); };
 };
 
 

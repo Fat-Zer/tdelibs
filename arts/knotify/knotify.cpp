@@ -37,10 +37,10 @@
 #endif
 
 // QT headers
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qstringlist.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqstringlist.h>
+#include <tqtextstream.h>
 
 // KDE headers
 #include <dcopclient.h>
@@ -75,14 +75,14 @@ class KNotifyPrivate
 public:
     KConfig* globalEvents;
     KConfig* globalConfig;
-    QMap<QString, KConfig*> events;
-    QMap<QString, KConfig*> configs;
-    QString externalPlayer;
+    TQMap<TQString, KConfig*> events;
+    TQMap<TQString, KConfig*> configs;
+    TQString externalPlayer;
     KProcess *externalPlayerProc;
 
 #ifndef WITHOUT_ARTS
-    QPtrList<KDE::PlayObject> playObjects;
-    QMap<KDE::PlayObject*,int> playObjectEventMap;
+    TQPtrList<KDE::PlayObject> playObjects;
+    TQMap<KDE::PlayObject*,int> playObjectEventMap;
     KAudioManagerPlay *audioManager;
 #endif
     int externalPlayerEventId;
@@ -90,9 +90,9 @@ public:
     bool useExternal;
     bool useArts;
     int volume;
-    QTimer *playTimer;
+    TQTimer *playTimer;
     bool inStartup;
-    QString startupEvents;
+    TQString startupEvents;
 };
 
 // Yes, it's ugly to put this here, but this facilitates the cautious startup
@@ -242,7 +242,7 @@ KDE_EXPORT int kdemain(int argc, char **argv)
 }// end extern "C"
 
 KNotify::KNotify( bool useArts )
-    : QObject(), DCOPObject("Notify")
+    : TQObject(), DCOPObject("Notify")
 {
     d = new KNotifyPrivate;
     d->globalEvents = new KConfig("knotify/eventsrc", true, false, "data");
@@ -255,7 +255,7 @@ KNotify::KNotify( bool useArts )
     d->audioManager = 0;
     if( useArts )
     {
-        connect( soundServer, SIGNAL( restartedServer() ), this, SLOT( restartedArtsd() ) );
+        connect( soundServer, TQT_SIGNAL( restartedServer() ), this, TQT_SLOT( restartedArtsd() ) );
         restartedArtsd(); //started allready need to initialize d->audioManager
     }
 #endif
@@ -292,9 +292,9 @@ void KNotify::loadConfig() {
 
     // try to locate a suitable player if none is configured
     if ( d->externalPlayer.isEmpty() ) {
-        QStringList players;
+        TQStringList players;
         players << "wavplay" << "aplay" << "auplay";
-        QStringList::Iterator it = players.begin();
+        TQStringList::Iterator it = players.begin();
         while ( d->externalPlayer.isEmpty() && it != players.end() ) {
             d->externalPlayer = KStandardDirs::findExe( *it );
             ++it;
@@ -313,28 +313,28 @@ void KNotify::reconfigure()
 
     // clear loaded config files
     d->globalConfig->reparseConfiguration();
-    for ( QMapIterator<QString,KConfig*> it = d->configs.begin(); it != d->configs.end(); ++it )
+    for ( TQMapIterator<TQString,KConfig*> it = d->configs.begin(); it != d->configs.end(); ++it )
         delete it.data();
     d->configs.clear();
 }
 
 
-void KNotify::notify(const QString &event, const QString &fromApp,
-                     const QString &text, QString sound, QString file,
+void KNotify::notify(const TQString &event, const TQString &fromApp,
+                     const TQString &text, TQString sound, TQString file,
                      int present, int level)
 {
     notify( event, fromApp, text, sound, file, present, level, 0, 1 );
 }
 
-void KNotify::notify(const QString &event, const QString &fromApp,
-                     const QString &text, QString sound, QString file,
+void KNotify::notify(const TQString &event, const TQString &fromApp,
+                     const TQString &text, TQString sound, TQString file,
                      int present, int level, int winId)
 {
     notify( event, fromApp, text, sound, file, present, level, winId, 1 );
 }
 
-void KNotify::notify(const QString &event, const QString &fromApp,
-                     const QString &text, QString sound, QString file,
+void KNotify::notify(const TQString &event, const TQString &fromApp,
+                     const TQString &text, TQString sound, TQString file,
                      int present, int level, int winId, int eventId )
 {
     // kdDebug() << "event=" << event << " fromApp=" << fromApp << " text=" << text << " sound=" << sound <<
@@ -343,7 +343,7 @@ void KNotify::notify(const QString &event, const QString &fromApp,
         d->startupEvents += "(" + event + ":" + fromApp + ")";
     }
 
-    QString commandline;
+    TQString commandline;
     KConfig *eventsFile = NULL;
     KConfig *configFile = NULL;
 
@@ -381,7 +381,7 @@ void KNotify::notify(const QString &event, const QString &fromApp,
 
         // get sound file name
         if( present & KNotifyClient::Sound ) {
-            QString theSound = configFile->readPathEntry( "soundfile" );
+            TQString theSound = configFile->readPathEntry( "soundfile" );
             if ( theSound.isEmpty() )
                 theSound = eventsFile->readPathEntry( "default_sound" );
             if ( !theSound.isEmpty() )
@@ -390,7 +390,7 @@ void KNotify::notify(const QString &event, const QString &fromApp,
 
         // get log file name
         if( present & KNotifyClient::Logfile ) {
-            QString theFile = configFile->readPathEntry( "logfile" );
+            TQString theFile = configFile->readPathEntry( "logfile" );
             if ( theFile.isEmpty() )
                 theFile = eventsFile->readPathEntry( "default_logfile" );
             if ( !theFile.isEmpty() )
@@ -410,13 +410,13 @@ void KNotify::notify(const QString &event, const QString &fromApp,
     }
 
     // emit event
-    if ( present & KNotifyClient::Sound ) // && QFile(sound).isReadable()
+    if ( present & KNotifyClient::Sound ) // && TQFile(sound).isReadable()
         notifyBySound( sound, fromApp, eventId );
 
     if ( present & KNotifyClient::Execute )
         notifyByExecute( commandline, event, fromApp, text, winId, eventId );
 
-    if ( present & KNotifyClient::Logfile ) // && QFile(file).isWritable()
+    if ( present & KNotifyClient::Logfile ) // && TQFile(file).isWritable()
         notifyByLogfile( text, file );
 
     if ( present & KNotifyClient::Stderr )
@@ -430,16 +430,16 @@ void KNotify::notify(const QString &event, const QString &fromApp,
     else if ( present & KNotifyClient::Messagebox )
         notifyByMessagebox( text, level, checkWinId( fromApp, winId ));
 
-    QByteArray qbd;
-    QDataStream ds(qbd, IO_WriteOnly);
+    TQByteArray qbd;
+    TQDataStream ds(qbd, IO_WriteOnly);
     ds << event << fromApp << text << sound << file << present << level
         << winId << eventId;
-    emitDCOPSignal("notifySignal(QString,QString,QString,QString,QString,int,int,int,int)", qbd);
+    emitDCOPSignal("notifySignal(TQString,TQString,TQString,TQString,TQString,int,int,int,int)", qbd);
 
 }
 
 
-bool KNotify::notifyBySound( const QString &sound, const QString &appname, int eventId )
+bool KNotify::notifyBySound( const TQString &sound, const TQString &appname, int eventId )
 {
     if (sound.isEmpty()) {
         soundFinished( eventId, NoSoundFile );
@@ -448,10 +448,10 @@ bool KNotify::notifyBySound( const QString &sound, const QString &appname, int e
 
     bool external = d->useExternal && !d->externalPlayer.isEmpty();
     // get file name
-    QString soundFile(sound);
-    if ( QFileInfo(sound).isRelative() )
+    TQString soundFile(sound);
+    if ( TQFileInfo(sound).isRelative() )
     {
-        QString search = QString("%1/sounds/%2").arg(appname).arg(sound);
+        TQString search = TQString("%1/sounds/%2").arg(appname).arg(sound);
         soundFile = KGlobal::instance()->dirs()->findResource("data", search);
         if ( soundFile.isEmpty() )
             soundFile = locate( "sound", sound );
@@ -527,8 +527,8 @@ bool KNotify::notifyBySound( const QString &sound, const QString &appname, int e
 
         if ( !d->playTimer )
         {
-            d->playTimer = new QTimer( this );
-            connect( d->playTimer, SIGNAL( timeout() ), SLOT( playTimeout() ) );
+            d->playTimer = new TQTimer( this );
+            connect( d->playTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( playTimeout() ) );
         }
         if ( !d->playTimer->isActive() )
             d->playTimer->start( 1000 );
@@ -541,8 +541,8 @@ bool KNotify::notifyBySound( const QString &sound, const QString &appname, int e
         if (!proc)
         {
            proc = d->externalPlayerProc = new KProcess;
-           connect( proc, SIGNAL( processExited( KProcess * )),
-                    SLOT( slotPlayerProcessExited( KProcess * )));
+           connect( proc, TQT_SIGNAL( processExited( KProcess * )),
+                    TQT_SLOT( slotPlayerProcessExited( KProcess * )));
         }
         if (proc->isRunning())
         {
@@ -550,7 +550,7 @@ bool KNotify::notifyBySound( const QString &sound, const QString &appname, int e
            return false; // Skip
         }
         proc->clearArguments();
-        (*proc) << d->externalPlayer << QFile::encodeName( soundFile );
+        (*proc) << d->externalPlayer << TQFile::encodeName( soundFile );
         d->externalPlayerEventId = eventId;
         proc->start(KProcess::NotifyOnExit);
         return true;
@@ -560,7 +560,7 @@ bool KNotify::notifyBySound( const QString &sound, const QString &appname, int e
     return false;
 }
 
-bool KNotify::notifyByMessagebox(const QString &text, int level, WId winId)
+bool KNotify::notifyByMessagebox(const TQString &text, int level, WId winId)
 {
     // ignore empty messages
     if ( text.isEmpty() )
@@ -586,17 +586,17 @@ bool KNotify::notifyByMessagebox(const QString &text, int level, WId winId)
     return true;
 }
 
-bool KNotify::notifyByPassivePopup( const QString &text,
-                                    const QString &appName,
+bool KNotify::notifyByPassivePopup( const TQString &text,
+                                    const TQString &appName,
                                     KConfig* eventsFile,
                                     WId senderWinId )
 {
     KIconLoader iconLoader( appName );
     if ( eventsFile != NULL ) {
         KConfigGroup config( eventsFile, "!Global!" );
-        QString iconName = config.readEntry( "IconName", appName );
-        QPixmap icon = iconLoader.loadIcon( iconName, KIcon::Small );
-        QString title = config.readEntry( "Comment", appName );
+        TQString iconName = config.readEntry( "IconName", appName );
+        TQPixmap icon = iconLoader.loadIcon( iconName, KIcon::Small );
+        TQString title = config.readEntry( "Comment", appName );
         KPassivePopup::message(title, text, icon, senderWinId);
     } else
         kdError() << "No events for app " << appName << "defined!" <<endl;
@@ -604,18 +604,18 @@ bool KNotify::notifyByPassivePopup( const QString &text,
     return true;
 }
 
-bool KNotify::notifyByExecute(const QString &command, const QString& event,
-                              const QString& fromApp, const QString& text,
+bool KNotify::notifyByExecute(const TQString &command, const TQString& event,
+                              const TQString& fromApp, const TQString& text,
                               int winId, int eventId) {
     if (!command.isEmpty()) {
 	// kdDebug() << "executing command '" << command << "'" << endl;
-        QMap<QChar,QString> subst;
+        TQMap<TQChar,TQString> subst;
         subst.insert( 'e', event );
         subst.insert( 'a', fromApp );
         subst.insert( 's', text );
-        subst.insert( 'w', QString::number( winId ));
-        subst.insert( 'i', QString::number( eventId ));
-        QString execLine = KMacroExpander::expandMacrosShellQuote( command, subst );
+        subst.insert( 'w', TQString::number( winId ));
+        subst.insert( 'i', TQString::number( eventId ));
+        TQString execLine = KMacroExpander::expandMacrosShellQuote( command, subst );
         if ( execLine.isEmpty() )
             execLine = command; // fallback
 
@@ -629,20 +629,20 @@ bool KNotify::notifyByExecute(const QString &command, const QString& event,
 }
 
 
-bool KNotify::notifyByLogfile(const QString &text, const QString &file)
+bool KNotify::notifyByLogfile(const TQString &text, const TQString &file)
 {
     // ignore empty messages
     if ( text.isEmpty() )
         return true;
 
     // open file in append mode
-    QFile logFile(file);
+    TQFile logFile(file);
     if ( !logFile.open(IO_WriteOnly | IO_Append) )
         return false;
 
     // append msg
-    QTextStream strm( &logFile );
-    strm << "- KNotify " << QDateTime::currentDateTime().toString() << ": ";
+    TQTextStream strm( &logFile );
+    strm << "- KNotify " << TQDateTime::currentDateTime().toString() << ": ";
     strm << text << endl;
 
     // close file
@@ -650,17 +650,17 @@ bool KNotify::notifyByLogfile(const QString &text, const QString &file)
     return true;
 }
 
-bool KNotify::notifyByStderr(const QString &text)
+bool KNotify::notifyByStderr(const TQString &text)
 {
     // ignore empty messages
     if ( text.isEmpty() )
         return true;
 
     // open stderr for output
-    QTextStream strm( stderr, IO_WriteOnly );
+    TQTextStream strm( stderr, IO_WriteOnly );
 
     // output msg
-    strm << "KNotify " << QDateTime::currentDateTime().toString() << ": ";
+    strm << "KNotify " << TQDateTime::currentDateTime().toString() << ": ";
     strm << text << endl;
 
     return true;
@@ -674,7 +674,7 @@ bool KNotify::notifyByTaskbar( WId win )
     return true;
 }
 
-bool KNotify::isGlobal(const QString &eventname)
+bool KNotify::isGlobal(const TQString &eventname)
 {
     return d->globalEvents->hasGroup( eventname );
 }
@@ -689,13 +689,13 @@ void KNotify::setVolume( int volume )
 void KNotify::playTimeout()
 {
 #ifndef WITHOUT_ARTS
-    for ( QPtrListIterator< KDE::PlayObject > it(d->playObjects); *it;)
+    for ( TQPtrListIterator< KDE::PlayObject > it(d->playObjects); *it;)
     {
-        QPtrListIterator< KDE::PlayObject > current = it;
+        TQPtrListIterator< KDE::PlayObject > current = it;
         ++it;
         if ( (*current)->state() != Arts::posPlaying )
         {
-            QMap<KDE::PlayObject*,int>::Iterator eit = d->playObjectEventMap.find( *current );
+            TQMap<KDE::PlayObject*,int>::Iterator eit = d->playObjectEventMap.find( *current );
             if ( eit != d->playObjectEventMap.end() )
             {
                 soundFinished( *eit, PlayedOK );
@@ -709,10 +709,10 @@ void KNotify::playTimeout()
 #endif
 }
 
-bool KNotify::isPlaying( const QString& soundFile ) const
+bool KNotify::isPlaying( const TQString& soundFile ) const
 {
 #ifndef WITHOUT_ARTS
-    for ( QPtrListIterator< KDE::PlayObject > it(d->playObjects); *it; ++it)
+    for ( TQPtrListIterator< KDE::PlayObject > it(d->playObjects); *it; ++it)
     {
         if ( (*it)->mediaName() == soundFile )
             return true;
@@ -730,7 +730,7 @@ void KNotify::slotPlayerProcessExited( KProcess *proc )
 void KNotify::abortFirstPlayObject()
 {
 #ifndef WITHOUT_ARTS
-    QMap<KDE::PlayObject*,int>::Iterator it = d->playObjectEventMap.find( d->playObjects.getFirst() );
+    TQMap<KDE::PlayObject*,int>::Iterator it = d->playObjectEventMap.find( d->playObjects.getFirst() );
     if ( it != d->playObjectEventMap.end() )
     {
         soundFinished( it.data(), Aborted );
@@ -742,35 +742,35 @@ void KNotify::abortFirstPlayObject()
 
 void KNotify::soundFinished( int eventId, PlayingFinishedStatus reason )
 {
-    QByteArray data;
-    QDataStream stream( data, IO_WriteOnly );
+    TQByteArray data;
+    TQDataStream stream( data, IO_WriteOnly );
     stream << eventId << (int) reason;
 
     DCOPClient::mainClient()->emitDCOPSignal( "KNotify", "playingFinished(int,int)", data );
 }
 
-WId KNotify::checkWinId( const QString &appName, WId senderWinId )
+WId KNotify::checkWinId( const TQString &appName, WId senderWinId )
 {
     if ( senderWinId == 0 )
     {
-        QCString senderId = kapp->dcopClient()->senderId();
-        QCString compare = (appName + "-mainwindow").latin1();
+        TQCString senderId = kapp->dcopClient()->senderId();
+        TQCString compare = (appName + "-mainwindow").latin1();
         int len = compare.length();
         // kdDebug() << "notifyByPassivePopup: appName=" << appName << " sender=" << senderId << endl;
 
         QCStringList objs = kapp->dcopClient()->remoteObjects( senderId );
         for (QCStringList::ConstIterator it = objs.begin(); it != objs.end(); ++it ) {
-            QCString obj( *it );
+            TQCString obj( *it );
             if ( obj.left(len) == compare) {
                 // kdDebug( ) << "found " << obj << endl;
-                QCString replyType;
-                QByteArray data, replyData;
+                TQCString replyType;
+                TQByteArray data, replyData;
 
                 if ( kapp->dcopClient()->call(senderId, obj, "getWinID()", data, replyType, replyData) ) {
-                    QDataStream answer(replyData, IO_ReadOnly);
+                    TQDataStream answer(replyData, IO_ReadOnly);
                     if (replyType == "int") {
                         answer >> senderWinId;
-                        // kdDebug() << "SUCCESS, found getWinID(): type='" << QString(replyType)
+                        // kdDebug() << "SUCCESS, found getWinID(): type='" << TQString(replyType)
                         //      << "' senderWinId=" << senderWinId << endl;
                     }
 		}

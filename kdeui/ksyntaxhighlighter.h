@@ -24,10 +24,10 @@
 #ifndef KSYNTAXHIGHLIGHTER_H
 #define KSYNTAXHIGHLIGHTER_H
 
-#include <qtextedit.h>
-#include <qsyntaxhighlighter.h>
-#include <qcolor.h>
-#include <qstringlist.h>
+#include <tqtextedit.h>
+#include <tqsyntaxhighlighter.h>
+#include <tqcolor.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -46,16 +46,16 @@ public:
 	PlainTextMode,
 	RichTextMode
     };
-    KSyntaxHighlighter( QTextEdit *textEdit,
+    KSyntaxHighlighter( TQTextEdit *textEdit,
 			 bool colorQuoting = false,
-			 const QColor& QuoteColor0 = black,
-			 const QColor& QuoteColor1 = QColor( 0x00, 0x80, 0x00 ),
-			 const QColor& QuoteColor2 = QColor( 0x00, 0x80, 0x00 ),
-			 const QColor& QuoteColor3 = QColor( 0x00, 0x80, 0x00 ),
+			 const TQColor& QuoteColor0 = black,
+			 const TQColor& QuoteColor1 = TQColor( 0x00, 0x80, 0x00 ),
+			 const TQColor& QuoteColor2 = TQColor( 0x00, 0x80, 0x00 ),
+			 const TQColor& QuoteColor3 = TQColor( 0x00, 0x80, 0x00 ),
 			 SyntaxMode mode = PlainTextMode );
     ~KSyntaxHighlighter();
 
-    int highlightParagraph( const QString& text, int endStateOfLastPara );
+    int highlightParagraph( const TQString& text, int endStateOfLastPara );
 
 private:
     class KSyntaxHighlighterPrivate;
@@ -65,21 +65,21 @@ private:
 class KDEUI_EXPORT KSpellingHighlighter : public KSyntaxHighlighter
 {
 public:
-    KSpellingHighlighter( QTextEdit *textEdit,
-			  const QColor& spellColor = red,
+    KSpellingHighlighter( TQTextEdit *textEdit,
+			  const TQColor& spellColor = red,
 			  bool colorQuoting = false,
-			  const QColor& QuoteColor0 = black,
-			  const QColor& QuoteColor1 = QColor( 0x00, 0x80, 0x00 ),
-			  const QColor& QuoteColor2 = QColor( 0x00, 0x80, 0x00 ),
-			  const QColor& QuoteColor3 = QColor( 0x00, 0x80, 0x00 ) );
+			  const TQColor& QuoteColor0 = black,
+			  const TQColor& QuoteColor1 = TQColor( 0x00, 0x80, 0x00 ),
+			  const TQColor& QuoteColor2 = TQColor( 0x00, 0x80, 0x00 ),
+			  const TQColor& QuoteColor3 = TQColor( 0x00, 0x80, 0x00 ) );
     ~KSpellingHighlighter();
 
-    virtual int highlightParagraph( const QString &text,
+    virtual int highlightParagraph( const TQString &text,
 				    int endStateOfLastPara );
-    virtual bool isMisspelled( const QString& word ) = 0;
+    virtual bool isMisspelled( const TQString& word ) = 0;
     bool intraWordEditing() const;
     void setIntraWordEditing( bool editing );
-    static QStringList personalWords();
+    static TQStringList personalWords();
 
 private:
     void flushCurrentWord();
@@ -91,24 +91,24 @@ private:
 /**
  * \brief Dictionary sensitive text highlighter
  */
-class KDEUI_EXPORT KDictSpellingHighlighter : public QObject, public KSpellingHighlighter
+class KDEUI_EXPORT KDictSpellingHighlighter : public TQObject, public KSpellingHighlighter
 {
 Q_OBJECT
 
 public:
-    KDictSpellingHighlighter( QTextEdit *textEdit,
+    KDictSpellingHighlighter( TQTextEdit *textEdit,
 			      bool spellCheckingActive = true,
 			      bool autoEnable = true,
-			      const QColor& spellColor = red,
+			      const TQColor& spellColor = red,
 			      bool colorQuoting = false,
-			      const QColor& QuoteColor0 = black,
-			      const QColor& QuoteColor1 = QColor( 0x00, 0x80, 0x00 ),
-			      const QColor& QuoteColor2 = QColor( 0x00, 0x70, 0x00 ),
-			      const QColor& QuoteColor3 = QColor( 0x00, 0x60, 0x00 ),
+			      const TQColor& QuoteColor0 = black,
+			      const TQColor& QuoteColor1 = TQColor( 0x00, 0x80, 0x00 ),
+			      const TQColor& QuoteColor2 = TQColor( 0x00, 0x70, 0x00 ),
+			      const TQColor& QuoteColor3 = TQColor( 0x00, 0x60, 0x00 ),
                               KSpellConfig *spellConfig = 0 );
     ~KDictSpellingHighlighter();
 
-    virtual bool isMisspelled( const QString &word );
+    virtual bool isMisspelled( const TQString &word );
     static void dictionaryChanged();
     void restartBackgroundSpellCheck();
 
@@ -158,17 +158,17 @@ public:
     bool automatic() const;
 
 signals:
-    void activeChanged(const QString &);
-    void newSuggestions(const QString& originalword, const QStringList& suggestions,
+    void activeChanged(const TQString &);
+    void newSuggestions(const TQString& originalword, const TQStringList& suggestions,
                         unsigned int pos);
 
 protected:
-    QString spellKey();
-    bool eventFilter(QObject *o, QEvent *e);
+    TQString spellKey();
+    bool eventFilter(TQObject *o, TQEvent *e);
 
 protected slots:
-    void slotMisspelling( const QString &originalWord, const QStringList &suggestions, unsigned int pos );
-    void slotCorrected( const QString &originalWord, const QString &, unsigned int );
+    void slotMisspelling( const TQString &originalWord, const TQStringList &suggestions, unsigned int pos );
+    void slotCorrected( const TQString &originalWord, const TQString &, unsigned int );
     void slotRehighlight();
     void slotDictionaryChanged();
     void slotSpellReady( KSpell *spell );

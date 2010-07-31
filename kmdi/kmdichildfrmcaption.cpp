@@ -28,11 +28,11 @@
 #include "kmdichildfrmcaption.h"
 #include "kmdichildfrmcaption.moc"
 
-#include <qpainter.h>
-#include <qapplication.h>
-#include <qcursor.h>
-#include <qtoolbutton.h>
-#include <qpopupmenu.h>
+#include <tqpainter.h>
+#include <tqapplication.h>
+#include <tqcursor.h>
+#include <tqtoolbutton.h>
+#include <tqpopupmenu.h>
 
 #include "kmdidefines.h"
 #include "kmdichildfrm.h"
@@ -66,7 +66,7 @@
 //============== KMdiChildFrmCaption =============//
 
 KMdiChildFrmCaption::KMdiChildFrmCaption( KMdiChildFrm *parent )
-		: QWidget( parent, "kmdi_childfrmcaption" )
+		: TQWidget( parent, "kmdi_childfrmcaption" )
 {
 	m_szCaption = i18n( "Unnamed" );
 	m_bActive = false;
@@ -83,14 +83,14 @@ KMdiChildFrmCaption::~KMdiChildFrmCaption()
 
 //============= mousePressEvent ==============//
 
-void KMdiChildFrmCaption::mousePressEvent( QMouseEvent *e )
+void KMdiChildFrmCaption::mousePressEvent( TQMouseEvent *e )
 {
 	if ( e->button() == LeftButton )
 	{
 		setMouseTracking( false );
 		if ( KMdiMainFrm::frameDecorOfAttachedViews() != KMdi::Win95Look )
 		{
-			QApplication::setOverrideCursor( Qt::sizeAllCursor, true );
+			TQApplication::setOverrideCursor( Qt::sizeAllCursor, true );
 		}
 		m_pParent->m_bDragging = true;
 		m_offset = mapToParent( e->pos() );
@@ -103,12 +103,12 @@ void KMdiChildFrmCaption::mousePressEvent( QMouseEvent *e )
 
 //============= mouseReleaseEvent ============//
 
-void KMdiChildFrmCaption::mouseReleaseEvent( QMouseEvent *e )
+void KMdiChildFrmCaption::mouseReleaseEvent( TQMouseEvent *e )
 {
 	if ( e->button() == LeftButton )
 	{
 		if ( KMdiMainFrm::frameDecorOfAttachedViews() != KMdi::Win95Look )
-			QApplication::restoreOverrideCursor();
+			TQApplication::restoreOverrideCursor();
 		
 		releaseMouse();
 		if ( m_pParent->m_bDragging )
@@ -119,7 +119,7 @@ void KMdiChildFrmCaption::mouseReleaseEvent( QMouseEvent *e )
 				//notify child view
 				KMdiChildFrmDragEndEvent ue( e );
 				if ( m_pParent->m_pClient != 0L )
-					QApplication::sendEvent( m_pParent->m_pClient, &ue );
+					TQApplication::sendEvent( m_pParent->m_pClient, &ue );
 				
 				m_bChildInDrag = false;
 			}
@@ -128,7 +128,7 @@ void KMdiChildFrmCaption::mouseReleaseEvent( QMouseEvent *e )
 }
 
 //============== mouseMoveEvent =============//
-void KMdiChildFrmCaption::mouseMoveEvent( QMouseEvent *e )
+void KMdiChildFrmCaption::mouseMoveEvent( TQMouseEvent *e )
 {
 	if ( !m_pParent->m_bDragging )
 		return ;
@@ -138,12 +138,12 @@ void KMdiChildFrmCaption::mouseMoveEvent( QMouseEvent *e )
 		//notify child view
 		KMdiChildFrmDragBeginEvent ue( e );
 		if ( m_pParent->m_pClient != 0L )
-			QApplication::sendEvent( m_pParent->m_pClient, &ue );
+			TQApplication::sendEvent( m_pParent->m_pClient, &ue );
 		
 		m_bChildInDrag = true;
 	}
 
-	QPoint relMousePosInChildArea = m_pParent->m_pManager->mapFromGlobal( e->globalPos() );
+	TQPoint relMousePosInChildArea = m_pParent->m_pManager->mapFromGlobal( e->globalPos() );
 
 	// mouse out of child area? stop child frame dragging
 	if ( !m_pParent->m_pManager->rect().contains( relMousePosInChildArea ) )
@@ -160,7 +160,7 @@ void KMdiChildFrmCaption::mouseMoveEvent( QMouseEvent *e )
 		if ( relMousePosInChildArea.y() > m_pParent->m_pManager->height() )
 			relMousePosInChildArea.ry() = m_pParent->m_pManager->height();
 	}
-	QPoint mousePosInChildArea = relMousePosInChildArea - m_offset;
+	TQPoint mousePosInChildArea = relMousePosInChildArea - m_offset;
 
 	// set new child frame position
 	parentWidget() ->move( mousePosInChildArea );
@@ -187,7 +187,7 @@ void KMdiChildFrmCaption::setActive( bool bActive )
 
 //=============== setCaption ===============//
 
-void KMdiChildFrmCaption::setCaption( const QString& text )
+void KMdiChildFrmCaption::setCaption( const TQString& text )
 {
 	m_szCaption = text;
 	repaint( false );
@@ -224,10 +224,10 @@ int KMdiChildFrmCaption::heightHint()
 
 //=============== paintEvent ==============//
 
-void KMdiChildFrmCaption::paintEvent( QPaintEvent * )
+void KMdiChildFrmCaption::paintEvent( TQPaintEvent * )
 {
-	QPainter p( this );
-	QRect r = rect();
+	TQPainter p( this );
+	TQRect r = rect();
 	p.setFont( m_pParent->m_pManager->m_captionFont );
 	
 	if ( m_bActive )
@@ -252,15 +252,15 @@ void KMdiChildFrmCaption::paintEvent( QPaintEvent * )
 		r.setLeft( r.left() + 30 );
 
 	int captionWidthForText = width() - 4 * m_pParent->m_pClose->width() - m_pParent->icon() ->width() - 5;
-	QString text = abbreviateText( m_szCaption, captionWidthForText );
+	TQString text = abbreviateText( m_szCaption, captionWidthForText );
 	p.drawText( r, AlignVCenter | AlignLeft | SingleLine, text );
 
 }
 
 
-QString KMdiChildFrmCaption::abbreviateText( QString origStr, int maxWidth )
+TQString KMdiChildFrmCaption::abbreviateText( TQString origStr, int maxWidth )
 {
-	QFontMetrics fm = fontMetrics();
+	TQFontMetrics fm = fontMetrics();
 	int actualWidth = fm.width( origStr );
 
 	int realLetterCount = origStr.length();
@@ -272,7 +272,7 @@ QString KMdiChildFrmCaption::abbreviateText( QString origStr, int maxWidth )
 		newLetterCount = realLetterCount; // should be 0 anyway
 
 	int w = maxWidth + 1;
-	QString s = origStr;
+	TQString s = origStr;
 	
 	if ( newLetterCount <= 0 )
 		s = "";
@@ -291,7 +291,7 @@ QString KMdiChildFrmCaption::abbreviateText( QString origStr, int maxWidth )
 					s = origStr.left( 1 );
 			}
 		}
-		QFontMetrics fm = fontMetrics();
+		TQFontMetrics fm = fontMetrics();
 		w = fm.width( s );
 		newLetterCount--;
 	}
@@ -300,7 +300,7 @@ QString KMdiChildFrmCaption::abbreviateText( QString origStr, int maxWidth )
 
 //============= mouseDoubleClickEvent ===========//
 
-void KMdiChildFrmCaption::mouseDoubleClickEvent( QMouseEvent * )
+void KMdiChildFrmCaption::mouseDoubleClickEvent( TQMouseEvent * )
 {
 	m_pParent->maximizePressed();
 }
@@ -313,10 +313,10 @@ void KMdiChildFrmCaption::slot_moveViaSystemMenu()
 	grabMouse();
 	
 	if ( KMdiMainFrm::frameDecorOfAttachedViews() != KMdi::Win95Look )
-		QApplication::setOverrideCursor( Qt::sizeAllCursor, true );
+		TQApplication::setOverrideCursor( Qt::sizeAllCursor, true );
 	
 	m_pParent->m_bDragging = true;
-	m_offset = mapFromGlobal( QCursor::pos() );
+	m_offset = mapFromGlobal( TQCursor::pos() );
 }
 
 // kate: space-indent off; replace-tabs off; indent-mode csands; tab-width 4;

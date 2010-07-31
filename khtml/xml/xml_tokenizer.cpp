@@ -34,7 +34,7 @@
 
 #include "khtmlview.h"
 #include "khtml_part.h"
-#include <qvariant.h>
+#include <tqvariant.h>
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -42,7 +42,7 @@ using namespace DOM;
 using namespace khtml;
 
 XMLIncrementalSource::XMLIncrementalSource()
-    : QXmlInputSource(), m_pos( 0 ), m_unicode( 0 ),
+    : TQXmlInputSource(), m_pos( 0 ), m_unicode( 0 ),
       m_finished( false )
 {
 }
@@ -52,17 +52,17 @@ void XMLIncrementalSource::fetchData()
     //just a dummy to overwrite default behavior
 }
 
-QChar XMLIncrementalSource::next()
+TQChar XMLIncrementalSource::next()
 {
     if ( m_finished )
-        return QXmlInputSource::EndOfDocument;
+        return TQXmlInputSource::EndOfDocument;
     else if ( m_data.length() <= m_pos )
-        return QXmlInputSource::EndOfData;
+        return TQXmlInputSource::EndOfData;
     else
         return m_unicode[m_pos++];
 }
 
-void XMLIncrementalSource::setData( const QString& str )
+void XMLIncrementalSource::setData( const TQString& str )
 {
     m_data = str;
     m_unicode = m_data.unicode();
@@ -70,18 +70,18 @@ void XMLIncrementalSource::setData( const QString& str )
     if ( !str.isEmpty() )
         m_finished = false;
 }
-void XMLIncrementalSource::setData( const QByteArray& data )
+void XMLIncrementalSource::setData( const TQByteArray& data )
 {
     setData( fromRawData( data, true ) );
 }
 
-void XMLIncrementalSource::appendXML( const QString& str )
+void XMLIncrementalSource::appendXML( const TQString& str )
 {
     m_data += str;
     m_unicode = m_data.unicode();
 }
 
-QString XMLIncrementalSource::data()
+TQString XMLIncrementalSource::data()
 {
     return m_data;
 }
@@ -118,7 +118,7 @@ NodeImpl *XMLHandler::currentNode() const
     return m_nodes.current();
 }
 
-QString XMLHandler::errorProtocol()
+TQString XMLHandler::errorProtocol()
 {
     return errorProt;
 }
@@ -133,28 +133,28 @@ bool XMLHandler::startDocument()
     return true;
 }
 
-bool XMLHandler::startPrefixMapping(const QString& prefix, const QString& uri)
+bool XMLHandler::startPrefixMapping(const TQString& prefix, const TQString& uri)
 {
     namespaceInfo[prefix].push(uri);
     return true;
 }
 
-bool XMLHandler::endPrefixMapping(const QString& prefix)
+bool XMLHandler::endPrefixMapping(const TQString& prefix)
 {
-    QValueStack<QString>& stack = namespaceInfo[prefix];
+    TQValueStack<TQString>& stack = namespaceInfo[prefix];
     stack.pop();
     if (stack.isEmpty())
         namespaceInfo.remove(prefix);
     return true;
 }
 
-void XMLHandler::fixUpNSURI(QString& uri, const QString& qname)
+void XMLHandler::fixUpNSURI(TQString& uri, const TQString& qname)
 {
     /* QXml does not resolve the namespaces of attributes in the same 
        tag that preceed the xmlns declaration. This fixes up that case */
     if (uri.isEmpty() && qname.find(':') != -1) {
-        QXmlNamespaceSupport ns;
-        QString localName, prefix;
+        TQXmlNamespaceSupport ns;
+        TQString localName, prefix;
         ns.splitName(qname, prefix, localName);
         if (namespaceInfo.contains(prefix)) {
             uri = namespaceInfo[prefix].top();
@@ -162,8 +162,8 @@ void XMLHandler::fixUpNSURI(QString& uri, const QString& qname)
     }
 }
 
-bool XMLHandler::startElement( const QString& namespaceURI, const QString& /*localName*/,
-                               const QString& qName, const QXmlAttributes& atts )
+bool XMLHandler::startElement( const TQString& namespaceURI, const TQString& /*localName*/,
+                               const TQString& qName, const TQXmlAttributes& atts )
 {
     if (currentNode()->nodeType() == Node::TEXT_NODE)
         exitText();
@@ -180,8 +180,8 @@ bool XMLHandler::startElement( const QString& namespaceURI, const QString& /*loc
     int i;
     for (i = 0; i < atts.length(); i++) {
         int exceptioncode = 0;
-        QString uriString = atts.uri(i);
-        QString qnString  = atts.qName(i);
+        TQString uriString = atts.uri(i);
+        TQString qnString  = atts.qName(i);
         fixUpNSURI(uriString, qnString);
         DOMString uri(uriString);
         DOMString qn(qnString);
@@ -221,7 +221,7 @@ bool XMLHandler::startElement( const QString& namespaceURI, const QString& /*loc
 }
 
 
-bool XMLHandler::endElement( const QString& /*namespaceURI*/, const QString& /*localName*/, const QString& /*qName*/ )
+bool XMLHandler::endElement( const TQString& /*namespaceURI*/, const TQString& /*localName*/, const TQString& /*qName*/ )
 {
     if (currentNode()->nodeType() == Node::TEXT_NODE)
         exitText();
@@ -264,7 +264,7 @@ bool XMLHandler::endCDATA()
     return currentNode();
 }
 
-bool XMLHandler::characters( const QString& ch )
+bool XMLHandler::characters( const TQString& ch )
 {
     if (currentNode()->nodeType() == Node::TEXT_NODE ||
         currentNode()->nodeType() == Node::CDATA_SECTION_NODE ||
@@ -284,7 +284,7 @@ bool XMLHandler::characters( const QString& ch )
 
 }
 
-bool XMLHandler::comment(const QString & ch)
+bool XMLHandler::comment(const TQString & ch)
 {
     if (currentNode()->nodeType() == Node::TEXT_NODE)
         exitText();
@@ -293,7 +293,7 @@ bool XMLHandler::comment(const QString & ch)
     return true;
 }
 
-bool XMLHandler::processingInstruction(const QString &target, const QString &data)
+bool XMLHandler::processingInstruction(const TQString &target, const TQString &data)
 {
     if (currentNode()->nodeType() == Node::TEXT_NODE)
         exitText();
@@ -306,14 +306,14 @@ bool XMLHandler::processingInstruction(const QString &target, const QString &dat
 }
 
 
-QString XMLHandler::errorString()
+TQString XMLHandler::errorString()
 {
     // ### Make better error-messages
     return i18n("the document is not in the correct file format");
 }
 
 
-bool XMLHandler::fatalError( const QXmlParseException& exception )
+bool XMLHandler::fatalError( const TQXmlParseException& exception )
 {
     errorProt += i18n( "fatal parsing error: %1 in line %2, column %3" )
         .arg( exception.message() )
@@ -346,21 +346,21 @@ void XMLHandler::exitText()
     popNode();
 }
 
-bool XMLHandler::attributeDecl(const QString &/*eName*/, const QString &/*aName*/, const QString &/*type*/,
-                               const QString &/*valueDefault*/, const QString &/*value*/)
+bool XMLHandler::attributeDecl(const TQString &/*eName*/, const TQString &/*aName*/, const TQString &/*type*/,
+                               const TQString &/*valueDefault*/, const TQString &/*value*/)
 {
     // qt's xml parser (as of 2.2.3) does not currently give us values for type, valueDefault and
     // value. When it does, we can store these somewhere and have default attributes on elements
     return true;
 }
 
-bool XMLHandler::externalEntityDecl(const QString &/*name*/, const QString &/*publicId*/, const QString &/*systemId*/)
+bool XMLHandler::externalEntityDecl(const TQString &/*name*/, const TQString &/*publicId*/, const TQString &/*systemId*/)
 {
     // ### insert these too - is there anything special we have to do here?
     return true;
 }
 
-bool XMLHandler::internalEntityDecl(const QString &name, const QString &value)
+bool XMLHandler::internalEntityDecl(const TQString &name, const TQString &value)
 {
     EntityImpl *e = new EntityImpl(m_doc,name);
     // ### further parse entities inside the value and add them as separate nodes (or entityreferences)?
@@ -370,7 +370,7 @@ bool XMLHandler::internalEntityDecl(const QString &name, const QString &value)
     return true;
 }
 
-bool XMLHandler::notationDecl(const QString &/*name*/, const QString &/*publicId*/, const QString &/*systemId*/)
+bool XMLHandler::notationDecl(const TQString &/*name*/, const TQString &/*publicId*/, const TQString &/*systemId*/)
 {
 // ### FIXME
 //     if (m_doc->document()->doctype()) {
@@ -380,8 +380,8 @@ bool XMLHandler::notationDecl(const QString &/*name*/, const QString &/*publicId
     return true;
 }
 
-bool XMLHandler::unparsedEntityDecl(const QString &/*name*/, const QString &/*publicId*/,
-                                    const QString &/*systemId*/, const QString &/*notationName*/)
+bool XMLHandler::unparsedEntityDecl(const TQString &/*name*/, const TQString &/*publicId*/,
+                                    const TQString &/*systemId*/, const TQString &/*notationName*/)
 {
     // ###
     return true;
@@ -456,10 +456,10 @@ void XMLTokenizer::finish()
         while (m_doc->hasChildNodes())
             static_cast<NodeImpl*>(m_doc)->removeChild(m_doc->firstChild(),exceptioncode);
 
-        QString line, errorLocPtr;
+        TQString line, errorLocPtr;
         if ( m_handler.errorLine ) {
-            QString xmlCode = m_source.data();
-            QTextIStream stream(&xmlCode);
+            TQString xmlCode = m_source.data();
+            TQTextIStream stream(&xmlCode);
             for (unsigned long lineno = 0; lineno < m_handler.errorLine-1; lineno++)
                 stream.readLine();
             line = stream.readLine();
@@ -517,7 +517,7 @@ void XMLTokenizer::finish()
         // Parsing was successful. Now locate all html <script> tags in the document and execute them
         // one by one
         addScripts(m_doc);
-        m_scriptsIt = new QPtrListIterator<HTMLScriptElementImpl>(m_scripts);
+        m_scriptsIt = new TQPtrListIterator<HTMLScriptElementImpl>(m_scripts);
         executeScripts();
     }
 
@@ -545,7 +545,7 @@ void XMLTokenizer::executeScripts()
     // inside the tag
     while (m_scriptsIt->current()) {
         DOMString scriptSrc = m_scriptsIt->current()->getAttribute(ATTR_SRC);
-        QString charset = m_scriptsIt->current()->getAttribute(ATTR_CHARSET).string();
+        TQString charset = m_scriptsIt->current()->getAttribute(ATTR_CHARSET).string();
 
         if (!scriptSrc.isEmpty()) {
             // we have a src attribute
@@ -558,12 +558,12 @@ void XMLTokenizer::executeScripts()
         }
         else {
             // no src attribute - execute from contents of tag
-            QString scriptCode = "";
+            TQString scriptCode = "";
             NodeImpl *child;
             for (child = m_scriptsIt->current()->firstChild(); child; child = child->nextSibling()) {
                 if ( ( child->nodeType() == Node::TEXT_NODE || child->nodeType() == Node::CDATA_SECTION_NODE) &&
                      static_cast<TextImpl*>(child)->string() )
-                    scriptCode += QConstString(static_cast<TextImpl*>(child)->string()->s,
+                    scriptCode += TQConstString(static_cast<TextImpl*>(child)->string()->s,
                                                static_cast<TextImpl*>(child)->string()->l).string();
             }
             // the script cannot do document.write until we support incremental parsing

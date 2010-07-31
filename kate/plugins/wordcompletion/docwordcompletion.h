@@ -35,9 +35,9 @@
 #include <ktexteditor/configinterfaceextension.h>
 #include <kxmlguiclient.h>
 
-#include <qevent.h>
-#include <qobject.h>
-#include <qvaluelist.h>
+#include <tqevent.h>
+#include <tqobject.h>
+#include <tqvaluelist.h>
 
 class DocWordCompletionPlugin
   : public KTextEditor::Plugin
@@ -47,9 +47,9 @@ class DocWordCompletionPlugin
   Q_OBJECT
 
   public:
-    DocWordCompletionPlugin( QObject *parent = 0,
+    DocWordCompletionPlugin( TQObject *parent = 0,
                             const char* name = 0,
-                            const QStringList &args = QStringList() );
+                            const TQStringList &args = TQStringList() );
     virtual ~DocWordCompletionPlugin() {};
 
     void addView (KTextEditor::View *view);
@@ -60,10 +60,10 @@ class DocWordCompletionPlugin
 
     // ConfigInterfaceExtention
     uint configPages() const { return 1; };
-    KTextEditor::ConfigPage * configPage( uint number, QWidget *parent, const char *name );
-    QString configPageName( uint ) const;
-    QString configPageFullName( uint ) const;
-    QPixmap configPagePixmap( uint, int ) const;
+    KTextEditor::ConfigPage * configPage( uint number, TQWidget *parent, const char *name );
+    TQString configPageName( uint ) const;
+    TQString configPageFullName( uint ) const;
+    TQPixmap configPagePixmap( uint, int ) const;
 
     uint treshold() const { return m_treshold; };
     void setTreshold( uint t ) { m_treshold = t; };
@@ -72,14 +72,14 @@ class DocWordCompletionPlugin
 
 
   private:
-    QPtrList<class DocWordCompletionPluginView> m_views;
+    TQPtrList<class DocWordCompletionPluginView> m_views;
     uint m_treshold;
     bool m_autopopup;
 
 };
 
 class DocWordCompletionPluginView
-   : public QObject, public KXMLGUIClient
+   : public TQObject, public KXMLGUIClient
 {
   Q_OBJECT
 
@@ -95,18 +95,18 @@ class DocWordCompletionPluginView
     void completeForwards();
     void shellComplete();
 
-    void popupCompletionList( QString word=QString::null );
+    void popupCompletionList( TQString word=TQString::null );
     void autoPopupCompletionList();
     void toggleAutoPopup();
 
-    void slotVariableChanged( const QString &, const QString & );
+    void slotVariableChanged( const TQString &, const TQString & );
 
   private:
     void complete( bool fw=true );
 
-    QString word();
-    QValueList<KTextEditor::CompletionEntry> allMatches( const QString &word );
-    QString findLongestUnique(const QValueList < KTextEditor::CompletionEntry > &matches);
+    TQString word();
+    TQValueList<KTextEditor::CompletionEntry> allMatches( const TQString &word );
+    TQString findLongestUnique(const TQValueList < KTextEditor::CompletionEntry > &matches);
     KTextEditor::View *m_view;
     struct DocWordCompletionPluginViewPrivate *d;
 };
@@ -115,7 +115,7 @@ class DocWordCompletionConfigPage : public KTextEditor::ConfigPage
 {
   Q_OBJECT
   public:
-    DocWordCompletionConfigPage( DocWordCompletionPlugin *completion, QWidget *parent, const char *name );
+    DocWordCompletionConfigPage( DocWordCompletionPlugin *completion, TQWidget *parent, const char *name );
     virtual ~DocWordCompletionConfigPage() {};
 
     virtual void apply();
@@ -124,9 +124,9 @@ class DocWordCompletionConfigPage : public KTextEditor::ConfigPage
 
   private:
     DocWordCompletionPlugin *m_completion;
-    class QCheckBox *cbAutoPopup;
-    class QSpinBox *sbAutoPopup;
-    class QLabel *lSbRight;
+    class TQCheckBox *cbAutoPopup;
+    class TQSpinBox *sbAutoPopup;
+    class TQLabel *lSbRight;
 };
 
 #endif // _DocWordCompletionPlugin_h_

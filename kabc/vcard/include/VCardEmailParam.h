@@ -24,7 +24,7 @@
 #ifndef  EMAILPARAM_H
 #define  EMAILPARAM_H
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <VCardParam.h>
 
@@ -39,7 +39,7 @@ class KVCARD_EXPORT EmailParam : public Param
 	QCString	emailType() { parse(); return emailType_;	}
 	bool		pref()		{ parse(); return pref_;		}
 	
-	void setEmailType(const QCString & s)
+	void setEmailType(const TQCString & s)
 	{ emailType_ = s; assembled_ = false; }
 	
 	void setPref(bool b)

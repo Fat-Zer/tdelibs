@@ -24,7 +24,7 @@
 #include <kapplication.h>
 #include <kdebug.h>
 
-#include <qdatetime.h>
+#include <tqdatetime.h>
 
 using namespace KSpell2;
 
@@ -39,7 +39,7 @@ int main( int argc, char** argv )
 
     Dictionary *dict = broker->dictionary( "en_US" );
 
-    QStringList words;
+    TQStringList words;
 
     words << "hello" << "helo" << "enviroment" << "guvernment" << "farted"
           << "hello" << "helo" << "enviroment" << "guvernment" << "farted"
@@ -82,12 +82,12 @@ int main( int argc, char** argv )
           << "hello" << "helo" << "enviroment" << "guvernment" << "farted"
           << "hello" << "helo" << "enviroment" << "guvernment" << "farted";
 
-    QTime mtime;
+    TQTime mtime;
     mtime.start();
-    for ( QStringList::Iterator itr = words.begin(); itr != words.end(); ++itr ) {
+    for ( TQStringList::Iterator itr = words.begin(); itr != words.end(); ++itr ) {
         if ( dict && !dict->check( *itr ) ) {
             //kdDebug()<<"Word " << *itr <<" is misspelled"<<endl;
-            QStringList sug = dict->suggest( *itr );
+            TQStringList sug = dict->suggest( *itr );
             //kdDebug()<<"Suggestions : "<<sug<<endl;
         }
     }

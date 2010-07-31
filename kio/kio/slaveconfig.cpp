@@ -22,7 +22,7 @@
 
 #include <assert.h>
 
-#include <qdict.h>
+#include <tqdict.h>
 
 #include <kconfig.h>
 #include <kstaticdeleter.h>
@@ -46,11 +46,11 @@ public:
 
 public:
   MetaData global;
-  QDict<MetaData> host;
+  TQDict<MetaData> host;
   KConfig *configFile;
 };
 
-static void readConfig(KConfig *config, const QString & group, MetaData *metaData)
+static void readConfig(KConfig *config, const TQString & group, MetaData *metaData)
 {
    *metaData += config->entryMap(group);
 }
@@ -59,12 +59,12 @@ class SlaveConfigPrivate
 {
   public:
      void readGlobalConfig();
-     SlaveConfigProtocol *readProtocolConfig(const QString &_protocol);
-     SlaveConfigProtocol *findProtocolConfig(const QString &_protocol);
-     void readConfigProtocolHost(const QString &_protocol, SlaveConfigProtocol *scp, const QString &host);
+     SlaveConfigProtocol *readProtocolConfig(const TQString &_protocol);
+     SlaveConfigProtocol *findProtocolConfig(const TQString &_protocol);
+     void readConfigProtocolHost(const TQString &_protocol, SlaveConfigProtocol *scp, const TQString &host);
   public:
      MetaData global;
-     QDict<SlaveConfigProtocol> protocol;
+     TQDict<SlaveConfigProtocol> protocol;
 };
 
 void SlaveConfigPrivate::readGlobalConfig()
@@ -77,12 +77,12 @@ void SlaveConfigPrivate::readGlobalConfig()
        readConfig(config, "<default>", &global);
 }
 
-SlaveConfigProtocol* SlaveConfigPrivate::readProtocolConfig(const QString &_protocol)
+SlaveConfigProtocol* SlaveConfigPrivate::readProtocolConfig(const TQString &_protocol)
 {
    SlaveConfigProtocol *scp = protocol.find(_protocol);
    if (!scp)
    {
-      QString filename = KProtocolInfo::config(_protocol);
+      TQString filename = KProtocolInfo::config(_protocol);
       scp = new SlaveConfigProtocol;
       scp->configFile = new KConfig(filename, true, false);
       protocol.insert(_protocol, scp);
@@ -92,7 +92,7 @@ SlaveConfigProtocol* SlaveConfigPrivate::readProtocolConfig(const QString &_prot
    return scp;
 }
 
-SlaveConfigProtocol* SlaveConfigPrivate::findProtocolConfig(const QString &_protocol)
+SlaveConfigProtocol* SlaveConfigPrivate::findProtocolConfig(const TQString &_protocol)
 {
    SlaveConfigProtocol *scp = protocol.find(_protocol);
    if (!scp)
@@ -100,14 +100,14 @@ SlaveConfigProtocol* SlaveConfigPrivate::findProtocolConfig(const QString &_prot
    return scp;
 }
 
-void SlaveConfigPrivate::readConfigProtocolHost(const QString &, SlaveConfigProtocol *scp, const QString &host)
+void SlaveConfigPrivate::readConfigProtocolHost(const TQString &, SlaveConfigProtocol *scp, const TQString &host)
 {
    MetaData *metaData = new MetaData;
    scp->host.replace(host, metaData);
 
    // Read stuff
    // Break host into domains
-   QString domain = host;
+   TQString domain = host;
 
    if (!domain.contains('.'))
    {
@@ -156,17 +156,17 @@ SlaveConfig::~SlaveConfig()
    _self = 0;
 }
 
-void SlaveConfig::setConfigData(const QString &protocol,
-                                const QString &host,
-                                const QString &key,
-                                const QString &value )
+void SlaveConfig::setConfigData(const TQString &protocol,
+                                const TQString &host,
+                                const TQString &key,
+                                const TQString &value )
 {
    MetaData config;
    config.insert(key, value);
    setConfigData(protocol, host, config);
 }
 
-void SlaveConfig::setConfigData(const QString &protocol, const QString &host, const MetaData &config )
+void SlaveConfig::setConfigData(const TQString &protocol, const TQString &host, const MetaData &config )
 {
    if (protocol.isEmpty())
       d->global += config;
@@ -190,7 +190,7 @@ void SlaveConfig::setConfigData(const QString &protocol, const QString &host, co
    }
 }
 
-MetaData SlaveConfig::configData(const QString &protocol, const QString &host)
+MetaData SlaveConfig::configData(const TQString &protocol, const TQString &host)
 {
    MetaData config = d->global;
    SlaveConfigProtocol *scp = d->findProtocolConfig(protocol);
@@ -209,7 +209,7 @@ MetaData SlaveConfig::configData(const QString &protocol, const QString &host)
    return config;
 }
 
-QString SlaveConfig::configData(const QString &protocol, const QString &host, const QString &key)
+TQString SlaveConfig::configData(const TQString &protocol, const TQString &host, const TQString &key)
 {
    return configData(protocol, host)[key];
 }

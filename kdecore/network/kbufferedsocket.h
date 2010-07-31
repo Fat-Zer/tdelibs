@@ -25,9 +25,9 @@
 #ifndef KBUFFEREDSOCKET_H
 #define KBUFFEREDSOCKET_H
 
-#include <qobject.h>
-#include <qcstring.h>
-#include <qvaluelist.h>
+#include <tqobject.h>
+#include <tqcstring.h>
+#include <tqvaluelist.h>
 #include "kstreamsocket.h"
 #include <kdelibs_export.h>
 
@@ -49,7 +49,7 @@ class KBufferedSocketPrivate;
  *
  * @note Buffered sockets only make sense if you're using them from
  *       the main (event-loop) thread. This is actually a restriction
- *       imposed by Qt's QSocketNotifier. If you want to use a socket
+ *       imposed by Qt's TQSocketNotifier. If you want to use a socket
  *       in an auxiliary thread, please use KStreamSocket.
  *
  * @see KNetwork::KStreamSocket, KNetwork::KServerSocket
@@ -67,8 +67,8 @@ public:
    * @param parent      the parent object for this object
    * @param name        the internal name for this object
    */
-  KBufferedSocket(const QString& node = QString::null, const QString& service = QString::null,
-		  QObject* parent = 0L, const char *name = 0L);
+  KBufferedSocket(const TQString& node = TQString::null, const TQString& service = TQString::null,
+		  TQObject* parent = 0L, const char *name = 0L);
 
   /**
    * Destructor.
@@ -195,7 +195,7 @@ public:
   /**
    * Reads a line of data from the socket buffers.
    */
-  QCString readLine();
+  TQCString readLine();
 
   // KDE4: make virtual, add timeout to match the Qt4 signature
   //       and move to another class up the hierarchy

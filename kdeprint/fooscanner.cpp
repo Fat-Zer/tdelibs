@@ -444,8 +444,8 @@ char *yytext;
  *  Boston, MA 02110-1301, USA.
  **/
 
-#include <qvariant.h>
-#include <qiodevice.h>
+#include <tqvariant.h>
+#include <tqiodevice.h>
 #define YYSTYPE QVariant
 #include "fooparser.cpp.h"
 
@@ -463,7 +463,7 @@ char *yytext;
 			result = 0; \
 	}
 
-QIODevice* kdeprint_foomatic2scanner_device = NULL;
+TQIODevice* kdeprint_foomatic2scanner_device = NULL;
 #line 468 "./fooscanner.cpp"
 
 /* Macros after this point can all be overridden by user definitions in
@@ -776,12 +776,12 @@ YY_RULE_SETUP
 case 14:
 YY_RULE_SETUP
 #line 64 "./fooscanner.l"
-{ yylval = QCString(yytext+1, strlen(yytext)-1); return STRING; }
+{ yylval = TQCString(yytext+1, strlen(yytext)-1); return STRING; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 65 "./fooscanner.l"
-{ yylval = QCString(yytext+1, strlen(yytext)-1); return QUOTED; }
+{ yylval = TQCString(yytext+1, strlen(yytext)-1); return QUOTED; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
@@ -1696,7 +1696,7 @@ int main()
 #line 73 "./fooscanner.l"
 
 
-void kdeprint_foomatic2scanner_init( QIODevice *d )
+void kdeprint_foomatic2scanner_init( TQIODevice *d )
 {
 	kdeprint_foomatic2scanner_device = d;
 }

@@ -35,9 +35,9 @@ using namespace KIO;
 static ParseTreeBase::Ptr *pTree = 0;
 static const char* sCode = 0;
 
-ParseTreeBase::Ptr KIO::parseConstraints( const QString& _constr )
+ParseTreeBase::Ptr KIO::parseConstraints( const TQString& _constr )
 {
-  QCString str = _constr.utf8();
+  TQCString str = _constr.utf8();
   sCode = str.data();
   KTraderParse_mainParse( sCode );
   sCode = 0;
@@ -45,9 +45,9 @@ ParseTreeBase::Ptr KIO::parseConstraints( const QString& _constr )
   return *pTree;
 }
 
-ParseTreeBase::Ptr KIO::parsePreferences( const QString& _prefs )
+ParseTreeBase::Ptr KIO::parsePreferences( const TQString& _prefs )
 {
-  QCString str = _prefs.utf8();
+  TQCString str = _prefs.utf8();
   sCode = str.data();
   KTraderParse_mainParse( sCode );
   sCode = 0;

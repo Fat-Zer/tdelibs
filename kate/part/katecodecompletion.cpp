@@ -34,16 +34,16 @@
 
 #include <kdebug.h>
 
-#include <qwhatsthis.h>
-#include <qvbox.h>
-#include <qlistbox.h>
-#include <qtimer.h>
-#include <qtooltip.h>
-#include <qapplication.h>
-#include <qsizegrip.h>
-#include <qfontmetrics.h>
-#include <qlayout.h>
-#include <qregexp.h>
+#include <tqwhatsthis.h>
+#include <tqvbox.h>
+#include <tqlistbox.h>
+#include <tqtimer.h>
+#include <tqtooltip.h>
+#include <tqapplication.h>
+#include <tqsizegrip.h>
+#include <tqfontmetrics.h>
+#include <tqlayout.h>
+#include <tqregexp.h>
 
 /**
  * This class is used as the codecompletion listbox. It can be resized according to its contents,
@@ -57,11 +57,11 @@ class KateCCListBox : public QListBox
     /**
       @short Create a new CCListBox
     */
-    KateCCListBox (QWidget* parent = 0, const char* name = 0, WFlags f = 0):QListBox(parent, name, f)
+    KateCCListBox (TQWidget* parent = 0, const char* name = 0, WFlags f = 0):TQListBox(parent, name, f)
     {
     }
 
-    QSize sizeHint()  const
+    TQSize sizeHint()  const
     {
         int count = this->count();
         int height = 20;
@@ -80,12 +80,12 @@ class KateCCListBox : public QListBox
             if ( (tmpcount = fontMetrics().width(text(i)) ) > maxcount)
                     maxcount = tmpcount;
 
-        if (maxcount > QApplication::desktop()->width()){
-            tmpwidth = QApplication::desktop()->width() - 5;
+        if (maxcount > TQApplication::desktop()->width()){
+            tmpwidth = TQApplication::desktop()->width() - 5;
             height += horizontalScrollBar()->height();
         } else
             tmpwidth += maxcount;
-        return QSize(tmpwidth,height);
+        return TQSize(tmpwidth,height);
 
     }
 };
@@ -93,8 +93,8 @@ class KateCCListBox : public QListBox
 class KateCompletionItem : public QListBoxText
 {
   public:
-    KateCompletionItem( QListBox* lb, KTextEditor::CompletionEntry entry )
-      : QListBoxText( lb )
+    KateCompletionItem( TQListBox* lb, KTextEditor::CompletionEntry entry )
+      : TQListBoxText( lb )
       , m_entry( entry )
     {
       if( entry.postfix == "()" ) { // should be configurable
@@ -109,31 +109,31 @@ class KateCompletionItem : public QListBoxText
 
 
 KateCodeCompletion::KateCodeCompletion( KateView* view )
-  : QObject( view, "Kate Code Completion" )
+  : TQObject( view, "Kate Code Completion" )
   , m_view( view )
   , m_commentLabel( 0 )
 {
-  m_completionPopup = new QVBox( 0, 0, WType_Popup );
-  m_completionPopup->setFrameStyle( QFrame::Box | QFrame::Plain );
+  m_completionPopup = new TQVBox( 0, 0, WType_Popup );
+  m_completionPopup->setFrameStyle( TQFrame::Box | TQFrame::Plain );
   m_completionPopup->setLineWidth( 1 );
 
   m_completionListBox = new KateCCListBox( m_completionPopup );
-  m_completionListBox->setFrameStyle( QFrame::NoFrame );
-  //m_completionListBox->setCornerWidget( new QSizeGrip( m_completionListBox) );
+  m_completionListBox->setFrameStyle( TQFrame::NoFrame );
+  //m_completionListBox->setCornerWidget( new TQSizeGrip( m_completionListBox) );
   m_completionListBox->setFocusProxy( m_view->m_viewInternal );
 
   m_completionListBox->installEventFilter( this );
 
-  m_completionPopup->resize(m_completionListBox->sizeHint() + QSize(2,2));
+  m_completionPopup->resize(m_completionListBox->sizeHint() + TQSize(2,2));
   m_completionPopup->installEventFilter( this );
   m_completionPopup->setFocusProxy( m_view->m_viewInternal );
 
   m_pArgHint = new KateArgHint( m_view );
-  connect( m_pArgHint, SIGNAL(argHintHidden()),
-           this, SIGNAL(argHintHidden()) );
+  connect( m_pArgHint, TQT_SIGNAL(argHintHidden()),
+           this, TQT_SIGNAL(argHintHidden()) );
 
-  connect( m_view, SIGNAL(cursorPositionChanged()),
-           this, SLOT(slotCursorPosChanged()) );
+  connect( m_view, TQT_SIGNAL(cursorPositionChanged()),
+           this, TQT_SLOT(slotCursorPosChanged()) );
 }
 
 KateCodeCompletion::~KateCodeCompletion()
@@ -146,7 +146,7 @@ bool KateCodeCompletion::codeCompletionVisible () {
 }
 
 void KateCodeCompletion::showCompletionBox(
-    QValueList<KTextEditor::CompletionEntry> complList, int offset, bool casesensitive )
+    TQValueList<KTextEditor::CompletionEntry> complList, int offset, bool casesensitive )
 {
   kdDebug(13035) << "showCompletionBox " << endl;
 
@@ -161,14 +161,14 @@ void KateCodeCompletion::showCompletionBox(
   updateBox( true );
 }
 
-bool KateCodeCompletion::eventFilter( QObject *o, QEvent *e )
+bool KateCodeCompletion::eventFilter( TQObject *o, TQEvent *e )
 {
   if ( o != m_completionPopup &&
        o != m_completionListBox &&
        o != m_completionListBox->viewport() )
     return false;
 
-   if( e->type() == QEvent::Hide )
+   if( e->type() == TQEvent::Hide )
    { 
      //don't use abortCompletion() as aborting here again will send abort signal
      //even on successfull completion we will emit completionAborted() twice...
@@ -179,20 +179,20 @@ bool KateCodeCompletion::eventFilter( QObject *o, QEvent *e )
    }
 
 
-   if ( e->type() == QEvent::MouseButtonDblClick  ) {
+   if ( e->type() == TQEvent::MouseButtonDblClick  ) {
     doComplete();
     return false;
    }
 
-   if ( e->type() == QEvent::MouseButtonPress ) {
-    QTimer::singleShot(0, this, SLOT(showComment()));
+   if ( e->type() == TQEvent::MouseButtonPress ) {
+    TQTimer::singleShot(0, this, TQT_SLOT(showComment()));
     return false;
    }
 
   return false;
 }
 
-void KateCodeCompletion::handleKey (QKeyEvent *e)
+void KateCodeCompletion::handleKey (TQKeyEvent *e)
 {
   // close completion if you move out of range
   if ((e->key() == Key_Up) && (m_completionListBox->currentItem() == 0))
@@ -207,8 +207,8 @@ void KateCodeCompletion::handleKey (QKeyEvent *e)
         (e->key() == Key_Home ) || (e->key() == Key_End)   ||
         (e->key() == Key_Prior) || (e->key() == Key_Next ))
   {
-    QTimer::singleShot(0,this,SLOT(showComment()));
-    QApplication::sendEvent( m_completionListBox, (QEvent*)e );
+    TQTimer::singleShot(0,this,TQT_SLOT(showComment()));
+    TQApplication::sendEvent( m_completionListBox, (TQEvent*)e );
     return;
   }
 
@@ -224,11 +224,11 @@ void KateCodeCompletion::doComplete()
   if( item == 0 )
     return;
 
-  QString text = item->m_entry.text;
-  QString currentLine = m_view->currentTextLine();
+  TQString text = item->m_entry.text;
+  TQString currentLine = m_view->currentTextLine();
   int len = m_view->cursorColumnReal() - m_colCursor;
-  QString currentComplText = currentLine.mid(m_colCursor,len);
-  QString add = text.mid(currentComplText.length());
+  TQString currentComplText = currentLine.mid(m_colCursor,len);
+  TQString add = text.mid(currentComplText.length());
   if( item->m_entry.postfix == "()" )
     add += "(";
 
@@ -269,9 +269,9 @@ void KateCodeCompletion::updateBox( bool )
 
   m_completionListBox->clear();
 
-  QString currentLine = m_view->currentTextLine();
+  TQString currentLine = m_view->currentTextLine();
   int len = m_view->cursorColumnReal() - m_colCursor;
-  QString currentComplText = currentLine.mid(m_colCursor,len);
+  TQString currentComplText = currentLine.mid(m_colCursor,len);
 /* No-one really badly wants those, or?
   kdDebug(13035) << "Column: " << m_colCursor << endl;
   kdDebug(13035) << "Line: " << currentLine << endl;
@@ -280,7 +280,7 @@ void KateCodeCompletion::updateBox( bool )
   kdDebug(13035) << "Text: '" << currentComplText << "'" << endl;
   kdDebug(13035) << "Count: " << m_complList.count() << endl;
 */
-  QValueList<KTextEditor::CompletionEntry>::Iterator it;
+  TQValueList<KTextEditor::CompletionEntry>::Iterator it;
   if( m_caseSensitive ) {
     for( it = m_complList.begin(); it != m_complList.end(); ++it ) {
       if( (*it).text.startsWith(currentComplText) ) {
@@ -305,29 +305,29 @@ void KateCodeCompletion::updateBox( bool )
   }
 
     kdDebug(13035)<<"KateCodeCompletion::updateBox: Resizing widget"<<endl;
-        m_completionPopup->resize(m_completionListBox->sizeHint() + QSize(2,2));
-    QPoint p = m_view->mapToGlobal( m_view->cursorCoordinates() );
+        m_completionPopup->resize(m_completionListBox->sizeHint() + TQSize(2,2));
+    TQPoint p = m_view->mapToGlobal( m_view->cursorCoordinates() );
         int x = p.x();
         int y = p.y() ;
-        if ( y + m_completionPopup->height() + m_view->renderer()->config()->fontMetrics( )->height() > QApplication::desktop()->height() )
+        if ( y + m_completionPopup->height() + m_view->renderer()->config()->fontMetrics( )->height() > TQApplication::desktop()->height() )
                 y -= (m_completionPopup->height() );
         else
                 y += m_view->renderer()->config()->fontMetrics( )->height();
 
-        if (x + m_completionPopup->width() > QApplication::desktop()->width())
-                x = QApplication::desktop()->width() - m_completionPopup->width();
+        if (x + m_completionPopup->width() > TQApplication::desktop()->width())
+                x = TQApplication::desktop()->width() - m_completionPopup->width();
 
-        m_completionPopup->move( QPoint(x,y) );
+        m_completionPopup->move( TQPoint(x,y) );
 
   m_completionListBox->setCurrentItem( 0 );
   m_completionListBox->setSelected( 0, true );
   m_completionListBox->setFocus();
   m_completionPopup->show();
 
-  QTimer::singleShot(0,this,SLOT(showComment()));
+  TQTimer::singleShot(0,this,TQT_SLOT(showComment()));
 }
 
-void KateCodeCompletion::showArgHint ( QStringList functionList, const QString& strWrapping, const QString& strDelimiter )
+void KateCodeCompletion::showArgHint ( TQStringList functionList, const TQString& strWrapping, const TQString& strDelimiter )
 {
   unsigned int line, col;
   m_view->cursorPositionReal( &line, &col );
@@ -335,8 +335,8 @@ void KateCodeCompletion::showArgHint ( QStringList functionList, const QString& 
   m_pArgHint->setArgMarkInfos( strWrapping, strDelimiter );
 
   int nNum = 0;
-  QStringList::Iterator end(functionList.end());
-  for( QStringList::Iterator it = functionList.begin(); it != end; ++it )
+  TQStringList::Iterator end(functionList.end());
+  for( TQStringList::Iterator it = functionList.begin(); it != end; ++it )
   {
     kdDebug(13035) << "Insert function text: " << *it << endl;
 
@@ -345,7 +345,7 @@ void KateCodeCompletion::showArgHint ( QStringList functionList, const QString& 
     nNum++;
   }
 
-  m_pArgHint->move(m_view->mapToGlobal(m_view->cursorCoordinates() + QPoint(0,m_view->renderer()->config()->fontMetrics( )->height())) );
+  m_pArgHint->move(m_view->mapToGlobal(m_view->cursorCoordinates() + TQPoint(0,m_view->renderer()->config()->fontMetrics( )->height())) );
   m_pArgHint->show();
 }
 
@@ -369,13 +369,13 @@ void KateCodeCompletion::showComment()
 
   delete m_commentLabel;
   m_commentLabel = new KateCodeCompletionCommentLabel( 0, item->m_entry.comment );
-  m_commentLabel->setFont(QToolTip::font());
-  m_commentLabel->setPalette(QToolTip::palette());
+  m_commentLabel->setFont(TQToolTip::font());
+  m_commentLabel->setPalette(TQToolTip::palette());
 
-  QPoint rightPoint = m_completionPopup->mapToGlobal(QPoint(m_completionPopup->width(),0));
-  QPoint leftPoint = m_completionPopup->mapToGlobal(QPoint(0,0));
-  QRect screen = QApplication::desktop()->screenGeometry ( m_commentLabel );
-  QPoint finalPoint;
+  TQPoint rightPoint = m_completionPopup->mapToGlobal(TQPoint(m_completionPopup->width(),0));
+  TQPoint leftPoint = m_completionPopup->mapToGlobal(TQPoint(0,0));
+  TQRect screen = TQApplication::desktop()->screenGeometry ( m_commentLabel );
+  TQPoint finalPoint;
   if (rightPoint.x()+m_commentLabel->width() > screen.x() + screen.width())
     finalPoint.setX(leftPoint.x()-m_commentLabel->width());
   else
@@ -392,13 +392,13 @@ void KateCodeCompletion::showComment()
 }
 
 KateArgHint::KateArgHint( KateView* parent, const char* name )
-    : QFrame( parent, name, WType_Popup )
+    : TQFrame( parent, name, WType_Popup )
 {
     setBackgroundColor( black );
     setPaletteForegroundColor( Qt::black );
 
     labelDict.setAutoDelete( true );
-    layout = new QVBoxLayout( this, 1, 2 );
+    layout = new TQVBoxLayout( this, 1, 2 );
     layout->setAutoAdd( true );
     editorView = parent;
 
@@ -414,7 +414,7 @@ KateArgHint::~KateArgHint()
 {
 }
 
-void KateArgHint::setArgMarkInfos( const QString& wrapping, const QString& delimiter )
+void KateArgHint::setArgMarkInfos( const TQString& wrapping, const TQString& delimiter )
 {
     m_wrapping = wrapping;
     m_delimiter = delimiter;
@@ -454,10 +454,10 @@ void KateArgHint::cursorPositionChanged( KateView* view, int line, int col )
     int nCountDelimiter = 0;
     int count = 0;
 
-    QString currentTextLine = view->doc()->textLine( line );
-    QString text = currentTextLine.mid( m_currentCol, col - m_currentCol );
-    QRegExp strconst_rx( "\"[^\"]*\"" );
-    QRegExp chrconst_rx( "'[^']*'" );
+    TQString currentTextLine = view->doc()->textLine( line );
+    TQString text = currentTextLine.mid( m_currentCol, col - m_currentCol );
+    TQRegExp strconst_rx( "\"[^\"]*\"" );
+    TQRegExp chrconst_rx( "'[^']*'" );
 
     text = text
         .replace( strconst_rx, "\"\"" )
@@ -484,11 +484,11 @@ void KateArgHint::cursorPositionChanged( KateView* view, int line, int col )
 
 }
 
-void KateArgHint::addFunction( int id, const QString& prot )
+void KateArgHint::addFunction( int id, const TQString& prot )
 {
     m_functionMap[ id ] = prot;
-    QLabel* label = new QLabel( prot.stripWhiteSpace().simplifyWhiteSpace(), this );
-    label->setBackgroundColor( QColor(255, 255, 238) );
+    TQLabel* label = new TQLabel( prot.stripWhiteSpace().simplifyWhiteSpace(), this );
+    label->setBackgroundColor( TQColor(255, 255, 238) );
     label->show();
     labelDict.insert( id, label );
 
@@ -507,15 +507,15 @@ void KateArgHint::setCurrentFunction( int currentFunction )
             currentFunction = 0;
 
         if( m_markCurrentFunction && m_currentFunction >= 0 ){
-            QLabel* label = labelDict[ m_currentFunction ];
+            TQLabel* label = labelDict[ m_currentFunction ];
             label->setFont( font() );
         }
 
         m_currentFunction = currentFunction;
 
         if( m_markCurrentFunction ){
-            QLabel* label = labelDict[ currentFunction ];
-            QFont fnt( font() );
+            TQLabel* label = labelDict[ currentFunction ];
+            TQFont fnt( font() );
             fnt.setBold( true );
             label->setFont( fnt );
         }
@@ -526,14 +526,14 @@ void KateArgHint::setCurrentFunction( int currentFunction )
 
 void KateArgHint::show()
 {
-    QFrame::show();
+    TQFrame::show();
     adjustSize();
 }
 
-bool KateArgHint::eventFilter( QObject*, QEvent* e )
+bool KateArgHint::eventFilter( TQObject*, TQEvent* e )
 {
-    if( isVisible() && e->type() == QEvent::KeyPress ){
-        QKeyEvent* ke = static_cast<QKeyEvent*>( e );
+    if( isVisible() && e->type() == TQEvent::KeyPress ){
+        TQKeyEvent* ke = static_cast<TQKeyEvent*>( e );
         if( (ke->state() & ControlButton) && ke->key() == Key_Left ){
             setCurrentFunction( currentFunction() - 1 );
             ke->accept();
@@ -553,9 +553,9 @@ bool KateArgHint::eventFilter( QObject*, QEvent* e )
 
 void KateArgHint::adjustSize( )
 {
-    QRect screen = QApplication::desktop()->screenGeometry( pos() );
+    TQRect screen = TQApplication::desktop()->screenGeometry( pos() );
 
-    QFrame::adjustSize();
+    TQFrame::adjustSize();
     if( width() > screen.width() )
         resize( screen.width(), height() );
 

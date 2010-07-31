@@ -40,7 +40,7 @@ ClassValue::ClassValue(const ClassValue & x)
 {
 }
 
-ClassValue::ClassValue(const QCString & s)
+ClassValue::ClassValue(const TQCString & s)
 	:	Value(s)
 {
 }
@@ -58,7 +58,7 @@ ClassValue::operator = (ClassValue & x)
 }
 
 	ClassValue &
-ClassValue::operator = (const QCString & s)
+ClassValue::operator = (const TQCString & s)
 {
 	Value::operator = (s);
 	return *this;

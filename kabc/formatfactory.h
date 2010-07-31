@@ -21,8 +21,8 @@
 #ifndef KABC_FORMATFACTORY_H
 #define KABC_FORMATFACTORY_H
 
-#include <qdict.h>
-#include <qstring.h>
+#include <tqdict.h>
+#include <tqstring.h>
 
 #include <kconfig.h>
 #include <klibloader.h>
@@ -33,9 +33,9 @@ namespace KABC {
 
 struct FormatInfo
 {
-  QString library;
-  QString nameLabel;
-  QString descriptionLabel;
+  TQString library;
+  TQString nameLabel;
+  TQString descriptionLabel;
 };
 
 /**
@@ -46,8 +46,8 @@ struct FormatInfo
  * \code
  * KABC::FormatFactory *factory = KABC::FormatFactory::self();
  *
- * QStringList list = factory->formats();
- * QStringList::Iterator it;
+ * TQStringList list = factory->formats();
+ * TQStringList::Iterator it;
  * for ( it = list.begin(); it != list.end(); ++it ) {
  *   KABC::FormatPlugin *format = factory->format( (*it) );
  *   // do something with format
@@ -74,27 +74,27 @@ class KABC_EXPORT FormatFactory
      *
      * @param type   The type of the format, returned by formats()
      */
-    FormatPlugin *format( const QString &type );
+    FormatPlugin *format( const TQString &type );
 
     /**
      * Returns a list of all available format types.
      */
-    QStringList formats();
+    TQStringList formats();
 
     /**
      * Returns the info structure for a special type.
      */
-    FormatInfo *info( const QString &type );
+    FormatInfo *info( const TQString &type );
 
   protected:
     FormatFactory();
 
   private:
-    KLibrary *openLibrary( const QString& libName );
+    KLibrary *openLibrary( const TQString& libName );
 
     static FormatFactory *mSelf;
 
-    QDict<FormatInfo> mFormatList;
+    TQDict<FormatInfo> mFormatList;
 };
 
 }

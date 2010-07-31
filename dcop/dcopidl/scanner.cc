@@ -849,8 +849,8 @@ extern int idl_line_no;
 int comment_mode;
 int function_mode = 0;
 
-#include <qstring.h>
-#include <qregexp.h>
+#include <tqstring.h>
+#include <tqregexp.h>
 
 static long ascii_to_longlong( long base, const char *s )
 {
@@ -1225,10 +1225,10 @@ case 10:
 YY_RULE_SETUP
 #line 170 "scanner.ll"
 {
-			  QString s( yytext );
-                          int i = s.find(QRegExp("[\"<]"))+1;
-                          int j = s.find(QRegExp("[\">]"), i);
-			  yylval._str = new QString( s.mid( i, j - i ) );
+			  TQString s( yytext );
+                          int i = s.find(TQRegExp("[\"<]"))+1;
+                          int j = s.find(TQRegExp("[\">]"), i);
+			  yylval._str = new TQString( s.mid( i, j - i ) );
                           idl_line_no++;
                           return T_INCLUDE;
                         }
@@ -1539,7 +1539,7 @@ case 71:
 YY_RULE_SETUP
 #line 243 "scanner.ll"
 {
-			  yylval._str = new QString( yytext );
+			  yylval._str = new TQString( yytext );
 			  return T_IDENTIFIER;
 			}
 	YY_BREAK
@@ -1587,7 +1587,7 @@ case 80:
 YY_RULE_SETUP
 #line 268 "scanner.ll"
 {
-                          QCString s( yytext );
+                          TQCString s( yytext );
 	                  s = s.mid( 1, s.length() - 2 );
 			  yylval._char = translate_char( s );
 			  return T_CHARACTER_LITERAL;
@@ -1597,8 +1597,8 @@ case 81:
 YY_RULE_SETUP
 #line 274 "scanner.ll"
 {
-                          QString s( yytext );
-                          yylval._str = new QString( s.mid( 1, s.length() - 2 ) );
+                          TQString s( yytext );
+                          yylval._str = new TQString( s.mid( 1, s.length() - 2 ) );
 			  return T_STRING_LITERAL;
 			}
 	YY_BREAK

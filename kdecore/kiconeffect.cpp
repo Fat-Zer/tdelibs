@@ -15,18 +15,18 @@
 #include <unistd.h>
 #include <math.h>
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qbitmap.h>
-#include <qpixmap.h>
-#include <qimage.h>
-#include <qcolor.h>
-#include <qwidget.h>
-#include <qpainter.h>
-#include <qpen.h>
-#include <qapplication.h>
-#include <qpoint.h>
-#include <qrect.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqbitmap.h>
+#include <tqpixmap.h>
+#include <tqimage.h>
+#include <tqcolor.h>
+#include <tqwidget.h>
+#include <tqpainter.h>
+#include <tqpen.h>
+#include <tqapplication.h>
+#include <tqpoint.h>
+#include <tqrect.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -45,8 +45,8 @@ extern bool qt_has_xft;
 class KIconEffectPrivate
 {
 public:
-	QString mKey[6][3];
-	QColor  mColor2[6][3];
+	TQString mKey[6][3];
+	TQColor  mColor2[6][3];
 };
 
 KIconEffect::KIconEffect()
@@ -66,25 +66,25 @@ void KIconEffect::init()
     KConfig *config = KGlobal::config();
 
     int i, j, effect=-1;
-    QStringList groups;
+    TQStringList groups;
     groups += "Desktop";
     groups += "Toolbar";
     groups += "MainToolbar";
     groups += "Small";
     groups += "Panel";
 
-    QStringList states;
+    TQStringList states;
     states += "Default";
     states += "Active";
     states += "Disabled";
 
-    QStringList::ConstIterator it, it2;
-    QString _togray("togray");
-    QString _colorize("colorize");
-    QString _desaturate("desaturate");
-    QString _togamma("togamma");
-    QString _none("none");
-    QString _tomonochrome("tomonochrome");
+    TQStringList::ConstIterator it, it2;
+    TQString _togray("togray");
+    TQString _colorize("colorize");
+    TQString _desaturate("desaturate");
+    TQString _togamma("togamma");
+    TQString _none("none");
+    TQString _tomonochrome("tomonochrome");
 
     KConfigGroupSaver cs(config, "default");
 
@@ -101,17 +101,17 @@ void KIconEffect::init()
         mValue[i][0] = 1.0;
         mValue[i][1] = ((i==0)||(i==4)) ? 0.7 : 1.0;
         mValue[i][2] = 1.0;
-        mColor[i][0] = QColor(144,128,248);
-        mColor[i][1] = QColor(169,156,255);
-        mColor[i][2] = QColor(34,202,0);
-        d->mColor2[i][0] = QColor(0,0,0);
-        d->mColor2[i][1] = QColor(0,0,0);
-        d->mColor2[i][2] = QColor(0,0,0);
+        mColor[i][0] = TQColor(144,128,248);
+        mColor[i][1] = TQColor(169,156,255);
+        mColor[i][2] = TQColor(34,202,0);
+        d->mColor2[i][0] = TQColor(0,0,0);
+        d->mColor2[i][1] = TQColor(0,0,0);
+        d->mColor2[i][2] = TQColor(0,0,0);
 
 	config->setGroup(*it + "Icons");
 	for (it2=states.begin(), j=0; it2!=states.end(); it2++, j++)
 	{
-	    QString tmp = config->readEntry(*it2 + "Effect");
+	    TQString tmp = config->readEntry(*it2 + "Effect");
 	    if (tmp == _togray)
 		effect = ToGray;
 	    else if (tmp == _colorize)
@@ -142,19 +142,19 @@ bool KIconEffect::hasEffect(int group, int state) const
     return mEffect[group][state] != NoEffect;
 }
 
-QString KIconEffect::fingerprint(int group, int state) const
+TQString KIconEffect::fingerprint(int group, int state) const
 {
     if ( group >= KIcon::LastGroup ) return "";
-    QString cached = d->mKey[group][state];
+    TQString cached = d->mKey[group][state];
     if (cached.isEmpty())
     {
-        QString tmp;
+        TQString tmp;
         cached = tmp.setNum(mEffect[group][state]);
         cached += ':';
         cached += tmp.setNum(mValue[group][state]);
         cached += ':';
-        cached += mTrans[group][state] ? QString::fromLatin1("trans")
-            : QString::fromLatin1("notrans");
+        cached += mTrans[group][state] ? TQString::fromLatin1("trans")
+            : TQString::fromLatin1("notrans");
         if (mEffect[group][state] == Colorize || mEffect[group][state] == ToMonochrome)
         {
             cached += ':';
@@ -172,7 +172,7 @@ QString KIconEffect::fingerprint(int group, int state) const
     return cached;
 }
 
-QImage KIconEffect::apply(QImage image, int group, int state) const
+TQImage KIconEffect::apply(TQImage image, int group, int state) const
 {
     if (state >= KIcon::LastState)
     {
@@ -188,12 +188,12 @@ QImage KIconEffect::apply(QImage image, int group, int state) const
 	    mColor[group][state], d->mColor2[group][state], mTrans[group][state]);
 }
 
-QImage KIconEffect::apply(QImage image, int effect, float value, const QColor col, bool trans) const
+TQImage KIconEffect::apply(TQImage image, int effect, float value, const TQColor col, bool trans) const
 {
     return apply (image, effect, value, col, KGlobalSettings::baseColor(), trans);
 }
 
-QImage KIconEffect::apply(QImage image, int effect, float value, const QColor col, const QColor col2, bool trans) const
+TQImage KIconEffect::apply(TQImage image, int effect, float value, const TQColor col, const TQColor col2, bool trans) const
 {
     if (effect >= LastEffect )
     {
@@ -229,7 +229,7 @@ QImage KIconEffect::apply(QImage image, int effect, float value, const QColor co
     return image;
 }
 
-QPixmap KIconEffect::apply(QPixmap pixmap, int group, int state) const
+TQPixmap KIconEffect::apply(TQPixmap pixmap, int group, int state) const
 {
     if (state >= KIcon::LastState)
     {
@@ -245,16 +245,16 @@ QPixmap KIconEffect::apply(QPixmap pixmap, int group, int state) const
 	    mColor[group][state], d->mColor2[group][state], mTrans[group][state]);
 }
 
-QPixmap KIconEffect::apply(QPixmap pixmap, int effect, float value,
-	const QColor col, bool trans) const
+TQPixmap KIconEffect::apply(TQPixmap pixmap, int effect, float value,
+	const TQColor col, bool trans) const
 {
     return apply (pixmap, effect, value, col, KGlobalSettings::baseColor(), trans);
 }
 
-QPixmap KIconEffect::apply(QPixmap pixmap, int effect, float value,
-	const QColor col, const QColor col2, bool trans) const
+TQPixmap KIconEffect::apply(TQPixmap pixmap, int effect, float value,
+	const TQColor col, const TQColor col2, bool trans) const
 {
-    QPixmap result;
+    TQPixmap result;
 
     if (effect >= LastEffect )
     {
@@ -269,7 +269,7 @@ QPixmap KIconEffect::apply(QPixmap pixmap, int effect, float value,
     }
     else if ( effect != NoEffect )
     {
-        QImage tmpImg = pixmap.convertToImage();
+        TQImage tmpImg = pixmap.convertToImage();
         tmpImg = apply(tmpImg, effect, value, col, col2, trans);
         result.convertFromImage(tmpImg);
     }
@@ -282,7 +282,7 @@ QPixmap KIconEffect::apply(QPixmap pixmap, int effect, float value,
 // Taken from KImageEffect. We don't want to link kdecore to kdeui! As long
 // as this code is not too big, it doesn't seem much of a problem to me.
 
-void KIconEffect::toGray(QImage &img, float value)
+void KIconEffect::toGray(TQImage &img, float value)
 {
     int pixels = (img.depth() > 8) ? img.width()*img.height()
 	    : img.numColors();
@@ -304,7 +304,7 @@ void KIconEffect::toGray(QImage &img, float value)
     }
 }
 
-void KIconEffect::colorize(QImage &img, const QColor &col, float value)
+void KIconEffect::colorize(TQImage &img, const TQColor &col, float value)
 {
     int pixels = (img.depth() > 8) ? img.width()*img.height()
 	    : img.numColors();
@@ -345,7 +345,7 @@ void KIconEffect::colorize(QImage &img, const QColor &col, float value)
     }
 }
 
-void KIconEffect::toMonochrome(QImage &img, const QColor &black, const QColor &white, float value) {
+void KIconEffect::toMonochrome(TQImage &img, const TQColor &black, const TQColor &white, float value) {
    int pixels = (img.depth() > 8) ? img.width()*img.height() : img.numColors();
    unsigned int *data = img.depth() > 8 ? (unsigned int *) img.bits()
          : (unsigned int *) img.colorTable();
@@ -395,13 +395,13 @@ void KIconEffect::toMonochrome(QImage &img, const QColor &black, const QColor &w
    }
 }
 
-void KIconEffect::deSaturate(QImage &img, float value)
+void KIconEffect::deSaturate(TQImage &img, float value)
 {
     int pixels = (img.depth() > 8) ? img.width()*img.height()
 	    : img.numColors();
     unsigned int *data = (img.depth() > 8) ? (unsigned int *) img.bits()
 	    : (unsigned int *) img.colorTable();
-    QColor color;
+    TQColor color;
     int h, s, v, i;
     for (i=0; i<pixels; i++)
     {
@@ -413,13 +413,13 @@ void KIconEffect::deSaturate(QImage &img, float value)
     }
 }
 
-void KIconEffect::toGamma(QImage &img, float value)
+void KIconEffect::toGamma(TQImage &img, float value)
 {
     int pixels = (img.depth() > 8) ? img.width()*img.height()
 	    : img.numColors();
     unsigned int *data = (img.depth() > 8) ? (unsigned int *) img.bits()
 	    : (unsigned int *) img.colorTable();
-    QColor color;
+    TQColor color;
     int i, rval, gval, bval;
     float gamma;
     gamma = 1/(2*value+0.5);
@@ -435,7 +435,7 @@ void KIconEffect::toGamma(QImage &img, float value)
     }
 }
 
-void KIconEffect::semiTransparent(QImage &img)
+void KIconEffect::semiTransparent(TQImage &img)
 {
     img.setAlphaBuffer(true);
 
@@ -509,22 +509,22 @@ void KIconEffect::semiTransparent(QImage &img)
     }
 }
 
-void KIconEffect::semiTransparent(QPixmap &pix)
+void KIconEffect::semiTransparent(TQPixmap &pix)
 {
     if ( qt_use_xrender && qt_has_xft )
     {
-	QImage img=pix.convertToImage();
+	TQImage img=pix.convertToImage();
 	semiTransparent(img);
 	pix.convertFromImage(img);
 	return;
     }
 
-    QImage img;
+    TQImage img;
     if (pix.mask() != 0L)
 	img = pix.mask()->convertToImage();
     else
     {
-	img.create(pix.size(), 1, 2, QImage::BigEndian);
+	img.create(pix.size(), 1, 2, TQImage::BigEndian);
 	img.fill(1);
     }
 
@@ -535,14 +535,14 @@ void KIconEffect::semiTransparent(QPixmap &pix)
 	for (int x=0; x<(img.width()+31)/32; x++)
 	    line[x] &= pattern;
     }
-    QBitmap mask;
+    TQBitmap mask;
     mask.convertFromImage(img);
     pix.setMask(mask);
 }
 
-QImage KIconEffect::doublePixels(QImage src) const
+TQImage KIconEffect::doublePixels(TQImage src) const
 {
-    QImage dst;
+    TQImage dst;
     if (src.depth() == 1)
     {
 	kdDebug(265) << "image depth 1 not supported\n";
@@ -589,7 +589,7 @@ QImage KIconEffect::doublePixels(QImage src) const
     return dst;
 }
 
-void KIconEffect::overlay(QImage &src, QImage &overlay)
+void KIconEffect::overlay(TQImage &src, TQImage &overlay)
 {
     if (src.depth() != overlay.depth())
     {
@@ -704,7 +704,7 @@ void KIconEffect::overlay(QImage &src, QImage &overlay)
 }
 
     void
-KIconEffect::visualActivate(QWidget * widget, QRect rect)
+KIconEffect::visualActivate(TQWidget * widget, TQRect rect)
 {
     if (!KGlobalSettings::visualActivate())
         return;
@@ -738,12 +738,12 @@ KIconEffect::visualActivate(QWidget * widget, QRect rect)
 
     //kdDebug() << "actCount=" << actCount << " actDelay=" << actDelay << endl;
 
-    QPoint c = rect.center();
+    TQPoint c = rect.center();
 
-    QPainter p(widget);
+    TQPainter p(widget);
 
     // Use NotROP to avoid having to repaint the pixmap each time.
-    p.setPen(QPen(Qt::black, 2, Qt::DotLine));
+    p.setPen(TQPen(Qt::black, 2, Qt::DotLine));
     p.setRasterOp(Qt::NotROP);
 
     // The spacing between the rects we draw.
@@ -772,7 +772,7 @@ KIconEffect::visualActivate(QWidget * widget, QRect rect)
 }
 
 void
-KIconEffect::visualActivate(QWidget * widget, QRect rect, QPixmap *pixmap)
+KIconEffect::visualActivate(TQWidget * widget, TQRect rect, TQPixmap *pixmap)
 {
     if (!KGlobalSettings::visualActivate())
         return;
@@ -811,8 +811,8 @@ KIconEffect::visualActivate(QWidget * widget, QRect rect, QPixmap *pixmap)
     unsigned int deltaX = rect.width() / actCount * 1.5;
     unsigned int deltaY = rect.height() / actCount * 1.5;
 
-    QPoint c = rect.center();
-    QRect maxRect(c.x() - (actCount * 2) * deltaX /2,
+    TQPoint c = rect.center();
+    TQRect maxRect(c.x() - (actCount * 2) * deltaX /2,
 	          c.y() - (actCount * 2) * deltaY /2,
 		  actCount * 2 * deltaX,
 		  actCount * 2 * deltaY);
@@ -821,7 +821,7 @@ KIconEffect::visualActivate(QWidget * widget, QRect rect, QPixmap *pixmap)
     if ((widget->rect().width() <= maxRect.width())
        || (widget->rect().height() <= maxRect.height()))
     {
-	QPoint topLeft(rect.x(), rect.y());
+	TQPoint topLeft(rect.x(), rect.y());
 	rect.moveLeft(widget->mapToGlobal(topLeft).x());
 	rect.moveTop(widget->mapToGlobal(topLeft).y());
 	c = rect.center();
@@ -831,12 +831,12 @@ KIconEffect::visualActivate(QWidget * widget, QRect rect, QPixmap *pixmap)
 			actCount * 2 * deltaY);
     }
 
-    QPainter *p;
-    QImage img = pixmap->convertToImage();
-    QPixmap pix;
-    QPixmap composite(maxRect.width(), maxRect.height(), -1, QPixmap::BestOptim);
-    QPainter cPainter(&composite);
-    QPoint cComposite = composite.rect().center();
+    TQPainter *p;
+    TQImage img = pixmap->convertToImage();
+    TQPixmap pix;
+    TQPixmap composite(maxRect.width(), maxRect.height(), -1, TQPixmap::BestOptim);
+    TQPainter cPainter(&composite);
+    TQPoint cComposite = composite.rect().center();
 
     // enable alpha blending
     img.setAlphaBuffer(true);
@@ -846,8 +846,8 @@ KIconEffect::visualActivate(QWidget * widget, QRect rect, QPixmap *pixmap)
     if ((widget->rect().width() <= maxRect.width())
        || (widget->rect().height() <= maxRect.height()))
     {
-        p = new QPainter(QApplication::desktop()->screen( -1 ), TRUE);
-	pix = QPixmap::grabWindow((QApplication::desktop()->screen( -1 ))->winId(),
+        p = new TQPainter(TQApplication::desktop()->screen( -1 ), TRUE);
+	pix = TQPixmap::grabWindow((TQApplication::desktop()->screen( -1 ))->winId(),
 		    		      maxRect.x(),
 				      maxRect.y(),
 				      maxRect.width(),
@@ -855,8 +855,8 @@ KIconEffect::visualActivate(QWidget * widget, QRect rect, QPixmap *pixmap)
     } else
     {
 	// not as ugly as drawing directly to the screen
-	p = new QPainter(widget);
-	pix = QPixmap::grabWidget(widget,
+	p = new TQPainter(widget);
+	pix = TQPixmap::grabWidget(widget,
 			              maxRect.x(),
 				      maxRect.y(),
 				      maxRect.width(),

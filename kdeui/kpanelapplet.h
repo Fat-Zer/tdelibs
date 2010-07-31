@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __kpanelapplet_h__
 #define __kpanelapplet_h__
 
-#include <qframe.h>
+#include <tqframe.h>
 #include <kconfig.h>
 
 class KConfig;
@@ -78,7 +78,7 @@ class QPopupMenu;
  *
  * extern "C"
  * {
- *     KPanelApplet* init(QWidget *parent, const QString& configFile)
+ *     KPanelApplet* init(TQWidget *parent, const TQString& configFile)
  *     {
  *         KGlobal::locale()->insertCatalogue("exampleapplet");
  *         return new ExampleApplet(configFile, KPanelApplet::Normal,
@@ -124,8 +124,8 @@ public:
      * @param name A Qt object name for your applet.
      * @param f Window control flags
      **/
-    KPanelApplet(const QString& configFile, Type t = Normal,
-                 int actions = 0, QWidget *parent = 0, const char *name = 0,
+    KPanelApplet(const TQString& configFile, Type t = Normal,
+                 int actions = 0, TQWidget *parent = 0, const char *name = 0,
                  WFlags f = 0);
 
     /**
@@ -213,9 +213,9 @@ public:
 
     /**
      * @return the applet's custom menu, usually the same as the context menu, or 0 if none
-     * see setCustomMenu(QPopupMenu*)
+     * see setCustomMenu(TQPopupMenu*)
      */
-    const QPopupMenu* customMenu() const;
+    const TQPopupMenu* customMenu() const;
 
     /**
      * @internal
@@ -335,7 +335,7 @@ protected:
      * If the menu is deleted during the life of the applet, be sure to call this method again
      * with the new menu (or 0) to avoid crashes
      */
-    void setCustomMenu(const QPopupMenu*);
+    void setCustomMenu(const TQPopupMenu*);
 
     /**
      * Register widgets that can receive keyboard focus with this this method
@@ -344,7 +344,7 @@ protected:
      * @param watch whether to start watching the widget, or to stop doing so
      * @since 3.4
      */
-    void watchForFocus(QWidget* widget, bool watch = true);
+    void watchForFocus(TQWidget* widget, bool watch = true);
 
     /**
      * Call this whenever focus is needed or not needed. You do not have to call this method
@@ -378,7 +378,7 @@ protected:
     // FIXME: Remove for KDE 4
     virtual KDE_DEPRECATED void popupDirectionChange( Direction /*direction*/ ) {}
 
-    bool eventFilter(QObject *, QEvent *);
+    bool eventFilter(TQObject *, TQEvent *);
 
 private:
     Type         _type;

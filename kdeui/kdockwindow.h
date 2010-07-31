@@ -18,7 +18,7 @@
 #ifndef KDOCKWINDOW_H
 #define KDOCKWINDOW_H
 
-#include <qlabel.h>
+#include <tqlabel.h>
 #include <ksystemtray.h>
 
 #ifndef KDE_NO_COMPAT
@@ -33,7 +33,7 @@ class KDE_DEPRECATED KDockWindow : public KSystemTray
 {
     Q_OBJECT
 public:
-    KDockWindow( QWidget* parent = 0, const char* name  = 0 )
+    KDockWindow( TQWidget* parent = 0, const char* name  = 0 )
 	: KSystemTray( parent, name ) {}
     ~KDockWindow() {}
 };

@@ -26,8 +26,8 @@
 #include <kprocess.h>
 #include <kdebug.h>
 
-LpqHelper::LpqHelper(QObject *parent, const char *name)
-: QObject(parent, name)
+LpqHelper::LpqHelper(TQObject *parent, const char *name)
+: TQObject(parent, name)
 {
 	m_exepath = KStandardDirs::findExe("lpq");
 }
@@ -36,7 +36,7 @@ LpqHelper::~LpqHelper()
 {
 }
 
-KMJob* LpqHelper::parseLineLpr(const QString& line)
+KMJob* LpqHelper::parseLineLpr(const TQString& line)
 {
 	QString	rank = line.left(7);
 	if (!rank[0].isDigit() && rank != "active")
@@ -54,7 +54,7 @@ KMJob* LpqHelper::parseLineLpr(const QString& line)
 	return job;
 }
 
-KMJob* LpqHelper::parseLineLPRng(const QString& line)
+KMJob* LpqHelper::parseLineLPRng(const TQString& line)
 {
 	QString	rank = line.left(7).stripWhiteSpace();
 	if (!rank[0].isDigit() && rank != "active" && rank != "hold")
@@ -80,7 +80,7 @@ KMJob* LpqHelper::parseLineLPRng(const QString& line)
 	return job;
 }
 
-void LpqHelper::listJobs(QPtrList<KMJob>& jobs, const QString& prname, int limit)
+void LpqHelper::listJobs(TQPtrList<KMJob>& jobs, const TQString& prname, int limit)
 {
 	KPipeProcess	proc;
 	if (!m_exepath.isEmpty() && proc.open(m_exepath + " -P " + KProcess::quote(prname)))
@@ -105,7 +105,7 @@ void LpqHelper::listJobs(QPtrList<KMJob>& jobs, const QString& prname, int limit
 			if (job)
 			{
 				job->setPrinter(prname);
-				job->setUri("lpd://"+prname+"/"+QString::number(job->id()));
+				job->setUri("lpd://"+prname+"/"+TQString::number(job->id()));
 				jobs.append(job);
 				count++;
 			}

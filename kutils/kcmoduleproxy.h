@@ -21,8 +21,8 @@
 #ifndef KCMODULEPROXY_H
 #define KCMODULEPROXY_H
 
-#include <qwidget.h>
-#include <qstringlist.h>
+#include <tqwidget.h>
+#include <tqstringlist.h>
 
 #include <kservice.h>
 #include <kdelibs_export.h>
@@ -42,7 +42,7 @@ class KProcess;
  * modules are to be displayed. It ensures layout is consistent, handles
  * root/administrator modules and in general takes care of the details
  * needed for making a module available in an interface. A KCModuleProxy
- * can be treated as a QWidget, without worrying about the details specific
+ * can be treated as a TQWidget, without worrying about the details specific
  * for modules such as library loading. KCModuleProxy is not a sub class of KCModule
  * but its API closely resembles KCModule's.\n
  * Usually, an instance is created by passing one of the constructors a KService::Ptr,
@@ -81,14 +81,14 @@ public:
 	 * a alternative will be tried, resulting in the module appearing in its
 	 * own window, if at all.
 	 * The embedded module will be load()ed.
-	 * @param parent the parent QWidget.
+	 * @param parent the parent TQWidget.
 	 * @param name the module's name.
 	 * @param args This is used in the implementation and is internal.
 	 * Use the default.
 	 */
 	KCModuleProxy( const KCModuleInfo & info, bool withFallback = true,
-			QWidget * parent = 0, const char * name = 0,
-			const QStringList & args = QStringList() );
+			TQWidget * parent = 0, const char * name = 0,
+			const TQStringList & args = TQStringList() );
 
 	/**
 	 * Constructs a KCModuleProxy from a module's service name, which is
@@ -100,14 +100,14 @@ public:
 	 * a alternative will be tried, resulting in the module appearing in its
 	 * own window, if at all.
 	 * The embedded module will be load()ed.
-	 * @param parent the parent QWidget.
+	 * @param parent the parent TQWidget.
 	 * @param name the module's name.
 	 * @param args This is used in the implementation and is internal.
 	 * Use the default.
 	 */
-	KCModuleProxy( const QString& serviceName, bool withFallback = true,
-			QWidget * parent = 0, const char * name = 0,
-			const QStringList & args = QStringList() );
+	KCModuleProxy( const TQString& serviceName, bool withFallback = true,
+			TQWidget * parent = 0, const char * name = 0,
+			const TQStringList & args = TQStringList() );
 
 	/**
 	 * Constructs a KCModuleProxy from KService. Otherwise equal to the one above.
@@ -117,14 +117,14 @@ public:
 	 * a alternative will be tried, resulting in the module appearing in its
 	 * own window, if at all.
 	 * The embedded module will be load()ed.
-	 * @param parent the parent QWidget.
+	 * @param parent the parent TQWidget.
 	 * @param name the module's name.
 	 * @param args This is used in the implementation and is internal.
 	 * Use the default.
 	 */
 	KCModuleProxy( const KService::Ptr& service, bool withFallback = true,
-			QWidget  * parent = 0, const char * name = 0,
-			const QStringList & args = QStringList() );
+			TQWidget  * parent = 0, const char * name = 0,
+			const TQStringList & args = TQStringList() );
 
 	/**
 	 * Default destructor
@@ -149,7 +149,7 @@ public:
 	/**
 	 * @return the module's quickHelp();
 	 */
-	QString quickHelp() const;
+	TQString quickHelp() const;
 
 	/**
 	 * @return the module's aboutData()
@@ -167,7 +167,7 @@ public:
 	 * message, if it has one
 	 * @deprecated
 	 */
-	QString rootOnlyMsg() const;
+	TQString rootOnlyMsg() const;
 	//KDE4 remove. There's a limit for convenience functions,
 	// this one's available via moduleInfo()-> and realModule()->
 
@@ -228,7 +228,7 @@ public:
 	 *
 	 * @since 3.4
 	 */
-	QCString dcopName() const;
+	TQCString dcopName() const;
 
 public slots:
 
@@ -292,7 +292,7 @@ protected:
 	 * Reimplemented for internal purposes. Makes sure the encapsulated
 	 * module is loaded before the show event is taken care of.
 	 */
-	void showEvent( QShowEvent * );
+	void showEvent( TQShowEvent * );
 
 	/**
 	 * Internal intialization function, called by the constructors.
@@ -318,7 +318,7 @@ private slots:
 	* @param function the function signature of the function to call.
 	* @since 3.4
 	*/
-	void callRootModule( const QCString& function );
+	void callRootModule( const TQCString& function );
 
 	/**
 	 * This is called when the module exits from root mode. It zeroes
@@ -345,7 +345,7 @@ private slots:
 	 *
 	 * @since 3.4
 	 */
-	void applicationRemoved( const QCString& app );
+	void applicationRemoved( const TQCString& app );
 
 private:
 

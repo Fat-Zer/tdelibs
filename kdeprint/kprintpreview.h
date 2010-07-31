@@ -22,7 +22,7 @@
 #define KPRINTPREVIEW_H
 
 #include <kdialogbase.h>
-#include <qstring.h>
+#include <tqstring.h>
 #include <kprocess.h>
 
 class KLibFactory;
@@ -31,13 +31,13 @@ class KPrintPreview : public KDialogBase
 {
 	Q_OBJECT
 public:
-	KPrintPreview(QWidget *parent = 0, bool previewOnly = false);
+	KPrintPreview(TQWidget *parent = 0, bool previewOnly = false);
 	~KPrintPreview();
 
-	void openFile(const QString& file);
+	void openFile(const TQString& file);
 	bool isValid() const;
 
-	static bool preview(const QString& file, bool previewOnly = false, WId parentId = 0);
+	static bool preview(const TQString& file, bool previewOnly = false, WId parentId = 0);
 
 private:
 	void initView(KLibFactory*);

@@ -35,12 +35,12 @@ class EditEntryDialog : public KDialogBase
 {
 	Q_OBJECT
 public:
-	EditEntryDialog(PrintcapEntry *entry, QWidget *parent = 0, const char *name = 0);
+	EditEntryDialog(PrintcapEntry *entry, TQWidget *parent = 0, const char *name = 0);
 
 	void fillEntry(PrintcapEntry *entry);
 
 protected slots:
-	void slotItemSelected(QListViewItem*);
+	void slotItemSelected(TQListViewItem*);
 	void slotChanged();
 	void slotTypeChanged(int);
 
@@ -48,7 +48,7 @@ protected:
 	Field createField();
 
 private:
-	QMap<QString,Field>	m_fields;
+	TQMap<TQString,Field>	m_fields;
 	QLineEdit	*m_name, *m_string, *m_aliases;
 	QCheckBox	*m_boolean;
 	QComboBox	*m_type;

@@ -34,7 +34,7 @@
 #include <kdemacros.h>
 #include <kfinddialog.h>
 
-#include <qregexp.h>
+#include <tqregexp.h>
 
 class KHTMLPartPrivate;
 class KHTMLPartBrowserExtension;
@@ -150,7 +150,7 @@ namespace KWallet
  * opening an url. You can do this in the following way:
  *
  * \code
- * QString myHTMLCode = ...;
+ * TQString myHTMLCode = ...;
  * KHTMLPart *w = new KHTMLPart();
  * w->begin();
  * w->write(myHTMLCode);
@@ -159,7 +159,7 @@ namespace KWallet
  * \endcode
  *
  * You can do as many calls to write() as you wish.  There are two
- * write() methods, one accepting a QString and one accepting a
+ * write() methods, one accepting a TQString and one accepting a
  * @p char @p * argument. You should use one or the other
  * (but not both) since the method using
  * the @p char @p * argument does an additional decoding step to convert the
@@ -173,7 +173,7 @@ namespace KWallet
  * \code
  * KHTMLPart *doc = new KHTMLPart();
  * doc->openStream( "text/html", KURL() );
- * doc->writeStream( QCString( "<html><body><p>KHTML Rocks!</p></body></html>" ) );
+ * doc->writeStream( TQCString( "<html><body><p>KHTML Rocks!</p></body></html>" ) );
  * doc->closeStream();
  * \endcode
  *
@@ -228,7 +228,7 @@ class KHTML_EXPORT KHTMLPart : public KParts::ReadOnlyPart
    * Don't add setOnlyLocalReferences here. It shouldn't be accessible via DCOP.
    *
    **/
-  Q_PROPERTY( QCString dcopObjectId READ dcopObjectId )
+  Q_PROPERTY( TQCString dcopObjectId READ dcopObjectId )
   Q_PROPERTY( bool modified READ isModified )
 
 public:
@@ -239,17 +239,17 @@ public:
    *
    * KHTML basically consists of two objects: The KHTMLPart itself,
    * holding the document data (DOM document), and the KHTMLView,
-   * derived from QScrollView, in which the document content is
+   * derived from TQScrollView, in which the document content is
    * rendered in. You can specify two different parent objects for a
    * KHTMLPart, one parent for the KHTMLPart document and on parent
    * for the KHTMLView. If the second @p parent argument is 0L, then
    * @p parentWidget is used as parent for both objects, the part and
    * the view.
    */
-  KHTMLPart( QWidget *parentWidget = 0, const char *widgetname = 0,
-             QObject *parent = 0, const char *name = 0, GUIProfile prof = DefaultGUI );
+  KHTMLPart( TQWidget *parentWidget = 0, const char *widgetname = 0,
+             TQObject *parent = 0, const char *name = 0, GUIProfile prof = DefaultGUI );
 
-  KHTMLPart( KHTMLView *view, QObject *parent = 0, const char *name = 0, GUIProfile prof = DefaultGUI );
+  KHTMLPart( KHTMLView *view, TQObject *parent = 0, const char *name = 0, GUIProfile prof = DefaultGUI );
 
   /**
    * Destructor.
@@ -290,7 +290,7 @@ public:
    * Returns the content of the source document.
    * @since 3.4
    */
-   QString documentSource() const;
+   TQString documentSource() const;
 
   /**
    * Returns the node that has the keyboard focus.
@@ -345,13 +345,13 @@ public:
   /**
    * Enable/disable statusbar messages.
    * When this class wants to set the statusbar text, it emits
-   * setStatusBarText(const QString & text)
+   * setStatusBarText(const TQString & text)
    * If you want to catch this for your own statusbar, note that it returns
    * back a rich text string, starting with "<qt>".  This you need to
-   * either pass this into your own QLabel or to strip out the tags
-   * before passing it to QStatusBar::message(const QString & message)
+   * either pass this into your own TQLabel or to strip out the tags
+   * before passing it to TQStatusBar::message(const TQString & message)
    *
-   * @see KParts::Part::setStatusBarText( const QString & text )
+   * @see KParts::Part::setStatusBarText( const TQString & text )
    */
   void setStatusMessagesEnabled( bool enable );
 
@@ -371,10 +371,10 @@ public:
   bool metaRefreshEnabled() const;
 
   /**
-   * Same as executeScript( const QString & ) except with the Node parameter
+   * Same as executeScript( const TQString & ) except with the Node parameter
    * specifying the 'this' value.
    */
-  QVariant executeScript( const DOM::Node &n, const QString &script );
+  TQVariant executeScript( const DOM::Node &n, const TQString &script );
 
   /**
    * Enables or disables Drag'n'Drop support. A drag operation is started if
@@ -521,10 +521,10 @@ public:
   void enablePlugins( bool e ) { setPluginsEnabled(e); }
   void autoloadImages( bool e ) { setAutoloadImages(e); }
   void enableMetaRefresh( bool e ) { setMetaRefreshEnabled(e); }
-  bool setCharset( const QString &, bool ) { return true; }
+  bool setCharset( const TQString &, bool ) { return true; }
 
   KURL baseURL() const;
-  QString baseTarget() const;
+  TQString baseTarget() const;
 #endif
 
   /**
@@ -535,7 +535,7 @@ public:
   /**
    * Schedules a redirection after @p delay seconds.
    */
-  void scheduleRedirection( int delay, const QString &url, bool lockHistory = true );
+  void scheduleRedirection( int delay, const TQString &url, bool lockHistory = true );
 
   /**
    * Clears the widget and prepares it for new content.
@@ -577,7 +577,7 @@ public:
    * parameter.
    *
    * Attention: Don't mix calls to write( const char *) with calls
-   * to write( const QString & ).
+   * to write( const TQString & ).
    *
    * The result might not be what you want.
    */
@@ -590,7 +590,7 @@ public:
    * this function many times in sequence. But remember: The fewer calls
    * you make, the faster the widget will be.
    */
-  virtual void write( const QString &str );
+  virtual void write( const TQString &str );
 
   /**
    * Call this after your last call to write().
@@ -602,12 +602,12 @@ public:
    *
    * (not implemented at the moment)
    */
-  //    void print(QPainter *, int pageHeight, int pageWidth);
+  //    void print(TQPainter *, int pageHeight, int pageWidth);
 
   /**
-   * Paints the HTML page to a QPainter. See KHTMLView::paint for details
+   * Paints the HTML page to a TQPainter. See KHTMLView::paint for details
    */
-  void paint( QPainter *, const QRect &, int = 0, bool * = 0 );
+  void paint( TQPainter *, const TQRect &, int = 0, bool * = 0 );
 
   /**
    * Sets the encoding the page uses.
@@ -615,14 +615,14 @@ public:
    * This can be different from the charset. The widget will try to reload the current page in the new
    * encoding, if url() is not empty.
    */
-  bool setEncoding( const QString &name, bool override = false );
+  bool setEncoding( const TQString &name, bool override = false );
 
   /**
    * Returns the encoding the page currently uses.
    *
    * Note that the encoding might be different from the charset.
    */
-  QString encoding() const;
+  TQString encoding() const;
 
   /**
    * Sets a user defined style sheet to be used on top of the HTML 4
@@ -644,7 +644,7 @@ public:
    *
    * To have an effect this function has to be called after calling begin().
    */
-  void setUserStyleSheet( const QString &styleSheet );
+  void setUserStyleSheet( const TQString &styleSheet );
 
 public:
 
@@ -653,7 +653,7 @@ public:
    *
    * @param name The font name to use for standard text.
    */
-  void setStandardFont( const QString &name );
+  void setStandardFont( const TQString &name );
 
   /**
    * Sets the fixed font style.
@@ -661,7 +661,7 @@ public:
    * @param name The font name to use for fixed text, e.g.
    * the <tt>&lt;pre&gt;</tt> tag.
    */
-  void setFixedFont( const QString &name );
+  void setFixedFont( const TQString &name );
 
   /**
    * Finds the anchor named @p name.
@@ -670,7 +670,7 @@ public:
    * scrolls to the closest position. Returns @p if the anchor has
    * been found.
    */
-  bool gotoAnchor( const QString &name );
+  bool gotoAnchor( const TQString &name );
 
   /**
    * Go to the next anchor
@@ -689,12 +689,12 @@ public:
   /**
    * Sets the cursor to use when the cursor is on a link.
    */
-  void setURLCursor( const QCursor &c );
+  void setURLCursor( const TQCursor &c );
 
   /**
    * Returns the cursor which is used when the cursor is on a link.
    */
-  QCursor urlCursor() const;
+  TQCursor urlCursor() const;
 
   /**
    * Extra Find options that can be used when calling the extended findText().
@@ -722,7 +722,7 @@ public:
    * @param findDialog Optionally, you can supply your own dialog.
    * @since 3.3
    */
-  void findText( const QString &str, long options, QWidget *parent = 0,
+  void findText( const TQString &str, long options, TQWidget *parent = 0,
                  KFindDialog *findDialog = 0 );
 
   /**
@@ -732,10 +732,10 @@ public:
 
   /**
    * Finds the next occurrence of the string or expression.
-   * If isRegExp is true then str is converted to a QRegExp, and caseSensitive is ignored.
+   * If isRegExp is true then str is converted to a TQRegExp, and caseSensitive is ignored.
    * @deprecated, use findText( str, options, parent, findDialog )
    */
-  bool findTextNext( const QString &str, bool forward, bool caseSensitive, bool isRegExp );
+  bool findTextNext( const TQString &str, bool forward, bool caseSensitive, bool isRegExp );
 
   /**
    * Finds the next occurence of a string set by @ref findText()
@@ -773,7 +773,7 @@ public:
   /**
    * Returns the text the user has marked.
    */
-  virtual QString selectedText() const;
+  virtual TQString selectedText() const;
 
   /**
    * Return the text the user has marked.  This is guaranteed to be valid xml,
@@ -783,7 +783,7 @@ public:
    *
    * @since 3.4
    */
-  QString selectedTextAsHTML() const;
+  TQString selectedTextAsHTML() const;
 
   /**
    * Returns the selected part of the HTML.
@@ -846,22 +846,22 @@ public:
 
   /**
    * Saves the KHTMLPart's complete state (including child frame
-   * objects) to the provided QDataStream.
+   * objects) to the provided TQDataStream.
    *
    * This is called from the saveState() method of the
    * browserExtension().
    */
-  virtual void saveState( QDataStream &stream );
+  virtual void saveState( TQDataStream &stream );
   /**
    * Restores the KHTMLPart's previously saved state (including
-   * child frame objects) from the provided QDataStream.
+   * child frame objects) from the provided TQDataStream.
    *
    * @see saveState()
    *
    * This is called from the restoreState() method of the
    * browserExtension() .
    **/
-  virtual void restoreState( QDataStream &stream );
+  virtual void restoreState( TQDataStream &stream );
 
   /**
    * Returns the @p Node currently under the mouse.
@@ -899,14 +899,14 @@ public:
    * the current document. Note that this method is not working recursively
    * for sub-frames.
    */
-  QStringList frameNames() const;
+  TQStringList frameNames() const;
 
-  QPtrList<KParts::ReadOnlyPart> frames() const;
+  TQPtrList<KParts::ReadOnlyPart> frames() const;
 
   /**
    * Finds a frame by name. Returns 0L if frame can't be found.
    */
-  KHTMLPart *findFrame( const QString &f );
+  KHTMLPart *findFrame( const TQString &f );
 
   /**
    * Recursively finds the part containing the frame with name @p f
@@ -916,7 +916,7 @@ public:
    * frame info in @p *childFrame
    * @since 3.3
    */
-  KHTMLPart *findFrameParent( KParts::ReadOnlyPart *callingPart, const QString &f, khtml::ChildFrame **childFrame=0 );
+  KHTMLPart *findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f, khtml::ChildFrame **childFrame=0 );
 
   /**
    * Return the current frame (the one that has focus)
@@ -931,7 +931,7 @@ public:
    * if the frame is defined but no displaying component has been
    * found/loaded, yet.
    */
-  bool frameExists( const QString &frameName );
+  bool frameExists( const TQString &frameName );
 
   /**
    * Returns child frame framePart its script interpreter
@@ -941,59 +941,59 @@ public:
   /**
    * Finds a frame by name. Returns 0L if frame can't be found.
    */
-  KParts::ReadOnlyPart *findFramePart( const QString &f );
+  KParts::ReadOnlyPart *findFramePart( const TQString &f );
   /**
    * Called by KJS.
    * Sets the StatusBarText assigned
    * via window.status
    */
-  void setJSStatusBarText( const QString &text );
+  void setJSStatusBarText( const TQString &text );
 
   /**
    * Called by KJS.
    * Sets the DefaultStatusBarText assigned
    * via window.defaultStatus
    */
-  void setJSDefaultStatusBarText( const QString &text );
+  void setJSDefaultStatusBarText( const TQString &text );
 
   /**
    * Called by KJS.
    * Returns the StatusBarText assigned
    * via window.status
    */
-  QString jsStatusBarText() const;
+  TQString jsStatusBarText() const;
 
   /**
    * Called by KJS.
    * Returns the DefaultStatusBarText assigned
    * via window.defaultStatus
    */
-  QString jsDefaultStatusBarText() const;
+  TQString jsDefaultStatusBarText() const;
 
   /**
    * Referrer used for links in this page.
    */
-  QString referrer() const;
+  TQString referrer() const;
 
   /**
    * Referrer used to obtain this page.
    */
-  QString pageReferrer() const;
+  TQString pageReferrer() const;
 
   /**
    * Last-modified date (in raw string format), if received in the [HTTP] headers.
    */
-  QString lastModified() const;
+  TQString lastModified() const;
 
   /**
    * Loads a style sheet into the stylesheet cache.
    */
-  void preloadStyleSheet( const QString &url, const QString &stylesheet );
+  void preloadStyleSheet( const TQString &url, const TQString &stylesheet );
 
   /**
    * Loads a script into the script cache.
    */
-  void preloadScript( const QString &url, const QString &script );
+  void preloadScript( const TQString &url, const TQString &script );
 
   /**
    * @internal
@@ -1058,12 +1058,12 @@ signals:
   /**
    * Emitted if the cursor is moved over an URL.
    */
-  void onURL( const QString &url );
+  void onURL( const TQString &url );
 
   /**
    * Emitted when the user clicks the right mouse button on the document.
    */
-  void popupMenu( const QString &url, const QPoint &point );
+  void popupMenu( const TQString &url, const TQPoint &point );
 
   /**
    * This signal is emitted when the selection changes.
@@ -1103,9 +1103,9 @@ signals:
    * @since 3.2
    * ### KDE4 remove me
    */
-  void formSubmitNotification(const char *action, const QString& url,
-                  const QByteArray& formData, const QString& target,
-                  const QString& contentType, const QString& boundary);
+  void formSubmitNotification(const char *action, const TQString& url,
+                  const TQByteArray& formData, const TQString& target,
+                  const TQString& contentType, const TQString& boundary);
 
 
 protected:
@@ -1114,7 +1114,7 @@ protected:
    * returns a KURL object for the given url. Use when
    * you know what you're doing.
    */
-  KURL completeURL( const QString &url );
+  KURL completeURL( const TQString &url );
 
   /**
    * presents a detailed error message to the user.
@@ -1122,9 +1122,9 @@ protected:
    * @p text kio additional information text.
    * @p url the url that triggered the error.
    */
-  void htmlError( int errorCode, const QString& text, const KURL& reqUrl );
+  void htmlError( int errorCode, const TQString& text, const KURL& reqUrl );
 
-  virtual void customEvent( QCustomEvent *event );
+  virtual void customEvent( TQCustomEvent *event );
 
   /**
    * Eventhandler of the khtml::MousePressEvent.
@@ -1157,8 +1157,8 @@ protected:
    */
   virtual bool openFile();
 
-  virtual void urlSelected( const QString &url, int button, int state,
-                            const QString &_target, KParts::URLArgs args = KParts::URLArgs());
+  virtual void urlSelected( const TQString &url, int button, int state,
+                            const TQString &_target, KParts::URLArgs args = KParts::URLArgs());
 
   /**
    * This method is called when a new embedded object (include html frames) is to be created.
@@ -1168,15 +1168,15 @@ protected:
    * to be a object of your derived type, in which case you should return a new instance for
    * the mimetype 'text/html' .
    */
-  virtual KParts::ReadOnlyPart *createPart( QWidget *parentWidget, const char *widgetName,
-                                            QObject *parent, const char *name,
-                                            const QString &mimetype, QString &serviceName,
-                                            QStringList &serviceTypes, const QStringList &params);
+  virtual KParts::ReadOnlyPart *createPart( TQWidget *parentWidget, const char *widgetName,
+                                            TQObject *parent, const char *name,
+                                            const TQString &mimetype, TQString &serviceName,
+                                            TQStringList &serviceTypes, const TQStringList &params);
 
   // This is for RenderPartObject. We want to ask the 'download plugin?'
   // question only once per mimetype
-  bool pluginPageQuestionAsked( const QString& mimetype ) const;
-  void setPluginPageQuestionAsked( const QString& mimetype );
+  bool pluginPageQuestionAsked( const TQString& mimetype ) const;
+  void setPluginPageQuestionAsked( const TQString& mimetype );
 
   enum PageSecurity { NotCrypted, Encrypted, Mixed };
   void setPageSecurity( PageSecurity sec );
@@ -1184,12 +1184,12 @@ protected:
   /**
    * Implements the streaming API of KParts::ReadOnlyPart.
    */
-  virtual bool doOpenStream( const QString& mimeType );
+  virtual bool doOpenStream( const TQString& mimeType );
 
   /**
    * Implements the streaming API of KParts::ReadOnlyPart.
    */
-  virtual bool doWriteStream( const QByteArray& data );
+  virtual bool doWriteStream( const TQByteArray& data );
 
   /**
    * Implements the streaming API of KParts::ReadOnlyPart.
@@ -1214,7 +1214,7 @@ public slots:
    */
   void stopAnimations();
 
-  QCString dcopObjectId() const;
+  TQCString dcopObjectId() const;
 
   /**
    * Execute the specified snippet of JavaScript code.
@@ -1223,7 +1223,7 @@ public slots:
    * and the code returned true itself or @p false otherwise.
    * @deprecated, use executeString( DOM::Node(), script)
    */
-  QVariant executeScript( const QString &script );
+  TQVariant executeScript( const TQString &script );
 
   /**
    * Enables/disables caret mode.
@@ -1272,11 +1272,11 @@ public slots:
   //          Remove this and make the one below protected+virtual slot.
   //          Warning: this is effectively "internal".  Be careful.
   // @since 3.2
-  void submitFormProxy( const char *action, const QString &url,
-                        const QByteArray &formData,
-                        const QString &target,
-                        const QString& contentType = QString::null,
-                        const QString& boundary = QString::null );
+  void submitFormProxy( const char *action, const TQString &url,
+                        const TQByteArray &formData,
+                        const TQString &target,
+                        const TQString& contentType = TQString::null,
+                        const TQString& boundary = TQString::null );
 
 private slots:
 
@@ -1288,15 +1288,15 @@ private slots:
   /**
    * @internal
    */
-  void slotData( KIO::Job*, const QByteArray &data );
+  void slotData( KIO::Job*, const TQByteArray &data );
   /**
   * @internal
   */
-  void slotInfoMessage( KIO::Job*, const QString& msg );
+  void slotInfoMessage( KIO::Job*, const TQString& msg );
   /**
    * @internal
    */
-  void slotRestoreData( const QByteArray &data );
+  void slotRestoreData( const TQByteArray &data );
   /**
    * @internal
    */
@@ -1481,7 +1481,7 @@ private slots:
   /**
    * @internal
    */
-  void slotHighlight( const QString &, int index, int length );
+  void slotHighlight( const TQString &, int index, int length );
 
   /**
    * @internal
@@ -1547,7 +1547,7 @@ private:
   KJSErrorDlg *jsErrorExtension();
 
   enum StatusBarPriority { BarDefaultText, BarHoverText, BarOverrideText };
-  void setStatusBarText( const QString& text, StatusBarPriority p);
+  void setStatusBarText( const TQString& text, StatusBarPriority p);
 
   bool restoreURL( const KURL &url );
   void resetFromScript();
@@ -1555,19 +1555,19 @@ private:
   // Returns whether callingHtmlPart may access this part
   bool checkFrameAccess(KHTMLPart *callingHtmlPart);
   bool openURLInFrame( const KURL &url, const KParts::URLArgs &urlArgs );
-  bool urlSelectedIntern( const QString &url, int button, int state,
-                          const QString &_target, KParts::URLArgs args = KParts::URLArgs());
+  bool urlSelectedIntern( const TQString &url, int button, int state,
+                          const TQString &_target, KParts::URLArgs args = KParts::URLArgs());
   void startAutoScroll();
   void stopAutoScroll();
-  void overURL( const QString &url, const QString &target, bool shiftPressed = false );
+  void overURL( const TQString &url, const TQString &target, bool shiftPressed = false );
   void resetHoverText(); // Undo overURL and reset HoverText
 
-  bool processObjectRequest( khtml::ChildFrame *child, const KURL &url, const QString &mimetype );
+  bool processObjectRequest( khtml::ChildFrame *child, const KURL &url, const TQString &mimetype );
 
   KWallet::Wallet* wallet();
 
   void openWallet(DOM::HTMLFormElementImpl*);
-  void saveToWallet(const QString& key, const QMap<QString,QString>& data);
+  void saveToWallet(const TQString& key, const TQMap<TQString,TQString>& data);
   void dequeueWallet(DOM::HTMLFormElementImpl*);
   
   void enableFindAheadActions(bool);
@@ -1582,24 +1582,24 @@ private:
   //          and virtual, or provide a better solution.
   //          See the web_module for the sidebar for an example where this is
   //          necessary.
-  void submitForm( const char *action, const QString &url, const QByteArray &formData,
-                   const QString &target, const QString& contentType = QString::null,
-                   const QString& boundary = QString::null );
+  void submitForm( const char *action, const TQString &url, const TQByteArray &formData,
+                   const TQString &target, const TQString& contentType = TQString::null,
+                   const TQString& boundary = TQString::null );
 
-  void popupMenu( const QString &url );
+  void popupMenu( const TQString &url );
 
   void init( KHTMLView *view, GUIProfile prof );
 
 
   void clear();
 
-  bool scheduleScript( const DOM::Node &n, const QString& script);
+  bool scheduleScript( const DOM::Node &n, const TQString& script);
 
-  QVariant crossFrameExecuteScript(const QString& target, const QString& script);
-  QVariant executeScheduledScript();
+  TQVariant crossFrameExecuteScript(const TQString& target, const TQString& script);
+  TQVariant executeScheduledScript();
 
-  bool requestFrame( khtml::RenderPart *frame, const QString &url, const QString &frameName,
-                     const QStringList &args = QStringList(), bool isIFrame = false );
+  bool requestFrame( khtml::RenderPart *frame, const TQString &url, const TQString &frameName,
+                     const TQStringList &args = TQStringList(), bool isIFrame = false );
 
   /**
    * @internal returns a name for a frame without a name.
@@ -1608,23 +1608,23 @@ private:
    * always the same.
    * The sequence is reset in clear().
    */
-  QString requestFrameName();
+  TQString requestFrameName();
 
-  bool requestObject( khtml::RenderPart *frame, const QString &url, const QString &serviceType,
-                      const QStringList &args = QStringList() );
+  bool requestObject( khtml::RenderPart *frame, const TQString &url, const TQString &serviceType,
+                      const TQStringList &args = TQStringList() );
 
   bool requestObject( khtml::ChildFrame *child, const KURL &url, const KParts::URLArgs &args = KParts::URLArgs() );
 
-  DOM::EventListener *createHTMLEventListener( QString code, QString name, DOM::NodeImpl *node );
+  DOM::EventListener *createHTMLEventListener( TQString code, TQString name, DOM::NodeImpl *node );
 
   DOM::HTMLDocumentImpl *docImpl() const;
   DOM::DocumentImpl *xmlDocImpl() const;
-  khtml::ChildFrame *frame( const QObject *obj );
+  khtml::ChildFrame *frame( const TQObject *obj );
 
   khtml::ChildFrame *recursiveFrameRequest( KHTMLPart *callingHtmlPart, const KURL &url, const KParts::URLArgs &args, bool callParent = true );
 
-  bool checkLinkSecurity( const KURL &linkURL,const QString &message = QString::null, const QString &button = QString::null );
-  QVariant executeScript( const QString& filename, int baseLine, const DOM::Node &n, const QString& script );
+  bool checkLinkSecurity( const KURL &linkURL,const TQString &message = TQString::null, const TQString &button = TQString::null );
+  TQVariant executeScript( const TQString& filename, int baseLine, const DOM::Node &n, const TQString& script );
 
   KJSProxy *jScript();
 
@@ -1655,10 +1655,10 @@ private:
    */
   bool isExtendingSelection() const;
   khtml::Decoder *createDecoder();
-  QString defaultEncoding() const;
+  TQString defaultEncoding() const;
 
   /** .html, .xhtml or .xml */
-  QString defaultExtension() const;
+  TQString defaultExtension() const;
 
   /** @internal
    * generic zoom in

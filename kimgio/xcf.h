@@ -21,17 +21,17 @@
  *
  */
 
-#include <qimage.h>
-#include <qiodevice.h>
-#include <qvaluestack.h>
-#include <qvaluevector.h>
+#include <tqimage.h>
+#include <tqiodevice.h>
+#include <tqvaluestack.h>
+#include <tqvaluevector.h>
 
 #include "gimp.h"
 
 
 extern "C" {
-void kimgio_xcf_read(QImageIO *);
-void kimgio_xcf_write(QImageIO *);
+void kimgio_xcf_read(TQImageIO *);
+void kimgio_xcf_write(TQImageIO *);
 }
 
 const float INCHESPERMETER = (100.0 / 2.54);
@@ -43,14 +43,14 @@ const float INCHESPERMETER = (100.0 / 2.54);
  * parallel processing on a tile-by-tile basis. Here, though,
  * we just read them in en-masse and store them in a matrix.
  */
-typedef QValueVector<QValueVector<QImage> > Tiles;
+typedef TQValueVector<TQValueVector<TQImage> > Tiles;
 
 
 
 class XCFImageFormat {
 public:
 	XCFImageFormat();
-	void readXCF(QImageIO* image_io);
+	void readXCF(TQImageIO* image_io);
 
 
 private:
@@ -60,7 +60,7 @@ private:
 	 * optional alpha channel, there are six possible types altogether.
 	 *
 	 * Note: there is only ever one instance of this structure. The
-	 * layer info is discarded after it is merged into the final QImage.
+	 * layer info is discarded after it is merged into the final TQImage.
 	 */
 	class Layer {
 	public:
@@ -132,13 +132,13 @@ private:
 		Q_INT32 tattoo;			//!< (unique identifier?)
 		Q_UINT32 unit;			//!< Units of The GIMP (inch, mm, pica, etc...)
 		Q_INT32 num_colors;		//!< number of colors in an indexed image
-		QValueVector<QRgb> palette;	//!< indexed image color palette
+		TQValueVector<QRgb> palette;	//!< indexed image color palette
 
 		int num_layers;			//!< number of layers
 		Layer layer;			//!< most recently read layer
 
-		bool initialized;		//!< Is the QImage initialized?
-		QImage image;			//!< final QImage
+		bool initialized;		//!< Is the TQImage initialized?
+		TQImage image;			//!< final QImage
 
 		XCFImage(void) : initialized(false) {}
 	};
@@ -155,14 +155,14 @@ private:
 	//static int add_lut[256][256]; - this is so lame waste of 256k of memory
 	static int add_lut( int, int );
 
-	//! The bottom-most layer is copied into the final QImage by this
+	//! The bottom-most layer is copied into the final TQImage by this
 	//! routine.
 	typedef void (*PixelCopyOperation)(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 
-	//! Higher layers are merged into the the final QImage by this routine.
+	//! Higher layers are merged into the the final TQImage by this routine.
 	typedef void (*PixelMergeOperation)(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 
 	//! Layer mode static data.
 	typedef struct {
@@ -173,59 +173,59 @@ private:
 	//! LayerModeEffects.
 	static const LayerModes layer_modes[];
 
-	bool loadImageProperties(QDataStream& xcf_io, XCFImage& image);
-	bool loadProperty(QDataStream& xcf_io, PropType& type, QByteArray& bytes);
-	bool loadLayer(QDataStream& xcf_io, XCFImage& xcf_image);
-	bool loadLayerProperties(QDataStream& xcf_io, Layer& layer);
+	bool loadImageProperties(TQDataStream& xcf_io, XCFImage& image);
+	bool loadProperty(TQDataStream& xcf_io, PropType& type, TQByteArray& bytes);
+	bool loadLayer(TQDataStream& xcf_io, XCFImage& xcf_image);
+	bool loadLayerProperties(TQDataStream& xcf_io, Layer& layer);
 	bool composeTiles(XCFImage& xcf_image);
-	void setGrayPalette(QImage& image);
-	void setPalette(XCFImage& xcf_image, QImage& image);
+	void setGrayPalette(TQImage& image);
+	void setPalette(XCFImage& xcf_image, TQImage& image);
 	static void assignImageBytes(Layer& layer, uint i, uint j);
-	bool loadHierarchy(QDataStream& xcf_io, Layer& layer);
-	bool loadLevel(QDataStream& xcf_io, Layer& layer, Q_INT32 bpp);
+	bool loadHierarchy(TQDataStream& xcf_io, Layer& layer);
+	bool loadLevel(TQDataStream& xcf_io, Layer& layer, Q_INT32 bpp);
 	static void assignMaskBytes(Layer& layer, uint i, uint j);
-	bool loadMask(QDataStream& xcf_io, Layer& layer);
-	bool loadChannelProperties(QDataStream& xcf_io, Layer& layer);
+	bool loadMask(TQDataStream& xcf_io, Layer& layer);
+	bool loadChannelProperties(TQDataStream& xcf_io, Layer& layer);
 	bool initializeImage(XCFImage& xcf_image);
-	bool loadTileRLE(QDataStream& xcf_io, uchar* tile, int size,
+	bool loadTileRLE(TQDataStream& xcf_io, uchar* tile, int size,
 			int data_length, Q_INT32 bpp);
 	static void copyLayerToImage(XCFImage& xcf_image);
 	static void copyRGBToRGB(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 
 	static void copyGrayToGray(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 	static void copyGrayToRGB(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 	static void copyGrayAToRGB(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 	static void copyIndexedToIndexed(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 	static void copyIndexedAToIndexed(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 	static void copyIndexedAToRGB(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 
 	static void mergeLayerIntoImage(XCFImage& xcf_image);
 	static void mergeRGBToRGB(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 	static void mergeGrayToGray(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 	static void mergeGrayAToGray(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 	static void mergeGrayToRGB(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 	static void mergeGrayAToRGB(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 	static void mergeIndexedToIndexed(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 	static void mergeIndexedAToIndexed(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 	static void mergeIndexedAToRGB(Layer& layer, uint i, uint j, int k, int l,
-			QImage& image, int m, int n);
+			TQImage& image, int m, int n);
 
-	static void dissolveRGBPixels(QImage& image, int x, int y);
-	static void dissolveAlphaPixels(QImage& image, int x, int y);
+	static void dissolveRGBPixels(TQImage& image, int x, int y);
+	static void dissolveAlphaPixels(TQImage& image, int x, int y);
 };
 
 #endif

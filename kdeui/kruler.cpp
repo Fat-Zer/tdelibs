@@ -20,8 +20,8 @@
 
 #include "kruler.h"
 
-#include <qpainter.h>
-#include <qfont.h>
+#include <tqpainter.h>
+#include <tqfont.h>
 
 #define INIT_VALUE 0
 #define INIT_MIN_VALUE 0
@@ -68,7 +68,7 @@
 #undef PROFILING
 
 #ifdef PROFILING
-# include <qdatetime.h>
+# include <tqdatetime.h>
 #endif
 
 class KRuler::KRulerPrivate
@@ -91,8 +91,8 @@ public:
 
 
 
-KRuler::KRuler(QWidget *parent, const char *name)
-  : QFrame(parent, name),
+KRuler::KRuler(TQWidget *parent, const char *name)
+  : TQFrame(parent, name),
     range(INIT_MIN_VALUE, INIT_MAX_VALUE, 1, 10, INIT_VALUE),
     dir(Horizontal)
 {
@@ -102,8 +102,8 @@ KRuler::KRuler(QWidget *parent, const char *name)
 
 
 KRuler::KRuler(Orientation orient,
-               QWidget *parent, const char *name, WFlags f)
-  : QFrame(parent, name, f),
+               TQWidget *parent, const char *name, WFlags f)
+  : TQFrame(parent, name, f),
     range(INIT_MIN_VALUE, INIT_MAX_VALUE, 1, 10, INIT_VALUE),
     dir(orient)
 {
@@ -116,8 +116,8 @@ KRuler::KRuler(Orientation orient,
 
 
 KRuler::KRuler(Orientation orient, int widgetWidth,
-               QWidget *parent, const char *name, WFlags f)
-  : QFrame(parent, name, f),
+               TQWidget *parent, const char *name, WFlags f)
+  : TQFrame(parent, name, f),
     range(INIT_MIN_VALUE, INIT_MAX_VALUE, 1, 10, INIT_VALUE),
     dir(orient)
 {
@@ -357,21 +357,21 @@ KRuler::showEndLabel() const
 
 
 void
-KRuler::setEndLabel(const QString& label)
+KRuler::setEndLabel(const TQString& label)
 {
   endlabel = label;
 
   // premeasure the fontwidth and save it
   if (dir == Vertical) {
-    QFont font = this->font();
+    TQFont font = this->font();
     font.setPointSize(LABEL_SIZE);
-    QFontMetrics fm(font);
+    TQFontMetrics fm(font);
     d->fontWidth = fm.width(endlabel);
   }
   update(contentsRect());
 }
 
-QString KRuler::endLabel() const
+TQString KRuler::endLabel() const
 {
   return endlabel;
 }
@@ -432,19 +432,19 @@ KRuler::setRulerMetricStyle(KRuler::MetricStyle style)
   }
   switch (style) {
   case Pixel:
-    setEndLabel(QString::fromLatin1("pixel"));
+    setEndLabel(TQString::fromLatin1("pixel"));
     break;
   case Inch:
-    setEndLabel(QString::fromLatin1("inch"));
+    setEndLabel(TQString::fromLatin1("inch"));
     break;
   case Millimetres:
-    setEndLabel(QString::fromLatin1("mm"));
+    setEndLabel(TQString::fromLatin1("mm"));
     break;
   case Centimetres:
-    setEndLabel(QString::fromLatin1("cm"));
+    setEndLabel(TQString::fromLatin1("cm"));
     break;
   case Metres:
-    setEndLabel(QString::fromLatin1("m"));
+    setEndLabel(TQString::fromLatin1("m"));
   default: /* never reached, see above switch */
     /* empty command */;
   }
@@ -552,13 +552,13 @@ KRuler::slotNewValue(int _value)
   // get the rectangular of the old and the new ruler pointer
   // and repaint only him
   if (dir == Horizontal) {
-    QRect oldrec(-5+oldvalue,10, 11,6);
-    QRect newrec(-5+_value,10, 11,6);
+    TQRect oldrec(-5+oldvalue,10, 11,6);
+    TQRect newrec(-5+_value,10, 11,6);
     repaint( oldrec.unite(newrec) );
   }
   else {
-    QRect oldrec(10,-5+oldvalue, 6,11);
-    QRect newrec(10,-5+_value, 6,11);
+    TQRect oldrec(10,-5+oldvalue, 6,11);
+    TQRect newrec(10,-5+_value, 6,11);
     repaint( oldrec.unite(newrec) );
   }
 }
@@ -591,12 +591,12 @@ KRuler::slotEndOffset(int offset)
 }
 
 void
-KRuler::drawContents(QPainter *p)
+KRuler::drawContents(TQPainter *p)
 {
   //  debug ("KRuler::drawContents, %s",(horizontal==dir)?"horizontal":"vertical");
 
 #ifdef PROFILING
-  QTime time;
+  TQTime time;
   time.start();
   for (int profile=0; profile<10; profile++) {
 #endif
@@ -625,7 +625,7 @@ KRuler::drawContents(QPainter *p)
     fontOffset = (((double)minval)>offsetmin)?(double)minval:offsetmin;
 
   // draw labels
-  QFont font = p->font();
+  TQFont font = p->font();
   font.setPointSize(LABEL_SIZE);
   p->setFont( font );
   // draw littlemarklabel
@@ -641,7 +641,7 @@ KRuler::drawContents(QPainter *p)
       p->drawText( END_LABEL_X, END_LABEL_Y, endlabel );
     }
     else { // rotate text +pi/2 and move down a bit
-      //QFontMetrics fm(font);
+      //TQFontMetrics fm(font);
 #ifdef KRULER_ROTATE_TEST
       p->rotate( -90.0 + rotate );
       p->translate( -8.0 - fontOffset - d->fontWidth + xtrans,
@@ -717,7 +717,7 @@ KRuler::drawContents(QPainter *p)
 
   // draw pointer
   if (d->showpointer) {
-    QPointArray pa(4);
+    TQPointArray pa(4);
     if (dir == Horizontal) {
       pa.setPoints(3, value-5, 10, value+5, 10, value/*+0*/,15);
     }

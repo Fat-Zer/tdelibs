@@ -38,9 +38,9 @@ KBuildImageIOFactory::KBuildImageIOFactory() :
 
 // return all service types for this factory
 // i.e. first arguments to m_resourceList->add() above
-QStringList KBuildImageIOFactory::resourceTypes()
+TQStringList KBuildImageIOFactory::resourceTypes()
 {
-    return QStringList() << "services";
+    return TQStringList() << "services";
 }
 
 KBuildImageIOFactory::~KBuildImageIOFactory() 
@@ -49,9 +49,9 @@ KBuildImageIOFactory::~KBuildImageIOFactory()
 }
 
 KSycocaEntry *
-KBuildImageIOFactory::createEntry( const QString& file, const char *resource )
+KBuildImageIOFactory::createEntry( const TQString& file, const char *resource )
 {
-   QString fullPath = locate( resource, file);
+   TQString fullPath = locate( resource, file);
 
    KImageIOFormat *format = new KImageIOFormat(fullPath);
    return format;
@@ -87,7 +87,7 @@ KBuildImageIOFactory::addEntry(KSycocaEntry *newEntry, const char *resource)
 
 
 void
-KBuildImageIOFactory::saveHeader(QDataStream &str)
+KBuildImageIOFactory::saveHeader(TQDataStream &str)
 {
    KSycocaFactory::saveHeader(str);
 
@@ -95,15 +95,15 @@ KBuildImageIOFactory::saveHeader(QDataStream &str)
 }
 
 void
-KBuildImageIOFactory::save(QDataStream &str)
+KBuildImageIOFactory::save(TQDataStream &str)
 {
    rPath.sort();
    // Remove duplicates from rPath:
-   QString last;
-   for(QStringList::Iterator it = rPath.begin();
+   TQString last;
+   for(TQStringList::Iterator it = rPath.begin();
        it != rPath.end(); )
    {
-      QStringList::Iterator it2 = it++;
+      TQStringList::Iterator it2 = it++;
       if (*it2 == last)
       {
          // remove duplicate

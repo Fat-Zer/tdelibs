@@ -23,14 +23,14 @@
 #ifndef _KCONFIGBASE_H
 #define _KCONFIGBASE_H
 
-#include <qobject.h>
-#include <qcolor.h>
-#include <qfont.h>
-#include <qdatetime.h>
-#include <qstrlist.h>
-#include <qstringlist.h>
-#include <qvariant.h>
-#include <qmap.h>
+#include <tqobject.h>
+#include <tqcolor.h>
+#include <tqfont.h>
+#include <tqdatetime.h>
+#include <tqstrlist.h>
+#include <tqstringlist.h>
+#include <tqvariant.h>
+#include <tqmap.h>
 
 #include "kconfigdata.h"
 #include "kdelibs_export.h"
@@ -96,7 +96,7 @@ public:
    * Switch back to the default group by passing a null string.
    * @param group The name of the new group.
    */
-  void setGroup( const QString& group );
+  void setGroup( const TQString& group );
 
   /**
    * Sets the group to the "Desktop Entry" group used for
@@ -110,7 +110,7 @@ public:
    *
    * @return The current group.
    */
-  QString group() const;
+  TQString group() const;
 
   /**
    * Returns true if the specified group is known about.
@@ -118,21 +118,21 @@ public:
    * @param group The group to search for.
    * @return true if the group exists.
    */
-  bool hasGroup(const QString &group) const;
+  bool hasGroup(const TQString &group) const;
 
   /**
    * Returns a list of groups that are known about.
    *
    * @return The list of groups.
    **/
-  virtual QStringList groupList() const = 0;
+  virtual TQStringList groupList() const = 0;
 
   /**
    * Returns a the current locale.
    *
    * @return A string representing the current locale.
    */
-  QString locale() const;
+  TQString locale() const;
 
   /**
    * Reads the value of an entry specified by @p pKey in the current group.
@@ -140,85 +140,85 @@ public:
    *
    * @param pKey The key to search for.
    * @param aDefault A default value returned if the key was not found.
-   * @return The value for this key. Can be QString::null if aDefault is null.
+   * @return The value for this key. Can be TQString::null if aDefault is null.
    */
-   QString readEntry(const QString& pKey,
-                     const QString& aDefault = QString::null ) const;
+   TQString readEntry(const TQString& pKey,
+                     const TQString& aDefault = TQString::null ) const;
 
   /**
    * Reads the value of an entry specified by @p pKey in the current group.
    *
    * @param pKey The key to search for.
    * @param aDefault A default value returned if the key was not found.
-   * @return The value for this key. Can be QString::null if aDefault is null.
+   * @return The value for this key. Can be TQString::null if aDefault is null.
    */
-   QString readEntry(const char *pKey,
-                     const QString& aDefault = QString::null ) const;
+   TQString readEntry(const char *pKey,
+                     const TQString& aDefault = TQString::null ) const;
 
   /**
    * Reads the value of an entry specified by @p pKey in the current group.
    * The value is treated as if it is of the given type.
    *
-   * Note that only the following QVariant types are allowed : String,
+   * Note that only the following TQVariant types are allowed : String,
    * StringList, List, Font, Point, Rect, Size, Color, Int, UInt, Bool,
    * Double, DateTime and Date.
    * @deprecated
    *
    * @param pKey The key to search for.
-   * @return An invalid QVariant if the key was not found or if the
-   * read value cannot be converted to the given QVariant::Type.
+   * @return An invalid TQVariant if the key was not found or if the
+   * read value cannot be converted to the given TQVariant::Type.
    */
-  QVariant readPropertyEntry( const QString& pKey, QVariant::Type ) const;
+  TQVariant readPropertyEntry( const TQString& pKey, TQVariant::Type ) const;
 
   /**
    * Reads the value of an entry specified by @p pKey in the current group.
    * The value is treated as if it is of the given type.
    *
-   * Note that only the following QVariant types are allowed : String,
+   * Note that only the following TQVariant types are allowed : String,
    * StringList, List, Font, Point, Rect, Size, Color, Int, UInt, Bool,
    * Double, DateTime and Date.
    *
    * @deprecated
    *
    * @param pKey The key to search for.
-   * @return An invalid QVariant if the key was not found or if the
-   * read value cannot be converted to the given QVariant::Type.
+   * @return An invalid TQVariant if the key was not found or if the
+   * read value cannot be converted to the given TQVariant::Type.
    */
-  QVariant readPropertyEntry( const char *pKey, QVariant::Type ) const;
+  TQVariant readPropertyEntry( const char *pKey, TQVariant::Type ) const;
 
   /**
    * Reads the value of an entry specified by @p pKey in the current group.
    * The value is treated as if it is of the type of the given default value.
    *
-   * Note that only the following QVariant types are allowed : String,
+   * Note that only the following TQVariant types are allowed : String,
    * StringList, List, Font, Point, Rect, Size, Color, Int, UInt, Bool,
    * Double, DateTime and Date.
    *
    * @param pKey The key to search for.
    * @param aDefault A default value returned if the key was not found or
-   * if the read value cannot be converted to the QVariant::Type.
+   * if the read value cannot be converted to the TQVariant::Type.
    * @return The value for the key or the default value if the key was not
    *         found.
    */
-  QVariant readPropertyEntry( const QString& pKey,
-                              const QVariant &aDefault) const;
+  TQVariant readPropertyEntry( const TQString& pKey,
+                              const TQVariant &aDefault) const;
 
   /**
    * Reads the value of an entry specified by @p pKey in the current group.
    * The value is treated as if it is of the type of the given default value.
    *
-   * Note that only the following QVariant types are allowed : String,
+   * Note that only the following TQVariant types are allowed : String,
    * StringList, List, Font, Point, Rect, Size, Color, Int, UInt, Bool,
    * Double, DateTime and Date.
    *
    * @param pKey The key to search for.
    * @param aDefault A default value returned if the key was not found or
-   * if the read value cannot be converted to the QVariant::Type.
+   * if the read value cannot be converted to the TQVariant::Type.
    * @return The value for the key or the default value if the key was not
    *         found.
    */
-  QVariant readPropertyEntry( const char *pKey,
-                              const QVariant &aDefault) const;
+  TQVariant readPropertyEntry( const char *pKey,
+                              const TQVariant &aDefault) const;
 
   /**
    * Reads a list of strings.
@@ -230,7 +230,7 @@ public:
    * @param sep  The list separator (default ",")
    * @return The number of entries in the list.
    */
-  int readListEntry( const QString& pKey, QStrList &list, char sep = ',' ) const;
+  int readListEntry( const TQString& pKey, TQStrList &list, char sep = ',' ) const;
 
   /**
    * Reads a list of strings.
@@ -242,7 +242,7 @@ public:
    * @param sep  The list separator (default ",")
    * @return The number of entries in the list.
    */
-  int readListEntry( const char *pKey, QStrList &list, char sep = ',' ) const;
+  int readListEntry( const char *pKey, TQStrList &list, char sep = ',' ) const;
 
   /**
    * Reads a list of strings.
@@ -251,7 +251,7 @@ public:
    * @param sep  The list separator (default is ",").
    * @return The list. Empty if the entry does not exist.
    */
-  QStringList readListEntry( const QString& pKey, char sep = ',' ) const;
+  TQStringList readListEntry( const TQString& pKey, char sep = ',' ) const;
 
   /**
    * Reads a list of strings.
@@ -260,7 +260,7 @@ public:
    * @param sep  The list separator (default is ",").
    * @return The list. Empty if the entry does not exist.
    */
-  QStringList readListEntry( const char *pKey, char sep = ',' ) const;
+  TQStringList readListEntry( const char *pKey, char sep = ',' ) const;
 
   /**
    * Reads a list of strings, but returns a default if the key 
@@ -271,7 +271,7 @@ public:
    * @return The list. Contains @p aDefault if the Key does not exist.
    * @since 3.3
    */
-  QStringList readListEntry( const char* pKey, const QStringList& aDefault, 
+  TQStringList readListEntry( const char* pKey, const TQStringList& aDefault, 
 		  char sep = ',' ) const;
 
   /**
@@ -280,7 +280,7 @@ public:
    * @param pKey The key to search for.
    * @return The list. Empty if the entry does not exist.
    */
-  QValueList<int> readIntListEntry( const QString& pKey ) const;
+  TQValueList<int> readIntListEntry( const TQString& pKey ) const;
 
   /**
    * Reads a list of Integers.
@@ -288,7 +288,7 @@ public:
    * @param pKey The key to search for.
    * @return The list. Empty if the entry does not exist.
    */
-  QValueList<int> readIntListEntry( const char *pKey ) const;
+  TQValueList<int> readIntListEntry( const char *pKey ) const;
 
   /**
    * Reads a path.
@@ -299,9 +299,9 @@ public:
    *
    * @param pKey The key to search for.
    * @param aDefault A default value returned if the key was not found.
-   * @return The value for this key. Can be QString::null if aDefault is null.
+   * @return The value for this key. Can be TQString::null if aDefault is null.
    */
-  QString readPathEntry( const QString& pKey, const QString & aDefault = QString::null ) const;
+  TQString readPathEntry( const TQString& pKey, const TQString & aDefault = TQString::null ) const;
 
   /**
    * Reads a path.
@@ -312,9 +312,9 @@ public:
    *
    * @param pKey The key to search for.
    * @param aDefault A default value returned if the key was not found.
-   * @return The value for this key. Can be QString::null if aDefault is null.
+   * @return The value for this key. Can be TQString::null if aDefault is null.
    */
-  QString readPathEntry( const char *pKey, const QString & aDefault = QString::null ) const;
+  TQString readPathEntry( const char *pKey, const TQString & aDefault = TQString::null ) const;
 
   /**
    * Reads a list of string paths.
@@ -328,7 +328,7 @@ public:
    * @return The list. Empty if the entry does not exist.
    * @since 3.1.3
    */
-  QStringList readPathListEntry( const QString& pKey, char sep = ',' ) const;
+  TQStringList readPathListEntry( const TQString& pKey, char sep = ',' ) const;
 
   /**
    * Reads a list of string paths.
@@ -342,7 +342,7 @@ public:
    * @return The list. Empty if the entry does not exist.
    * @since 3.1.3
    */
-  QStringList readPathListEntry( const char *pKey, char sep = ',' ) const;
+  TQStringList readPathListEntry( const char *pKey, char sep = ',' ) const;
 
 
   /**
@@ -356,7 +356,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  int readNumEntry( const QString& pKey, int nDefault = 0 ) const;
+  int readNumEntry( const TQString& pKey, int nDefault = 0 ) const;
 
   /**
    * Reads a numerical value.
@@ -382,7 +382,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  unsigned int readUnsignedNumEntry( const QString& pKey, unsigned int nDefault = 0 ) const;
+  unsigned int readUnsignedNumEntry( const TQString& pKey, unsigned int nDefault = 0 ) const;
 
   /**
    * Reads an unsigned numerical value.
@@ -409,7 +409,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  long readLongNumEntry( const QString& pKey, long nDefault = 0 ) const;
+  long readLongNumEntry( const TQString& pKey, long nDefault = 0 ) const;
 
   /**
    * Reads a numerical value.
@@ -435,7 +435,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  unsigned long readUnsignedLongNumEntry( const QString& pKey, unsigned long nDefault = 0 ) const;
+  unsigned long readUnsignedLongNumEntry( const TQString& pKey, unsigned long nDefault = 0 ) const;
 
   /**
    * Read an unsigned numerical value.
@@ -461,7 +461,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  Q_INT64 readNum64Entry( const QString& pKey, Q_INT64 nDefault = 0 ) const;
+  Q_INT64 readNum64Entry( const TQString& pKey, Q_INT64 nDefault = 0 ) const;
 
   /**
    * Reads a 64-bit numerical value.
@@ -487,7 +487,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  Q_UINT64 readUnsignedNum64Entry( const QString& pKey, Q_UINT64 nDefault = 0 ) const;
+  Q_UINT64 readUnsignedNum64Entry( const TQString& pKey, Q_UINT64 nDefault = 0 ) const;
 
   /**
    * Read an 64-bit unsigned numerical value.
@@ -513,7 +513,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  double readDoubleNumEntry( const QString& pKey, double nDefault = 0.0 ) const;
+  double readDoubleNumEntry( const TQString& pKey, double nDefault = 0.0 ) const;
 
   /**
    * Reads a floating point value.
@@ -529,30 +529,30 @@ public:
   double readDoubleNumEntry( const char *pKey, double nDefault = 0.0 ) const;
 
   /**
-   * Reads a QFont value.
+   * Reads a TQFont value.
    *
    * Read the value of an entry specified by @p pKey in the current group
    * and interpret it as a font object.
    *
    * @param pKey The key to search for.
-   * @param pDefault A default value (null QFont by default) returned if the
+   * @param pDefault A default value (null TQFont by default) returned if the
    * key was not found or if the read value cannot be interpreted.
    * @return The value for this key.
    */
-  QFont readFontEntry( const QString& pKey, const QFont* pDefault = 0L ) const;
+  TQFont readFontEntry( const TQString& pKey, const TQFont* pDefault = 0L ) const;
 
   /**
-   * Reads a QFont value.
+   * Reads a TQFont value.
    *
    * Read the value of an entry specified by @p pKey in the current group
    * and interpret it as a font object.
    *
    * @param pKey The key to search for.
-   * @param pDefault A default value (null QFont by default) returned if the
+   * @param pDefault A default value (null TQFont by default) returned if the
    * key was not found or if the read value cannot be interpreted.
    * @return The value for this key.
    */
-  QFont readFontEntry( const char *pKey, const QFont* pDefault = 0L ) const;
+  TQFont readFontEntry( const char *pKey, const TQFont* pDefault = 0L ) const;
 
   /**
    * Reads a boolean entry.
@@ -565,7 +565,7 @@ public:
    * @param bDefault A default value returned if the key was not found.
    * @return The value for this key.
    */
-  bool readBoolEntry( const QString& pKey, bool bDefault = false ) const;
+  bool readBoolEntry( const TQString& pKey, bool bDefault = false ) const;
 
   /**
    * Reads a boolean entry.
@@ -581,112 +581,112 @@ public:
   bool readBoolEntry( const char *pKey, bool bDefault = false ) const;
 
   /**
-   * Reads a QRect entry.
+   * Reads a TQRect entry.
    *
    * Read the value of an entry specified by pKey in the current group
-   * and interpret it as a QRect object.
+   * and interpret it as a TQRect object.
    *
    * @param pKey The key to search for
-   * @param pDefault A default value (null QRect by default) returned if the
+   * @param pDefault A default value (null TQRect by default) returned if the
    * key was not found or if the read value cannot be interpreted.
    * @return The value for this key.
    */
-  QRect readRectEntry( const QString& pKey, const QRect* pDefault = 0L ) const;
+  TQRect readRectEntry( const TQString& pKey, const TQRect* pDefault = 0L ) const;
 
   /**
-   * Reads a QRect entry.
+   * Reads a TQRect entry.
    *
    * Read the value of an entry specified by pKey in the current group
-   * and interpret it as a QRect object.
+   * and interpret it as a TQRect object.
    *
    * @param pKey The key to search for
-   * @param pDefault A default value (null QRect by default) returned if the
+   * @param pDefault A default value (null TQRect by default) returned if the
    * key was not found or if the read value cannot be interpreted.
    * @return The value for this key.
    */
-  QRect readRectEntry( const char *pKey, const QRect* pDefault = 0L ) const;
+  TQRect readRectEntry( const char *pKey, const TQRect* pDefault = 0L ) const;
 
   /**
-   * Reads a QPoint entry.
+   * Reads a TQPoint entry.
    *
    * Read the value of an entry specified by @p pKey in the current group
-   * and interpret it as a QPoint object.
+   * and interpret it as a TQPoint object.
    *
    * @param pKey The key to search for
-   * @param pDefault A default value (null QPoint by default) returned if the
+   * @param pDefault A default value (null TQPoint by default) returned if the
    * key was not found or if the read value cannot be interpreted.
    * @return The value for this key.
    */
-  QPoint readPointEntry( const QString& pKey, const QPoint* pDefault = 0L ) const;
+  TQPoint readPointEntry( const TQString& pKey, const TQPoint* pDefault = 0L ) const;
 
   /**
-   * Reads a QPoint entry.
+   * Reads a TQPoint entry.
    *
    * Read the value of an entry specified by @p pKey in the current group
-   * and interpret it as a QPoint object.
+   * and interpret it as a TQPoint object.
    *
    * @param pKey The key to search for
-   * @param pDefault A default value (null QPoint by default) returned if the
+   * @param pDefault A default value (null TQPoint by default) returned if the
    * key was not found or if the read value cannot be interpreted.
    * @return The value for this key.
    */
-  QPoint readPointEntry( const char *pKey, const QPoint* pDefault = 0L ) const;
+  TQPoint readPointEntry( const char *pKey, const TQPoint* pDefault = 0L ) const;
 
   /**
-   * Reads a QSize entry.
+   * Reads a TQSize entry.
    *
    * Read the value of an entry specified by @p pKey in the current group
-   * and interpret it as a QSize object.
+   * and interpret it as a TQSize object.
    *
    * @param pKey The key to search for
-   * @param pDefault A default value (null QSize by default) returned if the
+   * @param pDefault A default value (null TQSize by default) returned if the
    * key was not found or if the read value cannot be interpreted.
    * @return The value for this key.
    */
-  QSize readSizeEntry( const QString& pKey, const QSize* pDefault = 0L ) const;
+  TQSize readSizeEntry( const TQString& pKey, const TQSize* pDefault = 0L ) const;
 
   /**
-   * Reads a QSize entry.
+   * Reads a TQSize entry.
    *
    * Read the value of an entry specified by @p pKey in the current group
-   * and interpret it as a QSize object.
+   * and interpret it as a TQSize object.
    *
    * @param pKey The key to search for
-   * @param pDefault A default value (null QSize by default) returned if the
+   * @param pDefault A default value (null TQSize by default) returned if the
    * key was not found or if the read value cannot be interpreted.
    * @return The value for this key.
    */
-  QSize readSizeEntry( const char *pKey, const QSize* pDefault = 0L ) const;
+  TQSize readSizeEntry( const char *pKey, const TQSize* pDefault = 0L ) const;
 
 
   /**
-   * Reads a QColor entry.
+   * Reads a TQColor entry.
    *
    * Read the value of an entry specified by @p pKey in the current group
    * and interpret it as a color.
    *
    * @param pKey The key to search for.
-   * @param pDefault A default value (null QColor by default) returned if the
+   * @param pDefault A default value (null TQColor by default) returned if the
    * key was not found or if the value cannot be interpreted.
    * @return The value for this key.
    */
-  QColor readColorEntry( const QString& pKey, const QColor* pDefault = 0L ) const;
+  TQColor readColorEntry( const TQString& pKey, const TQColor* pDefault = 0L ) const;
 
   /**
-   * Reads a QColor entry.
+   * Reads a TQColor entry.
    *
    * Read the value of an entry specified by @p pKey in the current group
    * and interpret it as a color.
    *
    * @param pKey The key to search for.
-   * @param pDefault A default value (null QColor by default) returned if the
+   * @param pDefault A default value (null TQColor by default) returned if the
    * key was not found or if the value cannot be interpreted.
    * @return The value for this key.
    */
-  QColor readColorEntry( const char *pKey, const QColor* pDefault = 0L ) const;
+  TQColor readColorEntry( const char *pKey, const TQColor* pDefault = 0L ) const;
 
   /**
-   * Reads a QDateTime entry.
+   * Reads a TQDateTime entry.
    *
    * Read the value of an entry specified by @p pKey in the current group
    * and interpret it as a date and time.
@@ -697,10 +697,10 @@ public:
    * interpreted.
    * @return The value for this key.
    */
-  QDateTime readDateTimeEntry( const QString& pKey, const QDateTime* pDefault = 0L ) const;
+  TQDateTime readDateTimeEntry( const TQString& pKey, const TQDateTime* pDefault = 0L ) const;
 
   /**
-   * Reads a QDateTime entry.
+   * Reads a TQDateTime entry.
    *
    * Read the value of an entry specified by @p pKey in the current group
    * and interpret it as a date and time.
@@ -711,7 +711,7 @@ public:
    * interpreted.
    * @return The value for this key.
    */
-  QDateTime readDateTimeEntry( const char *pKey, const QDateTime* pDefault = 0L ) const;
+  TQDateTime readDateTimeEntry( const char *pKey, const TQDateTime* pDefault = 0L ) const;
 
   /**
    * Reads the value of an entry specified by @p pKey in the current group.
@@ -721,8 +721,8 @@ public:
    * @param aDefault A default value returned if the key was not found.
    * @return The value for this key.
    */
-   QString readEntryUntranslated( const QString& pKey,
-                     const QString& aDefault = QString::null ) const;
+   TQString readEntryUntranslated( const TQString& pKey,
+                     const TQString& aDefault = TQString::null ) const;
 
   /**
    * Reads the value of an entry specified by @p pKey in the current group.
@@ -732,8 +732,8 @@ public:
    * @param aDefault A default value returned if the key was not found.
    * @return The value for this key.
    */
-   QString readEntryUntranslated( const char *pKey,
-                     const QString& aDefault = QString::null ) const;
+   TQString readEntryUntranslated( const char *pKey,
+                     const TQString& aDefault = TQString::null ) const;
 
   /**
    * Writes a key/value pair.
@@ -754,7 +754,7 @@ public:
    * @param bNLS         If @p bNLS is true, the locale tag is added to the key
    *                     when writing it back.
    */
-  void writeEntry( const QString& pKey, const QString& pValue,
+  void writeEntry( const TQString& pKey, const TQString& pValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
 
@@ -775,7 +775,7 @@ public:
    * @param bNLS         If @p bNLS is true, the locale tag is added to the key
    *                     when writing it back.
    */
-  void writeEntry( const char *pKey, const QString& pValue,
+  void writeEntry( const char *pKey, const TQString& pValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
 
@@ -798,7 +798,7 @@ public:
    *
    * @see  writeEntry()
    */
-  void writeEntry( const QString& pKey, const QVariant& rValue,
+  void writeEntry( const TQString& pKey, const TQVariant& rValue,
                     bool bPersistent = true, bool bGlobal = false,
                     bool bNLS = false );
   /**
@@ -820,7 +820,7 @@ public:
    *
    * @see  writeEntry()
    */
-  void writeEntry( const char *pKey, const QVariant& rValue,
+  void writeEntry( const char *pKey, const TQVariant& rValue,
                     bool bPersistent = true, bool bGlobal = false,
                     bool bNLS = false );
 
@@ -844,7 +844,7 @@ public:
    *
    * @see  writeEntry()
    */
-  void writeEntry( const QString& pKey, const QStrList &rValue,
+  void writeEntry( const TQString& pKey, const TQStrList &rValue,
 		   char sep = ',', bool bPersistent = true, bool bGlobal = false, bool bNLS = false );
   /**
    * writeEntry() overridden to accept a list of strings.
@@ -866,7 +866,7 @@ public:
    *
    * @see  writeEntry()
    */
-  void writeEntry( const char *pKey, const QStrList &rValue,
+  void writeEntry( const char *pKey, const TQStrList &rValue,
 		   char sep = ',', bool bPersistent = true, bool bGlobal = false, bool bNLS = false );
 
   /**
@@ -889,7 +889,7 @@ public:
    *
    * @see  writeEntry()
    */
-  void writeEntry( const QString& pKey, const QStringList &rValue,
+  void writeEntry( const TQString& pKey, const TQStringList &rValue,
 		   char sep = ',', bool bPersistent = true, bool bGlobal = false, bool bNLS = false );
   /**
    * writeEntry() overridden to accept a list of strings.
@@ -911,7 +911,7 @@ public:
    *
    * @see  writeEntry()
    */
-  void writeEntry( const char *pKey, const QStringList &rValue,
+  void writeEntry( const char *pKey, const TQStringList &rValue,
 		   char sep = ',', bool bPersistent = true, bool bGlobal = false, bool bNLS = false );
 
 
@@ -934,7 +934,7 @@ public:
    *
    * @see  writeEntry()
    */
-  void writeEntry( const QString& pKey, const QValueList<int>& rValue,
+  void writeEntry( const TQString& pKey, const TQValueList<int>& rValue,
 		   bool bPersistent = true, bool bGlobal = false, bool bNLS = false );
  /**
    * writeEntry() overridden to accept a list of Integers.
@@ -955,7 +955,7 @@ public:
    *
    * @see  writeEntry()
    */
-  void writeEntry( const char *pKey, const QValueList<int>& rValue,
+  void writeEntry( const char *pKey, const TQValueList<int>& rValue,
 		   bool bPersistent = true, bool bGlobal = false, bool bNLS = false );
 
   /**
@@ -975,10 +975,10 @@ public:
    *  @param bNLS       If @p bNLS is true, the locale tag is added to the key
    *                    when writing it back.
    */
-  void writeEntry( const QString& pKey, const char *pValue,
+  void writeEntry( const TQString& pKey, const char *pValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false )
-    { writeEntry(pKey, QString::fromLatin1(pValue), bPersistent, bGlobal, bNLS); }
+    { writeEntry(pKey, TQString::fromLatin1(pValue), bPersistent, bGlobal, bNLS); }
   /**
    * Write a (key/value) pair.
    *
@@ -999,7 +999,7 @@ public:
   void writeEntry( const char *pKey, const char *pValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false )
-    { writeEntry(pKey, QString::fromLatin1(pValue), bPersistent, bGlobal, bNLS); }
+    { writeEntry(pKey, TQString::fromLatin1(pValue), bPersistent, bGlobal, bNLS); }
 
   /**
    * Write a (key/value) pair.
@@ -1016,7 +1016,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *                    when writing it back.
    */
-  void writeEntry( const QString& pKey, int nValue,
+  void writeEntry( const TQString& pKey, int nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
   /**
@@ -1053,7 +1053,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *                    when writing it back.
    */
-  void writeEntry( const QString& pKey, unsigned int nValue,
+  void writeEntry( const TQString& pKey, unsigned int nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
   /**
@@ -1089,7 +1089,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const QString& pKey, long nValue,
+  void writeEntry( const TQString& pKey, long nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
   /**
@@ -1124,7 +1124,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const QString& pKey, unsigned long nValue,
+  void writeEntry( const TQString& pKey, unsigned long nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
   /**
@@ -1159,7 +1159,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const QString& pKey, Q_INT64 nValue,
+  void writeEntry( const TQString& pKey, Q_INT64 nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
   /**
@@ -1194,7 +1194,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const QString& pKey, Q_UINT64 nValue,
+  void writeEntry( const TQString& pKey, Q_UINT64 nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
   /**
@@ -1228,11 +1228,11 @@ public:
    * @param format      @p format determines the format to which the value
    *  is converted. Default is 'g'.
    * @param precision   @p precision sets the precision with which the
-   *  value is converted. Default is 6 as in QString.
+   *  value is converted. Default is 6 as in TQString.
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const QString& pKey, double nValue,
+  void writeEntry( const TQString& pKey, double nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       char format = 'g', int precision = 6,
                       bool bNLS = false );
@@ -1249,7 +1249,7 @@ public:
    * @param format      @p format determines the format to which the value
    *  is converted. Default is 'g'.
    * @param precision   @p precision sets the precision with which the
-   *  value is converted. Default is 6 as in QString.
+   *  value is converted. Default is 6 as in TQString.
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
@@ -1272,7 +1272,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const QString& pKey, bool bValue,
+  void writeEntry( const TQString& pKey, bool bValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
   /**
@@ -1307,7 +1307,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const QString& pKey, const QFont& rFont,
+  void writeEntry( const TQString& pKey, const TQFont& rFont,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
   /**
@@ -1324,7 +1324,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const char *pKey, const QFont& rFont,
+  void writeEntry( const char *pKey, const TQFont& rFont,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
 
@@ -1345,7 +1345,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const QString& pKey, const QColor& rColor,
+  void writeEntry( const TQString& pKey, const TQColor& rColor,
                    bool bPersistent = true, bool bGlobal = false,
                    bool bNLS = false );
   /**
@@ -1365,7 +1365,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const char *pKey, const QColor& rColor,
+  void writeEntry( const char *pKey, const TQColor& rColor,
                    bool bPersistent = true, bool bGlobal = false,
                    bool bNLS = false );
 
@@ -1386,7 +1386,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const QString& pKey, const QDateTime& rDateTime,
+  void writeEntry( const TQString& pKey, const TQDateTime& rDateTime,
                    bool bPersistent = true, bool bGlobal = false,
                    bool bNLS = false );
   /**
@@ -1406,7 +1406,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const char *pKey, const QDateTime& rDateTime,
+  void writeEntry( const char *pKey, const TQDateTime& rDateTime,
                    bool bPersistent = true, bool bGlobal = false,
                    bool bNLS = false );
 
@@ -1428,7 +1428,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const QString& pKey, const QRect& rValue,
+  void writeEntry( const TQString& pKey, const TQRect& rValue,
                    bool bPersistent = true, bool bGlobal = false,
                    bool bNLS = false );
   /**
@@ -1448,7 +1448,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const char *pKey, const QRect& rValue,
+  void writeEntry( const char *pKey, const TQRect& rValue,
                    bool bPersistent = true, bool bGlobal = false,
                    bool bNLS = false );
 
@@ -1469,7 +1469,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const QString& pKey, const QPoint& rValue,
+  void writeEntry( const TQString& pKey, const TQPoint& rValue,
                    bool bPersistent = true, bool bGlobal = false,
                    bool bNLS = false );
   /**
@@ -1489,7 +1489,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const char *pKey, const QPoint& rValue,
+  void writeEntry( const char *pKey, const TQPoint& rValue,
                    bool bPersistent = true, bool bGlobal = false,
                    bool bNLS = false );
 
@@ -1510,7 +1510,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const QString& pKey, const QSize& rValue,
+  void writeEntry( const TQString& pKey, const TQSize& rValue,
                    bool bPersistent = true, bool bGlobal = false,
                    bool bNLS = false );
   /**
@@ -1530,7 +1530,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const char *pKey, const QSize& rValue,
+  void writeEntry( const char *pKey, const TQSize& rValue,
                    bool bPersistent = true, bool bGlobal = false,
                    bool bNLS = false );
 
@@ -1551,7 +1551,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writePathEntry( const QString& pKey, const QString & path,
+  void writePathEntry( const TQString& pKey, const TQString & path,
                        bool bPersistent = true, bool bGlobal = false,
                        bool bNLS = false );
   /**
@@ -1571,7 +1571,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writePathEntry( const char *pKey, const QString & path,
+  void writePathEntry( const char *pKey, const TQString & path,
                        bool bPersistent = true, bool bGlobal = false,
                        bool bNLS = false );
 
@@ -1598,7 +1598,7 @@ public:
    * @see  readPathListEntry()
    * @since 3.1.3
    */
-  void writePathEntry( const QString& pKey, const QStringList &rValue,
+  void writePathEntry( const TQString& pKey, const TQStringList &rValue,
 		   char sep = ',', bool bPersistent = true, bool bGlobal = false, bool bNLS = false );
   /**
    * writePathEntry() overridden to accept a list of paths (strings).
@@ -1623,7 +1623,7 @@ public:
    * @see  readPathListEntry()
    * @since 3.1.3
    */
-  void writePathEntry( const char *pKey, const QStringList &rValue,
+  void writePathEntry( const char *pKey, const TQStringList &rValue,
 		   char sep = ',', bool bPersistent = true, bool bGlobal = false, bool bNLS = false );
 
 
@@ -1635,7 +1635,7 @@ public:
    *  application specific config file, but to the global KDE config file.
    * @param bNLS        If @p bNLS is true, the key with the locale tag is removed.
    */
-   void deleteEntry( const QString& pKey,
+   void deleteEntry( const TQString& pKey,
                    bool bNLS = false, bool bGlobal = false);
   /**
    * Deletes the entry specified by @p pKey in the current group.
@@ -1665,7 +1665,7 @@ public:
    * @return If the group is not empty and bDeep is false,
    *         deleteGroup returns false.
    */
-  bool deleteGroup( const QString& group, bool bDeep = true, bool bGlobal = false );
+  bool deleteGroup( const TQString& group, bool bDeep = true, bool bGlobal = false );
 
 
   /**
@@ -1746,7 +1746,7 @@ public:
    * @param key The key to search for.
    * @return If true, the key is available.
    */
-  bool hasKey( const QString& key ) const;
+  bool hasKey( const TQString& key ) const;
 
   /**
    * Returns a map (tree) of entries for all entries in a particular
@@ -1758,7 +1758,7 @@ public:
    *         The returned map may be empty if the group is not found.
    * @see   QMap
    */
-  virtual QMap<QString, QString> entryMap(const QString &group) const = 0;
+  virtual TQMap<TQString, TQString> entryMap(const TQString &group) const = 0;
 
   /**
    * Reparses all configuration files. This is useful for programs
@@ -1786,7 +1786,7 @@ public:
    * @return whether changes may be made to @p group in this configuration
    * file.
    */
-  bool groupIsImmutable(const QString &group) const;
+  bool groupIsImmutable(const TQString &group) const;
 
   /**
    * Checks whether it is possible to change the given entry.
@@ -1794,7 +1794,7 @@ public:
    * @return whether the entry @p key may be changed in the current group
    * in this configuration file.
    */
-  bool entryIsImmutable(const QString &key) const;
+  bool entryIsImmutable(const TQString &key) const;
 
   /**
    * Possible return values for getConfigState().
@@ -1852,7 +1852,7 @@ public:
    * @param key The key of the entry to revert.
    * @since 3.2
    */
-  void revertToDefault(const QString &key);
+  void revertToDefault(const TQString &key);
 
   /**
    * Returns whether a default is specified for an entry in either the
@@ -1861,8 +1861,8 @@ public:
    * If an application computes a default value at runtime for
    * a certain entry, e.g. like:
    * \code
-   * QColor computedDefault = kapp->palette().color(QPalette::Active, QColorGroup::Text)
-   * QColor color = config->readEntry(key, computedDefault);
+   * TQColor computedDefault = kapp->palette().color(TQPalette::Active, TQColorGroup::Text)
+   * TQColor color = config->readEntry(key, computedDefault);
    * \encode
    *
    * Then it may wish to make the following check before
@@ -1880,7 +1880,7 @@ public:
    * @param key The key of the entry to check.
    * @since 3.2
    */
-  bool hasDefault(const QString &key) const;
+  bool hasDefault(const TQString &key) const;
 
 protected:
   /**
@@ -1919,7 +1919,7 @@ protected:
    * @return The map of the entries in the group.
    * @internal
    */
-  virtual KEntryMap internalEntryMap( const QString& pGroup ) const = 0;
+  virtual KEntryMap internalEntryMap( const TQString& pGroup ) const = 0;
 
   /**
    * Returns a map (tree) of the entries in the tree.
@@ -1967,7 +1967,7 @@ protected:
    */
   virtual KEntry lookupData(const KEntryKey &_key) const = 0;
 
-  virtual bool internalHasGroup(const QCString &group) const = 0;
+  virtual bool internalHasGroup(const TQCString &group) const = 0;
 
   /**
    * A back end for loading/saving to disk in a particular format.
@@ -1977,22 +1977,22 @@ public:
   /**
    * Overloaded public methods:
    */
-  void setGroup( const QCString &pGroup );
+  void setGroup( const TQCString &pGroup );
   void setGroup( const char *pGroup );
-  bool hasGroup(const QCString &_pGroup) const;
+  bool hasGroup(const TQCString &_pGroup) const;
   bool hasGroup(const char *_pGroup) const;
   bool hasKey( const char *pKey ) const;
 
 protected:
-  QCString readEntryUtf8( const char *pKey) const;
+  TQCString readEntryUtf8( const char *pKey) const;
 
   /**
    * The currently selected group. */
-  QCString mGroup;
+  TQCString mGroup;
 
   /**
    * The locale to retrieve keys under if possible, i.e en_US or fr.  */
-  QCString aLocaleString;
+  TQCString aLocaleString;
 
   /**
    * Indicates whether there are any dirty entries in the config object
@@ -2009,9 +2009,9 @@ private:
   class KConfigBasePrivate;
   KConfigBasePrivate *d;
 
-  void writeEntry( const char *pKey, const QString &rValue,
+  void writeEntry( const char *pKey, const TQString &rValue,
     bool bPersistent, bool bGlobal, bool bNLS, bool bExpand );
-  void writeEntry( const char *pKey, const QStringList &rValue,
+  void writeEntry( const char *pKey, const TQStringList &rValue,
     char sep, bool bPersistent, bool bGlobal, bool bNLS, bool bExpand );
 
 };
@@ -2028,7 +2028,7 @@ class KConfigGroupSaverPrivate;
   * written as:
   * \code
   *
-  * QString oldgroup config->group();
+  * TQString oldgroup config->group();
   * config->setGroup( "TheGroupThatIWant" );
   * ...
   * config->writeEntry( "Blah", "Blubb" );
@@ -2066,8 +2066,8 @@ public:
    *               KConfigGroupSaver works on.
    * @param group  The new group that the config object should switch to.
    */
-  KConfigGroupSaver( KConfigBase* config, QString group )
-      /* KDE 4 : make the second parameter const QString & */
+  KConfigGroupSaver( KConfigBase* config, TQString group )
+      /* KDE 4 : make the second parameter const TQString & */
       : _config(config), _oldgroup(config->group())
         { _config->setGroup( group ); }
 
@@ -2075,7 +2075,7 @@ public:
       : _config(config), _oldgroup(config->group())
         { _config->setGroup( group ); }
 
-  KConfigGroupSaver( KConfigBase* config, const QCString &group )
+  KConfigGroupSaver( KConfigBase* config, const TQCString &group )
       : _config(config), _oldgroup(config->group())
         { _config->setGroup( group ); }
 
@@ -2085,7 +2085,7 @@ public:
 
 private:
   KConfigBase* _config;
-  QString _oldgroup;
+  TQString _oldgroup;
 
   KConfigGroupSaver(const KConfigGroupSaver&);
   KConfigGroupSaver& operator=(const KConfigGroupSaver&);
@@ -2105,14 +2105,14 @@ public:
     * Construct a config group corresponding to @p group in @p master.
     * @p group is the group name encoded in UTF-8.
     */
-   KConfigGroup(KConfigBase *master, const QCString &group);
+   KConfigGroup(KConfigBase *master, const TQCString &group);
    /**
     * This is an overloaded constructor provided for convenience.
     * It behaves essentially like the above function.
     *
     * Construct a config group corresponding to @p group in @p master
     */
-   KConfigGroup(KConfigBase *master, const QString &group);
+   KConfigGroup(KConfigBase *master, const TQString &group);
    /**
     * This is an overloaded constructor provided for convenience.
     * It behaves essentially like the above function.
@@ -2154,16 +2154,16 @@ private:
    void isDirty() { }
 
    // The following members are not used.
-   virtual QStringList groupList() const { return QStringList(); }
+   virtual TQStringList groupList() const { return TQStringList(); }
    virtual void rollback(bool) { }
    virtual void reparseConfiguration() { }
-   virtual QMap<QString, QString> entryMap(const QString &) const
-    { return QMap<QString,QString>(); }
-   virtual KEntryMap internalEntryMap( const QString&) const
+   virtual TQMap<TQString, TQString> entryMap(const TQString &) const
+    { return TQMap<TQString,TQString>(); }
+   virtual KEntryMap internalEntryMap( const TQString&) const
     { return KEntryMap(); }
    virtual KEntryMap internalEntryMap() const
     { return KEntryMap(); }
-   virtual bool internalHasGroup(const QCString &) const
+   virtual bool internalHasGroup(const TQCString &) const
     { return false; }
 
    void getConfigState() { }

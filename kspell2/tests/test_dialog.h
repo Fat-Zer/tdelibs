@@ -24,7 +24,7 @@
 #include "dialog.h"
 #include "broker.h"
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class TestDialog : public QObject
 {
@@ -33,8 +33,8 @@ public:
     TestDialog();
 
 public slots:
-    void check( const QString& buffer );
-    void doneChecking( const QString& );
+    void check( const TQString& buffer );
+    void doneChecking( const TQString& );
 private:
     KSpell2::Broker *m_broker;
 };

@@ -24,7 +24,7 @@
 #ifndef KMEDIAPLAYERVIEW_H
 #define KMEDIAPLAYERVIEW_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kdelibs_export.h>
 
 namespace KMediaPlayer
@@ -36,8 +36,8 @@ class KDE_EXPORT View : public QWidget
 Q_OBJECT
 
 public:
-	/** Your typical QWidget constructor. */
-	View(QWidget *parent, const char *name);
+	/** Your typical TQWidget constructor. */
+	View(TQWidget *parent, const char *name);
 	virtual ~View(void);
 
 	/** The Possible buttons that can appear in the UI. */
@@ -58,9 +58,9 @@ public:
 	/** Return which buttons are being displayed. */
 	int buttons(void);
 
-	/** Return the QWidget in which video is displayed.
+	/** Return the TQWidget in which video is displayed.
 		May Return 0L if there is none. */
-	QWidget *videoWidget();
+	TQWidget *videoWidget();
 
 public slots:
 	/** Set which buttons to display. See Button. */
@@ -84,7 +84,7 @@ protected:
 		the video will be displayed. KMediaPlayer users may
 		reparent() it to somewhere else, for example.
 	*/
-	void setVideoWidget(QWidget *videoWidget);
+	void setVideoWidget(TQWidget *videoWidget);
 
 private:
 	int currentButtons;

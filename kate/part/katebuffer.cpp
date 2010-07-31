@@ -34,13 +34,13 @@
 #include <kglobal.h>
 #include <kcharsets.h>
 
-#include <qpopupmenu.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qtimer.h>
-#include <qtextcodec.h>
-#include <qcstring.h>
-#include <qdatetime.h>
+#include <tqpopupmenu.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
+#include <tqtimer.h>
+#include <tqtextcodec.h>
+#include <tqcstring.h>
+#include <tqdatetime.h>
 
 /**
  * loader block size, load 256 kb at once per default
@@ -84,7 +84,7 @@ void KateBuffer::setMaxLoadedBlocks (uint count)
 class KateFileLoader
 {
   public:
-    KateFileLoader (const QString &filename, QTextCodec *codec, bool removeTrailingSpaces)
+    KateFileLoader (const TQString &filename, TQTextCodec *codec, bool removeTrailingSpaces)
       : m_file (filename)
       , m_buffer (kMin (m_file.size(), KATE_FILE_LOADER_BS))
       , m_codec (codec)
@@ -95,7 +95,7 @@ class KateFileLoader
       , lastWasEndOfLine (true) // at start of file, we had a virtual newline
       , lastWasR (false) // we have not found a \r as last char
       , m_eol (-1) // no eol type detected atm
-      , m_twoByteEncoding (QString(codec->name()) == "ISO-10646-UCS-2")
+      , m_twoByteEncoding (TQString(codec->name()) == "ISO-10646-UCS-2")
       , m_binary (false)
       , m_removeTrailingSpaces (removeTrailingSpaces)
     {
@@ -173,7 +173,7 @@ class KateFileLoader
     inline bool removeTrailingSpaces () const { return m_removeTrailingSpaces; }
 
     // internal unicode data array
-    inline const QChar *unicode () const { return m_text.unicode(); }
+    inline const TQChar *unicode () const { return m_text.unicode(); }
 
     // read a line, return length + offset in unicode data
     void readLine (uint &offset, uint &length)
@@ -195,7 +195,7 @@ class KateFileLoader
             {
               processNull (c);
 
-              QString str (m_decoder->toUnicode (m_buffer, c));
+              TQString str (m_decoder->toUnicode (m_buffer, c));
               readString = str.length();
 
               m_text = m_text.mid (m_lastLineStart, m_position-m_lastLineStart)
@@ -301,11 +301,11 @@ class KateFileLoader
     }
 
   private:
-    QFile m_file;
-    QByteArray m_buffer;
-    QTextCodec *m_codec;
-    QTextDecoder *m_decoder;
-    QString m_text;
+    TQFile m_file;
+    TQByteArray m_buffer;
+    TQTextCodec *m_codec;
+    TQTextDecoder *m_decoder;
+    TQString m_text;
     uint m_position;
     uint m_lastLineStart;
     bool m_eof;
@@ -321,7 +321,7 @@ class KateFileLoader
  * Create an empty buffer. (with one block with one empty line)
  */
 KateBuffer::KateBuffer(KateDocument *doc)
- : QObject (doc),
+ : TQObject (doc),
    editSessionNumber (0),
    editIsRunning (false),
    editTagLineStart (0xffffffff),
@@ -455,13 +455,13 @@ void KateBuffer::clear()
   m_lineHighlighted = 0;
 }
 
-bool KateBuffer::openFile (const QString &m_file)
+bool KateBuffer::openFile (const TQString &m_file)
 {
   KateFileLoader file (m_file, m_doc->config()->codec(), m_doc->configFlags() & KateDocument::cfRemoveSpaces);
 
   bool ok = false;
   struct stat sbuf;
-  if (stat(QFile::encodeName(m_file), &sbuf) == 0)
+  if (stat(TQFile::encodeName(m_file), &sbuf) == 0)
   {
     if (S_ISREG(sbuf.st_mode) && file.open())
       ok = true;
@@ -539,12 +539,12 @@ bool KateBuffer::openFile (const QString &m_file)
 
 bool KateBuffer::canEncode ()
 {
-  QTextCodec *codec = m_doc->config()->codec();
+  TQTextCodec *codec = m_doc->config()->codec();
 
   kdDebug(13020) << "ENC NAME: " << codec->name() << endl;
 
   // hardcode some unicode encodings which can encode all chars
-  if ((QString(codec->name()) == "UTF-8") || (QString(codec->name()) == "ISO-10646-UCS-2"))
+  if ((TQString(codec->name()) == "UTF-8") || (TQString(codec->name()) == "ISO-10646-UCS-2"))
     return true;
 
   for (uint i=0; i < m_lines; i++)
@@ -561,26 +561,26 @@ bool KateBuffer::canEncode ()
   return true;
 }
 
-bool KateBuffer::saveFile (const QString &m_file)
+bool KateBuffer::saveFile (const TQString &m_file)
 {
-  QFile file (m_file);
-  QTextStream stream (&file);
+  TQFile file (m_file);
+  TQTextStream stream (&file);
 
   if ( !file.open( IO_WriteOnly ) )
   {
     return false; // Error
   }
 
-  QTextCodec *codec = m_doc->config()->codec();
+  TQTextCodec *codec = m_doc->config()->codec();
 
   // disable Unicode headers
-  stream.setEncoding(QTextStream::RawUnicode);
+  stream.setEncoding(TQTextStream::RawUnicode);
 
   // this line sets the mapper to the correct codec
   stream.setCodec(codec);
 
   // our loved eol string ;)
-  QString eol = m_doc->config()->eolString ();
+  TQString eol = m_doc->config()->eolString ();
 
   // should we strip spaces?
   bool removeTrailingSpaces = m_doc->configFlags() & KateDocument::cfRemoveSpaces;
@@ -597,7 +597,7 @@ bool KateBuffer::saveFile (const QString &m_file)
 
       if (lastChar > -1)
       {
-        stream << QConstString (textline->text(), lastChar+1).string();
+        stream << TQConstString (textline->text(), lastChar+1).string();
       }
     }
     else // simple, dump the line
@@ -916,9 +916,9 @@ void KateBuffer::updatePreviousNotEmptyLine(KateBufBlock *blk,uint current_line,
     textLine = blk->line(current_line);
   } while (textLine->firstChar()==-1);
   kdDebug(13020)<<"updatePreviousNotEmptyLine: updating line:"<<(blk->startLine()+current_line)<<endl;
-  QMemArray<uint> foldingList=textLine->foldingListArray();
+  TQMemArray<uint> foldingList=textLine->foldingListArray();
   while ( (foldingList.size()>0)  && ( abs(foldingList[foldingList.size()-2])==1)) {
-    foldingList.resize(foldingList.size()-2,QGArray::SpeedOptim);
+    foldingList.resize(foldingList.size()-2,TQGArray::SpeedOptim);
   }
   addIndentBasedFoldingInformation(foldingList,addindent,deindent);
   textLine->setFoldingList(foldingList);
@@ -927,19 +927,19 @@ void KateBuffer::updatePreviousNotEmptyLine(KateBufBlock *blk,uint current_line,
   emit tagLines (blk->startLine()+current_line, blk->startLine()+current_line);
 }
 
-void KateBuffer::addIndentBasedFoldingInformation(QMemArray<uint> &foldingList,bool addindent,uint deindent)
+void KateBuffer::addIndentBasedFoldingInformation(TQMemArray<uint> &foldingList,bool addindent,uint deindent)
 {
   if (addindent) {
     //kdDebug(13020)<<"adding indent for line :"<<current_line + buf->startLine()<<"  textLine->noIndentBasedFoldingAtStart"<<textLine->noIndentBasedFoldingAtStart()<<endl;
     kdDebug(13020)<<"adding ident"<<endl;
-    foldingList.resize (foldingList.size() + 2, QGArray::SpeedOptim);
+    foldingList.resize (foldingList.size() + 2, TQGArray::SpeedOptim);
     foldingList[foldingList.size()-2] = 1;
     foldingList[foldingList.size()-1] = 0;
   }
   kdDebug(13020)<<"DEINDENT: "<<deindent<<endl;
   if (deindent > 0)
   {
-    foldingList.resize (foldingList.size() + (deindent*2), QGArray::SpeedOptim);
+    foldingList.resize (foldingList.size() + (deindent*2), TQGArray::SpeedOptim);
 
     for (uint z= foldingList.size()-(deindent*2); z < foldingList.size(); z=z+2)
     {
@@ -965,7 +965,7 @@ bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, b
   if (startLine >= (buf->startLine()+buf->lines()))
     return false;
 
-  //QTime t;
+  //TQTime t;
   //t.start();
   //kdDebug (13020) << "HIGHLIGHTED START --- NEED HL, LINESTART: " << startLine << " LINEEND: " << endLine << endl;
   //kdDebug (13020) << "HL UNTIL LINE: " << m_lineHighlighted << " MAX: " << m_lineHighlightedMax << endl;
@@ -1041,7 +1041,7 @@ bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, b
     // current line
     KateTextLine::Ptr textLine = buf->line(current_line);
 
-    QMemArray<uint> foldingList;
+    TQMemArray<uint> foldingList;
     bool ctxChanged = false;
 
     m_highlight->doHighlight (prevLine, textLine, &foldingList, &ctxChanged);
@@ -1053,14 +1053,14 @@ bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, b
     if (m_highlight->foldingIndentationSensitive())
     {
       // get the indentation array of the previous line to start with !
-      QMemArray<unsigned short> indentDepth;
+      TQMemArray<unsigned short> indentDepth;
       indentDepth.duplicate (prevLine->indentationDepthArray());
 
       // current indentation of this line
       uint iDepth = textLine->indentDepth(m_tabWidth);
       if ((current_line+buf->startLine())==0)
       {
-          indentDepth.resize (1, QGArray::SpeedOptim);
+          indentDepth.resize (1, TQGArray::SpeedOptim);
           indentDepth[0] = iDepth;
       }
 
@@ -1121,18 +1121,18 @@ bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, b
         if ((iDepth > 0) && (indentDepth.isEmpty() || (indentDepth[indentDepth.size()-1] < iDepth)))
         {
           kdDebug(13020)<<"adding depth to \"stack\":"<<iDepth<<endl;
-          indentDepth.resize (indentDepth.size()+1, QGArray::SpeedOptim);
+          indentDepth.resize (indentDepth.size()+1, TQGArray::SpeedOptim);
           indentDepth[indentDepth.size()-1] = iDepth;
         } else {
           if (!indentDepth.isEmpty())
           {
             for (int z=indentDepth.size()-1; z > -1; z--)
               if (indentDepth[z]>iDepth)
-                indentDepth.resize(z, QGArray::SpeedOptim);
+                indentDepth.resize(z, TQGArray::SpeedOptim);
             if ((iDepth > 0) && (indentDepth.isEmpty() || (indentDepth[indentDepth.size()-1] < iDepth)))
             {
               kdDebug(13020)<<"adding depth to \"stack\":"<<iDepth<<endl;
-              indentDepth.resize (indentDepth.size()+1, QGArray::SpeedOptim);
+              indentDepth.resize (indentDepth.size()+1, TQGArray::SpeedOptim);
               indentDepth[indentDepth.size()-1] = iDepth;
               if (prevLine->firstChar()==-1) {
 
@@ -1196,8 +1196,8 @@ bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, b
     if (foldingList.size()!=textLine->foldingListArray().size()) {
       foldingChanged=true;
     } else {
-      QMemArray<uint>::ConstIterator it=foldingList.begin();
-      QMemArray<uint>::ConstIterator it1=textLine->foldingListArray();
+      TQMemArray<uint>::ConstIterator it=foldingList.begin();
+      TQMemArray<uint>::ConstIterator it1=textLine->foldingListArray();
       bool markerType=true;
       for(;it!=foldingList.end();++it,++it1) {
         if  (markerType) {
@@ -1263,7 +1263,7 @@ void KateBuffer::codeFoldingColumnUpdate(unsigned int lineNr) {
   if (line->foldingColumnsOutdated()) {
     line->setFoldingColumnsOutdated(false);
     bool tmp;
-    QMemArray<uint> folding=line->foldingListArray();
+    TQMemArray<uint> folding=line->foldingListArray();
     m_regionTree.updateLine(lineNr,&folding,&tmp,true,false);
   }
 }
@@ -1340,11 +1340,11 @@ void KateBufBlock::fillBlock (KateFileLoader *stream)
   // is allready too much stuff around in mem ?
   bool swap = m_parent->m_loadedBlocks.count() >= KateBuffer::maxLoadedBlocks();
 
-  QByteArray rawData;
+  TQByteArray rawData;
 
   // calcs the approx size for KATE_AVG_BLOCK_SIZE chars !
   if (swap)
-    rawData.resize ((KATE_AVG_BLOCK_SIZE * sizeof(QChar)) + ((KATE_AVG_BLOCK_SIZE/80) * 8));
+    rawData.resize ((KATE_AVG_BLOCK_SIZE * sizeof(TQChar)) + ((KATE_AVG_BLOCK_SIZE/80) * 8));
 
   char *buf = rawData.data ();
   uint size = 0;
@@ -1353,7 +1353,7 @@ void KateBufBlock::fillBlock (KateFileLoader *stream)
   {
     uint offset = 0, length = 0;
     stream->readLine(offset, length);
-    const QChar *unicodeData = stream->unicode () + offset;
+    const TQChar *unicodeData = stream->unicode () + offset;
 
     // strip spaces at end of line
     if ( stream->removeTrailingSpaces() )
@@ -1377,7 +1377,7 @@ void KateBufBlock::fillBlock (KateFileLoader *stream)
       uint pos = size;
 
       // calc new size
-      size = size + 1 + sizeof(uint) + (sizeof(QChar)*length);
+      size = size + 1 + sizeof(uint) + (sizeof(TQChar)*length);
 
       if (size > rawData.size ())
       {
@@ -1391,8 +1391,8 @@ void KateBufBlock::fillBlock (KateFileLoader *stream)
       memcpy(buf+pos, (char *) &length, sizeof(uint));
       pos += sizeof(uint);
 
-      memcpy(buf+pos, (char *) unicodeData, sizeof(QChar)*length);
-      pos += sizeof(QChar)*length;
+      memcpy(buf+pos, (char *) unicodeData, sizeof(TQChar)*length);
+      pos += sizeof(TQChar)*length;
     }
     else
     {
@@ -1501,7 +1501,7 @@ void KateBufBlock::swapIn ()
   if (m_state != KateBufBlock::stateSwapped)
     return;
 
-  QByteArray rawData (m_vmblockSize);
+  TQByteArray rawData (m_vmblockSize);
 
   // what to do if that fails ?
   if (!KateFactory::self()->vm()->copyBlock(rawData.data(), m_vmblock, 0, rawData.size()))
@@ -1541,7 +1541,7 @@ void KateBufBlock::swapOut ()
     for (uint i=0; i < m_lines; i++)
       size += m_stringList[i]->dumpSize (haveHl);
 
-    QByteArray rawData (size);
+    TQByteArray rawData (size);
     char *buf = rawData.data();
 
     // Dump textlines

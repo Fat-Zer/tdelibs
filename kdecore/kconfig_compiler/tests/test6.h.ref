@@ -10,22 +10,22 @@ class Test6 : public KConfigSkeleton
 {
   public:
 
-    Test6( const QString & Number );
+    Test6( const TQString & Number );
     ~Test6();
 
     /**
       Set Block colors.
     */
-    void setColor( const QColor & v )
+    void setColor( const TQColor & v )
     {
-      if (!isImmutable( QString::fromLatin1( "Color" ) ))
+      if (!isImmutable( TQString::fromLatin1( "Color" ) ))
         mColor = v;
     }
 
     /**
       Get Block colors.
     */
-    QColor color() const
+    TQColor color() const
     {
       return mColor;
     }
@@ -33,16 +33,16 @@ class Test6 : public KConfigSkeleton
     /**
       Set foo bar
     */
-    void setFooBar( const QString & v )
+    void setFooBar( const TQString & v )
     {
-      if (!isImmutable( QString::fromLatin1( "FooBar" ) ))
+      if (!isImmutable( TQString::fromLatin1( "FooBar" ) ))
         mFooBar = v;
     }
 
     /**
       Get foo bar
     */
-    QString fooBar() const
+    TQString fooBar() const
     {
       return mFooBar;
     }
@@ -64,7 +64,7 @@ class Test6 : public KConfigSkeleton
         v = 88;
       }
 
-      if (!isImmutable( QString::fromLatin1( "Age" ) ))
+      if (!isImmutable( TQString::fromLatin1( "Age" ) ))
         mAge = v;
     }
 
@@ -77,13 +77,13 @@ class Test6 : public KConfigSkeleton
     }
 
   protected:
-    QString mParamNumber;
+    TQString mParamNumber;
 
     // Foo
-    QColor mColor;
+    TQColor mColor;
 
     // Bar$(Number)
-    QString mFooBar;
+    TQString mFooBar;
     int mAge;
 
   private:

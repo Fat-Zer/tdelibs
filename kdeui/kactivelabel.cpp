@@ -20,19 +20,19 @@
 #include "kactivelabel.h"
 
 #include <kapplication.h>
-#include <qregexp.h>
-#include <qwhatsthis.h>
-#include <qsimplerichtext.h>
+#include <tqregexp.h>
+#include <tqwhatsthis.h>
+#include <tqsimplerichtext.h>
 #include <kdebug.h>
 
-KActiveLabel::KActiveLabel(QWidget * parent, const char * name)
- : QTextBrowser(parent, name)
+KActiveLabel::KActiveLabel(TQWidget * parent, const char * name)
+ : TQTextBrowser(parent, name)
 {
    init();
 }
 
-KActiveLabel::KActiveLabel(const QString &text, QWidget * parent, const char * name)
- : QTextBrowser(parent, name)
+KActiveLabel::KActiveLabel(const TQString &text, TQWidget * parent, const char * name)
+ : TQTextBrowser(parent, name)
 {
    init();
    setText(text);
@@ -41,38 +41,38 @@ KActiveLabel::KActiveLabel(const QString &text, QWidget * parent, const char * n
 void KActiveLabel::init()
 {
    setTextFormat(Qt::RichText);
-   setVScrollBarMode(QScrollView::AlwaysOff);
-   setHScrollBarMode(QScrollView::AlwaysOff);
-   setFrameStyle(QFrame::NoFrame);
-   setFocusPolicy( QWidget::TabFocus );
+   setVScrollBarMode(TQScrollView::AlwaysOff);
+   setHScrollBarMode(TQScrollView::AlwaysOff);
+   setFrameStyle(TQFrame::NoFrame);
+   setFocusPolicy( TQWidget::TabFocus );
    paletteChanged();
 
-   connect(this, SIGNAL(linkClicked(const QString &)),
-           this, SLOT(openLink(const QString &)));
+   connect(this, TQT_SIGNAL(linkClicked(const TQString &)),
+           this, TQT_SLOT(openLink(const TQString &)));
    if (kapp)
    {
-      connect(kapp, SIGNAL(kdisplayPaletteChanged()),
-              this, SLOT(paletteChanged()));
+      connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()),
+              this, TQT_SLOT(paletteChanged()));
    }
 }
 
 void KActiveLabel::paletteChanged()
 {
-   QPalette p = kapp ? kapp->palette() : palette();
-   p.setBrush(QColorGroup::Base, p.brush(QPalette::Normal, QColorGroup::Background));
-   p.setColor(QColorGroup::Text, p.color(QPalette::Normal, QColorGroup::Foreground));
+   TQPalette p = kapp ? kapp->palette() : palette();
+   p.setBrush(TQColorGroup::Base, p.brush(TQPalette::Normal, TQColorGroup::Background));
+   p.setColor(TQColorGroup::Text, p.color(TQPalette::Normal, TQColorGroup::Foreground));
    setPalette(p);
 }
 
-void KActiveLabel::openLink(const QString & link)
+void KActiveLabel::openLink(const TQString & link)
 {
-   QRegExp whatsthis("whatsthis:/*([^/].*)");
+   TQRegExp whatsthis("whatsthis:/*([^/].*)");
    if (whatsthis.exactMatch(link)) {
-      QWhatsThis::display(whatsthis.cap(1));
+      TQWhatsThis::display(whatsthis.cap(1));
       return;
    }
 
-   QStringList args;
+   TQStringList args;
    args << "exec" << link;
    kapp->kdeinitExec("kfmclient", args);
 }
@@ -80,21 +80,21 @@ void KActiveLabel::openLink(const QString & link)
 void KActiveLabel::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-void KActiveLabel::focusInEvent( QFocusEvent* fe )
+void KActiveLabel::focusInEvent( TQFocusEvent* fe )
 {
-   QTextBrowser::focusInEvent(fe);
-   if(fe->reason() == QFocusEvent::Tab || fe->reason() == QFocusEvent::Backtab)
+   TQTextBrowser::focusInEvent(fe);
+   if(fe->reason() == TQFocusEvent::Tab || fe->reason() == TQFocusEvent::Backtab)
       selectAll(true);
 }
 
-void KActiveLabel::focusOutEvent( QFocusEvent* fe )
+void KActiveLabel::focusOutEvent( TQFocusEvent* fe )
 {
-   QTextBrowser::focusOutEvent(fe);
-   if(fe->reason() == QFocusEvent::Tab || fe->reason() == QFocusEvent::Backtab)
+   TQTextBrowser::focusOutEvent(fe);
+   if(fe->reason() == TQFocusEvent::Tab || fe->reason() == TQFocusEvent::Backtab)
       selectAll(false);
 }
 
-void KActiveLabel::keyPressEvent( QKeyEvent *e )
+void KActiveLabel::keyPressEvent( TQKeyEvent *e )
 {
     switch ( e->key() )
     {
@@ -104,16 +104,16 @@ void KActiveLabel::keyPressEvent( QKeyEvent *e )
     case Key_Right:
         // jump over QTextEdit's key navigation breakage.
         // we're not interested in keyboard navigation within the text
-        QWidget::keyPressEvent( e );
+        TQWidget::keyPressEvent( e );
         break;
     default:
-        QTextBrowser::keyPressEvent( e );
+        TQTextBrowser::keyPressEvent( e );
     }
 }
 
-QSize KActiveLabel::minimumSizeHint() const
+TQSize KActiveLabel::minimumSizeHint() const
 {
-   QSize ms = minimumSize();
+   TQSize ms = minimumSize();
    if ((ms.width() > 0) && (ms.height() > 0))
       return ms;
 
@@ -121,8 +121,8 @@ QSize KActiveLabel::minimumSizeHint() const
    if (ms.width() > 0)
       w = ms.width();
 
-   QString txt = text();
-   QSimpleRichText rt(txt, font());
+   TQString txt = text();
+   TQSimpleRichText rt(txt, font());
    rt.setWidth(w - 2*frameWidth() - 10);
    w = 10 + rt.widthUsed() + 2*frameWidth();
    if (w < ms.width())
@@ -131,10 +131,10 @@ QSize KActiveLabel::minimumSizeHint() const
    if ( h < ms.height())
       h = ms.height();
 
-   return QSize(w, h);
+   return TQSize(w, h);
 }
 
-QSize KActiveLabel::sizeHint() const
+TQSize KActiveLabel::sizeHint() const
 {
    return minimumSizeHint();
 }

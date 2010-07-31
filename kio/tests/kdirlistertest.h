@@ -21,8 +21,8 @@
 #ifndef _KDIRLISTERTEST_H_
 #define _KDIRLISTERTEST_H_
 
-#include <qwidget.h>
-#include <qstring.h>
+#include <tqwidget.h>
+#include <tqstring.h>
 
 #include <kurl.h>
 #include <kfileitem.h>
@@ -35,7 +35,7 @@ class PrintSignals : public QObject
 {
    Q_OBJECT
 public:
-   PrintSignals() : QObject() { }
+   PrintSignals() : TQObject() { }
 
 public slots:
    void started( const KURL &url )
@@ -82,7 +82,7 @@ public slots:
       cout << "*** refreshItems: " << endl;
       // TODO
    }
-   void infoMessage( const QString& msg )
+   void infoMessage( const TQString& msg )
    { cout << "*** infoMessage: " << msg.local8Bit() << endl; }
 
    void percent( int percent )
@@ -102,7 +102,7 @@ class KDirListerTest : public QWidget
 {
    Q_OBJECT
 public:
-   KDirListerTest( QWidget *parent=0, const char *name=0 );
+   KDirListerTest( TQWidget *parent=0, const char *name=0 );
    ~KDirListerTest();
 
 public slots:

@@ -30,9 +30,9 @@ static KCmdLineOptions options[] =
 
 bool _expandvars = false;
 
-QString expandvars(const char *_input)
+TQString expandvars(const char *_input)
 {
-    QString result = QString::fromLatin1(_input);
+    TQString result = TQString::fromLatin1(_input);
     if (!_expandvars)
         return result;
 
@@ -103,7 +103,7 @@ QString expandvars(const char *_input)
         return result;
 }
 
-void printResult(const QString &s)
+void printResult(const TQString &s)
 {
     if (s.isEmpty())
         printf("\n");
@@ -142,7 +142,7 @@ int main(int argc, char **argv)
 
     if (args->isSet("libsuffix"))
     {
-        QString tmp(KDELIBSUFF);
+        TQString tmp(KDELIBSUFF);
         tmp.remove('"');
         printResult(expandvars(tmp.local8Bit()));
         return 0;
@@ -162,7 +162,7 @@ int main(int argc, char **argv)
 
     if (args->isSet("types"))
     {
-        QStringList types = KGlobal::dirs()->allTypes();
+        TQStringList types = KGlobal::dirs()->allTypes();
         types.sort();
         const char *helptexts[] = {
             "apps", I18N_NOOP("Applications menu (.desktop files)"),
@@ -191,7 +191,7 @@ int main(int argc, char **argv)
             "socket", I18N_NOOP("UNIX Sockets (specific for both current host and current user)"),
             0, 0
         };
-        for (QStringList::ConstIterator it = types.begin(); it != types.end(); ++it)
+        for (TQStringList::ConstIterator it = types.begin(); it != types.end(); ++it)
         {
             int index = 0;
             while (helptexts[index] && *it != helptexts[index]) {
@@ -206,7 +206,7 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    QString type = args->getOption("path");
+    TQString type = args->getOption("path");
     if (!type.isEmpty())
     {
         printResult(KGlobal::dirs()->resourceDirs(type.latin1()).join(":"));

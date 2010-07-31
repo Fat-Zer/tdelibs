@@ -30,8 +30,8 @@ int KArtsDispatcher::m_refCount = 0;
 Arts::Dispatcher *KArtsDispatcher::artsDispatcher = 0;
 Arts::QIOManager *KArtsDispatcher::artsQIOManager = 0;
 
-KArtsDispatcher::KArtsDispatcher(QObject *parent, const char *name)
-	: QObject(parent, name)
+KArtsDispatcher::KArtsDispatcher(TQObject *parent, const char *name)
+	: TQObject(parent, name)
 {
 	m_refCount++;
 	if(artsDispatcher == 0)

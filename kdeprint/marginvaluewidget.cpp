@@ -21,7 +21,7 @@
 
 #include <math.h>
 
-MarginValueWidget::MarginValueWidget(KNumInput *below, double value, QWidget *parent, const char *name)
+MarginValueWidget::MarginValueWidget(KNumInput *below, double value, TQWidget *parent, const char *name)
 : KDoubleNumInput(below, value, parent, name)
 {
 	m_mode = Pixels;
@@ -31,7 +31,7 @@ MarginValueWidget::MarginValueWidget(KNumInput *below, double value, QWidget *pa
 	m_margin = ( float )value;
 	setMode(m_mode);
 	setRange(0, 999, 1, false);
-	connect(this, SIGNAL(valueChanged(double)), SLOT(slotValueChanged(double)));
+	connect(this, TQT_SIGNAL(valueChanged(double)), TQT_SLOT(slotValueChanged(double)));
 }
 
 float MarginValueWidget::margin()

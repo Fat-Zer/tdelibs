@@ -19,39 +19,39 @@
  */
 
 #include "servicebase.h"
-#include <qregexp.h>
+#include <tqregexp.h>
 
 namespace DNSSD
 {
 
-ServiceBase::ServiceBase(const QString& name, const QString& type, const QString& domain,
-			 const QString& host, unsigned short port) : 
+ServiceBase::ServiceBase(const TQString& name, const TQString& type, const TQString& domain,
+			 const TQString& host, unsigned short port) : 
     		m_serviceName(name), m_type(type), m_domain(domain), m_hostName(host), m_port(port)
 {}
 
 ServiceBase::~ServiceBase()
 {}
 
-QString ServiceBase::encode()
+TQString ServiceBase::encode()
 {
-	return  m_serviceName.replace(".","\\.").replace("\\","\\\\") + QString(".") + m_type +
-			 QString(".") + m_domain;
+	return  m_serviceName.replace(".","\\.").replace("\\","\\\\") + TQString(".") + m_type +
+			 TQString(".") + m_domain;
 }
 
 // example: 3rd\.\032Floor\032Copy\032Room._ipp._tcp.dns-sd.org.  - normal service
 // 3rd\.\032Floor\032Copy\032Room.dns-sd.org  - domain
 // 	_ipp._tcp.dns-sd.org	- metaquery
 
-void ServiceBase::decode(const QString& name)
+void ServiceBase::decode(const TQString& name)
 {
-	QString rest;
+	TQString rest;
 	if (name[0]=='_') { 		// metaquery
 		m_serviceName="";
 		rest=name;
 	} else {		// normal service or domain
-		QString decoded_name=name;
+		TQString decoded_name=name;
 		decoded_name=decoded_name.replace("\\\\","\\");
-		int i = decoded_name.find(QRegExp("[^\\\\]\\."));
+		int i = decoded_name.find(TQRegExp("[^\\\\]\\."));
 		if (i==-1) return;            // first find service name
 		rest = decoded_name.mid(i+2);
 		m_serviceName=decoded_name.left(i+1).replace("\\.",".");
@@ -59,29 +59,29 @@ void ServiceBase::decode(const QString& name)
 	m_type = rest.section('.',0,1);
 	// does it really have a type?
 	if (m_type[0]=='_' && m_type[m_type.find('.')+1]=='_')
-		m_domain = rest.section('.',2,-1,QString::SectionIncludeTrailingSep);
+		m_domain = rest.section('.',2,-1,TQString::SectionIncludeTrailingSep);
 	else {
 		m_type="";
 		m_domain=rest;
 	}
 }
 
-const QString& ServiceBase::serviceName() const
+const TQString& ServiceBase::serviceName() const
 {
 	return m_serviceName;
 }
 
-const QString& ServiceBase::type() const
+const TQString& ServiceBase::type() const
 {
 	return m_type;
 }
 
-const QString& ServiceBase::domain() const
+const TQString& ServiceBase::domain() const
 {
 	return m_domain;
 }
 
-const QString& ServiceBase::hostName() const
+const TQString& ServiceBase::hostName() const
 {
 	return m_hostName;
 }
@@ -90,7 +90,7 @@ unsigned short ServiceBase::port() const
 {
 	return m_port;
 }
-const QMap<QString,QString>& ServiceBase::textData() const
+const TQMap<TQString,TQString>& ServiceBase::textData() const
 {
 	return m_textData;
 }
@@ -98,13 +98,13 @@ const QMap<QString,QString>& ServiceBase::textData() const
 void ServiceBase::virtual_hook(int, void*)
 {}
 
-QDataStream & operator<< (QDataStream & s, const ServiceBase & a)
+TQDataStream & operator<< (TQDataStream & s, const ServiceBase & a)
 {
 	s << a.m_serviceName << a.m_type << a.m_domain << a.m_hostName << Q_INT16(a.m_port) << a.m_textData;
 	return s;
 }
 
-QDataStream & operator>> (QDataStream & s, ServiceBase & a)
+TQDataStream & operator>> (TQDataStream & s, ServiceBase & a)
 {
 	Q_INT16 port;
 	s >> a.m_serviceName >> a.m_type >> a.m_domain >> a.m_hostName >> port >> a.m_textData;

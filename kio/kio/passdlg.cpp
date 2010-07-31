@@ -18,13 +18,13 @@
 
 #include "passdlg.h"
 
-#include <qapplication.h>
-#include <qcheckbox.h>
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qsimplerichtext.h>
-#include <qstylesheet.h>
+#include <tqapplication.h>
+#include <tqcheckbox.h>
+#include <tqhbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqsimplerichtext.h>
+#include <tqstylesheet.h>
 
 #include <kcombobox.h>
 #include <kconfig.h>
@@ -37,22 +37,22 @@ using namespace KIO;
 
 struct PasswordDialog::PasswordDialogPrivate
 {
-    QGridLayout *layout;
-    QLineEdit* userEdit;
+    TQGridLayout *layout;
+    TQLineEdit* userEdit;
     KLineEdit* passEdit;
-    QLabel* userNameLabel;
-    QLabel* prompt;
-    QCheckBox* keepCheckBox;
-    QMap<QString,QString> knownLogins;
+    TQLabel* userNameLabel;
+    TQLabel* prompt;
+    TQCheckBox* keepCheckBox;
+    TQMap<TQString,TQString> knownLogins;
     KComboBox* userEditCombo;
-    QHBox* userNameHBox;
+    TQHBox* userNameHBox;
 
     bool keep;
     short unsigned int nRow;
 };
 
-PasswordDialog::PasswordDialog( const QString& prompt, const QString& user,
-                                bool enableKeep, bool modal, QWidget* parent,
+PasswordDialog::PasswordDialog( const TQString& prompt, const TQString& user,
+                                bool enableKeep, bool modal, TQWidget* parent,
                                 const char* name )
                :KDialogBase( parent, name, modal, i18n("Password"), Ok|Cancel, Ok, true)
 {
@@ -64,10 +64,10 @@ PasswordDialog::~PasswordDialog()
     delete d;
 }
 
-void PasswordDialog::init( const QString& prompt, const QString& user,
+void PasswordDialog::init( const TQString& prompt, const TQString& user,
                            bool enableKeep  )
 {
-    QWidget *main = makeMainWidget();
+    TQWidget *main = makeMainWidget();
 
     d = new PasswordDialogPrivate;
     d->keep = false;
@@ -77,21 +77,21 @@ void PasswordDialog::init( const QString& prompt, const QString& user,
     KConfig* cfg = KGlobal::config();
     KConfigGroupSaver saver( cfg, "Passwords" );
 
-    d->layout = new QGridLayout( main, 9, 3, spacingHint(), marginHint());
+    d->layout = new TQGridLayout( main, 9, 3, spacingHint(), marginHint());
     d->layout->addColSpacing(1, 5);
 
     // Row 0: pixmap  prompt
-    QLabel* lbl;
-    QPixmap pix( KGlobal::iconLoader()->loadIcon( "password", KIcon::NoGroup, KIcon::SizeHuge, 0, 0, true));
+    TQLabel* lbl;
+    TQPixmap pix( KGlobal::iconLoader()->loadIcon( "password", KIcon::NoGroup, KIcon::SizeHuge, 0, 0, true));
     if ( !pix.isNull() )
     {
-        lbl = new QLabel( main );
+        lbl = new TQLabel( main );
         lbl->setPixmap( pix );
         lbl->setAlignment( Qt::AlignLeft|Qt::AlignVCenter );
         lbl->setFixedSize( lbl->sizeHint() );
         d->layout->addWidget( lbl, 0, 0, Qt::AlignLeft );
     }
-    d->prompt = new QLabel( main );
+    d->prompt = new TQLabel( main );
     d->prompt->setAlignment( Qt::AlignLeft|Qt::AlignVCenter|Qt::WordBreak );
     d->layout->addWidget( d->prompt, 0, 2, Qt::AlignLeft );
     if ( prompt.isEmpty() )
@@ -105,13 +105,13 @@ void PasswordDialog::init( const QString& prompt, const QString& user,
     // Row 2-3: Reserved for an additional comment
 
     // Row 4: Username field
-    d->userNameLabel = new QLabel( i18n("&Username:"), main );
+    d->userNameLabel = new TQLabel( i18n("&Username:"), main );
     d->userNameLabel->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     d->userNameLabel->setFixedSize( d->userNameLabel->sizeHint() );
-    d->userNameHBox = new QHBox( main );
+    d->userNameHBox = new TQHBox( main );
 
     d->userEdit = new KLineEdit( d->userNameHBox );
-    QSize s = d->userEdit->sizeHint();
+    TQSize s = d->userEdit->sizeHint();
     d->userEdit->setFixedHeight( s.height() );
     d->userEdit->setMinimumWidth( s.width() );
     d->userNameLabel->setBuddy( d->userEdit );
@@ -122,15 +122,15 @@ void PasswordDialog::init( const QString& prompt, const QString& user,
     d->layout->addRowSpacing( 5, 4 );
 
     // Row 6: Password field
-    lbl = new QLabel( i18n("&Password:"), main );
+    lbl = new TQLabel( i18n("&Password:"), main );
     lbl->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     lbl->setFixedSize( lbl->sizeHint() );
-    QHBox* hbox = new QHBox( main );
+    TQHBox* hbox = new TQHBox( main );
     d->passEdit = new KLineEdit( hbox );
     if ( cfg->readEntry("EchoMode", "OneStar") == "NoEcho" )
-        d->passEdit->setEchoMode( QLineEdit::NoEcho );
+        d->passEdit->setEchoMode( TQLineEdit::NoEcho );
     else
-        d->passEdit->setEchoMode( QLineEdit::Password );
+        d->passEdit->setEchoMode( TQLineEdit::Password );
     s = d->passEdit->sizeHint();
     d->passEdit->setFixedHeight( s.height() );
     d->passEdit->setMinimumWidth( s.width() );
@@ -143,18 +143,18 @@ void PasswordDialog::init( const QString& prompt, const QString& user,
         // Row 7: Add spacer
         d->layout->addRowSpacing( 7, 4 );
         // Row 8: Keep Password
-        hbox = new QHBox( main );
-        d->keepCheckBox = new QCheckBox( i18n("&Keep password"), hbox );
+        hbox = new TQHBox( main );
+        d->keepCheckBox = new TQCheckBox( i18n("&Keep password"), hbox );
         d->keepCheckBox->setFixedSize( d->keepCheckBox->sizeHint() );
         d->keep = cfg->readBoolEntry("Keep", false );
         d->keepCheckBox->setChecked( d->keep );
-        connect(d->keepCheckBox, SIGNAL(toggled( bool )), SLOT(slotKeep( bool )));
+        connect(d->keepCheckBox, TQT_SIGNAL(toggled( bool )), TQT_SLOT(slotKeep( bool )));
         d->layout->addWidget( hbox, 8, 2 );
     }
 
     // Configure necessary key-bindings and connect necessar slots and signals
-    connect( d->userEdit, SIGNAL(returnPressed()), d->passEdit, SLOT(setFocus()) );
-    connect( d->passEdit, SIGNAL(returnPressed()), SLOT(slotOk()) );
+    connect( d->userEdit, TQT_SIGNAL(returnPressed()), d->passEdit, TQT_SLOT(setFocus()) );
+    connect( d->passEdit, TQT_SIGNAL(returnPressed()), TQT_SLOT(slotOk()) );
 
     if ( !user.isEmpty() )
     {
@@ -168,12 +168,12 @@ void PasswordDialog::init( const QString& prompt, const QString& user,
 //    setFixedSize( sizeHint() );
 }
 
-QString PasswordDialog::username() const
+TQString PasswordDialog::username() const
 {
     return d->userEdit->text();
 }
 
-QString PasswordDialog::password() const
+TQString PasswordDialog::password() const
 {
     return d->passEdit->text();
 }
@@ -189,16 +189,16 @@ bool PasswordDialog::keepPassword() const
     return d->keep;
 }
 
-static void calculateLabelSize(QLabel *label)
+static void calculateLabelSize(TQLabel *label)
 {
-   QString qt_text = label->text();
+   TQString qt_text = label->text();
 
    int pref_width = 0;
    int pref_height = 0;
    // Calculate a proper size for the text.
    {
-       QSimpleRichText rt(qt_text, label->font());
-       QRect d = KGlobalSettings::desktopGeometry(label->topLevelWidget());
+       TQSimpleRichText rt(qt_text, label->font());
+       TQRect d = KGlobalSettings::desktopGeometry(label->topLevelWidget());
 
        pref_width = d.width() / 4;
        rt.setWidth(pref_width-10);
@@ -227,22 +227,22 @@ static void calculateLabelSize(QLabel *label)
              pref_width = used_width;
        }
     }
-    label->setFixedSize(QSize(pref_width+10, pref_height));
+    label->setFixedSize(TQSize(pref_width+10, pref_height));
 }
 
-void PasswordDialog::addCommentLine( const QString& label,
-                                     const QString comment )
+void PasswordDialog::addCommentLine( const TQString& label,
+                                     const TQString comment )
 {
     if (d->nRow > 0)
         return;
 
-    QWidget *main = mainWidget();
+    TQWidget *main = mainWidget();
 
-    QLabel* lbl = new QLabel( label, main);
+    TQLabel* lbl = new TQLabel( label, main);
     lbl->setAlignment( Qt::AlignVCenter|Qt::AlignRight );
     lbl->setFixedSize( lbl->sizeHint() );
     d->layout->addWidget( lbl, d->nRow+2, 0, Qt::AlignLeft );
-    lbl = new QLabel( comment, main);
+    lbl = new TQLabel( comment, main);
     lbl->setAlignment( Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak );
     calculateLabelSize(lbl);
     d->layout->addWidget( lbl, d->nRow+2, 2, Qt::AlignLeft );
@@ -255,28 +255,28 @@ void PasswordDialog::slotKeep( bool keep )
     d->keep = keep;
 }
 
-static QString qrichtextify( const QString& text )
+static TQString qrichtextify( const TQString& text )
 {
   if ( text.isEmpty() || text[0] == '<' )
     return text;
 
-  QStringList lines = QStringList::split('\n', text);
-  for(QStringList::Iterator it = lines.begin(); it != lines.end(); ++it)
+  TQStringList lines = TQStringList::split('\n', text);
+  for(TQStringList::Iterator it = lines.begin(); it != lines.end(); ++it)
   {
-    *it = QStyleSheet::convertFromPlainText( *it, QStyleSheetItem::WhiteSpaceNormal );
+    *it = TQStyleSheet::convertFromPlainText( *it, TQStyleSheetItem::WhiteSpaceNormal );
   }
 
-  return lines.join(QString::null);
+  return lines.join(TQString::null);
 }
 
-void PasswordDialog::setPrompt(const QString& prompt)
+void PasswordDialog::setPrompt(const TQString& prompt)
 {
-    QString text = qrichtextify(prompt);
+    TQString text = qrichtextify(prompt);
     d->prompt->setText(text);
     calculateLabelSize(d->prompt);
 }
 
-void PasswordDialog::setPassword(const QString &p)
+void PasswordDialog::setPassword(const TQString &p)
 {
     d->passEdit->setText(p);
 }
@@ -288,7 +288,7 @@ void PasswordDialog::setUserReadOnly( bool readOnly )
         d->passEdit->setFocus();
 }
 
-void PasswordDialog::setKnownLogins( const QMap<QString, QString>& knownLogins )
+void PasswordDialog::setKnownLogins( const TQMap<TQString, TQString>& knownLogins )
 {
     const int nr = knownLogins.count();
     if ( nr == 0 )
@@ -304,7 +304,7 @@ void PasswordDialog::setKnownLogins( const QMap<QString, QString>& knownLogins )
         delete d->userEdit;
         d->userEditCombo = new KComboBox( true, d->userNameHBox );
         d->userEdit = d->userEditCombo->lineEdit();
-        QSize s = d->userEditCombo->sizeHint();
+        TQSize s = d->userEditCombo->sizeHint();
         d->userEditCombo->setFixedHeight( s.height() );
         d->userEditCombo->setMinimumWidth( s.width() );
         d->userNameLabel->setBuddy( d->userEditCombo );
@@ -315,23 +315,23 @@ void PasswordDialog::setKnownLogins( const QMap<QString, QString>& knownLogins )
     d->userEditCombo->insertStringList( knownLogins.keys() );
     d->userEditCombo->setFocus();
 
-    connect( d->userEditCombo, SIGNAL( activated( const QString& ) ),
-             this, SLOT( slotActivated( const QString& ) ) );
+    connect( d->userEditCombo, TQT_SIGNAL( activated( const TQString& ) ),
+             this, TQT_SLOT( slotActivated( const TQString& ) ) );
 }
 
-void PasswordDialog::slotActivated( const QString& userName )
+void PasswordDialog::slotActivated( const TQString& userName )
 {
-    QMap<QString, QString>::ConstIterator it = d->knownLogins.find( userName );
+    TQMap<TQString, TQString>::ConstIterator it = d->knownLogins.find( userName );
     if ( it != d->knownLogins.end() )
         setPassword( it.data() );
 }
 
 
-int PasswordDialog::getNameAndPassword( QString& user, QString& pass, bool* keep,
-                                        const QString& prompt, bool readOnly,
-                                        const QString& caption,
-                                        const QString& comment,
-                                        const QString& label )
+int PasswordDialog::getNameAndPassword( TQString& user, TQString& pass, bool* keep,
+                                        const TQString& prompt, bool readOnly,
+                                        const TQString& caption,
+                                        const TQString& comment,
+                                        const TQString& label )
 {
     PasswordDialog* dlg;
     if( keep )

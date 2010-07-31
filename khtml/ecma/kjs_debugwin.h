@@ -21,21 +21,21 @@
 #ifndef _KJS_DEBUGGER_H_
 #define _KJS_DEBUGGER_H_
 
-#include <qglobal.h>
+#include <tqglobal.h>
 
 #define KJS_DEBUGGER
 
 #ifdef KJS_DEBUGGER
 
-#include <qwidget.h>
-#include <qmultilineedit.h>
-#include <qpixmap.h>
-#include <qptrlist.h>
-#include <qptrstack.h>
-#include <qcheckbox.h>
+#include <tqwidget.h>
+#include <tqmultilineedit.h>
+#include <tqpixmap.h>
+#include <tqptrlist.h>
+#include <tqptrstack.h>
+#include <tqcheckbox.h>
 #include <kdialogbase.h>
 #include <kmainwindow.h>
-#include <qscrollview.h>
+#include <tqscrollview.h>
 
 #include <kjs/debugger.h>
 
@@ -55,11 +55,11 @@ namespace KJS {
   class SourceFile : public DOM::DomShared
   {
    public:
-    SourceFile(QString u, QString c, Interpreter *interp) 
+    SourceFile(TQString u, TQString c, Interpreter *interp) 
 	: url(u), code(c), interpreter(interp) {}
-    QString getCode();
-    QString url;
-    QString code;
+    TQString getCode();
+    TQString url;
+    TQString code;
     Interpreter *interpreter;
   };
 
@@ -96,7 +96,7 @@ namespace KJS {
   class KJSErrorDialog : public KDialogBase {
     Q_OBJECT
   public:
-    KJSErrorDialog(QWidget *parent, const QString& errorMessage, bool showDebug);
+    KJSErrorDialog(TQWidget *parent, const TQString& errorMessage, bool showDebug);
     virtual ~KJSErrorDialog();
 
     bool debugSelected() const { return m_debugSelected; }
@@ -106,25 +106,25 @@ namespace KJS {
     virtual void slotUser1();
 
   private:
-    QCheckBox *m_dontShowAgainCb;
+    TQCheckBox *m_dontShowAgainCb;
     bool m_debugSelected;
   };
 
-  class EvalMultiLineEdit : public QMultiLineEdit {
+  class EvalMultiLineEdit : public TQMultiLineEdit {
     Q_OBJECT
   public:
-      EvalMultiLineEdit(QWidget *parent);
-      const QString & code() const { return m_code; }
+      EvalMultiLineEdit(TQWidget *parent);
+      const TQString & code() const { return m_code; }
   protected:
-      void keyPressEvent(QKeyEvent * e);
+      void keyPressEvent(TQKeyEvent * e);
   private:
-      QString m_code;
+      TQString m_code;
   };
 
-  class SourceDisplay : public QScrollView {
+  class SourceDisplay : public TQScrollView {
     Q_OBJECT
   public:
-    SourceDisplay(KJSDebugWin *debugWin, QWidget *parent, const char *name = 0);
+    SourceDisplay(KJSDebugWin *debugWin, TQWidget *parent, const char *name = 0);
     ~SourceDisplay();
 
     void setSource(SourceFile *sourceFile);
@@ -134,18 +134,18 @@ namespace KJS {
     void lineDoubleClicked(int lineno);
 
   protected:
-    virtual void contentsMousePressEvent(QMouseEvent *e);
-    virtual void showEvent(QShowEvent *);
-    virtual void drawContents(QPainter *p, int clipx, int clipy, int clipw, int cliph);
+    virtual void contentsMousePressEvent(TQMouseEvent *e);
+    virtual void showEvent(TQShowEvent *);
+    virtual void drawContents(TQPainter *p, int clipx, int clipy, int clipw, int cliph);
 
-    QString m_source;
+    TQString m_source;
     int m_currentLine;
     SourceFile *m_sourceFile;
-    QStringList m_lines;
+    TQStringList m_lines;
 
     KJSDebugWin *m_debugWin;
-    QFont m_font;
-    QPixmap m_breakpointIcon;
+    TQFont m_font;
+    TQPixmap m_breakpointIcon;
   };
 
   /**
@@ -162,7 +162,7 @@ namespace KJS {
     Q_OBJECT
     friend class SourceDisplay;
   public:
-    KJSDebugWin(QWidget *parent=0, const char *name=0);
+    KJSDebugWin(TQWidget *parent=0, const char *name=0);
     virtual ~KJSDebugWin();
 
     static KJSDebugWin *createInstance();
@@ -178,8 +178,8 @@ namespace KJS {
     };
 
     void setSourceLine(int sourceId, int lineno);
-    void setNextSourceInfo(QString url, int baseLine);
-    void sourceChanged(Interpreter *interpreter, QString url);
+    void setNextSourceInfo(TQString url, int baseLine);
+    void sourceChanged(Interpreter *interpreter, TQString url);
     bool inSession() const { return !m_execStates.isEmpty(); }
     void setMode(Mode m) { m_mode = m; }
     void clearInterpreter(Interpreter *interpreter);
@@ -207,16 +207,16 @@ namespace KJS {
 
   protected:
 
-    void closeEvent(QCloseEvent *e);
-    bool eventFilter(QObject *obj, QEvent *evt);
+    void closeEvent(TQCloseEvent *e);
+    bool eventFilter(TQObject *obj, TQEvent *evt);
     void disableOtherWindows();
     void enableOtherWindows();
 
   private:
 
-    SourceFile *getSourceFile(Interpreter *interpreter, QString url);
-    void setSourceFile(Interpreter *interpreter, QString url, SourceFile *sourceFile);
-    void removeSourceFile(Interpreter *interpreter, QString url);
+    SourceFile *getSourceFile(Interpreter *interpreter, TQString url);
+    void setSourceFile(Interpreter *interpreter, TQString url, SourceFile *sourceFile);
+    void removeSourceFile(Interpreter *interpreter, TQString url);
 
     void checkBreak(ExecState *exec);
     void enterSession(ExecState *exec);
@@ -224,7 +224,7 @@ namespace KJS {
     void displaySourceFile(SourceFile *sourceFile, bool forceRefresh);
     void updateContextList();
 
-    QString contextStr(const Context &ctx);
+    TQString contextStr(const Context &ctx);
 
     struct Breakpoint {
       int sourceId;
@@ -247,23 +247,23 @@ namespace KJS {
 
     SourceFile *m_curSourceFile;
     Mode m_mode;
-    QString m_nextSourceUrl;
+    TQString m_nextSourceUrl;
     int m_nextSourceBaseLine;
-    QPtrStack<ExecState> m_execStates;
+    TQPtrStack<ExecState> m_execStates;
     ExecState **m_execs;
     int m_execsCount;
     int m_execsAlloc;
     int m_steppingDepth;
 
-    QMap<QString,SourceFile*> m_sourceFiles; /* maps url->SourceFile */
-    QMap<int,SourceFragment*> m_sourceFragments; /* maps SourceId->SourceFragment */
-    QPtrList<SourceFile> m_sourceSelFiles; /* maps combobox index->SourceFile */
+    TQMap<TQString,SourceFile*> m_sourceFiles; /* maps url->SourceFile */
+    TQMap<int,SourceFragment*> m_sourceFragments; /* maps SourceId->SourceFragment */
+    TQPtrList<SourceFile> m_sourceSelFiles; /* maps combobox index->SourceFile */
 
     KActionCollection *m_actionCollection;
-    QPixmap m_stopIcon;
-    QPixmap m_emptyIcon;
+    TQPixmap m_stopIcon;
+    TQPixmap m_emptyIcon;
     SourceDisplay *m_sourceDisplay;
-    QListBox *m_contextList;
+    TQListBox *m_contextList;
 
     KAction *m_stepAction;
     KAction *m_nextAction;
@@ -271,7 +271,7 @@ namespace KJS {
     KAction *m_stopAction;
     KAction *m_breakAction;
 
-    QComboBox *m_sourceSel;
+    TQComboBox *m_sourceSel;
     EvalMultiLineEdit *m_evalEdit;
     int m_evalDepth;
 

@@ -20,9 +20,9 @@
 #ifndef KFONTREQUESTER_H
 #define KFONTREQUESTER_H
 
-#include <qwidget.h>
-#include <qfont.h>
-#include <qstring.h>
+#include <tqwidget.h>
+#include <tqfont.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -45,9 +45,9 @@ class KDEUI_EXPORT KFontRequester : public QWidget
 {
   Q_OBJECT
 
-  Q_PROPERTY( QString title READ title WRITE setTitle )
-  Q_PROPERTY( QString sampleText READ sampleText WRITE setSampleText )
-  Q_PROPERTY( QFont font READ font WRITE setFont )
+  Q_PROPERTY( TQString title READ title WRITE setTitle )
+  Q_PROPERTY( TQString sampleText READ sampleText WRITE setSampleText )
+  Q_PROPERTY( TQFont font READ font WRITE setFont )
 
   public:
 
@@ -59,13 +59,13 @@ class KDEUI_EXPORT KFontRequester : public QWidget
      * @param onlyFixed Only display fonts which have fixed-width character
      *        sizes.
      */
-    KFontRequester( QWidget *parent=0L, const char *name=0L,
+    KFontRequester( TQWidget *parent=0L, const char *name=0L,
         bool onlyFixed=false );
 
     /**
      * @return The currently selected font in the requester.
      */
-    QFont font() const { return m_selFont; }
+    TQFont font() const { return m_selFont; }
 
     /**
      * @return Returns true if only fixed fonts are displayed.
@@ -75,22 +75,22 @@ class KDEUI_EXPORT KFontRequester : public QWidget
     /**
      * @return The current text in the sample text input area.
      */
-    QString sampleText() const { return m_sampleText; }
+    TQString sampleText() const { return m_sampleText; }
 
     /**
      * @return The current title of the widget.
      */
-    QString title() const { return m_title; }
+    TQString title() const { return m_title; }
 
     /**
      * @return Pointer to the label used for preview.
      */
-    QLabel *label() const { return m_sampleLabel; }
+    TQLabel *label() const { return m_sampleLabel; }
 
     /**
      * @return Pointer to the pushbutton in the widget.
      */
-    QPushButton *button() const { return m_button; }
+    TQPushButton *button() const { return m_button; }
 
     /**
      * Sets the currently selected font in the requester.
@@ -99,7 +99,7 @@ class KDEUI_EXPORT KFontRequester : public QWidget
      * @param onlyFixed Display only fixed-width fonts in the font dialog
      * if @p true, or vice-versa.
      */
-    virtual void setFont( const QFont &font, bool onlyFixed=false );
+    virtual void setFont( const TQFont &font, bool onlyFixed=false );
 
     /**
      * Sets the sample text.
@@ -108,11 +108,11 @@ class KDEUI_EXPORT KFontRequester : public QWidget
      * text, but it can be better to do this if the default text is
      * too large for the edit area when using the default font of your
      * application. Default text is current font name and size. Setting
-     * the text to QString::null will restore the default.
+     * the text to TQString::null will restore the default.
      *
      * @param text The new sample text. The current will be removed.
      */
-    virtual void setSampleText( const QString &text );
+    virtual void setSampleText( const TQString &text );
 
     /**
      * Set the title for the widget that will be used in the tooltip and
@@ -120,13 +120,13 @@ class KDEUI_EXPORT KFontRequester : public QWidget
      *
      * @param title The title to be set.
      */
-    virtual void setTitle( const QString & title );
+    virtual void setTitle( const TQString & title );
 
   signals:
     /**
      * Emitted when a new @p font has been selected in the underlying dialog
      */
-    void fontSelected( const QFont &font );
+    void fontSelected( const TQFont &font );
 
   protected:
 
@@ -140,10 +140,10 @@ class KDEUI_EXPORT KFontRequester : public QWidget
   protected:
 
     bool m_onlyFixed;
-    QString m_sampleText, m_title;
-    QLabel *m_sampleLabel;
-    QPushButton *m_button;
-    QFont m_selFont;
+    TQString m_sampleText, m_title;
+    TQLabel *m_sampleLabel;
+    TQPushButton *m_button;
+    TQFont m_selFont;
 
   private:
 

@@ -24,7 +24,7 @@
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <kdeprint/kpreloadobject.h>
 
 /**
@@ -34,10 +34,10 @@
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class LprSettings : public QObject, public KPReloadObject
+class LprSettings : public TQObject, public KPReloadObject
 {
 public:
-	LprSettings(QObject *parent = 0, const char *name = 0);
+	LprSettings(TQObject *parent = 0, const char *name = 0);
 	~LprSettings();
 
 	static LprSettings* self();
@@ -45,10 +45,10 @@ public:
 	enum Mode { LPR, LPRng };
 	Mode mode() const		{ return m_mode; }
 	void setMode(Mode m)	{ m_mode = m; }
-	QString printcapFile();
-	QString defaultRemoteHost();
+	TQString printcapFile();
+	TQString defaultRemoteHost();
 	bool isLocalPrintcap()		{ return m_local; }
-	QString baseSpoolDir()		{ return m_spooldir; }
+	TQString baseSpoolDir()		{ return m_spooldir; }
 
 protected:
 	void init();
@@ -61,7 +61,7 @@ private:
 	QString	m_printcapfile;
 	bool	m_local;
 	QString	m_spooldir;
-	QString m_defaultremotehost;
+	TQString m_defaultremotehost;
 };
 
 #endif

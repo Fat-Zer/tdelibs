@@ -20,22 +20,22 @@
 #ifndef KDELIBS_KQIODEVICEGZIP_H
 #define KDELIBS_KQIODEVICEGZIP_H
 
-#include <qiodevice.h>
-#include <qstring.h>
-#include <qfile.h>
+#include <tqiodevice.h>
+#include <tqstring.h>
+#include <tqfile.h>
 
 #include <zlib.h>
 
 
 /**
- * \brief QIODevice class for a gzipped file
+ * \brief TQIODevice class for a gzipped file
  * \internal This class is internal to KDE. 
  * The class KFilterDev should be used instead.
  */
 class KQIODeviceGZip : public QIODevice
 {
 public:
-    KQIODeviceGZip(const QString& filename);
+    KQIODeviceGZip(const TQString& filename);
     ~KQIODeviceGZip(void);
 
     bool open(int mode);
@@ -57,7 +57,7 @@ public:
 private:
     gzFile m_gzfile;
     int m_ungetchar;
-    QString m_filename;
+    TQString m_filename;
 };
 
 

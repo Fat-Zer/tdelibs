@@ -27,7 +27,7 @@
 #ifndef _KCOOKIEWIN_H_
 #define _KCOOKIEWIN_H_
 
-#include <qgroupbox.h>
+#include <tqgroupbox.h>
 
 #include <kdialog.h>
 #include "kcookiejar.h"
@@ -42,7 +42,7 @@ class KCookieDetail : public QGroupBox
     Q_OBJECT
 
 public :
-    KCookieDetail( KHttpCookieList cookieList, int cookieCount, QWidget *parent=0,
+    KCookieDetail( KHttpCookieList cookieList, int cookieCount, TQWidget *parent=0,
                    const char *name=0 );
     ~KCookieDetail();
 
@@ -66,15 +66,15 @@ class KCookieWin : public KDialog
     Q_OBJECT
 
 public :
-    KCookieWin( QWidget *parent, KHttpCookieList cookieList, int defaultButton=0,
+    KCookieWin( TQWidget *parent, KHttpCookieList cookieList, int defaultButton=0,
                 bool showDetails=false );
     ~KCookieWin();
 
     KCookieAdvice advice( KCookieJar *cookiejar, KHttpCookie* cookie );
 
 private :
-    QPushButton*   m_button;
-    QVButtonGroup* m_btnGrp;
+    TQPushButton*   m_button;
+    TQVButtonGroup* m_btnGrp;
     KCookieDetail* m_detailView;
     bool m_showDetails;
 

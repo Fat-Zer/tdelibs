@@ -23,8 +23,8 @@
 #define __kio_rename_dlg__
 
 #include <kurl.h>
-#include <qdialog.h>
-#include <qstring.h>
+#include <tqdialog.h>
+#include <tqstring.h>
 #include <sys/types.h>
 
 #include <kio/global.h>
@@ -65,9 +65,9 @@ public:
    * @param modal set to true for a modal dialog
    * @see RenameDlg_Mode
    */
-  RenameDlg( QWidget *parent, const QString & caption,
+  RenameDlg( TQWidget *parent, const TQString & caption,
              // KDE4: make those KURLs, and use pathOrURL() internally.
-             const QString & src, const QString & dest,
+             const TQString & src, const TQString & dest,
              RenameDlg_Mode mode,
              KIO::filesize_t sizeSrc = (KIO::filesize_t) -1,
              KIO::filesize_t sizeDest = (KIO::filesize_t) -1,
@@ -91,7 +91,7 @@ public:
    * The suggested file name is of the form foo_1 foo_2 etc.
    * @since 3.4
    */
-  static QString suggestName(const KURL& baseURL, const QString& oldName);
+  static TQString suggestName(const KURL& baseURL, const TQString& oldName);
 
 public slots:
   /// KDE4: rename to cancelPressed(), renamePressed() etc.
@@ -106,7 +106,7 @@ public slots:
   void b8Pressed();
 
 protected slots:
-  void enableRenameButton(const QString &);
+  void enableRenameButton(const TQString &);
 private:
  class RenameDlgPrivate;
  RenameDlgPrivate *d;
@@ -135,10 +135,10 @@ private:
    * @param mtimeDest modification time of destination file
    * @return the result
    */
-KIO_EXPORT RenameDlg_Result open_RenameDlg( const QString & caption,
+KIO_EXPORT RenameDlg_Result open_RenameDlg( const TQString & caption,
                                  // KDE4: make those KURLs
-                                 const QString& src, const QString & dest,
-                                 RenameDlg_Mode mode, QString& newDestPath,
+                                 const TQString& src, const TQString & dest,
+                                 RenameDlg_Mode mode, TQString& newDestPath,
                                  KIO::filesize_t sizeSrc = (KIO::filesize_t) -1,
                                  KIO::filesize_t sizeDest = (KIO::filesize_t) -1,
                                  time_t ctimeSrc = (time_t) -1,

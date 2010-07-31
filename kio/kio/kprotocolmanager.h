@@ -20,7 +20,7 @@
 #ifndef __kprotocolmanager_h__
 #define __kprotocolmanager_h__
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 #include <kapplication.h>
 #include <kio/global.h>
@@ -64,7 +64,7 @@ public:
    *
    * @return the default user-agent string
    */
-  static QString defaultUserAgent();
+  static TQString defaultUserAgent();
 
   /**
    * Returns the default user-agent value.
@@ -77,20 +77,20 @@ public:
    * @li 'l'	Show language
    * @return the default user-agent value with the given @p keys
    */
-  static QString defaultUserAgent(const QString &keys);
+  static TQString defaultUserAgent(const TQString &keys);
 
   /**
    * Returns the userAgent string configured for the
    * specified host.
    *
    * If hostname is not found or is empty (i.e. "" or
-   * QString::null) this function will return the default
+   * TQString::null) this function will return the default
    * user agent.
    *
    * @param hostname name of the host
    * @return specified userAgent string
    */
-  static QString userAgentForHost( const QString &hostname );
+  static TQString userAgentForHost( const TQString &hostname );
 
 
 /*=========================== TIMEOUT CONFIG ================================*/
@@ -213,7 +213,7 @@ public:
    *
    * @see useReverseProxy, proxyFor, proxyForURL, slaveProtocol
    */
-  static QString noProxyFor();
+  static TQString noProxyFor();
 
   /**
    * Same as above except the environment variable name
@@ -223,7 +223,7 @@ public:
    * @see noProxyFor
    * @since 3.5.x
    */
-  static QString noProxyForRaw();
+  static TQString noProxyForRaw();
 
   /**
    * Returns the proxy server address for a given protocol.
@@ -234,9 +234,9 @@ public:
    * @see useReverseProxy, slaveProtocol
    * @param protocol the protocol whose proxy info is needed
    * @returns the proxy server address if one is available,
-   *          or QString::null if not available
+   *          or TQString::null if not available
    */
-  static QString proxyFor( const QString& protocol );
+  static TQString proxyFor( const TQString& protocol );
 
   /**
    * Returns the proxy server address for a given URL.
@@ -254,20 +254,20 @@ public:
    * @returns the proxy server address or the text "DIRECT"
    *          if no proxying is needed for the given address.
    */
-  static QString proxyForURL( const KURL& url );
+  static TQString proxyForURL( const KURL& url );
 
   /**
    * Marks this proxy as bad (down). It will not be used for the
    * next 30 minutes. (The script may supply an alternate proxy)
    * @param proxy the proxy to mark as bad (as URL)
    */
-  static void badProxy( const QString & proxy );
+  static void badProxy( const TQString & proxy );
 
   /**
    * Returns the URL of the script for automatic proxy configuration.
    * @return the proxy configuration script
    */
-  static QString proxyConfigScript();
+  static TQString proxyConfigScript();
 
 
 /*========================== CACHE CONFIG ===================================*/
@@ -305,7 +305,7 @@ public:
    * The directory which contains the cache files.
    * @return the directory that contains the cache files
    */
-  static QString cacheDir();
+  static TQString cacheDir();
 
   /**
    * Returns the Cache control directive to be used.
@@ -376,7 +376,7 @@ public:
    * @param proxy the URL of the proxy to use
    * @return the slave protocol (e.g. 'http'), can be null if unknown
    */
-  static QString slaveProtocol(const KURL &url, QString &proxy);
+  static TQString slaveProtocol(const KURL &url, TQString &proxy);
 
   /**
    * @internal

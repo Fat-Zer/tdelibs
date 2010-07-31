@@ -10,16 +10,16 @@
 
 #include "kaboutdialog.h"
 // #include <kimgio.h>
-#include <qimage.h>
+#include <tqimage.h>
 #include <kapplication.h>
 #include <klocale.h>
 
 int main(int argc, char** argv)
 {
   (void)new KApplication(argc, argv, "KAboutDialogTest");
-  QImage logo;
-  QImage bg;
-  QPixmap pix;
+  TQImage logo;
+  TQImage bg;
+  TQPixmap pix;
   KAboutDialog about;
   // -----
   // kimgioRegister();

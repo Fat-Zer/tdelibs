@@ -22,7 +22,7 @@
 #define KSPELL_ISPELLCLIENT_H
 
 #include "client.h"
-#include <qobject.h>
+#include <tqobject.h>
 
 #include "ispell_checker.h"
 
@@ -35,18 +35,18 @@ class ISpellClient : public KSpell2::Client
 {
     Q_OBJECT
 public:
-    ISpellClient( QObject *parent, const char *name, const QStringList & /* args */  );
+    ISpellClient( TQObject *parent, const char *name, const TQStringList & /* args */  );
     ~ISpellClient();
 
     virtual int reliability() const {
         return 10;
     }
 
-    virtual Dictionary* dictionary( const QString& language );
+    virtual Dictionary* dictionary( const TQString& language );
 
-    virtual QStringList languages() const;
+    virtual TQStringList languages() const;
 
-    virtual QString name() const {
+    virtual TQString name() const {
         return "ISpell";
     }
 private:

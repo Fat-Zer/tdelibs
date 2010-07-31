@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <signal.h>
 
-#include <qdialog.h>
+#include <tqdialog.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kdebug.h>
@@ -40,7 +40,7 @@ extern "C"
     extern const char *kss_description;
     extern const char *kss_version;
     KScreenSaver *kss_create( WId d );
-    QDialog *kss_setup();
+    TQDialog *kss_setup();
 }
 
 static const KCmdLineOptions options[] =
@@ -65,13 +65,13 @@ static void crashHandler( int  )
 class DemoWindow : public QWidget
 {
 public:
-    DemoWindow() : QWidget()
+    DemoWindow() : TQWidget()
     {
 	setFixedSize(600, 420);
     }
 
 protected:
-    virtual void keyPressEvent(QKeyEvent *e)
+    virtual void keyPressEvent(TQKeyEvent *e)
     {
         if (e->ascii() == 'q')
         {
@@ -79,7 +79,7 @@ protected:
         }
     }
 
-    virtual void closeEvent( QCloseEvent * )
+    virtual void closeEvent( TQCloseEvent * )
     {
         kapp->quit();
     }
@@ -112,7 +112,7 @@ KDE_EXPORT int main(int argc, char *argv[])
 
     if (args->isSet("setup"))
     {
-       QDialog *dlg = kss_setup();
+       TQDialog *dlg = kss_setup();
        args->clear();
        dlg->exec();
        delete dlg;
@@ -139,7 +139,7 @@ KDE_EXPORT int main(int argc, char *argv[])
     if (saveWin == 0)
     {
         demoWidget = new DemoWindow();
-        demoWidget->setBackgroundMode(QWidget::NoBackground);
+        demoWidget->setBackgroundMode(TQWidget::NoBackground);
         saveWin = demoWidget->winId();
         app.setMainWidget(demoWidget);
         app.processEvents();

@@ -21,7 +21,7 @@
 #ifndef KABC_TIMEZONE_H
 #define KABC_TIMEZONE_H
 
-#include <qstring.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -34,8 +34,8 @@ namespace KABC {
  */
 class KABC_EXPORT TimeZone
 {
-  friend KABC_EXPORT QDataStream &operator<<( QDataStream &, const TimeZone & );
-  friend KABC_EXPORT QDataStream &operator>>( QDataStream &, TimeZone & );
+  friend KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const TimeZone & );
+  friend KABC_EXPORT TQDataStream &operator>>( TQDataStream &, TimeZone & );
 
 public:
 
@@ -74,7 +74,7 @@ public:
   /**
    * Return string representation of time zone offset.
    */
-  QString asString() const;
+  TQString asString() const;
     
 private:
   int mOffset;  // Offset in minutes
@@ -82,8 +82,8 @@ private:
   bool mValid;
 };
 
-KABC_EXPORT QDataStream &operator<<( QDataStream &, const TimeZone & );
-KABC_EXPORT QDataStream &operator>>( QDataStream &, TimeZone & );
+KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const TimeZone & );
+KABC_EXPORT TQDataStream &operator>>( TQDataStream &, TimeZone & );
 
 }
 #endif

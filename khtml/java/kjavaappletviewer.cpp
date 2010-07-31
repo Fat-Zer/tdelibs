@@ -22,12 +22,12 @@
 #ifdef KDE_USE_FINAL
 #undef Always
 #endif
-#include <qdir.h>
-#include <qtable.h>
-#include <qpair.h>
-#include <qtimer.h>
-#include <qguardedptr.h>
-#include <qlabel.h>
+#include <tqdir.h>
+#include <tqtable.h>
+#include <tqpair.h>
+#include <tqtimer.h>
+#include <tqguardedptr.h>
+#include <tqlabel.h>
 
 #include <klibloader.h>
 #include <kaboutdata.h>
@@ -59,8 +59,8 @@ KJavaAppletViewerFactory::~KJavaAppletViewerFactory () {
 }
 
 KParts::Part *KJavaAppletViewerFactory::createPartObject
-  (QWidget *wparent, const char *wname,
-   QObject *parent, const char * name, const char *, const QStringList & args) {
+  (TQWidget *wparent, const char *wname,
+   TQObject *parent, const char * name, const char *, const TQStringList & args) {
     return new KJavaAppletViewer (wparent, wname, parent, name, args);
 }
 
@@ -74,12 +74,12 @@ public:
     KJavaServerMaintainer () { }
     ~KJavaServerMaintainer ();
 
-    KJavaAppletContext * getContext (QObject*, const QString &);
-    void releaseContext (QObject*, const QString &);
+    KJavaAppletContext * getContext (TQObject*, const TQString &);
+    void releaseContext (TQObject*, const TQString &);
     void setServer (KJavaAppletServer * s);
-    QGuardedPtr <KJavaAppletServer> server;
+    TQGuardedPtr <KJavaAppletServer> server;
 private:
-    typedef QMap <QPair <QObject*, QString>, QPair <KJavaAppletContext*, int> >
+    typedef TQMap <QPair <TQObject*, TQString>, QPair <KJavaAppletContext*, int> >
             ContextMap;
     ContextMap m_contextmap;
 };
@@ -88,7 +88,7 @@ KJavaServerMaintainer::~KJavaServerMaintainer () {
     delete server;
 }
 
-KJavaAppletContext * KJavaServerMaintainer::getContext (QObject * w, const QString & doc) {
+KJavaAppletContext * KJavaServerMaintainer::getContext (TQObject * w, const TQString & doc) {
     ContextMap::key_type key = qMakePair (w, doc);
     ContextMap::iterator it = m_contextmap.find (key);
     if (it != m_contextmap.end ()) {
@@ -100,7 +100,7 @@ KJavaAppletContext * KJavaServerMaintainer::getContext (QObject * w, const QStri
     return context;
 }
 
-void KJavaServerMaintainer::releaseContext (QObject * w, const QString & doc) {
+void KJavaServerMaintainer::releaseContext (TQObject * w, const TQString & doc) {
     ContextMap::iterator it = m_contextmap.find (qMakePair (w, doc));
     if (it != m_contextmap.end () && --(*it).second <= 0) {
         kdDebug(6100) << "KJavaServerMaintainer::releaseContext" << endl;
@@ -123,31 +123,31 @@ AppletParameterDialog::AppletParameterDialog (KJavaAppletWidget * parent)
                    KDialogBase::Close, KDialogBase::Close, true),
       m_appletWidget (parent) {
     KJavaApplet* const applet = parent->applet ();
-    table = new QTable (30, 2, this);
-    table->setMinimumSize (QSize (600, 400));
+    table = new TQTable (30, 2, this);
+    table->setMinimumSize (TQSize (600, 400));
     table->setColumnWidth (0, 200);
     table->setColumnWidth (1, 340);
-    QHeader* const header = table->horizontalHeader();
+    TQHeader* const header = table->horizontalHeader();
     header->setLabel (0, i18n ("Parameter"));
     header->setLabel (1, i18n ("Value"));
-    QTableItem * tit = new QTableItem (table, QTableItem::Never, i18n("Class"));
+    TQTableItem * tit = new TQTableItem (table, TQTableItem::Never, i18n("Class"));
     table->setItem (0, 0, tit);
-    tit = new QTableItem(table, QTableItem::Always, applet->appletClass());
+    tit = new TQTableItem(table, TQTableItem::Always, applet->appletClass());
     table->setItem (0, 1, tit);
-    tit = new QTableItem (table, QTableItem::Never, i18n ("Base URL"));
+    tit = new TQTableItem (table, TQTableItem::Never, i18n ("Base URL"));
     table->setItem (1, 0, tit);
-    tit = new QTableItem(table, QTableItem::Always, applet->baseURL());
+    tit = new TQTableItem(table, TQTableItem::Always, applet->baseURL());
     table->setItem (1, 1, tit);
-    tit = new QTableItem (table, QTableItem::Never, i18n ("Archives"));
+    tit = new TQTableItem (table, TQTableItem::Never, i18n ("Archives"));
     table->setItem (2, 0, tit);
-    tit = new QTableItem(table, QTableItem::Always, applet->archives());
+    tit = new TQTableItem(table, TQTableItem::Always, applet->archives());
     table->setItem (2, 1, tit);
-    QMap<QString,QString>::const_iterator it = applet->getParams().begin();
-    const QMap<QString,QString>::const_iterator itEnd = applet->getParams().end();
+    TQMap<TQString,TQString>::const_iterator it = applet->getParams().begin();
+    const TQMap<TQString,TQString>::const_iterator itEnd = applet->getParams().end();
     for (int count = 2; it != itEnd; ++it) {
-        tit = new QTableItem (table, QTableItem::Always, it.key ());
+        tit = new TQTableItem (table, TQTableItem::Always, it.key ());
         table->setItem (++count, 0, tit);
-        tit = new QTableItem(table, QTableItem::Always, it.data ());
+        tit = new TQTableItem(table, TQTableItem::Always, it.data ());
         table->setItem (count, 1, tit);
     }
     setMainWidget (table);
@@ -169,18 +169,18 @@ void AppletParameterDialog::slotClose () {
 }
 //-----------------------------------------------------------------------------
 
-class CoverWidget : public QWidget {
+class CoverWidget : public TQWidget {
     KJavaAppletWidget * m_appletwidget;
 public:
-    CoverWidget (QWidget *);
+    CoverWidget (TQWidget *);
     ~CoverWidget () {}
     KJavaAppletWidget * appletWidget () const;
 protected:
-    void resizeEvent (QResizeEvent * e);
+    void resizeEvent (TQResizeEvent * e);
 };
 
-inline CoverWidget::CoverWidget (QWidget * parent)
- : QWidget (parent, "KJavaAppletViewer Widget")
+inline CoverWidget::CoverWidget (TQWidget * parent)
+ : TQWidget (parent, "KJavaAppletViewer Widget")
 {
     m_appletwidget = new KJavaAppletWidget (this);
     setFocusProxy (m_appletwidget);
@@ -190,27 +190,27 @@ inline KJavaAppletWidget * CoverWidget::appletWidget () const {
     return m_appletwidget;
 }
 
-void CoverWidget::resizeEvent (QResizeEvent * e) {
+void CoverWidget::resizeEvent (TQResizeEvent * e) {
     m_appletwidget->resize (e->size().width(), e->size().height());
 }
 
 //-----------------------------------------------------------------------------
 
-class StatusBarIcon : public QLabel {
+class StatusBarIcon : public TQLabel {
 public:
-    StatusBarIcon (QWidget * parent) : QLabel (parent) {
-        setPixmap (SmallIcon (QString ("java"), KJavaAppletViewerFactory::instance ()));
+    StatusBarIcon (TQWidget * parent) : TQLabel (parent) {
+        setPixmap (SmallIcon (TQString ("java"), KJavaAppletViewerFactory::instance ()));
     }
 protected:
-    void mousePressEvent (QMouseEvent *) {
+    void mousePressEvent (TQMouseEvent *) {
         serverMaintainer->server->showConsole ();
     }
 };
 
 //-----------------------------------------------------------------------------
 
-KJavaAppletViewer::KJavaAppletViewer (QWidget * wparent, const char *,
-                 QObject * parent, const char * name, const QStringList & args)
+KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
+                 TQObject * parent, const char * name, const TQStringList & args)
  : KParts::ReadOnlyPart (parent, name),
    m_browserextension (new KJavaAppletViewerBrowserExtension (this)),
    m_liveconnect (new KJavaAppletViewerLiveConnectExtension (this)),
@@ -223,49 +223,49 @@ KJavaAppletViewer::KJavaAppletViewer (QWidget * wparent, const char *,
                                            new KJavaServerMaintainer);
     }
     m_view = new CoverWidget (wparent);
-    QString classname, classid, codebase, khtml_codebase, src_param;
+    TQString classname, classid, codebase, khtml_codebase, src_param;
     int width = -1;
     int height = -1;
     KJavaApplet* const applet = m_view->appletWidget()->applet ();
-    QStringList::const_iterator it = args.begin();
-    const QStringList::const_iterator itEnd = args.end();
+    TQStringList::const_iterator it = args.begin();
+    const TQStringList::const_iterator itEnd = args.end();
     for ( ; it != itEnd; ++it) {
         const int equalPos = (*it).find("=");
         if (equalPos > 0) {
-            const QString name = (*it).left (equalPos).upper ();
-            QString value = (*it).right ((*it).length () - equalPos - 1);
+            const TQString name = (*it).left (equalPos).upper ();
+            TQString value = (*it).right ((*it).length () - equalPos - 1);
             if (value.at(0)=='\"')
                 value = value.right (value.length () - 1);
             if (value.at (value.length () - 1) == '\"')
                 value.truncate (value.length () - 1);
             kdDebug(6100) << "name=" << name << " value=" << value << endl;
             if (!name.isEmpty()) {
-                const QString name_lower = name.lower ();
+                const TQString name_lower = name.lower ();
                 if (name == "__KHTML__PLUGINBASEURL") {
-                    baseurl = KURL (KURL (value), QString (".")).url ();
+                    baseurl = KURL (KURL (value), TQString (".")).url ();
                 } else if (name == "__KHTML__CODEBASE")
                     khtml_codebase = value;
-                else if (name_lower == QString::fromLatin1("codebase") ||
-                         name_lower == QString::fromLatin1("java_codebase")) {
+                else if (name_lower == TQString::fromLatin1("codebase") ||
+                         name_lower == TQString::fromLatin1("java_codebase")) {
                     if (!value.isEmpty ())
                         codebase = value;
                 } else if (name == "__KHTML__CLASSID")
-                //else if (name.lower()==QString::fromLatin1("classid"))
+                //else if (name.lower()==TQString::fromLatin1("classid"))
                     classid = value;
-                else if (name_lower == QString::fromLatin1("code") ||
-                         name_lower == QString::fromLatin1("java_code"))
+                else if (name_lower == TQString::fromLatin1("code") ||
+                         name_lower == TQString::fromLatin1("java_code"))
                     classname = value;
-                else if (name_lower == QString::fromLatin1("src"))
+                else if (name_lower == TQString::fromLatin1("src"))
                     src_param = value;
-                else if (name_lower == QString::fromLatin1("archive") ||
-                         name_lower == QString::fromLatin1("java_archive") ||
+                else if (name_lower == TQString::fromLatin1("archive") ||
+                         name_lower == TQString::fromLatin1("java_archive") ||
                          name_lower.startsWith ("cache_archive"))
                     applet->setArchives (value);
-                else if (name_lower == QString::fromLatin1("name"))
+                else if (name_lower == TQString::fromLatin1("name"))
                     applet->setAppletName (value);
-                else if (name_lower == QString::fromLatin1("width"))
+                else if (name_lower == TQString::fromLatin1("width"))
                     width = value.toInt();
-                else if (name_lower == QString::fromLatin1("height"))
+                else if (name_lower == TQString::fromLatin1("height"))
                     height = value.toInt();
                 if (!name.startsWith ("__KHTML__")) {
                     applet->setParameter (name, value);
@@ -285,19 +285,19 @@ KJavaAppletViewer::KJavaAppletViewer (QWidget * wparent, const char *,
     if (classname.isEmpty ())
         classname = src_param;
     else if (!src_param.isEmpty ())
-        applet->setParameter (QString ("SRC"), src_param);
+        applet->setParameter (TQString ("SRC"), src_param);
     if (codebase.isEmpty ())
         codebase = khtml_codebase;
     if (baseurl.isEmpty ()) {
         // not embeded in khtml
-        QString pwd = QDir().absPath ();
-        if (!pwd.endsWith (QChar (QDir::separator ())))
-            pwd += QDir::separator ();
+        TQString pwd = TQDir().absPath ();
+        if (!pwd.endsWith (TQChar (TQDir::separator ())))
+            pwd += TQDir::separator ();
         baseurl = KURL (KURL (pwd), codebase).url ();
     }
     if (width > 0 && height > 0) {
         m_view->resize (width, height);
-        applet->setSize( QSize( width, height ) );
+        applet->setSize( TQSize( width, height ) );
     }
     applet->setBaseURL (baseurl);
     // check codebase first
@@ -316,23 +316,23 @@ KJavaAppletViewer::KJavaAppletViewer (QWidget * wparent, const char *,
     if (!server->usingKIO ()) {
         /* if this page needs authentication */
         KIO::AuthInfo info;
-        QString errorMsg;
-        QCString replyType;
-        QByteArray params;
-        QByteArray reply;
+        TQString errorMsg;
+        TQCString replyType;
+        TQByteArray params;
+        TQByteArray reply;
         KIO::AuthInfo authResult;
 
         //(void) dcopClient(); // Make sure to have a dcop client.
         info.url = baseurl;
         info.verifyPath = true;
 
-        QDataStream stream(params, IO_WriteOnly);
+        TQDataStream stream(params, IO_WriteOnly);
         stream << info << m_view->topLevelWidget()->winId();
 
         if (!kapp->dcopClient ()->call( "kded", "kpasswdserver", "checkAuthInfo(KIO::AuthInfo, long int)", params, replyType, reply ) ) {
             kdWarning() << "Can't communicate with kded_kpasswdserver!" << endl;
         } else if ( replyType == "KIO::AuthInfo" ) {
-            QDataStream stream2( reply, IO_ReadOnly );
+            TQDataStream stream2( reply, IO_ReadOnly );
             stream2 >> authResult;
             applet->setUser (authResult.username);
             applet->setPassword (authResult.password);
@@ -347,18 +347,18 @@ KJavaAppletViewer::KJavaAppletViewer (QWidget * wparent, const char *,
     setInstance (KJavaAppletViewerFactory::instance ());
     KParts::Part::setWidget (m_view);
 
-    connect (applet->getContext(), SIGNAL(appletLoaded()), this, SLOT(appletLoaded()));
-    connect (applet->getContext(), SIGNAL(showDocument(const QString&, const QString&)), m_browserextension, SLOT(showDocument(const QString&, const QString&)));
-    connect (applet->getContext(), SIGNAL(showStatus(const QString &)), this, SLOT(infoMessage(const QString &)));
-    connect (applet, SIGNAL(jsEvent (const QStringList &)), m_liveconnect, SLOT(jsEvent (const QStringList &)));
+    connect (applet->getContext(), TQT_SIGNAL(appletLoaded()), this, TQT_SLOT(appletLoaded()));
+    connect (applet->getContext(), TQT_SIGNAL(showDocument(const TQString&, const TQString&)), m_browserextension, TQT_SLOT(showDocument(const TQString&, const TQString&)));
+    connect (applet->getContext(), TQT_SIGNAL(showStatus(const TQString &)), this, TQT_SLOT(infoMessage(const TQString &)));
+    connect (applet, TQT_SIGNAL(jsEvent (const TQStringList &)), m_liveconnect, TQT_SLOT(jsEvent (const TQStringList &)));
 }
 
-bool KJavaAppletViewer::eventFilter (QObject *o, QEvent *e) {
+bool KJavaAppletViewer::eventFilter (TQObject *o, TQEvent *e) {
     if (m_liveconnect->jsSessions () > 0) {
         switch (e->type()) {
-            case QEvent::Destroy:
-            case QEvent::Close:
-            case QEvent::Quit:
+            case TQEvent::Destroy:
+            case TQEvent::Close:
+            case TQEvent::Quit:
                 return true;
             default:
                 break;
@@ -404,7 +404,7 @@ bool KJavaAppletViewer::openURL (const KURL & url) {
     if (applet->size().width() > 0 || m_view->isVisible())
         w->showApplet ();
     else
-        QTimer::singleShot (10, this, SLOT (delayedCreateTimeOut ()));
+        TQTimer::singleShot (10, this, TQT_SLOT (delayedCreateTimeOut ()));
     if (!applet->failed ())
         emit started (0L);
     return url.isValid ();
@@ -443,7 +443,7 @@ void KJavaAppletViewer::appletLoaded () {
         emit completed();
 }
 
-void KJavaAppletViewer::infoMessage (const QString & msg) {
+void KJavaAppletViewer::infoMessage (const TQString & msg) {
     m_browserextension->infoMessage(msg);
 }
 
@@ -457,7 +457,7 @@ KJavaAppletViewerBrowserExtension::KJavaAppletViewerBrowserExtension (KJavaApple
   : KParts::BrowserExtension (parent, "KJavaAppletViewer Browser Extension") {
 }
 
-void KJavaAppletViewerBrowserExtension::urlChanged (const QString & url) {
+void KJavaAppletViewerBrowserExtension::urlChanged (const TQString & url) {
     emit setLocationBarURL (url);
 }
 
@@ -468,24 +468,24 @@ void KJavaAppletViewerBrowserExtension::setLoadingProgress (int percentage) {
 void KJavaAppletViewerBrowserExtension::setURLArgs (const KParts::URLArgs & /*args*/) {
 }
 
-void KJavaAppletViewerBrowserExtension::saveState (QDataStream & stream) {
+void KJavaAppletViewerBrowserExtension::saveState (TQDataStream & stream) {
     KJavaApplet* const applet = static_cast<KJavaAppletViewer*>(parent())->view()->appletWidget ()->applet ();
     stream << applet->appletClass();
     stream << applet->baseURL();
     stream << applet->archives();
     stream << applet->getParams().size ();
-    QMap<QString,QString>::const_iterator it = applet->getParams().begin();
-    const QMap<QString,QString>::const_iterator itEnd = applet->getParams().end();
+    TQMap<TQString,TQString>::const_iterator it = applet->getParams().begin();
+    const TQMap<TQString,TQString>::const_iterator itEnd = applet->getParams().end();
     for ( ; it != itEnd; ++it) {
         stream << it.key ();
         stream << it.data ();
     }
 }
 
-void KJavaAppletViewerBrowserExtension::restoreState (QDataStream & stream) {
+void KJavaAppletViewerBrowserExtension::restoreState (TQDataStream & stream) {
     KJavaAppletWidget* const w = static_cast<KJavaAppletViewer*>(parent())->view()->appletWidget();
     KJavaApplet* const applet = w->applet ();
-    QString key, val;
+    TQString key, val;
     int paramcount;
     stream >> val;
     applet->setAppletClass (val);
@@ -505,8 +505,8 @@ void KJavaAppletViewerBrowserExtension::restoreState (QDataStream & stream) {
         w->showApplet ();
 }
 
-void KJavaAppletViewerBrowserExtension::showDocument (const QString & doc,
-                                                      const QString & frame) {
+void KJavaAppletViewerBrowserExtension::showDocument (const TQString & doc,
+                                                      const TQString & frame) {
     const KURL url (doc);
     KParts::URLArgs args;
     args.frameName = frame;
@@ -520,16 +520,16 @@ KJavaAppletViewerLiveConnectExtension::KJavaAppletViewerLiveConnectExtension(KJa
 }
 
 bool KJavaAppletViewerLiveConnectExtension::get (
-        const unsigned long objid, const QString & name,
+        const unsigned long objid, const TQString & name,
         KParts::LiveConnectExtension::Type & type,
-        unsigned long & rid, QString & value)
+        unsigned long & rid, TQString & value)
 {
     if (!m_viewer->appletAlive ())
         return false;
-    QStringList args, ret_args;
+    TQStringList args, ret_args;
     KJavaApplet* const applet = m_viewer->view ()->appletWidget ()->applet ();
-    args.append (QString::number (applet->appletId ()));
-    args.append (QString::number ((int) objid));
+    args.append (TQString::number (applet->appletId ()));
+    args.append (TQString::number ((int) objid));
     args.append (name);
     m_jssessions++;
     const bool ret = applet->getContext()->getMember (args, ret_args);
@@ -545,14 +545,14 @@ bool KJavaAppletViewerLiveConnectExtension::get (
     return true;
 }
 
-bool KJavaAppletViewerLiveConnectExtension::put(const unsigned long objid, const QString & name, const QString & value)
+bool KJavaAppletViewerLiveConnectExtension::put(const unsigned long objid, const TQString & name, const TQString & value)
 {
     if (!m_viewer->appletAlive ())
         return false;
-    QStringList args;
+    TQStringList args;
     KJavaApplet* const applet = m_viewer->view ()->appletWidget ()->applet ();
-    args.append (QString::number (applet->appletId ()));
-    args.append (QString::number ((int) objid));
+    args.append (TQString::number (applet->appletId ()));
+    args.append (TQString::number ((int) objid));
     args.append (name);
     args.append (value);
     ++m_jssessions;
@@ -561,19 +561,19 @@ bool KJavaAppletViewerLiveConnectExtension::put(const unsigned long objid, const
     return ret;
 }
 
-bool KJavaAppletViewerLiveConnectExtension::call( const unsigned long objid, const QString & func, const QStringList & fargs, KParts::LiveConnectExtension::Type & type, unsigned long & retobjid, QString & value )
+bool KJavaAppletViewerLiveConnectExtension::call( const unsigned long objid, const TQString & func, const TQStringList & fargs, KParts::LiveConnectExtension::Type & type, unsigned long & retobjid, TQString & value )
 {
     if (!m_viewer->appletAlive ())
         return false;
     KJavaApplet* const applet = m_viewer->view ()->appletWidget ()->applet ();
-    QStringList args, ret_args;
-    args.append (QString::number (applet->appletId ()));
-    args.append (QString::number ((int) objid));
+    TQStringList args, ret_args;
+    args.append (TQString::number (applet->appletId ()));
+    args.append (TQString::number ((int) objid));
     args.append (func);
-    args.append (QString::number ((int) fargs.size ()));
+    args.append (TQString::number ((int) fargs.size ()));
     {
-        QStringList::const_iterator it = fargs.begin();
-        const QStringList::const_iterator itEnd = fargs.end();
+        TQStringList::const_iterator it = fargs.begin();
+        const TQStringList::const_iterator itEnd = fargs.end();
 	for ( ; it != itEnd; ++it)
             args.append(*it);
     }
@@ -602,27 +602,27 @@ void KJavaAppletViewerLiveConnectExtension::unregister(const unsigned long objid
         // no need to send to the jvm
         return;
     }
-    QStringList args;
-    args.append (QString::number (applet->appletId ()));
-    args.append (QString::number ((int) objid));
+    TQStringList args;
+    args.append (TQString::number (applet->appletId ()));
+    args.append (TQString::number ((int) objid));
     applet->getContext()->derefObject (args);
 }
 
-void KJavaAppletViewerLiveConnectExtension::jsEvent (const QStringList & args) {
+void KJavaAppletViewerLiveConnectExtension::jsEvent (const TQStringList & args) {
     if (args.count () < 2 || !m_viewer->appletAlive ())
         return;
     bool ok;
-    QStringList::ConstIterator it = args.begin();
-    const QStringList::ConstIterator itEnd = args.end();
+    TQStringList::ConstIterator it = args.begin();
+    const TQStringList::ConstIterator itEnd = args.end();
     const unsigned long objid = (*it).toInt(&ok);
     ++it;
-    const QString event = (*it);
+    const TQString event = (*it);
     ++it;
     KParts::LiveConnectExtension::ArgList arglist;
 
     for (; it != itEnd; ++it) {
         // take a deep breath here
-        const QStringList::ConstIterator prev = it++;
+        const TQStringList::ConstIterator prev = it++;
 	arglist.push_back(KParts::LiveConnectExtension::ArgList::value_type((KParts::LiveConnectExtension::Type) (*prev).toInt(), (*it)));
     }
     emit partEvent (objid, event, arglist);

@@ -18,7 +18,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qfile.h>
+#include <tqfile.h>
 
 #include <kdebug.h>
 #include <kio/netaccess.h>
@@ -46,7 +46,7 @@ class ResourceNet::ResourceNetPrivate
     KIO::Job *mSaveJob;
     bool mIsSaving;
 
-    QString mLastErrorString;
+    TQString mLastErrorString;
 };
 
 ResourceNet::ResourceNet( const KConfig *config )
@@ -57,11 +57,11 @@ ResourceNet::ResourceNet( const KConfig *config )
   if ( config ) {
     init( KURL( config->readPathEntry( "NetUrl" ) ), config->readEntry( "NetFormat" ) );
   } else {
-    init( KURL(), QString("vcard").latin1() );
+    init( KURL(), TQString("vcard").latin1() );
   }
 }
 
-ResourceNet::ResourceNet( const KURL &url, const QString &format )
+ResourceNet::ResourceNet( const KURL &url, const TQString &format )
   : Resource( 0 ), mFormat( 0 ),
     mTempFile( 0 ),
     d( new ResourceNetPrivate )
@@ -69,7 +69,7 @@ ResourceNet::ResourceNet( const KURL &url, const QString &format )
   init( url, format );
 }
 
-void ResourceNet::init( const KURL &url, const QString &format )
+void ResourceNet::init( const KURL &url, const TQString &format )
 {
   d->mLoadJob = 0;
   d->mIsLoading = false;
@@ -81,7 +81,7 @@ void ResourceNet::init( const KURL &url, const QString &format )
   FormatFactory *factory = FormatFactory::self();
   mFormat = factory->format( mFormatName );
   if ( !mFormat ) {
-    mFormatName = QString("vcard").latin1();
+    mFormatName = TQString("vcard").latin1();
     mFormat = factory->format( mFormatName );
   }
 
@@ -135,14 +135,14 @@ void ResourceNet::doClose()
 
 bool ResourceNet::load()
 {
-  QString tempFile;
+  TQString tempFile;
 
   if ( !KIO::NetAccess::download( mUrl, tempFile, 0 ) ) {
     addressBook()->error( i18n( "Unable to download file '%1'." ).arg( mUrl.prettyURL() ) );
     return false;
   }
 
-  QFile file( tempFile );
+  TQFile file( tempFile );
   if ( !file.open( IO_ReadOnly ) ) {
     addressBook()->error( i18n( "Unable to open file '%1'." ).arg( tempFile ) );
     KIO::NetAccess::removeTempFile( tempFile );
@@ -158,7 +158,7 @@ bool ResourceNet::load()
   return result;
 }
 
-bool ResourceNet::clearAndLoad( QFile *file )
+bool ResourceNet::clearAndLoad( TQFile *file )
 {
   clear();
   return mFormat->loadAll( addressBook(), this, file );
@@ -192,8 +192,8 @@ bool ResourceNet::asyncLoad()
   KIO::Scheduler::checkSlaveOnHold( true );
   d->mLoadJob = KIO::file_copy( mUrl, dest, -1, true, false, false );
   d->mIsLoading = true;
-  connect( d->mLoadJob, SIGNAL( result( KIO::Job* ) ),
-           this, SLOT( downloadFinished( KIO::Job* ) ) );
+  connect( d->mLoadJob, TQT_SIGNAL( result( KIO::Job* ) ),
+           this, TQT_SLOT( downloadFinished( KIO::Job* ) ) );
 
   return true;
 }
@@ -286,8 +286,8 @@ bool ResourceNet::asyncSave( Ticket* )
   KIO::Scheduler::checkSlaveOnHold( true );
   d->mIsSaving = true;
   d->mSaveJob = KIO::file_copy( src, mUrl, -1, true, false, false );
-  connect( d->mSaveJob, SIGNAL( result( KIO::Job* ) ),
-           this, SLOT( uploadFinished( KIO::Job* ) ) );
+  connect( d->mSaveJob, TQT_SIGNAL( result( KIO::Job* ) ),
+           this, TQT_SLOT( uploadFinished( KIO::Job* ) ) );
 
   return true;
 }
@@ -314,7 +314,7 @@ void ResourceNet::deleteLocalTempFile()
   mTempFile = 0;
 }
 
-void ResourceNet::saveToFile( QFile *file )
+void ResourceNet::saveToFile( TQFile *file )
 {
   mFormat->saveAll( addressBook(), this, file );
 }
@@ -329,7 +329,7 @@ KURL ResourceNet::url() const
   return mUrl;
 }
 
-void ResourceNet::setFormat( const QString &name )
+void ResourceNet::setFormat( const TQString &name )
 {
   mFormatName = name;
   if ( mFormat )
@@ -339,7 +339,7 @@ void ResourceNet::setFormat( const QString &name )
   mFormat = factory->format( mFormatName );
 }
 
-QString ResourceNet::format() const
+TQString ResourceNet::format() const
 {
   return mFormatName;
 }
@@ -352,11 +352,11 @@ void ResourceNet::downloadFinished( KIO::Job* )
 
   if ( !hasTempFile() || mTempFile->status() != 0 ) {
     d->mLastErrorString = i18n( "Download failed: Unable to create temporary file" );
-    QTimer::singleShot( 0, this, SLOT( signalError() ) );
+    TQTimer::singleShot( 0, this, TQT_SLOT( signalError() ) );
     return;
   }
 
-  QFile file( mTempFile->name() );
+  TQFile file( mTempFile->name() );
   if ( file.open( IO_ReadOnly ) ) {
     if ( clearAndLoad( &file ) )
       emit loadingFinished( this );

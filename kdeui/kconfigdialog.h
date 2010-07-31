@@ -25,7 +25,7 @@ class KConfig;
 class KConfigSkeleton;
 class KConfigDialogManager;
 #include <kdialogbase.h>
-#include <qasciidict.h>
+#include <tqasciidict.h>
 
 /**
  * \short Standard %KDE configuration dialog class
@@ -52,8 +52,8 @@ class KConfigDialogManager;
  *   KConfigDialog *dialog = new KConfigDialog(this, "settings", MySettings::self(), KDialogBase::IconList);
  *   dialog->addPage(new General(0, "General"), i18n("General") );
  *   dialog->addPage(new Appearance(0, "Style"), i18n("Appearance") );
- *   connect(dialog, SIGNAL(settingsChanged()), mainWidget, SLOT(loadSettings()));
- *   connect(dialog, SIGNAL(settingsChanged()), this, SLOT(loadSettings()));
+ *   connect(dialog, TQT_SIGNAL(settingsChanged()), mainWidget, TQT_SLOT(loadSettings()));
+ *   connect(dialog, TQT_SIGNAL(settingsChanged()), this, TQT_SLOT(loadSettings()));
  *   dialog->show();
  * }
  * \endcode
@@ -120,7 +120,7 @@ public:
    */
   // KDE4: Add the "separator" parameter as in KDialogBase
   //       Make "dialogType" an int
-  KConfigDialog( QWidget *parent, const char *name,
+  KConfigDialog( TQWidget *parent, const char *name,
                  KConfigSkeleton *config,
                  DialogType dialogType = IconList,
                  int dialogButtons = Default|Ok|Apply|Cancel|Help,
@@ -149,9 +149,9 @@ public:
    * @param manage - Whether KConfigDialogManager should manage the page or not.
    */
   // KDE4: Add a default value for itemName & pixmapName
-  void addPage( QWidget *page, const QString &itemName,
-                const QString &pixmapName,
-                const QString &header=QString::null,
+  void addPage( TQWidget *page, const TQString &itemName,
+                const TQString &pixmapName,
+                const TQString &header=TQString::null,
                 bool manage=true );
 
   /**
@@ -171,10 +171,10 @@ public:
    *        mode. If empty, the itemName text is used when needed.
    */
   // KDE4: Add a default value for itemName & pixmapName
-  void addPage( QWidget *page, KConfigSkeleton *config,
-                const QString &itemName,
-                const QString &pixmapName,
-                const QString &header=QString::null );
+  void addPage( TQWidget *page, KConfigSkeleton *config,
+                const TQString &itemName,
+                const TQString &pixmapName,
+                const TQString &header=TQString::null );
 
   /**
    * See if a dialog with the name 'name' already exists.
@@ -253,8 +253,8 @@ private:
   /**
    * Internal function with common addPage code.
    */
-  void addPageInternal(QWidget *page, const QString &itemName,
-                           const QString &pixmapName, const QString &header);
+  void addPageInternal(TQWidget *page, const TQString &itemName,
+                           const TQString &pixmapName, const TQString &header);
 
   /**
    * Sets the connections from a manager to the dialog (and the other
@@ -266,7 +266,7 @@ private:
   /**
    * The list of existing dialogs.
    */
-  static QAsciiDict<KConfigDialog> openDialogs;
+  static TQAsciiDict<KConfigDialog> openDialogs;
 
   class KConfigDialogPrivate;
   /**

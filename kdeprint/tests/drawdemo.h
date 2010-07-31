@@ -16,12 +16,12 @@ public slots:
     void   updateIt( int );
     void   printIt();
 protected:
-    void   drawIt( QPainter * );
-    void   paintEvent( QPaintEvent * );
-    void   resizeEvent( QResizeEvent * );
+    void   drawIt( TQPainter * );
+    void   paintEvent( TQPaintEvent * );
+    void   resizeEvent( TQResizeEvent * );
 private:
     KPrinter	 *printer;
-    QButtonGroup *bgroup;
+    TQButtonGroup *bgroup;
     QPushButton	 *print;
     int		  drawindex;
     int		  maxindex;

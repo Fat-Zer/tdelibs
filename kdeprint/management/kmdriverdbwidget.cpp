@@ -25,13 +25,13 @@
 
 #include <klistbox.h>
 #include <kpushbutton.h>
-#include <qcheckbox.h>
+#include <tqcheckbox.h>
 #include <kcursor.h>
-#include <qapplication.h>
+#include <tqapplication.h>
 #include <kmessagebox.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qstrlist.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqstrlist.h>
 
 #include <klocale.h>
 #include <kcursor.h>
@@ -39,29 +39,29 @@
 #include <kguiitem.h>
 #include <kio/netaccess.h>
 
-KMDriverDbWidget::KMDriverDbWidget(QWidget *parent, const char *name)
-: QWidget(parent,name)
+KMDriverDbWidget::KMDriverDbWidget(TQWidget *parent, const char *name)
+: TQWidget(parent,name)
 {
-	m_external = QString::null;
+	m_external = TQString::null;
 	m_valid = false;
 
 	// build widget
 	m_manu = new KListBox(this);
 	m_model = new KListBox(this);
-	m_postscript = new QCheckBox(i18n("&PostScript printer"),this);
-	m_raw = new QCheckBox(i18n("&Raw printer (no driver needed)"),this);
+	m_postscript = new TQCheckBox(i18n("&PostScript printer"),this);
+	m_raw = new TQCheckBox(i18n("&Raw printer (no driver needed)"),this);
 	m_postscript->setCursor(KCursor::handCursor());
 	m_raw->setCursor(KCursor::handCursor());
 	m_other = new KPushButton(KGuiItem(i18n("&Other..."), "fileopen"), this);
-	QLabel	*l1 = new QLabel(i18n("&Manufacturer:"), this);
-	QLabel	*l2 = new QLabel(i18n("Mo&del:"), this);
+	QLabel	*l1 = new TQLabel(i18n("&Manufacturer:"), this);
+	QLabel	*l2 = new TQLabel(i18n("Mo&del:"), this);
 	l1->setBuddy(m_manu);
 	l2->setBuddy(m_model);
 
 	// build layout
-	QVBoxLayout	*main_ = new QVBoxLayout(this, 0, 10);
-	QGridLayout	*sub1_ = new QGridLayout(0, 2, 3, 0, 0);
-	QHBoxLayout	*sub2_ = new QHBoxLayout(0, 0, 10);
+	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
+	QGridLayout	*sub1_ = new TQGridLayout(0, 2, 3, 0, 0);
+	QHBoxLayout	*sub2_ = new TQHBoxLayout(0, 0, 10);
 	main_->addLayout(sub1_);
 	main_->addLayout(sub2_);
 	main_->addWidget(m_raw);
@@ -74,26 +74,26 @@ KMDriverDbWidget::KMDriverDbWidget(QWidget *parent, const char *name)
 	sub2_->addWidget(m_other,0);
 
 	// build connections
-	connect(KMDriverDB::self(),SIGNAL(dbLoaded(bool)),SLOT(slotDbLoaded(bool)));
-	connect(KMDriverDB::self(), SIGNAL(error(const QString&)), SLOT(slotError(const QString&)));
-	connect(m_manu,SIGNAL(highlighted(const QString&)),SLOT(slotManufacturerSelected(const QString&)));
-	connect(m_raw,SIGNAL(toggled(bool)),m_manu,SLOT(setDisabled(bool)));
-	connect(m_raw,SIGNAL(toggled(bool)),m_model,SLOT(setDisabled(bool)));
-	connect(m_raw,SIGNAL(toggled(bool)),m_other,SLOT(setDisabled(bool)));
-	connect(m_raw,SIGNAL(toggled(bool)),m_postscript,SLOT(setDisabled(bool)));
-	connect(m_postscript,SIGNAL(toggled(bool)),m_manu,SLOT(setDisabled(bool)));
-	connect(m_postscript,SIGNAL(toggled(bool)),m_model,SLOT(setDisabled(bool)));
-	connect(m_postscript,SIGNAL(toggled(bool)),m_other,SLOT(setDisabled(bool)));
-	connect(m_postscript,SIGNAL(toggled(bool)),m_raw,SLOT(setDisabled(bool)));
-	connect(m_postscript,SIGNAL(toggled(bool)),SLOT(slotPostscriptToggled(bool)));
-	connect(m_other,SIGNAL(clicked()),SLOT(slotOtherClicked()));
+	connect(KMDriverDB::self(),TQT_SIGNAL(dbLoaded(bool)),TQT_SLOT(slotDbLoaded(bool)));
+	connect(KMDriverDB::self(), TQT_SIGNAL(error(const TQString&)), TQT_SLOT(slotError(const TQString&)));
+	connect(m_manu,TQT_SIGNAL(highlighted(const TQString&)),TQT_SLOT(slotManufacturerSelected(const TQString&)));
+	connect(m_raw,TQT_SIGNAL(toggled(bool)),m_manu,TQT_SLOT(setDisabled(bool)));
+	connect(m_raw,TQT_SIGNAL(toggled(bool)),m_model,TQT_SLOT(setDisabled(bool)));
+	connect(m_raw,TQT_SIGNAL(toggled(bool)),m_other,TQT_SLOT(setDisabled(bool)));
+	connect(m_raw,TQT_SIGNAL(toggled(bool)),m_postscript,TQT_SLOT(setDisabled(bool)));
+	connect(m_postscript,TQT_SIGNAL(toggled(bool)),m_manu,TQT_SLOT(setDisabled(bool)));
+	connect(m_postscript,TQT_SIGNAL(toggled(bool)),m_model,TQT_SLOT(setDisabled(bool)));
+	connect(m_postscript,TQT_SIGNAL(toggled(bool)),m_other,TQT_SLOT(setDisabled(bool)));
+	connect(m_postscript,TQT_SIGNAL(toggled(bool)),m_raw,TQT_SLOT(setDisabled(bool)));
+	connect(m_postscript,TQT_SIGNAL(toggled(bool)),TQT_SLOT(slotPostscriptToggled(bool)));
+	connect(m_other,TQT_SIGNAL(clicked()),TQT_SLOT(slotOtherClicked()));
 }
 
 KMDriverDbWidget::~KMDriverDbWidget()
 {
 }
 
-void KMDriverDbWidget::setDriver(const QString& manu, const QString& model)
+void KMDriverDbWidget::setDriver(const TQString& manu, const TQString& model)
 {
 	QListBoxItem	*item = m_manu->findItem(manu);
 	QString		model_(model);
@@ -105,7 +105,7 @@ void KMDriverDbWidget::setDriver(const QString& manu, const QString& model)
 			// try by stripping the manufacturer name from
 			// the beginning of the model string. This is
 			// often the case with PPD files
-			item = m_model->findItem(model_.replace(0,manu.length()+1,QString::fromLatin1("")));
+			item = m_model->findItem(model_.replace(0,manu.length()+1,TQString::fromLatin1("")));
 		if (item)
 			m_model->setCurrentItem(item);
 	}
@@ -127,12 +127,12 @@ void KMDriverDbWidget::setHaveOther(bool on)
 		m_other->hide();
 }
 
-QString KMDriverDbWidget::manufacturer()
+TQString KMDriverDbWidget::manufacturer()
 {
 	return m_manu->currentText();
 }
 
-QString KMDriverDbWidget::model()
+TQString KMDriverDbWidget::model()
 {
 	return m_model->currentText();
 }
@@ -151,7 +151,7 @@ void KMDriverDbWidget::init()
 {
 	if (!m_valid)
 	{
-		QApplication::setOverrideCursor(KCursor::waitCursor());
+		TQApplication::setOverrideCursor(KCursor::waitCursor());
 		m_manu->clear();
 		m_model->clear();
 		m_manu->insertItem(i18n("Loading..."));
@@ -161,13 +161,13 @@ void KMDriverDbWidget::init()
 
 void KMDriverDbWidget::slotDbLoaded(bool reloaded)
 {
-	QApplication::restoreOverrideCursor();
+	TQApplication::restoreOverrideCursor();
 	m_valid = true;
 	if (reloaded || m_manu->count() == 0 || (m_manu->count() == 1 && m_manu->text(0) == i18n("Loading...")))
 	{ // do something only if DB reloaded
 		m_manu->clear();
 		m_model->clear();
-		QDictIterator< QDict<KMDBEntryList> >	it(KMDriverDB::self()->manufacturers());
+		TQDictIterator< TQDict<KMDBEntryList> >	it(KMDriverDB::self()->manufacturers());
 		for (;it.current();++it)
 			m_manu->insertItem(it.currentKey());
 		m_manu->sort();
@@ -175,22 +175,22 @@ void KMDriverDbWidget::slotDbLoaded(bool reloaded)
 	}
 }
 
-void KMDriverDbWidget::slotError(const QString& msg)
+void KMDriverDbWidget::slotError(const TQString& msg)
 {
-	QApplication::restoreOverrideCursor();
+	TQApplication::restoreOverrideCursor();
 	m_valid = false;
 	m_manu->clear();
 	KMessageBox::error(this, "<qt>"+msg+"</qt>");
 }
 
-void KMDriverDbWidget::slotManufacturerSelected(const QString& name)
+void KMDriverDbWidget::slotManufacturerSelected(const TQString& name)
 {
 	m_model->clear();
-	QDict<KMDBEntryList>	*models = KMDriverDB::self()->findModels(name);
+	TQDict<KMDBEntryList>	*models = KMDriverDB::self()->findModels(name);
 	if (models)
 	{
 		QStrIList	ilist(true);
-		QDictIterator<KMDBEntryList>	it(*models);
+		TQDictIterator<KMDBEntryList>	it(*models);
 		for (;it.current();++it)
 			ilist.append(it.currentKey().latin1());
 		ilist.sort();
@@ -223,7 +223,7 @@ void KMDriverDbWidget::slotOtherClicked()
 {
 	if (m_external.isEmpty())
 	{
-		KFileDialog dlg( QString::null, QString::null, this, 0, true );
+		KFileDialog dlg( TQString::null, TQString::null, this, 0, true );
 		KURL url;
 
 		dlg.setMode( KFile::File );
@@ -233,14 +233,14 @@ void KMDriverDbWidget::slotOtherClicked()
 
 		if ( !url.isEmpty() )
 		{
-			QString filename;
+			TQString filename;
 			if ( KIO::NetAccess::download( url, filename, this ) )
 			{
 				DrMain	*driver = KMFactory::self()->manager()->loadFileDriver(filename);
 				if (driver)
 				{
 					m_external = filename;
-					disconnect(m_manu,SIGNAL(highlighted(const QString&)),this,SLOT(slotManufacturerSelected(const QString&)));
+					disconnect(m_manu,TQT_SIGNAL(highlighted(const TQString&)),this,TQT_SLOT(slotManufacturerSelected(const TQString&)));
 					m_manu->clear();
 					m_model->clear();
 					QString	s = driver->get("manufacturer");
@@ -263,10 +263,10 @@ void KMDriverDbWidget::slotOtherClicked()
 	}
 	else
 	{
-		m_external = QString::null;
-		connect(m_manu,SIGNAL(highlighted(const QString&)),this,SLOT(slotManufacturerSelected(const QString&)));
+		m_external = TQString::null;
+		connect(m_manu,TQT_SIGNAL(highlighted(const TQString&)),this,TQT_SLOT(slotManufacturerSelected(const TQString&)));
 		m_other->setText(i18n("Other"));
-		m_desc = QString::null;
+		m_desc = TQString::null;
 		slotDbLoaded(true);
 	}
 }

@@ -21,7 +21,7 @@
 #ifndef KSCREENSAVER_H
 #define KSCREENSAVER_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 #include <kdelibs_export.h>
 
@@ -30,7 +30,7 @@ class KScreenSaverPrivate;
 class KBlankEffectPrivate;
 
 /**
-* Provides a QWidget for a screensaver to draw into.
+* Provides a TQWidget for a screensaver to draw into.
 *
 * You should derive from this widget and implement your screensaver's
 * functionality.  To use libkss, provide the following constants and
@@ -47,13 +47,13 @@ class KBlankEffectPrivate;
 *           // return your KScreenSaver derived screensaver
 *       }
 *
-*       QDialog *kss_setup()
+*       TQDialog *kss_setup()
 *       {
 *           // return your modal setup dialog
 *       }
 *   }
 *
-* @short Provides a QWidget for a screensaver to draw into.
+* @short Provides a TQWidget for a screensaver to draw into.
 * @author Martin R. Jones <mjones@kde.org>
 */
 class KDE_EXPORT KScreenSaver : public QWidget
@@ -75,9 +75,9 @@ protected:
      *
      * @param widget The widget to embed in the screensaver widget.
      */
-    void embed( QWidget *widget );
+    void embed( TQWidget *widget );
 
-    bool eventFilter( QObject *o, QEvent * );
+    bool eventFilter( TQObject *o, TQEvent * );
 
 private:
     KScreenSaverPrivate *d;
@@ -95,7 +95,7 @@ class KBlankEffect : public QObject
 {
 	Q_OBJECT
 public:
-	KBlankEffect( QObject *parent=0 );
+	KBlankEffect( TQObject *parent=0 );
 	~KBlankEffect();
 
     enum Effect { Random=-1, Blank=0, SweepRight, SweepDown, Blocks,
@@ -109,7 +109,7 @@ public:
      * @param w The widget to blank.
      * @param effect The type of effect to use.
      */
-    void blank( QWidget *w, Effect effect=Random );
+    void blank( TQWidget *w, Effect effect=Random );
 
     typedef void (KBlankEffect::*BlankEffect)();
 

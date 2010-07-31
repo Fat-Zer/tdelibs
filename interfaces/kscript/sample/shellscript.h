@@ -20,20 +20,20 @@
 #define __shellscript_h__
 
 #include <scriptinterface.h>
-#include <qvariant.h>
-#include <qobject.h>
+#include <tqvariant.h>
+#include <tqobject.h>
 #include <kprocess.h>
 //using namespace KScriptInterface;
 class ShellScript :  public KScriptInterface
 {
 	Q_OBJECT
 public:
-	ShellScript(KScriptClientInterface *parent, const char *name, const QStringList &args);
+	ShellScript(KScriptClientInterface *parent, const char *name, const TQStringList &args);
 	virtual ~ShellScript();
-	QString script() const;
-	void setScript( const QString &scriptFile );
-	void setScript( const QString &scriptLibFile, const QString &method );
-	void run(QObject *context = 0, const QVariant &arg = 0);
+	TQString script() const;
+	void setScript( const TQString &scriptFile );
+	void setScript( const TQString &scriptLibFile, const TQString &method );
+	void run(TQObject *context = 0, const TQVariant &arg = 0);
 	void kill();
 private slots:
 	void Exit(KProcess *proc);
@@ -42,7 +42,7 @@ private slots:
 private:
 	KProcess *m_script;
 	KScriptClientInterface *ScriptClientInterface;
-	QString m_scriptName;
+	TQString m_scriptName;
 };
 
 #endif

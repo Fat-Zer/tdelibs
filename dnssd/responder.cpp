@@ -19,8 +19,8 @@
  */
 
 #include "responder.h"
-#include <qapplication.h>
-#include <qeventloop.h>
+#include <tqapplication.h>
+#include <tqeventloop.h>
 #include <kstaticdeleter.h>
 #include <kidna.h>
 #include <kdebug.h>
@@ -72,7 +72,7 @@ Responder& Responder::self()
 
 void Responder::process()
 {
-    qApp->eventLoop()->processEvents(QEventLoop::ExcludeUserInput);
+    qApp->eventLoop()->processEvents(TQEventLoop::ExcludeUserInput);
 }
 
 #ifdef HAVE_DNSSD
@@ -86,20 +86,20 @@ AvahiClientState Responder::state() const
 }
 #endif
 
-bool domainIsLocal(const QString& domain)
+bool domainIsLocal(const TQString& domain)
 {
 	return domain.section('.',-1,-1).lower()=="local";
 }
 
-QCString domainToDNS(const QString &domain)
+TQCString domainToDNS(const TQString &domain)
 {
 	if (domainIsLocal(domain)) return domain.utf8();
 		else return KIDNA::toAsciiCString(domain);
 }
 
-QString DNSToDomain(const char* domain)
+TQString DNSToDomain(const char* domain)
 {
-	if (domainIsLocal(domain)) return QString::fromUtf8(domain);
+	if (domainIsLocal(domain)) return TQString::fromUtf8(domain);
 		else return KIDNA::toUnicode(domain);
 }
 

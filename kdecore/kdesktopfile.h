@@ -48,7 +48,7 @@ public:
    *                  to search for if @p fileName is not absolute.  For
    *                  instance, you might want to specify "config".
    */
-  KDesktopFile( const QString &fileName, bool readOnly = false,
+  KDesktopFile( const TQString &fileName, bool readOnly = false,
 		const char * resType = "apps");
 
   /**
@@ -67,7 +67,7 @@ public:
    * @param path the path of the file to check
    * @return true if the file appears to be a desktop file.
    */
-  static bool isDesktopFile(const QString& path);
+  static bool isDesktopFile(const TQString& path);
 
   /**
    * Checks whether the user is authorized to run this desktop file.
@@ -78,81 +78,81 @@ public:
    * @return true if the user is authorized to run the file
    * @since 3.1
    */
-  static bool isAuthorizedDesktopFile(const QString& path);
+  static bool isAuthorizedDesktopFile(const TQString& path);
 
   /**
    * Returns the location where changes for the .desktop file @p path
    * should be written to.
    * @since 3.2
    */
-  static QString locateLocal(const QString &path);
+  static TQString locateLocal(const TQString &path);
 
   /**
    * Returns the value of the "Type=" entry.
-   * @return the type or QString::null if not specified
+   * @return the type or TQString::null if not specified
    */
-  QString readType() const;
+  TQString readType() const;
 
   /**
    * Returns the value of the "Icon=" entry.
-   * @return the icon or QString::null if not specified 
+   * @return the icon or TQString::null if not specified 
    */
-  QString readIcon() const;
+  TQString readIcon() const;
 
   /**
    * Returns the value of the "Name=" entry.
-   * @return the name or QString::null if not specified
+   * @return the name or TQString::null if not specified
    */
-  QString readName() const;
+  TQString readName() const;
 
   /**
    * Returns the value of the "Comment=" entry.
-   * @return the comment or QString::null if not specified
+   * @return the comment or TQString::null if not specified
    */
-  QString readComment() const;
+  TQString readComment() const;
 
   /**
    * Returns the value of the "GenericName=" entry.
-   * @return the generic name or QString::null if not specified
+   * @return the generic name or TQString::null if not specified
    */
-  QString readGenericName() const;
+  TQString readGenericName() const;
 
   /**
    * Returns the value of the "Path=" entry.
-   * @return the path or QString::null if not specified
+   * @return the path or TQString::null if not specified
    */
-  QString readPath() const;
+  TQString readPath() const;
 
   /**
    * Returns the value of the "Dev=" entry.
-   * @return the device or QString::null if not specified
+   * @return the device or TQString::null if not specified
    */
-  QString readDevice() const;
+  TQString readDevice() const;
 
   /**
    * Returns the value of the "URL=" entry.
-   * @return the URL or QString::null if not specified
+   * @return the URL or TQString::null if not specified
    */
-  QString readURL() const;
+  TQString readURL() const;
 
   /**
    * Returns a list of the "Actions=" entries.
    * @return the list of actions
    */
-  QStringList readActions() const;
+  TQStringList readActions() const;
 
   /**
    * Sets the desktop action group.
    * @param group the new action group
    */
-  void setActionGroup(const QString &group);
+  void setActionGroup(const TQString &group);
 
   /**
    * Returns true if the action group exists, false otherwise
    * @param group the action group to test
    * @return true if the action group exists
    */
-  bool hasActionGroup(const QString &group) const;
+  bool hasActionGroup(const TQString &group) const;
 
   /**
    * Checks whether there is a "Type=Link" entry.
@@ -191,13 +191,13 @@ public:
    * Returns the file name.
    * @return The filename as passed to the constructor.
    */
-  QString fileName() const;
+  TQString fileName() const;
 
   /**
    * Returns the resource.
    * @return The resource type as passed to the constructor.
    */
-  QString resource() const;
+  TQString resource() const;
 
   /**
    * Returns the value of the "X-DocPath=" Or "DocPath=" entry.
@@ -206,13 +206,13 @@ public:
    * @return The value of the "X-DocPath=" Or "DocPath=" entry.
    * @since 3.1
    */
-  QString readDocPath() const;
+  TQString readDocPath() const;
 
   /**
    * Returns the entry of the "SortOrder=" entry.
    * @return the value of the "SortOrder=" entry.
    */
-  QStringList sortOrder() const;
+  TQStringList sortOrder() const;
 
   /**
    * Copies all entries from this config object to a new 
@@ -224,7 +224,7 @@ public:
    * @param file the new KDesktopFile object it will save itself to.
    * @since 3.2
    */
-  KDesktopFile* copyTo(const QString &file) const;
+  KDesktopFile* copyTo(const TQString &file) const;
 
 #ifdef KDE_NO_COMPAT
 private:
@@ -232,7 +232,7 @@ private:
   /**
    * @deprecated Use fileName() instead.
    */
-    KDE_DEPRECATED QString filename() const { return fileName(); };
+    KDE_DEPRECATED TQString filename() const { return fileName(); };
 
 private:
 

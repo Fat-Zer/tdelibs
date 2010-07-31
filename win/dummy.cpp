@@ -17,18 +17,18 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 /** 
   qt_enter_modal() and qt_enter_modal() from qapplication_win.cpp are not exported
   by default, then we can't use it in NetAccess::enter_loop() (kio). 
   Empty implementation created as a workaround.
 */
-KDEWIN32_EXPORT void qt_enter_modal( QWidget *widget )
+KDEWIN32_EXPORT void qt_enter_modal( TQWidget *widget )
 {
 }
 
-KDEWIN32_EXPORT void qt_leave_modal( QWidget *widget )
+KDEWIN32_EXPORT void qt_leave_modal( TQWidget *widget )
 {
 }
 

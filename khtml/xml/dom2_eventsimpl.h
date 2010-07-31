@@ -141,7 +141,7 @@ protected:
     unsigned short m_eventPhase : 2;
     NodeImpl *m_currentTarget; // ref > 0 maintained externally
     NodeImpl *m_target;
-    QDateTime m_createTime;
+    TQDateTime m_createTime;
     DOMString m_message;
 };
 
@@ -193,7 +193,7 @@ public:
 		   bool metaKeyArg,
 		   unsigned short buttonArg,
 		   NodeImpl *relatedTargetArg,
-		   QMouseEvent *qe = 0,
+		   TQMouseEvent *qe = 0,
                    bool isDoubleClick = false);
     virtual ~MouseEventImpl();
     long screenX() const { return m_screenX; }
@@ -231,7 +231,7 @@ public:
 			const Node &relatedTargetArg);
     virtual bool isMouseEvent() const;
 
-    QMouseEvent *qEvent() const { return m_qevent; }
+    TQMouseEvent *qEvent() const { return m_qevent; }
 protected:
     long m_screenX;
     long m_screenY;
@@ -248,7 +248,7 @@ protected:
     bool m_isDoubleClick : 1;
     unsigned short m_button;
     NodeImpl *m_relatedTarget;
-    QMouseEvent *m_qevent;
+    TQMouseEvent *m_qevent;
 };
 
 
@@ -326,7 +326,7 @@ public:
   unsigned long    keyVal() const     { return m_keyVal; }
   unsigned long    virtKeyVal() const { return m_virtKeyVal; }
 
-  QKeyEvent *qKeyEvent() const { if (!m_keyEvent) buildQKeyEvent(); return m_keyEvent; }
+  TQKeyEvent *qKeyEvent() const { if (!m_keyEvent) buildQKeyEvent(); return m_keyEvent; }
 
   //Legacy key stuff...
   virtual int keyCode() const  = 0;
@@ -348,10 +348,10 @@ protected:
                    bool canBubbleArg,
                    bool cancelableArg,
                    AbstractViewImpl *viewArg,
-                   QKeyEvent *key);
+                   TQKeyEvent *key);
 
 
-  mutable QKeyEvent *m_keyEvent;
+  mutable TQKeyEvent *m_keyEvent;
   unsigned long m_keyVal;     //Unicode key value
   unsigned long m_virtKeyVal; //Virtual key value for keys like arrows, Fn, etc.
 
@@ -367,7 +367,7 @@ class TextEventImpl : public KeyEventBaseImpl {
 public:
     TextEventImpl();
 
-    TextEventImpl(QKeyEvent* key, DOM::AbstractViewImpl* view);
+    TextEventImpl(TQKeyEvent* key, DOM::AbstractViewImpl* view);
     
     void initTextEvent(const DOMString &typeArg,
                        bool canBubbleArg,
@@ -389,7 +389,7 @@ private:
 class KeyboardEventImpl : public KeyEventBaseImpl {
 public:
   KeyboardEventImpl();
-  KeyboardEventImpl(QKeyEvent* key, DOM::AbstractViewImpl* view);
+  KeyboardEventImpl(TQKeyEvent* key, DOM::AbstractViewImpl* view);
 
   virtual bool isKeyboardEvent() const;
 

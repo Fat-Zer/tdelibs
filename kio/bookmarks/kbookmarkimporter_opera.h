@@ -21,9 +21,9 @@
 #ifndef __kbookmarkimporter_opera_h
 #define __kbookmarkimporter_opera_h
 
-#include <qdom.h>
-#include <qcstring.h>
-#include <qstringlist.h>
+#include <tqdom.h>
+#include <tqcstring.h>
+#include <tqstringlist.h>
 #include <ksimpleconfig.h>
 
 #include <kbookmarkimporter.h>
@@ -36,22 +36,22 @@ class KIO_EXPORT_DEPRECATED KOperaBookmarkImporter : public QObject
 {
     Q_OBJECT
 public:
-    KOperaBookmarkImporter( const QString & fileName ) : m_fileName(fileName) {}
+    KOperaBookmarkImporter( const TQString & fileName ) : m_fileName(fileName) {}
     ~KOperaBookmarkImporter() {}
 
     void parseOperaBookmarks();
 
     // Usual place for Opera bookmarks
-    static QString operaBookmarksFile();
+    static TQString operaBookmarksFile();
 
 signals:
-    void newBookmark( const QString & text, const QCString & url, const QString & additionalInfo );
-    void newFolder( const QString & text, bool open, const QString & additionalInfo );
+    void newBookmark( const TQString & text, const TQCString & url, const TQString & additionalInfo );
+    void newFolder( const TQString & text, bool open, const TQString & additionalInfo );
     void newSeparator();
     void endFolder();
 
 protected:
-    QString m_fileName;
+    TQString m_fileName;
 };
 
 /**
@@ -63,7 +63,7 @@ class KIO_EXPORT KOperaBookmarkImporterImpl : public KBookmarkImporterBase
 public:
     KOperaBookmarkImporterImpl() { }
     virtual void parse();
-    virtual QString findDefaultLocation(bool forSaving = false) const;
+    virtual TQString findDefaultLocation(bool forSaving = false) const;
 private:
     class KOperaBookmarkImporterImplPrivate *d;
 };
@@ -74,7 +74,7 @@ private:
 class KIO_EXPORT KOperaBookmarkExporterImpl : public KBookmarkExporterBase
 {
 public:
-    KOperaBookmarkExporterImpl(KBookmarkManager* mgr, const QString & filename)
+    KOperaBookmarkExporterImpl(KBookmarkManager* mgr, const TQString & filename)
       : KBookmarkExporterBase(mgr, filename) 
     { ; }
     virtual ~KOperaBookmarkExporterImpl() {}

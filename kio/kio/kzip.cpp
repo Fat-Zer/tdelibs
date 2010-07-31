@@ -44,11 +44,11 @@
 #include <ksavefile.h>
 #include <kdebug.h>
 
-#include <qasciidict.h>
-#include <qfile.h>
-#include <qdir.h>
-#include <qdatetime.h>
-#include <qptrlist.h>
+#include <tqasciidict.h>
+#include <tqfile.h>
+#include <tqdir.h>
+#include <tqdatetime.h>
+#include <tqptrlist.h>
 
 #include <zlib.h>
 #include <time.h>
@@ -56,7 +56,7 @@
 
 const int max_path_len = 4095;	// maximum number of character a path may contain
 
-static void transformToMsDos(const QDateTime& dt, char* buffer)
+static void transformToMsDos(const TQDateTime& dt, char* buffer)
 {
     if ( dt.isValid() )
     {
@@ -91,15 +91,15 @@ static time_t transformFromMsDos(const char* buffer)
     int h = time >> 11;
     int m = ( time & 0x7ff ) >> 5;
     int s = ( time & 0x1f ) * 2 ;
-    QTime qt(h, m, s);
+    TQTime qt(h, m, s);
 
     Q_UINT16 date = (uchar)buffer[2] | ( (uchar)buffer[3] << 8 );
     int y = ( date >> 9 ) + 1980;
     int o = ( date & 0x1ff ) >> 5;
     int d = ( date & 0x1f );
-    QDate qd(y, o, d);
+    TQDate qd(y, o, d);
 
-    QDateTime dt( qd, qt );
+    TQDateTime dt( qd, qt );
     return dt.toTime_t();
 }
 
@@ -108,14 +108,14 @@ static time_t transformFromMsDos(const char* buffer)
 /** all relevant information about parsing file information */
 struct ParseFileInfo {
   // file related info
-//  QCString name;		// filename
+//  TQCString name;		// filename
   mode_t perm;			// permissions of this file
   time_t atime;			// last access time (UNIX format)
   time_t mtime;			// modification time (UNIX format)
   time_t ctime;			// creation time (UNIX format)
   int uid;			// user id (-1 if not specified)
   int gid;			// group id (-1 if not specified)
-  QCString guessed_symlink;	// guessed symlink target
+  TQCString guessed_symlink;	// guessed symlink target
   int extralen;			// length of extra field
 
   // parsing related info
@@ -321,8 +321,8 @@ public:
 
     unsigned long           m_crc;         // checksum
     KZipFileEntry*          m_currentFile; // file currently being written
-    QIODevice*              m_currentDev;  // filterdev used to write to the above file
-    QPtrList<KZipFileEntry> m_fileList;    // flat list of all files, for the index (saves a recursive method ;)
+    TQIODevice*              m_currentDev;  // filterdev used to write to the above file
+    TQPtrList<KZipFileEntry> m_fileList;    // flat list of all files, for the index (saves a recursive method ;)
     int                     m_compression;
     KZip::ExtraField        m_extraField;
     unsigned int            m_offset; // holds the offset of the place in the zip,
@@ -332,7 +332,7 @@ public:
     KSaveFile*              m_saveFile;
 };
 
-KZip::KZip( const QString& filename )
+KZip::KZip( const TQString& filename )
     : KArchive( 0L )
 {
     //kdDebug(7040) << "KZip(filename) reached." << endl;
@@ -344,10 +344,10 @@ KZip::KZip( const QString& filename )
     // KDE4: move KSaveFile support to base class, KArchive.
 }
 
-KZip::KZip( QIODevice * dev )
+KZip::KZip( TQIODevice * dev )
     : KArchive( dev )
 {
-    //kdDebug(7040) << "KZip::KZip( QIODevice * dev) reached." << endl;
+    //kdDebug(7040) << "KZip::KZip( TQIODevice * dev) reached." << endl;
     d = new KZipPrivate;
 }
 
@@ -361,7 +361,7 @@ KZip::~KZip()
         if ( d->m_saveFile ) // writing mode
             delete d->m_saveFile;
         else // reading mode
-            delete device(); // (the QFile)
+            delete device(); // (the TQFile)
     }
     delete d;
 }
@@ -391,9 +391,9 @@ bool KZip::openArchive( int mode )
     case IO_ReadOnly:
     case IO_ReadWrite:
     {
-        // ReadWrite mode still uses QFile for now; we'd need to copy to the tempfile, in fact.
+        // ReadWrite mode still uses TQFile for now; we'd need to copy to the tempfile, in fact.
         if ( !m_filename.isEmpty() ) {
-            setDevice( new QFile( m_filename ) );
+            setDevice( new TQFile( m_filename ) );
             if ( !device()->open( mode ) )
                 return false;
         }
@@ -408,7 +408,7 @@ bool KZip::openArchive( int mode )
 
     // Check that it's a valid ZIP file
     // the above code opened the underlying device already.
-    QIODevice* dev = device();
+    TQIODevice* dev = device();
 
     if (!dev) {
         return false;
@@ -418,7 +418,7 @@ bool KZip::openArchive( int mode )
     int n;
 
     // contains information gathered from the local file headers
-    QAsciiDict<ParseFileInfo> pfi_map(1009, true /*case sensitive */, true /*copy keys*/);
+    TQAsciiDict<ParseFileInfo> pfi_map(1009, true /*case sensitive */, true /*copy keys*/);
     pfi_map.setAutoDelete(true);
 
     // We set a bool for knowing if we are allowed to skip the start of the file
@@ -477,7 +477,7 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
 	    kdDebug(7040) << "archive size: " << dev->size() << endl;
 
 	    // read filename
-	    QCString filename(namelen + 1);
+	    TQCString filename(namelen + 1);
 	    n = dev->readBlock(filename.data(), namelen);
             if ( n < namelen ) {
                 kdWarning(7040) << "Invalid ZIP file. Name not completely read (#2)" << endl;
@@ -668,7 +668,7 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
             //kdDebug() << "general purpose flag=" << gpf << endl;
             // length of the filename (well, pathname indeed)
             int namelen = (uchar)buffer[29] << 8 | (uchar)buffer[28];
-            QCString bufferName( namelen + 1 );
+            TQCString bufferName( namelen + 1 );
             n = dev->readBlock( bufferName.data(), namelen );
             if ( n < namelen )
                 kdWarning(7040) << "Invalid ZIP file. Name not completely read" << endl;
@@ -677,7 +677,7 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
             if (!pfi) {   // can that happen?
                 pfi_map.insert(bufferName.data(), pfi = new ParseFileInfo());
             }
-            QString name( QFile::decodeName(bufferName) );
+            TQString name( TQFile::decodeName(bufferName) );
 
             //kdDebug(7040) << "name: " << name << endl;
             // only in central header ! see below.
@@ -726,7 +726,7 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
 	    	access = (uchar)buffer[40] | (uchar)buffer[41] << 8;
 	    }
 
-            QString entryName;
+            TQString entryName;
 
 		    if ( name.endsWith( "/" ) ) // Entries with a trailing slash are directories
             {
@@ -746,7 +746,7 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
             KArchiveEntry* entry;
             if ( isdir )
             {
-                QString path = QDir::cleanDirPath( name );
+                TQString path = TQDir::cleanDirPath( name );
                 KArchiveEntry* ent = rootDir()->entry( path );
                 if ( ent && ent->isDirectory() )
                 {
@@ -755,15 +755,15 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
                 }
                 else
                 {
-                    entry = new KArchiveDirectory( this, entryName, access, (int)pfi->mtime, rootDir()->user(), rootDir()->group(), QString::null );
+                    entry = new KArchiveDirectory( this, entryName, access, (int)pfi->mtime, rootDir()->user(), rootDir()->group(), TQString::null );
                     //kdDebug(7040) << "KArchiveDirectory created, entryName= " << entryName << ", name=" << name << endl;
                 }
 	    }
             else
             {
-	        QString symlink;
+	        TQString symlink;
 		if (S_ISLNK(access)) {
-		    symlink = QFile::decodeName(pfi->guessed_symlink);
+		    symlink = TQFile::decodeName(pfi->guessed_symlink);
 		}
                 entry = new KZipFileEntry( this, entryName, access, pfi->mtime,
 					rootDir()->user(), rootDir()->group(),
@@ -783,7 +783,7 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
                 else
                 {
                     // In some tar files we can find dir/./file => call cleanDirPath
-                    QString path = QDir::cleanDirPath( name.left( pos ) );
+                    TQString path = TQDir::cleanDirPath( name.left( pos ) );
                     // Ensure container directory exists, create otherwise
                     KArchiveDirectory * tdir = findOrCreate( path );
                     tdir->addEntry(entry);
@@ -874,7 +874,7 @@ bool KZip::closeArchive()
     Q_LONG centraldiroffset = device()->at();
     //kdDebug(7040) << "closearchive: centraldiroffset: " << centraldiroffset << endl;
     Q_LONG atbackup = centraldiroffset;
-    QPtrListIterator<KZipFileEntry> it( d->m_fileList );
+    TQPtrListIterator<KZipFileEntry> it( d->m_fileList );
 
     for ( ; it.current() ; ++it )
     {	//set crc and compressed size in each local file header
@@ -912,7 +912,7 @@ bool KZip::closeArchive()
         //kdDebug(7040) << "closearchive: filename: " << it.current()->path()
         //              << " encoding: "<< it.current()->encoding() << endl;
 
-        QCString path = QFile::encodeName(it.current()->path());
+        TQCString path = TQFile::encodeName(it.current()->path());
 
 	const int extra_field_len = 9;
         int bufferSize = extra_field_len + path.length() + 46;
@@ -1052,7 +1052,7 @@ bool KZip::closeArchive()
 }
 
 // Doesn't need to be reimplemented anymore. Remove for KDE-4.0
-bool KZip::writeFile( const QString& name, const QString& user, const QString& group, uint size, const char* data )
+bool KZip::writeFile( const TQString& name, const TQString& user, const TQString& group, uint size, const char* data )
 {
     mode_t mode = 0100644;
     time_t the_time = time(0);
@@ -1061,8 +1061,8 @@ bool KZip::writeFile( const QString& name, const QString& user, const QString& g
 }
 
 // Doesn't need to be reimplemented anymore. Remove for KDE-4.0
-bool KZip::writeFile( const QString& name, const QString& user,
-                        const QString& group, uint size, mode_t perm,
+bool KZip::writeFile( const TQString& name, const TQString& user,
+                        const TQString& group, uint size, mode_t perm,
                         time_t atime, time_t mtime, time_t ctime,
                         const char* data ) {
   return KArchive::writeFile(name, user, group, size, perm, atime, mtime,
@@ -1070,7 +1070,7 @@ bool KZip::writeFile( const QString& name, const QString& user,
 }
 
 // Doesn't need to be reimplemented anymore. Remove for KDE-4.0
-bool KZip::prepareWriting( const QString& name, const QString& user, const QString& group, uint size )
+bool KZip::prepareWriting( const TQString& name, const TQString& user, const TQString& group, uint size )
 {
     mode_t dflt_perm = 0100644;
     time_t the_time = time(0);
@@ -1079,14 +1079,14 @@ bool KZip::prepareWriting( const QString& name, const QString& user, const QStri
 }
 
 // Doesn't need to be reimplemented anymore. Remove for KDE-4.0
-bool KZip::prepareWriting(const QString& name, const QString& user,
-    			const QString& group, uint size, mode_t perm,
+bool KZip::prepareWriting(const TQString& name, const TQString& user,
+    			const TQString& group, uint size, mode_t perm,
     			time_t atime, time_t mtime, time_t ctime) {
   return KArchive::prepareWriting(name,user,group,size,perm,atime,mtime,ctime);
 }
 
-bool KZip::prepareWriting_impl(const QString &name, const QString &user,
-    			const QString &group, uint /*size*/, mode_t perm,
+bool KZip::prepareWriting_impl(const TQString &name, const TQString &user,
+    			const TQString &group, uint /*size*/, mode_t perm,
     			time_t atime, time_t mtime, time_t ctime) {
     //kdDebug(7040) << "prepareWriting reached." << endl;
     if ( !isOpened() )
@@ -1117,7 +1117,7 @@ bool KZip::prepareWriting_impl(const QString &name, const QString &user,
     // to save, so that we don´t have duplicate file entries when viewing the zip
     // with konqi...
     // CAUTION: the old file itself is still in the zip and won't be removed !!!
-    QPtrListIterator<KZipFileEntry> it( d->m_fileList );
+    TQPtrListIterator<KZipFileEntry> it( d->m_fileList );
 
 	//kdDebug(7040) << "filename to write: " << name <<endl;
     for ( ; it.current() ; ++it )
@@ -1132,18 +1132,18 @@ bool KZip::prepareWriting_impl(const QString &name, const QString &user,
     }
     // Find or create parent dir
     KArchiveDirectory* parentDir = rootDir();
-    QString fileName( name );
+    TQString fileName( name );
     int i = name.findRev( '/' );
     if ( i != -1 )
     {
-        QString dir = name.left( i );
+        TQString dir = name.left( i );
         fileName = name.mid( i + 1 );
         //kdDebug(7040) << "KZip::prepareWriting ensuring " << dir << " exists. fileName=" << fileName << endl;
         parentDir = findOrCreate( dir );
     }
 
     // construct a KZipFileEntry and add it to list
-    KZipFileEntry * e = new KZipFileEntry( this, fileName, perm, mtime, user, group, QString::null,
+    KZipFileEntry * e = new KZipFileEntry( this, fileName, perm, mtime, user, group, TQString::null,
                                            name, device()->at() + 30 + name.length(), // start
                                            0 /*size unknown yet*/, d->m_compression, 0 /*csize unknown yet*/ );
     e->setHeaderStart( device()->at() );
@@ -1158,7 +1158,7 @@ bool KZip::prepareWriting_impl(const QString &name, const QString &user,
         extra_field_len = 17;	// value also used in doneWriting()
 
     // write out zip header
-    QCString encodedName = QFile::encodeName(name);
+    TQCString encodedName = TQFile::encodeName(name);
     int bufferSize = extra_field_len + encodedName.length() + 30;
     //kdDebug(7040) << "KZip::prepareWriting bufferSize=" << bufferSize << endl;
     char* buffer = new char[ bufferSize ];
@@ -1298,14 +1298,14 @@ bool KZip::doneWriting( uint size )
     return true;
 }
 
-bool KZip::writeSymLink(const QString &name, const QString &target,
-    			const QString &user, const QString &group,
+bool KZip::writeSymLink(const TQString &name, const TQString &target,
+    			const TQString &user, const TQString &group,
     			mode_t perm, time_t atime, time_t mtime, time_t ctime) {
   return KArchive::writeSymLink(name,target,user,group,perm,atime,mtime,ctime);
 }
 
-bool KZip::writeSymLink_impl(const QString &name, const QString &target,
-    			const QString &user, const QString &group,
+bool KZip::writeSymLink_impl(const TQString &name, const TQString &target,
+    			const TQString &user, const TQString &group,
     			mode_t perm, time_t atime, time_t mtime, time_t ctime) {
 
   // reassure that symlink flag is set, otherwise strange things happen on
@@ -1320,7 +1320,7 @@ bool KZip::writeSymLink_impl(const QString &name, const QString &target,
     return false;
   }
 
-  QCString symlink_target = QFile::encodeName(target);
+  TQCString symlink_target = TQFile::encodeName(target);
   if (!writeData(symlink_target, symlink_target.length())) {
     kdWarning() << "KZip::writeFile writeData failed" << endl;
     setCompression(c);
@@ -1422,10 +1422,10 @@ void KZip::abort()
 
 ///////////////
 
-QByteArray KZipFileEntry::data() const
+TQByteArray KZipFileEntry::data() const
 {
-    QIODevice* dev = device();
-    QByteArray arr;
+    TQIODevice* dev = device();
+    TQByteArray arr;
     if ( dev ) {
         arr = dev->readAll();
         delete dev;
@@ -1433,7 +1433,7 @@ QByteArray KZipFileEntry::data() const
     return arr;
 }
 
-QIODevice* KZipFileEntry::device() const
+TQIODevice* KZipFileEntry::device() const
 {
     //kdDebug(7040) << "KZipFileEntry::device creating iodevice limited to pos=" << position() << ", csize=" << compressedSize() << endl;
     // Limit the reading to the appropriate part of the underlying device (e.g. file)
@@ -1444,7 +1444,7 @@ QIODevice* KZipFileEntry::device() const
     if ( encoding() == 8 )
     {
         // On top of that, create a device that uncompresses the zlib data
-        QIODevice* filterDev = KFilterDev::device( limitedDev, "application/x-gzip" );
+        TQIODevice* filterDev = KFilterDev::device( limitedDev, "application/x-gzip" );
         if ( !filterDev )
             return 0L; // ouch
         static_cast<KFilterDev *>(filterDev)->setSkipHeaders(); // Just zlib, not gzip

@@ -29,20 +29,20 @@
 #include <kfiledialog.h>
 #include <kimagefilepreview.h>
 
-#include <qlayout.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qsortedlist.h>
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qtimer.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
-#include <qfileinfo.h>
-#include <qtoolbutton.h>
-#include <qwhatsthis.h>
+#include <tqlayout.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqsortedlist.h>
+#include <tqimage.h>
+#include <tqpixmap.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqtimer.h>
+#include <tqbuttongroup.h>
+#include <tqradiobutton.h>
+#include <tqfileinfo.h>
+#include <tqtoolbutton.h>
+#include <tqwhatsthis.h>
 
 #ifdef HAVE_LIBART
 #include <svgicons/ksvgiconengine.h>
@@ -63,17 +63,17 @@ class KIconCanvas::KIconCanvasPrivate
 class IconPath : public QString
 {
 protected:
- QString m_iconName;
+ TQString m_iconName;
 
 public:
- IconPath(const QString &ip) : QString (ip)
+ IconPath(const TQString &ip) : TQString (ip)
  {
    int n = findRev('/');
-   m_iconName = (n==-1) ? static_cast<QString>(*this) : mid(n+1);
+   m_iconName = (n==-1) ? static_cast<TQString>(*this) : mid(n+1);
  }
 
 
- IconPath() : QString ()
+ IconPath() : TQString ()
  { }
 
  bool operator== (const IconPath &ip) const
@@ -88,14 +88,14 @@ public:
  * KIconCanvas: Iconview for the iconloader dialog.
  */
 
-KIconCanvas::KIconCanvas(QWidget *parent, const char *name)
+KIconCanvas::KIconCanvas(TQWidget *parent, const char *name)
     : KIconView(parent, name)
 {
     d = new KIconCanvasPrivate;
-    mpTimer = new QTimer(this);
-    connect(mpTimer, SIGNAL(timeout()), SLOT(slotLoadFiles()));
-    connect(this, SIGNAL(currentChanged(QIconViewItem *)),
-	    SLOT(slotCurrentChanged(QIconViewItem *)));
+    mpTimer = new TQTimer(this);
+    connect(mpTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotLoadFiles()));
+    connect(this, TQT_SIGNAL(currentChanged(TQIconViewItem *)),
+	    TQT_SLOT(slotCurrentChanged(TQIconViewItem *)));
     setGridX(80);
     setWordWrapIconText(false);
     setShowToolTips(true);
@@ -107,7 +107,7 @@ KIconCanvas::~KIconCanvas()
     delete d;
 }
 
-void KIconCanvas::loadFiles(const QStringList& files)
+void KIconCanvas::loadFiles(const TQStringList& files)
 {
     clear();
     mFiles = files;
@@ -119,7 +119,7 @@ void KIconCanvas::loadFiles(const QStringList& files)
 void KIconCanvas::slotLoadFiles()
 {
     setResizeMode(Fixed);
-    QApplication::setOverrideCursor(waitCursor);
+    TQApplication::setOverrideCursor(waitCursor);
 
     // disable updates to not trigger paint events when adding child items
     setUpdatesEnabled( false );
@@ -130,9 +130,9 @@ void KIconCanvas::slotLoadFiles()
 
     d->m_bLoading = true;
     int i;
-    QStringList::ConstIterator it;
+    TQStringList::ConstIterator it;
     uint emitProgress = 10; // so we will emit it once in the beginning
-    QStringList::ConstIterator end(mFiles.end());
+    TQStringList::ConstIterator end(mFiles.end());
     for (it=mFiles.begin(), i=0; it!=end; ++it, i++)
     {
 	// Calling kapp->processEvents() makes the iconview flicker like hell
@@ -149,11 +149,11 @@ void KIconCanvas::slotLoadFiles()
 //	kapp->processEvents();
         if ( !d->m_bLoading ) // user clicked on a button that will load another set of icons
             break;
-	QImage img;
+	TQImage img;
 
 	// Use the extension as the format. Works for XPM and PNG, but not for SVG
-	QString path= *it;
-	QString ext = path.right(3).upper();
+	TQString path= *it;
+	TQString ext = path.right(3).upper();
 
 	if (ext != "SVG" && ext != "VGZ")
 	    img.load(*it);
@@ -177,10 +177,10 @@ void KIconCanvas::slotLoadFiles()
 		img = img.smoothScale(width, 60);
 	    }
 	}
-	QPixmap pm;
+	TQPixmap pm;
 	pm.convertFromImage(img);
-	QFileInfo fi(*it);
-	QIconViewItem *item = new QIconViewItem(this, fi.baseName(), pm);
+	TQFileInfo fi(*it);
+	TQIconViewItem *item = new TQIconViewItem(this, fi.baseName(), pm);
 	item->setKey(*it);
 	item->setDragEnabled(false);
 	item->setDropEnabled(false);
@@ -193,16 +193,16 @@ void KIconCanvas::slotLoadFiles()
     // enable updates since we have to draw the whole view now
     setUpdatesEnabled( true );
 
-    QApplication::restoreOverrideCursor();
+    TQApplication::restoreOverrideCursor();
     d->m_bLoading = false;
     emit finished();
     setResizeMode(Adjust);
 }
 
-QString KIconCanvas::getCurrent() const
+TQString KIconCanvas::getCurrent() const
 {
     if (!currentItem())
-	return QString::null;
+	return TQString::null;
     return currentItem()->key();
 }
 
@@ -211,9 +211,9 @@ void KIconCanvas::stopLoading()
     d->m_bLoading = false;
 }
 
-void KIconCanvas::slotCurrentChanged(QIconViewItem *item)
+void KIconCanvas::slotCurrentChanged(TQIconViewItem *item)
 {
-    emit nameChanged((item != 0L) ? item->text() : QString::null);
+    emit nameChanged((item != 0L) ? item->text() : TQString::null);
 }
 
 class KIconDialog::KIconDialogPrivate
@@ -227,8 +227,8 @@ class KIconDialog::KIconDialogPrivate
     }
     ~KIconDialogPrivate() {}
     bool m_bStrictIconSize, m_bLockUser, m_bLockCustomDir;
-    QString custom;
-    QString customLocation;
+    TQString custom;
+    TQString customLocation;
     KIconViewSearchLine *searchLine;
 };
 
@@ -237,7 +237,7 @@ class KIconDialog::KIconDialogPrivate
  * specified icons can be chosen.
  */
 
-KIconDialog::KIconDialog(QWidget *parent, const char *name)
+KIconDialog::KIconDialog(TQWidget *parent, const char *name)
     : KDialogBase(parent, name, true, i18n("Select Icon"), Ok|Cancel, Ok)
 {
     d = new KIconDialogPrivate;
@@ -245,7 +245,7 @@ KIconDialog::KIconDialog(QWidget *parent, const char *name)
     init();
 }
 
-KIconDialog::KIconDialog(KIconLoader *loader, QWidget *parent,
+KIconDialog::KIconDialog(KIconLoader *loader, TQWidget *parent,
 	const char *name)
     : KDialogBase(parent, name, true, i18n("Select Icon"), Ok|Cancel, Ok)
 {
@@ -259,42 +259,42 @@ void KIconDialog::init()
     mGroupOrSize = KIcon::Desktop;
     mContext = KIcon::Any;
     mType = 0;
-    mFileList = KGlobal::dirs()->findAllResources("appicon", QString::fromLatin1("*.png"));
+    mFileList = KGlobal::dirs()->findAllResources("appicon", TQString::fromLatin1("*.png"));
 
-    QWidget *main = new QWidget( this );
+    TQWidget *main = new TQWidget( this );
     setMainWidget(main);
 
-    QVBoxLayout *top = new QVBoxLayout(main);
+    TQVBoxLayout *top = new TQVBoxLayout(main);
     top->setSpacing( spacingHint() );
 
-    QButtonGroup *bgroup = new QButtonGroup(0, Qt::Vertical, i18n("Icon Source"), main);
+    TQButtonGroup *bgroup = new TQButtonGroup(0, Qt::Vertical, i18n("Icon Source"), main);
     bgroup->layout()->setSpacing(KDialog::spacingHint());
     bgroup->layout()->setMargin(KDialog::marginHint());
     top->addWidget(bgroup);
-    connect(bgroup, SIGNAL(clicked(int)), SLOT(slotButtonClicked(int)));
-    QGridLayout *grid = new QGridLayout(bgroup->layout(), 3, 2);
-    mpRb1 = new QRadioButton(i18n("S&ystem icons:"), bgroup);
+    connect(bgroup, TQT_SIGNAL(clicked(int)), TQT_SLOT(slotButtonClicked(int)));
+    TQGridLayout *grid = new TQGridLayout(bgroup->layout(), 3, 2);
+    mpRb1 = new TQRadioButton(i18n("S&ystem icons:"), bgroup);
     grid->addWidget(mpRb1, 1, 0);
-    mpCombo = new QComboBox(bgroup);
-    connect(mpCombo, SIGNAL(activated(int)), SLOT(slotContext(int)));
+    mpCombo = new TQComboBox(bgroup);
+    connect(mpCombo, TQT_SIGNAL(activated(int)), TQT_SLOT(slotContext(int)));
     grid->addWidget(mpCombo, 1, 1);
-    mpRb2 = new QRadioButton(i18n("O&ther icons:"), bgroup);
+    mpRb2 = new TQRadioButton(i18n("O&ther icons:"), bgroup);
     grid->addWidget(mpRb2, 2, 0);
-    mpBrowseBut = new QPushButton(i18n("&Browse..."), bgroup);
+    mpBrowseBut = new TQPushButton(i18n("&Browse..."), bgroup);
     grid->addWidget(mpBrowseBut, 2, 1);
 
     //
     // ADD SEARCHLINE
     //
-    QHBoxLayout *searchLayout = new QHBoxLayout(0, 0, KDialog::spacingHint());
+    TQHBoxLayout *searchLayout = new TQHBoxLayout(0, 0, KDialog::spacingHint());
     top->addLayout(searchLayout);
 
-    QToolButton *clearSearch = new QToolButton(main);
+    TQToolButton *clearSearch = new TQToolButton(main);
     clearSearch->setTextLabel(i18n("Clear Search"), true);
-    clearSearch->setIconSet(SmallIconSet(QApplication::reverseLayout() ? "clear_left" :"locationbar_erase"));
+    clearSearch->setIconSet(SmallIconSet(TQApplication::reverseLayout() ? "clear_left" :"locationbar_erase"));
     searchLayout->addWidget(clearSearch);
 
-    QLabel *searchLabel = new QLabel(i18n("&Search:"), main);
+    TQLabel *searchLabel = new TQLabel(i18n("&Search:"), main);
     searchLayout->addWidget(searchLabel);
 
     d->searchLine = new KIconViewSearchLine(main, "searchLine");
@@ -303,28 +303,28 @@ void KIconDialog::init()
 
 
     // signals and slots connections
-    connect(clearSearch, SIGNAL(clicked()), d->searchLine, SLOT(clear()));
+    connect(clearSearch, TQT_SIGNAL(clicked()), d->searchLine, TQT_SLOT(clear()));
 
-    QString wtstr = i18n("Search interactively for icon names (e.g. folder).");
-    QWhatsThis::add(searchLabel, wtstr);
-    QWhatsThis::add(d->searchLine, wtstr);
+    TQString wtstr = i18n("Search interactively for icon names (e.g. folder).");
+    TQWhatsThis::add(searchLabel, wtstr);
+    TQWhatsThis::add(d->searchLine, wtstr);
 
 
     mpCanvas = new KIconCanvas(main);
-    connect(mpCanvas, SIGNAL(executed(QIconViewItem *)), SLOT(slotAcceptIcons()));
-    connect(mpCanvas, SIGNAL(returnPressed(QIconViewItem *)), SLOT(slotAcceptIcons()));
+    connect(mpCanvas, TQT_SIGNAL(executed(TQIconViewItem *)), TQT_SLOT(slotAcceptIcons()));
+    connect(mpCanvas, TQT_SIGNAL(returnPressed(TQIconViewItem *)), TQT_SLOT(slotAcceptIcons()));
     mpCanvas->setMinimumSize(400, 125);
     top->addWidget(mpCanvas);
     d->searchLine->setIconView(mpCanvas);
 
     mpProgress = new KProgress(main);
     top->addWidget(mpProgress);
-    connect(mpCanvas, SIGNAL(startLoading(int)), SLOT(slotStartLoading(int)));
-    connect(mpCanvas, SIGNAL(progress(int)), SLOT(slotProgress(int)));
-    connect(mpCanvas, SIGNAL(finished()), SLOT(slotFinished()));
+    connect(mpCanvas, TQT_SIGNAL(startLoading(int)), TQT_SLOT(slotStartLoading(int)));
+    connect(mpCanvas, TQT_SIGNAL(progress(int)), TQT_SLOT(slotProgress(int)));
+    connect(mpCanvas, TQT_SIGNAL(finished()), TQT_SLOT(slotFinished()));
 
     // When pressing Ok or Cancel, stop loading icons
-    connect(this, SIGNAL(hidden()), mpCanvas, SLOT(stopLoading()));
+    connect(this, TQT_SIGNAL(hidden()), mpCanvas, TQT_SLOT(stopLoading()));
 
     static const char* const context_text[] = {
         I18N_NOOP( "Actions" ),
@@ -372,7 +372,7 @@ void KIconDialog::init()
     mpBrowseBut->setFixedWidth(mpCombo->width());
 
     // Make the dialog a little taller
-    incInitialSize(QSize(0,100));
+    incInitialSize(TQSize(0,100));
 }
 
 
@@ -383,14 +383,14 @@ KIconDialog::~KIconDialog()
 
 void KIconDialog::slotAcceptIcons()
 {
-  d->custom=QString::null;
+  d->custom=TQString::null;
   slotOk();
 }
 
 void KIconDialog::showIcons()
 {
     mpCanvas->clear();
-    QStringList filelist;
+    TQStringList filelist;
     if (mType == 0)
 	if (d->m_bStrictIconSize)
             filelist=mpLoader->queryIcons(mGroupOrSize, mContext);
@@ -401,9 +401,9 @@ void KIconDialog::showIcons()
     else
 	filelist=mFileList;
 
-    QSortedList <IconPath>iconlist;
+    TQSortedList <IconPath>iconlist;
     iconlist.setAutoDelete(true);
-    QStringList::Iterator it;
+    TQStringList::Iterator it;
     for( it = filelist.begin(); it != filelist.end(); ++it )
        iconlist.append(new IconPath(*it));
 
@@ -443,7 +443,7 @@ int KIconDialog::iconSize() const
 }
 
 #ifndef KDE_NO_COMPAT
-QString KIconDialog::selectIcon(KIcon::Group group, KIcon::Context context, bool user)
+TQString KIconDialog::selectIcon(KIcon::Group group, KIcon::Context context, bool user)
 {
     setup( group, context, false, 0, user );
     return openDialog();
@@ -494,12 +494,12 @@ void KIconDialog::setContext( KIcon::Context context )
         }
 }
 
-void KIconDialog::setCustomLocation( const QString& location )
+void KIconDialog::setCustomLocation( const TQString& location )
 {
     d->customLocation = location;
 }
 
-QString KIconDialog::openDialog()
+TQString KIconDialog::openDialog()
 {
     showIcons();
 
@@ -507,13 +507,13 @@ QString KIconDialog::openDialog()
     {
         if (!d->custom.isNull())
             return d->custom;
-	QString name = mpCanvas->getCurrent();
+	TQString name = mpCanvas->getCurrent();
 	if (name.isEmpty() || (mType == 1))
 	    return name;
-	QFileInfo fi(name);
+	TQFileInfo fi(name);
 	return fi.baseName();
     }
-    return QString::null;
+    return TQString::null;
 }
 
 void KIconDialog::showDialog()
@@ -525,7 +525,7 @@ void KIconDialog::showDialog()
 
 void KIconDialog::slotOk()
 {
-    QString name;
+    TQString name;
     if (!d->custom.isNull())
     {
         name = d->custom;
@@ -535,7 +535,7 @@ void KIconDialog::slotOk()
         name = mpCanvas->getCurrent();
         if (!name.isEmpty() && (mType != 1))
         {
-            QFileInfo fi(name);
+            TQFileInfo fi(name);
             name = fi.baseName();
         }
     }
@@ -544,9 +544,9 @@ void KIconDialog::slotOk()
     KDialogBase::slotOk();
 }
 
-QString KIconDialog::getIcon(KIcon::Group group, KIcon::Context context,
+TQString KIconDialog::getIcon(KIcon::Group group, KIcon::Context context,
                              bool strictIconSize, int iconSize, bool user,
-                             QWidget *parent, const QString &caption)
+                             TQWidget *parent, const TQString &caption)
 {
     KIconDialog dlg(parent, "icon dialog");
     dlg.setup( group, context, strictIconSize, iconSize, user );
@@ -558,7 +558,7 @@ QString KIconDialog::getIcon(KIcon::Group group, KIcon::Context context,
 
 void KIconDialog::slotButtonClicked(int id)
 {
-    QString file;
+    TQString file;
 
     switch (id)
     {
@@ -586,7 +586,7 @@ void KIconDialog::slotButtonClicked(int id)
             // Create a file dialog to select a PNG, XPM or SVG file,
             // with the image previewer shown.
             // KFileDialog::getImageOpenURL doesn't allow svg.
-            KFileDialog dlg(QString::null, i18n("*.png *.xpm *.svg *.svgz|Icon Files (*.png *.xpm *.svg *.svgz)"),
+            KFileDialog dlg(TQString::null, i18n("*.png *.xpm *.svg *.svgz|Icon Files (*.png *.xpm *.svg *.svgz)"),
                             this, "filedialog", true);
             dlg.setOperationMode( KFileDialog::Opening );
             dlg.setCaption( i18n("Open") );
@@ -601,7 +601,7 @@ void KIconDialog::slotButtonClicked(int id)
             {
                 d->custom = file;
                 if ( mType == 1 )
-                  d->customLocation = QFileInfo( file ).dirPath( true );
+                  d->customLocation = TQFileInfo( file ).dirPath( true );
                 slotOk();
             }
         }
@@ -657,15 +657,15 @@ class KIconButton::KIconButtonPrivate
  * KIconButton: A "choose icon" pushbutton.
  */
 
-KIconButton::KIconButton(QWidget *parent, const char *name)
-    : QPushButton(parent, name)
+KIconButton::KIconButton(TQWidget *parent, const char *name)
+    : TQPushButton(parent, name)
 {
     init( KGlobal::iconLoader() );
 }
 
 KIconButton::KIconButton(KIconLoader *loader,
-	QWidget *parent, const char *name)
-    : QPushButton(parent, name)
+	TQWidget *parent, const char *name)
+    : TQPushButton(parent, name)
 {
     init( loader );
 }
@@ -679,7 +679,7 @@ void KIconButton::init( KIconLoader *loader )
 
     mpLoader = loader;
     mpDialog = 0L;
-    connect(this, SIGNAL(clicked()), SLOT(slotChangeIcon()));
+    connect(this, TQT_SIGNAL(clicked()), TQT_SLOT(slotChangeIcon()));
 }
 
 KIconButton::~KIconButton()
@@ -715,7 +715,7 @@ void KIconButton::setIconType(KIcon::Group group, KIcon::Context context, bool u
     mbUser = user;
 }
 
-void KIconButton::setIcon(const QString& icon)
+void KIconButton::setIcon(const TQString& icon)
 {
     mIcon = icon;
     setIconSet(mpLoader->loadIconSet(mIcon, mGroup, d->iconSize));
@@ -723,17 +723,17 @@ void KIconButton::setIcon(const QString& icon)
     if (!mpDialog)
     {
         mpDialog = new KIconDialog(mpLoader, this);
-        connect(mpDialog, SIGNAL(newIconName(const QString&)), SLOT(newIconName(const QString&)));
+        connect(mpDialog, TQT_SIGNAL(newIconName(const TQString&)), TQT_SLOT(newIconName(const TQString&)));
     }
 
     if ( mbUser )
-      mpDialog->setCustomLocation( QFileInfo( mpLoader->iconPath(mIcon, mGroup, true) ).dirPath( true ) );
+      mpDialog->setCustomLocation( TQFileInfo( mpLoader->iconPath(mIcon, mGroup, true) ).dirPath( true ) );
 }
 
 void KIconButton::resetIcon()
 {
-    mIcon = QString::null;
-    setIconSet(QIconSet());
+    mIcon = TQString::null;
+    setIconSet(TQIconSet());
 }
 
 void KIconButton::slotChangeIcon()
@@ -741,24 +741,24 @@ void KIconButton::slotChangeIcon()
     if (!mpDialog)
     {
         mpDialog = new KIconDialog(mpLoader, this);
-        connect(mpDialog, SIGNAL(newIconName(const QString&)), SLOT(newIconName(const QString&)));
+        connect(mpDialog, TQT_SIGNAL(newIconName(const TQString&)), TQT_SLOT(newIconName(const TQString&)));
     }
 
     mpDialog->setup( mGroup, mContext, d->m_bStrictIconSize, d->iconSize, mbUser );
     mpDialog->showDialog();
 }
 
-void KIconButton::newIconName(const QString& name)
+void KIconButton::newIconName(const TQString& name)
 {
     if (name.isEmpty())
         return;
 
-    QIconSet iconset = mpLoader->loadIconSet(name, mGroup, d->iconSize);
+    TQIconSet iconset = mpLoader->loadIconSet(name, mGroup, d->iconSize);
     setIconSet(iconset);
     mIcon = name;
 
     if ( mbUser )
-      mpDialog->setCustomLocation( QFileInfo( mpLoader->iconPath(mIcon, mGroup, true) ).dirPath( true ) );
+      mpDialog->setCustomLocation( TQFileInfo( mpLoader->iconPath(mIcon, mGroup, true) ).dirPath( true ) );
 
     emit iconChanged(name);
 }

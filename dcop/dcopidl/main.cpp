@@ -20,9 +20,9 @@ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
-#include <qstring.h>
-#include <qfile.h>
-#include <qcstring.h>
+#include <tqstring.h>
+#include <tqfile.h>
+#include <tqcstring.h>
 #include <stdlib.h>
 
 void dcopidlParse( const char *_code );
@@ -40,14 +40,14 @@ int main( int argc, char** argv )
         fprintf(stderr, "Usage : dcopidl input_file\n");
         return -1;
     }
-    QFile file( argv[1] );
+    TQFile file( argv[1] );
     if ( !file.open( IO_ReadOnly ) )
     {
         fprintf(stderr, "Can't open input file\n");
         return -1;
     }
 
-    QByteArray arr = file.readAll();
+    TQByteArray arr = file.readAll();
     uint len = arr.size();
     uint j = 1;
     for (uint i = 1; i<len; i++, j++) {

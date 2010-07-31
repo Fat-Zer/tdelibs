@@ -42,7 +42,7 @@ class KTEXTEDITOR_EXPORT HighlightingInterface
     unsigned int highlightingInterfaceNumber () const;
     
   protected:  
-    void setHighlightingInterfaceDCOPSuffix (const QCString &suffix);  
+    void setHighlightingInterfaceDCOPSuffix (const TQCString &suffix);  
 
   //
 	// slots !!!
@@ -66,12 +66,12 @@ class KTEXTEDITOR_EXPORT HighlightingInterface
 	/**
 	* returns the name of the highlighting with number "mode"
 	*/
-	virtual QString hlModeName (unsigned int mode) = 0;
+	virtual TQString hlModeName (unsigned int mode) = 0;
 	
 	/**
 	* returns the sectionname of the highlighting with number "mode"
 	*/
-  virtual QString hlModeSectionName (unsigned int mode) = 0;
+  virtual TQString hlModeSectionName (unsigned int mode) = 0;
 
 	//
 	// signals !!!

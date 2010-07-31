@@ -42,7 +42,7 @@ class KTEXTEDITOR_EXPORT SessionConfigInterface
     unsigned int configInterfaceNumber () const;
 
   protected:
-    void setSessionConfigInterfaceDCOPSuffix (const QCString &suffix);
+    void setSessionConfigInterfaceDCOPSuffix (const TQCString &suffix);
 
   //
   // slots !!!

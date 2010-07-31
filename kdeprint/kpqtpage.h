@@ -33,12 +33,12 @@ class KDEPRINT_EXPORT KPQtPage : public KPrintDialogPage
 {
 	Q_OBJECT
 public:
-	KPQtPage(QWidget *parent = 0, const char *name = 0);
-	KPQtPage(DrMain *driver, QWidget *parent = 0, const char *name = 0);
+	KPQtPage(TQWidget *parent = 0, const char *name = 0);
+	KPQtPage(DrMain *driver, TQWidget *parent = 0, const char *name = 0);
 	~KPQtPage();
 
-	void setOptions(const QMap<QString,QString>& opts);
-	void getOptions(QMap<QString,QString>& opts, bool incldef = false);
+	void setOptions(const TQMap<TQString,TQString>& opts);
+	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
 
 protected slots:
 	void slotOrientationChanged(int);

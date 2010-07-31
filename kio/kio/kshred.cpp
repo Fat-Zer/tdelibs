@@ -27,8 +27,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdlib.h>
 #include <kapplication.h>
 
-// antlarr: KDE 4: Make it const QString &
-KShred::KShred(QString fileName)
+// antlarr: KDE 4: Make it const TQString &
+KShred::KShred(TQString fileName)
 {
   if (fileName.isEmpty())
   {
@@ -37,7 +37,7 @@ KShred::KShred(QString fileName)
   }
   else
   {
-    file = new QFile();
+    file = new TQFile();
     file->setName(fileName);
     if (!file->open(IO_ReadWrite))
     {
@@ -144,9 +144,9 @@ KShred::fillrandom()
 }
 
 
-// antlarr: KDE 4: Make it const QString &
+// antlarr: KDE 4: Make it const TQString &
 bool
-KShred::shred(QString fileName)
+KShred::shred(TQString fileName)
 {
   if (fileName.isEmpty())
     return false;
@@ -209,7 +209,7 @@ KShred::shred()
   unsigned char p[6][3] = {{'\222', '\111', '\044'}, {'\111', '\044', '\222'},
                            {'\044', '\222', '\111'}, {'\155', '\266', '\333'},
                            {'\266', '\333', '\155'}, {'\333', '\155', '\266'}};
-  QString msg = i18n("Shredding:  pass %1 of 35");
+  TQString msg = i18n("Shredding:  pass %1 of 35");
 
   emit processedSize(0);
 

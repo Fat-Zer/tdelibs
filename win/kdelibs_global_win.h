@@ -19,7 +19,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qglobal.h>
+#include <tqglobal.h>
 
 /*! Bootstrap */
 #define kdemain \
@@ -77,13 +77,13 @@ int kde_start
 
 /*
 #ifdef __cplusplus
-#include <qstring.h>
+#include <tqstring.h>
 
 # ifndef KDEDIR
-#  define KDEDIR QString(KDEWIN32_DIR)
+#  define KDEDIR TQString(KDEWIN32_DIR)
 # endif
 # ifndef __KDE_BINDIR 
-#  define __KDE_BINDIR QString(KDEWIN32_DIR "/bin")
+#  define __KDE_BINDIR TQString(KDEWIN32_DIR "/bin")
 # endif
 #endif
 */

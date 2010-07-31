@@ -25,8 +25,8 @@
 
 #include <ksharedptr.h>
 
-#include <qmemarray.h>
-#include <qstring.h>
+#include <tqmemarray.h>
+#include <tqstring.h>
 
 class KateRenderer;
 class QTextStream;
@@ -139,16 +139,16 @@ class KateTextLine : public KShared
     /**
      * Gets the char at the given position
      * @param pos position
-     * @return character at the given position or QChar::null if position is
+     * @return character at the given position or TQChar::null if position is
      *   beyond the length of the string
      */
-    inline QChar getChar (uint pos) const { return m_text[pos]; }
+    inline TQChar getChar (uint pos) const { return m_text[pos]; }
 
     /**
      * Gets the text as a unicode representation
-     * @return text of this line as QChar array
+     * @return text of this line as TQChar array
      */
-    inline const QChar *text() const { return m_text.unicode(); }
+    inline const TQChar *text() const { return m_text.unicode(); }
 
     /**
      * Highlighting array
@@ -168,9 +168,9 @@ class KateTextLine : public KShared
 
     /**
      * Gets a QString
-     * @return text of line as QString reference
+     * @return text of line as TQString reference
      */
-    inline const QString& string() const { return m_text; }
+    inline const TQString& string() const { return m_text; }
 
     /**
      * Gets a substring.
@@ -178,14 +178,14 @@ class KateTextLine : public KShared
      * @param length length of substring
      * @return wanted substring
      */
-    inline QString string(uint startCol, uint length) const
+    inline TQString string(uint startCol, uint length) const
     { return m_text.mid(startCol, length); }
 
     /**
      * Gets a null terminated pointer to first non space char
      * @return array of QChars starting at first non-whitespace char
      */
-    const QChar *firstNonSpace() const;
+    const TQChar *firstNonSpace() const;
 
     /**
      * indentation depth of this line
@@ -216,21 +216,21 @@ class KateTextLine : public KShared
      * @param match string to match at given pos
      * @return did the string match?
      */
-    bool stringAtPos(uint pos, const QString& match) const;
+    bool stringAtPos(uint pos, const TQString& match) const;
 
     /**
      * Is the line starting with the given string
      * @param match string to test
      * @return does line start with given string?
      */
-    bool startingWith(const QString& match) const;
+    bool startingWith(const TQString& match) const;
 
     /**
      * Is the line ending with the given string
      * @param match string to test
      * @return does the line end with given string?
      */
-    bool endingWith(const QString& match) const;
+    bool endingWith(const TQString& match) const;
 
     /**
      * search given string
@@ -242,7 +242,7 @@ class KateTextLine : public KShared
      * @param backwards search backwards?
      * @return string found?
      */
-    bool searchText (uint startCol, const QString &text,
+    bool searchText (uint startCol, const TQString &text,
                      uint *foundAtCol, uint *matchLen,
                      bool casesensitive = true,
                      bool backwards = false);
@@ -256,7 +256,7 @@ class KateTextLine : public KShared
      * @param backwards search backwards?
      * @return regexp found?
      */
-    bool searchText (uint startCol, const QRegExp &regexp,
+    bool searchText (uint startCol, const TQRegExp &regexp,
                      uint *foundAtCol, uint *matchLen,
                      bool backwards = false);
 
@@ -278,7 +278,7 @@ class KateTextLine : public KShared
      * context stack
      * @return context stack
      */
-    inline const QMemArray<short> &ctxArray () const { return m_ctx; };
+    inline const TQMemArray<short> &ctxArray () const { return m_ctx; };
 
     /**
      * @return true if any context at the line end has the noIndentBasedFolding flag set 
@@ -289,13 +289,13 @@ class KateTextLine : public KShared
      * folding list
      * @return folding array
      */
-    inline const QMemArray<uint> &foldingListArray () const { return m_foldingList; };
+    inline const TQMemArray<uint> &foldingListArray () const { return m_foldingList; };
 
     /**
      * indentation stack
      * @return indentation array
      */
-    inline const QMemArray<unsigned short> &indentationDepthArray () const { return m_indentationDepth; };
+    inline const TQMemArray<unsigned short> &indentationDepthArray () const { return m_indentationDepth; };
 
     /**
      * insert text into line
@@ -304,7 +304,7 @@ class KateTextLine : public KShared
      * @param insText text to insert
      * @param insAttribs attributes for the insert text
      */
-    void insertText (uint pos, uint insLen, const QChar *insText, uchar *insAttribs = 0);
+    void insertText (uint pos, uint insLen, const TQChar *insText, uchar *insAttribs = 0);
 
     /**
      * remove text at given position
@@ -343,7 +343,7 @@ class KateTextLine : public KShared
      * Sets the syntax highlight context number
      * @param val new context array
      */
-    inline void setContext (QMemArray<short> &val) { m_ctx.assign (val); }
+    inline void setContext (TQMemArray<short> &val) { m_ctx.assign (val); }
 
     /**
      * sets if for the next line indent based folding should be disabled
@@ -364,13 +364,13 @@ class KateTextLine : public KShared
      * update folding list
      * @param val new folding list
      */
-    inline void setFoldingList (QMemArray<uint> &val) { m_foldingList.assign (val); m_foldingList.detach(); }
+    inline void setFoldingList (TQMemArray<uint> &val) { m_foldingList.assign (val); m_foldingList.detach(); }
 
     /**
      * update indentation stack
      * @param val new indentation stack
      */
-    inline void setIndentationDepth (QMemArray<unsigned short> &val) { m_indentationDepth.assign (val); }
+    inline void setIndentationDepth (TQMemArray<unsigned short> &val) { m_indentationDepth.assign (val); }
 
   /**
    * Methodes for dump/restore of the line in the buffer
@@ -385,7 +385,7 @@ class KateTextLine : public KShared
     {
       return ( 1
                + sizeof(uint)
-               + (m_text.length() * sizeof(QChar))
+               + (m_text.length() * sizeof(TQChar))
                + ( withHighlighting ?
                      ( (3 * sizeof(uint))
                        + (m_text.length() * sizeof(uchar))
@@ -421,29 +421,29 @@ class KateTextLine : public KShared
     /**
      * text of line as unicode
      */
-    QString m_text;
+    TQString m_text;
 
     /**
      * array of highlighting attributes
      * This is exactly the same size as m_text.length()
      * Each letter in m_text has a uchar attribute
      */
-    QMemArray<uchar> m_attributes;
+    TQMemArray<uchar> m_attributes;
 
     /**
      * context stack
      */
-    QMemArray<short> m_ctx;
+    TQMemArray<short> m_ctx;
 
     /**
      * list of folding starts/ends
      */
-    QMemArray<uint> m_foldingList;
+    TQMemArray<uint> m_foldingList;
 
     /**
      * indentation stack
      */
-    QMemArray<unsigned short> m_indentationDepth;
+    TQMemArray<unsigned short> m_indentationDepth;
 
     /**
      * flags

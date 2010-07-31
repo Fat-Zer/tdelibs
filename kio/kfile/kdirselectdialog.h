@@ -47,12 +47,12 @@ public:
      * @param startDir the directory, initially shown
      * @param localOnly unused. You can only select paths below the startDir
      * @param parent the parent for the dialog, usually 0L
-     * @param name the QObject::name
+     * @param name the TQObject::name
      * @param modal if the dialog is modal or not
      */
-    KDirSelectDialog(const QString& startDir = QString::null,
+    KDirSelectDialog(const TQString& startDir = TQString::null,
                      bool localOnly = false,
-                     QWidget *parent = 0L,
+                     TQWidget *parent = 0L,
                      const char *name = 0, bool modal = false);
 
     /**
@@ -75,18 +75,18 @@ public:
      * The tree will display this directory and subdirectories of it.
      * @param localOnly unused. You can only select paths below the startDir
      * @param parent the parent widget to use for the dialog, or NULL to create a parent-less dialog
-     * @param caption the caption to use for the dialog, or QString::null for the default caption
+     * @param caption the caption to use for the dialog, or TQString::null for the default caption
      * @return The URL selected, or an empty URL if the user canceled
      * or no URL was selected.
      */
-    static KURL selectDirectory( const QString& startDir = QString::null,
-                                 bool localOnly = false, QWidget *parent = 0L,
-                                 const QString& caption = QString::null);
+    static KURL selectDirectory( const TQString& startDir = TQString::null,
+                                 bool localOnly = false, TQWidget *parent = 0L,
+                                 const TQString& caption = TQString::null);
 
     /**
      * @return The path for the root node
      */
-    QString startDir() const { return m_startDir; }
+    TQString startDir() const { return m_startDir; }
 
 public slots:
     void setCurrentURL( const KURL& url );
@@ -98,26 +98,26 @@ protected:
     virtual void accept();
 
     // Layouts protected so that subclassing is easy
-    QVBoxLayout *m_mainLayout;
-    QString m_startDir;
+    TQVBoxLayout *m_mainLayout;
+    TQString m_startDir;
 
 private slots:
     void slotCurrentChanged();
-    void slotURLActivated( const QString& );
+    void slotURLActivated( const TQString& );
     void slotNextDirToList( KFileTreeViewItem *dirItem );
-    void slotComboTextChanged( const QString& text );
-    void slotContextMenu( KListView *, QListViewItem *, const QPoint & );
+    void slotComboTextChanged( const TQString& text );
+    void slotContextMenu( KListView *, TQListViewItem *, const TQPoint & );
     void slotShowHiddenFoldersToggled();
     void slotMkdir();
 
 private:
-    void readConfig( KConfig *config, const QString& group );
-    void saveConfig( KConfig *config, const QString& group );
+    void readConfig( KConfig *config, const TQString& group );
+    void saveConfig( KConfig *config, const TQString& group );
     void openNextDir( KFileTreeViewItem *parent );
     KFileTreeBranch * createBranch( const KURL& url );
 
     KFileTreeView *m_treeView;
-    QPopupMenu *m_contextMenu;
+    TQPopupMenu *m_contextMenu;
     KToggleAction *m_showHiddenFolders;
     bool m_localOnly;
 

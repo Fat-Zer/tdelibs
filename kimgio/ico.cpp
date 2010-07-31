@@ -13,11 +13,11 @@
 #include <algorithm>
 #include <vector>
 
-#include <qimage.h>
-#include <qbitmap.h>
-#include <qapplication.h>
-#include <qmemarray.h>
-#include <qpaintdevicemetrics.h>
+#include <tqimage.h>
+#include <tqbitmap.h>
+#include <tqapplication.h>
+#include <tqmemarray.h>
+#include <tqpaintdevicemetrics.h>
 
 #include <kdelibs_export.h>
 
@@ -34,7 +34,7 @@ namespace
         Q_UINT16 count;
     };
 
-    inline QDataStream& operator >>( QDataStream& s, IcoHeader& h )
+    inline TQDataStream& operator >>( TQDataStream& s, IcoHeader& h )
     {
         return s >> h.reserved >> h.type >> h.count;
     }
@@ -59,7 +59,7 @@ namespace
     };
     const Q_UINT32 BMP_INFOHDR::Size;
   
-    QDataStream& operator >>( QDataStream &s, BMP_INFOHDR &bi )
+    TQDataStream& operator >>( TQDataStream &s, BMP_INFOHDR &bi )
     {
         s >> bi.biSize;
         if ( bi.biSize == BMP_INFOHDR::Size )
@@ -73,7 +73,7 @@ namespace
     }
 
 #if 0
-    QDataStream &operator<<( QDataStream &s, const BMP_INFOHDR &bi )
+    TQDataStream &operator<<( TQDataStream &s, const BMP_INFOHDR &bi )
     {
         s << bi.biSize;
         s << bi.biWidth << bi.biHeight;
@@ -99,7 +99,7 @@ namespace
         Q_UINT32 offset;
     };
 
-    inline QDataStream& operator >>( QDataStream& s, IconRec& r )
+    inline TQDataStream& operator >>( TQDataStream& s, IconRec& r )
     {
         return s >> r.width >> r.height >> r.colors
                  >> r.hotspotX >> r.hotspotY >> r.size >> r.offset;
@@ -137,7 +137,7 @@ namespace
         unsigned colors;
     };
 
-    bool loadFromDIB( QDataStream& stream, const IconRec& rec, QImage& icon )
+    bool loadFromDIB( TQDataStream& stream, const IconRec& rec, TQImage& icon )
     {
         BMP_INFOHDR header;
         stream >> header;
@@ -169,7 +169,7 @@ namespace
         if ( icon.isNull() ) return false;
         icon.setAlphaBuffer( true );
 
-        QMemArray< QRgb > colorTable( paletteSize );
+        TQMemArray< QRgb > colorTable( paletteSize );
         
         colorTable.fill( QRgb( 0 ) );
         for ( unsigned i = 0; i < paletteEntries; ++i )
@@ -241,30 +241,30 @@ namespace
     }
 }
 
-extern "C" KDE_EXPORT void kimgio_ico_read( QImageIO* io )
+extern "C" KDE_EXPORT void kimgio_ico_read( TQImageIO* io )
 {
-    QIODevice::Offset offset = io->ioDevice()->at();
+    TQIODevice::Offset offset = io->ioDevice()->at();
 
-    QDataStream stream( io->ioDevice() );
-    stream.setByteOrder( QDataStream::LittleEndian );
+    TQDataStream stream( io->ioDevice() );
+    stream.setByteOrder( TQDataStream::LittleEndian );
     IcoHeader header;
     stream >> header;
     if ( stream.atEnd() || !header.count ||
          ( header.type != IcoHeader::Icon && header.type != IcoHeader::Cursor) )
         return;
 
-    QPaintDeviceMetrics metrics( QApplication::desktop() );
+    TQPaintDeviceMetrics metrics( TQApplication::desktop() );
     unsigned requestedSize = 32;
     unsigned requestedColors = metrics.depth() > 8 ? 0 : metrics.depth();
     int requestedIndex = -1;
     if ( io->parameters() )
     {
-        QStringList params = QStringList::split( ';', io->parameters() );
-        QMap< QString, QString > options;
-        for ( QStringList::ConstIterator it = params.begin();
+        TQStringList params = TQStringList::split( ';', io->parameters() );
+        TQMap< TQString, TQString > options;
+        for ( TQStringList::ConstIterator it = params.begin();
               it != params.end(); ++it )
         {
-            QStringList tmp = QStringList::split( '=', *it );
+            TQStringList tmp = TQStringList::split( '=', *it );
             if ( tmp.count() == 2 ) options[ tmp[ 0 ] ] = tmp[ 1 ];
         }
         if ( options[ "index" ].toUInt() )
@@ -296,14 +296,14 @@ extern "C" KDE_EXPORT void kimgio_ico_read( QImageIO* io )
         return;
 
     io->ioDevice()->at( offset + selected->offset );
-    QImage icon;
+    TQImage icon;
     if ( loadFromDIB( stream, *selected, icon ) )
     {
-        icon.setText( "X-Index", 0, QString::number( selected - icons.begin() ) );
+        icon.setText( "X-Index", 0, TQString::number( selected - icons.begin() ) );
         if ( header.type == IcoHeader::Cursor )
         {
-            icon.setText( "X-HotspotX", 0, QString::number( selected->hotspotX ) );
-            icon.setText( "X-HotspotY", 0, QString::number( selected->hotspotY ) );
+            icon.setText( "X-HotspotX", 0, TQString::number( selected->hotspotX ) );
+            icon.setText( "X-HotspotY", 0, TQString::number( selected->hotspotY ) );
         }
         io->setImage(icon);
         io->setStatus(0);
@@ -311,17 +311,17 @@ extern "C" KDE_EXPORT void kimgio_ico_read( QImageIO* io )
 }
 
 #if 0
-void kimgio_ico_write(QImageIO *io)
+void kimgio_ico_write(TQImageIO *io)
 {
     if (io->image().isNull())
         return;
 
-    QByteArray dibData;
-    QDataStream dib(dibData, IO_ReadWrite);
-    dib.setByteOrder(QDataStream::LittleEndian);
+    TQByteArray dibData;
+    TQDataStream dib(dibData, IO_ReadWrite);
+    dib.setByteOrder(TQDataStream::LittleEndian);
 
-    QImage pixels = io->image();
-    QImage mask;
+    TQImage pixels = io->image();
+    TQImage mask;
     if (io->image().hasAlphaBuffer())
         mask = io->image().createAlphaMask();
     else
@@ -340,8 +340,8 @@ void kimgio_ico_write(QImageIO *io)
     memmove(dibData.data() + hdrPos, dibData.data() + hdrPos + BMP_WIN + 8, dibData.size() - hdrPos - BMP_WIN - 8);
     dibData.resize(dibData.size() - BMP_WIN - 8);
         
-    QDataStream ico(io->ioDevice());
-    ico.setByteOrder(QDataStream::LittleEndian);
+    TQDataStream ico(io->ioDevice());
+    ico.setByteOrder(TQDataStream::LittleEndian);
     IcoHeader hdr;
     hdr.reserved = 0;
     hdr.type = Icon;

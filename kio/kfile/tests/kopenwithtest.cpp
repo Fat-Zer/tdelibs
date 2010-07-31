@@ -19,9 +19,9 @@
 */
 
 #include <kapplication.h>
-#include <qwidget.h>
-#include <qstringlist.h>
-#include <qdir.h>
+#include <tqwidget.h>
+#include <tqstringlist.h>
+#include <tqdir.h>
 #include <kopenwith.h>
 #include <kurl.h>
 #include <kdebug.h>
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
     delete dlg;
 
     // Test with a mimetype
-    QString mimetype = "text/plain";
+    TQString mimetype = "text/plain";
     dlg = new KOpenWithDlg( mimetype, "kedit", 0);
     if(dlg->exec()) {
         kdDebug() << "Dialog ended successfully\ntext: " << dlg->text() << endl;

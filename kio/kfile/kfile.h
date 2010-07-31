@@ -18,7 +18,7 @@
 #ifndef KFILE_H
 #define KFILE_H
 
-#include <qdir.h>
+#include <tqdir.h>
 
 #include "kdelibs_export.h"
 
@@ -73,26 +73,26 @@ public:
 
     // sorting specific
 
-    // grr, who had the idea to set QDir::Name to 0x0?
-    static bool isSortByName( const QDir::SortSpec& sort ) {
-	return (sort & QDir::Time) != QDir::Time &&
-	       (sort & QDir::Size) != QDir::Size;
+    // grr, who had the idea to set TQDir::Name to 0x0?
+    static bool isSortByName( const TQDir::SortSpec& sort ) {
+	return (sort & TQDir::Time) != TQDir::Time &&
+	       (sort & TQDir::Size) != TQDir::Size;
     }
 
-    static bool isSortBySize( const QDir::SortSpec& sort ) {
-	return (sort & QDir::Size) == QDir::Size;
+    static bool isSortBySize( const TQDir::SortSpec& sort ) {
+	return (sort & TQDir::Size) == TQDir::Size;
     }
 
-    static bool isSortByDate( const QDir::SortSpec& sort ) {
-	return (sort & QDir::Time) == QDir::Time;
+    static bool isSortByDate( const TQDir::SortSpec& sort ) {
+	return (sort & TQDir::Time) == TQDir::Time;
     }
 
-    static bool isSortDirsFirst( const QDir::SortSpec& sort ) {
-	return (sort & QDir::DirsFirst) == QDir::DirsFirst;
+    static bool isSortDirsFirst( const TQDir::SortSpec& sort ) {
+	return (sort & TQDir::DirsFirst) == TQDir::DirsFirst;
     }
 
-    static bool isSortCaseInsensitive( const QDir::SortSpec& sort ) {
-	return (sort & QDir::IgnoreCase) == QDir::IgnoreCase;
+    static bool isSortCaseInsensitive( const TQDir::SortSpec& sort ) {
+	return (sort & TQDir::IgnoreCase) == TQDir::IgnoreCase;
     }
 
 

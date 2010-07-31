@@ -27,8 +27,8 @@
 #include <sys/types.h>
 
 #include <stdio.h>
-#include <qptrlist.h>
-#include <qobject.h>
+#include <tqptrlist.h>
+#include <tqobject.h>
 
 class KSocket;
 class QSocketNotifier;
@@ -37,7 +37,7 @@ namespace KIO {
 
     struct KIO_EXPORT Task {
 	int cmd;
-	QByteArray data;
+	TQByteArray data;
     };
 
     /**
@@ -71,7 +71,7 @@ namespace KIO {
 	 * @see inited()
 	 */
 	void init(int fd_in, int fd_out); // Used by KDENOX
-	void connect(QObject *receiver = 0, const char *member = 0);
+	void connect(TQObject *receiver = 0, const char *member = 0);
         /// Closes the connection.
 	void close();
 	
@@ -98,7 +98,7 @@ namespace KIO {
 	 * @param cmd the command to set
 	 * @param arr the bytes to send
 	 */
-	void send(int cmd, const QByteArray &arr = QByteArray());
+	void send(int cmd, const TQByteArray &arr = TQByteArray());
 
         /** 
 	 * Sends the given command immediately.
@@ -106,7 +106,7 @@ namespace KIO {
 	 * @param data the bytes to send
 	 * @return true if successful, false otherwise
 	 */
-	bool sendnow( int _cmd, const QByteArray &data );
+	bool sendnow( int _cmd, const TQByteArray &data );
 
 	/**
 	 * Receive data.
@@ -116,7 +116,7 @@ namespace KIO {
 	 * @return >=0 indicates the received data size upon success
 	 *         -1  indicates error
 	 */
-	int read( int* _cmd, QByteArray &data );
+	int read( int* _cmd, TQByteArray &data );
 
         /**
          * Don't handle incoming data until resumed.
@@ -144,10 +144,10 @@ namespace KIO {
 	int fd_in;
 	FILE *f_out;
 	KSocket *socket;
-	QSocketNotifier *notifier;
-	QObject *receiver;
+	TQSocketNotifier *notifier;
+	TQObject *receiver;
 	const char *member;
-	QPtrList<Task> tasks;
+	TQPtrList<Task> tasks;
         bool m_suspended;
     private:
 	class ConnectionPrivate* d;

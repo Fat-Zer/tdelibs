@@ -24,9 +24,9 @@
 #include <kconfig.h>
 #include <kdialog.h>
 
-#include <qlayout.h>
+#include <tqlayout.h>
 
-KMConfigCups::KMConfigCups(QWidget *parent)
+KMConfigCups::KMConfigCups(TQWidget *parent)
 : KMConfigPage(parent,"ConfigCups")
 {
 	setPageName(i18n("CUPS Server"));
@@ -35,7 +35,7 @@ KMConfigCups::KMConfigCups(QWidget *parent)
 
 	m_widget = new KMCupsConfigWidget(this);
 
-	QVBoxLayout *lay0 = new QVBoxLayout(this, 0, KDialog::spacingHint());
+	TQVBoxLayout *lay0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	lay0->addWidget(m_widget);
 	lay0->addStretch(1);
 }

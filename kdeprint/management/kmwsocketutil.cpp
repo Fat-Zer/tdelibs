@@ -22,14 +22,14 @@
 
 #include "kmwsocketutil.h"
 
-#include <qprogressbar.h>
-#include <qlineedit.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qpushbutton.h>
+#include <tqprogressbar.h>
+#include <tqlineedit.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqpushbutton.h>
 #include <kmessagebox.h>
-#include <qlayout.h>
-#include <qregexp.h>
+#include <tqlayout.h>
+#include <tqregexp.h>
 #include <knumvalidator.h>
 
 #include <kapplication.h>
@@ -39,30 +39,30 @@
 
 #include <unistd.h>
 
-QString localRootIP();
+TQString localRootIP();
 
 //----------------------------------------------------------------------------------------
 
-SocketConfig::SocketConfig(KMWSocketUtil *util, QWidget *parent, const char *name)
-: KDialogBase(parent, name, true, QString::null, Ok|Cancel, Ok, true)
+SocketConfig::SocketConfig(KMWSocketUtil *util, TQWidget *parent, const char *name)
+: KDialogBase(parent, name, true, TQString::null, Ok|Cancel, Ok, true)
 {
-	QWidget	*dummy = new QWidget(this);
+	QWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
         KIntValidator *val = new KIntValidator( this );
-	QLabel	*masklabel = new QLabel(i18n("&Subnetwork:"),dummy);
-	QLabel	*portlabel = new QLabel(i18n("&Port:"),dummy);
-	QLabel	*toutlabel = new QLabel(i18n("&Timeout (ms):"),dummy);
-	QLineEdit	*mm = new QLineEdit(dummy);
-	mm->setText(QString::fromLatin1(".[0-255]"));
+	QLabel	*masklabel = new TQLabel(i18n("&Subnetwork:"),dummy);
+	QLabel	*portlabel = new TQLabel(i18n("&Port:"),dummy);
+	QLabel	*toutlabel = new TQLabel(i18n("&Timeout (ms):"),dummy);
+	QLineEdit	*mm = new TQLineEdit(dummy);
+	mm->setText(TQString::fromLatin1(".[0-255]"));
 	mm->setReadOnly(true);
 	mm->setFixedWidth(fontMetrics().width(mm->text())+10);
 
-	mask_ = new QLineEdit(dummy);
+	mask_ = new TQLineEdit(dummy);
 	mask_->setAlignment(Qt::AlignRight);
-	port_ = new QComboBox(true,dummy);
+	port_ = new TQComboBox(true,dummy);
         if ( port_->lineEdit() )
             port_->lineEdit()->setValidator( val );
-	tout_ = new QLineEdit(dummy);
+	tout_ = new TQLineEdit(dummy);
         tout_->setValidator( val );
 
 	masklabel->setBuddy(mask_);
@@ -74,11 +74,11 @@ SocketConfig::SocketConfig(KMWSocketUtil *util, QWidget *parent, const char *nam
 	port_->insertItem("9100");
 	port_->insertItem("9101");
 	port_->insertItem("9102");
-	port_->setEditText(QString::number(util->port_));
-	tout_->setText(QString::number(util->timeout_));
+	port_->setEditText(TQString::number(util->port_));
+	tout_->setText(TQString::number(util->timeout_));
 
-	QGridLayout	*main_ = new QGridLayout(dummy, 3, 2, 0, 10);
-	QHBoxLayout	*lay1 = new QHBoxLayout(0, 0, 5);
+	QGridLayout	*main_ = new TQGridLayout(dummy, 3, 2, 0, 10);
+	QHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 5);
 	main_->addWidget(masklabel, 0, 0);
 	main_->addWidget(portlabel, 1, 0);
 	main_->addWidget(toutlabel, 2, 0);
@@ -138,7 +138,7 @@ KMWSocketUtil::KMWSocketUtil()
 	timeout_ = 50;
 }
 
-bool KMWSocketUtil::checkPrinter(const QString& IPstr, int port, QString* hostname)
+bool KMWSocketUtil::checkPrinter(const TQString& IPstr, int port, TQString* hostname)
 {
 	KExtendedSocket	sock(IPstr, port, KExtendedSocket::inetSocket|KExtendedSocket::streamSocket);
 	bool	result(false);
@@ -156,7 +156,7 @@ bool KMWSocketUtil::checkPrinter(const QString& IPstr, int port, QString* hostna
 	return result;
 }
 
-bool KMWSocketUtil::scanNetwork(QProgressBar *bar)
+bool KMWSocketUtil::scanNetwork(TQProgressBar *bar)
 {
 	printerlist_.setAutoDelete(true);
 	printerlist_.clear();
@@ -165,7 +165,7 @@ bool KMWSocketUtil::scanNetwork(QProgressBar *bar)
 		bar->setTotalSteps(n);
 	for (int i=0; i<n; i++)
 	{
-		QString	IPstr = root_ + "." + QString::number(i);
+		QString	IPstr = root_ + "." + TQString::number(i);
 		QString	hostname;
 		if (checkPrinter(IPstr, port_, &hostname))
 		{ // we found a printer at this address, create SocketInfo entry in printer list
@@ -184,7 +184,7 @@ bool KMWSocketUtil::scanNetwork(QProgressBar *bar)
 	return true;
 }
 
-void KMWSocketUtil::configureScan(QWidget *parent)
+void KMWSocketUtil::configureScan(TQWidget *parent)
 {
 	SocketConfig	*dlg = new SocketConfig(this,parent);
 	if (dlg->exec())
@@ -198,13 +198,13 @@ void KMWSocketUtil::configureScan(QWidget *parent)
 
 //----------------------------------------------------------------------------------------
 
-QString localRootIP()
+TQString localRootIP()
 {
 	char	buf[256];
 	buf[0] = '\0';
 	if (!gethostname(buf, sizeof(buf)))
 		buf[sizeof(buf)-1] = '\0';
-	QPtrList<KAddressInfo>	infos = KExtendedSocket::lookup(buf, QString::null);
+	TQPtrList<KAddressInfo>	infos = KExtendedSocket::lookup(buf, TQString::null);
 	infos.setAutoDelete(true);
 	if (infos.count() > 0)
 	{
@@ -213,7 +213,7 @@ QString localRootIP()
 		IPstr.truncate(p);
 		return IPstr;
 	}
-	return QString::null;
+	return TQString::null;
 }
 
 #include "kmwsocketutil.moc"

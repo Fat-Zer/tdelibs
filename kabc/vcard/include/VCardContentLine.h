@@ -24,7 +24,7 @@
 #ifndef  CONTENTLINE_H
 #define  CONTENTLINE_H
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 
 #include "VCardEnum.h"
 #include "VCardEntity.h"
@@ -47,10 +47,10 @@ class KVCARD_EXPORT ContentLine : public Entity
 	ValueType	valueType()	{ parse(); return valueType_;	}
 	EntityType	entityType()	{ parse(); return entityType_;	}
 	
-	void setGroup		(const QCString & s)
+	void setGroup		(const TQCString & s)
 	{ group_ = s; assembled_ = false; }
 	
-	void setName		(const QCString & s)
+	void setName		(const TQCString & s)
 	{ name_ = s; assembled_ = false; }
 	
 	void setValue		(Value *s)
@@ -65,7 +65,7 @@ class KVCARD_EXPORT ContentLine : public Entity
 		
 		QCString		group_;
 		QCString		name_;
-		QPtrList<Param>		paramList_;
+		TQPtrList<Param>		paramList_;
 		Value			* value_;
 		
 		ParamType		paramType_;

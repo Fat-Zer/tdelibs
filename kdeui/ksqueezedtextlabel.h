@@ -19,12 +19,12 @@
 #ifndef KSQUEEZEDTEXTLABEL_H
 #define KSQUEEZEDTEXTLABEL_H
 
-#include <qlabel.h>
+#include <tqlabel.h>
 
 #include <kdelibs_export.h>
 
 /**
- * @short A replacement for QLabel that squeezes its text
+ * @short A replacement for TQLabel that squeezes its text
  *
  * A label class that squeezes its text into the label
  *
@@ -43,36 +43,36 @@
 /*
  * QLabel
  */
-class KDEUI_EXPORT KSqueezedTextLabel : public QLabel {
+class KDEUI_EXPORT KSqueezedTextLabel : public TQLabel {
   Q_OBJECT
 
 public:
   /**
    * Default constructor.
    */
-  KSqueezedTextLabel( QWidget *parent, const char *name = 0 );
-  KSqueezedTextLabel( const QString &text, QWidget *parent, const char *name = 0 );
+  KSqueezedTextLabel( TQWidget *parent, const char *name = 0 );
+  KSqueezedTextLabel( const TQString &text, TQWidget *parent, const char *name = 0 );
 
-  virtual QSize minimumSizeHint() const;
-  virtual QSize sizeHint() const;
+  virtual TQSize minimumSizeHint() const;
+  virtual TQSize sizeHint() const;
   /**
    * Overridden for internal reasons; the API remains unaffected.
    */
   virtual void setAlignment( int );
 
 public slots:
-  void setText( const QString & );
+  void setText( const TQString & );
 
 protected:
   /**
    * used when widget is resized
    */
-  void resizeEvent( QResizeEvent * );
+  void resizeEvent( TQResizeEvent * );
   /**
    * does the dirty work
    */
   void squeezeTextToLabel();
-  QString fullText;
+  TQString fullText;
 
 protected:
   virtual void virtual_hook( int id, void* data );

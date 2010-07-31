@@ -30,8 +30,8 @@
 #include "xml/dom_nodeimpl.h"
 #include "misc/shared.h"
 #include <kdemacros.h>
-#include <qdatetime.h>
-#include <qptrlist.h>
+#include <tqdatetime.h>
+#include <tqptrlist.h>
 
 namespace DOM {
 
@@ -229,7 +229,7 @@ namespace DOM {
 	void setParent(StyleBaseImpl *parent) { m_parent = parent; }
 
 	static void setParsedValue(int propId, const CSSValueImpl *parsedValue,
-				   bool important, bool nonCSSHint, QPtrList<CSSProperty> *propList);
+				   bool important, bool nonCSSHint, TQPtrList<CSSProperty> *propList);
 
 	virtual bool parseString(const DOMString &/*cssString*/, bool = false) { return false; }
 
@@ -261,7 +261,7 @@ namespace DOM {
 	void append(StyleBaseImpl *item) { m_lstChildren->append(item); }
 
     protected:
-	QPtrList<StyleBaseImpl> *m_lstChildren;
+	TQPtrList<StyleBaseImpl> *m_lstChildren;
     };
 
     KDE_NO_EXPORT int getPropertyID(const char *tagStr, int len);

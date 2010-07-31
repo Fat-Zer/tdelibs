@@ -21,8 +21,8 @@
 #ifndef KCONFIGDIALOGMANAGER_H
 #define KCONFIGDIALOGMANAGER_H
 
-#include <qobject.h>
-#include <qptrlist.h>
+#include <tqobject.h>
+#include <tqptrlist.h>
 #include "kdelibs_export.h"
 
 class KConfigSkeleton;
@@ -45,11 +45,11 @@ class QSqlPropertyMap;
  * "kcfg_" prefix. For example a widget named "kcfg_MyOption" would be
  * associated to the configuration entry "MyOption".
  *
- * KConfigDialogManager uses the QSqlPropertyMap class to determine if it can do
+ * KConfigDialogManager uses the TQSqlPropertyMap class to determine if it can do
  * anything to a widget.  Note that KConfigDialogManager doesn't  require a
  * database, it simply uses the functionality that is built into the
- * QSqlPropertyMap class.  New widgets can be added to the map using
- * QSqlPropertyMap::installDefaultMap().  Note that you can't just add any
+ * TQSqlPropertyMap class.  New widgets can be added to the map using
+ * TQSqlPropertyMap::installDefaultMap().  Note that you can't just add any
  * class.  The class must have a matching Q_PROPERTY(...) macro defined.
  *
  * For example (note that KColorButton is already added and it doesn't need to
@@ -57,25 +57,25 @@ class QSqlPropertyMap;
  *
  * kcolorbutton.h defines the following property:
  * \code
- * Q_PROPERTY( QColor color READ color WRITE setColor )
+ * Q_PROPERTY( TQColor color READ color WRITE setColor )
  * \endcode
  *
  * To add KColorButton the following code would be inserted in the main.
  *
  * \code
  * kapp->installKDEPropertyMap();
- * QSqlPropertyMap *map = QSqlPropertyMap::defaultMap();
+ * TQSqlPropertyMap *map = TQSqlPropertyMap::defaultMap();
  * map->insert("KColorButton", "color");
  * \endcode
  *
- * If you add a new widget to the QSqlPropertyMap and wish to be notified when
+ * If you add a new widget to the TQSqlPropertyMap and wish to be notified when
  * it is modified you should add its signal using addWidgetChangedSignal().
 
  * @since 3.2
  * @author Benjamin C Meyer <ben+kdelibs at meyerhome dot net>
  * @author Waldo Bastian <bastian@kde.org>
  */
-class KDECORE_EXPORT KConfigDialogManager : public QObject {
+class KDECORE_EXPORT KConfigDialogManager : public TQObject {
 
 Q_OBJECT
 
@@ -94,7 +94,7 @@ signals:
    * contains the one or more modified setting.
    * @see settingsChanged()
    */
-  void settingsChanged( QWidget *widget );
+  void settingsChanged( TQWidget *widget );
 
   /**
    * If retrieveSettings() was told to track changes then if
@@ -114,7 +114,7 @@ public:
    * @param conf Object that contains settings
    * @param name - Object name.
    */
-   KConfigDialogManager(QWidget *parent, KConfigSkeleton *conf, const char *name=0);
+   KConfigDialogManager(TQWidget *parent, KConfigSkeleton *conf, const char *name=0);
 
   /**
    * Destructor.
@@ -125,7 +125,7 @@ public:
    * Add additional widgets to manage
    * @param widget Additional widget to manage, inlcuding all its children
    */
-  void addWidget(QWidget *widget);
+  void addWidget(TQWidget *widget);
 
   /**
    * Returns whether the current state of the known widgets are
@@ -185,22 +185,22 @@ protected:
    * widget that are known.
    * @return bool - If a widget was set to something other then its default.
    */
-  bool parseChildren(const QWidget *widget, bool trackChanges);
+  bool parseChildren(const TQWidget *widget, bool trackChanges);
 
   /**
    * Set a property
    */
-  void setProperty(QWidget *w, const QVariant &v);
+  void setProperty(TQWidget *w, const TQVariant &v);
 
   /**
    * Retrieve a property
    */
-  QVariant property(QWidget *w);
+  TQVariant property(TQWidget *w);
 
   /**
    * Setup secondary widget properties
    */
-  void setupWidget(QWidget *widget, KConfigSkeletonItem *item);
+  void setupWidget(TQWidget *widget, KConfigSkeletonItem *item);
 
 protected:
   /**
@@ -211,17 +211,17 @@ protected:
   /**
    * Dialog being managed
    */
-  QWidget *m_dialog;
+  TQWidget *m_dialog;
 
   /**
    * Pointer to the property map for easy access.
    */
-  QSqlPropertyMap *propertyMap;
+  TQSqlPropertyMap *propertyMap;
 
   /**
    * Map of the classes and the signals that they emit when changed.
    */
-  QMap<QString, QCString> changedMap;
+  TQMap<TQString, TQCString> changedMap;
 
 private:
   class Private;

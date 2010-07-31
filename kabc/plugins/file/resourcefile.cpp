@@ -25,9 +25,9 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qtimer.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -50,7 +50,7 @@ ResourceFile::ResourceFile( const KConfig *config )
   : Resource( config ), mFormat( 0 ),
     mAsynchronous( false )
 {
-  QString fileName, formatName;
+  TQString fileName, formatName;
 
   if ( config ) {
     fileName = config->readPathEntry( "FileName", StdAddressBook::fileName() );
@@ -63,15 +63,15 @@ ResourceFile::ResourceFile( const KConfig *config )
   init( fileName, formatName );
 }
 
-ResourceFile::ResourceFile( const QString &fileName,
-                            const QString &formatName )
+ResourceFile::ResourceFile( const TQString &fileName,
+                            const TQString &formatName )
   : Resource( 0 ), mFormat( 0 ),
     mAsynchronous( false )
 {
   init( fileName, formatName );
 }
 
-void ResourceFile::init( const QString &fileName, const QString &formatName )
+void ResourceFile::init( const TQString &fileName, const TQString &formatName )
 {
   mFormatName = formatName;
 
@@ -83,9 +83,9 @@ void ResourceFile::init( const QString &fileName, const QString &formatName )
     mFormat = factory->format( mFormatName );
   }
 
-  connect( &mDirWatch, SIGNAL( dirty(const QString&) ), SLOT( fileChanged() ) );
-  connect( &mDirWatch, SIGNAL( created(const QString&) ), SLOT( fileChanged() ) );
-  connect( &mDirWatch, SIGNAL( deleted(const QString&) ), SLOT( fileChanged() ) );
+  connect( &mDirWatch, TQT_SIGNAL( dirty(const TQString&) ), TQT_SLOT( fileChanged() ) );
+  connect( &mDirWatch, TQT_SIGNAL( created(const TQString&) ), TQT_SLOT( fileChanged() ) );
+  connect( &mDirWatch, TQT_SIGNAL( deleted(const TQString&) ), TQT_SLOT( fileChanged() ) );
 
   setFileName( fileName );
 
@@ -143,7 +143,7 @@ void ResourceFile::releaseSaveTicket( Ticket *ticket )
 
 bool ResourceFile::doOpen()
 {
-  QFile file( mFileName );
+  TQFile file( mFileName );
 
   if ( !file.exists() ) {
     // try to create the file
@@ -153,7 +153,7 @@ bool ResourceFile::doOpen()
 
     return ok;
   } else {
-    QFileInfo fileInfo( mFileName );
+    TQFileInfo fileInfo( mFileName );
     if ( readOnly() || !fileInfo.isWritable() ) {
       if ( !file.open( IO_ReadOnly ) )
         return false;
@@ -167,22 +167,22 @@ bool ResourceFile::doOpen()
       kdDebug() << "File size is zero. Evaluating backups" << endl;
       for (int i=0; i!=20; i++)
       {
-        QFile backup( mFileName + "__" + QString::number(i) );
+        TQFile backup( mFileName + "__" + TQString::number(i) );
         kdDebug() << "Evaluating" << backup.name() << " size: " << backup.size() << endl;
         if ( backup.size() != 0 )
         {
           kdDebug() << "Restoring backup " << i << endl;
-          const QString src = mFileName + "__" + QString::number(i);
-          const QString dest = mFileName;
+          const TQString src = mFileName + "__" + TQString::number(i);
+          const TQString dest = mFileName;
 
           // remove dest
-          QFile::remove( dest );
+          TQFile::remove( dest );
 
           // copy src to dest
           if ( backup.open( IO_ReadOnly ) ) {
-            const QByteArray data = backup.readAll();
+            const TQByteArray data = backup.readAll();
 
-            QFile out( dest );
+            TQFile out( dest );
             if ( out.open( IO_WriteOnly ) ) {
               out.writeBlock( data );
               out.close();
@@ -213,7 +213,7 @@ bool ResourceFile::load()
 
   mAsynchronous = false;
 
-  QFile file( mFileName );
+  TQFile file( mFileName );
   if ( !file.open( IO_ReadOnly ) ) {
     addressBook()->error( i18n( "Unable to open file '%1'." ).arg( mFileName ) );
     return false;
@@ -245,25 +245,25 @@ bool ResourceFile::save( Ticket * )
   kdDebug(5700) << "ResourceFile::save()" << endl;
 
   // Only do the logrotate dance when the __0 file is not 0 bytes.
-  QFile file( mFileName + "__0" );
+  TQFile file( mFileName + "__0" );
   if ( file.size() != 0 ) {
-    const QString last = mFileName + "__20";
+    const TQString last = mFileName + "__20";
     kdDebug() << "deleting " << last << endl;
 
-    QFile::remove( last );
+    TQFile::remove( last );
 
     for (int i=19; i>=0; i--)
     {
-      const QString src = mFileName + "__" + QString::number(i);
-      const QString dest = mFileName + "__" + QString::number(i+1);
+      const TQString src = mFileName + "__" + TQString::number(i);
+      const TQString dest = mFileName + "__" + TQString::number(i+1);
       kdDebug() << "moving " << src << " -> " << dest << endl;
 
       // copy src to dest
-      QFile in( src );
+      TQFile in( src );
       if ( in.open( IO_ReadOnly ) ) {
-        const QByteArray data = in.readAll();
+        const TQByteArray data = in.readAll();
 
-        QFile out( dest );
+        TQFile out( dest );
         if ( out.open( IO_WriteOnly ) ) {
           out.writeBlock( data );
           out.close();
@@ -273,13 +273,13 @@ bool ResourceFile::save( Ticket * )
       }
 
       // remove src
-      QFile::remove( src );
+      TQFile::remove( src );
     }
   } else
     kdDebug() << "Not starting logrotate __0 is 0 bytes." << endl;
 
-  QString extension = "__0";
-  (void) KSaveFile::backupFile( mFileName, QString::null /*directory*/,
+  TQString extension = "__0";
+  (void) KSaveFile::backupFile( mFileName, TQString::null /*directory*/,
                                 extension );
 
   mDirWatch.stopScan();
@@ -309,14 +309,14 @@ bool ResourceFile::asyncSave( Ticket *ticket )
   bool ok = save( ticket );
 
   if ( !ok )
-    QTimer::singleShot( 0, this, SLOT( emitSavingError() ) );
+    TQTimer::singleShot( 0, this, TQT_SLOT( emitSavingError() ) );
   else
-    QTimer::singleShot( 0, this, SLOT( emitSavingFinished() ) );
+    TQTimer::singleShot( 0, this, TQT_SLOT( emitSavingFinished() ) );
 
   return ok;
 }
 
-void ResourceFile::setFileName( const QString &fileName )
+void ResourceFile::setFileName( const TQString &fileName )
 {
   mDirWatch.stopScan();
   if ( mDirWatch.contains( mFileName ) )
@@ -328,12 +328,12 @@ void ResourceFile::setFileName( const QString &fileName )
   mDirWatch.startScan();
 }
 
-QString ResourceFile::fileName() const
+TQString ResourceFile::fileName() const
 {
   return mFileName;
 }
 
-void ResourceFile::setFormat( const QString &format )
+void ResourceFile::setFormat( const TQString &format )
 {
   mFormatName = format;
   delete mFormat;
@@ -342,7 +342,7 @@ void ResourceFile::setFormat( const QString &format )
   mFormat = factory->format( mFormatName );
 }
 
-QString ResourceFile::format() const
+TQString ResourceFile::format() const
 {
   return mFormatName;
 }
@@ -365,9 +365,9 @@ void ResourceFile::fileChanged()
 
 void ResourceFile::removeAddressee( const Addressee &addr )
 {
-  QFile::remove( QFile::encodeName( locateLocal( "data", "kabc/photos/" ) + addr.uid() ) );
-  QFile::remove( QFile::encodeName( locateLocal( "data", "kabc/logos/" ) + addr.uid() ) );
-  QFile::remove( QFile::encodeName( locateLocal( "data", "kabc/sounds/" ) + addr.uid() ) );
+  TQFile::remove( TQFile::encodeName( locateLocal( "data", "kabc/photos/" ) + addr.uid() ) );
+  TQFile::remove( TQFile::encodeName( locateLocal( "data", "kabc/logos/" ) + addr.uid() ) );
+  TQFile::remove( TQFile::encodeName( locateLocal( "data", "kabc/sounds/" ) + addr.uid() ) );
 
   mAddrMap.erase( addr.uid() );
 }

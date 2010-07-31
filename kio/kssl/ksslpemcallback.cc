@@ -28,7 +28,7 @@
 
 int KSSLPemCallback(char *buf, int size, int rwflag, void *userdata) {
 #ifdef KSSL_HAVE_SSL
-	QCString pass;
+	TQCString pass;
 	Q_UNUSED(userdata);
 	Q_UNUSED(rwflag);
 

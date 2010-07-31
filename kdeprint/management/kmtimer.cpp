@@ -34,10 +34,10 @@ KMTimer* KMTimer::self()
 	return m_self;
 }
 
-KMTimer::KMTimer(QObject *parent, const char *name)
-: QTimer(parent, name), m_count(0)
+KMTimer::KMTimer(TQObject *parent, const char *name)
+: TQTimer(parent, name), m_count(0)
 {
-	connect(this, SIGNAL(timeout()), SLOT(slotTimeout()));
+	connect(this, TQT_SIGNAL(timeout()), TQT_SLOT(slotTimeout()));
 }
 
 KMTimer::~KMTimer()

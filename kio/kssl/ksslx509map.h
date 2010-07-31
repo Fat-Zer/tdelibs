@@ -21,8 +21,8 @@
 #ifndef _KSSLX509MAP_H
 #define _KSSLX509MAP_H
 
-#include <qmap.h>
-#include <qstring.h>
+#include <tqmap.h>
+#include <tqstring.h>
 
 #include <kdelibs_export.h>
 
@@ -43,7 +43,7 @@ public:
 	 *
 	 *  @param name the map to parse
 	 */
-	KSSLX509Map(const QString& name);
+	KSSLX509Map(const TQString& name);
 
 	/**
 	 *  Destroy this map
@@ -56,7 +56,7 @@ public:
 	 *  @param key the key
 	 *  @param value the value
 	 */
-	void setValue(const QString& key, const QString& value);
+	void setValue(const TQString& key, const TQString& value);
 
 	/**
 	 *  Get the value of an entry in the map
@@ -65,7 +65,7 @@ public:
 	 *
 	 *  @return the value
 	 */
-	QString getValue(const QString& key) const;
+	TQString getValue(const TQString& key) const;
 
 	/**
 	 *  Reset (clear) the internal storage.
@@ -73,14 +73,14 @@ public:
 	 *  @param name if this is not empty, it will be parsed and used as
 	 *         the new map internally
 	 */
-	void reset(const QString& name = "");
+	void reset(const TQString& name = "");
   
 private:
 	class KSSLX509MapPrivate;
 	KSSLX509MapPrivate *d;
-	QMap<QString, QString> m_pairs;
+	TQMap<TQString, TQString> m_pairs;
 
-	void parse(const QString& name);
+	void parse(const TQString& name);
 };
 
 #endif

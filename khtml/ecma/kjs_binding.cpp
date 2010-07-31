@@ -53,7 +53,7 @@ Value DOMObject::get(ExecState *exec, const Identifier &p) const
     // ### translate code into readable string ?
     // ### oh, and s/QString/i18n or I18N_NOOP (the code in kjs uses I18N_NOOP... but where is it translated ?)
     //     and where does it appear to the user ?
-    Object err = Error::create(exec, GeneralError, QString("DOM exception %1").arg(e.code).local8Bit());
+    Object err = Error::create(exec, GeneralError, TQString("DOM exception %1").arg(e.code).local8Bit());
     exec->setException( err );
     result = Undefined();
   }
@@ -72,7 +72,7 @@ void DOMObject::put(ExecState *exec, const Identifier &propertyName,
     tryPut(exec, propertyName, value, attr);
   }
   catch (DOM::DOMException e) {
-    Object err = Error::create(exec, GeneralError, QString("DOM exception %1").arg(e.code).local8Bit());
+    Object err = Error::create(exec, GeneralError, TQString("DOM exception %1").arg(e.code).local8Bit());
     exec->setException(err);
   }
   catch (...) {
@@ -120,7 +120,7 @@ Value DOMFunction::get(ExecState *exec, const Identifier &propertyName) const
     return tryGet(exec, propertyName);
   }
   catch (DOM::DOMException e) {
-    Object err = Error::create(exec, GeneralError, QString("DOM exception %1").arg(e.code).local8Bit());
+    Object err = Error::create(exec, GeneralError, TQString("DOM exception %1").arg(e.code).local8Bit());
     exec->setException(err);
     return Undefined();
   }
@@ -139,25 +139,25 @@ Value DOMFunction::call(ExecState *exec, Object &thisObj, const List &args)
   // ### Look into setting prototypes of these & the use of instanceof so the exception
   // type can be determined. See what other browsers do.
   catch (DOM::DOMException e) {
-    Object err = Error::create(exec, GeneralError, QString("DOM Exception %1").arg(e.code).local8Bit());
+    Object err = Error::create(exec, GeneralError, TQString("DOM Exception %1").arg(e.code).local8Bit());
     err.put(exec, "code", Number(e.code));
     exec->setException(err);
     return Undefined();
   }
   catch (DOM::RangeException e) {
-    Object err = Error::create(exec, GeneralError, QString("DOM Range Exception %1").arg(e.code).local8Bit());
+    Object err = Error::create(exec, GeneralError, TQString("DOM Range Exception %1").arg(e.code).local8Bit());
     err.put(exec, "code", Number(e.code));
     exec->setException(err);
     return Undefined();
   }
   catch (DOM::CSSException e) {
-    Object err = Error::create(exec, GeneralError, QString("CSS Exception %1").arg(e.code).local8Bit());
+    Object err = Error::create(exec, GeneralError, TQString("CSS Exception %1").arg(e.code).local8Bit());
     err.put(exec, "code", Number(e.code));
     exec->setException(err);
     return Undefined();
   }
   catch (DOM::EventException e) {
-    Object err = Error::create(exec, GeneralError, QString("DOM Event Exception %1").arg(e.code).local8Bit());
+    Object err = Error::create(exec, GeneralError, TQString("DOM Event Exception %1").arg(e.code).local8Bit());
     err.put(exec, "code", Number(e.code));
     exec->setException(err);
     return Undefined();
@@ -170,7 +170,7 @@ Value DOMFunction::call(ExecState *exec, Object &thisObj, const List &args)
   }
 }
 
-typedef QPtrList<ScriptInterpreter> InterpreterList;
+typedef TQPtrList<ScriptInterpreter> InterpreterList;
 static InterpreterList *interpreterList;
 
 ScriptInterpreter::ScriptInterpreter( const Object &global, khtml::ChildFrame* frame )
@@ -202,7 +202,7 @@ void ScriptInterpreter::forgetDOMObject( void* objectHandle )
 {
   if( !interpreterList ) return;
 
-  QPtrListIterator<ScriptInterpreter> it( *interpreterList );
+  TQPtrListIterator<ScriptInterpreter> it( *interpreterList );
   while ( it.current() ) {
     (*it)->deleteDOMObject( objectHandle );
     ++it;
@@ -215,7 +215,7 @@ void ScriptInterpreter::mark()
 #ifdef KJS_VERBOSE
   kdDebug(6070) << "ScriptInterpreter::mark " << this << " marking " << m_customizedDomObjects.count() << " DOM objects" << endl;
 #endif
-  QPtrDictIterator<void> it( m_customizedDomObjects );
+  TQPtrDictIterator<void> it( m_customizedDomObjects );
   for( ; it.current(); ++it )
     static_cast<DOMObject*>(it.currentKey())->mark();
 }
@@ -257,7 +257,7 @@ bool ScriptInterpreter::isWindowOpenAllowed() const
 }
 
 
-UString::UString(const QString &d)
+UString::UString(const TQString &d)
 {
   unsigned int len = d.length();
   UChar *dat = new UChar[len];
@@ -283,27 +283,27 @@ UString::UString(const DOM::DOMString &d)
 
 DOM::DOMString UString::string() const
 {
-  return DOM::DOMString((QChar*) data(), size());
+  return DOM::DOMString((TQChar*) data(), size());
 }
 
-QString UString::qstring() const
+TQString UString::qstring() const
 {
-  return QString((QChar*) data(), size());
+  return TQString((TQChar*) data(), size());
 }
 
-QConstString UString::qconststring() const
+TQConstString UString::qconststring() const
 {
-  return QConstString((QChar*) data(), size());
+  return TQConstString((TQChar*) data(), size());
 }
 
 DOM::DOMString Identifier::string() const
 {
-  return DOM::DOMString((QChar*) data(), size());
+  return DOM::DOMString((TQChar*) data(), size());
 }
 
-QString Identifier::qstring() const
+TQString Identifier::qstring() const
 {
-  return QString((QChar*) data(), size());
+  return TQString((TQChar*) data(), size());
 }
 
 DOM::Node KJS::toNode(const Value& val)
@@ -324,17 +324,17 @@ Value KJS::getString(DOM::DOMString s)
     return String(s);
 }
 
-QVariant KJS::ValueToVariant(ExecState* exec, const Value &val) {
-  QVariant res;
+TQVariant KJS::ValueToVariant(ExecState* exec, const Value &val) {
+  TQVariant res;
   switch (val.type()) {
   case BooleanType:
-    res = QVariant(val.toBoolean(exec), 0);
+    res = TQVariant(val.toBoolean(exec), 0);
     break;
   case NumberType:
-    res = QVariant(val.toNumber(exec));
+    res = TQVariant(val.toNumber(exec));
     break;
   case StringType:
-    res = QVariant(val.toString(exec).qstring());
+    res = TQVariant(val.toString(exec).qstring());
     break;
   default:
     // everything else will be 'invalid'
@@ -345,7 +345,7 @@ QVariant KJS::ValueToVariant(ExecState* exec, const Value &val) {
 
 class EmbedLiveConnect : public ObjectImp
 {
-  friend Value KJS::getLiveConnectValue(KParts::LiveConnectExtension *lc, const QString & name, const int type, const QString & value, int id);
+  friend Value KJS::getLiveConnectValue(KParts::LiveConnectExtension *lc, const TQString & name, const int type, const TQString & value, int id);
   EmbedLiveConnect(KParts::LiveConnectExtension *lc, UString n, KParts::LiveConnectExtension::Type t, int id);
 public:
   ~EmbedLiveConnect();
@@ -360,13 +360,13 @@ public:
 
 private:
   EmbedLiveConnect(const EmbedLiveConnect &);
-  QGuardedPtr<KParts::LiveConnectExtension> m_liveconnect;
+  TQGuardedPtr<KParts::LiveConnectExtension> m_liveconnect;
   UString name;
   KParts::LiveConnectExtension::Type objtype;
   unsigned long objid;
 };
 
-Value KJS::getLiveConnectValue(KParts::LiveConnectExtension *lc, const QString & name, const int type, const QString & value, int id)
+Value KJS::getLiveConnectValue(KParts::LiveConnectExtension *lc, const TQString & name, const int type, const TQString & value, int id)
 {
   KParts::LiveConnectExtension::Type t=(KParts::LiveConnectExtension::Type)type;
   switch(t) {
@@ -412,7 +412,7 @@ Value EmbedLiveConnect::get(ExecState *, const Identifier & prop) const
 {
   if (m_liveconnect) {
     KParts::LiveConnectExtension::Type rettype;
-    QString retval;
+    TQString retval;
     unsigned long retobjid;
     if (m_liveconnect->get(objid, prop.qstring(), rettype, retobjid, retval))
       return getLiveConnectValue(m_liveconnect, prop.qstring(), rettype, retval, retobjid);
@@ -436,11 +436,11 @@ KDE_NO_EXPORT
 Value EmbedLiveConnect::call(ExecState *exec, Object&, const List &args)
 {
   if (m_liveconnect) {
-    QStringList qargs;
+    TQStringList qargs;
     for (ListIterator i = args.begin(); i != args.end(); ++i)
       qargs.append((*i).toString(exec).qstring());
     KParts::LiveConnectExtension::Type rtype;
-    QString rval;
+    TQString rval;
     unsigned long robjid;
     if (m_liveconnect->call(objid, name.qstring(), qargs, rtype, robjid, rval))
       return getLiveConnectValue(m_liveconnect, name.qstring(), rtype, rval, robjid);
@@ -460,7 +460,7 @@ Value EmbedLiveConnect::toPrimitive(ExecState *exec, Type) const {
 
 KDE_NO_EXPORT
 UString EmbedLiveConnect::toString(ExecState *) const {
-  QString str;
+  TQString str;
   const char *type = objtype == KParts::LiveConnectExtension::TypeFunction ? "Function" : "Object";
   str.sprintf("[object %s ref=%d]", type, (int) objid);
   return UString(str);

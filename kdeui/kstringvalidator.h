@@ -22,13 +22,13 @@
 #ifndef __KSTRINGVALIDATOR_H__
 #define __KSTRINGVALIDATOR_H__
 
-#include <qvalidator.h>
-#include <qstringlist.h>
+#include <tqvalidator.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
 /**
- * @short A QValidator to (dis)allow certain strings
+ * @short A TQValidator to (dis)allow certain strings
  *
  * This validator allows you to accept only certain or to accept all
  * but certain strings.
@@ -57,9 +57,9 @@
  *
  * @author Marc Mutz <mutz@kde.org>
  **/
-class KDEUI_EXPORT KStringListValidator : public QValidator {
+class KDEUI_EXPORT KStringListValidator : public TQValidator {
   Q_OBJECT
-  Q_PROPERTY( QStringList stringList READ stringList WRITE setStringList )
+  Q_PROPERTY( TQStringList stringList READ stringList WRITE setStringList )
   Q_PROPERTY( bool rejecting READ isRejecting WRITE setRejecting )
   Q_PROPERTY( bool fixupEnabled READ isFixupEnabled WRITE setFixupEnabled )
 public:
@@ -73,14 +73,14 @@ public:
    * @param name Passed to lower level constructor
    *
    **/
-  KStringListValidator( const QStringList & list=QStringList(),
+  KStringListValidator( const TQStringList & list=TQStringList(),
 			bool rejecting=true, bool fixupEnabled=false,
-			QObject * parent=0, const char * name=0 )
-    : QValidator( parent, name ), mStringList( list ),
+			TQObject * parent=0, const char * name=0 )
+    : TQValidator( parent, name ), mStringList( list ),
       mRejecting( rejecting ), mFixupEnabled( fixupEnabled ) {}
 
-  virtual State validate( QString & input, int & pos ) const;
-  virtual void fixup( QString & input ) const;
+  virtual State validate( TQString & input, int & pos ) const;
+  virtual void fixup( TQString & input ) const;
 
   void setRejecting( bool rejecting ) { mRejecting = rejecting; }
   bool isRejecting() const { return mRejecting; }
@@ -88,11 +88,11 @@ public:
   void setFixupEnabled( bool fixupEnabled ) { mFixupEnabled = fixupEnabled; }
   bool isFixupEnabled() const { return mFixupEnabled; }
 
-  void setStringList( const QStringList & list ) { mStringList = list; }
-  QStringList stringList() const { return mStringList; }
+  void setStringList( const TQStringList & list ) { mStringList = list; }
+  TQStringList stringList() const { return mStringList; }
 
 protected:
-  QStringList mStringList;
+  TQStringList mStringList;
   bool        mRejecting;
   bool        mFixupEnabled;
 private:
@@ -100,7 +100,7 @@ private:
 };
 
 /**
- * @short A QValidator for mime types.
+ * @short A TQValidator for mime types.
  *
  * This validator allows you to validate mimetype names
  * (e.g. text/plain, image/jpeg). Note that the validation is only
@@ -120,8 +120,8 @@ class KDEUI_EXPORT KMimeTypeValidator : public QValidator
 {
   Q_OBJECT
 public:
-  KMimeTypeValidator( QObject* parent, const char* name=0)
-    : QValidator( parent, name ) {}
+  KMimeTypeValidator( TQObject* parent, const char* name=0)
+    : TQValidator( parent, name ) {}
 
   /**
    * Checks for well-formed mimetype. Returns
@@ -129,11 +129,11 @@ public:
    * @li Intermediate iff input ~= /^[:allowed chars:]*\/?[:allowed chars:]*$/
    * @li Invalid else
    */
-  virtual State validate( QString & input, int & pos ) const;
+  virtual State validate( TQString & input, int & pos ) const;
   /**
    * Removes all characters that are forbidden in mimetypes.
    */
-  virtual void fixup( QString & input ) const;
+  virtual void fixup( TQString & input ) const;
 private:
   class KMimeTypeValidator* d;
 };

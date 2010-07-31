@@ -12,10 +12,10 @@
 #define HELPWINDOW_H
 
 #include <kmainwindow.h>
-#include <qtextbrowser.h>
-#include <qstringlist.h>
-#include <qmap.h>
-#include <qdir.h>
+#include <tqtextbrowser.h>
+#include <tqstringlist.h>
+#include <tqmap.h>
+#include <tqdir.h>
 
 class QComboBox;
 class QPopupMenu;
@@ -24,7 +24,7 @@ class HelpWindow : public KMainWindow
 {
     Q_OBJECT
 public:
-    HelpWindow( const QString& home_,  const QString& path, QWidget* parent = 0, const char *name=0 );
+    HelpWindow( const TQString& home_,  const TQString& path, TQWidget* parent = 0, const char *name=0 );
     ~HelpWindow();
 
 private slots:
@@ -38,7 +38,7 @@ private slots:
     void newWindow();
     void print();
 
-    void pathSelected( const QString & );
+    void pathSelected( const TQString & );
     void histChosen( int );
     void bookmChosen( int );
     void addBookmark();
@@ -47,13 +47,13 @@ private:
     void readHistory();
     void readBookmarks();
     
-    QTextBrowser* browser;
-    QComboBox *pathCombo;
+    TQTextBrowser* browser;
+    TQComboBox *pathCombo;
     int backwardId, forwardId;
-    QString selectedURL;
-    QStringList history, bookmarks;
-    QMap<int, QString> mHistory, mBookmarks;
-    QPopupMenu *hist, *bookm;
+    TQString selectedURL;
+    TQStringList history, bookmarks;
+    TQMap<int, TQString> mHistory, mBookmarks;
+    TQPopupMenu *hist, *bookm;
 
 };
 

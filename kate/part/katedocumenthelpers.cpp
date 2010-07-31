@@ -31,8 +31,8 @@ KateBrowserExtension::KateBrowserExtension( KateDocument* doc )
 : KParts::BrowserExtension( doc, "katepartbrowserextension" ),
   m_doc (doc)
 {
-  connect( doc, SIGNAL( selectionChanged() ),
-           this, SLOT( slotSelectionChanged() ) );
+  connect( doc, TQT_SIGNAL( selectionChanged() ),
+           this, TQT_SLOT( slotSelectionChanged() ) );
   emit enableAction( "print", true );
 }
 

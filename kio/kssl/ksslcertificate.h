@@ -35,8 +35,8 @@
 //  There should be no reason to touch the X509 stuff directly.
 //
 
-#include <qcstring.h>
-#include <qvaluelist.h>
+#include <tqcstring.h>
+#include <tqvaluelist.h>
 
 class QString;
 class QStringList;
@@ -95,7 +95,7 @@ public:
 	 *  @param cert the certificate in base64 form
 	 *  @return the X.509 certificate, or NULL
 	 */
-	static KSSLCertificate *fromString(QCString cert);
+	static KSSLCertificate *fromString(TQCString cert);
 
 	/**
 	 *  Create an X.509 certificate from the internal representation.
@@ -121,110 +121,110 @@ public:
 	enum KSSLPurpose {      None=0, SSLServer=1, SSLClient=2,
 				SMIMESign=3, SMIMEEncrypt=4, Any=5 };
 
-        typedef QValueList<KSSLValidation> KSSLValidationList;
+        typedef TQValueList<KSSLValidation> KSSLValidationList;
 
 	/**
 	 *  Convert this certificate to a string.
 	 *  @return the certificate in base64 format
 	 */
-	QString toString();
+	TQString toString();
 
 	/**
 	 *  Get the subject of the certificate (X.509 map).
 	 *  @return the subject
 	 */
-	QString getSubject() const;
+	TQString getSubject() const;
 
 	/**
 	 *  Get the issuer of the certificate (X.509 map).
 	 *  @return the issuer
 	 */
-	QString getIssuer() const;
+	TQString getIssuer() const;
 
 	/**
 	 *  Get the date that the certificate becomes valid on.
 	 *  @return the date as a string, localised
 	 */
-	QString getNotBefore() const;
+	TQString getNotBefore() const;
 
 	/**
 	 *  Get the date that the certificate is valid until.
 	 *  @return the date as a string, localised
 	 */
-	QString getNotAfter() const;
+	TQString getNotAfter() const;
 
 	/**
 	 *  Get the date that the certificate becomes valid on.
 	 *  @return the date
 	 */
-	QDateTime getQDTNotBefore() const;
+	TQDateTime getQDTNotBefore() const;
 
 	/**
 	 *  Get the date that the certificate is valid until.
 	 *  @return the date
 	 */
-	QDateTime getQDTNotAfter() const;
+	TQDateTime getQDTNotAfter() const;
 
 	/**
 	 *  Convert the certificate to DER (ASN.1) format.
 	 *  @return the binary data of the DER encoding
 	 */
-	QByteArray toDer();
+	TQByteArray toDer();
 
 	/**
 	 *  Convert the certificate to PEM (base64) format.
 	 *  @return the binary data of the PEM encoding
 	 */
-	QByteArray toPem();
+	TQByteArray toPem();
 
 	/**
 	 *  Convert the certificate to Netscape format.
 	 *  @return the binary data of the Netscape encoding
 	 */
-	QByteArray toNetscape();
+	TQByteArray toNetscape();
 
 	/**
 	 *  Convert the certificate to OpenSSL plain text format.
 	 *  @return the OpenSSL text encoding
 	 */
-	QString toText();
+	TQString toText();
 
 	/**
 	 *  Get the serial number of the certificate.
 	 *  @return the serial number as a string
 	 */
-	QString getSerialNumber() const;
+	TQString getSerialNumber() const;
 
 	/**
 	 *  Get the key type (RSA, DSA, etc).
 	 *  @return the key type as a string
 	 */
-	QString getKeyType() const;
+	TQString getKeyType() const;
 
 	/**
 	 *  Get the public key.
 	 *  @return the public key as a hexidecimal string
 	 */
-	QString getPublicKeyText() const;
+	TQString getPublicKeyText() const;
 
 	/**
 	 *  Get the MD5 digest of the certificate.
 	 *  Result is padded with : to separate bytes - it's a text version!
 	 *  @return the MD5 digest in a hexidecimal string
 	 */
-	QString getMD5DigestText() const;
+	TQString getMD5DigestText() const;
 
 	/**
 	 *  Get the MD5 digest of the certificate.
 	 *  @return the MD5 digest in a hexidecimal string
 	 */
-	QString getMD5Digest() const;
+	TQString getMD5Digest() const;
 
 	/**
 	 *  Get the signature.
 	 *  @return the signature in text format
 	 */
-	QString getSignatureText() const;
+	TQString getSignatureText() const;
 
 	/**
 	 *  Check if this is a valid certificate.  Will use cached data.
@@ -243,7 +243,7 @@ public:
 	 *  The alternate subject name.
 	 *  @return string list with subjectAltName
 	 */
-	QStringList subjAltNames() const;
+	TQStringList subjAltNames() const;
 
 	/**
 	 *  Check if this is a valid certificate.  Will use cached data.
@@ -298,7 +298,7 @@ public:
 	 *  @param x the code to look up
 	 *  @return the message text corresponding to the validation code
 	 */
-	static QString verifyText(KSSLValidation x);
+	static TQString verifyText(KSSLValidation x);
 
 	/**
 	 *  Explicitly make a copy of this certificate.
@@ -317,7 +317,7 @@ public:
 	 *  @param cert the certificate to set to
 	 *  @return true on success
 	 */
-	bool setCert(QString& cert);
+	bool setCert(TQString& cert);
 
 	/**
 	 *  Access the X.509v3 parameters.
@@ -335,19 +335,19 @@ public:
 	/**
 	 *  FIXME: document
 	 */
-	void getEmails(QStringList& to) const;
+	void getEmails(TQStringList& to) const;
 
 	/**
 	 * KDEKey is a concatenation "Subject (MD5)", mostly needed for SMIME.
 	 * The result of getKDEKey might change and should not be used for
 	 * persistant storage.
 	 */
-	QString getKDEKey() const;
+	TQString getKDEKey() const;
 
 	/**
 	 * Aegypten semantics force us to search by MD5Digest only.
 	 */
-	static QString getMD5DigestFromKDEKey(const QString& k);
+	static TQString getMD5DigestFromKDEKey(const TQString& k);
 
 private:
 	KIO_EXPORT friend int operator!=(KSSLCertificate& x, KSSLCertificate& y);
@@ -365,8 +365,8 @@ protected:
 	KSSLValidation processError(int ec);
 };
 
-KIO_EXPORT QDataStream& operator<<(QDataStream& s, const KSSLCertificate& r);
-KIO_EXPORT QDataStream& operator>>(QDataStream& s, KSSLCertificate& r);
+KIO_EXPORT TQDataStream& operator<<(TQDataStream& s, const KSSLCertificate& r);
+KIO_EXPORT TQDataStream& operator>>(TQDataStream& s, KSSLCertificate& r);
 
 KIO_EXPORT int operator==(KSSLCertificate& x, KSSLCertificate& y);
 KIO_EXPORT inline int operator!=(KSSLCertificate& x, KSSLCertificate& y)

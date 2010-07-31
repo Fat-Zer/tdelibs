@@ -21,8 +21,8 @@
 #define KASYNCIO_H
 
 
-#include <qobject.h>
-#include <qiodevice.h>
+#include <tqobject.h>
+#include <tqiodevice.h>
 #include "kdelibs_export.h"
 
 class KAsyncIOPrivate;
@@ -30,12 +30,12 @@ class KAsyncIOPrivate;
  * Asynchronous I/O Support
  *
  * This abstract class provides basic functionality for asynchronous I/O
- * support on top of QIODevice.
+ * support on top of TQIODevice.
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short Asynchronous I/O support
  */
-class KDECORE_EXPORT KAsyncIO: public QObject, public QIODevice
+class KDECORE_EXPORT KAsyncIO: public TQObject, public QIODevice
 {
   Q_OBJECT
 protected:

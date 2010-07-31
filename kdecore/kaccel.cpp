@@ -19,12 +19,12 @@
 
 #include "kaccel.h"
 
-#include <qaccel.h>
-#include <qguardedptr.h>
-#include <qpopupmenu.h>
-#include <qregexp.h>
-#include <qstring.h>
-#include <qtimer.h>
+#include <tqaccel.h>
+#include <tqguardedptr.h>
+#include <tqpopupmenu.h>
+#include <tqregexp.h>
+#include <tqstring.h>
+#include <tqtimer.h>
 
 #include "kaccelbase.h"
 #include <kapplication.h>
@@ -107,7 +107,7 @@ KAccelEventHandler* KAccelEventHandler::g_pSelf = 0;
 bool KAccelEventHandler::g_bAccelActivated = false;
 
 KAccelEventHandler::KAccelEventHandler()
-    : QWidget( 0, "KAccelEventHandler" )
+    : TQWidget( 0, "KAccelEventHandler" )
 {
 #	ifdef Q_WS_X11
 	if ( kapp )
@@ -116,11 +116,11 @@ KAccelEventHandler::KAccelEventHandler()
 }
 
 #ifdef Q_WS_X11
-bool	qt_try_modal( QWidget *, XEvent * );
+bool	qt_try_modal( TQWidget *, XEvent * );
 
 bool KAccelEventHandler::x11Event( XEvent* pEvent )
 {
-	if( QWidget::keyboardGrabber() || !kapp->focusWidget() )
+	if( TQWidget::keyboardGrabber() || !kapp->focusWidget() )
 		return false;
 
 	if ( !qt_try_modal(kapp->focusWidget(), pEvent) )
@@ -140,7 +140,7 @@ bool KAccelEventHandler::x11Event( XEvent* pEvent )
 		if( key.modFlags() & KKey::ALT )   state |= Qt::AltButton;
 		if( key.modFlags() & KKey::WIN )   state |= Qt::MetaButton;
 
-		QKeyEvent ke( QEvent::AccelOverride, keyCodeQt, 0,  state );
+		TQKeyEvent ke( TQEvent::AccelOverride, keyCodeQt, 0,  state );
 		ke.ignore();
 
 		g_bAccelActivated = false;
@@ -163,14 +163,14 @@ bool KAccelEventHandler::x11Event( XEvent* pEvent )
 // KAccelPrivate
 //---------------------------------------------------------------------
 
-KAccelPrivate::KAccelPrivate( KAccel* pParent, QWidget* pWatch )
+KAccelPrivate::KAccelPrivate( KAccel* pParent, TQWidget* pWatch )
 : KAccelBase( KAccelBase::QT_KEYS )
 {
 	//kdDebug(125) << "KAccelPrivate::KAccelPrivate( pParent = " << pParent << " ): this = " << this << endl;
 	m_pAccel = pParent;
 	m_pWatch = pWatch;
 	m_bAutoUpdate = true;
-	connect( (QAccel*)m_pAccel, SIGNAL(activated(int)), this, SLOT(slotKeyPressed(int)) );
+	connect( (TQAccel*)m_pAccel, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotKeyPressed(int)) );
 
 #ifdef Q_WS_X11 //only makes sense if KAccelEventHandler is working
 	if( m_pWatch )
@@ -182,10 +182,10 @@ KAccelPrivate::KAccelPrivate( KAccel* pParent, QWidget* pWatch )
 void KAccelPrivate::setEnabled( bool bEnabled )
 {
 	m_bEnabled = bEnabled;
-	((QAccel*)m_pAccel)->setEnabled( bEnabled );
+	((TQAccel*)m_pAccel)->setEnabled( bEnabled );
 }
 
-bool KAccelPrivate::setEnabled( const QString& sAction, bool bEnable )
+bool KAccelPrivate::setEnabled( const TQString& sAction, bool bEnable )
 {
 	kdDebug(125) << "KAccelPrivate::setEnabled( \"" << sAction << "\", " << bEnable << " ): this = " << this << endl;
 	KAccelAction* pAction = actionPtr( sAction );
@@ -196,25 +196,25 @@ bool KAccelPrivate::setEnabled( const QString& sAction, bool bEnable )
 
 	pAction->setEnabled( bEnable );
 
-	QMap<int, KAccelAction*>::const_iterator it = m_mapIDToAction.begin();
+	TQMap<int, KAccelAction*>::const_iterator it = m_mapIDToAction.begin();
 	for( ; it != m_mapIDToAction.end(); ++it ) {
 		if( *it == pAction )
-			((QAccel*)m_pAccel)->setItemEnabled( it.key(), bEnable );
+			((TQAccel*)m_pAccel)->setItemEnabled( it.key(), bEnable );
 	}
 	return true;
 }
 
-bool KAccelPrivate::removeAction( const QString& sAction )
+bool KAccelPrivate::removeAction( const TQString& sAction )
 {
 	// FIXME: getID() doesn't contains any useful
 	//  information!  Use mapIDToAction. --ellis, 2/May/2002
-	//  Or maybe KAccelBase::remove() takes care of QAccel indirectly...
+	//  Or maybe KAccelBase::remove() takes care of TQAccel indirectly...
 	KAccelAction* pAction = actions().actionPtr( sAction );
 	if( pAction ) {
 		int nID = pAction->getID();
 		//bool b = actions().removeAction( sAction );
 		bool b = KAccelBase::remove( sAction );
-		((QAccel*)m_pAccel)->removeItem( nID );
+		((TQAccel*)m_pAccel)->removeItem( nID );
 		return b;
 	} else
 		return false;
@@ -232,21 +232,21 @@ bool KAccelPrivate::emitSignal( KAccelBase::Signal signal )
 bool KAccelPrivate::connectKey( KAccelAction& action, const KKeyServer::Key& key )
 {
 	uint keyQt = key.keyCodeQt();
-	int nID = ((QAccel*)m_pAccel)->insertItem( keyQt );
+	int nID = ((TQAccel*)m_pAccel)->insertItem( keyQt );
 	m_mapIDToAction[nID] = &action;
 	m_mapIDToKey[nID] = keyQt;
 
 	if( action.objSlotPtr() && action.methodSlotPtr() ) {
 #ifdef Q_WS_WIN /** @todo TEMP: new implementation (commit #424926) didn't work */
-		((QAccel*)m_pAccel)->connectItem( nID, action.objSlotPtr(), action.methodSlotPtr() );
+		((TQAccel*)m_pAccel)->connectItem( nID, action.objSlotPtr(), action.methodSlotPtr() );
 #else
-		((QAccel*)m_pAccel)->connectItem( nID, this, SLOT(slotKeyPressed(int)));
+		((TQAccel*)m_pAccel)->connectItem( nID, this, TQT_SLOT(slotKeyPressed(int)));
 #endif
 		if( !action.isEnabled() )
-			((QAccel*)m_pAccel)->setItemEnabled( nID, false );
+			((TQAccel*)m_pAccel)->setItemEnabled( nID, false );
 	}
 
-	kdDebug(125) << "KAccelPrivate::connectKey( \"" << action.name() << "\", " << key.key().toStringInternal() << " = 0x" << QString::number(keyQt,16) << " ): id = " << nID << " m_pObjSlot = " << action.objSlotPtr() << endl;
+	kdDebug(125) << "KAccelPrivate::connectKey( \"" << action.name() << "\", " << key.key().toStringInternal() << " = 0x" << TQString::number(keyQt,16) << " ): id = " << nID << " m_pObjSlot = " << action.objSlotPtr() << endl;
 	//kdDebug(125) << "m_pAccel = " << m_pAccel << endl;
 	return nID != 0;
 }
@@ -254,24 +254,24 @@ bool KAccelPrivate::connectKey( KAccelAction& action, const KKeyServer::Key& key
 bool KAccelPrivate::connectKey( const KKeyServer::Key& key )
 {
 	uint keyQt = key.keyCodeQt();
-	int nID = ((QAccel*)m_pAccel)->insertItem( keyQt );
+	int nID = ((TQAccel*)m_pAccel)->insertItem( keyQt );
 
 	m_mapIDToKey[nID] = keyQt;
 
-	kdDebug(125) << "KAccelPrivate::connectKey( " << key.key().toStringInternal() << " = 0x" << QString::number(keyQt,16) << " ): id = " << nID << endl;
+	kdDebug(125) << "KAccelPrivate::connectKey( " << key.key().toStringInternal() << " = 0x" << TQString::number(keyQt,16) << " ): id = " << nID << endl;
 	return nID != 0;
 }
 
 bool KAccelPrivate::disconnectKey( KAccelAction& action, const KKeyServer::Key& key )
 {
 	int keyQt = key.keyCodeQt();
-	QMap<int, int>::iterator it = m_mapIDToKey.begin();
+	TQMap<int, int>::iterator it = m_mapIDToKey.begin();
 	for( ; it != m_mapIDToKey.end(); ++it ) {
-		//kdDebug(125) << "m_mapIDToKey[" << it.key() << "] = " << QString::number(*it,16) << " == " << QString::number(keyQt,16) << endl;
+		//kdDebug(125) << "m_mapIDToKey[" << it.key() << "] = " << TQString::number(*it,16) << " == " << TQString::number(keyQt,16) << endl;
 		if( *it == keyQt ) {
 			int nID = it.key();
-			kdDebug(125) << "KAccelPrivate::disconnectKey( \"" << action.name() << "\", 0x" << QString::number(keyQt,16) << " ) : id = " << nID << " m_pObjSlot = " << action.objSlotPtr() << endl;
-			((QAccel*)m_pAccel)->removeItem( nID );
+			kdDebug(125) << "KAccelPrivate::disconnectKey( \"" << action.name() << "\", 0x" << TQString::number(keyQt,16) << " ) : id = " << nID << " m_pObjSlot = " << action.objSlotPtr() << endl;
+			((TQAccel*)m_pAccel)->removeItem( nID );
 			m_mapIDToAction.remove( nID );
 			m_mapIDToKey.remove( it );
 			return true;
@@ -285,11 +285,11 @@ bool KAccelPrivate::disconnectKey( KAccelAction& action, const KKeyServer::Key& 
 bool KAccelPrivate::disconnectKey( const KKeyServer::Key& key )
 {
 	int keyQt = key.keyCodeQt();
-	kdDebug(125) << "KAccelPrivate::disconnectKey( 0x" << QString::number(keyQt,16) << " )" << endl;
-	QMap<int, int>::iterator it = m_mapIDToKey.begin();
+	kdDebug(125) << "KAccelPrivate::disconnectKey( 0x" << TQString::number(keyQt,16) << " )" << endl;
+	TQMap<int, int>::iterator it = m_mapIDToKey.begin();
 	for( ; it != m_mapIDToKey.end(); ++it ) {
 		if( *it == keyQt ) {
-			((QAccel*)m_pAccel)->removeItem( it.key() );
+			((TQAccel*)m_pAccel)->removeItem( it.key() );
 			m_mapIDToKey.remove( it );
 			return true;
 		}
@@ -306,7 +306,7 @@ void KAccelPrivate::slotKeyPressed( int id )
 	if( m_mapIDToKey.contains( id ) ) {
 		KKey key = m_mapIDToKey[id];
 		KKeySequence seq( key );
-		QPopupMenu* pMenu = createPopupMenu( m_pWatch, seq );
+		TQPopupMenu* pMenu = createPopupMenu( m_pWatch, seq );
 
 		// If there was only one action mapped to this key,
 		//  and that action is not a multi-key shortcut,
@@ -318,9 +318,9 @@ void KAccelPrivate::slotKeyPressed( int id )
 			int iAction = pMenu->idAt(1);
 			slotMenuActivated( iAction );
 		} else {
-			connect( pMenu, SIGNAL(activated(int)), this, SLOT(slotMenuActivated(int)) );
-			pMenu->exec( m_pWatch->mapToGlobal( QPoint( 0, 0 ) ) );
-			disconnect( pMenu, SIGNAL(activated(int)), this, SLOT(slotMenuActivated(int)) );
+			connect( pMenu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotMenuActivated(int)) );
+			pMenu->exec( m_pWatch->mapToGlobal( TQPoint( 0, 0 ) ) );
+			disconnect( pMenu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotMenuActivated(int)) );
 		}
 		delete pMenu;
 	}
@@ -336,23 +336,23 @@ void KAccelPrivate::slotMenuActivated( int iAction )
 	KAccelAction* pAction = actions().actionPtr( iAction );
 #ifdef Q_WS_WIN /** @todo TEMP: new implementation (commit #424926) didn't work */
 	if( pAction ) {
-		connect( this, SIGNAL(menuItemActivated()), pAction->objSlotPtr(), pAction->methodSlotPtr() );
+		connect( this, TQT_SIGNAL(menuItemActivated()), pAction->objSlotPtr(), pAction->methodSlotPtr() );
 		emit menuItemActivated();
-		disconnect( this, SIGNAL(menuItemActivated()), pAction->objSlotPtr(), pAction->methodSlotPtr() );
+		disconnect( this, TQT_SIGNAL(menuItemActivated()), pAction->objSlotPtr(), pAction->methodSlotPtr() );
 	}
 #else
 	emitActivatedSignal( pAction );
 #endif
 }
 
-bool KAccelPrivate::eventFilter( QObject* /*pWatched*/, QEvent* pEvent )
+bool KAccelPrivate::eventFilter( TQObject* /*pWatched*/, TQEvent* pEvent )
 {
-	if( pEvent->type() == QEvent::AccelOverride && m_bEnabled ) {
-		QKeyEvent* pKeyEvent = (QKeyEvent*) pEvent;
+	if( pEvent->type() == TQEvent::AccelOverride && m_bEnabled ) {
+		TQKeyEvent* pKeyEvent = (TQKeyEvent*) pEvent;
 		KKey key( pKeyEvent );
 		kdDebug(125) << "KAccelPrivate::eventFilter( AccelOverride ): this = " << this << ", key = " << key.toStringInternal() << endl;
 		int keyCodeQt = key.keyCodeQt();
-		QMap<int, int>::iterator it = m_mapIDToKey.begin();
+		TQMap<int, int>::iterator it = m_mapIDToKey.begin();
 		for( ; it != m_mapIDToKey.end(); ++it ) {
 			if( (*it) == keyCodeQt ) {
 				int nID = it.key();
@@ -363,11 +363,11 @@ bool KAccelPrivate::eventFilter( QObject* /*pWatched*/, QEvent* pEvent )
 					if( !pAction->isEnabled() )
 						continue;
 #ifdef Q_WS_WIN /** @todo TEMP: new implementation (commit #424926) didn't work */
-					QGuardedPtr<KAccelPrivate> me = this;
-					connect( this, SIGNAL(menuItemActivated()), pAction->objSlotPtr(), pAction->methodSlotPtr() );
+					TQGuardedPtr<KAccelPrivate> me = this;
+					connect( this, TQT_SIGNAL(menuItemActivated()), pAction->objSlotPtr(), pAction->methodSlotPtr() );
 					emit menuItemActivated();
 					if (me) {
-						disconnect( me, SIGNAL(menuItemActivated()), pAction->objSlotPtr(), pAction->methodSlotPtr() );
+						disconnect( me, TQT_SIGNAL(menuItemActivated()), pAction->objSlotPtr(), pAction->methodSlotPtr() );
 					}
 #else
 					emitActivatedSignal( pAction );
@@ -388,21 +388,21 @@ bool KAccelPrivate::eventFilter( QObject* /*pWatched*/, QEvent* pEvent )
 void KAccelPrivate::emitActivatedSignal( KAccelAction* pAction )
 {
 	if( pAction ) {
-		QGuardedPtr<KAccelPrivate> me = this;
-		QRegExp reg( "([ ]*KAccelAction.*)" );
+		TQGuardedPtr<KAccelPrivate> me = this;
+		TQRegExp reg( "([ ]*KAccelAction.*)" );
 		if( reg.search( pAction->methodSlotPtr()) >= 0 ) {
-			connect( this, SIGNAL(menuItemActivated(KAccelAction*)),
+			connect( this, TQT_SIGNAL(menuItemActivated(KAccelAction*)),
 				pAction->objSlotPtr(), pAction->methodSlotPtr() );
 			emit menuItemActivated( pAction );
 			if (me)
-				disconnect( me, SIGNAL(menuItemActivated(KAccelAction*)),
+				disconnect( me, TQT_SIGNAL(menuItemActivated(KAccelAction*)),
 					pAction->objSlotPtr(), pAction->methodSlotPtr() );
 		} else {
-			connect( this, SIGNAL(menuItemActivated()),
+			connect( this, TQT_SIGNAL(menuItemActivated()),
 				pAction->objSlotPtr(), pAction->methodSlotPtr() );
 			emit menuItemActivated();
 			if (me)
-				disconnect( me, SIGNAL(menuItemActivated()),
+				disconnect( me, TQT_SIGNAL(menuItemActivated()),
 					pAction->objSlotPtr(), pAction->methodSlotPtr() );
 
 		}
@@ -414,15 +414,15 @@ void KAccelPrivate::emitActivatedSignal( KAccelAction* pAction )
 // KAccel
 //---------------------------------------------------------------------
 
-KAccel::KAccel( QWidget* pParent, const char* psName )
-: QAccel( pParent, (psName) ? psName : "KAccel-QAccel" )
+KAccel::KAccel( TQWidget* pParent, const char* psName )
+: TQAccel( pParent, (psName) ? psName : "KAccel-TQAccel" )
 {
 	kdDebug(125) << "KAccel( pParent = " << pParent << ", psName = " << psName << " ): this = " << this << endl;
 	d = new KAccelPrivate( this, pParent );
 }
 
-KAccel::KAccel( QWidget* watch, QObject* pParent, const char* psName )
-: QAccel( watch, pParent, (psName) ? psName : "KAccel-QAccel" )
+KAccel::KAccel( TQWidget* watch, TQObject* pParent, const char* psName )
+: TQAccel( watch, pParent, (psName) ? psName : "KAccel-TQAccel" )
 {
 	kdDebug(125) << "KAccel( watch = " << watch << ", pParent = " << pParent << ", psName = " << psName << " ): this = " << this << endl;
 	if( !watch )
@@ -442,9 +442,9 @@ bool KAccel::isEnabled()                     { return d->isEnabled(); }
 void KAccel::setEnabled( bool bEnabled )     { d->setEnabled( bEnabled ); }
 bool KAccel::setAutoUpdate( bool bAuto )     { return d->setAutoUpdate( bAuto ); }
 
-KAccelAction* KAccel::insert( const QString& sAction, const QString& sLabel, const QString& sWhatsThis,
+KAccelAction* KAccel::insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
 		const KShortcut& cutDef,
-		const QObject* pObjSlot, const char* psMethodSlot,
+		const TQObject* pObjSlot, const char* psMethodSlot,
 		bool bConfigurable, bool bEnabled )
 {
 	return d->insert( sAction, sLabel, sWhatsThis,
@@ -453,9 +453,9 @@ KAccelAction* KAccel::insert( const QString& sAction, const QString& sLabel, con
 		bConfigurable, bEnabled );
 }
 
-KAccelAction* KAccel::insert( const QString& sAction, const QString& sLabel, const QString& sWhatsThis,
+KAccelAction* KAccel::insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
 		const KShortcut& cutDef3, const KShortcut& cutDef4,
-		const QObject* pObjSlot, const char* psMethodSlot,
+		const TQObject* pObjSlot, const char* psMethodSlot,
 		bool bConfigurable, bool bEnabled )
 {
 	return d->insert( sAction, sLabel, sWhatsThis,
@@ -465,20 +465,20 @@ KAccelAction* KAccel::insert( const QString& sAction, const QString& sLabel, con
 }
 
 KAccelAction* KAccel::insert( const char* psAction, const KShortcut& cutDef,
-		const QObject* pObjSlot, const char* psMethodSlot,
+		const TQObject* pObjSlot, const char* psMethodSlot,
 		bool bConfigurable, bool bEnabled )
 {
-	return d->insert( psAction, i18n(psAction), QString::null,
+	return d->insert( psAction, i18n(psAction), TQString::null,
 		cutDef, cutDef,
 		pObjSlot, psMethodSlot,
 		bConfigurable, bEnabled );
 }
 
 KAccelAction* KAccel::insert( KStdAccel::StdAccel id,
-		const QObject* pObjSlot, const char* psMethodSlot,
+		const TQObject* pObjSlot, const char* psMethodSlot,
 		bool bConfigurable, bool bEnabled )
 {
-	QString sAction = KStdAccel::name( id );
+	TQString sAction = KStdAccel::name( id );
 	if( sAction.isEmpty() )
 		return 0;
 
@@ -492,24 +492,24 @@ KAccelAction* KAccel::insert( KStdAccel::StdAccel id,
 	return pAction;
 }
 
-bool KAccel::remove( const QString& sAction )
+bool KAccel::remove( const TQString& sAction )
 	{ return d->removeAction( sAction ); }
 bool KAccel::updateConnections()
 	{ return d->updateConnections(); }
 
-const KShortcut& KAccel::shortcut( const QString& sAction ) const
+const KShortcut& KAccel::shortcut( const TQString& sAction ) const
 {
 	const KAccelAction* pAction = actions().actionPtr( sAction );
 	return (pAction) ? pAction->shortcut() : KShortcut::null();
 }
 
-bool KAccel::setSlot( const QString& sAction, const QObject* pObjSlot, const char* psMethodSlot )
+bool KAccel::setSlot( const TQString& sAction, const TQObject* pObjSlot, const char* psMethodSlot )
 	{ return d->setActionSlot( sAction, pObjSlot, psMethodSlot ); }
 
-bool KAccel::setEnabled( const QString& sAction, bool bEnable )
+bool KAccel::setEnabled( const TQString& sAction, bool bEnable )
 	{ return d->setEnabled( sAction, bEnable ); }
 
-bool KAccel::setShortcut( const QString& sAction, const KShortcut& cut )
+bool KAccel::setShortcut( const TQString& sAction, const KShortcut& cut )
 {
 	kdDebug(125) << "KAccel::setShortcut( \"" << sAction << "\", " << cut.toStringInternal() << " )" << endl;
 	KAccelAction* pAction = actions().actionPtr( sAction );
@@ -521,10 +521,10 @@ bool KAccel::setShortcut( const QString& sAction, const KShortcut& cut )
 	return false;
 }
 
-const QString& KAccel::configGroup() const
+const TQString& KAccel::configGroup() const
 	{ return d->configGroup(); }
 // for kdegames/ksirtet
-void KAccel::setConfigGroup( const QString& s )
+void KAccel::setConfigGroup( const TQString& s )
 	{ d->setConfigGroup( s ); }
 
 bool KAccel::readSettings( KConfigBase* pConfig )
@@ -547,25 +547,25 @@ void KAccel::emitKeycodeChanged()
 // Obsolete methods -- for backward compatibility
 //------------------------------------------------------------
 
-bool KAccel::insertItem( const QString& sLabel, const QString& sAction,
+bool KAccel::insertItem( const TQString& sLabel, const TQString& sAction,
 		const char* cutsDef,
-		int /*nIDMenu*/, QPopupMenu *, bool bConfigurable )
+		int /*nIDMenu*/, TQPopupMenu *, bool bConfigurable )
 {
 	KShortcut cut( cutsDef );
-	bool b = d->insert( sAction, sLabel, QString::null,
+	bool b = d->insert( sAction, sLabel, TQString::null,
 		cut, cut,
 		0, 0,
 		bConfigurable ) != 0;
 	return b;
 }
 
-bool KAccel::insertItem( const QString& sLabel, const QString& sAction,
+bool KAccel::insertItem( const TQString& sLabel, const TQString& sAction,
 		int key,
-		int /*nIDMenu*/, QPopupMenu*, bool bConfigurable )
+		int /*nIDMenu*/, TQPopupMenu*, bool bConfigurable )
 {
 	KShortcut cut;
-	cut.init( QKeySequence(key) );
-	KAccelAction* pAction = d->insert( sAction, sLabel, QString::null,
+	cut.init( TQKeySequence(key) );
+	KAccelAction* pAction = d->insert( sAction, sLabel, TQString::null,
 		cut, cut,
 		0, 0,
 		bConfigurable );
@@ -573,9 +573,9 @@ bool KAccel::insertItem( const QString& sLabel, const QString& sAction,
 }
 
 // Used in kdeutils/kjots
-bool KAccel::insertStdItem( KStdAccel::StdAccel id, const QString& sLabel )
+bool KAccel::insertStdItem( KStdAccel::StdAccel id, const TQString& sLabel )
 {
-	KAccelAction* pAction = d->insert( KStdAccel::name( id ), sLabel, QString::null,
+	KAccelAction* pAction = d->insert( KStdAccel::name( id ), sLabel, TQString::null,
 		KStdAccel::shortcutDefault3( id ), KStdAccel::shortcutDefault4( id ),
 		0, 0 );
 	if( pAction )
@@ -584,7 +584,7 @@ bool KAccel::insertStdItem( KStdAccel::StdAccel id, const QString& sLabel )
 	return true;
 }
 
-bool KAccel::connectItem( const QString& sAction, const QObject* pObjSlot, const char* psMethodSlot, bool bActivate )
+bool KAccel::connectItem( const TQString& sAction, const TQObject* pObjSlot, const char* psMethodSlot, bool bActivate )
 {
 	kdDebug(125) << "KAccel::connectItem( " << sAction << ", " << pObjSlot << ", " << psMethodSlot << " )" << endl;
 	if( bActivate == false )
@@ -595,22 +595,22 @@ bool KAccel::connectItem( const QString& sAction, const QObject* pObjSlot, const
 	return b;
 }
 
-bool KAccel::removeItem( const QString& sAction )
+bool KAccel::removeItem( const TQString& sAction )
 	{ return d->removeAction( sAction ); }
 
-bool KAccel::setItemEnabled( const QString& sAction, bool bEnable )
+bool KAccel::setItemEnabled( const TQString& sAction, bool bEnable )
 	{ return setEnabled( sAction, bEnable ); }
 
-void KAccel::changeMenuAccel( QPopupMenu *menu, int id, const QString& action )
+void KAccel::changeMenuAccel( TQPopupMenu *menu, int id, const TQString& action )
 {
 	KAccelAction* pAction = actions().actionPtr( action );
-	QString s = menu->text( id );
+	TQString s = menu->text( id );
 	if( !pAction || s.isEmpty() )
 		return;
 
 	int i = s.find( '\t' );
 
-	QString k = pAction->shortcut().seq(0).toString();
+	TQString k = pAction->shortcut().seq(0).toString();
 	if( k.isEmpty() )
 		return;
 
@@ -621,24 +621,24 @@ void KAccel::changeMenuAccel( QPopupMenu *menu, int id, const QString& action )
 		s += k;
 	}
 
-	QPixmap *pp = menu->pixmap(id);
+	TQPixmap *pp = menu->pixmap(id);
 	if( pp && !pp->isNull() )
 		menu->changeItem( *pp, s, id );
 	else
 		menu->changeItem( s, id );
 }
 
-void KAccel::changeMenuAccel( QPopupMenu *menu, int id, KStdAccel::StdAccel accel )
+void KAccel::changeMenuAccel( TQPopupMenu *menu, int id, KStdAccel::StdAccel accel )
 {
 	changeMenuAccel( menu, id, KStdAccel::name( accel ) );
 }
 
-int KAccel::stringToKey( const QString& sKey )
+int KAccel::stringToKey( const TQString& sKey )
 {
 	return KKey( sKey ).keyCodeQt();
 }
 
-int KAccel::currentKey( const QString& sAction ) const
+int KAccel::currentKey( const TQString& sAction ) const
 {
 	KAccelAction* pAction = d->actionPtr( sAction );
 	if( pAction )
@@ -646,13 +646,13 @@ int KAccel::currentKey( const QString& sAction ) const
 	return 0;
 }
 
-QString KAccel::findKey( int key ) const
+TQString KAccel::findKey( int key ) const
 {
 	KAccelAction* pAction = d->actionPtr( KKey(key) );
 	if( pAction )
 		return pAction->name();
 	else
-		return QString::null;
+		return TQString::null;
 }
 #endif // !KDE_NO_COMPAT
 

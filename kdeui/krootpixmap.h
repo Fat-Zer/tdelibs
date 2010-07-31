@@ -11,8 +11,8 @@
 #ifndef __KRootPixmap_h_Included__
 #define __KRootPixmap_h_Included__
 
-#include <qobject.h>
-#include <qcolor.h>
+#include <tqobject.h>
+#include <tqcolor.h>
 #include <kdelibs_export.h>
 
 #ifndef Q_WS_QWS //FIXME
@@ -35,7 +35,7 @@ class KRootPixmapData;
  * are handled automatically.
  *
  * Instead of using the default behavior, you can ask KRootPixmap
- * to emit a backgroundUpdated(const QPixmap &) signal whenever
+ * to emit a backgroundUpdated(const TQPixmap &) signal whenever
  * the background needs updating by using setCustomPainting(bool).
  * Alternatively by reimplementing updateBackground(KSharedPixmap*)
  * you can take complete control of the behavior.
@@ -57,13 +57,13 @@ public:
      * transparent.
      * @param name The internal name of the pixmap
      */
-    KRootPixmap( QWidget *target, const char *name=0 );
+    KRootPixmap( TQWidget *target, const char *name=0 );
 
     /**
-     * Constructs a KRootPixmap where the parent QObject and target QWidget are
+     * Constructs a KRootPixmap where the parent TQObject and target TQWidget are
      * different.
      */
-    KRootPixmap( QWidget *target, QObject *parent, const char *name=0 );
+    KRootPixmap( TQWidget *target, TQObject *parent, const char *name=0 );
 
     /**
      * Destructs the object.
@@ -103,7 +103,7 @@ public:
     /** @since 3.2
      * @return the fade color.
      */
-    const QColor &color() const { return m_FadeColor; }
+    const TQColor &color() const { return m_FadeColor; }
 
     /** @since 3.2
      * @return the color opacity.
@@ -131,7 +131,7 @@ public slots:
      * will use the fade color unchanged.
      * @param color The color to fade to.
      */
-    void setFadeEffect(double opacity, const QColor &color);
+    void setFadeEffect(double opacity, const TQColor &color);
 
     /**
      * Repaints the widget background. Normally, you shouldn't need this
@@ -165,7 +165,7 @@ public slots:
     /**
      * Returns the name of the shared pixmap (only needed for low level access)
      */
-    static QString pixmapName(int desk);
+    static TQString pixmapName(int desk);
 signals:
     /**
      * Emitted when the background needs updating and custom painting
@@ -173,19 +173,19 @@ signals:
      *
      * @param pm A pixmap containing the new background.
      */
-    void backgroundUpdated( const QPixmap &pm );
+    void backgroundUpdated( const TQPixmap &pm );
 
 protected:
     /**
      * Reimplemented to filter the events from the target widget and
      * track its movements.
      */
-    virtual bool eventFilter(QObject *, QEvent *);
+    virtual bool eventFilter(TQObject *, TQEvent *);
 
     /**
      * Called when the pixmap has been updated. The default implementation
      * applies the fade effect, then sets the target's background, or emits
-     * backgroundUpdated(const QPixmap &) depending on the painting mode.
+     * backgroundUpdated(const TQPixmap &) depending on the painting mode.
      */
     virtual void updateBackground( KSharedPixmap * );
 
@@ -200,11 +200,11 @@ private:
     int m_Desk;
 
     double m_Fade;
-    QColor m_FadeColor;
+    TQColor m_FadeColor;
 
-    QRect m_Rect;
-    QWidget *m_pWidget;
-    QTimer *m_pTimer;
+    TQRect m_Rect;
+    TQWidget *m_pWidget;
+    TQTimer *m_pTimer;
     KSharedPixmap *m_pPixmap;
     KRootPixmapData *d;
 

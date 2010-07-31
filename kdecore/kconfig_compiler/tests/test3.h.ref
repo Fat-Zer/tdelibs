@@ -20,7 +20,7 @@ class Test3 : public KConfigSkeleton
     */
     void setAutoSave( bool v )
     {
-      if (!isImmutable( QString::fromLatin1( "AutoSave" ) ))
+      if (!isImmutable( TQString::fromLatin1( "AutoSave" ) ))
         mAutoSave = v;
     }
 
@@ -45,7 +45,7 @@ class Test3 : public KConfigSkeleton
     */
     void setBlubb( int v )
     {
-      if (!isImmutable( QString::fromLatin1( "Blubb" ) ))
+      if (!isImmutable( TQString::fromLatin1( "Blubb" ) ))
         mBlubb = v;
     }
 
@@ -68,16 +68,16 @@ class Test3 : public KConfigSkeleton
     /**
       Set BlahBlah
     */
-    void setBlahBlah( const QString & v )
+    void setBlahBlah( const TQString & v )
     {
-      if (!isImmutable( QString::fromLatin1( "BlahBlah" ) ))
+      if (!isImmutable( TQString::fromLatin1( "BlahBlah" ) ))
         mBlahBlah = v;
     }
 
     /**
       Get BlahBlah
     */
-    QString blahBlah() const
+    TQString blahBlah() const
     {
       return mBlahBlah;
     }
@@ -93,16 +93,16 @@ class Test3 : public KConfigSkeleton
     /**
       Set MyPassword
     */
-    void setMyPassword( const QString & v )
+    void setMyPassword( const TQString & v )
     {
-      if (!isImmutable( QString::fromLatin1( "MyPassword" ) ))
+      if (!isImmutable( TQString::fromLatin1( "MyPassword" ) ))
         mMyPassword = v;
     }
 
     /**
       Get MyPassword
     */
-    QString myPassword() const
+    TQString myPassword() const
     {
       return mMyPassword;
     }
@@ -122,8 +122,8 @@ class Test3 : public KConfigSkeleton
 
     // Blah
     int mBlubb;
-    QString mBlahBlah;
-    QString mMyPassword;
+    TQString mBlahBlah;
+    TQString mMyPassword;
 
   private:
     ItemBool *mAutoSaveItem;

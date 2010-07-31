@@ -25,7 +25,7 @@
 class KMExtUiManager : public KMUiManager
 {
 public:
-	KMExtUiManager(QObject *parent, const char *name, const QStringList & /*args*/);
+	KMExtUiManager(TQObject *parent, const char *name, const TQStringList & /*args*/);
 	~KMExtUiManager();
 
 	int pluginPageCap();

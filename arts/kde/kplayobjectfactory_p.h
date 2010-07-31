@@ -20,7 +20,7 @@
 #ifndef KPLAYOBJECTFACTORY_P_H
 #define KPLAYOBJECTFACTORY_P_H
 
-#include <qobject.h>
+#include <tqobject.h>
 #include "kplayobjectfactory.h"
 
 namespace KDE

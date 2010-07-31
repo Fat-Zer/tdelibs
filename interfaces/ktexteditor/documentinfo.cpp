@@ -44,7 +44,7 @@ DocumentInfoInterface::DocumentInfoInterface()
   myDocumentInfoInterfaceNumber = globalDocumentInfoInterfaceNumber++;
 
   d = new PrivateDocumentInfoInterface();
-  QString name = "DocumentInterface#" + QString::number(myDocumentInfoInterfaceNumber);
+  TQString name = "DocumentInterface#" + TQString::number(myDocumentInfoInterfaceNumber);
   d->interface = new DocumentInfoDCOPInterface(this, name.latin1());
 }
 
@@ -59,7 +59,7 @@ unsigned int DocumentInfoInterface::documentInfoInterfaceNumber () const
   return myDocumentInfoInterfaceNumber;
 }
 
-void DocumentInfoInterface::setDocumentInfoInterfaceDCOPSuffix (const QCString &suffix)
+void DocumentInfoInterface::setDocumentInfoInterfaceDCOPSuffix (const TQCString &suffix)
 {
   d->interface->setObjId ("DocumentInfoInterface#"+suffix);
 }

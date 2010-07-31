@@ -19,7 +19,7 @@
 #include "kateattribute.h"
 
 KateAttribute::KateAttribute()
-  : m_weight(QFont::Normal)
+  : m_weight(TQFont::Normal)
   , m_italic(false)
   , m_underline(false)
   , m_overline(false)
@@ -73,9 +73,9 @@ KateAttribute& KateAttribute::operator+=(const KateAttribute& a)
   return *this;
 }
 
-QFont KateAttribute::font(const QFont& ref)
+TQFont KateAttribute::font(const TQFont& ref)
 {
-  QFont ret = ref;
+  TQFont ret = ref;
 
   if (itemSet(Weight))
     ret.setWeight(weight());
@@ -105,7 +105,7 @@ void KateAttribute::setWeight(int weight)
 
 void KateAttribute::setBold(bool enable)
 {
-  setWeight(enable ? QFont::Bold : QFont::Normal);
+  setWeight(enable ? TQFont::Bold : TQFont::Normal);
 }
 
 void KateAttribute::setItalic(bool enable)
@@ -156,7 +156,7 @@ void KateAttribute::setStrikeOut(bool enable)
   }
 }
 
-void KateAttribute::setOutline(const QColor& color)
+void KateAttribute::setOutline(const TQColor& color)
 {
   if (!(m_itemsSet & Outline) || m_outline != color)
   {
@@ -168,7 +168,7 @@ void KateAttribute::setOutline(const QColor& color)
   }
 }
 
-void KateAttribute::setTextColor(const QColor& color)
+void KateAttribute::setTextColor(const TQColor& color)
 {
   if (!(m_itemsSet & TextColor) || m_textColor != color)
   {
@@ -180,7 +180,7 @@ void KateAttribute::setTextColor(const QColor& color)
   }
 }
 
-void KateAttribute::setSelectedTextColor(const QColor& color)
+void KateAttribute::setSelectedTextColor(const TQColor& color)
 {
   if (!(m_itemsSet & SelectedTextColor) || m_selectedTextColor != color)
   {
@@ -192,7 +192,7 @@ void KateAttribute::setSelectedTextColor(const QColor& color)
   }
 }
 
-void KateAttribute::setBGColor(const QColor& color)
+void KateAttribute::setBGColor(const TQColor& color)
 {
   if (!(m_itemsSet & BGColor) || m_bgColor != color)
   {
@@ -204,7 +204,7 @@ void KateAttribute::setBGColor(const QColor& color)
   }
 }
 
-void KateAttribute::setSelectedBGColor(const QColor& color)
+void KateAttribute::setSelectedBGColor(const TQColor& color)
 {
   if (!(m_itemsSet & SelectedBGColor) || m_selectedBGColor != color)
   {

@@ -1,7 +1,7 @@
 #ifndef _KCOMBOBOXTEST_H
 #define _KCOMBOBOXTEST_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class QTimer;
 class QComboBox;
@@ -14,7 +14,7 @@ class KComboBoxTest : public QWidget
   Q_OBJECT
     
 public:
-  KComboBoxTest ( QWidget *parent=0, const char *name=0 );
+  KComboBoxTest ( TQWidget *parent=0, const char *name=0 );
   ~KComboBoxTest();
 
 private slots:
@@ -22,12 +22,12 @@ private slots:
   void slotTimeout();
   void slotDisable();
   void slotReturnPressed();
-  void slotReturnPressed(const QString&);
+  void slotReturnPressed(const TQString&);
   void slotActivated( int );
-  void slotActivated( const QString& );
+  void slotActivated( const TQString& );
    
 protected:
-  QComboBox* m_qc;
+  TQComboBox* m_qc;
   
   KComboBox* m_ro;
   KComboBox* m_rw;
@@ -35,10 +35,10 @@ protected:
   KComboBox* m_konqc;
 
 
-  QPushButton* m_btnExit;
-  QPushButton* m_btnEnable;
+  TQPushButton* m_btnExit;
+  TQPushButton* m_btnEnable;
 
-  QTimer* m_timer;
+  TQTimer* m_timer;
 };
 
 #endif

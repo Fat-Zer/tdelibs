@@ -5,10 +5,10 @@
 
 #include <kapplication.h>
 #include <kmainwindow.h>
-#include <qwidget.h>
-#include <qcheckbox.h>
-#include <qradiobutton.h>
-#include <qbuttongroup.h>
+#include <tqwidget.h>
+#include <tqcheckbox.h>
+#include <tqradiobutton.h>
+#include <tqbuttongroup.h>
 #include <knuminput.h>
 
 class KRuler;
@@ -23,7 +23,7 @@ class MouseWidget : public QFrame
 {
 Q_OBJECT
 public:
-MouseWidget( QWidget *parent=0, const char *name=0, WFlags f=0 );
+MouseWidget( TQWidget *parent=0, const char *name=0, WFlags f=0 );
 
 signals:
   void newXPos(int);
@@ -32,10 +32,10 @@ signals:
   void newHeight(int);
 
 protected:
-  virtual void mousePressEvent   ( QMouseEvent * );
-  virtual void mouseReleaseEvent ( QMouseEvent * );
-  virtual void mouseMoveEvent    ( QMouseEvent * );
-  virtual void resizeEvent       ( QResizeEvent * );
+  virtual void mousePressEvent   ( TQMouseEvent * );
+  virtual void mouseReleaseEvent ( TQMouseEvent * );
+  virtual void mouseMoveEvent    ( TQMouseEvent * );
+  virtual void resizeEvent       ( TQResizeEvent * );
 private:
   bool mouseButtonDown;
 
@@ -74,17 +74,17 @@ private slots:
 private:
 
   KRuler *hruler, *vruler;
-  QGridLayout *layout;
-  QFrame *miniwidget, *bigwidget;
-  QFrame *mainframe;
+  TQGridLayout *layout;
+  TQFrame *miniwidget, *bigwidget;
+  TQFrame *mainframe;
 
-  QLabel *mouse_message;
-  QGroupBox *showMarks, *lineEdit, *vertrot;
-  QCheckBox *showTM, *showLM, *showMM, *showBM, *showEM, *showPT, *fixLen;
+  TQLabel *mouse_message;
+  TQGroupBox *showMarks, *lineEdit, *vertrot;
+  TQCheckBox *showTM, *showLM, *showMM, *showBM, *showEM, *showPT, *fixLen;
   KIntNumInput *beginMark, *endMark, *lengthInput;
   KDoubleNumInput *transX, *transY, *rotV;
-  QButtonGroup *metricstyle;
-  QRadioButton *pixelmetric, *inchmetric, *mmmetric, *cmmetric, *mmetric;
+  TQButtonGroup *metricstyle;
+  TQRadioButton *pixelmetric, *inchmetric, *mmmetric, *cmmetric, *mmetric;
 
 };
 #endif

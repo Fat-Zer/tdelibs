@@ -20,8 +20,8 @@
 #ifndef KFINDTEST_H
 #define KFINDTEST_H
 
-#include <qobject.h>
-#include <qstringlist.h>
+#include <tqobject.h>
+#include <tqstringlist.h>
 
 class KFind;
 
@@ -30,30 +30,30 @@ class KFindTest : public QObject
 	Q_OBJECT
 
 	public:
-		KFindTest(const QStringList &text) :
-		  QObject(0),
+		KFindTest(const TQStringList &text) :
+		  TQObject(0),
 		  m_find(0),
 		  m_text(text),
 		  m_line(0)
 		{}
 
-		void find(const QString &pattern, long options = 0);
-		void findNext(const QString &pattern = QString::null);
+		void find(const TQString &pattern, long options = 0);
+		void findNext(const TQString &pattern = TQString::null);
 
-		void changeText(uint line, const QString &text);
+		void changeText(uint line, const TQString &text);
 
-		const QStringList &hits() const { return m_hits; }
+		const TQStringList &hits() const { return m_hits; }
 		void clearHits() { m_hits.clear(); }
 
 	public slots:
-		void slotHighlight(const QString &text, int index, int matchedLength);
+		void slotHighlight(const TQString &text, int index, int matchedLength);
 		void slotHighlight(int id, int index, int matchedLengthlength);
 
 	private:
 		KFind                 *m_find;
-		QStringList            m_text;
+		TQStringList            m_text;
 		uint                   m_line;
-		QStringList            m_hits;
+		TQStringList            m_hits;
 };
 
 #endif

@@ -1,5 +1,5 @@
-#include <qtextstream.h>
-#include <qtimer.h>
+#include <tqtextstream.h>
+#include <tqtimer.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -10,7 +10,7 @@
 #include <dcopclient.h>
 #include <kwallet.h>
 
-static QTextStream _out( stdout, IO_WriteOnly );
+static TQTextStream _out( stdout, IO_WriteOnly );
 
 void openWallet()
 {

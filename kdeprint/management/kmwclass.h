@@ -28,10 +28,10 @@ class KMWClass : public KMWizardPage
 {
 	Q_OBJECT
 public:
-	KMWClass(QWidget *parent = 0, const char *name = 0);
+	KMWClass(TQWidget *parent = 0, const char *name = 0);
 	~KMWClass();
 
-	bool isValid(QString&);
+	bool isValid(TQString&);
 	void initPrinter(KMPrinter*);
 	void updatePrinter(KMPrinter*);
 

@@ -20,9 +20,9 @@
 #ifndef KMDBCREATOR_H
 #define KMDBCREATOR_H
 
-#include <qobject.h>
-#include <qstring.h>
-#include <qdatetime.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqdatetime.h>
 #include <kprocess.h>
 
 class QWidget;
@@ -32,11 +32,11 @@ class KMDBCreator : public QObject
 {
 	Q_OBJECT
 public:
-	KMDBCreator(QObject *parent = 0, const char *name = 0);
+	KMDBCreator(TQObject *parent = 0, const char *name = 0);
 	~KMDBCreator();
 
-	bool checkDriverDB(const QString& dirname, const QDateTime& d);
-	bool createDriverDB(const QString& dirname, const QString& filename, QWidget *parent = 0);
+	bool checkDriverDB(const TQString& dirname, const TQDateTime& d);
+	bool createDriverDB(const TQString& dirname, const TQString& filename, TQWidget *parent = 0);
 	bool status() const	{ return m_status; }
 
 protected slots:

@@ -25,20 +25,20 @@
 
 #include "rendering/enumerate.h"
 
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 
 namespace khtml {
 
 namespace Enumerate {
 
-QString toRoman( int number, bool upper )
+TQString toRoman( int number, bool upper )
 {
-    if (number < 1 || number > 3999) return QString::number(number);
-    QString roman;
-    static const QChar ldigits[] = { 'i', 'v', 'x', 'l', 'c', 'd', 'm' };
-    static const QChar udigits[] = { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
-    const QChar *digits = upper ? udigits : ldigits;
+    if (number < 1 || number > 3999) return TQString::number(number);
+    TQString roman;
+    static const TQChar ldigits[] = { 'i', 'v', 'x', 'l', 'c', 'd', 'm' };
+    static const TQChar udigits[] = { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
+    const TQChar *digits = upper ? udigits : ldigits;
     int i, d = 0;
 
     do
@@ -66,20 +66,20 @@ QString toRoman( int number, bool upper )
     return roman;
 }
 
-QString toGeorgian( int number )
+TQString toGeorgian( int number )
 {
-    QString georgian;
-    const QChar tenthousand = 0x10ef;
-    static const QChar thousands[9] = {0x10e8, 0x10e9, 0x10ea, 0x10eb, 0x10ec,
+    TQString georgian;
+    const TQChar tenthousand = 0x10ef;
+    static const TQChar thousands[9] = {0x10e8, 0x10e9, 0x10ea, 0x10eb, 0x10ec,
                           0x10ed, 0x10ee, 0x10f4, 0x10f5 };
-    static const QChar hundreds[9] = {0x10e0, 0x10e1, 0x10e2, 0x10e3, 0x10f3,
+    static const TQChar hundreds[9] = {0x10e0, 0x10e1, 0x10e2, 0x10e3, 0x10f3,
                          0x10e4, 0x10e5, 0x10e6, 0x10e7 };
-    static const QChar tens[9] = {0x10d8, 0x10d9, 0x10da, 0x10db, 0x10dc,
+    static const TQChar tens[9] = {0x10d8, 0x10d9, 0x10da, 0x10db, 0x10dc,
                      0x10f2, 0x10dd, 0x10de, 0x10df };
-    static const QChar units[9] = {0x10d0, 0x10d1, 0x10d2, 0x10d3, 0x10d4,
+    static const TQChar units[9] = {0x10d0, 0x10d1, 0x10d2, 0x10d3, 0x10d4,
                       0x10d5, 0x10d6, 0x10f1, 0x10d7 };
 
-    if (number < 1 || number > 19999) return QString::number(number);
+    if (number < 1 || number > 19999) return TQString::number(number);
     if (number >= 10000) {
         georgian.append(tenthousand);
         number = number - 10000;
@@ -103,54 +103,54 @@ QString toGeorgian( int number )
     return georgian;
 }
 
-QString toArmenian( int number )
+TQString toArmenian( int number )
 {
-    QString armenian;
+    TQString armenian;
     int onethousand = 0x57c;
     int hundreds = 0x572;
     int tens = 0x569;
     int units = 0x560;
 
     // The standard defines values over 1999, but 7000 is very hard to render
-    if (number < 1 || number > 1999) return QString::number(number);
+    if (number < 1 || number > 1999) return TQString::number(number);
     if (number >= 1000) {
-        armenian.append(QChar(onethousand));
+        armenian.append(TQChar(onethousand));
         number = number - 1000;
     }
     if (number >= 100) {
-        armenian.append(QChar(hundreds+number/100));
+        armenian.append(TQChar(hundreds+number/100));
         number = number % 100;
     }
     if (number >= 10) {
-        armenian.append(QChar(tens+number/10));
+        armenian.append(TQChar(tens+number/10));
         number = number % 10;
     }
     if (number >= 1)  {
-        armenian.append(QChar(units+number));
+        armenian.append(TQChar(units+number));
     }
 
     return armenian;
 }
 
-QString toHebrew( int number ) {
-    static const QChar tenDigit[] = {1497, 1499, 1500, 1502, 1504, 1505, 1506, 1508, 1510};
+TQString toHebrew( int number ) {
+    static const TQChar tenDigit[] = {1497, 1499, 1500, 1502, 1504, 1505, 1506, 1508, 1510};
 
-    QString letter;
-    if (number < 1) return QString::number(number);
+    TQString letter;
+    if (number < 1) return TQString::number(number);
     if (number>999) {
-  	letter = toHebrew(number/1000) + QString::fromLatin1("'");
+  	letter = toHebrew(number/1000) + TQString::fromLatin1("'");
    	number = number%1000;
     }
 
     int hunderts = (number/400);
     if (hunderts > 0) {
 	for(int i=0; i<hunderts; i++) {
-	    letter += QChar(1511 + 3);
+	    letter += TQChar(1511 + 3);
 	}
     }
     number = number % 400;
     if ((number / 100) != 0) {
-        letter += QChar (1511 + (number / 100) -1);
+        letter += TQChar (1511 + (number / 100) -1);
     }
     number = number % 100;
     int tens = number/10;
@@ -158,27 +158,27 @@ QString toHebrew( int number ) {
 	letter += tenDigit[tens-1];
     }
     if (number == 15 || number == 16) { // special because of religious
-	letter += QChar(1487 + 9);       // reasons
-    	letter += QChar(1487 + number - 9);
+	letter += TQChar(1487 + 9);       // reasons
+    	letter += TQChar(1487 + number - 9);
     } else {
         number = number % 10;
         if (number != 0) {
-            letter += QChar (1487 + number);
+            letter += TQChar (1487 + number);
         }
     }
     return letter;
 }
 
-static inline QString toLatin( int number, int base ) {
-    if (number < 1) return QString::number(number);
-    QValueList<QChar> letters;
+static inline TQString toLatin( int number, int base ) {
+    if (number < 1) return TQString::number(number);
+    TQValueList<TQChar> letters;
     while(number > 0) {
         number--; // number 0 is letter a
-        QChar letter = (QChar) (base + (number % 26));
+        TQChar letter = (TQChar) (base + (number % 26));
         letters.prepend(letter);
         number /= 26;
     }
-    QString str;
+    TQString str;
     str.setLength(letters.size());
     int i=0;
     while(!letters.isEmpty()) {
@@ -188,24 +188,24 @@ static inline QString toLatin( int number, int base ) {
     return str;
 }
 
-QString toLowerLatin( int number ) {
+TQString toLowerLatin( int number ) {
     return toLatin( number, 'a' );
 }
 
-QString toUpperLatin( int number ) {
+TQString toUpperLatin( int number ) {
     return toLatin( number, 'A' );
 }
 
-static inline QString toAlphabetic( int number, int base, const QChar alphabet[] ) {
-    if (number < 1) return QString::number(number);
-    QValueList<QChar> letters;
+static inline TQString toAlphabetic( int number, int base, const TQChar alphabet[] ) {
+    if (number < 1) return TQString::number(number);
+    TQValueList<TQChar> letters;
     while(number > 0) {
         number--; // number 0 is letter 1
-        QChar letter = alphabet[number % base];
+        TQChar letter = alphabet[number % base];
         letters.prepend(letter);
         number /= base;
     }
-    QString str;
+    TQString str;
     str.setLength(letters.size());
     int i=0;
     while(!letters.isEmpty()) {
@@ -215,8 +215,8 @@ static inline QString toAlphabetic( int number, int base, const QChar alphabet[]
     return str;
 }
 
-QString toHiragana( int number ) {
-    static const QChar hiragana[48] = {0x3042, 0x3044, 0x3046, 0x3048, 0x304A, 0x304B, 0x304D,
+TQString toHiragana( int number ) {
+    static const TQChar hiragana[48] = {0x3042, 0x3044, 0x3046, 0x3048, 0x304A, 0x304B, 0x304D,
                                  0x304F, 0x3051, 0x3053, 0x3055, 0x3057, 0x3059, 0x305B, 0x305D,
                                  0x305F, 0x3061, 0x3064, 0x3066, 0x3068, 0x306A, 0x306B,
                                  0x306C, 0x306D, 0x306E, 0x306F, 0x3072, 0x3075, 0x3078,
@@ -226,8 +226,8 @@ QString toHiragana( int number ) {
     return toAlphabetic( number, 48, hiragana );
 }
 
-QString toHiraganaIroha( int number ) {
-    static const QChar hiragana[47] = {0x3044, 0x308D, 0x306F, 0x306B, 0x307B, 0x3078, 0x3068,
+TQString toHiraganaIroha( int number ) {
+    static const TQChar hiragana[47] = {0x3044, 0x308D, 0x306F, 0x306B, 0x307B, 0x3078, 0x3068,
                                  0x3061, 0x308A, 0x306C, 0x308B, 0x3092, 0x308F, 0x304B,
                                  0x3088, 0x305F, 0x308C, 0x305D, 0x3064, 0x306D, 0x306A,
                                  0x3089, 0x3080, 0x3046, 0x3090, 0x306E, 0x304A, 0x304F, 0x3084,
@@ -237,8 +237,8 @@ QString toHiraganaIroha( int number ) {
     return toAlphabetic( number, 47, hiragana );
 }
 
-QString toKatakana( int number ) {
-    static const QChar katakana[48] = {0x30A2, 0x30A4, 0x30A6, 0x30A8, 0x30AA, 0x30AB, 0x30AD,
+TQString toKatakana( int number ) {
+    static const TQChar katakana[48] = {0x30A2, 0x30A4, 0x30A6, 0x30A8, 0x30AA, 0x30AB, 0x30AD,
                                  0x30AF, 0x30B1, 0x30B3, 0x30B5, 0x30B7, 0x30B9, 0x30BB,
                                  0x30BD, 0x30BF, 0x30C1, 0x30C4, 0x30C6, 0x30C8, 0x30CA,
                                  0x30CB, 0x30CC, 0x30CD, 0x30CE, 0x30CF, 0x30D2, 0x30D5,
@@ -248,8 +248,8 @@ QString toKatakana( int number ) {
     return toAlphabetic( number, 48, katakana );
 }
 
-QString toKatakanaIroha( int number ) {
-    static const QChar katakana[47] = {0x30A4, 0x30ED, 0x30CF, 0x30CB, 0x30DB, 0x30D8, 0x30C8,
+TQString toKatakanaIroha( int number ) {
+    static const TQChar katakana[47] = {0x30A4, 0x30ED, 0x30CF, 0x30CB, 0x30DB, 0x30D8, 0x30C8,
                                  0x30C1, 0x30EA, 0x30CC, 0x30EB, 0x30F2, 0x30EF, 0x30AB,
                                  0x30E8, 0x30BF, 0x30EC, 0x30ED, 0x30C4, 0x30CD, 0x30CA,
                                  0x30E9, 0x30E0, 0x30A6, 0x30F0, 0x30CE, 0x30AA, 0x30AF,
@@ -259,8 +259,8 @@ QString toKatakanaIroha( int number ) {
     return toAlphabetic( number, 47, katakana );
 }
 
-QString toLowerGreek( int number ) {
-    static const QChar greek[24] = { 0x3B1, 0x3B2, 0x3B3, 0x3B4, 0x3B5, 0x3B6, 0x3B7,
+TQString toLowerGreek( int number ) {
+    static const TQChar greek[24] = { 0x3B1, 0x3B2, 0x3B3, 0x3B4, 0x3B5, 0x3B6, 0x3B7,
                                0x3B8, 0x3B9, 0x3BA, 0x3BB, 0x3BC, 0x3BD, 0x3BE,
                                0x3BF, 0x3C0, 0x3C1, 0x3C3, 0x3C4, 0x3C5, 0x3C6,
                                0x3C7, 0x3C8, 0x3C0};
@@ -268,52 +268,52 @@ QString toLowerGreek( int number ) {
     return toAlphabetic( number, 24, greek );
 }
 
-QString toUpperGreek( int number ) {
+TQString toUpperGreek( int number ) {
     // The standard claims to be base 24, but only lists 19 letters.
-    static const QChar greek[19] = { 0x391, 0x392, 0x393, 0x394, 0x395, 0x396, 0x397, 0x398,
+    static const TQChar greek[19] = { 0x391, 0x392, 0x393, 0x394, 0x395, 0x396, 0x397, 0x398,
                                0x399, 0x39A, 0x39B, 0x39C, 0x39D, 0x39E, 0x39F,
                                0x3A0, 0x3A1, 0x3A3, 0x3A9};
 
     return toAlphabetic( number, 19, greek );
 }
 
-static inline QString toNumeric( int number, int base ) {
-    QString letter = QString::number(number);
+static inline TQString toNumeric( int number, int base ) {
+    TQString letter = TQString::number(number);
     for(unsigned int i = 0; i < letter.length(); i++) {
         if (letter[i].isDigit())
-        letter[i] = QChar(letter[i].digitValue()+base);
+        letter[i] = TQChar(letter[i].digitValue()+base);
     }
     return letter;
 }
 
-QString toArabicIndic( int number ) {
+TQString toArabicIndic( int number ) {
     return toNumeric(number, 0x660);
 }
 
-QString toPersianUrdu( int number ) {
+TQString toPersianUrdu( int number ) {
     return toNumeric(number, 0x6F0);
 }
 
-QString toLao( int number ) {
+TQString toLao( int number ) {
     return toNumeric(number, 0xED0);
 }
 
-QString toThai( int number ) {
+TQString toThai( int number ) {
     return toNumeric(number, 0xE50);
 }
 
-QString toTibetan( int number ) {
+TQString toTibetan( int number ) {
     return toNumeric(number, 0xF20);
 }
 
-static inline QString toIdeographic(int number, const QChar digits[], const QChar digitmarkers[]) {
-    if (number < 0 || number > 9999) return QString::number(number);
+static inline TQString toIdeographic(int number, const TQChar digits[], const TQChar digitmarkers[]) {
+    if (number < 0 || number > 9999) return TQString::number(number);
 
-    QString grp = QString::number(number);
+    TQString grp = TQString::number(number);
 
     // ### Append group markers to handle numbers > 9999
 
-    QString str;
+    TQString str;
 
     // special case
     if (number < 20 && number >= 10) {
@@ -342,10 +342,10 @@ static inline QString toIdeographic(int number, const QChar digits[], const QCha
     return str;
 }
 
-QString toTradChineseFormal( int number ) {
-//     static const QChar groupMarkers[3] = {0x4e07, 0x4ebf, 0x5146};
-    static const QChar digitMarkers[3] = {0x4e07, 0x4ebf, 0x5146};
-    static const QChar digits[10] = {0x96f6, 0x4e00,
+TQString toTradChineseFormal( int number ) {
+//     static const TQChar groupMarkers[3] = {0x4e07, 0x4ebf, 0x5146};
+    static const TQChar digitMarkers[3] = {0x4e07, 0x4ebf, 0x5146};
+    static const TQChar digits[10] = {0x96f6, 0x4e00,
                                      0x4ebc, 0x4e09,
                                      0x56db, 0x4e94,
                                      0x516d, 0x4e03,
@@ -353,10 +353,10 @@ QString toTradChineseFormal( int number ) {
     return toIdeographic(number, digits, digitMarkers);
 }
 
-QString toTradChineseInformal( int number ) {
-//     static const QChar groupMarkers[3] = {0x842c, 0x5104, 0x5146};
-    static const QChar digitMarkers[3] = {0x842c, 0x5104, 0x5146};
-    static const QChar digits[10] = {0x96f6, 0x4e00,
+TQString toTradChineseInformal( int number ) {
+//     static const TQChar groupMarkers[3] = {0x842c, 0x5104, 0x5146};
+    static const TQChar digitMarkers[3] = {0x842c, 0x5104, 0x5146};
+    static const TQChar digits[10] = {0x96f6, 0x4e00,
                                      0x4ebc, 0x4e09,
                                      0x56db, 0x4e94,
                                      0x516d, 0x4e03,
@@ -364,10 +364,10 @@ QString toTradChineseInformal( int number ) {
     return toIdeographic(number, digits, digitMarkers);
 }
 
-QString toSimpChineseFormal( int number ) {
-//     static const QChar groupMarkers[3] = {0x4e07, 0x5104, 0x5146};
-    static const QChar digitMarkers[3] = {0x4e07, 0x4ebf, 0x5146};
-    static const QChar digits[10] = {0x96f6, 0x58f9,
+TQString toSimpChineseFormal( int number ) {
+//     static const TQChar groupMarkers[3] = {0x4e07, 0x5104, 0x5146};
+    static const TQChar digitMarkers[3] = {0x4e07, 0x4ebf, 0x5146};
+    static const TQChar digits[10] = {0x96f6, 0x58f9,
                                      0x8cb3, 0x53c3,
                                      0x8086, 0x4f0d,
                                      0x9678, 0x67d2,
@@ -375,10 +375,10 @@ QString toSimpChineseFormal( int number ) {
     return toIdeographic(number, digits, digitMarkers);
 }
 
-QString toSimpChineseInformal( int number ) {
-//     static const QChar groupMarkers[3] = {0x842c, 0x5104, 0x5146};
-    static const QChar digitMarkers[3] = {0x842c, 0x5104, 0x5146};
-    static const QChar digits[10] = {0x96f6, 0x58f9,
+TQString toSimpChineseInformal( int number ) {
+//     static const TQChar groupMarkers[3] = {0x842c, 0x5104, 0x5146};
+    static const TQChar digitMarkers[3] = {0x842c, 0x5104, 0x5146};
+    static const TQChar digits[10] = {0x96f6, 0x58f9,
                                      0x8cb3, 0x53c3,
                                      0x8086, 0x4f0d,
                                      0x9678, 0x67d2,
@@ -386,10 +386,10 @@ QString toSimpChineseInformal( int number ) {
     return toIdeographic(number, digits, digitMarkers);
 }
 
-QString toJapaneseFormal( int number ) {
-//     static const QChar groupMarkers[3] = {0x4e07, 0x5104, 0x5146};
-    static const QChar digitMarkers[3] = {0x62fe, 0x4f70, 0x4edf};
-    static const QChar digits[10] = {0x96f6, 0x58f9,
+TQString toJapaneseFormal( int number ) {
+//     static const TQChar groupMarkers[3] = {0x4e07, 0x5104, 0x5146};
+    static const TQChar digitMarkers[3] = {0x62fe, 0x4f70, 0x4edf};
+    static const TQChar digits[10] = {0x96f6, 0x58f9,
                                      0x8cb3, 0x53c3,
                                      0x8086, 0x4f0d,
                                      0x9678, 0x67d2,
@@ -397,10 +397,10 @@ QString toJapaneseFormal( int number ) {
     return toIdeographic(number, digits, digitMarkers);
 }
 
-QString toJapaneseInformal( int number ) {
-//     static const QChar groupMarkers[3] = {0x842c, 0x5104, 0x5146};
-    static const QChar digitMarkers[3] = {0x842c, 0x5104, 0x5146};
-    static const QChar digits[10] = {0x96f6, 0x58f9,
+TQString toJapaneseInformal( int number ) {
+//     static const TQChar groupMarkers[3] = {0x842c, 0x5104, 0x5146};
+    static const TQChar digitMarkers[3] = {0x842c, 0x5104, 0x5146};
+    static const TQChar digits[10] = {0x96f6, 0x58f9,
                                      0x8d30, 0x53c1,
                                      0x8086, 0x4f0d,
                                      0x9646, 0x67d2,

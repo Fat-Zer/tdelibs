@@ -55,7 +55,7 @@ unsigned int MarkInterface::markInterfaceNumber () const
   return myMarkInterfaceNumber;
 }
 
-void MarkInterface::setMarkInterfaceDCOPSuffix (const QCString &/*suffix*/)
+void MarkInterface::setMarkInterfaceDCOPSuffix (const TQCString &/*suffix*/)
 {
   //d->interface->setObjId ("MarkInterface#"+suffix);
 }

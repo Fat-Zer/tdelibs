@@ -33,8 +33,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <qfile.h>
-#include <qobject.h>
+#include <tqfile.h>
+#include <tqobject.h>
 
 #include "klocale.h"
 #include "ksocketaddress.h"
@@ -126,7 +126,7 @@ bool KIpAddress::compare(const KIpAddress& other, bool checkMapped) const
 }
 
 // sets the address to the given address
-bool KIpAddress::setAddress(const QString& address)
+bool KIpAddress::setAddress(const TQString& address)
 {
   m_version = 0;
 
@@ -165,7 +165,7 @@ bool KIpAddress::setAddress(const QString& address)
 
 bool KIpAddress::setAddress(const char* address)
 {
-  return setAddress(QString::fromLatin1(address));
+  return setAddress(TQString::fromLatin1(address));
 }
 
 // set from binary data
@@ -186,7 +186,7 @@ bool KIpAddress::setAddress(const void* raw, int version)
 }
 
 // presentation form
-QString KIpAddress::toString() const
+TQString KIpAddress::toString() const
 {
   char buf[sizeof "1111:2222:3333:4444:5555:6666:255.255.255.255" + 2];
   buf[0] = '\0';
@@ -194,16 +194,16 @@ QString KIpAddress::toString() const
     {
     case 4:
       inet_ntop(AF_INET, m_data, buf, sizeof(buf) - 1);
-      return QString::fromLatin1(buf);
+      return TQString::fromLatin1(buf);
 
     case 6:
 #ifdef AF_INET6
       inet_ntop(AF_INET6, m_data, buf, sizeof(buf) - 1);
 #endif
-      return QString::fromLatin1(buf);
+      return TQString::fromLatin1(buf);
     }
 
-  return QString::null;
+  return TQString::null;
 }
 
 Q_UINT32 KIpAddress::hostIPv4Addr(bool convertMapped) const
@@ -559,10 +559,10 @@ bool KSocketAddress::operator ==(const KSocketAddress& other) const
   return false;		// not equal in any other case
 }
 
-QString KSocketAddress::nodeName() const
+TQString KSocketAddress::nodeName() const
 {
   if (d->invalid())
-    return QString::null;
+    return TQString::null;
 
   switch (d->addr.generic->sa_family)
     {
@@ -570,9 +570,9 @@ QString KSocketAddress::nodeName() const
 #ifdef AF_INET6
     case AF_INET6:
 
-      QString scopeid("%");
+      TQString scopeid("%");
       if (d->addr.generic->sa_family == AF_INET6 && d->addr.in6->sin6_scope_id)
-	scopeid += QString::number(d->addr.in6->sin6_scope_id);
+	scopeid += TQString::number(d->addr.in6->sin6_scope_id);
       else
 	scopeid.truncate(0);
       return d->ref.ipAddress().toString() + scopeid;
@@ -582,13 +582,13 @@ QString KSocketAddress::nodeName() const
     }
 
   // any other case, including AF_UNIX
-  return QString::null;
+  return TQString::null;
 }
 
-QString KSocketAddress::serviceName() const
+TQString KSocketAddress::serviceName() const
 {
   if (d->invalid())
-    return QString::null;
+    return TQString::null;
 
   switch (d->addr.generic->sa_family)
     {
@@ -596,21 +596,21 @@ QString KSocketAddress::serviceName() const
 #ifdef AF_INET6
     case AF_INET6:
 #endif
-      return QString::number(d->ref.port());
+      return TQString::number(d->ref.port());
 
     case AF_UNIX:
       return d->ref.pathname();
     }
 
-  return QString::null;
+  return TQString::null;
 }
 
-QString KSocketAddress::toString() const
+TQString KSocketAddress::toString() const
 {
   if (d->invalid())
-    return QString::null;
+    return TQString::null;
 
-  QString fmt;
+  TQString fmt;
 
   if (d->addr.generic->sa_family == AF_INET)
     fmt = "%1:%2";
@@ -619,7 +619,7 @@ QString KSocketAddress::toString() const
     fmt = "[%1]:%2";
 #endif
   else if (d->addr.generic->sa_family == AF_UNIX)
-    return QString::fromLatin1("unix:%1").arg(serviceName());
+    return TQString::fromLatin1("unix:%1").arg(serviceName());
   else
     return i18n("1: the unknown socket address family number",
 		"Unknown family %1").arg(d->addr.generic->sa_family);
@@ -916,7 +916,7 @@ KUnixSocketAddress::KUnixSocketAddress(const KUnixSocketAddress& other)
 {
 }
 
-KUnixSocketAddress::KUnixSocketAddress(const QString& pathname)
+KUnixSocketAddress::KUnixSocketAddress(const TQString& pathname)
 {
   setPathname(pathname);
 }
@@ -936,18 +936,18 @@ KUnixSocketAddress& KUnixSocketAddress::operator =(const KUnixSocketAddress& oth
   return *this;
 }
 
-QString KUnixSocketAddress::pathname() const
+TQString KUnixSocketAddress::pathname() const
 {
   if (!d->invalid() && d->addr.un->sun_family == AF_UNIX)
-    return QFile::decodeName(d->addr.un->sun_path);
-  return QString::null;
+    return TQFile::decodeName(d->addr.un->sun_path);
+  return TQString::null;
 }
 
-KUnixSocketAddress& KUnixSocketAddress::setPathname(const QString& path)
+KUnixSocketAddress& KUnixSocketAddress::setPathname(const TQString& path)
 {
   d->dup(0L, MIN_SOCKADDR_UN_LEN + path.length());
   d->addr.un->sun_family = AF_UNIX;
-  strcpy(d->addr.un->sun_path, QFile::encodeName(path));
+  strcpy(d->addr.un->sun_path, TQFile::encodeName(path));
 
 #ifdef HAVE_STRUCT_SOCKADDR_SA_LEN
   d->addr.un->sun_len = d->reallen;

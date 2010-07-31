@@ -67,7 +67,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
       @param parent the parent window
       @param caption the dialog caption
     */
-    DownloadDialog(Engine *engine, QWidget *parent, const QString& caption);
+    DownloadDialog(Engine *engine, TQWidget *parent, const TQString& caption);
 
     /**
       Alternative constructor.
@@ -76,7 +76,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
       @param parent the parent window
       @param caption the dialog caption
     */
-    DownloadDialog(QWidget *parent, const QString& caption);
+    DownloadDialog(TQWidget *parent, const TQString& caption);
 
     /**
       Destructor.
@@ -88,8 +88,8 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
 
       @param type a Hotstuff data type such as "korganizer/calendar"
     */
-    void setType(QString type);
-	// ### KDE 4.0: use const QString&
+    void setType(TQString type);
+	// ### KDE 4.0: use const TQString&
 
     /**
       Fetches descriptions of all available data, optionally considering
@@ -105,7 +105,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
 
       @since 3.4
     */
-    void setProviderList(const QString& providerList);
+    void setProviderList(const TQString& providerList);
 
     /**
       Fetches descriptions of all available data, optionally considering
@@ -115,7 +115,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
              we first try the ProvidersUrl from KGlobal::config, then we
              fall back to a hardcoded value.
     */
-    void load(QString providerList); // KDE4: merge with load() above
+    void load(TQString providerList); // KDE4: merge with load() above
 
     /**
       Adds another provider to the download dialog.
@@ -141,7 +141,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
       @param entry a Hotstuff data entry to be added
       @param variants all variants this entry is intended for
     */
-    void addEntry(Entry *entry, const QStringList& variants);
+    void addEntry(Entry *entry, const TQStringList& variants);
 
     /**
       Clears the entry list of the current provider.
@@ -156,7 +156,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
                     dialog should create an engine on its own
       @param parent the parent window
     */
-    DownloadDialog(Engine *engine, QWidget *parent = 0);
+    DownloadDialog(Engine *engine, TQWidget *parent = 0);
     // ### KDE 4.0: remove and make caption/parent argument optional
 
     /**
@@ -165,7 +165,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
 
       @param parent the parent window
     */
-    DownloadDialog(QWidget *parent = 0);
+    DownloadDialog(TQWidget *parent = 0);
     // ### KDE 4.0: remove and make caption/parent argument optional
 
     /**
@@ -177,7 +177,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
       @param type a data type such as "korganizer/calendar"
       @param caption the dialog caption
     */
-    static void open(const QString& type, const QString& caption);
+    static void open(const TQString& type, const TQString& caption);
 
     /**
       Opens the download dialog.
@@ -186,16 +186,16 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
       @see load()
 
       @param type a data type such as "korganizer/calendar"
-      @deprecated use open( const QString& type, const QString& caption );
+      @deprecated use open( const TQString& type, const TQString& caption );
     */
-    static void open(QString type) KDE_DEPRECATED; // ### KDE 4.0: remove and make caption/parent argument optional
+    static void open(TQString type) KDE_DEPRECATED; // ### KDE 4.0: remove and make caption/parent argument optional
 
     /**
       Returns the list of installed data entries.
 
       @return list of data entries which have been installed
     */
-    QPtrList<Entry> installedEntries();
+    TQPtrList<Entry> installedEntries();
     // ### KDE 4.0: the open() method should return this
 
   public slots:
@@ -212,15 +212,15 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
 
   private slots:
     void slotResult(KIO::Job *job);
-    void slotData(KIO::Job *job, const QByteArray &a);
+    void slotData(KIO::Job *job, const TQByteArray &a);
     void slotInstall();
     void slotDetails();
     void slotInstalled(KIO::Job *job);
     void slotTab();
     void slotSelected();
-    void slotPage(QWidget *w);
+    void slotPage(TQWidget *w);
     void slotFinish();
-    void slotEmail(const QString& link);
+    void slotEmail(const TQString& link);
 
   private:
     void init(Engine *e);
@@ -228,25 +228,25 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
     void loadProvider(Provider *p);
     void install(Entry *e);
     int installStatus(Entry *e);
-    QListViewItem *currentEntryItem();
+    TQListViewItem *currentEntryItem();
 
     ProviderLoader *m_loader;
-    QString m_entryname;
+    TQString m_entryname;
     KListView *lv_r, *lv_d, *lv_l;
-    QTextBrowser *m_rt;
-    QFrame *m_frame;
-    QListViewItem *m_entryitem;
-    QPtrList<Entry> m_entries;
+    TQTextBrowser *m_rt;
+    TQFrame *m_frame;
+    TQListViewItem *m_entryitem;
+    TQPtrList<Entry> m_entries;
     Entry *m_entry;
     KNewStuffGeneric *m_s;
     int m_curtab;
-    QMap<QWidget*, QValueList<KListView*>* > m_map;
-    QMap<QWidget*, Provider*> m_providers;
-    QMap<QWidget*, QTextBrowser*> m_rts;
-    QMap<QWidget*, QValueList<QPushButton*>* > m_buttons;
-    QMap<KIO::Job*, Provider*> m_jobs;
-    QMap<KIO::Job*, QString> m_data;
-    QString m_filter;
+    TQMap<TQWidget*, TQValueList<KListView*>* > m_map;
+    TQMap<TQWidget*, Provider*> m_providers;
+    TQMap<TQWidget*, TQTextBrowser*> m_rts;
+    TQMap<TQWidget*, TQValueList<TQPushButton*>* > m_buttons;
+    TQMap<KIO::Job*, Provider*> m_jobs;
+    TQMap<KIO::Job*, TQString> m_data;
+    TQString m_filter;
     Engine *m_engine;
     Private *d;
 };

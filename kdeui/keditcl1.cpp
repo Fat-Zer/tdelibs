@@ -19,10 +19,10 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <qdragobject.h>
-#include <qpopupmenu.h>
-#include <qtextstream.h>
-#include <qtimer.h>
+#include <tqdragobject.h>
+#include <tqpopupmenu.h>
+#include <tqtextstream.h>
+#include <tqtimer.h>
 
 #include <kapplication.h>
 #include <kcursor.h>
@@ -46,8 +46,8 @@ public:
 };
 
 
-KEdit::KEdit(QWidget *_parent, const char *name)
-   : QMultiLineEdit(_parent, name)
+KEdit::KEdit(TQWidget *_parent, const char *name)
+   : TQMultiLineEdit(_parent, name)
 {
     d = new KEditPrivate;
     d->overwriteEnabled = false;
@@ -67,8 +67,8 @@ KEdit::KEdit(QWidget *_parent, const char *name)
     setAcceptDrops(true);
     KCursor::setAutoHideCursor( this, true );
 
-    connect(this, SIGNAL(cursorPositionChanged(int,int)),
-            this, SLOT(slotCursorPositionChanged()));
+    connect(this, TQT_SIGNAL(cursorPositionChanged(int,int)),
+            this, TQT_SLOT(slotCursorPositionChanged()));
 }
 
 
@@ -84,17 +84,17 @@ KEdit::setAutoUpdate(bool b)
 }
 
 void
-KEdit::insertText(QTextStream *stream)
+KEdit::insertText(TQTextStream *stream)
 {
 //   setAutoUpdate(false);
    int line, col;
    getCursorPosition(&line, &col);
    int saveline = line;
    int savecol = col;
-   QString textLine;
+   TQString textLine;
 
    // MS: Patch by Martin Schenk <martin@schenk.com>
-   // MS: disable UNDO, or QMultiLineEdit remembers every textLine !!!
+   // MS: disable UNDO, or TQMultiLineEdit remembers every textLine !!!
    // memory usage is:
    //   textLine: 2*size rounded up to nearest power of 2 (520Kb -> 1024Kb)
    //   widget:   about (2*size + 60bytes*lines)
@@ -104,13 +104,13 @@ KEdit::insertText(QTextStream *stream)
 
    // MS: read everything at once if file <= 1MB,
    // else read in 5000-line chunks to keep memory usage acceptable.
-   QIODevice *dev=stream->device();
+   TQIODevice *dev=stream->device();
    if (dev && dev->size()>(1024*1024)) {
       while(1) {
         int i;
         textLine="";
         for (i=0; i<5000; i++) {
-                QString line=stream->readLine();
+                TQString line=stream->readLine();
                 if (line.isNull()) break;  // EOF
                 textLine+=line+'\n';
         }
@@ -138,7 +138,7 @@ KEdit::insertText(QTextStream *stream)
    // kedit used to be really really fast using memmap etc .....
    // oh well ....
 
-   //   QString str = text();
+   //   TQString str = text();
    //   for (int i = 0; i < (int) str.length(); i++)
    //     printf("KEdit: U+%04X\n", str[i].unicode());
 
@@ -150,21 +150,21 @@ KEdit::cleanWhiteSpace()
    d->autoUpdate = false;
    if (!hasMarkedText())
       selectAll();
-   QString oldText = markedText();
-   QString newText;
-   QStringList lines = QStringList::split('\n', oldText, true);
+   TQString oldText = markedText();
+   TQString newText;
+   TQStringList lines = TQStringList::split('\n', oldText, true);
    bool addSpace = false;
    bool firstLine = true;
-   QChar lastChar = oldText[oldText.length()-1];
-   QChar firstChar = oldText[0];
-   for(QStringList::Iterator it = lines.begin();
+   TQChar lastChar = oldText[oldText.length()-1];
+   TQChar firstChar = oldText[0];
+   for(TQStringList::Iterator it = lines.begin();
        it != lines.end();)
    {
-      QString line = (*it).simplifyWhiteSpace();
+      TQString line = (*it).simplifyWhiteSpace();
       if (line.isEmpty())
       {
          if (addSpace)
-            newText += QString::fromLatin1("\n\n");
+            newText += TQString::fromLatin1("\n\n");
          if (firstLine)
          {
             if (firstChar.isSpace())
@@ -206,16 +206,16 @@ KEdit::cleanWhiteSpace()
    if (wordWrap() == NoWrap)
    {
       // If wordwrap is off, we have to do some line-wrapping ourselves now
-      // We use another QMultiLineEdit for this, so that we get nice undo
+      // We use another TQMultiLineEdit for this, so that we get nice undo
       // behavior.
-      QMultiLineEdit *we = new QMultiLineEdit();
+      TQMultiLineEdit *we = new TQMultiLineEdit();
       we->setWordWrap(FixedColumnWidth);
       we->setWrapColumnOrWidth(78);
       we->setText(newText);
-      newText = QString::null;
+      newText = TQString::null;
       for(int i = 0; i < we->numLines(); i++)
       {
-        QString line = we->textLine(i);
+        TQString line = we->textLine(i);
         if (line.right(1) != "\n")
            line += '\n';
         newText += line;
@@ -233,13 +233,13 @@ KEdit::cleanWhiteSpace()
 
 
 void
-KEdit::saveText(QTextStream *stream)
+KEdit::saveText(TQTextStream *stream)
 {
    saveText(stream, false);
 }
 
 void
-KEdit::saveText(QTextStream *stream, bool softWrap)
+KEdit::saveText(TQTextStream *stream, bool softWrap)
 {
    int line_count = numLines()-1;
    if (line_count < 0)
@@ -264,7 +264,7 @@ KEdit::saveText(QTextStream *stream, bool softWrap)
          }
          else
          {
-            QString parag_text = textLine(i);
+            TQString parag_text = textLine(i);
             int pos = 0;
             int first_pos = 0;
             int current_line = 0;
@@ -331,7 +331,7 @@ void KEdit::computePosition()
   line_pos += line_offset;
 
   // We now calculate where the current line starts in the paragraph.
-  QString linetext = textLine(line);
+  TQString linetext = textLine(line);
   int start_of_line = 0;
   if (line_offset > 0)
   {
@@ -380,7 +380,7 @@ void KEdit::computePosition()
 }
 
 
-void KEdit::keyPressEvent ( QKeyEvent *e)
+void KEdit::keyPressEvent ( TQKeyEvent *e)
 {
   // ignore Ctrl-Return so that KDialogBase can catch them
   if ( e->key() == Key_Return && e->state() == ControlButton ) {
@@ -395,7 +395,7 @@ void KEdit::keyPressEvent ( QKeyEvent *e)
 
     int line = 0;
     int col  = 0;
-    QString killstring;
+    TQString killstring;
 
     if(!killing){
       killbufferstring = "";
@@ -442,7 +442,7 @@ void KEdit::keyPressEvent ( QKeyEvent *e)
 
     killing = true;
 
-    QMultiLineEdit::keyPressEvent(e);
+    TQMultiLineEdit::keyPressEvent(e);
     setModified(true);
     return;
   }
@@ -453,7 +453,7 @@ void KEdit::keyPressEvent ( QKeyEvent *e)
 
     getCursorPosition(&line,&col);
 
-    QString tmpstring = killbufferstring;
+    TQString tmpstring = killbufferstring;
     if(!killtrue)
       tmpstring += '\n';
 
@@ -469,10 +469,10 @@ void KEdit::keyPressEvent ( QKeyEvent *e)
   if ( KStdAccel::copy().contains( key ) )
     copy();
   else if ( isReadOnly() )
-    QMultiLineEdit::keyPressEvent( e );
-  // If this is an unmodified printable key, send it directly to QMultiLineEdit.
+    TQMultiLineEdit::keyPressEvent( e );
+  // If this is an unmodified printable key, send it directly to TQMultiLineEdit.
   else if ( !(key.keyCodeQt() & (CTRL | ALT)) && !e->text().isEmpty() && e->text().unicode()->isPrint() )
-    QMultiLineEdit::keyPressEvent( e );
+    TQMultiLineEdit::keyPressEvent( e );
   else if ( KStdAccel::paste().contains( key ) ) {
     paste();
     setModified(true);
@@ -557,16 +557,16 @@ void KEdit::keyPressEvent ( QKeyEvent *e)
     }
   }
   else
-    QMultiLineEdit::keyPressEvent(e);
+    TQMultiLineEdit::keyPressEvent(e);
 }
 
-void KEdit::installRBPopup(QPopupMenu *p) {
+void KEdit::installRBPopup(TQPopupMenu *p) {
   KContextMenuManager::insert( this, p );
 }
 
 void KEdit::selectFont(){
 
-  QFont font = this->font();
+  TQFont font = this->font();
   KFontDialog::getFont(font);
   this->setFont(font);
 
@@ -616,55 +616,55 @@ void KEdit::doGotoLine() {
 }
 
 
-void  KEdit::dragMoveEvent(QDragMoveEvent* e) {
+void  KEdit::dragMoveEvent(TQDragMoveEvent* e) {
 
   if(KURLDrag::canDecode(e))
     e->accept();
-  else if(QTextDrag::canDecode(e))
-    QMultiLineEdit::dragMoveEvent(e);
+  else if(TQTextDrag::canDecode(e))
+    TQMultiLineEdit::dragMoveEvent(e);
 }
 
-void  KEdit::contentsDragMoveEvent(QDragMoveEvent* e) {
+void  KEdit::contentsDragMoveEvent(TQDragMoveEvent* e) {
 
   if(KURLDrag::canDecode(e))
     e->accept();
-  else if(QTextDrag::canDecode(e))
-    QMultiLineEdit::contentsDragMoveEvent(e);
+  else if(TQTextDrag::canDecode(e))
+    TQMultiLineEdit::contentsDragMoveEvent(e);
 }
 
-void  KEdit::dragEnterEvent(QDragEnterEvent* e) {
+void  KEdit::dragEnterEvent(TQDragEnterEvent* e) {
 
   kdDebug() << "KEdit::dragEnterEvent()" << endl;
-  e->accept(KURLDrag::canDecode(e) || QTextDrag::canDecode(e));
+  e->accept(KURLDrag::canDecode(e) || TQTextDrag::canDecode(e));
 }
 
-void  KEdit::contentsDragEnterEvent(QDragEnterEvent* e) {
+void  KEdit::contentsDragEnterEvent(TQDragEnterEvent* e) {
 
   kdDebug() << "KEdit::contentsDragEnterEvent()" << endl;
-  e->accept(KURLDrag::canDecode(e) || QTextDrag::canDecode(e));
+  e->accept(KURLDrag::canDecode(e) || TQTextDrag::canDecode(e));
 }
 
 
-void  KEdit::dropEvent(QDropEvent* e) {
+void  KEdit::dropEvent(TQDropEvent* e) {
 
   kdDebug() << "KEdit::dropEvent()" << endl;
 
   if(KURLDrag::canDecode(e)) {
    emit gotUrlDrop(e);
   }
-  else if(QTextDrag::canDecode(e))
-    QMultiLineEdit::dropEvent(e);
+  else if(TQTextDrag::canDecode(e))
+    TQMultiLineEdit::dropEvent(e);
 }
 
-void  KEdit::contentsDropEvent(QDropEvent* e) {
+void  KEdit::contentsDropEvent(TQDropEvent* e) {
 
   kdDebug() << "KEdit::contentsDropEvent()" << endl;
 
   if(KURLDrag::canDecode(e)) {
    emit gotUrlDrop(e);
   }
-  else if(QTextDrag::canDecode(e))
-    QMultiLineEdit::contentsDropEvent(e);
+  else if(TQTextDrag::canDecode(e))
+    TQMultiLineEdit::contentsDropEvent(e);
 }
 
 void KEdit::setOverwriteEnabled(bool b)
@@ -672,10 +672,10 @@ void KEdit::setOverwriteEnabled(bool b)
   d->overwriteEnabled = b;
 }
 
-// QWidget::create() turns off mouse-Tracking which would break auto-hiding
+// TQWidget::create() turns off mouse-Tracking which would break auto-hiding
 void KEdit::create( WId id, bool initializeWindow, bool destroyOldWindow )
 {
-  QMultiLineEdit::create( id, initializeWindow, destroyOldWindow );
+  TQMultiLineEdit::create( id, initializeWindow, destroyOldWindow );
   KCursor::setAutoHideCursor( this, true );
 }
 
@@ -684,23 +684,23 @@ void KEdit::ensureCursorVisible()
   if (!d->autoUpdate)
     return;
 
-  QMultiLineEdit::ensureCursorVisible();
+  TQMultiLineEdit::ensureCursorVisible();
 }
 
-void KEdit::setCursor( const QCursor &c )
+void KEdit::setCursor( const TQCursor &c )
 {
   if (!d->autoUpdate)
     return;
 
-  QMultiLineEdit::setCursor(c);
+  TQMultiLineEdit::setCursor(c);
 }
 
-void KEdit::viewportPaintEvent( QPaintEvent*pe )
+void KEdit::viewportPaintEvent( TQPaintEvent*pe )
 {
   if (!d->autoUpdate)
     return;
 
-  QMultiLineEdit::viewportPaintEvent(pe);
+  TQMultiLineEdit::viewportPaintEvent(pe);
 }
 
 

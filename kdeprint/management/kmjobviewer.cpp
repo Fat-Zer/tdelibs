@@ -32,7 +32,7 @@
 
 #include <klistview.h>
 #include <kstatusbar.h>
-#include <qpopupmenu.h>
+#include <tqpopupmenu.h>
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kpopupmenu.h>
@@ -45,12 +45,12 @@
 #include <kdebug.h>
 #include <kwin.h>
 #include <kio/netaccess.h>
-#include <qtimer.h>
-#include <qlayout.h>
+#include <tqtimer.h>
+#include <tqlayout.h>
 #include <stdlib.h>
-#include <qlineedit.h>
+#include <tqlineedit.h>
 #include <kdialogbase.h>
-#include <qcheckbox.h>
+#include <tqcheckbox.h>
 #include <kurldrag.h>
 #include <kconfig.h>
 
@@ -60,20 +60,20 @@
 class KJobListView : public KListView
 {
 public:
-	KJobListView( QWidget *parent = 0, const char *name = 0 );
+	KJobListView( TQWidget *parent = 0, const char *name = 0 );
 
 protected:
-	bool acceptDrag( QDropEvent* ) const;
+	bool acceptDrag( TQDropEvent* ) const;
 };
 
-KJobListView::KJobListView( QWidget *parent, const char *name )
+KJobListView::KJobListView( TQWidget *parent, const char *name )
 	: KListView( parent, name )
 {
 	setAcceptDrops( true );
 	setDropVisualizer( false );
 }
 
-bool KJobListView::acceptDrag( QDropEvent *e ) const
+bool KJobListView::acceptDrag( TQDropEvent *e ) const
 {
 	if ( KURLDrag::canDecode( e ) )
 		return true;
@@ -81,7 +81,7 @@ bool KJobListView::acceptDrag( QDropEvent *e ) const
 		return KListView::acceptDrag( e );
 }
 
-KMJobViewer::KMJobViewer(QWidget *parent, const char *name)
+KMJobViewer::KMJobViewer(TQWidget *parent, const char *name)
 : KMainWindow(parent,name)
 {
 	m_view = 0;
@@ -100,7 +100,7 @@ KMJobViewer::KMJobViewer(QWidget *parent, const char *name)
 	{
 		setCaption(i18n("No Printer"));
 		KConfig *conf = KMFactory::self()->printConfig();
-		QSize defSize( 550, 250 );
+		TQSize defSize( 550, 250 );
 		conf->setGroup( "Jobs" );
 		resize( conf->readSizeEntry( "Size", &defSize ) );
 	}
@@ -121,10 +121,10 @@ KMJobViewer::~KMJobViewer()
 
 void KMJobViewer::setPrinter(KMPrinter *p)
 {
-	setPrinter((p ? p->printerName() : QString::null));
+	setPrinter((p ? p->printerName() : TQString::null));
 }
 
-void KMJobViewer::setPrinter(const QString& prname)
+void KMJobViewer::setPrinter(const TQString& prname)
 {
 	// We need to trigger a refresh even if the printer
 	// has not changed, some jobs may have been canceled
@@ -177,7 +177,7 @@ void KMJobViewer::addToManager()
 	if (m_prname == i18n("All Printers"))
 	{
 		loadPrinters();
-		QPtrListIterator<KMPrinter>	it(m_printers);
+		TQPtrListIterator<KMPrinter>	it(m_printers);
 		for (; it.current(); ++it)
 			m_manager->addPrinter(it.current()->printerName(), (KMJobManager::JobType)m_type, it.current()->isSpecial());
 	}
@@ -193,7 +193,7 @@ void KMJobViewer::removeFromManager()
 {
 	if (m_prname == i18n("All Printers"))
 	{
-		QPtrListIterator<KMPrinter>	it(m_printers);
+		TQPtrListIterator<KMPrinter>	it(m_printers);
 		for (; it.current(); ++it)
 			m_manager->removePrinter(it.current()->printerName(), (KMJobManager::JobType)m_type);
 	}
@@ -206,7 +206,7 @@ void KMJobViewer::removeFromManager()
 void KMJobViewer::refresh(bool reload)
 {
 	m_jobs.clear();
-	QPtrListIterator<KMJob>	it(m_manager->jobList(reload));
+	TQPtrListIterator<KMJob>	it(m_manager->jobList(reload));
 	bool	all = (m_prname == i18n("All Printers")), active = (m_type == KMJobManager::ActiveJobs);
 	for (; it.current(); ++it)
 		if ((all || it.current()->printer() == m_prname)
@@ -239,17 +239,17 @@ void KMJobViewer::init()
 		m_view->addColumn(i18n("Size (KB)"));
 		m_view->addColumn(i18n("Page(s)"));
 		m_view->setColumnAlignment(5,Qt::AlignRight|Qt::AlignVCenter);
-		connect( m_view, SIGNAL( dropped( QDropEvent*, QListViewItem* ) ), SLOT( slotDropped( QDropEvent*, QListViewItem* ) ) );
+		connect( m_view, TQT_SIGNAL( dropped( TQDropEvent*, TQListViewItem* ) ), TQT_SLOT( slotDropped( TQDropEvent*, TQListViewItem* ) ) );
 		//m_view->addColumn(i18n("Printer"));
 		//m_view->setColumnAlignment(6,Qt::AlignRight|Qt::AlignVCenter);
 		KMFactory::self()->uiManager()->setupJobViewer(m_view);
-		m_view->setFrameStyle(QFrame::WinPanel|QFrame::Sunken);
+		m_view->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 		m_view->setLineWidth(1);
 		m_view->setSorting(0);
 		m_view->setAllColumnsShowFocus(true);
-		m_view->setSelectionMode(QListView::Extended);
-		connect(m_view,SIGNAL(selectionChanged()),SLOT(slotSelectionChanged()));
-		connect(m_view,SIGNAL(rightButtonPressed(QListViewItem*,const QPoint&,int)),SLOT(slotRightClicked(QListViewItem*,const QPoint&,int)));
+		m_view->setSelectionMode(TQListView::Extended);
+		connect(m_view,TQT_SIGNAL(selectionChanged()),TQT_SLOT(slotSelectionChanged()));
+		connect(m_view,TQT_SIGNAL(rightButtonPressed(TQListViewItem*,const TQPoint&,int)),TQT_SLOT(slotRightClicked(TQListViewItem*,const TQPoint&,int)));
 		setCentralWidget(m_view);
 	}
 
@@ -259,35 +259,35 @@ void KMJobViewer::init()
 void KMJobViewer::initActions()
 {
 	// job actions
-	KAction	*hact = new KAction(i18n("&Hold"),"stop",0,this,SLOT(slotHold()),actionCollection(),"job_hold");
-	KAction	*ract = new KAction(i18n("&Resume"),"run",0,this,SLOT(slotResume()),actionCollection(),"job_resume");
-	KAction	*dact = new KAction(i18n("Remo&ve"),"edittrash",Qt::Key_Delete,this,SLOT(slotRemove()),actionCollection(),"job_remove");
-	KAction *sact = new KAction(i18n("Res&tart"),"redo",0,this,SLOT(slotRestart()),actionCollection(),"job_restart");
+	KAction	*hact = new KAction(i18n("&Hold"),"stop",0,this,TQT_SLOT(slotHold()),actionCollection(),"job_hold");
+	KAction	*ract = new KAction(i18n("&Resume"),"run",0,this,TQT_SLOT(slotResume()),actionCollection(),"job_resume");
+	KAction	*dact = new KAction(i18n("Remo&ve"),"edittrash",Qt::Key_Delete,this,TQT_SLOT(slotRemove()),actionCollection(),"job_remove");
+	KAction *sact = new KAction(i18n("Res&tart"),"redo",0,this,TQT_SLOT(slotRestart()),actionCollection(),"job_restart");
 	KActionMenu *mact = new KActionMenu(i18n("&Move to Printer"),"fileprint",actionCollection(),"job_move");
 	mact->setDelayed(false);
-	connect(mact->popupMenu(),SIGNAL(activated(int)),SLOT(slotMove(int)));
-	connect(mact->popupMenu(),SIGNAL(aboutToShow()),KMTimer::self(),SLOT(hold()));
-	connect(mact->popupMenu(),SIGNAL(aboutToHide()),KMTimer::self(),SLOT(release()));
-	connect(mact->popupMenu(),SIGNAL(aboutToShow()),SLOT(slotShowMoveMenu()));
+	connect(mact->popupMenu(),TQT_SIGNAL(activated(int)),TQT_SLOT(slotMove(int)));
+	connect(mact->popupMenu(),TQT_SIGNAL(aboutToShow()),KMTimer::self(),TQT_SLOT(hold()));
+	connect(mact->popupMenu(),TQT_SIGNAL(aboutToHide()),KMTimer::self(),TQT_SLOT(release()));
+	connect(mact->popupMenu(),TQT_SIGNAL(aboutToShow()),TQT_SLOT(slotShowMoveMenu()));
 	KToggleAction	*tact = new KToggleAction(i18n("&Toggle Completed Jobs"),"history",0,actionCollection(),"view_completed");
 	tact->setEnabled(m_manager->actions() & KMJob::ShowCompleted);
-	connect(tact,SIGNAL(toggled(bool)),SLOT(slotShowCompleted(bool)));
+	connect(tact,TQT_SIGNAL(toggled(bool)),TQT_SLOT(slotShowCompleted(bool)));
 	KToggleAction	*uact = new KToggleAction(i18n("Show Only User Jobs"), "personal", 0, actionCollection(), "view_user_jobs");
 	uact->setCheckedState(KGuiItem(i18n("Hide Only User Jobs"),"personal"));
-	connect(uact, SIGNAL(toggled(bool)), SLOT(slotUserOnly(bool)));
-	m_userfield = new QLineEdit(0);
+	connect(uact, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotUserOnly(bool)));
+	m_userfield = new TQLineEdit(0);
 	m_userfield->setText(getenv("USER"));
-	connect(m_userfield, SIGNAL(returnPressed()), SLOT(slotUserChanged()));
-	connect(uact, SIGNAL(toggled(bool)), m_userfield, SLOT(setEnabled(bool)));
+	connect(m_userfield, TQT_SIGNAL(returnPressed()), TQT_SLOT(slotUserChanged()));
+	connect(uact, TQT_SIGNAL(toggled(bool)), m_userfield, TQT_SLOT(setEnabled(bool)));
 	m_userfield->setEnabled(false);
-	m_userfield->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
+	m_userfield->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
 	KWidgetAction	*ufact = new KWidgetAction(m_userfield, i18n("User Name"), 0, 0, 0, actionCollection(), "view_username");
 
 	if (!m_pop)
 	{
-		m_pop = new QPopupMenu(this);
-		connect(m_pop,SIGNAL(aboutToShow()),KMTimer::self(),SLOT(hold()));
-		connect(m_pop,SIGNAL(aboutToHide()),KMTimer::self(),SLOT(release()));
+		m_pop = new TQPopupMenu(this);
+		connect(m_pop,TQT_SIGNAL(aboutToShow()),KMTimer::self(),TQT_SLOT(hold()));
+		connect(m_pop,TQT_SIGNAL(aboutToHide()),KMTimer::self(),TQT_SLOT(release()));
 		hact->plug(m_pop);
 		ract->plug(m_pop);
 		m_pop->insertSeparator();
@@ -300,10 +300,10 @@ void KMJobViewer::initActions()
 	// Filter actions
 	KActionMenu	*fact = new KActionMenu(i18n("&Select Printer"), "kdeprint_printer", actionCollection(), "filter_modify");
 	fact->setDelayed(false);
-	connect(fact->popupMenu(),SIGNAL(activated(int)),SLOT(slotPrinterSelected(int)));
-	connect(fact->popupMenu(),SIGNAL(aboutToShow()),KMTimer::self(),SLOT(hold()));
-	connect(fact->popupMenu(),SIGNAL(aboutToHide()),KMTimer::self(),SLOT(release()));
-	connect(fact->popupMenu(),SIGNAL(aboutToShow()),SLOT(slotShowPrinterMenu()));
+	connect(fact->popupMenu(),TQT_SIGNAL(activated(int)),TQT_SLOT(slotPrinterSelected(int)));
+	connect(fact->popupMenu(),TQT_SIGNAL(aboutToShow()),KMTimer::self(),TQT_SLOT(hold()));
+	connect(fact->popupMenu(),TQT_SIGNAL(aboutToHide()),KMTimer::self(),TQT_SLOT(release()));
+	connect(fact->popupMenu(),TQT_SIGNAL(aboutToShow()),TQT_SLOT(slotShowPrinterMenu()));
 
 	if (!m_standalone)
 	{
@@ -322,16 +322,16 @@ void KMJobViewer::initActions()
 	}
 	else
 	{// stand-alone application
-		KStdAction::quit(kapp,SLOT(quit()),actionCollection());
-		KStdAction::close(this,SLOT(slotClose()),actionCollection());
-		KStdAction::preferences(this, SLOT(slotConfigure()), actionCollection());
+		KStdAction::quit(kapp,TQT_SLOT(quit()),actionCollection());
+		KStdAction::close(this,TQT_SLOT(slotClose()),actionCollection());
+		KStdAction::preferences(this, TQT_SLOT(slotConfigure()), actionCollection());
 
 		// refresh action
-		new KAction(i18n("Refresh"),"reload",0,this,SLOT(slotRefresh()),actionCollection(),"refresh");
+		new KAction(i18n("Refresh"),"reload",0,this,TQT_SLOT(slotRefresh()),actionCollection(),"refresh");
 
 		// create status bar
 		KStatusBar	*statusbar = statusBar();
-		m_stickybox = new QCheckBox( i18n( "Keep window permanent" ), statusbar );
+		m_stickybox = new TQCheckBox( i18n( "Keep window permanent" ), statusbar );
 		statusbar->addWidget( m_stickybox, 1, false );
 		statusbar->insertItem(" " + i18n("Max.: %1").arg(i18n("Unlimited"))+ " ", 0, 0, true);
 		statusbar->setItemFixed(0);
@@ -344,12 +344,12 @@ void KMJobViewer::initActions()
 	slotSelectionChanged();
 }
 
-void KMJobViewer::buildPrinterMenu(QPopupMenu *menu, bool use_all, bool use_specials)
+void KMJobViewer::buildPrinterMenu(TQPopupMenu *menu, bool use_all, bool use_specials)
 {
 	loadPrinters();
 	menu->clear();
 
-	QPtrListIterator<KMPrinter>	it(m_printers);
+	TQPtrListIterator<KMPrinter>	it(m_printers);
 	int	i(0);
 	if (use_all)
 	{
@@ -379,11 +379,11 @@ void KMJobViewer::slotShowPrinterMenu()
 
 void KMJobViewer::updateJobs()
 {
-	QPtrListIterator<JobItem>	jit(m_items);
+	TQPtrListIterator<JobItem>	jit(m_items);
 	for (;jit.current();++jit)
 		jit.current()->setDiscarded(true);
 
-	QPtrListIterator<KMJob>	it(m_jobs);
+	TQPtrListIterator<KMJob>	it(m_jobs);
 	for (;it.current();++it)
 	{
 		KMJob	*j(it.current());
@@ -407,9 +407,9 @@ void KMJobViewer::updateJobs()
 	slotSelectionChanged();
 }
 
-JobItem* KMJobViewer::findItem(const QString& uri)
+JobItem* KMJobViewer::findItem(const TQString& uri)
 {
-	QPtrListIterator<JobItem>	it(m_items);
+	TQPtrListIterator<JobItem>	it(m_items);
 	for (;it.current();++it)
 		if (it.current()->jobUri() == uri) return it.current();
 	return 0;
@@ -422,8 +422,8 @@ void KMJobViewer::slotSelectionChanged()
 	int	thread(0);
 	bool	completed(true), remote(false);
 
-	QPtrListIterator<JobItem>	it(m_items);
-	QPtrList<KMJob>	joblist;
+	TQPtrListIterator<JobItem>	it(m_items);
+	TQPtrList<KMJob>	joblist;
 
 	joblist.setAutoDelete(false);
 	for (;it.current();++it)
@@ -459,26 +459,26 @@ void KMJobViewer::slotSelectionChanged()
 	m_manager->validatePluginActions(actionCollection(), joblist);
 }
 
-void KMJobViewer::jobSelection(QPtrList<KMJob>& l)
+void KMJobViewer::jobSelection(TQPtrList<KMJob>& l)
 {
 	l.setAutoDelete(false);
-	QPtrListIterator<JobItem>	it(m_items);
+	TQPtrListIterator<JobItem>	it(m_items);
 	for (;it.current();++it)
 		if (it.current()->isSelected())
 			l.append(it.current()->job());
 }
 
-void KMJobViewer::send(int cmd, const QString& name, const QString& arg)
+void KMJobViewer::send(int cmd, const TQString& name, const TQString& arg)
 {
 	KMTimer::self()->hold();
 
-	QPtrList<KMJob>	l;
+	TQPtrList<KMJob>	l;
 	jobSelection(l);
 	if (!m_manager->sendCommand(l,cmd,arg))
 	{
 		KMessageBox::error(this,"<qt>"+i18n("Unable to perform action \"%1\" on selected jobs. Error received from manager:").arg(name)+"<p>"+KMManager::self()->errorMsg()+"</p></qt>");
 		// error reported, clean it
-		KMManager::self()->setErrorMsg(QString::null);
+		KMManager::self()->setErrorMsg(TQString::null);
 	}
 
 	triggerRefresh();
@@ -515,7 +515,7 @@ void KMJobViewer::slotMove(int prID)
 	}
 }
 
-void KMJobViewer::slotRightClicked(QListViewItem*,const QPoint& p,int)
+void KMJobViewer::slotRightClicked(TQListViewItem*,const TQPoint& p,int)
 {
 	if (m_pop) m_pop->popup(p);
 }
@@ -525,7 +525,7 @@ void KMJobViewer::loadPrinters()
 	m_printers.clear();
 
 	// retrieve printer list without reloading it (faster)
-	QPtrListIterator<KMPrinter>	it(*(KMFactory::self()->manager()->printerList(false)));
+	TQPtrListIterator<KMPrinter>	it(*(KMFactory::self()->manager()->printerList(false)));
 	for (;it.current();++it)
 	{
 		// keep only real printers (no instance, no implicit) and special printers
@@ -594,25 +594,25 @@ void KMJobViewer::loadPluginActions()
 		}
 	}
 
-	QValueList<KAction*>	acts = m_manager->createPluginActions(actionCollection());
-	for (QValueListIterator<KAction*> it=acts.begin(); it!=acts.end(); ++it)
+	TQValueList<KAction*>	acts = m_manager->createPluginActions(actionCollection());
+	for (TQValueListIterator<KAction*> it=acts.begin(); it!=acts.end(); ++it)
 	{
 		// connect the action to this
-		connect((*it), SIGNAL(activated(int)), SLOT(pluginActionActivated(int)));
+		connect((*it), TQT_SIGNAL(activated(int)), TQT_SLOT(pluginActionActivated(int)));
 
 		// should add it to the toolbar and menubar
 		(*it)->plug(toolBar(), toolbarindex++);
 		if (m_pop)
 			(*it)->plug(m_pop, mpopindex++);
 		if (menu)
-			(*it)->plug(static_cast<QPopupMenu*>(menu), menuindex++);
+			(*it)->plug(static_cast<TQPopupMenu*>(menu), menuindex++);
 	}
 }
 
 void KMJobViewer::removePluginActions()
 {
-	QValueList<KAction*>	acts = actionCollection()->actions("plugin");
-	for (QValueListIterator<KAction*> it=acts.begin(); it!=acts.end(); ++it)
+	TQValueList<KAction*>	acts = actionCollection()->actions("plugin");
+	for (TQValueListIterator<KAction*> it=acts.begin(); it!=acts.end(); ++it)
 	{
 		(*it)->unplugAll();
 		delete (*it);
@@ -653,7 +653,7 @@ void KMJobViewer::reload()
 	static_cast<KToggleAction*>(actionCollection()->action("view_completed"))->setChecked(false);
 }
 
-void KMJobViewer::closeEvent(QCloseEvent *e)
+void KMJobViewer::closeEvent(TQCloseEvent *e)
 {
 	if (m_standalone && !kapp->sessionSaving())
 	{
@@ -668,7 +668,7 @@ void KMJobViewer::pluginActionActivated(int ID)
 {
 	KMTimer::self()->hold();
 
-	QPtrList<KMJob>	joblist;
+	TQPtrList<KMJob>	joblist;
 	jobSelection(joblist);
 	if (!m_manager->doPluginAction(ID, joblist))
 		KMessageBox::error(this, "<qt>"+i18n("Operation failed.")+"<p>"+KMManager::self()->errorMsg()+"</p></qt>");
@@ -679,7 +679,7 @@ void KMJobViewer::pluginActionActivated(int ID)
 
 void KMJobViewer::slotUserOnly(bool on)
 {
-	m_username = (on ? m_userfield->text() : QString::null);
+	m_username = (on ? m_userfield->text() : TQString::null);
 	refresh(false);
 }
 
@@ -717,10 +717,10 @@ bool KMJobViewer::isSticky() const
 	return ( m_stickybox ? m_stickybox->isChecked() : false );
 }
 
-void KMJobViewer::slotDropped( QDropEvent *e, QListViewItem* )
+void KMJobViewer::slotDropped( TQDropEvent *e, TQListViewItem* )
 {
-	QStringList files;
-	QString target;
+	TQStringList files;
+	TQString target;
 
         KURL::List uris;
 	KURLDrag::decode( e, uris );

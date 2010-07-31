@@ -18,8 +18,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <qdatastream.h>
-#include <qimage.h>
+#include <tqdatastream.h>
+#include <tqimage.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -44,10 +44,10 @@ extern "C"
   }
 }
 
-bool BinaryFormat::load( Addressee &addressee, QFile *file )
+bool BinaryFormat::load( Addressee &addressee, TQFile *file )
 {
   kdDebug(5700) << "BinaryFormat::load()" << endl;
-  QDataStream stream( file );
+  TQDataStream stream( file );
 
   if ( !checkHeader( stream ) )
     return false;
@@ -57,11 +57,11 @@ bool BinaryFormat::load( Addressee &addressee, QFile *file )
   return true;
 }
 
-bool BinaryFormat::loadAll( AddressBook*, Resource *resource, QFile *file )
+bool BinaryFormat::loadAll( AddressBook*, Resource *resource, TQFile *file )
 {
   kdDebug(5700) << "BinaryFormat::loadAll()" << endl;
 
-  QDataStream stream( file );
+  TQDataStream stream( file );
 
   if ( !checkHeader( stream ) )
     return false;
@@ -81,11 +81,11 @@ bool BinaryFormat::loadAll( AddressBook*, Resource *resource, QFile *file )
   return true;
 }
 
-void BinaryFormat::save( const Addressee &addressee, QFile *file )
+void BinaryFormat::save( const Addressee &addressee, TQFile *file )
 {
   kdDebug(5700) << "BinaryFormat::save()" << endl;
 
-  QDataStream stream( file );
+  TQDataStream stream( file );
 
   writeHeader( stream );
 
@@ -94,12 +94,12 @@ void BinaryFormat::save( const Addressee &addressee, QFile *file )
   saveAddressee( addressee, stream );
 }
 
-void BinaryFormat::saveAll( AddressBook*, Resource *resource, QFile *file )
+void BinaryFormat::saveAll( AddressBook*, Resource *resource, TQFile *file )
 {
   kdDebug(5700) << "BinaryFormat::saveAll()" << endl;
 
   Q_UINT32 counter = 0;
-  QDataStream stream( file );
+  TQDataStream stream( file );
 
   writeHeader( stream );
   // set dummy number of entries
@@ -117,22 +117,22 @@ void BinaryFormat::saveAll( AddressBook*, Resource *resource, QFile *file )
   stream << counter;
 }
 
-bool BinaryFormat::checkFormat( QFile *file ) const
+bool BinaryFormat::checkFormat( TQFile *file ) const
 {
   kdDebug(5700) << "BinaryFormat::checkFormat()" << endl;
 
-  QDataStream stream( file );
+  TQDataStream stream( file );
 
   return checkHeader( stream );
 }
 
-bool BinaryFormat::checkHeader( QDataStream &stream ) const
+bool BinaryFormat::checkHeader( TQDataStream &stream ) const
 {
   Q_UINT32 magic, version;
     
   stream >> magic >> version;
 
-  QFile *file = dynamic_cast<QFile*>( stream.device() );
+  TQFile *file = dynamic_cast<TQFile*>( stream.device() );
 
   if ( !file ) {
     kdError() << i18n("Not a file?") << endl;
@@ -152,7 +152,7 @@ bool BinaryFormat::checkHeader( QDataStream &stream ) const
   return true;
 }
 
-void BinaryFormat::writeHeader( QDataStream &stream )
+void BinaryFormat::writeHeader( TQDataStream &stream )
 {
   Q_UINT32 magic, version;
     
@@ -162,7 +162,7 @@ void BinaryFormat::writeHeader( QDataStream &stream )
   stream << magic << version;
 }
 
-void BinaryFormat::loadAddressee( Addressee &addressee, QDataStream &stream )
+void BinaryFormat::loadAddressee( Addressee &addressee, TQDataStream &stream )
 {
   stream >> addressee;
 /*
@@ -171,7 +171,7 @@ void BinaryFormat::loadAddressee( Addressee &addressee, QDataStream &stream )
   Picture logo = addressee.logo();
 
   if ( photo.isIntern() ) {
-    QImage img;
+    TQImage img;
     if ( !img.load( locateLocal( "data", "kabc/photos/" ) + addressee.uid() ) )
       kdDebug(5700) << "No photo available for '" << addressee.uid() << "'." << endl;
 
@@ -179,7 +179,7 @@ void BinaryFormat::loadAddressee( Addressee &addressee, QDataStream &stream )
   }
 
   if ( logo.isIntern() ) {
-    QImage img;
+    TQImage img;
     if ( !img.load( locateLocal( "data", "kabc/logos/" ) + addressee.uid() ) )
       kdDebug(5700) << "No logo available for '" << addressee.uid() << "'." << endl;
 
@@ -191,7 +191,7 @@ void BinaryFormat::loadAddressee( Addressee &addressee, QDataStream &stream )
 */
 }
 
-void BinaryFormat::saveAddressee( const Addressee &addressee, QDataStream &stream )
+void BinaryFormat::saveAddressee( const Addressee &addressee, TQDataStream &stream )
 {
   stream << addressee;
 /*
@@ -200,16 +200,16 @@ void BinaryFormat::saveAddressee( const Addressee &addressee, QDataStream &strea
   Picture logo = addressee.logo();
 
   if ( photo.isIntern() ) {
-    QImage img = photo.data();
-    QString fileName = locateLocal( "data", "kabc/photos/" ) + addressee.uid();
+    TQImage img = photo.data();
+    TQString fileName = locateLocal( "data", "kabc/photos/" ) + addressee.uid();
 
     if ( !img.save( fileName, "PNG" ) )
       kdDebug(5700) << "Unable to save photo for '" << addressee.uid() << "'." << endl;
   }
 
   if ( logo.isIntern() ) {
-    QImage img = logo.data();
-    QString fileName = locateLocal( "data", "kabc/logos/" ) + addressee.uid();
+    TQImage img = logo.data();
+    TQString fileName = locateLocal( "data", "kabc/logos/" ) + addressee.uid();
 
     if ( !img.save( fileName, "PNG" ) )
       kdDebug(5700) << "Unable to save logo for '" << addressee.uid() << "'." << endl;

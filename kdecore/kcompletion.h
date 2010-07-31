@@ -20,12 +20,12 @@
 #ifndef KCOMPLETION_H
 #define KCOMPLETION_H
 
-#include <qmap.h>
-#include <qptrlist.h>
-#include <qobject.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qguardedptr.h>
+#include <tqmap.h>
+#include <tqptrlist.h>
+#include <tqobject.h>
+#include <tqstring.h>
+#include <tqstringlist.h>
+#include <tqguardedptr.h>
 
 #include "kdelibs_export.h"
 #include <kglobalsettings.h>
@@ -43,7 +43,7 @@ class QPopupMenu;
  * @short A generic class for completing QStrings
  *
  * This class offers easy use of "auto-completion", "manual-completion" or
- * "shell completion" on QString objects. A common use is completing filenames
+ * "shell completion" on TQString objects. A common use is completing filenames
  * or URLs (see KURLCompletion()).
  * But it is not limited to URL-completion -- everything should be completable!
  * The user should be able to complete email-addresses, telephone-numbers,
@@ -134,7 +134,7 @@ class KDECORE_EXPORT KCompletion : public QObject
     Q_ENUMS( CompOrder )
     Q_PROPERTY( CompOrder order READ order WRITE setOrder )
     Q_PROPERTY( bool ignoreCase READ ignoreCase WRITE setIgnoreCase )
-    Q_PROPERTY( QStringList items READ items WRITE setItems )
+    Q_PROPERTY( TQStringList items READ items WRITE setItems )
     Q_OBJECT
 
 public:
@@ -162,7 +162,7 @@ public:
     /**
      * Attempts to find an item in the list of available completions,
      * that begins with @p string. Will either return the first matching item
-     * (if there is more than one match) or QString::null, if no match was
+     * (if there is more than one match) or TQString::null, if no match was
      * found.
      *
      * In the latter case, a sound will be issued, depending on
@@ -176,12 +176,12 @@ public:
      * This happens only in shell-completion-mode.
      *
      * @param string the string to complete
-     * @return the matching item, or QString::null if there is no matching
+     * @return the matching item, or TQString::null if there is no matching
      * item.
      * @see slotMakeCompletion
      * @see substringCompletion
      */
-    virtual QString makeCompletion( const QString& string );
+    virtual TQString makeCompletion( const TQString& string );
 
     /**
      * Returns a list of all completion items that contain the given @p string.
@@ -191,18 +191,18 @@ public:
      *
      * @see makeCompletion
      */
-    QStringList substringCompletion( const QString& string ) const;
+    TQStringList substringCompletion( const TQString& string ) const;
 
     /**
      * Returns the next item from the matching-items-list.
      * When reaching the beginning, the list is rotated so it will return the
      * last match and a sound is issued (depending on isSoundsEnabled()).
      * @return the next item from the matching-items-list.
-     * When there is no match, QString::null is returned and
+     * When there is no match, TQString::null is returned and
      * a sound is be issued.
      * @see slotPreviousMatch
      */
-    QString previousMatch();
+    TQString previousMatch();
 
     /**
      * Returns the next item from the matching-items-list.
@@ -210,18 +210,18 @@ public:
      * the first match and a sound is issued (depending on
      * isSoundsEnabled()).
      * @return the next item from the matching-items-list.  When there is no
-     * match, QString::null is returned and a sound is issued
+     * match, TQString::null is returned and a sound is issued
      * @see slotNextMatch
      */
-    QString nextMatch();
+    TQString nextMatch();
 
     /**
      * Returns the last match. Might be useful if you need to check whether
      * a completion is different from the last one.
-     * @return the last match. QString::null is returned when there is no
+     * @return the last match. TQString::null is returned when there is no
      *         last match.
      */
-    virtual const QString& lastMatch() const { return myLastMatch; }
+    virtual const TQString& lastMatch() const { return myLastMatch; }
 
     /**
      * Returns a list of all items inserted into KCompletion. This is useful
@@ -241,7 +241,7 @@ public:
      * @return a list of all items
      * @see setItems
      */
-    QStringList items() const;
+    TQStringList items() const;
     
     /**
      * Returns true when the completion object contains no entries.
@@ -322,14 +322,14 @@ public:
      * @return a list of all matches for the last completed string.
      * @see substringCompletion
      */
-    QStringList allMatches();
+    TQStringList allMatches();
 
     /**
      * Returns a list of all items matching @p string.
      * @param string the string to match
      * @return the list of all matches
      */
-    QStringList allMatches( const QString& string );
+    TQStringList allMatches( const TQString& string );
 
     /**
      * Returns a list of all items matching the last completed string.
@@ -350,7 +350,7 @@ public:
      * @param string the string to match
      * @return a list of all matches
      */
-    KCompletionMatches allWeightedMatches( const QString& string );
+    KCompletionMatches allWeightedMatches( const TQString& string );
 
     /**
      * Enables/disables playing a sound when
@@ -404,7 +404,7 @@ public slots:
      * @param string the string to complete
      * @see makeCompletion
      */
-    void slotMakeCompletion( const QString& string ) {
+    void slotMakeCompletion( const TQString& string ) {
         (void) makeCompletion( string );
     }
 
@@ -433,7 +433,7 @@ public slots:
      * Does the same as setItems(), but does not call clear() before.
      * @param items the items to insert
      */
-    void insertItems( const QStringList& items );
+    void insertItems( const TQStringList& items );
 
     /**
      * Sets the list of items available for completion. Removes all previous
@@ -450,7 +450,7 @@ public slots:
      * @param list the list of items that are available for completion
      * @see items
      */
-    virtual void setItems( const QStringList& list);
+    virtual void setItems( const TQStringList& list);
 
     /**
      * Adds an item to the list of available completions.
@@ -458,7 +458,7 @@ public slots:
      * won't work anymore).
      * @param item the item to add
      */
-    void addItem( const QString& item);
+    void addItem( const TQString& item);
 
     /**
      * Adds an item to the list of available completions.
@@ -471,7 +471,7 @@ public slots:
      * @param item the item to add
      * @param weight the weight of the item, default is 1
      */
-    void addItem( const QString& item, uint weight );
+    void addItem( const TQString& item, uint weight );
 
     /**
      * Removes an item from the list of available completions.
@@ -479,7 +479,7 @@ public slots:
      * won't work anymore).
      * @param item the item to remove
      */
-    void removeItem( const QString& item);
+    void removeItem( const TQString& item);
 
     /**
      * Removes all inserted items.
@@ -490,11 +490,11 @@ public slots:
 signals:
     /**
      * The matching item. Will be emitted by makeCompletion(),
-     * previousMatch() or nextMatch(). May be QString::null if there
+     * previousMatch() or nextMatch(). May be TQString::null if there
      * is no matching item.
-     * @param item the match, or QString::null if there is none
+     * @param item the match, or TQString::null if there is none
      */
-    void match( const QString& item);
+    void match( const TQString& item);
 
     /**
      * All matching items. Will be emitted by makeCompletion() in shell-
@@ -502,7 +502,7 @@ signals:
      * or more often.
      * @param matchlist the list of matches
      */
-    void matches( const QStringList& matchlist);
+    void matches( const TQStringList& matchlist);
 
     /**
      * This signal is emitted, when calling makeCompletion() and more than
@@ -525,7 +525,7 @@ protected:
      * @param match the match to process
      * @see postProcessMatches
      */
-    virtual void postProcessMatch( QString *match ) const { Q_UNUSED(match) }
+    virtual void postProcessMatch( TQString *match ) const { Q_UNUSED(match) }
 
     /**
      * This method is called before a list of all available completions is
@@ -537,7 +537,7 @@ protected:
      * @param matches the matches to process
      * @see postProcessMatch
      */
-    virtual void postProcessMatches( QStringList * matches ) const { Q_UNUSED(matches)}
+    virtual void postProcessMatches( TQStringList * matches ) const { Q_UNUSED(matches)}
 
     /**
      * This method is called before a list of all available completions is
@@ -552,19 +552,19 @@ protected:
     virtual void postProcessMatches( KCompletionMatches * matches ) const {Q_UNUSED(matches)}
 
 private:
-    void            addWeightedItem( const QString& );
-    QString         findCompletion( const QString& string );
-    void            findAllCompletions( const QString&,
+    void            addWeightedItem( const TQString& );
+    TQString         findCompletion( const TQString& string );
+    void            findAllCompletions( const TQString&,
                                         KCompletionMatchesWrapper *matches,
                                         bool& hasMultipleMatches ) const;
 
     void extractStringsFromNode( const KCompTreeNode *,
-                                 const QString& beginning,
+                                 const TQString& beginning,
                                  KCompletionMatchesWrapper *matches,
                                  bool addWeight = false ) const;
     void extractStringsFromNodeCI( const KCompTreeNode *,
-                                   const QString& beginning,
-                                   const QString& restString,
+                                   const TQString& beginning,
+                                   const TQString& restString,
                                    KCompletionMatchesWrapper *matches) const;
 
     enum        BeepMode { NoMatch, PartialMatch, Rotation };
@@ -573,11 +573,11 @@ private:
     KGlobalSettings::Completion myCompletionMode;
 
     CompOrder       myOrder;
-    QString         myLastString;
-    QString         myLastMatch;
-    QString         myCurrentMatch;
+    TQString         myLastString;
+    TQString         myLastMatch;
+    TQString         myCurrentMatch;
     KCompTreeNode * myTreeRoot;
-    QStringList     myRotations;
+    TQStringList     myRotations;
     bool            myBeep;
     bool            myIgnoreCase;
     bool            myHasMultipleMatches;
@@ -591,7 +591,7 @@ private:
 };
 
 // some more helper stuff
-typedef KSortableValueList<QString> KCompletionMatchesList;
+typedef KSortableValueList<TQString> KCompletionMatchesList;
 class KCompletionMatchesPrivate;
 
 /**
@@ -607,7 +607,7 @@ class KCompletionMatchesPrivate;
  * if( !location.startsWith( "www." ))
  matches += completion->allWeightedmatches( "www." + location" );
  * matches.removeDuplicates();
- * QStringList list = matches.list();
+ * TQStringList list = matches.list();
  * \endcode
  *
  * @short List for keeping matches returned from KCompletion
@@ -627,12 +627,12 @@ public:
      */
     void removeDuplicates();
     /**
-     * Returns the matches as a QStringList.
+     * Returns the matches as a TQStringList.
      * @param sort if false, the matches won't be sorted before the conversion,
      *             use only if you're sure the sorting is not needed
      * @return the list of matches
      */
-    QStringList list( bool sort = true ) const;
+    TQStringList list( bool sort = true ) const;
     /**
      * If sorting() returns false, the matches aren't sorted by their weight,
      * even if true is passed to list().
@@ -689,7 +689,7 @@ public:
 
 
     // Map for the key binding types mentioned above.
-    typedef QMap<KeyBindingType, KShortcut> KeyBindingMap;
+    typedef TQMap<KeyBindingType, KShortcut> KeyBindingMap;
 
     /**
      * Default constructor.
@@ -930,14 +930,14 @@ public:
      *
      * @param text the completed text to be set in the widget.
      */
-    virtual void setCompletedText( const QString& text ) = 0;
+    virtual void setCompletedText( const TQString& text ) = 0;
 
     /**
      * A pure virtual function that must be implemented by
      * all inheriting classes.
      * @param items the list of completed items
      */
-    virtual void setCompletedItems( const QStringList& items ) = 0;
+    virtual void setCompletedItems( const TQStringList& items ) = 0;
 
     /**
      * Returns a pointer to the completion object.
@@ -994,7 +994,7 @@ private:
     // Stores the completion mode locally.
     KGlobalSettings::Completion m_iCompletionMode;
     // Pointer to Completion object.
-    QGuardedPtr<KCompletion> m_pCompObj;
+    TQGuardedPtr<KCompletion> m_pCompObj;
     // Keybindings
     KeyBindingMap m_keyMap;
     // we may act as a proxy to another KCompletionBase object

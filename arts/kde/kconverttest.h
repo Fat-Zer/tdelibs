@@ -22,7 +22,7 @@
 #ifndef KCONVERTTEST_H
 #define KCONVERTTEST_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class KConvertTest : public QObject
 {

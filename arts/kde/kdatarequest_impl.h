@@ -22,14 +22,14 @@
 #ifndef KDATAREQUEST_IMPL
 #define KDATAREQUEST_IMPL
 
-#include <qobject.h>
+#include <tqobject.h>
 #include "artskde.h"
 #include "stdsynthmodule.h" 
 
 namespace Arts
 {
 
-class KDataRequest_impl : public QObject, virtual public KDataRequest_skel,
+class KDataRequest_impl : public TQObject, virtual public KDataRequest_skel,
 						  virtual public StdSynthModule
 {
 Q_OBJECT

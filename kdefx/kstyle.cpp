@@ -3,7 +3,7 @@
  * KStyle
  * Copyright (C) 2001-2002 Karol Szwed <gallium@kde.org>
  *
- * QWindowsStyle CC_ListView and style images were kindly donated by TrollTech,
+ * TQWindowsStyle CC_ListView and style images were kindly donated by TrollTech,
  * Copyright (C) 1998-2000 TrollTech AS.
  *
  * Many thanks to Bradley T. Hughes for the 3 button scrollbar code.
@@ -29,23 +29,23 @@
 
 #include "kstyle.h"
 
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qcleanuphandler.h>
-#include <qmap.h>
-#include <qimage.h>
-#include <qlistview.h>
-#include <qmenubar.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qpopupmenu.h>
-#include <qprogressbar.h>
-#include <qscrollbar.h>
-#include <qsettings.h>
-#include <qslider.h>
-#include <qstylefactory.h>
-#include <qtabbar.h>
-#include <qtoolbar.h>
+#include <tqapplication.h>
+#include <tqbitmap.h>
+#include <tqcleanuphandler.h>
+#include <tqmap.h>
+#include <tqimage.h>
+#include <tqlistview.h>
+#include <tqmenubar.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqpopupmenu.h>
+#include <tqprogressbar.h>
+#include <tqscrollbar.h>
+#include <tqsettings.h>
+#include <tqslider.h>
+#include <tqstylefactory.h>
+#include <tqtabbar.h>
+#include <tqtoolbar.h>
 
 #include <kpixmap.h>
 #include <kpixmapeffect.h>
@@ -76,12 +76,12 @@ namespace
 
 	// Drop Shadow
 	struct ShadowElements {
-		QWidget* w1;
-		QWidget* w2;
+		TQWidget* w1;
+		TQWidget* w2;
 	};
-	typedef QMap<const QPopupMenu*,ShadowElements> ShadowMap;
+	typedef TQMap<const TQPopupMenu*,ShadowElements> ShadowMap;
         static ShadowMap *_shadowMap = 0;
-        QSingleCleanupHandler<ShadowMap> cleanupShadowMap;
+        TQSingleCleanupHandler<ShadowMap> cleanupShadowMap;
         ShadowMap &shadowMap() {
 	    if ( !_shadowMap ) {
 		_shadowMap = new ShadowMap;
@@ -124,22 +124,22 @@ class TransparencyHandler : public QObject
 		TransparencyHandler(KStyle* style, TransparencyEngine tEngine,
 							float menuOpacity, bool useDropShadow);
 		~TransparencyHandler();
-		bool eventFilter(QObject* object, QEvent* event);
+		bool eventFilter(TQObject* object, TQEvent* event);
 
 	protected:
-		void blendToColor(const QColor &col);
-		void blendToPixmap(const QColorGroup &cg, const QPopupMenu* p);
+		void blendToColor(const TQColor &col);
+		void blendToPixmap(const TQColorGroup &cg, const TQPopupMenu* p);
 #ifdef HAVE_XRENDER
-		void XRenderBlendToPixmap(const QPopupMenu* p);
+		void XRenderBlendToPixmap(const TQPopupMenu* p);
 #endif
-		void createShadowWindows(const QPopupMenu* p);
-		void removeShadowWindows(const QPopupMenu* p);
-		void rightShadow(QImage& dst);
-		void bottomShadow(QImage& dst);
+		void createShadowWindows(const TQPopupMenu* p);
+		void removeShadowWindows(const TQPopupMenu* p);
+		void rightShadow(TQImage& dst);
+		void bottomShadow(TQImage& dst);
 	private:
 		bool    dropShadow;
 		float   opacity;
-		QPixmap pix;
+		TQPixmap pix;
 		KStyle* kstyle;
 		TransparencyEngine te;
 };
@@ -164,24 +164,24 @@ struct KStylePrivate
 	KStyle::KStyleFlags flags;
 	
 	//For KPE_ListViewBranch
-	QBitmap *verticalLine;
-	QBitmap *horizontalLine;
+	TQBitmap *verticalLine;
+	TQBitmap *horizontalLine;
 };
 
 // -----------------------------------------------------------------------------
 
 
 KStyle::KStyle( KStyleFlags flags, KStyleScrollBarType sbtype )
-	: QCommonStyle(), d(new KStylePrivate)
+	: TQCommonStyle(), d(new KStylePrivate)
 {
 	d->flags = flags;
 	bool useMenuTransparency    = (flags & AllowMenuTransparency);
 	d->useFilledFrameWorkaround = (flags & FilledFrameWorkaround);
 	d->scrollbarType = sbtype;
-	d->highcolor = QPixmap::defaultDepth() > 8;
+	d->highcolor = TQPixmap::defaultDepth() > 8;
 
 	// Read style settings
-	QSettings settings;
+	TQSettings settings;
 	d->popupMenuDelay       = settings.readNumEntry ("/KStyle/Settings/PopupMenuDelay", 256);
 	d->sloppySubMenus       = settings.readBoolEntry("/KStyle/Settings/SloppySubMenus", false);
 	d->etchDisabledText     = settings.readBoolEntry("/KStyle/Settings/EtchDisabledText", true);
@@ -192,7 +192,7 @@ KStyle::KStyle( KStyleFlags flags, KStyleScrollBarType sbtype )
 	d->menuHandler = NULL;
 
 	if (useMenuTransparency) {
-		QString effectEngine = settings.readEntry("/KStyle/Settings/MenuTransparencyEngine", "Disabled");
+		TQString effectEngine = settings.readEntry("/KStyle/Settings/MenuTransparencyEngine", "Disabled");
 
 #ifdef HAVE_XRENDER
 		if (effectEngine == "XRender")
@@ -237,35 +237,35 @@ KStyle::~KStyle()
 }
 
 
-QString KStyle::defaultStyle()
+TQString KStyle::defaultStyle()
 {
-	if (QPixmap::defaultDepth() > 8)
-	   return QString("plastik");
+	if (TQPixmap::defaultDepth() > 8)
+	   return TQString("plastik");
 	else
-	   return QString("light, 3rd revision");
+	   return TQString("light, 3rd revision");
 }
 
 
-void KStyle::polish( QWidget* widget )
+void KStyle::polish( TQWidget* widget )
 {
 	if ( d->useFilledFrameWorkaround )
 	{
-		if ( QFrame *frame = ::qt_cast< QFrame* >( widget ) ) {
-			QFrame::Shape shape = frame->frameShape();
-			if (shape == QFrame::ToolBarPanel || shape == QFrame::MenuBarPanel)
+		if ( TQFrame *frame = ::qt_cast< TQFrame* >( widget ) ) {
+			TQFrame::Shape shape = frame->frameShape();
+			if (shape == TQFrame::ToolBarPanel || shape == TQFrame::MenuBarPanel)
 				widget->installEventFilter(this);
 		} 
 	}
 }
 
 
-void KStyle::unPolish( QWidget* widget )
+void KStyle::unPolish( TQWidget* widget )
 {
 	if ( d->useFilledFrameWorkaround )
 	{
-		if ( QFrame *frame = ::qt_cast< QFrame* >( widget ) ) {
-			QFrame::Shape shape = frame->frameShape();
-			if (shape == QFrame::ToolBarPanel || shape == QFrame::MenuBarPanel)
+		if ( TQFrame *frame = ::qt_cast< TQFrame* >( widget ) ) {
+			TQFrame::Shape shape = frame->frameShape();
+			if (shape == TQFrame::ToolBarPanel || shape == TQFrame::MenuBarPanel)
 				widget->removeEventFilter(this);
 		} 
 	}
@@ -273,7 +273,7 @@ void KStyle::unPolish( QWidget* widget )
 
 
 // Style changes (should) always re-polish popups.
-void KStyle::polishPopupMenu( QPopupMenu* p )
+void KStyle::polishPopupMenu( TQPopupMenu* p )
 {
 	if (!p->testWState( WState_Polished ))
 		p->setCheckable(true);
@@ -299,20 +299,20 @@ KStyle::KStyleFlags KStyle::styleFlags() const
 	return d->flags;
 }
 
-void KStyle::renderMenuBlendPixmap( KPixmap &pix, const QColorGroup &cg,
-	const QPopupMenu* /* popup */ ) const
+void KStyle::renderMenuBlendPixmap( KPixmap &pix, const TQColorGroup &cg,
+	const TQPopupMenu* /* popup */ ) const
 {
 	pix.fill(cg.button());	// Just tint as the default behavior
 }
 
 
 void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
-								  QPainter* p,
-								  const QWidget* widget,
-								  const QRect &r,
-								  const QColorGroup &cg,
+								  TQPainter* p,
+								  const TQWidget* widget,
+								  const TQRect &r,
+								  const TQColorGroup &cg,
 								  SFlags flags,
-								  const QStyleOption& /* opt */ ) const
+								  const TQStyleOption& /* opt */ ) const
 {
 	switch( kpe )
 	{
@@ -322,7 +322,7 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 		case KPE_DockWindowHandle: {
 
 			// Draws a nice DockWindow handle including the dock title.
-			QWidget* wid = const_cast<QWidget*>(widget);
+			TQWidget* wid = const_cast<TQWidget*>(widget);
 			bool horizontal = flags & Style_Horizontal;
 			int x,y,w,h,x2,y2;
 
@@ -336,23 +336,23 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 			x2 = x + w - 1;
 			y2 = y + h - 1;
 
-			QFont fnt;
-			fnt = QApplication::font(wid);
+			TQFont fnt;
+			fnt = TQApplication::font(wid);
 			fnt.setPointSize( fnt.pointSize()-2 );
 
 			// Draw the item on an off-screen pixmap
 			// to preserve Xft antialiasing for
 			// vertically oriented handles.
-			QPixmap pix;
+			TQPixmap pix;
 			if (horizontal)
 				pix.resize( h-2, w-2 );
 			else
 				pix.resize( w-2, h-2 );
 
-			QString title = wid->parentWidget()->caption();
-			QPainter p2;
+			TQString title = wid->parentWidget()->caption();
+			TQPainter p2;
 			p2.begin(&pix);
-			p2.fillRect(pix.rect(), cg.brush(QColorGroup::Highlight));
+			p2.fillRect(pix.rect(), cg.brush(TQColorGroup::Highlight));
 			p2.setPen(cg.highlightedText());
 			p2.setFont(fnt);
 			p2.drawText(pix.rect(), AlignCenter, title);
@@ -367,9 +367,9 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 			p->drawLine(x2, y+1, x2, y2);
 
 			if (horizontal) {
-				QWMatrix m;
+				TQWMatrix m;
 				m.rotate(-90.0);
-				QPixmap vpix = pix.xForm(m);
+				TQPixmap vpix = pix.xForm(m);
 				bitBlt(wid, r.x()+1, r.y()+1, &vpix);
 			} else
 				bitBlt(wid, r.x()+1, r.y()+1, &pix);
@@ -410,10 +410,10 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 			{
 				// make 128*1 and 1*128 bitmaps that can be used for
 				// drawing the right sort of lines.
-				d->verticalLine   = new QBitmap( 1, 129, true );
-				d->horizontalLine = new QBitmap( 128, 1, true );
-				QPointArray a( 64 );
-				QPainter p2;
+				d->verticalLine   = new TQBitmap( 1, 129, true );
+				d->horizontalLine = new TQBitmap( 128, 1, true );
+				TQPointArray a( 64 );
+				TQPainter p2;
 				p2.begin( d->verticalLine );
 
 				int i;
@@ -422,7 +422,7 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 				p2.setPen( color1 );
 				p2.drawPoints( a );
 				p2.end();
-				QApplication::flushX();
+				TQApplication::flushX();
 				d->verticalLine->setMask( *d->verticalLine );
 
 				p2.begin( d->horizontalLine );
@@ -431,7 +431,7 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 				p2.setPen( color1 );
 				p2.drawPoints( a );
 				p2.end();
-				QApplication::flushX();
+				TQApplication::flushX();
 				d->horizontalLine->setMask( *d->horizontalLine );
 			}
 
@@ -492,7 +492,7 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 }
 
 
-int KStyle::kPixelMetric( KStylePixelMetric kpm, const QWidget* /* widget */) const
+int KStyle::kPixelMetric( KStylePixelMetric kpm, const TQWidget* /* widget */) const
 {
 	int value;
 	switch(kpm)
@@ -520,29 +520,29 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, const QWidget* /* widget */) co
 // -----------------------------------------------------------------------------
 
 void KStyle::drawPrimitive( PrimitiveElement pe,
-							QPainter* p,
-							const QRect &r,
-							const QColorGroup &cg,
+							TQPainter* p,
+							const TQRect &r,
+							const TQColorGroup &cg,
 							SFlags flags,
-							const QStyleOption& opt ) const
+							const TQStyleOption& opt ) const
 {
 	// TOOLBAR/DOCK WINDOW HANDLE
 	// ------------------------------------------------------------------------
 	if (pe == PE_DockWindowHandle)
 	{
 		// Wild workarounds are here. Beware.
-		QWidget *widget, *parent;
+		TQWidget *widget, *parent;
 
-		if (p && p->device()->devType() == QInternal::Widget) {
-			widget = static_cast<QWidget*>(p->device());
+		if (p && p->device()->devType() == TQInternal::Widget) {
+			widget = static_cast<TQWidget*>(p->device());
 			parent = widget->parentWidget();
 		} else
 			return;		// Don't paint on non-widgets
 
 		// Check if we are a normal toolbar or a hidden dockwidget.
 		if ( parent &&
-			(parent->inherits("QToolBar") ||		// Normal toolbar
-			(parent->inherits("QMainWindow")) ))	// Collapsed dock
+			(parent->inherits("TQToolBar") ||		// Normal toolbar
+			(parent->inherits("TQMainWindow")) ))	// Collapsed dock
 
 			// Draw a toolbar handle
 			drawKStylePrimitive( KPE_ToolBarHandle, p, widget, r, cg, flags, opt );
@@ -557,9 +557,9 @@ void KStyle::drawPrimitive( PrimitiveElement pe,
 			drawKStylePrimitive( KPE_GeneralHandle, p, widget, r, cg, flags, opt );
 #if QT_VERSION >= 0x030300
 #ifdef HAVE_XRENDER
-	} else if ( d->semiTransparentRubberband && pe == QStyle::PE_RubberBand ) {
-			QRect rect = r.normalize();
-			QPoint point;
+	} else if ( d->semiTransparentRubberband && pe == TQStyle::PE_RubberBand ) {
+			TQRect rect = r.normalize();
+			TQPoint point;
 			point = p->xForm( point );
 	
 			static XRenderColor clr = { 0, 0, 0, 0 };
@@ -596,7 +596,7 @@ void KStyle::drawPrimitive( PrimitiveElement pe,
 
 			p->save();
 			p->setRasterOp( Qt::CopyROP );
-			p->setPen( QPen( cg.highlight().dark( 160 ), 1 ) );
+			p->setPen( TQPen( cg.highlight().dark( 160 ), 1 ) );
 			p->setBrush( NoBrush );
 			p->drawRect(
 					rect.x() + point.x(),
@@ -607,32 +607,32 @@ void KStyle::drawPrimitive( PrimitiveElement pe,
 #endif
 #endif
 	} else
-		QCommonStyle::drawPrimitive( pe, p, r, cg, flags, opt );
+		TQCommonStyle::drawPrimitive( pe, p, r, cg, flags, opt );
 }
 
 
 
 void KStyle::drawControl( ControlElement element,
-						  QPainter* p,
-						  const QWidget* widget,
-						  const QRect &r,
-						  const QColorGroup &cg,
+						  TQPainter* p,
+						  const TQWidget* widget,
+						  const TQRect &r,
+						  const TQColorGroup &cg,
 						  SFlags flags,
-						  const QStyleOption &opt ) const
+						  const TQStyleOption &opt ) const
 {
 	switch (element)
 	{
 		// TABS
 		// ------------------------------------------------------------------------
 		case CE_TabBarTab: {
-			const QTabBar* tb  = (const QTabBar*) widget;
-			QTabBar::Shape tbs = tb->shape();
+			const TQTabBar* tb  = (const TQTabBar*) widget;
+			TQTabBar::Shape tbs = tb->shape();
 			bool selected      = flags & Style_Selected;
 			int x = r.x(), y=r.y(), bottom=r.bottom(), right=r.right();
 
 			switch (tbs) {
 
-				case QTabBar::RoundedAbove: {
+				case TQTabBar::RoundedAbove: {
 					if (!selected)
 						p->translate(0,1);
 					p->setPen(selected ? cg.light() : cg.shadow());
@@ -665,7 +665,7 @@ void KStyle::drawControl( ControlElement element,
 					break;
 				}
 
-				case QTabBar::RoundedBelow: {
+				case TQTabBar::RoundedBelow: {
 					if (!selected)
 						p->translate(0,-1);
 					p->setPen(selected ? cg.light() : cg.shadow());
@@ -699,7 +699,7 @@ void KStyle::drawControl( ControlElement element,
 					break;
 				}
 
-				case QTabBar::TriangularAbove: {
+				case TQTabBar::TriangularAbove: {
 					if (!selected)
 						p->translate(0,1);
 					p->setPen(selected ? cg.light() : cg.shadow());
@@ -720,7 +720,7 @@ void KStyle::drawControl( ControlElement element,
 					p->setPen(cg.mid());
 					p->drawLine(right-1, y+6, right-1, bottom);
 
-					QPointArray a(6);
+					TQPointArray a(6);
 					a.setPoint(0, x+2, bottom);
 					a.setPoint(1, x+2, y+7);
 					a.setPoint(2, x+7, y+2);
@@ -739,7 +739,7 @@ void KStyle::drawControl( ControlElement element,
 					break;
 				}
 
-				default: { // QTabBar::TriangularBelow
+				default: { // TQTabBar::TriangularBelow
 					if (!selected)
 						p->translate(0,-1);
 					p->setPen(selected ? cg.light() : cg.shadow());
@@ -763,7 +763,7 @@ void KStyle::drawControl( ControlElement element,
 					p->setPen(cg.mid());
 					p->drawLine(right-1, bottom-6, right-1, y);
 
-					QPointArray a(6);
+					TQPointArray a(6);
 					a.setPoint(0, x+2, y);
 					a.setPoint(1, x+2, bottom-7);
 					a.setPoint(2, x+7, bottom-2);
@@ -799,17 +799,17 @@ void KStyle::drawControl( ControlElement element,
 		// PROGRESSBAR
 		// ------------------------------------------------------------------------
 		case CE_ProgressBarGroove: {
-			QRect fr = subRect(SR_ProgressBarGroove, widget);
-			drawPrimitive(PE_Panel, p, fr, cg, Style_Sunken, QStyleOption::Default);
+			TQRect fr = subRect(SR_ProgressBarGroove, widget);
+			drawPrimitive(PE_Panel, p, fr, cg, Style_Sunken, TQStyleOption::Default);
 			break;
 		}
 
 		case CE_ProgressBarContents: {
 			// ### Take into account totalSteps() for busy indicator
-			const QProgressBar* pb = (const QProgressBar*)widget;
-			QRect cr = subRect(SR_ProgressBarContents, widget);
+			const TQProgressBar* pb = (const TQProgressBar*)widget;
+			TQRect cr = subRect(SR_ProgressBarContents, widget);
 			double progress = pb->progress();
-			bool reverse = QApplication::reverseLayout();
+			bool reverse = TQApplication::reverseLayout();
 			int steps = pb->totalSteps();
 
 			if (!cr.isValid())
@@ -836,10 +836,10 @@ void KStyle::drawControl( ControlElement element,
 
 					if (reverse)
 						p->fillRect(cr.x() + cr.width() - width - pstep, cr.y(), width, cr.height(),
-									cg.brush(QColorGroup::Highlight));
+									cg.brush(TQColorGroup::Highlight));
 					else
 						p->fillRect(cr.x() + pstep, cr.y(), width, cr.height(),
-									cg.brush(QColorGroup::Highlight));
+									cg.brush(TQColorGroup::Highlight));
 
 					return;
 				}
@@ -847,7 +847,7 @@ void KStyle::drawControl( ControlElement element,
 
 				// Do fancy gradient for highcolor displays
 				if (d->highcolor) {
-					QColor c(cg.highlight());
+					TQColor c(cg.highlight());
 					KPixmap pix;
 					pix.resize(cr.width(), cr.height());
 					KPixmapEffect::gradient(pix, reverse ? c.light(150) : c.dark(150),
@@ -861,25 +861,25 @@ void KStyle::drawControl( ControlElement element,
 				} else
 					if (reverse)
 						p->fillRect(cr.x()+(cr.width()-width), cr.y(), width, cr.height(),
-									cg.brush(QColorGroup::Highlight));
+									cg.brush(TQColorGroup::Highlight));
 					else
 						p->fillRect(cr.x(), cr.y(), width, cr.height(),
-									cg.brush(QColorGroup::Highlight));
+									cg.brush(TQColorGroup::Highlight));
 			}
 			break;
 		}
 
 		case CE_ProgressBarLabel: {
-			const QProgressBar* pb = (const QProgressBar*)widget;
-			QRect cr = subRect(SR_ProgressBarContents, widget);
+			const TQProgressBar* pb = (const TQProgressBar*)widget;
+			TQRect cr = subRect(SR_ProgressBarContents, widget);
 			double progress = pb->progress();
-			bool reverse = QApplication::reverseLayout();
+			bool reverse = TQApplication::reverseLayout();
 			int steps = pb->totalSteps();
 
 			if (!cr.isValid())
 				return;
 
-			QFont font = p->font();
+			TQFont font = p->font();
 			font.setBold(true);
 			p->setFont(font);
 
@@ -887,7 +887,7 @@ void KStyle::drawControl( ControlElement element,
 			if (progress > 0 || steps == 0) {
 				double pg = (steps == 0) ? 1.0 : progress / steps;
 				int width = QMIN(cr.width(), (int)(pg * cr.width()));
-				QRect crect;
+				TQRect crect;
 				if (reverse)
 					crect.setRect(cr.x()+(cr.width()-width), cr.y(), cr.width(), cr.height());
 				else
@@ -910,12 +910,12 @@ void KStyle::drawControl( ControlElement element,
 		}
 
 		default:
-			QCommonStyle::drawControl(element, p, widget, r, cg, flags, opt);
+			TQCommonStyle::drawControl(element, p, widget, r, cg, flags, opt);
 	}
 }
 
 
-QRect KStyle::subRect(SubRect r, const QWidget* widget) const
+TQRect KStyle::subRect(SubRect r, const TQWidget* widget) const
 {
 	switch(r)
 	{
@@ -927,17 +927,17 @@ QRect KStyle::subRect(SubRect r, const QWidget* widget) const
 		case SR_ProgressBarContents:
 		case SR_ProgressBarLabel: {
 			// ### take into account indicatorFollowsStyle()
-			QRect rt = widget->rect();
-			return QRect(rt.x()+2, rt.y()+2, rt.width()-4, rt.height()-4);
+			TQRect rt = widget->rect();
+			return TQRect(rt.x()+2, rt.y()+2, rt.width()-4, rt.height()-4);
 		}
 
 		default:
-			return QCommonStyle::subRect(r, widget);
+			return TQCommonStyle::subRect(r, widget);
 	}
 }
 
 
-int KStyle::pixelMetric(PixelMetric m, const QWidget* widget) const
+int KStyle::pixelMetric(PixelMetric m, const TQWidget* widget) const
 {
 	switch(m)
 	{
@@ -949,16 +949,16 @@ int KStyle::pixelMetric(PixelMetric m, const QWidget* widget) const
 
 		case PM_DockWindowHandleExtent:
 		{
-			QWidget* parent = 0;
+			TQWidget* parent = 0;
 			// Check that we are not a normal toolbar or a hidden dockwidget,
 			// in which case we need to adjust the height for font size
 			if (widget && (parent = widget->parentWidget() )
-				&& !parent->inherits("QToolBar")
-				&& !parent->inherits("QMainWindow")
+				&& !parent->inherits("TQToolBar")
+				&& !parent->inherits("TQMainWindow")
 				&& widget->inherits("QDockWindowHandle") )
 					return widget->fontMetrics().lineSpacing();
 			else
-				return QCommonStyle::pixelMetric(m, widget);
+				return TQCommonStyle::pixelMetric(m, widget);
 		}
 
 		// TABS
@@ -967,20 +967,20 @@ int KStyle::pixelMetric(PixelMetric m, const QWidget* widget) const
 			return 24;
 
 		case PM_TabBarTabVSpace: {
-			const QTabBar * tb = (const QTabBar *) widget;
-			if ( tb->shape() == QTabBar::RoundedAbove ||
-				 tb->shape() == QTabBar::RoundedBelow )
+			const TQTabBar * tb = (const TQTabBar *) widget;
+			if ( tb->shape() == TQTabBar::RoundedAbove ||
+				 tb->shape() == TQTabBar::RoundedBelow )
 				return 10;
 			else
 				return 4;
 		}
 
 		case PM_TabBarTabOverlap: {
-			const QTabBar* tb = (const QTabBar*)widget;
-			QTabBar::Shape tbs = tb->shape();
+			const TQTabBar* tb = (const TQTabBar*)widget;
+			TQTabBar::Shape tbs = tb->shape();
 
-			if ( (tbs == QTabBar::RoundedAbove) ||
-				 (tbs == QTabBar::RoundedBelow) )
+			if ( (tbs == TQTabBar::RoundedAbove) ||
+				 (tbs == TQTabBar::RoundedBelow) )
 				return 0;
 			else
 				return 2;
@@ -997,14 +997,14 @@ int KStyle::pixelMetric(PixelMetric m, const QWidget* widget) const
 		// Determines how much space to leave for the actual non-tickmark
 		// portion of the slider.
 		case PM_SliderControlThickness: {
-			const QSlider* slider   = (const QSlider*)widget;
-			QSlider::TickSetting ts = slider->tickmarks();
+			const TQSlider* slider   = (const TQSlider*)widget;
+			TQSlider::TickSetting ts = slider->tickmarks();
 			int thickness = (slider->orientation() == Horizontal) ?
 							 slider->height() : slider->width();
 			switch (ts) {
-				case QSlider::NoMarks:				// Use total area.
+				case TQSlider::NoMarks:				// Use total area.
 					break;
-				case QSlider::Both:
+				case TQSlider::Both:
 					thickness = (thickness/2) + 3;	// Use approx. 1/2 of area.
 					break;
 				default:							// Use approx. 2/3 of area
@@ -1045,14 +1045,14 @@ int KStyle::pixelMetric(PixelMetric m, const QWidget* widget) const
 			return pixelMetric( PM_ScrollBarExtent, 0);
 
 		default:
-			return QCommonStyle::pixelMetric( m, widget );
+			return TQCommonStyle::pixelMetric( m, widget );
 	}
 }
 
 //Helper to find the next sibling that's not hidden
-static QListViewItem* nextVisibleSibling(QListViewItem* item)
+static TQListViewItem* nextVisibleSibling(TQListViewItem* item)
 {
-    QListViewItem* sibling = item;
+    TQListViewItem* sibling = item;
     do
     {
         sibling = sibling->nextSibling();
@@ -1063,14 +1063,14 @@ static QListViewItem* nextVisibleSibling(QListViewItem* item)
 }
 
 void KStyle::drawComplexControl( ComplexControl control,
-								 QPainter* p,
-								 const QWidget* widget,
-								 const QRect &r,
-								 const QColorGroup &cg,
+								 TQPainter* p,
+								 const TQWidget* widget,
+								 const TQRect &r,
+								 const TQColorGroup &cg,
 								 SFlags flags,
 								 SCFlags controls,
 								 SCFlags active,
-								 const QStyleOption &opt ) const
+								 const TQStyleOption &opt ) const
 {
 	switch(control)
 	{
@@ -1080,13 +1080,13 @@ void KStyle::drawComplexControl( ComplexControl control,
 			// Many thanks to Brad Hughes for contributing this code.
 			bool useThreeButtonScrollBar = (d->scrollbarType & ThreeButtonScrollBar);
 
-			const QScrollBar *sb = (const QScrollBar*)widget;
+			const TQScrollBar *sb = (const TQScrollBar*)widget;
 			bool   maxedOut   = (sb->minValue()    == sb->maxValue());
 			bool   horizontal = (sb->orientation() == Qt::Horizontal);
 			SFlags sflags     = ((horizontal ? Style_Horizontal : Style_Default) |
 								 (maxedOut   ? Style_Default : Style_Enabled));
 
-			QRect  addline, subline, subline2, addpage, subpage, slider, first, last;
+			TQRect  addline, subline, subline2, addpage, subpage, slider, first, last;
 			subline = querySubControlMetrics(control, widget, SC_ScrollBarSubLine, opt);
 			addline = querySubControlMetrics(control, widget, SC_ScrollBarAddLine, opt);
 			subpage = querySubControlMetrics(control, widget, SC_ScrollBarSubPage, opt);
@@ -1145,7 +1145,7 @@ void KStyle::drawComplexControl( ComplexControl control,
 										Style_Down : Style_Default));
 				// Draw focus rect
 				if (sb->hasFocus()) {
-					QRect fr(slider.x() + 2, slider.y() + 2,
+					TQRect fr(slider.x() + 2, slider.y() + 2,
 							 slider.width() - 5, slider.height() - 5);
 					drawPrimitive(PE_FocusRect, p, fr, cg, Style_Default);
 				}
@@ -1157,19 +1157,19 @@ void KStyle::drawComplexControl( ComplexControl control,
 		// SLIDER
 		// -------------------------------------------------------------------
 		case CC_Slider: {
-			const QSlider* slider = (const QSlider*)widget;
-			QRect groove = querySubControlMetrics(CC_Slider, widget, SC_SliderGroove, opt);
-			QRect handle = querySubControlMetrics(CC_Slider, widget, SC_SliderHandle, opt);
+			const TQSlider* slider = (const TQSlider*)widget;
+			TQRect groove = querySubControlMetrics(CC_Slider, widget, SC_SliderGroove, opt);
+			TQRect handle = querySubControlMetrics(CC_Slider, widget, SC_SliderHandle, opt);
 
 			// Double-buffer slider for no flicker
-			QPixmap pix(widget->size());
-			QPainter p2;
+			TQPixmap pix(widget->size());
+			TQPainter p2;
 			p2.begin(&pix);
 
 			if ( slider->parentWidget() &&
 				 slider->parentWidget()->backgroundPixmap() &&
 				 !slider->parentWidget()->backgroundPixmap()->isNull() ) {
-				QPixmap pixmap = *(slider->parentWidget()->backgroundPixmap());
+				TQPixmap pixmap = *(slider->parentWidget()->backgroundPixmap());
 				p2.drawTiledPixmap(r, pixmap, slider->pos());
 			} else
 				pix.fill(cg.background());
@@ -1185,7 +1185,7 @@ void KStyle::drawComplexControl( ComplexControl control,
 
 			// Draw the tickmarks
 			if (controls & SC_SliderTickmarks)
-				QCommonStyle::drawComplexControl(control, &p2, widget,
+				TQCommonStyle::drawComplexControl(control, &p2, widget,
 						r, cg, flags, SC_SliderTickmarks, active, opt);
 
 			// Draw the slider handle
@@ -1196,7 +1196,7 @@ void KStyle::drawComplexControl( ComplexControl control,
 			}
 
 			p2.end();
-			bitBlt((QWidget*)widget, r.x(), r.y(), &pix);
+			bitBlt((TQWidget*)widget, r.x(), r.y(), &pix);
 			break;
 		}
 
@@ -1205,13 +1205,13 @@ void KStyle::drawComplexControl( ComplexControl control,
 		case CC_ListView: {
 
 			/*
-			 * Many thanks to TrollTech AS for donating CC_ListView from QWindowsStyle.
+			 * Many thanks to TrollTech AS for donating CC_ListView from TQWindowsStyle.
 			 * CC_ListView code is Copyright (C) 1998-2000 TrollTech AS.
 			 */
 
 			// Paint the icon and text.
 			if ( controls & SC_ListView )
-				QCommonStyle::drawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
+				TQCommonStyle::drawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
 
 			// If we're have a branch or are expanded...
 			if ( controls & (SC_ListViewBranch | SC_ListViewExpand) )
@@ -1220,20 +1220,20 @@ void KStyle::drawComplexControl( ComplexControl control,
 				if (opt.isDefault())
 					break;
 
-				QListViewItem *item  = opt.listViewItem();
-				QListViewItem *child = item->firstChild();
+				TQListViewItem *item  = opt.listViewItem();
+				TQListViewItem *child = item->firstChild();
 
 				int y = r.y();
 				int c;	// dotline vertice count
 				int dotoffset = 0;
-				QPointArray dotlines;
+				TQPointArray dotlines;
 
 				if ( active == SC_All && controls == SC_ListViewExpand ) {
 					// We only need to draw a vertical line
 					c = 2;
 					dotlines.resize(2);
-					dotlines[0] = QPoint( r.right(), r.top() );
-					dotlines[1] = QPoint( r.right(), r.bottom() );
+					dotlines[0] = TQPoint( r.right(), r.top() );
+					dotlines[1] = TQPoint( r.right(), r.bottom() );
 
 				} else {
 
@@ -1253,15 +1253,15 @@ void KStyle::drawComplexControl( ComplexControl control,
 					int bx = r.width() / 2;
 
 					// paint stuff in the magical area
-					QListView* v = item->listView();
+					TQListView* v = item->listView();
 					int lh = QMAX( p->fontMetrics().height() + 2 * v->itemMargin(),
-								   QApplication::globalStrut().height() );
+								   TQApplication::globalStrut().height() );
 					if ( lh % 2 > 0 )
 						lh++;
 
 					// Draw all the expand/close boxes...
-					QRect boxrect;
-					QStyle::StyleFlags boxflags;
+					TQRect boxrect;
+					TQStyle::StyleFlags boxflags;
 					while ( child && y < r.height() )
 					{
 						linebot = y + lh/2;
@@ -1269,23 +1269,23 @@ void KStyle::drawComplexControl( ComplexControl control,
 							 (child->height() > 0) )
 						{
 							// The primitive requires a rect.
-							boxrect = QRect( bx-4, linebot-4, 9, 9 );
-							boxflags = child->isOpen() ? QStyle::Style_Off : QStyle::Style_On;
+							boxrect = TQRect( bx-4, linebot-4, 9, 9 );
+							boxflags = child->isOpen() ? TQStyle::Style_Off : TQStyle::Style_On;
 
 							// KStyle extension: Draw the box and expand/collapse indicator
 							drawKStylePrimitive( KPE_ListViewExpander, p, NULL, boxrect, cg, boxflags, opt );
 
 							// dotlinery
 							p->setPen( cg.mid() );
-							dotlines[c++] = QPoint( bx, linetop );
-							dotlines[c++] = QPoint( bx, linebot - 5 );
-							dotlines[c++] = QPoint( bx + 5, linebot );
-							dotlines[c++] = QPoint( r.width(), linebot );
+							dotlines[c++] = TQPoint( bx, linetop );
+							dotlines[c++] = TQPoint( bx, linebot - 5 );
+							dotlines[c++] = TQPoint( bx + 5, linebot );
+							dotlines[c++] = TQPoint( r.width(), linebot );
 							linetop = linebot + 5;
 						} else {
 							// just dotlinery
-							dotlines[c++] = QPoint( bx+1, linebot );
-							dotlines[c++] = QPoint( r.width(), linebot );
+							dotlines[c++] = TQPoint( bx+1, linebot );
+							dotlines[c++] = TQPoint( r.width(), linebot );
 						}
 
 						y += child->totalHeight();
@@ -1297,16 +1297,16 @@ void KStyle::drawComplexControl( ComplexControl control,
 
 					if ( linetop < linebot )
 					{
-						dotlines[c++] = QPoint( bx, linetop );
-						dotlines[c++] = QPoint( bx, linebot );
+						dotlines[c++] = TQPoint( bx, linetop );
+						dotlines[c++] = TQPoint( bx, linebot );
 					}
 				}
 
 				// Draw all the branches...
 				static int thickness = kPixelMetric( KPM_ListViewBranchThickness );
 				int line; // index into dotlines
-				QRect branchrect;
-				QStyle::StyleFlags branchflags;
+				TQRect branchrect;
+				TQStyle::StyleFlags branchflags;
 				for( line = 0; line < c; line += 2 )
 				{
 					// assumptions here: lines are horizontal or vertical.
@@ -1323,8 +1323,8 @@ void KStyle::drawComplexControl( ComplexControl control,
 						int point = dotlines[line].x();
 						int other = dotlines[line].y();
 
-						branchrect  = QRect( point, other-(thickness/2), end-point, thickness );
-						branchflags = QStyle::Style_Horizontal;
+						branchrect  = TQRect( point, other-(thickness/2), end-point, thickness );
+						branchflags = TQStyle::Style_Horizontal;
 
 						// KStyle extension: Draw the horizontal branch
 						drawKStylePrimitive( KPE_ListViewBranch, p, NULL, branchrect, cg, branchflags, opt );
@@ -1336,11 +1336,11 @@ void KStyle::drawComplexControl( ComplexControl control,
 						int other = dotlines[line].x();
 						int pixmapoffset = ((point & 1) != dotoffset ) ? 1 : 0;
 
-						branchrect  = QRect( other-(thickness/2), point, thickness, end-point );
+						branchrect  = TQRect( other-(thickness/2), point, thickness, end-point );
 						if (!pixmapoffset)	// ### Hackish - used to hint the offset
-							branchflags = QStyle::Style_NoChange;
+							branchflags = TQStyle::Style_NoChange;
 						else
-							branchflags = QStyle::Style_Default;
+							branchflags = TQStyle::Style_Default;
 
 						// KStyle extension: Draw the vertical branch
 						drawKStylePrimitive( KPE_ListViewBranch, p, NULL, branchrect, cg, branchflags, opt );
@@ -1351,19 +1351,19 @@ void KStyle::drawComplexControl( ComplexControl control,
 		}
 
 		default:
-			QCommonStyle::drawComplexControl( control, p, widget, r, cg,
+			TQCommonStyle::drawComplexControl( control, p, widget, r, cg,
 											  flags, controls, active, opt );
 			break;
 	}
 }
 
 
-QStyle::SubControl KStyle::querySubControl( ComplexControl control,
-											const QWidget* widget,
-											const QPoint &pos,
-											const QStyleOption &opt ) const
+TQStyle::SubControl KStyle::querySubControl( ComplexControl control,
+											const TQWidget* widget,
+											const TQPoint &pos,
+											const TQStyleOption &opt ) const
 {
-	QStyle::SubControl ret = QCommonStyle::querySubControl(control, widget, pos, opt);
+	TQStyle::SubControl ret = TQCommonStyle::querySubControl(control, widget, pos, opt);
 
 	if (d->scrollbarType == ThreeButtonScrollBar) {
 		// Enable third button
@@ -1374,12 +1374,12 @@ QStyle::SubControl KStyle::querySubControl( ComplexControl control,
 }
 
 
-QRect KStyle::querySubControlMetrics( ComplexControl control,
-									  const QWidget* widget,
+TQRect KStyle::querySubControlMetrics( ComplexControl control,
+									  const TQWidget* widget,
 									  SubControl sc,
-									  const QStyleOption &opt ) const
+									  const TQStyleOption &opt ) const
 {
-    QRect ret;
+    TQRect ret;
 
 	if (control == CC_ScrollBar)
 	{
@@ -1387,7 +1387,7 @@ QRect KStyle::querySubControlMetrics( ComplexControl control,
 		bool platinumScrollBar    = d->scrollbarType & PlatinumStyleScrollBar;
 		bool nextScrollBar        = d->scrollbarType & NextStyleScrollBar;
 
-		const QScrollBar *sb = (const QScrollBar*)widget;
+		const TQScrollBar *sb = (const TQScrollBar*)widget;
 		bool horizontal = sb->orientation() == Qt::Horizontal;
 		int sliderstart = sb->sliderStart();
 		int sbextent    = pixelMetric(PM_ScrollBarExtent, widget);
@@ -1508,11 +1508,11 @@ QRect KStyle::querySubControlMetrics( ComplexControl control,
 			}
 
 			default:
-				ret = QCommonStyle::querySubControlMetrics(control, widget, sc, opt);
+				ret = TQCommonStyle::querySubControlMetrics(control, widget, sc, opt);
 				break;
 		}
 	} else
-		ret = QCommonStyle::querySubControlMetrics(control, widget, sc, opt);
+		ret = TQCommonStyle::querySubControlMetrics(control, widget, sc, opt);
 
 	return ret;
 }
@@ -1759,40 +1759,40 @@ static const char* const critical_xpm[]={
 "...........aaaaaaaaaaa..........",
 ".............aaaaaaa............"};
 
-QPixmap KStyle::stylePixmap( StylePixmap stylepixmap,
-						  const QWidget* widget,
-						  const QStyleOption& opt) const
+TQPixmap KStyle::stylePixmap( StylePixmap stylepixmap,
+						  const TQWidget* widget,
+						  const TQStyleOption& opt) const
 {
 	switch (stylepixmap) {
 		case SP_TitleBarShadeButton:
-			return QPixmap(const_cast<const char**>(kstyle_shade_xpm));
+			return TQPixmap(const_cast<const char**>(kstyle_shade_xpm));
 		case SP_TitleBarUnshadeButton:
-			return QPixmap(const_cast<const char**>(kstyle_unshade_xpm));
+			return TQPixmap(const_cast<const char**>(kstyle_unshade_xpm));
 		case SP_TitleBarNormalButton:
-			return QPixmap(const_cast<const char**>(kstyle_normalizeup_xpm));
+			return TQPixmap(const_cast<const char**>(kstyle_normalizeup_xpm));
 		case SP_TitleBarMinButton:
-			return QPixmap(const_cast<const char**>(kstyle_minimize_xpm));
+			return TQPixmap(const_cast<const char**>(kstyle_minimize_xpm));
 		case SP_TitleBarMaxButton:
-			return QPixmap(const_cast<const char**>(kstyle_maximize_xpm));
+			return TQPixmap(const_cast<const char**>(kstyle_maximize_xpm));
 		case SP_TitleBarCloseButton:
-			return QPixmap(const_cast<const char**>(kstyle_close_xpm));
+			return TQPixmap(const_cast<const char**>(kstyle_close_xpm));
 		case SP_DockWindowCloseButton:
-			return QPixmap(const_cast<const char**>(dock_window_close_xpm ));
+			return TQPixmap(const_cast<const char**>(dock_window_close_xpm ));
 		case SP_MessageBoxInformation:
-			return QPixmap(const_cast<const char**>(information_xpm));
+			return TQPixmap(const_cast<const char**>(information_xpm));
 		case SP_MessageBoxWarning:
-			return QPixmap(const_cast<const char**>(warning_xpm));
+			return TQPixmap(const_cast<const char**>(warning_xpm));
 		case SP_MessageBoxCritical:
-			return QPixmap(const_cast<const char**>(critical_xpm));
+			return TQPixmap(const_cast<const char**>(critical_xpm));
 		default:
 			break;
     }
-    return QCommonStyle::stylePixmap(stylepixmap, widget, opt);
+    return TQCommonStyle::stylePixmap(stylepixmap, widget, opt);
 }
 
 
-int KStyle::styleHint( StyleHint sh, const QWidget* w,
-					   const QStyleOption &opt, QStyleHintReturn* shr) const
+int KStyle::styleHint( StyleHint sh, const TQWidget* w,
+					   const TQStyleOption &opt, QStyleHintReturn* shr) const
 {
 	switch (sh)
 	{
@@ -1831,10 +1831,10 @@ int KStyle::styleHint( StyleHint sh, const QWidget* w,
 		case SH_LineEdit_PasswordCharacter:
 		{
 			if (w) {
-				const QFontMetrics &fm = w->fontMetrics();
-				if (fm.inFont(QChar(0x25CF))) {
+				const TQFontMetrics &fm = w->fontMetrics();
+				if (fm.inFont(TQChar(0x25CF))) {
 					return 0x25CF;
-				} else if (fm.inFont(QChar(0x2022))) {
+				} else if (fm.inFont(TQChar(0x2022))) {
 					return 0x2022;
 				}
 			}
@@ -1842,51 +1842,51 @@ int KStyle::styleHint( StyleHint sh, const QWidget* w,
 		}
 
 		default:
-			return QCommonStyle::styleHint(sh, w, opt, shr);
+			return TQCommonStyle::styleHint(sh, w, opt, shr);
 	}
 }
 
 
-bool KStyle::eventFilter( QObject* object, QEvent* event )
+bool KStyle::eventFilter( TQObject* object, TQEvent* event )
 {
 	if ( d->useFilledFrameWorkaround )
 	{
-		// Make the QMenuBar/QToolBar paintEvent() cover a larger area to
+		// Make the QMenuBar/TQToolBar paintEvent() cover a larger area to
 		// ensure that the filled frame contents are properly painted.
 		// We essentially modify the paintEvent's rect to include the
 		// panel border, which also paints the widget's interior.
 		// This is nasty, but I see no other way to properly repaint
 		// filled frames in all QMenuBars and QToolBars.
 		// -- Karol.
-		QFrame *frame = 0;
-		if ( event->type() == QEvent::Paint
-				&& (frame = ::qt_cast<QFrame*>(object)) )
+		TQFrame *frame = 0;
+		if ( event->type() == TQEvent::Paint
+				&& (frame = ::qt_cast<TQFrame*>(object)) )
 		{
-			if (frame->frameShape() != QFrame::ToolBarPanel && frame->frameShape() != QFrame::MenuBarPanel)
+			if (frame->frameShape() != TQFrame::ToolBarPanel && frame->frameShape() != TQFrame::MenuBarPanel)
 				return false;
 				
 			bool horizontal = true;
-			QPaintEvent* pe = (QPaintEvent*)event;
-			QToolBar *toolbar = ::qt_cast< QToolBar *>( frame );
-			QRect r = pe->rect();
+			TQPaintEvent* pe = (TQPaintEvent*)event;
+			TQToolBar *toolbar = ::qt_cast< TQToolBar *>( frame );
+			TQRect r = pe->rect();
 
 			if (toolbar && toolbar->orientation() == Qt::Vertical)
 				horizontal = false;
 
 			if (horizontal) {
 				if ( r.height() == frame->height() )
-					return false;	// Let QFrame handle the painting now.
+					return false;	// Let TQFrame handle the painting now.
 
 				// Else, send a new paint event with an updated paint rect.
-				QPaintEvent dummyPE( QRect( r.x(), 0, r.width(), frame->height()) );
-				QApplication::sendEvent( frame, &dummyPE );
+				TQPaintEvent dummyPE( TQRect( r.x(), 0, r.width(), frame->height()) );
+				TQApplication::sendEvent( frame, &dummyPE );
 			}
 			else {	// Vertical
 				if ( r.width() == frame->width() )
 					return false;
 
-				QPaintEvent dummyPE( QRect( 0, r.y(), frame->width(), r.height()) );
-				QApplication::sendEvent( frame, &dummyPE );
+				TQPaintEvent dummyPE( TQRect( 0, r.y(), frame->width(), r.height()) );
+				TQApplication::sendEvent( frame, &dummyPE );
 			}
 
 			// Discard this event as we sent a new paintEvent.
@@ -1904,13 +1904,13 @@ bool KStyle::eventFilter( QObject* object, QEvent* event )
 
 TransparencyHandler::TransparencyHandler( KStyle* style,
 	TransparencyEngine tEngine, float menuOpacity, bool useDropShadow )
-	: QObject()
+	: TQObject()
 {
 	te = tEngine;
 	kstyle = style;
 	opacity = menuOpacity;
 	dropShadow = useDropShadow;
-	pix.setOptimization(QPixmap::BestOptim);
+	pix.setOptimization(TQPixmap::BestOptim);
 }
 
 TransparencyHandler::~TransparencyHandler()
@@ -1918,7 +1918,7 @@ TransparencyHandler::~TransparencyHandler()
 }
 
 // This is meant to be ugly but fast.
-void TransparencyHandler::rightShadow(QImage& dst)
+void TransparencyHandler::rightShadow(TQImage& dst)
 {
 	if (dst.depth() != 32)
 		dst = dst.convertDepth(32);
@@ -1957,7 +1957,7 @@ void TransparencyHandler::rightShadow(QImage& dst)
 	}
 }
 
-void TransparencyHandler::bottomShadow(QImage& dst)
+void TransparencyHandler::bottomShadow(TQImage& dst)
 {
 	if (dst.depth() != 32)
 		dst = dst.convertDepth(32);
@@ -1997,18 +1997,18 @@ void TransparencyHandler::bottomShadow(QImage& dst)
 }
 
 // Create a shadow of thickness 4.
-void TransparencyHandler::createShadowWindows(const QPopupMenu* p)
+void TransparencyHandler::createShadowWindows(const TQPopupMenu* p)
 {
 #ifdef Q_WS_X11
 	int x2 = p->x()+p->width();
 	int y2 = p->y()+p->height();
-	QRect shadow1(x2, p->y() + 4, 4, p->height());
-	QRect shadow2(p->x() + 4, y2, p->width() - 4, 4);
+	TQRect shadow1(x2, p->y() + 4, 4, p->height());
+	TQRect shadow2(p->x() + 4, y2, p->width() - 4, 4);
 
 	// Create a fake drop-down shadow effect via blended Xwindows
 	ShadowElements se;
-	se.w1 = new QWidget(0, 0, WStyle_Customize | WType_Popup | WX11BypassWM );
-	se.w2 = new QWidget(0, 0, WStyle_Customize | WType_Popup | WX11BypassWM );
+	se.w1 = new TQWidget(0, 0, WStyle_Customize | WType_Popup | WX11BypassWM );
+	se.w2 = new TQWidget(0, 0, WStyle_Customize | WType_Popup | WX11BypassWM );
 	se.w1->setGeometry(shadow1);
 	se.w2->setGeometry(shadow2);
 	XSelectInput(qt_xdisplay(), se.w1->winId(), StructureNotifyMask );
@@ -2018,12 +2018,12 @@ void TransparencyHandler::createShadowWindows(const QPopupMenu* p)
 	shadowMap()[p] = se;
 
 	// Some hocus-pocus here to create the drop-shadow.
-	QPixmap pix_shadow1 = QPixmap::grabWindow(qt_xrootwin(),
+	TQPixmap pix_shadow1 = TQPixmap::grabWindow(qt_xrootwin(),
 			shadow1.x(), shadow1.y(), shadow1.width(), shadow1.height());
-	QPixmap pix_shadow2 = QPixmap::grabWindow(qt_xrootwin(),
+	TQPixmap pix_shadow2 = TQPixmap::grabWindow(qt_xrootwin(),
 			shadow2.x(), shadow2.y(), shadow2.width(), shadow2.height());
 
-	QImage img;
+	TQImage img;
 	img = pix_shadow1.convertToImage();
 	rightShadow(img);
 	pix_shadow1.convertFromImage(img);
@@ -2036,7 +2036,7 @@ void TransparencyHandler::createShadowWindows(const QPopupMenu* p)
 	se.w2->setErasePixmap(pix_shadow2);
 
 	// Show the 'shadow' just before showing the popup menu window
-	// Don't use QWidget::show() so we don't confuse QEffects, thus causing broken focus.
+	// Don't use TQWidget::show() so we don't confuse QEffects, thus causing broken focus.
 	XMapWindow(qt_xdisplay(), se.w1->winId());
 	XMapWindow(qt_xdisplay(), se.w2->winId());
 #else
@@ -2044,7 +2044,7 @@ void TransparencyHandler::createShadowWindows(const QPopupMenu* p)
 #endif
 }
 
-void TransparencyHandler::removeShadowWindows(const QPopupMenu* p)
+void TransparencyHandler::removeShadowWindows(const TQPopupMenu* p)
 {
 #ifdef Q_WS_X11
 	ShadowMap::iterator it = shadowMap().find(p);
@@ -2063,22 +2063,22 @@ void TransparencyHandler::removeShadowWindows(const QPopupMenu* p)
 #endif
 }
 
-bool TransparencyHandler::eventFilter( QObject* object, QEvent* event )
+bool TransparencyHandler::eventFilter( TQObject* object, TQEvent* event )
 {
 #if !defined Q_WS_MAC && !defined Q_WS_WIN
 	// Transparency idea was borrowed from KDE2's "MegaGradient" Style,
 	// Copyright (C) 2000 Daniel M. Duley <mosfet@kde.org>
 
 	// Added 'fake' menu shadows <04-Jul-2002> -- Karol
-	QPopupMenu* p = (QPopupMenu*)object;
-	QEvent::Type et = event->type();
+	TQPopupMenu* p = (TQPopupMenu*)object;
+	TQEvent::Type et = event->type();
 
-	if (et == QEvent::Show)
+	if (et == TQEvent::Show)
 	{
 		// Handle translucency
 		if (te != Disabled)
 		{
-			pix = QPixmap::grabWindow(qt_xrootwin(),
+			pix = TQPixmap::grabWindow(qt_xrootwin(),
 					p->x(), p->y(), p->width(), p->height());
 
 			switch (te) {
@@ -2112,7 +2112,7 @@ bool TransparencyHandler::eventFilter( QObject* object, QEvent* event )
 		if (dropShadow && p->width() > 16 && p->height() > 16 && !shadowMap().contains( p ))
 			createShadowWindows(p);
 	}
-	else if (et == QEvent::Hide)
+	else if (et == TQEvent::Hide)
 	{
 		// Handle drop shadow
 		if (dropShadow)
@@ -2120,7 +2120,7 @@ bool TransparencyHandler::eventFilter( QObject* object, QEvent* event )
 
 		// Handle translucency
 		if (te != Disabled)
-			p->setErasePixmap(QPixmap());
+			p->setErasePixmap(TQPixmap());
 	}
 
 #endif
@@ -2128,19 +2128,19 @@ bool TransparencyHandler::eventFilter( QObject* object, QEvent* event )
 }
 
 
-// Blends a QImage to a predefined color, with a given opacity.
-void TransparencyHandler::blendToColor(const QColor &col)
+// Blends a TQImage to a predefined color, with a given opacity.
+void TransparencyHandler::blendToColor(const TQColor &col)
 {
 	if (opacity < 0.0 || opacity > 1.0)
 		return;
 
-	QImage img = pix.convertToImage();
+	TQImage img = pix.convertToImage();
 	KImageEffect::blend(col, img, opacity);
 	pix.convertFromImage(img);
 }
 
 
-void TransparencyHandler::blendToPixmap(const QColorGroup &cg, const QPopupMenu* p)
+void TransparencyHandler::blendToPixmap(const TQColorGroup &cg, const TQPopupMenu* p)
 {
 	if (opacity < 0.0 || opacity > 1.0)
 		return;
@@ -2155,8 +2155,8 @@ void TransparencyHandler::blendToPixmap(const QColorGroup &cg, const QPopupMenu*
 	// Allow styles to define the blend pixmap - allows for some interesting effects.
 	kstyle->renderMenuBlendPixmap( blendPix, cg, p );
 
-	QImage blendImg = blendPix.convertToImage();
-	QImage backImg  = pix.convertToImage();
+	TQImage blendImg = blendPix.convertToImage();
+	TQImage backImg  = pix.convertToImage();
 	KImageEffect::blend(blendImg, backImg, opacity);
 	pix.convertFromImage(backImg);
 }
@@ -2166,7 +2166,7 @@ void TransparencyHandler::blendToPixmap(const QColorGroup &cg, const QPopupMenu*
 // Here we go, use XRender in all its glory.
 // NOTE: This is actually a bit slower than the above routines
 // on non-accelerated displays. -- Karol.
-void TransparencyHandler::XRenderBlendToPixmap(const QPopupMenu* p)
+void TransparencyHandler::XRenderBlendToPixmap(const TQPopupMenu* p)
 {
 	KPixmap renderPix;
 	renderPix.resize( pix.width(), pix.height() );

@@ -21,7 +21,7 @@
 #ifndef DNSSDQUERY_H
 #define DNSSDQUERY_H
 
-#include <qobject.h>
+#include <tqobject.h>
 #include <dnssd/remoteservice.h>
 
 
@@ -47,7 +47,7 @@ public:
 	@param domain Domain name - if set to "local." multicast query will be performed,
 			otherwise unicast
 	 */
-	Query(const QString& type, const QString& domain);
+	Query(const TQString& type, const TQString& domain);
 
 	virtual ~Query();
 
@@ -71,7 +71,7 @@ public:
 	/**
 	Returns queried domain
 	 */
-	const QString& domain() const;
+	const TQString& domain() const;
 
 signals:
 	/**
@@ -91,7 +91,7 @@ signals:
 
 protected:
 	virtual void virtual_hook(int, void*);
-	virtual void customEvent(QCustomEvent* event);
+	virtual void customEvent(TQCustomEvent* event);
 private:
 	QueryPrivate *d;
 private slots:

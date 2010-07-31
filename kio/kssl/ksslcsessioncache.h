@@ -32,16 +32,16 @@ class KIO_EXPORT KSSLCSessionCache {
     /**
      * Store a SSL session (client side only)
      * @param kurl URL the key belongs to. Method, host and port are used
-     * @param session QString representing session to store
+     * @param session TQString representing session to store
      */
-    static void putSessionForURL(const KURL &kurl, const QString &session);
+    static void putSessionForURL(const KURL &kurl, const TQString &session);
 
     /**
      * Retrieve a SSL session (client side only)
      * @param kurl URL the key belongs to
-     * @return if a key can be found, QString::null otherwise
+     * @return if a key can be found, TQString::null otherwise
      */
-    static QString getSessionForURL(const KURL &kurl);
+    static TQString getSessionForURL(const KURL &kurl);
 };
 
 #endif

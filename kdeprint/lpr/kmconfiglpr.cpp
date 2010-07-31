@@ -20,27 +20,27 @@
 #include "kmconfiglpr.h"
 #include "lprsettings.h"
 
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qgroupbox.h>
+#include <tqcombobox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqgroupbox.h>
 #include <klocale.h>
 #include <kconfig.h>
 
-KMConfigLpr::KMConfigLpr(QWidget *parent, const char *name)
+KMConfigLpr::KMConfigLpr(TQWidget *parent, const char *name)
 : KMConfigPage(parent, name)
 {
 	setPageName(i18n("Spooler"));
 	setPageHeader(i18n("Spooler Settings"));
 	setPagePixmap("gear");
 
-	QGroupBox	*m_modebox = new QGroupBox(1, Qt::Vertical, i18n("Spooler"), this);
+	QGroupBox	*m_modebox = new TQGroupBox(1, Qt::Vertical, i18n("Spooler"), this);
 
-	m_mode = new QComboBox(m_modebox);
+	m_mode = new TQComboBox(m_modebox);
 	m_mode->insertItem("LPR (BSD compatible)");
 	m_mode->insertItem("LPRng");
 
-	QVBoxLayout	*l0 = new QVBoxLayout(this, 5, 10);
+	QVBoxLayout	*l0 = new TQVBoxLayout(this, 5, 10);
 	l0->addWidget(m_modebox);
 	l0->addStretch(1);
 }

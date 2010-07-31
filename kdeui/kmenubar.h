@@ -25,15 +25,15 @@
 #ifndef _KMENUBAR_H
 #define _KMENUBAR_H
 
-#include <qmenubar.h>
+#include <tqmenubar.h>
 
 #include <kdelibs_export.h>
 
 /**
  * %KDE Style-able menubar.
  *
- * This is required since QMenuBar is currently not handled by
- * QStyle.
+ * This is required since TQMenuBar is currently not handled by
+ * TQStyle.
  *
  * @author Daniel "Mosfet" Duley.
  * @version $Id$
@@ -45,7 +45,7 @@ class KDEUI_EXPORT KMenuBar : public QMenuBar
 
 public:
 
-    KMenuBar (QWidget *parent=0, const char *name=0);
+    KMenuBar (TQWidget *parent=0, const char *name=0);
     ~KMenuBar ();
 
     /**
@@ -75,27 +75,27 @@ public:
     bool isTopLevelMenu() const;
 
     // TT are overloading virtuals :(
-    virtual void setGeometry( const QRect &r );
+    virtual void setGeometry( const TQRect &r );
     virtual void setGeometry( int x, int y, int w, int h );
     virtual void resize( int w, int h );
-    void resize( const QSize& s ) { QMenuBar::resize( s ); }
+    void resize( const TQSize& s ) { TQMenuBar::resize( s ); }
 
     virtual void show();
     virtual void setFrameStyle( int );
     virtual void setLineWidth( int );
     virtual void setMargin( int );
-    virtual QSize sizeHint() const;
+    virtual TQSize sizeHint() const;
 protected slots:
     void slotReadConfig();
 protected:
-    virtual void showEvent( QShowEvent* );
-    virtual void resizeEvent( QResizeEvent* );
-    virtual bool eventFilter(QObject *, QEvent *);
+    virtual void showEvent( TQShowEvent* );
+    virtual void resizeEvent( TQResizeEvent* );
+    virtual bool eventFilter(TQObject *, TQEvent *);
 #ifdef Q_WS_X11
     virtual bool x11Event( XEvent* );
 #endif
-    virtual void closeEvent( QCloseEvent* );
-    virtual void drawContents( QPainter* );
+    virtual void closeEvent( TQCloseEvent* );
+    virtual void drawContents( TQPainter* );
 private slots:
     void updateFallbackSize();
     void selectionTimeout();

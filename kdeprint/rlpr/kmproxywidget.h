@@ -20,7 +20,7 @@
 #ifndef KMPROXYWIDGET_H
 #define KMPROXYWIDGET_H
 
-#include <qgroupbox.h>
+#include <tqgroupbox.h>
 
 class KConfig;
 class QLineEdit;
@@ -29,7 +29,7 @@ class QCheckBox;
 class KMProxyWidget : public QGroupBox
 {
 public:
-	KMProxyWidget(QWidget *parent = 0, const char *name = 0);
+	KMProxyWidget(TQWidget *parent = 0, const char *name = 0);
 
 	void loadConfig(KConfig*);
 	void saveConfig(KConfig*);

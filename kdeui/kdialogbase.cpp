@@ -24,14 +24,14 @@
 #include "kdialogbase.h"
 #include <stdlib.h>
 
-#include <qgrid.h>
-#include <qhbox.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qvbox.h>
-#include <qwhatsthis.h>
-#include <qtimer.h>
-#include <qfocusdata.h>
+#include <tqgrid.h>
+#include <tqhbox.h>
+#include <tqlayout.h>
+#include <tqtooltip.h>
+#include <tqvbox.h>
+#include <tqwhatsthis.h>
+#include <tqtimer.h>
+#include <tqfocusdata.h>
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -53,7 +53,7 @@ int KDialogBaseButton::id()
     return mKey;
 }
 
-template class QPtrList<KDialogBaseButton>;
+template class TQPtrList<KDialogBaseButton>;
 
 /**
  * @internal
@@ -75,10 +75,10 @@ struct SButton : public Qt
 
   KPushButton *button( int key );
 
-  QWidget *box;
+  TQWidget *box;
   int mask;
   int style;
-  QPtrList<KDialogBaseButton> list;
+  TQPtrList<KDialogBaseButton> list;
 };
 }// namespace
 
@@ -89,15 +89,15 @@ public:
     bool bDetails;
     bool bFixed;
     bool bSettingDetails;
-    QWidget *detailsWidget;
-    QSize incSize;
-    QSize minSize;
-    QString detailsButton;
+    TQWidget *detailsWidget;
+    TQSize incSize;
+    TQSize minSize;
+    TQString detailsButton;
     SButton mButton;
 };
 
-KDialogBase::KDialogBase( QWidget *parent, const char *name, bool modal,
-			  const QString &caption, int buttonMask,
+KDialogBase::KDialogBase( TQWidget *parent, const char *name, bool modal,
+			  const TQString &caption, int buttonMask,
 			  ButtonCode defaultButton, bool separator,
 			  const KGuiItem &user1, const KGuiItem &user2,
 			  const KGuiItem &user3 )
@@ -109,7 +109,7 @@ KDialogBase::KDialogBase( QWidget *parent, const char *name, bool modal,
   setCaption( caption );
 
   makeRelay();
-  connect( this, SIGNAL(layoutHintChanged()), SLOT(updateGeometry()) );
+  connect( this, TQT_SIGNAL(layoutHintChanged()), TQT_SLOT(updateGeometry()) );
 
   enableButtonSeparator( separator );
   makeButtonBox( buttonMask, defaultButton, user1, user2, user3 );
@@ -118,9 +118,9 @@ KDialogBase::KDialogBase( QWidget *parent, const char *name, bool modal,
   setupLayout();
 }
 
-KDialogBase::KDialogBase( int dialogFace, const QString &caption,
+KDialogBase::KDialogBase( int dialogFace, const TQString &caption,
 			  int buttonMask, ButtonCode defaultButton,
-			  QWidget *parent, const char *name, bool modal,
+			  TQWidget *parent, const char *name, bool modal,
 			  bool separator, const KGuiItem &user1,
 			  const KGuiItem &user2, const KGuiItem &user3 )
   :KDialog( parent, name, modal, WStyle_DialogBorder ),
@@ -131,11 +131,11 @@ KDialogBase::KDialogBase( int dialogFace, const QString &caption,
   setCaption( caption );
 
   makeRelay();
-  connect( this, SIGNAL(layoutHintChanged()), SLOT(updateGeometry()) );
+  connect( this, TQT_SIGNAL(layoutHintChanged()), TQT_SLOT(updateGeometry()) );
 
   mJanus = new KJanusWidget( this, "janus", dialogFace );
-  connect(mJanus, SIGNAL(aboutToShowPage(QWidget *)),
-          this, SIGNAL(aboutToShowPage(QWidget *)));
+  connect(mJanus, TQT_SIGNAL(aboutToShowPage(TQWidget *)),
+          this, TQT_SIGNAL(aboutToShowPage(TQWidget *)));
 
   if( !mJanus || !mJanus->isValid() ) { return; }
 
@@ -146,9 +146,9 @@ KDialogBase::KDialogBase( int dialogFace, const QString &caption,
   setupLayout();
 }
 
-KDialogBase::KDialogBase(  KDialogBase::DialogType dialogFace, WFlags f, QWidget *parent, const char *name,
+KDialogBase::KDialogBase(  KDialogBase::DialogType dialogFace, WFlags f, TQWidget *parent, const char *name,
 		          bool modal,
-			  const QString &caption, int buttonMask,
+			  const TQString &caption, int buttonMask,
 			  ButtonCode defaultButton, bool separator,
 			  const KGuiItem &user1, const KGuiItem &user2,
 			  const KGuiItem &user3 )
@@ -160,11 +160,11 @@ KDialogBase::KDialogBase(  KDialogBase::DialogType dialogFace, WFlags f, QWidget
   setCaption( caption );
 
   makeRelay();
-  connect( this, SIGNAL(layoutHintChanged()), SLOT(updateGeometry()) );
+  connect( this, TQT_SIGNAL(layoutHintChanged()), TQT_SLOT(updateGeometry()) );
 
   mJanus = new KJanusWidget( this, "janus", dialogFace );
-  connect(mJanus, SIGNAL(aboutToShowPage(QWidget *)),
-          this, SIGNAL(aboutToShowPage(QWidget *)));
+  connect(mJanus, TQT_SIGNAL(aboutToShowPage(TQWidget *)),
+          this, TQT_SIGNAL(aboutToShowPage(TQWidget *)));
 
   if( !mJanus || !mJanus->isValid() ) { return; }
 
@@ -175,9 +175,9 @@ KDialogBase::KDialogBase(  KDialogBase::DialogType dialogFace, WFlags f, QWidget
   setupLayout();
 }
 
-KDialogBase::KDialogBase( const QString &caption, int buttonMask,
+KDialogBase::KDialogBase( const TQString &caption, int buttonMask,
 			  ButtonCode defaultButton, ButtonCode escapeButton,
-			  QWidget *parent, const char *name, bool modal,
+			  TQWidget *parent, const char *name, bool modal,
 			  bool separator, const KGuiItem &yes,
 			  const KGuiItem &no, const KGuiItem &cancel )
   :KDialog( parent, name, modal, WStyle_DialogBorder ),
@@ -189,7 +189,7 @@ KDialogBase::KDialogBase( const QString &caption, int buttonMask,
   setCaption( caption );
 
   makeRelay();
-  connect( this, SIGNAL(layoutHintChanged()), SLOT(updateGeometry()) );
+  connect( this, TQT_SIGNAL(layoutHintChanged()), TQT_SLOT(updateGeometry()) );
 
   enableButtonSeparator( separator );
 
@@ -230,7 +230,7 @@ void SButton::resize( bool sameWidth, int margin,
 
   for( p = list.first(); p; p =  list.next() )
   {
-    const QSize s( p->sizeHint() );
+    const TQSize s( p->sizeHint() );
     if( s.height() > h ) { h = s.height(); }
     if( s.width() > w ) { w = s.width(); }
   }
@@ -239,7 +239,7 @@ void SButton::resize( bool sameWidth, int margin,
   {
     for( p = list.first(); p; p =  list.next() )
     {
-      QSize s( p->sizeHint() );
+      TQSize s( p->sizeHint() );
       if( sameWidth ) { s.setWidth( w ); }
       p->setFixedWidth( s.width() );
       t += s.width() + spacing;
@@ -253,7 +253,7 @@ void SButton::resize( bool sameWidth, int margin,
     // sameWidth has no effect here
     for( p = list.first(); p; p =  list.next() )
     {
-      QSize s( p->sizeHint() );
+      TQSize s( p->sizeHint() );
       s.setWidth( w );
       p->setFixedSize( s );
       t += s.height() + spacing;
@@ -281,7 +281,7 @@ KDialogBase::delayedDestruct()
 {
    if (isVisible())
       hide();
-   QTimer::singleShot( 0, this, SLOT(slotDelayedDestruct()));
+   TQTimer::singleShot( 0, this, TQT_SLOT(slotDelayedDestruct()));
 }
 
 void
@@ -296,17 +296,17 @@ void KDialogBase::setupLayout()
   {
     delete mTopLayout;
   }
-  // mTopLayout = new QVBoxLayout( this, marginHint(), spacingHint() );
+  // mTopLayout = new TQVBoxLayout( this, marginHint(), spacingHint() );
 
 
   if( mButtonOrientation == Horizontal )
   {
-    mTopLayout = new QBoxLayout( this, QBoxLayout::TopToBottom,
+    mTopLayout = new TQBoxLayout( this, TQBoxLayout::TopToBottom,
 				 marginHint(), spacingHint() );
   }
   else
   {
-    mTopLayout = new QBoxLayout( this, QBoxLayout::LeftToRight,
+    mTopLayout = new TQBoxLayout( this, TQBoxLayout::LeftToRight,
 				 marginHint(), spacingHint() );
   }
 
@@ -350,7 +350,7 @@ void KDialogBase::setButtonBoxOrientation( int orientation )
     if( mActionSep )
     {
       mActionSep->setOrientation( mButtonOrientation == Horizontal ?
-				  QFrame::HLine : QFrame::VLine );
+				  TQFrame::HLine : TQFrame::VLine );
     }
     if( mButtonOrientation == Vertical )
     {
@@ -373,15 +373,15 @@ void KDialogBase::makeRelay()
 {
   if( mTile )
   {
-    connect( mTile, SIGNAL(pixmapChanged()), SLOT(updateBackground()) );
+    connect( mTile, TQT_SIGNAL(pixmapChanged()), TQT_SLOT(updateBackground()) );
     return;
   }
 
   mTile = new KDialogBaseTile;
   if( mTile )
   {
-    connect( mTile, SIGNAL(pixmapChanged()), SLOT(updateBackground()) );
-    connect( qApp, SIGNAL(aboutToQuit()), mTile, SLOT(cleanup()) );
+    connect( mTile, TQT_SIGNAL(pixmapChanged()), TQT_SLOT(updateBackground()) );
+    connect( qApp, TQT_SIGNAL(aboutToQuit()), mTile, TQT_SLOT(cleanup()) );
   }
 }
 
@@ -395,9 +395,9 @@ void KDialogBase::enableButtonSeparator( bool state )
       return;
     }
     mActionSep = new KSeparator( this );
-    mActionSep->setFocusPolicy(QWidget::NoFocus);
+    mActionSep->setFocusPolicy(TQWidget::NoFocus);
     mActionSep->setOrientation( mButtonOrientation == Horizontal ?
-				QFrame::HLine : QFrame::VLine );
+				TQFrame::HLine : TQFrame::VLine );
     mActionSep->show();
   }
   else
@@ -417,7 +417,7 @@ void KDialogBase::enableButtonSeparator( bool state )
 
 
 
-QFrame *KDialogBase::plainPage()
+TQFrame *KDialogBase::plainPage()
 {
 	return ( mJanus ? mJanus->plainPage() : 0 );
 }
@@ -434,20 +434,20 @@ void KDialogBase::adjustSize()
     resize( sizeHint() );
 }
 
-QSize KDialogBase::sizeHint() const
+TQSize KDialogBase::sizeHint() const
 {
    return d->minSize.expandedTo( minimumSizeHint() ) + d->incSize;
 }
 
-QSize KDialogBase::minimumSizeHint() const
+TQSize KDialogBase::minimumSizeHint() const
 {
   const int m = marginHint();
   const int s = spacingHint();
 
-  const QSize zeroByS(0, s);
+  const TQSize zeroByS(0, s);
 
-  QSize s1(0,0);
-  QSize s2(0,0);
+  TQSize s1(0,0);
+  TQSize s2(0,0);
 
   //
   // Url help area
@@ -473,12 +473,12 @@ QSize KDialogBase::minimumSizeHint() const
     s2 = s2.expandedTo( mMainWidget->minimumSizeHint() );
     if( s2.isEmpty() )
     {
-      s2 = QSize( 100, 100+s );
+      s2 = TQSize( 100, 100+s );
     }
   }
   else
   {
-    s2 = QSize( 100, 100+s );
+    s2 = TQSize( 100, 100+s );
   }
   s1.rwidth()  = QMAX( s1.rwidth(), s2.rwidth() );
   s1.rheight() += s2.rheight();
@@ -534,7 +534,7 @@ void KDialogBase::disableResize()
 }
 
 
-void KDialogBase::setInitialSize( const QSize &s, bool noResize )
+void KDialogBase::setInitialSize( const TQSize &s, bool noResize )
 {
   d->minSize = s;
   d->bFixed = noResize;
@@ -542,7 +542,7 @@ void KDialogBase::setInitialSize( const QSize &s, bool noResize )
 }
 
 
-void KDialogBase::incInitialSize( const QSize &s, bool noResize )
+void KDialogBase::incInitialSize( const TQSize &s, bool noResize )
 {
   d->incSize = s;
   d->bFixed = noResize;
@@ -569,42 +569,42 @@ void KDialogBase::makeButtonBox( int buttonMask, ButtonCode defaultButton,
     mEscapeButton = (buttonMask&Cancel) ? Cancel : Close;
   }
 
-  d->mButton.box = new QWidget( this );
+  d->mButton.box = new TQWidget( this );
 
   d->mButton.mask = buttonMask;
   if( d->mButton.mask & Help )
   {
     KPushButton *pb = d->mButton.append( Help, KStdGuiItem::help() );
 
-    connect( pb, SIGNAL(clicked()), SLOT(slotHelp()) );
+    connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotHelp()) );
   }
   if( d->mButton.mask & Default )
   {
     KPushButton *pb = d->mButton.append( Default, KStdGuiItem::defaults() );
 
-    connect( pb, SIGNAL(clicked()), SLOT(slotDefault()) );
+    connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotDefault()) );
   }
   if( d->mButton.mask & Details )
   {
-    KPushButton *pb = d->mButton.append( Details, QString::null );
-    connect( pb, SIGNAL(clicked()), SLOT(slotDetails()) );
+    KPushButton *pb = d->mButton.append( Details, TQString::null );
+    connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotDetails()) );
     setDetails(false);
   }
   if( d->mButton.mask & User3 )
   {
     KPushButton *pb = d->mButton.append( User3, user3 );
-    connect( pb, SIGNAL(clicked()), SLOT(slotUser3()) );
+    connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotUser3()) );
   }
   if( d->mButton.mask & User2 )
   {
     KPushButton *pb = d->mButton.append( User2, user2 );
     if( mMessageBoxMode )
     {
-      connect( pb, SIGNAL(clicked()), SLOT(slotYes()) );
+      connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotYes()) );
     }
     else
     {
-      connect( pb, SIGNAL(clicked()), this, SLOT(slotUser2()) );
+      connect( pb, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotUser2()) );
     }
   }
   if( d->mButton.mask & User1 )
@@ -612,44 +612,44 @@ void KDialogBase::makeButtonBox( int buttonMask, ButtonCode defaultButton,
     KPushButton *pb = d->mButton.append( User1, user1 );
     if( mMessageBoxMode )
     {
-      connect( pb, SIGNAL(clicked()), this, SLOT(slotNo()) );
+      connect( pb, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotNo()) );
     }
     else
     {
-      connect( pb, SIGNAL(clicked()), SLOT(slotUser1()) );
+      connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotUser1()) );
     }
   }
   if( d->mButton.mask & Ok )
   {
     KPushButton *pb = d->mButton.append( Ok, KStdGuiItem::ok() );
-    connect( pb, SIGNAL(clicked()), SLOT(slotOk()) );
+    connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotOk()) );
   }
   if( d->mButton.mask & Apply )
   {
     KPushButton *pb = d->mButton.append( Apply, KStdGuiItem::apply() );
-    connect( pb, SIGNAL(clicked()), SLOT(slotApply()) );
-    connect( pb, SIGNAL(clicked()), SLOT(applyPressed()) );
+    connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotApply()) );
+    connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(applyPressed()) );
   }
   if( d->mButton.mask & Try )
   {
     KPushButton *pb = d->mButton.append( Try,
                            i18n( "&Try" ) );
-    connect( pb, SIGNAL(clicked()), SLOT(slotTry()) );
+    connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotTry()) );
   }
   if( d->mButton.mask & Cancel )
   {
     KPushButton *pb = d->mButton.append( Cancel, KStdGuiItem::cancel() );
-    connect( pb, SIGNAL(clicked()), SLOT(slotCancel()) );
+    connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotCancel()) );
   }
   if( d->mButton.mask & Close )
   {
     KPushButton *pb = d->mButton.append( Close, KStdGuiItem::close() );
-    connect( pb, SIGNAL(clicked()), SLOT(slotClose()) );
+    connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotClose()) );
   }
 
   if( defaultButton != NoDefault )
   {
-    QPushButton *pb = actionButton( defaultButton );
+    TQPushButton *pb = actionButton( defaultButton );
     if( pb )
     {
       setButtonFocus( pb, true, false );
@@ -719,21 +719,21 @@ void KDialogBase::setButtonStyle( int style )
     delete d->mButton.box->layout();
   }
 
-  QBoxLayout *lay;
+  TQBoxLayout *lay;
   if( mButtonOrientation == Horizontal )
   {
-    lay = new QBoxLayout( d->mButton.box, QBoxLayout::LeftToRight, 0,
+    lay = new TQBoxLayout( d->mButton.box, TQBoxLayout::LeftToRight, 0,
 			  spacingHint());
   }
   else
   {
-    lay = new QBoxLayout( d->mButton.box, QBoxLayout::TopToBottom, 0,
+    lay = new TQBoxLayout( d->mButton.box, TQBoxLayout::TopToBottom, 0,
 			  spacingHint());
   }
 
   int numButton = 0;
-  QPushButton *prevButton = 0;
-  QPushButton *newButton;
+  TQPushButton *prevButton = 0;
+  TQPushButton *newButton;
 
   for( int i=0; i<layoutMax; ++i )
   {
@@ -829,7 +829,7 @@ void KDialogBase::setButtonStyle( int style )
 }
 
 
-QPushButton *KDialogBase::actionButton( ButtonCode id )
+TQPushButton *KDialogBase::actionButton( ButtonCode id )
 {
   return d->mButton.button(id);
 }
@@ -837,7 +837,7 @@ QPushButton *KDialogBase::actionButton( ButtonCode id )
 
 void KDialogBase::enableButton( ButtonCode id, bool state )
 {
-  QPushButton *pb = actionButton( id );
+  TQPushButton *pb = actionButton( id );
   if( pb )
   {
     pb->setEnabled( state );
@@ -865,7 +865,7 @@ void KDialogBase::enableButtonCancel( bool state )
 
 void KDialogBase::showButton( ButtonCode id, bool state )
 {
-  QPushButton *pb = actionButton( id );
+  TQPushButton *pb = actionButton( id );
   if( pb )
   {
     state ? pb->show() : pb->hide();
@@ -891,25 +891,25 @@ void KDialogBase::showButtonCancel( bool state )
 }
 
 
-void KDialogBase::setButtonOKText( const QString &text,
-				   const QString &tooltip,
-				   const QString &quickhelp )
+void KDialogBase::setButtonOKText( const TQString &text,
+				   const TQString &tooltip,
+				   const TQString &quickhelp )
 {
-  QPushButton *pb = actionButton( Ok );
+  TQPushButton *pb = actionButton( Ok );
   if( !pb )
   {
     return;
   }
 
-  const QString whatsThis = i18n( ""
+  const TQString whatsThis = i18n( ""
     "If you press the <b>OK</b> button, all changes\n"
     "you made will be used to proceed.");
 
   pb->setText( text.isEmpty() ? i18n("&OK") : text );
   d->mButton.resize( false, 0, spacingHint(), mButtonOrientation );
 
-  QToolTip::add( pb, tooltip.isEmpty() ? i18n("Accept settings") : tooltip );
-  QWhatsThis::add( pb, quickhelp.isEmpty() ? whatsThis : quickhelp );
+  TQToolTip::add( pb, tooltip.isEmpty() ? i18n("Accept settings") : tooltip );
+  TQWhatsThis::add( pb, quickhelp.isEmpty() ? whatsThis : quickhelp );
 }
 
 
@@ -919,17 +919,17 @@ void KDialogBase::setButtonOK( const KGuiItem &item /* = KStdGuiItem::ok() */ )
 }
 
 
-void KDialogBase::setButtonApplyText( const QString &text,
-				      const QString &tooltip,
-				      const QString &quickhelp )
+void KDialogBase::setButtonApplyText( const TQString &text,
+				      const TQString &tooltip,
+				      const TQString &quickhelp )
 {
-  QPushButton *pb = actionButton( Apply );
+  TQPushButton *pb = actionButton( Apply );
   if( !pb )
   {
     return;
   }
 
-  const QString whatsThis = i18n( ""
+  const TQString whatsThis = i18n( ""
     "When clicking <b>Apply</b>, the settings will be\n"
     "handed over to the program, but the dialog\n"
     "will not be closed. "
@@ -938,8 +938,8 @@ void KDialogBase::setButtonApplyText( const QString &text,
   pb->setText( text.isEmpty() ? i18n("&Apply") : text );
   d->mButton.resize( false, 0, spacingHint(), mButtonOrientation );
 
-  QToolTip::add( pb, tooltip.isEmpty() ? i18n("Apply settings") : tooltip );
-  QWhatsThis::add( pb, quickhelp.isEmpty() ? whatsThis : quickhelp );
+  TQToolTip::add( pb, tooltip.isEmpty() ? i18n("Apply settings") : tooltip );
+  TQWhatsThis::add( pb, quickhelp.isEmpty() ? whatsThis : quickhelp );
 }
 
 
@@ -949,11 +949,11 @@ void KDialogBase::setButtonApply( const KGuiItem &item /* = KStdGuiItem::apply()
 }
 
 
-void KDialogBase::setButtonCancelText( const QString& text,
-				       const QString& tooltip,
-				       const QString& quickhelp )
+void KDialogBase::setButtonCancelText( const TQString& text,
+				       const TQString& tooltip,
+				       const TQString& quickhelp )
 {
-  QPushButton *pb = actionButton( Cancel );
+  TQPushButton *pb = actionButton( Cancel );
   if( !pb )
   {
     return;
@@ -962,8 +962,8 @@ void KDialogBase::setButtonCancelText( const QString& text,
   pb->setText( text.isEmpty() ? i18n("&Cancel") : text );
   d->mButton.resize( false, 0, spacingHint(), mButtonOrientation );
 
-  QToolTip::add( pb, tooltip );
-  QWhatsThis::add( pb, quickhelp );
+  TQToolTip::add( pb, tooltip );
+  TQWhatsThis::add( pb, quickhelp );
 }
 
 
@@ -983,7 +983,7 @@ void KDialogBase::setButtonGuiItem( ButtonCode id, const KGuiItem &item )
 }
 
 
-void KDialogBase::setButtonText( ButtonCode id, const QString &text )
+void KDialogBase::setButtonText( ButtonCode id, const TQString &text )
 {
   if (!d->bSettingDetails && (id == Details))
   {
@@ -991,7 +991,7 @@ void KDialogBase::setButtonText( ButtonCode id, const QString &text )
     setDetails(d->bDetails);
     return;
   }
-  QPushButton *pb = actionButton( id );
+  TQPushButton *pb = actionButton( id );
   if( pb )
   {
     pb->setText( text );
@@ -1000,33 +1000,33 @@ void KDialogBase::setButtonText( ButtonCode id, const QString &text )
 }
 
 
-void KDialogBase::setButtonTip( ButtonCode id, const QString &text )
+void KDialogBase::setButtonTip( ButtonCode id, const TQString &text )
 {
-  QPushButton *pb = actionButton( id );
+  TQPushButton *pb = actionButton( id );
   if( pb )
   {
     if (text.isEmpty())
-      QToolTip::remove( pb );
+      TQToolTip::remove( pb );
     else
-      QToolTip::add( pb, text );
+      TQToolTip::add( pb, text );
   }
 }
 
 
-void KDialogBase::setButtonWhatsThis( ButtonCode id, const QString &text )
+void KDialogBase::setButtonWhatsThis( ButtonCode id, const TQString &text )
 {
-  QPushButton *pb = actionButton( id );
+  TQPushButton *pb = actionButton( id );
   if( pb )
   {
     if (text.isEmpty())
-      QWhatsThis::remove( pb );
+      TQWhatsThis::remove( pb );
     else
-      QWhatsThis::add( pb, text );
+      TQWhatsThis::add( pb, text );
   }
 }
 
 
-void KDialogBase::setButtonFocus( QPushButton *p,bool isDefault, bool isFocus )
+void KDialogBase::setButtonFocus( TQPushButton *p,bool isDefault, bool isFocus )
 {
   p->setDefault( isDefault );
   if( isFocus )
@@ -1064,19 +1064,19 @@ void KDialogBase::unfoldTreeList( bool persist )
     mJanus->unfoldTreeList( persist );
 }
 
-void KDialogBase::addWidgetBelowList( QWidget * widget )
+void KDialogBase::addWidgetBelowList( TQWidget * widget )
 {
   if( mJanus )
     mJanus->addWidgetBelowList( widget );
 }
 
-void KDialogBase::addButtonBelowList( const QString & text, QObject * recv, const char * slot )
+void KDialogBase::addButtonBelowList( const TQString & text, TQObject * recv, const char * slot )
 {
   if( mJanus )
     mJanus->addButtonBelowList( text, recv, slot );
 }
 
-void KDialogBase::addButtonBelowList( const KGuiItem & item, QObject * recv, const char * slot )
+void KDialogBase::addButtonBelowList( const KGuiItem & item, TQObject * recv, const char * slot )
 {
   if( mJanus )
     mJanus->addButtonBelowList( item, recv, slot );
@@ -1109,12 +1109,12 @@ void KDialogBase::slotDetails()
   setDetails(!d->bDetails);
 }
 
-void KDialogBase::setDetailsWidget(QWidget *detailsWidget)
+void KDialogBase::setDetailsWidget(TQWidget *detailsWidget)
 {
   delete d->detailsWidget;
   d->detailsWidget = detailsWidget;
   if (d->detailsWidget->parentWidget() != this)
-     d->detailsWidget->reparent(this, QPoint(0,0));
+     d->detailsWidget->reparent(this, TQPoint(0,0));
   d->detailsWidget->hide();
   if( mIsActivated )
   {
@@ -1226,7 +1226,7 @@ void KDialogBase::slotClose()
 }
 
 
-void KDialogBase::helpClickedSlot( const QString & )
+void KDialogBase::helpClickedSlot( const TQString & )
 {
   slotHelp();
 }
@@ -1256,8 +1256,8 @@ void KDialogBase::enableLinkedHelp( bool state )
       mUrlHelp->setBackgroundPixmap(*mTile->get());
     }
     mUrlHelp->setMinimumHeight( fontMetrics().height() + marginHint() );
-    connect(mUrlHelp,SIGNAL(leftClickedURL(const QString &)),
-	    SLOT(helpClickedSlot(const QString &)));
+    connect(mUrlHelp,TQT_SIGNAL(leftClickedURL(const TQString &)),
+	    TQT_SLOT(helpClickedSlot(const TQString &)));
     mUrlHelp->show();
   }
   else
@@ -1276,14 +1276,14 @@ void KDialogBase::enableLinkedHelp( bool state )
 }
 
 
-void KDialogBase::setHelp( const QString &anchor, const QString &appname )
+void KDialogBase::setHelp( const TQString &anchor, const TQString &appname )
 {
   mAnchor  = anchor;
   mHelpApp = appname;
 }
 
 
-void KDialogBase::setHelpLinkText( const QString &text )
+void KDialogBase::setHelpLinkText( const TQString &text )
 {
   mHelpLinkText = text;
   if( mUrlHelp )
@@ -1293,62 +1293,62 @@ void KDialogBase::setHelpLinkText( const QString &text )
 }
 
 
-QFrame *KDialogBase::addPage( const QString &itemName, const QString &header,
-			      const QPixmap &pixmap )
+TQFrame *KDialogBase::addPage( const TQString &itemName, const TQString &header,
+			      const TQPixmap &pixmap )
 {
   return ( mJanus ? mJanus->addPage( itemName, header, pixmap ) : 0);
 }
 
-QFrame *KDialogBase::addPage( const QStringList &items, const QString &header,
-			      const QPixmap &pixmap )
+TQFrame *KDialogBase::addPage( const TQStringList &items, const TQString &header,
+			      const TQPixmap &pixmap )
 {
   return ( mJanus ? mJanus->addPage( items, header, pixmap ) : 0);
 }
 
 
-QVBox *KDialogBase::addVBoxPage( const QString &itemName,
-				 const QString &header, const QPixmap &pixmap )
+TQVBox *KDialogBase::addVBoxPage( const TQString &itemName,
+				 const TQString &header, const TQPixmap &pixmap )
 {
   return ( mJanus ? mJanus->addVBoxPage( itemName, header, pixmap) : 0);
 }
 
-QVBox *KDialogBase::addVBoxPage( const QStringList &items,
-				 const QString &header, const QPixmap &pixmap )
+TQVBox *KDialogBase::addVBoxPage( const TQStringList &items,
+				 const TQString &header, const TQPixmap &pixmap )
 {
   return ( mJanus ? mJanus->addVBoxPage( items, header, pixmap) : 0);
 }
 
 
-QHBox *KDialogBase::addHBoxPage( const QString &itemName,
-				 const QString &header,
-				 const QPixmap &pixmap )
+TQHBox *KDialogBase::addHBoxPage( const TQString &itemName,
+				 const TQString &header,
+				 const TQPixmap &pixmap )
 {
   return ( mJanus ? mJanus->addHBoxPage( itemName, header, pixmap ) : 0);
 }
 
-QHBox *KDialogBase::addHBoxPage( const QStringList &items,
-				 const QString &header,
-				 const QPixmap &pixmap )
+TQHBox *KDialogBase::addHBoxPage( const TQStringList &items,
+				 const TQString &header,
+				 const TQPixmap &pixmap )
 {
   return ( mJanus ? mJanus->addHBoxPage( items, header, pixmap ) : 0);
 }
 
 
-QGrid *KDialogBase::addGridPage( int n, Orientation dir,
-				 const QString &itemName,
-				 const QString &header, const QPixmap &pixmap )
+TQGrid *KDialogBase::addGridPage( int n, Orientation dir,
+				 const TQString &itemName,
+				 const TQString &header, const TQPixmap &pixmap )
 {
   return ( mJanus ? mJanus->addGridPage( n, dir, itemName, header, pixmap) : 0);
 }
 
-QGrid *KDialogBase::addGridPage( int n, Orientation dir,
-				 const QStringList &items,
-				 const QString &header, const QPixmap &pixmap )
+TQGrid *KDialogBase::addGridPage( int n, Orientation dir,
+				 const TQStringList &items,
+				 const TQString &header, const TQPixmap &pixmap )
 {
   return ( mJanus ? mJanus->addGridPage( n, dir, items, header, pixmap) : 0);
 }
 
-void KDialogBase::setFolderIcon(const QStringList &path, const QPixmap &pixmap)
+void KDialogBase::setFolderIcon(const TQStringList &path, const TQPixmap &pixmap)
 {
   if (!mJanus)
     return;
@@ -1356,7 +1356,7 @@ void KDialogBase::setFolderIcon(const QStringList &path, const QPixmap &pixmap)
   mJanus->setFolderIcon(path,pixmap);
 }
 
-QFrame *KDialogBase::makeMainWidget()
+TQFrame *KDialogBase::makeMainWidget()
 {
   if( mJanus || mMainWidget )
   {
@@ -1364,13 +1364,13 @@ QFrame *KDialogBase::makeMainWidget()
     return 0;
   }
 
-  QFrame *mainWidget = new QFrame( this );
+  TQFrame *mainWidget = new TQFrame( this );
   setMainWidget( mainWidget );
   return mainWidget;
 }
 
 
-QVBox *KDialogBase::makeVBoxMainWidget()
+TQVBox *KDialogBase::makeVBoxMainWidget()
 {
   if( mJanus || mMainWidget )
   {
@@ -1378,14 +1378,14 @@ QVBox *KDialogBase::makeVBoxMainWidget()
     return 0;
   }
 
-  QVBox *mainWidget = new QVBox( this );
+  TQVBox *mainWidget = new TQVBox( this );
   mainWidget->setSpacing( spacingHint() );
   setMainWidget( mainWidget );
   return mainWidget;
 }
 
 
-QHBox *KDialogBase::makeHBoxMainWidget()
+TQHBox *KDialogBase::makeHBoxMainWidget()
 {
   if( mJanus || mMainWidget )
   {
@@ -1393,14 +1393,14 @@ QHBox *KDialogBase::makeHBoxMainWidget()
     return 0;
   }
 
-  QHBox *mainWidget = new QHBox( this );
+  TQHBox *mainWidget = new TQHBox( this );
   mainWidget->setSpacing( spacingHint() );
   setMainWidget( mainWidget );
   return mainWidget;
 }
 
 
-QGrid *KDialogBase::makeGridMainWidget( int n, Orientation dir )
+TQGrid *KDialogBase::makeGridMainWidget( int n, Orientation dir )
 {
   if( mJanus || mMainWidget )
   {
@@ -1408,7 +1408,7 @@ QGrid *KDialogBase::makeGridMainWidget( int n, Orientation dir )
     return 0;
   }
 
-  QGrid *mainWidget = new QGrid( n, dir, this );
+  TQGrid *mainWidget = new TQGrid( n, dir, this );
   mainWidget->setSpacing( spacingHint() );
   setMainWidget( mainWidget );
   return mainWidget;
@@ -1428,7 +1428,7 @@ void KDialogBase::printMakeMainWidgetError()
 }
 
 
-void KDialogBase::setMainWidget( QWidget *widget )
+void KDialogBase::setMainWidget( TQWidget *widget )
 {
   if( mJanus )
   {
@@ -1447,9 +1447,9 @@ void KDialogBase::setMainWidget( QWidget *widget )
   }
   if( mMainWidget != NULL )
   {
-    QFocusData* fd = focusData();
-    QWidget* prev = fd->last();
-    for( QPtrListIterator<KDialogBaseButton> it( d->mButton.list );
+    TQFocusData* fd = focusData();
+    TQWidget* prev = fd->last();
+    for( TQPtrListIterator<KDialogBaseButton> it( d->mButton.list );
 	 it != NULL;
 	 ++it )
     {
@@ -1461,7 +1461,7 @@ void KDialogBase::setMainWidget( QWidget *widget )
 }
 
 
-QWidget *KDialogBase::mainWidget()
+TQWidget *KDialogBase::mainWidget()
 {
   return mMainWidget;
 }
@@ -1479,16 +1479,16 @@ int KDialogBase::activePageIndex() const
 }
 
 
-int KDialogBase::pageIndex( QWidget *widget ) const
+int KDialogBase::pageIndex( TQWidget *widget ) const
 {
   return ( mJanus ? mJanus->pageIndex( widget) : -1);
 }
 
 
 // Deprecated
-QRect KDialogBase::getContentsRect() const
+TQRect KDialogBase::getContentsRect() const
 {
-  QRect r;
+  TQRect r;
   r.setLeft( marginHint() );
   r.setTop( marginHint() + (mUrlHelp ? mUrlHelp->height() : 0) );
   r.setRight( width() - marginHint() );
@@ -1525,15 +1525,15 @@ void KDialogBase::getBorderWidths(int& ulx, int& uly, int& lrx, int& lry) const
 }
 
 
-QSize KDialogBase::calculateSize(int w, int h) const
+TQSize KDialogBase::calculateSize(int w, int h) const
 {
   int ulx, uly, lrx, lry;
   getBorderWidths(ulx, uly, lrx, lry);
-  return QSize(ulx+w+lrx,uly+h+lry);
+  return TQSize(ulx+w+lrx,uly+h+lry);
 }
 
 
-QString KDialogBase::helpLinkText() const
+TQString KDialogBase::helpLinkText() const
 {
   return ( mHelpLinkText.isNull() ? i18n("Get help...") : mHelpLinkText );
 }
@@ -1550,7 +1550,7 @@ void KDialogBase::updateGeometry()
 
 
 
-void KDialogBase::keyPressEvent( QKeyEvent *e )
+void KDialogBase::keyPressEvent( TQKeyEvent *e )
 {
   //
   // Reimplemented from KDialog to remove the default behavior
@@ -1560,7 +1560,7 @@ void KDialogBase::keyPressEvent( QKeyEvent *e )
   {
     if( e->key() == Key_F1 )
     {
-      QPushButton *pb = actionButton( Help );
+      TQPushButton *pb = actionButton( Help );
       if( pb )
       {
 	pb->animateClick();
@@ -1570,7 +1570,7 @@ void KDialogBase::keyPressEvent( QKeyEvent *e )
     }
     if( e->key() == Key_Escape )
     {
-      QPushButton *pb = actionButton( mEscapeButton );
+      TQPushButton *pb = actionButton( mEscapeButton );
       if( pb )
       {
 	pb->animateClick();
@@ -1582,7 +1582,7 @@ void KDialogBase::keyPressEvent( QKeyEvent *e )
   }
   else if( e->key() == Key_F1 && e->state() == ShiftButton )
   {
-    QWhatsThis::enterWhatsThisMode();
+    TQWhatsThis::enterWhatsThisMode();
     e->accept();
     return;
   }
@@ -1591,7 +1591,7 @@ void KDialogBase::keyPressEvent( QKeyEvent *e )
   else if ( e->state() == ControlButton &&
             (e->key() == Key_Return || e->key() == Key_Enter) )
   {
-    QPushButton *pb = actionButton( Ok );
+    TQPushButton *pb = actionButton( Ok );
     if ( pb )
     {
       pb->animateClick();
@@ -1603,12 +1603,12 @@ void KDialogBase::keyPressEvent( QKeyEvent *e )
   //
   // Do the default action instead. Note KDialog::keyPressEvent is bypassed
   //
-  QDialog::keyPressEvent(e);
+  TQDialog::keyPressEvent(e);
 }
 
 
 
-void KDialogBase::hideEvent( QHideEvent *ev )
+void KDialogBase::hideEvent( TQHideEvent *ev )
 {
   emit hidden();
   if (!ev->spontaneous())
@@ -1619,13 +1619,13 @@ void KDialogBase::hideEvent( QHideEvent *ev )
 
 
 
-void KDialogBase::closeEvent( QCloseEvent *e )
+void KDialogBase::closeEvent( TQCloseEvent *e )
 {
-    QPushButton *pb = actionButton( mEscapeButton );
+    TQPushButton *pb = actionButton( mEscapeButton );
     if( pb && isShown() ) {
 	pb->animateClick();
     } else {
-	QDialog::closeEvent( e );
+	TQDialog::closeEvent( e );
     }
 }
 
@@ -1665,15 +1665,15 @@ bool KDialogBase::haveBackgroundTile()
 }
 
 // Deprecated. For compatibility only.
-const QPixmap *KDialogBase::getBackgroundTile() { return backgroundTile(); }
+const TQPixmap *KDialogBase::getBackgroundTile() { return backgroundTile(); }
 
-const QPixmap *KDialogBase::backgroundTile()
+const TQPixmap *KDialogBase::backgroundTile()
 {
   return ( mTile ? mTile->get() : 0);
 }
 
 
-void KDialogBase::setBackgroundTile( const QPixmap *pix )
+void KDialogBase::setBackgroundTile( const TQPixmap *pix )
 {
   if( mTile )
   {
@@ -1686,7 +1686,7 @@ void KDialogBase::updateBackground()
 {
   if( !mTile || !mTile->get() )
   {
-    QPixmap nullPixmap;
+    TQPixmap nullPixmap;
     setBackgroundPixmap(nullPixmap);
     if( d->mButton.box )
     {
@@ -1697,7 +1697,7 @@ void KDialogBase::updateBackground()
   }
   else
   {
-    const QPixmap *pix = mTile->get();
+    const TQPixmap *pix = mTile->get();
     setBackgroundPixmap(*pix);
     if( d->mButton.box )
     {
@@ -1725,7 +1725,7 @@ void KDialogBase::showTile( bool state )
   }
   else
   {
-    const QPixmap *pix = mTile->get();
+    const TQPixmap *pix = mTile->get();
     setBackgroundPixmap(*pix);
     if( d->mButton.box )
     {
@@ -1738,54 +1738,54 @@ void KDialogBase::showTile( bool state )
   }
 }
 
-QSize KDialogBase::configDialogSize( const QString& groupName ) const
+TQSize KDialogBase::configDialogSize( const TQString& groupName ) const
 {
    return configDialogSize( *KGlobal::config(), groupName );
 }
 
 
-QSize KDialogBase::configDialogSize( KConfig& config,
-				      const QString& groupName ) const
+TQSize KDialogBase::configDialogSize( KConfig& config,
+				      const TQString& groupName ) const
 {
    int w, h;
-   int scnum = QApplication::desktop()->screenNumber(parentWidget());
-   QRect desk = QApplication::desktop()->screenGeometry(scnum);
+   int scnum = TQApplication::desktop()->screenNumber(parentWidget());
+   TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
    w = sizeHint().width();
    h = sizeHint().height();
 
    KConfigGroupSaver cs(&config, groupName);
-   w = config.readNumEntry( QString::fromLatin1("Width %1").arg( desk.width()), w );
-   h = config.readNumEntry( QString::fromLatin1("Height %1").arg( desk.height()), h );
+   w = config.readNumEntry( TQString::fromLatin1("Width %1").arg( desk.width()), w );
+   h = config.readNumEntry( TQString::fromLatin1("Height %1").arg( desk.height()), h );
 
-   return QSize( w, h );
+   return TQSize( w, h );
 }
 
 
-void KDialogBase::saveDialogSize( const QString& groupName, bool global )
+void KDialogBase::saveDialogSize( const TQString& groupName, bool global )
 {
    saveDialogSize( *KGlobal::config(), groupName, global );
 }
 
 
-void KDialogBase::saveDialogSize( KConfig& config, const QString& groupName,
+void KDialogBase::saveDialogSize( KConfig& config, const TQString& groupName,
 				      bool global ) const
 {
-   int scnum = QApplication::desktop()->screenNumber(parentWidget());
-   QRect desk = QApplication::desktop()->screenGeometry(scnum);
+   int scnum = TQApplication::desktop()->screenNumber(parentWidget());
+   TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
    KConfigGroupSaver cs(&config, groupName);
-   QSize sizeToSave = size();
+   TQSize sizeToSave = size();
 
-   config.writeEntry( QString::fromLatin1("Width %1").arg( desk.width()),
-		      QString::number( sizeToSave.width()), true, global);
-   config.writeEntry( QString::fromLatin1("Height %1").arg( desk.height()),
-		      QString::number( sizeToSave.height()), true, global);
+   config.writeEntry( TQString::fromLatin1("Width %1").arg( desk.width()),
+		      TQString::number( sizeToSave.width()), true, global);
+   config.writeEntry( TQString::fromLatin1("Height %1").arg( desk.height()),
+		      TQString::number( sizeToSave.height()), true, global);
 }
 
 
 KDialogBaseButton::KDialogBaseButton( const KGuiItem &item, int key,
-				      QWidget *parent,  const char *name )
+				      TQWidget *parent,  const char *name )
   : KPushButton( item, parent, name ), mKey(key)
 {
 }
@@ -1793,8 +1793,8 @@ KDialogBaseButton::KDialogBaseButton( const KGuiItem &item, int key,
 
 
 
-KDialogBaseTile::KDialogBaseTile( QObject *parent, const char *name )
-  : QObject( parent, name ), mPixmap(0)
+KDialogBaseTile::KDialogBaseTile( TQObject *parent, const char *name )
+  : TQObject( parent, name ), mPixmap(0)
 {
 }
 
@@ -1805,7 +1805,7 @@ KDialogBaseTile::~KDialogBaseTile()
 }
 
 
-void KDialogBaseTile::set( const QPixmap *pix )
+void KDialogBaseTile::set( const TQPixmap *pix )
 {
   if( !pix )
   {
@@ -1815,7 +1815,7 @@ void KDialogBaseTile::set( const QPixmap *pix )
   {
     if( !mPixmap )
     {
-      mPixmap = new QPixmap(*pix);
+      mPixmap = new TQPixmap(*pix);
     }
     else
     {
@@ -1827,7 +1827,7 @@ void KDialogBaseTile::set( const QPixmap *pix )
 }
 
 
-const QPixmap *KDialogBaseTile::get() const
+const TQPixmap *KDialogBaseTile::get() const
 {
   return mPixmap;
 }

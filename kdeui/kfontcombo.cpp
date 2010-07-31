@@ -17,9 +17,9 @@
 */
 
 
-#include <qfontdatabase.h>
-#include <qlistbox.h>
-#include <qpainter.h>
+#include <tqfontdatabase.h>
+#include <tqlistbox.h>
+#include <tqpainter.h>
 
 #include <kcharsets.h>
 #include <kconfig.h>
@@ -50,35 +50,35 @@ struct KFontComboPrivate
     bool modified : 1;
     int size;
     int lineSpacing;
-    QString defaultFamily;
+    TQString defaultFamily;
 };
 
 class KFontListItem : public QListBoxItem
 {
 public:
-    KFontListItem(const QString &fontName, KFontCombo *combo);
+    KFontListItem(const TQString &fontName, KFontCombo *combo);
     virtual ~KFontListItem();
 
-    virtual int width(const QListBox *) const;
-    virtual int height(const QListBox *) const;
+    virtual int width(const TQListBox *) const;
+    virtual int height(const TQListBox *) const;
 
     void updateFont();
 
 protected:
-    virtual void paint(QPainter *p);
+    virtual void paint(TQPainter *p);
 
 private:
     void createFont();
 
 private:
     KFontCombo *m_combo;
-    QString m_fontName;
-    QFont *m_font;
+    TQString m_fontName;
+    TQFont *m_font;
     bool m_canPaintName;
 };
 
-KFontListItem::KFontListItem(const QString &fontName, KFontCombo *combo)
-    : QListBoxItem(combo->listBox()),
+KFontListItem::KFontListItem(const TQString &fontName, KFontCombo *combo)
+    : TQListBoxItem(combo->listBox()),
       m_combo(combo),
       m_fontName(fontName),
       m_font(0),
@@ -92,42 +92,42 @@ KFontListItem::~KFontListItem()
     delete m_font;
 }
 
-int KFontListItem::width(const QListBox *lb) const
+int KFontListItem::width(const TQListBox *lb) const
 {
     if (m_font)
-       return QFontMetrics(*m_font).width(text()) + 6;
+       return TQFontMetrics(*m_font).width(text()) + 6;
     return lb->fontMetrics().width(text()) + 6;
 }
 
-int KFontListItem::height(const QListBox *lb) const
+int KFontListItem::height(const TQListBox *lb) const
 {
     if (m_combo->d->displayFonts)
         return m_combo->d->lineSpacing + 2;
-    QFontMetrics fm(lb->fontMetrics());
+    TQFontMetrics fm(lb->fontMetrics());
     return fm.lineSpacing() + 2;
 }
 
-void KFontListItem::paint(QPainter *p)
+void KFontListItem::paint(TQPainter *p)
 {
     if (m_combo->d->displayFonts)
     {
         if (!m_font)
             createFont();
 
-        QString t = m_fontName;
+        TQString t = m_fontName;
         if (p->device() != m_combo)
         {
             if (m_canPaintName)
                 p->setFont(*m_font);
             else
-                t = QString::fromLatin1("(%1)").arg(m_fontName);
+                t = TQString::fromLatin1("(%1)").arg(m_fontName);
         }
-        QFontMetrics fm(p->fontMetrics());
+        TQFontMetrics fm(p->fontMetrics());
         p->drawText(3, (m_combo->d->lineSpacing + fm.ascent() + fm.leading() / 2) / 2, t);
     }
     else
     {
-        QFontMetrics fm(p->fontMetrics());
+        TQFontMetrics fm(p->fontMetrics());
         p->drawText(3, fm.ascent() + fm.leading() / 2, m_fontName);
     }
 }
@@ -149,8 +149,8 @@ void KFontListItem::createFont()
     if (m_font)
         return;
 
-    m_font = new QFont(m_fontName);
-    QFontMetrics fm(*m_font);
+    m_font = new TQFont(m_fontName);
+    TQFontMetrics fm(*m_font);
     for (unsigned int i = 0; i < m_fontName.length(); ++i)
         if (!fm.inFont(m_fontName[i]))
         {
@@ -160,35 +160,35 @@ void KFontListItem::createFont()
     updateFont();
 }
 
-KFontCombo::KFontCombo(QWidget *parent, const char *name)
+KFontCombo::KFontCombo(TQWidget *parent, const char *name)
     : KComboBox(true, parent, name)
 {
     init();
-    QStringList families;
+    TQStringList families;
     KFontChooser::getFontList(families, 0);
     setFonts(families);
 }
 
-KFontCombo::KFontCombo(const QStringList &fonts, QWidget *parent, const char *name)
+KFontCombo::KFontCombo(const TQStringList &fonts, TQWidget *parent, const char *name)
     : KComboBox(true, parent, name)
 {
     init();
     setFonts(fonts);
 }
 
-void KFontCombo::setFonts(const QStringList &fonts)
+void KFontCombo::setFonts(const TQStringList &fonts)
 {
     clear();
-    for (QStringList::ConstIterator it = fonts.begin(); it != fonts.end(); ++it)
+    for (TQStringList::ConstIterator it = fonts.begin(); it != fonts.end(); ++it)
         new KFontListItem(*it, this);
 }
 
 /*
  * Maintenance note: Keep in sync with KFontAction::setFont()
  */
-void KFontCombo::setCurrentFont(const QString &family)
+void KFontCombo::setCurrentFont(const TQString &family)
 {
-    QString lowerName = family.lower();
+    TQString lowerName = family.lower();
     int c = count();
     for(int i = 0; i < c; i++)
     {
@@ -234,7 +234,7 @@ void KFontCombo::slotModified( int )
    d->modified = 1;
 }
 
-QString KFontCombo::currentFont() const
+TQString KFontCombo::currentFont() const
 {
    if (d->modified)
       return currentText();
@@ -244,7 +244,7 @@ QString KFontCombo::currentFont() const
 void KFontCombo::setCurrentItem(int i)
 {
     d->modified = true;
-    QComboBox::setCurrentItem(i);
+    TQComboBox::setCurrentItem(i);
 }
 
 void KFontCombo::init()
@@ -254,7 +254,7 @@ void KFontCombo::init()
     setInsertionPolicy(NoInsertion);
     setAutoCompletion(true);
     setSize(12);
-    connect( this, SIGNAL(highlighted(int)), SLOT(slotModified(int)));
+    connect( this, TQT_SIGNAL(highlighted(int)), TQT_SLOT(slotModified(int)));
 }
 
 KFontCombo::~KFontCombo()
@@ -319,9 +319,9 @@ void KFontCombo::setSize(int size)
     if (d->size == size)
         return;
     d->size = size;
-    QFont f;
+    TQFont f;
     f.setPointSize(size);
-    QFontMetrics fm(f);
+    TQFontMetrics fm(f);
     d->lineSpacing = fm.lineSpacing();
     updateFonts();
 }

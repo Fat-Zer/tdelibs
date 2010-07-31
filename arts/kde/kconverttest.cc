@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include <qfile.h>
-#include <qobject.h>
+#include <tqfile.h>
+#include <tqobject.h>
 
 #include <klocale.h>
 #include <kaboutdata.h>
@@ -81,13 +81,13 @@ int main(int argc, char **argv)
 	// converter.setup(44100);
 	converter.requestPlayObject(url);
 
-	QObject::connect(&converter, SIGNAL(rawStreamStart()), get, SLOT(slotRawStreamStart()));
+	TQObject::connect(&converter, TQT_SIGNAL(rawStreamStart()), get, TQT_SLOT(slotRawStreamStart()));
 
-	QObject::connect(&converter, SIGNAL(newBlockSize(long)), get, SLOT(slotNewBlockSize(long)));
-	QObject::connect(&converter, SIGNAL(newBlockPointer(long)), get, SLOT(slotNewBlockPointer(long)));
-	QObject::connect(&converter, SIGNAL(newData()), get, SLOT(slotNewData()));
+	TQObject::connect(&converter, TQT_SIGNAL(newBlockSize(long)), get, TQT_SLOT(slotNewBlockSize(long)));
+	TQObject::connect(&converter, TQT_SIGNAL(newBlockPointer(long)), get, TQT_SLOT(slotNewBlockPointer(long)));
+	TQObject::connect(&converter, TQT_SIGNAL(newData()), get, TQT_SLOT(slotNewData()));
 	
-	QObject::connect(&converter, SIGNAL(rawStreamFinished()), get, SLOT(slotRawStreamFinished()));
+	TQObject::connect(&converter, TQT_SIGNAL(rawStreamFinished()), get, TQT_SLOT(slotRawStreamFinished()));
 
 	converter.start();
 

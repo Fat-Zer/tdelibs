@@ -18,12 +18,12 @@
 #ifndef KSCROLLVIEW_H
 #define KSCROLLVIEW_H
 
-#include <qscrollview.h>
+#include <tqscrollview.h>
 
 #include <kdelibs_export.h>
 
 /**
- * @short A variant of QScrollView that supports smooth scrolling.
+ * @short A variant of TQScrollView that supports smooth scrolling.
  *
  *
  **/
@@ -32,7 +32,7 @@ class KDEUI_EXPORT KScrollView : public QScrollView
   Q_OBJECT
 
 public:
-    KScrollView( QWidget *parent = 0, const char *name = 0, Qt::WFlags f = 0 );
+    KScrollView( TQWidget *parent = 0, const char *name = 0, Qt::WFlags f = 0 );
 
     ~KScrollView();
 
@@ -41,7 +41,7 @@ public slots:
 //    virtual void setContentsPos(int x, int y);
 
 protected:
-    virtual void wheelEvent( QWheelEvent *e );
+    virtual void wheelEvent( TQWheelEvent *e );
 
     void startScrolling();
     void stopScrolling();

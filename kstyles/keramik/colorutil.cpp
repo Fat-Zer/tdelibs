@@ -19,13 +19,13 @@
 */
 // $Id$
 
-#include <qcolor.h>
+#include <tqcolor.h>
 
 #include "colorutil.h"
 
 namespace Keramik
 {
-	QColor ColorUtil::lighten(QColor in, int factor)
+	TQColor ColorUtil::lighten(TQColor in, int factor)
 	{
 		if (factor > 100)
 		{
@@ -41,7 +41,7 @@ namespace Keramik
 			int hd  = int(mShare*diff);
 			int delta  =  int((diff - hd)*7.55);
 			
-			QColor wrk = in.light(100+hd);
+			TQColor wrk = in.light(100+hd);
 			
 			int r = wrk.red();
 			int g = wrk.green();
@@ -55,7 +55,7 @@ namespace Keramik
 			if (g>255) g=255;
 			if (b>255) b=255;
 			
-			return QColor(r,g,b);
+			return TQColor(r,g,b);
 		}
 		
 		return in;

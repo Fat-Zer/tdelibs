@@ -35,11 +35,11 @@ KProtocolInfo* KProtocolInfo::findProtocol(const KURL &url)
 #ifdef MAKE_KDECORE_LIB
    return 0;
 #else
-   QString protocol = url.protocol();
+   TQString protocol = url.protocol();
 
    if ( !KProtocolInfo::proxiedBy( protocol ).isEmpty() )
    {
-      QString dummy;
+      TQString dummy;
       protocol = KProtocolManager::slaveProtocol(url, dummy);
    }
 
@@ -81,9 +81,9 @@ bool KProtocolInfo::isFilterProtocol( const KURL &url )
   return isFilterProtocol (url.protocol());
 }
 
-bool KProtocolInfo::isFilterProtocol( const QString &protocol )
+bool KProtocolInfo::isFilterProtocol( const TQString &protocol )
 {
-  // We call the findProtocol (const QString&) to bypass any proxy settings.
+  // We call the findProtocol (const TQString&) to bypass any proxy settings.
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(protocol);
   if ( !prot )
     return false;
@@ -96,9 +96,9 @@ bool KProtocolInfo::isHelperProtocol( const KURL &url )
   return isHelperProtocol (url.protocol());
 }
 
-bool KProtocolInfo::isHelperProtocol( const QString &protocol )
+bool KProtocolInfo::isHelperProtocol( const TQString &protocol )
 {
-  // We call the findProtocol (const QString&) to bypass any proxy settings.
+  // We call the findProtocol (const TQString&) to bypass any proxy settings.
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(protocol);
   if ( !prot )
     return false;
@@ -111,9 +111,9 @@ bool KProtocolInfo::isKnownProtocol( const KURL &url )
   return isKnownProtocol (url.protocol());
 }
 
-bool KProtocolInfo::isKnownProtocol( const QString &protocol )
+bool KProtocolInfo::isKnownProtocol( const TQString &protocol )
 {
-  // We call the findProtocol (const QString&) to bypass any proxy settings.
+  // We call the findProtocol (const TQString&) to bypass any proxy settings.
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(protocol);
   return ( prot != 0);
 }
@@ -127,11 +127,11 @@ bool KProtocolInfo::supportsListing( const KURL &url )
   return prot->m_supportsListing;
 }
 
-QStringList KProtocolInfo::listing( const KURL &url )
+TQStringList KProtocolInfo::listing( const KURL &url )
 {
   KProtocolInfo::Ptr prot = findProtocol(url);
   if ( !prot )
-    return QStringList();
+    return TQStringList();
 
   return prot->m_listing;
 }
@@ -246,11 +246,11 @@ KProtocolInfo::FileNameUsedForCopying KProtocolInfo::fileNameUsedForCopying( con
   return prot->fileNameUsedForCopying();
 }
 
-QString KProtocolInfo::defaultMimetype( const KURL &url )
+TQString KProtocolInfo::defaultMimetype( const KURL &url )
 {
   KProtocolInfo::Ptr prot = findProtocol(url);
   if ( !prot )
-    return QString::null;
+    return TQString::null;
 
   return prot->m_defaultMimetype;
 }

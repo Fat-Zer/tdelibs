@@ -30,9 +30,9 @@
 #include "katetextline.h"
 #include "katedocument.h"
 
-#include <qpoint.h>
-#include <qtimer.h>
-#include <qintdict.h>
+#include <tqpoint.h>
+#include <tqtimer.h>
+#include <tqintdict.h>
 
 class KateView;
 class KateIconBorder;
@@ -151,37 +151,37 @@ class KateViewInternal : public QWidget
     void bottom_end(bool sel=false);
 
     inline const KateTextCursor& getCursor() { return cursor; }
-    QPoint cursorCoordinates();
+    TQPoint cursorCoordinates();
 
     void paintText (int x, int y, int width, int height, bool paintOnlyDirty = false);
 
   // EVENT HANDLING STUFF - IMPORTANT
   protected:
-    void paintEvent(QPaintEvent *e);
-    bool eventFilter( QObject *obj, QEvent *e );
-    void keyPressEvent( QKeyEvent* );
-    void keyReleaseEvent( QKeyEvent* );
-    void resizeEvent( QResizeEvent* );
-    void mousePressEvent(       QMouseEvent* );
-    void mouseDoubleClickEvent( QMouseEvent* );
-    void mouseReleaseEvent(     QMouseEvent* );
-    void mouseMoveEvent(        QMouseEvent* );
-    void dragEnterEvent( QDragEnterEvent* );
-    void dragMoveEvent( QDragMoveEvent* );
-    void dropEvent( QDropEvent* );
-    void showEvent ( QShowEvent *);
-    void wheelEvent(QWheelEvent* e);
-    void focusInEvent (QFocusEvent *);
-    void focusOutEvent (QFocusEvent *);
+    void paintEvent(TQPaintEvent *e);
+    bool eventFilter( TQObject *obj, TQEvent *e );
+    void keyPressEvent( TQKeyEvent* );
+    void keyReleaseEvent( TQKeyEvent* );
+    void resizeEvent( TQResizeEvent* );
+    void mousePressEvent(       TQMouseEvent* );
+    void mouseDoubleClickEvent( TQMouseEvent* );
+    void mouseReleaseEvent(     TQMouseEvent* );
+    void mouseMoveEvent(        TQMouseEvent* );
+    void dragEnterEvent( TQDragEnterEvent* );
+    void dragMoveEvent( TQDragMoveEvent* );
+    void dropEvent( TQDropEvent* );
+    void showEvent ( TQShowEvent *);
+    void wheelEvent(TQWheelEvent* e);
+    void focusInEvent (TQFocusEvent *);
+    void focusOutEvent (TQFocusEvent *);
 
-    void contextMenuEvent ( QContextMenuEvent * e );
+    void contextMenuEvent ( TQContextMenuEvent * e );
 
   private slots:
     void tripleClickTimeout();
 
   signals:
     // emitted when KateViewInternal is not handling its own URI drops
-    void dropEventPass(QDropEvent*);
+    void dropEventPass(TQDropEvent*);
 
   private slots:
     void slotRegionVisibilityChangedAt(unsigned int);
@@ -207,8 +207,8 @@ class KateViewInternal : public QWidget
 
     void updateMicroFocusHint();
 
-    void placeCursor( const QPoint& p, bool keepSelection = false, bool updateSelection = true );
-    bool isTargetSelected( const QPoint& p );
+    void placeCursor( const TQPoint& p, bool keepSelection = false, bool updateSelection = true );
+    bool isTargetSelected( const TQPoint& p );
 
     void doDrag();
 
@@ -236,8 +236,8 @@ class KateViewInternal : public QWidget
 
     struct _dragInfo {
       DragState    state;
-      QPoint       start;
-      QTextDrag*   dragObject;
+      TQPoint       start;
+      TQTextDrag*   dragObject;
     } dragInfo;
 
     uint iconBorderHeight;
@@ -246,9 +246,9 @@ class KateViewInternal : public QWidget
     // line scrollbar + first visible (virtual) line in the current view
     //
     KateScrollBar *m_lineScroll;
-    QWidget* m_dummy;
-    QVBoxLayout* m_lineLayout;
-    QHBoxLayout* m_colLayout;
+    TQWidget* m_dummy;
+    TQVBoxLayout* m_lineLayout;
+    TQHBoxLayout* m_colLayout;
 
     // These are now cursors to account for word-wrap.
     KateSuperCursor m_startPos;
@@ -266,7 +266,7 @@ class KateViewInternal : public QWidget
     //
     // column scrollbar + x position
     //
-    QScrollBar *m_columnScroll;
+    TQScrollBar *m_columnScroll;
     int m_startX;
 
     // has selection changed while your mouse or shift key is pressed
@@ -284,7 +284,7 @@ class KateViewInternal : public QWidget
     //
     // lines Ranges, mostly useful to speedup + dyn. word wrap
     //
-    QMemArray<KateLineRange> lineRanges;
+    TQMemArray<KateLineRange> lineRanges;
 
     // maximal lenght of textlines visible from given startLine
     int maxLen(uint startLine);
@@ -353,10 +353,10 @@ class KateViewInternal : public QWidget
 
   private:
     // Timers
-    QTimer m_dragScrollTimer;
-    QTimer m_scrollTimer;
-    QTimer m_cursorTimer;
-    QTimer m_textHintTimer;
+    TQTimer m_dragScrollTimer;
+    TQTimer m_scrollTimer;
+    TQTimer m_cursorTimer;
+    TQTimer m_textHintTimer;
 
     static const int scrollTime = 30;
     static const int scrollMargin = 16;
@@ -381,9 +381,9 @@ class KateViewInternal : public QWidget
    * IM input stuff
    */
   protected:
-    void imStartEvent( QIMEvent *e );
-    void imComposeEvent( QIMEvent *e );
-    void imEndEvent( QIMEvent *e );
+    void imStartEvent( TQIMEvent *e );
+    void imComposeEvent( TQIMEvent *e );
+    void imEndEvent( TQIMEvent *e );
 
   private:
     int m_imPreeditStartLine;

@@ -24,10 +24,10 @@
 #include "kmuimanager.h"
 
 #include <kpushbutton.h>
-#include <qlabel.h>
-#include <qwidgetstack.h>
+#include <tqlabel.h>
+#include <tqwidgetstack.h>
 #include <kmessagebox.h>
-#include <qlayout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kseparator.h>
@@ -50,8 +50,8 @@
 #include "kmwlocal.h"
 #include "sidepixmap.h"
 
-KMWizard::KMWizard(QWidget *parent, const char *name)
-: QDialog(parent,name,true)
+KMWizard::KMWizard(TQWidget *parent, const char *name)
+: TQDialog(parent,name,true)
 {
 	m_start = KMWizard::Start;
 	m_end = KMWizard::End;
@@ -60,12 +60,12 @@ KMWizard::KMWizard(QWidget *parent, const char *name)
 
 	m_pagepool.setAutoDelete(false);
 
-	m_stack = new QWidgetStack(this);
+	m_stack = new TQWidgetStack(this);
 	m_next = new KPushButton(i18n("&Next >"), this);
 	m_next->setDefault(true);
 	m_prev = new KPushButton(i18n("< &Back"), this);
 	QPushButton	*m_cancel = new KPushButton(KStdGuiItem::cancel(), this);
-	m_title = new QLabel(this);
+	m_title = new TQLabel(this);
 	QFont	f(m_title->font());
 	f.setBold(true);
 	m_title->setFont(f);
@@ -74,10 +74,10 @@ KMWizard::KMWizard(QWidget *parent, const char *name)
 	KSeparator* sep2 = new KSeparator( KSeparator::HLine, this);
 	QPushButton	*m_help = new KPushButton(KStdGuiItem::help(), this);
 
-	connect(m_cancel,SIGNAL(clicked()),SLOT(reject()));
-	connect(m_next,SIGNAL(clicked()),SLOT(slotNext()));
-	connect(m_prev,SIGNAL(clicked()),SLOT(slotPrev()));
-	connect(m_help, SIGNAL(clicked()), SLOT(slotHelp()));
+	connect(m_cancel,TQT_SIGNAL(clicked()),TQT_SLOT(reject()));
+	connect(m_next,TQT_SIGNAL(clicked()),TQT_SLOT(slotNext()));
+	connect(m_prev,TQT_SIGNAL(clicked()),TQT_SLOT(slotPrev()));
+	connect(m_help, TQT_SIGNAL(clicked()), TQT_SLOT(slotHelp()));
 
 	m_side = new SidePixmap(this);
 	if (!m_side->isValid())
@@ -87,10 +87,10 @@ KMWizard::KMWizard(QWidget *parent, const char *name)
 	}
 
 	// layout
-	QVBoxLayout *main0_ = new QVBoxLayout(this, 10, 10);
-	QVBoxLayout	*main_ = new QVBoxLayout(0, 0, 0);
-	QHBoxLayout *main1_ = new QHBoxLayout(0, 0, 10);
-	QHBoxLayout	*btn_ = new QHBoxLayout(0, 0, 10);
+	TQVBoxLayout *main0_ = new TQVBoxLayout(this, 10, 10);
+	QVBoxLayout	*main_ = new TQVBoxLayout(0, 0, 0);
+	TQHBoxLayout *main1_ = new TQHBoxLayout(0, 0, 10);
+	QHBoxLayout	*btn_ = new TQHBoxLayout(0, 0, 10);
 	main0_->addLayout(main1_);
 	if (m_side)
 		main1_->addWidget(m_side);
@@ -244,7 +244,7 @@ void KMWizard::slotNext()
 
 void KMWizard::slotHelp()
 {
-	kapp->invokeHelp(QString::null, "kdeprint");
+	kapp->invokeHelp(TQString::null, "kdeprint");
 }
 
 void KMWizard::enableWizard()

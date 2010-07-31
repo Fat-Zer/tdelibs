@@ -39,7 +39,7 @@
 #include <resolv.h>
 #include <sys/utsname.h>
 
-#include <qtimer.h>
+#include <tqtimer.h>
 
 #include <klocale.h>
 #include <kprocio.h>
@@ -49,16 +49,16 @@
 
 namespace KPAC
 {
-    Discovery::Discovery( QObject* parent )
+    Discovery::Discovery( TQObject* parent )
         : Downloader( parent ),
           m_helper( new KProcIO )
     {
-        connect( m_helper, SIGNAL( readReady( KProcIO* ) ), SLOT( helperOutput() ) );
-        connect( m_helper, SIGNAL( processExited( KProcess* ) ), SLOT( failed() ) );
+        connect( m_helper, TQT_SIGNAL( readReady( KProcIO* ) ), TQT_SLOT( helperOutput() ) );
+        connect( m_helper, TQT_SIGNAL( processExited( KProcess* ) ), TQT_SLOT( failed() ) );
         *m_helper << "kpac_dhcp_helper";
 
         if ( !m_helper->start() )
-            QTimer::singleShot( 0, this, SLOT( failed() ) );
+            TQTimer::singleShot( 0, this, TQT_SLOT( failed() ) );
     }
 
     bool Discovery::initHostName()
@@ -69,7 +69,7 @@ namespace KPAC
         {
             struct hostent *hent = gethostbyname (uts.nodename);
             if (hent != 0)
-                m_hostname = QString::fromLocal8Bit( hent->h_name );
+                m_hostname = TQString::fromLocal8Bit( hent->h_name );
         }
 
         // If no hostname, try gethostname as a last resort.
@@ -79,7 +79,7 @@ namespace KPAC
             if (gethostname (buf, sizeof(buf)) == 0)
             {
                 buf[255] = '\0';
-                m_hostname = QString::fromLocal8Bit( buf );
+                m_hostname = TQString::fromLocal8Bit( buf );
             }
         }
         return !m_hostname.isEmpty();
@@ -138,7 +138,7 @@ namespace KPAC
     void Discovery::helperOutput()
     {
         m_helper->disconnect( this );
-        QString line;
+        TQString line;
         m_helper->readln( line );
         download( KURL( line.stripWhiteSpace() ) );
     }

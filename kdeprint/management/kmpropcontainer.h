@@ -20,7 +20,7 @@
 #ifndef KMPROPCONTAINER_H
 #define KMPROPCONTAINER_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class KMPropWidget;
 class QPushButton;
@@ -30,7 +30,7 @@ class KMPropContainer : public QWidget
 {
 	Q_OBJECT
 public:
-	KMPropContainer(QWidget *parent = 0, const char *name = 0);
+	KMPropContainer(TQWidget *parent = 0, const char *name = 0);
 	~KMPropContainer();
 
 	void setWidget(KMPropWidget*);

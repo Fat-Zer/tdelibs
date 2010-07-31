@@ -28,10 +28,10 @@ class QDirMultiLineEdit;
 class CupsdDirPage : public CupsdPage
 {
 public:
-	CupsdDirPage(QWidget *parent = 0, const char *name = 0);
+	CupsdDirPage(TQWidget *parent = 0, const char *name = 0);
 
-	bool loadConfig(CupsdConf*, QString&);
-	bool saveConfig(CupsdConf*, QString&);
+	bool loadConfig(CupsdConf*, TQString&);
+	bool saveConfig(CupsdConf*, TQString&);
 	void setInfos(CupsdConf*);
 
 private:

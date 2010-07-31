@@ -36,13 +36,13 @@
 #include <math.h>
 #include <algorithm>
 
-#include <qapplication.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qsize.h>
-#include <qslider.h>
-#include <qspinbox.h>
-#include <qstyle.h>
+#include <tqapplication.h>
+#include <tqlabel.h>
+#include <tqlineedit.h>
+#include <tqsize.h>
+#include <tqslider.h>
+#include <tqspinbox.h>
+#include <tqstyle.h>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -59,14 +59,14 @@ static inline int calcDiffByTen( int x, int y ) {
 
 // ----------------------------------------------------------------------------
 
-KNumInput::KNumInput(QWidget* parent, const char* name)
-    : QWidget(parent, name)
+KNumInput::KNumInput(TQWidget* parent, const char* name)
+    : TQWidget(parent, name)
 {
     init();
 }
 
-KNumInput::KNumInput(KNumInput* below, QWidget* parent, const char* name)
-    : QWidget(parent, name)
+KNumInput::KNumInput(KNumInput* below, TQWidget* parent, const char* name)
+    : TQWidget(parent, name)
 {
     init();
 
@@ -98,7 +98,7 @@ KNumInput::~KNumInput()
         m_next->m_prev = m_prev;
 }
 
-void KNumInput::setLabel(const QString & label, int a)
+void KNumInput::setLabel(const TQString & label, int a)
 {
     if(label.isEmpty()) {
         delete m_label;
@@ -107,7 +107,7 @@ void KNumInput::setLabel(const QString & label, int a)
     }
     else {
         if (m_label) m_label->setText(label);
-        else m_label = new QLabel(label, this, "KNumInput::QLabel");
+        else m_label = new TQLabel(label, this, "KNumInput::TQLabel");
         m_label->setAlignment((a & (~(AlignTop|AlignBottom|AlignVCenter)))
                               | AlignVCenter);
         // if no vertical alignment set, use Top alignment
@@ -119,10 +119,10 @@ void KNumInput::setLabel(const QString & label, int a)
     layout(true);
 }
 
-QString KNumInput::label() const
+TQString KNumInput::label() const
 {
     if (m_label) return m_label->text();
-    return QString::null;
+    return TQString::null;
 }
 
 void KNumInput::layout(bool deep)
@@ -131,7 +131,7 @@ void KNumInput::layout(bool deep)
     int w2 = m_colw2;
 
     // label sizeHint
-    m_sizeLabel = (m_label ? m_label->sizeHint() : QSize(0,0));
+    m_sizeLabel = (m_label ? m_label->sizeHint() : TQSize(0,0));
 
     if(m_label && (m_alignment & AlignVCenter))
         m_colw1 = m_sizeLabel.width() + 4;
@@ -139,7 +139,7 @@ void KNumInput::layout(bool deep)
         m_colw1 = 0;
 
     // slider sizeHint
-    m_sizeSlider = (m_slider ? m_slider->sizeHint() : QSize(0, 0));
+    m_sizeSlider = (m_slider ? m_slider->sizeHint() : TQSize(0, 0));
 
     doLayout();
 
@@ -182,12 +182,12 @@ void KNumInput::layout(bool deep)
 //    kdDebug() << "w1 " << w1 << " w2 " << w2 << endl;
 }
 
-QSizePolicy KNumInput::sizePolicy() const
+TQSizePolicy KNumInput::sizePolicy() const
 {
-    return QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed );
+    return TQSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed );
 }
 
-QSize KNumInput::sizeHint() const
+TQSize KNumInput::sizeHint() const
 {
     return minimumSizeHint();
 }
@@ -201,8 +201,8 @@ void KNumInput::setSteps(int minor, int major)
 
 // ----------------------------------------------------------------------------
 
-KIntSpinBox::KIntSpinBox(QWidget *parent, const char *name)
-    : QSpinBox(0, 99, 1, parent, name)
+KIntSpinBox::KIntSpinBox(TQWidget *parent, const char *name)
+    : TQSpinBox(0, 99, 1, parent, name)
 {
     editor()->setAlignment(AlignRight);
     val_base = 10;
@@ -214,8 +214,8 @@ KIntSpinBox::~KIntSpinBox()
 }
 
 KIntSpinBox::KIntSpinBox(int lower, int upper, int step, int value, int base,
-                         QWidget* parent, const char* name)
-    : QSpinBox(lower, upper, step, parent, name)
+                         TQWidget* parent, const char* name)
+    : TQSpinBox(lower, upper, step, parent, name)
 {
     editor()->setAlignment(AlignRight);
     val_base = base;
@@ -233,9 +233,9 @@ int KIntSpinBox::base() const
     return val_base;
 }
 
-QString KIntSpinBox::mapValueToText(int v)
+TQString KIntSpinBox::mapValueToText(int v)
 {
-    return QString::number(v, val_base);
+    return TQString::number(v, val_base);
 }
 
 int KIntSpinBox::mapTextToValue(bool* ok)
@@ -263,20 +263,20 @@ public:
 };
 
 
-KIntNumInput::KIntNumInput(KNumInput* below, int val, QWidget* parent,
+KIntNumInput::KIntNumInput(KNumInput* below, int val, TQWidget* parent,
                            int _base, const char* name)
     : KNumInput(below, parent, name)
 {
     init(val, _base);
 }
 
-KIntNumInput::KIntNumInput(QWidget *parent, const char *name)
+KIntNumInput::KIntNumInput(TQWidget *parent, const char *name)
     : KNumInput(parent, name)
 {
     init(0, 10);
 }
 
-KIntNumInput::KIntNumInput(int val, QWidget *parent, int _base, const char *name)
+KIntNumInput::KIntNumInput(int val, TQWidget *parent, int _base, const char *name)
     : KNumInput(parent, name)
 {
     init(val, _base);
@@ -293,9 +293,9 @@ void KIntNumInput::init(int val, int _base)
     if (_base != 10)
         m_spin->setValidator(new KIntValidator(this, _base, "KNumInput::KIntValidtr"));
 
-    connect(m_spin, SIGNAL(valueChanged(int)), SLOT(spinValueChanged(int)));
-    connect(this, SIGNAL(valueChanged(int)),
-	    SLOT(slotEmitRelativeValueChanged(int)));
+    connect(m_spin, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(spinValueChanged(int)));
+    connect(this, TQT_SIGNAL(valueChanged(int)),
+	    TQT_SLOT(slotEmitRelativeValueChanged(int)));
 
     setFocusProxy(m_spin);
     layout(true);
@@ -332,17 +332,17 @@ void KIntNumInput::setRange(int lower, int upper, int step, bool slider)
     m_spin->setMaxValue(upper);
     m_spin->setLineStep(step);
 
-    step = m_spin->lineStep(); // maybe QRangeControl didn't like out lineStep?
+    step = m_spin->lineStep(); // maybe TQRangeControl didn't like out lineStep?
 
     if(slider) {
 	if (m_slider)
 	    m_slider->setRange(lower, upper);
 	else {
-	    m_slider = new QSlider(lower, upper, step, m_spin->value(),
-				   QSlider::Horizontal, this);
-	    m_slider->setTickmarks(QSlider::Below);
-	    connect(m_slider, SIGNAL(valueChanged(int)),
-		    m_spin, SLOT(setValue(int)));
+	    m_slider = new TQSlider(lower, upper, step, m_spin->value(),
+				   TQSlider::Horizontal, this);
+	    m_slider->setTickmarks(TQSlider::Below);
+	    connect(m_slider, TQT_SIGNAL(valueChanged(int)),
+		    m_spin, TQT_SLOT(setValue(int)));
 	}
 
 	// calculate (upper-lower)/10 without overflowing int's:
@@ -383,26 +383,26 @@ int KIntNumInput::maxValue() const
     return m_spin->maxValue();
 }
 
-void KIntNumInput::setSuffix(const QString &suffix)
+void KIntNumInput::setSuffix(const TQString &suffix)
 {
     m_spin->setSuffix(suffix);
 
     layout(true);
 }
 
-QString KIntNumInput::suffix() const
+TQString KIntNumInput::suffix() const
 {
     return m_spin->suffix();
 }
 
-void KIntNumInput::setPrefix(const QString &prefix)
+void KIntNumInput::setPrefix(const TQString &prefix)
 {
     m_spin->setPrefix(prefix);
 
     layout(true);
 }
 
-QString KIntNumInput::prefix() const
+TQString KIntNumInput::prefix() const
 {
     return m_spin->prefix();
 }
@@ -412,7 +412,7 @@ void KIntNumInput::setEditFocus(bool mark)
     m_spin->setEditFocus(mark);
 }
 
-QSize KIntNumInput::minimumSizeHint() const
+TQSize KIntNumInput::minimumSizeHint() const
 {
     constPolish();
 
@@ -434,7 +434,7 @@ QSize KIntNumInput::minimumSizeHint() const
     if(m_alignment & (AlignTop|AlignBottom))
         w = QMAX(w, m_sizeLabel.width() + 4);
 
-    return QSize(w, h);
+    return TQSize(w, h);
 }
 
 void KIntNumInput::doLayout()
@@ -446,7 +446,7 @@ void KIntNumInput::doLayout()
         m_label->setBuddy(m_spin);
 }
 
-void KIntNumInput::resizeEvent(QResizeEvent* e)
+void KIntNumInput::resizeEvent(TQResizeEvent* e)
 {
     int w = m_colw1;
     int h = 0;
@@ -509,18 +509,18 @@ int  KIntNumInput::value() const
     return m_spin->value();
 }
 
-void KIntNumInput::setSpecialValueText(const QString& text)
+void KIntNumInput::setSpecialValueText(const TQString& text)
 {
     m_spin->setSpecialValueText(text);
     layout(true);
 }
 
-QString KIntNumInput::specialValueText() const
+TQString KIntNumInput::specialValueText() const
 {
     return m_spin->specialValueText();
 }
 
-void KIntNumInput::setLabel(const QString & label, int a)
+void KIntNumInput::setLabel(const TQString & label, int a)
 {
     KNumInput::setLabel(label, a);
 
@@ -541,14 +541,14 @@ public:
     short blockRelative;
 };
 
-KDoubleNumInput::KDoubleNumInput(QWidget *parent, const char *name)
+KDoubleNumInput::KDoubleNumInput(TQWidget *parent, const char *name)
     : KNumInput(parent, name)
 {
     init(0.0, 0.0, 9999.0, 0.01, 2);
 }
 
 KDoubleNumInput::KDoubleNumInput(double lower, double upper, double value,
-				 double step, int precision, QWidget* parent,
+				 double step, int precision, TQWidget* parent,
 				 const char *name)
     : KNumInput(parent, name)
 {
@@ -557,20 +557,20 @@ KDoubleNumInput::KDoubleNumInput(double lower, double upper, double value,
 
 KDoubleNumInput::KDoubleNumInput(KNumInput *below,
 				 double lower, double upper, double value,
-				 double step, int precision, QWidget* parent,
+				 double step, int precision, TQWidget* parent,
 				 const char *name)
     : KNumInput(below, parent, name)
 {
     init(value, lower, upper, step, precision);
 }
 
-KDoubleNumInput::KDoubleNumInput(double value, QWidget *parent, const char *name)
+KDoubleNumInput::KDoubleNumInput(double value, TQWidget *parent, const char *name)
     : KNumInput(parent, name)
 {
     init(value, kMin(0.0, value), kMax(0.0, value), 0.01, 2 );
 }
 
-KDoubleNumInput::KDoubleNumInput(KNumInput* below, double value, QWidget* parent,
+KDoubleNumInput::KDoubleNumInput(KNumInput* below, double value, TQWidget* parent,
                                  const char* name)
     : KNumInput(below, parent, name)
 {
@@ -584,7 +584,7 @@ KDoubleNumInput::~KDoubleNumInput()
 
 // ### remove when BIC changes are allowed again:
 
-bool KDoubleNumInput::eventFilter( QObject * o, QEvent * e ) {
+bool KDoubleNumInput::eventFilter( TQObject * o, TQEvent * e ) {
     return KNumInput::eventFilter( o, e );
 }
 
@@ -611,10 +611,10 @@ void KDoubleNumInput::init(double value, double lower, double upper,
     d->spin = new KDoubleSpinBox( lower, upper, step, value, precision,
 				  this, "KDoubleNumInput::d->spin" );
     setFocusProxy(d->spin);
-    connect( d->spin, SIGNAL(valueChanged(double)),
-	     this, SIGNAL(valueChanged(double)) );
-    connect( this, SIGNAL(valueChanged(double)),
-	     this, SLOT(slotEmitRelativeValueChanged(double)) );
+    connect( d->spin, TQT_SIGNAL(valueChanged(double)),
+	     this, TQT_SIGNAL(valueChanged(double)) );
+    connect( this, TQT_SIGNAL(valueChanged(double)),
+	     this, TQT_SLOT(slotEmitRelativeValueChanged(double)) );
 
     updateLegacyMembers();
 
@@ -653,7 +653,7 @@ void KDoubleNumInput::slotEmitRelativeValueChanged( double value )
     emit relativeValueChanged( value / d->referencePoint );
 }
 
-QSize KDoubleNumInput::minimumSizeHint() const
+TQSize KDoubleNumInput::minimumSizeHint() const
 {
     constPolish();
 
@@ -675,10 +675,10 @@ QSize KDoubleNumInput::minimumSizeHint() const
     if(m_alignment & (AlignTop|AlignBottom))
         w = QMAX(w, m_sizeLabel.width() + 4);
 
-    return QSize(w, h);
+    return TQSize(w, h);
 }
 
-void KDoubleNumInput::resizeEvent(QResizeEvent* e)
+void KDoubleNumInput::resizeEvent(TQResizeEvent* e)
 {
     int w = m_colw1;
     int h = 0;
@@ -748,15 +748,15 @@ void KDoubleNumInput::setRange(double lower, double upper, double step,
 {
     if( m_slider ) {
 	// don't update the slider to avoid an endless recursion
-	QSpinBox * spin = d->spin;
-	disconnect(spin, SIGNAL(valueChanged(int)),
-		m_slider, SLOT(setValue(int)) );
+	TQSpinBox * spin = d->spin;
+	disconnect(spin, TQT_SIGNAL(valueChanged(int)),
+		m_slider, TQT_SLOT(setValue(int)) );
     }
     d->spin->setRange( lower, upper, step, d->spin->precision() );
 
     if(slider) {
 	// upcast to base type to get the min/maxValue in int form:
-	QSpinBox * spin = d->spin;
+	TQSpinBox * spin = d->spin;
         int slmax = spin->maxValue();
 	int slmin = spin->minValue();
         int slvalue = spin->value();
@@ -766,15 +766,15 @@ void KDoubleNumInput::setRange(double lower, double upper, double step,
 	    m_slider->setLineStep(slstep);
             m_slider->setValue(slvalue);
         } else {
-            m_slider = new QSlider(slmin, slmax, slstep, slvalue,
-                                   QSlider::Horizontal, this);
-            m_slider->setTickmarks(QSlider::Below);
+            m_slider = new TQSlider(slmin, slmax, slstep, slvalue,
+                                   TQSlider::Horizontal, this);
+            m_slider->setTickmarks(TQSlider::Below);
 	    // feedback line: when one moves, the other moves, too:
-            connect(m_slider, SIGNAL(valueChanged(int)),
-                    SLOT(sliderMoved(int)) );
+            connect(m_slider, TQT_SIGNAL(valueChanged(int)),
+                    TQT_SLOT(sliderMoved(int)) );
         }
-	connect(spin, SIGNAL(valueChanged(int)),
-			m_slider, SLOT(setValue(int)) );
+	connect(spin, TQT_SIGNAL(valueChanged(int)),
+			m_slider, TQT_SLOT(setValue(int)) );
 	// calculate ( slmax - slmin ) / 10 without overflowing ints:
 	int major = calcDiffByTen( slmax, slmin );
 	if ( !major ) major = slstep; // ### needed?
@@ -826,24 +826,24 @@ double KDoubleNumInput::referencePoint() const
     return d->referencePoint;
 }
 
-QString KDoubleNumInput::suffix() const
+TQString KDoubleNumInput::suffix() const
 {
     return d->spin->suffix();
 }
 
-QString KDoubleNumInput::prefix() const
+TQString KDoubleNumInput::prefix() const
 {
     return d->spin->prefix();
 }
 
-void KDoubleNumInput::setSuffix(const QString &suffix)
+void KDoubleNumInput::setSuffix(const TQString &suffix)
 {
     d->spin->setSuffix( suffix );
 
     layout(true);
 }
 
-void KDoubleNumInput::setPrefix(const QString &prefix)
+void KDoubleNumInput::setPrefix(const TQString &prefix)
 {
     d->spin->setPrefix( prefix );
 
@@ -862,7 +862,7 @@ int KDoubleNumInput::precision() const
     return d->spin->precision();
 }
 
-void KDoubleNumInput::setSpecialValueText(const QString& text)
+void KDoubleNumInput::setSpecialValueText(const TQString& text)
 {
     d->spin->setSpecialValueText( text );
 
@@ -870,7 +870,7 @@ void KDoubleNumInput::setSpecialValueText(const QString& text)
     updateLegacyMembers();
 }
 
-void KDoubleNumInput::setLabel(const QString & label, int a)
+void KDoubleNumInput::setLabel(const TQString & label, int a)
 {
     KNumInput::setLabel(label, a);
 
@@ -888,17 +888,17 @@ public:
     KDoubleSpinBoxValidator( double bottom, double top, int decimals, KDoubleSpinBox* sb, const char *name )
         : KDoubleValidator( bottom, top, decimals, sb, name ), spinBox( sb ) { }
 
-    virtual State validate( QString& str, int& pos ) const;
+    virtual State validate( TQString& str, int& pos ) const;
 
 private:
     KDoubleSpinBox *spinBox;
 };
 
-QValidator::State KDoubleSpinBoxValidator::validate( QString& str, int& pos ) const
+TQValidator::State KDoubleSpinBoxValidator::validate( TQString& str, int& pos ) const
 {
-    QString pref = spinBox->prefix();
-    QString suff = spinBox->suffix();
-    QString suffStriped = suff.stripWhiteSpace();
+    TQString pref = spinBox->prefix();
+    TQString suff = spinBox->suffix();
+    TQString suffStriped = suff.stripWhiteSpace();
     uint overhead = pref.length() + suff.length();
     State state = Invalid;
 
@@ -911,7 +911,7 @@ QValidator::State KDoubleSpinBoxValidator::validate( QString& str, int& pos ) co
                  || (stripedVersion = str.endsWith(suffStriped))) ) {
             if ( stripedVersion )
                 overhead = pref.length() + suffStriped.length();
-            QString core = str.mid( pref.length(), str.length() - overhead );
+            TQString core = str.mid( pref.length(), str.length() - overhead );
             int corePos = pos - pref.length();
             state = KDoubleValidator::validate( core, corePos );
             pos = corePos + pref.length();
@@ -919,9 +919,9 @@ QValidator::State KDoubleSpinBoxValidator::validate( QString& str, int& pos ) co
         } else {
             state = KDoubleValidator::validate( str, pos );
             if ( state == Invalid ) {
-                // stripWhiteSpace(), cf. QSpinBox::interpretText()
-                QString special = spinBox->specialValueText().stripWhiteSpace();
-                QString candidate = str.stripWhiteSpace();
+                // stripWhiteSpace(), cf. TQSpinBox::interpretText()
+                TQString special = spinBox->specialValueText().stripWhiteSpace();
+                TQString candidate = str.stripWhiteSpace();
 
                 if ( special.startsWith(candidate) ) {
                     if ( candidate.length() == special.length() ) {
@@ -993,25 +993,25 @@ public:
   KDoubleSpinBoxValidator * mValidator;
 };
 
-KDoubleSpinBox::KDoubleSpinBox( QWidget * parent, const char * name )
-  : QSpinBox( parent, name )
+KDoubleSpinBox::KDoubleSpinBox( TQWidget * parent, const char * name )
+  : TQSpinBox( parent, name )
 {
   editor()->setAlignment( Qt::AlignRight );
   d = new Private();
   updateValidator();
-  connect( this, SIGNAL(valueChanged(int)), SLOT(slotValueChanged(int)) );
+  connect( this, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotValueChanged(int)) );
 }
 
 KDoubleSpinBox::KDoubleSpinBox( double lower, double upper, double step,
 				double value, int precision,
-				QWidget * parent, const char * name )
-  : QSpinBox( parent, name )
+				TQWidget * parent, const char * name )
+  : TQSpinBox( parent, name )
 {
   editor()->setAlignment( Qt::AlignRight );
   d = new Private();
   setRange( lower, upper, step, precision );
   setValue( value );
-  connect( this, SIGNAL(valueChanged(int)), SLOT(slotValueChanged(int)) );
+  connect( this, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotValueChanged(int)) );
 }
 
 KDoubleSpinBox::~KDoubleSpinBox() {
@@ -1123,12 +1123,12 @@ void KDoubleSpinBox::setLineStep( double step ) {
     base::setLineStep( kMax( d->mapToInt( step, &ok ), 1 ) );
 }
 
-QString KDoubleSpinBox::mapValueToText( int value ) {
+TQString KDoubleSpinBox::mapValueToText( int value ) {
   if ( acceptLocalizedNumbers() )
     return KGlobal::locale()
       ->formatNumber( d->mapToDouble( value ), d->mPrecision );
   else
-    return QString().setNum( d->mapToDouble( value ), 'f', d->mPrecision );
+    return TQString().setNum( d->mapToDouble( value ), 'f', d->mPrecision );
 }
 
 int KDoubleSpinBox::mapTextToValue( bool * ok ) {
@@ -1145,7 +1145,7 @@ int KDoubleSpinBox::mapTextToValue( bool * ok ) {
   return d->mapToInt( value, ok );
 }
 
-void KDoubleSpinBox::setValidator( const QValidator * ) {
+void KDoubleSpinBox::setValidator( const TQValidator * ) {
   // silently discard the new validator. We don't want another one ;-)
 }
 

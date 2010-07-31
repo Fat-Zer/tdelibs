@@ -20,7 +20,7 @@
 #ifndef KPIPEPROCESS_H
 #define KPIPEPROCESS_H
 
-#include <qfile.h>
+#include <tqfile.h>
 #include <stdio.h>
 
 #include <kdelibs_export.h>
@@ -28,10 +28,10 @@
 class KDEPRINT_EXPORT KPipeProcess : public QFile
 {
 public:
-	KPipeProcess(const QString& cmd = QString::null, int mode = IO_ReadOnly);
+	KPipeProcess(const TQString& cmd = TQString::null, int mode = IO_ReadOnly);
 	~KPipeProcess();
 
-	bool open(const QString& cmd, int mode = IO_ReadOnly);
+	bool open(const TQString& cmd, int mode = IO_ReadOnly);
 	void close();
 
 private:

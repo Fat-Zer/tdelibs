@@ -40,13 +40,13 @@ DEALINGS IN THE SOFTWARE.
 #include <unistd.h>
 #endif
 
-#include <qobject.h>
+#include <tqobject.h>
 #ifdef Q_WS_X11 // FIXME(E)
 
 #include "kmanagerselection.h"
 
 #include <kdebug.h>
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kapplication.h>
 #include <kxerrorhandler.h>
 #include <X11/Xatom.h>
@@ -73,8 +73,8 @@ bool KSelectionOwnerPrivate::x11Event( XEvent* ev_P )
     return owner->filterEvent( ev_P );
     }
     
-KSelectionOwner::KSelectionOwner( Atom selection_P, int screen_P, QObject* parent_P )
-    :   QObject( parent_P ),
+KSelectionOwner::KSelectionOwner( Atom selection_P, int screen_P, TQObject* parent_P )
+    :   TQObject( parent_P ),
         selection( selection_P ),
         screen( screen_P >= 0 ? screen_P : DefaultScreen( qt_xdisplay())),
         window( None ),
@@ -84,8 +84,8 @@ KSelectionOwner::KSelectionOwner( Atom selection_P, int screen_P, QObject* paren
     {
     }
     
-KSelectionOwner::KSelectionOwner( const char* selection_P, int screen_P, QObject* parent_P )
-    :   QObject( parent_P ),
+KSelectionOwner::KSelectionOwner( const char* selection_P, int screen_P, TQObject* parent_P )
+    :   TQObject( parent_P ),
         selection( XInternAtom( qt_xdisplay(), selection_P, False )),
         screen( screen_P >= 0 ? screen_P : DefaultScreen( qt_xdisplay())),
         window( None ),
@@ -390,8 +390,8 @@ bool KSelectionWatcherPrivate::x11Event( XEvent* ev_P )
     }
     
 
-KSelectionWatcher::KSelectionWatcher( Atom selection_P, int screen_P, QObject* parent_P )
-    :   QObject( parent_P ),
+KSelectionWatcher::KSelectionWatcher( Atom selection_P, int screen_P, TQObject* parent_P )
+    :   TQObject( parent_P ),
         selection( selection_P ),
         screen( screen_P >= 0 ? screen_P : DefaultScreen( qt_xdisplay())),
         selection_owner( None ),
@@ -400,8 +400,8 @@ KSelectionWatcher::KSelectionWatcher( Atom selection_P, int screen_P, QObject* p
     init();
     }
     
-KSelectionWatcher::KSelectionWatcher( const char* selection_P, int screen_P, QObject* parent_P )
-    :   QObject( parent_P ),
+KSelectionWatcher::KSelectionWatcher( const char* selection_P, int screen_P, TQObject* parent_P )
+    :   TQObject( parent_P ),
         selection( XInternAtom( qt_xdisplay(), selection_P, False )),
         screen( screen_P >= 0 ? screen_P : DefaultScreen( qt_xdisplay())),
         selection_owner( None ),

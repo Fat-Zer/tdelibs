@@ -25,11 +25,11 @@
 class KLpdFactory : public KLibFactory
 {
 public:
-	KLpdFactory(QObject *parent = 0, const char *name = 0);
+	KLpdFactory(TQObject *parent = 0, const char *name = 0);
 	virtual ~KLpdFactory();
 
 protected:
-	QObject* createObject(QObject *parent = 0, const char *name = 0, const char *className = "QObject", const QStringList& args = QStringList());
+	TQObject* createObject(TQObject *parent = 0, const char *name = 0, const char *className = "TQObject", const TQStringList& args = TQStringList());
 };
 
 #endif

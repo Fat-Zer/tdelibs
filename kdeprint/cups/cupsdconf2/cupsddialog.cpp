@@ -31,16 +31,16 @@
 #include "cupsdbrowsingpage.h"
 #include "cupsdsecuritypage.h"
 
-#include <qdir.h>
-#include <qvbox.h>
+#include <tqdir.h>
+#include <tqvbox.h>
 #include <kmessagebox.h>
 #include <klocale.h>
-#include <qfile.h>
-#include <qfileinfo.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <qstringlist.h>
-#include <qwhatsthis.h>
+#include <tqstringlist.h>
+#include <tqwhatsthis.h>
 #include <kio/passdlg.h>
 #include <kguiitem.h>
 #include <kprocess.h>
@@ -54,14 +54,14 @@ static QString	pass_string;
 extern "C"
 {
 #include "cups-util.h"
-	KDEPRINT_EXPORT bool restartServer(QString& msg)
+	KDEPRINT_EXPORT bool restartServer(TQString& msg)
 	{
 		return CupsdDialog::restartServer(msg);
 	}
-	KDEPRINT_EXPORT bool configureServer(QWidget *parent, QString& msg)
+	KDEPRINT_EXPORT bool configureServer(TQWidget *parent, TQString& msg)
 	{
 		dynamically_loaded = true;
-		bool result = CupsdDialog::configure(QString::null, parent, &msg);
+		bool result = CupsdDialog::configure(TQString::null, parent, &msg);
 		dynamically_loaded = false;
 		return result;
 	}
@@ -69,7 +69,7 @@ extern "C"
 
 int getServerPid()
 {
-	QDir	dir("/proc",QString::null,QDir::Name,QDir::Dirs);
+	QDir	dir("/proc",TQString::null,TQDir::Name,TQDir::Dirs);
 	for (uint i=0;i<dir.count();i++)
 	{
 		if (dir[i] == "." || dir[i] == ".." || dir[i] == "self") continue;
@@ -94,7 +94,7 @@ const char* getPassword(const char*)
 	QString	user(cupsUser());
 	QString	pass;
 
-	if (KIO::PasswordDialog::getNameAndPassword(user, pass, NULL) == QDialog::Accepted)
+	if (KIO::PasswordDialog::getNameAndPassword(user, pass, NULL) == TQDialog::Accepted)
 	{
 		cupsSetUser(user.latin1());
 		pass_string = pass;
@@ -109,7 +109,7 @@ const char* getPassword(const char*)
 
 //---------------------------------------------------
 
-CupsdDialog::CupsdDialog(QWidget *parent, const char *name)
+CupsdDialog::CupsdDialog(TQWidget *parent, const char *name)
 	: KDialogBase(IconList, "", Ok|Cancel|User1, Ok, parent, name, true, true, KGuiItem(i18n("Short Help"), "help"))
 {
 	KGlobal::iconLoader()->addAppDir("kdeprint");
@@ -135,14 +135,14 @@ CupsdDialog::~CupsdDialog()
 
 void CupsdDialog::addConfPage(CupsdPage *page)
 {
-	QPixmap icon = KGlobal::instance()->iconLoader()->loadIcon(
+	TQPixmap icon = KGlobal::instance()->iconLoader()->loadIcon(
 	                                                           page->pixmap(),
                                                                    KIcon::NoGroup,
                                                                    KIcon::SizeMedium
 	                                                          );
 
 	QVBox	*box = addVBoxPage(page->pageLabel(), page->header(), icon);
-	page->reparent(box, QPoint(0,0));
+	page->reparent(box, TQPoint(0,0));
 	pagelist_.append(page);
 }
 
@@ -165,7 +165,7 @@ void CupsdDialog::constructDialog()
         }
 }
 
-bool CupsdDialog::setConfigFile(const QString& filename)
+bool CupsdDialog::setConfigFile(const TQString& filename)
 {
 	filename_ = filename;
 	if (!conf_->loadFromFile(filename_))
@@ -177,7 +177,7 @@ bool CupsdDialog::setConfigFile(const QString& filename)
 	{
 		// there were some unknown options, warn the user
 		QString	msg;
-		for (QValueList< QPair<QString,QString> >::ConstIterator it=conf_->unknown_.begin(); it!=conf_->unknown_.end(); ++it)
+		for (TQValueList< QPair<TQString,TQString> >::ConstIterator it=conf_->unknown_.begin(); it!=conf_->unknown_.end(); ++it)
 			msg += ((*it).first + " = " + (*it).second + "<br>");
 		msg.prepend("<p>" + i18n("Some options were not recognized by this configuration tool. "
 		                          "They will be left untouched and you won't be able to change them.") + "</p>");
@@ -195,7 +195,7 @@ bool CupsdDialog::setConfigFile(const QString& filename)
 	return true;
 }
 
-bool CupsdDialog::restartServer(QString& msg)
+bool CupsdDialog::restartServer(TQString& msg)
 {
 	int	serverPid = getServerPid();
         msg.truncate(0);
@@ -215,10 +215,10 @@ bool CupsdDialog::restartServer(QString& msg)
         return (msg.isEmpty());
 }
 
-bool CupsdDialog::configure(const QString& filename, QWidget *parent, QString *msg)
+bool CupsdDialog::configure(const TQString& filename, TQWidget *parent, TQString *msg)
 {
 	bool needUpload(false);
-	QString errormsg;
+	TQString errormsg;
 	bool result = true;
 
 	// init password dialog if needed
@@ -259,7 +259,7 @@ bool CupsdDialog::configure(const QString& filename, QWidget *parent, QString *m
 		CupsdDialog	dlg(parent);
 		if (dlg.setConfigFile(fn) && dlg.exec())
 		{
-			QCString	encodedFn = QFile::encodeName(fn);
+			QCString	encodedFn = TQFile::encodeName(fn);
 			if (!needUpload)
 				KMessageBox::information(parent,
 					i18n("The config file has not been uploaded to the "
@@ -276,7 +276,7 @@ bool CupsdDialog::configure(const QString& filename, QWidget *parent, QString *m
 
 	}
 	if (needUpload)
-		QFile::remove(fn);
+		TQFile::remove(fn);
 
 	if ( msg )
 		*msg = errormsg;
@@ -314,7 +314,7 @@ void CupsdDialog::slotOk()
 
 void CupsdDialog::slotUser1()
 {
-	QWhatsThis::enterWhatsThisMode();
+	TQWhatsThis::enterWhatsThisMode();
 }
 
 int CupsdDialog::serverPid()
@@ -338,7 +338,7 @@ int CupsdDialog::serverOwner()
 				str = t.readLine();
 				if (str.find("Uid:",0,false) == 0)
 				{
-					QStringList	list = QStringList::split('\t', str, false);
+					QStringList	list = TQStringList::split('\t', str, false);
 					if (list.count() >= 2)
 					{
 						bool	ok;

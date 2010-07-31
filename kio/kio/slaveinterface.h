@@ -23,7 +23,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include <kurl.h>
 #include <kio/global.h>
@@ -116,12 +116,12 @@ signals:
     // Messages sent by the slave
     ///////////
 
-    void data( const QByteArray & );
+    void data( const TQByteArray & );
     void dataReq( );
-    void error( int , const QString & );
+    void error( int , const TQString & );
     void connected();
     void finished();
-    void slaveStatus(pid_t, const QCString &, const QString &, bool);
+    void slaveStatus(pid_t, const TQCString &, const TQString &, bool);
     void listEntries( const KIO::UDSEntryList& );
     void statEntry( const KIO::UDSEntry& );
     void needSubURLData();
@@ -139,20 +139,20 @@ signals:
 
     void speed( unsigned long ) ;
     void errorPage() ;
-    void mimeType( const QString & ) ;
-    void warning( const QString & ) ;
-    void infoMessage( const QString & ) ;
+    void mimeType( const TQString & ) ;
+    void warning( const TQString & ) ;
+    void infoMessage( const TQString & ) ;
     void connectFinished();
 
     /**
      * @deprecated. Obsolete as of 3.1. Replaced by kpassword, a kded module.
      */
-    void authorizationKey( const QCString&, const QCString&, bool );
+    void authorizationKey( const TQCString&, const TQCString&, bool );
 
     /**
      * @deprecated. Obsolete as of 3.1. Replaced by kpassword, a kded module.
      */
-    void delAuthorization( const QCString& grpkey );
+    void delAuthorization( const TQCString& grpkey );
 
 protected:
     /////////////////
@@ -160,7 +160,7 @@ protected:
     ////////////////
 
     virtual bool dispatch();
-    virtual bool dispatch( int _cmd, const QByteArray &data );
+    virtual bool dispatch( int _cmd, const TQByteArray &data );
 
    /**
     * Prompt the user for authrization info (login & password).
@@ -206,27 +206,27 @@ protected:
    /**
     * @deprecated. Use openPassDlg( AuthInfo& ) instead.
     */
-    void openPassDlg( const QString& prompt, const QString& user,
-                      const QString& caption, const QString& comment,
-                      const QString& label, bool readOnly ) KDE_DEPRECATED;
+    void openPassDlg( const TQString& prompt, const TQString& user,
+                      const TQString& caption, const TQString& comment,
+                      const TQString& label, bool readOnly ) KDE_DEPRECATED;
 
    /**
     * @deprecated. Use openPassDlg( AuthInfo& ) instead.
     */
-    void openPassDlg( const QString& prompt, const QString& user, bool readOnly ) KDE_DEPRECATED;
+    void openPassDlg( const TQString& prompt, const TQString& user, bool readOnly ) KDE_DEPRECATED;
 
-    void messageBox( int type, const QString &text, const QString &caption,
-                     const QString &buttonYes, const QString &buttonNo );
+    void messageBox( int type, const TQString &text, const TQString &caption,
+                     const TQString &buttonYes, const TQString &buttonNo );
 
    /**
     * @since 3.3
     */
-    void messageBox( int type, const QString &text, const QString &caption,
-                     const QString &buttonYes, const QString &buttonNo, const QString &dontAskAgainName );
+    void messageBox( int type, const TQString &text, const TQString &caption,
+                     const TQString &buttonYes, const TQString &buttonNo, const TQString &dontAskAgainName );
 
     // I need to identify the slaves
-    void requestNetwork( const QString &, const QString &);
-    void dropNetwork( const QString &, const QString &);
+    void requestNetwork( const TQString &, const TQString &);
+    void dropNetwork( const TQString &, const TQString &);
 
     /**
      * @internal
@@ -250,7 +250,7 @@ private:
 
 }
 
-inline QDataStream &operator >>(QDataStream &s, KIO::UDSAtom &a )
+inline TQDataStream &operator >>(TQDataStream &s, KIO::UDSAtom &a )
 {
     Q_INT32 l;
     s >> a.m_uds;
@@ -258,7 +258,7 @@ inline QDataStream &operator >>(QDataStream &s, KIO::UDSAtom &a )
     if ( a.m_uds & KIO::UDS_LONG ) {
         s >> l;
         a.m_long = l;
-        a.m_str = QString::null;
+        a.m_str = TQString::null;
     } else if ( a.m_uds & KIO::UDS_STRING ) {
         s >> a.m_str;
         a.m_long = 0;
@@ -268,7 +268,7 @@ inline QDataStream &operator >>(QDataStream &s, KIO::UDSAtom &a )
     return s;
 }
 
-inline QDataStream &operator <<(QDataStream &s, const KIO::UDSAtom &a )
+inline TQDataStream &operator <<(TQDataStream &s, const KIO::UDSAtom &a )
 {
     s << a.m_uds;
 
@@ -282,7 +282,7 @@ inline QDataStream &operator <<(QDataStream &s, const KIO::UDSAtom &a )
     return s;
 }
 
-KIO_EXPORT QDataStream &operator <<(QDataStream &s, const KIO::UDSEntry &e );
-KIO_EXPORT QDataStream &operator >>(QDataStream &s, KIO::UDSEntry &e );
+KIO_EXPORT TQDataStream &operator <<(TQDataStream &s, const KIO::UDSEntry &e );
+KIO_EXPORT TQDataStream &operator >>(TQDataStream &s, KIO::UDSEntry &e );
 
 #endif

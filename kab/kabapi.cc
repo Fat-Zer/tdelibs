@@ -33,7 +33,7 @@
 
 using namespace std;
 
-KabAPI::KabAPI(QWidget* parent, const char* name)
+KabAPI::KabAPI(TQWidget* parent, const char* name)
   : KDialogBase(parent, name),
     book(0),
     listbox(new KListBox(this)),
@@ -43,19 +43,19 @@ KabAPI::KabAPI(QWidget* parent, const char* name)
   setMainWidget(listbox);
   showButtonApply(false);
   enableButtonSeparator(true);
-  connect(listbox, SIGNAL(highlighted(int)), SLOT(entrySelected(int)));
-  connect(listbox, SIGNAL(doubleClicked ( QListBoxItem * )),SLOT(slotDoubleClicked ( QListBoxItem * )));
+  connect(listbox, TQT_SIGNAL(highlighted(int)), TQT_SLOT(entrySelected(int)));
+  connect(listbox, TQT_SIGNAL(doubleClicked ( TQListBoxItem * )),TQT_SLOT(slotDoubleClicked ( TQListBoxItem * )));
 }
 
 
-void KabAPI::slotDoubleClicked ( QListBoxItem * )
+void KabAPI::slotDoubleClicked ( TQListBoxItem * )
 {
     accept();
 }
 
 int KabAPI::exec()
 {
-  QStringList names;
+  TQStringList names;
   // -----
   if(book==0)
     {
@@ -90,8 +90,8 @@ AddressBook::ErrorCode KabAPI::init()
   book=new AddressBook(0, "KABAPI::book", true);  //change parent from "this" to "0" //dsweet
   if(book->getState()==AddressBook::NoError)
     {
-      connect(book, SIGNAL(setStatus(const QString&)),
-	      SLOT(setStatusSlot(const QString&)));
+      connect(book, TQT_SIGNAL(setStatus(const TQString&)),
+	      TQT_SLOT(setStatusSlot(const TQString&)));
       return AddressBook::NoError;
     } else {
       return AddressBook::InternError;
@@ -152,7 +152,7 @@ AddressBook::ErrorCode KabAPI::remove(const KabKey& key)
   // ############################################################################
 }
 
-AddressBook::ErrorCode KabAPI::getEntryByName(const QString&,
+AddressBook::ErrorCode KabAPI::getEntryByName(const TQString&,
 					 list<AddressBook::Entry>&, const int)
 {
   // ############################################################################
@@ -214,7 +214,7 @@ void KabAPI::entrySelected(int index)
   selection=index;
 }
 
-void KabAPI::setStatusSlot(const QString& text)
+void KabAPI::setStatusSlot(const TQString& text)
 {
   emit(setStatus(text));
 }

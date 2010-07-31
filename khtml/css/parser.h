@@ -133,7 +133,7 @@
 typedef union YYSTYPE {
     CSSRuleImpl *rule;
     CSSSelector *selector;
-    QPtrList<CSSSelector> *selectorList;
+    TQPtrList<CSSSelector> *selectorList;
     bool ok;
     MediaListImpl *mediaList;
     CSSMediaRuleImpl *mediaRule;

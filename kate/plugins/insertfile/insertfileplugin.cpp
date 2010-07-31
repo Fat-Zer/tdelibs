@@ -34,14 +34,14 @@
 #include <ktempfile.h>
 #include <kurl.h>
 
-#include <qfile.h>
-#include <qtextstream.h>
+#include <tqfile.h>
+#include <tqtextstream.h>
 
 K_EXPORT_COMPONENT_FACTORY( ktexteditor_insertfile, KGenericFactory<InsertFilePlugin>( "ktexteditor_insertfile" ) )
 
 
 //BEGIN InsertFilePlugin
-InsertFilePlugin::InsertFilePlugin( QObject *parent, const char* name, const QStringList& )
+InsertFilePlugin::InsertFilePlugin( TQObject *parent, const char* name, const TQStringList& )
 	: KTextEditor::Plugin ( (KTextEditor::Document*) parent, name )
 {
 }
@@ -70,19 +70,19 @@ void InsertFilePlugin::removeView(KTextEditor::View *view)
 
 //BEGIN InsertFilePluginView
 InsertFilePluginView::InsertFilePluginView( KTextEditor::View *view, const char *name )
-  : QObject( view, name ),
+  : TQObject( view, name ),
     KXMLGUIClient( view )
 {
   view->insertChildClient( this );
   setInstance( KGenericFactory<InsertFilePlugin>::instance() );
   _job = 0;
-  (void) new KAction( i18n("Insert File..."), 0, this, SLOT(slotInsertFile()), actionCollection(), "tools_insert_file" );
+  (void) new KAction( i18n("Insert File..."), 0, this, TQT_SLOT(slotInsertFile()), actionCollection(), "tools_insert_file" );
   setXMLFile( "ktexteditor_insertfileui.rc" );
 }
 
 void InsertFilePluginView::slotInsertFile()
 {
-  KFileDialog dlg("::insertfile", "", (QWidget*)parent(), "filedialog", true);
+  KFileDialog dlg("::insertfile", "", (TQWidget*)parent(), "filedialog", true);
   dlg.setOperationMode( KFileDialog::Opening );
 
   dlg.setCaption(i18n("Choose File to Insert"));
@@ -98,13 +98,13 @@ void InsertFilePluginView::slotInsertFile()
     insertFile();
   }
   else {
-    KTempFile tempFile( QString::null );
+    KTempFile tempFile( TQString::null );
     _tmpfile = tempFile.name();
 
     KURL destURL;
     destURL.setPath( _tmpfile );
     _job = KIO::file_copy( _file, destURL, 0600, true, false, true );
-    connect( _job, SIGNAL( result( KIO::Job * ) ), this, SLOT( slotFinished ( KIO::Job * ) ) );
+    connect( _job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotFinished ( KIO::Job * ) ) );
   }
 }
 
@@ -113,34 +113,34 @@ void InsertFilePluginView::slotFinished( KIO::Job *job )
   assert( job == _job );
   _job = 0;
   if ( job->error() )
-    KMessageBox::error( (QWidget*)parent(), i18n("Failed to load file:\n\n") + job->errorString(), i18n("Insert File Error") );
+    KMessageBox::error( (TQWidget*)parent(), i18n("Failed to load file:\n\n") + job->errorString(), i18n("Insert File Error") );
   else
     insertFile();
 }
 
 void InsertFilePluginView::insertFile()
 {
-  QString error;
+  TQString error;
   if ( _tmpfile.isEmpty() )
     return;
 
-  QFileInfo fi;
+  TQFileInfo fi;
   fi.setFile( _tmpfile );
   if (!fi.exists() || !fi.isReadable())
     error = i18n("<p>The file <strong>%1</strong> does not exist or is not readable, aborting.").arg(_file.fileName());
 
-  QFile f( _tmpfile );
+  TQFile f( _tmpfile );
   if ( !f.open(IO_ReadOnly) )
     error = i18n("<p>Unable to open file <strong>%1</strong>, aborting.").arg(_file.fileName());
 
   if ( ! error.isEmpty() ) {
-    KMessageBox::sorry( (QWidget*)parent(), error, i18n("Insert File Error") );
+    KMessageBox::sorry( (TQWidget*)parent(), error, i18n("Insert File Error") );
     return;
   }
 
   // now grab file contents
-  QTextStream stream(&f);
-  QString str, tmp;
+  TQTextStream stream(&f);
+  TQString str, tmp;
   uint numlines = 0;
   uint len = 0;
   while (!stream.eof()) {
@@ -156,7 +156,7 @@ void InsertFilePluginView::insertFile()
   if ( str.isEmpty() )
     error = i18n("<p>File <strong>%1</strong> had no contents.").arg(_file.fileName());
   if ( ! error.isEmpty() ) {
-    KMessageBox::sorry( (QWidget*)parent(), error, i18n("Insert File Error") );
+    KMessageBox::sorry( (TQWidget*)parent(), error, i18n("Insert File Error") );
     return;
   }
 

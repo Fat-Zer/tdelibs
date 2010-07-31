@@ -23,10 +23,10 @@
 
 #include "kdockwidget_private.h"
 
-#include <qwidgetstack.h>
-#include <qlayout.h>
-#include <qtimer.h>
-#include <qtooltip.h>
+#include <tqwidgetstack.h>
+#include <tqlayout.h>
+#include <tqtimer.h>
+#include <tqtooltip.h>
 #include <kmultitabbar.h>
 #include <kglobalsettings.h>
 
@@ -49,8 +49,8 @@ static const char* const kmdi_not_close_xpm[] =
         "#####"
     };
 
-KMdiDockContainer::KMdiDockContainer( QWidget *parent, QWidget *win, int position, int flags )
-		: QWidget( parent ), KDockContainer()
+KMdiDockContainer::KMdiDockContainer( TQWidget *parent, TQWidget *win, int position, int flags )
+		: TQWidget( parent ), KDockContainer()
 {
 	m_tabSwitching = false;
 	m_block = false;
@@ -65,14 +65,14 @@ KMdiDockContainer::KMdiDockContainer( QWidget *parent, QWidget *win, int positio
 	m_startEvent = 0;
 	kdDebug( 760 ) << k_funcinfo << endl;
 
-	QBoxLayout *l;
+	TQBoxLayout *l;
 	m_horizontal = ( ( position == KDockWidget::DockTop ) || ( position == KDockWidget::DockBottom ) );
 
 
 	if ( m_horizontal )
-		l = new QVBoxLayout( this ); //vertical layout for top and bottom docks
+		l = new TQVBoxLayout( this ); //vertical layout for top and bottom docks
 	else
-		l = new QHBoxLayout( this ); //horizontal layout for left and right docks
+		l = new TQHBoxLayout( this ); //horizontal layout for left and right docks
 
 	l->setAutoAdd( false );
 
@@ -102,9 +102,9 @@ KMdiDockContainer::KMdiDockContainer( QWidget *parent, QWidget *win, int positio
 	}
 	m_tb->setPosition( kmtbPos );
 
-	m_ws = new QWidgetStack( this );
+	m_ws = new TQWidgetStack( this );
 
-	m_ws->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding ) );
+	m_ws->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 
 	//layout the tabbar
 	if ( position == KDockWidget::DockLeft || position == KDockWidget::DockTop )
@@ -133,7 +133,7 @@ void KMdiDockContainer::setStyle( int style )
 
 KMdiDockContainer::~KMdiDockContainer()
 {
-	QMap<KDockWidget*, int>::iterator it;
+	TQMap<KDockWidget*, int>::iterator it;
 	while ( m_map.count() )
 	{
 		it = m_map.begin();
@@ -183,7 +183,7 @@ KDockWidget* KMdiDockContainer::parentDockWidget()
 	return ( ( KDockWidget* ) parent() );
 }
 
-void KMdiDockContainer::insertWidget ( KDockWidget *dwdg, QPixmap pixmap, const QString &text, int & )
+void KMdiDockContainer::insertWidget ( KDockWidget *dwdg, TQPixmap pixmap, const TQString &text, int & )
 {
 	kdDebug( 760 ) << k_funcinfo << "Adding a dockwidget to the dock container" << endl;
 	KDockWidget* w = dwdg;
@@ -215,7 +215,7 @@ void KMdiDockContainer::insertWidget ( KDockWidget *dwdg, QPixmap pixmap, const 
 			KDockWidgetHeader *hdr = static_cast<KDockWidgetHeader*>( w->getHeader()->qt_cast( "KDockWidgetHeader" ) );
 			KDockButton_Private *btn = new KDockButton_Private( hdr, "OverlapButton" );
 
-			QToolTip::add( btn, i18n( "Switch between overlap and side by side mode", "Overlap" ) );
+			TQToolTip::add( btn, i18n( "Switch between overlap and side by side mode", "Overlap" ) );
 
 			btn->setToggleButton( true );
 			btn->setPixmap( const_cast< const char** >( kmdi_not_close_xpm ) );
@@ -223,7 +223,7 @@ void KMdiDockContainer::insertWidget ( KDockWidget *dwdg, QPixmap pixmap, const 
 			m_overlapButtons.insert( w, btn );
 			btn->setOn( !isOverlapMode() );
 
-			connect( btn, SIGNAL( clicked() ), this, SLOT( changeOverlapMode() ) );
+			connect( btn, TQT_SIGNAL( clicked() ), this, TQT_SLOT( changeOverlapMode() ) );
 		}
 
 		m_tb->appendTab( pixmap.isNull() ? SmallIcon( "misc" ) : pixmap, tab, w->tabPageLabel() );
@@ -231,7 +231,7 @@ void KMdiDockContainer::insertWidget ( KDockWidget *dwdg, QPixmap pixmap, const 
 		kdDebug( 760 ) << k_funcinfo << "Added tab with label " << w->tabPageLabel() <<
 			" to the tabbar" << endl;
 
-		connect( m_tb->tab( tab ), SIGNAL( clicked( int ) ), this, SLOT( tabClicked( int ) ) );
+		connect( m_tb->tab( tab ), TQT_SIGNAL( clicked( int ) ), this, TQT_SLOT( tabClicked( int ) ) );
 
 		mTabCnt++;
 		m_inserted = tab;
@@ -246,11 +246,11 @@ void KMdiDockContainer::insertWidget ( KDockWidget *dwdg, QPixmap pixmap, const 
 }
 
 
-bool KMdiDockContainer::eventFilter( QObject *obj, QEvent *event )
+bool KMdiDockContainer::eventFilter( TQObject *obj, TQEvent *event )
 {
 	switch ( event->type() )
 	{
-	case QEvent::MouseButtonPress:
+	case TQEvent::MouseButtonPress:
 	{
 		KMultiTabBarTab* kmtbTab = dynamic_cast<KMultiTabBarTab*>( obj );
 		if ( !kmtbTab )
@@ -286,21 +286,21 @@ bool KMdiDockContainer::eventFilter( QObject *obj, QEvent *event )
 			m_movingState = WaitingForMoveStart;
 
 		delete m_startEvent;
-		m_startEvent = new QMouseEvent( * ( ( QMouseEvent* ) event ) );
+		m_startEvent = new TQMouseEvent( * ( ( TQMouseEvent* ) event ) );
 	}
 	break;
-	case QEvent::MouseButtonRelease:
+	case TQEvent::MouseButtonRelease:
 		if ( m_movingState == Moving )
 		{
 			m_movingState = NotMoving;
-			QApplication::postEvent( m_dragPanel, new QMouseEvent( * ( ( QMouseEvent* ) event ) ) );
+			TQApplication::postEvent( m_dragPanel, new TQMouseEvent( * ( ( TQMouseEvent* ) event ) ) );
 			delete m_startEvent;
 			m_startEvent = 0;
 		}
-	case QEvent::MouseMove:
+	case TQEvent::MouseMove:
 		if ( m_movingState == WaitingForMoveStart )
 		{
-			QPoint p( ( ( QMouseEvent* ) event )->pos() - m_startEvent->pos() );
+			TQPoint p( ( ( TQMouseEvent* ) event )->pos() - m_startEvent->pos() );
 			if ( p.manhattanLength() > KGlobalSettings::dndEventDelay() )
 			{
 				m_dockManager->eventFilter( m_dragPanel, m_startEvent );
@@ -352,7 +352,7 @@ void KMdiDockContainer::changeOverlapMode()
 		deactivateOverlapMode();
 	}
 
-	QMap<KDockWidget*, KDockButton_Private*>::iterator it;
+	TQMap<KDockWidget*, KDockButton_Private*>::iterator it;
 	for ( it = m_overlapButtons.begin(); it != m_overlapButtons.end(); ++it )
 		it.data()->setOn( !isOverlapMode() );
 }
@@ -494,16 +494,16 @@ void KMdiDockContainer::tabClicked( int t )
 	m_tabSwitching = false;
 }
 
-void KMdiDockContainer::setToolTip ( KDockWidget* w, QString &s )
+void KMdiDockContainer::setToolTip ( KDockWidget* w, TQString &s )
 {
 	kdDebug( 760 ) << k_funcinfo << "Setting tooltip '" << s << "' for widget " << w << endl;
 	int tabId = m_map[w];
 	KMultiTabBarTab *mbTab = m_tb->tab( tabId );
-	QToolTip::remove( mbTab );
-	QToolTip::add( mbTab, s );
+	TQToolTip::remove( mbTab );
+	TQToolTip::add( mbTab, s );
 }
 
-void KMdiDockContainer::setPixmap( KDockWidget* widget , const QPixmap& pixmap )
+void KMdiDockContainer::setPixmap( KDockWidget* widget , const TQPixmap& pixmap )
 {
 	int id = m_ws->id( widget );
 	if ( id == -1 )
@@ -512,25 +512,25 @@ void KMdiDockContainer::setPixmap( KDockWidget* widget , const QPixmap& pixmap )
 	tab->setIcon( pixmap.isNull() ? SmallIcon( "misc" ) : pixmap );
 }
 
-void KMdiDockContainer::save( QDomElement& dockEl )
+void KMdiDockContainer::save( TQDomElement& dockEl )
 {
-	QDomDocument doc = dockEl.ownerDocument();
-	QDomElement el;
+	TQDomDocument doc = dockEl.ownerDocument();
+	TQDomElement el;
 	el = doc.createElement( "name" );
-	el.appendChild( doc.createTextNode( QString( "%1" ).arg( parent() ->name() ) ) );
+	el.appendChild( doc.createTextNode( TQString( "%1" ).arg( parent() ->name() ) ) );
 	dockEl.appendChild( el );
 	el = doc.createElement( "overlapMode" );
 	el.appendChild( doc.createTextNode( isOverlapMode() ? "true" : "false" ) );
 	dockEl.appendChild( el );
-	QPtrList<KMultiTabBarTab>* tl = m_tb->tabs();
-	QPtrListIterator<KMultiTabBarTab> it( *tl );
-	QStringList::Iterator it2 = itemNames.begin();
+	TQPtrList<KMultiTabBarTab>* tl = m_tb->tabs();
+	TQPtrListIterator<KMultiTabBarTab> it( *tl );
+	TQStringList::Iterator it2 = itemNames.begin();
 	int i = 0;
 	for ( ;it.current() != 0;++it, ++it2 )
 	{
 		el = doc.createElement( "child" );
-		el.setAttribute( "pos", QString( "%1" ).arg( i ) );
-		QString s = tabCaptions[ *it2 ];
+		el.setAttribute( "pos", TQString( "%1" ).arg( i ) );
+		TQString s = tabCaptions[ *it2 ];
 		if ( !s.isEmpty() )
 		{
 			el.setAttribute( "tabCaption", s );
@@ -544,7 +544,7 @@ void KMdiDockContainer::save( QDomElement& dockEl )
 		dockEl.appendChild( el );
 		if ( m_tb->isTabRaised( it.current() ->id() ) )
 		{
-			QDomElement el2 = doc.createElement( "raised" );
+			TQDomElement el2 = doc.createElement( "raised" );
 			el2.appendChild( doc.createTextNode( m_ws->widget( it.current() ->id() ) ->name() ) );
 			el.appendChild( el2 );
 		}
@@ -554,13 +554,13 @@ void KMdiDockContainer::save( QDomElement& dockEl )
 
 }
 
-void KMdiDockContainer::load( QDomElement& dockEl )
+void KMdiDockContainer::load( TQDomElement& dockEl )
 {
-	QString raise;
+	TQString raise;
 
-	for ( QDomNode n = dockEl.firstChild();!n.isNull();n = n.nextSibling() )
+	for ( TQDomNode n = dockEl.firstChild();!n.isNull();n = n.nextSibling() )
 	{
-		QDomElement el = n.toElement();
+		TQDomElement el = n.toElement();
 		if ( el.isNull() )
 			continue;
 		if ( el.tagName() == "overlapMode" )
@@ -588,8 +588,8 @@ void KMdiDockContainer::load( QDomElement& dockEl )
 		}
 	}
 
-	QPtrList<KMultiTabBarTab>* tl = m_tb->tabs();
-	QPtrListIterator<KMultiTabBarTab> it1( *tl );
+	TQPtrList<KMultiTabBarTab>* tl = m_tb->tabs();
+	TQPtrListIterator<KMultiTabBarTab> it1( *tl );
 	m_ws->hide();
 	if ( !m_horizontal )
 		parentDockWidget()->setForcedFixedWidth( m_tb->width() );
@@ -602,18 +602,18 @@ void KMdiDockContainer::load( QDomElement& dockEl )
 	kapp->syncX();
 	m_delayedRaise = -1;
 
-	for ( QMap<KDockWidget*, KDockButton_Private*>::iterator it = m_overlapButtons.begin();
+	for ( TQMap<KDockWidget*, KDockButton_Private*>::iterator it = m_overlapButtons.begin();
 	        it != m_overlapButtons.end();++it )
 		it.data() ->setOn( !isOverlapMode() );
 
 	if ( !raise.isEmpty() )
 	{
-		for ( QMap<KDockWidget*, int>::iterator it = m_map.begin();it != m_map.end();++it )
+		for ( TQMap<KDockWidget*, int>::iterator it = m_map.begin();it != m_map.end();++it )
 		{
 			if ( it.key() ->name() == raise )
 			{
 				m_delayedRaise = it.data();
-				QTimer::singleShot( 0, this, SLOT( delayedRaise() ) );
+				TQTimer::singleShot( 0, this, TQT_SLOT( delayedRaise() ) );
 				kdDebug( 760 ) << k_funcinfo << "raising " << it.key()->name() << endl;
 				break;
 			}
@@ -621,14 +621,14 @@ void KMdiDockContainer::load( QDomElement& dockEl )
 
 	}
 	if ( m_delayedRaise == -1 )
-		QTimer::singleShot( 0, this, SLOT( init() ) );
+		TQTimer::singleShot( 0, this, TQT_SLOT( init() ) );
 }
 
-void KMdiDockContainer::save( KConfig* cfg, const QString& group_or_prefix )
+void KMdiDockContainer::save( KConfig* cfg, const TQString& group_or_prefix )
 {
-	QString grp = cfg->group();
-	cfg->deleteGroup( group_or_prefix + QString( "::%1" ).arg( parent() ->name() ) );
-	cfg->setGroup( group_or_prefix + QString( "::%1" ).arg( parent() ->name() ) );
+	TQString grp = cfg->group();
+	cfg->deleteGroup( group_or_prefix + TQString( "::%1" ).arg( parent() ->name() ) );
+	cfg->setGroup( group_or_prefix + TQString( "::%1" ).arg( parent() ->name() ) );
 
 	if ( isOverlapMode() )
 		cfg->writeEntry( "overlapMode", "true" );
@@ -644,23 +644,23 @@ void KMdiDockContainer::save( KConfig* cfg, const QString& group_or_prefix )
 			cfg->writeEntry( "separatorPosition", m_separatorPos );
 	}
 
-	QPtrList<KMultiTabBarTab>* tl = m_tb->tabs();
-	QPtrListIterator<KMultiTabBarTab> it( *tl );
-	QStringList::Iterator it2 = itemNames.begin();
+	TQPtrList<KMultiTabBarTab>* tl = m_tb->tabs();
+	TQPtrListIterator<KMultiTabBarTab> it( *tl );
+	TQStringList::Iterator it2 = itemNames.begin();
 	int i = 0;
 	for ( ;it.current() != 0;++it, ++it2 )
 	{
-		//    cfg->writeEntry(QString("widget%1").arg(i),m_ws->widget(it.current()->id())->name());
-		cfg->writeEntry( QString( "widget%1" ).arg( i ), ( *it2 ) );
-		QString s = tabCaptions[ *it2 ];
+		//    cfg->writeEntry(TQString("widget%1").arg(i),m_ws->widget(it.current()->id())->name());
+		cfg->writeEntry( TQString( "widget%1" ).arg( i ), ( *it2 ) );
+		TQString s = tabCaptions[ *it2 ];
 		if ( !s.isEmpty() )
 		{
-			cfg->writeEntry( QString( "widget%1-tabCaption" ).arg( i ), s );
+			cfg->writeEntry( TQString( "widget%1-tabCaption" ).arg( i ), s );
 		}
 		s = tabTooltips[ *it2 ];
 		if ( !s.isEmpty() )
 		{
-			cfg->writeEntry( QString( "widget%1-tabTooltip" ).arg( i ), s );
+			cfg->writeEntry( TQString( "widget%1-tabTooltip" ).arg( i ), s );
 		}
 		//    kdDebug(760)<<"****************************************Saving: "<<m_ws->widget(it.current()->id())->name()<<endl;
 		if ( m_tb->isTabRaised( it.current() ->id() ) )
@@ -672,10 +672,10 @@ void KMdiDockContainer::save( KConfig* cfg, const QString& group_or_prefix )
 
 }
 
-void KMdiDockContainer::load( KConfig* cfg, const QString& group_or_prefix )
+void KMdiDockContainer::load( KConfig* cfg, const TQString& group_or_prefix )
 {
-	QString grp = cfg->group();
-	cfg->setGroup( group_or_prefix + QString( "::%1" ).arg( parent() ->name() ) );
+	TQString grp = cfg->group();
+	cfg->setGroup( group_or_prefix + TQString( "::%1" ).arg( parent() ->name() ) );
 
 	if ( cfg->readEntry( "overlapMode" ) != "false" )
 		activateOverlapMode( m_horizontal?m_tb->height():m_tb->width() );
@@ -685,22 +685,22 @@ void KMdiDockContainer::load( KConfig* cfg, const QString& group_or_prefix )
 	m_separatorPos = cfg->readNumEntry( "separatorPosition", 18000 );
 
 	int i = 0;
-	QString raise;
+	TQString raise;
 	while ( true )
 	{
-		QString dwn = cfg->readEntry( QString( "widget%1" ).arg( i ) );
+		TQString dwn = cfg->readEntry( TQString( "widget%1" ).arg( i ) );
 		if ( dwn.isEmpty() )
 			break;
 		kdDebug( 760 ) << k_funcinfo << "configuring dockwidget :" << dwn << endl;
 		KDockWidget *dw = ( ( KDockWidget* ) parent() ) ->dockManager() ->getDockWidgetFromName( dwn );
 		if ( dw )
 		{
-			QString s = cfg->readEntry( QString( "widget%1-tabCaption" ).arg( i ) );
+			TQString s = cfg->readEntry( TQString( "widget%1-tabCaption" ).arg( i ) );
 			if ( !s.isEmpty() )
 			{
 				dw->setTabPageLabel( s );
 			}
-			s = cfg->readEntry( QString( "widget%1-tabTooltip" ).arg( i ) );
+			s = cfg->readEntry( TQString( "widget%1-tabTooltip" ).arg( i ) );
 			if ( !s.isEmpty() )
 			{
 				dw->setToolTipString( s );
@@ -713,8 +713,8 @@ void KMdiDockContainer::load( KConfig* cfg, const QString& group_or_prefix )
 
 	}
 
-	QPtrList<KMultiTabBarTab>* tl = m_tb->tabs();
-	QPtrListIterator<KMultiTabBarTab> it1( *tl );
+	TQPtrList<KMultiTabBarTab>* tl = m_tb->tabs();
+	TQPtrListIterator<KMultiTabBarTab> it1( *tl );
 	m_ws->hide();
 	if ( !m_horizontal )
 		parentDockWidget() ->setForcedFixedWidth( m_tb->width() );
@@ -727,13 +727,13 @@ void KMdiDockContainer::load( KConfig* cfg, const QString& group_or_prefix )
 	kapp->syncX();
 	m_delayedRaise = -1;
 
-	for ( QMap<KDockWidget*, KDockButton_Private*>::iterator it = m_overlapButtons.begin();
+	for ( TQMap<KDockWidget*, KDockButton_Private*>::iterator it = m_overlapButtons.begin();
 	        it != m_overlapButtons.end();++it )
 		it.data() ->setOn( !isOverlapMode() );
 
 	if ( !raise.isEmpty() )
 	{
-		for ( QMap<KDockWidget*, int>::iterator it = m_map.begin();it != m_map.end();++it )
+		for ( TQMap<KDockWidget*, int>::iterator it = m_map.begin();it != m_map.end();++it )
 		{
 			if ( it.key() ->name() == raise )
 			{
@@ -745,7 +745,7 @@ void KMdiDockContainer::load( KConfig* cfg, const QString& group_or_prefix )
 				        kapp->syncX();*/
 
 				m_delayedRaise = it.data();
-				QTimer::singleShot( 0, this, SLOT( delayedRaise() ) );
+				TQTimer::singleShot( 0, this, TQT_SLOT( delayedRaise() ) );
 				kdDebug( 760 ) << k_funcinfo << "raising" << it.key() ->name() << endl;
 				break;
 			}
@@ -753,7 +753,7 @@ void KMdiDockContainer::load( KConfig* cfg, const QString& group_or_prefix )
 
 	}
 	if ( m_delayedRaise == -1 )
-		QTimer::singleShot( 0, this, SLOT( init() ) );
+		TQTimer::singleShot( 0, this, TQT_SLOT( init() ) );
 	cfg->setGroup( grp );
 
 }
@@ -772,8 +772,8 @@ void KMdiDockContainer::collapseOverlapped()
 
 	if ( isOverlapMode() )
 	{
-		QPtrList<KMultiTabBarTab>* tl = m_tb->tabs();
-		QPtrListIterator<KMultiTabBarTab> it( *tl );
+		TQPtrList<KMultiTabBarTab>* tl = m_tb->tabs();
+		TQPtrListIterator<KMultiTabBarTab> it( *tl );
 		for ( ;it.current();++it )
 		{
 			if ( it.current()->isOn() )
@@ -817,7 +817,7 @@ void KMdiDockContainer::toggle()
 void KMdiDockContainer::prevToolView()
 {
 	kdDebug( 760 ) << k_funcinfo << endl;
-	QPtrList<KMultiTabBarTab>* tabs = m_tb->tabs();
+	TQPtrList<KMultiTabBarTab>* tabs = m_tb->tabs();
 	int pos = tabs->findRef( m_tb->tab( oldtab ) );
 
 	if ( pos == -1 )
@@ -838,7 +838,7 @@ void KMdiDockContainer::prevToolView()
 void KMdiDockContainer::nextToolView()
 {
 	kdDebug( 760 ) << k_funcinfo << endl;
-	QPtrList<KMultiTabBarTab>* tabs = m_tb->tabs();
+	TQPtrList<KMultiTabBarTab>* tabs = m_tb->tabs();
 	int pos = tabs->findRef( m_tb->tab( oldtab ) );
 
 	if ( pos == -1 )

@@ -20,7 +20,7 @@
 #ifndef __MAINWINDOW_H
 #define __MAINWINDOW_H
 
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <kaction.h>
 
 #include <kmainwindow.h>
@@ -51,7 +51,7 @@ class KPARTS_EXPORT MainWindow : public KMainWindow, virtual public PartBase
   /**
    * Constructor, same signature as KMainWindow.
    */
-  MainWindow( QWidget* parent,  const char *name = 0L, WFlags f = WType_TopLevel | WDestructiveClose );
+  MainWindow( TQWidget* parent,  const char *name = 0L, WFlags f = WType_TopLevel | WDestructiveClose );
   /**
    * Compatibility Constructor
    */
@@ -60,7 +60,7 @@ class KPARTS_EXPORT MainWindow : public KMainWindow, virtual public PartBase
    * Constructor with creation flags, see KMainWindow.
    * @since 3.2
    */
-  MainWindow( int cflags, QWidget* parent,  const char *name = 0L, WFlags f = WType_TopLevel | WDestructiveClose );
+  MainWindow( int cflags, TQWidget* parent,  const char *name = 0L, WFlags f = WType_TopLevel | WDestructiveClose );
   /**
    * Destructor.
    */
@@ -85,7 +85,7 @@ protected slots:
    * Reimplement if your mainwindow has a complex statusbar
    * (with several items)
    */
-  virtual void slotSetStatusBarText( const QString & );
+  virtual void slotSetStatusBarText( const TQString & );
 
   /**
    * Rebuilds the GUI after KEditToolbar changed the toolbar layout.

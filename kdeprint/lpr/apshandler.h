@@ -22,7 +22,7 @@
 
 #include "lprhandler.h"
 
-#include <qmap.h>
+#include <tqmap.h>
 
 class ApsHandler : public LprHandler
 {
@@ -33,21 +33,21 @@ public:
 	KMPrinter* createPrinter(PrintcapEntry*);
 	bool completePrinter(KMPrinter*, PrintcapEntry*, bool = true);
 	DrMain* loadDriver(KMPrinter*, PrintcapEntry*, bool = false);
-	DrMain* loadDbDriver(const QString&);
+	DrMain* loadDbDriver(const TQString&);
 	void reset();
 	PrintcapEntry* createEntry(KMPrinter*);
 	bool savePrinterDriver(KMPrinter*, PrintcapEntry*, DrMain*, bool* = 0);
 	bool removePrinter(KMPrinter*, PrintcapEntry*);
-	QString printOptions(KPrinter*);
+	TQString printOptions(KPrinter*);
 
 protected:
-	QString driverDirInternal();
+	TQString driverDirInternal();
 
 private:
-	QMap<QString,QString> loadResources(PrintcapEntry*);
-	QMap<QString,QString> loadVarFile(const QString&);
-	QString sysconfDir();
-	QString shareDir();
+	TQMap<TQString,TQString> loadResources(PrintcapEntry*);
+	TQMap<TQString,TQString> loadVarFile(const TQString&);
+	TQString sysconfDir();
+	TQString shareDir();
 	DrMain* loadApsDriver(bool = false);
 
 private:

@@ -35,7 +35,7 @@
 #include <config.h>
 
 #include <kprocess.h>
-#include <qfile.h>
+#include <tqfile.h>
 
 int fsearch(FILE *fh,const char *text,long *ptr);
 
@@ -54,10 +54,10 @@ double metronomeTempoToTempo(ulong x)
 int uncompressFile(const char *gzname, char *tmpname)
   // Returns 0 if OK, 1 if error (tmpname not set)
 {
-  QString cmd("gzip -dc " + KProcess::quote(gzname));
-  FILE *infile = popen( QFile::encodeName(cmd).data(), "r");
+  TQString cmd("gzip -dc " + KProcess::quote(gzname));
+  FILE *infile = popen( TQFile::encodeName(cmd).data(), "r");
   if (infile==NULL) {
-    fprintf(stderr,"ERROR : popen failed : %s\n",QFile::encodeName(cmd).data());
+    fprintf(stderr,"ERROR : popen failed : %s\n",TQFile::encodeName(cmd).data());
     return 1;
   }
   strcpy(tmpname, "/tmp/KMid.XXXXXXXXXX");

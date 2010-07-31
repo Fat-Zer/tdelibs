@@ -21,8 +21,8 @@
 #ifndef KPRINTDIALOGPAGE_H
 #define KPRINTDIALOGPAGE_H
 
-#include <qwidget.h>
-#include <qmap.h>
+#include <tqwidget.h>
+#include <tqmap.h>
 
 #include <kdelibs_export.h>
 
@@ -44,36 +44,36 @@ class DrMain;
  * class MyDialogPage : public KPrintDialogPage
  * {
  * public:
- *   MyDialogPage( QWidget *parent = 0, const char *name = 0 );
+ *   MyDialogPage( TQWidget *parent = 0, const char *name = 0 );
  *
  *   //reimplement virtual functions
- *   void getOptions( QMap<QString,QString>& opts, bool incldef = false );
- *   void setOptions( const QMap<QString,QString>& opts );
- *   bool isValid( QString& msg );
+ *   void getOptions( TQMap<TQString,TQString>& opts, bool incldef = false );
+ *   void setOptions( const TQMap<TQString,TQString>& opts );
+ *   bool isValid( TQString& msg );
  *
  * private:
- *   QComboBox *m_fontcombo;
+ *   TQComboBox *m_fontcombo;
  * };
  *
- * MyDialogPage::MyDialogPage( QWidget *parent, const char *name )
+ * MyDialogPage::MyDialogPage( TQWidget *parent, const char *name )
  * : KPrintDialogPage( parent, name )
  * {
  *   setTitle( i18n( "My Page" ) );
  * }
  *
- * void MyDialogPage::getOptions( QMap<QString,QString>& opts, bool incldef )
+ * void MyDialogPage::getOptions( TQMap<TQString,TQString>& opts, bool incldef )
  * {
  *   if ( incldef || m_fontcombo->currentText() != mydefaultvalue )
  *     opts[ "kde-myapp-fontname" ] = m_fontcombo->currentText();
  * }
  *
- * void MyDialogPage::setOptions( const QMap<QString,QString>& opts )
+ * void MyDialogPage::setOptions( const TQMap<TQString,TQString>& opts )
  * {
- *   QString fntname = opts[ "kde-myapp-fontname" ];
+ *   TQString fntname = opts[ "kde-myapp-fontname" ];
  *   m_fontcombo->setEditText( fntname );
  * }
  *
- * bool MyDialogPage::isValid( QString& msg)
+ * bool MyDialogPage::isValid( TQString& msg)
  * {
  *   if ( m_fontcombo->currentText().isEmpty() )
  *   {
@@ -94,11 +94,11 @@ public:
 	/**
 	 * Standard constructor.
 	 */
-	KPrintDialogPage(QWidget *parent = 0, const char *name = 0);
+	KPrintDialogPage(TQWidget *parent = 0, const char *name = 0);
 	/**
 	 * Modified constructor. For internal use only.
 	 */
-	KPrintDialogPage(KMPrinter *pr, DrMain *dr = 0, QWidget *parent = 0, const char *name = 0);
+	KPrintDialogPage(KMPrinter *pr, DrMain *dr = 0, TQWidget *parent = 0, const char *name = 0);
 	/**
 	 * Destructor
 	 */
@@ -112,13 +112,13 @@ public:
 	 * @param incldef if true, include also options with default values
 	 * @see setOptions()
 	 */
-	virtual void getOptions(QMap<QString,QString>& opts, bool incldef = false);
+	virtual void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
 	/**
 	 * This function is called to update the current page with the options contained in @p opts.
 	 * Reimplement it in subclasses.
 	 * @param opts the structure containing the options to update the page
 	 */
-	virtual void setOptions(const QMap<QString,QString>& opts);
+	virtual void setOptions(const TQMap<TQString,TQString>& opts);
 	/**
 	 * Returns true if options selected in the page are valid (no conflict), false otherwise.
 	 * When returning false, @p msg should contain an error message explaining what is wrong
@@ -126,7 +126,7 @@ public:
 	 * @param msg should contain an error message when returning false
 	 * @returns valid status
 	 */
-	virtual bool isValid(QString& msg);
+	virtual bool isValid(TQString& msg);
 	/**
 	 * Get the ID of the page. Not used yet.
 	 * @returns the page ID
@@ -151,7 +151,7 @@ public:
 	 * @param txt the page title
 	 * @see title()
 	 */
-	void setTitle(const QString& txt)	{ m_title = txt; }
+	void setTitle(const TQString& txt)	{ m_title = txt; }
 	/**
 	 * Tell wether or not the page should be disable if a non real printer (special
 	 * printer) is selected in the print dialog. Returns false by default. Application

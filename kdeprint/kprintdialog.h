@@ -25,7 +25,7 @@
 #endif
 
 #include <kdialog.h>
-#include <qptrlist.h>
+#include <tqptrlist.h>
 #include <kdeprint/kpreloadobject.h>
 
 class KPrinter;
@@ -42,15 +42,15 @@ class KDEPRINT_EXPORT KPrintDialog : public KDialog, public KPReloadObject
 {
 	Q_OBJECT
 public:
-	KPrintDialog(QWidget *parent = 0, const char *name = 0);
+	KPrintDialog(TQWidget *parent = 0, const char *name = 0);
 	~KPrintDialog();
 
 	void setFlags(int f);
-	void setDialogPages(QPtrList<KPrintDialogPage> *pages);
+	void setDialogPages(TQPtrList<KPrintDialogPage> *pages);
 	void enableDialogPage( int index, bool flag = true );
 	KPrinter* printer() const;
 
-	static KPrintDialog* printerDialog(KPrinter*, QWidget*, const QString& caption = QString::null, bool forceExpand = false);
+	static KPrintDialog* printerDialog(KPrinter*, TQWidget*, const TQString& caption = TQString::null, bool forceExpand = false);
 
 signals:
 	void printRequested(KPrinter*);
@@ -65,7 +65,7 @@ protected slots:
 	void slotExtensionClicked();
 	void slotToggleFilter(bool);
 	void slotHelp();
-	void slotOutputFileSelected(const QString&);
+	void slotOutputFileSelected(const TQString&);
 	void slotUpdatePossible( bool );
 	void slotOpenFileDialog();
 
@@ -73,7 +73,7 @@ protected:
 	bool checkOutputFile();
 	void enableSpecial(bool on);
 	void enableOutputFile(bool on);
-	void setOutputFileExtension(const QString&);
+	void setOutputFileExtension(const TQString&);
 	void reload();
 	void configChanged();
 	void expandDialog(bool on = true);

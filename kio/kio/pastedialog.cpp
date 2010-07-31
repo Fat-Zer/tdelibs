@@ -22,22 +22,22 @@
 #include <kmimetype.h>
 #include <klocale.h>
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qapplication.h>
-#include <qclipboard.h>
+#include <tqlayout.h>
+#include <tqlabel.h>
+#include <tqcombobox.h>
+#include <tqapplication.h>
+#include <tqclipboard.h>
 
-KIO::PasteDialog::PasteDialog( const QString &caption, const QString &label,
-                               const QString &value, const QStringList& items,
-                               QWidget *parent,
+KIO::PasteDialog::PasteDialog( const TQString &caption, const TQString &label,
+                               const TQString &value, const TQStringList& items,
+                               TQWidget *parent,
                                bool clipboard )
     : KDialogBase( parent, 0 /*name*/, true, caption, Ok|Cancel, Ok, true )
 {
-    QFrame *frame = makeMainWidget();
-    QVBoxLayout *layout = new QVBoxLayout( frame, 0, spacingHint() );
+    TQFrame *frame = makeMainWidget();
+    TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
-    m_label = new QLabel( label, frame );
+    m_label = new TQLabel( label, frame );
     layout->addWidget( m_label );
 
     m_lineEdit = new KLineEdit( value, frame );
@@ -46,24 +46,24 @@ KIO::PasteDialog::PasteDialog( const QString &caption, const QString &label,
     m_lineEdit->setFocus();
     m_label->setBuddy( m_lineEdit );
 
-    layout->addWidget( new QLabel( i18n( "Data format:" ), frame ) );
-    m_comboBox = new QComboBox( frame );
+    layout->addWidget( new TQLabel( i18n( "Data format:" ), frame ) );
+    m_comboBox = new TQComboBox( frame );
     m_comboBox->insertStringList( items );
     layout->addWidget( m_comboBox );
 
     layout->addStretch();
 
-    //connect( m_lineEdit, SIGNAL( textChanged( const QString & ) ),
-    //    SLOT( slotEditTextChanged( const QString & ) ) );
-    //connect( this, SIGNAL( user1Clicked() ), m_lineEdit, SLOT( clear() ) );
+    //connect( m_lineEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
+    //    TQT_SLOT( slotEditTextChanged( const TQString & ) ) );
+    //connect( this, TQT_SIGNAL( user1Clicked() ), m_lineEdit, TQT_SLOT( clear() ) );
 
     //slotEditTextChanged( value );
     setMinimumWidth( 350 );
 
     m_clipboardChanged = false;
     if ( clipboard )
-        connect( QApplication::clipboard(), SIGNAL( dataChanged() ),
-                 this, SLOT( slotClipboardDataChanged() ) );
+        connect( TQApplication::clipboard(), TQT_SIGNAL( dataChanged() ),
+                 this, TQT_SLOT( slotClipboardDataChanged() ) );
 }
 
 void KIO::PasteDialog::slotClipboardDataChanged()
@@ -71,7 +71,7 @@ void KIO::PasteDialog::slotClipboardDataChanged()
     m_clipboardChanged = true;
 }
 
-QString KIO::PasteDialog::lineEditText() const
+TQString KIO::PasteDialog::lineEditText() const
 {
     return m_lineEdit->text();
 }

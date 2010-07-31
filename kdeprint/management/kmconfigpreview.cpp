@@ -19,43 +19,43 @@
 
 #include "kmconfigpreview.h"
 
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
+#include <tqcheckbox.h>
+#include <tqlayout.h>
+#include <tqgroupbox.h>
+#include <tqlabel.h>
 
 #include <klocale.h>
 #include <kurlrequester.h>
 #include <kconfig.h>
 #include <kdialog.h>
 
-KMConfigPreview::KMConfigPreview(QWidget *parent, const char *name)
+KMConfigPreview::KMConfigPreview(TQWidget *parent, const char *name)
 : KMConfigPage(parent, name)
 {
 	setPageName(i18n("Preview"));
 	setPageHeader(i18n("Preview Settings"));
 	setPagePixmap("filefind");
 
-	QGroupBox *box = new QGroupBox(0, Qt::Vertical, i18n("Preview Program"), this);
+	TQGroupBox *box = new TQGroupBox(0, Qt::Vertical, i18n("Preview Program"), this);
 
-	m_useext = new QCheckBox(i18n("&Use external preview program"), box);
+	m_useext = new TQCheckBox(i18n("&Use external preview program"), box);
 	m_program = new KURLRequester(box);
-	QLabel	*lab = new QLabel(box);
+	QLabel	*lab = new TQLabel(box);
 	lab->setText(i18n("You can use an external preview program (PS viewer) instead of the "
 					  "KDE built-in preview system. Note that if the KDE default PS viewer "
 					  "(KGhostView) cannot be found, KDE tries automatically to find another "
 					  "external PostScript viewer"));
 	lab->setTextFormat(Qt::RichText);
 
-	QVBoxLayout	*l0 = new QVBoxLayout(this, 0, KDialog::spacingHint());
+	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	l0->addWidget(box);
 	l0->addStretch(1);
-	QVBoxLayout	*l1 = new QVBoxLayout(box->layout(), KDialog::spacingHint());
+	QVBoxLayout	*l1 = new TQVBoxLayout(box->layout(), KDialog::spacingHint());
 	l1->addWidget(lab);
 	l1->addWidget(m_useext);
 	l1->addWidget(m_program);
 
-	connect(m_useext, SIGNAL(toggled(bool)), m_program, SLOT(setEnabled(bool)));
+	connect(m_useext, TQT_SIGNAL(toggled(bool)), m_program, TQT_SLOT(setEnabled(bool)));
 	m_program->setEnabled(false);
 }
 

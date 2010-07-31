@@ -22,13 +22,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <qglobal.h>
+#include <tqglobal.h>
 
 #ifdef Q_WS_X11
 
 #include "config.h"
-#include <qpainter.h>
-#include <qvaluelist.h>
+#include <tqpainter.h>
+#include <tqvaluelist.h>
 
 #include <kwin.h> 
 #include <kwinmodule.h> 
@@ -45,8 +45,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "kwindowlistmenu.h"
 #include "kwindowlistmenu.moc"
 
-static QCString kwinName() {
-    QCString appname;
+static TQCString kwinName() {
+    TQCString appname;
     int screen_number = DefaultScreen(qt_xdisplay());
     if (screen_number == 0)
         appname = "kwin";
@@ -58,21 +58,21 @@ static QCString kwinName() {
 // helper class
 namespace
 {
-class NameSortedInfoList : public QPtrList<KWin::WindowInfo>
+class NameSortedInfoList : public TQPtrList<KWin::WindowInfo>
 {
 public:
     NameSortedInfoList() { setAutoDelete(true); }
     ~NameSortedInfoList() {}
 
 private:
-    int compareItems( QPtrCollection::Item s1, QPtrCollection::Item s2 );
+    int compareItems( TQPtrCollection::Item s1, TQPtrCollection::Item s2 );
 };
 
-int NameSortedInfoList::compareItems( QPtrCollection::Item s1, QPtrCollection::Item s2 )
+int NameSortedInfoList::compareItems( TQPtrCollection::Item s1, TQPtrCollection::Item s2 )
 {
     KWin::WindowInfo *i1 = static_cast<KWin::WindowInfo *>(s1);
     KWin::WindowInfo *i2 = static_cast<KWin::WindowInfo *>(s2);
-    QString title1, title2;
+    TQString title1, title2;
     if (i1)
         title1 = i1->visibleNameWithState().lower();
     if (i2)
@@ -82,12 +82,12 @@ int NameSortedInfoList::compareItems( QPtrCollection::Item s1, QPtrCollection::I
 
 } // namespace
 
-KWindowListMenu::KWindowListMenu(QWidget *parent, const char *name)
+KWindowListMenu::KWindowListMenu(TQWidget *parent, const char *name)
   : KPopupMenu(parent, name)
 {
     kwin_module = new KWinModule(this);
 
-    connect(this, SIGNAL(activated(int)), SLOT(slotExec(int)));
+    connect(this, TQT_SIGNAL(activated(int)), TQT_SLOT(slotExec(int)));
 }
 
 KWindowListMenu::~KWindowListMenu()
@@ -102,7 +102,7 @@ static bool standaloneDialog( const KWin::WindowInfo* info, const NameSortedInfo
     {
         return info->transientFor() == qt_xrootwin();
     }
-    for( QPtrListIterator< KWin::WindowInfo > it( list );
+    for( TQPtrListIterator< KWin::WindowInfo > it( list );
          it.current() != NULL;
          ++it )
         if( (*it)->groupLeader() == group )
@@ -127,9 +127,9 @@ void KWindowListMenu::init()
     map.clear();
 
     int unclutter = insertItem( i18n("Unclutter Windows"),
-                                this, SLOT( slotUnclutterWindows() ) );
+                                this, TQT_SLOT( slotUnclutterWindows() ) );
     int cascade = insertItem( i18n("Cascade Windows"),
-                              this, SLOT( slotCascadeWindows() ) );
+                              this, TQT_SLOT( slotCascadeWindows() ) );
 
     // if we only have one desktop we won't be showing titles, so put a separator in
     if (nd == 1)
@@ -138,8 +138,8 @@ void KWindowListMenu::init()
     }
 
 
-    QValueList<KWin::WindowInfo> windows;
-    for (QValueList<WId>::ConstIterator it = kwin_module->windows().begin();
+    TQValueList<KWin::WindowInfo> windows;
+    for (TQValueList<WId>::ConstIterator it = kwin_module->windows().begin();
          it != kwin_module->windows().end(); ++it) {
          windows.append( KWin::windowInfo( *it, NET::WMDesktop ));
     }
@@ -154,7 +154,7 @@ void KWindowListMenu::init()
         NameSortedInfoList list;
         list.setAutoDelete(true);
 
-	for (QValueList<KWin::WindowInfo>::ConstIterator it = windows.begin();
+	for (TQValueList<KWin::WindowInfo>::ConstIterator it = windows.begin();
              it != windows.end(); ++it) {
 	    if (((*it).desktop() == d) || (on_all_desktops && (*it).onAllDesktops())
                 || (!show_all_desktops_group && (*it).onAllDesktops())) {
@@ -166,14 +166,14 @@ void KWindowListMenu::init()
 
         for (KWin::WindowInfo* info = list.first(); info; info = list.next(), ++i)
         {
-            QString itemText = KStringHandler::cPixelSqueeze(info->visibleNameWithState(), fontMetrics(), maxwidth);
+            TQString itemText = KStringHandler::cPixelSqueeze(info->visibleNameWithState(), fontMetrics(), maxwidth);
             NET::WindowType windowType = info->windowType( NET::NormalMask | NET::DesktopMask
                 | NET::DockMask | NET::ToolbarMask | NET::MenuMask | NET::DialogMask
                 | NET::OverrideMask | NET::TopMenuMask | NET::UtilityMask | NET::SplashMask );
             if ( (windowType == NET::Normal || windowType == NET::Unknown
                     || (windowType == NET::Dialog && standaloneDialog( info, list )))
                 && !(info->state() & NET::SkipTaskbar) ) {
-                QPixmap pm = KWin::icon(info->win(), 16, 16, true );
+                TQPixmap pm = KWin::icon(info->win(), 16, 16, true );
                 items++;
 
                 // ok, we have items on this desktop, let's show the title
@@ -186,7 +186,7 @@ void KWindowListMenu::init()
                 }
 
                 // Avoid creating unwanted accelerators.
-                itemText.replace('&', QString::fromLatin1("&&"));
+                itemText.replace('&', TQString::fromLatin1("&&"));
                 insertItem( pm, itemText, i);
                 map.insert(i, info->win());
                 if (info->win() == active_window)
@@ -225,8 +225,8 @@ void KWindowListMenu::slotExec(int id)
 }
 
 // This popup is much more useful from keyboard if it has the active
-// window active by default - however, QPopupMenu tries hard to resist.
-// QPopupMenu::popup() resets the active item, so this needs to be
+// window active by default - however, TQPopupMenu tries hard to resist.
+// TQPopupMenu::popup() resets the active item, so this needs to be
 // called after popup().
 void KWindowListMenu::selectActiveWindow()
 {

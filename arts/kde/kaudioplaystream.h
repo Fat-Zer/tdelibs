@@ -20,9 +20,9 @@
 #ifndef KAUDIOPLAYSTREAM_H
 #define KAUDIOPLAYSTREAM_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
-#include <qcstring.h>
+#include <tqcstring.h>
 #include <stdsynthmodule.h>
 
 #include <kdelibs_export.h>
@@ -39,7 +39,7 @@ class KAudioPlayStreamPrivate;
  * @since 3.2
 */
 
-class KDE_ARTS_EXPORT KAudioPlayStream : public QObject {
+class KDE_ARTS_EXPORT KAudioPlayStream : public TQObject {
    Q_OBJECT
 public:
 	/**
@@ -51,7 +51,7 @@ public:
 	 * @param parent You will propably want to pass the server as parent to so this stream gets deleted before the server disappears.
 	 * @param name The name of the stream.
 	*/
-	KAudioPlayStream( KArtsServer* server, const QString title, QObject* parent=0, const char* name=0 );
+	KAudioPlayStream( KArtsServer* server, const TQString title, TQObject* parent=0, const char* name=0 );
 	/**
 	 * Destructs the KAudioPlayStream.
 	*/
@@ -96,13 +96,13 @@ public slots:
 	 * Write data into the inputbuffer.
 	 * If you ignore the signal noData() it will play 0 ( silence ).
 	*/
-	void write( QByteArray& data );
+	void write( TQByteArray& data );
 signals:
 	/**
 	 * This signal is emitted when audio should be played.
 	 * You have to fill the array with data.
 	*/
-	void requestData( QByteArray& );
+	void requestData( TQByteArray& );
 
 	/**
 	 * Is emitted when the state changes.

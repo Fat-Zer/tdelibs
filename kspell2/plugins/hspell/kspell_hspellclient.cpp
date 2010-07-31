@@ -31,7 +31,7 @@ K_EXPORT_COMPONENT_FACTORY( kspell_hspell, HSpellClientFactory( "kspell_hspell" 
 
 using namespace KSpell2;
 
-HSpellClient::HSpellClient( QObject *parent, const char *name, const QStringList& /* args */  )
+HSpellClient::HSpellClient( TQObject *parent, const char *name, const TQStringList& /* args */  )
     : Client( parent, name )
 {
 }
@@ -40,15 +40,15 @@ HSpellClient::~HSpellClient()
 {
 }
 
-Dictionary* HSpellClient::dictionary( const QString& language )
+Dictionary* HSpellClient::dictionary( const TQString& language )
 {
     HSpellDict *ad = new HSpellDict( language );
     return ad;
 }
 
-QStringList HSpellClient::languages() const
+TQStringList HSpellClient::languages() const
 {
-    QStringList langs;
+    TQStringList langs;
     langs.append( "he" );
 
     return langs;

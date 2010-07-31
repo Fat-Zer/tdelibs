@@ -21,7 +21,7 @@
 #ifndef KPAC_DISCOVERY_H
 #define KPAC_DISCOVERY_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 #include "downloader.h"
 
@@ -33,7 +33,7 @@ namespace KPAC
     {
         Q_OBJECT
     public:
-        Discovery( QObject* );
+        Discovery( TQObject* );
 
     protected slots:
         virtual void failed();
@@ -46,7 +46,7 @@ namespace KPAC
         bool checkDomain() const;
 
         KProcIO* m_helper;
-        QString m_hostname;
+        TQString m_hostname;
     };
 }
 

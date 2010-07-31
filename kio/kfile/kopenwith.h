@@ -20,7 +20,7 @@
 #ifndef __open_with_h__
 #define __open_with_h__
 
-#include <qdialog.h>
+#include <tqdialog.h>
 
 #include <kurl.h>
 #include <krun.h>
@@ -43,7 +43,7 @@ class KOpenWithDlgPrivate;
  *
  * @author David Faure <faure@kde.org>
  */
-class KIO_EXPORT KOpenWithDlg : public QDialog //#TODO: Use KDialogBase for KDE4
+class KIO_EXPORT KOpenWithDlg : public TQDialog //#TODO: Use KDialogBase for KDE4
 {
     Q_OBJECT
 public:
@@ -56,7 +56,7 @@ public:
      * if the dialog is used to choose an application but not for some particular URLs.
      * @param parent parent widget
      */
-    KOpenWithDlg( const KURL::List& urls, QWidget *parent = 0L );
+    KOpenWithDlg( const KURL::List& urls, TQWidget *parent = 0L );
 
     /**
      * Create a dialog that asks for a application to open a given
@@ -67,8 +67,8 @@ public:
      * @param value  is the initial value of the line
      * @param parent parent widget
      */
-    KOpenWithDlg( const KURL::List& urls, const QString& text, const QString& value,
-                  QWidget *parent = 0L );
+    KOpenWithDlg( const KURL::List& urls, const TQString& text, const TQString& value,
+                  TQWidget *parent = 0L );
 
     /**
      * Create a dialog to select a service for a given service type.
@@ -78,8 +78,8 @@ public:
      * @param value  is the initial value of the line
      * @param parent parent widget
      */
-    KOpenWithDlg( const QString& serviceType, const QString& value,
-                  QWidget *parent = 0L );
+    KOpenWithDlg( const TQString& serviceType, const TQString& value,
+                  TQWidget *parent = 0L );
 
     /**
      * Create a dialog to select an application
@@ -88,7 +88,7 @@ public:
      * @param parent parent widget
      * @since 3.1
      */
-    KOpenWithDlg( QWidget *parent = 0L );
+    KOpenWithDlg( TQWidget *parent = 0L );
 
     /**
      * Destructor
@@ -98,7 +98,7 @@ public:
     /**
      * @return the text the user entered
      */
-    QString text() const;
+    TQString text() const;
     /**
      * Hide the "Do not &close when command exits" Checkbox
      */
@@ -129,8 +129,8 @@ public slots:
     * The slot for clearing the edit widget
     */
     void slotClear();
-    void slotSelected( const QString&_name, const QString& _exec );
-    void slotHighlighted( const QString& _name, const QString& _exec );
+    void slotSelected( const TQString&_name, const TQString& _exec );
+    void slotHighlighted( const TQString& _name, const TQString& _exec );
     void slotTextChanged();
     void slotTerminalToggled(bool);
     void slotDbClick();
@@ -138,7 +138,7 @@ public slots:
 
 protected slots:
     /**
-     * Reimplemented from QDialog::accept() to save history of the combobox
+     * Reimplemented from TQDialog::accept() to save history of the combobox
      */
     virtual void accept();
 
@@ -156,19 +156,19 @@ protected:
      * @param text   appears as a label on top of the entry box.
      * @param value  is the initial value of the line
      */
-    void init( const QString& text, const QString& value );
+    void init( const TQString& text, const TQString& value );
 
     KURLRequester * edit;
-    QString m_command;
+    TQString m_command;
 
     KApplicationTree* m_pTree;
-    QLabel *label;
+    TQLabel *label;
 
-    QString qName, qServiceType;
+    TQString qName, qServiceType;
     bool m_terminaldirty;
-    QCheckBox   *terminal, *remember, *nocloseonexit;
-    QPushButton *UNUSED;
-    QPushButton *UNUSED2;
+    TQCheckBox   *terminal, *remember, *nocloseonexit;
+    TQPushButton *UNUSED;
+    TQPushButton *UNUSED2;
 
     KService::Ptr m_pService;
 

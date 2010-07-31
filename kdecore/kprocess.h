@@ -24,9 +24,9 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <unistd.h>
-#include <qvaluelist.h>
-#include <qcstring.h>
-#include <qobject.h>
+#include <tqvaluelist.h>
+#include <tqcstring.h>
+#include <tqobject.h>
 #include "kdelibs_export.h"
 
 class QSocketNotifier;
@@ -91,8 +91,8 @@ class KPty;
  *
  *   *proc << "my_executable";
  *   *proc << "These" << "are" << "the" << "command" << "line" << "args";
- *   QApplication::connect(proc, SIGNAL(processExited(KProcess *)),
- *                         pointer_to_my_object, SLOT(my_objects_slot(KProcess *)));
+ *   TQApplication::connect(proc, TQT_SIGNAL(processExited(KProcess *)),
+ *                         pointer_to_my_object, TQT_SLOT(my_objects_slot(KProcess *)));
  *   proc->start();
  * \endcode
  *
@@ -186,7 +186,7 @@ public:
    * Constructor
    * @since 3.2
    */
-  KProcess( QObject* parent, const char *name = 0 );
+  KProcess( TQObject* parent, const char *name = 0 );
 
   /**
    * Constructor
@@ -214,7 +214,7 @@ public:
 	 @see operator<<()
 
   */
-  bool setExecutable(const QString& proc) KDE_DEPRECATED;
+  bool setExecutable(const TQString& proc) KDE_DEPRECATED;
 
 
   /**
@@ -230,17 +230,17 @@ public:
    * @param arg the argument to add
    * @return a reference to this KProcess
    **/
-  KProcess &operator<<(const QString& arg);
+  KProcess &operator<<(const TQString& arg);
   /**
    * Similar to previous method, takes a char *, supposed to be in locale 8 bit already.
    */
   KProcess &operator<<(const char * arg);
   /**
-   * Similar to previous method, takes a QCString, supposed to be in locale 8 bit already.
+   * Similar to previous method, takes a TQCString, supposed to be in locale 8 bit already.
    * @param arg the argument to add
    * @return a reference to this KProcess
    */
-  KProcess &operator<<(const QCString & arg);
+  KProcess &operator<<(const TQCString & arg);
 
   /**
    * Sets the executable and the command line argument list for this process,
@@ -248,7 +248,7 @@ public:
    * @param args the arguments to add
    * @return a reference to this KProcess
    **/
-  KProcess &operator<<(const QStringList& args);
+  KProcess &operator<<(const TQStringList& args);
 
   /**
    * Clear a command line argument list that has been set by using
@@ -464,7 +464,7 @@ public:
    * Lets you see what your arguments are for debugging.
    * @return the list of arguments
    */
-  const QValueList<QCString> &args() /* const */ { return arguments; }
+  const TQValueList<TQCString> &args() /* const */ { return arguments; }
 
   /**
    * Controls whether the started process should drop any
@@ -490,7 +490,7 @@ public:
    * @param name the name of the environment variable
    * @param value the new value for the environment variable
    */
-  void setEnvironment(const QString &name, const QString &value);
+  void setEnvironment(const TQString &name, const TQString &value);
 
   /**
    * Changes the current working directory (CWD) of the process
@@ -498,7 +498,7 @@ public:
    * This function must be called before starting the process.
    * @param dir the new directory
    */
-  void setWorkingDirectory(const QString &dir);
+  void setWorkingDirectory(const TQString &dir);
 
   /**
    * Specify whether to start the command via a shell or directly.
@@ -527,7 +527,7 @@ public:
    * @return the quoted argument
    * @since 3.1
    */
-  static QString quote(const QString &arg);
+  static TQString quote(const TQString &arg);
 
   /**
    * Detaches KProcess from child process. All communication is closed.
@@ -601,7 +601,7 @@ signals:
    * data structures before returning from the slot.
    * Example:
    * \code
-   *     QString myBuf = QString::fromLatin1(buffer, buflen);
+   *     TQString myBuf = TQString::fromLatin1(buffer, buflen);
    * \endcode
    **/
   void receivedStdout(KProcess *proc, char *buffer, int buflen);
@@ -671,7 +671,7 @@ protected slots:
   /**
    * Called when another bulk of data can be sent to the child's
    * stdin. If there is no more data to be sent to stdin currently
-   * available, this function must disable the QSocketNotifier innot.
+   * available, this function must disable the TQSocketNotifier innot.
    * @param dummy ignore this argument
    */
   void slotSendData(int dummy);	// KDE 4: remove dummy
@@ -688,7 +688,7 @@ protected:
    * The list of the process' command line arguments. The first entry
    * in this list is the executable itself.
    */
-  QValueList<QCString> arguments;
+  TQValueList<TQCString> arguments;
   /**
    * How to run the process (Block, NotifyOnExit, DontCare). You should
    *  not modify this data member directly from derived classes.
@@ -830,15 +830,15 @@ protected:
   /**
    * The socket notifier for in[1].
    */
-  QSocketNotifier *innot;
+  TQSocketNotifier *innot;
   /**
    * The socket notifier for out[0].
    */
-  QSocketNotifier *outnot;
+  TQSocketNotifier *outnot;
   /**
    * The socket notifier for err[0].
    */
-  QSocketNotifier *errnot;
+  TQSocketNotifier *errnot;
 
   /**
    * Lists the communication links that are activated for the child
@@ -917,10 +917,10 @@ public:
   virtual bool start(RunMode  runmode = NotifyOnExit,
 		  Communication comm = NoCommunication);
 
-  static QString quote(const QString &arg);
+  static TQString quote(const TQString &arg);
 
 private:
-  QCString shell;
+  TQCString shell;
 
 protected:
   virtual void virtual_hook( int id, void* data );

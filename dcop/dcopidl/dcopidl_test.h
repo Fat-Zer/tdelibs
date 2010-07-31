@@ -12,9 +12,9 @@
 class Test2;
 
 // this has to work too
-#include <qstring.h>
+#include <tqstring.h>
 
-typedef QMap<KIO::Job *, KIODownload> KIODownloadMap;
+typedef TQMap<KIO::Job *, KIODownload> KIODownloadMap;
 class Test3;
 
 // Those namespaces are opened and closed, so they should be just ignored
@@ -31,7 +31,7 @@ namespace KMail {
  * blah di blah
  **/
 class KDEUI_EXPORT Test : public MyNamespace::MyParentClass, virtual public DCOPObject,
-             public QValueList<QString>
+             public TQValueList<TQString>
 {
     K_DCOP
 
@@ -45,7 +45,7 @@ public:
     ~Test();
     int getPageOfObj( int obj );
     void setCell( KSpreadTable *table,
-		  const QPoint& point );
+		  const TQPoint& point );
 
     SomeForwardFooPrivate *d;
     static const int AUDIO_CD = 1;
@@ -54,8 +54,8 @@ public:
     enum { Enum1, Enum2 };
     enum NamedEnum { Enum3, Enum4 };
 k_dcop:
-    virtual QString url();
-    virtual QString constTest() const;
+    virtual TQString url();
+    virtual TQString constTest() const;
     virtual DCOPRef firstView();
     virtual DCOPRef nextView();
     virtual int getNumObjects();
@@ -68,8 +68,8 @@ k_dcop:
      **/
     int getPageOfObj( int obj );
     void setCell( const int& point = 3 );
-    QValueList<DCOPRef> getWindows();
-    const QStringList remotes(); // returns const type, but shouldn't use const var for it in stub
+    TQValueList<DCOPRef> getWindows();
+    const TQStringList remotes(); // returns const type, but shouldn't use const var for it in stub
 
 k_dcop_signals:
     void blah_signal();
@@ -78,7 +78,7 @@ private:
     Test3 *doc();
 
     struct KIODownload;
-    typedef QMap<KIO::Job *, KIODownload> KIODownloadMap;
+    typedef TQMap<KIO::Job *, KIODownload> KIODownloadMap;
 };
 
 class Test2 : public DCOPObject

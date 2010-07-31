@@ -20,18 +20,18 @@
 #ifndef KPUSHBUTTON_H
 #define KPUSHBUTTON_H
 
-#include <qpoint.h>
-#include <qpushbutton.h>
+#include <tqpoint.h>
+#include <tqpushbutton.h>
 #include <kguiitem.h>
 #include <kstdguiitem.h> 
 
 class QDragObject;
 /**
- * This is nothing but a QPushButton with drag-support and KGuiItem support. You have to call
+ * This is nothing but a TQPushButton with drag-support and KGuiItem support. You have to call
  * setDragEnabled( true ) and override the virtual method
- * dragObject() to specify the QDragObject to be used.
+ * dragObject() to specify the TQDragObject to be used.
  *
- * @short A QPushButton with drag-support and KGuiItem support
+ * @short A TQPushButton with drag-support and KGuiItem support
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
 class KDEUI_EXPORT KPushButton : public QPushButton
@@ -45,24 +45,24 @@ public:
     /**
      * Default constructor.
      */
-    KPushButton( QWidget *parent, const char *name=0 );
+    KPushButton( TQWidget *parent, const char *name=0 );
 
     /**
      * Constructor, that sets the button-text to @p text
      */
-    KPushButton( const QString &text, QWidget *parent, const char *name=0);
+    KPushButton( const TQString &text, TQWidget *parent, const char *name=0);
 
     /**
      * Constructor, that sets an icon and the button-text to @p text
      */
-    KPushButton( const QIconSet &icon, const QString &text,
-		     QWidget *parent, const char *name=0 );
+    KPushButton( const TQIconSet &icon, const TQString &text,
+		     TQWidget *parent, const char *name=0 );
 
     /**
      * Constructor that takes a KGuiItem for the text, the icon, the tooltip
      * and the what's this help
      */
-    KPushButton( const KGuiItem &item, QWidget *parent, const char *name = 0 );
+    KPushButton( const KGuiItem &item, TQWidget *parent, const char *name = 0 );
 
     /**
      * Destructs the button.
@@ -104,29 +104,29 @@ public:
      * Sets the Icon Set for this button. It also takes into account hte
      * KGlobalSettings::showIconsOnPushButtons() setting.
      */
-    void setIconSet( const QIconSet &iconSet );
+    void setIconSet( const TQIconSet &iconSet );
 
     /**
     * Sets the text of the button
     */
-    void setText( const QString &text );
+    void setText( const TQString &text );
 
 protected:
     /**
-     * Reimplement this and return the QDragObject that should be used
+     * Reimplement this and return the TQDragObject that should be used
      * for the drag.
      * Default implementation returns 0L, so that no drag is initiated.
      */
-    virtual QDragObject * dragObject();
+    virtual TQDragObject * dragObject();
 
     /**
      * Reimplemented to add drag-support
      */
-    virtual void mousePressEvent( QMouseEvent * );
+    virtual void mousePressEvent( TQMouseEvent * );
     /**
      * Reimplemented to add drag-support
      */
-    virtual void mouseMoveEvent( QMouseEvent * );
+    virtual void mouseMoveEvent( TQMouseEvent * );
 
     /**
      * Starts a drag (dragCopy() by default) using dragObject()
@@ -135,7 +135,7 @@ protected:
 
 private:
     bool m_dragEnabled;
-    QPoint startPos;
+    TQPoint startPos;
 
 private slots:
     void slotSettingsChanged( int category );

@@ -26,7 +26,7 @@
 #ifndef KALLOCATOR_H
 #define KALLOCATOR_H
 
-#include <qvaluelist.h>
+#include <tqvaluelist.h>
 #include "kdelibs_export.h"
 
 class KZoneAllocatorPrivate;
@@ -112,7 +112,7 @@ protected:
     /** A single chunk of memory from the heap. @internal */
     class MemBlock;
     /**< A list of chunks. @internal */
-    typedef QValueList<MemBlock *> MemList;
+    typedef TQValueList<MemBlock *> MemList;
     void addBlock(MemBlock *b);
     void delBlock(MemBlock *b);
     void insertHash(MemBlock *b);

@@ -21,13 +21,13 @@
 #ifndef kcharselect_h
 #define kcharselect_h
 
-#include <qgridview.h>
-#include <qvbox.h>
-#include <qcombobox.h>
-#include <qspinbox.h>
-#include <qstring.h>
-#include <qpoint.h>
-#include <qstringlist.h>
+#include <tqgridview.h>
+#include <tqvbox.h>
+#include <tqcombobox.h>
+#include <tqspinbox.h>
+#include <tqstring.h>
+#include <tqpoint.h>
+#include <tqstringlist.h>
 
 #include <kdelibs_export.h>
 
@@ -53,54 +53,54 @@ class KDEUI_EXPORT KCharSelectTable : public QGridView
     Q_OBJECT
 
 public:
-    KCharSelectTable( QWidget *parent, const char *name, const QString &_font,
-		      const QChar &_chr, int _tableNum );
+    KCharSelectTable( TQWidget *parent, const char *name, const TQString &_font,
+		      const TQChar &_chr, int _tableNum );
 
-    virtual QSize sizeHint() const;
-    virtual void resizeEvent( QResizeEvent * );
+    virtual TQSize sizeHint() const;
+    virtual void resizeEvent( TQResizeEvent * );
 
-    virtual void setFont( const QString &_font );
-    virtual void setChar( const QChar &_chr );
+    virtual void setFont( const TQString &_font );
+    virtual void setChar( const TQChar &_chr );
     virtual void setTableNum( int _tableNum );
 
-    virtual QChar chr() { return vChr; }
+    virtual TQChar chr() { return vChr; }
 
 protected:
-    virtual void paintCell( class QPainter *p, int row, int col );
+    virtual void paintCell( class TQPainter *p, int row, int col );
 
-    virtual void mousePressEvent( QMouseEvent *e ) {  mouseMoveEvent( e ); }
-    virtual void mouseDoubleClickEvent ( QMouseEvent *e ){  mouseMoveEvent( e ); emit doubleClicked();}
-    virtual void mouseReleaseEvent( QMouseEvent *e ) { mouseMoveEvent( e ); emit activated( chr() ); emit activated(); }
-    virtual void mouseMoveEvent( QMouseEvent *e );
+    virtual void mousePressEvent( TQMouseEvent *e ) {  mouseMoveEvent( e ); }
+    virtual void mouseDoubleClickEvent ( TQMouseEvent *e ){  mouseMoveEvent( e ); emit doubleClicked();}
+    virtual void mouseReleaseEvent( TQMouseEvent *e ) { mouseMoveEvent( e ); emit activated( chr() ); emit activated(); }
+    virtual void mouseMoveEvent( TQMouseEvent *e );
 
-    virtual void keyPressEvent( QKeyEvent *e );
+    virtual void keyPressEvent( TQKeyEvent *e );
 
     void gotoLeft();
     void gotoRight();
     void gotoUp();
     void gotoDown();
 
-    QString vFont;
-    QChar vChr;
+    TQString vFont;
+    TQChar vChr;
     int vTableNum;
-    QPoint vPos;
-    QChar focusItem;
-    QPoint focusPos;
+    TQPoint vPos;
+    TQChar focusItem;
+    TQPoint focusPos;
     int temp;
 
 signals:
-    void highlighted( const QChar &c );
+    void highlighted( const TQChar &c );
     void highlighted();
-    void activated( const QChar &c );
+    void activated( const TQChar &c );
     void activated();
     void focusItemChanged();
-    void focusItemChanged( const QChar &c );
+    void focusItemChanged( const TQChar &c );
     void tableUp();
     void tableDown();
     void doubleClicked();
 
 private:
-    virtual void setFont(const QFont &f) { QGridView::setFont(f); }
+    virtual void setFont(const TQFont &f) { TQGridView::setFont(f); }
     void setToolTips();
 protected:
     virtual void virtual_hook( int id, void* data );
@@ -140,7 +140,7 @@ private:
 class KDEUI_EXPORT KCharSelect : public QVBox
 {
     Q_OBJECT
-    Q_PROPERTY( QString fontFamily READ font WRITE setFont )
+    Q_PROPERTY( TQString fontFamily READ font WRITE setFont )
     Q_PROPERTY( int tableNum READ tableNum WRITE setTableNum )
     Q_PROPERTY( bool fontComboEnabled READ isFontComboEnabled WRITE enableFontCombo )
     Q_PROPERTY( bool tableSpinBoxEnabled READ isTableSpinBoxEnabled WRITE enableTableSpinBox )
@@ -151,23 +151,23 @@ public:
      * chr which character should be selected and @p tableNum specifies
      * the number of the table which should be displayed.
      */
-    KCharSelect( QWidget *parent, const char *name,
-		 const QString &font = QString::null, const QChar &chr = ' ', int tableNum = 0 );
+    KCharSelect( TQWidget *parent, const char *name,
+		 const TQString &font = TQString::null, const TQChar &chr = ' ', int tableNum = 0 );
     ~KCharSelect();
     /**
      * Reimplemented.
      */
-    virtual QSize sizeHint() const;
+    virtual TQSize sizeHint() const;
 
     /**
      * Sets the font which is displayed to @p font
      */
-    virtual void setFont( const QString &font );
+    virtual void setFont( const TQString &font );
 
     /**
      * Sets the currently selected character to @p chr.
      */
-    virtual void setChar( const QChar &chr );
+    virtual void setChar( const TQChar &chr );
 
     /**
      * Sets the currently displayed table to @p tableNum.
@@ -177,12 +177,12 @@ public:
     /**
      * Returns the currently selected character.
      */
-    virtual QChar chr() const { return charTable->chr(); }
+    virtual TQChar chr() const { return charTable->chr(); }
 
     /**
      * Returns the currently displayed font.
      */
-    virtual QString font() const { return fontCombo->currentText(); }
+    virtual TQString font() const { return fontCombo->currentText(); }
 
     /**
      * Returns the currently displayed table
@@ -224,38 +224,38 @@ protected:
     virtual void fillFontCombo();
     static void cleanupFontDatabase();
 
-    QComboBox *fontCombo;
-    QSpinBox *tableSpinBox;
+    TQComboBox *fontCombo;
+    TQSpinBox *tableSpinBox;
     KCharSelectTable *charTable;
-    QStringList fontList;
-    static QFontDatabase * fontDataBase;
+    TQStringList fontList;
+    static TQFontDatabase * fontDataBase;
 
 protected slots:
-    void fontSelected( const QString &_font );
+    void fontSelected( const TQString &_font );
     void tableChanged( int _value );
-    void charHighlighted( const QChar &c ) { emit highlighted( c ); }
+    void charHighlighted( const TQChar &c ) { emit highlighted( c ); }
     void charHighlighted() { emit highlighted(); }
-    void charActivated( const QChar &c ) { emit activated( c ); }
+    void charActivated( const TQChar &c ) { emit activated( c ); }
     void charActivated() { emit activated(); }
     void charFocusItemChanged() { emit focusItemChanged(); }
-    void charFocusItemChanged( const QChar &c ) { emit focusItemChanged( c ); }
+    void charFocusItemChanged( const TQChar &c ) { emit focusItemChanged( c ); }
     void charTableUp() { if ( tableNum() < 255 ) setTableNum( tableNum() + 1 ); }
     void charTableDown() { if ( tableNum() > 0 ) setTableNum( tableNum() - 1 ); }
     void slotDoubleClicked() { emit doubleClicked(); }
     void slotUnicodeEntered();
-    void slotUpdateUnicode( const QChar &c );
+    void slotUpdateUnicode( const TQChar &c );
 signals:
-    void highlighted( const QChar &c );
+    void highlighted( const TQChar &c );
     void highlighted();
-    void activated( const QChar &c );
+    void activated( const TQChar &c );
     void activated();
-    void fontChanged( const QString &_font );
+    void fontChanged( const TQString &_font );
     void focusItemChanged();
-    void focusItemChanged( const QChar &c );
+    void focusItemChanged( const TQChar &c );
     void doubleClicked();
 
 private:
-    virtual void setFont(const QFont &f) { QVBox::setFont(f); }
+    virtual void setFont(const TQFont &f) { TQVBox::setFont(f); }
 protected:
     virtual void virtual_hook( int id, void* data );
 private:

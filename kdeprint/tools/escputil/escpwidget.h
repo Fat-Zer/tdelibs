@@ -20,7 +20,7 @@
 #ifndef ESCPWIDGET_H
 #define ESCPWIDGET_H
 
-#include <qwidget.h>
+#include <tqwidget.h>
 #include <kprocess.h>
 #include <kurl.h>
 
@@ -32,9 +32,9 @@ class EscpWidget : public QWidget
 	Q_OBJECT
 
 public:
-	EscpWidget(QWidget *parent = 0, const char *name = 0);
-	void setDevice(const QString&);
-	void setPrinterName(const QString&);
+	EscpWidget(TQWidget *parent = 0, const char *name = 0);
+	void setDevice(const TQString&);
+	void setPrinterName(const TQString&);
 
 protected slots:
 	void slotReceivedStdout(KProcess*, char*, int);
@@ -43,7 +43,7 @@ protected slots:
 	void slotButtonClicked();
 
 protected:
-	void startCommand(const QString& arg);
+	void startCommand(const TQString& arg);
 
 private:
 	KProcess	m_proc;

@@ -24,7 +24,7 @@
 #ifndef  IMGPARAM_H
 #define  IMGPARAM_H
 
-#include <qcstring.h>
+#include <tqcstring.h>
 
 #include <VCardParam.h>
 

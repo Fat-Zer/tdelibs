@@ -6,15 +6,15 @@
 
 #include <tiffio.h>
 
-#include <qimage.h>
-#include <qfile.h>
+#include <tqimage.h>
+#include <tqfile.h>
 
 #include "g3r.h"
 
-KDE_EXPORT void kimgio_g3_read( QImageIO *io )
+KDE_EXPORT void kimgio_g3_read( TQImageIO *io )
 {
-    // This won't work if io is not a QFile !
-  TIFF *tiff = TIFFOpen(QFile::encodeName(io->fileName()), "r");  
+    // This won't work if io is not a TQFile !
+  TIFF *tiff = TIFFOpen(TQFile::encodeName(io->fileName()), "r");  
   if (!tiff)
     return;
  
@@ -26,7 +26,7 @@ KDE_EXPORT void kimgio_g3_read( QImageIO *io )
       return;
   scanlength = TIFFScanlineSize(tiff);
 
-  QImage image(width, height, 1, 0, QImage::BigEndian);
+  TQImage image(width, height, 1, 0, TQImage::BigEndian);
   
   if (image.isNull() || scanlength != image.bytesPerLine())
     {
@@ -44,7 +44,7 @@ KDE_EXPORT void kimgio_g3_read( QImageIO *io )
 }
 
 
-KDE_EXPORT void kimgio_g3_write(QImageIO *)
+KDE_EXPORT void kimgio_g3_write(TQImageIO *)
 {
 	// TODO: stub
 }

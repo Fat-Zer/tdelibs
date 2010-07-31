@@ -20,7 +20,7 @@
 #define __k_build_imageio_factory_h__
 
 #include <kimageiofactory.h>
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
 /**
  * Service group factory for building ksycoca
@@ -39,17 +39,17 @@ public:
   /**
    * Save header info to database
    */
-  virtual void saveHeader(QDataStream &);
+  virtual void saveHeader(TQDataStream &);
 
   /**
    * Write out service type specific index files.
    */
-  virtual void save(QDataStream &str);
+  virtual void save(TQDataStream &str);
 
   /**
    * Create new entry.
    */
-  virtual KSycocaEntry* createEntry(const QString &, const char *);
+  virtual KSycocaEntry* createEntry(const TQString &, const char *);
 
   virtual KSycocaEntry * createEntry( int ) { assert(0); return 0L; }
 
@@ -58,7 +58,7 @@ public:
   /**
    * Returns all resource types for this service factory
    */  
-  static QStringList resourceTypes();
+  static TQStringList resourceTypes();
 };
 
 #endif

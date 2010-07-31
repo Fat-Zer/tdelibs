@@ -14,10 +14,10 @@
  ***************************************************************************/
 
  //qt includes
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qstringlist.h>
-#include <qtimer.h>
+#include <tqfile.h>
+#include <tqfileinfo.h>
+#include <tqstringlist.h>
+#include <tqtimer.h>
 
  //kde includes
 #include <kdebug.h>
@@ -50,15 +50,15 @@ void Security::readKeys()
 {
   if (m_gpgRunning)
   {
-    QTimer::singleShot(5, this, SLOT(readKeys()));
+    TQTimer::singleShot(5, this, TQT_SLOT(readKeys()));
     return;
   }
   m_runMode = List;
   m_keys.clear();
   KProcIO *readProcess=new KProcIO();
   *readProcess << "gpg"<<"--no-secmem-warning"<<"--no-tty"<<"--with-colon"<<"--list-keys";
-  connect(readProcess, SIGNAL(processExited(KProcess *)), this, SLOT(slotProcessExited(KProcess *)));
-  connect(readProcess, SIGNAL(readReady(KProcIO *)) ,this, SLOT(slotDataArrived(KProcIO *)));
+  connect(readProcess, TQT_SIGNAL(processExited(KProcess *)), this, TQT_SLOT(slotProcessExited(KProcess *)));
+  connect(readProcess, TQT_SIGNAL(readReady(KProcIO *)) ,this, TQT_SLOT(slotDataArrived(KProcIO *)));
   if (!readProcess->start(KProcess::NotifyOnExit, true))
     KMessageBox::error(0L, i18n("<qt>Cannot start <i>gpg</i> and retrieve the available keys. Make sure that <i>gpg</i> is installed, otherwise verification of downloaded resources will not be possible.</qt>"));
   else
@@ -69,14 +69,14 @@ void Security::readSecretKeys()
 {
   if (m_gpgRunning)
   {
-    QTimer::singleShot(5, this, SLOT(readSecretKeys()));
+    TQTimer::singleShot(5, this, TQT_SLOT(readSecretKeys()));
     return;
   }
   m_runMode = ListSecret;
   KProcIO *readProcess=new KProcIO();
   *readProcess << "gpg"<<"--no-secmem-warning"<<"--no-tty"<<"--with-colon"<<"--list-secret-keys";
-  connect(readProcess, SIGNAL(processExited(KProcess *)), this, SLOT(slotProcessExited(KProcess *)));
-  connect(readProcess, SIGNAL(readReady(KProcIO *)) ,this, SLOT(slotDataArrived(KProcIO *)));
+  connect(readProcess, TQT_SIGNAL(processExited(KProcess *)), this, TQT_SLOT(slotProcessExited(KProcess *)));
+  connect(readProcess, TQT_SIGNAL(readReady(KProcIO *)) ,this, TQT_SLOT(slotDataArrived(KProcIO *)));
   if (readProcess->start(KProcess::NotifyOnExit, true))
     m_gpgRunning = true;  
 }
@@ -100,7 +100,7 @@ void Security::slotProcessExited(KProcess *process)
 
 void Security::slotDataArrived(KProcIO *procIO)
 {
-  QString data;
+  TQString data;
   while (procIO->readln(data, true) != -1)
   {
      switch (m_runMode)
@@ -114,10 +114,10 @@ void Security::slotDataArrived(KProcIO *procIO)
                 key.secret = false;
               else
                 key.secret = true;
-              QStringList line = QStringList::split(":", data, true);
+              TQStringList line = TQStringList::split(":", data, true);
               key.id = line[4];
-              QString shortId = key.id.right(8);
-              QString trustStr = line[1];
+              TQString shortId = key.id.right(8);
+              TQString trustStr = line[1];
               key.trusted = false;
               if (trustStr == "u" || trustStr == "f")
                   key.trusted = true;
@@ -136,7 +136,7 @@ void Security::slotDataArrived(KProcIO *procIO)
           {
               m_result &= SIGNED_BAD_CLEAR;
               m_result |= SIGNED_OK;
-              QString id = data.section(" ", 1 , 1).right(8);
+              TQString id = data.section(" ", 1 , 1).right(8);
               if (!m_keys.contains(id))
               {
                   m_result |= UNKNOWN;
@@ -153,7 +153,7 @@ void Security::slotDataArrived(KProcIO *procIO)
           if (data.startsWith("BADSIG"))
           {
               m_result |= SIGNED_BAD;
-              QString id = data.section(" ", 1 , 1).right(8);
+              TQString id = data.section(" ", 1 , 1).right(8);
               if (!m_keys.contains(id))
               {
                   m_result |= UNKNOWN;
@@ -172,7 +172,7 @@ void Security::slotDataArrived(KProcIO *procIO)
        case Sign:
          if (data.find("passphrase.enter") != -1)
          {
-           QCString password;
+           TQCString password;
            KeyStruct key = m_keys[m_secretKey];
            int result = KPasswordDialog::getPassword(password, i18n("<qt>Enter passphrase for key <b>0x%1</b>, belonging to<br><i>%2&lt;%3&gt;</i>:</qt>").arg(m_secretKey).arg(key.name).arg(key.mail));
            if (result == KPasswordDialog::Accepted)
@@ -196,7 +196,7 @@ void Security::slotDataArrived(KProcIO *procIO)
   }
 }
 
-void Security::checkValidity(const QString& filename)
+void Security::checkValidity(const TQString& filename)
 {
   m_fileName = filename;
   slotCheckValidity();
@@ -206,7 +206,7 @@ void Security::slotCheckValidity()
 {  
   if (!m_keysRead || m_gpgRunning)
   {
-    QTimer::singleShot(5, this, SLOT(slotCheckValidity()));
+    TQTimer::singleShot(5, this, TQT_SLOT(slotCheckValidity()));
     return;
   }
   if (m_keys.count() == 0)
@@ -217,12 +217,12 @@ void Security::slotCheckValidity()
 
   m_result = 0;
   m_runMode = Verify;
-  QFileInfo f(m_fileName);
+  TQFileInfo f(m_fileName);
   //check the MD5 sum
-  QString md5sum;
+  TQString md5sum;
   const char* c = "";
   KMD5 context(c);
-  QFile file(m_fileName);
+  TQFile file(m_fileName);
   if (file.open(IO_ReadOnly))
   {
      context.reset();
@@ -233,7 +233,7 @@ void Security::slotCheckValidity()
   file.setName(f.dirPath() + "/md5sum");
   if (file.open(IO_ReadOnly))
   {
-     QString md5sum_file;
+     TQString md5sum_file;
      file.readLine(md5sum_file, 50);
      if (!md5sum.isEmpty() && !md5sum_file.isEmpty() && md5sum_file.startsWith(md5sum))
        m_result |= MD5_OK;
@@ -248,8 +248,8 @@ void Security::slotCheckValidity()
   //verify the signature
   KProcIO *verifyProcess=new KProcIO();
   *verifyProcess<<"gpg"<<"--no-secmem-warning"<<"--status-fd=2"<<"--command-fd=0"<<"--verify" << f.dirPath() + "/signature"<< m_fileName;
-  connect(verifyProcess, SIGNAL(processExited(KProcess *)),this, SLOT(slotProcessExited(KProcess *)));
-  connect(verifyProcess, SIGNAL(readReady(KProcIO *)),this, SLOT(slotDataArrived(KProcIO *)));
+  connect(verifyProcess, TQT_SIGNAL(processExited(KProcess *)),this, TQT_SLOT(slotProcessExited(KProcess *)));
+  connect(verifyProcess, TQT_SIGNAL(readReady(KProcIO *)),this, TQT_SLOT(slotDataArrived(KProcIO *)));
   if (verifyProcess->start(KProcess::NotifyOnExit,true))
       m_gpgRunning = true;
   else
@@ -260,7 +260,7 @@ void Security::slotCheckValidity()
   }
 }
 
-void Security::signFile(const QString &fileName)
+void Security::signFile(const TQString &fileName)
 {
   m_fileName = fileName;
   slotSignFile();
@@ -270,12 +270,12 @@ void Security::slotSignFile()
 {
   if (!m_keysRead || m_gpgRunning)
   {
-    QTimer::singleShot(5, this, SLOT(slotSignFile()));
+    TQTimer::singleShot(5, this, TQT_SLOT(slotSignFile()));
     return;
   }
   
-  QStringList secretKeys;
-  for (QMap<QString, KeyStruct>::Iterator it = m_keys.begin(); it != m_keys.end(); ++it)
+  TQStringList secretKeys;
+  for (TQMap<TQString, KeyStruct>::Iterator it = m_keys.begin(); it != m_keys.end(); ++it)
   {
     if (it.data().secret)
       secretKeys.append(it.key());
@@ -288,13 +288,13 @@ void Security::slotSignFile()
   }  
   
   m_result = 0;
-  QFileInfo f(m_fileName);
+  TQFileInfo f(m_fileName);
 
   //create the MD5 sum
-  QString md5sum;
+  TQString md5sum;
   const char* c = "";
   KMD5 context(c);
-  QFile file(m_fileName);
+  TQFile file(m_fileName);
   if (file.open(IO_ReadOnly))
   {
     context.reset();
@@ -305,7 +305,7 @@ void Security::slotSignFile()
   file.setName(f.dirPath() + "/md5sum");
   if (file.open(IO_WriteOnly))
   {
-    QTextStream stream(&file);
+    TQTextStream stream(&file);
     stream << md5sum;
     m_result |= MD5_OK;
     file.close();
@@ -328,8 +328,8 @@ void Security::slotSignFile()
   //verify the signature
   KProcIO *signProcess=new KProcIO();
   *signProcess<<"gpg"<<"--no-secmem-warning"<<"--status-fd=2"<<"--command-fd=0"<<"--no-tty"<<"--detach-sign" << "-u" << m_secretKey << "-o" << f.dirPath() + "/signature" << m_fileName;
-  connect(signProcess, SIGNAL(processExited(KProcess *)),this, SLOT(slotProcessExited(KProcess *)));
-  connect(signProcess, SIGNAL(readReady(KProcIO *)),this, SLOT(slotDataArrived(KProcIO *)));
+  connect(signProcess, TQT_SIGNAL(processExited(KProcess *)),this, TQT_SLOT(slotProcessExited(KProcess *)));
+  connect(signProcess, TQT_SIGNAL(readReady(KProcIO *)),this, TQT_SLOT(slotDataArrived(KProcIO *)));
   m_runMode = Sign;
   if (signProcess->start(KProcess::NotifyOnExit,true))
     m_gpgRunning = true;

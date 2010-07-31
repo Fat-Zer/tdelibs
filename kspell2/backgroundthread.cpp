@@ -26,19 +26,19 @@
 #include "dictionary.h"
 
 #include <kdebug.h>
-#include <qapplication.h>
+#include <tqapplication.h>
 
 using namespace KSpell2;
 
 BackgroundThread::BackgroundThread()
-    : QThread(), m_broker( 0 ), m_dict( 0 )
+    : TQThread(), m_broker( 0 ), m_dict( 0 )
 {
     m_recv   = 0;
     m_filter = Filter::defaultFilter();
     m_done   = false;
 }
 
-void BackgroundThread::setReceiver( QObject *recv )
+void BackgroundThread::setReceiver( TQObject *recv )
 {
     m_recv = recv;
 }
@@ -52,7 +52,7 @@ void BackgroundThread::setBroker( const Broker::Ptr& broker )
     m_filter->restart();
 }
 
-QStringList BackgroundThread::suggest( const QString& word ) const
+TQStringList BackgroundThread::suggest( const TQString& word ) const
 {
     return m_dict->suggest( word );
 }
@@ -65,15 +65,15 @@ void BackgroundThread::run()
           w = m_filter->nextWord() ) {
         if ( !m_dict->check( w.word ) && !m_done ) {
             MisspellingEvent *event = new MisspellingEvent( w.word, w.start );
-            QApplication::postEvent( m_recv, event );
+            TQApplication::postEvent( m_recv, event );
         }
     }
     m_mutex.unlock();
     FinishedCheckingEvent *event = new FinishedCheckingEvent();
-    QApplication::postEvent( m_recv, event );
+    TQApplication::postEvent( m_recv, event );
 }
 
-void BackgroundThread::setText( const QString& buff )
+void BackgroundThread::setText( const TQString& buff )
 {
     stop();
     m_mutex.lock();
@@ -90,13 +90,13 @@ void BackgroundThread::setFilter( Filter *filter )
     m_filter = filter;
     if ( oldFilter ) {
         m_filter->setBuffer( oldFilter->buffer() );
-        oldFilter->setBuffer( QString::null );
+        oldFilter->setBuffer( TQString::null );
     }
     m_mutex.unlock();
     start();
 }
 
-void BackgroundThread::changeLanguage( const QString& lang )
+void BackgroundThread::changeLanguage( const TQString& lang )
 {
     stop();
     m_mutex.lock();

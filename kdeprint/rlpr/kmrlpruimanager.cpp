@@ -28,7 +28,7 @@
 
 #include <klocale.h>
 
-KMRlprUiManager::KMRlprUiManager(QObject *parent, const char *name, const QStringList & /*args*/)
+KMRlprUiManager::KMRlprUiManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMUiManager(parent,name)
 {
 }

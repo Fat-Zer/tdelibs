@@ -20,10 +20,10 @@
 #ifndef __kuserprofile_h__
 #define __kuserprofile_h__
 
-#include <qmap.h>
-#include <qstring.h>
-#include <qptrlist.h>
-#include <qvaluelist.h>
+#include <tqmap.h>
+#include <tqstring.h>
+#include <tqptrlist.h>
+#include <tqvaluelist.h>
 
 #include <kservice.h>
 
@@ -117,7 +117,7 @@ private:
 class KIO_EXPORT KServiceTypeProfile
 {
 public:
-  typedef QValueList<KServiceOffer> OfferList;
+  typedef TQValueList<KServiceOffer> OfferList;
 
   ~KServiceTypeProfile();
 
@@ -128,7 +128,7 @@ public:
    * @return the user's preference number of the given
    *         @p _service, or 0 the service is unknown.
    */
-  int preference( const QString& _service ) const;
+  int preference( const TQString& _service ) const;
 
   /**
    * @deprecated Remove in KDE 4, unused.
@@ -136,7 +136,7 @@ public:
    * @param _service the name of the service to check
    * @return true if allowed as default
    */
-  bool allowAsDefault( const QString& _service ) const;
+  bool allowAsDefault( const TQString& _service ) const;
 
   /**
    * Returns the list of all service offers for the service types
@@ -154,17 +154,17 @@ public:
    *                           "KParts/ReadOnlyPart")
    * @return the preferred service, or 0 if no service is available
    */
-  static KService::Ptr preferredService( const QString & serviceType, const QString & genericServiceType );
+  static KService::Ptr preferredService( const TQString & serviceType, const TQString & genericServiceType );
 
   /**
    * Returns the profile for the requested service type.
    * @param servicetype the service type (e.g. a MIME type)
    * @param genericServiceType the generic service type (e.g. "Application"
-   *                           or "KParts/ReadOnlyPart"). Can be QString::null,
+   *                           or "KParts/ReadOnlyPart"). Can be TQString::null,
    *                           then the "Application" generic type will be used
    * @return the KServiceTypeProfile with the given arguments, or 0 if not found
    */
-  static KServiceTypeProfile* serviceTypeProfile( const QString& servicetype, const QString & genericServiceType = QString::null );
+  static KServiceTypeProfile* serviceTypeProfile( const TQString& servicetype, const TQString & genericServiceType = TQString::null );
 
   /**
    * Returns the offers associated with a given servicetype, sorted by preference.
@@ -181,17 +181,17 @@ public:
    *
    * @param servicetype the service type (e.g. a MIME type)
    * @param genericServiceType the generic service type (e.g. "Application"
-   *                           or "KParts/ReadOnlyPart"). Can be QString::null,
+   *                           or "KParts/ReadOnlyPart"). Can be TQString::null,
    *                           then all generic types will be included
    * @return the list of offers witht he given parameters
    */
-  static OfferList offers( const QString& servicetype, const QString& genericServiceType = QString::null );
+  static OfferList offers( const TQString& servicetype, const TQString& genericServiceType = TQString::null );
 
   /**
    * Returns a list of all KServiceTypeProfiles.
    * @return a list of all KServiceTypeProfiles
    */
-  static const QPtrList<KServiceTypeProfile>& serviceTypeProfiles() { return *s_lstProfiles; }
+  static const TQPtrList<KServiceTypeProfile>& serviceTypeProfiles() { return *s_lstProfiles; }
 
   /**
    * Clear all cached information
@@ -225,11 +225,11 @@ protected:
    * first time.
    * @param serviceType the service type (e.g. a MIME type)
    * @param genericServiceType the generic service type (e.g. "Application"
-   *                           or "KParts/ReadOnlyPart"). Can be QString::null,
+   *                           or "KParts/ReadOnlyPart"). Can be TQString::null,
    *                           then the "Application" generic type will be used
    */
-  KServiceTypeProfile( const QString& serviceType,
-                       const QString& genericServiceType = QString::null );
+  KServiceTypeProfile( const TQString& serviceType,
+                       const TQString& genericServiceType = TQString::null );
 
   /**
    * Add a service to this profile.
@@ -239,7 +239,7 @@ protected:
    * @param _allow_as_default true if the service should be used as
    *                 default
    */
-  void addService( const QString& _service, int _preference = 1, bool _allow_as_default = true );
+  void addService( const TQString& _service, int _preference = 1, bool _allow_as_default = true );
 
 private:
   /**
@@ -260,20 +260,20 @@ private:
   /**
    * Map of all services for which we have assessments.
    */
-  QMap<QString,Service> m_mapServices;
+  TQMap<TQString,Service> m_mapServices;
 
   /**
    * ServiceType of this profile.
    */
-  QString m_strServiceType;
+  TQString m_strServiceType;
 
   /**
    * Secondary ServiceType of this profile.
    */
-  QString m_strGenericServiceType;
+  TQString m_strGenericServiceType;
 
   static void initStatic();
-  static QPtrList<KServiceTypeProfile>* s_lstProfiles;
+  static TQPtrList<KServiceTypeProfile>* s_lstProfiles;
   static bool s_configurationMode;
 private:
   class KServiceTypeProfilePrivate* d;

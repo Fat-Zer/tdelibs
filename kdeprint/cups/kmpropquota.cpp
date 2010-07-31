@@ -21,30 +21,30 @@
 #include "kmprinter.h"
 #include "kmwizard.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
 // some forward declarations (see kmwquota.cpp)
 const char* unitKeyword(int);
 int findUnit(int&);
 
-KMPropQuota::KMPropQuota(QWidget *parent, const char *name)
+KMPropQuota::KMPropQuota(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)
 {
-	m_period = new QLabel(this);
-	m_sizelimit = new QLabel(this);
-	m_pagelimit = new QLabel(this);
+	m_period = new TQLabel(this);
+	m_sizelimit = new TQLabel(this);
+	m_pagelimit = new TQLabel(this);
 
-	QLabel	*l1 = new QLabel(i18n("&Period:"), this);
-	QLabel	*l2 = new QLabel(i18n("&Size limit (KB):"), this);
-	QLabel	*l3 = new QLabel(i18n("&Page limit:"), this);
+	QLabel	*l1 = new TQLabel(i18n("&Period:"), this);
+	QLabel	*l2 = new TQLabel(i18n("&Size limit (KB):"), this);
+	QLabel	*l3 = new TQLabel(i18n("&Page limit:"), this);
 
 	l1->setBuddy(m_period);
 	l2->setBuddy(m_sizelimit);
 	l3->setBuddy(m_pagelimit);
 
-	QGridLayout	*main_ = new QGridLayout(this, 4, 2, 10, 10);
+	QGridLayout	*main_ = new TQGridLayout(this, 4, 2, 10, 10);
 	main_->setColStretch(1,1);
 	main_->setRowStretch(3,1);
 	main_->addWidget(l1,0,0);
@@ -75,9 +75,9 @@ void KMPropQuota::setPrinter(KMPrinter *p)
 			qu = -1;
 		if (qu > 0)
 			un = findUnit(qu);
-		m_period->setText(qu == -1 ? i18n("No quota") : QString::number(qu).append(" ").append(i18n(unitKeyword(un))));
-		m_sizelimit->setText(si ? QString::number(si) : i18n("None"));
-		m_pagelimit->setText(pa ? QString::number(pa) : i18n("None"));
+		m_period->setText(qu == -1 ? i18n("No quota") : TQString::number(qu).append(" ").append(i18n(unitKeyword(un))));
+		m_sizelimit->setText(si ? TQString::number(si) : i18n("None"));
+		m_pagelimit->setText(pa ? TQString::number(pa) : i18n("None"));
 		emit enable(true);
 		emit enableChange(p->isLocal());
 	}

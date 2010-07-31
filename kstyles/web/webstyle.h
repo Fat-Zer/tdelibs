@@ -21,7 +21,7 @@
 #define WEB_STYLE_H
 
 #include <kstyle.h>
-#include <qpalette.h>
+#include <tqpalette.h>
 
 class QPainter;
 class QScrollBar;
@@ -36,96 +36,96 @@ class WebStyle : public KStyle
 
     ~WebStyle();
 
-    void polish(QApplication *);
+    void polish(TQApplication *);
 
-    void unPolish(QWidget *);
+    void unPolish(TQWidget *);
 
-    void polish(QWidget *);
+    void polish(TQWidget *);
 
-    void polish(QPalette &);
+    void polish(TQPalette &);
 
-    void unPolish(QApplication *);
+    void unPolish(TQApplication *);
 
     void drawButton
       (
-       QPainter * p,
+       TQPainter * p,
        int x,
        int y,
        int w,
        int h,
-       const QColorGroup & g,
+       const TQColorGroup & g,
        bool sunken = false,
-       const QBrush * fill = 0
+       const TQBrush * fill = 0
       );
 
-    QRect buttonRect(int x, int y, int w, int h);
+    TQRect buttonRect(int x, int y, int w, int h);
 
     void drawBevelButton
       (
-       QPainter *,
+       TQPainter *,
        int x,
        int y,
        int w,
        int h,
-       const QColorGroup &,
+       const TQColorGroup &,
        bool sunken = false,
-       const QBrush * fill = 0
+       const TQBrush * fill = 0
       );
 
-    void drawPushButton(QPushButton *, QPainter *);
+    void drawPushButton(TQPushButton *, TQPainter *);
 
-    virtual void drawPushButtonLabel(QPushButton *, QPainter *);
+    virtual void drawPushButtonLabel(TQPushButton *, TQPainter *);
 
     void drawScrollBarControls
       (
-       QPainter *,
-       const QScrollBar *,
+       TQPainter *,
+       const TQScrollBar *,
        int sliderStart,
        uint controls,
        uint activeControl
       );
 
-    QStyle::ScrollControl scrollBarPointOver
+    TQStyle::ScrollControl scrollBarPointOver
       (
-       const QScrollBar *,
+       const TQScrollBar *,
        int sliderStart,
-       const QPoint &
+       const TQPoint &
       );
 
     void scrollBarMetrics
       (
-       const QScrollBar *,
+       const TQScrollBar *,
        int & sliderMin,
        int & sliderMax,
        int & sliderLength,
        int & buttonDim
       );
 
-    QSize indicatorSize() const;
+    TQSize indicatorSize() const;
 
     void drawIndicator
       (
-       QPainter *,
+       TQPainter *,
        int x,
        int y,
        int w,
        int h,
-       const QColorGroup &,
+       const TQColorGroup &,
        int state,
        bool down = false,
        bool enabled = true
       );
 
-    QSize exclusiveIndicatorSize() const;
+    TQSize exclusiveIndicatorSize() const;
 
     void drawExclusiveIndicator
       (
-       QPainter *,
+       TQPainter *,
        int x,
        int y,
        int w,
        int h,
-       const QColorGroup &,
+       const TQColorGroup &,
        bool on,
        bool down = false,
        bool enabled = true
@@ -133,7 +133,7 @@ class WebStyle : public KStyle
 
     void drawIndicatorMask
       (
-       QPainter *,
+       TQPainter *,
        int x,
        int y,
        int w,
@@ -143,7 +143,7 @@ class WebStyle : public KStyle
 
     void drawExclusiveIndicatorMask
       (
-       QPainter *,
+       TQPainter *,
        int x, 
        int y, 
        int w,
@@ -153,58 +153,58 @@ class WebStyle : public KStyle
 
     void drawComboButton
       (
-       QPainter *, 
+       TQPainter *, 
        int x, 
        int y, 
        int w, 
        int h,
-       const QColorGroup &, 
+       const TQColorGroup &, 
        bool sunken = false,
        bool editable = false, 
        bool enabled = true,
-       const QBrush * fill = 0
+       const TQBrush * fill = 0
       );
 
-    QRect comboButtonRect(int x, int y, int w, int h);
+    TQRect comboButtonRect(int x, int y, int w, int h);
 
-    QRect comboButtonFocusRect(int x, int y, int w, int h);
+    TQRect comboButtonFocusRect(int x, int y, int w, int h);
 
     int sliderLength() const;
 
     void drawSliderGroove
       (
-       QPainter *, 
+       TQPainter *, 
        int x, 
        int y, 
        int w, 
        int h,
-       const QColorGroup &,
+       const TQColorGroup &,
        QCOORD, 
        Orientation
       );
 
     void drawArrow
       (
-       QPainter *,
+       TQPainter *,
        Qt::ArrowType, 
        bool down,
        int x, 
        int y, 
        int w, 
        int h, 
-       const QColorGroup &,
+       const TQColorGroup &,
        bool enabled = true, 
-       const QBrush * fill = 0
+       const TQBrush * fill = 0
       );
 
     void drawSlider
       (
-       QPainter *, 
+       TQPainter *, 
        int x, 
        int y, 
        int w, 
        int h,
-       const QColorGroup &, 
+       const TQColorGroup &, 
        Orientation,
        bool tickAbove, 
        bool tickBelow
@@ -212,80 +212,80 @@ class WebStyle : public KStyle
 
     void drawKToolBar
       (
-       QPainter *, 
+       TQPainter *, 
        int x, 
        int y, 
        int w, 
        int h,
-       const QColorGroup &, 
+       const TQColorGroup &, 
        KToolBarPos,
-       QBrush * fill = 0
+       TQBrush * fill = 0
       );
 
     void drawKBarHandle
       (
-       QPainter *, 
+       TQPainter *, 
        int x, 
        int y, 
        int w, 
        int h,
-       const QColorGroup &,
+       const TQColorGroup &,
        KToolBarPos, 
-       QBrush * fill = 0
+       TQBrush * fill = 0
       );
 
     void drawKMenuBar
       (
-       QPainter *, 
+       TQPainter *, 
        int x, 
        int y, 
        int w, 
        int h,
-       const QColorGroup &, 
+       const TQColorGroup &, 
        bool macMode,
-       QBrush * fill = 0
+       TQBrush * fill = 0
       );
 
     void drawKToolBarButton
       (
-       QPainter * p, 
+       TQPainter * p, 
        int x, 
        int y, 
        int w, 
        int h,
-       const QColorGroup & g, 
+       const TQColorGroup & g, 
        bool sunken = false,
        bool raised = true, 
        bool enabled = true,
        bool popup = false,
        KToolButtonType = Icon,
-       const QString & btext = QString::null,
-       const QPixmap * = 0,
-       QFont * = 0,
-       QWidget * button = 0
+       const TQString & btext = TQString::null,
+       const TQPixmap * = 0,
+       TQFont * = 0,
+       TQWidget * button = 0
       );
 
     void drawKMenuItem
       (
-       QPainter *, 
+       TQPainter *, 
        int x, 
        int y, 
        int w, 
        int h,
-       const QColorGroup &, 
+       const TQColorGroup &, 
        bool active,
-       QMenuItem *, 
-       QBrush * fill = 0
+       TQMenuItem *, 
+       TQBrush * fill = 0
       );
 
     void drawPopupMenuItem
       (
-       QPainter *, 
+       TQPainter *, 
        bool checkable, 
        int maxpmw,
        int tab,
-       QMenuItem *, 
-       const QPalette &,
+       TQMenuItem *, 
+       const TQPalette &,
        bool act, 
        bool enabled, 
        int x, 
@@ -296,57 +296,57 @@ class WebStyle : public KStyle
 
     void drawKProgressBlock
       (
-       QPainter *, 
+       TQPainter *, 
        int x, 
        int y, 
        int w, 
        int h,
-       const QColorGroup &, 
-       QBrush * fill
+       const TQColorGroup &, 
+       TQBrush * fill
       );
 
     void drawFocusRect
       (
-       QPainter *, 
-       const QRect &, 
-       const QColorGroup &,
-       const QColor * pen, 
+       TQPainter *, 
+       const TQRect &, 
+       const TQColorGroup &,
+       const TQColor * pen, 
        bool atBorder
       );
 
     void drawPanel
       (
-       QPainter *,
+       TQPainter *,
        int x,
        int y,
        int w,
        int h,
-       const QColorGroup &,
+       const TQColorGroup &,
        bool sunken,
        int lineWidth = 1,
-       const QBrush * = 0
+       const TQBrush * = 0
       );
 
     void drawPopupPanel
       (
-       QPainter *,
+       TQPainter *,
        int x,
        int y,
        int w,
        int h,
-       const QColorGroup &,
+       const TQColorGroup &,
        int lineWidth = 2,
-       const QBrush * = 0
+       const TQBrush * = 0
       );
 
     void drawSeparator
       (
-       QPainter *,
+       TQPainter *,
        int x,
        int y,
        int w,
        int h,
-       const QColorGroup &,
+       const TQColorGroup &,
        bool sunken = true,
        int lineWidth = 1,
        int midLineWidth = 0
@@ -354,61 +354,61 @@ class WebStyle : public KStyle
 
     void drawTab
       (
-       QPainter * p,
-       const QTabBar * tabBar,
-       QTab * tab,
+       TQPainter * p,
+       const TQTabBar * tabBar,
+       TQTab * tab,
        bool selected
       );
 
     void drawTabMask
       (
-       QPainter * p,
-       const QTabBar *,
-       QTab * tab,
+       TQPainter * p,
+       const TQTabBar *,
+       TQTab * tab,
        bool
       );
 
     void drawKickerHandle
       (
-       QPainter * p,
+       TQPainter * p,
        int x,
        int y,
        int w,
        int h,
-       const QColorGroup & g,
-       QBrush *
+       const TQColorGroup & g,
+       TQBrush *
       );
 
     void drawKickerAppletHandle
       (
-       QPainter * p,
+       TQPainter * p,
        int x,
        int y,
        int w,
        int h,
-       const QColorGroup & g,
-       QBrush *
+       const TQColorGroup & g,
+       TQBrush *
       );
 
     void drawKickerTaskButton
       (
-       QPainter * p,
+       TQPainter * p,
        int x,
        int y,
        int w,
        int h,
-       const QColorGroup & g,
-       const QString & title,
+       const TQColorGroup & g,
+       const TQString & title,
        bool active,
-       QPixmap * icon,
-       QBrush *
+       TQPixmap * icon,
+       TQBrush *
       );
 
-    int popupMenuItemHeight(bool, QMenuItem *, const QFontMetrics &);
+    int popupMenuItemHeight(bool, TQMenuItem *, const TQFontMetrics &);
 
     GUIStyle guiStyle() const { return Qt::MotifStyle; }
 
-    bool eventFilter(QObject *, QEvent *);
+    bool eventFilter(TQObject *, TQEvent *);
 };
 
 #endif

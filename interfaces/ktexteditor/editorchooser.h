@@ -4,7 +4,7 @@
 #include <ktexteditor/editor.h>
 #include <ktexteditor/document.h>
 
-#include <qwidget.h>
+#include <tqwidget.h>
 
 class KConfig;
 class QString;
@@ -19,16 +19,16 @@ class KTEXTEDITOR_EXPORT EditorChooser: public QWidget
   Q_OBJECT
 
   public:
-    EditorChooser(QWidget *parent=0,const char *name=0);
+    EditorChooser(TQWidget *parent=0,const char *name=0);
     virtual ~EditorChooser();
     
    /* void writeSysDefault();*/
 
-    void readAppSetting(const QString& postfix=QString::null);
-    void writeAppSetting(const QString& postfix=QString::null);
+    void readAppSetting(const TQString& postfix=TQString::null);
+    void writeAppSetting(const TQString& postfix=TQString::null);
 
-    static KTextEditor::Document *createDocument(QObject* parent=0,const char *name=0,const QString& postfix=QString::null, bool fallBackToKatePart=true);
-    static KTextEditor::Editor *createEditor(QWidget *parentWidget,QObject *parent,const char* widgetName=0,const char* name=0,const QString& postfix=QString::null,bool fallBackToKatePart=true);
+    static KTextEditor::Document *createDocument(TQObject* parent=0,const char *name=0,const TQString& postfix=TQString::null, bool fallBackToKatePart=true);
+    static KTextEditor::Editor *createEditor(TQWidget *parentWidget,TQObject *parent,const char* widgetName=0,const char* name=0,const TQString& postfix=TQString::null,bool fallBackToKatePart=true);
   private:
     class PrivateEditorChooser *d;
 };
@@ -38,18 +38,18 @@ class EditorChooserBackEnd: public ComponentChooserPlugin {
 
 Q_OBJECT
 public:
-	EditorChooserBackEnd(QObject *parent=0, const char *name=0);
+	EditorChooserBackEnd(TQObject *parent=0, const char *name=0);
 	virtual ~EditorChooserBackEnd();
 
-	virtual QWidget *widget(QWidget *);
-	virtual const QStringList &choices();
+	virtual TQWidget *widget(TQWidget *);
+	virtual const TQStringList &choices();
 	virtual void saveSettings();
 
-	void readAppSetting(KConfig *cfg,const QString& postfix);
-	void writeAppSetting(KConfig *cfg,const QString& postfix);
+	void readAppSetting(KConfig *cfg,const TQString& postfix);
+	void writeAppSetting(KConfig *cfg,const TQString& postfix);
 
 public slots:
-	virtual void madeChoice(int pos,const QString &choice);
+	virtual void madeChoice(int pos,const TQString &choice);
 
 };
 */

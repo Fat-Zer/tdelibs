@@ -10,16 +10,16 @@
 #ifndef PCX_H
 #define PCX_H
 
-#include <qglobal.h>
-#include <qdatastream.h>
-#include <qcolor.h>
+#include <tqglobal.h>
+#include <tqdatastream.h>
+#include <tqcolor.h>
 
 class QImageIO;
 
 extern "C"
 {
-  void kimgio_pcx_read( QImageIO * );
-  void kimgio_pcx_write( QImageIO * );
+  void kimgio_pcx_read( TQImageIO * );
+  void kimgio_pcx_write( TQImageIO * );
 }
 
 class RGB
